@@ -68,7 +68,7 @@ main (int argc, char **argv)
 	    dig_fflush(&fp);
 	    if ( db != td[j] )
 	      {
-                fprintf (stderr, "ERROR in read/write portable double\n");
+                fprintf (stderr, "ERROR in read/write portable double, byte_order = %d\n", byte_order);
                 fprintf (stderr, "  Written: %.16e3E\n  Read   : %.16e3E\n", td[j], db);
 		err = 1;
 	      }
@@ -82,7 +82,7 @@ main (int argc, char **argv)
 	    dig_fflush(&fp);
 	    if ( fb != tf[j] )
 	      {
-                fprintf (stderr, "ERROR in read/write portable float\n");
+                fprintf (stderr, "ERROR in read/write portable float, byte_order = %d\n", byte_order);
                 fprintf (stderr, "  Written: %.8e3E\n  Read   : %.8e3E\n", tf[j], fb);
 		err = 1;
 	      }
@@ -97,7 +97,7 @@ main (int argc, char **argv)
 	    dig_fflush(&fp);
 	    if ( lb != tl[j] )
 	      {
-                fprintf (stderr, "ERROR in read/write portable long\n");
+                fprintf (stderr, "ERROR in read/write portable long, byte_order = %d\n", byte_order);
                 fprintf (stderr, "  Written: %ld\n  Read   : %ld\n", tl[j], lb);
 		err = 1;
 	      }
@@ -112,7 +112,7 @@ main (int argc, char **argv)
 	    dig_fflush(&fp);
 	    if ( ib != ti[j] )
 	      {
-                fprintf (stderr, "ERROR in read/write portable int\n");
+                fprintf (stderr, "ERROR in read/write portable int, byte_order = %d\n", byte_order);
                 fprintf (stderr, "  Written: %d\n  Read   : %d\n", ti[j], ib);
 		err = 1;
 	      }
@@ -127,7 +127,7 @@ main (int argc, char **argv)
 	    dig_fflush(&fp);
 	    if ( sb != ts[j] )
 	      {
-                fprintf (stderr, "ERROR in read/write portable short\n");
+                fprintf (stderr, "ERROR in read/write portable short, byte_order = %d\n", byte_order);
                 fprintf (stderr, "  Written: %d\n  Read   : %d\n", ts[j], sb);
 		err = 1;
 	      }
@@ -141,7 +141,7 @@ main (int argc, char **argv)
 	    dig_fflush(&fp);
 	    if ( cb != tc[j] )
 	      {
-                fprintf (stderr, "ERROR in read/write portable char\n");
+                fprintf (stderr, "ERROR in read/write portable char, byte_order = %d\n", byte_order);
                 fprintf (stderr, "  Written: %d\n  Read   : %d\n", tc[j], cb);
 		err = 1;
 	      }
