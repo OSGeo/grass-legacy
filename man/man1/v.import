@@ -12,6 +12,15 @@ vector support files.
 import programs.  It allows you to import DLG or ASCII vector
 files into GRASS vector format.  It also runs \fIv.support\fR.
 No arguments are required on the command line.
+However, before
+running \fIv.import\fR, the user should move the ASCII DLG files
+to be imported into GRASS in a directory named \fBdlg\fR under
+the user's current GRASS mapset (i.e., under the
+directory known to GRASS as $LOCATION).  If a \fBdlg\fR directory
+does not already exist under the user's current GRASS mapset,
+then the user will have to make one using the UNIX \fImkdir\fR command,
+and then move the ASCII DLG files to be imported under that new
+\fBdlg\fR directory.
 
 This program performs all of the processes that are needed to convert
 ASCII Digital Line Graph (DLG) files, binary DLG files, and ASCII vector files
@@ -141,6 +150,15 @@ This process is done in one phase:
 .br
 1. The \fBdig_plus\fR vector support file is created by analyzing the vector 
 file for topological information.
+.SH NOTES
+Before running \fIv.import\fR, the user should move the ASCII DLG files
+to be imported into GRASS in a directory named \fBdlg\fR under
+the user's current GRASS mapset (i.e., under the
+directory known to GRASS as $LOCATION).  If a \fBdlg\fR directory
+does not already exist under the user's current GRASS mapset,
+then the user will have to make one using the UNIX \fImkdir\fR command,
+and then move the ASCII DLG files to be imported under that new
+\fBdlg\fR directory.
 .SH SEE ALSO
 .I v.digit,
 .I v.in.ascii,
