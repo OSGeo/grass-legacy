@@ -705,9 +705,9 @@ set ver [info tclversion]
 
 if { [string compare $ver "8.0"] < 0} \
 {
-    puts stderr "Sorry your version of Tcl/Tk is $ver and is too old for GRASS."
-    puts stderr "GRASS requires a TCL/TK version of 8.0 or more."
-    puts stderr "Reverting back to text mode interface."
+    puts stderr "Sorry your version of the Tcl/Tk libraries is $ver and is too"
+    puts stderr "old for GRASS which requires a Tcl/Tk library version of 8.0 or later."
+    puts stderr "Reverting default settings back to GRASS text mode interface."
     exit 1
 }
 
