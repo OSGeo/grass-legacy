@@ -2,7 +2,7 @@ PGM = pg.in.dbf
 HOME = $(BIN_CMD)
 PACKAGE = "pg.in.dbf"
 DEFS = -Wall -DPACKAGE=\"$(PACKAGE)\"
-EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS)
+EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS) -I/usr/include/pgsql -L/usr/lib -lpq
 
 LIST = 	main.o \
 	dbfopen.o \
@@ -11,6 +11,6 @@ LIST = 	main.o \
 $(HOME)/$(PGM): $(LIST) $(DEPGISLIB) $(DEPDATETIMELIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) \
 		$(DATETIMELIB) $(MATHLIB) $(XDRLIB) \
-		$(PQLIBPATH) $(PQLIB) $(INTLLIB)
+		$(PQLIBPATH) $(PQLIB) $(INTLLIB) -L/usr/lib -lpq
 
 $(DEPGISLIB): # 
