@@ -20,6 +20,13 @@ else
     SUBDIRS3 = $(SUBDIRS2)
 endif
 
+#mysql
+ifneq ($(strip $(MYSQLLIB)),)
+    SUBDIRS4 = $(SUBDIRS3) mysql
+else
+    SUBDIRS4 = $(SUBDIRS3)
+endif
+
 #add new driver here, increase SUBDIRSx number
 
 #cp last SUBDIRSx to SUBDIRS
