@@ -1,7 +1,7 @@
-The gsurf library, consisting of approximately 20,000 lines of C code,
-contains some 180 public functions and about twice as many internal 
-functions for run-time data storage, manipulation, querying, and 
-visualization using OpenGL.
+The openGL gsurf library (ogsf), consisting of approximately 20,000 lines 
+of C code, contains some 180 public functions and about twice as many 
+internal functions for run-time data storage, manipulation, querying, 
+and visualization using OpenGL.
 The library handles all drawing and lighting operations, including use of
 user-defined clipping planes and drawing various style "fences" on clipping
 planes when drawing multiple surfaces, and treats datasets as objects which
