@@ -52,6 +52,23 @@ struct bound_box        /* Bounding Box */
     double B;   /* bottom */
   };
 
+/* category field information */
+struct field_info
+  {
+    int  number;   /* field number */
+    char *name;    /* field name */
+    char *driver;
+    char *database;
+    char *table;
+    char *key;
+  };
+
+struct dblinks 
+  {
+    struct field_info *field;
+    int alloc_fields, n_fields;
+  };
+
 /* Portability info */
 struct Port_info
   {	  
@@ -231,18 +248,11 @@ struct Map_info
     /* Common info for all formats */  
     int format;                /* format */
 
-    /* char *plus_file;	*/	/* Dig+ file */
-    /* char *coor_file; */		/* Point registration file */
+    struct dblinks *dblnk;      /* info about tables */ 
     
     struct Plus_head plus;      /* topo file *head; */
     dglGraph_s   graph;       	/* graph structure */
     dglSPCache_s spCache;     /* Shortest path cache */ 
-
-    /* double snap_thresh; */
-    /* double prune_thresh; */
-
-    /* int all_areas; */	/* if TRUE, all areas have just been calculated */
-    /* int all_isles; */	/* if TRUE, all islands have just been calculated */
 
     /*  All of these apply only to runtime, and none get written out
     **  to the dig_plus file 
@@ -278,10 +288,7 @@ struct Map_info
     
     /* non native */
     struct Format_info fInfo;  /* format information */
-    
   };
-
-
 
 struct P_node
   {
@@ -381,15 +388,6 @@ struct cat_list
     int *max;         /* pointer to array of maximum values */
     int n_ranges;     /* number ranges */
     int alloc_ranges; /* allocated space */
-  };
-
-/* category field information */
-struct field_info
-  {
-    char *driver;
-    char *database;
-    char *table;
-    char *key;
   };
 
 /* list of integers */
