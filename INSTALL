@@ -1,6 +1,6 @@
                    INSTALL GRASS 5.0 source code
 
-($Id: INSTALL,v 1.16 2001-01-13 09:33:36 markus Exp $)
+($Id: INSTALL,v 1.17 2001-01-19 20:49:10 markus Exp $)
 
 Welcome to the GRASS GIS source code distribution. This is the installation
 instruction file and contains the following sections:
@@ -16,24 +16,23 @@ instruction file and contains the following sections:
 Please read through these sections before installing GRASS.
 
 ************  IMPORTANT READ THIS  *********************************
+Jan 18 2001:
 
-Note for version *later* than beta11:
-Because of the UNISYS patent on the LZW compression algorithm, on
-December 16, 2000, GRASS library code no longer uses this method
-to compress floating point rasters and G3D files.  Unfortunately,
-this creates an incompatible change for persons using earlier
-versions of GRASS 5.0.  Note this does not effect CELL type rasters
-or persons just now upgrading from GRASS 4.x.  In order to make 
-your data readable you *must* uncompress all floating point rasters
-*before* installing newer GRASS libraries and binaries.  The command
-"r.compress -u" will do the job.  After installing the new binaries
-you may recompress your rasters with "r.compress" which will use
-the DEFLATE method availabe in libz.  Unfortunately, any LZW compressed
-G3D files must be dumped with r3.out.ascii, and then reimported.
+Because of the UNISYS patent on the LZW compression algorithm, GRASS 5
+library code no longer uses this method to compress floating point 
+rasters and G3D files.  Unfortunately, this creates an incompatible 
+change for persons using earlier versions of GRASS 5.0.  
+Note this does not effect CELL type rasters or persons just now upgrading 
+from GRASS 4.x.  In order to make your data readable you *must* 
+uncompress all floating point rasters *before* installing newer GRASS 
+libraries and binaries.  The command "r.compress -u" will do the job.  
+After installing the new binaries you may recompress your rasters 
+with "r.compress" which will use the DEFLATE method availabe in libz.  
+Unfortunately, any LZW compressed G3D files must be dumped with 
+r3.out.ascii, and then reimported.
 
-
-The GRASS 5.0 team apologizes for this inconvenience.
-
+The GRASS 5.0 team apologizes for this inconvenience. See also:
+http://www.geog.uni-hannover.de/grass/announces/announce_lzw_removal.html
 *******************************************************************
 
 INSTALLATION
