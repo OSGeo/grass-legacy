@@ -1,4 +1,6 @@
 /*
+ * $Id$
+ *
  * r3.out.v5d -
  *
  * Copyright Jaro Hofierka
@@ -154,6 +156,7 @@ void convert(char *fileout) {
   d1p = &d1; f1p = (float *) &d1;
 	cnt=0;
   for (z = 0; z < depths; z++) {
+    G_percent(z, depths, 2);
     for (y = 0; y < rows; y++) {  
       for (x = 0; x < cols; x++) {
         G3d_getValueRegion (map, x, y, z, d1p, typeIntern);
@@ -205,7 +208,7 @@ if (!v5dWrite(1,1, g )) {
 /* Main function: open the input and output files, then call
  * G3dtoascii.
  */
-void main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
   char *input, *output;
   int convertNull, decim;
   double nullValue;
@@ -244,6 +247,7 @@ void main(int argc, char *argv[]) {
     fatalError ("main: error closing new g3d file");
 
   map = NULL;
+  return (0);
 }
 
 /*---------------------------------------------------------------------------*/
