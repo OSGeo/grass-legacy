@@ -858,8 +858,8 @@ char *G__projection_name(int);
 char *G_database_unit_name(int);
 char *G_database_projection_name(void);
 double G_database_units_to_meters_factor(void);
-char *G_database_datum_name();
-char *G_database_ellipse_name();
+char *G_database_datum_name(void);
+char *G_database_ellipse_name(void);
 
 /* put_cellhd.c */
 int G_put_cellhd(char *, struct Cell_head *);
