@@ -4,11 +4,11 @@
 # a sort of g3.region with parser support.
 
 # written by Markus Neteler
-#            neteler@geog.uni-hannover.de
+#            neteler@itc.it
 # $Id$
 
-#TODO: - add crash check, see below
-#      - distinguish between e-w and n-s resolution
+#TODO:
+#
 
 if test "$GISBASE" = ""; then
 echo "You must be in GRASS to run this program."
@@ -18,15 +18,20 @@ fi
 function usage()
 {
  echo ""
- echo "g3.setregion creates a WIND3 from current 2D region"
+ echo "g3.setregion modifies current 3D region"
  echo ""
- echo "Usage:"
- echo "   g3.setregion [-p] [n=] [s=] [w=] [e=] [t=] [b=] [res=] [dres=] [reg=] [save=]"
+ echo "Usage: g3.setregion  [n=] [s=] [w=] [e=] [t=] [b=] [res=] [dres=]"
  echo ""
- echo "dres= is depth resolution, t/b/dres: only int numbers allowed"
- echo "save= save 3Dregion to extra file"
- echo "reg= read from saved 3dregion"
- echo "-p   print current 3dregion settings"
+ echo "   n=north"
+ echo "   s=south"
+ echo "   w=west"
+ echo "   e=east"
+ echo "   t=top_height"
+ echo "   b=bottom_height"
+ echo "   res=horizontal_resolution (2D)"
+ echo "   dres=depth_resolution (3D)"
+ echo ""
+ echo "   t/b/dres: only int numbers allowed"
  echo ""
 }
 
@@ -36,15 +41,10 @@ then
  exit
 fi
 
-#is G3D already defined?
 if test ! -f $LOCATION/WIND3
 then
-  echo "ERROR: No 3d region definition found!"
-  echo ""
-  echo "Either use g3.createwind to define 3dregion or restore from"
-  echo "saved 3dregion with:"
-  echo "    g3.setregion reg=<3dregion_file>"
-  exit 1
+ echo "No 3D region settings present. Run g3.createwind first!"
+ exit
 fi
 
 north=`cat $LOCATION/WIND | awk ' /north:/ { print $2 }'`
@@ -59,9 +59,9 @@ dres=`cat $LOCATION/WIND3 | awk ' /t-b resol:/ { printf "%.0f", $3 }'`
 
 # add crash check here, then previoulsy run g3.createwind
 
-currsettings=`echo "n:$north s:$south w:$west e:$east t:$top b:$bottom r:$res dres:$dres"`
-echo "Current/old settings:"
-echo "$currsettings"
+
+echo "Previous settings:"
+echo "n:$north s:$south w:$west e:$east t:$top b:$bottom r:$res dres:$dres"
 
 for i
 do
@@ -74,43 +74,6 @@ do
             b=*) bottom=`echo $i | awk -F '=' '{print $2}'` ;;
             res=*) res=`echo $i | awk -F '=' '{print $2}'` ;;
             dres=*) dres=`echo $i | awk -F '=' '{print $2}'` ;;
-            save=*) WINDsavename=`echo $i | cut -d'=' -f2`
-                    cp $LOCATION/WIND3 $LOCATION/WIND3.$WINDsavename
-                    echo "Saved currend WIND3 region to WIND3.$WINDsavename"
-                    echo "Current settings remain unchanged."
-                    exit 1 ;;
-            reg=*) WINDreadname=`echo $i | cut -d'=' -f2`
-                   if test ! -f $LOCATION/WIND3.$WINDreadname
-                   then
-                     echo "ERROR: WIND3 settings file $WINDreadname doesn't exist!"
-                     exit 1
-                   else 
-                     cp $LOCATION/WIND3.$WINDreadname $LOCATION/WIND3
-                     cp $LOCATION/WIND3.$WINDreadname $LOCATION/../PERMANENT/DEFAULT_WIND3
-                     echo " read WIND3 settings from $WINDreadname"
-                     #reset 2D region not possible
-                     g3.setregion -p
-                     exit
-                   fi ;;
-            -p) #we want to print settings only
-		echo "North: $north"
-		echo "South: $south"
-		echo "East: $east"
-		echo "West: $west"
-		layer_number=`echo $bottom $top $dres | awk '{print ($2-$1)/$3}'`
-		echo "Top: $top"
-		echo "Bottom: $bottom"
-		number_rows=`cat $LOCATION/WIND | awk ' /rows:/ { print $2 }'`
-		echo "nofRows: $number_rows"
-		number_cols=`cat $LOCATION/WIND | awk ' /cols:/ { print $2 }'`
-		echo "nofCols: $number_cols"
-		echo "nofDepths: $layer_number"
-		echo "horz resol: $res"
-		echo "t-b  resol: $dres"
-		exit ;;
-             *) error=`echo $i | cut -d'=' -f1`
-                   echo "ERROR: unknown parameter $error. Exit"
-                   exit 1 ;;
         esac
 done
 
