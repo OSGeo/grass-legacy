@@ -112,7 +112,7 @@ main (int argc, char **argv)
 
     just = G_define_flag();
     just->key = 'j';
-    just->description = "Just redraw current maps using default colors";
+    just->description = "Just redraw given maps using default colors";
 
     pan = G_define_flag();
     pan->key = 'p';
