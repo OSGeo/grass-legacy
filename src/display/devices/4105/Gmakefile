@@ -35,7 +35,7 @@ OFILES =  \
 	clip.o \
 	connect.o \
 	encode.o \
-	text.o
+	Text2.o
 
 DR_LIB = ../lib/driverlib.a
 
@@ -53,7 +53,7 @@ Panel.o:	graphics.h
 Raster.o:	graphics.h
 Reset_clrs.o:	graphics.h
 Text_size.o:	graphics.h
-text.o:	graphics.h
+Text2.o:	graphics.h
 Color.o:	colors.h
 Color_table.o:	colors.h
 Erase.o:	colors.h
