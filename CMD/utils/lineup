@@ -1,0 +1,5 @@
+awk ' NF==0{print;next}
+      {printf("%-19s %s", $1, $2)
+       for(i=3;i<=NF;i++) printf(" %s", $i)
+       print ""
+      }'
