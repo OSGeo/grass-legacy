@@ -1,0 +1,8 @@
+
+m.tiger.region is a C/grass program, and can be run alone.  However,
+since it gives region information for a file of tiger input data,
+it is logically linked to the other programs which deal with tiger
+data, mainly v.in.tig.rim, the mechanism to import tiger data into
+a grass binary vector file.  The import program, v.in.tig.rim, depends
+in rim and v.db.rim, both of which contain fortran code and require
+that a site have a fortran compiler to compile or use.
