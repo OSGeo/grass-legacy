@@ -1,0 +1,23 @@
+MDmain	Dmain.c	/^main(argc, argv)  char *argv[] ;$/
+Mcube	cube.c	/^main()$/
+Mmain	main.c	/^main()$/
+Reset_color	cube.c	/^Reset_color(red, grn, blu, number)$/
+Reset_colors	cube.c	/^Reset_colors(red, grn, blu, tot_colr)$/
+Screen_calc	transform.c	/^Screen_calc(carray, z_adj, scr_x, scr_y, atrow, wi/
+_norm	cube.c	/^_norm(intensity)$/
+check_options	check_opt.c	/^check_options()$/
+check_signal	sigint.c	/^check_signal()$/
+copy	cube.c	/^copy(sarray, darray, i1, i2, i3, i4)$/
+do_plot	threed.c	/^do_plot(row_beg,row_end,row_dir,col_beg,col_end,co/
+draw_line	clip.c	/^draw_line(x1,y1,x2,y2)$/
+draw_polygon	clip.c	/^draw_polygon(x, y, num)$/
+draw_polyline	clip.c	/^draw_polyline(x, y, num)$/
+establish_view	transform.c	/^establish_view(fx,fy,fz,tx,ty,tz, view_angle)$/
+get_inputs	get_inputs.c	/^get_inputs(do_it, do_erase)$/
+save_edges	clip.c	/^save_edges(T, B, L, R)$/
+set_default_options	command.c	/^set_default_options()$/
+set_signals	sigint.c	/^set_signals()$/
+sigint	sigint.c	/^sigint(n)$/
+stash_away	command.c	/^stash_away(pos, option)$/
+threed	threed.c	/^threed(interactive)$/
+usage	command.c	/^usage(cmd)$/
