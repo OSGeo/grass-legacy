@@ -1,0 +1,8 @@
+Dcell	Dcell.c	/^Dcell(name, mapset, overlay)$/
+Dchoose	Dchoose.c	/^Dchoose(name)$/
+Dclearscreen	Dclear.c	/^Dclearscreen()$/
+Derase	Derase.c	/^Derase(color)$/
+Dnew	Dnew.c	/^Dnew(name, bot, top, left, right)$/
+Dremove	Dremove.c	/^Dremove(new_wind)$/
+Dscreen	Dscreen.c	/^Dscreen()$/
+cell_draw	Dcell.c	/^cell_draw(name, mapset, colors, overlay)$/
