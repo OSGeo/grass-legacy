@@ -109,7 +109,6 @@ int main (int argc, char *argv[])
     {
 	char path[256];
 	G__file_name (path,"","",iset_name);
-	G_debug ( 0, "MAPSET: '%s'\n", path);
     }
 
     if (stat >= 0) {  /* yes, we can access the mapset */
@@ -139,7 +138,7 @@ int main (int argc, char *argv[])
 	 if (pj_get_kv(&info_in,in_proj_keys,in_unit_keys) < 0) exit (0);
 
 	 Vect_set_open_level (1);
-	 G_debug ( 0, "Open old: location: %s mapset : %s", G__location_path(), G_mapset() );
+	 G_debug ( 1, "Open old: location: %s mapset : %s", G__location_path(), G_mapset() );
 	 Vect_open_old( &Map, map_name, mapset);
     }
     else if (stat < 0)	/* allow 0 (i.e. denied permission) */
@@ -168,7 +167,7 @@ int main (int argc, char *argv[])
     G_free_key_value(out_proj_keys);
     G_free_key_value(out_unit_keys);
 
-    G_debug ( 0, "Open new: location: %s mapset : %s", G__location_path(), G_mapset() );
+    G_debug ( 1, "Open new: location: %s mapset : %s", G__location_path(), G_mapset() );
     Vect_open_new (&Out_Map, omap_name, Vect_is_3d(&Map) );
 	
     Vect_copy_head_data (&Map, &Out_Map);
