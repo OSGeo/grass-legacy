@@ -32,15 +32,15 @@ print_entry(Conformat,count,area)
 		print_area(F_CTOM(area));
 		break;
 	case 'p': 
-		print_percent(F_CTOP(count, window_cells));
+		print_percent(F_CTOP(area, window_area));
 		break;
 	case 'x':
 		col_total(Cndex,1,&total_count,&total_area);
-		print_percent(F_CTOX(count,total_count));
+		print_percent(F_CTOX(area,total_area)); 
 		break;
 	case 'y':
 		row_total(Rndex,1,&total_count,&total_area);
-		print_percent(F_CTOY(count,total_count));
+		print_percent(F_CTOY(area,total_area));
 		break;
 	default:  
 		fprintf(dumpfile," %9ld |", count);
