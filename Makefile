@@ -25,7 +25,7 @@ include $(MODULE_TOPDIR)/include/Make/Grass.make
 # Install directories
 exec_prefix=            ${prefix}
 BINDIR=			${UNIX_BIN}
-INST_DIR=		${prefix}/grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
+INST_DIR=		${prefix}/grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}
 
 # Shell commands
 MAKE_DIR_CMD=		mkdir -p -m 755
@@ -58,7 +58,7 @@ endif
 FILES = COPYING README REQUIREMENTS.html
 
 BIN_DIST_FILES = $(FILES) \
-	grass${VERSION_MAJOR}${VERSION_MINOR}.tmp \
+	grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.tmp \
 	bin \
 	bwidget \
 	docs \
@@ -82,7 +82,7 @@ default:
 	done
 	if [ ${LOCALE} -eq 1 ] ; then $(MAKE) -C locale; fi
 	-cp -f $(FILES) ${ARCH_DISTDIR}/
-	-cp -f ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} ${ARCH_DISTDIR}/grass${VERSION_MAJOR}${VERSION_MINOR}.tmp
+	-cp -f ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} ${ARCH_DISTDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.tmp
 	@(cd tools ; sh -c "./build_html_index.html")
 	@echo "Finished compilation: `date`" >> $(GRASS_HOME)/error.log
 	@cat $(GRASS_HOME)/error.log
@@ -134,9 +134,9 @@ cleandistdirs:
 	-rm -rf ${ARCH_DISTDIR}/man/         2>/dev/null
 	-rm -rf ${ARCH_DISTDIR}/scripts/     2>/dev/null
 	-rm -rf ${ARCH_DISTDIR}/tcltkgrass/  2>/dev/null
-	-rm -f ${ARCH_DISTDIR}/README ${ARCH_DISTDIR}/REQUIREMENTS.html ${ARCH_DISTDIR}/COPYING ${ARCH_DISTDIR}/grass${VERSION_MAJOR}${VERSION_MINOR}.tmp 2>/dev/null
+	-rm -f ${ARCH_DISTDIR}/README ${ARCH_DISTDIR}/REQUIREMENTS.html ${ARCH_DISTDIR}/COPYING ${ARCH_DISTDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.tmp 2>/dev/null
 	-rmdir ${ARCH_DISTDIR}
-	-rm -f ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} 2>/dev/null
+	-rm -f ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} 2>/dev/null
 	-rmdir ${ARCH_BINDIR}
 
 clean: cleandistdirs
@@ -156,7 +156,7 @@ distclean: clean
 	-rm -f include/config.h include/version.h include/winname.h include/Make/Grass.make include/Make/Platform.make 2>/dev/null
 
 strip: FORCE
-	@ if [ ! -f ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} ] ; then \
+	@ if [ ! -f ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} ] ; then \
 		echo "ERROR: GRASS has not been compiled. Try \"make\" first."; \
 		echo "  Strip aborted, exiting Make."; \
 		exit; \
@@ -173,8 +173,8 @@ install: FORCE
 	@ # a single action for the target.
 	@ # Check if grass has been compiled, if INST_DIR is writable, and if
 	@ # grass is part of INST_DIR
-	echo ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR}
-	@ if [ ! -f ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} ] ; then \
+	echo ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}
+	@ if [ ! -f ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} ] ; then \
 		echo "ERROR: GRASS has not been compiled. Try \"make\" first."; \
 		echo "  Installation aborted, exiting Make."; \
 		exit; \
@@ -216,8 +216,8 @@ real-install: FORCE
 	test -d ${INST_DIR} || ${MAKE_DIR_CMD} ${INST_DIR}
 	@##### test -d ${INST_DIR}/dev || ${MAKE_DIR_CMD} ${INST_DIR}/dev
 	test -d ${BINDIR} || ${MAKE_DIR_CMD} ${BINDIR}
-	-sed -e "s#^GISBASE.*#GISBASE=${INST_DIR}#" ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} > ${BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR}
-	-chmod a+x ${BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR}
+	-sed -e "s#^GISBASE.*#GISBASE=${INST_DIR}#" ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} > ${BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}
+	-chmod a+x ${BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}
 	-cd ${GISBASE} ; tar cBf - bin | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - bwidget | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - docs | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
@@ -246,62 +246,62 @@ install-strip: FORCE
 
 
 bindist:  
-	( date=`date '+%d_%m_%Y'`; cd ${ARCH_DISTDIR}; tar cBf - ${BIN_DIST_FILES} | gzip -fc > ../grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}-${ARCH}-$$date.tar.gz)
-	-date=`date '+%d_%m_%Y'`; name=grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}-${ARCH}-$$date.tar.gz; \
+	( date=`date '+%d_%m_%Y'`; cd ${ARCH_DISTDIR}; tar cBf - ${BIN_DIST_FILES} | gzip -fc > ../grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}-${ARCH}-$$date.tar.gz)
+	-date=`date '+%d_%m_%Y'`; name=grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}-${ARCH}-$$date.tar.gz; \
             size=`ls -l $$name | awk '{print $$5}'`; \
-	    sed -e "s/BIN_DIST_VERSION/${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}-${ARCH}-$$date/" \
+	    sed -e "s/BIN_DIST_VERSION/${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}-${ARCH}-$$date/" \
 	    -e "s/SIZE_TAR_FILE/$$size/" -e "s#BIN_DIST_DIR#'${INST_DIR}'#" \
 	    -e "s/ARCHITECTURE/${ARCH}/" \
 	    -e "s/TEST_STR=/TEST_STR=executable/" \
 	    -e "s#IMPORTANT.*#Generated from the binaryInstall.src file using the command make bindist#" \
 	    -e "s/# executable shell.*//" -e "s/# make bindist.*//" \
-	    binaryInstall.src > grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}-${ARCH}-$$date-install.sh ; \
-	    chmod a+x grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}-${ARCH}-$$date-install.sh 2>/dev/null
+	    binaryInstall.src > grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}-${ARCH}-$$date-install.sh ; \
+	    chmod a+x grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}-${ARCH}-$$date-install.sh 2>/dev/null
 
 # make a source package for distribution:
 srcdist: FORCE distclean
-	-${MAKE_DIR_CMD} ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
+	-${MAKE_DIR_CMD} ./grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}
 
 	@ # needed to store code in package with grass-version path:
-	-mv * ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
+	-mv * ./grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}
 	@ #we use -h to get the linked files into as real files:
-	tar cvfzh grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}.tar.gz ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}/* --exclude=CVS
+	tar cvfzh grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}.tar.gz ./grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}/* --exclude=CVS
 	@ # restore src code location:
-	-mv ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}/* .
-	-rmdir ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
-	@ echo "Distribution source package: grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}.tar.gz ready."
+	-mv ./grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}/* .
+	-rmdir ./grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}
+	@ echo "Distribution source package: grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}.tar.gz ready."
 
 # make a source package for library distribution:
 srclibsdist: FORCE distclean
-	-${MAKE_DIR_CMD} ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
+	-${MAKE_DIR_CMD} ./grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}
 
 	@ # needed to store code in package with grass-version path:
-	-cp -L * ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
-	-cp -rL tools ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
-	-cp -rL include ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
-	-cp -rL --parents lib/external/shapelib ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
-	-cp -rL --parents lib/datetime ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
-	-cp -rL --parents lib/db ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
-	-cp -rL --parents lib/gis ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
-	-cp -rL --parents lib/linkm ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
-	-cp -rL --parents lib/form ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
-	-cp -rL --parents lib/vector ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
+	-cp -L * ./grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}
+	-cp -rL tools ./grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}
+	-cp -rL include ./grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}
+	-cp -rL --parents lib/external/shapelib ./grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}
+	-cp -rL --parents lib/datetime ./grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}
+	-cp -rL --parents lib/db ./grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}
+	-cp -rL --parents lib/gis ./grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}
+	-cp -rL --parents lib/linkm ./grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}
+	-cp -rL --parents lib/form ./grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}
+	-cp -rL --parents lib/vector ./grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}
 
-	-cp -rL --parents db/drivers ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
+	-cp -rL --parents db/drivers ./grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}
 
-	tar cvfz grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}.tar.gz ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}/* --exclude=CVS
-	-rm -r ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
-	@ echo "Distribution source package: grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}.tar.gz ready."
+	tar cvfz grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}.tar.gz ./grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}/* --exclude=CVS
+	-rm -r ./grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}
+	@ echo "Distribution source package: grass-lib-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}.tar.gz ready."
 
 htmldocs:
 	(cd lib/db/ ; $(MAKE) htmldocs)
 	(cd lib/vector/ ; $(MAKE) htmldocs)
 	(cd lib/gis/ ; $(MAKE) htmldocs)
-	#next runs only on grass${VERSION_MAJOR}${VERSION_MINOR}refman.dox (as defined in ./Doxyfile)
+	#next runs only on grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}refman.dox (as defined in ./Doxyfile)
 	doxygen ./Doxyfile
 
 packagehtmldocs: htmldocs
-	tar cvfz grass${VERSION_MAJOR}${VERSION_MINOR}refman_`date '+%Y_%m_%d'`.tar.gz doxygenhtml/ lib/db/html lib/vector/html lib/gis/html
+	tar cvfz grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}refman_`date '+%Y_%m_%d'`.tar.gz doxygenhtml/ lib/db/html lib/vector/html lib/gis/html
 
 pdfdocs:
 	(cd lib/db/ ; $(MAKE) pdfdocs)

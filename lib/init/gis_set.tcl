@@ -456,7 +456,7 @@ proc gisSetWindow {} {
     
     
     button .frame0.frameBUTTONS.ok \
-     	-text [G_msg "Use Selection"] \
+     	-text [G_msg "Enter GRASS"] \
     	-relief raised \
      	-padx 10 \
      	-command { 

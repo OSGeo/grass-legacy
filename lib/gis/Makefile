@@ -200,7 +200,7 @@ default: $(ARCH_INCDIR)/version.h \
 	$(ETC)/gui.tcl
 
 $(ARCH_INCDIR)/version.h:
-	echo 'static char *VERSION_STRING = "@(#) GRASS $(VERSION_NUMBER) ($(VERSION_DATE))";' > $@
+	echo 'static char *GRASS_VERSION_STRING = "@(#) GRASS $(GRASS_VERSION_NUMBER) ($(GRASS_VERSION_DATE))";' > $@
 
 $(ETC)/ellipse.table: ellipse.table
 	rm -f $@

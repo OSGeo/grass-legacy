@@ -17,8 +17,8 @@
 #include <string.h>
 #include "gis.h"
 
-#ifndef VERSION_UPDATE_PKG
-#define VERSION_UPDATE_PKG "0.1"
+#ifndef GRASS_VERSION_UPDATE_PKG
+#define GRASS_VERSION_UPDATE_PKG "0.1"
 #endif
 
 int main(int argc, char *argv[])
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 	exit(1);
 
     fprintf (stdout, "GRASS %s (%s) %s\n",
-    	VERSION_NUMBER, VERSION_DATE, VERSION_UPDATE_PKG );
+    	GRASS_VERSION_NUMBER, GRASS_VERSION_DATE, GRASS_VERSION_UPDATE_PKG );
     fprintf (stdout, "\n");
     
     if (copyright->answer)

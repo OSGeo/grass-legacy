@@ -135,7 +135,7 @@ int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
 
     fprintf(stderr, "\n");
     fprintf(stderr, "\n");
-    fprintf(stderr, "Version: %s\n", VERSION_STRING);
+    fprintf(stderr, "Version: %s\n", GRASS_VERSION_STRING);
     fprintf(stderr, "\n");
     fprintf(stderr,
 	    "Authors: Bill Brown, Terry Baker, Mark Astley, David Gerdes\n");
