@@ -1,0 +1,220 @@
+EXTRA_CFLAGS=$(GETHOSTNAME)
+OBJ = \
+    adj_cellhd.o\
+    align_window.o\
+    alloc.o\
+    alloc_cell.o\
+    area.o\
+    area_ellipse.o\
+    area_sphere.o\
+    area_poly1.o\
+    area_poly2.o\
+    ascii_chk.o\
+    ask.o\
+    ask_cell.o\
+    ask_vctrs.o\
+    auto_mask.o\
+    bres_line.o\
+    cats.o\
+    cell_stats.o\
+    cellstats_eq.o\
+    cell_title.o\
+    clear_scrn.o\
+    closecell.o\
+    color_asp.o \
+    color_free.o \
+    color_get.o \
+    color_grey.o \
+    color_gyr.o \
+    color_hist.o \
+    color_init.o \
+    color_insrt.o \
+    color_invrt.o \
+    color_look.o \
+    color_org.o \
+    color_rain.o \
+    color_ramp.o \
+    color_rand.o \
+    color_range.o \
+    color_read.o \
+    color_rule.o \
+    color_ryg.o \
+    color_set.o \
+    color_shift.o \
+    color_wave.o \
+    color_write.o \
+    commas.o\
+    copy.o\
+    dalloc.o\
+    date.o\
+    def_window.o\
+    distance.o\
+    done_msg.o\
+    edit_cats.o\
+    edit_cellhd.o\
+    edit_hist.o\
+    eigen_tools.o\
+    env.o\
+    error.o\
+    file_name.o\
+    find_cell.o\
+    find_file.o\
+    find_vect.o\
+    fork.o\
+    format.o\
+    geodesic.o\
+    geodist.o\
+    get_cellhd.o\
+    get_ellipse.o\
+    get_ell_name.o\
+    get_projname.o\
+    get_projinfo.o\
+    get_row.o\
+    get_window.o\
+    getl.o\
+    gets.o\
+    gisbase.o\
+    gisdbase.o\
+    gishelp.o\
+    gisinit.o\
+    histo_eq.o\
+    histogram.o\
+    history.o\
+    home.o\
+    ialloc.o\
+    index.o\
+    intr_char.o\
+    key_value1.o\
+    key_value2.o\
+    key_value3.o\
+    key_value4.o\
+    legal_name.o\
+    list.o\
+    line_dist.o\
+    ll_format.o\
+    ll_scan.o\
+    location.o\
+    lu.o\
+    mach_name.o\
+    make_colr.o\
+    mapcase.o\
+    mapset.o\
+    mapset_msc.o\
+    mapset_nme.o\
+    mask_info.o\
+    maskfd.o\
+    myname.o\
+    named_colr.o\
+    nme_in_mps.o\
+    nl_to_spaces.o\
+    open.o\
+    opencell.o\
+    parser.o\
+    percent.o\
+    plot.o\
+    popen.o\
+    pole_in_poly.o\
+    progrm_nme.o\
+    proj1.o\
+    proj2.o\
+    proj3.o\
+    put_cellhd.o\
+    put_row.o\
+    put_title.o\
+    put_window.o\
+    putenv.o\
+    radii.o\
+    range.o\
+    rd_cellhd.o\
+    reclass.o\
+    remove.o\
+    rename.o\
+    rhumbline.o\
+    rm_colr.o\
+    set_window.o\
+    short_way.o\
+    sites.o\
+    squeeze.o\
+    store.o\
+    strings.o\
+    strip.o\
+    svd.o\
+    system.o\
+    tempfile.o\
+    token.o\
+    trim_dec.o\
+    unctrl.o\
+    view.o\
+    whoami.o\
+    wind_2_box.o\
+    wind_format.o\
+    wind_limits.o\
+    wind_overlap.o\
+    wind_scan.o\
+    window_map.o\
+    wr_cellhd.o\
+    writ_zeros.o\
+    yes.o\
+    zero.o\
+    zero_cell.o\
+    zone.o
+
+all: version.h \
+     $(GISLIB) \
+     $(ETC)/ellipse.table \
+     $(ETC)/projections \
+     $(ETC)/FIPS.code \
+     $(ETC)/state27 \
+     $(ETC)/state83
+
+$(GISLIB): $(OBJ)
+	$(AR)
+
+$(ETC)/ellipse.table: ellipse.table
+	rm -f $@
+	cp $? $@
+	chmod +r $@
+
+$(ETC)/FIPS.code: FIPS.code 
+	rm -f $@
+	cp $? $@
+	chmod +r $@
+
+$(ETC)/state27: state27 
+	rm -f $@
+	cp $? $@
+	chmod +r $@
+
+$(ETC)/state83: state83 
+	rm -f $@
+	cp $? $@
+	chmod +r $@
+
+$(ETC)/projections: projections 
+	rm -f $@
+	cp $? $@
+	chmod +r $@
+
+area_ellipse.o: pi.h
+area_sphere.o: pi.h
+auto_mask.o: G.h
+closecell.o: G.h
+format.o: G.h
+geodesic.o: pi.h
+geodist.o: pi.h
+get_row.o: G.h
+get_window.o: G.h
+gisinit.o: G.h
+gisinit.o: version.h
+maskfd.o: G.h
+opencell.o: G.h
+openvect.o: G.h
+put_row.o: G.h
+radii.o: pi.h
+rhumbline.o: pi.h
+set_window.o: G.h
+window_map.o: G.h
+
+version.h: $(VERSION_FILE)
+	echo 'static char *VERSION_STRING = "@(#) GRASS $(VERSION_NUMBER) ($(VERSION_DATE))";' > $@
+...: #
