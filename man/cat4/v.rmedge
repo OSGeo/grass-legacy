@@ -1,14 +1,14 @@
 
 
 
-v.rmedge <contrib>   GRASS Reference Manual    <contrib> v.rmedge
+v.rmedge <contrib>    GRASS Reference Manual   <contrib> v.rmedge
 
 
 
 NAME
-     v.rmedge -	Selects	edge vectors from an existing vector map,
+     v.rmedge - selects edge vectors from an existing vector map,
      removes them, and creates a new vector map.
-     (SCS GRASS	Vector Program)
+     (GRASS Vector Program)
 
 SYNOPSIS
      v.rmedge
@@ -18,39 +18,63 @@ SYNOPSIS
 DESCRIPTION
      allows a user to create a new vector map from an existing
      vector map, however ALL OUTER boundaries will be gone. Any
-     outer edge	that needs to be retained will require adding
+     outer edge that needs to be retained will require adding
      another outside boundary, v.digit can be used to provide
      this additional boundary.
 
+     NOTE
 
-     Parameters:
-
-     input=name	       Name of vector input file.
-
-     output=name       Name of vector output file.
-
-NOTES
-     When using	v.digit	to add an additional boundary to a map,
-     it	may be necessary to break the boundary of an existing
-     area.  The	user  *** MUST REMEMBER	*** that breaking the
-     boundary of a named area *** REMOVES THE LABEL ***, and the
-     area *** MUST BE RE-LABELED *** prior to leaving v.digit;
-     -OR-
-     *** v.rmedge will REMOVE that area	boundary ALSO ***
+	  When using v.digit to add an additional boundary to a
+	  map, it may be necessary to break the boundary of an
+	  existing area.  The user  *** MUST REMEMBER *** that
+	  breaking the boundary of a named area, *** REMOVES THE
+	  LABEL ***,  and the area *** MUST BE RE-LABELED ***,
+	  prior to leaving v.digit;
+	  -OR-
+	  *** v.rmedge will REMOVE that area boundary ALSO ***
 
      This will result in MISSING data in a patching operation.
 
+COMMAND LINE OPTIONS
+     Usage.
+
+     v.rmedge
+	  input=name output=name.
+
+     Parameters.
+
+     input
+	  Name of vector input file.
+
+     output
+	  Name of vector output file.
+
+BUGS
 SEE ALSO
-     v.digit, v.merge, v.patch
+     v.patch, v.merge
 
 AUTHOR
-     R.L. Glenn, USDA, SCS, NHQ-CGIS
+     R.L.Glenn, USDA, SCS, NHQ-CGIS
+
+
+
+
+
+GRASS 4.2.1		Baylor University			1
+
+
+
+
+
+
+v.rmedge <contrib>    GRASS Reference Manual   <contrib> v.rmedge
+
 
 
 NOTICE
-     This program is part of the contrib section of the	GRASS
-     distribution.  As such, it	is externally contributed code
-     that has not been examined	or tested by the Office	of GRASS
+     This program is part of the contrib section of the GRASS
+     distribution.  As such, it is externally contributed code
+     that has not been examined or tested by the Office of GRASS
      Integration.
 
 
@@ -60,7 +84,49 @@ NOTICE
 
 
 
-GRASS 4.2		Baylor University			1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.2.1		Baylor University			2
 
 
 
