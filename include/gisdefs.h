@@ -329,6 +329,12 @@ int G_add_modular_raster_color_rule(void *, int, int, int, void *, int, int,
 int G_add_modular_color_rule(CELL, int, int, int, CELL, int, int, int,
     struct Colors *);
 
+/* color_rule_get.c */
+int G_colors_count ( struct Colors *);
+int G_get_f_color_rule ( DCELL *, unsigned char *, unsigned char *, unsigned char *,
+                         DCELL *, unsigned char *, unsigned char *, unsigned char *,
+                         struct Colors *, int);
+
 /* color_ryg.c */
 int G_make_ryg_colors(struct Colors *, CELL, CELL);
 int G_make_ryg_fp_colors(struct Colors *, DCELL, DCELL);
