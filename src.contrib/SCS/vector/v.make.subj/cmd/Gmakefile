@@ -14,7 +14,5 @@ all:  $(PROG)
 
 
 $(PROG): $(OBJ) $(GISLIB) $(VECTLIB)
-	rm -f a.out $@
-	$(CC) $(LDFLAGS) $(OBJ) $(GISLIB) $(VECTLIB) $(MATHLIB) $(XDRLIB)
-	mv a.out $@
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(VECTLIB) $(MATHLIB) $(XDRLIB)
 

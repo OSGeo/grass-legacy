@@ -11,9 +11,7 @@ CFILES = \
 all: $(BIN_CONTRIB_CMD)/v.out.DI
 
 $(BIN_CONTRIB_CMD)/v.out.DI: $(OFILES) $(VECTLIB) $(GISLIB)
-	rm -f a.out $@
-	$(CC) $(LDFLAGS) $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB)
-	mv a.out $@
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB)
 
 
 $(OFILES):      vtoc.h

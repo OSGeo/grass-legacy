@@ -4,8 +4,7 @@ LIBES = $(GISLIB) $(XDRLIB)
 LDFLAGS = $(MATHLIB)
 LIST = data.o
 
-$(PGM): $(LIST) $(LIBES)
+$(RFEA)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
-	mv $(PGM) $(RFEA)
 
 $LIBES: #

@@ -3,8 +3,7 @@ RFEA=$(GISBASE)/etc/r.fea
 LIBES= $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) $(XDRLIB)
 LIST = main.o timedata.o mstifgeo.o timecalc.o other.o band.o infiltration.o draw.o 
 
-$(PGM): $(LIST) $(LIBES)
+$(RFEA)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(MATHLIB) $(LIBES)
-	mv $(PGM) $(RFEA)
 
 $LIBES: #

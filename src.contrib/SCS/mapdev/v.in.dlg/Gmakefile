@@ -8,7 +8,5 @@ all:  $(PROG)
 	
 
 $(PROG): $(OBJ) $(GISLIB)
-	rm -f a.out $@
-	$(CC) $(LDFLAGS) $(OBJ) $(GISLIB) $(MATHLIB) $(EXTRALIB) $(XDRLIB)
-	mv a.out $@
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(MATHLIB) $(EXTRALIB) $(XDRLIB)
 
