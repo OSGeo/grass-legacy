@@ -1,0 +1,59 @@
+xpos, ypos: (default - the current position) 
+verticalFromAbove: default
+horizontalFromLeft: default
+
+title
+type	- raster, vector, sites, scale
+
+/* For type raster */
+type:	raster
+1.	raster file name 
+/*Optional:*/
+xpos, ypos: default 
+verticalFromAbove: default 
+horizontalFromLeft: default - some indentation
+width : default
+height: default
+
+
+cat	catnum "..." (default-name given in cat file)
+cat	catnum "..." (default-name given in cat file)
+range of categories - ??? ways of specifying
+	corresponding text, assume first, last (and/or middle?);
+
+
+
+/*  For type vector */
+type:	vector
+1.	vector file name
+/*Optional:*/
+xpos, ypos: default 
+verticalFromAbove: default 
+horizontalFromLeft: default - some indentation
+width : default (only to be specified for A)
+height: default (only to be specified for A)
+
+
+A(areafeature) catnum "..." (default-name given in file)
+L(linefeature) catnum "..." (default-name given in file)
+
+
+/* For type sites */
+type:	sites
+1.	sites file name    "...."
+/*Optional:*/
+xpos, ypos: default 
+verticalFromAbove: default 
+horizontalFromLeft: default - some indentation
+
+
+
+Note:
+verticalFromAbove: default
+(spacing from the above element, hence for the first
+thing to be displaced, it is wrt to the initial
+xpos, ypos);
+
+horizontalFromLeft: default
+(spacing from the initial ypos if there is no element
+on the left.) ???
