@@ -42,7 +42,13 @@ tool_centre ( void )
 		new_line ();
 		break;
 	    case TOOL_DEL_LINE :
-		delete_line ();
+		process_line (PROCESS_DELETE);
+		break;
+	    case TOOL_MV_LINE :
+		process_line (PROCESS_MOVE);
+		break;
+	    case TOOL_MV_NODE :
+		process_line (PROCESS_NODE);
 		break;
 	    default:
 	}
@@ -55,7 +61,7 @@ tool_centre ( void )
 
 /* This function is regularly called from R_get_location_*() functions to enable GUI to kill running tool */
 int update ( int wx, int wy ) {
-    G_debug (3, "Update function wx = %d wy = %d", wx, wy);
+    G_debug (4, "Update function wx = %d wy = %d", wx, wy);
     i_update ();
     return 1;
 }

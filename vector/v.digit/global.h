@@ -13,6 +13,13 @@
 #define TOOL_EXIT      1   /* exit */
 #define TOOL_NEW_LINE  2   /* new_line */
 #define TOOL_DEL_LINE  3   /* delete_line */
+#define TOOL_MV_LINE   4   /* move_line */
+#define TOOL_MV_NODE   5   /* move_line */
+
+#define PROCESS_NOTHING  0   /* */
+#define PROCESS_DELETE   1   /* DELETE*/
+#define PROCESS_MOVE   2   /* MOVE*/
+#define PROCESS_NODE   3   /* NODE*/
 
 Global struct Map_info Map;
 Global struct Cell_head Region; /* Current region (synchronized with GRASS WIND) */ 

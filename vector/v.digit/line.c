@@ -15,6 +15,9 @@ static struct line_pnts *Points;
 static struct line_cats *Cats;
 static int first = 1;
 
+int do_move_line(struct Map_info *, plus_t, plus_t, double, double);
+int find_closest_point(struct Map_info *, int, double, double, double);
+
 /* Digitize new line */
 int new_line(void)
 {
@@ -102,24 +105,48 @@ int new_line(void)
     return 1;
 }
 
-/* Delete line */
-int delete_line(void)
+
+/* process line */
+int process_line(int type_of_process)
 {
 
     int row, col;
     int nrows, ncols;
     int screen_x, screen_y;
-    double east, north;
+    double east, north, east_sel = 0.0, north_sel = 0.0;
     int button;
     double x1, y1, x2, y2;
     double maxdist;
 
-    plus_t line, line_sel = 0;
+    plus_t line, line_sel = 0, node = 0, node_sel = 0;
 
-    G_debug(2, "delete_line()");
 
-    i_prompt("Delete line:");
-    i_prompt_buttons("Select line", "Delete", "Cancel");
+    switch (type_of_process) {
+    case PROCESS_DELETE:
+	G_debug(2, "delete_line()");
+
+	i_prompt("Delete line:");
+	i_prompt_buttons("Select line", "Delete", "Cancel");
+	break;
+
+    case PROCESS_MOVE:
+	G_debug(2, "move_line()");
+
+	i_prompt("Move line:");
+	i_prompt_buttons("Select line", "Move", "Cancel");
+	break;
+
+    case PROCESS_NODE:
+	G_debug(2, "move_node()");
+
+	i_prompt("Move node/vertex:");
+	i_prompt_buttons("Select", "Move", "Cancel");
+	break;
+
+    default:
+	return -1;
+	break;
+    }
 
     open_driver();
     R_set_update_function(update);
@@ -136,13 +163,6 @@ int delete_line(void)
 	R_set_update_function(update);
 	R_get_location_with_pointer(&screen_x, &screen_y, &button);
 
-	if (button == 2 && line_sel) {
-	    display_line(line_sel, BLACK, BLACK);
-	    Vect_delete_line(&Map, line_sel);
-	    line_sel = 0;
-	    continue;
-	}
-
 	if (button == 0 || button == 3) {
 	    if (line_sel)
 		display_line(line_sel, WHITE, GREEN);
@@ -151,6 +171,37 @@ int delete_line(void)
 
 	east = D_d_to_u_col((double) screen_x);
 	north = D_d_to_u_row((double) screen_y);
+
+	if (button == 2 && (line_sel || node_sel)) {
+
+	    switch (type_of_process) {
+	    case PROCESS_DELETE:
+		if (line_sel) {
+		    display_line(line_sel, BLACK, BLACK);
+		    Vect_delete_line(&Map, line_sel);
+		}
+		break;
+
+	    case PROCESS_MOVE:
+		if (line_sel)
+		    do_move_line(&Map, 0, line_sel, east - east_sel,
+				 north - north_sel);
+		break;
+
+	    case PROCESS_NODE:
+		if (node_sel && line_sel)
+		    do_move_line(&Map, node_sel, line_sel, east - east_sel,
+				 north - north_sel);
+		break;
+	    
+	    default:
+		break;
+	    }
+
+	    line_sel = 0;
+	    node_sel = 0;
+	    continue;
+	}
 
 	row = (Region.north - north) / Region.ns_res;
 	col = (east - Region.west) / Region.ew_res;
@@ -178,21 +229,139 @@ int delete_line(void)
 	if (line == 0)
 	    line = Vect_find_line(&Map, east, north, 0,
 				  GV_LINE | GV_BOUNDARY, maxdist, 0, 0);
+	if ((type_of_process == PROCESS_NODE) && line)
+	    node = find_closest_point(&Map, line, east, north, maxdist);
+
 
 	if (line_sel)
 	    display_line(line_sel, WHITE, GREEN);
-	if (line)
-	    display_line(line, YELLOW, RED);
+
+	if (line || node) {
+	    if (line)
+		display_line(line, YELLOW, RED);
+	    east_sel = east;
+	    north_sel = north;
+	}
+
 	line_sel = line;
+	node_sel = node;
     }
 
 
     close_driver();
 
+    switch (type_of_process) {
+    case PROCESS_DELETE:
+
+	G_debug(3, "delete_line(): End");
+	break;
+
+    case PROCESS_MOVE:
+
+	G_debug(3, "move_line(): End");
+	break;
+
+    case PROCESS_NODE:
+
+	G_debug(3, "move_node(): End");
+	break;
+
+    default:
+	break;
+    }
+
     i_prompt("");
     i_prompt_buttons("", "", "");
 
-    G_debug(3, "delete_line(): End");
-
     return 1;
+}
+
+
+/* workhorse called by process_line*/
+int do_move_line(struct Map_info *Map, plus_t node, plus_t line,
+		 double xoffset, double yoffset)
+{
+
+    int i, rcode = 0;
+    int type;
+
+    if (first) {
+	Points = Vect_new_line_struct();
+	Cats = Vect_new_cats_struct();
+	first = 0;
+    }
+    if (!Vect_line_alive(Map, line))
+	return 0;
+
+    G_debug(3, "do_move_line()");
+
+    Vect_reset_line(Points);
+    type = Vect_read_line(Map, Points, Cats, line);
+
+    display_points(Points, BLACK, BLACK);
+
+    if (node) {
+	Points->x[node - 1] += xoffset;
+	Points->y[node - 1] += yoffset;
+    }
+    else {
+	for (i = 0; i < Points->n_points; i++) {
+	    Points->x[i] += xoffset;
+	    Points->y[i] += yoffset;
+	}
+    }
+
+    if ((rcode = Vect_rewrite_line(Map, line, type, Points, Cats)) != -1) {
+
+	display_points(Points, WHITE, GREEN);
+	return 1;
+    }
+    else
+	return 0;
+
+}
+
+/* finds a point in line closest in (x,y)-coords to given (east,west) - when we need not z */
+int find_closest_point(struct Map_info *Map, int line, double east,
+		       double north, double maxdist)
+{
+    int i, rcode = 0;
+    int type;
+    double current_dist, closest_dist, dx, dy;
+
+    closest_dist = maxdist;
+
+    if (first) {
+	Points = Vect_new_line_struct();
+	Cats = Vect_new_cats_struct();
+	first = 0;
+    }
+    if (!Vect_line_alive(Map, line))
+	return 0;
+
+    G_debug(3, "do_move_line()");
+
+    Vect_reset_line(Points);
+    type = Vect_read_line(Map, Points, Cats, line);
+
+    for (i = 0; i < Points->n_points; i++) {
+	if ((Points->x[i] < east - maxdist)
+	    || (Points->x[i] > east + maxdist))
+	    continue;
+	if ((Points->y[i] < north - maxdist)
+	    || (Points->y[i] > north + maxdist))
+	    continue;
+
+	dx = Points->x[i] - east;
+	dy = Points->y[i] - north;
+	current_dist = hypot(dx, dy);
+	if (current_dist <= closest_dist) {
+	    closest_dist = current_dist;
+	    rcode = i + 1;
+	}
+    }
+
+    /* if (rcode) display_point(Points->x[rcode-1], Points->y[rcode-1], RED, 2); */
+
+    return rcode;
 }

@@ -33,7 +33,7 @@ i_prompt_buttons (char *l, char *m, char *r)
 
 /* This function should be regularly called from C to get GUI requests */
 int i_update ( void ) {
-    G_debug (3, "i_update");
+    G_debug (4, "i_update");
     Tcl_Eval ( Toolbox, "update" );
     return 1;
 }
