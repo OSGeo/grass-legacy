@@ -2,19 +2,23 @@
 #include "config.h"
 
 
+/* left button */
 #define	LEFTB	1
+/* left button string */
+#define	LEFTS	"Left:  "
 
 #ifndef	ANOTHER_BUTTON
 #	define	MIDDLEB	2
 #	define	RIGHTB	3
+#	define	MIDDLES	"Middle:"
+#	define	RIGHTS	"Right: "
 #else
 #	define	MIDDLEB	3
 #	define	RIGHTB	2
+#	define	MIDDLES	"Right: "
+#	define	RIGHTS	"Middle:"
 #endif
 
-#define	LBTN	"Left:  "
-#define	MBTN	"Middle:"
-#define	RBTN	"Right: "
 
 /* ask.c */
 int yes(char *);
