@@ -420,7 +420,10 @@ int GS_write_ppm(char *);
 int GS_write_tif(char *);
 
 /* From gsd_label.c */
-void gs_put_label(char *, char *, unsigned long, int *);
+void gs_put_label(char *, GLuint , int , unsigned long, int *);
+void gsd_remove_curr(void);
+void gsd_remove_all(void);
+void gsd_call_label(void);
 
 /* From gsd_objs.c */
 void gsd_plus(float *, int, float);
@@ -494,6 +497,7 @@ int gsd_makelist(void);
 void gsd_bgnlist(int, int);
 void gsd_endlist(void);
 void gsd_calllist(int);
+void gsd_deletelist(GLuint, int);
 
 /* From gsd_surf.c */
 int gsd_surf(geosurf *);

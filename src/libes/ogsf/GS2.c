@@ -57,7 +57,6 @@ void void_func(void)
 /***********************************************************************/
 void GS_libinit(void)
 {
-    int r, c;
     static int first = 1;
 
     G_get_set_window(&wind);
@@ -157,8 +156,7 @@ int GS_surf_exists(int id)
 */
 int GS_new_surface(void)
 {
-    geosurf *gs, *ns;
-    int i;
+    geosurf *ns;
 
 #ifdef TRACE_GS_FUNCS
     {
@@ -275,6 +273,21 @@ void GS_setlight_color(int num, float red, float green, float blue)
 }
 
 /***********************************************************************/
+void GS_getlight_color(int num, float *red, float *green, float *blue)
+{
+    if (num) {
+	num -= 1;
+	if (num < Numlights) {
+	    *red = Gv.lights[num].color[0];
+	    *green = Gv.lights[num].color[1];
+	    *blue = Gv.lights[num].color[2];
+	}
+    }
+
+    return;
+}
+
+/***********************************************************************/
 void GS_setlight_ambient(int num, float red, float green, float blue)
 {
     if (num) {
@@ -290,6 +303,22 @@ void GS_setlight_ambient(int num, float red, float green, float blue)
 
     return;
 }
+
+/***********************************************************************/
+void GS_getlight_ambient(int num, float *red, float *green, float *blue)
+{
+    if (num) {
+	num -= 1;
+	if (num < Numlights) {
+	    *red = Gv.lights[num].ambient[0];
+	    *green = Gv.lights[num].ambient[1];
+	    *blue = Gv.lights[num].ambient[2];
+	}
+    }
+
+    return;
+}
+
 
 /***********************************************************************/
 void GS_lights_off(void)
@@ -388,15 +417,12 @@ void GS_get_modelposition(float *siz, float *pos)
  * needs go function that returns center / eye distance
  * gsd_get_los function is not working correctly ??
 */
-void GS_draw_Narrow(int *pt, int id)
+void GS_draw_Narrow(int *pt, int id, GLuint fontbase)
 {
     geosurf *gs;
-    GLint fontbase;
     char *txt;
     float x, y, z;
     float near_h;
-    float length, width, ht;
-    float dir[3];
     float len;
     float len2;
     float v[4][3];
@@ -404,7 +430,6 @@ void GS_draw_Narrow(int *pt, int id)
     float los[2][3];
     Point3 pos2, dir2;
     float Ntop[] = { 0.0, 0.0, 1.0 };
-
 
     if (GS_get_selected_point_on_surface(pt[X], pt[Y], &id, &x, &y, &z)) {
 	gs = gs_get_surf(id);
@@ -481,31 +506,22 @@ void GS_draw_Narrow(int *pt, int id)
 
 /* draw N for North */
 /* Need to pick a nice generic font */
-    fontbase = gsd_set_font("-adobe-helvetica-bold-o-normal--18-*-*-*-*-*-*");
-    if (fontbase == 0) {
-	fprintf(stderr, "Unable to Load font...\n");
-	fprintf(stderr, "Trying default \n");
-	fontbase = gsd_set_font("-*-*-*-*-*--18-*-*-*-*-*-*");
-    }
-    if (fontbase == 0) {
-	fprintf(stderr, "Unable to Load font...\n");
-	fprintf(stderr, "Check xlsfonts for available fonts\n");
-	return;
-    }
-    txt = "N";
+
+    gsd_color_func(0x000000);
+    txt = "North";
     /* adjust position of N text */
-    base[0][X] -= gsd_get_txtwidth(txt) - 5.0;
-    base[0][Y] -= gsd_get_txtheight(txt) - 5.0;
+    base[0][X] -= gsd_get_txtwidth(txt, 18) - 20.;
+    base[0][Y] -= gsd_get_txtheight(18) - 20. ;
+
     glRasterPos3fv(base[0]);
     glListBase(fontbase);
     glCallLists(strlen(txt), GL_BYTE, (GLubyte *) txt);
+    GS_done_draw();
 
-    gsd_unset_font(fontbase);
     gsd_popmatrix();
     gsd_flush();
 
     return;
-
 }
 
 /***********************************************************************/
@@ -614,7 +630,6 @@ void GS_draw_flowline_at_xy(int id, float x, float y)
     float nv[3], pdir[2], mult;
     float p1[2], p2[2], next[2];
     int i = 0;
-    int repeat;
 
     if (gs = gs_get_surf(id)) {
 	p1[X] = x;
@@ -673,12 +688,48 @@ void GS_draw_flowline_at_xy(int id, float x, float y)
 }
 
 /***********************************************************************/
-void GS_draw_legend(char *name, char *font, int *flags, float *range, int *pt)
+int
+GS_draw_legend(char *name, GLuint * fontbase, int size, int *flags,
+	       float *range, int *pt)
 {
+    int list_no;
 /* TODO - add legend from list option */
 /* make font loading more flexible */
 
-    gsd_put_legend(name, font, flags, range, pt);
+    list_no = gsd_put_legend(name, fontbase, size, flags, range, pt);
+
+    return (list_no);
+}
+
+/*********************************************************************/
+void GS_draw_list(GLuint list_id)
+{
+/* Function to draw pre-defined list */
+/* Uses glFlush() to ensure all drawing is complete
+ * before returning
+*/
+    gsd_calllist(list_id);
+    glFlush();
+    return;
+}
+
+/*********************************************************************/
+void GS_draw_all_list(void)
+{
+/* Function to draw all glLists */
+/* Uses glFlush() to ensure all drawing is complete
+ * before returning
+*/
+    gsd_calllists();
+    glFlush();
+    return;
+}
+
+/*******************************************************************/
+void GS_delete_list(GLuint list_id)
+{
+    /* Function to draw pre-defined list */
+    gsd_deletelist(list_id, 1);
 
     return;
 }
@@ -822,8 +873,6 @@ int GS_set_SDsurf(int id)
 /***********************************************************************/
 int GS_set_SDscale(float scale)
 {
-    geosurf *gs;
-
     gsdiff_set_SDscale(scale);
 
     return (1);
@@ -1444,7 +1493,7 @@ int GS_load_att_map(int id, char *filename, int att)
 
 	    break;
 
-	} /* Done with switch */
+	}			/* Done with switch */
 
 	if (ret == -1) {
 	    gsds_free_data_buff(gs->att[att].hdata, ATTY_NULL);
@@ -2134,30 +2183,6 @@ void GS_set_focus(float *realto)
 }
 
 /***********************************************************************/
-/* Either create an OS context or destroy a context                    */
-#ifdef OS_RENDER
-void GS_oscontext(int ctx_flag)
-{
-
-#ifdef TRACE_GS_FUNCS
-    {
-	Gs_status("GS_oscontext");
-    }
-#endif
-
-    if (ctx_flag == 1) {
-	gsd_newcontext();
-    }
-    else {
-	gsd_destroy_context();
-    }
-
-    return;
-}
-#endif
-
-
-/***********************************************************************/
 /* OK to call with NULL argument if just want to check state */
 int GS_get_focus(float *realto)
 {
@@ -2182,9 +2207,6 @@ void GS_set_focus_center_map(int id)
 {
     float center[3];
     geosurf *gs;
-    typbuff *buff;
-    float tmp;
-    int offset;
 
 #ifdef TRACE_GS_FUNCS
     {
@@ -2229,7 +2251,9 @@ void GS_moveto(float *pt)
 
     if (Gv.infocus) {
 	GS_v3eq(Gv.from_to[FROM], pt);
+	/*
 	GS_v3eq(Gv.from_to[TO], Gv.real_to);
+	*/
 	GS_v3normalize(Gv.from_to[FROM], Gv.from_to[TO]);
 	/* update inclination, look_dir if we're keeping these */
     }
@@ -2247,7 +2271,6 @@ void GS_moveto(float *pt)
 /***********************************************************************/
 void GS_moveto_real(float *pt)
 {
-    float ft[3];
     gsd_real2model(pt);
     GS_moveto(pt);
 
@@ -2278,7 +2301,6 @@ int GS_get_zextents(int id, float *min, float *max, float *mid)
 int GS_get_zrange(float *min, float *max, int doexag)
 {
     int ret;
-    geosurf *gs;
 
 #ifdef TRACE_GS_FUNCS
     {
@@ -2482,10 +2504,9 @@ int GS_look_here(int sx, int sy)
 int GS_get_selected_point_on_surface(int sx, int sy, int *id, float *x,
 				     float *y, float *z)
 {
-    float los[2][3], los2[2][3], find_dist[MAX_SURFS], closest;
+    float los[2][3], find_dist[MAX_SURFS], closest;
     Point3 point, tmp, finds[MAX_SURFS];
     int surfs[MAX_SURFS], i, iclose, numhits = 0;
-    float scalx, scaly, scalz;
     geosurf *gs;
 
     /* returns surface-world coords */
@@ -2564,7 +2585,7 @@ void GS_set_cplane_trans(int num, float dx, float dy, float dz)
 void GS_draw_cplane(int num)
 {
     geosurf *gsurfs[MAX_SURFS];
-    int i, nsurfs;
+    int nsurfs;
 
     nsurfs = gs_num_surfaces();
     if (2 == nsurfs) {
@@ -2754,8 +2775,12 @@ void GS_init_view(void)
     GS_v3eq(Gv.real_to, Gv.from_to[TO]);
     GS_v3normalize(Gv.from_to[FROM], Gv.from_to[TO]);
 
-    Gd.nearclip = .05;
-    Gd.farclip = 100000.;	/* deletes map at given height (?) */
+    /*
+    Gd.nearclip = 50;
+    Gd.farclip = 10000.;	
+    */
+    Gd.nearclip = 10.;
+    Gd.farclip = 10000.;
     Gd.aspect = (float) GS_get_aspect();
 
     GS_set_focus(Gv.real_to);
