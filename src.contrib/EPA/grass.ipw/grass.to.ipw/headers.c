@@ -1,29 +1,30 @@
 
 #ifndef lint
-static char *SCCSid=	"SCCS version: @(#)   headers.c   1.9   5/9/91";
+static char *SCCSid=	"SCCS version: %Z%   %M%   %I%   %G%";
 #endif
 
 /*
 ** NAME
-** 	headers -- get GRASS active program window and write IPW headers
+** 	headers -- write IPW headers
 ** 
 ** SYNOPSIS
 **	#include "gis.h"
 **
-**	headers (fdo, raw, got_lqh, lqh_fd, window, range, units,
+**	headers (fdo, raw, override, got_lqh, lqh_fd, cellhd, range, units,
 **		 divisor, offset)
 ** 	int fdo;
 **	int raw;
+**	int override;
 **	int got_lqh;
 **	int lqh_fd;
-**	struct Cell_head, window;
+**	struct Cell_head, cellhd;
 **	struct Range range;
 **	char *units;
 **	double divisor, offset;
 ** 
 ** DESCRIPTION
-** 	headers reads the GRASS active program window and initializes and
-**	writes the BIH and GEO IPW headers.  If raw is not set or a header
+** 	headers initializes and	writes the BIH and GEO IPW headers from th
+**	given GRASS cell header.  If raw is not set or a header
 **	file is supplied, a linear quantization (LQ) header is also written
 **	to the output file.
 ** 
@@ -60,12 +61,14 @@ static char *unknown = "unknown";
 
 
 void
-headers (fdo, raw, got_lqh, lqh_fd, window, range, units, divisor, offset)
+headers (fdo, raw, override, got_lqh, lqh_fd, cellhd, range, units,
+	 divisor, offset)
 	int		fdo;		/* file descriptor for ipw image */
 	int		raw;		/* true for raw (no FP) output   */
+	int		override;	/* true to override GEO origin	 */
 	int		got_lqh;	/* true if LQH was supplied      */
 	int		lqh_fd;		/* file descriptor for LQH       */
-	struct Cell_head window;	/* GRASS geo window structure    */
+	struct Cell_head cellhd;	/* GRASS file cell header	 */
 	struct Range	range;		/* GRASS data ranges structure   */
 	char	       *units;		/* units string			 */
 	double		divisor;	/* data divisor			 */
@@ -108,15 +111,19 @@ headers (fdo, raw, got_lqh, lqh_fd, window, range, units, divisor, offset)
 		if (bih_nbands (i_bihpp[0]) > 1)
 			error ("input header has more than 1 band");
 
-		if ((bih_nlines (i_bihpp[0]) != window.rows) ||
-		    (bih_nsamps (i_bihpp[0]) != window.cols))
+		if ((bih_nlines (i_bihpp[0]) != cellhd.rows) ||
+		    (bih_nsamps (i_bihpp[0]) != cellhd.cols))
 			error ("header file has different dimensions than map layer");
+
+		o_bihpp = bihdup (i_bihpp);
+		if (bihwrite (fdo, o_bihpp) == ERROR) {
+			error ("can't write basic image header");
+		}
 
 		gethdrs (lqh_fd, request, 1, fdo);
 		i_lqhpp = (LQH_T **) hdr_addr(h_lqh);
 		i_geohpp = (GEOH_T **) hdr_addr(h_geoh);
 		nbits = hnbits (lqh_fd, 0);
-		o_bihpp = bihdup (i_bihpp);
 	}
 
 	
@@ -147,45 +154,50 @@ headers (fdo, raw, got_lqh, lqh_fd, window, range, units, divisor, offset)
 				      BIH_HNAME);
 		o_bihpp[0] = bihmake (0, nbits, (STRVEC_T *) NULL,
 			     	(STRVEC_T *) NULL, (BIH_T *) NULL,
-			     	window.rows, window.cols, 1);
-	}
+			     	cellhd.rows, cellhd.cols, 1);
 
-   /* Write basic image header to IPW output file */
-
-	if (bihwrite (fdo, o_bihpp) == ERROR) {
-		error ("can't write basic image header");
+		if (bihwrite (fdo, o_bihpp) == ERROR) {
+			error ("can't write basic image header");
+		}
 	}
 
    /* create geodetic header or duplicate GEO header from header file */
 
-	bline = window.north;
-	bsamp = window.west;
-	dline = -window.ns_res;
-	dsamp = window.ew_res;
+	if (!override) {
+		bline = cellhd.north - cellhd.ns_res / 2;
+		bsamp = cellhd.west + cellhd.ew_res / 2;
+	} else {
+		bline = cellhd.north;
+		bsamp = cellhd.west;
+	}
+	dline = -cellhd.ns_res;
+	dsamp = cellhd.ew_res;
 	if (!got_lqh || i_geohpp == NULL) {
 
-		proj = G_projection_name (window.proj);
-		punits_id = G_projection_units (window.proj);
-		switch (punits_id) {
-
-			case METERS:
-				punits = meters;
-				break;
-			case FEET:
-				punits = feet;
-				break;
-	
-			case DEGREES:
-				punits = degrees;
-				break;
-
-			default:
-				punits = unknown;
-				break;
+		switch (cellhd.proj) {
+		   case PROJECTION_XY:
+        		proj = "x,y";
+			punits = unknown;
+			break;
+		   case PROJECTION_UTM:
+        		proj = "UTM";
+			punits = meters;
+			break;
+		   case PROJECTION_SP:
+        		proj = "State Plane";
+			punits = feet;
+			break;
+		   case PROJECTION_LL:
+        		proj = "Latitude-Longitude";
+			punits = degrees;
+			break;
+		   default:
+        		proj = NULL;
+			break;
 		}
 
-		if (G_projection (window.proj) == PROJECTION_UTM) {
-			sprintf (zone_label, "%s zone %d", proj, window.zone);
+		if (cellhd.proj == PROJECTION_UTM) {
+			sprintf (zone_label, "%s zone %d", proj, cellhd.zone);
 			proj = zone_label;
 		}
 
