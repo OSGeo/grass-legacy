@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "imagery.h"
 print_distribution (fd,C)
     FILE *fd;
