@@ -34,7 +34,7 @@ The user can instead elect to run the program partially interactively,
 by specifying any/all of the parameters \fIexcept\fR
 the points file\*=\fIname\fR parameter on the command line.
 In this case, \fId.points\fR will expect the user to enter icon
-locations from standard input (i.e., at the keyboard) and will (silently) prompt
+locations from standard input (i.e., at the keyboard) and will prompt
 the user for these locations.  Each icon location should be entered
 as an easting and northing pair separated by a space, followed by a
 carriage return.  Coordinates should be stated in whatever map coordinate
