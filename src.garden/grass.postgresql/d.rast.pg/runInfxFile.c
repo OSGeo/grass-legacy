@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <libpq-fe.h>
 #include "dbrast.h"
+#include "glocale.h"
 
 int runInfxFile(SQL_stmt, input,output, withlabel)
   char *SQL_stmt, *input, *output;
@@ -36,21 +37,21 @@ int runInfxFile(SQL_stmt, input,output, withlabel)
         
     pg_conn = PQsetdb(pghost,NULL, NULL,NULL,G_getenv("PG_DBASE"));
     if (PQstatus (pg_conn) == CONNECTION_BAD) {
-      printf ("Error: Selecting from Postgres:%s\n",PQerrorMessage(pg_conn));
+      printf (_("Error: Selecting from Postgres:%s\n"),PQerrorMessage(pg_conn));
       PQfinish(pg_conn);
       exit (-1); 
     }
   	   
     res = PQexec (pg_conn, SQL_stmt);
     if ( PQresultStatus (res) != PGRES_TUPLES_OK ) {
-      printf ("Error: Connecting to Postgres:%s\n",PQerrorMessage(pg_conn)); 
+      printf (_("Error: Connecting to Postgres:%s\n"),PQerrorMessage(pg_conn)); 
       PQfinish(pg_conn);
       exit (-1);      
     }
     
 	tmpfile_rules = G_tempfile() ;
 	if((fpout = fopen(tmpfile_rules,"w")) == NULL) {
-            fprintf(stderr, "File write error on temporary file (rules)\n");
+            fprintf(stderr, _("File write error on temporary file (rules)\n"));
 	    exit(-1);
            }
 
@@ -77,7 +78,7 @@ int runInfxFile(SQL_stmt, input,output, withlabel)
 	system(sysbuf);
 	
 	if (TMP==TRUE) {
-	printf("Output map name has NOT been given,\nso we try to plot and exit..\n");
+	printf(_("Output map name has NOT been given,\nso we try to plot and exit..\n"));
 	sprintf(sysbuf,"d.rast %s\n",output);
 	system(sysbuf);
 	}

@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include "gis.h"
 #include "dbrast.h"
+#include "glocale.h"
 
 int
 getSelectOpts (argc, argv)
@@ -49,7 +50,7 @@ getSelectOpts (argc, argv)
 	
 	select = G_define_flag();
         select->key     = 's';
-        select->description     = "Use [-s] flag for query input from file.";
+        select->description     = _("Use [-s] flag for query input from file.");
 
         input = G_define_option() ;
         input->key        = "input" ;
@@ -57,7 +58,7 @@ getSelectOpts (argc, argv)
         input->type       = TYPE_STRING ;
         input->required   = YES  ;
         input->multiple   = NO ;
-        input->description= "Raster map (must exist):";
+        input->description= _("Raster map (must exist):");
 	
 	sql = G_define_option() ;
         sql->key        = "sql" ;
@@ -65,7 +66,7 @@ getSelectOpts (argc, argv)
         sql->type       = TYPE_STRING ;
         sql->required   = YES  ;
         sql->multiple   = NO ;
-        sql->description= "SQL command file: ";
+        sql->description= _("SQL command file: ");
 
         output = G_define_option() ;
         output->key        = "output" ;
@@ -73,7 +74,7 @@ getSelectOpts (argc, argv)
         output->type       = TYPE_STRING ;
         output->required   = NO  ;
         output->multiple   = NO ;
-        output->description= "Reclass map (new):";
+        output->description= _("Reclass map (new):");
 
 
         /* Check for help flag */
@@ -95,13 +96,13 @@ getSelectOpts (argc, argv)
             exit(-1);
 
         if (! (G_find_cell(input->answer,"")))  {
-             fprintf(stderr,"Raster map %s not found.\n",input->answer);
+             fprintf(stderr,_("Raster map %s not found.\n"),input->answer);
              exit(-1);
 	}
 
 
 	if((fp = fopen(sql->answer,"r")) == NULL) {
-            fprintf(stderr, "File read error on select file (%s)\n",sql->answer);
+            fprintf(stderr, _("File read error on select file (%s)\n"),sql->answer);
             exit(-1);
            }
 
