@@ -33,6 +33,8 @@
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
+#include <stdlib.h>
+#include <string.h>
 #define MAIN
 #include "options.h"
 #include "dhist.h"
@@ -79,7 +81,7 @@ int main (int argc, char **argv)
 	opt2->description= "Color for legend and title";
 	opt2->type       = TYPE_STRING ;
 	opt2->required   = NO ;
-	opt2->answer     = "white" ;
+	opt2->answer     = DEFAULT_FG_COLOR ;
 	opt2->options    = D_color_list();
 
 #ifdef CAN_DO_AREAS
