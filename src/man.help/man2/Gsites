@@ -1,0 +1,55 @@
+.\" %W% %G%
+.TH Gsites 2G G-language
+.SH NAME
+Gsites \- Lists 
+.CT point site
+coordinates from the named site 
+.CT file map
+.br
+.I (G Language Tool)
+.SH SYNOPSIS
+\fBGsites\fR [-fw] \fIsitefile\fR
+.SH DESCRIPTION
+.I Gsites
+lists the locations of 
+.CT points sites
+that are contained in the GRASS site
+.CT file map
+named on the command line.  
+.CT Point Site
+locations are listed as
+pairs of 
+.XT grid 
+coordinates in the form of eastings and northings
+(in that order) that are separated by a single blank space.
+.SH OPTIONS
+.IP -f
+This option can be used to print a site description to the
+right of each pair of site coordinates.
+.IP -w
+Ignore the current 
+.CT window "geographic window"
+and print all the sites. If -w is
+not specified, only the sites in the current 
+.CT window "geographic window"
+are printed.
+.SH "NOTES"
+Note that output from the GRASS \fIGsites\fR command can be
+redirected directly into \fIDpoints\fR. In this case, the -w option
+should be specified to get the correct 
+.CT graphics display
+windowing.
+.SH "SEE ALSO"
+.TS
+ll.
+\fIDINTRO[2D]\fR	Introduction to the GRASS \fID\fR tools
+.br
+\fId.sites[1]\fR	Displays 
+.XT point 
+sites
+.br
+\fIDpoints[2D]\fR	To create and display points in the current 
+.CT window "geographic window"
+.TE
+.SH "AUTHOR"
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
