@@ -1,4 +1,4 @@
-$Id: TODO,v 1.49 2000-11-10 17:31:53 markus Exp $
+$Id: TODO,v 1.50 2000-11-10 18:21:04 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -77,6 +77,15 @@ XDriver
 - replace fifos by sockets
   (Being worked on by ?) 
   -> there is a new concept based on IPC available (see README.sockets)
+
+- Auto-redraw after resizing the monitor:
+  Andreas Lange wrote:
+  I had the idea of implementing some sort of "auto-redraw" after resizing
+  the grass monitor, but this is not possible because the driver can not  
+  be opended from the XDRIVER process with R_open_driver(); to read out   
+  the pad contents (because of locking/different owners of process). Again
+  my problem is getting the overall picture of the design without
+  documentation.
 
 ---------------------------------------------------------------------
 Package concept:
