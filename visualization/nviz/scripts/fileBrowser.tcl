@@ -7,8 +7,8 @@ global last_dir
 set last_dir $env(GISDBASE)/$env(LOCATION_NAME)/$env(MAPSET)/images
 
 if {![file isdirectory $last_dir]} {
-    set last_dir $env(HOME)
-    if {![file isdirectory $env(HOME)]} {
+    set last_dir [exec pwd]
+    if {![file isdirectory $last_dir]} {
         set last_dir "."
     }
 }
