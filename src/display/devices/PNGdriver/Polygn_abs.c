@@ -33,8 +33,8 @@ fill(int x0, int x1, int y)
 	if (x0 < 0)
 		x0 = 0;
 
-	if (x1 > width - 1)
-		x1 = width - 1;
+	if (x1 > width)
+		x1 = width;
 
 	p = &grid[y * width + x0];
 
@@ -107,14 +107,14 @@ poly(const struct point *p, int n)
 			y1 = p[i].y;
 	}
 
-	if (y1 < 0 || y0 >= height)
+	if (y1 < 0 || y0 > height)
 		return;
 
 	if (y0 < 0)
 		y0 = 0;
 
-	if (y1 > height - 1)
-		y1 = height - 1;
+	if (y1 > height)
+		y1 = height;
 
 	for (y = y0; y < y1; y++)
 		line(p, n, y);
