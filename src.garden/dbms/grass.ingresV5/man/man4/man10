@@ -1,0 +1,66 @@
+
+
+
+g.table.db()      MISC. REFERENCE MANUAL PAGES       g.table.db()
+
+
+
+NAME
+     _g._t_a_b_l_e._d_b - Generate a  list  of  database  tables  in  the
+     curently selected database.
+     (_G_R_A_S_S _R_e_l_a_t_i_o_n_a_l _D_a_t_a_b_a_s_e _M_a_n_a_g_e_m_e_n_t _I_n_t_e_r_f_a_c_e _P_r_o_g_r_a_m)
+
+SYNOPSIS
+     g.table.db
+     g.table.db help
+     g.table.db
+
+DESCRIPTION
+     g.table.db is used to generate a list of the tables  in  the
+     currently selected SQL database.
+
+
+COMMAND LINE OPTIONS
+     None
+
+
+BUGS
+     None
+
+
+SEE ALSO
+     g.column.db, g.select.db, g.stats.db, d.rast.db,  d.site.db,
+     d.vect.db,     d.what.r.db,     d.what.s.db,    d.what.v.db,
+     r.reclass.db, r.rescale.db, v.reclass.db
+
+
+AUTHOR
+     James A. Farley, Wang Song and W. Fredrick  Limp  University
+     of Arkansas, CAST
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sun Release 4.1           Last change:                          1
+
+
+
