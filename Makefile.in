@@ -75,7 +75,6 @@ distclean: clean
 	echo "Performing compilation clean..."
 	find . -name 'LIB*' -exec rm -rf {} \; 2>/dev/null ; true
 	rm -f src.garden/grass.hdf/HDF4.1r3/hdf/src/libdf.a 2>/dev/null ; true
-#	rm -rf ${BINDIR}/* 2>/dev/null ; true
 	rm -rf bwidget/    2>/dev/null ; true
 	rm -rf dev/        2>/dev/null ; true
 	rm -rf driver/     2>/dev/null ; true
