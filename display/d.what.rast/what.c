@@ -51,7 +51,7 @@ int what (int once, int terse, int colrow, char *fs, int width, int mwidth)
         if (col < 0 || col >= ncols) continue;
         north = window.north - (row+.5) * window.ns_res ;
         east  = window.west  + (col+.5) * window.ew_res ;
-        show_utm (name[0], north, east, &window, terse, colrow, button, fs);
+        show_utm (name[0], mapset[0], north, east, &window, terse, colrow, button, fs);
 	G_set_c_null_value(&null_cell,1);
 	G_set_d_null_value(&null_dcell,1);
         for (i = 0; i < nrasts; i++)
