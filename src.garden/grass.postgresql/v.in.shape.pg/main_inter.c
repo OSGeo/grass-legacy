@@ -79,15 +79,17 @@ int main (int argc, char **argv)
 
 	struct Map_info  VectMap;
 	
-	int	no_rattle;
+	int	rattle, pgdump;
    	char	*infile;
+	int	try_again = 1;
+	
 
 
     	struct {
-	struct Option *input, *dumpmode;
+	struct Option *input;
     	} parm;
 	
-	/*ddgray's defines*/
+
 	
   int i0, j0, k0;
 
@@ -105,6 +107,13 @@ int main (int argc, char **argv)
 
   lineList *lined0;
   fieldDescript *fieldd0;
+	
+
+	
+  double	adfMinBound[4], adfMaxBound[4];
+  int		nShapeType, nShapes;
+  
+  char buf[256];
 	
 	
 	G_gisinit("ArcView -  import from shapefile");
@@ -127,22 +136,56 @@ int main (int argc, char **argv)
     	parm.input->required   = YES;
     	parm.input->description= "Name of .shp file to be imported";
 
-	parm.dumpmode = G_define_option() ;
-    	parm.dumpmode->key        = "dumpmode";
-   	parm.dumpmode->type       = TYPE_STRING;
-    	parm.dumpmode->required   = NO;
-    	parm.dumpmode->description= "Admin/normal user dump mode (Default = Postgres super-user)";
-    
+	fprintf (stdout,"\n Postgres support:\n");
+		fprintf (stdout,"Enter \"yes\" if you want to import data to Postgres\n");
+		fprintf (stdout,"Hit RETURN if you don't\n");
+		fprintf (stdout,"> ");
+		fgets(tmpbuf,80,stdin);
+/*************************************************************************/
+   /*****!!!!!! hier eine Zeile eingefuegt,ebenso bei allen anderen fgets *****/
 
+              tmpbuf[strlen(tmpbuf)-1]='\0';
+/********************************************************************/
+                
+
+		if (!strlen(tmpbuf)) {
+			pgdump = 0;
+		}
+		else if (!strncmp(tmpbuf,"y",1)) 
+			pgdump=1;
+		else
+			pgdump = 0;
+			
+	/*Choose mode of dump*/
+   if (pgdump) {		
+		tmpbuf[0] = '\0';	
+	fprintf (stdout,"\n Postgres dump mode:\n");
+		fprintf (stdout,"Enter \"user\" if you are not Postgres superuser\n");
+		fprintf (stdout,"Hit RETURN if you are\n");
+		fprintf (stdout,"> ");
+		fgets(tmpbuf,80,stdin);
+/*************************************************************************/
+   /*****!!!!!! hier eine Zeile eingefuegt,ebenso bei allen anderen fgets *****/
+
+              tmpbuf[strlen(tmpbuf)-1]='\0';
+/********************************************************************/
+		
+		if (!strlen(tmpbuf)) {
+			rattle = 0;
+		}
+		else if (!strncmp(tmpbuf,"user",4)) 
+			rattle = 1;
+		else
+			rattle = 0;
+   }
     /* get options and test their validity */
 
     if (G_parser(argc, argv))
 	exit(-1);
 	
 	infile = parm.input->answer;
-    	no_rattle = (int) parm.dumpmode->answer;
+
 	
-	PgDumpFromDBF(infile, no_rattle);
 
 
   /* Open shape file */
@@ -152,10 +195,100 @@ int main (int argc, char **argv)
     return -1;
   }
 
-  if( (dbf0 = DBFOpen( infile, "r" )) == NULL ) {
+  
+    /* Establish the shape types and corresponding GRASS type */
+    
+    SHPGetInfo( shp0, &nShapes, &nShapeType, adfMinBound, adfMaxBound );
+
+    if( nShapeType == SHPT_MULTIPATCH ) {
+  
+      sprintf( buf, "Multipatch type not yet supported" );
+      SHPClose( shp0 );
+      G_fatal_error( buf );
+
+    }
+    
+    switch (nShapeType) {
+      case SHPT_POINT:
+      case SHPT_MULTIPOINT:
+      case SHPT_POINTZ:
+      case SHPT_MULTIPOINTZ:
+      case SHPT_POINTM:
+      case SHPT_MULTIPOINTM:
+
+	fprintf(stdout,"\nType of shape file found: Point\n");
+	sprintf( buf, "Point type not supported in this module" );
+      
+      SHPClose( shp0 );
+      G_fatal_error( buf );
+        break;
+
+      case SHPT_ARC:
+      case SHPT_ARCZ:
+      case SHPT_ARCM:
+        strcat(cov_type,"line");
+	fprintf(stdout,"\nType of shape file found: arc\nConverting to GRASS vector lines\n");
+        break;
+      case SHPT_POLYGON:
+      case SHPT_POLYGONZ:
+      case SHPT_POLYGONM:
+        strcat(cov_type,"polygon");
+	
+	
+       	fprintf(stdout,"\nType of shape file found: area\n");
+	while (try_again) {
+	tmpbuf[0] = '\0';
+	fprintf (stdout,"\n Coverage type:\n");
+		fprintf (stdout,"Enter \"line\" if you want to import lines only\n");
+		fprintf (stdout,"Hit RETURN to import as areas.\n");
+		fprintf (stdout,"> ");
+		fgets(tmpbuf,80,stdin);
+/*************************************************************************/
+   /*****!!!!!! hier eine Zeile eingefuegt,ebenso bei allen anderen fgets *****/
+
+              tmpbuf[strlen(tmpbuf)-1]='\0';
+/********************************************************************/
+                
+		cov_type[0] = '\0';
+		
+		
+
+
+		if (!strlen(tmpbuf)) {
+			strcat(cov_type,"polygon");
+			try_again = 0;
+		}
+		else {
+			if (strcmp(tmpbuf,"line") == 0) {
+				strcat(cov_type,"line");
+				fprintf(stdout,"\nOK, converting to lines\n");
+				try_again = 0;
+			}
+			else if (strncmp(tmpbuf,"poly",4) == 0) {
+				strcat(cov_type,"polygon");
+				fprintf(stdout,"\nOK, converting to polygons\n");
+				try_again = 0;
+			}
+			else if (strcmp(tmpbuf,"area") == 0) {
+				strcat(cov_type,"polygon");
+				fprintf(stdout,"\nOK, converting to polygons\n");
+				try_again = 0;
+			}
+			else
+				fprintf(stdout,"\nYou've just typed-%s\nSorry, let's try again\n",tmpbuf);
+		}
+	}			
+
+        break;
+    }
+    
+    if( (dbf0 = DBFOpen( infile, "r" )) == NULL ) {
     printf( "\nCould not open dbf file\n" );
     return -1;
   }
+  
+  	if (pgdump) 
+		PgDumpFromDBF(infile, rattle);
 
   /* Process the shape file and build descriptors */
 
@@ -278,7 +411,7 @@ here we hack -A.Sh.*/
 	
 	
 	Vect_close (&VectMap);
-//	fclose(lines_file);
+
 	fclose(pts_file);
 	fprintf (stderr, "\n\nv.in.shape.pg finished.\n");
 	fprintf(stderr, "\n\nBefore using <%s> in 'v.digit' :\nrun v.support to build topology.\n",
