@@ -36,7 +36,7 @@
 #ifndef RAND_MAX 
 #define RAND_MAX (pow(2.0,31.0)-1) 
 #endif
-#if defined(__CYGWIN__) || defined(__MAC_OS_X__) 
+#if defined(__CYGWIN__) || defined(__APPLE__) 
 double drand48()
 {
 	return(rand()/32767.0);
