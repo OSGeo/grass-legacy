@@ -139,6 +139,7 @@ struct Categories *Cats;
 			nlines += 3 ;
 
 		}
+                fflush(stdout);
 
 	}while (!once);
 	Vect_destroy_line_struct(Points);
