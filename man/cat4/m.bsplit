@@ -6,9 +6,9 @@ m.bsplit <contrib>   GRASS Reference Manual    <contrib> m.bsplit
 
 
 NAME
-     m.bsplit - Splits a large (greater than 1,048,000 megabyte)
+     m.bsplit -	Splits a large (greater	than 1,048,000 megabyte)
      file into smaller portions.
-     (SCS GRASS File Management Program)
+     (SCS GRASS	File Management	Program)
 
 SYNOPSIS
      m.bsplit
@@ -16,41 +16,41 @@ SYNOPSIS
      m.bsplit input=name [size=value] [prefix=name]
 
 DESCRIPTION
-     m.bsplit works much like the UNIX command csplit;  however,
-     it was developed to be used on binary, not ASCII, files.
+     m.bsplit works much like the UNIX command csplit;	however,
+     it	was developed to be used on binary, not	ASCII, files.
 
-     The first parameter, size, has a default value of 500000.
-     The user may assign larger or smaller values, as long as
-     1000000 is not exceeded.
+     The first parameter, size,	has a default value of 500000.
+     The user may assign larger	or smaller values, as long as
+     1000000 is	not exceeded.
 
-     The second parameter, prefix, is comparable to the UNIX
-     csplit  command use of "x" as a prefix to output files.
+     The second	parameter, prefix, is comparable to the	UNIX
+     csplit  command use of "x"	as a prefix to output files.
      m.bsplit uses the default of "bx" as a prefix on output.
 
-COMMAND LINE OPTIONS
+COMMAND	LINE OPTIONS
      Parameters:
 
-     input=name        The name of the binary input file to be
-                       split.
+     input=name	       The name	of the binary input file to be
+		       split.
 
-     size=value        The value, in megabytes, of one of the
-                       new, split-up files created from the input
-                       file.
+     size=value	       The value, in megabytes,	of one of the
+		       new, split-up files created from	the input
+		       file.
 
-     prefix=name       File name prefix assigned to the new
-                       (split) files.
+     prefix=name       File name prefix	assigned to the	new
+		       (split) files.
 
 SEE ALSO
      The UNIX csplit command.
 
 AUTHOR
-     R.L.Glenn, USDA, SCS, NHQ-CGIS
+     R.L.Glenn,	USDA, SCS, NHQ-CGIS
 
 
 NOTICE
-     This program is part of the contrib section of the GRASS
-     distribution.  As such, it is externally contributed code
-     that has not been examined or tested by the Office of GRASS
+     This program is part of the contrib section of the	GRASS
+     distribution.  As such, it	is externally contributed code
+     that has not been examined	or tested by the Office	of GRASS
      Integration.
 
 
@@ -60,7 +60,7 @@ NOTICE
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
