@@ -1,0 +1,69 @@
+legend map.def -o ovm/text << EOF
+-p 1
+-f -crp
+-s 0.300
+-l 0.5
+-w d
+-y -4.200
+-x >-1.00
+-j r
+-t
+QUADN QUADRANGLE
+.
+-s 0.40
+-y >1.900
+-x >-1.00
+-j r
+-t
+QUADN QUADRANGLE
+.
+-l 0.400
+-s 0.200
+-y >1.400
+-x >-1.00
+-j r
+-t
+STATE_C
+7.5 MINUTE SERIES
+.
+-s 0.25
+-l 0.45
+-y >2.00
+-x 1.00
+-j l
+-t
+UNITED STATES
+DEPARTMENT OF AGRICULTURE
+SOIL CONSERVATION SERVICE
+.
+-s 0.300
+-y -2.000
+-x 1.00
+-j l
+-t
+SSURGO DIGITAL DATA
+
+DETAILED SOILS
+.
+-f -
+-s 0.40
+-y -5.2
+-x >-1.00
+-j r
+-t
+CHECK
+.
+-y -5.8
+-x >-1.00
+-j r
+-t
+DATE
+.
+-s 0.20
+-y -3.50
+-x |
+-j c
+-t
+UTM Projection
+.
+EOF
