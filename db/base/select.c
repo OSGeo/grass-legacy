@@ -1,6 +1,6 @@
 /*
  **************************************************************
- * db.select -cdh driver=name database=name [location=name] \
+ * db.select -cdh driver=name database=name \
  *	      [fs=|] [vs=] [nv=null-indicator] [input=filename]
  *
  *
@@ -15,18 +15,24 @@
  *   -d = describe query only, don't run it
  *   -h = use horizontal output format instead of vertical
  ****************************************************************/
-
+#include <stdlib.h>
 #include "gis.h"
 #include "dbmi.h"
 #include "codes.h"
 
 struct {
-	char *driver, *database, *location, *fs, *vs, *nv, *input;
+	char *driver, *database, *table, *sql, *fs, *vs, *nv, *input;
 	int c,d,h;
 } parms;
 
 void parse_command_line();
 
+int sel ( dbDriver *driver, dbString *stmt );
+int get_stmt( FILE *fd, dbString *stmt );
+int stmt_is_empty ( dbString *stmt );
+void print_column_definition ( dbColumn *column );
+    
+int
 main(argc, argv) char *argv[];
 {
     dbString stmt;
@@ -48,22 +54,32 @@ main(argc, argv) char *argv[];
     }
     else
 	fd = stdin;
-
+       
+    db_init_string ( &stmt );
+    
     driver = db_start_driver(parms.driver);
     if (driver == NULL)
 	exit(ERROR);
 
     db_init_handle (&handle);
-    db_set_handle (&handle, parms.database, parms.location);
+    db_set_handle (&handle, parms.database, NULL);
     if (db_open_database(driver, &handle) != DB_OK)
 	exit(ERROR);
 
-
-    stat = OK;
-    while(stat == OK && get_stmt (fd, &stmt))
-    {
-	if(!stmt_is_empty(&stmt))
-	    stat = select(driver, &stmt);
+    if ( parms.sql ) {
+	db_set_string ( &stmt, parms.sql );
+	stat = sel(driver, &stmt);
+    } else if ( parms.table ) {
+	db_set_string ( &stmt, "select * from "); 
+	db_append_string ( &stmt, parms.table); 
+	stat = sel(driver, &stmt);
+    } else { /* read stdin */
+	stat = OK;
+	while(stat == OK && get_stmt (fd, &stmt))
+	{
+	    if(!stmt_is_empty(&stmt))
+		stat = sel(driver, &stmt);
+	}
     }
 
     db_close_database(driver);
@@ -72,7 +88,7 @@ main(argc, argv) char *argv[];
     exit(stat);
 }
 
-select (driver, stmt)
+sel (driver, stmt)
     dbDriver *driver;
     dbString *stmt;
 {
@@ -148,8 +164,8 @@ select (driver, stmt)
 void
 parse_command_line(argc, argv) char *argv[];
 {
-    struct Option *driver, *database, *location, *fs, *vs, *nv, *input;
-    struct Flag *c,*d,*h;
+    struct Option *driver, *database, *table, *sql, *fs, *vs, *nv, *input;
+    struct Flag *c,*d,*v;
     struct GModule *module;
 
     /* Initialize the GIS calls */
@@ -159,20 +175,26 @@ parse_command_line(argc, argv) char *argv[];
     driver->key 	= "driver";
     driver->type 	= TYPE_STRING;
     driver->options     = db_list_drivers();
-    driver->required 	= NO;           /* changed to NO, RB 4/2000 */
+    driver->required 	= NO;          
     driver->description = "driver name";
 
     database 		= G_define_option();
     database->key 	= "database";
     database->type 	= TYPE_STRING;
-    database->required 	= NO;         /* changed to NO, RB 4/2000 */
+    database->required 	= NO;        
     database->description = "database name";
 
-    location 		= G_define_option();
-    location->key 	= "location";
-    location->type 	= TYPE_STRING;
-    location->required 	= NO;
-    location->description = "database location";
+    table 		= G_define_option();
+    table->key 	        = "table";
+    table->type 	= TYPE_STRING;
+    table->required 	= NO;         
+    table->description  = "Table name, select all from this table";
+
+    sql 		= G_define_option();
+    sql->key 	        = "sql";
+    sql->type 	        = TYPE_STRING;
+    sql->required 	= NO;         
+    sql->description    = "SQL select statement, for example: 'select * from rybniky where kapri = 'hodne'";
 
     fs 			= G_define_option();
     fs->key 		= "fs";
@@ -202,15 +224,15 @@ parse_command_line(argc, argv) char *argv[];
 
     c			= G_define_flag();
     c->key		= 'c';
-    c->description	= "include column names in output";
+    c->description	= "do not include column names in output";
 
     d			= G_define_flag();
     d->key		= 'd';
     d->description	= "describe query only (don't run it)";
 
-    h			= G_define_flag();
-    h->key		= 'h';
-    h->description	= "horizontal output (instead of vertical)";
+    v			= G_define_flag();
+    v->key		= 'v';
+    v->description	= "vertical output (instead of vertical)";
 
     /* Set description */
     module              = G_define_module();
@@ -223,14 +245,15 @@ parse_command_line(argc, argv) char *argv[];
 
     parms.driver	= driver->answer;
     parms.database	= database->answer;
-    parms.location	= location->answer;
+    parms.table 	= table->answer;
+    parms.sql  	        = sql->answer;
     parms.fs		= fs->answer;
     parms.vs		= vs->answer;
     parms.nv		= nv->answer;
     parms.input		= input->answer;
-    parms.c		= c->answer;
+    if ( !c->answer )  parms.c = 1; else  parms.c = 0;
     parms.d		= d->answer;
-    parms.h		= h->answer;
+    if ( !v->answer )  parms.h = 1; else  parms.h = 0;
 
     if (!parms.fs) parms.fs = "";
     if (parms.input && *parms.input == 0)
@@ -240,6 +263,7 @@ parse_command_line(argc, argv) char *argv[];
     }
 }
 
+int
 get_stmt(fd, stmt)
     FILE *fd;
     dbString *stmt;
@@ -248,7 +272,7 @@ get_stmt(fd, stmt)
     int n;
     static int first = 1;
 
-    db_init_string (stmt);
+    db_zero_string (stmt);
 
 /* this is until get_stmt is smart enough to handle multiple stmts */
     if (!first)
@@ -264,6 +288,7 @@ get_stmt(fd, stmt)
     return 1;
 }
 
+int
 stmt_is_empty(stmt)
     dbString *stmt;
 {
@@ -272,6 +297,7 @@ stmt_is_empty(stmt)
     return (sscanf (db_get_string(stmt), "%1s", dummy) != 1);
 }
 
+void
 print_column_definition(column)
     dbColumn *column;
 {
