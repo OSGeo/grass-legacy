@@ -113,7 +113,7 @@ int main( int   argc, char *argv[])
 	struct Option *scale, *catlabel;
     } parm;
 
-    struct Flag *listflag, *rejflag, *pgflag, *dmflag;
+    struct Flag *listflag, *rejflag, *pgflag;
 
     /* Are we running in Grass environment ? */
 
@@ -195,12 +195,6 @@ int main( int   argc, char *argv[])
     pgflag->key     = 'p';
     pgflag->description = "Create postgres table";
 
-    /* Set flag for dumping to postgres */
-
-    dmflag = G_define_flag();
-    dmflag->key     = 'n';
-    dmflag->description = "Connection by normal user (default no)";
-
     /* get options and test their validity */
 
     if (G_parser(argc, argv))
@@ -216,7 +210,6 @@ int main( int   argc, char *argv[])
     /* Are we dumping to postgres? */
 
     pgdmp =(int)pgflag->answer;
-    no_rattle = (int)dmflag->answer;
     
 
     /* Examine the flag `-l' first */
@@ -490,7 +483,7 @@ int main( int   argc, char *argv[])
     linedCreate( ll0, hShapeDB, hDBF, fd0, hVB, &fc1 );
 
     if (pgdmp)
-      PgDumpFromFieldD( fd0, no_rattle, fc1, name);
+      PgDumpFromFieldD( fd0, fc1, name);
 
     /* Extract arcs from V-base into segment list */
     vbase2segd( segl, hVB );
