@@ -1,0 +1,15 @@
+interface_build {
+    {v.report} 0
+    {Generates statistics for vector file.}
+    {entry map {Input vector map:} 0 vector}
+    {entry units {Measurement units (name[,name,...]):} 0 +distance}
+    {entry pl {Page length (default: 0 lines):} 0 ""}
+    {entry pw {Page width (default: 79 characters):} 0 ""}
+    {checkbox type {Area map.} "" area}
+    {checkbox type {Line map.} "" line}
+    {checkbox type {Site map.} "" site}
+    {separator grey 1}
+    {checkbox -h {Suppress page headers.} "" -h}
+    {checkbox -f {Use formfeeds between pages.} "" -f}
+    {checkbox -q {Run quietly.} "" -q}
+}
