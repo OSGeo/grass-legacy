@@ -17,10 +17,8 @@
 #include "gis.h"
 #include "display.h"
 
-int read_rast
-    (double east,
-     double north,
-     double dist, int fd, int coords, RASTER_MAP_TYPE data_type, FILE * fp)
+int read_rast(double east, double north, double dist, int fd, int coords, 
+		RASTER_MAP_TYPE data_type, FILE * fp, char *null_string)
 {
     int row, col, nrows, ncols;
     struct Cell_head window;
@@ -28,7 +26,6 @@ int read_rast
     char buf[1024] = "";
     FCELL *fcell;
     DCELL *dcell;
-    float val_f;
 
     G_get_window(&window);
     nrows = window.rows;
@@ -46,7 +43,7 @@ int read_rast
 	    exit(1);
 
 	if (G_is_c_null_value(&cell[col]))
-	    sprintf(buf, "Null");
+	    sprintf(buf, null_string);
 	else
 	    sprintf(buf, "%d", cell[col]);
 
@@ -62,7 +59,7 @@ int read_rast
 	    exit(1);
 
 	if (G_is_f_null_value(&fcell[col]))
-	    sprintf(buf, "Null");
+	    sprintf(buf, null_string);
 	else
 	    sprintf(buf, "%f", fcell[col]);
 
@@ -77,7 +74,7 @@ int read_rast
 	if (G_get_d_raster_row(fd, dcell, row) < 0)
 	    exit(1);
 	if (G_is_d_null_value(&dcell[col]))
-	    sprintf(buf, "Null");
+	    sprintf(buf, null_string);
 	else
 	    sprintf(buf, "%f", dcell[col]);
 
@@ -86,4 +83,6 @@ int read_rast
 	else
 	    fprintf(fp, "%f %s\n", dist, buf);
     }
+
+    return 0;
 }
