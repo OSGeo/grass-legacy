@@ -32,7 +32,7 @@ spline (double x[], double y[], int n, double yp1, double ypn, double y2[])
 	int i,k;
 	double p,qn,sig,un,*u;
 	
-	u=(double *)G_calloc(n-1,sizeof(double));
+	u=(double *)G_calloc(n,sizeof(double));
 	if (yp1 > 0.99e30)
 		y2[1]=u[1]=0.0;
  	else {
