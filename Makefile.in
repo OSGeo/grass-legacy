@@ -204,7 +204,7 @@ srcdist: distclean
 # http://www.red-bean.com/~kfogel/cvs2cl.shtml
 	cvs2cl.pl
 	@ echo "reduce Changelog file... Dont want the initial upload included."
-	head.${ARCH} -${CUTLINE} ChangeLog   > ChangeLog.cut
+	head -${CUTLINE} ChangeLog    > ChangeLog.cut
 	echo "   initial CVS import" >> ChangeLog.cut
 	${SHELL} -c "mv ChangeLog.cut ChangeLog"
 	${SHELL} -c "rm -f ChangeLog.bak"
