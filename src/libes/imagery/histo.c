@@ -1,0 +1,21 @@
+#include "gis.h"
+I_get_histogram (name, mapset, histogram)
+    char *name, *mapset;
+    struct Histogram *histogram;
+{
+    CELL i,min,max;
+    struct Range range;
+
+    if (G_read_histogram (name, mapset, histogram) > 0)
+	return 1;
+
+/* fake the histogram */
+    G_read_range (name, mapset, &range);
+    min = range.nmin?range.nmin:range.pmin;
+    max = range.pmax?range.pmax:range.nmax;
+    G_init_histogram (histogram);
+    for (i = min; i <= max; i++)
+	G_set_histogram (i, (long)1, histogram);
+    G_sort_histogram (histogram);
+    return 1;
+}
