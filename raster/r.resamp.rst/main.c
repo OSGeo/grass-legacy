@@ -150,7 +150,7 @@ int main (int argc, char *argv[])
   } parm;
   struct
   {
-    struct Flag *deriv, *iselev, *cprght;
+    struct Flag *deriv, *cprght;
   } flag;
 
 
@@ -169,10 +169,6 @@ int main (int argc, char *argv[])
   parm.input->required = YES;
   parm.input->gisprompt = "old,cell,raster";
   parm.input->description = _("Name of the input raster file");
-
-  flag.iselev = G_define_flag ();
-  flag.iselev->key = 'r';
-  flag.iselev->description = _("Do zeroes in input map represent elevation?");
 
   parm.res_ew = G_define_option ();
   parm.res_ew->key = "ew_res";
@@ -297,36 +293,11 @@ int main (int argc, char *argv[])
   inp_x_orig = winhd.west;
   inp_y_orig = winhd.south;
 
-    fprintf (stderr, "\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Version: GRASS5.0 beta,  update: November 1999\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Authors: original version -  H.Mitasova, L.Mitas\n");
-    fprintf (stderr, "         GRASS implementation and segmentation: I.Kosinovsky, D.P. Gerdes\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Methods used in this program are described in the following papers:\n");
-    fprintf (stderr, "Mitasova, H., and  Mitas, L., 1993,\n");
-    fprintf (stderr, "Interpolation by Regularized Spline with Tension:\n");
-    fprintf (stderr, "I. Theory  and  implementation.  Mathematical Geology, 25, 641-655.\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Mitasova, H., and Hofierka, L., 1993\n");
-    fprintf (stderr, "Interpolation by Regularized Spline with Tension:\n");
-    fprintf (stderr, "II. Application to terrain modeling and surface   geometry  analysis.\n");
-    fprintf (stderr, "Mathematical Geology, 25, 657-669.\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Mitasova, H., Mitas, L., Brown, W.M., Gerdes, D.P., Kosinovsky, I.,\n");
-    fprintf (stderr, "Baker, T., 1995, Modeling spatially and temporally\n");
-    fprintf (stderr, "distributed phenomena: New methods and tools for GRASS GIS.\n");
-    fprintf (stderr, "International Journal of Geographic Information Systems,V(9), No(4).\n");
-    fprintf (stderr, "(special issue on Integration of GIS and Environmental Modeling)\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "The postscript versions of these papers are available via Internet at\n");
-    fprintf (stderr, "http://www2.gis.uiuc.edu:2280/modviz/papers/listsj.html\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Please cite these references in publications where the results of this\n");
-    fprintf (stderr, "program were used.\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "\n");
+  fprintf(stderr, "\n");
+  fprintf(stderr, "Authors: original version -  H.Mitasova, L.Mitas, I. Kosinovsky, D.P. Gerdes\n");
+  fprintf(stderr, 
+          "See manual pages for reference and publications\n");
+  fprintf(stderr, "\n");
 
   per = 1;			/* flag.per->answer; */
   input = parm.input->answer;
@@ -572,7 +543,7 @@ int main (int argc, char *argv[])
 
   NPOINT = IL_resample_interp_segments_2d (&params, bitmask, zmin, zmax, &zminac,
     &zmaxac, &gmin, &gmax, &c1min, &c1max, &c2min, &c2max, &ertot, nsizc,
-   &dnorm, flag.iselev->answer, overlap, inp_rows, inp_cols, fdsmooth, fdinp,
+   &dnorm, overlap, inp_rows, inp_cols, fdsmooth, fdinp,
    ns_res, ew_res, inp_ns_res, inp_ew_res, dtens);
   fprintf (stderr, "dnorm in mainc after grid before out1= %f \n", dnorm);
 
