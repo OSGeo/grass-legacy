@@ -134,7 +134,7 @@ int main (int argc, char **argv)
   /* Determine the "mapset" based on your order of mapsets */
    if (!(mapset = G_find_vector2 (name, mapset)))
   {
-    sprintf (err_msg, "\nVector file name:  '%s' NOT found in mapset '%s'.\n\n", name);
+    sprintf (err_msg, "\nVector file name:  '%s' NOT found in mapset '%s'.\n\n", name, mapset);
     G_fatal_error (err_msg);
   }
 
