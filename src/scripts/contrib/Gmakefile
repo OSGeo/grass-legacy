@@ -21,7 +21,6 @@ all:
 	cp r.regression.line/r.regression.line $(GISBASE)/scripts
 	$(GMAKE) s.in.grid
 	cp r.univar/r.univar $(GISBASE)/scripts
-	cp r.out.gmt/r.out.gmt $(GISBASE)/scripts
 	cp r.to.pg/r.to.pg $(GISBASE)/scripts
 	cp s.in.atkisdgm/s.in.atkisdgm $(GISBASE)/scripts
 	cp s.in.gps/s.in.gps $(GISBASE)/scripts
