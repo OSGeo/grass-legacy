@@ -42,13 +42,7 @@ int main (int argc, char **argv)
     module->description =
 	"prints DB connection for a vector map";
 
-    inopt = G_define_option();
-    inopt->key             = "input";
-    inopt->type            = TYPE_STRING;
-    inopt->required        = YES;
-    inopt->gisprompt       = "old,vector,vect";
-    inopt->description     = "vector input map name ";
-
+    inopt = G_define_standard_option(G_OPT_V_MAP);
     field_opt = G_define_standard_option(G_OPT_V_FIELD) ;
 
 /*    print = G_define_flag();
