@@ -1,0 +1,4 @@
+$(BIN_MAIN_INTER)/r.random: main.o $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(VASK)
+
+$(GISLIB) $(VASKLIB): #
