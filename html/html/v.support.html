@@ -28,6 +28,7 @@
 <B>map=</B><EM>name</EM> 
 [<B>option=</B><EM>name</EM>] 
 [<B>threshold=</B><EM>value</EM>]
+[<B>err=</B><EM>name</EM>]
 
 
 <P>
@@ -117,8 +118,14 @@ Default:  <EM>edit</EM>
 <DT><B>threshold=</B><EM>value</EM> 
 
 <DD>Snapping threshold value to be used when building
-topology.  Valid only with <EM>build</EM> option and 
-<B>-s</B> flag.
+topology. Specified value is always saved in file header. 
+(Note: snapping is done only 
+with <EM>build</EM> option and <B>-s</B> flag).
+
+<DT><B>err=</B><EM>value</EM> 
+
+<DD>Name of new vector binary file, where are saved all area edges with topology
+problems like free ends or not closed areas.
 
 </DL>
 
