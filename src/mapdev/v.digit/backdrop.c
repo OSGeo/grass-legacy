@@ -9,6 +9,7 @@
 #include "wind.h"
 #include "keyboard.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 struct Cell_head cell_window;
 
@@ -33,7 +34,7 @@ ask_backdrop (void)
     mapset = G_ask_old ("", back_name, "cell", "cell");
     if (mapset == NULL)
     {
-	N_backdrop = "None";
+	N_backdrop = _("None");
 	N_backdrop_mapset = NULL;
 	disable_backdrop ();
 	Disp_backdrop = 0;
@@ -47,7 +48,7 @@ ask_backdrop (void)
 
     if (!Terse_On)
 	Disp_backdrop = G_yes (
-	    "Do you want to automatically redraw backdrop on re-window? ", 1);
+	    _("Do you want to automatically redraw backdrop on re-window? "), 1);
     return (1);
 }
 

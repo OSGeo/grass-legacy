@@ -12,6 +12,7 @@
 #include "Map_proto.h"
 #include "keyboard.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int 
 reset_map (struct Map_info *Map, char *coor_file)
@@ -53,7 +54,7 @@ reset_map (struct Map_info *Map, char *coor_file)
 		Clear_info() ;
 		Clear_base() ;
 
-		ok = ask_yes_no ("If satisfied with the registration, enter 'y', else 'n'");
+		ok = ask_yes_no (_("If satisfied with the registration, enter 'y', else 'n'"));
 
 		Clear_info() ;
 	}
@@ -65,9 +66,9 @@ reset_map (struct Map_info *Map, char *coor_file)
 int 
 check_map_explain (void) 
 {
-	Write_base( 3, "  This screen is used to verify that the map registration is correct.") ;
-	Write_base( 4, "  Check known points on the map with the digitizer and compare them") ;
-	Write_base( 5, "  with the coordinates at the bottom of this screen") ;
+	Write_base( 3, _("  This screen is used to verify that the map registration is correct.")) ;
+	Write_base( 4, _("  Check known points on the map with the digitizer and compare them")) ;
+	Write_base( 5, _("  with the coordinates at the bottom of this screen")) ;
 	return(0) ;
 }
 
@@ -89,10 +90,10 @@ check_map_buttons (void)
 
 	first_button = D_start_button() ;
 
-	sprintf(message, "CHECK MAP:   Key '%d' to preserve point;  Any other Key to continue", first_button) ;
+	sprintf(message, _("CHECK MAP:   Key '%d' to preserve point;  Any other Key to continue"), first_button) ;
 	Write_info(1, message) ;
-	Write_info (3,"      Coordinates:                X - Current - Y         X -  Saved  - Y") ;
-	Write_info (4,"         Place digitizer cursor on tablet") ;
+	Write_info (3,_("      Coordinates:                X - Current - Y         X -  Saved  - Y")) ;
+	Write_info (4,_("         Place digitizer cursor on tablet")) ;
 
 	button = 0 ;
 
@@ -146,9 +147,9 @@ check_map_generic (void)
 	Xsaved = 0.0 ;
 	Ysaved = 0.0 ;
 
-	Write_info(1, "CHECK MAP:   Hit 's' to preserve point;  Any other key to continue") ;
-	Write_info (3,"      Coordinates:                X - Current - Y         X -  Saved  - Y") ;
-	Write_info (4,"         Place digitizer cursor on tablet") ;
+	Write_info(1, _("CHECK MAP:   Hit 's' to preserve point;  Any other key to continue")) ;
+	Write_info (3,_("      Coordinates:                X - Current - Y         X -  Saved  - Y")) ;
+	Write_info (4,_("         Place digitizer cursor on tablet")) ;
 
 	set_keyboard() ;
 
@@ -194,11 +195,11 @@ check_map_ft_swtch (void)
 	Xsaved = 0.0 ;
 	Ysaved = 0.0 ;
 
-	Write_info(1, "CHECK MAP:   Hit 's' to preserve point;  Any other key to continue") ;
-	Write_info (2," Foot |                             Coordinates");
-	Write_info (3,"Switch|                           X - Current - Y         X -  Saved  - Y") ;
+	Write_info(1, _("CHECK MAP:   Hit 's' to preserve point;  Any other key to continue")) ;
+	Write_info (2,_(" Foot |                             Coordinates"));
+	Write_info (3,_("Switch|                           X - Current - Y         X -  Saved  - Y")) ;
 
-	strncpy (Ftsw_Str, "Up  \0", 5);
+	strncpy (Ftsw_Str, _("Up  \0"), 5);
 
 	set_keyboard() ;
 
@@ -208,9 +209,9 @@ check_map_ft_swtch (void)
 		FtswStat = _coll_a_pnt ( &Xmapcoor, &Ymapcoor) ;
 
 		if (FtswStat)
-			strncpy (Ftsw_Str, "Down\0", 5);
+			strncpy (Ftsw_Str, _("Down\0"), 5);
 		else
-			strncpy (Ftsw_Str, "Up  \0", 5);
+			strncpy (Ftsw_Str, _("Up  \0"), 5);
 
 		sprintf(message, "%6s| %15s  |%12.2f %12.2f %12.2f %12.2f |",
 				Ftsw_Str, "",  Xmapcoor, Ymapcoor, Xsaved, Ysaved);

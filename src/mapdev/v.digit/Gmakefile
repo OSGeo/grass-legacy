@@ -2,7 +2,10 @@ PGM = v.digit
 LIBTRANS	= $(LIBDIR)/vect32/libes/libtrans.a
 INCTRANS	= -I$(SRC)/libes/vect32/libes
 
-EXTRA_CFLAGS	=  $(DIGITFLAGS)  $(USE_FTIME) $(INCTRANS)
+PACKAGE ="v.digit"
+DEFS=-DPACKAGE=\"$(PACKAGE)\"
+
+EXTRA_CFLAGS	=  $(DIGITFLAGS)  $(USE_FTIME) $(INCTRANS) $(DEFS)
 
 OBJ = \
 	add_scale.o \

@@ -11,6 +11,7 @@ angle*/
 #include "debug.h"
 #include "Map_proto.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 /* Label contours
 **   Contour interval is specified previously
@@ -78,7 +79,7 @@ int label_contour (struct Map_info *map, int interval)
     }
 
     Clear_info();
-    if (0 >= (line1 = find_line_with_mouse (LINE | AREA, "Select first line and point:", tell_line_label)))
+    if (0 >= (line1 = find_line_with_mouse (LINE | AREA, _("Select first line and point:"), tell_line_label)))
     {
 	return (0);
     }
@@ -91,7 +92,7 @@ int label_contour (struct Map_info *map, int interval)
 	{
 	    Clear_base ();
 	    _Clear_info ();
-	    Write_info (2, "Enter elevation for this line: ");
+	    Write_info (2, _("Enter elevation for this line: "));
 	    Get_curses_text(buf);
 	    label1 = atoi (buf);
 	    Clear_info ();
@@ -102,7 +103,7 @@ int label_contour (struct Map_info *map, int interval)
 
     x1 = Point_X;
     y1 = Point_Y;
-    if (0 >= (line2 = _find_line_with_mouse (LINE | AREA, "Select ending line and point:", tell_line_label, USE_LINE, x1, y1)))
+    if (0 >= (line2 = _find_line_with_mouse (LINE | AREA, _("Select ending line and point:"), tell_line_label, USE_LINE, x1, y1)))
     {
 	V1_read_line (map, &Gpoints, map->Line[line1].offset);
 	display_line (map->Line[line1].type, &Gpoints, line1, map);
@@ -118,7 +119,7 @@ int label_contour (struct Map_info *map, int interval)
 	{
 	    Clear_base ();
 	    _Clear_info ();
-	    Write_info (2, "Enter elevation for this line: ");
+	    Write_info (2, _("Enter elevation for this line: "));
 	    Get_curses_text(buf);
 	    label2 = atoi (buf);
 	    Clear_info ();
@@ -169,7 +170,7 @@ int label_contour (struct Map_info *map, int interval)
 
     if ((ret = check_list (map, list, cnt)) != 0)
     {
-	Curses_error ("ERROR: Crosses same line more than once");
+	Curses_error (_("ERROR: Crosses same line more than once"));
     }
 
     /* get greatest variance */
@@ -210,7 +211,7 @@ int label_contour (struct Map_info *map, int interval)
 
     if ( (n_interv * interval) != label_diff)
     {
-	Curses_error ("Not correct number of intervals");
+	Curses_error (_("Not correct number of intervals"));
 	goto ending;
     }
 
@@ -245,7 +246,7 @@ int label_contour (struct Map_info *map, int interval)
 	{
 	    if (map->Att[Line->att].cat != (int) (start + int_cnt * incr))
 	    {
-		Curses_error ("Labelled line does not agree");
+		Curses_error (_("Labelled line does not agree"));
 		goto ending;
 	    }
 	}
@@ -304,7 +305,7 @@ int label_contour (struct Map_info *map, int interval)
 		if (LINE_LABELED (Line) && map->Att[Line->att].cat != label)
 		{
 		    /* TODO find a better way to handle this */
-		    Curses_error ("Ran into a line of different value");
+		    Curses_error (_("Ran into a line of different value"));
 		    if(0 > V1_read_line(map, &Gpoints, Line->offset))
 			return (-1);
 		    highlight_line (Line->type, &Gpoints, next_line, map);

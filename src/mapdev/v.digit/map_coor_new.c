@@ -10,6 +10,7 @@
 #include "dig_curses.h"
 #include    "map.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int 
 load_coor_from_file (FILE *fp)
@@ -28,7 +29,7 @@ load_coor_from_file (FILE *fp)
 	if ( sscanf (buff, "%s %s %d", bcx[i], bcy[i], &ll_flag)  !=  3)
 	 {
 	    if ( sscanf (buff, "%s %s", bcx[i], bcy[i])  !=  2) {
-	      Write_info (1, " ERROR:  Reading coordinates.");
+	      Write_info (1, _(" ERROR:  Reading coordinates."));
 	      sleep (3);
 	      break;
             }
@@ -37,7 +38,7 @@ load_coor_from_file (FILE *fp)
 /* changes 4-21-93 */
          if (ll_flag == 0) {
 	    if ( sscanf (buff, "%lf %lf", &bx[i], &by[i])  !=  2) {
-	      Write_info (1, " ERROR:  Reading coordinates.");
+	      Write_info (1, _(" ERROR:  Reading coordinates."));
 	      sleep (3);
 	      break;
             }
@@ -52,7 +53,7 @@ load_coor_from_file (FILE *fp)
 	    break;
 	if ( sscanf (buff, "%lf %lf", &bx[i], &by[i])  !=  2)
 	 {
-	    Write_info (1, " ERROR:  Reading coordinates.");
+	    Write_info (1, _(" ERROR:  Reading coordinates."));
 	    sleep (3);
 	    break;
 	 }

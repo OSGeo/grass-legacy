@@ -23,7 +23,7 @@
 #include "digit.h"
 #include "Map_proto.h"
 #include "local_proto.h"
-
+#include "glocale.h"
 
 #include "menus.i"
 
@@ -92,7 +92,7 @@ global_menu (int chr, struct Menu_head *from)
 	    break;
 	 case MGC_QUIT:
 	    _Clear_info ();
-	    if (curses_yes_no_default (2, "Leave digit? ", 0))
+	    if (curses_yes_no_default (2, _("Leave digit? "), 0))
 		return (MGI_QUIT);
 	    _Clear_info ();
 	    break;
@@ -124,7 +124,7 @@ _update_global_menu (void)
 	    strcat (str, M_global.item[i].text);
     _Write_info (1, str);
     if (!Terse_On)
-    _Write_info (4, "GLOBAL MENU: Press first letter of desired command. [Upper Case Only]");
+    _Write_info (4, _("GLOBAL MENU: Press first letter of desired command. [Upper Case Only]"));
     return 0;
 }
 
@@ -142,7 +142,7 @@ update_menu (struct Menu_head *menuhead)
 	baseline = 10;
     else
 	baseline = 3;
-    sprintf (tmpstr, " %s options:", menuhead->name);
+    sprintf (tmpstr, _(" %s options:"), menuhead->name);
     _Write_base (baseline++, tmpstr);
 
     for (i = 0 ;  menuhead->item[i].text != NULL ; i++)

@@ -7,6 +7,7 @@
 #include "dig_curses.h"
 #include "Map_proto.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 #define	FRONT    0
 #define	BACK    1
@@ -36,7 +37,7 @@ int move_point (struct Map_info *map)
     Save_Disp = Disp_points;
     Disp_points = 1;
 
-    line = find_line_with_mouse (LINE|AREA, "Choose line to modify:", NULL);
+    line = find_line_with_mouse (LINE|AREA, _("Choose line to modify:"), NULL);
     if (line <= 0)
     {
 	ret = 0;
@@ -55,7 +56,7 @@ int move_point (struct Map_info *map)
 
 /*  find where to place the point   */
     new_point_with_mouse ( &ux1, &uy1,
-	"  Place mouse on new position for point:");
+	_("  Place mouse on new position for point:"));
     if( ! ux1 && !uy1)
     {
 	ret = 0;

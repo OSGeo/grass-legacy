@@ -8,6 +8,7 @@
 #include "debug.h"
 #include "Map_proto.h"
 #include "local_proto.h"
+#include "glocale.h"
 /*
 **  Written by Dave Gerdes  11/1989
 **  US Army Construction Engineering Research Lab
@@ -45,7 +46,7 @@ int label_mlines (struct Map_info *map, int cat)
     {
 	Clear_info ();
 	/* find_line_with_mouse  fills Gpoints */
-	if (0 >= (line = find_line_with_mouse (LINE | AREA, "Choose line:", tell_line_label)))
+	if (0 >= (line = find_line_with_mouse (LINE | AREA, _("Choose line:"), tell_line_label)))
 	{
 	    return (-1);
 	}
@@ -140,9 +141,9 @@ int label_mlines (struct Map_info *map, int cat)
 	    {
 		char *str;
 		if (cat)
-		    str = "Label these lines?";
+		    str = _("Label these lines?");
 		else
-		    str = "Un-label these lines?";
+		    str = _("Un-label these lines?");
 		doit = mouse_yes_no (str);
 	    }
 #else

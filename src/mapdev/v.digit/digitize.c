@@ -15,6 +15,7 @@
 #include "line_pnts.h"
 #include "keyboard.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 /* made these global so modes would remain set if they leave and return */
 static int    type = AREA;
@@ -105,11 +106,11 @@ int Digitize (void)
 			Cat_name = NULL;
 		    }
 		    if ( type == 1 ) /* LINE */ 
-		        ans = ask_for_name("Do you wish to enter line labels?", &lcats);
+		        ans = ask_for_name(_("Do you wish to enter line labels?"), &lcats);
 		    else if (type == 2)    /* AREA EDGE*/
-		        ans = ask_for_name("Do you wish to enter area edges labels?", &lcats);
+		        ans = ask_for_name(_("Do you wish to enter area edges labels?"), &lcats);
 		    else if (type == 4)     /* DOT */
-		        ans = ask_for_name("Do you wish to enter site labels?", &lcats);
+		        ans = ask_for_name(_("Do you wish to enter site labels?"), &lcats);
 		        	
 		    auto_label = ask_cat ();
 		    if (auto_label && ans)
@@ -140,7 +141,7 @@ int Digitize (void)
 				if (d_get_names = 0)
 				{
 				    sprintf(buff2,
-				       " PSU must be named, NOT numbered");
+				       _(" PSU must be named, NOT numbered"));
 				    Write_info (3,buff2); 
 				    sleep (3);
 				}
@@ -243,7 +244,7 @@ int do_digitize (
 	{
 	    if (Digtiz_Device == MOUSE)
 	    {
-		while((yes_no = mouse_yes_no_zoom ("Begin digitizing? ", 0, NULL)) != 1)
+		while((yes_no = mouse_yes_no_zoom (_("Begin digitizing? "), 0, NULL)) != 1)
 			if(yes_no == 3)
 		    		return (0);
 	    }
@@ -252,7 +253,7 @@ int do_digitize (
 	    if (D_cursor_buttons())
 #endif
 	    {
-		if ( ! ask_driver_yes_no("Begin digitizing? ") )
+		if ( ! ask_driver_yes_no(_("Begin digitizing? ")) )
 			return(0) ;
 	    }
 	}
@@ -320,7 +321,7 @@ recollect:
 	    if (Beep_On)
 		BEEP;   /* Beep for at least one node */
 	    fflush(stdout);
-	    sprintf(buffer, "NOTE: Lines will not be snapped (%d new nodes needed)", node.cnt);
+	    sprintf(buffer, _("NOTE: Lines will not be snapped (%d new nodes needed)"), node.cnt);
 	    Write_info(3, buffer);
 	    if(node.cnt == 2)     /* Beep for second node */
 	    {
@@ -335,7 +336,7 @@ recollect:
 	 {
 	    /* Zero new nodes needed */
 	    if (type != DOT)
-		Write_info (3, "NOTE: Lines will be snapped");
+		Write_info (3, _("NOTE: Lines will be snapped"));
 	 }
 	 else
 	 {
@@ -354,17 +355,17 @@ recollect:
 
 	  switch (type) {
 	      case DOT:
-		  str = "Do you accept this site? ";
+		  str = _("Do you accept this site? ");
 		  break;
 	      case AREA:
 		  if (close_area)
-		      str = "Do you accept this area? ";
+		      str = _("Do you accept this area? ");
 		  else
-		      str = "Do you accept this area line? ";
+		      str = _("Do you accept this area line? ");
 		  break;
 	      case LINE:
 	      default:
-		  str = "Do you accept this line? ";
+		  str = _("Do you accept this line? ");
 		  break;
 	  }
 
@@ -391,7 +392,7 @@ recollect:
 			erase_line ((unsigned char) type, &Xpoints, 0, NULL);
 		    Xpoints.n_points = 0;
 		    BEEP;
-		    Write_info(3, "Only 1 point digitized, Ignoring...");
+		    Write_info(3, _("Only 1 point digitized, Ignoring..."));
 		    sleep (3);
 		    goto d_done;
 	        }
@@ -407,7 +408,7 @@ recollect:
 	    if (line < 0)
 	    {
 		BEEP;
-		Write_info (2, "Error creating new line.");
+		Write_info (2, _("Error creating new line."));
 		sleep (4);
 		return (-1);
 	    }
@@ -476,7 +477,7 @@ int do_psu_dig (struct Map_info *map, int mode, int type, double sample_thresh)
        Clear_base();
        }
     type = DOT;
-    sprintf(buffer,"Digitize sites ? ");
+    sprintf(buffer,_("Digitize sites ? "));
     if (Digtiz_Device == MOUSE)
 	yes_no = mouse_yes_no_zoom(buffer, type, NULL) ;
     else
@@ -488,7 +489,7 @@ int do_psu_dig (struct Map_info *map, int mode, int type, double sample_thresh)
       {
         Clear_info ();
         { 
-        sprintf(buffer,"Digitize site # %d ? ",count);
+        sprintf(buffer,_("Digitize site # %d ? "),count);
         if (Digtiz_Device == MOUSE)
 	  yes_no = mouse_yes_no_zoom(buffer, type, NULL) ;
         else

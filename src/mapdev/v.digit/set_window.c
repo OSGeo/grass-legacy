@@ -6,6 +6,7 @@
 #include "debug.h"
 #include "dig_curses.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 #define BEEP putchar ('\007')
 
@@ -42,21 +43,21 @@ set_window_w (void)
 	    return (0);
 	}
 	Clear_info() ;
-	Write_info(1, "Identify corners of graphics window.") ;
-	Write_info(2, "  Locate digitizer cursor on one corner of desired window.") ;
+	Write_info(1, _("Identify corners of graphics window.")) ;
+	Write_info(2, _("  Locate digitizer cursor on one corner of desired window.")) ;
 
 	priority_on = set_priority() ;
 #ifdef CURSORKEYS
 	if( D_cursor_buttons() )
 #endif
 	{
-		Write_info(3, "  Then hit any number <Key>") ;
+		Write_info(3, _("  Then hit any number <Key>")) ;
 		ask_driver() ;
 	}
 #ifdef CURSORKEYS
 	else
 	{
-		Write_info(3, "  Then hit <RETURN>") ;
+		Write_info(3, _("  Then hit <RETURN>")) ;
 		Get_curses_text(buff) ;
 	}
 
@@ -65,18 +66,18 @@ set_window_w (void)
 	BEEP;
 
 	Clear_info() ;
-	Write_info(2, "  Now place digitizer cursor on diagonal corner of desired window.") ;
+	Write_info(2, _("  Now place digitizer cursor on diagonal corner of desired window.")) ;
 #ifdef CURSORKEYS
 	if( D_cursor_buttons() )
 #endif
 	{
-		Write_info(3, "  Then hit any number <Key>") ;
+		Write_info(3, _("  Then hit any number <Key>")) ;
 		ask_driver() ;
 	}
 #ifdef CURSORKEYS
 	else
 	{
-		Write_info(3, "  Then hit <RETURN>") ;
+		Write_info(3, _("  Then hit <RETURN>")) ;
 		Get_curses_text(buff) ;
 	}
 

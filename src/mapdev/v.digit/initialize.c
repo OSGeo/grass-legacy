@@ -7,6 +7,7 @@
 #include "dig_curses.h"
 #include "Map_proto.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int initialize (
     FILE *digit,FILE *att,
@@ -58,8 +59,8 @@ int init_init (
     /*Overlay.head = &overlay_head; 4.0*/	/* name of overlay map */
     Overlay.dig_fp = NULL;
     Overlay.digit_file = NULL;
-    N_overlay = "None";
-    N_backdrop = "None";
+    N_overlay = _("None");
+    N_backdrop = _("None");
     Contour_Interval = 5;
 
 

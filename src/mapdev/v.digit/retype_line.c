@@ -8,6 +8,7 @@
 #include "dig_curses.h"
 #include "Map_proto.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 /* allow user to change type of line from AREA to LINE or back again */
 /* if it affects any existing areas, they are unlabeled */
@@ -22,7 +23,7 @@ retype_line (struct Map_info *map)
     Clear_info();
     while (1)
     {
-	if (0 >= (line = find_line_with_mouse (AREA | LINE," Re-type a line:", NULL)))
+	if (0 >= (line = find_line_with_mouse (AREA | LINE,_(" Re-type a line:"), NULL)))
 	{
 	    return (0);
 	}

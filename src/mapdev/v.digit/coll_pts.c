@@ -11,6 +11,7 @@
 #include "D.h"
 #include "libtrans.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 /*  these correspond to the cursor keys */
 #define		DIG_POINT	1
@@ -72,7 +73,7 @@ int Collect_points(
 	delay(5) ;
  	D_clear_driver() ; 
 
-	Write_info(1, " # Points       Easting     Northing") ;
+	Write_info(1, (" # Points       Easting     Northing")) ;
 
 	if (run_mode == STREAM)
 	{
@@ -135,7 +136,7 @@ int Collect_points(
 					if (type == DOT)
 					    return (save_mode);
 					loop = 0 ;
-					Write_info(3, " processing..") ;
+					Write_info(3, _(" processing..")) ;
 					continue ;
 					break ;
 
@@ -149,22 +150,22 @@ int Collect_points(
 					{
 						stream_mode = 1 ;
 						run_mode = STREAM ;
-						Write_info(4, " STREAM mode ") ;
+						Write_info(4, _(" STREAM mode ")) ;
 					}
 					else
 					{
 						run_mode = POINT ;
-						Write_info(4, " POINT mode ") ;
+						Write_info(4, _(" POINT mode ")) ;
 					}
 
 					last_key = KeyHit ;
 					break ;
 
 				case UPDATE_MON:
-					Write_info(2, "    Updating  MONITOR") ;
+					Write_info(2, _("    Updating  MONITOR")) ;
 					plot_points( type, *n_points, xarray, yarray,
 						CLR_HIGHLIGHT, 0);
-					Write_info(2, "    finished: continue  digitizing...") ;
+					Write_info(2, _("    finished: continue  digitizing...")) ;
 					last_key = KeyHit ;
 					continue ;
 					break ;

@@ -8,6 +8,7 @@
 #include "wind.h"
 #include "Map_proto.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 /*
 **  Customize menu 
@@ -187,7 +188,7 @@ CUST_END:
 #else	/* SCS_MODS */
     
     if (Changes)
-	if (curses_yes_no (1, "Save these changes in configuration file ?"))
+	if (curses_yes_no (1, _("Save these changes in configuration file ?")))
 	    get_mem(1);  /* save this custom version in the dig_cfg file */
 #endif /* SCS */
     return (Pass);
@@ -200,7 +201,7 @@ Custom_settings (struct Map_info *map)
     char tmpstr[512];
 
 
-    _Base_string (3, 36, " Current:");
+    _Base_string (3, 36, _(" Current:"));
 
     /*
     map_to_dig_thresh (map->prune_thresh);
@@ -215,21 +216,21 @@ Custom_settings (struct Map_info *map)
     */
     sprintf (tmpstr, "   %7.4f", _map_to_dig_thresh (map->snap_thresh));
     _Base_string (5, 36, tmpstr);	/* snapping thresh */
-    _Base_string (6, 36, ON_OFF (Disp_flex));
-    _Base_string (7, 36, ON_OFF (Beep_On));
+    _Base_string (6, 36, _(ON_OFF (Disp_flex)));
+    _Base_string (7, 36, _(ON_OFF (Beep_On)));
     /*
     _Base_string (8, 36, ON_OFF (Terse_On));
     _Base_string (8, 36, ON_OFF (Compress_File));
     */
-    _Base_string (8, 36, ON_OFF (Auto_Window));
-    _Base_string (9, 36,  Window_Device ?  "     MOUSE" : " DIGITIZER");
-    _Base_string (10, 36,  Point_Device ?  "     MOUSE" : " DIGITIZER");
-    _Base_string (11, 36,  Digtiz_Device ? "     MOUSE" : " DIGITIZER");
+    _Base_string (8, 36, _(ON_OFF (Auto_Window)));
+    _Base_string (9, 36,  Window_Device ?  _("     MOUSE") : _(" DIGITIZER"));
+    _Base_string (10, 36,  Point_Device ?  _("     MOUSE") : _(" DIGITIZER"));
+    _Base_string (11, 36,  Digtiz_Device ? _("     MOUSE") : _(" DIGITIZER"));
     sprintf (tmpstr, "%-10s", N_overlay);
     _Base_string (12, 36, tmpstr);
     sprintf (tmpstr, "%-10s", N_backdrop);
     _Base_string (13, 36, tmpstr);
-    _Base_string (14, 36,  Remove_Draw ?   "    REMOVE" : "    REDRAW");
-    _Base_string (16, 36, ON_OFF (Auto_Smooth));
+    _Base_string (14, 36,  Remove_Draw ?   _("    REMOVE") : _("    REDRAW"));
+    _Base_string (16, 36, _(ON_OFF (Auto_Smooth)));
     return 0;
 }

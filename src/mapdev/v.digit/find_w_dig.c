@@ -11,6 +11,7 @@
 #include "display_line.h"
 #include "dig_curses.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int 
 find_node_with_dig (double *x, double *y, double thresh, char *header)
@@ -22,10 +23,10 @@ find_node_with_dig (double *x, double *y, double thresh, char *header)
 
     _Clear_base ();
     _Write_base(10, header);
-    _Write_base(12, "    Select:");
-    _Write_base(13, "   button 1:   Choose node");
-    _Write_base(14, "   button 2:   Abort/Quit");
-     Write_base(15, "   button 3:   Accept chosen node");
+    _Write_base(12, _("    Select:"));
+    _Write_base(13, _("   button 1:   Choose node"));
+    _Write_base(14, _("   button 2:   Abort/Quit"));
+     Write_base(15, _("   button 3:   Accept chosen node"));
 
     node_num = 0;
     while (1)
@@ -44,7 +45,7 @@ find_node_with_dig (double *x, double *y, double thresh, char *header)
 		*y = uy1;
 
 		if ( (node_num = dig_which_node (CMap, &ux1, &uy1, thresh))  < 0)
-		    sprintf (buffer, " no node found ");
+		    sprintf (buffer, _(" no node found "));
 		else
 		{
 		    sprintf (buffer, " node#: %d", node_num);
@@ -67,9 +68,9 @@ find_node_with_dig (double *x, double *y, double thresh, char *header)
 		break;
 	 }
 
-	sprintf(buffer," EAST:  %10.2f", ux1);
+	sprintf(buffer,_(" EAST:  %10.2f"), ux1);
 	    Write_info(3, buffer);
-	sprintf(buffer," NORTH: %10.2f", uy1);
+	sprintf(buffer,_(" NORTH: %10.2f"), uy1);
 	    Write_info(4, buffer);
     }
 }
@@ -85,12 +86,12 @@ int find_point_with_dig (double *x, double *y, int n_points, double thresh)
 
 
     _Clear_base ();
-    sprintf(buffer, " Number of points on line: %d", n_points);
+    sprintf(buffer, _(" Number of points on line: %d"), n_points);
     _Write_base(10, buffer);
-    _Write_base(12, "    Select:");
-    _Write_base(13, "   button 1:   Choose point on line");
-    _Write_base(14, "   button 2:   Abort/Quit");
-     Write_base(15, "   button 3:   Accept chosen point");
+    _Write_base(12, _("    Select:"));
+    _Write_base(13, _("   button 1:   Choose point on line"));
+    _Write_base(14, _("   button 2:   Abort/Quit"));
+     Write_base(15, _("   button 3:   Accept chosen point"));
 
     point_num = -1;
 
@@ -116,7 +117,7 @@ int find_point_with_dig (double *x, double *y, int n_points, double thresh)
 
 		if ( i < n_points)
 		{
-		    sprintf (buffer, " point#: %d", i+1);
+		    sprintf (buffer, _(" point#: %d"), i+1);
 		    /*
 		    ** assume a chosen line is already highlit
 		    **  if Disp_lines, then make it contrast 
@@ -130,7 +131,7 @@ int find_point_with_dig (double *x, double *y, int n_points, double thresh)
 		}
 		else
 		{
-		    sprintf (buffer, " no point found ");
+		    sprintf (buffer, _(" no point found "));
 		    point_num = -1;
 		}
 
@@ -151,9 +152,9 @@ int find_point_with_dig (double *x, double *y, int n_points, double thresh)
 
 	 }
 
-	sprintf(buffer," EAST:  %10.2f", ux1);
+	sprintf(buffer,_(" EAST:  %10.2f"), ux1);
 	    Write_info(3, buffer);
-	sprintf(buffer," NORTH: %10.2f", uy1);
+	sprintf(buffer,_(" NORTH: %10.2f"), uy1);
 	    Write_info(4, buffer);
 
     }
@@ -172,10 +173,10 @@ int new_point_with_dig (double *x, double *y, char *header)
 
     _Clear_base ();
     _Write_base(10, header);
-    _Write_base(12, "    Select:");
-    _Write_base(13, "   button 1:   Choose this position");
-    _Write_base(14, "   button 2:   Abort/Quit");
-    Write_base (15, "   button 3:   Accept chosen point position");
+    _Write_base(12, _("    Select:"));
+    _Write_base(13, _("   button 1:   Choose this position"));
+    _Write_base(14, _("   button 2:   Abort/Quit"));
+    Write_base (15, _("   button 3:   Accept chosen point position"));
 
 
     prev = 0;
@@ -196,7 +197,7 @@ int new_point_with_dig (double *x, double *y, char *header)
 		*y = uy1;
 		R_standard_color (dcolors[CLR_HIGHLIGHT]);
 		Blot (x, y);
-		Write_info (1, " Point location:");
+		Write_info (1, _(" Point location:"));
 		break;
 
 	    case 2:			/*  abort  */
@@ -220,9 +221,9 @@ int new_point_with_dig (double *x, double *y, char *header)
 
 	 }
 
-	sprintf(buffer," EAST:  %10.2f", ux1);
+	sprintf(buffer,_(" EAST:  %10.2f"), ux1);
 	    Write_info(3, buffer);
-	sprintf(buffer," NORTH: %10.2f", uy1);
+	sprintf(buffer,_(" NORTH: %10.2f"), uy1);
 	    Write_info(4, buffer);
     }
 }
@@ -262,17 +263,17 @@ find_line_with_dig (int type_mask, char *header, int (*call)())
     _Write_base(10, header);
     if (type_mask == DOT)
     {
-	_Write_base(12, "    Select:");
-	_Write_base(13, "   button 1:   Choose site");
-	_Write_base(14, "   button 2:   Abort/Quit");
-	 Write_base(15, "   button 3:   Accept chosen site");
+	_Write_base(12, _("    Select:"));
+	_Write_base(13, _("   button 1:   Choose site"));
+	_Write_base(14, _("   button 2:   Abort/Quit"));
+	 Write_base(15, _("   button 3:   Accept chosen site"));
     }
     else
     {
-	_Write_base(12, "    Select:");
-	_Write_base(13, "   button 1:   Choose line");
-	_Write_base(14, "   button 2:   Abort/Quit");
-	 Write_base(15, "   button 3:   Accept chosen line");
+	_Write_base(12, _("    Select:"));
+	_Write_base(13, _("   button 1:   Choose line"));
+	_Write_base(14, _("   button 2:   Abort/Quit"));
+	 Write_base(15, _("   button 3:   Accept chosen line"));
     }
 
     ret = line = 0;
@@ -305,7 +306,7 @@ find_line_with_dig (int type_mask, char *header, int (*call)())
 		line = dig_point_by_line (CMap, ux1, uy1, ux2, uy2, type_mask);
 		if (! line)
 		{
-		    sprintf (buffer, " no line found ");
+		    sprintf (buffer, _(" no line found "));
 		    Write_info(1, buffer);
 		}
 		else
@@ -314,7 +315,7 @@ find_line_with_dig (int type_mask, char *header, int (*call)())
 		    if(0 > V2_read_line(CMap, &Gpoints, line))
 			return (0);
 		    highlight_line (type, &Gpoints, line, CMap);
-		    sprintf (buffer, " line#: %d,  category#: %d", 
+		    sprintf (buffer, _(" line#: %d,  category#: %d"), 
 				   line, CMap->Att[CMap->Line[line].att].cat);
 		    Write_info(1, buffer);
 		    ret = line;

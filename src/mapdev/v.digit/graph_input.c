@@ -33,6 +33,7 @@ static int Debug = 0;
 #include "gis.h"
 #include "ginput.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 #ifdef  HAVE_TERMIO_H
 #include <fcntl.h>
@@ -540,10 +541,10 @@ long start_ginput (char dev_path[], int mode)
     if( (fd_ginput = openf( dev_path, O_RDWR | O_NDELAY )) < 0 )
 #endif
     {
-	sprintf(tmp_msg, "Cannot open %s.  Check the device field \
-in the digcap file.", dev_path);
+	sprintf(tmp_msg, _("Cannot open %s.  Check the device field \
+in the digcap file."), dev_path);
         fprintf(stderr,"%s",tmp_msg);
-        sprintf(tmp_msg, "Ensure %s has read write permissions (0666).", dev_path);
+        sprintf(tmp_msg, _("Ensure %s has read write permissions (0666)."), dev_path);
         fprintf (stderr,"%s", tmp_msg);
         return(1);
     }
@@ -734,12 +735,12 @@ in the digcap file.", dev_path);
 	rtn = start_query_mode();
     else 
     {
-	fprintf (stderr, "Unknown mode.\n");
+	fprintf (stderr, _("Unknown mode.\n"));
 	rtn = 1;
     }
     if(rtn)	
     {   
-        fprintf (stderr,"Cannot do start actions on dig input device.");
+        fprintf (stderr,_("Cannot do start actions on dig input device."));
         if(fd_ginput > 0)
             closef(fd_ginput);
         return(1);
@@ -821,7 +822,7 @@ long query_ginput (void)
 #endif
         /********** execute query actions ****************************/
     if(ginput_ctl(digdevice.no_query_actions,digdevice.query))
-    {    fprintf (stderr, "Cannot do query actions on dig input device.");
+    {    fprintf (stderr, _("Cannot do query actions on dig input device."));
         return(1);
     }
 
@@ -849,7 +850,7 @@ long stop_ginput (void)
 {
         /********** execute stop actions ****************************/
     if(ginput_ctl(digdevice.no_stop_actions,digdevice.stop))
-    {    fprintf (stderr, "Cannot do stop actions on dig input device.");
+    {    fprintf (stderr, _("Cannot do stop actions on dig input device."));
         return(1);
     }
 

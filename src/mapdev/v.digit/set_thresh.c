@@ -12,6 +12,7 @@
 #include "Map_proto.h"
 #include "dig_curses.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 /**
  *    file contains: set_thresh(), reset_thresh(), calc_thresh();
@@ -98,18 +99,18 @@ reset_snap_thresh (struct Map_info *map)
     
         cur_digit = map->snap_thresh / (map->head.orig_scale * conversion);
 
-        Write_info ( 1, "  Current SNAPPING threshold:");
+        Write_info ( 1, _("  Current SNAPPING threshold:"));
 
-	sprintf ( buf, "         Map : %f  %s. ", map->snap_thresh, 
+	sprintf ( buf, _("         Map : %f  %s. "), map->snap_thresh, 
 	    G_database_unit_name (1));
         Write_info ( 2, buf);
 
-        sprintf ( buf, "         Dig : %f  -  1 / %f of an inch. ",
+        sprintf ( buf, _("         Dig : %f  -  1 / %f of an inch. "),
             cur_digit, 1.0 /cur_digit);
         Write_info ( 3, buf);
     
     
-        Write_info ( 4, "   Enter new Dig threshold or <RETURN> when finished: ");
+        Write_info ( 4, _("   Enter new Dig threshold or <RETURN> when finished: "));
     
         cur_digit = -1;
         Get_curses_text (buf);
@@ -125,10 +126,10 @@ reset_snap_thresh (struct Map_info *map)
         if ( cur_digit < Scale  ||  cur_digit > Lower)
          {
             Write_info ( 2, "");
-            sprintf ( buf, "    %f  is not a reasonable threshold.", cur_digit);
+            sprintf ( buf, _("    %f  is not a reasonable threshold."), cur_digit);
             Write_info ( 3, buf);
 
-            sprintf ( buf, " Threshold should be between   %f  and  %f.", 
+            sprintf ( buf, _(" Threshold should be between   %f  and  %f."), 
             Lower, Scale);
             Write_info ( 4, buf);
 
@@ -176,18 +177,18 @@ reset_thresh (struct Map_info *map)
 	cur_digit = map->prune_thresh / (dig_unit_conversion() * map->head.orig_scale);
     /*DEBUG*/ debugf ("reset_thresh: cur_digit = %f\n", cur_digit);
 
-	Write_info ( 1, "  Current thresholds:");
+	Write_info ( 1, _("  Current thresholds:"));
 
-	sprintf ( buf, "         Map : %f  %s. ", 2.0 * map->prune_thresh, 
+	sprintf ( buf, _("         Map : %f  %s. "), 2.0 * map->prune_thresh, 
 	    G_database_unit_name (1));
 	Write_info ( 2, buf);
 
-	sprintf ( buf, "         Dig : %f  -  1 / %f of an inch. ",
+	sprintf ( buf, _("         Dig : %f  -  1 / %f of an inch. "),
 	    2.0 * cur_digit, 1.0 /(2.0 * cur_digit));
 	Write_info ( 3, buf);
 
 
-	Write_info ( 4, "   Enter new Dig threshold or <RETURN> when finished: ");
+	Write_info ( 4, _("   Enter new Dig threshold or <RETURN> when finished: "));
 
 	cur_digit = -1;
 	Get_curses_text (buf);
@@ -203,10 +204,10 @@ reset_thresh (struct Map_info *map)
 	    if ( cur_digit < Scale  ||  cur_digit > Lower)
 	     {
 		Write_info ( 2, "");
-		sprintf ( buf, "    %f  is not a reasonable threshold.", cur_digit);
+		sprintf ( buf, _("    %f  is not a reasonable threshold."), cur_digit);
 		Write_info ( 3, buf);
 
-		sprintf ( buf, " Threshold should be between   %f  and  %f.", 
+		sprintf ( buf, _(" Threshold should be between   %f  and  %f."), 
 		Lower, Scale);
 		Write_info ( 4, buf);
 

@@ -4,10 +4,11 @@
 #include "graphics.h"
 #include "wind_2_box.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int window_rout (double N, double S, double E, double W)
 {
-    if (strcmp (N_backdrop, "None"))
+    if (strcmp (N_backdrop, _("None")))
 	fit_window (&N, &S, &E, &W);
     window_conversions (N, S, E, W);
     return 1;

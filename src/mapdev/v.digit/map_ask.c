@@ -4,6 +4,7 @@
 #include    "map.h"
 #include    "dig_curses.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 char	*star = "*" ;
 
@@ -29,12 +30,12 @@ ask_map_coor (int n_points)
 	coor_cnt = MAX_COOR - reg_cnt ;
 
 	/*  show min needed and max they can go to  */
-	sprintf(tmp,"    Enter %d - %d points :  points registered %d",
+	sprintf(tmp,_("    Enter %d - %d points :  points registered %d"),
 		(MIN_COOR > reg_cnt) ? MIN_COOR - reg_cnt : 0  , coor_cnt, reg_cnt);
 	V_clear();
-	V_line(1,"    MAP REGISTRATION POINTS ");
+	V_line(1,_("    MAP REGISTRATION POINTS "));
 	V_line(2, tmp);
-	V_line(4,"    Point #       X coord       Y coord");
+	V_line(4,_("    Point #       X coord       Y coord"));
 
 	for ( i=0; i < MAX_COOR; i++)
 	{
@@ -56,8 +57,8 @@ ask_map_coor (int n_points)
 		}
 	}
 
-	V_line(at_line + 2, "      Enter 0.0 to delete a coordinate pair.");
-	V_line(at_line + 3, "      Those marked by '*' are registered.");
+	V_line(at_line + 2, _("      Enter 0.0 to delete a coordinate pair."));
+	V_line(at_line + 3, _("      Those marked by '*' are registered."));
 
 	V_intrpt_ok(); 
 

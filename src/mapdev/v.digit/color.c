@@ -9,6 +9,7 @@
 #include "Map_proto.h"
 #include "dig_curses.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 static char *color_names[] = {
     "        ",
@@ -171,7 +172,7 @@ COLR_END:
 int 
 Display_color_settings (void)
 {
-    _Base_string (3, 36, " Current:");
+    _Base_string (3, 36, _(" Current:"));
     _Base_string (4, 38, color_name (CLR_AREA));
     _Base_string (5, 38, color_name (CLR_LINE));
     _Base_string (6, 38, color_name (CLR_SITE));
@@ -202,6 +203,6 @@ char *
 color_name (int color)
 {
     if (color < 1 || color > 13)
-	return ("none");
+	return (_("none"));
     return (color_names[color]);
 }

@@ -9,6 +9,7 @@
 #include "Map_proto.h"
 #include "dig_curses.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int write_out (int tell)
 {
@@ -19,13 +20,13 @@ int write_out (int tell)
 
     if ((fp = fopen (CMap->plus_file, "w")) == NULL)
     {
-	fprintf (stderr, "Cannot open '%s' for write\n", CMap->plus_file);
+	fprintf (stderr, _("Cannot open '%s' for write\n"), CMap->plus_file);
 	return (-1);
     }
 
     phead.all_areas = 0;
     phead.all_isles = 0;
-    Write_info (3, "Writing Plus File ...");
+    Write_info (3, _("Writing Plus File ..."));
     dig_map_to_head (CMap, &phead);
     if (0 > dig_write_plus_file (fp, CMap, &phead))
     {
@@ -35,7 +36,7 @@ int write_out (int tell)
     fclose (fp);
     if (tell)
     {
-	Write_info (3, "Writing Plus File ... DONE.");
+	Write_info (3, _("Writing Plus File ... DONE."));
 	sleep (1);
     }
     return (0);
@@ -58,7 +59,7 @@ int compress (struct Map_info *map, int tell)
 
 /*DEBUG*/ debugf ("Checkpoint A\n");
     if (tell)
-	Write_info (2, "Compressing Data: ");
+	Write_info (2, _("Compressing Data: "));
     Node = map->Node;
     Area = map->Area;
     Line = map->Line;
@@ -77,7 +78,7 @@ int compress (struct Map_info *map, int tell)
        /********************/
 
     if (tell)
-    Write_info (3, " Compressing NODES.");
+    Write_info (3, _(" Compressing NODES."));
     new_count = map->n_nodes;
     for (to = from = 1 ; from <= map->n_nodes ; from++)
     {
@@ -117,7 +118,7 @@ int compress (struct Map_info *map, int tell)
        /********************/
 
     if (tell)
-    Write_info (3, " Compressing NODES.  LINES.");
+    Write_info (3, _(" Compressing NODES.  LINES."));
     new_count = map->n_lines;
     for (to = from = 1 ; from <= map->n_lines ; from++)
     {
@@ -224,7 +225,7 @@ int compress (struct Map_info *map, int tell)
        /********************/
 
     if (tell)
-    Write_info (3, " Compressing NODES.  LINES.  AREAS.");
+    Write_info (3, _(" Compressing NODES.  LINES.  AREAS."));
     new_count = map->n_areas;
     for (to = from = 1 ; from <= map->n_areas ; from++)
     {
@@ -276,7 +277,7 @@ int compress (struct Map_info *map, int tell)
        /********************/
 
     if (tell)
-    Write_info (3, " Compressing NODES.  LINES.  AREAS.  ISLES.");
+    Write_info (3, _(" Compressing NODES.  LINES.  AREAS.  ISLES."));
 /*DEBUG*/ debugf ("number of isles: %d\n", map->n_isles);
     new_count = map->n_isles;
     for (to = from = 1 ; from <= map->n_isles ; from++)
@@ -325,7 +326,7 @@ int compress (struct Map_info *map, int tell)
 
 
     if (tell)
-    Write_info (3, " Compressing NODES.  LINES.  AREAS.  ISLES. ATTS.");
+    Write_info (3, _(" Compressing NODES.  LINES.  AREAS.  ISLES. ATTS."));
     new_count = map->n_atts;
     for (to = from = 1 ; from <= map->n_atts ; from++)
     {
@@ -356,7 +357,7 @@ int compress (struct Map_info *map, int tell)
     map->n_atts = new_count;
     if (tell)
     {
-	_Write_info (2, "Compressing Data:   DONE. ");
+	_Write_info (2, _("Compressing Data:   DONE. "));
 	Write_info (3, "");
 	sleep (1);
     }

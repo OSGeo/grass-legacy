@@ -8,6 +8,7 @@
 #include "dig_curses.h"
 #include "Map_proto.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 #define	FRONT    0
 #define	BACK    1
@@ -43,7 +44,7 @@ int move_line (struct Map_info *map)
 
     while (1)
     {
-	line = find_line_with_mouse (LINE|AREA|DOT, "Choose line or site to move:", NULL);
+	line = find_line_with_mouse (LINE|AREA|DOT, _("Choose line or site to move:"), NULL);
 	if (line <= 0)
 	{
 	    ret = 0;
@@ -69,10 +70,10 @@ int move_line (struct Map_info *map)
 
 	if (is_site)
 	    new_point_with_mouse ( &ux1, &uy1,
-		"  Place mouse on new position for this site:");
+		_("  Place mouse on new position for this site:"));
 	else
 	    new_point_with_mouse ( &ux1, &uy1,
-		"  Place mouse on new position for this point on line:");
+		_("  Place mouse on new position for this point on line:"));
 	if ( ! ux1 && !uy1)
 	{
 	    ret = 0;
@@ -109,7 +110,7 @@ int move_line (struct Map_info *map)
 	    if (line < 0)
 	    {
 		BEEP;
-		Write_info (2, "Error creating new line.");
+		Write_info (2, _("Error creating new line."));
 		sleep (4);
 		return (-1);
 	    }

@@ -5,6 +5,7 @@
 #include "Map_proto.h"
 #include "dig_curses.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int where_am_i (struct Map_info *map)
 {
@@ -20,10 +21,10 @@ int where_am_i (struct Map_info *map)
     screen_x = 0;
 
     _Clear_base ();
-    _Write_base(10, "Buttons:");
-    _Write_base(11, "   Left:   Where am i");
-    _Write_base(12, "   Middle: Quit");
-     Write_base(13, "   Right:  Quit");
+    _Write_base(10, _("Buttons:"));
+    _Write_base(11, _("   Left:   Where am i"));
+    _Write_base(12, _("   Middle: Quit"));
+     Write_base(13, _("   Right:  Quit"));
 
     thresh =  map->head.map_thresh;
 
@@ -36,7 +37,7 @@ int where_am_i (struct Map_info *map)
 	switch(button)
 	{
 	    case LEFTB:
-		sprintf(buffer,"EAST: %12.2f   NORTH: %12.2f", ux, uy);
+		sprintf(buffer,_("EAST: %12.2f   NORTH: %12.2f"), ux, uy);
 		Write_info(1, buffer);
 		break;
 	    case MIDDLEB:
@@ -45,15 +46,15 @@ int where_am_i (struct Map_info *map)
 		Write_info(2, "Checking areas");
 		if ( i = dig_point_to_area(ux, uy) )
 		{
-		    sprintf(buffer,"AREA: %d", i);
+		    sprintf(buffer,_("AREA: %d"), i);
 		    Write_area(i, &area[i]);
 		    Write_info(2, buffer);
 		}
 		else
-		    Write_info(2, "No Area found");
+		    Write_info(2, _("No Area found"));
 
 		/* Check to see if we are pointing to a node */
-		Write_info(3, "Checking nodes");
+		Write_info(3, _("Checking nodes"));
 		found = 0;
 		for (i=1; i<=map->n_nodes; i++)
 		{
@@ -67,21 +68,21 @@ int where_am_i (struct Map_info *map)
 		    }
 		}
 		if (! found)
-		    Write_info(3, "No Nodes found");
+		    Write_info(3, _("No Nodes found"));
 
 		/* Check to see if we are pointing to a line */
 		/*  checking for lines takes a long time  
 		*     may have to comment out or find a faster way.
 		*/
-		Write_info(4, "Checking lines");
+		Write_info(4, _("Checking lines"));
 		if ( i = dig_point_to_line(ux, uy) )
 		 {
-		    sprintf(buffer,"LINE: %d", i);
+		    sprintf(buffer,_("LINE: %d"), i);
 		    Write_info(i, &(map->Line[i]));
 		    Write_info(4, buffer);
 		 }
 		else
-		    Write_info(4, "No Lines found");
+		    Write_info(4, _("No Lines found"));
 		break;
 
 #endif

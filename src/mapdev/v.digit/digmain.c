@@ -20,6 +20,7 @@
 #include "debug.h"
 #include "keyboard.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 #define DEBUG
 /*
@@ -100,9 +101,8 @@ digmain (char *digname, char *path, char *mname, int pid, char *dev, char *lock)
         if (strcmp (argv[4], "nodig"))
         {
         fprintf (stdout, "Warning!  Digit not running as root.\n");
-        fprintf (stdout, "Please consult GRASS installation manual on how to set up DIGI
-T\n");
-        if (!G_yes ("Do you want to continue any way?", 1))
+        fprintf (stdout, "Please consult GRASS installation manual on how to set up DIGIT\n");
+        if (!G_yes (_("Do you want to continue any way?"), 1))
             exit (0);
         }
     }
@@ -110,7 +110,7 @@ T\n");
 
 #endif
     init_priority ();	/* set up permissions and stuff for higher nice value */
-#endif HIGHPRIORITY
+#endif /*HIGHPRIORITY*/
 
 #ifdef DEBUG
     init_debug (mname);
@@ -195,7 +195,7 @@ T\n");
     {
 	if ( (digit = fopen(N_dig_file, "w+") ) == NULL )
 	{
-	    sprintf (buf, "Not able to open <%s>\n", N_dig_file);
+	    sprintf (buf, _("Not able to open <%s>\n"), N_dig_file);
 	    G_fatal_error (buf);
 	}
 	V2__setup_for_digit (CMap, N_name);
@@ -217,9 +217,9 @@ T\n");
 	{
 	    if (have_old)
 	    {
-		G_fatal_error ("No dig_plus file exists. You must run v.support.\n");
+		G_fatal_error (_("No dig_plus file exists. You must run v.support.\n"));
 	    }
-	    sprintf (buf, "Not able to open <%s>\n", N_plus_file);
+	    sprintf (buf, _("Not able to open <%s>\n"), N_plus_file);
 	    G_fatal_error  (buf);
 	}
 	fclose (plus);
@@ -234,7 +234,7 @@ T\n");
     {
 	if ( (attr = fopen(N_att_file, "w+") ) == NULL )
 	{
-	    sprintf (buf, "Not able to open <%s>\n", N_att_file);
+	    sprintf (buf, _("Not able to open <%s>\n"), N_att_file);
 	    G_fatal_error (buf);
 	}
 	have_attr = 0;
@@ -260,8 +260,8 @@ T\n");
 	ret = dig_do_file_checks (CMap, N_plus_file, N_dig_file, N_att_file);
 	if (ret < 0)
 	{
-	    fprintf (stderr, "Could not open dig_plus file\n");
-	    fprintf (stderr, "You must first run v.support.\n");
+	    fprintf (stderr, _("Could not open dig_plus file\n"));
+	    fprintf (stderr, _("You must first run v.support.\n"));
 	    sleep (4);
 	    exit (-1);
 	}
@@ -284,7 +284,7 @@ T\n");
     if (!have_old)
 	if ( 0 > write_out (0))
 	{
-	    fprintf (stderr, "\nError creating 'dig_plus' file!\n");
+	    fprintf (stderr, _("\nError creating 'dig_plus' file!\n"));
 	    close_down (0);
 	}
 
@@ -359,7 +359,7 @@ T\n");
     {
 	BEEP;
 	fprintf (stderr, "\n");
-	fprintf(stderr, "No 'dig_plus' file exists. Run import.vect first\n\n");
+	fprintf(stderr, _("No 'dig_plus' file exists. Run import.vect first\n\n"));
 	close_down (0);
 
 	Extended_Edit = 0;
@@ -380,7 +380,7 @@ T\n");
 	if (CMap->head.orig_scale == 0)
 	{
 	    BEEP;
-	    fprintf (stderr, "\r\n Original Scale is not set!\n");
+	    fprintf (stderr, _("\r\n Original Scale is not set!\n"));
 	    sleep (3);
 	    close_down(0);
 	}
@@ -445,7 +445,7 @@ T\n");
 		goto clean_up;
 	    }
 #ifdef FOO
-	if (curses_yes_no (2, "  Changes Made: Do you want to save this session? "))
+	if (curses_yes_no (2, _("  Changes Made: Do you want to save this session? ")))
 	{
 	    if ( 0 > write_out (1))
 	    {
@@ -455,7 +455,7 @@ T\n");
 	}
 	else
 	{
-	    if (curses_yes_no (2, "   Changes will be lost!  Do you want to save the session? "))
+	    if (curses_yes_no (2, _("   Changes will be lost!  Do you want to save the session? ")))
 		if (0 > write_out (1))
 		{
 		    ret = -1;
@@ -485,9 +485,9 @@ int last_words (
 	fclose (map->att_fp);
 	if (Changes_Made)
 	{
-	    if (curses_yes_no_default (3, "Do you want to compress the Atts file? ", 0))
+	    if (curses_yes_no_default (3, _("Do you want to compress the Atts file? "), 0))
 	    {
-		Write_info (3, "Updating Att file...");
+		Write_info (3, _("Updating Att file..."));
 		/* update the dig_att file to agree with the digit atts */
 		if (0 > unlink (map->att_file))
 		{
@@ -508,7 +508,7 @@ int last_words (
 			}
 		    }
 		    fclose (map->att_fp);
-		    Write_info (3, "Updating Att file... DONE.");
+		    Write_info (3, _("Updating Att file... DONE."));
 		}
 	    }
 	}
@@ -533,7 +533,7 @@ do_file_checks (struct Map_info *map)
 
     if ((fp = fopen (map->plus_file, "r+")) == NULL)
     {
-	G_fatal_error ("Can't open Plus file for final write\n");
+	G_fatal_error (_("Can't open Plus file for final write\n"));
     }
     dig_Rd_Plus_head (map, &Plus, fp);
     rewind (fp);
