@@ -18,7 +18,7 @@ int G_put_cell_title (char *name, char *title)
     FILE *in, *out;
     char *tempfile;
     int line ;
-    char buf[300];
+    char buf[1024];
 
     mapset = G_mapset() ;
     in = out = 0 ;
