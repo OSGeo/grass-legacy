@@ -22,7 +22,7 @@
 <BR>
 <B>r.in.gdal help</B> 
 <BR>
-<B>r.in.gdal [-o] [-e] input=</B><EM>name</EM>
+<B>r.in.gdal [-oek] input=</B><EM>name</EM>
 [<B>band=</B><EM>number</EM>]
 <B>output=</B><EM>name</EM> 
 [<B>target=</B><EM>name</EM>] 
@@ -49,6 +49,9 @@ imported file may also be optionally used to create a new location.
 the new map layer.  Old resolution is preserved, but the region, and rows/cols
 are updated.  This will fail if the user doesn't have write access to the
 PERMANENT mapset.
+
+<DT><B>-k</B>
+<DD>Keep band numbers instead of using band color names
 </DL>
 
 <H3>Parameters:</H3>

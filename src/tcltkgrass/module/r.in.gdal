@@ -7,4 +7,5 @@ interface_build {
     {entry band {Band to select (default is all bands):} 0 ""}
     {checkbox -o {Override projection (use locations projection).} "" -o}
     {checkbox -e {Extend location extents based on new dataset.} "" -e}
+    {checkbox -k {Keep band numbers instead of using band color names.} "" -k}
 }
