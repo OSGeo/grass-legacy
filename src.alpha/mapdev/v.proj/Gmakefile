@@ -1,0 +1,17 @@
+EXTRA_CFLAGS	=  $(VECT_INCLUDE) 
+
+
+OFILES = \
+	main.o setenv.o 
+
+SRCS = \
+	main.c setenv.c 
+
+
+$(BIN_ALPHA_CMD)/v.proj: $(OFILES) $(GPROJLIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(LIBPROJSUPP) $(LIBPROJ) 
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GPROJLIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(MATHLIB)
+
+$(GPROJLIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB): # 
+
+saber_src:
+	#load $(SRCS) $(GPROJLIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(MATHLIB)
