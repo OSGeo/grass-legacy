@@ -159,30 +159,16 @@ and<BR>
 Vlib, Vect_*(), VECTLIB_REAL, libvect.a, vector library, grass4.x<BR><BR>
 
 Vector library was introduced in grass4.0 to hide vector files' formats
-and structures. However in grass5.0 modules often access dig_plus structure
-directly. We want to go on in hiding structures and replace for example:
+and structures. 
+In GRASS 5.1 everything is accessed via Vect_* functions, for example:
 <PRE>
     xx = Map.Att[Map.Area[area_num].att].x;
 </PRE>by new function<PRE>
-    V2_get_area_centroid()
+    Vect_get_area_centroid()
+    Vect_get_centroid_coor()
 </PRE>
-Some functions used by modules in grass5.0 are still in Digit library and often cause
-circular references because depend on Vector library (VECTLIB must be used twice in Gmakefile). 
-These functions will be moved to Vector library and renamed from dig_*() to Vect_()
-(for example dig_point_to_area(), dig_point_in_area()).
-<P>
 
-As result of these changes there will be <i>common modules</i> which will
-access data only through these Vect_*() functions. Common modules are
-modules which do not write directly to the topology file i.e. neither build
-topology nor update files on level2. They can read vector maps on level 1 or
-level 2 but writes into the coor file (geometry) on level1 only.
 <P>
-But there are few <I>special modules</I> v.build, v.digit (more?) which must
-write into topo file. The v.build module will we probably replaced by
-Vect_build() function??? v.digit will continue too use dig_*() functions for
-direct access to topology file at least in grass5.1 or in the beginning of
-grass5.1.
 
 <HR>
 
@@ -214,6 +200,8 @@ int Vect_reset_cats (struct line_cats *);
 
 </PRE>
 
+And many, many others ...
+
 <HR>
 
 <H2><A NAME="attr">Attributes</A></H2>
@@ -221,7 +209,7 @@ int Vect_reset_cats (struct line_cats *);
 dig_cats files are not used any more and
 vectors' attributes are stored in external database.
 Connection with database is done through drivers based on DBMI library
-(odbc, dbf, informix drivers are available at this time). Records in table
+(odbc, dbf, Postgres and MySQL drivers are available at this time). Records in table
 are linked to vector entities by field and category number. 
 The field identifies table and the category identifies record.
 I.e. for unique combination map+mapset+field+category exists one
@@ -234,10 +222,6 @@ Each row in DB file contains names separated by spaces in following order
 
 <B>map[@mapset] field table [key [database [driver]]] </B><BR><BR>
 
-Please don't cry: "I don't need that, that is too complex!". If it
-realy is, you can survive with just one row from example nr. 1,
-but there are people who need more features in one map.
-<P>
 If key, database or driver are omited (on second and higher row only)
 last definition is used. Definition from DB file in other mapset
 may be overwritten by definition in current mapset if mapset is specified 
@@ -288,10 +272,6 @@ river 1 river id water odbc<BR>
 river.backup* 1 NONE<BR>
 could be used to say that tables should not be copied for backups of
 map river because table is stored in reliable RDBMS. 
-
-<P>
-Remarks are welcome.
-
 
 <HR>
 
