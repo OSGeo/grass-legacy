@@ -1,0 +1,93 @@
+# %W%  %G%
+
+LIST =  adjust.o\
+	cell_draw.o\
+	clear.o\
+	db_window.o\
+	disp_del.o\
+	disp_pat.o\
+	dlg_wr_hdr.o\
+	draw_box.o\
+	draw_map.o\
+	draw_ring.o\
+	erase_disp.o\
+	erase_poly.o\
+	erase_ring.o\
+	erase_tpol.o\
+	free_ring.o\
+	go_up_down.o\
+	init_menu.o\
+	input.o\
+	locate_pat.o\
+	loop_funcs.o\
+	los.o\
+	main.o\
+	max_dist.o\
+	misc.o scroll.o\
+	obs_elev.o\
+	outlne_box.o\
+	output_map.o\
+	p_coors.o\
+	paint_blk.o\
+	plot_pat.o\
+	pt_mouse.o\
+	pt_text.o\
+	quit.o\
+	raster_con.o\
+	refresh.o \
+	scroll_t.o\
+	set_conv.o\
+	store_land.o\
+	throw_text.o\
+	traj.o\
+	trans_cor.o\
+	trans_pat.o\
+	tty.o\
+	update.o\
+	write_text.o
+
+all: $(BIN)/range.place $(ETC)/range.rc help
+
+$(BIN)/range.place: $(LIST) $(DISPLAYLIB) $(DLGLIB) $(RASTERLIB) $(GISLIB) $(SEGMENTLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(DISPLAYLIB) $(DLGLIB) $(RASTERLIB) $(GISLIB) $(SEGMENTLIB) $(TERMLIB) $(MATHLIB)
+
+$(ETC)/range.rc: range.rc
+	rm -rf $@; cp $? $@; chmod +r $@
+
+help:
+	cp HELP $(HELP)/range.place ; chmod +r $(HELP)/range.place
+	cp MAN.cat $(MAN1)/range.place ; chmod +r $(MAN1)/range.place
+
+MAN.cat: MAN.nroff
+	$(MANROFF)
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
+$(SEGMENTLIB): #
+
+disp_pat.o: menu.h
+disp_pat.o: radians.h
+draw_box.o: menu.h
+draw_map.o: menu.h
+draw_ring.o: menu.h
+erase_poly.o: menu.h
+erase_ring.o: menu.h
+erase_tpol.o: menu.h
+free_ring.o: menu.h
+go_up_down.o: menu.h
+init_menu.o: menu.h
+input.o: menu.h
+locate_pat.o: radians.h
+loop_funcs.o: menu.h
+main.o: opt_new.h
+main.o: graphics.h
+main.o: menu.h
+main.o: dlg_conv.h
+main.o: radians.h
+misc.o: menu.h
+p_coors.o: dlg_conv.h
+pt_mouse.o: menu.h
+scroll.o: menu.h
+scroll_t.o: menu.h
+traj.o: point.h
+write_text.o: menu.h
