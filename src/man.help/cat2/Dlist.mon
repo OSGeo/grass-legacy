@@ -1,0 +1,72 @@
+
+
+
+Dlist.mon(2D)        GRASS Reference Manual         Dlist.mon(2D)
+
+
+
+NAME
+     Dlist.mon - List all GRASS device driver programs (monitors)
+     (D Language Tool)
+
+SYNOPSIS
+     Dlist.mon
+
+DESCRIPTION
+     Dlist.mon lists the names of the graphics programs which
+     drive graphic output devices.  These programs are called
+     device drivers or monitors.
+
+SEE ALSO
+     DINTRO[2D]         Introduction to the GRASS D tools
+     Drelease.mon[2D]   Relinquishes control of a graphics output device
+     Dselect.mon[2D]    Selects a graphics device for output
+     Dstart.mon[2D]
+
+                        Loads graphics device driver program (i.e., starts
+                        the monitor)
+     Dstatus.mon[2D]    Lists the status of all GRASS device driver programs
+     Dstop.mon[2D]      Terminates graphics device driver program
+     Dwhich.mon[2D]
+
+                        States which output device is currently selected for
+                        output
+     monitor[1]
+
+                        Highly-interactive menu-driven program performing
+                        all of the functions of the D monitor commands
+                        listed above
+     monitorcap[5]      Device driver database file format
+
+AUTHORS
+     Jean Ezell, U.S. Army Construction Engineering Research
+     Laboratory
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
