@@ -105,7 +105,7 @@ int execute_random (struct rr_state *theState)
     nc = (theState->use_nulls) ? theState->nCells : 
             theState->nCells - theState->nNulls ;
     nt = theState->nRand;
-    cat = 1;
+    cat = 0;
     for (row = 0; row < nrows && nt ; row++)
     {
         if (G_get_raster_row (infd, theState->buf.data.v, row, theState->buf.type) < 0)
@@ -177,7 +177,7 @@ int execute_random (struct rr_state *theState)
     }
             
     if (nt > 0)
-        G_warning("%s: Only created %d random sites",
+        G_warning("%s: Only created %ld random sites",
                 G_program_name(), theState->nRand - nt);
 
     /* close files */
