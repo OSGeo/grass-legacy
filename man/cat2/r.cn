@@ -1,0 +1,132 @@
+
+
+
+r.cn <alpha>	     GRASS Reference Manual	     <alpha> r.cn
+
+
+
+NAME
+     r.cn - Generates a	curve number map layer
+     (GRASS Raster Program)
+
+SYNOPSIS
+     r.cn
+     r.cn help
+     r.cn sg=name lu=name pr=name hc=name cn=name amc=value
+
+DESCRIPTION
+     r.cn generates a SCS Curve	Number map.
+
+OPTIONS
+     Parameters:
+
+     sg=name	       Raster input map	of hydrologic soil
+		       groups.
+
+     lu=name	       Raster input map	of landuse.
+
+     pr=name	       Raster input map	of cultural practice or
+		       management.
+
+     hc=name	       Raster input map	of hydrologic condition.
+
+     cn=name	       Raster output map of curve numbers.
+
+     amc=value	       Equivalent AMC condition	number for the
+		       curve number output.
+		       Options:	1-3
+
+
+     r.cn uses information from	the four map layers by reading
+     the cell layer and	its category files. So it is important to
+     update the	category files for all four layers and it expects
+     the categories of the map layer exactly as	shown below:
+
+     For the hydrologic	soil group map (sg=), the categories may
+     be	either A, B, C or D.
+
+     For the landuse map (lu=),	the categories may be either
+     fallow, row crops,	small grain, close-seeded legumes,
+     rotation meadow, pasture, range, meadow, woods, farmsteads,
+     roads (dirt) or hard surface.
+
+     For the cultural practice or management map layer the
+     categories	may be straight	row, contoured,	or contoured and
+     terraced.
+
+     For the hydrological condition map	the categories may be
+     poor, fair, or good.
+
+
+
+
+GRASS 4.2		Baylor University			1
+
+
+
+
+
+
+r.cn <alpha>	     GRASS Reference Manual	     <alpha> r.cn
+
+
+
+     If	the combination	of the four layers categories does not
+     exist in the SCS CN table,	an error message is printed and
+     the program quits.
+
+
+NOTE
+     The r.cn program is sensitive to the current window setting.
+     Thus the program can be used to generate a	CN map of any
+     sub-area within the full map layer. Also, r.cn is sensitive
+     to	any mask in effect.
+
+
+SEE ALSO
+     r.cn.urban
+
+
+AUTHORS
+     Raghavan Srinivasan, Bernie Engel,	and James Darrell
+     McCauley, Agricultural Engineering, Purdue	University
+
+NOTICE
+     This program is part of the alpha section of the GRASS
+     distribution.  Unlike the code in the main	section	of GRASS,
+     the alpha code has	not yet	been fully tested for one release
+     cycle.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.2		Baylor University			2
+
+
+
