@@ -99,7 +99,7 @@ main (int argc, char *argv[])
       else /* num_dblinks > 0 */
       {
        field = atoi ( fieldopt->answer );
-       fprintf(stdout,"Displaying column type for database connection of layer %d:\n", field);
+       fprintf(stderr,"Displaying column type for database connection of layer %d:\n", field);
        if ( (fi = Vect_get_field ( &Map, field)) == NULL)
           G_fatal_error("Database connection not defined");
        driver = db_start_driver(fi->driver);
