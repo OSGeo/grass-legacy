@@ -1,4 +1,4 @@
-$Id: BUGS,v 1.7 2001-04-02 08:57:38 markus Exp $
+$Id: BUGS,v 1.8 2003-02-26 17:36:10 markus Exp $
 
                            G3D bugs list
                   ---> Call for assistance <------
@@ -69,6 +69,11 @@ Check these modules:
    x and y changed (I have done this to get consistency with 2D GRASS and
    to avoid problems with Vis5D)
 
+
+- BUT: the consistency of r3.in.ascii and r3.out.ascii results looks like it
+  might be due to a double reversal, not correctness.  The fact that
+  r3.out.v5d and r3.mk/showdspf result in consistent displays may also only
+  be confirming the consistency of bugs in the two codes :-)
 
  - s.vol.idw/main.c
      for (lev = 0; lev < Nl; lev++)
