@@ -1,16 +1,15 @@
 /* Written by Bill Brown, UIUC GMSL Laboratory
  */
 
-#include <strings.h>
+#include <string.h>
+#include <stdlib.h>
 #include "pv.h"
 
 typedef int FILEDESC;
 
 struct Cell_head    W;
 
-main(argc, argv)
-    int argc;
-    char *argv[];
+int main(int argc, char *argv[])
 {
 
     struct Option 	*rast_el, *rast_co, *out;
@@ -200,6 +199,8 @@ double G_col_to_easting();
 /* TODO:
  * change scale & use G_distance for latlon to preserve meter units
 */
+
+int
 init_coordcnv(exag, w, min, max)
     double              exag, min, max;
     struct Cell_head    *w;
@@ -224,8 +225,10 @@ init_coordcnv(exag, w, min, max)
     else                                 /* depth biggest */
 	scaleY = scaleXZ = 1.0/Yrange;
 
+   return 0;
 }
 
+int
 do_coordcnv(dval, axis)
 double *dval;
 char axis;
@@ -248,6 +251,6 @@ double dret;
     }
     
     *dval = dret;
-
+    return 0;
 }
 

@@ -2,7 +2,7 @@
 #include "pv.h"
 
 
-
+void
 vrml_begin(vout)
 FILE *vout;
 {
@@ -21,6 +21,7 @@ FILE *vout;
 
 }
 
+void
 vrml_end(vout)
 FILE *vout;
 {
@@ -36,6 +37,7 @@ FILE *vout;
    just comment out the tab printing.
 */
 
+void
 vrml_putline(indent,vout,str)
 int indent;
 FILE *vout;
@@ -52,5 +54,4 @@ int i;
     if (indent > 0) ind += indent; /* post-increment */
     if(ind<0) ind = 0;
 }
-
 
