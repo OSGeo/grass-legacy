@@ -1041,7 +1041,7 @@ int Gs_load_3dview(char *vname, geoview *gv, geodisplay *gd,
 	/* Set FOV */
 	if (v.fov)
 	{
-	    GS_set_fov((int)(v.fov * 10.));
+          GS_set_fov((int)(v.fov > 0 ? v.fov * 10. + 0.5 : v.fov * 10. - 0.5));
 	}
 	else
 	{
@@ -1050,7 +1050,7 @@ int Gs_load_3dview(char *vname, geoview *gv, geodisplay *gd,
 
 	/* Set twist */
 	if (v.twist)
-	GS_set_twist((int)(v.twist*10.));
+          GS_set_twist((int)(v.twist > 0 ? v.twist + 0.5 : v.twist - 0.5));
 	
 
     	/* TODO:  OK to here - need to unravel/reverse lights stuff****/
