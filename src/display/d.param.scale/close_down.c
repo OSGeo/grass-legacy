@@ -18,4 +18,5 @@ close_down()
     R_close_driver();
     
     system("d.frame -s full_screen");
+    
 }
