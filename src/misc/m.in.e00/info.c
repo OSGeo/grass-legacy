@@ -75,7 +75,7 @@ int usecovnum = 1;
 int
 main( void) {
     char line[100];
-    extern int getinfo( char*, int);
+    extern int getinfo( char*, int, int);
 
     fdlog = stdout;
     do {
