@@ -29,6 +29,10 @@ trap "echo 'User break!' ; exit" 2 3 15
 GRASS_PERL=PERL_COMMAND
 export GRASS_PERL
 
+# Set GRASS version number for R interface etc (must be an env_var for MS-Windows)
+GRASS_VERSION="GRASS_VERSION_NUMBER"
+export GRASS_VERSION
+
 # Get the command name
 CMD_NAME=START_UP
 
