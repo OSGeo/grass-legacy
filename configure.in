@@ -157,6 +157,7 @@ LOC_ARG_WITH(png, PNG)
 LOC_ARG_WITH(gd, GD)
 LOC_ARG_WITH(tcltk, Tcl/Tk)
 LOC_ARG_WITH(postgres, PostgreSQL)
+LOC_ARG_WITH(mysql, MySQL, no)
 LOC_ARG_WITH(opengl, OpenGL)
 LOC_ARG_WITH(odbc, ODBC)
 LOC_ARG_WITH(fftw, FFTW)
@@ -205,6 +206,9 @@ LOC_ARG_WITH_LIB(tcltk, Tcl/Tk)
 
 LOC_ARG_WITH_INC(postgres, PostgreSQL)
 LOC_ARG_WITH_LIB(postgres, PostgreSQL)
+
+LOC_ARG_WITH_INC(mysql, MySQL)
+LOC_ARG_WITH_LIB(mysql, MySQL)
 
 LOC_ARG_WITH_INC(opengl, OpenGL)
 LOC_ARG_WITH_LIB(opengl, OpenGL)
@@ -698,7 +702,7 @@ LOC_CHECK_LIB_PATH(gd,GD,GDLIB)
 
 LOC_CHECK_LIBS(gd,gdImagePng,GD,$GDLIB,GDLIB,,,[
 LOC_CHECK_LIBS(gd,gdImageGif,GD,$GDLIB,GDLIB,,,)
-],$X_LIBS -lXpm $X_PRE_LIBS -lX11 $X_EXTRA_LIBS,-lfreetype,$JPEGLIBPATH $JPEGLIB,$PNGLIB)
+],$X_LIBS -lXpm $X_PRE_LIBS -lX11 $X_EXTRA_LIBS,-lfreetype,$JPEGLIBPATH $JPEGLIB,$PNGLIB,$MATHLIB)
 
 AC_CHECK_LIB(gd, gdImagePng, AC_DEFINE(HAVE_GDIMAGEPNG), [], $GDLIB)
 AC_CHECK_LIB(gd, gdImageGif, AC_DEFINE(HAVE_GDIMAGEGIF), [], $GDLIB)
@@ -827,6 +831,42 @@ AC_SUBST(PQLIBPATH)
 AC_SUBST(PQLIB)
 
 # Done checking PostgreSQL
+
+# Enable MySQL option
+
+LOC_CHECK_USE(mysql,MySQL,USE_MYSQL)
+
+MYSQLINCPATH=
+MYSQLLIBPATH=
+MYSQLLIB=
+
+if test -n "$USE_MYSQL"; then
+
+# With MySQL includes directory
+
+LOC_CHECK_INC_PATH(mysql,MySQL,MYSQLINCPATH)
+
+LOC_CHECK_INCLUDES(mysql/mysql.h,MySQL,$MYSQLINCPATH)
+
+fi # $USE_MYSQL
+
+if test -n "$USE_MYSQL"; then
+
+# With MySQL library directory
+
+LOC_CHECK_LIB_PATH(mysql,MySQL,MYSQLLIBPATH)
+
+LOC_CHECK_LIBS(mysqlclient,mysql_query,MySQL,$MYSQLLIBPATH,MYSQLLIB,,,)
+
+fi # $USE_MYSQL
+
+AC_SUBST(USE_MYSQL)
+
+AC_SUBST(MYSQLINCPATH)
+AC_SUBST(MYSQLLIBPATH)
+AC_SUBST(MYSQLLIB)
+
+# Done checking MySQL
 
 # Enable OpenGL option
 
@@ -1083,40 +1123,6 @@ if test -n "${USE_NLS}" ; then
     AC_DEFINE(USE_NLS)
 fi
 
-# Check for optional packages
-
-USE_TOGL=
-if test -n "${USE_TCLTK}" -a -n "${USE_OPENGL}" ; then
-    USE_TOGL="1"
-fi
-
-LOC_OPTIONAL(W11,W11,W11,src/display/devices/windows)
-
-LOC_OPTIONAL(XDRIVER,X11,XDRIVER,src/display/devices/XDRIVER)
-
-LOC_OPTIONAL(NVIZ,TOGL,NVIZ,src.contrib/GMSL/NVIZ2.2)
-
-LOC_OPTIONAL(PNGdriver,GD,PNGDRIVER,src/display/devices/PNGdriver)
-
-LOC_OPTIONAL(PostgreSQL programs,POSTGRES,POSTGRESQL,src.garden/grass.postgresql)
-
-LOC_OPTIONAL(ODBC library,ODBC,ODBC,src/libes/dbmi/drivers/odbc)
-
-LOC_OPTIONAL(xganim,MOTIF,XGANIM,src.contrib/GMSL/xganim)
-
-LOC_OPTIONAL(FreeType programs,FREETYPE,FREETYPE,src/display/d.text.freetype)
-
-LOC_OPTIONAL(NLS support,NLS,NLS,locale)
-
-AC_MSG_CHECKING(whether to build FFTW programs)
-AC_MSG_RESULT()
-LOC_OPTIONAL(i.fft,FFTW,I_FFT,src/imagery/i.fft)
-LOC_OPTIONAL(i.zc,FFTW,I_ZC,src/imagery/i.zc)
-LOC_OPTIONAL(r.surf.fractal,FFTW,R_SURF_FRACTAL,src/raster/r.surf.fractal)
-LOC_OPTIONAL(i.shape,FFTW,I_SHAPE,src.contrib/CERL/imagery/i.shape)
-
-# Done checking for optional packages
-
 USE_TERMIO=
 AC_SUBST(USE_TERMIO)
 
@@ -1141,6 +1147,11 @@ dnl cp -f config.status config.status.${ARCH}
 
 # Display configuration status
 
+USE_TOGL=
+if test -n "${USE_TCLTK}" -a -n "${USE_OPENGL}" ; then
+    USE_TOGL="1"
+fi
+
 LOC_MSG()
 LOC_MSG([GRASS is now configured for ${host}])
 LOC_MSG()
@@ -1160,6 +1171,7 @@ LOC_MSG_USE(PNG support,USE_PNG)
 LOC_MSG_USE(GD support,USE_GD)
 LOC_MSG_USE(Tcl/Tk support,USE_TCLTK)
 LOC_MSG_USE(PostgreSQL support,USE_POSTGRES)
+LOC_MSG_USE(MySQL support,USE_MYSQL)
 LOC_MSG_USE(OpenGL(R) support,USE_OPENGL)
 LOC_MSG_USE(ODBC support,USE_ODBC)
 LOC_MSG_USE(FFTW support,USE_FFTW)

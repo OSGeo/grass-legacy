@@ -26,13 +26,10 @@ OBJS 	=  \
 	select.o \
 	str.o \
 	table.o
-	
+
 ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 
 default: $(DRIVER)
 
 $(DRIVER): $(ARCH_OBJS) $(LIBES)
-	$(CC) -g $(LDFLAGS) -o $@ $(ARCH_OBJS) $(LIBES) -L/usr/local/lib/mysql -lmysqlclient $(MATHLIB) $(XDRLIB)
-
-
-
+	$(CC) -g $(LDFLAGS) -o $@ $(ARCH_OBJS) $(LIBES) $(MYSQLLIBPATH) $(MYSQLLIB) $(MATHLIB) $(XDRLIB)
