@@ -1,3 +1,5 @@
+/* $Id$ */
+
 #include <string.h>
 #include <stdlib.h>
 #include "local_proto.h"
@@ -27,7 +29,8 @@ char *str;
 	    fprintf (stderr, "can't open sites file [%s]\n", site[n]);
 	    return(1);
     }
-    fprintf(stderr,"loading %s...", site[n]);
+    if(verbose)
+	fprintf(stderr, "loading %s...", site[n]);
 
 
     /* load sites */
@@ -44,7 +47,8 @@ char *str;
     s_alloc = SITE_BLOCK;
 
     CurSites[n][snum] = G_site_new_struct (rtype, ndim, nstr, ndec);
-     fprintf(stderr,"NDIM=%d, RTYPE = %d, NSTR=%d, NDEC=%d\n",
+    if(verbose)
+	fprintf(stderr, "NDIM=%d, RTYPE = %d, NSTR=%d, NDEC=%d\n",
 		     ndim, rtype, nstr, ndec );
 
     while(G_site_get (fp, CurSites[n][snum]) >= 0){
