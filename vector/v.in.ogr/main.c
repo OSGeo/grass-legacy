@@ -190,6 +190,8 @@ main (int argc, char *argv[])
 	Ogr_field = OGR_FD_GetFieldDefn( Ogr_featuredefn, i );
 	Ogr_ftype = OGR_Fld_GetType( Ogr_field );
 	
+	G_debug(3, "Ogr_ftype: %i", Ogr_ftype); /* look up below */
+	
 	/* auto-replace '#', '-' and '.' characters in columns with underscore for DBMI
 	 * allowed are: [A-Za-z][A-Za-z0-9_]*
 	 */
@@ -198,14 +200,28 @@ main (int argc, char *argv[])
 	namebuf3      = G_strchg(namebuf2, '-', '_');
 	Ogr_fieldname = G_strchg(namebuf3, '.', '_');
 
+  /** Simple 32bit integer                     OFTInteger = 0        **/
+  /** List of 32bit integers                   OFTIntegerList = 1    **/
+  /** Double Precision floating point          OFTReal = 2           **/
+  /** List of doubles                          OFTRealList = 3       **/
+  /** String of ASCII chars                    OFTString = 4         **/
+  /** Array of strings                         OFTStringList = 5     **/
+  /** Double byte string (unsupported)         OFTWideString = 6     **/
+  /** List of wide strings (unsupported)       OFTWideStringList = 7 **/
+  /** Raw Binary data (unsupported)            OFTBinary = 8         **/
+
 	if( Ogr_ftype == OFTInteger ) { 
 	    sprintf (buf, ", %s integer", Ogr_fieldname );
+	} else if( Ogr_ftype == OFTIntegerList ) {
+	    /* hack: treat as string */
+	    sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, 40 );
+	    G_warning ( "Writing column <%s> with fixed length 40 chars (may be truncated)", Ogr_fieldname);
 	} else if( Ogr_ftype == OFTReal ) { 
 	    sprintf (buf, ", %s double precision", Ogr_fieldname );
 	} else if( Ogr_ftype == OFTString ) { 
 	    sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, OGR_Fld_GetWidth(Ogr_field) );
-	} else if( Ogr_ftype == OFTIntegerList ) {
-	    /* treat as string */
+	} else if( Ogr_ftype == OFTStringList ) {
+	    /* hack: treat as string */
 	    sprintf (buf, ", %s varchar ( %d )", Ogr_fieldname, 40 );
 	    G_warning ( "Writing column <%s> with fixed length 40 chars (may be truncated)", Ogr_fieldname);
 	} else {
