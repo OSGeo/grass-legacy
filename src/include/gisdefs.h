@@ -622,7 +622,7 @@ char *G_database_unit_name(int);
 char *G_database_projection_name(void);
 double G_database_units_to_meters_factor(void);
 char *G_database_datum_name();
-char *G_database_ellipse_name();;
+char *G_database_ellipse_name();
 /* put_cellhd.c */
 int G_put_cellhd(char *, struct Cell_head *);
 /* put_row.c */
