@@ -1,3 +1,5 @@
+/* 1/28/98 change from Jacques Bouchard <bouchard@onera.fr> */
+
 #include "dxf2vect.h"
 
 
@@ -56,7 +58,7 @@ dxf_add_extents ()
 #ifdef DEBUG
 	fprintf(stderr,"open_layers %s\n",closed_layers[count].name);
 #endif
-	sprintf (filename, "%s.%s", basename, closed_layers[count].name);
+	sprintf (filename, "%s.%s", base_name, closed_layers[count].name);
 
 	/* temporarily reopen file */
 	if(!ascii_flag->answer) /* FOR USE IN BINARY FILE */
