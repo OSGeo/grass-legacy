@@ -6,12 +6,10 @@ int get_available_mapsets (void)
 {
     char **ms;
 
-    nmapsets = 0;
-
     ms = G_available_mapsets();
 
-    while ( ms[nmapsets] )
-        mapset_name[nmapsets++] = G_store (ms[nmapsets]);
+    for (nmapsets = 0; ms[nmapsets]; nmapsets++)
+        mapset_name[nmapsets] = G_store (ms[nmapsets]);
 
     return 0;
 }
