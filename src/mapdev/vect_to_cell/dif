@@ -1,0 +1,62 @@
+11a12
+>  *  Modified 8/89 by Dave Gerdes to better support sites
+95a97,99
+> 	if ((mapset = G_find_file2 ("dig", argv[1], "")) == NULL)
+> 	    G_fatal_error ("Could not find DIG file %s\n", argv[1]);
+> 
+98c102
+< 	if (dig_P_init(argv[1], mapset = G_mapset (), &Map ) == -1 )
+---
+> 	if (dig_P_init(argv[1], mapset, &Map ) == -1 )
+196d199
+< 	printf( "Step 3: Creating Line information...   ") ;
+203a207,214
+> 	printf( "Step 4: Creating Site information...   ") ;
+> 	start_clock (NULL);
+> 	pkgs = do_sites(&Map, &header) ;
+> 	if (pkgs < 0)
+> 		G_fatal_error("Working on digit sites.") ;
+> 	packages += pkgs ;
+> 	stop_clock (NULL);
+> 
+206c217
+< 	printf( "Step 4: Creating cell file...          ") ;
+---
+> 	printf( "Step 5: Creating cell file...          ") ;
+499a511
+> 
+571a584
+>     return (num_areas);
+635c648,649
+< 	    *y += .00001;
+---
+> 	    *y *= 1.000000000001;
+> 	    /* *y += .00001; */
+655c669,672
+<     double totalarea, cent_x, cent_y, south;
+---
+>     double totalarea;
+>     /*
+>     double cent_x, cent_y, south;
+>     */
+658a676
+>     /* 3.1
+659a678,679
+>     */
+>     dig_find_area2 (map, &(map->Area[area]), &totalarea);
+707c727
+<     for (i = 1 ; i < map->n_atts ; i++)
+---
+>     for (i = 1 ; i <= map->n_atts ; i++)
+726,727c746,747
+<     Clargest = largest;
+<     Csmallest = smallest;
+---
+>     Clargest =  largest;
+>     Csmallest =  smallest;
+731,732c751,752
+<     Slargest = largest;
+<     Ssmallest = smallest;
+---
+>     Slargest = (short) largest;
+>     Ssmallest = (short) smallest;
