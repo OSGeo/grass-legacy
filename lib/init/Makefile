@@ -111,7 +111,11 @@ $(ETC)/epsg_option.tcl: epsg_option.tcl
 $(ETC)/make_location_epsg_g57.sh: make_location_epsg_g57.sh
 	rm -f $@
 	$(INSTALL) -m 755 make_location_epsg_g57.sh $(ETC)
-$(ETC)/grass-run.sh: grass-run.sh
+
+$(ETC)/grass-run.sh: grass-run.src
 	rm -f $@
-	$(INSTALL) -m 755 grass-run.sh $(ETC)
+	$(SHELL) -c "sed \
+	-e \"s#LD_LIBRARY_PATH_VAR#$(LD_LIBRARY_PATH_VAR)#g\" \
+	grass-run.src > $@"
+	chmod +x $@
 
