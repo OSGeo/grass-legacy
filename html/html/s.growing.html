@@ -1,0 +1,254 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>s.growing</title>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+</head>
+<body>
+<h2>NAME</h2>
+<em><b>s.growing</b></em>
+<h2>SYNOPSIS</h2>
+<b>s.growing</b><br>
+<b>s.growing help</b><br>
+<b>s.growing</b> [-<b>o</b>] <b>input</b>=<em>string</em> <b>first</b>=<em>string</em>
+<b>output</b>=<em>string</em> [<b>Tj</b>=<em>float</em>] [<b>Td</b>=<em>float</em>]
+<h2>DESCRIPTION</h2>
+<em>s.growing</em> allows <span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">the filling
+of the inner part of an object, starting from a site file containing
+the edges classification
+output of the command
+s.edgedetections.<br>
+<br>
+</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">This command
+is part of a procedure to filter </span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">airbone
+laser scanning (LIDAR) data in order to extract Digital Terrain Model.<br>
+The procedure involves the execution of the following</span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">
+commands:<br>
+1) s.edgedetection - 2) s.growing - 3) s.correction - </span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">4)
+s.bspline.reg<br>
+<br>
+example of batch file to process LIDAR data:<br>
+</span>
+<div style="margin-left: 40px;"><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><span
+ style="font-style: italic;">g.region site4 res=2</span></span><br
+ style="font-style: italic;">
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><span
+ style="font-style: italic;">s.edgedetection input=4newLast.txt
+outClas=4class Sge=4 Sgn=4 lambda_r=2</span></span><br
+ style="font-style: italic;">
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><span
+ style="font-style: italic;">s.growing input=4class
+first=4FirstPulse.txt output=4grow</span></span><br
+ style="font-style: italic;">
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><span
+ style="font-style: italic;">s.correction input=4grow&nbsp;&nbsp;
+output=4corr_1 out_ter=4ter Sce=50 Scn=50 lambda_c=5 Tc=1 tc=0.5</span></span><br
+ style="font-style: italic;">
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><span
+ style="font-style: italic;">s.correction input=4corr_1
+output=4corr&nbsp;&nbsp; out_ter=4ter Sce=50 Scn=50 lambda_c=5 Tc=1
+tc=0.5</span></span><br style="font-style: italic;">
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><span
+ style="font-style: italic;">s.bspline.reg -g input=4ter
+output=4dtm.rast Sie=4 Sin=4 type=bilinear lambda_i=0.1</span></span><br
+ style="font-style: italic;">
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><span
+ style="font-style: italic;">s.to.qrast input=4class rast=4class.rast
+type=max findex=1</span></span><br style="font-style: italic;">
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><span
+ style="font-style: italic;">s.to.qrast input=4grow&nbsp;
+rast=4grow.rast&nbsp; type=max findex=1</span></span><br
+ style="font-style: italic;">
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><span
+ style="font-style: italic;">s.to.qrast input=4corr&nbsp;
+rast=4corr.rast&nbsp; type=max findex=1</span></span><br
+ style="font-style: italic;">
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><span
+ style="font-style: italic;">r.mapcalc
+4diff.rast=4newLast.rast-4dtm.rast</span></span><br>
+</div>
+<h2>OPTIONS</h2>
+The user can run this program either interactively
+or non- interactively. The program is ran non-interactively if the
+user
+specifies program arguments and flag settings on the command line using
+the
+form:<br>
+<br>
+s.growing [-o] input=<em>string</em> first=<em>string</em> output=<em>string</em>
+[Tj=<em>float</em>] [Td=<em>float</em>]<br>
+<br>
+Alternately, the user can simply type <span style="font-style: italic;">s.growing</span>
+on the command
+line without program arguments. In this case, the user will be prompted
+for parameter values and flag settings using the standard GRASS parser
+interface described in the manual entry for<i> parser</i>.<br>
+<br>
+<h3>Flags:</h3>
+<dl>
+  <dt><b>-o</b> </dt>
+  <dd>without region growing procedure?</dd>
+</dl>
+<h3>Parameters:</h3>
+<dl>
+  <dt><b>input</b>=<em>string</em> </dt>
+  <dd>input last pulse observation sites list file name</dd>
+  <dt><b>first</b>=<em>string</em> </dt>
+  <dd>input first pulse sites list file name (s.bordilaser output)</dd>
+  <dt><b>output</b>=<em>string</em> </dt>
+  <dd>output classificated sites list file name</dd>
+  <dt><b>Tj</b>=<em>float</em> </dt>
+  <dd>threshold for cell object frequency in region growing</dd>
+  <dd>Default: <em>0.2</em></dd>
+  <dt><b>Td</b>=<em>float</em> </dt>
+  <dd>threshold for double pulse in region growing</dd>
+  <dd>Default: <em>0.6</em></dd>
+</dl>
+<div style="text-align: left;">
+<h2>NOTES</h2>
+The data are
+rasterized with a
+resolution r<sub>d</sub> equal to the minimum data raw density. The
+algorithm computes the
+mean height value of the points belonging to each cell and assignes it
+this value. For
+each cell
+the presence of points with double pulse is evaluated (difference
+between first
+and last pulse greater than <span style="font-style: italic;">T</span><sub
+ style="font-style: italic;">d</sub>). Starting from the cells
+classified
+as &#8216;edge&#8217; and with only one pulse, all the linked cells are found and a
+convex
+hull algorithm (De Berg et al. 2000, O&#8217;Rourke 1998) is applied on them,
+computing at the same time the mean of the corresponding heights (mean
+edge
+height). The points inside the convex hull are classified as objects in
+case
+their height is greater or equal to the previously mean computed edge
+height.<br>
+<span lang="EN-GB" style="">Obviously the method proposed works
+better in case of data with high planimetric resolution and it is
+practically
+inapplicable to data with density lower than 0.18 points per square
+metre,
+corresponding to a point spacing of about 2.0 - 3.5 m. <br>
+</span><span lang="EN-US" style=""><br>
+</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">Every point
+of the input site file is examinated and classified as:</span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><br>
+</span><span lang="EN-GB" style="font-family: Symbol;"><span style="">&middot;<span
+ style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-stretch: normal; font-size-adjust: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">terrain (0)<br>
+</span><span lang="EN-GB" style="font-family: Symbol;"><span style="">&middot;<span
+ style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-stretch: normal; font-size-adjust: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">terrain with
+double pulse (1)<br>
+</span><span lang="EN-GB" style="font-family: Symbol;"><span style="">&middot;<span
+ style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-stretch: normal; font-size-adjust: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">object with
+double pulse (2)<br>
+</span><span lang="EN-GB" style="font-family: Symbol;"><span style="">&middot;<span
+ style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-stretch: normal; font-size-adjust: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">object (3)</span><span
+ lang="EN-US" style=""><o:p></o:p></span><br>
+<span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;; font-style: italic;"><br>
+</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><span
+ style="font-style: italic;">input </span>format </span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">example</span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"> </span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">(x|y|z)</span>:<br>
+<br>
+<div style="margin-left: 40px;"><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">499827.48|5418882.79|#0
+%247.49 %0 %247.06513365 <br>
+499827.1|5418870.68|#0 %246.7 %0 %246.32005415 <br>
+499826.72|5418858.43|#0 %245.7 %1 %245.59059607 <br>
+499826.33|5418846.07|#0 %244.65 %0 %244.9670436 <br>
+499825.96|5418833.6|#0 %244.23 %2 %244.52604082 </span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"></span>
+</div>
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><br>
+</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><span
+ style="font-style: italic;">first </span>format </span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">example</span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"> </span><span
+ lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">(x|y|z)</span>:<br>
+<br>
+<div style="margin-left: 40px;"><span
+ style="font-family: &quot;times new roman&quot;;">499449.89|5418727.62|#3 %254.70</span><br>
+<span style="font-family: &quot;times new roman&quot;;">499449.44|5418723.09|#4
+%260.55</span><br>
+<span style="font-family: &quot;times new roman&quot;;">499449.63|5418721.88|#5
+%255.19</span><br>
+<span style="font-family: &quot;times new roman&quot;;">499449.56|5418648.45|#6
+%254.33</span><br>
+<span style="font-family: &quot;times new roman&quot;;">499449.89|5418652.11|#7
+%250.67</span><br>
+<span style="font-family: &quot;times new roman&quot;;">499449.74|5418653.86|#8
+%256.03</span><br>
+</div>
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"></span><br>
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><span
+ style="font-style: italic;">output </span>format
+example (</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">x|y|z%classification%bicubic_interpolated_value):</span><br>
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">&nbsp;</span><br>
+<div style="margin-left: 40px;"><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">499453.39|5418722.51|#0
+%245.99 %1 <br>
+499453.52|5418725.56|#0 %246.19 %1 <br>
+499453.67|5418728.67|#0 %246.2 %2 <br>
+499453.81|5418731.8|#0 %246.2 %3 <br>
+499453.9|5418734.65|#0 %247.13 %0 <br>
+499454.66|5418734.31|#0 %246.99 %0&nbsp;</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"></span>
+</div>
+<br>
+<h2>SEE ALSO</h2>
+s.correction, s.bspline, s.edgedetection, s.to.qrast
+<h2>AUTHORS</h2>
+<span lang="IT" style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">Maria
+A. Brovelli, Politecnico di Milano - Campus Como<br>
+Massimiliano Cannata</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">, Politecnico
+di Milano - Campus Como<br>
+</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">Ulisse M.
+Longoni</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;">, Politecnico
+di Milano - Campus Como</span><span lang="IT"
+ style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><br>
+</span>
+<h2>REFERENCES</h2>
+<p class="MsoBodyTextIndent"><font class="textcitation">Brovelli M.A.;
+Cannata M.; Longoni U.M., </font><font class="head2"><span
+ style="font-style: italic;">LIDAR Data Filtering and DTM Interpolation
+Within GRASS</span><br>
+</font> Transactions in GIS, April 2004, vol. 8, no. 2, pp.
+155-174(20)&nbsp; - Blackwell Publishing Ltd</p>
+<p class="MsoBodyTextIndent"><span lang="EN-GB"
+ style="font-size: 12pt; color: black;">De
+Berg M, van Kreveld M, Overmars M and Schwarzkopf 2000 <i style="">Computer
+Geometry: algorithms and applications</i>. Uthrecht, The </span><st1:country-region><st1:place><span
+ lang="EN-GB" style="font-size: 12pt; color: black;">Netherlands</span></st1:place></st1:country-region><span
+ lang="EN-GB" style="font-size: 12pt; color: black;">. Springer Verlag</span><br>
+</p>
+</div>
+</body>
+</html>
