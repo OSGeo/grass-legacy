@@ -372,9 +372,9 @@ int main (int argc, char *argv[])
     }
     else Wrap = 0;
 
-    /* H = window.ew_res * 4 * 2/ zfactor;  /* horizontal (east-west) run 
+    /* H = window.ew_res * 4 * 2/ zfactor;*/  /* horizontal (east-west) run 
                                    times 4 for weighted difference */
-    /* V = window.ns_res * 4 * 2/ zfactor;  /* vertical (north-south) run 
+    /* V = window.ns_res * 4 * 2/ zfactor;*/  /* vertical (north-south) run 
                                    times 4 for weighted difference */
 
     G_begin_distance_calculations();
@@ -794,7 +794,7 @@ int main (int argc, char *argv[])
             }
 	    else if(perc && out_type == CELL_TYPE) 
 	/* INCR_BY_ONE*/
-                   /* test = slp_in_perc + 1.5;  /* All the slope categories are
+                   /* test = slp_in_perc + 1.5;*/  /* All the slope categories are
 						        incremented by 1 */
                    test = slp_in_perc + .5;
 
