@@ -60,7 +60,7 @@ OPERATORS AND ORDER OF PRECEDENCE
 
 
 
-GRASS 5.0beta7	      GRASS Development Team			1
+GRASS 5.0beta9	      GRASS Development Team			1
 
 
 
@@ -90,6 +90,8 @@ r.mapcalc <main>      GRASS Reference Manual	 <main> r.mapcalc
      1
 	  ||	     or					 Logical
      1
+	  #	     color separator operator
+     Arithmetic
 
 
      The operators are applied from left to right, with those of
@@ -121,12 +123,10 @@ RASTER MAP LAYER NAMES
 
      Also
 
-     x = 3107
 
 
 
-
-2		      GRASS Development Team	   GRASS 5.0beta7
+2		      GRASS Development Team	   GRASS 5.0beta9
 
 
 
@@ -136,6 +136,8 @@ RASTER MAP LAYER NAMES
 r.mapcalc <main>      GRASS Reference Manual	 <main> r.mapcalc
 
 
+
+     x = 3107
 
      would create x filled with the number 3107, while
 
@@ -187,12 +189,10 @@ RASTER MAP LAYER VALUES FROM THE
 
      For example, suppose that the raster map layer soil.ph
      (representing soil pH values) has a category file with
-     labels as follows:
 
 
 
-
-GRASS 5.0beta7	      GRASS Development Team			3
+GRASS 5.0beta9	      GRASS Development Team			3
 
 
 
@@ -202,6 +202,8 @@ GRASS 5.0beta7	      GRASS Development Team			3
 r.mapcalc <main>      GRASS Reference Manual	 <main> r.mapcalc
 
 
+
+     labels as follows:
 
      cat  label ------------------ 0	no data
 
@@ -256,9 +258,7 @@ GREY SCALE EQUIVALENTS AND COLOR SEPARATES
 
 
 
-
-
-4		      GRASS Development Team	   GRASS 5.0beta7
+4		      GRASS Development Team	   GRASS 5.0beta9
 
 
 
@@ -324,7 +324,7 @@ FUNCTIONS
 
 
 
-GRASS 5.0beta7	      GRASS Development Team			5
+GRASS 5.0beta9	      GRASS Development Team			5
 
 
 
@@ -345,6 +345,7 @@ r.mapcalc <main>      GRASS Reference Manual	 <main> r.mapcalc
      window
       ewres()		     current east-west resolution
       nsres()		     current north-south resolution
+      null()		     NULL value
 
 
 FLOATING POINT VALUES IN THE EXPRESSION
@@ -368,6 +369,66 @@ FLOATING POINT VALUES IN THE EXPRESSION
      map will be integer. If you want to get a float result, add
      the decimal point to integer number(s).
 
+NULL support
+     Division by zero should result in NULL.  Modulus by zero
+     should result in NULL.
+	  NULL-values in any arithmetic operation should result
+     in NULL.
+	  NULL-values in logical operations should be handled as
+     follows:
+
+		   NULL || true = true
+		   NULL || false = NULL
+		   NULL || NULL = NULL
+		   NULL && true = NULL
+		   NULL && false = false
+		   NULL && NULL = NULL
+
+	  NULL-values in function arguments should result in
+     NULL.
+	  Even though this is also true for the if() function,
+
+
+
+6		      GRASS Development Team	   GRASS 5.0beta9
+
+
+
+
+
+
+r.mapcalc <main>      GRASS Reference Manual	 <main> r.mapcalc
+
+
+
+     if() is spelled out here for clarification:
+
+	  if(x)
+	      NULL if x is NULL; 0 if x is zero; 1 otherwise
+	  if(x,a)
+	      NULL if x is NULL; a if x is non-zero; 0 otherwise
+	  if(x,a,b)
+	      NULL if x is NULL; a if x is non-zero; b otherwise
+	  if(x,n,z,p)
+	      NULL if x is NULL; n if x is negative;	   z if x
+     is zero; p if x is positive
+
+	  Exceptions: The (new) function isnull(x) returns: 1 if
+     x is NULL;
+		      0 otherwise. The (new) function null()
+		      (which has no arguments) returns an integer
+     NULL.
+
+     Non-NULL, but invalid, arguments to functions should result
+     in NULL.
+
+	  Examples:
+	  log(-2)
+	  pow(a,b) where a is negative and b is not an integer
+
+	  Exception: sqrt(-n) returns -sqrt(n)
+
+
 EXAMPLES
      To compute the average of two raster map layers a:
 
@@ -387,10 +448,15 @@ EXAMPLES
 
 	  mask = if(a)
 
+     To mask raster map layer b:
+
+	  result = if(a,b)
+
+     To change all map values below 5 to NULL:
 
 
 
-6		      GRASS Development Team	   GRASS 5.0beta7
+GRASS 5.0beta9	      GRASS Development Team			7
 
 
 
@@ -401,9 +467,7 @@ r.mapcalc <main>      GRASS Reference Manual	 <main> r.mapcalc
 
 
 
-     To mask raster map layer b:
-
-	  result = if(a,b)
+	     newmap = if(map<5, null(), 5)
 
 
 REGION/MASK
@@ -453,10 +517,12 @@ NOTES
      overwritten.  Otherwise, the result raster map layer will
      automatically be overwritten if it exists.
 
+     Quoting result is not allowed.  However, it is never
+     necessary to quote result since it is always taken to be a
 
 
 
-GRASS 5.0beta7	      GRASS Development Team			7
+8		      GRASS Development Team	   GRASS 5.0beta9
 
 
 
@@ -467,8 +533,6 @@ r.mapcalc <main>      GRASS Reference Manual	 <main> r.mapcalc
 
 
 
-     Quoting result is not allowed.  However, it is never
-     necessary to quote result since it is always taken to be a
      raster map layer name.
 
      For formulas that the user enters from standard input
@@ -522,7 +586,9 @@ SEE ALSO
 
 
 
-8		      GRASS Development Team	   GRASS 5.0beta7
+
+
+GRASS 5.0beta9	      GRASS Development Team			9
 
 
 
@@ -588,7 +654,7 @@ AUTHOR
 
 
 
-GRASS 5.0beta7	      GRASS Development Team			9
+10		      GRASS Development Team	   GRASS 5.0beta9
 
 
 

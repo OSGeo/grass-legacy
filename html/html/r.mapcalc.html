@@ -496,6 +496,49 @@ Note: If you calculate with integer numbers, the resulting map will
 be integer. If you want to get a float result, add the decimal point
 to integer number(s).
 
+<H2>NULL support</H2>
+
+<menu>
+<li>Division by zero should result in NULL. 
+<li>Modulus by zero should result in NULL. 
+<li>     NULL-values in any arithmetic operation should result in NULL. 
+<li>     NULL-values in logical operations should be handled as follows: 
+<pre>
+              NULL || true = true 
+              NULL || false = NULL 
+              NULL || NULL = NULL 
+              NULL && true = NULL 
+              NULL && false = false 
+              NULL && NULL = NULL 
+</pre>
+<li>     NULL-values in function arguments should result in NULL. 
+<li>     Even though this is also true for the if() function, 
+	 if() is spelled out here for clarification: 
+<pre>
+     if(x) 
+         NULL if x is NULL; 0 if x is zero; 1 otherwise 
+     if(x,a) 
+         NULL if x is NULL; a if x is non-zero; 0 otherwise 
+     if(x,a,b) 
+         NULL if x is NULL; a if x is non-zero; b otherwise 
+     if(x,n,z,p) 
+         NULL if x is NULL; n if x is negative; 
+	 z if x is zero; p if x is positive 
+
+     Exceptions: The (new) function isnull(x) returns: 1 if x is NULL; 
+                 0 otherwise. The (new) function null() 
+                 (which has no arguments) returns an integer NULL. 
+</pre>
+<li>Non-NULL, but invalid, arguments to functions should result in NULL. 
+<pre>
+     Examples: 
+     log(-2) 
+     pow(a,b) where a is negative and b is not an integer 
+
+     Exception: sqrt(-n) returns -sqrt(n) 
+</pre>
+</menu>
+
 <H2>EXAMPLES</H2>
 
 To compute the average of two raster map layers
