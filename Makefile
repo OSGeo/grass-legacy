@@ -9,7 +9,7 @@
 # PURPOSE:  	It provides the commands necessary to compile, install,
 #		clean, and uninstall GRASS
 #		See INSTALL file for explanations.
-# COPYRIGHT:    (C) 2002 by the GRASS Development Team
+# COPYRIGHT:    (C) 2002,2004 by the GRASS Development Team
 #
 #               This program is free software under the GNU General Public
 #   	    	License (>=v2). Read the file COPYING that comes with GRASS
@@ -106,25 +106,16 @@ libs:
 	-cp -f $(FILES) ${ARCH_DISTDIR}/
 	-cp -fr --parents include ${ARCH_DISTDIR}/
 
+#we leave this target for a while so that people can easily upgrade (11/2004):
 mix:
-	GRASS_PERL=${PERL} sh ./tools/link -old=$(GRASS50) -new=./ -conf=./tools/link.conf
-
-copymix:
-	GRASS_PERL=${PERL} sh ./tools/link -copy -old=$(GRASS50) -new=./ -conf=./tools/link.conf
-	echo "Mixed with" > MIX
-	cat $(GRASS50)/src/CMD/VERSION >> MIX
-	cat $(GRASS50)/src/CMD/RELEASE >> MIX
+	@echo "NOTE: 'make mix' is no longer needed (changed 9 Nov 2004)"
 
 mixclean:
-	@list='$(SUBDIRS)'; \
+	@list='include $(SUBDIRS)'; \
 	for subdir in $$list; do \
 		find $$subdir -type l -exec rm {} \; 2>/dev/null; \
 	done
 	-rm -f MIX 
-
-# Copy binary modules
-binmix:
-	GRASS_PERL=${PERL} sh ./tools/cpbin -old=$(GRASS50)/dist.$(ARCH) -new=dist.$(ARCH) -conf=./tools/cpbin.conf
 
 # Any target that has a dependency on this target will be forced to be made.
 # If we switch to GNU Make then this feature can be replaced with .PHONY
@@ -267,10 +258,9 @@ bindist:
 	    binaryInstall.src > grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}-${ARCH}-$$date-install.sh ; \
 	    chmod a+x grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}-${ARCH}-$$date-install.sh 2>/dev/null
 
-# make a source package for distribution (we include the 5.3.0 stuff):
+# make a source package for distribution:
 srcdist: FORCE distclean
 	-${MAKE_DIR_CMD} ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
-	cp ./MIX ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}/SRCPKG
 
 	@ # needed to store code in package with grass-version path:
 	-mv * ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
@@ -281,10 +271,9 @@ srcdist: FORCE distclean
 	-rmdir ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
 	@ echo "Distribution source package: grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}.tar.gz ready."
 
-# make a source package for library distribution (we include the 5.3.0 stuff):
+# make a source package for library distribution:
 srclibsdist: FORCE distclean
 	-${MAKE_DIR_CMD} ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}
-	cp ./MIX ./grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}/SRCPKG
 
 	@ # needed to store code in package with grass-version path:
 	-cp -L * ./grass-lib-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}

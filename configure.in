@@ -8,7 +8,7 @@
 # PURPOSE:  	This configure runs all the tests to determine what components
 #   	    	are installed on the current system. It also defines certain
 #   	    	configuration variables for compilation and installation.
-# COPYRIGHT:    (C) 2000 by the GRASS Development Team
+# COPYRIGHT:    (C) 2000,2004 by the GRASS Development Team
 #
 #               This program is free software under the GNU General Public
 #   	    	License (>=v2). Read the file COPYING that comes with GRASS
@@ -28,21 +28,6 @@ AC_PREFIX_DEFAULT(/usr/local)
 AC_CONFIG_HEADER(include/config.h)
 AC_CANONICAL_HOST
 AC_PROG_CC
-
-# GRASS50
-AC_ARG_WITH(grass50,
-[  --with-grass50=DIR      absolute path to GRASS 5 CVS HEAD source directory])
-
-if test ! -f ./SRCPKG; then
-    AC_MSG_CHECKING(for GRASS 5 CVS HEAD source code)
-    if test -d "$with_grass50"; then
-	GRASS50="$with_grass50"
-    else
-	AC_MSG_ERROR([*** GRASS 5 source directory \"$with_grass50\" does not exist.])
-    fi
-
-    AC_SUBST(GRASS50)
-fi
 
 # Check for full floating-point support, including Infinity and NaN
 IEEEFLAG=
@@ -1192,17 +1177,10 @@ AC_SUBST(STRIPFLAG)
 GRASS_HOME=${DSTDIR}
 AC_SUBST(GRASS_HOME)
 
-#remove first to avoid link tool problems (5.0 links):
-
-\rm -f include/version.h include/winname.h
 AC_OUTPUT(include/Make/Grass.make include/Make/Platform.make include/version.h include/winname.h)
 
-# Generate files for conventional (non-gmake5) build
-
-dnl cp -f src/CMD/head/head mk/vars.mk
-
-dnl LOC_MSG([Copying config.status to config.status.${ARCH}])
-dnl cp -f config.status config.status.${ARCH}
+LOC_MSG([Copying config.status to config.status.${ARCH}])
+cp -f config.status config.status.${ARCH}
 
 # Display configuration status
 
