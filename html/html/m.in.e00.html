@@ -16,7 +16,7 @@ NAME</h2>
 SYNOPSIS</h2>
 <b>m.in.e00</b>
 <br><b>m.in.e00</b> [<b>-idts</b>] <b>input=</b><i>name</i> [<b>mapset=</b><i>name</i>]
-[<b>action=</b><i>what to do</i>] [<b>verbose=</b><i>debug level</i>] [<b>logfile=</b><i>name</i>]
+[<b>action=</b><i>what to do</i>] [<b>verbose=</b><i>debug level</i>] [<b>logfile=</b><i>name</i>] [<b>list=</b><i>name,name,name...</i>]
 <h2>
 DESCRIPTION</h2>
 The m.in.e00 program is designed to import ESRI Arc/Info e00 ascii archives.
@@ -26,8 +26,8 @@ recognize the format.
 try to create the objects described (geometry and attributes).
 <p>m.in.e00 will be run non-interactively if the user specifies program
 arguments on the command line, using the form:
-<p><b>m.in.e00</b> [<b>-idts</b>] <b>input=</b><i>name</i> [<b>mapset=</b><i>name</i>]
-[<b>action=</b><i>what to do</i>] [<b>verbose=</b><i>debug level</i>] [<b>logfile=</b><i>name</i>]
+<p><b>m.in.e00</b> [<b>-idts</b>] <b>input=</b><i>name</i> [<b>mapset=</b><i>name</i>] 
+[<b>action=</b><i>what to do</i>] [<b>verbose=</b><i>debug level</i>] [<b>logfile=</b><i>name</i>] [<b>list=</b><i>list</i>]
 <p>Alternately, the user can simply type:
 <p><b>m.in.e00</b>
 <p>on the command line without program arguments. In this case, the user
@@ -36,9 +36,14 @@ described in the manual entry for parser.
 <h2>
 FEATURES</h2>
 m.in.e00 attemps to retrieve all information in an Arc/Info export file
-(.e00): points, line, polygon, and grid coverage. The attribute of each
-"vector" object (points, line, and polygon) is the Arc/Info coverage-ID
+(.e00): points, line, polygon, and grid coverage. The attribute number of 
+each "vector" object (points, line, and polygon) is the Arc/Info coverage-ID
 (and not the coverage-#). Both single and double precision are supported.
+
+<p>Unless otherwise directed with the <b>list=</b> parameter m.in.e00 may 
+try to import all of the items in the INFO table of point and polygon 
+attributes.  For large e00 files this can prohibitively time-consuming and 
+place unreasonable demands on computer memory.
 
 <p>GRASS files created have the name extracted from the first line of the
 e00 file, i.e. the name of the coverage. The file is read from the current
@@ -58,11 +63,11 @@ modules will use it for the raster file created.<p>
 To "activate" a category label file for the vector map "cover_name", change to:<br>
 
 <pre>
+
     cd $LOCATION/dig_cats/
     ls cover_name.*
     cp cover_name.attribute_name cover_name
     cd $HOME
-    v.support cover_name
 </pre>
 
 If you want to use another table entry, you have to run above procedure
@@ -147,6 +152,24 @@ Number between 0 (no trace of what's happening) and 9 (very verbose log).</dd>
 <dd>
 Name of file where log info will be written. By default log info are directed
 to stderr.</dd>
+
+<dt>
+<b>list=</b><i>name,name,name...</i></dt>
+
+<dd>
+A list of INFO item names (attributes) to extract from the INFO tables.  
+The list is not case-sensitive, but must be comma-delimited without 
+intervening spaces.  If the list is omitted then m.in.e00 will try to 
+extract all of the items in the INFO tables.  The names of items in the 
+INFO table can be listed by running :
+
+<pre>
+m.in.e00 input=&lt filename&gt action=analyse verbose=7
+</pre>
+
+This command will also produce a lot of other information, so it may be best 
+to direct the output to a file.
+</dd>
 </dl>
 
 <h2>
