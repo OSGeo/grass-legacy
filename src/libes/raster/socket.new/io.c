@@ -291,8 +291,9 @@ R_open_driver()
 	    case EADDRINUSE:
 		    if (verbose)
 			fprintf (stderr, "Socket is already in use or not "\
-					"accepting connections.\n");
-                    return (NO_OPEN);
+					"accepting connections.\n"\
+                                        "Use d.mon to select a monitor\n");
+                    return (NO_RUN);
 	            break;
 	    case EBADF:
 	    case ENOTSOCK:
@@ -300,13 +301,13 @@ R_open_driver()
 			fprintf (stderr, "Trying to connect to something "\
 					"not a socket.\nProbably program "\
 					"error.\n");
-		    return (NO_OPEN);
+		    return (NO_RUN);
 		    break;
 	    case ETIMEDOUT:
 		    if (verbose)
 			fprintf (stderr, "Connect attempt timed out. "\
 					"Probably an error with the server.\n");
-		    return (NO_OPEN);
+		    return (NO_RUN);
 		    break;
 	    default:
 		    break;
