@@ -29,6 +29,7 @@ INCLUDE_DIR = $(SRC)/include
 CONFIG_DIR  = $(DSTDIR)/src/include
 
 VASKLIB     = $(LIBDIR)/libvask.a
+EDITLIB     = $(LIBDIR)/libedit.a
 
 GISLIB      = $(LIBDIR)/libgis.a
 G3DLIB      = $(LIBDIR)/libg3d.a
