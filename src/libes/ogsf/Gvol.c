@@ -21,12 +21,9 @@ typedef int FILEDESC;
 
 #define NO_DATA_COL 0xffffff
 
-int Gvol_open_dspf(char *filename, char *dspfname, geodsp *dspinfo)
+int Gvol_open_dspf(char *filename, char *dspfname, geodsp * dspinfo)
 {
     /* TODO */
 
-    return(1);
+    return (1);
 }
-
-
-
