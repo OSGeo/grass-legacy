@@ -1,0 +1,279 @@
+.TH range.place 1
+.SH NAME
+range.place \- interactive graphic tool for range planning session.
+.SH SYNOPSIS
+range.place
+.SH DESCRIPTION
+.B range.place
+is an interactive and graphic version of the GRASS functions
+\fBGpat.place\fR, \fBGlos\fR and  \fBGtraj\fR.
+Instead of the non-interactive and relatively cumbersome approach of
+entering the parameters of the function on the command line,
+the user can step through the various parts of his analysis using the
+mouse (or any available pointing device) to choose desired options from
+displayed menus of available choices.
+Menus will pop down and roll up as needed.
+
+The  
+.B D 
+language programs 
+.B Dnew 
+and 
+.B Dchoose 
+must be run in order to prepare a window as the current graphics window
+for running this program.
+
+The user is presented with a graphics window and, across the top,
+various options from which he can choose: window, overlay, landpat, range,
+los, traj and quit.
+Most choices made on the main menu will route program control to another menu.
+From there, choices will either display another menu or execute a command.
+While executing different functions,
+the user is often given messages or prompted to type specific requested
+information inside the "talk window".
+.sp 3
+.SH RANGE PLACEMENT
+The following steps should be used to call up and place a pattern on the landscape using a base map as reference.
+
+.B
+1)
+.R
+The user chooses a base map to be shown in the display window
+(which becomes the current window upon entering the program)
+using the options
+
+.B
+overlay --> display --> perm/user --> basemap.
+.R
+
+.B
+2)
+.R
+The user defines the pattern that has to be placed over the base map.
+This is done with the menu choices
+
+.B
+landpat --> display --> add --> any_basic_pattern
+.R
+
+in case of a globally unregistered pattern or
+
+.B
+landpat --> display --> modify --> land_pattern
+.R
+
+when the user wants to modify a previously stored land pattern. The chosen pattern is displayed in the display window according to the scale of the base map.
+
+.B
+3)
+.R
+After choosing the options
+
+.B
+range --> locate,
+.R
+
+the user can use the mouse to place the pattern in the desired location.
+A click of the left mouse button will translate the pattern so that its
+origin now lies at the pointed location. The middle button is clicked
+to signify the direction in which the pattern has to be oriented after
+rotation. The right button signals the end of the location process.
+
+.B
+4)
+.R
+In its final position, the pattern overlayed on a base map can be stored
+in a digit format file by activating the
+.B store
+function and typing a unique filename when prompted for one.
+.SH LINE OF SITE ANALYSIS
+The following steps should be used to determine the visibility of landscape
+from a specified observer location on a base map which gives elevation
+data for all grid cells.
+
+.B
+1)  
+.R
+The user chooses the overlay of elevation data to be shown in the
+display window using the options 
+.B
+overlay --> display --> perm/user --> elevation_overlay.
+.R
+
+.B
+2)
+.R
+The line of sight application is activated by clicking on the main menu
+option 
+.B los.
+
+.B
+3)
+.R
+The user specifies the observer location by either of the following two ways:
+
+.in +0.8i
+.B
+(i)  viewpt --> text : 
+.R
+The user is then prompted for the global UTM coordinates of the observer location.
+
+.B
+(ii)  viewpt --> mouse : 
+.R
+The user specifies the observer location by clicking the mouse at the desired spot on the displayed elevation overlay.
+
+.in
+.B
+4)
+.R
+The user can specify the height of the observer (in metres) above the viewing point's elevation by using the option 
+.B obs_elev.
+If omitted, a default value of 1.75m is assumed.
+
+.B
+5) 
+.R
+The user can specify the maximum distance (in metres) from the viewing
+point inside which the line of sight analysis will be performed by choosing the option 
+.B max_dist.  
+The grid cells outside this distance range are coded with '0'. If omitted, a default maximum distance of 100 grid cells is assumed.
+
+.B
+6)  
+.R
+The user must specify the filename of the output grid cell overlay that will be produced by the program.  Upon choosing the option 
+.B outmap,
+the user is prompted for a filename unique among overlays existing under
+the user's individual mapset.  If a duplicate overlay exists,
+a warning is given and if accepted the existing overlay will be overwritten.
+
+.B
+7) 
+.R
+The 
+.B execute 
+option starts the program which generates an output map on which the cells
+that are visible from the observer's location are marked with integer values
+that represent a measure of the vertical angle required to see those cells.
+.SH TRAJECTORY ANALYSIS
+The following steps should be used to perform the trajectory analysis on a base elevation map.
+
+.B
+1)
+.R
+The user chooses a base map to be shown in the display window  using the options
+.B
+overlay --> display --> perm/user --> basemap.
+.R
+
+.B
+2)
+.R
+The trajectory analysis tool is activated by clicking on the main
+menu option
+.B traj.
+
+.B
+3)
+.R
+The user specifies the weapon location by either of the following two ways:
+
+.in +0.8i
+.B
+(i)  firingpt --> text :
+.R
+The user is then prompted for the global UTM coordinates of the weapon location.
+
+.B
+(ii)  firingpt --> mouse :
+.R
+The user specifies the weapon location by clicking the mouse at the
+desired spot on the displayed elevation overlay.
+.in
+
+.B
+4)
+.R
+The user can specify the height of the weapon (in metres) above the
+viewing point's elevation by using the option
+.B gun_elev.
+
+.B
+5)
+.R
+The user can specify the two azimuth angles indicating the horizontal
+angle range of firing by using the option 
+.B azimuth.
+
+.B
+6)
+.R
+The user can specify the low and high veritcal angles (in degrees) of
+firing by using the option   
+.B altitude.
+
+.B
+6) 
+.R
+.R 
+The user can specify the muzzle velocity (metres/sec) by using the option    
+.B velocity. 
+
+.B
+7)
+.R
+The user must specify the filename of the output grid cell overlay
+that will be produced by the program.  Upon choosing the option
+.B outmap,
+the user is prompted for a filename unique among overlays existing under
+the user's individual mapset. 
+
+.B
+8)
+.R
+The
+.B execute
+option starts the program that generates an output map on which the
+cells that can be hit by a shell are marked with integer values that
+represent a measure of the muzzle firing angles required to hit the specific
+cells.
+.SH MISCELLANEOUS
+.B
+1)  
+.R
+The user can delete any vector or cell overlay in his individual mapset
+by activating the function 
+.B
+overlay --> delete
+.R
+or
+.B
+landpat --> delete.
+.R
+
+.B
+2)  
+.R
+The contents of the display window can be erased or refreshed by activating the functions 
+.B
+window --> screen --> erase/refresh.
+.R
+
+.B
+3)  
+.R
+The characteristics of the database window can be altered after activating  
+.B
+window --> database 
+.R
+and then selecting the desired parameter to change from the sub-menu.
+The user is prompted for the necessary information.
+.SH SEE ALSO
+.nf
+Glos[2]
+Gpat.place[2]
+Gtraj[2]
+.fi
+.SH AUTHOR
+Kewan Q. Khawaja, Intelligent Engineering Systems Laboratory, M.I.T.
