@@ -367,7 +367,7 @@ Vect_build_nat ( struct Map_info *Map, FILE *msgout )
 	}
 	i++; j++;
     }
-    prnmsg ("       \n%d lines registered\n", plus->n_lines);
+    prnmsg ("       \n%d primitives registered\n", plus->n_lines);
 
     /* Build areas */
     /* Go through all bundaries and try to build area for both sides */
