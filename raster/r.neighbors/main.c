@@ -109,7 +109,7 @@ int main (int argc, char *argv[])
 
         flag.null= G_define_flag();
         flag.null->key = 'n';
-        flag.null->description = "Set zeros to null";
+        flag.null->description = "Do NOT set zeroes to null";
 
 	if (G_parser(argc,argv))
 		exit(1);
@@ -228,7 +228,7 @@ int main (int argc, char *argv[])
 /* Catch zeros and convert to null if set */
 /* Probably a better way to do this */
 	out_val = newvalue (values, n, map_type);
-	if (flag.null->answer){ /* Set zero to null */
+	if (!flag.null->answer){ /* Set zero to null */
 	if (out_val == 0) {
 	G_set_null_value(&out_val, 1, map_type);
 	} }
