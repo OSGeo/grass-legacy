@@ -76,10 +76,17 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
+#check if present
+GNUPLOT=`type -p gnuplot`
+if [ -z "$GNUPLOT" ] ; then
+  echo "Requires 'gnuplot' which could not be found in PATH"
+  exit 1
+fi
+
 # get y-data for gnuplot-data file
 
 RASTERMAPS="$GIS_OPT_band1 $GIS_OPT_band2 $GIS_OPT_band3 $GIS_OPT_band4 $GIS_OPT_band5 $GIS_OPT_band6 $GIS_OPT_band7 $GIS_OPT_band8"
-RASTERMAPS=`echo $RASTERMAPS | sed 's+(null)++g' |tr -s ' ' ' '| sed 's+ $++g' | sed 's+ +,+g'`
+RASTERMAPS=`echo $RASTERMAPS | sed 's+ $++g' | sed 's+ +,+g'`
 
 d.where -1 |r.what input=$RASTERMAPS > /tmp/spectr.dum1
 cat /tmp/spectr.dum1 | cut -d'|' -f4,5,6,7,8,9,10| tr '|' '\012' > /tmp/spectr.dum2
@@ -106,7 +113,7 @@ echo ""
 echo "Band - DN at $COORD"
 cat  spectrum.data
 
-# build g.gnuplot script
+# build gnuplot script
 echo "set xtics ('$GIS_OPT_band1' 1, '$GIS_OPT_band2' 2, '$GIS_OPT_band3' 3, '$GIS_OPT_band4' 4, '$GIS_OPT_band5' 5, '$GIS_OPT_band6' 6, '$GIS_OPT_band7' 7, '$GIS_OPT_band8' 8)" >> spectrum.gnuplot
 echo "set grid" >> spectrum.gnuplot
 echo "set title 'Spectral response at $COORD'" >> spectrum.gnuplot
@@ -127,6 +134,6 @@ echo "set ylabel 'DN Value'" >> spectrum.gnuplot
 #fi
 
 # display it...
-gnuplot -persist spectrum.gnuplot
+$GNUPLOT -persist spectrum.gnuplot
 
 rm -f spectrum.data spectrum.data.dum spectrum.gnuplot
