@@ -77,6 +77,7 @@ int main(int argc,char *argv[])
 
     vect_opt = G_define_standard_option(G_OPT_V_INPUT);
     vect_opt->key        = "vect" ;
+    vect_opt->description= "Name of input vector points map";
 
     rast_opt = G_define_option() ;
     rast_opt->key        = "rast" ;
@@ -168,7 +169,7 @@ int main(int argc,char *argv[])
 	if ( !(type & GV_POINT) ) continue; /* Points only */
 
 	/* check region */
-	if ( ! Vect_point_in_box ( Points->x[0], Points->y[0], 0, &box) ) {
+	if ( ! Vect_point_in_box ( Points->x[0], Points->y[0], 0.0, &box) ) {
 	    outside_cnt++;
 	    continue;
 	}
@@ -224,10 +225,10 @@ int main(int argc,char *argv[])
 
     /* Report number of points not used */
     if ( outside_cnt )
-	G_warning ( "%d points outside current region skip" );
+	G_warning ( "%d points outside current region skip", outside_cnt );
 
     if ( nocat_cnt )
-	G_warning ( "%d points without category skip" );
+	G_warning ( "%d points without category skip", nocat_cnt );
     
     /* Sort cache by current region row */
     qsort (cache, point_cnt, sizeof (struct order), by_row);
