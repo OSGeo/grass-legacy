@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.85 2000-11-21 08:32:36 markus Exp $
+$Id: BUGS,v 1.86 2000-11-23 20:50:11 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -507,34 +507,75 @@ Modules with interface problems (parser etc):
 (collected by Andreas Lange, not release critical, bu should be fixed
  sometimes for consistency)
 
-r.water.outlet: 
-  ????
+--------------- script used --------------------                                
+cd $GISBASE/bin                                                                 
+for f in ?.*; do echo '---> '$f; $f -help; done 2>&1 | more                     
+------------------------------------------------- 
+
+d.colors, d.pan, d.save, d.what.sites, d.zoom,                         
+Thoses commands give only the text help when a monitor is running         
+Without a running monitor, they print the following error message :      
+No graphics monitor has been selected for output.                        
+Please run "d.mon" to select a graphics monitor.    
+-> change order of parsing and R_driver()?
+
+d.site.pg, d.vect.pg, d.what.r.pg, d.what.s.pg, d.what.v.pg,        
+g.column.pg, g.stats.pg, g.table.pg, v.reclass.pg print :                
+ Please run g.select.pg to identify a current database.      
 
 g.gisenv:
   g.gisenv help says nothing (not a bug, just to remind that it is
   always listed in grass.sum as FAILED).
+  -help prints nothing
+
+g3.region:
+  no parser
 
 i.tape.tm.fast:
   ERROR (only for xy-locations), no "Usage: " Info
 
-v.in.dlg: 
-  ????
+m.region.ll -help prints :                                                      
+m.region.ll - must be in a UTM database
 
 m.in.stf1.tape:
  must be run in command mode only (USAGE:) ... no parser interface
 
-m.lulc.USGS:
- "Can not open USGS CTG file"
+r.mapcalc -help prints :
+you have confused me
 
-r.out.rlc:
-  no parser interface
+v.in.arc.pg -help prints :
+ Coverage type:
+Enter "polygon(area)" or "line"
+Hit RETURN to cancel.
 
-m.lulc.USGS:
-Mlulc.read:
-  can these modules be deprecated/discarded?
+v.in.dlg: 
+  ????
 
-g3.region:
-  no parser
+v.in.tig.basic -help prints :
+ERROR: You are not in a UTM or Lat-Long location. Don't use this program.
+
+v.in.tig.lndmk -help prints :
+ERROR: Must be in UTM or Lat-Long location to use this program.
+
+NOTE: When the location is in UTM, m.region.ll,v.in.tig.basic and
+      v.in.tig.lndmk print a correct help message
+
+v.mkquads -help prints the escape sequence <ESC>[H<ESC>[2J
+before the help for erasing screen and put the help on top
+
+m.lulc.USGS -help prints :
+Cannot open USGS CTG file
+
+tcltkgrass launch itself, ignoring the -help option...
+
+All interactive functions print only:
+Usage : <name of the command>
+  (This command must be run interactively)
+
+On the other hand, some help messages are huge (75 lines...)
+
+Sometimes, a blank line is printed before the "Usage:" string 
+this is also not consistent...
 
 -----------------------------------------------------------------------
 Further discussion/hints:
