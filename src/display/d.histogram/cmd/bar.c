@@ -3,9 +3,10 @@
  *
  * function defined:
  *
- * bar(dist_stats) 
+ * bar(dist_stats,colors) 
  *
- * struct stat_list dist_stats          - linked list of statistics
+ * struct stat_list *dist_stats          - linked list of statistics
+ * struct Colors *colors                 - map colors
  * 
  * PURPOSE: To draw a bar-chart representing the histogram
  * statistics in the linked list dist_stats.  
@@ -27,8 +28,9 @@
 
 #include "bar.h"
 
-bar(dist_stats)
-struct stat_list dist_stats;  /* list of distribution statistics */
+bar(dist_stats, colors)
+struct stat_list *dist_stats;  /* list of distribution statistics */
+struct Colors *colors;
 {
 	struct stat_node *ptr;
 	int draw=YES;
@@ -77,9 +79,9 @@ struct stat_list dist_stats;  /* list of distribution statistics */
 	y_line[1] = y_line[2] = b-(int)(ORIGIN_Y*height);
 
 	/* figure scaling factors and offsets */
-	num_cats = dist_stats.maxcat - dist_stats.mincat + 1;
+	num_cats = dist_stats->maxcat - dist_stats->mincat + 1;
 	xscale = ((double)(x_line[2]-x_line[1])/((double)num_cats));
-	yscale = ((double)(y_line[1]-y_line[0]))/dist_stats.maxstat;
+	yscale = ((double)(y_line[1]-y_line[0]))/dist_stats->maxstat;
 	yoffset = (double)(y_line[1]);
 
 	if (num_cats >= x_line[2]-x_line[1])
@@ -115,15 +117,18 @@ struct stat_list dist_stats;  /* list of distribution statistics */
  * number on those evenly divisible by tic_every
  *
  */
-	ptr = dist_stats.ptr;
-	for (i=dist_stats.mincat; i<=dist_stats.maxcat; i++)
+	ptr = dist_stats->ptr;
+	for (i=dist_stats->mincat; i<=dist_stats->maxcat; i++)
 	{
 		draw=NO;
 		/* figure bar color and height 
     *
-    * the cat number indicates the color, the corresponding stat,
+    * the cat number determines the color, the corresponding stat,
     * determines the bar height.  if a stat cannot be found for the
-    * cat, then the bar color will be black and its height will be 0.
+    * cat, then it doesn't drow anything, before it used to draw the
+    * box of size 0 in black. Later when the option to provide the
+    * background color will be added , we might still draw a box in
+    * this color.
     */
 		if (ptr->cat == i) /* AH-HA!! found the stat */
 		{
@@ -133,7 +138,8 @@ struct stat_list dist_stats;  /* list of distribution statistics */
 			{
 				draw=YES;
 				bar_color = ptr->cat;
-				bar_height = (int)(yoffset-yscale*(double)ptr->stat);
+				bar_height =
+				  (int)(yoffset-yscale*(double)ptr->stat);
 			}
 			if (ptr->next != NULL)
 				ptr=ptr->next;
@@ -151,7 +157,8 @@ struct stat_list dist_stats;  /* list of distribution statistics */
 				{
 					draw=YES;
 					bar_color = ptr->cat;
-					bar_height = (int)(yoffset-yscale*(double)ptr->stat);
+					bar_height =
+					   (int)(yoffset-yscale*(double)ptr->stat);
 				}
 				if (ptr->next != NULL)
 					ptr=ptr->next;
@@ -160,6 +167,8 @@ struct stat_list dist_stats;  /* list of distribution statistics */
 			{
 				if (xscale > 1)
 				{
+					draw=NO;
+				/*
 					draw=YES;
 					bar_color = D_translate_color("black");
 					bar_height = yoffset; /* zero */
@@ -175,9 +184,9 @@ struct stat_list dist_stats;  /* list of distribution statistics */
 			if (xscale != 1)
 			{
 				/* draw the bar as a box */
-				R_color(bar_color);
-				x_box[0]= x_box[1] = xoffset+((i-dist_stats.mincat)*xscale-0.5*xscale);
-				x_box[2]= x_box[3] = xoffset+((i-dist_stats.mincat)*xscale+0.5*xscale);
+				D_color((CELL)bar_color, colors);
+				x_box[0]= x_box[1] = xoffset+((i-dist_stats->mincat)*xscale-0.5*xscale);
+				x_box[2]= x_box[3] = xoffset+((i-dist_stats->mincat)*xscale+0.5*xscale);
 				y_box[0]= y_box[3] = yoffset;
 				y_box[1]= y_box[2] = bar_height;
 				R_polygon_abs(x_box,y_box,4);
@@ -185,8 +194,8 @@ struct stat_list dist_stats;  /* list of distribution statistics */
 			else
 			{
 				/* draw the bar as a line */
-				R_color(bar_color);
-				x_box[0] = x_box[1] = xoffset+(i-dist_stats.mincat)*xscale;
+				D_color((CELL)bar_color, colors);
+				x_box[0] = x_box[1] = xoffset+(i-dist_stats->mincat)*xscale;
 				y_box[0] = yoffset;
 				y_box[1] = bar_height;
 				R_move_abs((int)x_box[0],(int)y_box[0]);
@@ -199,7 +208,7 @@ struct stat_list dist_stats;  /* list of distribution statistics */
 		{
 			/* draw a numbered tic-mark */
 			R_standard_color(color);
-			R_move_abs( (int)(xoffset+(i-dist_stats.mincat)*xscale),
+			R_move_abs( (int)(xoffset+(i-dist_stats->mincat)*xscale),
 			    (int)(b-ORIGIN_Y*(b-t)) );
 			R_cont_rel( (int)0 , (int)(BIG_TIC*(b-t)) );
 			sprintf(txt,"%d",(int)(i/tic_unit));
@@ -214,7 +223,7 @@ struct stat_list dist_stats;  /* list of distribution statistics */
 				R_text_size(text_width,text_height);
 				R_get_text_box(txt,&tt,&tb,&tl,&tr);
 			}
-			R_move_abs((int)(xoffset+(i-dist_stats.mincat)*xscale-(tr-tl)/2),
+			R_move_abs((int)(xoffset+(i-dist_stats->mincat)*xscale-(tr-tl)/2),
 			    (int)(b-XNUMS_Y*(b-t)));
 			R_text(txt);
 		}
@@ -222,7 +231,7 @@ struct stat_list dist_stats;  /* list of distribution statistics */
 		{
 			/* draw a tic-mark */
 			R_standard_color(color);
-			R_move_abs( (int)(xoffset+(i-dist_stats.mincat)*xscale),
+			R_move_abs( (int)(xoffset+(i-dist_stats->mincat)*xscale),
 			    (int)(b-ORIGIN_Y*(b-t)) );
 			R_cont_rel( (int)0 , (int)(SMALL_TIC*(b-t)) );
 		}
@@ -250,9 +259,9 @@ struct stat_list dist_stats;  /* list of distribution statistics */
 
 	max_tics = (long)((y_line[1]-y_line[0])/YTIC_DIST);
 
-	if (dist_stats.maxstat == dist_stats.minstat)
-		dist_stats.minstat = 0;
-	num_stats = dist_stats.maxstat - dist_stats.minstat;
+	if (dist_stats->maxstat == dist_stats->minstat)
+		dist_stats->minstat = 0;   /* LOOKS FUNNY TO ME */
+	num_stats = dist_stats->maxstat - dist_stats->minstat;
 	i=0;
 	while ((num_stats/tics[i].every) > max_tics)
 		i++;
@@ -260,8 +269,8 @@ struct stat_list dist_stats;  /* list of distribution statistics */
 	tic_unit = tics[i].unit;
 	strcpy(tic_name,tics[i].name);
 
-	stat_start = tic_unit*((long)(dist_stats.minstat/tic_unit));
-	stat_finis = tic_unit*((long)(dist_stats.maxstat/tic_unit));
+	stat_start = tic_unit*((long)(dist_stats->minstat/tic_unit));
+	stat_finis = tic_unit*((long)(dist_stats->maxstat/tic_unit));
 
 	/* Y-AXIS LOOP
  *
