@@ -369,7 +369,7 @@ Vect_attach_centroids ( struct Map_info *Map, BOUND_BOX *box )
 	    }
 	}
 	    
-	if ( sel_area != orig_area ) dig_line_add_updated ( plus, centr );
+	if ( sel_area != orig_area && plus->do_uplist ) dig_line_add_updated ( plus, centr );
     }
 	
     return 0;
