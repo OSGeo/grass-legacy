@@ -55,7 +55,7 @@ int Label (void)
 	    {
 	    case MLC_LAREA:
 		Clear_base ();
-                ans = ask_for_name(AREA, &cats);
+                ans = ask_for_name("Do you wish to enter area edges labels?", &cats);
 		while (1)
 		{
 		    Clear_base ();
@@ -82,7 +82,7 @@ int Label (void)
 		break;
 	    case MLC_LLINE:
                 Clear_base ();
-                ans = ask_for_name(LINE, &cats);
+                ans = ask_for_name("Do you wish to enter line labels?", &cats);
 
 		while (1)
 		{
@@ -110,7 +110,7 @@ int Label (void)
 		break;
 	    case MLC_LSITE:
                 Clear_base ();
-                ans = ask_for_name(DOT, &cats);
+                ans = ask_for_name("Do you wish to enter site labels?", &cats);
 
 		while (1)
 		{
@@ -162,7 +162,7 @@ int Label (void)
 		break;
 	    case MLC_MLINES:	/* label multiple lines */
                 Clear_base ();
-                ans = ask_for_name(LINE, &cats);
+                ans = ask_for_name("Do you wish to enter lines labels?", &cats);
 
 		while (1)
 		{
@@ -885,7 +885,7 @@ int label_all_lines (struct Map_info *map, int cat)
 }
 
 
-int ask_for_name (int Type, struct Categories *pcats)
+int ask_for_name (char *prompt, struct Categories *pcats)
 {
     int ans, ans2, ier;
     char buffr[128];
@@ -895,17 +895,7 @@ int ask_for_name (int Type, struct Categories *pcats)
     while (ans < 0)
     {
 	Clear_info ();
-	if (Type == 1)         /* LINE */
-	    ans = curses_yes_no_default(2,
-	    " Do you wish to enter line labels? ", 1);
-	else if (Type == 2)    /* AREA */
-	    ans = curses_yes_no_default(2,
-	    " Do you wish to enter area edges labels? ", 1);
-	else if (Type == 4)     /* DOT */
-	    ans = curses_yes_no_default(2,
-	    " Do you wish to enter site labels? ", 1);
-	else                   /* PSU  always enter labels */
-	    ans = 1;
+	ans = curses_yes_no_default(2, prompt, 1);
 
 	if (ans)
 	{
