@@ -231,7 +231,7 @@ void yyerror( char *s )
 {
 	snprintf( sqlpStmt->errmsg, 500, "%s processing '%s'", s, yytext );
 	
-	YY_FLUSH_BUFFER;
+	yy_flush_buffer(YY_CURRENT_BUFFER);
 }
 
 /**********************************************************************
