@@ -115,7 +115,7 @@ main (int argc, char *argv[])
 		fprintf(stderr, "%s - can't read raster cellhd\n", inopt->answer);
 		exit(1);
 	}
-	if ((G_set_window(&cellhd) < 0))
+	if ((G_get_window(&cellhd) < 0))
 		G_fatal_error("Can't set window");
 	G_read_colors(inopt->answer, mapset, &colors);
 	G_set_null_value_color (255, 255, 255, &colors);
