@@ -1,0 +1,42 @@
+#!/bin/csh
+#
+# Remove any temp files from previous runs
+#
+unalias rm
+#
+rm -f tmpoutfile 
+$GISBASE/etc/agnps50/remove_old_tmp_files.sh >tmpoutfile
+#
+# Eliminate the MASK from the previous execution so that
+# the program can start a new MASK (with correct resolution,
+# etc.)
+g.remove MASK >>tmpoutfile
+#
+# Run the first excecutable
+#
+agnps_input_1
+# psu_agnps_input_1 exits with a status of 1 if
+# the flow map was not present and had to be created.
+# The user is warned that the flow map needs to be
+# manually checked, so it this is the case, the
+# script exits before psu_agnps_input_2, the main
+# portion of the program (and the second executable)
+# is executed.
+
+# Changed agnps_input_2 to agnps_input_2a to use new r.cn2 and other
+# changes                       19.12.96 Markus Neteler
+
+if ($status != 1) then 
+  agnps_input_2a
+endif
+##
+## ADDED BY MIKE FOSTER 3-24-96
+## MAKE SURE YOU HAVE A COPY OF temp_cell_num called cell_num.map.res
+## FOR THE OUTPUT VIEWER
+#  WHERE res is the cell size (100, 150, 200, etc.)
+#
+#  Retrieve the current mapset resolution from temp_file for use in the
+#  cell_num.map.* name
+# 
+
+$GISBASE/etc/agnps50/copy_cell_num.sh
