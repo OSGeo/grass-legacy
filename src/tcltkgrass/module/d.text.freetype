@@ -1,0 +1,18 @@
+interface_build {
+    {d.text.freetype} 0
+    {Draws text on the display using TrueType fonts.}
+    {entry text {Text (enclose multiple words "in quotes"):} 0 ""}
+    {entry east_north {Map coordinates (easting,northing) [leave blank to select with mouse]:} 0 ""}
+    {entry font {Font name (from 'freetypecap' file list):} 0 ""}
+    {entry path {Path to TrueType font (including file name):} 0 file}
+    {entry charset {Character encoding (e.g. ISO-8859-1):} 0 ""}
+    {entry color {Text color or hexadecimal (0xRRGGBB) [gray]:} 0 color}
+    {entry size {Letters height in % of frame height (0-100) [10]:} 0 ""}
+    {entry align {Text alignment (ll,lc,lr,cl,cc,cr,ul,uc,ur) [ll]:} 0 ""}
+    {entry rotation {Rotation angle in degrees (counterclockwise) [0]:} 0 ""}
+    {entry < {Text command file (command mode only):} 0 file}
+    {checkbox -r {Use radians instead of degrees for rotation.} "" -r}
+    {checkbox -p {Use pixel coordinates ([0,0] is top left)} "" -p}
+    {checkbox -s {Font size is height in pixels} "" -s}
+    {checkbox -c {Command mode (Compatibility with d.text)} "" -c}
+}
