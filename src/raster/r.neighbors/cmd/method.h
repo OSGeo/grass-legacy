@@ -18,6 +18,8 @@ struct menu
     CELL c_min();
     CELL c_max();
     CELL c_ave();
+    CELL c_stddev();
+    CELL c_var();
     CELL c_divr();
     CELL c_intr();
 
@@ -35,8 +37,10 @@ struct menu
     c_mode,   NO_CATS, 1,   "mode",  "most frequently occuring value",
     c_min,    NO_CATS, 1,   "minimum", "lowest value",
     c_max,    NO_CATS, 1,   "maximum", "highest value",
-    c_divr,   divr_cats, 0, "diversity", "number of different value",
-    c_intr,   intr_cats, 0, "interspersion", "number of value different than center value",
+    c_stddev, NO_CATS, 0,   "stddev", "standard deviation",
+    c_var,    NO_CATS, 0,   "variance", "statistical variance",
+    c_divr,   divr_cats, 0, "diversity", "number of different values",
+    c_intr,   intr_cats, 0, "interspersion", "number of values different than center value",
 
     0,0,0,0,0 };
 
