@@ -384,6 +384,8 @@ main(int argc, char **argv)
    close(fe);
    close(fd);
 
+   unlink(tempfile1);
+   unlink(tempfile2);
    G_free (in_buf);
    G_free (out_buf);
 
