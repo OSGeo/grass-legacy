@@ -19,9 +19,7 @@ geo_point_main(  control_file, point_file)
     FILE   *fp, *fopen();
     int    close_down();
 
-    fprintf (stderr,"before\n");
-    G_gisinit ("GEO_POINT");
-    fprintf (stderr,"after\n");
+    G_gisinit("geo_point") ;
 
 /*  control_file contains info about the digitizer, tty, and the control
     points.
@@ -86,7 +84,7 @@ geo_point_main(  control_file, point_file)
 
 /*  save the point  */
     if ( fprintf( fp, " %lf  %lf\n", x, y) == EOF)
-	close_down(-1);
+	exit (-1);
 
     fclose (fp) ;
 
