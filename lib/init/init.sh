@@ -25,6 +25,10 @@
 
 trap "echo 'User break!' ; exit" 2 3 15
 
+# Set the GRASS_PERL variable
+GRASS_PERL=PERL_COMMAND
+export GRASS_PERL
+
 # Get the command name
 CMD_NAME=`basename "$0"`
 
@@ -126,6 +130,14 @@ fi
 
 PATH=$GISBASE/bin:$GISBASE/scripts:$PATH:$GRASS_ADDON_PATH
 export PATH
+
+# Set LD_LIBRARY_PATH to find GRASS shared libraries
+if [ ! "$LD_LIBRARY_PATH_VAR" ] ; then
+  LD_LIBRARY_PATH_VAR=$GISBASE/lib
+else
+  LD_LIBRARY_PATH_VAR=$LD_LIBRARY_PATH_VAR:$GISBASE/lib
+fi
+export LD_LIBRARY_PATH_VAR
 
 # Check for concurrent use
 "$ETC/lock" "$lockfile" $$

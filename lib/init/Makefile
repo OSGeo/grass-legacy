@@ -46,14 +46,18 @@ $(ARCH_BINDIR)/$(START_UP): init.sh
 	rm -f $(ARCH_BINDIR)/$(START_UP) ; true
 	$(SHELL) -c "sed \
 	-e \"s#GISBASE_VALUE#$(GISBASE)#\" \
-	-e \"s#LD_LIBRARY_PATH_VAR#$(LD_LIBRARY_PATH_VAR)#g\" \
-	-e \"s#PERL_COMMAND#$(PERL)#\" \
 	grass.src > $(ARCH_BINDIR)/$(START_UP) 2>/dev/null ; true"
 	chmod a+x $(ARCH_BINDIR)/$(START_UP)
 
-$(ETC)/Init.sh: init.sh version.sed 
+$(ETC)/Init.sh: init.sh
 	rm -f $@
-	sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" init.sh > $@
+	$(SHELL) -c "sed \
+	-e "s/VERSION_NUMBER/$(VERSION_NUMBER)/" \
+	-e "s/VERSION_DATE/$(VERSION_DATE)/" \
+	-e "s/VERSION_UPDATE_PKG/$(VERSION_UPDATE)/" \
+	-e \"s#LD_LIBRARY_PATH_VAR#$(LD_LIBRARY_PATH_VAR)#g\" \
+	-e \"s#PERL_COMMAND#$(PERL)#\" \
+	init.sh > $@
 	chmod +x $@
 
 $(ETC)/set_data: $(SET_DATA)
