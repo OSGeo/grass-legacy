@@ -30,12 +30,16 @@ htmldocs: checkdoxygen generatelocaldox
 latexdocs: checkdoxygen generatelocaldox
 	test ! -d latex || (cd ./latex && make clean)
 	doxygen ./Doxyfile_arch_latex
+#this hack is needed to make Acroread's search engine happy:
+	(cd ./latex ; echo "\usepackage[T1]{fontenc}" >> doxygen.sty)
 	(cd ./latex && make)
 	@echo "Latex reference in directory ./latex/refman.dvi"
 
 pdfdocs: checkdoxygen generatelocaldox
 	test ! -d latex || (cd ./latex && make clean)
 	doxygen ./Doxyfile_arch_latex
+#this hack is needed to make Acroread's search engine happy:
+	(cd ./latex ; echo "\usepackage[T1]{fontenc}" >> doxygen.sty)
 	(cd ./latex && make pdf && mv refman.pdf grass51dbmi_`date '+%Y_%m_%d'`_refman.pdf)
 	@echo "PDF reference in directory ./latex/grass51dbmi_`date '+%Y_%m_%d'`_refman.pdf"
 
