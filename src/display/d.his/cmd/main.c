@@ -68,7 +68,7 @@ main (int argc, char **argv)
 	
 	nulldraw = G_define_flag();
 	nulldraw->key = 'n';
-	nulldraw->description = "Respect NULL values when drawing";
+	nulldraw->description = "Respect NULL values while drawing";
 
 
 	if (G_parser(argc, argv))
