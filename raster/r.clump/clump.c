@@ -21,6 +21,7 @@ clump(int in_fd, int out_fd, int verbose)
     int pass;
     int nalloc;
     long cur_time;
+    int column;
 
 
     nrows = G_window_rows();
@@ -222,6 +223,11 @@ clump(int in_fd, int out_fd, int verbose)
 		while (col-- > 0)
 		    *temp_cell++ = index[*temp_clump++];
 
+		for (column = 0; column < ncols; column++)
+		{
+		 if (out_cell[column] == 0)
+		       G_set_null_value(&out_cell[column],1,CELL_TYPE);
+		}
 		if (G_put_raster_row (out_fd, out_cell, CELL_TYPE) < 0)
 		    G_fatal_error ("can't properly write output raster file");
 	    }
