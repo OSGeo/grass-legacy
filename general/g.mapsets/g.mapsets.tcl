@@ -2,6 +2,9 @@
 # the next line restarts using wish \
 exec $GRASS_WISH "$0" "$@"
 
+# Put current mapset and PERMANENT at the top of the list, mapsets are later written to SEARCH_PATH
+# and searched in this order
+
 lappend auto_path $env(GISBASE)/bwidget
 package require -exact BWidget 1.2.1
 
@@ -22,6 +25,7 @@ proc set_mapsets { } {
             set first 0
         }
     }
+    puts  $cmd
     eval exec $cmd
 }
 
@@ -34,13 +38,26 @@ $sw setwidget $sf
 pack $sw $sf -fill both -expand yes
 set sframe [$sf getframe]
 
-set msts [ lsort [split [exec g.mapsets -l] " \n"] ]
+
+# Add current mapset and PERMANENT
+set current [exec g.gisenv get=MAPSET]
+set msts [list $current PERMANENT]
+
+set tmp_msts [ lsort [split [exec g.mapsets -l] " \n"] ]
+foreach ms $tmp_msts {
+    if { $ms == $current || $ms == "PERMANENT" } { continue }
+    lappend msts $ms 
+}
+
 set nms 0
 foreach ms $msts {
     if { [string length $ms] == 0 } { continue }
     set fr [frame $sframe.f$nms]
     pack $fr -side top -anchor w 
     set cb [checkbutton $fr.cb -text "$ms" -variable ms_ch($ms) -command set_mapsets]
+    if { $ms == $current } { 
+	$cb configure -state disabled 
+    }
     pack $cb -side left
     set ms_name($nms) $ms
     incr nms
@@ -49,6 +66,10 @@ foreach ms $msts {
 # check in selected
 set msts [split [exec g.mapsets -p] " \n"]
 foreach ms $msts {
+    if { $ms == $current } { 
+        set ms_ch($ms) 1
+        continue
+    }
     if { [string length $ms] == 0 } { continue }
     set ms_ch($ms) 1
 }
