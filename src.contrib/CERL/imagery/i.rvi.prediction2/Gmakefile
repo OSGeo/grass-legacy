@@ -1,0 +1,10 @@
+PGM = i.rvi.prediction
+HOME = $(BIN_CONTRIB_CMD)
+LIST = main.o\
+	model.o\
+	closefiles.o
+
+./$(PGM): $(LIST) $(GISLIB) globals.h
+	 $(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB)
+
+$(LIBES): #
