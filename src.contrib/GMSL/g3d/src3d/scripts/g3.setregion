@@ -42,16 +42,11 @@ function usage()
  echo ""
 }
 
+UPDATE=0
 if [ "$1" = "" -o "$1" = "help" -o "$1" = "-help" -o "$1" = "-h" ]
 then
  usage
  exit
-else
- if [ "$1" != "-u" ]  # update WIND3 from WIND
- then
-   usage
-   exit
- fi
 fi
 
 if test ! -f $LOCATION/WIND3
@@ -79,6 +74,7 @@ echo "n:$north s:$south w:$west e:$east t:$top b:$bottom r:$res dres:$dres"
 for i
 do
         case $i in
+            -u)  continue ;; # update WIND3 from WIND
             n=*) north=`echo $i | awk -F '=' '{print $2}'` ;;
             s=*) south=`echo $i | awk -F '=' '{print $2}'` ;;
             e=*) east=`echo $i | awk -F '=' '{print $2}'` ;;
