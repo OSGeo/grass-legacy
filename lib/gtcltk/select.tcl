@@ -45,30 +45,40 @@ proc GSelect_::create { element } {
     set location_path "$env(GISDBASE)/$env(LOCATION_NAME)/"
     set current_mapset $env(MAPSET)
     set sympath "$env(GISBASE)/etc/symbol/"
-    foreach dir [exec g.mapsets -p] {
-        set windfile "$location_path/$dir/WIND"
-        if { ! [ file exists $windfile ] } { continue }
-        $tree insert end root ms_$dir -text $dir -data $dir -open 1 \
-            -image [Bitmap::get openfold] -drawcross auto
+    
+    if {$element != "symbol"} {
+	foreach dir [exec g.mapsets -p] {
+	    set windfile "$location_path/$dir/WIND"
+	    if { ! [ file exists $windfile ] } { continue }
+	    $tree insert end root ms_$dir -text $dir -data $dir -open 1 \
+		-image [Bitmap::get openfold] -drawcross auto
 
-        set path "$location_path/$dir/$element/"
-	foreach fp [ lsort [glob -nocomplain $path/*] ]  {
-            set file [file tail $fp]
-            $tree insert end ms_$dir $file@$dir -text $file -data $file \
-                  -image [Bitmap::get file] -drawcross never
-        }
+	    set path "$location_path/$dir/$element/"
+	    foreach fp [ lsort [glob -nocomplain $path/*] ]  {
+		set file [file tail $fp]
+		$tree insert end ms_$dir $file@$dir -text $file -data $file \
+		    -image [Bitmap::get file] -drawcross never
+	    }
+	}
     }
 
-    $tree insert end root ms_$sympath -text SYMBOLS -data $sympath -open 1 \
-	-image [Bitmap::get openfold] -drawcross auto
-    
-    set icpath "$sympath/$element/"
-    foreach ic [ lsort [glob -nocomplain $icpath/*] ]  {
-            set icfile [file tail $ic]
-            $tree insert end ms_$sympath $icfile@$sympath -text $icfile -data $icfile \
-                  -image [Bitmap::get file] -drawcross never
+    if {$element == "symbol"} {
+	$tree insert end root ms_$sympath -text SYMBOLS -data $sympath -open 1 \
+	    -image [Bitmap::get openfold] -drawcross auto
+	
+	foreach ic_dir [ lsort [glob -nocomplain $sympath/*] ]  {
+	    set dir_tail [file tail $ic_dir]
+	    $tree insert end ms_$sympath ms_$dir_tail  -text $dir_tail -data $dir_tail \
+		-image [Bitmap::get folder] -drawcross auto
+
+	    foreach ic_file [ lsort [glob -nocomplain $sympath/$dir_tail/*] ]  {
+		set file [file tail $ic_file]
+		$tree insert end ms_$dir_tail $file@$dir_tail -text $file -data $file \
+		    -image [Bitmap::get file] -drawcross never
+	    }
+	}
     }
-    
+
     $tree configure -redraw 1
 
     # buttons
@@ -99,9 +109,20 @@ proc GSelect_::create { element } {
 
     if { $selected != "" } {
         regexp {([^@]+)@(.+)} $selected x file mapset
-        if { $mapset == $current_mapset || $mapset == $sympath} {
-            return $file
-        } else {
+        
+	foreach sel [ lsort [glob -nocomplain $sympath/*] ]  {
+	    set sel [file tail $sel]
+	     if {$mapset == $sel} {
+		 return "$sel/$file"
+		 exit
+	     }  
+	}
+	
+	if { $mapset == $current_mapset} {
+            return $file    
+        } 
+ 
+	if {$mapset != $current_mapset} {
             return "$file@$mapset"
         }
     }
