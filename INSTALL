@@ -2,7 +2,7 @@
 
 Compilation:
 
-./configure --with-grass50=/full/path/to/grass50(MAIN)/source
+CFLAGS="-g -Wall" ./configure --with-grass50=/full/path/to/grass50(MAIN)/source
 make mix   
 make       
 
