@@ -1,0 +1,120 @@
+#!/bin/sh
+# $Id: d.monsize, v 1.6 for GRASS 5.7 2004/04/01 
+############################################################################
+#
+# MODULE:		d.monsize, v 1.6 for GRASS 5.7 (2004/05/01) 
+#			based on d.monsize for GRASS 5
+# AUTHOR(S):	Unknown; 
+#			updated to GRASS 5.7 by Michael Barton (michael.barton@asu.edu)
+# PURPOSE:	selects/starts specified monitor at specified window size
+# COPYRIGHT:	(C) 2004 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+#############################################################################
+
+
+# NOTE: This is based on the output pattern of d.mon -p
+# Anantha Prasad <aprasad/ne_de@fs.fed.us>
+#
+# Version 1: Author?. Tue, 25 Jan 2000 10:31:37
+
+
+#%Module
+#%  description: d.monsize - selects/starts specified monitor at specified size
+#%End
+#%option
+#% key: setmonitor
+#% type: string
+#% description: Display monitor to start
+#% required : yes
+#%end
+#%option
+#% key: setwidth
+#% type: integer
+#% description: Width in pixels of new display monitor
+#% required : yes
+#%end
+#%option
+#% key: setheight
+#% type: integer
+#% description: Height in pixels of new display monitor
+#% required : yes
+#%end
+
+
+
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+fi
+
+
+if [ "$GIS_OPT_setmonitor" = "(null)" ]
+then
+			echo ""
+			echo "You must select a display monitor"
+			echo ""
+			exit
+fi
+
+if [ "$GIS_OPT_setwidth" = "(null)" ]
+then
+			echo ""
+			echo "You must select a display width"
+			echo ""
+			exit
+fi
+
+if [ "$GIS_OPT_setheight" = "(null)" ]
+then
+			echo ""
+			echo "You must select a display height"
+			echo ""
+			exit
+fi
+
+export GRASS_WIDTH=$GIS_OPT_setwidth
+export GRASS_HEIGHT=$GIS_OPT_setheight
+
+
+# Check the current status of the monitor
+st1=`d.mon -p| sed s/'No monitor currently selected for output'//`
+st2=`echo $st1 | cut -d ":" -f2`
+
+# STrip leading blanks
+st3=`echo $st2|perl -pne 's/^\s+//g'`
+
+if [ -z "$st3" ]
+then
+  # No monitor running so start a new one....
+  echo
+  echo "No monitor selected"
+  echo "Starting monitor $GIS_OPT_setmonitor of size $GIS_OPT_setwidthx$GIS_OPT_setheight ..."
+  d.mon start=$GIS_OPT_setmonitor
+else
+  if [ "$GIS_OPT_setmonitor" = "$st3" ]
+  then
+    # Monitor is already running...stop it and start new one
+    d.mon stop=$GIS_OPT_setmonitor
+    echo
+    echo "Monitor already running and selected"
+    echo "Restarting monitor $GIS_OPT_setmonitorat size $GIS_OPT_setwidthx$GIS_OPT_setheight ..."
+    sleep 4
+    d.mon start=$GIS_OPT_setmonitor
+  else
+    echo
+    echo "A different monitor is selected"
+    echo "Selecting and restarting monitor $GIS_OPT_setwidthx$GIS_OPT_setheight..."
+    #d.mon select=$GIS_OPT_setmonitor
+    d.mon stop=$GIS_OPT_setmonitor
+    sleep 4
+    d.mon start=$GIS_OPT_setmonitor
+  fi
+fi
