@@ -21,7 +21,7 @@ active frame on the graphics monitor.
 <BR>
 <B>d.legend</B> [<B>-vcnsmf</B>] <B>map=</B><EM>name</EM> [<B>color=</B><EM>name</EM>]
 [<B>lines=</B><EM>value</EM>] [<B>thin=</B><EM>value</EM>] [<B>labelnum=</B><EM>value</EM>]
-[<B>at=</B><EM>x1,y1,x2,y2</EM>] [<B>range=</B><EM>min,max</EM>]
+[<B>at=</B><EM>bottom,top,left,right</EM>] [<B>range=</B><EM>min,max</EM>]
 <H2>DESCRIPTION</H2>
 
 <EM>d.legend</EM> displays a legend for a user-specified
@@ -63,6 +63,7 @@ using the standard GRASS <A HREF="parser.html">parser</A> interface.
 </DL>
 <P>
 <H3>Parameters:</H3>
+<DL>
 <DT><B>map=</B><EM>name</EM>
 <DD>Name of raster map.
 <DT><B>color=</B><EM>name</EM>
@@ -93,8 +94,8 @@ using the standard GRASS <A HREF="parser.html">parser</A> interface.
 <BR>
 <DD>Default: 5
 
-<DT><B>at=</B><EM>x1,y1,x2,y2</EM>
-<DD>Placement coordinates, as 0-100% of graphics monitor width/height. 0,0 is upper left here.
+<DT><B>at=</B><EM>bottom,top,left,right</EM>
+<DD>Placement coordinates, as 0-100% of graphics frame height/width. 0,0 is lower left.
 <BR>
 <DD>Options: 0-100
 <BR>
@@ -134,8 +135,8 @@ The <B>lines</B> option will display the first number of categories, as defined
 by <EM>value</EM>, contained in the raster map. When used with the <B>-n</B> flag,
 it takes on a new meaning: "up to category #". When used with both
 <B>thin</B> and the <B>-n</B> flag, its meaning becomes more obscure. When
-using <B>lines</B>, text similar to "4 of 16 categories" will be placed at 
-the bottom of the legend, and is always auto-scaled to fit within the frame.
+using <B>lines</B>, auto-scaled text similar to "4 of 16 categories" will be placed at 
+the bottom of the legend.
 <p>
 The <B>thin</B> option sets the thinning factor. For raster maps with a 0th
 category, <B>thin=</B><EM>10</EM> gives cats [0,10,20,...]. For raster maps 
@@ -159,8 +160,8 @@ height of the box. The <B>-c</B> and <B>-v</B> flags may be used to suppress the
 display of category numbers and labels respectively, or used together to 
 suppress all text of categorial raster maps.
 <p>
-The text produced from floating-point raster maps will create output with a
-meaningful number of significant digits automatically. For very small values,
+The text produced from floating-point raster maps will automatically create
+output with a meaningful number of significant digits. For very small values,
 numbers will be expressed in scientific notation, e.g. "1.7e-9".
 <p>
 Note that old scripts which relied on setting <B>lines</B> greater than the
@@ -168,44 +169,36 @@ number of categories to scale the legend may no longer produce the desired
 output, although the auto-scaling should still produce something that looks 
 good in this case.
 
+
 <H2>TODO</H2>
 
 - Add <B>use</B> option for legends of discrete category numbers/values only.<BR>
+- Auto-scale text width for floating point rasters.<BR>
 - Text labels for horizontal legends.<BR>
-- <B>at</B> declaration format will change from <EM>x1,y1,x2,y2</EM>
-to <EM>bottom,top,left,right</EM> for consistency with
-<EM><A HREF="d.frame.html">d.frame</A></EM>.
-
-<H2>BUGS</H2>
-
-- Auto scaling text isn't quite right for legends within frames.<BR>
-- <B>at</B> positioning is relative to monitor, not frame.<BR>
-- <B>at</B> positioning currently uses the top left for 0,0 instead of the
-bottom left. This will be changed.<BR>
 
 
 <H2>SEE ALSO</H2>
 
-<EM><A HREF="d.colormode.html">d.colormode</A></EM><br>
-<EM><A HREF="d.colors.html">d.colors</A></EM><br>
+<EM><A HREF="d.colormode.html">d.colormode</A></EM><BR>
+<EM><A HREF="d.colors.html">d.colors</A></EM><BR>
 <EM><A HREF="d.colortable.html">d.colortable</A></EM><BR>
-<EM><A HREF="d.display.html">d.display</A></EM><br>
-<EM><A HREF="d.erase.html">d.erase</A></EM><br>
-<EM><A HREF="d.grid.html">d.grid</A></EM><br>
+<EM><A HREF="d.display.html">d.display</A></EM><BR>
+<EM><A HREF="d.erase.html">d.erase</A></EM><BR>
+<EM><A HREF="d.grid.html">d.grid</A></EM><BR>
 <EM><A HREF="d.rast.html">d.rast</A></EM><BR>
 <EM><A HREF="d.rast.labels.html">d.rast.labels</A></EM><BR>
 <EM><A HREF="d.rast.leg.sh.html">d.rast.leg</A></EM><BR>
-<EM><A HREF="d.vect.html">d.vect</A></EM><br>
-<EM><A HREF="d.what.rast.html">d.what.rast</A></EM><br>
+<EM><A HREF="d.vect.html">d.vect</A></EM><BR>
+<EM><A HREF="d.what.rast.html">d.what.rast</A></EM><BR>
 <EM><A HREF="r.reclass.html">r.reclass</A></EM>
 <BR>
 <EM><A HREF="parser.html">parser</A></EM>
 
 <H2>AUTHORS</H2>
 Bill Brown, U.S. Army Construction Engineering Research Laboratories
-<br>Late 2002: Rewrite of much of the code. Hamish Bowman,
+<BR>Late 2002: Rewrite of much of the code. Hamish Bowman,
  Otago University, New Zealand
-<br>Additional improvements from various authors
+<BR>Additional improvements from various authors
 
 
 <p><i>Last changed: $Date$</i>
