@@ -1,5 +1,5 @@
 /*!
-\mainpage GRASS 5.7 DataBase Management Interface
+\mainpage GRASS 6 DataBase Management Interface
 
 by GRASS Development Team
 
@@ -7,7 +7,7 @@ http://grass.itc.it
 
 \section intro Introduction
 
-The attribute management was completely changed in GRASS 5.7 to achieve
+The attribute management was completely changed in GRASS 5.7/6 to achieve
 multi-attribute capabilities managed within external databases.  The former
 dig_cats/ files are not used any more and all vector attributes are stored
 in external database. Connection with database is done through DBMI library
