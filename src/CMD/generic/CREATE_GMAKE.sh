@@ -1,6 +1,9 @@
 :
 
-if [ ! -d /usr/local/bin ]; then mkdir /usr/local/bin ; fi
+HEAD_FILE=`dirname $0`"/../head/head"
+# set (and create) UNIX_BIN
+eval `cat ${HEAD_FILE} | grep UNIX_BIN | sed "s/ //g"`
+if [ ! -d $UNIX_BIN ]; then mkdir $UNIX_BIN ; fi
 
 # create gmake5 script to be used for local compiling
 echo ":"                                   > $UNIX_BIN/gmake5
@@ -18,3 +21,5 @@ echo ":"                                      > $UNIX_BIN/gmakelinks5
 echo "GMAKE=$UNIX_BIN/gmake5"           >> $UNIX_BIN/gmakelinks5
 echo ". $SRC/src/CMD/generic/MAKELINKS.sh"   >> $UNIX_BIN/gmakelinks5
 chmod ugo+x $UNIX_BIN/gmakelinks5
+
+
