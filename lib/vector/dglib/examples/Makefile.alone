@@ -1,7 +1,7 @@
 CFLAGS = -Wall -I../include -DGNGRP_STATS -DGNGRP_NEWCLIP
 LNFLAGS = -L.. -ldgl -lm
-PROGRAMS = cr_from_a view shortest_path cr_large_graph unflatten
-OBJECTS = opt.o cr_from_a.o view.o shortest_path.o cr_large_graph.o unflatten.o
+PROGRAMS = cr_from_a view shortest_path cr_large_graph unflatten span
+OBJECTS = opt.o cr_from_a.o view.o shortest_path.o cr_large_graph.o unflatten.o span.o
 
 
 all: $(PROGRAMS)
@@ -14,6 +14,9 @@ cr_large_graph: cr_large_graph.o opt.o
 
 unflatten: unflatten.o opt.o
 	cc -o $@ unflatten.o opt.o $(LNFLAGS)
+
+span: span.o opt.o
+	cc -o $@ span.o opt.o $(LNFLAGS)
 
 view: view.o opt.o
 	cc -o $@ view.o opt.o $(LNFLAGS)
