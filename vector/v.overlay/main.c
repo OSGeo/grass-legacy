@@ -100,8 +100,8 @@ main (int argc, char *argv[])
     operator_opt->description = "Operator defines features written to output vector. "
 	"Feature is written to output if the result of operation 'ainput operator binput' is true. "
 	"Input feature is considered to be true, if category of given field is defined.\n"
-	"\t and : also known as 'union' in GIS\n"
-	"\t or  : also known as 'intersection' in GIS\n"
+	"\t and : also known as 'intersection' in GIS\n"
+	"\t or  : also known as 'union' in GIS\n"
 	"\t not : features from ainput not overlayed by features from binput\n"
 	"\t xor : features from either ainput or binput but not those from ainput overlayed by binput";
 
