@@ -1,8 +1,8 @@
 interface_build {
     {v.transform} 0
-    {Transforms an ASCII vector map from one coordinate system into another.}
-    {entry input {Input ASCII vector map:} 0 vector_ascii}
-    {entry output {Output ASCII vector map:} 0 vector_ascii}
+    {Transforms a vector map from one coordinate system into another.}
+    {entry input {Input vector map:} 0 vector}
+    {entry output {Output vector map:} 0 vector}
     {entry pointsfile {File holding transform coordinates:} 0 file}
     {checkbox -y {Suppress display of residuals or other information:} "" -y}
 }
