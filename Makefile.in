@@ -299,7 +299,13 @@ srcdist: FORCE distclean
 	echo "   initial CVS import" >> ChangeLog.cut
 	${SHELL} -c "mv ChangeLog.cut ChangeLog"
 	${SHELL} -c "rm -f ChangeLog.bak"
-	tar cvfz grass${VERSION}_src.tar.gz * --exclude=CVS
+	${SHELL} -c "mkdir ./grass-${VERSION}" ; true
+	@ # needed to store code in package with grass-version path:
+	${SHELL} -c "mv * ./grass-${VERSION} " ; true
+	tar cvfz grass${VERSION}_src.tar.gz ./grass-${VERSION}/* --exclude=CVS
+	@ # restore src code location:
+	${SHELL} -c "mv ./grass-${VERSION}/* ." ; true
+	${SHELL} -c "rmdir ./grass-${VERSION}" ; true
 	@ echo "Distribution source package: grass${VERSION}_src.tar.gz ready."
 
 # make a binary package for distribution:
