@@ -155,6 +155,7 @@ int execute(char *sql, cursor * c)
 	    dbval->i = 0;
 	    dbval->d = 0.0;
 	    dbval->c = NULL;
+	    dbval->is_null = 1;
 	}
 	db.tables[tab].updated = TRUE;
 	break;
