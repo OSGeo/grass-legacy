@@ -92,7 +92,7 @@ int asc_to_bin(
 			return 0;
 		    } 
 		    *z=0;
-		    if ( sscanf(buff, "%lf%lf%lf", y, x, z) < 2 ) {			
+		    if ( sscanf(buff, "%lf%lf%lf", x, y, z) < 2 ) {			
 			fprintf (stderr,"Error reading ascii file:\n%s\n", buff) ;
 			return 0;
 		    }    

@@ -14,21 +14,19 @@ main (int argc, char *argv[])
 	FILE *ascii;
 	struct GModule *module;
 	struct Option *old, *new, *delim_opt, *columns_opt, *xcol_opt, 
-		*ycol_opt, *zcol_opt, *catcol_opt;
-	int    xcol, ycol, zcol, catcol;
+		*ycol_opt, *zcol_opt, *catcol_opt, *format_opt;
+	int    xcol, ycol, zcol, catcol, format;
 	struct Flag *zcoorf, *t_flag, *e_flag;
-	char   *mapset, *table;
-	char   errmsg[200];
+	char   *table;
 	char   *fs;
-	int    zcoor=WITHOUT_Z, points_format, make_table; 
+	int    zcoor=WITHOUT_Z, make_table; 
 
 	struct Map_info Map;
 
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
-	module->description = "Convert GRASS ascii file or points file to binary vector. "
-	    "If option 'input' is not used, the module read points from standard input ('points mode').";
+	module->description = "Convert GRASS ascii file or points file to binary vector.";
 
         /************************** Command Parser ************************************/
 	old = G_define_option();
@@ -36,10 +34,20 @@ main (int argc, char *argv[])
 	old->type	 =  TYPE_STRING;
 	old->required	 =  NO;
 	old->multiple	 =  NO;
-	old->gisprompt   = "old,dig_ascii,ascii vector";
-	old->description = "ascii file to be converted to binary vector file";
+	old->gisprompt   = "file,file,file";
+	old->description = "ascii file to be converted to binary vector file, if not given reads from "
+	                   "standard input";
 
 	new = G_define_standard_option(G_OPT_V_OUTPUT);
+
+	format_opt = G_define_option();
+	format_opt->key         = "format";
+	format_opt->type        =  TYPE_STRING;
+	format_opt->required    =  NO;
+	format_opt->multiple    =  NO;
+	format_opt->options     = "point,standard";
+	format_opt->answer      = "point";
+	format_opt->description = "output format";
 
 	delim_opt = G_define_option();
 	delim_opt->key = "fs";
@@ -105,38 +113,31 @@ main (int argc, char *argv[])
 	
 	if (G_parser (argc, argv))
 		exit(-1);
+
+	if ( format_opt->answer[0] == 'p' )
+	    format = FORMAT_POINT;
+	else
+            format = FORMAT_ALL;
+
 	if (zcoorf->answer && zcol_opt->answer == "0")
 		G_fatal_error("Please specify zcol.");
 
 	xcol = atoi(xcol_opt->answer) - 1;
 	ycol = atoi(ycol_opt->answer) - 1;
 	zcol = atoi(zcol_opt->answer) - 1;
+
 	if (zcoorf->answer && zcol < 0)
-		G_fatal_error("Please specify reasonable zcol.");
+	    G_fatal_error("Please specify reasonable zcol.");
+
 	catcol = atoi(catcol_opt->answer) - 1;
 
-	if ( !*(new->answer) )
-	{
-	    fprintf (stderr, "%s: Command line error: missing output name.\n\n", argv[0]);
-		    G_usage();
-	    exit (-1);
-	}
-        /*****************************************************************************/
-        
 	if ( old->answer != NULL ) {
-	    if ((mapset = G_find_file2 (A_DIR, old->answer, "")) == NULL)
+	    if ( (ascii = fopen ( old->answer, "r" ) ) == NULL )
 	    {
-		    sprintf (errmsg, "Could not find ascii file <%s>\n", old->answer);
-		    G_fatal_error (errmsg);
+	        G_fatal_error ( "Could not open ascii file [%s]\n", old->answer);
 	    }
-	    if ( (ascii = G_fopen_old (A_DIR, old->answer, mapset) ) == NULL )
-	    {
-		    sprintf(errmsg, "Could not open ascii file <%s>\n", old->answer);
-		    G_fatal_error (errmsg);
-	    }
-	    points_format = 0;
-        } else { /* write points to stdout */
-	    points_format = 1;
+        } else { 
+	    ascii = stdin;
         }
 
 	if (  (fs = delim_opt->answer) ) {
@@ -144,9 +145,9 @@ main (int argc, char *argv[])
 		fs = " ";
 	    else if(strcmp (fs, "tab") == 0)
 		fs = "\t";
-	}
-	else
+	} else {
 	    fs = "|";
+	}
 
 	/* check dimension */
 	if (zcoorf->answer) {
@@ -162,7 +163,7 @@ main (int argc, char *argv[])
 	    exit(0) ;
 	}
 
-	if ( points_format ) {
+	if ( format == FORMAT_POINT ) {
 	    int i, rowlen, ncols, minncols, *coltype, *collen;
 	    int n_int = 0, n_double = 0, n_string = 0;
 	    char buf[1000];
@@ -170,15 +171,16 @@ main (int argc, char *argv[])
 	    char *tmp, *key;
 	    dbDriver *driver;
 	    dbString sql;
+	    FILE *tmpascii;
 
 	    /* Open temporary file */
 	    tmp = G_tempfile();
-	    if (NULL == (ascii = fopen(tmp, "w+"))) {
+	    if (NULL == (tmpascii = fopen(tmp, "w+"))) {
 		G_fatal_error ( "Can't open temp file %s", tmp);
 	    }
 	    unlink(tmp);
 
-	    points_analyse ( stdin, ascii, fs, PNT_HEAD_NO, &rowlen, &ncols, &minncols, &coltype, &collen);
+	    points_analyse ( ascii, tmpascii, fs, PNT_HEAD_NO, &rowlen, &ncols, &minncols, &coltype, &collen);
 	    fprintf ( stderr, "Maximum input row length: %d\n", rowlen);
 	    fprintf ( stderr, "Maximum number of columns: %d\n", ncols);
 	    fprintf ( stderr, "Minimum number of columns: %d\n", minncols);
@@ -352,7 +354,7 @@ main (int argc, char *argv[])
 		table = NULL;
 	    }
 
-	    points_to_bin ( ascii, rowlen, &Map, driver, table, fs, PNT_HEAD_NO, 
+	    points_to_bin ( tmpascii, rowlen, &Map, driver, table, fs, PNT_HEAD_NO, 
 		            ncols, coltype,  
 		            xcol, ycol, zcol, catcol );
 
@@ -360,10 +362,13 @@ main (int argc, char *argv[])
 	        db_commit_transaction ( driver );
 	        db_close_database_shutdown_driver ( driver );
 	    }
-	    fclose (ascii);
+	    fclose (tmpascii);
 	} else {
     	    read_head(ascii, &Map);
 	    asc_to_bin(ascii, &Map) ;
+	}
+	
+	if ( old->answer != NULL ) {
 	    fclose(ascii) ;
 	}
         
