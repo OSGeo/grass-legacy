@@ -1,0 +1,26 @@
+Meditor	editor.c	/^main(argc,argv) char *argv[];$/
+add_fp	add_fp.c	/^add_fp()$/
+add_target	add_targ.c	/^add_target()$/
+add_weapon	add_weap.c	/^add_weapon()$/
+ask_weapon	ask_weapon.c	/^ask_weapon(num_wtable) int num_wtable;$/
+choose_fp	choose_fp.c	/^choose_fp(num_wtable) int num_wtable;$/
+choose_target	choose_targ.c	/^choose_target(num_wtable) int num_wtable;$/
+choose_weapon	choose_weap.c	/^choose_weapon(num_wtable) int num_wtable;$/
+cmp_weap	add_weap.c	/^cmp_weap(a,b)$/
+finish	finish.c	/^}$/
+for	write_fp.c	/^    for (i=0; i<num_fp; i++)$/
+get_answer	get_answer.c	/^get_answer()$/
+new_firing_point	new.c	/^new_firing_point()$/
+new_fp_info	new.c	/^new_fp_info(n)$/
+read_fp	read_fp.c	/^read_fp(fd,num_wtable) FILE *fd; int num_wtable;$/
+read_target	read_target.c	/^read_target(fd,num_wtable) FILE *fd;$/
+read_weapon	read_weapon.c	/^read_weapon(fd,beg_num,read_num,used_num)$/
+run_Bnoise	run_Bnoise.c	/^run_Bnoise()$/
+save_param	save_param.c	/^save_param()$/
+show_fp	show_fp.c	/^show_fp()$/
+show_targets	show_targets.c	/^show_targets()$/
+show_weapons	show_weapons.c	/^show_weapons()$/
+write7	write7.c	/^write7(fd) FILE *fd;$/
+write_fp	write_fp.c	/^write_fp(fd) FILE *fd;$/
+write_target	write_target.c	/^write_target(fd) FILE *fd;$/
+write_weapon	write_weapon.c	/^write_weapon(fd,num_wtable,write_all)$/
