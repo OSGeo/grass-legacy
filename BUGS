@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.30 2000-10-15 13:39:20 markus Exp $
+$Id: BUGS,v 1.31 2000-10-17 08:38:47 markus Exp $
 
 Maintained by
    Markus Neteler
@@ -103,8 +103,6 @@ i.ortho.photo
    immediately in orange color (right window)
  - GIS WARNING: Can't write embedded null values for map open for random
    access: i.ortho.photo/photo.rectify/write.c needs to be updated.
- - photo2target/mark.c needs to be updated to support FP elevations
-    function: static int get_z_from_cell ()
 
 i.tape.tm.fast: (Todd Shoemaker, jtshoe@datasync.com)
 - Attempting to change the default Title causes a segfault.
@@ -363,4 +361,4 @@ else within Grass, though.
 
 ---------------------------------------------------------------------
 
- $Id: BUGS,v 1.30 2000-10-15 13:39:20 markus Exp $
+ $Id: BUGS,v 1.31 2000-10-17 08:38:47 markus Exp $
