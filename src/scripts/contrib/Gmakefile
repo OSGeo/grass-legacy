@@ -23,11 +23,11 @@ all:
 	cp r.univar/r.univar $(GISBASE)/scripts
 	cp r.to.pg/r.to.pg $(GISBASE)/scripts
 	cp s.in.atkisdgm/s.in.* $(GISBASE)/scripts
-	cp s.in.gps/s.in.gps $(GISBASE)/scripts
-	cp s.out.gps/s.out.gps $(GISBASE)/scripts
+	# cp s.in.gps/s.in.gps $(GISBASE)/scripts
+	# cp s.out.gps/s.out.gps $(GISBASE)/scripts
 	cp s.reclass/s.reclass $(GISBASE)/scripts
 	cp v.cutter.attr/v.cutter.attr $(GISBASE)/scripts
-	cp v.in.gps/v.in.gps $(GISBASE)/scripts
+	# cp v.in.gps/v.in.gps $(GISBASE)/scripts
 	cp v.line2area/v.line2area $(GISBASE)/scripts
 	cp v.plant/v.plant $(GISBASE)/scripts
 	cp v.xfig/*fig*  $(GISBASE)/scripts
