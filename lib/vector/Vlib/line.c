@@ -22,6 +22,8 @@
 #include "gis.h"
 #include "Vect.h"
 
+struct line_pnts *Vect__new_line_struct (void);
+
 /*
    **
    **  Creates and initializes a  struct line_pnts  
@@ -90,28 +92,6 @@ Vect_destroy_line_struct (struct line_pnts *p)
    ** returns 0 or -1 on out of memory
  */
 int 
-Vect_copy_xy_to_pnts (
-	struct line_pnts *Points, double *x, double *y, int n)
-{
-  register int i;
-
-  if (0 > dig_alloc_points (Points, n))
-    return (-1);
-
-  for (i = 0; i < n; i++)
-    {
-      Points->x[i] = x[i];
-      Points->y[i] = y[i];
-      Points->n_points = n;
-    }
-
-  return (0);
-}
-
-/*
-   ** returns 0 or -1 on out of memory
- */
-int 
 Vect_copy_xyz_to_pnts (
 	struct line_pnts *Points, double *x, double *y, double *z, int n)
 {
@@ -124,7 +104,10 @@ Vect_copy_xyz_to_pnts (
     {
       Points->x[i] = x[i];
       Points->y[i] = y[i];
-      Points->z[i] = z[i];
+      if ( z != NULL ) 
+          Points->z[i] = z[i];
+      else
+          Points->z[i] = 0;
       Points->n_points = n;
     }
 
@@ -220,22 +203,6 @@ Vect_append_points (struct line_pnts *Points, struct line_pnts *APoints,
  */
 
 int 
-Vect_copy_pnts_to_xy (
-		     struct line_pnts *Points, double *x, double *y, int *n)
-{
-  register int i;
-
-  for (i = 0; i < *n; i++)
-    {
-      x[i] = Points->x[i];
-      y[i] = Points->y[i];
-      *n = Points->n_points;
-    }
-
-  return (Points->n_points);
-}
-
-int 
 Vect_copy_pnts_to_xyz (
 	  struct line_pnts *Points, double *x, double *y, double *z, int *n)
 {
@@ -245,7 +212,8 @@ Vect_copy_pnts_to_xyz (
     {
       x[i] = Points->x[i];
       y[i] = Points->y[i];
-      z[i] = Points->z[i];
+      if ( z = NULL )
+          z[i] = Points->z[i];
       *n = Points->n_points;
     }
 
@@ -349,6 +317,7 @@ int
 Vect_line_distance (
 		  struct line_pnts *points, /* line */
 		  double ux, double uy, double uz,    /* point */
+		  int    with_z,   /* use z coordinate, (3D calculation) */
 		  double *px, double *py, double *pz, /* point on line */
 		  double *dist,             /* distance to line */
 		  double *spdist,           /* distance of point from segment beginning */
@@ -367,6 +336,7 @@ Vect_line_distance (
   if ( n_points == 1 ) {
     distance = dig_distance2_point_to_line (ux, uy, uz, points->x[0], points->y[0], points->z[0],
               				                points->x[0], points->y[0], points->z[0],
+							with_z,
 				  	                NULL, NULL, NULL, NULL, NULL);
     tpx = points->x[0];
     tpy = points->y[0];
@@ -380,6 +350,7 @@ Vect_line_distance (
 
       distance = dig_distance2_point_to_line (ux, uy, uz, points->x[0], points->y[0], points->z[0],
 						          points->x[1], points->y[1], points->z[1],
+							  with_z,
 						          NULL, NULL, NULL, NULL, NULL);
       segment = 1;
 	  
@@ -388,6 +359,7 @@ Vect_line_distance (
 	  new_dist = dig_distance2_point_to_line (ux, uy, uz, 
 		                                  points->x[i], points->y[i], points->z[i],
 					          points->x[i + 1], points->y[i + 1], points->z[i + 1],
+					          with_z,
 					          NULL, NULL, NULL, NULL, NULL);
 	  if (new_dist < distance)
 	    {
@@ -400,6 +372,7 @@ Vect_line_distance (
       new_dist = dig_distance2_point_to_line (ux, uy, uz, 
 	                       points->x[segment - 1], points->y[segment - 1], points->z[segment - 1],
 			       points->x[segment], points->y[segment], points->z[segment],
+			       with_z,
 			       &tpx, &tpy, &tpz, &tspdist, NULL);
       
       /* calculate distance from beginning of line */
@@ -408,7 +381,11 @@ Vect_line_distance (
 	  for ( i = 0; i < segment - 1; i++) {
               dx = points->x[i+1] - points->x[i];
 	      dy = points->y[i+1] - points->y[i];
-	      dz = points->z[i+1] - points->z[i];
+	      if ( with_z ) 
+	          dz = points->z[i+1] - points->z[i];
+	      else 
+		  dz = 0;
+
 	      tlpdist += hypot ( hypot (dx, dy), dz );
 	  }
 	  tlpdist += tspdist;
@@ -418,7 +395,7 @@ Vect_line_distance (
   
   if (px) *px = tpx;
   if (py) *py = tpy;
-  if (pz) *pz = tpz;
+  if (pz && with_z) *pz = tpz;
   if (dist) *dist = tdist;
   if (spdist) *spdist = tspdist;
   if (lpdist) *lpdist = tlpdist;
@@ -426,3 +403,28 @@ Vect_line_distance (
   return (segment);
 }
 
+/* Distance of 2 points. 
+*  
+*  with_z - use z coordinate
+*  
+*  returns: distance
+*/  
+double
+Vect_points_distance (
+		  double x1, double y1, double z1,    /* point 1 */
+		  double x2, double y2, double z2,    /* point 2 */
+		  int with_z)
+{
+    double dx, dy, dz;
+
+
+    dx = x2 - x1;
+    dy = y2 - y1;
+    dz = z2 - z1;
+
+    if (with_z)
+        return hypot ( hypot (dx, dy), dz );
+    else
+        return hypot (dx, dy);
+  
+}

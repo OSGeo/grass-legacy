@@ -1,7 +1,8 @@
 
 MODULE_TOPDIR = ../..
 
-SUBDIRS = diglib \
+SUBDIRS = dglib \
+	diglib \
 	Vlib
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make

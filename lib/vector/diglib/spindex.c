@@ -19,6 +19,7 @@
 *****************************************************************************/
 #include <stdlib.h>
 #include <string.h>
+#include "gis.h"
 #include "Vect.h"
 
 
@@ -130,7 +131,7 @@ dig_select_nodes ( struct Plus_head *Plus, BOUND_BOX *box, struct ilist *list )
 {
     BTREE  *B;
     double coor[3], *c;
-    int    *node, i, j;
+    int    *node, i, j, nd;
     
     G_debug(3, "dig_select_nodes()" );
     
@@ -158,16 +159,26 @@ dig_select_nodes ( struct Plus_head *Plus, BOUND_BOX *box, struct ilist *list )
 	else
             B->cur = i;
           
-        while ( btree_next (B, (char **) &c, (char **) &node) ) {
-	    if ( c[0] > box->E ) break;
-	    
+	/* get key of first (current) */
+	c = B->node[B->cur].key ;
+	node = B->node[B->cur].data;
+	do {
+	    G_debug ( 3, "Is node %d: %f %f %f in box", *node, c[0], c[1], c[2] ); 
+	    if ( c[0] > box->E ) {
+	        G_debug ( 3, "  east limit reached -> return" ); 
+		break;
+	    }
+            if ( c[0] >= box->W && c[0] <= box->E )
             if ( c[0] >= box->W && c[0] <= box->E &&
                  c[1] >= box->S && c[1] <= box->N &&
                  c[2] >= box->B && c[2] <= box->T ) 
 	    {
+	        G_debug ( 3, "  yes -> add to list" ); 
                 dig_list_add ( list, *node );
-	    }
-	}    
+	    } else 
+	        G_debug ( 3, "  no -> test next" ); 
+	    
+	} while ( btree_next (B, (char **) &c, (char **) &node) );
         return list->n_values;
     }
 

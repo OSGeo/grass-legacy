@@ -42,7 +42,7 @@ Vect_select_lines_by_box (struct Map_info *Map, BOUND_BOX *Box,
     P_NODE    *Node;
     struct ilist *LocList;
     
-    G_debug ( 3, "Vect_select_lines()" );
+    G_debug ( 3, "Vect_select_lines_by_box()" );
     G_debug ( 3, "Box(N,S,E,W,T,B): %e, %e, %e, %e, %e, %e", Box->N, Box->S,
                            Box->E, Box->W, Box->T, Box->B);
     plus = &(Map->plus);
@@ -96,7 +96,7 @@ Vect_select_areas_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *li
     struct    Plus_head *plus ;
     BOUND_BOX abox;
     
-    G_debug ( 3, "Vect_select_areas()" );
+    G_debug ( 3, "Vect_select_areas_by_box()" );
     G_debug ( 3, "Box(N,S,E,W,T,B): %e, %e, %e, %e, %e, %e", Box->N, Box->S,
                            Box->E, Box->W, Box->T, Box->B);
     plus = &(Map->plus);
@@ -132,7 +132,7 @@ Vect_select_isles_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *li
     struct    Plus_head *plus ;
     BOUND_BOX ibox;
     
-    G_debug ( 3, "Vect_select_isles()" );
+    G_debug ( 3, "Vect_select_isles_by_box()" );
     G_debug ( 3, "Box(N,S,E,W,T,B): %e, %e, %e, %e, %e, %e", Box->N, Box->S,
                            Box->E, Box->W, Box->T, Box->B);
     plus = &(Map->plus);
@@ -148,4 +148,28 @@ Vect_select_isles_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *li
     }
     
     return list->n_values;
+}
+
+/* 
+*  Vect_select_nodes_by_box ()
+*  
+*  Select nodes by box. 
+*  
+*  argument 'list' must be initialized
+*  
+*  returns: number of nodes
+*           
+*/
+int 
+Vect_select_nodes_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *list)
+{
+    struct    Plus_head *plus ;
+    
+    G_debug ( 3, "Vect_select_nodes_by_box()" );
+    G_debug ( 3, "Box(N,S,E,W,T,B): %e, %e, %e, %e, %e, %e", Box->N, Box->S,
+                           Box->E, Box->W, Box->T, Box->B);
+    plus = &(Map->plus);
+    list->n_values = 0; 
+    
+    return ( dig_select_nodes ( plus, Box, list ) ) ;
 }

@@ -17,11 +17,13 @@
 *   	    	for details.
 *
 *****************************************************************************/
-#include "Vect.h"
 #include <stdlib.h>
+#include <string.h>
 #include "gis.h"
+#include "Vect.h"
 
 static int cmp();
+struct line_cats *Vect__new_cats_struct (void);
 
 /*
    **
@@ -195,7 +197,7 @@ Vect_cat_del (struct line_cats *Cats, int field)
     {
       if (Cats->field[n] == field)
 	{
-	  for (n; n < Cats->n_cats - 1; n++)
+	  for (n = n; n < Cats->n_cats - 1; n++)
 	    {
 	      Cats->field[n] = Cats->field[n + 1];
 	      Cats->cat[n] = Cats->cat[n + 1];

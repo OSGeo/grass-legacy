@@ -50,6 +50,7 @@ dig_distance2_point_to_line (
 	double x, double y, double z,       /* point */
 	double x1, double y1, double z1,    /* line segment */
 	double x2, double y2, double z2,	
+	int with_z, /* use z coordinate, (3D calculation) */ 
 	double *px, double *py, double *pz, /* point on segment */
 	double *pdist, /* distance of point on segment from the first point of segment */
         int *status)
@@ -62,6 +63,12 @@ dig_distance2_point_to_line (
 
     st = 0;
 
+    if ( !with_z ) {
+       z = 0;
+       z1 = 0;
+       z2 = 0;
+    }       
+    
     dx = x2 - x1;
     dy = y2 - y1;
     dz = z2 - z1;
@@ -75,6 +82,7 @@ dig_distance2_point_to_line (
       tpz = z1;
     } else {
 	t = (dx * (x - x1) + dy * (y - y1) + dz * (z - z1)) / (dx * dx + dy * dy + dz * dz);
+	t = (dx * (x - x1) + dy * (y - y1) ) / (dx * dx + dy * dy );
 
 	if (t < 0.0) {			/* go to x1,y1,z1 */
 	    t = 0.0;
@@ -83,6 +91,7 @@ dig_distance2_point_to_line (
 	    t = 1.0;
 	    st = 1;
 	}
+    
 
 	/* go t from x1,y1,z1 towards x2,y2,z2 */
 	tpx = dx * t + x1;
