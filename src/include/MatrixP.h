@@ -34,6 +34,7 @@
  */
 
 #include <Xm/XmP.h>
+#include <Xm/ManagerP.h>
 #include <Matrix.h>
 
 
