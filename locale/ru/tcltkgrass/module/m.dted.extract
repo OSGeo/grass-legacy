@@ -1,0 +1,11 @@
+interface_build {
+    m.dted.extract 0
+    {Extracts digital terrain elevation data (DTED - levels 1 and 2) produced and supplied by the Defense Mapping Agency (DMA) on 1/2-inch magnetic tapes.}
+    {entry input {Input device:} 0 file}
+    {entry output {Output raster map:} 0 File}
+    {entry header {Header output file:} 0 File}
+    {entry north {North latitude of region to extract (dd:mm:ss{N|S}):} 0 ""}
+    {entry south {South latitude of region to extract (dd:mm:ss{N|S}):} 0 ""}
+    {entry east {East longitude of region to extract (ddd:mm:ss{E|W}):} 0 ""}
+    {entry north {North longitude of region to extract (ddd:mm:ss{E|W}):} 0 ""}
+}

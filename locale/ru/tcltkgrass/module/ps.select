@@ -1,0 +1,8 @@
+interface_build {
+    {ps.select} 0
+    {Выбирает устройство (PostScript принтер) для вывода на печать.}
+    {entry painter {Выбрать PostScript устройство:} 0 postscript}
+    {checkbox -l {Список PostScript принтеров.} "" -l}
+    {checkbox -p {Показать текущ. PostScript принтер.} "" -p}
+    {checkbox -q {без комм.} "" -q}
+}

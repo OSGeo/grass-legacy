@@ -1,0 +1,10 @@
+interface_build {
+    {i.rgb.his} 0
+    {Функция преобразования растровой карты RGB в HIS.}
+    {entry red_input {Растровая карта RED (ввод):} 0 raster}
+    {entry green_input {Растровая карта GREEN (ввод):} 0 raster}
+    {entry blue_input {Растровая карта BLUE (ввод):} 0 raster}
+    {entry hue_output {Растровая карта HUE (рез.):} 0 raster}
+    {entry intensity_output {Растровая карта INTENSITY (рез.):} 0 raster}
+    {entry saturation_output {Растровая карта SATURATION (рез.):} 0 raster}
+}

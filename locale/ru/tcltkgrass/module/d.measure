@@ -1,0 +1,8 @@
+interface_build {
+    {d.measure -s} 0
+    {Измерить длины и площади.}
+    {entry c1 {Цвет линии1:} 0 color}
+    {entry c2 {Цвет линии2:} 0 color}
+    {checkbox -m {Только метрические ед-цы.} "" -m}
+    {checkbox -k {в километрах.} "" -k}
+}

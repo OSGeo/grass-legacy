@@ -1,0 +1,5 @@
+interface_build {
+    {db.tables} 0
+    {Список таблиц.}
+    {checkbox -s {систем. табл.} "" -s}
+}

@@ -1,0 +1,9 @@
+interface_build {
+    {i.gensigset} 0
+    {Создает неинтерактивную статистику для  i.smap с исходной растровой карты.}
+    {entry trainingmap {Растровая карта (трен.):} 0 raster}
+    {entry group {Группа снимков:} 0 group}
+    {entry subgroup {Подгруппа снимков:} 0 subgroup}
+    {entry signaturefile {Файл подписей (рез.):} 0 signature}
+    {entry threshold {Макс. число под-подписей для люб. класса [10]:} 0 ""}
+}

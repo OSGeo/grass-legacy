@@ -1,0 +1,5 @@
+interface_build {
+    {v.support option=edit} 1
+    {Редактирует категории векторной карты.}
+    {entry map {Векторная карта GRASS:} 0 vector}
+}

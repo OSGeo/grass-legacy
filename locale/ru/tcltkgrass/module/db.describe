@@ -1,0 +1,5 @@
+interface_build {
+    {db.describe} 0
+    {Вывести информацию о таблице.}
+    {entry table {Таблица:} 0 ""}
+}

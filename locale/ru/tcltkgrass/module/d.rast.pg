@@ -1,0 +1,12 @@
+interface_build {
+    d.rast.pg 0
+    {Реклассифицировать и показать растровую карту как результат запроса БД.}
+    {entry key {Столбец cat-ID:} 0 ""}
+    {entry tab  {Таблица:} 0 ""}
+    {entry col  {Столбец кат. рекласса:} 0 ""}
+    {entry where  {Условие where:} 0 ""}
+    {entry input  {Растровая карта:} 0 raster}
+    {entry output  {Карта рекласса (нов., выб.):} 0 raster}
+    {checkbox -s {Исп. файл SQL} "" -s}
+    {entry sql  {Файл команд SQL:} 0 file}
+}

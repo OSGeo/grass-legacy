@@ -1,0 +1,9 @@
+interface_build {
+    {ps.map} 1
+    {Создает цветной файл PostScript.}
+    {entry input {Файл инструкций, или - для ввода с клав.:} 0 file}
+    {entry scale {Масштаб карты, напр. 1:25000 [1 panel]} 0 ""}
+    {entry copies {Число копий:} 0 ""}
+    {entry output {Файл PostScript:} 0 File}
+    {checkbox -r {Повернуть карту.} "" -r}
+}

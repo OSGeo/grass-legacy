@@ -1,0 +1,7 @@
+interface_build {
+    {r.binfer} 0
+    {Экспертная система Байеса.}
+    {entry input {Файл с инструкциями:} 0 file}
+    {entry output {Файл вывода информации [r.binfer.out]:} 0 File}
+    {checkbox -v {Доп. информация.} "" -v}
+}

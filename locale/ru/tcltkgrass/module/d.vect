@@ -1,0 +1,7 @@
+interface_build {
+    {d.vect} 0
+    {Показать векторный файл GRASS.}
+    {entry map {Векторный файл:} 0 vector}
+    {entry color {Цвет линий [white]:} 0 color}
+    {checkbox -m {огран. ресурс памяти} "" -m}
+}

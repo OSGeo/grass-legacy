@@ -1,0 +1,7 @@
+interface_build {
+    {r.resample} 0
+    {Изменяет границы растровой карты GRASS.}
+    {entry input {Растровая карта:} 0 raster}
+    {entry output {Растровая карта (рез.) текущего региона:} 0 raster}
+    {checkbox -q {без комм.} "" -q}
+}

@@ -1,0 +1,10 @@
+interface_build {
+    d.what.r.pg 0
+    {Запрос категорий растровой карты в БД.}
+    {entry map  {Растровая карта:} 0 raster}
+    {entry tab {Таблица:} 0 ""}
+    {entry col  {Ключ. столбец:} 0 ""}
+    {entry hv  {Вывод - v(ert)/h(oriz):} 0 ""}
+    {checkbox -s {Исп. файл SQL} "" -s}
+    {entry sql  {Файл команд SQL:} 0 file}
+}

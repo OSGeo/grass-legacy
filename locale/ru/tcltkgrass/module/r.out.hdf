@@ -1,0 +1,8 @@
+interface_build {
+    {r.out.hdf} 0
+    {Экспортирует растровую карту GRASS в формат HDF.}
+    {entry input {Растровая карта GRASS (ввод):} 0 raster}
+    {entry output {Файл HDF (рез.):} 0 File}
+    {entry mult {Множитель с плавающей точкой для значений клеток:} 0 ""}
+    {checkbox -q {без комм.} "" -q}
+}

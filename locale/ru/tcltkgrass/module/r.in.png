@@ -1,0 +1,8 @@
+interface_build {
+    {r.in.png} 0
+    {Импорт файла PNG в растровую карту GRASS.}
+    {entry input {PNG файл:} 0 file}
+    {entry output {Растровая карта:} 0 raster}
+    {entry title {Титул карты рез-та:} 0 ""}
+    {checkbox -v {с комм.} "" -v}
+}

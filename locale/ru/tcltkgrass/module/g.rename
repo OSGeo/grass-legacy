@@ -1,0 +1,12 @@
+interface_build {
+    g.rename 0
+    {Переименовывает файлы данных в директории набора данных пользователя.}
+    {entry rast {Растровые карты (стар,нов):} 0 raster}
+    {entry vect {Векторные карты (стар,нов):} 0 vector}
+    {entry icon {Иконки (стар,нов):} 0 icon}
+    {entry labels {Метки (стар,нов):} 0 label}
+    {entry sites {Объекты (стар,нов):} 0 sites}
+    {entry region {Файлы границ региона (стар,нов):} 0 region}
+    {entry group {Группы снимков (стар,нов):} 0 group}
+    {entry 3dview {3d файлы (стар,нов):} 0 3dview}
+}

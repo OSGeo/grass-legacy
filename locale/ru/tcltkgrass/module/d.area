@@ -1,0 +1,7 @@
+interface_build {
+    {d.area} 0
+    {Показывает векторные полигоны GRASS (цвет по выбору).}
+    {entry map {Векторная карта полигонов, обяз..:} 0 vector}
+    {entry linecolor {Цвет границы полигонов [none]:} 0 color}
+    {entry fillcolor {Цвет заливки полигонов [white]:} 0 color}
+}

@@ -1,0 +1,7 @@
+interface_build {
+    {nviz} 1
+    {Средство визуализации.}
+    {entry el {Растровая карта DEM:} 0 raster}
+    {entry ve {Векторная карта:} 0 vector}
+    {entry si {Карта объектов:} 0 sites}
+}

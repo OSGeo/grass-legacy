@@ -1,0 +1,12 @@
+interface_build {
+    m.ll2u 0
+    {Преобразует географические координаты в Universal Transverse Mercator (UTM).}
+    {entry spheroid {Эллипсоид:} 0 spheroid}
+    {entry zone {Зона UTM (1-60):} 0 ""}
+    {entry input {Исходный файл:} 0 file}
+    {entry output {Результат:} 0 File}
+    {checkbox -r {Ввод обратный: шир., дол.} "" -r}
+    {checkbox -w {Не обозначать дол.,шир. при вводе как ошибки.} "" -w}
+    {checkbox -o {Обозначать др. линии при вводе как ошибки.} "" -o}
+    {checkbox -z {Не выводить номера зон UTM.} "" -z}
+}

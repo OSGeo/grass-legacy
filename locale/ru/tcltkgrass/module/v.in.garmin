@@ -1,0 +1,13 @@
+interface_build {
+    {v.in.garmin.sh} 0
+    {Импорт контр.точек, маршрутов и отрезков с garmin gps receiver через программу gpstrans}
+    {entry name {Название новой вект.карты:} 0 ""}
+    {entry port {Порт для присоединения garmin receiver:} 0 ""}
+    {checkbox -w {Загрузить контр.точки} "" -w} 
+    {checkbox -r {Загрузить маршруты} "" -r} 
+    {checkbox -t {Загрузить отрезки} "" -t} 
+    {checkbox -u {Выполнить v.support на новой вект.карте} "" -u}
+    {checkbox -v {с комментариями} "" -v} 
+    {checkbox -h {вывести help} "" -h}
+}
+

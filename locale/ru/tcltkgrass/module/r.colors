@@ -1,0 +1,18 @@
+interface_build {
+    {r.colors} 0
+    {Создает/редактирует цветовую таблицу для растровой карты.}
+    {entry map {Растровая карта:} 0 raster}
+    {checkbox color {Серый по аспекту.} "" aspect}
+    {checkbox color {Линейный серый.} "" grey}
+    {checkbox color {Серый с уравн. по гистограмме.} "" grey.eq}
+    {checkbox color {Зел.-желт.-красн.} "" gyr}
+    {checkbox color {Радуга.} "" rainbow}
+    {checkbox color {Цвет. дробление.} "" ramp}
+    {checkbox color {Красн.-желт.-зел.} "" ryg}
+    {checkbox color {Случ. цвет.} "" random}
+    {checkbox color {Волна.} "" wave}
+    {checkbox color {По правилу.} "" rules}
+    {separator grey 1}
+    {checkbox -w {Не переписывать сущ.табл..} "" -w}
+    {checkbox -q {без комм.} "" -q}
+}

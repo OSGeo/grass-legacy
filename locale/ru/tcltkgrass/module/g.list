@@ -1,0 +1,15 @@
+interface_build {
+    {g.list} 0
+    {Показывает файлы базы данных GRASS, заданного пользователем типа.}
+    {entry mapset {Набор данных [в заданном каталоге]:} 0 ""}
+    {checkbox type {Растровые файлы}		"" rast}
+    {checkbox type {Бинарные векторные файлы}	"" vect}
+    {checkbox type {Иконки}		"" icon}
+    {checkbox type {Обозначения}		"" labels}
+    {checkbox type {Объекты}		"" sites}
+    {checkbox type {Файлы границы регионов}	"" region}
+    {checkbox type {Группы} 	"" group}
+    {checkbox type {Параметры 3D моделей}	"" 3dview}
+    {separator grey 1}
+    {checkbox -f {Полная информация} "" -f}
+}

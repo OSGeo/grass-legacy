@@ -1,0 +1,9 @@
+interface_build {
+    {r.to.sites} 0
+    {Преобразовать растровую карту GRASS в карту объектов GRASS.}
+    {entry input {Растровая карта:} 0 raster}
+    {entry output {Карта объектов:} 0 sites}
+    {entry label {Метка для объектов (default: без меток):} 0 ""}
+    {checkbox -a {Вывод десят. величин вместо атрибутов.} "" -a}
+    {checkbox -z {Вывод как третье измерение вм. атрибутов.} "" -z}
+}

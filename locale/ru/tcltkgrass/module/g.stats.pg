@@ -1,0 +1,8 @@
+interface_build {
+    g.stats.pg 0
+    {Вычислить mean, min,max, частоты для указанного числового поля}
+    {entry table {Таблица БД:} 0 ""}
+    {entry column {Столбец:} 0 ""}
+    {checkbox -f {Частоты (вместо min,max)} "" -f}
+    {checkbox -v {полн.вывод} "" -v}
+}

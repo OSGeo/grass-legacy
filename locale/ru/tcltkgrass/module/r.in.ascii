@@ -1,0 +1,8 @@
+interface_build {
+    {r.in.ascii} 0
+    {Преобразует ASCII растровый текстовый файл в (бин.) растровую карту.}
+    {entry input {ASCII растровый файл:} 0 file}
+    {entry output {Растровая карта (рез.):} 0 raster}
+    {entry title {Заголовок растровой карты:} 0 ""}
+    {entry mult {Множитель ASCII данных [1.0]:} 0 ""}
+}

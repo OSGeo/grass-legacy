@@ -1,0 +1,10 @@
+interface_build {
+    m.gc2ll 0
+    {Преобразует геоцентрические координаты в географические.}
+    {entry x {X коорд.:} 0 ""}
+    {entry y {Y коорд.:} 0 ""}
+    {entry z {Z коорд.:} 0 ""}
+    {entry s {Сфероид:} 0 spheroid}
+    {entry thresh {Порог. знач. [1e-6]:} 0 ""}
+    {entry iterations {Число итераций[30].} 0 ""}
+}

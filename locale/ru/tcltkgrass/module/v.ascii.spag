@@ -1,0 +1,7 @@
+interface_build {
+    {v.ascii.spag} 0
+    {Обработка дигитированной ASCII GRASS векторной карты.}
+    {entry input  {Векторная карта (ввод):} 0 vector_ascii}
+    {entry output {Векторная карта (рез.):} 0 vector_ascii}
+    {checkbox -i {Только выполнить тест на совпадение линий.} "" -i}
+}

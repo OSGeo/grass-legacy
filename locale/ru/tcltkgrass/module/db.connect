@@ -1,0 +1,8 @@
+interface_build {
+    {db.connect} 0
+    {Соединиться с БД.}
+    {entry database {БД:} 0 ""}
+    {entry user {Пользователь:} 0 ""}
+    {entry password {Пароль:} 0 ""}
+    {entry key {Ключ. поле:} 0 ""}
+}

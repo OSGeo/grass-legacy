@@ -1,0 +1,6 @@
+interface_build {
+    {v.out.e00} 0
+    {Экспорт векторной карты GRASS в файл ARC/INFO E00.}
+    {entry input {Векторная карта GRASS:} 0 vector}
+    {entry output {Файл E00:} 0 File}
+}

@@ -1,0 +1,9 @@
+interface_build {
+    m.dem.extract 0
+    {Получить USGS Digital Elevation Model (DEM) данные с 1/2-дюйм. магн. ленты.}
+    {entry input {Устройство или файл ввода:} 0 file}
+    {entry output {Растровая карта рез-т (не указ. - просмотр):} 0 raster}
+    {entry blocksize {Размер блока на ленте[10240]:} 0 ""}
+    {entry start {Первый файл для считывания [1]:} 0 ""}
+    {entry end {Посл. файл для считывания [999999]:} 0 ""}
+}

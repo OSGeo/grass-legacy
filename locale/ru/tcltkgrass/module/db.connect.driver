@@ -1,0 +1,5 @@
+interface_build {
+    {db.connect.driver} 0
+    {Выбрать DBMI драйвер.}
+    {entry driver {Драйвер, необх.:} 0 ""}
+}

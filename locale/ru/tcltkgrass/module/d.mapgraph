@@ -1,0 +1,8 @@
+interface_build {
+    {d.mapgraph} 0
+    {Создает и показывает простую графику на растровых картах.}
+    {entry input {Файл с граф. инструкциями:} 0 file}
+    {entry color {Начальный цвет графики [white]:} 0 color}
+    {entry vsize {???} 0 ""}
+    {entry hsize {???} 0 ""}
+}

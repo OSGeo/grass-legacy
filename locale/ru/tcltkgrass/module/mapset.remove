@@ -1,0 +1,5 @@
+interface_build {
+    {mapset.remove} 0
+    {Удаляет наборы данных.}
+    {entry mapset {Удалить набор данных:} 0 Mapset}
+}

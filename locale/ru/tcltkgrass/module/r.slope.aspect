@@ -1,0 +1,14 @@
+interface_build {
+    {r.slope.aspect} 0
+    {Создает растровую карту склонов и экспозиций по растровой карте высот.}
+    {entry elevation {Растровая карта (DEM):} 0 raster}
+    {entry slope {Растровая карта склонов(рез.):} 0 raster}
+    {entry aspect {Растровая карта экспозиций (рез.):} 0 raster}
+    {entry zfactor {Множитель единиц DEM к метрам [1]:} 0 ""}
+    {entry min_slp {Мин. склон для расчета экспозиции [0].} 0 ""}
+    {checkbox format {Склон в град. (по умол.).} "" degrees}
+    {checkbox format {Склон в проц..} "" percent}
+    {checkbox -a {Не выравнивать текущ. регион по DEM.} "" -a}
+    {checkbox -q {без комм.} "" -q}
+    {checkbox -z {Нули DEM соотв. высоте.} "" -z}
+}

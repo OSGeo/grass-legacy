@@ -1,0 +1,13 @@
+interface_build {
+    m.u2ll 0
+    {Преобразует Universal Transverse Mercator (UTM) в географические координаты (шир./дол.).}
+    {entry spheroid {Эллипсоид:} 0 spheroid}
+    {entry zone {Зона UTM (1-60):} 0 ""}
+    {entry input {Исходный файл:} 0 file}
+    {entry output {Результат:} 0 File}
+    {checkbox -s {Указ.зона в южном полушарии.} "" -s}
+    {checkbox -r {Ввод обратный: сев., вост.} "" -r}
+    {checkbox -w {Не обозначать вост.,сев. линии при вводе как ошибки.} "" -w}
+    {checkbox -o {Обозначать др. линии при вводе как ошибки.} "" -o}
+    {checkbox -d {Вывод десятичных град.} "" -d}
+}

@@ -1,0 +1,7 @@
+interface_build {
+    {s.in.ascii} 0
+    {Преобразует текстовый файл в файл объектов GRASS.}
+    {entry input {Текстовый файл (ввод):} 0 file}
+    {entry sites {Карта объектов GRASS (рез.):} 0 sites}
+    {entry fs {Разделитель ввода (1 симв.) [пробел]:} 0 ""}
+}

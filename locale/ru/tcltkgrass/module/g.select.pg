@@ -1,0 +1,7 @@
+interface_build {
+    g.select.pg 0
+    {Выбрать БД.}
+    {entry host {Сервер Postgres:} 0 ""}
+    {entry database {База данных:} 0 ""}
+    {checkbox -l {Только список БД} "" -l}
+}

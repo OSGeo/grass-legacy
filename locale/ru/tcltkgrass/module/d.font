@@ -1,0 +1,5 @@
+interface_build {
+    {d.font} 0
+    {Выбирает фонт для вывода текста на дисплей.}
+    {entry font {Название фонта [romans]:} 0 font}
+}

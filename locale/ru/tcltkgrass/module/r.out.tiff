@@ -1,0 +1,9 @@
+interface_build {
+    {r.out.tiff} 0
+    {Экспортирует растровую карту GRASS в формат TIFF (8/24bit).}
+    {entry input {Растровая карта GRASS (ввод):} 0 raster}
+    {entry output {Файл TIFF (рез.):} 0 File}
+    {checkbox -p {Палитра TIFF (8bit вм. 24bit).} "" -p}
+    {checkbox -c { LZW сжатие.} "" -c}
+    {checkbox -v {Доп. информация.} "" -v}
+}

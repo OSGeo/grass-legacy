@@ -1,0 +1,6 @@
+interface_build {
+    g.column.pg 0
+    {Информация о столбцах заданной таблицы.}
+    {entry table {Таблица:} 0 ""}
+    {checkbox -v {полн. вывод} "" -v}
+}

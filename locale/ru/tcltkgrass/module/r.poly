@@ -1,0 +1,7 @@
+interface_build {
+    {r.poly} 0
+    {Находит границы на растровой карте и преобразует ее в полигоны GRASS.}
+    {entry input {Растровая карта:} 0 raster}
+    {entry output {Векторная карта (рез.):} 0 vector}
+    {checkbox -l {Сглаживать углы.} "" -l}
+}

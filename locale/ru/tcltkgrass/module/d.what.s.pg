@@ -1,0 +1,12 @@
+interface_build {
+    d.what.s.pg 0
+    {Запрос БД по объектам внутри заданного радиуса курсора.}
+    {entry tab {Таблица:} 0 ""}
+    {entry xcol  {Столбец X коор.:} 0 ""}
+    {entry ycol  {Столбец Y коор.:} 0 ""}
+    {entry xpos  {X коор. поиска:} 0 ""}
+    {entry ypos  {Y коор. поиска:} 0 ""}
+    {entry distance  {Радиус:} 0 ""}
+    {checkbox -s {Исп. файл SQL} "" -s}
+    {entry sql  {Файл команд SQL:} 0 file}
+}

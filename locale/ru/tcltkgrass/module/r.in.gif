@@ -1,0 +1,8 @@
+interface_build {
+    {r.in.gif} 0
+    {Импортирует GIF (8bit) файл в растровую карту GRASS.}
+    {entry input {GIF файл (ввод):} 0 file}
+    {entry output {Растовая карта GRASS(рез.):} 0 raster}
+    {entry title {Заголовок растровой карты GRASS (выбор):} 0 ""}
+    {checkbox -v {Доп. информация.} "" -v}
+}

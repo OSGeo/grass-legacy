@@ -1,0 +1,11 @@
+interface_build {
+    {d.histogram} 0
+    {Показывает гистограмму в виде столбчатой или круговой диаграммы для
+    растровой карты.}
+    {entry map {Растровая карта, обяз.:} 0 raster}
+    {entry color {Цвет оси и текста [white]:} 0 color}
+    {checkbox style {Столб. [default].} "" bar}
+    {checkbox style {Кругов..} "" pie}
+    {checkbox -z {Показать нули.} "" -z}
+    {checkbox -q {работать без комм..} "" -q}
+}

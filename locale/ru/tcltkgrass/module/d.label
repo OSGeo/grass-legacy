@@ -1,0 +1,8 @@
+interface_build {
+    {d.label} 1
+    {Создает и показывает текстовые метки.}
+    {entry size {Размер текстовых меток в % от высоты рамки (0-100) [10]:} 0 ""}
+    {entry backcolor {Цвет фона для меток [black]:} 0 color}
+    {entry textcolor {Цвет текста меток [white]:} 0 color}
+    {entry font {Тип фонта [romans]:} 0 font}
+}

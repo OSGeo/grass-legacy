@@ -1,0 +1,7 @@
+interface_build {
+    {r.in.tiff} 0
+    {Импортирует 8bit - TIFF файл в растровую карту GRASS.}
+    {entry input {8bit - TIFF файл (ввод):} 0 file}
+    {entry output {Растровая карта GRASS (рез.):} 0 raster}
+    {checkbox -v {Доп. информация.} "" -v}
+}

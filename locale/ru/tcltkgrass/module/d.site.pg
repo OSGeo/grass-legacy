@@ -1,0 +1,13 @@
+interface_build {
+    d.site.pg 0
+    {Показать и скопировать объекты как результат запроса БД.}
+    {entry tab {Таблица:} 0 ""}
+    {entry coordx  {Столбец X коор.:} 0 ""}
+    {entry coordy  {Столбец Y коор.:} 0 ""}
+    {entry cats  {Столбец категорий:} 0 ""}
+    {entry where  {Условие where:} 0 ""}
+    {entry map  {Карта объектов (нов., выб.):} 0 sites}
+    {entry plot  {Color,icon,size:} 0 ""}
+    {checkbox -s {Исп. файл SQL} "" -s}
+    {entry sql  {Файл команд SQL:} 0 file}
+}

@@ -1,0 +1,8 @@
+interface_build {
+    {v.transform} 0
+    {Преобразует ASCII векторную карту из одной системы координат в другую.}
+    {entry input {ASCII векторная карта:} 0 vector_ascii}
+    {entry output ASCII векторная карта (результ.):} 0 vector_ascii}
+    {entry pointsfile {Файл коорд. трансформации:} 0 file}
+    {checkbox -y {Без вывода дополн. информации:} "" -y}
+}
