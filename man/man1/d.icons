@@ -153,9 +153,9 @@ is the name of an icon.
 .I d.sites,
 .I d.where,
 .I p.icons,
-.I s.db,
+.I s.db.rim,
 .I s.out.ascii,
-.I v.db,
+.I v.db.rim,
 and
 .I parser
 .SH AUTHOR
