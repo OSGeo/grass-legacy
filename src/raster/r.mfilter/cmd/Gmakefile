@@ -1,0 +1,19 @@
+PGM = r.mfilter
+HOME = $(BIN_MAIN_CMD)
+
+LIST = \
+	main.o\
+	getfilt.o\
+	getrow.o\
+	apply.o\
+	execute.o\
+	perform.o\
+	uppercase.o
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB) $(ROWIOLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(ROWIOLIB)
+
+$(LIST): filter.h glob.h
+
+$(GISLIB): # in case library changes
+$(ROWIOLIB): # in case library changes
