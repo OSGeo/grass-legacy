@@ -1,0 +1,59 @@
+<html>
+<A NAME="r.to.sites">
+<TITLE>r.to.sites</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<B><EM>r.to.sites </EM></B> - Converts point data in a GRASS raster map layer into a GRASS site_lists file.<BR>
+<EM>(GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>r.to.sites</B><BR>
+<B>r.to.sites help</B><BR>
+<B>r.to.sites [-az] input</B><EM>=name</EM> <B>output</B><EM>=name</EM> [<B>label</B><EM>=name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+The <EM>r.to.sites</EM> program extracts data from a GRASS raster map layer and stores output in a new GRASS <EM>site_lists</EM> file.  The resulting sites map layer can be used with such programs as <EM>d.sites</EM>.
+
+<P>
+
+The user can run the program non-interactively by specifying the names of an existing raster input map layer and a new site list file to be output on the command line.  The program will be run interactively if the user types <EM>r.to.sites</EM> without arguments on the command line.  In this case, the user will be prompted to enter parameter values through the standard user interface described in the manual entry for <EM>parser</EM>.
+
+<H2>OPTIONS:</H2>
+
+<H3>Flags:</H3>
+<DL>
+<DT><B>-a</B> 
+<DD>Output as decimal attribute rather than cat
+
+<DT><B>-z</B> 
+<DD>Output as third dimension rather than cat
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>input</B> 
+<DD>Name of an existing raster map layer from which site data are to be extracted
+
+<DT><B>output</B>
+<DD>Name of new sites file
+
+<DT><B>label</B>
+<DD>Label for site values
+<DD>Default: No Label
+</DL>
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="d.sites.html">d.sites</A>, <A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+Bill Brown
+
+</BODY>
+</HTML>
+
