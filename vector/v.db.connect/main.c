@@ -15,6 +15,7 @@
  *
  * TODO: - fix -o flag (needs fix in Vect lib)
  *       - add check that key is INTEGER (needs test for column type)
+ *       - add check if column exists
  *
  **************************************************************/
 
