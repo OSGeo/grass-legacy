@@ -1,2 +1,2 @@
 all:
-	$(GMAKE) libW11
+	(cd libW11; make; cp lib/libG11.dll $(GISBASE)/bin)
