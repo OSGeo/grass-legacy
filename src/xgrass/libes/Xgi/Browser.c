@@ -37,6 +37,7 @@ static char     rcsid[] = "@(#)XGRASS $Id: Browser.c,v 0.0 1992/05/05 14:55:50 s
 #include <Xm/RowColumn.h>
 #include <Xm/DialogS.h>
 #include <Xm/PushBG.h>
+#include "XmLinux.h"
 #include "hourglass.h"
 
 #include <stdio.h>
