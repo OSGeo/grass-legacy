@@ -128,7 +128,7 @@ db_read_dbmscap()
 /* START OF NEW CODE FOR SEARCH IN $(GISBASE)/driver/db/ */
     
     /* opend db drivers directory */
-    snprintf (dirpath, 1023, "%s/driver/db/", G_gisbase());
+    sprintf (dirpath, "%s/driver/db/", G_gisbase());
     dir = opendir(dirpath);
     if (dir == NULL)
     {
@@ -142,7 +142,7 @@ db_read_dbmscap()
         if ( (strcmp (ent->d_name, ".") == 0) 
 	    || (strcmp (ent->d_name, "..") == 0) ) continue;	
 	
-        snprintf (buf, 1023, "%s/driver/db/%s", G_gisbase(),ent->d_name);
+        sprintf (buf, "%s/driver/db/%s", G_gisbase(),ent->d_name);
 	add_entry (&list, ent->d_name, buf, "");
       }
     
