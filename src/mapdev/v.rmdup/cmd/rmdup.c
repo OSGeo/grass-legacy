@@ -19,20 +19,7 @@
 **/
 
 #include <stdio.h>
-/*#ifndef __CYGWIN__
-  #include <values.h>
-  #endif
-
- updated to:*/
-
-#ifdef HAVE_LIMITS_H
 #include <limits.h>
-#endif
-
-#ifdef HAVE_VALUES_H
-#include "values.h"
-#endif
-
 #include <math.h>
 
 #include    "gis.h"
