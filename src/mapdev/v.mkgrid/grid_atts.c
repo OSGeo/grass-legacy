@@ -37,7 +37,7 @@ void set_grid_area_points( double *xlist, double *ylist, struct grid_description
   }
 }
 
-void set_grid_attributes( int *gatts, struct grid_description *gd1, AttributeType att_type ) {
+void set_grid_attributes( int *gatts, struct Categories *cats, struct grid_description *gd1, AttributeType att_type ) {
 
   /* Fill out array of attribute values */
 
@@ -52,6 +52,8 @@ void set_grid_attributes( int *gatts, struct grid_description *gd1, AttributeTyp
 
   int nr = gd1->num_rows;
   int nc = gd1->num_cols;
+
+  char buf[100], let;
 
   /* loop */
   int i,j;
@@ -84,6 +86,9 @@ void set_grid_attributes( int *gatts, struct grid_description *gd1, AttributeTyp
 	  rownum = nr - i - 1;
 	  colnum = j;
 	  gatts[i*nc+j] = colnum * nr + rownum + 1;
+	  let = (char) ( rownum + 'A' );
+	  snprintf (buf, 100, "%c %d", let, colnum+1);
+	  G_set_cat( gatts[i*nc+j], buf  , cats);	  
 	}
       }
       break;
@@ -95,6 +100,9 @@ void set_grid_attributes( int *gatts, struct grid_description *gd1, AttributeTyp
 	  rownum = nr - i - 1;
 	  colnum = j;
 	  gatts[i*nc+j] = rownum * nc + colnum + 1;
+	  let = (char) ( rownum + 'A' );
+	  snprintf (buf, 100, "%c %d", let, colnum+1);
+	  G_set_cat( gatts[i*nc+j], buf  , cats);	  
 	}
       }
       break;

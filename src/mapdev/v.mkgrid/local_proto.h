@@ -12,5 +12,5 @@ int write_grid(struct grid_description *, struct Map_info *, int);
 int write_vect(double, double, double, double, struct Map_info *, struct line_pnts *);
 /* grid_atts.c */
 void set_grid_area_points( double *, double *, struct grid_description * );
-void set_grid_attributes( int *, struct grid_description *, AttributeType );
+void set_grid_attributes( int *, struct Categories *, struct grid_description *, AttributeType );
 int proc_const_attribute_value( int, int * );
