@@ -30,7 +30,7 @@
 
 #  Set the GIS environment variable
   
-   setenv GISRC $HOME/.grassrc 
+   setenv GISRC $HOME/.grassrc5 
 # 
 # 
 #  Generate maps 
