@@ -1,0 +1,16 @@
+Hi,
+
+ Edit XDRIVER24/Gmakefile for other platforms than Linux.
+
+ After compiliation you find the file XDRIVER24 in
+  grass42/driver/
+
+ You have to put a link there
+
+  ln -s XDRIVER24 XDRIVER
+
+ Otherwise GRASS d.mon will not work.
+
+ Markus Neteler
+
+ 27.1.98
