@@ -11,6 +11,5 @@ interface_build {
     {entry label {Name of field with category label:} 0 ""}
     {checkbox -l {List fields in database(dbf).} "" -l}
     {checkbox -r {Create reject lines map.} "" -r}
-    {checkbox -p {Create postgres table.} "" -p}
 }
 
