@@ -99,7 +99,8 @@ int main( int argc , char ** argv )
 	gnInt32_t 			from , to;
 
 	int					fd , nret;
-	gnGrpSPReport_s *	pSPReport;
+	gnGrpSPReport_s * 	pReport;
+	gnInt32_t			nDistance;
 	gnGrpSPCache_s		spCache;
 	ClipperContext_s	clipctx , * pclipctx;
 
@@ -109,12 +110,14 @@ int main( int argc , char ** argv )
  	char	*	pszFrom;
  	char	*	pszTo;
  	char	*	pszDiscard;
+	Boolean		fDistance;
  
 	GNO_BEGIN /*short  	long        default     variable        help */
  	GNO_OPTION( "g", 	"graph", 	NULL ,  	& pszFilein ,	"graph file to view" )
  	GNO_OPTION( "f", 	"from", 	NULL ,  	& pszFrom ,		"from-node id" )
  	GNO_OPTION( "t", 	"to", 		NULL ,  	& pszTo ,		"to-node id" )
  	GNO_OPTION( "d", 	"discard", 	NULL ,  	& pszDiscard ,	"node to discard in clipper" )
+ 	GNO_SWITCH( "D", 	"distance",	False , 	& fDistance ,	"Report shortest distance only" )
  	GNO_END
  
 
@@ -161,42 +164,62 @@ int main( int argc , char ** argv )
 	printf( "shortest path: from-node %ld - to-node %ld\n\n" , from , to );
 
 	gnGrpInitializeSPCache( & graph, & spCache );
-	pSPReport = gnGrpShortestPath( & graph , from , to , clipper , pclipctx , & spCache );
-	gnGrpReleaseSPCache( & graph, & spCache );
 
-	if ( pSPReport == NULL )
-	{
-		if ( gnGrpErrno(& graph) == 0 )
+	if ( fDistance == False ) {
+		nret = gnGrpShortestPath( & graph , & pReport , from , to , clipper , pclipctx , & spCache );
+
+		if ( nret == 0 )
 		{
-			printf( "destination node is unreachable\n\n" );
+			if ( gnGrpErrno(& graph) == 0 )
+			{
+				printf( "destination node is unreachable\n\n" );
+			}
 		}
-		else
+		else if ( nret < 0 ) 
 		{
 			fprintf( stderr , "gnGrpShortestPath error: %s\n", gnGrpStrerror( & graph ) );
 		}
-	}
-	else
-	{
-		int i;
-
-		printf( "shortest path report: total links %ld - total distance %ld\n" , pSPReport->cArc , pSPReport->distance );
-
-		for( i = 0 ; i < pSPReport->cArc ; i ++ )
+		else
 		{
-			printf(	"link[%d]: from %ld to %ld - travel cost %ld - user linkid %ld - distance from start node %ld\n" ,
-					i,
-					pSPReport->pArc[i].From,
-					pSPReport->pArc[i].To,
-					gnGrpGetLink_Cost(&graph, pSPReport->pArc[i].Link), /* this is the cost from clip() */
-					gnGrpGetLink_UserId(&graph, pSPReport->pArc[i].Link),
-					pSPReport->pArc[i].Distance
-					);
+			int i;
+	
+			printf( "shortest path report: total links %ld - total distance %ld\n" , pReport->cArc , pReport->distance );
+	
+			for( i = 0 ; i < pReport->cArc ; i ++ )
+			{
+				printf(	"link[%d]: from %ld to %ld - travel cost %ld - user linkid %ld - distance from start node %ld\n" ,
+						i,
+						pReport->pArc[i].From,
+						pReport->pArc[i].To,
+						gnGrpGetLink_Cost(&graph, pReport->pArc[i].Link), /* this is the cost from clip() */
+						gnGrpGetLink_UserId(&graph, pReport->pArc[i].Link),
+						pReport->pArc[i].Distance
+						);
+			}
+			gnGrpFreeSPReport( & graph , pReport );
 		}
+	}
+	else {
+		nret = gnGrpShortestDistance( & graph , & nDistance , from , to , clipper , pclipctx , & spCache );
 
-
-		gnGrpFreeSPReport( & graph , pSPReport );
+		if ( nret == 0 )
+		{
+			if ( gnGrpErrno(& graph) == 0 )
+			{
+				printf( "destination node is unreachable\n\n" );
+			}
+		}
+		else if ( nret < 0 ) 
+		{
+			fprintf( stderr , "gnGrpShortestDistance error: %s\n", gnGrpStrerror( & graph ) );
+		}
+		else
+		{
+			printf( "shortest distance: %ld\n" , nDistance );
+		}
 	}
 
+	gnGrpReleaseSPCache( & graph, & spCache );
 	gnGrpRelease( & graph );
 
 	return 0;
