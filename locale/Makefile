@@ -4,6 +4,9 @@ MODULE_TOPDIR = ..
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default:
+	@if [ "$(HAVE_NLS)" != "" ] ; then echo "Creating translations " ; make mo ; else echo "NLS disabled" ; fi
+
+all:
 	@echo 'Usage:'
 	@echo '   make pot        create grass.pot (containing original messages)'
 	@echo '   make update-po  merge new messages into existing *.po files'
