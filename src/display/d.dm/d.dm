@@ -73,23 +73,6 @@ proc set_display { dtype } {
 
     set cmd "d.mon select=$smon"
     execute $cmd
-    set cmd "g.region save=_d.dm.current"
-    execute $cmd
-
-    if { $dtype != "a" } {
-	set reg [element_list "windows" ]
-	set rege 0		
-	foreach r $reg {
-	    if { $r == "_d.dm.$smon" } { set rege 1; break } 
-	}
-	if { $rege == 1 } {
-	    set cmd "g.region region=_d.dm.$smon"
-	    execute $cmd
-	} else {
-	    set cmd "g.region -d"
-	    execute $cmd
-	}
-    }	
 
     if { $dtype == "a" } {
 	set cmd "g.region -d"
@@ -117,12 +100,7 @@ proc set_display { dtype } {
             }
         }
     }
-    
-    set cmd "g.region save=_d.dm.$smon"
-    execute $cmd
-    set cmd "g.region region=_d.dm.current"
-    execute $cmd
-
+   
     # display raster map legends
     foreach mw [pack slaves $f] {
 	regexp -- {.*\.([^.]*)$} $mw p m
@@ -134,7 +112,7 @@ proc set_display { dtype } {
 		set cmd "d.erase"
 		execute $cmd	    
 	    }
-	    set cmd "d.leg.thin map=$map($s,$m,map) color=$map($s,$m,_leg_color)"
+	    set cmd "d.legend map=$map($s,$m,map) color=$map($s,$m,_leg_color)"
 	    if { $map($s,$m,_leg_lines) > 0 } { append cmd " lines=$map($s,$m,_leg_lines)" }
 	    if { $map($s,$m,_leg_thin) > 0 } { append cmd " thin=$map($s,$m,_leg_thin)" }
 	    execute $cmd	    
@@ -155,10 +133,6 @@ proc set_query { } {
 
     if { $s < 0 || $m < 0 } { puts stdout "Set or map not selected."; return }
 
-    # Redisplay because after g.region must be run d.erase otherwise
-    # query doesn't work properly. Fix better later. 
-    set_display d
-
     if {[lsearch -exact [mon_get] $smon] < 0} {
 	puts stdout "Monitor $smon is not opened"
 	return    
@@ -172,27 +146,9 @@ proc set_query { } {
 
     set cmd "d.mon select=$smon"
     execute $cmd
-    set cmd "g.region save=_d.dm.current"
-    execute $cmd
-
-    set reg [element_list "windows" ]
-    set rege 0		
-    foreach r $reg {
-	if { $r == "_d.dm.$smon" } { set rege 1; break } 
-    }
-    if { $rege == 1 } {
-	set cmd "g.region region=_d.dm.$smon"
-	execute $cmd
-    } else {
-	set cmd "g.region -d"
-	execute $cmd
-    }
 
     map_query $s $m
 
-    set cmd "g.region region=_d.dm.current"
-    execute $cmd
-    
     if { $cm != "" } {  
 	set cmd "d.mon select=$cm"
 	execute $cmd
@@ -220,9 +176,10 @@ proc map_create { type } {
     checkbutton $f.$m._disp -text "" -variable map($s,$m,_disp)
     $f.$m._disp select 
     pack $f.$m._sel $f.$m._disp -side left
+    set ewidth 20
     switch $type {
 	r {
-	    Entry $f.$m.map -width 10 -text "" -textvariable map($s,$m,map) \
+	    Entry $f.$m.map -width $ewidth -text "" -textvariable map($s,$m,map) \
 		-helptext "raster map name\nuse right button to select from list"
 	    bind $f.$m.map <ButtonPress-3> "map_par_set r $s $m map" 
 	    checkbutton $f.$m.o -text "overlay" -variable map($s,$m,-o)
@@ -242,7 +199,7 @@ proc map_create { type } {
 		 $f.$m.lab2 $f.$m._leg_thin -side left   
 	}    
 	l {
-	    Entry $f.$m.map -width 10 -text "" -textvariable map($s,$m,map) \
+	    Entry $f.$m.map -width $ewidth -text "" -textvariable map($s,$m,map) \
 		-helptext "vector map name\nuse right button to select from list"	    
 	    bind $f.$m.map <ButtonPress-3> "map_par_set l $s $m map" 	    
 	    SelectColor $f.$m.color -type menubutton -variable map($s,$m,color)
@@ -250,7 +207,7 @@ proc map_create { type } {
 	    pack $f.$m.map $f.$m.color -side left   
 	}
 	a {
-	    Entry $f.$m.map -width 10 -text "" -textvariable map($s,$m,map) \
+	    Entry $f.$m.map -width $ewidth -text "" -textvariable map($s,$m,map) \
 		-helptext "vector map name\nuse right button to select from list"	    
 	    bind $f.$m.map <ButtonPress-3> "map_par_set a $s $m map"
 	    Label $f.$m.lab1 -text "fill color" 	    
@@ -262,7 +219,7 @@ proc map_create { type } {
 	    pack $f.$m.map $f.$m.lab1 $f.$m.fillcolor $f.$m.lab2 $f.$m.linecolor -side left
 	}	
 	s {
-	    Entry $f.$m.sitefile -width 10 -text "" -textvariable map($s,$m,sitefile) \
+	    Entry $f.$m.sitefile -width $ewidth -text "" -textvariable map($s,$m,sitefile) \
 		-helptext "site map name\nuse right button to select from list"	    
 	    bind $f.$m.sitefile <ButtonPress-3> "map_par_set s $s $m sitefile" 	    	    
 	    SelectColor $f.$m.color -type menubutton -variable map($s,$m,color)
@@ -279,7 +236,7 @@ proc map_create { type } {
 	    pack $f.$m.sitefile $f.$m.color $f.$m.size $f.$m.type -side left   
 	}
 	pl {
-	    Entry $f.$m.file -width 10 -text "" -textvariable map($s,$m,file) \
+	    Entry $f.$m.file -width $ewidth -text "" -textvariable map($s,$m,file) \
 		-helptext "paint labels file name\nuse right button to select from list"
 	    bind $f.$m.file <ButtonPress-3> "map_par_set pl $s $m file"
 	    pack $f.$m.file -side left
@@ -407,7 +364,7 @@ proc map_display { s m } {
         a {
 	    set fillcol [color_get $map($s,$m,fillcolor)]	
 	    set linecol [color_get $map($s,$m,linecolor)]
-	    set cmd "d.area map=$map($s,$m,map) fillcolor=$fillcol linecolor=$linecol"
+	    set cmd "d.vect.area map=$map($s,$m,map) fillcolor=$fillcol linecolor=$linecol"
         }	
         s {
 	    set col [color_get $map($s,$m,color)]
@@ -677,16 +634,16 @@ proc color_get { col } {
 
 proc mon_get { } {
     #xlsclients is slow but d.mon -L now hangs up 
-    #set mons [eval exec d.mon -L] 
+    set mons [eval exec d.mon -L] 
 
     set xdriver_list ""
-    if ![catch {open "|xlsclients -l" r} input] {
-	while {[gets $input line] >= 0} {
-	    if {[regexp -nocase {^ *Name:.*GRASS.*Monitor: *(.*)} $line buffer monitor]} {
-		lappend xdriver_list $monitor
-	    }
-	}
-    }	
+    if ![catch {open "|d.mon -L" r} input] {
+    	while {[gets $input line] >= 0} {
+    	    if {[regexp -nocase {(x.).*display *running} $line buffer monitor]} {
+    		lappend xdriver_list $monitor
+    	    }
+    	}
+    }
     return [lsort $xdriver_list] 
 }
 
