@@ -136,6 +136,7 @@ for (; ; )
        }
       strcpy(cellnummapname,"cell_num.map.");
       strcat(cellnummapname,resstring);
+      G_chop(cellnummapname);
 
    if (find_old_map(cellnummapname) == 1);
    /* Otherwise a repeated warning is generated that the
