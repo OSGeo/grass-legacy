@@ -60,6 +60,8 @@ MAKE_GMAKE_ENV=		GRASS_BIN=${GRASS_BIN} SRC=${SRCDIR} MAKE=${MAKE} NAME_VER=${NA
 MAKE_POST_ENV=		GISBASE=${GISBASE}  MACHINENAME=${SERVERNAME}
 IS64BIT=		${SRCDIR}/src/CMD/generic/is64bit.sh
 
+XDRIVER=		@XDRIVER@
+
 
 # Variables for the DejaGNU testing suite:
 EXPECT=`which expect`
@@ -206,8 +208,9 @@ real-install:
 	${SHELL} -c "cd ${GISBASE} ; tar cBf - man/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
 	${SHELL} -c "cd ${GISBASE} ; tar cBf - include/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
 	${SHELL} -c "cd ${GISBASE} ; tar cBf - lib/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
-	${SHELL} -c "${SHELL} ${SRCDIR}/src/scripts/shells/create_fifos.sh ${INST_DIR} 2>/dev/null ; true"
 	${SHELL} -c "$(INSTALL) ${GISBASE}/dev/create_fifos.sh ${INST_DIR}/dev ; true"
+	${SHELL} -c "$(INSTALL) ${GISBASE}/dev/create_ipcs.sh ${INST_DIR}/dev ; true"
+	${SHELL} -c "${SHELL} ${SRCDIR}/src/scripts/shells/create_${XDRIVER}s.sh ${INST_DIR} 2>/dev/null ; true"
 	${SHELL} -c "sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/monitorcap > ${INST_DIR}/etc/monitorcap ; true"
 	${SHELL} -c "chmod -R 1777 ${INST_DIR}/locks 2>/dev/null ; true"
 
