@@ -1,4 +1,4 @@
-$Id: TODO,v 1.7 2000-07-10 05:27:47 markus Exp $
+$Id: TODO,v 1.8 2000-07-10 09:49:17 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -22,6 +22,15 @@ Configure:
 
 - is "-fwritable-strings" o.k. for all platforms?
 
+--------------------------------------------------------------------
+Font selection:
+- add truetype support (replace old font system). This is urgently required
+  for internationalization. Suggestion: Use "FreeType"
+  http://freetype.sourceforge.net
+  (Being worked on by )
+
+---------------------------------------------------------------------
+
 Libraries:
 - src/libes/gis/readsites.c: Required is a new function which allows
   to read an attribute/dimension selectable by user. Useful 
@@ -35,11 +44,15 @@ Libraries:
 - new 3D vector format: evetually http://gts.sourceforge.net/ ??
   (Being worked on by )
 
+
+---------------------------------------------------------------------
 Package:
 - split into packages: GRASS-CORE, GRASS-Raster, ...
   (Being worked on by )
 - release import/export routines separately under LGPL
 
+
+---------------------------------------------------------------------
 Modules:
 - r.buffer: should save info about used buffers into map history
   (Being worked on by )
@@ -73,10 +86,6 @@ Modules:
   for initialization
   (Being worked on by Justin)
 
-- Change the Grass monitor font system to use system fonts for
-  X windows and/or Windows
-  (Being worked on by )
-
 - Create a Tcl/Tk interface for v.digit
   (Being worked on by Justin)
 
@@ -85,5 +94,5 @@ Modules:
   list. For example when using d.rast we must click a "Raster"
   button to get a list of raster files instead of having the
   raster files appear automatically when we call the d.rast
-  module from the menu
+  module from the menu (edit gui.tcl)
   (Being worked on by )
