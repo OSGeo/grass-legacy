@@ -1,0 +1,12 @@
+LIST:	grelas.o \
+	eltran.o \
+	genproc.o
+
+#$(BIN)/grelas:	$(LIST) $(GISLIB) $(MATHLIB)
+#	cc $(LDFLGAS) -o $(LIST) $(GISLIB) $(MATHLIB) -ltermcap
+$(BIN)/grelas:	$(LIST) 
+	cc $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) -ltermcap
+
+$(GISLIB): #
+
+
