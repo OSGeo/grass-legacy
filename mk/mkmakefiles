@@ -1,0 +1,11 @@
+#!/bin/sh
+if [ ! -f ./mk/mkmakefiles ] ; then
+    echo This script must be run from the top of the GRASS source tree >&2
+    exit 1
+fi
+
+find . -name Gmakefile -print | \
+    sed -e 's#^\(.*\)/Gmakefile#\1#' | \
+    while read dir ; do
+	sed -f mk/genmake.sed < $dir/Gmakefile > $dir/makefile
+    done

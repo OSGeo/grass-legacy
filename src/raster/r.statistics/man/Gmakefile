@@ -1,9 +1,0 @@
-MSEC=4
-MDIR=$(SRC)/../man/man$(MSEC)
-MUTL=$(SRC)/../man/utilities
-
-man:  
-	-cp r.statistics.man $(MDIR)/r.statistics
-	nroff $(MUTL)/man.version $(MDIR)/.class-header \
-	$(MUTL)/man.header r.statistics.man $(MDIR)/.class-notice \
-	> $(GISBASE)/man/$(MSEC)/r.statistics

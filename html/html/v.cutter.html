@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<TITLE>v.cutter</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width="100%" align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>v.cutter</b></EM>  - Polygon Cookie Cutter
+
+<BR>
+
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.cutter</B>
+
+<BR>
+
+<B>v.cutter help</B>
+
+<BR>
+
+<B>v.cutter [-o] [-l] [-a] [-q] cutter=</B><EM>name</EM> <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM> <B>type=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+This program provides a way to generate new maps based on an intersection
+of two existing maps.  It in effect provides a way to create masked
+versions of vector maps.  Lines, sites, and polygons are clipped 
+correctly.  By default v.cutter will extract line-type arcs.
+
+<H2>OPTIONS</H2>
+
+<H3>Flags:</H3>
+<DL>
+<DT><B>-q</B>   
+<DD>Run quietly.  Don't print percent information.
+<DT><B>-o</B>   
+<DD>Only intersect labeled areas.  Intersection of unlabeled areas may not be dependable.  The flag is meaningful only for type=area or type=both.
+
+<DT><B>-a</B>
+<DD>Extract area-edge arc types only.  The flag is meaningful only for type=line or type=both.  By default the program uses both area-edge and line arc types.
+
+<DT><B>-l</B>
+<DD>Extract line arc types only.  The flag is meaningful only for type=line or type=both.  By default the program uses both area-edge and line arc types.
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>cutter=</B><EM>mapname</EM> 
+<DD>Name of the binary vector file to use for the cookie cutter.
+
+<DT><B>input=</B><EM>mapname</EM> 
+<DD>Name of the binary vector file which is to be cut.
+
+<DT><B>output=</B><EM>mapname</EM> 
+<DD>Name of new vector file to be created.
+
+<DT><B>type=</B><EM>object type</EM>
+<DD>Type of object (area, line or both) to extract.  The default is to extract lines.
+</DL>
+<P>
+<H2>NOTES</H2>
+
+If v.cutter is only used to extract lines then it automatically runs <EM><A HREF="v.support.html">v.support</A></EM> on the output file.  
+If v.cutter is used to extract polygons then the user may need to run<EM>
+<A HREF="v.spag.html">v.spag</A> -i</EM> after running <EM>v.cutter</EM>
+to remove identical lines.
+<P>
+
+If type=area then the edge created by the cutter file will appear on closed polygons in the output. If type=line then the edge does not appear in the output.
+<P>
+
+The attributes of the output map will be generated from the attributes
+of the <EM>input</EM> map.
+
+<H2>BUGS</H2>
+
+There are a few rare situations that are not currently handled correctly.
+These mostly involve nodes or vertices intersecting exactly with lines
+of the opposite map.  You will know you have hit one of these cases
+because a lot of strange text will start spitting out.
+
+<P>
+
+Borders between areas with the same attributes are not dissolved.
+
+
+<P>
+
+There are many places where the code could be optimized greatly.
+
+<P>
+
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.spag.html">v.spag</A></EM><BR>
+<EM><A HREF="v.digit.html">v.digit</A></EM><BR>
+<EM><A HREF="v.support.html">v.support</A></EM><BR>
+<EM><A HREF="v.clean.html">v.clean</A></EM>
+
+<H2>AUTHOR</H2>
+
+Dave Gerdes, U.S.Army Construction Engineering 
+Research Laboratory
+
+
+<P>
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

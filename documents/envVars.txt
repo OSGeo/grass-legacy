@@ -1,0 +1,11 @@
+$Id$
+========================================================================
+
+Please maintain all GRASS environment variable in
+
+../html/env_vars.html
+
+now. This html file will be updated on GRASS Hannover web site and it's
+mirrors by a cron_job.
+
+MN

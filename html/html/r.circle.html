@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<TITLE>r.circle</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width="100%" align=center size=6 noshade>
+
+
+<H2>NAME</H2>
+<EM><B>r.circle</B></EM> - Creates a raster map containing concentric rings around a given point.
+
+<H2>SYNOPSIS</H2>
+<B>r.circle [-b] output=</B><EM>name</EM> <B>coordinate=</B><EM>x,y</EM>
+[<B>min=</B><EM>value</EM>] [<B>max=</B><EM>value</EM>] [<B>mult=</B><EM>value</EM>]
+
+<H2>DESCRIPTION</H2>
+
+This module creates a raster map containing concentric rings around a given
+point.  The cell values are increasing linear from the center point to outer
+rings. Minimum and maximum radius can be selected. Optionally a "donut" ring
+can be created to use as (binary) filter for <em>i.ifft</em> inverse Fourier
+transform (apply filter with <em>r.mask</em>).
+
+<H2>OPTIONS</H2>
+
+<H3>Flag:</H3>
+
+<DL>
+<DT><B>-b</B>
+<DD>Generate binary raster map
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>output=</B><EM>name</EM>
+<DD>Name for new raster file
+
+<DT><B>coordinate=</B><EM>x,y</EM>
+<DD>The coordinate of the center (easting, northing)
+
+<DT><B>min=</B><EM>value</EM>
+<DD>Minimum radius for ring/circle map (in cell units)
+
+<DT><B>max=</B><EM>value</EM>
+<DD>Maximum radius for ring/circle map (in cell units)
+
+<DT><B>mult=</B><EM>value</EM>
+<DD>Multiplier
+</DL>
+
+<H2>EXAMPLES</H2>
+
+Generate a circle at current map center with a radius of 300m:
+
+<pre>
+      EASTCENTER=`g.region -c |  awk ' /region center easting:/ { print $4 }'`
+      NORTHCENTER=`g.region -c | awk ' /region center northing:/ { print $4 }'`
+      r.circle -b out=circle coordinate=$EASTCENTER,$NORTHCENTER max=300
+</pre>
+
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="g.remove.html">g.remove</A></EM>, 
+<EM><A HREF="g.rename.html">g.rename</A></EM>, 
+<EM><A HREF="i.fft.html">i.fft</A></EM>, 
+<EM><A HREF="i.ifft.html">i.ifft</A></EM>, 
+<EM><A HREF="r.mask.html">r.mask</A></EM>
+
+<H2>AUTHOR</H2>
+Bill Brown, U.S. Army Construction Engineering Research Laboratory<br>
+Additional flag/min/max parameter by Markus Neteler, University of Hannover
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

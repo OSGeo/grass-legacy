@@ -1,8 +1,8 @@
-EXTRA_CFLAGS	= $(VECT_INCLUDE)
 
 PGM=v.report
 
 LIBES= $(GISLIB)
+DEPLIBS= $(DEPGISLIB)
 LIST = main.o\
 	format.o\
 	header.o\
@@ -16,11 +16,11 @@ LIST = main.o\
 	stats.o\
 	sums.o
 
-all: $(BIN_CONTRIB_CMD)/$(PGM)
+all: $(BIN_CMD)/$(PGM)
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES) 
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VECTLIB) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): global.h
 
-$(LIBES): #
+$(DEPLIBS): #

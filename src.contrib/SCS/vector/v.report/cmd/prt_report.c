@@ -1,11 +1,24 @@
+/*
+ * $Id$
+ */
+
 #include "global.h"
+#include <stdlib.h>
 #include <string.h>
+
+static int
+cmp_stats(const void *pa, const void *pb)
+{
+    int a = *(const int *)pa;
+    int b = *(const int *)pb;
+    return Gstats[a].cats[0] - Gstats[b].cats[0];
+}
 
 int 
 print_report (int unit1, int unit2)
 {
     int ns,nl,nx;
-    char num[30];
+    char num[100];
     int len, new;
     long *cats, *prev;
     int first;
@@ -17,6 +30,7 @@ print_report (int unit1, int unit2)
     char *cp;
     int spacing;
     char dot;
+    int *sort_order;
 
 /* examine units, determine output format */
     for (i = unit1; i <= unit2; i++)
@@ -60,7 +74,7 @@ print_report (int unit1, int unit2)
 	case LN_KILOMETERS:
 	    unit[i].label[0] = "";
 	    unit[i].label[1] = "kilometers";
-	    unit[i].factor   = 1.0e+3;
+	    unit[i].factor   = 1.0e-3;
 	    break;
 
 	case ACRES:
@@ -105,8 +119,8 @@ print_report (int unit1, int unit2)
 	}
 	if (need_format)
 	{
-	    unit[i].dp = 10;
-	    unit[i].len = 14;
+	    unit[i].dp = 6;
+	    unit[i].len = 10;
 	    unit[i].eformat = 0;
 	    ns = 0;
             if (unit[i].type == LN_METERS ||
@@ -114,10 +128,10 @@ print_report (int unit1, int unit2)
                 unit[i].type == LN_KILOMETERS ||
                 unit[i].type == LN_MILES ) 
 	        format_parms (len_sum(&ns,-1)*unit[i].factor,
-		    unit[i].len, &unit[i].eformat, &unit[i].dp);
+		    &unit[i].len, &unit[i].dp, &unit[i].eformat, e_format);
             else
 	        format_parms (area_sum(&ns,-1)*unit[i].factor,
-		    unit[i].len, &unit[i].eformat, &unit[i].dp);
+		    &unit[i].len, &unit[i].dp, &unit[i].eformat, e_format);
 	}
     }
 
@@ -147,6 +161,12 @@ print_report (int unit1, int unit2)
 	layers[nl].clen = len;
     }
 
+/* sort the stats in order of category number */
+    sort_order = (int *) G_malloc(nstats * sizeof(int));
+    for (i = 0; i < nstats; i++)
+	    sort_order[i] = i;
+    qsort(sort_order, nstats, sizeof(int), cmp_stats);
+
 /* print the report */
 
     header(unit1, unit2);
@@ -156,7 +176,9 @@ print_report (int unit1, int unit2)
     divider_level = -1;
     for (ns = 0; ns < nstats; ns++)
     {
-	cats  = Gstats[ns].cats;
+	int ns1 = sort_order[ns];
+
+	cats  = Gstats[ns1].cats;
 
 /* determine the number of lines needed to print the cat labels 
  * by pretending to print the labels and counting the number of
@@ -252,7 +274,7 @@ print_report (int unit1, int unit2)
 		    if (with_stats)
 		    {
 			for (i = unit1; i <= unit2; i++)
-			    print_unit(i,ns,nl);
+			    print_unit(i,ns1,nl);
 		    }
 		    else
 		    {

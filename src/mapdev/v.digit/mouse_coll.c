@@ -12,9 +12,9 @@
 
 
 /*  these correspond to the cursor keys */
-#define		DIG_POINT	1
-#define		BACKUP		2
-#define		STOP_DIG	3
+#define		DIG_POINT	LEFTB
+#define		BACKUP		MIDDLEB
+#define		STOP_DIG	RIGHTB
 
 static int mouse_get_point (int *, int *, int);
 
@@ -32,46 +32,56 @@ int mouse_collect_points (int mode, int type, struct line_pnts *Points)
     double	*yptr ;
     char message[128] ;
     int *n_points ;
-    int cnt;
 
     if (Points->alloc_points == 0)
     {
 	dig_alloc_points (Points, 500);
+    	Points->n_points = 0 ;
+    	Xlast = 0 ;
+    	Ylast = 0 ;
+    }else if(Points->n_points){
+	utm_to_screen (*(Points->x + Points->n_points - 1),
+		       *(Points->y + Points->n_points - 1),
+		       &Xlast, &Ylast) ;
+	Xraw = Xlast ;
+	Yraw = Ylast ;
+    }else{
+    	Xlast = 0 ;
+    	Ylast = 0 ;
     }
     n_points = &(Points->n_points);
     mode = POINT;
     run_mode = mode ;
-    xptr = Points->x ;
-    yptr = Points->y ;
+    xptr = Points->x + *n_points ;
+    yptr = Points->y + *n_points ;
 
     Clear_info() ;
 
     Write_info(1, " # Points       Easting     Northing") ;
 
-    {
-    Xlast = 0 ;
-    Ylast = 0 ;
-    *n_points = 0 ;
     stream_mode = 0 ;
     sprintf(message, "   %6d   %12.2f %12.2f", *n_points, 0.0, 0.0);
     Write_info(2, message) ;
     Write_info(4, " POINT mode ") ;
-    }
 
     loop = 1 ;
 
-    Xraw = Yraw = 100;
-
-    cnt = 0;
     /*  digitizing loop  */
     while (loop)
     {
 /*-->*/ if (type == DOT)		/* scs added code */
 	{
+ 	   _Clear_base () ;
+	   Write_base(10, "Site digitizing") ;
 	   Write_base(12, "    Buttons:") ;
-	   Write_base(13, "       left:  Digitize a site") ;
-	   Write_base(14, "       Middle:  Abort/Quit") ;
-	   Write_base(15, "       Right:   Abort/Quit") ;
+	   Write_base(13, "       Left:   Digitize a site") ;
+#ifdef ANOTHER_BUTTON
+	   Write_base(14, "       Middle: Abort/Quit") ;
+	   Write_base(15, "       Right:  Zoom") ;
+#else
+	   Write_base(14, "       Middle: Zoom") ;
+	   Write_base(15, "       Right:  Abort/Quit") ;
+#endif
 
 	   Write_info(2, "") ;
 
@@ -84,7 +94,7 @@ int mouse_collect_points (int mode, int type, struct line_pnts *Points)
 
 
 	switch (button) {
-	    case STOP_DIG:
+	    case STOP_DIG:				/* RIGHTB */
 		if (type == DOT)
 		    return (mode);
 		loop = 0 ;
@@ -93,9 +103,13 @@ int mouse_collect_points (int mode, int type, struct line_pnts *Points)
 		continue ;
 		break ;
 
-	    case BACKUP:
-		if (type == DOT)	/* abort */
-		    return (mode);
+	    case BACKUP:				/* MIDDLEB */
+		if (type == DOT){	/* abort */
+			zoom_window (type, Points);
+
+			continue ;
+			break ;
+		}
 		if (*n_points <= 0)
 		{
 		    BEEP;
@@ -126,7 +140,7 @@ int mouse_collect_points (int mode, int type, struct line_pnts *Points)
 		continue ;
 		break ;
 
-	    case DIG_POINT:
+	    case DIG_POINT:				/* LEFTB */
 	    default:
 		break ;
 
@@ -211,11 +225,9 @@ int mouse_collect_points (int mode, int type, struct line_pnts *Points)
 static int mouse_get_point (int *screen_x, int *screen_y, int cnt)
 {
     int  button;
-    double    ux1, uy1;
-    double    ux2, uy2;
-    char    buffer[64];
     char header[50];
-    int prev;
+    /* double    ux1, uy1;
+    double    ux2, uy2; */
 
 
     sprintf  (header, "Point number %d\n", cnt);
@@ -224,11 +236,19 @@ static int mouse_get_point (int *screen_x, int *screen_y, int cnt)
     _Write_base(10, header);
     _Write_base(12, "    Buttons:                                    ");
     _Write_base(13, "       Left:   Mark a point                     ");
+#ifdef ANOTHER_BUTTON
+    _Write_base (14, "       Middle: Quit digitizing                  ");
+    if (cnt)
+	Write_base(15, "       Right:  Backup one point                 ");
+    else
+	Write_base(15, "       Right:  (Backup one point)               ");
+#else
     if (cnt)
 	_Write_base(14, "       Middle: Backup one point                 ");
     else
 	_Write_base(14, "       Middle: (Backup one point)               ");
     Write_base (15, "       Right:  Quit digitizing                  ");
+#endif
 
 
     if (cnt)

@@ -1,4 +1,5 @@
 #include "dbmi.h"
+#include <stdlib.h>
 
 void
 db_init_index (index)
@@ -130,24 +131,28 @@ db_get_index_column_name (index, column_num)
     return db_get_string (&index->columnNames[column_num]);
 }
 
+int
 db_set_index_type_unique (index)
     dbIndex *index;
 {
     index->unique = 1;
 }
 
+int
 db_set_index_type_non_unique (index)
     dbIndex *index;
 {
     index->unique = 0;
 }
 
+int
 db_test_index_type_unique (index)
     dbIndex *index;
 {
     return index->unique != 0;
 }
 
+int
 db_print_index(fd, index)
     FILE *fd;
     dbIndex *index;

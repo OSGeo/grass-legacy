@@ -36,16 +36,16 @@ int G_putenv ( char *name, char *value)
 
     if (first)
     {
-	for (i = 0; env = environ[i]; i++)
+	for (i = 0; (env = environ[i]); i++)
 		;
 	newenv = (char **) malloc ((i+1) * sizeof (char *));
-	for (i = 0; env = environ[i]; i++)
+	for (i = 0; (env = environ[i]); i++)
 	    newenv[i] = store (env);
 	newenv[i] = NULL;
 	environ = newenv;
 	first = 0;
     }
-    for (i = 0; env = environ[i]; i++)
+    for (i = 0; (env = environ[i]); i++)
     {
 	if (sscanf (env, "%[^=]=%1s", buf, temp) < 1)
 	    continue;

@@ -293,7 +293,7 @@ int display_signature (void)
 	buffer[col] = (CELL) 1;
       past: ;
       }
-      G_put_map_row(fd,buffer);
+      G_put_raster_row(fd, buffer, CELL_TYPE);
     }
   
     G_close_cell(fd);

@@ -1,6 +1,12 @@
-all: port_test libvect.a
+#all: port_test libvect.a
+all: port_test $(DEPDIG2LIB)
 
 ###########################################################
+
+SLIBDEPS = $(DIG_ATTLIB) $(VECTLIB_REAL) $(GISLIB)
+
+EXTRA_CFLAGS = $(PICFLAGS)
+
 #    set_head.o 
 
 OBJ = \
@@ -33,7 +39,6 @@ OBJ = \
     struct_copy.o \
     unit_conv.o \
     write_file.o \
-    \
     portable.o \
     portable2.o \
     x_struct_io.o 
@@ -76,10 +81,9 @@ CFILES = \
     x_struct_io.c 
 
 
-$(DIG2LIB): $(OBJ)
-	$(AR)
+$(DEPDIG2LIB): $(OBJ)
+	$(SLIBRULE)
 
-EXTRA_CFLAGS    = $(VECTLIBFLAGS) $(VECT_INCLUDE)
 
 read_head: read_head.o
 	$(CC) -o $@ read_head.o $(DIGLIB) $(GISLIB)
@@ -89,10 +93,11 @@ read_head.c: read_head.C
 	cp read_head.C read_head.c
 
 #  Test the machine size and orientation for the Portable Library
-port_test : port_test.c
-        $(CC) -o $* $@
-        cp portable.h.in portable.h
-        $@ >> portable.h
+port_test: port_test.c
+	$(CC) -o $@ port_test.c
+	cp portable.h.in portable.h
+	./$@ >> portable.h
+	-rm port_test
 
 iprint:
 	pr -l60 *.h *.c | expand -4 | ipr

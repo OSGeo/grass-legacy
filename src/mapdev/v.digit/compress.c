@@ -6,7 +6,6 @@
 #include <unistd.h>
 #include "digit.h"
 #include "debug.h"
-#include "dig_head.h"
 #include "Map_proto.h"
 #include "dig_curses.h"
 #include "local_proto.h"

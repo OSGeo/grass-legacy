@@ -30,7 +30,7 @@ void contour (
     DCELL  **z,
     struct Cell_head Cell,
     FILE *Att,
-    int quiet,int noerr)
+    int quiet,int noerr,int n_cut)
 {
     int nrow, ncol;  	     /* number of rows and columns in current region */
     int startrow, startcol;  /* start row and col of current line */
@@ -103,11 +103,13 @@ void contour (
 			    newedge (&current);
 			    outside = getnewcell(&current, nrow, ncol, z);
 			}
-			Vect_write_line (&Map, LINE, Points);
-			get_line_center (&x, &y, Points);
-			write_att (Att, 'L', x, y, (int)level);
-			Points->n_points = 0;
-
+			if((n_cut <= 0) || ((Points->n_points) > n_cut)) {
+				Vect_write_line (&Map, LINE, Points);
+				get_line_center (&x, &y, Points);
+				write_att (Att, 'L', x, y, (int)level);
+			}
+			Vect_destroy_line_struct(Points);
+			Points = Vect_new_line_struct();
 		    } /* if checkedge */
 		} /* if ! hit */
 	    } /* for columns */
@@ -143,10 +145,13 @@ void contour (
 			    newedge (&current);
 			    outside = getnewcell(&current, nrow, ncol, z);
 			}
-			Vect_write_line (&Map, LINE, Points);
-			get_line_center (&x, &y, Points);
-			write_att (Att, 'L', x, y, (int)level);
-			Points->n_points = 0;
+			if((n_cut <= 0) || ((Points->n_points) > n_cut)) {
+				Vect_write_line (&Map, LINE, Points);
+				get_line_center (&x, &y, Points);
+				write_att (Att, 'L', x, y, (int)level);
+			}
+			Vect_destroy_line_struct(Points);
+			Points = Vect_new_line_struct();
 
 		    } /* if checkedge */
 		} /* if ! hit */
@@ -182,10 +187,13 @@ void contour (
 			    newedge (&current);
 			    outside = getnewcell(&current,nrow, ncol, z);
 			}
-			Vect_write_line (&Map, LINE, Points);
-			get_line_center (&x, &y, Points);
-			write_att (Att, 'L', x, y, (int)level);
-			Points->n_points = 0;
+			if((n_cut <= 0) || ((Points->n_points) > n_cut)) {
+				Vect_write_line (&Map, LINE, Points);
+				get_line_center (&x, &y, Points);
+				write_att (Att, 'L', x, y, (int)level);
+			}
+			Vect_destroy_line_struct(Points);
+			Points = Vect_new_line_struct();
 
 		    } /* if checkedge */
 		} /* if ! hit */
@@ -193,6 +201,7 @@ void contour (
 	} /* for columns */
     } /* for levels */
     fprintf (stdout, "       \n");
+    Vect_destroy_line_struct(Points);
 }
 
 /***************************************************************************
@@ -247,7 +256,7 @@ static void newedge (struct cell *current)
 }
 
 /***********************************************************************
-findcrossing-- decides which edge exit point from cell is on and changes 
+  findcrossing-- decides which edge exit point from cell is on and changes
   value of edge. 
   Returns 1 if only 2 crossings found ( don't want to check this Cell again);
   0 otherwise.

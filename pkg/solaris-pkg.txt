@@ -1,0 +1,82 @@
+Creating a SysV package for GRASS on Solaris 8
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Author: Andreas Lange, andreas.lange@rhein-main.de
+
+
+The package is _not_ relocatable and must be build from the final
+destination directory, because the paths in the installation are hard-coded.
+One could construct a postinstall-script that uses sed to change the paths
+in the monitorcap file, but i did not try this. There are several other
+files where the path is hardcoded. On Solaris all optional packages should
+be installed under /opt, so i see no reason to make the package relocatable.
+
+The base directory is /opt, all installation is below /opt/GNUgrass. 
+
+Install this package as root with:
+gunzip ./GNUgrass-sparc.pkg.gz 
+pkgadd -d ./GNUgrass-sparc.pkg
+
+To give all users access to GRASS 5 put 
+/opt/GNUgrass/bin in the path for the users, e. g.:
+export PATH=$PATH:/opt/GNUgrass/bin
+or add the path to the system wide or users .profile file. 
+
+Now you should be able to start grass with:
+grass5
+
+Alternatively you can create a link with:
+ln -s /opt/GNUgrass/bin/grass5 /usr/local/bin/grass5
+or similar. 
+
+If you have installed the libraries in a directory which is not in the
+default library search path (e. g. /opt/sfw/lib) you may: 
+
+1) create softlinks to /usr/lib 
+2) export LD_LIBRARY_PATH before starting grass, from a configuration file,
+like .profile
+3) add the directories system-wide to the search path, e. g. use crle -u -l
+/local/lib to add the path to the configuration file /var/ld/ld.conf, see
+/man ld.so.1 and man crle for more details.
+
+
+pkginfo file:
+-------------
+
+see pkginfo in this directory. 
+
+Compare man pkginfo, pkgproto, pkgmk, pkgtrans. 
+
+
+makefile for building the pkg-file:
+-----------------------------------
+
+see makefile-pgk in this directory. 
+
+On Solaris/i386 change ARCH to i386 or i86. 
+
+
+Rebuilding the package:
+
+First unpack source code of grass, next configure with:
+./configure --prefix=/opt/GNUgrass \
+-with-libs=/opt/sfw/lib --with-libs=/usr/local/lib \
+--with-includes=/opt/sfw/include --with-includes=/usr/local/include \
+--with-postgres=no --with-odbc=no \
+--with-blas=no --with-motif=yes
+
+(or similar for your installation) then make and make install.
+
+Now change to this directory and simply do (as root!):
+
+gmake -f makefile-pkg pkg
+
+You will need a lot of disk space. After some time you'll find the file
+GNUgrass-sparc.pkg.gz in this directory, which is the package. The
+compressed file is about 40 MB with stripped binaries, the uncompressed pkg
+file is about 90 MB big. The installation needs approximatly 100 MB space
+on the /opt mount point. 
+
+
+-- 
+$Id$

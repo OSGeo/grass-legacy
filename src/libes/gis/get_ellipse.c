@@ -1,26 +1,31 @@
 #include "gis.h"
 #include <unistd.h>
+#include <ctype.h>
 #include <string.h>
 #include <stdlib.h>
-
+#include <math.h>  /* for sqrt() */
 
 static struct table
 {
     char *name;
+    char *descr;
     double a;
     double e2;
+    double f;
 } *table = NULL;
+
 static int count = -1;
-static int same ( char *,char *);
-static int lower (int );
-static int get_a_e2 ( char *, char *, double *,double *);
-static char *ellipsoid_table_file( char *);
-static int compare_table_names(struct table *,struct table *);
+
+static int same (const char *, const char *);
+/* static int get_a_e2 (char *, char *, double *,double *); */
+static int get_a_e2_f (const char*, const char *, double *, double *, double*);
+static char *ellipsoid_table_file(char *);
+static int compare_table_names(const struct table *, const struct table *);
 static int read_ellipsoid_table(int );
 
 /*
  * This routine returns the ellipsoid parameters from the database.
- * If the file ELLIPSOID exist in the PERMANENT mapset, read info from
+ * If the PROJECTION_FILE exists in the PERMANENT mapset, read info from
  * that file, otherwise return WGS 84 values.
  *
  * Returns: 1 ok, 0 default values used.
@@ -104,7 +109,7 @@ G_get_ellipsoid_parameters (double *a, double *e2)
       }
     }
     return 1;
-
+    /* whats that? al 05/2000 */
     return 0;
 }
 
@@ -116,11 +121,13 @@ G_get_ellipsoid_parameters (double *a, double *e2)
  *         0 if not found in table
  */
 
-int G_get_ellipsoid_by_name (char *name, double *a,double *e2)
+int 
+G_get_ellipsoid_by_name (const char *name, double *a, double *e2)
 {
     int i;
 
-    read_ellipsoid_table(0);
+    (void) read_ellipsoid_table(0);
+
     for (i = 0; i < count; i++)
     {
 	if (same(name, table[i].name))
@@ -139,74 +146,123 @@ int G_get_ellipsoid_by_name (char *name, double *a,double *e2)
  * for (i = 0; name = G_ellipsoid_name(i); i++)
  *         ....
  */
-char *G_ellipsoid_name (int n)
+char *
+G_ellipsoid_name (int n)
 {
-    read_ellipsoid_table(0);
+    (void) read_ellipsoid_table(0);
     return n>=0 && n < count ? table[n].name : NULL;
 }
 
-static int same ( char *a,char *b)
+/*
+ * new 05/2000 by al: for datum shift the f parameter is needed too.
+ * this all is not a clean design, but it keeps backward-
+ * compatibility. 
+ * looks up ellipsoid in ellipsoid table and returns the
+ * a, e2 and f parameters for the ellipsoid
+ * 
+ * returns 1 if ok,
+ *         0 if not found in table 
+ */
+int 
+G_get_spheroid_by_name(const char *name, double *a, double *e2, double *f)
+{
+    int i;
+
+    (void) read_ellipsoid_table(0);
+
+    for (i = 0; i < count; i++)
+    {
+	if (same(name, table[i].name))
+	{
+	    *a = table[i].a;
+	    *e2 = table[i].e2;
+	    *f = table[i].f;
+	    return 1;
+	}
+    }
+    return 0;
+}
+
+char *
+G_ellipsoid_description(int n)
+{
+    (void) read_ellipsoid_table(0);
+    return n>=0 && n < count ? table[n].descr : NULL;
+}
+
+static int 
+same (const char *a, const char *b)
 {
     while (*a && *b)
-	if (lower(*a++) != lower (*b++))
+	if (tolower(*a++) != tolower(*b++))
 	    return 0;
     
     return (*a == 0 && *b == 0);
 }
 
-static int lower (int c)
+static int 
+get_a_e2_f (const char *s1, const char *s2, double *a, double *e2, double *f)
 {
-    if (c >= 'A' && c < 'Z')
-	c += 'a' - 'A' ;
-    return c;
-}
-
-static int get_a_e2 ( char *s1, char *s2, double *a,double *e2)
-{
-    double b,f;
+    double b, recipf;
 
     if (sscanf (s1, "a=%lf", a) != 1)
 	return 0;
-    if (*a <= 0.0) return 0;
+    
+    if (*a <= 0.0) 
+        return 0;
 
-    if (sscanf (s2, "e=%lf", e2) == 1)
-	return (*e2 > 0.0);
-
-    if (sscanf (s2, "f=1/%lf", &f) == 1)
+    if (sscanf (s2, "e=%lf", e2) == 1) 
     {
-	if (f <= 0.0) return 0;
-	f = 1/f;
-	*e2 = f+f - f*f;
+        *f = (double)1.0 / - sqrt( ((double)1.0 - *e2) ) + (double)1.0;
+        return (*e2 > 0.0);
+    }
+
+    if (sscanf (s2, "f=1/%lf", f) == 1)
+    {
+	if (*f <= 0.0) 
+	    return 0;
+	recipf = (double)1.0/(*f);
+	*e2 = recipf + recipf - recipf * recipf;
 	return (*e2 > 0.0);
     }
 
     if (sscanf (s2, "b=%lf", &b) == 1)
     {
 	if (b <= 0.0) return 0;
-	f = b/(*a);
-	*e2 = 1.0 - f*f;
+	if (b == *a) {
+	  *f = 0.0;
+	  *e2 = 0.0;
+	} else {
+	  recipf = ((*a) - b) / (*a);
+	  *f = (double)1.0 / recipf;
+	  *e2 = recipf + recipf - recipf * recipf;
+	}
 	return (*e2 > 0.0);
     }
     return 0;
 }
 
-static char *ellipsoid_table_file( char *file)
+static char *
+ellipsoid_table_file(char *file)
 {
     sprintf (file, "%s/etc/ellipse.table", G_gisbase());
     return file;
 }
 
-static int compare_table_names(struct table *a,struct table *b)
+static int 
+compare_table_names(const struct table *a, const struct table *b)
 {
-    return strcmp(a->name,b->name);
+  /* return strcmp(a->name,b->name); */
+  return G_strcasecmp(a->name, b->name); 
 }
 
-static int read_ellipsoid_table(int fatal)
+static int 
+read_ellipsoid_table(int fatal)
 {
     FILE *fd;
     char file[1024];
     char buf[1024];
-    char name[100], buf1[100], buf2[100];
+    char name[100], descr[100], buf1[100], buf2[100];
     char badlines[256];
     int line;
     int err;
@@ -216,7 +272,7 @@ static int read_ellipsoid_table(int fatal)
     count = 0;
     table = NULL;
 
-    ellipsoid_table_file (file);
+    (void) ellipsoid_table_file (file);
     fd = fopen (file, "r");
     if (fd == NULL)
     {
@@ -234,33 +290,37 @@ static int read_ellipsoid_table(int fatal)
 	if (*buf == 0 || *buf == '#')
 	    continue;
 
-	if (sscanf (buf, "%s %s %s", name, buf1, buf2) != 3)
+	if (sscanf (buf, "%s  \"%32[^\"]\" %s %s", name, descr, buf1, buf2) != 4)
 	{
 	    err++;
 	    sprintf (buf, " %d", line);
-	    if (*badlines) strcat (badlines, ",");
-	    strcat (badlines, buf);
+	    if (*badlines) 
+	      G_strcat(badlines, ",");
+	    G_strcat(badlines, buf);
 	    continue;
 	}
 
 	table = (struct table *) G_realloc ((char *) table, (count+1) * sizeof(*table));
 	table[count].name = G_store (name);
+	table[count].descr = G_store (descr);
 
-	if(get_a_e2 (buf1, buf2, &table[count].a, &table[count].e2)
-	|| get_a_e2 (buf2, buf1, &table[count].a, &table[count].e2))
+	if(get_a_e2_f (buf1, buf2, &table[count].a, &table[count].e2, &table[count].f)
+	|| get_a_e2_f (buf2, buf1, &table[count].a, &table[count].e2, &table[count].f))
 	    count++;
 	else
 	{
 	    err++;
 	    sprintf (buf, " %d", line);
-	    if (*badlines) strcat (badlines, ",");
-	    strcat (badlines, buf);
+	    if (*badlines) 
+	      G_strcat (badlines, ",");
+	    G_strcat (badlines, buf);
 	    continue;
 	}
     }
     if (!err)
     {
-	qsort (table, count, sizeof(*table), compare_table_names);
+    	/* over correct typed version */
+	qsort ((void *)table, (size_t)count, (size_t)sizeof(*table), (int (*)(const void*, const void *))(compare_table_names));
 	return 1;
     }
     sprintf (buf, "Line%s%s of ellipsoid table file <%s> %s invalid",

@@ -1,0 +1,22 @@
+test patterns, probably useful for FFT (FFTW):
+
+# generate tilted stripes:
+r.mapcalc test="if( (row() + col())%50 > 25,1,null())"
+d.rast test
+
+#fft them: result should look perpendicular and following one "line" only:
+i.fft in=test real=real ima=img
+d.rast real
+d.rast img
+
+-> check carefully
+
+i.ifft real=real ima=img out=test_back
+# compare result to original:
+d.rast test_back
+d.rast test
+
+(oops, i.ifft writes 0 instead of NULL!)
+-> BUG
+
+$Id: TESTS,v 1.2 2002-01-22 04:51:05 glynn Exp $

@@ -78,7 +78,7 @@ static int zoom1 (int x,int y)	/* called by Input_pointer */
 
 /*
  * ok, erase menu messages
- *
+ */
     Menu_msg("");
 
 /* determine magnification of zoom */

@@ -1,7 +1,8 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include "gis.h"
 #include "lock.h"
-#include    "georef.h"
+#include "georef.h"
 
 int 
 main (int argc, char *argv[])

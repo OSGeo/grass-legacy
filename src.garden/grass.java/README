@@ -1,0 +1,177 @@
+
+		    JNI interface to GRASS library
+
+			    Release 0.7.4
+
+   Copyright (C) 1998 The Information-technology Promotion Agency,
+			      Japan(IPA)
+
+			   Contact Address:
+		   Regional Science Institute Inc.
+		      (Chiiki Kagaku Kenkyusho)
+		   4-13 Kita-24, Nishi-2, Kita-ku
+			Sapporo 001-0024 JAPAN
+			 Tel +81-11-717-6660
+			 Fax +81-11-757-3610
+			http://www.vtt.co.jp/
+
+0. License
+
+   Please read carefully copyright information given in COPYING file.
+
+1. Introduction
+
+   GRASS-JNI allows programmers to access GRASS data from their
+   applications written in Java.  It uses JNI (Java Native Interface)
+   calls to function in GRASS library and its API closely resembles
+   GRASS Programmers' API.
+
+   General information about GRASS can be found on 
+     http://www.baylor.edu/~grass/
+
+   General information about Java can be found on
+     http://java.sun.com/
+
+2. Obtaining
+
+   You can download GRASS-JNI from RSI WWW-site:
+
+     Sources:
+     http://www.vtt.co.jp/staff/sorokin/jni/grass-jni-0.7.4.src.tar.gz
+
+     Solaris 2.5.1 (sparc) binaries: 
+     http://www.vtt.co.jp/staff/sorokin/jni/grass-jni-0.7.4.sol251.tar.gz
+
+     Programmers' documentation in javadoc format:
+     http://www.vtt.co.jp/staff/sorokin/jni/grass-jni-0.7.4.doc.tar.gz
+
+3. Installing and use in your programs
+
+   Unpack downloaded archive using one of the following commands
+
+     Sources:
+     gzip -dc grass-jni-0.7.4.src.tar.gz | tar -xf - 
+
+     Solaris 2.5.1 (sparc) binaries: 
+     gzip -dc grass-jni-0.7.4.sol251.tar.gz | tar -xf - 
+
+   Then cd to grass-jni directory:
+
+     cd grass-jni-0.7.4
+
+   if you downloaded documentation then unpack it with the command:
+     gzip -dc ../grass-jni-0.7.4.doc.tar.gz | tar -xf - 
+
+   Then follow the instruction in the INSTALL file:
+     more INSTALL
+
+   Download gzip from http://www.gzip.org/ if it is missing on your
+   system.
+
+4. Current Release (0.7.4)
+
+   Current series of releases is intended mainly for experienced GRASS
+   programmers and does not constitute a finished product.  At the
+   moment it lacks implementations of many functions in GRASS library
+   and others (most write operations) have not been tested thoroughly.
+   GRASS-JNI API is mostly stable but some changes are be expected in
+   future versions.  Specifically interface for reading/writing of
+   GRASS layers will be reworked.
+
+   The main problem from Java standpoint is that the current release
+   of GRASS-JNI is not thread-safe.  We will address these issues in
+   future releases.
+
+5. Design Overview
+
+   GRASS-JNI is built in a way to make it easy for GRASS programmers
+   to write in Java.  Most of its classes and methods have
+   corresponding counterparts in GRASS API.  It does not provide an
+   object-oriented abstraction in terms of GIS but rather it is a
+   straightforward translation of C function in GRASS library to Java.
+   
+   The basic functions of GRASS GIS Library are accessible via
+   corresponding methods in libgis class.  Instance of libgis class
+   must be created first to use any methods or classes in GRASS-JNI.
+   This will load all needed shared libraries.  With libgis you get
+   access to the functions that report current library settings,
+   region settings and (in future) projection information and perform
+   calculations.  Also it serves as a factory of objects like the ones
+   used for read/write operations on database files.  An instance of
+   libvect class must be created to access functions from Vect
+   library.
+
+   Most of the data structure in GRASS Library have corresponding
+   classes in GRASS-JNI.  These classes have a field that stores a
+   memory pointer to the C struct.  In such cases, the class
+   constructor calls a JNI method that allocates the struct using
+   either malloc or function from GRASS API if it is available.  Then
+   the allocated memory can be freed by either explicitly calling a
+   designated method of the class or after a call to finalize() method
+   before garbage collection.  Sometimes classes that wrap struct have
+   additional functionality and perform checks to avoid core dumps.
+   Particular fields can be accessed using [get]<Field>/set<Field>
+   methods and toArray/fromArray methods if the field stores an array
+   of values.
+
+   Rasters, site lists and vector in GRASS database are accessed via
+   wrapping classes for file descriptors, streams and struct Map_info.
+   On creation these classes open files by calling relevant functions
+   from the GRASS library.  The resource (open file) will be freed
+   during garbage collection but it is recommended to explicitly call
+   the method 'close' or similar since time of garbage collection is
+   usually not predictable.
+   
+   Authors aimed at not disturbing of the operation of GRASS library
+   functions.  No changes in GRASS sources or recompilation of GRASS
+   library are required to make it work with GRASS-JNI.  Also we
+   attempted to minimize the amount of reverse engineering of GRASS
+   source code and relied only on documented features of GRASS API
+   unless the opposite is stated in documentation for particular class
+   or method.
+
+   Naming conventions
+
+     We tried to preserve the same names of function and structs as in
+     GRASS API whenever it iss possible.  For example, function
+
+       char *G_find_cell(char *name, char *mapset) 
+     
+     becomes a method in libgis class 
+
+       String G_find_cell(String name, String mapset)
+
+     However the names of classes that wrap GRASS API data structure
+     have underscores ommitted.  It was done because translation of
+     underscores in class names into the names of corresponding C
+     files and function makes them difficult to read.
+
+   Please note that the authors' original intention was not to develop
+   a universal library to access GRASS function from java rather than
+   to interface their own system to GRASS.  This can explain some
+   peculiarities in GRASS-JNI design.
+
+6. Known Problems and Bugs
+
+   See TODO file.
+
+7. Authors and Contact Information
+
+   Alexandre Sorokine (code, tests)
+   mailto:sorokin@vtt.co.jp
+   http://www.vtt.co.jp/staff/sorokin
+
+   Thomas Davis (documentation)
+   mailto:davistom@altavista.net
+
+   Regional Science Institute Inc.
+   4-13 Kita-24, Nishi-2, Kita-ku 
+   Sapporo 001-0024 JAPAN
+   Tel +81-11-717-6660
+   Fax +81-11-757-3610
+   http://www.vtt.co.jp/
+
+==========================================================================
+$Id: README,v 2.0 2000-04-22 10:58:18 markus Exp $
+
+

@@ -1,4 +1,0 @@
-
-@man("r.in.sunrast") - Converts a SUN raster file to a GRASS raster file.
-
-(GRASS Raster Data Import Program)

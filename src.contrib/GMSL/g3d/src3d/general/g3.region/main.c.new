@@ -1,0 +1,759 @@
+/***************************************************************************
+ * $Id$
+ *
+ * MODULE:      g3.region
+ * AUTHOR(S):   Roman Waupowitsch? Jaro Hofierka?
+ * PURPOSE:     Program to manage and print the boundary definitions for the
+ *              G3D geographic region.
+ *              Initial parser support added, not finished yet (Jan. 2001)
+ *
+ * COPYRIGHT:   (C) 2000 by the GRASS Development Team
+ *
+ *              This program is free software under the GPL (>=v2)
+ *              Read the file COPYING that comes with GRASS for details.
+ ****************************************************************************
+ */
+             
+#define MAIN
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include "glob.h"
+#include "gis.h"
+#include "G3d.h"
+#include "Vect.h"
+#include "site.h"
+#include "local_proto.h"
+
+#define selection(x) (strcmp(buf,x)==0)
+static char *llinfo(char *,char *,int);
+
+/* the following is copied from wind_format.c */
+void
+format_double (value, buf)
+    double value;
+    char *buf;
+{
+    sprintf (buf, "%.8f", value);
+    G_trim_decimal (buf);
+}
+
+int max(a,b)
+{
+    return a>b ? a:b;
+}
+
+int main(int argc,char *argv[])
+{
+    char buf[200];
+    int (*option)();
+    int ok;
+    char *prj;
+    char north[20], south[20], nsres[20];
+    char east[20], west[20], ewres[20];
+    char top[20], bottom[20], tbres[20];
+    int len1, len2, len3;
+    G3D_Region window3d;
+    int print_flag;
+    int set_flag;
+    int i;
+    double x;
+    struct Cell_head window;
+    G3D_Region temp_window3d;
+    char msg[200];
+    char *value;
+    char *name;
+    G3D_Map *name3d;
+    char *mapset;
+    char *err;
+    char *G_align_window();
+    int projection;
+
+    struct
+    {
+    struct Flag *update, *print, *gprint, *dflt;
+    } flag;
+
+    struct
+    {
+    struct Option
+    *north,*south,*east,*west,
+    *res, *nsres, *ewres,
+    *save, *region, *view,
+    *grid3d, *raster, *align, *zoom3d, *vect, *sites;
+    } parm;
+
+    G_gisinit (argv[0]) ;
+    G3d_initDefaults ();
+
+    G3d_getWindow (&window3d);
+
+
+    /* flags */
+
+    flag.dflt = G_define_flag();
+    flag.dflt->key         = 'd';
+    flag.dflt->description = "Set from default region";
+
+    flag.gprint = G_define_flag();
+    flag.gprint->key         = 'g';
+    flag.gprint->description = "Print the current region (shell script style)";
+
+    flag.print = G_define_flag();
+    flag.print->key         = 'p';
+    flag.print->description = "Print the current region";
+
+    flag.update = G_define_flag();
+    flag.update->key         = 'u';
+    flag.update->description = "Do not update the current region";
+
+    /* parameters */
+
+    parm.region = G_define_option();
+    parm.region->key         = "region";
+    parm.region->key_desc    = "name";
+    parm.region->required    = NO;
+    parm.region->multiple    = NO;
+    parm.region->type        = TYPE_STRING;
+    parm.region->description = "Set current region from named region";
+
+    parm.grid3d = G_define_option();
+    parm.grid3d->key         = "grid3d";
+    parm.grid3d->key_desc    = "name3d";
+    parm.grid3d->required    = NO;
+    parm.grid3d->multiple    = NO;
+    parm.grid3d->type        = TYPE_STRING;
+    parm.grid3d->description = "Set region to match this grid3d map";
+
+    parm.raster = G_define_option();
+    parm.raster->key         = "raster";
+    parm.raster->key_desc    = "name";
+    parm.raster->required    = NO;
+    parm.raster->multiple    = NO;
+    parm.raster->type        = TYPE_STRING;
+    parm.raster->description = "Set region to match this raster map";
+
+    parm.vect = G_define_option();
+    parm.vect->key         = "vector";
+    parm.vect->key_desc    = "name";
+    parm.vect->required    = NO;
+    parm.vect->multiple    = NO;
+    parm.vect->type        = TYPE_STRING;
+    parm.vect->description = "Set region to match this vector map";
+
+    parm.sites = G_define_option();
+    parm.sites->key         = "sites";
+    parm.sites->key_desc    = "name";
+    parm.sites->required    = NO;
+    parm.sites->multiple    = NO;
+    parm.sites->type        = TYPE_STRING;
+    parm.sites->description = "Set region to match this sites map";
+
+    parm.view = G_define_option();
+    parm.view->key         = "3dview";
+    parm.view->key_desc    = "name";
+    parm.view->required    = NO;
+    parm.view->multiple    = NO;
+    parm.view->type        = TYPE_STRING;
+    parm.view->description = "Set region to match this 3dview file";
+
+    parm.north = G_define_option();
+    parm.north->key         = "n";
+    parm.north->key_desc    = "value";
+    parm.north->required    = NO;
+    parm.north->multiple    = NO;
+    parm.north->type        = TYPE_STRING;
+    parm.north->description = llinfo("Value for the northern edge", G_lat_format_string(), window3d.proj);
+
+    parm.south = G_define_option();
+    parm.south->key         = "s";
+    parm.south->key_desc    = "value";
+    parm.south->required    = NO;
+    parm.south->multiple    = NO;
+    parm.south->type        = TYPE_STRING;
+    parm.south->description = llinfo("Value for the southern edge", G_lat_format_string(), window3d.proj);
+
+    parm.east = G_define_option();
+    parm.east->key         = "e";
+    parm.east->key_desc    = "value";
+    parm.east->required    = NO;
+    parm.east->multiple    = NO;
+    parm.east->type        = TYPE_STRING;
+    parm.east->description = llinfo("Value for the eastern edge ", G_lon_format_string(), window3d.proj);
+
+    parm.west = G_define_option();
+    parm.west->key         = "w";
+    parm.west->key_desc    = "value";
+    parm.west->required    = NO;
+    parm.west->multiple    = NO;
+    parm.west->type        = TYPE_STRING;
+    parm.west->description = llinfo("Value for the western edge ", G_lon_format_string(), window3d.proj);
+
+    parm.res = G_define_option();
+    parm.res->key         = "res";
+    parm.res->key_desc    = "value";
+    parm.res->required    = NO;
+    parm.res->multiple    = NO;
+    parm.res->type        = TYPE_STRING;
+    parm.res->description = "Grid resolution (both north-south and east-west)";
+
+    parm.nsres = G_define_option();
+    parm.nsres->key         = "nsres";
+    parm.nsres->key_desc    = "value";
+    parm.nsres->required    = NO;
+    parm.nsres->multiple    = NO;
+    parm.nsres->type        = TYPE_STRING;
+    parm.nsres->description = llinfo("North-south grid resolution", G_llres_format_string(), window3d.proj);
+
+    parm.ewres = G_define_option();
+    parm.ewres->key         = "ewres";
+    parm.ewres->key_desc    = "value";
+    parm.ewres->required    = NO;
+    parm.ewres->multiple    = NO;
+    parm.ewres->type        = TYPE_STRING;
+    parm.ewres->description = llinfo("East-west grid resolution  ", G_llres_format_string(), window3d.proj);
+
+    parm.zoom3d = G_define_option();
+    parm.zoom3d->key         = "zoom3d";
+    parm.zoom3d->key_desc    = "name";
+    parm.zoom3d->required    = NO;
+    parm.zoom3d->multiple    = NO;
+    parm.zoom3d->type        = TYPE_STRING;
+    parm.zoom3d->description = "grid3d map to zoom into";
+
+    parm.align = G_define_option();
+    parm.align->key         = "align";
+    parm.align->key_desc    = "name";
+    parm.align->required    = NO;
+    parm.align->multiple    = NO;
+    parm.align->type        = TYPE_STRING;
+    parm.align->description = "Raster map to align to";
+
+    parm.save = G_define_option();
+    parm.save->key         = "save";
+    parm.save->key_desc    = "name";
+    parm.save->required    = NO;
+    parm.save->multiple    = NO;
+    parm.save->type        = TYPE_STRING;
+    parm.save->description = "Name the current region";
+
+    if (G_parser(argc,argv))
+        exit(1);
+
+    set_flag = ! flag.update->answer;
+    if (flag.gprint->answer)
+        print_flag = 2;
+    else if (flag.print->answer)
+        print_flag = 1;
+    else
+        print_flag = 0;
+
+    /* get default window settings */
+    if (flag.dflt->answer)
+        G3d_getWindow(&window3d);
+
+    /* region= */
+    if (name = parm.region->answer)
+    {
+        mapset = G_find_file ("wind3", name, "");
+        if (!mapset)
+        {
+            sprintf (msg, "region <%s> not found", name);
+            G_fatal_error (msg);
+        }
+        if (G3d_readWindow (&window3d, "wind3") != NULL)
+        {
+            sprintf (msg, "can't read region <%s> in <%s>", name, mapset);
+            G_fatal_error (msg);
+        }
+    }
+
+    /* 3dview= */
+    if (name = parm.view->answer)
+    {
+        struct G_3dview v;
+        FILE *fp;
+        int ret;
+        
+        mapset = G_find_file2 ("3d.view", name, "");
+        if (!mapset)
+        {
+            sprintf (msg, "3dview file <%s> not found", name);
+            G_fatal_error (msg);
+        }
+
+        G_3dview_warning(0); /* suppress boundary mismatch warning */
+
+        if(NULL == (fp = G_fopen_old("3d.view",name,mapset))){
+            sprintf (msg, "can't open 3dview file <%s> in <%s>", name, mapset);
+            G_fatal_error (msg);
+        }
+
+        G_copy (&temp_window3d, &window3d, sizeof(window));
+
+        if(0 > (ret = G_get_3dview(name, mapset, &v))){
+            sprintf (msg, "can't read 3dview file <%s> in <%s>", name, mapset);
+            G_fatal_error (msg);
+        }
+        if (ret == 0){
+            sprintf (msg, "Old 3dview file. Region not found in <%s> in <%s>", name, mapset);
+            G_fatal_error (msg);
+        }
+
+                 
+        window3d.north = v.vwin.north;
+        window3d.south = v.vwin.south;
+        window3d.west  = v.vwin.west;
+        window3d.east  = v.vwin.east;
+
+        window3d.rows = v.vwin.rows;
+        window3d.cols = v.vwin.cols;
+        window3d.ns_res = v.vwin.ns_res;
+        window3d.ew_res = v.vwin.ew_res;
+
+        fclose (fp);
+
+    }
+
+    /* grid3d= */
+    if (name3d = parm.grid3d->answer)
+    {
+        mapset = G_find_grid3d (name3d, "");
+        if (!mapset)
+        {
+            sprintf (msg, "grid3d map <%s> not found", name3d);
+            G3d_fatalError (msg);
+        }
+        G3d_getRegionStructMap (name3d, &window3d);
+    }
+
+    /* raster= */
+    if (name = parm.raster->answer)
+    {
+        mapset = G_find_cell2 (name, "");
+        if (!mapset)
+        {
+            sprintf (msg, "raster map <%s> not found", name);
+            G_fatal_error (msg);
+        }
+        if (G_get_cellhd (name, mapset, &window3d) < 0)   /* should use copy 2d region into 3d region */
+        {
+            sprintf (msg, "can't read header for <%s> in <%s>",
+                name, mapset);
+            G_fatal_error (msg);
+        }
+    }
+
+    /* vect= */
+    if (name = parm.vect->answer)
+    {
+        struct Map_info Map;
+        mapset = G_find_vector2 (name, "");
+        if (!mapset)
+        {
+            sprintf (msg, "vector map <%s> not found", name);
+            G_fatal_error (msg);
+        }
+
+        G_copy (&temp_window3d, &window3d, sizeof(window));
+
+        Vect_set_open_level (1);
+        if (1 != Vect_open_old (&Map, name, mapset))
+        {
+            sprintf (msg, "can't open vector file <%s> in <%s>", name, mapset);
+            G_fatal_error (msg);
+        }
+
+        window3d.north = Map.head.N;
+        window3d.south = Map.head.S;
+        window3d.west  = Map.head.W;
+        window3d.east  = Map.head.E;
+
+                   if(window3d.north == window3d.south)
+                   {
+                      window3d.north = window3d.north + 0.5 * temp_window3d.ns_res;
+                      window3d.south = window3d.south - 0.5 * temp_window3d.ns_res;
+                }
+                if(window3d.east==window3d.west)
+                {
+                      window3d.west = window3d.west - 0.5 * temp_window3d.ew_res;
+                      window3d.east = window3d.east + 0.5 * temp_window3d.ew_res;
+                }
+
+        G_align_window (&window3d, &temp_window3d);
+
+        Vect_close (&Map);
+    }
+
+    /* sites= */
+    if (name = parm.sites->answer)
+    {
+        FILE *fp;
+        int i;
+                Site mysite;
+                mysite.dim_alloc=mysite.dbl_alloc=mysite.str_alloc=0;
+
+        mapset = G_find_sites2 (name, "");
+        if (!mapset)
+        {
+            sprintf (msg, "sites map <%s> not found", name);
+            G_fatal_error (msg);
+        }
+        if (NULL == (fp = G_fopen_sites_old (name, mapset)))
+        {
+            sprintf (msg, "Could not open sites map <%s>", name);
+            G_fatal_error (msg);
+        }
+
+        for (i = 0; G_site_get (fp, &mysite) == 0; i++)
+        {
+            if (i==0)
+            {
+                G_copy (&temp_window3d, &window3d, sizeof(window));
+                window3d.east = window3d.west = mysite.east;
+                window3d.north = window3d.south = mysite.north;
+            }
+            else
+            {
+                if (mysite.east > window3d.east) 
+                    window3d.east = mysite.east;
+                if (mysite.east < window3d.west) 
+                    window3d.west = mysite.east;
+                if (mysite.north > window3d.north) 
+                    window3d.north = mysite.north;
+                if (mysite.north < window3d.south) 
+                    window3d.south = mysite.north;
+            }
+        }
+        fclose (fp);
+        if (i)
+        {
+                        if(window3d.north == window3d.south)
+                        {
+                              window3d.north = window3d.north + 0.5 * temp_window3d.ns_res;
+                           window3d.south = window3d.south - 0.5 * temp_window3d.ns_res;
+                     }
+                     if(window3d.east==window3d.west)
+                     {
+                           window3d.west = window3d.west - 0.5 * temp_window3d.ew_res;
+                           window3d.east = window3d.east + 0.5 * temp_window3d.ew_res;
+                     }
+
+             G_align_window (&window3d, &temp_window3d);
+                }
+    }
+
+
+
+    /* n= */
+    if (value = parm.north->answer)
+    {
+        if(i = nsew(value, "n+", "n-", "s+"))
+        {
+            if (!G_scan_resolution (value+2, &x, window3d.proj))
+                die(parm.north);
+            switch(i)
+            {
+            case 1:
+                window3d.north += x;
+                break;
+            case 2:
+                window3d.north -= x;
+                break;
+            case 3:
+                window3d.north = window3d.south + x;
+                break;
+            }
+        }
+        else if (G_scan_northing (value, &x, window3d.proj))
+            window3d.north = x;
+        else
+            die(parm.north);
+    }
+
+    /* s= */
+    if (value = parm.south->answer)
+    {
+        if(i = nsew(value, "s+", "s-", "n-"))
+        {
+            if (!G_scan_resolution (value+2, &x, window3d.proj))
+                die(parm.south);
+            switch(i)
+            {
+            case 1:
+                window3d.south += x;
+                break;
+            case 2:
+                window3d.south -= x;
+                break;
+            case 3:
+                window3d.south = window3d.north - x;
+                break;
+            }
+        }
+        else if (G_scan_northing (value, &x, window3d.proj))
+            window3d.south = x;
+        else
+            die(parm.south);
+    }
+
+    /* e= */
+    if (value = parm.east->answer)
+    {
+        if(i = nsew(value, "e+", "e-", "w+"))
+        {
+            if (!G_scan_resolution (value+2, &x, window3d.proj))
+                die(parm.east);
+            switch(i)
+            {
+            case 1:
+                window3d.east += x;
+                break;
+            case 2:
+                window3d.east -= x;
+                break;
+            case 3:
+                window3d.east = window3d.west + x;
+                break;
+            }
+        }
+        else if (G_scan_easting (value, &x, window3d.proj))
+            window3d.east = x;
+        else
+            die(parm.east);
+    }
+
+    /* w= */
+    if (value = parm.west->answer)
+    {
+        if(i = nsew(value, "w+", "w-", "e-"))
+        {
+            if (!G_scan_resolution (value+2, &x, window3d.proj))
+                die(parm.west);
+            switch(i)
+            {
+            case 1:
+                window3d.west += x;
+                break;
+            case 2:
+                window3d.west -= x;
+                break;
+            case 3:
+                window3d.west = window3d.east - x;
+                break;
+            }
+        }
+        else if (G_scan_easting (value, &x, window3d.proj))
+            window3d.west = x;
+        else
+            die(parm.west);
+    }
+
+    /* res= */
+    if (value = parm.res->answer)
+    {
+        if (!G_scan_resolution (value, &x, window3d.proj))
+            die(parm.res);
+        window3d.ns_res = x;
+        window3d.ew_res = x;
+    }
+
+    /* nsres= */
+    if (value = parm.nsres->answer)
+    {
+        if (!G_scan_resolution (value, &x, window3d.proj))
+            die(parm.nsres);
+        window3d.ns_res = x;
+    }
+
+    /* ewres= */
+    if (value = parm.ewres->answer)
+    {
+        if (!G_scan_resolution (value, &x, window3d.proj))
+            die(parm.ewres);
+        window3d.ew_res = x;
+    }
+
+    /* zoom3d= */
+    if (name = parm.zoom3d->answer)
+    {
+        mapset = G_find_grid3d (name, "");
+        if (!mapset)
+        {
+            sprintf (msg, "grid3d map <%s> not found", name);
+            G_fatal_error (msg);
+        }
+        zoom3d (&window3d, name, mapset);
+    }
+
+    /* align= */
+    if (name = parm.align->answer)
+    {
+        mapset = G_find_grid3d (name, "");
+        if (!mapset)
+        {
+            sprintf (msg, "grid3d map <%s> not found", name);
+            G_fatal_error (msg);
+        }
+        if (G_get_cellhd (name, mapset, &temp_window3d) < 0)
+        {
+            sprintf (msg, "can't read header for <%s> in <%s>",
+                name, mapset);
+            G_fatal_error (msg);
+        }
+        if (err = G_align_window (&window3d, &temp_window3d))
+        {
+            sprintf (msg, "%s in %s: %s", name, mapset, err);
+            G_fatal_error (msg);
+        }
+    }
+
+    /* save= */
+    if (name = parm.save->answer)
+    {
+        if (G_legal_filename (name) < 0)
+        {
+            sprintf (msg, "<%s> - illegal region name", name);
+            G_fatal_error (msg);
+        }
+        G_copy (&temp_window3d, &window3d, sizeof(window));
+        adjust_window (&temp_window3d);
+        if (G__put_window (&temp_window3d, "wind3", name) < 0)
+        {
+            sprintf (msg, "can't write region <%s>", name);
+            G_fatal_error (msg);
+        }
+    }
+
+    adjust_window (&window3d);
+    if (set_flag)
+    {
+        if (G_put_window (&window3d) < 0)
+            G_fatal_error ("unable to update current region");
+    }
+    if (print_flag)
+    {
+        print_window (&window3d, print_flag);
+    }
+
+    exit(0);
+} /* end of main */
+
+
+
+static int print_window(G3D_Region window3d,int print_flag)
+{
+    char buf[200];
+    int (*option)();
+    int ok;
+    int cur_from_def();
+    int modify_cur();
+    int cur_from_db();
+    int cur_to_db();
+    int new_db();
+    int modify_db();
+    int from_cellhd();
+    int from_vect();
+    int from_view();
+    int from_3dcellhd(), cur_from_3ddb(), cur_from_3ddef();
+    char *G_database_projection_name();
+    char *G__get_window();
+    char *prj;
+    char north[20], south[20], nsres[20];
+    char east[20], west[20], ewres[20];
+    char top[20], bottom[20], tbres[20];
+    int len1, len2, len3;
+
+    while (1)
+    {
+    G_clear_screen ();
+    fprintf (stderr, "                         REGION FACILITY\n");
+    fprintf (stderr, "LOCATION: %-40s MAPSET: %s\n\n", G_location(), G_mapset());
+    G_format_northing (window3d.north, north, window3d.proj);
+    G_format_northing (window3d.south, south, window3d.proj);
+    G_format_resolution (window3d.ns_res, nsres, window3d.proj);
+
+    G_format_easting (window3d.east, east, window3d.proj);
+    G_format_easting (window3d.west, west, window3d.proj);
+    G_format_resolution (window3d.ew_res, ewres, window3d.proj);
+
+    format_double (window3d.top, top);
+    format_double (window3d.bottom, bottom);
+    format_double (window3d.tb_res, tbres);
+
+    len1 = max(max(strlen(north), strlen(east)), strlen(top));
+    len2 = max(max(strlen(south), strlen(west)), strlen(bottom));
+    len3 = max(max(strlen(ewres), strlen(nsres)), strlen(tbres));
+
+    fprintf (stderr, "CURRENT REGION: N=%*s  S=%*s  RES=%*s    ROWS=%d\n",
+        len1, north, len2, south, len3, nsres, window3d.rows);
+    fprintf (stderr, "                E=%*s  W=%*s  RES=%*s    COLS=%d\n",
+        len1, east, len2, west, len3, ewres, window3d.cols);
+    fprintf (stderr, "                T=%*s  B=%*s  RES=%*s  DEPTHS=%d\n",
+        len1, top, len2, bottom, len3, tbres, window3d.depths);
+
+    prj = G_database_projection_name();
+    if (!prj) prj = "** unknown **";
+    fprintf (stderr, "PROJECTION: %d (%s)\n", window3d.proj, prj);
+    fprintf (stderr, "ZONE:       %d\n", window3d.zone);
+
+    fprintf (stderr, "\n\nPlease select one of the following options\n\n");
+    fprintf (stderr, "   Current 3d Region                        3d Region Database\n\n");
+    fprintf (stderr, "1  Modify current 3d region directly    10  Save current region in 3d database\n");
+    fprintf (stderr, "2  Set from default region              11  Create a new 3d region\n");
+    fprintf (stderr, "3  Set from a database region           12  Modify an existing 3d region\n");
+    fprintf (stderr, "4  Set from a raster map\n");
+    fprintf (stderr, "5  Set from a vector map\n");
+    fprintf (stderr, "6  Set from 3d.view file\n");
+    fprintf (stderr, "7  Set from a 3d default region\n");
+    fprintf (stderr, "8  Set from a 3d database region\n");
+    fprintf (stderr, "9  Set from a 3d raster map\n");
+    fprintf (stderr, "\n");
+    fprintf (stderr, "RETURN to quit\n\n");
+    fprintf (stderr, "> ");
+
+    if (!G_gets(buf)) continue;
+    G_strip (buf);
+
+    if (selection(""))         exit(0);
+    else if (selection("1"))   option = modify_cur;
+    else if (selection("2"))   option = cur_from_def;
+    else if (selection("3"))   option = cur_from_db;
+    else if (selection("4"))   option = from_cellhd ;
+    else if (selection("5"))   option = from_vect ;
+    else if (selection("10"))  option = cur_to_db;
+    else if (selection("11"))  option = new_db;
+    else if (selection("12"))  option = modify_db;
+    else if (selection("6"))   option = from_view;
+    else if (selection("9"))   option = from_3dcellhd;
+    else if (selection("8"))   option = cur_from_3ddb;
+    else if (selection("7"))   option = cur_from_3ddef;
+
+    else
+    {
+        fprintf (stderr, "<%s> unknown option. ", buf);
+        option = 0;
+    }
+    ok = 0;
+    if (option)
+    {
+        G_clear_screen();
+        ok = option();
+    }
+    fprintf (stderr, "\n\n");
+    if (!ok) sleep(4);
+    }
+}
+
+
+static char *llinfo(char *msg,char *llformat,int proj)
+{ 
+        char buf[256];
+        if (proj != PROJECTION_LL)
+           return msg;
+
+        sprintf (buf, "%s (format %s)", msg, llformat);
+           return G_store(buf);
+}
+                                                

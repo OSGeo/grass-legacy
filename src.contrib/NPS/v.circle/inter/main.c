@@ -206,6 +206,7 @@ static int double_prompt (double *answer_double, char *default_ch,
     fprintf(stderr,"\n");
     fprintf(stderr,"%s",question); 
     fgets(answer,510,stdin);
+    *strchr(answer,'\n')=0;
     if (strcmp(answer,"")==0)
       strcpy(answer,default_ch);
     /* "scan_int" will not be equal to 1 only if "default_ch" has been */
@@ -223,6 +224,7 @@ static int double_prompt (double *answer_double, char *default_ch,
       fprintf(stderr,"You have chosen:\n  %s=%f\nIs this correct? (y/n)\
  [y] ",variable,*answer_double);
       fgets(answer,510,stdin);
+      *strchr(answer,'\n')=0;
       if (strcmp(answer,"")==0)
         strcpy(answer,"y");
       strcpy(verify,answer);
@@ -258,6 +260,7 @@ static int ch_prompt (char *answer_ch, char *default_ch,
     fprintf(stderr,"\n");
     fprintf(stderr,"%s",question); 
     fgets(answer,510,stdin);
+    *strchr(answer,'\n')=0;
     if (strcmp(answer,"")==0)
       strcpy(answer,default_ch);
     /* "strcmp" will be equal to 0 only if a NULL value has been */
@@ -276,6 +279,7 @@ static int ch_prompt (char *answer_ch, char *default_ch,
       fprintf(stderr,"You have chosen:\n  %s=%s\nIs this correct? (y/n)\
  [y] ",variable,answer_ch);
       fgets(answer,510,stdin);
+      *strchr(answer,'\n')=0;
       if (strcmp(answer,"")==0)
         strcpy(answer,"y");
       strcpy(verify,answer);

@@ -1,0 +1,32 @@
+:
+# runa2g - sets up list of input files to a2g in a file and 
+# calls a2g.
+
+echo "
+  *******************************************************
+  a2g expects input files which have lat/long projections
+  and two names for each area, line or point.  Each input
+  file is expected to have areas only or lines only or 
+  points only.  All *.bna files in the current directory
+  will be processed by a2g in background.
+  *******************************************************
+  "
+echo "Do you wish to proceed? (y/n) \c"
+
+ANSWER=" "
+resp="0"
+read ANSWER
+while (test $resp = 0)do {
+case $ANSWER in
+	[Yy]*)	resp="1";;
+	[Nn]*)	exit;;
+	*)	echo "\007\c";
+		echo "(y or n) \c";
+		read ANSWER;;
+esac
+} done
+
+ls *.bna > a2g.in
+sed "s/.bna//" a2g.in > tmp
+nohup a2g `cat a2g.in` &
+rm a2g.in

@@ -1,0 +1,6 @@
+# d.hist color wrong for input value=0, NULL randomly added
+# can not be tested automated
+
+set test "d.hist color wrong, NULL randomly added"
+
+unresolved "$test"

@@ -21,7 +21,7 @@ SRCS= 	dcmp.c \
 	weisberg.c
 
 $(LIB): $(LIST) 
-	$(AR)
+	$(LIBRULE)
  
 clean : 
 	-rm -rf OBJ* LIB*

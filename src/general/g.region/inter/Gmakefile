@@ -1,7 +1,4 @@
 PGM      = g.region
-HOME     = $(BIN_MAIN_INTER)
-
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 LIST     = main.o\
 	   cur_frm_db.o\
@@ -11,6 +8,7 @@ LIST     = main.o\
 	   lister.o\
 	   from_cell.o\
 	   from_vect.o\
+	   from_sites.o\
 	   mke_curr.o\
 	   modify_cur.o\
 	   modify_db.o\
@@ -19,11 +17,14 @@ LIST     = main.o\
 	   from_view.o\
 	   yes.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB) $(VASKLIB) $(VECTLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VECTLIB) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
+LIBES=$(EDITLIB) $(GISLIB) $(VASKLIB) $(VECTLIB) $(DATETIMELIB)
+DEPLIBS=$(DEPEDITLIB) $(DEPGISLIB) $(DEPVASKLIB) $(DEPVECTLIB) $(DEPDATETIMELIB)
+
+$(BIN_INTER)/$(PGM): $(LIST) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): glob.h
 
-$(GISLIB):   #
-$(VASKLIB): #
-$(VECTLIB): #
+$(DEPGISLIB):   #
+$(DEPVASKLIB): #
+$(DEPVECTLIB): #

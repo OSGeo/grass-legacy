@@ -1,0 +1,240 @@
+.\" %W% %G%
+.TH r.random.surface 1
+.SH NAME
+\fIr.random.surface\fR \- generates random surface(s) with spatial dependence.
+.br
+.I "(GRASS Raster Program)"
+.SH SYNOPSIS
+.nf
+\fBr.random.surface\fR
+\fBr.random.surface help\fR
+\fBr.random.surface\fR [\fB\-uq\fR] [\fBoutput\*=\fIname(s)\fR]
+   [\fBdistance\*=\fIvalue(s)\fR] [\fBexponent\*=\fIvalue(s)\fR]
+   [\fBweight\*=\fIvalue(s)\fR] [\fBseed\*=\fIvalue\fR] 
+   [\fBhigh\*=\fIvalue\fR]
+.fi
+.RE
+.SH DESCRIPTION
+\fIr.random.surface\fR generates a spatially dependent random surface. The 
+random surface is composed of values representing the deviation from the mean
+of the initial random values driving the algorithm. The initial random values
+are independent Gaussian random deviates with a mean of 0 and standard 
+deviation of 1. The initial values are spread over each \fIoutput\fR map using
+filter(s) of diameter \fIdistance\fR. The influence of each random 
+value on nearby cells is determined by a distance decay function based on
+\fIexponent\fR. If multiple filters are passed over the output maps, each
+filter is given a weight based on the \fIweight\fR inputs. 
+The resulting random surface can have "any" mean and variance,
+but the theoretical mean of an infinitely large map is \fI0.0\fR and a 
+variance of \fI1.0\fR.  
+Description of the algorithm is in the \fBNOTES\fR section.
+.LP
+Correlograms of an infinitely large map for a
+particular set of \fIdistance\fR, \fIexponent\fR, and \fIweight\fR values
+can be saved as a two dimensional correlogram if the \fI2Dcorrelogram\fR
+option is chosen.  Correlograms for actual surfaces can be generated using
+\fIr.1Dcorrelogram\fR and \fIr.2Dcorrelogram\fR.
+.LP
+The random surface generated are composed of floating point numbers, and
+saved in the category description files of the output map(s).  
+Cell values are uniformly or normally distributed between \fBlow\fR and 
+\fBhigh\fR values inclusive (determined by whether the \fI-u\fR flag is 
+used). The category names indicate the average floating 
+point value and the range of floating point values that each cell value
+represents.
+.LP
+\fBr.random.surface\fR's original goal is to generate random fields for use
+in spatial error modeling.
+A procedure to use \fBr.random.surface\fR in spatial error modeling is given
+in the \fBNOTES\fR section.
+.SH OPTIONS
+.IP \fI-q\fR
+This flag prevents the program from sending information to standard output.
+.IP \fI-u\fR
+This flag will make the \fIoutput\fR map's cell values have a uniform
+distribution instead of a normal distribution.  Uniform distributions are
+useful in situations where the user wants random values for a range of
+integer values.  The user then uses the cell values instead of the random
+values in the category description file.  The uniform flag is also useful
+when the random values near the mean are more meaningful to the user.
+The flag on will cause the cell values from 1 
+to \fIhigh\fR to have an equal
+chance of being used.  Thus, not using the flag is useful in situations where
+you want to use the floating
+point numbers in the category description in your analysis. 
+Keeping this flag off will allow
+the outliers of the random distribution to be more accurately represented. 
+See the \fBNOTES\fR section for example use of this flag.
+.IP \fIoutput\fR
+Optional output map(s): Random surface(s). The cell values are a random 
+distribution
+between 1 and \fBhigh\fR values inclusive. The category values of
+the \fIoutput\fR map(s) are in the form "#.# #.# to #.#" where each #.# is a 
+floating point number. The first number is the average of the random values
+the cell value represents. The other two numbers are the range of
+random values for that cell value. The "average" mean value of generated
+\fIoutput\fR map(s) is 0. The "average" variance of map(s) generated is 1.
+The random values represent the standard deviation from the mean of that
+random surface.
+.IP \fI2Dcorrelogram\fR
+Optional output map name: Two dimensional correlogram of an infinitely large 
+random surface
+created by the \fRdistance\fR, \fIexponent\fR, and \fIweight\fR parameters.
+The correlogram is saved as a GRASS map using the current region.  The NW
+corner of the map represents the correlation of a cell to itself (always 1.0).
+The other cells of the \fI2Dcorrelogram\fR represent the "lag offset".  Thus,
+a cell 1000 meters South and 2000 meters East of the NW corner represents
+the correlation of cells 1000 meters North or South of each other and 2000
+meters East or West of each other.  Correlation values will vary between 0.0
+and 1.0 in this map (represented as values 0 through 100 until GRASS goes
+floating point).  If the program \fBr.2Dcorrelogram\fR is used on a map, it's
+range of values will be from -1.0 to 1.0 (or -100 through 100 in cell values)
+because REAL maps can have negative correlation while an infinitely large
+random field will not.
+.IP \fIlags\fR
+Optional input values(s)
+.IP \fIdistance\fR
+Input value(s) [default 0.0]: \fIdistance\fR determines the spatial dependence
+of the \fIoutput\fR map(s). The \fIdistance\fR value indicates the minimum 
+distance at which two map cells have no relationship to each other.
+A \fIdistance\fR value of 0.0 indicates that there is no spatial
+dependence (i.e., adjacent cell values have no relationship to each other). 
+As the \fIdistance\fR value increases, adjacent cell values will have values
+closer to each other. But the range and distribution of cell values over the
+\fIoutput\fR map(s) will remain the same.  Visually, the clumps of lower and
+higher values gets larger as \fIdistance\fR increases. If multiple values are 
+given, each \fIoutput\fR map will have multiple filters, one for each 
+set of \fIdistance\fR, \fIexponent\fR, and \fIweight\fR values.
+.IP \fIexponent\fR
+Input value(s) [default 1.0]: \fIexponent\fR determines the distance decay
+exponent for a particular filter.  
+The \fIexponent\fR value(s) have the property of determining the
+"texture" of the random surface.  Texture will decrease as the 
+\fIexponent\fR value(s) get closer to \fI1.0\fR.  Normally, \fIexponent\fR
+will be \fI1.0\fR or greater.  As the \fIexponent\fR approaches \fI0.0\fR, the
+random surface will have cliff-like properties in the output.
+If there are no \fIexponent\fR values
+given,  each filter will be given a \fIexponent\fR value of \fI1.0\fR.
+If there is at least one \fIexponent\fR
+value given, there must be one \fIexponent\fR value for each \fIdistance\fR
+value.  
+.IP \fIweight\fR
+Input value(s) [default 1.0]: \fIweight\fR determines the relative importance
+of each filter. For example, if there were two filters driving the algorithm
+and \fBweight=1.0,2.0\fR was given in the command line: The second filter 
+would be twice as important as the first filter.  
+If no \fIweight\fR values
+are given, each filter will be just as important as the other filters 
+defining the random field.  If \fIweight\fR values exist, there must be 
+a \fIweight\fR value for each filter of the random field.
+.IP \fIhigh\fR
+Input value [default 255]: Specifies the high end of the range of cell values
+in the \fIoutput\fR map(s).  Specifying a very large \fIhigh\fR value will
+minimize the "errors" caused by the random surface's discretization.  The
+word errors is in quotes because errors in discretization are often going
+to cancel each other out and the spatial statistics are far more sensitive
+to the initial independent random deviates than any potential discretization
+errors.
+Input value(s) [default random]: Specifies the random seed(s), one for each
+map, that \fBr.random.surface\fR will use to
+generate the initial set of random values that the resulting map is
+based on. If the random seed is not given, \fBr.random.surface\fR will get
+a seed from the process ID number.
+.SH NOTES
+While most literature uses the term random field instead of random surface, 
+this algorithm always generates a surface.  Thus, its use of random surface.
+.LP
+\fBr.random.surface\fR builds the random surface using a filter algorithm
+smoothing a map of independent random deviates.  The size of the
+filter is determined by the largest distance of spatial dependence.  The
+shape of the filter is determined by the distance decay exponent(s), and
+the various weights if different sets of spatial parameters are used.  The
+map of independent random deviates will be as large as the current region 
+PLUS the extents of the filter.  This will eliminate edge effects caused
+by the reduction of degrees of freedom.
+The map of independent random deviates will ignore the current mask for the
+same reason.
+.LP
+One of the most important uses for \fBr.random.surface\fR is to determine how
+the error inherent in raster maps might effect the analyses done with those
+maps. 
+If you wanted to check to
+see how sensitive your analysis is to the errors in the DEMs in your 
+study area, the following procedure could be used:
+.LP
+1) Collect elevation data at an accuracy and precision level that will not
+effect the outcome of your application for sections of your study area.  Save
+this as a raster map.  This data will be used as the "truth map", determining 
+the spatial autocorrelation of the original elevation data.
+.LP
+2) Mask out areas without collected higher accuracy elevation data.
+.LP
+3) Generate an error map by subtracting the more accurate elevation data from 
+the DEMs: 
+.in +.2i
+\fBr.mapcalc Error \*= 'DEM - CollectElevation'\fR
+.in -.2i
+.LP
+4) Use \fIr.correlogram\fR and/or \fIr.2Dcorrelogram\fR to generate 
+correlograms of the error map (the following program assumes a map resolution
+of 100 meters): 
+.in +.2i
+\fBr.correlogram input\*=Error lag\*=100 lagfile\*=ErrorFile\fR
+.in -.2i
+.LP
+5) Note that the standard output from \fIr.correlogram\fR gives the
+variance of Error.  Look at the lagfile to determine the distance of spatial 
+dependence (the
+\fIdistance\fR parameter in \fIr.random.surface\fR).  The
+distance parameter can be determined by looking where
+the correlation drops to \fI0.0\fR.  This example assumes the distance
+of spatial dependence is 8700 meters.
+.LP
+6) Experiment with \fIr.random.surface\fR by building theoretical 
+correlograms until one is similar
+to the error's correlogram.  For example:
+.in +.2i
+/fBr.random.surface dist\*=8700 exp\*=1.5\fR
+.in -.2i
+.LP
+7) After you are satified with the quality of fit, generate a number of 
+potential DEMs.  The following commands generates one potential DEM (this 
+example assumes the 
+variance of error is 7.5 meters):
+.in +.2i
+\fBr.random.surface out\*=NormalDistribution dist\*=8700 exp\=1.5\fR
+\fBr.mapcalc PotentialDEM \*= 'DEM + @NormalDistribution * 7.5'\fR
+.in -.2i
+The use
+of the '@' character makes \fIr.mapcalc\fR use the values in the category file 
+instead of the cell values.
+.LP
+8) Run your application many times using different potential DEM maps instead 
+of the actual DEM.
+.LP
+9) Compare the results of your potential analyses with each other.
+Stochastically compare the results to determine the distribution of possible
+results of the application.
+If the results are different enough to modify the decisions
+to be made because of the analysis: get more accurate data, improve the 
+analysis, or cover your butt in case the decisions prove to be wrong.
+.LP
+If you are interested in creating potential realizations of categorical
+coverage maps, see \fIr.random.model\fR.
+.SH "SEE ALSO"
+Ehlschlaeger, C.R. & Goodchild, M.F., 1994. 
+"Uncertainty in spatial data: Defining, visualizing, and managing spatial 
+errors" Proceeding of GIS/LIS'94, Phoenix, AZ, pp. 246-53.
+.LP
+.I r.random.model,
+.I r.1Dcorrelogram,
+.I r.2Dcorrelogram,
+.I r.2Dto1D,
+.I r.mapcalc,
+.I r.mask,
+.I r.random
+.SH "AUTHORS"
+Charles Ehlschlaeger, Michael Goodchild, and Chih-chang Lin; National Center 
+for Geographic Information and Analysis, University of California, Santa 
+Barbara.
+5.0check/update - Bruce Byars Baylor Univ.

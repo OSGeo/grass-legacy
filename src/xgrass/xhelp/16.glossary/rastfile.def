@@ -1,9 +1,0 @@
-
-
-raster file - (aka, cell file in earlier releases of GRASS).  The
-@glossary("digital",16.glossary/digdata.def) data file in which @glossary("raster map data",16.glossary/rastdata.def) are stored in GRASS.
-Each data file describes a specific thematic map in terms of its 
-geographic coordinates.  Supporting files describe the category
-values, labels, map title, history, etc., corresponding to this
-raster data file.  All of the files relating to a given raster data
-file are collectively termed a raster map layer.

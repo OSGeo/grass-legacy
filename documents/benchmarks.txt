@@ -1,0 +1,25 @@
+GRASS benchmarks
+
+As you can compile GRASS with different compiler options (see
+../INSTALL for details), here some functions for simple
+benchmarking:
+
+Using
+ g.region res=X -p
+with X set to a number you can use any GRASS location for these
+tests. The resolution defines dependent from the boundary coordinates,
+how many raster rows and cols are currently set. 
+
+Here we go:
+
+#Two test patterns are generated and patched:
+#Generate first pattern:
+ date; r.mapcalc testA="if(row()%2., row(), null())"; date
+
+#Generate second pattern:
+ date; r.mapcalc testB="if(col()%2., col(), null())"; date
+
+#Patch it:
+ date; r.patch in=testA,testB out=testpatch; date
+
+[to be cont'ed]

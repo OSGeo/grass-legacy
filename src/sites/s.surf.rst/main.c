@@ -1,18 +1,32 @@
 /*-
- * s.surf.rst: main program for interpolation and topographic analysis 
+ * s.surf.rst: main program for interpolation and topographic analysis
  * from scattered point data using regularized spline with tension
  *
  * Original program (1989) and various modifications:
- * Lubos Mitas 
+ * Lubos Mitas
  *
  * GRASS4.1 version of the program and GRASS4.2 modifications:
  * H. Mitasova
- * I. Kosinovsky, D. Gerdes 
- * D. McCauley 
+ * I. Kosinovsky, D. Gerdes
+ * D. McCauley
  *
- * Copyright 1989, 1993, 1995, 1997:
- * L. Mitas,  H. Mitasova,
+ * Copyright (C) 1989, 1993, 1995, 1997 L. Mitas,  H. Mitasova,
  * I. Kosinovsky, D.Gerdes, D. McCauley
+ *
+ *This program is free software; you can redistribute it and/or
+ *modify it under the terms of the GNU General Public License
+ *as published by the Free Software Foundation; either version 2
+ *of the License, or (at your option) any later version.
+ *
+ *This program is distributed in the hope that it will be useful,
+ *but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *GNU General Public License for more details.
+ *
+ *You should have received a copy of the GNU General Public License
+ *along with this program; if not, write to the Free Software
+ *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
+ *
  *
  * Notes on modifications:
  *
@@ -20,7 +34,7 @@
  * modified by Mitasova in August 1995 segmentation, tension
  * modified by Mitasova in November 1996, reference info, no mod. needed
  *                      for variable smoothing
- * modified by Brown in June 1999 to allow site attribute selection 
+ * modified by Brown in June 1999 to allow site attribute selection
  *                      for elev & smoothing
  *
  * Modified by Brown in Oct 1999 to fix writing of TimeStamp info so
@@ -35,25 +49,6 @@
  *
  */
 
-/*
- * The interpolation library and interpolation programs, both binary and
- * source is copyrighted, but available without fee for education,
- * research and non-commercial purposes. Users may distribute the binary
- * and source code to third parties provided that the copyright notice and
- * this statement appears on all copies and that no charge is made for
- * such copies.  Any entity wishing to integrate all or part of the source
- * code into a product for  commercial use or resale, should contact the
- * the authors of the software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS" WITHOUT EXPRESS OR IMPLIED WARRANTY. THE
- * University of Illinois, U.S.Army CERL or authors SHALL NOT BE LIABLE FOR 
- * ANY DAMAGES SUFFERED BY THE USER OF THIS SOFTWARE.
- * 
- * By copying this program, you, the user, agree to abide by the copyright
- * conditions and understandings with respect to any software which is
- * marked with a copyright notice.
- */
-
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -64,11 +59,10 @@
 #include <unistd.h>
 #endif
 #include "gis.h"
+#include "site.h"
 #include "Vect.h"
 #include "linkm.h"
 #include "bitmap.h"
-#include "digit.h"
-#include "dig_head.h"
 
 #include "interpf.h"
 #include "surf.h"
@@ -138,9 +132,11 @@ char *Tmp_file_xy = NULL;
 double gmin, gmax, c1min, c1max, c2min, c2max, fi, rsm;
 double xmin, xmax, ymin, ymax, zmin, zmax;
 int elattr, smattr;
+double theta, scalex;
 
 struct BM *bitmask;
 struct Cell_head cellhd;
+struct GModule *module;
 
 char msg[1024];
 
@@ -161,7 +157,8 @@ int main ( int argc, char *argv[])
   {
     struct Option *input, *smatt, *elatt, 
     *elev, *slope, *aspect, *pcurv, *tcurv, *mcurv, *maskmap,
-    *dmin1, *zmult, *fi, *rsm, *segmax, *npmin, *devi, *treefile, *overfile;
+    *dmin1, *zmult, *fi, *rsm, *segmax, *npmin, *devi, *treefile, *overfile,
+    *theta, *scalex;
   } parm;
   struct
   {
@@ -171,6 +168,12 @@ int main ( int argc, char *argv[])
 
   G_gisinit (argv[0]);
 
+  module = G_define_module();
+  module->description =        
+                  "Interpolation and topographic analysis from given site "
+                  "data to GRASS floating point raster format using "
+                  "regularized spline with tension";
+                  
   if (G_get_set_window (&cellhd) == -1)
     exit (0);
   ew_res = cellhd.ew_res;
@@ -189,37 +192,13 @@ int main ( int argc, char *argv[])
   sdisk = n_rows * n_cols * sizeof (short int);
   sprintf (dminchar, "%f", dmin);
 
-    fprintf (stderr, "\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Version: GRASS5.0 beta, last update: Nov 9 1999\n");
-    fprintf (stderr, "input is x|y|%%z1 %%z2..., output is FP raster files\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Authors: original version L.Mitas, H.Mitasova\n");
-    fprintf (stderr, "         GRASS implementation I.Kosinovsky, D.P. Gerdes\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Methods used in this program are described in the following papers:\n");
-    fprintf (stderr, "Mitasova, H., and  Mitas, L., 1993,\n");
-    fprintf (stderr, "Interpolation by Regularized Spline with Tension:\n");
-    fprintf (stderr, "I. Theory  and  implementation.  Mathematical Geology, 25, 641-55.\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Mitasova, H., and Hofierka, J., 1993\n");
-    fprintf (stderr, "Interpolation by Regularized Spline with Tension:\n");
-    fprintf (stderr, "II. Application to terrain modeling and surface   geometry  analysis.\n");
-    fprintf (stderr, "Mathematical Geology, 25, 657-69.\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Mitasova, H., Mitas, L., Brown, W.M., Gerdes, D.P., Kosinovsky, I.,\n");
-    fprintf (stderr, "Baker, T., 1995, Modeling spatially and temporally\n");
-    fprintf (stderr, "distributed phenomena: New methods and tools for GRASS GIS.\n");
-    fprintf (stderr, "International Journal of Geographic Information Systems,9(4), 433-46.\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "The postscript versions of these papers are available via Internet at\n");
-    fprintf (stderr, "http://www2.gis.uiuc.edu:2280/modviz/papers/listsj.html\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Please cite these references in publications where the results of this\n");
-    fprintf (stderr, "program were used.\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "\n");
-
+  fprintf (stdout, "\n");
+  fprintf (stdout, "Authors: original version L.Mitas, H.Mitasova\n");
+  fprintf (stdout, "         GRASS implementation I.Kosinovsky, D.P.Gerdes\n"); 
+  fprintf (stdout, "see references in manual page or at:\n");
+  fprintf (stdout, "http://www2.gis.uiuc.edu:2280/modviz/papers/listsj.html\n");
+  fprintf (stdout, "\n");
+  fflush(stdout);
 
   parm.input = G_define_option ();
   parm.input->key = "input";
@@ -250,13 +229,13 @@ int main ( int argc, char *argv[])
   parm.aspect->description = "Aspect";
 
   parm.elatt = G_define_option ();
-  parm.elatt->key = "elatt";
+  parm.elatt->key = "field";
   parm.elatt->type = TYPE_INTEGER;
   parm.elatt->options = "1-100";
   parm.elatt->answer = "1";
   parm.elatt->required = NO;
   parm.elatt->description = 
-	  "Which fp site attribute to use for elevation (1=first)";
+	  "decimal attribute to use for elevation (1=first)";
 
   parm.smatt = G_define_option ();
   parm.smatt->key = "smatt";
@@ -272,7 +251,6 @@ int main ( int argc, char *argv[])
   /*
   parm.rsm->options = "0.00-1000.00";
   */
-  parm.rsm->answer = SMOOTH; /*THIS was MISSING, added by Helena nov 1999*/
   parm.rsm->required = NO;
   parm.rsm->description = "Smoothing parameter";
 
@@ -304,10 +282,7 @@ int main ( int argc, char *argv[])
   parm.overfile->gisprompt = "new,dig,vector";
   parm.overfile->description = "Output vector file showing overlapping segments";
 
-  flag.deriv = G_define_flag ();
-  flag.deriv->key = 'd';
-  flag.deriv->description = "Output partial derivatives instead";
-
+ 
   parm.pcurv = G_define_option ();
   parm.pcurv->key = "pcurv";
   parm.pcurv->type = TYPE_STRING;
@@ -364,9 +339,25 @@ int main ( int argc, char *argv[])
   parm.npmin->required = NO;
   parm.npmin->description = "Min number of points for interpolation(>segmax)";
 
+  parm.theta = G_define_option ();
+  parm.theta ->key = "theta";
+  parm.theta ->type = TYPE_DOUBLE;
+  parm.theta ->required = NO;
+  parm.theta ->description = "Anisotropy angle (in degrees)";
+
+  parm.scalex = G_define_option ();
+  parm.scalex ->key = "scalex";
+  parm.scalex ->type = TYPE_DOUBLE;
+  parm.scalex ->required = NO;
+  parm.scalex ->description = "Anisotropy scaling factor";
+
+  flag.deriv = G_define_flag ();
+  flag.deriv->key = 'd';
+  flag.deriv->description = "Output partial derivatives instead";
+
   flag.cprght = G_define_flag ();
   flag.cprght->key = 't';
-  flag.cprght->description = "Use dnorm-independent tension";
+  flag.cprght->description = "Use dnorm-independent tension (experimental)";
 
 
   if (G_parser (argc, argv))
@@ -403,6 +394,16 @@ int main ( int argc, char *argv[])
   sscanf (parm.npmin->answer, "%d", &npmin);
   sscanf (parm.zmult->answer, "%lf", &zmult);
   sscanf (parm.elatt->answer, "%d", &elattr);
+
+  if(parm.theta->answer) 
+  sscanf (parm.theta->answer, "%lf", &theta);
+	
+  if(parm.scalex->answer) {
+  sscanf (parm.scalex->answer, "%lf", &scalex);
+	if (!parm.theta->answer)
+      	G_fatal_error("Using anisotropy - both theta and scalex have to be specified");
+	}
+
   if(parm.rsm->answer){
       sscanf (parm.rsm->answer, "%lf", &rsm);
       if(rsm < 0.0)
@@ -419,13 +420,16 @@ int main ( int argc, char *argv[])
 	  rsm = -1; /* used in InterpLib to indicate variable smoothing */
       }
   }
-  if (npmin > MAXPOINTS - 50)
-    KMAX2 = npmin + 50;
+  if (npmin > MAXPOINTS - 50){
+    G_warning("The computation will last too long - lower npmin is suggested");
+    KMAX2 = 2 * npmin; /* was: KMAX2 = npmin + 50;*/
+  }
   else
-    KMAX2 = MAXPOINTS;
+    KMAX2 = 2 * npmin; /* was: KMAX2 = MAXPOINTS; fixed by JH in 12/01*/
+
   dmin = dmin * dmin;
   KMIN = npmin;
-/*  fprintf (stderr, "MAXPOINTS=%d,KMAX2=%d,KMIN=%d\n", MAXPOINTS,KMAX2,KMIN);*/
+/*  fprintf (stdout, "MAXPOINTS=%d,KMAX2=%d,KMIN=%d\n", MAXPOINTS,KMAX2,KMIN);*/
   az = G_alloc_vector (n_cols + 1);
   if (!az)
   {
@@ -475,12 +479,12 @@ int main ( int argc, char *argv[])
   mapset = G_find_file ("site_lists", input, "");
   if (mapset == NULL)
   {
-    sprintf (msg, "file [%s] not found", input);
+    sprintf (msg, "Cannot find sites file [%s]", input);
     G_fatal_error (msg);
   }
   if ((fdinp = G_fopen_sites_old (input, mapset)) == NULL)
   {
-    sprintf (msg, "Cannot open %s", input);
+    sprintf (msg, "Cannot open sites file %s", input);
     G_fatal_error (msg);
   }
   if (G_site_describe (fdinp, &dims, &cat, &strs, &dbls) != 0)
@@ -492,14 +496,14 @@ int main ( int argc, char *argv[])
   {
     if (cat != -1)
     {
-      fprintf (stderr, "\nWARNING: old data format detected.\n");
+      fprintf (stdout, "\nWARNING: old data format detected.\n");
       if ((mapset = G_find_file ("site_lists", input, G_mapset ())) == NULL)
       {
-	fprintf (stderr,
+	fprintf (stdout,
 	       "%sSite list [%s] cannot be used in its current format\n",
 		 "ERROR:\t", input);
-	fprintf (stderr, "\tIt cannot be converted to the new format ");
-	fprintf (stderr, "since it is not\n\tin the current mapset\n");
+	fprintf (stdout, "\tIt cannot be converted to the new format ");
+	fprintf (stdout, "since it is not\n\tin the current mapset\n");
 	exit (-1);
       }
       fprintf (stdout,"Convert site file to new format?\n");
@@ -546,7 +550,7 @@ int main ( int argc, char *argv[])
 
 
   ertot = 0.;
-  /* if (per) fprintf (stderr, "Percent complete: "); */
+  /* if (per) fprintf (stdout, "Percent complete: "); */
   if (elev != NULL)
     Tmp_file_z = G_tempfile ();
   if (slope != NULL)
@@ -662,7 +666,7 @@ void IL_init_params_2d(struct interp_params *, FILE *, int, int, double,
 		     maskmap, n_rows, n_cols, az, adx, ady, adxx, adyy, adxy, 
 		     fi, KMAX2, SCIK1, SCIK2, SCIK3,
 		     rsm, elev, slope, aspect, pcurv, tcurv, mcurv, dmin, 
-		     x_orig, y_orig, deriv,
+		     x_orig, y_orig, deriv, theta, scalex,
 		     Tmp_fd_z, Tmp_fd_dx, Tmp_fd_dy, 
 		     Tmp_fd_xx, Tmp_fd_yy, Tmp_fd_xy, fddevi, inhead.time);
 
@@ -707,11 +711,11 @@ void IL_init_params_2d(struct interp_params *, FILE *, int, int, double,
   if (mcurv != NULL)
     ddisk += disk;
   ddisk += sddisk;
-  fprintf (stderr, "\n");
-  fprintf (stderr, "Processing all selected output files \n");
-  fprintf (stderr, "will require %d bytes of disk space for temp files \n", ddisk
+  fprintf (stdout, "\n");
+  fprintf (stdout, "Processing all selected output files \n");
+  fprintf (stdout, "will require %d bytes of disk space for temp files \n", ddisk
     );
-  fprintf (stderr, "\n");
+  fprintf (stdout, "\n");
 
   deltx = xmax - xmin;
   delty = ymax - ymin;
@@ -720,7 +724,7 @@ void IL_init_params_2d(struct interp_params *, FILE *, int, int, double,
   if(dtens)
  {
   params.fi = params.fi * dnorm / 1000.;
-  fprintf (stderr, "dnorm = %f, rescaled tension = %f\n", dnorm, params.fi);
+  fprintf (stdout, "dnorm = %f, rescaled tension = %f\n", dnorm, params.fi);
   }
 
   if (maskmap != NULL)
@@ -731,7 +735,7 @@ void IL_init_params_2d(struct interp_params *, FILE *, int, int, double,
     G_fatal_error ("Input failed");
   ertot = 0.;
   if (per)
-    fprintf (stderr, "Percent complete: ");
+    fprintf (stdout, "Percent complete: ");
   if (!IL_interp_segments_2d (&params, info, info->root, bitmask,
 		      zmin, zmax, &zminac, &zmaxac, &gmin, &gmax, &c1min,
 		 &c1max, &c2min, &c2max, &ertot, totsegm, n_cols, dnorm))
@@ -809,11 +813,8 @@ void IL_init_params_2d(struct interp_params *, FILE *, int, int, double,
 static int print_tree (struct multtree *tree,
     double x_orig, double y_orig, struct Map_info *Map)
 {
-  double x_se, x_sw, x_ne, x_nw, y_se, y_sw, y_ne, y_nw;
   double xarray[5], yarray[5];
   struct line_pnts *Points;
-  static int k = 0;
-  static int i = 1;
   int j;
   int type = LINE;
 

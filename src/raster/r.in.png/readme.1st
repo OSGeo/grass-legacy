@@ -1,6 +1,0 @@
-This shall become r.in.png, a replacement for r.in.tiff and r.in.gif
-due to LZW-related patent problems.
-
-To do:
-
- r.in.png.c and pngtpppm.c need to be merged.

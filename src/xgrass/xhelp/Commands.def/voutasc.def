@@ -1,8 +1,0 @@
-
-
-v.out.ascii - 
-
-v.out.ascii converts a @glossary("vector",16.glossary/vector.def) map in binary format to a vector map in
-ASCII format.
-
-Manual entry for @man("v.out.ascii")

@@ -1,27 +1,38 @@
+/* rectification code */
+
+/* 1/2002: updated to GRASS 5 write routines and 
+   CELL/FP elevation - Markus Neteler
+ */
+
 #include <string.h>
 #include <unistd.h>
 #include "global.h"
-#define  NO_ELEV_DATA_VALUE  1000
+#include "local_proto.h"
 
 int rectify (char *name, char *mapset, char *result)
 {
     struct Cell_head cellhd, win;
     int ncols, nrows;
     int row, col;
-    int infd, outfd;
-    CELL *cell;
+    int infd;
+    void *rast;
     int x_ties, y_ties;
     int tie_row, tie_col;
     int i;
-    int nrow1, nrow2;
-    int ncol1, ncol2;
-    double n1,w1,ns_res1,ew_res1;
-    double n2,e2,z2,ns_res2,ew_res2;
+    double n2,e2,z2, zz2;
     double nx,ex,zx;
-    double NX, EX;
-    int r2, c2, zz2;
+    int r2, c2;
     double row2, col2;
     double aver_z;
+    char buf[64]="";
+    RASTER_MAP_TYPE data_type;
+
+
+    /* 1/2002: for some reason we have to suppress the warnings to avoid
+       tons of email concerning G_set_null_value() error (map_type undefined).
+       Where is this bug??? But - the module works fine.
+     */
+    G_suppress_warnings(1);
 
 #ifdef DEBUG3
     fprintf (Bugsr,"Open temp elevation file: \n");
@@ -31,20 +42,21 @@ int rectify (char *name, char *mapset, char *result)
     select_target_env();
     /**G_set_window (&elevhd);**/
     G_set_window (&target_window);  
-    elev = G_open_cell_old (elev_layer, mapset_elev);
+    elevfd = G_open_cell_old (elev_layer, mapset_elev);
     /**G_get_cellhd (elev_layer, mapset_elev, &elevhd);**/ 
-    elevbuf = G_allocate_cell_buf();  
+    data_type = G_raster_map_type(elev_layer, mapset);
+    elevbuf = G_allocate_raster_buf(data_type);
 
     /* get an average elevation of the control points */
     /* this is used only if TIE points are outside of the elev_layer boundary */
     get_aver_elev (&group.control_points, &aver_z);
 
 
-    if (elev < 0) {   
+    if (elevfd < 0) {   
 #ifdef DEBUG3
         fprintf (Bugsr,"CANT OPEN ELEV\n");
         fprintf (Bugsr,"elev layer = %s  mapset elev = %s elevfd = %d \n",
-            elev_layer,mapset_elev,elev);
+                        elev_layer,      mapset_elev,  elevfd);
         fflush (Bugsr);
 #endif
         return 0;
@@ -52,7 +64,7 @@ int rectify (char *name, char *mapset, char *result)
 
 #ifdef DEBUG3
     fprintf (Bugsr,"elev layer = %s  mapset elev = %s elevfd = %d \n",
-            elev_layer,mapset_elev,elev);
+            elev_layer,mapset_elev,elevfd);
     fflush (Bugsr);
 #endif
 
@@ -76,10 +88,10 @@ int rectify (char *name, char *mapset, char *result)
         row2 = northing_to_row(&target_window, n2);
         r2 = (int) row2;
 
-        if ( (G_get_map_row (elev, elevbuf, r2)) < 0)  
+        if ( (G_get_raster_row (elevfd, elevbuf, r2, data_type)) < 0)  
         {
 #ifdef DEBUG3
-           fprintf (Bugsr, "ERROR reading elevation layer %s fd = %d : row %d, col %d \n", elev_layer, elev, row, col);
+           fprintf (Bugsr, "ERROR reading elevation layer %s fd = %d : row %d \n", elev_layer, elevfd, r2);
 #endif
            exit (0);
         }
@@ -99,12 +111,10 @@ int rectify (char *name, char *mapset, char *result)
 #ifdef DEBUG3
            fprintf (Bugsr,"\t\t row2 = %f \t col2 =  %f \n",row2,col2);
 #endif
- 
-           zz2 = (elevbuf[c2]);
+           zz2 = (double) elevbuf[c2];
            /* if target TIE point has no elevation, set to aver_z */
-           /* if (zz2 == 0) zz2 = NO_ELEV_DATA_VALUE; */
            if (zz2 == 0) zz2 =  aver_z; 
-           z2 = (double) zz2;
+           z2 = zz2;
 
 #ifdef DEBUG3
            fprintf (Bugsr,"\t\t e2 = %f \t n2 =  %f \t z2 = %f \n",e2,n2,z2);
@@ -127,7 +137,6 @@ int rectify (char *name, char *mapset, char *result)
            fprintf (Bugsr,"\t\tAfter geo ref: ex = %f \t nx =  %f \n",ex,nx);
            fflush (Bugsr);
 #endif
-
            T_Point[tie_row][tie_col].XT = e2;
            T_Point[tie_row][tie_col].YT = n2;
            T_Point[tie_row][tie_col].ZT = z2;
@@ -139,7 +148,7 @@ int rectify (char *name, char *mapset, char *result)
 
     /* close elev layer so we can open the file to be rectified */
     select_target_env();
-    if (!G_close_cell (elev)) {  
+    if (!G_close_cell (elevfd)) {  
 #ifdef DEBUG3
        fprintf (Bugsr,"Can't close the elev file %s [%s in%s]",
        elev_layer, mapset_elev, G_location());
@@ -161,28 +170,9 @@ int rectify (char *name, char *mapset, char *result)
     select_target_env();
     G_set_window (&target_window);
     G_set_cell_format (cellhd.format);
-    outfd = G_open_cell_new_random (result); 
+
 
     select_current_env();
-    if (outfd < 0)
-	return 0;
-
-/* open the file to be rectified
- * set window to cellhd first to be able to read file exactly
- */
-    select_current_env();
-    G_suppress_warnings(1);
-    G_set_window (&cellhd); 
-    infd = G_open_cell_old (name, mapset);
-    if (infd < 0) {
-#ifdef DEBUG3
-        fprintf (Bugsr, "Cant open %s in %s infd = %d \n", name, mapset, infd);
-#endif
-	close (infd);
-        return 0;
-    }
-    cell = (CELL *) G_calloc (G_window_cols()+1, sizeof(CELL));
-    *cell = 0;
 
     G_copy (&win, &target_window, sizeof(win));
 
@@ -223,7 +213,22 @@ int rectify (char *name, char *mapset, char *result)
             fflush  (Bugsr);
 #endif
 	
-            perform_georef (infd, cell);
+	    /* open the source imagery file to be rectified */
+	    /* set window to cellhd first to be able to read file exactly */
+	    select_current_env();
+	    G_set_window (&cellhd);
+	    infd = G_open_cell_old (name, mapset);
+	    if (infd < 0)
+	      {
+		close (infd);
+		return 0;
+	      }
+	    map_type = G_raster_map_type(name, mapset);
+	    rast = (void *)  G_calloc (G_window_cols()+1, G_raster_size(map_type));
+	    G_set_null_value(rast, G_window_cols()+1, map_type);
+
+	    /* perform the actual data rectification */
+	    perform_georef (infd, rast);
 #ifdef DEBUG3
             fprintf (Bugsr,"\t\tperform georef \n");
             fflush  (Bugsr);
@@ -231,7 +236,17 @@ int rectify (char *name, char *mapset, char *result)
             fprintf (Bugsr,"\t\twrite matrix \n");
             fflush  (Bugsr);
 #endif
-	    write_matrix (outfd, row, col);
+
+	    /* close the source imagery file and free the buffer */
+	    select_current_env();
+	    G_close_cell (infd);
+	    G_free (rast);
+	 /*   select_current_env();*/
+  	    select_target_env();
+
+
+	    /* write of the data rectified into the result file */
+	    write_matrix (row, col);
 
 	    nrows -= win.rows;
 	    row += win.rows;
@@ -243,19 +258,32 @@ int rectify (char *name, char *mapset, char *result)
 	win.west += (win.ew_res * win.cols);
     }
 
-/* Close cell files */
     select_target_env();
-    if (!G_close_cell (outfd)) {
-#ifdef DEBUG3
-       fprintf (Bugsr,"Can't close the elev file %s [%s in%s]",
-               elev_layer, mapset_elev, G_location());
-#endif
-    }
+    G_suppress_warnings(0);
+    if (cellhd.proj == 0) { /* x,y imagery */
+			cellhd.proj = target_window.proj;
+			cellhd.zone = target_window.zone;
+	}
 
+    if (target_window.proj != cellhd.proj) {
+			cellhd.proj = target_window.proj;
+			sprintf(buf,"WARNING %s@%s: projection don't match current settings.\n",name,mapset);
+			G_warning(buf);
+	}  
+
+    if (target_window.zone != cellhd.zone) {
+			cellhd.zone = target_window.zone;
+			sprintf(buf,"WARNING %s@%s: zone don't match current settings .\n",name,mapset);
+			G_warning(buf);
+	}  
+
+    G_suppress_warnings(1);
+    target_window.compressed=cellhd.compressed;
+    G_close_cell (infd);
+    write_map(result);
     select_current_env();
 
-    G_close_cell (infd);
-    G_free (cell);
+    G_suppress_warnings(0);
 
     return 1;
 }

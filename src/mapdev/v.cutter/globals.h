@@ -6,6 +6,7 @@
 */
 
 
+#define BOTH 3
 
 #ifdef MAIN_T
 #define GLOBAL_T
@@ -23,6 +24,7 @@ GLOBAL_T struct line_pnts *TPoints;
 GLOBAL_T int Debug_on;
 GLOBAL_T int All;
 GLOBAL_T int Quiet;
+GLOBAL_T int ltype;
 GLOBAL_T int Do_lines;
 GLOBAL_T int Do_areas;
 GLOBAL_T struct bbox Cutter_bbox;

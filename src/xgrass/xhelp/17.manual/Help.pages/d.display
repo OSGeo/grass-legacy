@@ -1,6 +1,0 @@
-
-@man("d.display") - Interactive program to display textual, symbolic, raster,
-vector, and site data in the active frame on the user's graphics
-monitor.
-
-(GRASS Display Program)

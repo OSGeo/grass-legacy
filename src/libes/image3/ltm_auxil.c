@@ -1,7 +1,7 @@
-/*======================================================================
-                             ltm_auxil.c
-
-======================================================================*/
+/*
+ *                            ltm_auxil.c
+ *
+ ======================================================================*/
 
 #include "ortho_image.h"
 
@@ -19,15 +19,15 @@ I_get_ltm_auxil_data (Rectify_Group *group)
   auxil = (Auxillary_Ltm *) group->auxil;
 
 
-/** TODO
-/**  /* get the fiducial points for the imagery group */
-/**  if (I_get_ref_points(group->name, &auxil->points_fid) < -1) {
-/**
-/**    /* If FIDUCIAL file exists, but is a BAD format, exit */
-/**    sprintf (msg, "Bad format in FIDUCIAL file for group [%s]\n", group->name);
-/**    G_fatal_error (msg);
-/**  }
-**/
+/** TODO */
+    /* get the fiducial points for the imagery group */
+ /*  if (I_get_ref_points(group->name, &auxil->points_fid) < -1) {
+ */
+    /* If FIDUCIAL file exists, but is a BAD format, exit */
+ /*    sprintf (msg, "Bad format in FIDUCIAL file for group [%s]\n", group->name);
+ *    G_fatal_error (msg);
+ *  }
+ */
 
   /* get the group elevation layer infomation */
   if (I_get_group_elev (group->name, &auxil->elev) < -1) {

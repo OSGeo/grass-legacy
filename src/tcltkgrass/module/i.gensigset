@@ -4,6 +4,6 @@ interface_build {
     {entry trainingmap {Input training raster map:} 0 raster}
     {entry group {Image group:} 0 group}
     {entry subgroup {Image subgroup:} 0 subgroup}
-    {entry signaturefile {Signaturefile to be created:} 0 signature}
+    {entry signaturefile {Signaturefile to be created:} 0 signature2}
     {entry threshold {Maximum number of sub-signatures in any class [10]:} 0 ""}
 }

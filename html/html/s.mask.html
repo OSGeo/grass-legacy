@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<TITLE>s.mask</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width="100%" align=center size=6 noshade>
+
+<H2>NAME</H2>
+<EM><b>s.mask</b></EM>  - Filter a sites list with a raster mask<BR>
+<EM>(GRASS Sites Program)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>s.mask</B> 
+<BR>
+<B>s.mask help</B> 
+<BR>
+<B>s.mask</B> [<B>-r</B>] <B>input=</B><EM>name</EM>
+<B>output=</B><EM>name</EM> <B>raster=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2> 
+
+<P>
+Use <EM>s.mask</EM> to filter a sites list with a raster mask.  The raster
+can be any available raster.  Sites are filtered first by the
+region, then by whether the site falls in a cell with a non-NULL value.
+The region used for filtering is the current region by default.  However,
+the user may specify that the raster mask's region be used instead.  If
+the raster mask's region is used, both it's extents and resolution are
+used in the filtering process.
+</P>
+
+<P>
+Upon succesful completion, <EM>s.mask</EM> will print out the total number
+of sites examined and the number of sites output.
+</P>
+
+<H2>OPTIONS</H2>
+<H3>Flags:</H3> 
+<DL>
+<DT><B>-r</B>
+<DD>Use the raster's extents and cell resolution, rather than the current
+region settings.
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>input=</B><EM>name</EM>
+<DD>The name of the existing sites list to filter.
+
+<DT><B>output=</B><EM>name</EM>
+<DD>The name of the sites list to output.
+
+<DT><B>raster=</B><EM>name</EM>
+<DD>The name of the raster to use as the mask.
+</DL>
+
+<H2>SEE ALSO</H2>
+<P>
+<A HREF="d.sites">d.sites</A>
+<A HREF="parser.html">parser</A>
+</P>
+
+<H2>AUTHOR</H2>
+<P>
+Eric G. Miller
+</P><P>
+Inspired by code supplied by Helen Mitasova and Jaro Hofierka.
+</P>
+<P><I>Last changed: $Date$</I>
+</BODY>
+</HTML>

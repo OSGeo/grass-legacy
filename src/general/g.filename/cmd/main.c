@@ -7,9 +7,16 @@ int main( int   argc, char *argv[])
 	char *element;
 	char *mapset;
 	char *name;
+	struct GModule *module;
 	struct Option *opt1 ;
 	struct Option *opt2 ;
 	struct Option *opt3 ;
+
+	G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Prints GRASS data base file names.";
 
 	/* Define the different options */
 
@@ -31,8 +38,6 @@ int main( int   argc, char *argv[])
 	opt3->type       = TYPE_STRING;
 	opt3->required   = YES;
 	opt3->description= "Name of an database file" ;
-
-	G_gisinit (argv[0]);
 
 	if (G_parser(argc, argv))
 		exit(-1);

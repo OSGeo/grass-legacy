@@ -1,0 +1,755 @@
+
+
+proc longitude { } {
+
+
+  toplevel .longitude
+
+  wm geometry .longitude +100+20
+  wm title .longitude "longitude"
+
+
+  global mdd
+
+
+  frame .longitude.frame0 \
+    -relief {flat}
+
+  scale .longitude.frame0.scale \
+     -label "Latitude Degrees" \
+     -from 0 \
+     -to 90 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .longitude.frame0 \
+    .longitude.frame0.scale { left expand fill }
+
+  .longitude.frame0.scale set 0
+
+  global mmm
+
+
+  frame .longitude.frame1 \
+    -relief {flat}
+
+  scale .longitude.frame1.scale \
+     -label "Longitude Minutes" \
+     -from 0 \
+     -to 60 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .longitude.frame1 \
+    .longitude.frame1.scale { left expand fill }
+
+  .longitude.frame1.scale set 0
+
+  global mss
+
+
+  frame .longitude.frame2 \
+    -relief {flat}
+
+  scale .longitude.frame2.scale \
+     -label "Longitude Seconds" \
+     -from 0 \
+     -to 60 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .longitude.frame2 \
+    .longitude.frame2.scale { left expand fill }
+
+  .longitude.frame2.scale set 0
+
+  global ew
+
+
+  frame .longitude.frame3 \
+    -relief {flat}
+
+  label .longitude.frame3.label \
+    -anchor {w} \
+    -text {East/West} \
+    -padx {2}
+
+  scrollbar .longitude.frame3.hscrollbar \
+    -command {.longitude.frame3.entry view} \
+    -orient {horizontal}
+
+  entry .longitude.frame3.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.longitude.frame3.hscrollbar set}
+
+  pack append .longitude.frame3 \
+    .longitude.frame3.label { top fillx } \
+    .longitude.frame3.entry { top fillx } \
+    .longitude.frame3.hscrollbar { bottom fillx }
+
+  .longitude.frame3.entry configure -state normal
+
+  bind .longitude.frame3.entry <Return> {
+       set ew [%W get] }
+
+
+
+  frame .longitude.frame4 \
+     -borderwidth {2}
+
+  button .longitude.frame4.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set mdd [.longitude.frame0.scale get]
+                  set mmm [.longitude.frame1.scale get]
+                  set mss [.longitude.frame2.scale get]
+                  set ew [.longitude.frame3.entry get]
+                 destroy .longitude }
+
+  button .longitude.frame4.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set mdd ""
+                  set mmm ""
+                  set mss ""
+                  set ew ""
+                 destroy .longitude }
+
+  pack append .longitude.frame4 \
+    .longitude.frame4.ok { left expand } \
+    .longitude.frame4.cancel { right expand }
+
+
+bind .longitude.frame0.scale <Return> {
+     focus .longitude.frame1.scale
+}
+
+bind .longitude.frame1.scale <Return> {
+     focus .longitude.frame2.scale
+}
+
+bind .longitude.frame2.scale <Return> {
+     focus .longitude.frame3.entry
+}
+
+bind .longitude.frame3.entry <Return> {
+     focus .longitude.frame0.scale
+}
+
+
+  pack append .longitude \
+    .longitude.frame0 { top expand fill } \
+    .longitude.frame1 { top expand fill } \
+    .longitude.frame2 { top expand fill } \
+    .longitude.frame3 { top expand fill } \
+    .longitude.frame4 { bottom expand fill }
+
+
+
+  grab set .longitude
+  tkwait window .longitude
+
+}
+
+
+
+
+proc spheroids { } {
+
+
+  toplevel .spheroids
+
+  wm geometry .spheroids +100+20
+  wm title .spheroids "spheroids"
+
+
+  global insphere
+
+
+  frame .spheroids.frame0 \
+    -relief {flat}
+
+  label .spheroids.frame0.label \
+     -anchor {w} \
+     -text {Input spheroid} \
+     -padx {2}
+
+  listbox .spheroids.frame0.listbox \
+     -relief sunken \
+     -yscrollcommand {.spheroids.frame0.vscrollbar set}
+
+  scrollbar .spheroids.frame0.vscrollbar \
+     -command {.spheroids.frame0.listbox yview}
+
+
+  pack append .spheroids.frame0 \
+    .spheroids.frame0.label { top fillx } \
+    .spheroids.frame0.listbox { left expand fill } \
+    .spheroids.frame0.vscrollbar { right fill }
+
+  bind .spheroids.frame0.listbox <Button-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set insphere [%W get [%W nearest %y]]
+  }
+
+  bind .spheroids.frame0.listbox <ButtonRelease-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set insphere [%W get [%W nearest %y]]
+  }
+
+  bind .spheroids.frame0.listbox <Double-ButtonPress-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set insphere [%W get [%W nearest %y]]
+  }
+
+  .spheroids.frame0.listbox delete 0 end
+  foreach i {airy australian bessel clark66 everest grs80 hayford international krasovsky wgs66 wgs72 wgs84} {
+      .spheroids.frame0.listbox insert 0 $i
+  }
+
+  global outsphere
+
+
+  frame .spheroids.frame1 \
+    -relief {flat}
+
+  label .spheroids.frame1.label \
+     -anchor {w} \
+     -text {Output spheroid} \
+     -padx {2}
+
+  listbox .spheroids.frame1.listbox \
+     -relief sunken \
+     -yscrollcommand {.spheroids.frame1.vscrollbar set}
+
+  scrollbar .spheroids.frame1.vscrollbar \
+     -command {.spheroids.frame1.listbox yview}
+
+
+  pack append .spheroids.frame1 \
+    .spheroids.frame1.label { top fillx } \
+    .spheroids.frame1.listbox { left expand fill } \
+    .spheroids.frame1.vscrollbar { right fill }
+
+  bind .spheroids.frame1.listbox <Button-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set outsphere [%W get [%W nearest %y]]
+  }
+
+  bind .spheroids.frame1.listbox <ButtonRelease-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set outsphere [%W get [%W nearest %y]]
+  }
+
+  bind .spheroids.frame1.listbox <Double-ButtonPress-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set outsphere [%W get [%W nearest %y]]
+  }
+
+  .spheroids.frame1.listbox delete 0 end
+  foreach i {airy australian bessel clark66 everest grs80 hayford international krasovsky wgs66 wgs72 wgs84} {
+      .spheroids.frame1.listbox insert 0 $i
+  }
+
+
+  frame .spheroids.frame2 \
+     -borderwidth {2}
+
+  button .spheroids.frame2.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .spheroids }
+
+  button .spheroids.frame2.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .spheroids }
+
+  pack append .spheroids.frame2 \
+    .spheroids.frame2.ok { left expand } \
+    .spheroids.frame2.cancel { right expand }
+
+
+bind .spheroids.frame0.listbox <Return> {
+     focus .spheroids.frame1.listbox
+}
+
+bind .spheroids.frame1.listbox <Return> {
+     focus .spheroids.frame0.listbox
+}
+
+
+  pack append .spheroids \
+    .spheroids.frame0 { top expand fill } \
+    .spheroids.frame1 { top expand fill } \
+    .spheroids.frame2 { bottom expand fill }
+
+
+
+  grab set .spheroids
+  tkwait window .spheroids
+
+}
+
+
+
+
+proc shift_parameters { } {
+
+
+  toplevel .shift_parameters
+
+  wm geometry .shift_parameters +100+20
+  wm title .shift_parameters "shift_parameters"
+
+
+  global dx
+
+
+  frame .shift_parameters.frame0 \
+    -relief {flat}
+
+  label .shift_parameters.frame0.label \
+    -anchor {w} \
+    -text {X Shift (meters)} \
+    -padx {2}
+
+  scrollbar .shift_parameters.frame0.hscrollbar \
+    -command {.shift_parameters.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .shift_parameters.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.shift_parameters.frame0.hscrollbar set}
+
+  pack append .shift_parameters.frame0 \
+    .shift_parameters.frame0.label { top fillx } \
+    .shift_parameters.frame0.entry { top fillx } \
+    .shift_parameters.frame0.hscrollbar { bottom fillx }
+
+  .shift_parameters.frame0.entry configure -state normal
+
+  bind .shift_parameters.frame0.entry <Return> {
+       set dx [%W get] }
+
+
+  global dy
+
+
+  frame .shift_parameters.frame1 \
+    -relief {flat}
+
+  label .shift_parameters.frame1.label \
+    -anchor {w} \
+    -text {Y Shift (meters)} \
+    -padx {2}
+
+  scrollbar .shift_parameters.frame1.hscrollbar \
+    -command {.shift_parameters.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .shift_parameters.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.shift_parameters.frame1.hscrollbar set}
+
+  pack append .shift_parameters.frame1 \
+    .shift_parameters.frame1.label { top fillx } \
+    .shift_parameters.frame1.entry { top fillx } \
+    .shift_parameters.frame1.hscrollbar { bottom fillx }
+
+  .shift_parameters.frame1.entry configure -state normal
+
+  bind .shift_parameters.frame1.entry <Return> {
+       set dy [%W get] }
+
+
+  global dz
+
+
+  frame .shift_parameters.frame2 \
+    -relief {flat}
+
+  label .shift_parameters.frame2.label \
+    -anchor {w} \
+    -text {Z Shift (meters)} \
+    -padx {2}
+
+  scrollbar .shift_parameters.frame2.hscrollbar \
+    -command {.shift_parameters.frame2.entry view} \
+    -orient {horizontal}
+
+  entry .shift_parameters.frame2.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.shift_parameters.frame2.hscrollbar set}
+
+  pack append .shift_parameters.frame2 \
+    .shift_parameters.frame2.label { top fillx } \
+    .shift_parameters.frame2.entry { top fillx } \
+    .shift_parameters.frame2.hscrollbar { bottom fillx }
+
+  .shift_parameters.frame2.entry configure -state normal
+
+  bind .shift_parameters.frame2.entry <Return> {
+       set dz [%W get] }
+
+
+
+  frame .shift_parameters.frame3 \
+     -borderwidth {2}
+
+  button .shift_parameters.frame3.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set dx [.shift_parameters.frame0.entry get]
+                  set dy [.shift_parameters.frame1.entry get]
+                  set dz [.shift_parameters.frame2.entry get]
+                 destroy .shift_parameters }
+
+  button .shift_parameters.frame3.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set dx ""
+                  set dy ""
+                  set dz ""
+                 destroy .shift_parameters }
+
+  pack append .shift_parameters.frame3 \
+    .shift_parameters.frame3.ok { left expand } \
+    .shift_parameters.frame3.cancel { right expand }
+
+
+bind .shift_parameters.frame0.entry <Return> {
+     focus .shift_parameters.frame1.entry
+}
+
+bind .shift_parameters.frame1.entry <Return> {
+     focus .shift_parameters.frame2.entry
+}
+
+bind .shift_parameters.frame2.entry <Return> {
+     focus .shift_parameters.frame0.entry
+}
+
+
+  pack append .shift_parameters \
+    .shift_parameters.frame0 { top expand fill } \
+    .shift_parameters.frame1 { top expand fill } \
+    .shift_parameters.frame2 { top expand fill } \
+    .shift_parameters.frame3 { bottom expand fill }
+
+
+
+  grab set .shift_parameters
+  tkwait window .shift_parameters
+
+}
+
+
+
+
+proc put_command { } {
+
+
+  global ldd
+  global lmm
+  global lss
+  global ns
+  global mdd
+  global mmm
+  global mss
+  global ew
+  global insphere
+  global outsphere
+  global dx
+  global dy
+  global dz
+
+
+  set cmd ""
+
+  if {  $ldd != "" || $lmm != "" || $lss != "" || $ns != "" } {
+         set cmd "$cmd lat=$ldd,$lmm,$lss,$ns"
+  }
+
+  if {  $mdd != "" || $mmm != "" || $mss != "" || $ew != "" } {
+         set cmd "$cmd lon=$mdd,$mmm,$mss,$ew"
+  }
+
+  if {  $insphere != "" } {
+         set cmd "$cmd is=$insphere"
+  }
+
+  if {  $outsphere != "" } {
+         set cmd "$cmd os=$outsphere"
+  }
+
+  if {  $dx != "" } {
+         set cmd "$cmd xshift=$dx"
+  }
+
+  if {  $dy != "" } {
+         set cmd "$cmd yshift=$dy"
+  }
+
+  if {  $dz != "" } {
+         set cmd "$cmd zshift=$dz"
+  }
+
+  if { $cmd != "" } {
+     set cmd "m.datum.shift $cmd"
+  }
+}
+
+
+
+
+proc set_command_entry { } {
+
+  .cmd.frame0.entry configure -state normal
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 [put_command]
+  .cmd.frame0.entry configure -state disabled
+
+}
+
+
+proc proc_m.datum.shift { } {
+
+
+  global ldd
+  global lmm
+  global lss
+  global ns
+  global mdd
+  global mmm
+  global mss
+  global ew
+  global insphere
+  global outsphere
+  global dx
+  global dy
+  global dz
+
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "Shift Datum"
+
+
+  frame .cmd.frame0 \
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame0.hscrollbar set}
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {m.datum.shift}
+
+  .cmd.frame0.entry configure -state disabled
+
+
+
+  frame .cmd.frame1 \
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame1.hscrollbar set}
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {latitude}
+
+  .cmd.frame1.entry configure -state disabled
+
+
+
+  frame .cmd.frame2 \
+    -relief {flat}
+
+  label .cmd.frame2.label \
+    -anchor {w} \
+    -text {Other options available:} \
+    -padx {2}
+
+  button .cmd.frame2.button0 \
+     -text "longitude ..." \
+     -relief raised \
+     -padx 10 \
+     -command "longitude
+                set_command_entry"
+
+
+  button .cmd.frame2.button1 \
+     -text "spheroids ..." \
+     -relief raised \
+     -padx 10 \
+     -command "spheroids
+                set_command_entry"
+
+
+  button .cmd.frame2.button2 \
+     -text "shift_parameters ..." \
+     -relief raised \
+     -padx 10 \
+     -command "shift_parameters
+                set_command_entry"
+
+
+  frame .cmd.frame3 \
+     -borderwidth {2}
+
+  button .cmd.frame3.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 
+		if {  $ldd != "" && $lmm != "" && $lss != "" && $ns != "" && $mdd != "" && $mmm != "" && $mss != "" && $ew != "" && $insphere != "" && $outsphere != "" && $dx != "" && $dy != "" && $dz != "" } {
+ 		set cmd [put_command]
+ 		if { $cmd != "" } {
+ 		   eval " exec xterm -title m.datum.shift -geometry 50x5 -exec $cmd " 
+ 		   destroy .cmd
+ 		}
+ 	}
+ }
+
+  button .cmd.frame3.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { destroy .cmd }
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.ok { left expand } \
+    .cmd.frame3.cancel { right expand }
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.label { top fillx } \
+    .cmd.frame2.button0 { left } \
+    .cmd.frame2.button1 { left } \
+    .cmd.frame2.button2  { left }
+
+
+
+  pack append .cmd \
+    .cmd.frame1 { top expand fill } \
+    .cmd.frame2 { top expand fill } \
+    .cmd.frame0 { top expand fill } \
+    .cmd.frame3 { bottom expand fill }
+
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global ldd
+set ldd ""
+
+global lmm
+set lmm ""
+
+global lss
+set lss ""
+
+global ns
+set ns ""
+
+global mdd
+set mdd ""
+
+global mmm
+set mmm ""
+
+global mss
+set mss ""
+
+global ew
+set ew ""
+
+global insphere
+set insphere ""
+
+global outsphere
+set outsphere ""
+
+global dx
+set dx ""
+
+global dy
+set dy ""
+
+global dz
+set dz ""
+
+
+global database
+global location
+global mapset
+global feature
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_m.datum.shift

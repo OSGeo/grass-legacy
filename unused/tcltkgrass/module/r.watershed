@@ -1,0 +1,1591 @@
+
+
+proc get_feature { type } {
+
+  set dir ""
+  case $type in {
+
+       {raster} {
+                      set dir "cell"
+                  }
+
+       {vector} {
+                      set dir "dig"
+                  }
+
+       {sites} {
+                      set dir "site_lists"
+                  }
+
+       {label} {
+                      set dir "paint/labels"
+                  }
+
+       {group} {
+                      set dir "group"
+                  }
+
+       {icon} {
+                      set dir "paint/icons"
+                  }
+
+       {region} {
+                      set dir "windows"
+                  }
+
+       {dlg} {
+                      set dir "dlg"
+                  }
+
+       {dlg_ascii} {
+                      set dir "dlg_ascii"
+                  }
+
+  }
+  return $dir
+
+}
+
+
+
+
+proc put_list { the_listbox the_list } {
+
+  $the_listbox delete 0 end
+  foreach i $the_list {
+      $the_listbox insert end $i
+  }
+}
+
+
+
+
+proc get_list { path } {
+  set list ""
+  if { [file isdirectory $path] != 1 } {
+     return $list
+  }
+  set current_dir [exec pwd]
+  cd $path
+  foreach i [exec ls -a [exec pwd]] {
+     if { [string compare $i "."] != 0 && [string compare $i ".."] != 0 } {
+        lappend list $i
+     }
+  }
+  cd $current_dir
+  return $list
+}
+
+
+
+
+proc mapset_listbox { type } {
+
+  global database
+  global location
+  global mapset
+  global feature
+
+  global file_name
+  set file_name ""
+
+  toplevel .mapset
+
+  wm geometry .mapset +100+100
+  wm title .mapset {spatial layer}
+
+  set feature [get_feature $type]
+
+  global mapset_list
+
+  frame .mapset.frame0 \
+    -borderwidth {2} \
+    -relief {flat}
+
+  label .mapset.frame0.label \
+    -anchor {w} \
+    -text "Mapset"
+
+  entry .mapset.frame0.mapset \
+    -relief {sunken} \
+   -width 20
+
+  menubutton .mapset.frame0.mapsets \
+    -bitmap {@../bitmap/arrow} \
+    -menu {.mapset.frame0.mapsets.pulldown}
+
+  menu .mapset.frame0.mapsets.pulldown
+
+  set mapset_list [get_list "$database/$location"]
+  foreach i $mapset_list {
+      .mapset.frame0.mapsets.pulldown add command \
+          -label $i \
+          -command {
+                     set mapset [lindex $mapset_list \
+                               [.mapset.frame0.mapsets.pulldown index active] ]
+                     .mapset.frame0.mapset delete 0 end
+                     .mapset.frame0.mapset insert 0 $mapset
+                     put_list .mapset.frame1.listbox \
+                         [get_list "$database/$location/$mapset/$feature"]
+                     set file_name ""
+                   }
+  }
+
+  pack append .mapset.frame0 \
+    .mapset.frame0.label { left } \
+    .mapset.frame0.mapset { left } \
+    .mapset.frame0.mapsets { right }
+
+  frame .mapset.frame1 \
+    -borderwidth {2} \
+    -relief {raised}
+
+  listbox .mapset.frame1.listbox \
+    -relief {sunken} \
+    -geometry 20x10 \
+    -yscrollcommand {.mapset.frame1.vscrollbar set}
+
+  scrollbar .mapset.frame1.vscrollbar \
+    -command {.mapset.frame1.listbox yview}
+
+  pack append .mapset.frame1 \
+    .mapset.frame1.listbox { left expand fill } \
+    .mapset.frame1.vscrollbar { right fill }
+
+  frame .mapset.frame2 \
+    -borderwidth {2}
+
+  frame .mapset.frame2.frame
+
+  button .mapset.frame2.frame.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { if { $file_name != "" } {
+                   destroy .mapset
+               }
+              }
+
+  button .mapset.frame2.frame.cancel \
+    -text Cancel \
+    -relief raised \
+    -padx 10 \
+    -command { set file_name ""
+               destroy .mapset
+             }
+
+  pack append .mapset.frame2.frame \
+    .mapset.frame2.frame.ok { left expand } \
+    .mapset.frame2.frame.cancel { right expand }
+
+  pack append .mapset.frame2 \
+    .mapset.frame2.frame { bottom frame center fill }
+
+  pack append .mapset \
+    .mapset.frame0 { top expand fill } \
+    .mapset.frame1 { top expand fill } \
+    .mapset.frame2 { bottom expand fill }
+
+  bind .mapset.frame1.listbox <Button-1> {
+        %W select from [%W nearest %y]
+        %W select to [%W nearest %y]
+	    set file_name [%W get [%W nearest %y]]
+  }
+
+  bind .mapset.frame1.listbox <ButtonRelease-1> {
+        %W select from [%W nearest %y]
+        %W select to [%W nearest %y]
+	    set file_name [%W get [%W nearest %y]]
+  }
+
+  bind .mapset.frame1.listbox <Double-ButtonPress-1> {
+        %W select from [%W nearest %y]
+        %W select to [%W nearest %y]
+	    set file_name [%W get [%W nearest %y]]
+  }
+
+  .mapset.frame0.mapset delete 0 end
+  .mapset.frame0.mapset insert 0 $mapset
+
+  .mapset.frame1.listbox delete 0 end
+  put_list .mapset.frame1.listbox \
+             [get_list "$database/$location/$mapset/$feature"]
+
+  grab set .mapset
+  tkwait window .mapset
+
+  return $file_name
+
+}
+
+
+
+
+proc input_maps { } {
+
+
+  toplevel .input_maps
+
+  wm geometry .input_maps +100+20
+  wm title .input_maps "input_maps"
+
+
+  global elevationname
+
+
+  frame .input_maps.frame0 \
+    -relief {flat}
+
+  label .input_maps.frame0.label \
+    -anchor {w} \
+    -text {Elevation map on which the entire analysis is based:} \
+    -padx {2}
+
+  scrollbar .input_maps.frame0.hscrollbar \
+    -command {.input_maps.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .input_maps.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.input_maps.frame0.hscrollbar set}
+
+  button .input_maps.frame0.button \
+    -relief {raised} \
+    -anchor {n} \
+    -text {raster} \
+    -command { set file [mapset_listbox raster]
+                if { $file != "" } {
+                   set elevationname $file
+                   .input_maps.frame0.entry delete 0 end
+                   .input_maps.frame0.entry insert 0 $file
+                   set_command_entry
+                }
+             }
+
+
+  pack append .input_maps.frame0 \
+    .input_maps.frame0.label { top fillx } \
+    .input_maps.frame0.button { right frame n } \
+    .input_maps.frame0.entry { top fill } \
+    .input_maps.frame0.hscrollbar { top fillx }
+
+
+
+  bind .input_maps.frame0.entry <Return> {
+       set elevationname [%W get] }
+
+  global depressionname
+
+
+  frame .input_maps.frame1 \
+    -relief {flat}
+
+  label .input_maps.frame1.label \
+    -anchor {w} \
+    -text {Map layer of depressions in the landscape:} \
+    -padx {2}
+
+  scrollbar .input_maps.frame1.hscrollbar \
+    -command {.input_maps.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .input_maps.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.input_maps.frame1.hscrollbar set}
+
+  button .input_maps.frame1.button \
+    -relief {raised} \
+    -anchor {n} \
+    -text {raster} \
+    -command { set file [mapset_listbox raster]
+                if { $file != "" } {
+                   set depressionname $file
+                   .input_maps.frame1.entry delete 0 end
+                   .input_maps.frame1.entry insert 0 $file
+                   set_command_entry
+                }
+             }
+
+
+  pack append .input_maps.frame1 \
+    .input_maps.frame1.label { top fillx } \
+    .input_maps.frame1.button { right frame n } \
+    .input_maps.frame1.entry { top fill } \
+    .input_maps.frame1.hscrollbar { top fillx }
+
+
+
+  bind .input_maps.frame1.entry <Return> {
+       set depressionname [%W get] }
+
+  global flowname
+
+
+  frame .input_maps.frame2 \
+    -relief {flat}
+
+  label .input_maps.frame2.label \
+    -anchor {w} \
+    -text {Map indicating the amount of overland flow units that each cell will contribute to the watershed basin model:} \
+    -padx {2}
+
+  scrollbar .input_maps.frame2.hscrollbar \
+    -command {.input_maps.frame2.entry view} \
+    -orient {horizontal}
+
+  entry .input_maps.frame2.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.input_maps.frame2.hscrollbar set}
+
+  button .input_maps.frame2.button \
+    -relief {raised} \
+    -anchor {n} \
+    -text {raster} \
+    -command { set file [mapset_listbox raster]
+                if { $file != "" } {
+                   set flowname $file
+                   .input_maps.frame2.entry delete 0 end
+                   .input_maps.frame2.entry insert 0 $file
+                   set_command_entry
+                }
+             }
+
+
+  pack append .input_maps.frame2 \
+    .input_maps.frame2.label { top fillx } \
+    .input_maps.frame2.button { right frame n } \
+    .input_maps.frame2.entry { top fill } \
+    .input_maps.frame2.hscrollbar { top fillx }
+
+
+
+  bind .input_maps.frame2.entry <Return> {
+       set flowname [%W get] }
+
+  global disturbedname
+
+
+  frame .input_maps.frame3 \
+    -relief {flat}
+
+  label .input_maps.frame3.label \
+    -anchor {w} \
+    -text {Map containing the percent of disturbed land:} \
+    -padx {2}
+
+  scrollbar .input_maps.frame3.hscrollbar \
+    -command {.input_maps.frame3.entry view} \
+    -orient {horizontal}
+
+  entry .input_maps.frame3.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.input_maps.frame3.hscrollbar set}
+
+  button .input_maps.frame3.button \
+    -relief {raised} \
+    -anchor {n} \
+    -text {raster} \
+    -command { set file [mapset_listbox raster]
+                if { $file != "" } {
+                   set disturbedname $file
+                   .input_maps.frame3.entry delete 0 end
+                   .input_maps.frame3.entry insert 0 $file
+                   set_command_entry
+                }
+             }
+
+
+  pack append .input_maps.frame3 \
+    .input_maps.frame3.label { top fillx } \
+    .input_maps.frame3.button { right frame n } \
+    .input_maps.frame3.entry { top fill } \
+    .input_maps.frame3.hscrollbar { top fillx }
+
+
+
+  bind .input_maps.frame3.entry <Return> {
+       set disturbedname [%W get] }
+
+  global disturbedvalue
+
+
+  frame .input_maps.frame4 \
+    -relief {flat}
+
+  label .input_maps.frame4.label \
+    -anchor {w} \
+    -text {Percent of disturbed land:} \
+    -padx {2}
+
+  scrollbar .input_maps.frame4.hscrollbar \
+    -command {.input_maps.frame4.entry view} \
+    -orient {horizontal}
+
+  entry .input_maps.frame4.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.input_maps.frame4.hscrollbar set}
+
+  button .input_maps.frame4.button \
+    -relief {raised} \
+    -anchor {n} \
+    -text {raster} \
+    -command { set file [mapset_listbox raster]
+                if { $file != "" } {
+                   set disturbedvalue $file
+                   .input_maps.frame4.entry delete 0 end
+                   .input_maps.frame4.entry insert 0 $file
+                   set_command_entry
+                }
+             }
+
+
+  pack append .input_maps.frame4 \
+    .input_maps.frame4.label { top fillx } \
+    .input_maps.frame4.button { right frame n } \
+    .input_maps.frame4.entry { top fill } \
+    .input_maps.frame4.hscrollbar { top fillx }
+
+
+
+  bind .input_maps.frame4.entry <Return> {
+       set disturbedvalue [%W get] }
+
+  global blockingname
+
+
+  frame .input_maps.frame5 \
+    -relief {flat}
+
+  label .input_maps.frame5.label \
+    -anchor {w} \
+    -text {Map containing the terrain that will block overland surface flow:} \
+    -padx {2}
+
+  scrollbar .input_maps.frame5.hscrollbar \
+    -command {.input_maps.frame5.entry view} \
+    -orient {horizontal}
+
+  entry .input_maps.frame5.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.input_maps.frame5.hscrollbar set}
+
+  button .input_maps.frame5.button \
+    -relief {raised} \
+    -anchor {n} \
+    -text {raster} \
+    -command { set file [mapset_listbox raster]
+                if { $file != "" } {
+                   set blockingname $file
+                   .input_maps.frame5.entry delete 0 end
+                   .input_maps.frame5.entry insert 0 $file
+                   set_command_entry
+                }
+             }
+
+
+  pack append .input_maps.frame5 \
+    .input_maps.frame5.label { top fillx } \
+    .input_maps.frame5.button { right frame n } \
+    .input_maps.frame5.entry { top fill } \
+    .input_maps.frame5.hscrollbar { top fillx }
+
+
+
+  bind .input_maps.frame5.entry <Return> {
+       set blockingname [%W get] }
+
+
+  frame .input_maps.frame6 \
+     -borderwidth {2}
+
+  button .input_maps.frame6.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set elevationname [.input_maps.frame0.entry get]
+                  set depressionname [.input_maps.frame1.entry get]
+                  set flowname [.input_maps.frame2.entry get]
+                  set disturbedname [.input_maps.frame3.entry get]
+                  set disturbedvalue [.input_maps.frame4.entry get]
+                  set blockingname [.input_maps.frame5.entry get]
+                 destroy .input_maps }
+
+  button .input_maps.frame6.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set elevationname ""
+                  set depressionname ""
+                  set flowname ""
+                  set disturbedname ""
+                  set disturbedvalue ""
+                  set blockingname ""
+                 destroy .input_maps }
+
+  pack append .input_maps.frame6 \
+    .input_maps.frame6.ok { left expand } \
+    .input_maps.frame6.cancel { right expand }
+
+
+bind .input_maps.frame0.entry <Return> {
+     focus .input_maps.frame1.entry
+}
+
+bind .input_maps.frame1.entry <Return> {
+     focus .input_maps.frame2.entry
+}
+
+bind .input_maps.frame2.entry <Return> {
+     focus .input_maps.frame3.entry
+}
+
+bind .input_maps.frame3.entry <Return> {
+     focus .input_maps.frame4.entry
+}
+
+bind .input_maps.frame4.entry <Return> {
+     focus .input_maps.frame5.entry
+}
+
+bind .input_maps.frame5.entry <Return> {
+     focus .input_maps.frame0.entry
+}
+
+
+  pack append .input_maps \
+    .input_maps.frame0 { top expand fill } \
+    .input_maps.frame1 { top expand fill } \
+    .input_maps.frame2 { top expand fill } \
+    .input_maps.frame3 { top expand fill } \
+    .input_maps.frame4 { top expand fill } \
+    .input_maps.frame5 { top expand fill } \
+    .input_maps.frame6 { bottom expand fill }
+
+
+
+  grab set .input_maps
+  tkwait window .input_maps
+
+}
+
+
+
+
+proc output_maps { } {
+
+
+  toplevel .output_maps
+
+  wm geometry .output_maps +100+20
+  wm title .output_maps "output_maps"
+
+
+  global accumulationname
+
+
+  frame .output_maps.frame0 \
+    -relief {flat}
+
+  label .output_maps.frame0.label \
+    -anchor {w} \
+    -text {Map to contain the number of cells that drain through each cell:} \
+    -padx {2}
+
+  scrollbar .output_maps.frame0.hscrollbar \
+    -command {.output_maps.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .output_maps.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.output_maps.frame0.hscrollbar set}
+
+  pack append .output_maps.frame0 \
+    .output_maps.frame0.label { top fillx } \
+    .output_maps.frame0.entry { top fillx } \
+    .output_maps.frame0.hscrollbar { bottom fillx }
+
+  .output_maps.frame0.entry configure -state normal
+
+  bind .output_maps.frame0.entry <Return> {
+       set accumulationname [%W get] }
+
+
+  global drainagename
+
+
+  frame .output_maps.frame1 \
+    -relief {flat}
+
+  label .output_maps.frame1.label \
+    -anchor {w} \
+    -text {Map to contain the drainage direction:} \
+    -padx {2}
+
+  scrollbar .output_maps.frame1.hscrollbar \
+    -command {.output_maps.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .output_maps.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.output_maps.frame1.hscrollbar set}
+
+  pack append .output_maps.frame1 \
+    .output_maps.frame1.label { top fillx } \
+    .output_maps.frame1.entry { top fillx } \
+    .output_maps.frame1.hscrollbar { bottom fillx }
+
+  .output_maps.frame1.entry configure -state normal
+
+  bind .output_maps.frame1.entry <Return> {
+       set drainagename [%W get] }
+
+
+  global basinname
+
+
+  frame .output_maps.frame2 \
+    -relief {flat}
+
+  label .output_maps.frame2.label \
+    -anchor {w} \
+    -text {Map to contain a unique label for each watershed basin:} \
+    -padx {2}
+
+  scrollbar .output_maps.frame2.hscrollbar \
+    -command {.output_maps.frame2.entry view} \
+    -orient {horizontal}
+
+  entry .output_maps.frame2.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.output_maps.frame2.hscrollbar set}
+
+  pack append .output_maps.frame2 \
+    .output_maps.frame2.label { top fillx } \
+    .output_maps.frame2.entry { top fillx } \
+    .output_maps.frame2.hscrollbar { bottom fillx }
+
+  .output_maps.frame2.entry configure -state normal
+
+  bind .output_maps.frame2.entry <Return> {
+       set basinname [%W get] }
+
+
+  global streamname
+
+
+  frame .output_maps.frame3 \
+    -relief {flat}
+
+  label .output_maps.frame3.label \
+    -anchor {w} \
+    -text {Map to contain stream segments:} \
+    -padx {2}
+
+  scrollbar .output_maps.frame3.hscrollbar \
+    -command {.output_maps.frame3.entry view} \
+    -orient {horizontal}
+
+  entry .output_maps.frame3.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.output_maps.frame3.hscrollbar set}
+
+  pack append .output_maps.frame3 \
+    .output_maps.frame3.label { top fillx } \
+    .output_maps.frame3.entry { top fillx } \
+    .output_maps.frame3.hscrollbar { bottom fillx }
+
+  .output_maps.frame3.entry configure -state normal
+
+  bind .output_maps.frame3.entry <Return> {
+       set streamname [%W get] }
+
+
+  global halfname
+
+
+  frame .output_maps.frame4 \
+    -relief {flat}
+
+  label .output_maps.frame4.label \
+    -anchor {w} \
+    -text {Map to contain each half basin:} \
+    -padx {2}
+
+  scrollbar .output_maps.frame4.hscrollbar \
+    -command {.output_maps.frame4.entry view} \
+    -orient {horizontal}
+
+  entry .output_maps.frame4.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.output_maps.frame4.hscrollbar set}
+
+  pack append .output_maps.frame4 \
+    .output_maps.frame4.label { top fillx } \
+    .output_maps.frame4.entry { top fillx } \
+    .output_maps.frame4.hscrollbar { bottom fillx }
+
+  .output_maps.frame4.entry configure -state normal
+
+  bind .output_maps.frame4.entry <Return> {
+       set halfname [%W get] }
+
+
+  global visualname
+
+
+  frame .output_maps.frame5 \
+    -relief {flat}
+
+  label .output_maps.frame5.label \
+    -anchor {w} \
+    -text {Map to contain a useful display of the results:} \
+    -padx {2}
+
+  scrollbar .output_maps.frame5.hscrollbar \
+    -command {.output_maps.frame5.entry view} \
+    -orient {horizontal}
+
+  entry .output_maps.frame5.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.output_maps.frame5.hscrollbar set}
+
+  pack append .output_maps.frame5 \
+    .output_maps.frame5.label { top fillx } \
+    .output_maps.frame5.entry { top fillx } \
+    .output_maps.frame5.hscrollbar { bottom fillx }
+
+  .output_maps.frame5.entry configure -state normal
+
+  bind .output_maps.frame5.entry <Return> {
+       set visualname [%W get] }
+
+
+  global lengthname
+
+
+  frame .output_maps.frame6 \
+    -relief {flat}
+
+  label .output_maps.frame6.label \
+    -anchor {w} \
+    -text {Map to contain the slope length and steepness (LS) factor:} \
+    -padx {2}
+
+  scrollbar .output_maps.frame6.hscrollbar \
+    -command {.output_maps.frame6.entry view} \
+    -orient {horizontal}
+
+  entry .output_maps.frame6.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.output_maps.frame6.hscrollbar set}
+
+  pack append .output_maps.frame6 \
+    .output_maps.frame6.label { top fillx } \
+    .output_maps.frame6.entry { top fillx } \
+    .output_maps.frame6.hscrollbar { bottom fillx }
+
+  .output_maps.frame6.entry configure -state normal
+
+  bind .output_maps.frame6.entry <Return> {
+       set lengthname [%W get] }
+
+
+  global slopename
+
+
+  frame .output_maps.frame7 \
+    -relief {flat}
+
+  label .output_maps.frame7.label \
+    -anchor {w} \
+    -text {Map to contain the slope steepness (S) factor for RUSLE:} \
+    -padx {2}
+
+  scrollbar .output_maps.frame7.hscrollbar \
+    -command {.output_maps.frame7.entry view} \
+    -orient {horizontal}
+
+  entry .output_maps.frame7.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.output_maps.frame7.hscrollbar set}
+
+  pack append .output_maps.frame7 \
+    .output_maps.frame7.label { top fillx } \
+    .output_maps.frame7.entry { top fillx } \
+    .output_maps.frame7.hscrollbar { bottom fillx }
+
+  .output_maps.frame7.entry configure -state normal
+
+  bind .output_maps.frame7.entry <Return> {
+       set slopename [%W get] }
+
+
+  global armsedname
+
+
+  frame .output_maps.frame8 \
+    -relief {flat}
+
+  label .output_maps.frame8.label \
+    -anchor {w} \
+    -text {Map to contain the ARMSED input file:} \
+    -padx {2}
+
+  scrollbar .output_maps.frame8.hscrollbar \
+    -command {.output_maps.frame8.entry view} \
+    -orient {horizontal}
+
+  entry .output_maps.frame8.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.output_maps.frame8.hscrollbar set}
+
+  pack append .output_maps.frame8 \
+    .output_maps.frame8.label { top fillx } \
+    .output_maps.frame8.entry { top fillx } \
+    .output_maps.frame8.hscrollbar { bottom fillx }
+
+  .output_maps.frame8.entry configure -state normal
+
+  bind .output_maps.frame8.entry <Return> {
+       set armsedname [%W get] }
+
+
+
+  frame .output_maps.frame9 \
+     -borderwidth {2}
+
+  button .output_maps.frame9.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set accumulationname [.output_maps.frame0.entry get]
+                  set drainagename [.output_maps.frame1.entry get]
+                  set basinname [.output_maps.frame2.entry get]
+                  set streamname [.output_maps.frame3.entry get]
+                  set halfname [.output_maps.frame4.entry get]
+                  set visualname [.output_maps.frame5.entry get]
+                  set lengthname [.output_maps.frame6.entry get]
+                  set slopename [.output_maps.frame7.entry get]
+                  set armsedname [.output_maps.frame8.entry get]
+                 destroy .output_maps }
+
+  button .output_maps.frame9.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set accumulationname ""
+                  set drainagename ""
+                  set basinname ""
+                  set streamname ""
+                  set halfname ""
+                  set visualname ""
+                  set lengthname ""
+                  set slopename ""
+                  set armsedname ""
+                 destroy .output_maps }
+
+  pack append .output_maps.frame9 \
+    .output_maps.frame9.ok { left expand } \
+    .output_maps.frame9.cancel { right expand }
+
+
+bind .output_maps.frame0.entry <Return> {
+     focus .output_maps.frame1.entry
+}
+
+bind .output_maps.frame1.entry <Return> {
+     focus .output_maps.frame2.entry
+}
+
+bind .output_maps.frame2.entry <Return> {
+     focus .output_maps.frame3.entry
+}
+
+bind .output_maps.frame3.entry <Return> {
+     focus .output_maps.frame4.entry
+}
+
+bind .output_maps.frame4.entry <Return> {
+     focus .output_maps.frame5.entry
+}
+
+bind .output_maps.frame5.entry <Return> {
+     focus .output_maps.frame6.entry
+}
+
+bind .output_maps.frame6.entry <Return> {
+     focus .output_maps.frame7.entry
+}
+
+bind .output_maps.frame7.entry <Return> {
+     focus .output_maps.frame8.entry
+}
+
+bind .output_maps.frame8.entry <Return> {
+     focus .output_maps.frame0.entry
+}
+
+
+  pack append .output_maps \
+    .output_maps.frame0 { top expand fill } \
+    .output_maps.frame1 { top expand fill } \
+    .output_maps.frame2 { top expand fill } \
+    .output_maps.frame3 { top expand fill } \
+    .output_maps.frame4 { top expand fill } \
+    .output_maps.frame5 { top expand fill } \
+    .output_maps.frame6 { top expand fill } \
+    .output_maps.frame7 { top expand fill } \
+    .output_maps.frame8 { top expand fill } \
+    .output_maps.frame9 { bottom expand fill }
+
+
+
+  grab set .output_maps
+  tkwait window .output_maps
+
+}
+
+
+
+
+proc threshold { } {
+
+
+  toplevel .threshold
+
+  wm geometry .threshold +100+20
+  wm title .threshold "threshold"
+
+
+  global thresholdvalue
+
+
+  frame .threshold.frame0 \
+    -relief {flat}
+
+  label .threshold.frame0.label \
+    -anchor {w} \
+    -text {Minimum size of an exterior watershed basin in cells or overland flow units:} \
+    -padx {2}
+
+  scrollbar .threshold.frame0.hscrollbar \
+    -command {.threshold.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .threshold.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.threshold.frame0.hscrollbar set}
+
+  pack append .threshold.frame0 \
+    .threshold.frame0.label { top fillx } \
+    .threshold.frame0.entry { top fillx } \
+    .threshold.frame0.hscrollbar { bottom fillx }
+
+  .threshold.frame0.entry configure -state normal
+
+  bind .threshold.frame0.entry <Return> {
+       set thresholdvalue [%W get] }
+
+
+
+  frame .threshold.frame1 \
+     -borderwidth {2}
+
+  button .threshold.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set thresholdvalue [.threshold.frame0.entry get]
+                 destroy .threshold }
+
+  button .threshold.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set thresholdvalue ""
+                 destroy .threshold }
+
+  pack append .threshold.frame1 \
+    .threshold.frame1.ok { left expand } \
+    .threshold.frame1.cancel { right expand }
+
+
+
+  pack append .threshold \
+    .threshold.frame0 { top expand fill } \
+    .threshold.frame1 { bottom expand fill }
+
+
+
+  grab set .threshold
+  tkwait window .threshold
+
+}
+
+
+
+
+proc slope_length { } {
+
+
+  toplevel .slope_length
+
+  wm geometry .slope_length +100+20
+  wm title .slope_length "slope_length"
+
+
+  global maxvalue
+
+
+  frame .slope_length.frame0 \
+    -relief {flat}
+
+  label .slope_length.frame0.label \
+    -anchor {w} \
+    -text {Maximum length of overland surface flow in meters:} \
+    -padx {2}
+
+  scrollbar .slope_length.frame0.hscrollbar \
+    -command {.slope_length.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .slope_length.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.slope_length.frame0.hscrollbar set}
+
+  pack append .slope_length.frame0 \
+    .slope_length.frame0.label { top fillx } \
+    .slope_length.frame0.entry { top fillx } \
+    .slope_length.frame0.hscrollbar { bottom fillx }
+
+  .slope_length.frame0.entry configure -state normal
+
+  bind .slope_length.frame0.entry <Return> {
+       set maxvalue [%W get] }
+
+
+
+  frame .slope_length.frame1 \
+     -borderwidth {2}
+
+  button .slope_length.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set maxvalue [.slope_length.frame0.entry get]
+                 destroy .slope_length }
+
+  button .slope_length.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set maxvalue ""
+                 destroy .slope_length }
+
+  pack append .slope_length.frame1 \
+    .slope_length.frame1.ok { left expand } \
+    .slope_length.frame1.cancel { right expand }
+
+
+
+  pack append .slope_length \
+    .slope_length.frame0 { top expand fill } \
+    .slope_length.frame1 { bottom expand fill }
+
+
+
+  grab set .slope_length
+  tkwait window .slope_length
+
+}
+
+
+
+
+proc flags { } {
+
+
+  toplevel .flags
+
+  wm geometry .flags +100+20
+  wm title .flags "flags"
+
+
+  global m
+
+
+  frame .flags.frame0 \
+    -relief {flat}
+
+  checkbutton .flags.frame0.checkbutton \
+     -text "Perform memory management." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "m" \
+     -offvalue "" \
+     -variable m
+
+  pack append .flags.frame0 \
+    .flags.frame0.checkbutton { left }
+
+  global x
+
+
+  frame .flags.frame1 \
+    -relief {flat}
+
+  checkbutton .flags.frame1.checkbutton \
+     -text "Allow only horizontal and vertical flow of water." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "4" \
+     -offvalue "" \
+     -variable x
+
+  pack append .flags.frame1 \
+    .flags.frame1.checkbutton { left }
+
+
+  frame .flags.frame2 \
+     -borderwidth {2}
+
+  button .flags.frame2.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .flags }
+
+  button .flags.frame2.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .flags }
+
+  pack append .flags.frame2 \
+    .flags.frame2.ok { left expand } \
+    .flags.frame2.cancel { right expand }
+
+
+bind .flags.frame0.checkbutton <Return> {
+     focus .flags.frame1.checkbutton
+}
+
+bind .flags.frame1.checkbutton <Return> {
+     focus .flags.frame0.checkbutton
+}
+
+
+  pack append .flags \
+    .flags.frame0 { top expand fill } \
+    .flags.frame1 { top expand fill } \
+    .flags.frame2 { bottom expand fill }
+
+
+
+  grab set .flags
+  tkwait window .flags
+
+}
+
+
+
+
+proc put_command { } {
+
+
+  global m
+  global 4
+  global elevationname
+  global depressionname
+  global flowname
+  global disturbedname
+  global disturbedvalue
+  global blockingname
+  global thresholdvalue
+  global maxvalue
+  global accumulationname
+  global drainagename
+  global basinname
+  global streamname
+  global halfname
+  global visualname
+  global lengthname
+  global slopename
+  global armsedname
+
+
+  set cmd ""
+
+  if {  $m != "" || $4 != "" } {
+         set cmd "$cmd -$m$4"
+  }
+
+  if {  $elevationname != "" } {
+         set cmd "$cmd elevation=$elevationname"
+  }
+
+  if {  $depressionname != "" } {
+         set cmd "$cmd depression=$depressionname"
+  }
+
+  if {  $flowname != "" } {
+         set cmd "$cmd flow=$flowname"
+  }
+
+  if {  $disturbedname != "" || $disturbedvalue != "" } {
+         set cmd "$cmd disturbed.land=$disturbedname,$disturbedvalue"
+  }
+
+  if {  $blockingname != "" } {
+         set cmd "$cmd blocking=$blockingname"
+  }
+
+  if {  $thresholdvalue != "" } {
+         set cmd "$cmd threshold=$thresholdvalue"
+  }
+
+  if {  $maxvalue != "" } {
+         set cmd "$cmd max.slope.length=$maxvalue"
+  }
+
+  if {  $accumulationname != "" } {
+         set cmd "$cmd accumulation=$accumulationname"
+  }
+
+  if {  $drainagename != "" } {
+         set cmd "$cmd drainage=$drainagename"
+  }
+
+  if {  $basinname != "" } {
+         set cmd "$cmd basin=$basinname"
+  }
+
+  if {  $streamname != "" } {
+         set cmd "$cmd stream=$streamname"
+  }
+
+  if {  $halfname != "" } {
+         set cmd "$cmd half.basin=$halfname"
+  }
+
+  if {  $visualname != "" } {
+         set cmd "$cmd visual=$visualname"
+  }
+
+  if {  $lengthname != "" } {
+         set cmd "$cmd length.slope=$lengthname"
+  }
+
+  if {  $slopename != "" } {
+         set cmd "$cmd slope.steepness=$slopename"
+  }
+
+  if {  $armsedname != "" } {
+         set cmd "$cmd armsed=$armsedname"
+  }
+
+  if { $cmd != "" } {
+     set cmd "r.watershed $cmd"
+  }
+}
+
+
+
+
+proc set_command_entry { } {
+
+  .cmd.frame0.entry configure -state normal
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 [put_command]
+  .cmd.frame0.entry configure -state disabled
+
+}
+
+
+proc proc_r.watershed { } {
+
+
+  global m
+  global 4
+  global elevationname
+  global depressionname
+  global flowname
+  global disturbedname
+  global disturbedvalue
+  global blockingname
+  global thresholdvalue
+  global maxvalue
+  global accumulationname
+  global drainagename
+  global basinname
+  global streamname
+  global halfname
+  global visualname
+  global lengthname
+  global slopename
+  global armsedname
+
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "Generate Watershed Maps"
+
+
+  frame .cmd.frame0 \
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame0.hscrollbar set}
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {r.watershed}
+
+  .cmd.frame0.entry configure -state disabled
+
+
+
+  frame .cmd.frame1 \
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame1.hscrollbar set}
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {r.watershed generates a set of maps indicating: 1) the location of watershed basins, 2) information to interface with ARMSED, a storm-water runoff and sedimentation yield model, and 3) the LS and S factors of the Revised Universal Soil Loss Equation(RUSLE).}
+
+  .cmd.frame1.entry configure -state disabled
+
+
+
+  frame .cmd.frame2 \
+    -relief {flat}
+
+  label .cmd.frame2.label \
+    -anchor {w} \
+    -text {Other options available:} \
+    -padx {2}
+
+  button .cmd.frame2.button0 \
+     -text "input_maps ..." \
+     -relief raised \
+     -padx 10 \
+     -command "input_maps
+                set_command_entry"
+
+
+  button .cmd.frame2.button1 \
+     -text "output_maps ..." \
+     -relief raised \
+     -padx 10 \
+     -command "output_maps
+                set_command_entry"
+
+
+  button .cmd.frame2.button2 \
+     -text "threshold ..." \
+     -relief raised \
+     -padx 10 \
+     -command "threshold
+                set_command_entry"
+
+
+  button .cmd.frame2.button3 \
+     -text "slope_length ..." \
+     -relief raised \
+     -padx 10 \
+     -command "slope_length
+                set_command_entry"
+
+
+  button .cmd.frame2.button4 \
+     -text "flags ..." \
+     -relief raised \
+     -padx 10 \
+     -command "flags
+                set_command_entry"
+
+
+  frame .cmd.frame3 \
+     -borderwidth {2}
+
+  button .cmd.frame3.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 
+		if {  $elevationname != "" } {
+ 		set cmd [put_command]
+ 		if { $cmd != "" } {
+ 		   eval " exec xterm -title r.watershed -geometry 50x5 -exec $cmd " 
+ 		   destroy .cmd
+ 		}
+ 	}
+ }
+
+  button .cmd.frame3.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { destroy .cmd }
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.ok { left expand } \
+    .cmd.frame3.cancel { right expand }
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.label { top fillx } \
+    .cmd.frame2.button0 { left } \
+    .cmd.frame2.button1 { left } \
+    .cmd.frame2.button2 { left } \
+    .cmd.frame2.button3 { left } \
+    .cmd.frame2.button4  { left }
+
+
+
+  pack append .cmd \
+    .cmd.frame1 { top expand fill } \
+    .cmd.frame2 { top expand fill } \
+    .cmd.frame0 { top expand fill } \
+    .cmd.frame3 { bottom expand fill }
+
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global m
+set m ""
+
+global 4
+set 4 ""
+
+global elevationname
+set elevationname ""
+
+global depressionname
+set depressionname ""
+
+global flowname
+set flowname ""
+
+global disturbedname
+set disturbedname ""
+
+global disturbedvalue
+set disturbedvalue ""
+
+global blockingname
+set blockingname ""
+
+global thresholdvalue
+set thresholdvalue ""
+
+global maxvalue
+set maxvalue ""
+
+global accumulationname
+set accumulationname ""
+
+global drainagename
+set drainagename ""
+
+global basinname
+set basinname ""
+
+global streamname
+set streamname ""
+
+global halfname
+set halfname ""
+
+global visualname
+set visualname ""
+
+global lengthname
+set lengthname ""
+
+global slopename
+set slopename ""
+
+global armsedname
+set armsedname ""
+
+
+global database
+global location
+global mapset
+global feature
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_r.watershed

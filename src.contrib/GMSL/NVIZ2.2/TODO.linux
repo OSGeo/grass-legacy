@@ -1,6 +1,0 @@
-08/16/99 J. Hofierka
-- problem with Image Dump (byte order)
-- 3D sites not working (seems to be a bug in grass5.0beta)
-- disappearing polygon picture when moving mouse over zexag and height
-scrollbars (probably tcl/tk problem)
-- mkdspf stuff 

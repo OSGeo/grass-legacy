@@ -1,0 +1,21 @@
+EXTRA_CFLAGS   =  -I$(SRC)/include/geom
+
+LIBES = $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(GEOMLIB) $(XDRLIB) $(DATETIMELIB)
+DEPLIBS= $(DEPVECTLIB) $(DEPDIG_ATTLIB) $(DEPGISLIB) $(DEPGEOMLIB) $(DEPDATETIMELIB)
+
+SOURCES = \
+	main.c
+
+OBJ = \
+	main.o
+
+
+
+PROG =   $(BIN_CMD)/s.out.minmaxer 
+
+all:  $(PROG)
+
+$(PROG): $(OBJ) $(DEPLIBS)
+	$(CC) $(EXTRA_FLAGS) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB)
+
+$(DEPLIBS): #

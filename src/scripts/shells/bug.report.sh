@@ -1,8 +1,17 @@
-:
+#!/bin/sh
 
-BUG_PERSON=grass@baylor.edu
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+     
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
-if [ $# -lt 1 ]
+BUG_PERSON=grass-bugs@intevation.de
+
+if [ $# -lt 1 ] || [ "$1" == "help"  ]
 then
 	cmd=`echo $0 | sed -e 's:.*/::'`
 	echo Usage: $cmd command.name [command arguments]
@@ -30,34 +39,14 @@ echo "" >> $o
 echo -n "Program: $1  " >> $o
 cmd=0
 inter=0
-if [ -x $GISBASE/etc/bin/main/cmd/$1 ]
+if [ -x $GISBASE/etc/bin/cmd/$1 ]
 then
-	echo ' (main-cmd)' >> $o
+	echo ' (cmd)' >> $o
 	cmd=1
 fi
-if [ -x $GISBASE/etc/bin/alpha/cmd/$1 ]
+if [ -x $GISBASE/etc/bin/inter/$1 ]
 then
-	echo ' (alpha-cmd)' >> $o
-	cmd=1
-fi
-if [ -x $GISBASE/etc/bin/contrib/cmd/$1 ]
-then
-	echo ' (contrib-cmd)' >> $o
-	cmd=1
-fi
-if [ -x $GISBASE/etc/bin/contrib/inter/$1 ]
-then
-	echo ' (contrib-inter)' >> $o
-	inter=1
-fi
-if [ -x $GISBASE/etc/bin/main/inter/$1 ]
-then
-	echo ' (main-inter)' >> $o
-	inter=1
-fi
-if [ -x $GISBASE/etc/bin/alpha/inter/$1 ]
-then
-	echo ' (alpha-inter)' >> $o
+	echo ' (inter)' >> $o
 	inter=1
 fi
 if [ 0 = $inter -a 0 = $cmd ]

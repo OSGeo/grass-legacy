@@ -32,7 +32,7 @@ proc mkvolPanel { BASE } {
     label $tmp.current -text "Current:" -anchor nw
     mkMapList $tmp.list vol 
     button $tmp.new -text New -anchor ne -command "add_map vol" 
-    button $tmp.delete -text Delete -anchor ne -command "delete_map vect"
+    button $tmp.delete -text Delete -anchor ne -command "delete_map vol"
 
     pack $tmp.current -side left -expand 1
     pack $tmp.list -side left 
@@ -45,10 +45,10 @@ proc mkvolPanel { BASE } {
     pack $BASE.f.close -side right
     pack $BASE.f -side bottom -fill x -expand 1
     
-    set curr [Nget_current vect]
+    set curr [Nget_current vol]
     
     if {0 != $curr}  {
-	set width [Nvect$curr get_att width]
+	set width [Nvol$curr get_att width]
 	set maplist [Nget_map_list surf]
     } else {
 	set width 1 
@@ -56,14 +56,14 @@ proc mkvolPanel { BASE } {
     }
 
     set tmp [frame $BASE.left]
-    Nv_mkArrows $tmp.linewidth "Line Width" [concat set_width vect] $width
+    Nv_mkArrows $tmp.linewidth "Line Width" [concat set_width vol] $width
 #	checkbutton $tmp.load -relief flat -text "Load to memory"
     button $tmp.color -text Color \
-	-command "change_color vect $tmp.color"
+	-command "change_color vol $tmp.color"
     button $tmp.draw_current -text {Draw Current} \
-	-command {Nvect_draw_one [Nget_current vect]}
+	-command {Nvol_draw_one [Nget_current vol]}
     bind $tmp.color <Expose> \
-	"$tmp.color configure -bg \[get_curr_sv_color vect\]"
+	"$tmp.color configure -bg \[get_curr_sv_color vol\]"
 
     pack $tmp.linewidth $tmp.color $tmp.draw_current -anchor w \
 	-padx 2 -pady 2 -side top -expand 1
@@ -71,7 +71,7 @@ proc mkvolPanel { BASE } {
 
     set tmp [frame $BASE.right]
     label $tmp.label -text "Display on surface(s):"
-    Nv_mkSurfacelist $tmp.list $maplist Nvect$curr
+    Nv_mkSurfacelist $tmp.list $maplist Nvol$curr vol
     pack $tmp.label $tmp.list -expand 1
     pack $tmp -side right -fill y -expand 1
 
@@ -80,56 +80,56 @@ proc mkvolPanel { BASE } {
 
 # Reset procedure for this panel
 proc Nviz_vol_reset {} {
-    set vect_list [Nget_vect_list]
+    set vol_list [Nget_vol_list]
 
-    foreach i $vect_list {
-	Nvect$i delete
+    foreach i $vol_list {
+	Nvol$i delete
     }
 
-    set_new_curr vect 0
+    set_new_curr vol 0
 }
 
-# Save procedure for saving state of Nviz vect files
+# Save procedure for saving state of Nviz vol files
 proc Nviz_vol_save {file_hook} {
-    # For each vector file we write out all of its attribute information. 
+    # For each vol file we write out all of its attribute information. 
     # Vectors are referenced by logical name so that they are reloadable
     # (otherwise, they may be assigned different id's each time they are loaded
     # and scripts won't work correctly).
 
-    # Get the list of vect files
-    set vect_list [Nget_vect_list]
+    # Get the list of vol files
+    set vol_list [Nget_vol_list]
 
     # Get the list of surfaces for checking draping
     set surf_list [Nget_surf_list]
     puts "Surf list is $surf_list"
 
-    # Write out the total number of vector files
-    puts $file_hook "[llength $vect_list]"
+    # Write out the total number of vol files
+    puts $file_hook "[llength $vol_list]"
 
-    # For each vector file write out the following:
+    # For each vol file write out the following:
     # 1. Logical name
     # 2. map name
     # 3. color
     # 4. width
     # 5. list of logical names of surfaces displayed on
-    foreach i $vect_list {
+    foreach i $vol_list {
 
 	# logical name
-	puts $file_hook "[Nvect$i get_logical_name]"
+	puts $file_hook "[Nvol$i get_logical_name]"
 	
 	# map name
-	puts $file_hook "[Nvect$i get_att map]"
+	puts $file_hook "[Nvol$i get_att map]"
 
 	# color
-	puts $file_hook "[Nvect$i get_att color]"
+	puts $file_hook "[Nvol$i get_att color]"
 
 	# width
-	puts $file_hook "[Nvect$i get_att width]"
+	puts $file_hook "[Nvol$i get_att width]"
 
 	# logical names of surfaces displayed on
 	set draped [list]
 	foreach j $surf_list {
-	    if {[Nvect$i surf_is_selected Nsurf$j]} then {
+	    if {[Nvol$i surf_is_selected Nsurf$j]} then {
 		lappend draped $j
 	    }
 	}
@@ -144,33 +144,33 @@ proc Nviz_vol_save {file_hook} {
     # Done...
 }
 
-# Load procedure for loading state of Nviz vect files
+# Load procedure for loading state of Nviz vol files
 proc Nviz_vol_load { file_hook } {
     # Read the number of surfaces saved in this state file
-    gets $file_hook num_vects
+    gets $file_hook num_vols
 
-    # For each vect file, create a new surface with the given logical
+    # For each vol file, create a new surface with the given logical
     # name and fill in the attributes as appropriate
-    for {set i 0} {$i < $num_vects} {incr i} {
-	# Read in the logical name for this new vect map
+    for {set i 0} {$i < $num_vols} {incr i} {
+	# Read in the logical name for this new vol map
 	gets $file_hook logical_name
 
-	# Now create a new vect map with the given logical name
-	set new_vect [Nnew_map_obj vect "name=$logical_name"]
+	# Now create a new vol map with the given logical name
+	set new_vol [Nnew_map_obj vol "name=$logical_name"]
 
 	# Set all attributes as appropriate (i.e. as they are read from the state file)
 	
 	# map
 	gets $file_hook att_data
-	$new_vect set_att map $att_data
+	$new_vol set_att map $att_data
 
 	# color 
 	gets $file_hook att_data
-	$new_vect set_att color $att_data
+	$new_vol set_att color $att_data
 
 	# width
 	gets $file_hook att_data
-	$new_vect set_att width $att_data
+	$new_vol set_att width $att_data
 
 	# Select all the appropriate surfaces to put this map on
 	gets $file_hook num_selected_surfs
@@ -178,10 +178,10 @@ proc Nviz_vol_load { file_hook } {
 	    gets $file_hook selected_surf
 
 	    # Select this surf by translating from a logical name and selecting
-	    $new_vect select_surf [Nliteral_from_logical $selected_surf]
+	    $new_vol select_surf [Nliteral_from_logical $selected_surf]
 	}
 
-	Nset_current vect [string range $new_vect 5 end]
+	Nset_current vol [string range $new_vol 5 end]
     }
 
 }

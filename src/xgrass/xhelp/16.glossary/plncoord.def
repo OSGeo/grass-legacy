@@ -1,7 +1,0 @@
-
-
-plane coordinates - Coordinates specifying the locations of points in
-planar space.  In cartography, this usually is a @glossary("projection",16.glossary/projtn.def) of the
-earth's surface onto a flattenable cone or cylinder, and the x and
-y values scaled along the x and y axes are respectively called
-@glossary("eastings",16.glossary/easting.def) and @glossary("northings",16.glossary/northing.def).

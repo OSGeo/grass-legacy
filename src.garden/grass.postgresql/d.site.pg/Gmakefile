@@ -1,0 +1,20 @@
+PGM       = $(BIN_CMD)/d.site.pg
+LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(DATETIMELIB)
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB) $(DEPDATETIMELIB)
+PACKAGE = "d.site.pg"
+DEFS = -Wall -DPACKAGE=\"$(PACKAGE)\"
+EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS)
+
+OBJS = \
+	main.o   \
+        getAllOpts.o \
+        getSopts.o \
+        buildInfxQry.o \
+        runInfxFile.o \
+	plotsite.o
+
+$(PGM): $(OBJS) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(PQLIBPATH) $(PQLIB) $(MATHLIB) $(XDRLIB) $(INTLLIB)
+
+
+$(DEPLIBS): #

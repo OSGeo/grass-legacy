@@ -1,0 +1,5 @@
+The new HDF 5 is here:
+http://hdf.ncsa.uiuc.edu/HDF5/
+ftp://ftp.ncsa.uiuc.edu/HDF/HDF5/
+
+Option: add HDF support into GDAL (r.in.gdal) from Frank Warmerdam.

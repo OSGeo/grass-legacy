@@ -2,6 +2,9 @@
  *
  * r.colors.paint
  *
+ * Generates color table for PAINT driver
+ *  -> ????? no docs!
+ *
  */
 #define MAIN
 #include <stdlib.h>
@@ -28,10 +31,17 @@ int main (int argc, char **argv)
 	int readtest, min, max;
 	struct Option *opt1, *opt2, *opt3, *opt4 ;
 	struct Flag *flag1 ;
+	struct GModule *module;
+	
 
 	/** INITIALIZE GIS CALLS ************************************************/
 
 	G_gisinit(argv[0]);
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+	"Generates color table for PAINT driver";
 
 	opt1               = G_define_option() ;
 	opt1->key          = "input" ;
@@ -118,7 +128,7 @@ int main (int argc, char **argv)
 		new_min = 1;
 		new_max = clist.max_colors;
 
-		sprintf (buf, "Grescale '%s in %s' '%s' %ld %ld %ld %ld '%s'",
+		sprintf (buf, "r.rescale '%s in %s' '%s' %ld %ld %ld %ld '%s'",
 		    old_name, old_mapset, new_name,
 		    old_min, old_max, new_min, new_max,
 		    title);

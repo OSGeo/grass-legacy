@@ -1,6 +1,8 @@
-LIBES = $(IMAGERYLIB) $(GISLIB)
+PGM=i.gensig
+LIBES = $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
+DEPLIBS= $(DEPIMAGERYLIB) $(DEPGISLIB) $(DEPVASKLIB)
 
-$(BIN_ALPHA_INTER)/i.gensig: main.o $(LIBES) $(VASKLIB)	
-	$(CC) -o $@ main.o $(LIBES) $(VASK) $(MATHLIB) $(XDRLIB)
+$(BIN_INTER)/$(PGM): main.o $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ main.o $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES) $(VASKLIB): #
+$(DEPLIBS): #

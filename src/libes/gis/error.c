@@ -45,18 +45,19 @@
 		Bill Hughes
 */
 
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdarg.h>
 #include <time.h>
 #include "gis.h"
 
-#include <stdarg.h>
 
-static int (*error)() = 0;
+/* static int (*error)() = 0; */
+static int (*ext_error)() = 0; /* Roger Bivand 17 June 2000 */
 static int no_warn = 0;
-static int no_sleep = 0;
+static int no_sleep = 1;
 
-extern char *getenv();
 static int print_word (FILE *,char **,int *,int);
 static int print_error(char *,int);
 static int mail_msg (char *,int);
@@ -111,14 +112,15 @@ int G_sleep_on_error (int flag)
 
 int G_set_error_routine ( int (*error_routine)())
 {
-    error = error_routine;
-
+    /* error = error_routine; */
+    ext_error = error_routine; /* Roger Bivand 17 June 2000 */
     return 0;
 }
 
 int G_unset_error_routine ()
 {
-    error = 0;
+    /* error = 0; */
+    ext_error = 0; /* Roger Bivand 17 June 2000 */
 
     return 0;
 }
@@ -129,16 +131,27 @@ static int print_error(char *msg,int fatal)
 
     if (active)
     {
-	fprintf(stderr,"%s: ",fatal?"ERROR":"WARNING");
+	/* fprintf(stderr,"%s: ",fatal?"ERROR":"WARNING");
 	fprintf (stderr, "%s\n", msg);
-	return -1;
+	return -1; */
+	if (ext_error) { /* Roger Bivand 18 June 2000 */
+	    ext_error(msg, fatal);
+	    return -1;
+	}
+	else {
+	    fprintf(stderr,"%s: ",fatal?"ERROR":"WARNING");
+	    fprintf (stderr, "%s\n", msg);
+	    return -1;
+	}
     }
     active = 1;
 
     log_error (msg, fatal);
 
-    if (error)
-	error (msg, fatal);
+    /* if (error)
+	error (msg, fatal); */
+    if (ext_error) /* Roger Bivand 17 June 2000 */
+	ext_error (msg, fatal);
     else
     {
 	char *w;
@@ -168,16 +181,16 @@ static int log_error ( char *msg,int fatal)
 {
     FILE *pwd;
     char cwd[1024];
-    long clock;
+    time_t ticks;
     char *home;
     char *gisbase;
 
 /* get time */
-    clock = time(0);
+    ticks = time(0);
 
 /* get current working directory */
     sprintf(cwd,"?");
-    if (pwd = G_popen ("pwd","r"))
+    if ((pwd = G_popen ("pwd","r")))
     {
 	if (fgets(cwd, sizeof cwd, pwd))
 	{
@@ -191,21 +204,20 @@ static int log_error ( char *msg,int fatal)
     }
 
 /* write the 2 possible error log files */
-    if(gisbase = G_gisbase ())
-	write_error (msg, fatal, gisbase, clock, cwd);
+    if((gisbase = G_gisbase ()))
+	write_error (msg, fatal, gisbase, ticks, cwd);
     home = G__home();
     if (home && gisbase && strcmp (home, gisbase))
-	write_error (msg, fatal, home, clock, cwd);
+	write_error (msg, fatal, home, ticks, cwd);
 
 
     return 0;
 }
 
-static int write_error ( char *msg, int fatal, char *dir, long clock, char *cwd)
+static int write_error ( char *msg, int fatal, char *dir, time_t ticks, char *cwd)
 {
     char logfile[1000];
     FILE *log;
-    char *ctime();
 
     if (dir == 0 || *dir == 0)
 	return 1;
@@ -223,7 +235,7 @@ static int write_error ( char *msg, int fatal, char *dir, long clock, char *cwd)
     fprintf(log,"%-10s %s\n", "program:", G_program_name());
     fprintf(log,"%-10s %s\n", "user:", G_whoami());
     fprintf(log,"%-10s %s\n", "cwd:", cwd);
-    fprintf(log,"%-10s %s\n", "date:", ctime(&clock));
+    fprintf(log,"%-10s %s\n", "date:", ctime(&ticks));
     fprintf(log,"%-10s %s\n", fatal?"error:":"warning:", msg);
     fprintf(log,"-------------------------------------\n");
 

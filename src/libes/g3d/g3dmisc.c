@@ -104,6 +104,7 @@ G3d_length (t)
 
   if (t == G3D_FLOAT) return sizeof (float);
   if (t == G3D_DOUBLE) return sizeof (double);
+  return 0;
 }
 
 int
@@ -116,6 +117,7 @@ G3d_externLength (t)
 
   if (t == G3D_FLOAT) return G3D_XDR_FLOAT_LENGTH;
   if (t == G3D_DOUBLE) return G3D_XDR_DOUBLE_LENGTH;
+  return 0;
 }
 
 /*---------------------------------------------------------------------------*/

@@ -1,7 +1,0 @@
-
-
-map database - A directory storing geographic data.  In GRASS, the
-GRASS database is known by the variable $GISDBASE.  Users can work
-with only those maps stored beneath a specified database, location,
-and mapset during a single GRASS session.
-

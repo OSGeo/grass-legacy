@@ -1,6 +1,6 @@
 #include <curses.h>
 #include "gis.h"
-#include "digit.h"
+#include "Vect.h"
 #include "menu.h"
 #include "ginput.h"
 
@@ -554,14 +554,14 @@ curses_yes_no_default (n, str, def)
 
 /*
 */
-suspend ()
+mysuspend ()
 {
     move (LINES-1, 0);
     refresh ();
     endwin ();
 }
 
-respend ()
+myrespend ()
 {
     crmode ();
     noecho();

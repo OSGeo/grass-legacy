@@ -82,7 +82,7 @@ int draw_image (View *view, int color)
 	R_move_abs (x, y+row);
 	if ((n = I_get_image_row (&group.ref, row)) <= 0)
 	    break;
-	R_RGB_raster (ncols, n, red, grn, blu, 1);
+	R_RGB_raster (ncols, n, red, grn, blu, 0);
     }
     I_close_image (&group.ref);
     R_set_RGB_color (red_colors, grn_colors, blu_colors);

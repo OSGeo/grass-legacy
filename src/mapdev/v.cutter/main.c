@@ -1,5 +1,6 @@
 /**** main.c ****/
 /*
+**  $Id$
 **  Written by David Gerdes  Fall 1992
 **  US Army Construction Engineering Research Lab
 **  Copyright  David Gerdes  USA-CERL  1992
@@ -29,18 +30,23 @@ int output_open = 1;
 
 int main (int argc, char *argv[])
 {
+	struct GModule *module;
     struct ARGS Args;
+    struct Categories *Cat1;
     struct table_base *PTable;
     struct table_base *LTable;
     int newpolys = 0;
     int newlines = 0;
     int tmp;
+    char *dmapset;
+    char buf[64];
 
 
     G_gisinit (argv[0]);
 
-    Do_lines = 1;
-    Do_areas = 1;
+	module = G_define_module();
+	module->description =
+		"Polygon Cookie Cutter  (Boolean AND Overlay).";
 
     parse_args (argc, argv, &Args);
     open_files (&Args, Maps, &Out);
@@ -85,12 +91,6 @@ int main (int argc, char *argv[])
 
     /* Lines */
     if(Do_lines)
-    {
-        if (Maps[B_CODE].n_llines+Maps[B_CODE].n_plines < Maps[B_CODE].n_lines)
-	G_warning("The data map is topologically incomplete. Most probably\nthere are some open area edges. These edges will not appear \nin resulting map, even if they fall within region of interest. \nIf you want these lines preserved please edit data map \nusing v.digit.");
-		
-    }
-    if (Do_lines && (Maps[B_CODE].n_llines > 0 || Maps[B_CODE].n_plines > 0))
     {
 	if (!Quiet)
 	    fprintf (stderr,  "Building line intersect table: ");
@@ -139,6 +139,23 @@ int main (int argc, char *argv[])
 	Vect_close (&Out);	
     }
 
+    /* Category labels copied across */
+
+    Cat1 = (struct Categories *)malloc( sizeof(struct Categories) );
+
+    if( (dmapset = G_find_file( "dig_cats", Args.MapB, "" ) ) == NULL )
+      G_warning( "Unable to find dig_cats file. No category support available.\n" );
+    else {
+      G_read_vector_cats( Args.MapB, dmapset, Cat1 );
+      G_write_vector_cats( Args.Out, Cat1 );
+    }
+
+    if(Do_lines && !Do_areas)
+    {
+        sprintf(buf,"v.support map=%s",Args.Out);
+        system(buf);
+    }
+    
 
     exit (0);
 }

@@ -1,5 +1,0 @@
-
-@man("i.rectify.blk") - An imagery function that ortho-rectifies an
-imagery group file.
-
-(GRASS Imagery Program)

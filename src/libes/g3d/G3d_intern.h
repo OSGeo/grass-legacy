@@ -36,6 +36,7 @@
 
 /*---------------------------------------------------------------------------*/
 
+#ifndef GRASS_G3D_H 
 typedef struct {
 
   char *fileName;
@@ -148,7 +149,7 @@ typedef struct {
      int useMask; /* 1 if mask is used; 0 otherwise */
 
 } G3D_Map;
-
+#endif
 /*---------------------------------------------------------------------------*/
 
 /* global arrays */

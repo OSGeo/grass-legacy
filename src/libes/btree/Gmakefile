@@ -1,3 +1,5 @@
+EXTRA_CFLAGS = $(PICFLAGS)
+
 OBJ = \
 	create.o\
 	find.o\
@@ -6,10 +8,10 @@ OBJ = \
 	rewind.o\
 	update.o
 
-all: $(BTREELIB) #$(LIBDIR)/btree.h
+all: $(DEPBTREELIB) #$(LIBDIR)/btree.h
 
-$(BTREELIB): $(OBJ)
-	$(AR)
+$(DEPBTREELIB): $(OBJ)
+	$(SLIBRULE)
 
 #$(LIBDIR)/btree.h: btree.h
 #	rm -f $@
@@ -18,5 +20,5 @@ $(BTREELIB): $(OBJ)
 
 $(OBJ): #btree.h
 
-try: try.o $(BTREELIB)
+try: try.o $(DEPBTREELIB)
 	$(CC) $(LDFLAGS) try.o $(BTREELIB) -o try

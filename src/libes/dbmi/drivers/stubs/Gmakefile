@@ -31,7 +31,7 @@ OBJ = \
 	update.o
 
 $(LIB): $(OBJ)
-	$(AR)
+	$(LIBRULE)
 
 $(OBJ): $(INCLUDE_DIR)/dbmi.h
 

@@ -2,7 +2,7 @@
 #ifndef lint
 static const char SCCSID[]="@(#)aasincos.c	4.6	93/12/12	GIE	REL";
 #endif
-#include <projects.h>
+#include "projects.h"
 #define ONE_TOL	 1.00000000000001
 #define TOL	0.000000001
 #define ATOL 1e-50

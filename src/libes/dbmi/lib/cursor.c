@@ -1,4 +1,5 @@
 #include "dbmi.h"
+#include <stdlib.h>
 
 void
 db_init_cursor (cursor)
@@ -12,6 +13,7 @@ db_init_cursor (cursor)
     cursor->column_flags = NULL;
 }
 
+int
 db_alloc_cursor_table (cursor, ncols)
     dbCursor *cursor;
     int ncols;

@@ -1,5 +1,0 @@
-
-@man("s.in.ascii") - Converts a GRASS site_lists file in ASCII format to
-binary format.
-
-(GRASS Sites Program)

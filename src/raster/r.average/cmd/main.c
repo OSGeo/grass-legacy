@@ -13,6 +13,7 @@ main (int argc, char *argv[])
     char *me;
     char command[1024];
     char *mapset;
+	struct GModule *module;
     struct Option *basemap, *covermap, *outputmap;
     struct Flag *flag_c;
     struct Categories cats;
@@ -23,6 +24,12 @@ main (int argc, char *argv[])
     FILE *fd1, *fd2;
 
     G_gisinit(me=argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Finds the average of values in a cover map within "
+		"areas assigned the same category value in a "
+		"user-specified base map.";
 
     basemap = G_define_option();
     basemap->key        = "base";

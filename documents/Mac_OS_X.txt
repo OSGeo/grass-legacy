@@ -1,0 +1,15 @@
+Compiling on Mac OS X:
+see REQUIREMENTS file too. 
+
+you need: 
+ 
+ - Mac OS X system
+ - some of the tools from the REQUIREMENTS listing are missing:
+ - developer tools: http://developer.apple.com/membership/online.html
+   (join the "Online" ADC for free)
+
+ - Mac OS X system X-Windows Library:
+   http://www.darwinfo.org/pub/darwin/X11/X11R6-darwin.tar.gz
+
+   follow the instructions for X-Windows Library installation:
+   http://www.darwinfo.org/howto/x.shtml

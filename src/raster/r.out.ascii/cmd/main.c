@@ -1,74 +1,137 @@
 #include <string.h>
 #include "gis.h"
+#include <math.h>
 #include <stdio.h>
+#include "localproto.h"
+
+/*
+ * $Id$
+ *
+ ****************************************************************************
+ *
+ * MODULE:     r.out.ascii
+ * AUTHOR(S):  Michael Shapiro
+ *             Markus Neteler: added SURFER support
+ *             Roger Miller added MODFLOW support and organization
+ * PURPOSE:    r.out.ascii: writes ASCII GRID file
+ * COPYRIGHT:  (C) 2000 by the GRASS Development Team
+ *
+ *             This program is free software under the GNU General Public
+ *   	    	License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	for details.
+ *
+ *****************************************************************************/
 
 int main(int argc, char *argv[])
 {
-    void *raster, *ptr;
-    /*
-    char  *null_row;
-    */
     RASTER_MAP_TYPE out_type, map_type;
     char *name; 
     char *mapset;
     char *null_str;
-    char cell_buf[300];
+    char surfer_null_str[13]={"1.70141e+038"};
     int fd;
-    int row,col;
-    int nrows, ncols, i, dp;
-    int number;
+    int nrows, ncols, dp, width;
+    int do_stdout,rc;
+    FILE *fp;
+    struct GModule *module;
     struct
     {
 	struct Option *map ;
+	struct Option *output ;
 	struct Option *dp ;
+        struct Option *width ;
 	struct Option *null ;
     } parm;
     struct
     {
         struct Flag *noheader;
+        struct Flag *surfer;
+        struct Flag *modflow;
         struct Flag *int_out;
     } flag;
 
     G_gisinit(argv[0]);
 
+    module = G_define_module();
+    module->description =
+		"Converts a raster map layer into an ASCII text file.";
+
 /* Define the different options */
 
     parm.map = G_define_option() ;
-    parm.map->key        = "map";
+    parm.map->key        = "input";
     parm.map->type       = TYPE_STRING;
     parm.map->required   = YES;
     parm.map->gisprompt  = "old,cell,raster" ;
     parm.map->description= "Name of an existing raster map" ;
 
+    parm.output = G_define_option() ;
+    parm.output->key        = "output";
+    parm.output->type       = TYPE_STRING;
+    parm.output->required   = NO;
+    parm.output->gisprompt  = "any,cell,raster" ;
+    parm.output->description= "Name of an output ASCII grid map (use out=- for stdout)";
+
     parm.dp = G_define_option() ;
     parm.dp->key        = "dp";
     parm.dp->type       = TYPE_INTEGER;
     parm.dp->required   = NO;
-    parm.dp->answer     = "6";
-    parm.dp->description= "number of decimal places" ;
+    parm.dp->description= "Number of significant digits (floating point only)" ;
+
+    parm.width = G_define_option() ;
+    parm.width->key        = "width" ;
+    parm.width->type       = TYPE_INTEGER;
+    parm.width->required   = NO;
+    parm.width->description="Number of values printed before wrapping a line" ;
 
     parm.null = G_define_option() ;
     parm.null->key        = "null";
     parm.null->type       = TYPE_STRING;
     parm.null->required   = NO;
     parm.null->answer     = "*";
-    parm.null->description= "Char string to represent no data cell" ;
+    parm.null->description= "String to represent null cell (GRASS grid only)" ;
 
     flag.noheader = G_define_flag();
     flag.noheader->key = 'h';
     flag.noheader->description = "Suppress printing of header information";
 
+    flag.surfer = G_define_flag();
+    flag.surfer->key = 's';
+    flag.surfer->description = "Write SURFER (Golden Software) ASCII grid";
+
+    flag.modflow = G_define_flag();
+    flag.modflow->key = 'M';
+    flag.modflow->description = "Write MODFLOW (USGS) ASCII array";
+
     flag.int_out = G_define_flag();
     flag.int_out->key = 'i';
-    flag.int_out->description = "Output integer category values, not cell values";
+    flag.int_out->description = "Force output of integer values";
 
     if (G_parser(argc, argv))
        	exit (-1);
 
-    sscanf(parm.dp->answer, "%d", &dp);
-    if(dp>20 || dp < 0)
-       G_fatal_error("dp has to be from 0 to 20");
+    if(parm.dp->answer)
+    {
+        if(sscanf(parm.dp->answer,"%d",&dp)!=1)
+           G_fatal_error("failed to interpret dp as an integer\n");
+        if(dp>20 || dp < 0)
+           G_fatal_error("dp has to be from 0 to 20\n");
+    }
+
+    width=10;
+    if(parm.width->answer)
+    {
+        if(sscanf(parm.width->answer,"%d",&width)!=1)
+            G_fatal_error("failed to interpret width as an integer\n");
+    }
+
     null_str = parm.null->answer;
+
+    if (flag.surfer->answer && flag.noheader->answer)
+    	G_fatal_error("Both -s and -h doesn't make sense.");
+
+    if (flag.surfer->answer && flag.modflow->answer)
+        G_fatal_error("Use -M or -s, not both.");
 
     name = parm.map->answer;
     mapset = G_find_cell2 (name, "");
@@ -78,115 +141,61 @@ int main(int argc, char *argv[])
 	 out_type = map_type;
     else out_type = CELL_TYPE;
 
-    if (mapset == NULL)
+    if(!parm.dp->answer)
     {
-        char msg[100];	
-		
-	sprintf (msg, "%s: <%s> cellfile not found\n", G_program_name(), name);
-		G_fatal_error (msg);
-        exit(1);
+        dp=6;
+        if(out_type==DCELL_TYPE)dp=16;
     }
 
-    fd = G_open_cell_old (name, mapset);
-    if (fd < 0)
-    	exit(1);
-
-/*
-    null_row = G_allocate_null_buf();
-    */
-    raster =  G_allocate_raster_buf(out_type);
+    if (mapset == NULL)
+    {
+        G_fatal_error ("Cell file [%s] not found\n",name);
+    }
 
     nrows = G_window_rows();
     ncols = G_window_cols();
 
-    if (!flag.noheader->answer)
+/* open ascii file for writing or use stdout */
+    if(parm.output->answer && strcmp("-",parm.output->answer)!=0)
     {
-	struct Cell_head region;
-	char buf[128];
-
-	G_get_window (&region);
-	G_format_northing (region.north, buf, region.proj);
-	fprintf (stdout,"north: %s\n", buf);
-	G_format_northing (region.south, buf, region.proj);
-	fprintf (stdout,"south: %s\n", buf);
-	G_format_easting (region.east, buf, region.proj);
-	fprintf (stdout,"east: %s\n", buf);
-	G_format_easting (region.west, buf, region.proj);
-	fprintf (stdout,"west: %s\n", buf);
-
-	fprintf (stdout,"rows: %d\n", region.rows);
-	fprintf (stdout,"cols: %d\n", region.cols);
-
+        if(NULL == (fp = fopen(parm.output->answer, "w")))
+           G_fatal_error("Not able to open file [%s]", parm.output->answer);
     }
-    
+    else
+       fp = stdout;
+
+/* open raster file */
     fd = G_open_cell_old (name, mapset);
     if (fd < 0)
         exit(1);
 
-    for (row = 0; row < nrows; row++)
+/* process the requested output format */
+    if (flag.surfer->answer)
     {
-	if (G_get_raster_row(fd, raster, row, out_type) < 0)
-             exit(1);
-	/*
-	if (G_get_null_value_row(fd, null_row, row) < 0)
-	     exit(1);
-	     */
-        for (col = 0, ptr = raster; col < ncols; col++, 
-		       ptr = G_incr_void_ptr(ptr, G_raster_size(out_type))) 
+        if(!flag.noheader->answer)
         {
-           if(!G_is_null_value(ptr, out_type))
-	   {
-               if(out_type == CELL_TYPE)
-	           fprintf (stdout,"%d", *((CELL *) ptr));
-
-               else if(out_type == FCELL_TYPE)
-	       {
-	           sprintf(cell_buf, "%.*f", dp, *((FCELL *) ptr));
-	           G_trim_decimal (cell_buf);
-	           fprintf (stdout,"%s", cell_buf);
-	       }
-               else if(out_type == DCELL_TYPE)
-	       {
-	           sprintf(cell_buf, "%.*f", dp, *((DCELL *) ptr));
-	           G_trim_decimal (cell_buf);
-	           fprintf (stdout,"%s", cell_buf);
-	       }
-            }
-            else
-                fprintf (stdout,"%s", null_str);
-            fprintf (stdout," ");
+            if(writeGSheader(fp,name,mapset))
+               G_fatal_error ("Can't read fp range for [%s]\n",name);
         }
-	fprintf (stdout,"\n");
-	/*
-        for (col = 0; col < ncols; col++)
-            fprintf (stdout,"%d ", null_row[col]);
-	fprintf (stdout,"\n");
-	*/
+        rc=write_GSGRID(fd,fp,nrows,ncols,out_type,dp,surfer_null_str,width);
     }
+    else if (flag.modflow->answer)
+    {
+        if(!flag.noheader->answer)writeMFheader(fp,dp,width,out_type);
+        rc=write_MODFLOW(fd,fp,nrows,ncols,out_type,dp,width);
+    }
+    else
+    {
+        if(!flag.noheader->answer)writeGRASSheader(fp);
+        rc=write_GRASS(fd,fp,nrows,ncols,out_type,dp,null_str);
+    }
+    if(rc)
+    {
+        G_fatal_error("Read failed at row [%d]\n",rc);
+    }
+  
+/* tidy up and go away */
     G_close_cell(fd);
+    fclose(fp);
     exit(0);
 }
-
-int set_type( char *str, RASTER_MAP_TYPE *out_type)
-{
-   char msg[100];
-   char *ch;
-
-   ch = str;
-   if(*ch != '%')
-   {
-        sprintf(msg, "wrong format: %s", str);
-        G_fatal_error(msg);
-   }
-   while (*(++ch));
-   ch--;
-   if(*ch=='d' || *ch=='i' || *ch=='o' || *ch=='u' || *ch=='x' || *ch=='X')
-       *out_type = CELL_TYPE;
-   else if(*ch=='f' || *ch=='e' || *ch=='E' || *ch=='g' || *ch=='G')
-       *out_type = DCELL_TYPE;
-   /*
-       *out_type = FCELL_TYPE;
-   */
-
-    return 0;
-}       

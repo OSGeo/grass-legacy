@@ -1,3 +1,19 @@
+/*
+****************************************************************************
+*
+* MODULE:       v.transform
+* AUTHOR(S):    See below also.
+*               Eric G. Miller <egm2@jps.net>
+* PURPOSE:      To transform a vector layer's coordinates via a set of tie
+*               points.
+* COPYRIGHT:    (C) 2002 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
+
 
 /*
 *  This takes an ascii digit file in one coordinate system and converts
@@ -6,46 +22,38 @@
 *
 *  Written during the ice age of Illinois, 02/16/90, by the GRASS team, -mh.
 *
-** Modified by Dave Gerdes  1/90  for dig_head stuff
-**
-** converted to grass4.0--new parser installed 1/91 - dks
-*/
-
-/*
-*  Current is the existing file to be converted.
-*  Trans is the new transformed file.
+*  Modified by Dave Gerdes  1/90  for dig_head stuff
+*  Modified by Radim Blazek to work on binary files
+*
 */
 
 #define MAIN
-#ifdef OLD
-#define USAGE	"[mapin=name] [mapout=name] [coord=name] [verbose=(yes,no)]"
-#endif
 
 #include <string.h>
-#include  "trans.h"
+#include "trans.h"
 #include "gis.h"
-#include "dig_head.h"
-#include "digit.h"
+#include "Vect.h"
 #include "local_proto.h"
-
-static  char  *Prog_name ;
 
 int main (int argc, char *argv[])
 {
 
 	struct dig_head dhead;
-	struct  file_info  Current ;
-	struct  file_info  Trans ;
-	struct  file_info  Coord ;
+	struct file_info  Current, Trans, Coord ;
+	struct GModule *module;
 	struct Option *old, *new, *pointsfile;
 	struct Flag *quiet_flag;
-
-#ifdef OLD
-	extern int stash_away() ;
-	extern int my_help() ;
-#endif
+	char   *mapset, mon[4], date[40], buf[1000];
+	struct Map_info Old, New;
+	int    day, yr; 
+	
 
 	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Transforms an vector map layer from one "
+		"coordinate system into another coordinate system.";
 
 	quiet_flag = G_define_flag();
 	quiet_flag->key		= 'y';
@@ -56,16 +64,16 @@ int main (int argc, char *argv[])
         old->type			= TYPE_STRING;
         old->required			= YES;
         old->multiple			= NO;
-        old->gisprompt			= "old,dig_ascii,ascii";
-        old->description		= "ascii vector map to be transformed";
+        old->gisprompt			= "old,dig,vector";
+        old->description		= "vector map to be transformed";
         
         new = G_define_option();
         new->key			= "output";
         new->type			= TYPE_STRING;
         new->required			= YES;
         new->multiple			= NO;
-        new->gisprompt			= "new,dig_ascii,ascii";
-        new->description		= "resultant ascii vector map";
+        new->gisprompt			= "new,dig,vector";
+        new->description		= "resultant vector map";
 
         pointsfile = G_define_option();
         pointsfile->key			= "pointsfile";
@@ -74,82 +82,78 @@ int main (int argc, char *argv[])
         pointsfile->multiple		= NO;
         pointsfile->description		= "file holding transform coordinates";
         
-    if (G_parser (argc, argv))
-	exit (-1);
-    strcpy (Current.name, old->answer);
-    strcpy (Trans.name, new->answer);
-    if (pointsfile->answer != NULL)
-	strcpy (Coord.name, pointsfile->answer);
-    else
-	Coord.name[0] = '\0';
-    
-    /*DEBUG*/
-/*
-    if (!*Coord.name)
-      fprintf (stderr, "coord = blank");
-    else
-      fprintf (stderr, "coord.name[0] = %c\n", *Coord.name);
-*/
-
-    if (!*Current.name  || !*Trans.name )
-    {
-        fprintf (stderr, "\n%s: Command line error: missing input or output name.\n\n", argv[0]);
-	G_usage();
-        exit (-1);
-    }
-
-	Prog_name = argv[0] ;
-
-
-/* Check command line */
-#ifdef OLD
-	set_default_options( &Current, &Trans, &Coord, &Flags ) ;
-
-	if ( argc > 1 )
-	{
-
-		G_set_parse_command_usage( my_help) ;
-		if (G_parse_command(argc, argv, com_keys, stash_away))
-		{
-			fprintf(stderr,"Usage: %s %s\n", argv[0], USAGE) ;
-			pr_options() ;
-			exit(-1) ;
-		}
+	if (G_parser (argc, argv))
+	    exit (-1);
+	
+	strcpy (Current.name, old->answer);
+	strcpy (Trans.name, new->answer);
+	
+	if (pointsfile->answer != NULL)
+	    strcpy (Coord.name, pointsfile->answer);
+	else
+	    Coord.name[0] = '\0';
+	
+	/* open coord file */
+        if ( Coord.name[0] != '\0' ){
+            if ( (Coord.fp = fopen(Coord.name, "r"))  ==  NULL) 
+	        G_fatal_error ("Could not open file with coordinates : %s\n", Coord.name) ;
 	}
-#endif
+	
+	/* open vectors */
+	if ( (mapset = G_find_file2 ("dig", old->answer, "")) == NULL)
+	    G_fatal_error ("Could not find input vector %s\n", old->answer);
+	
+        if( Vect_open_old(&Old, old->answer, mapset) < 1)
+            G_fatal_error("Could not open input vector %s\n", old->answer);
 
-/*let's get to work*/
-
-	open_vect_files ( &Current, &Trans, &Coord ) ;
-
-	/*  read the header first, so that if there any errors reading the
-	*   the header they don't have to type in the numbers before
-        *   finding out.
-	*/
-
-	if ( 0 > dig_read_head_ascii(Current.fp, &dhead) )
-	{
-		fprintf( stderr, "\nERROR: Could not read the header information in the ascii digit file: %s .\n\n",  Current.full_name ) ;
-		exit (-1) ;
+	if (0 > Vect_open_new (&New, new->answer)) {
+	    Vect_close (&Old);
+            G_fatal_error("Could not open output vector %s\n", new->answer);
 	}
 
+
+        /* copy and set header */
+	Vect_copy_head_data(&Old.head, &New.head);
+
+        sprintf(date,"%s",G_date());
+        sscanf(date,"%*s%s%d%*s%d",mon,&day,&yr);
+	sprintf(date,"%s %d %d",mon,day,yr);
+        strcpy( New.head.date, date);
+	
+        strcpy( New.head.your_name, G_whoami());
+
+        sprintf (buf, "transformed from %s", old->answer);
+        /* truncate if string > DIG_MAP_NAME_LEN-1 */
+        buf[DIG_MAP_NAME_LEN-1] = '\0';
+	strcpy( New.head.map_name, buf);
+	
+        New.head.orig_scale  =  0.0 ;
+	New.head.plani_zone  =  0 ;
+	New.head.map_thresh  =  0.0 ;
+	New.head.N  =  0.0 ;
+	New.head.S  =  0.0 ;
+	New.head.E  =  0.0 ;
+	New.head.W  =  0.0 ;
+	
 	create_transform_conversion( &Coord, quiet_flag->answer);
 
-	transform_head_info(&dhead) ;
-	dig_write_head_ascii( Trans.fp, &dhead) ;
-
-
-	if (!quiet_flag->answer)
-		fprintf (stdout,"\n\n Now transforming the vectors ...") ;
-	transform_digit_file( Current.fp, Trans.fp) ;
-
-	fflush(Trans.fp) ;
 	if (Coord.name[0] != '\0')
 		fclose( Coord.fp) ;
-	fclose( Current.fp) ;
-	fclose( Trans.fp) ;
+	
+	if (!quiet_flag->answer)
+	    fprintf (stdout,"\n\n Now transforming the vectors ...") ;
+	
+	transform_digit_file( &Old, &New) ;
+
+	Vect_close (&Old);
+	Vect_close (&New);
+
 	if (!quiet_flag->answer)
 		fprintf (stdout,"\n '%s' has finished the transformation of the vectors.\n", argv[0]) ;
+
+	/* set mapset */
+	Current.mapset = mapset;
+	Trans.mapset = G_mapset();
 
 	if ( open_att_files ( &Current, &Trans) )
 	{
@@ -168,25 +172,9 @@ int main (int argc, char *argv[])
 	fclose( Current.fp) ;
 	fclose( Trans.fp) ;
 
+        trans_dig_cats (Current.name, Current.mapset, Trans.name);
+
 	exit(0) ;
 
 }
 
-
-#ifdef OLD
-int 
-my_help (void)
-{
-	/*G_parse_command_usage( Prog_name, com_keys, USAGE_SHORT) ;*/
-}
-
-int 
-pr_options (void)
-{
-	fprintf(stderr,"\n    Options:\n") ;
-	fprintf(stderr,"     mapin  - name of existing map to transform.\n") ;
-	fprintf(stderr,"     mapout - name of transformed map.\n") ;
-	fprintf(stderr,"     coord  - name of file holding transformation coordinates.\n") ;
-	fprintf(stderr,"     verbose  - print the stats or not (default is yes).\n") ;
-}
-#endif

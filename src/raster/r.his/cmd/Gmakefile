@@ -1,0 +1,10 @@
+PGM=r.his
+OFILES =  main.o his.o
+
+LIBES=$(GISLIB)
+DEPLIBS=$(DEPGISLIB)
+
+$(BIN_CMD)/$(PGM): $(OFILES) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(DEPGISLIB): #

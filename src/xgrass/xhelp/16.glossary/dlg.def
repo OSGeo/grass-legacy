@@ -1,7 +1,0 @@
-
-
-Digital Line Graph (DLG) - A @glossary("digital",16.glossary/digdata.def) file containing a series of
-x,y coordinates describing boundaries, drainage lines, transportation
-routes, and other linear features, organized by USGS quadrangle.
-The digital equivalent of the linear hydrographic and cultural data
-on a paper topographic base map.

@@ -51,7 +51,8 @@ main(argc, argv)
 	east0 = north0 = 0.0;
     }
 
-    R_open_driver();
+    if (R_open_driver() != 0)
+	    G_fatal_error ("No graphics device selected");
     setup();
     where(east0, north0, drag->answer);
     R_close_driver();

@@ -1,0 +1,63 @@
+Date: Wed, 31 May 2000 14:09:57 -0700
+From: "Hall, Steve" <steve.hall@lmco.com>
+Subject: RE: r3.showdspf and colors
+To: "'Markus Neteler'" <neteler@geog.uni-hannover.de>
+
+Markus,
+
+> After starting r3.showdspf from within Grass with no command-line
+> arguments you should get the following prompt:> "Name of existing color
+> table".
+> 
+> After getting this prompt, enter the name of a file located in the current
+> working directory that is created manually.  That file should have lines
+> similar to the ones shown below:
+> 
+> .000010:0:0:255
+> 0.183342:0:255:255
+> 0.366673:0:255:0
+> 0.550005:255:255:0
+> 0.733337:255:0:0
+> 0.916668:55:0:255
+> 1.100000:55:55:255
+> 
+> Each lines have 4 fields separated by colons. 
+> Field 1 contains a threshold value
+> Field 2 contains a red color component where 0 <= red <= 255
+> Field 3 contains a green color component where 0 <= green <= 255
+> Field 4 contains a blue color component where 0 <= blue <= 255
+> 
+> I hope that this helps.
+> 
+Steve
+
+
+> ----------
+> From: 	Markus Neteler
+> Sent: 	Tuesday, May 30, 2000 11:11 AM
+> To: 	steve.hall@lmco.com
+> Subject: 	r3.showdspf and colors
+> 
+> Steve,
+> 
+> currently I am getting more familiar with r3.*.
+> A related question I have, if you allow:
+> How can I manage colors in r3.showdspf?
+> As far as I know a r3.colors is missing.
+> 
+> If you have an idea, please let me know.
+> 
+> Many thanks in advance
+> 
+>   Markus
+> 
+> PS: r3.showdspf is running pretty well!
+> 
+> -- 
+> Dipl.-Geogr. Markus Neteler *  University of Hannover
+> Institute of Physical Geography and Landscape Ecology
+> Schneiderberg 50 * D-30167 Hannover * Germany
+> Tel: ++49-(0)511-762-4494  Fax: -3984
+> 
+> 
+

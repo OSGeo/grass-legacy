@@ -1,6 +1,6 @@
 /* %W%   %G% */
 /* @(#)main.c	        1.0   02/27/91 
-/*    created - RL.Glenn, SCS 
+*    created - RL.Glenn, SCS 
 *     to allow names or categories for reclassification
 *     to allow file input
 */

@@ -48,9 +48,8 @@ int drawcell(view)
     R_standard_color (I_COLOR_BLUE);
     Outline_box (top, top+nrows-1, left, left+ncols-1);
 
-    {char *getenv();
-     if (getenv("NO_DRAW")) return 1;
-    }
+    if (getenv("NO_DRAW"))
+        return 1;
 
     fd = G_open_cell_old (view->cell.name, view->cell.mapset);
     if (fd < 0)

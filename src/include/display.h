@@ -7,10 +7,6 @@
 int D_clip(register double, register double, register double, register double, register double *, register double *, register double *, register double *);
 /* cnversions.c */
 int D_do_conversions(struct Cell_head *, int, int, int, int);
-double D_get_u_to_a_yconv(void);
-double D_get_u_to_a_xconv(void);
-double D_get_a_to_d_xconv(void);
-double D_get_a_to_d_yconv(void);
 double D_get_u_to_d_xconv(void);
 double D_get_u_to_d_yconv(void);
 double D_get_u_west(void);
@@ -53,7 +49,18 @@ int ident_win(char *);
 /* list.c */
 int D_set_cell_name(char *);
 int D_get_cell_name(char *);
+int D_set_dig_name(char *);
+int D_get_dig_name(char *);
+int D_set_site_name(char *);
+int D_get_site_name(char *);
+int D_add_to_cell_list(char *);
+int D_get_cell_list(char ***, int *);
+int D_add_to_dig_list(char *);
+int D_get_dig_list(char ***, int *);
+int D_add_to_site_list(char *);
+int D_get_site_list(char ***, int *);
 int D_add_to_list(char *);
+int D_get_list(char ***, int *);
 int D_clear_window(void);
 int D_claim_offset_is(int);
 int D_offset_is(int *);
@@ -64,10 +71,28 @@ int D_popup(int, int, int, int, int, int, char *[]);
 /* raster.c */
 int D_draw_raster(int, void *, struct Colors *, RASTER_MAP_TYPE);
 int D_draw_d_raster(int, DCELL *, struct Colors *);
-int D_draw_f_raster(int, DCELL *, struct Colors *);
-int D_draw_c_raster(int, DCELL *, struct Colors *);
+int D_draw_f_raster(int, FCELL *, struct Colors *);
+int D_draw_c_raster(int, CELL *, struct Colors *);
 int D_draw_cell(int, CELL *, struct Colors *);
 int D_cell_draw_setup(int, int, int, int);
+/* raster_rgb.c */
+int D_draw_raster_RGB(int, void *, void *, void *,
+		      struct Colors *, struct Colors *, struct Colors *,
+		      RASTER_MAP_TYPE, RASTER_MAP_TYPE, RASTER_MAP_TYPE);
+int D_draw_d_raster_RGB(int, DCELL *, DCELL *, DCELL *,
+			struct Colors *, struct Colors *, struct Colors *);
+int D_draw_f_raster_RGB(int, FCELL *, FCELL *, FCELL *,
+			struct Colors *, struct Colors *, struct Colors *);
+int D_draw_c_raster_RGB(int,  CELL *,  CELL *,  CELL *,
+			struct Colors *, struct Colors *, struct Colors *);
+int D_draw_cell_RGB(int, CELL *, CELL *, CELL *,
+		    struct Colors *, struct Colors *, struct Colors *);
+int D_cell_draw_setup_RGB(int, int, int, int);
+int D_raster_of_type_RGB(void *, void *, void *,
+			 int, int,
+			 struct Colors *, struct Colors *, struct Colors *,
+			 RASTER_MAP_TYPE, RASTER_MAP_TYPE, RASTER_MAP_TYPE);
+void D_set_colors_RGB(void);
 /* raster2.c */
 int D_set_overlay_mode(int);
 int D_set_colors(struct Colors *);

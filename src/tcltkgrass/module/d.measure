@@ -1,0 +1,8 @@
+interface_build {
+    {d.measure -s} 0
+    {Measures lengths and areas.}
+    {entry c1 {Line color1:} 0 color}
+    {entry c2 {Line color2:} 0 color}
+    {checkbox -m {Use metric units only.} "" -m}
+    {checkbox -k {Use kilometers.} "" -k}
+}

@@ -84,21 +84,24 @@ process_new (FILE *in, char *file, char *upd_file)
                     ok = show_a_label(tmp_fname);
                     if (!ok)  /* clear label from the screen */
                       {
-                      strcpy (color,config.color);
-                      strcpy (background,config.background);
-                      strcpy (border,config.border);
-                      strcpy (config.color,"black");
-                      strcpy (config.background,"black");
-                      strcpy (config.border,"black");
-                      tmp = fopen(tmp_fname,"w");  /* open temp file */ 
-                      update(tmp);                /* write label info to it */ 
-                      fclose(tmp);
-                      chk_status = 0;
-                      show_a_label(tmp_fname);
-                      chk_status = 1;
-                      strcpy (config.color,color);
-                      strcpy (config.background,background);
-                      strcpy (config.border,border);
+		      /* Don't do this do_label already handles it better
+		       * 
+                      	strcpy (color,config.color);
+                      	strcpy (background,config.background);
+                      	strcpy (border,config.border);
+                      	strcpy (config.color,"black");
+                      	strcpy (config.background,"black");
+                      	strcpy (config.border,"black");
+                      	tmp = fopen(tmp_fname,"w");   
+                      	update(tmp);                 
+                      	fclose(tmp);
+                      	chk_status = 0;
+                      	show_a_label(tmp_fname);
+                      	chk_status = 1;
+                      	strcpy (config.color,color);
+                      	strcpy (config.background,background);
+                      	strcpy (config.border,border);
+		       */
 		      ok = 1;
                       }
                     else

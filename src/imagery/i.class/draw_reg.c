@@ -28,6 +28,7 @@ int draw_region (void)
     }
     Region.area.define = 1;
     add_point(x, y);
+    R_stabilize();
   }
   /* if the area is completed have to delete before adding */
   else if (Region.area.completed) {
@@ -37,6 +38,7 @@ int draw_region (void)
       if (button==RIGHT_BUTTON) return(0);
       if (button==MIDDLE_BUTTON) {
 	del_point();
+	R_stabilize();
 	if (NP<=0) return(0);
       }
     }
@@ -51,10 +53,12 @@ int draw_region (void)
     case LEFT_BUTTON:
       if (!In_view(Region.view, x, y)) continue;
       add_point(x,y);
+      R_stabilize();
       break;
     case MIDDLE_BUTTON:
       if (!In_view(Region.view, x, y)) continue;
       del_point();
+      R_stabilize();
       if (NP<=0) return(0);
       break;
     case RIGHT_BUTTON:

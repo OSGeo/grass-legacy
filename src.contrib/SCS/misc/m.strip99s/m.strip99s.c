@@ -19,6 +19,7 @@ int main( int argc, char **argv)
 	char *aptr;
 	struct Option *inopt,
 		      *outopt;
+	struct GModule *module;	      
 
 	inopt = G_define_option();
 	inopt->key	   = "input";
@@ -31,6 +32,14 @@ int main( int argc, char **argv)
 	outopt->description  = "output file";
 	outopt->type	     = TYPE_STRING;
 	outopt->required     = YES;
+	
+	G_gisinit (argv[0]);
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+	"strips the no data, '99', areas out and replaces them with spaces "
+	"(after raster import with r.in.miads)";
 
 	if(G_parser(argc,argv))
 	  exit(-1);

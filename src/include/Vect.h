@@ -1,6 +1,6 @@
 #ifndef GRASS_VECT_H
 #define GRASS_VECT_H
-#include "Digit.h"
+#include "vect/digit.h"
 
 /*   ANSI prototypes for the libes/vect32/Vlib functions */
 struct dig_head *Vect__get_default_out_head (void);
@@ -27,6 +27,7 @@ char *Vect__P_init ( struct Map_info *, char *, char *) ;
 char *Vect__P_init_new_plus ( struct Map_info *, char *);
 int V2_num_lines ( struct Map_info *);
 int V2_num_areas ( struct Map_info *);
+int V2_num_islands ( struct Map_info *);
 int V2_line_att ( struct Map_info *, int );
 int V2_area_att ( struct Map_info *, int );
 int V2_get_area ( struct Map_info *, int , P_AREA **);

@@ -1,10 +1,10 @@
 /* infer --- inference engine */
 
-# include <stdio.h>
+#include <stdio.h>
 #include <string.h>
 #include <errno.h>
-# include <ctype.h>
-# include "infer.h"
+#include <ctype.h>
+#include "infer.h"
 
 # define TRUTHVAL(E)    ((E->type & NOT) ? (E->str->val == TRUE) ? FALSE : TRUE : (E->str->val))
 
@@ -22,11 +22,20 @@ int
 main (int argc, char **argv)
 {
 	FILE *fp;
+	struct GModule *module;
 	struct Flag *flag1 ;
 	struct Flag *flag2 ;
 	struct Option *opt1 ;
 
 	SP = NULL ;
+
+	G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Outputs a raster map layer whose category values "
+		"represent the application of user-specified criteria "
+		"(rules statements) to other raster map layers' category values.";
 
 	/* Define the different options */
 
@@ -45,7 +54,6 @@ main (int argc, char **argv)
 	flag2 = G_define_flag() ;
 	flag2->key         = 't' ;
 	flag2->description = "test" ;
-	G_gisinit(argv[0]);
 
 	if (G_parser(argc, argv))
 		exit(-1);

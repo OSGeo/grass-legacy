@@ -1,29 +1,21 @@
-PBIN = /usr/tmp 
 PGM    = v.surf.rst
-HOME = $(BIN_CONTRIB_CMD)
-
-#required for Windows/Cygnus (12/99)
-#XDRLIB = /usr/local/lib/librpclib.a
 
 TREEDIR = $(SRC)/libes/rst_gmsl/tree
-TREELIB = $(TREEDIR)/libtree.a
+TREELIB = $(LIBDIR)/rst_gmsl/tree/libtree.a
 DATADIR = $(SRC)/libes/rst_gmsl/data
-DATALIB = $(DATADIR)/libdata.a
+DATALIB = $(LIBDIR)/rst_gmsl/data/libdata.a
 INTERPFDIR = $(SRC)/libes/rst_gmsl/interp_float
-INTERPFLIB = $(INTERPFDIR)/libinterpfl.a
+INTERPFLIB = $(LIBDIR)/rst_gmsl/interp_float/libinterpfl.a
 
-EXTRA_CFLAGS =  -I$(TREEDIR) -I$(DATADIR) -I$(INTERPFDIR) $(VECT_INCLUDE)
-#EXTRA_CFLAGS =  $(VECT_INCLUDE)
+EXTRA_CFLAGS =  -I$(TREEDIR) -I$(DATADIR) -I$(INTERPFDIR)
 
 LIST   =  main.o 
 SRCS   =  main.c 
 
 LIBES = $(DATALIB) $(TREELIB) $(INTERPFLIB) $(BITMAPLIB) $(LINKMLIB) $(VECTLIB) $(GISLIB) $(DATETIMELIB)
- 
-$(HOME)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST)  $(LIBES) $(XDRLIB) $(MATHLIB) 
+DEPLIBS= $(DATALIB) $(TREELIB) $(INTERPFLIB) $(DEPBITMAPLIB) $(DEPLINKMLIB) $(DEPVECTLIB) $(DEPGISLIB) $(DEPDATETIMELIB)
 
-saber_src:
-	load $(CFLAGS) $(LDFLAGS) $(SRCS)  $(LIBES) 
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(LIST)  $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

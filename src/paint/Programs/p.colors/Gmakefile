@@ -1,12 +1,11 @@
-INTERFACE = $(SRC)/paint/Interface/applib/lib.a
+PGM=p.colors
+INTERFACE = ../../Interface/applib/lib.a
 LIST =	main.o
 EXTRA_CFLAGS = -I../../
 
-####################################################################
-$(BIN_MAIN_INTER)/p.colors: $(LIST) $(INTERFACE) $(GISLIB) $(VASKLIB)
-	$(CC) $(LDFLAGS) $(LIST) $(INTERFACE) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB) -o $@
+$(BIN_INTER)/$(PGM): $(LIST) $(INTERFACE) $(DEPGISLIB) $(DEPVASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(INTERFACE) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
-####################################################################
 $(INTERFACE):	# in case the interface changes
-$(GISLIB):	# in case the library changes
-$(VASKLIB):	# in case the library changes
+$(DEPGISLIB):	# in case the library changes
+$(DEPVASKLIB):	# in case the library changes

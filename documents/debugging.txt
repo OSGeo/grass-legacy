@@ -1,0 +1,150 @@
+$Id$
+
+Contents:
+---------
+
+ 1. How to debug GRASS modules and libraries with GNU gdb and DDD
+ 2. Debugging tools
+ 3. Shell debugging 
+ 4. Library browsing
+ 5. Library dependencies with shared libraries
+
+
+------------------------------------------------------------------------
+
+1. How to debug GRASS modules and libraries with GNU gdb and DDD
+
+Re-compile the modules and libraries you want to debug with the -g switch to
+the gcc compiler and without the -s switch to the linker:
+
+1. Do a usual ./configure with options for your platform/installation.
+   Now "make pre-compile" and then  
+   edit src/CMD/head/head.$ARCH for the above configuration:
+	COMPILE_FLAGS = -g -O2 # add -g flag here if missing
+	LD_FLAGS = -s # remove -s flag here
+
+2. Run "make clean" from the sorce code root directory
+
+3. Run "make" to recompile the code
+
+Now you can start a grass5 session, start up the DDD debugger (ddd&) and
+select the module to debug. The binary in $GISBASE/bin/ is not what you want
+to look at, as this only switches between the interactive version and the
+command line version of the module in most cases. The command line version
+of the module is in $GISBASE/etc/bin/cmd, the interactive version in
+$GISBASE/etc/bin/inter. 
+
+-- 
+Andreas Lange, andreas.lange@rhein-main.de
+
+------------------------------------------------------------------------
+
+2. Debugging tools
+
+ gdb:     GNU debugger. GDB, the GNU Project debugger, allows you to see
+          what is going on 'inside' another program while it executes -- 
+          or what another program was doing at the moment it crashed.
+          http://sources.redhat.com/gdb/
+
+   Start gdb like this (after following above compile steps):
+   gdb /usr/local/grass5/etc/bin/<module>
+ 
+    r <grassflags> <grassparamters>
+    
+    The "where" command in gdb will give a traceback after a crash or break.
+
+    Example:
+    gdb /usr/local/grass5/etc/bin/cmd/r.in.tiff
+    r in=map.tiff out=map
+    where
+
+    Or, if a core file is written:
+
+    locate the core file that was produced as a result of this crash (it's
+    usually called 'core' and is located in the directory in which you
+    started the editor, or maybe in your home directory), and type
+
+       gdb /usr/local/grass5/etc/bin/cmd/<module> core
+
+    then type 'where' when the debugger prompt comes up.  (If you don't have
+    GDB on your system, you might have DBX, or XDB, or SDB.  A similar
+    procedure should work for all of these.  Ask your system administrator
+    if you need more help.)
+
+
+ ddd:     GNU DDD is a graphical front-end for command-line debuggers such as
+          GDB, DBX, WDB, Ladebug, JDB, XDB, the Perl debugger, or the Python
+          debugger. Besides `usual' front-end features such as viewing source
+          texts, DDD has become famous through its interactive graphical data
+          display, where data structures are displayed as graphs.
+          http://www.gnu.org/software/ddd/ddd.html
+
+    startup with module
+    set break point
+    run or use "next" step to go stepwise
+
+ memprof: Profiling and leak detection. MemProf is a tool for profiling
+          memory usage and finding memory leaks
+          http://people.redhat.com/otaylor/memprof/
+
+
+------------------------------------------------------------------------
+
+3. Shell debugging
+
+to enable debugging:
+ set -x
+
+to disable debugging:
+ set +x
+
+You have to add this line into the script to be analysed, or,
+alternatively, run
+
+sh -x scriptname
+
+
+-------------------------------------------------------------------------
+
+4. Library browsing
+
+If you are searching for a specific function within a library, you
+may use the "nm" tool to list the supported functions.
+Example:
+
+nm /usr/local/lib/libgdal.1.1.so
+[...]
+00051434 T BuildSubfields__12DDFFieldDefn
+00050738 T CEOSClose
+00050490 T CEOSDestroyRecord
+000504c0 T CEOSOpen
+000502f4 T CEOSReadRecord
+00050698 T CEOSReadScanline
+0005028c t CEOSScanInt
+000c9b50 T CPLCalloc
+[...]
+
+
+-------------------------------------------------------------------------
+
+5. Library dependencies with shared libraries
+
+Why are GRASS shared libraries useful for GRASS development? First, if
+you're modifying library code, you only need to rebuild the library; you
+don't have to re-link the programs. Second, the information obtained from
+running "nm" or "ldd" on an executable is more useful when the executable is
+linked against shared versions of the GRASS libraries.
+
+If you need to know on which shared libraries a given binary depends, you
+may use ldd to find out:
+
+ldd /usr/local/grass5/etc/bin/cmd/r.out.tiff
+        libtiff.so.3 => /usr/lib/libtiff.so.3 (0x40021000)
+        libz.so.1 => /usr/lib/libz.so.1 (0x40064000)
+        libm.so.6 => /lib/libm.so.6 (0x40072000)
+        libc.so.6 => /lib/libc.so.6 (0x40092000)
+	libjpeg.so.62 => /usr/lib/libjpeg.so.62 (0x401b8000)
+	/lib/ld-linux.so.2 => /lib/ld-linux.so.2 (0x40000000)
+
+-- 
+$Id$ 

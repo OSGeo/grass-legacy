@@ -9,7 +9,7 @@ static const char SCCSID[]="@(#)PJ_ocea.c	4.1	94/02/15	GIE	REL";
 	double	singam; \
 	double	cosgam;
 #define PJ_LIB__
-#include	<projects.h>
+#include	"projects.h"
 PROJ_HEAD(ocea, "Oblique Cylindrical Equal Area") "\n\tCyl, Sph"
 	"lonc= alpha= or\n\tlat_1= lat_2= lon_1= lon_2=";
 FORWARD(s_forward); /* spheroid */
@@ -40,7 +40,7 @@ INVERSE(s_inverse); /* spheroid */
 }
 FREEUP; if (P) pj_dalloc(P); }
 ENTRY0(ocea)
-	double phi_0, phi_1, phi_2, lam_1, lam_2, lonz, alpha;
+	double phi_0=0.0, phi_1, phi_2, lam_1, lam_2, lonz, alpha;
 
 	P->rok = P->a / P->k0;
 	P->rtk = P->a * P->k0;

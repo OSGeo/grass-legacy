@@ -34,8 +34,8 @@ struct intersect {
     plus_t line;
     double x, y;
 };
-int cmp_x(struct intersect *, struct intersect *);
-int cmp_y(struct intersect *, struct intersect *);
+int cmp_x(const void *, const void *);
+int cmp_y(const void *, const void *);
 int line_in_bbox (P_LINE *,double,double,double,double);
 static int check_list (struct Map_info *, struct intersect *,int);
 
@@ -167,7 +167,7 @@ int label_contour (struct Map_info *map, int interval)
 	}
     }
 
-    if (ret = check_list (map, list, cnt))
+    if ((ret = check_list (map, list, cnt)) != 0)
     {
 	Curses_error ("ERROR: Crosses same line more than once");
     }
@@ -294,7 +294,7 @@ int label_contour (struct Map_info *map, int interval)
 
 	for (n = 0 ; n < 2 ; n++)	/* do both directions */
 	{
-	    for (j = 0 ; next_line = lines[n][j] ; j++)
+	    for (j = 0 ; (next_line = lines[n][j]) ; j++)
 	    {
 		if (!next_line)	/* no more lines */
 		    break;
@@ -336,8 +336,9 @@ ending:
     
 }
 
-int cmp_x (struct intersect *a, struct intersect *b)
+int cmp_x (const void *aa, const void *bb)
 {
+    const struct intersect *a = aa, *b = bb;
     if (a->x < b->x)
 	return (-1);
     else if (a->x > b->x)
@@ -346,8 +347,9 @@ int cmp_x (struct intersect *a, struct intersect *b)
 	return (0);
 }
 
-int cmp_y (struct intersect *a, struct intersect *b)
+int cmp_y (const void *aa, const void *bb)
 {
+    const struct intersect *a = aa, *b = bb;
     if (a->y < b->y)
 	return (-1);
     else if (a->y > b->y)

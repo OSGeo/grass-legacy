@@ -1,8 +1,0 @@
-
-
-p.icons - 
-
-This print function allows the user to create and maintain icons which
-are used by the @man("p.map") command to depict @glossary("sites",16.glossary/site.def).
-
-Manual entry for @man("p.icons")

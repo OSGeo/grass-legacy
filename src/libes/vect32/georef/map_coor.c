@@ -4,9 +4,9 @@
 *  Save coordinates to file.
 */
 
-#include    <stdio.h>
-#include "digit.h"
-#include    "map.h"
+#include <stdio.h>
+#include "Vect.h"
+#include "map.h"
 
 int 
 load_coor_from_file (FILE *fp)

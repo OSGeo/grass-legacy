@@ -98,11 +98,7 @@ int main (int argc, char **argv)
 		fprintf (stdout,"Hit RETURN to cancel request\n");
 		fprintf (stdout,"> ");
 		fgets(tmpbuf,80,stdin);
-/*************************************************************************/
-/*****!!!!!! next line added, for all fgets 12/99 *****/
-
-              tmpbuf[strlen(tmpbuf)-1]='\0';
-/********************************************************************/
+		tmpbuf[strlen(tmpbuf)-1]='\0';
                 
 		cov_type[0] = '\0';
 		if (strcmp(tmpbuf,"polygon") == 0) strcat(cov_type,"polygon");
@@ -137,20 +133,17 @@ int main (int argc, char **argv)
 				fprintf (stdout,"option of the ARC/INFO Ungenerate command\n");
 				fprintf (stdout,"Hit RETURN to cancel request\n");
 				fprintf (stdout,"> ");
-				fgets(tmpbuf,80,stdin);
-                                tmpbuf[strlen(tmpbuf)-1]='\0';
-				if (strcmp(tmpbuf,"") == 0)
+				fgets(lines_filename,80,stdin);
+                                lines_filename[strlen(lines_filename)-1]='\0';
+				if (strcmp(lines_filename,"") == 0)
 					exit(0);
 				else 
 				{
-					if (G__file_name(lines_filename,"arc",tmpbuf,G_mapset())
-					    == NULL) {
-						sprintf (errmsg,
-		"Could not find ARC line file %s\n", lines_filename);
-						G_warning (errmsg);
-						}
 					if ((lines_file=fopen(lines_filename,"r")) == NULL)
+						{
+						perror( lines_filename);
 						G_warning("File could NOT be opened for reading ");
+						}
 					else
 						done = 1;
 				}
@@ -164,9 +157,9 @@ int main (int argc, char **argv)
 				fprintf (stdout,"option of the ARC/INFO Ungenerate command\n");
 				fprintf (stdout,"Hit RETURN if there is no such file\n");
 				fprintf (stdout,"> ");
-				fgets(tmpbuf,80,stdin);
-                                tmpbuf[strlen(tmpbuf)-1]='\0';
-				if (strcmp(tmpbuf,"") == 0)
+				fgets(pts_filename,80,stdin);
+                                pts_filename[strlen(pts_filename)-1]='\0';
+				if (strcmp(pts_filename,"") == 0)
 				{
 					pts_file = NULL;
 					txt_file = NULL;
@@ -174,15 +167,11 @@ int main (int argc, char **argv)
 				}
 				else 
 				{
-					if (G__file_name(pts_filename,"arc",tmpbuf,G_mapset())
-					    == NULL) {
-						sprintf (errmsg,
-			"Could not find ARC label-points file %s\n",
-						    pts_filename);
-						G_warning (errmsg);
-					}
 					if ((pts_file=fopen(pts_filename,"r")) == NULL)
+						{
+						perror( pts_filename);
 						G_warning("File could NOT be opened for reading ");
+						}
 					else
 						done = 1;
 				}
@@ -198,21 +187,15 @@ int main (int argc, char **argv)
 					fprintf (stdout,"label-point ID numbers with text label strings\n");
 					fprintf (stdout,"Hit RETURN if there is no such file\n");
 					fprintf (stdout,"> ");
-					fgets(tmpbuf,80,stdin);
-                                        tmpbuf[strlen(tmpbuf)-1]='\0';
-					if (strcmp(tmpbuf,"") == 0)
+					fgets(txt_filename,80,stdin);
+                                        txt_filename[strlen(txt_filename)-1]='\0';
+					if (strcmp(txt_filename,"") == 0)
 					{
 						txt_file = NULL;
 						done = 1;
 					}
 					else 
 					{
-						if (G__file_name(txt_filename,"arc",tmpbuf,G_mapset())
-						    == NULL) {
-							sprintf(errmsg,
-		"Could not find ARC text file %s\n", txt_filename);
-							G_warning ( errmsg);
-						}
 						/* remove the txt_file INFO header, save the column headings
                  * rewrite the txt_file */
 						tmp_name = G_tempfile();
@@ -223,7 +206,13 @@ int main (int argc, char **argv)
 						}
 						else
 						{
-							if (errflag == -1)
+							if (errflag == -3)
+							{
+								sprintf(errmsg,
+								"Could not find ARC text file %s\n", txt_filename);
+								G_warning( errmsg);
+							}
+							else if (errflag == -1)
 								G_warning("Error in ARC-INFO text-label file header.");
 							else
 								G_warning("Error in ARC-INFO textlabel file item name list.");
@@ -245,20 +234,17 @@ int main (int argc, char **argv)
 				fprintf (stdout,"option of the ARC/INFO Ungenerate command\n");
 				fprintf (stdout,"Hit RETURN to cancel request\n");
 				fprintf (stdout,"> ");
-				fgets(tmpbuf,80,stdin);
-                                tmpbuf[strlen(tmpbuf)-1]='\0';
-				if (strcmp(tmpbuf,"") == 0)
+				fgets(lines_filename,80,stdin);
+                                lines_filename[strlen(lines_filename)-1]='\0';
+				if (strcmp(lines_filename,"") == 0)
 					exit(0);
 				else 
 				{
-					if (G__file_name(lines_filename,"arc",tmpbuf,G_mapset())
-					    == NULL) {
-						sprintf (errmsg,
-		"Could not find ARC line file %s\n", lines_filename);
-						G_warning (errmsg);
-					}
 					if ((lines_file=fopen(lines_filename,"r")) == NULL)
+						{
+						perror( lines_filename);
 						G_warning("File could NOT be opened for reading ");
+						}
 					else
 						done = 1;
 				}
@@ -272,9 +258,9 @@ int main (int argc, char **argv)
 				fprintf (stdout,"line ID numbers with text label strings\n");
 				fprintf (stdout,"Hit RETURN if there is no such file\n");
 				fprintf (stdout,"> ");
-				fgets(tmpbuf,80,stdin);
-                                tmpbuf[strlen(tmpbuf)-1]='\0';
-				if (strcmp(tmpbuf,"") == 0)
+				fgets(txt_filename,80,stdin);
+                                txt_filename[strlen(txt_filename)-1]='\0';
+				if (strcmp(txt_filename,"") == 0)
 				{
 					pts_file = NULL;
 					txt_file = NULL;
@@ -282,12 +268,6 @@ int main (int argc, char **argv)
 				}
 				else 
 				{
-					if (G__file_name(txt_filename,"arc",tmpbuf,G_mapset())
-					    == NULL) {
-						sprintf (errmsg,
-			"Could not find ARC text file %120s\n",txt_filename);
-						G_warning (errmsg);
-					}
 					/* remove the txt_file INFO header, save the column headings
                  * rewrite the txt_file */
 					tmp_name = G_tempfile();
@@ -298,7 +278,13 @@ int main (int argc, char **argv)
 					}
 					else
 					{
-						if (errflag == -1)
+						if (errflag == -3)
+						{
+							sprintf(errmsg,
+							"Could not find ARC text file %s\n", txt_filename);
+							G_warning( errmsg);
+						}
+						else if (errflag == -1)
 							G_warning("Error in INFO attribute <txt> file item count");
 						else
 							G_warning("Error in INFO attribute <txt> file item names");

@@ -1,0 +1,106 @@
+This are the neccessary steps to get 
+full map datum support within GRASS:
+
+- change coorcnv library calls to use $GISBASE/etc/datum.table
+done.
+
+- change coorcnv library to use ellipsoids in 
+$GISBASE/etc/ellipse.table
+done.
+
+- add datum support functions to coorcnv library:
+datum shift parameters:
++ CC_get_datum_by_name
++ CC_get_datum_by_nbr
+x CC_datum_name
+x CC_datum_description
++ CC_datum_ellipsoid
+x CC_datum_shift -> CC_get_datum_parameters
++ CC_get_datum_parameters ( or CC_get_datum_parameters3?) 
+  CC_get_datum_parameters7
+
+spheroid/ellipsoid parameters:
+(only wrappers for libgis calls!)
+* CC_get_spheroid
+* CC_spheroid_name
++ CC_get_spheroid_by_name
++ CC_get_spheroid_by_nbr
+(reworked and new gislib calls)
++ G_ellipsoid_name
++ G_get_spheroid_by_name (for f parameter)
++ G_ellipsoid_name
++ G_ellipsoid_description
+* G_get_ellipsoid_by_name
+* G_get_ellipsoid_parameters
+
+datum shift routines:
++ CC_datum_shift_Molodensky
++ CC_datum_to_datum_shift_M
++ CC_datum_shift_CC
++ CC_datum_to_datum_shift_CC
++ CC_datum_shift_BursaWolf
++ CC_datum_to_datum_shift_BW
+
+others:
++ CC_geo2lld
++ CC_lld2geo
+
+symbols:
+? not known
+x changable, because not used in any module
+* existing, not changable
++ new
+  not yet implemented
+mostly done, needs testing. 
+
+- change m.datum.shift to new library calls
+done, needs testing. 
+
+- add functions for low-level datum support to gislib 
+(in analogy to the ellipsoid and projection functions):
+add metadata (datum name and parameters) to PROJ_INFO 
+to every PERMAMENT mapset of locations. 
+This is done via g.setproj i assume (please correct me
+if i am wrong!)
+
+proposed format: 
+datum:  acronym
+ellips: acronym -> already there
+dx: -> shifting parameter dx relative to wgs84
+dy: -> dy
+dz: -> dz
+a:  -> already in PROJ_INFO
+e2: -> already in PROJ_INFO
+f:  -> from ellipse.table
+
+- add a function to read the datum parameters for the 
+actual location (parallel to G_database_projection_name 
+and G_get_ellipsoid_parameters)
++ G_database_datum_name()
++ G_get_datum_parameters(a, e2, f, dx, dy, dz)
++ G_get_datum_parameters7(a, e2, f, dx, dy, dz, rx, ry, rz, m)
+
+- add G_ask_datum_name for interactive use in modules
++ G_ask_datum_name()
+done.
+
+- change all modules that create new locations to
+ask the user for a map datum and add to PROJ_INFO file.
+This is done via g.setproj.
+
+- change all modules that do projection or data-import 
+to use datum conversion:
+v.proj
+r.proj
+s.proj
+r.in.*
+v.in.*
+etc.
+
+Please note that i am only involved with the first steps of 
+changing the library to support map datums. The changes in 
+the modules must be done by other GRASS developers or
+the module maintainers.
+
+Andreas Lange, 05/2000,
+andreas.lange@rhein-main.de

@@ -4,7 +4,7 @@ static const char SCCSID[]="@(#)PJ_urm5.c	4.1	94/02/15	GIE	REL";
 #define PROJ_PARMS__ \
 	double m, rmn, q3, n;
 #define PJ_LIB__
-# include	<projects.h>
+# include	"projects.h"
 PROJ_HEAD(urm5, "Urmaev V") "\n\tPCyl., Sph.\n\tn= q= alphi=";
 FORWARD(s_forward); /* spheroid */
 	double t;

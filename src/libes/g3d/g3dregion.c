@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "gis.h"
+#include "G3d.h"
 #include "G3d_intern.h"
 
 /*---------------------------------------------------------------------------*/

@@ -27,11 +27,17 @@ G3d_writeDoubles (fd, useXdr, i, nofNum)
      G3d_fatalError ("G3d_writeDoubles: nofNum out of range");
 
    if (useXdr == G3D_NO_XDR) 
-     if (write (fd, i, sizeof (double) * nofNum) != sizeof (double) * nofNum) {
+   {
+     if (write (fd, i, sizeof (double) * nofNum) != sizeof (double) * nofNum) 
+     {
        G3d_error ("G3d_writeDoubles: writing to file failed"); 
        return 0;
-     } else
+     } 
+     else
+     {
        return 1;
+     }
+   }
 
 
    if (firstTime) {
@@ -50,7 +56,7 @@ G3d_writeDoubles (fd, useXdr, i, nofNum)
      }
 
      if (! xdr_vector (&xdrEncodeStream, (char *) i, n, sizeof (double), 
-		       xdr_double)) {
+		      (xdrproc_t) xdr_double)) {
        G3d_error ("G3d_writeDoubles: writing xdr failed"); 
        return 0;
      }
@@ -87,12 +93,18 @@ G3d_readDoubles (fd, useXdr, i, nofNum)
   if (nofNum <= 0)
     G3d_fatalError ("G3d_readDoubles: nofNum out of range");
 
-  if (useXdr == G3D_NO_XDR) 
-    if (read (fd, i, sizeof (double) * nofNum) != sizeof (double) * nofNum) {
+  if (useXdr == G3D_NO_XDR)
+  {
+    if (read (fd, i, sizeof (double) * nofNum) != sizeof (double) * nofNum) 
+    {
       G3d_error ("G3d_readDoubles: reading from file failed");
       return 0;
-    } else
+    } 
+    else
+    {
       return 1;
+    }
+  }
 
   if (firstTime) {
     xdrmem_create (&xdrDecodeStream, xdrDoubleBuf, 
@@ -117,7 +129,7 @@ G3d_readDoubles (fd, useXdr, i, nofNum)
     }
 
     if (! xdr_vector (&xdrDecodeStream, (char *) i, n, sizeof (double), 
-		      xdr_double)) {
+		      (xdrproc_t)xdr_double)) {
       G3d_error ("G3d_readDoubles: reading xdr failed");
       return 0;
     }

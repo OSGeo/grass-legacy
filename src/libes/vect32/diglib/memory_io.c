@@ -7,7 +7,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "Vect.h"
-#include "digit.h"
 
 
 /* this code is an attempt to speed up execution of parts of the dig_import

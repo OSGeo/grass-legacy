@@ -1,9 +1,0 @@
-
-
-i.fft - 
-
-i.fft is an image processing program based on an algorithm which
-processes a single input @glossary("raster",16.glossary/rastdata.def) file (input image) and contructs the
-real and imaginary Fourier components into frequency space images.
-
-Manual entry for @man("i.fft")

@@ -44,7 +44,6 @@ int
 run (char *pgm)
 {
     char command[1024];
-    char *getenv();
 
     sprintf (command, "%s/etc/%s", G_gisbase(), pgm);
     return system(command);

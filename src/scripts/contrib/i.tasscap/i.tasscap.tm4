@@ -2,15 +2,15 @@
 # from Dr. Agustin Lobo - alobo@ija.csic.es
 #
 # LANDSAT-4 TM coefficients
-#
+# Identical to ERDAS Imagine
 
 #set echo
 #set verbose
 
 if test "$GISBASE" = ""; then
-echo "You must be in GRASS GIS to run this program."
-exit
-fi
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
 
 if ($#argv == 0) then
         echo ""

@@ -13,7 +13,7 @@ struct units units[] = {
 	{"feet","f"},
 	{"miles","mi"},
 	{"acres","a"},
-	{"hectacres","h"},
+	{"hectares","h"},
 	{"counts","c"},
         {NULL,NULL}};
 #else
