@@ -13,6 +13,7 @@ src/xgrass/xghelp
 src/xgrass/xghistory
 src/xgrass/xgmapcalc
 src/xgrass/xgmapsets
+src/xgrass/xgrasteredit
 src/xgrass/xgreclass
 src/xgrass/xgregion
 src/xgrass/xgshow
