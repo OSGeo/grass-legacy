@@ -28,6 +28,48 @@ CALLS:
 ***********************************************************************/
 
 #include "vask.h"
+
+/*!
+ * \brief define screen question
+ *
+ * <i>Ctype</i> is one of int, long, float,
+ * double, or char.
+ * These two calls use the same syntax. V_const(~) and V_ques(~) specify that
+ * the contents of memory at the address of <b>value</b> are to be displayed on
+ * the screen at location <b>row, col</b> for <b>len</b> characters.
+ * V_ques(~) further specifies that this screen location is a prompt field.  The
+ * user will be allowed to change the field on the screen and thus change the
+ * <b>value</b> itself. V_const(~) does not define a prompt field, and thus
+ * the user will not be able to change these values.
+ * <b>Value</b> is a pointer to an int, long, float, double, or char string.
+ * <b>Type</b> specifies what type value points to: 'i' (int), 'l' (long), 'f'
+ * (float), 'd' (double), or 's' (character string). <b>Row</b> is an integer
+ * value of 0-22 specifying the row on the screen where the value is placed. The
+ * top row on the screen is row 0. <b>Col</b> is an integer value of 0-79
+ * specifying the column on the screen where the value is placed. The leftmost
+ * column on the screen is column 0. <b>Len</b> specifies the number of columns
+ * that the value will use.
+ * Note that the size of a character array passed to V_ques(~) must be at least
+ * one byte longer than the length of the prompt field to allow for NULL
+ * termination. Currently, you are limited to 20 constants and 80 variables.
+ * <b>Warning.</b> These routines store the address of <b>value</b> and not
+ * the value itself. This implies that different variables must be used for
+ * different calls. Programmers will instinctively use different variables with
+ * V_ques(~), but it is a stumbling block for V_const(~). Also, the programmer
+ * must initialize <b>value</b> prior to calling these
+ * routines.\remarks{Technically <b>value</b> needs to be initialized before
+ * the call to V_call(~) since V_const(~) and V_ques(~) only store the
+ * address of <b>value.</b> V_call(~) looks up the values and places them on
+ * the screen.}
+ *
+ *  \param value
+ *  \param type
+ *  \param row
+ *  \param col
+ *  \param len
+ *  \return int
+ */
+
 int V_ques(
 	void  *src   ,
 	char  var_type ,

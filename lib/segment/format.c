@@ -9,6 +9,34 @@ static int write_int(int,int);
 static int zero_fill(int, long);
 
 /* fd must be open for write */
+
+/*!
+ * \brief format a segment file
+ *
+ * The segmentation routines require a disk file
+ * to be used for paging segments in and out of memory. This routine formats the
+ * file open for write on file descriptor <b>fd</b> for use as a segment file.
+ * A segment file must be formatted before it can be processed by other segment
+ * routines. The configuration parameters <b>nrows, ncols, srows, scols</b>,
+ * and <b>len</b> are written to the beginning of the segment file which is
+ * then filled with zeros.
+ * The corresponding nonsegmented data matrix, which is to be transferred to the
+ * segment file, is <b>nrows</b> by <b>ncols.</b> The segment file is to be
+ * formed of segments which are <b>srows</b> by <b>scols.</b> The data items
+ * have length <b>len</b> bytes. For example, if the <i>data type is int</i>,
+ * \textbf{<i>len</i> }<i>is sizeof(int).</i>
+ * Return codes are: 1 ok; else -1 could not seek or write <i>fd</i>, or -3
+ * illegal configuration parameter(s).
+ *
+ *  \param fd
+ *  \param nrows
+ *  \param ncols
+ *  \param srows
+ *  \param scols
+ *  \param len
+ *  \return int
+ */
+
 int segment_format (int fd,int nrows,int ncols,int srows,int scols,int len)
 {
     return _segment_format (fd, nrows, ncols, srows, scols, len, 1);
