@@ -185,7 +185,7 @@ int main(int argc,char **argv)
 	fprintf(stderr,"Q ? + - r d l L (xyz)# (XYZ)# S B(xyz)# E(xyz)# R g C c w W i h t T# \n");
 	fprintf (stderr, " > ");
 	
-	if (NULL == gets (buff))
+	if (NULL == fgets (buff, 80, stdin))
 	    break;	
 	p = buff;	
       while(XtAppPending(App_context))
