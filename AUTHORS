@@ -37,6 +37,7 @@ Others making significant contributions:
  Radim Blazek    <Radim.Blazek@dhv.cz>       (DBMS support, ps.map, d.dm)
  Bill Brown      <brown@gomez.gis.uiuc.edu>  (grid3D and related)
  Angus Carr      <apcarr@flash.lakeheadu.ca> (ERDAS LAN)
+ Huidae Cho      <hdcho@geni.knu.ac.kr>      (FreeBSD, r.topmodel, r.topidx, ...)
  Jaro Hofierka   <hofierka@geomodel.sk>      (NVIZ port, grid3D and related)
  Justin Hickey   <jhickey@impact1.hpcc.nectec.or.th>   (GRASS entry screens, SGI)
  John Huddleston <John.Huddleston@usda.gov>  (Windows/Cygnus port)
