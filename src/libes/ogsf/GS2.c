@@ -40,6 +40,8 @@ static int SDref_surf = 0;
 static float Default_const[MAX_ATTS];
 static float Default_nulls[MAX_ATTS];
 static float Longdim;
+static float E1_DIST, E2_DIST, E_DIST;
+static float N1_DIST, N2_DIST, N_DIST;
 static float Region[4]; /* N, S, W, E */
 static geoview Gv;
 static geodisplay Gd;
@@ -67,6 +69,27 @@ void GS_libinit(void)
     Region[2] = wind.west;
     Region[3] = wind.east;
 
+if (wind.proj == PROJECTION_LL) {
+G_begin_distance_calculations();
+E1_DIST = G_distance( wind.east,wind.north,wind.west,wind.north);
+E2_DIST = G_distance( wind.east,wind.south,wind.west,wind.south);
+if (E1_DIST > E2_DIST) E_DIST = E1_DIST;
+else
+E_DIST = E2_DIST;
+wind.ew_res = E_DIST / wind.cols;
+
+N1_DIST = G_distance( wind.east,wind.north,wind.east,wind.south);
+N2_DIST = G_distance(wind.west,wind.north,wind.west,wind.south);
+if (N1_DIST > N2_DIST) N_DIST = N1_DIST;
+else
+N_DIST = N2_DIST;
+wind.ns_res = N_DIST / wind.rows;
+if (E_DIST > N_DIST) Longdim = E_DIST;
+else
+Longdim = N_DIST;
+} else {
+
+
     /* scale largest dimension to GS_UNIT_SIZE */
     if((wind.east - wind.west) > (wind.north - wind.south))
     {
@@ -76,6 +99,7 @@ void GS_libinit(void)
     {
 	Longdim = (wind.north - wind.south);
     }
+}
     
     Gv.scale = GS_UNIT_SIZE / Longdim;
     

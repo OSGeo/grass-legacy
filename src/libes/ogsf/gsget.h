@@ -48,10 +48,17 @@
 #define NZUP 0x000003ff
 
 /* Fetch Normal vector from packed int */
+/*
 #define FNORM(i,nv)  \
   nv[X] = ((int)(((i) & NXMASK) >> 21) - XYMAXPOS)/(float)XYMAXPOS; \
   nv[Y] = ((int)(((i) & NYMASK) >> 10) - XYMAXPOS)/(float)XYMAXPOS; \
   nv[Z] = (int)((i) & NZMASK) * GS_global_exag()/(float)ZMAXPOS
+*/
+
+#define FNORM(i,nv)  \
+  nv[X] = ((int)(((i) & NXMASK) >> 21) - XYMAXPOS)/(float)XYMAXPOS; \
+  nv[Y] = ((int)(((i) & NYMASK) >> 10) - XYMAXPOS)/(float)XYMAXPOS; \
+  nv[Z] = (int)((i) & NZMASK) /(float)ZMAXPOS
 
 /* Pack Normal vector into int */
 #define PNORM(i,nv)  \
