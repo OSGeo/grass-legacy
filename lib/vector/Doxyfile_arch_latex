@@ -249,7 +249,7 @@ MAX_INITIALIZER_LINES  = 30
 # For instance some of the names that are used will be different. The list 
 # of all members will be omitted, etc. 
 
-OPTIMIZE_OUTPUT_FOR_C  = NO
+OPTIMIZE_OUTPUT_FOR_C  = YES
 
 # Set the SHOW_USED_FILES tag to NO to disable the list of files generated 
 # at the bottom of the documentation of classes and structs. If set to YES the 
