@@ -2,7 +2,7 @@ MYLIBDIR = $(SRC)/libes/dspf
 DSPLIB	 = $(SRC)/libes/dspf/libdsp3.a
 OGSF_DIR     = $(SRC)/libes/ogsf
 
-EXTRA_CFLAGS = -I$(MYLIBDIR) -I$(OGSF_DIR) -I$(OPENGLINC) -I$(OPENGLwINC) $(XCFLAGS)
+EXTRA_CFLAGS = -I$(MYLIBDIR) -I$(OGSF_DIR) $(OPENGLINC) $(OPENGLwINC) $(XCFLAGS)
 SUNLDFLAGS   = $(XMLIBPATH) $(XLIBPATH) -L/lib
 OGLLIB	     = -lGLU -lGL -lGLw ${LGLWM} -lXm -lX11 -lXt -lXext
 
