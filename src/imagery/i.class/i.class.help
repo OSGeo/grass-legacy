@@ -1,0 +1,5 @@
+An imagery function that generates spectral signatures for
+land cover types in an image by allowing the user to outline
+regions on a cell map.  This is the first part of the GRASS
+supervised classification process.  The resulting signature 
+file is used as input for i.maxlik.
