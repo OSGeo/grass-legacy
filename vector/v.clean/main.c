@@ -75,7 +75,10 @@ main (int argc, char *argv[])
 				"non topological format (like shapefile). Boundaries are broken on each "
 				"point shared between 2 and more polygons where angles of segments "
 			        "are different\n"
-			        "\t\tprune - remove vertices in threshold from lines and boundaries\n"
+			        "\t\tprune - remove vertices in threshold from lines and boundaries, "
+				"boundary is pruned only if topology is not damaged (new intersection, "
+       				"changed attachement of centroid), first and last segment of the boundary "
+				"is never changed\n"
 			        "\t\trmarea - remove small areas, the longest boundary with adjacent area "
 			        "is removed";
 	
@@ -245,7 +248,7 @@ main (int argc, char *argv[])
 	/* Start with GV_BUILD_NONE and for each tool use unly the necessary level! */
 	fprintf (stderr,         "--------------------------------------------------\n" );
 	for ( i = 0; i < ntools ; i++ ) { 
-	    if (  tools[i] == TOOL_RMDAC || tools[i] == TOOL_RMAREA ) {
+	    if (  tools[i] == TOOL_RMDAC || tools[i] == TOOL_PRUNE || tools[i] == TOOL_RMAREA ) {
 	        if ( Vect_get_built ( &Out ) >= GV_BUILD_CENTROIDS ) {
 		    Vect_build_partial ( &Out, GV_BUILD_CENTROIDS, NULL );
 		} else {
