@@ -1147,9 +1147,9 @@ int G_gui (void)
 	    /* Set key name and type */
 	    append(cmd, "set optname(%d) \"%s\" \n", optn, opt->key);
 	    if(opt->multiple && opt->options)
-	        append(cmd, "set opttype(%d) \"multi\" \n");
+	        append(cmd, "set opttype(%d) \"multi\" \n", optn);
 	    else
-	        append(cmd, "set opttype(%d) \"opt\" \n");
+	        append(cmd, "set opttype(%d) \"opt\" \n", optn);
 
 	    /* Option label */ 
 	    append(cmd, "label $suf.lab%d -text \"%s (%s, %s):\" -anchor w -justify left\n", 
