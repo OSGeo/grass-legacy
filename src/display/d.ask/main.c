@@ -4,6 +4,7 @@
 #include "raster.h"
 int main(int argc,char *argv[])
 {
+	struct GModule *module;
     struct Option *element, *prompt;
     struct Flag *quiet;
     char *tempfile;
@@ -11,6 +12,11 @@ int main(int argc,char *argv[])
     FILE *fd;
 
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Prompts the user to select a GRASS data base file from among "
+		"files displayed in a menu on the graphics monitor.";
 
     element = G_define_option();
     element->key = "element";

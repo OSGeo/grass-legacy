@@ -12,7 +12,10 @@
  *	Read the file COPYING coming with GRASS for details.
  *
  * $Log$
- * Revision 1.1  2000-11-07 05:15:19  cho
+ * Revision 1.2  2000-12-01 14:18:48  jan
+ * added module description
+ *
+ * Revision 1.1  2000/11/07 05:15:19  cho
  * renamed
  *
  * Revision 1.3  2000/11/05 15:47:53  cho
@@ -34,6 +37,7 @@
 int 
 main (int argc, char **argv)
 {
+	struct GModule *module;
     struct Flag *v;
     int i, first=1;
     char buf[128];
@@ -41,14 +45,18 @@ main (int argc, char **argv)
     char **rast, **vect, **site;
     int nrasts, nvects, nsites;
     double east, west, south, north, nsres, ewres;
-                        
+
+    G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Set window region from currently displayed raster, "
+		"vector and sites maps with largest map region.";
 
     v = G_define_flag();
     v->key = 'v';
     v->description = "Verbose output";
 
-
-    G_gisinit(argv[0]) ;
 
     if(argc > 1 && G_parser(argc, argv))
     {

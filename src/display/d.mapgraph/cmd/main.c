@@ -12,7 +12,13 @@ int
 main (int argc, char **argv)
 {
 	int color ;
+	struct GModule *module;
 	struct Option *opt1, *opt2/*, *opt3, *opt4*/ ;
+
+	module = G_define_module();
+	module->description =
+		"Generates and displays simple graphics on map "
+		"layers drawn in the active graphics monitor display frame.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "input" ;

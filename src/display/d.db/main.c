@@ -13,6 +13,7 @@ int main (int argc, char **argv)
 	int    t, b, l, r, more, ctype[2], sqltype;
 	int    i, icon, size, color, nplot=0, cont;	 
 	struct Cell_head window ;
+	struct GModule *module;
 	struct {   
 	    struct Option *table, *x, *y, *where, *icon, *size, *color;
 	} par;  
@@ -26,6 +27,10 @@ int main (int argc, char **argv)
 	dbValue  *value;   
 	double   coor[2];
 
+	module = G_define_module();
+	module->description =
+		"Displays sites from DB table in the active "
+		"graphics monitor.";
 
         par.table               = G_define_option();
         par.table->key          = "table";
