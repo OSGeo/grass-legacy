@@ -14,6 +14,7 @@ SUBDIRS = \
 	i.tasscap \
 	pg.postgisdb \
 	r.out.gdal \
+	r.reclass.area \
 	r.univar \
 	v.shape.regist
 
