@@ -197,6 +197,9 @@ if [ ! "$GRASS_HTML_BROWSER" ] ; then
         elif [ -f "$i/mozilla" ] ; then
             GRASS_HTML_BROWSER=mozilla
             break
+        elif [ -f "$i/mozilla-firefox" ] ; then
+            GRASS_HTML_BROWSER=mozilla-firefox
+            break
         elif [ -f "$i/opera" ] ; then
             GRASS_HTML_BROWSER=opera
             break
