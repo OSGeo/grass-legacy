@@ -99,6 +99,8 @@ void gk_follow_frames(Viewnode *view, int numsteps, Keylist *keys, int step,
     int frame, c;     /* frame is index into viewnode array */
     float tmp[3];
     int set;
+    float x, y, z;
+    int num, w;
     unsigned long mask;
 
     for(frame = step-1; frame < numsteps; frame++)
@@ -167,6 +169,13 @@ void gk_follow_frames(Viewnode *view, int numsteps, Keylist *keys, int step,
 	{
 	    GS_set_fov((int)v->fields[KF_FOV]);
 	}
+
+	/* Initilaize lights before drawing */
+	num = 1;
+	GS_getlight_position (num, &x, &y, &z, &w);
+	GS_setlight_position(num, x, y, z, w);
+	num = 2; /* Top light */
+	GS_setlight_position(num, 0., 0., 1., 0);
 
 	if(render)
 	{
