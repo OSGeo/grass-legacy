@@ -48,4 +48,4 @@ set NVIZ_SCRIPTS $env(GISBASE)/etc/nviz2.2/scripts
 
 
 #Execute Command
-eval exec $env(GISBASE)/etc/nviz2.2/NVWISH2.2 -f $env(GISBASE)/etc/nviz2.2/scripts/nviz2.2_script $argv -name NVIZ >&@stdout
+eval exec nviz -f $env(GISBASE)/etc/nviz2.2/scripts/nviz2.2_script $argv -name NVIZ >&@stdout

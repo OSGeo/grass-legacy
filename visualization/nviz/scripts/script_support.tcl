@@ -21,7 +21,7 @@ proc AddScriptLine {} {
     if $ScriptPlaying return
 
     # Create a simple entry popup
-    set line [exec NVWISH2.2 -f $env(GISBASE)/etc/nviz2.2/scripts/script_get_line -q]
+    set line [exec nviz -f $env(GISBASE)/etc/nviz2.2/scripts/script_get_line -q]
     if {"$line" == "-1"} return
     Nv_script_add_string "$line"
 }
@@ -35,7 +35,7 @@ proc AddScriptCmd {} {
     if $ScriptPlaying return
 
     # Create a simple entry popup
-    set line [exec NVWISH2.2 -f $env(GISBASE)/etc/nviz2.2/scripts/script_get_line -q]
+    set line [exec nviz -f $env(GISBASE)/etc/nviz2.2/scripts/script_get_line -q]
     if {"$line" == "-1"} return
     Nv_script_add_string "catch \{send \$ProcessName \{$line\}\}"
 }

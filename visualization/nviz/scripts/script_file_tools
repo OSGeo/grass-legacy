@@ -1,4 +1,4 @@
-#!$(GISBASE)/etc/nviz2.2/NVWISH2.2 -f
+#!nviz -f
 # Please log changes in the ChangeLog file in this directory
 # (Use "C-x 4 a" from emacs to add an entry)
 
@@ -270,8 +270,7 @@ proc save_fields {} {
 ###################################################
 proc display_error { err_string } {
     tk_dialog .file_error "File Error" "$err_string" \
-	@/usr/local/lib/tk/bitmaps/error \
-	0 "Dismiss"
+	error 0 "Dismiss"
 }
 
 ###################################################
