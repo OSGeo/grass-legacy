@@ -12,7 +12,6 @@
 
 global BGColor
 
-set BGColor #FFFFFF
 proc mkcolorPanel { BASE } {
     global Nv_
 

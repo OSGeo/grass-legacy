@@ -11,9 +11,12 @@
 
 global src_boot
 global env
+global BGColor
 
 #Initialize ProcessName variable
 set env(NV_processname) NVIZ
+
+set BGColor #FFFFFF
 
 source $src_boot/etc/nviz2.2/scripts/config.tcl
 
@@ -448,13 +451,14 @@ proc inform {args} {
 
 proc Nv_expose { W } {
     global Nv_
+    global BGColor
 
 #    if [$W islinked] then {
 	if {$Nv_(First)} then {
 	    init_graphics
 	    set Nv_(First) 0
 	} else {
-            Nbackground #FFFFFF
+            Nbackground $BGColor
 	    Nquick_draw
 	}
 #    }
