@@ -1,5 +1,5 @@
 #include "gis.h"
-#define MAXFILES    20
+#define MAXFILES    30
 
 /* if short is 16 bits, then
  *       short will allow 32767 cols
