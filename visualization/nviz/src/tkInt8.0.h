@@ -1,6 +1,9 @@
 /* 
   $Log$
-  Revision 1.1  2000-10-16 16:14:32  markus
+  Revision 2.0  2004-11-09 14:21:40  bernhard
+  copied within CVS repository from grass/src.contrib/GMSL/NVIZ2.2/src/tkInt8.0.h
+
+  Revision 1.1  2000/10/16 16:14:32  markus
   renamed from tkInt.h to tkInt8.0.h
 
   Revision 1.3  2000/02/22 19:19:38  markus
