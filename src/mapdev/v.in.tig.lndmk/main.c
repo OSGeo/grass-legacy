@@ -17,13 +17,13 @@ FILE *fpin;
 G_gisinit (argv[0]);
 
 proj = G_projection();
-if (proj != PROJECTION_LL && proj != PROJECTION_UTM) 
-  G_fatal_error("Must be in UTM or Lat-Long location to use this program.");
 
 reset_m_strings();
 reset_cats();
 both_conds_req = 0;
 parse_input(argc,argv);
+if (proj != PROJECTION_LL && proj != PROJECTION_UTM) 
+  G_fatal_error("Must be in UTM or Lat-Long location to use this program.");
 tig_names();
 if (flag1->answer == 0 && flag2->answer == 0 && optin->answer == NULL)
   interactive = 1;

@@ -1,6 +1,4 @@
-
-#all: $(BIN_CONTRIB_CMD)/r.in.dted
-all: ./r.in.dted
+PGM=r.in.dted
 
 OBJS= main.o \
       dted_read.o \
@@ -8,8 +6,7 @@ OBJS= main.o \
 
 $(OBJS): dtedgis.h
 
-#$(BIN_CONTRIB_CMD)/r.in.dted: $(OBJS) $(GISLIB)
-./r.in.dted: $(OBJS) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(GISLIB) $(MATHLIB)
+$(BIN_CMD)/$(PGM): $(OBJS) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

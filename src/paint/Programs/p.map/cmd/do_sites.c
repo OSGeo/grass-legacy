@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "sites.h"
 #include "gis.h"
+#include "site.h"
 #include "text.h"
 #include "misc.h"
 #include "local_proto.h"

@@ -5,7 +5,20 @@ OBJ = \
     tm.o\
     utm.o\
     format_ll.o\
-    scan_ll.o
+    scan_ll.o\
+    datum.o\
+    molodens.o
+    
+all: $(COORCNVLIB) \
+	$(GISLIB) \
+	$(ETC)/datum.table
 
 $(COORCNVLIB): $(OBJ)
 	$(AR)
+
+$(ETC)/datum.table: datum.table
+	rm -f $@
+	cp $? $@
+	chmod +r $@
+
+LIBES = $(COORCNVLIB) $(GISLIB)

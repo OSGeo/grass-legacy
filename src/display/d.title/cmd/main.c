@@ -12,8 +12,17 @@ int main (int argc, char **argv)
 	char *mapset ;
 	struct Cell_head window ;
 	struct Categories cats ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3 ;
 	struct Flag *flag ;
+
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Outputs a TITLE for a raster map layer in a form suitable "
+		"for display by d.text.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "map" ;
@@ -40,9 +49,6 @@ int main (int argc, char **argv)
 	flag = G_define_flag() ;
 	flag->key        = 'f' ;
 	flag->description= "Do a fancier title" ;
-
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
 
 	/* Check command line */
 	if (G_parser(argc, argv))
@@ -85,7 +91,8 @@ int main (int argc, char **argv)
 	else
 		fancy(mapset, &window, &cats) ;
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 	D_add_to_list(G_recreate_command()) ;
 	R_close_driver();
 

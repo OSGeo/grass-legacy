@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "gis.h"
 #include "cell.h"
 
 /********************************************************
@@ -33,7 +34,7 @@ POINT
 
 static int edge(int,int,int,int);
 static int edge_point(int x,int);
-static int edge_order(struct point *,struct point *);
+static int edge_order(const void *, const void *);
 
 static POINT *P;
 static int np;
@@ -46,9 +47,8 @@ int polyfill (
     int (*fill)(int,int,int)  /* fill routine */
 )
 {
-    int x0,x1,xN;
-    int y0,y1,yN;
     int error;
+    int i;
 
     if (n < 3)
         return 0;
@@ -56,20 +56,11 @@ int polyfill (
 /* traverse the perimeter */
 
     np = 0;
-    P = (POINT *) calloc (npmax = 32, sizeof (POINT));
+    P = (POINT *) G_calloc (npmax = 32, sizeof (POINT));
 
-    xN = x0 = *x++;
-    yN = y0 = *y++;
-
-    while (--n)
-    {
-        x1 = *x++;
-        y1 = *y++;
-        edge (x0,y0,x1,y1);
-        x0 = x1;
-        y0 = y1;
-    }
-    edge (x0,y0,xN,yN);
+    for (i = 0; i < n-1; i++)
+	edge (x[i],y[i],x[i+1],y[i+1]);
+    edge (x[n-1],y[n-1],x[0],y[0]);
 
 /* check if perimeter has odd number of points */
     if (np%2)
@@ -84,16 +75,15 @@ int polyfill (
     qsort (P, np, sizeof(POINT), edge_order);
 
     error = 0;
-    for (n = 1; n < np; n++)
+    for (i = 0; i < np; i += 2)
     {
-        if (P[n].y != P[n-1].y)
+        if (P[i+1].y != P[i].y)
         {
-            fprintf(stderr,"polyfill: row %d out of sync\n", P[n-1].y);
+            fprintf(stderr,"polyfill: row %d out of sync\n", P[i].y);
             continue;
         }
-        if(error = fill (P[n].y, P[n-1].x, P[n].x))
+        if(error = fill (P[i].y, P[i].x, P[i+1].x))
             break;
-        n++;
     }
 
     free (P);
@@ -101,11 +91,10 @@ int polyfill (
     return error;
 }
 
-static int edge ( register int x0, register int y0, int x1, int y1)
+static int edge ( int x0, int y0, int x1, int y1)
 {
     register float m;
     register float x;
-
 
     if (y0 == y1) return 0;
 
@@ -114,38 +103,33 @@ static int edge ( register int x0, register int y0, int x1, int y1)
     if (y0 < y1)
     {
         x = x0;
-        while (++y0 <= y1)
-        {
-            x0 = (x += m) + .5;
-            edge_point (x0, y0);
-        }
+        while (y0 < y1)
+            edge_point (x += m, y0++);
     }
     else
     {
         x = x1;
-        while (++y1 <= y0)
-        {
-            x1 = (x += m) + .5;
-            edge_point (x1, y1);
-        }
+        while (y1 < y0)
+            edge_point (x += m, y1++);
     }
 
     return 0;
 }
 
-static int edge_point ( register int x, register int y)
+static int edge_point ( int x, int y)
 {
 
     if (np >= npmax)
-        P = (POINT *) realloc (P, (npmax += 32) * sizeof (POINT));
+        P = (POINT *) G_realloc (P, (npmax += 32) * sizeof (POINT));
     P[np].x   = x;
     P[np++].y = y;
 
     return 0;
 }
 
-static int edge_order ( struct point *a, struct point *b)
+static int edge_order (const void *aa, const void *bb)
 {
+    const struct point *a = aa, *b = bb;
     if (a->y < b->y) return (-1);
     if (a->y > b->y) return (1);
 

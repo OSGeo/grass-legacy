@@ -1,25 +1,26 @@
 /*******************************************************************************
-r.sun: it was writen by Jaro Hofierka in Summer 1993 and re-engineered
-in 1996, 1997 and 1999.
-(C) Copyright Jaro Hofierka, Gresaka 22, 085 01 Bardejov, Slovakia, 
-email: hofierka@netlab.sk, hofierka@nextra.sk
-*******************************************************************************/
+ * r.sun: it was writen by Jaro Hofierka in Summer 1993 and re-engineered
+ *  in 1996, 1997 and 1999.
+ * (C) Copyright Jaro Hofierka, Gresaka 22, 085 01 Bardejov, Slovakia, 
+ * email: hofierka@geomodel.sk
+ ******************************************************************************/
+
 /*
- * This program, both binary and source is copyrighted, but available without 
- * fee for education, research and non-commercial purposes. Users may distribute
- * the binary and source code to third parties provided that the copyright 
- * notice and this statement appears on all copies and that no charge is made 
- * for such copies.  Any entity wishing to integrate all or part of the source
- * code into a product for  commercial use or resale, should contact the
- * author of the software.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
  *
- * THE SOFTWARE IS PROVIDED "AS IS" WITHOUT EXPRESS OR IMPLIED WARRANTY. THE
- * AUTHOR SHALL NOT BE LIABLE FOR 
- * ANY DAMAGES SUFFERED BY THE USER OF THIS SOFTWARE.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * By copying this program, you, the user, agree to abide by the copyright
- * conditions and understandings with respect to any software which is
- * marked with a copyright notice.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ *   Free Software Foundation, Inc.,
+ *   59 Temple Place - Suite 330,
+ *   Boston, MA  02111-1307, USA.
  */
 
 #define M2_PI    2 * M_PI
@@ -99,6 +100,7 @@ int
 main (int argc, char *argv[])
 {
 
+ struct GModule *module;
  struct
   {
   struct Option *elevin, *aspin, *slopein, *incidout, *energyout, *latitude, *dej, *lum_time, *linke;
@@ -110,23 +112,17 @@ main (int argc, char *argv[])
 
 	  G_gisinit (argv[0]);
 
-		if(G_get_set_window(&cellhd)==-1) exit(0);
-		/*ew_res = cellhd.ew_res;*/
-/*		stepx = cellhd.ew_res/cellhd.ew_res;*/
-		stepx = cellhd.ew_res;
-		/*ns_res = cellhd.ns_res;*/
-/*		stepy = cellhd.ns_res/cellhd.ew_res;*/
-		stepy = cellhd.ns_res;
-		n/*n_cols*/ = cellhd.cols;
-		m/*n_rows*/ = cellhd.rows;
-		/*x_orig = cellhd.west;*/
-	/*	xmin = 0.;*/
-		xmin = cellhd.west;
-		/*y_orig = cellhd.south;*/
-/*		ymin = 0.;*/
-		ymin = cellhd.south;
-		xmax = cellhd.east;
-		ymax = cellhd.north;
+	  module = G_define_module();
+	  module->description =
+		"Computes solar illumination (incidence) angle raster maps "
+		"for given time and latitude and solar irradiance (direct "
+		"solar radiation) raster maps for given day and latitude. "
+		"They are computed from elevation, slope and aspect raster "
+		"maps. Sunrise, sunset times, declination for given day "
+		"are displayed along with solar azimuth and zenith angle "
+		"for specified local time. The shadowing effect of the "
+		"topography is optionally incorporated.";
+
 	  parm.elevin = G_define_option();
 	  parm.elevin->key = "elevin";
 	  parm.elevin->type = TYPE_STRING;
@@ -191,13 +187,31 @@ main (int argc, char *argv[])
 
           flag.shade = G_define_flag();
           flag.shade->key = 's';
-          flag.shade->description = "Do you want to incorporate the shading effect of terrain? ";
+          flag.shade->description = "Incorporate shadowing effect of terrain";
 
 		
-		if(G_parser(argc,argv)) exit(1);
+	if(G_parser(argc,argv))
+		exit(1);
 
-		shd=flag.shade->answer;
+		if(G_get_set_window(&cellhd)==-1) exit(0);
+		/*ew_res = cellhd.ew_res;*/
+/*		stepx = cellhd.ew_res/cellhd.ew_res;*/
+		stepx = cellhd.ew_res;
+		/*ns_res = cellhd.ns_res;*/
+/*		stepy = cellhd.ns_res/cellhd.ew_res;*/
+		stepy = cellhd.ns_res;
+		n/*n_cols*/ = cellhd.cols;
+		m/*n_rows*/ = cellhd.rows;
+		/*x_orig = cellhd.west;*/
+	/*	xmin = 0.;*/
+		xmin = cellhd.west;
+		/*y_orig = cellhd.south;*/
+/*		ymin = 0.;*/
+		ymin = cellhd.south;
+		xmax = cellhd.east;
+		ymax = cellhd.north;
 
+	  shd=flag.shade->answer;
           elevin = parm.elevin->answer;
           aspin = parm.aspin->answer; 
           slopein = parm.slopein->answer;
@@ -496,44 +510,44 @@ com_par (void)
 						}
 			  }
 			  else {
-			if (pom < 0) {
-	  printf("\n Sun is ABOVE the surface during the whole day\n");
-			  sunrise_time = 0;
-			  sunset_time = 24;
-			  if (fabs(pom) - 1 <= EPS)
-			printf("\texcept at midnight is sun ON THE HORIZONT\n");
+				if (pom < 0) {
+				  printf("\n Sun is ABOVE the surface during the whole day\n");
+				  sunrise_time = 0;
+				  sunset_time = 24;
+				  if (fabs(pom) - 1 <= EPS)
+					printf("\texcept at midnight is sun ON THE HORIZONT\n");
 				}
 				else {
-		  printf("\n The sun is BELOW the surface during the whole day\n");
-			  if (fabs(pom) - 1 <= EPS) {
-			printf("\texcept at noon is sun ON HORIZONT\n");
-			sunrise_time = 12;
-			sunset_time = 12;
-/*                       if (old_time != sunrise_time)
+				  printf("\n The sun is BELOW the surface during the whole day\n");
+				  if (fabs(pom) - 1 <= EPS) {
+				printf("\texcept at noon is sun ON HORIZONT\n");
+				sunrise_time = 12;
+				sunset_time = 12;
+/*                      	 if (old_time != sunrise_time)
 na toto sa este riadne pozri		  request -= LUMCLINE;*/
-							  }
-/*				  else
-			   request -= LUMCLINE;*/
-						}
 				  }
+/*				  else
+				   request -= LUMCLINE;*/
+				}
+			  }
 			}
 			else {
 			  if (fabs(lum_Lz) >= EPS) {
 				if (lum_Lz > 0) {
-			  printf("\tSun is ABOVE area during the whole day\n");
+				  printf("\tSun is ABOVE area during the whole day\n");
 				  sunrise_time = 0;
 				  sunset_time = 24;
-					}
-					else {
-			  printf("\tSun is BELLOW area during the whole day");
-			 /*	  request -= LUMCLINE;*/
-					}
-				  }
-				  else {
-			printf("\tThe Sun is ON HORIZON during the whole day\n");
-						sunrise_time = 0;
-						sunset_time = 24;
-				  }
+				}
+				else {
+				  printf("\tSun is BELLOW area during the whole day");
+				 /*  request -= LUMCLINE;*/
+				}
+			  }
+			  else {
+				printf("\tThe Sun is ON HORIZON during the whole day\n");
+				sunrise_time = 0;
+				sunset_time = 24;
+			  }
 			}
 
 		  h0 = asin (lum_Lz);   /* vertical angle of the sun */
@@ -547,31 +561,31 @@ na toto sa este riadne pozri		  request -= LUMCLINE;*/
 
 		  if (fabs(pom) > EPS) {
 			A0 = lum_Ly / pom;
-		A0 = acos(A0);     /* horiz. angle of the Sun */
+			A0 = acos(A0);     /* horiz. angle of the Sun */
 /*			A0 *= RAD;*/
 			if (lum_Lx < 0)
 			  A0 = M2_PI - A0;
 /*			printf ("horizontal angle of the sun = %.4f\n", A0*RAD);*/
-			  }
-			  else {
+		  }
+		  else {
 			A0 = UNDEF;
 			if (h0 > 0)
 			  printf ("A0 = Zenit\n");
 			else
 			  printf ("A0 = Nadir\n");
-				  }
-				  angle = A0;
+		  }
+		  angle = A0;
                   if ( tlac == 1) {
-			 fprintf(stderr,"\n\n ----------------------------------------------------");
-			 fprintf(stderr,"\n declination = %f", decl);  
+			fprintf(stderr,"\n\n ----------------------------------------------------");
+			fprintf(stderr,"\n declination = %f", decl);  
                         fprintf(stderr,"\n sunrise (hr.) = %.2f",  sunrise_time);
                         fprintf(stderr,"\n sunset (hr.) = %.2f", sunset_time);
-		if(incidout != NULL) fprintf (stderr,"\n vertical angle (in degrees) of the sun = %.4f", h0*RAD);
-		if(incidout != NULL) fprintf (stderr,"\n horizontal angle (in degrees) of the sun = %.4f", A0*RAD); 
-		  fprintf(stderr,"\n ------------------------------------------------------\n\n");
-		tlac = 0; 
-                        }   
-			}
+			if(incidout != NULL) fprintf (stderr,"\n vertical angle (in degrees) of the sun = %.4f", h0*RAD);
+			if(incidout != NULL) fprintf (stderr,"\n horizontal angle (in degrees) of the sun = %.4f", A0*RAD); 
+			fprintf(stderr,"\n ------------------------------------------------------\n\n");
+			tlac = 0; 
+		   }   
+}
 /**********************************************************/
 
 double 
@@ -749,7 +763,7 @@ tky = metre apod. */
 
 	  return (s);
 }
-/*//////////////////////////////////////////////////////////////////////*/
+/*------------------------------------------------------------------------*/
 
 int 
 quadrant (void)
@@ -1455,7 +1469,7 @@ mesh_line (void)
 }
 
 
-/*//////////////////////////////////////////////////////////////////////*/
+/*------------------------------------------------------------------------*/
 
 void 
 calculate (void)

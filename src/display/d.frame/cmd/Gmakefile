@@ -1,9 +1,10 @@
 PGM=d.frame
-HOME=$(BIN_MAIN_CMD)
+HOME=$(BIN_CMD)
 all: \
 	$(ETC)/frame.create \
 	$(ETC)/frame.select \
 	$(ETC)/frame.dumper \
+	$(ETC)/frame.list \
 	$(HOME)/$(PGM)
 
 LIBES= $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
@@ -16,6 +17,9 @@ $(ETC)/frame.select: select.o $(LIBES)
 
 $(ETC)/frame.dumper: dumper.o $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ dumper.o $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(ETC)/frame.list: list.o $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ list.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(HOME)/$(PGM): frame.o $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ frame.o $(LIBES) $(MATHLIB) $(XDRLIB)

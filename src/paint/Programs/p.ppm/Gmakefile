@@ -10,7 +10,7 @@ LIST  = main.o\
 	paint.o\
 	xalloc.o
 
-$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(INTERFACE) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(INTERFACE) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(INTERFACE) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(INTERFACE) $(GISLIB): #

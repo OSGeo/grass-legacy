@@ -29,33 +29,67 @@ proc mkmainPanel { BASE } {
     # make redraw button area
     pack [frame $BASE.redrawf]		-side top -fill x -expand 1
     pack [frame $BASE.redrawf.f1] 	-side top -fill x
+    pack [frame $BASE.redrawf.f11]       -side top -fill x
     pack [frame $BASE.redrawf.f2] 	-side top -fill x 
 
-    set auto [checkbutton $BASE.redrawf.f1.autoclear -text "Auto Clear" \
+    set labl1 [label $BASE.redrawf.f1.label1  -text Auto: ]
+    set auto [checkbutton $BASE.redrawf.f1.autoclear -text "Clear" \
 		  -variable autoc ] 
     $auto select
-    set labl [label $BASE.redrawf.f1.label  -text REDRAW] 
-    set clr [button $BASE.redrawf.f1.clear -text Clear -command do_clear]
-    pack $auto $labl $clr -side left -expand 1 -fill x
+    set auto_d [checkbutton $BASE.redrawf.f1.autodraw -text "Draw" \
+                  -onvalue 1 -offvalue 0 -variable auto_draw ]
+    $auto_d select
+    pack $labl1 $auto $auto_d -side left -expand 1 -fill x
 
-    pack \
-	[button $BASE.redrawf.f2.surface -text Surface -command Nsurf_draw_all] \
-	-side left -expand 1 -fill x
-    pack \
-	[button $BASE.redrawf.f2.vectors -text Vectors -command Nvect_draw_all] \
-	-side left -expand 1 -fill x
-    pack \
-	[button $BASE.redrawf.f2.sites  -text Sites -command Nsite_draw_all] \
-	-side left -expand 1 -fill x
-    pack \
-	[button $BASE.redrawf.f2.cancel -text Cancel -command {Nset_cancel 1} ] \
-	-side left -expand 1 -fill x
+#checkbuttons for features to draw
+    set labl2 [label $BASE.redrawf.f11.label1  -text Feature: ]
+
+    set surf_b [checkbutton $BASE.redrawf.f11.surface -text "Surface" \
+                  -onvalue 1 -offvalue 0 -variable surface]
+    $surf_b select
+
+    set vect_b [checkbutton $BASE.redrawf.f11.vector -text "Vectors" \
+                  -onvalue 1 -offvalue 0 -variable vector]
+    $vect_b select
+
+    set site_b [checkbutton $BASE.redrawf.f11.sites -text "Sites" \
+                  -onvalue 1 -offvalue 0 -variable sites]
+    $site_b select
+
+    pack $labl2 $surf_b $vect_b $site_b -side left \
+    -expand 1 -fill x
 
 
+#Execute buttons
+
+    button $BASE.redrawf.f2.exec -text DRAW -command { \
+        if {$surface == 1 && $vector == 1 && $sites == 1} {
+        {Ndraw_all}
+        } else {
+        if {$surface == 1} {
+        {Nsurf_draw_all}
+        }
+        if {$vector == 1} {
+        {Nvect_draw_all}
+        }
+        if {$sites == 1} {
+        {Nsite_draw_all}
+        }
+                }}
+
+   button $BASE.redrawf.f2.clear -text Clear -command {do_clear}
+
+   button $BASE.redrawf.f2.cancel -text Cancel -command {Nset_cancel 1}
+
+   pack $BASE.redrawf.f2.exec  $BASE.redrawf.f2.clear $BASE.redrawf.f2.cancel \
+    -side left -expand 1 -fill x
+
+
+#pack frames
     pack [frame $BASE.midf ] -side left -expand 1
 
     # make  position "widget"
-    set XY [Nv_mkXYScale $BASE.midf.pos puck XY_POS 125 125 20 20 update_position]
+    set XY [Nv_mkXYScale $BASE.midf.pos puck XY_POS 125 125 105 105 update_position]
     set H [mk_hgt_slider $BASE.midf]
     set E [mk_exag_slider $BASE.midf]
     pack $XY $H $E -side left -expand y
@@ -69,9 +103,12 @@ proc mkmainPanel { BASE } {
 #-command {bind .top.canvas <Button> {if [%W islinked] {look_here %W %x %y}}}
 
     button $BASE.midf.lookat.here -text here \
-	-command {bind .top.canvas <Button> {look_here %W %x %y}}
+	-command {bind .top.canvas <Button> {look_here %W %x %y
+	if {[Nauto_draw] == 1} {Ndraw_all}
+	}}
 
-    button $BASE.midf.lookat.center -text center -command look_center
+    button $BASE.midf.lookat.center -text center -command { look_center
+	if {[Nauto_draw] == 1} {Ndraw_all} }
     button $BASE.midf.lookat.cancel -text cancel -command no_focus
     pack $BASE.midf.lookat.l $BASE.midf.lookat.here \
 	$BASE.midf.lookat.center $BASE.midf.lookat.cancel \
@@ -198,8 +235,8 @@ proc do_reset {XY H E P} {
     appBusy
 
     Nset_focus_map
-    Nv_itemDrag $XY $Nv_(XY_POS) 20 20
-    Nv_xyCallback Nchange_position 125 125 20 20
+    Nv_itemDrag $XY $Nv_(XY_POS) 105 105
+    Nv_xyCallback Nchange_position 125 125 105 105
     
     set exag [Nget_first_exag] 
     set val $exag
@@ -257,8 +294,9 @@ proc update_exag {exag} {
 }
 
 proc update_position {x y} {
-    global Nv_
+    global Nv_ 
     Nchange_position $x $y 
+
     if {$Nv_(FollowView)} {
 	set_lgt_position $x $y
 	set x [expr int($x*125)]

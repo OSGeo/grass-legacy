@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
@@ -6,15 +7,25 @@
 int main (int argc, char **argv)
 {
 	char frame[64] ;
+	struct GModule *module;
 	struct
 	{
 	    struct Option *c1;
 	    struct Option *c2;
+	  struct Flag *s;
+	  struct Flag *m;
+	  struct Flag *k;
 	} parm;
-	int color1, color2;
+	int color1, color2, s_flag, m_flag, k_flag;
 
 /* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Measures the lengths and areas of features drawn "
+		"by the user in the active display frame on the "
+		"graphics monitor.";
 
 	parm.c1 = G_define_option();
 	parm.c1->key = "c1";
@@ -32,10 +43,23 @@ int main (int argc, char **argv)
 	parm.c2->options=D_color_list();
 	parm.c2->answer = "white";
 
+	parm.s = G_define_flag();
+	parm.s->key = 's';
+	parm.s->description = "Suppress clear screen";
+
+	parm.m = G_define_flag();
+	parm.m->key = 'm';
+	parm.m->description = "Output in meters";
+
+	parm.k = G_define_flag();
+	parm.k->key = 'k';
+	parm.k->description = "Output in kilometers";
+	
 	if (G_parser(argc,argv))
 	    exit(1);
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	if (D_get_cur_wind(frame))
 		G_fatal_error("No current frame") ;
@@ -45,8 +69,11 @@ int main (int argc, char **argv)
 
 	color1 = D_translate_color (parm.c1->answer);
 	color2 = D_translate_color (parm.c2->answer);
+	s_flag = parm.s->answer;
+	m_flag = parm.m->answer;
+	k_flag = parm.k->answer;
 
-	measurements(color1, color2) ;
+	measurements(color1, color2, s_flag, m_flag, k_flag ) ;
 
 	R_close_driver();
 

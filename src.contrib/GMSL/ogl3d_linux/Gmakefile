@@ -1,4 +1,0 @@
-all:
-	$(GMAKE) $(SRC)/xgrass/libes/Xgi
-	$(GMAKE) gsf
-	$(GMAKE) cmd

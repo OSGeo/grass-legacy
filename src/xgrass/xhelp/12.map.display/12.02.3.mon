@@ -1,9 +1,0 @@
-                 RELEASING AND UNLOCKING A MONITOR    
-
-Once a user has selected a monitor for graphics output, it is locked
-for use by that user until either:  (1) the user voluntarily releases
-control of the monitor for use by another, or (2) another GRASS user
-unlocks the user's control of the monitor.  Only the user who has
-selected a monitor for output can release control of it.  However,
-other users can achieve the same effect by running @man("d.mon") from the
-command line and unlocking another user's control of a monitor.

@@ -1,6 +1,6 @@
 PGM	=	m.strip99s
 LIST	=	m.strip99s.o
-all:		$(BIN_CONTRIB_CMD)/$(PGM)
+all:		$(BIN_CMD)/$(PGM)
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(GISLIB) 
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(EXTRALIB) $(MATHLIB) $(XDRLIB)

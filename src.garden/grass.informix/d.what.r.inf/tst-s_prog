@@ -1,7 +1,0 @@
-:
-# test for d.what.r.inf using prebuilt SQL command file
-# DB=seco_soils, GISdb=SECO
-#
-#
-
-d.what.r.inf  -s sql=tst_dwr.sql map=seco.soils 

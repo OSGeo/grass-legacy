@@ -24,8 +24,15 @@ main (int argc, char **argv)
 	int i, stat ;
 	int t,b,l,r;
 	char map_name[128];
+	struct GModule *module;
 	struct Option *opt1,*opt2, *opt3;
 	struct line_pnts *Points;
+
+	G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Obtains area/perimeter information on vector polygons.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "map" ;
@@ -47,7 +54,6 @@ main (int argc, char **argv)
 	opt3->type       = TYPE_STRING ;
 	opt3->answer     = "none" ;
 	opt3->description= "Color desired for drawing map" ;
-	G_gisinit(argv[0]);
 
 	/* Check command line */
 	if (G_parser(argc, argv))
@@ -67,10 +73,11 @@ main (int argc, char **argv)
 	}
 
 	
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error("No graphics driver selected");
 
 	if (D_get_cur_wind(window_name))
-		G_fatal_error("No current graphocs window");
+		G_fatal_error("No current graphics window");
 	if (D_set_cur_wind(window_name))
 		G_fatal_error("Current graphics window not available");
 	G_get_window(&window) ;

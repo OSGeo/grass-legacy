@@ -59,9 +59,15 @@ main (int argc, char **argv)
     double U_east, U_north ;
     double U_start;
     double U_x, U_y ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4, *opt5, *opt6 ;
 
 	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Draws arrows representing cell "
+		"aspect direction for a raster map layer.";
 
     opt1 = G_define_option() ;
     opt1->key        = "map" ;
@@ -148,7 +154,8 @@ main (int argc, char **argv)
 
 /* Setup driver and check important information */
 
-    R_open_driver();
+    if (R_open_driver() != 0)
+	G_fatal_error ("No graphics device selected");
 
     if (D_get_cur_wind(window_name))
         G_fatal_error("No current window") ;

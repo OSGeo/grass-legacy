@@ -1,136 +1,95 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <sys/time.h>
 #include "includes.h"
-#include "../lib/graph.h"
 #include "colors.h"
 #include "pad.h"
+#include "gis.h"
 
-extern int SCREEN_RIGHT, SCREEN_BOTTOM ;
-extern XFontStruct *fontstruct;
-extern Display *dpy;
-extern Window grwin;
-extern Pixmap bkupmap;
-extern int backing_store;
-extern GC gc;
-extern unsigned SC_WID, SC_HITE;
+static void spawnRedrawProcess(void);
+static void checkRedrawProcess(void);
+static void handleResizeEvent(void);
+static void checkFlush(void);
+static void setTitleBusy(int);
 
-extern PAD *curpad;
-extern PAD *padlist;
+pid_t redraw_pid;
 
-int Service_Xevent (void)
+int needs_flush;
+
+int Get_Xevent(long event_mask, XEvent *event)
 {
-    static int firstime = 1;
+    int input_fd = command_get_input();
+    int display_fd = ConnectionNumber(dpy);
+
+    for (;;)
+    {
+	fd_set waitset;
+	struct timeval tv;
+
+	if (XCheckWindowEvent(dpy, grwin, event_mask, event))
+	    return 1;
+
+	tv.tv_sec = 1;
+	tv.tv_usec = 0;
+
+	FD_ZERO(&waitset);
+	FD_SET(input_fd, &waitset);
+	FD_SET(display_fd, &waitset);
+	if (select(FD_SETSIZE, &waitset, NULL, NULL, &tv) < 0)
+	{
+	    perror("monitor: get_event: select");
+	    return 0;
+	}
+
+	if (FD_ISSET(input_fd, &waitset))
+	    return 0;
+    }
+}
+
+int Service_Xevent (int opened)
+{
+    static int do_resize;
     Atom WM_DELETE_WINDOW;
     XEvent event;
 
-    while( XPending(dpy)) { /* NOTE: This won't die if server terminates */
-        XNextEvent(dpy, &event);
-    /* On the first Expose events, write the grass display message. For
-     * now, on subsequent expose copy the backup window to the display
-     * window. */
-    if ((event.type == Expose && event.xexpose.count == 0)
-        || event.type == ConfigureNotify ) {
-      if ( event.type == Expose ) {
-        if (firstime) {
-            /* Fill the window with the background color */
-            XClearWindow(dpy, grwin);
-            firstime = 0;
-        } else 
-        {
-            XWindowAttributes xwa;
+    checkRedrawProcess();
 
-            /* Get the window's current attributes. */
-	    
-            if (XGetWindowAttributes(dpy, grwin, &xwa) == 0)
-                return 1;
-
-            SC_WID  = xwa.width;
-            SC_HITE = xwa.height;
-            SCREEN_RIGHT = xwa.width - 1;
-            SCREEN_BOTTOM = xwa.height - 1;
-            Set_window(1, xwa.height-1, 1, xwa.width-1);
-
-            if (!backing_store)
-                XCopyArea(dpy, bkupmap, grwin, gc, 0, 0, SC_WID, SC_HITE,
-                    0, 0);
-            firstime = 0;
-        }
-      } else if ( event.type == ConfigureNotify ) {
-            /* if the window is not the same size do a d.frame -e */
-            if ( event.xconfigure.width != SC_WID || 
-                 event.xconfigure.height != SC_HITE ) {
-                PAD *curpad;
-                char buf[64];
-                XWindowAttributes xwa;
-
-
-                /* Get the window's current attributes. */
-                if (XGetWindowAttributes(dpy, grwin, &xwa) == 0)
-                    return 1;
-
-                SC_WID  = xwa.width;
-                SC_HITE = xwa.height;
-                SCREEN_RIGHT = xwa.width - 1;
-                SCREEN_BOTTOM = xwa.height - 1;
-
-                /* do a d.frame -e (essentially) */
-                /* Dclearscreen() */
-                /* delete the time and current window out of the scratch pad */
-                curpad = find_pad("");
-                delete_item(curpad,"time");
-                delete_item(curpad,"cur_w");
-                /* delete all other pads */
-                for ( curpad = padlist; curpad != NULL; curpad = curpad->next ){
-                    if ( *curpad->name  )
-                        delete_pad(curpad);
-                }
-                curpad = NULL;
-                /* set standard color to black and erase */
-                Standard_color(BLACK);
-                Erase();
-                /* Dnew("full_screen") */
-                /* find a pad called "full_screen" */
-                create_pad("full_screen");
-                sprintf(buf,"1 %d 1 %d",SCREEN_BOTTOM,SCREEN_RIGHT);
-                curpad = find_pad("full_screen");
-                append_item(curpad, "d_win", buf);
-                _time_stamp(curpad);
-                /* Dchoose("full_screen") */
-                /* set the time and window name in no-name pad */
-                curpad = find_pad("");
-                append_item(curpad, "cur_w", "full_screen");
-                _time_stamp(curpad);
-                /* make white outline for the window (it's selected) */
-                Standard_color(WHITE);
-                Move_abs(0, SCREEN_BOTTOM+1) ;
-                Cont_abs(0, 0) ;
-                Cont_abs(SCREEN_RIGHT+1, 0) ;
-                Cont_abs(SCREEN_RIGHT+1, SCREEN_BOTTOM+1) ;
-                Cont_abs(0, SCREEN_BOTTOM+1) ;
-                /* set the window */
-                Set_window(1, SCREEN_BOTTOM,
-                           1, SCREEN_RIGHT) ;
-		/* Handle backing store */
-                if (!backing_store) {
-fprintf(stderr,"Destroying old pixmap\n");
-                    XFreePixmap(dpy, bkupmap);
-                    bkupmap = XCreatePixmap(dpy, grwin, SC_WID, SC_HITE, 
-                        xwa.depth);
-                    XCopyArea(dpy, grwin, bkupmap, gc, 0, 0, (unsigned) SC_WID,
-                            (unsigned) SC_HITE, 0, 0);
-		}
-            }
-        }
-    }
-    if (event.type == ClientMessage)
+    while (XPending(dpy))
     {
-	WM_DELETE_WINDOW = XInternAtom(event.xclient.display, "WM_DELETE_WINDOW", False);
-	if(event.xclient.data.l[0] == WM_DELETE_WINDOW)
+	/* NOTE: This won't die if server terminates */
+        XNextEvent(dpy, &event);
+	switch (event.type)
 	{
-   	   Graph_Close();
-	   exit(0);
-	}
+	case ConfigureNotify:
+	    if ( event.xconfigure.width != SC_WID || 
+		 event.xconfigure.height != SC_HITE ) 
+		do_resize = 1; /* group requests into one */
+	    break;
+
+        case ClientMessage:
+            WM_DELETE_WINDOW = XInternAtom(event.xclient.display, 
+					   "WM_DELETE_WINDOW", False);
+            if (event.xclient.data.l[0] != WM_DELETE_WINDOW)
+		break;
+	    Graph_Close();
+	    exit(0);
+	    break;
+        }
+    } /* while() */
+
+    /* Now process resize or expose events */
+    if (do_resize && !redraw_pid && !opened)
+    {
+	spawnRedrawProcess();
+	handleResizeEvent();
+	do_resize = 0;
     }
-    }
+
+    checkFlush();
 
     return 0;
 }
@@ -143,6 +102,209 @@ int _time_stamp (PAD *pad)
     return 0;
 }
 
+static void checkRedrawProcess(void)
+{
+    int status;
+    pid_t pid;
+
+    if (!redraw_pid)
+	return;
+
+    pid = waitpid(redraw_pid, &status, WNOHANG);
+    if (pid < 0)
+    {
+	perror("Monitor: checkRedrawProcess: waitpid");
+	return;
+    }
+
+    if (pid == 0)
+	return;
+
+    if (pid != redraw_pid)
+    {
+	fprintf(stderr, "Monitor: waitpid: expected %d but got %d\n",
+		redraw_pid, pid);
+	return;
+    }
+
+    setTitleBusy(0);
+    redraw_pid = 0;
+}
+
+static void spawnRedrawProcess(void)
+{
+    pid_t pid;
+    LIST *commands;
+    PAD *pad;
+    ITEM *item;
+
+    if (redraw_pid)
+	return;
+
+    pad = find_pad("full_screen");
+    if (!pad)
+	return;
+
+    item = find_item(pad, "list");
+    if (!item)
+	return;
+
+    commands = item->list;
+    if (!commands)
+	return;
+
+    pid = fork();
+    if (pid < 0)
+    {
+	perror("Monitor: fork");
+	return;
+    }
+
+    if (pid != 0)	/* parent */
+    {
+	setTitleBusy(1);
+	redraw_pid = pid;
+	return;
+    }
+
+    /* child */
+
+    close(0); open("/dev/null", O_RDONLY);
+    close(1); open("/dev/null", O_WRONLY);
+    close(2); open("/dev/null", O_WRONLY);
+    for ( ; commands; commands = commands->next)
+	system(commands->value);
+    exit(0);
+}
+
+static void handleResizeEvent(void)
+{
+    PAD *curpad;
+    char buf[64];
+    XWindowAttributes xwa;
+    XGCValues gc_values;
+
+    /* Get the window's current attributes. */
+    if (!XGetWindowAttributes(dpy, grwin, &xwa))
+	return;
+
+    SC_WID  = xwa.width;
+    SC_HITE = xwa.height;
+    screen_right = xwa.width;
+    screen_bottom = xwa.height;
+
+    /* do a d.frame -e (essentially) */
+    /* Dclearscreen() */
+    /* delete the time and current window out of the scratch pad */
+    curpad = find_pad("");
+    delete_item(curpad,"time");
+    delete_item(curpad,"cur_w");
+
+    /* delete all other pads */
+    for ( curpad = pad_list(); curpad != NULL; curpad = curpad->next )
+	if ( *curpad->name  )
+	    delete_pad(curpad);
+
+    curpad = NULL;
+
+    /* set standard color to black and erase */
+    Standard_color(BLACK);
+    Erase();
+
+    /* Dnew("full_screen") */
+    /* find a pad called "full_screen" */
+    create_pad("full_screen");
+    sprintf(buf,"%d %d %d %d",
+	    screen_top,screen_bottom,screen_left,screen_right);
+    curpad = find_pad("full_screen");
+    append_item(curpad, "d_win", buf);
+    _time_stamp(curpad);
+    /* Dchoose("full_screen") */
+
+    /* set the time and window name in no-name pad */
+    curpad = find_pad("");
+    append_item(curpad, "cur_w", "full_screen");
+    _time_stamp(curpad);
+
+    /* set the window */
+    Set_window(screen_top, screen_bottom, screen_left, screen_right) ;
+
+    /* Handle backing store */
+    XFreePixmap(dpy, bkupmap);
+    bkupmap = XCreatePixmap(dpy, grwin, SC_WID, SC_HITE, xwa.depth);
+    XGetGCValues(dpy, gc, GCForeground, &gc_values);
+    XSetForeground(dpy, gc, BlackPixel(dpy, scrn));
+    XFillRectangle(dpy, bkupmap, gc, 0, 0, SC_WID, SC_HITE);
+    XSetForeground(dpy, gc, gc_values.foreground);
+    XSetWindowBackgroundPixmap(dpy, grwin, bkupmap);
+    XClearWindow(dpy, grwin);
+
+    needs_flush = 0;
+}
+
+static void checkFlush(void)
+{
+	static struct timeval last_flush;
+	struct timeval now;
+	long delta;
+
+	if (!needs_flush)
+		return;
+
+	if (gettimeofday(&now, NULL) < 0)
+	{
+		perror("Monitor: gettimeofday");
+		return;
+	}
+
+	delta = (now.tv_sec - last_flush.tv_sec) * 1000000 +
+		(now.tv_usec - last_flush.tv_usec);
+	if (last_flush.tv_sec && delta < 250000)
+		return;
+
+	XClearWindow(dpy, grwin);
+
+	last_flush = now;
+	needs_flush = 0;
+}
+
+static void setTitleBusy(int busy)
+{
+#ifndef X11R3
+	static const char text[] = " [redraw]";
+	XTextProperty prop;
+	char title[1024], *p;
+
+	if (!XGetWMName(dpy, grwin, &prop))
+	{
+		fprintf(stderr, "Monitor: XGetWMName failed\n");
+		return;
+	}
+
+	if (!prop.value || !prop.nitems || prop.format != 8)
+	{
+		fprintf(stderr, "Monitor: XGetWMName: bad result\n");
+		return;
+	}
+
+	strcpy(title, prop.value);
+	XFree(prop.value);
+
+	p = strstr(title, text);
+	if (p)
+		*p = '\0';
+	if (busy)
+		strcat(title, text);
+
+	prop.value = title;
+	prop.nitems = strlen(title);
+
+	XSetWMName(dpy, grwin, &prop);
+#endif
+	if (busy)
+		XDefineCursor(dpy, grwin, cur_clock);
+	else
+		XUndefineCursor(dpy, grwin);
+}
 
 /*** end Serve_Xevent.c ***/
-

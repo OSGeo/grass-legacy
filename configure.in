@@ -1,107 +1,147 @@
+#############################################################################
+#
+# $Id$
+#
+# MODULE:   	Grass Compilation
+# AUTHOR(S):	Original author unknown - probably CERL
+#   	    	Eric G. Miller - egm2@jps.net
+#   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
+#		Markus Neteler - Germany - neteler@geog.uni-hannover.de
+# PURPOSE:  	This configure runs all the tests to determine what components
+#   	    	are installed on the current system. It also defines certain
+#   	    	configuration variables for compilation and installation.
+# COPYRIGHT:    (C) 2000 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#   	    	License (>=v2). Read the file COPYING that comes with GRASS
+#   	    	for details.
+#
+# MANUAL:       http://www.gnu.org/manual/autoconf/html_mono/autoconf.html
+#############################################################################
+
+define([AC_CACHE_LOAD], )
+define([AC_CACHE_SAVE], )
+
 AC_INIT(README)
-AC_PREFIX_DEFAULT(/usr/local/grass-5.0b)
-AC_BINDIR_DEFAULT(/usr/local/bin)
+AC_PREFIX_DEFAULT(/usr/local)
 AC_CONFIG_HEADER(src/include/config.h)
 AC_CANONICAL_HOST
 AC_PROG_CC
 
 AC_MSG_CHECKING(whether ld -s works)
 STRIPFLAG=
-ac_save_ldflags=${LDFLAGS}
-LDFLAGS=-s
-AC_TRY_LINK(,,STRIPFLAG=-s; AC_MSG_RESULT(yes),AC_MSG_RESULT(no))
+ac_save_ldflags="$LDFLAGS"
+LDFLAGS="$LDFLAGS -s"
+AC_TRY_LINK(,,STRIPFLAG=-s; AC_MSG_RESULT(yes), AC_MSG_RESULT(no))
 LDFLAGS=${ac_save_ldflags}
 AC_SUBST(STRIPFLAG)
 
-AC_PROG_INSTALL
-AC_PROG_LEX
-AC_PROG_RANLIB
-AC_CHECK_PROGS(ENV, env)
-AC_CHECK_PROGS(F77, f77 g77)
-AC_PATH_XTRA
-AC_HEADER_STDC
-AC_CHECK_HEADERS(curses.h limits.h termio.h termios.h unistd.h values.h)
-AC_CHECK_HEADERS(sys/ioctl.h sys/mtio.h sys/resource.h sys/time.h)
-AC_CHECK_HEADERS(sys/timeb.h sys/types.h sys/utsname.h)
-AC_HEADER_TIME
-AC_TYPE_OFF_T
-AC_TYPE_UID_T
-
-AC_MSG_CHECKING(curses.h WINDOW structure component)
-CURSES_MAXY=NONE
-AC_TRY_COMPILE([
-#include <curses.h>
-  WINDOW w;
-  ],[w.maxy = 0;],
-  CURSES_MAXY=maxy)
-AC_TRY_COMPILE([
-#include <curses.h>
-  WINDOW w;
-  ],[w._maxy = 0;],
-  CURSES_MAXY=_maxy)
-AC_DEFINE_UNQUOTED(CURSES_MAXY,$CURSES_MAXY)
-AC_SUBST(CURSES_MAXY)
-AC_MSG_RESULT($CURSES_MAXY)
-
-AC_CHECK_FUNCS(ftime gethostname gettimeofday lseek nice time uname)
-AC_CHECK_FUNCS(seteuid setpriority setreuid setruid)
-AC_FUNC_SETPGRP
-
-CURSESLIB=
-if test -z "${CURSESLIB}"; then
-AC_CHECK_LIB(ncurses, initscr, CURSESLIB=-lncurses)
-fi
-if test -z "${CURSESLIB}"; then
-AC_CHECK_LIB(curses, initscr, CURSESLIB=-lcurses)
-fi
-AC_SUBST(CURSESLIB)
-
-COMPATLIB=
-if test -z "${COMPATLIB}"; then
-AC_CHECK_LIB(compat, gtty, COMPATLIB=-lcompat)
-fi
-AC_SUBST(COMPATLIB)
-
-TERMLIB=
-if test -z "${TERMLIB}"; then
-AC_CHECK_LIB(termlib, tgetent, TERMLIB=-ltermlib)
-fi
-AC_SUBST(TERMLIB)
-
-XDRLIB=
-if test -z "${XDRLIB}"; then
-AC_CHECK_LIB(sun, xdr_int, XDRLIB=-lsun)
-fi
-if test -z "${XDRLIB}"; then
-AC_CHECK_LIB(nsl, xdr_int, XDRLIB=-lnsl)
-fi
-AC_SUBST(XDRLIB)
-
+if test -n "${bindir}"; then
+BINDIR="${bindir}"
+else
 BINDIR=/usr/local/bin
-AC_ARG_WITH(bindir,
-    [  --with-bindir=DIR       user executables installed in DIR [/usr/local/bin] ],
-    [
-	case "$withval" in
-	"" | y | ye | yes | n | no)
-	    AC_MSG_ERROR([*** You must supply an argument to the --with-bindir option.])
-	  ;;
-	esac
-	WITH_BINDIR="$withval"
-    ])
-
-if test "$WITH_BINDIR"; then
-	for dir in $WITH_BINDIR; do
-		if test -d "$dir"; then
-			BINDIR="$dir"
-		else
-			AC_MSG_WARN([*** installation directory $dir does not exist.])
-		fi
-	done
-	AC_MSG_CHECKING(user executable directory)
-	AC_MSG_RESULT($BINDIR)
 fi
 AC_SUBST(BINDIR)
 
+# Make sure this is set correctly
+SRCDIR=`pwd`
+AC_SUBST(SRCDIR)
+
+ARCH=
+if test -z "${host}"; then
+ARCH="unknown"
+else
+ARCH="${host}"
+fi
+AC_SUBST(ARCH)
+
+# Add VERSION, GISBASE, and GRASS_BIN
+VERSION=`cat ${SRCDIR}/src/CMD/VERSION | head -1`
+NAME_VER=`echo ${VERSION} | sed 's/\..*//'`
+GISBASE=${SRCDIR}/dist.${ARCH}
+GRASS_BIN=${SRCDIR}/bin.${ARCH}
+
+AC_SUBST(VERSION)
+AC_SUBST(NAME_VER)
+AC_SUBST(GISBASE)
+AC_SUBST(GRASS_BIN)
+
+# With SysV option
+SYSV=
+AC_MSG_CHECKING(for SYSV)
+AC_ARG_WITH(SYSV,
+    [  --with-SYSV             define the compiler macro SYSV],
+    [
+	case "$withval" in
+	"" | y | ye | yes)
+	    SYSV=-DSYSV
+	    AC_MSG_RESULT(yes)
+	  ;;
+	n | no)
+	    SYSV=
+	    AC_MSG_RESULT(no)
+	  ;;
+	*)
+	    AC_MSG_ERROR([*** Invalid argument $withval supplied to the --with-SYSV option.])
+	  ;;
+	esac
+    ],
+    [
+	SYSV=
+	AC_MSG_RESULT(no)
+    ])
+AC_SUBST(SYSV)
+
+# With USE_TERMIO option
+USE_TERMIO=
+AC_MSG_CHECKING(for USE_TERMIO)
+AC_ARG_WITH(USE_TERMIO,
+    [  --with-USE_TERMIO       define the compiler macro USE_TERMIO],
+    [
+	case "$withval" in
+	"" | y | ye | yes)
+	    USE_TERMIO=-DUSE_TERMIO
+	    AC_MSG_RESULT(yes)
+	  ;;
+	n | no)
+	    USE_TERMIO=
+	    AC_MSG_RESULT(no)
+	  ;;
+	*)
+	    AC_MSG_ERROR([*** Invalid argument $withval supplied to the --with-USE_TERMIO option.])
+	  ;;
+	esac
+    ],
+    [
+	USE_TERMIO=
+	AC_MSG_RESULT(no)
+    ])
+AC_SUBST(USE_TERMIO)
+
+# With ANOTHER_BUTTON option
+ANOTHER_BUTTON=no
+AC_MSG_CHECKING(for another button)
+AC_ARG_WITH(another-button,
+    [  --with-another-button   use two button mouse conveniently],
+    [
+        case "$withval" in
+        "" | y | ye | yes)
+	    AC_MSG_RESULT(yes)
+	    AC_DEFINE(ANOTHER_BUTTON)
+          ;;
+	n | no)
+	    AC_MSG_RESULT(no)
+	  ;;
+	*)
+	    AC_MSG_ERROR([*** Invalid argument $withval supplied to the --with-another-button option.])
+	  ;;
+        esac
+    ],
+    [
+	AC_MSG_RESULT(no)
+    ])
+
+# Put this early on so CPPFLAGS and LDFLAGS have any additional dirs
 AC_ARG_WITH(includes,
     [  --with-includes=DIR     site header files in DIR],
     [
@@ -113,16 +153,17 @@ AC_ARG_WITH(includes,
 	INC_DIRS="$withval"
     ])
 
-if test "$INC_DIRS"; then
-	for dir in $INC_DIRS; do
-		if test -d "$dir"; then
-			INCLUDE_DIRS="$INCLUDE_DIRS -I$dir"
-		else
-			AC_MSG_WARN([*** Include directory $dir does not exist.])
-		fi
-	done
-	AC_MSG_CHECKING(additional include dirs)
-	AC_MSG_RESULT($INCLUDE_DIRS)
+if test -n "$INC_DIRS"; then
+    for dir in $INC_DIRS; do
+        if test -d "$dir"; then
+            INCLUDE_DIRS="$INCLUDE_DIRS -I$dir"
+        else
+            AC_MSG_WARN([*** Include directory $dir does not exist.])
+        fi
+    done
+    AC_MSG_CHECKING(additional include dirs)
+    AC_MSG_RESULT($INCLUDE_DIRS)
+    CPPFLAGS="$CPPFLAGS $INCLUDE_DIRS"
 fi
 AC_SUBST(INCLUDE_DIRS)
 
@@ -137,106 +178,1152 @@ AC_ARG_WITH(libs,
 	LIB_DIRS="$withval"
     ])
 
-if test "$LIB_DIRS"; then
-	for dir in $LIB_DIRS; do
-		if test -d "$dir"; then
-			LIBRARY_DIRS="$LIBRARY_DIRS -L$dir"
-		else
-			AC_MSG_WARN([*** Library directory $dir does not exist.])
-		fi
-	done
-	AC_MSG_CHECKING(additional library dirs)
-	AC_MSG_RESULT($LIBRARY_DIRS)
+if test -n "$LIB_DIRS"; then
+    for dir in $LIB_DIRS; do
+        if test -d "$dir"; then
+            LIBRARY_DIRS="$LIBRARY_DIRS -L$dir"
+        else
+            AC_MSG_WARN([*** Library directory $dir does not exist.])
+        fi
+    done
+    AC_MSG_CHECKING(additional library dirs)
+    AC_MSG_RESULT($LIBRARY_DIRS)
+    LDFLAGS="$LDFLAGS $LIBRARY_DIRS"
 fi
 AC_SUBST(LIBRARY_DIRS)
 
+AC_PROG_INSTALL
+AC_PROG_LEX
+if test "$LEX" != "flex"; then
+    AC_MSG_WARN([Consider installation of flex (replacement of lex).])
+fi
+
+AC_PROG_YACC
+
+AC_PROG_RANLIB
+AC_CHECK_PROGS(ENV, env)
+AC_CHECK_PROGS(F77, g77 f77)
+AC_PATH_PROG(PERL, perl, no)  
+AC_PATH_XTRA
+AC_HEADER_STDC
+AC_CHECK_HEADERS(curses.h limits.h termio.h termios.h unistd.h values.h g2c.h f2c.h)
+AC_CHECK_HEADERS(sys/ioctl.h sys/mtio.h sys/resource.h sys/time.h)
+AC_CHECK_HEADERS(sys/timeb.h sys/types.h sys/utsname.h)
+AC_HEADER_TIME
+AC_TYPE_OFF_T
+AC_TYPE_UID_T
+AC_TYPE_SIGNAL
+AC_CYGWIN
+AC_CHECK_FUNCS(ftime gethostname gettimeofday lseek nice time uname)
+AC_CHECK_FUNCS(seteuid setpriority setreuid setruid)
+AC_CHECK_FUNCS(drand48)
+AC_FUNC_SETPGRP
+
+AC_MSG_CHECKING(curses.h WINDOW structure component)
+CURSES_MAXY=NONE
+AC_TRY_COMPILE([
+#include <curses.h>
+  ],[WINDOW w; w.maxy = 0;],
+  CURSES_MAXY=maxy)
+AC_TRY_COMPILE([
+#include <curses.h>
+  ],[WINDOW w; w._maxy = 0;],
+  CURSES_MAXY=_maxy)
+AC_DEFINE_UNQUOTED(CURSES_MAXY,$CURSES_MAXY)
+AC_SUBST(CURSES_MAXY)
+AC_MSG_RESULT($CURSES_MAXY)
+
+AC_CHECK_LIB(ncurses, initscr, CURSESLIB=-lncurses, [
+AC_CHECK_LIB(curses, initscr, CURSESLIB=-lcurses, [
+    AC_MSG_WARN([*** Unable to locate curses library.])
+    CURSESLIB=
+])])
+AC_SUBST(CURSESLIB)
+
+AC_CHECK_LIB(compat, gtty, COMPATLIB=-lcompat, [
+AC_CHECK_LIB(bsd-compat, gtty, COMPATLIB=-lbsd-compat, [
+AC_CHECK_LIB(bsd, gtty, COMPATLIB=-lbsd, [
+    COMPATLIB=
+])])])
+AC_SUBST(COMPATLIB)
+
+AC_CHECK_LIB(termlib, tgetent, TERMLIB=-ltermlib, [
+AC_CHECK_LIB(termcap, tgetent, TERMLIB=-ltermcap, [
+AC_CHECK_LIB(ncurses, tgetent, TERMLIB=-lncurses, [
+AC_CHECK_LIB(curses, tgetent, TERMLIB=-lcurses, [
+    TERMLIB=
+])])])])
+AC_SUBST(TERMLIB)
+
+AC_CHECK_FUNC(xdrmem_create, XDRLIB=, [
+AC_CHECK_LIB(sun, xdrmem_create, XDRLIB=-lsun, [
+AC_CHECK_LIB(nsl, xdrmem_create, XDRLIB=-lnsl, [
+AC_CHECK_LIB(rpclib, xdrmem_create, XDRLIB=-lrpclib, [
+    AC_MSG_ERROR([*** Unable to locate XDR functions.])
+])])])])
+AC_SUBST(XDRLIB)
+
+# Test if mathlib needs -lm flag or is included with libc
+AC_CHECK_FUNC(atan, MATHLIB=, [
+AC_CHECK_LIB(m, atan, MATHLIB=-lm, [
+AC_MSG_WARN([*** Failed check for math library.])
+    MATHLIB=
+])])
+AC_SUBST(MATHLIB)
+
+AC_CHECK_FUNC(dlsym, DLLIB=, [
+AC_CHECK_LIB(dl, dlsym, DLLIB=-ldl, [
+    DLLIB=
+])])
+AC_SUBST(DLLIB)
+
+# With zlib includes directory:
+AC_MSG_CHECKING(for location of zlib includes)
+AC_ARG_WITH(zlib-includes,
+  [  --with-zlib-includes=DIR
+                          Specify includes directory for zlib],
+  [
+   	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+	    AC_MSG_ERROR([*** You must supply a directory to the --with-zlib-includes option.])
+	;;
+	esac
+	zlib_inc_dir="$withval"
+   ])
+AC_MSG_RESULT($zlib_inc_dir)
+
+ZLIBINCPATH=
+if test -n "$zlib_inc_dir"; then
+    if test -d "$zlib_inc_dir"; then
+        ZLIBINCPATH="-I${zlib_inc_dir}"
+    else
+        AC_MSG_WARN([*** zlib includes directory $zlib_inc_dir does not exist.])
+    fi
+fi
+AC_SUBST(ZLIBINCPATH)
+
+ac_save_cppflags="$CPPFLAGS"
+CPPFLAGS="$CPPFLAGS $ZLIBINCPATH"
+AC_CHECK_HEADERS(zlib.h, [], [
+    AC_MSG_ERROR([*** Unable to locate zlib includes.])
+])
+CPPFLAGS=${ac_save_cppflags}
+
+# With zlib library directory:
+AC_MSG_CHECKING(for location of zlib library)
+AC_ARG_WITH(zlib-libs,
+  [  --with-zlib-libs=DIR
+                          Specify library directory for zlib],
+  [
+   	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+	    AC_MSG_ERROR([*** You must supply a directory to the --with-zlib-libs option.])
+	;;
+	esac
+	zlib_lib_dir="$withval"
+   ])
+AC_MSG_RESULT($zlib_lib_dir)
+
+ZLIBLIBPATH=
+if test -n "$zlib_lib_dir"; then
+    if test -d "$zlib_lib_dir"; then
+        ZLIBLIBPATH="$ZLIBLIBPATH -L${zlib_lib_dir}"
+    else
+        AC_MSG_WARN([*** zlib library directory $zlib_lib_dir does not exist.])
+    fi
+fi
+AC_SUBST(ZLIBLIBPATH)
+
+ZLIB=
+ac_save_ldflags="$LDFLAGS"
+LDFLAGS="$LDFLAGS $ZLIBLIBPATH"
+AC_CHECK_LIB(z, deflate, ZLIB=-lz, [
+    AC_MSG_ERROR([*** Unable to locate zlib.])
+])
+LDFLAGS=${ac_save_ldflags}
+AC_SUBST(ZLIB)
+
+# Done checking zlib
+
+# With JPEG includes directory:
+AC_MSG_CHECKING(for location of JPEG includes)
+AC_ARG_WITH(jpeg-includes,
+  [  --with-jpeg-includes=DIR
+                          Specify directory for JPEG includes],
+  [   
+   	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+	    AC_MSG_ERROR([*** you must supply a directory to --with-jpeg-includes.])
+	;;
+	esac
+	jpeg_includes="$withval"
+   ])
+AC_MSG_RESULT($jpeg_includes)
+
+JPEGINCPATH=
+if test -n "$jpeg_includes"; then
+    if test -d "$jpeg_includes"; then
+        JPEGINCPATH="$JPEGINCPATH -I$jpeg_includes"
+    else
+        AC_MSG_WARN([*** JPEG includes directory $jpeg_includes does not exist.])
+    fi
+fi
+AC_SUBST(JPEGINCPATH)
+
+ac_save_cppflags="$CPPFLAGS"
+CPPFLAGS="$CPPFLAGS $JPEGINCPATH"
+AC_CHECK_HEADERS(jpeglib.h, [], [
+    AC_MSG_WARN([*** Unable to locate JPEG includes.])
+])
+CPPFLAGS=${ac_save_cppflags}
+
+# With JPEG library directory:
+AC_MSG_CHECKING(for location of JPEG library)
+AC_ARG_WITH(jpeg-libs,
+  [  --with-jpeg-libs=DIR    Specify directory for jpeg library],
+  [   
+   	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+	    AC_MSG_ERROR([*** You must supply a directory to --with-jpeg-lib.])
+	;;
+	esac
+	jpeg_libs="$withval"
+   ])
+AC_MSG_RESULT($jpeg_libs)
+
+JPEGLIBPATH=
+if test "$jpeg_libs"; then
+    if test -d "$jpeg_libs" ; then
+        JPEGLIBPATH="$JPEGLIBPATH -L$jpeg_libs"
+    else
+        AC_MSG_WARN([*** JPEG library directory $jpeg_libs does not exist.])
+    fi
+fi
+AC_SUBST(JPEGLIBPATH)
+
+JPEGLIB=
+ac_save_ldflags="$LDFLAGS"
+LDFLAGS="$LDFLAGS $JPEGLIBPATH"
+AC_CHECK_LIB(jpeg, jpeg_start_compress, JPEGLIB="-ljpeg", [
+eval unset ac_cv_lib_$ac_lib_var
+AC_CHECK_LIB(jpeg, jpeg_start_compress, JPEGLIB="-ljpeg $ZLIB", [
+    AC_MSG_WARN([*** Unable to locate JPEG library.])
+], $ZLIB)
+])
+LDFLAGS=${ac_save_ldflags}
+AC_SUBST(JPEGLIB)
+
+# Done checking JPEG
+
+# Do we want to build with a static GDAL?  
+
+AC_MSG_CHECKING(if we should build directly against GDAL)
+
+AC_ARG_WITH(gdal,
+  [  --with-gdal[=path]        Build directly against GDAL (path is gdal-config)],,)
+
+if test "`basename xx/$with_gdal`" = "gdal-config" ; then
+  GDAL_CONFIG="$with_gdal"
+  AC_MSG_RESULT(yes)
+fi
+
+if test "$with_gdal" = "yes" ; then
+  AC_MSG_RESULT(yes)
+  AC_PATH_PROG(GDAL_CONFIG, gdal-config, no)
+
+  if test "$GDAL_CONFIG" = "no" ; then
+    AC_MSG_ERROR([couldn't find gdal-config])
+  fi
+else
+  AC_MSG_RESULT(no)
+fi
+
+if test "$GDAL_CONFIG" != "" ; then
+  GDAL_LIBS="`$GDAL_CONFIG --libs`"
+  GDAL_CFLAGS="`$GDAL_CONFIG --cflags` -DUSE_GDAL_H"
+else
+  GDAL_LIBS=$DLLIB
+  GDAL_CFLAGS=
+fi
+
+AC_SUBST(GDAL_LIBS)
+AC_SUBST(GDAL_CFLAGS)
+
+# With TIFF includes directory:
+AC_MSG_CHECKING(for location of TIFF includes)
 AC_ARG_WITH(tiff-includes,
     [  --with-tiff-includes=DIR
                           site header files for TIFF in DIR],
     [
 	case "$withval" in
 	"" | y | ye | yes | n | no)
-	    AC_MSG_ERROR([*** You must supply an argument to the --with-tiff-includes option.])
+	    AC_MSG_ERROR([*** You must supply a directory to the --with-tiff-includes option.])
 	  ;;
 	esac
-	TIFF_INC_DIRS="$withval"
+	tiff_inc_dir="$withval"
     ])
+AC_MSG_RESULT($tiff_inc_dir)
 
-if test "$TIFF_INC_DIRS"; then
-	for dir in $TIFF_INC_DIRS; do
-		if test -d "$dir"; then
-			TIFF_INCLUDE_DIRS="$TIFF_INCLUDE_DIRS -I$dir"
-		else
-			AC_MSG_WARN([*** TIFF include directory $dir does not exist.])
-		fi
-	done
-	AC_MSG_CHECKING(TIFF include dirs)
-	AC_MSG_RESULT($TIFF_INCLUDE_DIRS)
+TIFF_INCLUDE_DIRS=
+if test -n "$tiff_inc_dir"; then
+    if test -d "$tiff_inc_dir"; then
+        TIFF_INCLUDE_DIRS="-I$tiff_inc_dir"
+    else
+        AC_MSG_WARN([*** TIFF includes directory $tiff_inc_dir does not exist.])
+    fi
 fi
 AC_SUBST(TIFF_INCLUDE_DIRS)
 
+ac_save_cppflags="$CPPFLAGS"
+CPPFLAGS="$CPPFLAGS $TIFF_INCLUDE_DIRS"
+AC_CHECK_HEADERS(tiffio.h, [], [
+    AC_MSG_WARN([*** Unable to locate TIFF includes.])
+])
+CPPFLAGS=${ac_save_cppflags}
+
+# With TIFF library directory:
+AC_MSG_CHECKING(for location of TIFF library)
 AC_ARG_WITH(tiff-libs,
-    [  --with-tiff-libs=DIR    also search for TIFF libraries in DIR],
+    [  --with-tiff-libs=DIR    search for TIFF libraries in DIR],
     [
 	case "$withval" in
 	"" | y | ye | yes | n | no)
-	    AC_MSG_ERROR([*** You must supply an argument to the --with-tiff-libs option.])
+	    AC_MSG_ERROR([*** You must supply a directory to the --with-tiff-libs option.])
 	  ;;
 	esac
-	TIFF_LIB_DIRS="$withval"
+	tiff_lib_dir="$withval"
     ])
+AC_MSG_RESULT($tiff_lib_dir)
 
-if test "$TIFF_LIB_DIRS"; then
-	for dir in $TIFF_LIB_DIRS; do
-		if test -d "$dir"; then
-			TIFF_LIBRARY_DIRS="$TIFF_LIBRARY_DIRS -L$dir"
-		else
-			AC_MSG_WARN([*** TIFF library directory $dir does not exist.])
-		fi
-	done
-	AC_MSG_CHECKING(additional TIFF library dirs)
-	AC_MSG_RESULT($TIFF_LIBRARY_DIRS)
+TIFF_LIBRARY_DIRS=
+if test -n "$tiff_lib_dir"; then
+    if test -d "$tiff_lib_dir"; then
+        TIFF_LIBRARY_DIRS="-L${tiff_lib_dir}"
+    else
+        AC_MSG_WARN([*** TIFF library directory $tiff_lib_dir does not exist.])
+    fi
 fi
 AC_SUBST(TIFF_LIBRARY_DIRS)
 
-SYSV=
-AC_ARG_WITH(SYSV,
-    [  --with-SYSV             define the compiler macro SYSV],
+TIFFLIB=
+ac_save_ldflags="$LDFLAGS"
+LDFLAGS="$LDFLAGS $TIFF_LIBRARY_DIRS"
+AC_CHECK_LIB(tiff, TIFFOpen, TIFFLIB="-ltiff", [
+eval unset ac_cv_lib_$ac_lib_var
+AC_CHECK_LIB(tiff, TIFFOpen, TIFFLIB="-ltiff $MATHLIB", [
+eval unset ac_cv_lib_$ac_lib_var
+AC_CHECK_LIB(tiff, TIFFOpen, TIFFLIB="-ltiff $ZLIB",[
+eval unset ac_cv_lib_$ac_lib_var
+AC_CHECK_LIB(tiff, TIFFOpen, TIFFLIB="-ltiff $ZLIB $MATHLIB",[
+eval unset ac_cv_lib_$ac_lib_var
+AC_CHECK_LIB(tiff, TIFFOpen, TIFFLIB="-ltiff $JPEGLIBPATH $JPEGLIB", [
+eval unset ac_cv_lib_$ac_lib_var
+AC_CHECK_LIB(tiff, TIFFOpen, TIFFLIB="-ltiff $JPEGLIBPATH $JPEGLIB $MATHLIB",[
+eval unset ac_cv_lib_$ac_lib_var
+AC_CHECK_LIB(tiff, TIFFOpen, TIFFLIB="-ltiff $JPEGLIBPATH $JPEGLIB $ZLIB",[
+eval unset ac_cv_lib_$ac_lib_var
+AC_CHECK_LIB(tiff, TIFFOpen, TIFFLIB="-ltiff $JPEGLIBPATH $JPEGLIB $ZLIB $MATHLIB",[
+    AC_MSG_WARN([*** Unable to locate TIFF library.])
+], $JPEGLIBPATH $JPEGLIB $ZLIB $MATHLIB)
+], $JPEGLIBPATH $JPEGLIB $ZLIB)
+], $JPEGLIBPATH $JPEGLIB $MATHLIB)
+], $JPEGLIBPATH $JPEGLIB)
+], $ZLIB $MATHLIB)
+], $ZLIB)
+], $MATHLIB)
+])
+LDFLAGS=${ac_save_ldflags}
+AC_SUBST(TIFFLIB)
+
+# Done checking TIFF
+
+# With PNG includes directory:
+AC_MSG_CHECKING(for location of PNG includes)
+AC_ARG_WITH(png-includes,
+    [  --with-png-includes=DIR
+                          site header files for PNG in DIR],
+    [
+	case "$withval" in
+	"" | y | ye | yes | n | no)
+	    AC_MSG_ERROR([*** You must supply a directory to the --with-png-includes option.])
+	  ;;
+	esac
+	png_inc_dir="$withval"
+    ])
+AC_MSG_RESULT($png_inc_dir)
+
+PNGINC=
+if test -n "$png_inc_dir"; then
+    if test -d "$png_inc_dir"; then
+        PNGINC="-I$png_inc_dir"
+    else
+        AC_MSG_WARN([*** PNG includes directory $png_inc_dir does not exist.])
+    fi
+fi
+AC_SUBST(PNGINC)
+
+ac_save_cppflags="$CPPFLAGS"
+CPPFLAGS="$CPPFLAGS $PNGINC"
+AC_CHECK_HEADERS(png.h, [], [
+    AC_MSG_WARN([*** Unable to locate PNG includes.])
+])
+CPPFLAGS=${ac_save_cppflags}
+
+# With PNG library directory:
+AC_MSG_CHECKING(for location of PNG library)
+AC_ARG_WITH(png-libs,
+    [  --with-png-libs=DIR    search for PNG libraries in DIR],
+    [
+	case "$withval" in
+	"" | y | ye | yes | n | no)
+	    AC_MSG_ERROR([*** You must supply a directory to the --with-png-libs option.])
+	  ;;
+	esac
+	png_lib_dir="$withval"
+    ])
+AC_MSG_RESULT($png_lib_dir)
+
+PNGLIB=
+if test -n "$png_lib_dir"; then
+    if test -d "$png_lib_dir"; then
+        PNGLIB="-L${png_lib_dir}"
+    else
+        AC_MSG_WARN([*** PNG library directory $png_lib_dir does not exist.])
+    fi
+fi
+
+PNGLIB=
+ac_save_ldflags="$LDFLAGS"
+LDFLAGS="$LDFLAGS $PNGLIB"
+AC_CHECK_LIB(png, png_read_png, PNGLIB="$PNGLIB -lpng $ZLIB $MATHLIB", [
+    AC_MSG_WARN([*** Unable to locate PNG library.])
+], $ZLIB $MATHLIB)
+LDFLAGS=${ac_save_ldflags}
+AC_SUBST(PNGLIB)
+
+# Done checking PNG
+
+# With GD includes directory:
+AC_MSG_CHECKING(for location of GD includes)
+AC_ARG_WITH(gd-includes,
+    [  --with-gd-includes=DIR
+                          site header files for GD in DIR],
+    [
+	case "$withval" in
+	"" | y | ye | yes | n | no)
+	    AC_MSG_ERROR([*** You must supply a directory to the --with-gd-includes option.])
+	  ;;
+	esac
+	gd_inc_dir="$withval"
+    ])
+AC_MSG_RESULT($gd_inc_dir)
+
+GDINC=
+if test -n "$gd_inc_dir"; then
+    if test -d "$gd_inc_dir"; then
+        GDINC="-I$gd_inc_dir"
+    else
+        AC_MSG_WARN([*** GD includes directory $gd_inc_dir does not exist.])
+    fi
+fi
+AC_SUBST(GDINC)
+
+ac_save_cppflags="$CPPFLAGS"
+CPPFLAGS="$CPPFLAGS $GDINC"
+AC_CHECK_HEADERS(gd.h, [], [
+    AC_MSG_WARN([*** Unable to locate GD includes.])
+])
+CPPFLAGS=${ac_save_cppflags}
+
+# With GD library directory:
+AC_MSG_CHECKING(for location of GD library)
+AC_ARG_WITH(gd-libs,
+    [  --with-gd-libs=DIR    search for GD libraries in DIR],
+    [
+	case "$withval" in
+	"" | y | ye | yes | n | no)
+	    AC_MSG_ERROR([*** You must supply a directory to the --with-gd-libs option.])
+	  ;;
+	esac
+	gd_lib_dir="$withval"
+    ])
+AC_MSG_RESULT($gd_lib_dir)
+
+GDLIB=
+if test -n "$gd_lib_dir"; then
+    if test -d "$gd_lib_dir"; then
+        GDLIB="-L${gd_lib_dir}"
+    else
+        AC_MSG_WARN([*** GD library directory $gd_lib_dir does not exist.])
+    fi
+fi
+
+GDLIB=
+ac_save_ldflags="$LDFLAGS"
+LDFLAGS="$LDFLAGS $GDLIB"
+AC_CHECK_LIB(gd, gdImageCreate, GDLIB="$GDLIB -lgd", [
+eval unset ac_cv_lib_$ac_lib_var
+AC_CHECK_LIB(gd, gdImageCreate, GDLIB="$GDLIB -lgd $PNGLIB", [
+eval unset ac_cv_lib_$ac_lib_var
+AC_CHECK_LIB(gd, gdImageCreate, GDLIB="$GDLIB -lgd $JPEGLIBPATH $JPEGLIB", [
+eval unset ac_cv_lib_$ac_lib_var
+AC_CHECK_LIB(gd, gdImageCreate, GDLIB="$GDLIB -lgd $JPEGLIBPATH $JPEGLIB $PNGLIB", [
+    AC_MSG_WARN([*** Unable to locate GD library.])
+], $JPEGLIBPATH $JPEGLIB $PNGLIB)
+], $JPEGLIBPATH $JPEGLIB)
+], $PNGLIB)
+])
+LDFLAGS=${ac_save_ldflags}
+AC_SUBST(GDLIB)
+
+LDFLAGS="$LDFLAGS $GDLIB"
+AC_CHECK_FUNCS(gdImageGif gdImagePng)
+LDFLAGS=${ac_save_ldflags}
+
+# Done checking GD
+
+# With Tcl/Tk includes directory:
+AC_MSG_CHECKING(for location of Tcl/Tk includes)
+AC_ARG_WITH(tcltk-includes,
+    [  --with-tcltk-includes=DIR
+                          site header files for Tcl and Tk in DIR],
+    [
+	case "$withval" in
+	"" | y | ye | yes | n | no)
+	    AC_MSG_ERROR([*** You must supply a directory to the --with-tcltk-includes option.])
+	  ;;
+	esac
+	tcltk_inc_dir="$withval"
+    ])
+AC_MSG_RESULT($tcltk_inc_dir)
+
+TCLINCDIR=
+if test -n "$tcltk_inc_dir" ; then
+    for dir in $tcltk_inc_dir; do
+        if test -d "$dir"; then
+            TCLINCDIR="$TCLINCDIR -I$dir"
+        else
+            AC_MSG_WARN([*** Tcl/Tk includes directory $dir does not exist.])
+        fi
+    done
+fi
+TKINCDIR=$TCLINCDIR
+
+AC_SUBST(TCLINCDIR)
+AC_SUBST(TKINCDIR)
+
+ac_save_cppflags="$CPPFLAGS"
+CPPFLAGS="$CPPFLAGS $TCLINCDIR"
+
+AC_CHECK_HEADERS(tcl.h,[
+AC_TRY_RUN([
+#include <tcl.h>
+int main(void) {
+ FILE *fp = fopen("conftestdata","w");
+ fputs(TCL_VERSION, fp);
+ return 0;
+}
+],[
+    tcl_ver=`cat conftestdata`
+],[
+    AC_MSG_WARN([*** Could not determine Tcl version.])
+    tcl_ver=
+])],[
+    AC_MSG_WARN([*** Could not find 'tcl.h'.])
+])
+
+AC_CHECK_HEADERS(tk.h,[
+AC_TRY_RUN([
+#include <tk.h>
+int main(void) {
+ FILE *fp = fopen("conftestdata","w");
+ fputs(TK_VERSION, fp);
+ return 0;
+}
+],[
+    tk_ver=`cat conftestdata`
+],[
+    AC_MSG_WARN([*** Could not determine Tk version.])
+    tk_ver=
+])],[
+    AC_MSG_WARN([*** Could not find 'tk.h'.])
+])
+
+CPPFLAGS=${ac_save_cppflags}
+
+if test "$tcl_ver" = "$tk_ver" ; then
+    tcltk_ver=$tcl_ver
+else
+    AC_MSG_WARN([*** Tcl/Tk version mismatch.])
+fi
+
+# FreeBSD and CygWin don't have a "dot" between major/minor version number
+if test `uname -s` = FreeBSD || test "$CYGWIN"; then
+    tcltk_ver=`echo $tcltk_ver | sed 's/\.//g'`
+fi
+
+AC_MSG_CHECKING(for location of Tcl/Tk libraries)
+AC_ARG_WITH(tcltk-libs,
+    [  --with-tcltk-libs=DIR   also search for Tcl and Tk libraries in DIR],
+    [
+	case "$withval" in
+	"" | y | ye | yes | n | no)
+	    AC_MSG_ERROR([*** You must supply a directory to the --with-tcltk-libs option.])
+	  ;;
+	esac
+	tcltk_lib_dir="$withval"
+    ])
+AC_MSG_RESULT($tcltk_lib_dir)
+
+TCLTKLIBPATH=
+if test -n "$tcltk_lib_dir"; then
+    if test -d "$tcltk_lib_dir"; then
+        TCLTKLIBPATH="-L$tcltk_lib_dir"
+    else
+        AC_MSG_WARN([*** Tcl/Tk library directory $tcltk_lib_dir does not exist.])
+    fi
+fi
+
+AC_SUBST(TCLTKLIBPATH)
+
+ac_save_ldflags="$LDFLAGS"
+LDFLAGS="$LDFLAGS $TCLTKLIBPATH"
+AC_CHECK_LIB(tcl, Tcl_Init, TCLTKLIBS="-ltcl $MATHLIB", [
+eval unset ac_cv_lib_$ac_lib_var
+AC_CHECK_LIB(tcl, Tcl_Init, TCLTKLIBS="-ltcl $MATHLIB $DLLIB", [
+eval unset ac_cv_lib_$ac_lib_var
+AC_CHECK_LIB(tcl$tcltk_ver, Tcl_Init, TCLTKLIBS="-ltcl$tcltk_ver $MATHLIB", [
+eval unset ac_cv_lib_$ac_lib_var
+AC_CHECK_LIB(tcl$tcltk_ver, Tcl_Init, TCLTKLIBS="-ltcl$tcltk_ver $MATHLIB $DLLIB", [
+    AC_MSG_WARN([*** Unable to locate Tcl library.])
+],$MATHLIB $DLLIB)
+],$MATHLIB)
+],$MATHLIB $DLLIB)
+],$MATHLIB)
+AC_CHECK_LIB(tk, Tk_MainWindow, TCLTKLIBS="$TCLTKLIBS -ltk", [
+eval unset ac_cv_lib_$ac_lib_var
+AC_CHECK_LIB(tk, Tk_MainWindow, TCLTKLIBS="$TCLTKLIBS -ltk $X_LIBS $X_PRE_LIBS -lX11 $X_EXTRA_LIBS", [
+eval unset ac_cv_lib_$ac_lib_var
+AC_CHECK_LIB(tk$tcltk_ver, Tk_MainWindow, TCLTKLIBS="$TCLTKLIBS -ltk$tcltk_ver", [
+eval unset ac_cv_lib_$ac_lib_var
+AC_CHECK_LIB(tk$tcltk_ver, Tk_MainWindow, TCLTKLIBS="$TCLTKLIBS -ltk$tcltk_ver $X_LIBS $X_PRE_LIBS -lX11 $X_EXTRA_LIBS", [
+    AC_MSG_WARN([*** Unable to locate Tk library.])
+], $TCLTKLIBS $X_LIBS $X_PRE_LIBS -lX11 $X_EXTRA_LIBS)
+], $TCLTKLIBS)
+], $TCLTKLIBS $X_LIBS $X_PRE_LIBS -lX11 $X_EXTRA_LIBS)
+], $TCLTKLIBS)
+LDFLAGS=${ac_save_ldflags}
+AC_SUBST(TCLTKLIBS)
+
+# Done checking Tcl/Tk
+
+# Enable PostgreSQL option
+USE_POSTGRES=
+AC_MSG_CHECKING(whether to use PostgreSQL)
+AC_ARG_ENABLE(postgres,
+  [  --enable-postgres=yes/no
+                          Support PostgreSQL functionality (default: yes)],
+  [
+  	case "$enableval" in
+	"n" | "no")
+		USE_POSTGRES=
+		AC_MSG_RESULT(no)
+	;;
+	*)
+		USE_POSTGRES="1"
+		AC_MSG_RESULT(yes)
+	;;
+	esac
+  ],
+  [
+	USE_POSTGRES="1"
+	AC_MSG_RESULT(yes)
+  ]
+)
+
+PQLIB=
+PQINCPATH=
+PQLIBPATH=
+
+if test -n "$USE_POSTGRES"; then
+
+# With PostgreSQL root:
+AC_MSG_CHECKING(for location of PostgreSQL root)
+AC_ARG_WITH(postgres-root,
+  [  --with-postgres-root=DIR
+                          Specify root directory for PostgreSQL],
+  [
+  	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+		AC_MSG_ERROR([*** You must supply a directory to --with-postgres-root.])
+	;;
+	esac
+	pg_root="$withval"
+  ])
+AC_MSG_RESULT($pg_root)
+
+# With Postgresql includes directory:
+AC_MSG_CHECKING(for location of PostgreSQL includes)
+AC_ARG_WITH(postgres-includes,
+  [  --with-postgres-includes=DIR  
+                          Specify includes directory for PostgreSQL],
+  [
+  	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+	    AC_MSG_ERROR([*** You must supply a directory to --with-postgres-includes.])
+	;;
+	esac
+	pg_includes="$withval"
+  ])
+if test -n "$pg_root" -a -z "$pg_includes"; then
+    pg_includes="$pg_root/include"
+fi
+AC_MSG_RESULT($pg_includes)
+
+if test -n "$pg_includes"; then
+    if test -d "$pg_includes"; then
+        PQINCPATH="-I$pg_includes"
+    else
+        AC_MSG_WARN([*** PostgreSQL includes directory $pg_includes does not exist.])
+    fi
+fi
+
+ac_save_cppflags="$CPPFLAGS"
+CPPFLAGS="$CPPFLAGS $PQINCPATH"
+AC_CHECK_HEADERS(libpq-fe.h, [], [
+    AC_MSG_WARN([*** Unable to locate PostgreSQL includes.])
+    USE_POSTGRES=
+])
+CPPFLAGS=${ac_save_cppflags}
+
+fi # $USE_POSTGRES
+
+if test -n "$USE_POSTGRES"; then
+
+# With Postgresql library directory:
+AC_MSG_CHECKING(for location of PostgreSQL library)
+AC_ARG_WITH(postgres-libs,
+  [  --with-postgres-libs=DIR
+                          Specify library directory for PostgreSQL],
+  [
+   	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+	    AC_MSG_ERROR([*** You must supply a directory to --with-postgres-libs.])
+	;;
+	esac
+	pg_libs="$withval"
+   ])
+if test -n "$pg_root" -a -z "$pg_libs"; then
+    pg_libs="$pg_root/lib"
+fi
+AC_MSG_RESULT($pg_libs)
+
+if test -n "$pg_libs"; then
+    if test -d "$pg_libs"; then
+        PQLIBPATH="-L$pg_libs"
+    else
+        AC_MSG_WARN([*** PostgreSQL library directory $pg_libs does not exist.])
+    fi
+fi
+
+ac_save_ldflags="$LDFLAGS"
+LDFLAGS="$LDFLAGS $PQLIBPATH"
+AC_CHECK_LIB(pq, PQsetdbLogin, PQLIB="-lpq", [
+eval unset ac_cv_lib_$ac_lib_var
+AC_CHECK_LIB(pq, PQsetdbLogin, PQLIB="-lpq -lcrypt", [
+    AC_MSG_WARN([*** Unable to locate PostgreSQL library.])
+    USE_POSTGRES=
+], -lcrypt)
+])
+AC_CHECK_LIB(pq,PQcmdTuples, [AC_DEFINE(HAVE_PQCMDTUPLES)], [
+eval unset ac_cv_lib_$ac_lib_var
+AC_CHECK_LIB(pq,PQcmdTuples, [AC_DEFINE(HAVE_PQCMDTUPLES)], [
+], -lcrypt)
+])
+LDFLAGS=${ac_save_ldflags}
+
+fi # $USE_POSTGRES
+
+AC_SUBST(USE_POSTGRES)
+
+AC_SUBST(PQINCPATH)
+AC_SUBST(PQLIBPATH)
+AC_SUBST(PQLIB)
+
+# Done checking PostgreSQL
+
+# OpenGL
+# Allow OpenGL to be disabled
+USE_OPENGL=
+AC_MSG_CHECKING(whether to use OpenGL)
+AC_ARG_ENABLE(opengl,
+  [  --enable-opengl=yes/no
+                          Enable or disable OpenGL programs (default: yes)],
+  [
+	case "$enableval" in
+	"n" | "no")
+		USE_OPENGL=
+		AC_MSG_RESULT(no)
+	;;
+	*)
+		USE_OPENGL="1"
+		AC_MSG_RESULT(yes)
+	;;
+	esac
+  ],
+  [
+	USE_OPENGL="1"
+	AC_MSG_RESULT(yes)
+  ]
+)
+
+OPENGLINC=
+OPENGLLIB=
+OPENGLULIB=
+
+if test -n "$USE_OPENGL"; then
+
+# With OpenGL includes directory:
+AC_MSG_CHECKING(for location of OpenGL includes)
+AC_ARG_WITH(opengl-includes,
+  [  --with-opengl-includes=DIR
+                          Specify the directory for OpenGL (or Mesa) headers],
+  [
+	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+	    AC_MSG_ERROR([*** You must supply a directory to --with-opengl-includes.])
+	;;
+	esac
+	opengl_includes="$withval"
+  ])
+AC_MSG_RESULT($opengl_includes)
+
+if test -n "$opengl_includes"; then
+    if test -d "$opengl_includes"; then
+        OPENGLINC="-I$opengl_includes"
+    else
+        AC_MSG_WARN([*** OpenGL includes directory $opengl_includes does not exist.])
+    fi
+fi
+
+ac_save_cppflags="$CPPFLAGS"
+CPPFLAGS="$CPPFLAGS $OPENGLINC"
+AC_CHECK_HEADERS(GL/gl.h GL/glu.h, [], [
+    AC_MSG_WARN([*** Unable to locate OpenGL includes.])
+])
+CPPFLAGS=${ac_save_cppflags}
+
+# With OpenGL library directory:
+AC_MSG_CHECKING(for location of OpenGL libraries)
+AC_ARG_WITH(opengl-libs,
+  [  --with-opengl-libs=DIR
+                          Specify the directory for OpenGL (or Mesa) libraries],
+  [
+	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+	    AC_MSG_ERROR([*** You must supply a directory to --with-opengl-libs.])
+	;;
+	esac
+	opengl_libs="$withval"
+  ])
+AC_MSG_RESULT($opengl_libs)
+
+if test -n "$opengl_libs"; then
+    if test -d "$opengl_libs"; then
+        OPENGL_LIB_PATH="-L$opengl_libs"
+    else
+        AC_MSG_WARN([*** OpenGL library directory $opengl_libs does not exist.])
+    fi
+fi
+
+ac_save_ldflags="$LDFLAGS"
+LDFLAGS="$LDFLAGS $OPENGL_LIB_PATH"
+AC_CHECK_LIB(GL, glBegin, OPENGLLIB="-lGL", [
+eval unset ac_cv_lib_$ac_lib_var
+AC_CHECK_LIB(GL, glBegin, OPENGLLIB="-lGL -lpthread", [
+    AC_MSG_WARN([*** Unable to locate OpenGL library.])
+], $X_LIBS $X_PRE_LIBS -lX11 $X_EXTRA_LIBS $MATHLIB -lpthread)
+], $X_LIBS $X_PRE_LIBS -lX11 $X_EXTRA_LIBS $MATHLIB)
+AC_CHECK_LIB(GLU,gluBeginCurve, OPENGLULIB="-lGLU", [
+    AC_MSG_WARN([*** Unable to locate GLU library.])
+], $MATHLIB $OPENGLLIB $X_LIBS $X_PRE_LIBS -lX11 $X_EXTRA_LIBS)
+LDFLAGS=${ac_save_ldflags}
+
+OPENGLLIB="$OPENGL_LIB_PATH $OPENGLLIB"
+OPENGLULIB="$OPENGL_LIB_PATH $OPENGLULIB"
+
+fi # $USE_OPENGL
+
+AC_SUBST(USE_OPENGL)
+AC_SUBST(OPENGLINC)
+AC_SUBST(OPENGLLIB)
+AC_SUBST(OPENGLULIB)
+# Done checking OpenGL
+
+# GLw isn't used currently, so there's not much point in checking for it
+
+OPENGLwINC=
+LGLWM=
+
+AC_SUBST(OPENGLwINC)
+AC_SUBST(LGLWM)
+# Done checking GLw
+
+# This is bogus.
+OPENGL32=
+AC_SUBST(OPENGL32)
+
+# With ODBC includes directory:
+AC_MSG_CHECKING(for location of ODBC includes)
+AC_ARG_WITH(odbc-includes,
+  [  --with-odbc-includes=DIR  
+                          Specify path for ODBC library headers],
+  [   
+   	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+	    AC_MSG_ERROR([*** You must supply a directory to --with-odbc-includes.])
+	;;
+	esac
+	odbc_includes="$withval"
+   ])
+AC_MSG_RESULT($odbc_includes)
+
+ODBCINC=
+if test -n "$odbc_includes"; then
+    if test -d "$odbc_includes"; then
+        ODBCINC="-I$odbc_includes"
+    else
+        AC_MSG_WARN([*** ODBC includes directory $odbc_includes does not exist.])
+    fi
+fi
+AC_SUBST(ODBCINC)
+
+ac_save_cppflags="$CPPFLAGS"
+CPPFLAGS="$CPPFLAGS $ODBCINC"
+AC_CHECK_HEADERS(sql.h, [], [
+    AC_MSG_WARN([*** Unable to locate ODBC includes.])
+])
+CPPFLAGS=${ac_save_cppflags}
+
+# With ODBC library directory:
+AC_MSG_CHECKING(for location of ODBC library)
+AC_ARG_WITH(odbc-libs,
+  [  --with-odbc-libs=DIR  
+                          Specify path for ODBC library],
+  [   
+   	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+	    AC_MSG_ERROR([*** You must supply a directory to --with-odbc-libs.])
+	;;
+	esac
+	odbc_libs="$withval"
+   ])
+AC_MSG_RESULT($odbc_libs)
+
+ODBCLIB=
+if test -n "$odbc_libs"; then
+    if test -d "$odbc_libs"; then
+        ODBCLIB="-L$odbc_libs"
+    else
+        AC_MSG_WARN([*** ODBC library directory $odbc_libs does not exist.])
+    fi
+fi
+
+ac_save_ldflags="$LDFLAGS"
+LDFLAGS="$LDFLAGS $ODBCLIB"
+AC_CHECK_LIB(odbc, SQLConnect, ODBCLIB="$ODBCLIB -lodbc", [
+    AC_MSG_WARN([*** Unable to locate ODBC library.])
+])
+LDFLAGS=${ac_save_ldflags}
+AC_SUBST(ODBCLIB)
+
+# Done checking ODBC
+
+# With FFTW includes directory:
+AC_MSG_CHECKING(for location of FFTW includes)
+AC_ARG_WITH(fftw-includes,
+  [  --with-fftw-includes=DIR  
+                          Specify path for FFTW library headers],
+  [   
+   	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+	    AC_MSG_ERROR([*** You must supply a directory to --with-fftw-includes.])
+	;;
+	esac
+	fftw_includes="$withval"
+   ])
+AC_MSG_RESULT($fftw_includes)
+
+FFTWINC=
+if test -n "$fftw_includes"; then
+    if test -d "$fftw_includes"; then
+        FFTWINC="-I$fftw_includes"
+    else
+        AC_MSG_WARN([*** FFTW includes directory $fftw_includes does not exist.])
+    fi
+fi
+AC_SUBST(FFTWINC)
+
+ac_save_cppflags="$CPPFLAGS"
+CPPFLAGS="$CPPFLAGS $FFTWINC"
+AC_CHECK_HEADERS(fftw.h, [], [
+    AC_MSG_WARN([*** Unable to locate FFTW includes.])
+])
+CPPFLAGS=${ac_save_cppflags}
+
+# With FFTW library directory:
+AC_MSG_CHECKING(for location of FFTW library)
+AC_ARG_WITH(fftw-libs,
+  [  --with-fftw-libs=DIR  
+                          Specify path for FFTW library],
+  [   
+   	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+	    AC_MSG_ERROR([*** You must supply a directory to --with-fftw-libs.])
+	;;
+	esac
+	fftw_libs="$withval"
+   ])
+AC_MSG_RESULT($fftw_libs)
+
+FFTWLIB=
+if test -n "$fftw_libs"; then
+    if test -d "$fftw_libs"; then
+        FFTWLIB="-L$fftw_libs"
+    else
+        AC_MSG_WARN([*** FFTW library directory $fftw_libs does not exist.])
+    fi
+fi
+
+ac_save_ldflags="$LDFLAGS"
+LDFLAGS="$LDFLAGS $FFTWLIB"
+AC_CHECK_LIB(fftw, fftwnd_one, FFTWLIB="$FFTWLIB -lfftw $MATHLIB", [
+    AC_MSG_WARN([*** Unable to locate FFTW library.])
+], $MATHLIB)
+LDFLAGS=${ac_save_ldflags}
+AC_SUBST(FFTWLIB)
+
+# Done checking FFTW
+
+# See if there is a libblas.a which can be used for gmath library
+# blas = Basic Linear Algebra Subroutines
+# www.netlib.org
+
+# With BLAS includes directory:
+# BLAS doesn't have includes (FORTRAN library)
+
+# With BLAS library directory:
+AC_MSG_CHECKING(for location of BLAS library)
+AC_ARG_WITH(blas-libs,
+  [  --with-blas-libs=DIR  
+                          Specify path for BLAS library],
+  [   
+   	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+	    AC_MSG_ERROR([*** You must supply a directory to --with-blas-libs.])
+	;;
+	esac
+	blas_libs="$withval"
+   ])
+AC_MSG_RESULT($blas_libs)
+
+BLASLIB=
+if test -n "$blas_libs"; then
+    if test -d "$blas_libs"; then
+        BLASLIB="-L$blas_libs"
+    else
+        AC_MSG_WARN([*** BLAS library directory $blas_libs does not exist.])
+    fi
+fi
+
+ac_save_ldflags="$LDFLAGS"
+LDFLAGS="$LDFLAGS $BLASLIB"
+AC_CHECK_LIB(blas, dnrm2_, BLASLIB="$BLASLIB -lblas",[
+eval unset ac_cv_lib_$ac_lib_var
+AC_CHECK_LIB(blas, dnrm2_, BLASLIB="$BLASLIB -lblas -lg2c",[
+    AC_MSG_WARN([*** Unable to locate BLAS library.])
+],$MATHLIB -lg2c)
+],$MATHLIB)
+LDFLAGS=${ac_save_ldflags}
+AC_SUBST(BLASLIB)
+AC_DEFINE(HAVE_LIBBLAS)
+
+# Done checking BLAS
+
+# With LAPACK includes directory:
+# LAPACK doesn't have includes (FORTRAN library)
+
+# With LAPACK library directory:
+AC_MSG_CHECKING(for location of LAPACK library)
+AC_ARG_WITH(lapack-libs,
+  [  --with-lapack-libs=DIR  
+                          Specify path for LAPACK library],
+  [   
+   	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+	    AC_MSG_ERROR([*** You must supply a directory to --with-lapack-libs.])
+	;;
+	esac
+	lapack_libs="$withval"
+   ])
+AC_MSG_RESULT($lapack_libs)
+
+LAPACKLIB=
+if test "$lapack_libs"; then
+    if test -d "$lapack_libs" ; then
+        LAPACKLIB="-L$lapack_libs"
+    else
+        AC_MSG_WARN([*** LAPACK library directory $lapack_libs does not exist.])
+    fi
+fi
+
+ac_save_ldflags="$LDFLAGS"
+LDFLAGS="$LDFLAGS $LAPACKLIB"
+AC_CHECK_LIB(lapack, dgesv_, LAPACKLIB="$LAPACKLIB -llapack",[
+eval unset ac_cv_lib_$ac_lib_var
+AC_CHECK_LIB(lapack, dgesv_, LAPACKLIB="$LAPACKLIB -llapack -lg2c",[
+    AC_MSG_WARN([*** Unable to locate LAPACK library.])
+],$BLASLIB $MATHLIB -lg2c)
+],$BLASLIB $MATHLIB)
+LDFLAGS=${ac_save_ldflags}
+AC_SUBST(LAPACKLIB)
+AC_DEFINE(HAVE_LIBLAPACK)
+
+# Done checking LAPACK
+
+# XDRIVER connection type
+AC_MSG_CHECKING(for XDriver)
+
+XDRIVER=socket
+
+AC_ARG_WITH(fifo,
+    [  --with-fifo             use fifo XDriver instead of sockets],
     [
 	case "$withval" in
 	"" | y | ye | yes)
-	    SYSV=-DSYSV
-	    AC_MSG_CHECKING(for SYSV)
-	    AC_MSG_RESULT($SYSV)
-	  ;;
-	n | no)
-	    SYSV=
-	  ;;
-	*)
-	    AC_MSG_ERROR([*** Invalid argument $withval supplied to the --with-SYSV option.])
+	    XDRIVER=fifo
 	  ;;
 	esac
     ])
-AC_SUBST(SYSV)
 
-USE_TERMIO=
-AC_ARG_WITH(USE_TERMIO,
-    [  --with-USE_TERMIO       define the compiler macro USE_TERMIO],
+AC_ARG_WITH(socket,
+    [  --with-socket           use socket XDriver instead of fifo (default)],
     [
-	case "$withval" in
-	"" | y | ye | yes)
-	    USE_TERMIO=-DUSE_TERMIO
-	    AC_MSG_CHECKING(for USE_TERMIO)
-	    AC_MSG_RESULT($USE_TERMIO)
-	  ;;
-	n | no)
-	    USE_TERMIO=
-	  ;;
-	*)
-	    AC_MSG_ERROR([*** Invalid argument $withval supplied to the --with-USE_TERMIO option.])
-	  ;;
-	esac
+       case "$withval" in
+       "" | y | ye | yes)
+           XDRIVER=socket
+	 ;;
+       esac
     ])
-AC_SUBST(USE_TERMIO)
 
-AC_OUTPUT(Makefile src/CMD/head/head src/scripts/shells/create_fifos.sh)
+AC_MSG_RESULT($XDRIVER)
+
+if test "$XDRIVER" = "socket"; then
+	AC_DEFINE(USE_G_SOCKS)
+fi
+
+AC_SUBST(XDRIVER)
+
+# Done checking XDRIVER
+
+AC_OUTPUT(Makefile src/CMD/head/head)

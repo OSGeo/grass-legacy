@@ -49,7 +49,14 @@ main (int argc, char *argv[])
 	CELL *cell, data, viewpt_elev;
 	SEGMENT seg_in, seg_out, seg_patt;
 	struct point *heads[16],*SEARCH_PT;
+	struct GModule *module;
 	struct Option *opt1,*opt2,*opt3,*opt5,*opt6,*opt7;
+
+	G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Line-of-sight raster analysis program.";
 
 	/* Define the different options */
 
@@ -96,8 +103,6 @@ main (int argc, char *argv[])
 	opt6->options    = "0-99999" ;
 	opt6->description= "Max distance from the viewing point (meters)" ;
 
-	G_gisinit (argv[0]);
-
 	if (G_parser(argc, argv))
 		exit (-1);
 
@@ -119,7 +124,15 @@ main (int argc, char *argv[])
     else
         patt_flag=1;
 
-
+/* Make sure that the current projection is not lat/long */
+    if ((G_projection() == 3))
+        {
+          char msg[256];
+          sprintf(msg,"lat/long databases not (yet) supported.");
+          G_fatal_error (msg);
+          exit(1);
+        }
+                                                
     /* check if specified observer location inside window   */
     if(east<window.west || east>window.east
         || north>window.north || north<window.south)
@@ -360,7 +373,7 @@ main (int argc, char *argv[])
 		{
 			if (cell[col] == 1) cell[col] = 0;
 		}
-		if(G_put_map_row(new,cell) < 0)
+		if(G_put_raster_row(new, cell, CELL_TYPE) < 0)
 		{
 			exit(1);
 		}

@@ -10,7 +10,8 @@ int setup()
 	FILE *popen() ;
 	FILE *fptr ;
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 /* Try to make it possible to interactively change colors */
 	R_color_table_float() ;
@@ -36,7 +37,8 @@ int setup()
 	gorun("grass.logo.sh", "") ;
 
 /* Provide known information */
-	R_open_driver();
+	if (R_open_driver() != 0)
+	    G_fatal_error ("No graphics device selected");
 	Dchoose(LOC.name) ;
 	R_close_driver();
 

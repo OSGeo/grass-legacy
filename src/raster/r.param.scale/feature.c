@@ -1,4 +1,4 @@
-/* changes line  37 for Linux - Markus Neteler (Jan. 1998)
+/* changes line  37 for Linux - Markus Neteler (Jan. 1998) */
 /*****************************************************************************/
 /***                                                                       ***/
 /***                              feature()                                ***/
@@ -12,9 +12,7 @@
 #include <math.h>
 
 
-CELL feature(coeff)
-    float *coeff;		/* Set of six quadratic coefficents. 	*/
-
+CELL feature(double *coeff)	/* Set of six quadratic coefficents. 	*/
 {
 
     /* Quadratic function in the form of
@@ -34,7 +32,6 @@ CELL feature(coeff)
 
     minic = 20*wsize*resoln*(-a-b-sqrt((a-b)*(a-b) + c*c));
     maxic = 20*wsize*resoln*(-a-b+sqrt((a-b)*(a-b) + c*c));
-/*    slope = RAD2DEG*atan(sqrtf((d*d) + (e*e)));  */
     slope = RAD2DEG*atan(sqrt((d*d) + (e*e)));     
     crosc = -20*wsize*resoln*(b*d*d + a*e*e - c*d*e)/(d*d + e*e);
 

@@ -1,14 +1,77 @@
 #ifndef _SHAPEFILE_H_INCLUDED
 #define _SHAPEFILE_H_INCLUDED
 
-/*
- * Copyright (c) 1995 Frank Warmerdam
+/******************************************************************************
+ * $Id$
  *
- * This code is in the public domain.
+ * Project:  Shapelib
+ * Purpose:  Primary include file for Shapelib.
+ * Author:   Frank Warmerdam, warmerda@home.com
+ *
+ ******************************************************************************
+ * Copyright (c) 1999, Frank Warmerdam
+ *
+ * This software is available under the following "MIT Style" license,
+ * or at the option of the licensee under the LGPL (see LICENSE.LGPL).  This
+ * option is discussed in more detail in shapelib.html.
+ *
+ * --
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ * DEALINGS IN THE SOFTWARE.
+ ******************************************************************************
  *
  * $Log$
- * Revision 1.1  1999-12-29 15:10:57  markus
- * Initial revision
+ * Revision 1.2  2000-05-24 17:35:22  david
+ *
+ * Listing fields contained in dbf file now handled by flag `-l'.
+ * Category support fixed.
+ * Now no longer necessary to specify `.shp' extension for input.
+ * Any of basename, full pathname or prefix only will do.
+ * However the input files must still be in the current directory.
+ * Documentation updated.
+ *
+ * Revision 1.1  2000/05/22 14:45:29  markus
+ * Frank Warmerdam: added shapelib
+ *
+ * Revision 1.15  2000/02/16 16:03:51  warmerda
+ * added null shape support
+ *
+ * Revision 1.14  1999/11/05 14:12:05  warmerda
+ * updated license terms
+ *
+ * Revision 1.13  1999/06/02 18:24:21  warmerda
+ * added trimming code
+ *
+ * Revision 1.12  1999/06/02 17:56:12  warmerda
+ * added quad'' subnode support for trees
+ *
+ * Revision 1.11  1999/05/18 19:11:11  warmerda
+ * Added example searching capability
+ *
+ * Revision 1.10  1999/05/18 17:49:38  warmerda
+ * added initial quadtree support
+ *
+ * Revision 1.9  1999/05/11 03:19:28  warmerda
+ * added new Tuple api, and improved extension handling - add from candrsn
+ *
+ * Revision 1.8  1999/03/23 17:22:27  warmerda
+ * Added extern "C" protection for C++ users of shapefil.h.
  *
  * Revision 1.7  1998/12/31 15:31:07  warmerda
  * Added the TRIM_DBF_WHITESPACE and DISABLE_MULTIPATCH_MEASURE options.
@@ -36,6 +99,10 @@
 #include <dbmalloc.h>
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+    
 /************************************************************************/
 /*                        Configuration options.                        */
 /************************************************************************/
@@ -81,6 +148,7 @@ typedef SHPInfo * SHPHandle;
 /* -------------------------------------------------------------------- */
 /*      Shape types (nSHPType)                                          */
 /* -------------------------------------------------------------------- */
+#define SHPT_NULL	0
 #define SHPT_POINT	1
 #define SHPT_ARC	3
 #define SHPT_POLYGON	5
@@ -164,6 +232,59 @@ void	SHPClose( SHPHandle hSHP );
 const char *SHPTypeName( int nSHPType );
 const char *SHPPartTypeName( int nPartType );
 
+/* -------------------------------------------------------------------- */
+/*      Shape quadtree indexing API.                                    */
+/* -------------------------------------------------------------------- */
+
+/* this can be two or four for binary or quad tree */
+#define MAX_SUBNODE	4
+
+typedef struct shape_tree_node
+{
+    /* region covered by this node */
+    double	adfBoundsMin[4];
+    double	adfBoundsMax[4];
+
+    /* list of shapes stored at this node.  The papsShapeObj pointers
+       or the whole list can be NULL */
+    int		nShapeCount;
+    int		*panShapeIds;
+    SHPObject   **papsShapeObj;
+
+    int		nSubNodes;
+    struct shape_tree_node *apsSubNode[MAX_SUBNODE];
+    
+} SHPTreeNode;
+
+typedef struct
+{
+    SHPHandle   hSHP;
+    
+    int		nMaxDepth;
+    int		nDimension;
+    
+    SHPTreeNode	*psRoot;
+} SHPTree;
+
+SHPTree *SHPCreateTree( SHPHandle hSHP, int nDimension, int nMaxDepth,
+                        double *padfBoundsMin, double *padfBoundsMax );
+void     SHPDestroyTree( SHPTree * hTree );
+
+int	SHPWriteTree( SHPTree *hTree, const char * pszFilename );
+SHPTree SHPReadTree( const char * pszFilename );
+
+int	SHPTreeAddObject( SHPTree * hTree, SHPObject * psObject );
+int	SHPTreeAddShapeId( SHPTree * hTree, SHPObject * psObject );
+int	SHPTreeRemoveShapeId( SHPTree * hTree, int nShapeId );
+
+void 	SHPTreeTrimExtraNodes( SHPTree * hTree );
+
+int    *SHPTreeFindLikelyShapes( SHPTree * hTree,
+                                 double * padfBoundsMin,
+                                 double * padfBoundsMax,
+                                 int * );
+int     SHPCheckBoundsOverlap( double *, double *, double *, double *, int );
+
 /************************************************************************/
 /*                             DBF Support.                             */
 /************************************************************************/
@@ -200,6 +321,8 @@ typedef enum {
   FTInvalid
 } DBFFieldType;
 
+#define XBASE_FLDHDR_SZ       32
+
 DBFHandle DBFOpen( const char * pszDBFFile, const char * pszAccess );
 DBFHandle DBFCreate( const char * pszDBFFile );
 
@@ -223,6 +346,15 @@ int DBFWriteDoubleAttribute( DBFHandle hDBF, int iShape, int iField,
 int DBFWriteStringAttribute( DBFHandle hDBF, int iShape, int iField,
 			     const char * pszFieldValue );
 
+const char *DBFReadTuple(DBFHandle psDBF, int hEntity );
+int DBFWriteTuple(DBFHandle psDBF, int hEntity, void * pRawTuple );
+
+DBFHandle DBFCloneEmpty(DBFHandle psDBF, const char * pszFilename );
+ 
 void	DBFClose( DBFHandle hDBF );
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ndef _SHAPEFILE_H_INCLUDED */

@@ -76,11 +76,12 @@ ltm_trans_calculate (Rectify_Group *group)
     /* calculate the row/col to photo-coords transformation */
     /* coeffients (using the fiducial points marked in i.points) */
 /** TODO
-/**    if (I_compute_fiducial_equations(auxil, coefs) <= 0) {
-/**       /** TODO message about fiducials **/
+**    if (I_compute_fiducial_equations(auxil, coefs) <= 0) {
+**/
+        /** TODO message about fiducials **/
 /**       group->stat = -2;
-/**       return (group->stat);
-/**    }
+**       return (group->stat);
+**    }
 **/
 
     /* convert each scanned imagery (row,col) pair to photo coordinates */
@@ -99,16 +100,15 @@ ltm_trans_calculate (Rectify_Group *group)
 
 
 /** TODO convert from imagery(row, col) to (line,pixel) relative to full scene */ 
-/**        /* do the row,col to photo coordinate transformation */
+        /* do the row,col to photo coordinate transformation */
 /**        I_fiducial_ref  (scan_x, scan_y, &photo_x, &photo_y, coefs);
 **/
 
-/**
-/**	/* make a new temporary control point */
+	/* make a new temporary control point */
 /**        I_new_con_point (&auxil->points_photo, 
-/**			 photo_x, photo_y, photo_z,
-/**			 tar_x,   tar_y,   tar_z,
-/**			 status);
+**			 photo_x, photo_y, photo_z,
+**			 tar_x,   tar_y,   tar_z,
+**			 status);
 **/
 
 	/* make a new temporary control point */
@@ -143,9 +143,9 @@ ltm_trans_calculate (Rectify_Group *group)
 
 
 /*-------------------------------------------------------------------*
-/*  Given the imagery location (e1,n1) z1 = target elevation 
-/*  Determine the target location cordinates (e2,n2,z2)
-/*-------------------------------------------------------------------*/
+ *  Given the imagery location (e1,n1) z1 = target elevation 
+ *  Determine the target location cordinates (e2,n2,z2)
+ *-------------------------------------------------------------------*/
 int 
 ltm_trans_forward (Rectify_Group *group, double e1, double n1, double z1, double *e2, double *n2, double *z2)
 {
@@ -154,8 +154,8 @@ double         temp_e, temp_n, temp_z;
 int            temp_elev;
 
 
-/** TODO 
-/**      /* compute the Landsat full scene coordinates */
+/** TODO */
+        /* compute the Landsat full scene coordinates */
 /**      I_fiducial_ref (e1, n1, &temp_e, &temp_n, group->coefs);
 **/
 
@@ -196,7 +196,7 @@ double         temp_e, temp_n, temp_z;
 	      /* the scanned coordinates are stored in ex, nx */
 
 /** TODO 
-/**	      I_inverse_fiducial_ref (e1, n1, temp_e, temp_n, group->coefs);
+ **	      I_inverse_fiducial_ref (e1, n1, temp_e, temp_n, group->coefs);
 **/
 
               *e1 = temp_e;

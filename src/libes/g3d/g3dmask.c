@@ -5,7 +5,7 @@
 
 /*--------------------------------------------------------------------------*/
 
-/* the standart g3d file format is used to store the mask values. a NULL-value
+/* the standard g3d file format is used to store the mask values. a NULL-value
    is stored for values which are masked out and a "0." is stored for values 
    which are not masked out. to improve compression, the precision is set to 
    0 and RLE encoding is used.
@@ -17,14 +17,20 @@ static int G3d_maskMapExistsVar = 0;
 static G3D_Map *G3d_maskMap;
 
 /*--------------------------------------------------------------------------*/
+static void dummy(void)
+{
+   return;
+}
+
 
 static float G3D_MASKNUMmaskValue;
 
+/* Call to dummy() to match void return type of G3d_setNullValue() */
 #define G3D_MASKNUM(map,Xmask,Ymask,Zmask,VALUEmask,TYPEmask) \
 \
    (G3D_MASKNUMmaskValue = G3d_getMaskFloat (map, Xmask, Ymask, Zmask), \
     ((G3d_isNullValueNum (&G3D_MASKNUMmaskValue, G3D_FLOAT)) ? \
-      G3d_setNullValue (VALUEmask, 1, TYPEmask) : NULL))
+      G3d_setNullValue (VALUEmask, 1, TYPEmask) : dummy()))
 
 /*--------------------------------------------------------------------------*/
 
@@ -32,7 +38,8 @@ int
 G3d_maskClose ()
 
 {
-  if (! G3d_maskMapExistsVar) return 1;
+  /* No Idea if this is correct return value */
+  if (! G3d_maskMapExistsVar) return 1;  
 
   G3d_maskMapExistsVar = 0;
 
@@ -68,7 +75,8 @@ G3d_maskOpenOld ()
   double min, max;
   G3D_Region region;
 
-  if (G3d_maskMapExistsVar) return;
+  /* No Idea if this is correct return value */
+  if (G3d_maskMapExistsVar) return 1;
 
   G3d_maskMapExistsVar = G3d_maskFileExists ();
 
@@ -108,7 +116,7 @@ G3d_getMaskFloat (map, x, y, z)
   top = ((double) z + 0.5) / (double) map->window.depths * 
           (map->window.top - map->window.bottom) + map->window.bottom;
 
-  G3d_getRegionValue (G3d_maskMap, north, east, top, &value, G3D_FLOAT);
+  G3d_getRegionValue (G3d_maskMap, north, east, top, (char *)&value, G3D_FLOAT);
   return value;
 }     
 

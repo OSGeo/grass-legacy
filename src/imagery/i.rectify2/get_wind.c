@@ -17,20 +17,24 @@ int get_target_window (int order)
 	fprintf (stderr, "> ");
 	if (!G_gets(buf)) continue;
 	G_strip (buf);
-	if (strcmp (buf,"1") == 0) return 1;
+	if (strcmp (buf,"1") == 0) {
+/*	Pierre de Mouveaux - 11 april 2000*/
+		G_get_window(&target_window);
+		return 1;
+	}
 	if (strcmp (buf,"2") == 0) break;
     }
     ask_file_from_list (name, mapset);
     if (G_get_cellhd (name, mapset, &cellhd) < 0)
-	exit(-1);
+        exit(-1);
     georef_window (&cellhd, &target_window,order);
     ask_window (&target_window);
 
     if(!G_yes("Would you like this region saved as the region in the target location?\n", -1))
-	return 1;
+        return 1;
     select_target_env();
     if(G_put_window (&target_window)>=0)
-	fprintf (stderr, "Saved!\n");
+        fprintf (stderr, "Saved!\n");
     select_current_env();
 
     return 0;

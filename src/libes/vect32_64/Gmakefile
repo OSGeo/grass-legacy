@@ -1,5 +1,0 @@
-all:
-	$(GMAKE) ../dig_atts
-	$(GMAKE) Vlib
-	$(GMAKE) diglib
-	$(GMAKE) libes

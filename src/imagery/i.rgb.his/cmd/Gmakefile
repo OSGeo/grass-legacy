@@ -4,13 +4,13 @@ H2ROBJS = h2rmain.o his2rgb.o openfiles.o closefiles.o
 
 LIBES= $(GISLIB)
 
-all:	$(BIN_MAIN_CMD)/i.rgb.his \
-	$(BIN_MAIN_CMD)/i.his.rgb 
+all:	$(BIN_CMD)/i.rgb.his \
+	$(BIN_CMD)/i.his.rgb 
 
-$(BIN_MAIN_CMD)/i.rgb.his: $(R2HOBJS) $(LIBES)
+$(BIN_CMD)/i.rgb.his: $(R2HOBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(R2HOBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(BIN_MAIN_CMD)/i.his.rgb: $(H2ROBJS) $(LIBES)
+$(BIN_CMD)/i.his.rgb: $(H2ROBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(H2ROBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(R2HOBJS): globals.h

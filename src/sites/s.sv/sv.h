@@ -14,7 +14,8 @@ struct semivar_list
 };
 typedef struct semivar_list HGN;
 
-#define PLOTPROG "g.gnuplot"
+extern const char *plot_program;
+
 #define POINTSSTYLE "1 8"
 #define LINESTYLE "2 8"
 
@@ -26,7 +27,5 @@ char **cdpath(char *, int *, char *, char *);
 int nbins(double);
 /* plthgpt.c */
 int plot_hg_points(HGN *, int, int, char *);
-/* readsite.c */
-int readsites(FILE *, int, int, int, Z **);
 /* save.c */
 void save_plot(char *, char *);

@@ -1,9 +1,0 @@
-interface_build {
-    {v.surf.spline} 0
-    {Surface generation program.}
-    {entry in {vector contour map to be interpolated:} 0 vector}
-    {entry out {Resultant Digital Elevation Model:} 0 raster}
-    {entry interval {Contour interval (0 for no constraint):} 0 ""}
-    {checkbox -r {Rasterise contours using rooks case adjacency.} "" -r}
-    {checkbox -s {Constrain interpolation using simple truncation.} "" -s}
-}

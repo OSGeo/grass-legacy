@@ -1,0 +1,46 @@
+#!/bin/sh
+
+# generates HTML page from man page.
+# Requires : rman (RosettaMan v3.0.2a9 of $Date$)
+#
+# Markus Neteler neteler@geog.uni-hannover.de
+
+# $Id$
+
+if [ $# = 0 -o "$1" = "-help" -o "$1" = "help" ]
+then
+ echo "Usage: g.man2html manfile"
+ exit
+fi
+
+echo "Checking if rman installed..."
+which rman > /dev/null
+if [ $? -eq 1 ] ; then
+ echo "Please install RosettaMan (rman) version to 3.0.2 or later!"
+ echo "Get it at:"
+ echo "ftp://ftp.cs.berkeley.edu/ucb/people/phelps/tcltk/rman.tar.Z"
+ exit
+fi
+
+echo "Checking for rman version..."
+wantversion=302
+currentversion=`rman -v |cut -d' ' -f2 |tr  .a-z ' ' |awk '{print $1$2$3}'`
+
+if [ $currentversion -lt $wantversion ] ; then 
+ echo "Please upgrade your rman version to 3.0.2 or later!"
+ echo "Get it at:"
+ echo "ftp://ftp.cs.berkeley.edu/ucb/people/phelps/tcltk/rman.tar.Z"
+ exit
+fi
+
+if [ "$1" = "" ] ; then
+ echo ""
+ echo "Specify man page file name as parameter!"
+ echo ""
+ exit
+fi
+
+echo "Converting man page..."
+rman -f HTML $1 > $1.html
+
+echo "New HTML file created: $1.html"

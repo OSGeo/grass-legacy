@@ -33,6 +33,7 @@ get_shift (double *E, double *N)
 		R_get_location_with_pointer(&screen_x, &screen_y, &button) ;
 		fprintf(stderr,"x_%d y_%d\n",screen_x, screen_y);
 		if (button == 1) {
+			draw_on = 1;
 			ieast = D_d_to_u_col((double)screen_x) ;
 			inorth = D_d_to_u_row((double)screen_y) ;
 			G_format_easting  (ieast,  buf1, projection);
@@ -40,6 +41,7 @@ get_shift (double *E, double *N)
 			fprintf(stderr,"%18s %18s image\n", buf1, buf2) ;
 			}
 		if (button == 2) {
+			draw_on = 1;
 			east = D_d_to_u_col((double)screen_x) ;
 			north = D_d_to_u_row((double)screen_y) ;
 			G_format_easting  (east,  buf1, projection);
@@ -54,12 +56,20 @@ get_shift (double *E, double *N)
 			return(0) ;
 		}
 
-/*		if (draw_on)
+		if (draw_on)
 		{
+			if(button == 1)
+			{
+				R_move_abs(cur_screen_x, cur_screen_y) ;
+				cur_screen_x = screen_x ;
+				cur_screen_y = screen_y ;
+			}
 			black_and_white_line(black, white, screen_x,screen_y,cur_screen_x,cur_screen_y) ;
 			cur_screen_x = screen_x ;
 			cur_screen_y = screen_y ;
 			R_move_abs(cur_screen_x, cur_screen_y) ;
+			if(button == 1)
+				draw_on = 0;
 		}
 		else if (button == 2)
 		{
@@ -68,7 +78,6 @@ get_shift (double *E, double *N)
 			cur_screen_y = screen_y ;
 			draw_on = 1 ;
 		}
-*/
 	}
 }
 

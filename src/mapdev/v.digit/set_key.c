@@ -1,4 +1,8 @@
 /*
+** $Id$
+**
+**  - Cygwin fixes (5/2001): Mike Thomas <miketh@brisbane.paradigmgeo.com>
+**
 **  US Army Construction Engineering Research Lab
 **  Written by GRASS 3.0 Summer of 88,  -mh
 */
@@ -36,7 +40,7 @@ struct	termio	old_termio ;
 
 int set_keyboard (void)
 {
-
+#ifndef __CYGWIN__
  /* 
   * get the tty structure
   */
@@ -65,7 +69,7 @@ int set_keyboard (void)
 
 	if (ioctl (KEYBOARD, TCSETA, &new_termio) < 0)
 		perror ("ioctl failed on device");
-
+#endif
 	return (0);
 }
 
@@ -73,10 +77,10 @@ int set_keyboard (void)
 
 int unset_keyboard (void)
 {
-
+#ifndef __CYGWIN__
 	if (ioctl (KEYBOARD, TCSETA, &old_termio) < 0)
 		perror ("ioctl failed on device");
-
+#endif
 	return (0);
 }
 
@@ -90,7 +94,7 @@ unset_keyboard (void) {}
 
 int key_hit (char *buf)
 {
-
+#ifndef __CYGWIN__
 	int	Keyhit ;
 
 #ifdef	HAVE_TERMIO_H
@@ -112,7 +116,9 @@ int key_hit (char *buf)
 #endif
 
 	return (Keyhit) ;
-
+#else
+        return ( 0 );
+#endif        
 }
 
 

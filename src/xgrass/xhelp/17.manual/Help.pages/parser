@@ -1,6 +1,0 @@
-
- - The routines used to parse information entered to GRASS
-by users on the command line, and presenting a generic user interface
-to the user.
-
-(GRASS Parsing Routine)

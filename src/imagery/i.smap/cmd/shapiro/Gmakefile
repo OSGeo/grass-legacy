@@ -1,17 +1,17 @@
 LIST = main.o parse.o openfiles.o opencell.o labels.o read_sig.o \
 	history.o closefiles.o write_img.o
 
-PGM = $(BIN_ALPHA_CMD)/i.smap
+PGM = i.smap
 
 EXTRA_CFLAGS = -I../bouman/
 
-LIB = ../bouman/lib.a
+LIBES = ../bouman/lib.a $(GISLIB) $(IMAGERYLIB)
 
-$(PGM): $(LIST) $(GISLIB) $(LIB) $(IMAGERYLIB) 
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIB) $(GISLIB) $(IMAGERYLIB) $(MATHLIB) $(XDRLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): ../bouman/bouman.h
 read_block.o: ../bouman/region.h
 
-$(LIB) $(GISLIB) $(IMAGERYLIB): #
+$(LIBES): #
 

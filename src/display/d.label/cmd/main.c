@@ -21,7 +21,16 @@ main (int argc, char **argv)
 	int t, b, l, r ;
 	int textcolor ;
 	int tsize ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4 ;
+
+	module = G_define_module();
+	module->description =
+		"Creates and displays text labels "
+		"in the active display frame on the graphics monitor.";
+
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
 
 	opt1 = G_define_option() ;
 	opt1->key        = "size" ;
@@ -54,9 +63,6 @@ main (int argc, char **argv)
 	opt4->options="romand,romanp,romant,romans,scriptc,scripts,romancs,italicc,italiccs,gothitt,gothgrt,gothgbt" ;
 	opt4->description= "Sets the font" ;
 
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
-
 	/* Check command line */
 
 	if (G_parser(argc, argv))
@@ -81,7 +87,8 @@ main (int argc, char **argv)
 
 
 	/* */
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	if (opt4->answer != NULL)
 		R_font(opt4->answer) ;

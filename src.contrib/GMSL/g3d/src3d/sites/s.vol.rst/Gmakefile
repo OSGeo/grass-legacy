@@ -1,0 +1,17 @@
+PGM    = s.vol.rst
+HOME   = $(BIN_CMD)
+
+LIST   =  main.o dataoct.o oct.o user1.o user2.o user3.o user4.o
+
+LIBES=$(G3DLIB) $(GISLIB) $(DATETIMELIB) $(BITMAPLIB) $(LINKMLIB)
+
+all: g3d $(HOME)/$(PGM)
+
+g3d:
+	$(GMAKE) $(SRC)/libes/g3d
+
+$(HOME)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+user1.o: Viz.h 
+$(GISLIB):#

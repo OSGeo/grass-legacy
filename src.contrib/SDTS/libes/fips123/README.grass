@@ -1,0 +1,98 @@
+NOTES on FIPS123 LIbrary and its installation as part of GRASS:
+
+
+A. Original contents of the FIPS123 package, as obtained from USGS.
+
+    bugs.doc 
+    fixes.doc    
+    f123app/
+    f123bat/
+    f123doc/
+    f123inc/
+    f123lib/
+    f123lst/
+    f123obj/
+    f123src/
+    f123utl/
+    samdlg3/
+    sammsdd/
+    samtiger/
+
+--------------------
+
+B. general notes on modifications in course of installation:
+
+1.  f123src becomes libes/fips123
+2.  all other directories mv under libes/fips123
+3.  files bugs.doc, fixes.doc, mv under libes/fips123
+
+4.  libes/fips123/README is new file, documenting modifications of
+original library.
+
+5.  f123app and f123utl contain sample application and utility programs
+that use the fips123 library.  
+
+6. f123bat contains scripts to make the f123lib and the programs in f123app
+and f123utl. Those in f123lib are obsoleted by the gmake process, although
+those for the programs in f123app and f123utl may be of use. In any case,
+DO NOT USE THESE SCRIPTS WITHOUT MODIFYING PATH SPECS FIRST!
+
+--------------------
+
+C. source code modification of fips library for compilation and use with
+GRASS:
+
+
+1. Gmakefile created. note -DFIPS_BSD define for EXTRA_CFLAGS
+
+2. two new src files created:
+
+	fips123/fips_bsd.c 
+	fips123/f123inc/fips_bsd.h 
+
+This new headerfile and C source file contain the implementation of 
+some types and functions used in FIPS library but not available in BSD.
+
+f123inc/stc123.h:
+	Add "Include fips_bsd.h"
+
+(f123src)/beg_file.c and (f123src)/ch_size.c:
+    Correct fopen calls, change "rb" and "wb" params to "r" and "w".
+
+f123src/ch_size.c
+    Code modified to fix bug involving use of system call rename() to
+    rename a file from one file system to another. this is an error.
+
+f123src/wr_ddrec.c
+    Changed the System V-specific system calls as follows:  
+
+  fgetpos changed to ftell
+  fsetpos  "		fseek
+  fpos_t   "		long
+
+
+f123bat/f123comp.m
+  added compile option '-DFIPS_BSD' when compiling FIPS library under BSD.
+
+f123bat/f123lib.m
+  changed AR options which are invalid in SUN OS.
+
+--------------------------
+
+for further information about FIPS 123 Library, contact:
+
+Bob Lazar
+SDTS Task Force
+U.S. Geological Survey
+526 National Center
+Reston, VA 22092
+1-703-648-4182
+email: rlazar@usgs.gov
+
+for information about use of FIPS 123 Library as part of GRASS, contact:
+
+David Stigberg
+USACERL
+1-800-USACERL x7631
+stigberg@diego.cecer.army.mil
+

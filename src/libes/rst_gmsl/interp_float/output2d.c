@@ -8,6 +8,7 @@
  * modified by Mitasova in August 1999 (fix for elev color)
  * modified by Brown in September 1999 (fix for Timestamps)
  * Modified by Mitasova in Nov. 1999 (write given tension into hist)
+ * $Id$
  *
  */
 
@@ -50,9 +51,8 @@ int IL_output_2d (
   FCELL *cell1;
   int cf1, cf2, cf3, cf4, cf5, cf6;
   int nrows, ncols;
-  int i, ii, iarc, j, k;
+  int i, ii;
   double zstep;
-  char msg[1024];
   FCELL data1, data2;
   struct Colors colors;
   struct History hist, hist1, hist2, hist3, hist4, hist5;
@@ -60,7 +60,6 @@ int IL_output_2d (
   char *mapset = NULL;
   int cond1, cond2;
   FCELL dat1, dat2;
-  struct TimeStamp ts;
 
 
   cond2 = ((params->pcurv != NULL) || (params->tcurv != NULL)
@@ -624,22 +623,32 @@ int IL_output_2d (
     G_short_history (params->elev, type, &hist);
 
     params->dmin = sqrt (params->dmin);
-    fprintf (stderr, "history initiated\n");
+    fprintf (stdout, "history initiated\n");
+    fflush(stdout);
     /*
      * sprintf (hist.edhist[0], "tension=%f, smoothing=%f", params->fi *
      * dnorm / 1000., params->rsm);
      */
 
     if(dtens)
-    {
-    sprintf (hist.edhist[0], "giventension=%f, smoothing=%f",
-	     params->fi * 1000. / dnorm, params->rsm);
-    }
+        {
+        if(params->rsm == -1)
+            sprintf (hist.edhist[0], "giventension=%f, smoothing att=%d",
+                 params->fi * 1000. / dnorm, params->smatt);
+        else
+            sprintf (hist.edhist[0], "giventension=%f, smoothing=%f",
+                 params->fi * 1000. / dnorm, params->rsm);
+        
+        }
     else
-    {
-    sprintf (hist.edhist[0], "tension=%f, smoothing=%f",
-             params->fi, params->rsm);
-    }
+        {
+        if(params->rsm == -1)
+            sprintf (hist.edhist[0], "tension=%f, smoothing att=%d",
+                 params->fi * 1000. / dnorm, params->smatt);
+         else
+            sprintf (hist.edhist[0], "tension=%f, smoothing=%f",
+                 params->fi, params->rsm);
+        }
 
     sprintf (hist.edhist[1], "dnorm=%f, dmin=%f, zmult=%f",
 	     dnorm, params->dmin, params->zmult);

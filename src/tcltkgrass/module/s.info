@@ -1,0 +1,8 @@
+interface_build {
+    {s.info} 0
+    {Outputs basic information about a sites map.}
+    {entry sites {Sites map:} 0 sites}
+    {checkbox -q {Load quietly.} "" -q}
+    {checkbox -w {Only count sites in current window for min/max.} "" -w}
+    {checkbox -Q {Show quartiles for decimal attributes.} "" -Q}
+}

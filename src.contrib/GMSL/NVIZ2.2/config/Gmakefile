@@ -1,7 +1,0 @@
-# nviz v1.0
-# 2/12/96
-# Toplevel makefile for building everything
-
-all: 
-	echo $(GISBASE)
-

@@ -30,7 +30,7 @@ struct Line_List
 	double length     ;   /* length */
 	int line_cnt      ;   /* number of lines of this category number */
 } *vect               ;
-static int cmp ( char *,char *);
+static int cmp (const void *,const void *);
 static int ABS (int);
 
 int do_v_stats(int verbose, int lay_no, char *fd)
@@ -371,7 +371,7 @@ int codes ( char ctype)
 	}
 }
 
-static int cmp ( char *a,char *b)
+static int cmp (const void *a,const void *b)
 {
 	if(a < b)
 		return -1;

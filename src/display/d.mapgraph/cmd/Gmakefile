@@ -1,4 +1,5 @@
-LIBES  = $(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
+PGM=d.mapgraph
+LIBES  = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) 
 
 LIST = \
 	do_graph.o \
@@ -6,7 +7,7 @@ LIST = \
 	read_line.o\
 	main.o
 
-$(BIN_MAIN_CMD)/d.mapgraph: $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

@@ -3,6 +3,6 @@ LIBES = $(IMAGERYLIB) $(GISLIB)
 LIST = main.o
 
 $(ETC)/imagery/colors: $(LIST) $(LIBES) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VASK) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES) $(VASKLIB): #

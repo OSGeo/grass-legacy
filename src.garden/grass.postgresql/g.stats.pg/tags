@@ -1,0 +1,4 @@
+Mmain	main.c	/^main(argc, argv)$/
+buildSQL	main.c	/^buildSQL(fp,tabname,colname)$/
+chktype	chktype.c	/^chktype(tabname, colname, sqlFile)$/
+infxStats	infxStats.c	/^infxStats(tabname, colname,sqlFile)$/

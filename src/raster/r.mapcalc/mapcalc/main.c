@@ -2,6 +2,7 @@
 #include "glob.h"
 #include <unistd.h>
 #include <signal.h>
+#include <stdio.h>
 #include "function.h"
 #include "mapcalc.h"
 
@@ -29,6 +30,15 @@ main (int argc, char *argv[])
 	argv++;
 	argc--;
     }
+
+	if ( argc > 1 && ( (strcmp(argv[1], "-help") == 0) || (
+		strcmp(argv[1], "-h") == 0) ) ) {
+	fprintf(stderr, "r.mapcalc - Raster map layer data calculator\n\n");
+	fprintf(stderr, "r.mapcalc performs arithmetic on raster map layers.\n");
+	fprintf(stderr, "New raster map layers can be created which are arithmetic expressions involving existing raster map layers, integer or floating point constants, and functions.\n\n");
+	fprintf(stderr, "For more information use g.manual r.mapcalc\n");
+	exit(1);
+	}
 
     if (argc >= 2)
     {
@@ -104,6 +114,7 @@ system (buf);
 	    if ( !ok ) {
 		allok = ok;
 	    }
+	    
 #ifdef SIGFPE
 	    signal (SIGFPE, SIG_DFL);
 #endif
@@ -122,6 +133,8 @@ system (buf);
 		print_range (result);
 	    }
 	    free_execute_stack();
+        } else {
+	  allok = 1; /* added 11/00 Andreas Lange */
 	}
 	free_expression_stack();
 	if (argc >= 2) break;

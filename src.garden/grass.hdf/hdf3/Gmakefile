@@ -1,4 +1,0 @@
-all:
-	$(GMAKE) HDF.lib.3.2.3
-	$(GMAKE) r.in.hdf
-	$(GMAKE) r.out.hdf

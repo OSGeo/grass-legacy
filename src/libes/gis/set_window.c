@@ -26,9 +26,8 @@ int G_get_set_window (struct Cell_head *window)
 
 int G_set_window (struct Cell_head *window)
 {
-    int i, j;
+    int i;
     int maskfd;
-    char buf[400];
     char *err;
 
 /* adjust window, check for valid window */

@@ -1,0 +1,7 @@
+PGM=v.in.atlas
+VFILES = vinatnrcs.o atl2dig2.o atl2dig1.o isle.o grfix.o
+
+$(BIN_CMD)/$(PGM): $(VFILES) $(VECTLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(VFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB): #

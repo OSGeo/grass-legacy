@@ -1,3 +1,0 @@
-Program to modify vector file dig_att data for each mapset to agree
-with a common "subject" file. Then does a patch of all files in the
-list.

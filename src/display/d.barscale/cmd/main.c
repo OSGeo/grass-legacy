@@ -10,11 +10,16 @@ int main (int argc, char **argv)
 	char window_name[64] ;
 	struct Cell_head window ;
 	int t, b, l, r ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3 ;
 	struct Flag *mouse ;
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Displays a barscale on GRASS monitor.";
 
 	{
 		struct Cell_head W ;
@@ -75,7 +80,8 @@ int main (int argc, char **argv)
 	sscanf(opt3->answers[1],"%lf",&north) ;
 	if((east>0)||(north>0)) coord_inp=1;
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	if (D_get_cur_wind(window_name))
 		G_fatal_error("No current window") ;

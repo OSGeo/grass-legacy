@@ -3,26 +3,26 @@
  * drawn in that color's number.
  * 
  * Called by: Color() in ../lib/Color.c */
+
 #include <stdio.h>
 #include "includes.h"
-#include "../lib/colors.h"
+#include "colors.h"
+#include "gis.h"
 
-extern int NCOLORS;
-extern Display *dpy;
-extern GC gc;
-extern u_long *xpixels;
-extern int table_type;
-
-int SetXColor (int number)
+int color(int number)
 {
-    if ((number >= NCOLORS) || (number < 0)) {
-        fprintf(stderr, "Color: can't set color %d\n", number);
+    if (number >= NCOLORS || number < 0)
+    {
+        G_warning("Color: can't set color %d\n", number);
         return 0;
     }
-    if (table_type == FIXED)
-        XSetForeground(dpy, gc, xpixels[number]);
+
+    if (get_table_type() == FLOAT)
+        XSetForeground(dpy, gc, number);
+    else if (use_visual->class >= TrueColor)
+	XSetForeground(dpy, gc, number);
     else
-        XSetForeground(dpy, gc, (u_long) number);
+	XSetForeground(dpy, gc, xpixels[number]);
 
     return 0;
 }

@@ -1,0 +1,147 @@
+<html>
+<A NAME="d.site.pg">
+<TITLE>d.site.pg</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>d.site.pg</B></EM> - Display select sites from a database query.
+(GRASS-RDBMS Interface Display Program)
+
+<H2>SYNOPSIS</H2>
+<B>d.site.pg</B><BR>
+<B>d.site.pg help</B><BR>
+<B>d.site.pg</B> [<B>sql</B><EM>=filename</EM>]
+[<B>table</B><EM>=name</EM>] 
+[<B>coordx</B><EM>=X-column</EM>]
+[<B>coordy</B><EM>=Y-column</EM>] 
+[<B>where</B><EM>=conditions</EM>] 
+[<B>map</B><EM>=name</EM>] 
+[<B>plot</B><EM>=color,icon,size</EM>] 
+
+
+<H2>DESCRIPTION</H2>
+<P>
+<EM>d.site.pg</EM> displays selected point locations returned from a database query.  
+The site locations returned from the database query are displayed as icons in 
+the active frame. The user controls the color, size and icon used in the graphic 
+output. At the users option a site list of the database output is generated 
+and placed in the current mapset/location.
+<P>
+The user has the option of <B>either</B> specifying an SQL file to use for the
+query, <B>or</B> specifying the query parameters via command arguments.  If an
+SQL file is specified all other options are ignored, except <EM>plot</EM> and
+<EM>map</EM>.  The user has the greatest flexibility with an SQL file, being able to
+specify joins and other database specific features.
+
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>sql=filename</B>
+<DD>SQL statements specifying well formed selection criteria.  If this argument is
+specified, all other arguments except <EM>plot</EM> and <EM>map</EM> will be ignored.
+The SQL must return data of either two or three columns, where the first is the easting,
+the second is the northing, and the optional third is a category value.
+<P>
+
+<DL>
+<DT><B>table=name</B>
+<DD>Name of the table containing X, Y coordinate values.  If this option is selected
+instead of <EM>sql</EM>, then you must specify the X and Y column names (if they aren't
+"X" and "Y").
+<P>
+
+<DT><B>coordx=X-coord</B>
+<DD>Column containing the "x" (easting) coordinate value.
+<P>
+
+<DT><B>coordy=Y-coord</B>
+<DD>Column containing the "y" (northing) coordinate value.
+<P>
+
+<DT><B>where=SQLwhereclause</B>
+<DD>SQL "where" clause which specifies the query criteria to be used in
+subsetting the database. The information specified in the where option must
+indicate the column(s) to be used, the operators to be used in the evaluation
+and the values which the data in the column will be evaluated against.
+</DL>
+<P>
+For example, if you want to select only those records from the table 
+well where the value for depth is either 58 or 75 the following could be entered:
+<P>
+<DD><EM>well.depth = 58 or well.depth = 75</EM>
+<P>
+To select all wells in an area where the value for well is between 50 and 120:
+<P>
+<DD><EM>well.depth &gt; 50 and well.depth &lt; 120</EM>
+<P>
+To select all wells of depth greater than 75 where the value for owner is not equal to SMITH:
+<P>
+<DD><EM>well.depth &gt; 75 and well.owner != 'SMITH'</EM>
+<P>
+If the database column used as the selection criteria is a character 
+field then the associated value must be placed in single quotes. 
+To determine the data types associated with columns in the currently 
+selected database use the <EM>g.column.pg</EM> command with the <EM>-v</EM> flag.
+<P>
+In addition to the operators presented in the examples above a range 
+of relational operators including and, or, etc. are supported. There may 
+be some differences in the relational operators which are supported with 
+different database drivers.
+<P>
+The examples presented above were created using the command line parser.  
+If <EM>d.site.pg</EM> is being called from a shell script 
+remember to escape quoted strings.  The foll0wing example presents a 
+component of a shell script where the database column <EM>label</EM>
+has a value of "O'Reilly".
+<P>
+<DD><EM>d.site.pg tab=well coords=utme,utmy
+<DD>where="label = O''Reilly" map=$1 plot=green,plus,2</EM>
+
+<DL>
+<DT><B>map=list</B>
+<DD>Name of sites list to output
+<P>
+
+<DT><B>plot=color,icon,size</B>
+<DD>Colors: red, orange, yellow, green, blue, indigo, violet, magenta, brown, gray, white, black
+<DD>Icon: diamond, box, plus, x
+<DD>Size: 1-9
+<DD>Default: gray, x, 3
+<P>
+
+<H2>BUGS</H2>
+None known.
+
+<H2>NOTE</H2>
+This program requires the PostgreSQL database software.
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="g.column.pg.html">g.column.pg</A>, 
+<A HREF="g.select.pg.html">g.select.pg</A>, 
+<A HREF="g.stats.pg.html">g.stats.pg</A>, 
+<A HREF="g.table.pg.html">g.table.pg</A>, 
+<A HREF="d.rast.pg.html">d.rast.pg</A>, 
+<A HREF="d.vect.pg.html">d.vect.pg</A>, 
+<A HREF="d.what.r.pg.html">d.what.r.pg</A>,
+<A HREF="d.what.s.pg.html">d.what.s.pg</A>,
+<A HREF="d.what.v.pg.html">d.what.v.pg</A>, 
+<A HREF="r.reclass.pg.html">r.reclass.pg</A>, 
+<A HREF="r.rescale.pg.html">r.rescale.pg</A>, 
+<A HREF="v.reclass.pg.html">v.reclass.pg</A></EM>
+
+<H2>AUTHOR</H2>
+Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick Limp University of Arkansas, CAST
+<P>
+Postgres modifications: Janne Soimasuo, Faculty of Forestry, University of Joensuu, Finland.
+<P>
+Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com), Eric G. Miller
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

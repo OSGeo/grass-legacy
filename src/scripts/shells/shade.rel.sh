@@ -1,6 +1,7 @@
 :
-#updated $ewres to ewres() and $nsres to nsres() 11/99
-# updated number to FP in r.mapcalc statement
+# 1/2001 fix for NULL by David Finlayson <david_finlayson@yahoo.com>
+# 11/99 updated $ewres to ewres() and $nsres to nsres()
+#       updated number to FP in r.mapcalc statement Markus Neteler
 
 # set nsres and ewres
 #eval `g.region -g`
@@ -57,6 +58,7 @@ echo Running r.mapcalc, please stand by.
 echo Your new map will be named shade.  Please consider renaming.
 echo ""
 
+# Note: no space allowed after \\:
 r.mapcalc << EOF
 shade = eval( \\
  x=($elev[-1,-1] + 2*$elev[0,-1] + $elev[1,-1] \\
@@ -65,9 +67,11 @@ shade = eval( \\
    -$elev[1,-1] - 2*$elev[1,0] - $elev[1,1])/(8.*nsres()) , \\
  slope=90.-atan(sqrt(x*x + y*y)), \\
  a=round(atan(x,y)), \\
+ a=if(isnull(a),1,a), \\
  aspect=if(x||y,if(a,a,360.)), \\
  cang = sin($alt)*sin(slope) + cos($alt)*cos(slope) * cos($az-aspect), \\
- if(cang < 0.,0.,100.*cang))
+ if(cang < 0.,0.,100.*cang), \\
+ if(isnull(cang), 22, 100.*cang))
 EOF
 
 r.colors shade color=grey

@@ -1,5 +1,0 @@
-
-@man("r.cross") - Creates a cross product of the category values from multiple
-raster map layers.
-
-(GRASS Raster Program)

@@ -1,0 +1,12 @@
+FIPS PUB 123 Function Library
+Readme File 
+Subdirectory: <f123dir>/f123app/
+
+This subdirectory contains sample application programs written in
+the ANSI C programming language for the FIPS PUB 123 Function Library.
+
+These sample source code files can be compiled and linked using the 
+samprg*.mak make files located in the subdirectory <f123dir>/f123bat/.
+The batch files will produce object code files in the subdirectory 
+<f123dir>/f123obj/ and source listing files in the subdirectory 
+<f123dir>/f123lst/.  Executable files will be created in this subdirectory.

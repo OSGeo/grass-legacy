@@ -1,6 +1,6 @@
 #include "xdr.h"
 
-db__send_char(d)
+int db__send_char(d)
     char d;
 {
     XDR xdrs;
@@ -20,6 +20,7 @@ db__send_char(d)
     return stat;
 }
 
+int
 db__recv_char (d)
     char *d;
 {

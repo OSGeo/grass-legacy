@@ -23,7 +23,7 @@ void infiltration(void);
 int absolute(int);
 void calc_band_width(int *, int *, int, int *);
 /* mstifgeo.c */
-int compare(int *, int *);
+int compare(const void *, const void *);
 void make_capacitance(void);
 void makestiffness_capacitance(void);
 /* other.c */

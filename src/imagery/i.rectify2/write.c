@@ -32,7 +32,6 @@ int write_matrix (int row, int col)
            unlink(temp_name);
            G_fatal_error("error while writing to temp file");
         }
-        /*G_put_map_row_random (outfd, cell_buf[n], row++, col, matrix_cols);*/
     }
     select_current_env();
 
@@ -45,6 +44,7 @@ int write_map(char *name)
    char buf[100];
    void *rast;
    
+   G_set_window(&target_window); 
 
    rast = G_allocate_raster_buf(map_type);
    close(temp_fd);

@@ -1,4 +1,7 @@
-#!/bin/csh -f
+#!/bin/sh
+#
+# $Id$
+#
 # from Dr. Agustin Lobo - alobo@ija.csic.es
 # TC-factor changed to CRIST et al. 1986, p.1467 (Markus Neteler 1/99)
 #                      Proc. IGARSS 1986
@@ -7,41 +10,41 @@
 #set verbose
 
 if test "$GISBASE" = ""; then
-echo "You must be in GRASS GIS to run this program."
-exit
+ echo "You must be in GRASS GIS to run this program."
+ exit
 fi
 
-if ($#argv == 0) then
+if test "$1" = "" ; then
         echo ""
         echo "Tasseled Cap transformation (Kauth Thomas) - vegetation index"
 	echo "for LANDSAT-5 TM"
         echo ""
         echo "Usage: i.tasscap tm1 tm2 tm3 tm4 tm5 tm7 outfile"
 	exit
-endif 
+fi
 
-if ($argv[7] == "" ) then
+if test "$7" = "" ; then
         echo ""
         echo "Tasseled Cap transformation (Kauth Thomas) - vegetation index"
         echo "for LANDSAT-5 TM"
         echo ""
         echo "Usage: i.tasscap tm1 tm2 tm3 tm4 tm5 tm7 outfile"
         exit
-endif
+fi
 
-set out = $argv[$#argv]
+out=$7
 echo ""
 echo "Calculating first TC component $out.1 (Brightness) ..."
-r.mapcalc "$out.1 =  0.2909 * $argv[1] + 0.2493 * $argv[2] + 0.4806 * $argv[3] + 0.5568 * $argv[4] + 0.4438 * $argv[5] + 0.1706 * $argv[6] + 10.3695"
+r.mapcalc $out.1 = "0.2909 * $1 + 0.2493 * $2 + 0.4806 * $3 + 0.5568 * $4 + 0.4438 * $5 + 0.1706 * $6 + 10.3695"
 echo ""
 echo "Calculating second TC component $out.2 (Greenness) ..."
-r.mapcalc "$out.2 = -0.2728 * $argv[1] - 0.2174 * $argv[2] - 0.5508 * $argv[3] + 0.7221 * $argv[4] + 0.0733 * $argv[5] - 0.1648 * $argv[6] -0.7310"
+r.mapcalc $out.2 ="-0.2728 * $1 - 0.2174 * $2 - 0.5508 * $3 + 0.7221 * $4 + 0.0733 * $5 - 0.1648 * $6 - 0.7310"
 echo ""
 echo "Calculating third TC component $out.3 (Wetness) ..."
-r.mapcalc "$out.3 =  0.1446 * $argv[1] + 0.1761 * $argv[2] + 0.3322 * $argv[3] + 0.3396 * $argv[4] - 0.6210 * $argv[5] - 0.4186 * $argv[6] - 3.3828"
+r.mapcalc $out.3 = "0.1446 * $1 + 0.1761 * $2 + 0.3322 * $3 + 0.3396 * $4 - 0.6210 * $5 - 0.4186 * $6 - 3.3828"
 echo ""
 echo "Calculating fourth TC component $out.4. (Haze) ..."
-r.mapcalc "$out.4 =  0.8461 * $argv[1] - 0.0731 * $argv[2] - 0.4640 * $argv[3] - 0.0032 * $argv[4] - 0.0492 * $argv[5] - 0.0119 * $argv[6] + 0.7879"
+r.mapcalc $out.4 = "0.8461 * $1 - 0.0731 * $2 - 0.4640 * $3 - 0.0032 * $4 - 0.0492 * $5 - 0.0119 * $6 + 0.7879"
 
 r.colors map=$out.1 color=grey
 r.colors map=$out.2 color=grey

@@ -1,0 +1,21 @@
+From waupo@sal.cs.uiuc.edu Fri May 31 14:55:15 1996
+Received: from sal.cs.uiuc.edu by gomez.gis.uiuc.edu with SMTP id AA24771
+  (5.67b/IDA-1.5 for <helena@gis.uiuc.edu>); Fri, 31 May 1996 14:55:14 -0500
+Received: (from waupo@localhost) by sal.cs.uiuc.edu (8.7.5/8.7.3) id OAA13641; Fri, 31 May 1996 14:54:58 -0500 (CDT)
+Date: Fri, 31 May 1996 14:54:58 -0500 (CDT)
+From: Roman Waupotitsch <waupo@cs.uiuc.edu>
+Message-Id: <199605311954.OAA13641@sal.cs.uiuc.edu>
+To: helena@gis.uiuc.edu, shapiro@diego.cecer.army.mil, waupo@cs.uiuc.edu
+Subject: Re: 3D
+Status: RO
+
+
+i was planning to finish the window/ region part next monday. what is left
+is only a parser for commandline specification of the window and the 
+g3.region program itself. and there is the update to the documentation.
+
+g3.mapcalc does not exist at this point. mainly because window capability
+was added.
+
+roman
+

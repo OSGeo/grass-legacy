@@ -1,9 +1,0 @@
-#!/bin/csh
-d.menu bcolor=red tcolor=white dcolor=orange size=3 << EOF
-.T 40
-.L 40
-Really Quit?
-   Yes
-   No
-EOF
-

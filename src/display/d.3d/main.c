@@ -18,7 +18,9 @@ main (int argc, char *argv[])
 	char *mapset ;
 
 	G_gisinit(argv[0]) ;
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics driver selected");
+
 	G_clear_screen() ;
 
 /* Get name of files for display */
@@ -45,7 +47,8 @@ main (int argc, char *argv[])
 	{
 	    R_close_driver();
 	    system ("d.frame -e");
-	    R_open_driver();
+	    if (R_open_driver() != 0)
+		    G_fatal_error ("No graphics driver selected");
 	}
 
 	for(;;)

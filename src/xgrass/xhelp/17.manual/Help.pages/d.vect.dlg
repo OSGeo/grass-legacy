@@ -1,5 +1,0 @@
-
-@man("d.vect.dlg") - Displays a vector USGS digital line graph (DLG-3) file
-in the active frame on the graphics monitor.
-
-(GRASS Display Program)

@@ -1,4 +1,3 @@
-/* %G% %W% */
 /* Chris Rewerts
    rewerts@ecn.purdue.edu
    Agricultural Engineering, Purdue University
@@ -18,6 +17,8 @@
 #include "raster.h"
 #include "display.h"
 #include "linegraph.h"
+#include <math.h>
+
 #define MAX(x,y)             (( x>y ) ? x : y)
 #define MIN(x,y)             (( x<y ) ? x : y)
 
@@ -62,6 +63,7 @@ main (int argc, char **argv)
     };
     
     struct in_file in[12];
+    struct GModule *module;
     
     float max_y;
     float min_y;
@@ -86,6 +88,11 @@ main (int argc, char **argv)
 /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
 
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Generates and displays simple line graphs in the active graphics monitor display frame.";
+    
     x_opt             = G_define_option() ;
     x_opt->key        = "x_file" ;
     x_opt->description= "Name of data file for X axis of graph" ;

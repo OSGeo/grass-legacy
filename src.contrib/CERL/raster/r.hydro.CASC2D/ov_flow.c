@@ -47,6 +47,14 @@ alfaov=sqrt(abs(sf))/mann;
 
 dqq=sign(sf)*w*alfaov*pow((base=hh),(power=1.667));
 
+/* To force dqq < current flow: cho
+if(dqq > 0 && dqov[vect] < dqq)
+	dqq = dqov[vect];
+
+if(dqq < 0 && dqov[vect2] < abs(dqq))
+	dqq = - dqov[vect2];
+*/
+
 dqov[vect]=dqov[vect]-dqq;
 dqov[vect2]=dqov[vect2]+dqq;
 

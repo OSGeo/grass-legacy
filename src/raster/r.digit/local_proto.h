@@ -1,3 +1,18 @@
+/* Define ANOTHER_BUTTON to click conveniently for two button mouse.
+ * Read src/CMD/head/head and do not define here for consistency.
+#define ANOTHER_BUTTON
+*/
+
+#define	LEFTB	1
+
+#ifndef ANOTHER_BUTTON
+#	define MIDDLEB	2
+#	define RIGHTB	3
+#else
+#	define MIDDLEB	3
+#	define RIGHTB	2
+#endif
+
 /* bnw_line.c */
 int black_and_white_line(int, int, int, int);
 /* create_map.c */

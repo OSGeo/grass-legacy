@@ -1,6 +1,0 @@
-
-\i.median\ - An interactive imagery function that creates a new raster
-map layer whose color table is based on the red, green, and blue (RGB)
-color values present in existing, user-specified imagery group files.
-
-(GRASS Imagery Program)

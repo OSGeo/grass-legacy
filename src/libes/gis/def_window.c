@@ -5,8 +5,8 @@
  *
  *   Screen oriented user interactive session for defining a window.
  *   Uses the visual_ask V_ask routines.  As such, programs including
- *   this must load the GRASS library $(VASK), which includes -lcurses
- *   and -ltermlib.
+ *   this must load the GRASS library $(VASKLIB), and add $(CURSES) (which
+ *   includes -lcurses and -ltermlib) to the command line
  *
  *   parms:
  *      struct Cell_head *window   (window to be defined)

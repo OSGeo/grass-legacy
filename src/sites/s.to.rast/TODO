@@ -1,0 +1,18 @@
+#    Should accept site list without #cats field:
+#    
+#    Example:
+#    x-coord|y-coord|%decimals
+#    x-coord|y-coord|%decimals
+#    x-coord|y-coord|%decimals
+#    
+#    Currently just a binary map is created instead of
+#    a floating point raster map.
+#    
+#    1/2000
+Problem fixed (10/13/2000) Eric G. Miller
+
+# o Warn user if cells get written more than once.
+Warning should be working... (10/15/200 Eric G. Miller)
+
+o Add option to average cells that would be written more than once (???)
+    Probably requires major rewrite.

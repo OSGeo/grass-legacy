@@ -1,3 +1,4 @@
+PGM=d.histogram
 OFILES = \
 	get_stats.o\
 	draw_slice.o\
@@ -5,8 +6,10 @@ OFILES = \
 	bar.o\
 	main.o
 
-$(BIN_MAIN_CMD)/d.histogram: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(MATHLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(RASTERLIB): #
 $(DISPLAYLIB): #

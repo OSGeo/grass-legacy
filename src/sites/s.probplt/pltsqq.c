@@ -1,3 +1,11 @@
+/*
+ * Copyright (C) 1994. James Darrell McCauley.  (darrell@mccauley-usa.com)
+ * 	                                        http://mccauley-usa.com/
+ *
+ * This program is free software under the GPL (>=v2)
+ * Read the file GPL.TXT coming with GRASS for details.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -111,7 +119,7 @@ int pltsqq(z, width, log, save, verbose)
 #endif				/* PAUSE */
   fclose (tfp);
 
-  sprintf (buf, "%s %s ", PLOTPROG, tmp_plot_file);
+  sprintf (buf, "%s %s ", plot_program, tmp_plot_file);
   G_system (buf);
 
   /* get rid of the previous temporary files */

@@ -17,7 +17,16 @@
 int main (int argc, char **argv)
 {
 	char window_name[64] ;
+	struct GModule *module;
 	struct Option *opt1, *opt2 ;
+
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Program for generating and displaying simple graphics to the "
+		"graphics display monitor.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "input" ;
@@ -31,9 +40,6 @@ int main (int argc, char **argv)
 	opt2->answer     = "white" ;
 	opt2->options    = D_color_list();
 	opt2->description= "Color selection graphics" ;
-
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
 
 	hsize = vsize = 5. ;
 
@@ -69,7 +75,8 @@ int main (int argc, char **argv)
 		}
 	}
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	if (D_get_cur_wind(window_name))
 		G_fatal_error("No current window") ;

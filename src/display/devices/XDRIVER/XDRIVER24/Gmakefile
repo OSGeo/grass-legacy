@@ -1,8 +1,6 @@
-# corrected line 78 $(XLIB) instead of -lX11  (Michel Wurtz, 22.1.98)
 PGM=XDRIVER
-SWITCHER = SWITCHER.o
 
-LIB = ../lib/driverlib.a $(D_LIB)
+LIBES = ../../lib/driverlib.a $(D_LIB) $(GISLIB)
 
 # if you are compiling under X11R3 add this define
 #R3DEFINE=-DX11R3
@@ -32,12 +30,11 @@ R3DEFINE=
 EXTRA_CFLAGS=$(XCFLAGS) $(R3DEFINE) $(XINCPATH) -I../../lib
 
 OFILES =  \
-	$(SWITCHER)\
 	Box_abs.o\
 	Can_do.o\
-	Color.o\
-	Cont_abs.o\
+	Client.o\
 	Clr_table.o\
+	Color.o\
 	Draw_line.o\
 	Get_w_box.o\
 	Get_w_line.o\
@@ -47,22 +44,23 @@ OFILES =  \
 	Panel.o\
 	Plylne_abs.o\
 	Polygn_abs.o\
-	Returns.o\
+	Raster.o\
+	Raster_RGB.o\
+	Respond.o\
 	Serve_Xevent.o\
-	alloc.o\
-	command_pend.o\
-	Raster.o
+	Work.o\
+	alloc.o
 
-all: version.h $(GISBASE)/driver/$(PGM)
+all: winname.h $(GISBASE)/driver/$(PGM)
 
-$(GISBASE)/driver/$(PGM): $(OFILES) $(LIB)
-	$(CC) $(LDFLAGS) -o $@ $(XLDFLAGS) $(OFILES) $(LIB) $(XLIBPATH) $(XLIB) $(XEXTRALIBS) $(MATHLIB)
+$(GISBASE)/driver/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(XLDFLAGS) $(OFILES) $(LIBES) $(XLIBPATH) $(XLIB) $(XEXTRALIBS) $(MATHLIB)
 
-Graph_Set.o: version.h
+Graph_Set.o: winname.h
 
-version.h: $(VERSION_FILE)
-	rm -f version.h
+winname.h: $(VERSION_FILE)
+	rm -f winname.h
 	echo '#define WIN_NAME "GRASS $(VERSION_NUMBER)"' > $@
 
 
-$(LIB): #
+$(LIBES): #

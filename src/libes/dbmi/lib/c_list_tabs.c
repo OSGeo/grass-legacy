@@ -1,7 +1,7 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_list_tables (driver, names, count, system)
+int db_list_tables (driver, names, count, system)
     dbDriver *driver;
     dbString **names;
     int *count;

@@ -26,7 +26,7 @@ slow_range (char *name, char *mapset, long *min, long *max)
     *min = *max = 0;
 
     fprintf (stdout,"one moment ...\n");
-    sprintf (buf, "Gdescribe -r -1 '%s in %s'",name,mapset);
+    sprintf (buf, "r.stats -r -1 '%s in %s'",name,mapset);
     fd = popen (buf,"r");
     if (fd == NULL)
 	return 0;

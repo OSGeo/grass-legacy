@@ -1,0 +1,140 @@
+#!/bin/sh
+
+# r.to.pg:
+# exports GRASS raster map to PostgreSQL database
+# supports only one value, no attribute cats (yet)
+#
+#
+# $Id$
+#
+#        Copyright (C) 2000 by the GRASS Development Team
+#        Author:  Markus Neteler <neteler@geog.uni-hannover.de>
+#                 Institute of Physical Geography and Landscape Ecology
+#                 University of Hannover
+#
+#        This program is free software under the GPL (>=v2)
+#        Read the file COPYING coming with GRASS for details.
+
+TMP=/tmp
+
+if test "$GISBASE" = ""; then
+echo "You must be in GRASS to run this program."
+exit
+fi
+
+which psql > /dev/null
+if [ $? != 0 ]; then
+ echo "ERROR: psql not found. Required for PostgreSQL import!"
+ exit
+fi
+
+if [ "$1" = "help" -o "$1" = "-help" ]; then
+ echo "r.to.pg exports GRASS raster map to PostgreSQL database"
+ echo "        into a one column table (raster values only)."
+ echo "Usage:"
+ echo "        r.to.pg rastermap [celltable_name]"
+ exit
+fi
+
+if [ "$#" -lt 1 ]; then
+ echo "r.to.pg exports GRASS raster map to PostgreSQL database"
+ echo "        into a one column table (raster values only)."
+ echo "Usage:"
+ echo "        r.to.pg rastermap [celltable_name]"
+ exit
+fi
+
+#check if map exists:
+test -f $LOCATION/cell/$1
+if [ $? != 0 ]; then
+ echo "ERROR: Raster map $1 does not exit."
+ exit 1
+fi
+
+#replacing eventual dots from table name to avoid name conflicts:
+FIELDNAME=`echo $1 | sed 's/\.//'`
+
+if [ "x$2" != "x" ]
+then
+ CELLTABLE=`echo $2 | sed 's/\.//'`
+else
+ CELLTABLE=$FIELDNAME
+fi
+
+# check for database settings
+DB_DATABASE=`cat ~/.grassrc5 | grep DB_DATABASE| cut -d' ' -f2`
+
+if [ "$DB_DATABASE" = "" ]
+then
+ DB_DATABASE=`cat ~/.grassrc5 | grep PG_DBASE| cut -d' ' -f2`
+fi
+
+if [ "$DB_DATABASE" = "" ]
+then
+ echo "Please select database with g.select.pg or db.connect"
+ exit
+fi
+echo "Importing raster map $1 into PostgreSQL database: $DB_DATABASE..."
+echo ""
+
+#create DB if not existing:
+# mhhh, error check is not very elegant:
+createdb $DB_DATABASE > /dev/null
+if [ $? != 0 ]; then
+ echo "... ignoring error..."
+ echo ""
+else
+ echo "Created database $DB_DATABASE"
+ echo ""
+fi
+
+# start writing SQL file:
+echo "CREATE TABLE $CELLTABLE (" > $TMP/pgimport.sql
+echo "    $FIELDNAME float );"  >> $TMP/pgimport.sql
+
+psql -q  -d $DB_DATABASE < $TMP/pgimport.sql
+if [ $? != 0 ]; then
+ echo "Table $CELLTABLE already exists."
+ echo "Replace existing table [y/n]?"
+ read ans
+ if [ "$ans" = "Y" -o "$ans" = "y" ]
+  then
+     SQL_COMMAND="drop table $CELLTABLE;"
+     echo $SQL_COMMAND | psql -q -d $DB_DATABASE
+     echo "Replacing table..."
+     psql -q -d $DB_DATABASE < $TMP/pgimport.sql
+     rm -f $TMP/pgimport.sql
+  else
+     echo "Stopped. Existing table not replaced." 
+     rm -f $TMP/pgimport.sql
+     exit
+  fi
+fi
+rm -f $TMP/pgimport.sql
+
+#get the raster values and write out SQL:
+# (needs awk=gawk)
+export CELLTABLE TMP
+r.stats -1 nv='-9999' in=$1 | awk 'BEGIN{}
+  NR == 1{}
+         {printf "INSERT INTO %s VALUES ( %.5f);\n", "'$CELLTABLE'" , $1  >> "'$TMP'/pgimport.sql"}
+END{}'
+
+# proceeding with field entries:
+echo "Importing into PostgreSQL table: $CELLTABLE...."
+psql -q -d $DB_DATABASE < $TMP/pgimport.sql
+#check the exit status:
+if [ $? != 0 ]; then
+ echo "ERROR. Stopped."
+ exit
+fi
+rm -f $TMP/pgimport.sql
+
+#check number of imported values:
+#not working yet (some shell problem with asterix)
+echo "Number of imported cell values (= rows in $CELLTABLE):"
+SQL_COMMAND="select count(*) from $CELLTABLE;"
+echo $SQL_COMMAND | psql -q -d $DB_DATABASE
+
+echo "Finished import into PostgreSQL."
+echo "Created table $CELLTABLE with column $FIELDNAME"

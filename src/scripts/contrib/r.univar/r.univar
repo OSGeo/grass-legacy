@@ -1,21 +1,33 @@
 #!/bin/sh
 # Statistical analysis of GRASS raster maps
-# written by Markus Neteler 23. July 1998
+# written by Markus Neteler 1998-2001
 #            neteler@geog.uni-hannover.de
 #
-# updated 3. Dec.99 for GRASS 5
-# updated 20.Sept.99 for GRASS 5
+# $Id$
 
 # usage: r.univar [basemap] covermap
+
+TMP=/tmp/r.univar.tmp
+
+# what to do in case of user break:
+function exitprocedure()
+{
+ echo "User break!"
+ \rm -f $TMP
+ exit 1
+}
+# shell check for user break (signal list: trap -l)
+trap "exitprocedure" 2 3 9 15
+
 
 if test "$GISBASE" = ""; then
 echo "You must be in GRASS to run this program."
 exit
 fi
 
-if test "$1" = ""
+if [ "$1" = "" -o "$1" = "-help" -o "$1" = "help" ]
 then
- echo ""
+ echo "Description:"
  echo "This module calculates univariate statistics from a GRASS raster map"
  echo ""
  echo "Usage: r.univar [basemap] covermap"
@@ -25,16 +37,18 @@ then
  exit
 fi
 
-if test "$1" = "help"
-then
- echo ""
- echo "This module calculates univariate statistics from a GRASS raster map"
- echo ""
- echo "Usage: r.univar [basemap] covermap"
- echo ""
- echo "Parameter basemap is an optional masking map (containing areas)"
- echo ""
- exit
+#test: maps there?
+if  test ! -f $LOCATION/cell/$1 ; then
+ echo "ERROR: Map $1 not found."
+ exit 1
+fi
+file=
+
+if [ "$2" ] ; then
+  if  test ! -f $LOCATION/cell/$2 ; then
+    echo "ERROR: Map $2 not found."
+    exit 1
+  fi
 fi
 
 # test: only one parameter specified?
@@ -47,16 +61,25 @@ if test "$2" = ""
 then
    echo "Calculation for full image $1... (no mask set, ignoring NULL cells)"
    echo "Collecting cell values..."
-   r.stats -1n input=$1 > /tmp/m.univar.tmp
+   r.stats -1n input=$1 > $TMP
 else
    echo "Calculation for images $2 masked through $1... (ignoring NULL cells)"
    echo "Collecting cell values..."
-   r.stats -1n input=$1,$2 |grep '1 ' |cut -d' ' -f2 > /tmp/m.univar.tmp
+   r.stats -1n input=$1,$2 |grep '1 ' |cut -d' ' -f2 > $TMP
+fi
+
+#check if map contains only NULL's in current region
+LINES=`wc -l $TMP | awk '{print $1}'`
+if [ $LINES == 0 ]
+then
+ echo ""
+ echo "ERROR: Map $1 contains only NULL data in current region."
+ exit 1
 fi
 
 # calculate statistics
 echo "Calculating statistics..."
-cat /tmp/m.univar.tmp | awk 'BEGIN {sum = 0.0 ; sum2 = 0.0} 
+cat $TMP | awk 'BEGIN {sum = 0.0 ; sum2 = 0.0} 
 NR == 1{min = $1 ; max = $1}
        {sum += $1 ; sum2 += $1 * $1 ; N++}
        {
@@ -74,4 +97,4 @@ print "Variance: ",(sum2 - sum*sum/N)/N
 print "Standarddeviation:",sqrt((sum2 - sum*sum/N)/N)
 print "Variation coefficient:",100*(sqrt((sum2 - sum*sum/N)/N))/(sum/N),"%"
 }'
-rm /tmp/m.univar.tmp
+rm -f $TMP

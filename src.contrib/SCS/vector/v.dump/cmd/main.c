@@ -1,9 +1,13 @@
-/*  @(#)main.c     1.1  6/03/91   
+/*
+ * $Id$
+ *
+ * @(#)main.c     1.1  6/03/91   
  *  created by:         R.L.Glenn, SCS
  *
  * Program will read vector maps, areas, lines, islands, etc.
+ * Reports details information on vector map contents
  *
- * snoop [-falicne] map=name[,name,...]
+ * v.dump [-falicne] map=name[,name,...]
  *                  num=ent number
  *
  *  flags:    -f(default)   full reports:   All areas, lines, islands, etc.\n");
@@ -27,7 +31,6 @@ struct Categories cats;
 
 int 
 main (int argc, char *argv[])
-
 {
 	register int area_num, line_num, isle_num, node_num, i;
 	int vect_read, got_cats;
@@ -48,8 +51,15 @@ main (int argc, char *argv[])
 		struct Flag *n;
 		struct Flag *e;
 	} flags;
+	struct GModule *module;
+	
 
         G_gisinit(argv[0]);
+        
+        /* Set description */
+        module              = G_define_module();
+        module->description = ""\
+        "Reports details information on vector map contents";
 
         parms.entopt = G_define_option();
         parms.entopt->key                = "num";

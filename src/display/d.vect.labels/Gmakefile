@@ -1,0 +1,15 @@
+PGM=d.vect.labels
+
+LIBES= $(VECTLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(DATETIMELIB)
+LIST = main.o\
+       do_labels.o	
+
+EXTRACFLAGS=-Wall
+
+all: $(BIN_CMD)/$(PGM)
+
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES) 
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIST): #
+$(LIBES): #

@@ -1,4 +1,0 @@
-dig_to_dlg
-    MAPDEV program to convert digit file to dlg file.
-    An interactive program that will take a file created by the 'digit'
-    program and convert it to dlg-3 format.

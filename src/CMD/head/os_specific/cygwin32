@@ -1,0 +1,50 @@
+CC                  = gcc -I/usr/include -I/usr/local/include
+FC                  = g77
+LEX                 = flex
+YACC                = bison -y
+ARCH                = i686-pc-cygwin32
+
+GISBASE             = /usr/local/grass5
+UNIX_BIN            = /usr/local/bin
+
+DEFAULT_DATABASE    =
+DEFAULT_LOCATION    =
+
+COMPILE_FLAGS       = -O2 -I/usr/include -I/usr/local/include
+LDFLAGS             = -s 
+
+XCFLAGS             =  -I/usr/X11R6/include
+# XXX - replace SYSV in code with configure results in config.h
+# XXX - need SYSV defined for hpux10
+XLDFLAGS            = 
+XINCPATH            = 
+XMINCPATH           = 
+XLIBPATH            =  -L/usr/X11R6/lib
+XTLIBPATH           = 
+XMLIBPATH           = 
+XLIB                =  -lSM -lICE -lX11
+XTLIB               = -lXt
+XMLIB               = -lXm
+XEXTRALIBS          = 
+
+COMPATLIB           = 
+TERMLIB             = 
+CURSES              = -lncurses $(TERMLIB) $(COMPATLIB)
+MATHLIB             = -lm
+XDRLIB              = -lrpclib
+
+PQLIB               = -L/usr/local/pgsql/lib -L/usr/lib/pgsql/lib -lpq -lcrypt
+PQINCPATH           = -I/usr/local/pgsql/include -I/usr/lib/pgsql/include -I/usr/include/postgresql
+
+PNGINC              = -I/usr/X11R6/include/ -I/usr/include/gr -I/usr/local/include -I/usr/include
+PNGLIB              = -L/usr/local/lib -L/usr/X11R6/lib -L/usr/lib
+
+
+TIFFINCPATH         = 
+TIFFLIBPATH         = 
+
+JPEGINCPATH         = -I/usr/X11R6/include/ -I/usr/include/gr -I/usr/local/include -I/usr/include
+JPEGLIBPATH         = -L/usr/local/lib -L/usr/X11R6/lib -L/usr/lib
+
+LIBRULE             = ar ruv $@ $?; ranlib $@
+USE_TERMIO          = 

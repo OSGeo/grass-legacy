@@ -108,6 +108,7 @@ int main (int argc, char *argv[])
     int perc=0;
     char *slope_fmt;
     char *str;
+	struct GModule *module;
     struct
     {
 	struct Option *elevation, *slope_fmt, *slope, *aspect, *pcurv, *tcurv,
@@ -118,6 +119,14 @@ int main (int argc, char *argv[])
     {
 	struct Flag *a,*q;
     } flag;
+
+    G_gisinit (argv[0]);
+
+	module = G_define_module();
+    module->description =
+		"Generates raster map layers of slope, aspect, "
+		"curvatures and partial derivatives from a raster "
+		"map layer of true elevation values.";
 
     parm.elevation = G_define_option() ;
     parm.elevation->key        = "elevation" ;
@@ -235,8 +244,6 @@ int main (int argc, char *argv[])
     flag.q = G_define_flag() ;
     flag.q->key         = 'q' ;
     flag.q->description = "Quiet" ;
-
-    G_gisinit (argv[0]);
 
     radians_to_degrees = 180.0 / 3.14159 ;
     degrees_to_radians = 3.14159 / 180.0 ;
@@ -365,9 +372,9 @@ int main (int argc, char *argv[])
     }
     else Wrap = 0;
 
-    /* H = window.ew_res * 4 * 2/ zfactor;  /* horizontal (east-west) run 
+    /* H = window.ew_res * 4 * 2/ zfactor;*/  /* horizontal (east-west) run 
                                    times 4 for weighted difference */
-    /* V = window.ns_res * 4 * 2/ zfactor;  /* vertical (north-south) run 
+    /* V = window.ns_res * 4 * 2/ zfactor;*/  /* vertical (north-south) run 
                                    times 4 for weighted difference */
 
     G_begin_distance_calculations();
@@ -787,7 +794,7 @@ int main (int argc, char *argv[])
             }
 	    else if(perc && out_type == CELL_TYPE) 
 	/* INCR_BY_ONE*/
-                   /* test = slp_in_perc + 1.5;  /* All the slope categories are
+                   /* test = slp_in_perc + 1.5;*/  /* All the slope categories are
 						        incremented by 1 */
                    test = slp_in_perc + .5;
 

@@ -26,10 +26,17 @@ int main( int argc , char **argv )
 	int color,fill;
         int line_cat;
 	char map_name[128] ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3;
 	struct Flag *flag1;
 	struct line_pnts *Points;
 
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Tool for viewing vector maps with labels.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "map" ;
@@ -57,10 +64,6 @@ int main( int argc , char **argv )
 	flag1->key 	= 'f';
 	flag1->description= "Fill areas";
 
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
-
-
 	/* Check command line */
 	if (G_parser(argc, argv))
 		exit(-1);
@@ -81,7 +84,8 @@ int main( int argc , char **argv )
 		exit(-1);
 	}
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	D_setup(0);
 

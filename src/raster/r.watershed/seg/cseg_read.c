@@ -27,7 +27,7 @@ cseg_read_cell (CSEG *cseg, char *map_name, char *mapset)
 	buffer = G_allocate_cell_buf ();
 	for (row=0; row < nrows; row++)
 	{
-		if (G_get_map_row (map_fd, buffer, row) < 0)
+		if (G_get_c_raster_row (map_fd, buffer, row) < 0)
 		{
 			G_free (buffer);
 			G_close_cell (map_fd);

@@ -1,0 +1,8 @@
+interface_build {
+    {db.connect} 0
+    {Connect to database.}
+    {entry database {Database:} 0 ""}
+    {entry user {User:} 0 ""}
+    {entry password {Password:} 0 ""}
+    {entry key {Key column:} 0 ""}
+}

@@ -1,5 +1,4 @@
 PGM=r.report
-HOME=$(BIN_MAIN_CMD)
 
 LIBES= $(GISLIB)
 LIST = main.o\
@@ -14,8 +13,8 @@ LIST = main.o\
 	stats.o\
 	sums.o
 
-$(HOME)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB) $(MATHLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): global.h
 

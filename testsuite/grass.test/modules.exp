@@ -1,0 +1,361 @@
+# automated GRASS5 functionality check
+# see grass/documents/list5_of_modules.txt
+# 
+# Andreas Lange, andreas.lange@rhein-main.de
+# 
+# internal data: 
+# module(name,var)
+# var: if     interface: cmd, inter, xml, etc.
+#      type   exe, script
+#      test   status from list5_of_modules.txt
+#      status status from testsuite
+#  
+
+
+# on heavy loaded machines this could cause problems!
+# but timeout of 15s is too long for average usage
+set timeout 5
+
+
+# mbad is list of modules with possible problems to exclude:
+set mbad {{g.gisenv} {m.in.stf1.tape} {r.mapcalc} {m.lulc.USGS} {r.in.tiff} {r.hydro.CASC2D} {v.in.arc.pg} {g.version}}
+# set mbad {{Mlulc.read} {r.out.tiff} {r.out.rlc}}
+
+
+# for output list of all modules
+set mlist ""
+set comment_txt ""
+
+
+# open html output
+proc open_html { } {
+    global htmlfd
+
+    set htmlf [file join [getenv SRCDIR] "documents" "modules-list.html"]
+    if { [catch {open "$htmlf" w} htmlfd] } \
+    {
+	perror "$htmlf can no be opened!"
+	exit -1
+    }
+    return
+}
+
+
+# close html output
+proc close_html { } {
+    global htmlfd
+
+    close $htmlfd
+    return
+}
+
+
+# creating a list of all avail. modules in path
+proc grass_modules_list { path type interface } {
+    global module
+    global mlist
+
+    foreach exe [glob -nocomplain $path/*] \
+    {
+	if { [file executable $exe] } \
+        {
+	    set tmp [file tail $exe]
+	    if { [lsearch -exact $mlist $tmp] >= 0 } \
+            {
+		if { [info exists module($tmp,if)] } \
+                {
+		    if { ![regexp "$interface" "$module($tmp,if)" ] } \
+                    {
+			set module($tmp,if) [append module($tmp,if) "," "$interface"]
+		    }
+		} else {
+		    set module($tmp,if) "$interface"
+		}
+	    } else {
+		set module($tmp,type) "$type"
+		set module($tmp,if) "$interface"
+		set module($tmp,status) " "
+		set module($tmp,test) " "
+		lappend mlist $tmp
+	    }
+	}
+    }
+    return
+}
+
+
+# read all available modules in one list structure
+proc read_modules { } {
+    global mlist
+    global module
+
+    # sources for the modules list:
+    # list5_of_modules.txt
+    # $GISBASE/bin
+    # $GISBASE/scripts
+    # $GISBASE/etc/bin/inter
+    # $GISBASE/etc/bin/cmd
+    set gisbase [getenv GISBASE]
+
+    # collect all executables from bin dir
+    set path [file join $gisbase "bin"]
+    #grass_modules_list "$path" "exe" ""
+
+    # collect all scripts from scripts dir
+    set path [file join $gisbase "scripts"]
+    grass_modules_list "$path" "script" "script"
+
+    # add all executables from interactive dir
+    set path [file join $gisbase "etc" "bin" "inter"]
+    grass_modules_list "$path" "exe" "inter"
+    
+    # add all executables from commandline dir
+    set path [file join $gisbase "etc" "bin" "cmd"]
+    grass_modules_list "$path" "exe" "cmd"
+    
+    # add all executables from contrib/interactive dir
+    # set path [file join $gisbase "etc" "bin" "contrib" "inter"]
+    # grass_modules_list "$path" "exe" "inter"
+
+    # add all executables from contrib/commandline dir
+    # set path [file join $gisbase "etc" "bin" "contrib" "cmd"]
+    # grass_modules_list $path "exe" "cmd"
+
+    return
+}
+
+
+# add the modules from the moduleslist file
+proc read_modules_list { } {
+    global comment_txt
+    global module
+    global mlist 
+
+    set comment_txt ""
+    set fn [file join [getenv SRCDIR] "documents" "list5_of_modules.txt"]
+    if { ![file exists $fn] } \
+    {
+	perror "$fn missing!"
+    } else { 
+	if { [catch {open $fn r} fd] } \
+        {
+	    perror "$fn can no be opened!"
+	} else {
+	    set status ""
+	    set modname ""
+	    set comment ""
+	    foreach line [split [read $fd] \n] {
+		if { [regexp {^\#(.*)$} $line dummy comment] } \
+                {
+		    lappend comment_txt $comment
+		}
+		if { [empty_line $line] } \
+                {
+		    continue
+		}
+		regexp {^(.)  (.*)$} $line dummy status modname
+		set tmp [string trim $modname]
+		if { [lsearch -exact $mlist $tmp] >= 0 } \
+                {
+		    set module($tmp,status) "$status"
+		    set module($tmp,test) "?"
+		} else {
+		    # puts "$modname not found!"
+		    set module($tmp,type) "unkn"
+		    set module($tmp,if) "n/a"
+		    set module($tmp,status) "$status"
+		    set module($tmp,test) "-"
+		    lappend mlist $tmp
+		}
+		# puts "$module($tmp,status)  $module($tmp,test)  $tmp\t$module($tmp,type)\t$module($tmp,if)"
+	    }
+	    close $fd
+	}
+    }
+    return
+}
+
+
+# process all from modules list
+proc test_modules { } {
+    global mlist
+    global module
+    global mbad
+
+    foreach line $mlist \
+    {
+	set mod $line
+	# skip modules with known problems from mbad list
+	if { [lsearch -exact $mbad $mod] >= 0 } {
+	    continue
+	}
+	verbose  "$mod help command line test"
+	set test "$mod help command line test"
+	if { ![isgrassbin "$mod"] } \
+        {
+	    # this module is not available for unknown reasons
+	    fail "$test: module missing"
+	    set module($mod,type) "unkn"
+	    set module($mod,status) "-"
+	} else {
+	    if { [file executable [file join [getenv GISBASE] "scripts" "$mod"]] } \
+            {
+		# this module is a script
+		verbose "$mod is script"
+		untested "$test: scripts can not be tested"
+		set module($mod,type) "script"
+		set module($mod,test) "."
+		# set module($mod,status) ""
+	    } elseif { $module($mod,type) == "unkn" } {
+		# module type not known
+		verbose "$mod is unknown type"
+		untested "$test: module type unknown"
+		set module($mod,type) "unkn"
+		set module($mod,test) "."
+		# set module($mod,status) ""
+	    } elseif { $module($mod,type) == "exe" } {
+		# module is executable binary
+		verbose "$mod is executable"
+		verbose "testing $mod help "	
+		spawn "$mod" "help"
+		# wait one moment to let things settle down...
+		after 500
+		set status 1
+		expect {
+		    -re {.*Usage.*$}              { unresolved "$test: basic test worked" ; ; set status 1 }
+		    -re {.*USAGE.*$}              { fail "$test: unusual Usage message" ; ; set status -1 }
+		    -re {.*confused me.*$}        { unresolved "$test: basic test worked" ;  ; set status 1 }
+		    -re {.*o graphics monitor.*$} { unresolved "$test: display module can not be tested" ; ; set status 1 }
+		    -re {.*egmentation f.*$}      { fail "$test: segmentation fault" ; ; set status -1 }
+		    -re {.*core dump.*$}          { fail "$test: core dump" ; ; set status -1 }
+		    -re {.*Speicher.*$}           { fail "$test: core dump" ; ; set status -1 }
+		    -re {.*ERROR.*$}              { fail "$test: ERROR condition" ; ; set status -1 }
+		    -re {.*Please.*database.*$}   { unresolved "$test: postgres database modules can not be tested" ; slay "$mod" ; set status 1 }
+		    timeout                       { fail "$test: timed out" ; slay "$mod" ; set status -1 }
+		}
+		wait
+		close
+		
+		if { $status == -1 } \
+                {
+		    set module($mod,if) "f"
+		} elseif { $status == 1 } {
+		    set module($mod,test) "?"
+		} elseif { $status == 0 } {
+		    set module($mod,test) "p"
+		}
+		set xml 0
+		set test "$mod xml interface description"
+		verbose "testing xml interface-description for $mod"
+		spawn "$mod" "--interface-description"
+		# wait one moment to let things settle down...
+		after 500
+		expect {
+		    -re {.*illegal.*$}            { fail "$test: does not support parser" ; set xml -1 }
+		    -re {.*ERROR.*$}              { fail "$test: does not support parser correctly" ; slay "$mod"; set xml -1 }
+		    -re {.*<task name.*$}         { pass "$test" ; slay "$mod" ; set xml 1}
+		    -re {.*USAGE.*$}              { fail "$test: does not support parser" ; set xml -1 }
+		    -re {.*must be run interactively.*$} { unresolved "$test: only interactively" ; set xml -1 }
+		    -re {.*o graphics monitor.*$} { unresolved "$test: display modules can not be tested" ; set xml -1 }
+		    -re {.*egmentation f.*$}      { fail "$test: Segmentation fault" ; }
+		    -re {.*ot found.*$}           { fail "$test: does not support xml desc correctly" ; set xml -1 }
+		    -re {.*Please.*database.*$}   { unresolved "$test: postgres database modules can not be tested" ; slay "$mod" }
+		    timeout                       { fail "$test: timeout" ; slay "$mod" ; set xml -1 }
+		}
+		wait
+		close
+		if { $xml == -1 } \
+                {
+		    append module($mod,if) ""
+		} elseif { $xml == 1 } {
+		    append module($mod,if) "," "xml"
+		} elseif { $xml == 0 } {
+		    append module($mod,if) ""
+		}
+		
+	    }
+	}
+    }
+    return
+}
+
+
+# write out html-version of modules-list
+proc put_modules {} {
+    global module
+    global mlist
+    global htmlfd
+    global comment_txt
+
+    set scripts 0
+    set exes    0
+    set inter   0
+    set cmd     0
+    set both    0    
+    puts $htmlfd "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">
+    <HTML>
+      <HEAD>
+        <TITLE>
+          GRASS 5.0 Modules List
+        </TITLE>
+      </HEAD>
+    <BODY>
+    <H1>GRASS 5.0 Modules List</H1>"
+    puts $htmlfd "<PRE>"
+    foreach line $comment_txt \
+    {
+	puts $htmlfd $line
+    }
+    puts $htmlfd "</PRE><P>"
+    puts $htmlfd "<TABLE COLS= WIDTH=\"90%\"><TT>"
+    puts $htmlfd "<TR>\n<TD>T</TD>\n<TD>S</TD>\n<TD>Name</TD>\n<TD>Type</TD>\n<TD>Interface</TD>\n<TR>"
+    foreach mod [lsort -ascii $mlist] \
+    {
+	if { $module($mod,type) == "exe" } \
+        {
+	    incr exes
+	} else {
+	    incr scripts
+	}
+	incr both
+	
+	if { [regexp "inter" $module($mod,if)] } \
+        {
+	    incr inter
+	} 
+	if { [regexp "cmd" $module($mod,if)] } \
+        {
+	    incr cmd
+	}
+	
+	puts $htmlfd "\n<TR>\n<TD>$module($mod,status)</TD>\n<TD>$module($mod,test)</TD>\n<TD>$mod</TD>\n<TD>$module($mod,type)</TD>\n<TD>$module($mod,if)</TD>\n</TR>\n"
+    }
+    puts $htmlfd "</TT>
+</TABLE>"
+puts $htmlfd "<P><PRE>"
+
+    puts $htmlfd "All modules/scripts counted:"
+    puts $htmlfd "    $both"
+    puts $htmlfd "Modules without parser interface (interactive):"
+    puts $htmlfd "    $inter"
+    puts $htmlfd "Modules with parser interface (commandline):"
+    puts $htmlfd "    $cmd"
+    puts $htmlfd "Scripts:"
+    puts $htmlfd "    $scripts"
+    puts $htmlfd ""
+    puts $htmlfd "</PRE>
+  </BODY>
+</HTML>"
+    return
+}
+
+
+# main program
+read_modules
+read_modules_list
+test_modules
+open_html
+put_modules
+close_html
+
+return 0

@@ -1,4 +1,0 @@
-#!/bin/sh
-
-# used by GRASS startup shells. Does terminal intialization
-# will do nothing on 3b2

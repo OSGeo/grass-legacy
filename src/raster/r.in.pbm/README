@@ -1,9 +1,0 @@
-r.in.pbm.c is a replacement file for:
-../../src.contrib/SCS/raster/r.ppm/cmd/r.in.ppm.c
-
-which has the same functionality, 
-but this one also allows the use of
-portable BITmaps which are non-ascii.
-
-BUT: Limitation to 32768 colors. 
-     Use (new 5.0) r.in.ppm instead.

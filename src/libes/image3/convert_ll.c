@@ -19,21 +19,20 @@
 #include "ortho_image.h"
 #include "projects.h"
 
-/*-----------------------------------------------------------------------*/
-/* Convert Target coordinates (east, north) to (lat, lon)
-/* 
-/*
-/* RETURNS: 
-/*-----------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------
+ * Convert Target coordinates (east, north) to (lat, lon)
+ * 
+ *
+ * RETURNS: 
+ *-----------------------------------------------------------------------*/
 int convert_to_ll (Control_Points_LL *cpll, Control_Points_2D *cptemp)
 {
   int i;
   double lat,  lon;
   double east, north;
-  char   msg[80];   /* error message buffer */
 
-  struct pj_info    targ_proj_info;       /* target location proj info */
-  struct pj_info    ll_proj_info;         /* info for lat/lon */
+  struct pj_info    ;       /* target location proj info */
+  struct pj_info    ;         /* info for lat/lon */
   struct Key_Value  *targ_proj_keys, *targ_unit_keys;
   struct Key_Value  *ll_proj_keys,   *ll_unit_keys;
   char   *ellps;    /* target ellps paramet */
@@ -127,22 +126,21 @@ int convert_to_ll (Control_Points_LL *cpll, Control_Points_2D *cptemp)
 }
 
 
-/*-----------------------------------------------------------------------*/
-/* Convert from (lat/lon) to Target coordinates (east, north)
-/* 
-/*
-/* RETRUNS: 
-/*-----------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------*
+ * Convert from (lat/lon) to Target coordinates (east, north)
+ * 
+ *
+ * RETRUNS: 
+ *-----------------------------------------------------------------------*/
 int 
 convert_from_ll (Control_Points_LL *cpll, Control_Points_2D *cptemp)
 {
   int i;
   double lat,  lon;
   double east, north;
-  char   msg[80];   /* error buff */
 
-  struct pj_info    targ_proj_info;       /* target location proj info */
-  struct pj_info    ll_proj_info;         /* info for lat/lon */
+  struct pj_info    ;       /* target location proj info */
+  struct pj_info    ;         /* info for lat/lon */
   struct Key_Value  *targ_proj_keys, *targ_unit_keys;
   struct Key_Value  *ll_proj_keys,   *ll_unit_keys;
   char   *ellps;    /* target ellps paramet */

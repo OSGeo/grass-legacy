@@ -6,10 +6,20 @@ int main (int argc, char *argv[])
 {
     int i,n;
     char *mapset;
+    struct GModule *module;
     struct Option **parm, *p;
+    struct Flag *overwr;
     char *from, *to;
+    char buf1[256], *location_path;
 
     init (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Copies available data files in the user's current mapset "
+		"search path and location to the appropriate element "
+		"directories under the user's current mapset.";
+
     parm = (struct Option **) G_calloc (nlist, sizeof(struct Option *));
 
     for (n = 0; n < nlist; n++)
@@ -23,6 +33,10 @@ int main (int argc, char *argv[])
         p->description = G_malloc (64);
         sprintf (p->description, "%s file(s) to be copied", list[n].alias);
     }
+
+    overwr		= G_define_flag();
+    overwr->key		= 'o';
+    overwr->description	= "Overwrite <to> file(s)";
 
     if (G_parser(argc, argv))
         exit(1);
@@ -40,6 +54,9 @@ int main (int argc, char *argv[])
             exit(1);
         }
     }
+
+    location_path = G__location_path();
+
     for (n = 0; n < nlist; n++)
     {
         if (parm[n]->answers == NULL)
@@ -55,6 +72,11 @@ int main (int argc, char *argv[])
                 fprintf (stderr, "<%s> not found\n", from);
                 continue;
             }
+	    if (!overwr->answer && find (n, to, ""))
+	    {
+		fprintf (stderr, "<%s> already exists\n", to);
+		continue;
+	    }
             if (G_legal_filename (to) < 0)
             {
                 fprintf (stderr, "<%s> illegal name\n", to);
@@ -67,6 +89,9 @@ int main (int argc, char *argv[])
                 continue;
             }
             do_copy (n, from, mapset, to);
+	    sprintf (buf1, "rm -f %s/%s/cell_misc/%s/reclassed_to",
+			    location_path, mapset, to);
+	    system(buf1);
         }
     }
     exit(0);

@@ -3,15 +3,14 @@
 /***       Function to get input from user and check files can be opened       ***/
 /***  									       ***/
 /***         Jo Wood, Department of Geography, V1.2, 7th February 1992         ***/
+/***				$Id$					       ***/
 /*********************************************************************************/
+
+#include <stdlib.h>
 
 #include "param.h"
 
-interface(argc,argv) 
-
-    int	     argc;			/* Number of command line arguments.	*/
-    char    *argv[];			/* Contents of command line arguments.	*/
-
+void interface(int argc, char **argv) 
 {
     /*--------------------------------------------------------------------------*/
     /*                                 INITIALISE				*/
@@ -28,6 +27,7 @@ interface(argc,argv)
 
     struct Flag		*constr;	/* Forces quadratic through the central	*/
 					/* cell of local window if selected.	*/
+    struct GModule      *module;	/* GRASS module description */
 
     G_gisinit (argv[0]);                /* GRASS function which MUST be called	*/
                                       	/* first to check for valid database 	*/
@@ -36,6 +36,11 @@ interface(argc,argv)
     /*--------------------------------------------------------------------------*/
     /*                            SET PARSER OPTIONS 				*/
     /*--------------------------------------------------------------------------*/
+
+    module = G_define_module();
+    module->description =
+      "Extracts terrain parameters from a DEM. Uses a multi-scalar approach"
+      " by taking fitting quadratic parameters to any size window (via least squares)";
 
     rast_in   = G_define_option();	/* Request memory for each option.	*/
     rast_out  = G_define_option();
@@ -175,7 +180,7 @@ interface(argc,argv)
 
     mapset_out = G_mapset();		/* Set output to current mapset.	*/
 
-    if (G_legal_filename(rast_out_name)==NULL)
+    if (!G_legal_filename(rast_out_name))
     {
         char err[256];
         sprintf(err,"Illegal file name. Please try another.");

@@ -1,0 +1,63 @@
+<html>
+<TITLE>r.out.ppm3</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+<H2>NAME</H2>
+<B>r.out.ppm3</B> - converts 3 GRASS raster layers (R,G,B) to a PPM
+image file, using the current region.
+<P>
+
+<H2>Usage:</H2>
+<B>r.out.ppm3</B> [-qc] <B>red=</B>name <B>green=</B>name <B>blue=</B>name <B>output=</B>name
+
+<h2>Flags:</H2>
+<P>  -q   Run quietly</P>
+<P>  -c   Store the region in the image as comments</P>
+
+<H2>Parameters:</H2>
+<DL>
+<DT><B>red=</B><EM>name</EM>
+<DD>Name of raster map layer to be used for RED component. 
+<DT><B>green=</B><EM>name</EM>
+<DD>Name of raster map layer to be used for GREEN component. 
+<DT><B>blue=</B><EM>name</EM>
+<DD>Name of raster map layer to be used for BLUE component. 
+<DT><B>output=</B><EM>filename.ppm</EM>
+<DD>Name of PPM file to be written (use out=- for stdout).
+</DL>
+
+<P>
+This program converts a GRASS raster file to a PPM image file
+using the the current region.
+</P>
+<P>
+To get the full area of the raster map, do:
+</P>
+<PRE>
+    g.region rast=[mapname]
+</PRE>
+
+<P>before running r.out.ppm3.</P>
+
+<H2>NOTES</H2>
+<P>
+One pixel is written for each cell value, so if ew_res and ns_res
+differ, the aspect ratio of the resulting image will be off.
+<P>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="r.out.ppm.html">r.out.ppm</A></EM><br>
+<EM><A HREF="r.in.ppm.html">r.in.ppm</A></EM><br>
+<EM><A HREF="d.rgb.html">d.rgb</A></EM><br>
+
+<H2>AUTHOR</H2>
+
+Glynn Clements <glynn.clements@virgin.net>
+
+Based upon <EM>r.out.ppm</EM> and <EM>d.rgb</EM>.
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

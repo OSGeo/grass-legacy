@@ -13,11 +13,8 @@
    Side Effects:
      Sets appropriate fence color
 */
-int Nset_fence_color_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;
-     int argc;
-     char **argv;
+int 
+Nset_fence_color_cmd (Nv_data *data, Tcl_Interp *interp, int argc, char **argv)
 {
   /* Verify arguments */
   if (argc != 2) {
@@ -57,11 +54,8 @@ int Nset_fence_color_cmd (data, interp, argc, argv)
    Side Effects:
      None
 */
-int Nget_fence_color_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;
-     int argc;
-     char **argv;
+int 
+Nget_fence_color_cmd (Nv_data *data, Tcl_Interp *interp, int argc, char **argv)
 {
   int mode;
   
@@ -124,11 +118,13 @@ int Nget_fence_color_cmd (data, interp, argc, argv)
      set_rot - sets rotation for the current cutplane
      set_trans - sets the translation for the current cutplane
 */
-int Ncutplane_obj_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Ncutplane_obj_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 
 {
   int id, type;
@@ -172,11 +168,13 @@ int Ncutplane_obj_cmd (data, interp, argc, argv)
      called a new tcl command is created for the new cutplane.
      I.e. basically an oops approach.
 */
-int Nnew_cutplane_obj_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nnew_cutplane_obj_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
      
 {
   /*
@@ -219,11 +217,13 @@ int Nnew_cutplane_obj_cmd (data, interp, argc, argv)
    Side Effects:
      None
 */
-int Nnum_cutplane_obj_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nnum_cutplane_obj_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
      
 {
   char result[20];
@@ -235,11 +235,13 @@ int Nnum_cutplane_obj_cmd(data, interp, argc, argv)
 
 /*
 */
-int Nset_current_cutplane_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nset_current_cutplane_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 
 {
 
@@ -258,11 +260,13 @@ int Nset_current_cutplane_cmd(data, interp, argc, argv)
    Side Effects:
      None
 */
-int Nget_current_cutplane_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nget_current_cutplane_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
      
 {
   char curr[128];
@@ -282,11 +286,13 @@ int Nget_current_cutplane_cmd(data, interp, argc, argv)
   returns list of all map objects of specified type, 
   either by name or id.
 */
-int Nget_cutplane_list_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nget_cutplane_list_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   return (TCL_OK);
 }
@@ -305,9 +311,7 @@ int Nget_cutplane_list_cmd(data, interp, argc, argv)
    Side Effects:
      Causes all the active cut planes to be drawn
 */
-void cp_draw(current, data, surf1, surf2)
-     int current, surf1, surf2;
-     Nv_data *data;
+void cp_draw (int current, Nv_data *data, int surf1, int surf2)
 {
   int i, j, nsurfs;
   int surf_min, surf_max, temp;
@@ -365,11 +369,8 @@ void cp_draw(current, data, surf1, surf2)
    Side Effects:
      None
 */
-int draw_cp_obj(data, interp, id, argv, argc)
-     Nv_data *data;
-     Tcl_Interp *interp;
-     int id, argc;
-     char **argv;
+int 
+draw_cp_obj (Nv_data *data, Tcl_Interp *interp, int id, char **argv, int argc)
 {
   int bound1, bound2;
 
@@ -415,11 +416,8 @@ int draw_cp_obj(data, interp, id, argv, argc)
      Sets the current cutplane as the currently active
      cutplane in the gsf library.
 */
-int on_cp_obj(data, interp, id, argv, argc)
-     Nv_data *data;
-     Tcl_Interp *interp;
-     int id, argc;
-     char **argv;
+int 
+on_cp_obj (Nv_data *data, Tcl_Interp *interp, int id, char **argv, int argc)
 {
   /* Verify arguments are correct */
   if (argc != 2) {
@@ -447,11 +445,8 @@ int on_cp_obj(data, interp, id, argv, argc)
    Side Effects:
      Sets the current cutplane as inactive in the gsf library.
 */
-int off_cp_obj(data, interp, id, argv, argc)
-     Nv_data *data;
-     Tcl_Interp *interp;
-     int id, argc;
-     char **argv;
+int 
+off_cp_obj (Nv_data *data, Tcl_Interp *interp, int id, char **argv, int argc)
 {
   /* Verify arguments */
   if (argc != 2) {
@@ -478,11 +473,8 @@ int off_cp_obj(data, interp, id, argv, argc)
    Side Effects:
      None
 */
-int state_cp_obj(data, interp, id, argv, argc)
-     Nv_data *data;
-     Tcl_Interp *interp;
-     int id, argc;
-     char **argv;
+int 
+state_cp_obj (Nv_data *data, Tcl_Interp *interp, int id, char **argv, int argc)
 {
   /* Verify arguments */
   if (argc != 2) {
@@ -511,11 +503,8 @@ int state_cp_obj(data, interp, id, argv, argc)
    Side Effects:
      Sets the rotation parameters for the given cutplane.
 */
-int cp_set_rot(data, interp, id, argv, argc)
-     Nv_data *data;
-     Tcl_Interp *interp;
-     int id, argc;
-     char **argv;
+int 
+cp_set_rot (Nv_data *data, Tcl_Interp *interp, int id, char **argv, int argc)
 {
   double dx, dy, dz;
 
@@ -568,11 +557,8 @@ int cp_set_rot(data, interp, id, argv, argc)
    Side Effects:
      Sets translation of current cutplane
 */
-int cp_set_trans(data, interp, id, argv, argc)
-     Nv_data *data;
-     Tcl_Interp *interp;
-     int id, argc;
-     char **argv;
+int 
+cp_set_trans (Nv_data *data, Tcl_Interp *interp, int id, char **argv, int argc)
 {
   double dx, dy, dz;
 
@@ -619,11 +605,8 @@ int cp_set_trans(data, interp, id, argv, argc)
    Get the rotation values for the current cutplane.
 
 */
-int cp_get_rot(data, interp, id, argv, argc)
-     Nv_data *data;
-     Tcl_Interp *interp;
-     int id, argc;
-     char **argv;
+int 
+cp_get_rot (Nv_data *data, Tcl_Interp *interp, int id, char **argv, int argc)
 {
   char x[32], y[32], z[32];
 
@@ -649,11 +632,8 @@ int cp_get_rot(data, interp, id, argv, argc)
    Get the translation values for the current cutplane.
 
 */
-int cp_get_trans(data, interp, id, argv, argc)
-     Nv_data *data;
-     Tcl_Interp *interp;
-     int id, argc;
-     char **argv;
+int 
+cp_get_trans (Nv_data *data, Tcl_Interp *interp, int id, char **argv, int argc)
 {
   char x[32], y[32], z[32];
 
@@ -686,8 +666,8 @@ int cp_get_trans(data, interp, id, argv, argc)
    Side Effects:
      None
 */
-int get_cp_idnum(name)
-     char *name;
+int 
+get_cp_idnum (char *name)
 {
   static char comp[]="Ncutplane";
 

@@ -57,7 +57,7 @@ int write_output_map (char *output, int offset, int quiet)
 	    }
 	}
 	cell -= window.cols;
-	if (G_put_map_row (fd_out, cell) < 0)
+	if (G_put_raster_row (fd_out, cell, CELL_TYPE) < 0)
 	{
 	    fprintf (stderr, "%s - ERROR writing %s\n", pgm_name, output);
 	    exit(1);

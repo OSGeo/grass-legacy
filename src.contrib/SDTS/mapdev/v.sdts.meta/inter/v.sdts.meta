@@ -1,0 +1,1600 @@
+#!/bin/sh
+# the next line restarts using wish \
+exec wish "$0" "$@"
+
+
+proc editor { {w .ed} } {
+   
+    global choice
+    global file_w
+    catch { destroy $w}
+    toplevel $w
+    global map_name
+    set map_name ""
+    dpos $w
+    wm title $w $choice
+    wm iconname $w $choice
+    wm minsize $w 1 1
+
+    set file_w $w
+    global file_name
+    set file_name ""
+    global modified 
+    set modified 0
+
+    frame $w.menu -relief raised -borderwidth 3
+    frame $w.text -relief flat -borderwidth 1 
+
+    pack $w.menu -side top -fill x
+    pack $w.text -side bottom -expand yes -fill both
+
+#--------------------------------------------------------
+#  Text widget is used as main part of the editor
+#--------------------------------------------------------
+
+    text $w.text.t -relief sunken -bd 3 -yscrollcommand "$w.text.s set" \
+	 -width 80 -height 45 -wrap word
+#	 -font "-Adobe-Helvetica-Bold-R-Normal-*-120-*"
+
+    scrollbar $w.text.s -relief flat -command "$w.text.t yview"
+
+    pack $w.text.s -side right -fill y -pady 5 -padx 5 
+    pack $w.text.t -side left -expand yes -fill both -pady 5 -padx 5
+    
+#--------------------------------------------------------
+#  Menus are created here.
+#--------------------------------------------------------
+
+    menubutton $w.menu.file -text "File" -menu $w.menu.file.m 
+
+    menu $w.menu.file.m 
+    $w.menu.file.m add command -label "New" -command {
+		   new_file $file_w.text.t $file_name;grab $file_w
+		   } 
+#		   -underline 0
+#                  -accelerator Control+n
+#    bind $w.menu <Control-n> { new_file }
+
+    $w.menu.file.m add command -label "Load" -command "load_file; grab $w"
+#	           -underline 0
+#		   -accelerator Control+l 
+#    bind $w.menu <Control-l> { load_file }
+
+    $w.menu.file.m add command -label "Save" -command {
+		   save_file $file_w.text.t $file_name; grab $file_w
+		   }
+#		   -underline 0
+#		   -accelerator Control+s 
+#    bind $w.menu <Control-s> { save_file }
+
+    $w.menu.file.m add command -label "Quit" -command {
+	     if [new_file $file_w.text.t $file_name] {destroy $file_w}
+	     }
+#		   -underline 0
+#		   -accelerator Control+q 
+#    bind $w.menu <Control-q>  "destroy $w"
+
+
+    menubutton $w.menu.map -text "Install" -menu $w.menu.map.m
+
+    menu $w.menu.map.m 
+
+    $w.menu.map.m add command -label "Copy from file (no overwrite)" -command {
+	  set fname [browse_file];
+	  grab $file_w;
+	  if {$fname == ""} { return 0}
+	  input_map; 
+	  if {$map_name == ""} { grab $file_w; return 0 }
+	  if [catch {exec v.sdts.dq.cp $dq_option=$fname map=$map_name} errMsg] {
+	     if {$errMsg == ""} {
+		set errMsg "Installation of $choice DQ file is successful!"; 
+		}
+             tk_dialog .error Dialog $errMsg warning -1 OK
+          }
+	  grab $file_w;
+     }
+
+    $w.menu.map.m add command -label "Copy from file (overwrite)" -command {
+	  set fname [browse_file];
+	  grab $file_w;
+	  if {$fname == ""} { return 0}
+	  input_map; 
+	  if {$map_name == ""} { grab $file_w; return 0 }
+	  if [catch {exec v.sdts.dq.cp -f $dq_option=$fname map=$map_name} errMsg] {
+	     if {$errMsg == ""} {
+		set errMsg "Installation of $choice DQ file is successful!"; 
+		}
+             tk_dialog .error Dialog $errMsg warning -1 OK
+          }
+	  grab $file_w;
+     }
+
+    $w.menu.map.m add separator 
+
+    $w.menu.map.m add command -label "Copy from screen (no overwrite)" -command {
+	  set fname "/tmp/_file[pid]"
+          save_file2 [$file_w.text.t get 1.0 end] $fname
+	  input_map; 
+	  if {$map_name == ""} { grab $file_w; return 0 }
+	  if [catch {exec v.sdts.dq.cp $dq_option=$fname map=$map_name} errMsg] {
+	     if {$errMsg == ""} {
+		set errMsg "Installation of $choice DQ file is successful!"; 
+		}
+             tk_dialog .error Dialog $errMsg warning -1 OK
+          }
+	  exec rm -f $fname
+	  grab $file_w;
+     }
+
+    $w.menu.map.m add command -label "Copy from screen (overwrite)" -command {
+	  set fname "/tmp/_file[pid]"
+          save_file2 [$file_w.text.t get 1.0 end] $fname
+	  input_map; 
+	  if {$map_name == ""} { grab $file_w; return 0 }
+	  if [catch {exec v.sdts.dq.cp -f $dq_option=$fname map=$map_name} errMsg] {
+	     if {$errMsg == ""} {
+		set errMsg "Installation of $choice DQ file is successful!"; 
+		}
+             tk_dialog .error Dialog $errMsg warning -1 OK
+          }
+	  exec rm -f $fname
+	  grab $file_w;
+     }
+
+    pack $w.menu.file $w.menu.map -side left -padx 30
+
+    menubutton $w.menu.help -text "Help" -menu $w.menu.help.m 
+
+    menu $w.menu.help.m 
+   
+    $w.menu.help.m add command -label "Menu" -command {
+	 display_help {\
+File Menu:
+   New         New file
+   Load        Load file
+   Save        Save file
+   Quit  
+
+Install Menu:
+
+ Copy from file (no overwrite)                 
+   Select and install an existing file as an SDTS Data Quality 
+   file for the specified map.  Previously installed file will 
+   not be overwritten.
+
+ Copy from file (overwrite)                 
+   Select and install an existing file; overwrite any previously 
+   installed file.
+
+ Copy from screen (no overwrite)                 
+   Install the contents of the editing screen as a Data Quality 
+   file for the specified map.  Previously installed file will not 
+   be overwritten. 
+
+ Copy from screen (overwrite)                 
+   Install the contents of the editing screen; overwrite any 
+   previously installed file.
+		       }
+         grab $file_w
+         }
+
+    $w.menu.help.m add command -label "Editor" -command {
+display_help {\
+Click           position the insertion cursor
+Drag            make a selection
+Double-click    select a word
+Triple-click    select a line
+
+Control-h 
+BackSpace 
+Delete          delete the character before the cursor
+Control-v       delete the current selection before cursor
+Control-d       delete the selected characters
+		       }
+         grab $file_w
+          }
+
+    $w.menu.help.m add command -label "$choice" -command {
+	 if {$choice == "lineage" } {
+	    display_help {\
+Data Quality report on Lineage includes a "description of the
+source material from which the data were derived and the methods
+of derivation, including all transformations involved in
+producing the final digital files. . . ." (SDTS Part I, 3.1)
+			  }
+         } elseif {$choice == "position" } {
+            display_help {\
+Data Quality report on Positional Accuracy includes 
+"the degree of compliance to the spatial registration 
+standard. . ." (SDTS Part I, 3.2)
+			 }
+         } elseif {$choice == "attribute" } {
+	    display_help {\
+Data Quality report on Attribute Accuracy shall include 
+an account of tests and assessments of attribute accuracy 
+(SDTS Part I, 3.3)
+			 }
+         } elseif {$choice == "consistency"} {
+	    display_help {\
+Data Quality report on Logical Consistency "shall describe
+the fidelity of relationships encoded in the data structure
+of the digital spatial data . . ."(SDTS Part I, 3.4)
+			 }
+         } elseif {$choice == "completeness"} {
+	    display_help {\
+Data Quality report on Completeness "shall include 
+information about selection criteria, definitions used and
+other relevant mapping rules." (SDTS Part I, 3.5)
+			 }
+         }
+         grab $file_w
+    }
+
+
+    pack $w.menu.help -side right -padx 30
+
+
+    bind all <Meta-f> "$w.menu.file activate"
+    bind all <Meta-h> "$w.menu.help activate"
+    bind $w.text.t <KeyRelease> {set modified 1} 
+
+    set oldFocus [focus]
+    grab  $w
+    focus $w.text.t
+
+    tkwait window $w
+    focus $oldFocus
+}
+
+proc save_file { w {fname ""} } {
+
+    global modified
+    global file_name
+   
+    
+
+    set s [$w get 1.0 end]
+
+    if {$modified != 0} {
+
+      if { $fname == "" }  { 
+	set fname [input_file]; 
+      
+
+        set sel 0
+        if {$fname != ""} {
+          if [file exists $fname]  {
+	    set sel [tk_dialog .warn Warning "File $fname already exists."\
+		   warning 0 "Go ahead" "Cancel"]
+	  }
+	  if {$sel == 0} {
+	    save_file2  $s $fname .busy
+            set modified 0
+            set file_name $fname
+          } else { set file_name ""; return 0 }
+        } else { return 0 }
+
+      } else { 
+	    save_file2  $s $fname .busy
+	    set modified 0
+	    set file_name $fname
+	    }
+    }
+    return 1;
+}
+
+proc save_file2 { s fname  { w ""}} {
+     
+     if { $w != "" } {
+
+       catch {destroy $w}
+       toplevel $w
+       dpos $w
+       wm title $w "Busy"
+       wm iconname $w "Busy"
+       wm minsize $w 1 1
+
+       frame $w.f -relief groove -bd 5
+       pack $w.f -side top -pady 10 -padx 10 -fill both
+       message $w.f.msg -text "Writing file <$fname>, please wait ..." \
+	     -font -Adobe-Times-Medium-R-Normal-*-180-*
+
+       pack $w.f.msg -side top -pady 10 -padx 10 -fill both
+    
+       set oldFocus [focus]
+       grab $w
+       focus $w
+     }
+
+     set fp  [open $fname w]
+     puts $fp $s;
+
+     close $fp;
+
+     if { $w != "" } {
+
+       after 2000 destroy $w
+       focus $oldFocus
+     }
+}
+
+proc load_file {{d "."} {w .brl}} {
+
+    global cur_dir
+    global file_name
+    global win
+    global save_name 
+    set save_name $file_name
+    set cur_dir $d
+    set win $w
+
+    catch {destroy $w;}
+    toplevel $w
+    dpos $w
+    wm title $w "File Browser"
+    wm iconname $w "File Browser"
+    wm minsize $w 1 1
+
+    frame $w.top -relief ridge -bd 5
+    frame $w.bot -relief flat
+
+    pack $w.top $w.bot -side top -pady 5 -padx 5 -expand yes -fill both
+
+    scrollbar $w.top.scroll -command "$w.top.list yview"
+    pack $w.top.scroll -side right -fill y -padx 10 -pady 5
+
+    listbox $w.top.list -yscroll "$w.top.scroll set" -relief raised\
+			-geometry 20x20 -setgrid yes
+    pack $w.top.list -side left -fill both -expand yes -padx 10 -pady 5
+
+    entry $w.bot.entry -relief sunken 
+    pack $w.bot.entry -side top -fill x -expand yes -padx 5 -pady 5 
+    bind $w.bot.entry <Return> { 
+	   browse $win.top.list [$win.bot.entry get]
+	   }
+
+    button $w.bot.b2 -text "Cancel" -command {
+	     set file_name $save_name; destroy $win } -relief raised
+    pack $w.bot.b2 -side left -expand yes -fill x -anchor w -pady 5
+
+# Fill the listbox with a list of all the files in the directory (run
+# the "ls" command to get that information).
+
+#if $argc>0 {set d [lindex $argv 0]} else {set d "."}
+    global LS
+    foreach i [exec $LS -ap $d] {
+        $w.top.list insert end $i
+    }
+
+# Set up bindings for the browser.
+    bind $w.top.list <Double-Button-1> {
+		  set file_name [lindex [selection get] 0];
+		  browse $win.top.list $file_name;
+		  }
+
+    set oldFocus [focus]
+    grab $w
+    focus $w
+
+    tkwait window $w
+    focus $oldFocus
+}
+
+
+# The procedure below is invoked to open a browser on a given file;  if the
+# file is a directory then another instance of this program is invoked; if
+# the file is a regular file then the Mx editor is invoked to display
+# the file.
+
+proc browse { w file} {
+
+    global win
+    global modified
+    global file_name
+    global save_name
+
+#    if {[string compare $dir "."] != 0} {set file $dir/$file}
+    if {![file exists $file]} {
+       tk_dialog .error Error "$file doesn't exist!" warning -1 OK;
+       set file_name $save_name
+       grab $win
+    } else {
+      if [file isdirectory $file] {
+        $w delete 0 end
+	global LS
+        foreach i [exec $LS -ap $file] {
+           $w insert end $i
+        }
+	cd $file
+      } else {
+        if [file isfile $file] {
+	   set w .ed.text.t
+	   if {![new_file $w]} { grab $win; return 0 }
+	   set fp [open $file r]
+	   while {[gets $fp line]>=0} {
+             $w insert end "$line\n"
+	   }
+	   close $fp
+	   set modified 1
+        } else {
+            tk_dialog .error Error "$file isn't a directory or regular file" warning -1 OK;
+            set file_name $save_name
+            grab $win
+        }
+	destroy $win
+    }
+  }
+}
+
+
+proc input_map { { w .inmap} } {
+
+    catch { destroy $w }
+    toplevel $w
+    dpos $w
+    wm title $w "Map Entry"
+    wm iconname $w "Map Entry"
+
+    global map_name 
+    set map_name ""
+    global map_win
+    set map_win $w
+    message $w.msg -text "Enter the associated vector mapname:" -aspect 700
+#    -font -Adobe-times-medium-r-normal--*-180* 
+    entry $w.entry -relief sunken 
+    frame $w.button -relief flat 
+     
+    pack $w.msg -side top -fill both -pady 5 
+    pack $w.entry $w.button -side top -fill x -pady 5
+
+    button $w.button.ok -text OK -command \
+		 {set map_name [$map_win.entry get]; destroy $map_win}
+  
+    button $w.button.cancel -text Cancel -command "destroy $w"
+		 
+    bind $w.entry <Return> {set map_name [$map_win.entry get]; destroy $map_win}
+
+    pack $w.button.ok $w.button.cancel -side left -expand yes -padx 5 -pady 5\
+	 -fill x
+
+    set oldFocus [focus]
+    grab $w
+    focus $w.entry
+
+    tkwait window $w
+    focus $oldFocus
+    return $map_name
+}
+
+proc input_file { { w .input} } {
+
+    global file_name 
+    global fname
+    catch { destroy $w }
+    toplevel $w
+    dpos $w
+    wm title $w "Entry"
+    wm iconname $w "Entry"
+    set fname $file_name
+
+    message $w.msg -text "Enter filename:" -aspect 700
+#    -font -Adobe-times-medium-r-normal--*-180* 
+    entry $w.entry -relief sunken 
+    frame $w.button -relief flat 
+    bind $w.entry <Return> "set_fn $w;"
+     
+    pack $w.msg -side top -fill both -pady 5 
+    pack $w.entry $w.button -side top -fill x -pady 5
+
+    button $w.button.ok -text OK -command  "set_fn $w;"
+
+    button $w.button.cancel -text Cancel -command "set file_name $fname; set fname \"***\"; destroy $w"
+
+    pack $w.button.ok $w.button.cancel -side left -expand yes -padx 5 -pady 5\
+	 -fill x
+
+    set oldFocus [focus]
+    grab   $w
+    focus $w.entry
+
+    tkwait window $w
+    focus $oldFocus
+    
+    if {$fname == "***"} { return "" } else  {return $file_name}
+}
+
+proc set_fn { w } {
+    
+    global file_name;
+    set file_name [$w.entry get];
+    if {[file isfile $file_name] || ![file exists $file_name]} { 
+      destroy $w 
+    } else {
+      tk_dialog .warn Warning "$file_name is not a plain file!" warning -1 OK
+    }
+}
+
+proc new_file { w {fname ""}} {
+
+    global modified
+    global file_name
+
+    if { $modified == 1} {
+      set sel [tk_dialog .warn Warning "Do you want to save the current file?"\
+		warning 0 Save "Don't Save" Cancel]
+      switch $sel {
+	0  { 
+	      
+	      if {! [save_file $w $fname] } { return 0 }
+	   }
+	1  { 
+	      
+	   }
+        2 {
+	      return 0
+          }
+      }
+   }
+
+   $w delete 1.0 end
+   set file_name ""
+   set modified 0
+   return 1
+}
+      
+proc browse_file {{d "."} {w .brl}} {
+
+    global cur_dir
+    global br_win
+    set br_win $w
+    set cur_dir $d
+    global fname
+    set fname ""
+
+
+    catch {destroy $w;}
+    toplevel $w
+    dpos $w
+    wm title $w "File Browser"
+    wm iconname $w "File Browser"
+    wm minsize $w 1 1
+
+    frame $w.top -relief ridge -bd 5
+    frame $w.bot -relief flat
+
+    pack $w.top $w.bot -side top -pady 5 -padx 5 -expand yes -fill both
+
+    scrollbar $w.top.scroll -command "$w.top.list yview"
+    pack $w.top.scroll -side right -fill y -padx 10 -pady 5
+
+    listbox $w.top.list -yscroll "$w.top.scroll set" -relief raised\
+			-geometry 20x20 -setgrid yes
+    pack $w.top.list -side left -fill both -expand yes -padx 10 -pady 5
+
+    button $w.bot.b2 -text "Cancel" -command "destroy $w" -relief raised
+    pack $w.bot.b2 -side left -expand yes -fill x -anchor w -pady 5
+
+# Fill the listbox with a list of all the files in the directory (run
+# the "ls" command to get that information).
+
+#if $argc>0 {set d [lindex $argv 0]} else {set d "."}
+    global LS
+    foreach i [exec $LS -ap $d] {
+        $w.top.list insert end $i
+    }
+
+# Set up bindings for the browser.
+    bind $w.top.list <Double-Button-1> {
+		  set fname [lindex [selection get] 0]
+		  browse2 .brl.top.list $fname
+		  }
+
+    set oldFocus [focus]
+    grab  $w
+    focus $w
+
+    tkwait window $w
+    focus $oldFocus
+    
+    return $fname
+}
+
+# The procedure below is invoked to open a browser on a given file;  if the
+# file is a directory then another instance of this program is invoked; if
+# the file is a regular file then the Mx editor is invoked to display
+# the file.
+
+proc browse2 { w file} {
+
+     global br_win
+
+#    if {[string compare $dir "."] != 0} {set file $dir/$file}
+
+      if [file isdirectory $file] {
+        $w delete 0 end
+	global LS
+        foreach i [exec $LS -ap $file] {
+           $w insert end $i
+        }
+	cd $file
+      } else {
+        if [file isfile $file] {
+	   destroy $br_win
+        } else {
+            tk_dialog .error Error "\"$file\" isn't a directory or regular file"warning -1 OK
+	    grab $br_win
+        }
+    }
+}
+
+
+proc save_meta { {fname ""} } {
+
+    global mod_meta
+    global meta_name
+    
+    if {$mod_meta != 0} {
+
+      if { $fname == "" }  { 
+	set fname [input_meta]; 
+      
+
+        set sel 0
+        if {$fname != ""} {
+          if [file exists $fname]  {
+	    set sel [tk_dialog .warn Warning "File $fname already exists."\
+		   warning 0 "Go ahead" "Cancel"]
+	  }
+	  if {$sel == 0} {
+	    save_meta2 $fname .busy
+            set mod_meta 0
+            set meta_name $fname
+          } else { set meta_name "";return 0 }
+
+        }  else { return 0 }
+
+      } else { 
+	    save_meta2 $fname .busy
+	    set mod_meta 0
+	    set meta_name $fname
+	    }
+    }
+    return 1;
+}
+proc valid_mpdt { d } {
+
+    
+    if {[string length $d] != 8 || ![regexp {^[0-9]+$} $d]} { return "{}"; }
+
+    return "[string range $d 0 3] [string range $d 4 5] [string range $d 6 7]";
+}
+
+proc load_meta2 { fname } {
+
+     set f [open $fname r]
+     set sel 0
+     while {[gets $f line] >= 0} {
+       
+       if [string match "IDEN_MPDT:*" $line] {
+         incr sel 1 
+	 if {$sel != 1} {return 1;}
+	 set dat [valid_mpdt [string range $line 10 end]]
+	 
+	 if {[llength $dat]!=3} { return 1;}
+	 .meta.iden.mpdt.year_e delete 0 end
+	 .meta.iden.mpdt.year_e insert end [lindex $dat 0]
+	 .meta.iden.mpdt.month_e delete 0 end
+         .meta.iden.mpdt.month_e insert end [lindex $dat 1]
+	 .meta.iden.mpdt.day_e delete 0 end
+	 .meta.iden.mpdt.day_e insert end [lindex $dat 2]
+       } elseif [string match "IDEN_TITL:*" $line] {
+         incr sel 1 
+	 if {$sel != 2} {return 1;}
+	 .meta.iden.titl_e insert end [string range $line 10 end]
+       } elseif [string match "IDEN_COMT:*" $line] {
+         incr sel 1 
+	 if {$sel != 3} {return 1;}
+	 .meta.iden.comt_t insert end [string range $line 10 end];
+	 continue;
+       } elseif [string match "XREF_HDAT:*" $line] {
+         incr sel 1 
+	 if {$sel != 4} {return 1;}
+	 set s [string range $line 10 end]
+	 .meta.xref.hdat_e delete 0 end
+	 if {$s == "NAS"} {
+	   .meta.xref.hdat_t select from 0
+	   .meta.xref.hdat_e insert end NAS
+	 } elseif {$s == "NAX"} {
+	   .meta.xref.hdat_t select from 1
+	   .meta.xref.hdat_e insert end NAX
+         } elseif {$s == "WGA"} {
+	   .meta.xref.hdat_t select from 2
+	   .meta.xref.hdat_e insert end WGA
+         } elseif {$s == "WGB"} {
+	   .meta.xref.hdat_t select from 3
+	   .meta.xref.hdat_e insert end WGB
+         } elseif {$s == "WGC"} {
+	   .meta.xref.hdat_t select from 4
+	   .meta.xref.hdat_e insert end WGC
+         } elseif {$s == "WGE"} {
+	   .meta.xref.hdat_t select from 5
+	   .meta.xref.hdat_e insert end WGE
+         } else {
+	   .meta.xref.hdat_t select from 6
+	   .meta.xref.hdat_e insert end $s
+         }
+	  
+       } elseif [string match "DDDF_GRASS_ENT:*" $line] {
+         incr sel 1 
+	 if {$sel != 5} {return 1;}
+	 .meta.dddf.f1.ent_t insert end [string range $line 15 end];
+	 continue;
+       } elseif [string match "DDDF_ATTR_NUM:*" $line] {
+         incr sel 1 
+	 if {$sel != 6} {return 1;}
+	 .meta.dddf.f2.num_t insert end [string range $line 14 end];
+	 continue;
+       } elseif [string match "DDDF_ATTR_LABEL:*" $line] {
+         incr sel 1 
+	 if {$sel != 7} {return 1;}
+	 .meta.dddf.f3.label_t insert end [string range $line 16 end];
+	 continue;
+       } elseif [string match "DDSH_ENT_NAME:*" $line] {
+         incr sel 1 
+	 if {$sel != 8} {return 1;}
+	 .meta.ddsh.ent_e insert end [string range $line 14 end]
+       }
+
+       switch $sel {
+         3 {
+	     .meta.iden.comt_t insert end "\n$line"
+	   }
+	 5 {
+	     .meta.dddf.f1.ent_t insert end "\n$line"
+	   }
+	 6 {
+	     .meta.dddf.f2.num_t insert end "\n$line"
+	   }
+	 7 {
+	     .meta.dddf.f3.label_t insert end "\n$line"
+           }
+       }
+    }
+
+    close $f
+    if {$sel != 8} {return 1} else {return 0;}
+     
+}
+
+proc save_meta2 { fname {w ""}} {
+     
+     if { $w != "" } {
+       catch {destroy $w}
+       toplevel $w
+       dpos $w
+       wm title $w "Busy"
+       wm iconname $w "Busy"
+       wm minsize $w 1 1
+
+       frame $w.f -relief groove -bd 5
+       pack $w.f -side top -pady 10 -padx 10 -fill both
+       message $w.f.msg -text "Writing file <$fname>, please wait ..." \
+  	     -font -Adobe-Times-Medium-R-Normal-*-180-*
+
+       pack $w.f.msg -side top -pady 10 -padx 10 -fill both
+    
+       set oldFocus [focus]
+       grab $w
+       focus $w
+     }
+
+     set f [open $fname w+]
+     set year [.meta.iden.mpdt.year_e get]
+     if {![valid_year $year]} { 
+	set year [exec date "+19%y"]
+     }
+     set month [.meta.iden.mpdt.month_e get]
+     if {![valid_month $month]} {
+	set month [exec date "+%m"]
+     }
+     set day [.meta.iden.mpdt.day_e get]
+     if { ![valid_day $day]} {
+       set day [exec date "+%d"]
+     }
+     puts $f "IDEN_MPDT:$year$month$day"
+     valid_titl [.meta.iden.titl_e get]
+     puts $f "IDEN_TITL:[.meta.iden.titl_e get]"
+     valid_comt [.meta.iden.comt_t get 1.0 end]
+     puts $f "IDEN_COMT:[.meta.iden.comt_t get 1.0 end]"
+     valid_hdat [.meta.xref.hdat_e get]
+     puts $f "XREF_HDAT:[.meta.xref.hdat_e get]"
+     puts $f "DDDF_GRASS_ENT:[.meta.dddf.f1.ent_t get 1.0 end]"
+     puts $f "DDDF_ATTR_NUM:[.meta.dddf.f2.num_t get 1.0 end]"
+     puts $f "DDDF_ATTR_LABEL:[.meta.dddf.f3.label_t get 1.0 end]"
+     valid_ent [.meta.ddsh.ent_e get]
+     puts $f "DDSH_ENT_NAME:[.meta.ddsh.ent_e get]"
+     close $f
+
+     if { $w != "" } {
+
+       after 2000 destroy $w
+       focus $oldFocus
+     }
+}
+
+proc new_meta {{fname  ""}} {
+
+    global mod_meta
+    global meta_name
+
+    if { $mod_meta == 1} {
+      set sel [tk_dialog .warn Warning "Do you want to save the current meta file?"\
+		warning 0 Save "Don't Save" Cancel]
+      switch $sel {
+	0  { 
+	      
+	      if {![save_meta $fname]} {return 0};
+	   }
+	1  { 
+	      
+	   }
+        2  {
+	      return 0
+           }
+      }
+   }
+
+   clear_meta 
+   set meta_name ""
+   set mod_meta 0
+   return 1
+}
+
+proc clear_meta {} {
+
+   .meta.iden.mpdt.year_e delete 0 end
+#   .meta.iden.mpdt.year_e insert end [exec date "+19%y"]
+   .meta.iden.mpdt.month_e delete 0 end
+#   .meta.iden.mpdt.month_e insert end [exec date "+%m"]
+   .meta.iden.mpdt.day_e delete 0 end
+#   .meta.iden.mpdt.day_e insert end [exec date "+%d"]
+   .meta.iden.titl_e delete 0 end
+   .meta.iden.comt_t delete 1.0 end
+   .meta.xref.hdat_t select from 0
+   .meta.xref.hdat_e delete 0 end
+#   .meta.xref.hdat_e insert end NAS
+   .meta.dddf.f1.ent_t delete 1.0 end
+   .meta.dddf.f2.num_t delete 1.0 end
+   .meta.dddf.f3.label_t delete 1.0 end
+   .meta.ddsh.ent_e delete 0 end
+
+}
+
+proc load_meta {{d "."} {w .brl}} {
+
+    global cur_dir
+    global meta_name
+    global meta_win
+    global save_name
+    set save_name $meta_name
+    set cur_dir $d
+    set meta_win $w
+
+
+    catch {destroy $w;}
+    toplevel $w
+    dpos $w
+    wm title $w "File Browser"
+    wm iconname $w "File Browser"
+    wm minsize $w 1 1
+
+    frame $w.top -relief ridge -bd 5
+    frame $w.bot -relief flat
+
+    pack $w.top $w.bot -side top -pady 5 -padx 5 -expand yes -fill both
+
+    scrollbar $w.top.scroll -command "$w.top.list yview"
+    pack $w.top.scroll -side right -fill y -padx 10 -pady 5
+
+    listbox $w.top.list -yscroll "$w.top.scroll set" -relief raised\
+			-geometry 20x20 -setgrid yes
+    pack $w.top.list -side left -fill both -expand yes -padx 10 -pady 5
+
+    entry $w.bot.entry -relief sunken
+
+    bind $w.bot.entry <Return> {
+	   meta_browse $meta_win.top.list [$meta_win.bot.entry get]
+	 }
+    pack $w.bot.entry -side top -expand yes -fill x -pady 5 -padx 5
+
+    button $w.bot.b2 -text "Cancel" -command {
+		 set meta_name $save_name; destroy $meta_win} -relief raised
+    pack $w.bot.b2 -side top -expand yes -fill x -anchor w -pady 5
+
+# Fill the listbox with a list of all the files in the directory (run
+# the "ls" command to get that information).
+
+#if $argc>0 {set d [lindex $argv 0]} else {set d "."}
+    global LS
+    foreach i [exec $LS -ap $d] {
+	$w.top.list insert end $i
+    }
+
+# Set up bindings for the browser.
+    bind $w.top.list <Double-Button-1> {
+		  meta_browse $meta_win.top.list [lindex [selection get] 0];
+	  }
+
+    set oldFocus [focus]
+    grab  $w
+    focus $w
+
+    tkwait window $w
+    focus $oldFocus
+}
+
+# The procedure below is invoked to open a browser on a given file;  if the
+# file is a directory then another instance of this program is invoked; if
+# the file is a regular file then the Mx editor is invoked to display
+# the file.
+
+proc meta_browse { w file} {
+
+    global meta_win
+    global mod_meta
+    global meta_name
+    global save_name
+
+#    if {[string compare $dir "."] != 0} {set file $dir/$file}
+    if {![file exists $file]} {
+      tk_dialog .error Error "$file doesn't exist!" warning -1 OK
+      grab $meta_win
+      set meta_name $save_name
+    } else {
+
+      if [file isdirectory $file] {
+	$w delete 0 end
+	global LS
+        foreach i [exec $LS -ap $file] {
+          $w insert end $i
+       }
+	cd $file
+      } else {
+        if [file isfile $file] {
+	   set w .ed.text.t
+	   if { ![new_meta  $meta_name] } { grab $meta_win; return 0 }
+	   load_meta2 $file
+	   set mod_meta 1
+	   destroy $meta_win
+        } else {
+            tk_dialog .error Error "\"$file\" isn't a directory or regular file" warning -1 OK
+	    set meta_name $save_name
+	    grab $meta_win
+        }
+    }
+  }
+}
+
+
+proc input_meta { { w .input} } {
+
+    global meta_name 
+    catch { destroy $w }
+    toplevel $w
+    dpos $w
+    wm title $w "Entry"
+    wm iconname $w "Entry"
+    set mname $meta_name
+
+    message $w.msg -text "Enter filename:" -aspect 700
+#    -font -Adobe-times-medium-r-normal--*-180* 
+    entry $w.entry -relief sunken 
+    frame $w.button -relief flat 
+    bind $w.entry <Return> "set_meta $w;"
+
+    pack $w.msg -side top -fill both -pady 5 
+    pack $w.entry $w.button -side top -fill x -pady 5
+    
+    button $w.button.ok -text OK -command  "set_meta $w;"
+
+    button $w.button.cancel -text Cancel -command "set meta_name $mname; set mname \"***\"; destroy $w"
+
+    pack $w.button.ok $w.button.cancel -side left -expand yes -padx 5 -pady 5\
+	 -fill x
+
+    set oldFocus [focus]
+    grab  $w
+    focus $w.entry
+
+    tkwait window $w
+    focus $oldFocus
+    if {$mname == "***" } { return $mname } else { return $meta_name }
+}
+
+proc set_meta { w } {
+    
+    global meta_name;
+    set meta_name [$w.entry get];
+    if {[file isfile $meta_name] || ![file exists $meta_name]} { 
+      destroy $w 
+    } else {
+      tk_dialog .warn Warning "$meta_name is not a plain file!" warning -1 OK
+    }
+}
+
+proc get_select {} {
+
+    global mod_meta
+
+    set s [selection get]
+    
+    .meta.xref.hdat_e delete 0 end
+    if {$s != "Other"} {
+      .meta.xref.hdat_e insert end [string range [lindex $s 0] 0 2]
+    }
+    set mod_meta 1
+}
+
+proc invalid { s } {
+    tk_dialog .error Error "$s is invalid!" warning -1 OK
+}
+
+proc valid_year { {y ""}} {
+
+    
+
+    if { $y == "" } { return 0 }
+    if {[string length $y] == 4 && [regexp {^[0-9]+$} $y]} {
+       if { $y > 1000 && $y <= [exec date "+19%y"]} { 
+	   return 1 
+       } else {
+	   invalid "Year '$y'";
+	   return 0; 
+       }
+    } else {
+      invalid "Year '$y'";
+      return 0;
+    }
+}
+
+proc valid_month { m } {
+    
+
+    if { $m == "" } { return 0 }
+    if {[string length $m] == 2 && [regexp {^[0-9]+$} $m]} {
+       if { $m > 0 && $m <= 12} {
+	   return 1 
+       } else {
+	   invalid "Month '$m'";
+	   return 0; 
+       }
+    } else {
+      invalid "Month '$m'";
+      return 0;
+    }
+}
+
+proc valid_day { d } {
+    
+
+    if { $d == "" } { return 0 }
+    if {[string length $d] <= 2 && [regexp {^[0-9]+$} $d]} {
+       if { $d > 0 && $d <= 31 } {
+	   return 1 
+       } else {
+	   invalid "Day '$d'";
+	   return 0; 
+       }
+    } else {
+      invalid "Day '$d'";
+      return 0;
+    }
+}
+
+proc valid_titl { t } {
+    
+    return 1
+
+}
+
+proc valid_hdat { h } { 
+    
+    return 1
+}
+
+proc valid_ent { e } {
+    
+    return 1
+}
+
+proc valid_comt { c  } {
+
+    if {[string length $c] >= 5000} {
+       tk_dialog .warn Warn "Field Comment is too long! It will be truncated." warning -1 OK
+    }
+}
+
+proc display_help { s  { w .help }} {
+
+    catch {destroy  $w};
+    toplevel $w
+    dpos $w
+    wm title $w "Help"
+    wm iconname $w "Help"
+    wm minsize $w 1 1
+
+
+    message $w.msg -relief groove -width 540 -bd 3 -text $s
+
+    button $w.but -text "OK" -command "destroy $w"
+  
+    pack $w.msg -side top -fill both -padx 10 -pady 5 
+    pack $w.but -side bottom -fill x -pady 5 
+   
+    set oldFocus [focus]
+    grab $w
+    focus $w
+
+    tkwait window $w
+    focus $oldFocus
+}
+
+proc meta {{w .meta} } {
+
+#puts $file
+global errMsg
+global meta_name
+global map_name
+set meta_name ""
+set map_name ""
+global meta_w
+set meta_w $w
+global mod_meta
+set mod_meta 0
+
+catch $w {destroy $w}
+toplevel $w
+dpos $w
+wm title $w "Metadata"
+wm iconname $w "Metadata"
+
+frame $w.menu -relief raised -bd 3 
+frame $w.iden -borderwidth 3 -relief groove 
+frame $w.xref -borderwidth 3 -relief groove
+frame $w.dddf -borderwidth 3 -relief groove
+frame $w.ddsh -borderwidth 3 -relief groove
+
+pack $w.menu $w.iden $w.xref $w.ddsh $w.dddf -side top -pady 5 -fill both -padx 5 -expand yes
+
+#--------------------------------------------------------
+#  Menus are created here.
+#--------------------------------------------------------
+
+menubutton $w.menu.file -text "File" -menu $w.menu.file.m 
+
+    menu $w.menu.file.m 
+    $w.menu.file.m add command -label "New" -command {
+		   new_meta $meta_name;grab $meta_w
+		   }
+#		   -underline 0
+#                  -accelerator Control+n
+#    bind $w.menu <Control-n> { new_file }
+
+    $w.menu.file.m add command -label "Load" -command "load_meta; grab $w"
+#	           -underline 0
+#		   -accelerator Control+l 
+#    bind $w.menu <Control-l> { load_file }
+
+    $w.menu.file.m add command -label "Save" -command {
+		   save_meta $meta_name;grab $meta_w
+		   }
+#		   -underline 0
+#		   -accelerator Control+s 
+#    bind $w.menu <Control-s> { save_file }
+
+    $w.menu.file.m add command -label "Quit" -command {
+		    if [new_meta $meta_name]  {destroy $meta_w}
+		    }
+#		   -underline 0
+#		   -accelerator Control+q 
+#    bind $w.menu <Control-q>  "destroy $w"
+
+    pack $w.menu.file -side left -padx 30
+
+    menubutton $w.menu.map -text "Install" -menu $w.menu.map.m
+    
+    menu $w.menu.map.m
+    
+    $w.menu.map.m add command -label "Copy from file (not overwrite)" -command {
+	  set mname [browse_file];
+	  grab $meta_w;
+	  if {$mname == ""} {  return 0}
+	  input_map; 
+	  if {$map_name == ""} {grab $meta_w; return 0;}
+	  if [catch {exec v.sdts.meta.cp meta=$mname map=$map_name;} errMsg] {
+	      if {$errMsg ==  ""} { set $errMsg "Installation is sucessful!"}
+              tk_dialog .error Dialog $errMsg warning -1 OK
+          }
+
+	  grab $meta_w; 
+	  }
+
+    $w.menu.map.m add command -label "Copy from file (overwrite)" -command {
+	  set mname [browse_file];
+	  grab $meta_w;
+	  if {$mname == ""} { return 0}
+	  input_map; 
+	  if {$map_name == ""} {grab $meta_w; return 0;}
+	  if [catch {exec v.sdts.meta.cp -f meta=$mname map=$map_name;} errMsg] {
+	      if {$errMsg ==  ""} { set $errMsg "Installation is sucessful!"}
+              tk_dialog .error Dialog $errMsg warning -1 OK
+          }
+
+	  grab $meta_w; 
+	  }
+
+    $w.menu.map.m add separator;
+
+    $w.menu.map.m add command -label "Copy from editor (not overwrite)" -command {
+	  set mname "/tmp/_meta[pid]";
+          save_meta2 $mname;
+	  input_map; 
+	  if {$map_name == ""} {grab $meta_w; return 0;}
+	  if [catch {exec v.sdts.meta.cp -f meta=$mname map=$map_name;} errMsg] {
+	      if {$errMsg ==  ""} { set $errMsg "Installation is sucessful!"}
+              tk_dialog .error Dialog $errMsg warning -1 OK
+          }
+
+	  grab $meta_w; 
+	  exec rm -f $mname
+
+	  }
+
+    $w.menu.map.m add command -label "Copy from editor (overwrite)" -command {
+	  set mname "/tmp/_meta[pid]";
+	  save_meta2 $mname;
+	  input_map; 
+	  if {$map_name == ""} {grab $meta_w; return 0;}
+	  if [catch {exec v.sdts.meta.cp -f meta=$mname map=$map_name;} errMsg] {
+	      if {$errMsg ==  ""} { set $errMsg "Installation is sucessful!"}
+              tk_dialog .error Dialog $errMsg warning -1 OK
+          }
+
+	  grab $meta_w; 
+	  exec rm -f $mname
+	  }
+
+#    menu $w.menu.map.m -postcommand {puts Install;}
+
+    pack $w.menu.map -side left -padx 30
+
+    menubutton $w.menu.help -text "Help" -menu $w.menu.help.m
+
+    menu $w.menu.help.m 
+
+    $w.menu.help.m add command -label "Menu" -command { 
+		   display_help {\
+File Menu:
+   New         New file
+   Load        Load file
+   Save        Save file
+   Quit        
+
+Install Menu:
+
+ Copy from file (no overwrite)                 
+   Select and install an existing file as a metadata file 
+   file for the specified map.  Previously installed metadata
+   file will not be overwritten.
+
+ Copy from file (overwrite)                 
+   Select and install an existing file; overwrite any previously 
+   installed file.
+
+ Copy from screen (no overwrite)                 
+   Install the contents of the editing screen as a metadata 
+   file for the specified map.  Previously installed file will not 
+   be overwritten. 
+
+ Copy from screen (overwrite)                 
+   Install the contents of the editing screen; overwrite any 
+   previously installed file.
+		   }
+               grab $meta_w
+               }
+
+    $w.menu.help.m add separator
+
+    $w.menu.help.m add command -label "Map Date" -command  {
+		   display_help {\
+Date specifying the temporal extent of the real-world information 
+represented by the transfer data set (SDTS, PART I); date of the 
+original source map. To be placed in transfer Identification 
+module's MPDT field. If not supplied by user, entry will be blank. 
+(GRASS vector header "map date" cannot be used due to format 
+inconsistencies.)
+		   }
+               grab $meta_w
+               }
+   
+    $w.menu.help.m add command -label "Title" -command  {
+		   display_help {\
+A general title for the contents of the transfer, to be placed in the 
+transfer Identification module's TITL field.  In lieu of user-supplied
+entry, the GRASS vector header "map_name" entry will be exported as TITL.
+		   }
+               grab $meta_w
+	   }
+
+    $w.menu.help.m add command -label "Comment" -command {
+		   display_help {\
+General comments about the transfer dataset, for Identification 
+module's COMT field.
+		   }
+               grab $meta_w
+	   }
+
+    $w.menu.help.m add command -label "Horizontal Datum" -command {
+		   display_help {\
+Name of geodetic datum to which the transfer's coordinate data 
+have been referenced.  For transfer set's External Spatial 
+Reference module's HDAT field.  Select one of the items in the 
+supplied list, or if necessary, select "Other" and type in the 
+entry manually.  HDAT is optional, and will be blank if not specified 
+by user.
+		   }
+               grab $meta_w
+	   }
+
+    $w.menu.help.m add command -label "Entity Name" -command {
+		   display_help {\
+Name for the kind of entity that the transfer dataset contains. 
+Entry will be used to specify entity type for dig_att and dig_cats
+records in the Data Dictionary/Schema module. If not supplied by
+user, the map name specified for v.out.sdts will be used.
+
+(Currently, only one entity name can be entered for a transfer.)  
+		   }
+               grab $meta_w
+	   }
+
+    $w.menu.help.m add command -label "Entity Definition" -command {
+		   display_help {\
+Definition for the kind of entity the transfer data set contains, 
+specified by "Entity Name." For Data Dictionary/Definition module.
+If not supplied by user, default is used: "Exported GRASS map 
+layer."
+		   }
+               grab $meta_w
+	   }
+
+    $w.menu.help.m add command -label "dig_att Definition" -command {
+		   display_help {\
+Definition, for the Data Dictionary/Definition module, for GRASS 
+dig_att integer values in the transfer dataset. In lieu of user 
+input a simple default definition is supplied by v.out.sdts.  
+(The dig_att values themselves are transferred as attributes in 
+the ATTR_NUM field in the AP01 attribute module.)
+		   }
+               grab $meta_w
+	   }
+
+    $w.menu.help.m add command -label "dig_cats Definition" -command {
+		   display_help {\
+Definition, for the Data Dictionary/Definition module, for GRASS 
+dig_cats labels in the transfer dataset. In lieu of user input 
+a simple default definition is supplied by v.out.sdts.  
+(The dig_cats labels themselves are transferred as attributes in 
+the ATTR_LABEL field in the AP01 attribute module.)
+		   }
+               grab $meta_w
+	   }
+
+
+    pack $w.menu.help -side right -padx 30
+
+
+    bind all <Meta-f> "$w.menu.file activate"
+    bind all <Meta-I> "$w.menu.map activate"
+    bind all <Meta-h> "$w.menu.help activate"
+
+    label $w.iden.mpdt_l -text "Map Date"
+    frame $w.iden.mpdt -relief flat
+    label $w.iden.mpdt.year_l -text "Year"
+    entry $w.iden.mpdt.year_e -relief sunken
+#    $w.iden.mpdt.year_e insert end [exec date "+19%y"];
+    bind $w.iden.mpdt.year_e <Return> {
+	  if {[valid_year [$meta_w.iden.mpdt.year_e get]]} {
+	     focus $meta_w.iden.mpdt.month_e; 
+	     } ;
+	  grab $meta_w; }
+#    bind $w.iden.mpdt.year_e <Leave> {puts Leave}
+
+    bind $w.iden.mpdt.year_e <KeyRelease> { set mod_meta 1 }
+    label $w.iden.mpdt.month_l -text "Month"
+    entry $w.iden.mpdt.month_e -relief sunken
+#    $w.iden.mpdt.month_e insert end [exec date "+%m"]
+    bind $w.iden.mpdt.month_e <Return> {
+	  if {[valid_month [$meta_w.iden.mpdt.month_e get]]} {
+	     focus $meta_w.iden.mpdt.day_e;
+	     }
+	  grab $meta_w}
+    bind $w.iden.mpdt.month_e <KeyRelease> { set mod_meta 1 }
+#    bind $w.iden.mpdt.month_e <Leave> {valid_month [$meta_w.iden.mpdt.month_e get]; grab $meta_w}
+
+    label $w.iden.mpdt.day_l -text "Day"
+    entry $w.iden.mpdt.day_e -relief sunken
+#    $w.iden.mpdt.day_e insert end [exec date "+%d"]
+    bind $w.iden.mpdt.day_e <Return> {
+	  if {[valid_day [$meta_w.iden.mpdt.day_e get]]} {
+	     focus $meta_w.iden.titl_e;
+	     }
+	  grab $meta_w}
+    bind $w.iden.mpdt.day_e <KeyRelease> { set mod_meta 1 }
+#    bind $w.iden.mpdt.day_e <Leave> {valid_day [$meta_w.iden.mpdt.day_e get]; grab $meta_w}
+
+#    entry $w.iden.mpdt_e -relief sunken
+#    bind $w.iden.mpdt_e <KeyRelease> { set mod_meta 1 }
+
+    pack $w.iden.mpdt.year_l $w.iden.mpdt.year_e $w.iden.mpdt.month_l \
+	 $w.iden.mpdt.month_e $w.iden.mpdt.day_l $w.iden.mpdt.day_e -side left\
+	 -expand yes -fill x -padx 5
+
+    label $w.iden.titl_l -text "Title"
+    entry $w.iden.titl_e -relief sunken
+    bind $w.iden.titl_e <Return> {
+	  if {[valid_titl [$meta_w.iden.titl_e get]]} {
+	     focus $meta_w.iden.comt_t;
+	     }
+	  grab $meta_w}
+    bind $w.iden.titl_e <KeyRelease> { set mod_meta 1 }
+#    bind $w.iden.titl_e <Leave> {valid_titl [$meta_w.iden.titl_e get]; grab $meta_w}
+
+
+    label $w.iden.comt_l -text "Comment"
+    text  $w.iden.comt_t -relief sunken -bd 3 -yscrollcommand "$w.iden.comt_s set" \
+	  -width 60 -height 3 -wrap word
+#	  -font "-Adobe-Helvetica-Bold-R-Normal-*-120-*"
+    scrollbar $w.iden.comt_s -relief flat -command "$w.iden.comt_t yview"
+    bind $w.iden.comt_t <KeyRelease> { set mod_meta 1 }
+
+    pack $w.iden.mpdt_l $w.iden.mpdt -side top -padx 10 -pady 5 -fill x
+    pack $w.iden.titl_l $w.iden.titl_e $w.iden.comt_l -side top -fill x -pady 5 -padx 10
+
+    pack $w.iden.comt_s -side right -fill y -pady 5 -padx 10
+    pack $w.iden.comt_t -side right -fill x -expand yes -pady 5 -padx 10
+
+    label $w.xref.hdat_l -text "Horizontal Datum"
+    entry $w.xref.hdat_e -relief sunken 
+    scrollbar $w.xref.hdat_s -relief flat -command "$w.xref.hdat_t yview"
+    listbox $w.xref.hdat_t -yscroll "$w.xref.hdat_s set" -relief sunken -setgrid 1 -geometry 80x3 
+    bind $w.xref.hdat_e <KeyRelease> { set mod_meta 1 }
+    bind $w.xref.hdat_e <Return> {
+	  if {[valid_hdat [$meta_w.xref.hdat_e get]]} {
+	     focus $meta_w.dddf.f1.ent_t;
+	  }
+	  grab $meta_w}
+#    bind $w.xref.hdat_e <Leave> {valid_hdat [$meta_w.xref.hdat_e get]; grab $meta_w}
+
+#    bind $w.xref.hdat_t <Double-Button-1> {get_select}
+    bind $w.xref.hdat_t <ButtonRelease-1> {get_select}
+
+#    selection handle $w.xref.hdat_t get_select STRING
+
+    pack $w.xref.hdat_l $w.xref.hdat_e -side top -fill x -pady 5 -padx 10
+    pack $w.xref.hdat_s -side right -fill y -padx 10 -pady 5
+    pack $w.xref.hdat_t -side left -expand yes -fill x -padx 10 -pady 5
+
+    $w.xref.hdat_t insert 0 \
+	"NAS         North American 1927"\
+	"NAX         North American 1983" \
+	"WGA         World Geodetic System 1960"\
+	"WGB         World Geodetic System 1966"\
+	"WGC         World Geodetic System 1972"\
+	"WGE         World Geodetic System 1984"\
+	"Other"
+
+#    $w.xref.hdat_t select from 0
+#   $w.xref.hdat_e insert end NAS
+
+    label $w.ddsh.ent_l -text "Entity Name"
+    entry $w.ddsh.ent_e -relief sunken 
+    bind $w.ddsh.ent_e <Return> {
+	  if {[valid_ent [$meta_w.ddsh.ent_e get]]} {
+	     focus $meta_w.dddf.f1.ent_t;
+	  }
+	  grab $meta_w}
+    bind $w.ddsh.ent_e <KeyRelease> { set mod_meta 1 }
+#    bind $w.ddsh.ent_e <Leave> {valid_ent [$meta_w.ddsh.ent_e get]; grab $meta_w}
+    pack $w.ddsh.ent_l $w.ddsh.ent_e -side top -fill x -padx 10 -pady 5 
+
+    frame $w.dddf.f1 -relief flat
+    frame $w.dddf.f2 -relief flat
+    frame $w.dddf.f3 -relief flat
+
+    pack $w.dddf.f1 $w.dddf.f2 $w.dddf.f3 -side top -expand yes -fill both
+
+    label $w.dddf.f1.ent_l -text "Entity Definition"
+    scrollbar $w.dddf.f1.ent_s -relief flat -command "$w.dddf.f1.ent_t yview"
+    text  $w.dddf.f1.ent_t -relief sunken -bd 3 -yscrollcommand "$w.dddf.f1.ent_s set"\
+	  -width 60 -height 3 -wrap word
+#	  -font "-Adobe-Helvetica-Bold-R-Normal-*-120-*"
+    bind $w.dddf.f1.ent_t <KeyRelease> { set mod_meta 1 }
+
+    pack $w.dddf.f1.ent_l -side top -fill x 
+    pack $w.dddf.f1.ent_s -side right -fill y -padx 10
+    pack $w.dddf.f1.ent_t -side right -fill x -expand yes -padx 10
+
+    label $w.dddf.f2.num_l -text "dig_att Definition"
+    scrollbar $w.dddf.f2.num_s -relief flat -command "$w.dddf.f2.num_t yview"
+    text  $w.dddf.f2.num_t -relief sunken -bd 3 -yscrollcommand "$w.dddf.f2.num_s set"\
+	  -width 60 -height 3 -wrap word
+#	  -font "-Adobe-Helvetica-Bold-R-Normal-*-120-*"
+    bind $w.dddf.f2.num_t <KeyRelease> { set mod_meta 1 }
+
+    pack $w.dddf.f2.num_l -side top -fill x 
+    pack $w.dddf.f2.num_s -side right -fill y -padx 10
+    pack $w.dddf.f2.num_t -side right -fill x -expand yes -padx 10
+
+    label $w.dddf.f3.label_l -text "dig_cats Definition"
+    scrollbar $w.dddf.f3.label_s -relief flat -command "$w.dddf.f3.label_t yview"
+    text  $w.dddf.f3.label_t -relief sunken -bd 3 -yscrollcommand "$w.dddf.f3.label_s set"\
+	  -width 60 -height 3  -wrap word
+#	  -font "-Adobe-Helvetica-Bold-R-Normal-*-120-*"
+    bind $w.dddf.f3.label_t <KeyRelease> { set mod_meta 1 }
+
+    pack $w.dddf.f3.label_l -side top -fill x 
+    pack $w.dddf.f3.label_s -side right -fill y -padx 10 -pady 5
+    pack $w.dddf.f3.label_t -side right -fill x -expand yes -padx 10 -pady 5
+
+    set oldFocus [focus]
+    grab  $w
+    
+    focus $w.iden.mpdt.year_e
+
+    tkwait window $w
+    focus $oldFocus
+}
+
+proc dpos w {
+    wm geometry $w +300+300
+}
+     
+#----------------------------------------------------
+#  Main Window
+#----------------------------------------------------
+
+global choice
+set choice ""
+global dq_option
+set dq_option ""
+global LS
+if {[exec uname] == "SunOS" && [file exists "/usr/5bin/ls"]} {
+  set LS "/usr/5bin/ls"
+} else {
+  set LS "ls"
+}
+
+frame .mwin_top -relief raise -borderwidth 5
+frame .mwin_bot -relief raise -borderwidth 5
+pack .mwin_top .mwin_bot -side top -pady 3 -expand yes -fill both
+
+button .mwin_top.rb1 -text "Metadata" -command "meta"  -relief flat 
+button .mwin_top.rb2 -text "Data Quality: Lineage" \
+       -command "set choice lineage; set dq_option HL; editor" -relief flat 
+button .mwin_top.rb3 -text "Data Quality: Positional Accuracy" \
+       -command "set choice position;set dq_option PA; editor" -relief flat 
+button .mwin_top.rb4 -text "Data Quality: Attribute Accuracy"\
+       -command "set choice attribute;set dq_option AA; editor" -relief flat 
+button .mwin_top.rb5 -text "Data Quality: Logical Consistency"\
+       -command "set choice consistency;set dq_option LC;  editor" -relief flat 
+button .mwin_top.rb6 -text "Data Quality: Completeness" \
+       -command "set choice completeness; set dq_option CG; editor" -relief flat
+
+pack .mwin_top.rb1 .mwin_top.rb2 .mwin_top.rb3 .mwin_top.rb4 .mwin_top.rb5 .mwin_top.rb6 -side top -anchor w -pady 10 -padx 20 -expand yes
+
+
+button .mwin_bot.b -text "Quit" -command { destroy .} -relief raise
+
+pack .mwin_bot.b -side left -anchor w -fill x -expand yes
+

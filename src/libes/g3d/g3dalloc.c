@@ -41,7 +41,7 @@ G3d_realloc (ptr, nBytes)
 void
 G3d_free (buf)
 
-     char *buf;
+     void *buf;
 
 {
   free (buf);

@@ -2,6 +2,7 @@
  *    returns 0 if color is not known.
  */
 
+#include <string.h>
 #include "display.h"
 #include "colors.h"
 

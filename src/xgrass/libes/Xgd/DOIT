@@ -1,7 +1,0 @@
-#!/bin/sh
-cd /grass.src/4.1/src/libes/Xgd
-rm OBJ.sun4/*.o
-gmake4.1.x
-cd /grass.src/4.1/src.x/display
-rm OBJ.sun4/*.o
-gmake4.1.x

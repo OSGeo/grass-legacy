@@ -8,6 +8,7 @@ int
 main (int argc, char *argv[])
 {
     char buf[1024];
+	struct GModule *module;
     struct Option *input, *basemap, *fprange, *range;
     struct Flag *trunc, *rnd;
     int truncate;
@@ -18,6 +19,10 @@ main (int argc, char *argv[])
     char *basename, *basemapset;
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"This routine produces the quantization file for a floating-point map.";
 
     basemap = G_define_option();
     basemap->key = "basemap";

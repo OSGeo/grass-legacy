@@ -1,0 +1,21 @@
+OBJ = fft.o \
+	del2g.o \
+	eigen.o \
+	gauss.o \
+	getg.o \
+	jacobi.o \
+	max_pow2.o \
+	mult.o \
+	rand1.o \
+	la.o
+
+LIBES = $(GISLIB)
+
+EXTRA_CFLAGS = $(FFTWINC)
+
+all: $(GMATHLIB)
+
+$(GMATHLIB): $(OBJ)
+	$(AR) 
+
+$(OBJ): $(INCLUDE_DIR)/la.h

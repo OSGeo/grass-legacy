@@ -1,0 +1,99 @@
+<HTML>
+<HEAD>
+	<TITLE>GRASS Source Code Details</TITLE>
+	<LINK REV="made" HREF="jwo@le.ac.uk">
+</HEAD>
+<body bgcolor="#FFFFFF">
+<img SRC="grass.smlogo.gif" >
+<hr width=100% align=center size=6 no shade>
+<h2>
+NAME</h2>
+<b><i>m.in.ntf</i></b> - Read an Ordnance Survey NTF file
+<br><i>(GRASS Misc Data Import Program)</i>
+
+<P>
+	 	Program to read an Ordnance Survey NTF file. Can read most raster and vector 
+	 	formats. (NTF 1 and 2).
+</P>
+
+<PRE>Each line in an NTF file starts with a 2 digit record type. 
+Included here is a list of supported and unsupported
+rocord types. 
+
+--------------------------------------------
+The following NTF record types are supported
+
+00 Continuation record
+01 Volume header record
+02 Database header record
+03 Data description record
+04 Data format record
+05 Feature classification record
+07 Section header record
+11 Name record
+12 Name position record
+14 Attribute record
+15 Point record
+16 Node record
+21 Geometry record
+22 3D Geometry record
+23 Line record
+40 Attribute description record
+43 Text record
+44 Text position record
+45 Text representation record
+50 Grid header record
+51 Grid data record
+99 Volume termination record
+
+
+-----------------------------------
+The following are not yet supported
+
+24 Chain record
+31 Polygon record
+33 Complex polygon
+34 Collection of features
+
+
+---------------------------------------------------------
+Coding history:
+
+Jo Wood, Department of Geography, V1.0
+29th May 1993
+
+Modified, 10th February, 1995
+
+Modified 18th October, 1995 - Incorporates 'STRATEGI' vector files.
+	Minor bug modifications, 19th October, 1995.
+				 23rd October, 1995.
+Last modified 24th October, 1995 - Fixed attribute labelling problem.
+
+------------
+
+Usage:
+ m.in.ntf [-l] ntf=name [out=name]
+
+Flags:
+  -l   Sends an NTF conversion log to standard output
+
+Parameters:
+  ntf   NTF file to read
+  out   Output file
+        default: No output file
+
+</PRE> 
+
+
+<P> </P>
+
+<ADDRESS>
+	<P ALIGN="RIGHT"> <FONT SIZE=-3>
+	Last modified, 3rd August, 1997 <BR>
+	<A HREF="MAILTO:jwo@le.ac.uk">jwo@le.ac.uk</A>
+	</P>
+</ADDRESS>
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

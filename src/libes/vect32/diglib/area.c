@@ -1,5 +1,5 @@
-#include "digit.h"
 #include <stdlib.h>
+#include "Vect.h"
 /*
 **  Written by Dave Gerdes  5/1988
 **  US Army Construction Engineering Research Lab

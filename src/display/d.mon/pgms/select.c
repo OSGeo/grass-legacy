@@ -4,6 +4,7 @@
 #include "display.h"
 #include "D.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include "gis.h"
 #include "monitors.h"
 
@@ -39,7 +40,9 @@ main (int argc, char *argv[])
  * set the font
  * if no current frame create a full screen window.
  */
-	R_open_driver();
+	/* Don't do anything else if connecting to the driver fails */
+	if (R_open_driver() != 0)
+	    exit(EXIT_FAILURE);
 	R_font ("romans");
 	D_setup(0);
 	R_close_driver();

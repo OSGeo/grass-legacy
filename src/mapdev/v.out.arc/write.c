@@ -1,4 +1,4 @@
-#include "digit.h"
+#include "Vect.h"
 #include "gtoa.h"
 
 static int coors_printed = 0;

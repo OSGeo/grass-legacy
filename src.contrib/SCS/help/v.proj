@@ -1,3 +1,0 @@
- Automatically copies a vector file from one mapset to another,
- converting the coordinates to the proper map projection for
- the specified output mapset.

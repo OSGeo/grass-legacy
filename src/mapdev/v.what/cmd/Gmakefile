@@ -1,0 +1,15 @@
+PGM = v.what
+OFILES = \
+	main.o \
+	openvect.o\
+	what.o
+
+LIBES=$(VECTLIB) $(VECTLIB_REAL) $(DIG2LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
+$(VECTLIB): #

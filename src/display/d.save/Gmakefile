@@ -1,8 +1,8 @@
-$(BIN_MAIN_CMD)/d.save: main.o $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
-	$(CC) $(LDFLAGS) main.o $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB) -o $@
+PGM=d.save
+LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+$(BIN_CMD)/$(PGM): main.o $(LIBES)
+	$(CC) $(LDFLAGS) main.o -o $@ $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(DISPLAYLIB): #
 $(RASTERLIB): #
 $(GISLIB): #
-
-

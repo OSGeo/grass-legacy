@@ -1,14 +1,8 @@
-
-
 LIBRARIES = $(GISLIB)
 
-
-PGM = $(BIN_CONTRIB_CMD)/r.out.ppm
+PGM = r.out.ppm
 
 OFILES = main.o 
 
-
-$(PGM): $(OFILES) $(LIBRARIES)
-	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBRARIES) $(MATHLIB) $(XDRLIB) -I$(INCLUDE_DIR)
-
-
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBRARIES)
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBRARIES) $(MATHLIB) $(XDRLIB)

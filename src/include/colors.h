@@ -1,3 +1,6 @@
+#define FIXED		0
+#define FLOAT		1
+
 #define RED		1
 #define ORANGE		2
 #define YELLOW		3

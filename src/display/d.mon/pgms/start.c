@@ -1,5 +1,7 @@
-
-/* Changed for truecolor 24bit support by 
+/* 
+ * $Id$
+ * 
+ * Changed for truecolor 24bit support by 
  * Roberto Flor/ITC-Irst, Trento, Italy
  * August 1999
  *
@@ -26,12 +28,16 @@
  * prompt back.  For more information, see the comments in SWITCHER.c.
  ****************************************************************/
 
+#include "config.h"
 #include <unistd.h>
 #include <stdio.h>
 #include "raster.h"
 #include "monitors.h"
 #include "local_proto.h"
 
+#ifdef __W98__
+#include <process.h>
+#endif
 
 int main (int argc, char *argv[])
 {
@@ -79,10 +85,24 @@ int start_mon (char *name, char *par)
 			execl(mon->path,name,mon->link,(char *) 0);
 #else /* ORIG */
 		{
-			if ( par[0] == '\0')
+#ifdef USE_G_SOCKS
+#ifndef __W98__
+		if ( par[0] == '\0')
+		    execl(mon->path,name,(char *) 0);
+		else
+	            execl(mon->path,name,par,(char *) 0);
+#else  /*  Win98 version */
+  if ( par[0] == '\0')
+      spawnl(_P_DETACH, mon->path,name,(char *) 0);
+  else
+             spawnl(_P_DETACH, mon->path,name,par,(char *) 0);
+#endif /* Win98 version */
+#else /* USE_G_SOCKS */
+		if ( par[0] == '\0')
 			execl(mon->path,name,mon->link,(char *) 0);
 		else
 			 execl(mon->path,name,mon->link,par,(char *) 0);
+#endif
 		}
 #endif /* ORIG */
 		else
@@ -96,7 +116,9 @@ int start_mon (char *name, char *par)
 			 execl(mon->path,name,"-",mon->link,par,(char *) 0);
 		}
 #endif /* ORIG */
+#ifndef __W98__
 		fprintf(stderr,"Error:  could not execute '%s'\n",mon->path);
+#endif
 	}
 	else
 	{

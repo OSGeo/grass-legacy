@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
@@ -13,17 +14,29 @@
 int 
 main (int argc, char **argv)
 {
-    char name[128] ;
+    char name[128] = "";
     struct Option *map;
+    struct GModule *module;
     char *mapset;
     char buff[500];
 
 /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
-    R_open_driver();
-    if(D_get_cell_name (name) < 0)
-	*name = 0;
-    R_close_driver();
+
+    /* Try to get default raster name, don't fail so --interface-description works */
+    /* don't let R_open_driver() kill us */
+    R__open_quiet();
+    if (R_open_driver() == 0)
+    {
+        if(D_get_cell_name (name) < 0)
+	    *name = 0;
+        R_close_driver();
+    }
+
+    module = G_define_module();
+    module->description =
+	"Allows the user to interactively change the color table "
+	"of a raster map layer displayed on the graphics monitor.";
 
     map = G_define_option();
     map->key = "map";
@@ -57,7 +70,8 @@ main (int argc, char **argv)
     }
 
 /* connect to the driver */
-    R_open_driver();
+    if (R_open_driver() != 0)
+	G_fatal_error ("No graphics device selected");
 
 /* Read in the map region associated with graphics window */
     D_setup(0);

@@ -1,23 +1,26 @@
+/* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char dxf_line */
 /* adapted  7/23/90  J Moorman from undxf.c code written by:  
 ** Programmer: Tom Howard   National Park Service GIS division		    
 */
-#include <stdlib.h>
+
 #include <math.h>
 #include "dxf2vect.h"
 
+double atof();
 
-int dxf_add_circle (FILE *dxf_file)
+int 
+dxf_add_circle (FILE *dxf_file)
 {
     /* DECLARING VARIABLES */
     int  layer_flag = 0;    /* INDICATES IF A LAYER NAME HAS BEEN FOUND */
     int  xflag = 0;         /* INDICATES IF A x VALUE HAS BEEN FOUND */
     int  yflag = 0;         /* INDICATES IF A y VALUE HAS BEEN FOUND */
     int  rflag = 0;         /* INDICATES IF A radius HAS BEEN FOUND */		
-    double centerx = 0.0;   /* READ IN FROM DXF FILE */ 
-    double centery = 0.0;   /* READ IN FROM DXF FILE */   
-    double radius = 0.0;    /* READ IN FROM DXF FILE */  
+    double centerx;         /* READ IN FROM DXF FILE */ 
+    double centery;         /* READ IN FROM DXF FILE */   
+    double radius;          /* READ IN FROM DXF FILE */  
     char *nolayername = "UNIDENTIFIED"; 
-    DXF_DIG *layer_fd = NULL; /* POINTER TO LAYER NAME */
+    DXF_DIG *layer_fd;         /* POINTER TO LAYER NAME */
     int  code;  /* VARIABLE THAT HOLDS VALUE RETURNED BY readcode() */
 	int arr_size = 0;
 
@@ -27,7 +30,7 @@ int dxf_add_circle (FILE *dxf_file)
     {
 		if (code == -2)  /* EOF */
 			return(0);
-		dxf_fgets (dxf_line,80,dxf_file);  
+		dxf_fgets (dxf_line,256,dxf_file);  
 		if (feof(dxf_file) != 0) /* EOF */
 			return(0);
 		
@@ -99,7 +102,7 @@ make_arc (
     int arr_size;
 
     arr_size = offset;
-    fprintf (stdout,"making arc: offset %d  x %.1f y %.1f rad %.1f a1 %.1f a2 %.1f  %d\n", offset, centerx,centery,radius,start_angle,finish_angle,flag);
+    printf("making arc: offset %d  x %.1f y %.1f rad %.1f a1 %.1f a2 %.1f  %d\n", offset, centerx,centery,radius,start_angle,finish_angle,flag);
     if(start_angle > finish_angle) finish_angle = 360. + finish_angle;
 
     /* negative radius indicates that arc is to be drawn in a clockwise 

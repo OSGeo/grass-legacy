@@ -1,9 +1,8 @@
 PGM=r.grow
-HOME=$(BIN_MAIN_INTER)
 
 LIST = main.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB) -o $@
+$(BIN_INTER)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

@@ -8,8 +8,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include  "gis.h"
-#include "digit.h"
-#include "dig_head.h"
+#include "Vect.h"
 
 
 #define V_PROG  "v.prune" 

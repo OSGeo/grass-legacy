@@ -31,7 +31,7 @@ dseg_write_cellfile (DSEG *dseg, char *map_name)
 		{
 			buffer[col] = (CELL) (dbuffer[col] + 0.5);
 		}
-		if (G_put_map_row (map_fd, buffer) < 0)
+		if (G_put_raster_row (map_fd, buffer, CELL_TYPE) < 0)
 		{
 			G_free (buffer);
 			G_free (dbuffer);

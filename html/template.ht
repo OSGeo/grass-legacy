@@ -1,0 +1,56 @@
+<TITLE>_manpagename_</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>_manpagename_</B></EM>  - _manpagedescr_<BR>
+<EM>(_manpageplace_)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>_manpagename_</B> [<b>-a</b>] [<b>-b</b>] <b>input=</b><i>name</i> [<b>xxx=</b><i>xxx</i>]
+
+<BR>
+
+<H2>DESCRIPTION</H2>
+<P>
+<B>_manpagename_</B>
+<P>
+
+<H2>FEATURES</H2>
+
+<H2>OPTIONS</H2>
+
+<H3>Flags:</H3>
+<DL>
+<DT><B>-a</B>
+<DD> explanation for -a
+<DT><B>-b</B>
+<DD> explanation for -b
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>input=</B><EM>input file name</EM>
+<DD> Name of input file to use.
+<DT><B>xxx=</B><EM>xxx</EM>
+<DD> Explanation for xxx.
+</DL>
+
+<H2>EXAMPLES</H2>
+
+<H2>BUGS AND CAVEAT</H2>
+
+<H2>NOTES</H2>
+
+<H2>FILES</H2>
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="g.region.html">g.region</A></EM>,
+<EM><A HREF="xxx">xxx</A></EM>
+
+<H2>AUTHOR</H2>
+_manpageauthor_ (<A HREF=mailto:_manpageauthormail_>_manpageauthormail_</A>)
+<BR>
+</BODY>
+</HTML>

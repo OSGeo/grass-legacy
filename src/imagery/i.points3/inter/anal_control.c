@@ -206,7 +206,7 @@ Control_Points  *points;
 
 
 /* setup the more/less boxes in the sidecar */
-    R_standard_color (COLOR_BLACK);
+    R_standard_color (I_COLOR_BLACK);
     less.top = top;
     less.bottom = top + 2*height;
     less.left = right;
@@ -238,11 +238,11 @@ Control_Points  *points;
 
 /* put head on the report */
     cury = top;
-    dotext (LHEAD1, cury, cury+height, left, middle, 0, COLOR_BLACK);
-    dotext (RHEAD1, cury, cury+height, middle, right-1, 0, COLOR_BLACK);
+    dotext (LHEAD1, cury, cury+height, left, middle, 0, I_COLOR_BLACK);
+    dotext (RHEAD1, cury, cury+height, middle, right-1, 0, I_COLOR_BLACK);
     cury += height;
-    dotext (LHEAD2, cury, cury+height, left, middle, 0, COLOR_BLACK);
-    dotext (RHEAD2, cury, cury+height, middle, right-1, 0, COLOR_BLACK);
+    dotext (LHEAD2, cury, cury+height, left, middle, 0, I_COLOR_BLACK);
+    dotext (RHEAD2, cury, cury+height, middle, right-1, 0, I_COLOR_BLACK);
     cury += height;
     R_move_abs (left, cury-1);
     R_cont_abs (right, cury-1);
@@ -272,18 +272,18 @@ Control_Points  *points;
 	    line++;
 
 	    if(!delete_mode)
-   		color = COLOR_BLACK;
+   		color = I_COLOR_BLACK;
 	    else
-   		color = COLOR_BLUE;
+   		color = I_COLOR_BLUE;
 
 	    if(group.stat > 0 && points->points_temp.status[curp] > 0)
 	    {
-		/* color = COLOR_BLACK; */
+		/* color = I_COLOR_BLACK; */
 		FMT1(buf, resid.xres[curp], resid.yres[curp], resid.gnd[curp]);
 		if (curp == resid.large_x ||
 		    curp == resid.large_y ||
 		    curp == resid.large_gnd)
-		  color = COLOR_RED;
+		  color = I_COLOR_RED;
 		dotext (buf, cury, cury+height, nums, middle, 0, color);
 	    }
 	    else if (points->points_temp.status[curp] > 0)
@@ -315,7 +315,7 @@ Control_Points  *points;
 
 		if(group.stat == -1)
 		{
-	    		color = COLOR_RED;
+	    		color = I_COLOR_RED;
 	    		strcpy (buf, "Poorly placed control points");
 		}
 		else
@@ -329,16 +329,16 @@ Control_Points  *points;
 	}
 	else if (group.stat == 0)
 	{
-	    color = COLOR_RED;
+	    color = I_COLOR_RED;
 	    strcpy (buf, "Not enough control points");
 	}
 	else
 	{
-	    color = COLOR_BLACK; 
+	    color = I_COLOR_BLACK; 
 	    sprintf (buf, "Overall rms error: %.2f", resid.gnd_rms);
 	}
 	dotext (buf, bottom-height, bottom, left, right-1, 0, color);
-	R_standard_color (COLOR_BLACK);
+	R_standard_color (I_COLOR_BLACK);
 	R_move_abs (left, bottom-height);
 	R_cont_abs (right-1, bottom-height);
 
@@ -535,9 +535,9 @@ Control_Points *points;
     which = n;
     show_point (first_point+n, 0);
     if(!delete_mode)
-        R_standard_color (COLOR_RED);
+        R_standard_color (I_COLOR_RED);
     else  
-        R_standard_color(COLOR_WHITE);
+        R_standard_color(I_COLOR_WHITE);
     Outline_box (report.top + n*height, report.top +(n+1)*height,
 		         report.left, report.right-1);
 
@@ -728,11 +728,11 @@ Control_Points *points;
     points = (Control_Points *) group.points;
 
     if (!true_color)
-	R_standard_color (COLOR_WHITE);  /* ORANGE); */
+	R_standard_color (I_COLOR_WHITE);  /* ORANGE); */
     else if(points->points_temp.status[n])
-	R_standard_color (COLOR_YELLOW);  /* GREEN); */
+	R_standard_color (I_COLOR_YELLOW);  /* GREEN); */
     else
-	R_standard_color (COLOR_RED);
+	R_standard_color (I_COLOR_RED);
     display_one_point (VIEW_MAP1, 
 		       points->points_temp.e1[n], 
 		       points->points_temp.n1[n]);

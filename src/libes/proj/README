@@ -5,3 +5,43 @@ This is PROJ4.3.3 from kai.er.usgs.edu
 Added in GRASS 5 beta4d (16. Sept. 1999)
 
 Markus Neteler/Jacques Bouchard
+
+Updated GRASS interface to PROJ4 by Morten Hulden 1999
+<morten@ngb.se>
+
+-------------------------------------------
+
+About implementation:
+
+From morten@ngb.se Tue Jun 13 10:59:58 2000
+To: Markus Neteler <neteler@geog.uni-hannover.de>
+cc: osrs-proj@remotesensing.org
+Subject: Re: [OSRS-PROJ] gauss-krueger/transverse mercator
+
+Dear Markus
+
++unfact= is a GRASS variable 'unit factor' that gets passed to proj's info
+structure as info->meters. It is also present in GRASS' internal
+location description file PROJ_UNIT. 
+
++unfact is the conversion factor from meters to other units
+(e.g. feet). The value of +unfact is 1 if the location unit is meters. 
+
+get_proj.c is the routine that parses the pseudo-command line passed from
+GRASS and converts +unfact to a real PROJ parameter.
+
++unfact is not the only GRASS specific parameter that will not be sent to
+PROJ as such; e.g. all spheroid names are parsed and converted to their
+'a' and 'e2' values, which are then sent to PROJ routines. Spheroid names
+are never sent to PROJ. In fact, PROJ has a slightly different list of
+names for the spheroids, and does not know of some spheroids used in
+GRASS (e.g. 'sphere').
+
+
+hope this explains it
+why things were done as they were I have no idea
+but they work
+
+best regards
+Morten Hulden
+

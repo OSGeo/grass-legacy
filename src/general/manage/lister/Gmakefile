@@ -1,11 +1,15 @@
 L = $(ETC)/lister
 
-all: $L $L/cell
+all: $L $L/cell $L/dig $L/site_lists
 
 $L:
 	mkdir $L
 
 $L/cell: cell.o $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ cell.o $(GISLIB) $(MATHLIB) $(XDRLIB)
-	
+$L/dig: dig.o $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ dig.o $(GISLIB) $(MATHLIB) $(XDRLIB)
+$L/site_lists: site_lists.o $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ site_lists.o $(GISLIB) $(MATHLIB) $(XDRLIB) $(DATETIMELIB)
+
 $(GISLIB): #

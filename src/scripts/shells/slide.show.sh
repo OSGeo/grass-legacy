@@ -1,22 +1,40 @@
 :
 
+# $Id$
+# Markus Neteler 1/2000: added prefix character option to view only select files
+# Angus Carr 1999: bugfix on MAPSET
+
 if [ $? != 0 ]
 then
 	exit 1
 fi
-d.colormode fixed
 
-# set gis variables
-eval `g.gisenv`
-LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+#d.colormode fixed
 
 # set defaults
 DOWN=3
 ACROSS=4
 
+if [ "$1" = "help" ] 
+then
+  echo "Slide show of GRASS raster maps."
+  echo "Options: [across=#maps_across] [down=#_maps_down] [prefix=character[s]]"
+  echo "Defaults:"
+  echo "   across =   $ACROSS"
+  echo "   down   =   $DOWN"
+  echo "   prefix = * (show all maps. Specify character(s) to view selected maps only)"
+ exit
+fi
+# set gis variables
+eval `g.gisenv`
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+
+
 # evaluate arguments
 for i do
 	case $i in
+		prefix=*) 
+			PREFIX=`echo $i | sed s/prefix=//`;;
 		down=*)
 			DOWN=`echo $i | sed s/down=//` ;;
 		height=*)
@@ -32,10 +50,11 @@ for i do
 		*)
 			echo ""
 			echo "Unrecognized option: $i"
-			echo Options: across=#maps_across down=#_maps_down
+			echo Options: [across=#maps_across] [down=#_maps_down] [prefix=character[s]] 
 			echo Defaults:
 			echo "   across =   $ACROSS"
 			echo "   down   =   $DOWN"
+			echo "   prefix = * (show all maps)"
 			exit
 	esac
 done
@@ -96,8 +115,9 @@ do
 	then
 		continue
 	fi
-	for i in MASK `ls cell`
+	for i in MASK `ls cell/$PREFIX*`
 	do
+		i=`echo $i | sed 's/cell\///'`
 		if [ ! $i = "MASK" ]
 		then
 			atnum=`expr $atnum % $totmaps`
@@ -116,3 +136,4 @@ do
 		fi
 	done
 done
+d.frame -s full_screen

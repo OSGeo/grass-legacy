@@ -1,0 +1,153 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [de] (X11; U; Linux 2.2.16 i686) [Netscape]">
+   <title>REQUIREMENTS to compile GRASS GIS</title>
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EF" vlink="#59188E" alink="#FF0000">
+
+<h2>
+REQUIREMENTS to compile GRASS GIS</h2>
+A workstation running some flavor of unix like Solaris, Irix, Linux, BSD,
+Mac OS X, CygWindows. Ideally, you should have at least 500 Mb for data
+and 32 Mb RAM. The source code package needs around 100MB uncompressed.
+The resulting binaries may need between 80MB and 180MB depending on your
+platform.
+<br>&nbsp;
+<h3>
+General requirements:</h3>
+(most tools are standard tools on Linux, for other platforms you may have
+to install some of them.)
+<ul>
+<li>
+&nbsp;C-compiler (cc, gcc, egcs, ...)</li>
+
+<br>gcc: <a href="http://www.gnu.org/software/gcc/gcc.html">http://www.gnu.org/software/gcc/gcc.html</a>
+<li>
+&nbsp;Fortran compiler (f77, g77, ...) for a few modules</li>
+
+<br>g77: coming along with gcc
+<li>
+GNU make is recommended</li>
+
+<br><a href="http://www.gnu.org/software/make/make.html">http://www.gnu.org/software/make/make.html</a>
+<li>
+&nbsp;zlib compression library (already installed on modern systems)</li>
+
+<br>It is used to compress GRASS raster files:
+<br>&nbsp;&nbsp; libz: <a href="http://www.info-zip.org/pub/infozip/zlib/">http://www.info-zip.org/pub/infozip/zlib/</a>
+<br>&nbsp;&nbsp; <a href="ftp://ftp.freesoftware.com/pub/infozip/zlib/">ftp://ftp.freesoftware.com/pub/infozip/zlib/</a>
+<li>
+lexical analyzer generator (flex),</li>
+
+<br>(lex is no longer supported, please use flex instead)
+<br>flex: <a href="http://www.gnu.org/software/flex/flex.html">http://www.gnu.org/software/flex/flex.html</a>
+<br>&nbsp;
+<li>
+parser generator (yacc, bison)</li>
+
+<br>bison: <a href="http://www.gnu.org/software/bison/bison.html">http://www.gnu.org/software/bison/bison.html</a>
+<br>&nbsp;
+<li>
+libncurses4.x/5.x</li>
+
+<br><a href="http://www.gnu.org/software/ncurses/ncurses.html">http://www.gnu.org/software/ncurses/ncurses.html</a>
+<br><a href="ftp://ftp.gnu.org/pub/gnu/ncurses/">ftp://ftp.gnu.org/pub/gnu/ncurses/</a>
+<br>&nbsp;
+<li>
+X11 window system for graphical output, development libraries (X development
+libraries, in some linux distributions they are separate packages)</li>
+
+<br><a href="http://www.xfree.org">http://www.xfree.org</a></ul>
+
+<h3>
+Optional requirements:</h3>
+
+<ul>
+<li>
+Tcl/Tk 8.x libraries to use TclTkGRASS Interface and to compile src.contrib/GMSL/NVIZ2.2/<br>
+see [<a href="http://grass.itc.it/main_tclgrass.html">http://grass.itc.it/main_tclgrass.html</a>]</li>
+</ul>
+
+<ul>
+<li>
+&nbsp;Mesa-3.x (openGL clone) required for NVIZ2.2<br>
+[<a href="http://mesa3d.sourceforge.net/">http://mesa3d.sourceforge.net/</a>]<br>
+Special compile instructions:<br>
+[<a href="http://grass.itc.it/grass5/README.mesa31">http://grass.itc.it/grass5/README.mesa31</a>]</li>
+</ul>
+
+<ul>
+<li>
+&nbsp;FFTW (library for computing the Discrete Fourier Transform) required for
+i.fft and i.ifft modules<br>
+[<a href="http://www.fftw.org">http://www.fftw.org</a>]</li>
+</ul>
+
+<ul>
+<li>
+&nbsp;libpng (for r.in.png, r.out.png), usually already installed.<br>
+[<a href="ftp://ftp.cdrom.com/pub/png/">ftp://ftp.cdrom.com/pub/png/</a>]<br>
+<BR></li>
+
+<li>
+libjpeg (for r.in.tiff, r.out.tiff, for HDF library), usually already installed.<br>
+[<a href="ftp://ftp.uu.net/graphics/jpeg/">ftp://ftp.uu.net/graphics/jpeg/</a>]<br>
+<BR></li>
+
+<li>
+libtiff (for r.in.tiff, r.out.tiff), usually already installed.<br>
+[<a href="http://www.libtiff.org">http://www.libtiff.org</a>]<br>
+<BR></li>
+
+<li>
+netpbm-tools/libraries (for r.in.png/r.out.png), usually already installed.<br>
+[please look at any decent software mirror near you!]<br>
+[<a href="http://wuarchive.wustl.edu/graphics/graphics/packages/NetPBM">http://wuarchive.wustl.edu/graphics/graphics/packages/NetPBM</a>]<br>
+[<a href="http://www.sourceforge.net/projects/netpbm/">http://www.sourceforge.net/projects/netpbm/</a>]<br>
+<BR></li>
+
+<li>
+PostgreSQL libraries (for the PostgreSQL database interface)<br>
+[<a href="http://www.postgresql.org">http://www.postgresql.org</a>]<br>
+<BR></li>
+
+<li>
+Unix ODBC (for the ODBC database interface)<br>
+[<a href="http://www.unixodbc.org">http://www.unixodbc.org</a>]<br>
+<BR></li>
+
+<li>
+R language (for the R language interface)<br>
+[<a href="http://cran.r-project.org">http://cran.r-project.org</a>]<br>
+<BR></li>
+
+<li>
+Usually not required (as you will use NVIZ) the Motif or Lesstif libraries
+required for<br>
+src.contrib/GMSL/ogl3d<br>
+[<a href="http://www.lesstif.org">http://www.lesstif.org</a>]<br>
+<BR></li>
+
+<li>
+r.in.gdal requires GDAL - Geospatial Data Abstraction Library<br>
+[<a href="http://www.remotesensing.org/gdal/">http://www.remotesensing.org/gdal/</a>]</li>
+</ul>
+
+<h3>
+Note:</h3>
+SUN users may go here to download precompiled libraries etc.:
+<br><a href="http://www.sunfreeware.com/">http://www.sunfreeware.com/</a>
+<p>SGI users may go here to download precompiled libraries etc.:
+<br><a href="http://freeware.sgi.com/">http://freeware.sgi.com/</a>
+<p>
+<hr WIDTH="100%">
+<br><i>GRASS Development Team 2001</i>
+<p>Please report fixes here:
+<br><a href="http://grass.itc.it/bugtracking/bugreport.html">http://grass.itc.it/bugtracking/bugreport.html</a>
+
+<p><i>$Id$</i>
+<br>&nbsp;
+</body>
+</html>

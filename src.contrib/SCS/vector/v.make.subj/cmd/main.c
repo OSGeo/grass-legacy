@@ -1,5 +1,6 @@
-/* %W% %G% */
-/* main.c    1.0   4/01/91
+/* 
+ * $Id$
+* main.c    1.0   4/01/91
 *
 *  ------Rev 4.+ arguements --------------------------------------
 *    Input arguements:
@@ -16,7 +17,7 @@
 #include "gis.h"
 
 int sort_by_label(struct Categories *);
-int cmp(char *, char *);
+int cmp(const void *, const void *);
 
 int main (int argc, char *argv[])
 {
@@ -31,10 +32,16 @@ int main (int argc, char *argv[])
 	FILE *Out, *In, *tmp_file;
 	struct Option *map, *subj;
         struct Categories cats;
+        struct GModule *module;
 
 	setbuf (stdout, NULL);
 	G_gisinit (argv[0]);
-
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+	"Create a 'subject' file from all category labels found in a set of listed vector maps.";
+	
 	map = G_define_option();
 	map->key			= "map";
 	map->type			= TYPE_STRING;
@@ -243,11 +250,8 @@ int sort_by_label( struct Categories *pcats)
 	return 0;
 }
 
-int cmp ( char *a,char *b)
+int cmp (const void *a, const void *b)
 {
-	if(strcmp(a , b) < 0) 
-	    return -1;
-	if(strcmp(a , b) > 0)  
-	    return 1;
-	return 0;
+	return strcmp(a, b);
 }
+

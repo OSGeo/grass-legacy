@@ -1,12 +1,10 @@
+PGM    = r.what
 LIBES  = $(GISLIB)
 
 SRCS   = main.c die.c
 LIST   = main.o die.o
 
-$(BIN_MAIN_CMD)/r.what: $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #
-
-saber_src: 
-	#load $(CFLAGS) $(SRCS) $(LIBES)

@@ -8,7 +8,16 @@ int
 main (int argc, char **argv)
 {
     char *D_color_list();
+	struct GModule *module;
     struct Option *opt1, *opt2, *opt3, *opt4;
+
+    /* Initialize the GIS calls */
+    G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Displays point graphics in the "
+		"active frame on the graphics display monitor.";
 
     opt1 = G_define_option() ;
     opt1->key        = "color" ;
@@ -40,9 +49,6 @@ main (int argc, char **argv)
     opt4->required   = NO ;
     opt4->answer     = NULL ;
     opt4->description= "Input is a UNIX file name" ;
-
-    /* Initialize the GIS calls */
-    G_gisinit(argv[0]) ;
 
     /* Check command line */
 
@@ -83,7 +89,8 @@ main (int argc, char **argv)
 
 
     /* Setup driver and check important information */
-    R_open_driver();
+    if (R_open_driver() != 0)
+	    G_fatal_error ("No graphics device selected");
     setup();
 
     /* Do the plotting */

@@ -2,7 +2,6 @@
 #include <string.h>
 #include <math.h>
 #include "gis.h"
-#include "global.h"
 #include "local_proto.h"
 
 #define DOT 	   "."		/* for determining data type -tw */
@@ -10,8 +9,9 @@
 #define FLOAT      "float"
 #define DOUBLE     "double"
 #define TMPBUFSIZE 8192
+/* rsb fix 
 #define SEEK_SET   0
-#define SEEK_CUR   1
+#define SEEK_CUR   1 */
 
 static int error(char *);
 static int missing(int,char *);
@@ -31,6 +31,8 @@ char **nval)
 	char buf[1024];
 	char *err;
 	int ret, len;
+/* rsb fix */
+	fpos_t p;
 
 	n = s = e = w = r = c = 0;
 
@@ -38,10 +40,15 @@ char **nval)
 	cellhd->proj = G_projection();
 
 /*	while (n == 0 || s== 0 || e == 0 || w == 0 || r == 0 || c == 0)*/
+
         while(1)
 	{
+/* rsb fix */
+	  if(fgetpos(fd, &p) != 0) G_fatal_error("File position error");
 	  if (!G_getl(buf,sizeof buf, fd)) break;
+
 	  len = strlen(buf);
+
 	  *label = *value = '\0';
 	  if(NULL == G_strstr(buf, ":")) break;
 	  if(sscanf (buf, "%[^:]:%s", label, value)!=2) break;
@@ -140,7 +147,9 @@ char **nval)
       } /* while */
       /* the line read was not a header line, but actually
       the first data line, so put it back on the stack and break */
-      fseek(fd, -(len+1), SEEK_CUR);
+/* rsb fix */
+      fsetpos(fd, &p);
+
       missing(n,"north") ;
       missing(s,"south") ;
       missing(e,"east") ;

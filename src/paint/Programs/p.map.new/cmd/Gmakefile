@@ -1,20 +1,19 @@
 # Note: when this program is installed as src, the program name
 # will be p.map, not p.map.new and the directory it will be installed
-# in is $(BINA_MAIN_CMD) not $(BIN_ALPHA_CMD)
+# in is $(BINA_MAIN_CMD) not $(BIN_CMD)
 # This code has known bugs in it, and it is NOT know if
 # (1) previous scripts for p.map can be handled by this new code
 # (2) if the interactive p.map will generate correct scripts for version
 # (3) There is no interactive interface to the new features, particularly
 #     for legends
 
-PGM = $(BIN_ALPHA_CMD)/p.map.new
+PGM = p.map.new
 
 PAINT = $(ETC)/paint
 
 INTERFACE = $(SRC)/paint/Interface/applib/lib.a
 LIBES =	$(VECTLIB) $(GISLIB) $(ICONLIB) $(DATETIMELIB)
 
-EXTRA_CFLAGS=$(VECT_INCLUDE)
 
 LIST =	main.o\
 	alloc_pats.o\
@@ -173,15 +172,12 @@ SRCLIST =	main.c\
 ####################################################################
 
 
-all: $(PGM) \
+all: $(BIN_CMD)/$(PGM) \
      $(PAINT)/header \
      $(PAINT)/patterns.index
 
-$(PGM):	$(LIST) $(INTERFACE) $(LIBES)
-	$(CC) $(LDFLAGS) $(LIST) $(LIBES) $(INTERFACE) $(MATHLIB) $(XDRLIB) -o $@ $(MATHLIB)
-
-saber:
-	#load $(CFLAGS) $(SRCLIST) nildriver/lib.a $(LIBES) $(INTERFACE) $(MATHLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(INTERFACE) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(INTERFACE) $(MATHLIB) $(XDRLIB)
 
 $(PAINT)/patterns.index: $(PAINT)/patterns $(PAINT)/patcc
 	cd $(PAINT); ./patcc patterns

@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "gis.h"
 
 int eq_grey_colors (char *name, char *mapset, struct Colors *colors, int quiet)

@@ -1,0 +1,128 @@
+Note 2001: New vect lib docs at:
+
+http://www.raz-dva.cz/krakonos/grass/vector5.html
+
+--------------------------------------------
+
+Date: Thu, 07 Sep 2000 15:25:20 +0200
+To: grass5@geog.uni-hannover.de
+X-Archive-URL: "http://www.geog.uni-hannover.de/grass/grassdevel.html"
+
+
+Proposal for new dig 5.0 format with categories and z-coordinate.
+
+General:
+Each element may have none, 1 or more categories (cats).
+More cats are distinguished by category numbers (cat_num).
+Only one cat with cat_num=1 will be used at this stage
+and multi-category support on modules level will be added in
+future.
+Z-coordinate will be optional and both 2d and 3d files may
+be written.
+
+Implementation steps:
+
+1. Define new dig format:
+    like 4.x but in:
+    - head : Add type field for 2d/3d 
+    - body : - between element type and number of coordinates is inserted:
+                 - number of categories 0-255        (1 byte)
+                 - category number(s)   1-65535      (n_cats * 2 bytes)
+                 - category(s)          1-4294967295 (n_cats * 4 bytes)
+             - for 3d files z coordinate is written in the same style as x,y
+
+2. Define new structures and write functions:
+    #define CENTROID        0x08
+    #define FILE_CENTROID      3
+    typedef unsigned char   VCNCATS;
+    typedef unsigned short  VCCATNUM;
+    typedef unsigned int    VCCAT;
+ 
+    struct line_cats {
+       VCNCATS  n_cats;      /* number of vector categories on one element */
+       int      alloc_cats;  /* size of allocated space */
+       VCCATNUM *cat_num;    /* pointer to field of category numbers */
+       VCCAT    *cat;        /* pointer to field of categories */
+    };
+
+    struct line_pnts {
+       double *x;
+       double *y;
+       double *z;             /* null for 2d */
+       int     n_points;
+       int     alloc_points;
+    };
+
+    struct line_cats *Vect__new_cats_struct (void);
+    int Vect_append_cat ( struct line_cats *, VCCATNUM, VCCAT);
+    int Vect_read_next_cats_line ( struct Map_info *, struct line_cats *,struct line_pnts *);
+    long Vect_write_cats_line ( struct Map_info *, int type, struct line_cats *, struct ine_pnts );
+          ( for backward compatibility this function duplicates cats to dig_att file
+           so that old modules can work with new dig files )
+ 
+    Vect_read_next_line( ) - rewrite to read both 4.x and 5.0 2d/3d
+         and of course all functions called by these and some others.
+
+3. Rewrite v.build to support both dig 4.0 and 5.0.
+   Write v.dig module for conversion from built dig_plus to dig5.0.
+ 
+4. Request for testing on other platforms. Result of v.dig and v.support
+   should be the same as original dig_plus and all modules should work
+   with dig in 5.0 correctly.
+ 
+5. Rewrite all modules which read from dig_plus (level2) or from
+   other sources (v.in.*) to new dig format.
+ 
+6. Rewrite remaining modules which read from dig file. Here is the problem
+   because if module writes dig5.0, it must also read in dig5.0 format and
+   so imput file must be converted by v.support and v.dig first.
+
+
+David D Gray, Radim Blazek
+<ddgray@armadce.demon.co.uk>
+<Radim.Blazek@dhv.cz>
+
+-----------------------------------------------------------------------
+Further comments:
+
+Date: Fri, 08 Sep 2000 01:30:38 +0000
+From: David D Gray <ddgray@armadce.demon.co.uk>
+
+The core format is a true 3d format as there is no assymetry between the
+x- and y- coords and the new z-coord. But most modules work on the
+presumption of a projected 2d space, so in the first instance most
+immediate applications will be to work with projection+elevation eg. a
+projected TIN model. Also it will now be easier to work directly from
+vector data to obtain true point to point values such as slopes, aspect
+etc (instead of having to interpolate from raster or sites data).
+
+Then, though this would be extra to our immediate plans, a volume
+handling capability could be added by creating combinations of AREA into
+SURFACE and SURFACE into VOLUME (we'd also need an EDGE). Then modules
+to deal with g3d <-> v3d just as we do with the 2d stuff at present. We
+could probably just hack this in to the existing system, mostly to
+v.build and the display/edit modules, but I don't think much else, apart
+from the new modules.
+
+`CAD' type support would require 1) layers 2) a format, maybe a vector
+graphics format 3) some kind of support for composite maps (this would
+be a good idea generally-does anyone know if it has ever been
+discussed?) where a combination of vector/raster/CAD etc layers could be
+treated as one map.
+
+So that is a bigger job. Maybe we could complete the immediate task, and
+possibly create volume support through the course of development of
+GRASS 5.x. However to go much further, do we want to continue hacking
+more stuff on to GRASS3 dig and GRASS4 Vect, or is it time to think
+about a rewrite of the vector engine? There is a spec for a vector
+engine dating back some years, that was originally intended for
+`GRASS6', in the documents directory, though it appears the code base no
+longer exists (?).
+
+David
+
+[Comment M.N.:
+ David Gerdes          obviously does not have the software any more
+ dpgerdes@roadkill.com
+ http://www.roadkill.com/~dpgerdes/vector/api.html
+]

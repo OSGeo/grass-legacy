@@ -28,8 +28,9 @@
 
 #include "gis.h"
 #include <unistd.h>
-
 #include <signal.h>
+#include <string.h>
+
 static int broken_pipe;
 static int hit_return = 0;
 static int list_element(FILE *,char *,char *,char *,int (*)());

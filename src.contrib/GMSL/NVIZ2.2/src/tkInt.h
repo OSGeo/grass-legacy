@@ -1,4 +1,3 @@
-/* adjusted path in line 28   8/99 MN */
 /*
  * tkInt.h --
  *
@@ -25,7 +24,7 @@
 #include "tcl.h"
 #endif
 #ifndef _TKPORT
-#include "tkPort.h"
+#include <tkPort.h>
 #endif
 
 #ifdef BUILD_tk

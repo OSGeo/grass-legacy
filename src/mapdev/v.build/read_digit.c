@@ -2,10 +2,8 @@
 /*  notice that all LINES, NODES, and AREA   indexes start at 1  */
 
 #include <math.h>
-#include "digit.h"
 #include "gis.h"
 #include "Vect.h"
-#include "dig_head.h"
 #include "vbuildlib.h"
 
 #define    ALLOC_AMT    512

@@ -6,7 +6,8 @@
  *
  *   Interactively prompts the user for history information.
  *   Uses screen oriented prompting through the visual_ask library.
- *   Programs using this must be compiled with the GRASS library $(VASK)
+ *   Programs using this must be compiled with the GRASS library $(VASKLIB)
+ *   and include $(CURSES) in the compile line
  *
  *   Returns: 1 ok
  *           -1 user canceled edit

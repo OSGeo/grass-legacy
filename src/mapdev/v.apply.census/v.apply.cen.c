@@ -65,6 +65,7 @@ int parse_input(int, char *[]);
 
 int main (int argc, char *argv[])
 {
+  struct GModule *module;
   FILE *fp_stf, *bc_pipe, *table_fp, *if_fp;
   long lat, lon;
   int output_type,i,column,zone;
@@ -80,6 +81,10 @@ int main (int argc, char *argv[])
   char c;
 
   G_gisinit (argv0=argv[0]);
+
+  module = G_define_module();
+  module->description =
+	"Calculate/Import Demographics from Census STF1 Files.";
 
     /* Print TABLES  and exit */
     /*

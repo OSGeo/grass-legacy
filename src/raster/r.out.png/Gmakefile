@@ -1,0 +1,9 @@
+PGM=r.out.png
+EXTRA_CFLAGS=$(PNGINC)
+
+LIST= r.out.png.o
+
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(XDRLIB) $(PNGLIB)
+
+$(GISLIB): #

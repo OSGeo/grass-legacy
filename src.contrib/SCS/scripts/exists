@@ -1,8 +1,0 @@
-#/bin/sh
-for i in `echo /bin /usr/bin /usr/ucb`
-do
-if [ -x $i/$1 ]; then
-	exit 0
-fi
-done
-exit 1

@@ -131,7 +131,7 @@ char buf[100];
 
 
     /* Get the target location (coords) for the point */
-    /* get_point2() returns:
+    /* get_point2() returns: */
     /*     1 - second point was marked */
     /*     0 - means ignore second point */
     status = get_point2_poly(&e2, &n2);
@@ -170,14 +170,14 @@ char buf[100];
 }
 
 
-/*-----------------------------------------------------------------------*/
-/* Get the target coordinates of the marked point.
-/* Calls either screen(), keyboard(), or digitizer() based on input option
-/*
-/* RETURNS: 
-/*      1 - second point entered
-/*      0 - canceled second point so ignore the first (source) point enterd
-/*-----------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------*
+* Get the target coordinates of the marked point.
+* Calls either screen(), keyboard(), or digitizer() based on input option
+*
+* RETURNS: 
+*      1 - second point entered
+*      0 - canceled second point so ignore the first (source) point enterd
+*-----------------------------------------------------------------------*/
 static int get_point2_poly (double *east,double *north)
 {
     static int use = 1;
@@ -221,13 +221,13 @@ static int get_point2_poly (double *east,double *north)
 }
 
 
-/*-----------------------------------------------------------------------*/
-/* Use the keyboard to enter the target coordinates
-/*
-/* RETRUNS: 
-/*      1 - second point entered
-/*      0 - canceled second point so ignore the first (source) point enterd
-/*-----------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------*
+* Use the keyboard to enter the target coordinates
+*
+* RETRUNS: 
+*      1 - second point entered
+*      0 - canceled second point so ignore the first (source) point enterd
+*-----------------------------------------------------------------------*/
 static int keyboard()
 {
     int ok;
@@ -299,13 +299,13 @@ end:
 }
 
 
-/*-----------------------------------------------------------------------*/
-/* Use the digitizer to enter the target coordinates
-/*
-/* RETURNS: 
-/*      1 - second point entered
-/*      0 - canceled second point so ignore the first (source) point enterd
-/*-----------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------*
+* Use the digitizer to enter the target coordinates
+*
+* RETURNS: 
+*      1 - second point entered
+*      0 - canceled second point so ignore the first (source) point enterd
+*-----------------------------------------------------------------------*/
 static int digitizer()
 {
     return digitizer_point (&E, &N);
@@ -313,13 +313,13 @@ static int digitizer()
 
 
 
-/*-----------------------------------------------------------------------*/
-/* Mark the target coordinates using the mouse.
-/*
-/* RETRUNS: 
-/*      1 - second point entered
-/*      0 - canceled second point so ignore the first (source) point enterd
-/*-----------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------*
+* Mark the target coordinates using the mouse.
+*
+* RETRUNS: 
+*      1 - second point entered
+*      0 - canceled second point so ignore the first (source) point enterd
+*-----------------------------------------------------------------------*/
 static int screen (int x,int y,int button)
 {
     int row,col;
@@ -357,9 +357,9 @@ static int screen (int x,int y,int button)
     /* buttons 2 or 3 - print target location, but ignore point */
 
 /**    sprintf (buf, "East:   %10.2lf\n", E);
-/**    Curses_write_window (INFO_WINDOW, 2, 2, buf);
-/**    sprintf (buf, "North:  %10.2lf\n", N);
-/**    Curses_write_window (INFO_WINDOW, 3, 2, buf);
+**    Curses_write_window (INFO_WINDOW, 2, 2, buf);
+**    sprintf (buf, "North:  %10.2lf\n", N);
+**    Curses_write_window (INFO_WINDOW, 3, 2, buf);
 **/
     return 0;
 }

@@ -21,6 +21,13 @@ parse_command_line (int argc, char *argv[])
 		struct Flag *h;
 		struct Flag *q;
 	} flags;
+	
+	struct GModule *module;
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+	"Generates statistics for vector files.";
 
 	parms.vect = G_define_option();
 	parms.vect->key    = "map";

@@ -4,7 +4,14 @@
 
 global file_browser
 global last_dir
-set last_dir "."
+set last_dir $env(GISDBASE)/$env(LOCATION_NAME)/$env(MAPSET)/images
+
+if {![file isdirectory $last_dir]} {
+    set last_dir $env(HOME)
+    if {![file isdirectory $env(HOME)]} {
+        set last_dir "."
+    }
+}
 
 proc set_file_browser_filename {w name} {
     $w.filename delete 0 end
@@ -50,6 +57,10 @@ proc create_file_browser {{w .file_browser} {mode 0} {no_top 0}} {
 	set geom_y [lindex $geom 2]
 	toplevel $w 
 	wm geometry $w "+$geom_x+$geom_y"
+    }
+
+    if {![file isdirectory $last_dir]} {
+    	file mkdir $last_dir
     }
 
 #   set file_browser($w,cur_dir) [exec pwd]

@@ -112,11 +112,11 @@ I_initialize_group_elev (Elevation *elev)
 {
 /** TODO - fix these properly **/
 /**   *elev->elev_map = 0;
-/**   *elev->elev_mapset = 0;
-/**   *elev->tl = 0;
-/**   *elev->math_exp = 0;
-/**   *elev->units = 0;
-/**   *elev->nd = 0;
+  *   *elev->elev_mapset = 0;
+  *   *elev->tl = 0;
+  *   *elev->math_exp = 0;
+  *   *elev->units = 0;
+  *   *elev->nd = 0;
 **/
 
    elev->fd = 0;

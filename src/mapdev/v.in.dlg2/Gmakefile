@@ -1,13 +1,7 @@
-EXTRA_CFLAGS	=$(VECT_INCLUDE)
-
+PGM=v.in.dlg2
 OBJ = v.in.dlg.o
 
-PROG = $(BIN_MAIN_CMD)/v.in.dlg2
-
-all:  $(PROG)
-	
-
-$(PROG): $(OBJ) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(OBJ) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

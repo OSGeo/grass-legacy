@@ -54,5 +54,7 @@ draw_grid (void)
         R_cont_abs((int)D_east, D_y) ;
     }
 
+    R_stabilize();
+
     return 0;
 }

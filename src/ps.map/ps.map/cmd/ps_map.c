@@ -71,20 +71,23 @@ int ps_map (void)
     /* do the unmasked vector plots, if any */
     if (vector.count) do_vectors(1);
 
-    /* do the unmasked ponts/lines, if any */
-    do_plfile(1);
-
     /* do the sites, if any */
     do_sites();
 
     /* do the grid numbers, if any */
     if (PS.grid_numbers > 0) do_grid_numbers();
 
-    /* do the labels, if any */
-    do_labels();
+    /* do the labels from paint/labels, if any */
+    do_labels(0);
 
     /* restore the unclipped graphics state */
     fprintf(PS.fp, "grestore ");
+
+    /* do the unmasked points, lines and eps if any */
+    do_plfile(1);
+
+    /* do the labels specified in script file */
+    do_labels(1);
 
     /* show the map info */
     if (do_mapinfo) map_info();
