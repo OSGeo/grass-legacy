@@ -32,7 +32,7 @@ int G_ask_ellipse_name( char *spheriod)
 	    G_fatal_error("Cannot open temp file") ;
         }
         fprintf(Tmp_fd,"sphere\n");
-        for (i=0; sph = G_ellipsoid_name(i); i++) {
+        for (i=0; (sph = G_ellipsoid_name(i)); i++) {
           fprintf(Tmp_fd,"%s\n",sph);
         }
 

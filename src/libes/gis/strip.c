@@ -14,7 +14,7 @@ int G_strip ( register char *buf)
     for (a = b = buf; *a == ' ' || *a == '\t'; a++)
 	    ;
     if (a != b)
-	while (*b++ = *a++)
+	while ((*b++ = *a++))
 	    ;
 /* remove trailing white space */
     for (a = buf; *a; a++)

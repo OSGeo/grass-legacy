@@ -62,7 +62,7 @@ char *G_strcpy (register char *T,register char *F)
 {
     register char *d = T;
 
-    while (*d++ = *F++)
+    while ((*d++ = *F++))
         ;
     return (T);
 }

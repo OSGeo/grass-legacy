@@ -22,7 +22,7 @@ G_home ()
     char *home;
     char *G_home();
 
-    if (home = G__home())
+    if ((home = G__home()))
 	return home;
     
     G_fatal_error ("unable to determine user's home directory");
@@ -42,7 +42,7 @@ G__home ()
 */
     if (!home)
     {
-	if(fd = G_popen ("cd; pwd","r"))
+	if((fd = G_popen ("cd; pwd","r")))
 	{
 	    if (fscanf (fd,"%s", buf) == 1)
 		home = G_store (buf);

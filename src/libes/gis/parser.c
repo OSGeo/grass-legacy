@@ -725,7 +725,7 @@ static int show_options(int maxlen,char *str)
 	fprintf (stderr, "  %*s   options: ", maxlen, " ") ;
 	totlen = maxlen + 13 ;
 	p1 = buff ;
-	while(p2 = G_index(p1, ','))
+	while((p2 = G_index(p1, ',')))
 	{
 		*p2 = '\0' ;
 		len = strlen(p1) + 1 ;
@@ -889,7 +889,7 @@ static int check_opts (void)
 				    opt->options, opt->answer) ;
 			else
 			{
-				for(ans=0; opt->answers[ans] != '\0'; ans++)
+				for(ans=0; opt->answers[ans] != NULL; ans++)
 					error += check_an_opt(opt->key, opt->type,
 					    opt->options, opt->answers[ans]) ;
 			}
@@ -1196,7 +1196,7 @@ static int check_multiple_opts (void)
 				if (*ptr == ',')
 					n_commas++ ;
 			/* count items */
-			for(n=0;opt->answers[n] != '\0';n++)
+			for(n=0;opt->answers[n] != NULL;n++)
 				;
 			/* if not correct multiple of items */
 			if(n % n_commas)
@@ -1396,7 +1396,7 @@ static int gis_prompt (struct Option *opt, char *buff)
 		fprintf(stderr,"        Must be either new, old, mapset, or any\n") ;
 		return -1;
 	}
-	if (ptr1 == '\0')
+	if (ptr1 == NULL)
 		*buff = '\0';
 
 	return 0;
