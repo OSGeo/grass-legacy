@@ -1,0 +1,38 @@
+.TH d.what.s.db
+.SH NAME
+\fId.what.s.db\fR \- ENTER ONE LINE DESCRIPTION HERE
+.br
+.I "(GRASS Display Program)"
+.SH SYNOPSIS
+\fBd.what.s.db\fR
+.br
+\fBd.what.s.db help\fR
+.br
+\fBd.what.s.db\fR \fBkeytable=\fIname\fR \fBxcol=\fIname\fR \fBycol=\fIname\fR \fBdistance=\fIname\fR
+   \fB[join=\fItab,key,pkey]\fR
+.SH DESCRIPTION
+enter short description of d.what.s.db here
+
+.SH "COMMAND LINE OPTIONS"
+.LP
+Parameters
+.IP \fIkeytable\fR
+Name of table containing X, Y coordinates.
+.IP \fIxcol\fR
+X coordinate (E/W) column in keytable.
+.IP \fIycol\fR
+Y coordinate (N/S) column in keytable.
+.IP \fIdistance\fR
+Distance from mouse location to search.
+.IP \fIjoin\fR
+JOIN rules (eg. table, key, primekey). 
+
+.SH BUGS
+Describe known bugs here
+
+.SH "SEE ALSO"
+Refer reader to related programs here
+
+.SH AUTHOR
+Provide the programmers name and institution
+
