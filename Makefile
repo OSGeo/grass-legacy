@@ -296,15 +296,18 @@ srclibsdist: FORCE distclean
 htmldocs:
 	(cd lib/db/ ; $(MAKE) htmldocs)
 	(cd lib/vector/ ; $(MAKE) htmldocs)
+	(cd lib/gis/ ; $(MAKE) htmldocs)
 	#next runs only on grass${VERSION_MAJOR}${VERSION_MINOR}refman.dox (as defined in ./Doxyfile)
 	doxygen ./Doxyfile
 
 packagehtmldocs: htmldocs
-	tar cvfz grass${VERSION_MAJOR}${VERSION_MINOR}refman_`date '+%Y_%m_%d'`.tar.gz doxygenhtml/ lib/db/html lib/vector/html
+	tar cvfz grass${VERSION_MAJOR}${VERSION_MINOR}refman_`date '+%Y_%m_%d'`.tar.gz doxygenhtml/ lib/db/html lib/vector/html lib/gis/html
 
 pdfdocs:
 	(cd lib/db/ ; $(MAKE) pdfdocs)
 	(cd lib/vector/ ; $(MAKE) pdfdocs)
+	(cd lib/gis/ ; $(MAKE) pdfdocs)
+	@echo "Written PDF docs in: lib/db/latex/ ; lib/vector/latex/ ; lib/gis/latex/"
 
 changelog:
 	@ echo "creating ChangeLog file..."
