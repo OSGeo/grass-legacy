@@ -1,0 +1,30 @@
+#!/bin/sh
+
+MAXVAL=4
+
+until
+i=`d.menu << 'EOF'
+# set the text size in % of entire screen height
+.S 3
+# set the top edge
+.T 10
+# set the LEFT edge
+.L 10
+GIS: choose item of interest 
+  Map analysis
+  Image analysis
+  Map Display
+  Return
+EOF
+`
+
+if [ $i -ge $MAXVAL ] 
+	then
+	exit 1
+fi
+
+$0.$i
+
+do
+echo -n
+done
