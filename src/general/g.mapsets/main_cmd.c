@@ -40,7 +40,7 @@ main (int argc, char *argv[])
     opt1->type       = TYPE_STRING ;
     opt1->required   = NO ;
     opt1->multiple   = YES ;
-    opt1->description= "Names(s) of existing mapset(s)" ;
+    opt1->description= "Name(s) of existing mapset(s)" ;
 
     opt2 = G_define_option() ;
     opt2->key        = "addmapset" ;
