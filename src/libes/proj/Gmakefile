@@ -68,7 +68,8 @@ NAD_TABLES = \
 	$(NAD_DIR)/prvi		\
 	$(NAD_DIR)/stgeorge	\
 	$(NAD_DIR)/stlrnc	\
-	$(NAD_DIR)/stpaul
+	$(NAD_DIR)/stpaul	\
+	$(NAD_DIR)/ntv1_can.dat
 
 all: $(DEPGPROJLIB) $(NAD_TABLES)
 
@@ -116,3 +117,6 @@ $(NAD_DIR)/stlrnc:	$(NAD_DIR) $(NAD2BIN) stlrnc.lla
 
 $(NAD_DIR)/stpaul:	$(NAD_DIR) $(NAD2BIN) stpaul.lla
 	$(NAD2BIN) < stpaul.lla $@
+
+$(NAD_DIR)/ntv1_can.dat:	$(NAD_DIR) ntv1_can.dat
+	cp -f ntv1_can.dat $@
