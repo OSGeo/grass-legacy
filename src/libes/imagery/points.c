@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "imagery.h"
 
 FILE *I_fopen_group_file_old();
