@@ -13,7 +13,10 @@
  *   	    	Read the file COPYING that comes with GRASS for details.
  ****************************************************************************
  * $Log$
- * Revision 1.3  2000-11-08 20:30:36  andreas
+ * Revision 1.4  2000-11-26 16:33:14  andreas
+ * added module description, file header, output of ellipsoid with cmdline and inter
+ *
+ * Revision 1.3  2000/11/08 20:30:36  andreas
  * added datum output with -p option
  *
  */
@@ -615,7 +618,7 @@ int main (int argc, char *argv[])
 static int print_window(struct Cell_head *window,int print_flag)
 {
 	char *G_database_projection_name();
-	char *prj, *datum;
+	char *prj, *datum, *ellps;
 	int x;
 	char north[30], south[30], east[30], west[30], nsres[30], ewres[30];
 
@@ -636,10 +639,13 @@ static int print_window(struct Cell_head *window,int print_flag)
 		if (!prj) prj = "** unknown **";
 		datum = G_database_datum_name();
 		if (!datum) datum = "** unknown (default: WGS84) **";
+		ellps = G_database_ellipse_name();
+		if (!ellps) ellps = "** unknown (default: WGS84) **";
 		fprintf (stdout, "%-11s %d (%s)\n","projection:", window->proj, prj);
 		fprintf (stdout, "%-11s %d\n","zone:",  window->zone);
 
 		fprintf (stdout, "%-11s %s\n","datum:", datum);
+		fprintf (stdout, "%-11s %s\n","ellipsoid:", ellps);
 		fprintf (stdout, "%-11s %s\n","north:", north);
 		fprintf (stdout, "%-11s %s\n","south:", south);
 		fprintf (stdout, "%-11s %s\n","west:",  west);

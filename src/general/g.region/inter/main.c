@@ -12,7 +12,10 @@
  *   	    	Read the file COPYING that comes with GRASS for details.
  ****************************************************************************
  * $Log$
- * Revision 1.3  2000-11-08 20:31:28  andreas
+ * Revision 1.4  2000-11-26 16:33:15  andreas
+ * added module description, file header, output of ellipsoid with cmdline and inter
+ *
+ * Revision 1.3  2000/11/08 20:31:28  andreas
  * added output of map datum
  *
  */
@@ -43,7 +46,7 @@ main (int argc, char *argv[])
     int from_view();
     char *G_database_projection_name();
     char *G__get_window();
-    char *prj, *datum;
+    char *prj, *datum, *ellps;
     char north[20], south[20], nsres[20];
     char east[20], west[20], ewres[20];
     int len1, len2, len3;
@@ -89,11 +92,14 @@ main (int argc, char *argv[])
 
 	prj = G_database_projection_name();
 	datum = G_database_datum_name();
+	ellps = G_database_ellipse_name();
 	if (!prj) prj = "** unknown **";
 	if (!datum) datum = "** unknown (default WGS84) **";
+	if (!ellps) ellps = "** unknown (default WGS84) **";
 	fprintf (stderr, "PROJECTION: %d (%s)\n", cur_window.proj, prj);
 	fprintf (stderr, "ZONE:       %d\n", cur_window.zone);
 	fprintf (stderr, "DATUM:      %s\n", datum);
+	fprintf (stderr, "ELLIPSOID:  %s\n", ellps);
 
 	fprintf (stderr, "\nPlease select one of the following options:\n\n");
 	fprintf (stderr, "   Current Region                           Region Database\n\n");
@@ -105,7 +111,7 @@ main (int argc, char *argv[])
 	fprintf (stderr, "6  Set from a sites list map\n");
 	fprintf (stderr, "7  Set from 3d.view file\n");
 	fprintf (stderr, "\n");
-	fprintf (stderr, "RETURN to quit\n\n");
+	fprintf (stderr, "RETURN to quit\n");
 	fprintf (stderr, "> ");
 
 	if (!G_gets(buf)) continue;
