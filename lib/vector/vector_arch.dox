@@ -37,7 +37,10 @@ For details please read Blazek et al. 2002 (see below) as well as the
 references in this document.
 
 The Vect_*() functions are the programmer's API for GRASS 5.1 vector
-programming.
+programming. See details here:
+
+
+<a class="qindex" href="modules.html">Structured Vect_*() functions list</a>
 
 
 \subsection dglib DGLib (Directed Graph Library)
