@@ -15,6 +15,16 @@
 **  US Army Construction Engineering Research Lab
 */
 
+/* #define ASIAN_CHARS to input asian characters.
+ * Does not show characters when input due to waddch() function,
+ * but characters are still valid for further use.
+ *
+ * If you have any problems with this, please inform me.
+ * <hdcho@geni.knu.ac.kr>
+ */
+/*
+#define ASIAN_CHARS
+*/
 
 
 WINDOW *BASE_WIN;
@@ -428,7 +438,11 @@ int Replot_screen (void)
 
 int Get_curses_char (char *answer)
 {
+#ifdef ASIAN_CHARS
+    *answer = wgetch(INFO_WIN);
+#else
     *answer = wgetch(INFO_WIN) & 0177;
+#endif
 
     return 0;
 }
@@ -445,9 +459,17 @@ int Get_curses_text (char answer[])
     *answer = 0;
     for(;;)
     {
+#ifdef ASIAN_CHARS
+	newchar = wgetch(INFO_WIN);
+#else
 	newchar = wgetch(INFO_WIN) & 0177;
+#endif
 
+#ifdef ASIAN_CHARS
+	if (((newchar > 037) && (newchar < 0177)) || newchar < 0)
+#else
 	if ((newchar > 037) && (newchar < 0177))
+#endif
 	{
 	    *(pointer++) = newchar;
 	    *pointer = 000;
@@ -789,7 +811,11 @@ int curses_getchar (void)
 {
     /* TESTING 1/91  dpg */
     /* return ((getch ()) & 0177); */
+#ifdef ASIAN_CHARS
+    return (wgetch (BASE_WIN));
+#else
     return ((wgetch (BASE_WIN)) & 0177);
+#endif
 }
 
 int _Write_covr (int line, char *message)
