@@ -409,6 +409,9 @@ menu_build 1 .main_menu {
             "source $env(TCLTKGRASSBASE)/module/d.where"
         }
         -separator
+        "NVIZ visualization tool" "" {
+            "source $env(TCLTKGRASSBASE)/module/nviz"
+        }
         "ERASE display frame" "" {
             "source $env(TCLTKGRASSBASE)/module/d.erase"
         }
