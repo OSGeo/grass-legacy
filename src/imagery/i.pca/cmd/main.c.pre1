@@ -1,0 +1,283 @@
+/***** Principal Component Transformation of Satellite Data *****/
+/*
+
+             Center for Space Research
+             WRW 402
+             University of Texas
+             Austin, TX 78712-1085
+
+             (512) 471-6824
+
+*/
+
+#define MAIN
+
+#include "gis.h"
+#include "globals.h"
+
+main(argc,argv)
+int argc;
+char *argv[];
+{
+  /* Global variable & function declarations */
+
+  int i,j,k;                    /* Loop control variables */
+  long rows,cols;               /* Number of rows & columns */
+  long bands;                   /* Number of image bands */
+  long NN;                      /* Total number of data points */
+  double **covar;     /* Covariance Matrix */
+  double *eigval;
+  double **eigmat;
+  char **inp_names;
+  char **out_names, temp[600];
+  int result, infd, outfd;
+  int scale, scale_max, scale_min;
+  char tempbuf[500], *mapset;
+  CELL *rowbuf, min, max;
+  FILE *fopen(), *fp ;
+
+  struct Option *opt1, *opt2, *opt3 ;
+
+  /* Define the different options */
+
+  opt1 = G_define_option() ;
+  opt1->key        = "input";
+  opt1->type       = TYPE_STRING;
+  opt1->required   = YES;
+  opt1->multiple   = YES;
+  opt1->gisprompt  = "old,cell,raster" ;
+  opt1->description= "input layer name" ;
+
+  opt2 = G_define_option() ;
+  opt2->key        = "output";
+  opt2->type       = TYPE_STRING;
+  opt2->required   = YES;
+  opt2->gisprompt  = "new,cell,raster" ;
+  opt2->description= "output layer name";
+
+  opt3 = G_define_option() ;
+  opt3->key        = "rescale";
+  opt3->type       = TYPE_INTEGER;
+  opt3->key_desc   = "min,max";
+  opt3->required   = NO;
+  opt3->answer     = "1,255"; 
+  opt3->description= "Rescaling range output (For no rescaling use 0,0)";
+
+  /***** Start of main *****/
+  G_gisinit(argv[0]);
+
+  if (G_parser(argc, argv) < 0)
+    exit(-1);
+
+  rows = G_window_rows();
+  cols = G_window_cols();
+  NN = rows * cols;
+
+  rowbuf = G_allocate_cell_buf();
+
+  scale = 1;
+  scale_min = 1;
+  scale_max =255;  /* default values */
+  if(opt3->answer)
+  {
+     sscanf(opt3->answers[0], "%d", &scale_min);
+     sscanf(opt3->answers[1], "%d", &scale_max);
+
+     if(scale_min==scale_max)
+     {
+	if(scale_min==0) scale = 0;
+	else
+	{
+          printf("Scale range length should be >0; Using default values: 1,255\n\n");
+          scale_min = 1;
+          scale_max = 255;
+        }
+     }
+     if(scale_max<scale_min)
+     {
+       int temp;
+       temp = scale_max;
+       scale_max = scale_min;
+       scale_min = temp;
+     }
+  }
+
+  for(bands=0; opt1->answers[bands] != NULL; bands++);
+
+  covar = (double **) G_calloc(bands, sizeof(double *));
+  eigmat = (double **) G_calloc(bands, sizeof(double *));
+  eigval = (double *) G_calloc(bands, sizeof(double));
+  inp_names = (char **) G_calloc(bands, sizeof(char *));
+  out_names = (char **) G_calloc(bands, sizeof(char *));
+  for(i=0;i<bands+1;i++)
+  {
+      covar[i] = (double *) G_calloc((bands) , sizeof(double));
+      eigmat[i] = (double *) G_calloc((bands) , sizeof(double)); 
+  }
+
+  if (bands < 2)
+    G_fatal_error("Sorry, you must provide at least 2 input bands") ;
+
+  for (i=0 ; i<bands ; i++)
+    {
+      if ((mapset=G_find_cell(opt1->answers[i], "")) == NULL) {
+        sprintf(tempbuf, "Unable to find cell map <%s>", opt1->answers[i]);
+        G_fatal_error(tempbuf);
+      }
+      if ((infd=G_open_cell_old(opt1->answers[i], mapset)) < 0)
+        {
+          sprintf(tempbuf,"Error opening %s\n",opt1->answers[i]);
+          G_fatal_error(tempbuf);
+        }
+
+      inp_names[i] = G_fully_qualified_name(opt1->answers[i], mapset);
+
+      sprintf(tempbuf, "%s.%d", opt2->answer, i+1); 
+      out_names[i] = G_fully_qualified_name(tempbuf, G_mapset());
+      G_close_cell (infd);
+    }
+
+  /* check output file */
+  /*****************************/
+  /*if (strlen(opt2->answer) >=13)
+    G_fatal_error("The output cell map name can not be longer than 12 characters.");
+  */
+  for(i=0;i<bands;i++)
+     for(j=0;j<bands;j++)
+       {
+	  if(strcmp(inp_names[i], out_names[j]) == 0)
+	  {
+	      sprintf(tempbuf, "The output file %s will overwrite the input file %s",
+			out_names[i], inp_names[i]);
+	      G_fatal_error(tempbuf);
+	  }
+       }
+
+  printf("Calculating covariance matrix...\n");
+  sprintf(tempbuf, "r.covar map=");
+  for (i=0;i<bands;i++) 
+  {
+     strcat(tempbuf, opt1->answers[i]);
+     if(i<(bands-1)) strcat(tempbuf, ",");
+  }
+  strcat(tempbuf, " > ");
+  strcpy(temp , G_tempfile());
+  strcat(tempbuf, temp);
+  system(tempbuf);
+
+  fp = fopen(temp,"r");
+  for (i=0;i<bands;i++) 
+     for (j=0;j<bands;j++) 
+	 fscanf(fp,"%lf", &covar[i][j]);
+  fclose(fp);
+
+  printf("Calculating eigenvalues and eigenvectors...\n");
+  eigen(covar, eigmat, eigval, bands);
+  /*   DEBUG  
+  for(i=0;i<bands;i++)
+  {
+     for (j=0;j<bands;j++)
+	fprintf(stdout, "%f  ", eigmat[i][j]);
+     fprintf(stdout, "\n");
+  }
+  for (i=0;i<bands;i++)
+     fprintf(stdout, "%f  ", eigval[i]);
+  fprintf(stdout, "\n");
+  */
+
+  printf("Ordering eigenvalues in descending order...\n");
+  egvorder(eigval,eigmat,bands);
+  printf("Transposing eigen matrix...\n");
+  transpose(eigmat,bands);
+
+  printf("Transforming data...\n");
+  /* transform(DATA,NN,eigmat,bands,outbandmax); */
+
+  sprintf(tempbuf, "r.mapcalc < %s", temp);
+  for(i=0;i<bands;i++) 
+  {
+      char name[100], command[100];
+      int row,col;
+
+      fp = fopen(temp, "w");
+      /* generate output file name */
+      sprintf(name, "%s.%d", opt2->answer, (i+1));
+      fprintf(fp, "%s", name);
+      fprintf(fp, "= ");
+      for(j=0;j<bands;j++) 
+      {
+          fprintf(fp, "%lf * %s ", eigmat[i][j], opt1->answers[j]);
+	  if(j<(bands-1)) fprintf(fp, "+ ");
+      }
+      fclose(fp);
+      system(tempbuf); 
+      fprintf(stdout, "Finding out the range of data... ");
+      fflush(stdout);
+      mapset = G_mapset();
+      if ((infd=G_open_cell_old(name, mapset)) < 0)
+      {
+          sprintf(tempbuf,"Error opening %s@%s\n",name, mapset);
+          G_fatal_error(tempbuf);
+      }
+      for(row=0 ; row<rows ; row++)
+      {
+	 G_percent(row,rows-1,2);
+	 G_get_map_row( infd, rowbuf, row); 
+         if(row==0)min = max = rowbuf[0];
+         for(col=0 ; col<cols ; col++)
+         {
+             if (rowbuf[col]<min) min=rowbuf[col];
+             if (rowbuf[col]>max) max=rowbuf[col];
+         }
+      }
+      if(scale)
+      {
+	  float old_range, new_range;
+
+          fprintf(stdout, "Rescaling the data to %d,%d range ... ", 
+			 scale_min, scale_max);
+	  fflush(stdout);
+          if ((outfd=G_open_cell_new(name, mapset)) < 0)
+          {
+              sprintf(tempbuf,"Error opening %s@%s\n",name, mapset);
+              G_fatal_error(tempbuf);
+          }
+
+	  old_range = (float) (max - min);
+	  new_range = (float) (scale_max - scale_min);
+
+          for(row=0 ; row<rows ; row++)
+          {
+	     G_percent(row,rows-1,2);
+ 	     G_get_map_row( infd, rowbuf, row); 
+             for(col=0 ; col<cols ; col++)
+	     {
+	          if(min==max) rowbuf[col] = 1;   
+	          else 
+	          /* first mapping data to 0,(new_range-1) 
+		     and then adding new_min */
+	             rowbuf[col] = 
+	        	(CELL) ((new_range*(rowbuf[col]-min)/old_range + 0.5) + scale_min);
+             }
+             G_put_map_row(outfd, rowbuf);
+          }
+
+          /* debug:
+          fprintf(stdout, "min[%d] = %d,   max[%d] = %d \n", i, min, i,max );
+	  */
+          if(scale) G_close_cell(outfd);
+          G_close_cell(infd);
+      }
+
+      /* make grey scale color table */
+      sprintf(command, "r.colors %s color=grey", name);
+      system(command);
+
+      /* write a color table */
+
+    } /* for i=0 to bands-1 */
+
+  unlink(fp);
+  exit(0);
+}
+
