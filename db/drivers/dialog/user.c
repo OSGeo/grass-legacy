@@ -1,3 +1,5 @@
+#include <config.h>
+
 #ifdef HAVE_TCLTK
 
 #include <stdlib.h>
@@ -101,6 +103,7 @@ dbd_user ( char *driver,  char *database, char **usr, char **pwd )
 int 
 dbd_user ( char *driver,  char *database, char **usr, char **pwd ) 
 {
+    G_warning ( "Cannot open user/password dialog (compiled without Tcl/Tk)" );
     return -1;
 }
 
