@@ -48,10 +48,6 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
   int nums0, newRecsCount;
   int ltype;
 
-  /* log files */
-  FILE *vbl;
-  char *vbaselog = "/tmp/vbase.log";
-
   int i0, j0, j1, k0, k1;
   int i2, j2, k2;
 
@@ -68,6 +64,8 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
   int nolinks; /* Count how many vertex links we fail to register */
   int badring; /* Record if current shape part is to be rejected */
 
+  int pnts_diff; /* Flag points that differ in comparing two lines */
+
   double topIsect;   /* Store maximum intersect value of island ring */
 
   dbfRecElement *reclist;
@@ -77,10 +75,6 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
   DBFFieldType ftype;
   char fname[12];
   int fsize, fdec;
-
-  /* Open log file */
-  if( ( vbl = fopen( vbaselog, "w" ) ) == NULL )
-    fprintf( stderr, "Unable to open vbase log file\n" );
 
   /* Begin the process of assembling the line descriptor from shape
      file
@@ -106,7 +100,6 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
       int partStart, partEnd, currVertex;
 
       badring = 0; /* Assume ring is good */
-      fprintf( vbl, "Logging new ring: Shape %d, Part %d\n", i0, j0 );
 
       l1->lines[i0].parts[j0].intersects = NULL;    
       l1->lines[i0].parts[j0].linepnts = NULL;    
@@ -118,6 +111,8 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
 
       if( j0 == l1->lines[i0].numParts - 1 ) partEnd = tmpShp->nVertices - 1;
       else partEnd = tmpShp->panPartStart[j1+1] - 1;
+
+      j1++;
 
       /* Create the vertex list for the part and loop through the list */
       l1->lines[i0].parts[j0].numPoints = partEnd - partStart + 1;
@@ -160,24 +155,8 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
         */
 	
 	
-	if( vertRegister( hBank, &l1->lines[i0].parts[j0], currVertex ) )
-	   nolinks++;
-
-	fprintf( vbl, "  Vertex: %d at %.6f %.6f\n  Links are:-\n", k0,
-		 l1->lines[i0].parts[j0].linepnts[currVertex].xPosn,
-		 l1->lines[i0].parts[j0].linepnts[currVertex].yPosn );
-	for( n1 = 0; n1 < l1->lines[i0].parts[j0].linepnts[currVertex].linknum;
-	     ++n1 ) {
-	  fprintf( vbl, "    At %X %.6f %.6f with outset %.6f\n", 
-		   &l1->lines[i0].parts[j0].linepnts[currVertex].linkverts[n1],
-		   l1->lines[i0].parts[j0].linepnts[currVertex].linkverts[n1]->xPosn,
-		   l1->lines[i0].parts[j0].linepnts[currVertex].linkverts[n1]->yPosn,
-		   l1->lines[i0].parts[j0].linepnts[currVertex].linkdirect[n1] );
-	}
-
-	fprintf( vbl, "      And the number of links registered is %d\n",
-		 l1->lines[i0].parts[j0].linepnts[currVertex].linknum );
-	fflush( vbl );
+	if( !vertRegister( hBank, &l1->lines[i0].parts[j0], currVertex ) )
+	  nolinks++;
 
 	/* Increment block's internal counter */
 	currVertex++;
@@ -196,8 +175,11 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
       else if( ltype == SHPT_POLYGON || ltype == SHPT_POLYGONZ || ltype == SHPT_POLYGONM )
 	partCalcFieldsPolygon ( &l1->lines[i0].parts[j0] );
 
-      /* Check for duplicates. Reject this ring if it is already registered */
-      if( nolinks == l1->lines[i0].parts[j0].numPoints ) {
+      /* Check for duplicates. Reject this ring if it is already registered, and
+	 moreover is an exterior ring
+      */
+      if( nolinks == l1->lines[i0].parts[j0].numPoints && 
+	l1->lines[i0].parts[j0].indic < 0  ) {
 	
 	/* Run thru previous listings if this is the case to
 	   find the already recorded rings or lines, and
@@ -230,6 +212,7 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
 		) continue;
 	    
 	    /* Go in if a point is found to be different */
+	    pnts_diff = 0;
 	    for( k2 = 0; k2 < l1->lines[i0].parts[j0].numPoints; ++k2 ) {
 	      if( fabs( l1->lines[i0].parts[j0].linepnts[k2].xPosn -
 			l1->lines[i2].parts[j2].linepnts[k2].xPosn ) 
@@ -237,8 +220,9 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
 		  fabs( l1->lines[i0].parts[j0].linepnts[k2].yPosn -
 			l1->lines[i2].parts[j2].linepnts[k2].yPosn ) 
 		  > SNAP_RADIUS
-		  ) continue;
+		  ) pnts_diff = 1;;
 	    }
+	    if( pnts_diff ) continue;
 
 	    /* Still here? We have already registered this ring.
 	       Rubber it.
@@ -627,8 +611,11 @@ void partCalcFieldsPolygon( partDescript *partd ) {
   partd->north = Ymax;
   partd->south = Ymin;
 
-  tmpCentroidx = ( Xmin + Xmax ) / 2.0;
-  tmpCentroidy = ( Ymin + Ymax ) / 2.0;
+  /* Move the centroid a little bit to avoid indeterminacies caused in
+     saw-tooth boundary maps
+  */
+  tmpCentroidx = (( Xmin + Xmax ) / 2.0) - (0.002 * ( Xmax - Xmin ));
+  tmpCentroidy = (( Ymin + Ymax ) / 2.0) - (0.002 * ( Ymax - Ymin ));
   
   /* We must create an array of point descriptors to hold the position
      of East-West intersects. These points are eventually located on
@@ -674,7 +661,7 @@ void partCalcFieldsPolygon( partDescript *partd ) {
       if( (i0 == 0 && fabs( posvecy_old ) < HORIZON_WIDTH)  ||
 	  fabs( posvecy ) < HORIZON_WIDTH ) {
 	tryAgain = 1;
-	tmpCentroidy -= 0.02 * ( Ymax - Ymin );
+	tmpCentroidy -= 0.002 * ( Ymax - Ymin );
 	break;	
       }
 
@@ -1341,3 +1328,17 @@ void recalcCentroid( partDescript *part1, double intsect ) {
 }
 
 
+int procMapType( int iswitch, int *mtype ) {
+  
+  static int mt = 0;
+
+  if( iswitch == GET_MT ) {
+    *mtype = mt;
+    return 0;
+  }
+  else if( iswitch == SET_MT ) {
+    mt = *mtype;
+    return 0;
+  }
+  else return 1;
+}

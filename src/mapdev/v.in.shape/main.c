@@ -11,6 +11,9 @@
 #include "gis.h"
 #include "Vect.h"
 #include "shapefil.h"
+#include "shp2dig.h"
+#include "dbutils.h"
+#include "writelin.h"
 
 /******************************************************************/
 /*                                                                */
@@ -23,6 +26,17 @@
 
 /* 10/1999 added dig_cats file support
  *         Markus Neteler neteler@geog.uni-hannover.de
+ *
+ ******************************************************************/
+ 
+/*03/2000 minor modifications to read data from shp2dig
+ *         structures, after processing
+ *04/2000 further modifications. Now splits lines at nodes
+ *         and removes duplicate shapes.
+ *
+ *        Point file import now handled by separate module
+ *         s.in.shape.
+ *          David D Gray  <ddgray@armadce.demon.co.uk>
  *
  ******************************************************************/
 
@@ -38,8 +52,11 @@ int main( int   argc, char *argv[])
     SHPHandle	hShapeDB;
     DBFHandle   hDBF;
     double	adfMinBound[4], adfMaxBound[4];
-    int		nShapeType, nShapes, iShape;
+    int		nShapeType, nShapes, iShape, iPart, iArc;
+    int         iPoint, iRec, iField;
+    int         pntCount;
     int		cat_field;
+    int 	pgdmp, no_rattle;
 
     char name[128], *p;	/* name of output files */
 
@@ -52,11 +69,35 @@ int main( int   argc, char *argv[])
 
     struct Categories cats;  /* added MN 10/99 */
     char    AttText[512];    /* added MN 10/99 */
+
+
+    /* DDG: Create structures for processing of shapefile contents */
+    lineList *ll0;
+    fieldDescript *fd0;
+    segmentList *segl;
+    BTREE *hVB;
+    int fc1;
+
+    char errbuf[1000];
+
+    /* DDG: variables for controlling snap distance and scale */
+
+    float sd0;
+    char *sdc;
+
+    int init_scale;
+
+    /************************************/
+
+    double *pntxlist, *pntylist;
+    double *xlab, *ylab;
     
+    int (*btrkeycmp)(char *, char *);
     char buf[256];
 
     struct {
-	struct Option *input, *mapset, *logfile, *verbose, *attribute;
+	struct Option *input, *mapset, *logfile, *verbose, *attribute, *snapd;
+	struct Option *scale, *pgdump, *dumpmode;
     } parm;
 
     /* Are we running in Grass environment ? */
@@ -69,7 +110,7 @@ int main( int   argc, char *argv[])
     parm.input->key        = "input";
     parm.input->type       = TYPE_STRING;
     parm.input->required   = YES;
-    parm.input->description= "Name of .shp file to be imported";
+    parm.input->description= "Name of .shp (or just .dbf) file to be imported";
 
     parm.mapset = G_define_option() ;
     parm.mapset->key        = "mapset";
@@ -90,12 +131,27 @@ int main( int   argc, char *argv[])
     parm.logfile->required   = NO;
     parm.logfile->description= "Name of file where log operations";
 
+    parm.snapd = G_define_option() ;
+    parm.snapd->key        = "snapdist";
+    parm.snapd->type       = TYPE_STRING;
+    parm.snapd->required   = NO;
+    parm.snapd->description= "Snap distance in ground units (Default = 0.1)";
+    parm.snapd->answer     = "0.1";
+
+    parm.scale = G_define_option() ;
+    parm.scale->key        = "scale";
+    parm.scale->type       = TYPE_INTEGER;
+    parm.scale->required   = NO;
+    parm.scale->description= "Set initial scale [1:2400]";
+    parm.scale->answer     = "2400";
+
     parm.attribute = G_define_option() ;
     parm.attribute->key        = "attribute";
     parm.attribute->type       = TYPE_STRING;
     parm.attribute->required   = NO;
     parm.attribute->description= "Name of attribute to use as category";
     parm.attribute->answer     = "";
+    
 
     /* get options and test their validity */
 
@@ -104,7 +160,7 @@ int main( int   argc, char *argv[])
     
     infile = parm.input->answer;
     newmapset = parm.mapset->answer;
-
+    
     debug = atoi( parm.verbose->answer);
     if (parm.logfile->answer == NULL)
 	fdlog = stderr;
@@ -113,13 +169,27 @@ int main( int   argc, char *argv[])
 	    sprintf (buf, "Cannot open log file \"%s\"", parm.logfile->answer);
 	    G_fatal_error( buf);
 	}
+
+    sdc = (char *)malloc(20);
+    strncpy( sdc, parm.snapd->answer, 19 );
+    sd0 = (float)atof(sdc);
+    if( sd0 < 0 ) sd0 = -sd0;
+    if( fabs( (double)sd0 ) < 0.001 ) sd0 = 0.1;
+
+    free(sdc);
+
+    if( procSnapDistance( SET_SD, &sd0 ) != 0 ) {
+      G_fatal_error( "Error setting snap distance" );
+    }
+
+    init_scale = atoi(parm.scale->answer);
     
     /* Open input file and verify that's a good shapefile file */
 
     hShapeDB = SHPOpen( infile, "r" );
     if (hShapeDB == NULL)
     {
-	sprintf (buf, "%s - not found, or wrong format.\n", infile);
+	sprintf (buf, "%s - shapefile not found, or wrong format.\n", infile);
 	G_fatal_error (buf);
     }
 
@@ -147,25 +217,33 @@ int main( int   argc, char *argv[])
 		fprintf( fdlog, "Mapset \"%s\" created for import\n", G_mapset());
 	}
     }
-
+    
+    
+    	
     /* Establish the shape types and corresponding GRASS type */
     
     SHPGetInfo( hShapeDB, &nShapes, &nShapeType, adfMinBound, adfMaxBound );
+
+    if( nShapeType == SHPT_MULTIPATCH ) {
+      sprintf( buf, "Multipatch type not yet supported" );
+      SHPClose( hShapeDB );
+      G_fatal_error( buf );
+    }
+
+    if( nShapeType == SHPT_POINT || nShapeType == SHPT_MULTIPOINT || nShapeType == SHPT_POINTZ ||
+	nShapeType == SHPT_MULTIPOINTZ || nShapeType == SHPT_POINTM || 
+	nShapeType == SHPT_MULTIPOINTM ) {
+      sprintf( buf, "Point map import not now supported by this module: use s.in.shape" );
+      SHPClose( hShapeDB );
+      G_fatal_error( buf );
+    }
     
     switch (nShapeType) {
-      case SHPT_POINT:
-      case SHPT_MULTIPOINT:
-      case SHPT_POINTZ:
-      case SHPT_MULTIPOINTZ:
-      case SHPT_POINTM:
-      case SHPT_MULTIPOINTM:
-        cover_type = DOT;
-        break;
-
       case SHPT_ARC:
       case SHPT_ARCZ:
       case SHPT_ARCM:
         cover_type = LINE;
+        break;
 
       case SHPT_POLYGON:
       case SHPT_POLYGONZ:
@@ -173,7 +251,13 @@ int main( int   argc, char *argv[])
         cover_type = AREA;
         break;
     }
+
+    if( procMapType( SET_MT, &cover_type ) != 0 ) 
+      G_fatal_error( "Could not set map type to. Aborting\n"  );
     
+
+
+
 /* -------------------------------------------------------------------- */
 /*      Extract basename of shapefile.                                  */
 /* -------------------------------------------------------------------- */
@@ -278,62 +362,128 @@ int main( int   argc, char *argv[])
             G_fatal_error( buf );
         }
 
-        /*
-         * Create the dig_cats file
-         */
-        G_init_cats(nShapes,(char *)NULL,&cats);
-        if (G_write_vector_cats(name, &cats) != 1)
-                    G_fatal_error("Writing dig_cats file");
+    }
+
+
+  /* -------------------------------------------------------------------- */
+  /*      DDG: Create the line descriptor list and field descriptor.      */
+  /*           Also create line segments fro vertex database.             */
+  /* -------------------------------------------------------------------- */
+
+    if( cat_field == -1 ) {
+      hDBF = DBFOpen( infile, "r" );
+      if( hDBF == NULL )
+	{
+	  sprintf (buf, "%s - DBF not found, or wrong format.\n", infile);
+	  G_fatal_error (buf);
+	}
+    }
+
+    /*****************************/
+
+    ll0 = ( lineList *)malloc( sizeof( lineList ));
+    fd0 = ( fieldDescript *)malloc( (DBFGetFieldCount(hDBF) + 4) * 
+				    sizeof( fieldDescript ));
+
+    hVB = (BTREE *)malloc(sizeof (BTREE) );
+  
+    /* Create V-base */
+    btrkeycmp = btree_compare;
+    if( !btree_create( hVB, btrkeycmp, 200 )) {
+      sprintf( errbuf, "Cannot create database. Aborting" );
+      G_fatal_error( errbuf );;
+    }
+
+    segl = ( segmentList *)malloc( sizeof( segmentList ));
+    /* Initialise segment list */
+    segl->origID = 0;
+    segl->numSegments = 0;
+    segl->segments = NULL;
+
+    /* Read shape into line list and fill out V-base */
+    linedCreate( ll0, hShapeDB, hDBF, fd0, hVB, &fc1 );
+
+    /* Extract arcs from V-base into segment list */
+    vbase2segd( segl, hVB );
+
+    
+    /*
+     * Create the dig_cats file
+     */
+    G_init_cats( (CELL)0,(char *)NULL,&cats);
+    /* if (G_write_vector_cats(name, &cats) != 1)
+       G_fatal_error("Writing dig_cats file"); */
                         
+
+
+
+
+    /* Check the number of records is the same as the number of lines */
+    xlab = (double *)malloc( ll0->totalValidParts * sizeof( double ) );
+    ylab = (double *)malloc( ll0->totalValidParts * sizeof( double ) );
+
+    pntCount = 0;
+    for( iShape = 0; iShape < nShapes; ++iShape ) {
+      for( iPart = 0; iPart < ll0->lines[iShape].numParts; ++iPart ) {
+	if( ll0->lines[iShape].parts[iPart].duff ) continue;
+	xlab[pntCount] = ll0->lines[iShape].parts[iPart].centroid->xcentroid;
+	ylab[pntCount++] = ll0->lines[iShape].parts[iPart].centroid->ycentroid;
+      }	 
+    } 
+
+    /* -------------------------------------------------------------------- */
+    /*      Scan segment list to extract and write arcs.                    */
+    /* -------------------------------------------------------------------- */
+
+    for( iArc = 0; iArc < segl->numSegments; ++iArc ) {
+      if( segl->segments[iArc].duff ) continue;
+
+      pntxlist = (double *)malloc( segl->segments[iArc].numVertices *
+				   sizeof( double ) );
+      pntylist = (double *)malloc( segl->segments[iArc].numVertices *
+				   sizeof( double ) );
+      for( iPoint = 0; iPoint < segl->segments[iArc].numVertices; ++iPoint ) {
+	pntxlist[iPoint] = segl->segments[iArc].vertices[iPoint]->xPosn;
+	pntylist[iPoint] = segl->segments[iArc].vertices[iPoint]->yPosn;
+      }
+      points = Vect_new_line_struct();
+      Vect_copy_xy_to_pnts( points, pntxlist, pntylist,
+			    segl->segments[iArc].numVertices );
+      Vect_write_line( &map, cover_type, points);
+      Vect_destroy_line_struct( points );
+	    
+      free(pntxlist);
+      free(pntylist);
+      
     }
+    
 
-  /* -------------------------------------------------------------------- */
-  /*      Loop over each shape in the file.                               */
-  /* -------------------------------------------------------------------- */
-    for( iShape = 0; iShape < nShapes; iShape++ )
-    {
-        SHPObject	*psShape = SHPReadObject( hShapeDB, iShape );
+    /* Write attributes and category file */
+	
+    if( f_att != NULL ) {
+      for( iRec = 0; iRec < fd0[0].nRec; ++iRec ) {
+	if( cover_type == LINE )
+	  fprintf( f_att, "L  %-12f  %-12f  %-8d \n",
+		   xlab[iRec], ylab[iRec],
+		   fd0[cat_field+4].fldRecs[iRec].intField );
+	else
+	  fprintf( f_att, "A  %-12f  %-12f  %-8d \n",
+		   xlab[iRec], ylab[iRec],
+		   fd0[cat_field+4].fldRecs[iRec].intField );
 
-        if( psShape->nVertices == 0 )
-        {
-            SHPDestroyObject( psShape );
-            continue;
-        }
-
-	points = Vect_new_line_struct();
-	Vect_copy_xy_to_pnts( points, psShape->padfX, psShape->padfY,
-                              psShape->nVertices );
-	Vect_write_line( &map, cover_type, points);
-	Vect_destroy_line_struct( points );
-
-        if( f_att != NULL ) {
-            double	xc, yc;
-
-            if( psShape->nVertices == 1 )
-            {
-                xc = psShape->padfX[0];
-                yc = psShape->padfY[0];
-            }
-            else 
-            {
-                xc = (psShape->padfX[0] + psShape->padfX[1]) / 2.0;
-                yc = (psShape->padfY[0] + psShape->padfY[1]) / 2.0;
-            }
-            
-            fprintf( f_att, "L  %-12f  %-12f  %-8d \n",
-                     xc, yc,
-                     DBFReadIntegerAttribute( hDBF, iShape, cat_field ) );
                      
-            /* set cat for dig_cats file*/ /* M Neteler 10/99 */
-            sprintf(AttText, "%-8d", DBFReadIntegerAttribute( hDBF, iShape, cat_field ));
-            if (G_set_cat(iShape, AttText, &cats) != 1)
-                       G_fatal_error("Call to G_set_cats");
-        }
+	/* set cat for dig_cats file*/ /* M Neteler 10/99 */
+	sprintf(AttText, "%-8d", fd0[cat_field+4].fldRecs[iRec].intField );
+	if (G_set_cat(iRec, AttText, &cats) != 1)
+	  G_fatal_error("Error setting category in dig_cats");
+	    
+      }
 
-        SHPDestroyObject( psShape );
+      free( xlab );
+      free( ylab );
     }
 
-    map.head.orig_scale = 100000l;
+    map.head.orig_scale = (long)init_scale;
     G_strncpy( map.head.your_name, G_whoami(), 20);
     G_strncpy( map.head.date, G_date(), 20);
     G_strncpy( map.head.map_name, name, 20);
@@ -351,6 +501,9 @@ int main( int   argc, char *argv[])
         DBFClose( hDBF );
         fclose( f_att );
     }
+    segLDispose( segl );
+    btree_free( hVB );
+    linedDispose( ll0, fd0, fc1 );
     
     exit(0);
 }

@@ -26,12 +26,16 @@
 
 #include "shp2dig.h"
 
+#define SET_SD 1
+#define GET_SD 0
+
 /* Functions */
 int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx );
-char *calcKeyValue( pntDescript *pnt1, int decs );
+char *calcKeyValue( pntDescript *pnt1, float sr );
 
 /* Helper Function Prototypes */
 
 int btree_compare( char *key1, char *key2 );
+int procSnapDistance( int iswitch, float *sd );
 
 #endif /* _DB_UTILS_TOPO_H */

@@ -26,7 +26,7 @@
 #define SHP2DIG_INCLUDE
 
 #include "shapefil.h"
-#include "btree.h"
+#include "gbtree.h"
 
 /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 /*                                                           */
@@ -43,7 +43,8 @@
 #define SNAP_RADIUS 0.01
 #define HORIZON_WIDTH 0.0000000000000001
 
-
+#define GET_MT 0
+#define SET_MT 1
 
 /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 /*                                                           */
@@ -364,6 +365,10 @@ int pntInside( partDescript *part1, partDescript *part2, double *maxIsect );
 */
 
 void recalcCentroid( partDescript *part1, double intsect );
+
+/* Set or retrieve the value of map-type required by various functions remotely */
+
+int procMapType( int iswitch, int *mtype );
 
 
 #endif /* SHP2DIG_INCLUDE */

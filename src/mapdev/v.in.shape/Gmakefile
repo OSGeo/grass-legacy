@@ -4,7 +4,11 @@ EXTRA_CFLAGS = $(VECT_INCLUDE)
 # EXTRA_CFLAGS = $(VECT_INCLUDE) -DDEBUG # for debugging
 LIST = 	main.o \
 	shpopen.o \
-	dbfopen.o
+	dbfopen.o \
+	dbutils.c \
+	shp2dig.c \
+	writelin.c \
+	gbtree.c
 
 $(HOME)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) $(VASK) $(MATHLIB) $(DATETIMELIB) $(XDRLIB)

@@ -22,7 +22,7 @@
  ******************************************************************************/
 
 #include "shp2dig.h"
-#include "btree.h"
+#include "gbtree.h"
 
 /* Structure prototypes */
 
@@ -30,3 +30,6 @@
 /* Function prototypes */
 
 int vbase2segd( segmentList *seg0, BTREE *btr0 );
+int segLDispose( segmentList *seg0 );
+double reverse_angle(double phi0);
+
