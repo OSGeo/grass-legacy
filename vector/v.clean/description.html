@@ -1,40 +1,11 @@
 <h2>DESCRIPTION</h2>
 
-<em>v.clean</em> allows the user to automatically change (repair) vector files. Possible
-tools are:
+<em>v.clean</em> allows the user to automatically change (repair) vector files.
+The user does <em>not</em> have to run  <em><a HREF="v.build.html">v.build</a></em> afterwards.
 
-<p>
+<h2>NOTES</h2>
 
-<b>break</b>
-<br>
-breaks lines and sets a node at each intersection
-
-<p>
-
-<b>rmdupl</b>
-<br>
-removes duplicate lines (pay attention to categories!)
-
-<p>
-
-<b>snap</b>
-<br>
-snaps vertex to a line and create new vertex at that line
-
-<p>
-
-<b>rmdac</b>
-<br>
-removes duplicate area centroids ('type' option ignored)
-
-</pre>
-
-<p>
-You do <em>not</em> have to run  <em><a HREF="v.build.html">v.build</a></em> afterwards.
-<P>
-<b>What is a bridge?</b>
-<P>
-
+<h3>What is a bridge?</h3>
 A bridge is an area type connection of an island (polygon in a polygon) to the outer
 polygon. This is topologically incorrect (but OGC Simple Features allow it). <em>v.clean</em>
 can be used to optionally change the line type to fulfill the topology rules or to
@@ -53,11 +24,15 @@ remove the bridge from the map:
     +------+------+             +-------------+   +-------------+
 </pre>
 
-<h2>EXAMPLE</h2>
+<h2>EXAMPLES</h2>
 
+<h3>Snap lines to vertex in threshold</h3>
+
+<b>v.clean input=</b><em>testmap</em> <b>output=</b><em>cleanmap</em> <b>tool=</b><em>snap</em> <b>thresh=</b><em>1</em>
 <p>
-<b>v.clean input=</b><em>testmap</em> <b>output=</b><em>cleanmap</em> <b>tool=</b><em>svtlx</em> <b>breakthresh=</b><em>1</em>
-<p>
+
+
+<h3>Cleaning OGR imported data (Simple Feature data)</h3>
 
 The import of areas with <a HREF="v.in.ogr.html">v.in.ogr</a> requires a subsequent run of
 <a HREF="v.clean.html">v.clean</a> to update the map to a topologically
@@ -66,6 +41,12 @@ used for that are 'rmdupl' and 'bpol':
 <p>
 <b>v.clean input=</b><em>areamap</em> <b>output=</b><em>areamap_clean</em> <b>tool=</b><em>rmdupl,bpol</em> <br>
 
+
+<h3>Extracting intersection points of vector lines</h3>
+
+<b>v.clean input=</b><em>lines1</em> <b>output=</b><em>lines2</em> <<b>err=</b><em>points</em> <b>tool=</b><em>break</em> <br>
+
+Intersection points are written to 'points' map.
 
 <h2>AUTHOR</h2>
 
