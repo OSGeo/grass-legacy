@@ -1,3 +1,23 @@
+/***************************************************************************
+ * $Id$
+ *
+ * MODULE: 	g.region (commandline)
+ * AUTHOR(S):	Michael Shapiro, CERL
+ *              datum added by Andreas Lange <andreas.lange@rhein-main.de>
+ * PURPOSE: 	Program to manage and print the boundary definitions for the
+ *              geographic region.
+ * 
+ * COPYRIGHT:  	(C) 2000 by the GRASS Development Team
+ *
+ *   	    	This program is free software under the GPL (>=v2)
+ *   	    	Read the file COPYING that comes with GRASS for details.
+ ****************************************************************************
+ * $Log$
+ * Revision 1.3  2000-11-08 20:30:36  andreas
+ * added datum output with -p option
+ *
+ */
+
 #include <string.h>
 #include <stdlib.h>
 #include "gis.h"
@@ -44,9 +64,9 @@ int main (int argc, char *argv[])
 	G_gisinit (argv[0]);
 
 	/* get current region.
- * if current region not valid, set it from default
- * note: G_get_default_window() dies upon error
- */
+	 * if current region not valid, set it from default
+	 * note: G_get_default_window() dies upon error
+	 */
 	if (G__get_window (&window, "", "WIND", G_mapset()) != NULL)
 	{
 		G_get_default_window (&window);
@@ -595,7 +615,7 @@ int main (int argc, char *argv[])
 static int print_window(struct Cell_head *window,int print_flag)
 {
 	char *G_database_projection_name();
-	char *prj;
+	char *prj, *datum;
 	int x;
 	char north[30], south[30], east[30], west[30], nsres[30], ewres[30];
 
@@ -614,9 +634,12 @@ static int print_window(struct Cell_head *window,int print_flag)
 	{
 		prj = G_database_projection_name();
 		if (!prj) prj = "** unknown **";
+		datum = G_database_datum_name();
+		if (!datum) datum = "** unknown (default: WGS84) **";
 		fprintf (stdout, "%-11s %d (%s)\n","projection:", window->proj, prj);
 		fprintf (stdout, "%-11s %d\n","zone:",  window->zone);
 
+		fprintf (stdout, "%-11s %s\n","datum:", datum);
 		fprintf (stdout, "%-11s %s\n","north:", north);
 		fprintf (stdout, "%-11s %s\n","south:", south);
 		fprintf (stdout, "%-11s %s\n","west:",  west);
