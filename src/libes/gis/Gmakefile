@@ -234,7 +234,7 @@ geodist.o: pi.h
 get_row.o: G.h
 get_window.o: G.h
 gisinit.o: G.h
-gisinit.o: version.h
+gisinit.o: $(SRC)/include/version.h
 maskfd.o: G.h
 opencell.o: G.h
 # openvect.o ***DEPRECATED*** delete next line for 5.1
