@@ -7,6 +7,28 @@
 static int read_int(int,int *);
 
 /* fd must be open for read and write */
+
+/*!
+ * \brief initialize segment
+ *       structure
+ *
+ * Initializes the <b>seg</b> structure. The file on <b>fd</b> is
+ * a segment file created by <i>segment_format</i> and must be open for
+ * reading and writing. The segment file configuration parameters <i>nrows,
+ * ncols, srows, scols</i>, and <i>len</i>, as written to the file by
+ * <i>segment_format</i>, are read from the file and stored in the
+ * <b>seg</b> structure. <b>Nsegs</b> specifies the number of segments that
+ * will be retained in memory. The minimum value allowed is 1.
+ * <b>Note.</b> The size of a segment is <i>scols*srows*len</i> plus a few
+ * bytes for managing each segment.
+ * Return codes are:  1 if ok; else -1 could not seek or read segment file,  or -2 out of memory.
+ *
+ *  \param seg
+ *  \param fd
+ *  \param nsegs
+ *  \return int
+ */
+
 int segment_init (SEGMENT *SEG,int fd,int nseg)
 {
     SEG->open = 0;

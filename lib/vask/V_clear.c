@@ -27,6 +27,17 @@ CALLS:
 
 #define DECIMAL_PLACES -1
 
+
+/*!
+ * \brief initialize screen description
+ *
+ * This routine initializes
+ * the screen description information, and must be called before each new screen
+ * layout description.
+ *
+ *  \return int
+ */
+
 int V_clear()
 {
 	static char *text = "" ;

@@ -28,6 +28,21 @@ CALLS:
 ***********************************************************************/
 
 #include "vask.h"
+
+/*!
+ * \brief define screen constant
+ *
+ * <i>Ctype</i> is one of int, long, float,
+ * double, or char.
+ *
+ *  \param value
+ *  \param type
+ *  \param row
+ *  \param col
+ *  \param len
+ *  \return int
+ */
+
 int V_const(
     void  *src   ,
     char  var_type ,
