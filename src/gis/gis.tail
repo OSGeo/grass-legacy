@@ -1,0 +1,96 @@
+# unset the MONITOR variable
+
+monitor=`gisenv MONITOR`
+if [ "$monitor" ]
+then
+	Drelease.mon -v $monitor
+fi
+gisenv MONITOR=
+
+# Read gisrc again
+
+eval `gisenv`
+LOCATION=${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}
+
+
+# exit session. remove unwanted cell files
+
+clear
+echo ""
+echo "GRASS SESSION WRAPUP"
+echo ""
+
+echo "You have just finished working on mapset: <$MAPSET>"
+any=no
+if [ -d $LOCATION/cell ]
+then
+    count=`ls $LOCATION/cell | wc -l`
+    if [ "$count" != "0" ]
+    then
+	any=yes
+    fi
+fi
+if [ $any = yes ]
+then
+    echo "The following data layers belong to it:"
+    echo ""
+    ls -C $LOCATION/cell
+else
+    echo "No data layers exist under this mapset"
+fi
+
+echo ""
+if [ $MAPSET != PERMANENT ]
+then
+    $GISBASE/etc/echo -n "SHALL THE MAPSET <$MAPSET> BE SAVED?              y/n [y]"
+    read ans
+else
+    ans=YES
+fi
+
+case $ans in
+    n|no|N|NO|No)
+	echo ""
+	echo "WARNING - if you remove your mapset, you will lose"
+	echo "          all your data files in this mapset"
+	echo ""
+	$GISBASE/etc/echo -n "are you sure you want to remove your mapset? y/n [n]"
+	read ans
+	case $ans in
+	    y|yes|Y|YES|Yes)
+		echo ""
+		echo "Removing MAPSET $MAPSET"
+		rm -rf $LOCATION
+		if [ -d $LOCATION ]
+		then
+		    echo "WARNING: Unable to completely remove $LOCATION"
+		else
+		    echo "MAPSET --$MAPSET-- REMOVED."
+		fi
+		sleep 3 ;;
+	    *) ;;
+	    esac
+	    ;;
+
+    *)
+	if [ $any = yes ]
+	then
+	    echo ""
+	    $GISBASE/etc/echo -n "DO YOU WISH TO SELECTIVELY REMOVE LAYERS? y/n [n]"
+	    read ans
+	    case $ans in
+		y|yes|Y|YES|Yes)
+		    $GISBASE/bin/remove cell ;;
+		*) ;;
+	    esac
+	fi
+	($ETC/clean_temp > /dev/null &)
+esac
+clear
+echo ""
+echo ""
+echo ""
+echo "                  GOOD BYE from GRASS"
+rm -f $lockfile
+echo ""
+echo ""
