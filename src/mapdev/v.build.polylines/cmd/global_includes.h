@@ -1,9 +1,7 @@
-
 extern "C"
 {
 #include "gis.h"
-#include "digit.h"
-#include "V_.h"
+#include "Vect.h"
 }
 
 /* #include "CC_display_graphics_protos.h" */
