@@ -23,7 +23,7 @@ Global char Changes_Made;	  /* Changes made, Exit will warn or Not write*/
 	 			  /*   if no changes have been made  */
 Global char Auto_Window;	  /* Rewindow if chosen area is outside window*/
 Global int  Contour_Interval;	  /* spacing between contour lines */
-
+Global int  Remove_Draw;          /* Remove Block: REMOVE or REDRAW */
 
 Global char Coor_file[512];	/* argv[2] of digit.  Name of Coord file */
 
