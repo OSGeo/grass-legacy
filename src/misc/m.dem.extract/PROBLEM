@@ -1,0 +1,59 @@
+There were many instances when the format on
+the USGS tape was wrong. This new version of
+m.dem.extract is very much format sensitive.
+So the program exits with an  error when the
+data has such error.
+
+In general if the program exits with an error
+message "The file with  incorrect dada format 
+encountered",  Try running m.dem.extract with 
+-e flag. If the  program still exits with the 
+same   error  message,   then  there  is   an  
+inconsistency in usgs data format.
+format.
+
+Description of format error.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Each  usgs  dem  file  consists  of 3 records:
+type A record  - header
+tybe B record  - collection  of  profiles with 
+		 various number of elevations.
+ans SOMETIMES  - type C  ( accuracy )  record.
+
+Since the new version of m.dem.extract  cannot 
+skip to the  physical end of each dem file, it 
+tries to figure out exactly  which  records it 
+has to read  and then  read all of them  after
+which it starts reading next header (record A)
+
+Thus it's very important for  m.dem.extract to 
+know wether or not there is a C-record  in the
+end of dem file. This information is  provided 
+in header record (type A). There is a field in 
+header record(A-record) which is set to 1 when 
+C-record exists and to 0 when C-record doesn't 
+exist.
+
+The problem is that we saw at least 5 diff dem
+tapes in which in some  of the dem files,  the
+accuracy field was set to 0,  but the C-record 
+existed.What happened then is that the program 
+read all the data from such file OK,  but then
+it didn't try to  read C - record, but instead
+tried to read A-record (header of the next dem
+file) which resulted in a format  error  since
+type C and type A records have  totally  diff. 
+formats.
+
+If  you know  a little C,  this is easy to fix 
+temporary  for a particular tape.  There is  a 
+place in getgrid.c and usgs_buf.c (skip_file()
+function) where C-record is read.  So  instead 
+if(C_record)  put  if((C_record)||(count = N)) 
+where N = number of  dem  file  on  which  the 
+program stopped.(the last header that appeared
+on the screen).
+
+For more information call Olga at ext. 526
+
