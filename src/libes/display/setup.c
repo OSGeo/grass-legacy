@@ -41,7 +41,7 @@ D_setup (clear)
     if (D_get_screen_window(&t, &b, &l, &r))
 	G_fatal_error("Getting graphics coordinates") ;
 
-/* clear the window, if requested to do so */
+/* clear the frame, if requested to do so */
     if (clear)
     {
 	D_clear_window();
@@ -49,16 +49,16 @@ D_setup (clear)
 	R_box_abs (l, t, r, b);
     }
 
-/* Set the map region associated with graphics window */
+/* Set the map region associated with graphics frame */
     G_get_set_window (&region);
     if (D_check_map_window(&region))
 	G_fatal_error("Setting graphics coordinates") ;
     if(G_set_window (&region) < 0)
-	G_fatal_error ("Invalid graphics window coordinates");
+	G_fatal_error ("Invalid graphics coordinates");
 
 /* Determine conversion factors */
     if (D_do_conversions(&region, t, b, l, r))
-	G_fatal_error("Error calculating graphics window conversions") ;
+	G_fatal_error("Error calculating graphics-region conversions") ;
 
 /* set text clipping, for good measure */
     R_set_window (t, b, l, r);
