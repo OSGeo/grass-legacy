@@ -8,7 +8,7 @@ static int srch();
 int 
 update (void)
 {
-    int      i, more, *catexst, *cex, upd, fcati, ctype;
+    int      i, more, *catexst, *cex, upd, fcat, ctype;
     char     buf1[1024], buf2[1024];
     dbString stmt; 
     dbDriver *driver;
