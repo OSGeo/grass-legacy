@@ -20,6 +20,7 @@
 #include "gis.h"
 #include "dbvect.h"
 #include "display.h"
+#include "glocale.h"
 
 int getSelectOpts (argc, argv)
     int argc;
@@ -40,7 +41,7 @@ int getSelectOpts (argc, argv)
 
 	select = G_define_flag();
 	select->key	= 's';
-	select->description	= "Use [s] flag to select db records using an input file." ;
+	select->description	= _("Use [s] flag to select db records using an input file.") ;
 
         map = G_define_option() ;
         map->key        = "map" ;
@@ -48,7 +49,7 @@ int getSelectOpts (argc, argv)
 	map->gisprompt	= "old,dig,vector" ;
         map->required   = YES  ;
         map->multiple   = NO ;
-        map->description= "Name of existing vector file.";
+        map->description= _("Name of existing vector file.");
 
 	sql = G_define_option() ;
         sql->key        = "sql" ;
@@ -56,18 +57,18 @@ int getSelectOpts (argc, argv)
         sql->type       = TYPE_STRING ;
         sql->required   = YES  ;
         sql->multiple   = NO ;
-        sql->description= "SQL statements specifying selection criteria. ";
+        sql->description= _("SQL statements specifying selection criteria. ");
 
         color = G_define_option() ;
         color->key        = "color" ;
         color->type       = TYPE_STRING ;
         color->required   = NO  ;
         color->multiple   = NO ;
-        color->description= "Color for vector draw.";
+        color->description= _("Color for vector draw.");
 	
 	flag1 = G_define_flag() ;
 	flag1->key         = 'f' ;
-	flag1->description = "Fill polygons" ;
+	flag1->description = _("Fill polygons") ;
 
 
         /* Check for help flag */
@@ -95,12 +96,12 @@ int getSelectOpts (argc, argv)
 
 
 	if ((mapset=G_find_file2("dig",map->answer,""))==NULL)  {
-	     fprintf(stderr,"Vector file %s not found.\n",map->answer);
+	     fprintf(stderr,_("Vector file %s not found.\n"),map->answer);
              exit(-1);
 	}
 
         if((fp = fopen(sql->answer,"r")) == NULL) {
-            fprintf(stderr, "File read error on %s\n",sql->answer);
+            fprintf(stderr, _("File read error on %s\n"),sql->answer);
             exit(-1);
            }
  

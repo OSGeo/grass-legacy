@@ -1,7 +1,9 @@
 PGM       = $(BIN_CMD)/d.vect.pg
 LIBES     = $(DISPLAYLIB) $(VECTLIB) $(RASTERLIB) $(GISLIB)		
-EXTRA_CFLAGS = $(PQINCPATH) 
-# -Dunlink=puts
+PACKAGE = "d.vect.pg"
+DEFS = -Wall -DPACKAGE=\"$(PACKAGE)\"
+EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS)
+
 
 OBJS = \
 	main.o\

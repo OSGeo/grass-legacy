@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include "gis.h"
 #include "dbvect.h"
+#include "glocale.h"
 
 #define MAIN
 
@@ -37,7 +38,11 @@ char **argv ;
 
     int selPassed;	/* User specified select inputfile */
 
-/*	setbuf (stdout, NULL);*/
+#ifdef HAVE_LIBINTL_H
+  setlocale (LC_MESSAGES, "");
+  bindtextdomain (PACKAGE, LOCALEDIR);
+  textdomain (PACKAGE);
+#endif
 
 	selPassed = 0;
 

@@ -13,7 +13,7 @@
 #include "gis.h"
 #include "dbvect.h"
 #include "display.h"
-
+#include "glocale.h"
 
 int getAllOpts(argc, argv)
 	int argc;
@@ -33,14 +33,14 @@ int getAllOpts(argc, argv)
         map->type       = TYPE_STRING ;
         map->required   = YES  ;
         map->multiple   = NO ;
-        map->description= "Vector map:";
+        map->description= _("Vector map:");
 
 	key = G_define_option() ;
         key->key        = "key" ;
         key->type       = TYPE_STRING ;
         key->required   = YES  ;
         key->multiple   = NO ;
-        key->description= "Column with category IDs from the table:" ;
+        key->description= _("Column with category IDs from the table:") ;
 
 
         tab = G_define_option() ;
@@ -48,24 +48,25 @@ int getAllOpts(argc, argv)
         tab->type       = TYPE_STRING ;
         tab->required   = YES  ;
         tab->multiple   = NO ;
-        tab->description= "Table containing this column:" ;
+        tab->description= _("Table containing this column:") ;
 
         where = G_define_option() ;
         where->key        = "where" ;
         where->type       = TYPE_STRING ;
         where->required   = NO  ;
         where->multiple   = NO ;
-        where->description= "Query clause (e.g. obj='paved'):" ;
+        where->description= _("Query clause (e.g. obj='paved'):") ;
 
         color = G_define_option() ;
         color->key        = "color" ;
         color->type       = TYPE_STRING ;
         color->required   = NO  ;
         color->multiple   = NO ;
+	color->description= _("Color to draw selected vectors:") ;
 	
 	flag1 = G_define_flag() ;
 	flag1->key         = 'f' ;
-	flag1->description = "Fill polygons" ;
+	flag1->description = _("Fill polygons") ;
 
 	/* Invoke parser */
 	if (G_parser(argc, argv)) {
@@ -83,7 +84,7 @@ int getAllOpts(argc, argv)
 	
 	
 	if ((mapset=G_find_file2("dig",map->answer,""))==NULL)  {
-	     fprintf(stderr,"Vector map %s not found.\n",map->answer);
+	     fprintf(stderr,_("Vector map %s not found.\n"),map->answer);
              exit(-1);
 	}
 

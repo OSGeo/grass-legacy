@@ -12,6 +12,7 @@
 #include "raster.h"
 #include "Vect.h"
 #include "dbvect.h"
+#include "glocale.h"
 
 
 int runInfxFile(SQL_stmt, map, mapset, color, fillcolor )
@@ -46,7 +47,7 @@ int runInfxFile(SQL_stmt, map, mapset, color, fillcolor )
 	Points = Vect_new_line_struct();
         if (2 > Vect_open_old (&P_map, map, mapset))
         { 
-                printf ("Error opening vector map %s in mapset %s\n",
+                printf (_("Error opening vector map %s in mapset %s\n"),
                 map,mapset);
                 return -1;
          }
@@ -59,18 +60,18 @@ int runInfxFile(SQL_stmt, map, mapset, color, fillcolor )
         
     pg_conn = PQsetdb(pghost,NULL, NULL,NULL,G_getenv("PG_DBASE"));
     if (PQstatus (pg_conn) == CONNECTION_BAD) {
-      printf ("Error Selecting from Postgres:%s\n",PQerrorMessage(pg_conn));
+      printf (_("Error Selecting from Postgres:%s\n"),PQerrorMessage(pg_conn));
       PQfinish(pg_conn);
       exit (-1); 
     }
   	      
     res = PQexec (pg_conn, SQL_stmt);
     if ( PQresultStatus (res) != PGRES_TUPLES_OK ) {
-      printf ("Error Connecting to Postgres:%s\n",PQerrorMessage(pg_conn)); 
+      printf (_("Error Connecting to Postgres:%s\n"),PQerrorMessage(pg_conn)); 
       PQfinish(pg_conn);
       exit (-1);      
     }
-      printf ("%d Rows\n",PQntuples(res));
+      printf (_("%d Rows\n"),PQntuples(res));
     for ( i=0; i < PQntuples(res); i++)  {
       strcpy (buf1, PQgetvalue (res, i, 0));
       line_cat = atoi (buf1);
@@ -80,7 +81,7 @@ int runInfxFile(SQL_stmt, map, mapset, color, fillcolor )
       
       stat = plotCat(map,mapset,Points,line_cat, &P_map, fillcolor);
       if (stat != 0) {
-        printf ("Error plotting category %d\n",line_cat);
+        printf (_("Error plotting category %d\n"),line_cat);
         exit (-1);
        } 
     }
