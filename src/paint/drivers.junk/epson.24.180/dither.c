@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "P.h"
 
 static unsigned char rowmask[8] = {0200,0100,0040,0020,0010,0004,0002,0001};
