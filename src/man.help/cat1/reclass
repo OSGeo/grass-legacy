@@ -1,0 +1,198 @@
+
+
+
+reclass(1)           GRASS Reference Manual            reclass(1)
+
+
+
+NAME
+     reclass - Create new cell based upon existing cell
+     (Available through grass3 menu)
+
+SYNOPSIS
+     reclass
+
+DESCRIPTION
+     The GRASS program reclass allows a user to create a new
+     based upon a category reclassification of an existing This
+     new will be a reclassification of the original map, based
+     upon the information the user provided using the reclass
+     program.
+
+     Before using reclass one must know the following:
+
+
+
+     1    The new categories desired; and, which old categories
+          fit into which new categories.
+
+     2    The of the new categories.
+
+
+EXAMPLE
+     Suppose we want to reclassify the cell "roads" consisting of
+     five categories into the three new categories:  paved roads,
+     unpaved roads, and railroad tracks.  The following screen
+     lists the categories of the "roads" cell to be reclassified
+     and prompts the user for the new category to be assigned
+     them.
+
+           ENTER NEW CATEGORY NUMBERS FOR THESE CATEGORIES
+
+         OLD CATEGORY NAME            OLD        NEW
+                                      NUM        NUM
+         no data                      0          0__
+         Hard Surface, 2 lanes        1          0__
+         Loose Surface, 1 lane        2          0__
+         Improved Dirt                3          0__
+         Unimproved Dirt Trail        4          0__
+         Railroad, single track       5          0__
+
+         AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE
+                       (OR <Ctrl-C> TO CANCEL)
+
+
+
+     In the following screen the new category have been entered
+     next to the appropriate old category names. assigned to
+     category 2, 3, and 4 in the old map are now assigned the new
+     category 2 in the reclassed map; formerly assigned to 5 in
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+reclass(1)           GRASS Reference Manual            reclass(1)
+
+
+
+     the old map is now assigned the new category 3 in the
+     reclassed map.
+
+           ENTER NEW CATEGORY NUMBERS FOR THESE CATEGORIES
+
+         OLD CATEGORY NAME            OLD        NEW
+                                      NUM        NUM
+         no data                      0          0__
+         Hard Surface, 2 lanes        1          1__
+         Loose Surface, 1 lane        2          2__
+         Improved Dirt                3          2__
+         Unimproved Dirt Trail        4          2__
+         Railroad, single track       5          3__
+
+         AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE
+                       (OR <Ctrl-C> TO CANCEL)
+
+
+
+     Hitting the escape key <ESC> will bring up the following
+     screen, which prompts the user to enter a new title and
+     category for the newly reclassed categories.
+
+            ENTER NEW CATEGORY NAMES FOR THESE CATEGORIES
+
+       TITLE:  Roads Reclassified
+                  CAT               NEW CATEGORY NAME
+                  NUM
+                   0                no data
+                   1                Paved Roads
+                   2                Unpaved Roads
+                   3                Railroad, single track
+
+       AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE
+                     (OR <Ctrl-C> TO CANCEL)
+
+
+     Based upon the information supplied by the user in the above
+     sample screens, the new cell map, supporting category,
+     color, history, and header files are created.
+
+NOTE
+     In fact, the reclass program does not generate any new maps
+     (in the interests of disk space conservation).  Instead, a
+     reclass table is stored which will be used to reclassify the
+     original map each time the new (reclassed) map name is
+     requested.  As far as the user (and programmer) is
+     concerned, that map has been created.  Also note that
+     although the user can generate a reclass map which is based
+     on another reclass map, the new reclass map will be stored
+     in GRASS as a reclass of the original map.  Therefore, while
+     GRASS allows the user to provide reclass information which
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
+
+
+
+reclass(1)           GRASS Reference Manual            reclass(1)
+
+
+
+     is based on an already reclassified map (for the user's
+     convenience), no reclass map (i.e., reclass table) will ever
+     be stored as a reclass of a reclass.
+
+BEWARE
+     Because reclass generates a table referencing some original
+     map rather than creating a reclassed map, a reclass "cell
+     map" will no longer be accessible if the original map upon
+     which it was based is later removed.
+
+NOTES
+     To convert a reclass to a regular cell set your window to
+     match the header for the reclass and then run resample.
+
+SEE ALSO
+     Greclass[2G], rescale[1], resample[1]
+
+AUTHORS
+     James Westervelt, U.S. Army Construction Engineering
+     Research Laboratory
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         3
+
+
+
