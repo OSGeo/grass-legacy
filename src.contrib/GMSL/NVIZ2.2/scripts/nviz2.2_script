@@ -17,7 +17,7 @@ set env(NV_processname) NVIZ
 
 source $src_boot/etc/nviz2.2/scripts/config.tcl
 
-global Nv_ ScriptState ScriptFile ScriptPlaying
+global Nv_ ScriptState ScriptFile ScriptPlaying NvizLoadState
 
 set ScriptPlaying 0
 
@@ -320,7 +320,7 @@ proc dump_ppm { } {
     appBusy
 
     if {$fname != -1} then {
-       Nwrite_ppm $fname
+       Nwrite_ppm $fname 1
     }
     # show user can proceed
     appNotBusy
@@ -682,6 +682,18 @@ update
 catch {destroy .wait_ok}
 
 # *********************************************************************
+# Automatically load state file from command line
+# *********************************************************************
+if {[catch {set NvizLoadState}] == 0} then {
+
+global Nv_
+
+appBusy
+load_state_aux $NvizLoadState
+appNotBusy
+}
+
+# *********************************************************************
 # Automatics command line script playing functions
 # *********************************************************************
 
@@ -710,13 +722,6 @@ proc CheckScriptDone {} {
 
     after 5000 CheckScriptDone
 }
-
-
-
-
-
-
-
 
 
 
