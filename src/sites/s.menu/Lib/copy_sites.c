@@ -4,7 +4,7 @@ copy_sites (a, b, clipped)
 
 	SITE_LIST *a, *b;
 {
-	int north, east;
+	double north, east;
 	char *desc;
 	struct Cell_head window;
 
