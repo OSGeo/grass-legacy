@@ -1,0 +1,16 @@
+#!/bin/sh
+# look for command in PATH
+# exit status 0 indicates found, 1 indicates not found, 2 missing argument
+
+if [ $# != 1 ]
+then
+	exit 2
+fi
+for dir in `echo $PATH | sed 's/:/ /g'`
+do
+	if [ -x $dir/$1 ]
+	then
+		exit 0
+	fi
+done
+exit 1
