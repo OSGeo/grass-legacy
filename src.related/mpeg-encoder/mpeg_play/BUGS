@@ -1,0 +1,6 @@
+Beta Release 3/7/95
+
+KNOWN BUGS
+o IDCT sometimes doesn't generate IEEE-compliant values for sparse blocks 
+o seg faults when running more than one mpeg_play on a multiprocessor machine
+  w/Solaris 2.4
