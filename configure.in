@@ -179,11 +179,12 @@ AC_ARG_WITH(tiff-includes,
 	    AC_MSG_ERROR([*** You must supply an argument to the --with-tiff-includes option.])
 	  ;;
 	esac
-	TIFF_INC_DIRS="$withval"
+	tiff_inc_dirs="$withval"
     ])
 
-if test "$TIFF_INC_DIRS"; then
-	for dir in $TIFF_INC_DIRS; do
+TIFF_INC_DIRS=
+if test "$tiff_inc_dirs"; then
+	for dir in $tiff_inc_dirs; do
 		if test -d "$dir"; then
 			TIFF_INCLUDE_DIRS="$TIFF_INCLUDE_DIRS -I$dir"
 		else
@@ -193,6 +194,7 @@ if test "$TIFF_INC_DIRS"; then
 	AC_MSG_CHECKING(TIFF include dirs)
 	AC_MSG_RESULT($TIFF_INCLUDE_DIRS)
 fi
+# NEEDS else check default places...
 AC_SUBST(TIFF_INCLUDE_DIRS)
 
 AC_ARG_WITH(tiff-libs,
@@ -203,11 +205,12 @@ AC_ARG_WITH(tiff-libs,
 	    AC_MSG_ERROR([*** You must supply an argument to the --with-tiff-libs option.])
 	  ;;
 	esac
-	TIFF_LIB_DIRS="$withval"
+	tiff_lib_dirs="$withval"
     ])
 
-if test "$TIFF_LIB_DIRS"; then
-	for dir in $TIFF_LIB_DIRS; do
+TIFF_LIB_DIRS=
+if test "$tiff_lib_dirs"; then
+	for dir in $tiff_lib_dirs; do
 		if test -d "$dir"; then
 			TIFF_LIBRARY_DIRS="$TIFF_LIBRARY_DIRS -L$dir"
 		else
@@ -217,7 +220,78 @@ if test "$TIFF_LIB_DIRS"; then
 	AC_MSG_CHECKING(additional TIFF library dirs)
 	AC_MSG_RESULT($TIFF_LIBRARY_DIRS)
 fi
+# NEEDS else check default places ...
 AC_SUBST(TIFF_LIBRARY_DIRS)
+
+AC_ARG_WITH(tcltk-includes,
+    [  --with-tcltk-includes=DIR
+                          site header files for TCL and TK in DIR],
+    [
+	case "$withval" in
+	"" | y | ye | yes | n | no)
+	    AC_MSG_ERROR([*** You must supply an argument to the --with-tcltk-includes option.])
+	  ;;
+	esac
+	tclincdir="$withval"
+	tkincdir="$withval"
+    ])
+
+TKINCDIR=
+if test "$tkincdir"; then
+	for dir in $tkincdir; do
+		if test -d "$dir"; then
+			TKINCDIR="$TKINCDIR -I$dir"
+		else
+			AC_MSG_WARN([*** TK include directory $dir does not exist.])
+		fi
+	done
+	AC_MSG_CHECKING(TK include dirs)
+	AC_MSG_RESULT($TKINCDIR)
+fi
+# NEEDS else check known places ...
+AC_SUBST(TKINCDIR)
+
+TCLINCDIR=
+if test "$tclincdir"; then
+	for dir in $tclincdir; do
+		if test -d "$dir"; then
+			TCLINCDIR="$TCLINCDIR -I$dir"
+		else
+			AC_MSG_WARN([*** TCL include directory $dir does not exist.])
+		fi
+	done
+	AC_MSG_CHECKING(TCL include dirs)
+	AC_MSG_RESULT($TCLINCDIR)
+fi
+# NEEDS else check known places ...
+AC_SUBST(TCLINCDIR)
+
+AC_ARG_WITH(tcltk-libs,
+    [  --with-tcltk-libs=DIR    also search for TCL and TK libraries in DIR],
+    [
+	case "$withval" in
+	"" | y | ye | yes | n | no)
+	    AC_MSG_ERROR([*** You must supply an argument to the --with-tcltk-libs option.])
+	  ;;
+	esac
+	tcltk_lib_dirs="$withval"
+    ])
+
+TCLTKLIBS=
+if test "$tcltk_lib_dirs"; then
+	for dir in $tcltk_lib_dirs; do
+		if test -d "$dir"; then
+			TCLTKLIBS="$TCLTKLIBS -L$dir"
+		else
+			AC_MSG_WARN([*** TCL/TK library directory $dir does not exist.])
+		fi
+	done
+	AC_MSG_CHECKING(additional TCL and TK library dirs)
+	AC_MSG_RESULT($TCLTKLIBS)
+fi
+# NEEDS else check known places ...
+AC_SUBST(TCLTKLIBS)
+
 
 SYSV=
 AC_ARG_WITH(SYSV,
