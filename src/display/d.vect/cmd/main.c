@@ -20,14 +20,27 @@
 #include "local_proto.h"
 int quiet = 1;
 
+static int check_catlist (char *answer)
+{
+    int status = 0;
+    char *cptr;
+    
+    if (answer) {
+        cptr = answer;
+        do {
+            if (!atoi (cptr))
+                status = 1;
+        } while ((cptr = strchr (cptr, ',')) && *(++cptr));
+    }
+    return status;
+}
+
 int main( int argc , char **argv )
 {
     char *mapset ;
-    char **ptr;
     char buf[1024] ;
     int stat=0;
     int color,fill;
-    int line_cat;
     char map_name[128] ;
     struct GModule *module;
     struct Option *opt1, *opt2, *opt3;
@@ -61,6 +74,7 @@ int main( int argc , char **argv )
     opt3->type	= TYPE_INTEGER ;
     opt3->required	= NO ;
     opt3->multiple	= YES ;
+    opt3->checker       = check_catlist;
     opt3->description= "Vector category number(s) to be displayed" ;
 
     flag1 = G_define_flag();
@@ -101,14 +115,11 @@ int main( int argc , char **argv )
     /********** First try level 2 vector read ***********/
     Points = Vect_new_line_struct ();
 
-    if((ptr = opt3->answers) != NULL)   /* Use opt#->answers for multiple */
+    if(opt3->answers)   /* Use opt#->answers for multiple */
     {
-        for (; *ptr != NULL; ptr++)
-        {
-            line_cat = atoi(*ptr);
-            fprintf(stdout, "Selected category number = %d\n",line_cat);
-            stat = plotCat (map_name, mapset, Points, line_cat, fill);
-        }
+        stat = plotCat (map_name, mapset, Points, opt3->answers, fill);
+        if (stat == -2)
+            G_fatal_error ("bad category list");
     }
     else /* we want to see all vectors, no opt3 */
     {

@@ -61,10 +61,58 @@ add_boundary_to_xy_arrays (struct line_pnts *pnts)
     ring_data.npnts[ring_data.nused++] = count;
 }
 
+static int *catlist = NULL;
+static int catcnt = 0;
+
+static int
+build_catlist (char **cats)
+{
+    int i, cat;
+    char *cur;
+    
+    catlist = NULL;
+    catcnt  = 0;
+    
+    for (i = 0, cur = cats[i] ; cur; cur = cats[++i])
+        ;
+    if (i) 
+    {
+        catlist = G_calloc (sizeof (int), i);
+        for (i = 0, cur = cats[i]; cur; cur = cats[++i])
+        {
+            cat = atoi(cur);
+            if (cat)
+                catlist[catcnt++] = cat;
+        }
+        if (!catcnt)
+        {
+            free (catlist);
+            catlist = NULL;
+        }
+        i = catcnt;
+    }
+
+    return i;
+}
+
+static int
+lookup_cat (int cat)
+{
+    int i;
+
+    for (i = 0; i < catcnt; i++)
+    {
+        if (catlist[i] == cat)
+            return cat;
+    }
+    /* not found */
+    return 0;
+}
+    
 int plotCat (
     char *name,char *mapset,
     struct line_pnts *Points,
-    int vect_cat,int fill)
+    char **vect_cats,int fill)
 {
     double *x, *y;
     double N,S,E,W;
@@ -83,6 +131,9 @@ int plotCat (
     {
 	return -1;
     }
+
+    if (!build_catlist (vect_cats))
+        return -2;
 
     Vect__get_window (&P_map, &N, &S, &E, &W);
     if(!quiet)
@@ -129,7 +180,7 @@ int plotCat (
    {
        for(area_cnt=1; area_cnt<=nareas; area_cnt++)
        {
-           if(V2_area_att(&P_map,area_cnt) == vect_cat)
+           if(lookup_cat(V2_area_att(&P_map,area_cnt)))
            {
                a_index = P_map.Att[P_map.Area[area_cnt].att].index;
                /* Points = Vect_new_line_struct(); */
@@ -170,35 +221,34 @@ int plotCat (
        } /* end of for() */
    } /* end if nareas > 0 */
  
-  if(nlines > 0)
+   if(nlines > 0)
    {
 
-    for (line = 1; line <= nlines; line++)
-    {
-	int ret;
+       for (line = 1; line <= nlines; line++)
+       {
+           int ret;
 
-        if (0 > (ret = V2_read_line (&P_map, Points, line)))
-	{
-	    if (ret == -2)
-		G_warning ("Read error\n");
-	    break;
-	}
-	
-        if(V2_line_att(&P_map,line) == vect_cat)
-         {
-	   np = Points->n_points;
-	   x  = Points->x;
-	   y =  Points->y;
-	   for (i=1; i < np; i++)
-	     {
-	       G_plot_line (x[0], y[0], x[1], y[1]);
-	       x++;
-	       y++;
-	     }
-	   catscountL++;
+           if(lookup_cat(V2_line_att(&P_map,line)))
+           {
+               if (0 > (ret = V2_read_line (&P_map, Points, line)))
+               {
+                   if (ret == -2)
+                       G_warning ("Read error\n");
+                   break;
+               }
+               np = Points->n_points;
+               x  = Points->x;
+               y =  Points->y;
+               for (i=1; i < np; i++)
+               {
+                   G_plot_line (x[0], y[0], x[1], y[1]);
+                   x++;
+                   y++;
+               }
+               catscountL++;
            }
        }    /* end for lines */
-    } /* end if nlines > 0 */
+   } /* end if nlines > 0 */
 
    
     if ((catscountL + catscountA) == 0)
