@@ -1,0 +1,25 @@
+Arcdef	arcdef.c	/^Arcdef(radius,table,number) $/
+Circledef	arcdef.c	/^Circledef(radius,table,number) $/
+Mmain	main.c	/^main(argc, argv)$/
+black_and_white_line	bnw_line.c	/^black_and_white_line(screen_x,screen_y,cur_screen_/
+check_lines_out_1	make_cell.c	/^check_lines_out_1(i)$/
+check_lines_out_2	make_cell.c	/^check_lines_out_2(i)$/
+get_category	make_cell.c	/^get_category()$/
+get_map_bot	returns.c	/^get_map_bot() $/
+get_map_left	returns.c	/^get_map_left()$/
+get_map_rite	returns.c	/^get_map_rite() $/
+get_map_top	returns.c	/^get_map_top() $/
+get_point	make_cell.c	/^get_point(csx, csy, screen_x, screen_y, ux, uy)$/
+get_wind_bot	returns.c	/^get_wind_bot() $/
+get_wind_left	returns.c	/^get_wind_left() $/
+get_wind_rite	returns.c	/^get_wind_rite() $/
+get_wind_top	returns.c	/^get_wind_top() $/
+get_wind_x_pos	returns.c	/^get_wind_x_pos(position)$/
+get_wind_y_pos	returns.c	/^get_wind_y_pos(position)$/
+getem	returns.c	/^getem()$/
+make_cell	make_cell.c	/^make_cell()$/
+make_support	make_cell.c	/^make_support(name, mapset, num)$/
+next_type	make_cell.c	/^next_type()$/
+print_header	make_cell.c	/^print_header(mapfile, universe) $/
+show_instructions_1	make_cell.c	/^show_instructions_1()$/
+show_instructions_2	make_cell.c	/^show_instructions_2()$/
