@@ -2,6 +2,10 @@
 # configure script for nviz
 
 # Revisions:
+#  $Log: configure,v $
+#  Revision 1.3  2000-03-06 09:02:53  markus
+#  Philip Warner/Markus Neteler: updated to relative paths
+#
 #  11/11/99 - updated GL path
 #  11/26/97 - Modified to work by changing two following variables
 #  08/29/99 - small bugfixes
@@ -132,40 +136,21 @@ if ("$found" != "") then
 endif
 
 # Now create the makefile
-echo Creating src makefile...
-set SCRIPTS=${install_dir}/scripts
-set SCRIPTS=`echo "$SCRIPTS" | sed 's/\//\\\//g'`
+echo Creating src/Gmakefile...
 set TK_LIB_PATH=`echo "$TK_LIB_PATH" | sed 's/\//\\\//g'`
 set TK_INCLUDE_PATH=`echo "$TK_INCLUDE_PATH" | sed 's/\//\\\//g'`
 'rm' -rf src/Gmakefile
 sed -e "\
 s/TK_LIB_PATH=sed/TK_LIB_PATH=${TK_LIB_PATH}/g;\
 s/TK_INCLUDE_PATH=sed/TK_INCLUDE_PATH=${TK_INCLUDE_PATH}/g;\
-s/SCRIPTS=sed/SCRIPTS=${SCRIPTS}/g\
 s/NVWISH_VER=sed/NVWISH_VER=${NVWISH_VER}/g\
 " src/Gmakefile.in > src/Gmakefile
-
-# Now figure out how we need to configure the tcl scripts
-# set panel_path=${install_dir}/scripts
-# set bit_maps=${install_dir}/bitmaps
-
-# Looks good, now lets make the config file in the scripts directory
-# echo Configuring nviz scripts...
-# set panel_path=`echo "$panel_path" | sed 's/\//\\\//g'`
-# set bit_maps=`echo "$bit_maps" | sed 's/\//\\\//g'`
-# 'rm' -rf scripts/config.tcl
-# sed -e "\
-# s/default_panel_path=sed/default_panel_path ${panel_path}/g;\
-# s/bit_map_path=sed/bit_map_path ${bit_maps}/g\
-# " scripts/config.tcl.in > scripts/config.tcl
-#   WBH - don't hard-code these paths
 
 # Finally create the toplevel makefile
 echo Creating top-level makefile
 set ID=`echo "$install_dir" | sed 's/\//\\\//g'`
 'rm' -rf Gmakefile
 sed -e "\
-s/INSTALL_DIR=sed/INSTALL_DIR=${ID}/g\
 s/NV_VER=sed/NV_VER=${NV_VER}/g\
 s/NVWISH_VER=sed/NVWISH_VER=${NVWISH_VER}/g\
 " Gmakefile.in > Gmakefile

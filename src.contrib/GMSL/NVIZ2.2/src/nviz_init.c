@@ -1,3 +1,7 @@
+/* 
+ * $Id$ 
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "tk.h"
@@ -356,7 +360,7 @@ int Ninit(Tcl_Interp *interp, Tk_Window w)
   Ninitdata(interp, &data);
 
   /* compile in the home directory */
-  Tcl_SetVar(interp, "src_boot", SRC_BOOT, TCL_GLOBAL_ONLY);
+  Tcl_SetVar(interp, "src_boot", getenv("GISBASE"), TCL_GLOBAL_ONLY);
 }  
 
 void swap_togl();

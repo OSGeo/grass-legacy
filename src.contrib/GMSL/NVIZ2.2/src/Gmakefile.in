@@ -1,5 +1,8 @@
 # $Log$
-# Revision 1.4  2000-02-29 14:38:28  markus
+# Revision 1.5  2000-03-06 09:04:07  markus
+# Philip Warner/Markus Neteler: updated to relative paths
+#
+# Revision 1.4  2000/02/29 14:38:28  markus
 # Philip Warner (pjw@rhyme.com.au): Handle Tcl/Tk shared libs (remove tkBind.c), Remove tk*.c as far as possible, Use idle handler instead of SpecialWait
 #
 # 26-Feb-2000 Philip Warner (pjw@rhyme.com.au)
@@ -26,7 +29,6 @@
 # These should be set by the configure script
 TK_LIB_PATH=sed
 TK_INCLUDE_PATH=sed
-SCRIPTS=sed
 NVWISH_VER=sed
 
 OGL_LIBS = -lGLU -lGL $(XLIB) -lXmu -lXext $(MATHLIB) -ldl $(XDRLIB) $(XEXTRALIBS)
@@ -38,10 +40,8 @@ SURFLIB = $(LIBDIR)/ogsf/libgsf.a
 # DSPLIB = $(LIBDIR)/libes/dspf/libdsp3.a
 # DSPINC = $(LIBDIR)/libes/dspf
 
-#EXTRA_CFLAGS= -xansi -O0 -g -I${SURF_INCDIR} $(VECT_INCLUDE) -D_NO_PROTO\
-#        -D__STDC__ $(TK_INCLUDE_PATH) -DSRC_BOOT=\"$(SCRIPTS)\" -I$(DSPINC)
 EXTRA_CFLAGS= -I${SURF_INCDIR} $(VECT_INCLUDE) -D_NO_PROTO\
-        -D__STDC__ $(TK_INCLUDE_PATH) -DSRC_BOOT=\"$(SCRIPTS)\" -I$(DSPINC) $(GISLIB)
+        -D__STDC__ $(TK_INCLUDE_PATH) -I$(DSPINC) $(GISLIB)
 
 IMGLIB= $(LIBDIR)/libimage/libimage.a
 

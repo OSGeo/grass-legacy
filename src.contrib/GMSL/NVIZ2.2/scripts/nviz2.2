@@ -1,0 +1,17 @@
+#!
+cd $GISBASE/etc/nviz2.2/scripts
+
+# this is the NVIZ start script in $GISBASE/bin
+# 3/2000 Philip Warner
+# maybe further parameters need to be added
+
+if [ "$1" != "" ]
+then
+ ELEV="elev=$1"
+fi
+
+#required for NVWISH (src/nviz_init.c)
+NVIZ_SCRIPTS=$GISBASE/etc/nviz2.2/scripts
+
+# now start:
+$GISBASE/etc/bin/contrib/cmd/NVWISH2.2 -f $GISBASE/etc/nviz2.2/scripts/nviz2.2_script $ELEV -name nviz
