@@ -30,12 +30,6 @@ static int format () { G_fatal_error ("Requested format is not compiled in this 
 static int (*Rewind_array[][3]) () =
 {
     { rew_dummy, V1_rewind_nat, V2_rewind_nat }
-   ,{ rew_dummy, V1_rewind_shp, V2_rewind_shp }
-#ifdef HAVE_POSTGRES
-   ,{ rew_dummy, V1_rewind_post, V2_rewind_post }
-#else
-   ,{ rew_dummy, format, format }
-#endif
 #ifdef HAVE_OGR
    ,{ rew_dummy, V1_rewind_ogr, V2_rewind_ogr }
 #else
