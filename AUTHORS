@@ -1,4 +1,3 @@
-
 GRASS 5.0 Author List
 
 Please check additionally the new list at:
@@ -6,7 +5,7 @@ Please check additionally the new list at:
 
 While it is impossible for us to give credit to everyone (past 
 and present) who has contributed to GRASS, the following is the 
-official list for GRASS 5.0:
+incomplete official list for GRASS 5.0:
 
 Center for Applied Geographic and Spatial Research
 Bruce Byars, Steve Clamons, Lisa Zygo, Scott Cherry, Clay Cockrell
@@ -20,17 +19,46 @@ Helena Mitasova, William Brown
 National Center for Supercomputing Applications
 Lubos Mitas
 
-U.S. Army Construction Engineering Laboratories
-Jim Westervelt, Michael Shapiro, Chris Rewerts, Robert Lozar
+GRASS 4 development:
+ U.S. Army Construction Engineering Laboratories
+ Jim Westervelt, Michael Shapiro, Chris Rewerts, Robert Lozar
 
 Others making significant contributions:
 Bill Hughes
 Bernhard Reiter
 Brook Milligan
 
+    Carl Anderson (email) (XDRIVER support) 
+    Roger Bivand (email) ("R" statistical language support) 
+    Bill Brown (email) (grid3D and related) 
+    Angus Carr (email) (ERDAS LAN) 
+    Jaro Hofierka (email) (NVIZ, grid3D and related) 
+    John Huddleston (email) (Windows/Cygnus port) 
+    Bill Hughes (email) (64bit compliance) 
+    Andreas Lange (email) (SGI/Irix compliance) 
+    Pierre de Mouveaux (email) (NVIZ) 
+    Brook Milligan (email) (autoconf) 
+    Lubos Mitas (email) (grid3D and related) 
+    Helena Mitasova (email) (grid3D and related, spline interpolation) 
+    Bernhard Reiter (email) (license, CVS) 
+    Richard Shepard (email) (GRASS documentation project) 
+    Alexander Shevlakov (email) (PostgreSQL/GRASS interface) 
+    Michel Wurtz (email) (ESRI e00 support) 
+    Edward Zarecky (email) (user support) 
+    Lisa Zygo (email) (user support, GRASS manuals) 
 
 The Official home of GRASS is:
 
+European Headquarters 
+GRASS Development Team
+Institute of Physical Geography-Landscape Ecology
+University of Hannover 
+Schneiderberg 50 
+30167 Hannover 
+Germany 
+email: neteler@geog.uni-hannover.de
+
+United States Headquarters 
 GRASS Development Team
 Center for Applied Geographic and Spatial Research
 Baylor University
@@ -42,4 +70,4 @@ Email:     grass@baylor.edu
 Internet:  http://www.baylor.edu/~grass
            http://www.geog.uni-hannover.de/grass
 
-With a worldwide distribution network.
+with a worldwide distribution network.
