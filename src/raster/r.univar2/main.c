@@ -182,7 +182,7 @@ int main(int argc, char *argv[]) {
 
     /* all these calculations get promoted to doubles, so any DIV0 becomes nan */
     mean = sum/n;
-    variance = (sumsq - sum*sum/n)/(n-1);
+    variance = (sumsq - sum*sum/n)/n);
     stdev = sqrt(variance);
     var_coef = (stdev/mean)*100;  /* perhaps stdev/fabs(mean) ? */
 
@@ -209,7 +209,7 @@ int main(int argc, char *argv[]) {
 	fprintf(stdout, "range: %g\n", max - min);
 	fprintf(stdout, "mean: %g\n", mean);
 	fprintf(stdout, "standard deviation: %g\n", stdev);
-	fprintf(stdout, "sample variance: %g\n", variance);
+	fprintf(stdout, "variance: %g\n", variance);
 	fprintf(stdout, "variation coefficient: %g %%\n", var_coef);
     }
 
