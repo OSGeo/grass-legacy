@@ -1,0 +1,15 @@
+EXTRA_CFLAGS	= -I$(SRC)/mapdev/lib   -I$(SRC)/mapdev/libes 
+
+
+OFILES = \
+	ask_for.o \
+	init_head.o \
+	main.o \
+	write_grid.o
+
+all:  $(BIN)/V.mkgrid 
+
+
+$(BIN)/V.mkgrid:  $(OFILES)
+	$(CC) $(LDFLAGS) -o $@  $(OFILES) $(GISLIB) $(DIGLIB) $(MATHLIB)
+
