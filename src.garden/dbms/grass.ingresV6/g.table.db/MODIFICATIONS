@@ -1,0 +1,34 @@
+****************************************
+g.table.db - Modifications for INGRES
+
+Katarina Johnsson, 930421
+****************************************
+
+INGRES version: 6
+
+INGRES version specific subroutines:
+	Available database tables names are extracted via an SQL query
+	to system tables. These are specific for INGRES ver5. Thus the
+	entire program is specific for INGRES ver5.
+
+Modified and/or renamed subroutines:
+	main
+	ingresTable <=> infxTable ?
+
+New subroutines:
+	None
+
+Modified and/or renamed include files:
+	None
+
+New include files:
+	None
+
+INGRES modifications:
+	SQL query to system table (main).
+
+Improvements:
+	None
+
+Bug Fixes:
+	None
