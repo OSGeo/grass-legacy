@@ -64,8 +64,7 @@ int PS_vector_plot (struct Map_info *P_map, int vec, int type)
 		{
 		    if ( vector.coffset[vec] != 0 )
 			d = cat * vector.coffset[vec] / PS.ew_to_x ;
-
-		    if ( vector.offset[vec] != 0 )
+		    else
 			d = vector.offset[vec] / PS.ew_to_x ;
 		    
 		    adjust_line ( Points ); /* LL projection */
