@@ -56,7 +56,7 @@ proc prnout {dlg fh} {
 		close $fh
 	} else {
 		set str [read $fh]
-		while {[set idx [string first {\b} $str]] != -1} {
+		while {[set idx [string first "\b" $str]] != -1} {
 			set last [expr $idx - 1]
 			set str1 [string range $str 1 $last]
 			set first [expr $idx + 1]
