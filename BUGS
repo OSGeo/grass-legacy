@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.41 2000-10-19 16:35:03 markus Exp $
+$Id: BUGS,v 1.42 2000-10-19 16:36:20 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -98,6 +98,11 @@ d.rast.num: some numbers are displayed in wrong (unreadable) color
   d.sites.qual doesn't work properly: not all the sites 
   are used/displayed if the number of fields of the input site file is 
   not constant. Compare with d.sites.
+ Comment from Eric G Miller:
+    However, I do not believe this is a bug.  d.sites.qual needs consistent
+    dimension, category and attribute data to work.  Besides, I think the  
+    site_list is broken if it doesn't have a constant number and type of   
+    fields (We're looking at allowing null fields for 5.1...). 
   (being worked on by ?)  
 
 i.in.gtc/i.in.pri
