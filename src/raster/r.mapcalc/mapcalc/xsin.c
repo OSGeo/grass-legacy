@@ -11,23 +11,33 @@ sin(x)
 
 #define DEGREES_TO_RADIANS ( 3.14159 / 180.0 )
 
+extern double sin();
+static double cur = 0.0;
+static double cur_sin = 0.0; /* sin(0.0); */
+
 x_sin (argc, argv, cell, ncols)
     double *argv[];
     register double *cell;
     register int ncols;
 {
-    double sin();
-    register double x;
     register double *a;
 
     a = argv[0];
     while (ncols-- > 0)
     {
-	floating_point_exception = 0;
-	x = sin (*a++ * DEGREES_TO_RADIANS);
-	if (floating_point_exception)
-	    x = 0.0;
-	*cell++ = x;
+	if (*a == cur)
+	{
+	    a++;
+	}
+	else
+	{
+	    cur = *a++;
+	    floating_point_exception = 0;
+	    cur_sin = sin (cur * DEGREES_TO_RADIANS);
+	    if (floating_point_exception)
+		cur_sin = 0.0;
+	}
+	*cell++ = cur_sin;
     }
 }
 
