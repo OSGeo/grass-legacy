@@ -1,0 +1,19 @@
+.TH DOS.delete
+.SH NAME
+\fIDOS.delete\fR \- SCS DOS PC6300 display station image support.
+.br
+.I "(Available for PC6300 workstations, only)"
+.SH SYNOPSIS
+\fBDOS.delete\fR
+.br
+\fBDOS.delete help\fR
+.SH DESCRIPTION
+allows a user to interactively remove PC6300 saved images from the MS-DOS disk. DOS.save will store an image produced by "d.display", "d.rast", etc. on the PC6300 display the 6300 hard disk. 
+
+.SH "INTERACTIVE MODE"
+.SH BUGS
+.SH "SEE ALSO"
+DOS.list, DOS.show, DOS.save
+.SH AUTHOR
+P.W.Carlson, USDA, SCS, NHQ-CGIS
+
