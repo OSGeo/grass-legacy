@@ -1,11 +1,12 @@
-#ifndef NOT_SUN
-# include <rasterfile.h>
-#else
+/* #ifndef NOT_SUN
+ * # include <rasterfile.h>
+ * #else
+ */
 # define RAS_MAGIC 0x59a66a95
 # define RT_STANDARD 1
 # define RT_BYTE_ENCODED 2
 # define RMT_EQUAL_RGB 1
-#endif
+/* #endif */
 
 #include <stdio.h>
 
