@@ -3,7 +3,7 @@ LIBES = $(DISPLAYLIB) $(RASTERLIB) $(COORCNVLIB) $(GISLIB)
 LIST = \
 	b_w_line.o \
 	main.o \
-	where_am_i.o
+	where.o
 
 
 $(BIN_MAIN_CMD)/d.where: $(LIST) $(LIBES)
