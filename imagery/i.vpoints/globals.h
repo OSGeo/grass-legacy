@@ -7,6 +7,8 @@
 #  define INIT(x) = x
 #endif
 
+GLOBAL int cellmap_present;
+
 GLOBAL int SCREEN_TOP;
 GLOBAL int SCREEN_BOTTOM;
 GLOBAL int SCREEN_LEFT;

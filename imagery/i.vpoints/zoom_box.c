@@ -195,6 +195,8 @@ static int zoom2 (int x,int y)
 
     if(target_flag)
        {
+          if(cellmap_present)
+               drawcell (zoom_view,0);
           zoomvect(zoom_view);
           VIEW_MAP2_ZOOM->cell.configured = 1;
        }
