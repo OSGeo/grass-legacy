@@ -16,14 +16,14 @@ map to Postgres/PostGIS table. (GRASS-RDBMS Interface Display Program)
 SYNOPSIS</h2>
 <b>v.to.pg</b>
 <br><b>v.to.pg help</b>
-<br><b>v.to.pg [-fvtp]</b> <b>key</b>=<i>name</i> <b>tab</b>=<i>name</i><b>type</b>=<i>name
-</i>[<b>where</b>=<i>name</i>]
-<b>map</b>=<i>name</i> [<b>color</b>=<i>name</i>]
+<br><b>v.to.pg [-tfvp]</b> <b>key</b>=<i>name</i> <b>tab</b>=<i>name</i>
+<b>map</b>=<i>name</i> <b>type</b>=<i>name</i> 
+[<b>where</b>=<i>name</i>] [<b>color</b>=<i>name</i>]
 <h2>
 ALTERNATE</h2>
 <b>v.to.pg -s help</b>
-<br><b>v.to.pg ]-sfvp] sql</b><i>=filename</i> <b>map</b><i>=name</i> <b>type</b>=<i>name
-</i>[<b>color</b><i>=name</i>]
+<br><b>v.to.pg [-sfvp] sql</b><i>=filename</i> <b>map</b><i>=name</i> 
+<b>type</b>=<i>name </i>[<b>color</b><i>=name</i>]
 <h2>
 DESCRIPTION</h2>
 <i>v.to.pg</i> exports vectors from an existing vector map based on the
@@ -54,12 +54,6 @@ Flag:</h3>
 
 <dl>
 <dt>
-<b>-f</b></dt>
-
-<dd>
-Fill polygons selected on the query criteria.</dd>
-
-<dt>
 <b>-t</b></dt>
 
 <dd>
@@ -67,6 +61,13 @@ Export all map vectors without reference to existing table ('where' clause
 ignored).</dd>
 
 <dt>
+<b>-f</b></dt>
+
+<dd>
+Fill polygons selected on the query criteria.</dd>
+
+<dt>
+
 <b>-v</b></dt>
 
 <dd>
@@ -219,14 +220,14 @@ Type of the coverage to export.</dd>
 </dl>
 
 <p><br><b>EXAMPLE:</b>
-<p><b>1. </b><i>v.to.pg -f key=rec_id map=kuruma_id tab=info_kuruma type=area
-where='type_id >32 and type_id &lt; 38'&nbsp; color=red</i>
+<p><b>1. </b><tt>v.to.pg -f key=rec_id map=kuruma_id tab=info_kuruma type=area
+where='type_id >32 and type_id &lt; 38'&nbsp; color=red</tt>
 <br>&nbsp;
 <p><b>Result:</b> only polygons with type in 33-37 range would be inserted
 in table <i>info_kuruma_bnd</i> and displayed in red color.
-<p><b>2.</b> <i>v.to.pg -v -s -f -p sql=oak.sql map=kuruma_id type=area</i>
+<p><b>2.</b> <tt>v.to.pg -v -s -f -p sql=oak.sql map=kuruma_id type=area</tt>
 <p>oak.sql is:
-<p><i>select rec_id from info_kuruma where type_id > 32 and type_id &lt;38;</i>
+<p><tt>select rec_id from info_kuruma where type_id > 32 and type_id &lt;38;</tt>
 <p><b>Result: </b>this command would do the same as in the first example,
 some information printed on screen. However, the result table would be
 in PostGIS format.
