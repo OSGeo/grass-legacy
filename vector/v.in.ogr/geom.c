@@ -23,7 +23,7 @@
 
 /* Write geometry to output map */
 int 
-geom(OGRGeometryH hGeom, struct Map_info *Map, int cat )
+geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat )
 {
     int    i, j, np, nr, ret;
     struct line_pnts *Points, **IPoints;
@@ -35,7 +35,7 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int cat )
     Points = Vect_new_line_struct ();
     BCats = Vect_new_cats_struct ();
     Cats = Vect_new_cats_struct ();
-    Vect_cat_set ( Cats, 1, cat );
+    Vect_cat_set ( Cats, field, cat );
 
     eType = wkbFlatten(OGR_G_GetGeometryType(hGeom));
 
@@ -69,6 +69,10 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int cat )
 	    Vect_append_point ( Points, OGR_G_GetX(hRing,j), 
 		    OGR_G_GetY(hRing,j), OGR_G_GetZ(hRing,j) );
 	}
+	
+	if ( Points->n_points < 4 ) 
+	    G_warning ( "Degenerate polygon (%d vertices).", Points->n_points );
+	
         Vect_write_line ( Map, GV_BOUNDARY, Points, BCats);
 	
 	/* Isles */
@@ -82,23 +86,44 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int cat )
                 Vect_append_point ( IPoints[i-1], OGR_G_GetX(hRing,j), 
 			OGR_G_GetY(hRing,j), OGR_G_GetZ(hRing,j) );
 	    }
+	    
+	    if ( IPoints[i-1]->n_points < 4 ) 
+	        G_warning ( "Degenerate island (%d vertices).", IPoints[i-1]->n_points );
+	    
             Vect_write_line ( Map, GV_BOUNDARY, IPoints[i-1], BCats);
         }
 
 	/* Centroid */
-	ret = Vect_get_point_in_poly_isl ( Points, IPoints, nr-1, &x, &y);
-	if ( ret == -1 ) {
-	    G_warning ( "Cannot calculate centroid" );
-	} else {
-            Vect_reset_line ( Points );
-	    Vect_append_point ( Points, x, y, 0 );
+	/* Vect_get_point_in_poly_isl() would fail for degenerate polygon */
+	if ( Points->n_points >= 4 ) {
+	    ret = Vect_get_point_in_poly_isl ( Points, IPoints, nr-1, &x, &y);
+	    if ( ret == -1 ) {
+		G_warning ( "Cannot calculate centroid" );
+	    } else {
+		Vect_reset_line ( Points );
+		Vect_append_point ( Points, x, y, 0 );
+		Vect_write_line ( Map, GV_CENTROID, Points, Cats);
+	    }
+	} else if ( Points->n_points > 0 ) {
+	    if ( Points->n_points >= 2 ) { 
+		/* center of 1. segment ( 2. point is not best for 3 vertices as 3. may be the same as 1.) */
+		x = (Points->x[0] + Points->x[1]) / 2;  
+	        y = (Points->y[0] + Points->y[1]) / 2;
+	    } else {  /* one point */
+		x = Points->x[0];  
+		y = Points->y[0];
+	    }
+	    Vect_reset_line ( Points );
+      	    Vect_append_point ( Points, x, y, 0 );
 	    Vect_write_line ( Map, GV_CENTROID, Points, Cats);
-	}
+	} else { /* 0 points */
+	    G_warning ( "No centroid written for polygon with 0 vertices." );
+	} 
+	
 	for( i = 1; i < nr; i++ ) {
             Vect_destroy_line_struct ( IPoints[i-1] );
 	}
         if ( nr > 1 ) G_free ( IPoints );	 
-     	
     }
 
     /* I did not test this because I did not have files of these types */
@@ -112,7 +137,7 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int cat )
         for( i = 0; i < nr; i++ ) {
             hRing = OGR_G_GetGeometryRef( hGeom, i );
 
-	    ret = geom( hRing, Map, cat );
+	    ret = geom( hRing, Map, field, cat );
 	    if ( ret == -1 ) {
 		G_warning ("Cannot write part of geometry" );
 	    }
