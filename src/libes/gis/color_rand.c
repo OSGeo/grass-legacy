@@ -1,40 +1,33 @@
-/**********************************************************************
- *
- *  G_make_random_colors (pcolr, min, max)
- *
- *   struct Colors *pcolr    struct to hold colors
- *   CELL min,max            min,max color numbers
- *
- *  Generates random colors that are stored in the pcolr structure. 
- *
- **********************************************************************/
-
 #include "gis.h"
 
-G_make_random_colors (pcolr,min,max)
-    struct Colors *pcolr ;
+#define MAX_COLORS 1024
+#define DEVIATION 128
+
+G_make_random_colors (colors,min,max)
+    struct Colors *colors ;
     CELL min,max;
 {
-    int i ;
-    int num;
-    int red, grn, blu;
+    unsigned char red, grn, blu;
+    int count;
+    CELL n;
 
-    G_init_colors (pcolr);
-    if (max < min)
-	return -1;
+    G_init_colors (colors);
+    if (min > max) return -1;
 
-    if (min == 1) min = 0;
-    if (max == -1) max = 0;
-    num = max - min + 1;
+    srand(time ((long *)0));
 
-    srand((int)time((long *)0)) ;
-    for(i=0; i < num; i++)
+    count = MAX_COLORS-DEVIATION + rand() % DEVIATION;
+    if (count > max-min+1)
+	count = max-min+1;
+
+    for (n = 1; n <= count; n++)
     {
 	red = rand() & 0377;
 	grn = rand() & 0377;
 	blu = rand() & 0377;
-	G_set_color ((CELL)(i+min), red, grn, blu, pcolr);
+	G_add_modular_color_rule (n, red, grn, blu, n, red, grn, blu, colors);
     }
+    G_set_color_range (min, max, colors);
 
     return 1;
 }
