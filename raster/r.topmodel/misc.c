@@ -100,11 +100,11 @@ top_index(void)
 	}
 
 	if(map.topidx){
-		sprintf(buf, "%s/scripts/r.avgstats "
-			     "map=%s nsteps=%d > %s",
+		sprintf(buf, "%s/bin/r.stats -Anc "
+			     "input=%s nsteps=%d > %s",
 				gisbase, map.topidx, misc.nidxclass,
 				file.idxstats);
-		fprintf(stderr, "r.avgstats map=%s nsteps=%d > %s ... ",
+		fprintf(stderr, "r.stats -Anc input=%s nsteps=%d > %s ... ",
 				map.topidx, misc.nidxclass, file.idxstats);
 
 		if(run(buf))
