@@ -1721,6 +1721,9 @@ XRootWindow(
 Window
 XRootWindowOfScreen(Screen *scr);
 
+int
+XScreenNumberOfScreen(Screen *scr);
+
 BoolDef XTranslateCoordinates(
 		      Display *display,
 		      Window sw, Window dw,
@@ -1947,6 +1950,15 @@ Cursor
 XCreateFontCursor(
 		  Display *display,
 		  unsigned int shape);
+Cursor
+XCreatePixmapCursor(
+		    Display *display,
+		    Pixmap source,
+		    Pixmap mask,
+		    XColor *foreground_color,
+		    XColor *background_color,
+		    unsigned int x,
+		    unsigned int y);
 int
 XRecolorCursor(
 	       Display *display,

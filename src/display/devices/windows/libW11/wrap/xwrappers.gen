@@ -181,6 +181,13 @@ Pixmap XCreatePixmap( Display *display, Drawable drawable, unsigned int width, u
 	return (func_XCreatePixmap)( display, drawable, width, height, depth);
 }
 
+typedef Cursor (proto_XCreatePixmapCursor)( Display *display, Pixmap source, Pixmap mask, XColor *foreground_color, XColor *background_color, unsigned int x, unsigned int y);
+static proto_XCreatePixmapCursor *func_XCreatePixmapCursor = NULL;
+Cursor XCreatePixmapCursor( Display *display, Pixmap source, Pixmap mask, XColor *foreground_color, XColor *background_color, unsigned int x, unsigned int y) {
+	if (!func_XCreatePixmapCursor) func_XCreatePixmapCursor=(proto_XCreatePixmapCursor *)_loadfunc("XCreatePixmapCursor");
+	return (func_XCreatePixmapCursor)( display, source, mask, foreground_color, background_color, x, y);
+}
+
 typedef Region (proto_XCreateRegion)();
 static proto_XCreateRegion *func_XCreateRegion = NULL;
 Region XCreateRegion() {
@@ -809,6 +816,13 @@ static proto_XRootWindowOfScreen *func_XRootWindowOfScreen = NULL;
 Window XRootWindowOfScreen(Screen *scr) {
 	if (!func_XRootWindowOfScreen) func_XRootWindowOfScreen=(proto_XRootWindowOfScreen *)_loadfunc("XRootWindowOfScreen");
 	return (func_XRootWindowOfScreen)(scr);
+}
+
+typedef int (proto_XScreenNumberOfScreen)(Screen *scr);
+static proto_XScreenNumberOfScreen *func_XScreenNumberOfScreen = NULL;
+int XScreenNumberOfScreen(Screen *scr) {
+	if (!func_XScreenNumberOfScreen) func_XScreenNumberOfScreen=(proto_XScreenNumberOfScreen *)_loadfunc("XScreenNumberOfScreen");
+	return (func_XScreenNumberOfScreen)(scr);
 }
 
 typedef Screen * (proto_XScreenOfDisplay)( Display *display, int scr);
