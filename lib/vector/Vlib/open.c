@@ -185,10 +185,10 @@ Vect__open_old (
       G_debug (1, "Vect_open_old(): vector was not opened");
       switch ( Vect_get_fatal_error () ) {
           case GV_FATAL_EXIT:
-              G_fatal_error ( "Cannot open old vector %s", Vect_get_full_name(Map) ); 
+              G_fatal_error ( "Cannot open old vector %s on level %d", Vect_get_full_name(Map), level_request ); 
 	      break;
           case GV_FATAL_PRINT:
-              fprintf(stderr, "ERROR: Cannot open old vector %s\n", Vect_get_full_name(Map) ); 
+              fprintf(stderr, "ERROR: Cannot open old vector %s on level %d\n", Vect_get_full_name(Map), level_request ); 
 	      break;
           case GV_FATAL_RETURN:
 	      break;
