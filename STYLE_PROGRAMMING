@@ -1,6 +1,6 @@
 GRASS GIS programming style standards
 
-$Id: STYLE_PROGRAMMING,v 1.9 2000-11-02 09:27:08 justin Exp $
+$Id: STYLE_PROGRAMMING,v 1.10 2000-11-02 19:44:09 cho Exp $
 
 Please improve this list!
  
@@ -61,6 +61,8 @@ GRASS GIS programming style standards
     /*
      * <$>Id<$>
      */
+
+10. For consistency, use README rather than README.txt.
 
 ...
 [add further hints]
