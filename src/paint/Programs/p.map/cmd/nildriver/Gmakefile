@@ -1,0 +1,5 @@
+LIST = open.o close.o connect.o alpha.o raster.o rle.o text.o\
+	returns.o pictsize.o flush.o disconnect.o\
+	colors.o
+lib.a: $(LIST)
+	$(AR)
