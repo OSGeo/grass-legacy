@@ -23,6 +23,7 @@
 #define O_REP  3
 #define O_PRN  4
 #define O_SUM  5
+#define O_CHFIELD 6
 
 #define FRTYPES 7  /* number of field report types */
 
@@ -71,11 +72,12 @@ main (int argc, char *argv[])
 	option_opt->type =  TYPE_STRING;
 	option_opt->required = NO;
 	option_opt->multiple = NO;
-	option_opt->options = "add,del,sum,report,print";
+	option_opt->options = "add,del,chfield,sum,report,print";
 	option_opt->answer = "add";
         option_opt->description = "Action to be done:\n"
 	    	"\tadd - add a new category\n"
 		"\tdel - delete category\n"
+		"\tchfield - change field number (e.g. field=3,1 changes all fields 3 to field 1)\n"
 		"\tsum - add the value specified by cat option to the current category value\n"
 		"\treport - print report (statistics)\n"
 		"\tprint - print category values";
@@ -101,13 +103,16 @@ main (int argc, char *argv[])
 	
 	/* read options */
 	option = 0;
-        switch ( option_opt->answer[0] )
-          {
+        switch ( option_opt->answer[0] ) {
 	    case ( 'a' ):
 		option = O_ADD;
 		break;
 	    case ( 'd' ):
 		option = O_DEL;
+		break;
+	    case ( 'c' ):
+		option = O_CHFIELD;
+		G_warning("Database connection and attribute tables for concerned fields are not changed");
 		break;
 	    case ( 's' ):
 		option = O_SUM;
@@ -118,7 +123,7 @@ main (int argc, char *argv[])
 	    case ( 'p' ):
 		option = O_PRN;
 		break;
-	  }
+	}
 
 	cat = atoi( cat_opt->answer );
 	step = atoi( step_opt->answer );
@@ -157,8 +162,11 @@ main (int argc, char *argv[])
 	    fields[i] = atoi( field_opt->answers[i] );
 	    i++;
 	}
-	if ( nfields > 1 && option != O_PRN )
+	if ( nfields > 1 && option != O_PRN && option != O_CHFIELD )
 	    G_fatal_error ( "Too many fields for this operation");
+	
+	if ( nfields != 2 && option == O_CHFIELD )
+	    G_fatal_error ( "2 fields must be specified");
 	
 	if ( (option != O_REP) && (option != O_PRN) && (out_opt->answer == NULL) )
 	  {
@@ -179,8 +187,7 @@ main (int argc, char *argv[])
 	Vect_open_old (&In, in_opt->answer, mapset); 
 
 	/* open output vector if needed */
-	if (option == O_ADD || option == O_DEL || option == O_SUM)
-          {
+	if (option == O_ADD || option == O_DEL || option == O_CHFIELD || option == O_SUM) {
 	    with_z = In.head.with_z;
 	
 	    Vect_set_fatal_error (GV_FATAL_PRINT);
@@ -192,11 +199,9 @@ main (int argc, char *argv[])
 	    Vect_copy_head_data (&In, &Out);
 	    Vect_hist_copy (&In, &Out);
 	    Vect_hist_command ( &Out );
-          }
+        }
 
-
-        switch ( option)
-	  {	
+        switch ( option) {	
 	    case (O_ADD):	  
 		/* Lines */
 	        while ( (type = Vect_read_next_line (&In, Points, Cats)) > 0)
@@ -244,6 +249,19 @@ main (int argc, char *argv[])
 	               }	   
 	            Vect_write_line ( &Out, type, Points, Cats );  
 	          }
+		break;
+
+	    case (O_CHFIELD):	  
+	        while ( (type = Vect_read_next_line (&In, Points, Cats)) > 0) {
+	            if ( type & otype ) {
+			for ( i = 0 ; i < Cats->n_cats; i++ ) {
+			   if ( Cats->field[i] == fields[0] ) {
+			       Cats->field[i] = fields[1];
+			   }
+			}
+	            }
+	            Vect_write_line ( &Out, type, Points, Cats );  
+	        }
 		break;
 		
 	    case (O_SUM):	  
@@ -367,9 +385,9 @@ main (int argc, char *argv[])
 	            fprintf (stdout, "\n" );
 		}
 		break;
-	  }
+	}
 	
-	if (option == O_ADD || option == O_DEL || option == O_SUM) {
+	if (option == O_ADD || option == O_DEL || option == O_CHFIELD || option == O_SUM) {
 	    Vect_copy_tables ( &In, &Out, 0 );
 	    Vect_build (&Out, stdout);
 	    Vect_close (&Out);
