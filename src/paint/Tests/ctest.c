@@ -1,5 +1,3 @@
-/* @(#)ctest.c	2.2   10/14/87 */
-
 /***********************************************************
 test: test the number of chars per line of the painter
 
@@ -12,7 +10,7 @@ int nchars;
 
 int nchars;
 
-main()
+main(argc,argv) char *argv[];
 {
     char buf[100];
     char *cbuf;
@@ -21,6 +19,7 @@ main()
     int ok;
     int repeat;
 
+    G_gisinit(argv[0]);
     Pconnect();
     Plock();
     Popen();
