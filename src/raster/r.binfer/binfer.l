@@ -41,7 +41,9 @@ int yynerrs = 0;
 
 #ifndef sparc
 #ifndef linux
+#ifndef __FreeBSD__
 int yylineno = 1;
+#endif
 #endif
 #endif
 
