@@ -3,16 +3,13 @@
 #include "vect/digit.h"
 
 /*   ANSI prototypes for the libes/vect32/Vlib functions */
-/*
-struct dig_head *Vect__get_default_out_head (void);
-struct dig_head *Vect__get_default_in_head (void);
-struct dig_head *Vect__get_default_port_head (void);
-*/
 int Vect_close (struct Map_info *);
-int V1_close (struct Map_info *);
-int V2_close (struct Map_info *);
-int V2_tmp_close (int);
-int V2_tmp_open (int);
+int V1_close_nat (struct Map_info *);
+int V1_close_shp (struct Map_info *);
+int V1_close_post (struct Map_info *);
+int V2_close_nat (struct Map_info *);
+int V2_close_shp (struct Map_info *);
+int V2_close_post (struct Map_info *);
 int Vect_set_constraint_region (struct Map_info *, double, double, double, double);
 int Vect_set_constraint_type (struct Map_info *, int);
 int Vect_remove_constraints (struct Map_info *);
@@ -64,17 +61,23 @@ int Vect_code_to_type (int);
 int Vect_set_open_level (int);
 int Vect_open_old (struct Map_info *, char *, char *);
 int Vect_open_new (struct Map_info *, char *, int);
-int Vect__open_update_1 (struct Map_info *, char *);
-int V1_open_old (struct Map_info *, char *, char *);
-int V1_open_new (struct Map_info *, char *, int);
-int V1__open_update_1 (struct Map_info *, char *);
-int V2_open_old (struct Map_info *, char *, char *);
+/*int Vect__open_update_1 (struct Map_info *, char *);*/
+int V1_open_old_nat (struct Map_info *);
+int V1_open_old_shp (struct Map_info *);
+int V1_open_old_post (struct Map_info *);
+int V1_open_new_nat (struct Map_info *, char *, int);
+int V1_open_new_shp (struct Map_info *, char *, int);
+int V1_open_new_post (struct Map_info *, char *, int);
+/*int V1__open_update_1 (struct Map_info *, char *); */
+int V2_open_old_nat (struct Map_info *, char *, char *);
+/*
 int V2__open_new_1 (struct Map_info *, char *, int);
 int V2_open_update (struct Map_info *, char *);
 int V2_open_new_plus (struct Map_info *, char *);
 int V2__init_for_create_plus (struct Map_info *, char *);
 int V2__open_update_1 (struct Map_info *, char *);
-int V2__setup_for_digit (struct Map_info *, char *);
+int V2__setup_for_digit (struct Map_info *, char *); 
+*/
 int Vect_get_point_in_area (struct Map_info *, int, double *, double *);
 int Vect__intersect_line_with_poly (struct line_pnts *, double, struct line_pnts *);
 int Vect_get_point_in_poly (struct line_pnts *, double *, double *);
@@ -88,9 +91,6 @@ int Vect__read_head_binary (struct Map_info *, struct dig_head *);
 */
 int Vect__write_head (struct Map_info *);
 int Vect__read_head (struct Map_info *);
-int Vect__Read_line (struct Map_info *, struct line_pnts *, struct line_cats *, long);
-long Vect__Write_line (struct Map_info *, int type, struct line_pnts *, struct line_cats *);
-int Vect__Rewrite_line (struct Map_info *, long, int, struct line_pnts *, struct line_cats *);
 int dig_Rd_P_node (struct Map_info *, struct P_node *, FILE *);
 int dig_Wr_P_node (struct Map_info *, struct P_node *, FILE *);
 int dig_Rd_P_line (struct Map_info *, struct P_line *, FILE *);
@@ -103,28 +103,56 @@ int dig_Rd_P_att (struct Map_info *, struct P_att *, FILE *);
 int dig_Wr_P_att (struct Map_info *, struct P_att *, FILE *);
 int dig_Rd_Plus_head (struct Map_info *, struct Plus_head *, FILE *);
 int dig_Wr_Plus_head (struct Map_info *, struct Plus_head *, FILE *);
+
 int Vect_read_next_line (struct Map_info *, struct line_pnts *, struct line_cats *);
 int V1_read_line (struct Map_info *, struct line_pnts *, struct line_cats *, long);
+int V1_read_line_nat (struct Map_info *, struct line_pnts *, struct line_cats *, long);
+int V1_read_line_shp (struct Map_info *, struct line_pnts *, struct line_cats *, long);
+int V1_read_line_post (struct Map_info *, struct line_pnts *, struct line_cats *, long);
 int V1_read_next_line (struct Map_info *, struct line_pnts *, struct line_cats *);
+int V1_read_next_line_nat (struct Map_info *, struct line_pnts *, struct line_cats *);
+int V1_read_next_line_shp (struct Map_info *, struct line_pnts *, struct line_cats *);
+int V1_read_next_line_post (struct Map_info *, struct line_pnts *, struct line_cats *);
 int V2_read_line (struct Map_info *, struct line_pnts *, struct line_cats *, int);
+int V2_read_line_nat (struct Map_info *, struct line_pnts *, struct line_cats *, int);
+int V2_read_line_shp (struct Map_info *, struct line_pnts *, struct line_cats *, int);
+int V2_read_line_post (struct Map_info *, struct line_pnts *, struct line_cats *, int);
 int V2_read_next_line (struct Map_info *, struct line_pnts *, struct line_cats *);
+int V2_read_next_line_nat (struct Map_info *, struct line_pnts *, struct line_cats *);
+int V2_read_next_line_shp (struct Map_info *, struct line_pnts *, struct line_cats *);
+int V2_read_next_line_post (struct Map_info *, struct line_pnts *, struct line_cats *);
+
 int V__map_overlap (struct Map_info *, double, double, double, double);
 int Vect_rewind (struct Map_info *);
-int V1_rewind (struct Map_info *);
-int V2_rewind (struct Map_info *);
+int V1_rewind_nat (struct Map_info *);
+int V1_rewind_shp (struct Map_info *);
+int V1_rewind_post (struct Map_info *);
+int V2_rewind_nat (struct Map_info *);
+int V2_rewind_shp (struct Map_info *);
+int V2_rewind_post (struct Map_info *);
 /*
 int Vect__get_window (struct Map_info *, double *, double *, double *, double *);
 */
 long Vect_write_line (struct Map_info *, int type, struct line_pnts *, struct line_cats *);
+long V1_write_line_nat (struct Map_info *, int type, struct line_pnts *, struct line_cats *);
+long V1_write_line_shp (struct Map_info *, int type, struct line_pnts *, struct line_cats *);
+long V1_write_line_post (struct Map_info *, int type, struct line_pnts *, struct line_cats *);
+long Vect_rewrite_line (struct Map_info *, long offset, int type, struct line_pnts *, struct line_cats *);
+long V1_rewrite_line_nat (struct Map_info *, long offset, int type, struct line_pnts *, struct line_cats *);
+long V1_rewrite_line_shp (struct Map_info *, long offset, int type, struct line_pnts *, struct line_cats *);
+long V1_rewrite_line_post (struct Map_info *, long offset, int type, struct line_pnts *, struct line_cats *);
+/*
 int Vect_x__Read_line (struct Map_info *, struct line_pnts *, struct line_cats *, long);
 long Vect_x__Write_line (struct Map_info *, int, struct line_pnts *, struct line_cats *);
 int Vect_x__Rewrite_line (struct Map_info *, long, int, struct line_pnts *, struct line_cats *);
 int Vect_x__Mem_Read_line (struct line_pnts *, long);
 int Vect_x__Mem_Read_line (struct line_pnts *, long);
-/*
+int Vect__Read_line (struct Map_info *, struct line_pnts *, struct line_cats *, long);
+long Vect__Write_line (struct Map_info *, int type, struct line_pnts *, struct line_cats *);
+int Vect__Rewrite_line (struct Map_info *, long, int, struct line_pnts *, struct line_cats *);
 int Vect_x_write_head_binary (struct Map_info *, struct dig_head *);
 int Vect_x_read_head_binary (struct Map_info *, struct dig_head *);
-*/
 char *Vect_support_name (void);
+*/
 
 #endif
