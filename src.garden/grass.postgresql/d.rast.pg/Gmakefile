@@ -1,11 +1,7 @@
 PGM       = $(BIN_CONTRIB_CMD)/d.rast.pg
-#PGM       = d.rast.pg
-#LIBES     = $(GISLIB) 
 # EXTRA_CFLAGS = -Dunlink=puts
-LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(PQLIB) $(DATETIMELIB) $(MATHLIB)
+LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(PQLIB) $(DATETIMELIB)
 EXTRA_CFLAGS    = $(PQINCPATH)
-
-
 
 OBJS = \
 	main.o \
@@ -16,6 +12,6 @@ OBJS = \
 
 
 $(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #
