@@ -86,10 +86,10 @@ Resume_curses (void)
 }
 
 int 
-Curses_allow_interrupts (int true)
+Curses_allow_interrupts (int ok)
 {
     refresh();
-    if (true)
+    if (ok)
 	noraw();
     else
 	raw();
