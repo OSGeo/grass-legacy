@@ -10,7 +10,7 @@ by G_warning().
 
 FIELD TYPES:
 Field type code may change. See for example
-http://developer.postgresql.org/cvsweb.cgi/pgsql-server/src/include/catalog/pg_type.h.diff?r1=text&tr1=1.111&r2=text&tr2=1.112&f=h
+http://developer.postgresql.org/cvsweb.cgi/pgsql-server/src/include/catalog/pg_type.h
 
 Because of this, type codes must be read from server when database is opened.
 
@@ -26,3 +26,4 @@ character, char, character varying, varchar,  text, bool, boolean
 
 DB_C_TYPE_DATETIME:
 date, time, timestamp
+
