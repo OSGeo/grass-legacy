@@ -108,7 +108,7 @@ int main( int argc, char *argv[] ) {
   category->type = TYPE_STRING;
   category->required = NO;
   category->description = "Type of field for category (none[default],string,integer,float)";
-  category->options = "none, string, integer, float";
+  category->options = "none,string,integer,float";
   category->answer = "none";
 
   altname = G_define_option();
