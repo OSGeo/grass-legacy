@@ -1,0 +1,3 @@
+Ppictsize (nrows, ncols)
+{
+}
