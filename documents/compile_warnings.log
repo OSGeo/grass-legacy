@@ -1,0 +1,1122 @@
+src/libes/gis:
+CC-167 cc: WARNING File = cats.c, Line = 1194
+  Argument of type "int (*)(int *, int *)" is incompatible with parameter of
+          type "int (*)(const void *, const void *)".
+
+     qsort (indexes, ncats, sizeof (int), &cmp);
+                                          ^
+
+
+src/libes/gis:
+CC-167 cc: WARNING File = color_org.c, Line = 78
+  Argument of type "int (*)(DCELL *, DCELL *)" is incompatible with parameter of
+          type "int (*)(const void *, const void *)".
+
+  		    sizeof(DCELL), &double_comp);
+  		                   ^
+src/libes/gis:
+CC-167 cc: WARNING File = histogram.c, Line = 263
+  Argument of type "int (*)(struct Histogram_list *, struct Histogram_list *)"
+          is incompatible with parameter of type
+          "int (*)(const void *, const void *)".
+
+      qsort (list, n, sizeof(LIST), &cmp);
+                                    ^
+src/libes/gis:
+CC-167 cc: WARNING File = histogram.c, Line = 302
+  Argument of type "int (*)(struct Histogram_list *, struct Histogram_list *)"
+          is incompatible with parameter of type
+          "int (*)(const void *, const void *)".
+
+      qsort (list, n, sizeof(LIST), &cmp_count);
+                                    ^
+
+src/libes/gis:
+CC-167 cc: WARNING File = opencell.c, Line = 369
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "caddr_t".
+
+          	xdrmem_create (&FCB.xdrstream, FCB.data, 
+          	                               ^
+src/libes/gis:
+CC-167 cc: WARNING File = plot.c, Line = 415
+  Argument of type "int (*)(struct point *, struct point *)" is incompatible
+          with parameter of type "int (*)(const void *, const void *)".
+
+      qsort (P, np, sizeof(POINT), &edge_order);
+                                   ^
+
+src/libes/gis:
+CC-167 cc: WARNING File = put_row.c, Line = 722
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "caddr_t".
+
+    xdrmem_create (&FCB.xdrstream, G__.work_buf,
+                                   ^
+
+src/libes/vask:
+CC-167 cc: WARNING File = V_tty.c, Line = 41
+  Argument of type "int (*)(int)" is incompatible with parameter of type
+          "void (*)(int)".
+
+      get_tstp (tstp_old);
+      ^
+
+CC-167 cc: WARNING File = V_tty.c, Line = 49
+  Argument of type "int (*)(int)" is incompatible with parameter of type
+          "void (*)(int)".
+
+      get_tstp (tstp_new);
+      ^
+
+CC-167 cc: WARNING File = V_tty.c, Line = 57
+  Argument of type "int (*)(int)" is incompatible with parameter of type
+          "void (*)(int)".
+
+      set_tstp (tstp_old);
+      ^
+
+CC-167 cc: WARNING File = V_tty.c, Line = 65
+  Argument of type "int (*)(int)" is incompatible with parameter of type
+          "void (*)(int)".
+
+      set_tstp (tstp_new);
+      ^
+
+src/libes/raster:
+CC-167 cc: WARNING File = Raster.c, Line = 64
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	R_raster_char(num, nrows, withzero, chararray) ;
+  	                                    ^
+src/libes/raster:
+CC-167 cc: WARNING File = Raster.c, Line = 83
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+  	_send_char_array(num,ras) ;
+  	                     ^
+
+src/libes/vect32/Vlib/:
+CC-167 cc: WARNING File = poly.c, Line = 473
+  Argument of type "int (*)(double *, double *)" is incompatible with parameter
+          of type "int (*)(const void *, const void *)".
+
+      qsort (Intersects->x, Intersects->n_points, sizeof (double), comp_double);
+                                                                   ^
+
+Total warnings detected in poly.c: 1
+CC-167 cc: WARNING File = x_rw_binary.c, Line = 51
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+      strncpy (buf, dhead->line_3, NEW_LINE_3_SIZE);
+               ^
+	       
+src/libes/vect32/Vlib/:
+CC-167 cc: WARNING File = x_rw_binary.c, Line = 53
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+      if (0>= dig__fwrite_port_C (buf ,NEW_LINE_3_SIZE, Map->dig_fp)) return -1;
+                                  ^
+
+CC-167 cc: WARNING File = x_rw_binary.c, Line = 66
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+      if (0>= dig__fwrite_port_C (buf ,VERS_4_DATA_SIZE, Map->dig_fp)) return -1;
+                                  ^
+
+CC-167 cc: WARNING File = x_rw_binary.c, Line = 151
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+      if (0 >= dig__fread_port_C(buf, VERS_4_DATA_SIZE, digit)) return -1;
+                                 ^
+
+
+src/display/devices/lib/socket.new/
+CC-167 cc: WARNING File = SWITCHER.c, Line = 569
+  Argument of type "unsigned int *" is incompatible with parameter of type
+          "int *".
+
+                  Raster_int(x, y, (unsigned int *) xarray, index, 1) ;
+                                   ^
+
+src/display/devices/CELL/:
+CC-167 cc: WARNING File = polyfill.c, Line = 85
+  Argument of type "int (*)(struct point *, struct point *)" is incompatible
+          with parameter of type "int (*)(const void *, const void *)".
+
+      qsort (P, np, sizeof(POINT), edge_order);
+                       
+		                   ^
+
+src/display/devices/XDRIVER/lib:
+CC-167 cc: WARNING File = RGB.c, Line = 93
+
+  Argument of type "unsigned int *" is incompatible with parameter of type
+          "int *".
+
+      Raster_int_def(n, nrows, array, withzeros, 0);
+                               ^
+
+
+src/display/devices/XDRIVER/XDRIVER24/:
+CC-167 cc: WARNING File = Graph_Set.c, Line = 330
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "const char *".
+
+      wmhints->icon_pixmap = XCreateBitmapFromData(dpy, grwin, icon_bits,
+                                           
+					                       ^
+src/display/devices/PNGdriver/:
+CC-167 cc: WARNING File = connect.c, Line = 105
+  Argument of type "void (*)(void)" is incompatible with parameter of type
+          "void (*)(int)".
+
+  	def = signal(SIGALRM,timeout);	/* where to go when timer goes off */
+  	                     ^
+
+src/display/d.histogram/cmd/
+CC-9 cc: WARNING File = bar.c, Line = 216
+  A "/*" appears inside a comment.
+
+  					bar_height = yoffset; /* zero */
+  					                      ^
+src/imagery/i.colors/
+CC-167 cc: WARNING File = colors.c, Line = 65
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+      I_image_colors (&group.ref, red_colors, grn_colors, blu_colors);
+                                  ^
+src/imagery/i.colors/
+CC-167 cc: WARNING File = colors.c, Line = 65
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+      I_image_colors (&group.ref, red_colors, grn_colors, blu_colors);
+                                              ^
+src/imagery/i.colors/
+CC-167 cc: WARNING File = colors.c, Line = 65
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+      I_image_colors (&group.ref, red_colors, grn_colors, blu_colors);
+                                                          ^
+src/imagery/i.colors/
+CC-167 cc: WARNING File = colors.c, Line = 66
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+      R_set_RGB_color (red_colors, grn_colors, blu_colors);
+                       ^
+src/imagery/i.colors/
+CC-167 cc: WARNING File = colors.c, Line = 66
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+      R_set_RGB_color (red_colors, grn_colors, blu_colors);
+                                   ^
+src/imagery/i.colors/
+CC-167 cc: WARNING File = colors.c, Line = 66
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+      R_set_RGB_color (red_colors, grn_colors, blu_colors);
+                                               ^
+src/imagery/i.colors/
+CC-167 cc: WARNING File = image.c, Line = 58
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+  	R_set_RGB_color (red_colors, red_colors, red_colors);
+  	                 ^
+src/imagery/i.colors/
+CC-167 cc: WARNING File = image.c, Line = 58
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+  	R_set_RGB_color (red_colors, red_colors, red_colors);
+  	                             ^
+src/imagery/i.colors/
+CC-167 cc: WARNING File = image.c, Line = 58
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+  	R_set_RGB_color (red_colors, red_colors, red_colors);
+  	                                         ^
+src/imagery/i.colors/
+CC-167 cc: WARNING File = image.c, Line = 64
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+  	R_set_RGB_color (grn_colors, grn_colors, grn_colors);
+  	                 ^
+src/imagery/i.colors/
+CC-167 cc: WARNING File = image.c, Line = 64
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+  	R_set_RGB_color (grn_colors, grn_colors, grn_colors);
+  	                             ^
+src/imagery/i.colors/
+CC-167 cc: WARNING File = image.c, Line = 64
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+  	R_set_RGB_color (grn_colors, grn_colors, grn_colors);
+  	                                         ^
+src/imagery/i.colors/
+CC-167 cc: WARNING File = image.c, Line = 70
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+  	R_set_RGB_color (blu_colors, blu_colors, blu_colors);
+  	                 ^
+src/imagery/i.colors/
+CC-167 cc: WARNING File = image.c, Line = 70
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+  	R_set_RGB_color (blu_colors, blu_colors, blu_colors);
+  	                             ^
+src/imagery/i.colors/
+CC-167 cc: WARNING File = image.c, Line = 70
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+  	R_set_RGB_color (blu_colors, blu_colors, blu_colors);
+  	                                         ^
+src/imagery/i.colors/
+CC-167 cc: WARNING File = image.c, Line = 76
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+  	R_set_RGB_color (red_colors, grn_colors, blu_colors);
+  	                 ^
+src/imagery/i.colors/
+CC-167 cc: WARNING File = image.c, Line = 76
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+  	R_set_RGB_color (red_colors, grn_colors, blu_colors);
+  	                             ^
+
+CC-167 cc: WARNING File = image.c, Line = 76
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+  	R_set_RGB_color (red_colors, grn_colors, blu_colors);
+  	                                         ^
+
+CC-167 cc: WARNING File = image.c, Line = 88
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+      R_set_RGB_color (red_colors, grn_colors, blu_colors);
+                       ^
+
+CC-167 cc: WARNING File = image.c, Line = 88
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+      R_set_RGB_color (red_colors, grn_colors, blu_colors);
+                                   ^
+
+CC-167 cc: WARNING File = image.c, Line = 88
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+      R_set_RGB_color (red_colors, grn_colors, blu_colors);
+                                               ^
+
+
+src/imagery/i.in.erdas
+CC-167 cc: WARNING File = do_color.c, Line = 52
+  Argument of type "unsigned int *" is incompatible with parameter of type
+          "int *".
+
+  convchar(buff,green);
+                ^
+src/imagery/i.in.erdas
+CC-167 cc: WARNING File = do_color.c, Line = 59
+  Argument of type "unsigned int *" is incompatible with parameter of type
+          "int *".
+
+  convchar(buff,red);
+                ^
+src/imagery/i.in.erdas
+CC-167 cc: WARNING File = do_color.c, Line = 66
+  Argument of type "unsigned int *" is incompatible with parameter of type
+          "int *".
+
+  convchar(buff,blue);
+                ^
+
+
+src/imagery/i.ortho.photo/photo.2image/
+CC-167 cc: WARNING File = group.c, Line = 26
+  Argument of type "int (*)(int *, int *)" is incompatible with parameter of
+          type "int (*)(const void *, const void *)".
+
+      qsort (idx, group.group_ref.nfiles, sizeof(int), cmp);
+                                                       ^
+
+src/imagery/i.ortho.photo/photo.2target/
+CC-167 cc: WARNING File = group.c, Line = 27
+  Argument of type "int (*)(int *, int *)" is incompatible with parameter of
+          type "int (*)(const void *, const void *)".
+
+      qsort (idx, group.group_ref.nfiles, sizeof(int), cmp);
+                                                       ^
+
+src/imagery/i.ortho.photo/photo.rectify/
+CC-167 cc: WARNING File = matrix.c, Line = 93
+  Argument of type "int (*)(int *, int *)" is incompatible with parameter of
+          type "int (*)(const void *, const void *)".
+
+      qsort (row_idx, nrow2, sizeof (IDX), cmp);
+                                           ^
+	
+src/imagery/i.points/
+Total warnings detected in main.c: 1
+CC-167 cc: WARNING File = group.c, Line = 27
+  Argument of type "int (*)(int *, int *)" is incompatible with parameter of
+          type "int (*)(const void *, const void *)".
+
+      qsort (idx, group.ref.nfiles, sizeof(int), cmp);
+                                                 ^
+
+src/imagery/i.points3/inter/
+CC-167 cc: WARNING File = list_group.c, Line = 57
+  Argument of type "int (*)(int *, int *)" is incompatible with parameter of
+          type "int (*)(const void *, const void *)".
+
+      qsort (idx, group.ref.nfiles, sizeof(int), cmp);
+                                                 ^
+
+
+
+src/imagery/i.rectify2/
+CC-167 cc: WARNING File = matrix.c, Line = 90
+  Argument of type "int (*)(int *, int *)" is incompatible with parameter of
+          type "int (*)(const void *, const void *)".
+
+      qsort (row_idx, nrow2, sizeof (IDX), cmp);
+                                           ^
+
+src/imagery/i.tape.tm/
+CC-167 cc: WARNING File = put_image.c, Line = 11
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+  	put_row (tape.band[b].fd, zero, row);
+  	                          ^
+
+src/imagery/i.vpoints/
+CC-167 cc: WARNING File = group.c, Line = 26
+  Argument of type "int (*)(int *, int *)" is incompatible with parameter of
+          type "int (*)(const void *, const void *)".
+
+      qsort (idx, group.ref.nfiles, sizeof(int), cmp);
+                                                 ^
+
+src/mapdev/v.cutter
+CC-167 cc: WARNING File = intersect.c, Line = 117
+  Argument of type "int (*)(struct foo *, struct foo *)" is incompatible with
+          parameter of type "int (*)(const void *, const void *)".
+
+      qsort ((char *) a, 4, sizeof (struct foo), compar);
+    
+                                             ^
+-----------------------------------
+NOTE: I have removed all further qsort warnings as they can be found with find/grep
+MN 4/2001
+-------------------------------------------------------------------------------------
+
+src/misc/m.dted.examine/
+CC-167 cc: WARNING File = main.c, Line = 46
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	if(readtape (buf, sizeof buf) == 0)
+  	             ^
+src/misc/m.dted.examine/
+CC-167 cc: WARNING File = main.c, Line = 65
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "const char *".
+
+  	sscanf (buf, "%3s", type);
+  	        ^
+src/misc/m.dted.examine/
+CC-167 cc: WARNING File = main.c, Line = 69
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "const char *".
+
+  	sscanf (buf,
+  	        ^
+src/misc/m.dted.extract/
+CC-167 cc: WARNING File = extract.c, Line = 57
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  		write_out (tapeptr, outlen);
+  		           ^
+
+src/misc/m.dted.extract/
+CC-167 cc: WARNING File = extract.c, Line = 76
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "const char *".
+
+  	if (strncmp (tapebuf, "VOL", 3) == 0)
+  	             ^
+
+src/misc/m.dted.extract/
+CC-167 cc: WARNING File = extract.c, Line = 78
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "const char *".
+
+  	if (strncmp (tapebuf, "EOF", 3) == 0)
+  	             ^
+
+src/misc/m.dted.extract/
+CC-167 cc: WARNING File = extract.c, Line = 80
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "const char *".
+
+  	if (strncmp (tapebuf, "HDR", 3) == 0)
+  	             ^
+
+src/misc/m.dted.extract/
+CC-167 cc: WARNING File = extract.c, Line = 82
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "const char *".
+
+  	if (strncmp (tapebuf, "UTL", 3) == 0)
+  	             ^
+
+src/misc/m.dted.extract/
+CC-167 cc: WARNING File = extract.c, Line = 84
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "const char *".
+
+  	if (strncmp (tapebuf, "UHL", 3) == 0)
+  	             ^
+
+src/misc/m.dted.extract/
+CC-167 cc: WARNING File = uhl.c, Line = 13
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "const char *".
+
+      if(sscanf(tapebuf,"%*4c%3d%2d%2d%1c",&d,&m,&s,&h) != 4)
+                ^
+
+src/misc/m.dted.extract
+CC-167 cc: WARNING File = uhl.c, Line = 17
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "const char *".
+
+      if(sscanf(tapebuf,"%*47c%4d",&n) != 1)
+                ^
+
+src/misc/m.dted.extract
+CC-167 cc: WARNING File = uhl.c, Line = 19
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "const char *".
+
+      if(sscanf(tapebuf,"%*20c%4d",&res) != 1)
+                ^
+
+src/misc/m.dted.extract
+CC-167 cc: WARNING File = uhl.c, Line = 33
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "const char *".
+
+      if(sscanf(tapebuf,"%*12c%3d%2d%2d%1c",&d,&m,&s,&h) != 4)
+                ^
+
+src/misc/m.dted.extract
+CC-167 cc: WARNING File = uhl.c, Line = 37
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "const char *".
+
+      if(sscanf(tapebuf,"%*51c%4d",&n) != 1)
+                ^
+
+src/misc/m.dted.extract
+CC-167 cc: WARNING File = uhl.c, Line = 39
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "const char *".
+
+      if(sscanf(tapebuf,"%*24c%4d",&res) != 1)
+                ^
+
+src/misc/m.kappa/cmd/
+CC-513 cc: WARNING File = readin_data.c, Line = 19
+  A value of type "int **" cannot be assigned to an entity of type "long **".
+
+    if ((mat = (int **) G_malloc (ncat * sizeof (int *))) == NULL)
+             ^
+
+src/misc/m.kappa/cmd/
+CC-513 cc: WARNING File = readin_data.c, Line = 23
+  A value of type "int *" cannot be assigned to an entity of type "long *".
+
+        if ((mat[i] = (int *) G_malloc (ncat * sizeof (int))) == NULL)
+                    ^
+
+src/paint/Interface/applib/
+CC-167 cc: WARNING File = colortable.c, Line = 17
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	P__send (red, i);
+  	         ^
+
+src/paint/Interface/applib/
+CC-167 cc: WARNING File = colortable.c, Line = 18
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	P__send (grn, i);
+  	         ^
+
+src/paint/Interface/applib/
+CC-167 cc: WARNING File = colortable.c, Line = 19
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	P__send (blu, i);
+  	         ^
+
+src/paint/Interface/applib/
+CC-167 cc: WARNING File = colortable.c, Line = 20
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	P__get (table, i);
+  	        ^
+		
+src/paint/Interface/applib/
+Total warnings detected in colortable.c: 4
+CC-167 cc: WARNING File = data.c, Line = 12
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+      P__send (buf, n);
+               ^
+
+src/paint/Interface/applib/
+CC-167 cc: WARNING File = rle.c, Line = 44
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	P__send (dbuf, nd);
+  	         ^
+
+src/paint/Interface/applib/
+CC-167 cc: WARNING File = rle.c, Line = 49
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	P__send (rbuf, nr);
+  	         ^
+
+src/paint/Interface/driverlib/
+CC-167 cc: WARNING File = interface.c, Line = 178
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	recs (databuf,databuflen);
+  	      ^
+
+CC-167 cc: WARNING File = interface.c, Line = 179
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	Ptext(databuf);
+  	      ^
+
+CC-167 cc: WARNING File = interface.c, Line = 253
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	sprintf (databuf,"LOCK(%s)",env?env:"");
+  	         ^
+
+CC-167 cc: WARNING File = interface.c, Line = 254
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	TRACE(databuf);
+  	      ^
+
+CC-167 cc: WARNING File = interface.c, Line = 261
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	sprintf (databuf,"LOCK(%s)",env?env:"");
+  	         ^
+
+CC-167 cc: WARNING File = interface.c, Line = 262
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	TRACE(databuf);
+  	      ^
+
+CC-167 cc: WARNING File = interface.c, Line = 264
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	sprintf (databuf,"OPEN(%s)",env?env:"");
+  	         ^
+
+CC-167 cc: WARNING File = interface.c, Line = 265
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	TRACE(databuf);
+  	      ^
+
+CC-167 cc: WARNING File = interface.c, Line = 282
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	    Pout (databuf, nc);
+  	          ^
+
+Total warnings detected in interface.c: 9
+
+
+src/ps.map/ps.map/cmd/
+CC-39 cc: WARNING File = vect.c, Line = 23
+  A division by zero appears in an expression.
+
+      *x  = 5 / 0;
+              ^
+
+src/raster/r.in.arc/cmd/
+CC-167 cc: WARNING File = gethead.c, Line = 39
+  Argument of type "int (*)(char *, int *, int)" is incompatible with parameter
+          of type "int (*)(char *, void *, int)".
+
+  			    scan_int)) ok = 0;
+  			    ^
+
+src/raster/r.in.arc/cmd/
+CC-167 cc: WARNING File = gethead.c, Line = 46
+  Argument of type "int (*)(char *, int *, int)" is incompatible with parameter
+          of type "int (*)(char *, void *, int)".
+
+  			    scan_int)) ok = 0;
+  			    ^
+
+src/raster/r.in.arc/cmd/
+CC-167 cc: WARNING File = gethead.c, Line = 53
+  Argument of type "int (*)(char *, double *, int)" is incompatible with
+          parameter of type "int (*)(char *, void *, int)".
+
+  			    G_scan_easting)) ok = 0;
+  			    ^
+
+src/raster/r.in.arc/cmd/
+CC-167 cc: WARNING File = gethead.c, Line = 60
+  Argument of type "int (*)(char *, double *, int)" is incompatible with
+          parameter of type "int (*)(char *, void *, int)".
+
+  			    G_scan_northing)) ok = 0;
+  			    ^
+
+src/raster/r.in.arc/cmd/
+CC-167 cc: WARNING File = gethead.c, Line = 67
+  Argument of type "int (*)(char *, double *, int)" is incompatible with
+          parameter of type "int (*)(char *, void *, int)".
+
+  			    G_scan_resolution)) ok = 0;
+  			    ^
+
+src/raster/r.in.arc/cmd/
+CC-167 cc: WARNING File = gethead.c, Line = 79
+  Argument of type "int (*)(char *, int *, int)" is incompatible with parameter
+          of type "int (*)(char *, void *, int)".
+
+  			    scan_res)) ok = 0;
+  			    ^
+
+src/r.in.doq/cmd/
+CC-513 cc: WARNING File = main.c, Line = 122
+  A value of type "char *" cannot be assigned to an entity of type
+          "unsigned char *".
+
+  	bcell = G_malloc(ncols);
+  	      ^
+
+src/raster/r.in.ll/cmd/
+CC-167 cc: WARNING File = geo_value.c, Line = 17
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+  	return value (buf + col*geo->bpc, geo->bpc, geo->sflag);
+  	              ^
+
+src/libes/vect32_64/shapelib-1.2.8/
+CC-167 cc: WARNING File = dbfopen.c, Line = 632
+  Argument of type "uchar *" is incompatible with parameter of type
+          "const char *".
+
+      strncpy( pszStringField, pabyRec+psDBF->panFieldOffset[iField],
+                               ^
+
+src/sites/s.in.dbf/
+CC-167 cc: WARNING File = dbfopen.c, Line = 635
+  Argument of type "uchar *" is incompatible with parameter of type
+          "const char *".
+
+      strncpy( pszStringField, pabyRec+psDBF->panFieldOffset[iField],
+                               ^
+
+src/sites/s.in.dbf/
+CC-167 cc: WARNING File = dump.c, Line = 354
+  Argument of type "uchar *" is incompatible with parameter of type
+          "const char *".
+
+      strncpy( pszStringField, pabyRec+psDBF->panFieldOffset[iField],
+                               ^
+
+src/sites/s.in.dbf/
+CC-167 cc: WARNING File = dump.c, Line = 463
+  Argument of type "uchar *" is incompatible with parameter of type
+          "const char *".
+
+      strncpy( pszStringField, pabyRec+psDBF->panFieldOffset[iField],
+                               ^
+
+
+src/raster/r.infer/cmd/
+CC-47 cc: WARNING File = infer.h, Line = 60
+  Macro "TRUE" (declared at line 39 of
+          "/home/t3e/fsn/nhdc/nhdcmark/grass/src/include/gis.h") has an
+          incompatible redefinition.
+
+  # define TRUE       (-1)        /* all binary ones (most places) */
+           ^
+
+src/raster/r.infer/cmd/
+CC-47 cc: WARNING File = infer.h, Line = 60
+  Macro "TRUE" (declared at line 39 of
+          "/home/t3e/fsn/nhdc/nhdcmark/grass/src/include/gis.h") has an
+          incompatible redefinition.
+
+  # define TRUE       (-1)        /* all binary ones (most places) */
+           ^
+
+src/raster/r.infer/cmd/
+CC-47 cc: WARNING File = infer.h, Line = 60
+  Macro "TRUE" (declared at line 39 of
+          "/home/t3e/fsn/nhdc/nhdcmark/grass/src/include/gis.h") has an
+          incompatible redefinition.
+
+  # define TRUE       (-1)        /* all binary ones (most places) */
+           ^
+
+src/raster/r.infer/cmd/
+Total warnings detected in run_maps.c: 1
+
+
+
+src/raster/r.out.mpeg
+CC-167 cc: WARNING File = main.c, Line = 236
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+                  G_lookup_raster_colors((void *)voidc, tr, tg, tb, tset, tsiz,
+                                                        ^
+
+CC-167 cc: WARNING File = main.c, Line = 236
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+                  G_lookup_raster_colors((void *)voidc, tr, tg, tb, tset, tsiz,
+                                                            ^
+
+CC-167 cc: WARNING File = main.c, Line = 236
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+                  G_lookup_raster_colors((void *)voidc, tr, tg, tb, tset, tsiz,
+                                                                ^
+
+CC-167 cc: WARNING File = main.c, Line = 236
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+                  G_lookup_raster_colors((void *)voidc, tr, tg, tb, tset, tsiz,
+                                                                    ^
+
+Total warnings detected in main.c: 4
+
+
+
+src/raster/r.support/inter/
+CC-167 cc: WARNING File = modhead.c, Line = 48
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	    sprintf (buffer, "%s not found\n", name);
+  	             ^
+
+src/raster/r.support/inter/
+CC-167 cc: WARNING File = modhead.c, Line = 49
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	    G_fatal_error (buffer);
+  	                   ^
+
+src/raster/r.support/inter/
+CC-167 cc: WARNING File = modhead.c, Line = 77
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	sprintf (buffer, "%s - can't open raster file\n", name);
+  	         ^
+
+src/raster/r.support/inter/
+CC-167 cc: WARNING File = modhead.c, Line = 78
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	G_fatal_error (buffer);
+  	               ^
+
+src/raster/r.support/inter/
+CC-167 cc: WARNING File = modhead.c, Line = 86
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	sprintf (buffer, "%s - empty raster file\n", name);
+  	         ^
+
+src/raster/r.support/inter/
+CC-167 cc: WARNING File = modhead.c, Line = 87
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	G_fatal_error (buffer);
+  	               ^
+
+src/raster/r.support/inter/
+CC-167 cc: WARNING File = modhead.c, Line = 92
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	sprintf (buffer, "%s - error reading raster file\n", name);
+  	         ^
+
+src/raster/r.support/inter/
+CC-167 cc: WARNING File = modhead.c, Line = 93
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	G_fatal_error (buffer);
+  	               ^
+
+src/raster/r.support/inter/
+CC-167 cc: WARNING File = modhead.c, Line = 191
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	sprintf (buffer, "[%s] appears to be compressed. Is it? ", name);
+  	         ^
+
+src/raster/r.support/inter/
+CC-167 cc: WARNING File = modhead.c, Line = 193
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	if ((compressed_new || compressed_old) && G_yes (buffer, -1))
+  	                                                 ^
+
+src/raster/r.support/inter/
+CC-167 cc: WARNING File = modhead.c, Line = 202
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  		    if (!G_gets(buffer)) continue;
+  		                ^
+
+src/raster/r.support/inter/
+CC-167 cc: WARNING File = modhead.c, Line = 203
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  		    G_strip (buffer);
+  		             ^
+
+src/raster/r.support/inter/
+CC-167 cc: WARNING File = modhead.c, Line = 204
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "const char *".
+
+  		    if (strcmp (buffer, "1") == 0) break;
+  		                ^
+
+src/raster/r.support/inter/
+CC-167 cc: WARNING File = modhead.c, Line = 205
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "const char *".
+
+  		    if (strcmp (buffer, "2") == 0) break;
+  		                ^
+
+src/raster/r.support/inter/
+CC-167 cc: WARNING File = modhead.c, Line = 300
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	sprintf (buffer, "unable to write header for %s", name);
+  	         ^
+
+src/raster/r.support/inter/
+CC-167 cc: WARNING File = modhead.c, Line = 301
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	G_fatal_error(buffer) ;
+  	              ^
+
+./r.surf.idw/cmd/
+CC-9 cc: WARNING File = main.c, Line = 229
+  A "/*" appears inside a comment.
+
+      nbr_head->searchptr = &(nbr_head->Mptr);      /* see replace_neighbor */
+
+HOW TO FIX ABOVE???  
+                                                  ^
+
+src/sites/cdhc/
+CC-180 cc: WARNING File = as181.c, Line = 293
+  The indicated argument is incompatible with the corresponding formal parameter.
+
+    wext (x, n, ssq, a, n2, eps, w, p, ifault);
+                            ^
+
+src/sites/cdhc/
+CC-180 cc: WARNING File = as181.c, Line = 293
+  The indicated argument is incompatible with the corresponding formal parameter.
+
+    wext (x, n, ssq, a, n2, eps, w, p, ifault);
+                                 ^
+
+src/sites/cdhc/
+CC-180 cc: WARNING File = as181.c, Line = 293
+  The indicated argument is incompatible with the corresponding formal parameter.
+
+    wext (x, n, ssq, a, n2, eps, w, p, ifault);
+                                    ^
+
+src/sites/s.to.rast/
+CC-127 cc: WARNING File = main.c, Line = 345
+  Expected a statement.
+
+  	    }
+  	    ^
+
+src/libes/libimage
+CC-180 cc: WARNING File = open.c, Line = 255
+  The indicated argument is incompatible with the corresponding formal parameter.
+
+      cvtshorts(buffer,12);
+                ^
+
+Total warnings detected in open.c: 1
+cmd-1102 ar: Creating 'LIB.alpha-cray-unicosmk2.0.5.X/libimage.a'.
+ranlib-702 ranlib: INFO 
+  The optimized archive is up-to-date.
+CC-5 cc: ERROR File = gstypes.h, Line = 15
+  The source file "GL/gl.h" is unavailable.
+
+  #include <GL/gl.h>
+                    ^
+
+src.contrib/CERL/raster/r.out.mpeg/
+CC-167 cc: WARNING File = main.c, Line = 230
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	write_ppm(pr, pg, pb, nrows, ncols, &y_rows, &y_cols, yfiles[cnt]);
+  	          ^
+
+src.contrib/CERL/raster/r.out.mpeg/
+CC-167 cc: WARNING File = main.c, Line = 230
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	write_ppm(pr, pg, pb, nrows, ncols, &y_rows, &y_cols, yfiles[cnt]);
+  	              ^
+
+src.contrib/CERL/raster/r.out.mpeg/
+CC-167 cc: WARNING File = main.c, Line = 230
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	write_ppm(pr, pg, pb, nrows, ncols, &y_rows, &y_cols, yfiles[cnt]);
+  	                  ^
+
+src.contrib/NPS/r.in.utm/
+CC-167 cc: WARNING File = utm_value.c, Line = 26
+  Argument of type "char *" is incompatible with parameter of type
+          "unsigned char *".
+
+        row = value (buf + col*utm->bpc, utm->bpc, utm->sflag);
+                     ^
+
+src.contrib/SCS/raster/r.in.miads/cmd/
+CC-513 cc: WARNING File = proces.c, Line = 175
+  A value of type "char *" cannot be assigned to an entity of type
+          "unsigned char *".
+
+  	       ptr = G_calloc(cols,rows);
+  	           ^
+
+src.contrib/SDTS/mapdev/v.out.sdts
+CC-231 cc: WARNING File = spatial_ref.c, Line = 12
+  The indicated declaration is not visible outside of the function.
+
+     struct Map_info *Map;
+            ^
+
+src.contrib/SDTS/mapdev/v.out.sdts/
+CC-167 cc: WARNING File = write_coords.c, Line = 65
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	 if (!wr123sfld (fpout, "SADR", lead_id, bit_y, 4, 4))
+  	                                         ^
+
+CC-167 cc: WARNING File = write_coords.c, Line = 157
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	if (!wr123sfld (fpout, tag, lead_id, bit_x, 4, option1))
+  	                                     ^
+
+CC-167 cc: WARNING File = write_coords.c, Line = 162
+  Argument of type "unsigned char *" is incompatible with parameter of type
+          "char *".
+
+  	if (!wr123sfld (fpout, tag, lead_id, bit_y, 4, option2))
+  	                                     ^
+
+src.contrib/SDTS/mapdev/v.in.sdts/
+CC-47 cc: WARNING File = /home/t3e/fsn/nhdc/nhdcmark/grass/src.contrib/SDTS/mapdev/v.in.sdts/../../libes/fips123/f123inc/stc123.h, Line = 398
+  Macro "MAXINT" (declared at line 49 of "/usr/include/values.h") has an
+          incompatible redefinition.
+
+  #define MAXINT 32767L
+          ^
