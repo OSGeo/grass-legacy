@@ -15,30 +15,25 @@
 
 <H2>SYNOPSIS</H2>
 
-<B>v.in.garmin.sh</B>
-<BR>
-<B>v.in.garmin.sh</B> <EM>-h</EM>
-<BR>
-<B>v.in.garmin.sh </B> <EM><b>name=</B>vectorfile <B>port=</B>/dev/gps -v -w -r -t -u </EM>
+<B>v.in.garmin.sh</B><BR>
+<B>v.in.garmin.sh help</B><BR>
+<B>v.in.garmin.sh</B> [<b>-v</b>] [<b>-w</b>] [<b>-r</b>] [<b>-t</b>] [<b>-u</b>] [<b>-k</b>] 
+    [<B>vect</B>=<EM>vectorfile</EM>] [<B>port</B>=<EM>/dev/gps</EM>]
 
 <H2>DESCRIPTION</H2>
 
-<EM>v.in.garmin.sh</EM> allows to import waypoint, route and track
- data from a locally connected garmin gps receiver via the 
+<EM>v.in.garmin.sh</EM> allows the user to import waypoint, route and track
+ data from a locally connected Garmin GPS receiver via the 
 <EM><A HREF="http://gpstrans.sourceforge.net">gpstrans</a></EM>
- program of Carsten Tschach. 
+ program by Carsten Tschach. 
 <P>Use at your own risk. This software comes with absolutely no warranty.
 <BR>
 
-<H3>Parameters:</H3>
 
+<H3>Flags:</H3>
 <DL>
-<DT><B>name=</B><EM>vectorfile</EM> 
-<DD>name for new binary vector file
-<DT><B>port=</B><EM>/dev/gps </EM> 
-<DD>port garmin receiver is connected to
 <DT><EM>-v </EM> 
-<DD>verbose output
+<DD>verbose output (version info)
 <DT><EM>-w </EM> 
 <DD>upload Waypoints
 <DT><EM>-r </EM> 
@@ -47,39 +42,57 @@
 <DD>upload Track
 <DT><EM>-u </EM> 
 <DD>run v.support on new binary vector file
-<DT><EM>-h </EM> 
-<DD>print this message
+<DT><EM>-k </EM> 
+<DD>do not attempt projection transform from WGS84
 <DD>
 </DL>
-<BR>
+
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>vect=</B><EM>vectorfile</EM> 
+<DD>name for new binary vector file (omit for display to stdout)
+<DT><B>port=</B><EM>/dev/gps </EM> 
+<DD>port the Garmin receiver is connected to.  (Default: /dev/gps)
+<DD>
+</DL>
+<P>
 
 <H2>NOTES</H2>
-No checks are performed for datum, projection and format of data.
-You must check by yourself that your receiver, gpstrans and GRASS
-use the same map datum and projection (this means as it is now that
-you can only use a GRASS database in lat/lon projection and in wgs84
-datum).<BR>
-<BR>
+If the GPS is set up to output WGS84 Lat/Lon, <em>v.in.garmin.sh</em> will
+attempt to automatically transform the positions to the current projection.
+In all other cases, no checks are performed for datum, projection and format of data.
+You must check for yourself that your receiver, gpstrans and GRASS
+use the same map datum and projection.
+The automatic transform may be skipped by using the <b>-k</b> flag.
+<P>
+
 If you wish to use latitude-longitude input, the user should setup gpstrans
-as follows before running <EM>s.in.garmin.sh</EM>: <BR>
+as follows before running <EM>v.in.garmin.sh</EM>: <BR>
 <tt>
 $ <B>gpstrans -s</B><BR>
 datum:  100 (WGS84)<BR>
 format: 2 - lat/lon  ddd.ddddd<BR></tt>
-<BR>
 
+<P>
+If you use multiple upload flags to import waypoints, routes, and tracks all at 
+the same time, all of the data will be connected in a single line, end-to-end.
+<P>
 
 <H2>SEE ALSO</H2>
 
 <EM><A HREF="s.in.garmin.sh.html">s.in.garmin.sh</A></EM><BR>
+<EM><A HREF="m.proj2.html">m.proj2</A></EM><BR>
 <A HREF="http://gpstrans.sourceforge.net">gpstrans</a> manual
+<P>
 
 <H2>AUTHOR</H2>
 
 Andreas Lange,
-Andreas.Lange@Rhein-Main.de<BR>
+Andreas.Lange (at) Rhein-Main.de<BR>
+Projection updates by Hamish Bowman, New Zealand<BR><BR>
 gpstrans was written by Carsten Tschach<BR>
-gpstrans is found at 
+gpstrans may be found at 
 <A HREF="http://gpstrans.sourceforge.net">http://gpstrans.sourceforge.net</a><BR>
 
 <p><i>Last changed: $Date$</i>
