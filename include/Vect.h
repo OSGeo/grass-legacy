@@ -185,6 +185,7 @@ int Vect_get_area_boundaries ( struct Map_info *, int, struct ilist * );
 
 int Vect_get_isle_points (struct Map_info *, int, struct line_pnts *);
 int Vect_get_isle_area ( struct Map_info *, int );
+int Vect_get_isle_boundaries ( struct Map_info *, int, struct ilist * );
 
 int Vect_get_centroid_area ( struct Map_info *, int );
 
@@ -240,11 +241,22 @@ int Vect_overlay ( struct Map_info *, int, struct ilist *, struct ilist *,
 	           struct Map_info *, int, struct ilist *, struct ilist *,
                    int, struct Map_info *);
 
+    /* Graph */
+void Vect_graph_init ( GRAPH *, int);
+void Vect_graph_build ( GRAPH *);
+void Vect_graph_add_edge ( GRAPH *, int, int, double, int);
+void Vect_graph_set_node_costs ( GRAPH *, int, double);
+int Vect_graph_shortest_path ( GRAPH *, int, int, struct ilist *, double * );
+
     /* Network (graph) */
 int Vect_net_build_graph ( struct Map_info *, int, int, int, char *, char *, char *, int, int);
 int Vect_net_shortest_path ( struct Map_info *, int, int, struct ilist *, double *);
 int Vect_net_get_line_cost ( struct Map_info *, int, int, double *);
 int Vect_net_get_node_cost ( struct Map_info *, int, double *);
+int Vect_net_nearest_nodes ( struct Map_info *, double, double, double, int, double, int *, int *, int *,
+                             double *, double *, struct line_pnts *, struct line_pnts *, double*);
+int Vect_net_shortest_path_coor ( struct Map_info *, double, double, double, double, double, double,
+				  double, double, double *, struct line_pnts *, double *, double * );
 
     /* Miscellaneous */
 int Vect_topo_dump ( struct Plus_head *, FILE *);
@@ -263,6 +275,7 @@ int Vect_segment_intersection ( double, double, double, double, double, double,
 int Vect_line_intersection ( struct line_pnts *, struct line_pnts *,
                              struct line_pnts ***, struct line_pnts ***,
                              int *, int *, int );
+int Vect_line_check_intersection ( struct line_pnts *, struct line_pnts *, int );
 char *Vect_subst_var ( char *str, struct Map_info *Map);
 
 /* Internal functions, MUST NOT be used in modules */
