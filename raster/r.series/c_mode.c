@@ -9,16 +9,13 @@ void c_mode(DCELL *result, DCELL *values, int n)
 	int count;
 	int i;
 
-	sort_cell(values, n);
+	n = sort_cell(values, n);
 
 	max = 0;
 	count = 0;
 
 	for (i = 0; i < n; i++)
 	{
-		if (G_is_d_null_value(&values[i]))
-			break;
-
 		if (max == 0 || values[i] != prev)
 		{
 			prev = values[i];
