@@ -223,6 +223,8 @@ if [ ! -f "$GISRC" ] ; then
 
     #for convenience, define pwd as GISDBASE:
     echo "GISDBASE: `pwd`" > "$GISRC"
+    echo 'LOCATION_NAME: <UNKNOWN>' >> "$GISRC"
+    echo 'MAPSET: <UNKNOWN>' >> "$GISRC"
     
     # This is a hack for not having a good initial gui - should be removed
     # with next version of initialization gui
