@@ -81,7 +81,7 @@ default: builddemolocation
 	if [ ${LOCALE} -eq 1 ] ; then $(MAKE) -C locale; fi
 	-cp -f $(FILES) ${ARCH_DISTDIR}/
 	-cp -f ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} ${ARCH_DISTDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.tmp
-	@(cd tools ; sh -c "./build_html_index.html")
+	@(cd tools ; sh -c "./build_html_index.sh")
 	@echo "Finished compilation: `date`" >> $(GRASS_HOME)/error.log
 	@cat $(GRASS_HOME)/error.log
 
