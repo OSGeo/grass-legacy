@@ -1,0 +1,76 @@
+From pierre@audiovu.com Tue May  2 14:29:51 2000
+Return-Path: <pierre@audiovu.com>
+Received: from mgate.uni-hannover.de by hgeo02.geog.uni-hannover.de (SMI-8.6/SMI-SVR4)
+	id OAA04676; Tue, 2 May 2000 14:29:50 +0100
+Received: from postfix1.free.fr by mgate.uni-hannover.de (PP) with SMTP;
+          Tue, 2 May 2000 14:35:00 +0200
+Received: from saturne.audiovu.com (strasbourg-23-128.dial.proxad.net [213.228.23.128]) 
+          by postfix1.free.fr (Postfix) with ESMTP id 645932821A;
+          Tue,  2 May 2000 14:34:43 +0200 (MEST)
+Received: from localhost (localhost [[UNIX: localhost]]) 
+          by saturne.audiovu.com (8.9.3/8.8.7) id OAA24947;
+          Tue, 2 May 2000 14:35:15 +0200
+From: Pierre de Mouveaux <pmx@audiovu.com>
+Reply-To: pmx@audiovu.com
+To: candrsn@mindspring.com
+Subject: X11 driver
+Date: Tue, 2 May 2000 14:13:59 +0200
+X-Mailer: KMail [version 1.0.28]
+Content-Type: text/plain
+Cc: Markus Neteler <neteler@geog.uni-hannover.de>
+MIME-Version: 1.0
+Message-Id: <00050214350901.24798@saturne.audiovu.com>
+Content-Transfer-Encoding: quoted-printable
+Sender: pierre@audiovu.com
+Status: RO
+Content-Length: 1554
+Lines: 47
+
+Hello Carl,
+
+Markus requested me to contact you, as you are updating the XDriver to us=
+e
+fifos.
+
+I have modified the XDriver to be a "layered driver", i.e. having layers =
+to
+draw into, that you can superimpose, erase, show, hide, etc...individuall=
+y.
+
+This code doesn't touch the fifos in itself.
+
+BUT...
+
+As you probably noticed, the X event loop is ... no event loop at all!
+This is replaced with a blockind read from the fifos. Event are processed=
+ only
+afrer fifos are unblocked, i.e. when the users issues a display command.
+
+The nice thing would be to use a select(...) call into a real X event loo=
+p.
+I would then be able to have some local menus/popups into the window.
+There is a call in X, to asynchonously wait for sockets or fifos, (or any
+file descriptor as well) within the event X loop, but I suspect it's an X=
+t call,
+not an Xlib call.=20
+
+
+An other well kept secret, at this time, ;) is that I just updated all th=
+e d.xxx
+modules to allow for selection of the target device, like "d.rast map=3D.=
+=2E.
+device=3Dx1", for instance. Beside the evident uses, it allows you to hav=
+e a menu
+**into** the winow, that would call (for instance) "d.rast ... device=3D.=
+=2E.", with
+it's own device name as target.=20
+Combined with the "pads" internal memory, you will be able to redraw scre=
+ens
+upon resize, or entiere frames, in a way thet is 100% compatible with the
+Grass architecture. (That's really not built on the event driven GUI
+paradigm...)=20
+All this could allow also a powerfull integration into tcltkgrass.
+
+Cheers,
+Pierre.
+
