@@ -15,10 +15,10 @@
 #           (by H. Bowman)
 #########################
 #Derived from:
-# ftp://edcsgs9.cr.usgs.gov/pub/data/srtm/Documentation/Notes_for_ARCInfo_users.txt
+# ftp://e0dps01u.ecs.nasa.gov/srtm/Documentation/Notes_for_ARCInfo_users.txt
 #     (bugfix: the USGS document was updated silently end of 2003)
 #
-# ftp://edcsgs9.cr.usgs.gov/pub/data/srtm/Documentation/SRTM_Topo.txt
+# ftp://e0dps01u.ecs.nasa.gov/srtm/Documentation/SRTM_Topo.txt
 #  "3.0 Data Formats
 #  [...]
 #  To be more exact, these coordinates refer to the geometric center of 
@@ -35,7 +35,7 @@
 #- GDAL uses *corners* of pixels for its coordinates.
 #
 # NOTE: Even, if small difference: SRTM is referenced to EGM96, not WGS84 ellps
-# http://earth-info.nima.mil/GandG/wgsegm/egm96.html
+# http://earth-info.nga.mil/GandG/wgsegm/egm96.html
 #
 #########################
 
