@@ -151,9 +151,10 @@ static int interactive_flag( struct Flag *);
 static int interactive_option( struct Option *);
 static int gis_prompt( struct Option *, char *);
 
-int G_gui (void);
-int G_usage_xml (void);
-int G_usage_html (void);
+static void G_gui (void);
+static void G_tcltk (void);
+static void G_usage_xml (void);
+static void G_usage_html (void);
 
 
 /*!
@@ -507,7 +508,22 @@ int G_parser (int argc, char **argv)
 			G_usage_html();
 			return -1;
 		}
-	
+
+		/* If first arg is "--ui" then run G_gui() */
+		if (strcmp(argv[1],"--ui") == 0)
+		{
+			G_gui();
+			return -1;
+		}
+
+		/* If first arg is "--tcltk" then then generate
+		 * code for tcltkgrass */
+		if (strcmp(argv[1],"--tcltk") == 0)
+		{
+			G_tcltk();
+			exit(0);
+		}
+
 		/* fake session for HTML generation with parser */
 		fakestart = getenv( "GRASS_FAKE_START" );
 		if ( fakestart != NULL )
@@ -728,7 +744,7 @@ void print_escaped_for_xml (FILE * fp, char * str) {
 	}
 }
 
-int G_usage_xml (void)
+static void G_usage_xml (void)
 {
 	struct Option *opt ;
 	struct Flag *flag ;
@@ -892,10 +908,9 @@ int G_usage_xml (void)
 	 *****/
 
 	fprintf(stdout, "</task>\n");
-    return 0;
 }
 
-int G_usage_html (void)
+static void G_usage_html (void)
 {
 	struct Option *opt ;
 	struct Flag *flag ;
@@ -1060,101 +1075,100 @@ int G_usage_html (void)
 	}
 	
     fprintf(stdout, "</body></html>\n");
-    return 0;
 }
 
-/* Add to cmd */
-int append (char *cmd, char *frm, ...)
+static void generate_tcl(FILE *fp)
 {
-    char buffer[5000];
-    va_list ap;
-	     
+	char *type;
+	int optn;
 
-    va_start(ap,frm);
-    vsprintf(buffer,frm,ap);
-    va_end(ap);
+	fprintf(fp, "begin_dialog {%s} {%s}\n", pgm_name,
+		module_info.description ? module_info.description : "");
+
+	optn = 1;
     
-    strcat (cmd, buffer);
+	if (n_opts)
+	{
+		struct Option *opt;
 
-    return 1;
+		for (opt = &first_option; opt; opt = opt->next_opt, optn++)
+		{
+			switch (opt->type)
+			{
+			case TYPE_INTEGER:
+				type = "integer";
+				break;
+			case TYPE_DOUBLE:
+				type = "float";
+				break;
+			case TYPE_STRING:
+				type = "string";
+				break;
+			default:
+				type = "string";
+				break;
+			}
+
+			fprintf(fp, "add_option %d {\n", optn);
+			fprintf(fp, " name {%s}\n", opt->key);
+			fprintf(fp, " type %s\n", type);
+			fprintf(fp, " multi %d\n", opt->multiple);
+			fprintf(fp, " desc {%s}\n", opt->description);
+			fprintf(fp, " required %d\n", opt->required);
+			fprintf(fp, " options {%s}\n", opt->options ? opt->options : "");
+			fprintf(fp, " answer {%s}\n", opt->answer ? opt->answer : "");
+			fprintf(fp, " prompt {%s}\n", opt->gisprompt ? opt->gisprompt : "");
+			fprintf(fp, "}\n");
+		}
+	}
+
+	if (n_flags)
+	{
+		struct Flag *flag;
+
+		for (flag = &first_flag; flag; flag = flag->next_flag, optn++)
+			fprintf(fp, "add_flag %d {%c} {%s}\n", optn, flag->key, flag->description);
+	}
+   
+	fprintf(fp, "end_dialog %d\n", optn - 1);
 }
 
 /* Build gui */
-int G_gui (void)
+static void G_gui (void)
 {
-    char *type;
-    int optn;
-    FILE *fp;
-		
-    if (!pgm_name)
-	pgm_name = G_program_name ();
-    if (!pgm_name)
-	pgm_name = "??";
+	FILE *fp;
 
-    if (getenv("GRASS_DEBUG_GUI"))
-	fp = popen("tee gui_dump.tcl | $GRASS_WISH", "w");
-    else
-	fp = popen("$GRASS_WISH", "w");
+	if (!pgm_name)
+		pgm_name = G_program_name ();
+	if (!pgm_name)
+		pgm_name = "??";
 
-    if (!fp)
-	    G_fatal_error("unable to spawn wish");
+	if (getenv("GRASS_DEBUG_GUI"))
+		fp = popen("tee gui_dump.tcl | $GRASS_WISH", "w");
+	else
+		fp = popen("$GRASS_WISH", "w");
 
-    fprintf(fp, "source $env(GISBASE)/etc/gui.tcl\n");
+	if (!fp)
+		G_fatal_error("unable to spawn wish");
 
-    fprintf(fp, "begin_dialog {%s} {%s}\n", pgm_name,
-	    module_info.description ? module_info.description : "");
+	fprintf(fp, "source $env(GISBASE)/etc/gui.tcl\n");
 
-    optn = 1;
-    
-    if (n_opts)
-    {
-	struct Option *opt;
+	generate_tcl(fp);
 
-	for (opt = &first_option; opt; opt = opt->next_opt, optn++)
-	{
-	    switch (opt->type)
-	    {
-	    case TYPE_INTEGER:
-		type = "integer";
-		break;
-	    case TYPE_DOUBLE:
-		type = "float";
-		break;
-	    case TYPE_STRING:
-		type = "string";
-		break;
-	    default:
-		type = "string";
-		break;
-	    }
-
-	    fprintf(fp, "add_option %d {\n", optn);
-	    fprintf(fp, " name {%s}\n", opt->key);
-	    fprintf(fp, " type %s\n", type);
-	    fprintf(fp, " multi %d\n", opt->multiple);
-	    fprintf(fp, " desc {%s}\n", opt->description);
-	    fprintf(fp, " required %d\n", opt->required);
-	    fprintf(fp, " options {%s}\n", opt->options ? opt->options : "");
-	    fprintf(fp, " answer {%s}\n", opt->answer ? opt->answer : "");
-	    fprintf(fp, " prompt {%s}\n", opt->gisprompt ? opt->gisprompt : "");
-	    fprintf(fp, "}\n");
-	}
-    }
-
-    if (n_flags)
-    {
-	struct Flag *flag;
-
-	for (flag = &first_flag; flag; flag = flag->next_flag, optn++)
-	    fprintf(fp, "add_flag %d {%c} {%s}\n", optn, flag->key, flag->description);
-    }
-   
-    fprintf(fp, "end_dialog %d\n", optn - 1);
-
-    pclose(fp);
-
-    return 0;
+	pclose(fp);
 }
+
+/* Send Tcl/Tk code to tcltkgrass */
+static void G_tcltk (void)
+{
+	if (!pgm_name)
+		pgm_name = G_program_name ();
+	if (!pgm_name)
+		pgm_name = "??";
+
+	generate_tcl(stdout);
+}
+
 /**************************************************************************
  *
  * The remaining routines are all local (static) routines used to support
