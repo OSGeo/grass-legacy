@@ -58,7 +58,7 @@ int main (int argc, char *argv[])
     {
         struct Option *input, *output, *target, *title, *outloc, *band;
     } parm;
-    struct Flag *flag_o, *flag_e, *flag_k;
+    struct Flag *flag_o, *flag_e, *flag_k, *flag_f;
 
 /* -------------------------------------------------------------------- */
 /*      Initialize.                                                     */
@@ -79,18 +79,18 @@ int main (int argc, char *argv[])
     parm.input->description = "Raster file to be imported";
     parm.input->gisprompt = "file,file,file";
 
-    parm.band = G_define_option();
-    parm.band->key = "band";
-    parm.band->type = TYPE_INTEGER;
-    parm.band->required = NO;
-    parm.band->description = "Band to select (default is all bands)";
-
     parm.output = G_define_option();
     parm.output->key = "output";
     parm.output->type = TYPE_STRING;
     parm.output->required = YES;
     parm.output->description = "Name for resultant raster map";
     parm.output->gisprompt = "any,cell,raster";
+
+    parm.band = G_define_option();
+    parm.band->key = "band";
+    parm.band->type = TYPE_INTEGER;
+    parm.band->required = NO;
+    parm.band->description = "Band to select (default is all bands)";
 
     parm.target = G_define_option();
     parm.target->key = "target";
@@ -113,11 +113,15 @@ int main (int argc, char *argv[])
 
     flag_o = G_define_flag();
     flag_o->key = 'o';
-    flag_o->description = "Override projection (use locations projection)";
+    flag_o->description = "Override projection (use location's projection)";
 
     flag_e = G_define_flag();
     flag_e->key = 'e';
     flag_e->description = "Extend location extents based on new dataset";
+
+    flag_f = G_define_flag();
+    flag_f->key = 'f';
+    flag_f->description = "List supported formats then exit";
 
     flag_k = G_define_flag();
     flag_k->key = 'k';
@@ -141,10 +145,34 @@ int main (int argc, char *argv[])
         G_fatal_error("You have to specify a target location different from output location");
     }
 
+
+/* -------------------------------------------------------------------- */
+/*      Fire up the engines.                                            */
+/* -------------------------------------------------------------------- */
+    GDALAllRegister();
+
+
+/* -------------------------------------------------------------------- */
+/*      List supported formats and exit.                                */
+/* -------------------------------------------------------------------- */
+   if(flag_f->answer) {
+      int iDr;
+
+      fprintf(stdout, "Supported Formats:\n" );
+      for( iDr = 0; iDr < GDALGetDriverCount(); iDr++ )
+      {
+	  GDALDriverH hDriver = GDALGetDriver(iDr);
+
+	  fprintf(stdout, "  %s: %s\n",
+	      GDALGetDriverShortName( hDriver ),
+	      GDALGetDriverLongName( hDriver ) );
+      }
+      exit(0);
+   }
+
 /* -------------------------------------------------------------------- */
 /*      Open the file.                                                  */
 /* -------------------------------------------------------------------- */
-    GDALAllRegister();
     hDS = GDALOpen( input, GA_ReadOnly );
     if( hDS == NULL )
         return 1;
