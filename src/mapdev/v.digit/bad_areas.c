@@ -62,6 +62,6 @@ unfinished_areas (map)
 	}
     }
     unset_keyboard ();
-    R_flush ();
+    V_flush ();
     return (ret);
 }
