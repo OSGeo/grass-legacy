@@ -1,0 +1,46 @@
+****************************************
+d.rast.db - Modifications for INGRES
+
+Katarina Johnsson, 930421
+****************************************
+
+INGRES version:6 
+
+INGRES version specific subroutines:
+	ingresUnTable
+	buildSQL
+
+Modified and/or renamed subroutines:
+	getAllOpts
+	getSelectOpts
+	buildSQL <=> buildInfxQry
+	runSQL <=> runInfxFile
+	row_or_col
+	readSQLout
+
+New subroutines:
+	ingresUnTable
+	fancyDisplay
+
+Modified and/or renamed include files:
+	None
+
+New include files:
+	ingresUtils.h
+	displayUtils.h
+
+INGRES modifications:
+	SQL query syntax (buildSQL)        
+	'\g' added at end of SQL query (runSQL)
+	Syntax of execution of SQL command (runSQL)
+	Reading SQL output (readSQLout):
+		reduced key is not used
+		ingresUnTable added (INGRES v6 specific)
+		row type output is not used
+
+Improvements:
+	Explanatory messages added
+	Fancy display added (readSQLout)
+
+Bug Fixes:
+	None
