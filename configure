@@ -43,7 +43,7 @@ ac_help="$ac_help
 ac_help="$ac_help
   --with-opengl           support OpenGL functionality (default: yes)"
 ac_help="$ac_help
-  --with-odbc             support ODBC functionality (default: yes)"
+  --with-odbc             support ODBC functionality (default: no)"
 ac_help="$ac_help
   --with-fftw             support FFTW functionality (default: yes)"
 ac_help="$ac_help
@@ -2693,7 +2693,7 @@ if test "${with_odbc+set}" = set; then
   withval="$with_odbc"
   :
 else
-  with_odbc=yes
+  with_odbc=no
 fi
 
 
