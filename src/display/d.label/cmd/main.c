@@ -24,6 +24,9 @@ main (int argc, char **argv)
 	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4 ;
 
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
+
 	module = G_define_module();
 	module->description =
 		"Creates and displays text labels "
@@ -59,9 +62,6 @@ main (int argc, char **argv)
 	opt4->required   = NO ;
 	opt4->options="romand,romanp,romant,romans,scriptc,scripts,romancs,italicc,italiccs,gothitt,gothgrt,gothgbt" ;
 	opt4->description= "Sets the font" ;
-
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
 
 	/* Check command line */
 
