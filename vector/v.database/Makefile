@@ -3,9 +3,9 @@ MODULE_TOPDIR = ../..
 
 PGM=v.database
 
-LIBES     = $(VECTLIB) $(GISLIB)
-DEPENDENCIES = $(VECTDEP) $(GISDEP)
- 
+LIBES     = $(VECTLIB) $(DBMILIB) $(GISLIB)
+DEPENDENCIES = $(VECTDEP) $(DBMIDEP) $(GISDEP)
+
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default: cmd	
