@@ -27,7 +27,7 @@ map layer.
 
 <BR>
 
-<B>r.neighbors</B> [<B>-aq</B>] 
+<B>r.neighbors</B> [<B>-aqz</B>] 
 <B>input=</B><EM>name </EM><B>output=</B><EM>name </EM>
 <B>method=</B><EM>name </EM><B>size=</B><EM>value</EM> 
 [<B>TITLE=</B><EM>"phrase"</EM>]
@@ -188,6 +188,13 @@ By default, if unspecified,
 <DD>If specified, <EM>r.neighbors</EM> will run relatively quietly
 (i.e., without printing to standard output notes on the program's progress).
 If unspecified, the program will print messages to standard output by default.
+
+<DT><B>-z</B>
+
+<DD>If specified, <EM>r.neighbors</EM> will preserve zero values in output.
+The default is to set all zero values to null in the output raster.
+If the input raster contains real zero values, <EM>-z</EM> should be set to 
+avoid resetting these values to null.
 </DL>
 <H2>NOTES</H2>
 
