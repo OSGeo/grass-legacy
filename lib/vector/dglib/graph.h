@@ -32,123 +32,75 @@
 
 __BEGIN_DECLS
 
+/*
+ * Node macros - addresses in a flat node
+ */
+#define GNGRP_IN_NODEID						0
+#define GNGRP_IN_STATUS 					1
+#define GNGRP_IN_OFFSET 					2
+#define GNGRP_IN_ATTR						3
+#define GNGRP_IN_SIZE						GNGRP_IN_ATTR
+
+#define GNGRP_NODE_SIZEOF( nattr  ) 	 	(sizeof( gnInt32_t ) * GNGRP_IN_SIZE + (nattr) )
+#define GNGRP_NODE_WSIZE( nattr )			(GNGRP_NODE_SIZEOF( nattr ) / sizeof(gnInt32_t) )
+#define GNGRP_NODE_ALLOC( nattr )   		(malloc( GNGRP_NODE_SIZEOF( nattr ) ) )
+
+#define GNGRP_NODE_ID(p)					((p)[GNGRP_IN_NODEID])
+#define GNGRP_NODE_STATUS(p)				((p)[GNGRP_IN_STATUS])
+#define GNGRP_NODE_LINKAREA_OFFSET(p)		((p)[GNGRP_IN_OFFSET])
+#define GNGRP_NODE_ATTR_PTR(p)				((p) + GNGRP_IN_ATTR)
 
 /*
- * FLAT DIRECTED GRAPH (FDG) MEMORY REPRESENTATION * VERSION 1:
- *
- * FDG is represented by two mandatory arrays of 32bit words: the node buffer and the link buffer. Plus two more optional arrays:
- * the node-attr buffer and the link-attr buffer.
- *
- * Each node has a entry in the node buffer. The status tells if a node has role 'from', 'to' or both. All the arcs departing
- * from a node are described by a link-area stored in the link buffer. The offset field of a node points to its link-area.
- * Each link-area tells the number of link-entries (tocnt) followed by tocnt*link-entries.
- * Each link-entry reports the offset of the to-node in the node buffer, the 'cost' for travelling from->to on this link and
- * a user defined value (usually an external arc-id).
- *
- * Nodes in the node buffer are sorted by ascending nodeid, thus a node can be found using a binary search on the
- * node buffer, given also that a node entry has fixed size.
- * 
- * Node attributes are optionally stored by enlarging the node entry by a fixed amount of bytes (attr), as well as link
- * attributes, which are stored in the respective link entry extension (attr).
- * Sizes for node and link attributes are given at graph creation time and cannot be modified later.
- * 
- *        +-------------------------------------------------------------------------------------------------------> ...
- *        | +--------------------------------------------------+
- *        | |                                                  V
- * Node Buffer (nodeid|status|offset|predec|distan|attr)...    (nodeid|status|offset|predec|distan|attr)...
- *        | |                   |                                              |                     
- *        | |  +----------------+                                     +--------+                     
- *        | |  V                                                      V                              
- * Link Buffer (tocnt|toarr) ...                                      (tocnt|toarr)                  
- *        | |        (offset|cost|user|attr)[0]... (||)[tocnt-1]...         (offset|cost|user|attr)[0]... (||)[tocnt-1]...
- *        | |           |                                                     |
- *        | +-----------+                                                     |
- *        +-------------------------------------------------------------------+
- *
- * TODO: actual node fields 'predec' and 'distan' are kept in the graph data model but are not really carring
- * effective graph description. They are used in shortest path computations to assume dynamic assigned values.
- * This is a problem: 1) the size of the flat graph is larger than what it could be; 2) the concurrent shortest path
- * computation cannot be achieved this way. I'll get them out of the graph in the next revisions.
+ * LinkArea macros - addresses in a flat link-area
  */
+#define GNGRP_ILA_TOCNT						0
+#define GNGRP_ILA_SIZE						1
+#define GNGRP_ILA_TOARR						GNGRP_ILA_SIZE
 
-/* FLAT DIRECTED GRAPH (FDG) FILE REPRESENTATION * VERSION 1
- *
- * Flat graphs can be stored into files as they are, their representation is in what we use to call a 'serialized format'.
- * Graphs are versioned: a pool exists of pointers to methods which implement a given graph version, for each graph version.
- * Actually only version 1 has been defined.
- * The version number is stored as the first byte of the graph file and must be supplied as an argument when we want to
- * create a new graph.
- *
- * Verion 1 graph file format:
- *
- * Field                          Size/Type                     Value range          Description
- * [VERSION...................]   1 byte                        1                    Version 1 graphs always keep value 1
- * [ENDIANESS.................]   1 byte                        1 | 2                Integer words byte order 1=big 2=little
- * [NODE ATTRIBUTES BYTE SIZE.]   4 bytes integer               >= 0                 Byte size of attributes area for each node
- * [LINK ATTRIBUTES BYTE SIZE.]   4 bytes integer               >= 0                 Byte size of attributes area for each link
- * [OPAQUE SET................]   16 words of 4 bytes           -                    Free user's storage
- * [NODE COUNT................]   4 bytes integer               > 0                  How many nodes in graph
- * [FROM NODE COUNT...........]   4 bytes integer               > 0                  How many nodes with from role
- * [TO NODE COUNT.............]   4 bytes integer               > 0                  How many nodes with to role
- * [ARC (LINK) COUNT..........]   4 bytes integer               > 0                  Home many links in graph
- * [NODE BUFFER BYTE SIZE.....]   4 bytes integer               >= 0                 Byte size of the node buffer
- * [LINK BUFFER BYTE SIZE.....]   4 bytes integer               >= 0                 Byte size of the link buffer
- * [NODE BUFFER...............]   variable len array of bytes   V1 FDG NODE BUFFER   Node buffer
- * [LINK BUFFER...............]   variable len array of bytes   V1 FDG LINK BUFFER   Link buffer
- *
+#define GNGRP_LINKAREA_SIZEOF(C, lattr)  	(sizeof( gnInt32_t ) * (GNGRP_ILA_SIZE) + GNGRP_LINK_SIZEOF(lattr) * (C))
+#define GNGRP_LINKAREA_WSIZE(C, lattr)		(GNGRP_LINKAREA_SIZEOF(C, lattr) / sizeof(gnInt32_t)))
+#define GNGRP_LINKAREA_ALLOC(C, lattr)   	(malloc(GNGRP_LINKAREA_SIZEOF(C, lattr)))
+#define GNGRP_LINKAREA_REALLOC(P, C, lattr)	(realloc(P , GNGRP_LINKAREA_SIZEOF(C, lattr)))
+
+#define GNGRP_LINKAREA_LINKCOUNT(p)			((p)[GNGRP_ILA_TOCNT])
+#define GNGRP_LINKAREA_LINKARRAY_PTR(p)		((p) + GNGRP_ILA_TOARR)
+#define GNGRP_LINKAREA_LINK_PTR(p,i,C)		(((p) + GNGRP_ILA_TOARR) + (i) * GNGRP_LINK_WSIZE(C))
+
+/*
+ * Link macros - addresses in a flat link
  */
+#define GNGRP_IL_OFFSET						0
+#define GNGRP_IL_COST						1
+#define GNGRP_IL_USER						2
+#define GNGRP_IL_ATTR						3
+#define GNGRP_IL_SIZE						GNGRP_IL_ATTR
 
+#define GNGRP_LINK_SIZEOF( lattr ) 			(sizeof( gnInt32_t ) * GNGRP_IL_SIZE + (lattr))
+#define GNGRP_LINK_WSIZE( lattr ) 			(GNGRP_LINK_SIZEOF( lattr ) / sizeof( gnInt32_t ))
+#define GNGRP_LINK_ALLOC( lattr )  			(malloc( GNGRP_LINK_SIZEOF( lattr ) ))
+
+#define GNGRP_LINK_TONODE_OFFSET(p)			((p)[GNGRP_IL_OFFSET])
+#define GNGRP_LINK_COST(p)					((p)[GNGRP_IL_COST])
+#define GNGRP_LINK_USER(p)					((p)[GNGRP_IL_USER])
+#define GNGRP_LINK_ATTR_PTR(p)				((p) + GNGRP_IL_ATTR)
 
 
 /*
- * Node macros
+ * Node Buffer Macros
  */
-#define GNGRP_C_NODEID						0
-#define GNGRP_C_STATUS 						1
-#define GNGRP_C_OFFSET 						2
-#define GNGRP_C_ATTR						3
-#define GNGRP_C_SIZE						GNGRP_C_ATTR
+#define GNGRP_NB_FOREACH_NODE(pgrp,pn)		for((pn)=(gnInt32_t*)(pgrp)->pNodeBuffer;\
+												(pn)<(gnInt32_t*)((pgrp)->pNodeBuffer+(pgrp)->iNodeBuffer);\
+												(pn)+=GNGRP_NODE_WSIZE((pgrp)->NodeAttrSize))
 
-#define GNGRP_C_SIZEOF( nattr  ) 		 	( sizeof( gnInt32_t ) * GNGRP_C_SIZE + (nattr) )
-#define GNGRP_C_WSIZE( nattr )				( GNGRP_C_SIZEOF( nattr ) / sizeof(gnInt32_t) )
-#define GNGRP_C_ALLOC( nattr )   			( malloc( GNGRP_C_SIZEOF( nattr ) ) )
-
-#define GNGRP_NODE_ID(p)					(p[GNGRP_C_NODEID])
-#define GNGRP_NODE_STATUS(p)				(p[GNGRP_C_STATUS])
-#define GNGRP_NODE_LINKAREA_OFFSET(p)		(p[GNGRP_C_OFFSET])
+#define GNGRP_NB_NODE_I(pgrp,i)				((gnInt32_t*)((pgrp)->pNodeBuffer[GNGRP_NODE_SIZEOF((pgrp)->LinkAttrSize)*(i)]))
+#define GNGRP_NB_NODE_OFF(pgrp,o)			((gnInt32_t*)((pgrp)->pNodeBuffer + (o)))
 
 /*
- * LinkArea macros
+ * Link Area Scan
  */
-#define GNGRP_F_TOCNT						0
-#define GNGRP_F_SIZE						1
-#define GNGRP_F_TOARR						GNGRP_F_SIZE
-
-#define GNGRP_F_SIZEOF( C , lattr )  		( sizeof( gnInt32_t ) * (GNGRP_F_SIZE) + GNGRP_T_SIZEOF(lattr) * (C) )
-#define GNGRP_F_WSIZE( C , lattr )			( GNGRP_F_SIZEOF( C , lattr ) / sizeof(gnInt32_t) ) )
-#define GNGRP_F_ALLOC( C , lattr )   		( malloc( GNGRP_F_SIZEOF( C , lattr ) ) )
-#define GNGRP_F_REALLOC( P , C , lattr ) 	( realloc( P , GNGRP_F_SIZEOF( C , lattr ) ) )
-
-#define GNGRP_LINKAREA_LINKCOUNT(p)			(p[GNGRP_F_TOCNT])
-#define GNGRP_LINKAREA_LINKARRAY_PTR(p)		(p + GNGRP_F_TOARR)
-
-/*
- * Link macros
- */
-#define GNGRP_T_OFFSET						0
-#define GNGRP_T_COST						1
-#define GNGRP_T_USER						2
-#define GNGRP_T_ATTR						3
-#define GNGRP_T_SIZE						GNGRP_T_ATTR
-
-#define GNGRP_T_SIZEOF( lattr ) 			( sizeof( gnInt32_t ) * GNGRP_T_SIZE + (lattr) )
-#define GNGRP_T_WSIZE( lattr ) 				( GNGRP_T_SIZEOF( lattr ) / sizeof( gnInt32_t ) )
-#define GNGRP_T_ALLOC( lattr )  			( malloc( GNGRP_T_SIZEOF( lattr ) ) )
-
-#define GNGRP_LINK_TONODE_OFFSET(p)			(p[GNGRP_T_OFFSET])
-#define GNGRP_LINK_COST(p)					(p[GNGRP_T_COST])
-#define GNGRP_LINK_USER(p)					(p[GNGRP_T_USER])
-
+#define GNGRP_LA_FOREACH_LINK(pgrp,pla,pl)	for((pl)=GNGRP_LINKAREA_LINKARRAY_PTR(pla);\
+												(pl)<(pla)+GNGRP_LINK_WSIZE((pgrp)->LinkAttrSize)*GNGRP_LINKAREA_LINKCOUNT(pla);\
+												(pl)+=GNGRP_LINK_WSIZE((pgrp)->LinkAttrSize))
 
 /*
  * node status
@@ -202,12 +154,8 @@ typedef struct _gnGrpSPClipOutput
 /* forward declaration of gnGrpGraph structure  */
 struct _gnGrpGraph;
 
-typedef struct _gnGrpMethods
+typedef struct _gnGrpIOMethods
 {
-	int			(*release)			(
-									struct _gnGrpGraph *	pgraph
-									);
-
 	int 		(*write)			(
 									struct _gnGrpGraph *	pgraph ,
 									int						fd
@@ -217,94 +165,8 @@ typedef struct _gnGrpMethods
 									struct _gnGrpGraph *	pgraph ,
 									int						fd
 									);
-
-	gnInt32_t * 	(*parsearcvalues)(
-									struct _gnGrpGraph *	pgraph ,
-									gnInt32_t *				ppar ,
-									gnInt32_t 				lFrom ,
-									gnInt32_t 				lTo , 
-									gnInt32_t 				lCost , 
-									gnInt32_t 				lUser
-									);
-
-	int         (*addlink)     		(
-									struct _gnGrpGraph * 	pgraph ,
-									gnInt32_t *				ppar ,
-									void *					pvFromNodeAttr ,
-									void *					pvToNodeAttr ,
-									void *					pvLinkAttr
-									);
-
-	gnInt32_t *     (*searchnode) 		(
-									struct _gnGrpGraph * 	pgraph ,
-									gnInt32_t 				nodeid
-									);
-
-	int         (*unflatten)		(
-									struct _gnGrpGraph * 	pgraph
-									);
-
-	int         (*flatten)			(
-									struct _gnGrpGraph * 	pgraph
-									);
-
-	int         (*setnodeattr)		(
-									struct _gnGrpGraph * 	pgraph ,
-									void *					pattr ,
-									gnInt32_t				nodeid
-									);
-
-	void *      (*getnodeattr)		(
-									struct _gnGrpGraph * 	pgraph ,
-									gnInt32_t				nodeid
-									);
-
-	int         (*setlinkattr)		(
-									struct _gnGrpGraph * 	pgraph ,
-									void *					pattr ,
-									gnInt32_t				fnodeid ,
-									gnInt32_t				tnodeid
-									);
-
-	void *      (*getlinkattr)		(
-									struct _gnGrpGraph * 	pgraph ,
-									gnInt32_t				fnodeid ,
-									gnInt32_t				tnodeid
-									);
-
-	void        (*dumphead)   		(
-									struct _gnGrpGraph * 	pgraph ,
-									FILE * 					f
-									);
-
-	void        (*dumpnode)   		(
-									struct _gnGrpGraph * 	pgraph ,
-									FILE * 					f ,
-									gnInt32_t *				pnode
-									);
-
-	void * 		(*shortestpath)		(
-									struct _gnGrpGraph * 	pgraph ,
-									gnInt32_t 				from ,
-					 				gnInt32_t 				to ,
-									int 					(*clip) (
-																	struct _gnGrpGraph * 	pgraph ,
-#ifndef GNGRP_NEWCLIP
-																	gnInt32_t * 			pprevlink ,
-																	gnInt32_t * 			pnodefrom ,
-																	gnInt32_t * 			plink ,
-																	gnInt32_t * 			pnodeto ,
-																	gnInt32_t * 			pcost ,
-#else /* GNGRP_NEWCLIP */
-																	gnGrpSPClipInput_s *	pArgIn ,
-																	gnGrpSPClipOutput_s *	pArgOut ,
-#endif /* GNGRP_NEWCLIP */
-																	void * 					pvarg
-																	) ,
-					 				void * 					pvcliparg
-					 				);
 }
-gnGrpMethods_s;
+gnGrpIOMethods_s;
 
 
 /*
@@ -318,7 +180,6 @@ typedef struct _gnGrpGraph
 	gnInt32_t			NodeAttrSize;
 	gnInt32_t			LinkAttrSize;
 	gnTreeNode_s *		pNodeTree;
-	gnTreeNode_s *		pLinkTree;
 	gnHeap_s	   		NodeHeap;
 	gnByte_t * 			pNodeBuffer;
 	gnInt32_t			iNodeBuffer;
@@ -330,16 +191,14 @@ typedef struct _gnGrpGraph
 	gnInt32_t			cArc;
 	gnInt32_t			Flags;
 	gnInt32_t			aOpaqueSet[ 16 ];
-	gnGrpMethods_s *	pMethods;
+	gnGrpIOMethods_s *	pMethods;
 
 /* so far statistics are only computed by gnGrpAddLink() */
 #ifdef GNGRP_STATS
 	clock_t				clkAddLink;  /* cycles spent during the last addlink execution */
 	int					cAddLink;    /* # of calls to gnGrpAddLink() */
-	clock_t				clkLinkTree; /* cycles spent in accessing the link binary tree */
 	clock_t				clkNodeTree; /* cycles spent in accessing the node binary tree */
 	clock_t				clkNodeHeap; /* cycles spent in accessing the node min heap */
-	int					cLinkTree;   /* # of probes in the link tree */
 	int					cNodeTree;   /* # of probes in the node tree */
 	int					cNodeHeap;   /* # of probes in the node heap */
 #endif
@@ -372,30 +231,35 @@ typedef struct _gnGrpSPReport
 }
 gnGrpSPReport_s;
 
+
 /*
- * Error codes returned in gnGrpError
+ * Error codes returned by gnGrpError
  */
-#define GNGRP_ERR_BadVersion 			-1
-#define GNGRP_ERR_BadNodeType 			-2
-#define GNGRP_ERR_MemoryExhausted 		-3
-#define GNGRP_ERR_HeapError 			-4
-#define GNGRP_ERR_UndefinedMethod 		-5
-#define GNGRP_ERR_Write 				-6
-#define GNGRP_ERR_Read 					-7
-#define GNGRP_ERR_NotSupported 			-8
-#define GNGRP_ERR_UnknownByteOrder 		-9
-#define GNGRP_ERR_FromNodeNotFound 		-10
-#define GNGRP_ERR_ToNodeNotFound 		-11
-#define GNGRP_ERR_BadLink 				-12
-#define GNGRP_ERR_BadOnFlatGraph		-13
-#define GNGRP_ERR_BadOnNoFlatGraph		-14
-#define GNGRP_ERR_NodeNotFound 			-15
-#define GNGRP_ERR_TreeSearchError 		-16
-#define GNGRP_ERR_UnexpectedNullPointer -17
-#define GNGRP_ERR_VersionNotSupported	-18
+#define GNGRP_ERR_BadVersion 			1
+#define GNGRP_ERR_BadNodeType 			2
+#define GNGRP_ERR_MemoryExhausted 		3
+#define GNGRP_ERR_HeapError 			4
+#define GNGRP_ERR_UndefinedMethod 		5
+#define GNGRP_ERR_Write 				6
+#define GNGRP_ERR_Read 					7
+#define GNGRP_ERR_NotSupported 			8
+#define GNGRP_ERR_UnknownByteOrder 		9
+#define GNGRP_ERR_FromNodeNotFound 		10
+#define GNGRP_ERR_ToNodeNotFound 		11
+#define GNGRP_ERR_BadLink 				12
+#define GNGRP_ERR_BadOnFlatGraph		13
+#define GNGRP_ERR_BadOnTreeGraph		14
+#define GNGRP_ERR_NodeNotFound 			15
+#define GNGRP_ERR_TreeSearchError 		16
+#define GNGRP_ERR_UnexpectedNullPointer 17
+#define GNGRP_ERR_VersionNotSupported	18
 
 
 
+
+/*
+ * function prototypes
+ */
 
 extern int				gnGrpInitialize		(
 											gnGrpGraph_s * 		pgraph ,
@@ -422,32 +286,43 @@ extern int 				gnGrpFlatten		(
 											);
 
 extern int 				gnGrpSetNodeAttr	(
-											gnGrpGraph_s * pgraph ,
-											void * pattr ,
-											gnInt32_t nodeid
+											gnGrpGraph_s * 	pGraph ,
+											void * 			pvAttr ,
+											gnInt32_t 		nNodeId
 											);
 
 extern void * 			gnGrpGetNodeAttr	(	
-											gnGrpGraph_s * pgraph ,
-											gnInt32_t nodeid
+											gnGrpGraph_s * 	pGraph ,
+											gnInt32_t 		nNodeId
 											);
 
 extern int 				gnGrpSetLinkAttr	(
-											gnGrpGraph_s * 	pgraph ,
-											void * 			pattr ,
-											gnInt32_t 		fnodeid ,
-											gnInt32_t		tnodeid
+											gnGrpGraph_s * 	pGraph ,
+											void * 			pvAttr ,
+											gnInt32_t 		nFromNodeId ,
+											gnInt32_t		nToNodeId
 											);
 
 extern void * 			gnGrpGetLinkAttr	(	
-											gnGrpGraph_s * 	pgraph ,
-											gnInt32_t 		fnodeid ,
-											gnInt32_t		tnodeid
+											gnGrpGraph_s * 	pGraph ,
+											gnInt32_t 		nFromNodeId ,
+											gnInt32_t		nToNodeId
 											);
 
-extern gnInt32_t * 		gnGrpSearchNode		(
-											gnGrpGraph_s * 	pgraph ,
-											gnInt32_t 			nodeid
+extern gnInt32_t * 		gnGrpGetNode		(
+											gnGrpGraph_s * 	pGraph ,
+											gnInt32_t		nNodeId
+											);
+
+extern gnInt32_t * 		gnGrpGetLinkArea	(
+											gnGrpGraph_s * 	pGraph ,
+											gnInt32_t *		pnNode
+											);
+
+extern gnInt32_t * 		gnGrpGetLink		(
+											gnGrpGraph_s * 	pGraph ,
+											gnInt32_t *		pnFromNode ,
+											gnInt32_t 		nToNodeId
 											);
 
 extern int 				gnGrpAddLink		(
@@ -471,15 +346,10 @@ extern int				gnGrpRead			(
 											int 			fd
 											);
 
-extern void 			gnGrpDumpHead		(
-											gnGrpGraph_s * 	pgraph ,
-											FILE * 			f
-											);
-
-extern void 			gnGrpDumpNode		(
-											gnGrpGraph_s * 	pgraph ,
-											FILE * 			f ,
-											gnInt32_t * 		pnode
+extern int 				gnGrpScan			(
+											gnGrpGraph_s * pgraph ,
+											int (*push)( gnGrpGraph_s * pgraph , gnInt32_t * pnode , void * pvarg ) ,
+											void * pvarg
 											);
 
 extern gnGrpSPReport_s *gnGrpShortestPath	(
