@@ -1,4 +1,3 @@
-/* @(#)main.c	1.3 2/27/91 */
 #include <string.h>
 #include <string.h>
 #include <stdio.h>
