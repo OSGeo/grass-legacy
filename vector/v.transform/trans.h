@@ -13,7 +13,7 @@
 *******************/
 
 #define		MIN_COOR	4
-#define		MAX_COOR	10
+#define		MAX_COOR	1000
 
 
 /*  return status for setup_transform() and the transform library  */

@@ -25,6 +25,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "glocale.h"
+#include "gis.h"
 #include "Vect.h"
 #include "trans.h"
 #include "local_proto.h"
@@ -119,7 +121,7 @@ create_transform_from_file (struct file_info *Coord, int quiet)
 
 	if (status != ALL_OK )
 	{
-		fprintf (stdout," Number of points that have been entered: %d\n", n_points );
+		G_message ( _("Number of points that have been entered: %d"), n_points );
 		print_transform_error(status) ;
 		exit(-1) ;
 	}
