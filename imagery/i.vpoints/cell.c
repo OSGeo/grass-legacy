@@ -5,6 +5,8 @@ static int plot(int,int);
 static int cancel(void);
 static int choose_cellfile (char *,char *);
 
+#define OLDCODE
+
 int plotcell(int x,int y)
 {
 #ifdef OLDCODE
@@ -27,9 +29,11 @@ int plotcell(int x,int y)
 	plot (VIEW_MAP1->left+1,0);
 #endif
 
+#ifdef NEWCODE  /* how can this work?? - no right raster map MN 5/2002 */
     VIEW_MAP2->cell.configured = 0;
     VIEW_MAP2_ZOOM->cell.configured = 0;
     plot(VIEW_MAP1->left+1,0);   /* new code for i.vpoints */
+#endif
     return 0;
 }
 
