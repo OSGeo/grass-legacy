@@ -1,0 +1,28 @@
+scale 1 inch equals 2 miles
+raster owner
+maploc 1.25 0.0
+setcolor 2 white
+header
+  file bugs.hdr
+  font Helvetica
+  fontsize 15
+  end
+outline y
+  color black
+  end
+sites bugsites
+  icon bug
+  color black
+  size 1
+  desc n
+  end
+mapinfo
+  font Helvetica
+  fontsize 10
+  end
+comments bugs.cmt
+  where 4.75 10.0
+  font Times Roman
+  fontsize 12
+  end
+end
