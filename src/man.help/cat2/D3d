@@ -1,0 +1,132 @@
+
+
+
+D3d(2D)              GRASS Reference Manual               D3d(2D)
+
+
+
+NAME
+     D3d - Three-dimensional map display program
+     (D Language Tool)
+
+SYNOPSIS
+     D3d  [file=mapname]  [fe=from_easting]  [fn=from_northing]
+          [fh=from_height]  [te=to_easting]  [tn=to_northing]
+          [th=to_height]  [ew=east-west resolution] [ns=north-
+          south resolution]  [lf=line_freq] [exag=exaggeration]
+          [ef=elev_file]  [va=view_angle]
+
+DESCRIPTION
+     D3d provides device-independent 3-dimensional graphic images
+     based on GRASS grid cell maps.  The user identifies the
+     viewing location, the line of sight, the view angle, a
+     vertical exaggeration factor, and the map to be used for
+     "elevation" data.  This program is a non-interactive version
+     of the GRASS tool d.3d.  Refer to the d.3d manual entry for
+     a detailed examination of the production of three-
+     dimensional images in GRASS, and of specific parameters.
+     Three-dimensional images can also be generated through the
+     GRASS display program.
+
+
+          file=map_name
+               Name of the map to be displayed in 3-d.
+
+          fe=from_easting
+
+          fn=from_northing
+
+          fh=from_height
+               The 3-d location of the viewing location.
+               Defaults to 30,000 units high, and just southwest
+               of the current window.
+
+          te=to_elevation
+
+          tn=to_northing
+
+          th=to_height
+               The 3-d location to appear in the center of the
+               graphics window.  Defaults to 0 units high, and
+               the center of the display window.
+
+          ew=east-west resolution
+
+          ns=north-south resolution
+
+          lf=line_frequency
+               Black lines are drawn on the 3-d image to improve
+               the image.  This value is the number of rows and
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+D3d(2D)              GRASS Reference Manual               D3d(2D)
+
+
+
+               columns to skip between lines.  Defaults to 10.  0
+               means "no lines".
+
+          exag=exaggerating_file
+               This value is multiplied times the "elevations" in
+               the elevation file.  Defaults to 2.
+
+          ef=elevation_file
+               Name of the file to provide the elevation values.
+               Generally, this is something like "elevation", but
+               can be any file.
+
+          va=viewing_angle
+               The field of view in the image.  Defaults to 40
+               degrees.
+
+     The image is drawn in the current graphics window.  The D
+     language program Dscreen can be run before running D3d run
+     to prepare the a full-screen window for graphics.  Refer to
+     the GRASS tool D3d.view for a demonstration of the D3d
+     program.
+
+
+SEE ALSO
+     DINTRO[2D]     Introduction to the GRASS D tools
+     D3d.view[2D]   To view several 3-d views
+     d.3d[1]        Interactive version of D3d
+     display[1]     To display images on the graphics monitor
+
+AUTHOR
+     James Westervelt, U.S. Army Construction Engineering
+     Research Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
