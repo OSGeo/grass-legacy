@@ -349,8 +349,7 @@ Vect_line_geodesic_length ( struct line_pnts *Points )
 }
 
 /*!
- \fn int 
-Vect_line_distance (	  struct line_pnts *points,
+\fn int Vect_line_distance (	  struct line_pnts *points,
 		  double ux, double uy, double uz,
 		  int    with_z,
 		  double *px, double *py, double *pz,
@@ -461,8 +460,7 @@ Vect_line_distance (
 
 
 /*!
- \fn double
-Vect_points_distance ( double x1, double y1, double z1,
+ \fn double Vect_points_distance ( double x1, double y1, double z1,
 		  double x2, double y2, double z2,
 		  int with_z)
  \brief distance of 2 points. with_z - use z coordinate
