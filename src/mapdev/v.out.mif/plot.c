@@ -2,7 +2,6 @@
 
 #include "gis.h"
 #include "Vect.h"
-#include "digit.h"
 
 static
 struct list
