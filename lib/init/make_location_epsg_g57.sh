@@ -16,8 +16,6 @@
 #   ISBN: 1-4020-7088-8, http://mpa.itc.it/grasstutor/
 #
 
-GRASSVERSION=57
-GRASSSTARTSCRIPT=grass$GRASSVERSION
 ########## nothing to change below ##############################
 EPSG=$1
 LOCATION=$2
@@ -27,7 +25,7 @@ GRASSRC=grassrc6
 if [ $# -lt 2 ] ; then
  echo "Script to create a new LOCATION from EPSG code"
  echo "Usage:"
- echo "   make_location_epsg_g$GRASSVERSION.sh epsg newlocation_name [GISDBASE]"
+ echo "   make_location_epsg.sh epsg newlocation_name [GISDBASE]"
  echo ""
  echo "       epsg: EPSG code number of projection (see /usr/local/share/proj/epsg)"
  echo "       newlocation_name: new location to be created"
