@@ -580,6 +580,7 @@ csh|tcsh)
     rm -f "$cshrc" "$tcshrc"
     echo "set home = $USERHOME" > "$cshrc"
     echo "set history = 500 savehist = 500  noclobber ignoreeof" >> "$cshrc"
+    echo "set histfile = $HOME/.history" >> "$cshrc"
 
     echo "set prompt = '\\" >> "$cshrc"
     echo "Mapset <${MAPSET}> in Location <${LOCATION_NAME}> \\" >> "$cshrc"
@@ -624,6 +625,7 @@ bash)
     echo "test -z $PROFILEREAD && . /etc/profile" > "$bashrc"
     echo "test -r ~/.alias && . ~/.alias" >> "$bashrc"
     echo "umask 022" >> "$bashrc"
+    echo "PROMPT_COMMAND='if test -f `g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/cell/MASK ; then echo "[Raster MASK present]" ; fi'" >> "$bashrc"
     echo "PS1='GRASS VERSION_NUMBER:\w > '" >> "$bashrc"
 
     if [ -r "$USERHOME/.grass.bashrc" ]
