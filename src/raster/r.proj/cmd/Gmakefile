@@ -1,7 +1,4 @@
-# @(#)Gmakefile	v1.3 - 27 Jun 1995 	-emes-
-
-
-PGM = r.proj.new
+PGM = r.proj
 
 OBJ = \
 	main.o \
@@ -10,10 +7,6 @@ OBJ = \
 	nearest.o \
 	bilinear.o \
 	cubic.o
-
-
-EXTRA_CFLAGS = 
-
 
 $(BIN_CONTRIB_CMD)/$(PGM): $(OBJ) $(GPROJLIB) $(GISLIB) 
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GPROJLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
