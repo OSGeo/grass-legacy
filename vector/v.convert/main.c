@@ -63,7 +63,7 @@ main (int argc, char *argv[])
     opt_end->type        = TYPE_STRING ;
     opt_end->required    = NO;
     opt_end->multiple    = NO;
-    opt_end->options      = "little,big";    
+    opt_end->options     = "big,little";    
     opt_end->description = "endian of input vector map";      
     opt_end->answer = "big"; 
     
