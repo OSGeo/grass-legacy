@@ -11,6 +11,7 @@
 #		for details.
 #
 # Dec 2004: merged with srtm_generate_hdr.sh (M. Neteler)
+#           corrections and refinement (W. Kyngesburye)
 # Aug 2004: modified to accept files from other directories
 #           (by H. Bowman)
 #########################
@@ -40,21 +41,21 @@
 #########################
 
 #%Module
-#% description: Import SRTM30 HGT files into GRASS
+#% description: Import SRTM90 HGT files into GRASS
 #%End
 #%option
 #% key: input
 #% gisprompt: file,file,file
 #% type: string
-#% description: SRTM input hgt.zip file
+#% description: SRTM input tile (file without .hgt.zip extension)
 #% required : yes
 #%end
 #%option
 #% key: output
 #% gisprompt: new,cell,raster
 #% type: string
-#% description: Output raster map
-#% required : yes
+#% description: Output raster map (default: input tile)
+#% required : no
 #%end
 
 
@@ -87,25 +88,27 @@ if [ $? -ne 0 ] ; then
  exit 1
 fi
 
-#####################################
-# Convert input zip file to GeoTIFF:
-# e.g. N18W077.hgt.zip
+# use these from now on:
+FILE=`echo $GIS_OPT_input | sed 's+.hgt++g'| sed 's+.zip++g'`
+TILE=`echo "$FILE" | sed 's+^.*/++'`
+FDIR=`echo "$FILE" | sed 's+[^/]*$++'`
 
-if test ! -f "$GIS_OPT_input" ; then
- echo "File '$GIS_OPT_input' not found"
- exit
+if [ "$GIS_OPT_output" == "" ] ; then
+  TILEOUT=$TILE
+else
+  TILEOUT=$GIS_OPT_output
 fi
 
-ls -1 "$GIS_OPT_input" | grep zip > /dev/null
+if test ! -f $FILE.hgt.zip ; then
+ echo "File '$FILE.hgt.zip' not found"
+ exit 1
+fi
+
+ls -1 "$FILE.hgt.zip" | grep zip > /dev/null
 if [ $? -ne 0 ] ; then
-  echo "$GIS_OPT_input is no zip file."
-  echo "Usage: r.in.srtm in=XXYY.hgt.zip out=srtm_xxyy"
+  echo "$FILE.hgt.zip is no zip file."
   exit 1
 fi
-
-#basename needed?
-FILE=`echo "$GIS_OPT_input" | sed 's+.hgt++g'| sed 's+.zip++g'`
-TILE=`echo "$FILE" | sed 's+^.*/++'`
 
 echo "Converting input file to BIL..."
 
@@ -115,19 +118,19 @@ LL_LONGITUDE=`echo $TILE | cut -b5-7`
 #are we on the southern hemisphere? If yes, make LATITUDE negative.
 NORTH=`echo $TILE  | sed 's+.hgt++g' | cut -b1`
 if [ "$NORTH" = "S" ] ; then
-   LL_LATITUDE=`echo $LL_LATITUDE | awk '{printf "%.10f", $GIS_OPT_input * -1 }'`
+   LL_LATITUDE=`echo $LL_LATITUDE | awk '{printf "%.10f", $1 * -1 }'`
 fi
 
 #are we west of Greenwich? If yes, make LONGITUDE negative.
 EAST=`echo $TILE  | sed 's+.hgt++g' | cut -b4`
 if [ "$EAST" = "W" ] ; then
-   LL_LONGITUDE=`echo $LL_LONGITUDE | awk '{printf "%.10f", $GIS_OPT_input * -1 }'`
+   LL_LONGITUDE=`echo $LL_LONGITUDE | awk '{printf "%.10f", $1 * -1 }'`
 fi
 
 # Calculate Upper Left from Lower Left
-ULXMAP=`echo $LL_LONGITUDE | awk '{printf "%.1f", $GIS_OPT_input}'`
+ULXMAP=`echo $LL_LONGITUDE | awk '{printf "%.1f", $1}'`
 # SRTM90 tile size is 1 deg:
-ULYMAP=`echo $LL_LATITUDE  | awk '{printf "%.1f", $GIS_OPT_input + 1.0}'`
+ULYMAP=`echo $LL_LATITUDE  | awk '{printf "%.1f", $1 + 1.0}'`
 
 echo "BYTEORDER M
 LAYOUT BIL
@@ -144,49 +147,20 @@ ULYMAP $ULYMAP
 XDIM 0.000833333333333
 YDIM 0.000833333333333"> $TILE.hdr
 
-#rename data file:
+#unzip & rename data file:
 unzip $FILE.hgt.zip
-cp $TILE.hgt $TILE.bil
+mv $TILE.hgt $TILE.bil
 
-#create prj file: To be precisely, we would need EGM96! But who really cares...
+#create prj file: To be precise, we would need EGS96! But who really cares...
 echo "GEOGCS["wgs84",DATUM["WGS_1984",SPHEROID["wgs84",6378137,298.257223563],TOWGS84[0.000000,0.000000,0.000000]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433]]" > $TILE.prj
 
-echo "Making Geotiff (Lat/Long)..."
-gdal_translate -ot Int16 $TILE.bil $TILE.tif
+r.in.gdal in=$TILE.bil out=$TILEOUT
 
-#echo "Verify Lat/Long SRTM DEM with:"
-#echo "   gdalinfo $TILE.tif"
+rm $TILE.bil $TILE.hdr $TILE.prj
 
-#####################################
-#we use the resulting GeoTIFF:
+#nice color table and zoom to tile
+r.colors rul=srtm map=$TILEOUT
+g.region rast=$TILEOUT
 
-# flag -o needed?
-r.in.gdal in=$TILE.tif out=$TILE
-
-g.region rast=$TILE
-echo "Byte mapping down large values due to INT16 format..."
-r.mapcalc "$GIS_OPT_output=if($TILE >= 32767, $TILE - 32768, $TILE)"
-g.remove $TILE > /dev/null
-
-#apply nice color table: (maybe better 'etopo2' of r.colors?)
-echo "-500 0 0 10
--300 0 0 20
--200 0 0 70
--100 0 0 130
--50 0 0 205
-0 aqua
-0.1   57 151 105
-100  117 194 93
-200  230 230 128
-500  202 158 75
-1000 214 187 98
-2000 185 154 100
-3000 220 220 220
-4000 245 245 245
-8850 255 255 255
-nv white" | r.colors col=rules m=$GIS_OPT_output
-
-echo "Done: generated map $GIS_OPT_output"
+echo "Done: generated map $TILEOUT"
 echo "Holes in the data can be closed with 'r.fillnulls' (using splines)."
-
-#rm -f $TILE.bil $TILE.hdr $TILE.hgt $TILE.prj
