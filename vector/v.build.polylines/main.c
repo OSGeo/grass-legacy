@@ -97,7 +97,7 @@ int main (int argc, char **argv)
   input->type = TYPE_STRING;
   input->required = YES;
   input->multiple = NO;
-  input->gisprompt = "old,dig,vector";
+  input->gisprompt = "old,vector,vector";
   input->description = "Input binary vector map";
 
   output = G_define_option ();
@@ -105,7 +105,7 @@ int main (int argc, char **argv)
   output->type = TYPE_STRING;
   output->required = YES;
   output->multiple = NO;
-  output->gisprompt = "new,dig,vector";
+  output->gisprompt = "new,vector,vector";
   output->description = "Output vector map";
 
   /*
