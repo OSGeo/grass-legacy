@@ -284,8 +284,10 @@ Vect_open_new (
 		int with_z)
 {
     int format, ret, ferror;
-    char buf[200];
+    char buf[200], *frmt;
     FILE *fp;
+
+    G_debug ( 2, "Vect_open_new(): name = %s", name);
     
     Vect__init_head (Map);
     ferror = Vect_get_fatal_error ();
@@ -314,19 +316,20 @@ Vect_open_new (
     Map->name = G_store (name);
     Map->mapset = G_store ( G_mapset() );
     
-    format = 0;
-    sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, name);
-    fp = G_fopen_old (buf, GRASS_VECT_FRMT_ELEMENT, G_mapset());
-    if ( fp == NULL) {
-        format = GV_FORMAT_NATIVE;
-        G_debug ( 1, "Vector format: %d (native)", format);
-    } else {
-        format = dig_read_frmt_ascii ( fp, &(Map->fInfo) );
-        fclose (fp); 
-        G_debug ( 1, "Vector format: %d (non-native)", format);
+    /* Which format */
+    format = GV_FORMAT_NATIVE;
+    frmt = G__getenv2 ( "GV_FORMAT", G_VAR_MAPSET );
+    if ( frmt != NULL ) {
+	if ( G_strcasecmp ( frmt, "POSTGIS") == 0 )
+	    format = GV_FORMAT_POSTGIS;
+	else if ( G_strcasecmp ( frmt, "NATIVE") == 0 )
+	    format = GV_FORMAT_NATIVE;
+	else
+	    G_warning ("Format '%s' not supported, native format used");
     }
     Map->format = format;
-    
+    G_debug ( 3, "  format = %d", format);
+
     if (0 > (*Open_new_array[format][1]) (Map, name, with_z)) {
 	  switch ( ferror ) {
 	      case GV_FATAL_EXIT:

@@ -28,60 +28,154 @@
 #include <time.h>
 #include <string.h>
 #include <stdio.h>
-int connectionEstablished = 0;	/* No Connection Made */
 
 /* TODO: 3D */
 
-int setup (struct Map_info *Map);
+/* Parse postgis connection string (clone from pg driver) */
+int 
+parse_conn ( struct Format_info *finfo )
+{
+    int  i;
+    char **tokens, delm[2];
+    
+    G_debug ( 3, "parse_conn()");
+
+    if ( finfo->post.db == NULL )
+	G_fatal_error ( "Cannot parse PostGIS database (db == NULL)");
+
+    /* reset */
+    finfo->post.host = NULL;
+    finfo->post.port = NULL;
+    finfo->post.options = NULL;
+    finfo->post.tty = NULL;
+    finfo->post.database = NULL;
+    finfo->post.user = NULL;
+    finfo->post.password = NULL;
+ 
+    G_debug (3, "parse_conn : %s", finfo->post.db ); 
+    
+    if ( strchr(finfo->post.db, '=') == NULL ) { /*db name only */
+	finfo->post.database = G_store ( finfo->post.db );
+    } else {
+	delm[0] = ','; delm[1] = '\0';
+        tokens = G_tokenize ( finfo->post.db, delm );
+	i = 0;
+	while ( tokens[i] ) {
+	   G_debug (3, "token %d : %s", i, tokens[i] ); 
+	   if ( strncmp(tokens[i], "host", 4 ) == 0 )
+	       finfo->post.host = G_store ( tokens[i] + 5 );
+	   else if ( strncmp(tokens[i], "port", 4 ) == 0 )
+	       finfo->post.port = G_store ( tokens[i] + 5 );
+	   else if ( strncmp(tokens[i], "options", 7 ) == 0 )
+	       finfo->post.options = G_store ( tokens[i] + 8 );
+	   else if ( strncmp(tokens[i], "tty", 3 ) == 0 )
+	       finfo->post.tty = G_store ( tokens[i] + 4 );
+	   else if ( strncmp(tokens[i], "dbname", 6 ) == 0 )
+	       finfo->post.database = G_store ( tokens[i] + 7 );
+	   else if ( strncmp(tokens[i], "user", 4 ) == 0 )
+	       finfo->post.user = G_store ( tokens[i] + 5 );
+	   else if ( strncmp(tokens[i], "password", 8 ) == 0 )
+	       finfo->post.password = G_store ( tokens[i] + 9 );
+	   else 
+               G_warning ( "Unknown option in database definition for PostGIS: '%s'", tokens[i] );
+	   
+	   i++;
+	}
+	G_free_tokens ( tokens );	
+    }
+
+    G_debug ( 2, "  db = %s", finfo->post.db);
+    G_debug ( 2, "  host = %s port = %s options = %s tty = %s", 
+	      finfo->post.host, finfo->post.port, finfo->post.options, finfo->post.tty);
+    G_debug ( 2, "  database = %s user = %s password = %s", 
+	      finfo->post.database, finfo->post.user, finfo->post.password);
+    return 0;
+}
+
+/* Set format for postgis */
+int
+set_frmt ( struct Format_info *finfo, char *name )
+{
+    char buf[1000];
+    
+    G_debug ( 3, "set_frmt_post(): name = %s", name);
+
+    finfo->post.db         = G__getenv2 ( "GV_PGIS_DATABASE", G_VAR_MAPSET );
+    if ( finfo->post.db == NULL ) G_fatal_error ( "PostGIS database was not set");
+
+    sprintf (buf, "%s_geom", name );
+    finfo->post.geom_table = G_store (buf);
+    sprintf (buf, "%s_cat", name );
+    finfo->post.cat_table = G_store (buf);
+    finfo->post.geom_id    = G_store ("id");
+    finfo->post.geom_type  = G_store ("type");
+    finfo->post.geom_geom  = G_store ("geom");
+    finfo->post.cat_id     = G_store ("id");
+    finfo->post.cat_field  = G_store ("field");
+    finfo->post.cat_cat    = G_store ("cat");
+
+    return 1;
+}
+	
+
 /************************************************************************************ 
 * Function name: setup.
 * Arguments    : Map.
 * Return       : Status (-1 error 0 all ok), and modify Map structures.
 *
 **************************************************************************************/
-
 int
 setup (struct Map_info *Map)
 {
-  char GEOM_ID[20] = "GEOM_ID";
-  char GEOM_TYPE[20] = "GEOM_TYPE";
-  char GEOM_GEOM[20] = "GEOM_GEOM";
-  char CAT_ID[20] = "CAT_ID";
-  char CAT_FIELD[20] = "CAT_FIELD";
-  char CAT_CAT[20] = "CAT_CAT";
-  
   G_debug (3, "setup()\n");
-  
-  /* If some option parameter are not defined..define here (be quite and drive)*/
-  if ((Map->fInfo.post.geom_id == NULL) || (strlen (Map->fInfo.post.geom_id) == 0))
-    Map->fInfo.post.geom_id = strdup (GEOM_ID);
-  if ((Map->fInfo.post.geom_type == NULL) || (strlen (Map->fInfo.post.geom_type) == 0))
-    Map->fInfo.post.geom_type = strdup (GEOM_TYPE);
-  if ((Map->fInfo.post.geom_geom == NULL) || (strlen (Map->fInfo.post.geom_geom) == 0))
-    Map->fInfo.post.geom_geom = strdup (GEOM_GEOM);
 
-  if ((Map->fInfo.post.cat_id == NULL) || (strlen (Map->fInfo.post.cat_id) == 0))
-    Map->fInfo.post.cat_id = strdup (CAT_ID);
-  if ((Map->fInfo.post.cat_field == NULL) || (strlen (Map->fInfo.post.cat_field) == 0))
-    Map->fInfo.post.cat_field = strdup (CAT_FIELD);
-  if ((Map->fInfo.post.cat_cat == NULL) || (strlen (Map->fInfo.post.cat_cat) == 0))
-    Map->fInfo.post.cat_cat = strdup (CAT_CAT);
+  if ( Map->fInfo.post.database == NULL || strlen (Map->fInfo.post.database) == 0 ) {
+      G_warning ("PostGIS connection: database table not defined");
+      return -1;
+  }
   
   /* Check if table names are set */
   if ( Map->fInfo.post.geom_table == NULL || strlen (Map->fInfo.post.geom_table) == 0 ) {
-      G_warning ("Geometry table name not available for vector '%s'", Map->name);
+      G_warning ("PostGIS connection: geometry table not defined");
       return -1;
   }
   if ( Map->fInfo.post.cat_table == NULL || strlen (Map->fInfo.post.cat_table) == 0 ) {
-      G_warning ("Category table name not available for vector '%s'", Map->name);
+      G_warning ("PostGIS connection: category table not defined");
+      return -1;
+  }
+  /* Check if parameters are defined */
+  if ((Map->fInfo.post.geom_id == NULL) || (strlen (Map->fInfo.post.geom_id) == 0)) {
+      G_warning ("PostGIS connection: geom_id not defined");
+      return -1;
+  }
+
+  if ((Map->fInfo.post.geom_type == NULL) || (strlen (Map->fInfo.post.geom_type) == 0)) {
+      G_warning ("PostGIS connection: geom_type  not defined");
+      return -1;
+  }
+  if ((Map->fInfo.post.geom_geom == NULL) || (strlen (Map->fInfo.post.geom_geom) == 0)) {
+      G_warning ("PostGIS connection: geom_geom not defined");
+      return -1;
+  }
+
+  if ((Map->fInfo.post.cat_id == NULL) || (strlen (Map->fInfo.post.cat_id) == 0)) {
+      G_warning ("PostGIS connection: cat_id not defined");
+      return -1;
+  }
+  if ((Map->fInfo.post.cat_field == NULL) || (strlen (Map->fInfo.post.cat_field) == 0)) {
+      G_warning ("PostGIS connection: cat_field not defined");
+      return -1;
+  }
+  if ((Map->fInfo.post.cat_cat == NULL) || (strlen (Map->fInfo.post.cat_cat) == 0)) {
+      G_warning ("PostGIS connection: cat_cat not defined");
       return -1;
   }
   
   /* Try to make a connection to the specified database */
   Map->fInfo.post.conn =
-       PQsetdbLogin (Map->fInfo.post.host, Map->fInfo.post.port, NULL, NULL,
-  		     Map->fInfo.post.database, Map->fInfo.post.user,
-		     Map->fInfo.post.password);
+       PQsetdbLogin (Map->fInfo.post.host, Map->fInfo.post.port, 
+	             Map->fInfo.post.options, Map->fInfo.post.tty,
+  		     Map->fInfo.post.database, Map->fInfo.post.user, Map->fInfo.post.password);
 
   if (PQstatus (Map->fInfo.post.conn) == CONNECTION_BAD) {
       G_warning ("Cannot make connection to PostGIS:\nhost = %s\nport = %s\n"
@@ -90,9 +184,9 @@ setup (struct Map_info *Map)
 		  Map->fInfo.post.database, Map->fInfo.post.user);
       return (-1);
   }
-  connectionEstablished = 1;
   return (0);
 }
+
 
 /************************************************************************************ 
 * Function name: V1_open_old_post.
@@ -114,9 +208,8 @@ V1_open_old_post (struct Map_info *Map, int update)
 {
   G_debug (1, "V1_open_old_post()");
   
-  if (!connectionEstablished) {
-      if (setup (Map)) return (-1);
-  }
+  parse_conn ( &(Map->fInfo) );
+  if (setup (Map)) return (-1);
 
   Map->head.with_z = WITHOUT_Z;
   Map->fInfo.post.lastRead = 0;
@@ -176,13 +269,16 @@ int
 V1_open_new_post (struct Map_info *Map, char *name, int with_z)
 {
   char query[2000];
+  char buf[1000];
+  FILE *fp;
   PGresult *res;
 
   G_debug (1, "V1_open_new_post()");
 
-  if (!connectionEstablished) {
-      if (setup (Map)) return (-1);
-  }
+  set_frmt ( &(Map->fInfo), Map->name );
+  parse_conn ( &(Map->fInfo) );
+
+  if (setup (Map)) return (-1);
   
   /*Check if geom table doesn't exist */
   sprintf (query, "SELECT COUNT (tablename) FROM pg_tables WHERE tablename = '%s'", 
@@ -206,6 +302,7 @@ V1_open_new_post (struct Map_info *Map, char *name, int with_z)
   /*Check if category table doesn't exist */
   sprintf (query, "SELECT COUNT (tablename) FROM pg_tables WHERE tablename = '%s'", 
 	                  Map->fInfo.post.cat_table);
+  G_debug (1, "%s", query);
   res = PQexec (Map->fInfo.post.conn, query);
   if (!res || PQresultStatus (res) != PGRES_TUPLES_OK) {
       G_warning ("%s", PQresultErrorMessage(res) );
@@ -270,6 +367,12 @@ V1_open_new_post (struct Map_info *Map, char *name, int with_z)
       return (-1);
   }
   PQclear (res);
+
+  /* Save format, it is more probable that create table fail than write_frmt */
+  sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, name);
+  fp = G_fopen_new (buf, GRASS_VECT_FRMT_ELEMENT);
+  dig_write_frmt_ascii ( fp, &(Map->fInfo), GV_FORMAT_POSTGIS );
+  fclose (fp);
 
   Map->head.with_z = WITHOUT_Z;
   Map->fInfo.post.lastRead = 0;

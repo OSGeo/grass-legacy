@@ -172,6 +172,7 @@ int dig_point_by_line (struct Map_info *, double, double, double, double, char);
 int dig_prune (struct line_pnts *, double);
 int dig_write_head_ascii (FILE *, struct dig_head *);
 int dig_read_head_ascii (FILE *, struct dig_head *);
+int dig_write_frmt_ascii (FILE *, struct Format_info *, int);
 int dig_read_frmt_ascii (FILE *, struct Format_info *);
 int dig_node_alloc_line (P_NODE *, int add);
 int dig_alloc_nodes (struct Plus_head *, int);

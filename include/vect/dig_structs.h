@@ -155,8 +155,11 @@ struct Format_info_shp {
 /* PostGIS */
 #ifdef HAVE_POSTGRES
 struct Format_info_post {
+    char       *db;          /* database connection string */
     char       *host;        /* host name */
     char       *port;        /* port number */
+    char       *options;        
+    char       *tty;
     char       *database;    /* database name */
     char       *user;        /* user name */ 
     char       *password;    /* user password */
