@@ -71,6 +71,12 @@ Display all vector points except for LAMAR valley and <i>extensive trapping</i>:
  d.vect trapping_sites_points fcol=black icon=basic/diamond col=white size=13 \
     where="valley <> 'LAMAR' OR (valley = 'LAMAR' AND description = 'extensive trapping')"
 </pre>
+<p>
+Select all attributes from table where str1 column values are not 'No Name':
+<pre>
+ echo "SELECT * FROM archsites WHERE str1 <> 'No Name'" | db.select
+</pre>
+
 
 <h2>SEE ALSO</h2>
 <em>
