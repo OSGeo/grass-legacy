@@ -52,7 +52,6 @@ email: hofierka@geomodel.sk,marcel.suri@jrc.it,suri@geomodel.sk
 #include <stdlib.h>
 #include <math.h>
 #include "gis.h"
-#include "Vect.h"
 #include "gprojects.h"
 
 FILE *felevin,*faspin,*fslopein,*flinkein,*falbedo,*flatin;
@@ -78,8 +77,6 @@ char *shade;
 char mapname[1024];
 
 struct Cell_head cellhd;
-struct Map_info Map;
-struct dig_head Head;
 struct pj_info iproj;
 struct pj_info oproj;
 
