@@ -23,13 +23,13 @@
 
 int main( int   argc, char *argv[])
 {
-    char *infile;
+    char *infile, *outfile;
 
     struct {
-	struct Option *input;
+	struct Option *input, *output;
 	/*struct Option *order;*/
     } parm;
-
+    struct GModule *module;
     struct Flag *listflag;
     DBFHandle   hDBF;
     char *buf;
@@ -40,11 +40,24 @@ int main( int   argc, char *argv[])
 
     /* define the different options */
 
+    module = G_define_module();
+    module->description = 
+      "Import a dBase table of site locations "
+      "into a GRASS site list file.";
+
+
     parm.input = G_define_option() ;
     parm.input->key        = "input";
     parm.input->type       = TYPE_STRING;
     parm.input->required   = YES;
     parm.input->description= "Name of .dbf file to be imported";
+
+    parm.output = G_define_option();
+    parm.output->key = "sites";
+    parm.output->type = TYPE_STRING;
+    parm.output->required = NO;
+    parm.output->description = "sites file to be created";
+    parm.output->gisprompt = "any,site_lists,sites";
 
 /* not yet implemented. See dump.c DBFDumpASCII as well.
     parm.order = G_define_option() ;
@@ -69,6 +82,10 @@ int main( int   argc, char *argv[])
 	exit(-1);
     
     infile = parm.input->answer;
+    if(!parm.output->answer)
+    	outfile = parm.input->answer;
+    else
+	outfile = parm.output->answer;
 
     /* Examine the `-l' flag: Borrowed from David Gray's v.in.shape */
     if(listflag->answer) {
@@ -94,7 +111,7 @@ int main( int   argc, char *argv[])
 
     }
     else
-        DumpFromDBF(infile);
+        DumpFromDBF(infile, outfile);
     
     exit(0);
 }
