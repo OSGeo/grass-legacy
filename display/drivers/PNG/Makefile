@@ -1,0 +1,39 @@
+
+MODULE_TOPDIR = ../../..
+
+include $(MODULE_TOPDIR)/include/Make/Platform.make
+include $(MODULE_TOPDIR)/include/Make/Grass.make
+include $(MODULE_TOPDIR)/include/Make/Rules.make
+
+
+EXTRA_CFLAGS = $(GDINC) -I../lib
+
+OBJS =  \
+	Can_do.o\
+	Clr_table.o\
+	Color.o\
+	Draw_line.o\
+	Get_w_box.o\
+	Get_w_line.o\
+	Get_w_pnt.o\
+	Graph_Clse.o\
+	Graph_Set.o\
+	Panel.o\
+	Polygn_abs.o
+
+ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
+
+LIBES = $(DRIVERLIB) $(GISLIB)
+DEPENDENCIES = $(DRIVERLIBDEP) $(GISLIBDEP)
+
+default: $(DRIVERDIR)/PNG
+	@if egrep '^PNG' $(ETC)/monitorcap >/dev/null 2>&1 ; then \
+	echo PNG already defined in $(ETC)/monitorcap ; \
+	else \
+	echo adding PNG driver to $(ETC)/monitorcap ; \
+	cat moncap.entry >> $(ETC)/monitorcap ; \
+	fi
+
+$(DRIVERDIR)/PNG: $(ARCH_OBJS) $(DEPENDENCIES)
+	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(LIBES) $(XDRLIB) $(GDLIB) $(MATHLIB)
+
