@@ -25,11 +25,11 @@ SUBDIRS = \
 	rowio \
 	segment \
 	vector \
+	sites \
 	front.end \
 	rst \
 	ogsf \
 	symbol \
-	sites \
 	init
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
