@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.62 2000-11-04 09:30:17 markus Exp $
+$Id: BUGS,v 1.63 2000-11-04 17:59:36 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -57,7 +57,8 @@ G3D libraries bug:
     functions with 4000x4000 map, modules get killed)
 
 ----------- docs ------------------------------------------------
-Update html/Gmakefile
+html/Gmakefile:
+ fix it
 
 ----------- modules ---------------------------------------------
 [RC] d.his: 
@@ -78,6 +79,11 @@ d.param.scale
  - lower axis description not readable
  - sometimes "floating point exeption", especially in par=geary
     (being worked on by ?)
+
+[RC]d.profile
+ - problems when loading a map containing NULLs
+   (reported by Markus)
+   (being worked on by ?)   
 
 d.rast.num: some numbers are displayed in wrong (unreadable) color
   (being worked on by ?)
@@ -446,7 +452,7 @@ v.cutter:
    and David Finlayson <david_finlayson@yahoo.com>)
   (being worked on by David D Gray)
 
-[RC]v.reclass:
+v.reclass:
   The problem with v.reclass seems to stem from an input field for old=new        
   reclass rule that cannot be more than 7 characters long (i.e. 11250=16 is       
   eight characters long and will cause v.reclass to return an error). Someone     
