@@ -66,7 +66,7 @@ lab = 0;
 		lab++;
 		/* do text */
 		if ( i == 0 || lab == sb.numbers ) {
-		sprintf(num, "%.0f", (sb.length/sb.segment)*i);
+		sprintf(num, "%s", nice_number ((sb.length/sb.segment)*i) );
 		text_box_path(x1, y2+margin, CENTER, LOWER, num, sb.fontsize, 0); 
    		set_rgb_color(WHITE);
    		fprintf(PS.fp, "F ");
@@ -76,7 +76,7 @@ lab = 0;
    		}
    		if ((lab > 0 && i == seg-1) || (sb.numbers == 1 && i == seg-1)) {
 		/* special case for last label */
-   		sprintf(num, "%.0f", (sb.length/sb.segment)*i);
+   		sprintf(num, "%s", nice_number (sb.length) );
    		text_box_path(x2, y2+margin, CENTER, LOWER, num, sb.fontsize, 0);
    		set_rgb_color(WHITE);
    		fprintf(PS.fp, "F ");
@@ -113,7 +113,7 @@ lab = 0;
   y1 = 72.0 * ( PS.page_height - sb.y);
   fprintf(PS.fp, "%.1f %.1f %.1f %.1f L D\n", x1, y1, x2, y2);
   /* draw label */
-  sprintf(num, "%.0f", sb.length);
+  sprintf(num, "%s", nice_number (sb.length) );
   text_box_path(x1, y2+margin, CENTER, LOWER, num, sb.fontsize, 0); 
   set_rgb_color(WHITE);
   fprintf(PS.fp, "F ");
@@ -134,9 +134,6 @@ lab = 0;
    		lab++;
 		/* do text */
 		if ( lab == sb.numbers ) {
-		/*
-		sprintf(num, "%.0f", (sb.length/sb.segment)*i);
-		*/
 		sprintf(num, "%s", nice_number ((sb.length/sb.segment)*i) );
 		text_box_path(x1, y3+margin, CENTER, LOWER, num, sb.fontsize, 0); 
    		set_rgb_color(WHITE);
@@ -153,14 +150,11 @@ lab = 0;
 return 0;
 }
 
-/* Make a nice number -- reduce to less than 2 decimal places */
+/* Make a nice number -- reduce to less than 3 decimal places */
 static char *nice_number(double val)
 {
     static char text[50];
-    int val_int;
-    double val_tmp;
     
-    val_int = (int)val;
     if ( val == (int)val)
     	sprintf(text, "%.0f", val);
     else if ( (val*10.) == (int)(val*10))
