@@ -1,5 +1,5 @@
 PGM    = r.fill
-SRCS   = main.c libr.c
+SRCS   = main.c ../libr/libr.c
 OBJS   = main.o libr.o
 LIBES  = $(GISLIB)
 
