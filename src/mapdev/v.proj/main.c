@@ -286,6 +286,7 @@ int main (int argc, char *argv[])
            G_free_key_value(in_unit_keys);
            G_free_key_value(out_proj_keys);
            G_free_key_value(out_unit_keys);
+           pj_print_proj_params(&info_in, &info_out);
 
 	   if ((vect_read =  scs_open_new(&Out_Map, omap_name, oset_name)) < 0) 
 	   {
