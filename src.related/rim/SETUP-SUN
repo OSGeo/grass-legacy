@@ -4,8 +4,6 @@ rm -f Makefile
 cat <<endmake >Makefile
 # definitions for SUN rim
 PILE = f77
-EXTRA = csystem.o system.o
-LIBEXTRA = csystem.o system.o
 AR = ar rcv
 RAN = ranlib
 endmake
