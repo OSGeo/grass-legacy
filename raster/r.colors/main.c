@@ -57,6 +57,34 @@ static char *rules_files(void)
 	return list;
 }
 
+static void list_rules_files(void)
+{
+	char path[4096];
+	DIR *dir;
+
+	sprintf(path, "%s/etc/colors", G_gisbase());
+
+	dir = opendir(path);
+	if (!dir)
+		G_fatal_error("Rules directory doesn't exist");
+
+	for (;;)
+	{
+		struct dirent *d = readdir(dir);
+		int n;
+
+		if (!d)
+			break;
+
+		if (d->d_name[0] == '.')
+			continue;
+
+		printf("%s\n", d->d_name);
+	}
+
+	closedir(dir);
+}
+
 int main (int argc, char *argv[])
 {
     int overwrite;
@@ -69,8 +97,8 @@ int main (int argc, char *argv[])
     char *rules;
     char errbuf[256];
     int fp;
-	struct GModule *module;
-    struct Flag *flag1, *flag2;
+    struct GModule *module;
+    struct Flag *flag1, *flag2, *flag3;
     struct Option *opt1, *opt2, *opt3, *opt4;
 
     G_gisinit (argv[0]);
@@ -83,7 +111,7 @@ int main (int argc, char *argv[])
     opt1 = G_define_option();
     opt1->key         = "map";
     opt1->type        = TYPE_STRING;
-    opt1->required    = YES;
+    opt1->required    = NO;
     opt1->gisprompt  = "old,cell,raster" ;
     opt1->description = "raster map name";
 
@@ -117,10 +145,20 @@ int main (int argc, char *argv[])
     flag2->key = 'q';
     flag2->description = "Quietly";
 
+    flag3 = G_define_flag();
+    flag3->key = 'l';
+    flag3->description = "List rules";
+
     if (G_parser(argc, argv) < 0)
     {
 	more_usage();
 	exit(1);
+    }
+
+    if (flag3->answer)
+    {
+	    list_rules_files();
+	    return 0;
     }
 
     overwrite = ( ! flag1->answer);
@@ -128,6 +166,13 @@ int main (int argc, char *argv[])
     type = opt2->answer;
     cmap = opt3->answer;
     rules = opt4->answer;
+
+    if (!name)
+    {
+	G_warning("No map specified");
+	G_usage();
+	exit(1);
+    }
 
     if(!cmap && !type && !rules)
     {
