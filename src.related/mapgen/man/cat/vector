@@ -1,0 +1,264 @@
+
+
+
+
+
+
+_v_e_c_t_o_r - _c_r_e_a_t_e _l_i_n_e _d_a_t_a _o_v_e_r_l_a_y
+
+
+_v_e_c_t_o_r [ -oaci [args]] [ -m ] def_file [ files ]
+
+_V_e_c_t_o_r is a  graphic  function  in  the  MAPGEN/PLOTGEN
+graphic  series  which  provides for creating vector or
+line metagraphic overlays from geographic or  cartesian
+coordinate data file[s].
+
+     Most of the following options can  appear  in  any
+order:  This option specifies the required plot scaling
+file which may be either a map or cartesian  definition
+file.  If the -_m is omitted, _d_e_f__f_i_l_e must be the first
+file listed.  This option specifies a new overlay meta-
+graphic  file.   If the file already exists, it will be
+overwritten.  This option specifies appending the over-
+lay  metagraphic  to an existing overlay file.  If _f_i_l_e
+does not exist, it will be created.  If this option  is
+specified,  a plot of the graphic file is output to the
+controlling terminal.  If the  -_o  or  -_a  options  are
+omitted, then -_i is implied.  This options provides for
+run-line inclusion of graphic options listed below.  If
+there  is  more than one option or imbedded blanks, the
+field must be enclosed in quotes or apostrophies.   The
+contents  of  this  option is processed before the data
+files.
+
+     One or more data _f_i_l_e_s that contain geographic  or
+x-y  data  (depending  upon _d_e_f__f_i_l_e type), and control
+data.  If no files are specified, or if a - argument is
+encountered,  _v_e_c_t_o_r  reads  from  the  standard input.
+Files are processed in left to right order.
+
+     The following options provide for graphic  control
+and  may  only  appear  in the -_c run-line field or the
+data file[s].  Control data in the data files  must  be
+on  lines with a # character in column one.  A second #
+character on these lines causes the  remainder  of  the
+line  to  be ignored and, consequently, may be used for
+comments.
+
+     Vector or  line  drafting  has  three  methods  of
+display:  solid  lines,  dashed lines and symbol lines.
+Symbol lines are similar to dashed  lines  except  that
+the graphic employed in lieu of the dash segment may be
+any character(s) from the font  selected.   The  symbol
+line  form  may  be  combined  with either the solid or
+dashed line option.  The font selected by the -_f deter-
+mines  the  character  set  used by the the symbol line
+generator.  This option provides  for  controlling  the
+method and character of lines.  Argument _p_e_n designates
+the mechanical pen to be employed in drafting and  must
+be  specified with each usage.  The remaining arguments
+
+
+
+                     June 4, 1991
+
+
+
+
+
+                         - 2 -
+
+
+may be optionally specified but when omitted the  posi-
+tion  must be indicated with appropriate comma (,) del-
+imiters (ie. # -B 0,,,1,.2,\010 #- _m_a_s_k and _s_i_z_e  unal-
+tered).
+
+     _M_a_s_k and _s_i_z_e control  dash  line  drafting  where
+     _m_a_s_k  is  specification of the 16 bit dash pattern
+     to be employed and _s_i_z_e is the  size  of  the  bit
+     element  of the mask pattern in centimeters.  Note
+     that the total  length  of  the  dash  pattern  is
+     16x_s_i_z_e  centimeters.   If _m_a_s_k is -1 then a solid
+     line is drafted and _s_i_z_e is ignored and when  _m_a_s_k
+     is 0 line drafting is suspended (0 is usually only
+     employed with symbol line drafting).  _M_a_s_k is usu-
+     ally  specified as a hexadecimal value (ie. 0xCCCC
+     for a small dash bit pattern of 1010101010101010)
+
+     Lines with symbol patterns may be created by using
+     the  _d_i_s_t,ssize  and _s_t_r options where _d_i_s_t is the
+     inter-symbol distance in centimeters, _s_s_i_z_e is the
+     size of the symbol in centimeters.
+
+     _S_t_r is any string of one to 128  symbols  selected
+     from the selected character font to be employed in
+     a repeated manner when drafting symbol  lines.   A
+     special symbol (\177) may be employed to denote an
+     empty point in the symbol  sequence.   Any  symbol
+     (including  the  empty point symbol) with the most
+     significant bit (sign) set will cause 180 rotation
+     of the current and following _s_t_r (if any) symbols.
+     At the start of each cycle through _s_t_r the charac-
+     ter rotation is set to 0 so that if a line is pro-
+     gressing from  left  to  right  the  symbol  would
+     appear  right  side  up.  If a single symbol is to
+     appear in a reverse manner  then  \200  should  be
+     added  (i.e.  a reverse rotation letter A would be
+     \301).  To  create  a  sequence  of  symbols  with
+     alternating rotation then two or more symbols must
+     be used with the sign set  on  some  symbol  other
+     than  the first.  For example, -a A\301 will cause
+     the letter A to be plotted with alternating  rota-
+     tion.
+
+     The cyclic operation though _s_t_r can  be  inhibited
+     by  terminating  _s_t_r with the \377 special charac-
+     ter.  This permits this option to be employed  for
+     drafting  curved annotation based on the following
+     line data.  With this feature the drafting of  the
+     line   is   normally   turned   off   (ie.   #  -L
+     ,0,,.01,.3,Example\ Line\377).  This option  (geo-
+     graphic coordinates only) provides for the genera-
+     tion of rhumb lines (lines  of  constant  azimuth)
+     when  _n is a positive value.  The larger the value
+     of _n the coarser the rhumb fit  will  be  and  the
+
+
+
+                     June 4, 1991
+
+
+
+
+
+                         - 3 -
+
+
+     greater  likelyhood  of visible straight line seg-
+     ments.  Generally a selection of -_R3 is considered
+     and  optimal  value  for publication work.  When _n
+     zero or absent normal  lines  directly  connecting
+     coordinates  are  employed.   When  employed  with
+     non-rhumb lines in a single control-data file a -_b
+     should separate line segments.  This option speci-
+     fies a break in the line.  Line drafting  will  be
+     discontinued  at  the  last point and restarted at
+     the next data point.  _X-_c_o_o_r_d and _y-_c_o_o_r_d are  the
+     respective field control words of either the long-
+     itude and latitude data fields (data  must  be  in
+     DMS  format)  or  the  x-y  cartesian coordinates.
+     Both  field  control  words  are   of   the   form
+     [_f][.[_o][._l]]  where  _f  is the field number, _o is
+     the number of characters to skip from  the  begin-
+     ning  of  the  field,  and  _l is the length of the
+     field.  If _l is  not  specified  or  0,  then  the
+     remainder of the field is employed.  If _f or _o are
+     omitted then 1 and 0 are  respective  assumptions.
+     If  this option is omitted then a default value of
+     "-d 2,1" is assumed for geographic coordinates and
+     "-d  1,2"  for  x-y  data.   _N_a_m_e is the name of a
+     graphic system font to be employed for the  symbol
+     line  characters.   Names of fonts in the standard
+     font library are preceeded by a  -.   If  omitted,
+     the  graphic  system  default  character  font  is
+     selected ( # -f -).  The character _c,  immediately
+     following -_t, delimits data fields on data records
+     (default: "t\t" (tab)).  Use of special characters
+     may  require " or ' mark enclosure on the runline.
+     The character  _c  immediately  following  -_z  will
+     replace  the normal # character that indicate con-
+     trol line and comment.  The  -_x  option  specifies
+     that  the following lines contain x-y data in cen-
+     timeter board units which outline, in  a  counter-
+     clockwise manner, an area where vector plotting is
+     to be suppressed.  For less than two input coordi-
+     nate  values the operation is ignored with a warn-
+     ing.  If two lines of data follow then  this  pair
+     of   coordinates  represents  diagonally  opposite
+     corners of a rectangular region.   For  more  than
+     two  lines  of coordinate pairs the region is con-
+     sidered to be a polygonal outline.   If  the  last
+     coordinate  of  a  polygon set is not identical to
+     the first point, closure is forced by appending  a
+     copy  of  the first line.  The list of coordinates
+     is terminated by any control line.
+
+     All of the data must be inside the  maximum  board
+     size  of  the plot and the region must have a non-
+     zero area.  The maximum number of points  defining
+     a polygon region is currently limited to 100.
+
+
+
+
+                     June 4, 1991
+
+
+
+
+
+                         - 4 -
+
+
+ _M_a_p _d_e_f_i_n_i_t_i_o_n _f_i_l_e.
+
+ _M_A_P_G_E_N _a_n_d _P_L_O_T_G_E_N _s_y_s_t_e_m _d_o_c_u_m_e_n_t_a_t_i_o_n.
+
+_G_e_r_a_l_d _I. _E_v_e_n_d_e_n, _U_S_G_S, _W_o_o_d_s _H_o_l_e, _M_A.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                     June 4, 1991
+
+
