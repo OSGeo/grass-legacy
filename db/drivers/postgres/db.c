@@ -52,7 +52,7 @@ int db_driver_open_database(handle)
     pg_conn = PQsetdb(pghost, NULL, NULL, NULL, db.name);
 
     if (PQstatus(pg_conn) == CONNECTION_BAD) {
-	snprintf(emsg, sizeof(emsg), "Error:connect Postgres:%s\n",
+	snprintf(emsg, sizeof(emsg), "Error: connect Postgres: %s\n",
 		 PQerrorMessage(pg_conn));
 	report_error(emsg);
 	return DB_FAILED;
@@ -62,7 +62,7 @@ int db_driver_open_database(handle)
 		 "select tablename from pg_tables where tablename !~ 'pg_*' order by tablename");
 
     if (PQresultStatus(res) != PGRES_TUPLES_OK) {
-	snprintf(emsg, sizeof(emsg), "Error:select Postgres:%s\n",
+	snprintf(emsg, sizeof(emsg), "Error: select Postgres: %s\n",
 		 PQerrorMessage(pg_conn));
 	report_error(emsg);
 	return DB_FAILED;

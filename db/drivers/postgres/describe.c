@@ -16,7 +16,6 @@
 
 #include <dbmi.h>
 #include <datetime.h>
-#include <shapefil.h>
 #include "globals.h"
 #include "proto.h"
 
