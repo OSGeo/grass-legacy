@@ -1,3 +1,8 @@
+
+2/2002: have added a dirty fix for the NULL problem (Markus Neteler)
+
+details for a real solution below:
+
 TODO list:
 
 To implement: Support of other NULL values than -9999: They are
