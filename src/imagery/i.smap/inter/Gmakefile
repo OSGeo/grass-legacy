@@ -1,0 +1,8 @@
+LIST = main.o
+
+$(BIN_ALPHA_INTER)/i.smap: $(LIST) $(IMAGERYLIB) $(GISLIB)
+	rm -f a.out
+	$(CC) $(LDFLAGS) $(LIST) $(IMAGERYLIB) $(GISLIB)
+	mv a.out $@
+
+$(IMAGERYLIB) $(GISLIB): #
