@@ -3,12 +3,16 @@
 #include <signal.h>
 #include <sys/types.h>
 
-#ifndef __MINGW32__
-#include <sys/wait.h>
+#ifdef __MINGW32__
+#  include <io.h>
+#  include <fcntl.h>
+#  include <process.h>
+#else
+#  include <sys/wait.h>
+#  define tst(a,b)        (*mode == 'r'? (b) : (a))
 #endif
-#include "gis.h"
 
-#define tst(a,b)        (*mode == 'r'? (b) : (a))
+#include "gis.h"
 
 #define READ      0
 #define WRITE     1
@@ -19,6 +23,27 @@ FILE *G_popen(
     char    *cmd,
     char    *mode)
 {
+
+#ifdef __MINGW32__
+
+    int thepipes[2];
+    FILE *rv = NULL;
+
+    fflush (stdout);
+    fflush (stderr);
+
+    /*setvbuf ( stdout, NULL, _IONBF, 0 );*/
+
+    if ( _pipe ( thepipes, 256, O_BINARY ) != -1 ) {
+        execl ( "cmd", "cmd", "/c", cmd, 0 );
+	close ( thepipes[WRITE] );
+	rv = fdopen ( thepipes[READ], mode ); 
+    }
+
+    return ( rv );
+
+#else /* __MINGW32__ */
+
     int p[2];
     int me, you, pid;
 
@@ -46,6 +71,9 @@ FILE *G_popen(
     close(you);
 
     return(fdopen(me, mode));
+
+#endif /* __MINGW32__ */
+
 }
 
 int G_pclose( FILE *ptr)
@@ -62,18 +90,22 @@ int G_pclose( FILE *ptr)
     fclose(ptr);
 
     sigint  = signal(SIGINT, SIG_IGN);
-#ifndef __MINGW32__
+#ifdef __MINGW32__
+    _cwait ( &status, popen_pid[f], WAIT_CHILD );
+    if ( 0 & status ) {
+      status = -1;
+    }
+#else
     sigquit = signal(SIGQUIT, SIG_IGN);
     sighup  = signal(SIGHUP, SIG_IGN);
-#endif
-
     while((r = wait(&status)) != popen_pid[f] && r != -1)
 	    ;
-
     if(r == -1)
 	status = -1;
+#endif
 
     signal(SIGINT, sigint);
+
 #ifndef __MINGW32__
     signal(SIGQUIT, sigquit);
     signal(SIGHUP, sighup);
