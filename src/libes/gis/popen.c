@@ -6,7 +6,7 @@
 #define READ      0
 #define WRITE     1
 
-static  int     popen_pid[20];
+static  int     popen_pid[50];
 
 FILE *
 popen(cmd,mode)
@@ -14,7 +14,7 @@ popen(cmd,mode)
     char    *mode;
 {
     int p[2];
-    register me, you, pid;
+    int me, you, pid;
 
     fflush (stdout);
     fflush (stderr);
@@ -45,7 +45,7 @@ popen(cmd,mode)
 pclose(ptr)
     FILE *ptr;
 {
-    register f, r, (*sighup)(), (*sigint)(), (*sigquit)();
+    int f, r, (*sighup)(), (*sigint)(), (*sigquit)();
     int status;
 
     f = fileno(ptr);
