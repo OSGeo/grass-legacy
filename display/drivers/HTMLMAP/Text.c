@@ -12,7 +12,7 @@ int Text (char *text)
 
     if (len > last_text_len) {
         free (last_text);
-        last_text = (char *) malloc(len+1);
+        last_text = (char *) G_malloc(len+1);
         last_text_len = len;
     }
     strcpy(last_text, text);

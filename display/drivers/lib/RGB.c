@@ -70,7 +70,7 @@ RGB_raster (int n, int nrows, register unsigned char *r, register unsigned char 
 		
 	/* Make sure sufficient space is allocated */
 		if (array == NULL)
-			array = (int *)malloc((size_t)(array_alloc * sizeof(int))) ;
+			array = (int *)G_malloc((size_t)(array_alloc * sizeof(int))) ;
 		else
 			array = (int *)realloc((void *)array, (size_t) (array_alloc * sizeof(int))) ;
 		if(array == NULL)
