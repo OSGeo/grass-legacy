@@ -1,0 +1,20 @@
+PGM=$(BIN_CONTRIB_CMD)/r.kappa
+
+LIBES= $(GISLIB) $(VASK)
+
+OBJS = main.o\
+	calc_kappa.o\
+	mask.o\
+	prt_hdr.o\
+	prt_label.o\
+	prt_mat.o\
+	stats.o\
+	sum.o
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(EXTRA_FLAGS)
+
+
+
+$(LIBES): #
