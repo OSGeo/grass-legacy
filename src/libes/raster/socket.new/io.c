@@ -377,7 +377,12 @@ fifoto(input,output,alarm_time)
     _wfd = msgget(ftok(output,0), 0600);
     _rfd = msgget(ftok(input,0),  0600);
     if( (_wfd == -1) || (_rfd == -1) )
+	/* NO_RUN */
+	return 0;
+
+	/* NO_OPEN
         return -1;
+	*/
 
     return 1;
 }
