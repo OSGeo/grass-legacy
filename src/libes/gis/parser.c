@@ -544,7 +544,7 @@ int G_usage_xml (void)
 	struct Option *opt ;
 	struct Flag *flag ;
 	char *type;
-	char *s;
+	char *s, *top;
 
 	if (!pgm_name)		/* v.dave && r.michael */
 	    pgm_name = G_program_name ();
@@ -608,9 +608,9 @@ int G_usage_xml (void)
 
 			if(opt->options) {
 				fprintf(stdout, "\t\t\t<values>\n");
-				s = G_calloc(strlen(opt->options) + 1,1);
-				strcpy(s, opt->options);
-				s = strtok(s, ",");
+				top = G_calloc(strlen(opt->options) + 1,1);
+				strcpy(top, opt->options);
+				s = strtok(top, ",");
 				while (s) {
 					fprintf(stdout, "\t\t\t\t<value>");
 					print_escaped_for_xml(stdout, s);
@@ -618,7 +618,7 @@ int G_usage_xml (void)
 					s = strtok(NULL, ",");
 				}
 				fprintf(stdout, "\t\t\t</values>\n");
-				G_free (s);
+				G_free (top);
 			}
 
 			/* TODO:
