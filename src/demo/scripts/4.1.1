@@ -1,0 +1,120 @@
+#!/bin/sh
+Dnew map1 67 99 61 99
+Dnew map2 34 66 61 99
+Dnew map3  1 33 61 99
+
+Dchoose text
+Dtext << EOF
+.S 10
+
+.S 9
+.C yellow
+  * 
+EOF
+
+Dchoose explain
+Derase
+Dtext << EOF
+.F romans
+.S 5
+
+  Boolean overlays (and/or) allow you
+  to give GRASS commands to:
+
+.C yellow
+    Show the soil-pH map and then
+    just the low pH soils.  (top map)
+EOF
+
+Dchoose map1
+Dcell soils.ph
+combine << EOF
+y
+(over RED (group 1-3 (soils.ph)))
+bye
+EOF
+
+Dchoose explain
+Dtext << EOF
+.S 5
+
+ 
+
+
+
+.C yellow
+
+
+    Now show the elevation map and then
+    just the high elevations. (middle map)
+EOF
+
+Dchoose map2
+Dcell elevation
+combine << EOF
+y
+(over YELLOW (group 100-300 (elevation)))
+bye
+EOF
+
+Dchoose explain
+Dtext << EOF
+.S 5
+
+ 
+
+
+
+
+
+
+
+.C yellow
+
+    Finally show the high elevations
+    AND the low pH areas on one map.
+		       (bottom map)
+EOF
+
+Dchoose map3
+combine << EOF
+y
+(name junk (over RED (group 1-3 (soils.ph))))
+(over YELLOW junk (group 100-300 (elevation)))
+bye
+EOF
+
+Gremove cell junk
+
+Dchoose explain
+Dtext << EOF
+.S 5
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+  An actual GRASS commands looks like:
+.C yellow
+    (group 100-300 (elevation))
+  The numbers reference map categories;
+  here categories 100-300 of the
+  elevation map.
+EOF
+
+./continue.yes
+
+Dchoose explain
+Dremove map1
+Dremove map2
+Dremove map3
+exit 1
