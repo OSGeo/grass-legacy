@@ -1,0 +1,91 @@
+PGM = ps.map
+
+LIBES = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(IMAGERYLIB)
+
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+OBJ =	main.o \
+	read_cfg.o \
+	scale.o \
+	map_info.o \
+	infofile.o \
+	get_font.o \
+	distance.o \
+	ps_header.o \
+	hdrfile.o \
+	do_header.o \
+	cellfile.o \
+	map_setup.o \
+	rast_plot.o \
+	ctablfile.o \
+	ps_clrtbl.o \
+	ps_vector.o \
+	box_stuff.o \
+	gprims.o \
+	makeprocs.o \
+	textbox.o \
+	scan_ref.o \
+	do_labels.o \
+	bound.o \
+	outl_io.o \
+	ps_outline.o \
+	ps_colors.o \
+	do_vectors.o \
+	vectfile.o \
+	label.o \
+	plfile.o \
+	do_plfile.o \
+	scan_misc.o \
+	lblfile.o \
+	input.o \
+	scan_gis.o \
+	key_data.o \
+	error.o \
+	chk_scale.o \
+	yesno.o \
+	session.o \
+	ps_map.o \
+	vlegfile.o \
+	vlegend.o \
+	getgrid.o \
+	do_grid.o \
+	comment.o \
+	sitefile.o \
+	do_sites.o \
+	fit_map.o \
+	windfile.o \
+	parse_list.o \
+	do_masking.o \
+	do_psfiles.o \
+	mtextbox.o \
+	groupfile.o
+
+#$(BIN_ALPHA_CMD)/$(PGM): $(OBJ) $(LIBES)
+$(BIN_CONTRIB_CMD)/$(PGM): $(OBJ) $(LIBES)
+	rm -f a.out
+	$(CC) $(LDFLAGS) $(OBJ) $(LIBES) $(MATHLIB)
+	cp a.out $@
+
+$(OBJ):		ps_info.h
+main.o:		vector.h labels.h map_info.h header.h colortable.h comment.h sites.h group.h
+ps_map.o:	vector.h
+map_setup.o:	group.h
+do_vectors.o:	vector.h group.h
+vectfile.o:	vector.h
+vlegfile.o:	vector.h
+vlegend.o:	vector.h
+do_labels.o:	labels.h
+lblfile.o:	labels.h
+map_info.o:	map_info.h
+infofile.o:	map_info.h
+do_header.o:	header.h
+hdrfile.o:	header.h
+ps_clrtbl.o:	colortable.h
+ctablfile.o:	colortable.h
+io_outl.o:	extr_areas.h
+comment.o:	comment.h
+sitefile.o:	sites.h
+do_sites.o:	sites.h
+groupfile.o:	group.h
+
+$(LIBES):	#
