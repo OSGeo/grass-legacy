@@ -35,14 +35,14 @@ struct symb default_symb_table[] = {
     { "highlight",  SYMB_HIGHLIGHT,  255, 255,   0 }, /* yellow */
     { "point",      SYMB_POINT,        0,   0,   0 }, /* black */
     { "line",       SYMB_LINE,         0,   0,   0 }, /* black */ 
-    { "boundary_0", SYMB_BOUNDARY_0, 255,   0,   0 }, /* red */
+    { "boundary_0", SYMB_BOUNDARY_0, 153, 153, 153 }, /* grey */
     { "boundary_1", SYMB_BOUNDARY_1, 255, 125,   0 }, /* orange */
     { "boundary_2", SYMB_BOUNDARY_2,   0, 255,   0 }, /* green */
-    { "centroid_in",   SYMB_CENTROID_IN,     0, 255,   0 }, /* green */
-    { "centroid_out",  SYMB_CENTROID_OUT,  255,   0,   0 }, /* red */
+    { "centroid_in",   SYMB_CENTROID_IN,     0  , 0, 153 }, /* dark blue */
+    { "centroid_out",  SYMB_CENTROID_OUT,  153, 153,   0 }, /* mustard */
     { "centroid_dupl", SYMB_CENTROID_DUPL, 255,   0, 255 }, /* magenta */
     { "node_1",     SYMB_NODE_1,     255,   0,   0 }, /* red */
-    { "node_2",     SYMB_NODE_2,       0, 255,   0 }, /* green */
+    { "node_2",     SYMB_NODE_2,       0, 153,   0 }, /* dark green */
     { "",           0,                 0,   0,   0 }
 };
 
