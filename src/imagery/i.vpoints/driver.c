@@ -63,6 +63,7 @@ stop (void)
 static int 
 go_refresh (void)
 {
+    /* re_fresh_rast(); segfault */
     re_fresh_vect(); /* only vect implemented */
     return 1;
 }
