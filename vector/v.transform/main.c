@@ -65,7 +65,7 @@ int main (int argc, char *argv[])
     old->type			= TYPE_STRING;
     old->required		= YES;
     old->multiple		= NO;
-    old->gisprompt		= "old,dig,vector";
+    old->gisprompt		= "old,vector,vector";
     old->description		= "vector map to be transformed";
     
     new = G_define_option();
@@ -73,7 +73,7 @@ int main (int argc, char *argv[])
     new->type			= TYPE_STRING;
     new->required		= YES;
     new->multiple		= NO;
-    new->gisprompt		= "new,dig,vector";
+    new->gisprompt		= "new,vector,vector";
     new->description		= "resultant vector map";
 
     pointsfile = G_define_option();
