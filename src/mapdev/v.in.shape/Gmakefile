@@ -5,10 +5,11 @@ EXTRA_CFLAGS = $(VECT_INCLUDE)
 LIST = 	main.o \
 	shpopen.o \
 	dbfopen.o \
-	dbutils.c \
-	shp2dig.c \
-	writelin.c \
-	gbtree.c
+	dbutils.o \
+	shp2dig.o \
+	writelin.o \
+	gbtree.o \
+	cleanup.o
 
 $(HOME)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) $(VASK) $(MATHLIB) $(DATETIMELIB) $(XDRLIB)

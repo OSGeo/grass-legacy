@@ -1,11 +1,10 @@
 /******************************************************************************
- * writelin.h
- * header file containing prototypes for routines to
- * write vector data into GRASS database
+ * cleanup.h
+ * header file for vector cleanup routines
 
  * @Copyright David D.Gray <ddgray@armadce.demon.co.uk>
- * 8th. Apr. 2000
- * Last updated 11th. May. 2000
+ * 9th. May. 2000
+ * Last updated 9th. May. 2000
  *
 
 * This file is part of GRASS GIS. It is free software. You can 
@@ -21,18 +20,5 @@
 
  ******************************************************************************/
 
-#include "shp2dig.h"
-#include "gbtree.h"
-
-/* Structure prototypes */
-
-
-/* Function prototypes */
-
-int vbase2segd( segmentList *seg0, BTREE *btr0 );
-int segLDispose( segmentList *seg0 );
-double reverse_angle(double phi0);
-int check_terminal_snapback( pntDescript *ppnt1, pntDescript *ppnt2, pntDescript **pmiddle );
-void build_half_lines( pntDescript *ppntx, segmentList *segl );
-void extract_simple_link( segmentList *seg1, pntDescript *pt1, pntDescript *pt2 );
+void vector_map_cleanup( char *mapname );
 

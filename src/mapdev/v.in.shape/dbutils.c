@@ -284,15 +284,38 @@ int procSnapDistance( int iswitch, float *sd ) {
 
   static float snap_distance = 0.0;
 
-  if( iswitch == SET_SD ) {
+  if( iswitch == SET_VAL ) {
     if(sd) {
       snap_distance = *sd;
       return 0;
     }
     else return 1;
   }
-  else if( iswitch == GET_SD ) {
+  else if( iswitch == GET_VAL ) {
     *sd = snap_distance;
+    return 0;
+  }
+  else return 1;
+}
+
+
+int procMinSubtend( int iswitch, float *dphi ) {
+  
+  /* Set or get the minimum value at which two radii from a node
+     are considered to be separate (non-colinear)
+  */
+
+  static float minimum_angle = 1.745e-4;
+
+  if( iswitch == SET_VAL ) {
+    if(dphi) {
+      minimum_angle = *dphi;
+      return 0;
+    }
+    else return 1;
+  }
+  else if( iswitch == GET_VAL ) {
+    *dphi = minimum_angle;
     return 0;
   }
   else return 1;

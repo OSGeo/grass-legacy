@@ -14,6 +14,7 @@
 #include "shp2dig.h"
 #include "dbutils.h"
 #include "writelin.h"
+#include "cleanup.h"
 
 /******************************************************************/
 /*                                                                */
@@ -36,8 +37,14 @@
  *
  *        Point file import now handled by separate module
  *         s.in.shape.
+ *
+ *05/2000
+ *        Some  enhancements to assist in improving
+ *         linework and fixing topological errors.
+ *
  *          David D Gray  <ddgray@armadce.demon.co.uk>
  *
+ *     
  ******************************************************************/
 
 enum {ANALYSE, RASTER, LINES, VECTOR, ALL} todo;
@@ -64,11 +71,14 @@ int main( int   argc, char *argv[])
     int cover_type;		/* type of coverage (line, point, area) */
 
     FILE *f_att = NULL;
+    FILE *f_cats = NULL;
     struct Map_info map;
     struct line_pnts *points;
 
     struct Categories cats;  /* added MN 10/99 */
     char    AttText[512];    /* added MN 10/99 */
+    int attval;
+    int lab_field = -1;
 
 
     /* DDG: Create structures for processing of shapefile contents */
@@ -80,10 +90,10 @@ int main( int   argc, char *argv[])
 
     char errbuf[1000];
 
-    /* DDG: variables for controlling snap distance and scale */
+    /* DDG: variables for controlling snap distance, slivers and scale */
 
-    float sd0;
-    char *sdc;
+    float sd0, psi;
+    char *sdc, *cpsi;
 
     int init_scale;
 
@@ -96,8 +106,8 @@ int main( int   argc, char *argv[])
     char buf[256];
 
     struct {
-	struct Option *input, *mapset, *logfile, *verbose, *attribute, *snapd;
-	struct Option *scale, *pgdump, *dumpmode;
+	struct Option *input, *mapset, *logfile, *verbose, *attribute, *snapd, *minangle;
+	struct Option *scale, *pgdump, *dumpmode, *catlabel;
     } parm;
 
     /* Are we running in Grass environment ? */
@@ -138,6 +148,13 @@ int main( int   argc, char *argv[])
     parm.snapd->description= "Snap distance in ground units (Default = 0.1)";
     parm.snapd->answer     = "0.1";
 
+    parm.minangle = G_define_option() ;
+    parm.minangle->key        = "sliver";
+    parm.minangle->type       = TYPE_STRING;
+    parm.minangle->required   = NO;
+    parm.minangle->description= "Min. angle subtended by a wedge at node (radians)";
+    parm.minangle->answer     = "1.745e-4";
+
     parm.scale = G_define_option() ;
     parm.scale->key        = "scale";
     parm.scale->type       = TYPE_INTEGER;
@@ -151,6 +168,13 @@ int main( int   argc, char *argv[])
     parm.attribute->required   = NO;
     parm.attribute->description= "Name of attribute to use as category";
     parm.attribute->answer     = "";
+    
+    parm.catlabel = G_define_option() ;
+    parm.catlabel->key        = "label";
+    parm.catlabel->type       = TYPE_STRING;
+    parm.catlabel->required   = NO;
+    parm.catlabel->description= "Name of attribute to use as category label";
+    parm.catlabel->answer     = "";
     
 
     /* get options and test their validity */
@@ -178,8 +202,20 @@ int main( int   argc, char *argv[])
 
     free(sdc);
 
-    if( procSnapDistance( SET_SD, &sd0 ) != 0 ) {
+    if( procSnapDistance( SET_VAL, &sd0 ) != 0 ) {
       G_fatal_error( "Error setting snap distance" );
+    }
+
+    cpsi = (char *)malloc(20);
+    strncpy( cpsi, parm.minangle->answer, 19 );
+    psi = (float)atof(cpsi);
+    if( psi < 0 || psi > 1.5708 )
+      psi = 1.745e-4;
+
+    free(cpsi);
+
+    if( procMinSubtend( SET_VAL, &psi ) != 0 ) {
+      G_fatal_error( "Error setting minimum angle" );
     }
 
     init_scale = atoi(parm.scale->answer);
@@ -252,8 +288,8 @@ int main( int   argc, char *argv[])
         break;
     }
 
-    if( procMapType( SET_MT, &cover_type ) != 0 ) 
-      G_fatal_error( "Could not set map type to. Aborting\n"  );
+    if( procMapType( SET_VAL, &cover_type ) != 0 ) 
+      G_fatal_error( "Could not set map type. Aborting\n"  );
     
 
 
@@ -286,7 +322,8 @@ int main( int   argc, char *argv[])
     if( strcmp(parm.attribute->answer,"") == 0 ) {
         cat_field = -1;
         
-    } else if( strcmp(parm.attribute->answer,"list") == 0 ) {
+    } else if( strcmp(parm.attribute->answer,"list") == 0 ||
+	       strcmp(parm.catlabel->answer,"list") == 0) {
         int	i;
         
         hDBF = DBFOpen( infile, "r" );
@@ -344,6 +381,27 @@ int main( int   argc, char *argv[])
         if (debug > 4)
             fprintf( fdlog, "Selected attribute field %d.\n", cat_field);
 
+	/* Find field number of category label */ /* May '00 : DDG */
+
+	if( strcmp(parm.catlabel->answer, "") != 0 ) {
+	  int j;
+
+	  for( j = 0; j < DBFGetFieldCount(hDBF); j++ )
+	    {
+	      char label_name[15];
+
+	      DBFGetFieldInfo( hDBF, j, label_name, NULL, NULL );
+	      if( strcasecmp( parm.catlabel->answer, label_name) == 0 )
+		lab_field = j;
+	    }
+	}
+
+	if( lab_field == -1 ) {
+	  sprintf( buf, "No attribute `%s' found on %s. \nNot writing category labels.\n",
+		   parm.catlabel->answer, infile);
+	  fprintf( stderr, buf );
+	}
+
         /*
          * Create the dig_att file (or append).
          */
@@ -362,12 +420,30 @@ int main( int   argc, char *argv[])
             G_fatal_error( buf );
         }
 
+	/* Create the dig_cats file */ /* Is this necessary? */
+
+        if (G_find_file( "dig_cats", name, G_mapset()) == NULL) {
+            f_cats = G_fopen_new( "dig_cats", name);
+            if (debug)
+                fprintf( fdlog, "Creating dig_cats(L) file \"%s\"\n", name);
+        } else {
+            f_cats = G_fopen_append( "dig_cats", name);
+            if (debug)
+                fprintf( fdlog, "Updating dig_cats(L) file \"%s\"\n", name);
+        }
+        if (f_cats == NULL)
+        {
+            sprintf( buf, "Unable to create category label file `%s'.", name );
+            G_fatal_error( buf );
+        }
+	
+
     }
 
 
   /* -------------------------------------------------------------------- */
   /*      DDG: Create the line descriptor list and field descriptor.      */
-  /*           Also create line segments fro vertex database.             */
+  /*           Also create line segments from vertex database.             */
   /* -------------------------------------------------------------------- */
 
     if( cat_field == -1 ) {
@@ -410,7 +486,10 @@ int main( int   argc, char *argv[])
     /*
      * Create the dig_cats file
      */
-    G_init_cats( (CELL)0,(char *)NULL,&cats);
+    if(strcmp(parm.catlabel->answer, "") != 0) {
+      G_init_cats( (CELL)0,(char *)NULL,&cats);      
+    }
+    else fprintf( stderr, "Not assigning category labels\n" );
     /* if (G_write_vector_cats(name, &cats) != 1)
        G_fatal_error("Writing dig_cats file"); */
                         
@@ -461,27 +540,68 @@ int main( int   argc, char *argv[])
     /* Write attributes and category file */
 	
     if( f_att != NULL ) {
+      if(fd0[cat_field+4].fldType != 1)
+	G_warning( "Named attribute field is not integer value. Using record ID.\n" );	
       for( iRec = 0; iRec < fd0[0].nRec; ++iRec ) {
-	if( cover_type == LINE )
+	if( cover_type == LINE ) {
+	  if(fd0[cat_field+4].fldType == 1)
+	    attval = fd0[cat_field+4].fldRecs[iRec].intField;
+	  else
+	    attval = iRec;
 	  fprintf( f_att, "L  %-12f  %-12f  %-8d \n",
-		   xlab[iRec], ylab[iRec],
-		   fd0[cat_field+4].fldRecs[iRec].intField );
-	else
+		   xlab[iRec], ylab[iRec], attval );
+	}
+	else if( cover_type == AREA ) {
+	  if(fd0[cat_field+4].fldType == 1)
+	    attval = fd0[cat_field+4].fldRecs[iRec].intField;
+	  else
+	    attval = iRec;
 	  fprintf( f_att, "A  %-12f  %-12f  %-8d \n",
-		   xlab[iRec], ylab[iRec],
-		   fd0[cat_field+4].fldRecs[iRec].intField );
+		   xlab[iRec], ylab[iRec], attval );
+	}
 
                      
 	/* set cat for dig_cats file*/ /* M Neteler 10/99 */
-	sprintf(AttText, "%-8d", fd0[cat_field+4].fldRecs[iRec].intField );
-	if (G_set_cat(iRec, AttText, &cats) != 1)
-	  G_fatal_error("Error setting category in dig_cats");
+	if( lab_field > -1 ) {
+
+	  switch(fd0[lab_field+4].fldType){
+	  case 0:
+	    strncpy(AttText, fd0[lab_field+4].fldRecs[iRec].stringField, 511 );
+	    break;
+	  case 1:
+	    snprintf(AttText, 10, "%-d", fd0[lab_field+4].fldRecs[iRec].intField );
+	    AttText[strlen(AttText)] = '\0';
+	    break;
+	  case 2:
+	    snprintf(AttText, 20, "%-f", fd0[lab_field+4].fldRecs[iRec].doubleField );
+	    AttText[strlen(AttText)] = '\0';
+	    break;
+	  default:
+	    G_warning("Error in category type assignment, not assigning category text.\n");
+	    strcpy(AttText, "");
+	    break;
+	  }
+
+	  if( strcmp( G_get_cat( attval, &cats ), "" ) != 0 ) {
+	    sprintf( errbuf, "Label `%s' already assigned to category value %d. Overwriting.\n",
+		     G_get_cat( attval, &cats ), attval );
+	  }
+
+	  if (G_set_cat(attval, AttText, &cats) != 1)
+	    G_fatal_error("Error setting category in dig_cats");
+	}
 	    
       }
+
+      /*if (G_write_vector_cats(name, &cats) != 0)
+	G_fatal_error("Error writing dig_cats file");
+      */
 
       free( xlab );
       free( ylab );
     }
+
+	
 
     map.head.orig_scale = (long)init_scale;
     G_strncpy( map.head.your_name, G_whoami(), 20);
@@ -499,11 +619,15 @@ int main( int   argc, char *argv[])
     if( hDBF != NULL )
     {
         DBFClose( hDBF );
-        fclose( f_att );
+        if(f_att) fclose( f_att );
     }
-    segLDispose( segl );
+    /* segLDispose( segl );
     btree_free( hVB );
     linedDispose( ll0, fd0, fc1 );
+    */
+
+    /* Apply post-processing procedures to clean up map */
+    vector_map_cleanup(name);
     
     exit(0);
 }

@@ -5,7 +5,7 @@
 
  * @Copyright David D.Gray <ddgray@armadce.demon.co.uk>
  * 3rd. Feb. 2000
- * Last updated 5th. Mar. 2000
+ * Last updated 11th. May. 2000
  *
 
 * This file is part of GRASS GIS. It is free software. You can 
@@ -658,67 +658,17 @@ void partCalcFieldsPolygon( partDescript *partd ) {
       posvecx = partd->linepnts[i0+1].xPosn - tmpCentroidx;
       posvecy = partd->linepnts[i0+1].yPosn - tmpCentroidy;
 
-      if( (i0 == 0 && fabs( posvecy_old ) < HORIZON_WIDTH)  ||
-	  fabs( posvecy ) < HORIZON_WIDTH ) {
+
+      if( fabs(posvecy_old) < HORIZON_WIDTH ||
+	  fabs(posvecy) < HORIZON_WIDTH ) {
+	/* One of the vertices too close to call. Start again! */
 	tryAgain = 1;
-	tmpCentroidy -= 0.002 * ( Ymax - Ymin );
-	break;	
+	tmpCentroidy -= 0.002 * (Ymax - Ymin);
+	break;
       }
-
-      if( i0 == 0 && fabs( posvecy_old ) < HORIZON_WIDTH ) {
-	if( posvecy > 0 ) remindEnd = 1; /* heading North */
-	else remindEnd = -1;             /* heading South */
-      }
-      else if( i0 == partd->numPoints - 2 && remindEnd == 1 ) {
-	if( remindDirect == 1 || posvecy_old < 0 ) {
-	  /* Got an intersect. It is the first (last) point */
-	  pd0[nIntersects].duff = 0;
-	  pd0[nIntersects].isnode = 0;
-	  pd0[nIntersects].xPosn = partd->linepnts[0].xPosn;
-	  pd0[nIntersects].yPosn = partd->linepnts[0].yPosn;
-	  nIntersects++;
-	}
-      }
-      else if( i0 == partd->numPoints - 2 && remindEnd == -1 ) {
-	if( remindDirect == -1 || posvecy_old > 0 ) {
-	  /* Got an intersect. It is the first (last) point */
-	  pd0[nIntersects].duff = 0;
-	  pd0[nIntersects].isnode = 0;
-	  pd0[nIntersects].xPosn = partd->linepnts[0].xPosn;
-	  pd0[nIntersects].yPosn = partd->linepnts[0].yPosn;
-	  nIntersects++;
-	}
-      }
-      else if( !remindDirect && fabs( posvecy ) < HORIZON_WIDTH ) {
-	if( posvecy > 0 ) remindDirect = 1; /* heading North */
-	else remindDirect = -1;             /* heading South */
-      }
-      else if( remindDirect && fabs( posvecy ) < HORIZON_WIDTH ) {
-	/* Do nothing */
-      }
-      else if( (remindDirect == -1 && posvecy < 0) 
-	       || (remindDirect == 1 && posvecy > 0) ) { 
-	/* Found an intersect. It's equal to the current base point */
-
-	/* Unset flag */
-	remindDirect = 0;
-
-	/* Register intersect */
-	pd0[nIntersects].duff = 0;
-	pd0[nIntersects].isnode = 0;
-	pd0[nIntersects].xPosn = partd->linepnts[i0].xPosn;
-	pd0[nIntersects].yPosn = partd->linepnts[i0].yPosn;
-	/* Don't bother about M and Z */
-
-	nIntersects++;
-      }
-      else if( (remindDirect == 1 && posvecy < 0) 
-	       || (remindDirect == -1 && posvecy > 0) ) {
-	/* It's reflected. Not an intersect, but unset flag */
-	remindDirect = 0;
-      }
-      else if( (posvecy_old < 0 && posvecy > 0) || (posvecy_old > 0 && posvecy < 0) ) {
-	/* Again got an intersect. It's between two points so have to calculate it */
+      else if( (posvecy_old < 0 && posvecy > 0) ||
+	       (posvecy_old > 0 && posvecy < 0)) {
+	/* Got an intersect. Calculate it. */
 
 	/* Calculate beta, the y/x slope */
 	if( fabs( posvecx - posvecx_old ) < HORIZON_WIDTH ) {
@@ -740,8 +690,9 @@ void partCalcFieldsPolygon( partDescript *partd ) {
 
 	  nIntersects++;
 	}
+
       }
-    
+
       /* Now calculate partial circulation of sector */
       /* THIS WON'T WORK. */
       /* lenvec = sqrt( (posvecx * posvecx) + (posvecy * posvecy) );
@@ -752,18 +703,18 @@ void partCalcFieldsPolygon( partDescript *partd ) {
 
       theta_old = getTheta( posvecx_old, posvecy_old );
       theta = getTheta( posvecx, posvecy );
-      if( (i0 == 1 && theta_old < -1.0) || theta < -1.0 )  {
+      /*if( (i0 == 1 && theta_old < -1.0) || theta < -1.0 )  {
 	tryAgain = 1;
-	tmpCentroidy -= 0.05 * ( Ymax - Ymin );
+	tmpCentroidy -= 0.002 * ( Ymax - Ymin );
 	break;
-      }
+	} */ /* ? */
 	
       delta = theta - theta_old;
 
       /* Deal with the case of indeterminacy (it's on an edge) */
-      if( fabs( fabs( delta ) - PI ) < SNAP_RADIUS ) {
+      if( fabs( fabs( delta ) - PI ) < HORIZON_WIDTH ) {
 	tryAgain = 1;
-	tmpCentroidy -= 0.05 * ( Ymax - Ymin );
+	tmpCentroidy -= 0.002 * ( Ymax - Ymin );
 	break;
       }
 
@@ -841,7 +792,6 @@ void partCalcFieldsPolygon( partDescript *partd ) {
     if(totalCirc < 1.0 && totalCirc > -1.0 ) {
       totalCirc = 0;
     }
-
   }
 
   /* Next, dispose situation where circulation is positive ( ie. anti-clockwise, an island
@@ -854,7 +804,7 @@ void partCalcFieldsPolygon( partDescript *partd ) {
     partd->centroid->ycentroid = newy;
   }
 
-  /* Finally, if circulation is negative, we have an exterior ring
+  /* If circulation is negative, we have an exterior ring
   */
   else if( totalCirc < -1.0 ) {
     partd->duff = 0;
@@ -871,7 +821,6 @@ void partCalcFieldsPolygon( partDescript *partd ) {
     partd->centroid->xcentroid = 0.0;
     partd->centroid->ycentroid = 0.0;    
   }
-
 
   /* THE END */
 } /* partCalcFieldsPolygon */
