@@ -1,6 +1,6 @@
 PGM = ps.map.new
 
-LIBES = $(VECTLIB) $(GISLIB) $(DATETIMELIB) $(DATETIMELIB) $(DIG_ATTLIB) $(IMAGERYLIB)
+LIBES = $(VECTLIB) $(GISLIB) $(DATETIMELIB) $(DATETIMELIB) $(DIG_ATTLIB) $(IMAGERYLIB) $(LINKMLIB)
 
 EXTRA_CFLAGS = $(VECT_INCLUDE)
 
@@ -86,3 +86,4 @@ do_sites.o:	sites.h
 groupfile.o:	group.h
 
 $(LIBES):	#
+	  
