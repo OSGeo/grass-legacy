@@ -258,6 +258,8 @@ int main( int argc, char *argv[])
 		    if (pu->next != (struct Univ *)NULL)
 			pu->next->prev = pu->prev;
 		    npts++;
+		    if (current->next == (struct Univ *)NULL)
+			break;
 		    current = current->next;
 		    current->next = (struct Univ *)NULL;
 		    break;
@@ -279,6 +281,7 @@ int main( int argc, char *argv[])
 	pu->area = 0;
 	pu->next = segment = current = stack;
 	stack = stack->next;
+	stack->prev = (struct Univ *)NULL;
 	current->next = (struct Univ *)NULL;
 	npts += 2;
     }
@@ -415,7 +418,7 @@ no_area:
 
     fprintf( fde00, "%-32.32sXX   7   7  28%10ld\n", nm, nlines);
     fprintf( fde00, "%-16.16s%s\n%-16.16s%s\n%-16.16s%s\n%-16.16s%s\n",
-	"FNODE#", "  4-1   14-1  12 3 60-1  -1  -1-1                   1-",
+	"FNODE#", "  4-1   14-1  12 3 50-1  -1  -1-1                   1-",
 	"TNODE#", "  4-1   54-1   5-1 50-1  -1  -1-1                   2-",
 	"LPOLY#", "  4-1   94-1   5-1 50-1  -1  -1-1                   3-",
 	"RPOLY#", "  4-1  134-1   5-1 50-1  -1  -1-1                   4-");
