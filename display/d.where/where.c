@@ -52,13 +52,6 @@ int where_am_i (int once, int have_spheroid, int decimal)
 		G_format_easting  (east,  buf1, projection);
 		G_format_northing (north, buf2, projection);
 		}
-		if (once)
-		{
-		  fprintf (stdout,"%18s %18s %d\n", buf1, buf2, button) ;
-		  if ( !isatty(1) )
-		    fprintf(stderr, "%18s %18s %d\n", buf1, buf2, button) ;
-		  return(0) ;
-		}
 		sprintf(buffer,"%18s %18s", buf1, buf2) ;
 		if (have_spheroid)
 		{
@@ -81,6 +74,11 @@ int where_am_i (int once, int have_spheroid, int decimal)
 			sprintf (temp, " %18s %18s", buf1, buf2);
 			strcat (buffer, temp);
 		}
+	        if(once)
+	        {
+		    sprintf (temp, " %d", button);
+		    strcat (buffer, temp);
+		}
 		show (buffer, once, have_spheroid);
 		if (button != 2)
 			draw_on = 0 ;
@@ -100,6 +98,8 @@ int where_am_i (int once, int have_spheroid, int decimal)
 			draw_on = 1 ;
 		}
 		nlines++;
+	        if(once)
+	            return 0;
 	}
 
 	return 0;
@@ -107,25 +107,15 @@ int where_am_i (int once, int have_spheroid, int decimal)
 
 static int show (char *buf,int once,int have_spheroid)
 {
-	char *b;
-
+	fprintf (stdout,"%s\n", buf);
 	if (!isatty(1))
-		fprintf (stdout,"%s\n", buf);
-	for (b = buf; *b; b++)
-		fprintf (stderr, "%c", *b);
-	fprintf(stderr, "\n");
+		fprintf (stderr,"%s\n", buf);
 
 	if ( nlines >= 21 )
 	{
 	  header(once, have_spheroid);
 	  nlines=4;
 	}
-
-/*  Code to CR without a line feed commented out 9/16/92 krb
-	for (b = buf; *b; b++)
-		fprintf (stderr, "\b");
-*/
-
 
 	return 0;
 }
