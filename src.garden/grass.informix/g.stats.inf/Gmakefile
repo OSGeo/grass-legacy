@@ -1,0 +1,16 @@
+PGM       = $(GARDEN_BIN)/g.stats.inf
+LIBES     = $(GISLIB)
+
+#EXTRA_CFLAGS	= -Dunlink=puts
+
+
+OBJS = \
+	main.o \
+	infxStats.o \
+	chktype.o
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+
+$(LIBES): #
