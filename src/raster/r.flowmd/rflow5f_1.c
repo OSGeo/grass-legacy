@@ -2,24 +2,26 @@
 **  Written by Jaroslav Hofierka 1992,1997 and 2000.
 **  J. Gresaka 22, 085 01 Bardejov, Slovakia, hofierka@geomodel.sk
 **  Copyright Jaroslav Hofierka 1992,1997,2000
+**  email: hofierka@geomodel.sk
 *****************************************************************************/
 
 /*
- * This program, both binary and source is copyrighted, but available without
- * fee for education, research and non-commercial purposes. Users may distribute
- * the binary and source code to third parties provided that the copyright
- * notice and this statement appears on all copies and that no charge is made
- * for such copies.  Any entity wishing to integrate all or part of the source
- * code into a product for  commercial use or resale, should contact the
- * author of the software.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
  *
- * THE SOFTWARE IS PROVIDED "AS IS" WITHOUT EXPRESS OR IMPLIED WARRANTY. THE
- * AUTHOR SHALL NOT BE LIABLE FOR
- * ANY DAMAGES SUFFERED BY THE USER OF THIS SOFTWARE.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * By copying this program, you, the user, agree to abide by the copyright
- * conditions and understandings with respect to any software which is
- * marked with a copyright notice.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ *   Free Software Foundation, Inc.,
+ *   59 Temple Place - Suite 330,
+ *   Boston, MA  02111-1307, USA.
+ *
  */
 
 
