@@ -15,8 +15,7 @@ eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
-
-function usage()
+usage()
 {
  echo ""
  echo "g3.createwind creates DEFAULTWIND3/WIND3 based on current 2D region"
