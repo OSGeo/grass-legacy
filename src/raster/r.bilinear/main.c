@@ -186,7 +186,7 @@ fprintf(stderr,"row %d maprow1 %d maprow2 %d\n", row, maprow1, maprow2);
 
 		/* in region? */
 		if(east < mapw.west || east >= mapw.east){
-		    outbuf[col] = 0;  /* NULL? */
+		    G_set_f_null_value(&outbuf[col], 1);
 		    continue;
 		}
 
