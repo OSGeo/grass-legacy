@@ -9,7 +9,6 @@
 #include "config.h"
 #include "gis.h"
 
-#include "globals.h"
 #include "expression.h"
 
 /****************************************************************************/
@@ -35,17 +34,21 @@ extern char *format_expression(const expression *);
 
 extern void execute(expr_list *);
 
-/* map.c */
+/* map.c/map3.c */
+
+extern void setup_region(void);
 
 extern int map_type(const char *name, int mod);
 extern int open_map(const char *name, int mod, int row, int col);
 extern void setup_maps(void);
+extern void get_map_row(
+	int idx, int mod, int depth, int row, int col, void *buf, int res_type);
 extern void close_maps(void);
-extern void get_map_row(int idx, int mod, int row, int col, void *buf, int res_type);
 
 extern int open_output_map(const char *name, int res_type);
 extern void put_map_row(int fd, void *buf, int res_type);
 extern void close_output_map(int fd);
+extern void unopen_output_map(int fd);
 
 extern void copy_cats(const char *dst, int idx);
 extern void copy_colors(const char *dst, int idx);
