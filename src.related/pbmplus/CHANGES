@@ -1,0 +1,219 @@
+Changes during the beta test period, starting on 15jan91:
+
+    fitstopgm was using "bzero" as a struct member; changed to bzer.
+      (David Elliott, Doug Claar)
+    Include-file re-ordering in pbmplus.h to make the BROKENPUTC1 fix
+      work properly. (Markus Bolz)
+    Lots of cleanup work on the man pages.
+    In the pgmtoppm colorization tool, changed the separator for the
+      two-color case from ',' to '-', since ',' was also being used
+      in specifying RGB colors.
+    Fixed typos in README, FORMATS.
+    Added statics to pbmmask and pbmtoepson to avoid a name conflict.
+    Added casts to ppmpat, ppmdraw.h, libppm5 to avoid warnings.
+    Minor fixes to hipstopgm, pnmarith, libpbm5, giftoppm, xim.h, pnmtoxwd,
+      ppmtogif, gemtopbm, pi3topbm. (Arthur David Olson and gcc 1.39)
+    Added note to README about incompatibility with gnu make; removed
+      extraneous includes from giftoppm; corrected typo in pbmtog3.1;
+      added ifdef's around definition of M_PI in ppmpat, pnmrotate, pnmshear.
+      (Francois Pinard)
+    Added new man page installation option to Makefiles. (Philip Gladstone)
+    Re-worded TIFF configuration instructions in Makefile.
+    No more trailing blanks when writing PGM and PPM plain format.
+    Tried a compile with gcc -Wall, and made bunches of minor tweaks to
+      avoid warnings.
+    Fixes to pbmtolj. (Arthur David Olson, Mike Hench)
+    Portability fixes for the Convex - casting malloc to char*, no
+      static function decls inside other functions. (Anthony A. Datri)
+    Added new rasterfile types and 32-bit support to to rast.h, libpnm4,
+      rasttopnm, pnmtorast.
+    Added #undefs to pbmplus.h for max, min, abs, odd, in case they are
+      already defined. (Selden E. Ball, Jr.)
+    Updated libp?m.3 man pages.
+    Fixes to pbmtog3 to make it compatible with more fax machines.
+      (Klaus U. Schallhorn)
+    Makefile fixes to remove old scripts and binaries before installing new
+      ones; fixed typo in xwdtopnm.1. (Arthur David Olson)
+    Changed ppmquant to keep reducing maxval until it can make a histogram.
+    Fixed typo in anytopnm. (Ken Laprade)
+    Added rawtoppm, and minor tweaks to rawtopgm.
+    Minor bugfix to ppmquant -map.
+    Minor correction to pgmoil.
+    Added declaration of realloc() to pbmplus.h.
+    Replaced fixed-size arrays in pbmmask, pbmtext, libpnm4, xwdtopnm, pnmcat.
+    Removed extraneous include of sys/file.h from giftoppm.
+      (Selden E. Ball, Jr.)
+    Minor fix to error messages in libpgm1 and libppm1.
+    Made pnmtorast always write 256-element colormaps again - some rasterfile
+      readers can't handle short maps.
+    Changed error messages in p?mmerge.
+    Correct bug in pi3topbm. (R C Smith)
+    Removed here-doc quotes from pnmsmooth. (Arthur David Olson, Jim Hanko)
+    Fix to fitstopgm for files that don't have DATAMIN and DATAMAX cards.
+      (Steve Allen)
+    In pgmnorm and pgmoil, moved the hist array to the global frame
+      to avoid local frame storage problems if BIGGRAYS is set.
+
+Changes since the X.V11R4 / comp.sources.misc distribution of 22nov89:
+
+    Added pgmramp, pgmedge, pgmtoppm, rgb3toppm, ppmtoxpm, pnmgamma,
+      ximtoppm, pgmtofs, picttoppm, ppmtopict, ppmquantall, anytopnm,
+      pi1toppm, ppmtopi1, sputoppm, spctoppm, pbmto10x, ppmtoicr, ppmmake,
+      xpmtoppm, ppmtopuzz, ppmtouil, ybmtopbm, pbmtoybm, lispmtopgm,
+      pgmtolispm, pbmtogem, pi3topbm, pbmtopi3, pbmtoepson, pbmtoplot,
+      pbmtozinc, pbmtext, pnmnoraw, pnmmargin, pnmfile, pnmindex,
+      ppmtorgb3, gouldtoppm, pgmbentley, pgmoil, ppmrelief, pnmtotiff,
+      ppmtopcx.
+    Merged some filters:
+      rasttopbm and rasttoppm into rasttopnm;
+      pbmtorast and ppmtorast into pnmtorast;
+      xwdtopbm and xwdtoppm into xwdtopnm;
+      pbmtoxwd and ppmtoxwd into pnmtoxwd.
+    Promoted some filters:
+      pcxtopbm to pcxtoppm;
+      ppmarith to pnmarith;
+      ppmconvol to pnmconvol;
+      ppmcscale to pnmdepth;
+      ppmrotate to pnmrotate;
+      ppmscale to pnmscale;
+      ppmshear to pnmshear;
+      ppmsmooth to pnmsmooth;
+      tifftopgm to tifftopnm - new version based on Sam Leffler's libtiff.
+    Bugfixes to pbmtoicon, ppmtops.
+    The Makefiles now have a "merge" option.
+    All flags are now case-insensitive.
+    Added $(MAKE) stuff to Makefile.
+    Changed pnmsmooth from a csh script to a sh script.
+    Made macro use in pbmtox10bm and pbmtoxbm more portable.
+    Moved compataliases to compat.csh, and added compat.ksh.
+    Made ppmtoilbm less Amiga-specific.
+    Added -headerskip and -rowskip flags to rawtopgm.
+    Enhanced rasttopnm to interpret 8-bit rasters with no colormap as grayscale.
+    Changed sscanf %g to %f - some systems can't handle %g on input.
+    Added -expand flag to pbmmask.
+    Speedup to pnmflip - don't buffer if possible.
+    Added color-name-to-value routine to ppm - uses X11's rgb.txt if present.
+    Updated Imakefile support to reflect X.V11R4.
+    Removed picttopbm.
+    Improved pnmcut argument syntax so that negative coords work like pnmpaste.
+    Added "magic" file, for use with the "file" program.
+    40% speedup for pgmnorm from Robert Stockton (rgs@cs.cmu.edu).
+    Fixed long-standing bug involving colormaps on SPARCstations when
+      compiled with gcc -- had to do with passing structs by value.
+    Removed the -x flag from pnmtorast -- it's not really needed.
+    Fixed subtle bug in the pnm reading code that caused pnmcat to blow
+      it on images that differed greatly in width or height.
+    New version of giftoppm that handles the GIF89a standard, and doesn't
+      use fseek.
+    Fixed fitstopgm to handle three-axis images, such as the Hubble pix.
+    Xwdtopnm and pnmtoxwd finally handle byte-order properly.
+    Added -xysize flag to pnmscale.
+    Added conditional ANSI function prototypes to library routines.
+    Added -noantialias flag to pnmrotate and pnmshear.
+    Removed the TIPS file.  No one ever sent in any new tips, so I just
+      moved the few I had into the relevant man pages.  That's probably
+      where they belonged in the first place.
+    Added justification flags to pnmcat.
+    Added -map flag to ppmquant - user-specifiable colormap.  Also, the
+      Floyd-Steinberg error diffusion finally works right.
+    Added -map flag to pgmtoppm.
+    Added DirectColor support to xwdtopnm and pnmtoxwd.
+    Speedup to pgmtolj from Arthur David Olson: avoid sending whitespace.
+    Fix to pbmtogo from Bo Thide': 2D compression now works.
+
+Patch 1 to the X.V11R4 / comp.sources.misc distribution of 22nov89:
+
+    Fixed bug in pgmtops -rle.
+
+Changes since the alt.sources distribution of 13sep89:
+
+    Small corrections to ppmtorast, pgmtops.
+    Moved pbm/tifftopbm to pgm/tifftopgm - it now handles grayscale TIFF files.
+    Fixed tifftopgm to handle non-native byte order.
+    Changes to tifftopgm to handle bogus AppleScan TIFF files, to have
+      better command syntax, and to use stdio.
+    Optimizations to xbmtopbm, pbmtoxbm, and pbmtox10bm, courtesy of
+      Juha Sarlin, to make them go about three times as fast.
+    Optimization to pgmtops and ppmtops to make them go three times as fast.
+    Optimization to pnmcrop.
+    Added PBMPLUS_BROKENPUTC defines in pbmplus.h to handle systems (such as
+      ULTRIX) which have broken putc() macros.
+    Rewrote ppmscale, pnmcat, and pgmhist to operate line-by-line, instead
+      of reading in the whole image.
+    Rewrote pnmflip to keep only one copy of the image in memory.
+    Added pgmtofits, courtesy of Wilson H. Bent, plus bugfixes to fitstopgm
+      and a patch to giftoppm to handle black&white GIF files.
+    Added picttopbm and rawtopgm.
+    Fixes to xwdtoppm and ppmtoxwd so they compile with SunOS cc as well as gcc.
+    Another small change to ppmtoxwd having to do with colormap size.
+    Changed macptopbm's -headersize flag to be -extraskip.
+    Changed tgatoppm to read color values as BGRA instead of ARGB; the Targa
+      documentation is apparently wrong about the order.
+    Some changes to the Makefiles, partially to work around bugs in gnumake.
+    Got g3topbm working, and added pbmtog3, courtesy of Paul Haeberli.
+    Added some pixrect work-alike code so that rasttopbm, pbmtorast, rasttoppm,
+      and ppmtorast can be used on non-Sun systems.  This also provides a
+      final solution to the persistent byte- and bit-order problems on 386's.
+    Moved the SYSV-checking #ifdefs to *after* the include of pbm.h, which
+      defines SYSV.
+    Made all the #else's and #endif's ANSI-compliant.
+    Added manual pages for libpbm, libpgm, libppm, and libpnm, courtesy
+      of Tony Hansen.
+    Changed man page installation so that pages from different sections
+      can go in different directories.
+    Fixed Imakefiles.
+
+Changes since the expo.lcs.mit.edu FTP distribution of 06sep89:
+
+    Added #ifdefs to pnm/libpnm3.c to allow the PBM-PNM-only configuration.
+    Small corrections to TIPS, pnm/Makefile, pnm/Imakefile, ppm/ppmrotate.1,
+      ppm/ppmshear.1, ppm/ppmtoilbm.c, pbm/xwdtopbm.c, ppm/xwdtoppm.c,
+      ppm/ppmtoxwd.c, ppm/ppmtoxwd.1, pbm/x11wd.h.
+
+Changes since the comp.sources.misc distribution of 31oct88:
+
+    Added pbmreduce, pbmlife, pbmmask, and pbmupc.
+    Added gemtopbm, tifftopbm, pcxtopbm, pbmtogo, mgrtopbm, pbmtomgr,
+      cmuwmtopbm, pbmtocmuwm, g3topbm, and pbmtobg.
+    Minor bugfix to pbmtolj.
+    Slight restructuring of most of the programs to use vastly less memory.
+    Various other minor optimizations.
+    Fixed pbmtorast and rasttopbm to handle byte-swapped big-endian 386 boxes.
+    Slight changes to argument syntax of pbmcrop, pbmmake, pbmreduce.
+    Moved to the new PGM package: pbmtops (which now produces Conforming PS).
+    Moved to the new PPM package: giftopbm.
+    Moved to the new PNM package: pbmcrop pbmcut pbmenlarge pbminvert.
+    Consolidated into a single pnmflip tool: pbmfliplr pbmfliptb pbmtrnspos.
+    Consolidated into a single pnmcat tool: pbmcatlr pbmcattb.
+    Added compataliases script for upward compatability with changed tools.
+    Removed xxxtopbm.
+    Added a -headersize flag to macptopbm, to help get around annoying
+      problems in MacPaint file format.
+    Added the RAWBITS compilation-time option, to use a more compact and
+      much faster (but less portable) external format.
+    Removed the CBM format - use compress(1) and / or RAWBITS instead.
+    Pbmpaste (and the new pnmpaste) now accepts negative x and y coords,
+      which are interpreted relative to the right and bottom sides.
+    Changed all programs to accept a "-" file argument as meaning standard
+      input.
+    Removed pbmtox10wd, since it was never very useful (X10 doesn't have xwud).
+    Added Imakefiles, for X11 types to use.
+
+Changes since the X.V11R3 distribution of 31aug88:
+
+    The cbm format has been revised to support run-length encoding.
+    Pbmtops now does run-length encoding.
+
+Major changes since the X.V11R2 distribution of 28mar88:
+
+    The pbm format now has a "magic number".
+    New conversion filters: brushtopbm, giftopbm, pbmtolj, pbmtomacp,
+      pbmtoxwd, and pbmtox10wd.
+    Icontopbm converter has a better parser -- it knows to skip over
+      any extraneous comments at the beginning of the icon file.
+    Pbmtops generates a different PostScript wrapper program -- it should
+      handle huge bitmaps better.
+    Xwdtopbm now handles byte-swapping correctly.
+    Pbmmake takes a flag to specify the color of the new bitmap.
+    Pbmpaste now implements 'or', 'and', and 'xor' operations as well
+      as the default 'replace'.
