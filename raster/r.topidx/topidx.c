@@ -256,8 +256,9 @@ atanb(void)
 
 					sumtb/=nslp;
 					if(sumtb>ZERO){
-						atbv(i,j)=logf(av(i,j)/
-								(2*dx*sumtb));
+						atbv(i,j)=(float)
+							log((double)(av(i,j)/
+								(2*dx*sumtb)));
 					}else{
 						G_set_f_null_value(&atbv(i,j),
 									1);
@@ -267,7 +268,7 @@ atanb(void)
 				}
 				
 				C=av(i,j)/sum;
-				atbv(i,j)=logf(C);
+				atbv(i,j)=(float)log((double)C);
 				natb++;
 
 				if(i>0){
