@@ -158,6 +158,9 @@ Create source and binary distributions:
        Note the file name convention:
         tar cvfz grass-5.0.X_src.tar.gz grass-5.0.X
 
+       Generate the MD5 checksum:
+       md5sum grass-5.0.X_src.tar.gz > checksum
+
    o Markus:
      Update the PDF-docs on server (needs "htmldoc" tool):
        ftp://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/htmldoc/
@@ -195,7 +198,7 @@ BINARIES
      ../REQUIREMENTS.html where to find it)
 
    o compile everything, incl NVIZ without PG (note, no ";" to be used):
-       CFLAGS=-O2 LDFLAGS="-s" ./configure --without-postgres
+       CFLAGS=-O2 LDFLAGS="-s" ./configure --without-postgres --with-gdal
        make
      
 #   o compile G3D tools
@@ -203,7 +206,7 @@ BINARIES
 #                                     GRASS 5.0.0!
 
    o compile PostgreSQL modules:
-       CFLAGS=-O2 LDFLAGS="-s" ./configure --with-postgres=yes
+       CFLAGS=-O2 LDFLAGS="-s" ./configure --with-postgres=yes --with-gdal
        make pre-compile
        gmake5 src.garden/grass.postgresql
 
@@ -265,6 +268,9 @@ BINARIES
    tar.gz file is stored in the grass5install.sh program. This is done in
    order to check that the download of the binary file was successful.
    Thus both the tar.gz file and the install program need to be uploaded.
+
+   Add the MD5 checksum:
+   md5sum grass5x_y_bin.tar.gz > checksum
 
 --------------------------------------------------------------
 
