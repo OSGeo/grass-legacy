@@ -1,14 +1,16 @@
-EXTRA_CFLAGS = -I../lib  -I../libes 
+EXTRA_CFLAGS = $(VECT_INCLUDE) 
+
+#EXTRA_CFLAGS = -I../lib  -I../libes 
 
 OBJ = \
 	head_conv.o \
 	main.o \
 	rw_bdig.o
 
-all: $(ETC)/dlg.to.digit
+all: $(ETC)/v.dlg.to.digit $(VECTLIB) $(GISLIB)
 
-$(ETC)/dlg.to.digit: $(OBJ)
-	$(CC) $(LDFLAGS)  -o $(ETC)/dlg.to.digit $(OBJ) $(DLGLIB) $(DIGLIB) $(GISLIB) $(MATHLIB) $(DIG_ATTLIB)
+$(ETC)/v.dlg.to.digit: $(OBJ)
+	$(CC) $(LDFLAGS)  -o $(ETC)/v.dlg.to.digit $(OBJ) $(DLGLIB) $(VECTLIB) $(GISLIB) $(MATHLIB) $(DIG_ATTLIB)
 
 #  there will be no bin program for GRASS 3.0 release
 #  
@@ -20,5 +22,5 @@ $(ETC)/dlg.to.digit: $(OBJ)
 iprint:
 	pr -l60 *.h *.c | expand -4 | ipr
 
-head_conv.o : bdig_head.h
+#head_conv.o : bdig_head.h
 
