@@ -1,4 +1,4 @@
-.\" %W% %G%
+.\
 .TH V.mkquads 2
 .SH NAME
 V.mkquads \- Creates a quads vector (digit) map and/or sites file and/or windows
