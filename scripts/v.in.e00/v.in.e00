@@ -162,7 +162,7 @@ fi
 ## point
 
 
-if [ "$GIS_OPT_type" == "point" ] ; then
+if [ "$GIS_OPT_type" = "point" ] ; then
         echo "Importing..."
         v.in.ogr -o dsn=$E00NAME layer=LAB type=point output=$NAME
 	if [ $? -eq 1 ] ; then
@@ -174,7 +174,7 @@ fi
 
 ## line
 
-if [ "$GIS_OPT_type" == "line" ] ; then
+if [ "$GIS_OPT_type" = "line" ] ; then
         echo "Importing..."
         v.in.ogr -o dsn=$E00NAME layer=ARC type=line output=$NAME
 	if [ $? -eq 1 ] ; then
@@ -187,7 +187,7 @@ fi
 ## area
 
 
-if [ "$GIS_OPT_type" == "area" ] ; then
+if [ "$GIS_OPT_type" = "area" ] ; then
         echo "Importing..."
         v.in.ogr -o dsn=$E00NAME layer=LAB,ARC type=centroid,boundary output=$NAME
 	if [ $? -eq 1 ] ; then
