@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "distance.h"
 
     /* read the input map. convert non-nulls to 1 */
