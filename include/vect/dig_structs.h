@@ -12,6 +12,7 @@
 #include <stdio.h>
 #endif
 
+#include "dgl.h"
 #include "shapefil.h"
 #include "btree.h"
 
@@ -229,6 +230,7 @@ struct Map_info
     //char *coor_file;		/* Point registration file */
     
     struct Plus_head plus;      /* topo file *head; */
+    gnGrpGraph_s   graph;           /* graph structure */
 
     //double snap_thresh;
     //double prune_thresh;

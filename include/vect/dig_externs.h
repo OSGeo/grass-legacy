@@ -16,7 +16,8 @@ char *dig_float_point (char *, int, double);
 //double dig_point_in_area (struct Map_info *, double, double, P_AREA *);
 double dig_x_intersect (double, double, double, double, double);
 double dig_point_in_poly (double, double, struct line_pnts *);
-double dig_distance2_point_to_line (double, double, double, double, double, double, double, double, double, double *, double *, double *, double *, int *);
+double dig_distance2_point_to_line (double, double, double, double, double, double, double, double, double, 
+	                            int, double *, double *, double *, double *, int *);
 
 double dig_unit_conversion (void);
 
@@ -166,3 +167,15 @@ int dig_write_nodes (FILE *, struct Plus_head *);
 int dig_write_lines (FILE *, struct Plus_head *);
 int dig_write_areas (FILE *, struct Plus_head *);
 int dig_write_isles (FILE *, struct Plus_head *);
+
+int dig_Rd_P_node (struct Plus_head *, int i, FILE *);
+int dig_Wr_P_node (struct Plus_head *, int i, FILE *);
+int dig_Rd_P_line (struct Plus_head *, int i, FILE *);
+int dig_Wr_P_line (struct Plus_head *, int i, FILE *);
+int dig_Rd_P_area (struct Plus_head *, int i, FILE *);
+int dig_Wr_P_area (struct Plus_head *, int i, FILE *);
+int dig_Rd_P_isle (struct Plus_head *, int i, FILE *);
+int dig_Wr_P_isle (struct Plus_head *, int i, FILE *);
+int dig_Rd_Plus_head (FILE *, struct Plus_head *);
+int dig_Wr_Plus_head (FILE *, struct Plus_head *);
+
