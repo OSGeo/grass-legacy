@@ -15,11 +15,6 @@
 #  The updated driver has to be tested and finally made to be standard
 #  driver.
 #
-# NOTE:
-#  The $GISBASE/dev/fifo* files are still required. However, those files 
-#  need not to be FIFO files. It's ok if those files are just zero size
-#  file, not FIFO nor other special file. Socket drivers communicate through
-#  those files.
 #############################################################################
 #
 # Please test new XDRIVER and report bugs to developers list.
@@ -54,27 +49,56 @@ then
 	exit
 fi
 
-if [ $# -ne 1 -o "$1" = "help" ]
+if [ $# -eq 0 -o "$1" = "help" ]
 then
 	echo
 	echo "Please read README.sockets first."
 	echo
 	echo "Usage:"
-	echo " ./README.sockets [new|orig]"
+	echo " ./README.sockets [-nf] {new|orig}"
+	echo
+	echo "   -n: Do not compile"
+	echo "   -f: Force to compile"
 	echo
 	exit
 fi
 
-if [ "$1" != "new" -a "$1" != "orig" ]
+compile=1
+sources=""
+for i
+do
+	case $i in
+		-n)
+			compile=0
+			sources=" sources"
+			;;
+		-f)
+			compile=2
+			sources=""
+			;;
+		new|orig)
+			cmd=$i
+			;;
+		*)
+			echo
+			echo "$i: Invalid argument"
+			echo
+			exit
+			;;
+	esac
+	shift
+done
+
+if [ "$cmd" = "" ]
 then
 	echo
-	echo "$1: Invalid argument."
+	echo "Missing {new|orig}"
 	echo
 	exit
 fi
 
-go=0
-if [ "$1" = "new" ]
+changed=0
+if [ "$cmd" = "new" ]
 then
 	for i in $SOURCES
 	do
@@ -85,7 +109,7 @@ then
 		then
 			continue
 		fi
-		go=1
+		changed=1
 		echo cp $orig $orig.orig
 		cp $orig $orig.orig
 		echo cp $new $orig
@@ -99,7 +123,7 @@ else
 		then
 			continue
 		fi
-		go=1
+		changed=1
 		echo cp $orig.orig $orig
 		cp $orig.orig $orig
 		echo rm $orig.orig
@@ -107,18 +131,24 @@ else
 	done
 fi
 
-if [ $go -eq 0 ]
+if [ $changed -eq 0 -a $compile -ne 2 ]
 then
 	echo
-	if [ "$1" = "new" ]
+	if [ "$cmd" = "new" ]
 	then
-		echo "It's already new driver."
+		echo "It's already new driver$sources."
 	else
-		echo "It's already original driver."
+		echo "It's already original driver$sources."
 	fi
 	echo
 	exit
 fi
+
+if [ $compile -eq 0 ]
+then
+	exit
+fi
+
 
 (cd src/display/devices/XDRIVER && gmake5)
 (cd src/libes/raster && gmake5)
