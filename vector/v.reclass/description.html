@@ -1,22 +1,20 @@
 <H2>DESCRIPTION</H2>
 
-<EM>v.db.reclass</EM> allows user to create a new vector map based on the reclassification 
+<EM>v.reclass</EM> allows user to create a new vector map based on the reclassification 
 of an existing vector map. 
 
 <BR><BR>
 Rules file may contain on each row either pair: <BR> 
 <I>keyword&nbsp;value</I> <BR>
 (separated by space) or comment beginning by #(hash). 
-Definition of new category begins with kyeword <I>cat</I> followed by new category value.
+Definition of new category begins with keyword <I>cat</I> followed by new category value.
 Keyword <I>where</I> specifies SQL where condition.
 
 <H2>EXAMPLE</H2>
 
-<DT>
-<DD><B>v.db.reclass input=</B><EM>land</EM> <B>output=</B><EM>land_u</EM> <B>type=</B><EM>area</EM>
+<B>v.reclass input=</B><EM>land</EM> <B>output=</B><EM>land_u</EM> <B>type=</B><EM>area</EM>
                  <B>rules=</B><EM>land.rcl</EM>
-<BR>
-</DT>
+
 <P>
 the rules file contains :
 <PRE>
