@@ -107,7 +107,7 @@ _area_display (Area, map, mode)
 
     for (i = 0 ; i < Area->n_lines ; i++)
     {
-	line = ABS(Area->lines[i]);
+	line = abs(Area->lines[i]);
 
 	/* this shouldnt have to  be here, but... */
 	if (!LINE_ALIVE (&(map->Line[line])))	 
@@ -146,7 +146,7 @@ _area_display (Area, map, mode)
     Disp_llabels = save_llabel_state;
     Disp_lines = save_line_state;
 
-    R_flush ();
+    V_flush ();
     return (0);
 }
 
@@ -287,7 +287,7 @@ _isle_display (Isle, map, mode)
 
     for (i = 0 ; i < Isle->n_lines ; i++)
     {
-	line = ABS(Isle->lines[i]);
+	line = abs(Isle->lines[i]);
 
 	/* this shouldnt have to  be here, but... */
 	if (!LINE_ALIVE (&(map->Line[line])))	 
@@ -326,7 +326,7 @@ _isle_display (Isle, map, mode)
     Disp_llabels = save_llabel_state;
     Disp_lines = save_line_state;
 
-    R_flush ();
+    V_flush ();
     return (0);
 }
 
