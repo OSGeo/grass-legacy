@@ -1,0 +1,20 @@
+
+###########################################################
+
+
+###########################################################
+#  %W%  %G%
+
+
+
+UNIX_BIN = $(GRAPH)/macros
+
+CFILE = make_text.c
+
+all:  $(UNIX_BIN)/make_text $(UNIX_BIN)/make.text
+
+$(UNIX_BIN)/make_text: $(CFILE)
+	$(CC) -o $@ $(CFILE)
+
+$(UNIX_BIN)/make.text: make.text
+	cp make.text $(UNIX_BIN)/make.text
