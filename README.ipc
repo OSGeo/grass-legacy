@@ -60,7 +60,7 @@ fi
 if [ ! "$GRASS_IN_CONFIGURE" ]
 then
 
-if [ ! -f config.status ]
+if [ ! -f config.status -o ! -f Makefile ]
 then
 	echo
 	echo "You must ./configure first. Or GRASS is not installed."
@@ -69,11 +69,7 @@ then
 	exit
 fi
 
-##old:
-#GISBASE=`grep "@prefix@" config.status | cut -d '%' -f 3`/grass5
-
-GISBASE=`grep GISBASE Makefile | head -1 | tr -s ' ' '|' | cut -d'|' -f2`
-
+GISBASE=`grep '^GISBASE=' Makefile | sed 's/^GISBASE=[ 	]*//'`
 if [ ! -d $GISBASE/dev ]
 then
 	echo
@@ -83,12 +79,13 @@ then
 	exit
 fi
 
+GRASS_BIN=`grep '^GRASS_BIN=' Makefile | sed 's/^GRASS_BIN=[ 	]*//'`
 GMAKE5=
 # Search for gmake5 command in user's path
 for i in `echo $PATH | sed 's/^:/.:/
     	    		    s/::/:.:/g
 			    s/:$/:./
-			    s/:/ /g'`
+			    s/:/ /g'` $GRASS_BIN
 do
     if [ -f $i/gmake5 ] ; then
 	# Save the path of the gmake5 command
@@ -101,7 +98,7 @@ done
 if [ ! "$GMAKE5" ]
 then
 	echo
-	echo "gmake5 is not under \$PATH."
+	echo "gmake5 is not under \$PATH nor $GRASS_BIN."
 	echo
 	exit
 fi
@@ -245,18 +242,18 @@ then
 	exit
 fi
 
-(cd src/display/devices/XDRIVER && gmake5)
-(cd src/libes/raster && gmake5)
+(cd src/display/devices/XDRIVER && $GMAKE5)
+(cd src/libes/raster && $GMAKE5)
 
 if [ $dmon -eq 1 ]
 then
-	(cd src/display/d.mon && gmake5)
+	(cd src/display/d.mon && $GMAKE5)
 else
-	(cd src/display && gmake5)
-	(cd src/raster && gmake5)
-	(cd src/mapdev && gmake5)
-	(cd src/paint/Drivers/preview && gmake5)
-	(cd src/paint/Drivers/preview2 && gmake5)
+	(cd src/display && $GMAKE5)
+	(cd src/raster && $GMAKE5)
+	(cd src/mapdev && $GMAKE5)
+	(cd src/paint/Drivers/preview && $GMAKE5)
+	(cd src/paint/Drivers/preview2 && $GMAKE5)
 fi
 
 
