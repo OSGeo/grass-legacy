@@ -40,6 +40,9 @@ int find_cross ( struct line_pnts *Points, int s1, int s2, int s3, int s4,  int 
     int i, j, np, ret;
     double *x, *y;
 
+    G_debug (5, "find_cross(): npoints = %d, s1 = %d, s2 = %d, s3 = %d, s4 = %d", 
+	                 Points->n_points, s1, s2, s3, s4 ); 
+    
     x = Points->x;
     y = Points->y;
     np = Points->n_points;
@@ -56,16 +59,19 @@ int find_cross ( struct line_pnts *Points, int s1, int s2, int s3, int s4,  int 
 	    {
 		*s5 = i;
 		*s6 = j;
+                G_debug (5, "  intersection: s5 = %d, s6 = %d", *s5, *s6 ); 
 		return 1;
 	    }	    
 	    if (  ret == -1  )
 	    {
 		*s5 = i;
 		*s6 = j;
+                G_debug (5, "  overlap: s5 = %d, s6 = %d", *s5, *s6 ); 
 		return -1;
 	    }
 	}    
     }
+    G_debug (5, "  no intersection" ); 
     return 0;
 }
 
@@ -111,6 +117,8 @@ void clean_parallel ( struct line_pnts *Points, struct line_pnts *oPoints, doubl
     double *x, *y, px, py, ix, iy;
     static struct line_pnts *sPoints = NULL;    
 
+    G_debug (4, "clean_parallel(): npoints = %d, d = %f, rm_end = %d", Points->n_points, d, rm_end ); 
+
     x = Points->x;
     y = Points->y;
     np = Points->n_points;    
@@ -128,10 +136,12 @@ void clean_parallel ( struct line_pnts *Points, struct line_pnts *oPoints, doubl
 	current=first;  last=Points->n_points-2;  lcount=0;
 	while( find_cross ( Points, current, last-1, current+1, last,  &sa, &sb ) != 0 ) 
 	{  
-	    if ( lcount == 0 ){ first=sa; }	
-		current=sa+1;
-		last=sb;    
+	    if ( lcount == 0 ){ first=sa; } /* move first forward */	
+
+	    current=sa+1;
+	    last=sb;    
 	    lcount++;
+            G_debug (5, "  current = %d, last = %d, lcount = %d", current, last, lcount); 
 	}
 	if ( lcount == 0 ) { break; }   /* loop not found */
 
@@ -140,6 +150,7 @@ void clean_parallel ( struct line_pnts *Points, struct line_pnts *oPoints, doubl
 	    j=sb+1;
 	    npn=sa+1;
 	} else {
+	    Vect_reset_line ( sPoints );
 	    dig_find_intersection ( x[sa],y[sa],x[sa+1],y[sa+1],x[sb],y[sb],x[sb+1],y[sb+1], &ix,&iy);
 	    Vect_append_point ( sPoints, ix, iy, 0 );
 	    for ( i=sa+1 ; i < sb+1; i++ ) { /* create loop polygon */
@@ -314,6 +325,7 @@ Vect_line_parallel ( struct line_pnts *InPoints, double distance, double toleran
   \fn void Vect_line_buffer ( struct line_pnts *InPoints, double distance, double tolerance,
                               struct line_pnts *OutPoints )
   \brief Create buffer around the line line. 
+         Buffer is closed counter clockwise polygon. 
          Warning: output line may contain loops!
   \param InPoints input line
   \param distance  
