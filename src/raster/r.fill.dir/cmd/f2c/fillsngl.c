@@ -75,6 +75,10 @@ main(int argc, char **argv)
 
 	fclose(infile);
 
+	for(i=1; i<=ns; i++)
+		free(data[i] + 1);
+	free(data + 1);
+
 	exit(0);
 }
 
