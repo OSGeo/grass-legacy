@@ -178,9 +178,9 @@ main (int argc, char *argv[])
       Vect_get_map_box (&Map, &box );
       sprintf (line, "           N: %-10.3f    S: %-10.3f", box.N, box.S);
       printline (line);
-      sprintf (line, "           E: %-10.3f    W: %-10.3f", box.E, box.W);
+      sprintf (line, "           E: %-10.3f     W: %-10.3f", box.E, box.W);
       printline (line);
-      sprintf (line, "           B: %-6.3f         T: %-6.3f", box.B, box.T);
+      sprintf (line, "           B: %-6.3f        T: %-6.3f", box.B, box.T);
       printline (line);
 
       printline ("");
