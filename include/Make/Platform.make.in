@@ -78,6 +78,11 @@ PQINCPATH           = @PQINCPATH@
 PQLIBPATH           = @PQLIBPATH@
 PQLIB               = @PQLIB@
 
+#MySQL:
+MYSQLINCPATH        = @MYSQLINCPATH@
+MYSQLLIBPATH        = @MYSQLLIBPATH@
+MYSQLLIB            = @MYSQLLIB@
+
 #ODBC:
 ODBCINC             = @ODBCINC@
 ODBCLIB             = @ODBCLIB@
