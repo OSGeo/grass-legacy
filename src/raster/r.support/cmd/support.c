@@ -57,7 +57,7 @@ int main (int argc, char *argv[])
 
     rangeflag = G_define_flag() ;
     rangeflag->key         = 'r';
-    rangeflag->description = "Calculate range";
+    rangeflag->description = "Update the stats (histogram, range)";
 
     if (G_parser(argc,argv))
             exit(1);
