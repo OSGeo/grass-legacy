@@ -1,3 +1,5 @@
+/* $Id$ */
+#include <stdlib.h>
 #include "gis.h"
 #include "local_proto.h"
 
@@ -36,10 +38,10 @@ int main (int argc, char *argv[])
     rows->required         = NO;
     rows->multiple         = NO;
     rows->description      = "number of rows to hold in memory";
-    rows->answer           = "512";
+    rows->answer           = "4096";
 
     if (G_parser (argc, argv))
-	exit (-1);
+	exit (1);
 
     sscanf (rows->answer, "%d", &n);
     exit(vect_to_rast (input->answer, output->answer, n));
