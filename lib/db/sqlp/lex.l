@@ -134,17 +134,25 @@
   ***************************************/
 
 '[^'\n]*'	{
-			char	*Buffer;
+			char	*Buffer, *ptra, *ptrb;
 			int 	c = input();
 			int     len;
 			
-			Buffer = (char*)strdup(yytext);	/* store here because we lose it when unput()			*/
-			unput( c );				/* just peeking - checking for a double quote... embedded quote */
+			Buffer = (char*)strdup(yytext);	/* store here because we lose it when unput() */
+			unput( c ); /* just peeking - checking for a double quote... embedded quote */
 
 			if ( c != '\'' )
 			{
 			        len = strlen (Buffer);
 				Buffer[len-1] = '\0';
+                                /* Hopefully replace all '' by ' */
+                                ptrb = Buffer + 1;
+                                while ( (ptra = strchr(ptrb, '\'')) != NULL ) {
+                                    ptra++; ptrb = ptra;
+                                    while ( ptra[1] != 0 ) { ptra[0] = ptra[1]; ptra++; } 
+                                    ptra[0] = 0;
+                                }
+                                    
 				yylval.strval = (char*)strdup(Buffer+1);
 				free( Buffer );
 				return STRING;
