@@ -1,7 +1,7 @@
 Pretester for pre-candidates:
 
 Linux:
- Juhana Nieminen
+*Juhana Nieminen
  jussi <juhana.nieminen@helsinki.fi>
  Division of Environmental Biology,GIS Laboratory
  P.O.Box 44 (Jyrangontie 2)                  tel: +358-9-191 50050
@@ -12,13 +12,14 @@ Linux:
   RH available ranging from 5.2 to RH beta versions. The systems are running
   from 486 to Athlon platforms."
 
-
-?:
-Richard Christofferson 
-<richc@eng.utah.edu>
+* Richard Christofferson
+  <richc@eng.utah.edu>
 
 
-Solaris:
+
+Solaris 2.7:
+* Richard Christofferson 
+  <richc@eng.utah.edu>
 
 SGI:
 
