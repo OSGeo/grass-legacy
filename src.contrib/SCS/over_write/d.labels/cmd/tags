@@ -1,0 +1,10 @@
+CAPTURE	gather.c	/^#define CAPTURE(X) strncpy (X, value, sizeof(X)); /
+FIELD	gather.c	/^#define FIELD(X) strcmp(X,field)==0$/
+Mmain	main.c	/^main()$/
+gather	gather.c	/^gather (in)$/
+modify	modify.c	/^modify()$/
+output	output.c	/^output (out, label, value)$/
+process_new	proc_new.c	/^process_new (out, file)$/
+process_old	proc_old.c	/^process_old (in, out, file)$/
+setup	setup.c	/^setup (file, new)$/
+update	update.c	/^update (out)$/
