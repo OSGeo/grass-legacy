@@ -1,0 +1,32 @@
+#  @(#)Gmakefile	2.2  6/26/87
+
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+COORLIB = $(LIBDIR)/libcoorcnv.a
+
+IMP_OFILES = \
+	imp_main.o \
+	imp_tig.o \
+	head.o
+
+CON_OFILES = \
+	tig1.o
+#
+# nrcstig is appropriate for specific operational sites, this code
+# will compress the header of a Tiger file, only knowlegable souls
+# would want to do that !!!
+#
+#all:	$(BIN_CONTRIB_CMD)/v.in.tiger.nrcs $(ETC)/CFCC.code $(ETC)/nrcstig 
+all:	$(BIN_CONTRIB_CMD)/v.in.tiger.nrcs $(ETC)/CFCC.code 
+
+$(BIN_CONTRIB_CMD)/v.in.tiger.nrcs:		$(IMP_OFILES)
+	$(CC) -g  -o $@ $(IMP_OFILES) $(GISLIB) $(VASK) $(COORLIB) $(GPROJLIB) $(VECTLIB) $(MATHLIB) $(SHAREDLIB) $(EXTRALIB)
+
+$(ETC)/CFCC.code: CFCC.code
+	cp CFCC.code $(GISBASE)/etc
+
+#$(ETC)/nrcstig:		$(CON_OFILES)
+#	cc $(LDFLAGS) -o $@ $(CON_OFILES) $(GISLIB) $(VASK) $(COORLIB) $(GPROJLIB) $(MATHLIB) $(SHAREDLIB)
+
+$(GISLIB): #
+
