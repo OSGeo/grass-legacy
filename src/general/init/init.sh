@@ -23,70 +23,8 @@
 
 : ${GISBASE?}
 
-echo "Starting GRASS ..."
-
-if [ ! "$GRASS_TCLSH" ] ; then
-    GRASS_TCLSH=tclsh
-    export GRASS_TCLSH
-fi
-
-if [ ! "$GRASS_WISH" ] ; then
-    GRASS_WISH=wish
-    export GRASS_WISH
-fi
-
-# Check if we need to find wish
-if [ "$GRASS_GUI" = "tcltk" ] ; then
-    
-    # Search for a wish program
-    SEARCHCOMMAND=$GRASS_WISH
-    WISH=
-    
-    for i in `echo $PATH | sed 's/^:/.:/
-    	    	    		s/::/:.:/g
-				s/:$/:./
-				s/:/ /g'`
-    do
-	if [ -f $i/$SEARCHCOMMAND ] ; then
-    	    WISH=$i/$SEARCHCOMMAND
-	    break
-	fi
-    done
-
-    #NEEDED: is wish >= wish8.0? Because wish4.2 won't work.
-
-    # Check if any wish8.x programs are stored in $PATHLIST 
-    if [ "$WISH" ] ; then
-    	
-	# Take the first and the tcltkgrass base directory
-	TCLTKGRASSBASE=$GISBASE/tcltkgrass
-	export TCLTKGRASSBASE
-    else
-    	
-	# Wish was not found - switch to text interface mode
-	echo ""
-    	echo "WARNING: The wish command($GRASS_WISH) was not found!"
-	echo "WARNING: Please check your GRASS_WISH enironmental varialble."
-	echo "WARNING: See $CMD_NAME -h for details."
-	echo "Switching to text based interface mode"
-	sleep 2
-    	
-	GRASS_GUI="text"
-    fi
-fi
-
-# Set PAGER environment variable if not set
-if [ ! "$PAGER" ] ; then
-    PAGER=more
-    export PAGER
-fi
-
-# Get name of lockfile and gisrc file
-lockfile=$HOME/.gislock5
-GISRC=$HOME/.grassrc5
-export GISRC
-
 # Set the GIS_LOCK variable to current process id
+lockfile=$HOME/.gislock5
 GIS_LOCK=$$
 export GIS_LOCK
 
@@ -108,12 +46,91 @@ case $? in
     	exit ;;
 esac
 
-# First time user ...
+# Set some environment variables if they are not set
+if [ ! "$PAGER" ] ; then
+    PAGER=more
+    export PAGER
+fi
+
+if [ ! "$GRASS_TCLSH" ] ; then
+    GRASS_TCLSH=tclsh
+    export GRASS_TCLSH
+fi
+
+if [ ! "$GRASS_WISH" ] ; then
+    GRASS_WISH=wish
+    export GRASS_WISH
+fi
+
+# First time user - GISRC is defined in the grass script
 if [ ! -f $GISRC ] ; then
     cat $ETC/grass_intro
-    echo ""
+    echo
     echo "Hit RETURN to continue"
     read ans
+    
+    # This is a hack for not having a good initial gui - should be removed
+    # with next version of initialization gui
+    GRASS_GUI="text"
+fi
+
+echo "Starting GRASS ..."
+
+# Check if we are running X windows by checking the DISPLAY variable
+if [ "$DISPLAY" ] ; then
+
+    # Check if we need to find wish
+    if [ "$GRASS_GUI" = "tcltk" ] ; then
+
+	# Search for a wish program
+	WISH=
+
+	for i in `echo $PATH | sed 's/^:/.:/
+    	    	    		    s/::/:.:/g
+				    s/:$/:./
+				    s/:/ /g'`
+	do
+	    if [ -f $i/$GRASS_WISH ] ; then
+    		WISH=$GRASS_WISH
+		break
+	    fi
+	done
+
+	# Check if wish was found
+	if [ "$WISH" ] ; then
+
+	    # Set the tcltkgrass base directory
+	    TCLTKGRASSBASE=$GISBASE/tcltkgrass
+	    export TCLTKGRASSBASE
+	else
+
+	    # Wish was not found - switch to text interface mode
+	    echo 
+    	    echo "WARNING: The wish command ($GRASS_WISH) was not found!"
+	    echo "Please check your GRASS_WISH environment variable."
+	    echo "See $CMD_NAME -h for details."
+	    echo "Switching to text based interface mode."
+	    echo
+	    echo "Hit RETURN to continue."
+	    read ans
+
+	    GRASS_GUI="text"
+	fi
+    fi
+else
+    
+    # Display a message if a graphical interface was expected
+    if [ "$GRASS_GUI" != "text" ] ; then
+    	echo
+	echo "WARNING: It appears that the X Windows system is not active."
+	echo "A graphical based user interface is not supported."
+	echo "Switching to text based interface mode."
+	echo
+	echo "Hit RETURN to continue"
+	read ans
+    fi
+    
+    # Set the interface mode to text
     GRASS_GUI="text"
 fi
 
@@ -208,23 +225,50 @@ if [ ! "$LOCATION" ] ; then
 	tcltk)
 	    eval `$WISH -file $TCLTKGRASSBASE/script/gis_set.tcl`
 	    
-	    # These checks should not be necessary with real init stuff
-	    if [ "$LOCATION_NAME" = "##NONE##" ] ; then
-    	    	$ETC/set_data
-    	    	if [ $? != 0 ]; then
-    	    	    echo "GISDBASE: $OLD_DB" > $GISRC
-    	    	    echo "LOCATION_NAME: $OLD_LOC" >> $GISRC
-    	    	    echo "MAPSET: $OLD_MAP" >> $GISRC
-    	    	    exit
-    	    	fi
-    	    	eval `g.gisenv`
-    	    fi
+	    case $? in
+     	    	1)
+		    # The gis_set.tcl script printed an error message so wait
+		    # for user to read it
+		    echo "Hit RETURN to continue..."
+		    read ans
+		    
+		    GRASS_GUI="text"
+		    $ETC/set_data
 
-	    if [ "$LOCATION_NAME" = "##ERROR##" ] ; then
-    	    	echo "The selected location is not a valid GRASS location"
-    	    	exit
-	    fi
-    	    
+		    case $? in
+     	    		0) ;;
+     	    		*) exit ;;
+    		    esac
+	    
+		    eval `g.gisenv`
+		    ;;
+	    
+     	    	0)
+		    # These checks should not be necessary with real init stuff
+		    if [ "$LOCATION_NAME" = "##NONE##" ] ; then
+    	    		$ETC/set_data
+    	    		if [ $? != 0 ]; then
+    	    		    echo "GISDBASE: $OLD_DB" > $GISRC
+    	    		    echo "LOCATION_NAME: $OLD_LOC" >> $GISRC
+    	    		    echo "MAPSET: $OLD_MAP" >> $GISRC
+    	    		    exit
+    	    		fi
+    	    		eval `g.gisenv`
+    		    fi
+
+		    if [ "$LOCATION_NAME" = "##ERROR##" ] ; then
+    	    		echo "The selected location is not a valid GRASS location"
+    	    		exit
+		    fi
+
+		    ;;
+		    
+		*)
+		    echo "Invalid return code from gis_set.tcl."
+		    echo "Please advise GRASS developers of this error."
+		    ;;
+    	    esac
+	    
 	    ;;
 	*)
 	    # Shouldn't need this but you never know
