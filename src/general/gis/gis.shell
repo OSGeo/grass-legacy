@@ -18,9 +18,11 @@ Welcome to GRASS VERSION_NUMBER (VERSION_DATE) VERSION_UPDATE_PKG
 
 Geographic Resources Analysis Support System (GRASS) is a Trademark
 of U.S. Army Construction Engineering Research Laboratories (USACERL)
+and Baylor University GRASS Research Group.
 
-New releases of GRASS are coordinated and produced by the Office of
-GRASS Integration (OGI) located at USACERL.
+This new release of GRASS is coordinated and produced by the GRASS
+Research Group at Baylor University with assistance from the Office
+of GRASS Integration (OGI) located at USACERL.
 
 
 This version running thru the $shellname ($SHELL)
