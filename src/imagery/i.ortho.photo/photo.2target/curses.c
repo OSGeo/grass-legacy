@@ -81,10 +81,10 @@ int Resume_curses (void)
     return 0;
 }
 
-int Curses_allow_interrupts (int true)
+int Curses_allow_interrupts (int ok)
 {
     refresh();
-    if (true)
+    if (ok)
 	noraw();
     else
 	raw();
