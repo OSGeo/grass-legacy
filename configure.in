@@ -1,5 +1,5 @@
 AC_INIT(README)
-AC_PREFIX_DEFAULT(/usr/local/grass5)
+AC_PREFIX_DEFAULT(/usr/local)
 AC_CONFIG_HEADER(src/include/config.h)
 AC_CANONICAL_HOST
 AC_PROG_CC
@@ -152,6 +152,7 @@ fi
 AC_SUBST(MATHLIB)
 
 
+# Handle this the same
 BINDIR=/usr/local/bin
 if test -z "${exec_prefix}" || test "${exec_prefix}" = "NONE"; then
 exec_prefix="/usr/local"
@@ -366,6 +367,7 @@ if test -z "$TKINCDIR" && test -z "$HAVE_TK_H"; then
 fi
 AC_SUBST(TKINCDIR)
 
+# Also need this for Cygwin (how is it identified??)
 if test `uname -s` = FreeBSD; then
     tcltk_ver=`echo $tcltk_ver | sed 's/\.//g'`
 fi
@@ -468,6 +470,15 @@ AC_SUBST(USE_TERMIO)
 # Make sure this is set correctly
 SRCDIR=`pwd`
 AC_SUBST(SRCDIR)
+
+# Add VERSION and GISBASE
+VERSION=`cat ${SRCDIR}/src/CMD/VERSION | head -1`
+NAME_VER=`echo -n ${VERSION} | sed 's/\..*//'`
+GISBASE="${exec_prefix}/grass${NAME_VER}"
+
+AC_SUBST(VERSION)
+AC_SUBST(NAME_VER)
+AC_SUBST(GISBASE)
 
 ARCH=
 if test -z "${host}"; then

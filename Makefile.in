@@ -17,11 +17,12 @@ SRCDIR=			@SRCDIR@
 SERVERNAME=		`uname -n`
 SYSTEM=			`uname -s`
 ARCH=			@ARCH@
-VERSION=		`cat ${SRCDIR}/src/CMD/VERSION | head -1`
+GISBASE=                @GISBASE@
+VERSION=		@VERSION@ #`cat ${SRCDIR}/src/CMD/VERSION | head -1`
 
 # Get the major release number from the version for appending to gmake,
 # gmakelinks, and grass command names eg VERSION = 5.0beta8 NAME_VER = 5
-NAME_VER=   	    	`cat ${SRCDIR}/src/CMD/VERSION | head -1 | sed 's/\..*//'`
+NAME_VER=   	    	@NAME_VER@ #`cat ${SRCDIR}/src/CMD/VERSION | head -1 | sed 's/\..*//'`
 
 INSTALL=		@INSTALL@
 INSTALL_DATA=		@INSTALL_DATA@ -m 644
@@ -40,7 +41,7 @@ IS64BIT=		${SRCDIR}/src/CMD/generic/is64bit.sh
 
 MAKE_GMAKE_ENV=		UNIX_BIN=${BINDIR} SRC=${SRCDIR} MAKE=${MAKE} NAME_VER=${NAME_VER}
 
-MAKE_POST_ENV=		GISBASE=${PREFIX} MACHINENAME=${SERVERNAME}
+MAKE_POST_ENV=		GISBASE=${GISBASE}  MACHINENAME=${SERVERNAME}
 
 # the cutline we need to find out to shorten the ChangeLog:
 CUTLINE=		`grep -n '1999-12-29 16:12' ChangeLog |cut -d':' -f1 | head.${ARCH} -1`
