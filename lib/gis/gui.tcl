@@ -8,6 +8,7 @@ set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
 set env(MAPSET) [exec g.gisenv get=MAPSET]
 
 set dlg 0
+set path {}
 
 ################################################################################
 
@@ -69,8 +70,7 @@ proc prnout {dlg fh} {
 	}
 }
 
-proc get_file {dlg optn}
-{
+proc get_file {dlg optn} {
 	global opt
 	set filename [tk_getOpenFile -title {Load File}]
 	if {$filename != ""} {
@@ -121,7 +121,7 @@ proc run_cmd {dlg} {
 }
 
 proc help_cmd {dlg} {
-	global opt
+	global opt env
 	set pgm_name $opt($dlg,pgm_name)
 
 	exec $env(GRASS_HTML_BROWSER) $env(GISBASE)/docs/html/$pgm_name.html &
@@ -135,12 +135,15 @@ proc clear_cmd {dlg} {
 }
 
 proc close_cmd {dlg} {
-	exit
+	global opt
+	set root $opt($dlg,root)
+
+	destroy $root
 }
 
 ################################################################################
 
-proc make_dialog {dlg path} {
+proc make_dialog {dlg path root} {
 	global opt
 
 	set pw [PanedWindow $path.pw -side right]
@@ -157,10 +160,11 @@ proc make_dialog {dlg path} {
 
 	set outwin [ScrolledWindow $outpane.win -relief sunken -borderwidth 2]
 	set outtext [text $outwin.text -height 5 -width 30] 
-	$outwin setwidget outtext
-	pack $outwin outtext -expand yes -fill both
+	$outwin setwidget $outtext
+	pack $outwin $outtext -expand yes -fill both
 
 	set opt($dlg,path) $path
+	set opt($dlg,root) $root
 	set opt($dlg,suf) $suf
 	set opt($dlg,outtext) $outtext
 }
@@ -183,7 +187,8 @@ proc add_buttons {dlg} {
 	button $path.clear -text Clear -command "clear_cmd $dlg"
 	button $path.close -text Close -command "close_cmd $dlg"
 
-	pack .run .help .clear .close -side left -expand yes -padx 20 -pady 5
+	pack $path.run $path.help $path.clear $path.close \
+		-side left -expand yes -padx 20 -pady 5
 }
 
 proc do_button_file {dlg optn} {
@@ -239,12 +244,14 @@ proc do_combo {dlg optn vals} {
 ################################################################################
 
 proc begin_dialog {pgm desc} {
-	global opt dlg
+	global opt dlg path
 	incr dlg
 
+	set root [expr {$path == "" ? "." : $path}]
+
 	set opt($dlg,pgm_name) $pgm
-	wm title . $pgm
-	make_dialog $dlg
+	wm title $root $pgm
+	make_dialog $dlg $path $root
 	module_description $dlg $desc
 }
 
