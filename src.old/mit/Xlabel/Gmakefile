@@ -1,0 +1,15 @@
+PGM = Xlabel
+OFILES = \
+	command.o\
+	label.o\
+	main.o
+LIBES = $(GISLIB) $(XDISPLAYLIB) $(DISPLAYLIB)
+
+$(BIN)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(TERMLIB) -lX11
+
+$(LIBES):	#
+
+command.o: options.h
+label.o: options.h
+main.o: options.h
