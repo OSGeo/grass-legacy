@@ -107,6 +107,7 @@ proc DmVector::create { tree parent } {
     set opt($count,maxreg) "" 
 
     set opt($count,_query_text) 0 
+    set opt($count,_use_query_text) 0
 
     DmVector::legend $count
 
@@ -233,7 +234,9 @@ proc DmVector::options { id frm } {
     set row [ frame $frm.where ]
     LabelEntry $row.a -label "SQL query" -textvariable DmVector::opt($id,where) \
                -width 40
-    pack $row.a -side left
+    checkbutton $row.b -text "use query" -variable DmVector::opt($id,_use_query_text) \
+                -command "DmVector::legend $id"
+    pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
     # query
@@ -260,7 +263,7 @@ proc DmVector::save { tree depth node } {
     foreach key { _check map display_shape display_cat display_topo display_dir display_attr
                   type_point type_line type_boundary type_centroid type_area type_face
                   color fcolor _use_fcolor lcolor icon size field lfield attribute lsize cat where 
-                  _query_text minreg maxreg } {
+                  _query_text _use_query_text minreg maxreg } {
         Dm::rc_write $depth "$key $opt($id,$key)"
 
     } 
@@ -301,7 +304,8 @@ proc DmVector::display { node } {
     set color [DmVector::color $opt($id,color)]
     set fcolor [DmVector::color $opt($id,fcolor)]
     set lcolor [DmVector::color $opt($id,lcolor)]
-    append cmd " color=$color lcolor=$lcolor" 
+    append cmd " color=$color"
+    if { $opt($id,display_attr) && $opt($id,attribute) != "" } { append cmd " lcolor=$lcolor" }
     if { $opt($id,_use_fcolor) } { append cmd " fcolor=$fcolor" } { append cmd " fcolor=none" }
 
     # display
@@ -327,7 +331,7 @@ proc DmVector::display { node } {
     if { $opt($id,field) != "" } { 
         append cmd " field=$opt($id,field)" 
     } 
-    if { $opt($id,attribute) != "" } { 
+    if { $opt($id,attribute) != "" && $opt($id,display_attr) } { 
         append cmd " att=$opt($id,attribute) lsize=$opt($id,lsize)" 
     } 
     if { $opt($id,lfield) != "" } { 
@@ -336,7 +340,7 @@ proc DmVector::display { node } {
     if { $opt($id,cat) != "" } { 
         append cmd " cat=$opt($id,cat)" 
     } 
-    if { $opt($id,where) != "" } { 
+    if { $opt($id,where) != "" && $opt($id,_use_query_text) } { 
         append cmd " where=\"$opt($id,where)\"" 
     } 
     if { $opt($id,minreg) != "" } { 
