@@ -180,11 +180,6 @@ main (int argc, char *argv[])
 	Cats = Vect_new_cats_struct ();
 	
 	/* open input vector */
-        if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-	     sprintf (errmsg, "Could not find input map <%s>\n", in_opt->answer);
-	     G_fatal_error (errmsg);
-	}
-	
         Vect_set_open_level (2); 
 	Vect_open_old (&In, in_opt->answer, mapset); 
 
