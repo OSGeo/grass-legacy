@@ -1,0 +1,68 @@
+  1 99 10 96 window          c y y  2  0  4
+ 86 92 95 89 screen          c y y  2  0  4
+ 86 50 95 47 erase           c y n  1  9
+ 86 46 95 43 refresh         c y n  1 26 
+ 86 42 95 39 return          l y n  2  5  7
+ 86 88 95 85 database        c y y  2  0  4
+ 86 50 95 47 northing        c y n  3 35  3 36  
+ 86 46 95 43 southing        c y n  3 37  3 36
+ 86 42 95 39 westing         c y n  3 39  3 36
+ 86 38 95 35 easting         c y n  3 38  3 36
+ 86 34 95 31 res             c y n  3 40  3 36 
+ 86 30 95 27 return          l y n  2  5  7
+ 86 84 95 81 return          l y n  2  5  7
+
+ 13 99 22 96 overlay         c y y  2  0  4
+ 86 92 95 89 display         c y y  3 22  0  4  
+ 86 50 95 47 permanent       c y y  8  5  7  5 10  0 17  4 41
+ 86 92 95 89 0               c y n  1 18
+ 86  4 95  1 return          l y n  4  5  7  7  7
+ 86 46 95 43 user            c y y  8  5  7  5 10  0 17  4 41
+ 86 92 95 89 0               c y n  1 18
+ 86  4 95  1 return          l y n  4  5  7  7  7
+ 86 42 95 39 return          l y n  2  5  7
+ 86 88 95 85 delete          c y n  3 23  0  4
+ 86 84 95 81 return          l y n  2  5  7
+
+ 25 99 34 96 landpat         c y y  2  0  4
+ 86 92 95 89 add             c y y  5  5  0 17  4 41
+ 86 92 95 89 0               c y n  1 18
+ 86  4 95  1 return          l y n  3  5  7  7
+ 86 88 95 85 modify          c y y  5  5  0 17  4 41
+ 86 92 95 89 0               c y n  1 18
+ 86  4 95  1 return	     l y n  3  5  7  7  
+ 86 84 95 81 return          l y n  2  5  7
+
+ 37 99 46 96 range           c y y  2  0  4
+ 86 92 95 89 locate          c y n  1 11
+ 86 88 95 85 store           c y n  3 19 28  3
+ 86 84 95 81 return          l y n  2  5  7
+
+ 49 99 58 96 los             c y y  2  0  4
+ 86 92 95 89 viewpt          c y y  2  0  4
+ 86 50 95 47 text            c y n  2  6  3
+ 86 46 95 43 mouse           c y n  2 14  3
+ 86 42 95 39 return          l y n  2  5  7
+ 86 88 95 85 obs-elev        c y n  2 12  3
+ 86 84 95 81 max-dist        c y n  2 24  3
+ 86 80 95 77 outmap          c y n  2 13  3
+ 86 76 95 73 execute         c y n  2 25 27
+ 86 72 95 69 return          l y n  2  5  7
+
+ 61 99 70 96 traj            c y y  2  0  4
+ 86 92 95 89 firingpt        c y y  2  0  4
+ 86 50 95 47 text            c y n  2 29  3
+ 86 46 95 43 mouse           c y n  2 30  3
+ 86 42 95 39 return          l y n  2  5  7
+ 86 88 95 85 gun-elev        c y n  2 12  3
+ 86 84 95 81 azimuth         c y n  2 33  3
+ 86 80 95 77 altitude        c y n  2 34  3
+ 86 76 95 73 velocity        c y n  2 31  3
+ 86 72 95 69 outmap	     c y n  2 13  3
+ 86 68 95 65 execute	     c y n  2 32 27
+ 86 64 95 61 return          l y n  2  5  7
+
+ 73 99 82 96 quit            l y y  2  0  4
+
+ 86 92 95 89 confirm         c y n  1  1
+ 86 88 95 85 cancel          l y n  2  5  7
