@@ -337,7 +337,8 @@ static int *use_cross = NULL;
 static void add_cross ( int asegment, double adistance, int bsegment, double bdistance, double x, double y) 
 {
     if ( n_cross == a_cross ) { 
-        cross = (CROSS *) G_realloc ( (void *) cross, (a_cross + 100) * sizeof(CROSS) );
+	/* Must be space + 1, used later for last line point, do it better */
+        cross = (CROSS *) G_realloc ( (void *) cross, (a_cross + 101) * sizeof(CROSS) );
         use_cross = (int *) G_realloc ( (void *) use_cross, (a_cross + 101) * sizeof(int) );
 	a_cross += 100;
     }
