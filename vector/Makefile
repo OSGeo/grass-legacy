@@ -33,6 +33,7 @@ SUBDIRS = \
 	v.net.steiner \
 	v.normal \
 	v.out.ascii \
+	v.out.dxf \
 	v.out.pov \
 	v.overlay \
 	v.patch \
