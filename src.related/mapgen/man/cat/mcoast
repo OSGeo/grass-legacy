@@ -1,0 +1,132 @@
+
+
+
+
+
+
+_m_c_o_a_s_t - _c_r_e_a_t_e _c_o_m_p_a_c_t _c_o_a_s_t_l_i_n_e _f_i_l_e
+
+
+_m_c_o_a_s_t [ -bfrR [args]] [ files ]
+
+_M_c_o_a_s_t is required to create the data files employed by
+the  program  _C_o_a_s_t.   Input data defining the nodes of
+coastline segments must be in  the  following  form:  a
+record  beginning  with  a # character and feature code
+number (between 0 and 255)  followed  by  one  or  more
+records containing a single pair of latitude and longi-
+tude values (separated by white space) which define the
+nodes  of  the  line.  The processing of the first line
+segment is not begun until the first # record  is  pro-
+cessed.   Error monitoring is provided on standard out-
+put.  The above data is compressed and placed into  two
+files: the *.cdr file contains the lon-lat range of the
+line data segments as well as  pointer  information  to
+the  *.cdt  file  which  contains the definition of the
+line  in  incremental  form.   The  following  run-line
+parameters can appear in any order: This optional value
+of _n establishes the resolution  of  the  data  set  in
+"meters on the ground".  _F_i_l_e is required and specifies
+the name of the compressed data set "file.cdt" and  its
+associated  directory "file.cdr".  This option reverses
+the order of the input data pair from latitude - longi-
+tude to longitude - latitude.  This option provides for
+the input to be  in  quasi-binary  form  where  segment
+headers must consist of "# code length" and coordinates
+are latitude-longitude in double precision binary.  The
+-_R  options  has no effect with -_b option.  One or more
+_f_i_l_e_s of source data may be specified and are processed
+in  a  left to right order.  If a _f_i_l_e is not specified
+_s_t_a_n_d_a_r_dinput is assumed.  A -  may  also  signify  the
+point of processing _s_t_a_n_d_a_r_dinput.
+
+_A _s_o_u_r_c_e _f_i_l_e, _m_y_d_a_t_a is to be preprocessed by the pro-
+gram  _a_b_c to reformat the data into a form suitable for
+_m_c_o_a_s_t input.  _M_c_o_a_s_t is to create a coastline file set
+_m_y_c_o_a_s_t which has a resolution of 200 meters.
+        abc <mydata | mcoast -r 200 -f mycoast >monitor
+&
+The file _m_o_n_i_t_o_r is  used  to  collect  any  processing
+information from _m_c_o_a_s_t so that the process can be han-
+dled in batch mode.   Compressed  coastline  data  file
+created will be named _m_y_c_o_a_s_t._c_d_r and _m_y_c_o_a_s_t._c_d_t.
+
+ ._c_d_r _a_n_d ._c_d_t _c_o_m_p_r_e_s_s_e_d _o_u_t_p_u_t _f_i_l_e_s.
+
+ _P_r_o_g_r_a_m_s _c_o_a_s_t, _t_o_d_e_g, _t_o_b_i_n.  _T_h_i_s _p_r_o_g_r_a_m _s_u_p_e_r_c_e_d_e_s
+_a_l_l _e_a_r_l_i_e_r _v_e_r_s_i_o_n_s _o_f _c_o_a_s_t_l_i_n_e _g_e_n_e_r_a_t_o_r_s.
+
+
+
+
+
+
+                     June 4, 1991
+
+
+
+
+
+                         - 2 -
+
+
+ _E_r_r_o_r _m_o_n_i_t_o_r_i_n_g _o_n_l_y.
+
+_T_o_o _e_a_r_l_y _t_o _t_e_l_l (_p_r_o_b_a_b_l_y).
+
+_G_e_r_a_l_d _I. _E_v_e_n_d_e_n, _U_S_G_S, _W_o_o_d_s _H_o_l_e, _M_A.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                     June 4, 1991
+
+
