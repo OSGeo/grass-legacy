@@ -21,8 +21,8 @@ int getAllOpts(argc, argv)
 	
 {
 
-	struct Option *key, *where, *tab, *map,*color;
-	struct Flag *flag1;
+	struct Option *key, *where, *tab, *map, *color;
+	struct Flag *flag1, *flag2;
 	char *mapset;
 	int colr, fillcolr, retval;
 
@@ -68,6 +68,10 @@ int getAllOpts(argc, argv)
 	flag1->key         = 'f' ;
 	flag1->description = _("Fill polygons") ;
 
+	flag2 = G_define_flag() ;
+	flag2->key         = 'e' ;
+	flag2->description = _("Extract vector objects to new map") ;
+
 	/* Invoke parser */
 	if (G_parser(argc, argv)) {
 		system("d.vect.pg -s help");
@@ -81,6 +85,7 @@ int getAllOpts(argc, argv)
 	
 	
 	fillcolr = flag1->answer;
+	extract_yes = flag2->answer;
 	
 	
 	if ((mapset=G_find_file2("dig",map->answer,""))==NULL)  {

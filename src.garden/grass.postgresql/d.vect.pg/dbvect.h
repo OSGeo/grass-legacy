@@ -1,4 +1,7 @@
 #include "vect/digit.h"
+
+extern int extract_yes;
+
 int getAllOpts (int, char **);
 int getSelectOpts (int, char **);
 int bin_search (int *, int , int *, int *);
