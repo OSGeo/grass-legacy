@@ -182,10 +182,6 @@ main (int argc, char **argv)
     if (rast || vect || site) 
        quiet->answer=1;
 
-    R_open_driver();
-
-    D_setup(0);
-
 /* find out for lat/lon if zoom or rotate option */
     rotate = 0;
     if (G_projection() == PROJECTION_LL)
@@ -195,6 +191,12 @@ main (int argc, char **argv)
 	else
 	    rotate = ask_rotate();
     }
+
+do
+{
+    R_open_driver();
+
+    D_setup(0);
 
 /* Do the zoom */
     stat = zoomwindow(quiet->answer, rotate, magnify);
@@ -212,7 +214,6 @@ main (int argc, char **argv)
       	sprintf(command, "d.rast -o map=%s", rmap->answers[i]);
       	system(command);
       }
-      R_pad_freelist(rast, nrasts);
     }
 
 /* Redraw vector map */
@@ -223,7 +224,6 @@ main (int argc, char **argv)
       	sprintf(command, "d.vect map=%s", vmap->answers[i]);
       	system(command);
       }
-      R_pad_freelist(vect, nvects);
     }
     
 /* Redraw site map */
@@ -234,8 +234,17 @@ main (int argc, char **argv)
       	sprintf(command, "d.sites sitefile=%s", smap->answers[i]);
       	system(command);
       }
-      R_pad_freelist(site, nsites);
     }
+} while(stat == 2);
+
+    if (rast)
+      R_pad_freelist(rast, nrasts);
+
+    if (vect)
+      R_pad_freelist(vect, nvects);
+
+    if (site)
+      R_pad_freelist(site, nsites);
 
     exit(stat);
 }

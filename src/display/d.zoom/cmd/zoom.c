@@ -7,7 +7,7 @@ int zoomwindow (int quiet, int rotate, double magnify)
     char *err;
     int quitonly;
 
-    G_get_window(&window) ;
+    G_get_set_window(&window) ;
     if (window.proj != PROJECTION_LL)
 	rotate = 0;
 
@@ -35,12 +35,15 @@ int zoomwindow (int quiet, int rotate, double magnify)
     }
 
     if (!quitonly || quitonly == 2)
+    {
        G_put_window(&window) ;
+       G_set_window(&window) ;
+    }
 
     if(!quiet)
     {
 	fprintf(stderr, "This region now saved as current region.\n\n") ;
 	fprintf(stderr, "Note: run 'd.erase' for the new region to affect the graphics.\n");
     }
-    return(0) ;
+    return(quitonly) ;
 }
