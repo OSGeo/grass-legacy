@@ -39,18 +39,20 @@ int plot1 (
 	}
 
 	if ( !(type & ltype) ) continue;
-	
+
         if ( Clist->n_ranges > 0)
-          {
-             Vect_cat_get(Cats, Clist->field, &cat);
-	     if ( !(Vect_cat_in_cat_list (cat, Clist)) )
-                 continue;
+          { 
+             if ( Vect_cat_get(Cats, Clist->field, &cat) ) { 
+	         if ( !(Vect_cat_in_cat_list (cat, Clist)) )
+                     continue;
+	     } else {
+		 continue;
+	     } 
           }
 	
 	x = Points->x;
 	y = Points->y;
 
-	
         if ( ltype & ELEMENT_TYPE_DOT )
 	  {
 	    G_plot_line(x[0], y[0], x[0], y[0]);
