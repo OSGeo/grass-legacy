@@ -221,6 +221,7 @@ int main (int argc, char *argv[])
          if (!quiet )
           {
             fprintf (stderr, " Creating FP map from doubles attributes\n");
+            fprintf (stderr, " Using attribute field no. %d\n", dec_field+1);
           }
          map_type = DCELL_TYPE;
         } 
