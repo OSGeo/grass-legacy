@@ -21,6 +21,7 @@ all:
 	cp r.fillnulls/r.fillnulls $(SCRIPTS)
 	cp r.mpatch/r.mpatch $(SCRIPTS)
 	cp r.out.bil/r.out.bil $(SCRIPTS)
+	cp r.out.gdal/r.out.gdal $(SCRIPTS)
 	cp r.plane/r.plane $(SCRIPTS)
 	cp r.reclass.area/r.reclass.area $(SCRIPTS)
 	cp r.regression.line/r.regression.line $(SCRIPTS)
