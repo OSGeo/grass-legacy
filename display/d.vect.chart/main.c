@@ -99,7 +99,7 @@ main (int argc, char **argv)
     ocolor_opt = G_define_option() ;
     ocolor_opt->key        = "ocolor" ;
     ocolor_opt->type       = TYPE_STRING ;
-    ocolor_opt->answer     = "black" ;
+    ocolor_opt->answer     = DEFAULT_FG_COLOR ;
     ocolor_opt->description= "Outline color" ;
 
     colors_opt = G_define_option() ;
