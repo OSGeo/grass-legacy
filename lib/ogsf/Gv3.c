@@ -7,7 +7,7 @@
     December 1993
     Uses GRASS routines!
 */
-
+#include <stdlib.h>
 #include "gis.h"
 #include "Vect.h"
 
@@ -27,7 +27,7 @@ geoline *Gv_load_vect(char *grassname, int *nlines)
     struct line_pnts *points;
     char            *mapset;
     geoline *top, *gln, *prev;
-    int np, ret, i, nl=0;
+    int np, ret, i, n, nl=0, polygon, area;
     struct Cell_head  wind;
 
     /* TODO: handle error messages */
@@ -65,105 +65,171 @@ geoline *Gv_load_vect(char *grassname, int *nlines)
     Vect_set_constraint_region(&map,wind.north,wind.south,wind.east,wind.west,
 	                       PORT_DOUBLE_MAX, -PORT_DOUBLE_MAX);
 
-    if (map.head.with_z == WITHOUT_Z)
-    {
-        while (-2 != (ret = Vect_read_next_line(&map, points, NULL)))
-        {
-            G_debug(3, "read line 2d : type = %d\n", ret);
-
-	    if ( ret & ( GV_LINE | GV_BOUNDARY ) )
-	    { 
-	        nl++;
-	        gln->dims = 2;
-	        gln->npts = np = points->n_points;
-	
-	        if (NULL == (gln->p2=(Point2 *)calloc(np, sizeof(Point2))))
-	        {
-		    fprintf(stderr,"Can't calloc.\n"); /* CLEAN UP */
-		
-		    return(NULL);
-	        }
+    /* Decide if lines or polygons */
+    /* TODO: this is far from optimal */
+    ret = Vect_read_next_line(&map, points, NULL);
+    if ( ret == GV_BOUNDARY && Vect_level(&map) >= 2 ) {
+       	polygon = 1;
+    } else { 
+	polygon = 0;
+    }
     
-    	        #ifdef TRAK_MEM
-	        {
-    	    	    Tot_mem+=(np*sizeof(Point2));
-	        }
-    	        #endif
-	    
-	        for (i=0; i < np; i++)
-	        {
-		    gln->p2[i][X] = points->x[i];
-		    gln->p2[i][Y] = points->y[i];
-	        }
-	    
-	        if (NULL == (gln->next=(geoline *)malloc (sizeof(geoline))))
-	        {
-		    fprintf(stderr,"Can't malloc.\n"); /* CLEAN UP */
-		
-		    return(NULL);
-	        }
+    Vect_rewind ( &map );
+    
+    if ( !polygon ) {
+	if (map.head.with_z == WITHOUT_Z)
+	{
+	    G_debug(3, "Vector 2D non polygon layer");
+	    while (-2 != (ret = Vect_read_next_line(&map, points, NULL)))
+	    {
+		G_debug(3, "read line 2d : type = %d", ret);
 
-    	        #ifdef TRAK_MEM
-	        {
-    	    	    Tot_mem+=sizeof(geoline);
-	        }
-    	        #endif
+		if ( ret & ( GV_LINE | GV_BOUNDARY ) )
+		{ 
+		    nl++;
+		    
+		    gln->dims = 2;
+		    gln->npts = np = points->n_points;
 	    
-	        prev = gln;
-	        gln = gln->next;
+		    if (NULL == (gln->p2=(Point2 *)calloc(np, sizeof(Point2))))
+		    {
+			fprintf(stderr,"Can't calloc.\n"); /* CLEAN UP */
+		    
+			return(NULL);
+		    }
+	
+		    #ifdef TRAK_MEM
+		    {
+			Tot_mem+=(np*sizeof(Point2));
+		    }
+		    #endif
+		
+		    for (i=0; i < np; i++)
+		    {
+			gln->p2[i][X] = points->x[i];
+			gln->p2[i][Y] = points->y[i];
+		    }
+		
+		    if (NULL == (gln->next=(geoline *)malloc (sizeof(geoline))))
+		    {
+			fprintf(stderr,"Can't malloc.\n"); /* CLEAN UP */
+		    
+			return(NULL);
+		    }
+
+		    #ifdef TRAK_MEM
+		    {
+			Tot_mem+=sizeof(geoline);
+		    }
+		    #endif
+		
+		    prev = gln;
+		    gln = gln->next;
+		}
 	    }
-        }
-    } 
-    else  /* vector is 3D > read with z coors to Point3 */
-    {
-	while (-2 != (ret = Vect_read_next_line(&map, points, NULL)))
-        {
+	} 
+	else  /* vector is 3D > read with z coors to Point3 */
+	{
+	    G_debug(3, "Vector 3D non polygon layer");
+	    while (-2 != (ret = Vect_read_next_line(&map, points, NULL)))
+	    {
+		    
+		G_debug(3, "read line 3d : type = %d", ret);
 		
-            G_debug(3, "read line 3d : type = %d\n", ret);
+		if ( ret & ( GV_LINE | GV_BOUNDARY ) )
+		{ 
+		    nl++;
+		    gln->dims = 3;
+		    gln->npts = np = points->n_points;
 	    
-	    if ( ret & ( GV_LINE | GV_BOUNDARY ) )
-	    { 
-	        nl++;
-	        gln->dims = 3;
-	        gln->npts = np = points->n_points;
+		    if (NULL == (gln->p3=(Point3 *)calloc(np, sizeof(Point3))))
+		    {
+			fprintf(stderr,"Can't calloc.\n"); /* CLEAN UP */
+		    
+			return(NULL);
+		    }
 	
-	        if (NULL == (gln->p3=(Point3 *)calloc(np, sizeof(Point3))))
-	        {
+		    #ifdef TRAK_MEM
+		    {
+			Tot_mem+=(np*sizeof(Point3));
+		    }
+		    #endif
+		
+		    for (i=0; i < np; i++)
+		    {
+			gln->p3[i][X] = points->x[i];
+			gln->p3[i][Y] = points->y[i];
+			gln->p3[i][Z] = points->z[i];
+		    }
+		
+		    if (NULL == (gln->next=(geoline *)malloc (sizeof(geoline))))
+		    {
+			fprintf(stderr,"Can't malloc.\n"); /* CLEAN UP */
+		    
+			return(NULL);
+		    }
+
+		    #ifdef TRAK_MEM
+		    {
+			Tot_mem+=sizeof(geoline);
+		    }
+		    #endif
+		
+		    prev = gln;
+		    gln = gln->next;
+		}
+	    }
+	}
+    } else { /* read polygons */
+	G_debug(3, "Vector polygon layer.");
+	n = Vect_get_num_areas (&map);
+	G_debug(3, " nareas = %d", n);
+	for ( area = 1; area <= n ; area++ ) {
+	    G_debug(3, " area %d", area);
+
+	    Vect_get_area_points ( &map, area, points ); 
+	    if ( map.head.with_z ) {
+		gln->dims = -3;
+		gln->npts = np = points->n_points;
+	    
+		if (NULL == (gln->p3=(Point3 *)calloc(np, sizeof(Point3))))
+		{
 		    fprintf(stderr,"Can't calloc.\n"); /* CLEAN UP */
 		
 		    return(NULL);
-	        }
+		}
     
-    	        #ifdef TRAK_MEM
-	        {
-    	    	    Tot_mem+=(np*sizeof(Point3));
-	        }
-    	        #endif
+		#ifdef TRAK_MEM
+		{
+		    Tot_mem+=(np*sizeof(Point3));
+		}
+		#endif
 	    
-	        for (i=0; i < np; i++)
-	        {
+		for (i=0; i < np; i++)
+		{
 		    gln->p3[i][X] = points->x[i];
 		    gln->p3[i][Y] = points->y[i];
 		    gln->p3[i][Z] = points->z[i];
-	        }
+		}
 	    
-	        if (NULL == (gln->next=(geoline *)malloc (sizeof(geoline))))
-	        {
+		if (NULL == (gln->next=(geoline *)malloc (sizeof(geoline))))
+		{
 		    fprintf(stderr,"Can't malloc.\n"); /* CLEAN UP */
 		
 		    return(NULL);
-	        }
+		}
 
-    	        #ifdef TRAK_MEM
-	        {
-    	    	    Tot_mem+=sizeof(geoline);
-	        }
-    	        #endif
+		#ifdef TRAK_MEM
+		{
+		    Tot_mem+=sizeof(geoline);
+		}
+		#endif
 	    
-	        prev = gln;
-	        gln = gln->next;
+		prev = gln;
+		gln = gln->next;
 	    }
-        }
+	}
+	nl = n;
     }
     
     prev->next = NULL;
