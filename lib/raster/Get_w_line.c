@@ -2,9 +2,24 @@
 #include "raster.h"
 #include "graph.h"
 
-/* button is set to: 1 - left, 2 - middle, 3 - right 
-*                    0 function was canceled by R_set_cancel (1) 
-*/                    
+/*!
+ * \brief get mouse location using a line
+ *
+ * Similar to <i>R_get_location_with_pointer</i> except the pointer is
+ * replaced by a line which has one end fixed at the coordinate identified
+ * by the <b>x,y</b> values. The other end of the line is initialized at the
+ * coordinate identified by the <b>nx,ny</b> pointers. This end then tracks
+ * the mouse until a button is pressed. The mouse button (1 for left, 2 for
+ * middle, and 3 for right) is returned in the <b>button</b> pointer.
+ *
+ *  \param cx
+ *  \param cy
+ *  \param wx
+ *  \param wy
+ *  \param button
+ *  \return 0 function was canceled by R_set_cancel (1)
+ */
+
 int R_get_location_with_line(
 	int cx,int cy,
 	int *wx,int *wy,
