@@ -419,7 +419,7 @@ csh|tcsh)
     tcshrc=$HOME/.tcshrc
     rm -f $cshrc $tcshrc
     echo "set home = $USERHOME" > $cshrc
-    echo "set history = 500 noclobber ignoreeof" >> $cshrc
+    echo "set history = 500 savehist = 500  noclobber ignoreeof" >> $cshrc
 
     echo "set prompt = '\\" >> $cshrc
     echo "Mapset <${MAPSET}> in Location <${LOCATION_NAME}> \\" >> $cshrc
