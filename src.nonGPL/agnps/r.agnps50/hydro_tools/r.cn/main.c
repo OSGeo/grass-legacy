@@ -1,19 +1,19 @@
-/* January, 1991 Agricultural Engineering, Purdue University
+/* 
+   $Id$
+   
+   Extensions by Markus Neteler, see README for details
+   19.12.1996
+
+  ---------------------
+   January, 1991 Agricultural Engineering, Purdue University
    Raghavan Srinivasan (srin@ecn.purdue.edu)
 
-   r.cn2()
+   r.cn()
 
    This program generates a Curve Number (CN) map based on the 
    four input map layers include, hydrological soil group, land-
    use, practice or management, hydrological condition maps.
    This program follows the SCS CN table.
-*/
-
-/* 
-   $Id$
-   
-   Extensions by Markus Neteler, see history.txt for details
-   19.12.1996
 */ 
 
 #include "CN.h"

@@ -27,7 +27,9 @@
         CN map.
 */
 
-/* using r.cn2 now instead of r.cn  12/96  MN */
+/* using r.cn2 now instead of r.cn  12/96  MN
+ * replaced r.cn with r.cn2  MN 4/2001        */
+ 
 #include "agnps_input.h"
 
 
@@ -120,7 +122,7 @@ CN_hy_cond()
         amc = 2;
         system("rm -f temp_cn"); /* added by Dave Peterson, April 1996 */
         fprintf (stderr,"Creating CN map\n");
-        sprintf(buf,"r.cn2 sg=%s hc=%s lu=%s pr=%s amc=%d cn=temp_cn",hyg->p,hy_cond->p,landuse->p,mgt_practice->p,amc);  /* changed to r.cn2 12/96 MN */
+        sprintf(buf,"r.cn sg=%s hc=%s lu=%s pr=%s amc=%d cn=temp_cn",hyg->p,hy_cond->p,landuse->p,mgt_practice->p,amc);
         fprintf (stderr,"%s\n",buf);
         G_system(buf);
 
