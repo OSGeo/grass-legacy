@@ -6,8 +6,8 @@ GRASSTOP = ../..
 GRASSPLAT = dist.i686-pc-mingw32
 
 # Where TCL lives
-#TCLHOME = /e/lang/Tcl
-TCLHOME = /c/lang/Tcl-8.4.1.0
+TCLHOME = /e/lang/Tcl
+#TCLHOME = /c/lang/Tcl-8.4.1.0
 
 # TCL lib and include dirs
 TCLINC = $(TCLHOME)/include
@@ -20,9 +20,9 @@ BINDNAME = libgis
 all: $(BINDNAME).$(DLLEXT)
 
 $(BINDNAME).$(DLLEXT): $(BINDNAME)_wrap.c $(GRASSTOP)/$(GRASSPLAT)/lib/$(BINDNAME).a
-	gcc --shared -I$(GRASSTOP)/src/include -I$(TCLINC) $(BINDNAME)_wrap.c \
+	gcc -shared  $(BINDNAME)_wrap.c -I$(GRASSTOP)/src/include -I$(TCLINC) \
 	   -L$(GRASSTOP)/$(GRASSPLAT)/lib -lgis -ldatetime \
-	   -L$(TCLLIB) -ltcl84 -lrpclib -lz -o $(BINDNAME).$(DLLEXT) >make.log 2>&1
+	   -L$(TCLLIB) -ltcl84 -lrpclib -lz -o $(BINDNAME).$(DLLEXT)
 
 $(BINDNAME)_wrap.c: $(BINDNAME).i $(GRASSTOP)/src/include/gis.h $(GRASSTOP)/src/include/gisdefs.h
 	$(SWIGBIN)/swig -I$(GRASSTOP)/src/include -tcl $(BINDNAME).i
