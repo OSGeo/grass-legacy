@@ -39,25 +39,25 @@ char *getCat(struct Map_info *Map, float x, float y, int *i)
 
 	if ((dbCat = V2_line_att(Map, line))) {
 
-	    snprintf(buf, 32, "Line category:\n");
+	    sprintf(buf, "Line category:\n");
 	}
 	else
-	    snprintf(buf, 32, "Line category not found\n");
+	    sprintf(buf, "Line category not found\n");
     }
     else if (area > 0) {
 
 	if ((dbCat = V2_area_att(Map, area))) {
 
-	    snprintf(buf, 32, "Area category:\n");
+	    sprintf(buf, "Area category:\n");
 	}
 	else {
-	    snprintf(buf, 32, "Area category not found\n");
+	    sprintf(buf, "Area category not found\n");
 	    if (line > 0) {
 		if ((dbCat = V2_line_att(Map, line))) {
-		    snprintf(buf, 32, "Line category:\n");
+		    sprintf(buf, "Line category:\n");
 		}
 		else
-		    snprintf(buf, 32, "Line category not found\n");
+		    sprintf(buf, "Line category not found\n");
 	    }
 	}
     }
