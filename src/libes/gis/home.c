@@ -33,7 +33,7 @@ G__home ()
 {
     static char *home = 0;
     char buf[1024];
-    FILE *fd,*popen();
+    FILE *fd,*G_popen();
 
 /* first call must get home
 * execute the command "cd; pwd" and read the
@@ -41,11 +41,11 @@ G__home ()
 */
     if (!home)
     {
-	if(fd = popen ("cd; pwd","r"))
+	if(fd = G_popen ("cd; pwd","r"))
 	{
 	    if (fscanf (fd,"%s", buf) == 1)
 		home = G_store (buf);
-	    pclose (fd);
+	    G_pclose (fd);
 	}
     }
 
