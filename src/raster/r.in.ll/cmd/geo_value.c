@@ -14,7 +14,7 @@ int geo_value (double lat, double lon, struct GEO *geo, ROWIO *geo_data)
 
     buf = rowio_get (geo_data, row);
     if (buf != NULL)
-	return value (buf + col*geo->bpc, geo->bpc, geo->sflag);
+	return value ((unsigned char *) buf + col*geo->bpc, geo->bpc, geo->sflag);
     else
 	return 0;
 }

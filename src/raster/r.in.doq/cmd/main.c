@@ -119,7 +119,7 @@ if (!keephead->answer){
 	cf = G_open_cell_new_uncompressed (output);
 /************************************************************************/
 	cell = G_allocate_cell_buf();
-	bcell = G_malloc(ncols);
+	bcell = (unsigned char *) G_malloc(ncols);
 	if (cf < 0)
 	{
 		char msg[100];
@@ -129,7 +129,7 @@ if (!keephead->answer){
 	}
 	for (row = 0; row < nrows; row++)
 	{
-		if (fread(bcell,1,ncols,fd) != ncols) {
+		if (fread((char *) bcell,1,ncols,fd) != ncols) {
 			char msg[100];
 			sprintf(msg,"error in reading row %d",row);
 			G_fatal_error (msg);

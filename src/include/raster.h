@@ -35,7 +35,7 @@ int R_RGB_color(unsigned char,unsigned char,unsigned char);
 int R_set_RGB_color(unsigned char *,unsigned char *,unsigned char *);
 int R_RGB_raster(int,int,unsigned char *,unsigned char *,unsigned char *,int);
 int R_raster(int,int,int,int *);
-int R_raster_char( int, int, int, char  *);
+int R_raster_char( int, int, int, unsigned char  *);
 int R_raster_int( int, int, int, int  *);
 int R_reset_color( unsigned char,unsigned char,unsigned char, int);
 int R_reset_colors( int,int, unsigned char *,unsigned char *,unsigned char *);

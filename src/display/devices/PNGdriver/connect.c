@@ -48,7 +48,7 @@ int prepare_connection (void)
 /* this is the AT&T version. */
 
 static jmp_buf save;
-static void timeout(int);
+static RETSIGTYPE timeout(int);
 
 int check_connection (char *me, char *link)
 {
@@ -120,7 +120,7 @@ error:
 
 }
 
-static void timeout (int dummy)
+static RETSIGTYPE timeout (int dummy)
 {
 	longjmp(save,-1);
 }
