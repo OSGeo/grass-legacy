@@ -38,25 +38,30 @@ G3D maps with <EM>r3.in.ascii</EM>.
 
 <P>
 The format for the ascii file is:
-<TABLE>
-<TD align=left> 
-<TT>north:</TT> <TD align=left> <EM>floating point</EM> <TR>
-<TD> <TT>south:</TT>    <TD> <EM>floating point</EM> <TR>
-<TD> <TT>east:</TT>     <TD> <EM>floating point</EM> <TR>
-<TD> <TT>west:</TT>     <TD> <EM>floating point</EM> <TR>
-<TD> <TT>top:</TT>      <TD> <EM>floating point</EM> <TR>
-<TD> <TT>bottom:</TT>   <TD> <EM>floating point</EM> <TR>
-<TD> <TT>rows:</TT>     <TD> <EM>integer</EM> <TR>
-<TD> <TT>cols:</TT>     <TD> <EM>integer</EM> <TR>
-<TD> <TT>levels:</TT>   <TD> <EM>integer</EM> <TR>
-</TABLE>
+<pre>
+north:   <i>floating point</i>
+south:   <i>floating point</i>
+east:    <i>floating point</i>
+west:    <i>floating point</i>
+top:     <i>floating point</i>
+bottom:  <i>floating point</i>
+rows:    <i>integer</i>
+cols:    <i>integer</i>
+levels:  <i>integer</i>
+</pre>
+
 The header is followed by cell values in <EM>floating point</EM> format.
 Cell values are output as a series of horizontal slices in row-major
 order.  That is, 
-<TABLE>
-<TD align=center> (x, y, z) <TD align=center> (x + 1, y, z) <TD align=center> ... <TD align=center> (x + cols, y, z) <TR>
-<TD> (x, y + 1, z) <TD> (x + 1, y + 1, z) <TD> ... <TD> and so on <TR>
-</TABLE>
+
+<pre>
+  (x, y, z)       (x + 1, y, z)     ...     (x + cols, y, z)
+(x, y + 1, z)   (x + 1, y + 1, z)   ...   (x + cols, y + 1, z)
+
+  and so on
+
+</pre>
+
 
 <P>
 One level maps can be imported with r.in.ascii (Raster 2D) after removing
