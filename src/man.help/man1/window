@@ -1,0 +1,284 @@
+.\" %W% %G%
+.TH window 1
+.SH NAME
+window \- 
+.CT Window "Geographic window"
+management program
+.br
+.I (Available through
+.B grass3
+.I menu)
+.SH SYNOPSIS
+.B window
+.SH DESCRIPTION
+The \fIwindow\fR program is a management tool for setting the current 
+.CT "" geographic
+window.
+It enables the user to set the current 
+.CT "" geographic
+window both directly and from a
+.CT database "data base"
+of 
+.CT "" geographic
+windows. Each \fImapset\fR has a single current 
+.CT "" geographic
+window.
+The user can create and modify as many 
+.CT database "data base"
+.CT "" geographic
+windows as desired.
+.SH MAIN MENU
+The main menu consists of an information section with the 
+.CT database
+"data base"
+LOCATION, MAPSET, and CURRENT WINDOW, followed by user options:
+
+.NF
+.ne 25
+------------------------------------------------------------
+|                    WINDOW FACILITY                       |
+| LOCATION: sample                         MAPSET: grass   |
+|                                                          |
+| CURRENT     5167600(N)  5156755(S)  50(RES)  216(ROWS)   |
+| WINDOW:      729314(E)   705924(W)  50(RES)  467(COLS)   |
+|                                                          |
+|                                                          |
+| Please select one of the following options               |
+|                                                          |
+|     Current Window              Window Database          |
+|                                                          |
+| 1 Modify current window     5 Save current window in     |
+|   directly                    the database               |
+|                                                          |
+| 2 Set from default window   6 Create a new window        |
+|                                                          |
+| 3 Set from a database       7 Modify an existing window  |
+|   window                                                 |
+|                                                          |
+| 4 Set from a map layer                                   |
+|                                                          |
+| RETURN to quit WINDOW program                            |
+------------------------------------------------------------
+.FI
+.SH DEFINITIONS
+.TP
+.B Window
+A 
+.CT "" geographic
+window is a grid of rectangles (or cells)
+with boundaries (north, south, east, west)
+which define the extent of the window,
+and 
+.CT grid cell
+resolutions (north-south, east-west)
+which determine the length (in meters) of the edges of the window cells.
+The north and south boundaries are called the
+.I northings
+and increase from south to north.
+The east and west boundaries are called the
+.I eastings
+and increase from west to east.
+The north-south and east-west resolutions need not be the
+same, thus allowing non-square cells.
+.TP
+.B Default Window:
+Each location has a fixed
+.CT "" geographic
+window, called the default window, which defines the
+extent of the 
+.CT "database." "data base."
+While this provides a starting point for defining new 
+.CT "" geographic
+windows,
+user-defined 
+.CT "" geographic
+windows need not fall within this window.
+.TP
+.B Current Window:
+Each mapset has a current 
+.CT "" geographic
+window.
+This 
+.CT "" geographic
+window defines the area of the 
+.CT database "data base"
+in which
+all viewing and analyses will be done.
+Data will be resampled, if necessary,
+to the resolutions of the current 
+.CT "" geographic
+window.
+.TP
+.B Window Data Base
+Each mapset may have any number of predefined named 
+.CT "" geographic
+windows.
+The user may create as many of these 
+.CT "" geographic
+windows as they
+desire. Any of the predefined 
+.CT "" geographic
+windows may be selected,
+by name, to become the current 
+.CT "" geographic
+window.
+.SH WINDOW EDIT PROMPT
+Most of the options will require the user to edit a 
+.CT "" geographic
+window,
+be it the current 
+.CT "" geographic
+window or a 
+.CT database "data base"
+window.
+A standard prompt is used to perform this edit.
+An example is shown below:
+
+.NF
+.ne 28
+---------------------------------------------------------------
+|                         IDENTIFY WINDOW                     |
+|                                                             |
+|           ===========  DEFAULT WINDOW  ==========           |
+|           |    Default North: 3402025.00        |           |
+|           |                                     |           |
+|           |          ===YOUR WINDOW===          |           |
+|           |          |  NORTH EDGE   |          |           |
+|           |          |  3402025.00_  |          |           |
+|           |          |               |          |           |
+| Def West: |WEST EDGE |               |EAST EDGE | Def.East: |
+| 233975.00 |233975.00_|               |236025.00_| 236025.00 |
+|           |          |  SOUTH EDGE   |          |           |
+|           |          |  3399975.00_  |          |           |
+|           |          =================          |           |
+|           |                                     |           |
+|           |    Default South: 3399975.00        |           |
+|           =======================================           |
+|                                                             |
+|              Default   GRID RESOLUTION   Window             |
+|               50.00   --- East-West ---  50.00__            |
+|               50.00   -- North-South --  50.00__            |
+|                                                             |
+|                                                             |
+|     AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE     |
+---------------------------------------------------------------
+.FI
+
+The fields NORTH EDGE, SOUTH EDGE, WEST EDGE and EAST EDGE
+are the boundaries of the 
+.CT "" geographic
+window which the user can change.
+The fields Default North, Default South, Def West and Def East
+are the boundaries of the default window which are displayed for
+reference and cannot be changed. The GRID RESOLUTION Window
+fields are the 
+.CT "" geographic
+window resolutions which the user can change.
+The GRID RESOLUTION Default fields are the resolutions of the
+default window which are displayed for reference
+and can not be changed.
+.SH WINDOW MANAGEMENT OPTIONS
+.TP
+1 Modify the current geographic window directly
+Allows the user to edit the current 
+.CT "" geographic
+window.
+.TP
+2 Set current geographic window from default window
+Copies the default window to the current 
+.CT "" geographic
+window,
+and then lets the user edit the current 
+.CT "" geographic
+window.
+.TP
+3 Set current geographic window from a 
+.CT database "data base"
+window
+Allows the user to select a 
+.CT "" geographic
+window by name
+from the 
+.CT database "data base"
+of windows to become the current 
+.CT "" geographic
+window,
+and then lets the user edit the current 
+.CT "" geographic
+window.
+
+Note: windows may be selected from other mapsets as well, depending
+on the user's mapset search path.
+.TP
+4 Set current geographic window from a cell map
+Allows the user to select a 
+.CT "map layer," "cell map,"
+copies the cell
+header for this 
+.CT layer "cell map"
+to the current 
+.CT "" geographic
+window,
+and then lets the user edit the current 
+.CT "" geographic
+window.
+This option is useful when subsequent GRASS operations will
+be used to produce a 
+.CT "map layer" "cell map"
+from one input 
+.CT "map layer "cell map"
+and it is necessary that the result coincide with the input
+.CT "layer." "cell map."
+.TP
+5 Save the current geographic window in the data base
+Allows the user to save the current 
+.CT "" geographic
+window in the window 
+.CT database "data base"
+of
+the current mapset.
+This option is useful when the current 
+.CT "" geographic
+window is set directly using option 2, or
+even by another 
+.CT GRID GRASS
+program (e.g., \fIdisplay[1]\fR).
+This option installs an otherwise temporary 
+.CT "" geographic
+window into the
+window 
+.CT database "data base"
+for recall when needed.
+.TP
+6 Create a new data base window.
+Creates a new 
+.CT "" geographic
+window in the window 
+.CT database "data base"
+of the current mapset
+using the window edit prompt described above.
+After the 
+.CT "" geographic
+window is created,
+the user is asked if this 
+.CT "" geographic
+window should also be used as the current 
+.CT "" geographic
+window.
+.TP
+7 Modify a data base window
+Modifies a 
+.CT "" geographic
+window in the window 
+.CT database "data base"
+of the current mapset
+using the window edit prompt.  After the changes have been made,
+the user is asked if this 
+.CT "" geographic
+window should also be used as the current 
+.CT "" geographic
+window.
+.SH "SEE ALSO"
+\fIdisplay[1], d.window[1], Gwindow[2G]\fR
+.SH "AUTHOR"
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
