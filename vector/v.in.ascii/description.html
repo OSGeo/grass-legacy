@@ -15,7 +15,8 @@ file
 
 <h2>EXAMPLE</h2>
 
-Example ASCII vector file (stored in dig_ascii/). Note the blank before
+<b>Example 1</b><br>
+Sample ASCII vector file (stored in dig_ascii/). Note the blank before
 entering vertex coordinates:<p>
 <pre>
 	ORGANIZATION: GRASS Development Team
@@ -63,7 +64,16 @@ The associated dig_cats file needs following format:<p>
 </pre>
 
 <p>
+<b>Example 2</b><br>
+Generating a 3D points vector map from DBMS (idcol must be an integer column):<br>
+<pre>
+echo "select east,north,elev,idcol from mytable " | db.select -c | v.in.ascii -z out=mymap
+</pre>
 
+The module is reading from standard input, delimiter is '|' (pipe).
+The import works for 2D maps as well (no elev column and no '-z' flag).
+
+<P>
 The GRASS program <em><a HREF="v.out.ascii.html">v.out.ascii</a></em>
 performs the function of <em>v.in.ascii</em> in reverse;
 i.e., it converts vector files in binary format to ASCII
@@ -75,13 +85,14 @@ machines.
 <p>
 
 The input from <em>v.in.ascii</em> has to be placed into
-<kbd>$LOCATION/dig_ascii</kbd> (this directory must be created if not existing).
+<kbd>$LOCATION/dig_ascii</kbd> (this directory must be created if not existing)
+or piped into the module.
 
 
 <h2>SEE ALSO</h2>
 
 <em><a HREF="v.out.ascii.html">v.out.ascii</a></em>,
-<em><a HREF="v.build.html">v.build</a></em>,
+<em><a HREF="v.build.html">v.build</a></em>
 
 
 <h2>AUTHORS</h2>
