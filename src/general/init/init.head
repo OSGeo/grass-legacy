@@ -70,9 +70,9 @@ eval `g.gisenv`
 LOCATION=${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}
 export LOCATION
 
-if [ -x $home/.grassrc5.VERSION_NUMBER ]
+if [ -x $home/.grassrcVERSION_NUMBER ]
 then
-	$home/.grassrc5.VERSION_NUMBER
+	$home/.grassrcVERSION_NUMBER
 elif [ -x $GISBASE/grassrc5 ]
 then
 	$GISBASE/grassrc5
