@@ -1,0 +1,59 @@
+<html>
+<title>GRASS GIS: Install extra modules</title>
+<body bgcolor=#FFFFE8>
+<pre>
+<b>Compiling extra modules for GRASS GIS</b>
+
+To compile extra modules (e.g. from untested section) you
+have to perform two steps:
+
+
+1. Enter the directory of the module where the Gmakefile is
+   stored. If there are several Gmakefiles, enter the 
+   "root directory" of this module.
+
+   E.g.
+     
+   cd src.alpha/vector/v.in.shape
+    
+   The Gmakefile should be here.
+    
+1. Say
+     gmake4.3
+   there.
+
+   If you are using GRASS 5.x, say
+     gmake5.0
+
+   The module will be compiled now. The GRASS libraries
+   must have been compiled before. If not, you have to compile
+   the GRASS package first. For that follow the instructions <a href=compile_grass.html>here</a>.
+
+   If you should receive a compiling error, fix it and say 
+     gmake4.3 
+   again.
+
+2. Now you have to include the module into the GRASS
+   binary tree by using the script MAKELINKS.my.
+   You find this script in
+ 
+    src43/src/CMD/
+
+   Go there and say
+    MAKELINKS.my
+
+   The script will create links for all modules again
+   including you new module.
+
+  That is all... Start GRASS and use the new module.
+
+</pre>
+<hr> 
+ <A HREF=../welcome.html> <img src=../picts/iln_logo.gif> <A
+HREF=../welcome.html> Back to GRASS GIS pages </A> 
+<address>
+<a href="mailto:neteler@geog.uni-hannover.de">Markus Neteler</A>
+</address>
+
+</body>
+</html>
