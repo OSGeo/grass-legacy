@@ -1,0 +1,238 @@
+Checkout	../../../mapdev/diglib/portable.c	/^static $/
+Init_Portable_structs	../../../mapdev/Vlib/portable_io.c	/^Init_Portable_structs ()$/
+Mmain	main.c	/^main(argc, argv)$/
+V1__open_update_1	../../../mapdev/Vlib/open1.c	/^V1__open_update_1 (Map, name)$/
+V1_close	../../../mapdev/Vlib/close.c	/^V1_close (Map)$/
+V1_open_new	../../../mapdev/Vlib/open1.c	/^V1_open_new (Map, name)$/
+V1_open_old	../../../mapdev/Vlib/open1.c	/^V1_open_old (Map, name, mapset)$/
+V1_read_line	../../../mapdev/Vlib/read1.c	/^V1_read_line (Map, Points, offset)$/
+V1_read_next_line	../../../mapdev/Vlib/read1.c	/^V1_read_next_line (Map, line_p)$/
+V1_rewind	../../../mapdev/Vlib/rewind.c	/^V1_rewind (Map)$/
+V2__init_for_create_plus	../../../mapdev/Vlib/open2.c	/^V2__init_for_create_plus (Map, name)	$/
+V2__line_in_constraint	../../../mapdev/Vlib/read2.c	/^V2__line_in_constraint (Map, Line)$/
+V2__open_new_1	../../../mapdev/Vlib/open2.c	/^V2__open_new_1 (Map, name)		\/* for digit  (unsuppo/
+V2__open_update_1	../../../mapdev/Vlib/open2.c	/^V2__open_update_1 (Map, name)$/
+V2__release_file_mem	../../../mapdev/Vlib/close.c	/^V2__release_file_mem (Map)$/
+V2__setup_for_digit	../../../mapdev/Vlib/open2.c	/^V2__setup_for_digit (Map, name)$/
+V2_area_att	../../../mapdev/Vlib/level_two.c	/^V2_area_att (map, area)$/
+V2_close	../../../mapdev/Vlib/close.c	/^V2_close (Map)$/
+V2_get_area	../../../mapdev/Vlib/level_two.c	/^V2_get_area (map, num, Area)$/
+V2_get_area_bbox	../../../mapdev/Vlib/level_two.c	/^V2_get_area_bbox (map, area, N, S, E, W)$/
+V2_get_line_bbox	../../../mapdev/Vlib/level_two.c	/^V2_get_line_bbox (map, line, N, S, E, W)$/
+V2_line_att	../../../mapdev/Vlib/level_two.c	/^V2_line_att (map, line)$/
+V2_num_areas	../../../mapdev/Vlib/level_two.c	/^V2_num_areas (map)$/
+V2_num_lines	../../../mapdev/Vlib/level_two.c	/^V2_num_lines (map)$/
+V2_open_new_plus	../../../mapdev/Vlib/open2.c	/^V2_open_new_plus (Map, name)		\/* for v.build *\/$/
+V2_open_old	../../../mapdev/Vlib/open2.c	/^V2_open_old (Map, name, mapset)$/
+V2_open_update	../../../mapdev/Vlib/open2.c	/^V2_open_update (Map, name)		\/* for digit, and v.ca/
+V2_read_line	../../../mapdev/Vlib/read2.c	/^V2_read_line (Map, line_p, line)$/
+V2_read_next_line	../../../mapdev/Vlib/read2.c	/^V2_read_next_line (Map, line_p)$/
+V2_rewind	../../../mapdev/Vlib/rewind.c	/^V2_rewind (Map)$/
+V2_tmp_close	../../../mapdev/Vlib/close.c	/^V2_tmp_close (Map)$/
+V2_tmp_open	../../../mapdev/Vlib/close.c	/^V2_tmp_open (Map)$/
+Vect_P_init	../../../mapdev/Vlib/level_two.c	/^Vect_P_init (name, mapset, map)$/
+Vect__P_init	../../../mapdev/Vlib/level_two.c	/^Vect__P_init (map, name, mapset)$/
+Vect__P_init_new_plus	../../../mapdev/Vlib/level_two.c	/^Vect__P_init_new_plus (map, name)$/
+Vect__P_writeable	../../../mapdev/Vlib/level_two.c	/^Vect__P_writeable (x)$/
+Vect__Read_line	../../../mapdev/Vlib/portable_io.c	/^Vect__Read_line (Map, p, offset)$/
+Vect__Rewrite_line	../../../mapdev/Vlib/portable_io.c	/^Vect__Rewrite_line (Map, offset, type, points) $/
+Vect__Write_line	../../../mapdev/Vlib/portable_io.c	/^Vect__Write_line (Map, type, points) $/
+Vect__copy_portable_info	../../../mapdev/Vlib/init_head.c	/^Vect__copy_portable_info (from, to)$/
+Vect__get_default_in_head	../../../mapdev/Vlib/portable_io.c	/^Vect__get_default_in_head ()$/
+Vect__get_default_out_head	../../../mapdev/Vlib/portable_io.c	/^Vect__get_default_out_head ()$/
+Vect__get_default_port_head	../../../mapdev/Vlib/portable_io.c	/^Vect__get_default_port_head ()$/
+Vect__get_window	../../../mapdev/Vlib/window.c	/^Vect__get_window (Map, n, s, e, w)$/
+Vect__init_default_heads	../../../mapdev/Vlib/portable_io.c	/^Vect__init_default_heads (do_port)$/
+Vect__init_head	../../../mapdev/Vlib/init_head.c	/^Vect__init_head (head)$/
+Vect__new_line_struct	../../../mapdev/Vlib/line_struct.c	/^Vect__new_line_struct ()$/
+Vect__open_update_1	../../../mapdev/Vlib/open.c	/^Vect__open_update_1 (Map, name)$/
+Vect__read_head_binary	../../../mapdev/Vlib/portable_io.c	/^Vect__read_head_binary (Map, head)$/
+Vect__write_head_binary	../../../mapdev/Vlib/portable_io.c	/^Vect__write_head_binary (Map, head)$/
+Vect_close	../../../mapdev/Vlib/close.c	/^Vect_close (Map)$/
+Vect_copy_head_data	../../../mapdev/Vlib/init_head.c	/^Vect_copy_head_data (from, to)$/
+Vect_copy_pnts_to_xy	../../../mapdev/Vlib/line_struct.c	/^Vect_copy_pnts_to_xy (Points, x, y, n)$/
+Vect_copy_xy_to_pnts	../../../mapdev/Vlib/line_struct.c	/^Vect_copy_xy_to_pnts (Points, x, y, n)$/
+Vect_destroy_line_struct	../../../mapdev/Vlib/line_struct.c	/^Vect_destroy_line_struct (p)$/
+Vect_get_area_points	../../../mapdev/Vlib/get_area.c	/^Vect_get_area_points (Map, area, BPoints)$/
+Vect_init	../../../mapdev/Vlib/portable_io.c	/^Vect_init ()	\/* init vector system *\/$/
+Vect_level	../../../mapdev/Vlib/level.c	/^Vect_level (Map)$/
+Vect_new_line_struct	../../../mapdev/Vlib/line_struct.c	/^Vect_new_line_struct ()$/
+Vect_open_new	../../../mapdev/Vlib/open.c	/^Vect_open_new (Map, name)$/
+Vect_open_old	../../../mapdev/Vlib/open.c	/^Vect_open_old (Map, name, mapset)$/
+Vect_print_header	../../../mapdev/Vlib/header.c	/^Vect_print_header (Map)$/
+Vect_read_next_line	../../../mapdev/Vlib/read.c	/^Vect_read_next_line (Map, line_p)$/
+Vect_remove_constraints	../../../mapdev/Vlib/constraint.c	/^Vect_remove_constraints (Map)$/
+Vect_rewind	../../../mapdev/Vlib/rewind.c	/^Vect_rewind (Map)$/
+Vect_set_constraint_region	../../../mapdev/Vlib/constraint.c	/^Vect_set_constraint_region (Map, n, s, e, w)$/
+Vect_set_constraint_type	../../../mapdev/Vlib/constraint.c	/^Vect_set_constraint_type (Map, type)$/
+Vect_set_open_level	../../../mapdev/Vlib/open.c	/^Vect_set_open_level (level)$/
+Vect_write_line	../../../mapdev/Vlib/write.c	/^Vect_write_line (Map, type, points)$/
+Vect_x__Mem_Read_line	../../../mapdev/Vlib/x_point_io.c	/^Vect_x__Mem_Read_line (p, offset)$/
+Vect_x__Read_line	../../../mapdev/Vlib/x_point_io.c	/^Vect_x__Read_line (Map, p, offset)$/
+Vect_x__Rewrite_line	../../../mapdev/Vlib/x_point_io.c	/^Vect_x__Rewrite_line (Map, offset, type, points) $/
+Vect_x__Write_line	../../../mapdev/Vlib/x_point_io.c	/^Vect_x__Write_line(Map, type, points) $/
+Vect_x_read_head_binary	../../../mapdev/Vlib/x_rw_binary.c	/^Vect_x_read_head_binary (Map, dhead)$/
+Vect_x_write_head_binary	../../../mapdev/Vlib/x_rw_binary.c	/^Vect_x_write_head_binary (Map, dhead)$/
+ZERO	../../../mapdev/diglib/line_dist.c	/^#define ZERO(x) ((x) < tolerance && (x) > -toleran/
+buf_alloc	../../../mapdev/diglib/portable.c	/^static $/
+close_vect	open.c	/^close_vect(fd)$/
+d_atan2	../../../mapdev/diglib/calc_angl.c	/^d_atan2 (y, x)$/
+debugf	main.c	/^debugf() { $/
+dig_Mem_load_file	../../../mapdev/diglib/memory_io.c	/^dig_Mem_load_file (fp, ptr)$/
+dig_Mem_release_file	../../../mapdev/diglib/memory_io.c	/^dig_Mem_release_file ()$/
+dig_Rd_P_area	../../../mapdev/Vlib/portable_io.c	/^dig_Rd_P_area (map, ptr, fp)$/
+dig_Rd_P_att	../../../mapdev/Vlib/portable_io.c	/^dig_Rd_P_att (map, ptr, fp)$/
+dig_Rd_P_isle	../../../mapdev/Vlib/portable_io.c	/^dig_Rd_P_isle (map, ptr, fp)$/
+dig_Rd_P_line	../../../mapdev/Vlib/portable_io.c	/^dig_Rd_P_line (map, ptr, fp)$/
+dig_Rd_P_node	../../../mapdev/Vlib/portable_io.c	/^dig_Rd_P_node (map, ptr, fp)$/
+dig_Rd_Plus_head	../../../mapdev/Vlib/portable_io.c	/^dig_Rd_Plus_head (map, ptr, fp)$/
+dig_Wr_P_area	../../../mapdev/Vlib/portable_io.c	/^dig_Wr_P_area (map, ptr, fp)$/
+dig_Wr_P_att	../../../mapdev/Vlib/portable_io.c	/^dig_Wr_P_att (map, ptr, fp)$/
+dig_Wr_P_isle	../../../mapdev/Vlib/portable_io.c	/^dig_Wr_P_isle (map, ptr, fp)$/
+dig_Wr_P_line	../../../mapdev/Vlib/portable_io.c	/^dig_Wr_P_line (map, ptr, fp)$/
+dig_Wr_P_node	../../../mapdev/Vlib/portable_io.c	/^dig_Wr_P_node (map, ptr, fp)$/
+dig_Wr_Plus_head	../../../mapdev/Vlib/portable_io.c	/^dig_Wr_Plus_head (map, ptr, fp)$/
+dig__Init_portable_code	../../../mapdev/diglib/portable.c	/^dig__Init_portable_code (portable)$/
+dig__alloc_space	../../../mapdev/diglib/allocation.c	/^dig__alloc_space(n_wanted, n_elements, chunk_size,/
+dig__check_dist	../../../mapdev/diglib/point_t_line.c	/^dig__check_dist (map, points, ux, uy, dist)$/
+dig__convert_buffer	../../../mapdev/diglib/portable.c	/^dig__convert_buffer (needed)$/
+dig__del_area	../../../mapdev/diglib/area.c	/^dig__del_area (map, area)$/
+dig__del_att	../../../mapdev/diglib/attribute.c	/^dig__del_att (map, att)$/
+dig__double_convert	../../../mapdev/diglib/portable.c	/^dig__double_convert (in, out, count, head)$/
+dig__falloc	../../../mapdev/diglib/allocation.c	/^dig__falloc(nelem, elsize)$/
+dig__fill_head_portable	../../../mapdev/diglib/portable.c	/^dig__fill_head_portable (head)$/
+dig__float_convert	../../../mapdev/diglib/portable.c	/^dig__float_convert (in, out, count, head)$/
+dig__fread_port_C	../../../mapdev/diglib/portable2.c	/^dig__fread_port_C (buf, cnt, fp)	\/* CHAR *\/$/
+dig__fread_port_D	../../../mapdev/diglib/portable2.c	/^dig__fread_port_D (buf, cnt, fp)	\/* DOUBLE *\/$/
+dig__fread_port_F	../../../mapdev/diglib/portable2.c	/^dig__fread_port_F (buf, cnt, fp)	\/* FLOAT *\/$/
+dig__fread_port_I	../../../mapdev/diglib/portable2.c	/^dig__fread_port_I (buf, cnt, fp)	\/* INT *\/$/
+dig__fread_port_L	../../../mapdev/diglib/portable2.c	/^dig__fread_port_L (buf, cnt, fp)	\/* LONG *\/$/
+dig__fread_port_P	../../../mapdev/diglib/portable2.c	/^dig__fread_port_P (buf, cnt, fp)	\/* PLUS_T *\/$/
+dig__fread_port_S	../../../mapdev/diglib/portable2.c	/^dig__fread_port_S (buf, cnt, fp)	\/* SHORT *\/$/
+dig__frealloc	../../../mapdev/diglib/allocation.c	/^dig__frealloc(oldptr, nelem, elsize, oldnelem)$/
+dig__fwrite_port_C	../../../mapdev/diglib/portable2.c	/^dig__fwrite_port_C (buf, cnt, fp)	\/* CHAR *\/$/
+dig__fwrite_port_D	../../../mapdev/diglib/portable2.c	/^dig__fwrite_port_D (buf, cnt, fp)	\/* DOUBLE *\/$/
+dig__fwrite_port_F	../../../mapdev/diglib/portable2.c	/^dig__fwrite_port_F (buf, cnt, fp)	\/* FLOAT *\/$/
+dig__fwrite_port_I	../../../mapdev/diglib/portable2.c	/^dig__fwrite_port_I (buf, cnt, fp)	\/* INT->LONG *\/$/
+dig__fwrite_port_L	../../../mapdev/diglib/portable2.c	/^dig__fwrite_port_L (buf, cnt, fp)	\/* LONG *\/$/
+dig__fwrite_port_P	../../../mapdev/diglib/portable2.c	/^dig__fwrite_port_P (buf, cnt, fp)	\/* PLUS_T->LONG /
+dig__fwrite_port_S	../../../mapdev/diglib/portable2.c	/^dig__fwrite_port_S (buf, cnt, fp)	\/* SHORT *\/$/
+dig__get_cur_in_head	../../../mapdev/diglib/portable2.c	/^struct dig_head *dig__get_cur_in_head () { return /
+dig__get_cur_out_head	../../../mapdev/diglib/portable2.c	/^struct dig_head *dig__get_cur_out_head () { return/
+dig__int_convert	../../../mapdev/diglib/portable.c	/^dig__int_convert (in, out, count, head)$/
+dig__long_convert	../../../mapdev/diglib/portable.c	/^dig__long_convert (in, out, count, head)$/
+dig__long_convert_to_int	../../../mapdev/diglib/portable.c	/^dig__long_convert_to_int (in, out, count, head)$/
+dig__long_convert_to_plus_t	../../../mapdev/diglib/portable.c	/^dig__long_convert_to_plus_t (in, out, count, head)/
+dig__new_att	../../../mapdev/diglib/attribute.c	/^dig__new_att (map, x, y, type, index, cat, offset)/
+dig__plus_t_convert	../../../mapdev/diglib/portable.c	/^dig__plus_t_convert (in, out, count, head)$/
+dig__set_cur_in_head	../../../mapdev/diglib/portable2.c	/^dig__set_cur_in_head (head) struct dig_head *head;/
+dig__set_cur_out_head	../../../mapdev/diglib/portable2.c	/^dig__set_cur_out_head (head) struct dig_head *head/
+dig__short_convert	../../../mapdev/diglib/portable.c	/^dig__short_convert (in, out, count, head)$/
+dig_add_line_to_node	../../../mapdev/diglib/node_op.c	/^dig_add_line_to_node (num, line, type, map, points/
+dig_alloc_area	../../../mapdev/diglib/struct_alloc.c	/^dig_alloc_area (map, add)$/
+dig_alloc_att	../../../mapdev/diglib/struct_alloc.c	/^dig_alloc_att (map, add)$/
+dig_alloc_isle	../../../mapdev/diglib/struct_alloc.c	/^dig_alloc_isle (map, add)$/
+dig_alloc_line	../../../mapdev/diglib/struct_alloc.c	/^dig_alloc_line (map, add)$/
+dig_alloc_node	../../../mapdev/diglib/struct_alloc.c	/^dig_alloc_node (map, add)$/
+dig_alloc_points	../../../mapdev/diglib/struct_alloc.c	/^dig_alloc_points (points, num)$/
+dig_alloc_space	../../../mapdev/diglib/allocation.c	/^dig_alloc_space(n_wanted, n_elements, chunk_size, /
+dig_angle_next_line	../../../mapdev/diglib/area.c	/^dig_angle_next_line (map, current_line, direction)/
+dig_area_alloc_isle	../../../mapdev/diglib/struct_alloc.c	/^dig_area_alloc_isle (Area, num)$/
+dig_area_alloc_line	../../../mapdev/diglib/struct_alloc.c	/^dig_area_alloc_line (area, num)$/
+dig_area_bound_box	../../../mapdev/diglib/area.c	/^dig_area_bound_box (map, Area)$/
+dig_bound_box2	../../../mapdev/diglib/bound_box.c	/^dig_bound_box2 (points, N, S, E, W, orig_scale)$/
+dig_build_area_with_line	../../../mapdev/diglib/area.c	/^dig_build_area_with_line (map, first_line, Area)$/
+dig_by_line_bbox	../../../mapdev/diglib/point_t_line.c	/^dig_by_line_bbox (Line, x1, y1, x2, y2)$/
+dig_calc_begin_angle	../../../mapdev/diglib/calc_angl.c	/^dig_calc_begin_angle (points, thresh)$/
+dig_calc_end_angle	../../../mapdev/diglib/calc_angl.c	/^dig_calc_end_angle(points, thresh)$/
+dig_center_check	../../../mapdev/diglib/point_t_line.c	/^dig_center_check(line, a, b, ux, uy)$/
+dig_check_dist	../../../mapdev/diglib/point_t_line.c	/^dig_check_dist (map, line, ux, uy, dist)$/
+dig_check_nodes	../../../mapdev/diglib/check_node.c	/^dig_check_nodes (map, node, points)$/
+dig_del_area	../../../mapdev/diglib/area.c	/^dig_del_area (map, area)$/
+dig_del_att	../../../mapdev/diglib/attribute.c	/^dig_del_att (map, att)$/
+dig_del_isle	../../../mapdev/diglib/isle.c	/^dig_del_isle (map, isle)$/
+dig_distance2_point_to_line	../../../mapdev/diglib/line_dist.c	/^dig_distance2_point_to_line (x,y,x1,y1,x2,y2)$/
+dig_do_file_checks	../../../mapdev/diglib/file_checks.c	/^dig_do_file_checks (map, plus, dig, dig_att)$/
+dig_falloc	../../../mapdev/diglib/allocation.c	/^dig_falloc (nelem, elsize)$/
+dig_find_area	../../../mapdev/diglib/find_area.c	/^dig_find_area (map, Area, totalarea, cent_x, cent_/
+dig_find_area2	../../../mapdev/diglib/find_area.c	/^dig_find_area2 (map, Area, totalarea)$/
+dig_find_intersection	../../../mapdev/diglib/linecros.c	/^dig_find_intersection (ax1,ay1,ax2,ay2,bx1,by1,bx2/
+dig_float_point	../../../mapdev/diglib/format.c	/^dig_float_point (buf, size, num)$/
+dig_frealloc	../../../mapdev/diglib/allocation.c	/^dig_frealloc(oldptr, nelem, elsize, oldnelem)$/
+dig_get_cont_lines	../../../mapdev/diglib/cont_lines.c	/^dig_get_cont_lines (map, line, angle, twoway)$/
+dig_get_next_cont_line	../../../mapdev/diglib/cont_lines.c	/^dig_get_next_cont_line (map, prev_line, angle, two/
+dig_head_to_map	../../../mapdev/diglib/map_to_head.c	/^dig_head_to_map (head, map)$/
+dig_in_area_bbox	../../../mapdev/diglib/chk_inside.c	/^dig_in_area_bbox (Area, x, y)$/
+dig_in_line_bbox	../../../mapdev/diglib/point_t_line.c	/^dig_in_line_bbox(line, x, y)$/
+dig_init_box	../../../mapdev/diglib/dig_box.c	/^dig_init_box (n, s, e, w)$/
+dig_is_line_degenerate	../../../mapdev/diglib/calc_angl.c	/^dig_is_line_degenerate (points, thresh)$/
+dig_isle_alloc_line	../../../mapdev/diglib/struct_alloc.c	/^dig_isle_alloc_line (isle, num)$/
+dig_load_plus	../../../mapdev/diglib/load_plus.c	/^dig_load_plus (map, digit, do_checks)$/
+dig_map_to_head	../../../mapdev/diglib/map_to_head.c	/^dig_map_to_head (map, phead)$/
+dig_mread	../../../mapdev/diglib/memory_io.c	/^dig_mread (buf, size, n_elem, mp)$/
+dig_mseek	../../../mapdev/diglib/memory_io.c	/^dig_mseek (mp, offset, code)$/
+dig_mwrite	../../../mapdev/diglib/memory_io.c	/^dig_mwrite (buf, size, n_elem, mp)$/
+dig_new_area	../../../mapdev/diglib/area.c	/^dig_new_area (map, Area, att)$/
+dig_new_att	../../../mapdev/diglib/attribute.c	/^dig_new_att (map, x, y, type, index, cat)	\/* creat/
+dig_new_isle	../../../mapdev/diglib/isle.c	/^dig_new_isle (map, Area, area)$/
+dig_new_to_old_type	../../../mapdev/diglib/old2new.c	/^dig_new_to_old_type (type)$/
+dig_node_add_line	../../../mapdev/diglib/node_op.c	/^dig_node_add_line (map, node, line, points, type)$/
+dig_node_alloc_line	../../../mapdev/diglib/struct_alloc.c	/^dig_node_alloc_line (node, add)$/
+dig_node_del_line	../../../mapdev/diglib/node_op.c	/^dig_node_del_line (node, line)$/
+dig_old_to_new_type	../../../mapdev/diglib/old2new.c	/^dig_old_to_new_type (type)$/
+dig_out_of_memory	../../../mapdev/diglib/struct_alloc.c	/^dig_out_of_memory ()$/
+dig_point_by_line	../../../mapdev/diglib/point_t_line.c	/^dig_point_by_line (map, ux1, uy1, ux2, uy2, type)$/
+dig_point_in_area	../../../mapdev/diglib/chk_inside.c	/^dig_point_in_area(map, X, Y, Area)$/
+dig_point_in_poly	../../../mapdev/diglib/chk_inside.c	/^dig_point_in_poly (X, Y, Points)$/
+dig_point_to_area	../../../mapdev/diglib/point_t_area.c	/^dig_point_to_area (map, ux, uy)$/
+dig_point_to_line	../../../mapdev/diglib/point_t_line.c	/^dig_point_to_line (map, ux, uy, type)$/
+dig_point_to_next_area	../../../mapdev/diglib/point_t_area.c	/^dig_point_to_next_area (map, ux, uy, min_dist)$/
+dig_prune	../../../mapdev/diglib/prune.c	/^dig_prune (points, thresh)$/
+dig_read_head_ascii	../../../mapdev/diglib/rw_ascii.c	/^dig_read_head_ascii(dascii, head)$/
+dig_read_line_in_box	../../../mapdev/diglib/dig_box.c	/^dig_read_line_in_box (fp, n_points, x, y)$/
+dig_read_line_struct_in_box	../../../mapdev/diglib/dig_box.c	/^dig_read_line_struct_in_box (fp, line_p)$/
+dig_rmcr	../../../mapdev/diglib/struct_copy.c	/^dig_rmcr (str)$/
+dig_set_distance_to_line_tolerance	../../../mapdev/diglib/line_dist.c	/^dig_set_distance_to_line_tolerance (t)$/
+dig_snap_line_to_node	../../../mapdev/diglib/node_op.c	/^dig_snap_line_to_node (map, line, node, points)$/
+dig_start_clock	../../../mapdev/diglib/clock.c	/^dig_start_clock (save)$/
+dig_stop_clock	../../../mapdev/diglib/clock.c	/^dig_stop_clock (save)$/
+dig_struct_copy	../../../mapdev/diglib/struct_copy.c	/^dig_struct_copy (from, to, cnt)$/
+dig_test_for_intersection	../../../mapdev/diglib/linecros.c	/^dig_test_for_intersection (ax1,ay1,ax2,ay2,bx1,by1/
+dig_unit_conversion	../../../mapdev/diglib/unit_conv.c	/^dig_unit_conversion ()$/
+dig_update_att	../../../mapdev/diglib/attribute.c	/^dig_update_att (map, att)$/
+dig_which_node	../../../mapdev/diglib/check_node.c	/^dig_which_node (map, x, y, thresh)$/
+dig_write_areas	../../../mapdev/diglib/write_file.c	/^dig_write_areas( plus, Map, Plus)$/
+dig_write_atts	../../../mapdev/diglib/write_file.c	/^dig_write_atts( plus, Map, Plus)$/
+dig_write_file_checks	../../../mapdev/diglib/file_checks.c	/^dig_write_file_checks (fp_plus, map, Plus)$/
+dig_write_head_ascii	../../../mapdev/diglib/rw_ascii.c	/^dig_write_head_ascii(dascii, head)$/
+dig_write_isles	../../../mapdev/diglib/write_file.c	/^dig_write_isles( plus, Map, Plus)$/
+dig_write_lines	../../../mapdev/diglib/write_file.c	/^dig_write_lines( plus, Map, Plus)$/
+dig_write_nodes	../../../mapdev/diglib/write_file.c	/^dig_write_nodes( plus, Map, Plus)$/
+dig_write_plus_file	../../../mapdev/diglib/write_file.c	/^dig_write_plus_file( fp_plus, Map, Plus)$/
+dig_x_Rd_P_area	../../../mapdev/diglib/x_struct_io.c	/^dig_x_Rd_P_area (map, ptr, fp)$/
+dig_x_Rd_P_att	../../../mapdev/diglib/x_struct_io.c	/^dig_x_Rd_P_att (map, ptr, fp)$/
+dig_x_Rd_P_isle	../../../mapdev/diglib/x_struct_io.c	/^dig_x_Rd_P_isle (map, ptr, fp)$/
+dig_x_Rd_P_line	../../../mapdev/diglib/x_struct_io.c	/^dig_x_Rd_P_line (map, ptr, fp)$/
+dig_x_Rd_P_node	../../../mapdev/diglib/x_struct_io.c	/^dig_x_Rd_P_node (map, ptr, fp)$/
+dig_x_Rd_Plus_head	../../../mapdev/diglib/x_struct_io.c	/^dig_x_Rd_Plus_head (map, ptr, fp)$/
+dig_x_Wr_P_area	../../../mapdev/diglib/x_struct_io.c	/^dig_x_Wr_P_area (map, ptr, fp)$/
+dig_x_Wr_P_att	../../../mapdev/diglib/x_struct_io.c	/^dig_x_Wr_P_att (map, ptr, fp)$/
+dig_x_Wr_P_isle	../../../mapdev/diglib/x_struct_io.c	/^dig_x_Wr_P_isle (map, ptr, fp)$/
+dig_x_Wr_P_line	../../../mapdev/diglib/x_struct_io.c	/^dig_x_Wr_P_line (map, ptr, fp)$/
+dig_x_Wr_P_node	../../../mapdev/diglib/x_struct_io.c	/^dig_x_Wr_P_node (map, ptr, fp)$/
+dig_x_Wr_Plus_head	../../../mapdev/diglib/x_struct_io.c	/^dig_x_Wr_Plus_head (map, ptr, fp)$/
+dig_x_intersect	../../../mapdev/diglib/chk_inside.c	/^dig_x_intersect (beg_x, end_x, beg_y, end_y, Y) $/
+dig_xy_distance2_point_to_line	../../../mapdev/diglib/line_dist.c	/^dig_xy_distance2_point_to_line (px,py,x1,y1,x2,y2)/
+dig_xy_distance3_point_to_line	../../../mapdev/diglib/line_dist.c	/^dig_xy_distance3_point_to_line (px,py,x1,y1,x2,y2,/
+dist_squared	../../../mapdev/diglib/check_node.c	/^dist_squared (x1, y1, x2, y2)$/
+dummy	../../../mapdev/Vlib/open.c	/^static dummy () {}$/
+dumpflags	../../../mapdev/Vlib/portable_io.c	/^dumpflags (fhead)$/
+find_offset	../../../mapdev/diglib/portable.c	/^find_offset (basis, search_value, size)$/
+n_index	../../../mapdev/diglib/format.c	/^n_index (str, chr)$/
+normalize_angle	../../../mapdev/diglib/cont_lines.c	/^normalize_angle (angle)$/
+open_vect	open.c	/^open_vect(name, mapset)$/
+plot1	plot1.c	/^plot1 (name, mapset, Points)$/
+plot2	plot2.c	/^plot2 (name, mapset, Points)$/
+tell_delta_size	../../../mapdev/diglib/file_checks.c	/^static int $/
+tell_delta_time	../../../mapdev/diglib/file_checks.c	/^tell_delta_time (file)$/
+use_plot1	use_plot1.c	/^use_plot1(name, mapset)$/
