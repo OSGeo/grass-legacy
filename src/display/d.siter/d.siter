@@ -61,7 +61,7 @@ then
     while [ "$num" -le "$numdims" ]
     do
 	label=`head -$linedim $TMP | tail -1 | 
-	   awk ' NF == 5 { print $5 }; NF < 5 { print "no_label" }'`
+	   awk ' NF == 5 { print $5 }; NF < 5 { print "Dimension3" }'`
 	range=`head -$linedim $TMP | tail -1 | awk '{ printf("%f %f",$3,$4) }'`
 	str="$str D$num $range $label"
 	num=`expr $num + 1`
@@ -78,7 +78,7 @@ then
     linecat=`expr $linecat + 3`
  
     label=`head -$linecat $TMP | tail -1 | \
-	   awk ' NF == 3 { print $3 }; NF < 3 { print "no_label" }'`
+	   awk ' NF == 3 { print $3 }; NF < 3 { print "Category" }'`
     range=`head -$linecat $TMP | tail -1 | awk '{ printf("%f %f",$1,$2) }'`
     str="$str C $range $label"
 fi
@@ -95,7 +95,7 @@ then
     while [ "$num" -le "$numatts" ]
     do
 	label=`head -$lineatt $TMP | tail -1 | 
-	   awk ' NF == 5 { print $5 }; NF < 5 { print "no_label" }'`
+	   awk ' NF == 5 { print $5 }; NF < 5 { printf("Attribute" '$num') }'`
 	range=`head -$lineatt $TMP | tail -1 | awk '{ printf("%f %f",$3,$4) }'`
 	str="$str A$num $range $label"
 	num=`expr $num + 1`
