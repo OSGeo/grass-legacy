@@ -1,6 +1,6 @@
 #!/bin/sh
 # the next line restarts using wish \
-exec "$1" "$0" "$@"
+exec wish $0 $*
 
 # called by script d.siter
 
@@ -164,4 +164,11 @@ proc do_reset {} {
 	set minval($k) $amin
 	set maxval($k) $amax
     }
+}
+
+;# added by al 10/2000
+proc error { errmsg } {
+    puts "d.siter error in: tclsiter.tcl"
+    puts "$errmsg\n"
+    exit 1
 }
