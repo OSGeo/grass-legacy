@@ -121,7 +121,7 @@ int main (int argc, char *argv[])
     fi = Vect_default_field_info ( &Map, 1, NULL, GV_1TABLE );
 
     /* Open driver */
-    driver = db_start_driver_open_database ( fi->driver, fi->database );
+    driver = db_start_driver_open_database ( driver_opt->answer, database_opt->answer );
     if ( driver == NULL ) {
 	G_fatal_error ( "Cannot open database %s by driver %s", fi->database, fi->driver );
     }
