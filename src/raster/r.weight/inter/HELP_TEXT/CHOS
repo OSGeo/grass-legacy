@@ -1,0 +1,13 @@
+
+------------------------------------------------------------------
+KEYWORD: choose
+    "choose" is used to identify up to six (6) maps that will be
+    combined in a WEIGHT analysis.  Maps must be chosen before
+    weights can be assigned.
+
+EXAMPLE:
+    choose geology
+
+ALIAS: pick     
+------------------------------------------------------------------
+
