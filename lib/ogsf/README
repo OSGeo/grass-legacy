@@ -1,0 +1,8 @@
+moved from src.contrib/GMSL/NVIZ2.2/lobes/ogsf/ 
+      to   src/libes/ogsf/
+
+Updated src.contrib/GMSL/NVIZ2.2/Gmakefile for that.
+10/1999 Markus Neteler
+
+10/99   - changed gsd_img.c to uncompressed IRIS RGB
+2/26/96 - some minor cleanup (mca)

@@ -1,0 +1,13 @@
+GS_get_cat_at_xy
+
+diff gsdrape.c gsdrape.bak  - region clipping not working
+(see cont. example in germany location testdata)
+Inconsistent error - depends on view res, maybe check I3d init.
+or num points returned. 
+I think fixed now.
+
+did a bunch of DIFFUSE -> AD changes for trial
+
+shininess not working
+OK - working now - will be different from SG3d due to infinite light.
+
