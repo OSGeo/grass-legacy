@@ -16,7 +16,7 @@
 <BR>
 <B>r.out.ascii help</B>
 <BR>
-<B>r.out.ascii </B>[<B>-hsi</B>] <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM>
+<B>r.out.ascii </B>[<B>-hsMi</B>] <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM>
 [<B>dp=</B><EM>value</EM>] [<B>null=</B><EM>string</EM>]
 
 <H2>DESCRIPTION</H2>
@@ -40,6 +40,9 @@ format to GRASS raster file format.
 <DT><B>-s</B>
 <DD>Write SURFER .grd ASCII GRID instead of GRASS ASCII GRID<br>
     (with reverted row order, different header)
+
+<DT><B>-s</B>
+<DD>Write MODFLOW (USGS) free-format array instead of GRASS ASCII GRID<br>
 
 <DT><B>-i</B>
 <DD>Output integer category values, nit cell values.
