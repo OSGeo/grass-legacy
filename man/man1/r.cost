@@ -1,0 +1,147 @@
+.TH r.cost
+.SH NAME
+\fIr.cost\fR \- Outputs a raster map layer showing the cumulative cost
+of moving between different geographic locations
+on an input raster map layer whose cell category values represent cost.
+.br
+\fI(GRASS Raster Program)\fR
+.SH SYNOPSIS
+\fBr.cost\fR
+.br
+\fBr.cost help\fR
+.br
+\fBr.cost input\*=\fIname \fBoutput\*=\fIname \fR[\fBcoordinate\*=\fIx,y\fR[,\fIx,y\fR,...]]
+.SH DESCRIPTION
+.I r.cost
+determines the cumulative cost of moving
+to each cell on a \fIcost surface\fR (the input raster map layer)
+from other user-specified cell(s)
+whose locations are specified by their geographic coordinate(s).
+Each cell in the original cost surface map
+will contain a category value which represents the cost of traversing
+that cell.
+\fIr.cost\fR will produce an output raster map layer in which each cell
+contains the lowest total cost of traversing the space between each cell
+and the user-specified points.
+(Diagonal costs are multiplied by a factor that depends on the dimensions
+of the cell.)
+This program uses the current geographic region settings.
+.SH OPTIONS
+\fIr.cost\fR can be run either non-interactively or interactively.
+The program will be run non-interactively if the user specifies
+the names of raster map layers and any desired options on the
+command line, using the form:
+.LP
+.RS
+\fBr.cost input\*=\fIname \fBoutput\*=\fIname \fR[\fBcoordinate\*=\fIx,y\fR[,\fIx,y\fR,...]]
+.RE
+.LP
+where the input \fIname\fR is the name of a raster map layer representing
+the cost surface map, the output \fIname\fR is the name of a raster map layer
+of cumulative cost, and each \fIx,y\fR coordinate pair gives the geographic
+location of a point from which the transportation cost should be figured.
+
+Alternately, the user can simply type \fBr.cost\fR on the command line,
+without program arguments.  In this case, the user will be prompted for
+parameter values using the standard GRASS parser interface
+described in the manual entry for \fIparser\fR.
+
+.I r.cost
+can be run with two different methods of identifying the starting point(s).
+One or more points (geographic coordinate pairs) can be provided
+on the command line.
+In lieu of command line coordinates,
+a map of starting point (e.g., \fIstart_pt_map\fR) may already exist.
+Primarily filled with zeros, this map contains non-zero values
+at the starting cell(s).  To submit the \fIstart_pt_map\fR, set
+output\*=\fIstart_pt_map\fR.  \fBBeware:\fR  doing this will overwrite
+\fIstart_pt_map \fR with the results of the calculations.
+If \fIstart_pt_map\fR does exist and points are also given on the command line,
+the \fIstart_pt_map\fR is ignored and the coordinates given on the command
+line are used instead.
+.LP
+\fBParameters:\fR
+.IP "\fBinput\*=\fIname\fR" 18
+Name of input raster map layer whose category values represent surface cost.
+.IP "\fBoutput\*=\fIname\fR" 18
+Name of raster map layer to contain output.  Also can be used as the map
+layer of the input starting points.  If so used, the input starting point map
+will be overwritten by the output.
+.IP "\fBcoordinate\*=\fIx,y\fR[,\fIx,y,x,y,\fR ...]" 18
+Each x,y coordinate pair gives the easting and northing (respectively)
+geographic coordinates of a starting point from which to figure
+cumulative transportation costs for each cell.
+
+As many points as desired can be entered by the user.
+
+
+
+.SH EXAMPLE
+Consider the following example:
+
+.NF
+Input:                            Output:
+   COST SURFACE                      CUMULATIVE COST SURFACE
+ . . . . . . . . . . . . . . .     . . . . . . . . . . . . . . .
+ . 2 . 2 . 1 . 1 . 5 . 5 . 5 .     . 22. 20. 18. 17. 19. 17. 16.
+ . . . . . . . . . . . . . . .     . . . . . . . . . . . . . . .
+ . 2 . 2 . 8 . 8 . 5 . 2 . 1 .     . 22. 21. 26. 22. 16. 12. 11.
+ . . . . . . . . . . . . . . .     . . . . . . . . . . . . . . .
+ . 7 . 1 . 1 . 8 . 2 . 2 . 2 .     . 26. 19. 18. 19. 11. 10. 11.
+ . . . . . . . . . . . . . . .     . . . . . . . . . . . . . . .
+ . 8 . 7 . 8 . 8 . 7 . 5 . 5 .     . 28. 20. 18. 17. 13. 8 . 10.
+ . . . . . . . . . . _____ . .     . . . . . . . . . . . . . . .
+ . 8 . 8 . 1 . 1 . 5 | 3 | 9 .     . 22. 18. 10. 9 . 8 . 0 . 12.
+ . . . . . . . . . . |___| . .     . . . . . . . . . . . . . . .
+ . 8 . 1 . 1 . 2 . 5 . 3 . 9 .     . 19. 11. 10. 11. 10. 6 . 16.
+ . . . . . . . . . . . . . . .     . . . . . . . . . . . . . . .
+.FI
+
+The user-provided ending location in the above example is
+the boxed \fB3\fR in the left-hand map.  The costs in the output
+map represent the total cost of moving from each box ("cell")
+to one or more (here, only one) starting location(s).
+This output map can be viewed, for example,
+as an elevation model in which the starting location(s) is/are
+the lowest point(s).
+Outputs from \fIr.cost\fR can be used as inputs to \fIr.drain\fR,
+in order to trace the least-cost path given in this model
+between any given cell and the
+.I r.cost
+starting location(s).  The two programs, when used together, generate
+least-cost paths or corridors between any two map locations (cells).
+.SH NOTES
+If you submit the starting point map on the command line by specifying:
+.LP
+.RS
+\fBoutput\*=start_pt_map\fR
+.RE
+.LP
+the starting point map will be overwritten by the calculated output.
+It is wise to copy or rename (e.g., using \fIg.copy\fR or \fIg.rename\fR)
+the map of starting points to another name before submitting it to
+\fIr.cost\fR;  otherwise, its contents will be overwritten.
+
+Sometimes, when the differences among cell category values
+in the \fIr.cost\fR cumulative cost surface output are small,
+this cumulative cost output cannot accurately be used as input to \fIr.drain\fR
+(\fIr.drain\fR will output bad results).
+This problem can be circumvented by making the differences between
+cell category values in the cumulative cost output bigger.
+It is recommended that, if the output from \fIr.cost\fR is to be used
+as input to \fIr.drain\fR, the user multiply the input cost surface map
+to \fIr.cost\fR by the value of the map's cell resolution, before running
+\fIr.cost\fR.  This can be done using \fIr.mapcalc\fR or other programs.
+The map resolution can be found using \fIg.region\fR.
+.SH "SEE ALSO"
+.I g.copy,
+.I g.region,
+.I g.rename,
+.I r.drain,
+.I r.in.ascii,
+.I r.mapcalc,
+.I r.out.ascii,
+and
+.I parser
+.SH AUTHOR
+Antony Awaida, Intelligent Engineering Systems Laboratory, M.I.T.
