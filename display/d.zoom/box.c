@@ -30,12 +30,12 @@ int make_window_box ( struct Cell_head *window, double magnify, int full, int ha
         if ( !hand ) {
 	    if ( printmenu ) {
 		fprintf(stderr, "\n\nButtons:\n") ;
-		fprintf(stderr, "%s 1. corner\n", LEFTS) ;
-		fprintf(stderr, "%s Unzoom\n", MIDDLES) ;
+		fprintf(stderr, "%s 1. corner\n", lefts) ;
+		fprintf(stderr, "%s Unzoom\n", middles) ;
 		if ( full )
-		    fprintf(stderr, "%s Main menu\n\n", RIGHTS) ;
+		    fprintf(stderr, "%s Main menu\n\n", rights) ;
 		else 
-		    fprintf(stderr, "%s Quit\n\n", RIGHTS) ;
+		    fprintf(stderr, "%s Quit\n\n", rights) ;
 
 		printmenu = 0;
 	    }
@@ -63,17 +63,16 @@ int make_window_box ( struct Cell_head *window, double magnify, int full, int ha
         if ( !hand ) 
             print_coor ( window, py, px );
 	
-	switch(button) {
-	    case LEFTB:
+	if(button == leftb){
 		if ( !hand ) {
 		    if ( mode == 1 ) {
 			fprintf(stderr, "\n\nButtons:\n") ;
-			fprintf(stderr, "%s 1. corner (reset)\n", LEFTS) ;
-			fprintf(stderr, "%s 2. corner\n", MIDDLES) ;
+			fprintf(stderr, "%s 1. corner (reset)\n", lefts) ;
+			fprintf(stderr, "%s 2. corner\n", middles) ;
 			if ( full )
-			    fprintf(stderr, "%s Main menu\n\n", RIGHTS) ;
+			    fprintf(stderr, "%s Main menu\n\n", rights) ;
 			else 
-			    fprintf(stderr, "%s Quit\n\n", RIGHTS) ;
+			    fprintf(stderr, "%s Quit\n\n", rights) ;
 		        mode = 2;
 		    }
 		    if ( mode == 2 ) {
@@ -92,8 +91,8 @@ int make_window_box ( struct Cell_head *window, double magnify, int full, int ha
 		        mode = 1;
 		    }
 		}
-		break ;
-	    case MIDDLEB:
+	}else
+	if(button == middleb){
 		if ( mode == 1 ) { /* unzoom */
 	            ux2 = D_d_to_u_col((double)screen_x)  ;
 	            uy2 = D_d_to_u_row((double)screen_y)  ;
@@ -124,11 +123,9 @@ int make_window_box ( struct Cell_head *window, double magnify, int full, int ha
 		}
 	        fprintf(stderr, "\n") ;
 		resetwin = 1;
-		break;
-	    case RIGHTB:
+	}else{
                 fprintf(stderr, "\n") ;
 		return 1;
-		break;
 	}
 	if ( resetwin ) {
 	    set_win ( window, ux1, uy1, ux2, uy2, hand);

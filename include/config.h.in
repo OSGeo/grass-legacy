@@ -192,13 +192,6 @@
 #undef HAVE_PIXMAPS
 
 /*
- * It's hard to click two buttons simultaneously with two button mouse.
- * Situation is worse, if it requires continuous clicking.
- * In this case uncomment below.
- */
-#undef ANOTHER_BUTTON
-
-/*
  * configuration information solely dependent on the above
  * nothing below this point should need changing
  */

@@ -20,7 +20,7 @@ int get_point (int *x, int *y, char *east, char *north)
         else
             R_get_location_with_pointer(&curx, &cury, &button) ;
 
-        if (button == RIGHTB)
+        if (button == rightb)
             return(0) ;
 
 	get_east_north (curx, cury, east, north);
@@ -28,7 +28,7 @@ int get_point (int *x, int *y, char *east, char *north)
         fprintf (stdout,"NORTH: %s\n", north);
         instructions(1) ;
 
-    } while (button == LEFTB) ;
+    } while (button == leftb) ;
 
     *x = curx;
     *y = cury;

@@ -144,10 +144,6 @@ AC_ARG_ENABLE(sysv,
 [  --enable-sysv           define the compiler macro SYSV],,
 [enable_sysv=no])
 
-AC_ARG_ENABLE(another-button,
-[  --enable-another-button use two-button mouse conveniently],,
-[enable_another_button=no])
-
 AC_ARG_ENABLE(socket,
 [  --enable-socket         use socket XDriver (default)],,
 [enable_socket=no])
@@ -255,16 +251,6 @@ case "$enable_sysv" in
 esac
 AC_MSG_RESULT("$enable_sysv")
 AC_SUBST(SYSV)
-
-# Enable ANOTHER_BUTTON option
-
-AC_MSG_CHECKING(for another button)
-case "$enable_another_button" in
-	yes)	AC_DEFINE(ANOTHER_BUTTON)	;;
-	no)					;;
-	*)	AC_MSG_ERROR([*** You must answer yes or no.])	;;
-esac
-AC_MSG_RESULT("$enable_another_button")
 
 # XDRIVER connection type
 

@@ -18,25 +18,25 @@ int do_pan(struct Cell_head *window) {
     while( !end ) {
 	if (printmenu){
 	    fprintf(stderr, _("\n\nButtons:\n"));
-	    fprintf(stderr, _("%s Pan\n"), LEFTS);
-	    fprintf(stderr, _("%s Quit\n"), RIGHTS);
+	    fprintf(stderr, _("%s Pan\n"), lefts);
+	    fprintf(stderr, _("%s Quit\n"), rights);
 	    printmenu = 0;
 	}
 
 	R_get_location_with_pointer(&screen_x, &screen_y, &button);
 
 
-	switch(button) {
-	    case LEFTB: /* pan */
+	if(button == leftb){
+	    /* pan */
 		pan_window(window, screen_x, screen_y);
 		printmenu = 1;
-		break;
-	    case MIDDLEB: /* noop */
+	}else
+	if(button == middleb){
+	    /* noop */
 		printmenu = 1;
-		break;
-	    case RIGHTB:
+	}else
+	if(button == rightb){
 		end = 1;
-		break;
 	}
     }
 

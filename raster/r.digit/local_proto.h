@@ -1,17 +1,14 @@
-/* Define ANOTHER_BUTTON to click conveniently for two button mouse.
- * Read src/CMD/head/head and do not define here for consistency.
-#define ANOTHER_BUTTON
-*/
+#ifndef LOCAL_PROTO_H
+#define	LOCAL_PROTO_H
 
-#define	LEFTB	1
-
-#ifndef ANOTHER_BUTTON
-#	define MIDDLEB	2
-#	define RIGHTB	3
+#ifdef	MAIN
+#define	GLOBAL
 #else
-#	define MIDDLEB	3
-#	define RIGHTB	2
+#define	GLOBAL	extern
 #endif
+
+GLOBAL int leftb, middleb, rightb;
+GLOBAL char *lefts, *middles, *rights;
 
 /* bnw_line.c */
 int black_and_white_line(int, int, int, int);
@@ -50,4 +47,6 @@ char *get_label(long, struct Categories *);
 int get_category(FILE *, char *, struct Categories *);
 /* get_line.c */
 int get_line(FILE *, struct Categories *);
+#endif
+
 #endif

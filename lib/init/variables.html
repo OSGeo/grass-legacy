@@ -48,7 +48,7 @@ Use: &nbsp;&nbsp;&nbsp; <tt>g.gisenv set=VARIABLE=VALUE</tt>
 <p>
 
 It looks unusual with two equals signs, but g.gisenv does dual duty for
-getting and setting GRASS environment variables.  If the user just specifies
+getting and setting GRASS variables.  If the user just specifies
 a variable name, it defaults to "get" mode. Example:
 <p>
 <tt>
@@ -57,7 +57,7 @@ a variable name, it defaults to "get" mode. Example:
 </tt>
 
 <p>
-To <b>permanently</b> predefine GRASS environment variables the user may specify
+To <b>permanently</b> predefine GRASS variables the user may specify
 the variable(s) in the <tt>.grassrc57</tt> file.
 
 <hr WIDTH="100%">
@@ -72,6 +72,11 @@ the variable(s) in the <tt>.grassrc57</tt> file.
 <p>GRASS_ADDON_PATH
 <br>[grass5] startup script
 <br>&nbsp; allows to specify additional paths to local GRASS modules extra to standard distribution
+
+<p>GRASS_ANOTHER_BUTTON
+<br>[various modules]
+<br>&nbsp; If the environment variable GRASS_ANOTHER_BUTTON exists,
+ the mouse button setting will be changed for two-button mice.
 
 <p>GRASS_BACKGROUNDCOLOR
 <br>[PNGdriver]

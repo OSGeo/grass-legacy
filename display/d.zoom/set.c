@@ -75,23 +75,19 @@ int set_win ( struct Cell_head *window, double ux1, double uy1, double ux2, doub
 
 	    fprintf(stderr, "\nResolution is too low for selected region.\n") ;
 	    fprintf(stderr, "Buttons:\n") ;
-	    fprintf(stderr, "%s Increase resolution to n-s = %.20f e-w = %.20f\n", LEFTS, nsr, ewr);
-	    fprintf(stderr, "%s Cancel (keep previous region)\n", MIDDLES) ;
-	    fprintf(stderr, "%s Cancel (keep previous region)\n", RIGHTS) ;
+	    fprintf(stderr, "%s Increase resolution to n-s = %.20f e-w = %.20f\n", lefts, nsr, ewr);
+	    fprintf(stderr, "%s Cancel (keep previous region)\n", middles) ;
+	    fprintf(stderr, "%s Cancel (keep previous region)\n", rights) ;
 	    
 	    R_get_location_with_pointer(&screen_x, &screen_y, &button);
 
-	    switch(button) {
-		case LEFTB:
+	    if(button == leftb){
 		    window->ns_res = nsr;
 		    window->ew_res = ewr;
-		    break;
-		case MIDDLEB:
-		case RIGHTB:
+	    }else{
 		    resetres = 0;
 		    resetwin = 0;
-		    break;
-	     }	
+	    }
 	} else {
 	    resetres = 0;
 	}
@@ -104,14 +100,13 @@ int set_win ( struct Cell_head *window, double ux1, double uy1, double ux2, doub
 	ewr = round_to ( window->ew_res * 10, 3); 
 	fprintf(stderr, "\nResolution is too high for selected region.\n") ;
 	fprintf(stderr, "Buttons:\n") ;
-	fprintf(stderr, "%s Decrease resolution to n-s = %.20f e-w = %.20f\n", LEFTS, nsr, ewr);
-	fprintf(stderr, "%s Keep current resolution\n", MIDDLES) ;
-	fprintf(stderr, "%s Keep current resolution\n", RIGHTS) ;
+	fprintf(stderr, "%s Decrease resolution to n-s = %.20f e-w = %.20f\n", lefts, nsr, ewr);
+	fprintf(stderr, "%s Keep current resolution\n", middles) ;
+	fprintf(stderr, "%s Keep current resolution\n", rights) ;
 
 	R_get_location_with_pointer(&screen_x, &screen_y, &button);
 
-	switch(button) {
-	    case LEFTB:
+	if(button == leftb){
 		window->ns_res = nsr;
 		window->ew_res = ewr;
 		td = rint (tnorth / nsr);
@@ -122,11 +117,7 @@ int set_win ( struct Cell_head *window, double ux1, double uy1, double ux2, doub
 		teast = td * ewr;
 		td = rint (twest / ewr);
 		twest = td * ewr;
-		break;
-	    case MIDDLEB:
-	    case RIGHTB:
-		break;
-	 }	
+	}
     }
 
     if ( window->proj == PROJECTION_LL ) {
