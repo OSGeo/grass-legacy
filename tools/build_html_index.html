@@ -1,0 +1,42 @@
+#!/bin/sh
+
+#generates man page index.html
+# Markus Neteler, 2003
+
+ARCH="`cat ../include/Make/Platform.make | grep ARCH | sed 's+ ++g' | cut -d'=' -f2`"
+HTMLDIR="../dist.$ARCH/docs/html"
+
+cd $HTMLDIR
+
+echo "<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<TITLE>GRASS GIS 5.1 Reference Manual</TITLE>
+<body bgcolor=\"#FFFFFF\">
+<h2>GRASS GIS 5.1 Reference Manual</h2>
+This reference manual details the use of modules distributed with
+Geographic Resources Analysis Support System (GRASS), an open source (GNU
+GPL'ed), image processing and geographic information system (GIS).
+<p>
+<ul>" > index.html
+
+for i in `ls -1 *.html | grep -v index.html| cut -d'.' -f1 | sort -u`
+do 
+  echo "<b>$i.* commands:</b>" >> index.html
+  echo "<ul>" >> index.html
+  
+  for i in `ls -1 $i*.html`
+  do
+    BASENAME=`basename $i .html`
+    echo -n "<li><a href=\"$i\">$BASENAME" >> index.html
+  done
+  echo "</ul><br>" >> index.html
+  echo "<p>" >> index.html
+done
+
+echo "</ul>" >> index.html
+echo "<hr>" >> index.html
+echo "&copy; 2003 GRASS Development Team" >> index.html
+echo "</body>" >> index.html   
+echo "</html>" >> index.html
+
+echo "Generated $HTMLDIR/index.html"
