@@ -1,0 +1,66 @@
+
+
+
+Dwhat.once(2D)       GRASS Reference Manual        Dwhat.once(2D)
+
+
+
+NAME
+     Dwhat.once - Single interactive map query
+     (D Language Tool)
+
+SYNOPSIS
+     Dwhat.once [layer]
+
+DESCRIPTION
+     Dwhat.once is an interactive tool that allows the user,
+     using the pointing device (mouse), to select a single
+     location on the map in the current graphics window.  It
+     outputs two numbers for the first and only selection:
+     category number and the button pressed.  This program is
+     intended for use inside shell scripts that require a
+     category number and a button depressed.  If no map layer
+     names are specified on the command line, the map layer that
+     is displayed on the monitor in the current graphics window
+     is queried by default.  Otherwise, the current graphics
+     window is used for reference and the map layers named on the
+     command line are queried.
+
+     A single dash (-) following the command Dwhat.once can be
+     used as shorthand to indicate the layer displayed in the
+     current graphics window (i.e., Dwhat.once -).
+
+     The button numbers are: 0 for no button, 1 for left button,
+     2 for middle, and 3 for right.
+
+
+SEE ALSO
+     DINTRO[2D]   Introduction to the GRASS D tools
+     Dwhat[2D]    Performs a series of interactive queries
+
+AUTHOR
+     Jim Westervelt, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
