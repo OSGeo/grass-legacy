@@ -1,0 +1,15 @@
+PGM       = $(BIN_CONTRIB_CMD)/r.reclass.pg
+#PGM       = r.reclass.pg
+LIBES     = $(GISLIB) 
+
+
+
+OBJS = \
+	main.o \
+	infxQry.o 
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+
+$(LIBES): #
