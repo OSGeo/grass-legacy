@@ -1,0 +1,34 @@
+$Id: TODO,v 1.1 2000-06-07 16:44:51 markus Exp $
+
+TODO for GRASS GIS:
+
+- Fix the bugs in documents/know_bugs.list
+
+
+Wishlist for GRASS 5
+
+Libraries:
+- src/libes/gis/sites.c: Required is a new function which allows
+  to read an attribute/dimension selectable by user. This function
+  is needed for s.to.rast in order to select which attribute shall
+  be converted (assuming multi-attribute sites lists).
+
+- projection datum support for maps
+
+- new 3D vector format: evetually http://gts.sourceforge.net/ ??
+
+
+Modules:
+- r.buffer: should save info about used buffers into map history
+
+- etc/monitorcap: use relative paths based on $GISBASE
+
+- fix s.to.rast and s.to.vect to accept site lists created
+  by r.to.sites
+
+- NVIZ:
+    - Z axis scalable when displaying 3D sites
+    - eventually color problem in lat/long locations
+
+- v.out.e00: write it
+- r.out.e00: as well
