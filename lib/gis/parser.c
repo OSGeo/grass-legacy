@@ -1131,7 +1131,7 @@ int G_gui (void)
 
     /* module description */
     if (module_info.description) {
-       append(cmd, "label $suf.labdesc1 -text \"%s\" -anchor w -justify left -background white -foreground black\n", module_info.description);
+       append(cmd, "label $suf.labdesc1 -text {%s} -anchor w -justify left -background white -foreground black\n", module_info.description);
        append(cmd, "label $suf.labdesc2 -text \"\" -anchor w -justify left\n");
        append(cmd, "pack $suf.labdesc1 $suf.labdesc2 -side top -fill x\n" );
     }
@@ -1165,7 +1165,7 @@ int G_gui (void)
 	        append(cmd, "set opttype(%d) \"opt\" \n", optn);
 
 	    /* Option label */ 
-	    append(cmd, "label $suf.lab%d -text \"%s (%s, %s):\" -anchor w -justify left\n", 
+	    append(cmd, "label $suf.lab%d -text {%s (%s, %s):} -anchor w -justify left\n", 
 		          optn, opt->description, 
 			  type, opt->required == YES ? "required" : "optional");
 	    append(cmd, "pack $suf.lab%d -side top -fill x\n", optn );
@@ -1185,7 +1185,7 @@ int G_gui (void)
 		i = 1;
 		while (s) {
 		    if(opt->multiple) {
-			append(cmd, "checkbutton $suf.val%d.val%d -text \"%s\" -variable optval(%d,%d) -onvalue 1 -offvalue 0\n", optn, i, s, optn, i );    
+			append(cmd, "checkbutton $suf.val%d.val%d -text {%s} -variable optval(%d,%d) -onvalue 1 -offvalue 0\n", optn, i, s, optn, i );    
 			append(cmd, "pack $suf.val%d.val%d -side left\n", optn, i);
 			append(cmd, "set optvalname(%d,%d) \"%s\" \n", optn, i, s);    
 		    } else {
@@ -1252,7 +1252,7 @@ int G_gui (void)
 	    append(cmd, "set opttype(%d) \"flag\" \n", optn);
 	    
 	    append(cmd, "frame $suf.val%d \n", optn );
-	    append(cmd, "checkbutton $suf.val%d.chk -text \"%s\" -variable optval(%d) -onvalue 1 -offvalue 0 -anchor w\n", optn, flag->description, optn );    
+	    append(cmd, "checkbutton $suf.val%d.chk -text {%s} -variable optval(%d) -onvalue 1 -offvalue 0 -anchor w\n", optn, flag->description, optn );    
 	    append(cmd, "pack $suf.val%d.chk -side left\n", optn);
 	    append(cmd, "set optname(%d) \"%c\" \n", optn, flag->key);    
 	    append(cmd, "pack $suf.val%d -side top -fill x\n", optn );
