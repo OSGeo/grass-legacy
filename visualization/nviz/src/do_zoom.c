@@ -13,7 +13,7 @@
 
 #define USE_GL_NORMALIZE
 
-
+#include "config.h"
 /* Nvision includes */
 #include "interface.h"
 
@@ -31,12 +31,13 @@ static Display *dpy;
 static Window root;
 static GLXDrawable xdraw;
 static GLXContext ctx_orig;
-#ifdef GLX_PBUFFER_WIDTH
+#ifdef HAVE_PBUFFERS
 static GLXPbuffer pbuffer;
-#elif GLX_PIXMAP_BIT
+#endif
+#ifdef HAVE_PIXMAPS
 Pixmap pixmap;
 static GLXPixmap glxpixmap;
-#endif /* GLX */
+#endif
 #endif /*X11 */
 
 void swap_togl();
@@ -57,7 +58,7 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
     int cnt=1;
     double aspect;
     char pref[64], filename[1024], cmd[1024], cmd2[1024];
-#ifdef GLX_PIXMAP_BIT
+#if defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS)
     int os_w ;
     int os_h ;
 #endif
@@ -76,7 +77,7 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
     aspect = (double) (c_orig-a_orig)/(d_orig-b_orig);
 
 /* create off-screen context if possible */
-#ifdef GLX_PIXMAP_BIT
+#if defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS)
     os_w = atoi(argv[2]);
     os_h = atoi(argv[3]);
 
@@ -196,7 +197,7 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
     Ndraw_all_cmd(data, interp, argc, argv);
 
       
-#ifdef GLX_PIXMAP_BIT
+#if defined(HAVE_PBUFFERS) || defined(HAVE_PIXMAPS)
     Destroy_OS_Ctx();
 #endif
 
@@ -210,15 +211,18 @@ int Nstart_zoom_cmd(Nv_data * data,	/* Local data */
 *********************************************/
 void swap_os(void)
 {
-
-#ifdef GLX_PBUFFER_WIDTH
-    glXSwapBuffers(dpy, pbuffer);
-#elif GLX_PIXMAP_BIT
-    glXSwapBuffers(dpy, glxpixmap);
+#ifdef HAVE_PBUFFERS
+    if (pbuffer)
+    {
+	glXSwapBuffers(dpy, pbuffer);
+	return;
+    }
 #endif
-
+#ifdef HAVE_PIXMAPS
+    if (glxpixmap)
+	glXSwapBuffers(dpy, glxpixmap);
+#endif
 }
-
 
 /********************************************
  * open an off-screen render context 
@@ -228,12 +232,13 @@ int Create_OS_Ctx(int width, int height)
 #ifdef X11
     int scr;
 
-#ifdef GLX_PBUFFER_WIDTH
+#ifdef HAVE_PBUFFERS
     GLXFBConfig *fbc;
     int elements;
     int pbuf_attrib[200];
     int pbuf_cnt;
-#elif GLX_PIXMAP_BIT
+#endif
+#ifdef HAVE_PIXMAPS
     XVisualInfo *vi;
     Colormap cmap;
     int att[] = { GLX_RGBA,
@@ -245,7 +250,6 @@ int Create_OS_Ctx(int width, int height)
 	None
     };
     GLXContext ctx;
-
 #endif
 
     dpy = XOpenDisplay(NULL);
@@ -267,52 +271,56 @@ int Create_OS_Ctx(int width, int height)
 	return (-1);
     }
 
-#ifdef GLX_PBUFFER_WIDTH
-/* use newer 1.3 code */
-/* use FB method */
+#ifdef HAVE_PBUFFERS
     fprintf(stderr, "Creating PBuffer Using GLX 1.3\n");
 
     fbc = glXChooseFBConfig(dpy, scr, 0, &elements);
-    if (fbc == NULL) {
-	fprintf(stderr, "ERROR -- FBConfig NULL return\n");
-	return (-1);
+    if (fbc)
+    {
+	pbuf_cnt = 0;
+	pbuf_attrib[pbuf_cnt++] = GLX_PBUFFER_WIDTH;
+	pbuf_attrib[pbuf_cnt++] = width + 1;
+	pbuf_attrib[pbuf_cnt++] = GLX_PBUFFER_HEIGHT;
+	pbuf_attrib[pbuf_cnt++] = height + 1;
+
+	pbuffer = glXCreatePbuffer(dpy, fbc[0], pbuf_attrib);
+	if (pbuffer)
+	    glXMakeContextCurrent(dpy, pbuffer, pbuffer, ctx_orig);
     }
+#endif
+#ifdef HAVE_PIXMAPS
+#ifdef HAVE_PBUFFERS
+    if (!pbuffer)
+#endif
+    {
+	fprintf(stderr, "Create PixMap Using GLX 1.1\n");
 
-    pbuf_cnt = 0;
-    pbuf_attrib[pbuf_cnt++] = GLX_PBUFFER_WIDTH;
-    pbuf_attrib[pbuf_cnt++] = width + 1;
-    pbuf_attrib[pbuf_cnt++] = GLX_PBUFFER_HEIGHT;
-    pbuf_attrib[pbuf_cnt++] = height + 1;
+	vi = glXChooseVisual(dpy, scr, att);
+	if (vi == NULL) {
+	    fprintf(stderr, "Unable to get Visual\n");
+	    return (-1);
+	}
 
-    pbuffer = glXCreatePbuffer(dpy, fbc[0], pbuf_attrib);
-    glXMakeContextCurrent(dpy, pbuffer, pbuffer, ctx_orig);
+	ctx = glXCreateContext(dpy, vi, NULL, GL_FALSE);
+	if (ctx == NULL) {
+	    fprintf(stderr, "Unable to create context\n");
+	    return (-1);
+	}
 
-#elif GLX_PIXMAP_BIT
-/* use old pre-1.3 method */
-    fprintf(stderr, "Create PixMap Using GLX 1.1\n");
+	cmap = XCreateColormap(dpy, RootWindow(dpy,vi->screen),
+			       vi->visual, AllocNone);
 
-    vi = glXChooseVisual(dpy, scr, att);
-    if (vi == NULL) {
-	fprintf(stderr, "Unable to get Visual\n");
-	return (-1);
+	pixmap =
+	    XCreatePixmap(dpy, RootWindow(dpy, vi->screen), width, height,
+			  vi->depth);
+	if (!pixmap) {
+	    fprintf(stderr, "Unable to create pixmap\n");
+	    return (-1);
+	}
+	glxpixmap = glXCreateGLXPixmap(dpy, vi, pixmap);
+	glXMakeCurrent(dpy, glxpixmap, ctx);
     }
-
-    ctx = glXCreateContext(dpy, vi, NULL, GL_FALSE);
-    if (ctx == NULL) {
-	fprintf(stderr, "Unable to create context\n");
-	return (-1);
-    }
-
-    cmap = XCreateColormap(dpy, RootWindow(dpy,vi->screen),
-		vi->visual, AllocNone);
-
-    pixmap =
-	XCreatePixmap(dpy, RootWindow(dpy, vi->screen), width, height,
-		      vi->depth);
-    glxpixmap = glXCreateGLXPixmap(dpy, vi, pixmap);
-    glXMakeCurrent(dpy, glxpixmap, ctx);
-
-#endif /* GLX */
+#endif
 
     /* Initalize off screen context */
 	if ( init_ctx() != 1) {
@@ -334,8 +342,6 @@ int Create_OS_Ctx(int width, int height)
     fprintf(stderr, "It appears that X is not available!\n");
     return (-1);
 #endif /* X11 */
-
- 
 }
 
 
@@ -346,25 +352,34 @@ int Destroy_OS_Ctx(void)
 {
 #ifdef X11
 
-#ifdef GLX_PBUFFER_WIDTH
-    fprintf(stderr, "GLX -- destroy pbuffer\n");
-    glXDestroyPbuffer(dpy, pbuffer);
-    glXMakeCurrent(dpy, xdraw, ctx_orig);
-    /*
-    glXMakeContextCurrent(dpy, xdraw, xdraw, ctx_orig);
-    */
-    GS_set_swap_func(swap_togl);
-    return (1);
+#ifdef HAVE_PBUFFERS
+    if (pbuffer)
+    {
+	fprintf(stderr, "GLX -- destroy pbuffer\n");
+	glXDestroyPbuffer(dpy, pbuffer);
+	pbuffer = None;
+	glXMakeCurrent(dpy, xdraw, ctx_orig);
+	/*
+	  glXMakeContextCurrent(dpy, xdraw, xdraw, ctx_orig);
+	*/
+	GS_set_swap_func(swap_togl);
+	return (1);
+    }
+#endif
+#ifdef HAVE_PIXMAPS
+    if (glxpixmap)
+    {
+	fprintf(stderr, "Destroy Pixmap and GLXPixmap\n");
+	XFreePixmap(dpy, pixmap);
+	pixmap = None;
+	glXDestroyGLXPixmap(dpy, glxpixmap);
+	glxpixmap = None;
+	glXMakeCurrent(dpy, xdraw, ctx_orig);
+	GS_set_swap_func(swap_togl);
+	return (1);
+    }
 
-#elif GLX_PIXMAP_BIT
-    fprintf(stderr, "Destroy Pixmap and GLXPixmap\n");
-    XFreePixmap(dpy, pixmap);
-    glXDestroyGLXPixmap(dpy, glxpixmap);
-    glXMakeCurrent(dpy, xdraw, ctx_orig);
-    GS_set_swap_func(swap_togl);
-    return (1);
-
-#endif /* GLX */
+#endif
     return (1);
 
 #endif /* X11 */
