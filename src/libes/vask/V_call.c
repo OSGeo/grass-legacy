@@ -123,6 +123,25 @@ struct V__ V__ ;
 
 static int interrupts_ok = 0;			/* mod shapiro */
 
+
+/*!
+ * \brief interact with the user
+ *
+ * V_call() clears the screen and
+ * writes the text and data values specified by V_line(), V_ques() and
+ * V_const() to the screen. It interfaces with the user, collecting user
+ * responses in the V_ques() fields until the user is satisfied. A message is
+ * automatically supplied on line number 23, explaining to the user to enter an
+ * ESC when all inputs have been supplied as desired. V_call() ends when the
+ * user hits ESC and returns a value of 1 (but see V_intrpt_ok() below). No
+ * error checking is done by V_call().  Instead, all variables used in V_ques()
+ * calls must be checked upon return from V_call(). If the user has supplied
+ * inappropriate information, the user can be informed, and the input prompted
+ * for again by further calls to V_call().
+ *
+ *  \return int
+ */
+
 int V_call(void) 
 {
     int incr ;
@@ -411,12 +430,44 @@ int V_call(void)
     }
 }
 
+
+/*!
+ * \brief allow ctrl-c
+ *
+ * V_call() normally only allows the
+ * ESC character to end the interactive input session. Sometimes it is desirable
+ * to allow the user to cancel the session. To provide this alternate means of
+ * exit, the programmer can call V_intrpt_ok() before V_call(). This allows
+ * the user to enter Ctrl-C, which causes V_call() to return a value of 0
+ * instead of 1.
+ * A message is automatically supplied to the user on line 23 saying to use
+ * Ctrl-C to cancel the input session. The normal message accompanying V_call()
+ * is moved up to line 22.
+ * <b>Note.</b> When V_intrpt_ok() is called, the programmer must limit the
+ * use of V_line(), V_ques(), and V_const() to lines 0-21.
+ *
+ *  \return int
+ */
+
 int V_intrpt_ok(void)
 {
     interrupts_ok = 1;		/* will be set false when V_call() exists */
 
     return 0;
 }
+
+/*!
+ * \brief change ctrl-c message
+ *
+ * A call to
+ * V_intrpt_msg() changes the default V_intrpt_ok() message from (OR
+ * <Ctrl-C> TO CANCEL) to (OR <Ctrl-C> TO <i>msg</i>). The message is (re)set
+ * to the default by V_clear().
+ *
+ *  \param text
+ *  \return int
+ */
+
 int V_intrpt_msg (const char *msg)
 {
     strcpy (V__.interrupt_msg, msg);

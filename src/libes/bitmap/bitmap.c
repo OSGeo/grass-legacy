@@ -43,12 +43,14 @@
 static int Mode = BM_FLAT;
 static int Size = 1;
 
-/*
-** Create bitmap of dimension x/y and return structure token
-**  Bitmap is initialized to all zeros
-**
-**  Returns struct BM * or NULL on error
-*/
+/*!
+ * \brief Create bitmap of dimension x/y and return structure token. 
+ * Bitmap is initialized to all zeros
+ *
+ *  \param int x
+ *  \param int y
+ *  \return struct BM or NULL on error
+ */
 struct BM *BM_create (int x, int y)
 {
     struct BM *map;
@@ -71,10 +73,13 @@ struct BM *BM_create (int x, int y)
     return map;
 }
 
-/* 
-** Destroy bitmap and free all associated memory
-**   returns 0;
-*/
+
+/*!
+ * \brief Destroy bitmap and free all associated memory
+ *
+ *  \param struct BM *map
+ *  \return int returns 0
+ */
 int 
 BM_destroy (struct BM *map)
 {

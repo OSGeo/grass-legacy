@@ -4,6 +4,30 @@
 static char *my_select ( ROWIO *,int);
 static int pageout ( ROWIO *,int);
 
+
+/*!
+ * \brief read a row
+ *
+ * Rowio_get() returns a
+ * buffer which holds the data for row <b>n</b> from the file associated with
+ * ROWIO structure <b>r.</b> If the row requested is not in memory, the
+ * <b>getrow()</b> routine specified in <i>rowio_setup</i> is called to
+ * read row <b>n</b> into memory and a pointer to the memory buffer containing
+ * the row is returned. If the data currently in the buffer had been changed by
+ * <i>rowio_put</i>, the <b>putrow()</b> routine specified in
+ * <i>rowio_setup</i> is called first to write the changed row to disk. If row
+ * <b>n</b> is already in memory, no disk read is done. The pointer to the data
+ * is simply returned.
+ * Return codes:
+ * NULL <b>n</b> is negative, or
+ * <b>getrow()</b> returned 0 (indicating an error condition).
+ * !NULL pointer to buffer containing row <b>n.</b>
+ *
+ *  \param r
+ *  \param n
+ *  \return char * 
+ */
+
 char *rowio_get (ROWIO *R,int row)
 {
     int i;

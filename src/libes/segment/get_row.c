@@ -1,14 +1,28 @@
-/*
- * $Id$
- */
- 
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
 #include "segment.h"
 
-/*  int segment_get_row (SEGMENT *SEG, CELL *buf,int row) */
+/* bugfix:
+ * int segment_get_row (SEGMENT *SEG, CELL *buf,int row) */
+
+/*!
+ * \brief read row from segment file
+ *
+ * Transfers data from a segment file, row by row, into memory
+ * (which can then be written to a regular matrix file). <b>Seg</b> is the
+ * segment structure that was configured from a call to <i>segment_init.</i>
+ * <b>Buf</b> will be filled with <i>ncols*len</i> bytes of data
+ * corresponding to the <b>row</b> in the data matrix.
+ * Return codes are: 1 if ok; else -1 could not seek or read segment file.
+ *
+ *  \param seg
+ *  \param buf
+ *  \param row
+ *  \return int
+ */
+
 int segment_get_row (SEGMENT *SEG, void *buf,int row)
 {
     int size;

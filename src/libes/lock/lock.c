@@ -51,6 +51,33 @@ static int get_pid(char *,int *);
 static int find_process(int);
 #endif
 
+
+/*!
+ * \brief create a lock
+ *
+ * This routine
+ * decides if the lock can be set and, if so, sets the lock. If <b>file</b>
+ * does not exist, the lock is set by creating the file and writing the
+ * <b>pid</b> (process id) into the <b>file.</b> If <b>file</b> exists, the
+ * lock may still be active, or it may have been abandoned. To determine this, an
+ * integer is read out of the file. This integer is taken to be the process id
+ * for the process which created the lock. If this process is still running, the
+ * lock is still active and the lock request is denied. Otherwise the lock is
+ * considered to have been abandoned, and the lock is set by writing the
+ * <b>pid</b> into the <b>file.</b>
+ * Return codes:
+ * 1 ok, lock request was successful
+ * 0 sorry, another process already has the file locked
+ * -1 error. could not create the file
+ * -2 error. could not read the file
+ * -3 error. could not write the file
+
+ *
+ *  \param file
+ *  \param pid
+ *  \return int
+ */
+
 int lock_file(char *file, int lock_pid)
 {
 #ifdef __MINGW32__
