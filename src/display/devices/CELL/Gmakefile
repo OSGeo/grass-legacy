@@ -1,0 +1,25 @@
+GRAPH = 
+
+OFILES =  \
+	connect.o\
+	bresline.o\
+	file_io.o\
+	polyfill.o\
+	Can_do.o\
+	Color.o\
+	Draw_line.o\
+	Get_w_box.o\
+	Get_w_line.o\
+	Get_w_pnt.o\
+	Graph_Clse.o\
+	Graph_Set.o\
+	Panel.o\
+	Polygn_abs.o\
+	Reset_clr.o \
+	Returns.o
+
+$(GISBASE)/driver/CELL: CELL
+	mv CELL $@
+
+CELL: $(OFILES) $(DRIVERLIB)
+	cc $(LDFLAGS) -o $@ $(OFILES) $(DRIVERLIB) $(GRAPH) $(GISLIB)
