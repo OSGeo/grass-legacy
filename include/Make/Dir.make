@@ -9,13 +9,13 @@ subdirs:
 	@list='$(SUBDIRS)'; \
 	for subdir in $$list; do \
 	    echo $$subdir ; \
-	    (cd $$subdir && make) || exit 1; \
+	    (cd $$subdir && $(MAKE)) || exit 1; \
 	done
 
 cleansubdirs:
 	@list='$(SUBDIRS)'; \
 	for subdir in $$list; do \
 	    echo $$subdir ; \
-	    (cd $$subdir && make clean) || exit 1; \
+	    (cd $$subdir && $(MAKE) clean) || exit 1; \
 	done
 
