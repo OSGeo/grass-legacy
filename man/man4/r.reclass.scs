@@ -1,36 +1,22 @@
 .TH r.reclass.scs
 .SH NAME
-\fIr.reclass.scs\fR \- Create a new raster map layer based on an existing
-raster map.
+\fIr.reclass.scs\fR \- Create new cell layer based upon	existing cell
+     layer
 .br
-.I "(SCS GRASS Raster Program)"
+.I "(GRASS Raster Program)"
 .SH SYNOPSIS
 \fBr.reclass.scs\fR
 .br
 \fBr.reclass.scs help\fR
 .SH DESCRIPTION
-\fIr.reclass.scs\fR is an interface to the GRASS \fIr.reclass\fR program.
-The program will reclassify the category values in a raster map layer
-based on reclass instructions entered by the user.
-The user can enter map reclassification rules to \fIr.reclass.scs\fR
-either from standard input or from a file.
-The program then issues \fIr.reclass\fR commands to produce the
-new reclassified raster map layer.
+an interactive program which allows a user to enter categories or category names interactively or will read the categories or names from a file. The program then issues r.reclass commands to produce the reclass map.
 
-Input to \fIr.reclass.scs\fR consists of a list of category names
-or category values that will be grouped into the same category in the
-output (reclassified) map.  Only one category name should appear on each
-line of input.  Input can be entered either interactively, or from
-a file.
+Files containing category names can be created in many ways, one may use a test editor, word-processor, or DBMS. In any event, the files for are no more than a list of category names which will have the same category number after the reclass. The files must contain the categories or category names as one category name per line.
 
-A file containing these reclass rules can be created using a text editor,
-word-processor, DBMS, etc.
-It is no more than a list of category names which will have the same
-category value after the reclassification.
+.SH "INTERACTIVE MODE"
+.SH BUGS
 .SH "SEE ALSO"
-.I r.reclass,
-.I r.resample,
-.I r.rescale
+r.reclass, r.rescale, r.resample
 .SH AUTHOR
-R.L. Glenn, USDA, SCS, NHQ-CGIS
+R.L.Glenn, USDA, SCS, NHQ-CGIS
 
