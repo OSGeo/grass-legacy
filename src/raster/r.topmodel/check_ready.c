@@ -232,6 +232,12 @@ check_names(void)
 		retval = 1;
 	}
 
+	if(file.Qobs && !strcmp(file.idxstats, file.Qobs)){
+		fprintf(stderr, 
+			"\n** idxstats == Qobs **\n");
+		retval = 1;
+	}
+
 	if(!strcmp(file.params, file.input)){
 		fprintf(stderr, 
 			"\n** parameters == input **\n");
@@ -244,9 +250,27 @@ check_names(void)
 		retval = 1;
 	}
 
+	if(file.Qobs && !strcmp(file.params, file.Qobs)){
+		fprintf(stderr, 
+			"\n** parameters == Qobs **\n");
+		retval = 1;
+	}
+
 	if(!strcmp(file.input, file.output)){
 		fprintf(stderr, 
 			"\n** input == output **\n");
+		retval = 1;
+	}
+
+	if(file.Qobs && !strcmp(file.input, file.Qobs)){
+		fprintf(stderr, 
+			"\n** input == Qobs **\n");
+		retval = 1;
+	}
+
+	if(file.Qobs && !strcmp(file.output, file.Qobs)){
+		fprintf(stderr, 
+			"\n** output == Qobs **\n");
 		retval = 1;
 	}
 
@@ -402,22 +426,26 @@ check_io(void)
 		}
 	}
 
-	if(file.params && !(fp=fopen(file.params, "r"))){
-		fprintf(stderr, 
-			"\n** %s - file not exists **\n", 
-			file.params);
-		retval = 1;
-	}else{
-		fclose(fp);
+	if(file.params){
+		if(!(fp=fopen(file.params, "r"))){
+			fprintf(stderr, 
+				"\n** %s - file not exists **\n", 
+				file.params);
+			retval = 1;
+		}else{
+			fclose(fp);
+		}
 	}
 
-	if(file.input && !(fp=fopen(file.input, "r"))){
-		fprintf(stderr, 
-			"\n** %s - file not exists **\n", 
-			file.input);
-		retval = 1;
-	}else{
-		fclose(fp);
+	if(file.input){
+		if(!(fp=fopen(file.input, "r"))){
+			fprintf(stderr, 
+				"\n** %s - file not exists **\n", 
+				file.input);
+			retval = 1;
+		}else{
+			fclose(fp);
+		}
 	}
 
 	if(file.output && (fp=fopen(file.output, "r"))){
@@ -429,6 +457,17 @@ check_io(void)
 				"\n** %s - file already exists **\n", 
 				file.output);
 			retval = 1;
+		}
+	}
+
+	if(file.Qobs){
+		if(!(fp=fopen(file.Qobs, "r"))){
+			fprintf(stderr, 
+				"\n** %s - file not exists **\n", 
+				file.Qobs);
+			retval = 1;
+		}else{
+			fclose(fp);
 		}
 	}
 

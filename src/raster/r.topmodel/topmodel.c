@@ -30,7 +30,7 @@ get_lambda(void)
 #endif
 
 
-	return retval;
+	return(retval);
 }
 
 
@@ -69,10 +69,10 @@ initialize(void)
 		}else{
 			for(j=1; j<params.nch; j++){
 				if(t <= misc.tch_[j]){
-					misc.Add[i] = params.Ad_r[j-1] +
-					  (params.Ad_r[j] - params.Ad_r[j-1]) *
-					  (t - misc.tch_[j-1]) /
-					  (misc.tch_[j] - misc.tch_[j-1]);
+					misc.Add[i] = params.Ad_r[j - 1] +
+					 (params.Ad_r[j] - params.Ad_r[j - 1]) *
+					 (t - misc.tch_[j - 1]) /
+					 (misc.tch_[j] - misc.tch_[j - 1]);
 					break;
 				}
 			}
@@ -197,7 +197,7 @@ implement(void)
 						: 0.0)) / 2.0;
 #elif	AVG == FRWD
 			Aatb_r = (idxstats.Aatb_r[j] + 
-					(j < misc.nidxclass-1 ?
+					(j < misc.nidxclass - 1 ?
 					 	idxstats.Aatb_r[j + 1]
 						: 0.0)) / 2.0;
 #endif
@@ -254,7 +254,7 @@ implement(void)
 									2.0
 					: 0.0);
 #elif	AVG == FRWD
-			_qo_ = (j < misc.nidxclass-1 ?
+			_qo_ = (j < misc.nidxclass - 1 ?
 					(misc.ex_[i][j] + misc.ex_[i][j + 1]) /
 									2.0
 					: 0.0);
@@ -288,11 +288,76 @@ implement(void)
 }
 
 
+/* Object function for hydrograph suggested by Servet and Dezetter(1991) */
+double
+get_Em(void)
+{
+	int	i;
+	double	Em, numerator, denominator;
+
+
+	misc.Qobs_bar_ = 0.0;
+	numerator = 0.0;
+	for(i=0; i<input.ntimestep; i++){
+		misc.Qobs_bar_ += misc.Qobs_[i];
+		numerator += pow(misc.Qobs_[i] - misc.Qt_[i], 2.0);
+	}
+	misc.Qobs_bar_ /= input.ntimestep;
+
+	denominator = 0.0;
+	for(i=0; i<input.ntimestep; i++)
+		denominator += pow(misc.Qobs_[i] - misc.Qobs_bar_, 2.0);
+
+	if(denominator == 0.0){
+		fprintf(stderr, "\n** Em can not be resolved due to constant "
+				"observed Q **\n");
+		Em = -1.0;
+	}else{
+		Em = 1.0 - numerator / denominator;
+	}
+
+
+	return(Em);
+}
+
+
+void
+others(void)
+{
+	int	i;
+
+
+	misc.Qt_bar_ = 0.0;
+	for(i=0; i<input.ntimestep; i++){
+		misc.Qt_bar_ += misc.Qt_[i];
+		if(!i || misc.Qt_peak_ < misc.Qt_[i]){
+			misc.Qt_peak_ = misc.Qt_[i];
+			misc.tt_peak_  = i + 1;
+		}
+	}
+	misc.Qt_bar_ /= input.ntimestep;
+
+	if(file.Qobs){
+		misc.Em = get_Em();
+		for(i=0; i<input.ntimestep; i++){
+			if(!i || misc.Qobs_peak_ < misc.Qobs_[i]){
+				misc.Qobs_peak_ = misc.Qobs_[i];
+				misc.tobs_peak_  = i + 1;
+			}
+		}
+	}
+
+
+	return;
+}
+
+
 void
 topmodel(void)
 {
 	initialize();
 	implement();
+	others();
 
 
 	return;

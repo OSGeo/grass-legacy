@@ -6,7 +6,10 @@
  * $Id$
  *
  * $Log$
- * Revision 1.3  2000-08-21 04:21:21  cho
+ * Revision 1.4  2000-09-05 08:58:10  cho
+ * added Qobs parameter and cosmetics
+ *
+ * Revision 1.3  2000/08/21 04:21:21  cho
  * modulized and cosmetics
  *
  * Revision 1.2  2000/08/20 06:35:19  cho
@@ -43,6 +46,7 @@ main(argc, argv)
 		struct	Option	*params;
 		struct	Option	*input;
 		struct	Option	*output;
+		struct	Option	*Qobs;
 		struct	Option	*timestep;
 		struct	Option	*idxclass;
 	} param;
@@ -140,6 +144,13 @@ main(argc, argv)
 	param.output->type		= TYPE_STRING;
 	param.output->required		= YES;
 
+	param.Qobs			= G_define_option();
+	param.Qobs->key			= "Qobs";
+	param.Qobs->description		=
+		"      Observed Q file";
+	param.Qobs->type		= TYPE_STRING;
+	param.Qobs->required		= NO;
+
 	param.timestep			= G_define_option();
 	param.timestep->key		= "timestep";
 	param.timestep->description	=
@@ -190,6 +201,7 @@ main(argc, argv)
 	file.params	= param.params->answer;
 	file.input	= param.input->answer;
 	file.output	= param.output->answer;
+	file.Qobs	= param.Qobs->answer;
 
 	misc.nidxclass	= atoi(param.nidxclass->answer);
 

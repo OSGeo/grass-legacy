@@ -36,6 +36,8 @@ Parameters:
 
 (o)	output:		Output file
 
+	Qobs:		Compare Qt with Qobs and calculate model efficiency
+
 	timestep:	OPTIONAL output for given time step
 
 	idxclass:	OPTIONAL output for given topographic index class
