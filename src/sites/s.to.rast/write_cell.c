@@ -44,7 +44,7 @@ int write_temp (int fd, struct Cell_head *window,
     num_cells = 0;
     num_cells = (endrow - startrow + 1) * (endcol - startcol + 1);
     if (NULL == (cells_written = (long *) G_malloc(sizeof(long) * (num_cells + 1)))) {
-	    G_fatal_error("Out of memory");
+        G_fatal_error("Out of memory");
     }
     i = 0;
     
@@ -53,13 +53,13 @@ int write_temp (int fd, struct Cell_head *window,
         {
             offset = (row * window->cols + col) * G_raster_size(map_type);
             lseek(fd,offset,0);
-	    /* For overwrite check */
-	    /* debugging */
-	    assert(i < num_cells);
-	    cells_written[i++] = offset;
+            /* For overwrite check */
+            /* debugging */
+            assert(i < num_cells);
+            cells_written[i++] = offset;
             if(write(fd, rast, G_raster_size(map_type))!=
-			                     G_raster_size(map_type))
-		   G_fatal_error("error while writing to temp file (disk full?)");
+                                             G_raster_size(map_type))
+            G_fatal_error("error while writing to temp file (disk full?)");
         }
 
     assert(i == num_cells);
@@ -105,45 +105,46 @@ int close_temp (int fd, char *name, char *temp_name,
 
 void check_overwrite(long *cells, long count)
 {
-	static long *all_cells = NULL, all_size = 0;
-	static int  said_it = 0;
-	long i, j, *lptr;
-	
-	if (!said_it) {
-		if (!all_cells) {
-			all_cells = (long *) G_malloc(sizeof(long) * count);
-			assert(all_cells != NULL);
-		}
-		else {
-			lptr = (long *) G_realloc(all_cells, sizeof(long) * 
-					(all_size + count));
-			assert(lptr != NULL);
-			all_cells = lptr;
-		}
-		/* Check the new values against our list */
-		for (i = 0; i < all_size; i++) {
-			for (j = 0; j < count; j++) {
-				if (cells[j] == all_cells[i] && !said_it) { /* Do warning */
-					G_warning("Writing same cells more than once!\n"
-						"Consider reducing your cell resolution or"
-						" reducing the 'size' parameter.");
-					said_it = 1;
-					goto break_out;
-				}
-			}
-		}
+    static long *all_cells = NULL, all_size = 0;
+    static int  said_it = 0;
+    long i, j, *lptr;
+    
+    if (!said_it) {
+        if (!all_cells) {
+            all_cells = (long *) G_malloc(sizeof(long) * count);
+            assert(all_cells != NULL);
+        }
+        else {
+            lptr = (long *) G_realloc(all_cells, sizeof(long) * 
+                            (all_size + count));
+            assert(lptr != NULL);
+            all_cells = lptr;
+        }
+        /* Check the new values against our list */
+        for (i = 0; i < all_size; i++) {
+            for (j = 0; j < count; j++) {
+                if (cells[j] == all_cells[i] && !said_it) { /* Do warning */
+                    G_warning("Writing same cells more than once!\n"
+                            "Consider reducing your cell resolution or"
+                            " reducing the 'size' parameter.");
+                    said_it = 1;
+                    goto break_out;
+                }
+            }
+        }
 break_out:
-		/* If we didn't find any, let's add to the list */
-		if (!said_it) {
-			all_size += count;
-			for (i = all_size - count, j = 0; 
-					i < all_size && j < count; i++, j++) {
-				all_cells[i] = cells[j];
-			}
-		}
-		else { /* Free memory and set all_cells == NULL */
-			G_free(all_cells);
-			all_cells = NULL;
-		}
-	} /* if (!said_it) */
+        /* If we didn't find any, let's add to the list */
+        if (!said_it) {
+            all_size += count;
+            for (i = all_size - count, j = 0; 
+                            i < all_size && j < count; i++, j++) {
+                all_cells[i] = cells[j];
+            }
+        }
+        else { /* Free memory and set all_cells == NULL */
+            G_free(all_cells);
+            all_cells = NULL;
+        }
+    } /* if (!said_it) */
 } /* check_overwrite() */
+/* vim: softtabstop=4 shiftwidth=4 expandtab */
