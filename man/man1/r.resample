@@ -43,9 +43,11 @@ resolution as the resolution of the current geographic region
 (set using \fIg.region\fR).
 
 The resulting raster map layer may be identical to the original raster
-map layer.  The \fIr.resample\fR program will copy the color table,
-category file, and history file associated with the original raster map
-layer for the resulting raster map layer.
+map layer.  The \fIr.resample\fR program will copy the color table
+and history file associated with the original raster map
+layer for the resulting raster map layer and will create a modified
+category file which contains description of only those categories
+which appear in resampled file.
 
 When the user resamples a GRASS \fIreclass\fR file, a true raster file
 is created by \fIr.resample\fR.
