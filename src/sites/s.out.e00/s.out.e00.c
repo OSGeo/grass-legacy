@@ -42,6 +42,7 @@ int main( int argc, char *argv[])
     struct Cell_head region;
     struct GModule *module;
     Site *site;
+    char *mapset;
 
     struct {
 	struct Option *input, *output;
@@ -80,16 +81,21 @@ int main( int argc, char *argv[])
     strncpy( name, infile, 27);
     for (p=name; *p; p++) {
 	if (!isalnum( *p))
+	{
 	    if (p == name)
 		*p = 'X';
 	    else
 		*p = 0;
+	}
     }
     G_toucase( name);
 
     /* Open input file */
+    mapset = G_find_file2 ("site_lists", parm.input->answer, "");
+    if(!mapset)
+         G_fatal_error("Couldn't find sites file %s", parm.input->answer);
 
-    if ((fsite = G_sites_open_old( infile, G_mapset())) == NULL)
+    if ((fsite = G_sites_open_old( infile, mapset)) == NULL)
 	G_fatal_error( "Site file not found\n");
     if (G_site_describe( fsite, &dims, &cat, &strs, &dbls))
 	G_fatal_error( "Failed to guess site file format\n");
@@ -164,7 +170,7 @@ int main( int argc, char *argv[])
       "YMAX              4-1  134-1  12 3 60-1  -1  -1-1                   4-");
     fprintf( fde00, "%14.7E%14.7E%14.7E%14.7E\n", xmin, xmax, ymin, ymax);
 
-    fsite = G_sites_open_old( infile, G_mapset());
+    fsite = G_sites_open_old( infile, mapset);
     
     strncpy( nnu, name, 13);
     strncpy( nid, name, 13);
