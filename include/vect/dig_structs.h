@@ -33,10 +33,10 @@
 typedef int plus_t;
 
 
-#define P_NODE_2D struct P_node_2d
-#define P_AREA_2D struct P_area_2d
-#define P_LINE_2D struct P_line_2d
-#define P_ISLE_2D struct P_isle_2d
+#define P_NODE struct P_node
+#define P_AREA struct P_area
+#define P_LINE struct P_line
+#define P_ISLE struct P_isle
 
 
 #define DIG_ORGAN_LEN       30
@@ -108,6 +108,7 @@ struct dig_head
 struct Format_info_shp {
     char       *file;    /* path to shp file without .shp */
     char       *cat_col; /* category column */
+    int        cat_col_num; /* category column number */
     SHPHandle  hShp;     
     DBFHandle  hDbf;
     int        type;     /* shapefile type */
@@ -160,10 +161,10 @@ struct Plus_head
 
     struct Port_info port;      /* Portability information */
 
-    P_NODE_2D **Node_2d;	/* P_NODE array of pointers *//* 1st item is 1 for  */
-    P_LINE_2D **Line_2d;	/* P_LINE array of pointers *//* all these (not 0) */
-    P_AREA_2D **Area_2d;		
-    P_ISLE_2D **Isle_2d;
+    P_NODE **Node;	/* P_NODE array of pointers *//* 1st item is 1 for  */
+    P_LINE **Line;	/* P_LINE array of pointers *//* all these (not 0) */
+    P_AREA **Area;		
+    P_ISLE **Isle;
    
     plus_t n_nodes;		/* Current Number of nodes */
     plus_t n_lines;		/* Current Number of lines */
@@ -266,20 +267,19 @@ struct bounding_box        /* Bounding Box */
     double B;   /* bottom */
   };
 
-struct P_node_2d
+struct P_node
   {
-    double x;			/* X ord */
-    double y;			/* Y ord */
+    double x;			/* X coordinate */
+    double y;			/* Y coordinate */
+    double z;			/* Z coordinate */
     plus_t alloc_lines;  
     plus_t n_lines;	/* Number of attached lines (size of lines, angle) */
-    /*  If 0, then is degenerate node, for snapping */
+    /*  If 0, then is degenerate node, for snappingi ??? */
     plus_t *lines;		/* Connected lines */
     float  *angles;		/* Respected angles */
-    //char   alive;		/* deleted or not   0 or !0  */
-            // if dead pointer to this node is set to NULL
   };
 
-struct P_line_2d
+struct P_line
   {
     plus_t N1;			/* start node */
     plus_t N2;			/* end node */
@@ -291,24 +291,25 @@ struct P_line_2d
     double S;
     double E;
     double W;
+    double T;                   /* top */
+    double B;                   /* bottom */ 
 
     long offset;		/* offset in DIG file for line */
     char type;			/*  see mode.h */
-    //char   alive;	/* ??? add alive because types are only alive now */
   };
 
-struct P_area_2d
+struct P_area
   {
     double N;		/* Bounding Box */
     double S;
     double E;
     double W;
+    double T;           /* top */
+    double B;           /* bottom */ 
     plus_t n_lines;	/* Number of boundary lines */
     plus_t alloc_lines;
     plus_t *lines;	/* Boundary Lines, negative means direction N2 to N1,
 			   lines are in  clockwise order */
-    //char   alive;		/* deleted or not   0 or !0  */
-    //  alive replaced by pointer to NULL
     
     /*********  Above this line is compatible with P_isle **********/
     
@@ -322,22 +323,23 @@ struct P_area_2d
     plus_t alloc_isles;
     plus_t *isles;		/* 1st generation interior islands */
 
-    //plus_t outside;             /* ??? Area outside if this area if island */
+    //plus_t outside;           /* ??? Area outside if this area if island */
   };
 
-struct P_isle_2d
+struct P_isle
   {
     double N;		/* Bounding Box */
     double S;
     double E;
     double W;
+    double T;           /* top */
+    double B;           /* bottom */ 
     plus_t n_lines;	/* Number of boundary lines */
     plus_t alloc_lines;
     plus_t *lines;	/* Boundary Lines, negative means direction N2 to N1,
 			   lines are in counter clockwise order */
-    //char alive;			/* deleted or not   0 or !0  */
-    //  alive replaced by pointer to NULL
-/*********  Above this line is compatible with P_area **********/
+
+    /*********  Above this line is compatible with P_area **********/
 
     plus_t area;		/* area it exists w/in, if any */
   };

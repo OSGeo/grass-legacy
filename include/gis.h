@@ -28,6 +28,7 @@
 #endif
 
 /* Grass and local include files */
+#include "config.h"
 #include "datetime.h"
 
 /*=========================== Constants/Defines ============================*/

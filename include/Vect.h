@@ -160,6 +160,9 @@ long V1_rewrite_line_shp (struct Map_info *, long offset, int type, struct line_
 long V1_rewrite_line_post (struct Map_info *, long offset, int type, struct line_pnts *, struct line_cats *);
 
 int Vect_build ( struct Map_info *Map, FILE *msgout );
+int Vect_build_nat ( struct Map_info *Map, FILE *msgout );
+int Vect_build_shp ( struct Map_info *Map, FILE *msgout );
+int Vect_build_post ( struct Map_info *Map, FILE *msgout );
 int Vect_topo_dump ( struct Plus_head *plus, FILE *out );
 
 int Vect_point_on_line ( struct line_pnts *, double, 
