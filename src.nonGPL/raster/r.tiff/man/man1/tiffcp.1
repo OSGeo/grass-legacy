@@ -1,0 +1,117 @@
+.\"	$Header: /usr/people/sam/tiff/man/man1/RCS/tiffcp.1,v 1.8 90/11/25 11:12:59 sam Exp $
+.\"
+.\" Copyright (c) 1988 by Sam Leffler.
+.\" All rights reserved.
+.\"
+.\" This file is provided for unrestricted use provided that this
+.\" legend is included on all tape media and as a part of the
+.\" software program in whole or part.  Users may copy, modify or
+.\" distribute this file at will.
+.\"
+.TH TIFFCP 1 "November 24, 1990"
+.SH NAME
+tiffcp \- copy a
+.SM TIFF
+file
+.SH SYNOPSIS
+.B tiffcp
+[
+.B \-none
+] [
+.B \-packbits
+] [
+.B \-lzw
+] [
+.B \-g3
+] [
+.B \-g4
+] [
+.B \-contig
+] [
+.B \-separate
+] [
+.B \-rowsperstrip
+.I n
+] [
+.B \-2d
+] [
+.B \-fill
+] [
+.B \-predictor
+.I n
+]
+.I "from-file to-file"
+.SH DESCRIPTION
+.I Tiffcp
+copies a file created according
+to the Tag Image File Format, Revision 5.0.
+Because the output file may be compressed using a different
+algorithm than the input file,
+.I tiffcp
+is most often used to convert between different compression
+schemes.
+.PP
+By default, 
+.I tiffcp
+will copy all known tags in a
+.SM TIFF
+directory of the input
+file to the associated directory in the output file.
+The
+.BR \-none ,
+.BR \-packbits ,
+.BR \-lzw ,
+.BR \-g3 ,
+and
+.BR \-g4 ,
+options are used to override the value of the
+Compression and thereby define
+the compression scheme to use in creating the output file.
+The
+.SM CCITT
+Group 3 and Group 4 compression algorithms can only
+be used with bilevel data.
+The
+.B \-2d
+and
+.B \-fill
+options are meaningful only with Group 3 compression:
+.B \-2d
+requests 2-dimensional encoding, while
+.B \-fill
+requests that each encoded scanline be
+zero-filled to a byte boundary.
+The
+.B \-predictor
+option is only meaninful with 
+.SM LZW
+compression: a predictor value of 2 causes
+each scanline of the output image to undergo horizontal
+differencing before it is encoded; a value
+of 1 forces each scanline to be encoded without
+differencing.
+.PP
+By default,
+.I tiffcp
+will create a new file with the same planar configuration as
+the original.
+The
+.B \-contig
+and
+.B \-separate
+options can be used to covert between different planar
+configurations if the original file has one 8-bit
+sample per pixel.
+.PP
+The
+.B \-rowsperstrip
+option can be used to set the number of rows (scanlines)
+in each strip of data in the output file.
+By default, the output file has the number of rows per strip
+set to a value that will ensure each strip is no more than 8 kilobytes.
+.SH "SEE ALSO"
+.IR pal2rgb (1),
+.IR tiffinfo (1),
+.IR tiffcmp (1),
+.IR tiffmedian (1),
+.IR libtiff (3)
