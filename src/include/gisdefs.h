@@ -40,10 +40,10 @@ char *G_adjust_Cell_head(struct Cell_head *, int, int);
 char *G_align_window(struct Cell_head *, struct Cell_head *);
 
 /* alloc.c */
-char *G_malloc(int);
-char *G_calloc(int, int);
-char *G_realloc(void *, int);
-int G_free(void *);
+void *G_malloc(int);
+void *G_calloc(int, int);
+void *G_realloc(void *, int);
+void G_free(void *);
 
 /* alloc_cell.c */
 int G_raster_size(RASTER_MAP_TYPE);
