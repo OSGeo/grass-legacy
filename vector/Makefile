@@ -4,6 +4,7 @@ MODULE_TOPDIR = ..
 SUBDIRS = \
 	v.ascii \
 	v.build \
+	v.build.polylines \
 	v.category \
 	v.clean \
 	v.convert \
