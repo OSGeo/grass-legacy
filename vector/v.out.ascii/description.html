@@ -3,7 +3,10 @@
 <em>v.out.ascii</em> 
 converts a GRASS vector map in binary format to a GRASS vector map in ASCII 
 format. Using flag <b>-o</b> <em>v.out.ascii</em> output will be in old 
-(version 4) ascii format.
+(version 4) ASCII format.
+<P>
+If the <b>output</b> parameter is not given then the coordinates of any 
+<em>point</em> data within the vector file is sent to stdout.
 
 <h2>NOTES</h2>
 
@@ -16,8 +19,8 @@ between machines.
 
 <p>
 
-The output from <em>v.out.ascii</em> will be placed in the user's current 
-mapset under the <em>$LOCATION/dig_ascii</em> directory.
+The <B>output</B> file from <em>v.out.ascii</em> will be placed 
+in the <em>$LOCATION/$MAPSET/dig_ascii/</em> directory.
 
 <p>
 
