@@ -47,7 +47,7 @@ int process(int in, char *parms, char *proj_name, char *proj_title,
 	}
 	if (index_prev != -1)
 		index_prev = proj_index;
-	proj_index = get_proj_index(proj_name);
+	proj_index = G_geo_get_proj_index(proj_name);
 	if (proj_index < 0) {
 		sprintf(buff, "projection %s is not specified in the table", proj_name);
 		G_fatal_error(buff);

@@ -40,7 +40,7 @@ get_input (char *blank1, char *word1, char *blank2, char *word2, char *rest)
 	*word2++ = *b++;
     *word2 = 0;
 
-    while (*rest++ = *b++)
+    while ((*rest++ = *b++))
 	;
 
     if (isatty(0) && strcmp ("end", w1) == 0 && *w2 == 0)
