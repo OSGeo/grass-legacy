@@ -14,8 +14,8 @@ SUBDIRS1 = \
 	v.format \
 	v.info \
 	v.in.ascii \
-	v.in.dwg \
 	v.in.sites \
+	v.proj \
 	v.net.alloc \
 	v.net.iso \
 	v.net.salesman \
