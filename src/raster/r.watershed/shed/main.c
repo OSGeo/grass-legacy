@@ -7,10 +7,11 @@ main(argc, argv) int argc; char *argv[]; {
 	char	buf[500];
 
 	G_gisinit (argv[0]);
+	G_set_program_name ("r.watershed");
 	G_get_window (&(output.window));
 	intro ();
 	output.num_maps = 0;
-	com_line_Gwater (&input, &output); /* develops Gwater command line */
+	com_line_Gwater (&input, &output); /* develops r.watershed command line */
 	basin_maps (&input, &output); /* organizes map layers output */
 	if (input.fast || input.slow) { 
 	  if (input.fast) {
@@ -36,6 +37,13 @@ main(argc, argv) int argc; char *argv[]; {
 		exit (1);
 	  }
 	}
+
+	/*
+	ARMSED:  This section exists to create the stats part.
+	input.ar_file_name could be used as a flag to determine this stuff
+	should be run.
+	*/
+#ifdef ARMSED
 	ar_file_in (input.ar_file_name, &output);
 	read_basins (input.haf_name, &output);
 	valid_basins (input.accum_name, &output);
@@ -56,5 +64,11 @@ main(argc, argv) int argc; char *argv[]; {
 		print_output (&output);
 	}
 	free_output (&output);
+
+#endif
+	/*
+	end of ARMSED comment code
+	*/
+
 	exit (0);
 }
