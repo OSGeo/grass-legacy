@@ -26,6 +26,7 @@ main (int argc, char *argv[])
             R_release_driver();
             break;
         case NO_RUN:
+	case NO_MON:
             status = "not running";
             break;
         case LOCKED:
