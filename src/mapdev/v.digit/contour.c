@@ -360,6 +360,7 @@ cmp_y (a, b)
 
 static 
 check_list (map, list, cnt)
+    struct Map_info *map;
     struct intersect *list;
 {
     plus_t **clines;
