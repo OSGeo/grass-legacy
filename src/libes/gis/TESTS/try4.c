@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "gis.h"
 main (argc, argv) char *argv[];
 {
