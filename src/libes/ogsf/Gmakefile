@@ -9,7 +9,7 @@ EXTRA_CFLAGS= -DUSE_OGL
 LDFLAGS=
 
 OBJ = GS2.o GSX.o GS_util.o Gs3.o gs.o gsd_wire.o gsd_surf.o gsd_views.o gsd_prim.o \
-	gs_bm.o gs_norms.o gs_query.o gsd_objs.o gsd_img.o gsd_cplane.o trans.o \
+	gs_bm.o gs_norms.o gs_query.o gsd_objs.o gsd_img.o gsd_img_ppm.o gsd_cplane.o trans.o \
 	GV2.o Gv3.o gv.o gvd.o gv_quick.o gsdrape.o GP2.o Gp3.o gp.o gpd.o gsds.o \
 	GK2.o gsdiff.o gsget.o gk.o \
 	gsd_label.o gsd_fonts.o   \
