@@ -3898,7 +3898,7 @@ echo "configure:3885: checking libpq-fe.h" >&5
         echo $ac_n "checking libpq paths""... $ac_c" 1>&6
 echo "configure:3900: checking libpq paths" >&5
         for dir in $my_pglib_path; do
-            if test -d "$dir"; then
+            if test -d "$dir" && ( test -f "$dir/libpq.a" || test -f "$dir/libpq.so" ) ; then
             	PQLIBPATH="$PQLIBPATH -L$dir"
 		break
             fi
