@@ -52,7 +52,7 @@ fi
 
 AC_DEFUN(LOC_CHECK_INCLUDES,[
 ac_save_cppflags="$CPPFLAGS"
-CPPFLAGS="$CPPFLAGS $3"
+CPPFLAGS="$3 $CPPFLAGS"
 AC_CHECK_HEADERS($1, [], ifelse($4,[],[
     AC_MSG_ERROR([*** Unable to locate $2 includes.])
 ], $4))
@@ -96,7 +96,7 @@ LOC_SHIFT9($*))
 
 define(LOC_CHECK_LIBS,[
 ac_save_ldflags="$LDFLAGS"
-LDFLAGS="$LDFLAGS $4"
+LDFLAGS="$4 $LDFLAGS"
 LOC_CHECK_LIBS_1($1,$2,,,$5,$6,$7,ifelse($8,[],[
     AC_MSG_ERROR([*** Unable to locate $3 library.])
 ],$8),LOC_SHIFT8($*))
@@ -106,7 +106,7 @@ LDFLAGS=${ac_save_ldflags}
 AC_DEFUN(LOC_CHECK_VERSION,[
 AC_MSG_CHECKING($3 version)
 ac_save_cppflags="$CPPFLAGS"
-CPPFLAGS="$CPPFLAGS $5"
+CPPFLAGS="$5 $CPPFLAGS"
 AC_TRY_RUN([
 #include <$1>
 int main(void) {

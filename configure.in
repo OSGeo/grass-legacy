@@ -267,16 +267,16 @@ AC_PROG_INSTALL
 
 AC_PROG_LEX
 if test "$LEX" = "lex"; then
-    AC_CHECK_PROGS(LEX, lex, no)
-    if test "$LEX" = "no"; then
+    AC_PATH_PROG(LEXPATH, lex, no)
+    if test "$LEXPATH" = "no"; then
 	AC_MSG_ERROR([*** Unable to locate lex.])
     fi
 fi
 
 AC_PROG_YACC
 if test "$YACC" = "yacc"; then
-    AC_CHECK_PROGS(YACC, yacc, no)
-    if test "$YACC" = "no"; then
+    AC_PATH_PROG(YACCPATH, yacc, no)
+    if test "$YACCPATH" = "no"; then
 	AC_MSG_ERROR([*** Unable to locate yacc.])
     fi
 fi
