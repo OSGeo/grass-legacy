@@ -1,0 +1,28 @@
+
+                       BUILDING CUSTOM FILTERS
+
+The user may wish to model interactions across a landscape or remove
+systematic distortion occurring across a map or image.  Both
+applications can be accomplished by filtering data.  Custom filters can
+be built which make the value of one pixel a user-defined function of
+the values in the surrounding \cells\.  
+
+The GRASS programs that can be used to build custom filters are:
+
+	\-  i.zc \
+	\-  r.mapcalc \
+	\-  r.mfilter \
+	\-  r.neighbors \ 
+
+For more information on a specific command, select a command and press
+ESC.
+
+
+
+
+
+
+
+
+
+
