@@ -75,3 +75,48 @@ Implementation steps:
 David D Gray, Radim Blazek
 <ddgray@armadce.demon.co.uk>
 <Radim.Blazek@dhv.cz>
+
+-----------------------------------------------------------------------
+Further comments:
+
+Date: Fri, 08 Sep 2000 01:30:38 +0000
+From: David D Gray <ddgray@armadce.demon.co.uk>
+
+The core format is a true 3d format as there is no assymetry between the
+x- and y- coords and the new z-coord. But most modules work on the
+presumption of a projected 2d space, so in the first instance most
+immediate applications will be to work with projection+elevation eg. a
+projected TIN model. Also it will now be easier to work directly from
+vector data to obtain true point to point values such as slopes, aspect
+etc (instead of having to interpolate from raster or sites data).
+
+Then, though this would be extra to our immediate plans, a volume
+handling capability could be added by creating combinations of AREA into
+SURFACE and SURFACE into VOLUME (we'd also need an EDGE). Then modules
+to deal with g3d <-> v3d just as we do with the 2d stuff at present. We
+could probably just hack this in to the existing system, mostly to
+v.build and the display/edit modules, but I don't think much else, apart
+from the new modules.
+
+`CAD' type support would require 1) layers 2) a format, maybe a vector
+graphics format 3) some kind of support for composite maps (this would
+be a good idea generally-does anyone know if it has ever been
+discussed?) where a combination of vector/raster/CAD etc layers could be
+treated as one map.
+
+So that is a bigger job. Maybe we could complete the immediate task, and
+possibly create volume support through the course of development of
+GRASS 5.x. However to go much further, do we want to continue hacking
+more stuff on to GRASS3 dig and GRASS4 Vect, or is it time to think
+about a rewrite of the vector engine? There is a spec for a vector
+engine dating back some years, that was originally intended for
+`GRASS6', in the documents directory, though it appears the code base no
+longer exists (?).
+
+David
+
+[Comment M.N.:
+ David Gerdes          obviously does not have the software any more
+ dpgerdes@roadkill.com
+ http://www.roadkill.com/~dpgerdes/vector/api.html
+]
