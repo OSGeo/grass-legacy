@@ -137,7 +137,7 @@ static int check_alloc_color(int n)
 		if (pos_color_look_alloc)
 			pos_color_lookup = (int *)realloc((char *)pos_color_lookup, to_alloc * sizeof(int)) ;
 		else
-			pos_color_lookup = (int *)malloc(to_alloc * sizeof(int)) ;
+			pos_color_lookup = (int *)G_malloc(to_alloc * sizeof(int)) ;
 
 		if(pos_color_lookup)
 		{
@@ -163,7 +163,7 @@ static int check_alloc_color(int n)
 		if (neg_color_look_alloc)
 			neg_color_lookup = (int *)realloc((char *)neg_color_lookup, to_alloc * sizeof(int)) ;
 		else
-			neg_color_lookup = (int *)malloc(to_alloc * sizeof(int)) ;
+			neg_color_lookup = (int *)G_malloc(to_alloc * sizeof(int)) ;
 
 		if(neg_color_lookup)
 		{

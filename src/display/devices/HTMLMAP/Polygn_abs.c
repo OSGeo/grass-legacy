@@ -120,10 +120,10 @@ int Polygon_abs (int *x, int *y, int n)
 
     if (n >= 3) {
 
-	new = (struct MapPoly *) malloc(sizeof(struct MapPoly));
+	new = (struct MapPoly *) G_malloc(sizeof(struct MapPoly));
 
 	/* grab the last text string written as url */
-	new->url = (char *) malloc(strlen(last_text)+1);
+	new->url = (char *) G_malloc(strlen(last_text)+1);
 	strcpy(new->url, last_text);
 
 	/* hook up new MapPoly into list */
@@ -132,8 +132,8 @@ int Polygon_abs (int *x, int *y, int n)
 	tail  = &(new->next_poly);
 
 	new->num_pts = n;
-	new->x_pts = (int *) malloc(sizeof(int) * n);
-	new->y_pts = (int *) malloc(sizeof(int) * n);
+	new->x_pts = (int *) G_malloc(sizeof(int) * n);
+	new->y_pts = (int *) G_malloc(sizeof(int) * n);
 
 	for (i = 0; i < n; i++) {
 	    new->x_pts[i] = x[i];
