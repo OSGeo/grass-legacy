@@ -1,4 +1,4 @@
-$Id: TODO,v 1.38 2000-10-20 15:11:42 markus Exp $
+$Id: TODO,v 1.39 2000-10-23 08:03:46 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -185,6 +185,15 @@ Modules:
 - r.out.bin
    write it
   (Being worked on by ?)
+
+- r.profile
+   r.profile only give the values of the cell between the two 
+   coordinates, but does not give any information of the distance between
+   those cell values. 
+   An (optional) table would be fine:
+     1 Km        200m                                                                
+     2 Km        210m                                                                
+     3 Km        150m  
 
 - r.surf.distance: write it
   this module would generate a distance surface (improved version of
