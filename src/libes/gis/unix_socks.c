@@ -37,6 +37,16 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 
+/** For systems where the *_LOCAL (POSIX 1g) is not defined 
+ ** There's not really any difference between PF and AF in practice.
+ **/
+#ifndef AF_LOCAL
+#define AF_LOCAL AF_UNIX
+#endif
+#ifndef PF_LOCAL
+#define PF_LOCAL PF_UNIX
+#endif
+
 /* ----------------------------------------------------------------------
  * G_sock_get_fname(), builds the full path for a UNIX socket using the
  * G__temp_element() routine (tempfile.c).  Caller should free() the
@@ -125,7 +135,7 @@ G_sock_bind (char *name)
     
     strncpy (addr.sun_path, name, sizeof (addr.sun_path) - 1);
     
-    addr.sun_family = PF_LOCAL;
+    addr.sun_family = AF_LOCAL;
 
     sockfd = socket (PF_LOCAL, SOCK_STREAM, 0);
 
@@ -192,7 +202,7 @@ G_sock_connect (char *name)
     
     strncpy (addr.sun_path, name, sizeof (addr.sun_path) - 1);
     
-    addr.sun_family = PF_LOCAL;
+    addr.sun_family = AF_LOCAL;
 
     sockfd = socket (PF_LOCAL, SOCK_STREAM, 0);
 
