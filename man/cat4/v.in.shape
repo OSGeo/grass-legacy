@@ -1,0 +1,132 @@
+
+
+
+v.in.shape <contrib>  GRASS Reference Manual <contrib> v.in.shape
+
+
+
+NAME
+     v.in.shape - Read an ArcView Shapefile
+
+SYNOPSIS
+     v.in.shape
+     v.in.shape	 input=name [mapset=name] [verbose=debug level] [logfile=name] [attribute=a_name]
+
+DESCRIPTION
+     The v.in.shape program is designed to import ArcView
+     Shapefiles.
+
+     v.in.shape will be run non-interactively if the user
+     specifies program arguments on the command line, using the
+     form:
+     v.in.shape	 input=name [mapset=name] [action=what to do] [verbose=debug level] [logfile=name]
+
+     Alternately, the user can simply type:
+
+	  v.in.shape
+
+     on the command line without program arguments.  In this
+     case, the user will be prompted for parameter values using
+     the standard GRASS user interface described in the manual
+     entry for parser.
+
+FEATURES
+     Grass files created have the name extracted from the
+     basename of the shapefile.
+
+OPTIONS
+     mapset=name       For creating a new mapset for the data
+		       imported.  This may be usefull, since we
+		       cannot create a projection info file and a
+		       default window in an existing mapset.
+		       When a file is imported in the current
+		       mapset, you should take care that they are
+		       in the same projection.
+		       Unfortunately, you may run in trouble
+		       after that when using g.region (Cf BUGS).
+
+     verbose=debug level
+		       Number between 0 (no trace of what's
+		       happening) and 9 (very verbose log).
+
+     logfile=name      Name of file where log info will be
+		       written. By default log info are directed
+		       to stderr.
+
+     attribute=a_name  Name of the attribute to use as the
+		       category number in dig_att.  Give a value
+		       of list to see a list of available
+		       attributes.
+
+
+
+GRASS 4.2.1		Baylor University			1
+
+
+
+
+
+
+v.in.shape <contrib>  GRASS Reference Manual <contrib> v.in.shape
+
+
+
+BUGS AND CAVEAT
+     Polygons with internal holes are not treated properly.  The
+     holes are just treated as a continuation of the polygon.
+
+     There is no support for projection.
+
+     Label for polygons are located on the edge, rather than
+     interior to the polygon.  This is ambiguous in cases of
+     polygons that share boundaries with other polygons and will
+     cause conflicts when running v.support.
+
+     New mapset are allways created with proj=0 zone=99.  If the
+     default proj and zone are not the same, g.region complaints
+     and d.vect or d.rast refuse to display your data.	The only
+     thing to do is to import in the current mapset.
+
+SEE ALSO
+     m.in.e00 g.mapset , g.region , g.proj , v.support ,
+     v.to.rast .
+
+AUTHORS
+     Frank Warmerdam (warmerda@home.com)
+     Based on Shapelib
+     (http://gdal.velocet.ca/projects/shapelib/).
+
+NOTICE
+     This program is part of the contrib section of the GRASS
+     distribution.  As such, it is externally contributed code
+     that has not been examined or tested by the Office of GRASS
+     Integration.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.2.1		Baylor University			2
+
+
+
