@@ -2,7 +2,7 @@
 
 BUG_PERSON=neteler@geog.uni-hannover.de
 
-if [ $# -lt 1 ]
+if [ $# -lt 1 ] || [ "$1" == "help"  ]
 then
 	cmd=`echo $0 | sed -e 's:.*/::'`
 	echo Usage: $cmd command.name [command arguments]
