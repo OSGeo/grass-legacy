@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "xdr.h"
 
 db__send_short(n)

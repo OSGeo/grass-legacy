@@ -1,3 +1,5 @@
+#include <string.h>
+#include <stdlib.h>
 #include "xdr.h"
 
 db__send_string_array(a, count)

@@ -1,3 +1,4 @@
+#include <string.h>
 #include "dbmi.h"
 
 static void print_priv();

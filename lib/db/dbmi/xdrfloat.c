@@ -1,7 +1,4 @@
-/*
- * $Id$
- */
-
+#include <stdlib.h>
 #include "xdr.h"
 
 int db__send_float(float d)

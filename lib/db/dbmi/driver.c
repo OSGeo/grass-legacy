@@ -1,6 +1,7 @@
+#include <stdlib.h>
+#include <stdio.h>
 #include "dbmi.h"
 #include "procs.h"
-#include <stdlib.h>
 
 extern char *getenv();
 

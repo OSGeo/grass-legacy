@@ -1,11 +1,14 @@
+#include <string.h>
+#include <stdlib.h>
 #include "dbmi.h"
+
 #ifndef __CYGWIN__
 extern int errno;
-/*extern char *sys_errlist[];*/ /* bugfix Neteler 6/99 use ANSI C*/
 extern int sys_nerr;
 #else
 #include <errno.h>
 #endif
+
 static int  err_flag = 0;
 static int  err_code = DB_OK;
 static char *err_msg = 0;
