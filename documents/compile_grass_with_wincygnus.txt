@@ -91,11 +91,15 @@ Install it, too.
    Current version is 1.8.8 as of August, 2000
 
 7. Add the values.h file to the /grass/src/include
-   directory.  Put values in it for MAXDOUBLE and 
-   MINDOUBLE.  For example, my file has the following:
+   directory.  Put values in it for the following:
 
+#define MININT      (1 << (INTBITS - 1))
+#define MAXINT      (~MININT)
 #define MAXDOUBLE   1.79769313486231470e+308
 #define MINDOUBLE   4.94065645841246544e-324
+#define BITSPERBYTE 8
+#define BITS(type)  (BITSPERBYTE * (int)sizeof(type))
+#define INTBITS     BITS(int)
 
 8. You'll need to read the REQUIREMENTS files, download
    the public domain libraries, such as png, and build
