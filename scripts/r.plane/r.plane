@@ -16,7 +16,7 @@
 #############################################################################
 
 #%Module
-#%  description: r.plane - Creates raster plane map given dip (inclination), aspect (azimuth), and one point
+#%  description: Creates raster plane map given dip (inclination), aspect (azimuth), and one point
 #%End
 #%option
 #% key: dip
