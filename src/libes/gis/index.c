@@ -1,10 +1,7 @@
-/*  index ()
- *  rindex ()
- */
 #include "gis.h"
 
 char *
-index (str, delim)
+G_index (str, delim)
     register char *str, delim;
 {
     while (*str && *str != delim)
@@ -15,7 +12,7 @@ index (str, delim)
 }
 
 char *
-rindex (str, delim)
+G_rindex (str, delim)
     register char *str, delim;
 {
     register char *p;
