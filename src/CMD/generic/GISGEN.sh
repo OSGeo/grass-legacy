@@ -63,7 +63,7 @@ for i in \
     etc/bin/main/inter etc/bin/main/cmd \
     etc/bin/contrib/inter etc/bin/contrib/cmd \
     txt txt/COMBINE txt/DIGIT txt/DIGIT2 txt/WEIGHT txt/MONITOR \
-    garden garden/bin garden/etc \
+    lib include \
     driver locks dev
 do
     if test ! -d $GISBASE/$i
