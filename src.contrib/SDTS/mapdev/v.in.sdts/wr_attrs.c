@@ -1,3 +1,7 @@
+/*
+ * $Id$
+ */
+
 #include <stdio.h>
 #include "sdts_in.h"
 #include "sdts_globals.h"
@@ -240,7 +244,7 @@ write_database_link_and_cats_tables (Schema_type, cats, obj_linkname, dbpath, sd
 		  sprintf (obj_attr_file, "%sobat.db", sdts_prefix);
 		  add_file_to_db_table_list (obj_attr_file, DBTYPE_OB_AT, NULL);
 		  sprintf (full_obj_attr_file, "%s/%s", dbpath, obj_attr_file);
-		  if ( ! (fp_obj_attr = fopen (full_obj_attr_file, "w")) )
+		  if ( ! (fp_obj_attr = fopen (full_obj_attr_file, "a")) )
 		  {
 			  sprintf (Error_msg, "Unable to create object-attribute link file <%s>\n", full_obj_attr_file);
 			  G_fatal_error (Error_msg);
@@ -582,7 +586,8 @@ write_database_attr_tables (Att_FF_info, Schema_type, cats, dbpath, prefix, vect
 		  }
 #endif
 		  strcat (attr_buf, "|");
-		  strcat (attr_buf, G_strip (string));
+		  G_strip (string);
+		  strcat (attr_buf, string);
 	   }
 
 	}
