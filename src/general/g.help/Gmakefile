@@ -1,9 +1,9 @@
+PGM=g.help
 OFILES	= main.o do_leave.o tty.o menu.o 
 
-all: pgm  the_help
-pgm: $(BIN_MAIN_INTER)/g.help
+all: $(BIN_MAIN_INTER)/$(PGM)  the_help
 
-$(BIN_MAIN_INTER)/g.help:	$(OFILES) $(GISLIB)
+$(BIN_MAIN_INTER)/$(PGM): $(OFILES) $(GISLIB)
 	$(CC) ${LDFLAGS} -o $@ $(OFILES) $(GISLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 the_help:

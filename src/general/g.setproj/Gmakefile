@@ -1,9 +1,10 @@
+PGM=g.setproj
 OFILES = \
 	main.o get_deg.o get_num.o get_stp.o get_datum.o
 
-LIBES = $(GISLIB) $(COORCNVLIB) $(MATHLIB) $(XDRLIB)
+LIBES = $(GISLIB) $(COORCNVLIB)
 
-$(BIN_MAIN_INTER)/g.setproj: $(OFILES) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES)
+$(BIN_MAIN_INTER)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

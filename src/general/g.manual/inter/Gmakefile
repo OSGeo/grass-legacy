@@ -1,9 +1,8 @@
 PGM    = g.manual
-HOME   = $(BIN_MAIN_INTER)
 
 OBJECTS   = main.o
 
-$(HOME)/$(PGM):  $(OBJECTS) $(GISLIB) 
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@ $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+$(BIN_MAIN_INTER)/$(PGM):  $(OBJECTS) $(GISLIB) 
+	$(CC) $(LDFLAGS) -o $@ $(OBJECTS) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #
