@@ -11,6 +11,7 @@ OBJS =  \
 	Can_do.o\
 	Color.o\
 	Draw_line.o\
+	Draw_point.o\
 	Get_w_box.o\
 	Get_w_line.o\
 	Get_w_pnt.o\
@@ -23,7 +24,7 @@ OBJS =  \
 
 ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 
-LIBES = $(DRIVERLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+LIBES = $(DRIVERLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(FTLIB) $(ICONVLIB)
 DEPENDENCIES = $(DRIVERLIBDEP) $(DRIVERDEP) $(DISPLAYDEP) $(RASTERDEP) $(GISLIBDEP)
 PGM=htmlmapdriver
 
