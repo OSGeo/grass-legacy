@@ -20,7 +20,6 @@ dxf_add_point (dxf_file)
     DXF_DIG *layer_fd;         /* POINTER TO LAYER NAME */
     int  code;  /* VARIABLE THAT HOLDS VALUE RETURNED BY readcode() */
     int  count; /* LOOPING VARIABLE */ 
-    int  arr_size = 0;
 
     /* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
 
@@ -44,13 +43,14 @@ dxf_add_point (dxf_file)
 		}
 		break;
 	    case 10: /* x COORDINATE */
-		xinfo[arr_size] = atof(dxf_line);	
+		xinfo[0] = atof(dxf_line);	
 		xflag = 1;
 		break;
 	    case 20: /* y COORDINATE */
-		yinfo[arr_size] = atof(dxf_line);	
+		yinfo[0] = atof(dxf_line);	
 		yflag = 1;
 		break;
+#ifdef FOO
 	    case 30: /* Z COORDINATE NOT BEING USED */
 	    case 50: /* ANGLE OF x AXIS FOR THE UCS IN EFFECT */
 
@@ -61,13 +61,14 @@ dxf_add_point (dxf_file)
 	    case 210: /* X EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
 	    case 220: /* Y EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
 	    case 230: /* Z EXTRUSION IF NOT PARALLEL TO THE WORLD Z AXIS */
+#endif
 
 	    default:
 		break;
 	}
 	if(xflag == 1  && yflag ==1)
 	{
-	    dxf_check_ext (xinfo[arr_size],yinfo[arr_size]);
+	    dxf_check_ext (xinfo[0],yinfo[0]);
 	    xflag = 0;
 	    yflag = 0;
 	    if (!layer_flag)
@@ -93,8 +94,6 @@ dxf_add_point (dxf_file)
 			xinfo[count]);
 	    }
 	}
-	else
-	    arr_size ++;
     }
     return(1);
 }
