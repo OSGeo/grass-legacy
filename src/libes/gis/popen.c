@@ -1,0 +1,69 @@
+
+#include <stdio.h>
+#include <signal.h>
+#define tst(a,b)        (*mode == 'r'? (b) : (a))
+
+#define READ      0
+#define WRITE     1
+
+static  int     popen_pid[20];
+
+FILE *
+popen(cmd,mode)
+    char    *cmd;
+    char    *mode;
+{
+    int p[2];
+    register me, you, pid;
+
+    fflush (stdout);
+    fflush (stderr);
+
+    if(pipe(p) < 0)
+	return NULL;
+    me = tst(p[WRITE], p[READ]);
+    you = tst(p[READ], p[WRITE]);
+    if((pid = fork()) == 0)
+    {
+/* me and you reverse roles in child */
+	close(me);
+	close(tst(0, 1));
+	dup(you);
+	close(you);
+	execl("/bin/sh", "sh", "-c", cmd, 0);
+	_exit(1);
+    }
+
+    if(pid == -1)
+	return NULL;
+    popen_pid[me] = pid;
+    close(you);
+
+    return(fdopen(me, mode));
+}
+
+pclose(ptr)
+    FILE *ptr;
+{
+    register f, r, (*sighup)(), (*sigint)(), (*sigquit)();
+    int status;
+
+    f = fileno(ptr);
+    fclose(ptr);
+
+    sigint  = signal(SIGINT, SIG_IGN);
+    sigquit = signal(SIGQUIT, SIG_IGN);
+    sighup  = signal(SIGHUP, SIG_IGN);
+
+    while((r = wait(&status)) != popen_pid[f] && r != -1)
+	    ;
+
+    if(r == -1)
+	status = -1;
+
+    signal(SIGINT, sigint);
+    signal(SIGQUIT, sigquit);
+    signal(SIGHUP, sighup);
+
+    return(status);
+}
