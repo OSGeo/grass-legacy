@@ -12,7 +12,7 @@ struct menu
     char *text;		/* menu display - full description	 */
 };
 
-extern int bordwalk(struct Cell_head *, struct Cell_head *, struct pj_info *, struct pj_info *, char *);
+extern void bordwalk(struct Cell_head *, struct Cell_head *, struct pj_info *, struct pj_info *);
 extern FCELL **readcell(int);
 /* declare resampling methods */
 /* bilinear.c */
