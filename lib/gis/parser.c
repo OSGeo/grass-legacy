@@ -1033,7 +1033,7 @@ int G_gui (void)
 		"set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]\n"
 		"set env(MAPSET) [exec g.gisenv get=MAPSET]\n" );
 
-    append(cmd, "set pw [PanedWindow .pw -side left ]\n");
+    append(cmd, "set pw [PanedWindow .pw -side right ]\n");
     append(cmd, "set optpane [$pw add -minsize 50]\n");
     append(cmd, "set outpane [$pw add -minsize 30]\n");
     
