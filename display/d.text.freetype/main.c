@@ -279,7 +279,9 @@ main(int argc, char **argv)
 	if(!size)
 		size = atoi(DEFAULT_SIZE);
 
-	fprintf(stdout, "Font=<%s:%s:%s:%d>\n\n", path, charset, tcolor, size);
+	if(!flag.c->answer)
+		fprintf(stdout, "Font=<%s:%s:%s:%d>\n\n",
+				path, charset, tcolor, size);
 
 	rotation = atof(param.rotation->answer);
 	if(!flag.r->answer)
@@ -304,7 +306,7 @@ main(int argc, char **argv)
 	R_set_window(win.t, win.b, win.l, win.r);
 
 	if(!flag.s->answer)
-		size = (int)(size/100.0 * (double)(win.b - win.t));
+		size = (int)(size/100.0 * (double)(win.b-win.t));
 
 	if(FT_Init_FreeType(&library))
 		error("Unable to initialise FreeType");
@@ -382,6 +384,8 @@ main(int argc, char **argv)
 			if(buf[0] == '.' && buf[1] != '.')
 			{
 				G_squeeze(buf);
+				if(!buf[1])
+					continue;
 				for(p = buf + 2; *p == ' '; p++);
 				l = strlen(p);
 				switch(buf[1])
@@ -430,7 +434,7 @@ main(int argc, char **argv)
 					case 'S':
 						size = atoi(p);
 						if(p[l-1] != 'p')
-							size = (int)(size/100.0 * (double)(win.b - win.t));
+							size = (int)(size/100.0 * (double)(win.b-win.t));
 						if(face && FT_Set_Pixel_Sizes(face, size, 0))
 							error("Unable to set size");
 						break;
