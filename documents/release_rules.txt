@@ -16,6 +16,11 @@ General methodolgy: call for release - pre-testing - bug fixes - publish
 
 0. Prepare to create a release
 
+   o Create a branch on CVS for creating a release (call it bugFixes or
+     something). All code for the stable release will come from this branch.
+     
+   o Unstable modules are commented out of the src/CMD/lists/GRASS file.
+
    o Make a list of bugs that we would like to see fixed for the release
      (probably the RC list in BUGS)
 
@@ -25,23 +30,30 @@ General methodolgy: call for release - pre-testing - bug fixes - publish
    o After a few days or a week, any remaining bugs are left for the next
      release - if nobody claims them they obviously won't be fixed
 
-   o Create a branch on CVS for bug fixing (call it bugFixes or something).
-     All code for the stable release will come from this branch.
-
-   o The only commits to this branch are bug fixes (not necessarily only
-     those claimed) - other developments are committed to MAIN. All such
-     bug fixes should include "Release bug fix:" at the start of each log
-     message for easy monitoring of committed code. That is, any code
-     committed without this phrase at the start of the log message will
-     be backed out. All developers who subscribe to the commit list (who
-     are we?) should take responsibility for monitoring the code committed
-     to the release branch. As stated, all other code can be committed to
-     the MAIN branch as usual, thus development does not need to be halted.
+   o The only commits to the release branch are *minor* bug fixes (not
+     necessarily only those claimed) - other developments are committed to
+     the MAIN branch. Any *major* bug fixes require consensus from the
+     developers and/or approval from Markus to commit to the release branch.
+     
+   o < need a detailed description of how to commit a bug fix but could include
+       the following > 
+     
+     o All bug fixes should include "Release bug fix:" at the start of each log
+       message for easy monitoring of committed code. That is, any code
+       committed without this phrase at the start of the log message will
+       be backed out.
+       
+     o All developers who subscribe to the commit list (should
+       list both names and email addresses) should take responsibility for
+       monitoring the code committed to the release branch.
+     
+     o Tag the code both before AND after you make your changes < need more
+       here to describe what to tag etc >
 
    o Once all claimed bugs are fixed, tag this branch as pre release 1
      and start the pretest phase
 
-1. Add disclaimer to all mails to be send to the pre-testers:
+1. Add disclaimer to all mails to be sent to the pre-testers:
 
    ------------------
    GRASS 5 beta DISCLAIMER: WARNING
@@ -80,10 +92,16 @@ General methodolgy: call for release - pre-testing - bug fixes - publish
 3. Proceed to publishing by publishing the code in the release branch.
    See the sections below for details
 
-4. Merge the changes in the release branch back into the MAIN branch
-   using CVS.
+4. Fix any bugs reported by users and release a bug-fix version (eg version
+   5.0.0 is released, bugs are found and fixed, release version 5.0.1)
 
-5. One of the keys to this scheme is cooperation among the developers.
+5. At some point Markus decides there will be no more releases for this
+   version, the release branch is considered dead, and changes are merged into
+   the main branch. Note that merges could be made throughout this process to
+   the main branch but merging from the main branch to the stable branch is not
+   allowed at any time.
+
+6. One of the keys to this scheme is cooperation among the developers.
    Basically the developers have to concentrate on fixing bugs, but those
    who cannot fix bugs can still commit features if they wish. Another key
    is that the developers should ask Markus if their new code can be
