@@ -52,15 +52,18 @@ FURTHER_FILES="config.guess \
 	WARNING.html install-sh ONGOING REQUIREMENTS README.xdriver \
 	binaryInstall.src README.cygwin Makefile.in AUTHORS BUGS TODO.txt \
 	configure.in configure NEWS.html \
-	src/libes/README"
+	src/libes/README src/imagery/README src/general/README\
+	src/libes/vect32/Gmakefile src/libes/vect32/README\
+	src/mapdev/README src/paint/README src/raster/r.mask/README"
 
 #list of extra directories not in compile list:
 FURTHER_DIRECTORIES="documents ALPHA64 testsuite cygwin\
 	src/include src/CMD src/fonts src/gui src/sites/cdhc \
 	src/libes/libimage src/libes/vect32_64/shapelib-1.2.8 \
-	src/libes/dbmi/drivers/odbc src.garden/grass.postgresql\
+	src/libes/dbmi src.garden/grass.postgresql\
 	src/libes/gmath src/libes/ogsf\
-	src/display/devices/PNGdriver"
+	src/display/devices/PNGdriver src/libes/Gmakefile\
+	src/libes/digitizer"
 
 
 #tag it...
