@@ -6,7 +6,7 @@
 *  CHRIS EMMERICH, AUTOMETRIC INC., 10/3/89
 */
 
-#include  "digit.h"
+#include  "Vect.h"
 #include  "gis.h"
 
 line_to_mpinfo (map,pcats,mpmif,mpmid,proj,nad,zone)

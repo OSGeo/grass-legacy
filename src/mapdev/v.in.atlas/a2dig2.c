@@ -1,4 +1,4 @@
-/* @(#)atl2dig2.c	08/03/92 */
+/* atl2dig2.c 08/03/92 */
 /* Creates dig file in Grass format from ASCII file representing an
 ATLAS area, line or point file. */
 
@@ -6,9 +6,6 @@ ATLAS area, line or point file. */
 #include <stdio.h>
 #include <string.h>
 #include "gis.h"
-#include "dig_defines.h"
-#include "dig_structs.h"
-#include "dig_head.h"
 #include "Vect.h"
 
 char inbuf[2000],outbuf[1000];

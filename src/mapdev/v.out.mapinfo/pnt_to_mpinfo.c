@@ -10,7 +10,7 @@
 *  R.L. GLENN, USDA, NRCS, 09/27/95
 */
 
-#include  "digit.h"
+#include  "Vect.h"
 #include  "gis.h"
 
 point_to_mpinfo (map,pcats,mpmif,mpmid,proj,nad,zone)
