@@ -35,6 +35,8 @@ int *numarg,fname_len,pname_len;
 
   G_gisinit(progname);
   G_sleep_on_error(0);
+  Projection = G_projection();
+  G_begin_distance_calculations();
 
   /* initialize the field values to NULL */
   Field_num = 0;
