@@ -94,6 +94,8 @@ void getraster( char *name, int flag, int prec)
 	    p = (long *) buf;
 	    for (j = 0; j < cols; j += 5) {
 		read_e00_line( line);
+		if ((cols - j) < 5)
+		    line[ 14 * (cols-j+1)] = 0;
 		sscanf( line, "%ld%ld%ld%ld%ld", p, p+1, p+2, p+3, p+4);
 		p += 5;
 	    }
@@ -115,6 +117,8 @@ void getraster( char *name, int flag, int prec)
 		d = (double *) dbuf;
 		for (j = 0; j < cols; j += 3) {
 		    read_e00_line( line);
+		    if ((cols - j) < 5)
+			line[ 21 * (cols-j+1)] = 0;
 		    sscanf( line, "%lf%lf%lf", d, d+1, d+2);
 		    d += 3;
 		}
@@ -132,6 +136,8 @@ void getraster( char *name, int flag, int prec)
 		f = (float *) fbuf;
 		for (j = 0; j < cols; j += 5) {
 		    read_e00_line( line);
+		    if ((cols - j) < 5)
+			line[ 14 * (cols-j+1)] = 0;
 		    sscanf( line, "%f%f%f%f%f", f, f+1, f+2, f+3, f+4);
 		    f += 5;
 		}
