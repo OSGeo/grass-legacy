@@ -8,7 +8,7 @@ BUGS:
  * with -m flag the "Probe" crashes in Vis5D
 
 
-$Id: BUG,v 1.5 2001-02-04 16:59:48 markus Exp $
+$Id: BUG,v 2.0 2004-11-09 14:10:33 bernhard Exp $
 
 G3D library bug?
         G3d_getValueRegion (map, x, y, z, d1p, typeIntern);                  
