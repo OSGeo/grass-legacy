@@ -52,10 +52,6 @@ struct menu
 
 /* main.c */
 int is_ok(char *, char *);
-/* median.c */
-long median(struct stats *);
-/* moment.c */
-int stats(double *, int, double *, double *, double *, double *, double *, double *);
 /* o_adev.c */
 int o_adev(char *, char *, char *, int, struct Categories *);
 int a_dev(double *, int, double *);
@@ -91,8 +87,5 @@ int o_var(char *, char *, char *, int, struct Categories *);
 int m_var(double *, int, double *);
 /* read_stats.c */
 int read_stats(FILE *, long *, long *, double *);
-/* skew.c */
-int kurt(double *, int, double *);
-int skew(double *, int, double *);
 /* write_rec.c */
 int write_reclass(FILE *, long, long, char *, int);
