@@ -112,6 +112,8 @@
 #define DATA_NCOLS  FCB.cellhd.cols
 static int allocate_compress_buf(int);
 
+static int G__open_raster_new(char *name, int open_mode);
+
 int G_open_cell_old (
     char *name,
     char *mapset)
@@ -541,7 +543,7 @@ clean_check_raster_name (char *inmap, char **outmap, char **outmapset)
 }
 	
 /* opens a f-cell or cell file depending on WRITE_MAP_TYPE */
-int G__open_raster_new (char *name, int open_mode)
+static int G__open_raster_new (char *name, int open_mode)
 {
     int i, null_fd, fd;
     char *tempname;
@@ -615,8 +617,8 @@ int G__open_raster_new (char *name, int open_mode)
     G_copy ((char *) &FCB.cellhd, (char *) &WINDOW, sizeof (FCB.cellhd));
     if (open_mode == OPEN_NEW_COMPRESSED && FCB.map_type == CELL_TYPE)
     {
-	FCB.row_ptr = (long *) G_calloc(DATA_NROWS + 1, sizeof(long)) ;
-	G_zero((char *) FCB.row_ptr,(DATA_NROWS + 1) * sizeof(long)) ;
+	FCB.row_ptr = G_calloc(DATA_NROWS + 1, sizeof(off_t)) ;
+	G_zero(FCB.row_ptr,(DATA_NROWS + 1) * sizeof(off_t)) ;
 	G__write_row_ptrs (fd);
 	FCB.cellhd.compressed = 1;
 
@@ -631,8 +633,8 @@ int G__open_raster_new (char *name, int open_mode)
         FCB.nbytes = WRITE_NBYTES ;
         if(open_mode == OPEN_NEW_COMPRESSED)
         {
-	      FCB.row_ptr = (long *) G_calloc(DATA_NROWS + 1, sizeof(long)) ;
-      	      G_zero((char *) FCB.row_ptr,(DATA_NROWS + 1) * sizeof(long)) ;
+	      FCB.row_ptr = G_calloc(DATA_NROWS + 1, sizeof(off_t)) ;
+      	      G_zero(FCB.row_ptr,(DATA_NROWS + 1) * sizeof(off_t)) ;
 	      G__write_row_ptrs (fd);
 	      FCB.cellhd.compressed = 1;
         }
