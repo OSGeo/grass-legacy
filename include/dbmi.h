@@ -225,8 +225,8 @@ typedef struct
 typedef struct
 {
     int  cat;  /* category */
+    int  isNull; 
     union { 
-        /* char       isNull; */
         int        i;
         double     d;
         /* dbString   s; */
