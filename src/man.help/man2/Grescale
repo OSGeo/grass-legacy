@@ -1,0 +1,115 @@
+.\" %W% %G%
+.TH Grescale 2G G-language
+.SH NAME
+Grescale \- Rescales the 
+.CT values "category values"
+in a 
+.CT "data layer" "cell map"
+.br
+.I (G Language Tool)
+.SH SYNOPSIS
+.IP \fBGrescale\fR 10
+\fIold_layer new_layer old_min old_max new_min new_max [title]\fR
+.SH DESCRIPTION
+.I Grescale
+creates a new 
+.CT "data layer" "cell map"
+that is a rescaling of an
+existing 
+.CT "data layer." "cell map."
+This command is useful for producing representations with
+a reduced number of categories from a 
+.CT layer "cell map"
+with a large range of category
+values (e.g., an elevation 
+.CT "file)." "cell map)."
+Rescaled
+.CT "map layers" "cell maps" 
+are appropriate for use in such programs as \fIcell.stats(1),
+report(1)\fR, and \fIcoin(1)\fR.
+
+The user specifies the name of the 
+.CT layer "cell map"
+to be rescaled 
+.I (old_layer)
+and the resulting 
+.CT "data layer" "cell map"
+name
+.I (new_layer).
+The user also specifes the minimum
+.I  (old_min)
+and maximum
+.I (old_max)
+.CT data "category value"
+range of the 
+.CT map "cell map"
+to be rescaled, as well as the desired minimum
+.I (new_min)
+and maximum
+.I (new_max)
+output 
+.CT data "category value"
+range of the resultant rescaled 
+.CT "map layer." "cell map."
+These 
+.CT data "category value"
+ranges determine 
+the scaling to be performed.  An optional
+.I title
+may also be specified for the new 
+.CT "map layer." "cell map."
+
+.CT Data "Categroy values"
+which falls outside of the specified input 
+.CT data "category value"
+range of the 
+.CT map "cell map"
+to be
+rescaled will become zero.  This allows the user to select a subset of the 
+full 
+.CT data "category value"
+range for rescaling.  The user should know the 
+.CT data "category value"
+range of the input 
+.CT layer "cell map"
+before invoking
+.I Grescale.
+This can be determined by using either the GRASS
+.I describe
+or
+.I Gdescribe
+commands.
+
+An appropriate category file and color table, based upon the original 
+.CT "map," "cell map,"
+are generated with category labels that reflect the original 
+.CT values "category values"
+used to produce each category.
+
+.SH EXAMPLE
+If you want to rescale an elevation 
+.CT "data layer" "cell map" 
+with 
+.CT values "category values"
+ranging from
+1090 meters to 1800 meters into the range 1\-255,
+the following command line could be used:
+
+.IP
+\fBGrescale elevation elevation.255 1090 1800 1 255\fR
+.SH NOTES
+The rescaled 
+.CT data "category value"
+range is actually unlimited, but the 
+.CT data "category value"
+range 1 to 255
+is used frequently due to limitations of 
+.CT "color display devices." "graphics monitors"
+
+\fIGrescale\fR actually runs 
+.I Greclass
+to represent the rescaled categories.
+.SH SEE ALSO
+\fIcell.stats[1], coin[1], describe[1], reclass[1], report[1], Gdescribe[2], Greclass[2]\fR
+.SH "AUTHOR"
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
