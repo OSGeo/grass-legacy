@@ -1,0 +1,19 @@
+#include <stdio.h>
+
+make_mapset(location, mapset, name)
+	char *location ;
+	char *mapset ;
+{
+	char buffer[256] ;
+
+/* create the mapset directory */
+	sprintf(buffer,"mkdir %s/%s",location, mapset) ;
+	system(buffer) ;
+
+/* give the mapset a default window for the entire location */
+	sprintf(buffer,"cat %s/PERMANENT/DEFAULT_WIND  > %s/%s/WIND",
+		location, location, mapset) ;
+	system(buffer) ;
+
+	return(0) ;
+}
