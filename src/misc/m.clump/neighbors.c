@@ -1,4 +1,3 @@
-#include "proto.h"
 #include <math.h>
 #include "geom/basic.h"
 #include "geom/optri.h"
