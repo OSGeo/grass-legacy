@@ -1,0 +1,4 @@
+231c231
+<  	gets(buffr,50);
+---
+>  	fgets(buffr,50,stdin);
