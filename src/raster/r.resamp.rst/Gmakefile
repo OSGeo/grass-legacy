@@ -1,11 +1,11 @@
 PGM    = r.resamp.rst
 
 TREEDIR = $(SRC)/libes/rst_gmsl/tree
-TREELIB = $(TREEDIR)/libtree.a
+TREELIB = $(LIBDIR)/rst_gmsl/tree/libtree.a
 DATADIR = $(SRC)/libes/rst_gmsl/data
-DATALIB = $(DATADIR)/libdata.a
+DATALIB = $(LIBDIR)/rst_gmsl/data/libdata.a
 INTERPFDIR = $(SRC)/libes/rst_gmsl/interp_float
-INTERPFLIB = $(INTERPFDIR)/libinterpfl.a
+INTERPFLIB = $(LIBDIR)/rst_gmsl/interp_float/libinterpfl.a
 
 EXTRA_CFLAGS =  -I$(TREEDIR) -I$(DATADIR) -I$(INTERPFDIR)
 
