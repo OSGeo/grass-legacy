@@ -53,7 +53,7 @@ int find_column (int tab, char *col)
      
     for ( i = 0; i < db.tables[tab].ncols; i++ )
       {
-        if ( strcmp( db.tables[tab].cols[i].name, col ) == 0 )
+        if ( G_strcasecmp( db.tables[tab].cols[i].name, col ) == 0 )
             return (i);
       } 
     return (-1);
