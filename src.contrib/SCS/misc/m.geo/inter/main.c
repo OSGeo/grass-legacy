@@ -101,205 +101,191 @@ main(argc, argv)
 	{
         case 1: 		        /*  coord->ll conversions */
         case 2: 			/*  ll->coord conversions */
-               parms[0] = '\0';
-	       tmp_file = G_tempfile();
-               if (strcmp(proj_name,"stp",3) == 0)
-		  {
-		  if (COzone == 0)
-                    if (get_CO_code() == 0) break;
-		  if (get_stp_code(COzone,parms) == 0)
-		    {
+    parms[0] = '\0';
+	tmp_file = G_tempfile();
+    if (strcmp(proj_name,"stp",3) == 0)
+		{
+		if (COzone == 0) if (get_CO_code() == 0) break;
+		if (get_stp_code(COzone,parms) == 0)
+			{
 		    fprintf(stderr," ERROR: This should not happen, see your system admin\n");
 		    sleep(2);
 		    break;
-		    }
-		  }
-	       else
-		  {
-                  if (conv_typ == 1)
+			}
+		}
+	else
+		{
+        if (conv_typ == 1)
 		     sprintf(parms,
 		     "%s/mapgen/bin/proj -s +proj=%s +ellps=%s +inv ",
 		     getenv("GISBASE"),proj_name,ellps_name);
-                  else
+        else
 		     sprintf(parms,
 		     "%s/mapgen/bin/proj -s +proj=%s +ellps=%s ",
 		     getenv("GISBASE"),proj_name,ellps_name);
-	          if ((strncmp(proj_name,"utm",3) != 0))
-		      {
-                      fprintf(stderr,"\n     Last Prime meridian used was %lf\n     Std. Parallel was %lf\n\t\tdo you want to change them (y/[n]) ? ", LONCEN,LATPAR);
-                      gets(answer);
-                      if ((strlen(answer) != 0) &&
+	    if ((strncmp(proj_name,"utm",3) != 0))
+			{
+            fprintf(stderr,"\n     Last Prime meridian used was %lf\n     Std. Parallel was %lf\n\t\tdo you want to change them (y/[n]) ? ", LONCEN,LATPAR);
+            gets(answer);
+            if ((strlen(answer) != 0) &&
 			   *answer != 'N' && *answer != 'n')
-	                 {
-			 for(;;)
-			   {
-                           G_clear_screen();
-		           if (get_PM()) break;
-			   }
-	                 }
-		      sprintf(buff,"+lon_0=%lf +lat_0=%lf ",LONCEN,LATPAR);
-		      strcat(parms,buff);
-		      }
-                  }
-
-               if (input_typ == 1)       /* keyboard input */
-	         {
-		 for(;;)
-		 {
-                 if (conv_typ == 1)
-		    { if (!get_enz()) break;}
-                 else
-                    { if (!get_ll()) break; }
-	         if (strncmp(proj_name,"utm",3) == 0)
-		    {
-		    sprintf(buff,"+zone=%d ",ZONE);
-		    strcat(parms,buff);
-		    }
-                 sys = fopen (tmp_file,"w");
-                 if (conv_typ == 1) fprintf(sys,"%s +inv",parms);
-                 else fprintf(sys,"%s",parms);
-		 fclose (sys);
-                 if (conv_typ == 1)
-		   {
-		   if (strncmp(proj_name,"stp",3) == 0)
-		      sprintf(command,
-		      "%s/mapgen/bin/proj -c %s -s -f \"%%.8f\" -m 1/.30480060960121920243 << eof\012%lf %lf\012eof\n",
-		      getenv("GISBASE"),tmp_file,EAS,NOR);
-                   else
-		      sprintf(command,
-		      "%s/mapgen/bin/proj -c %s -s -f \"%%.8f\" << eof\012%lf %lf\012eof\n",
-		      getenv("GISBASE"),tmp_file,EAS,NOR);
-		   }
-                 else
-		   {
-		   if (strncmp(proj_name,"stp",3) == 0)
-		      sprintf(command,
-		      "%s/mapgen/bin/proj -c %s -s -m 1/.30480060960121920243 << eof\012%lf %lf\012eof\n",
-		      getenv("GISBASE"),tmp_file,LON,LAT);
-                   else
-		      sprintf(command,
-		      "%s/mapgen/bin/proj -c %s -s << eof\012%lf %lf\012eof\n",
-		      getenv("GISBASE"),tmp_file,LON,LAT);
-                   }
-
-                 if (sys = popen(command,"r"))
 	            {
-	            fgets(buff, sizeof buff, sys);
-		           /* remove the trailing newline */
-		    for (ptr = buff; *ptr; ptr++)
-			if (*ptr == '\n')
-			    *ptr = 0;
+				for(;;)
+					{
+               		G_clear_screen();
+		       		if (get_PM()) break;
+			   		}
+	            }
+		    sprintf(buff,"+lon_0=%lf +lat_0=%lf ",LONCEN,LATPAR);
+		    strcat(parms,buff);
+			}
+/********  END UTM   ****************/
+		}
 
-                    if (conv_typ == 1) 
-                       sscanf(buff,"%lf %lf",&LAT, &LON);
+        if (input_typ == 1)       /* keyboard input */
+	    	{
+			for(;;)
+				{
+                 if (conv_typ == 1) {if (!get_enz()) break;}
+                 else { if (!get_ll()) break; }
+	         	if (strncmp(proj_name,"utm",3) == 0)
+		    		{
+		    		sprintf(parms,"%s +zone=%d ",parms,ZONE);
+		    		}
+                sys = fopen (tmp_file,"w");
+                if (conv_typ == 1) fprintf(sys,"%s +inv",parms);
+                else fprintf(sys,"%s",parms);
+		 		fclose (sys);
+                if (conv_typ == 1)
+		   		{
+		   			if (strncmp(proj_name,"stp",3) == 0)
+		      		sprintf(command,
+		      		"%s/mapgen/bin/proj -c %s -s -f \"%%.8f\" -m 1/.30480060960121920243 << eof\012%lf %lf\012eof\n",
+		      		getenv("GISBASE"),tmp_file,EAS,NOR);
+                else
+		      		sprintf(command,
+		      		"%s/mapgen/bin/proj -c %s -s -f \"%%.8f\" << eof\012%lf %lf\012eof\n",
+		      		getenv("GISBASE"),tmp_file,EAS,NOR);
+		   		}
+                else
+		   			{
+		   			if (strncmp(proj_name,"stp",3) == 0)
+		      			sprintf(command,
+		      			"%s/mapgen/bin/proj -c %s -s -m 1/.30480060960121920243 << eof\012%lf %lf\012eof\n",
+		      			getenv("GISBASE"),tmp_file,LON,LAT);
+                   else
+		      			sprintf(command,
+		      			"%s/mapgen/bin/proj -c %s -s << eof\012%lf %lf\012eof\n",
+		      			getenv("GISBASE"),tmp_file,LON,LAT);
+                   }
+          		if (sys = popen(command,"r"))
+	            	{
+	            	fgets(buff, sizeof buff, sys);
+		           /* remove the trailing newline */
+		    		for (ptr = buff; *ptr; ptr++)
+					if (*ptr == '\n') *ptr = 0;
+
+                    if (conv_typ == 1) sscanf(buff,"%lf %lf",&LAT, &LON);
                     else sscanf(buff,"%lf %lf",&NOR, &EAS);
-		    DMS (); /*  convert LAT/LON to dd mm ss.ss */
-		    Write_results(0);
+		    		DMS (); /*  convert LAT/LON to dd mm ss.ss */
+		    		Write_results(0);
                     pclose (sys);
                     }
 	         }  /*end for loop */
 		 }
                
-               if (input_typ == 2)        /* file input */
-		 {
-		 rec_cnt = 0;
-                 G_clear_screen();
-                 fprintf(stderr,"                   Coordinate Conversions\n\n");
-                 if (conv_typ == 1)
-		   fprintf(stderr,"                 Coord->Lat/Long Conversion\n\n");
-                 else
-                   fprintf(stderr,"                 Lat/Long->Coord Conversion\n\n");
-		 rec_cnt = 0;
-		 for (;;)
-		     {
-                     if (fgets(buff,80,In_file) == NULL) break; 
-		     rec_cnt++;
-                     if (conv_typ == 1) sscanf(buff,"%lf%lf%d",&EAS,&NOR,&ZONE);
-		     else
+		if (input_typ == 2)        /* file input */
 			{
-		        ZONE = 0;
-                        sscanf(buff,"%d%d%f%d%d%f%d",
-                                     &IDEG,&IMIN,&XSEC,&JDEG,&JMIN,&YSEC,&ZONE);
-                        sscanf(buff,"%f%f%f%f%f%f%d",
-                                     &XDEG,&XMIN,&XSEC,&YDEG,&YMIN,&YSEC,&ZONE);
-                        if (XDEG < 0.0)
-			   {
-			   LON = -XDEG + (XMIN/60.) + (XSEC/3600.);
-			   LON = -LON;
-			   }
-                        else
-			   LON = XDEG + (XMIN/60.) + (XSEC/3600.);
-                        if (YDEG < 0.0)
-			   {
-			   LAT = -YDEG + (YMIN/60.) + (YSEC/3600.);
-			   LAT = -LAT;
-			   }
-                        else
-			   LAT = YDEG + (YMIN/60.) + (YSEC/3600.);
-			}
-	             if (strncmp(proj_name,"utm",3) == 0)
-		        {
-                        if (ZONE <= 0)
-			   {
-                           if( LON < 0) ZONE = (186E0 + LON)/6E0;
-                           else ZONE = (186E0 - LON)/6E0;
-			   }
-		        sprintf(buff,"+zone=%d ",ZONE);
-		        strcat(parms,buff);
-		        }
-                     sys = fopen (tmp_file,"w");
-                     if (conv_typ == 1)  fprintf(sys,"%s +inv",parms);
-                     else fprintf(sys,"%s",parms);
-		     fclose (sys);
-
-		     if (conv_typ == 1)
-		      {
-		      if (strncmp(proj_name,"stp",3) == 0)
-		         sprintf(command,
-		         "%s/mapgen/bin/proj -c %s -s -f \"%%.8f\" -m 1/.30480060960121920243 << eof\012%lf %lf\012eof\n",
-		         getenv("GISBASE"),tmp_file,EAS,NOR);
-                      else
-		         sprintf(command,
-		         "%s/mapgen/bin/proj -c %s -s -f \"%%.8f\" << eof\012%lf %lf\012eof\n",
-		         getenv("GISBASE"),tmp_file,EAS,NOR);
-		      }
+			rec_cnt = 0;
+            G_clear_screen();
+            fprintf(stderr,"                   Coordinate Conversions\n\n");
+            if (conv_typ == 1)
+		   		fprintf(stderr,"                 Coord->Lat/Long Conversion\n\n");
+            else
+            	fprintf(stderr,"                 Lat/Long->Coord Conversion\n\n");
+		 	rec_cnt = 0;
+		 	for (;;)
+		    	{
+                if (fgets(buff,80,In_file) == NULL) break; 
+		     	rec_cnt++;
+                if (conv_typ == 1) sscanf(buff,"%lf%lf%d",&EAS,&NOR,&ZONE);
+		     	else
+					{
+		        	ZONE = 0;
+                    sscanf(buff,"%d%d%f%d%d%f%d",
+                    &IDEG,&IMIN,&XSEC,&JDEG,&JMIN,&YSEC,&ZONE);
+                    sscanf(buff,"%f%f%f%f%f%f%d",
+                    &XDEG,&XMIN,&XSEC,&YDEG,&YMIN,&YSEC,&ZONE);
+                  	if (XDEG < 0.0)
+			   			{
+			   			LON = -XDEG + (XMIN/60.) + (XSEC/3600.);
+			   			LON = -LON;
+			   			}
+                 	else
+			   			LON = XDEG + (XMIN/60.) + (XSEC/3600.);
+                    if (YDEG < 0.0)
+			   			{
+			   			LAT = -YDEG + (YMIN/60.) + (YSEC/3600.);
+			   			LAT = -LAT;
+			   			}
                     else
-		      {
-		      if (strncmp(proj_name,"stp",3) == 0)
-		         sprintf(command,
-		         "%s/mapgen/bin/proj -c %s -s -m 1/.30480060960121920243 << eof\012%lf %lf\012eof\n",
-		         getenv("GISBASE"),tmp_file,LON,LAT);
-                      else
-		         sprintf(command,
-		         "%s/mapgen/bin/proj -c %s -s << eof\012%lf %lf\012eof\n",
-		         getenv("GISBASE"),tmp_file,LON,LAT);
-                      }
-
-                     if (sys = popen(command,"r"))
-	                {
-	                fgets(buff, sizeof buff, sys);
+			   			LAT = YDEG + (YMIN/60.) + (YSEC/3600.);
+					}
+	       		if (strncmp(proj_name,"utm",3) == 0)
+		       		{
+                    if (ZONE <= 0) ZONE = (186E0 + LON)/6E0;
+		        	sprintf(buff,"%s +zone=%d ",parms,ZONE);
+		        	}
+             	sys = fopen (tmp_file,"w");
+             	if (conv_typ == 1)  fprintf(sys,"%s +inv",buff);
+                else fprintf(sys,"%s",buff);
+		     	fclose (sys);
+		     	if (conv_typ == 1)
+		      		{
+		      		if (strncmp(proj_name,"stp",3) == 0)
+		 				sprintf(command,
+						"%s/mapgen/bin/proj -c %s -s -f \"%%.8f\" -m 1/.30480060960121920243 << eof\012%lf %lf\012eof\n",
+		         		getenv("GISBASE"),tmp_file,EAS,NOR);
+					else
+						sprintf(command,
+						"%s/mapgen/bin/proj -c %s -s -f \"%%.8f\" << eof\012%lf %lf\012eof\n",
+		         		getenv("GISBASE"),tmp_file,EAS,NOR);
+		      		}
+				else
+		      		{
+		      		if (strncmp(proj_name,"stp",3) == 0)
+		         		sprintf(command,
+		         		"%s/mapgen/bin/proj -c %s -s -m 1/.30480060960121920243 << eof\012%lf %lf\012eof\n",
+		         		getenv("GISBASE"),tmp_file,LON,LAT);
+					else
+		  				sprintf(command,
+		         		"%s/mapgen/bin/proj -c %s -s << eof\012%lf %lf\012eof\n",
+		         		getenv("GISBASE"),tmp_file,LON,LAT);
+					}
+				if (sys = popen(command,"r"))
+					{
+					fgets(buff, sizeof buff, sys);
 		           /* remove the trailing newline */
-		        for (ptr = buff; *ptr; ptr++)
-			    if (*ptr == '\n')
-			        *ptr = 0;
-                        if (conv_typ == 1)
-			   {
-                           sscanf(buff,"%lf %lf",&LAT, &LON);
-			   DMS (); /*  convert to dd mm ss.ss */
-			   }
-                        else sscanf(buff,"%lf %lf",&NOR, &EAS);
-		        Write_results(0);
-                        pclose (sys);
-                        }
-                     } /* end for loop */
+		        	for (ptr = buff; *ptr; ptr++)
+			    	if (*ptr == '\n') *ptr = 0;
+               		if (conv_typ == 1)
+			   			{
+              			sscanf(buff,"%lf %lf",&LAT, &LON);
+			   			DMS (); /*  convert to dd mm ss.ss */
+			   			}
+					else sscanf(buff,"%lf %lf",&NOR, &EAS);
+		        	Write_results(0);
+					pclose (sys);
+					}
+				} /* end for loop */
 
-                 Write_results(1);
-		 fclose(In_file);
-                 input_typ = output_typ = 1;
-		 fprintf(stderr,"\tresetting to default screen & keyboard\n");
-		 sleep(2);
-                 }
-             unlink(tmp_file);
+			Write_results(1);
+			fclose(In_file);
+			input_typ = output_typ = 1;
+			fprintf(stderr,"\tresetting to default screen & keyboard\n");
+			sleep(2);
+			}
+		unlink(tmp_file);
         break;
         
 /*
@@ -311,49 +297,49 @@ sleep(2);
 
         case 4:                         **  input/output selection */
         case 3:                         /*  input/output selection */
-	   conv_way = 0;
-           while (conv_way != 3)
-	      {
-              G_clear_screen();
-	      fprintf(stderr,"\n\n\t1- Input selection  2- Output selection 3- Main Menu\n\n");
-              fprintf(stderr,"    Enter your selection [3] : ");
-	      gets(answer);
-	      if (strlen(answer) == 0)   conv_way = 3;
-	      else if (*answer != '1' && 
-		       *answer != '2' && 
-		       *answer != '3' )  conv_way = 3;
+	   		conv_way = 0;
+           	while (conv_way != 3)
+	      		{
+				G_clear_screen();
+				fprintf(stderr,"\n\n\t1- Input selection  2- Output selection 3- Main Menu\n\n");
+				fprintf(stderr,"    Enter your selection [3] : ");
+				gets(answer);
+				if (strlen(answer) == 0)   conv_way = 3;
+				else 
+					if (*answer != '1' && *answer != '2' && *answer != '3' )
+						conv_way = 3;
 	           else conv_way = atoi(answer);
 
 /*  actions   */
-              switch(conv_way)
+		switch(conv_way)
 	        {
 /* --------------------- Input Selection ------------------------ */
-              case 1: 	
+   			case 1: 	
                 input_typ = 0;
                 while (input_typ == 0)
-	           {
-		   G_clear_screen();
-	           fprintf(stderr,"\n\n\t1- Keyboard           2- File\n\n");
-                   fprintf(stderr,"\tEnter your selection : ");
-	           gets(answer);
-	           if (strlen(answer) == 0)   input_typ = 1;
-	           else if (*answer != '1' && 
-		            *answer != '2' )  input_typ = 3;
-	           else input_typ = atoi(answer);
+	      			{
+		   			G_clear_screen();
+	           		fprintf(stderr,"\n\n\t1- Keyboard           2- File\n\n");
+               		fprintf(stderr,"\tEnter your selection : ");
+					gets(answer);
+	           		if (strlen(answer) == 0)   input_typ = 1;
+	           		else if (*answer != '1' && 
+		            	*answer != '2' )  input_typ = 3;
+	           		else input_typ = atoi(answer);
 
            /*  actions   */
                    switch(input_typ)
-	             {
+	             	{
                    case 1: 				/*  Keyboard */
                          break;
                    case 2: 				/*  File */
                          get_file(1);
                          break;
-                   default:                                /* invalid option */
-		         fprintf(stderr,"  *** INVALID option *** \n");
-			 sleep(2);
-	                 input_typ = 0;
-	                 break;
+                   default:               /* invalid option */
+		         		fprintf(stderr,"  *** INVALID option *** \n");
+			 			sleep(2);
+	                 	input_typ = 0;
+	                 	break;
                      }
                    }
 	           break;
@@ -362,44 +348,44 @@ sleep(2);
               case 2: 			
                  output_typ = 0;
                  while (output_typ == 0)
-	            {
-		    G_clear_screen();
-	            fprintf(stderr,"\n\n\t1- Screen             2- File\n\n");
+	            	{
+		    		G_clear_screen();
+	            	fprintf(stderr,"\n\n\t1- Screen             2- File\n\n");
                     fprintf(stderr,"\tEnter your selection : ");
-	            gets(answer);
-	            if (strlen(answer) == 0)   output_typ = 1;
-	            else if (*answer != '1' && 
-		             *answer != '2' )  output_typ = 3;
-	            else output_typ = atoi(answer);
+	            	gets(answer);
+	            	if (strlen(answer) == 0)   output_typ = 1;
+	            	else if (*answer != '1' && 
+		            	 *answer != '2' )  output_typ = 3;
+	            	else output_typ = atoi(answer);
 
             /*  actions   */
                     switch(output_typ)
-	              {
+	              	{
                     case 1: 				/*  Screen */
                           break;
                     case 2: 				/*  File */
                           get_file(2);
                           break;
-                    default:                                /* invalid option */
-		          fprintf(stderr,"  *** INVALID option *** \n");
-			  sleep(2);
-	                  output_typ = 0;
-	                  break;
-                      }
+                    default:                /* invalid option */
+		          		fprintf(stderr,"  *** INVALID option *** \n");
+			  			sleep(2);
+	                  	output_typ = 0;
+	                  	break;
+                     }
                     }
 	            break;
 
 /* --------------------- Return to Main Menu ------------------------ */
-              case 3: 		
-		    break;
+              		case 3: 		
+		    			break;
 
 /* --------------------- Invalid option ---------------------------- */
-              default:                                /* invalid option */
-		    fprintf(stderr,"  *** INVALID option *** \n");
-		    sleep(2);
-	            input_typ = 0;
-	            output_typ = 0;
-	            break;
+              		default:                /* invalid option */
+		    			fprintf(stderr,"  *** INVALID option *** \n");
+		    			sleep(2);
+	            		input_typ = 0;
+	            		output_typ = 0;
+	            		break;
                 }
               }
               break;
@@ -418,9 +404,9 @@ sleep(2);
 
 /* invalid option */
       default:
-              fprintf(stderr," *** INVALID option ***\n");
-	      sleep(2);
-	      break;
+        	fprintf(stderr," *** INVALID option ***\n");
+	      	sleep(2);
+	      	break;
       }
     }
 }
