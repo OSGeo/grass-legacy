@@ -29,12 +29,17 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <li> r.in.tiff: bugfix for seg. fault (Carl Anderson)
 <li> r.line working now with Grass5 (Pierre de Mouveaux)
 <li> r.timestamp: fixed library function (Bill Hughes, Bill Brown)
+<li> s.in.shape: added, reads an ArcView Shapefile with points or
+     multipoint SHAPES (David D. Gray)
 <li> v.autocorr: compile and bug fix (David D. Gray)
 <li> v.extract: writes cats now (David D. Gray)
 <li> v.in.shape: Splitting of shapefile rings to arc-node segments,
       Correction (through options) of some common topological problems with imported
      data, Removal of duplicate rings and line segments, label bug
      fix  (David D. Gray)
+<li> v.in.ascii fixed to read DIGIT DATE properly (Huidae Cho)
+<li> v.in.dxf fixed to read DXF header correctly (Huidae Cho)
+<li> v.in.dxf2 fixed to read DXF header correctly (Huidae Cho)
 <li> v.out.arc: small fix for importing into ARC/INFO (Markus Neteler)
 <li> v.timestamp: added (Markus Neteler, based on r.timestamp)
 </menu>
@@ -43,6 +48,7 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <menu>
 <li>new grid3D modules added: r3.in.v5d, r3.out.v5d to exchange
     data with VIS5D, s.to.rast3 to convert 3D sites to grid3D (Jaro Hofierka)
+<li>g3.createwind added to create 3D region from 2D region (Markus Neteler)
 <li>r3.out.ascii region sensitive now (Jaro Hofierka)
 </menu>
 
@@ -50,6 +56,16 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <menu>
 <li> WIldfire SPread Simulation, WiSpS, package contains three GRASS
       modules r.ros, r.spread and r.spreadpath (Jianping Xu 1995)
+</menu>
+
+<b>Source Code</b>
+<menu>
+<li> removed src.related section for code cleanup
+<li> removed XGRASS for code cleanup
+<dd> you can still access the code using an old tag:<br>
+ cvs -z3 co -r "release_grass5beta7_20_april_2000" grass/src.related<br>
+ cvs -z3 co -r "release_grass5beta7_20_april_2000" grass/src/xgrass<br>
+ cvs -z3 co -r "release_grass5beta7_20_april_2000" grass/src/include
 </menu>
 
 <hr>
