@@ -1,0 +1,10 @@
+interface_build {
+    {v.support} 1
+    {(Re)Builds topology or edit cotegories of vector file.}
+    {entry map {Name of the GRASS vector file to be (re)build:} 0 vector}
+    {checkbox option {(Re)build topology.} "" build}
+    {checkbox option {Edit categories.} "" edit}
+    {entry threshold {Snap threshold value (valid only with -s option):} 0 ""}
+    {checkbox -s {Snap nodes (only valid with build option).} "" -s}
+    {checkbox -r {Set map region from data.} "" -r}
+}
