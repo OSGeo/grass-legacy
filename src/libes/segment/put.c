@@ -1,6 +1,7 @@
 #include "segment.h"
-
-int segment_put (SEGMENT *SEG,int *buf,int row,int col)
+/*bugfix: buf: char* vs int* -> wrong pointer arithmetics!!!. Pierre de Mouveaux - 09 april 2000 */
+/*  int segment_put (SEGMENT *SEG,int *buf,int row,int col) */
+int segment_put (SEGMENT *SEG, void *buf,int row,int col)
 {
     int n;
     int index;
@@ -15,6 +16,6 @@ int segment_put (SEGMENT *SEG,int *buf,int row,int col)
 
     n = SEG->len;
     while (n-- > 0)
-	*b++ = *buf++;
+	*b++ = *((char*)buf)++;
     return 1;
 }
