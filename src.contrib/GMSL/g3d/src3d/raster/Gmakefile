@@ -8,6 +8,6 @@ all:
 	$(GMAKE) r3.null
 	$(GMAKE) r3.out.ascii
 # Linux/Solaris version (using MESA 3D or openGL):
-#	$(GMAKE) r3.showdspf.openGL
+	$(GMAKE) r3.showdspf.openGL
 # SGI-version:
 #	$(GMAKE) r3.showdspf.sgi
