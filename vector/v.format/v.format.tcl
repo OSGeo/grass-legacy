@@ -218,6 +218,9 @@ proc create_vect { } {
 set efok [Button $efframe.ok -text "Create vector" -command create_vect ]
 pack $efok 
 
+button .close -text "Close" -command { exit }
+pack .close -side left -expand yes
+
 set row [ frame $efframe.res ]
 Label $row.a -text "" -justify left -textvariable resultmsg
 pack $row.a -side left
