@@ -4,5 +4,10 @@ written by Frank Warmerdam.
 See http://www.remotesensing.org/gdal/index.html.
 
 
-The dgn-header files are copied from"
- gdal/ogr/ogrsf_frmts/dgn/
+The dgn-header files have to be linked from:
+gdal/ogr/ogrsf_frmts/dgn/
+
+e.g.
+
+   ln -s /opt/soft/gdal/ogr/ogrsf_frmts/dgn/dgnlibp.h dgnlibp.h
+   ln -s /opt/soft/gdal/ogr/ogrsf_frmts/dgn/dgnlib.h dgnlib.h

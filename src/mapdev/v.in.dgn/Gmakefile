@@ -4,17 +4,15 @@ EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 OBJ = main.o
 
-#DGNLIB=$(LIBDIR)/libdgn.a
-#CPLLIB=$(LIBDIR)/libcpl.a
+#this may be configured to DGNlib:
+DGNLIB=$(GDAL_LIBS)
 
-#DGNLIB=$(LIBDIR)/ogrsf_frmts.a
-#CPLLIB=$(LIBDIR)/ogrsf_frmts.a
-
+####
 LIBES=$(VECTLIB) $(GISLIB)
 DEPLIBS=$(DEPVECTLIB) $(DEPGISLIB)
 
 $(BIN_CMD)/$(PGM):  $(OBJ) $(DEPLIBS) 
-	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(GDAL_LIBS) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(DGNLIB) $(MATHLIB) $(XDRLIB)
 
 $(DEPVECTLIB): #
 $(DEPGISLIB): #
