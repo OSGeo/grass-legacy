@@ -132,7 +132,7 @@ vec_struct *G_matvect_get_column(mat_struct *, int);
 vec_struct *G_vector_init(int, int, vtype);
 int G_vector_set(vec_struct *, int, int, vtype);
 double G_vector_norm_euclid(vec_struct *);
-double G_vector_norm_maxval(vec_struct *);
+double G_vector_norm_maxval(vec_struct *, int);
 
 #endif /* LA_H_ */
 
