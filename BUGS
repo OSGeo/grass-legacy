@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.42 2000-10-19 16:36:20 markus Exp $
+$Id: BUGS,v 1.43 2000-10-20 15:11:42 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -202,6 +202,10 @@ p.map.new:
   (reported by david_finlayson@yahoo.com)
    -> floating point exception fix already done, -M to be tested
   (being worked on by ?)
+
+r.in.bin:
+ - does it accept coordinates in dec. degree as well as DD:mm:ss?
+   -> put a note in html/html/r.in.bin.html
 
 r.in.hdf/r.out.hdf (src.garden/grass.hdf)
  - needs updating to HDF5.x lib (already there)

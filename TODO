@@ -1,4 +1,4 @@
-$Id: TODO,v 1.37 2000-10-19 16:06:36 markus Exp $
+$Id: TODO,v 1.38 2000-10-20 15:11:42 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -353,5 +353,37 @@ For grass5.1 we should discuss how this can be improved.
 ---------------------------------------------------------------------
 PDF documentation (all HTML in one file)
 
--> we need a script for that.
+-> see html/Gmakefile
+ 
+---------------------------------------------------------------------
+New GRASS Startup concept:
 
+Markus Neteler wrote:
+> Now a menu would appear with following items:                                 
+>                                                                               
+>  (1) Open existing session (using Justins forthcoming session manager)        
+>  (2) Define new location (using Justins forthcoming definition manager)       
+>  (3) Import data from file/cdrom... (using Frank Warmerdams GDAL import       
+>        module and others) and define location on-the-fly from data            
+>        settings                                                               
+>                                                                               
+> As (1) and (2) are generally nothing new (except the new graphical            
+> layout), (3) would be very welcome. Here a general change in GRASS            
+> import modules (raster, vector and sites) would be required. Like             
+> commercial GIS software GRASS should be capable of defining a location        
+> while importing external data *without* additional user input.                
+> Technically it's possible in my opinion. The import module would              
+> read the projection/coordinates parameters from the spatial data file,        
+> generate the DEFAULT_WIND and other files (look into "testgrass.sh" how       
+> this can be done by script), create the location and import the data.         
+> Especially for new users this is much more convenient.      
+
+Frank Warmerdam wrote:
+>I do have a version of r.in.gdal now working that includes an optional          
+>location parameter.  If provided it will initialize a new location on           
+>the basis of the extents, projection and units of the dataset being             
+>read.  However, this only works with GDAL supported datasets, so it             
+>isn't entirely general.   
+>Perhaps g.region could have an additional option to extend the current          
+>region bounds based on a scan of all raster, and vector extents in the          
+>mapset (or location)?    
