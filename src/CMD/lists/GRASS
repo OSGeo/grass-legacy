@@ -438,7 +438,7 @@ src.contrib/CERL/raster/r.hydro.CASC2D
 # 2D-case working:
 src.contrib/GMSL/g3d/src3d/sites/s.vol.rst
 #
-#new 2003, requires also C++
+#new 2003, requires also C++, use configure --with-cxx
 #src.contrib/DUKE/r.terraflow
 #
 #new 2003, not yet to be enabled:

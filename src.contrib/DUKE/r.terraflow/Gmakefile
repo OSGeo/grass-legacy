@@ -1,6 +1,3 @@
-
-CC = g++
-
 SOURCES = main.cc common.cc stats.cc fill.cc types.cc ccforest.cc \
 	nodata.cc plateau.cc direction.cc water.cc  \
 	filldepr.cc grid.cc genericWindow.cc \
@@ -24,10 +21,10 @@ SHORT_OBJ = $(patsubst %.cc, $(OBJARCH)/SHORT/%.o, $(SOURCES))
 #		header files should be included as prerequisites, but does not work 
 #		because of GRASS scripts 
 $(OBJARCH)/FLOAT/%.o:%.cc
-	$(CC) -c $(CFLAGS) -DELEV_FLOAT $< -o $@
+	$(CXX) -c $(CFLAGS) -DELEV_FLOAT $< -o $@
 
 $(OBJARCH)/SHORT/%.o:%.cc
-	$(CC) $(CFLAGS)  -DELEV_SHORT -c $< -o $@
+	$(CXX) $(CFLAGS)  -DELEV_SHORT -c $< -o $@
 
 
 
@@ -61,12 +58,12 @@ force:
 
 $(BIN_CMD)/r.terraflow: $(FLOAT_OBJ) $(GISLIB)  $(DEPLIBS)
 	(cd IOStream/lib ; make)
-	$(CC) -DELEV_FLOAT $(LDFLAGS) -o $@ $(FLOAT_OBJ) $(LIBS) $(MATHLIB) \
+	$(CXX) -DELEV_FLOAT $(LDFLAGS) -o $@ $(FLOAT_OBJ) $(LIBS) $(MATHLIB) \
 	$(XDRLIB) $(IOSTREAM_LIB)
 
 $(BIN_CMD)/r.terraflow.short: $(SHORT_OBJ) $(GISLIB)  $(DEPLIBS)
 	(cd IOStream/lib ; make)
-	$(CC) -DELEV_SHORT $(LDFLAGS) -o $@ $(SHORT_OBJ) $(LIBS) $(MATHLIB) \
+	$(CXX) -DELEV_SHORT $(LDFLAGS) -o $@ $(SHORT_OBJ) $(LIBS) $(MATHLIB) \
 	$(XDRLIB) $(IOSTREAM_LIB)
 
 
