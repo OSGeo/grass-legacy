@@ -83,7 +83,7 @@ int main(int argc, char **argv)
 		if(j > mwidth)
 			mwidth = j;
 
-	        if(G_find_sites(site[i], (str ? str+1 : "")) == NULL)
+	        if(G_find_sites2(site[i], (str ? str+1 : "")) == NULL)
 		{
 		    char msg[256];
 		    sprintf(msg, "Site file [%s] not available", site[i]);
