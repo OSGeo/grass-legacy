@@ -21,6 +21,7 @@ dig:oldvect:vector:old (GRASS 5.0) binary vector files
   dig_misc:misc
   reg:point registration
 vector:vect:vector:binary vector files
+dig_ascii:asciivect:vector:ascii vector files
 icons:icon:icon:paint icon files
 paint/labels:labels:label:paint label files
 site_lists:sites:site list:site list files
