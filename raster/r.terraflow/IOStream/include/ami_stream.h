@@ -144,7 +144,8 @@ public:
   
   // An AMI stream based on a specific path name.
   AMI_STREAM(const char *path_name, 
-	     AMI_stream_type st = AMI_READ_WRITE_STREAM);
+	     //	     AMI_stream_type st = AMI_READ_WRITE_STREAM);
+	     AMI_stream_type st);
   
   // A psuedo-constructor for substreams.
   AMI_err new_substream(AMI_stream_type st, off_t sub_begin, off_t sub_end,
@@ -173,7 +174,8 @@ public:
   
   // Query memory usage
   AMI_err main_memory_usage(size_t *usage,
-			    MM_stream_usage usage_type= MM_STREAM_USAGE_OVERHEAD);
+			    //MM_stream_usage usage_type= MM_STREAM_USAGE_OVERHEAD);
+			    MM_stream_usage usage_type);
   
   void persist(persistence p);
   

@@ -464,10 +464,9 @@ em_pqueue<T,Key>::em_pqueue(MinMaxHeap<T> *im, AMI_STREAM<T> *amis) {
 
   //estimate available remaining memory 
   size_t mm_avail = getAvailableMemory();
-  cout << form("EM_PQUEUE: available memory after allocation: %.2fMB\n", 
-	       mm_avail/(float)(1<<20));
-
-
+  printf("EM_PQUEUE: available memory after allocation: %.2fMB\n", 
+	 mm_avail/(float)(1<<20));
+  
   //last thing: insert the input stream in external buffers
   //allocate buffer if necessary
   //assert(crt_buf==0 && !buff[0]);// given
