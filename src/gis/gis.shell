@@ -1,0 +1,71 @@
+##############################################################
+
+trap "" 2 3
+shell=sh
+shellname="Bourne Shell"
+
+if test "$SHELL"
+then
+    if [ "$SHELL" = "/bin/csh" ]
+    then
+	shell=csh
+	shellname="C Shell"
+    fi
+fi
+
+# Display the advertising
+clear
+echo ""
+echo "------------------------------------------------------------------------"
+echo "Welcome to the QUICK-ACCESS version of GRASS VERSION_NUMBER (VERSION_DATE)"
+echo "  Copyright: Army Corps of Engineers, Construction Engineering"
+echo "  Research Laboratory, Environmental Division, Modeling"
+echo "  and Simulation Team."
+echo "  This version running thru the $shellname ($shell)"
+echo ""
+echo "Help is available with the command: help"
+echo "When ready to quit, enter: exit"
+echo "------------------------------------------------------------------------"
+echo ""
+
+if [ $shell = csh ]
+then
+    HOME=$LOCATION
+    export HOME
+    cshrc=$HOME/.cshrc
+    rm -f $cshrc
+    echo "set home = $home" > $cshrc
+
+    if [ -r $home/.cshrc ]
+    then
+	grep '^ *set  *mail *= *' $home/.cshrc >> $cshrc
+    fi
+
+    if [ -r $home/.login ]
+    then
+	grep '^ *set  *mail *= *' $home/.login >> $cshrc
+    fi
+
+    echo "set history=30 noclobber ignoreeof" >> $cshrc
+    echo "set prompt='\\" >> $cshrc
+    echo "Mapset <$MAPSET> in Location <$LOCATION_NAME>\\" >> $cshrc
+    echo "GRASS-GRID > '" >> $cshrc
+
+    $ETC/run csh
+
+    HOME=$home
+    export HOME
+
+else
+
+PS1="
+Mapset <$MAPSET> in Location <$LOCATION_NAME>
+GRASS-GRID > "
+
+    export PS1
+
+    $ETC/run sh
+fi
+
+trap 2 3
+#############################################################
