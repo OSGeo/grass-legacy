@@ -4,6 +4,8 @@
  *   Get region through graphics
  */
 
+#define	MAIN
+
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
@@ -16,11 +18,8 @@ main (int argc, char **argv)
     int rotate;
     struct Flag *quiet;
     struct Option *action;
-    char **rast, **vect, **site;
-    int nrasts, nvects, nsites;
     struct Option *rmap, *vmap, *smap, *zoom;
     double magnify;
-    char command[128];
     int i;
     char *mapset;
                         
@@ -202,39 +201,6 @@ main (int argc, char **argv)
         stat = zoomwindow(quiet->answer, rotate, magnify);
     
         R_close_driver();
-    
-        sprintf(command, "d.erase");
-        system(command);
-    
-    /* Redraw raster map */
-        if (rast)
-        {
-          for(i=0; i<nrasts; i++)
-          {
-          	sprintf(command, "d.rast -o map=%s", rmap->answers[i]);
-          	system(command);
-          }
-        }
-    
-    /* Redraw vector map */
-        if (vect)
-        {
-          for(i=0; i<nvects; i++)
-          {
-          	sprintf(command, "d.vect map=%s", vmap->answers[i]);
-          	system(command);
-          }
-        }
-        
-    /* Redraw site map */
-        if (site)
-        {
-          for(i=0; i<nsites; i++)
-          {
-          	sprintf(command, "d.sites sitefile=%s", smap->answers[i]);
-          	system(command);
-          }
-        }
     } while(stat == 2);
 
     if (rast)
@@ -248,4 +214,6 @@ main (int argc, char **argv)
 
     exit(stat);
 }
+
+#undef	MAIN
 

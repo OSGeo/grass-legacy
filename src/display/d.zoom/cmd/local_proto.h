@@ -1,3 +1,5 @@
+#include "gis.h"
+
 /* ask.c */
 int yes(char *);
 int just_click(char *);
@@ -20,3 +22,13 @@ int get_wind_y_pos(float);
 int get_wind_x_pos(float);
 /* zoom.c */
 int zoomwindow(int, int, double);
+
+#ifdef MAIN
+#define	GLOBAL
+#else
+#define	GLOBAL	extern
+#endif
+
+GLOBAL char **rast, **vect, **site;
+GLOBAL int nrasts, nvects, nsites;
+
