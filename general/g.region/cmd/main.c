@@ -104,7 +104,7 @@ int main (int argc, char *argv[])
 
         flag.res_set= G_define_flag();
         flag.res_set->key         = 'a';
-        flag.res_set->description = "Align region to resolution [default = align to bounds]";
+        flag.res_set->description = "Align region to resolution (default = align to bounds)";
 
 	flag.update = G_define_flag();
 	flag.update->key         = 'u';
