@@ -16,6 +16,8 @@ SUBDIRS = \
 	pg.postgisdb \
 	r.out.gdal \
 	r.reclass.area \
+	r.fillnulls \
+	r.shaded.relief \
 	r.univar \
 	v.build.all
 
