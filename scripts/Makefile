@@ -6,6 +6,7 @@ SUBDIRS = \
 	d.redraw \
 	g.manual \
 	pg.postgisdb \
+	r.univar \
 	v.distance.connect \
 	v.shape.regist
 
