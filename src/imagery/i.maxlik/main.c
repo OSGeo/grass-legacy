@@ -1,4 +1,3 @@
-/* %W% %G% */
 #define GLOBAL
 #include "global.h"
 
@@ -7,7 +6,6 @@ main(argc,argv) char *argv[];
 {
     struct Colors colr;
     struct Categories cats;
-    struct Histogram histogram ;
     struct Ref group_ref;
     int nrows, ncols;
     int row;
@@ -70,11 +68,12 @@ main(argc,argv) char *argv[];
     if (reject_fd > 0)
 	G_close_cell (reject_fd);
 
-    G_read_cats (class_name, G_mapset(), &cats);
-    G_set_cats_title ("Maximum Likelihood Classification", &cats);
+    G_init_cats((CELL)S.nsigs,"Maximum Likelihood Classification",&cats);
     for (i=0; i < S.nsigs; i++)
+    {
 	if(*S.sig[i].desc)
 	    G_set_cat ((CELL)(i+1),S.sig[i].desc, &cats);
+    }
     G_write_cats (class_name, &cats);
     G_free_cats (&cats);
 
@@ -142,8 +141,9 @@ main(argc,argv) char *argv[];
     {
 	char title[100];
 
-	G_read_cats (reject_name, G_mapset(), &cats);
 	sprintf (title, "Rejection Probability for %s", class_name);
+
+	G_init_cats((CELL)17,title,&cats);
 	G_set_cats_title (title, &cats);
 	G_set_cat ((CELL)0, "no data", &cats);
 	G_set_cat ((CELL)1, "0.1%", &cats);
@@ -167,13 +167,7 @@ main(argc,argv) char *argv[];
 	G_free_cats (&cats);
 
 
-	if(I_get_histogram (reject_name, G_mapset(), &histogram) >= 0)
-	{
-	    G_make_histo_grey_scale (&colr, &histogram);
-	    G_free_histogram (&histogram);
-	}
-	else
-	    G_make_grey_scale (&colr, (CELL) 1, (CELL) 16);
+	G_make_grey_scale_colors (&colr, (CELL) 1, (CELL) 16);
 
 	G_set_color ((CELL)0, 0, 255, 0, &colr);
 	G_set_color ((CELL)17, 255, 0, 0, &colr);
@@ -211,4 +205,5 @@ done()
 	fprintf (mail, "Reject threshold map layer: %s\n", reject_name);
 	pclose (mail);
     }
+    G_done_msg ("Check your mail");
 }
