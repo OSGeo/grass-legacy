@@ -1,0 +1,80 @@
+CC                  = gcc
+FC                  = g77
+LEX                 = flex
+YACC                = bison -y
+ARCH                = i686-pc-cygwin
+MAKE                = make
+prefix              = /usr/local/grass-5.0b
+exec_prefix         = ${prefix}
+
+GISBASE             = /usr/local/grass-5.0b
+UNIX_BIN            = /usr/local/bin
+
+DEFAULT_DATABASE    =
+DEFAULT_LOCATION    =
+
+COMPILE_FLAGS       = -I/usr/include -I/usr/local/include
+LDFLAGS             = -s 
+
+DLLIB               = 
+XCFLAGS             =  -I/usr/X11R6.4/include
+# XXX - replace SYSV in code with configure results in config.h
+# XXX - need SYSV defined for hpux10
+XLDFLAGS            = 
+XINCPATH            = 
+XMINCPATH           = 
+XLIBPATH            =  -L/usr/X11R6.4/lib
+XTLIBPATH           = 
+XMLIBPATH           = 
+XLIB                =  -lSM -lICE -lX11
+XTLIB               = -lXt
+XMLIB               = -lXm
+XEXTRALIBS          = 
+
+COMPATLIB           = 
+TERMLIB             = 
+CURSES              = -lncurses $(TERMLIB) $(COMPATLIB)
+MATHLIB             = -lm
+XDRLIB              = -lrpclib -lcygipc
+ZLIB                = @ZLIB@
+
+#PostgreSQL:
+PQINCPATH           = 
+PQLIBPATH           = 
+PQLIB               = 
+
+#ODBC:
+ODBCINC             = -I/usr/include
+
+#Image formats:
+PNGINC              = -I/usr/X11R6/include/ -I/usr/include/gr -I/usr/local/include -I/usr/include
+PNGLIB              = -L/usr/local/lib -L/usr/X11R6/lib -L/usr/lib
+
+JPEGINCPATH         = -I/usr/X11R6/include/ -I/usr/include/gr -I/usr/local/include -I/usr/include
+JPEGLIBPATH         = -L/usr/local/lib -L/usr/X11R6/lib -L/usr/lib
+
+TIFFINCPATH         =  -I/usr/local/include
+TIFFLIBPATH         =  -L/usr/local/lib
+
+#openGL files for NVIZ/r3.showdspf
+OPENGLINC           = -I/usr/local/include/GL
+OPENGLwINC          = 
+OPENGLLIB           = NO
+OPENGLULIB          = NO
+LGLWM               = 
+
+#tcl/tk stuff
+TCLINCDIR           = 
+TKINCDIR            = 
+TCLTKLIBS           = 
+
+LIBRULE             = ar ruv $@ $?; ranlib $@
+USE_TERMIO          = 
+
+# Uncomment below to input Korean(Asian?) characters in v.digit or etc.
+#DASIAN_CHARS        = -DASIAN_CHARS
+
+# It's hard to click two buttons simultaneously with two button mouse.
+# Situation is worse, if it requires continuous clicking.
+# In this case uncomment below.
+#DANOTHER_BUTTON     = -DANOTHER_BUTTON
