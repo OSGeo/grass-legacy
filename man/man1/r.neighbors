@@ -10,8 +10,11 @@ and stores new cell values in an output raster map layer.
 .br
 \fBr.neighbors help\fR
 .br
+.in +3
+.ti -3
 \fBr.neighbors\fR [\fB-aq\fR] \fBinput\*=\fIname \fBoutput\*=\fIname \fBmethod\*=\fIname \fBsize\*=\fIvalue\fR \
 [\fBtitle\*=\fI"phrase"\fR]
+.in
 .SH DESCRIPTION
 \fIr.neighbors\fR looks at each cell in a raster input file,
 and examines the category values assigned to the cells
@@ -79,9 +82,15 @@ The maximum category value within the neighborhood.
    | 7  | 6  |  4 |          |    |    |    |
    |----|----|----|          |----|----|----|
 .FI
+.IP \fBstddev\fR 18
+The statistical standard deviation of category values
+within the neighborhood (rounded to the nearest integer).
+.IP \fBvariance\fR 18
+The statistical variance of category values
+within the neighborhood (rounded to the nearest integer).
 .IP \fBdiversity\fR 18
 The number of different category values within the neighborhood.
-In the above example, the diversity is four.
+In the above example, the diversity is 4.
 .IP \fBinterspersion\fR 18
 The percentage of cells containing categories which differ from the category
 assigned to the center cell in the neighborhood, plus 1.
@@ -130,8 +139,8 @@ this (e.g., using the \fI-a\fR option).
 \fIr.neighbors\fR copies the GRASS \fIcolor\fR files associated with
 the input raster map layer for those output map layers that are based
 on the neighborhood average, median, mode, minimum, and maximum.
-Because diversity and interspersion are indices, rather than direct
-correspondents to input category values,
+Because standard deviation, variance, diversity, and interspersion are indices,
+rather than direct correspondents to input category values,
 no \fIcolor\fR files are copied for these map layers.
 (The user should note that although the \fIcolor\fR file is copied
 for \fIaverage\fRd neighborhood function output,
