@@ -492,7 +492,13 @@ int Nnew_map_obj_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
     /* See if there is a default file name specified */
     if ((argc >= 3) && (strncmp(argv[2], "name=", 5))) {
         arglist[2] = argv[2];
-        load_obj(new_id, SITE, data, 3, arglist, interp);
+        if (load_obj(new_id, SITE, data, 3, arglist, interp) == TCL_ERROR)
+	{
+		GP_delete_site(new_id);
+		Tcl_SetResult(interp, "Error loading vector points", TCL_VOLATILE);
+		return (TCL_ERROR);
+
+	}
         file_used = 1;
     }
 
@@ -520,6 +526,7 @@ int Nnew_map_obj_cmd(Nv_data * data, Tcl_Interp * interp, int argc,
     /* See if there is a default file name specified */
     if ((argc >= 3) && (strncmp(argv[2], "name=", 5))) {
         arglist[2] = argv[2];
+/*	load_obj(new_id, VECT, data, 3, arglist, interp); */
         if ( load_obj(new_id, VECT, data, 3, arglist, interp) == TCL_ERROR){
             GV_delete_vector(new_id);
             Tcl_SetResult(interp, "Error loading vector", TCL_VOLATILE);
@@ -1458,13 +1465,19 @@ int load_obj(int id, int type, Nv_data * data, int argc, char *argv[],
 {
     switch (type) {
     case SITE:
-    if (0 > GP_load_site(id, argv[2]))
-        return (TCL_ERROR);
+    if (0 > GP_load_site(id, argv[2])) {
+	    GP_delete_site(id);
+	    return (TCL_ERROR);
+    } else {
+	    return (TCL_OK);
+    }
     break;
     case VECT:
     if ( 0 > GV_load_vector(id, argv[2]) ) {
         GV_delete_vector(id);
         return (TCL_ERROR);
+    } else {
+	    return (TCL_OK);
     }
     case VOL:
     if ( 0 > GVL_load_vol(id, argv[2]) ) {
