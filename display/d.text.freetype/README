@@ -28,15 +28,16 @@ Install
 	gmake5 -i
 	gmakelinks5 -i
 
+6. Update $(GISBASE)/etc/freetypecap file to indicate your own files.
+
 
 Usage
 -----
 
-	d.text.freetype text="text"	# The default font in freetypecap is
-					# used.
+d.text.freetype text="text"	# The default font in freetypecap is used.
 
-	If path, charset, color, or size is given, the value of the default
-	font will be overrided.
+If path, charset, color, or size is given, the value of the default font
+will be overrided.
 
 
 Bugs
