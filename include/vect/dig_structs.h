@@ -146,14 +146,7 @@ struct Format_info_post {
     char       *cat_field;   /* category table: field column */
     char       *cat_cat;     /* category table: category column */
     PGconn     *conn;        /* connection */
-    int        selected;     /* 0 - data not selected, 1 - data selected */
-    PGresult   *geomRes;    /* results from geometry table */
-    PGresult   *catRes;     /* results from category table */
-    int        nGeom;        /* number of selected geometry records */ 
-    int        nCat;         /* number of selected category records */ 
-    int        nextRow;      /* number of the next row in geometry 
-				selection to be read */ 
-    int        nextId;       /* id number of the next geometry record to be read */ 
+    int        lastRead;   /* id of last read line, 0 if no one was yet read */
 };
 #endif
 struct Format_info {
