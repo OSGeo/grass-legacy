@@ -20,14 +20,11 @@ OFILES =  \
 	Returns.o
 
 
-$(GISBASE)/driver/PNG: PNG
+$(GISBASE)/driver/PNG: $(OFILES) ${DRIVERLIB} ${GISLIB}
+	${CC} $(LDFLAGS) -o $@ $(OFILES) ${DRIVERLIB} ${GISLIB} $(GRAPH) $(ZLIB) ${PNGLIB} ${GDLIB} $(MATHLIB) $(XDRLIB)
 	@if egrep '^PNG' $(ETC)/monitorcap >/dev/null 2>&1 ; then \
 	echo PNG already defined in $(ETC)/monitorcap ; \
 	else \
 	echo adding PNG driver to $(ETC)/monitorcap ; \
 	cat moncap.entry | sed -e s:BASEDIR:$(GISBASE):g >>$(ETC)/monitorcap ; \
 	fi
-
-
-PNG: $(OFILES) ${DRIVERLIB} ${GISLIB}
-	${CC} $(LDFLAGS) -o $@ $(OFILES) ${DRIVERLIB} ${GISLIB} $(GRAPH) $(ZLIB) ${PNGLIB} ${GDLIB} $(MATHLIB) $(XDRLIB)
