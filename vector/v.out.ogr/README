@@ -1,0 +1,5 @@
+
+This module requires OGR (GDAL) library libgdal.1.1.so and header file ogr_api.h.
+
+GDAL flags should be added to Makefile and compilation made conditional.
+ 
