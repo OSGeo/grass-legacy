@@ -1,0 +1,8 @@
+IDEN_MPDT:19940804
+IDEN_TITL:
+IDEN_COMT:
+XREF_HDAT:NAS
+DDDF_GRASS_ENT:Polygons represent soil areas from SSURGO database
+DDDF_ATTR_NUM:Integer coresponding to MUID
+DDDF_ATTR_LABEL:Label = MUID, Map Unit Identification Number, from SSURGO Database
+DDSH_ENT_NAME:SOIL_AREAS

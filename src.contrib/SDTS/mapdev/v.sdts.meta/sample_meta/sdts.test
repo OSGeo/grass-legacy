@@ -1,0 +1,12 @@
+IDEN_MPDT:19931025
+IDEN_TITL:SDTS test map
+IDEN_COMT:This is the file that i have been using for a long time now for this
+project. It seems to go on forever. But lets add a little bit to this
+now.
+
+XREF_HDAT:NAS
+DDDF_GRASS_ENT:The entities are abstract shapes without any real word meaning.
+They are simple spatial objects, nothing more.
+DDDF_ATTR_NUM:The number arbitrarily assigned to each test spatial object in the map.
+DDDF_ATTR_LABEL:Textual identification of the object, as to type and number.
+DDSH_ENT_NAME:Abstract_objects
