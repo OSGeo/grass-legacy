@@ -101,9 +101,9 @@ void gk_follow_frames(Viewnode *view, int numsteps, Keylist *keys, int step,
     int set;
     unsigned long mask;
 
-
     for(frame = step-1; frame < numsteps; frame++)
     {
+
 	v = &view[frame];
 	mask = gk_get_mask_sofar((float)frame/numsteps, keys);
 
@@ -134,10 +134,15 @@ void gk_follow_frames(Viewnode *view, int numsteps, Keylist *keys, int step,
     	    fprintf(stderr,"FROM: %f %f %f\n", tmp[X], tmp[Y], tmp[Z]);
     	}
     	#endif
-	
+
+/* Fails ??	
 	if(!GS_get_focus(NULL))
 	{
-	    GS_get_viewdir(tmp);
+*/
+/* Replace View dir with get_focus (center */
+/*	    GS_get_viewdir(tmp); */
+
+            GS_get_focus(tmp);
 	    if((mask & KF_DIRX_MASK))
 	    {
 		tmp[X] = v->fields[KF_DIRX];
@@ -149,10 +154,10 @@ void gk_follow_frames(Viewnode *view, int numsteps, Keylist *keys, int step,
 	    if((mask & KF_DIRZ_MASK))
 	    {
 		tmp[Z] = v->fields[KF_DIRZ];
-	    }
-	    
-	    GS_set_viewdir(tmp);
-	}
+	    } 
+	    GS_set_focus(tmp);
+/*	    GS_set_viewdir(tmp); */
+/*	} */
 	
     	#ifdef KDEBUG
 	{
@@ -193,7 +198,7 @@ void gk_follow_frames(Viewnode *view, int numsteps, Keylist *keys, int step,
 	}
 
 	GS_alldraw_cplane_fences ();
-	
+
 	if(mode & FM_PATH)
 	{
 	    gk_draw_path(view, numsteps, keys);

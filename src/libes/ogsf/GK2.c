@@ -184,6 +184,36 @@ void GK_update_tension(void)
     return;
 }
 
+
+
+void GK_print_keys(char *name)
+{
+Keylist *k;
+FILE *fp;
+int cnt=1;
+
+if (NULL == (fp = fopen (name, "w")))
+{
+	fprintf (stderr, "Cannot open file for output\n"),exit(1);
+}
+	/* write a default frame rate of 30 at top of file */
+	fprintf(fp, "30 \n");
+
+	for (k = Keys; k; k=k->next) {
+
+	fprintf(fp, "{%f {{FromX %f} {FromY %f} {FromZ %f} {DirX %f} {DirY %f} {DirZ %f} {FOV fov} {TWIST twist} {cplane-0 {{pos_x 0.000000} {pos_y 0.000000} {pos_z 0.000000} {blend_type OFF} {rot 0.000000} {tilt 0.000000}}}} keyanimtag%d 0} ", 
+	k->pos,
+	k->fields[KF_FROMX], k->fields[KF_FROMY], k->fields[KF_FROMZ],
+	k->fields[KF_DIRX], k->fields[KF_DIRY], k->fields[KF_DIRZ],
+	cnt );
+	cnt++;
+	}
+
+fclose (fp);
+return;
+
+}
+
 void GK_update_frames(void)
 {
     int i;
@@ -340,7 +370,11 @@ int GK_add_key(float pos, unsigned long fmask, int force_replace, float precis)
     }
     #endif
 
-    GS_get_viewdir(tmp);
+/* Instead of View Dir try get_focus (view center) */
+/* View Dir is implied from eye and center position */
+/*    GS_get_viewdir(tmp); */
+
+    GS_get_focus(tmp);
     newk->fields[KF_DIRX] = tmp[X]; 
     newk->fields[KF_DIRY] = tmp[Y]; 
     newk->fields[KF_DIRZ] = tmp[Z]; 
@@ -383,7 +417,6 @@ void GK_show_path(int flag)
     
 	if(Views)
 	{
-
 	    GS_set_draw(GSD_FRONT);
 	    GS_ready_draw();
 	    

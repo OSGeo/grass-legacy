@@ -109,6 +109,100 @@ Nhas_focus_cmd (
 
 }
 
+/***********************************/
+int 
+Nset_focus_gui_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
+{
+  float realto[3];
+  float n, s, e, w;
+  float ew_res, ns_res;
+  int id;
+  int *surf_list, num_surfs;
+  int rows, cols;
+
+  /* Get current center */
+  GS_get_focus(realto);
+  surf_list=GS_get_surf_list(&num_surfs);
+
+  if(argc == 3 && surf_list > 0){
+	  id = surf_list[0];
+	  free(surf_list);
+	  GS_get_dims(id, &rows, &cols);
+      /* get coordinates from gui (0->1) and convert to screen */
+	GS_get_region(&n, &s, &w, &e);
+	ew_res = (e-w)/cols;
+	ns_res = (n-s)/rows;
+/* EAST TO WEST -- east=1, west=0 */
+      realto[0]=(float)atof(argv[1]);
+      realto[0] = (float)((e-w)*realto[0])+w;
+      realto[0] = (float)(realto[0] - w - (ew_res/2.));
+/* NORTH to SOUTH -- north=0 south=1 */
+      realto[1]=(float)atof(argv[2]);
+      realto[1] = n-((n-s)*realto[1]);
+      realto[1] = (float)(realto[1] - s - (ns_res/2.));
+
+      GS_set_focus(realto);
+      Nquick_draw_cmd(data,interp);
+  }
+
+  return (TCL_OK);
+
+}
+
+
+/***********************************/
+int 
+Nget_focus_gui_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
+{
+  float realto[3];
+  float n, s, e, w;
+  float ew_res, ns_res;
+  int id;
+  int *surf_list, num_surfs;
+  int rows, cols;
+  char *list[2], east[32], north[32];
+  
+
+  /* Get current center */
+  GS_get_focus(realto);
+
+  surf_list=GS_get_surf_list(&num_surfs);
+  if (surf_list > 0) {
+  id = surf_list[0];
+  free(surf_list);
+  GS_get_dims(id, &rows, &cols);
+      /* get coordinates from gui (0->1) and convert to screen */
+	GS_get_region(&n, &s, &w, &e);
+	ew_res = (e-w)/cols;
+	ns_res = (n-s)/rows;
+/* EAST TO WEST -- east=1, west=0 */
+	realto[0] = realto[0] + (ew_res/2.);
+	sprintf(east, "%f", (realto[0] / (e - w)) );
+	list[0] = east;
+    
+/* NORTH to SOUTH -- north=0 south=1 */
+	realto[1] = realto[1] + (ns_res/2.);
+	sprintf(north, "%f", (realto[1] / (n-s)) );
+	list[1] = north;
+
+   Tcl_SetResult (interp, Tcl_Merge (2, list), TCL_VOLATILE);
+  }
+
+  return (TCL_OK);
+
+}
+
+/***********************************/
 int 
 Nset_focus_cmd (
     Nv_data *data,
@@ -171,6 +265,29 @@ Nset_focus_map_cmd (
 }
 
 
+int Nmove_to_real_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
+{
+  float	ftmp[3];
+  int i;
+  double atof();
+
+  if (argc != 4)
+    return (TCL_ERROR);
+
+	ftmp[0]=(float)atof(argv[1]);
+	ftmp[1]=(float)atof(argv[2]);
+	ftmp[2]=(float)atof(argv[3]);
+	GS_moveto_real(ftmp);
+  
+  return (TCL_OK);
+}
+
+
 int Nmove_to_cmd (
     Nv_data *data,
     Tcl_Interp *interp,                 /* Current interpreter. */
@@ -178,19 +295,21 @@ int Nmove_to_cmd (
     char **argv                        /* Argument strings. */
 )
 {
-  float	ftmp;
+  float	ftmp[3];
   int i;
   double atof();
 
   if (argc != 4)
     return (TCL_ERROR);
-  for(i=1;i<argc;i++) {
-    ftmp = (float)atof(*(++argv));
-    GS_moveto(&ftmp);
-  }
+
+	ftmp[0]=(float)atof(argv[1]);
+	ftmp[1]=(float)atof(argv[2]);
+	ftmp[2]=(float)atof(argv[3]);
+	GS_moveto(ftmp);
   
   return (TCL_OK);
 }
+
 
 int Nset_fov_cmd (
     Nv_data *data,
@@ -754,9 +873,8 @@ Nload_3dview_cmd (
     
     free(list_space);
   }
-
   /* Finally make the GSF library call */
   GS_load_3dview(argv[1], first_surf);
-  
+
   return (TCL_OK);
 }

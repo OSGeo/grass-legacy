@@ -612,6 +612,27 @@ Nshow_site_cmd (
 
 }
 
+int
+Nprint_keys_cmd (
+	Nv_data *data,         /* Local data */
+	Tcl_Interp *interp,    /* Current interpreter */
+	int argc,              /* Number of arguments */
+	char **argv           /* Argument strings */
+	)
+{
+	  /* Parse arguments */
+	  if (argc != 2) {
+		interp->result="Error: should be Nprint_keys filename" ;
+		return (TCL_ERROR);
+		}
+
+	  /* Call function */
+	GK_print_keys(argv[1]);
+
+	return (TCL_OK);
+
+}
+
 int 
 Nshow_vect_cmd (
     Nv_data *data,         /* Local data */
@@ -770,5 +791,35 @@ Nwrite_tif_cmd (
   return (TCL_OK);
 
 }
+
+/********************************************************* */
+#ifdef OS_RENDER
+int
+Noff_screen_cmd(
+    Nv_data *data,         /* Local data */
+    Tcl_Interp *interp,    /* Current interpreter */
+    int argc,              /* Number of arguments */
+    char **argv           /* Argument strings */
+)
+{
+
+ int flag;
+
+  /* Parse arguments */
+  if (argc != 2) {
+    interp->result="Error: should be Noff_screen flag";
+    return (TCL_ERROR);
+  }
+
+  flag = atoi(argv[1]);
+
+  /* Call the function */
+  GS_oscontext(flag);
+
+  return (TCL_OK);
+
+}
+#endif
+
 
 

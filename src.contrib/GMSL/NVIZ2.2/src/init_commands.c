@@ -7,6 +7,7 @@ extern int
   Nresize_cmd(),
   Nset_background_cmd(),
   Nchange_position_cmd(),
+  Nget_position_cmd(),
   Nchange_persp_cmd(),
   Nchange_exag_cmd(),
   Nchange_height_cmd(),
@@ -34,11 +35,14 @@ extern int
   Nget_from_cmd (),
   Nlook_here_cmd (),
   Nset_focus_cmd(),
+  Nset_focus_gui_cmd(),
+  Nget_focus_gui_cmd(),
   Nget_focus_cmd(),
   Nhas_focus_cmd(),
   Nset_focus_map_cmd(),
   Nset_no_focus_cmd(),
   Nmove_to_cmd(),
+  Nmove_to_real_cmd(),
   Nset_fov_cmd(),
   Nget_region_cmd(),
   Nget_point_on_surf_cmd(),
@@ -80,10 +84,14 @@ extern int
   Nshow_vect_cmd(),
   Ndelete_key_cmd(),
   Nmove_key_cmd(),
+  Nprint_keys_cmd(),
   Nwrite_rgb_cmd(),
   Nwrite_ppm_cmd(),
   Nwrite_tif_cmd(),
   Nstart_zoom_cmd(),
+#ifdef OS_RENDER
+  Noff_screen_cmd(),
+#endif
   Ncutplane_obj_cmd(),
   Nnew_cutplane_obj_cmd(),
   Nnum_cutplane_obj_cmd(),
@@ -172,6 +180,7 @@ init_commands (Tcl_Interp *interp, Nv_data *data)
   Tcl_CreateCommand(interp, "Nresize", Nresize_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nchange_position", Nchange_position_cmd,
 		      data, NULL);
+  Tcl_CreateCommand(interp, "Nget_position", Nget_position_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nchange_persp", Nchange_persp_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nchange_height", Nchange_height_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nget_first_exag", Nget_first_exag_cmd, 
@@ -202,9 +211,12 @@ init_commands (Tcl_Interp *interp, Nv_data *data)
   Tcl_CreateCommand(interp, "Nhas_focus", Nhas_focus_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nget_focus", Nget_focus_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nset_focus", Nset_focus_cmd, data, NULL);
+  Tcl_CreateCommand(interp, "Nset_focus_gui", Nset_focus_gui_cmd, data, NULL);
+  Tcl_CreateCommand(interp, "Nget_focus_gui", Nget_focus_gui_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nset_focus_map", Nset_focus_map_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nset_no_focus", Nset_no_focus_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nmove_to", Nmove_to_cmd, data, NULL);
+  Tcl_CreateCommand(interp, "Nmove_to_real", Nmove_to_real_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nset_fov", Nset_fov_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nget_region", Nget_region_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nget_point_on_surf", Nget_point_on_surf_cmd, 
@@ -275,6 +287,8 @@ init_commands (Tcl_Interp *interp, Nv_data *data)
 		    data, NULL);
   Tcl_CreateCommand(interp, "Nmove_key", Nmove_key_cmd,
 		    data, NULL);
+  Tcl_CreateCommand(interp, "Nprint_keys", Nprint_keys_cmd,
+		    data, NULL);
   Tcl_CreateCommand(interp, "Nwrite_rgb", Nwrite_rgb_cmd,
 		    data, NULL);
   Tcl_CreateCommand(interp, "Nwrite_ppm", Nwrite_ppm_cmd,
@@ -283,6 +297,10 @@ init_commands (Tcl_Interp *interp, Nv_data *data)
                         data, NULL);
   Tcl_CreateCommand(interp, "Nstart_zoom", Nstart_zoom_cmd,
                         data, NULL);
+#ifdef OS_RENDER
+  Tcl_CreateCommand(interp, "Noff_screen", Noff_screen_cmd,
+                        data, NULL);
+#endif
 
   /* Cutplane Junk */
   Tcl_CreateCommand(interp, "Ncutplane_obj", Ncutplane_obj_cmd,

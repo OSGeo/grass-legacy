@@ -226,5 +226,35 @@ Nchange_exag_cmd (
 
 /**********************************************************************/
 
+int Nget_position_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 
+{
+ float from[3];
+ float xpos, ypos;
+ float tempx, tempy;
+ char *list[2], x_pos[32], y_pos[32];
 
+ GS_get_from(from);
+
+ tempx = (from[X]+RANGE_OFFSET)/RANGE;
+ tempy = (from[Y]+RANGE_OFFSET)/RANGE;
+
+ sprintf(x_pos, "%f", tempx);
+ sprintf(y_pos, "%f", tempy);
+ 
+ list[0] = x_pos;
+ list[1] = y_pos;
+  
+
+  Tcl_SetResult (interp, Tcl_Merge (2, list), TCL_VOLATILE);
+
+ return (TCL_OK);
+
+}
+
+/**********************************************************************/

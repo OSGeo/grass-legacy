@@ -2111,7 +2111,7 @@ void GS_done_draw(void)
     	Gs_status("GS_done_draw");
     }
     #endif
-    
+   
     if (GSD_BACK == Buffermode)
     {
 	gsd_swapbuffers();
@@ -2139,6 +2139,29 @@ void GS_set_focus(float *realto)
     
     return;
 }
+
+/***********************************************************************/
+/* Either create an OS context or destroy a context                    */
+#ifdef OS_RENDER
+void GS_oscontext(int ctx_flag)
+{
+
+	    #ifdef TRACE_GS_FUNCS
+	    {
+	    Gs_status("GS_oscontext");
+	}
+	        #endif
+
+	    if (ctx_flag == 1) {
+		    gsd_newcontext();
+	    } else {
+		    gsd_destroy_context();
+	    }
+
+	return;
+}
+#endif
+
 
 /***********************************************************************/
 /* OK to call with NULL argument if just want to check state */
@@ -2236,7 +2259,6 @@ void GS_moveto(float *pt)
 void GS_moveto_real(float *pt)
 {
     float ft[3];
-
     gsd_real2model(pt);
     GS_moveto(pt);
 
@@ -2699,6 +2721,7 @@ int GS_save_3dview(char *vname, int surfid)
 /************************************************************************/
 int GS_load_3dview(char *vname, int surfid)
 {
+
     return(Gs_load_3dview(vname, &Gv, &Gd, &wind, gs_get_surf(surfid)));
     
     /* what to do about lights - I guess, delete all & 
@@ -2764,7 +2787,7 @@ void GS_init_view(void)
     GS_v3eq(Gv.real_to, Gv.from_to[TO]);
     GS_v3normalize(Gv.from_to[FROM], Gv.from_to[TO]);
 
-    Gd.nearclip = 50.;
+    Gd.nearclip = .5;
     Gd.farclip = 100000.;      /* deletes map at given height (?) */
     Gd.aspect = (float) GS_get_aspect(); 
 
