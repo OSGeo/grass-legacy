@@ -153,7 +153,7 @@ main (int argc, char *argv[])
 
     list_flag = G_define_flag ();
     list_flag->key             = 'l';
-    list_flag->description     = "List available layers in data source.";
+    list_flag->description     = "List available layers in data source and exit.";
     
     no_clean_flag = G_define_flag ();
     no_clean_flag->key             = 'c';
