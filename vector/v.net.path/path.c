@@ -21,13 +21,13 @@ typedef struct { /* category index */
 
 int cmp ( const void *, const void *);
 
-int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist)
+int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist, int segments)
 {
     int    i, nlines, line, npoints, type, cat, id, fcat, tcat, fline, tline, fnode, tnode, count;
     int    ret, sp, input_mode, unreachable, nopoint, formaterr;
     struct ilist *AList;
     double cost;
-    struct line_pnts *Points, *OPoints;
+    struct line_pnts *Points, *OPoints, *FPoints, *TPoints;
     struct line_cats *Cats;
     CIDX   *Cidx, *Citem;
     char   buf[2000], dummy[2000];
@@ -41,6 +41,8 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist
     AList = Vect_new_list ();
     Points = Vect_new_line_struct ();
     OPoints = Vect_new_line_struct ();
+    FPoints = Vect_new_line_struct ();
+    TPoints = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
     db_init_string (&sql);
 
@@ -89,7 +91,9 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist
         db_close_database_shutdown_driver ( driver );
 	G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql )  );
     }
-    
+
+    db_begin_transaction ( driver );
+
     /* Read stdin, find shortest path, and write connectin line and new database record */
     cat = 0;
     formaterr = nopoint = unreachable = 0;
@@ -158,24 +162,42 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist
 		    /* Write new line connecting 'from' and 'to' */
 		    G_debug ( 3, "Number of arcs = %d, total costs = %f",  AList->n_values, cost);
 
-		    Vect_reset_line ( OPoints );
 		    Vect_reset_cats ( Cats );
 		    Vect_cat_set ( Cats, 1, cat );
-		    for ( i = 0; i < AList->n_values; i++ ) {
-			line = AList->value[i];
-			Vect_read_line ( In, Points, NULL, abs(line) );
-			if ( line > 0 ) 
-			    Vect_append_points ( OPoints,  Points, GV_FORWARD );
-			else 
-			    Vect_append_points ( OPoints,  Points, GV_BACKWARD );
-		    }	
-		    Vect_write_line ( Out, GV_LINE, OPoints, Cats);
+
+		    if ( segments ) {
+			for ( i = 0; i < AList->n_values; i++ ) {
+			    line = AList->value[i];
+			    Vect_read_line ( In, Points, NULL, abs(line) );
+
+			    if ( line > 0 ) {
+			        Vect_write_line ( Out, GV_LINE, Points, Cats);
+			    } else {
+			        Vect_reset_line ( OPoints );
+				Vect_append_points ( OPoints,  Points, GV_BACKWARD );
+			        Vect_write_line ( Out, GV_LINE, OPoints, Cats);
+			    }
+			}	
+		    } else { 
+			Vect_reset_line ( OPoints );
+
+			for ( i = 0; i < AList->n_values; i++ ) {
+			    line = AList->value[i];
+			    Vect_read_line ( In, Points, NULL, abs(line) );
+			    if ( line > 0 ) 
+				Vect_append_points ( OPoints,  Points, GV_FORWARD );
+			    else 
+				Vect_append_points ( OPoints,  Points, GV_BACKWARD );
+			}	
+
+			Vect_write_line ( Out, GV_LINE, OPoints, Cats);
+		    }
 		}
 	    }
 	} else { /* INPUT_MODE_COOR */
 	    fcat = tcat = 0;
 	    ret = Vect_net_shortest_path_coor ( In, fx, fy, 0.0, tx, ty, 0.0, maxdist, maxdist,
-                                                &cost, OPoints, &fdist, &tdist );
+                                                &cost, OPoints, AList, FPoints, TPoints, &fdist, &tdist );
 
 	    if ( ret == 0 ) {
 		sp = SP_UNREACHABLE;
@@ -184,7 +206,34 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist
 	    } else {
 		Vect_reset_cats ( Cats );
 		Vect_cat_set ( Cats, 1, cat );
-		Vect_write_line ( Out, GV_LINE, OPoints, Cats);
+
+		if ( segments ) {
+		    /* From point to the first node */
+		    if ( FPoints->n_points > 0 ) 
+			Vect_write_line ( Out, GV_LINE, FPoints, Cats);
+
+		    /* On the network */
+		    for ( i = 0; i < AList->n_values; i++ ) {
+			line = AList->value[i];
+
+			Vect_read_line ( In, Points, NULL, abs(line) );
+
+			if ( line > 0 ) {
+			    Vect_write_line ( Out, GV_LINE, Points, Cats);
+			} else {
+			    Vect_reset_line ( OPoints );
+			    Vect_append_points ( OPoints,  Points, GV_BACKWARD );
+			    Vect_write_line ( Out, GV_LINE, OPoints, Cats);
+			}
+		    }	
+
+		    /* From last node to point */ 
+		    if ( TPoints->n_points > 0 ) 
+			Vect_write_line ( Out, GV_LINE, TPoints, Cats);
+		    
+		} else {
+		    Vect_write_line ( Out, GV_LINE, OPoints, Cats);
+		}
 	    }
 	}
 
@@ -197,8 +246,10 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist
 	    db_close_database_shutdown_driver ( driver );
 	    G_fatal_error ( "Insert new row: %s", db_get_string ( &sql )  );
 	}
-    };
+    }
 
+    db_commit_transaction ( driver );
+    
     db_close_database_shutdown_driver ( driver );
     
     Vect_destroy_list(AList);
