@@ -17,9 +17,10 @@ int main(int argc, char *argv[])
     char subgroup[30];
     char **rasters;
     int m, k=0;
+    FILE *output;
 
     struct Option *grp, *rast, *sgrp;
-    struct Flag *r;
+    struct Flag *r, *l;
     struct GModule *module;
 
     G_gisinit(argv[0]);
@@ -57,6 +58,10 @@ int main(int argc, char *argv[])
     r->key = 'r';
     r->description = "Remove selected files from specified group";
 
+    l = G_define_flag();
+    l->key = 'l';
+    l->description = "List files from specified (sub)group";
+
     if (G_parser(argc, argv))
 	exit(-1);
 
@@ -77,7 +82,7 @@ int main(int argc, char *argv[])
 	k++;
     }
     
-    if (k < 1)  /* remove if input is requirement */
+    if (k < 1 && !l->answer)  /* remove if input is requirement */
         G_fatal_error( _("No input map(s) specified.") );
 
     rasters = rast->answers;
@@ -98,18 +103,28 @@ int main(int argc, char *argv[])
 	}
     }
     else {
-	/* Create or update Group REF */
-	if (I_find_group(group) == 0) {
-	    fprintf(stderr, "group %s - does not yet exist...\n", group);
-	    fprintf(stderr, "Creating new group %s\n", group);
-	}
-	if (sgrp->answer) {
-	    fprintf(stderr, "Adding files to sub-group\n");
-	    add_or_update_subgroup(group, subgroup, rasters, k);
+        if (l->answer) {
+		output = stdout;
+		
+		if (sgrp->answer)
+			list_subgroup_files(group, subgroup, output);
+		else
+			list_group_files(group, output);
 	}
 	else {
-	    fprintf(stderr, "Adding files to group\n");
-	    add_or_update_group(group, rasters, k);
+		/* Create or update Group REF */
+		if (I_find_group(group) == 0) {
+		    fprintf(stderr, "group %s - does not yet exist...\n", group);
+		    fprintf(stderr, "Creating new group %s\n", group);
+		}
+		if (sgrp->answer) {
+		    fprintf(stderr, "Adding files to sub-group\n");
+		    add_or_update_subgroup(group, subgroup, rasters, k);
+		}
+		else {
+		    fprintf(stderr, "Adding files to group\n");
+		    add_or_update_group(group, rasters, k);
+		}
 	}
     }
 
@@ -280,6 +295,25 @@ int remove_subgroup_files(char group[30],
     fprintf(stderr, "Done ... Put subgroup ref\n");
     I_put_subgroup_ref(group, subgroup, &ref);
 
+    return 0;
+}
+
+int list_group_files(char group[30], FILE *fd)
+{
+    struct Ref ref;
+
+    I_get_group_ref(group, &ref);
+    I_list_group (group, &ref, fd);
+
+    return 0;
+}
+
+int list_subgroup_files(char group[30], char subgroup[30], FILE *fd)
+{
+    struct Ref ref;
+
+    I_get_group_ref(group, &ref);
+    I_list_subgroup (group, subgroup, &ref, fd);
 
     return 0;
 }
