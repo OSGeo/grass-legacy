@@ -1,6 +1,4 @@
 /*
- * $Id$
- *
  ****************************************************************************
  *
  * MODULE:       g.setproj 
@@ -56,26 +54,23 @@ int main(int argc, char *argv[])
 {
 	int Out_proj;
 	int out_stat;
-	int ret;
 	int old_zone, old_proj;
 	int i;
 	int stat;
-	char cmnd2[500], out_lon0[20], out_lat0[20];
-	char proj_out[20], proj_name[50], set_name[20], file[1024],
-	    *value1, *a;
-	char path[1024], epath[1024], buffa[1024], buffb[1024], answer[200],
+	char cmnd2[500];
+	char proj_out[20], proj_name[50], set_name[20];
+	char path[1024], buffa[1024], buffb[1024], answer[200],
 	     answer1[200];
 	char answer2[200], buff[1024];
-	char tmp_buff[20], *buf, *bufa;
+	char tmp_buff[20], *buf;
 
-	struct Option *projopt;
 	struct Key_Value *old_proj_keys, *out_proj_keys, *in_unit_keys;
 	double aa, e2;
-	double f, dx, dy, dz;
-	FILE *ls, *out1, *FPROJ, *pj;
+	double f;
+	FILE *FPROJ;
 	int exist = 0;
-	char *new_data, *key, *value, spheroid[100], *sph;
-	int j, k, in_stat, ii, npr, sph_check;
+	char spheroid[100];
+	int j, k, in_stat, npr, sph_check;
 	struct Cell_head cellhd;
 	char datum[100], dat_ellps[100], dat_params[100]; 
 
@@ -113,12 +108,12 @@ int main(int argc, char *argv[])
 		old_proj_keys = G_fread_key_value(FPROJ);
 		fclose(FPROJ);
 		buf = G_find_key_value("name", old_proj_keys);
-		fprintf(stderr, "\n\nWARNING!  A projection file already exists for this location\n(Filename '%s')\n", path);
+		fprintf(stderr, "\nWARNING!  A projection file already exists for this location\n(Filename '%s')\n", path);
 		fprintf(stderr, "\nThis file contains all the parameters for the\nlocation's projection: %s\n", buf);
 		fprintf(stderr, "\n    Overriding this information implies that the old projection parameters\n");
 		fprintf(stderr, "    were incorrect.  If you change the parameters, all existing data will be\n");
 		fprintf(stderr, "    interpreted differently by the projection software.\n%c%c%c", 7, 7, 7);
-		fprintf(stderr, "    GRASS will not re-project your data automatically\n\n");
+		fprintf(stderr, "    GRASS will not re-project your data automatically\n");
 
 		if (!G_yes("Would you still like to change some of the parameters ", 0)) {
 			fprintf(stderr, "The projection information will not be updated\n");
