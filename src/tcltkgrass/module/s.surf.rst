@@ -16,6 +16,9 @@ interface_build {
     {entry tension {Tension parameter (appropriate for smooth surfaces) [40]:} 0 ""}
     {entry smooth {Smoothing parameter [0 = no smoothing):} 0 ""}
     {entry npmin {Minimum number of points for interpolation [200]:} 0 ""}
+    {entry segmax {Maximum number of points in segment [40]:} 0 ""}
+    {entry theta {Anisotropy angle (in degrees counterclockwise from East):} 0 ""}
+    {entry scalex {Anisotrophy scaling factor (0 and 1 give no anisotrophy):} 0 ""}
     {checkbox -d {Output partial derivatives instead.} "" -d}
     {checkbox -t {Use dnorm-independent tension.} "" -t}
 }
