@@ -100,7 +100,7 @@ int main (int argc, char **argv)
     newopt->required         =  NO;
     newopt->answer           = "0";
     newopt->description      = "Enter 0 to keep original category or a desired NEW category value. "
-	                       "If new > 0, table is not copied.";
+	                       "If new <> 0, table is not copied.";
 
     listopt = G_define_option();
     listopt->key             = "list";
