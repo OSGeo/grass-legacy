@@ -1,11 +1,7 @@
 #include "gis.h"
 
-#ifndef GLOBAL
-#define GLOBAL extern
-#endif
-
-GLOBAL int fd;
-GLOBAL int dbCat;
-GLOBAL int h_num;
-GLOBAL char *name;
-GLOBAL char *mapset;
+extern int fd;
+extern int dbCat;
+extern int h_num;
+extern char *name;
+extern char *mapset;

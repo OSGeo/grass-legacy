@@ -73,17 +73,17 @@ int main (argc, argv)
   flag.dozero = G_define_flag ();
   flag.dozero->key = 'z';
   flag.dozero->description = "print table smoothed with zero counts";
-  flag.dozero->answer = NULL;
+  flag.dozero->answer = 0;
 
   flag.marginal = G_define_flag ();
   flag.marginal->key = 'm';
   flag.marginal->description = "print marginals with all tables";
-  flag.marginal->answer = NULL;
+  flag.marginal->answer = 0;
 
   flag.showstop = G_define_flag ();
   flag.showstop->key = 'e';
   flag.showstop->description = "indicate when ipf stopped";
-  flag.showstop->answer = NULL;
+  flag.showstop->answer = 0;
 
   if (G_parser (argc, argv))
     exit (1);
@@ -121,7 +121,7 @@ int main (argc, argv)
       if ((matrix[i] = (int *) G_malloc (n * sizeof (int))) == NULL)
 	G_fatal_error ("main: problems allocating memory 2");
 
-  if (flag.marginal->answer!=NULL)
+  if (flag.marginal->answer!=0)
     pn = n + 1;
   else
     pn = n;
@@ -133,7 +133,7 @@ int main (argc, argv)
 
   smoothed = elimzero (n, matrix);
 
-  if (flag.dozero->answer!=NULL) 
+  if (flag.dozero->answer!=0) 
   {
     for (i = 0; i < pn; ++i)
     {
@@ -144,7 +144,7 @@ int main (argc, argv)
     printf ("\n");
   }
 
-  normalized = ipf (n, smoothed, stop, (flag.showstop->answer==NULL) ? 0 : 1);
+  normalized = ipf (n, smoothed, stop, (flag.showstop->answer==0) ? 0 : 1);
   for (i = 0; i < pn; ++i)
   {
     for (j = 0; j < pn; ++j)

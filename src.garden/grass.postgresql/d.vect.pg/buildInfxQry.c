@@ -8,9 +8,6 @@
 #include "Vect.h"
 #include <stdio.h> 
 
-#define TRUE 0
-#define FALSE 1
-
 buildInfxQry(key, where, table, map, mapset, color, fillcolor)
   char *key,*where, *table, *map, *mapset;
   int color, fillcolor;

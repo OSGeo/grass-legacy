@@ -146,7 +146,7 @@ char *argv[];
    in the GRASS Programmer's Manual was not sufficient to find out if more
    types of units are supported. IDRISI knows also "mi", "km" and "rad" */
 
-	if (version_3->answer != NULL) {
+	if (version_3->answer != 0) {
 
 	fprintf (idrisi_dvc, "title       : %s\n", idrisi_map);
 	fprintf (idrisi_dvc, "data type   : real\n");

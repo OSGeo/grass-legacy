@@ -3,6 +3,7 @@
  */
 
 #include <stdio.h>
+#include <string.h>
 #include "sdts_in.h"
 #include "sdts_globals.h"
 #include "defines.h"

@@ -1283,7 +1283,7 @@ int get_att(int id, int type, Nv_data *data, Tcl_Interp *interp, int argc, char 
     float c;
     char mapname[100], temp[100];
     
-    GS_get_att(id, att_atoi(argv[2]), &set, &c, &mapname);
+    GS_get_att(id, att_atoi(argv[2]), &set, &c, mapname);
 
     switch (set) {
     case NOTSET_ATT:
@@ -1401,7 +1401,7 @@ int set_att(int id, int type, Nv_data *data, Tcl_Interp *interp, int argc, char 
   int index;
   float temp2, size;
   float temp;
-  long col;
+  int col;
   char	errStr[255];
 
   /* Switch based on the type of map object we are using */

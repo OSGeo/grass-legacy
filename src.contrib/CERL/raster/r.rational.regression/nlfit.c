@@ -68,6 +68,9 @@ nlfinish()
     return 0;
 }
 
+static abc();
+static solve2();
+
 nlfit(x,y,a,chisq)
     double *x,*y,*a,*chisq;
 {

@@ -32,7 +32,8 @@
 char *get_new_name(prompt)
 char *prompt;
 {
-	char name[50], *mapset, buf[512];
+	static char name[50];
+	char *mapset, buf[512];
 	extern char *G_ask_cell_new();
 
 	mapset = G_ask_cell_new(prompt,name);

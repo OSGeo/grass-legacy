@@ -83,7 +83,7 @@ char *inp,*out;
 		buf1p=strtok(NULL, "\"\n");
 		if(buf1p[0]==44)
 		{
-			b2[0]=NULL;
+			b2[0]='\0';
 			sscanf(buf1p+1, "%d", &bs);
 		}
 		else

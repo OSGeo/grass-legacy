@@ -7,9 +7,6 @@
 #include <stdio.h>
 #include "dbsite.h"
 
-#define TRUE 0
-#define FALSE 1
-
 buildInfxQry(table, x, y, cat, where, map, joinargs, plotargs )
   char *table;
   char *x;

@@ -104,7 +104,7 @@ write_quality_mod (sdts_prefix,  sdts_path, mod_id, current_layer)
 
      sprintf (rec_buf, "%4s%c%6d%c", mod_name, FT_EXPORT, rec_num, FT_EXPORT);
 
-     while ((cnt = fread (buf, 1, BUF_MAX, fp_dq_src)) != NULL)
+     while ((cnt = fread (buf, 1, BUF_MAX, fp_dq_src)) != 0)
      {
         short cr_flag = 0;
 	    short new_paragraph = 0;

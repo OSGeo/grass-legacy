@@ -159,7 +159,7 @@ else
         	printf ("Color table for [%s] set to grey scale\n", output);
 	G_short_history(output,"raster",&history);
 	for (i=0;i < 50;i++) history.title[i] = title[i];
-	history.title[i] = NULL;
+	history.title[i] = '\0';
 	if (G_write_history(output,&history) < 0)
 		fprintf(stderr,"Error in writing history file\n");
 

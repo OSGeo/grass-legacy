@@ -23,11 +23,14 @@
 			clicked lines/areas coloring
 			more control of database output
 */
-#define GLOBAL
 #include "what.h"
 #include "Vect.h"
 
-
+int fd;
+int dbCat;
+int h_num;
+char *name;
+char *mapset;
 
 int main(argc, argv)
 int argc ;

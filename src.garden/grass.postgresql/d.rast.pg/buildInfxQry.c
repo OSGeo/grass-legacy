@@ -6,8 +6,6 @@
 #include "gis.h"
 #include <stdio.h>
 #include "dbrast.h"
-#define TRUE 0
-#define FALSE 1
 
 buildInfxQry(key,col,lab,table,where,input,output)
   char *key;

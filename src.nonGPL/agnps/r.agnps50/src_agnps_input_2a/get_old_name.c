@@ -37,7 +37,8 @@ char *get_old_name(prompt, quit_on_error)
 char *prompt;
 int  quit_on_error;
 {
-	char name[50], *mapset, buf[512];
+	static char name[50];
+	char *mapset, buf[512];
 	extern char *G_ask_cell_old();
 
 	mapset = G_ask_cell_old(prompt,name);
