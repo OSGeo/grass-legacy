@@ -26,6 +26,8 @@ LIST  = \
 	nearest.o \
 	utils.o
 
+all: $(PROGRAM)
+
 $(PROGRAM): $(LIST) $(LIBES) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 

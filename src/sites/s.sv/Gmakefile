@@ -10,6 +10,8 @@ LIST=main.o readsite.o cdpath.o save.o nbins.o angleok.o plthgpt.o
 
 LIBES=$(GISLIB)  $(RASTERLIB) $(DATETIMELIB)
 
+all: $(PGM)
+
 $(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 

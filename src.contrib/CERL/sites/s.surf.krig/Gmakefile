@@ -36,6 +36,8 @@ SOURCE= \
 	krigzest.c \
 	variogrm.c 
 
+all: $(PGM)
+
 $(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB) $(DATETIMELIB)
 
