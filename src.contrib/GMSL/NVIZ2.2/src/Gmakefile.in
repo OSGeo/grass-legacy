@@ -1,5 +1,8 @@
 # $Log$
-# Revision 1.9  2000-09-25 12:02:07  markus
+# Revision 1.10  2000-10-02 15:57:35  markus
+# Bob Covill <bcovill@tekmap.ns.ca>: nviz update to create a new NVIZ program entitled Nwrite_tif. three updated TCL scripts, that incorporate the three image formats. The image dump button now goes to cascade menu where the user can select to dump to an RGB, PPM, or TIFF. In the animation menus, I added radiobuttons to the final dump menus. When setting base name for dump files, the file type can also be set. The default format for the animations is set to PPM.
+#
+# Revision 1.9  2000/09/25 12:02:07  markus
 # added missing lib path
 #
 # Revision 1.8  2000/09/05 09:14:20  markus
@@ -82,5 +85,5 @@ nvwish: $(OBJS) $(VECTLIB) $(BITMAPLIB) $(LINKMLIB)
 	$(CC) -g -o $@ $(OBJS) $(LDFLAGS) $(SURFLIB) $(IMGLIB) \
 	$(BITMAPLIB) $(LINKMLIB) $(VECTLIB) \
 	$(GISLIB) $(MATHLIB) $(XDRLIB) \
-	$(LIBDIR)/libdatetime.a $(XTRA_LDFLAGS)
+	$(LIBDIR)/libdatetime.a $(XTRA_LDFLAGS) -ltiff
 	mv nvwish $(BIN_CONTRIB_CMD)/$(NVWISH_VER)
