@@ -1,9 +1,10 @@
 :
 # is a 64bit alpha machine ? if so set sizeoflong to 8.
+#
+# $Id$
 # 
-#    script by Luca Palmeri (lpalmeri@ux1.unipd.it)
-#                                 07 Dec 1999
-#                                 grass 5.0 beta5i
+# script by Luca Palmeri (lpalmeri@ux1.unipd.it)
+# 07 Dec 1999
 #
 # To be executed right before starting compilation,
 # checks for the presence of the string 'alpha' into
@@ -28,7 +29,7 @@ int main()
 }
 EOM
 ########################
-$CC 64test.c
+$CC 64test.c -o a.out
 
 SIZEOFLONG=`./a.out`
 
