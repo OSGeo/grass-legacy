@@ -9,6 +9,6 @@ OBJS = \
 	infxStats.o
 
 $(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)  $(PQLIBPATH) $(PQLIB) $(XEXTRALIBS) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)  $(PQLIBPATH) $(PQLIB) $(MATHLIB) $(XDRLIB) $(INTLLIB)
 
 $(LIBES): #
