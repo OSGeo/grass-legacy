@@ -51,7 +51,7 @@ TMP=/tmp/tmp__$$
 
 
 #### trap ctrl-c so that we can clean up tmp
-trap 'rm -f ${TMP}*' 2 3 9
+trap 'rm -f ${TMP}*' 2 3 15
 
 
 #### process command line arguments 
