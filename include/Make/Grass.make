@@ -66,7 +66,7 @@ FONTDIR         = $(ARCH_DISTDIR)/fonts
 VERSION_MAJOR   = 5
 VERSION_MINOR   = 1
 VERSION_NUMBER  = $(VERSION_MAJOR).$(VERSION_MINOR)
-VERSION_DATE    = December 2001
+VERSION_DATE    = January 2001
 VERSION_NAME    = 51
 
 ##################### other #############################################
