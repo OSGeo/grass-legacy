@@ -283,6 +283,11 @@ chmod -R 1777 $DESTDIR/locks
 
 # Update paths in etc/monitorcap:
 cp $DESTDIR/etc/monitorcap $DESTDIR/etc/monitorcap.orig
+if [ $? -eq 1 ] ; then
+    echo "An error occured while installing binaries (are you root user?)! Exiting."
+    exit
+fi
+
 NEWPATH=$DESTDIR
 sed 's#'$ORIG_BASE_DIR'#'$NEWPATH'#g' $DESTDIR/etc/monitorcap.orig > $DESTDIR/etc/monitorcap
 
