@@ -77,6 +77,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "gis.h"
+#include "glocale.h"
 
 /*
  * OLD references any mapset
@@ -249,14 +250,14 @@ static char *ask (
 	switch (type)
 	{
 	case NEW:
-	    sprintf(prompt = tprompt,"Enter a new %s file name", desc);
+	    sprintf(prompt = tprompt,_("Enter a new %s file name"), desc);
 	    break;
 	case OLD:
 	case PRJ:
-	    sprintf(prompt = tprompt,"Enter the name of an existing %s file", desc);
+	    sprintf(prompt = tprompt,_("Enter the name of an existing %s file"), desc);
 	    break;
 	default:
-	    sprintf(prompt = tprompt,"Enter %s file name", desc);
+	    sprintf(prompt = tprompt,_("Enter %s file name"), desc);
 	    break;
 	}
     }
@@ -273,18 +274,18 @@ static char *ask (
  */
 	do{
 	    fprintf (stderr,"\n%s\n", prompt);
-	    fprintf (stderr,"Enter 'list' for a list of existing %s files\n", desc);
+	    fprintf (stderr,_("Enter 'list' for a list of existing %s files\n"), desc);
 	    if (lister)
 	    {
-		fprintf (stderr,"Enter 'list -f' for ");
+		fprintf (stderr,_("Enter 'list -f' for "));
 		if (option && *option)
-		    fprintf (stderr,"a list %s", option);
+		    fprintf (stderr,_("a list %s"), option);
 		else
-		    fprintf (stderr,"an extended list");
+		    fprintf (stderr,_("an extended list"));
 		fprintf (stderr,"\n");
 	    }
 
-	    fprintf (stderr,"Hit RETURN %s\n", G_get_ask_return_msg());
+	    fprintf (stderr,_("Hit RETURN %s\n"), G_get_ask_return_msg());
 	    fprintf (stderr,"> ");
 	}
 	while (!G_gets(input));
@@ -338,7 +339,7 @@ static char *ask (
 	    ok = G_legal_filename (input) >= 0;
 	if (!ok)
 	{
-	    fprintf (stderr,"\n**<%s> illegal name **\n", input);
+	    fprintf (stderr,_("\n**<%s> illegal name **\n"), input);
 	    continue;
 	}
 /*
@@ -353,7 +354,7 @@ static char *ask (
 	    {
 		if(strcmp (cur_mapset, xmapset) != 0)
 		{
-		    fprintf (stderr,"\n** %s - illegal request **\n", input);
+		    fprintf (stderr,_("\n** %s - illegal request **\n"), input);
 		    continue;
 		}
 		strcpy (input, xname);
@@ -368,7 +369,7 @@ static char *ask (
 		    strcpy (name,input);
 		    return cur_mapset;
 		}
-		fprintf (stderr,"\n** %s - exists, select another name **\n", input);
+		fprintf (stderr,_("\n** %s - exists, select another name **\n"), input);
 		break;
 
 	    case ANY:
@@ -378,7 +379,7 @@ static char *ask (
 		{
 		    char question[200];
 		    sprintf(question,
-			"\n** %s exists. ok to overwrite? ", input);
+			_("\n** %s exists. ok to overwrite? "), input);
 		    if (!G_yes (question,0))
 			break;
 		}
@@ -392,11 +393,11 @@ static char *ask (
 		    strcpy (name,input);
 		    return cur_mapset;
 		}
-		fprintf (stderr,"\n** %s - not found **\n", input);
+		fprintf (stderr,_("\n** %s - not found **\n"), input);
 		break;
 
 	    default:
-		G_fatal_error ("ask: can't happen");
+		G_fatal_error (_("ask: can't happen"));
 	    }
 	}
 /*
@@ -414,7 +415,7 @@ static char *ask (
 		    strcpy (name,input);
 		return mapset;
 	    }
-	    fprintf (stderr,"\n** %s - not found **\n", input);
+	    fprintf (stderr,_("\n** %s - not found **\n"), input);
 	}
     }
 
