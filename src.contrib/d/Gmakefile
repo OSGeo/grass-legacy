@@ -1,0 +1,36 @@
+LIBRARIES = $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+LIST=main.o\
+	choose_mon.o\
+	basemap.o\
+	pads.o\
+	help.o\
+	colormode.o\
+	bg.o\
+	zoom.o\
+	getname.o\
+	getcolor.o\
+	geticon.o\
+	getsize.o\
+	script.o\
+	init.o\
+	input.o\
+	window.o\
+	display.o\
+	repeat.o\
+	overlay.o\
+	unset.o\
+	cell.o\
+	vect.o\
+	sites.o\
+	labels.o\
+	erase.o
+
+$(BIN)/d:	$(LIST) $(LIBRARIES)
+	cc $(LDFLAGS) -o $@ $(LIST) $(LIBRARIES)
+
+labels.o: level.h
+overlay.o: level.h
+sites.o: level.h
+vect.o: level.h
+
+$(LIBRARIES): #
