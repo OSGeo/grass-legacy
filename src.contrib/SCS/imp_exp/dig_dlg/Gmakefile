@@ -1,3 +1,5 @@
+#  %W%  %G%
+
 LIBPROJ         = $(SRC)/../src.related/mapgen/lib/libproj.a
 LIBSUPP         = $(SRC)/../src.related/mapgen/lib/libsupp.a
 
@@ -32,8 +34,8 @@ CFILES = \
 all:  START $(BIN_CONTRIB_CMD)/v.out.dlg.scs
 	
 
-$(BIN_CONTRIB_CMD)/v.out.dlg.scs: $(OFILES) v.export_dlg.o
-	$(CC) $(LDFLAGS) -o $@ v.export_dlg.o $(OFILES) $(VECTLIB) $(LIBPROJ) $(LIBSUPP) $(VECTLIB) $(GISLIB) $(MATHLIB)
+$(BIN_CONTRIB_CMD)/v.out.dlg.scs: $(OFILES) v.exp_dlg.o
+	$(CC) $(LDFLAGS) -o $@ v.exp_dlg.o $(OFILES) $(GISLIB) $(VECTLIB) $(LIBPROJ) $(LIBSUPP) $(VECTLIB) $(GISLIB) $(MATHLIB)
 
 START:
 	cp $(SRC)/../src.related/mapgen/proj/SetProj.c SetProj.c
