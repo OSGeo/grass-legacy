@@ -1,4 +1,3 @@
-# $Id$
 # Makefile for building nvwish
 # Requires Tk 8.x and Tcl 8.x
 
@@ -10,7 +9,6 @@ include $(MODULE_TOPDIR)/include/Make/Rules.make
 
 # These should be set by the doconfigure script
 NVWISH_VER=sed
-PQ_OBJS=sed
 
 OGL_LIBS = $(OPENGLULIB) $(OPENGLLIB) $(OPENGL32) $(XLIB) -lXmu -lXext $(MATHLIB) $(DLLIB) $(XDRLIB) $(XEXTRALIBS) $(XLIBPATH)
 
@@ -23,20 +21,20 @@ SURFLIB = $(OGSFLIB)
 EXTRA_INC = $(VECT_INC)
 EXTRA_CFLAGS= ${XCFLAGS} ${TCLINCDIR} ${TKINCDIR} \
 	$(INC) \
-	-D_NO_PROTO -D__STDC__ $(TIFFINCPATH) $(DSPINC) $(PQINCPATH) \
+	-D_NO_PROTO -D__STDC__ $(TIFFINCPATH) $(DSPINC) \
 	$(VECT_CFLAGS)
 
 
 IMGLIB= $(IMAGELIB)
 
-XTRA_LDFLAGS=$(DFLAGS) $(TCLTKLIBPATH) $(TCLTKLIBS) $(OGL_LIBS) $(PQLIBPATH) $(PQLIB)
+XTRA_LDFLAGS=$(DFLAGS) $(TCLTKLIBPATH) $(TCLTKLIBS) $(OGL_LIBS)
 
 OBJS = nvizAppInit.o change_view.o draw.o exag.o glwrappers.o \
 	init_commands.o lights.o map_obj.o misc.o nviz_init.o \
 	position.o quick_draw.o anim_support.o cutplane_obj.o \
 	script_support.o do_zoom.o \
 	label.o nvizMain.o togl.o togl_cb.o\
-	query_postgr.o $(PQ_OBJS)
+	query_vect.o
 # mkdspf_calc_linefax.o mkdspf_init_file.o mkdspf_main.o \
 # mkdspf_fill_cfax.o mkdspf_iso_surface.o
 
@@ -48,8 +46,8 @@ default: nvwish
 #	cd $(SURF_INCDIR) ; $(GMAKE)
 #	touch nviz_init.c
 
-nvwish: $(ARCH_OBJS) $(VECTDEP) $(BITMAPDEP) $(LINKMDEP)
+nvwish: $(ARCH_OBJS) $(VECTDEP) $(BITMAPDEP) $(LINKMDEP) $(FORMDEP) $(DBMIDEP $(GISDEP)
 	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(SURFLIB) $(IMGLIB) \
-	$(BITMAPLIB) $(LINKMLIB) $(VECTLIB) $(SITESLIB) $(DBMILIB) \
+	$(BITMAPLIB) $(LINKMLIB) $(VECTLIB) $(SITESLIB) $(FORMLIB) $(DBMILIB) \
 	$(GISLIB) $(MATHLIB) $(XDRLIB) \
 	$(DATETIMELIB) $(XTRA_LDFLAGS) -ltiff $(XLIB)
