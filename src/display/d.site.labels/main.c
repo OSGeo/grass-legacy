@@ -15,17 +15,17 @@
 
 int main (int argc, char **argv)
 {
-	struct Cell_head window ;
-	char window_name[64] ;
-	char *site_name ;
-	char *mapset, position[MAX_SITE_STRING] ;
-	FILE *infile ;
-	char buff[128] ;
-	int t, b, l, r ;
-	int i, column, index ;
-        struct Option *site_opt, *xref_opt, *yref_opt, *color_opt, *size_opt, *backgr_opt;
-	struct Option *border_opt, *font_opt, *col_opt, *index_opt ;
-	struct Flag *mouse;
+    struct Cell_head window ;
+    char window_name[64] ;
+    char *site_name ;
+    char *mapset, position[MAX_SITE_STRING] ;
+    FILE *infile ;
+    char buff[128] ;
+    int t, b, l, r ;
+    int i, column, index ;
+    struct Option *site_opt, *xref_opt, *yref_opt, *color_opt, *size_opt, *backgr_opt;
+    struct Option *border_opt, *font_opt, *col_opt, *index_opt ;
+    struct Flag *mouse;
 	
 
 /* Initialize the GIS calls */
@@ -120,86 +120,87 @@ int main (int argc, char **argv)
 /* Check command line */
 
 /* Save map name */
-	site_name = site_opt->answer ;
+    site_name = site_opt->answer ;
 
 /* Make sure map is available */
-	mapset = G_find_sites (site_name, "") ;
-	if (mapset == NULL)
-	{
-		sprintf(buff,"Sites file [%s] not available", site_name);
-		G_fatal_error(buff) ;
-	}
+    mapset = G_find_sites (site_name, "") ;
+    if (mapset == NULL)
+    {
+        sprintf(buff,"Sites file [%s] not available", site_name);
+        G_fatal_error(buff) ;
+    }
 
 /* Open map is available */
-	infile = G_fopen_sites_old (site_name, mapset) ;
-	if (infile == NULL)
-	{
-		sprintf(buff,"Cant open sitesfile [%s]", site_name);
-		G_fatal_error(buff) ;
-	}
+    infile = G_fopen_sites_old (site_name, mapset) ;
+    if (infile == NULL)
+    {
+        sprintf(buff,"Cant open sitesfile [%s]", site_name);
+        G_fatal_error(buff) ;
+    }
 
 /* Index column and number */
-  	if(strcmp(col_opt->answer, "string") == 0) {
-          	column = SITE_ATTR_STR;
-  	}
-  	else if (strcmp(col_opt->answer, "cat") == 0) {
-          	column = SITE_ATTR_CAT;
-  	}
-  	else if (strcmp(col_opt->answer, "double") == 0) {
-          	column = SITE_ATTR_DBL;
-  	}
-  	else if (strcmp(col_opt->answer, "coords") == 0) {
-          	column = SITE_ATTR_COORD;
-  	}
-  	else if (strcmp(col_opt->answer, "dim") == 0) {
-          	column = SITE_ATTR_DIM;
-  	}
-  	else {
-          	G_fatal_error("Unknown attribute type!\n");
-  	}
+    if(strcmp(col_opt->answer, "string") == 0) {
+        column = SITE_ATTR_STR;
+    }
+    else if (strcmp(col_opt->answer, "cat") == 0) {
+        column = SITE_ATTR_CAT;
+    }
+    else if (strcmp(col_opt->answer, "double") == 0) {
+        column = SITE_ATTR_DBL;
+    }
+    else if (strcmp(col_opt->answer, "coords") == 0) {
+        column = SITE_ATTR_COORD;
+    }
+    else if (strcmp(col_opt->answer, "dim") == 0) {
+        column = SITE_ATTR_DIM;
+    }
+    else {
+        G_fatal_error("Unknown attribute type!\n");
+    }
 
-  	index = atoi(index_opt->answer) - 1;
-  	if (index < 0) {
-          	G_fatal_error("Index must be a positive number greater than zero!\n");
-  	}
+    index = atoi(index_opt->answer) - 1;
+    if (index < 0) {
+        G_fatal_error("Index must be a positive number greater than zero!\n");
+    }
 
 /* Default positioning hack (should fix do_labels) */
-	sprintf(position, "%s %s", xref_opt->answer, yref_opt->answer);
+    sprintf(position, "%s %s", xref_opt->answer, yref_opt->answer);
 
-	R_open_driver();
+    R_open_driver();
 
-	if (D_get_cur_wind(window_name))
-		G_fatal_error("No current window") ;
+    if (D_get_cur_wind(window_name))
+        G_fatal_error("No current window") ;
 
-	if (D_set_cur_wind(window_name))
-		G_fatal_error("Current window not available") ;
+    if (D_set_cur_wind(window_name))
+        G_fatal_error("Current window not available") ;
 
 /* Read in the map window associated with window */
- 	G_get_window (&window);
-	if (D_check_map_window(&window))
-		G_fatal_error("Setting map window") ;
+    G_get_window (&window);
+    if (D_check_map_window(&window))
+        G_fatal_error("Setting map window") ;
 
-	if (G_set_window(&window) == -1) 
-		G_fatal_error("Current window not settable") ;
+    if (G_set_window(&window) == -1) 
+        G_fatal_error("Current window not settable") ;
 
 /* Determine conversion factors */
-	t = b = l = r = 0;
-	if (D_get_screen_window(&t, &b, &l, &r))
-		G_fatal_error("Getting screen window") ;
-	if (D_do_conversions(&window, t, b, l, r))
-		G_fatal_error("Error in calculating conversions") ;
+    t = b = l = r = 0;
+    if (D_get_screen_window(&t, &b, &l, &r))
+        G_fatal_error("Getting screen window") ;
+    if (D_do_conversions(&window, t, b, l, r))
+        G_fatal_error("Error in calculating conversions") ;
 
 	
 /* Go draw the cell file */
-	do_labels(infile,window, position, color_opt->answer, size_opt->answer, 
-			backgr_opt->answer, border_opt->answer, 
-			font_opt->answer, column, index, mouse->answer);
+    do_labels(infile,window, position, color_opt->answer, size_opt->answer, 
+            backgr_opt->answer, border_opt->answer, 
+            font_opt->answer, column, index, mouse->answer);
 
-	D_add_to_list(G_recreate_command()) ;
+    D_add_to_list(G_recreate_command()) ;
 
-	fclose(infile) ;
+    fclose(infile) ;
 
-	R_close_driver();
+    R_close_driver();
 
-	return 0;
+    return 0;
 }
+/* vim: softtabstop=4 shiftwidth=4 expandtab */
