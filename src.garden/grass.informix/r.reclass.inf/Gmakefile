@@ -1,0 +1,14 @@
+PGM       = $(GARDEN_BIN)/r.reclass.inf
+LIBES     = $(GISLIB) 
+
+
+
+OBJS = \
+	main.o \
+	infxQry.o 
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+
+$(LIBES): #
