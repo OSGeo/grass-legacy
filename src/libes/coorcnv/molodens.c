@@ -1,12 +1,18 @@
-/***********************************************************************
- * GRASS 5.0 coorcnv library
- * molodens.c, molodensky and other datum shift functions
+/*
+ * $Id$
  *
- * Andreas Lange, andreas.lange@rhein-main.de
- * version 0.9
- * modified Jun 10 2000 
+ ****************************************************************************
  *
- ***********************************************************************/
+ * MODULE:       coorcnv library 
+ * AUTHOR(S):    Andreas Lange - andreas.lange@rhein-main.de
+ * PURPOSE: 	 molodensky and other datum shift functions
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
 
 /*********************************************************************** 
  *
@@ -40,6 +46,7 @@
 /* for definition of PI and others: */
 #include "projects.h" 
 #include <math.h>
+/* local includes, only for this library: */
 #include "cc.h"
 
 

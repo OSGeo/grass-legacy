@@ -1,12 +1,19 @@
-/***********************************************************************
- * GRASS 5.0 coorcnv library
- * geocen1.c, converting lat lon to geocentric coordinates
+/*
+ * $Id$
  *
- * Andreas Lange, andreas.lange@rhein-main.de
- * version 0.9
- * modified Jun 10 2000 
+ ****************************************************************************
  *
- ***********************************************************************/
+ * MODULE:       coorcnv library
+ * AUTHOR(S):    Original author unknown - probably CERL
+ *               Andreas Lange - andreas.lange@rhein-main.de
+ * PURPOSE:      converting lat lon to geocentric coordinates 
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
 
 /***********************************************************************
  * CC_ll2geo (a, e2, lat, lon, h, x, y, z)
