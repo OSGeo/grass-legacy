@@ -919,15 +919,9 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    ;;
 	Rhapsody-*|Darwin-*)
 	    # see: http://fink.sourceforge.net/doc/porting/shared.php
-	    # NOTE: Static linking is not supported an Mac OS X: 
-	    #         http://developer.apple.com/qa/qa2001/qa1118.html
 	    SHLIB_CFLAGS="-fPIC -fno-common"
-	    #according to http://www.osxfaq.com/man/1/ld.ws the flag -r is needed for
-	    #relocatable binaries, but...:
-#doesn't work	    SHLIB_LD="-dynamiclib -r -flat_namespace -undefined suppress -fno-common \${LDFLAGS} -install_name $rpath/$soname $verstring"
-#doesn't work	    SHLIB_LD="-bundle -framework System -flat_namespace -undefined suppress -fno-common \${LDFLAGS}"
-	    SHLIB_LD="-dynamiclib -Wl,-flat_namespace,-U,_environ,-U,_cuserid \${LDFLAGS}"
-
+#check if we want -U,_cuserid:
+	    SHLIB_LD="-dynamiclib -Wl,-flat_namespace,-U,_cuserid \${LDFLAGS}"
 	    GRASS_SHLIB_LD_EXTRAS=""
 	    SHLIB_LD_LIBS='${LIBS}'
 	    SHLIB_SUFFIX="dylib"
