@@ -1,0 +1,66 @@
+
+
+
+Pselect(2P)          GRASS Reference Manual           Pselect(2P)
+
+
+
+NAME
+     Pselect - Selects hardcopy device
+
+SYNOPSIS
+     Pselect [-i] [device]
+
+DESCRIPTION
+     The GRASS tool paint supports multiple hardcopy devices. The
+     user is required to select a device before running any of
+     the paint functions.
+
+     Pselect device
+     selects the specified device for output.
+
+     Pselect
+     run without arguments simply prints the currently selected
+     device.
+
+     Pselect -i
+     asks Pselect to run interactively. It will then print the
+     name of the currently selected device, list all paint
+     devices on the system, and allow the user to select a new
+
+SEE ALSO
+     paint[1], Pmap[2P], Pscreen[2P]
+     paint[5]   For a discussion of paint devices.
+
+AUTHOR
+     Michael Shapiro, U.S. Army Constuction Engineering Research
+     Laboratory.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
