@@ -2,7 +2,7 @@
 MODULE_TOPDIR = ../..
 
 SUBDIRS = \
-	lib\
+	lib \
 	monitorcap \
 	XDRIVER
 
