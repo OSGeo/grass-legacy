@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.18 2000-09-19 16:25:54 markus Exp $
+$Id: BUGS,v 1.19 2000-09-20 15:50:22 markus Exp $
 
 Maintained by
    Markus Neteler
@@ -112,6 +112,9 @@ p.map.new:
    desi in PERMANENT : can't open raster file
    I think it is to do with the new format of GRASS5.0 raster files.
  -> 5/2000: still a problem??
+
+ps.map: -fwritable-strings is required on Linux
+   some variable implementation needs to be improved.
 
 r3.showdspf.openGL:  (src.contrib/GMSL/g3d/src3d/raster/r3.showdspf.openGL)
  - the dependency to OpenGL and Mesa should be checked automatically
@@ -296,7 +299,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log: BUGS,v $
- Revision 1.18  2000-09-19 16:25:54  markus
+ Revision 1.19  2000-09-20 15:50:22  markus
+ added ps.map fwritable-strings problem
+
+ Revision 1.18  2000/09/19 16:25:54  markus
  added bugreport form
 
  Revision 1.17  2000/09/11 19:01:08  markus
