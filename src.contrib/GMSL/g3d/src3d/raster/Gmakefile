@@ -1,7 +1,6 @@
 all:
 	$(GMAKE) r3.in.ascii
 	$(GMAKE) r3.info
-	$(GMAKE) r3.mapcalc
 	$(GMAKE) r3.mask
 	$(GMAKE) r3.mkdspf
 	$(GMAKE) r3.out.ascii
