@@ -290,6 +290,13 @@ main (int argc, char **argv)
     if (rast || vect || site) 
        quiet->answer=1;
 
+    if (rmap->answers)
+	    rast = rmap->answers;
+    if (vmap->answers)
+	    vect = vmap->answers;
+    if (smap->answers)
+	    site = smap->answers;
+
 #ifdef BOUNDARY
     if(!first)
     {
