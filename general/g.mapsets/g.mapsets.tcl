@@ -31,7 +31,7 @@ $sw setwidget $sf
 pack $sw $sf -fill both -expand yes
 set sframe [$sf getframe]
 
-set msts [split [exec g.mapsets -l] " \n"]
+set msts [ lsort [split [exec g.mapsets -l] " \n"] ]
 set nms 0
 foreach ms $msts {
     if { [string length $ms] == 0 } { continue }
