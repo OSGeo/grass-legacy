@@ -305,7 +305,7 @@ Vect_cidx_dump ( struct Map_info *Map, FILE *out )
     check_status ( Map );
 
     nfields = Vect_cidx_get_num_fields ( Map );
-    fprintf (out, "---------- CATEGORY INDEX DUMP: Number of fields: %d "
+    fprintf (out, "---------- CATEGORY INDEX DUMP: Number of layers: %d "
 	          "--------------------------------------\n", nfields );
     
     for (i = 0; i < nfields; i++ ) {

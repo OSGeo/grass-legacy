@@ -317,11 +317,11 @@ int display_attributes (void)
 		    for (j = 0; j < Cats->n_cats; j++) {
 			G_debug(3, "field = %d category = %d", Cats->field[j], Cats->cat[j]);
 
-			sprintf (title, "Field %d", Cats->field[j] );
+			sprintf (title, "Layer %d", Cats->field[j] );
 			db_set_string (&html, ""); 
 			db_append_string (&html, "<HTML><HEAD><TITLE>Attributes</TITLE><BODY>"); 
 
-			sprintf(buf, "field: %d<BR>category: %d<BR>", Cats->field[j], Cats->cat[j] );
+			sprintf(buf, "layer: %d<BR>category: %d<BR>", Cats->field[j], Cats->cat[j] );
 			db_append_string (&html, buf);
 
 			Fi = Vect_get_field( &Map, Cats->field[j]);
@@ -421,7 +421,7 @@ int check_record ( int field, int cat )
     
     if ( ret == 0 ) return 0;
 
-    sprintf (buf, "There are no more features with category %d (field %d) in the map, but there is "
+    sprintf (buf, "There are no more features with category %d (layer %d) in the map, but there is "
 	          "record in the table. Delete this record?", cat, field );
     ret = i_message ( MSG_YESNO, MSGI_QUESTION, buf );
     
