@@ -288,9 +288,9 @@ int main (int argc, char *argv[])
 	    *out_datum='\0';
 	    if((hold=G_database_datum_name()))
 	       strncpy(out_datum,hold,sizeof(out_datum));
-	    *in_datum='\0';
-	    if((hold=G_database_datum_name()))
-	       strncpy(in_datum,hold,sizeof(in_datum));
+	    *out_ellipse='\0';
+	    if((hold=G_database_ellipse_name()))
+	       strncpy(out_ellipse,hold,sizeof(out_ellipse));
 
 	     /****** get the output projection parameters ******/
            Out_proj = G_projection();
