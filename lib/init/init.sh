@@ -84,15 +84,35 @@ for i in "$@" ; do
     esac
 done
 
-# Set the grassrc file
-GISRC="$HOME/.grassrc57"
+# Set the GIS_LOCK variable to current process id
+GIS_LOCK=$$
+export GIS_LOCK
+
+# Set the global grassrc file
+GISRCRC="$HOME/.grassrc57"
+export GISRCRC
+# Set the session grassrc file
+USER=`whoami`
+mkdir -p /tmp/grass57-$USER-$GIS_LOCK
+GISRC="/tmp/grass57-$USER-$GIS_LOCK/gisrc"
 export GISRC
 
 # remove invalid GISRC file to avoid disturbing error messages:
-cat "$GISRC" 2>/dev/null| grep UNKNOWN >/dev/null
+cat "$GISRCRC" 2>/dev/null| grep UNKNOWN >/dev/null
 if [ $? -eq 0 ] ; then
-   rm -f "$GISRC"
+   rm -f "$GISRCRC"
 fi
+
+# Copy the global grassrc file to the session grassrc file
+if [ -f "$GISRCRC" ] ; then
+    cp "$GISRCRC" "$GISRC"
+    if [ $? -eq 1 ] ; then
+    	echo "Cannot copy '$GISRCRC' to '$GISRC'"
+    	exit
+    fi
+fi
+
+# Copy global grassrc file to session grassrc
 
 # At this point the GRASS user interface variable has been set from the
 # command line, been set from an external environment variable, or is 
@@ -112,11 +132,6 @@ fi
 
 # Export the user interface variable
 export GRASS_GUI
-
-# Set the GIS_LOCK variable to current process id
-lockfile="$HOME/.gislock57"
-GIS_LOCK=$$
-export GIS_LOCK
 
 # Set PATH to GRASS bin, ETC to GRASS etc
 ETC=$GISBASE/etc
@@ -139,19 +154,6 @@ else
   LD_LIBRARY_PATH_VAR=$LD_LIBRARY_PATH_VAR:$GISBASE/lib
 fi
 export LD_LIBRARY_PATH_VAR
-
-# Check for concurrent use
-"$ETC/lock" "$lockfile" $$
-case $? in
-    0) ;;
-    1)
-    	echo `whoami` is currently running GRASS VERSION_NUMBER. Concurrent use not allowed.
-    	exit ;;
-    *)
-    	echo Unable to properly access "$lockfile"
-    	echo Please notify system personel.
-    	exit ;;
-esac
 
 # Once the new environment system is committed we can delete these lines
 # Export the PAGER environment variable for those who have it set
@@ -516,6 +518,20 @@ MAPSET=`g.gisenv MAPSET`
 
 LOCATION=${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}
 
+# Check for concurrent use
+lockfile="$LOCATION/.gislock"
+"$ETC/lock" "$lockfile" $$
+case $? in
+    0) ;;
+    1)
+    	echo `whoami` is currently running GRASS in selected mapset. Concurrent use not allowed.
+    	exit ;;
+    *)
+    	echo Unable to properly access "$lockfile"
+    	echo Please notify system personel.
+    	exit ;;
+esac
+
 trap "" 2 3 15
 CYGWIN=`uname | grep CYGWIN`
 
@@ -687,10 +703,21 @@ trap 2 3 15
 
 # GRASS session finished
 tput clear
+echo "Closing monitors....."
+for MON  in `d.mon -L | grep running | grep -v "not running" | sed 's/ .*//'`
+do 
+    echo d.mon stop=$MON
+    d.mon stop=$MON 
+done
+
 echo "Cleaning up temporary files....."
 
 ("$ETC/clean_temp" > /dev/null &)
 rm -f "$lockfile"
+
+# Save GISRC
+cp "$GISRC" "$GISRCRC"
+rm -rf /tmp/grass57-$USER-$GIS_LOCK
 
 echo "done"
 echo 
