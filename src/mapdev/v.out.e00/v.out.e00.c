@@ -370,6 +370,10 @@ int main( int argc, char *argv[])
 	    fputc( '\n', fde00);
     }
 
+    fprintf( fde00, "%10ld%10ld%10ld%10ld%10ld%10ld%10ld\n",
+	    -1, 0L, 0L, 0L, 0L, 0L, 0L);
+    fprintf( fde00, "%21.14lE%21.14lE\n", 0.0, 0.0);
+
 no_area:
 
     /* no TOLERANCE SECTION */
