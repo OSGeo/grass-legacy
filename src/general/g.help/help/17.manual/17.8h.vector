@@ -5,10 +5,12 @@ Below is a list of GRASS 4.0 vector commands.
 To access information on a command, highlight the command using the
 RETURN key, then press ESC.
 
-  \v.area help\          \v.cadlabel help\       \v.clean help\
-  \v.db.rim help\        \v.digit help\          \v.import help\
+  \v.alabel help\        \v.area help\           \v.cadlabel help\
+  \v.clean help\         \v.cutter help\         \v.db.rim help\
+  \v.digit help\         \v.digit2 help\         \v.import help\
   \v.in.arc help\        \v.in.ascii help\       \v.in.dlg help\
-  \v.in.dxf help\        \v.in.tiger help\       \v.mkgrid help\
+  \v.in.dlg2 help\       \v.in.dxf help\         \v.in.tig.rim\
+  \v.in.tiger help\      \v.in.transects\        \v.mkgrid help\
   \v.mkquads help\       \v.out.arc help\        \v.out.ascii help\ 
   \v.out.dlg help\       \v.out.dxf help\        \v.out.moss help\ 
   \v.patch help\         \v.prune help\          \v.spag help\
@@ -16,3 +18,4 @@ RETURN key, then press ESC.
   \v.to.sites help\      \v.transform help\      \v.trim help\
 
   \Gen.Maps help\        \Gen.tractmap help\
+
