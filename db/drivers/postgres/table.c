@@ -16,8 +16,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <dirent.h>
-#include <gis.h>
 #include <dbmi.h>
 #include "globals.h"
 #include "proto.h"
@@ -80,14 +78,15 @@ int load_table(int t, char *stmt)
     char *fname;
     int fsize;
     int type;
-    int nflds, nrws = 0;
-    char *buf, emsg[PG_MSG], stmtbuf[NAMELEN + 16];
+    int nflds = 0;
+    int nrws = 0;
+    char *buf;
+    char stmtbuf[NAMELEN + 16];
     ROW *rows;
     VALUE *val;
     int i, j;
     int header_only = 0;
-
-
+    
     if (db.tables[t].loaded == TRUE)	/*already loaded */
 	return DB_OK;
     if (stmt == NULL) {
@@ -100,12 +99,11 @@ int load_table(int t, char *stmt)
     res = PQexec(pg_conn, stmt);
 
     if (PQresultStatus(res) != PGRES_TUPLES_OK) {
-	snprintf(emsg, sizeof(emsg), "Error:select Postgres:%s\n",
+        
+	snprintf(errMsg, sizeof(errMsg), "Error:select Postgres:%s\n",
 		 PQerrorMessage(pg_conn));
-	report_error(emsg);
 	return DB_FAILED;
     }
-
     nflds = PQnfields(res);
     nrws = PQntuples(res);
 
@@ -132,10 +130,9 @@ int load_table(int t, char *stmt)
 	    type = PG_DOUBLE;
 	    break;
 	default:
-	    snprintf(emsg, sizeof(emsg),
+	    snprintf(errMsg, sizeof(errMsg),
 		     "Field %s can not be selected for query output: type %d not supported yet\n",
 		     fname, dtype);
-	    report_error(emsg);
 	    return DB_FAILED;
 	    break;
 

@@ -15,7 +15,6 @@
 *****************************************************************************/
 
 #include <dbmi.h>
-#include <shapefil.h>
 #include "globals.h"
 #include "proto.h"
 
