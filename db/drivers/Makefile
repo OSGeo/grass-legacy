@@ -22,7 +22,7 @@ ifneq ($(strip $(MYSQLLIB)),)
 endif
 
 # add ogr:
-ifneq ($(strip $(GDALLIBS)),)
+ifneq ($(strip $(USE_OGR)),)
     SUBDIRS5 = ogr
 endif
 
