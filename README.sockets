@@ -46,18 +46,42 @@ SOURCES="
 	src/libes/raster/SOCKET_NEW/io.c
 "
 
+#############################################################################
+
+
+if [ ! -f INSTALL -o ! -f NEWS.html -o "$0" != "./README.sockets" ]
+then
+	echo
+	echo "This should be run under grass root directory."
+	echo
+	exit
+fi
+
+if [ ! -f config.status ]
+then
+	echo
+	echo "You must ./configure first. Or GRASS is not installed."
+	echo "Read INSTALL for more information."
+	echo
+	exit
+fi
+
+GISBASE=`grep "@prefix@" config.status | cut -d '%' -f 3`
+
+if [ ! -d $GISBASE/dev ]
+then
+	echo
+	echo "You must install GRASS first."
+	echo "Read INSTALL for more information."
+	echo
+	exit
+fi
 
 which gmake5 > /dev/null 2>&1
 if [ $? -ne 0 ]
 then
-	echo "gmake5 is not under \$PATH."
-	exit
-fi
-
-if [ ! -f NEWS.html -o "$0" != "./README.sockets" ]
-then
 	echo
-	echo "This should be run under grass root directory."
+	echo "gmake5 is not under \$PATH."
 	echo
 	exit
 fi
@@ -153,7 +177,6 @@ then
 	done
 fi
 
-GISBASE=`grep "@prefix@" config.status | cut -d '%' -f 3`
 
 if [ ! -f $GISBASE/dev/create_buffers.sh ]
 then
