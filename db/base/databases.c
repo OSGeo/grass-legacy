@@ -22,10 +22,8 @@ main(int argc, char *argv[])
 
     driver = db_start_driver (parms.driver);
     if (driver == NULL)
-    {
-	fprintf (stderr, "Can't run driver %s\n", parms.driver);
-	exit(ERROR);
-    }
+        G_fatal_error("No db connection for driver <%s> defined. Run db.connect", parms.driver);
+        
     if(db_list_databases (driver, NULL, nlocs, &handles, &count) != DB_OK)
 	exit(ERROR);
     db_shutdown_driver (driver);
