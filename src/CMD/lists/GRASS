@@ -457,3 +457,5 @@ src.contrib/UCB/gdbase
 #src.contrib/eurogis/r.to.SVF
 #src.garden/grass.hdf/hdf3
 src.garden/answers/src.answers/raster/r.fill.dir
+# PostgreSQL support: (working!)
+#src.garden/grass.postgresql
