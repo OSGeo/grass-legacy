@@ -13,7 +13,7 @@
 #include <math.h>
 
 char inbuf2[100];
-FILE *fp1, *fp2, *log;
+FILE *fp1, *fp2, *flog;
 
 isle(inp,out)
 char *inp, *out;
@@ -25,33 +25,33 @@ char *inp, *out;
 	int i, b3, np, x, j, ia=0, a[1000], a2[1000], a3[1000], sav[100], east;
 	long curr;
 
-	if((log=fopen("log","a"))==NULL)
+	if((flog=fopen("log","a"))==NULL)
 	{	return(-1);
 	}
 	if((fp1=fopen(inp,"r"))==NULL)
 	{	printf("ERROR - see log\n");
-		fprintf(log,"USAGE: isle input-file output-file\n");
-		fprintf(log,"cannot find input-file %s\n",inp);
-		fprintf(log,"************************************\n");
+		fprintf(flog,"USAGE: isle input-file output-file\n");
+		fprintf(flog,"cannot find input-file %s\n",inp);
+		fprintf(flog,"************************************\n");
 		return(-1);
 	}
 	if((fp2=fopen(out,"w"))==NULL)
 	{	printf("ERROR - see log\n");
-		fprintf(log,"USAGE: isle input-file output-file\n");
-		fprintf(log,"cannot create output-file %s\n",out);
-		fprintf(log,"************************************\n");
+		fprintf(flog,"USAGE: isle input-file output-file\n");
+		fprintf(flog,"cannot create output-file %s\n",out);
+		fprintf(flog,"************************************\n");
 		return(-1);
 	}
-	fprintf(log,"%s START ISLE.\n",inp);
+	fprintf(flog,"%s START ISLE.\n",inp);
 	/* Read input records.*/
 	while(fgets(inbuf2,100,fp1)!=NULL)
 	{
 		if(inbuf2[0]!=34)
 		{	printf("ERROR - see log\n");
-			fprintf(log,"ERROR: Area label must begin with double quote.\n");
-			fprintf(log,"Current line=%s\n",inbuf2);
-			fprintf(log,"Last Area=%s,%s\n",b1,b2);
-			fprintf(log,"************************************\n");
+			fprintf(flog,"ERROR: Area label must begin with double quote.\n");
+			fprintf(flog,"Current line=%s\n",inbuf2);
+			fprintf(flog,"Last Area=%s,%s\n",b1,b2);
+			fprintf(flog,"************************************\n");
 			return(-1);
 		}
 		buf1p=strtok(inbuf2,",\n");
@@ -62,18 +62,18 @@ char *inp, *out;
 		sscanf(buf1p,"%d",&b3);
 		if(b3 < -1)
 		{	
-			fprintf(log,"%s ERROR: LINE IN AREA FILE \n",inp);
+			fprintf(flog,"%s ERROR: LINE IN AREA FILE \n",inp);
 			fclose(fp1);
 			fclose(fp2);
-			fclose(log);
+			fclose(flog);
 			return(-1);
 		}
 		if(b3 == 1) 
 		{
-			fprintf(log,"%s ERROR: POINT IN AREA FILE \n",inp);
+			fprintf(flog,"%s ERROR: POINT IN AREA FILE \n",inp);
 			fclose(fp1);
 			fclose(fp2);
-			fclose(log);
+			fclose(flog);
 			return(-1);
 		}
 		if(b3 < 1) return(-1);
@@ -90,8 +90,8 @@ char *inp, *out;
 		{
 			if(fgets(inbuf2,100,fp1)==NULL)
 			{	printf("ERROR - see log\n");
-				fprintf(log,"ERROR: EOF came too soon.\n");
-				fprintf(log,"************************************\n");
+				fprintf(flog,"ERROR: EOF came too soon.\n");
+				fprintf(flog,"************************************\n");
 				return(-1);
 			}
 			if(inbuf2[0]=='"')  /*double quote mark*/
@@ -99,7 +99,7 @@ char *inp, *out;
 				j--;
 				curr=strlen(inbuf2);
 				fseek(fp1,-curr,1);
-				fprintf(log,"Count Error Fixed: %s, %d\n",b1,b3);
+				fprintf(flog,"Count Error Fixed: %s, %d\n",b1,b3);
 				break;
 			}
 
@@ -110,9 +110,9 @@ char *inp, *out;
 					inbuf2[i]=10;
 					inbuf2[i+1]=NULL;
 					printf("ERROR - see log\n");
-					fprintf(log,"ERROR: Invalid coordinate data. Only 0-9, comma, period, minus sign.\n");
-					fprintf(log,"AREA: %s,%s,%d LINE: %d\n",b1,b2,b3,np+1);
-					fprintf(log,"************************************\n");
+					fprintf(flog,"ERROR: Invalid coordinate data. Only 0-9, comma, period, minus sign.\n");
+					fprintf(flog,"AREA: %s,%s,%d LINE: %d\n",b1,b2,b3,np+1);
+					fprintf(flog,"************************************\n");
 					return(-1);*/
 				}
 			}
@@ -157,7 +157,7 @@ char *inp, *out;
 						if(Nmax < ypts[np-1] || Smax > ypts[np-1] || Emax < xpts[np-1] || Wmax > xpts[np-1])
 						{ /*true island*/
 							a3[x]=0;
-		/*fprintf(log,"TRUE ISLAND:%s,%s,%d\n",b1,b2,a[x]);*/
+		/*fprintf(flog,"TRUE ISLAND:%s,%s,%d\n",b1,b2,a[x]);*/
 						}
 						else
 						{
@@ -201,17 +201,17 @@ char *inp, *out;
 							if(east==(east/2)*2)
 							{
 								a3[x]=0;
-		/*fprintf(log,"TRUE ISLAND:%s,%s,%d\n",b1,b2,a[x]);*/
+		/*fprintf(flog,"TRUE ISLAND:%s,%s,%d\n",b1,b2,a[x]);*/
 							}
 							else
 							{
 								a3[x]=1;
 		if(ii==0){
-			fprintf(log,"CHECK AREAS WITH INTERNAL VOIDS FOR POSSIBLE LABEL PLACEMENT PROBLEMS.\n");
+			fprintf(flog,"CHECK AREAS WITH INTERNAL VOIDS FOR POSSIBLE LABEL PLACEMENT PROBLEMS.\n");
 			printf("WARNING - see log\n");
 			ii=1;
 		}
-		fprintf(log,"INTERNAL VOID:%s,%s,%d\n",b1,b2,a[x]);
+		fprintf(flog,"INTERNAL VOID:%s,%s,%d\n",b1,b2,a[x]);
 		vod = 1;
 							}
 						}
@@ -220,7 +220,7 @@ char *inp, *out;
 					else
 					{  /*interior island*/
 		if(ii==0){
-			fprintf(log,"CHECK AREAS WITH INTERIOR ISLANDS FOR POSSIBLE LABEL PLACEMENT PROBLEMS.\n");
+			fprintf(flog,"CHECK AREAS WITH INTERIOR ISLANDS FOR POSSIBLE LABEL PLACEMENT PROBLEMS.\n");
 			printf("WARNING - see log\n");
 			ii=1;
 		}
@@ -229,7 +229,7 @@ char *inp, *out;
 						a2[x-1]--;		
 						a3[x]=1;
 						if(np<b3-1) x++;
-		fprintf(log,"INTERIOR ISLAND:%s,%s,%d\n",b1,b2,a[x]);
+		fprintf(flog,"INTERIOR ISLAND:%s,%s,%d\n",b1,b2,a[x]);
 					}
 				}
 			}
@@ -257,9 +257,9 @@ char *inp, *out;
 			if(vod == 1) vod = 0;
 		}
 	}
-	fprintf(log,"%s AREA FILE - END OF ISLE.\n",inp);
+	fprintf(flog,"%s AREA FILE - END OF ISLE.\n",inp);
 	fclose(fp1);
 	fclose(fp2);
-	fclose(log);
+	fclose(flog);
 	return(0);
 }
