@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.51 2000-10-24 15:58:08 markus Exp $
+$Id: BUGS,v 1.52 2000-10-25 14:53:37 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -287,6 +287,10 @@ r.in.hdf/r.out.hdf (src.garden/grass.hdf)
  (being worked on by ?)
 
 [RC]r.random:
+ needs to be updated to GRASS 5
+ (being worked on by ?)
+
+r.random.surface
  needs to be updated to GRASS 5
  (being worked on by ?)
 
