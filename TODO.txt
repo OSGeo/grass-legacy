@@ -349,6 +349,10 @@ Monitor:
 ---------------------------------------------------------------------
 Modules:
 
+- all modules:
+   There should be a warning if overwriting existing maps in scripted
+   mode (see: documents/parameter_proposal.txt) 
+
 -IMPORT/EXPORT modules:
   They should read/write from current directory instead of subdirectory
   in mapset.
