@@ -6,7 +6,7 @@
 
 int print_window(struct Cell_head *window,int print_flag, int dist_flag)
 {
-	char *prj, *datum, *ellps, *ellps2;
+	char *prj, *datum, *ellps;
 	int x;
 	char north[30], south[30], east[30], west[30], nsres[30], ewres[30];
 	/* BOB */
@@ -78,6 +78,7 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag)
 	 /* if coordinates are not in lat/long format, transform them: */
 	 if ((G_projection() != PROJECTION_LL) && window->proj != 0)
 	 {
+	    double a, es;
 	   /* read current projection info */
 	    if ((in_proj_info = G_get_projinfo()) == NULL)
 	       G_fatal_error("Can't get projection info of current location");
@@ -94,11 +95,11 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag)
 	    
             G_set_key_value("proj", "ll", out_proj_info);
 
-            ellps2 = G_find_key_value("ellps", in_proj_info);
-            if( ellps2 != NULL )
-                G_set_key_value("ellps", ellps2, out_proj_info);
-            else
-                G_set_key_value("ellps", "wgs84", out_proj_info);
+            G_get_ellipsoid_parameters(&a, &es);
+            sprintf(buf, "%.16g", a);
+            G_set_key_value("a", buf, out_proj_info);
+            sprintf(buf, "%.16g", es);
+            G_set_key_value("es", buf, out_proj_info);
 	    
             G_set_key_value("unit", "degree", out_unit_info);
             G_set_key_value("units", "degrees", out_unit_info);
@@ -107,6 +108,11 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag)
 	    if (pj_get_kv(&oproj, out_proj_info, out_unit_info) < 0)
 	       G_fatal_error("Unable to set up lat/long projection parameters");            
 	
+            G_free_key_value( in_proj_info );
+            G_free_key_value( in_unit_info );
+            G_free_key_value( out_proj_info );
+            G_free_key_value( out_unit_info );
+	    
 	   /* do the transform
 	    * syntax: pj_do_proj(outx, outy, in_info, out_info) 
 	    *

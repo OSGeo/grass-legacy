@@ -36,7 +36,8 @@ int convert_to_ll (Control_Points_LL *cpll, Control_Points_2D *cptemp)
   struct pj_info ll_proj_info;         /* info for lat/lon */
   struct Key_Value  *targ_proj_keys, *targ_unit_keys;
   struct Key_Value  *ll_proj_keys,   *ll_unit_keys;
-  char   *ellps;    /* target ellps paramet */
+  double a, es;    /* target ellps paramet */
+  char buf[50];
   char *tmp_bob;
 
    
@@ -78,18 +79,22 @@ if (!strcmp(tmp_bob, "ll")) return 0;
 
 
   /* save the target ellps parameter */
-  ellps = G_find_key_value ("ellps", targ_proj_keys);
+  G_get_ellipsoid_parameters(&a, &es);
 
   /* set up ll_proj_keys */
   ll_proj_keys = G_create_key_value();
   ll_unit_keys = G_create_key_value();
   G_set_key_value ("name", "Lat/Lon", ll_proj_keys);
   G_set_key_value ("proj", "ll", ll_proj_keys);
-  if( ellps != NULL )
-      G_set_key_value ("ellps", ellps, ll_proj_keys);
-  else
-      G_set_key_value ("ellps", "wgs84", ll_proj_keys);
+  sprintf(buf, "%.16g", a);
+  G_set_key_value("a", buf, ll_proj_keys);
+  sprintf(buf, "%.16g", es);
+  G_set_key_value("es", buf, ll_proj_keys);
 
+  G_set_key_value("unit", "degree", ll_unit_keys);
+  G_set_key_value("units", "degrees", ll_unit_keys);
+  G_set_key_value("meters", "1.0", ll_unit_keys);
+   
   /*   There is no longer a pj_get_kv() in libproj.a   Sep-15-1999 */
   if (pj_get_kv(&ll_proj_info, ll_proj_keys, ll_unit_keys) < 0) {
 	exit (0);
@@ -163,7 +168,8 @@ convert_from_ll (Control_Points_LL *cpll, Control_Points_2D *cptemp)
   struct pj_info ll_proj_info;         /* info for lat/lon */
   struct Key_Value  *targ_proj_keys, *targ_unit_keys;
   struct Key_Value  *ll_proj_keys,   *ll_unit_keys;
-  char   *ellps;    /* target ellps paramet */
+  double a, es;    /* target ellps paramet */
+  char buf[50];
 
 
   /* initialize */
@@ -197,17 +203,17 @@ convert_from_ll (Control_Points_LL *cpll, Control_Points_2D *cptemp)
   }
 
   /* save the target ellps parameter */
-  ellps = G_find_key_value ("ellps", targ_proj_keys);
+  G_get_ellipsoid_parameters(&a, &es);
 
   /* set up ll_proj_keys */
   ll_proj_keys = G_create_key_value();
   ll_unit_keys = G_create_key_value();
   G_set_key_value ("name", "Lat/Lon", ll_proj_keys);
   G_set_key_value ("proj", "ll", ll_proj_keys);
-  if( ellps != NULL)
-      G_set_key_value ("ellps", ellps, ll_proj_keys);
-  else
-      G_set_key_value ("ellps", "wgs84", ll_proj_keys);
+  sprintf(buf, "%.16g", a);
+  G_set_key_value("a", buf, ll_proj_keys);
+  sprintf(buf, "%.16g", es);
+  G_set_key_value("es", buf, ll_proj_keys);
 
   /*   There is no longer a pj_get_kv() in libproj.a   Sep-15-1999 */
   if (pj_get_kv(&ll_proj_info, ll_proj_keys, ll_unit_keys) < 0) {

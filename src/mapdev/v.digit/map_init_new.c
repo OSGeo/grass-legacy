@@ -31,7 +31,7 @@ int init_map (char	*coor_file)
 #ifdef LATLON
         struct  Key_Value *proj_keys, *unit_keys;
         struct  Key_Value *ll_proj_keys, *ll_unit_keys;
-        char *ellps; 
+        double a, es; 
         static struct pj_info   info_ll, info_coord;    /* Conversion info */
         int ask_again;
 #endif
@@ -88,11 +88,11 @@ int init_map (char	*coor_file)
 	    
             G_set_key_value("proj", "ll", ll_proj_keys);
 
-            ellps = G_find_key_value("ellps", proj_keys);
-            if( ellps != NULL )
-                G_set_key_value("ellps", ellps, ll_proj_keys);
-            else
-                G_set_key_value("ellps", "wgs84", ll_proj_keys);
+            G_get_ellipsoid_parameters(&a, &es);
+            sprintf(buff, "%.16g", a);
+            G_set_key_value("a", buff, ll_proj_keys);
+            sprintf(buff, "%.16g", es);
+            G_set_key_value("es", buff, ll_proj_keys);
 	    
             G_set_key_value("unit", "degree", ll_unit_keys);
             G_set_key_value("units", "degrees", ll_unit_keys);
@@ -102,12 +102,16 @@ int init_map (char	*coor_file)
               fprintf(stderr,_("Could not initialize proj_ll\n"));
               last_words(CMap,-1);
             } 
+            G_free_key_value( ll_proj_keys );
+            G_free_key_value( ll_unit_keys );
 
             if (pj_get_kv(&info_coord,proj_keys,unit_keys) <0)  {
             /* projection file had to be corrupted after last registration */   
               fprintf(stderr,_("Could not initialize proj_coord\n"));
               last_words(CMap,-1);
             }
+            G_free_key_value( proj_keys );
+            G_free_key_value( unit_keys );
 	     
             ll_ask = 2;  /* user can enter only lat/lon strings */
           }
@@ -125,14 +129,32 @@ int init_map (char	*coor_file)
               ll_ask = 0;  /* don't allow lat/lon registration */ 
               break;
             }
-            if (pj_get_string(&info_ll,"+proj=ll") <0) {
+            ll_proj_keys = G_create_key_value();
+            ll_unit_keys = G_create_key_value();
+	    
+            G_set_key_value("proj", "ll", ll_proj_keys);
+
+            G_get_ellipsoid_parameters(&a, &es);
+            sprintf(buff, "%.16g", a);
+            G_set_key_value("a", buff, ll_proj_keys);
+            sprintf(buff, "%.16g", es);
+            G_set_key_value("es", buff, ll_proj_keys);
+	    
+            G_set_key_value("unit", "degree", ll_unit_keys);
+            G_set_key_value("units", "degrees", ll_unit_keys);
+            G_set_key_value("meters", "1.0", ll_unit_keys);
+            if (pj_get_kv(&info_ll,ll_proj_keys,ll_unit_keys) <0) {
               ll_ask = 0;  /* don't allow lat/lon registration */ 
               break;
             }
+            G_free_key_value( ll_proj_keys );
+            G_free_key_value( ll_unit_keys );
             if (pj_get_kv(&info_coord,proj_keys,unit_keys) <0)  {
               ll_ask = 0;  /* don't allow lat/lon registration */ 
               break;
             }
+            G_free_key_value( proj_keys );
+            G_free_key_value( unit_keys );
             ll_ask = 1;
             break;
           }

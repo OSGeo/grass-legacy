@@ -38,7 +38,6 @@ main(int argc, char **argv)
   struct GModule *module;
 
   char errbuf[256];          /* buffer for error messages */
-  char *ellps;
 
   char *datumlist, *mapset, 
     *name, *outdatum;
@@ -160,6 +159,8 @@ main(int argc, char **argv)
   
   if (proj != PROJECTION_LL)	/* lat/lon needs no reprojection */ 
     {
+      double a, es;
+       
       if ((proj_info_map = G_get_projinfo()) == NULL)
 	G_fatal_error("Can't get projection info of map");
       if ((unit_info_map = G_get_projunits()) == NULL)
@@ -173,11 +174,11 @@ main(int argc, char **argv)
 	    
       G_set_key_value("proj", "ll", proj_info_ll);
 
-      ellps = G_find_key_value("ellps", proj_info_map);
-      if( ellps != NULL )
-          G_set_key_value("ellps", ellps, proj_info_ll);
-      else
-          G_set_key_value("ellps", "wgs84", proj_info_ll);
+      G_get_ellipsoid_parameters(&a, &es);
+      sprintf(errbuf, "%.16g", a);
+      G_set_key_value("a", errbuf, proj_info_ll);
+      sprintf(errbuf, "%.16g", es);
+      G_set_key_value("es", errbuf, proj_info_ll);
 	    
       G_set_key_value("unit", "degree", unit_info_ll);
       G_set_key_value("units", "degrees", unit_info_ll);
@@ -186,6 +187,10 @@ main(int argc, char **argv)
       if (pj_get_kv(&pjll, proj_info_ll, unit_info_ll) < 0)
           G_fatal_error("Unable to set up lat/long projection parameters");            
 
+      G_free_key_value( proj_info_map );
+      G_free_key_value( unit_info_map );
+      G_free_key_value( proj_info_ll );
+      G_free_key_value( unit_info_ll );
     }
   
   if (molod->answer) {
