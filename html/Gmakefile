@@ -3,6 +3,7 @@ all:
 	(tar -cf - * | (cd $(GISBASE)/html; tar -xf - 2>/dev/null ); true )
 
 #html2man:
+	rm -rf $(GISBASE)/man
 	html/convert_to_man.sh $(SRC) $(GISBASE)
 
 #Postscript-docs:
