@@ -29,7 +29,8 @@ int main(int argc, char **argv)
   G_gisinit (argv[0]) ;
 
   /* have a look if vector maps are already drawn in monitor */
-  R_open_driver();
+  if (R_open_driver() != 0)
+    G_fatal_error ("No graphics device selected");
   
   if(D_get_dig_list (&vect, &nvects) < 0)
 	vect = NULL;
