@@ -37,6 +37,7 @@
 #include "userextern.h"
 #include "userglobs.h"
 #include "user.h"
+#include "points.h"
 
 /*
        fi - tension parameter
@@ -102,6 +103,11 @@ interp_call (root, tree)
     double distx,disty,distz,distxp,distyp,distzp,temp1,temp2,temp3;
     int             i, npt, nptprev, MAXENC, k,j;
     static struct quadruple *points = NULL;
+    struct point_3d skip_point;
+    struct point_3d *point = NULL;
+    int	skip_index, segtest;
+    double xx, yy, zz, ww;
+
     if (tree == NULL)
 	return;
     if (tree->data == NULL)
@@ -115,11 +121,14 @@ interp_call (root, tree)
     else
     {
 
-	if (!points)
-	{
-	    if(!(points=(struct quadruple*)malloc(sizeof(struct quadruple)*(KMAX2+1))))
+	    if(!points) {
+	    if(!(points=(struct quadruple*)G_malloc(sizeof(struct quadruple)*(KMAX2+1))))
             clean_fatal_error("Not enough memory for points");
-	}
+	    }
+
+/*           if(!(point=(struct point_3d*)G_malloc(sizeof(struct point_3d)*(KMAX2+1))))
+        clean_fatal_error("Not enough memory for points");*/
+
 
 	distx = (((struct octdata *) (tree->data))->n_cols * ew_res) * 0.1;
 	disty = (((struct octdata *) (tree->data))->n_rows * ns_res) * 0.1;
@@ -218,9 +227,58 @@ interp_call (root, tree)
 	    }
 	}
 
-/*for  (i=0;i<npt;i++)
-  fprintf(stderr,"i=%d: %lf,%lf,%lf\n",i,points[i].x,points[i].y,points[i].z);
-*/
+/*	if(!(points=(struct quadruple*)G_malloc(sizeof(struct quadruple)*(npt))))
+		clean_fatal_error("Not enough memory for points");*/
+	if(!(point=(struct point_3d*)G_malloc(sizeof(struct point_3d)*(npt))))
+		clean_fatal_error("Not enough memory for points");
+
+	/* cv stuff */
+
+   if (cv) {
+		for (i = 0; i < npt; i++)
+		{
+		point[i].x = points[i].x;
+		point[i].y = points[i].y;
+		point[i].z = points[i].z;
+		point[i].w = points[i].w;
+		}
+
+     for(skip_index=0;skip_index<npt;skip_index++) {
+      segtest = 0;
+      j = 0;
+      xx = point[skip_index].x;
+      yy = point[skip_index].y;
+      zz = point[skip_index].z;
+      ww = point[skip_index].w;
+      if (xx >= xmn && xx <= xmx && yy >= ymn && yy <= ymx && zz >= zmn && zz <= zmx) {
+      segtest = 1;
+      skip_point.x = point[skip_index].x;
+      skip_point.y = point[skip_index].y;
+      skip_point.z = point[skip_index].z;
+      skip_point.w = point[skip_index].w;
+      for (k=0;k<npt;k++) {
+        if (k!=skip_index) {
+          points[j].x = point[k].x;
+          points[j].y = point[k].y;
+          points[j].z = point[k].z;
+	  points[j].w = point[k].w;
+          j++;
+        }
+      }
+      }/* segment area test */
+
+      if (segtest == 1)
+      if (!COGRR1 (xmn, ymn, zmn, ((struct octdata *) (tree->data))->n_rows,
+                                  ((struct octdata *) (tree->data))->n_cols,
+                                  ((struct octdata *) (tree->data))->n_levs,
+                                  npt-1, points, skip_point)) {
+                                  fprintf(stderr,"Error in COGRR!\n");
+                                  return 0;
+      }
+     }
+   }
+
+	
 
 	/* show before to catch 0% */
 
@@ -230,17 +288,17 @@ interp_call (root, tree)
   G_percent (cursegm, totsegm, 1);
 }
 
-
+if(!cv)
 if (!COGRR1 (xmn, ymn, zmn, ((struct octdata *) (tree->data))->n_rows, 
                             ((struct octdata *) (tree->data))->n_cols,
 		            ((struct octdata *) (tree->data))->n_levs, 
-                            npt, points)) {
+                            npt, points, skip_point)) {
             fprintf(stderr,"Error in COGRR!\n");
 	    return 0;
         }
-	/*
-	free (points);
-	*/
+	
+/*	free (points);*/
+	
 	/* free (A); */
 	/* show after to catch 100% */
 	cursegm++;
