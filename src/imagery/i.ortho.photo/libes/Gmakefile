@@ -15,7 +15,6 @@ OBJ =\
 	find_init.o\
 	find_camera.o\
 	fopen_camera.o\
-	georef.o\
 	group_elev.o\
 	init.o\
 	init_info.o\
