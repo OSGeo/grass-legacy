@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
     inwkt->key = "wkt";
     inwkt->type = TYPE_STRING;
     inwkt->required = NO;
-    inwkt->description = "ASCII file containing a WKT "
+    inwkt->description = "ASCII file containing a single line WKT "
 	"projection description (- for stdin)";
 
     inproj4 = G_define_option();
