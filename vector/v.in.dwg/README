@@ -13,7 +13,11 @@ Download OpenDWG toolkit libraries. 2/2003 were available for:
 DEC Alpha NT, DEC Alpha Unix, HP 700 Series, HP/UX, IBM RS/6000 AIX, Linux,
 Macintosh, Silicon Graphics, Sun Solaris 2, Sun Solaris X86, Microsoft Windows.
 
-Unpack library and copy to this directory: 'ad2.a ad2.h odio.h adinit.dat'
-and run 'make' in this directory.
+Use configure options to enable this module and to specify paths to header files
+and library. For example:
+
+   --with-opendwg \
+   --with-opendwg-includes=/opt/openDWG/toolkit27 \
+   --with-opendwg-libs=/opt/openDWG/toolkit27
 
 Not all entity types are supported (warning printed).
