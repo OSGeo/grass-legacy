@@ -12,3 +12,6 @@ $(PGM): $(OBJ) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(DEPGISLIB): #
+
+$(OBJ): tinf.h
+
