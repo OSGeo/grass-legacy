@@ -1,7 +1,7 @@
 
 
 
-r.cross              GRASS Reference Manual               r.cross
+r.cross <main>       GRASS Reference Manual        <main> r.cross
 
 
 
@@ -60,14 +60,14 @@ OPTIONS
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-r.cross              GRASS Reference Manual               r.cross
+r.cross <main>       GRASS Reference Manual        <main> r.cross
 
 
 
@@ -126,14 +126,14 @@ EXAMPLE
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
 
 
 
-r.cross              GRASS Reference Manual               r.cross
+r.cross <main>       GRASS Reference Manual        <main> r.cross
 
 
 
@@ -192,7 +192,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
