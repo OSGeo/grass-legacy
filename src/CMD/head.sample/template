@@ -1,0 +1,22 @@
+# set these definitions according to your system requirements
+ARCH                = sun3
+
+GISBASE             = /usr/grass3.1
+UNIX_BIN            = /usr/local/bin
+
+DEFAULT_DATABASE    = /usr/grass/data
+DEFAULT_LOCATION    = spearfish
+
+COMPILE_FLAGS       = -O
+LDFLAGS             = -s
+DIGIT_FLAGS         =
+MATHLIB             = -lm
+TERMLIB             = -ltermlib
+CURSES              = -lcurses $(TERMLIB)
+LIBRULE             = ar ruv $@ $?; ranlib $@
+#LIBRULE             = ar rc $@ `lorder $(OBJ) | tsort`
+
+#USE_TERMIO          = -DUSE_TERMIO
+USE_MTIO             = -DUSE_MTIO
+DIGITFLAGS           =
+CAN_CLEAR            = -DCAN_CELAR
