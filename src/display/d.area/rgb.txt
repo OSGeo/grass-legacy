@@ -751,3 +751,5 @@
 139   0   0		DarkRed
 144 238 144		light green
 144 238 144		LightGreen
+  0 127 255		indigo
+100 127 255		aqua
