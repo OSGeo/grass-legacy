@@ -1,0 +1,68 @@
+
+
+
+Dclear.screen(2D)    GRASS Reference Manual     Dclear.screen(2D)
+
+
+
+NAME
+     Dclear.screen - Tool for clearing the graphics screen
+     (D Language Tool)
+
+SYNOPSIS
+     Dclear.screen
+
+DESCRIPTION
+     Dclear.screen clears the entire screen and removes all
+     recorded traces of any windows previously drawn there from
+     memory.  Unlike Dscreen, Dclear.screen clears the entire
+     screen without creating any new windows.  Also contrast
+     Dclear.screen with Derase, which erases only the contents of
+     the current window while leaving the window itself there.
+
+SEE ALSO
+     DINTRO[2D]    Introduction to the GRASS D tools
+     Derase[2D]    Erase only the contents of the current window
+     Dscreen[2D]
+
+                   Clear the screen, create a new display window
+                   covering the full screen, and choose this
+                   full screen as the current window
+
+AUTHOR
+     James Westervelt, U.S. Army Construction Engineering
+     Research Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
