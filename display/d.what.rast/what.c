@@ -43,7 +43,8 @@ int what (int once, int terse, int colrow, char *fs)
 
     do
     {
-	show_buttons(once);
+        if(!terse)
+	    show_buttons(once);
         R_get_location_with_pointer(&screen_x, &screen_y, &button) ;
 	if (!once)
 	{

@@ -15,7 +15,7 @@ int main (int argc, char **argv)
 	char **ptr;
 	struct Flag *once, *terse, *colrow;
 	struct Option *opt1, *fs;
-
+	struct GModule *module;
 
 	/* Initialize the GIS calls */
 	G_gisinit (argv[0]) ;
@@ -49,6 +49,11 @@ int main (int argc, char **argv)
 	colrow->key 	    = 'c';
 	colrow->description = "Print out col and row for entire map region";
 
+	module = G_define_module();
+	module->description = 
+	  "Allows the user to interactively query the category contents "
+	  "of multiple raster map layers at user specified locations "
+	  "within the current geographic region. ";
 
 	if (argc != 1)		/* NON-interactive */
 	{
