@@ -1,23 +1,23 @@
 
 
 
-ps.icon <alpha>      GRASS Reference Manual       <alpha> ps.icon
+ps.icon	<alpha>	     GRASS Reference Manual	  <alpha> ps.icon
 
 
 
 NAME
      ps.icon - Creates and modifies icons for use with ps.map.
-     (GRASS Hardcopy PostScript Output Program)
+     (GRASS Hardcopy PostScript	Output Program)
 
 SYNOPSIS
      ps.icon
 
 DESCRIPTION
-     This program allows the user to create and maintain icons
-     which are used by ps.map to depict sites.
+     This program allows the user to create and	maintain icons
+     which are used by ps.map to depict	sites.
 
 FILES
-     Icon files created by the user are stored under
+     Icon files	created	by the user are	stored under
      $LOCATION/ps_icon.
 
 SEE ALSO
@@ -28,8 +28,8 @@ AUTHOR
 
 NOTICE
      This program is part of the alpha section of the GRASS
-     distribution.  Unlike the code in the main section of GRASS,
-     the alpha code has not yet been fully tested for one release
+     distribution.  Unlike the code in the main	section	of GRASS,
+     the alpha code has	not yet	been fully tested for one release
      cycle.
 
 
@@ -60,7 +60,7 @@ NOTICE
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
