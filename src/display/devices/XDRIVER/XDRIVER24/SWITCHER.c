@@ -189,7 +189,8 @@ int main (int argc, char *argv[])
 	fprintf(stderr,"Nlev is zero, resetting to 32\n");
 	nlev=32;
     }
-    if ( nlev < 0 ) {
+/* pass nlev=-1 to Graph_Set as a flag to try to force TrueColor  */;
+    if ( nlev < -1 ) {
 	fprintf(stderr,"Nlev is negative, resetting to 32\n");
 	nlev=32;
     }
