@@ -1,0 +1,41 @@
+Date: Wed, 28 Mar 2001 08:13:43 +0200
+From: "Andrea Aime" <aaime@comune.modena.it>
+Reply-To: grass5@geog.uni-hannover.de
+To: GRASS Developers <grass5@geog.uni-hannover.de>
+Subject: [GRASS5] v.trim (RC bug)
+X-Archive-URL: "http://www.geog.uni-hannover.de/grass/grassdevel.html"
+
+Hi Markus, hi everybody,
+last night I tried to track down v.trim bug that has been marked as 
+release critical... well, my opionion in short is that v.trim has
+too many bugs and to make it useful it needs a major rewrite, not a
+bug fix. Well, now a more in depth description to support my opinion.
+v.trim is expected to remove small spurs and node in excess from a
+vector
+layer based on a trimming factor that is the minimum distance between
+nodes
+(beware, I said nodes, not vertices, I mean line endings). Here the list
+of bugs I've seen in that small program (277 lines of code):
+* trim factor is just a distance (a double), not a percentage, so why
+  limit   it between 0 and 100?
+* a line is eliminated if the euclidean distance between its nodes 
+  (line endings) is less than the trimming factor... no surprise that
+  closed loops gets eliminated, start node = end node, so euclidean
+  distance is 0 regardless of how big is the loop;
+* two consequent lines are joined into one regardless of their
+  attributes
+  -> this is loss of information
+* in fact attributes are not treated at all, the output file loses all 
+  the label points
+There are also other problems, but it seems to me that the ones cited
+are enough (for me) to vote for v.trim removal from grass 5 stable: 
+fixing it is almost equivalent to building it from scratch, 
+it seems much more a new feature than a bug fix :-). What is your
+opinion?
+
+BTW, we still have to take a decision about zero handling in vector
+files...
+
+Regard
+Andrea Aime
+
