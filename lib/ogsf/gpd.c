@@ -14,6 +14,10 @@
 #include "rowcol.h"
 
 #define CHK_FREQ 50
+
+/* BOB -- border allowed outside of viewport*/
+#define v_border 50
+
 /* check for cancel every CHK_FREQ points */
 
 int gs_point_in_region(geosurf *gs, float *pt, float *region)
@@ -142,10 +146,15 @@ translate it relative to surface on which it's displayed */
 int gpd_2dsite(geosite *gp, geosurf *gs, int do_fast)
 {
     float site[3], tx, ty, konst; 
+    float lpt[3];
     float size;
     int src, check, marker, color; 
     geopoint *gpt;
     typbuff *buf;
+    GLdouble modelMatrix[16], projMatrix[16];
+    GLint viewport[4];
+    GLint window[4];
+
     
     if (GS_check_cancel())
     {
@@ -168,9 +177,13 @@ int gpd_2dsite(geosite *gp, geosurf *gs, int do_fast)
 	    buf = gs_get_att_typbuff(gs, ATT_TOPO, 0);
 	}
 
+	/* Get viewport parameters for view check */
+	gsd_getwindow(&window, &viewport, &modelMatrix, &projMatrix);
+
 	gsd_pushmatrix();
 
 	gsd_do_scale(1);
+
 	gsd_translate(gs->x_trans, gs->y_trans, gs->z_trans);
 
 	gsd_linewidth(gp->width);
@@ -199,7 +212,7 @@ int gpd_2dsite(geosite *gp, geosurf *gs, int do_fast)
 	    if (gs_point_is_masked(gs, site))
 	    {
 		continue;
-	    }
+	    } 
 	    
 	    /* TODO: set other dynamic attributes */
 	    if (gp->attr_mode & ST_ATT_COLOR)
@@ -212,16 +225,23 @@ int gpd_2dsite(geosite *gp, geosurf *gs, int do_fast)
 		if (viewcell_tri_interp(gs, buf, site, 1))
 		{
 		    /* returns 0 if outside or masked */
+		site[Z] += gp->z_trans;
 
-		    site[Z] += gp->z_trans;
-		    gpd_obj(gs, color, size, marker, site);
+		if (gsd_checkpoint(site, window, viewport, modelMatrix, projMatrix) ) 
+			continue;
+		else 
+			gpd_obj(gs, color, size, marker, site);
 		}
 	    }
 	    else if (src == CONST_ATT)
 	    {
 		if (gs_point_in_region(gs, site, NULL))
 		{
-		    gpd_obj(NULL, color, size, marker, site);
+                    site[Z] += gp->z_trans;
+		    if (gsd_checkpoint(site, window, viewport, modelMatrix, projMatrix) )
+			    continue;
+		    else 
+			gpd_obj(NULL, color, size, marker, site);
 		}
 	    }
 	}
@@ -239,15 +259,21 @@ int gpd_3dsite(geosite *gp, float xo, float yo, int do_fast)
     float size;
     int check, color, marker; 
     geopoint *gpt;
+    GLdouble modelMatrix[16], projMatrix[16];
+    GLint viewport[4];
+    GLint window[4];
 
     if (GS_check_cancel())
     {
     	return(0);
     }
 
+    gsd_getwindow(&window, &viewport, &modelMatrix, &projMatrix);
+
     gsd_pushmatrix();
 
     gsd_do_scale(1); 
+
     tz = GS_global_exag();
     site[Z] = 0.0;
     
@@ -285,6 +311,9 @@ int gpd_3dsite(geosite *gp, float xo, float yo, int do_fast)
 	    color = gpt->iattr;
 	}
 
+	if(gsd_checkpoint(site, window, viewport, modelMatrix, projMatrix) )
+		continue;
+	else 
 	/* clip points outside default region? */
 	gpd_obj(NULL, color, size, marker, site);
     }

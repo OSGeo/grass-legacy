@@ -16,6 +16,12 @@
 #include "GL/gl.h"
 #include "GL/glu.h"
 
+#ifdef OS_RENDER
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <GL/glx.h>
+#endif
+
 #define USE_GL_NORMALIZE
 
 #define RED_MASK 0x000000FF
@@ -30,6 +36,9 @@
 
 #define MAX_OBJS 64
 /* ^ TMP - move to gstypes */
+
+/* define border width (pixels) for viewport check */
+#define border 15
 
 static GLuint LightList[MAX_LIGHTS];
 static GLuint ObjList[MAX_OBJS];
@@ -46,6 +55,97 @@ static float ogl_mat_spec[4];
 static float ogl_mat_emis[4];
 static float ogl_mat_shin;
 static float ogl_lmodel[4];
+
+#ifdef OS_RENDER
+Display *dpy;
+GLXContext ctx;
+GLXFBConfig *fbc;
+GLXDrawable xdraw;
+GLXPbuffer pbuffer;
+#endif
+
+/************************************************************************/
+#ifdef OS_RENDER
+void gsd_newcontext(void)
+{
+GLint tmp[4];
+int t, l, b, r;
+int width, height;
+XVisualInfo *vi;
+Window root;
+int scr;
+int elements;
+int pbuf_attrib[200];
+int pbuf_cnt;
+
+fprintf(stderr, "GLX -- off screen\n");
+
+/* Get width and height from Viewport */
+    glGetIntegerv(GL_VIEWPORT, tmp);
+    l=tmp[0];
+    r=tmp[0]+tmp[2]-1;
+    b=tmp[1];
+    t=tmp[1]+tmp[3]-1;
+    width = r - l + 1;
+    height = t - b + 1;
+
+dpy = glXGetCurrentDisplay();
+
+/* Get current display context */
+ctx = glXGetCurrentContext();
+if (ctx == NULL)
+	fprintf(stderr, "Unable to get current context\n");
+
+scr = DefaultScreen(dpy);
+root = RootWindow(dpy, scr);
+
+xdraw = glXGetCurrentDrawable();
+if (xdraw == None)
+	fprintf(stderr, "Unable to get current GLX drawable\n");
+
+/* Select off screen config */
+fprintf(stderr, "GLX -- glXChooseFBConfig\n");
+fbc = glXChooseFBConfig(dpy, scr, 0, &elements);
+if (fbc == NULL)
+	fprintf(stderr, "ERROR -- FBConfig NULL return\n");
+
+/* Get visual info from screen config */
+vi = glXGetVisualFromFBConfig(dpy, fbc[0]);
+
+pbuf_cnt = 0;
+pbuf_attrib[pbuf_cnt++] = GLX_PBUFFER_WIDTH;
+pbuf_attrib[pbuf_cnt++] = width;
+pbuf_attrib[pbuf_cnt++] = GLX_PBUFFER_HEIGHT;
+pbuf_attrib[pbuf_cnt++] = height;
+
+/* Create off screen pbuffer to draw to */
+fprintf(stderr, "GLX -- glXCreatePbuffer %d\n", elements);
+pbuffer = glXCreatePbuffer (dpy, fbc[0], pbuf_attrib);
+
+/* make the created context current */
+glXMakeContextCurrent(dpy, pbuffer, pbuffer, ctx);
+
+return ;
+
+}
+#endif
+
+/************************************************************************/
+#ifdef OS_RENDER
+void gsd_destroy_context(void)
+{
+/* Need to destroy off-screen context and restore (??)
+ * togl on-screen widget -- Change below
+ */
+	fprintf(stderr, "GLX -- destroy pbuffer\n");
+	glXDestroyPbuffer(dpy, pbuffer);
+	glXMakeContextCurrent(dpy, xdraw, xdraw, ctx);
+
+return;
+}
+#endif
+
+
 
 /************************************************************************/
 /* Mostly for flushing drawing commands accross a network - glFlush
@@ -308,7 +408,6 @@ void gsd_bgnline(void)
 {
     /* OGLXXX for multiple, independent line segments: use GL_LINES */
     glBegin(GL_LINE_STRIP);
-    
     return;
 }
 
@@ -366,7 +465,6 @@ void gsd_backbuffer(int bool)
 {
     /* OGLXXX backbuffer: other possibilities include GL_FRONT_AND_BACK */
     glDrawBuffer((bool) ? GL_BACK : GL_FRONT);
-    
     return;
 }
 
@@ -412,6 +510,46 @@ void gsd_translate(float dx, float dy, float dz)
     glTranslatef(dx, dy, dz);
     
     return;
+}
+
+/************************************************************************/
+void gsd_getwindow(int *window, int *viewport, double *modelMatrix, double *projMatrix )
+{
+ gsd_pushmatrix();
+ gsd_do_scale(1);
+
+ glGetDoublev(GL_MODELVIEW_MATRIX, modelMatrix);
+ glGetDoublev(GL_PROJECTION_MATRIX, projMatrix);
+ glGetIntegerv(GL_VIEWPORT, viewport);
+ gsd_popmatrix();
+
+ window[0] = viewport[1]+viewport[3]+border;
+ window[1] = viewport[1]-border;
+ window[2] = viewport[0]-border;
+ window[3] = viewport[0]+viewport[2]+border;
+
+ return;
+
+}
+
+/************************************************************************/
+int gsd_checkpoint (float pt[4], 
+     int window[4], 
+     int viewport[4], 
+     double modelMatrix[16], 
+     double projMatrix[16] )
+{
+ GLdouble fx, fy, fz;
+
+ gluProject((GLdouble)pt[X], (GLdouble)pt[Y],(GLdouble)pt[Z],
+		 modelMatrix, projMatrix, viewport, &fx, &fy, &fz);
+
+  if(fx < window[2] || fx > window[3] 
+  || fy < window[1] || fy > window[0] ) 
+	  return 1;
+	  else
+	  return 0;
+
 }
 
 /************************************************************************/
@@ -703,7 +841,7 @@ int gsd_getimage(unsigned long **pixbuf, unsigned int *xsize,
     {
 	return (0);
     }
-    
+   
     glReadBuffer(GL_FRONT);
     
     /* OGLXXX lrectread: see man page for glReadPixels */
