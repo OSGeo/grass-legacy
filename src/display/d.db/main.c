@@ -28,6 +28,9 @@ int main (int argc, char **argv)
 	dbValue  *value;   
 	double   coor[2];
 
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
+
 	module = G_define_module();
 	module->description =
 		"Displays sites from DB table in the active "
@@ -80,9 +83,6 @@ int main (int argc, char **argv)
 	par.icon->answer      = "x" ;
 	par.icon->options     = "x,diamond,box,+" ;
 	par.icon->description = "Specify the type of the icon" ;
-
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
 
 	/* Check command line */
 
