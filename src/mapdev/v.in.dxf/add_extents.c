@@ -78,7 +78,7 @@ dxf_add_extents ()
 	if(!ascii_flag->answer) /* FOR USE IN BINARY FILE */
 	{
 	    Vect_copy_head_data (&dxf_head, &(closed_layers[count].Map->head));
-	    Vect_close (layers[count].Map);
+	    Vect_close (closed_layers[count].Map);
 	}
 	else /*FOR USE IN ASCII FILE */
 	{
