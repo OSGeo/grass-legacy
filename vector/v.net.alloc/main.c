@@ -178,8 +178,10 @@ int main(int argc, char **argv)
 	    ret = Vect_net_shortest_path ( &Map, node1, node2, NULL, &cost);
 	    if ( ret == -1 ) { continue; } /* node unreachable */
 
-	    /* We must add centre node costs (not calculated by Vect_net_shortest_path() ) */
-	    cost += n1cost;
+	    /* We must add centre node costs (not calculated by Vect_net_shortest_path() ), but
+	     *  only if centre and node are not identical, because at the end node cost is add later */
+	    if ( node1 != node2 ) cost += n1cost;
+
 	    G_debug ( 5, "Arc nodes: %d %d cost: %f (x old cent: %d old cost %f", node1, node2, cost, 
 		                                Nodes[node2].centre, Nodes[node2].cost);
 	    if ( Nodes[node2].centre == -1 || cost < Nodes[node2].cost ) { 
