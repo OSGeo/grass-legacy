@@ -1,0 +1,154 @@
+I_add_covariances	add_cov.c	/^I_add_covariances (n1, n2, m1a, m1b, m2a, m2b, cov/
+I_add_file_to_group_ref	group.c	/^I_add_file_to_group_ref (name, mapset, ref)$/
+I_alloc_double2	alloc.c	/^I_alloc_double2 (a,b)$/
+I_alloc_double3	alloc.c	/^I_alloc_double3 (a,b,c)$/
+I_alloc_int	alloc.c	/^I_alloc_int(a)$/
+I_alloc_int2	alloc.c	/^I_alloc_int2 (a,b)$/
+I_ask	ask.c	/^I_ask (prompt, answer, nullok)$/
+I_ask_bands	ask_bands.c	/^I_ask_bands (nbands)$/
+I_ask_group_any	ask_group.c	/^I_ask_group_any (prompt,group)$/
+I_ask_group_new	ask_group.c	/^I_ask_group_new (prompt, group)$/
+I_ask_group_old	ask_group.c	/^I_ask_group_old (prompt,group)$/
+I_ask_ref_colors	ask_colors.c	/^I_ask_ref_colors (title, ref)$/
+I_ask_signature_file_any	sigfile.c	/^I_ask_signature_file_any (prompt, group, subgroup,/
+I_ask_signature_file_old	sigfile.c	/^I_ask_signature_file_old (prompt, group, subgroup,/
+I_ask_subgroup_new	ask_subgrp.c	/^I_ask_subgroup_new (prompt, group, subgroup)$/
+I_ask_subgroup_old	ask_subgrp.c	/^I_ask_subgroup_old (prompt,group,subgroup)$/
+I_bandname	ask_bands.c	/^I_bandname (n)$/
+I_bandname_prefix	ask_bands.c	/^I_bandname_prefix()$/
+I_clear_tape_info	tape_info.c	/^I_clear_tape_info (t)$/
+I_close_band	band_io.c	/^I_close_band (fd, tape_info, band)$/
+I_close_image	image.c	/^I_close_image (Ref)$/
+I_cluster_assign	c_assign.c	/^I_cluster_assign (C,interrupted)$/
+I_cluster_begin	c_begin.c	/^I_cluster_begin (C,nbands)$/
+I_cluster_begin_point_set	c_point.c	/^I_cluster_begin_point_set (C, n)$/
+I_cluster_clear	c_clear.c	/^I_cluster_clear (C)$/
+I_cluster_distinct	c_distinct.c	/^I_cluster_distinct (C,separation)$/
+I_cluster_end_point_set	c_point.c	/^I_cluster_end_point_set (C, n)$/
+I_cluster_exec	c_exec.c	/^I_cluster_exec (C, maxclass, iterations, convergen/
+I_cluster_exec_allocate	c_execmem.c	/^I_cluster_exec_allocate(C)$/
+I_cluster_exec_free	c_execmem.c	/^I_cluster_exec_free (C)$/
+I_cluster_means	c_means.c	/^I_cluster_means (C)$/
+I_cluster_merge	c_merge.c	/^I_cluster_merge (C)$/
+I_cluster_nclasses	c_nclasses.c	/^I_cluster_nclasses (C,minsize)$/
+I_cluster_point	c_point.c	/^I_cluster_point (C,x)$/
+I_cluster_point_part	c_point.c	/^I_cluster_point_part (C, x, band, n)$/
+I_cluster_reassign	c_reassign.c	/^I_cluster_reassign (C,interrupted)$/
+I_cluster_reclass	c_reclass.c	/^I_cluster_reclass(C,minsize)$/
+I_cluster_separation	c_sep.c	/^I_cluster_separation (C,class1,class2)$/
+I_cluster_signatures	c_sig.c	/^I_cluster_signatures (C)$/
+I_cluster_sum2	c_sum2.c	/^I_cluster_sum2 (C)$/
+I_compute_georef_equations	georef.c	/^I_compute_georef_equations (cp, E12, N12, E21, N21/
+I_edit_tape_info	tape_info.c	/^I_edit_tape_info (t)$/
+I_find_group	find.c	/^I_find_group (group)$/
+I_find_group_file	find.c	/^I_find_group_file (group, file)$/
+I_find_subgroup	find.c	/^I_find_subgroup (group, subgroup)$/
+I_find_subgroup_file	find.c	/^I_find_subgroup_file (group, subgroup, file)$/
+I_fopen_group_file_append	fopen.c	/^I_fopen_group_file_append (group, file)$/
+I_fopen_group_file_new	fopen.c	/^I_fopen_group_file_new (group, file)$/
+I_fopen_group_file_old	fopen.c	/^I_fopen_group_file_old (group, file)$/
+I_fopen_group_ref_new	ref.c	/^I_fopen_group_ref_new (group)$/
+I_fopen_group_ref_old	ref.c	/^I_fopen_group_ref_old (group)$/
+I_fopen_signature_file_new	sigfile.c	/^I_fopen_signature_file_new (group, subgroup, name)/
+I_fopen_signature_file_old	sigfile.c	/^I_fopen_signature_file_old (group, subgroup, name)/
+I_fopen_subgroup_file_append	fopen.c	/^I_fopen_subgroup_file_append (group, subgroup, fil/
+I_fopen_subgroup_file_new	fopen.c	/^I_fopen_subgroup_file_new (group, subgroup, file)$/
+I_fopen_subgroup_file_old	fopen.c	/^I_fopen_subgroup_file_old (group, subgroup, file)$/
+I_fopen_subgroup_ref_new	ref.c	/^I_fopen_subgroup_ref_new (group,subgroup)$/
+I_fopen_subgroup_ref_old	ref.c	/^I_fopen_subgroup_ref_old (group,subgroup)$/
+I_free	alloc.c	/^I_free (b)$/
+I_free_double2	alloc.c	/^I_free_double2(x)$/
+I_free_double3	alloc.c	/^I_free_double3 (x)$/
+I_free_group_colors	colors.c	/^I_free_group_colors (ref)$/
+I_free_group_ref	group.c	/^I_free_group_ref (ref)$/
+I_free_int2	alloc.c	/^I_free_int2(x)$/
+I_free_signatures	sig.c	/^I_free_signatures (S)$/
+I_georef	georef.c	/^I_georef (e1, n1, e2, n2, E, N)$/
+I_get_control_points	points.c	/^I_get_control_points (group, cp)$/
+I_get_group	group.c	/^I_get_group (group)$/
+I_get_group_ref	group.c	/^I_get_group_ref (group, ref)$/
+I_get_group_title	title.c	/^I_get_group_title (group, title, n)$/
+I_get_histogram	histo.c	/^I_get_histogram (name, mapset, histogram)$/
+I_get_image_row	image.c	/^I_get_image_row (Ref, row)$/
+I_get_subgroup	group.c	/^I_get_subgroup (group, subgroup)$/
+I_get_subgroup_ref	group.c	/^I_get_subgroup_ref (group, subgroup, ref)$/
+I_get_target	target.c	/^I_get_target (group, location, mapset)$/
+I_get_to_eol	eol.c	/^I_get_to_eol (line,len,fd)$/
+I_grey_scale	grey.c	/^I_grey_scale (histo,colr)$/
+I_histo_eq	histo_eq.c	/^I_histo_eq (histo, map, min, max)$/
+I_histo_eq_blu	histo_eq.c	/^I_histo_eq_blu (histo, map)$/
+I_histo_eq_grn	histo_eq.c	/^I_histo_eq_grn (histo, map)$/
+I_histo_eq_red	histo_eq.c	/^I_histo_eq_red (histo, map)$/
+I_image_colors	image.c	/^I_image_colors (Ref, red_colors, grn_colors, blu_c/
+I_init_group_ref	group.c	/^I_init_group_ref (ref)$/
+I_init_ref_color_nums	group.c	/^I_init_ref_color_nums (ref)$/
+I_init_signatures	sig.c	/^I_init_signatures (S, nbands)$/
+I_list_groups	ls_groups.c	/^I_list_groups (full)$/
+I_list_subgroup	list_subgp.c	/^I_list_subgroup (group, subgroup, ref, fd)$/
+I_list_subgroups	ls_groups.c	/^I_list_subgroups (group, full)$/
+I_location_info	loc_info.c	/^I_location_info(buf,middle)$/
+I_malloc	alloc.c	/^I_malloc(n)$/
+I_must_be_imagery_projection	proj.c	/^I_must_be_imagery_projection()$/
+I_new_control_point	points.c	/^I_new_control_point (cp, e1, n1, e2, n2, status)$/
+I_new_signature	sig.c	/^I_new_signature (S)$/
+I_number_of_group_ref_files	nfiles.c	/^I_number_of_group_ref_files (group)$/
+I_number_of_subgroup_ref_files	nfiles.c	/^I_number_of_subgroup_ref_files (group, subgroup)$/
+I_open_band_new	band_io.c	/^I_open_band_new (band)$/
+I_open_group_file_new	open.c	/^I_open_group_file_new (group, file)$/
+I_open_group_file_old	open.c	/^I_open_group_file_old (group, file)$/
+I_open_image	image.c	/^I_open_image (Ref)$/
+I_percent	percent.c	/^I_percent (n,d,s)$/
+I_put_control_points	points.c	/^I_put_control_points (group, cp)$/
+I_put_group	group.c	/^I_put_group (group)$/
+I_put_group_ref	group.c	/^I_put_group_ref (group, ref)$/
+I_put_group_title	title.c	/^I_put_group_title (group, title)$/
+I_put_subgroup	group.c	/^I_put_subgroup (group, subgroup)$/
+I_put_subgroup_ref	group.c	/^I_put_subgroup_ref (group, subgroup, ref)$/
+I_put_target	target.c	/^I_put_target (group, location, mapset)$/
+I_read_control_points	points.c	/^I_read_control_points (fd, cp)$/
+I_read_group_blu_colors	colors.c	/^I_read_group_blu_colors (group, ref)$/
+I_read_group_colors	colors.c	/^I_read_group_colors (group, ref)$/
+I_read_group_grn_colors	colors.c	/^I_read_group_grn_colors (group, ref)$/
+I_read_group_red_colors	colors.c	/^I_read_group_red_colors (group, ref)$/
+I_read_one_signature	sig.c	/^I_read_one_signature (fd, S)$/
+I_read_signatures	sig.c	/^I_read_signatures (fd, S)$/
+I_realloc	alloc.c	/^I_realloc(b,n)$/
+I_set_window	set_window.c	/^I_set_window (firstrow, lastrow, firstcol, lastcol/
+I_stddev	var.c	/^I_stddev (sum, sum2, n)$/
+I_tape_advance	advance.c	/^I_tape_advance(fd,n)$/
+I_transfer_group_ref_file	group.c	/^I_transfer_group_ref_file (ref2, n, ref1)$/
+I_translate_image_data	image.c	/^I_translate_image_data (c, buf, min, max, index, n/
+I_v_exec	v_exec.c	/^I_v_exec()$/
+I_variance	var.c	/^I_variance (sum, sum2, n)$/
+I_vask_group_new	vask_group.c	/^I_vask_group_new (info, group, cancel_msg)$/
+I_vask_group_old	vask_group.c	/^I_vask_group_old (info, group, cancel_msg)$/
+I_vask_subgroup_new	vask_group.c	/^I_vask_subgroup_new (info, group, subgroup, both, /
+I_vask_subgroup_old	vask_group.c	/^I_vask_subgroup_old (info, group, subgroup, both, /
+I_write_control_points	points.c	/^I_write_control_points (fd, cp)$/
+I_write_group_blu_colors	colors.c	/^I_write_group_blu_colors (group, ref)$/
+I_write_group_colors	colors.c	/^I_write_group_colors (group, ref)$/
+I_write_group_grn_colors	colors.c	/^I_write_group_grn_colors (group, ref)$/
+I_write_group_red_colors	colors.c	/^I_write_group_red_colors (group, ref)$/
+I_write_signatures	sig.c	/^I_write_signatures (fd, S)$/
+all_zero	c_point.c	/^all_zero (C,i)$/
+ask	vask_group.c	/^ask (info, group, subgroup, type, both, cancel_msg/
+ask_bandname_prefix	ask_bands.c	/^ask_bandname_prefix (num, nbands)$/
+ask_group	ask_group.c	/^ask_group (prompt, group)$/
+ask_subgroup	ask_subgrp.c	/^ask_subgroup (prompt, group, subgroup)$/
+build_color	image.c	/^build_color (min, max, flag, table, index, colors)/
+build_index	colors.c	/^build_index (min, max)$/
+catch	georef.c	/^catch(n)$/
+determinant	georef.c	/^determinant (a,b,c,d,e,f,g,h,i)$/
+error	fopen.c	/^static error (group,file,msga,msgb)$/
+error2	fopen.c	/^static error2 (group,subgroup,file,msga,msgb)$/
+extend	c_point.c	/^extend(C,n)$/
+get_colors	colors.c	/^get_colors (group, file, name, mapset, min, max)$/
+get_ref	group.c	/^get_ref (group, subgroup, ref)$/
+lister	sigfile.c	/^static lister (name, mapset, buf)$/
+nfiles	nfiles.c	/^nfiles (group, subgroup)$/
+prefix_ok	ask_bands.c	/^prefix_ok (num,nbands)$/
+put_ref	group.c	/^put_ref (group, subgroup, ref)$/
+read_color	colors.c	/^read_color (group, file, name, mapset, min, max)$/
+set_color	group.c	/^set_color (name, mapset, color, ref)$/
+show_color	ask_colors.c	/^show_color (label, n, ref)$/
+write_colors	colors.c	/^write_colors (group, file, name, mapset, table, mi/
