@@ -1,7 +1,7 @@
 /* ask_format.c */
 int ask_format(char *, struct Cell_head *, long);
 /* check.c */
-int check_stats(char *);
+int check_stats(char *, int);
 /* check_new.c */
 int check_new_compressed(struct Cell_head *, int);
 /* check_old.c */
