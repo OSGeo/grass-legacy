@@ -61,7 +61,7 @@ grass_sites="grass.sites.main grass.sites.mirror"
 #red,orange,yellow,green,blue,indigo,white,black,brown,magenta,gray,grey
 #     bug: aqua, indigo don't seem to work
 #first two colors and blue are reserved:
-map_mirror_colors="green orange white brown blue yellow white magenta red white yellow magenta red white yellow magenta red"
+map_mirror_colors="green orange white brown red white magenta yellow white magenta red white yellow magenta red white yellow magenta red"
 
 #write this variable to array:
 set $map_mirror_colors
@@ -110,7 +110,7 @@ coast=`grep -v "UNKNOWN"  $LOCATION/dig_cats/$world_vec | tail +5 | \
 g.remove vect=temp__coast   >$out 2>&1
 v.extract -d type=area input=$world_vec output=temp__coast list="$coast" \
     new=2     >$out 2>&1
-d.area map=temp__coast linecolor=gray fillcolor=gray  >$out 2>&1
+d.vect.area map=temp__coast linecolor=gray fillcolor=gray  >$out 2>&1
 g.remove vect=temp__coast    >$out 2>&1
 
 # label the image, be sure to change colors & names to reflect site categories
@@ -160,13 +160,13 @@ do
     # draw the image areas
     d.mon select=CELL  >$out 2>&1
     sleep 2
-    d.area map=temp__vec linecolor=$areacolor fillcolor=$areacolor  >$out 2>&1
+    d.vect.area map=temp__vec linecolor=$areacolor fillcolor=$areacolor  >$out 2>&1
 
     # draw the htmlmap areas
     d.mon select=HTMLMAP     >$out 2>&1
     sleep 1
     echo $url | tr -d "\012" | d.text  >$out 2>&1
-    d.area map=temp__vec     >$out 2>&1
+    d.vect.area map=temp__vec     >$out 2>&1
     g.remove vect=temp__vec  >$out 2>&1
  
   done
