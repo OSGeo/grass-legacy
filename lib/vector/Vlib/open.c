@@ -87,9 +87,9 @@ Vect_set_open_level (int level)
 }
 
 /*
-   ** returns Level of openness.   [ 1, 2, (3) ]
-   ** and -1 on error
- */
+*  Returns Level of openness.   [ 1, 2, (3) ] or -1 for error.
+*  In case of error, the functions respect fatal error settings.
+*/
 int
 Vect_open_old (
 		struct Map_info *Map,
@@ -105,6 +105,7 @@ Vect_open_old (
       
   level_request = Open_level;
   Open_level = 0;
+  Vect__init_head (Map);
   
   if (G__name_is_fully_qualified (name, xname, xmapset)) {
       sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, xname);
@@ -155,17 +156,27 @@ Vect_open_old (
 	  }
   }
 
-  if ( level >= 1 ) {
-      if ( (Vect__read_head (Map)) != GRASS_OK ) return (-1);
-      Map->open = VECT_OPEN_CODE;
-      Map->level = level;
-      Map->mode = MODE_READ;
-      Map->Constraint_region_flag = 0;
-      Map->Constraint_type_flag = 0;
-      G_debug (1, "Vect_open_old(): vector opened on level %d", level);
+  if ( level >= 1 && Vect__read_head (Map) == GRASS_OK ) {
+	  Map->open = VECT_OPEN_CODE;
+	  Map->level = level;
+	  Map->mode = MODE_READ;
+	  Map->Constraint_region_flag = 0;
+	  Map->Constraint_type_flag = 0;
+	  G_debug (1, "Vect_open_old(): vector opened on level %d", level);
   } else {
       level = -1;
       G_debug (1, "Vect_open_old(): vector was not opened");
+      switch ( Vect_get_fatal_error () ) {
+          case GV_FATAL_EXIT:
+              G_fatal_error ( "Cannot open old vector %s", Vect_get_full_name(Map) ); 
+	      break;
+          case GV_FATAL_PRINT:
+              fprintf(stderr, "ERROR: Cannot open old vector %s\n", Vect_get_full_name(Map) ); 
+	      break;
+          case GV_FATAL_RETURN:
+	      break;
+      }
+      Vect_set_fatal_error (GV_FATAL_EXIT);
   }
       
   return (level);
@@ -184,6 +195,11 @@ Vect_open_new (
     char buf[200];
     FILE *fp;
     
+    Vect__init_head (Map);
+
+    Map->name = G_store (name);
+    Map->mapset = G_store ( G_mapset() );
+    
     format = 0;
     sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, name);
     fp = G_fopen_old (buf, GRASS_VECT_FRMT_ELEMENT, G_mapset());
@@ -197,8 +213,21 @@ Vect_open_new (
     }
     Map->format = format;
     
-    if (0 > (*Open_new_array[format][1]) (Map, name, with_z))
-        return -1;
+    if (0 > (*Open_new_array[format][1]) (Map, name, with_z)) {
+	  switch ( Vect_get_fatal_error () ) {
+	      case GV_FATAL_EXIT:
+		  G_fatal_error ( "Cannot open new vector %s", Vect_get_full_name(Map) ); 
+		  break;
+	      case GV_FATAL_PRINT:
+		  fprintf(stderr, "ERROR: Cannot open new vector %s\n", Vect_get_full_name(Map) ); 
+		  return (-1);
+		  break;
+	      case GV_FATAL_RETURN:
+		  return (-1);
+		  break;
+	  }
+	  Vect_set_fatal_error (GV_FATAL_EXIT);
+    }
 
     Open_level = 0;
     return 1;

@@ -28,63 +28,41 @@
  */
 
 int 
-Vect__init_head (struct dig_head *head)
+Vect__init_head (struct Map_info *Map)
 {
-  head->organization[0] = 0;
-  head->date[0] = 0;
-  head->your_name[0] = 0;
-  head->map_name[0] = 0;
-  head->source_date[0] = 0;
+    Map->head.organization = NULL; 
+    Vect_set_organization ( Map, "" );
+    Map->head.date = NULL;
+    Vect_set_date ( Map, "" );
+    Map->head.your_name = NULL;
+    Vect_set_person ( Map, "" );
+    Map->head.map_name = NULL;
+    Vect_set_map_name ( Map, "" );
+    Map->head.source_date = NULL;
+    Vect_set_map_date ( Map, "" );
+    Map->head.line_3 = NULL;
+    Vect_set_comment ( Map, "" );
+    
+    Vect_set_scale ( Map, 1 );
+    Vect_set_zone ( Map, 0 );
+    Vect_set_thresh ( Map, 0.0 );
 
-  head->orig_scale = 0;;
-  head->line_3[0] = 0;
-  head->plani_zone = 0;
-  /* head->W = head->E = head->S = head->N = 0; */
-  head->digit_thresh = 0;
-  head->map_thresh = 0;
-
-  /* portability stuff */
-  /* now set only by V_open_new/old() */
-  /*
-  head->Version_Major = 4;
-  head->Version_Minor = 0;
-  head->Back_Major = 4;
-  head->Back_Minor = 0;
-  */
-  /*
-  head->byte_order= 0;
-  head->dbl_quick = 0;
-  head->flt_quick = 0;
-  head->lng_quick = 0;
-  head->shrt_quick = 0;
-  */
-  
-  return 0;
+    return 0;
 }
 
 int 
-Vect_copy_head_data (struct dig_head *from, struct dig_head *to)
+Vect_copy_head_data (struct Map_info *from, struct Map_info *to)
 {
-  strncpy (to->organization, from->organization, DIG_ORGAN_LEN);
-  strncpy (to->date, from->date, DIG_DATE_LEN);
-  strncpy (to->your_name, from->your_name, DIG_YOUR_NAME_LEN);
-  strncpy (to->map_name, from->map_name, DIG_MAP_NAME_LEN);
-  strncpy (to->source_date, from->source_date, DIG_SOURCE_DATE_LEN);
-
-  strncpy (to->line_3, from->line_3, DIG_LINE_3_LEN);
-
-  to->orig_scale = from->orig_scale;
-  to->plani_zone = from->plani_zone;
-
-  /*
-  to->W = from->W;
-  to->E = from->E;
-  to->S = from->S;
-  to->N = from->N;
-  */
-
-  to->digit_thresh = from->digit_thresh;
-  to->map_thresh = from->map_thresh;
-
-  return 0;
+    Vect_set_organization ( to, Vect_get_organization(from) );
+    Vect_set_date ( to, Vect_get_date(from) );
+    Vect_set_person ( to, Vect_get_person(from) );
+    Vect_set_map_name ( to, Vect_get_map_name(from) );
+    Vect_set_map_date ( to, Vect_get_map_date(from) );
+    Vect_set_comment ( to, Vect_get_comment(from) );
+    
+    Vect_set_scale ( to, Vect_get_scale(from) );
+    Vect_set_zone ( to, Vect_get_zone(from) );
+    Vect_set_thresh ( to, Vect_get_thresh(from) );
+  
+    return 0;
 }
