@@ -1,0 +1,10 @@
+interface_build {
+    {d.histogram} 0
+    {Displays a histogram in the form of a pie or bar chart for a raster file.}
+    {entry map {Raster map, required:} 0 raster}
+    {entry color {Color for axis and text [white]:} 0 color}
+    {checkbox style {Bar chart [default].} "" bar}
+    {checkbox style {Pie chart.} "" pie}
+    {checkbox -z {Display zero-data information.} "" -z}
+    {checkbox -q {Gather the histogram quietly.} "" -q}
+}
