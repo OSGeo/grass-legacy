@@ -12,6 +12,7 @@ char **argv ;
 	char buff[128] ;
 	char msg[200];
 	char window_name[64] ;
+	char *D_color_list();
 	double east, north;
 	int i ;
 	int t, b, l, r ;
@@ -30,7 +31,7 @@ char **argv ;
 	opt1->type       = TYPE_STRING ;
 	opt1->required   = NO ;
 	opt1->answer     = "gray" ;
-	opt1->options="red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,black";
+	opt1->options    = D_color_list();
 	opt1->description= "Sets the current color to that stated" ;
 
 	opt2 = G_define_option() ;
