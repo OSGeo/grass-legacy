@@ -1,4 +1,4 @@
-$Id: SUBMITTING,v 1.25 2002-09-06 08:32:16 markus Exp $
+$Id: SUBMITTING,v 1.26 2002-12-04 14:16:05 markus Exp $
 
 NOTE: Please improve this list!
 
@@ -7,11 +7,12 @@ Dear (new) GRASS Developer,
 When submitting to GRASS CVS repositiory, please take
 care of following rules:
 
-1.  Get the latest GRASS 5 Programmer's Manual here:
+1.  Get and read the GRASS 5 Programmer's Manual here:
     http://grass.itc.it/grassdevel.html#prog
 
-    or (better) grab it from GRASS CVS server (Latex):
+    or (better) grab the latest version from GRASS CVS server (Latex):
     	cvs -z3 co progmangrass50
+        cd progmangrass50 ; make pdf
 
 2.  Use the directory structure to place your module appropriately into
     the source tree
@@ -44,7 +45,7 @@ care of following rules:
 *   	    	be used. Note that most linked list functionality (add,
 *   	    	remove, get) is supported, but their is no sorting
 *   	    	functionality.
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
+* COPYRIGHT:    (C) 2002 by the GRASS Development Team
 *
 *               This program is free software under the GNU General Public
 *   	    	License (>=v2). Read the file COPYING that comes with GRASS
@@ -161,13 +162,15 @@ care of following rules:
 	OFILES = linegraph.o
 
 	LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(DATETIMELIB)
+	DEPLIB=$(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB) $(DEPDATETIMELIB)
 
-	$(BIN_MAIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(BIN_MAIN_CMD)/$(PGM): $(OFILES) $(DEPLIB)
 		$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-	$(RASTERLIB): #
-	$(DISPLAYLIB): #
-	$(GISLIB): #
+	$(DEPRASTERLIB): #
+	$(DEPDISPLAYLIB): #
+	$(DEPGISLIB): #
+
 	linegraph.o:    linegraph.h
     --- snap ----
 
@@ -262,13 +265,21 @@ care of following rules:
     All variables are described in
     html/env_vars.html
 
-25. Tell the other developers about the new code using the following e-mail:
+25. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
+    You can re-check before submission with 'cvs diff':
+
+    Either unified ("diff -u") or context ("diff -c") format. "Plain"
+    diffs (the default format) are risky, because they will apply without
+    warning to code which has been substantially changed; they are also
+    harder to read than unified or context diffs.
+
+26. Tell the other developers about the new code using the following e-mail:
     grass5@grass.itc.it
  
     To subscribe to this mailing list, see
     http://grass.itc.it/grassdevel.html
 
-26. In case of questions feel free to contact the developers at the above
+27. In case of questions feel free to contact the developers at the above
     mailing list.
     http://grass.itc.it/grassdevel.html#submission
     
