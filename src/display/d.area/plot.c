@@ -27,14 +27,14 @@ typedef struct _ScreenPoint {
 } SCREENPOINT;
 
 typedef struct {
-    int count;
-    SCREENPOINT *entry;
+    int count, _alloced;
+    SCREENPOINT *entry, *_array;
 } SCREENPOLY;
 
 
 /* Allocate memory for new SCREENPOLY type and intialize */
 static SCREENPOLY *
-ScreenPolyNew (void)
+ScreenPolyNew (int sz)
 {
     SCREENPOLY *new = (SCREENPOLY *) G_calloc (sizeof (SCREENPOLY), 1);
     if (new == NULL)
@@ -42,6 +42,14 @@ ScreenPolyNew (void)
 
     new->count = 0;
     new->entry = NULL;
+
+    new->_array = (SCREENPOINT *) G_calloc (sizeof (SCREENPOINT), sz);
+    if (new->_array == NULL)
+    {
+        G_free (new);
+        return NULL;
+    }
+    new->_alloced = sz;
 
     return new;
 }
@@ -59,11 +67,20 @@ ScreenPolyAddEntry (SCREENPOLY *sp, int x, int y)
 
     if (sp == NULL)
         return -1;
-    
-    if (NULL == (pnt = (SCREENPOINT *) 
-                G_calloc (sizeof (SCREENPOINT), 1)))
-        return -1;
 
+    /* Realloc if needed */
+    if (sp->count == sp->_alloced)
+    {
+        pnt = (SCREENPOINT *) G_realloc (sp->_array, 
+                    (sp->_alloced + 10) * (sizeof (SCREENPOINT)));
+        if (pnt == NULL)
+            G_fatal_error ("[%s:%d] Memory Exhausted!", __FILE__, __LINE__);
+        sp->_array = pnt;
+        sp->_alloced += 10;
+    }
+    
+
+    pnt = &sp->_array[sp->count];
     pnt->x = x;
     pnt->y = y;
     
@@ -77,6 +94,7 @@ ScreenPolyAddEntry (SCREENPOLY *sp, int x, int y)
     }
     else if (sp->count == 1)
     {
+        /* Special Case */
         pnt->prev = sp->entry;
         pnt->next = sp->entry;
         sp->entry->next = pnt;
@@ -89,7 +107,6 @@ ScreenPolyAddEntry (SCREENPOLY *sp, int x, int y)
         /* Weed out duplicate entries with no purpose */
         if (pnt->x == sp->entry->x && pnt->y == sp->entry->y)
         {
-            G_free (pnt);
             return 0;
         }
         after = sp->entry->next;
@@ -120,7 +137,6 @@ ScreenPolyRemoveEntry (SCREENPOLY *sp)
     {
         /* special case */
         sp->count--;
-        G_free (sp->entry);
         sp->entry = NULL;
     }
     else
@@ -130,7 +146,6 @@ ScreenPolyRemoveEntry (SCREENPOLY *sp)
         before->next = after;
         after->prev = before;
         sp->count--;
-        G_free (sp->entry);
         sp->entry = after;
     }
 
@@ -146,8 +161,7 @@ ScreenPolyDestroy (SCREENPOLY *sp)
     if (sp == NULL)
         return -1;
 
-    while (ScreenPolyRemoveEntry (sp) == 0)
-        ;
+    G_free (sp->_array);
 
     G_free (sp);
 
@@ -180,7 +194,7 @@ ScreenPolyCopy (SCREENPOLY *sp)
 
     if (sp == NULL)
         return NULL;
-    if (NULL == (cp = ScreenPolyNew()))
+    if (NULL == (cp = ScreenPolyNew(sp->count)))
         return NULL;
     
     pnt = sp->entry;
@@ -206,7 +220,7 @@ ScreenPolyMoveNearest (SCREENPOLY *a, SCREENPOLY *b)
     SCREENPOLY  *u, *v;
     SCREENPOINT *uPnt, *vPnt, *uSave, *vSave;
 
-    if (a == NULL || b == NULL || a->count < 1 || b->count < 1)
+    if (a == NULL || b == NULL || a->count < 2 || b->count < 2)
         return -1;
 
     if (a->count > b->count)
@@ -284,12 +298,12 @@ ScreenPolyMerge (SCREENPOLY *a, SCREENPOLY *b)
         return NULL;
 
     
-    if (a->count < 1)
+    if (a->count < 2)
     {
         /* Special case, just copy "a" */
         return ScreenPolyCopy (a);
     }
-    else if (b->count < 1)
+    else if (b->count < 2)
     {
         /* Special case, just copy "b" */
         return ScreenPolyCopy (b);
@@ -299,7 +313,8 @@ ScreenPolyMerge (SCREENPOLY *a, SCREENPOLY *b)
         /* Make sure polys are at nearest node points */
         ScreenPolyMoveNearest (a,b);
 
-        if (NULL == (new = ScreenPolyNew()))
+        /* Two extra points -- one on each ring */
+        if (NULL == (new = ScreenPolyNew(a->count + b->count + 2)))
             return NULL;
 
         /* Save branch points */
@@ -343,7 +358,8 @@ ScreenPolyToArrays (SCREENPOLY *sp, int **x, int **y)
     int i, *u, *v;
     SCREENPOINT *this;
     
-    if (sp == NULL || sp->count < 1)
+    /* line needs 2 points, poly needs 3 */
+    if (sp == NULL || sp->count < 2)
         return 0;
 
     this = sp->entry;
@@ -361,14 +377,6 @@ ScreenPolyToArrays (SCREENPOLY *sp, int **x, int **y)
         return -1;
     }
 
-    /* special case */
-    if (sp->count == 1)
-    {
-        **x = this->x;
-        **y = this->y;
-        return 1;
-    }
-    
     for (i = 0; i < sp->count ; i++)
     {
         u[i] = this->x;
@@ -408,6 +416,9 @@ int plot1 (char *name, char *mapset, struct line_pnts *Points)
     nlines = V2_num_areas(&Map);
     for (line = 1;line <= nlines; line++)
     {
+        /* Percentages */
+        G_percent (line, nlines, 5);
+
         dofill = V2_area_att (&Map, line); /* Returns 0 if area is unlabelled */
         /* Skip areas that we wont fill or draw outlines for */
         if (!dofill && linecolor <= 0)
@@ -433,7 +444,7 @@ int plot1 (char *name, char *mapset, struct line_pnts *Points)
 		continue;
 
         /* Get a SCREENPOLY type for the polygon line */
-        spLine = ScreenPolyNew();
+        spLine = ScreenPolyNew(Points->n_points);
 	for(i=0; i < Points->n_points; i++)
 	{
             /* Populate the SCREENPOLY type with screen coordinates */
@@ -459,7 +470,7 @@ int plot1 (char *name, char *mapset, struct line_pnts *Points)
                 {
                     Isle = Vect_new_line_struct();
                     Vect_get_isle_points (&Map, pa->isles[i], Isle);
-                    spIsle = ScreenPolyNew();
+                    spIsle = ScreenPolyNew(Isle->n_points);
                     for (j = 0; j < Isle->n_points; j++)
                         ScreenPolyAddEntry (
                                 spIsle, 
@@ -483,8 +494,6 @@ int plot1 (char *name, char *mapset, struct line_pnts *Points)
             if (i == 0)
             {
                 G_warning ("No points in point struct ??");
-                G_free (x_screen);
-                G_free (y_screen);
                 continue;
             }
             else if (i < 0)
@@ -503,15 +512,18 @@ int plot1 (char *name, char *mapset, struct line_pnts *Points)
 	if (linecolor > 0)
 	{
             i = ScreenPolyToArrays (spLine, &x_screen, &y_screen);   
-	    R_standard_color(linecolor);
-	    R_polyline_abs(x_screen,y_screen, i);
-            G_free(x_screen);
-            G_free(y_screen);
+            if (i > 0)
+            {
+                R_standard_color(linecolor);
+                R_polyline_abs(x_screen,y_screen, i);
+                G_free(x_screen);
+                G_free(y_screen);
+            }
+            else if (i < 0)
+                G_fatal_error ("Converting ScreenPoly to Arrays");
 	}
         ScreenPolyDestroy (spLine);
 
-        /* Percentages */
-        G_percent (line, nlines, 5);
     }
     /* do newline */
     fprintf (stderr, "\n");
