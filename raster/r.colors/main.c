@@ -170,7 +170,7 @@ int main (int argc, char *argv[])
     else{  /* use color from another map (cmap) */
 	cmapset = G_find_cell2 (cmap, "");
 	if (cmapset == NULL) {
-	    fprintf (stderr, "ERROR: %s - map not found\n", name);
+	    fprintf (stderr, "ERROR: %s - map not found\n", cmap);
 	    exit(1);
 	}
 	if(0 > G_read_colors (cmap, cmapset, &colors)){
