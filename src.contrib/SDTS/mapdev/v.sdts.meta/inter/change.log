@@ -1,0 +1,4 @@
+5-24-95  - formerly, NAS was inserted as default Horizontal Datum when
+			  "new" metadata commnad was invoked. this was a bug and was
+			  corrected.  now, horizontal datum field is cleared for "new"
+			  metadata. (dks)
