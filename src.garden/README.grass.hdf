@@ -1,0 +1,6 @@
+27.2.1998
+grass.hdf modules are moved to src.alpha -section
+
+../src.alpha/raster/r.hdf
+
+M. Neteler
