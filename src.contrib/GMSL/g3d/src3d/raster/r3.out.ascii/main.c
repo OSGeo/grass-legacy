@@ -163,7 +163,7 @@ void G3dToascii(FILE *fp, G3D_Region *region, int decim) {
   for (z = 0; z < depths; z++) 
     for (y = rows-1; y >= 0; y--) {    /* north to south */
       for (x = 0; x < cols; x++) {
-	G3d_getValueRegion (map, x, y, z, d1p, typeIntern);
+	G3d_getValue (map, x, y, z, d1p, typeIntern);
 	if (typeIntern == G3D_FLOAT) {
 	  if (G3d_isNullValueNum(f1p, G3D_FLOAT))
 	    fprintf (fp, "%s ", param.null_val->answer);
@@ -214,7 +214,8 @@ void main(int argc, char *argv[]) {
     G3d_fatalError("main: error opening g3d file");
 
   /* Figure out the region from the map */
-  G3d_getRegionStructMap(map, &region);
+/*  G3d_getRegionStructMap(map, &region);*/
+    G3d_getWindow(&region);
 
   /* Open the output ascii file */
   fp = openAscii(output, region);

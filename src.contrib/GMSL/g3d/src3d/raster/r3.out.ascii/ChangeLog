@@ -37,4 +37,7 @@ Thu Apr  4 11:45:37 1996  Mark Astley  <astley@gambit.gis.uiuc.edu (Mark Astley)
 	Roman's r3.in.ascii code with a few additional features.  No big
 	deal.
 
+Sat Apr 29 17:22:15 CEST 2000 Jaro Hofierka hofierka@geomodel.sk
 
+	main.c: r3.out.ascii2 outputs volume data due to actual region settings, 
+	not size of the map.
