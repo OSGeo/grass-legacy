@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.94 2000-12-06 12:43:01 markus Exp $
+$Id: BUGS,v 1.95 2000-12-07 18:07:32 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -219,7 +219,12 @@ p.map.new:
  Perhaps some carried sum exceeds the MAXINT value, or some such.  I have
  no more good ideas.
  Chris Cornuelle <bob@math.umn.edu> 
+  (being worked on by ?)
 
+r.fill.dir:
+  stops working somewhere in the map if DEM contains NULL holes
+  (reported by Markus Neteler)
+  (being worked on by ?)
 
 r.flow
   bugreport: Issuing the command (-M switch is the problem):
