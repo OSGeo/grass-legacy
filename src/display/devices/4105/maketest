@@ -1,0 +1,42 @@
+OFILES =  \
+	Color.o \
+	Color_table.o \
+	Cont_abs.o \
+	Cont_rel.o \
+	Draw_mode.o \
+	Erase.o \
+	Get_c_index.o \
+	Get_color.o \
+	Get_t_box.o \
+	Get_w_box.o \
+	Get_w_line.o \
+	Get_w_pnt.o \
+	Graph_Clse.o \
+	Graph_Set.o \
+	Linemod.o \
+	Move_abs.o \
+	Move_rel.o \
+	Plydts_abs.o \
+	Plydts_rel.o \
+	Plylne_abs.o \
+	Plylne_rel.o \
+	Polygn_abs.o \
+	Polygn_rel.o \
+	Raster.o \
+	Reset_clrs.o \
+	Returns.o \
+	Set_window.o \
+	Text.o \
+	Text_size.o \
+	Xraster.o \
+	chars.o \
+	clip.o \
+	connect.o \
+	encode.o \
+	text.o
+
+test: test.o $(OFILES)
+	cc -o test test.o $(OFILES) -lm
+
+test6: test6.o $(OFILES)
+	cc -o test6 test6.o $(OFILES) -lm
