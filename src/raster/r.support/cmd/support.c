@@ -30,6 +30,7 @@
 int main (int argc, char *argv[])
 {
     char *name;
+    char *inmapset;
     char rname[256], rmapset[256];
     struct Cell_head cellhd;
     int row, col, null_fd;
@@ -42,7 +43,7 @@ int main (int argc, char *argv[])
     struct GModule *module;
     struct Option *map;
     struct Flag *rangeflag, *colorflag;
-
+    
     G_gisinit (argv[0]);
 
     module = G_define_module();
@@ -70,6 +71,14 @@ int main (int argc, char *argv[])
             exit(1);
 
     name = map->answer;
+
+    inmapset = G_find_cell2 (name, "");
+    if (inmapset == NULL)
+    {
+     fprintf(stderr,"%s: raster map not found\n", name);
+     exit(1);
+    }
+                                
 
 /* cell header */
     cellhd_ok = G_get_cellhd (name, G_mapset(), &cellhd) >= 0 ;
