@@ -1,0 +1,70 @@
+###########################################################
+
+EXTRA_CFLAGS	= -I../include
+
+OPTRI_LIB = liboptri.a
+
+OBJ = 		 	novisual.o \
+				queue.o \
+				heap.o \
+				randtree.o \
+				stack.o \
+				timer.o \
+				bitvector.o \
+				pqe2qe.o \
+				graph.o \
+				quadedge.o \
+				triangulation.o \
+				site.o \
+	 			sos.regular.o \
+				planesweep.o \
+				flips.o \
+				delaunay.o \
+				persquadedge.o \
+				hdag.o \
+				regular.o \
+				edgeinsert.o \
+				heur.angle.o \
+				angle.o \
+				heur.slope.o \
+				slope.o \
+				heur.height.o \
+				height.o
+
+
+
+CFILES = 		 	novisual.c \
+				queue.c \
+				heap.c \
+				randtree.c \
+				stack.c \
+				timer.c \
+				bitvector.c \
+				pqe2qe.c \
+				graph.c \
+				quadedge.c \
+				triangulation.c \
+				site.c \
+	 			sos.regular.c \
+				planesweep.c \
+				flips.c \
+				delaunay.c \
+				persquadedge.c \
+				hdag.c \
+				regular.c \
+				edgeinsert.c \
+				heur.angle.c \
+				angle.c \
+				heur.slope.c \
+				slope.c \
+				heur.height.c \
+				height.c
+
+
+all: $(OPTRI_LIB)
+
+$(OPTRI_LIB): $(OBJ)
+	$(AR)
+
+
+
