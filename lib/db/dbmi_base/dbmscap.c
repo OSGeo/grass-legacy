@@ -101,7 +101,7 @@ db_read_dbmscap()
     int  line;
     */
     char   buf[1024];
-    char   dirpath[1024];
+    char   *dirpath;
     DIR    *dir;	
     struct dirent *ent;	
 
@@ -154,13 +154,14 @@ db_read_dbmscap()
 /* START OF NEW CODE FOR SEARCH IN $(GISBASE)/driver/db/ */
     
     /* opend db drivers directory */
-    snprintf (dirpath, 1023, "%s/driver/db/", G_gisbase());
+    G_asprintf (&dirpath, "%s/driver/db/", G_gisbase());
     dir = opendir(dirpath);
     if (dir == NULL)
     {
 	db_syserror (dirpath);
 	return (dbDbmscap *) NULL;
     }
+    G_free (dirpath);
     
     /* read all drivers */
     while ( ent = readdir (dir) )
@@ -173,9 +174,10 @@ db_read_dbmscap()
 	/* Remove '.exe' from name (windows extension) */
 	name = G_str_replace ( ent->d_name, ".exe", "" );
 	
-        snprintf (buf, 1023, "%s/driver/db/%s", G_gisbase(),ent->d_name);
-	add_entry (&list, name, buf, "");
-	free(name);
+        G_asprintf (&dirpath, "%s/driver/db/%s", G_gisbase(),ent->d_name);
+	add_entry (&list, name, dirpath, "");
+	G_free (name);
+	G_free (dirpath);
       }
     
     closedir (dir);
