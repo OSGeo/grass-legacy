@@ -463,7 +463,7 @@ struct symtab *ptr;
     char title[256];
 
     G_read_cats(result,G_mapset(),&cats);
-    sprintf(title,"Combined map. Created by binfer: %s",G_date());
+    sprintf(title,"Combined map. Created by r.binfer: %s",G_date());
     G_set_cats_title(title,&cats);
     sprintf(title,"no data");
     G_set_cat((CELL)i++,title,&cats);
@@ -478,7 +478,7 @@ struct symtab *ptr;
 
     while(local != (struct symtab *)0 ) {
         G_read_cats(local->name,G_mapset(),&cats);
-        sprintf(title,"Probability map. Created by binfer: %s",G_date());
+        sprintf(title,"Probability map. Created by r.binfer: %s",G_date());
         G_set_cats_title(title,&cats);
         sprintf(title,"no data");
         G_set_cat((CELL)0,title,&cats);
