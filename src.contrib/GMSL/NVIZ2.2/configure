@@ -3,7 +3,10 @@
 
 # Revisions:
 #  $Log: configure,v $
-#  Revision 1.9  2000-08-07 17:44:20  bernhard
+#  Revision 1.10  2000-09-05 09:14:02  markus
+#  libpg disabled if PostgreSQL not wanted
+#
+#  Revision 1.9  2000/08/07 17:44:20  bernhard
 #  Added /usr/X11R6/include/GL to search path for nviz configure.
 #  (Mesa 3.2 for Redhat6.2 installed it there.)
 #
@@ -59,6 +62,7 @@ set TOP=$cwd
 
 set OS=`uname -s`
 
+
 # Look for tcl, tk libraries
 if ("$OS" == "FreeBSD") then
 	set DLLIB=""
@@ -81,7 +85,7 @@ foreach k ($libs_reqd)
         switch ($j)
           case $k*:
             set found=-L$i
-            echo $i
+            echo "$k found in: $i"
             break
             breaksw
         endsw
@@ -111,14 +115,15 @@ else
 	set TK_LIB_PATH="$TK_LIB_PATH -ltk8.0 -ltcl8.0"
 endif
 
+
 # Look for tcl, tk includes
 if ("$OS" == "FreeBSD") then
 	set spath=(/usr/local/include /usr/local/include/tk8.0 /usr/local/include/tcl8.0 /usr/include /usr/X11R6/include/GL /usr/X11R6/include/X11)
 else
-	set spath=(/usr/local/include /usr/local/lib/tk8.0/include /usr/local/lib/tcl8.0/include /usr/include /usr/include/X11 /usr/include/gl /usr/X11R6/include /usr/X11R6/include/GL /usr/include/GL /usr/freeware/include)
+	set spath=(/usr/local/include /usr/local/lib/tk8.0/include /usr/local/lib/tcl8.0/include /usr/include /usr/include/X11 /usr/include/gl /usr/X11R6/include /usr/X11R6/include/GL /usr/include/GL /usr/freeware/include /usr/include/X11/GLw)
 endif
 set includes_reqd=(tk.h tcl.h gl.h X.h)
-set def_dirs=(/usr/local/include /usr/include /usr/include/X11 /usr/include/GL /usr/include/gl /usr/freeware/include)
+set def_dirs=(/usr/local/include /usr/include /usr/include/X11 /usr/include/GL /usr/include/gl /usr/freeware/include /usr/include/X11/GLw)
 set TK_INCLUDE_PATH=''
 set index=1
 foreach k ($includes_reqd)
@@ -130,7 +135,7 @@ foreach k ($includes_reqd)
         switch ($j)
           case $k:
             set found=-I$i
-            echo $i
+            echo "$k found in: $i"
             break
             breaksw
         endsw
@@ -177,6 +182,7 @@ endif
 
 # Check for PostgreSQL
 set PQ_OBJS=(openvect.o getCat.o buildInfxQry.o runInfxQry.o)
+set PQLIB=(-lpq)
 'cp' src/query_postgr_orig.c src/query_postgr.c
 'cp' scripts/panel_query_pg.tcl scripts/panel_query.tcl
 echo -n Do you want Postgres support \[y\/n\]:
@@ -184,6 +190,7 @@ set found=$<
 if ("$found" != "y") then
   echo -n Postgres support disabled.
   set PQ_OBJS=''
+  set PQLIB=''
   'rm' -rf src/query_postgr.c
   'rm' -rf src/scripts/panel_query.tcl
   'cp' src/query_postgr_dummy.c src/query_postgr.c
@@ -196,11 +203,13 @@ echo Creating src/Gmakefile...
 set TK_LIB_PATH=`echo "$TK_LIB_PATH" | sed 's/\//\\\//g'`
 set TK_INCLUDE_PATH=`echo "$TK_INCLUDE_PATH" | sed 's/\//\\\//g'`
 set PQ_OBJS=`echo "$PQ_OBJS" | sed 's/\//\\\//g'`
+set PQLIB=`echo "$PQLIB" | sed 's/\//\\\//g'`
 'rm' -rf src/Gmakefile
 sed -e "\
 s/TK_LIB_PATH=sed/TK_LIB_PATH=${TK_LIB_PATH}/g;\
 s/TK_INCLUDE_PATH=sed/TK_INCLUDE_PATH=${TK_INCLUDE_PATH}/g;\
 s/PQ_OBJS=sed/PQ_OBJS=${PQ_OBJS}/g;\
+s/PQLIB=sed/PQLIB=${PQLIB}/g;\
 s/NVWISH_VER=sed/NVWISH_VER=${NVWISH_VER}/g;\
 s/DLLIB=sed/DLLIB=${DLLIB}/g\
 " src/Gmakefile.in > src/Gmakefile
