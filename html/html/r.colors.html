@@ -32,6 +32,7 @@ of the following:
      grey          (grey scale)
      grey.eq       (histogram-equalized grey scale)
      grey.log      (histogram logarithmic transformed grey scale)
+     byg           (blue through yellow to green colors)
      byr           (blue through yellow to red colors)
      gyr           (green through yellow to red colors)
      rainbow       (rainbow color table)   
@@ -51,9 +52,10 @@ exist, or modified if it does.
 <p>If the user sets the <b>-q</b> flag, <i>r.colors</i> will run quietly,
 Without printing numerous messages on its progress to standard output.
 <p>Color table types <i>aspect, grey, grey.eq</i> (histogram-equalized grey
-scale), <i>byr</i> (blue-yellow-red), <i>gyr</i> (green-yellow-red), <i>rainbow, ramp, ryg</i>
-(red-yellow-green), <i>random</i>, and <i>wave</i> are pre-defined color
-tables that <i>r.colors</i> knows how to create without any further input.
+scale), <i>byg</i> (blue-yellow-green), <i>byr</i> (blue-yellow-red),
+<i>gyr</i> (green-yellow-red), <i>rainbow, ramp, ryg</i> (red-yellow-green),
+<i>random</i>, and <i>wave</i> are pre-defined color tables that
+<i>r.colors</i> knows how to create without any further input.
 
 <p>The <i>rules</i> color table type will cause <i>r.colors</i> to read
 color table specifications from standard input (stdin) and will build the

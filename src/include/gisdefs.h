@@ -310,6 +310,13 @@ int G_add_modular_raster_color_rule(void *, int, int, int, void *, int, int,
 int G_add_modular_color_rule(CELL, int, int, int, CELL, int, int, int,
     struct Colors *);
 
+/* color_byg.c */
+int G_make_byg_colors(struct Colors *, CELL, CELL);
+int G_make_byg_fp_colors(struct Colors *, DCELL, DCELL);
+int G_make_blue_yel_grn(struct Colors *, CELL, CELL);
+int G_add_byg_colors(struct Colors *, CELL, CELL);
+
+
 /* color_ryg.c */
 int G_make_ryg_colors(struct Colors *, CELL, CELL);
 int G_make_ryg_fp_colors(struct Colors *, DCELL, DCELL);
@@ -1003,6 +1010,7 @@ int G_open_support_old(char *, char *, char *);
 FILE *G_fopen_support_old(char *, char *, char *);
 int G_open_support_new(char *, char *, char *);
 FILE *G_fopen_support_new(char *, char *, char *);
+int G__getsome (FILE *, char *, int, int, int);
 
 /* svd.c */
 int G_svdcmp(double **, int, int, double *, double **);
