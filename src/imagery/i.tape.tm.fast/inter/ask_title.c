@@ -31,7 +31,7 @@ int ask_title (void)
       repeat = 0;
   } while (repeat);
 
-  snprintf (tmp, TITLE_SIZE, "%s", buf);
+  sprintf (tmp, "%s", buf);
   G_strip(tmp);
   title = tmp;
 
