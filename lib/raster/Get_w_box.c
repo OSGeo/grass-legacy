@@ -2,9 +2,22 @@
 #include "raster.h"
 #include "graph.h"
 
-/* button is set to: 1 - left, 2 - middle, 3 - right 
-*                    0 function was canceled by R_set_cancel (1) 
-*/                    
+/*!
+ * \brief get mouse location using a box
+ *
+ * Identical to <i>R_get_location_with_line</i> except a rubber-band box is
+ * used instead of a rubber-band line.
+ * <b>button</b> is set to: 1 - left, 2 - middle, 3 - right 
+ *
+ *  \param cx
+ *  \param cy
+ *  \param wx
+ *  \param wy
+ *  \param button
+ *  \return 0 function was canceled by R_set_cancel (1)
+ */
+
+
 int R_get_location_with_box(
 	int cx,int cy,
 	int *wx,int *wy,
