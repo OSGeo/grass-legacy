@@ -1,11 +1,20 @@
 #include "G3d.h"
+#include "config.h"
 
 #define TOGGLE(x) ((x) = (x) ? 0 : 1)
 
 #define MAIN
 #include <Xm/Xm.h>
 #include <Xm/Form.h>
-#include <GL/GLwMDrawA.h>    /* include file for GL drawing widget */
+
+#ifdef HAVE_GL_GLWMDRAWA_H
+#include <GL/GLwMDrawA.h> 
+#else
+#ifdef HAVE_X11_GLW_GLWMDRAWA_H
+#include <X11/GLw/GLwMDrawA.h> 
+#endif
+#endif
+
 #include "vizual.h"
 
 #include "kns_defines.h"
@@ -17,6 +26,11 @@
 #include <sys/time.h>
 #include <sys/wait.h>
 #include <ctype.h>
+
+#ifndef WAIT_ANY
+#define WAIT_ANY ((pid_t) -1)
+#endif
+
 void set_threshold_button(int i);
 char *check_get_any_dspname();
 void do__bbox (struct dspec *D_spec);
