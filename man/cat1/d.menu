@@ -1,7 +1,7 @@
 
 
 
-d.menu               GRASS Reference Manual                d.menu
+d.menu <main>        GRASS Reference Manual         <main> d.menu
 
 
 
@@ -60,14 +60,14 @@ DESCRIPTION
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-d.menu               GRASS Reference Manual                d.menu
+d.menu <main>        GRASS Reference Manual         <main> d.menu
 
 
 
@@ -126,14 +126,14 @@ d.menu               GRASS Reference Manual                d.menu
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
 
 
 
-d.menu               GRASS Reference Manual                d.menu
+d.menu <main>        GRASS Reference Manual         <main> d.menu
 
 
 
@@ -192,14 +192,14 @@ EXAMPLE
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
 
 
 
-d.menu               GRASS Reference Manual                d.menu
+d.menu <main>        GRASS Reference Manual         <main> d.menu
 
 
 
@@ -258,7 +258,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         4
+GRASS 4.1                U.S. Army CERL                         4
 
 
 
