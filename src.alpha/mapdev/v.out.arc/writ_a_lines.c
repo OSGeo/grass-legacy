@@ -1,5 +1,5 @@
-
 #include "digit.h"
+#include "gtoa.h"
 
 write_area_lines(Map, ascii)
     struct Map_info *Map;
@@ -39,7 +39,7 @@ write_area_lines(Map, ascii)
            xptr = Points.x;
 		   yptr = Points.y;
 		   while (Points.n_points--)
-			   fprintf(ascii, " %12.2lf %12.2lf\n", *xptr++, *yptr++);
+			   fprintf(ascii, " %12.2lf%c%12.2lf\n", *xptr++, separator, *yptr++);
 		   fprintf(ascii,"END\n");
            }
     }
