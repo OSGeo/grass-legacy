@@ -245,7 +245,7 @@ int main (int argc, char *argv[])
         default: /* Already caught.. */
     }
     
-    if (str_index >= strs) {
+    if (str_index > strs) {
         G_warning("String attribute index out of range, resetting to default.");
         str_index = 0;
     }
