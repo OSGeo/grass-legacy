@@ -1,0 +1,13 @@
+PGM = v.in.shape.pg
+HOME = $(BIN_CONTRIB_CMD)
+EXTRA_CFLAGS = $(VECT_INCLUDE) $(PQINCPATH)
+# EXTRA_CFLAGS = $(VECT_INCLUDE) -DDEBUG # for debugging
+LIST = 	main.o \
+	shpopen.o \
+	dbfopen.o \
+	pgdump.o
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) $(VASK) $(MATHLIB) $(DATETIMELIB) $(XDRLIB) $(PQLIB)
+
+$(GISLIB): # 
