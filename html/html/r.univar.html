@@ -17,24 +17,32 @@
 <BR>
 <B>r.univar help</B>
 <BR>
-<B>r.univar</B> <EM>name</EM> 
+<B>r.univar</B> [<B>-e</B>] <B>cover=</B><EM>name</EM>
+                [<B>base=</B><EM>name</EM>]
 
 <H2>DESCRIPTION</H2>
 
 <EM>r.univar</EM> calculates univariate statistics of a raster map.  This includes the number of cells counted, mininum and maximum cell values, range, arithmetic mean, variance, standard deviation and coefficient of variation.
 
+<H3>Flags:</H3>
+
+<DL>
+<DT><EM>-e</EM> 
+<DD>calculate extended statistics (median and quartiles)
+</DL>
 
 <H3>Parameters:</H3>
 
 <DL>
-<DT><EM>name</EM> 
+<DT><EM>cover</EM> 
 <DD>Name of an existing raster map.
+<DT><EM>base</EM> 
+<DD>Name of an existing raster map (optional masking map containing areas)
 </DL>
 
 <H2>SEE ALSO</H2>
 
 <EM><A HREF="s.univar.html">s.univar</A></EM>
-
 
 
 <H2>AUTHOR</H2>
