@@ -104,7 +104,7 @@ int GS_write_tif(char *name)
 	    break;
 	}
     }
-    
+    free(pixbuf);
     (void) TIFFClose(out);
     
     return(0);
