@@ -5,7 +5,7 @@ OBJ = main.o
 DGNLIB=$(LIBDIR)/libdgn.a
 CPLLIB=$(LIBDIR)/libcpl.a
 
-LIBES=$(VECTLIB) $(GISLIB) $(DGNLIB) $(CPLLIB) $(MATHLIB) -lz
+LIBES=$(VECTLIB) $(GISLIB) $(DGNLIB) $(CPLLIB) $(MATHLIB) $(GDAL_LIBS) -lz
 
 
 $(BIN_CMD)/$(PGM):  $(OBJ) $(LIBES) 
