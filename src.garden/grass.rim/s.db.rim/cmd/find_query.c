@@ -24,10 +24,14 @@ double
 dist(x,y)
      double x,y;
 {
-  double dx,dy;
+  double d, G_distance();
+  d = G_distance(x,y,target_e,target_n);
+  return (d);
+/*double dx,dy;
   dx = x - target_e;
   dy = y - target_n;
   return(sqrt(dx*dx + dy*dy));
+*/
 }
 
 /* This is the ordering and qsort function for .find */
@@ -72,7 +76,7 @@ char *inp_buf;
   int i, count, error, number, offset, n_original;
   int add_del_count;
   CELL in_mask();
-  char *p1;
+  char *p1, str_e[30], str_n[30];
 
   /* initialize for new or appended site list */
   if (append_list && (Last_site != NULL))
@@ -101,6 +105,7 @@ char *inp_buf;
   default:
     {
       if(number=sscanf(inp_buf,"site %d %d",&target_site,&count) )
+
         {
           count = (number==2?count:1);
           if (! get_loc_of_site(target_site) ) {
@@ -111,7 +116,8 @@ char *inp_buf;
         }
       else
         {
-          number=sscanf(inp_buf,"%lf %lf %d",&target_e,&target_n,&count);
+          /*number=sscanf(inp_buf,"%lf %lf %d",&target_e,&target_n,&count);*/
+	  number=sscanf(inp_buf,"%s %s %d",str_e,str_n,&count);
           if (number == 2) count=1;
           if (number < 2){
             fprintf(Outfile,".find: Invalid request coordinates\n");
@@ -121,6 +127,8 @@ char *inp_buf;
             fprintf(Outfile,".find: Invalid number of records requested\n");
             goto abort_point;
           }
+	  G_scan_easting (str_e,&target_e,Projection);
+	  G_scan_northing(str_n,&target_n,Projection);
         }
       break;
     }                           /* end of default case */
@@ -422,9 +430,10 @@ char *buf;
                 Mask = 1;
                 window_yes = 1;
         }
-        if ( !strncmp(buf," w",2) || !strncmp(buf," -w",3)  )
-                        window_yes = 1;
-                buf++;
+        if ( !strncmp(buf," w",2) || !strncmp(buf," -w",3) ||
+	     !strncmp(buf," r",2) || !strncmp(buf," -r",3) )
+                window_yes = 1;
+        buf++;
  }
  if (window_yes) {
          if (G__get_window(&Active_wind,"","WIND",G_mapset())!=NULL)
@@ -441,7 +450,7 @@ in_target()
         if (target_dist == 0.0) return (1); /* no distance calc needed */
         if (target_dist > 0.0 )    /* keep only points within target dist */
                 return ((dist(e,n) <= target_dist )? 1 : 0 );
-        if (target_dist < 0.0 )    /* keep only points beyond target dist */
+        else                       /* keep only points beyond target dist */
                 return ((dist(e,n) > fabs(target_dist))? 1 : 0 );
 }
 
@@ -583,6 +592,7 @@ char cmd[50];
 dist_clause(inp_buf)
 char *inp_buf;
 {
+char str_e[30], str_n[30];
  if (sscanf(inp_buf,"distance from site %d %lf",
         &target_site,&target_dist) == 2) {
    if (get_loc_of_site(target_site) )
@@ -591,9 +601,15 @@ char *inp_buf;
         return (-1);
  }
  else
-   if (sscanf(inp_buf,"distance from %lf %lf %lf",
+/*   if (sscanf(inp_buf,"distance from %lf %lf %lf",
         &target_e,&target_n,&target_dist) == 3)
-     return (2);
+*/
+     if (sscanf(inp_buf,"distance from %s %s %lf",
+            str_e, str_n, &target_dist) == 3) {
+       G_scan_easting (str_e, &target_e, Projection);
+       G_scan_northing(str_n, &target_n, Projection);
+       return (2);
+     }
  return (0);
 }
 
