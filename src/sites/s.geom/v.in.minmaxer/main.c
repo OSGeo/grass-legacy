@@ -141,7 +141,7 @@ closeGlobal ()
 {
   fclose(In);
   fclose (OutAtt);
-  Vect_close (OutMap);
+  Vect_close (&OutMap);
   Vect_destroy_line_struct (Points);
 }
 
