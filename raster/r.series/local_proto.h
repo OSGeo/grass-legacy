@@ -4,6 +4,7 @@
 typedef void cfunc(DCELL *, DCELL *, int);
 
 extern cfunc c_ave;
+extern cfunc c_count;
 extern cfunc c_divr;
 extern cfunc c_max;
 extern cfunc c_median;
