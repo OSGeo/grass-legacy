@@ -105,6 +105,10 @@ typedef enum {
     G_OPT_V_CATS    /* more categories */
 } STD_OPT;
 
+/* Message format */
+#define G_INFO_FORMAT_STANDARD 0  /* GRASS_MESSAGE_FORMAT=standard or not defined */
+#define G_INFO_FORMAT_GUI      1  /* GRASS_MESSAGE_FORMAT=gui */
+
 /* Icon types */
 #define G_ICON_CROSS  0
 #define G_ICON_BOX    1
