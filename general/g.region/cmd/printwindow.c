@@ -202,12 +202,19 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag)
 	  else
 	     fprintf(stderr, "You are in xy location (no projection possible, use -p flag instead).\n");
 	}
-	 else if (print_flag == 4) /* print coordinates of map center  MN 2001*/
+	else if (print_flag == 4) /* print coordinates of map center  MN 2001*/
 	 {
 	   if ((G_projection() == PROJECTION_LL))
-	   	fprintf (stdout, "Decimal degrees (East/North positive, West/South negative):\n");
+	   	fprintf (stdout, "Decimal degree (East/North positive, West/South negative):\n");
 	   fprintf (stdout, "%-11s %f\n","region center northing:", ((window->north - window->south)/2. + window->south));
            fprintf (stdout, "%-11s %f\n","region center easting: ", ((window->west - window->east)/2. + window->east));
+	 }
+	else if (print_flag == 5) /* print region extent  MN 2003*/
+	 {
+	   if ((G_projection() == PROJECTION_LL))
+	   	fprintf (stdout, "Values in decimal degree:\n");
+	   fprintf (stdout, "%-11s %f\n","region nort-south extent:", window->north - window->south);
+	   fprintf (stdout, "%-11s %f\n","region east-west  extent:", window->east - window->west);
 	 }
 	else
 	{
