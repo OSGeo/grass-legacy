@@ -224,6 +224,11 @@ int G_make_grey_scale_fp_colors(struct Colors *, double, double);
 int G_make_grey_scale(struct Colors *, CELL, CELL);
 int G_add_grey_scale_colors(struct Colors *, CELL, CELL);
 
+/* color_byr.c */
+int G_make_byr_colors(struct Colors *, CELL, CELL);
+int G_make_byr_fp_colors(struct Colors *, DCELL, DCELL);
+int G_add_byr_colors(struct Colors *, CELL, CELL);
+
 /* color_gyr.c */
 int G_make_gyr_colors(struct Colors *, CELL, CELL);
 int G_make_gyr_fp_colors(struct Colors *, DCELL, DCELL);
