@@ -1,4 +1,4 @@
-all: $(DEPVECTLIB)
+all: mkextradirs $(DEPVECTLIB)
 	$(GMAKE) libes
 	$(GMAKE) georef
 
@@ -62,3 +62,7 @@ OBJ = \
 
 $(DEPVECTLIB): $(OBJ)
 	$(SLIBRULE)
+
+mkextradirs:
+	mkdir -p $(DSTDIR)/src/libes/vect32/Vlib
+	mkdir -p $(DSTDIR)/src/libes/vect32/diglib
