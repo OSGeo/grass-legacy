@@ -1,0 +1,17 @@
+GIP: 0
+Title: GIPs are GRASS Improvement Proposals
+Version: $Date$
+Author: neteler@itc.it (Markus Neteler)
+Status: Active
+Type: Informational
+Created: 26-Feb-2003
+
+INTRODUCTION
+
+  A GIP is a GRASS Improvement Proposal.
+  It is a way to store ideas and discussion results
+  for GRASS improvements which have major impact on
+  the system.
+
+NOTES
+  -
