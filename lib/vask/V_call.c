@@ -290,14 +290,20 @@ int V_call(void)
 		done = 1;
 	    break ;
 
+#ifdef KEY_LEFT
+	case KEY_LEFT:
+	    ans_col = (ans_col-1 >= 0) ? ans_col-1 : 0 ;
+	    break ;
+#endif
+
 #ifdef KEY_BACKSPACE
 	case KEY_BACKSPACE:
 #endif
-#ifdef KEY_LEFT
-	case KEY_LEFT:
-#endif
 	case BS:
 	    ans_col = (ans_col-1 >= 0) ? ans_col-1 : 0 ;
+	    ANSWER[ans_col] = ' ' ;
+	    move(ROW, COL + ans_col) ;
+	    addch(' ') ;
 	    break ;
 
 #ifdef KEY_RIGHT
