@@ -67,7 +67,10 @@ char **argv ;
 	/* Make sure database is available */
 
   if ( pghost->answer )
-       G_setenv("PG_HOST", pghost->answer);
+	G_setenv("PG_HOST", pghost->answer);
+  else
+	G_unsetenv("PG_HOST");
+
 
   if(list->answer) {
         printf(_("The following databases are in the Unix catalogue:\n"));
