@@ -164,11 +164,17 @@ db_read_dbmscap()
     /* read all drivers */
     while ( ent = readdir (dir) )
       {
+	char *name;
+
         if ( (strcmp (ent->d_name, ".") == 0) 
 	    || (strcmp (ent->d_name, "..") == 0) ) continue;	
+
+	/* Remove '.exe' from name (windows extension) */
+	name = G_str_replace ( ent->d_name, ".exe", "" );
 	
         snprintf (buf, 1023, "%s/driver/db/%s", G_gisbase(),ent->d_name);
-	add_entry (&list, ent->d_name, buf, "");
+	add_entry (&list, name, buf, "");
+	free(name);
       }
     
     closedir (dir);
