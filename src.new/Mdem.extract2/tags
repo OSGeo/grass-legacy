@@ -1,0 +1,18 @@
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+get_buf	usgs_buf.c	/^get_buf()$/
+get_dfloat	usgs_num.c	/^get_dfloat(num)$/
+get_efloat	usgs_num.c	/^get_efloat(num)$/
+get_hdr	usgs_hdr.c	/^get_hdr()$/
+get_int	usgs_num.c	/^get_int(num)$/
+get_profile	get_prof.c	/^get_profile()$/
+getargs	getargs.c	/^getargs (argc, argv)$/
+getgrid	getgrid.c	/^getgrid()$/
+hdr_list	usgs_hdr.c	/^hdr_list(file)$/
+max	usgs_init.c	/^#define   max(a,b) (a>b/a:b)$/
+next_elev	getgrid.c	/^next_elev()$/
+next_profile	getgrid.c	/^next_profile()$/
+skip_columns	getgrid.c	/^skip_columns()$/
+skip_file	usgs_buf.c	/^skip_file()$/
+skip_rows	getgrid.c	/^skip_rows()$/
+usgs_init	usgs_init.c	/^usgs_init()$/
+window_list	usgs_hdr.c	/^window_list(file)$/
