@@ -71,6 +71,7 @@
 [Nn][Oo][Tt]			{ return NOT; }
 [Oo][Rr][Dd][Ee][Rr]		{ return ORDER; }
 [Bb][Yy]			{ return BY; }
+[Ii][Ss]			{ return IS; }
  /* [Dd][Ii][Ss][Tt][Ii][Nn][Cc][Tt]	{ return DISTINCT; } */
  /***************************************
   * EQUAL
