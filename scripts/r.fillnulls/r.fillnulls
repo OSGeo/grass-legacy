@@ -72,6 +72,13 @@ then
  exit 1
 fi
 
+#check if input file exists
+#if test -f $LOCATION/cell/$GIS_OPT_input
+if [ -z `g.findfile elem=cell file="$GIS_OPT_input" | grep ^file | cut -f2 -d=` ] ; then
+    echo "<$GIS_OPT_input> does not exist! Aborting."
+    exit 1
+fi
+
 #check if a MASK is already present:
 MASKFILE=
 if test -f $LOCATION/cell/MASK
@@ -88,12 +95,14 @@ echo Using tmp file $TMP1
 # idea: filter all NULLS and grow that area(s) by one pixel, then
 # interpolate from these surrounding one pixel area
 
+echo "Locating and isolating NULL areas..."
 r.mapcalc $TMP1="if(isnull($GIS_OPT_input))"
 r.grow input=$TMP1 output=MASK
 
 # now we would see only the outlines of the NULL areas if looking at INPUT.
 # Use this outline (raster border) for interpolating the fill data:
-r.to.vect -v input=$GIS_OPT_input output=vecttmp_fillnulls_$$ feature=point
+echo "Creating interpolation points..."
+r.to.vect input=$GIS_OPT_input output=vecttmp_fillnulls_$$ feature=point
 
 
 #count number of points to control segmax parameter for interpolation:
@@ -112,11 +121,11 @@ echo ""
 
 if [ $POINTSNUMBER  -ge 800 ] ; then
   echo "Using segmentation for interpolation..."
-  v.surf.rst input=vecttmp_fillnulls_$$ elev=rfillnulls_$TMP1 > /dev/null
+  v.surf.rst zcol=value input=vecttmp_fillnulls_$$ elev=rfillnulls_$TMP1 #2> /dev/null
 else
   #if less than 800 points, use no segmentation for speedup:
   echo "Using no segmentation for interpolation as not needed..."
-  v.surf.rst input=vecttmp_fillnulls_$$ elev=rfillnulls_$TMP1 segmax=700 > /dev/null
+  v.surf.rst zcol=value input=vecttmp_fillnulls_$$ elev=rfillnulls_$TMP1 segmax=700 #2> /dev/null
 fi
 
 echo ""
@@ -144,3 +153,5 @@ rm -f TMP2
 
 echo ""
 echo "Filled raster map is: $GIS_OPT_output"
+echo
+echo "Done."
