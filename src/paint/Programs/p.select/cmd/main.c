@@ -6,7 +6,7 @@ main(argc,argv) char *argv[];
     struct Flag *print, *list, *quiet;
     char *ls_painters();
 
-    G_gisinit (argv[0]);
+    G_no_gisinit (argv[0]);
 
     painter = G_define_option();
     painter->key = "painter";
