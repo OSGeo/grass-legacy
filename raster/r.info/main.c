@@ -180,6 +180,8 @@ main (int argc, char *argv[])
 
     if (is_reclass > 0)
     {
+	int first = 1;
+
         divider ('|');
         sprintf (line, "  Reclassification of [%s] in mapset [%s]",
             reclass.name, reclass.mapset);
@@ -188,12 +190,19 @@ main (int argc, char *argv[])
         printline ("        Category        Original categories");
         printline ("");
 
-	mincat = maxcat = reclass.table[0];
-	for (i = 1; i < reclass.num; i++)
-	    if (reclass.table[i] < mincat)
-		mincat = reclass.table[i];
-	    else if (reclass.table[i] > maxcat)
-		maxcat = reclass.table[i];
+	for (i = 0; i < reclass.num; i++)
+	{
+	    CELL x = reclass.table[i];
+	    if (G_is_c_null_value(&x))
+		continue;
+	    if (first || x < mincat)
+		mincat = x;
+	    if (first || x > maxcat)
+		maxcat = x;
+	    first = 0;
+	}
+
+	if (!first)
         for (cat = mincat; cat <= maxcat; cat++)
         {
             char text[80];
