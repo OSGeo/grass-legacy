@@ -23,7 +23,7 @@
 
 #  Set correct GIS environment 
 
-   setenv GISRC $HOME/.grassrc 
+   setenv GISRC $HOME/.grassrc5 
 
 # 
 # 
