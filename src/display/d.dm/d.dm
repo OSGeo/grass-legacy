@@ -432,7 +432,7 @@ proc map_query { s m } {
 	    set cmd "d.what.vect map=$map($s,$m,map)"
         }	
         s {
-            set cmd "d.what.sites sites=$map($s,$m,sitefile)"
+            set cmd "d.what.sites map=$map($s,$m,sitefile)"
         }
 	default {
 	    puts stdout "I don't know how to query map type $type."
