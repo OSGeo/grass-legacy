@@ -1,4 +1,4 @@
-$Id: TODO,v 1.39 2000-10-23 08:03:46 markus Exp $
+$Id: TODO,v 1.40 2000-10-23 16:32:02 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -202,6 +202,9 @@ Modules:
   distance values, too.
   (Being worked on by)
 
+- r.water.outlet
+  - needs FP update
+
 - r3.out.v5d:
   Add check for cols/rows settings *before* starting to export:
       Too many rows: 1200 (400 is maximum)
@@ -319,7 +322,6 @@ Further local TODO files:
 ./src/raster/r.agnps50/TODO
 ./src/raster/r.circle/TODO
 ./src/raster/r.random.surface/TODO
-./src/raster/r.surf.area/TODO
 ./src/raster/r.to.sites/TODO
 ./src/raster/r.water.outlet/TODO
 ./src/sites/s.to.rast/TODO
@@ -368,31 +370,31 @@ PDF documentation (all HTML in one file)
 New GRASS Startup concept:
 
 Markus Neteler wrote:
-> Now a menu would appear with following items:                                 
->                                                                               
->  (1) Open existing session (using Justins forthcoming session manager)        
->  (2) Define new location (using Justins forthcoming definition manager)       
->  (3) Import data from file/cdrom... (using Frank Warmerdams GDAL import       
->        module and others) and define location on-the-fly from data            
+> Now a menu would appear with following items:                             
+>                                                                           
+>  (1) Open existing session (using Justins forthcoming session manager)    
+>  (2) Define new location (using Justins forthcoming definition manager)   
+>  (3) Import data from file/cdrom... (using Frank Warmerdams GDAL import   
+>        module and others) and define location on-the-fly from data        
 >        settings                                                               
->                                                                               
-> As (1) and (2) are generally nothing new (except the new graphical            
-> layout), (3) would be very welcome. Here a general change in GRASS            
-> import modules (raster, vector and sites) would be required. Like             
-> commercial GIS software GRASS should be capable of defining a location        
-> while importing external data *without* additional user input.                
-> Technically it's possible in my opinion. The import module would              
-> read the projection/coordinates parameters from the spatial data file,        
-> generate the DEFAULT_WIND and other files (look into "testgrass.sh" how       
-> this can be done by script), create the location and import the data.         
+>                                                                          
+> As (1) and (2) are generally nothing new (except the new graphical       
+> layout), (3) would be very welcome. Here a general change in GRASS        
+> import modules (raster, vector and sites) would be required. Like         
+> commercial GIS software GRASS should be capable of defining a location    
+> while importing external data *without* additional user input.            
+> Technically it's possible in my opinion. The import module would          
+> read the projection/coordinates parameters from the spatial data file,    
+> generate the DEFAULT_WIND and other files (look into "testgrass.sh" how   
+> this can be done by script), create the location and import the data.     
 > Especially for new users this is much more convenient.      
 
 Frank Warmerdam wrote:
->I do have a version of r.in.gdal now working that includes an optional          
->location parameter.  If provided it will initialize a new location on           
->the basis of the extents, projection and units of the dataset being             
->read.  However, this only works with GDAL supported datasets, so it             
+>I do have a version of r.in.gdal now working that includes an optional 
+>location parameter.  If provided it will initialize a new location on     
+>the basis of the extents, projection and units of the dataset being       
+>read.  However, this only works with GDAL supported datasets, so it       
 >isn't entirely general.   
->Perhaps g.region could have an additional option to extend the current          
->region bounds based on a scan of all raster, and vector extents in the          
+>Perhaps g.region could have an additional option to extend the current    
+>region bounds based on a scan of all raster, and vector extents in the     
 >mapset (or location)?    
