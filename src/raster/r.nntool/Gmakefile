@@ -1,0 +1,29 @@
+PGM       = r.nntool
+#LDFLAGS = -g
+CMP_FLAG = -g
+ESQL = esql
+IMSL = -limsl -L/usr2/lang/SC1.0 -lF77
+
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+LIST =  activate.o compile.o convert.o dribble.o layer.o buildnet.o \
+        lnrate.o net.o netio.o netmain.o pairs.o parser.o prop.o show.o \
+        sysdep.o teach.o weights.o quickprop.o nntool.o draw.o driver.o\
+        sample.o graphics.o histograms.o band_files.o analyze_sig.o \
+	configure.o define.o input.o mouse.o cellhd.o conv.o signature.o\
+        zoom_box.o lump.o readbands.o sigalarm.o view.o mask.o init_reg.o\
+	draw_cell.o set_signals.o title.o g_init.o curses.o input_color.o\
+	input_std.o outline.o tty.o sigint.o edge.o edge_order.o redisplay.o\
+	edge_point.o remove_mask.o ask_sig.o add_point.o save_reg.o \
+	erase_reg.o del_point.o class.o
+
+#bayes.o
+#OBJS = newfile.o
+#OBJS = trial.c
+
+LIBES     = $(IMAGERYLIB) $(GISLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB)
+
+$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(LIBES) $(VASKLIB)
+	$(CC) $(CMP_FLAG) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(EXTRALIB) $(VASK)
+
+$(LIST): globals.h defs.h common.h
