@@ -1,8 +1,6 @@
 #include <dbmi.h>
-#include <odbc/sql.h>
-#include <odbc/sqlext.h>
-#include <odbc/sqltypes.h>
 #include <datetime.h>
+#include "odbc.h"
 #include "globals.h"
 #include "proto.h"
 
