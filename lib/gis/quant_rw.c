@@ -1,4 +1,5 @@
 #include "gis.h"
+#include "glocale.h"
 #include <string.h>
 
 /*********************************************************************
@@ -150,7 +151,7 @@ int G_write_quant(
 
      if (G_raster_map_type (name, mapset) == CELL_TYPE)
      {
-            sprintf(buf, "Cannot write quant rules: map %s is integer", name);
+            sprintf(buf, _("Cannot write quant rules: map %s is integer"), name);
             G_warning(buf);
             return -1;
      }
@@ -160,7 +161,7 @@ int G_write_quant(
      /* first actually write the rules */
      if( G__quant_export (name, mapset, quant) < 0)
      {
-            sprintf(buf, "Cannot write quant rules for map %s", name);
+            sprintf(buf, _("Cannot write quant rules for map %s"), name);
             G_warning(buf);
             return -1;
      }
