@@ -25,7 +25,7 @@ int
 main(int argc, char *argv[])
 {
     struct Flag *print;
-    struct Option *driver, *database;
+    struct Option *driver, *database, *schema;
     struct GModule *module;
     dbConnection  connection;
 
@@ -41,7 +41,7 @@ main(int argc, char *argv[])
     driver->type       = TYPE_STRING ;
     driver->required   = NO  ;
     driver->multiple   = NO ;
-    driver->description= "driver name:" ;
+    driver->description = "Driver name." ;
     driver->options    = db_list_drivers();
 
     database = G_define_option() ;
@@ -49,7 +49,15 @@ main(int argc, char *argv[])
     database->type       = TYPE_STRING ;
     database->required   = NO  ;
     database->multiple   = NO ;
-    database->description= "Database name:" ;
+    database->description = "Database name." ;
+
+    schema = G_define_option() ;
+    schema->key        = "schema" ;
+    schema->type       = TYPE_STRING ;
+    schema->required   = NO  ;
+    schema->multiple   = NO ;
+    schema->description = "Database schema. Don't use this option if schemas are not supported "
+	                 "by driver/database server.";
 
     /* Set description */
     module              = G_define_module();
@@ -63,6 +71,9 @@ main(int argc, char *argv[])
 		
     if ( database->answer )
 	G_setenv2 ( "GV_DATABASE", database->answer, G_VAR_MAPSET );
+
+    if ( schema->answer )
+	G_setenv2 ( "GV_SCHEMA", schema->answer, G_VAR_MAPSET );
 
     /* Set also DB_DRIVER and DB_DATABASE if not yet set */
     db_get_connection( &connection );
@@ -78,6 +89,7 @@ main(int argc, char *argv[])
     if( print->answer)  {
         fprintf(stdout, "driver:%s\n", G__getenv2( "GV_DRIVER", G_VAR_MAPSET) );
         fprintf(stdout, "database:%s\n", G__getenv2( "GV_DATABASE", G_VAR_MAPSET) );    
+        fprintf(stdout, "schema:%s\n", G__getenv2( "GV_SCHEMA", G_VAR_MAPSET) );    
     }
 
     exit(0);
