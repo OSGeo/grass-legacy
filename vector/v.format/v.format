@@ -1,6 +1,6 @@
 #!/bin/sh
 #% Module
-#%  description: v.format is an interactive GUI (Graphical User Interface) which enables the user to import external shapefile into GRASS vector format.
+#%  description: v.format is an interactive GUI (Graphical User Interface) which enables the user to register external SHAPE file into GRASS and allows to define PostGRASS connection.
 #% End
 
 if [ $# -eq 0 ]
