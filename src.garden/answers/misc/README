@@ -1,0 +1,18 @@
+This directory contains an exercise that was used as part of a class
+assignment for the Spring, 1992 AGEN 526 Class in Agricultural Engineering,
+Purdue University. The exercise was ostensively part of the
+class instruction about watershed modeling, but also served
+as test of the programs created for the ANSWERS-GRASS integration.
+Map names used herein are references to layers existing in
+the sample mapbase from the Indian Pine Natural Resource Laboratory.
+
+I include this document to add to the GRASS documentation manuals for
+the programs included in this distribution. Hopefully, you will be able
+to use in a more step by step manner as you explore using r.answers
+and its associate programs with the sample database.
+
+FILES:
+
+exercise.ps     - the exercise in postscript format.
+exercise.troff  - the "raw" text with troff commands that was used
+                  to create exercise.ps.
