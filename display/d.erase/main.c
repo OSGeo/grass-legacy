@@ -14,11 +14,11 @@
  *
  *****************************************************************************/
 
+#include <stdlib.h>
 #include "gis.h"
 #include "display.h"
 #include "D.h"
 #include "raster.h"
-#include <stdlib.h>
 
 int main(int argc,char *argv[])
 {
@@ -33,11 +33,9 @@ int main(int argc,char *argv[])
 	color->key = "color";
 	color->type = TYPE_STRING;
 	color->required = NO;
-	color->answer = "black";	/* set default color! */
-        color->options = D_color_list(); /* added 11/2000 by Andreas Lange, 
-                                            for consistency with other modules
-					 */
-	color->description = "Color to erase with";
+	color->answer = DEFAULT_BG_COLOR;
+	color->description =
+	   "Color to erase with, either a standard GRASS color or R:G:B triplet (separated by colons)";
 
 	module = G_define_module();
 	module->description = 
