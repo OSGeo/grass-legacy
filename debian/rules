@@ -116,6 +116,8 @@ binary-arch: build install
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
+	#clean links to 5.3 code
+	-$(MAKE) mixclean
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install
