@@ -1,0 +1,19 @@
+# %W%  %G%
+
+XLIB = /usr/iesl/Xwindows/usr/lib
+DLIB  = $(SRC)/D/libes/Dlib.a
+
+PGM = Xgraph
+OFILES =  main.o disp_args.o cr_menu.o new_win.o quit.o destroy_win.o choose_win.o draw_map.o draw_vect.o show_3D.o
+
+
+$(BIN)/$(PGM): $(OFILES) $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) $X
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DLIB) $(DISPLAYLIB) ${RASTERLIB} $(GISLIB) $(VASK) -L$(XLIB) -lXaw -lXt -lX11 -lXmu $(MATHLIB)
+
+
+
+
+$(GISLIB):	#
+$(DISPLAYLIB):	#
+$(RASTERLIB):	#
+
