@@ -78,7 +78,7 @@ proc DmToolBar::create { tb  } {
     $bbox2 add -image [image create photo -file "$dmpath/dig.gif"] \
         -command "Dm::edit" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext [G_msg "Digitize vector map"]
+        -helptext [G_msg "Digitize vector map (select or create new vector first)"]
 
     $bbox2 add -image [Bitmap::get cut] -command "Dm::delete" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
