@@ -101,6 +101,12 @@ dig_add_line (struct Plus_head *plus, int type, struct line_pnts *Points, long o
 	case GV_CENTROID:
             plus->n_clines++;
 	    break;
+	case GV_FACE:
+            plus->n_flines++;
+	    break;
+	case GV_KERNEL:
+            plus->n_klines++;
+	    break;
     }
          
     dig_line_box ( Points, &box );

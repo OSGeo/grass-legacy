@@ -40,6 +40,14 @@ dig_spidx_init ( struct Plus_head *Plus)
     Plus->Area_spidx = RTreeNewIndex();
     Plus->Isle_spidx = RTreeNewIndex();
 
+    Plus->Node_spidx_offset = 0L;
+    Plus->Edge_spidx_offset = 0L;
+    Plus->Line_spidx_offset = 0L;
+    Plus->Area_spidx_offset = 0L;
+    Plus->Isle_spidx_offset = 0L;
+    Plus->Volume_spidx_offset = 0L;
+    Plus->Hole_spidx_offset = 0L;
+
     return 1;
 }
 
