@@ -70,7 +70,7 @@ typedef struct {
     int type;    /* type of cursor: SELECT, UPDATE, INSERT */
 } cursor;
 
-#ifndef MAIN
+#ifdef MAIN
     DATABASE db;
     char     errMsg[DBF_MSG];
     int    drv_mode;
