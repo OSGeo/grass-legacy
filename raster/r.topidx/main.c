@@ -22,9 +22,7 @@
 
 
 int
-main(argc,argv)
-	int	argc;
-	char	**argv;
+main(int argc, char **argv)
 {
 	struct GModule *module;
 	struct
@@ -71,8 +69,8 @@ main(argc,argv)
 	        exit(-1);
 	}
 
-	mapset  = G_mapset();
 	iname   = params.input->answer;
+	mapset  = G_find_cell2 (iname, "");
 	oname   = params.output->answer;
 	overwr  = flags.overwr->answer;
 	verbose = flags.verbose->answer;
