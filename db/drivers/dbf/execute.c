@@ -13,11 +13,11 @@
 *   	    	for details.
 *
 *****************************************************************************/
-
 #include <dbmi.h>
 #include "globals.h"
 #include "proto.h"
 
+int
 db_driver_execute_immediate (sql)
     dbString *sql;
 {

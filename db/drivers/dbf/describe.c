@@ -20,16 +20,13 @@
 #include "globals.h"
 #include "proto.h"
 
+int
 db_driver_describe_table (table_name, table)
     dbString *table_name;
     dbTable **table;
 {
     int         tab;	
-    int         col, ncols, dbtype, precision, scale;
-    dbColumn    *column;
-    COLUMN      *dcol;
     char        *name;
-    char        emsg[DBF_MSG];
 
     name = db_get_string (table_name);
     
@@ -47,7 +44,6 @@ describe_table (int tab, int *scols, int nscols, dbTable **table)
     int         i, col, ncols, dbtype, precision, scale;
     dbColumn    *column;
     COLUMN      *dcol;
-    char        emsg[DBF_MSG];
 
     load_table_head ( tab );
     ncols = db.tables[tab].ncols;

@@ -13,7 +13,6 @@
 *   	    	for details.
 *
 *****************************************************************************/
-
 #include <dbmi.h>
 #include "globals.h"
 #include "proto.h" 
@@ -29,7 +28,7 @@ db_driver_fetch(cn, position, more)
     dbTable    *table;
     dbColumn   *column;
     dbValue    *value;
-    int        cur, col, ncols;
+    int        col, ncols;
     int        htype, sqltype, ctype;
     int  dbfrow, dbfcol;
 
