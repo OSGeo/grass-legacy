@@ -9,3 +9,5 @@ default: $(ETC)/gtcltk
 $(ETC)/gtcltk: *.tcl 
 	if [ ! -d $(ETC)/gtcltk ]; then mkdir $(ETC)/gtcltk; fi
 	cp *.tcl $(ETC)/gtcltk/
+
+clean:
