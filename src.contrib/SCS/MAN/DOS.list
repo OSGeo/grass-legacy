@@ -1,0 +1,19 @@
+.TH DOS.list
+.SH NAME
+\fIDOS.list\fR \- lists stored screen images on the PC6300 MS-DOS hard disk.
+.br
+.I "(Available for PC6300 workstations, only)"
+.SH SYNOPSIS
+\fBDOS.list\fR
+.br
+\fBDOS.list help\fR
+.SH DESCRIPTION
+allows a user to interactively list PC6300 screen images saved by DOS.save, on the PC6300 hard disk. Program will find MS-DOS files with the extension ".GRS" in the current DOS directory. 
+
+.SH "INTERACTIVE MODE"
+.SH BUGS
+.SH "SEE ALSO"
+DOS.delete, DOS.save, DOS.show
+.SH AUTHOR
+P.W.Carlson, USDA, SCS, NHQ-CGIS
+
