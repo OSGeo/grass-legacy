@@ -1,14 +1,14 @@
 
 
 
-i.tape.other         GRASS Reference Manual          i.tape.other
+i.tape.other <main>  GRASS Reference Manual   <main> i.tape.other
 
 
 
 NAME
      i.tape.other - An imagery function that extracts scanned
-     aerial imagery (NHAP, etc.) and SPOT imagery from half-inch
-     tape.
+     aerial imagery (NHAP, etc.) and satellite imagery (TM, SPOT,
+     etc) from half-inch or 8mm tape.
      (GRASS Image Processing Program)
 
 SYNOPSIS
@@ -60,31 +60,32 @@ TAPE LAYOUT MENU
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-i.tape.other         GRASS Reference Manual          i.tape.other
+i.tape.other <main>  GRASS Reference Manual   <main> i.tape.other
 
 
 
                            GENERIC TAPE EXTRACTION
 
 tape layout
-    _0_       number of tape files to be skipped
-    _0_       number of records in the remaining files to be skipped
+    0__       number of tape files to be skipped
+    0__       number of records in the remaining files to be skipped
 band files
-    _0_       number of bands on the tape
+    0__       number of bands on the tape
 data format
     ___       band sequential (BSQ)  |  mark one with an x
     ___       band interleaved (BIL) |
-    _0_       if you select BSQ format and all the bands are in a single file
+    0__       if you select BSQ format and all the bands are in a single file,
               enter the total number of records in the file. Otherwise enter 0
 
-    _0_       length (in bytes) of the longest record on the tape
+    0__       length (in bytes) of the longest record on the tape
+    1__       blocking factor of data in the file
 
              AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE
                            (OR <Ctrl-C> TO CANCEL)
@@ -99,44 +100,48 @@ data format
           GRASS utility m.examine.tape will also provide this
           information.  The record length is the number of
           columns in the image, while the number of records is
-          the number of rows in the image.  NHAP imagery and
-          usually most scanned aerial imagery do not have tape
-          header files, but this should be checked.  SPOT imagery
-          has two files that should be skipped on the first tape,
-          and one file to be skipped on the second tape (of a
-          two-tape set).
+          the number of rows in the image (not always correct,
+          see blocking factor of data in the file below). NHAP
+          imagery and usually most scanned aerial imagery do not
+          have tape header files, but this should be checked.  TM
+          imagery has one header file that contains imagery
+          format of data files and parameters of data aquisition.
+          SPOT imagery has two files that should be skipped on
+          the first tape, and one file to be skipped on the
+          second tape (of a two-tape set).
 
      number of records in the remaining files to be skipped
           If the files which contain the image begin with non-
           image data, these records can also be skipped.  This is
-          usually 0 for most data types.  SPOT imagery stored in
+          usually 0 for most data types. SPOT imagery stored in
           1600bpi has one header record in the image file on each
           tape that should be skipped.
 
      number of bands on the tape
           Most aerial imagery have 3 bands, but satellite
-          simulator data may have more.  SPOT has 3 bands as a
-          standard.  The total number of bands on the tape should
-          be specified here, not just the number that will be
+          simulator data may have more.  TM data has seven bands
+          and SPOT has three bands as a standard, respectively.
+          The total number of bands on the tape should be
+          specified here, not just the number that will be
+
+
+
+GRASS 4.1                U.S. Army CERL                         2
+
+
+
+
+
+
+i.tape.other <main>  GRASS Reference Manual   <main> i.tape.other
+
+
+
           extracted.
 
      data format
           The two formats that imagery data are most commonly
           stored in are called band interleaved format (BIL) and
-
-
-
-GRASS 4.0                U.S. Army CERL                         2
-
-
-
-
-
-
-i.tape.other         GRASS Reference Manual          i.tape.other
-
-
-
           band sequential format (BSQ).  In BIL format, each
           record on the tape contains one line for one band of
           data.  If the data contains three bands, then the first
@@ -181,6 +186,31 @@ i.tape.other         GRASS Reference Manual          i.tape.other
           buffer to use for reading the tape. This value can be
           obtained using m.examine.tape.
 
+     blocking factor of data in the file
+          This is the number of lines combining into one physical
+          record on tape.  It is usually one for most of
+
+
+
+GRASS 4.1                U.S. Army CERL                         3
+
+
+
+
+
+
+i.tape.other <main>  GRASS Reference Manual   <main> i.tape.other
+
+
+
+          imageries, i.e., one line per physical record. However,
+          considering on data compressing and tape memory saving,
+          sometimes more than one lines are combined into one
+          physical record on the tape.  This number may be
+          written on the exterior of the tape, otherwise the user
+          need to experiment on this number by running of
+          i.tape.other.
+
 BAND EXTRACTION MENU
      The user is then asked to mark an x beside the bands to be
      extracted.  See the subheading in this entry entitled ROW
@@ -189,20 +219,6 @@ BAND EXTRACTION MENU
            please mark an x by the bands you want extracted
 
                                 _____1
-
-
-
-GRASS 4.0                U.S. Army CERL                         3
-
-
-
-
-
-
-i.tape.other         GRASS Reference Manual          i.tape.other
-
-
-
                                 _____2
                                 _____3
                                 _____4
@@ -240,6 +256,19 @@ ROW AND COLUMN MENU
                               end row:_0_
 
 
+
+
+GRASS 4.1                U.S. Army CERL                         4
+
+
+
+
+
+
+i.tape.other <main>  GRASS Reference Manual   <main> i.tape.other
+
+
+
                             start col:_0_
                               end col:_0_
 
@@ -255,23 +284,25 @@ ROW AND COLUMN MENU
      Following the extraction, the extracted band files will be
      listed as raster map layers available in the current MAPSET.
      These raster map layers may be displayed individually using
-
-
-
-GRASS 4.0                U.S. Army CERL                         4
-
-
-
-
-
-
-i.tape.other         GRASS Reference Manual          i.tape.other
-
-
-
      the GRASS commands d.display, d.rast or i.points.
 
 NOTES
+     This program can be used for extraction of TM, SPOT and
+     other types of data from tape;  however, the user must
+     supply information to the program on how the image data is
+     laid out on the tape.  For example, the image data may be
+     padded with surrounding extra rows and/or columns; the user
+     may wish to skip over these rows and columns and extract
+     only the actual image data from the tape.  i.tape.other does
+     not know where image data actually begins on the tape;  the
+     user must tell the program what portion of the tape data to
+     extract.  Often, information on the orientation and layout
+     of the image data on tape will be included on a printout
+     accompanying any tape data received by the user;  however,
+     this may not always be the case.  The user may need to
+     experiment with various runs of i.tape.other before
+     extracting the portions of an image actually desired.
+
      After extracting an image from tape, the geographic region
      in the x,y coordinate LOCATION_NAME will be set, based upon
      the extracted rows and columns from the tape. The
@@ -290,6 +321,20 @@ ROW AND COLUMN EXTRACTION
      can be extracted and displayed.  The measurements option in
      d.display, or d.where (following a run of d.rast) will echo
      x and y coordinates to the screen.  (These coordinates will
+
+
+
+GRASS 4.1                U.S. Army CERL                         5
+
+
+
+
+
+
+i.tape.other <main>  GRASS Reference Manual   <main> i.tape.other
+
+
+
      display negative numbers in the north-south direction but
      ignoring the negative sign will yield the row number.  See
      the imagery manual entry for further explanation.)
@@ -313,18 +358,39 @@ SEE ALSO
      GRASS Tutorial: Image Processing
 
      d.display, d.rast, d.where, i.group, i.points, i.tape.mss,
-     i.tape.mss.h, i.tape.tm, imagery, m.examine.tape
+     i.tape.mss.h, i.tape.tm, i.tape.tm.fast, imagery,
+     m.examine.tape
 
 AUTHOR
      Michael Shapiro, U.S. Army Construction Engineering Research
      Laboratory
+     Tao Wen, University of Illinois at Urbana-Champaign,
+     Illinois
 
 
 
 
 
 
-GRASS 4.0                U.S. Army CERL                         5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.1                U.S. Army CERL                         6
 
 
 
