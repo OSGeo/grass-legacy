@@ -15,22 +15,6 @@
 **  US Army Construction Engineering Research Lab
 */
 
-/* #define ASIAN_CHARS to input asian characters.
- * Does not show characters when input due to waddch() function,
- * but characters are still valid for further use.
- *
- * If you have any problems with this, please inform me.
- * <hdcho@geni.knu.ac.kr>
- *
- * I recommend that you don't touch this source files for further CVS checkout.
- * Instead, add "DASIAN_CHARS = -DASIAN_CHARS" into grass/src/CMD/head/head
- * file. This method does not confuse CVS checkout process.
- */
-/*
-#define ASIAN_CHARS
-*/
-
-
 WINDOW *BASE_WIN;
 WINDOW *INFO_WIN;
 WINDOW *HELP_WIN;

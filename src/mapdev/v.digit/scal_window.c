@@ -32,9 +32,14 @@ top:
     {
 	_Clear_base ();
 	_Write_base (12, "Buttons:") ;
-	_Write_base (13, "Left:   Zoom in") ;
-	_Write_base (14, "Middle: Abort/Quit") ;
-	Write_base  (15, "Right:  Zoom out") ;
+	_Write_base (13, "   Left:   Zoom in") ;
+#ifdef ANOTHER_BUTTON
+	_Write_base (14, "   Middle: Abort/Quit") ;
+	Write_base  (15, "   Right:  Zoom out") ;
+#else
+	_Write_base (14, "   Middle: Zoom out") ;
+	Write_base  (15, "   Right:  Abort/Quit") ;
+#endif
 
         screen_x = screen_y = 1;
 	R_get_location_with_pointer(&screen_x, &screen_y, &button) ;
@@ -43,7 +48,7 @@ top:
 
 	switch (button)
         {
-	    case 1:
+	    case LEFTB:
 		/* ZOOM IN */
                 W = U_west  + (U_east - U_west)   * (1. - SCALE_FACTOR);
                 E = U_east  - (U_east - U_west)   * (1. - SCALE_FACTOR);
@@ -59,11 +64,7 @@ top:
 		Clear_info ();
 		break;
 
-	    case 2:
-                return(0);
-		break;
-
-	    case 3:
+	    case MIDDLEB:
 		/* ZOOM OUT */
                 W = U_west  - (U_east - U_west)   * (1. - SCALE_FACTOR);
                 E = U_east  + (U_east - U_west)   * (1. - SCALE_FACTOR);
@@ -79,6 +80,10 @@ top:
 		Clear_info ();
 
 	        break ;
+
+	    case RIGHTB:
+                return(0);
+		break;
 
 	    default:
 	        return(1) ;

@@ -655,9 +655,14 @@ zoom_window (unsigned char type, struct line_pnts *Xpoints)
 		Clear_info ();
 		_Clear_base ();
 		_Write_base (12, "Buttons:") ;
-		_Write_base (13, "Left:   Select new window  ") ;
-		_Write_base (14, "Middle: Abort/Quit ") ;
-		Write_base  (15, "Right:  Zoom/Pan MENU") ;
+		_Write_base (13, "   Left:   Select new window  ") ;
+#ifdef ANOTHER_BUTTON
+		_Write_base (14, "   Middle: Abort/Quit ") ;
+		 Write_base (15, "   Right:  Zoom/Pan MENU") ;
+#else
+		_Write_base (14, "   Middle: Zoom/Pan MENU") ;
+		 Write_base (15, "   Right:  Abort/Quit ") ;
+#endif
 
 		R_get_location_with_pointer ( &screen_x, &screen_y, &button) ;
 		flush_keyboard (); /*ADDED*/
@@ -665,17 +670,14 @@ zoom_window (unsigned char type, struct line_pnts *Xpoints)
 
 		switch (button)
 		{
-		    case 1:
+		    case LEFTB:
 			set_window_w_mouse ();
 			clear_window ();
 			replot(CMap); 
 			if(Xpoints)
 				highlight_line (type, Xpoints, 0, NULL);
 			break ;
-		    case 2:
-			return(0);
-			break;
-		    case 3:
+		    case MIDDLEB:
 		    {
 			int zoom_pan = 1;
 			while (zoom_pan)
@@ -683,23 +685,28 @@ zoom_window (unsigned char type, struct line_pnts *Xpoints)
 			    Clear_info ();
 			    _Clear_base ();
 			    _Write_base (12, "Buttons:") ;
-			    _Write_base (13, "Left:   Zoom MENU") ;
-			    _Write_base (14, "Middle: Abort/Quit ") ;
-			    Write_base  (15, "Right:  Pan  MENU") ;
+			    _Write_base (13, "   Left:   Zoom MENU") ;
+#ifdef ANOTHER_BUTTON
+			    _Write_base (14, "   Middle: Abort/Quit ") ;
+			     Write_base (15, "   Right:  Pan  MENU") ;
+#else
+			    _Write_base (14, "   Middle: Pan  MENU") ;
+			     Write_base (15, "   Right:  Abort/Quit") ;
+#endif
 
 			    R_get_location_with_pointer ( &screen_x, &screen_y, &button1) ;
 			    flush_keyboard (); /*ADDED*/
 			    Clear_info ();
 			    switch(button1)
 			    {
-				case 1:
+				case LEFTB:
 				    scal_window (type, Xpoints);
 				    break;
-				case 2:
-				    zoom_pan = 0;
-				    break;
-				case 3:
+				case MIDDLEB:
 				    slid_window (type, Xpoints);
+				    break;
+				case RIGHTB:
+				    zoom_pan = 0;
 				    break;
 				default:
 				    return(1);
@@ -707,6 +714,9 @@ zoom_window (unsigned char type, struct line_pnts *Xpoints)
 			    }
 			}
 		    }
+			break;
+		    case RIGHTB:
+			return(0);
 			break;
 		    default:
 			return(1) ;

@@ -15,14 +15,14 @@ int mouse_yes_no (char *header)
 	_Clear_base () ;
 	Write_base(10, header) ;
 	Write_base(12, "    Buttons:") ;
-	Write_base(13, "       Left:   yes") ;
-	Write_base(14, "       Middle: no") ;
-	Write_base(15, "       Right:  yes") ;
+	Write_base(13, "       Left:   Yes") ;
+	Write_base(14, "       Middle: No") ;
+	Write_base(15, "       Right:  No") ;
 
 
 	R_get_location_with_pointer ( &screen_x, &screen_y, &button) ;
 
-	return (!(button == 2)) ;
+	return (button == LEFTB) ;
 }
 
 /* this is for node_lines () */
@@ -35,8 +35,13 @@ int mouse_next_prev (char *header)
 	Write_base(10, header) ;
 	Write_base(12, "    Buttons:") ;
 	Write_base(13, "       Left:   Previous line") ;
+#ifdef ANOTHER_BUTTON
 	Write_base(14, "       Middle: Quit") ;
 	Write_base(15, "       Right:  Next line") ;
+#else
+	Write_base(14, "       Middle: Next line") ;
+	Write_base(15, "       Right:  Quit") ;
+#endif
 
 	R_get_location_with_pointer ( &screen_x, &screen_y, &button) ;
 
@@ -57,9 +62,9 @@ int mouse_yes_no_zoom (char *header,
 	_Clear_base () ;
 	Write_base(10, header) ;
 	Write_base(12, "    Buttons:") ;
-	Write_base(13, "       Left:   yes") ;
+	Write_base(13, "       Left:   Yes") ;
 	Write_base(14, buf) ;
-	Write_base(15, "       Right:  no") ;
+	Write_base(15, "       Right:  No") ;
 
 
 	R_get_location_with_pointer ( &screen_x, &screen_y, &button) ;

@@ -7,6 +7,39 @@
 
 #include "digit.h"
 
+/* Define ANOTHER_BUTTON to click conveniently for two button mouse.
+ * Read src/CMD/head/head and do not define here for consistency.
+ */
+/*
+#define ANOTHER_BUTTON
+ */
+
+#define	LEFTB	1
+
+#ifndef ANOTHER_BUTTON
+#	define MIDDLEB	2
+#	define RIGHTB	3
+#else
+#	define MIDDLEB	3
+#	define RIGHTB	2
+#endif
+
+/* #define ASIAN_CHARS to input asian characters.
+ * Does not show characters when input due to waddch() function,
+ * but characters are still valid for further use.
+ *
+ * If you have any problems with this, please inform me.
+ * <hdcho@geni.knu.ac.kr>
+ *
+ * I recommend that you don't touch this source files for further CVS checkout.
+ * Instead, add "DASIAN_CHARS = -DASIAN_CHARS" into grass/src/CMD/head/head
+ * file. This method does not confuse CVS checkout process.
+ */
+/*
+#define ASIAN_CHARS
+ */
+
+
 int print_binary_int(int);
 int print_binary_char(int);
 int change_mode(int);
