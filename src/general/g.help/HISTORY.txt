@@ -1,0 +1,29 @@
+8/98 Markus Neteler
+
+- reversed functions of ESC and SPACE BAR for more intuitive use.
+
+
+Changed by Jacques Bouchard  (bouchard@onera.fr)
+ 2/1998
+ 
+
+Diffs for menu.c
+
+552d551
+< int	curx, cury;
+584c583
+< 			 && (getyx(PrmptW, cury, curx), curx <= (COLS - 5)))
+---
+> 			 && (PrmptW->_curx <= (COLS - 5)))
+731d729
+< 	int	curx, cury;
+765c763
+< 				(getyx(Windoname, cury, curx), curx < (COLS - 3)))
+---
+> 				(Windoname->_curx < (COLS - 3)))
+806d803
+< 	int	curx, cury;
+872c869
+< 				(getyx(Windoname, cury, curx), curx < (COLS - 3)))
+---
+> 				(Windoname->_curx < (COLS - 3)))
