@@ -1,0 +1,6 @@
+#  %W%  %G%
+
+
+$(BIN2)/p.hpxl300: hpxl300.sh
+	cp hpxl300.sh $@
+	chmod 755 $@
