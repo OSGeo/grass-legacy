@@ -1,0 +1,86 @@
+.TH v.reclass.pg
+.SH NAME
+\fIv.reclass.pg\fR \- Generate new vector map layer derived from attribute data in the currently selected
+database.
+.br
+.I "(GRASS-RDBMS Vector Interface Program)"
+.SH SYNOPSIS
+\fBv.reclass.pg\fR
+.br
+\fBv.reclass.pg help\fR
+.br
+\fBv.reclass.pg\fR \fB[-d]\fR \fBpql=\fIname\fR \fBkey=\fIname\fR \fBtype=\fIname\fR \fBinput=\fIname\fR \fB[output=\fIname]\fR 
+.SH DESCRIPTION
+v.reclass.pg generates a new vector map layer based on the results of one or more queries to the currently selected database. 
+The user constructs a series of mutually exclusive postQUEL retrieve statments designed to return groups of records from the database. Each group of records should be
+internally consistent in terms of attribute characteristics specified by the user in the retrieve clause. These
+groups should also be mutually exclusive, thereby insuring that a row returned by one retrieve clause is
+not also returned by a subsequent retrieve clause. Each group of records therefore forms the basis for a single
+category in the resulting GRASS vector map. v.reclass.pg processes each retrieve statement in order returning
+groups of records which will form a single category in the resulting map.
+As each retrieve statement is processed the group of
+records returned receives a common category value. The category value is incremented by one for each
+subsequent retrieve statment which is processed. The resulting reclass map will have one category for each
+of the original retrieve statements.
+
+For example, the rows associated with the first retrieve statement will be assigned to category 1, those 
+associated with the second retrieve statement will be assigned to category 2 and so on. The output map will 
+contain only those line segments associated with database rows returned by the retrieve statement(s).
+
+.SH "COMMAND LINE OPTIONS"
+.LP
+Falgs:
+.IP \fI-d\fR
+Disolve common boundaries between reclassed areas.
+.LP
+Parameters:
+.IP \fIpql=filename\fR
+Name of file containing postQUEL query statements.
+.IP \fIkey=database_column_name\fR
+Key column in db.
+.IP \fItype=area/line.\fR
+Key column in db.
+.IP \fIinput=map\fR
+Name of existing vector file to be reclassed using query output.
+.IP \fIoutput=map\fR
+Name of new raster (reclass),  file.
+
+.SH "EXAMPLE: produces vector map of primary and secondary roads." 
+
+
+v.reclass.pg pql=vect.pql key=tlid input=t.roads.pg output=t.roads.12
+
+.br
+vect.pql:
+
+.br
+	retrieve unique (t.tlid,t.cfcc) from t in type1 
+.br
+	where cfcc ~ "A1" 
+.br
+	sort by tlid
+.br
+.br
+	retrieve unique (t.tlid,t.cfcc) from t in type1 
+.br
+	where cfcc ~ "A2" 
+.br
+	sort by tlid
+.br
+
+.SH BUGS
+None known.
+
+.SH "NOTE"
+This program requires the Postgres database software.
+
+.SH "SEE ALSO"
+g.column.pg, g.select.pg, g.stats.pg, g.table.pg, d.rast.pg, d.site.pg, d.vect.pg, d.what.r.pg, d.what.s.pg, d.what.v.pg, r.rescale.pg, v.reclass.pg
+
+.SH AUTHOR
+Original Informix SQL-tools: James A. Farley, Wang Song and W. Fredrick Limp
+University of Arkansas, CAST
+
+Postgres modifications: Janne Soimasuo, Faculty of Forestry, University of Joensuu,
+Finland.
+
