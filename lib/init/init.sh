@@ -30,7 +30,7 @@ GRASS_PERL=PERL_COMMAND
 export GRASS_PERL
 
 # Get the command name
-CMD_NAME=`basename "$0"`
+CMD_NAME=START_UP
 
 # Go through the command line options
 for i in "$@" ; do
@@ -51,8 +51,9 @@ for i in "$@" ; do
 	    echo
             echo "Flags:"
             echo "  -h or -help or --help          print this help message"
-            echo "  -text                          use text based interface"
+            echo "  -text                          use text based interface and set as default"
             echo "  -tcltk or -gui                 use Tcl/Tk based graphical user interface"
+            echo "                                   and set as default"
             echo
             echo "Parameters:"
             echo "  GISDBASE                       initial database"
@@ -493,7 +494,10 @@ if [ ! "$LOCATION" ] ; then
     esac
 fi
 
-eval `g.gisenv`
+GISDBASE=`g.gisenv GISDBASE`
+LOCATION_NAME=`g.gisenv LOCATION_NAME`
+MAPSET=`g.gisenv MAPSET`
+
 LOCATION=${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}
 
 trap "" 2 3 15
@@ -505,7 +509,6 @@ if [ "$CYGWIN" ] ; then
     sh="cygwin"
     shellname="GNU Bash (Cygwin)"
     SHELL=/usr/bin/bash.exe
-    export SHELL
 else 
     sh=`basename "$SHELL"`
     case "$sh" in

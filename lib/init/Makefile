@@ -39,6 +39,9 @@ default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/license \
 	$(ETC)/msgs \
 	$(ETC)/gis_set.tcl
+	mkdir -p $(GISBASE)/docs/html
+	cp description.html $(GISBASE)/docs/html/variables.html
+
 
 $(ARCH_BINDIR)/$(START_UP): init.sh 
 	@test -d $(ARCH_BINDIR) || (echo 'ARCH_DISTDIR($(ARCH_BINDIR))' not found; exit 1)
@@ -57,6 +60,7 @@ $(ETC)/Init.sh: init.sh
 	-e \"s#VERSION_UPDATE_PKG#$(VERSION_UPDATE)#\" \
 	-e \"s#LD_LIBRARY_PATH_VAR#$(LD_LIBRARY_PATH_VAR)#g\" \
 	-e \"s#PERL_COMMAND#$(PERL)#\" \
+	-e \"s#START_UP#$(START_UP)#\" \
 	init.sh > $@"
 	chmod +x $@
 
