@@ -17,10 +17,17 @@ These two companion programs are useful both for importing and exporting
 vector files between GRASS and other software, and for transferring data 
 between machines.
 
+<p> 
+The order of coordinates for new (standard) version of ASCII file is <BR><BR>
+X Y [Z]
+<BR><BR> 
+the order of coordinates for old version of ASCII file is <BR><BR>
+Y X
+
 <p>
 
-The <B>output</B> file from <em>v.out.ascii</em> will be placed 
-in the <em>$LOCATION/$MAPSET/dig_ascii/</em> directory.
+If old version is requested, the <B>output</B> files from <em>v.out.ascii</em> will be placed 
+in the <em>$LOCATION/$MAPSET/dig_ascii/</em> and <em>$LOCATION/$MAPSET/dig_att</em> directory.
 
 <p>
 
@@ -29,7 +36,6 @@ file associated with the binary vector <em>input</em> map
 to the new <em>output</em> file name.  The user must copy
 the <em>dig_cats</em> file to the new <em>output</em> name
 if this is desired (e.g., using the UNIX <em>cp</em>
-
 command).
 
 <h2>SEE ALSO</h2>
