@@ -1,5 +1,5 @@
-
 GRASS Debugging:
+
  Print debugging message if variable DEBUG
  is set to level equal or greater
 
@@ -18,6 +18,24 @@ Further hints:
 '-Werror-implicit-function-declaration'
      Give a warning (or error) whenever a function is used before being
      declared.
+
+----------------------------------------------------
+
+To debug  TCL code, run (example):
+
+GRASS:~> g.gisenv set="DEBUG=1"
+GRASS:~> d.text.freetype > dtf_tcl.txt
+
+then edit 'dtf_tcl.txt'  to remove the "| wish &" from the end.
+
+then '. dtf_tcl.txt > dtf.tcl' to get rid of the echo-proofing chars.
+
+then 'wish < dtf.tcl'  to test it.
+
+References:
+"Is white space significant in Tcl"  http://wiki.tcl.tk/981
+"Tcl quoting hell"  http://wiki.tcl.tk/1726
+"1 minute intro to tcl"  http://www.pconline.com/~erc/tcl.htm
 
 ----------------------------------------------------
 
