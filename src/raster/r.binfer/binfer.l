@@ -92,6 +92,8 @@ s_lookup(token(String));
 return token(String);
 }
 
+"-"{digit}+   |                  
+"-"{digit}*"."{digit}+  |
 {digit}+   |                  
 {digit}*"."{digit}+        {
 s_lookup(token(Constant));
