@@ -6,7 +6,7 @@
  * $Id$
  *
  *	Copyright (C) 2000 by the GRASS Development Team
- *	Author: Huidae Cho <hdcho@geni.knu.ac.kr>
+ *	Author: Huidae Cho <hdcho@water.knu.ac.kr>
  *		Hydro Laboratory, Kyungpook National University
  *		South Korea
  *
