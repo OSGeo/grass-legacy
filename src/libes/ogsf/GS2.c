@@ -1303,7 +1303,8 @@ int GS_load_att_map(int id, char *filename, int att)
     unsigned int changed;
     unsigned int atty;
     char *mapset;
-    int reuse = 0, begin, hdata, ret, neg = 0, has_null = 0;
+    struct Cell_head rast_head;
+    int reuse = 0, begin, hdata, ret = 1, neg = 0, has_null = 0;
     typbuff *tbuff;
 
 #ifdef TRACE_GS_FUNCS
@@ -1339,7 +1340,25 @@ int GS_load_att_map(int id, char *filename, int att)
 
     /* Get MAPSET to ensure names are fully qualified */
     mapset = G_find_cell2(filename, "");
+    if (mapset == NULL) {
+	    /* Check for valid filename */
+	    fprintf(stderr, "Error: Raster %s does not exist in current Mapset\n", filename);
+	    fprintf(stderr, "Load Failed\n");
+	    exit (0);
+    }
     filename = G_fully_qualified_name(filename, mapset);
+
+    /* Check to see if map is in Region */
+    G_get_cellhd(filename, mapset, &rast_head);
+    if (rast_head.north <= wind.south ||
+		    rast_head.south >= wind.north ||
+		    rast_head.east <= wind.west ||
+		    rast_head.west >= wind.east)
+    {
+	    fprintf(stderr, "Error: Raster %s is outside of current region\n",filename);
+			    fprintf(stderr, "Load Failed\n");
+			    exit(0);
+			    }
 
     while (!reuse && (0 < hdata)) {
 	changed = CF_COLOR_PACKED;
@@ -1575,8 +1594,11 @@ int GS_load_att_map(int id, char *filename, int att)
 	fprintf(stderr, "loading error\n");
     }
 
-    if (-1 == Gs_update_attrange(gs, att)) {
-	Gs_status("Error finding range");
+    if (Gs_update_attrange(gs, att) < 0 ) {
+	    /* If update range returns -1 then probably all nulls */
+           /* Should exit */
+	    Gs_status("Error finding raster range (all nulls)");
+	    exit(0);
     }
 
 #ifdef DEBUG_MSG
