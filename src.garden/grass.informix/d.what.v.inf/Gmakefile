@@ -1,0 +1,21 @@
+PGM       = $(GARDEN_BIN)/d.what.v.inf
+LIBES     = $(VECTLIB) $(VECTLIB) $(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
+
+
+
+OBJS = \
+	main.o  \
+        getAllOpts.o \
+        getSopts.o \
+        buildInfxQry.o \
+        runInfxFile.o \
+	getCat.o  \
+	openvect.o 
+
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB)
+
+$(LIBES): #
