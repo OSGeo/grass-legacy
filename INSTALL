@@ -1,6 +1,10 @@
                    INSTALL GRASS 5.0 source code
 
-($Id: INSTALL,v 1.6 2000-10-13 08:12:17 justin Exp $)
+($Id: INSTALL,v 1.7 2000-11-13 09:55:49 markus Exp $)
+
+To compile GRASS, please read the file REQUIREMENTS. Note: If your
+system does not fullfil all requirements, some modules won't be
+compiled.
 
 The intent of the new install method is to have the following sequence
 of commands work to install GRASS on any platform.  If for some reason
@@ -38,6 +42,9 @@ dependencies not already accounted for by `configure') please pass
 along the relevant information (e.g., operating system, dependency
 information, and ideally a fix) so the configuration system can be
 fixed.
+
+
+Old install method
 
 Note that the old install method based on running GISGEN directly
 should still work (though be sure to check the files created by
@@ -85,6 +92,8 @@ normal options.  The following lists a few that are relevant to GRASS.
 					(-I) for locating TIFF files
 	--with-tiff-libs=DIRS		add DIRS to the compiler flags
 					(-L) for locating TIFF libraries
+        --without-PACKAGE               do not use PACKAGE (same as
+                                        --with-PACKAGE=no)
 	--with-SYSV			define the SYSV macro
 	--with-USE_TERMIO		define the USE_TERMIO macro
 
@@ -94,6 +103,12 @@ account for system dependencies that are not yet included within the
 `configure' script (see below).  They will be removed in future
 versions.
 
+To disable the support of a specific package you can use the
+        --without-PACKAGE
+option.
+Example: To disable PostgreSQL support you will specify
+        configure --without-postgresql
+
 
 FILES TO CHECK
 
@@ -101,13 +116,15 @@ The `configure' script creates the following files to contain system
 dependencies: 
 
 	Makefile
-	src/CMD/head/head
+	src/CMD/head/head.$ARCH
 	src/include/config.h
 	src/scripts/shells/create_fifos.sh
 
+$ARCH is a variable containing the host system (example:
+head.i686-pc-linux-gnu).
 After running `configure' it is wise to check these files to verify
 that they contain the correct information.  In particular, several
-known exceptions (see below) might need fixing in src/CMD/head/head.
+known exceptions (see below) might need fixing in src/CMD/head/head.$ARCH.
 
 
 KNOWN EXCEPTIONS
@@ -118,7 +135,7 @@ fixed, especially if people with these systems can help (see below).
 
 Scattered throughout the source code are dependencies on the C
 preprocessor macro `SYSV'.  Only `hpux10' machines need to define this
-macro in src/CMD/head/head:
+macro in src/CMD/head/head.$ARCH:
 
 	XLDFLAGS = -DSYSV
 
