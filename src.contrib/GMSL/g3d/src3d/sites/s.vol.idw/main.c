@@ -1,22 +1,23 @@
 /************************************************************************/
 /*If necessary, please contact the author at hofierka@geomodel.sk.
 
-(c) Copyright Jaroslav Hofierka, GeoModel, s.r.o. Bratislava 1999, 2000
+ (c) Copyright Jaroslav Hofierka, GeoModel, s.r.o. Bratislava 1999, 2000
 
-This program is based on s.surf.idw grass command.
---------------------------------------------------------------------------
+ This program is based on s.surf.idw grass command.
+ --------------------------------------------------------------------------
 
-s.vol.idw - inverse distance - weighted interpolation program 
-for generation of 3d raster (voxel) from GRASS site file
-in x,y,z,w format. Output is in G3D data format.
+ s.vol.idw - inverse distance - weighted interpolation program 
+ for generation of 3d raster (voxel) from GRASS site file
+ in x,y,z,w format. Output is in G3D data format.
 
  v. 2.0.0 - 3/2000 -  
 			input: x|y|z|%w 
 			output: G3D file
-*/
-/*	  change site format due to datetime.lib specs
-*/
-/*************************************************************************/ 
+
+ - change site format due to datetime.lib specs
+ - added field selection, add file exist test MN 1/2001
+*************************************************************************/
+
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
@@ -63,7 +64,9 @@ int main(argc, argv)
 	float *data, value;
     int i,n,max,sz,cnt;
     int field,  scan_int;
-    
+    char buf[200];
+    char *sitesmap;
+
     struct
     {
 	struct Option *input, *npoints, *output, *field;
@@ -109,12 +112,18 @@ int main(argc, argv)
 	exit(1);
     }
 
+    sitesmap = G_find_file2 ("site_lists", parm.input->answer, "");
+    if(!sitesmap){
+	sprintf(buf,"Couldn't find sites file %s", parm.input->answer);
+	G_fatal_error(buf);
+    }
+
     G3d_getWindow (&current_region);
     G3d_readWindow(&current_region,NULL);
     fprintf(stderr,"Region from getWindow: %d %d %d\n",current_region.rows, 
                                 current_region.cols, current_region.depths);
 
-	output = parm.output->answer;
+    output = parm.output->answer;
 
     if(sscanf(parm.npoints->answer,"%d", &search_points) != 1 || search_points<1)
     {
@@ -134,6 +143,7 @@ int main(argc, argv)
     }
 
     list = (struct Point *) G_calloc (search_points, sizeof (struct Point));
+ 
 
 /* read the elevation points from the input sites file */
     read_sites (parm.input->answer, field);
