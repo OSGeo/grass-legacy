@@ -2,11 +2,13 @@
 # Copyright (C) 2002 Free Software Foundation, Inc.
 # Alex Shevlakov<sixote@yahoo.com>, 2002.
 #
+#: getAllOpts.c:32 getSopts.c:43 getSopts.c:44 getSopts.c:45 getSopts.c:46
+#: getSopts.c:165 main.c:48 openvect.c:10
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: 5.0\n"
-"POT-Creation-Date: 2002-03-06 13:20+0300\n"
+"POT-Creation-Date: 2002-03-20 12:31+0300\n"
 "PO-Revision-Date: 2002-03-06 13:20+0300\n"
 "Last-Translator: Alex Shevlakov<sixote@yahoo.com>, 2002\n"
 "Language-Team: ru <ru@li.org>\n"
@@ -14,33 +16,82 @@ msgstr ""
 "Content-Type: text/plain; charset=8-bit\n"
 "Content-Transfer-Encoding: koi8\n"
 
+#: buildInfxQry.c:14
+#, c-format
+msgid "SELECT * from %s where %s=%d"
+msgstr ""
+
+#: getAllOpts.c:43 getSopts.c:62
+msgid "map"
+msgstr ""
+
+#: getAllOpts.c:44 getSopts.c:63
+msgid "old,dig,vector"
+msgstr ""
+
 #: getAllOpts.c:48 getSopts.c:67
 msgid "Vector map to run query on:"
 msgstr "Векторная карта, на которой выполняется запрос:"
+
+#: getAllOpts.c:51
+msgid "tab"
+msgstr ""
 
 #: getAllOpts.c:55
 msgid "Postgres table with categories:"
 msgstr "Таблица Postgres:"
 
+#: getAllOpts.c:58
+msgid "col"
+msgstr ""
+
 #: getAllOpts.c:62
 msgid "Column with categories from this table:"
 msgstr "Столбец ID в этой таблице:"
+
+#: getAllOpts.c:65 getSopts.c:78
+msgid "color"
+msgstr ""
 
 #: getAllOpts.c:69 getSopts.c:82
 msgid "Selected lines color:"
 msgstr "Выбранный цвет линий:"
 
+#: getAllOpts.c:70
+msgid "yellow"
+msgstr ""
+
 #: getAllOpts.c:74 getSopts.c:87
 msgid "Fill polygons?"
 msgstr "Закрасить полигоны"
+
+#: getAllOpts.c:77 getSopts.c:90
+msgid "fillcolor"
+msgstr ""
+
+#: getAllOpts.c:79 getSopts.c:92
+msgid "gray"
+msgstr ""
 
 #: getAllOpts.c:81
 msgid "Selected areas color (for fill):"
 msgstr "Цвет заливки:"
 
+#: getAllOpts.c:84 getSopts.c:97
+msgid "hv"
+msgstr ""
+
+#: getAllOpts.c:86 getSopts.c:99 runInfxQry.c:30
+msgid "v"
+msgstr ""
+
 #: getAllOpts.c:87 getSopts.c:100
 msgid "Type of database output - [h/v]:"
 msgstr "Формат вывода - [h/v]:"
+
+#: getAllOpts.c:92
+msgid "d.what.v.pg -s help"
+msgstr ""
 
 #: getAllOpts.c:108 getSopts.c:131
 #, c-format
@@ -87,7 +138,7 @@ msgstr ""
 msgid "Nothing found.\n"
 msgstr "Ничего не найдено.\n"
 
-#: getCat.c:93 getCat.c:179
+#: getCat.c:93 getCat.c:187
 msgid "Read error\n"
 msgstr "Ошибка чтения\n"
 
@@ -99,11 +150,11 @@ msgstr ""
 "Категория линии не найдена\n"
 "Область не найдена\n"
 
-#: getCat.c:171
+#: getCat.c:179
 msgid "Area category not found\n"
 msgstr "Категория области не найдена\n"
 
-#: getCat.c:196
+#: getCat.c:204
 msgid "Line category not found\n"
 msgstr "Категория линии не найдена\n"
 
@@ -111,18 +162,56 @@ msgstr "Категория линии не найдена\n"
 msgid "Use [-s] for SQL command file input."
 msgstr "Используйте [-s] для ввода через командный файл SQL."
 
+#: getSopts.c:70
+msgid "sql"
+msgstr ""
+
+#: getSopts.c:71
+msgid "file"
+msgstr ""
+
 #: getSopts.c:75
 msgid "Name of the SQL command file: "
 msgstr "Название файла команд SQL:"
+
+#: getSopts.c:83
+msgid "red"
+msgstr ""
 
 #: getSopts.c:94
 msgid "Selected areas color (for polys):"
 msgstr "Цвет выбранных площадей:"
 
+#: getSopts.c:105 getSopts.c:106
+msgid "help"
+msgstr ""
+
+#: getSopts.c:109 main.c:68
+msgid "-s"
+msgstr ""
+
+#: getSopts.c:158
+msgid "r"
+msgstr ""
+
 #: getSopts.c:159
 #, c-format
 msgid "File read error on %s\n"
 msgstr "Ошибка чтения файла %s\n"
+
+#: getSopts.c:171
+#, c-format
+msgid "%d"
+msgstr ""
+
+#: getSopts.c:174
+#, c-format
+msgid "%c"
+msgstr ""
+
+#: main.c:60 runInfxQry.c:35
+msgid "PG_DBASE"
+msgstr ""
 
 #: main.c:62
 msgid "Please run g.select.pg to identify a current database.\n"
@@ -133,15 +222,61 @@ msgstr "Выполните g.select.pg и выберите БД.\n"
 msgid "warning: %s - vector file not found\n"
 msgstr "предупреждение: %s - векторная карта не найдена\n"
 
+#: runInfxQry.c:28 runInfxQry.c:63
+#, c-format
+msgid "%s"
+msgstr ""
+
+#: runInfxQry.c:32
+#, c-format
+msgid ""
+"\n"
+"\n"
+"Executing\n"
+"%s\n"
+"---------------------\n"
+msgstr ""
+
+#: runInfxQry.c:34
+msgid "PG_HOST"
+msgstr ""
+
 #: runInfxQry.c:38
 #, c-format
 msgid "Error: select Postgres:%s\n"
 msgstr "Ошибка: select Postgres:%s\n"
 
+#: runInfxQry.c:44
+msgid "update"
+msgstr ""
+
+#: runInfxQry.c:44
+msgid "UPDATE"
+msgstr ""
+
 #: runInfxQry.c:48
 #, c-format
 msgid "Error: Connecting to Postgres:%s\n"
 msgstr "Ошибка: Connecting to Postgres:%s\n"
+
+#: runInfxQry.c:59
+#, c-format
+msgid "%10s I %s\n"
+msgstr ""
+
+#: runInfxQry.c:65
+#, c-format
+msgid ",%s"
+msgstr ""
+
+#: runInfxQry.c:67 runInfxQry.c:75
+msgid "\n"
+msgstr ""
+
+#: runInfxQry.c:73
+#, c-format
+msgid "%s,"
+msgstr ""
 
 #: runInfxQry.c:80
 #, c-format

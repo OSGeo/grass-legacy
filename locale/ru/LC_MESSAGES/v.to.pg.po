@@ -1,0 +1,297 @@
+# GRASS .po file.
+# Copyright (C) 2002 Free Software Foundation, Inc.
+# Alex Shevlakov<sixote@yahoo.com>, 2002.
+#
+#: buildInfxQry.c:13 getAllOpts.c:96 getSopts.c:95 main.c:37 plotCat.c:43
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 5.0\n"
+"POT-Creation-Date: 2002-03-20 12:39+0300\n"
+"PO-Revision-Date: 2002-03-05 19:20+0300\n"
+"Last-Translator: Alex Shevlakov<sixote@yahoo.com>, 2002\n"
+"Language-Team: ru <ru@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=8-bit\n"
+"Content-Transfer-Encoding: koi8\n"
+
+#: buildInfxQry.c:18
+msgid " where "
+msgstr ""
+
+#: buildInfxQry.c:21
+#, c-format
+msgid "SELECT Distinct %s from %s %s %s and %s is not null"
+msgstr ""
+
+#: buildInfxQry.c:23
+#, c-format
+msgid "SELECT Distinct %s from %s where %s is not null"
+msgstr ""
+
+#: getAllOpts.c:20 getSopts.c:30
+msgid "map"
+msgstr ""
+
+#: getAllOpts.c:21 getSopts.c:32
+msgid "old,dig,vector"
+msgstr ""
+
+#: getAllOpts.c:25
+msgid "Vector map:"
+msgstr "Векторная карта:"
+
+#: getAllOpts.c:28 getSopts.c:38
+msgid "type"
+msgstr ""
+
+#: getAllOpts.c:32 getSopts.c:42
+msgid "area,line"
+msgstr ""
+
+#: getAllOpts.c:33 getSopts.c:43
+msgid "Select area or line."
+msgstr "Выберите area или line."
+
+#: getAllOpts.c:36
+msgid "key"
+msgstr ""
+
+#: getAllOpts.c:40
+msgid "Column with category IDs from the table:"
+msgstr "Столбец ID в таблице:"
+
+#: getAllOpts.c:44
+msgid "tab"
+msgstr ""
+
+#: getAllOpts.c:48
+msgid "Table containing this column:"
+msgstr "Таблица, содержащая ID:"
+
+#: getAllOpts.c:51
+msgid "where"
+msgstr ""
+
+#: getAllOpts.c:55
+msgid "Query clause (e.g. obj='paved'):"
+msgstr "Условие запроса (напр.,obj='paved'): "
+
+#: getAllOpts.c:58 getSopts.c:54
+msgid "color"
+msgstr ""
+
+#: getAllOpts.c:62
+msgid "Color to draw selected vectors:"
+msgstr "Цвет прорисовки выбранных линий/площадей:"
+
+#: getAllOpts.c:67 getSopts.c:62
+msgid "Fill polygons"
+msgstr "Закрасить полигоны"
+
+#: getAllOpts.c:71
+msgid "Without reference table, i.e., all vectors"
+msgstr "Без соответствия с др. таблицей, т.е., все векторы"
+
+#: getAllOpts.c:75 getSopts.c:66
+msgid "Verbose mode"
+msgstr "Вывод статистики на экран"
+
+#: getAllOpts.c:81
+msgid "v.to.pg -s help"
+msgstr ""
+
+#: getAllOpts.c:86 getSopts.c:85
+msgid "white"
+msgstr ""
+
+#: getAllOpts.c:96 getSopts.c:95
+msgid "dig"
+msgstr ""
+
+#: getAllOpts.c:97
+#, c-format
+msgid "Vector map %s not found.\n"
+msgstr "Векторная карта %s не найдена.\n"
+
+#: getSopts.c:27
+msgid "Use [s] flag to select db records using an input file."
+msgstr "Используйте флаг [s] для выборки записей через командный файл SQL."
+
+#: getSopts.c:35
+msgid "Name of existing vector file."
+msgstr "Название существующей векторной карты."
+
+#: getSopts.c:46
+msgid "sql"
+msgstr ""
+
+#: getSopts.c:47
+msgid "file"
+msgstr ""
+
+#: getSopts.c:51
+msgid "SQL statements specifying selection criteria. "
+msgstr "SQL команды в файле."
+
+#: getSopts.c:58
+msgid "Color for vector draw."
+msgstr "Цвет прорисовки."
+
+#: getSopts.c:72 getSopts.c:73
+msgid "help"
+msgstr ""
+
+#: getSopts.c:75 main.c:59
+msgid "-s"
+msgstr ""
+
+#: getSopts.c:96
+#, c-format
+msgid "Vector file %s not found.\n"
+msgstr "Векторная карта %s не найдена.\n"
+
+#: getSopts.c:100
+msgid "r"
+msgstr ""
+
+#: getSopts.c:101
+#, fuzzy, c-format
+msgid "File read error on %s\n"
+msgstr "Ошибка чтения - EOF\n"
+
+#: main.c:50 runInfxFile.c:56
+msgid "PG_DBASE"
+msgstr ""
+
+#: main.c:52
+msgid "Please run g.select.pg to identify a current database.\n"
+msgstr "Выполните g.select.pg и выберите БД.\n"
+
+#: plotCat.c:62 runInfxFile.c:66
+msgid "area"
+msgstr ""
+
+#: plotCat.c:107
+#, c-format
+msgid "INSERT into %s_bnd (%s, num, ex, boundary) values ('%d','%d','f','("
+msgstr ""
+
+#: plotCat.c:117 plotCat.c:158 plotCat.c:249
+#, c-format
+msgid "(%f,%f),"
+msgstr ""
+
+#: plotCat.c:119 plotCat.c:160 plotCat.c:251
+#, c-format
+msgid "(%f,%f)"
+msgstr ""
+
+#: plotCat.c:125 plotCat.c:166
+msgid ")')"
+msgstr ""
+
+#: plotCat.c:130
+#, c-format
+msgid "n_points_i is %d, v_att is %d, count is %d\n"
+msgstr "число точек %d, v_att %d, count %d\n"
+
+#: plotCat.c:132 plotCat.c:173 plotCat.c:267 runInfxFile.c:76 runInfxFile.c:90
+#, c-format
+msgid ""
+"Executing\n"
+"%s;\n"
+"\n"
+msgstr "" 
+"Выполняется\n"
+"%s;\n"
+"\n"
+
+#: plotCat.c:149
+#, c-format
+msgid "INSERT into %s_bnd (%s, num, ex, boundary) values ('%d','%d','t','("
+msgstr ""
+
+#: plotCat.c:171 plotCat.c:265
+#, c-format
+msgid "n_points is %d, v_att is %d, count is %d\n"
+msgstr "число точек %d, v_att %d, count %d\n"
+
+#: plotCat.c:205
+msgid "line"
+msgstr ""
+
+#: plotCat.c:215
+#, c-format
+msgid ""
+"\n"
+"WARNING: vector file [%s]-read error\n"
+msgstr ""
+"\n"
+"WARNING: векторная карта [%s]-ошибка чтения\n"
+
+#: plotCat.c:225
+msgid "Read error - EOF\n"
+msgstr "Ошибка чтения - EOF\n"
+
+#: plotCat.c:229
+msgid "Read error\n"
+msgstr "Ошибка чтения\n"
+
+#: plotCat.c:237
+#, c-format
+msgid "INSERT into %s_arc (%s, num, segment) values ('%d','%d','["
+msgstr ""
+
+#: plotCat.c:260
+msgid "]')"
+msgstr ""
+
+#: runInfxFile.c:46
+#, c-format
+msgid "Error opening vector map %s in mapset %s\n"
+msgstr "Ошибка открытия векторной карты %s в наборе %s\n"
+
+#: runInfxFile.c:54
+msgid "PG_HOST"
+msgstr ""
+
+#: runInfxFile.c:58
+#, c-format
+msgid "Error Connecting to Postgres:%s\n"
+msgstr "Ошибка: Connecting to Postgres:%s\n"
+
+#: runInfxFile.c:68
+#, c-format
+msgid "CREATE TABLE %s_bnd (%s int4, num int2, ex bool, boundary polygon)"
+msgstr ""
+
+#: runInfxFile.c:72
+#, c-format
+msgid "CREATE TABLE %s_arc (%s int4, num int2, segment path)"
+msgstr ""
+
+#: runInfxFile.c:80
+#, c-format
+msgid "Could not create new table:%sExiting.\n"
+msgstr "Невозможно создать таблицу:%sВыход.\n"
+
+#: runInfxFile.c:94
+#, c-format
+msgid "Error Selecting from Postgres:%s\n"
+msgstr "Ошибка: Selecting from Postgres:%s\n"
+
+#: runInfxFile.c:98
+#, c-format
+msgid "%d Rows\n"
+msgstr "%d записей\n"
+
+#: runInfxFile.c:108 runInfxFile.c:121
+#, c-format
+msgid "Error plotting category %d\n"
+msgstr "Ошибка рисования категории %d\n"
+
+#: runInfxFile.c:132
+#, c-format
+msgid "Total number of vectors inserted = %d, with average of %d vertices\n"
+msgstr "Общее число векторов вставлено %d, в среднем %d вертексов\n"
