@@ -504,6 +504,11 @@ menu_build 1 .main_menu {
                 }
             }
         }
+        "Convert map" "" {
+            "To sites format" "" {
+                "source $env(TCLTKGRASSBASE)/module/r.to.sites"
+            }
+        }
         "Extract vector map" "" {
             "Lines from thinned raster" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.line"
@@ -699,8 +704,10 @@ menu_build 1 .main_menu {
     }
     Site "Site map analysis" {
         Display "" $display_sites
-        "Query with mouse" "" {
-            "source $env(TCLTKGRASSBASE)/module/d.what.sites"
+        "Analyse map" "" {
+            "Query with mouse" "" {
+                "source $env(TCLTKGRASSBASE)/module/d.what.sites"
+            }
         }
         Interpolation "" {
             "Inverse distance weighted" "" {
@@ -710,14 +717,27 @@ menu_build 1 .main_menu {
                  "source $env(TCLTKGRASSBASE)/module/s.surf.rst"
             }
         }
+        "Convert map" "" {
+            "To raster format" "" {
+                "source $env(TCLTKGRASSBASE)/module/s.to.rast"
+            }
+            "To vector format" "" {
+                "source $env(TCLTKGRASSBASE)/module/s.to.vect"
+            }
+        }
+        "Report map" "" {
+            "Basic information" "" {
+                "source $env(TCLTKGRASSBASE)/module/s.info"
+            }
+        }
     }
     Image "Image processing" $image_processing
     Import "Import maps into GRASS" {
         "Raster map" "" {
-            "GIF (8bit)" "" {
-                "source $env(TCLTKGRASSBASE)/module/r.in.gif"
+            "ESRI ARC/INFO ASCII-GRID" "" {
+                "source $env(TCLTKGRASSBASE)/module/r.in.arc"
             }
-            "TIFF 8bit" "" {
+            "TIFF 8/24bit" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.in.tiff"
             }
             "PNG (24bit)" "" {
@@ -768,6 +788,12 @@ menu_build 1 .main_menu {
     }
     Export "Export maps from GRASS" {
         "Raster map" "" {
+            "Binary file" "" {
+                "source $env(TCLTKGRASSBASE)/module/r.out.bin"
+            }
+            "ESRI ARC/INFO ASCII-GRID" "" {
+                "source $env(TCLTKGRASSBASE)/module/r.out.arc"
+            }
             "TIFF (8/24bit)" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.out.tiff"
             }
@@ -776,6 +802,9 @@ menu_build 1 .main_menu {
             }
             "HDF" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.out.hdf"
+            }
+            "ERDAS/LAN" "" {
+                "source $env(TCLTKGRASSBASE)/module/i.out.erdas"
             }
         }
         "Vector map" "" {
@@ -919,8 +948,11 @@ menu_build 1 .main_menu {
         "Help" "" {
            "source $env(TCLTKGRASSBASE)/main/help.tcl"
         }
-        About "" {
+        "About tcltkgrass" "" {
            "source $env(TCLTKGRASSBASE)/main/about.tcl"
+        }
+        "About GRASS" "" {
+           "run g.version &"
         }
 	-separator
 	"Help on scripting" "" {
