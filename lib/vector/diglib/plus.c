@@ -150,6 +150,9 @@ dig_free_plus (struct Plus_head *Plus)
         free (Isle);
     }
     free ( Plus->Isle );
+
+    /* Free spatial index */
+    dig_spidx_free ( Plus );
     
     return 1;
 }

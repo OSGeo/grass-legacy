@@ -148,6 +148,7 @@ int dig_select_isles ( struct Plus_head *, BOUND_BOX *, struct ilist *);
 int dig_find_node ( struct Plus_head *, double, double, double);
 
 int dig_spidx_init (struct Plus_head *);
+void dig_spidx_free (struct Plus_head *);
 int dig_write_spidx (GVFILE *, struct Plus_head *);
 int dig_dump_spidx (FILE *, struct Plus_head *);
 int dig_read_spidx (GVFILE *, struct Plus_head *);
