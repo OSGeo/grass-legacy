@@ -11,10 +11,7 @@ all:
 	cp i.tasscap/i.tasscap.tm5 $(GISBASE)/scripts
 	cp ps.add.pagesize/ps.add.pagesize $(GISBASE)/scripts
 	cp r.edge.dig/r.edge.dig $(GISBASE)/scripts
-	cp r.in.arctiff/r.in.arctiff $(GISBASE)/scripts
 	cp r.in.globedem/r.in.globedem $(GISBASE)/scripts
-	cp r.out.arctiff/r.out.arctiff $(GISBASE)/scripts
-	cp r.out.geotiff/r.out.geotiff $(GISBASE)/scripts
 	cp r.out.bil/r.out.bil $(GISBASE)/scripts
 	cp r.plane/r.plane $(GISBASE)/scripts
 	cp r.reclass.area/r.reclass.area $(GISBASE)/scripts
