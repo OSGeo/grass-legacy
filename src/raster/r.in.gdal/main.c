@@ -1048,7 +1048,7 @@ wkt_to_grass( const char * wkt,
         /* We assume degrees ... someday we will be wrong! */
         G_set_key_value( "unit", "degree", *proj_units );
         G_set_key_value( "units", "degrees", *proj_units );
-        G_set_key_value( "meter", "1.0", *proj_units );
+        G_set_key_value( "meters", "1.0", *proj_units );
     }
     else 
     {
@@ -1062,7 +1062,7 @@ wkt_to_grass( const char * wkt,
         sprintf( szFormatBuf, "%ss", pszUnitsName );
         G_set_key_value( "units", szFormatBuf, *proj_units );
         sprintf( szFormatBuf, "%g", dfToMeters );
-        G_set_key_value( "meter", szFormatBuf, *proj_units );
+        G_set_key_value( "meters", szFormatBuf, *proj_units );
 
     }
 
