@@ -9,7 +9,7 @@ do_copy(n,old,mapset,new)
     char command[2048];
     char path[1024];
 
-    printf ("COPY [%s in %s] to [%s]\n", old, mapset, new);
+    printf ("COPY [%s] to [%s]\n", G_fully_qualified_name(old, mapset), new);
 
     len = get_description_len(n);
 
