@@ -20,6 +20,8 @@
  * DEALINGS IN THE SOFTWARE.
  ******************************************************************************
  *
+ * 12/2000 Federico Ponchio ponhio@dm.unipi.it (minor changes to memory 
+ *  allocation for inserting in normal mode)
  * 02/2000 Alex Shevlakov sixote@yahoo.com	
  *			      
  ******************************************************************************/
@@ -33,6 +35,48 @@
 
 typedef unsigned char uchar;
 
+/* ok... i guess someone invented C++ just for this...*/
+
+struct my_string {
+  char *data;
+  int len;
+  int totlen;
+};
+
+int init(struct my_string *str) {
+  str->data = (char *)malloc(1024 *sizeof(char));
+  if(str->data == NULL) {
+    fprintf(stderr, "Failed to allocate new memory.\n");
+    exit(-1);
+  } 
+  str->len = 1;
+  str->totlen = 128;
+}
+
+int append(struct my_string *str, const char *s) {
+  int newlen;
+  newlen = strlen(s);
+  str->len += newlen;
+  if(str->len >= str->totlen) {
+    str->totlen = str->len;
+    str->data = (char *)realloc(str->data, sizeof(char) * str->len);
+    if(str->data == NULL) {
+      fprintf(stderr, "Failed to allocate new memory.\n");
+      exit(-1);
+    }
+  }
+  strcat(str->data, s);
+}
+
+int clear(struct my_string *str) {
+  strcpy(str->data, "");
+  str->len = 1;
+}
+
+int delete(struct my_string *str) {
+  if(str->data != NULL) 
+    free(str->data);
+}
 
 int PgDumpFromDBF (char *infile, int normal_user) {
 	
@@ -42,11 +86,17 @@ int PgDumpFromDBF (char *infile, int normal_user) {
 	int i,j;
 	char *dbname, *pp;
 	
-	static char SQL_create [1024]="";
-	static char SQL_insert [4096]="";
+	struct my_string SQL_create;
+	struct my_string SQL_insert;
+	struct my_string chunks;
+	struct my_string fldstrng;
+
 	static char name[128]="";
+	/*	static char SQL_create [1024]="";
+	static char SQL_insert [4096]="";
+
 	static char chunks[1024]="";
-	static char fldstrng[1024]="";
+	static char fldstrng[1024]="";*/
 	
 	PGconn*	pg_conn;
     	PGresult*	res;
@@ -55,6 +105,10 @@ int PgDumpFromDBF (char *infile, int normal_user) {
 	FILE *fp;
     	char *tmpfile_nm;
 
+	init(&SQL_create);
+	init(&SQL_insert);
+	init(&chunks);
+	init(&fldstrng);
 
 	
 	/* Check DATABASE env variable */
@@ -88,12 +142,12 @@ int PgDumpFromDBF (char *infile, int normal_user) {
 		
 	for( i = 0; i < DBFGetFieldCount(hDBF); i++ )
         {
-            char	field_name[15];
+	  char	field_name[128];
 	    int		field_width, k;
-	    char 	c_tmpbuf[128];
+	    //	    char 	*c_tmpbuf;
 	    char *fld;
 	    
-	    
+
 	    DBFFieldType ftype;
 
             ftype=DBFGetFieldInfo( hDBF, i, field_name, &field_width, NULL );
@@ -115,24 +169,36 @@ int PgDumpFromDBF (char *infile, int normal_user) {
 	}
 	
 	/*chunks -for create stmt*/	
-	snprintf(c_tmpbuf,128,"%s %s,",field_name,fld);
-		strncat(chunks,c_tmpbuf,strlen(c_tmpbuf));
+	append(&chunks, field_name);
+	append(&chunks, " ");
+	append(&chunks, fld);
+	append(&chunks, ",");
+	//	snprintf(c_tmpbuf,128,"%s %s,",field_name,fld);
+	//	strncat(chunks,c_tmpbuf,strlen(c_tmpbuf));
 		
 	/*fldstrng - for insert stmt*/
-	snprintf(c_tmpbuf,128,"%s,",field_name);
-		strncat(fldstrng,c_tmpbuf,strlen(c_tmpbuf));
+	
+	append(&fldstrng, field_name);
+	append(&fldstrng, ",");
+	//	snprintf(c_tmpbuf,128,"%s,",field_name);
+	//		strncat(fldstrng,c_tmpbuf,strlen(c_tmpbuf));
 		
         }
 	/*stripping last commas*/
-	pp = strrchr(chunks, ',');
+	pp = strrchr(chunks.data, ',');
     	if (pp != NULL)
         	*pp = '\0';
 	
-	pp = strrchr(fldstrng, ',');
+	pp = strrchr(fldstrng.data, ',');
     	if (pp != NULL)
         	*pp = '\0';
-
-	snprintf(SQL_create,1024,"create table %s (%s)",name, chunks);
+	
+	append(&SQL_create, "create table ");
+	append(&SQL_create, name);
+	append(&SQL_create, " (");
+	append(&SQL_create, chunks.data);
+	append(&SQL_create, ")");	
+	//	snprintf(SQL_create,1024,"create table %s (%s)",name, chunks->data);
 	
 	pghost = G__getenv("PG_HOST");
         
@@ -142,8 +208,8 @@ int PgDumpFromDBF (char *infile, int normal_user) {
       		PQfinish(pg_conn);
       		exit (-1); 
     	}
-  	fprintf(stdout,"Executing %s\n",SQL_create);      
-   	res = PQexec (pg_conn, SQL_create);
+  	fprintf(stdout,"Executing %s\n",SQL_create.data);      
+   	res = PQexec (pg_conn, SQL_create.data);
 	
 		if (strlen(PQresultErrorMessage(res))){
 			fprintf(stdout,"FIXME: Postgres Says:\n**********************\n%s\nPlease make sure that created table name is not used by another table.\n", PQresultErrorMessage(res));
@@ -187,9 +253,10 @@ if (!normal_user) {
 			
 	if((fp = fopen(tmpfile_nm,"w")) == NULL) {
             fprintf(stderr, "File write error on temporary file %s\nHint: Check write permissions for current catalogue", tmpfile_nm);
-	
-		snprintf(SQL_insert,4096,"drop table %s",name);	
-		res = PQexec (pg_conn,SQL_insert);
+	    append(&SQL_insert, "drop table ");
+	    append(&SQL_insert, name);
+	    //		snprintf(SQL_insert,4096,"drop table %s",name);	
+		res = PQexec (pg_conn,SQL_insert.data);
 		PQclear(res);
 		PQfinish(pg_conn);
 		DBFClose( hDBF );
@@ -200,13 +267,18 @@ if (!normal_user) {
 		
 	fclose(fp);
 	
-				
-		snprintf(SQL_insert,4096,"copy  %s from '%s' using delimiters ','",
-			name, tmpfile_nm);
+	clear(&SQL_insert);
+	append(&SQL_insert, "copy ");
+	append(&SQL_insert, name);
+	append(&SQL_insert, " from '");
+	append(&SQL_insert, tmpfile_nm);
+	append(&SQL_insert, "' using delimiters ','");
+	//	snprintf(SQL_insert,4096,"copy  %s from '%s' using delimiters ','",
+	//			name, tmpfile_nm);
 			
-		fprintf(stdout,"Executing %s\n",SQL_insert);
+		fprintf(stdout,"Executing %s\n",SQL_insert.data);
 		
-		res = PQexec (pg_conn, SQL_insert);
+		res = PQexec (pg_conn, SQL_insert.data);
 		
 		if (strlen(PQresultErrorMessage(res))){
 		/*explicitly close select result to avoid memory leaks*/  
@@ -215,9 +287,12 @@ if (!normal_user) {
 		fprintf(stdout,"********************\nFIXME: Postgres ERROR:%s\nThe table has NOT been created.\nYou must be Postgres superuser to COPY table. Choose normal user dumpmode.\n",PQresultErrorMessage(res));
 			
 			PQclear(res);
-			snprintf(SQL_insert,4096,"drop table %s",name);
+			clear(&SQL_insert);
+			append(&SQL_insert, "drop table ");
+			append(&SQL_insert, name);
+			//			snprintf(SQL_insert,4096,"drop table %s",name);
 			
-			res = PQexec (pg_conn,SQL_insert);
+			res = PQexec (pg_conn,SQL_insert.data);
 			PQclear(res);
 			
 			if (ch != 'y') unlink(tmpfile_nm);
@@ -231,17 +306,19 @@ if (!normal_user) {
 	PQclear(res);
 }
 else {			
+  struct my_string valstrng;
+  init(&valstrng);
 	
 	/*Loop over records*/
    for( i = 0; i < hDBF->nRecords; i++ ) {
-   
-   char valstrng[1024]="";
+     clear(&valstrng);
+     //   char valstrng[1024]="";
 		
 	for( j = 0; j < DBFGetFieldCount(hDBF); j++ ) {
 	
             char	field_name[15];
-	    char 	c_tmpbuf[128];
-	    char fld[128];
+	    //	    char 	c_tmpbuf[1024];
+	    char fld[1024];
 	    
 	    DBFFieldType ftype;
 
@@ -249,35 +326,47 @@ else {
 
 	  switch (ftype) {
 		case 0:
-			snprintf(fld,128,"'%s'",DBFReadStringAttribute( hDBF, i, j));
+		  append(&valstrng,"'");
+		  append(&valstrng,DBFReadStringAttribute( hDBF, i, j));
+		  append(&valstrng,"'");
+		  //			snprintf(fld,1024,"'%s'",DBFReadStringAttribute( hDBF, i, j));
 		break;
 		case 1:
-			snprintf(fld,128,"%d",DBFReadIntegerAttribute( hDBF, i, j));
+			snprintf(fld,1024,"%d",DBFReadIntegerAttribute( hDBF, i, j));
+			append(&valstrng, fld);
 
 		break;
 		case 2:
-			snprintf(fld,128,"%f",DBFReadDoubleAttribute( hDBF, i, j));
-
+			snprintf(fld,1024,"%f",DBFReadDoubleAttribute( hDBF, i, j));
+			append(&valstrng, fld);
 		break;
 		case 3:
             		G_fatal_error ("Invalid field type - bailing out");
 		break;
 	  }
+	  append(&valstrng,",");
 	/*valstrng -for insert stmt*/
-	snprintf(c_tmpbuf,128,"%s,",fld);
-		strncat(valstrng,c_tmpbuf,strlen(c_tmpbuf));
+	  //	snprintf(c_tmpbuf,1024,"%s,",fld);
+	  //	strncat(valstrng,c_tmpbuf,strlen(c_tmpbuf));
 	}
 	
-		pp = strrchr(valstrng, ',');
+		pp = strrchr(valstrng.data, ',');
     		if (pp != NULL)
         		*pp = '\0';
+		clear(&SQL_insert);
+		append(&SQL_insert, "insert into ");
+		append(&SQL_insert, name);
+		append(&SQL_insert, " (");
+		append(&SQL_insert, fldstrng.data);
+		append(&SQL_insert, ") values (");
+		append(&SQL_insert, valstrng.data);
+		append(&SQL_insert, ")");
+		//		snprintf(SQL_insert,4096,"insert into %s (%s) values (%s)",name, 
+		//			fldstrng,valstrng);
 			
-		snprintf(SQL_insert,4096,"insert into %s (%s) values (%s)",name, 
-			fldstrng,valstrng);
-			
-		fprintf(stdout,"Executing %s\n",SQL_insert);
+		fprintf(stdout,"Executing %s\n",SQL_insert.data);
 		
-		res = PQexec (pg_conn, SQL_insert);
+		res = PQexec (pg_conn, SQL_insert.data);
 		/*explicitly close select result to avoid memory leaks*/  
 		PQclear(res);
    }
