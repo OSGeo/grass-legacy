@@ -251,6 +251,14 @@ int G_geo_init_table(void)
 	TABLE[LAEA][LON0].def_exists = 1;
 	TABLE[LAEA][LON0].deflt = 20.0;
 
+	TABLE[LAEA][X0].ask = 1;
+	TABLE[LAEA][X0].def_exists = 1;
+	TABLE[LAEA][X0].deflt = 0.0;
+
+	TABLE[LAEA][Y0].ask = 1;
+	TABLE[LAEA][Y0].def_exists = 1;
+	TABLE[LAEA][Y0].deflt = 0.0;
+
 	TABLE[AEQD][LON0].ask = 1;
 	TABLE[AEQD][LON0].def_exists = 1;
 	TABLE[AEQD][LON0].deflt = 20.0;
