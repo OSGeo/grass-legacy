@@ -1,0 +1,17 @@
+PGM       = $(BIN_CONTRIB_CMD)/g.table.pg
+#PGM       = g.table.pg
+EXTRA_CFLAGS = $(PQINCPATH)
+LIBES     = $(GISLIB) $(PQLIB) $(MATHLIB)
+
+
+
+OBJS = \
+	main.o \
+	infxTable.o \
+	delcr.o
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+
+$(LIBES): #
+

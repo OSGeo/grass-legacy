@@ -1,0 +1,18 @@
+History of Changes
+
+1998, August - Markus Neteler neteler@geog.uni-hannover.de
+ - renamed Postgres command "retrieve" to PostgresQL 6.x "select"
+
+BTW: - the current PostgreSQL 6.x could be found at http://www.postgresql.org
+     - a nice TclTK interface is "pgaccess" (with visual query designer etc)
+
+
+1998, June - Markus Neteler
+ - created Gmakefile
+
+1996
+ 27.11. Markus Neteler: Correction of messages: 
+                          g.select.inf -> g.select.pg
+
+1994 Janne Soimasuo, Finland: changes for Postgres
+

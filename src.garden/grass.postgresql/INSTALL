@@ -1,0 +1,73 @@
+1. How to install the GRASS/Postgres ( aka pg_grass) interface modules.
+
+These instructions are applicable on the new style 'make install' GRASS
+compilation and installation. It is supposed you have successfully compiled and
+installed the core modules and libraries of GRASS.
+
+
+A. First, make sure Postgres libpq libraries and headers are installed in your
+system. Check them up in /usr/local/pgsql/. As for the version of Postgres,
+these modules were tested with Postgres 6.5.2. Do not forget, to access the
+database in pgsql you need to have appropriate permissions in pg_hba.conf,
+and BE a user of postgres (with the same name as of GRASS). As rule, postgres
+does not allow root to be a user, so if root holds PERMANENT folders on your
+GRASS server, change to a user account to work with pg_grass modules.
+
+B. Become root and change to the GRASS source root.
+
+	cd /usr/grass5.0/src
+	tar zxvf <path_to_pg_grass_tar_gz>
+	
+C. Edit file src/CMD/lists/GRASS and add the list of the new modules to the
+bottom of the GRASS list.
+
+D. Edit the src/CMD/head/<your_architecture_name>. See if the paths to libpq
+libraries and headers are there. If not, add them as in the sample "head" file
+(used to compile on Linux), found in the tar archive. Actually, this may be
+adding two following lines:
+
+PQLIB		    = -L/usr/local/pgsql/lib -lpq -lcrypt
+PQINCPATH	    = -I/usr/local/pgsql/include
+
+E. Edit the file src/CMD/next_step/<your_architecture_name>.
+Remove the line DONE and replace it with the line showing the path to the first
+of the new modules added to GRASS list in step A.
+
+F. Now, change to the /usr/grass5.0 and type 'make install'. The script will 
+compile the new modules and add links to them to the front-end directory of 
+GRASS.
+
+Of course, you may also get all stuff compiled with old type gmake5-gmakelinks5
+from the source directory.
+------------------------------
+
+Optionally (and recommended) add the TCLTKGRASS menus for these new
+modules.
+
+ Change to the tcltkgrass root directory:
+	
+	cd /usr/local/grass5.0/tcltkgrass
+	tar zxvf <path_to_tcltk_pg_grass_tar_gz>
+	
+This will place module menus to the "module" directory.
+Now, change the main menu bar to access the new modules:
+
+	cp main/menu.tcl main/menu.tcl.orig
+	patch main/menu.tcl < menu.diff
+	
+
+--
+-------------------------------
+Optionally (and also recommended) recompile NVIZ2.2 with Postgres patch.
+This gives you option to query Postgres from 3D-maps.
+
+	cp NVIZ2.2_postgres_**.diff /usr/grass5.0beta/src.contrib/GMSL
+	cd /usr/grass5.0beta/src.contrib/GMSL
+	patch -p1 < NVIZ2.2_postgres_**.diff
+	
+(you may need then to change GL include path in src/Gmakefile 
+to fit your computer, or just run configure again)
+--
+/*
+			alex shevlakov sixote@yahoo.com
+*/	

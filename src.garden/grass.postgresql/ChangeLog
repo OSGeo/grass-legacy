@@ -1,0 +1,87 @@
+#---------grass-postgres pack revision by Alex Shevlakov <sixote@yahoo.com>, 
+#---------dec'99- jan'00. Tested on Postgres-6.5.2.
+#---------mainly used codes from Carl Anderson's "postgrass" pack,
+#---------and extensively old grass.postgres pack codes. 
+#####################################################################
+./grass5.0beta/src/pg_eng/g.select.pg/*.c
+./grass5.0beta/src/pg_eng/g.table.pg/*.c
+./grass5.0beta/src/pg_eng/g.column.pg/*.c
+./grass5.0beta/src/pg_eng/g.stats.pg/*.c
+./grass5.0beta/src/pg_eng/d.vect.pg/runInfxFile.c
+#------------ In runInfxFile.c changed D_setup(0) instead of D_setup()
+#------------ to allow new color lines without flushing old lines 
+./grass5.0beta/src/pg_eng/d.vect.pg/getAllOpts.c
+./grass5.0beta/src/pg_eng/d.what.s.pg/*.c
+./grass5.0beta/src/pg_eng/d.site.pg/getAllOpts.c
+#---------- commented off cats->answer 
+./grass5.0beta/src/pg_eng/d.site.pg/buildInfxQry.c
+#-------- squeezed the SQL statement and changed wherecl[1024]
+./grass5.0beta/src/pg_eng/d.site.pg/runInfxFile.c
+#------------ In runInfxFile.c changed D_setup(0) instead of D_setup()
+#------------ to allow new color sites without flushing old sites 
+#------------Changed API Site (instead of G_put_site() >> G_site_put())
+#------------and allowed copying query-selected sites to new sites map with one
+#------------new string attribute.
+./grass5.0beta/src/pg_eng/d.rast.pg/*.c
+#-------- redone *.c files to libpq from psql-interface.
+#-------- input/output in getSopts.c revised.
+./grass5.0beta/src/pg_eng/d.what.v.pg/*.c
+#-------- redone to libpq interface with new functions added:
+#-------- coloring "clicked" lines/areas
+#-------- more readable database output
+#--------- added switching output format vert/horiz. Vert is good for reading,
+#--------- and horiz is for import to gnumeric(:)
+./grass5.0beta/src/pg_eng/g.stats.pg/infxStats.c
+#--------- changed can_avg_col = 1 in defines, otherwise mean can not be
+#--------- calculated.
+./grass5.0beta/src/pg_eng/d.what.s.pg/*.c
+#--------- added switching output format vert/horiz. Vert is good for reading,
+#--------- and horiz is for import to gnumeric(:)
+./grass5.0beta/src/pg_eng/d.what.r.pg/*.c
+#-------- redone to libpq interface
+#--------- added switching output format vert/horiz. Vert is good for reading,
+#--------- and horiz is for import to gnumeric(:)
+#--------- buffer-overrun and compile clean-up
+./grass5.0beta/src/pg_eng/d.vect.pg/plotCat.c
+#--------- swapped find_area and find_line to skip the bug
+#--------- in bsearch finding lines which are not there (area_cats=0)
+./grass5.0beta/src/pg_eng/d.vect.pg/*.c
+###-------- added (optional) filling selected areas with color, code clean-up
+./grass5.0beta/src/pg_eng/d.what.v.pg/getCat.c
+#---------- added toggle color on the middle button click;
+###-------- compile clean-up
+./grass5.0beta/src/pg_eng/v.reclass.pg/*.c
+###-------- rewrote to libpq. Check the v.reclass for the file input buffer
+#---------- length (currently 8 is too small).
+./grass5.0beta/src/pg_eng/d.what.v.pg/getCat.c
+###-------- filtered off returns of dbcat==0. Avoid plotting lines when areas
+#---------- found. Check up if R_polygons_abs() is the only way to fill polys.
+#---------- The problem with it is that it fills islands.
+./grass5.0beta/src/pg_eng/d.what.v.pg/getAllOpts.c
+./grass5.0beta/src/pg_eng/d.what.v.pg/getSopts.c
+###-------- Added flag to optionally fill areas.
+./grass5.0beta/src/pg_eng/d.what.v.pg/runInfxQry.c
+###-------- fprintf.
+./grass5.0beta/src/pg_eng/d.what.v.pg/runInfxQry.c
+./grass5.0beta/src/pg_eng/d.what.v.pg/getAllOpts.c
+./grass5.0beta/src/pg_eng/d.what.v.pg/getSopts.c
+###-------- smarter pre-export CSV output
+./grass5.0beta/src/pg_eng/d.what.v.pg/getCat.c
+###-------- rearranged if clauses to the order:
+###"Line_with_cats-no-area***area_with_cats***area_without_cats_line_with_cats
+###***both_lines_and_areas_without_cats
+./grass5.0beta/src/pg_eng/v.in.shape.pg/*.c
+### Added dump dbf to postgres functionality; also added dbf to ascii lib function
+### called DBFDumpASCII()
+./grass5.0beta/src/pg_eng/v.in.arc.pg/*.c
+./grass5.0beta/src/pg_eng/pg.in.dbf/*.c
+### Added dump dbf to postgres; v.in.arc.pg works more straightforward now.
+./grass5.0beta/src.contrib/GMSL/NVIZ2.2/src/position.c
+./grass5.0beta/src.contrib/GMSL/NVIZ2.2/src/init_commands.c
+./grass5.0beta/src.contrib/GMSL/NVIZ2.2/src/query_postgr.c
+./grass5.0beta/src.contrib/GMSL/NVIZ2.2/src/getCat.c
+./grass5.0beta/src.contrib/GMSL/NVIZ2.2/src/runInfxQry.c
+./grass5.0beta/src.contrib/GMSL/NVIZ2.2/src/buildInfxQry.c
+./grass5.0beta/src.contrib/GMSL/NVIZ2.2/scripts/panel_query.tcl
+./grass5.0beta/src.contrib/GMSL/NVIZ2.2/src/Gmakefile
+### Added postgres queries to NVIZ (arcs/areas/sites)
