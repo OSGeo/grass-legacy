@@ -1,0 +1,6 @@
+ACRES	conv.h	/^#define ACRES(C,R)      KILOMETERS(C,R) * 247.1000/
+HECTACRES	conv.h	/^#define HECTACRES(C,R)  KILOMETERS(C,R) * 100.0000/
+KILOMETERS	conv.h	/^#define KILOMETERS(C,R)	R*C\/1000000.0$/
+MILES	conv.h	/^#define MILES(C,R)      KILOMETERS(C,R) *   0.3861/
+Mmain	main.c	/^main (argc, argv)	char *argv[];$/
+more_print	more_print.c	/^more_print(tmpname, unexpected_cats)$/
