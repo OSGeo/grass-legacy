@@ -4,8 +4,7 @@
 * MODULE:       v.transform
 * AUTHOR(S):    See other files as well...
 *               Eric G. Miller <egm2@jps.net>
-* PURPOSE:      To transform a vector layer's coordinates via a set of tie
-*               points.
+* PURPOSE:      Read all the registration (map) coordinates in from the file
 * COPYRIGHT:    (C) 2002 by the GRASS Development Team
 *
 *               This program is free software under the GNU General Public
@@ -14,12 +13,9 @@
 *
 *****************************************************************************/
 
-/*
-*  Read all the registration (map) coordinates in from the file.
-*/
-
-#include    <stdio.h>
-#include    "trans.h"
+#include <stdio.h>
+#include "trans.h"
+#include "gis.h"
 
 int 
 get_coor_from_file (FILE *fp)
@@ -36,8 +32,11 @@ get_coor_from_file (FILE *fp)
 
 	if ( sscanf (buff, "%lf %lf %lf %lf", &ax[i], &ay[i], &bx[i], &by[i])  !=  4)
 	 {
-	    fprintf (stderr, " ERROR:  Reading coordinates from file\n.");
-	    return (-1);
+	    /* comment or illegal line found */
+	    if (! buff[0] == '#' )
+	       G_fatal_error (" ERROR:  Reading coordinates from file.");
+	    else
+	       i--; /* just comment found */
 	 }
 	use[i] = 1 ;
 
@@ -46,6 +45,3 @@ get_coor_from_file (FILE *fp)
     return (i);
 
 }	/*    get_coor_from_file ()   */
-
-
-
