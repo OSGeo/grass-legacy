@@ -1,7 +1,9 @@
-
+#include "gis.h"
 #include "glob.h"	
 #include "G3d.h"
-	
+#include "local_proto.h"
+
+int
 from_view()
 {
 	char name[30], msg[128];
@@ -53,7 +55,7 @@ from_view()
       window.depths = 1;
       G3d_adjustRegionRes (&window);
       if(!edit_window(&window)) return 1;
-      set_window (&window);
+      set_window (&window, name);
       return(0);
 
 }

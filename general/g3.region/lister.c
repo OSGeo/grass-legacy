@@ -1,6 +1,10 @@
+#include <stdio.h>
+#include <string.h>
 #include "glob.h"
 #include "G3d.h"
+#include "local_proto.h"
 
+int
 lister (name, mapset, text)
     char *name;
     char *mapset;
@@ -15,13 +19,13 @@ lister (name, mapset, text)
     {
 	sprintf (text, "%-9s %-9s %-9s %-9s %-9s %-9s",
 		"north", "south", "east", "west", "top", "bottom");
-	return;
+	return -1;
     }
 
     sprintf (fullName, "%s@%s", name, mapset);
     if(! G3d_readWindow (&window, fullName)) {
       strcpy (text, "** error reading region **");
-      return;
+      return -1;
     }
 
     G_format_northing (window.north, north, window.proj);
@@ -46,8 +50,10 @@ lister (name, mapset, text)
         window.bottom  == cur_window.bottom &&
         window.ew_res  == cur_window.ew_res)
       strcat (text, "*");
+    return 0;
 }
 
+int
 lister2d (name, mapset, text)
     char *name;
     char *mapset;
@@ -64,13 +70,13 @@ lister2d (name, mapset, text)
 	sprintf (text, "%-10s %-10s %-10s %-10s %-7s %-7s",
 		"north", "south", "east", "west",
 	 	"ns res", "ew res");
-	return;
+	return -1;
     }
 
-    if(err = G__get_window (&window, window_dir, name, mapset))
+    if((err = G__get_window (&window, window_dir, name, mapset)))
     {
 	strcpy (text, "** error reading region **");
-	return;
+	return -1;
     }
 
     G_format_northing (window.north, north, window.proj);
@@ -91,4 +97,5 @@ lister2d (name, mapset, text)
         window.west    == cur_window.west   &&
         window.ew_res  == cur_window.ew_res)
 	    strcat (text, "*");
+    return 0;
 }
