@@ -18,12 +18,14 @@
 *
 *****************************************************************************/
 
-
+#include <config.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#ifdef HAVE_ICONV_H
 #include <iconv.h>
+#endif
 #include <freetype/freetype.h>
 #include "gis.h"
 #include "display.h"
@@ -60,7 +62,9 @@ main(int argc, char **argv)
 	int	size, color;
 	double	east, north;
 	int	i, j, k, l, x, y, ch, index;
+#ifdef HAVE_ICONV_H
 	iconv_t	cd;
+#endif
 	int	ol;
 	unsigned char	*p1, *p2;
 	unsigned char	*out;
@@ -142,11 +146,12 @@ main(int argc, char **argv)
 
 	l = strlen(text);
 
-	ol = 3 * l + 1;
+	ol = 2 * l;
 
 	if(!(out = (unsigned char *) G_malloc(ol)))
 		error("Unable to allocate memory");
 
+#ifdef HAVE_ICONV_H
 	p1 = text;
 	p2 = (char *) out;
 	i = ol;
@@ -158,6 +163,14 @@ main(int argc, char **argv)
 
 	iconv_close(cd);
 	l = ol - i;
+#else
+	for (i = 0; i < l; i++)
+	{
+		out[2*i+0] = '\0';
+		out[2*i+1] = text[i];
+	}
+	l *= 2;
+#endif
 
 	D_setup(0);
 
@@ -184,16 +197,13 @@ main(int argc, char **argv)
 		north = D_d_to_u_row((double)y);
 	}
 
-	fprintf(stdout, "%f(E) %f(N)\n", east, north);
 	R_color_table_fixed();
 
 	if(strstr(tcolor, "0x") == (char *)tcolor && strlen(tcolor) == 8){
 		i = (chr2hex(tcolor[2]) << 4) | chr2hex(tcolor[3]);
 		j = (chr2hex(tcolor[4]) << 4) | chr2hex(tcolor[5]);
 		k = (chr2hex(tcolor[6]) << 4) | chr2hex(tcolor[7]);
-		/*
-		fprintf(stdout, "%s: %x %x %x\n", tcolor, i, j, k);
-		*/
+
 		color = 1;
 		R_reset_color(i, j, k, color);
 	}else
@@ -219,9 +229,7 @@ main(int argc, char **argv)
 				face->glyph->bitmap.buffer[j] = color;
 		x += face->glyph->bitmap_left;
 		y -= face->glyph->bitmap_top;
-		/*
-		fprintf(stdout, "%d %d\n", face->glyph->bitmap.width, face->glyph->bitmap.rows);
-		*/
+
 		for(j=0; j<face->glyph->bitmap.rows; j++){
 			R_move_abs(x, y+j);
 			R_raster_char(face->glyph->bitmap.width,
