@@ -19,7 +19,6 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
     char buf[2000], text[50];
     struct field_info *fi;
     dbDriver *driver;
-    dbHandle handle;
     dbString stmt, valstr;
     dbCursor cursor;
     dbTable  *table;
@@ -39,15 +38,11 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
 
     fi = Vect_get_field(Map, lattr->field);
     if ( fi == NULL ) return 1;
-    driver = db_start_driver(fi->driver);
-    if (driver == NULL) G_fatal_error("Cannot open driver %s", fi->driver) ;
 
-    db_init_handle (&handle);
-    db_set_handle (&handle, fi->database, NULL);
-    if (db_open_database(driver, &handle) != DB_OK)
-        G_fatal_error("Cannot open database %s", fi->database) ;
-										    
-    
+    driver = db_start_driver_open_database ( fi->driver, fi->database );
+    if ( driver == NULL )
+	G_fatal_error ( "Cannot open database %s by driver %s", fi->database, fi->driver );
+
     Vect_rewind ( Map );
     while (1)
     {
@@ -81,9 +76,12 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
 	
 	if( Vect_cat_get(Cats, lattr->field, &cat) )
 	  {	    
+	    int ncats = 0;
 	    /* Read attribute from db */
 	    text[0] = '\0';
 	    for ( i = 0; i < Cats->n_cats; i++ ) {
+		int nrows;
+		
 		if ( Cats->field[i] != lattr->field ) continue;
 		db_init_string (&stmt);
 		sprintf (buf, "select %s from %s where %s = %d", attrcol, fi->table, fi->key, Cats->cat[i]);
@@ -91,18 +89,27 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
 		db_append_string ( &stmt, buf);   
 		
 		if (db_open_select_cursor(driver, &stmt, &cursor, DB_SEQUENTIAL) != DB_OK)
-		    G_fatal_error ("Cannot select attributes from cat %d.", cat);
+		    G_fatal_error ("Cannot select attributes:\n%s", db_get_string(&stmt) );
 
-		table = db_get_cursor_table (&cursor);
-		column = db_get_table_column(table, 0); /* first column */
-		
-		if(db_fetch (&cursor, DB_NEXT, &more) != DB_OK) continue;
-		db_convert_column_value_to_string (column, &valstr); 
+		nrows = db_get_num_rows ( &cursor );
 
-		if ( strlen(text) > 0 ) sprintf (text, "%s/", text);
-		sprintf (text, "%s%s", text, db_get_string(&valstr));
+		if (ncats > 0)
+		    sprintf (text, "%s/", text);
+
+		if ( nrows > 0 ) {
+		    table = db_get_cursor_table (&cursor);
+		    column = db_get_table_column(table, 0); /* first column */
+		    
+		    if(db_fetch (&cursor, DB_NEXT, &more) != DB_OK) continue;
+		    db_convert_column_value_to_string (column, &valstr); 
+
+		    sprintf (text, "%s%s", text, db_get_string(&valstr));
+		} else {
+		    G_warning ("No attribute found for cat %d:\n%s", cat, db_get_string(&stmt));
+		}
 
 		db_close_cursor(&cursor);
+		ncats++;
 	    }
 	    
 	    if ( (ltype & GV_POINTS) || Points->n_points == 1 )
@@ -170,8 +177,7 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
 	}
     }
 
-    db_close_database(driver);
-    db_shutdown_driver(driver);
+    db_close_database_shutdown_driver ( driver );
     Vect_destroy_line_struct (Points);
     Vect_destroy_cats_struct (Cats);
     
