@@ -16,6 +16,8 @@ following programs:
 The following directories contain the source code:
 
 	menu		-	main menu code
+                                -> menu/menu.c
+
 	select_target	-	select target location and mapset
 	select_elevation-	select elevation model 
 	select_camera	-	select a camera to use for parameters
