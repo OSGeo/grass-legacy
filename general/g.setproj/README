@@ -1,4 +1,9 @@
-new metadata system:
+g.setproj needs IMHO a major re-design.
+It is bad design that the mutual dependencies are hard-coded
+into g.setproj and not reflected in the external database
+files. 
+
+a proposal for a new metadata system:
 
 system
 
@@ -10,7 +15,10 @@ datum
 
 ellipsoid
 
+units
 
+(dependencies are top to down, e. g. ellipsoid is usually
+ determined by datum)
 
 # projection	spheroid	map datum
 ALSK		clark66
@@ -21,8 +29,6 @@ NZMG		interantional
 SOMERC		bessel
 OBTRAN		eqc
 
-
-
 # units
 meters		1.0
 degree
@@ -30,3 +36,6 @@ degrees
 feet
 foot
 meters		0.30479999
+
+-- 
+Andreas Lange, 11/2000

@@ -1,3 +1,23 @@
+/*
+ * $Id$
+ *
+ ****************************************************************************
+ *
+ * MODULE:       g.setproj 
+ * AUTHOR(S):    M. L. Holko - Soil Conservation Service, USDA
+ *               Morten Hulden - morten@ngb.se
+ *               Andreas Lange - andreas.lange@rhein-main.de
+ * PURPOSE:      Provides a means of creating a new projection information
+ *               file (productivity tool).
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
+
+/* old log retained for information */
 /* main.c    
    *    1.1   05/16/91  GRASS4.0
    *    Created by : M.L.Holko , Soil Conservation Service, USDA
@@ -21,8 +41,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include  "geo.h"
-#include  "gis.h"
+#include "geo.h"
+#include "gis.h"
 #include "CC.h" /* for datum support */
 #include "local_proto.h"
 #define MAIN
