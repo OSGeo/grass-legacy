@@ -1,0 +1,133 @@
+Mpatch	patch.c	?^main (argc, argv)$?
+ZERO	../lib/line_dist.c	?^#define ZERO(x) ((x) < tolerance && (x) > -toleran?
+d_atan2	../lib/calc_angl.c	?^d_atan2 (y, x)$?
+debugf	../lib/debugf.c	?^debugf ()$?
+dig_Mem_load_file	../lib/memory_io.c	?^dig_Mem_load_file (fp, ptr)$?
+dig_Mem_release_file	../lib/memory_io.c	?^dig_Mem_release_file ()$?
+dig_P_area_att	../lib/level_two.c	?^dig_P_area_att (map, area)$?
+dig_P_fini	../lib/level_two.c	?^dig_P_fini (map)$?
+dig_P_get_area	../lib/level_two.c	?^dig_P_get_area (map, num, Area)$?
+dig_P_get_area_bbox	../lib/level_two.c	?^dig_P_get_area_bbox (map, area, N, S, E, W)$?
+dig_P_get_area_xy	../lib/get_area_xy.c	?^dig_P_get_area_xy (Map, area, n_points, x, y)$?
+dig_P_get_line_bbox	../lib/level_two.c	?^dig_P_get_line_bbox (map, line, N, S, E, W)$?
+dig_P_init	../lib/level_two.c	?^dig_P_init (name, mapset, map)$?
+dig_P_line_att	../lib/level_two.c	?^dig_P_line_att (map, line)$?
+dig_P_num_areas	../lib/level_two.c	?^dig_P_num_areas (map)$?
+dig_P_num_lines	../lib/level_two.c	?^dig_P_num_lines (map)$?
+dig_P_read_line	../lib/level_two.c	?^dig_P_read_line (map, line, points)$?
+dig_P_read_next_line	../lib/level_two.c	?^dig_P_read_next_line (map, points)$?
+dig_P_rewind	../lib/level_two.c	?^dig_P_rewind (map)$?
+dig_P_tmp_close	../lib/level_two.c	?^dig_P_tmp_close (map)$?
+dig_P_tmp_open	../lib/level_two.c	?^dig_P_tmp_open (map)$?
+dig_Rd_P_area	../lib/struct_io.c	?^dig_Rd_P_area (ptr, fp)$?
+dig_Rd_P_att	../lib/struct_io.c	?^dig_Rd_P_att (ptr, fp)$?
+dig_Rd_P_isle	../lib/struct_io.c	?^dig_Rd_P_isle (ptr, fp)$?
+dig_Rd_P_line	../lib/struct_io.c	?^dig_Rd_P_line (ptr, fp)$?
+dig_Rd_P_node	../lib/struct_io.c	?^dig_Rd_P_node (ptr, fp)$?
+dig_Rd_Plus_head	../lib/struct_io.c	?^dig_Rd_Plus_head (ptr, fp)$?
+dig_Read_line	../lib/points.c	?^dig_Read_line (fp, offset, xarray, yarray, n_point?
+dig_Rewrite_line	../lib/points.c	?^dig_Rewrite_line (digit, offset, type, xarray, yar?
+dig_Wr_P_area	../lib/struct_io.c	?^dig_Wr_P_area (ptr, fp)$?
+dig_Wr_P_att	../lib/struct_io.c	?^dig_Wr_P_att (ptr, fp)$?
+dig_Wr_P_isle	../lib/struct_io.c	?^dig_Wr_P_isle (ptr, fp)$?
+dig_Wr_P_line	../lib/struct_io.c	?^dig_Wr_P_line (ptr, fp)$?
+dig_Wr_P_node	../lib/struct_io.c	?^dig_Wr_P_node (ptr, fp)$?
+dig_Wr_Plus_head	../lib/struct_io.c	?^dig_Wr_Plus_head (ptr, fp)$?
+dig_Write_line	../lib/points.c	?^dig_Write_line(digit, type, xarray, yarray, n_poin?
+dig__Mem_Read_line	../lib/points.c	?^dig__Mem_Read_line (p, offset)$?
+dig__P_get_area_xy	../lib/get_area_xy.c	?^dig__P_get_area_xy (Map, area)$?
+dig__Read_line	../lib/points.c	?^dig__Read_line (p, fp, offset)$?
+dig__Rewrite_line	../lib/points.c	?^dig__Rewrite_line (digit, offset, type, points) $?
+dig__Write_line	../lib/points.c	?^dig__Write_line(digit, type, points) $?
+dig__alloc_space	../lib/allocation.c	?^dig__alloc_space(n_wanted, n_elements, chunk_size,?
+dig__check_dist	../lib/point_t_line.c	?^dig__check_dist (map, points, ux, uy, dist)$?
+dig__del_area	../lib/area.c	?^dig__del_area (map, area)$?
+dig__del_att	../lib/attribute.c	?^dig__del_att (map, att)$?
+dig__falloc	../lib/allocation.c	?^dig__falloc(nelem, elsize)$?
+dig__frealloc	../lib/allocation.c	?^dig__frealloc(oldptr, nelem, elsize, oldnelem)$?
+dig__new_att	../lib/attribute.c	?^dig__new_att (map, x, y, type, index, cat, offset)?
+dig_add_line_to_node	../lib/node_op.c	?^dig_add_line_to_node (num, line, type, map, points?
+dig_alloc_area	../lib/struct_alloc.c	?^dig_alloc_area (map, add)$?
+dig_alloc_att	../lib/struct_alloc.c	?^dig_alloc_att (map, add)$?
+dig_alloc_isle	../lib/struct_alloc.c	?^dig_alloc_isle (map, add)$?
+dig_alloc_line	../lib/struct_alloc.c	?^dig_alloc_line (map, add)$?
+dig_alloc_node	../lib/struct_alloc.c	?^dig_alloc_node (map, add)$?
+dig_alloc_points	../lib/struct_alloc.c	?^dig_alloc_points (points, num)$?
+dig_alloc_space	../lib/allocation.c	?^dig_alloc_space(n_wanted, n_elements, chunk_size, ?
+dig_angle_next_line	../lib/area.c	?^dig_angle_next_line (map, current_line, direction)?
+dig_area_alloc_line	../lib/struct_alloc.c	?^dig_area_alloc_line (area, num)$?
+dig_area_bound_box	../lib/area.c	?^dig_area_bound_box (map, Area)$?
+dig_bound_box	../lib/bound_box.c	?^dig_bound_box (points, N, S, E, W)$?
+dig_build_area_with_line	../lib/area.c	?^dig_build_area_with_line (map, first_line, Area, s?
+dig_calc_begin_angle	../lib/calc_angl.c	?^dig_calc_begin_angle(points, thresh)$?
+dig_calc_end_angle	../lib/calc_angl.c	?^dig_calc_end_angle(points, thresh)$?
+dig_center_check	../lib/point_t_line.c	?^dig_center_check(line, a, b, ux, uy)$?
+dig_check_dist	../lib/point_t_line.c	?^dig_check_dist (map, line, ux, uy, dist)$?
+dig_check_nodes	../lib/check_node.c	?^dig_check_nodes (map, node, points)$?
+dig_del_area	../lib/area.c	?^dig_del_area (map, area)$?
+dig_del_att	../lib/attribute.c	?^dig_del_att (map, att)$?
+dig_del_isle	../lib/area.c	?^dig_del_isle (map, isle)$?
+dig_distance2_point_to_line	../lib/line_dist.c	?^dig_distance2_point_to_line (x,y,x1,y1,x2,y2)$?
+dig_do_file_checks	../lib/file_checks.c	?^dig_do_file_checks (plus, dig, dig_att)$?
+dig_falloc	../lib/allocation.c	?^dig_falloc (nelem, elsize)$?
+dig_find_area	../lib/find_area.c	?^dig_find_area (map, Area, totalarea, cent_x, cent_?
+dig_fini	../lib/level_one.c	?^dig_fini ()$?
+dig_frealloc	../lib/allocation.c	?^dig_frealloc(oldptr, nelem, elsize, oldnelem)$?
+dig_head_to_map	../lib/map_to_head.c	?^dig_head_to_map (head, map)$?
+dig_in_area_bbox	../lib/chk_inside.c	?^dig_in_area_bbox (Area, x, y)$?
+dig_in_line_bbox	../lib/point_t_line.c	?^dig_in_line_bbox(line, x, y)$?
+dig_init	../lib/level_one.c	?^dig_init (fp)$?
+dig_init_box	../lib/dig_box.c	?^dig_init_box (n, s, e, w)$?
+dig_is_line_degenerate	../lib/calc_angl.c	?^dig_is_line_degenerate (points, thresh)$?
+dig_isle_alloc_line	../lib/struct_alloc.c	?^dig_isle_alloc_line (isle, num)$?
+dig_load_plus	../lib/load_plus.c	?^dig_load_plus (map, digit, do_checks)$?
+dig_map_to_head	../lib/map_to_head.c	?^dig_map_to_head (map, phead)$?
+dig_mread	../lib/memory_io.c	?^dig_mread (buf, size, n_elem, mp)$?
+dig_mseek	../lib/memory_io.c	?^dig_mseek (mp, offset, code)$?
+dig_mwrite	../lib/memory_io.c	?^dig_mwrite (buf, size, n_elem, mp)$?
+dig_new_area	../lib/area.c	?^dig_new_area (map, Area, att)$?
+dig_new_att	../lib/attribute.c	?^dig_new_att (map, x, y, type, index, cat)	/* creat?
+dig_new_isle	../lib/area.c	?^dig_new_isle (map, Isle, att)$?
+dig_new_to_old_type	../lib/points.c	?^dig_new_to_old_type (type)$?
+dig_node_add_line	../lib/node_op.c	?^dig_node_add_line (map, node, line, points)$?
+dig_node_alloc_line	../lib/struct_alloc.c	?^dig_node_alloc_line (node, add)$?
+dig_node_del_line	../lib/node_op.c	?^dig_node_del_line (node, line)$?
+dig_old_to_new_type	../lib/points.c	?^dig_old_to_new_type (type)$?
+dig_out_of_memory	../lib/struct_alloc.c	?^dig_out_of_memory ()$?
+dig_point_in_area	../lib/chk_inside.c	?^dig_point_in_area(map, X, Y, Area)$?
+dig_point_to_area	../lib/point_t_area.c	?^dig_point_to_area (map, ux, uy)$?
+dig_point_to_line	../lib/point_t_line.c	?^dig_point_to_line (map, ux, uy, type)$?
+dig_print_header	../lib/level_one.c	?^dig_print_header()$?
+dig_prune	../lib/prune.c	?^dig_prune (points, thresh)$?
+dig_read_head_binary	../lib/rw_binary.c	?^dig_read_head_binary(digit, head)$?
+dig_read_line_in_box	../lib/dig_box.c	?^dig_read_line_in_box (fp, n_points, x, y)$?
+dig_read_line_struct_in_box	../lib/dig_box.c	?^dig_read_line_struct_in_box (fp, line_p)$?
+dig_read_next_line	../lib/level_one.c	?^dig_read_next_line (fp, n_points, x, y)$?
+dig_read_next_line_struct	../lib/level_one.c	?^dig_read_next_line_struct (fp, pnts)$?
+dig_read_next_line_type	../lib/level_one.c	?^dig_read_next_line_type (fp, n_points, x, y, utype?
+dig_rewind	../lib/level_one.c	?^dig_rewind (fp)$?
+dig_rmcr	../lib/struct_copy.c	?^dig_rmcr (str)$?
+dig_set_distance_to_line_tolerance	../lib/line_dist.c	?^dig_set_distance_to_line_tolerance (t)$?
+dig_snap_line_to_node	../lib/node_op.c	?^dig_snap_line_to_node (map, line, node, points)$?
+dig_start_clock	../lib/clock.c	?^dig_start_clock (save)$?
+dig_stop_clock	../lib/clock.c	?^dig_stop_clock (save)$?
+dig_struct_copy	../lib/struct_copy.c	?^dig_struct_copy (from, to, cnt)$?
+dig_unit_conversion	../lib/unit_conv.c	?^dig_unit_conversion ()$?
+dig_update_att	../lib/attribute.c	?^dig_update_att (map, att)$?
+dig_which_node	../lib/check_node.c	?^dig_which_node (map, x, y, thresh)$?
+dig_write_areas	../lib/write_file.c	?^dig_write_areas( plus, Map, Plus)$?
+dig_write_atts	../lib/write_file.c	?^dig_write_atts( plus, Map, Plus)$?
+dig_write_file_checks	../lib/file_checks.c	?^dig_write_file_checks (fp_plus, map, Plus)$?
+dig_write_head_binary	../lib/rw_binary.c	?^dig_write_head_binary(digit, head)$?
+dig_write_isles	../lib/write_file.c	?^dig_write_isles( plus, Map, Plus)$?
+dig_write_lines	../lib/write_file.c	?^dig_write_lines( plus, Map, Plus)$?
+dig_write_nodes	../lib/write_file.c	?^dig_write_nodes( plus, Map, Plus)$?
+dig_write_plus_file	../lib/write_file.c	?^dig_write_plus_file( fp_plus, Map, Plus)$?
+dig_x_intersect	../lib/chk_inside.c	?^dig_x_intersect (beg_x, end_x, beg_y, end_y, Y) $?
+dig_xy_distance2_point_to_line	../lib/line_dist.c	?^dig_xy_distance2_point_to_line (px,py,x1,y1,x2,y2)?
+dist_squared	../lib/check_node.c	?^dist_squared (x1, y1, x2, y2)$?
+docat	patch.c	?^docat (In, Out)$?
+fread	../lib/struct_io.c	?^if(0 >= fread (ptr->Dig_name, HEADSTR, 1, fp)) ret?
+patch	patch.c	?^patch (In, Out, Head)$?
+tell_delta_size	../lib/file_checks.c	?^static int $?
+tell_delta_time	../lib/file_checks.c	?^tell_delta_time (file)$?
