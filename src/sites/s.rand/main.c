@@ -46,6 +46,14 @@
 #endif
 double myrand(void);
 
+#ifdef __CYGWIN__
+double drand48()
+{
+	return(rand()/32767.0);
+}
+#define srand48(sv) (srand((unsigned)(sv)))
+#endif
+
 int main (int argc, char *argv[])
 {
   char *output, errmsg[256];
