@@ -13,7 +13,7 @@ The user may define up to four "views", or sub-windows, to animate
 simultaneously.  e.g., View 1 could be rainfall, View 2 flooded areas, View
 3 damage to bridges or levees, View 4 other economic damage, all animated as
 a time series. A black border 2 pixels wide is drawn around each view. There
-is an arbitrary limit of 100 files per view (100 animation frames). 
+is an arbitrary limit of 400 files per view (400 animation frames). 
 Temporary files are created in the conversion process, so lack of adequate
 tmp space could also limit the number of frames you are able to convert.
 <!-- flag to keep these to feed into another more modern encoder? -->
@@ -46,8 +46,8 @@ With <B>-c</B> flag the module converts "on the fly", uses less disk space
 by using <EM>r.out.ppm</EM> with stdout option to convert frames as needed
 instead of converting all frames to ppm before encoding.  Only use when
 encoding a single view.  Use of this option also overrides any size
-defaults, using the CURRENTLY DEFINED GRASS REGION for the output size. So
-be careful to set region to a reasonable size prior to encoding.
+defaults, using the <B>CURRENTLY DEFINED GRASS REGION for the output size</B>.
+So be careful to set region to a reasonable size prior to encoding.
 
 <P>
 A quality value of <EM>qual=1</EM> will yield higher quality images, but
@@ -77,6 +77,14 @@ Available from Berkeley:
 <a href="http://bmrc.berkeley.edu/frame/research/mpeg/mpeg_encode.html">http://bmrc.berkeley.edu/frame/research/mpeg/mpeg_encode.html</a>
 <BR>or as part of the netpbm package (<em>ppmtompeg</em>):
 <a href="http://netpbm.sourceforge.net">http://netpbm.sourceforge.net</a>
+
+<P>
+Playback may be done with many viewers; <em>mpeg_encode</em>'s official companion 
+is <em>mpeg_play</em> available from Berkeley at 
+<a href="ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/play/">ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/play/</a>
+or a precompiled Debian package from 
+<a href="http://packages.debian.org/ucbmpeg-play">http://packages.debian.org/ucbmpeg-play</a>
+(includes maintained source code).
 
 <P>
 Use of the <EM>-c</EM> flag requires the <EM>r.out.ppm</EM> GRASS module 
