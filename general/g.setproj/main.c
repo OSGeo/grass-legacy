@@ -201,19 +201,19 @@ int main(int argc, char *argv[])
     sph_check = 0;
     if(G_yes("Do you want to specify a map datum for this location?", 1))
     {
-        char buf[100], bufa[100];
-        if (exist && (G_get_datumparams_from_projinfo(old_proj_keys, buf, bufa) == 2))
+        char lbuf[100], lbufa[100];
+        if (exist && (G_get_datumparams_from_projinfo(old_proj_keys, lbuf, lbufa) == 2))
 	{
-	    G_strip(buf);
-            if (i = G_get_datum_by_name(buf))
+	    G_strip(lbuf);
+            if (i = G_get_datum_by_name(lbuf))
             {
                 fprintf(stderr, "The current datum is %s\n", G_datum_name(i));
                 if (G_yes("Would you want to change the datum (or the datum transformation parameters)?", 0))
                     sph_check = ask_datum(datum, dat_ellps, dat_params);
                 else 
 		{
-		    sprintf(datum, buf);
-		    sprintf(dat_params, bufa);
+		    sprintf(datum, lbuf);
+		    sprintf(dat_params, lbufa);
 		    sprintf(dat_ellps, G_datum_ellipsoid(i));
 		    sph_check = 1;
                     fprintf(stderr, "The datum information is not changed\n");
@@ -222,8 +222,6 @@ int main(int argc, char *argv[])
             else
                 sph_check = ask_datum(datum, dat_ellps, dat_params);
 
-	    G_free(buf);
-	    G_free(bufa);
         }
         else
             sph_check = ask_datum(datum, dat_ellps, dat_params);
@@ -287,7 +285,6 @@ int main(int argc, char *argv[])
 		    }	/* the val is legal */
 		    else
 		        sph_check = G_ask_ellipse_name(spheroid);
-		    G_free(buf);
 		} else
 		    sph_check = G_ask_ellipse_name(spheroid);
 	    }
@@ -677,11 +674,11 @@ int main(int argc, char *argv[])
 		sprintf(buffb, "Error writing PROJ_INFO file: %s\n", path);
 		G_fatal_error(buffb);
 	}
-/* Commenting this may avoid segfaults when setting units for a UTM location? PK
+
 	G_free_key_value(out_proj_keys);
 	if (exist)
 		G_free_key_value(old_proj_keys);
-*/
+
       write_units:
 	G__file_name(path, "", UNIT_FILE, set_name);
 
