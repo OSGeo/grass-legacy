@@ -1,0 +1,124 @@
+
+#include <unistd.h>
+#include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "mapcalc.h"
+
+/****************************************************************************/
+
+int overflow_occurred;
+
+struct Cell_head current_region;
+int current_row;
+
+int rows, columns;
+
+volatile int floating_point_exception;
+volatile int floating_point_exception_occurred;
+
+/****************************************************************************/
+
+static const char help_text[] =
+"r.mapcalc - Raster map layer data calculator\n"
+"\n"
+"usage: r.mapcalc '<map>=<expression>'\n"
+"\n"
+"r.mapcalc performs arithmetic on raster map layers.\n"
+"\n"
+"New raster map layers can be created which are arithmetic expressions\n"
+"involving existing raster map layers, integer or floating point constants,\n"
+"and functions.\n"
+"\n"
+"For more information use 'g.manual r.mapcalc'\n";
+
+/****************************************************************************/
+
+static expression *result;
+
+/****************************************************************************/
+
+static RETSIGTYPE
+handle_fpe(int n)
+{
+	floating_point_exception = 1;
+	floating_point_exception_occurred = 1;
+}
+
+static void
+pre_exec(void)
+{
+#ifdef SIGFPE
+	struct sigaction act;
+
+	act.sa_handler = &handle_fpe;
+	act.sa_flags = 0;
+	sigemptyset(&act.sa_mask);
+
+	sigaction(SIGFPE, &act, NULL);
+#endif
+
+	floating_point_exception_occurred = 0;
+	overflow_occurred = 0;
+}
+
+static void
+post_exec(void)
+{
+#ifdef SIGFPE
+	struct sigaction act;
+
+	act.sa_handler = SIG_DFL;
+	act.sa_flags = 0;
+	sigemptyset(&act.sa_mask);
+
+	sigaction(SIGFPE, &act, NULL);
+#endif
+}
+
+/****************************************************************************/
+
+int 
+main (int argc, char *argv[])
+{
+	int ok, all_ok;
+
+	G_gisinit(argv[0]);
+
+	G_get_window(&current_region);
+
+	if (argc != 2 || (argc > 1 && strcmp(argv[1], "help") == 0))
+	{
+		fputs(help_text, stderr);
+		return 0;
+	}
+
+	result = parse(argv[1]);
+
+	pre_exec();
+	ok = execute(result);
+	post_exec();
+
+	if (!ok)
+		return 1;
+
+	all_ok = 1;
+
+	if (floating_point_exception_occurred)
+	{
+		fprintf(stderr, "NOTE: floating point error(s) occured in the calculation\n");
+		all_ok = 0;
+	}
+
+	if (overflow_occurred)
+	{
+		fprintf(stderr, "NOTE: overflow occured in the calculation\n");
+		all_ok = 0;
+	}
+	return all_ok ? 0 : 1;
+}
+
+/****************************************************************************/
+
