@@ -51,6 +51,7 @@ LIB_OBJS = \
 	color_range.o \
 	color_read.o \
 	color_rule.o \
+	color_rule_get.o \
 	color_ryg.o \
 	color_set.o \
 	color_str.o \
