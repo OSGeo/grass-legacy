@@ -87,7 +87,8 @@ int main(
         G_fatal_error(buf) ;
     }
 
-    R_open_driver();
+    if (R_open_driver() != 0)
+	G_fatal_error ("No graphics device selected");
 
     fp = G_raster_map_is_fp(name, mapset);
     if(catlist->answer)

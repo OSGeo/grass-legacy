@@ -74,7 +74,8 @@ int main (int argc, char **argv)
 
 	G_gisinit(argv[0]);
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 	Sheight = R_screen_bot() - R_screen_top() + 1;
 	Swidth = R_screen_rite() - R_screen_left() + 1;
 

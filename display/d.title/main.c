@@ -91,7 +91,8 @@ int main (int argc, char **argv)
 	else
 		fancy(mapset, &window, &cats) ;
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 	D_add_to_list(G_recreate_command()) ;
 	R_close_driver();
 

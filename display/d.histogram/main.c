@@ -184,7 +184,8 @@ int main (int argc, char **argv)
 
 	/* set up the graphics driver and initialize its color-table */
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	D_setup(0);
 
