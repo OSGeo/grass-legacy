@@ -81,7 +81,7 @@ int IL_vector_input_data_2d (
   if ( field == 0 && !Vect_is_3d(Map) )  G_fatal_error ( "Vector is not 3D");
 
   if ( field > 0 && zcol != NULL ) { /* open db driver */
-    Fi = Vect_get_field_info( Map->name, Map->mapset, field);
+    Fi = Vect_get_field( Map, field);
     if ( Fi == NULL ) G_fatal_error ("Cannot get field info");   
     G_debug ( 0, "  driver = %s database = %s table = %s", Fi->driver, Fi->database, Fi->table);
     db_init_handle (&handle);
