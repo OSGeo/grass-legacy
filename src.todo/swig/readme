@@ -1,0 +1,13 @@
+INTRO
+
+The beginnings of a Swig binding to the grass libraries with
+a view to allowing TCL and other languages access to Grass
+and possibly to build an entire OS independent GUI based
+on some such.
+
+NOTES TO REMEMBER
+
+miketh@WATER /c/lang/SWIG-1.3.19/Examples/tcl/grass
+$ gcc --share -I/c/cvs/grass/src/include -I/c/lang/Tcl-8.4.1.0/include/ libgis_
+wrap.c -L/c/cvs/grass/dist.i686-pc-mingw32/lib -lgis -ldatetime -L/c/lang/Tcl-8
+.4.1.0/bin -ltcl84 -loncrpc -o libgis.dll >make.log 2>&1
