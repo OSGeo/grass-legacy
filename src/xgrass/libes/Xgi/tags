@@ -1,0 +1,516 @@
+ABS	color.c	/^#define	ABS(x)	    ((x)<0/-(x):(x))$/
+AddColumns	Matrix.c	/^AddColumns(mw, position, columns, labels, widths, /
+AddColumnsToTable	Matrix.c	/^AddColumnsToTable(mw, position, columns, labels, w/
+AddHelpCallbacks	Pixel.c	/^AddHelpCallbacks(which, xgp)$/
+AddRows	Matrix.c	/^AddRows(mw, position, rows, labels, colors, num_ro/
+AddRowsToTable	Matrix.c	/^AddRowsToTable(mw, position, rows, labels, colors,/
+AdjustTopRow	Matrix.c	/^AdjustTopRow(mw)$/
+AlignmentArrayDestructor	Matrix.c	/^AlignmentArrayDestructor(app, to, converter_data, /
+AllocHelpStruct	Interact.c	/^AllocHelpStruct(xgi)$/
+AllocReclassRuleStruct	Reclass.c	/^AllocReclassRuleStruct()$/
+BrowserAdjustAndAttach	Browser.c	/^BrowserAdjustAndAttach(xgb, attach)$/
+BrowserBuildResult	Browser.c	/^BrowserBuildResult(xgb)$/
+BrowserCallBack	Reclass.c	/^BrowserCallBack(w, client_data, call_data)$/
+BrowserCreateWidgets	Browser.c	/^BrowserCreateWidgets(xgb)$/
+BrowserDataSetup	Browser.c	/^BrowserDataSetup(xgb)$/
+BrowserListCallback	Browser.c	/^BrowserListCallback(list_w, client_data, cbs)$/
+BrowserOkCallBack	Reclass.c	/^BrowserOkCallBack(w, client_data, call_data)$/
+BrowserUpdateList1	Browser.c	/^BrowserUpdateList1(w, num)$/
+BrowserUpdateList2	Browser.c	/^BrowserUpdateList2(w, num)$/
+BrowserUpdateList3	Browser.c	/^BrowserUpdateList3(w, num)$/
+CELL_TOTAL_HEIGHT	Matrix.c	/^#define CELL_TOTAL_HEIGHT(mw)	((mw->matrix.rows - /
+CELL_TOTAL_WIDTH	Matrix.c	/^#define CELL_TOTAL_WIDTH(mw)	mw->matrix.cell_total/
+CELL_WINDOW	Matrix.c	/^#define CELL_WINDOW(mw, row, column) \\$/
+CMYToRGB	color.c	/^CMYToRGB(cmy)$/
+COLUMN_LABEL_HEIGHT	Matrix.c	/^#define COLUMN_LABEL_HEIGHT(mw) (mw->matrix.column/
+COLUMN_LABEL_OFFSET	Matrix.c	/^#define COLUMN_LABEL_OFFSET(mw)	(ROW_LABEL_WIDTH(m/
+COLUMN_WIDTH	Matrix.c	/^#define COLUMN_WIDTH(mw, col)	((mw->matrix.column_/
+CalcGraphicSize	Region.c	/^CalcGraphicSize(xgr)$/
+CancelEdit	Matrix.c	/^CancelEdit(mw, unmap)$/
+CancelEditACT	Matrix.c	/^CancelEditACT(w, event, params, nparams)$/
+CatsAddCat	Cats.c	/^CatsAddCat(w, data, cbs)$/
+CatsAdjustAndAttach	Cats.c	/^CatsAdjustAndAttach(xgc, attach)$/
+CatsCreateWidgets	Cats.c	/^CatsCreateWidgets(xgc)$/
+CatsListCallback	Cats.c	/^CatsListCallback(w, data, cbs)$/
+CatsNameEdit	Cats.c	/^CatsNameEdit(w, data, cbs)$/
+CatsUpdateTitle	Cats.c	/^CatsUpdateTitle(w, data, cbs)$/
+ChangeManaged	Caption.c	/^ChangeManaged(cw)$/
+ClassInitialize	Browser.c	/^                    ClassInitialize()$/
+ClassPartInitialize	Browser.c	/^ClassPartInitialize(xgb)$/
+ClearCell	Matrix.c	/^ClearCell(mw, row, column)$/
+ClearItemLabels	Interact.c	/^ClearItemLabels(xgi)$/
+ClearItems	Interact.c	/^ClearItems(xgi)$/
+ClipChild	Matrix.c	/^#define ClipChild(mw)		(mw->composite.children[2])/
+ClipRedisplay	Matrix.c	/^ClipRedisplay(w, event, region)$/
+CommitEdit	Matrix.c	/^CommitEdit(mw, unmap)$/
+CommitEditACT	Matrix.c	/^CommitEditACT(w, event, params, nparams)$/
+CompareStrings	Caption.c	/^CompareStrings(in, test)$/
+ComputeSize	Caption.c	/^ComputeSize(cw, cwWidth, cwHeight, childWidth, chi/
+ComputeUserChildSize	Caption.c	/^ComputeUserChildSize(cw, cwWidth, cwHeight, childW/
+ContainsString	editor.c	/^ContainsString(buffer, pattern)$/
+CopyCells	Matrix.c	/^CopyCells(mw)$/
+CopyColors	Matrix.c	/^CopyColors(mw)$/
+CopyColumnAlignments	Matrix.c	/^CopyColumnAlignments(mw)$/
+CopyColumnLabelAlignments	Matrix.c	/^CopyColumnLabelAlignments(mw)$/
+CopyColumnLabels	Matrix.c	/^CopyColumnLabels(mw)$/
+CopyColumnMaxLengths	Matrix.c	/^CopyColumnMaxLengths(mw)$/
+CopyColumnWidths	Matrix.c	/^CopyColumnWidths(mw)$/
+CopyHeadings	Table.c	/^CopyHeadings(tb,rowOrCol)$/
+CopyItemLabels	Interact.c	/^CopyItemLabels(xgi)$/
+CopyItems	Interact.c	/^CopyItems(xgi)$/
+CopyRowLabels	Matrix.c	/^CopyRowLabels(mw)$/
+CopySelectedCells	Matrix.c	/^CopySelectedCells(mw)$/
+CreateBottomShadowClipGC	Matrix.c	/^CreateBottomShadowClipGC(mw)$/
+CreateColors	Matrix.c	/^CreateColors(mw)$/
+CreateColumnPositions	Matrix.c	/^#define CreateColumnPositions(mw)	(int *) XtMalloc/
+CreateDrawClipGC	Matrix.c	/^CreateDrawClipGC(mw)$/
+CreateDrawGC	Matrix.c	/^CreateDrawGC(mw)$/
+CreateInverseClipGC	Matrix.c	/^CreateInverseClipGC(mw)$/
+CreateLabel	Help.c	/^CreateLabel(w, type, buf, hot, x_offset, num_lines/
+CreateOriginalMapListItems	Reclass.c	/^CreateOriginalMapListItems(xgr)$/
+CreateTopShadowClipGC	Matrix.c	/^CreateTopShadowClipGC(mw)$/
+CvtStringToAlignmentArray	Matrix.c	/^CvtStringToAlignmentArray(dpy, args, num_args, fro/
+CvtStringToLabelAlignment	Caption.c	/^CvtStringToLabelAlignment(dpy, args, num_args, fro/
+CvtStringToLabelPosition	Caption.c	/^CvtStringToLabelPosition(dpy, args, num_args, from/
+CvtStringToMaxLengthArray	Matrix.c	/^CvtStringToMaxLengthArray(dpy, args, num_args, fro/
+CvtStringToStringArray	Matrix.c	/^CvtStringToStringArray(dpy, args, num_args, from, /
+CvtStringToWidthArray	Matrix.c	/^CvtStringToWidthArray(dpy, args, num_args, from, t/
+DeleteBgProc	oldsystem.c	/^DeleteBgProc(pid)$/
+DeleteChild	Browser.c	/^DeleteChild(w)$/
+DeleteColumns	Matrix.c	/^DeleteColumns(mw, position, num_columns)$/
+DeleteColumnsFromTable	Matrix.c	/^DeleteColumnsFromTable(mw, position, num_columns)$/
+DeleteRows	Matrix.c	/^DeleteRows(mw, position, num_rows)$/
+DeleteRowsFromTable	Matrix.c	/^DeleteRowsFromTable(mw, position, num_rows)$/
+DeselectAll	Matrix.c	/^DeselectAll(mw)$/
+DeselectCell	Matrix.c	/^DeselectCell(mw, row, column)$/
+DeselectColumn	Matrix.c	/^DeselectColumn(mw, column)$/
+DeselectRow	Matrix.c	/^DeselectRow(mw, row)$/
+Destroy	Browser.c	/^Destroy(xgb)$/
+DoCommitEdit	Matrix.c	/^DoCommitEdit(mw)$/
+DoFinishCommand	system.c	/^DoFinishCommand(client_data, id)$/
+DoGridOptions	Region.c	/^DoGridOptions(w, data)$/
+DoHotWord	Help.c	/^DoHotWord(parent, hot)$/
+DrawCell	Matrix.c	/^DrawCell(mw, row, column)$/
+DrawColumnLabel	Matrix.c	/^DrawColumnLabel(mw, column)$/
+DrawGrid	Region.c	/^DrawGrid(xgr, window)$/
+DrawRowLabel	Matrix.c	/^DrawRowLabel(mw, row)$/
+DrawString	Matrix.c	/^DrawString(mw, win, string, length, x, y, maxlen, /
+DumpRegData	oldsystem.c	/^DumpRegData()$/
+EdhistUpdate	History.c	/^EdhistUpdate(w, data)$/
+EditCell	Matrix.c	/^EditCell(mw, row, column)$/
+EditCellACT	Matrix.c	/^EditCellACT(w, event, params, nparams)$/
+EditStringCancel	editstr.c	/^static void EditStringCancel(w,cld,cad)$/
+EditStringOk	editstr.c	/^void EditStringOk(w,cld,cad)$/
+EditStringReset	editstr.c	/^static void EditStringReset(w,cld,cad)$/
+EventToXY	Matrix.c	/^EventToXY(mw, event, x, y, cell)$/
+ExecuteReclass	Reclass.c	/^ExecuteReclass(xgr)$/
+FIXED_COLUMN_LABEL_OFFSET	Matrix.c	/^#define FIXED_COLUMN_LABEL_OFFSET(mw) (COLUMN_LABE/
+FIXED_COLUMN_WIDTH	Matrix.c	/^#define FIXED_COLUMN_WIDTH(mw)	mw->matrix.column_p/
+FIXED_ROW_HEIGHT	Matrix.c	/^#define FIXED_ROW_HEIGHT(mw)	(mw->matrix.fixed_row/
+FIXED_ROW_LABEL_OFFSET	Matrix.c	/^#define FIXED_ROW_LABEL_OFFSET(mw) (ROW_LABEL_OFFS/
+FONT_WIDTH	Matrix.c	/^#define FONT_WIDTH(mw)		(mw->matrix.font->max_boun/
+FetchCallbackStruct	Help.c	/^static CallbackStruct **FetchCallbackStruct(widget/
+FetchXtCallbackList	Help.c	/^XtCallbackList FetchXtCallbackList(widget, name)$/
+FieldChanged	Region.c	/^FieldChanged(w, data)$/
+FindBgProc	oldsystem.c	/^FindBgProc(pid)$/
+FindManPage	Help.c	/^FindManPage(mandir, entry)$/
+FindReclassRule	Reclass.c	/^FindReclassRule(xgr, rule)$/
+FinishExecute	Reclass.c	/^FinishExecute(wid, client_data, call_data)$/
+FocusInACT	Clip.c	/^FocusInACT(cw, event, params, nparams)$/
+FreeCells	Matrix.c	/^FreeCells(mw)$/
+FreeColors	Matrix.c	/^FreeColors(mw)$/
+FreeColumnAlignments	Matrix.c	/^#define FreeColumnAlignments(mw)	XtFree((XtPointer/
+FreeColumnLabelAlignments	Matrix.c	/^#define FreeColumnLabelAlignments(mw)	XtFree((XtPo/
+FreeColumnLabels	Matrix.c	/^FreeColumnLabels(mw)$/
+FreeColumnMaxLengths	Matrix.c	/^#define FreeColumnMaxLengths(mw)	XtFree((XtPointer/
+FreeColumnPositions	Matrix.c	/^#define FreeColumnPositions(mw)		XtFree((XtPointer/
+FreeColumnWidths	Matrix.c	/^#define FreeColumnWidths(mw)		XtFree((XtPointer) \\/
+FreeHelpStruct	Interact.c	/^FreeHelpStruct(ptr)$/
+FreeOriginalMapListItems	Reclass.c	/^FreeOriginalMapListItems(xgr)$/
+FreeReclassRuleList	Reclass.c	/^FreeReclassRuleList(rule)$/
+FreeRowLabels	Matrix.c	/^FreeRowLabels(mw)$/
+FreeSelectedCells	Matrix.c	/^FreeSelectedCells(mw)$/
+GeometryManager	Caption.c	/^GeometryManager(w, desired, allowed)$/
+GetCell	Matrix.c	/^GetCell(mw, row, column)$/
+GetCellTotalWidth	Matrix.c	/^GetCellTotalWidth(mw)$/
+GetColumnPositions	Matrix.c	/^GetColumnPositions(mw)$/
+GetDefaultRegion	Region.c	/^GetDefaultRegion(w, data)$/
+GetHotWord	Help.c	/^GetHotWord(type, str, str_count, buf, hot)$/
+GetInverseGC	Matrix.c	/^GetInverseGC(mw)$/
+GetSavedRegion	Region.c	/^GetSavedRegion(w, data)$/
+GetValuesHook	Caption.c	/^GetValuesHook(cw, args, num_args)$/
+GetVisibleCells	Matrix.c	/^GetVisibleCells(mw, top_row, bottom_row, left_colu/
+GetVisibleColumns	Matrix.c	/^GetVisibleColumns(mw, left_column, right_column)$/
+GetVisibleRows	Matrix.c	/^GetVisibleRows(mw, top_row, bottom_row)$/
+GridGetSavedRegion	Region.c	/^GridGetSavedRegion(w, data)$/
+GridInfoChanged	Region.c	/^GridInfoChanged(w, data)$/
+GridOptionsCancel	Region.c	/^GridOptionsCancel(w, cl, ca)             \/* CALLBA/
+GridOptionsOK	Region.c	/^GridOptionsOK(w, cl, ca)             \/* CALLBACK */
+GroupCallBack	Reclass.c	/^GroupCallBack(w, client_data, call_data)$/
+HORIZ_ORIGIN	Matrix.c	/^#define HORIZ_ORIGIN(mw)	(mw->matrix.horiz_origin)/
+HSCROLL_HEIGHT	Matrix.c	/^#define HSCROLL_HEIGHT(mw)	(HorizScrollChild(mw)->/
+HSCROLL_WIDTH	Matrix.c	/^#define HSCROLL_WIDTH(mw)	(HorizScrollChild(mw)->c/
+HSVToRGB	color.c	/^HSVToRGB(hsv)$/
+H_GetFg	Help.c	/^#define H_GetFg(w,type) type / w->help.hotword_fg /
+H_GetFontlist	Help.c	/^#define H_GetFontlist(w,type) type / w->help.hotwo/
+HaveUserChild	Caption.c	/^#define HaveUserChild(w)  (((CompositeWidget)w)->c/
+HelpCreateWidgets	Help.c	/^HelpCreateWidgets(w, dpy, screen)$/
+HistoryAdjustAndAttach	History.c	/^HistoryAdjustAndAttach(xgh, attach)$/
+HistoryCreateWidgets	History.c	/^HistoryCreateWidgets(xgh)$/
+HistoryEdhistCancel	History.c	/^HistoryEdhistCancel(w,data,cbs)$/
+HistoryEdhistDialog	History.c	/^HistoryEdhistDialog(w,data,cbs)$/
+HistoryEdhistOk	History.c	/^HistoryEdhistOk(w,data,cbs)$/
+HistoryNextField	History.c	/^HistoryNextField(w,data,cbs)$/
+HistoryUpdateStruct	History.c	/^HistoryUpdateStruct(w, data)$/
+HorizScrollChild	Matrix.c	/^#define HorizScrollChild(mw)	(mw->composite.childr/
+HorizSliderMove	Table.c	/^static  XtCallbackProc  HorizSliderMove(w,closure,/
+HotWordProcess	Help.c	/^HotWordProcess(w, hot, calldata)$/
+INBOX	Matrix.c	/^#define INBOX(r, x, y) \\$/
+INTERSECT	Matrix.c	/^#define INTERSECT(r1, r2, res)	{ X_INTERSECT(r1, r/
+IS_FIXED	Matrix.c	/^#define IS_FIXED(mw, row, column) (row < mw->matri/
+IncrementCallBack	Cats.c	/^IncrementCallBack(w, client_data, call_data)$/
+IncrementTextCallBack	Cats.c	/^IncrementTextCallBack(w, client_data, call_data)$/
+IncrementTextVerifyCallBack	Cats.c	/^IncrementTextVerifyCallBack(w, client_data, call_d/
+Initialize	Browser.c	/^Initialize(request, new)$/
+InsertChild	Caption.c	/^InsertChild(w)$/
+IsCellVisible	Matrix.c	/^IsCellVisible(mw, row, column)$/
+IsColumnVisible	Matrix.c	/^IsColumnVisible(mw, column)$/
+IsRowVisible	Matrix.c	/^IsRowVisible(mw, row)$/
+KidDied	system.c	/^KidDied()$/
+LabelChild	Caption.c	/^#define LabelChild(w)     (((CompositeWidget)w)->c/
+Layout	Caption.c	/^Layout(cw, configure)$/
+LinkReclassRule	Reclass.c	/^LinkReclassRule(xgr, rule)$/
+ListCallBack	Interact.c	/^ListCallBack (w, client_data, call_data)$/
+MAX	color.c	/^#define	MAX(a, b)   ((a)>(b)/(a):(b))$/
+MIN	color.c	/^#define	MIN(a, b)   ((a)<(b)/(a):(b))$/
+MakeCellVisible	Matrix.c	/^MakeCellVisible(mw, row, column)$/
+MakeColumnVisible	Matrix.c	/^MakeColumnVisible(mw, column)$/
+MakeHotWord	Help.c	/^MakeHotWord(w, str, buf, str_count, x_offset, num_/
+MakeRowVisible	Matrix.c	/^MakeRowVisible(mw, row)$/
+MapCoord2ScreenEasting	Region.c	/^MapCoord2ScreenEasting(xgr, v)$/
+MapCoord2ScreenNorthing	Region.c	/^MapCoord2ScreenNorthing(xgr, v)$/
+MaxLengthArrayDestructor	Matrix.c	/^MaxLengthArrayDestructor(app, to, converter_data, /
+MaxRowLabel	Matrix.c	/^MaxRowLabel(mw)$/
+Mfonttest	fonttest.c	/^main(argc, argv)$/
+MixHSV	color.c	/^MixHSV(r, alpha, s, beta)$/
+MixRGB	color.c	/^MixRGB(r, alpha, s, beta)$/
+ModifyVerifyCB	Matrix.c	/^ModifyVerifyCB(w, mw, verify)$/
+NewBox	Region.c	/^NewBox(xgr, isold, X1, Y1, X2, Y2, window)$/
+NewBoxRegion	Region.c	/^NewBoxRegion(xgr, isold, r, window)$/
+NewFont	Matrix.c	/^NewFont(mw)$/
+NewMapTextCallBack	Reclass.c	/^NewMapTextCallBack(w, client_data, call_data)$/
+NewMapTitleTextCallBack	Reclass.c	/^NewMapTitleTextCallBack(w, client_data, call_data)/
+OVERLAP	Matrix.c	/^#define OVERLAP(r1, r2) \\$/
+OffsetOf	Caption.c	/^#define OffsetOf(field)	XtOffsetOf(XbaeCaptionRec,/
+OriginalMapTextCallBack	Reclass.c	/^OriginalMapTextCallBack(w, client_data, call_data)/
+ParseColumnLabel	Matrix.c	/^ParseColumnLabel(label, lines)$/
+PctToHSV	color.c	/^PctToHSV(hh, ss, vv)$/
+PctToRGB	color.c	/^PctToRGB(rr, gg, bb)$/
+PixelAdjustAndAttach	Pixel.c	/^PixelAdjustAndAttach(xgp, attach)$/
+PixelCreateScaleWidgets	Pixel.c	/^PixelCreateScaleWidgets(xgp, form, which)$/
+PixelCreateWidgets	Pixel.c	/^PixelCreateWidgets(xgp)$/
+PromptTextCallBack	Interact.c	/^PromptTextCallBack (w, client_data, call_data)$/
+PutFields	Region.c	/^PutFields(xgr, region)$/
+QueryGeometry	Caption.c	/^QueryGeometry(cw, proposed, desired)$/
+RGBDist	color.c	/^RGBDist(r, s)$/
+RGBToCMY	color.c	/^RGBToCMY(rgb)$/
+RGBToHSV	color.c	/^RGBToHSV(rgb)$/
+RGBToXColor	color.c	/^RGBToXColor(r, x)$/
+ROW_HEIGHT	Matrix.c	/^#define ROW_HEIGHT(mw)		(int)((TEXT_HEIGHT_OFFSET(/
+ROW_LABEL_OFFSET	Matrix.c	/^#define ROW_LABEL_OFFSET(mw)	(COLUMN_LABEL_HEIGHT(/
+ROW_LABEL_WIDTH	Matrix.c	/^#define ROW_LABEL_WIDTH(mw)	(mw->matrix.row_labels/
+Realize	Clip.c	/^Realize(cw, valueMask, attributes)$/
+ReclassAdjustAndAttach	Reclass.c	/^ReclassAdjustAndAttach(xgr, attach)$/
+ReclassCreateWidgets	Reclass.c	/^ReclassCreateWidgets(xgr)$/
+Redisplay	Clip.c	/^Redisplay(cw, event, region)$/
+Redraw	Clip.c	/^Redraw(cw)$/
+RedrawCells	Matrix.c	/^RedrawCells(mw, expose)$/
+RedrawLabelsAndFixed	Matrix.c	/^RedrawLabelsAndFixed(mw, expose)$/
+RegBgProc	oldsystem.c	/^RegBgProc(pid, e, s, buf, shell, ignore, err, nerr/
+RegionAdjustAndAttach	Region.c	/^RegionAdjustAndAttach(xgr, attach)$/
+RegionClearGraphic	Region.c	/^RegionClearGraphic(xgr, window)$/
+RegionCreatePixmap	Region.c	/^RegionCreatePixmap(xgr)$/
+RegionCreateWidgets	Region.c	/^RegionCreateWidgets(xgr)$/
+RegionRedrawGraphic	Region.c	/^RegionRedrawGraphic(xgr, window)$/
+RegionResize	Region.c	/^RegionResize(w)$/
+RemoveHelpCallbacks	Pixel.c	/^RemoveHelpCallbacks(xgp)$/
+Resize	Caption.c	/^Resize(cw)$/
+ResizeCells	Matrix.c	/^ResizeCells(current, new)$/
+ResizeColors	Matrix.c	/^ResizeColors(current, new)$/
+ResizeSelectedCells	Matrix.c	/^ResizeSelectedCells(current, new)$/
+RowColToXY	Matrix.c	/^RowColToXY(mw, row, column, x, y)$/
+SETRECT	Matrix.c	/^#define SETRECT(r, X1, Y1, X2, Y2) { (r).x1 = X1; /
+SaveRegion	Region.c	/^SaveRegion(w, data)$/
+Screen2MapCoordEasting	Region.c	/^Screen2MapCoordEasting(xgr, v)$/
+Screen2MapCoordNorthing	Region.c	/^Screen2MapCoordNorthing(xgr, v)$/
+ScrollHorizCB	Matrix.c	/^ScrollHorizCB(w, client_data, call_data)$/
+ScrollVertCB	Matrix.c	/^ScrollVertCB(w, client_data, call_data)$/
+SelectCell	Matrix.c	/^SelectCell(mw, row, column)$/
+SelectCellACT	Matrix.c	/^SelectCellACT(w, event, params, nparams)$/
+SelectColumn	Matrix.c	/^SelectColumn(mw, column)$/
+SelectRow	Matrix.c	/^SelectRow(mw, row)$/
+SetCell	Matrix.c	/^SetCell(mw, row, column, value)$/
+SetCellColor	Matrix.c	/^SetCellColor(mw, row, column, color)$/
+SetClipMask	Matrix.c	/^SetClipMask(mw)$/
+SetColumnColors	Matrix.c	/^SetColumnColors(mw, position, colors, num_colors)$/
+SetGraphicSize	Region.c	/^SetGraphicSize(xgr)$/
+SetGridColor	Region.c	/^SetGridColor(w, data)$/
+SetRowColors	Matrix.c	/^SetRowColors(mw, position, colors, num_colors)$/
+SetScaleValues	Pixel.c	/^SetScaleValues(xgp,oldType)$/
+SetValues	Browser.c	/^SetValues(current, request, new)$/
+SetValuesAlmost	Caption.c	/^SetValuesAlmost(old, new, request, reply)$/
+ShowMenu	fonttest.c	/^ShowMenu(widget, cli, call)$/
+SmAddScroll	Matrix.c	/^SmAddScroll(scrollMgr, delta_x, delta_y)$/
+SmCreateScrollMgr	Matrix.c	/^SmCreateScrollMgr()$/
+SmDestroyScrollMgr	Matrix.c	/^SmDestroyScrollMgr(scrollMgr)$/
+SmRemoveScroll	Matrix.c	/^SmRemoveScroll(scrollMgr)$/
+SmScrollEvent	Matrix.c	/^SmScrollEvent(scrollMgr, event)$/
+StringArrayDestructor	Matrix.c	/^StringArrayDestructor(app, to, converter_data, arg/
+StringsAreEqual	Matrix.c	/^StringsAreEqual(in, test, length)$/
+StripNewLine	Reclass.c	/^StripNewLine(s)$/
+TEXT_HEIGHT	Matrix.c	/^#define TEXT_HEIGHT(mw)		(mw->matrix.font->descent/
+TEXT_HEIGHT_OFFSET	Matrix.c	/^#define TEXT_HEIGHT_OFFSET(mw)	(mw->matrix.cell_ma/
+TEXT_WIDTH_OFFSET	Matrix.c	/^#define TEXT_WIDTH_OFFSET(mw)	(mw->matrix.cell_mar/
+TEXT_X_OFFSET	Matrix.c	/^#define TEXT_X_OFFSET(mw)	(int)(TEXT_WIDTH_OFFSET(/
+TEXT_Y_OFFSET	Matrix.c	/^#define TEXT_Y_OFFSET(mw)	(int)(mw->matrix.text_ba/
+TextCallBack	Interact.c	/^TextCallBack (w, client_data, call_data)$/
+TextChild	Matrix.c	/^#define TextChild(mw)		(mw->composite.children[3])/
+ToggleCoord	Region.c	/^ToggleCoord(w, data)$/
+ToggleCurrent	Region.c	/^ToggleCurrent(w, data)$/
+ToggleDefault	Region.c	/^ToggleDefault(w, data)$/
+ToggleGrid	Region.c	/^ToggleGrid(w, data)$/
+ToggleRaster	Region.c	/^ToggleRaster(w, data)$/
+TraverseInCB	Matrix.c	/^TraverseInCB(w, mw, call_data)$/
+TraverseNextACT	Matrix.c	/^TraverseNextACT(w, event, params, nparams)$/
+TraversePrevACT	Matrix.c	/^TraversePrevACT(w, event, params, nparams)$/
+UngroupCallBack	Reclass.c	/^UngroupCallBack(w, client_data, call_data)$/
+UnmanageCallBack	Help.c	/^UnmanageCallBack(w, cld, cad)$/
+UpdateScale	Pixel.c	/^UpdateScale(w, cl, ca)$/
+UpdateText	Pixel.c	/^UpdateText(w, cl, ca)$/
+UserChild	Caption.c	/^#define UserChild(w)      (((CompositeWidget)w)->c/
+VERT_ORIGIN	Matrix.c	/^#define VERT_ORIGIN(mw)		(mw->matrix.top_row)$/
+VISIBLE_HEIGHT	Matrix.c	/^#define VISIBLE_HEIGHT(mw)	(ClipChild(mw)->core.he/
+VISIBLE_WIDTH	Matrix.c	/^#define VISIBLE_WIDTH(mw)	(ClipChild(mw)->core.wid/
+VSCROLL_HEIGHT	Matrix.c	/^#define VSCROLL_HEIGHT(mw)	(VertScrollChild(mw)->c/
+VSCROLL_WIDTH	Matrix.c	/^#define VSCROLL_WIDTH(mw)	(VertScrollChild(mw)->co/
+ValidateAndUpdateEdhist	History.c	/^ValidateAndUpdateEdhist(xgh)$/
+ValidateFields	Region.c	/^ValidateFields(xgr)$/
+VertScrollChild	Matrix.c	/^#define VertScrollChild(mw)	(mw->composite.childre/
+VertSliderMove	Table.c	/^static  XtCallbackProc  VertSliderMove(w,closure,c/
+WidthArrayDestructor	Matrix.c	/^WidthArrayDestructor(app, to, converter_data, args/
+XYToRowCol	Matrix.c	/^XYToRowCol(mw, x, y, row, column, cell)$/
+X_INTERSECT	Matrix.c	/^#define X_INTERSECT(r1, r2, res) { (res).x1 = Max(/
+XbaeClipRedraw	Clip.c	/^XbaeClipRedraw(w)$/
+XbaeMatrixAddColumns	Matrix.c	/^XbaeMatrixAddColumns(w, position, columns, labels,/
+XbaeMatrixAddRows	Matrix.c	/^XbaeMatrixAddRows(w, position, rows, labels, color/
+XbaeMatrixCancelEdit	Matrix.c	/^XbaeMatrixCancelEdit(w, unmap)$/
+XbaeMatrixCommitEdit	Matrix.c	/^XbaeMatrixCommitEdit(w, unmap)$/
+XbaeMatrixDeleteColumns	Matrix.c	/^XbaeMatrixDeleteColumns(w, position, num_columns)$/
+XbaeMatrixDeleteRows	Matrix.c	/^XbaeMatrixDeleteRows(w, position, num_rows)$/
+XbaeMatrixDeselectAll	Matrix.c	/^XbaeMatrixDeselectAll(w)$/
+XbaeMatrixDeselectCell	Matrix.c	/^XbaeMatrixDeselectCell(w, row, column)$/
+XbaeMatrixDeselectColumn	Matrix.c	/^XbaeMatrixDeselectColumn(w, column)$/
+XbaeMatrixDeselectRow	Matrix.c	/^XbaeMatrixDeselectRow(w, row)$/
+XbaeMatrixEditCell	Matrix.c	/^XbaeMatrixEditCell(w, row, column)$/
+XbaeMatrixGetCell	Matrix.c	/^XbaeMatrixGetCell(w, row, column)$/
+XbaeMatrixGetRow	Matrix.c	/^XbaeMatrixGetRow(tb,row)$/
+XbaeMatrixSelectCell	Matrix.c	/^XbaeMatrixSelectCell(w, row, column)$/
+XbaeMatrixSelectColumn	Matrix.c	/^XbaeMatrixSelectColumn(w, column)$/
+XbaeMatrixSelectRow	Matrix.c	/^XbaeMatrixSelectRow(w, row)$/
+XbaeMatrixSetCell	Matrix.c	/^XbaeMatrixSetCell(w, row, column, value)$/
+XbaeMatrixSetCellColor	Matrix.c	/^XbaeMatrixSetCellColor(w, row, column, color)$/
+XbaeMatrixSetColumn	Matrix.c	/^XbaeMatrixSetColumn(tb,column,values)$/
+XbaeMatrixSetColumnColors	Matrix.c	/^XbaeMatrixSetColumnColors(w, position, colors, num/
+XbaeMatrixSetRow	Matrix.c	/^XbaeMatrixSetRow(tb,row,values)$/
+XbaeMatrixSetRowColors	Matrix.c	/^XbaeMatrixSetRowColors(w, position, colors, num_co/
+XgAddHelpCallBackFromFile	help.c	/^XgAddHelpCallBackFromFile(w, file)$/
+XgAddHelpCallback	help.c	/^XgAddHelpCallback(va_alist)$/
+XgAllocateNamedPixel	allocpix.c	/^XgAllocateNamedPixel(display,cmap,xcolor,name)$/
+XgAllocatePixel	allocpix.c	/^XgAllocatePixel(display,cmap,xcolor)$/
+XgBrowserRescan	Browser.c	/^XgBrowserRescan(xgb)$/
+XgCatsCallBack	Cats.c	/^XgCatsCallBack(wid, which_button, callback)$/
+XgCreateBrowser	Browser.c	/^XgCreateBrowser(p, name, args, n)$/
+XgCreateBrowserDialog	Browser.c	/^XgCreateBrowserDialog(ds_p, name, xgb_args, xgb_n)/
+XgCreateCats	Cats.c	/^XgCreateCats(p, name, args, n)$/
+XgCreateCatsDialog	Cats.c	/^XgCreateCatsDialog(ds_p, name, xgc_args, xgc_n)$/
+XgCreateHelp	Help.c	/^XgCreateHelp(p, name, args, n)$/
+XgCreateHelpDialog	Help.c	/^XgCreateHelpDialog(parent, name, xgh_args, xgh_n)$/
+XgCreateHistory	History.c	/^XgCreateHistory(p, name, args, n)$/
+XgCreateHistoryDialog	History.c	/^XgCreateHistoryDialog(ds_p, name, xgh_args, xgh_n)/
+XgCreateInteractor	Interact.c	/^XgCreateInteractor(p, name, args, n)$/
+XgCreateInteractorDialog	Interact.c	/^XgCreateInteractorDialog(ds_p, name, xgi_args, xgi/
+XgCreateInteractorFontListDialog	Interact.c	/^XgCreateInteractorFontListDialog(ds_p, name, xgi_a/
+XgCreateInteractorList	Interact.c	/^XgCreateInteractorList(p, name, xgi_args, xgi_n)$/
+XgCreateInteractorListDialog	Interact.c	/^XgCreateInteractorListDialog(ds_p, name, xgi_args,/
+XgCreateInteractorPrompt	Interact.c	/^XgCreateInteractorPrompt(p, name, xgi_args, xgi_n)/
+XgCreateInteractorPromptDialog	Interact.c	/^XgCreateInteractorPromptDialog(ds_p, name, xgi_arg/
+XgCreateInteractorTopLevel	Interact.c	/^XgCreateInteractorTopLevel(ds_p, name, xgi_args, x/
+XgCreatePixel	Pixel.c	/^XgCreatePixel(p, name, args, n)$/
+XgCreatePixelDialog	Pixel.c	/^XgCreatePixelDialog(ds_p, name, xgp_args, xgp_n)$/
+XgCreateReclass	Reclass.c	/^XgCreateReclass(p, name, args, n)$/
+XgCreateReclassDialog	Reclass.c	/^XgCreateReclassDialog(ds_p, name, xgr_args, xgr_n)/
+XgCreateRegion	Region.c	/^XgCreateRegion(p, name, args, n)$/
+XgCreateRegionDialog	Region.c	/^XgCreateRegionDialog(ds_p, name, xgr_args, xgr_n)$/
+XgCreateXmStringFromFile	xmstring.c	/^XgCreateXmStringFromFile(file)$/
+XgDoHelpWidgetHelp	Interact.c	/^XgDoHelpWidgetHelp(w, s, title)$/
+XgDoHourGlass	cursor.c	/^XgDoHourGlass(shell)$/
+XgEditStringDialog	editstr.c	/^XgEditStringDialog(appContext, parent, thestring, /
+XgEditor	editor.c	/^XgEditor(widget, string, title, command, textw)$/
+XgError	error.c	/^XgError(widget, string)$/
+XgEventLoop	yesno.c	/^XgEventLoop(appContext,flag)$/
+XgGetCommandString	prop.c	/^XgGetCommandString(display,window)$/
+XgGetMenuWindow	prop.c	/^XgGetMenuWindow(display)$/
+XgGetQualifiedDir	qualify.c	/^XgGetQualifiedDir(dirSpec)$/
+XgHelpCallback	help.c	/^XgHelpCallback(widget, client_data, call_data)$/
+XgHelpCallbackFromFile	help.c	/^XgHelpCallbackFromFile(widget, client_data, call_d/
+XgHistoryCallBack	History.c	/^XgHistoryCallBack(wid, which_button, callback)$/
+XgInteractorCallBack	Interact.c	/^XgInteractorCallBack(w, client_data, call_data)$/
+XgInteractorGetChild	Interact.c	/^XgInteractorGetChild(xgi, which)$/
+XgMainLoop	system.c	/^XgMainLoop(ac)$/
+XgPixelCallBack	Pixel.c	/^XgPixelCallBack(wid, which_button, callback)$/
+XgPixelGetChild	Pixel.c	/^XgPixelGetChild(xgp, which)$/
+XgPutCatsInList	Cats.c	/^XgPutCatsInList(cats, range, list, xgc)$/
+XgReclassCallBack	Reclass.c	/^XgReclassCallBack(wid, client_data, call_data)$/
+XgReclassGetChild	Reclass.c	/^XgReclassGetChild(xgr, which)$/
+XgRegionGetChild	Region.c	/^XgRegionGetChild(xgr, which)$/
+XgRegisterScaleTypeConverter	convert.c	/^XgRegisterScaleTypeConverter()$/
+XgRelativePath	relative.c	/^XgRelativePath(start, path)$/
+XgSetCommandString	prop.c	/^XgSetCommandString(display,window,s)$/
+XgSetFontList	fontlist.c	/^XgSetFontList(parent, child)$/
+XgSortListItems	sortlist.c	/^XgSortListItems(widget, order)$/
+XgStripTrailingSlash	qualify.c	/^XgStripTrailingSlash(s)$/
+XgSystem	oldsystem.c	/^XgSystem(shell, buf, ignore, err, nerr)$/
+XgSystemMainLoop	oldsystem.c	/^XgSystemMainLoop(appc)$/
+XgUndoHourGlass	cursor.c	/^XgUndoHourGlass(shell)$/
+XgWMClientMessage	client.c	/^XgWMClientMessage(w, cld, msg)$/
+XgWarningDialog	warning.c	/^XgWarningDialog(parent, string)$/
+XgYesNo	yesno.c	/^XgYesNo(parent, question)$/
+XgYesNoResponse	yesno.c	/^XgYesNoResponse(w, answer, reason)$/
+XmCreateTable	Table.c	/^XmCreateTable(parent, name, args, argCount)$/
+XmTableGetColumn	Table.c	/^XmTableGetColumn(tb,column)$/
+XmTableGetRow	Table.c	/^XmTableGetRow(tb,row)$/
+XmTableGetValue	Table.c	/^XmTableGetValue(tb,row,col)$/
+XmTableSetColumn	Table.c	/^XmTableSetColumn(tb,column,values)$/
+XmTableSetRow	Table.c	/^XmTableSetRow(tb,row,values)$/
+XmTableSetValue	Table.c	/^XmTableSetValue(tb,row,col,value)$/
+XtoCol	Matrix.c	/^XtoCol(mw, x)$/
+Y_INTERSECT	Matrix.c	/^#define Y_INTERSECT(r1, r2, res) { (res).y1 = Max(/
+YtoRow	Matrix.c	/^#define YtoRow(mw, y)			((y) \/ (ROW_HEIGHT(mw)))$/
+_XgCSL2StringArray	stringarray.c	/^_XgCSL2StringArray(s, cp)$/
+_XgCalloc	alloc.c	/^_XgCalloc(num, s)$/
+_XgCopyStringArray	stringarray.c	/^_XgCopyStringArray(ptr, items)$/
+_XgCountMaps	database.c	/^_XgCountMaps(mapset,type)$/
+_XgCountMapsets	database.c	/^_XgCountMapsets()$/
+_XgCountMapsetsWithMaps	database.c	/^_XgCountMapsetsWithMaps(type)$/
+_XgCvtStringToScaleTypeMask	convert.c	/^_XgCvtStringToScaleTypeMask (args, num_args, from_/
+_XgDirectoryListing	dirlist.c	/^_XgDirectoryListing(path, items, dotFiles, sort, d/
+_XgDirectoryNotEmpty	dirlist.c	/^_XgDirectoryNotEmpty(path, dotFiles, dirsonly)$/
+_XgEditorCancel	editor.c	/^_XgEditorCancel(w, cld, cad)$/
+_XgEditorClear	editor.c	/^_XgEditorClear(w, cld, cad)$/
+_XgEditorCopy	editor.c	/^_XgEditorCopy(w, cld, cad)$/
+_XgEditorCut	editor.c	/^_XgEditorCut(w, cld, cad)$/
+_XgEditorHelp	editor.c	/^_XgEditorHelp(w, cld, cad)$/
+_XgEditorInsert	editor.c	/^_XgEditorInsert(w, cld, cad)$/
+_XgEditorLoad	editor.c	/^_XgEditorLoad(w, cld, cad)$/
+_XgEditorPaste	editor.c	/^_XgEditorPaste(w, cld, cad)$/
+_XgEditorPrint	editor.c	/^_XgEditorPrint(w, cld, cad)$/
+_XgEditorSaveAs	editor.c	/^_XgEditorSaveAs(w, cld, cad)$/
+_XgFindRootAncestor	ancestor.c	/^_XgFindRootAncestor(w)$/
+_XgFontListOkCB	fontlist.c	/^_XgFontListOkCB(w, cli, call)$/
+_XgFree	alloc.c	/^_XgFree(ptr)$/
+_XgFreeDirectoryListing	dirlist.c	/^_XgFreeDirectoryListing(ptr, items)$/
+_XgFreeStringArray	stringarray.c	/^_XgFreeStringArray(ptr, items)$/
+_XgFreeTokens	token.c	/^_XgFreeTokens (tokens)$/
+_XgGetUserName	user.c	/^_XgGetUserName()$/
+_XgHandleSystemError	oldsystem.c	/^_XgHandleSystemError(w, file)$/
+_XgHandleSystemOutput	oldsystem.c	/^_XgHandleSystemOutput(w, buf, file)$/
+_XgHasMaps	database.c	/^_XgHasMaps(mapset,type)$/
+_XgHelpAdjust	Help.c	/^_XgHelpAdjust(w)$/
+_XgHelpLoadFile	Help.c	/^_XgHelpLoadFile(w)$/
+_XgInteractorActivate	Interact.c	/^_XgInteractorActivate( widget, event, params, numP/
+_XgInteractorCreateApplyButton	Interact.c	/^_XgInteractorCreateApplyButton(xgi)$/
+_XgInteractorCreateButtonG	Interact.c	/^_XgInteractorCreateButtonG(xgi, lstring, name)$/
+_XgInteractorCreateCancelButton	Interact.c	/^_XgInteractorCreateCancelButton(xgi)$/
+_XgInteractorCreateHelpButton	Interact.c	/^_XgInteractorCreateHelpButton(xgi)$/
+_XgInteractorCreateHelpMenu	Interact.c	/^_XgInteractorCreateHelpMenu(xgi)$/
+_XgInteractorCreateList	Interact.c	/^_XgInteractorCreateList(xgi)$/
+_XgInteractorCreateListLabel	Interact.c	/^_XgInteractorCreateListLabel(xgi)$/
+_XgInteractorCreateListText	Interact.c	/^_XgInteractorCreateListText(xgi)$/
+_XgInteractorCreateListTextLabel	Interact.c	/^_XgInteractorCreateListTextLabel(xgi)$/
+_XgInteractorCreateOkButton	Interact.c	/^_XgInteractorCreateOkButton(xgi)$/
+_XgInteractorCreatePromptLabel	Interact.c	/^_XgInteractorCreatePromptLabel(xgi)$/
+_XgInteractorCreateSeparator	Interact.c	/^_XgInteractorCreateSeparator(xgi)$/
+_XgInteractorCreateText	Interact.c	/^_XgInteractorCreateText(xgi)$/
+_XgInteractorGeoMatrixCreate	Interact.c	/^_XgInteractorGeoMatrixCreate(xgi, instigator, desi/
+_XgInteractorGetApplyLabelString	Interact.c	/^_XgInteractorGetApplyLabelString(xgi, resource, va/
+_XgInteractorGetCancelLabelString	Interact.c	/^_XgInteractorGetCancelLabelString(xgi, resource, v/
+_XgInteractorGetHelpLabelString	Interact.c	/^_XgInteractorGetHelpLabelString(xgi, resource, val/
+_XgInteractorGetListItemCount	Interact.c	/^_XgInteractorGetListItemCount(xgi, resource, value/
+_XgInteractorGetListItems	Interact.c	/^_XgInteractorGetListItems(xgi, resource, value)$/
+_XgInteractorGetListLabelString	Interact.c	/^_XgInteractorGetListLabelString(xgi, resource, val/
+_XgInteractorGetListTextColumns	Interact.c	/^_XgInteractorGetListTextColumns(xgi, resource, val/
+_XgInteractorGetListTextLabelString	Interact.c	/^_XgInteractorGetListTextLabelString(xgi, resource,/
+_XgInteractorGetListTextString	Interact.c	/^_XgInteractorGetListTextString(xgi, resource, valu/
+_XgInteractorGetListVisibleItemCount	Interact.c	/^_XgInteractorGetListVisibleItemCount(xgi, resource/
+_XgInteractorGetOkLabelString	Interact.c	/^_XgInteractorGetOkLabelString(xgi, resource, value/
+_XgInteractorGetPromptLabelString	Interact.c	/^_XgInteractorGetPromptLabelString(xgi, resource, v/
+_XgInteractorGetTextColumns	Interact.c	/^_XgInteractorGetTextColumns(xgi, resource, value)$/
+_XgInteractorGetTextString	Interact.c	/^_XgInteractorGetTextString(xgi, resource, value)$/
+_XgInteractorHelp	Interact.c	/^_XgInteractorHelp(w, client_data, call_data)$/
+_XgInteractorHelpAction	Interact.c	/^_XgInteractorHelpAction(widget, event, parms, npar/
+_XgInteractorNoGeoRequest	Interact.c	/^_XgInteractorNoGeoRequest(geoSpec)$/
+_XgInteractorUpdateString	Interact.c	/^_XgInteractorUpdateString(w, string, direction)$/
+_XgListFix	Interact.c	/^_XgListFix(geoSpec, action, layoutPtr, rowPtr)$/
+_XgListLabelFix	Interact.c	/^_XgListLabelFix(geoSpec, action, layoutPtr, rowPtr/
+_XgListMapsetsWithMaps	database.c	/^_XgListMapsetsWithMaps(type,count,sort)$/
+_XgListTextFix	Interact.c	/^_XgListTextFix(geoSpec, action, layoutPtr, rowPtr)/
+_XgListTextLabelFix	Interact.c	/^_XgListTextLabelFix(geoSpec, action, layoutPtr, ro/
+_XgMalloc	alloc.c	/^_XgMalloc(s)$/
+_XgNameIsFullyQualified	Reclass.c	/^_XgNameIsFullyQualified(text, name, mapset)$/
+_XgNumberOfTokens	token.c	/^_XgNumberOfTokens(tokens)$/
+_XgPutDirectoryInList	dirlist.c	/^_XgPutDirectoryInList(path, list, dirsonly)$/
+_XgPutDirectoryInListOWN	dirlist.c	/^_XgPutDirectoryInListOWN(path, list, dirsonly)$/
+_XgPutFileInStringArray	stringarray.c	/^_XgPutFileInStringArray(theFile, countPtr)$/
+_XgPutSearchPathInList	dirlist.c	/^_XgPutSearchPathInList(list)$/
+_XgPutStringArrayInList	stringarray.c	/^_XgPutStringArrayInList(list, items, count)$/
+_XgPutStringArrayInOptionMenu	Browser.c	/^_XgPutStringArrayInOptionMenu(dirlist, menu, callb/
+_XgRealloc	alloc.c	/^_XgRealloc(ptr, size)$/
+_XgSearchPath	dirlist.c	/^_XgSearchPath(cp)$/
+_XgSortStringArray	stringarray.c	/^_XgSortStringArray(ptr, items, sort)$/
+_XgStrDup	strdup.c	/^char *_XgStrDup(s)$/
+_XgStringArray2CSL	stringarray.c	/^_XgStringArray2CSL(array, count, delim)$/
+_XgStringArray2XmStringTable	stringarray.c	/^_XgStringArray2XmStringTable(array, nitems)$/
+_XgStringArrayAdd	stringarray.c	/^_XgStringArrayAdd(ptr, items, newitem)$/
+_XgStringArrayDelete	stringarray.c	/^_XgStringArrayDelete(ptr, items, deaditem)$/
+_XgStringArraySearch	stringarray.c	/^_XgStringArraySearch(ptr, items, str)$/
+_XgStringArrayTotalLength	stringarray.c	/^_XgStringArrayTotalLength(ptr, items)$/
+_XgStripNewLine	stringarray.c	/^_XgStripNewLine(s)$/
+_XgSupplyGenericHelp	help.c	/^_XgSupplyGenericHelp(parent, w)$/
+_XgTokenize	token.c	/^_XgTokenize (buf, delim)$/
+_XgXmStringTable2StringArray	stringarray.c	/^_XgXmStringTable2StringArray(table, nitems)$/
+_XmDialogTypeDefault	Interact.c	/^_XmDialogTypeDefault(widget, offset, value)$/
+__XgInsertFile	editor.c	/^__XgInsertFile(w, cld, cad)$/
+__XgLoadFile	editor.c	/^__XgLoadFile(w, cld, cad)$/
+__XgPrintFile	editor.c	/^__XgPrintFile(w, cld, cad)$/
+__XgSaveAsFile	editor.c	/^__XgSaveAsFile(w, cld, cad)$/
+__XgSaveToFile	editor.c	/^__XgSaveToFile(text, file)$/
+acceptCancelGridColor	Region.c	/^acceptCancelGridColor(w, cl, ca)             \/* CA/
+acceptSetGridColor	Region.c	/^acceptSetGridColor(w, cl, ca)             \/* CALLB/
+browserAcceptRaster	Region.c	/^browserAcceptRaster(w, cl, ca)             \/* CALL/
+browserAcceptRegion	Region.c	/^browserAcceptRegion(w, cl, ca)             \/* CALL/
+browserCancelRaster	Region.c	/^browserCancelRaster(w, cl, ca)             \/* CALL/
+browserCancelRegion	Region.c	/^browserCancelRegion(w, cl, ca)             \/* CALL/
+charWidth	Matrix.c	/^#define charWidth(fs,c) ((fs)->per_char\\$/
+cut_paste	fonttest.c	/^cut_paste(widget, num)$/
+drawLine	Region.c	/^drawLine(xgr, x1, y1, x2, y2, window)$/
+exposeGraphic	Region.c	/^exposeGraphic(drawing_a, cld, cad)$/
+externaldef	Browser.c	/^externaldef(xgbrowserclassrec)$/
+file_cb	fonttest.c	/^file_cb(w, item_no, cbs)$/
+fonts_cb	fonttest.c	/^fonts_cb()$/
+max	Region.c	/^#define max(a,b) (((a) > (b)) / (a) : (b))$/
+min	Region.c	/^#define min(a,b) (((a) < (b)) / (a) : (b))$/
+offset	Matrix.c	/^#define offset(field)	XtOffsetOf(XbaeMatrixRec, fi/
+open_file	fonttest.c	/^open_file(dialog, save, cbs)$/
+rubberBand	Region.c	/^rubberBand(widget, event, args, num_args)$/
+search_cb	fonttest.c	/^search_cb(w, item_no, cbs)$/
+snapToGrid	Region.c	/^snapToGrid(w, data)$/
