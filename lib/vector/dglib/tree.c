@@ -21,13 +21,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <malloc.h>
-#include "bst.c"
+#include "avl.c"
 
 #include "type.h"
 #include "tree.h"
 
 typedef struct {
-	struct bst_table * pbst;
+	struct avl_table * pbst;
 	int (* pfnNodeCancel )( gnTreeNode_s * , void * );
 	void * pvNodeCancel;
 } gnTree_s;
@@ -49,20 +49,20 @@ static struct libavl_allocator _tree_allocator = {
 
 
 /* node item comparison */
-static int _bst_compare(const void * bst_a, const void * bst_b, void * bst_param )
+static int _avl_compare(const void * avl_a, const void * avl_b, void * avl_param )
 {
-	gnTreeNode_s * pa = (gnTreeNode_s*)bst_a;
-	gnTreeNode_s * pb = (gnTreeNode_s*)bst_b;
+	gnTreeNode_s * pa = (gnTreeNode_s*)avl_a;
+	gnTreeNode_s * pb = (gnTreeNode_s*)avl_b;
 	if ( pa->key < pb->key ) return -1;
 	if ( pa->key > pb->key ) return 1;
 	return 0;
 }
 
 /* node item cancel */
-static void _bst_cancel(void *bst_item, void *bst_param)
+static void _avl_cancel(void *avl_item, void *avl_param)
 {
-	gnTreeNode_s * pn = (gnTreeNode_s*)bst_item;
-	gnTree_s * ptree = bst_param;
+	gnTreeNode_s * pn = (gnTreeNode_s*)avl_item;
+	gnTree_s * ptree = avl_param;
 
 	ptree->pfnNodeCancel( pn , ptree->pvNodeCancel );
 }
@@ -76,7 +76,7 @@ void * gnTreeCreate( int (* pfnNodeCancel )( gnTreeNode_s * , void * ) , void * 
 	}
 	ptree->pfnNodeCancel = pfnNodeCancel;
 	ptree->pvNodeCancel = pvcancel;
-	ptree->pbst = bst_create(_bst_compare, ptree, &_tree_allocator);
+	ptree->pbst = avl_create(_avl_compare, ptree, &_tree_allocator);
 	if ( ptree->pbst == NULL ) {
 		free( ptree );
 		return NULL;
@@ -87,20 +87,22 @@ void * gnTreeCreate( int (* pfnNodeCancel )( gnTreeNode_s * , void * ) , void * 
 void gnTreeDestroy( void * pvtree )
 {
 	gnTree_s * ptree = pvtree;
-	bst_destroy( ptree->pbst , _bst_cancel );
+	avl_destroy( ptree->pbst , _avl_cancel );
 	free( pvtree );
 }
 
-void gnTreeInitNode( gnTreeNode_s * pnode , long key , gnTreeData_u data )
+void gnTreeInitNode( gnTreeNode_s * pnode , long key , gnTreeData_u data , gnTreeData_u data2 )
 {
 	if ( pnode )
 	{
 		memset( pnode , 0 , sizeof( gnTreeNode_s ) );
 		pnode->key = key;
 		pnode->data = data;
+		pnode->data2 = data2;
 	}
 }
 
+/*
 void gnTreeSetNode( gnTreeNode_s * pnode , long key , gnTreeData_u data )
 {
 	if ( pnode )
@@ -109,13 +111,14 @@ void gnTreeSetNode( gnTreeNode_s * pnode , long key , gnTreeData_u data )
 		pnode->data = data;
 	}
 }
+*/
 
-gnTreeNode_s * gnTreeNewNode( long key , gnTreeData_u data )
+gnTreeNode_s * gnTreeNewNode( long key , gnTreeData_u data , gnTreeData_u data2 )
 {
 	gnTreeNode_s * pnode;
 
 	pnode = malloc( sizeof( gnTreeNode_s ) );
-	gnTreeInitNode( pnode , key , data );
+	gnTreeInitNode( pnode , key , data , data2 );
 	return pnode;
 }
 
@@ -125,19 +128,30 @@ gnTreeNode_s * gnTreeSearch ( void * pvtree , long key )
 	gnTreeNode_s node , * pnode;
 
 	node.key = key;
-	pnode = bst_find( ptree->pbst , & node );
+	pnode = avl_find( ptree->pbst , & node );
 	return pnode;
 }
 
+/*
 int gnTreeInsert( void * pvtree , gnTreeNode_s *pnode )
 {
 	gnTree_s * ptree = pvtree;
 	void ** pitem;
 
-	pitem = bst_probe( ptree->pbst , pnode );
+	pitem = avl_probe( ptree->pbst , pnode );
 	if ( pitem == NULL ) return -1;
 	if ( *pitem != pnode ) return -2;
 	return 0;
+}
+*/
+gnTreeNode_s * gnTreeInsert( void * pvtree , gnTreeNode_s * pnode )
+{
+	gnTree_s * ptree = pvtree;
+	void ** pitem;
+
+	pitem = avl_probe( ptree->pbst , pnode );
+	if ( pitem == NULL ) return NULL;
+	return (gnTreeNode_s*) *pitem;
 }
 	
 /*
@@ -148,7 +162,7 @@ gnTreeNode_s * gnTreeCancel( void * pvtree , gnTreeNode_s * pnode )
 	gnTree_s * ptree = pvtree;
 	gnTreeNode_s * pitem;
 
-	pitem = bst_delete( ptree->pbst , pnode );
+	pitem = avl_delete( ptree->pbst , pnode );
 	return pitem;
 }
 
