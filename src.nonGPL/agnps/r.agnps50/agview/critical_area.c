@@ -217,7 +217,7 @@ END ADDITIONS BY MIKE FOSTER 2-19-96
       
       if((infile = fopen(infilename,"r")) == NULL) {
          fprintf(stderr,"Can't open file: %s\n",infilename);
-         sprintf(cmd,"Bad_dir_message.sh %s.nps\n",file_entered); 
+         sprintf(cmd,"$GISBASE/etc/agnps50/Bad_dir_message.sh %s.nps\n",file_entered); 
          system(cmd); 
          return;
          }
@@ -270,7 +270,7 @@ END ADDITIONS BY MIKE FOSTER 2-19-96
           fprintf(stderr,"run AGNPS to generate \n");
           fprintf(stderr,"the ouput file for this\n");
           fprintf(stderr,"simulation\n");
-          sprintf(cmd,"Bad_dir_message.sh %s.nps",file_entered);
+          sprintf(cmd,"$GISBASE/etc/agnps50/Bad_dir_message.sh %s.nps",file_entered);
           system(cmd);
           return;
           }

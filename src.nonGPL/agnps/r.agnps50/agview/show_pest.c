@@ -59,7 +59,7 @@ void show_pest(char *input_nps)
     */ 
     if((infile = fopen(input_nps,"r")) == NULL) {
        fprintf(stderr,"Can't open file: %s\n",input_nps);
-       sprintf(cmd,"Bad_dir_message.sh %s.nps\n",input_nps); 
+       sprintf(cmd,"$GISBASE/etc/agnps50/Bad_dir_message.sh %s.nps\n",input_nps); 
        system(cmd); 
        return;
        }
