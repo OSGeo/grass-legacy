@@ -1,0 +1,8 @@
+PGM=r.out.ascii
+HOME=$(BIN_MAIN_CMD)
+
+$(HOME)/$(PGM): main.o $(GISLIB)
+	$(CC) $(LDFLAGS) main.o $(GISLIB)
+	mv a.out $@
+
+$(GISLIB): #
