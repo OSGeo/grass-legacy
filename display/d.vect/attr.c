@@ -28,8 +28,7 @@ int attr ( struct Map_info *Map, int type, char *attrcol,
     G_debug (2, "attr()");
 
     if ( attrcol == NULL || strlen(attrcol) == 0 ) {
-	G_warning ( "attrcol not specified, cannot display attributes");
-	return 1;
+	G_fatal_error ( "attrcol not specified, cannot display attributes");
     }
     
     Points = Vect_new_line_struct ();
