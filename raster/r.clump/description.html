@@ -1,0 +1,61 @@
+<H2>DESCRIPTION</H2>
+
+<EM>r.clump</EM> finds all areas of contiguous cell category values in the
+input raster map layer <EM>name</B>.</EM> It assigns a unique category value
+to each such area ("clump") in the resulting output raster map layer
+<EM>name</B>.</EM> If the user does not provide input and output map layer
+names on the command line, the program will prompt the user for these names,
+using the standard <A HREF="parser.html">parser</A> interface (see manual
+entry for <EM>parser</B>).</EM>
+
+Category distinctions in the input raster map layer are preserved.  This
+means that if distinct category values are adjacent, they will NOT be
+clumped together.  (The user can run <EM><A
+HREF="r.reclass.html">r.reclass</A></EM> prior to <EM>r.clump</EM> to
+recategorize cells and reassign cell category values.)
+
+<H2>ALGORITHM</H2>
+
+<EM>r.clump</EM> moves a 2x2 matrix over the input raster map layer. 
+The lower right-hand corner of the matrix is grouped with the cells above it, 
+or to the left of it. 
+(Diagonal cells are not considered.) 
+
+<H2>NOTES</H2>
+
+<EM>r.clump</EM> works properly with raster map layers that
+contain only "fat" areas (more than a single cell in
+width).  Linear elements (lines that are a single cell
+wide) may or may not be clumped together depending on the
+direction of the line -- horizontal and vertical lines of
+cells are considered to be contiguous, but diagonal lines
+of cells are not considered to be contiguous and are broken
+up into separate clumps.
+
+<P> 
+
+A random color table and other support files are
+generated for the <EM>output</EM> raster map layer.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="r.average.html">r.average</A></EM><br>
+<EM><A HREF="r.buffer.html">r.buffer</A></EM><br>
+<EM><A HREF="r.combine.html">r.combine</A></EM><br>
+<EM><A HREF="r.grow.html">r.grow</A><br></EM>
+<EM><A HREF="r.infer.html">r.infer</A></EM><br>
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM><br>
+<EM><A HREF="r.mfilter.html">r.mfilter</A></EM><br>
+<EM><A HREF="r.neighbors.html">r.neighbors</A></EM><br>
+<EM><A HREF="r.poly.html">r.poly</A></EM><br>
+<EM><A HREF="r.reclass.html">r.reclass</A></EM><br>
+<EM><A HREF="r.support.html">r.support</A></EM><br>
+<EM><A HREF="r.weight.html">r.weight</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S. Army Construction Engineering 
+Research Laboratory
+
+<p><i>Last changed: $Date$</i>
