@@ -52,7 +52,7 @@ htmldesc = \
 	GISRC=$(GISBASE)/demolocation/.grassrc${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} \
 	GISBASE=$(GISBASE) \
 	PATH=$(GISBASE)/bin:$$PATH \
-	$(LD_LIBRARY_PATH_VAR)="$($(LD_LIBRARY_PATH_VAR)):$(GISBASE)/lib" \
+	$(LD_LIBRARY_PATH_VAR)="$(GISBASE)/lib:$($(LD_LIBRARY_PATH_VAR))" \
 	$(1) --html-description | grep -v '</body>' > $(PGM).tmp.html ; true
 
 # html rules for cmd commands
