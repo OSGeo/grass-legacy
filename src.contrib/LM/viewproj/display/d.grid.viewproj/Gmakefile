@@ -1,0 +1,11 @@
+PGM=d.grid.viewproj
+
+EXTRA_CFLAGS = -I../../include $(PROJINC)
+
+LIBES  = $(LIBDIR)/libviewproj.a $(GPROJLIB) \
+	$(DISPLAYLIB) $(RASTERLIB) $(GISLIB) 
+
+LIST = plot.o main.o
+
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)

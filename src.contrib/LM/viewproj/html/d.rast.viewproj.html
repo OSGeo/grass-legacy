@@ -1,0 +1,68 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.79 [en] (X11; U; SunOS 5.8 sun4u) [Netscape]">
+   <title>d.rast.viewproj</title>
+</head>
+<body bgcolor="#FFFFFF">
+<img SRC="grass.smlogo.gif" >
+<hr width=100% align=center size=6 no shade>
+<h2>
+NAME</h2>
+<b><i>d.rast.viewproj</i></b>- Displays a raster map in the view projection
+on the graphics monitor.
+<br><i>(GRASS Viewproj Display Program)</i>
+<h2>
+SYNOPSIS</h2>
+<b>d.rast.viewproj</b>
+<br><b>d.rast.viewproj help</b>
+<br><b>d.rast.viewproj [-o] map=</b><i>name</i>
+<h2>
+DESCRIPTION</h2>
+<i>d.rast.viewproj</i> displays a raster map (<b>map=</b><i>name</i>) in
+the current view projection (set by d.set.viewproj or d.auto.viewproj)
+that is associated with the current monitor (set by d.mon.viewproj).
+<p>The projections are based upon PROJ (originally from the USGS).&nbsp;&nbsp;&nbsp;
+More information about PROJ is available at&nbsp; <a href="http://remotesensing.org/proj/">PROJ.4-
+Cartographic Projections Library</a><a href="http://remotesensing.org/proj/"></a>
+<p>Viewproj programs work only with&nbsp; lat-lon data.
+<h3>
+Flags:</h3>
+
+<dl>
+<dt>
+<b>-o</b></dt>
+
+<dl>Overlay the named raster map layer onto whatever is already displayed
+in the active graphics frame.</dl>
+
+<h3>
+Parameters:</h3>
+</dl>
+
+<dl>
+<dt>
+<b>map=</b><i>name</i></dt>
+
+<dd>
+Name of an existing raster map to be displayed.</dd>
+</dl>
+If the user does not use any arguments, the program will prompt the user
+to enter them.
+<h2>
+SEE ALSO</h2>
+<i><a href="d.auto.viewproj.html">d.auto.viewproj</a></i>
+<br><i><a href="d.set.viewproj.html">d.set.viewproj</a></i>
+<br><i><a href="d.mon.viewproj.html">d.mon.viewproj</a></i>
+<br><i><a href="d.vect.viewproj.html">d.vect.viewproj</a></i>
+<br><i><a href="d.grid.viewproj.html">d.grid.viewproj</a></i>
+<br><i><a href="viewproj.examples.html">viewproj examples</a></i>
+<h2>
+AUTHORS</h2>
+Sharif Razzaque, Lockheed Martin Missiles &amp; Space, Sunnyvale, CA, USA
+<br>Improvements by Beverly Wallace, Lockheed Martin Space Systems, Sunnyvale,
+CA, USA
+<br>&nbsp;
+</body>
+</html>

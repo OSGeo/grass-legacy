@@ -1,0 +1,10 @@
+r.out.v5d.texture
+
+Creates a Vis5d texture file using GRASS and ImageMagick programs
+A Vis5d data file and GRASS raster file are required inputs.
+
+Usage:
+	r.out.v5d.texture vis5d_data_file.v5d grass_raster_file
+
+Written by Bev Wallace, beverly.t.wallace@lmco.com, April 2003
+

@@ -1,0 +1,19 @@
+Centered on 0,0:
+g.region n=90 s=-90 w=-180 e=180; d.erase; d.auto.viewproj; d.mon.viewproj; \
+d.grid.viewproj 10; d.vect.viewproj coastlines
+
+Centered on USA:
+g.region n=90 s=-90 w=90 e=450; d.erase; d.auto.viewproj; d.mon.viewproj; \
+d.grid.viewproj 10; d.vect.viewproj coastlines
+
+Centered on USA with raster:
+g.region n=90 s=-90 w=90 e=450; d.erase; d.auto.viewproj; d.mon.viewproj; \
+d.grid.viewproj 10; d.rast.viewproj nations; d.vect.viewproj coastlines color=brown; d.grid.viewproj 10
+
+Centered on USA nothern hemisphere with raster (polar):
+g.region n=90 s=0 w=90 e=450; d.erase; d.auto.viewproj; d.mon.viewproj; \
+d.grid.viewproj 10; d.rast.viewproj nations; d.vect.viewproj coastlines color=brown; d.grid.viewproj 10
+
+Centered on USA nothern hemisphere with raster (oblique):
+g.region n=90 s=0 w=180 e=360; d.erase; d.auto.viewproj; d.mon.viewproj; \
+d.grid.viewproj 10; d.rast.viewproj nations; d.vect.viewproj coastlines color=brown; d.grid.viewproj 10

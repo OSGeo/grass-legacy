@@ -1,0 +1,390 @@
+****************************************************************************
+*
+* MODULE:       viewproj documentation
+*
+* AUTHOR(S):    Sharif Razzaque, LMMS, June 1995 (Original Author)
+*               Beverly Wallace, beverly.t.wallace@lmco.com
+*
+* MANAGER:    	Steve Hall, steve.hall@lmco.com
+*
+* PURPOSE:      To view lat/lon maps in a variety of projections.
+*
+* COPYRIGHT:    (C) 1995 by Lockheed Martin Missiles & Space, Sunnyvale, CA, USA
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
+
+
+
+--------
+Overview
+--------
+
+Viewproj gives GRASS users the ability to view lat/lon maps in a variety of 
+map projections (Mercator, UTM, etc.).  Viewproj was developed in 1995 by 
+Lockheed Martin Missiles & Space (LMMS), Sunnyvale, CA, USA.  
+
+The viewproj programs are:
+	d.set.viewproj
+	d.mon.viewproj
+	d.rast.viewproj
+	d.vect.viewproj
+
+Viewproj uses PROJ to do many coordinate system transformations. Viewproj 
+originally used PROJ version 4.3.0 from the USGS.  It also works with
+PROJ 4.4.7 or the PROJ library within GRASS.
+
+
+
+------
+Design
+------
+
+· All functionality is available and controllable from the GRASS command line.
+
+· Does not modify any GRASS code, but calls the high level functions in GRASS.  
+This is to allow all current GRASS software and 3rd party extensions to operate 
+as before, and to make maintaining this code as new versions of GRASS are 
+released as painless as possible.
+
+· Does not modify the map data in any way.  The projections are computed on the 
+fly. 
+
+· The interface is consistent with the interface of GRASS 4.1 routines.  
+Furthermore, the function names and file names are consistent with GRASS 
+standards.
+
+· Supports raster and vector map-layers in both overlay and non-overlay mode.
+
+· Supports multiple maps and projections running within the same GRASS process. 
+Each map can be drawn in a different projection.  Yet at the same time, the 
+code will automatically detect the projection of the current map so that 
+features such as overlays and queries use the same projection and scaling as 
+the underlying map drawing.  (i.e.  If we have a UTM map and a Mercator map on 
+the screen, then we decide to overlay rainfall data on one of the maps, this 
+software will automatically recognize the projection of the map in use and will 
+draw the overlays appropriately.)
+
+
+
+-----
+Usage
+-----
+
+This section assumes a basic knowledge of drawing maps using the GRASS command 
+line.
+
+Viewproj adds four new GRASS executables which are available to use at the 
+GRASS command shell:
+
+·	d.set.viewproj  - sets the current projection
+
+·	d.mon.viewproj  - updates the projection associated with each monitor
+
+·	d.rast.viewproj - draws raster maps in the current projection
+
+·	d.vect.viewproj - draws vector maps in the current projection
+
+Before explaining all the details of these commands, here is a brief example to 
+draw a raster map in the Mercator projection, then to overlay the 
+vector coastlines in red on top of the raster map.
+
+GRASS 4.1 > d.mon start=x1
+
+GRASS 4.1 > d.set.viewproj proj=merc
+
+GRASS 4.1 > d.mon.viewproj
+
+GRASS 4.1 > d.rast.viewproj map=nations
+
+GRASS 4.1 > d.vect.viewproj map=coastlines color=red
+
+
+
+--------------
+d.set.viewproj
+--------------
+
+d.set.viewproj sets the current projection.  d.set.viewproj takes the 
+projection information from the user and saves it for later use by other 
+viewproj routines.  The projection information is a list of parameters which 
+are passed to PROJ.  
+
+The user enters these parameters almost exactly as they are passed to PROJ 
+(please see the PROJ user manual).  Parameters and flags may be entered in any 
+order.
+
+Each PROJ parameter that is entered at the command line as +<parameter>=<value> 
+is entered to d.set.viewproj as <parameter>=<value>.  The only difference is 
+that the '+' sign is omitted.  
+
+Each PROJ flag that is entered at the command line as +<flag> is entered to 
+d.set.viewproj as <flag>=y.
+
+For example, the following PROJ command line:
+	proj +proj=merc +lon_0=90w
+becomes:
+	d.set.viewproj proj=merc lon_0=90w
+while this PROJ command line:
+	proj +proj=ups +south
+becomes:
+	d.set.viewproj proj=ups south=y
+
+d.set.viewproj will attempt to initialized PROJ using the parameters the user 
+has just entered.  If PROJ accepts them, d.set.viewproj will store the 
+projection information for subsequent drawing and querying.  If PROJ does not 
+accept them, it prints an error message explaining this.
+
+If you get the following error message:
+	pj_init error -13:  major axis or radius = 0 or not given
+or 
+	pj_init error -9:  unknown elliptical parameter name
+Then you may need to set the "ellps" or "a" parameters.  For example:
+	d.set.viewproj proj=merc ellps=wgs84
+or 
+	d.set.viewproj proj=merc ellps=WGS84
+Warning, some versions of PROJ use ellps=wgs84 while others use ellps=WGS84.
+
+If you are using an external PROJ library, you may set the PROJ_LIB environment 
+variable to the location of the proj.4 data directory (above the proj_def.dat 
+file).  The proj_def.dat file sets defaults.
+
+Please see the PROJ manual for a full listing and description of the 
+projections available and the proper parameters to use to specify the desired 
+projection.
+
+The following projections have been tested and are known to work.  Some 
+projections listed in the PROJ manual, do not work completely (unless we 
+severely restrict the region of the earth to plot).  This problem is within 
+PROJ itself, not this code.
+
+·	Mercator
+
+d.set.viewproj proj=merc
+d.set.viewproj proj=merc lon_0=90w
+
+WARNING:  Regions near the poles (above 85 N or below 85 S) cannot be plotted 
+on any Mercator map.
+
+·	 UTM
+
+d.set.viewproj proj=utm zone=2
+d.set.viewproj proj=utm south=y zone=2
+
+Include the flag south=y whenever you wish to draw a region in the Southern 
+hemisphere.
+
+WARNING:  The region of the earth to be plotted must be completely contained 
+within one UTM zone.
+
+·	Gall / Stereographic
+
+d.set.viewproj proj=gall
+d.set.viewproj proj=gall lon_0=90w
+
+·	Equidistant Cylindrical / Plate Caree
+
+d.set.viewproj proj=eqc
+d.set.viewproj proj=eqc lon_0=90w
+
+Note:  This is the projection that d.rast and d.vect use for lat/lon databases.
+While the viewproj routines work perfectly well for this projection, it would 
+be much faster to use d.rast and d.vect if you wish to display in the 
+Equidistant Cylindrical projection.
+
+
+
+--------------
+d.mon.viewproj
+--------------
+
+d.mon.viewproj associates the current monitor with the current projection.
+Each monitor has a projection associated with it.  This is to support multiple 
+maps (in possibly different projections) on the screen at the same time.  
+
+Note that d.set.viewproj and d.mon.viewproj work very similarly to g.region and 
+d.erase.  g.region changes the current region of the earth to draw, but the 
+current monitor does not see the new region until the user runs d.erase.
+
+Here is an example were we start two monitors, display a raster map on each 
+(but in a different projection), then overlay a vector map on both:
+
+GRASS 4.1 > d.mon start=x1
+
+GRASS 4.1 > d.set.viewproj proj=merc
+
+Sets the current projection to Mercator.
+
+GRASS 4.1 > d.mon.viewproj
+
+This associates monitor x1 with the current projection, which is Mercator.
+
+GRASS 4.1 > d.rast.viewproj map=nations
+
+Draws the raster map in the Mercator projection.
+
+GRASS 4.1 > d.set.viewproj proj=eqc
+
+This sets the current projection to equidistant cylindrical.  Note that this 
+does NOT alter the projection associated with the monitor x1.
+
+GRASS 4.1 > d.mon start=x2
+
+GRASS 4.1 > d.mon.viewproj
+
+Now monitor x2 (the current monitor) is associated with the current projection 
+which is equidistant cylindrical.
+
+GRASS 4.1 > d.rast.viewproj map=nations
+
+GRASS 4.1 > d.mon select=x1
+
+This makes monitor x1 the current monitor (it was previously x2).
+
+GRASS 4.1 > d.vect.viewproj map=coastlines
+
+Draws the vector map in the Mercator projection, because monitor x1 is still 
+associated with Mercator (even though the current projection is equidistant 
+cylindrical).
+
+GRASS 4.1 > d.mon select=x2
+
+GRASS 4.1 > d.vect.viewproj map=coastlines
+
+Draws the vector map in the Equidistant Cylindrical projection, since that is 
+the projection associated with monitor x2.
+
+
+
+---------------
+d.rast.viewproj
+---------------
+
+d.rast.viewproj behaves like d.rast except that it draws raster maps in the 
+projection that is associated with the current monitor.  It displays the region 
+of the earth set by g.region and automatically scales the region to fit the 
+current monitor window size.
+
+The user must set the region (using g.region) appropriately for the map 
+projection.  For example, a Mercator projection can not draw above 85 N or 
+below 85 S.
+
+Algorithm:
+
+For each and every pixel in the display window, it calculates which lat/lon 
+position should be plotted there, and where in the database that lat/lon data 
+resides.  It then fetches the data and plots it to that pixel.  This is 
+very slow since GRASS does not allow us to fetch just one single cell from the 
+database.  Instead we have to fetch whole rows, which all have the same 
+latitude.  
+
+To be more efficient, we first store all the locations of the cell data we 
+want, then sort it by location, before we actually do any database access.  
+This speeds up the fetching in two ways: 1) we never access any row of the 
+database twice.  2) We access the database from top to bottom in one sweep.  
+This often reduces disk access.
+
+Performance (GRASS 4.1):
+
+g.region n=80 s=-60 e=80 w=-75
+d.rast time = 10 sec
+d.rast.viewproj time for Mercator = 45 sec
+d.rast.viewproj time for poly projection = 1 min 15 sec
+
+
+
+---------------
+d.vect.viewproj
+---------------
+
+d.vect.viewproj behaves like d.vect except that it draws the vector map in the 
+projection that is associated with the current monitor.
+
+The user must set the region (using g.region) appropriately for the map 
+projection.  For example, a Mercator projection can not draw above 85 N or 
+below 85 S.
+
+Algorithm:
+
+The vector data is stored as a series of lines and arcs in the lat/lon 
+coordinate system.  d.vect.viewproj just converts these lat/lon points to 
+screen points using the above mentioned transformation routines.
+
+Performance:
+
+This takes only 'slightly' longer then d.vect, but this extra time is almost 
+completely due to PROJ.  
+
+
+
+------------------
+Coordinate Systems
+------------------
+
+After initializing the routines, the user has all the following transformations 
+available:
+
+·	Lat/Lon		world coordinates
+
+·	screen 		the coordinates in the display window
+
+·	map		the row and column of some data in the database
+
+·	cartPROJ	the Cartesian coordinate system that PROJ uses
+
+During initialization, the window size, the region of the earth to map and the 
+projection are  taken into account automatically.  The transformation functions 
+are strongly typed (each coordinate system has its own type, and the functions 
+will only input and output the proper type) to avoid any confusion when dealing 
+with multiple coordinate systems.
+
+Please see the header file include/coord_systems.viewproj.h for the exact 
+function names and type declarations.
+
+Also, Grass 4.1 is using a 1992 version of Proj originally.  We are using PROJ 
+4.3 (from moon.incomming ftp site).
+
+
+
+------------------
+Other things to do
+------------------
+
+· Support raster files in projections/coordinate systems other than lat/lon.
+
+· Update d.rhumbline and other GRASS executables which plot on top of map 
+layers, so that they can plot on maps drawn by the viewproj routines.
+
+
+
+------------------------------------
+Ideas to make d.rast.viewproj faster
+------------------------------------
+
+· Currently, the screen buffer stores the CELL values.  These are mapped to 
+the screen colors within the GRASS drawing primitives, at draw time.  When 
+drawing, d.rast.viewproj searches for sections of the screen that are the same 
+CELL value.  When it finds such a section, it plots that section in one 
+draw-line call.  It does this to reduce the number of graphic calls, which are 
+really slow.  However, many different CELL values map onto the same screen 
+color.  So one section of the screen buffer could contain an area which was one 
+color on the screen, but two distinct CELL values in the screen buffer.  In 
+this case, d.rast.viewproj would make two graphics calls instead of one.  If 
+the screen buffer stored the screen colors instead of the CELL values, this
+situation would be remedied.  This enhancement would be very significant for 
+elevation and other continuous data sets.
+
+· After setting up the mapping transformations from screen position to map 
+position, d.rast.viewproj queries PROJ for each and every screen pixel (in the 
+display window).  However, before we even start iterating through all the 
+screen pixels, we already know the extent of the screen window that the map 
+data will cover - it is figured out when we calculate the scaling from screen 
+coordinates to cartPROJ coordinates (see conversions.viewproj.c and 
+coord_systems.viewproj.h).  So if we could modify d.rast.viewproj so that it 
+doesn't even query PROJ for pixels we already know don't map into the data 
+file, we might be able to save some time.  Note that this won't help at all for 
+projections such as Mercator, since these maps take up the whole window.
+

@@ -1,0 +1,43 @@
+#!/bin/sh
+
+# Create a Vis5d texture file using GRASS and ImageMagick programs
+# Written by Bev Wallace, beverly.t.wallace@lmco.com, April 2003
+
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+
+# Check that ImageMagick convert is installed
+# Use `command -v` because `which` does not work correctly for Solaris
+CONVERT=`command -v convert`
+if [ "$CONVERT" = "" ]
+then
+	echo This program requires the ImageMagick convert program.
+	echo See http://www.imagemagick.org/
+	exit
+fi
+
+# Usage 
+if [ $# != 1 -o "$1" = "help" -o "$1" = "-help" -o "$1" = "-h" ]
+then
+	echo Converts GRASS raster data into a Vis5d 2D texture file
+	echo Please supply a GRASS raster file
+	echo Usage: 
+	echo `basename $0` grass_raster_file
+	exit
+fi
+
+# Create a tif file from the GRASS data.
+echo
+echo r.out.tiff input=$1 output=$1
+r.out.tiff input=$1 output=$1
+
+# Use the ImageMagick convert program to create a Vis5d texture file.
+echo
+echo convert $1.tif $1.sgi
+convert $1.tif $1.sgi
+ls -l $1.sgi
+
+# Remove the tif file.
+rm $1.tif

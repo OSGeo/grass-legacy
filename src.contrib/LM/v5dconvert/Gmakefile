@@ -1,0 +1,5 @@
+# Make libes first
+
+all:
+	cd libes; $(GMAKE)
+	$(MAKEALL)

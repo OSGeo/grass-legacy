@@ -1,0 +1,11 @@
+VIEWPROJLIB = $(LIBDIR)/libviewproj.a
+
+EXTRA_CFLAGS = -I../../include $(PROJINC)
+
+# PROJLIB
+OBJ = \
+    conversions.viewproj.o
+
+$(VIEWPROJLIB):  $(OBJ)
+	$(SLIBRULE)
+

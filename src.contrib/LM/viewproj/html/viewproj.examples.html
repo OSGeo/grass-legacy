@@ -1,0 +1,87 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.79 [en] (X11; U; SunOS 5.9 sun4u) [Netscape]">
+   <title>Viewproj Examples</title>
+</head>
+<body bgcolor="#FFFFFF">
+<img SRC="grass.smlogo.gif" >
+<hr width="100%" align="center" size="6" no="" shade="">
+<br>&nbsp;
+<h2>
+DESCRIPTION</h2>
+The <i>viewproj</i><b> </b>programs give GRASS users the ability to view
+lat-lon data in a variety of map projections.
+<h2>
+EXAMPLES</h2>
+The user must open a graphics monitor (using <i>d.mon</i>) before running
+the examples.
+<p>The following examples use d.auto.viewproj, which automatically adjusts
+the region and sets the projection parameters for the requested view projection.
+<p><img SRC="merc2.gif" height=179 width=176 align=LEFT>
+<blockquote><b>A Mercator map</b>
+<br><i>n=85.0&nbsp; s=-85.0&nbsp; e=449.5&nbsp; w=90.5</i>
+<br><i>proj=merc&nbsp; ellps=wgs84&nbsp; lon_0=-90.0</i></blockquote>
+
+<blockquote>g.region n=90 s=-90 e=450 w=90
+<br>d.erase color=white
+<br>d.auto.viewproj projname=Mercator
+<br>d.mon.viewproj
+<br>d.vect.viewproj map=coastlines color=black
+<br>d.grid.viewproj size=10<br CLEAR=BOTH>
+<BR></blockquote>
+<img SRC="aea2.gif" height=179 width=176 align=LEFT>
+<blockquote><b>An Albers Equal Area map</b>
+<br><i>n=85.0&nbsp; s=-85.0&nbsp; e=-45.0&nbsp; w=-135.0</i>
+<br><i>proj=aea&nbsp; lon_0=-90.0&nbsp; lat_0=0.0&nbsp; lat_1=28.33&nbsp;
+lat_2=42.5</i>
+<p>g.region n=90 s=-90 e=450 w=90
+<br>d.erase color=white
+<br>d.auto.viewproj projname=AlbersEqualArea
+<br>d.mon.viewproj
+<br>d.vect.viewproj map=coastlines color=black
+<br>d.grid.viewproj size=10
+<br>&nbsp;</blockquote>
+<img SRC="ortho2.gif" height=179 width=176 align=LEFT>
+<blockquote><b>An Orthographic polar map</b>
+<br><i>n=90.0&nbsp; s=0.0&nbsp; e=450.0&nbsp; w=90.0</i>
+<br><i>proj=ortho&nbsp; ellps=wgs84&nbsp; lon_0=-90.0&nbsp; lat_0=90.0</i></blockquote>
+
+<blockquote>g.region n=90 s=0 e=450 w=90
+<br>d.erase color=white
+<br>d.auto.viewproj projname=Orthographic
+<br>d.mon.viewproj
+<br>d.vect.viewproj map=coastlines color=black
+<br>d.grid.viewproj size=10
+<br>&nbsp;</blockquote>
+To retain more control over the view projection, d.set.viewproj may be
+used instead of d.auto.viewproj.&nbsp; The user must set the parameters
+required by the projection.&nbsp; The user must also set the region appropriately
+for the projection.
+<p><img SRC="laea.gif" height=180 width=177 align=LEFT>
+<blockquote><b>A Lambert Azimuthal Equal Area map</b>
+<br>Oblique Aspect
+<p>g.region n=89.95 s=-89.95 e=450 w=90
+<br>d.erase color=white
+<br>d.set.viewproj proj=laea ellps=WGS84 lon_0=-90.0 lat_0=45.0
+<br>d.mon.viewproj
+<br>d.vect.viewproj map=coastlines color=black
+<br>d.grid.viewproj size=10
+<p>Note, some versions of PROJ require ellps=wgs84 instead of ellps=WGS84
+<br>&nbsp;</blockquote>
+
+<h2>
+SEE ALSO</h2>
+<i><a href="d.auto.viewproj.html">d.auto.viewproj</a></i>
+<br><i><a href="d.set.viewproj.html">d.set.viewproj</a></i>
+<br><i><a href="d.mon.viewproj.html">d.mon.viewproj</a></i>
+<br><i><a href="d.rast.viewproj.html">d.rast.viewproj</a></i>
+<br><i><a href="d.vect.viewproj.html">d.vect.viewproj</a></i>
+<br><i><a href="d.grid.viewproj.html">d.grid.viewproj</a></i>
+<h2>
+AUTHOR</h2>
+Beverly Wallace, Lockheed Martin Space Systems, Sunnyvale, CA, USA
+<br>&nbsp;
+</body>
+</html>

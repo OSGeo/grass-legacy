@@ -1,0 +1,61 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.79 [en] (X11; U; SunOS 5.8 sun4u) [Netscape]">
+   <title>V5dconvert Examples</title>
+</head>
+<body bgcolor="#FFFFFF">
+<img SRC="grass.smlogo.gif" >
+<hr width="100%" align="center" size="6" no="" shade="">
+<br>&nbsp;
+<br>&nbsp;
+<h2>
+DESCRIPTION</h2>
+The <i>v5dconvert </i>programs convert GRASS 2D raster and vector data
+into Vis5d 2D texture, topography, and map outline data.
+<p><a href="http://vis5d.sourceforge.net/">Vis5d+</a> is a free OpenGL-based
+volumetric rendering program for scientific data sets in 3+ dimensions.&nbsp;
+Vis5d must be installed to run the following examples.
+<h2>
+EXAMPLES</h2>
+These examples use the <i>hole.v5d </i>example data that is distributed
+with Vis5d .&nbsp; The user will need to copy the <i>hole.v5d</i> data
+into the current working directory to run the examples below.&nbsp; The
+resulting Vis5d topo, map, and texture data will be written to the current
+working directory.
+<p><img SRC="v5d.topomap.gif" height=256 width=256 align=LEFT>
+<blockquote><b>Create Vis5d topo and map data from GRASS data.</b>
+<br><b>Display the data with Vis5d.</b>
+<p><i>g.region rast=topo.</i>
+<br><i>r.out.v5d.topo input=topo. output=topo.topo</i>
+<br><i>v.out.v5d.map input=coastlines output=coastlines.map</i>
+<br><i>vis5d -topo $PWD/topo.topo -map $PWD/coastlines.map hole.v5d</i>
+<p>To see the new data, press the TOPO and MAP buttons in the control panel
+and press SFC in the popup.&nbsp; To duplicate this view, press eps under
+Isosurf and set it to 6, press h.b01.z under Isosurf and set it to 3, press
+REVERSE, then rotate the image in the display window by using the mouse.<br CLEAR=BOTH>
+<BR></blockquote>
+<img SRC="v5d.texture.gif" height=256 width=256 align=LEFT>
+<blockquote><b>Create Vis5d texture data from GRASS data.</b>
+<br><b>Display the data with Vis5d.</b>
+<p><i>g.region rast=nations</i>
+<br><i>g.region.v5d -r hole.v5d</i>
+<br><i>r.out.v5d.texture nations</i>
+<br><i>vis5d -texture $PWD/nations.sgi hole.v5d</i>
+<p>To see the new data, press the TEXTURE button in the control panel.&nbsp;&nbsp;
+To duplicate this view, follow the directions in the example above.<br CLEAR=BOTH>
+<BR></blockquote>
+
+<h2>
+SEE ALSO</h2>
+<i><a href="g.region.v5d.html">g.region.v5d</a></i>
+<br><i><a href="r.out.v5d.texture.html">r.out.v5d.texture</a></i>
+<br><i><a href="r.out.v5d.topo.html">r.out.v5d.topo</a></i>
+<br><i><a href="v.out.v5d.map.html">v.out.v5d.map</a></i>
+<h2>
+AUTHOR</h2>
+Beverly Wallace, Lockheed Martin Space Systems, Sunnyvale, CA, USA
+<br>&nbsp;
+</body>
+</html>

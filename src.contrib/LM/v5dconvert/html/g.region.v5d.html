@@ -1,0 +1,75 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.79 [en] (X11; U; SunOS 5.8 sun4u) [Netscape]">
+   <title>g.region.v5d</title>
+</head>
+<body bgcolor="#FFFFFF">
+<img SRC="grass.smlogo.gif" >
+<hr width=100% align=center size=6 no shade>
+<h2>
+NAME</h2>
+<b><i>g.region.v5d</i></b> - Set the region corresponding to Vis5d v5d
+data.
+<br><i>(GRASS Raster Program)</i>
+<h2>
+SYNOPSIS</h2>
+<b>g.region.v5d</b>
+<br><b>g.region.v5d help</b>
+<br><b>g.region.v5d</b> [<b>-pr</b>] <b>v5d=</b><i>name</i>
+<h2>
+DESCRIPTION</h2>
+<i>g.region.v5d</i> set the GRASS region&nbsp; corresponding to a Vis5d
+data file (v<b>5d</b>=<i>name</i>), also called a v5d file.
+<p><a href="http://vis5d.sourceforge.net/">Vis5d+</a>&nbsp; is a free OpenGL-based
+volumetric rendering program for scientific data sets in 3+ dimensions.
+<h3>
+Flags:</h3>
+
+<dl>
+<dt>
+<b>-p</b></dt>
+
+<dd>
+Print out the region and v5d information.</dd>
+</dl>
+
+<dl>
+<dt>
+<b>-r</b></dt>
+
+<dd>
+Retain the original resolution.&nbsp; Only the region extent (north, south,
+east, west) is changed to correspond to the Vis5d data file.</dd>
+</dl>
+
+<h3>
+Parameters:</h3>
+
+<dl>
+<dt>
+<b>v5d=</b><i>name</i></dt>
+
+<dd>
+Full path to an existing v5d file.</dd>
+</dl>
+If the user does not use any arguments, the program will prompt the user.
+<h2>
+NOTES</h2>
+The Vis5d region passes through the center of the grid cells while the
+GRASS region is along the outside edge of the grid cells.&nbsp; Vis5d longitudes
+are opposite (east is negative, west is positive).&nbsp; The rows, columns,
+and resolution (=increment) are the same for both GRASS and Vis5d.
+<h2>
+SEE ALSO</h2>
+<i><a href="r.out.v5d.texture.html">r.out.v5d.texture</a></i>
+<br><i><a href="r.out.v5d.topo.html">r.out.v5d.topo</a></i>
+<br><i><a href="v.out.v5d.map.html">v.out.v5d.map</a></i>
+<br><i><a href="v5dconvert.examples.html">v5dconvert examples</a></i>
+<h2>
+AUTHOR</h2>
+Beverly Wallace, Lockheed Martin Space Systems, Sunnyvale, CA, USA
+<br>&nbsp;
+</body>
+</html>

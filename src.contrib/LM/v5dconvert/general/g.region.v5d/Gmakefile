@@ -1,0 +1,12 @@
+PGM = g.region.v5d
+
+EXTRA_CFLAGS = -I../../libes/libv5d/lib
+
+LIBES = $(LIBDIR)/libv5d.a $(GISLIB)
+
+OFILES = main.o
+
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB): #

@@ -1,0 +1,84 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.79 [en] (X11; U; SunOS 5.9 sun4u) [Netscape]">
+   <title>d.set.viewproj</title>
+</head>
+<body bgcolor="#FFFFFF">
+<img SRC="grass.smlogo.gif" >
+<hr width=100% align=center size=6 no shade>
+<h2>
+NAME</h2>
+<b><i>d.set.viewproj</i></b>- Sets the current view projection.
+<br><i>(GRASS Viewproj Display Program)</i>
+<h2>
+SYNOPSIS</h2>
+<b>d.set.viewproj</b>
+<br><b>d.set.viewproj help</b>
+<br><b>d.set.viewproj proj=</b><i>projection</i>
+<h2>
+DESCRIPTION</h2>
+<i>d.set.viewproj</i> sets the current view projection (<b>proj=</b><i>projection</i>).&nbsp;
+See d.auto.viewproj if you are unfamiliar with PROJ.
+<p>The projections are based upon PROJ (originally from the USGS).&nbsp;&nbsp;&nbsp;
+More information about PROJ is available at&nbsp; <a href="http://remotesensing.org/proj/">PROJ.4-
+Cartographic Projections Library</a>
+<p>Viewproj programs work only with&nbsp; lat-lon data.
+<h3>
+Parameters:</h3>
+
+<dl>
+<dt>
+<b>proj=</b><i>projection</i></dt>
+
+<dd>
+Name of a PROJ projection.</dd>
+</dl>
+<b>There are over twenty additional PROJ parameters which may be entered.</b>
+<br>See the PROJ manual or <a href="http://www.remotesensing.org/geotiff/proj_list/">Projections
+Transform List (PROJ4)</a> for the projections and their parameters.
+<p>Each PROJ parameter&nbsp; is entered without a plus sign.&nbsp;&nbsp;
+Each PROJ flag must have "=y" appended to the flag and be entered without
+a plus sign.&nbsp; For example, the PROJ command line
+<blockquote>proj +proj=utm +south +zone=2</blockquote>
+becomes
+<blockquote>d.set.viewproj proj=utm south=y zone=2</blockquote>
+If the user does not use any arguments, the program will prompt the user
+to enter them.&nbsp; Consult the PROJ manual to determine the projections
+and the appropriate parameters for each projection.
+<h2>
+NOTES</h2>
+If the projection parameters are not accepted by PROJ, the current view
+projection will not be changed and the program will exit with an error
+message, as in the following example.
+<blockquote>d.set.viewproj proj=abc
+<br><i>PROJ doesn't accept these parameters!</i></blockquote>
+<font color="#000000">Warning:&nbsp; Some versions of PROJ use different
+elliptical parameters.&nbsp; For example, ellps=wgs84 versus ellps=WGS84.</font><font color="#000000"></font>
+<p>The user must set the region (with g.region) appropriately for the view
+projection.&nbsp; If the region is not set correctly, the drawing programs
+(d.grid.viewproj, d.rast.viewproj, and d.vect.viewproj) will exit with
+an error message, as in the following example.
+<blockquote>Mercator maps are restricted to the region between 85N and
+85S.&nbsp; If n=90 and e=180, the following <font color="#000000">error
+message will occur when attempting to draw:</font>
+<br><i><font color="#000000">ERROR: latlon_to_cartPROJ cannot map 180.000000,90.000000
+in cart_PROJ</font></i></blockquote>
+
+<h2>
+SEE ALSO</h2>
+<i><a href="d.auto.viewproj.html">d.auto.viewproj</a></i>
+<br><i><a href="d.mon.viewproj.html">d.mon.viewproj</a></i>
+<br><i><a href="d.rast.viewproj.html">d.rast.viewproj</a></i>
+<br><i><a href="d.vect.viewproj.html">d.vect.viewproj</a></i>
+<br><i><a href="d.grid.viewproj.html">d.grid.viewproj</a></i>
+<br><i><a href="viewproj.examples.html">viewproj examples</a></i>
+<h2>
+AUTHORS</h2>
+Sharif Razzaque, Lockheed Martin Missiles &amp; Space, Sunnyvale, CA, USA
+<br>Improvements by Beverly Wallace, Lockheed Martin Space Systems, Sunnyvale,
+CA, USA
+<br>&nbsp;
+</body>
+</html>

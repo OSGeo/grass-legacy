@@ -1,0 +1,10 @@
+PGM=d.set.viewproj
+
+EXTRA_CFLAGS = $(PROJINC)
+
+LIBES  = $(LIBDIR)/libviewproj.a $(GPROJLIB) $(GISLIB)
+
+LIST   = main.o
+
+$(BIN_CMD)/$(PGM): $(LIST)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
