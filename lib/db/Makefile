@@ -2,7 +2,9 @@
 MODULE_TOPDIR = ../..
 
 SUBDIRS = \
-	dbmi \
+	dbmi_base \
+	dbmi_client \
+	dbmi_driver \
 	sqlp \
 	stubs
 
@@ -17,7 +19,7 @@ checkdoxygen:
 	@(type doxygen > /dev/null || (echo "ERROR: Install 'doxygen' software first (get from http://www.doxygen.org)" && exit 1))
 
 generatelocaldox:
-	(cd dbmi ; sh generate_dox.sh)
+	(cd dbmi_client ; sh generate_dox.sh)
 
 htmldocs: checkdoxygen generatelocaldox
 	doxygen ./Doxyfile_arch_html
@@ -38,4 +40,4 @@ pdfdocs: checkdoxygen generatelocaldox
 	@echo "PDF reference in directory ./latex/grass51dbmi_`date '+%Y_%m_%d'`_refman.pdf"
 
 cleandocs:
-	rm -rf ./latex ./html dbmi/*.dox
+	rm -rf ./latex ./html dbmi_client/*.dox
