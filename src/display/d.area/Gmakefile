@@ -1,5 +1,5 @@
 PGM       = d.area
-LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB) $(XDRLIB)
+LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB)
 
 
 OBJS = \
@@ -11,6 +11,6 @@ CFILES = \
 	plot.c
 
 $(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #
