@@ -24,7 +24,7 @@ OBJS =  \
 
 ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 
-LIBES = $(DRIVERLIB) $(GISLIB) $(FTLIB)
+LIBES = $(DRIVERLIB) $(GISLIB) $(FTLIB) $(ICONVLIB)
 DEPENDENCIES = $(DRIVERDEP) $(GISLIBDEP)
 PGM=pngdriver
 

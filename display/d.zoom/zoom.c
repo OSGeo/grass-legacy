@@ -12,9 +12,9 @@ int zoomwindow ( struct Cell_head *window, int quiet, double magnify)
     while( !end ) {
 	if (printmenu){
 	    fprintf(stderr, "\n\nButtons:\n") ;
-	    fprintf(stderr, "%s Zoom menu\n", LBTN);
-	    fprintf(stderr, "%s Pan\n", MBTN);
-	    fprintf(stderr, "%s Quit\n", RBTN);
+	    fprintf(stderr, "%s Zoom menu\n", LEFTS);
+	    fprintf(stderr, "%s Pan\n", MIDDLES);
+	    fprintf(stderr, "%s Quit\n", RIGHTS);
 	    printmenu = 0;
 	}
 

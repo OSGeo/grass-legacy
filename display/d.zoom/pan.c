@@ -17,8 +17,8 @@ int do_pan(struct Cell_head *window) {
     while( !end ) {
 	if (printmenu){
 	    fprintf(stderr, "\n\nButtons:\n");
-	    fprintf(stderr, "%s Pan\n", LBTN);
-	    fprintf(stderr, "%s Quit\n", RBTN);
+	    fprintf(stderr, "%s Pan\n", LEFTS);
+	    fprintf(stderr, "%s Quit\n", RIGHTS);
 	    printmenu = 0;
 	}
 
