@@ -21,10 +21,10 @@ SHORT_OBJ = $(patsubst %.cc, $(OBJARCH)/SHORT/%.o, $(SOURCES))
 #		header files should be included as prerequisites, but does not work 
 #		because of GRASS scripts 
 $(OBJARCH)/FLOAT/%.o:%.cc
-	$(CXX) -c $(CFLAGS) -DELEV_FLOAT $< -o $@
+	$(CXX) -c $(CXXFLAGS) -DELEV_FLOAT $< -o $@
 
 $(OBJARCH)/SHORT/%.o:%.cc
-	$(CXX) $(CFLAGS)  -DELEV_SHORT -c $< -o $@
+	$(CXX) $(CXXFLAGS)  -DELEV_SHORT -c $< -o $@
 
 
 
@@ -39,20 +39,20 @@ WARNING_FLAGS   = -Wformat  -Wparentheses  -Wpointer-arith -Wno-conversion \
   -Wcomment  -Wno-sign-compare
 
 
-CFLAGS += -Wall  -I$(IOSTREAM_INC) \
+CXXFLAGS += -I$(IOSTREAM_INC) \
 		-DUSER=\"$(USER)\" \
 		-DNODATA_FIX -D_FILE_OFFSET_BITS=64
 
-LDFLAGS += -L$(IOSTREAM_LIBDIR) -O3
+LDFLAGS += -L$(IOSTREAM_LIBDIR)
 
 LIBS = $(GISLIB) 
 DEPLIBS = $(DEPGISLIB)
 
 
 
-all: force $(BIN_CMD)/r.terraflow $(BIN_CMD)/r.terraflow.short
+all: dofirst $(BIN_CMD)/r.terraflow $(BIN_CMD)/r.terraflow.short
 
-force:
+dofirst:
 	-mkdir $(OBJARCH)/FLOAT ; true
 	-mkdir $(OBJARCH)/SHORT ; true
 
