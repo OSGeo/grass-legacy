@@ -83,7 +83,7 @@ main (int argc, char *argv[])
 		"\tsum - add the value specified by cat option to the current category value\n"
 		"\treport - print report (statistics), in shell style:\n"
 			"\t\tlayer type count min max\n"
-		"\tprint - print category values";
+		"\tprint - print category values, more cats in the same layer are separated by '/'";
 
 	cat_opt = G_define_standard_option(G_OPT_V_CAT);
 	cat_opt->answer = "1";
@@ -403,13 +403,33 @@ main (int argc, char *argv[])
 		
 	    case (O_PRN):
 	        while ( (type = Vect_read_next_line (&In, Points, Cats)) > 0) {
+		    int has = 0;
+		    
 	            if ( !(type & otype) ) continue;
 		    
-		    /* TODO more cats of the same field */
+		    /* Check if the line has at least one cat */
 		    for (i=0; i < nfields; i++) {
-		        Vect_cat_get ( Cats, fields[i], &cat );
-		        if ( i > 0 ) fprintf (stdout, "|" );
-		        fprintf (stdout, "%d", cat );
+			for (j=0; j < Cats->n_cats; j++) {
+			    if ( Cats->field[j] == fields[i] ) {
+				has  = 1;
+				break;
+			    }
+			}
+		    }
+
+		    if ( !has ) continue;
+
+		    for (i=0; i < nfields; i++) {
+			int first = 1;
+		        
+			if ( i > 0 ) fprintf (stdout, "|" );
+		        for (j=0; j < Cats->n_cats; j++) {
+			    if ( Cats->field[j] == fields[i] ) {
+				if ( !first ) fprintf (stdout, "/");
+		                fprintf (stdout, "%d", Cats->cat[j] );
+				first = 0;
+			    }
+			}
 		    }
 	            fprintf (stdout, "\n" );
 		}
@@ -425,5 +445,4 @@ main (int argc, char *argv[])
 
 	exit(0) ;
 }
-
 
