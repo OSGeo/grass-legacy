@@ -7,9 +7,11 @@
  * GeoModel,s.r.o., Bratislava, 1999
  * hofierka@geomodel.sk
  * 
- * it needs to be finished - export of grass region settings
- *
+ * Region sensivity by MN 1/2001
  */
+
+/* uncomment to get some debug output */
+/* #define DEBUG */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,7 +32,7 @@ typedef	struct {
 void fatalError(char *errorMsg);
 void setParams();
 void getParams(char **input, char **output, int *decim);
-void convert(char *fileout);
+void convert(char *fileout, int, int, int);
 
 /* globals */
 void *map = NULL;
@@ -88,7 +90,7 @@ void getParams(char **input, char **output, int *decim) {
  * Returns the file handle for the output file.
  */
 
-void convert(char *fileout) {
+void convert(char *fileout, int rows, int cols, int depths) {
 
    int NumTimes=1;                        /* number of time steps */
    int NumVars=1;                         /* number of variables */
@@ -102,22 +104,25 @@ void convert(char *fileout) {
    float LonInc;                        /* spacing between columns in degs */
    float BottomHgt;                     /* height of bottom of box in km */
    float HgtInc;                        /* spacing between grid levels in km */
-  int Projection;
+   int Projection;
    float ProjArgs[100];
    int Vertical;
    float VertArgs[MAXLEVELS];
-  int CompressMode;
-	float *g;
-	int cnt;
+   int CompressMode;
+   float *g;
+   int cnt;
+   double d1 = 0;
+   double *d1p;
+   float *f1p;
+   int x, y, z;
+   int typeIntern; 
 
-  double d1 = 0;
-  double *d1p;
-  float *f1p;
-  int x, y, z;
-  int rows, cols, depths, typeIntern; 
-
-  G3d_getCoordsMap (map, &rows, &cols, &depths);
+/*  G3d_getCoordsMap (map, &rows, &cols, &depths);*/
   typeIntern = G3d_tileTypeMap (map);
+
+#ifdef DEBUG
+fprintf(stderr, "cols: %i rows:%i \n", cols, rows);
+#endif
 
   /* see v5d.h */
   if (cols > MAXCOLUMNS)
@@ -248,11 +253,16 @@ int main(int argc, char *argv[]) {
   if (map == NULL)
     G3d_fatalError("main: error opening g3d file");
 
-  /* Figure out the region from the map */
-    G3d_getRegionStructMap(map, &region);
-/*  G3d_getWindow(&region);  use current settings */
+  /* Use default region */
+  /*  G3d_getRegionStructMap(map, &region); */
+  /* Figure out the region from current settings:*/
+  G3d_getWindow(&region);
 
-  convert(output);
+#ifdef DEBUG
+fprintf(stderr, "cols: %i rows:%i depths:%i\n", region.cols, region.rows, region.depths);
+#endif
+
+  convert(output, region.rows, region.cols, region.depths);
 
   /* Close files and exit */
   if (!G3d_closeCell (map)) 
