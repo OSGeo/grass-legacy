@@ -1,4 +1,6 @@
-/*r3.null*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "G3d.h"
 
@@ -162,6 +164,7 @@ modifyNull (name, maskRules, changeNull, newNullVal)
 
 /*--------------------------------------------------------------------------*/
 
+int
 main (argc, argv)
 
      int argc;
@@ -172,14 +175,20 @@ main (argc, argv)
   void *maskRules;
   int changeNull;
   double newNullVal;
+  struct GModule *module;
 
   G_gisinit (argv[0]);
+  module = G_define_module();
+  module->description =
+   "Explicitly create the 3D NULL-value bitmap file.";
 
   setParams ();
   if (G_parser (argc, argv)) exit(1);
   getParams (&name, &maskRules, &changeNull, &newNullVal);
 
   modifyNull (name, maskRules, changeNull, newNullVal);
+
+  return 0;
 }
 
 /*--------------------------------------------------------------------------*/
