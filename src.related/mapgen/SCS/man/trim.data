@@ -1,0 +1,37 @@
+
+
+                                   APPENDIX I                    1
+                              GRASS-MAPGEN User's Guide
+            trim.data                                       trim.data 
+
+            
+            
+            NAME
+            trim.data - Enables the user to graphically trim the size of
+            the data area in a map composition.
+            
+            SYNOPSIS
+            trim.data 
+            
+            DESCRIPTION 
+            trim.data allows the user to trim the size of the data area 
+            in a map composition by identifying a north, south, east and
+            west point for a new data window.  The extremity points are
+            identified by using the mouse device to point to the desired
+            location on the graphic screen.
+            
+            This capability provides a graphic alternative for modifying
+            the map definition parameters in the map.def.par file. 
+            
+            EXAMPLE
+            
+                 trim.data
+            
+            NOTE 
+            Before using the trim.data command, the user must have run
+            the GRASS d.erase command, and then the d.vect command for a
+            base vector file to use as a reference.
+            
+            AUTHOR 
+            Marty Holko, Computer Systems Analyst, Cartography and
+            Geographic Information Systems Division, USDA, Soil
