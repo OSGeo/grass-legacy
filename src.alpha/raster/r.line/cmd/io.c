@@ -85,13 +85,13 @@ write_line(seed)
 	int dir, line_type, n, n1;
 
 	point = seed;
-	if (dir = at_end(point))		/* already have one end of line */
+	if (dir = at_end(point))	/* already have one end of line */
 	{
 		begin = point;
 		end = find_end(point,dir,&line_type,&n);
 		if (line_type == OPEN)
 		{
-			return(-1);			/* unfinished line */
+			return(-1);	/* unfinished line */
 		}
 		direction = dir;
 	}
@@ -152,8 +152,16 @@ write_ln (begin,end,n)
 	x = cell_head.west + ((double) p->col + 0.5) * cell_head.ew_res;
 
 
+/****************************************************************
+ * shapiro 27 feb 1992.
+ * bug fixed by:  by Jinn-Guey Lay: jinn@uhunix.uhcc.Hawaii.edu
+ ***************************************************************/
+	Vect_reset_line (Points);
+/***************************************************************/
+
 	if (which_outputs & BINARY)
-	    Vect_append_point (Points, x, y);
+	    if(Vect_append_point (Points, x, y)==-1)
+		 G_fatal_error("Out of Memory");
 
 	for (i = 1; i < n; i++)
 	{
@@ -169,9 +177,36 @@ write_ln (begin,end,n)
 
 		if (which_outputs & BINARY)
 		    Vect_append_point (Points, x, y);
-		xfree(last,"write_ln, last");
+	/*	xfree(last,"write_ln, last");*/
 	}
-	xfree(p,"write_ln, p");
+
+
+    /* now free all the pointers */
+    p = begin;
+
+    for (i = 1; i < n; i++) 
+    {
+    /*
+	if( i<10)
+         printf(" row: %d col: %d\n", p->row, p->col);
+	 */
+	   last = p;
+	if ((p = move(p)) == NULL)
+	  break;
+	if(last==p) break;
+	if(last->fptr!=NULL)
+	   if(last->fptr->fptr==last) last->fptr->fptr=NULL;
+	/* now it can already ne NULL */
+	if(last->fptr!=NULL)
+	   if(last->fptr->bptr==last) last->fptr->bptr=NULL;
+	if(last->bptr!=NULL)
+	   if(last->bptr->fptr==last) last->bptr->fptr=NULL;
+	if(last->bptr!=NULL)
+	   if(last->bptr->bptr==last) last->bptr->bptr=NULL;
+	free(last);
+    } /* end of for i */
+    if(p!=NULL)
+	free(p);
 
 	Vect_write_line (&Map, type, Points);
 }
@@ -294,7 +329,7 @@ char *input, *output;
 
 	if (strncmp(opt4->answer,"line",4) == 0)
 		edge_type = LINE_EDGE;
-	else if (strncmp(type,"area",4) == 0)
+	else if (strncmp(opt4->answer,"area",4) == 0)
 		edge_type = AREA_EDGE;
 
 	error_prefix = argv[0];
@@ -448,6 +483,7 @@ char *label;
 xfree(addr,label)
 char *addr, *label;
 {
+	/* free(addr);*/
 	free(addr);
 }
 
