@@ -35,7 +35,7 @@ int main (int argc, char **argv)
 {
   char *mapset;
   char name[20];
-  int n, i;
+  int c_matrix (), n, i;
   extern int **c, quiet;
   char gisbase[256], dig_cat_file[128];
   char err_msg[128];
@@ -153,7 +153,7 @@ int main (int argc, char **argv)
   /* Compute connectivity matrix */
   if (!quiet)
     fprintf(stdout, "Computing connectivity matrix...\n");
-  n = c_matrix (&Map, &Plus);
+  n = c_matrix (&Map, &Plus, c);
 
   if (!flag.stats->answer)
   {
