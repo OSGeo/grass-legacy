@@ -1,3 +1,12 @@
+o GRASS text mode startup
+
+  "grass5" starts up tcltkgrass by default.
+  "grass5 -text" will start up in text mode.
+
+  You can use alias "grass5" to "grass5 -text" to use text mode by default.
+  Or set env var GRASS_GUI=text.
+
+
 o GRASS non-interactive startup examples
 
 
