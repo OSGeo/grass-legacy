@@ -758,52 +758,54 @@ void partCalcFieldsPolygon( partDescript *partd ) {
     proc_reject_centroid(GET_VAL, &rej_val);
     if(rej_val) {
       totalCirc = 0.0;
-      goto end;
     }
-    assert( fabs(newx1) < 1.0e10 && fabs(newx2) < 1.0e10 );
+
+    else {
+      assert( fabs(newx1) < 1.0e10 && fabs(newx2) < 1.0e10 );
 
     /* Third pass. Have to redetermine the circulation to see if we have an
        exterior ring or an island.
     */
 
-    newx = ( newx1 + newx2 ) / 2.0; newy = tmpCentroidy;
+      newx = ( newx1 + newx2 ) / 2.0; newy = tmpCentroidy;
 
-    totalCirc = 0;
-    for( i0 = 0; i0 < partd->numPoints - 1; ++i0 ) { /* Miss last vertex ( == first ) */
+      totalCirc = 0;
+      for( i0 = 0; i0 < partd->numPoints - 1; ++i0 ) { /* Miss last vertex ( == first ) */
 
-      /* Calculate two successive position vectors rel. to centroid */
-      posvecx_old = partd->linepnts[i0].xPosn - newx;
-      posvecy_old = partd->linepnts[i0].yPosn - newy;
-      posvecx = partd->linepnts[i0+1].xPosn - newx;
-      posvecy = partd->linepnts[i0+1].yPosn - newy;
+	/* Calculate two successive position vectors rel. to centroid */
+	posvecx_old = partd->linepnts[i0].xPosn - newx;
+	posvecy_old = partd->linepnts[i0].yPosn - newy;
+	posvecx = partd->linepnts[i0+1].xPosn - newx;
+	posvecy = partd->linepnts[i0+1].yPosn - newy;
 
-      /* Now calculate partial circulation of sector */
-      /* Don't need to check special cases: this _should_ be a
-	 valid centroid of this ring.
-      */
-      theta_old = getTheta( posvecx_old, posvecy_old );
-      theta = getTheta( posvecx, posvecy );
-      delta = theta - theta_old;
+	/* Now calculate partial circulation of sector */
+	/* Don't need to check special cases: this _should_ be a
+	   valid centroid of this ring.
+	*/
+	theta_old = getTheta( posvecx_old, posvecy_old );
+	theta = getTheta( posvecx, posvecy );
+	delta = theta - theta_old;
 
-      if( delta < -1.0 * PI )
-	delta += 2 * PI;
-      else if( delta > PI )
-	delta -= 2 * PI;
+	if( delta < -1.0 * PI )
+	  delta += 2 * PI;
+	else if( delta > PI )
+	  delta -= 2 * PI;
 
-      totalCirc += delta;
-    }
+	totalCirc += delta;
+      }
 
-    /* This should now be positive or negative (non-zero) in value. 
+      /* This should now be positive or negative (non-zero) in value. 
        though some situations seem to arise where it can `escape'.
        We will deal with this eventually for now - flag the parent
        procedure to drop the label
      */
     /* assert( totalCirc > 1.0 || totalCirc < -1.0 ); */
-    if(totalCirc < 1.0 && totalCirc > -1.0 ) {
-      totalCirc = 0;
-    }
+      if(totalCirc < 1.0 && totalCirc > -1.0 ) {
+	totalCirc = 0;
+      }
 
-  end:
+    }
+    
   }
 
   /* Next, dispose situation where circulation is positive ( ie. anti-clockwise, an island
