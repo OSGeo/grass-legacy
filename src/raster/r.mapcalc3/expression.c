@@ -56,6 +56,7 @@ static expression *to_int(expression *e1)
 	argt[1] = e1->res_type;
 
 	e->data.func.name = "";
+	e->data.func.oper = NULL;
 	e->data.func.func = f_int;
 	e->data.func.argc = 1;
 	e->data.func.args = args;
@@ -77,6 +78,7 @@ static expression *to_float(expression *e1)
 	argt[1] = e1->res_type;
 
 	e->data.func.name = "";
+	e->data.func.oper = NULL;
 	e->data.func.func = f_float;
 	e->data.func.argc = 1;
 	e->data.func.args = args;
@@ -98,6 +100,7 @@ static expression *to_double(expression *e1)
 	argt[1] = e1->res_type;
 
 	e->data.func.name = "";
+	e->data.func.oper = NULL;
 	e->data.func.func = f_double;
 	e->data.func.argc = 1;
 	e->data.func.args = args;
