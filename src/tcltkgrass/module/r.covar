@@ -1,0 +1,8 @@
+interface_build {
+    {r.covar} 0
+    {Outputs a covariance/correlation matrix for user specified raster map layer(s).}
+    {entry map {Input raster maps (name[,name,...]):} 0 +raster}
+    {checkbox -m {Include zero values in the calculations, due to mask.} "" -m}
+    {checkbox -r {Print the correlation matrix instead of covariance matrix.} "" -r}
+    {checkbox -q {Run quietly.} "" -q}
+}
