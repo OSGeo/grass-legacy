@@ -132,8 +132,8 @@ int main (int argc, char *argv[])
     max_opt->key = "maxdist";
     max_opt->type = TYPE_DOUBLE;
     max_opt->required = NO;
-    max_opt->answer = "1000000";
-    max_opt->description = "Maximum distance";
+    max_opt->answer = "-1";
+    max_opt->description = "Maximum distance or -1 for no limit.";
 
     upload_opt = G_define_option();
     upload_opt->key = "upload";
@@ -251,6 +251,25 @@ int main (int argc, char *argv[])
 	Outp = &Out;
     } else {
 	Outp = NULL;
+    }
+
+    /* TODO: add maxdist = -1 to Vect_select_ !!! */
+    /* Calc maxdist */
+    if ( max < 0 ) {
+        BOUND_BOX fbox, tbox;
+	double dx, dy;
+
+	Vect_get_map_box ( &From, &fbox );
+	Vect_get_map_box ( &To, &tbox );
+
+	Vect_box_extend ( &fbox, &tbox );
+
+	dx = fbox.E - fbox.W;
+	dy = fbox.N - fbox.S;
+
+	max = sqrt ( dx*dx + dy*dy );
+
+	G_debug ( 2, "max = %f", max );
     }
 
     /* Open database driver */
@@ -749,7 +768,7 @@ int main (int argc, char *argv[])
         db_commit_transaction ( driver );
     
     /* print stats */
-    fprintf (stderr,"\nStatistics:\n");
+    fprintf (stderr,"Statistics:\n");
     fprintf (stderr,"%d categories with more than 1 feature in 'from'\n", update_dupl);
     fprintf (stderr,"%d categories - no nearest feature found\n", update_notfound);
 
