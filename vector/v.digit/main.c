@@ -188,7 +188,7 @@ int
 end ( void ) 
 {
     G_debug (1, "end()");
-    /* Enable this later (not usefull for debugging) */
+    Vect_build_partial (&Map, GV_BUILD_NONE, NULL);
     Vect_build ( &Map, stdout );
     Vect_close (&Map);
     

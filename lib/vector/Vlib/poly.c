@@ -175,7 +175,7 @@ Vect_get_point_in_poly (struct line_pnts *Points, double *X, double *Y)
   /* get centroid */
   Vect_find_poly_centroid (Points, &cent_x, &cent_y);
   /* is it w/in poly? */
-  if (dig_point_in_poly (cent_x, cent_y, Points))
+  if ( Vect_point_in_poly (cent_x, cent_y, Points) == 1 )
     {
       *X = cent_x;
       *Y = cent_y;
@@ -266,7 +266,7 @@ Vect__divide_and_conquer (
 
       C->x = (A->x + B->x) / 2.;
 
-      if (dig_point_in_poly (C->x, *Y, Points))
+      if ( Vect_point_in_poly (C->x, *Y, Points) == 1 )
 	{
 	  *X = C->x;
 	  return levels;
@@ -384,7 +384,7 @@ Vect_point_in_islands (
       if (0 > Vect_get_isle_points (Map, Area->isles[isle], TPoints))
 	return -1;
 
-      if (dig_point_in_poly (cent_x, cent_y, TPoints))
+      if ( Vect_point_in_poly (cent_x, cent_y, TPoints) == 1 )
 	return 1;
     }
 
@@ -441,12 +441,12 @@ Vect_get_point_in_poly_isl (
   /* get centroid */
   Vect_find_poly_centroid (Points, &cent_x, &cent_y);
   /* is it w/in poly? */
-  if (dig_point_in_poly (cent_x, cent_y, Points))
+  if ( Vect_point_in_poly (cent_x, cent_y, Points) == 1)
     /* if the point is iside the polygon */
     {
       for (i = 0; i < n_isles; i++)
 	{
-	  if (dig_point_in_poly (cent_x, cent_y, IPoints[i]) > 0.0)
+	  if (Vect_point_in_poly (cent_x, cent_y, IPoints[i]) == 1)
 	    point_in_sles = 1;
 	}
       if (!point_in_sles)
@@ -533,7 +533,233 @@ Vect_get_point_in_poly_isl (
 
   *att_x = (Intersects->x[maxpos] + Intersects->x[maxpos + 1]) / 2.;
 
-  /* if (dig_point_in_poly (*att_x, *att_y, Points)==0.0) */
+  /* if (Vect_point_in_poly (*att_x, *att_y, Points) == 1) */
   return 0;
+}
+
+
+/* Intersect segments of Points with ray from point X,Y to the right.
+ * Returns: -1 point exactly on segment
+ *          number of intersections
+ */
+int 
+segments_x_ray ( double X, double Y, struct line_pnts *Points)
+{
+    double x1, x2, y1, y2;
+    double x_inter;
+    int n_intersects;
+    int n;
+
+    G_debug ( 3, "segments_x_ray(): x = %f y = %f n_points = %d", X, Y, Points->n_points );
+
+    /* Follow the ray from X,Y along positive x and find number of intersections.
+     * Coordinates exactly on ray are considered to be slightly above. */
+    
+    n_intersects = 0;
+    for ( n = 0; n < Points->n_points-1; n++) {
+        G_debug ( 3, "X = %f Y = %f x1 = %f y1 = %f x2 = %f y2 = %f", X, Y, x1, y1, x2, y2 );
+	x1 = Points->x[n];
+	y1 = Points->y[n];
+	x2 = Points->x[n+1];
+	y2 = Points->y[n+1];
+	
+        /* I know, it should be possible to do that with less conditions, but it should be 
+	 * enough readable also! */
+	
+	/* segment left from X -> no intersection */
+	if ( x1 < X && x2 < X ) continue;
+	
+	/* point on vertex */
+	if ( (x1 == X && y1 == Y) || (x2 == X && y2 == Y) ) return -1;
+
+	/* on vertical boundary */
+	if ( (x1 == x2 && x1 == X) && ( (y1 <= Y && y2 >= Y) || (y1 >= Y && y2 <= Y) ) ) return -1;
+	
+	/* on horizontal boundary */
+	if ( (y1 == y2 && y1 == Y) && ( (x1 <= X && x2 >= X) || (x1 >= X && x2 <= X) ) ) return -1;
+	
+	/* segment on ray (X is not important) */
+	if ( y1 == Y && y2 == Y ) continue;
+
+	/* segment above (X is not important) */
+	if ( y1 > Y && y2 > Y ) continue;
+	
+	/* segment below (X is not important) */
+	if ( y1 < Y && y2 < Y ) continue;
+	
+	/* one end on Y second above (X is not important) */
+	if ( (y1 == Y && y2 > Y) || (y2 == Y && y1 > Y) ) continue;
+
+	/* For following cases we know that at least one of x1 and x2 is  >= X */
+	
+	/* one end of segment on Y second below Y */
+	if ( y1 == Y && y2 < Y) { 
+	    if ( x1 >= X)  /* x of the end on the ray is >= X */
+	        n_intersects++;
+            continue;
+        }
+	if ( y2 == Y && y1 < Y ) {
+	    if ( x2 >= X)
+	        n_intersects++;
+            continue;
+        }
+	    
+	/* one end of segment above Y second below Y */
+	if ( (y1 < Y && y2 > Y) || (y1 > Y && y2 < Y) ) {
+	    if ( x1 >= X && x2 >= X ) {
+		n_intersects++;
+	        continue;
+	    }
+	    
+	    /* now either x1 < X && x2 > X or x1 > X && x2 < X -> calculate intersection */
+            x_inter = dig_x_intersect ( x1, x2, y1, y2, Y);
+            G_debug ( 3, "x_inter = %f", x_inter );
+	    if ( x_inter == X ) 
+		return 1;
+	    else if (x_inter > X) 
+	        n_intersects++;
+		
+	    continue; /* would not be necessary, just to check, see below */
+	}
+	/* should not be reached (one condition is not necessary, but it is may be better readable
+	 * and it is a check) */
+	G_warning ( "segments_x_ray() conditions failed:" );
+        G_warning ( "X = %f Y = %f x1 = %f y1 = %f x2 = %f y2 = %f", X, Y, x1, y1, x2, y2 );
+    }
+
+    return  n_intersects;
+}
+
+/*
+ *  Determines if a point (X,Y) is inside a polygon.
+ *
+ *  Returns: 0 - outside
+ *           1 - inside 
+ *           2 - on the boundary (exactly may be said only for vertex of vertical/horizontal line)
+ */
+int
+Vect_point_in_poly ( double X, double Y, struct line_pnts *Points)
+{
+    int n_intersects;
+
+    G_debug ( 3, "Vect_point_in_poly(): x = %f y = %f n_points = %d", X, Y, Points->n_points );
+
+    n_intersects = segments_x_ray ( X, Y, Points);
+	
+    if ( n_intersects == -1 ) return 2; 
+    
+    if (n_intersects % 2)
+        return 1;
+    else
+        return 0;
+}
+
+/*
+ *  Determines if a point (X,Y) is inside an area outer ring. Islands are not considered.
+ *
+ *  Returns: 0 - outside
+ *           1 - inside 
+ *           2 - on the boundary (exactly may be said only for vertex of vertical/horizontal line)
+ */
+int
+Vect_point_in_area_outer_ring ( double X, double Y, struct Map_info *Map, int area)
+{
+    static int first = 1;
+    int n_intersects, inter;
+    int i, line;
+    static struct line_pnts *Points;
+    struct Plus_head *Plus;
+    P_LINE *Line;
+    P_AREA *Area;
+
+    G_debug ( 3, "Vect_point_in_area_outer_ring(): x = %f y = %f area = %d", X, Y, area );
+
+    if (first == 1) {
+        Points = Vect_new_line_struct();
+        first = 0;
+    }
+
+    Plus = &(Map->plus);
+    Area = Plus->Area[area];
+
+    /* First it must be in box */
+    if ( X < Area->W || X > Area->E || Y > Area->N || Y < Area->S ) return 0;
+    
+    n_intersects = 0;
+    for (i = 0; i < Area->n_lines; i++) {
+        line = abs(Area->lines[i]);
+        G_debug ( 3, "  line[%d] = %d", i, line );
+    
+        Line = Plus->Line[line];	
+    
+	/* dont check lines that obviously do not intersect with test ray */
+	if ((Line->N < Y) || (Line->S > Y) || (Line->E < X)) continue;
+
+	Vect_read_line (Map, Points, NULL, line );
+	
+	inter = segments_x_ray ( X, Y, Points);
+        G_debug ( 3, "  inter = %d", inter );
+	
+	if ( inter == -1 ) return 2; 
+        n_intersects += inter;
+        G_debug ( 3, "  n_intersects = %d", n_intersects );
+    }
+    
+    if (n_intersects % 2)
+        return 1;
+    else
+        return 0;
+}
+
+/*
+ *  Determines if a point (X,Y) is inside an island.
+ *
+ *  Returns: 0 - outside
+ *           1 - inside 
+ *           2 - on the boundary (exactly may be said only for vertex of vertical/horizontal line)
+ */
+int
+Vect_point_in_island ( double X, double Y, struct Map_info *Map, int isle)
+{
+    static int first = 1;
+    int n_intersects, inter;
+    int i, line;
+    static struct line_pnts *Points;
+    struct Plus_head *Plus;
+    P_LINE *Line;
+    P_ISLE *Isle;
+
+    G_debug ( 3, "Vect_point_in_island(): x = %f y = %f isle = %d", X, Y, isle );
+
+    if (first == 1) {
+        Points = Vect_new_line_struct();
+        first = 0;
+    }
+
+    Plus = &(Map->plus);
+    Isle = Plus->Isle[isle];
+    
+    if ( X < Isle->W || X > Isle->E || Y > Isle->N || Y < Isle->S ) return 0;
+
+    n_intersects = 0;
+    for (i = 0; i < Isle->n_lines; i++) {
+        line = abs(Isle->lines[i]);
+    
+        Line = Plus->Line[line];	
+    
+	/* dont check lines that obviously do not intersect with test ray */
+	if ((Line->N < Y) || (Line->S > Y) || (Line->E < X)) continue;
+
+	Vect_read_line (Map, Points, NULL, line );
+	
+	inter = segments_x_ray ( X, Y, Points);
+	if ( inter == -1 ) return 2; 
+        n_intersects += inter;
+    }
+    
+    if (n_intersects % 2)
+        return 1;
+    else
+        return 0;
 }
 

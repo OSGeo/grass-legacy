@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "Vect.h"
+#include "dbmi.h"
 #include "gis.h"
 
 /*!
@@ -221,6 +222,7 @@ struct field_info
     struct field_info *fi;
     char buf[1000];
     char *drv, *db;
+    dbConnection  connection;
     
     G_debug (1, "Vect_default_field_info(): map = %s field = %d", Map->name, field);
     
@@ -230,10 +232,21 @@ struct field_info
     G_debug (2, "drv = %s db = %s", drv, db );
 
     if ( drv == NULL && db == NULL ) { /* Set default values and create dbf db dir */
-	G_warning ( "Default driver / database set to:\n"
+	G_warning ( "Default driver / database for vectors set to:\n"
 		    "driver: dbf\ndatabase: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/" );
 	G_setenv2 ( "GV_DRIVER", "dbf", G_VAR_MAPSET );
 	G_setenv2 ( "GV_DATABASE", "$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/", G_VAR_MAPSET );
+
+	/* Set also DB_DRIVER and DB_DATABASE is not yet set */
+	db_get_connection( &connection );
+	if ( !connection.driverName && !connection.databaseName ) {
+	    G_warning ( "Database connection (for db.* modules) set to:\n"
+			"driver: dbf\ndatabase: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/" );
+	    connection.driverName = "dbf";
+	    connection.databaseName = "$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/";
+	    db_set_connection( &connection );
+	}
+	
 	sprintf ( buf, "%s/%s/%s/dbf", Map->gisdbase, Map->location, Map->mapset );
 	G__make_mapset_element ( "dbf" );
 	drv = G_store ( "dbf" );

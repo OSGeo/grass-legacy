@@ -230,6 +230,8 @@ struct Plus_head
     struct Port_info spidx_port;      /* Portability information for spatial index */
     int mode;			/* Read, Write, RW */
 
+    int built;                 /* the highest level of topology currently available (GV_BUILD_*) */
+
     struct bound_box box;      /* box */
     
     P_NODE **Node;	/* P_NODE array of pointers *//* 1st item is 1 for  */

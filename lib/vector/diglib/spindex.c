@@ -51,6 +51,27 @@ dig_spidx_init ( struct Plus_head *Plus)
     return 1;
 }
 
+void
+dig_spidx_free_nodes ( struct Plus_head *Plus) {
+    RTreeDestroyNode ( Plus->Node_spidx );
+    Plus->Node_spidx = RTreeNewIndex();
+}
+void
+dig_spidx_free_lines ( struct Plus_head *Plus) {
+    RTreeDestroyNode ( Plus->Line_spidx );
+    Plus->Line_spidx = RTreeNewIndex();
+}
+void
+dig_spidx_free_areas ( struct Plus_head *Plus) {
+    RTreeDestroyNode ( Plus->Area_spidx );
+    Plus->Area_spidx = RTreeNewIndex();
+}
+void
+dig_spidx_free_isles ( struct Plus_head *Plus) {
+    RTreeDestroyNode ( Plus->Isle_spidx );
+    Plus->Isle_spidx = RTreeNewIndex();
+}
+
 /* 
 *  dig_spidx_free ()
 *  free spatial index (nodes, lines, areas, isles)
@@ -59,10 +80,10 @@ dig_spidx_init ( struct Plus_head *Plus)
 void 
 dig_spidx_free ( struct Plus_head *Plus) 
 {
-    RTreeDestroyNode ( Plus->Node_spidx );
-    RTreeDestroyNode ( Plus->Line_spidx );
-    RTreeDestroyNode ( Plus->Area_spidx );
-    RTreeDestroyNode ( Plus->Isle_spidx );
+    dig_spidx_free_nodes ( Plus );
+    dig_spidx_free_lines ( Plus );
+    dig_spidx_free_areas ( Plus );
+    dig_spidx_free_isles ( Plus );
 }
 
 /************************* ADD NEW *********************************/

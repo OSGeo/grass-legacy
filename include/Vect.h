@@ -9,7 +9,10 @@
       /* Points (line) */  
 struct line_pnts *Vect_new_line_struct (void);
 int Vect_append_point (struct line_pnts *, double, double, double);
-int Vect_append_points (struct line_pnts *, struct line_pnts *, int direction);
+int Vect_append_points (struct line_pnts *, struct line_pnts *, int);
+int Vect_line_insert_point (struct line_pnts *, int, double, double, double);
+int Vect_line_delete_point (struct line_pnts *, int);
+int Vect_line_prune (struct line_pnts *);
 int Vect_copy_xyz_to_pnts (struct line_pnts *, double *, double *, double *, int);
 int Vect_copy_pnts_to_xyz (struct line_pnts *, double *, double *, double *, int *);
 int Vect_reset_line (struct line_pnts *);
@@ -127,6 +130,8 @@ int Vect_open_new (struct Map_info *, char *, int);
 int Vect_open_update (struct Map_info *, char *, char *);
 int Vect_copy_head_data (struct Map_info *, struct  Map_info *);
 int Vect_build ( struct Map_info *, FILE *);
+int Vect_get_built ( struct Map_info *Map );
+int Vect_build_partial ( struct Map_info *, int, FILE *);
 int Vect_set_constraint_region (struct Map_info *, double, double, double, double, double, double);
 int Vect_set_constraint_type (struct Map_info *, int);
 int Vect_remove_constraints (struct Map_info *);
@@ -155,6 +160,7 @@ int Vect_get_line_areas (struct Map_info *, int, int *, int *);
 int Vect_get_node_coor (struct Map_info *, int, double *, double *, double *);
 int Vect_get_node_n_lines (struct Map_info *, int );
 int Vect_get_node_line (struct Map_info *, int, int );
+float Vect_get_node_line_angle (struct Map_info *, int, int );
 
 int Vect_get_area_points (struct Map_info *, int, struct line_pnts *);
 int Vect_get_area_centroid ( struct Map_info *, int );
@@ -164,6 +170,7 @@ double Vect_get_area_area ( struct Map_info *, int );
 int Vect_get_area_boundaries ( struct Map_info *, int, struct ilist * );
 
 int Vect_get_isle_points (struct Map_info *, int, struct line_pnts *);
+int Vect_get_isle_area ( struct Map_info *, int );
 
 int Vect_get_centroid_area ( struct Map_info *, int );
 
@@ -188,6 +195,7 @@ int Vect_select_nodes_by_box (struct Map_info *, BOUND_BOX *, struct ilist *);
 int Vect_find_node (struct Map_info *, double, double, double, double, int);
 int Vect_find_line (struct Map_info *, double, double, double, int, double, int, int);
 int Vect_find_area (struct Map_info *, double, double);
+int Vect_find_island (struct Map_info *, double, double);
 
       /* Analysis */
 int Vect_point_in_area (struct Map_info *, int, double, double);
@@ -198,13 +206,15 @@ int Vect_find_poly_centroid (struct line_pnts *, double *, double *);
 int Vect_get_point_in_poly_isl (struct line_pnts *, struct line_pnts **, int, double *, double *);
 int Vect__intersect_line_with_poly (struct line_pnts *, double, struct line_pnts *);
 int Vect_get_point_in_poly (struct line_pnts *, double *, double *);
-
+int Vect_point_in_poly ( double, double, struct line_pnts *);
+int Vect_point_in_area_outer_ring ( double, double, struct Map_info *, int);
+int Vect_point_in_island ( double, double, struct Map_info *, int);
 
     /* Cleaning */
 void Vect_break_lines ( struct Map_info *, int, struct Map_info *, FILE * );
 void Vect_break_polygons ( struct Map_info *, int, struct Map_info *, FILE * );
 void Vect_remove_duplicates ( struct Map_info *, int, struct Map_info *, FILE * );
-void Vect_snap_vertices ( struct Map_info *, int, double, struct Map_info *, FILE * );
+void Vect_snap_lines ( struct Map_info *, int, double, struct Map_info *, FILE * );
 void Vect_remove_dangles ( struct Map_info *, int, double, struct Map_info *, FILE * );
 void Vect_chtype_dangles ( struct Map_info *, double, struct Map_info *, FILE * );
 void Vect_remove_bridges ( struct Map_info *, struct Map_info *, FILE * );
@@ -227,7 +237,7 @@ int Vect_topo_dump ( struct Plus_head *, FILE *);
 double Vect_points_distance ( double, double, double, double, double, double, int);
 int Vect_option_to_types (struct Option *);
 int Vect_copy_map_lines ( struct Map_info *, struct Map_info * );
-int Vect_copy ( char *in, char *mapset, char *out );
+int Vect_copy ( char *in, char *mapset, char *out, FILE * );
 int Vect_copy_table ( struct Map_info *, struct Map_info *, int, int, char *, int );
 int Vect_copy_tables ( struct Map_info *, struct Map_info *, int );
 int Vect_delete ( char *map );
@@ -337,10 +347,10 @@ long V1_rewrite_line_post (struct Map_info *, long offset, int type, struct line
 long V2_rewrite_line_post (struct Map_info *, long offset, int type, struct line_pnts *, struct line_cats *);
 
     /* Miscellaneous */
-int Vect_build_nat ( struct Map_info *, FILE *);
-int Vect_build_shp ( struct Map_info *, FILE *);
-int Vect_build_ogr ( struct Map_info *, FILE *);
-int Vect_build_post ( struct Map_info *, FILE *);
+int Vect_build_nat ( struct Map_info *, int, FILE *);
+int Vect_build_shp ( struct Map_info *, int, FILE *);
+int Vect_build_ogr ( struct Map_info *, int, FILE *);
+int Vect_build_post ( struct Map_info *, int, FILE *);
 int Vect_type_to_code (int);
 int Vect_code_to_type (int);
 int Vect_type_to_store (int);

@@ -82,7 +82,8 @@ Vect_select_areas_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *li
     dig_select_areas ( &(Map->plus), Box, list );
     G_debug ( 3, "  %d areas selected", list->n_values );
     for ( i = 0; i < list->n_values; i++ ) {
-        G_debug ( 3, "  %d : %d", list->value[i], Map->plus.Area[list->value[i]] );
+        G_debug ( 3, "  area = %d pointer to area structure = %d", list->value[i], 
+		      Map->plus.Area[list->value[i]] );
             
     }
     return list->n_values;

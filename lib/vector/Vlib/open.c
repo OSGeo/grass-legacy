@@ -143,6 +143,7 @@ Vect__open_old (
   level_request = Open_level;
   Open_level = 0;
   Vect__init_head (Map);
+  dig_init_plus ( &(Map->plus) );    
   
   if (G__name_is_fully_qualified (name, xname, xmapset)) {
       sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, xname);
@@ -220,6 +221,12 @@ Vect__open_old (
       G_debug (1, "Vect_open_old(): vector was not opened");
       fatal_error (ferror, errmsg);
       return -1;
+  }
+
+  if ( level == 1 ) { /* without topology */
+      Map->plus.built = GV_BUILD_NONE;  
+  } else { /* level 2, with topology */
+      Map->plus.built = GV_BUILD_ALL; /* Highest level of topology for level 2 */
   }
 
   Map->plus.do_uplist = 0;
@@ -374,8 +381,11 @@ Vect_open_new (
 
     Open_level = 0;
 
+    dig_init_plus ( &(Map->plus) );    
+    
     Map->open = VECT_OPEN_CODE;
     Map->level = 1;
+    Map->plus.built = GV_BUILD_NONE;
     Map->mode = GV_MODE_RW;
     Map->Constraint_region_flag = 0;
     Map->Constraint_type_flag = 0;

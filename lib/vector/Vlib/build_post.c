@@ -25,12 +25,12 @@
  \param Map_info structure, msgout - message output (stdout/stderr for example) or NULL
 */
 int
-Vect_build_post ( struct Map_info *Map, FILE *msgout )
+Vect_build_post ( struct Map_info *Map, int build, FILE *msgout )
 {
 
     G_debug (1, "Vect_build_post()"); 
 
-    return ( Vect_build_nat (Map, msgout)) ;
+    return ( Vect_build_nat (Map, build, msgout)) ;
 }
 
 

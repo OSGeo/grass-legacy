@@ -55,7 +55,7 @@ Vect_remove_dangles ( struct Map_info *Map, int type, double maxlength, struct M
   If a dangle is formed by more boundaries, such string of boundaries is taken as one dangle and 
   either deleted are all parts or nothing.
   Optionaly deleted dangles are written to error map. 
-  Input map must be opened on level 2 for update.
+  Input map must be opened on level 2 for update at least on GV_BUILD_BASE.
 
  \param Map input map where have to be deleted
  \param type type of dangles 
@@ -76,7 +76,7 @@ Vect_chtype_dangles ( struct Map_info *Map, double maxlength, struct Map_info *E
   Optionaly, if chtype is set to 1, only GV_BOUNDARY are checked for dangles, and if dangle is found
   lines are not deleted but rewritten with type GVLINE.
   Optionaly deleted dangles are written to error map. 
-  Input map must be opened on level 2 for update.
+  Input map must be opened on level 2 for update at least on GV_BUILD_BASE.
 
   Parameters:
   Map input map where have to be deleted
@@ -104,6 +104,7 @@ remove_dangles ( struct Map_info *Map, int type, int chtype, double maxlength, s
 	type = GV_BOUNDARY; /* process boundaries only */
 	lmsg = "changed lines";
     } else {
+	type = GV_LINE | GV_BOUNDARY;
 	lmsg = "removed lines";
     }
     
@@ -115,10 +116,10 @@ remove_dangles ( struct Map_info *Map, int type, int chtype, double maxlength, s
 	                            dangles_removed, lmsg, lines_removed ); 
 
     nnodes = Vect_get_num_nodes (Map);
-    G_debug (1, "nnodes =  %d", nnodes );
+    G_debug (2, "nnodes =  %d", nnodes );
     
     for ( node = 1; node <= nnodes; node++ ){ 
-	G_debug (2, "node =  %d", node);
+	G_debug (3, "node =  %d", node);
 	if ( !Vect_node_alive (Map, node) ) continue; 
 	
 	nnodelines = Vect_get_node_n_lines ( Map, node );
@@ -184,7 +185,7 @@ remove_dangles ( struct Map_info *Map, int type, int chtype, double maxlength, s
 		for ( i = 0; i < List->n_values; i++) {
 		    ltype = Vect_read_line (Map, Points, Cats, List->value[i]);
 		    
-		    // Write to Err deleted dangle
+		    /* Write to Err deleted dangle */
 		    if ( Err ) {
 			Vect_write_line ( Err, ltype, Points, Cats );
 		    }

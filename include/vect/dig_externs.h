@@ -16,7 +16,6 @@ int dig_line_degenerate ( struct line_pnts *);
 char *dig_float_point (char *, int, double);
 /* double dig_point_in_area (struct Map_info *, double, double, P_AREA *); */
 double dig_x_intersect (double, double, double, double, double);
-double dig_point_in_poly (double, double, struct line_pnts *);
 double dig_distance2_point_to_line (double, double, double, double, double, double, double, double, double, 
 	                            int, double *, double *, double *, double *, int *);
 
@@ -102,7 +101,11 @@ int dig_test_for_intersection (double, double, double, double, double, double, d
 int dig_find_intersection (double, double, double, double, double, double, double, double, double *, double *);
 
 int dig_init_plus (struct Plus_head *);
-int dig_free_plus (struct Plus_head *);
+void dig_free_plus_nodes (struct Plus_head *);
+void dig_free_plus_lines (struct Plus_head *);
+void dig_free_plus_areas (struct Plus_head *);
+void dig_free_plus_isles (struct Plus_head *);
+void dig_free_plus (struct Plus_head *);
 int dig_load_plus (struct Plus_head *, GVFILE *);
 int dig_map_to_head (struct Map_info *, struct Plus_head *);
 int dig_head_to_map (struct Plus_head *, struct Map_info *);
@@ -148,6 +151,10 @@ int dig_select_isles ( struct Plus_head *, BOUND_BOX *, struct ilist *);
 int dig_find_node ( struct Plus_head *, double, double, double);
 
 int dig_spidx_init (struct Plus_head *);
+void dig_spidx_free_nodes (struct Plus_head *);
+void dig_spidx_free_lines (struct Plus_head *);
+void dig_spidx_free_areas (struct Plus_head *);
+void dig_spidx_free_isles (struct Plus_head *);
 void dig_spidx_free (struct Plus_head *);
 int dig_write_spidx (GVFILE *, struct Plus_head *);
 int dig_dump_spidx (FILE *, struct Plus_head *);

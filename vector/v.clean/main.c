@@ -32,8 +32,10 @@ main (int argc, char *argv[])
 	char   *mapset;
 	struct GModule *module;
 	struct Option *in_opt, *out_opt, *type_opt, *tool_opt, *thresh_opt, *err_opt;
+	struct Flag *no_build_flag;
 	int    *tools, ntools, atools;
 	double *threshs;
+	int    level;
 
 	G_gisinit(argv[0]);
 
@@ -54,7 +56,7 @@ main (int argc, char *argv[])
 	tool_opt->type =  TYPE_STRING;
 	tool_opt->required = YES;
 	tool_opt->multiple = YES;
-	tool_opt->options = "break,rmdupl,rmdangle,chdangle,rmbridge,chbridge,svtlx,rmdac,bpol";
+	tool_opt->options = "break,rmdupl,rmdangle,chdangle,rmbridge,chbridge,snap,rmdac,bpol";
         tool_opt->description = "Action to be done:\n"
 	                        "\t\tbreak - break lines at each intersection\n"
 			        "\t\trmdupl - remove duplicate lines (pay attention to categories!)\n"
@@ -64,7 +66,7 @@ main (int argc, char *argv[])
 			        "\t\trmbridge - remove bridges connecting area and island or 2 islands\n"
 			        "\t\tchbridge - change the type of remove bridges connecting area and island "
 			        "or 2 islands from boundary to line\n"
-			        "\t\tsvtlx - snap vertex to a line and create new vertex at that line\n"
+			        "\t\tsnap - snap lines to vertex in threshold\n"
 			        "\t\trmdac - remove duplicate area centroids ('type' option ignored)\n"
 			        "\t\tbpol - break (topologicaly clean) polygons (imported from "
 				"non topological format (like shapefile). Boundaries are broken on each "
@@ -77,6 +79,10 @@ main (int argc, char *argv[])
 	thresh_opt ->required = NO;
 	thresh_opt ->multiple = YES;
         thresh_opt ->description = "Threshold in map units for each tool (default: 0.0).";
+
+        no_build_flag = G_define_flag ();
+        no_build_flag->key             = 'b';
+        no_build_flag->description     = "Do not rebuild and store the topology at the end.";
 
         if (G_parser (argc, argv))
 	    exit(-1); 
@@ -107,8 +113,8 @@ main (int argc, char *argv[])
 		tools[ntools] = TOOL_RMBRIDGE;
 	    else if ( strcmp ( tool_opt->answers[i], "chbridge" ) == 0 )
 		tools[ntools] = TOOL_CHBRIDGE;
-	    else if ( strcmp ( tool_opt->answers[i], "svtlx" ) == 0 )
-		tools[ntools] = TOOL_SVTLX;
+	    else if ( strcmp ( tool_opt->answers[i], "snap" ) == 0 )
+		tools[ntools] = TOOL_SNAP;
 	    else if ( strcmp ( tool_opt->answers[i], "rmdac" ) == 0 )
 		tools[ntools] = TOOL_RMDAC;
 	    else if ( strcmp ( tool_opt->answers[i], "bpol" ) == 0 )
@@ -129,7 +135,7 @@ main (int argc, char *argv[])
 	    threshs[i] = atof ( thresh_opt->answers[i] ) ;
 	    G_debug ( 1, "thresh : %s -> %f ", tool_opt->answers[i], threshs[i] );
 	    
-	    if (  tools[i] != TOOL_SVTLX && tools[i] != TOOL_RMDANGLE && tools[i] != TOOL_CHDANGLE ) {
+	    if (  tools[i] != TOOL_SNAP && tools[i] != TOOL_RMDANGLE && tools[i] != TOOL_CHDANGLE ) {
 		G_warning ("Threshold for tool %d may not be > 0, set to 0", i + 1);
 		threshs[i] = 0.0;
 	    }
@@ -137,57 +143,58 @@ main (int argc, char *argv[])
 	}
 
         /* Print tool table */
-	fprintf (stdout,             "+---------------------------------+---------------+\n" );
-	fprintf (stdout,             "| Tool                            | Threshold     |\n" );
-	fprintf (stdout,             "+---------------------------------+---------------+\n" );
+	fprintf (stderr,             "+---------------------------------+---------------+\n" );
+	fprintf (stderr,             "| Tool                            | Threshold     |\n" );
+	fprintf (stderr,             "+---------------------------------+---------------+\n" );
 	for ( i = 0; i < ntools; i++ ) {
 	    switch ( tools[i] ) {
 		case ( TOOL_BREAK ) :
-	            fprintf (stdout, "| Break                            |" );	    
+	            fprintf (stderr, "| Break                            |" );	    
 		    break;
 		case ( TOOL_RMDUPL ) :
-	            fprintf (stdout, "| Remove duplicates                |" );	    
+	            fprintf (stderr, "| Remove duplicates                |" );	    
 		    break;
 		case ( TOOL_RMDANGLE ) :
-	            fprintf (stdout, "| Remove dangles                   |" );	    
+	            fprintf (stderr, "| Remove dangles                   |" );	    
 		    break;
 		case ( TOOL_CHDANGLE ) :
-	            fprintf (stdout, "| Change type of boundary dangles  |" );	    
+	            fprintf (stderr, "| Change type of boundary dangles  |" );	    
 		    break;
 		case ( TOOL_RMBRIDGE ) :
-	            fprintf (stdout, "| Remove bridges                   |" );	    
+	            fprintf (stderr, "| Remove bridges                   |" );	    
 		    break;
 		case ( TOOL_CHBRIDGE ) :
-	            fprintf (stdout, "| Change type of boundary bridges  |" );	    
+	            fprintf (stderr, "| Change type of boundary bridges  |" );	    
 		    break;
-		case ( TOOL_SVTLX ) :
-	            fprintf (stdout, "| Snap vertices                    |" );	    
+		case ( TOOL_SNAP ) :
+	            fprintf (stderr, "| Snap vertices                    |" );	    
 		    break;
 		case ( TOOL_RMDAC ) :
-	            fprintf (stdout, "| Remove duplicate area centroids  |" );	    
+	            fprintf (stderr, "| Remove duplicate area centroids  |" );	    
 		    break;
 		case ( TOOL_BPOL ) :
-	            fprintf (stdout, "| Break polygons                   |" );	    
+	            fprintf (stderr, "| Break polygons                   |" );	    
 		    break;
 	    }
-	    fprintf (stdout, " %e |\n", threshs[i] );	    
+	    fprintf (stderr, " %e |\n", threshs[i] );	    
 	}
-	fprintf (stdout,             "+---------------------------------+---------------+\n" );
+	fprintf (stderr,             "+---------------------------------+---------------+\n" );
 		    
 	/* open input vector */
         if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
 	     G_fatal_error ("Could not find input map <%s>\n", in_opt->answer);
 	}
 
-        /* Input vector may be both on level 1 and 2. Level 2 is required for 
-	 * virtual centroids (shapefile/OGR) and level 1 if input is too big 
-	 * and build would take a long time */
-	Vect_open_old (&In, in_opt->answer, mapset); 
+        /* Input vector may be both on level 1 and 2. Level 2 is necessary for 
+	 * virtual centroids (shapefile/OGR) and level 1 is better if input is too big 
+	 * and build in previous module (like v.in.ogr or other call to v.clean) would take 
+	 * a long time */
+	level = Vect_open_old (&In, in_opt->answer, mapset); 
 
 	with_z = Vect_is_3d (&In);
     
 	Vect_set_fatal_error (GV_FATAL_PRINT);
-	if (0 > Vect_open_new (&Out, out_opt->answer, with_z)) {
+	if ( 0 > Vect_open_new (&Out, out_opt->answer, with_z)) {
 	     Vect_close (&In);
 	     exit (1);
 	}
@@ -205,22 +212,38 @@ main (int argc, char *argv[])
 	}
 
 	/* Copy input to output */
+	fprintf (stderr, "Copying vector lines ...\n" );
 	Vect_copy_head_data (&In, &Out);
 	Vect_hist_copy (&In, &Out);
 	Vect_hist_command ( &Out );
+
+	/* This works for both level 1 and 2 */
 	Vect_copy_map_lines ( &In, &Out );
 	Vect_copy_tables ( &In, &Out, 0 );
 
 	Vect_close (&In);
 
-	fprintf (stdout, "Building topology for copy of input vector ...\n" );	    
-	Vect_build ( &Out, stdout );
-	Vect_close (&Out);
-
-	Vect_open_update (&Out, out_opt->answer, G_mapset()); 
-	
-	fprintf (stdout,         "--------------------------------------------------\n" );
+	/* Start with GV_BUILD_NONE and for each tool use unly the necessary level! */
+	fprintf (stderr,         "--------------------------------------------------\n" );
 	for ( i = 0; i < ntools ; i++ ) { 
+	    if (  tools[i] == TOOL_RMDAC ) {
+	        if ( Vect_get_built ( &Out ) >= GV_BUILD_CENTROIDS ) {
+		    Vect_build_partial ( &Out, GV_BUILD_CENTROIDS, NULL );
+		} else {
+	            fprintf (stderr,         "Rebuilding parts of topology ...\n" );
+		    Vect_build_partial ( &Out, GV_BUILD_CENTROIDS, stderr );
+	            fprintf (stderr,         "--------------------------------------------------\n" );
+		}
+	    } else {
+	        if ( Vect_get_built ( &Out ) >= GV_BUILD_BASE )	{
+		    Vect_build_partial ( &Out, GV_BUILD_BASE, NULL );
+		} else {
+	            fprintf (stderr,         "Rebuilding parts of topology ...\n" );
+		    Vect_build_partial ( &Out, GV_BUILD_BASE, stderr );
+	            fprintf (stderr,         "--------------------------------------------------\n" );
+		}
+	    }
+
 	    switch ( tools[i] ) {
 		case TOOL_BREAK:
 		    fprintf (stderr, "Tool: Break lines at intersections\n" );
@@ -257,10 +280,10 @@ main (int argc, char *argv[])
 		    fflush ( stderr );
                     rmdac ( &Out );
 		    break;
-		case TOOL_SVTLX:
-		    fprintf (stderr, "Tool: Snap vertex to a line and create new vertex at that line\n" );
+		case TOOL_SNAP:
+		    fprintf (stderr, "Tool: Snap line to vertex in threshold\n" );
 		    fflush ( stderr );
-                    Vect_snap_vertices ( &Out, otype, threshs[i], pErr, stderr );
+                    Vect_snap_lines ( &Out, otype, threshs[i], pErr, stderr );
 		    break;
 		case TOOL_BPOL:
 		    fprintf (stderr, "Tool: Break polygons\n" );
@@ -268,17 +291,22 @@ main (int argc, char *argv[])
                     Vect_break_polygons ( &Out, otype, pErr, stderr );
 		    break;
 	    }
-	    fprintf (stdout,         "--------------------------------------------------\n" );
+	    fprintf (stderr,         "--------------------------------------------------\n" );
 	}
 
-	fprintf (stdout, "Building topology for output vector ...\n" );	    
-	Vect_build (&Out, stdout);
+	if ( !no_build_flag->answer ) {
+	    fprintf (stderr, "Rebuilding topology for output vector ...\n" );	    
+	    Vect_build_partial (&Out, GV_BUILD_NONE, NULL);
+	    Vect_build (&Out, stderr);
+	} else { 
+	    Vect_build_partial ( &Out, GV_BUILD_NONE, NULL ); /* -> topo not saved */
+	}
 	Vect_close (&Out);
 
 	if ( pErr ) {
-	    fprintf (stdout,         "--------------------------------------------------\n" );
-	    fprintf (stdout, "Building topology for error vector ...\n" );
-	    Vect_build (pErr, stdout);
+	    fprintf (stderr,         "--------------------------------------------------\n" );
+	    fprintf (stderr, "Building topology for error vector ...\n" );
+	    Vect_build (pErr, stderr);
 	    Vect_close (pErr);
 	}
 

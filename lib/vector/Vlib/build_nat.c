@@ -114,14 +114,14 @@ Vect_build_line_area ( struct Map_info *Map, int iline, int side )
 int
 Vect_isle_find_area ( struct Map_info *Map, int isle ) 
 {
-    int    j, k, line, node, sel_area, first, area, part, bline;
+    int    j, line, node, sel_area, first, area, poly;
     static int first_call = 1;
     struct Plus_head *plus ;
-    P_LINE *Line, *BLine;
+    P_LINE *Line;
     P_NODE *Node;
     P_ISLE *Isle;
     P_AREA *Area;
-    double  dist, cur_dist;
+    double  size, cur_size;
     BOUND_BOX box, abox;
     static struct ilist *List;
     static struct line_pnts *APoints;
@@ -154,18 +154,22 @@ Vect_isle_find_area ( struct Map_info *Map, int isle )
     box.E = Node->x; box.W = Node->x; box.N = Node->y; box.S = Node->y;
     box.T = PORT_DOUBLE_MAX; box.B = -PORT_DOUBLE_MAX;
     Vect_select_areas_by_box (Map, &box, List);
-    G_debug ( 3, "%d areas overlap island box", List->n_values );
-    sel_area = 0;
+    G_debug ( 3, "%d areas overlap island boundary point", List->n_values );
+   
+    sel_area = 0; cur_size = -1;
     first = 1;
+    Vect_get_isle_box ( Map, isle, &box);
     for (j = 0; j < List->n_values; j++) {
 	area = List->value[j];
 	G_debug ( 3, "area = %d", area );
 
 	Area = plus->Area[area];
 	
-        /* Check for areas imported from nontopo formats (one boundary forms both area and isle) */
-	if ( Isle->n_lines == 1 && Area->n_lines == 1 && abs(Isle->lines[0]) == abs(Area->lines[0]) )
-	   continue; 
+        /* Before other tests, simply exclude those areas inside isolated isles formed by one boundary */
+	if ( abs(Isle->lines[0]) == abs(Area->lines[0]) ) {
+	    G_debug ( 3, "  area inside isolated isle" );
+	    continue;
+	}
 	
 	/* Check box */
 	/* Note: If build is run on large files of areas imported from nontopo format (shapefile)
@@ -173,39 +177,40 @@ Vect_isle_find_area ( struct Map_info *Map, int isle )
 	 * box all overlaping areas selects all areas with box overlaping first node. 
 	 * Then reading coordinates for all those areas would take a long time -> check first 
 	 * if isle's box is completely within area box */
-	Vect_get_isle_box ( Map, isle, &box);
 	Vect_get_area_box ( Map, area, &abox);
-	if ( box.E > abox.E || box.W < abox.W || box.N > abox.N || box.S < abox.S ) continue;
+	if ( box.E > abox.E || box.W < abox.W || box.N > abox.N || box.S < abox.S ) {
+	    G_debug ( 3, "  isle not completely inside area box" );
+	    continue;
+	}
 	
-	/* This (reading area points, takes most of time in this function ! */
-	Vect_get_area_points (Map, area, APoints);
+	poly = Vect_point_in_area_outer_ring ( Node->x, Node->y, Map, area);
+	G_debug ( 3, "  poly = %d", poly );
+	
+	if ( poly == 1) { /* pint in area, but node is not part of area inside isle (would be poly == 2) */
+	    /* In rare case island is inside more areas in that case we have to calculate area
+	     * of outer ring and take the smaller */
+	    if ( sel_area == 0 ) { /* first */
+		sel_area = area;
+	    } else { /* is not first */
+		if ( cur_size < 0 ) { /* second area */
+		    /* This is slow, but should not be called often */
+		    Vect_get_area_points (Map, sel_area, APoints);
+		    G_begin_polygon_area_calculations();
+		    cur_size = G_area_of_polygon(APoints->x, APoints->y, APoints->n_points);
+	            G_debug ( 3, "  first area size = %f (n points = %d)", cur_size, APoints->n_points );
 
-	cur_dist = dig_point_in_poly ( Node->x, Node->y, APoints);
-	G_debug ( 3, "current dist = %f", cur_dist );
-	
-	if (cur_dist > 0) { /* point in area but area may be part of isle */
-	    part = 0;
-	    for ( k = 0; k < Node->n_lines; k++ ) {
-		bline = abs ( Node->lines[k] );
-		BLine = plus->Line[bline];
-		if ( BLine->left == area || BLine->right == area ) {
-		    /* -> this area is part of isle */
-		    part = 1;
-		    break;
-		}
-	    }
-	    if ( !part ) { /* node in area which is not part of isle */
-		if ( first ) {
+		} 
+
+		Vect_get_area_points (Map, area, APoints);
+		size = G_area_of_polygon(APoints->x, APoints->y, APoints->n_points);
+	        G_debug ( 3, "  area size = %f (n points = %d)", cur_size, APoints->n_points );
+
+		if ( size < cur_size ) {
 		    sel_area = area;
-		    dist = cur_dist;
-		    first = 0;
-		} else {
-		    if ( cur_dist < dist ) {
-			sel_area = area;
-			dist = cur_dist;
-		    }
+		    cur_size = size;
 		}
 	    }
+	    G_debug ( 3, "sel_area = %d cur_size = %f", sel_area, cur_size );
 	}
     }
     if ( sel_area > 0 ) {	
@@ -345,196 +350,206 @@ Vect_attach_centroids ( struct Map_info *Map, BOUND_BOX *box )
  \param Map_info structure, msgout - message output (stdout/stderr for example) or NULL
 */
 int
-Vect_build_nat ( struct Map_info *Map, FILE *msgout )
+Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
 {
     struct Plus_head *plus ;
-    int    i, j, s, type, lineid, offset, ret, aisles, nisles, isle;
-    int    side, line, area, found;
+    int    i, j, s, type, lineid, offset; 
+    int    side, line, area;
     int     progress, last_progress;
-    struct line_pnts *Points, *APoints, **IPoints;
+    struct line_pnts *Points, *APoints;
     struct line_cats *Cats;
     P_LINE *Line;
     P_NODE *Node;
     P_AREA *Area;
     BOUND_BOX box;
     struct ilist *List;
-    double poly;
 
-    G_debug (1, "Vect_build_nat()");
+    G_debug (1, "Vect_build_nat() build = %d", build);
     
     plus = &(Map->plus);
     Msgout = msgout;
+    
+    if ( build == plus->built ) return 1; /* Do nothing */
+    
+    /* Check if upgrade or downgrade */
+    if ( build < plus->built ) { /* lower level request */
+
+	/* release old sources (this also initializes structures and numbers of elements) */
+	if ( plus->built >= GV_BUILD_CENTROIDS && build < GV_BUILD_CENTROIDS) {
+	    /* reset info about areas stored for centroids */
+	    int nlines = Vect_get_num_lines (Map);
+	    for ( line = 1; line <= nlines; line++ ) {
+		Line = plus->Line[line];
+		if ( Line && Line->type == GV_CENTROID ) 
+		    Line->left = 0;
+	    }
+	    dig_free_plus_areas (plus);
+	    dig_free_plus_isles (plus);
+	}
+
+
+	if ( plus->built >= GV_BUILD_AREAS && build < GV_BUILD_AREAS) {
+	    /* reset info about areas stored for lines */
+	    int nlines = Vect_get_num_lines (Map);
+	    for ( line = 1; line <= nlines; line++ ) {
+		Line = plus->Line[line];
+		if ( Line && Line->type == GV_BOUNDARY ) {
+		    Line->left = 0;
+		    Line->right = 0;
+		}
+	    }
+	    dig_free_plus_areas (plus);
+	    dig_free_plus_isles (plus);
+	}
+	if ( plus->built >= GV_BUILD_BASE && build < GV_BUILD_BASE) {
+	    dig_free_plus_nodes (plus);
+	    dig_free_plus_lines (plus);
+	}
+	
+	plus->built = build;
+	return 1;
+    }
     
     Points = Vect_new_line_struct ();
     APoints = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
     List = Vect_new_list ();
 
-    /* 
-    *  We shall go through all primitives in coor file and 
-    *  add new node for each end point to nodes structure
-    *  if the node with the same coordinates doesn't exist yet.
-    */
-   
-    /* register lines, create nodes */ 
-    Vect_rewind ( Map );
-    prnmsg ("Registering lines: ");
-    i = 1; j = 1;
-    while ( 1 ) {
-	/* register line */
-        type = Vect_read_next_line (Map, Points, Cats);
-	/* Note: check for dead lines is not needed, because they are skipped by V1_read_next_line_nat() */
-	if ( type == -1 ) { 
-	    fprintf (stderr, "\nERROR: vector file - can't read\n" );
-	    return 0;
-        } else if ( type == -2 ) {
-	    break;
+    if ( plus->built < GV_BUILD_BASE ) { 
+	/* 
+	*  We shall go through all primitives in coor file and 
+	*  add new node for each end point to nodes structure
+	*  if the node with the same coordinates doesn't exist yet.
+	*/
+       
+	/* register lines, create nodes */ 
+	Vect_rewind ( Map );
+	prnmsg ("Registering lines: ");
+	i = 1; j = 1;
+	while ( 1 ) {
+	    /* register line */
+	    type = Vect_read_next_line (Map, Points, Cats);
+	    /* Note: check for dead lines is not needed, because they are skipped by V1_read_next_line_nat() */
+	    if ( type == -1 ) { 
+		fprintf (stderr, "\nERROR: vector file - can't read\n" );
+		return 0;
+	    } else if ( type == -2 ) {
+		break;
+	    }
+	    offset = Vect_last_line_offset (Map);
+	    G_debug ( 3, "Register line: offset = %d", offset );
+	    lineid = dig_add_line ( plus, type, Points, offset );
+	    dig_line_box ( Points, &box );
+	    if ( lineid == 1 ) 
+		Vect_box_copy (&(plus->box), &box);
+	    else
+		Vect_box_extend (&(plus->box), &box);
+	    
+	    /* print progress */
+	    if ( i == 1000 ) {
+		prnmsg ("%7d\b\b\b\b\b\b\b", j);
+		i = 0;
+	    }
+	    i++; j++;
 	}
-	offset = Vect_last_line_offset (Map);
-	G_debug ( 3, "Register line: offset = %d", offset );
-	lineid = dig_add_line ( plus, type, Points, offset );
-	dig_line_box ( Points, &box );
-	if ( lineid == 1 ) 
-	    Vect_box_copy (&(plus->box), &box);
-        else
-	    Vect_box_extend (&(plus->box), &box);
-	
-	/* print progress */
-	if ( i == 10 ) {
-            prnmsg ("%7d\b\b\b\b\b\b\b", j);
-	    i = 0;
-	}
-	i++; j++;
+	prnmsg ("\r%d primitives registered      \n", plus->n_lines);
+
+	plus->built = GV_BUILD_BASE;
     }
-    prnmsg ("       \n%d primitives registered\n", plus->n_lines);
 
-    /* Build areas */
-    /* Go through all bundaries and try to build area for both sides */
-    prnmsg ("Building areas: ");
-    last_progress = -1; 
-    for (i = 1; i <= plus->n_lines; i++) {
-	/* print progress */
-        progress = ( int ) 100 *  i / plus->n_lines;
-	if ( progress > last_progress ) {
-            prnmsg ("%4d%%\b\b\b\b\b", progress);
-	    last_progress = progress;
+    if ( build < GV_BUILD_AREAS ) return 1;
+
+    if ( plus->built < GV_BUILD_AREAS ) {
+	/* Build areas */
+	/* Go through all bundaries and try to build area for both sides */
+	prnmsg ("Building areas: ");
+	last_progress = -1; 
+	for (i = 1; i <= plus->n_lines; i++) {
+	    /* print progress */
+	    progress = ( int ) 100 *  i / plus->n_lines;
+	    if ( progress > last_progress + 2 ) {
+		prnmsg ("%4d%%\b\b\b\b\b", progress);
+		last_progress = progress;
+	    }
+
+	    /* build */
+	    if ( plus->Line[i] == NULL ) { continue; } /* dead line */
+	    Line = plus->Line[i];
+	    if ( Line->type != GV_BOUNDARY ) { continue; }
+
+	    for (s = 0; s < 2; s++) {
+		if ( s == 0 ) side = GV_LEFT;
+		else side = GV_RIGHT;
+	       
+		G_debug ( 3, "Build area for line = %d, side = %d", i, side );
+		Vect_build_line_area ( Map, i, side );
+	    }
 	}
-
-	/* build */
-	if ( plus->Line[i] == NULL ) { continue; } /* dead line */
-	Line = plus->Line[i];
-	if ( Line->type != GV_BOUNDARY ) { continue; }
-
-        for (s = 0; s < 2; s++) {
-            if ( s == 0 ) side = GV_LEFT;
-	    else side = GV_RIGHT;
-	   
-	    G_debug ( 3, "Build area for line = %d, side = %d", i, side );
-            Vect_build_line_area ( Map, i, side );
-	}
+	prnmsg ("\r%d areas built      \n%d isles built\n", plus->n_areas, plus->n_isles );
+	plus->built = GV_BUILD_AREAS;
     }
-    prnmsg ("\n%d areas built\n%d isles built\n", plus->n_areas, plus->n_isles );
+    
+    if ( build < GV_BUILD_ATTACH_ISLES ) return 1;
     
     /* Attach isles to areas */
-    prnmsg ("Attaching islands: ");
-    last_progress = -1; 
-    for (i = 1; i <= plus->n_isles; i++) {
-    Vect_attach_isle ( Map, i ) ;
+    if ( plus->built < GV_BUILD_ATTACH_ISLES ) {
+	prnmsg ("Attaching islands: ");
+	last_progress = -1; 
+	for (i = 1; i <= plus->n_isles; i++) {
+	    Vect_attach_isle ( Map, i ) ;
 
-	/* print progress */
-        progress = ( int ) 100 *  i / plus->n_isles;  
-	if ( progress > last_progress ) {
-            prnmsg ("%4d%%\b\b\b\b\b", progress);
-	    last_progress = progress;
+	    /* print progress */
+	    progress = ( int ) 100 *  i / plus->n_isles;  
+	    if ( progress > last_progress + 2 ) {
+		prnmsg ("%4d%%\b\b\b\b\b", progress);
+		last_progress = progress;
+	    }
 	}
+	prnmsg ("\r                                  \r" );
+	plus->built = GV_BUILD_ATTACH_ISLES;
     }
     
+    if ( build < GV_BUILD_CENTROIDS ) return 1;
+
     /* Attach centroids to areas */
-    prnmsg ("\nAttaching centroids: ");
-    last_progress = -1; 
-    IPoints = NULL; aisles = 0;
-    for (area = 1; area <= plus->n_areas; area++) {
-	/* print progress */
-        progress = ( int ) 100 *  area / plus->n_areas;  
-	if ( progress > last_progress ) {
-            prnmsg ("%4d%%\b\b\b\b\b", progress);
-	    last_progress = progress;
-	}
+    if ( plus->built < GV_BUILD_CENTROIDS ) {
+	int nlines;
 	
-	/* attach */
-	Area = plus->Area[area];
-	Vect_get_area_box ( Map, area, &box );
-	box.T = PORT_DOUBLE_MAX;
-	box.B = -PORT_DOUBLE_MAX;
-	Vect_select_lines_by_box (Map, &box, GV_CENTROID, List);
-        G_debug ( 3, "%d centroids in area box", List->n_values );
-
-	if ( List->n_values == 0 ) continue;
-
-	/* Read Area/isles */
-	nisles = Area->n_isles;
-        if ( nisles > aisles ) {
-	    IPoints = (struct line_pnts **) G_realloc ( IPoints, nisles * sizeof(struct line_pnts *));
-	    for (i = aisles; i < nisles; i++ )
-		IPoints[i] = Vect_new_line_struct ();
-		
-	    aisles = nisles;
-	}
-	Vect_get_area_points (Map, area, APoints);
-        G_debug ( 3, "    Area->n_points = %d", APoints->n_points );
-	for (i = 0; i < nisles; i++) {
-	    isle = Area->isles[i];
-	    Vect_get_isle_points (Map, isle, IPoints[i]);
-	}
-
-	found = 0;
-        for (i = 0; i < List->n_values; i++) {
-	    line = List->value[i];
-	    
-	    Line = plus->Line[line];
-	    Node = plus->Node[Line->N1];
-	   
-	    /* First was used : */ 
-	      /* ret = Vect_point_in_area (Map, area, Node->x, Node->y); */
-	    /* but for more areas it reads area points for each centroid - slow =>
-	     * area and isles read once and check is done here */
-            
-	    poly = dig_point_in_poly ( Node->x, Node->y, APoints);
-	    if ( poly <=  0 ) continue; /* is not in area */
-
-	    ret = 1;
-	    for ( j = 0; j < nisles; j++ ) {
-		poly = dig_point_in_poly ( Node->x, Node->y, IPoints[j]);
-		if ( poly > 0 ) { /* in isle */
-		    ret = 0;
-		    break; 
-		}
+	prnmsg ("Attaching centroids: ");
+	last_progress = -1; 
+	
+	nlines = Vect_get_num_lines (Map);
+	for ( line = 1; line <= nlines; line++ ) {
+	    progress = ( int ) 100 *  line / nlines;  
+	    if ( progress > last_progress + 2 ) {
+		prnmsg ("%4d%%\b\b\b\b\b", progress);
+		last_progress = progress;
 	    }
-	    
-	    if ( ret ) {
-                G_debug ( 3, "Centroid (line=%d) in area %d", i, area );
-	        if ( found == 0  ) {
+
+	    Line = plus->Line[line];
+
+	    if ( Line->type != GV_CENTROID ) continue;
+
+	    Node = plus->Node[Line->N1];
+
+	    area = Vect_find_area ( Map, Node->x, Node->y );
+
+	    if ( area > 0 ) {
+		G_debug ( 3, "Centroid (line=%d) in area %d", line, area );
+
+		Area =  plus->Area[area];
+
+		if ( Area->centroid == 0 ) { /* first */
 		    Area->centroid = line;
 		    Line->left = area;
-		}
-		found++;
-		if ( found == 2 ) 
-                    prnmsg ("\n");
-		
-		if ( found > 1 ) { 
+		} else { /* duplicate */
 		    Line->left = -area;
- 		    G_warning ( "%d. centroid found in area %d", found, area );
 		}
 	    }
 	}
-	if ( found > 1 ) 
-	    prnmsg ("Attaching centroids: ");
+	prnmsg ("\r                                      \r");
+	plus->built = GV_BUILD_CENTROIDS;
     }
-    prnmsg ("\n");
-    
-    /* Free isles */
-    for (i = 0; i < aisles; i++ ) Vect_destroy_line_struct ( IPoints[i] );
-    G_free ( IPoints );
 
     return 1;
 }

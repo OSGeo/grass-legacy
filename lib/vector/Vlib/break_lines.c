@@ -23,7 +23,9 @@
  \brief Break lines in vector map.
 
  Breaks lines specified by type in vector map. Points at intersections may be optionaly 
- written to error map. Input map must be opened on level 2 for update
+ written to error map. Input map must be opened on level 2 for update at least on GV_BUILD_BASE.
+
+ The function also breaks lines forming collapsed loop, for example 0,0;1,0;0,0 is broken at 1,0.
 
  \param Map input map where lines will be broken
  \param type type of line to be broken
@@ -37,12 +39,18 @@ Vect_break_lines ( struct Map_info *Map, int type, struct Map_info *Err, FILE *m
     struct line_pnts *APoints, *BPoints, *Points;
     struct line_pnts **AXLines, **BXLines;
     struct line_cats *ACats, *BCats, *Cats;
-    int    i, j, k, l, ret, atype, btype, bline, found;
+    int    j, k, l, ret, atype, btype, aline, bline, found;
     int    nlines, naxlines, nbxlines, nx;
     double *xx, *yx, *zx;
-    BOUND_BOX  ABox; 
+    BOUND_BOX  ABox, BBox; 
     struct ilist *List; 
     int nbreaks;
+    int touch1_n, touch1_s, touch1_e, touch1_w; /* other vertices except node1 touching box */ 
+    int touch2_n, touch2_s, touch2_e, touch2_w; /* other vertices except node2 touching box */ 
+    int is3d;
+    int node, anode1, anode2, bnode1, bnode2;
+    double nodex, nodey;
+    int printed;
 
     APoints = Vect_new_line_struct ();
     BPoints = Vect_new_line_struct ();
@@ -53,32 +61,121 @@ Vect_break_lines ( struct Map_info *Map, int type, struct Map_info *Err, FILE *m
     List = Vect_new_list ();
     
     nlines = Vect_get_num_lines (Map);
+    is3d = Vect_is_3d ( Map );
 
     G_debug (3, "nlines =  %d", nlines );
+    /* To find intersection of two lines (Vect_line_intersection) is quite slow.
+     * Fortunately usual lines/boundaries in GIS often forms a network where lines
+     * are connected by end points, and touch by MBR. This function checks and occasionaly
+     * skips such cases. This is currently done for 2D only */
+    
     /* Go through all lines in vector, for each select lines which overlap MBR of
-    *  this line and try to intersect, if lines intersect write new lines at the end of 
+    *  this line exclude those connected by one endpoint (see above)
+    *  and try to intersect, if lines intersect write new lines at the end of 
     *  the file, and process next line (remainining lines overlaping box are skipped) */
     nbreaks = 0;
+    printed = 0;
     if (msgout) fprintf (msgout, "Intersections: %5d", nbreaks ); 
-    for ( i = 1; i <= nlines; i++ ){ 
-	G_debug (4, "i =  %d", i);
-	if ( !Vect_line_alive ( Map, i ) ) continue;
+    for ( aline = 1; aline <= nlines; aline++ ){ 
+	G_debug (3, "aline =  %d", aline);
+	if ( !Vect_line_alive ( Map, aline ) ) continue;
 
-	atype = Vect_read_line (Map, APoints, ACats, i);
+	atype = Vect_read_line (Map, APoints, ACats, aline);
 	if ( !(atype & type) ) continue;
 
-	Vect_line_box ( APoints, &ABox ); 
+	Vect_get_line_box ( Map, aline, &ABox );
+
+	/* Find which sides of the box are touched by intermediate (non-end) points of line */
+	if ( !is3d ) {
+	    touch1_n = touch1_s = touch1_e = touch1_w = 0;
+	    for ( j = 1; j < APoints->n_points; j++ ){
+		if ( APoints->y[j] == ABox.N ) touch1_n = 1;
+		if ( APoints->y[j] == ABox.S ) touch1_s = 1;
+		if ( APoints->x[j] == ABox.E ) touch1_e = 1;  
+		if ( APoints->x[j] == ABox.W ) touch1_w = 1;  
+	    }
+	    G_debug(3, "touch1: n = %d s = %d e = %d w = %d", touch1_n, touch1_s, touch1_e, touch1_w );
+	    touch2_n = touch2_s = touch2_e = touch2_w = 0;
+	    for ( j = 0; j < APoints->n_points-1; j++ ){
+		if ( APoints->y[j] == ABox.N ) touch2_n = 1;
+		if ( APoints->y[j] == ABox.S ) touch2_s = 1;
+		if ( APoints->x[j] == ABox.E ) touch2_e = 1;  
+		if ( APoints->x[j] == ABox.W ) touch2_w = 1;  
+	    }
+	    G_debug(3, "touch2: n = %d s = %d e = %d w = %d", touch2_n, touch2_s, touch2_e, touch2_w );
+	}
+	
 	Vect_select_lines_by_box ( Map, &ABox, type, List);
-	G_debug (4, "  %d lines selected by box", List->n_values);
+	G_debug (3, "  %d lines selected by box", List->n_values);
 	
 	for ( j = 0; j <  List->n_values; j++ ){ 
 	    bline = List->value[j];
-	    G_debug (5, "  j = %d bline = %d", j, bline);
+	    G_debug (3, "  j = %d bline = %d", j, bline);
     
+	    /* Check if thouch by end node only */
+	    if ( !is3d ) {
+		Vect_get_line_nodes ( Map, aline, &anode1, &anode2 );
+		Vect_get_line_nodes ( Map, bline, &bnode1, &bnode2 );
+	        Vect_get_line_box ( Map, bline, &BBox );
+
+		if ( anode1 == bnode1 || anode1 == bnode2 ) 
+		    node = anode1; 
+		else if ( anode2 == bnode1 || anode2 == bnode2 )
+		    node = anode2;
+ 	        else
+		    node = 0;
+		
+		if ( node ) {
+		    Vect_get_node_coor ( Map, node, &nodex, &nodey, NULL);
+		    if ( ( node == anode1 && nodey == ABox.N && !touch1_n && nodey == BBox.S  ) ||
+		         ( node == anode2 && nodey == ABox.N && !touch2_n && nodey == BBox.S  ) ||
+			 ( node == anode1 && nodey == ABox.S && !touch1_s && nodey == BBox.N ) ||
+			 ( node == anode2 && nodey == ABox.S && !touch2_s && nodey == BBox.N ) ||
+			 ( node == anode1 && nodex == ABox.E && !touch1_e && nodex == BBox.W ) ||
+			 ( node == anode2 && nodex == ABox.E && !touch2_e && nodex == BBox.W ) ||
+			 ( node == anode1 && nodex == ABox.W && !touch1_w && nodex == BBox.E ) ||
+			 ( node == anode2 && nodex == ABox.W && !touch2_w && nodex == BBox.E ) )
+		    {
+			G_debug(3, "lines %d and %d touching by end nodes only -> no intersection", aline, bline);
+			continue;
+		    }
+		}
+	    }
+		
 	    btype = Vect_read_line (Map, BPoints, BCats, bline);
     
 	    Vect_line_intersection(APoints, BPoints, &AXLines, &BXLines, &naxlines, &nbxlines, 0);
-	    G_debug(5, "  naxlines = %d nbxlines = %d",  naxlines, nbxlines);
+	    G_debug(3, "  naxlines = %d nbxlines = %d",  naxlines, nbxlines);
+
+	    /* This part handles a special case when aline == bline, no other intersection was found
+	     * and the line is forming collapsed loop, for example  0,0;1,0;0,0 should be broken at 1,0.
+	     * ---> */
+	    if ( aline == bline && naxlines == 0 && nbxlines == 0 && APoints->n_points >= 3  ) {
+		int centre;
+		int i;
+	        
+		G_debug(3, "  Check collapsed loop" );
+		if ( APoints->n_points % 2 ) { /* odd number of vertices */
+		    centre = APoints->n_points / 2; /* index of centre */
+		    if ( APoints->x[centre-1] == APoints->x[centre+1] &&
+			 APoints->y[centre-1] == APoints->y[centre+1] &&
+			 APoints->z[centre-1] == APoints->z[centre+1] ) /* -> break */
+		    {
+			AXLines = (struct line_pnts **) G_malloc ( 2 * sizeof(struct line_pnts *) );
+			AXLines[0] = Vect_new_line_struct ();
+			AXLines[1] = Vect_new_line_struct ();
+			
+			for ( i = 0; i <= centre; i++ ) 
+			    Vect_append_point ( AXLines[0], APoints->x[i], APoints->y[i], APoints->z[i]);
+
+			for ( i = centre; i < APoints->n_points; i++ ) 
+			    Vect_append_point ( AXLines[1], APoints->x[i], APoints->y[i], APoints->z[i]);
+
+			naxlines = 2;
+		    }
+		}
+	    }
+	    /* <--- */
 	    
 	    if ( Err ) { /* array for intersections (more than needed */
 		xx = (double *) G_malloc ( (naxlines + nbxlines) * sizeof ( double ) ); 
@@ -87,11 +184,15 @@ Vect_break_lines ( struct Map_info *Map, int type, struct Map_info *Err, FILE *m
 	    }
 	    nx = 0; /* number of intersections to be written to Err */
 	    if ( naxlines > 0 ) { /* intersection -> write out */
-		Vect_delete_line (Map, i); 
+		Vect_delete_line (Map, aline); 
 		for ( k = 0; k < naxlines; k++ ){ 
 		    /* Write new line segments */
-		    ret = Vect_write_line ( Map, atype, AXLines[k], ACats );  
-		    G_debug (5, "Line %d written", ret);
+		    /* line may collapse, don't write zero length lines */
+		    Vect_line_prune ( AXLines[k] );
+		    if ( (atype & GV_POINTS) || AXLines[k]->n_points > 1 ) {
+			ret = Vect_write_line ( Map, atype, AXLines[k], ACats );  
+			G_debug (3, "Line %d written, npoints = %d", ret, AXLines[k]->n_points);
+		    }
 		    
 		    /* Write intersection points */
 		    if ( Err ) {
@@ -109,12 +210,16 @@ Vect_break_lines ( struct Map_info *Map, int type, struct Map_info *Err, FILE *m
 	    }
 		
 	    if ( nbxlines > 0 ) { 
-		if ( i != bline ) { /* Self intersection, do not write twice, TODO: is it OK? */
+		if ( aline != bline ) { /* Self intersection, do not write twice, TODO: is it OK? */
 		    Vect_delete_line (Map, bline); 
 		    for ( k = 0; k < nbxlines; k++ ){ 
 		        /* Write new line segments */
-			ret = Vect_write_line ( Map, btype, BXLines[k], BCats );  
-			G_debug (5, "Line %d written", ret);
+			/* line may collapse, don't write zero length lines */
+			Vect_line_prune ( BXLines[k] );
+		        if ( (btype & GV_POINTS) || BXLines[k]->n_points > 1 ) {
+			    ret = Vect_write_line ( Map, btype, BXLines[k], BCats );  
+			    G_debug (5, "Line %d written", ret);
+			}
 			
 			/* Write intersection points */
 			if ( Err ) {
@@ -157,13 +262,18 @@ Vect_break_lines ( struct Map_info *Map, int type, struct Map_info *Err, FILE *m
 		G_free ( zx );
 	    }
 	    
-	    if (msgout) fprintf (msgout, "\rIntersections: %5d", nbreaks ); 
-	    if (msgout) fflush ( msgout );
+	    if (msgout && printed > 1000) {
+		fprintf (msgout, "\rIntersections: %5d (line %d)", nbreaks, aline ); 
+	        fflush ( msgout );
+		printed = 0;
+	    }
+	    printed++;
 	    if ( naxlines > 0 ) break; /* first line was broken and deleted -> take the next one */
 	}
 	nlines = Vect_get_num_lines (Map);
 	G_debug (3, "nlines =  %d\n", nlines );
     }
-    if (msgout) fprintf (msgout, "\n" ); 
+    if (msgout) fprintf (msgout, "\rIntersections: %5d                         \n", nbreaks ); 
+    Vect_destroy_list ( List );
 }
 

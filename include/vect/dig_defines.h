@@ -78,6 +78,14 @@
 #define LEVEL_2  2
 #define LEVEL_3  3
 
+/* Topology level details */
+#define GV_BUILD_NONE  0
+#define GV_BUILD_BASE  1
+#define GV_BUILD_AREAS  2  
+#define GV_BUILD_ATTACH_ISLES 3  /* Attach islands to areas */
+#define GV_BUILD_CENTROIDS 4 /* Assign centroids to areas */
+#define GV_BUILD_ALL GV_BUILD_CENTROIDS
+
 #define VECT_OPEN(Map)   (Map->open == VECT_OPEN_CODE)
 
 /* Memory mode */

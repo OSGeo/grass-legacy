@@ -79,13 +79,15 @@ Vect_copy_map_lines ( struct Map_info *In, struct Map_info *Out )
 }
 
 /*!
- \fn int Vect_copy ( char *in, char *mapset, char *out )
+ \fn int Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
  \brief copy a map including attribute tables
  \return -1 error, 0 success
- \param  input name, input mapset, output name
+ \param in input vector
+ \param out output vector
+ \param msgout output file for messages or NULL 
 */
 int 
-Vect_copy ( char *in, char *mapset, char *out )
+Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
 {
     int i, n, ret, type;
     struct Map_info In, Out;
@@ -138,7 +140,7 @@ Vect_copy ( char *in, char *mapset, char *out )
 	}
     }
     
-    Vect_build ( &Out, NULL );
+    Vect_build ( &Out, msgout );
     Vect_close ( &In );
     Vect_close ( &Out );
 

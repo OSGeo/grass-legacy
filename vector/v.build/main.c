@@ -22,11 +22,16 @@ int
 main (int argc, char *argv[])
 {
     struct GModule *module;
-    struct Option *map_opt, *opt;
+    struct Option *map_opt, *opt, *err_opt;
     struct Map_info Map;
     int    i, build = 0, dump = 0, sdump = 0;
     
     map_opt = G_define_standard_option(G_OPT_V_MAP);
+    
+    err_opt = G_define_standard_option(G_OPT_V_OUTPUT);
+    err_opt->key = "error";
+    err_opt->description  = "Name of vector where errors are written";
+    err_opt->required = NO;
     
     opt = G_define_option();
     opt->key = "option";
@@ -76,6 +81,42 @@ main (int argc, char *argv[])
 
         if (sdump)
 	    Vect_spatial_index_dump ( &(Map.plus), stdout );
+    }
+
+    if ( err_opt->answer ) {
+	int    nlines, line, type, area, left, right, err;
+        struct Map_info  Err;
+	struct line_pnts *Points;
+	struct line_cats *Cats;
+	
+	Points = Vect_new_line_struct ();
+        Cats = Vect_new_cats_struct ();
+
+        Vect_open_new (&Err, err_opt->answer, Vect_is_3d(&Map) );
+
+	nlines = Vect_get_num_lines (&Map);
+
+	for ( line = 1; line <= nlines; line++ ){
+	    err = 0;
+	    type = Vect_read_line (&Map, Points, Cats, line);
+
+	    
+	    if ( type == GV_BOUNDARY ) {
+		Vect_get_line_areas ( &Map, line, &left, &right );
+		if ( left == 0 || right == 0 )
+		    err = 1;
+	    } else if ( type == GV_CENTROID ) {
+		area = Vect_get_centroid_area ( &Map, line );
+		if ( area <= 0 )
+		    err = 1;
+	    }
+	    
+	    if (err)
+		Vect_write_line ( &Err, type, Points, Cats );
+	}
+
+	Vect_build ( &Err, stdout );
+        Vect_close ( &Err );
     }
 
     Vect_close (&Map);

@@ -23,7 +23,7 @@
 #include "Vect.h"
 #include "ogr_api.h"
 
-int geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat );
+int geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_area );
 
 int 
 main (int argc, char *argv[])
@@ -32,7 +32,8 @@ main (int argc, char *argv[])
     float  xmin=0., ymin=0., xmax=0., ymax=0.;
     int    ncols;
     struct GModule *module;
-    struct Option *dsn_opt, *out_opt, *layer_opt, *spat_opt;
+    double min_area, snap;
+    struct Option *dsn_opt, *out_opt, *layer_opt, *spat_opt, *min_area_opt, *snap_opt;
     struct Flag *list_flag, *no_clean_flag;
     char   buf[2000], namebuf[2000];
     char   *namebuf2, *namebuf3;
@@ -68,6 +69,8 @@ main (int argc, char *argv[])
     int layer_id;
 
     G_gisinit(argv[0]);
+
+    G_begin_polygon_area_calculations(); /* Used in geom() */
 
     OGRRegisterAll();
     /* Module options */
@@ -105,6 +108,21 @@ main (int argc, char *argv[])
     spat_opt->required = NO;
     spat_opt->description = "Import subregion only (xmin,ymin,xmax,ymax)";
 
+    min_area_opt = G_define_option();
+    min_area_opt->key = "min_area";
+    min_area_opt->type = TYPE_DOUBLE;
+    min_area_opt->required = NO;
+    min_area_opt->answer = "0.0001";
+    min_area_opt->description = "Minimum size of area to be imported (square units). Smaller areas and "
+	                        "islands are ignored. Should be greater than snap^2.";
+
+    snap_opt = G_define_option();
+    snap_opt->key = "snap";
+    snap_opt->type = TYPE_DOUBLE;
+    snap_opt->required = NO;
+    snap_opt->answer = "0.001";
+    snap_opt->description = "Snapping threshold for boundaries.";
+
     list_flag = G_define_flag ();
     list_flag->key             = 'l';
     list_flag->description     = "List available layers in data source.";
@@ -115,6 +133,9 @@ main (int argc, char *argv[])
     
     if (G_parser (argc, argv)) exit(-1); 
 
+    min_area = atof (min_area_opt->answer);
+    snap = atof (snap_opt->answer);
+    
     /* Open OGR DSN */
     Ogr_ds = OGROpen( dsn_opt->answer, FALSE, NULL );
     if( Ogr_ds == NULL ) G_fatal_error ("Cannot open data source");
@@ -324,7 +345,7 @@ main (int argc, char *argv[])
 	    if ( Ogr_geometry == NULL ) {
 		nogeom++;
 	    } else {
-		geom ( Ogr_geometry, &Map, layer+1, cat );
+		geom ( Ogr_geometry, &Map, layer+1, cat, min_area );
 	    }
 
 	    /* Attributes */
@@ -371,7 +392,7 @@ main (int argc, char *argv[])
 	db_shutdown_driver(driver);
 
 	if ( nogeom > 0 )
-	    G_warning ("%d feature without geometry.", nogeom);
+	    G_warning ("%d %s without geometry.", nogeom, nogeom == 1 ? "feature" : "features" );
     }
     
     OGR_DS_Destroy( Ogr_ds );
@@ -386,14 +407,29 @@ main (int argc, char *argv[])
 
         Vect_close ( &Map );
 	Vect_open_update (&Map, out_opt->answer, G_mapset());
+        Vect_build_partial ( &Map, GV_BUILD_BASE, stderr ); /* Downgrade topo */
+	
+        fprintf ( stderr, separator );
+	fprintf ( stderr, "Snap boundaries (threshold = %.3e):\n", snap );
+	Vect_snap_lines ( &Map, GV_BOUNDARY, snap, NULL, stderr ); 
 
+	/* It is not to clean to snap centroids, but I have seen data with 2 duplicate polygons
+	 * (as far as decimal places were printed) and centroids were not identical */
+	/* Disabled, because overlapping polygons result in many duplicate centroids anyway */
+	/*
+        fprintf ( stderr, separator );
+	fprintf ( stderr, "Snap centroids (threshold 0.000001):\n" );
+	Vect_snap_lines ( &Map, GV_CENTROID, 0.000001, NULL, stderr ); 
+	*/
+	
         fprintf ( stderr, separator );
 	fprintf ( stderr, "Break polygons:\n" );
 	Vect_break_polygons ( &Map, GV_BOUNDARY, NULL, stderr ); 
 	
+	/* It is important to remove also duplicate centroids in case of duplicate imput polygons */
         fprintf ( stderr, separator );
 	fprintf ( stderr, "Remove duplicates:\n" );
-	Vect_remove_duplicates ( &Map, GV_BOUNDARY, NULL, stderr ); 
+	Vect_remove_duplicates ( &Map, GV_BOUNDARY | GV_CENTROID, NULL, stderr ); 
 	
         fprintf ( stderr, separator );
 	fprintf ( stderr, "Break boundaries:\n" );
@@ -402,8 +438,17 @@ main (int argc, char *argv[])
         fprintf ( stderr, separator );
 	fprintf ( stderr, "Remove duplicates:\n" );
 	Vect_remove_duplicates ( &Map, GV_BOUNDARY, NULL, stderr ); 
+
+        fprintf ( stderr, separator );
+	fprintf ( stderr, "Remove dangles:\n" );
+	Vect_remove_dangles ( &Map, GV_BOUNDARY, -1, NULL, stderr ); 
+
+        fprintf ( stderr, separator );
+	fprintf ( stderr, "Remove bridges:\n" );
+	Vect_remove_bridges ( &Map, NULL, stderr ); 
 	
         fprintf ( stderr, separator );
+	Vect_build_partial (&Map, GV_BUILD_NONE, NULL);
         Vect_build ( &Map, stderr );
     }
 

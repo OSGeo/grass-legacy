@@ -31,10 +31,10 @@ extern int prnmsg ( char *msg, ...) ;
  \param Map_info structure, msgout - message output (stdout/stderr for example) or NULL
 */
 int
-Vect_build_shp ( struct Map_info *Map, FILE *msgout )
+Vect_build_shp ( struct Map_info *Map, int build, FILE *msgout )
 {
     struct Plus_head *plus ;
-    int    i, n, offset, ret;
+    int    i, n, offset, ret, poly;
     int    line, type;
     int    area, isle;
     plus_t lines[1];
@@ -45,7 +45,7 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout )
     P_LINE *Line;
     P_AREA *Area;
     P_ISLE *Isle;
-    double area_size, x, y, fret;
+    double area_size, x, y;
     int     progress;
     int     nShapes, nParts, shape, part;
     int     first, last;
@@ -175,9 +175,9 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout )
 		    /* find islands inside area */
 		    for ( i = 0; i < nParts; i++ ) {
 			if ( ptype[i] == 2 ) { /* not registerd island */
-			    fret = dig_point_in_poly ( Points[i]->x[0], Points[i]->y[0], Points[part]);
-			    G_debug ( 3, "isle in area ? = %f", fret );
-			    if ( fret > 0 ) { /* isle inside area */
+			    poly = Vect_point_in_poly ( Points[i]->x[0], Points[i]->y[0], Points[part]);
+			    G_debug ( 3, "isle in area ? = %d", poly );
+			    if ( poly >= 1 ) { /* isle inside area (includes point at area boundary) */
 				G_debug ( 3, "isle (part = %d) in area", i );
 				/* register island */ 
 				lines[0] = pline[i]; 
