@@ -7,9 +7,9 @@ MAKE                = make
 prefix              = @prefix@
 exec_prefix         = @exec_prefix@
 
-GISBASE             = @GISBASE@
+GISBASE             = @prefix@/grass@NAME_VER@
 UNIX_BIN            = @BINDIR@
-VERSION             = @VERSION@
+#VERSION             = @VERSION@
 NAME_VER            = @NAME_VER@
 
 DEFAULT_DATABASE    =
