@@ -36,7 +36,7 @@ Arc/Info suffixes recognised :
 *******************************************************************************/
 
 struct Item {
-    char fname[16];		/* name of item			   */
+    char fname[18];		/* name of item			   */
     int fpos;			/* position in data line	   */
     int fsize;			/* size for reading		   */
     int ftype;	         	/* type of data			   */
@@ -45,13 +45,13 @@ struct Item {
 };
 
 struct Info {
-    char tname[36];
+    char tname[34];
     char aifile[4];     /* XX if Arc/info file, spaces otherwise */
     int uitems;         /* number of usable items in this table  */
     int nitems;         /* number of items in this table         */
     int ldr;            /* length of data record                 */
-    int ndr;            /* number of data records                */
-    int length;         /* total lenght for one data line        */
+    long ndr;           /* number of data records                */
+    long length;        /* total lenght for one data line        */
     struct Item *item;  /* One per field...                      */
 };
 void igntbl(struct Info);
@@ -264,18 +264,21 @@ void getpataat( char *name, struct Info info, int ncatmin, int flag)
 
 int getinfo( char *name, int flag)
 {
-    char line[84], *p;
+    char line[84], tmp[12], *p;
     int cover_type = 0; /* 1 if AAT, 2 if PAT, 3 if both */
     struct Info info;	/* Info tables                   */
     int i;
 
     read_e00_line( line);
     do {
-	sscanf( line, "%32c%2c%4d%4d%4d%11ld", info.tname,
-		info.aifile, &info.uitems, &info.nitems, &info.ldr, &info.ndr);
+	strncpy( info.tname, line, 32); info.tname[32] = 0;
 	p = strchr( info.tname, ' ');
 	*p = 0;
-	info.aifile[2] = 0;
+	strncpy( info.aifile, line+32, 2); info.aifile[2] = 0;
+	strncpy( tmp, line+34, 4) ; tmp[4] = 0; info.uitems = atoi( tmp);
+	strncpy( tmp, line+38, 4) ; tmp[4] = 0; info.nitems = atoi( tmp);
+	strncpy( tmp, line+42, 4) ; tmp[4] = 0; info.ldr = atoi( tmp);
+	strncpy( tmp, line+46, 11) ; tmp[11] = 0; info.ndr = atol( tmp);
 	if (debug > 0)
 	    fprintf( fdlog, "%s %s %d %d %d\n", info.tname, info.aifile,
 		     info.nitems, info.ldr, info.ndr);
@@ -304,7 +307,8 @@ int getinfo( char *name, int flag)
 		info.item[i].fsize = (info.item[i].fsize == 4 ? 14:24);
 	    if (info.item[i].ftype == 50)
                 info.item[i].fsize = (info.item[i].fsize == 2 ? 6:11);
-	    info.length += info.item[i].fsize;
+	    if (i < info.uitems)
+		info.length += info.item[i].fsize;
 	    if (i == 0)
 		info.item[i].fpos = 0;
 	    else
