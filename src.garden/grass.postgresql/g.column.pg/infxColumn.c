@@ -4,6 +4,7 @@
 #include <libpq-fe.h>
 #include "glocale.h"
 
+/*
 #ifdef HAVE_POSTGRES_H
 #include <postgres.h>
 #else
@@ -13,10 +14,12 @@
 #error Neither <postgres.h> nor <postgres_fe.h> available
 #endif
 #endif
+*/
 
 #define LEN 20
 #define LINE 80
 #define HEADER "colname"
+#define VARHDRSZ 4
 
 int infxColumn(SQL_stmt)
   char *SQL_stmt;
