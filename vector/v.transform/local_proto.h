@@ -26,4 +26,4 @@ void trans_dig_cats (const char * /* from */,
                      const char * /* from_mapset */, 
                      const char * /* to */);
 /* trans_digit.c */
-int transform_digit_file(struct Map_info *, struct Map_info *);
+int transform_digit_file(struct Map_info *, struct Map_info *, float, float);
