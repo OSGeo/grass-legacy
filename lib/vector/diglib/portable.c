@@ -3,7 +3,7 @@
 #include "portable.h"
 #include "Vect.h"
 
-struct dig_head *Cur_Head;
+struct Port_info *Cur_Head;
 
 static char *buffer = NULL;
 static int buf_alloced = 0;
@@ -583,84 +583,87 @@ dig__fwrite_port_C (		/* CHAR */
   return fwrite (buf, PORT_CHAR, cnt, fp);
 }
 
+/* set portable info structure to byte order of file */
 void
-dig__init_head_portable ( struct dig_head *head )
+dig_init_portable ( struct Port_info *port, int byte_order )
 {
   int i;
   
-  if ( head->byte_order == DOUBLE_ORDER )
-      head->dbl_quick = TRUE;
+  port->byte_order = byte_order;
+  
+  if ( port->byte_order == DOUBLE_ORDER )
+      port->dbl_quick = TRUE;
   else
-      head->dbl_quick = FALSE;
+      port->dbl_quick = FALSE;
   
   for ( i = 0; i < PORT_DOUBLE; i++ )
     {
-      if ( head->byte_order == ENDIAN_BIG )
-        head->dbl_cnvrt[i] = dbl_cnvrt[i];
+      if ( port->byte_order == ENDIAN_BIG )
+        port->dbl_cnvrt[i] = dbl_cnvrt[i];
       else
-        head->dbl_cnvrt[i] = dbl_cnvrt[PORT_DOUBLE - i];
+        port->dbl_cnvrt[i] = dbl_cnvrt[PORT_DOUBLE - i];
     }
   
-  if ( head->byte_order == FLOAT_ORDER )
-      head->flt_quick = TRUE;
+  if ( port->byte_order == FLOAT_ORDER )
+      port->flt_quick = TRUE;
   else
-      head->flt_quick = FALSE;
+      port->flt_quick = FALSE;
   
   for ( i = 0; i < PORT_FLOAT; i++ )
     {
-      if ( head->byte_order == ENDIAN_BIG )
-        head->flt_cnvrt[i] = flt_cnvrt[i];
+      if ( port->byte_order == ENDIAN_BIG )
+        port->flt_cnvrt[i] = flt_cnvrt[i];
       else
-        head->flt_cnvrt[i] = flt_cnvrt[PORT_FLOAT - i];
+        port->flt_cnvrt[i] = flt_cnvrt[PORT_FLOAT - i];
     }
   
-  if ( head->byte_order == LONG_ORDER )
-      head->lng_quick = TRUE;
+  if ( port->byte_order == LONG_ORDER )
+      port->lng_quick = TRUE;
   else
-      head->lng_quick = FALSE;
+      port->lng_quick = FALSE;
   
   for ( i = 0; i < PORT_LONG; i++ )
     {
-      if ( head->byte_order == ENDIAN_BIG )
-        head->lng_cnvrt[i] = lng_cnvrt[i];
+      if ( port->byte_order == ENDIAN_BIG )
+        port->lng_cnvrt[i] = lng_cnvrt[i];
       else
-        head->lng_cnvrt[i] = lng_cnvrt[PORT_LONG - i];
+        port->lng_cnvrt[i] = lng_cnvrt[PORT_LONG - i];
     }
   
-  if ( head->byte_order == INT_ORDER )
-      head->int_quick = TRUE;
+  if ( port->byte_order == INT_ORDER )
+      port->int_quick = TRUE;
   else
-      head->int_quick = FALSE;
+      port->int_quick = FALSE;
   
   for ( i = 0; i < PORT_INT; i++ )
     {
-      if ( head->byte_order == ENDIAN_BIG )
-        head->int_cnvrt[i] = int_cnvrt[i];
+      if ( port->byte_order == ENDIAN_BIG )
+        port->int_cnvrt[i] = int_cnvrt[i];
       else
-        head->int_cnvrt[i] = int_cnvrt[PORT_INT - i];
+        port->int_cnvrt[i] = int_cnvrt[PORT_INT - i];
     }
   
-  if ( head->byte_order == SHORT_ORDER )
-      head->shrt_quick = TRUE;
+  if ( port->byte_order == SHORT_ORDER )
+      port->shrt_quick = TRUE;
   else
-      head->shrt_quick = FALSE;
+      port->shrt_quick = FALSE;
   
   for ( i = 0; i < PORT_SHORT; i++ )
     {
-      if ( head->byte_order == ENDIAN_BIG )
-        head->shrt_cnvrt[i] = shrt_cnvrt[i];
+      if ( port->byte_order == ENDIAN_BIG )
+        port->shrt_cnvrt[i] = shrt_cnvrt[i];
       else
-        head->shrt_cnvrt[i] = shrt_cnvrt[PORT_SHORT - i];
+        port->shrt_cnvrt[i] = shrt_cnvrt[PORT_SHORT - i];
     }
 
  return; 
 }
 
+/* set current portable info */
 int 
-dig__set_cur_head (head) 
-    struct dig_head *head;
+dig_set_cur_port ( struct Port_info *port) 
 { 
-    Cur_Head = head; 
+    Cur_Head = port; 
     return 0;
 }
 
@@ -687,7 +690,7 @@ dig__write_head ( struct Map_info *Map )
     buf[2] = GRASS_V_EARLIEST_MAJOR;
     buf[3] = GRASS_V_EARLIEST_MINOR;
 
-    buf[4] = Map->head.byte_order;
+    buf[4] = Map->head.port.byte_order;
     buf[5] = Map->head.with_z;
     
     if (0 >= dig__fwrite_port_C ( buf, GRASS_V_DIG_HEAD_LENGTH, Map->dig_fp))
@@ -712,7 +715,7 @@ dig__read_head ( struct Map_info *Map )
     Map->head.Back_Major    = buf[2];
     Map->head.Back_Minor    = buf[3];
 
-    Map->head.byte_order    = buf[4];
+    Map->head.port.byte_order    = buf[4];
     Map->head.with_z        = buf[5];
 
     return (1);
