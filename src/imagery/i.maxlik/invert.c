@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "global.h"
 
 invert_signatures()
