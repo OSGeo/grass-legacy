@@ -901,24 +901,20 @@ types 3 and 7.
 <P>
 Table 1. Link Types
 <P>
-<TT>Link Number of Number of</TT> 
-<P>
-<TT>Type Description of Link Type Parameters Nodes</TT> 
-<P>
-<TT>1 Fluvial Link, Trapezoidal Cross-Section 5 &gt;=2</TT> 
-<P>
-<TT>2 Overflow Weir 8 2</TT> 
-<P>
-<TT>3 Culvert/Weir (not yet supported) 8 2</TT> 
-<P>
-<TT>4 Reservoir 5 2</TT> 
-<P>
-<TT>7 Bridge Crossing (not yet supported) 8 2</TT> 
-<P>
-<TT>8 Fluvial Link, Look-up Table (Breakpoint) 4 &gt;=2</TT> 
-<P>
-<TT>Cross-Section</TT> 
-<P>
+<PRE>
+Link    Description              Number of        Number of
+Type    of Link Type             Parameters       Nodes
+
+1 Fluvial Link, 
+  Trapezoidal Cross-Section          5             >=2
+2 Overflow Weir                      8               2
+3 Culvert/Weir (not yet supported)   8               2
+4 Reservoir                          5               2
+7 Bridge Crossing (not yet supported) 8              2
+8 Fluvial Link, Look-up Table (Breakpoint) 4        >=2
+  Cross-Section
+</PRE>
+</P>
 At present the channel model formulation accepts cross-sectional
 input for only two different channel geometries, namely trapezoidal,
 and breakpoint via look-up table. Trapezoidal channel parameters
