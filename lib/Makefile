@@ -25,7 +25,6 @@ SUBDIRS = \
 	segment \
 	vector \
 	sites \
-	front.end \
 	rst \
 	g3d \
 	dspf \

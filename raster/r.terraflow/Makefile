@@ -54,23 +54,21 @@ DEPLIBS = $(DEPGISLIB)
 
 PGM = r.terraflow
 
-default: dofirst $(BIN_CMD)/$(PGM) $(BIN_CMD)/$(PGM).short htmlgen
+default: dofirst $(BIN)/$(PGM) $(BIN)/$(PGM).short htmlgen
 
 dofirst:
 	$(MKDIR) $(OBJARCH)/FLOAT ; true
 	$(MKDIR) $(OBJARCH)/SHORT ; true
 
-$(BIN_CMD)/$(PGM): $(FLOAT_OBJ) $(GISLIB)  $(DEPLIBS)
+$(BIN)/$(PGM): $(FLOAT_OBJ) $(GISLIB)  $(DEPLIBS)
 	(cd IOStream/lib ; $(MAKE) )
 	$(CXX) -DELEV_FLOAT $(LDFLAGS) -o $@ $(FLOAT_OBJ) $(LIBS) $(MATHLIB) \
 	$(XDRLIB) $(IOSTREAM_LIB)
-	@test -x $(BIN)/$(PGM) || ln $(ETC)/front.end $(BIN)/$(PGM)
 
-$(BIN_CMD)/$(PGM).short: $(SHORT_OBJ) $(GISLIB)  $(DEPLIBS)
+$(BIN)/$(PGM).short: $(SHORT_OBJ) $(GISLIB)  $(DEPLIBS)
 	(cd IOStream/lib ; $(MAKE) )
 	$(CXX) -DELEV_SHORT $(LDFLAGS) -o $@ $(SHORT_OBJ) $(LIBS) $(MATHLIB) \
 	$(XDRLIB) $(IOSTREAM_LIB)
-	@test -x $(BIN)/$(PGM).short || ln $(ETC)/front.end $(BIN)/$(PGM).short
 
 
 $(GISLIB):	#

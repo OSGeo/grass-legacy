@@ -62,8 +62,6 @@ OBJDIR		= OBJ.$(ARCH)
 GISBASE		= $(ARCH_DISTDIR)
 BIN             = $(ARCH_DISTDIR)/bin
 ETC             = $(ARCH_DISTDIR)/etc
-BIN_INTER       = $(ETC)/bin/inter
-BIN_CMD         = $(ETC)/bin/cmd
 DRIVERDIR       = $(ARCH_DISTDIR)/driver
 DBDRIVERDIR     = $(ARCH_DISTDIR)/driver/db
 
@@ -317,9 +315,9 @@ first: pre default
 
 # create platform dirs 
 pre: $(ARCH_BINDIR) $(ARCH_INCDIR) $(ARCH_LIBDIR) \
-	$(BIN) $(ETC) $(BIN_CMD) $(BIN_INTER) \
+	$(BIN) $(ETC) \
 	$(DRIVERDIR) $(DBDRIVERDIR) $(FONTDIR)
-	
+
 $(ARCH_BINDIR):
 	mkdir -p $(ARCH_BINDIR)
 
@@ -334,12 +332,6 @@ $(BIN):
 
 $(ETC):
 	mkdir -p $(ETC)
-
-$(BIN_CMD):
-	mkdir -p $(BIN_CMD)
-
-$(BIN_INTER):
-	mkdir -p $(BIN_INTER)
 
 $(DRIVERDIR):
 	mkdir -p $(DRIVERDIR)

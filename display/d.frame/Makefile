@@ -5,8 +5,6 @@ DEPLIBS = $(D_DEP) $(DISPLAYDEP) $(RASTERDEP) $(GISDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
-HOME=$(BIN_CMD)
-
 PGM=d.frame
 
 default: \
@@ -14,7 +12,7 @@ default: \
 	$(ETC)/frame.select \
 	$(ETC)/frame.dumper \
 	$(ETC)/frame.list \
-	$(HOME)/$(PGM) \
+	$(BIN)/$(PGM) \
 	htmlcmd
 
 $(ETC)/frame.create: $(OBJDIR)/create.o $(DEPLIBS)
@@ -29,6 +27,5 @@ $(ETC)/frame.dumper: $(OBJDIR)/dumper.o $(DEPLIBS)
 $(ETC)/frame.list: $(OBJDIR)/list.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/list.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(HOME)/$(PGM): $(OBJDIR)/frame.o $(DEPLIBS)
+$(BIN)/$(PGM): $(OBJDIR)/frame.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/frame.o $(LIBES) $(MATHLIB) $(XDRLIB)
-	@test -x $(BIN)/d.frame || ln $(ETC)/front.end $(BIN)/d.frame
