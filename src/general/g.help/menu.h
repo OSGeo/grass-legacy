@@ -73,8 +73,15 @@ static int HELPWINHITE ;
  |		Global Data Structures
  */
 
-WINDOW	*MenuW, *PlanetW, *PrmptW, *TablW;
-WINDOW	*StatehelpW, *CommandhelpW, *ErrorW;
+
+#ifdef G_HELP_MAIN
+#define G_HELP_GLOBAL
+#else
+#define G_HELP_GLOBAL extern
+#endif
+
+G_HELP_GLOBAL WINDOW	*MenuW, *PlanetW, *PrmptW, *TablW;
+G_HELP_GLOBAL WINDOW	*StatehelpW, *CommandhelpW, *ErrorW;
 
 
 int F_menu(char *, char *, int *, char *, int *, int *, int *);

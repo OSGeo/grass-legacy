@@ -14,11 +14,8 @@ the_help:
 html_help:
 	$(H2H) $(GISBASE)
 
-do_call.o: do_climb.h
-do_call.o: menu.h
-do_climb.o: do_climb.h
-do_climb.o: menu.h
 do_leave.o: menu.h
 menu.o: menu.h
+main.o: menu.h
 
 $(DEPGISLIB): #

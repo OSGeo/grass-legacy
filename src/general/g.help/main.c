@@ -1,3 +1,4 @@
+#define  G_HELP_MAIN
 #include <string.h>
 #include <unistd.h>
 #include <sys/file.h>
