@@ -19,7 +19,7 @@ SUBDIRS1 = \
 	v.surf.rst \
 	v.to.rast
 
-OGRBASED = v.out.ogr
+OGRBASED = v.out.ogr v.in.ogr
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
