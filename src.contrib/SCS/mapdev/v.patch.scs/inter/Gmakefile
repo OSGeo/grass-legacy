@@ -1,3 +1,4 @@
+#  %W%  %G%
 MAPDEV		= $(SRC)/mapdev
 
 EXTRA_CFLAGS	= -I$(MAPDEV)/diglib   -I$(MAPDEV)/libes
