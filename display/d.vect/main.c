@@ -411,7 +411,7 @@ main (int argc, char **argv)
 
 	Vect_get_map_box ( &Map, &box );
 	if ( window.north < box.S || window.south >  box.N || window.east < box.W || window.west > box.E ){
-	    fprintf (stdout,"The bounding box of the map outside current region, nothing displayed.");
+	    fprintf (stdout,"The bounding box of the map outside current region, nothing displayed.\n");
 	} else { 
 	    overlap =  G_window_percentage_overlap(&window, box.N, box.S, box.E, box.W);
 	    G_debug ( 1, "overlap = %f \n", overlap );
