@@ -1,0 +1,6 @@
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+enhance	enhance.c	/^enhance (group, gmapset, result, red, grn, blu, hi/
+gen_colors	gen_colors.c	/^gen_colors (result)$/
+get_histo	main.c	/^get_histo (n, histo)$/
+get_name	main.c	/^get_name (n, display_name)$/
+set_color	gen_colors.c	/^set_color (n, r, g, b)$/
