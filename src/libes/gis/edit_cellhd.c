@@ -116,7 +116,7 @@ int G_edit_cellhd (struct Cell_head *cellhd , int type)
     struct Cell_head def_wind ;
     double north, south, east, west ;
     double nsres, ewres;
-    char buf[64], buf2[30];
+    char buf[64], buf2[30], *p;
     short ok ;
     int line;
     char *prj;
@@ -398,7 +398,8 @@ SHOW:
     fprintf (stderr, "\n");
     fprintf (stderr, "  total rows:  %15d\n",    cellhd->rows);
     fprintf (stderr, "  total cols:  %15d\n",    cellhd->cols);
-    sprintf(buf,"%ld",    (long) cellhd->rows * cellhd->cols);
+    sprintf(buf,"%lf",    (double) cellhd->rows * cellhd->cols);
+    *(p = strchr(buf, '.')) = 0;
     G_insert_commas(buf);
     fprintf (stderr, "  total cells: %15s\n",    buf);
     fprintf (stderr, "\n");
