@@ -1,4 +1,4 @@
-$Id: SUBMITTING,v 1.9 2000-11-30 11:38:01 justin Exp $
+$Id: SUBMITTING,v 1.10 2000-12-01 08:21:00 justin Exp $
 
 NOTE: Please improve this list!
 
@@ -164,15 +164,35 @@ care of following rules:
     
     The online WWW man pages will be updated over-night by CVS.
 
-17. For consistency, use README rather than README.txt for any README files.
+17. If you write a shell script and search for a command in $PATH, do NOT
+    use the "which" command or the "type -p" command. Both commands are not
+    supported on all platforms, thus causing problems for some people. As an
+    alternative, please use code similar to the following shell script snippet
+    which will perform the same function. In this case, the path of the grass5
+    command is saved if grass5 is found in $PATH.
+    
+	# Search for grass5 command in user's path
+	for i in `echo $PATH | sed 's/^:/.:/
+    	    	    		    s/::/:.:/g
+				    s/:$/:./
+				    s/:/ /g'`
+	do
+	    if [ -f $i/grass5 ] ; then
+    		
+		# Save the path of the grass5 command
+		GRASS_PATH=$i/grass5
+	    fi
+	done
 
-18. Tell the other developers about the new code using the following e-mail:
+18. For consistency, use README rather than README.txt for any README files.
+
+19. Tell the other developers about the new code using the following e-mail:
     grass5@geog.uni-hannover.de
  
     To subscribe to this mailing list, see
     http://www.geog.uni-hannover.de/grass/grassdevel.html
 
-19. In case of questions feel free to contact the developers at the above
+20. In case of questions feel free to contact the developers at the above
     mailing list.
 
 ...
