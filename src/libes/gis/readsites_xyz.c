@@ -105,6 +105,8 @@ int G_readsites_xyz(
 				G_fatal_error("String attribute index out of range");
 			}
 			break;
+		case SITE_COL_NUL: /* Doesn't want a z-dim */
+			break;
 		default:
 			/* Die miserable death due to bad call */
 			G_fatal_error("Unknown attribute type in call to "
@@ -141,6 +143,8 @@ int G_readsites_xyz(
 				if (end_ptr == s->str_att[index]) {
 					G_fatal_error("Failed to convert string attribute.");
 				}
+				break;
+			case SITE_COL_NUL: /* No z-dim requested */
 				break;
 			default: /* Programming error, die miserably */
 				G_fatal_error("G_readsites(): fatal programmer error!\n");
