@@ -169,6 +169,7 @@ db_copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
 	    switch ( ctype ) {
 		case DB_C_TYPE_STRING:
 		case DB_C_TYPE_DATETIME:
+		    db_double_quote_string ( &value_string );
 		    sprintf (buf, "'%s'", db_get_string(&value_string) );
 		    db_append_string ( &sql, buf);
 		    break;
