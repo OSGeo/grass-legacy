@@ -1,4 +1,4 @@
-$Id: SUBMITTING,v 1.16 2000-12-27 16:29:50 markus Exp $
+$Id: SUBMITTING,v 1.17 2001-01-04 16:25:07 markus Exp $
 
 NOTE: Please improve this list!
 
@@ -148,7 +148,7 @@ care of following rules:
 
 	LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(DATETIMELIB)
 
-	$(BIN_ALPHA_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(BIN_MAIN_CMD)/$(PGM): $(OFILES) $(LIBES)
 		$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 	$(RASTERLIB): #
