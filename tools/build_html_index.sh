@@ -45,7 +45,7 @@ GPL'ed), image processing and geographic information system (GIS).
 <h3>Quick Introduction</h3>
 
 <!-- the helptext.html file lives in lib/init/helptext.html -->
-<a href="../start/helptext.html">How to start with GRASS</a>
+<a href="helptext.html">How to start with GRASS</a>
 <P>
 
 " > $1
