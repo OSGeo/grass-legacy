@@ -1,5 +1,8 @@
+/* $Id$ 
+ *
+ * Update 12/99 Markus Neteler for GRASS 5
+ */
 /*
-
 s.to.rast - this program was created to provided a command-line operability
 of what could have been done interactively with the s.menu program. Thus,
 much of what you find here is simply a modified version of the sites_to_rast
@@ -16,8 +19,6 @@ the first reading is by-passed.
 Chris Rewerts, U.S. Army Construction Engineering Research Laboratory
 rewerts@zorro.cecer.army.mil
 May 20, 1993
-
-Update 12/99 Markus Neteler for GRASS 5
 */
 
 #include <string.h>
@@ -158,26 +159,36 @@ int main (int argc, char *argv[])
        fprintf (stderr, "\nMap Type: %d, Dims: %d, Strs: %d, Dbls: %d\n", map_type, dims, strs, dbls);
 
     zero_one = 0;
-    if(map_type < 0)
+    if(map_type < 0) /* no #cats found */
     {
-        zero_one = 1;
-	map_type = CELL_TYPE;
-        if (!quiet )
-        {
+      if(!dbls == 1) /* no %decimal attributes as well. Create binary map */
+      {
+         zero_one = 1;
+	 map_type = CELL_TYPE;
+         if (!quiet )
+         {
 	    fprintf (stderr, 
             "\nNOTE: some site(s) did not have category values in the\n");
             fprintf (stderr, 
             "description field, so we can only create a no-data/1 raster file.\n");
-        }
+         }
+       }
+       else          /* no #cats found, but %decimal atts existing */
+       {
+        fprintf (stderr, "No #cats, but decimal attribs found.\n");
+        fprintf (stderr, "Aborting due to improper sites format in file <%s>\n",
+                 name);
+        exit(1);         
+       }
     }
+        
     if(map_type == 0)
     {
         zero_one = 0;
-	map_type = FCELL_TYPE;
+	map_type = CELL_TYPE;
     }
-
+    
     s = G_site_new_struct (map_type, dims, strs, dbls);
-
     temp_name = G_tempfile();
     temp_fd = creat(temp_name,0660);
     rast = G_allocate_raster_buf(map_type);	
@@ -185,6 +196,12 @@ int main (int argc, char *argv[])
     cols = window.cols;
 
     /*  zero out the entire file that will receive data   */
+    if (!quiet)
+    {
+        fprintf (stdout, "\ninput sites map: <%s> in <%s>\n", name, mapset);
+        fprintf (stdout, "\ncreating empty raster file ...\n");
+    }
+
     G_set_null_value(rast, cols, map_type);
     for(row = 0; row < rows; row++)
         if(write(temp_fd, rast, cols * G_raster_size(map_type))!=
@@ -192,13 +209,7 @@ int main (int argc, char *argv[])
 	       G_fatal_error("error while writing to temp file");
 
     if (!quiet)
-        fprintf (stdout, "\noutput: <%s> in <%s>\n", layer, G_mapset());
-
-    if (!quiet)
-    {
-        fprintf (stdout, "\ninput: <%s> in <%s>\n", name, mapset);
-        fprintf (stdout, "\ncreating empty raster file ...\n");
-    }
+        fprintf (stdout, "\noutput raster map: <%s> in <%s>\n", layer, G_mapset());
 
 /* 
    if the site descriptions are all of the form: #n <label>
