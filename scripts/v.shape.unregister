@@ -9,13 +9,17 @@ if test "$GISBASE" = ""; then
  exit
 fi
 
-if [ $# -eq 0 ]
+if [ $# -eq 0  -o "$1" = "-h" -o "$1" = "-help" -o "$1" = "--help" ]
 then
  echo "Unregisters a registered SHAPE file from GRASS 5.1 DATABASE"
  echo " "
  echo "v.shape.unregister map.shp"
  exit
 fi
+
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 CWD=`pwd`
 INPUT=$1

@@ -16,13 +16,17 @@ echo "You must be in GRASS to run this program."
 exit
 fi
 
-if [ $# -eq 0 ]
+if [ $# -eq 0 -o "$1" = "-h" -o "$1" = "-help" -o "$1" = "--help" ]
 then
  echo "Registers a SHAPE file into GRASS 5.1 DATABASE"
  echo " "
  echo "v.shape.register map.shp"
  exit
 fi
+
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 which ogrinfo > /dev/null
 if [ $? -eq 1 ]
@@ -94,5 +98,12 @@ OTHER INFO:   -
 ZONE:         0
 MAP THRESH:   0.500000" > head
 
+
+#write DB file
+cd $GISDBASE/$LOCATION_NAME/$MAPSET
+####    file  field table  CAT_COLUMN  path                  driver
+echo "$SHAPE.shp 1 $SHAPE $USERIDFIELD \$GISDBASE/\$LOCATION/shp dbf" >> DB
+
+### that's it
 echo "$SHAPE.shp is registered now. Consider to run v.build:"
 echo "     v.build $SHAPE.shp"
