@@ -1,32 +1,50 @@
 /*
  * string/chring movement functions
  *
-** strcpy (T, F)
-** strncpy (T, F, n)	copy F up to null or n, always copy null
-** chrcpy (T, F, n)
-** strmov (T, F)
-** chrmov (T, F, n)
-** strcat (T, F)
-** chrcat (T, F, n)
+** G_strcpy (T, F)
+** G_strncpy (T, F, n)	copy F up to null or n, always copy null
+** G_chrcpy (T, F, n)
+** G_strmov (T, F)
+** G_chrmov (T, F, n)
+** G_strcat (T, F)
+** G_chrcat (T, F, n)
 **     char *T, *F;
 **     int n;
  *
- * strcpy (T, F)    copy F up to null, copy null
- * chrcpy (T, F, n) copy F up to n,    copy null
+ * G_strcpy (T, F)    copy F up to null, copy null
+ * G_chrcpy (T, F, n) copy F up to n,    copy null
  * 
- * strmov (T, F)    copy F up to null
- * chrmov (T, F, n) copy F up to n
+ * G_strmov (T, F)    copy F up to null
+ * G_chrmov (T, F, n) copy F up to n
  * 
- * strcat (T, F)    cat F up to null, copy null
- * chrcat (T, F, n) cat F up to n,    copy null
+ * G_strcat (T, F)    cat F up to null, copy null
+ * G_chrcat (T, F, n) cat F up to n,    copy null
  *
  * the -cpy and -cat functions are for null-terminated destinations;
  * the -mov functions are for non-null-terminated ('chring') destinations.
  * all functions return 'T'.
  *
- * last modification: 12 aug 81, j w hamilton
+ * Author Dave Gerdes (USACERL)
  *
+ *
+ * G_strcasecmp(a, b) char *a, *b;
+ *   string compare ignoring case (upper or lower)
+ *   returns: -1 a<b; 0 a==b; 1 a>b
+ *
+ * Author Michael Shapiro (USACERL)
+ *
+ *
+ * G_strstr(mainString, subString)
+ *	Return a pointer to the first occurrence of subString
+ *	in mainString, or NULL if no occurrences are found.
+ * G_strdup(string)
+ *	Return a pointer to a string that is a duplicate of the string
+ *	given to G_strdup.  The duplicate is created using malloc.
+ *	If unable to allocate the required space, NULL is returned.
+ *
+ * Author: Amit Parghi (USACERL), 1993 02 23
  */
+
 static char *
 G_strend (S)
     register char *S;
@@ -111,4 +129,83 @@ G_chrcat (T, F, n)
 {
     G_chrcpy (G_strend (T), F, n);
     return (T);
+}
+
+G_strcasecmp(x,y)
+    char *x, *y;
+{
+    int xx,yy;
+
+    if (!x)
+	return y ? -1 : 0;
+    if (!y)
+	return x ? 1 : 0;
+    while (*x && *y)
+    {
+	xx = *x++;
+	yy = *y++;
+	if (xx >= 'A' && xx <= 'Z')
+	    xx = xx + 'a' - 'A';
+	if (yy >= 'A' && yy <= 'Z')
+	    yy = yy + 'a' - 'A';
+	if (xx < yy) return -1;
+	if (xx > yy) return 1;
+    }
+    if (*x) return 1;
+    if (*y) return -1;
+    return 0;
+}
+
+
+
+#include <sys/types.h>
+#include <string.h>
+
+extern char *malloc();
+
+#ifndef NULL
+#define NULL		0
+#endif
+
+
+char *
+G_strstr(mainString, subString)
+    char *mainString;
+    char *subString;
+{
+    char *p, *q;
+    int length;
+
+    p = subString;
+    q = mainString;
+    length = strlen(subString);
+
+    do {
+	while (*q != '\0' && *q != *p) {	/* match 1st subString char */
+	    q++;
+	}
+    } while (*q != '\0' && strncmp(p, q, length) != 0 && q++);
+				/* Short-circuit evaluation is your friend */
+
+    if (*q == '\0') {				/* ran off end of mainString */
+	return NULL;
+    } else {
+	return q;
+    }
+}
+
+
+char *
+G_strdup(string)
+    char *string;
+{
+    char *p;
+
+    p = malloc(strlen(string) + 1);
+
+    if (p != NULL) {
+	strcpy(p, string);
+    }
+
+    return p;
 }
