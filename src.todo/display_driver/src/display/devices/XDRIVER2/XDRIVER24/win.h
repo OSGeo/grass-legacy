@@ -1,5 +1,0 @@
-
-Display *dpy;
-Colormap floatcmap;
-
-
