@@ -26,8 +26,6 @@
 int 
 V1_rewind_nat (struct Map_info *Map)
 {
-    struct dig_head dhead;
-
     return (fseek (Map->dig_fp, GRASS_V_DIG_HEAD_LENGTH, 0));
 }
 

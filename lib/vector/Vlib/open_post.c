@@ -100,7 +100,7 @@ setup (struct Map_info *Map)
 **************************************************************************************/
 
 int
-V1_open_old_post (struct Map_info *Map)
+V1_open_old_post (struct Map_info *Map, int update)
 {
   char *query = (char *) calloc (65536, sizeof (char));
   fprintf (stderr, "V1_open_old_post\n");
@@ -184,10 +184,9 @@ V1_open_old_post (struct Map_info *Map)
 *  Return: 0 success
 *         -1 error */
 int
-V2_open_old_post (struct Map_info *Map)
+V2_open_old_post (struct Map_info *Map, int update)
 {
   int ret;
-  char buf[500];
 
   G_debug (1, "V2_open_old_post(): name = %s mapset = %s", Map->name,
 	   Map->mapset);
@@ -202,19 +201,13 @@ V2_open_old_post (struct Map_info *Map)
       return -1;
     }
 
-  ret = V1_open_old_post (Map);
+  ret = V1_open_old_post (Map, update);
   if (ret != 0)
     {
       dig_free_plus (&(Map->plus));
       return -1;
     }
 
-  Map->open = VECT_OPEN_CODE;
-  Map->level = LEVEL_2;
-  Map->mode = MODE_READ;
-
-  Map->Constraint_region_flag = 0;
-  Map->Constraint_type_flag = 0;
   Map->next_line = 1;
 
   return 0;
@@ -231,11 +224,6 @@ V1_open_new_post (struct Map_info *Map, char *name, int with_z)
   char *query = (char *) calloc (65536, sizeof (char));
 
   G_debug (1, "V1_open_new_post()");
-
-  Map->name = G_store (name);
-  Map->mapset = G_store (G_mapset ());
-  Map->level = 1;
-  Map->open = VECT_OPEN_CODE;
 
  /************************************************************************************/
 
@@ -332,7 +320,7 @@ V1_open_new_post (struct Map_info *Map, char *name, int with_z)
   Map->fInfo.post.catRes = NULL;
 
 /************************************************************************************/
-  return (V1_open_old_post (Map));
+  return (V1_open_old_post (Map, 1));
 }
 
 #endif

@@ -122,7 +122,7 @@ Vect_find_line ( struct Map_info *map,
 	  if (new_dist == cur_dist)
 	    {
 	      /* TODO */  
-	      //choice = dig_center_check (map->Line, choice, a, ux, uy);
+	      /* choice = dig_center_check (map->Line, choice, a, ux, uy); */
 	      continue;
 	    }
 	  

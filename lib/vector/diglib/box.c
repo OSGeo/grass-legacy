@@ -58,3 +58,39 @@ dig_line_box (struct line_pnts *Points, BOUND_BOX *Box){
     return 1;
 }
 
+/*
+*  dig_box_copy ()
+*  Copy B to A.
+*/
+int
+dig_box_copy (BOUND_BOX *A, BOUND_BOX *B)
+{
+     
+    A->N = B->N;
+    A->S = B->S;
+    A->E = B->E;
+    A->W = B->W;
+    A->T = B->T;
+    A->B = B->B;
+
+    return 1;
+}
+
+/*
+* dig_box_extend ()
+* Extend A by B.
+*/
+int
+dig_box_extend (BOUND_BOX *A, BOUND_BOX *B)
+{
+     
+    if ( B->N > A->N ) A->N = B->N;
+    if ( B->S < A->S ) A->S = B->S;
+    if ( B->E > A->E ) A->E = B->E;
+    if ( B->W < A->W ) A->W = B->W;
+    if ( B->T > A->T ) A->T = B->T;
+    if ( B->B < A->B ) A->B = B->B;
+
+    return 1;
+}
+

@@ -35,7 +35,7 @@ V1_close_nat (struct Map_info *Map)
   if (!VECT_OPEN (Map))
     return -1;
 
-  if (Map->mode == MODE_WRITE || Map->mode == MODE_RW) {
+  if (Map->mode == GV_MODE_WRITE || Map->mode == GV_MODE_RW) {
     Vect_coor_info ( Map, &CInfo);
     Map->head.size = CInfo.size;
     dig__write_head (Map);
@@ -69,7 +69,7 @@ V2_close_nat (struct Map_info *Map)
   
   Plus = &(Map->plus); 
   
-  if (Map->mode & (MODE_WRITE | MODE_RW)) {
+  if (Map->mode & (GV_MODE_WRITE | GV_MODE_RW)) {
       Vect_coor_info ( Map, &CInfo);
       Map->head.size = CInfo.size;
       dig__write_head (Map);
@@ -81,13 +81,14 @@ V2_close_nat (struct Map_info *Map)
   fclose (Map->dig_fp);
 
   /* Save topo if necessary */
-  if (Plus->mode & (MODE_WRITE | MODE_RW)) {
+  if (Plus->mode & (GV_MODE_WRITE | GV_MODE_RW)) {
       /* Get coor file checks */
       Vect_coor_info ( Map, &CInfo);
       Plus->coor_size = CInfo.size;
       Plus->coor_mtime = CInfo.mtime;
       
       Vect_save_topo ( Map );
+      Vect_save_spatial_index ( Map );
       dig_free_plus ( Plus );
   }
 

@@ -22,10 +22,6 @@
 #include "gis.h"
 #include "Vect.h"
 
-
-int nodecmp (char *, char *);
-int nodefirst ( );
-
 /* 
 *  dig_spindex_init ()
 *  initit spatial index (nodes, lines, areas, isles)
@@ -39,7 +35,10 @@ dig_spidx_init ( struct Plus_head *Plus)
     
     G_debug(1, "dig_spidx_init()");
     
-    btree_create (&(Plus->Node_spidx), nodecmp, 1000); 
+    Plus->Node_spidx = RTreeNewIndex();
+    Plus->Line_spidx = RTreeNewIndex();
+    Plus->Area_spidx = RTreeNewIndex();
+    Plus->Isle_spidx = RTreeNewIndex();
 
     return 1;
 }
@@ -56,18 +55,13 @@ int
 dig_spidx_add_node ( struct Plus_head *Plus, int node, 
 	               double x, double y, double z) 
 {
-    BTREE *B;
-    double coor[3];
+    struct Rect rect;
     
     G_debug(3, "dig_spidx_add_node(): node = %d, x,y,z = %f, %f, %f", node, x, y, z );
 
-    B = &(Plus->Node_spidx);
-
-    coor[0] = x;
-    coor[1] = y;
-    coor[2] = z;
-   
-    btree_update (B, (char *) coor, 3 * sizeof(double), (char *) &node, sizeof(int));
+    rect.boundary[0] = x; rect.boundary[1] = y; rect.boundary[2] = z;
+    rect.boundary[3] = x; rect.boundary[4] = y; rect.boundary[5] = z;
+    RTreeInsertRect( &rect, node, &(Plus->Node_spidx), 0);
 
     return 1;
 }
@@ -80,9 +74,15 @@ dig_spidx_add_node ( struct Plus_head *Plus, int node,
 *          0 on error      
 */
 int 
-dig_spidx_add_line ( struct Plus_head *Plus, int line, BOUND_BOX *Box ) 
+dig_spidx_add_line ( struct Plus_head *Plus, int line, BOUND_BOX *box ) 
 {
-    /* TODO */
+    struct Rect rect;
+    
+    G_debug(3, "dig_spidx_add_line(): line = %d", line );
+
+    rect.boundary[0] = box->W; rect.boundary[1] = box->S; rect.boundary[2] = box->B;
+    rect.boundary[3] = box->E; rect.boundary[4] = box->N; rect.boundary[5] = box->T;
+    RTreeInsertRect( &rect, line, &(Plus->Line_spidx), 0);
 
     return 0;
 }
@@ -95,9 +95,15 @@ dig_spidx_add_line ( struct Plus_head *Plus, int line, BOUND_BOX *Box )
 *          0 on error      
 */
 int 
-dig_spidx_add_area ( struct Plus_head *Plus, int line, BOUND_BOX *Box ) 
+dig_spidx_add_area ( struct Plus_head *Plus, int area, BOUND_BOX *box ) 
 {
-    /* TODO */
+    struct Rect rect;
+    
+    G_debug(3, "dig_spidx_add_area(): area = %d", area );
+
+    rect.boundary[0] = box->W; rect.boundary[1] = box->S; rect.boundary[2] = box->B;
+    rect.boundary[3] = box->E; rect.boundary[4] = box->N; rect.boundary[5] = box->T;
+    RTreeInsertRect( &rect, area, &(Plus->Area_spidx), 0);
 
     return 0;
 }
@@ -111,14 +117,145 @@ dig_spidx_add_area ( struct Plus_head *Plus, int line, BOUND_BOX *Box )
 */
 
 int 
-dig_spidx_add_isle ( struct Plus_head *Plus, int line, BOUND_BOX *Box ) 
+dig_spidx_add_isle ( struct Plus_head *Plus, int isle, BOUND_BOX *box ) 
 {
-    /* TODO */
+    struct Rect rect;
+    
+    G_debug(3, "dig_spidx_add_isle(): isle = %d", isle );
+
+    rect.boundary[0] = box->W; rect.boundary[1] = box->S; rect.boundary[2] = box->B;
+    rect.boundary[3] = box->E; rect.boundary[4] = box->N; rect.boundary[5] = box->T;
+    RTreeInsertRect( &rect, isle, &(Plus->Isle_spidx), 0);
 
     return 0;
 }
 
+/* 
+*  dig_spindex_del_node ()
+*  delete node from spatial index 
+*
+*  returns 1 OK
+*          0 on error      
+*/
+int 
+dig_spidx_del_node ( struct Plus_head *Plus, int node ) 
+{
+    int    ret;
+    P_NODE *Node; 
+    struct Rect rect;
+    
+    G_debug(3, "dig_spidx_del_node(): node = %d", node );
+
+    Node = Plus->Node[node];
+
+    rect.boundary[0] = Node->x; rect.boundary[1] = Node->y; rect.boundary[2] = Node->z;
+    rect.boundary[3] = Node->x; rect.boundary[4] = Node->y; rect.boundary[5] = Node->z;
+    
+    ret = RTreeDeleteRect( &rect, node, &(Plus->Node_spidx) ); 
+
+    if ( ret ) G_fatal_error ( "Cannot delete node %d from spatial index", node );
+    
+    return 0;
+}
+
+/* 
+*  dig_spindex_del_line ()
+*  delete line from spatial index 
+*
+*  returns 1 OK
+*          0 on error      
+*/
+int 
+dig_spidx_del_line ( struct Plus_head *Plus, int line ) 
+{
+    P_LINE *Line; 
+    struct Rect rect;
+    int ret;
+    
+    G_debug(3, "dig_spidx_del_line(): line = %d", line );
+
+    Line = Plus->Line[line];
+
+    G_debug(3, "  box(x1,y1,z1,x2,y2,z2): %f %f %f %f %f %f",Line->W,Line->S,Line->B,Line->E,Line->N, Line->T );
+
+    rect.boundary[0] = Line->W; rect.boundary[1] = Line->S; rect.boundary[2] = Line->B;
+    rect.boundary[3] = Line->E; rect.boundary[4] = Line->N; rect.boundary[5] = Line->T;
+    
+    ret = RTreeDeleteRect( &rect, line, &(Plus->Line_spidx) ); 
+    
+    G_debug(3, "  ret = %d", ret );
+    
+    if ( ret ) G_fatal_error ( "Cannot delete line %d from spatial index", line );
+
+    return 0;
+}
+
+/* 
+*  dig_spindex_del_area ()
+*  delete area from spatial index 
+*
+*  returns 1 OK
+*          0 on error      
+*/
+int 
+dig_spidx_del_area ( struct Plus_head *Plus, int area ) 
+{
+    int ret;
+    P_AREA *Area; 
+    struct Rect rect;
+    
+    G_debug(3, "dig_spidx_del_area(): area = %d", area );
+
+    Area = Plus->Area[area];
+
+    if (Area == NULL) {
+	G_fatal_error ("Attempt to delete sidx for dead area");
+    }
+
+    rect.boundary[0] = Area->W; rect.boundary[1] = Area->S; rect.boundary[2] = Area->B;
+    rect.boundary[3] = Area->E; rect.boundary[4] = Area->N; rect.boundary[5] = Area->T;
+    
+    ret = RTreeDeleteRect( &rect, area, &(Plus->Area_spidx) ); 
+
+    if ( ret ) G_fatal_error ( "Cannot delete area %d from spatial index", area );
+    
+    return 0;
+}
+
+/* 
+*  dig_spindex_del_isle ()
+*  delete isle from spatial index 
+*
+*  returns 1 OK
+*          0 on error      
+*/
+int 
+dig_spidx_del_isle ( struct Plus_head *Plus, int isle ) 
+{
+    int ret;
+    P_ISLE *Isle; 
+    struct Rect rect;
+    
+    G_debug(3, "dig_spidx_del_isle(): isle = %d", isle );
+
+    Isle = Plus->Isle[isle];
+
+    rect.boundary[0] = Isle->W; rect.boundary[1] = Isle->S; rect.boundary[2] = Isle->B;
+    rect.boundary[3] = Isle->E; rect.boundary[4] = Isle->N; rect.boundary[5] = Isle->T;
+
+    ret = RTreeDeleteRect( &rect, isle, &(Plus->Isle_spidx) ); 
+
+    if ( ret ) G_fatal_error ( "Cannot delete isle %d from spatial index", isle );
+    
+    return 0;
+}
 /************************* SELECT BY BOX *********************************/
+/* This function is called by  RTreeSearch() to add selected node/line/area/isle to thelist */
+int _add_item(int id, struct ilist *list)
+{
+    dig_list_add ( list, id );
+    return 1;
+}
 /* 
 *  dig_select_nodes ()
 *  select nodes by bbox 
@@ -129,59 +266,24 @@ dig_spidx_add_isle ( struct Plus_head *Plus, int line, BOUND_BOX *Box )
 int 
 dig_select_nodes ( struct Plus_head *Plus, BOUND_BOX *box, struct ilist *list ) 
 {
-    BTREE  *B;
-    double coor[3], *c;
-    int    *node, i, j, nd;
+    struct Rect rect;
     
     G_debug(3, "dig_select_nodes()" );
     
     list->n_values = 0;
-    
-    B = &(Plus->Node_spidx);
 
-    if (B->N <= 0) return 0;
+    rect.boundary[0] = box->W; rect.boundary[1] = box->S; rect.boundary[2] = box->B;
+    rect.boundary[3] = box->E; rect.boundary[4] = box->N; rect.boundary[5] = box->T;
+    RTreeSearch( Plus->Node_spidx, &rect, (void *) _add_item, list);
     
-    if ( box->N == box->S && box->E == box->W && box->B == box->T ) { /* point */
-	coor[0] = box->W;
-	coor[1] = box->S;
-	coor[2] = box->B;
-        if ( btree_find (B, (char *) coor, (char **) &node) ) {
-            dig_list_add ( list, *node );
-            return 1;
-        } else {
-	    return 0;
-        }
-    } else { /* box */
-        i = nodefirst ( B, box->W, box->S, box->B );
-	j = B->node[i].left; 
-	if ( j > 0 )
-            B->cur = j;
-	else
-            B->cur = i;
-          
-	/* get key of first (current) */
-	c = B->node[B->cur].key ;
-	node = B->node[B->cur].data;
-	do {
-	    G_debug ( 3, "Is node %d: %f %f %f in box", *node, c[0], c[1], c[2] ); 
-	    if ( c[0] > box->E ) {
-	        G_debug ( 3, "  east limit reached -> return" ); 
-		break;
-	    }
-            if ( c[0] >= box->W && c[0] <= box->E )
-            if ( c[0] >= box->W && c[0] <= box->E &&
-                 c[1] >= box->S && c[1] <= box->N &&
-                 c[2] >= box->B && c[2] <= box->T ) 
-	    {
-	        G_debug ( 3, "  yes -> add to list" ); 
-                dig_list_add ( list, *node );
-	    } else 
-	        G_debug ( 3, "  no -> test next" ); 
-	    
-	} while ( btree_next (B, (char **) &c, (char **) &node) );
-        return list->n_values;
-    }
+    return ( list->n_values );
+}
 
+/* This function is called by  RTreeSearch() for nodes to add selected node to list */
+int _add_node(int id, int *node)
+{
+    *node = id;
+    return 0;
 }
 
 /* 
@@ -194,24 +296,21 @@ dig_select_nodes ( struct Plus_head *Plus, BOUND_BOX *box, struct ilist *list )
 int 
 dig_find_node ( struct Plus_head *Plus, double x, double y, double z ) 
 {
-    BTREE  *B;
-    double coor[3];
-    int    *node;
+    struct Rect rect;
+    struct ilist list;
+    int    node;
     
     G_debug(3, "dig_find_node()" );
     
-    B = &(Plus->Node_spidx);
+    dig_init_list ( &list );
+    
+    rect.boundary[0] = x; rect.boundary[1] = y; rect.boundary[2] = z;
+    rect.boundary[3] = x; rect.boundary[4] = y; rect.boundary[5] = z;
 
-    if (B->N <= 0) return 0;
-    
-    coor[0] = x;
-    coor[1] = y;
-    coor[2] = z;
-	
-    if ( btree_find (B, (char *) coor, (char **) &node) )
-	return *node;
-    
-    return 0;
+    node = 0; 
+    RTreeSearch( Plus->Node_spidx, &rect, (void *) _add_node, &node);
+
+    return node;
 }
 
 /* 
@@ -219,13 +318,21 @@ dig_find_node ( struct Plus_head *Plus, double x, double y, double z )
 *  select lines by box 
 *
 *  returns: number of selected lines
-*           -1 error
 */
 int 
 dig_select_lines ( struct Plus_head *Plus, BOUND_BOX *box, struct ilist *list ) 
 {
-    /* TODO */
-    return -1;
+    struct Rect rect;
+    
+    G_debug(3, "dig_select_lines()" );
+    
+    list->n_values = 0;
+
+    rect.boundary[0] = box->W; rect.boundary[1] = box->S; rect.boundary[2] = box->B;
+    rect.boundary[3] = box->E; rect.boundary[4] = box->N; rect.boundary[5] = box->T;
+    RTreeSearch( Plus->Line_spidx, &rect, (void *) _add_item, list);
+    
+    return ( list->n_values );
 }
 
 /* 
@@ -233,13 +340,21 @@ dig_select_lines ( struct Plus_head *Plus, BOUND_BOX *box, struct ilist *list )
 *  select areas by box 
 *
 *  returns: number of selected areas
-*           -1 error
 */
 int 
 dig_select_areas ( struct Plus_head *Plus, BOUND_BOX *box, struct ilist *list ) 
 {
-    /* TODO */
-    return -1;
+    struct Rect rect;
+    
+    G_debug(3, "dig_select_areas()" );
+    
+    list->n_values = 0;
+
+    rect.boundary[0] = box->W; rect.boundary[1] = box->S; rect.boundary[2] = box->B;
+    rect.boundary[3] = box->E; rect.boundary[4] = box->N; rect.boundary[5] = box->T;
+    RTreeSearch( Plus->Area_spidx, &rect, (void *) _add_item, list);
+    
+    return ( list->n_values );
 }
 
 /* 
@@ -247,192 +362,21 @@ dig_select_areas ( struct Plus_head *Plus, BOUND_BOX *box, struct ilist *list )
 *  select isles by box 
 *
 *  returns: number of selected isles
-*           -1 error
 */
 int 
 dig_select_isles ( struct Plus_head *Plus, BOUND_BOX *box, struct ilist *list ) 
 {
-    /* TODO */
-    return -1;
+    struct Rect rect;
+    
+    G_debug(3, "dig_select_isles()" );
+    
+    list->n_values = 0;
+
+    rect.boundary[0] = box->W; rect.boundary[1] = box->S; rect.boundary[2] = box->B;
+    rect.boundary[3] = box->E; rect.boundary[4] = box->N; rect.boundary[5] = box->T;
+    RTreeSearch( Plus->Isle_spidx, &rect, (void *) _add_item, list);
+    
+    return ( list->n_values );
 }
 
-/************************* WRITE TO FILE *********************************/
-/* dig_write_spidx_nodes() 
-*  Write spatial index for nodes to plus file.
-*
-*  returns: 0 OK
-*          -1 error
-*/
-int
-dig_write_spidx_nodes ( FILE * fp, struct Plus_head *Plus ) 
-{
-    /* TODO */ 
 
-    return 0;
-}
-
-/* dig_write_spidx_lines() 
-*  Write spatial index for lines to plus file.
-*
-*  returns: 0 OK
-*          -1 error
-*/
-int
-dig_write_spidx_lines ( FILE * fp, struct Plus_head *Plus ) 
-{
-    /* TODO */ 
-    
-    return 0;
-}
-
-/* dig_write_spidx_areas() 
-*  Write spatial index for areas to plus file.
-*
-*  returns: 0 OK
-*          -1 error
-*/
-int
-dig_write_spidx_areas ( FILE * fp, struct Plus_head *Plus ) 
-{
-    /* TODO */ 
-    
-    return 0;
-}
-
-/* dig_write_spidx_isles() 
-*  Write spatial index for isles to plus file.
-*
-*  returns: 0 OK
-*          -1 error
-*/
-int
-dig_write_spidx_isles ( FILE * fp, struct Plus_head *Plus ) 
-{
-    /* TODO */ 
-    
-    return 0;
-}
-
-/************************* READ FROM FILE *********************************/
-/* dig_read_spidx_nodes() 
-*  Reas spatial index for nodes from plus file.
-*
-*  returns: 0 OK
-*          -1 error
-*/
-int
-dig_read_spidx_nodes ( FILE * fp, struct Plus_head *Plus ) 
-{
-    /* TODO */
-    
-    return 0;
-}
-
-/* dig_read_spidx_lines() 
-*  Reas spatial index for lines from plus file.
-*
-*  returns: 0 OK
-*          -1 error
-*/
-int
-dig_read_spidx_lines ( FILE * fp, struct Plus_head *Plus ) 
-{
-    /* TODO */ 
-    
-    return 0;
-}
-
-/* dig_read_spidx_areas() 
-*  Reas spatial index for areas from plus file.
-*
-*  returns: 0 OK
-*          -1 error
-*/
-int
-dig_read_spidx_areas ( FILE * fp, struct Plus_head *Plus ) 
-{
-    /* TODO */ 
-    
-    return 0;
-}
-
-/* dig_read_spidx_isles() 
-*  Reas spatial index for isles from plus file.
-*
-*  returns: 0 OK
-*          -1 error
-*/
-int
-dig_read_spidx_isles ( FILE * fp, struct Plus_head *Plus ) 
-{
-    /* TODO */ 
-    
-    return 0;
-}
-/************************* LOCAL ROUTINES *********************************/
-int nodecmp ( char *v1, char *v2 ) 
-{
-      double *c1, *c2;
-
-      c1 = (double *) v1;
-      c2 = (double *) v2;
-
-      if ( c1[0] < c2[0] ) return -1;         /* x1 < x2 */
-      else if ( c1[0] > c2[0] ) return  1;    /* x1 > x2 */
-      else if ( c1[1] < c2[1] ) return -1;    /* x1 = x2 & y1 < y2 */
-      else if ( c1[1] > c2[1] ) return  1;    /* x1 = x2 & y1 > y2 */
-      else if ( c1[2] < c2[2] ) return -1;    /* x1 = x2 & y1 = y2 & z1 < z2 */
-      else if ( c1[2] > c2[2] ) return -1;    /* x1 = x2 & y1 = y2 & z1 > z2 */
-      else return 0;                         /* x1 = x2 & y1 = y2 & z1 = z2 */
-    
-}
-
-/* find first node which is <= box corner or first node if no one is <=
-* 
-*  returns:  index of node in btree
-*            0 if tree is empty
-*/
-int nodefirst ( BTREE *B, double bx, double by, double bz)
-{
-    register int q;
-    int (*cmp)();
-    int dir;
-    double c[3];
-    char  *key;
-    int  last;
-
-    if (B->N <= 0)
-	return 0;
-    
-    c[0] = bx;
-    c[1] = by;
-    c[2] = bz;
-    key = (char *) c;
-    
-    cmp = B->cmp;
-
-    q = 1; last = 1;
-    while ( 1 )
-    {
-	dir = (*cmp)(B->node[q].key, key) ;
-	
-	if (dir == 0) {
-	    return q;
-	} 
-	
-	if (dir > 0) {
-	    q = B->node[q].left;             /* go left */
-	}
-	else 
-	{
-	    q = B->node[q].right;            /* go right */
-	}
-	
-	if ( q > 0 )
-	    last = q;
-	else 
-	    return last;
-    }
-    
-    return 0; /* not reached */
-}

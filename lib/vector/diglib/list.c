@@ -28,6 +28,8 @@ dig_init_list ( struct ilist *list )
     list->value = NULL;
     list->n_values = 0;
     list->alloc_values = 0;
+    
+    return 1;
 }
 
 /* Init add item to list */

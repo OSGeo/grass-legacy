@@ -19,9 +19,7 @@
 *****************************************************************************/
 #include <string.h>
 #include "gis.h"
-#include "portable.h"
 #include "Vect.h"
-
 
 int
 dig__write_head ( struct Map_info *Map )

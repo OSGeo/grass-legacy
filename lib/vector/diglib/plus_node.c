@@ -40,9 +40,8 @@ dig_node_add_line ( struct Plus_head *plus, int nodeid, int lineid,
 {
     register int i, j, nlines;
     float angle;
-    int end, ret;
+    int ret;
     P_NODE *node;
-    char *p;
 
     G_debug (3, "dig_node_add_line(): node = %d line = %d", nodeid, lineid);
 
@@ -53,22 +52,15 @@ dig_node_add_line ( struct Plus_head *plus, int nodeid, int lineid,
     ret = dig_node_alloc_line ( node, 1);
     if ( ret == -1 ) return -1;
     
-    //end = line < 0 ? points->n_points - 1 : 0;
-
     if ( type & GV_LINES ) { 
 	if (lineid < 0)
-	{
-	  //angle = dig_calc_end_angle (points, map->head.map_thresh);
 	  angle = dig_calc_end_angle (points, 0);
-	}
 	else
-	{
-	  //angle = dig_calc_begin_angle (points, map->head.map_thresh);
 	  angle = dig_calc_begin_angle (points, 0);
-	}
     } else {
-	angle = 9.;
+	angle = -9.;
     }
+    G_debug (3, "    angle = %f", angle);
 	
     /* make sure the new angle is less than the empty space at end */
     node->angles[nlines] = 999.;
@@ -106,7 +98,6 @@ dig_node_add_line ( struct Plus_head *plus, int nodeid, int lineid,
 int 
 dig_add_node ( struct Plus_head *plus, double x, double y, double z) {
     int  nnum;
-    char *p;
     P_NODE *node;
     
     /* First look if we have space in array of pointers to nodes
@@ -184,6 +175,35 @@ dig_which_node ( struct Plus_head *plus, double x, double y, double thresh) {
   return (winner);
 }				/*  which_node ()  */
 
+/* dig_node_get_line_angle ()
+**   Lines is specified by line ID in topology, NOT by order number.
+**   Negative ID if looking for line end point.
+**
+**   Returns  line angle <-PI,PI>
+**            9 not a line (point/degenerate)
+*/
+float
+dig_node_line_angle ( struct Plus_head *plus, int nodeid, int lineid )
+{
+    int    i, nlines;
+    P_NODE *node;
+
+    G_debug (3, "dig_node_line_angle: node = %d line = %d", nodeid, lineid);
+
+    node = plus->Node[nodeid];
+    nlines = node->n_lines;
+
+    for (i = 0; i < nlines; i++)
+    {
+      if ( node->lines[i] == lineid )
+	  return ( node->angles[i] );
+    }
+
+    G_fatal_error ("Attempt to read line angle for the line which is not connected to the node: "
+	           "node = %d line = %d", nodeid, lineid);
+    
+    return 0.0; /* not reached */
+}
 
 static double 
 dist_squared (double x1, double y1, double x2, double y2)

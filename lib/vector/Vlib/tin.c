@@ -35,7 +35,7 @@ Vect_tin_get_z (
   struct Plus_head *Plus;
   P_AREA *Area;
   static struct line_pnts *Points;
-  static first_time = 1;
+  static int first_time = 1;
   double *x, *y, *z;
   double vx1, vx2, vy1, vy2, vz1, vz2;
   double a, b, c, d;

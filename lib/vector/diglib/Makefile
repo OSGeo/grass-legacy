@@ -20,6 +20,7 @@ LIB_OBJS = \
     poly.o \
     portable.o \
     spindex.o  \
+    spindex_rw.o  \
     struct_alloc.o
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make

@@ -19,34 +19,54 @@
 *****************************************************************************/
 #include "Vect.h"
 
-static long write_dummy () { return -1; }
-static long rewrite_dummy () { return -1; }
-static int  delete_dummy () { return -1; }
+static long write_dummy () { 
+    G_warning ( "Vect_write_line() for this format/level not supported");
+    return -1; 
+}
+static int rewrite_dummy () { 
+    G_warning ( "Vect_rewrite_line() for this format/level not supported");
+    return -1; 
+}
+static int  delete_dummy () { 
+    G_warning ( "Vect_delete_line() for this format/level not supported");
+    return -1; 
+}
 
-static long (*Write_line_array[][2]) () =
+static long (*Write_line_array[][3]) () =
 {
-    { write_dummy, V1_write_line_nat } 
-   ,{ write_dummy, write_dummy }
+    { write_dummy, V1_write_line_nat, V2_write_line_nat } 
+   ,{ write_dummy, write_dummy, write_dummy }
 #ifdef HAVE_POSTGRES
-   ,{ write_dummy, V1_write_line_post } 
+   ,{ write_dummy, V1_write_line_post, write_dummy } 
 #endif
 };
 
-static long (*V1_rewrite_line_array[][2]) () =
+static int (*Vect_rewrite_line_array[][3]) () =
 {
-    { rewrite_dummy, V1_rewrite_line_nat } 
-   ,{ rewrite_dummy, rewrite_dummy }
+    { rewrite_dummy, rewrite_dummy, V2_rewrite_line_nat } 
+   ,{ rewrite_dummy, rewrite_dummy, rewrite_dummy }
 #ifdef HAVE_POSTGRES
-   ,{ rewrite_dummy, V1_rewrite_line_post } 
+   ,{ rewrite_dummy, rewrite_dummy, rewrite_dummy } 
 #endif
 };
 
-static int (*V1_delete_line_array[][2]) () =
+/*
+static int (*V1_delete_line_array[][3]) () =
 {
-    { delete_dummy, V1_delete_line_nat } 
-   ,{ delete_dummy, delete_dummy }
+    { delete_dummy, V1_delete_line_nat, delete_dummy } 
+   ,{ delete_dummy, delete_dummy, delete_dummy }
 #ifdef HAVE_POSTGRES
-   ,{ delete_dummy, V1_delete_line_post } 
+   ,{ delete_dummy, V1_delete_line_post, delete_dummy } 
+#endif
+};
+*/
+
+static int (*Vect_delete_line_array[][3]) () =
+{
+    { delete_dummy, delete_dummy, V2_delete_line_nat } 
+   ,{ delete_dummy, delete_dummy, delete_dummy }
+#ifdef HAVE_POSTGRES
+   ,{ delete_dummy, delete_dummy, delete_dummy } 
 #endif
 };
 
@@ -77,13 +97,13 @@ Vect_write_line (Map, type, points, cats)
 *  the number of points or cats or type may change.
 *  If necessary, the old line is deleted and new is written.
 *  
-*  Returns: offset into file where the line starts
+*  Returns: number of new line
 *           -1 on error 
 */
-long
-V1_rewrite_line (Map, offset, type, points, cats )
+int
+Vect_rewrite_line (Map, line, type, points, cats )
      struct Map_info *Map;
-     long offset;
+     int line;
      int type;
      struct line_pnts *points;
      struct line_cats *cats;
@@ -91,7 +111,7 @@ V1_rewrite_line (Map, offset, type, points, cats )
 #ifdef GDEBUG
     G_debug (3, "Vect_rewrite_line(): name = %s", Map->name);
 #endif
-    return (*V1_rewrite_line_array[Map->format][Map->level]) (Map, offset, type, points, cats);
+    return (*Vect_rewrite_line_array[Map->format][Map->level]) (Map, line, type, points, cats);
 }
 
 /*
@@ -100,14 +120,49 @@ V1_rewrite_line (Map, offset, type, points, cats )
 *  Returns: 0 ok
 *          -1 on error 
 */
+/*
 int
 V1_delete_line (Map, offset )
      struct Map_info *Map;
      long offset;
 {
 #ifdef GDEBUG
-    G_debug (3, "Vect_delete_line(): name = %s", Map->name);
+    G_debug (3, "V1_delete_line(): name = %s", Map->name);
 #endif
     return (*V1_delete_line_array[Map->format][Map->level]) (Map, offset);
+}
+*/
+
+/*
+*  Deletes line of given number. Map must be opened on level 2.
+*  
+*  Returns: 0 ok
+*          -1 on error 
+*/
+int
+Vect_delete_line (Map, line )
+     struct Map_info *Map;
+     int line;
+{
+    int ret;
+    
+    G_debug (3, "Vect_delete_line(): name = %s", Map->name);
+    
+    if ( Map->level < 2 ) {
+	G_warning ("Cannot delete the line, map '%s' is not opened on level 2", Map->name );
+        return -1;
+    }
+    
+    if ( Map->mode != GV_MODE_RW && Map->mode != GV_MODE_WRITE ) {
+	G_warning ("Cannot delete the line, map '%s' is not in opened in 'write' mode", Map->name );
+        return -1;
+    }
+    
+    ret = (*Vect_delete_line_array[Map->format][Map->level]) (Map, line);
+
+    if ( ret == -1 )
+	G_warning ( "Vect_delete_line() failed");
+    
+    return ret;
 }
 

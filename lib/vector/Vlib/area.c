@@ -45,6 +45,11 @@ Vect_get_area_points (
   Plus = &(Map->plus);
   Area = Plus->Area[area];
 
+  if ( Area == NULL ) { /* dead area */
+      G_warning ("Attempt to read points of nonexisting area" ); 
+      return -1;      /* error , because we should not read dead areas */
+  }
+  
   if (first_time == 1){
       Points = Vect_new_line_struct ();	
       first_time = 0;
@@ -232,8 +237,14 @@ Vect_get_area_area (
   struct line_pnts * Points;
   double size;
   int i;
+  static int first_time = 1;
   
   G_debug ( 3, "Vect_get_area_area(): area = %d", area );	
+
+  if (first_time == 1) {
+      G_begin_polygon_area_calculations();
+      first_time = 0;
+  }
 
   Points = Vect_new_line_struct();
   Plus = &(Map->plus);
@@ -249,6 +260,8 @@ Vect_get_area_area (
   }
   
   Vect_destroy_line_struct(Points);
+  
+  G_debug ( 3, "    area = %f", size );	
   
   return ( size );
 }

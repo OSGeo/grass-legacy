@@ -46,7 +46,7 @@ V1_close_post (struct Map_info *Map)
   if (!VECT_OPEN (Map))
     return -1;
 
-  if (Map->mode & (MODE_WRITE | MODE_RW))
+  if (Map->mode & (GV_MODE_WRITE | GV_MODE_RW))
     Vect__write_head (Map);
 
   free (Map->name);
@@ -93,7 +93,7 @@ V2_close_post (struct Map_info *Map)
   Plus = &(Map->plus);
 
   /* Save topo if necessary */
-  if (Plus->mode & (MODE_WRITE | MODE_RW))
+  if (Plus->mode & (GV_MODE_WRITE | GV_MODE_RW))
     {
       Vect_save_topo (Map);
       dig_free_plus (Plus);

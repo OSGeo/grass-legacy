@@ -68,6 +68,7 @@ chorder ( void * ptr, int size , int step, int count)
 	ptr += step;
       }	
 }
+*/
 
 /* read doubles from the PVF file */
 int 
@@ -202,12 +203,13 @@ dig__fread_port_L (
       for (i = 0; i < cnt; i++)
 	{
 	  /* set to FF if the value is negative */	
-          if ( Cur_Head->byte_order == ENDIAN_LITTLE )
+          if ( Cur_Head->byte_order == ENDIAN_LITTLE ) {
 	      if ( c1[PORT_LONG-1] & 0x80 )
                   memset (c2, 0xff, sizeof(long)); 
-	  else
+	  } else {
 	      if ( c1[0] & 0x80 )
                   memset (c2, 0xff, sizeof(long)); 
+	  }
           for (j = 0; j < PORT_LONG; j++)
 	  	c2[Cur_Head->lng_cnvrt[j]] = c1[j];
 	  c1 += PORT_LONG;
@@ -276,12 +278,13 @@ dig__fread_port_I (
       for (i = 0; i < cnt; i++)
 	{
 	  /* set to FF if the value is negative */	
-          if ( Cur_Head->byte_order == ENDIAN_LITTLE )
+          if ( Cur_Head->byte_order == ENDIAN_LITTLE ) {
 	      if ( c1[PORT_INT-1] & 0x80 )
                   memset (c2, 0xff, sizeof(int)); 
-	  else
+	  } else {
 	      if ( c1[0] & 0x80 )
                   memset (c2, 0xff, sizeof(int)); 
+	  }
           for (j = 0; j < PORT_INT; j++)
 	  	c2[Cur_Head->int_cnvrt[j]] = c1[j];
 	  c1 += PORT_INT;
@@ -350,12 +353,13 @@ dig__fread_port_S (
       for (i = 0; i < cnt; i++)
 	{
 	  /* set to FF if the value is negative */	
-          if ( Cur_Head->byte_order == ENDIAN_LITTLE )
+          if ( Cur_Head->byte_order == ENDIAN_LITTLE ) {
 	      if ( c1[PORT_SHORT-1] & 0x80 )
                   memset (c2, 0xff, sizeof(short)); 
-	  else
+	  } else {
 	      if ( c1[0] & 0x80 )
                   memset (c2, 0xff, sizeof(short)); 
+	  }
           for (j = 0; j < PORT_SHORT; j++)
 	  	c2[Cur_Head->shrt_cnvrt[j]] = c1[j];
 	  c1 += PORT_SHORT;
