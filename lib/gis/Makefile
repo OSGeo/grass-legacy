@@ -47,6 +47,7 @@ LIB_OBJS = \
     color_rule.o \
     color_ryg.o \
     color_set.o \
+    color_str.o \
     color_shift.o \
     color_wave.o \
     color_write.o \
