@@ -24,21 +24,19 @@ The legend's default size is based on the dimensions of the
 active frame, specifically its height.  <EM>d.legend</EM> will only
 obscure those portions of the active frame that directly underlie the legend.
 <p>
-When using the mouse or <B>at</B> to size &amp; place the legend, if the user
-makes a horizontal box the values run from left to right and no category
-values are printed (you may want to use <EM><A HREF ="d.label.html">d.label
-</A></EM> for that). A horizontal legend is created if the box is wider than
-it is tall.
+When using the mouse or <B>at</B> to size &amp; place the legend, a user may
+create a horizontal legend by making the box wider than it is tall.
 <p>
 Raster maps based on floating point values will display smoothed, from greatest
 to smallest value, while categorial raster maps will display in order, from
-top to bottom. If the box is defined with inverted y-values or an inverted
-<B>range</B>, the legend will automatically flip. If this is not the desired
-result, the <B>-f</B> flag may be used to flip it back.
+top to bottom. Horizontal legends will always be smoothed. If the box is defined
+with inverted y-values or an inverted <B>range</B>, the legend will automatically
+flip. If this is not the desired result, the <B>-f</B> flag may be used to flip
+it back.
 <p>
 If the user attempts to display a very long legend in a relatively short 
 display frame, the legend may appear in unreadably small text, or even revert
-to a smooth gradient legend. Use the <B>lines</B>, <B>thin</B>, <B>range</B>,
+to a smooth gradient legend. Use the <B>lines</B>, <B>thin</B>, <B>use</B>, <B>range</B>,
 and/or <B>-n</B> options to reduce the number of categories to be displayed,
 or the <B>-s</B> flag to force a smooth gradient legend.
 <p>
@@ -53,38 +51,38 @@ The <B>thin</B> option sets the thinning factor. For raster maps with a 0th
 category, <B>thin=</B><EM>10</EM> gives cats [0,10,20,...]. For raster maps 
 starting at category 1, <B>thin=</B><EM>10</EM> gives cats [1,11,21,...].
 <p>
+The <B>use</B> option lets the user create a legend made up of arbitrary category
+values. e.g.&nbsp;<B>use=</B><EM>1000,100,10,0,-10,-100,-1000</EM>
+<p>
 The <B>range</B> option lets the user define the minimum and maximum categories
 to be used in the legend. It may also be used to define the limits of a smooth
 gradient legend created from a raster containing floating point values. Note
 the color scale will remain faithful to the category values as defined with
-<EM><A HREF="r.colors.html">r.colors</A></EM>.
+<EM><A HREF="r.colors.html">r.colors</A></EM>, and the <B>range</B> may be
+extended to the limits defined by the <EM><A HREF="r.colors.html">r.colors</A></EM>
+color map.
 <p>
 The flag <B>-n</B> is useful for categorial maps, as it suppresses the
 drawing of non-existing categories (otherwise the full range is shown).
 <p>
-Vertical legends produced with <EM>d.legend</EM> will produce text labels to the
-right of the legend box. This text will be auto-scaled to fit within the frame,
-reducing the size of the legend if necessary. Legends positioned with the mouse
-or with the <B>at</B> option will not auto-scale text, in order to provide more
-control to the user. Smaller text may be obtained in this case by reducing the
+Vertical legends produced with <EM>d.legend</EM> will place text labels to the
+right of the legend box, horizontal legends will place text below. This text
+will be auto-scaled to fit within the frame, reducing the size of the legend
+if necessary. Legends positioned with the mouse or with the <B>at</B> option
+will not auto-scale text, in order to provide more control to the user.
+Smaller text may be obtained in this case by reducing the
 height of the box. The <B>-c</B> and <B>-v</B> flags may be used to suppress the
 display of category numbers and labels respectively, or used together to 
 suppress all text of categorial raster maps.
 <p>
 The text produced from floating-point raster maps will automatically create
 output with a meaningful number of significant digits. For very small values,
-numbers will be expressed in scientific notation, e.g. "1.7e-9".
+numbers will be expressed in scientific notation, e.g.&nbsp;"1.7e-9".
 <p>
 Note that old scripts which relied on setting <B>lines</B> greater than the
 number of categories to scale the legend may no longer produce the desired
 output, although the auto-scaling should still produce something that looks 
 good in this case.
-
-
-<H2>TODO</H2>
-
-- Add <B>use</B> option for legends of discrete category numbers/values only.<BR>
-- Text labels for horizontal legends.<BR>
 
 
 <H2>SEE ALSO</H2>
