@@ -272,10 +272,8 @@ echo""
 echo "Creating the monitor fifos..."
 rm -f $DESTDIR/dev/fifo.*
 
-# Create script with paths updated:
-sed 's#^DEV=.*#DEV='$DESTDIR'/dev#' $DESTDIR/dev/create_fifos.sh > $DESTDIR/dev/create_fifos_new.sh
-chmod ugo+x $DESTDIR/dev/create_fifos_new.sh
-sh $DESTDIR/dev/create_fifos_new.sh
+# Create the fifos
+sh $DESTDIR/dev/create_fifos.sh $DESTDIR
 
 echo "Installation finished. Start GRASS $NAME_VER with"
 echo "    grass$NAME_VER"
