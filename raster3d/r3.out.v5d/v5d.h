@@ -59,7 +59,7 @@ typedef unsigned short V5Dushort;   /* Must be 2 byte, except for cray */
 #define MAXVARS      30
 #define MAXTIMES    400
 #define MAXROWS     400
-#define MAXCOLUMNS  800 
+#define MAXCOLUMNS  400 
 #define MAXLEVELS   100
 
 
