@@ -78,3 +78,4 @@ lis37    "Lisbon_1937"    international dx=99999    dy=99999    dz=99999
 ngo48    "NGO_1948"	  modif_bessel  dx=99999    dy=99999    dz=99999
 # http://www.linz.govt.nz/rcs/linz/pub/web/root/core/SurveySystem/GeodeticInfo/GeodeticDatums/nzgd49tonzgd2000/index.jsp
 nzgd49   "New_Zealand_Geodetic_Datum_1949"       international dx=54.4  dy=-20.1  dz=183.1
+nzgd2k   "New_Zealand_Geodetic_Datum_2000"       grs80    dx=0   dy=0    dz=0
