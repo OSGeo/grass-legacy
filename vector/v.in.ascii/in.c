@@ -14,10 +14,10 @@ main (int argc, char *argv[])
 	struct GModule *module;
 	struct Option *old, *new, *columns_opt, *xcol_opt, *ycol_opt, *zcol_opt, *catcol_opt;
 	int    xcol, ycol, zcol, catcol;
-	struct Flag *zcoorf;
-	char   *mapset;
+	struct Flag *zcoorf, *t_flag;
+	char   *mapset, *table;
 	char   errmsg[200];
-	int    zcoor=WITHOUT_Z, points_format; 
+	int    zcoor=WITHOUT_Z, points_format, make_table; 
 
 	struct Map_info Map;
 
@@ -83,6 +83,10 @@ main (int argc, char *argv[])
 	zcoorf = G_define_flag ();
         zcoorf->key           	= 'z';
 	zcoorf->description   	= "create 3D file";  
+
+	t_flag = G_define_flag();
+	t_flag->key              = 't';
+	t_flag->description      = "Do not create table in points mode.";
 	
 	if (G_parser (argc, argv))
 		exit(-1);
@@ -140,141 +144,12 @@ main (int argc, char *argv[])
 	    }
 	    unlink(tmp);
 
-	    Fi = Vect_default_field_info ( &Map, 1, NULL, GV_1TABLE );
-	    driver = db_start_driver_open_database ( Fi->driver, Vect_subst_var(Fi->database,&Map) );
-	    if ( driver == NULL ) {
-		G_fatal_error ( "Cannot open database %s by driver %s",
-			Vect_subst_var(Fi->database,&Map), Fi->driver );
-	    }
-	    db_begin_transaction ( driver );
-
-	    db_init_string (&sql);
-	    sprintf ( buf, "create table %s ( ", Fi->table );
-	    db_append_string ( &sql, buf );
-
-	    if ( catcol < 0 ) { 
-		db_append_string ( &sql, "cat integer, " );
-	    }
-
 	    points_analyse ( stdin, ascii, "|", PNT_HEAD_NO, &rowlen, &ncols, &minncols, &coltype, &collen);
 	    fprintf ( stderr, "Maximum input row length: %d\n", rowlen);
 	    fprintf ( stderr, "Maximum number of columns: %d\n", ncols);
 	    fprintf ( stderr, "Minimum number of columns: %d\n", minncols);
-	    for ( i = 0 ; i < ncols; i++ ) {
-		fprintf ( stderr, "column: %d  type: ", i+1);
-		if ( i > 0 && !columns_opt->answer ) {
-		    db_append_string ( &sql, ", " );
-		}
-		if ( catcol == i && coltype[i] != DB_C_TYPE_INT ) 
-		    G_fatal_error ("Category column is not integer");
 
-		switch ( coltype[i] ) {
-		    case DB_C_TYPE_INT:
-			fprintf ( stderr, "integer\n");
-			if ( !columns_opt->answer ) {
-			    sprintf ( buf, "int_%d integer", n_int+1);
-	                    db_append_string ( &sql, buf);
-		            if ( catcol == i ) {
-			        sprintf ( buf, "int_%d", n_int+1);
-			        key = G_store( buf );
-			    }
-		        }
-			n_int++;
-			break;
-		    case DB_C_TYPE_DOUBLE:
-			fprintf ( stderr, "double\n");
-			if ( !columns_opt->answer ) {
-			    sprintf ( buf, "dbl_%d double precision", n_double+1);
-	                    db_append_string ( &sql, buf);
-		        }
-			n_double++;
-			break;
-		    case DB_C_TYPE_STRING:
-			fprintf ( stderr, "string  length: %d\n", collen[i]);
-			if ( !columns_opt->answer ) {
-			    sprintf ( buf, "str_%d varchar(%d)", n_string+1, collen[i]);
-	                    db_append_string ( &sql, buf);
-		        }
-			n_string++;
-			break;
-		}
-	    }
-	    if ( columns_opt->answer ) {
-		db_append_string ( &sql, columns_opt->answer );
-	    }
-	    db_append_string ( &sql, " )" );
-	    
-	    /* this link is added with default 'cat' key, later deleted and replaced by true key name,
-	     * otherwise if module crashes when the table exists but link is not written it makes troubles */ 
-	    Vect_map_add_dblink ( &Map, 1, NULL, Fi->table, "cat", Fi->database, Fi->driver);
-
-	    /* Create table */
-	    G_debug ( 3, db_get_string ( &sql ) );
-	    if (db_execute_immediate (driver, &sql) != DB_OK ) {
-		G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql )  );
-	    }
-
-	    /* Check column types */
-	    if ( columns_opt->answer ) {
-		int nc;
-		dbTable *table;
-		dbColumn *column;
-		
-		db_set_string ( &sql, Fi->table );
-		if(db_describe_table (driver, &sql, &table) != DB_OK)
-		    G_fatal_error ("Cannot describe table %s", Fi->table);
-			    
-		nc = db_get_table_number_of_columns(table);
-
-		if ( (catcol >= 0 && nc != ncols) || (catcol < 0 && (nc-1) != ncols) ) {
-		    G_fatal_error ("Number of columns defined (%d) does not match number of columns (%d) "
-			    "in input", nc, ncols);
-		}
-
-		for ( i = 0; i < ncols; i++ ) {
-		    int dbcol, ctype, length;
-
-		    if ( catcol < 0 ) dbcol = i+1; /* first is category */
-		    else dbcol = i;
-		    
-		    column = db_get_table_column ( table, dbcol );
-		    ctype =  db_sqltype_to_Ctype ( db_get_column_sqltype(column) );
-		    length = db_get_column_length ( column );
-		    
-		    if ( catcol == i ) { /* if catcol == -1 it cannot be tru */
-			key = G_store(db_get_column_name(column));
-		    }
-
-		    switch ( coltype[i] ) {
-			case DB_C_TYPE_INT:
-			    if ( ctype == DB_C_TYPE_DOUBLE ) {
-			        G_warning ( "Column %d defined as double has only integer values", i+1);
-			    } else if ( ctype == DB_C_TYPE_STRING ) {
-			        G_warning ( "Column %d defined as string has only integer values", i+1);
-			    }
-			    break;
-			case DB_C_TYPE_DOUBLE:
-			    if ( ctype == DB_C_TYPE_INT ) {
-			        G_fatal_error ( "Column %d defined as integer has double values", i+1);
-			    } else if ( ctype == DB_C_TYPE_STRING ) {
-			        G_fatal_error ( "Column %d defined as string has double values", i+1);
-			    }
-			    break;
-			case DB_C_TYPE_STRING:
-			    if ( ctype == DB_C_TYPE_INT ) {
-			        G_fatal_error ( "Column %d defined as integer has string values", i+1);
-			    } else if ( ctype == DB_C_TYPE_DOUBLE ) {
-			        G_fatal_error ( "Column %d defined as double has string values", i+1);
-			    }
-			    if ( length < collen[i] ) {
-				G_fatal_error ( "Length of column %d (%d) is less than maximum value "
-					        "length (%d)", i+1, length, collen[i]);
-			    }
-			    break;
-		    }
-		}
-	    }
-
+	    /* check column numbers */
 	    if ( xcol >= minncols ) G_fatal_error ( "xcol > minimum last column number"); 
 	    if ( ycol >= minncols ) G_fatal_error ( "ycol > minimum last column number"); 
 	    if ( zcol >= minncols ) G_fatal_error ( "zcol > minimum last column number"); 
@@ -285,21 +160,172 @@ main (int argc, char *argv[])
 	    if ( zcol >= 0 && coltype[zcol] == DB_C_TYPE_STRING ) G_fatal_error ( "zcol is not number");
 	    if ( catcol >= 0 && coltype[catcol] == DB_C_TYPE_STRING ) G_fatal_error ( "catcol is not number");
 
-	    if ( catcol < 0 ) {
-	       key = "cat";	
-	    } else if ( !columns_opt->answer ) {
-		
-
+	    /* Create table */
+	    make_table = 0;
+	    for ( i = 0 ; i < ncols; i++ ) {
+		if ( xcol != i && ycol != i && zcol != i && catcol != i ) {
+		    make_table = 1;
+		    break;
+		}
 	    }
-	    Vect_map_del_dblink ( &Map, 1 );
-	    Vect_map_add_dblink ( &Map, 1, NULL, Fi->table, key, Fi->database, Fi->driver);
+	    if ( t_flag->answer ) {
+		make_table = 0;
+	    }
 
-	    points_to_bin ( ascii, rowlen, &Map, driver, Fi->table, "|", PNT_HEAD_NO, 
+	    if ( make_table ) {	
+		Fi = Vect_default_field_info ( &Map, 1, NULL, GV_1TABLE );
+		driver = db_start_driver_open_database ( Fi->driver, Vect_subst_var(Fi->database,&Map) );
+		if ( driver == NULL ) {
+		    G_fatal_error ( "Cannot open database %s by driver %s",
+			    Vect_subst_var(Fi->database,&Map), Fi->driver );
+		}
+		db_begin_transaction ( driver );
+
+		db_init_string (&sql);
+		sprintf ( buf, "create table %s ( ", Fi->table );
+		db_append_string ( &sql, buf );
+
+		if ( catcol < 0 ) { 
+		    db_append_string ( &sql, "cat integer, " );
+		}
+
+		for ( i = 0 ; i < ncols; i++ ) {
+		    fprintf ( stderr, "column: %d  type: ", i+1);
+		    if ( i > 0 && !columns_opt->answer ) {
+			db_append_string ( &sql, ", " );
+		    }
+		    if ( catcol == i && coltype[i] != DB_C_TYPE_INT ) 
+			G_fatal_error ("Category column is not integer");
+
+		    switch ( coltype[i] ) {
+			case DB_C_TYPE_INT:
+			    fprintf ( stderr, "integer\n");
+			    if ( !columns_opt->answer ) {
+				sprintf ( buf, "int_%d integer", n_int+1);
+				db_append_string ( &sql, buf);
+				if ( catcol == i ) {
+				    sprintf ( buf, "int_%d", n_int+1);
+				    key = G_store( buf );
+				}
+			    }
+			    n_int++;
+			    break;
+			case DB_C_TYPE_DOUBLE:
+			    fprintf ( stderr, "double\n");
+			    if ( !columns_opt->answer ) {
+				sprintf ( buf, "dbl_%d double precision", n_double+1);
+				db_append_string ( &sql, buf);
+			    }
+			    n_double++;
+			    break;
+			case DB_C_TYPE_STRING:
+			    fprintf ( stderr, "string  length: %d\n", collen[i]);
+			    if ( !columns_opt->answer ) {
+				sprintf ( buf, "str_%d varchar(%d)", n_string+1, collen[i]);
+				db_append_string ( &sql, buf);
+			    }
+			    n_string++;
+			    break;
+		    }
+		}
+		if ( columns_opt->answer ) {
+		    db_append_string ( &sql, columns_opt->answer );
+		}
+		db_append_string ( &sql, " )" );
+		
+		/* this link is added with default 'cat' key, later deleted and replaced by true key name,
+		 * otherwise if module crashes when the table exists but link is not written it makes troubles */ 
+		Vect_map_add_dblink ( &Map, 1, NULL, Fi->table, "cat", Fi->database, Fi->driver);
+
+		/* Create table */
+		G_debug ( 3, db_get_string ( &sql ) );
+		if (db_execute_immediate (driver, &sql) != DB_OK ) {
+		    G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql )  );
+		}
+
+		/* Check column types */
+		if ( columns_opt->answer ) {
+		    int nc;
+		    dbTable *table;
+		    dbColumn *column;
+		    
+		    db_set_string ( &sql, Fi->table );
+		    if(db_describe_table (driver, &sql, &table) != DB_OK)
+			G_fatal_error ("Cannot describe table %s", Fi->table);
+				
+		    nc = db_get_table_number_of_columns(table);
+
+		    if ( (catcol >= 0 && nc != ncols) || (catcol < 0 && (nc-1) != ncols) ) {
+			G_fatal_error ("Number of columns defined (%d) does not match number of columns (%d) "
+				"in input", nc, ncols);
+		    }
+
+		    for ( i = 0; i < ncols; i++ ) {
+			int dbcol, ctype, length;
+
+			if ( catcol < 0 ) dbcol = i+1; /* first is category */
+			else dbcol = i;
+			
+			column = db_get_table_column ( table, dbcol );
+			ctype =  db_sqltype_to_Ctype ( db_get_column_sqltype(column) );
+			length = db_get_column_length ( column );
+			
+			if ( catcol == i ) { /* if catcol == -1 it cannot be tru */
+			    key = G_store(db_get_column_name(column));
+			}
+
+			switch ( coltype[i] ) {
+			    case DB_C_TYPE_INT:
+				if ( ctype == DB_C_TYPE_DOUBLE ) {
+				    G_warning ( "Column %d defined as double has only integer values", i+1);
+				} else if ( ctype == DB_C_TYPE_STRING ) {
+				    G_warning ( "Column %d defined as string has only integer values", i+1);
+				}
+				break;
+			    case DB_C_TYPE_DOUBLE:
+				if ( ctype == DB_C_TYPE_INT ) {
+				    G_fatal_error ( "Column %d defined as integer has double values", i+1);
+				} else if ( ctype == DB_C_TYPE_STRING ) {
+				    G_fatal_error ( "Column %d defined as string has double values", i+1);
+				}
+				break;
+			    case DB_C_TYPE_STRING:
+				if ( ctype == DB_C_TYPE_INT ) {
+				    G_fatal_error ( "Column %d defined as integer has string values", i+1);
+				} else if ( ctype == DB_C_TYPE_DOUBLE ) {
+				    G_fatal_error ( "Column %d defined as double has string values", i+1);
+				}
+				if ( length < collen[i] ) {
+				    G_fatal_error ( "Length of column %d (%d) is less than maximum value "
+						    "length (%d)", i+1, length, collen[i]);
+				}
+				break;
+			}
+		    }
+		}
+
+		if ( catcol < 0 ) {
+		   key = "cat";	
+		} else if ( !columns_opt->answer ) {
+		    
+
+		}
+		Vect_map_del_dblink ( &Map, 1 );
+		Vect_map_add_dblink ( &Map, 1, NULL, Fi->table, key, Fi->database, Fi->driver);
+		table = Fi->table;
+	    } else { 
+		driver = NULL;
+		table = NULL;
+	    }
+
+	    points_to_bin ( ascii, rowlen, &Map, driver, table, "|", PNT_HEAD_NO, 
 		            ncols, coltype,  
 		            xcol, ycol, zcol, catcol );
 
-	    db_commit_transaction ( driver );
-	    db_close_database_shutdown_driver ( driver );
+	    if ( driver ) {
+	        db_commit_transaction ( driver );
+	        db_close_database_shutdown_driver ( driver );
+	    }
 	    fclose (ascii);
 	} else {
     	    read_head(ascii, &Map);
