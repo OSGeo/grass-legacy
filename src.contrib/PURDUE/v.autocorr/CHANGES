@@ -1,0 +1,22 @@
+/*-v.autocorr
+**
+** Author: James Darrell McCauley (mccauley@ecn.purdue.edu)
+**         USDA Fellow
+**         Department of Agricultural Engineering
+**         Purdue University
+**         West Lafayette, Indiana 47907-1146 USA
+**
+** Permission to use, copy, modify, and distribute this software and its
+** documentation for any purpose and without fee is hereby granted. This
+** software is provided "as is" without express or implied warranty.
+**
+** Reference: Griffith, Daniel A.  1987. Spatial Autcorrelation---A Primer.
+** 1710 Sixteenth St NW, Washington, DC: Assoc of Am Geographers.
+**
+** Modification History:
+** 15 Apr 92 - Created by James Darrell McCauley <mccauley@ecn.purdue.edu>
+** 20 May 92 - Added capability to calculate means and std errs
+**                                               <mccauley@ecn.purdue.edu>
+** 27 May 92 - Added chatter and -h flag <mccauley@ecn.purdue.edu>
+**/
+
