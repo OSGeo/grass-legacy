@@ -29,6 +29,7 @@ main (int argc, char **argv)
 	int color, fcolor, r, g, b;
 	int colornum = MAX_COLOR_NUM;
 	int size;
+	double minreg, maxreg, reg;
 	char map_name[128] ;
 	struct GModule *module;
 	struct Option *map_opt, *color_opt, *fcolor_opt;
@@ -38,7 +39,7 @@ main (int argc, char **argv)
 	struct Option *field_opt, *cat_opt, *lfield_opt;
 	struct Option *lcolor_opt, *bgcolor_opt, *bcolor_opt;
 	struct Option *lsize_opt, *font_opt, *xref_opt, *yref_opt;
-	struct Option *attrcol_opt;
+	struct Option *attrcol_opt, *maxreg_opt, *minreg_opt;
 	struct Flag   *_quiet, *id_flag;
 	struct cat_list *Clist;
 	int *cats, ncat;
@@ -53,9 +54,8 @@ main (int argc, char **argv)
 	SYMBOL *Symb;
 	
 	module = G_define_module();
-	module->description =
-		"Displays GRASS vector data in the active frame on the "
-		"graphics monitor.";
+	module->description = "Displays GRASS vector data in the active frame on the "
+		              "graphics monitor.";
 
 	map_opt = G_define_standard_option(G_OPT_V_MAP); 
 
@@ -158,6 +158,20 @@ main (int argc, char **argv)
 	yref_opt->options    = "top,center,bottom";
 	yref_opt->description= "Label vertical justification" ;
 	
+	minreg_opt = G_define_option() ;
+	minreg_opt->key        = "minreg" ;
+	minreg_opt->type       = TYPE_DOUBLE ;
+	minreg_opt->required   = NO ;
+	minreg_opt->description= "Minimum region size (average from height and width) "
+	                         "when map is displayed" ;
+	
+	maxreg_opt = G_define_option() ;
+	maxreg_opt->key        = "maxreg" ;
+	maxreg_opt->type       = TYPE_DOUBLE ;
+	maxreg_opt->required   = NO ;
+	maxreg_opt->description= "Maximum region size (average from height and width) "
+	                         "when map is displayed" ;
+	
 	_quiet = G_define_flag ();
 	_quiet->key		= 'v';
 	_quiet->description	= "Run verbosely";
@@ -173,7 +187,33 @@ main (int argc, char **argv)
 	if (G_parser(argc, argv))
 		exit(-1);
 	
+	G_get_set_window (&window);
+
+	if (R_open_driver() != 0)  G_fatal_error ("No graphics device selected");
+
 	/* Read map options */
+
+	/* Check min/max region */
+	reg = ((window.east - window.west) + (window.north - window.south)) / 2;
+	if ( minreg_opt->answer ) {
+	    minreg = atof ( minreg_opt->answer );
+             
+	    if ( reg < minreg ) {
+		fprintf ( stdout, "Region size is lower than minreg, nothing displayed.\n");
+	        D_add_to_list(G_recreate_command()) ;
+		exit (0);
+	    }
+	}
+	if ( maxreg_opt->answer ) {
+	    maxreg = atof ( maxreg_opt->answer );
+             
+	    if ( reg > maxreg ) {
+		fprintf ( stdout, "Region size is greater than maxreg, nothing displayed.\n");
+	        D_add_to_list(G_recreate_command()) ;
+		exit (0);
+	    }
+	}
+
 	strcpy(map_name, map_opt->answer);
 	color = WHITE;
 	ret =  G_str_to_color(color_opt->answer, &r, &g, &b);
@@ -351,9 +391,6 @@ main (int argc, char **argv)
 	        lattr.yref = LBOTTOM;
 		break;
 	  }
-	
-	if (R_open_driver() != 0)
-            G_fatal_error ("No graphics device selected");
 
 	D_setup(0);
 
@@ -364,7 +401,6 @@ main (int argc, char **argv)
 	if (!quiet)
 	     fprintf (stdout,"Plotting ... "); fflush (stdout);
 
-	G_get_set_window (&window);
 	Vect_get_map_box ( &Map, &box );
 	overlap =  G_window_percentage_overlap(&window, box.N, box.S, box.E, box.W);
 	G_debug ( 1, "overlap = %f \n", overlap );
