@@ -189,7 +189,9 @@ int main (int argc, char **argv)
          while (1)
            {
            if (!fgets (buffr, 39, in)) break;
-           sscanf (buffr, "%s", text);
+           sscanf (buffr, "%[a-zA-Z. #0-9]", text); 
+	   	/*sscanf (buffr, "%s", text); */
+		/*scan %s stops at whitespace?*/
            scan_names (&cats, text, &x);
            cat_array[cat_index] = x; cat_index++; 
            }
@@ -236,7 +238,9 @@ int main (int argc, char **argv)
          while (1)
            {
            if (!fgets (buffr, 39, in)) break;
-           sscanf(buffr, "%s", text);
+           sscanf (buffr, "%[a-zA-Z. #0-9]", text); 
+	   	/*sscanf (buffr, "%s", text); */
+		/*scan %s stops at whitespace?*/
            scan_cats (text, &x, &y);
 	   cat_index = 0;
            while (x <= y)
@@ -373,13 +377,15 @@ scan_cats (char *s, int *x, int *y)
 int scan_names (struct Categories *pcats, char *s, int *x)
 {
     int i, icode, recd;
-    char area_name[40], cat_name[40], buff[128];
+    char area_name[40], cat_name[40], buff[128]="";
     char *nptr, *cptr, *pntr1;
     char dummy[2];
 
     *dummy = 0;
-    sscanf (s, "%s%1s", area_name, dummy);
-      nptr = area_name;
+    /*sscanf (s, "%s%1s", area_name, dummy);
+      nptr = area_name;*/
+      
+      nptr=s;
 
       icode = 0;
 	/* find input string in category struct, assign category value to the
@@ -393,13 +399,17 @@ int scan_names (struct Categories *pcats, char *s, int *x)
         pntr1 = cat_name;
         cptr = buff;
         *cptr = '\0';  
-        while (1)
+        
+	while (1)
            {   /* look for cats field separator SCS version */
-           if (ispunct(*pntr1) || *pntr1 == '\0') break;
+           /*if (ispunct(*pntr1) || *pntr1 == '\0') break;*/
+	   if (*pntr1 == '\0') break;
            *(cptr) = *(pntr1);
            pntr1++; cptr++;
            }
-        *cptr = '\0';  cptr = buff;
+        
+	cptr = buff;
+	
 /*fprintf(stderr,"i= %d, compare nam|%s| :cat|%s|, num= %d\n",i,nptr,cptr,pcats->list[i].num);
   fprintf(stderr,"       compare value= %d\n",strcmp(cptr,nptr));
   sleep(2);*/
@@ -408,6 +418,7 @@ int scan_names (struct Categories *pcats, char *s, int *x)
            *x = i ; /* return category code */
            return(1);
 	   }
+	   
 	} 
 	/* end of category search for loop */
 
