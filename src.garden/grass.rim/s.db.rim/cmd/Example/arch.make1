@@ -1,7 +1,7 @@
 .make
             ====Spearfish/Deadwood Archeological Sites====
 
-Site Number: ~sSite~            East: ~xEast~~~     North: ~yNorth~~
+Site Number: ~sSite~            East: ~xEast~~~~~  North: ~yNorth~~~~
 Site Name: ~tName~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Project Name: ~tProject~~~~~~~~~~~~~~   State: ~tState~~
 Field: ~tField~~~               Quad Map: ~tQuad~~~~~~
