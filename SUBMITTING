@@ -1,4 +1,4 @@
-$Id: SUBMITTING,v 1.15 2000-12-23 10:22:03 markus Exp $
+$Id: SUBMITTING,v 1.16 2000-12-27 16:29:50 markus Exp $
 
 NOTE: Please improve this list!
 
@@ -146,7 +146,7 @@ care of following rules:
 	PGM = d.linegraph
 	OFILES = linegraph.o
 
-	LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(DATETIMELIB)
 
 	$(BIN_ALPHA_CMD)/$(PGM): $(OFILES) $(LIBES)
 		$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
