@@ -1,0 +1,11 @@
+PGM=r.cross
+HOME=$(BIN_MAIN_CMD)
+
+OBJS = main.o tree.o cross.o cats.o store.o renumber.o
+
+$(HOME)/$(PGM): $(OBJS) $(GISLIB)
+	$(CC) $(LDFLAGS) $(OBJS) $(GISLIB) -o $@
+
+$(OBJS): glob.h
+
+$(GISLIB): #
