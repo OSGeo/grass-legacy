@@ -52,15 +52,15 @@ G_begin_ellipsoid_polygon_area (a, e2)
     QbarD =                                        (4.0/49.0)*e6;
 
     Qp = Q(PI/2);
-    E  = PI * Qp;
+    E  = 4 * PI * Qp * AE;
+    if (E < 0.0) E = -E;
 }
 
 double
 G_ellipsoid_polygon_area (lon, lat, n)
     double *lon, *lat;
 {
-    double x1,y1,x2,y2,dx;
-    double sum1, sum2;
+    double x1,y1,x2,y2,dx,dy;
     double Qbar1, Qbar2;
     double area;
 
@@ -68,7 +68,7 @@ G_ellipsoid_polygon_area (lon, lat, n)
     y2 = Radians (lat[n-1]);
     Qbar2 = Qbar(y2);
 
-    sum1 = sum2 = 0.0;
+    area = 0.0;
 
     while (--n >= 0)
     {
@@ -86,15 +86,23 @@ G_ellipsoid_polygon_area (lon, lat, n)
 	else if (x2 > x1)
 	    while (x2 - x1 > PI)
 		x1 += TwoPI;
-	if ((dx = x2 - x1) == 0.0)
-	    continue;
 
-	sum1 += dx;
-	sum2 += ((y2-y1)/dx)*(Qbar2-Qbar1);
+	dx = x2 - x1;
+	area += dx * (Qp - Q(y2));
+
+	if ((dy = y2 - y1) != 0.0)
+	    area += dx * Q(y2) - (dx/dy)*(Qbar2-Qbar1);
     }
-    if((area = AE * (Qp * sum1 - sum2)) < 0.0)
+    if((area *= AE) < 0.0)
 	area = -area;
-    if (area > E/2)
-	area = E - area;
+
+    /* kludge - if polygon circles the south pole the area will be
+     * computed as if it cirlced the north pole. The correction is
+     * the difference between total surface area of the earth and
+     * the "north pole" area.
+     */
+    if (area > E) area = E;
+    if (area > E/2) area = E - area;
+
     return area;
 }
