@@ -24,6 +24,7 @@ dig_node_add_line ( struct Plus_head *plus, int nodeid, int lineid,
     P_NODE_2D *node;
     char *p;
 
+    G_debug (3, "dig_node_add_line(): node = %d line = %d", nodeid, lineid);
 
     node = plus->Node_2d[nodeid];
     nlines = node->n_lines;
@@ -70,7 +71,7 @@ dig_node_add_line ( struct Plus_head *plus, int nodeid, int lineid,
 
     node->n_lines++;
 #ifdef GDEBUG
-    G_debug (3, "dig_node_add_line(): line %d added position %d n_lines: %d angle %f\n", lineid, i, node->n_lines, angle);
+    G_debug (3, "dig_node_add_line(): line %d added position %d n_lines: %d angle %f", lineid, i, node->n_lines, angle);
 #endif
     return ((int) node->n_lines);
 }
@@ -90,7 +91,7 @@ dig_add_node ( struct Plus_head *plus, double x, double y) {
     
     /* First look if we have space in array of pointers to nodes
     *  and reallocate if necessary */
-    G_debug(3, "dig_add_node(): n_nodes = %d, alloc_nodes = %d\n", plus->n_nodes, plus->alloc_nodes );
+    G_debug(3, "dig_add_node(): n_nodes = %d, alloc_nodes = %d", plus->n_nodes, plus->alloc_nodes );
     if ( plus->n_nodes >= plus->alloc_nodes ) { /* array is full */
 	if ( dig_alloc_nodes_2d(plus,1000) == -1 )
             return -1;
@@ -107,7 +108,7 @@ dig_add_node ( struct Plus_head *plus, double x, double y) {
   
     plus->n_nodes++;
     
-    G_debug(3, "new node = %d, n_nodes = %d, alloc_nodes = %d\n", nnum, plus->n_nodes, plus->alloc_nodes );
+    G_debug(3, "new node = %d, n_nodes = %d, alloc_nodes = %d", nnum, plus->n_nodes, plus->alloc_nodes );
      
     return ( nnum );
 }
