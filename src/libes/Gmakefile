@@ -1,0 +1,3 @@
+all:
+	$(GMAKE) gis
+	$(MAKEALL)
