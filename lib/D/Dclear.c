@@ -1,3 +1,4 @@
+#include "gis.h"
 #include "raster.h"
 #include "display.h"
 
@@ -24,7 +25,7 @@ int Dclearscreen()
 		}
 	}
 
-	R_standard_color(D_translate_color("black")) ;
+	R_standard_color(D_translate_color(DEFAULT_BG_COLOR)) ;
 	R_erase() ;
 
 	return 0;
