@@ -4,13 +4,13 @@
 . .F {font|path}[:charset]		font
 . .C {color_name|0xRRGGBB}		color
 . .S [+|-]size[p]			size		p means pixel size
-. .A {ll,lc,lr,cl,cc,cr,ul,uc,ur}	align
+. .A {ll|lc|lr|cl|cc|cr|ul|uc|ur}	align
 . .R [+|-]rotation[r]			rotation	r means radian rotation
-. .X [+|-]x[%|p]			set x-coord	+|- means relative dx
-. .Y [+|-]y[%|p]			set y-coord	% means percentage
-. .L {0|1}				set auto-linefeed
-. .E [+|-]east[%|p]			set x-origin
-. .N [+|-]north[%|p]			set y-origin
+. .X [+|-]x[%|p]			x-coord		+|- means relative dx
+. .Y [+|-]y[%|p]			y-coord		% means percentage
+. .L {0|1}				linefeed
+. .E [+|-]east[%|p]			x-origin
+. .N [+|-]north[%|p]			y-origin
 . ..					draw one .
 .
 .c ALSO COMMENT
