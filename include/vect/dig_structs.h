@@ -87,7 +87,7 @@ struct dig_head
     long orig_scale;
     char *line_3;
     int plani_zone;
-    //double W, E, S, N;
+    /* double W, E, S, N; */
     double digit_thresh;
     /* double map_thresh; */ /* not used in g51 */
 
