@@ -24,6 +24,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#ifdef HAVE_OGR
+
 /* Open old file.
 *  Map->name and Map->mapset must be set before
 *
@@ -112,3 +114,4 @@ V1_open_new_ogr (
     return (-1);
 }
 
+#endif

@@ -37,6 +37,8 @@
 #include "gis.h"
 #include "Vect.h"
 
+#ifdef HAVE_OGR
+
 int Vect__Read_line_ogr ( struct Map_info *, struct line_pnts *, struct line_cats *, long );
 
 /*
@@ -245,3 +247,5 @@ Vect_last_line_offset_ogr ( struct Map_info *Map )
     
     return (Map->head.last_offset);
 }
+
+#endif

@@ -21,6 +21,8 @@
 #include "gis.h"
 #include "Vect.h"
 
+#ifdef HAVE_OGR
+
 extern FILE *Msgout;
 extern int prnmsg ( char *msg, ...) ;
 
@@ -46,4 +48,4 @@ Vect_build_ogr ( struct Map_info *Map, FILE *msgout )
     return 1;
 }
 
-
+#endif

@@ -30,12 +30,12 @@ static int (*Read_next_line_array[][3]) () =
 #ifdef HAVE_POSTGRES
    ,{ read_next_dummy, V1_read_next_line_post, V2_read_next_line_post }
 #else
-   ,{ read_old_dummy, format, format }
+   ,{ read_next_dummy, format, format }
 #endif
 #ifdef HAVE_OGR
    ,{ read_next_dummy, V1_read_next_line_ogr, V2_read_next_line_ogr }
 #else
-   ,{ read_old_dummy, format, format }
+   ,{ read_next_dummy, format, format }
 #endif
 };
 

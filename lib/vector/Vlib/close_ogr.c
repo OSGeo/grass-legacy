@@ -18,6 +18,8 @@
 #include "Vect.h"
 #include <stdlib.h>
 
+#ifdef HAVE_OGR
+
 /* 
 ** return 0 on success
 **         non-zero on error
@@ -64,4 +66,4 @@ V2_close_ogr (struct Map_info *Map)
     return -1;
 }
 
-
+#endif
