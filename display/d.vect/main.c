@@ -22,7 +22,6 @@ int
 main (int argc, char **argv)
 {
 	char *mapset ;
-	char buf[128] ;
 	int ret, level;
 	int i, stat, type, area, display;
 	int chcat = 0;
@@ -46,6 +45,9 @@ main (int argc, char **argv)
         struct field_info *fi;
         dbDriver *driver;
         dbHandle handle;
+	struct Cell_head window;
+	BOUND_BOX box;
+	double overlap;
 	
 	module = G_define_module();
 	module->description =
@@ -339,13 +341,14 @@ main (int argc, char **argv)
 	if (!quiet)
 	     fprintf (stdout,"Plotting ... "); fflush (stdout);
 
-	
-	/* look att this later
-	if (stat = plot2 (map_name, mapset, Points))
-	{
-		stat = plot1 (map_name, mapset, &lattr);
-	}
-        */
+	G_get_set_window (&window);
+	Vect_get_map_box ( &Map, &box );
+	overlap =  G_window_percentage_overlap(&window, box.N, box.S, box.E, box.W);
+	G_debug ( 1, "overlap = %f \n", overlap );
+	if ( overlap < 1 ) 
+	    Vect_set_constraint_region (&Map, window.north, window.south, 
+	        window.east, window.west, PORT_DOUBLE_MAX, -PORT_DOUBLE_MAX);
+         
 	if ( area ) {
 	    if ( level >= 2 )
 	        stat = darea ( &Map, Clist, color, fcolor, chcat );
@@ -353,15 +356,8 @@ main (int argc, char **argv)
 		G_warning ("Cannot display areas, topology not available");
         }
 
-	if ( display & DISP_SHAPE ) {
-	    /*
-	    if (level >= 2 )
-	        stat = plot2 ( &Map, type, area, Clist, color, fcolor);
-	    else
-	    */
-	        stat = plot1 ( &Map, type, area, Clist, color, fcolor, chcat, 
-			             icon, size);
-	}
+	if ( display & DISP_SHAPE ) 
+	    stat = plot1 ( &Map, type, area, Clist, color, fcolor, chcat, icon, size);
 
         R_color(color);
 	if ( display & DISP_DIR )
