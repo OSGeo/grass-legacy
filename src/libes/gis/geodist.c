@@ -70,7 +70,7 @@ double
 G_geodesic_distance_lon_to_lon (lon1, lon2)
     double lon1, lon2;
 {
-    double a, cd, d, dl, e,
+    double a, cd, d, e, /*dl,*/
 	   q, sd, sdlmr, 
 	   t, u, v, x, y;
 
