@@ -1,7 +1,4 @@
-/*  %W%  %G%  */
 /*
-
-
    Chris Rewerts, Agricultural Engineering, Purdue University
    April 1991
 */
