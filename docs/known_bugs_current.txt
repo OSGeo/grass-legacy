@@ -70,6 +70,9 @@ r.in.png/r.out.png
 r.info
  - suggestion: raster type should be printed: CELL, FCELL, DCELL
 
+r.los
+ - segmentation fault in mark_pts.c line 37
+
 src/raster/r.mapcalc/polish: (when compiling)
 make[2]: Entering directory
 /home/neteler/src5/grass5.0beta/src/raster/r.mapcalc/polish'
@@ -229,7 +232,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log$
- Revision 1.9  2000-02-09 16:28:12  markus
+ Revision 1.10  2000-02-15 17:57:10  markus
+ added r.los seg.fault
+
+ Revision 1.9  2000/02/09 16:28:12  markus
  added i.shape segfault
 
  Revision 1.8  2000/02/09 16:15:56  markus
