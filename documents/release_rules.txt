@@ -68,8 +68,44 @@ http://www.geog.uni-hannover.de/grass/grass5/source/
 
     make bindist
 
+--------------------------------------------------------------
+Pre-phase: pre-testing
 
-3. Publish it on web site:
+1. Add displaimer to all mails:
+
+ GRASS 5 beta DISCLAIMER: WARNING
+ This pre-release of GRASS 5 is in alpha-quality only. The
+ pre-release is intended to find critical bugs which would
+ cause problems in the later official release. All pre-testers
+ may submit bug reports and comments immediately to allow
+ the new official release to be published as soon as possible.
+ Please read the BUGS file to see unresolved bugs.
+ Use the bug report form to report bugs:
+ http://www.geog.uni-hannover.de/grass/bugtracking/bugreport.html 
+
+ Unless the pre-testing phase isn't finished, no official release
+ is possible.
+
+ List of pre-testers:
+ See pretesting_grass.txt
+ (find more!)
+
+
+2. while GRASS_PRE=unstable do
+
+    a) send (new) source/binary tarball to pre-testers
+    b) receive comments/bug reports
+    c) fix *only* these bugs, no other commits allowed
+    d) if no (more) complaints
+          GRASS_PRE=stable
+   done
+
+3. Proceed to publishing.
+
+--------------------------------------------------------------
+Publish the new official GRASS 5 release:
+
+1. Publish it on web site:
  - grass5x_y_bin.tar.gz
  - grass5install.sh
  - grass5uninstall.sh (if tested)
@@ -77,7 +113,7 @@ http://www.geog.uni-hannover.de/grass/grass5/source/
  - grass5x_y_src.tar.gz
 
 
-4. Tell others about it:
+2. Tell others about it:
  - related announcement press release at:
 
  Our GRASS web site: /announces/
