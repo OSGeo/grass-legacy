@@ -21,7 +21,12 @@ ifneq ($(strip $(MYSQLLIB)),)
     SUBDIRS4 = mysql
 endif
 
-SUBDIRS =  $(SUBDIRS1) $(SUBDIRS2) $(SUBDIRS3) $(SUBDIRS4)
+# add ogr:
+ifneq ($(strip $(GDALLIBS)),)
+    SUBDIRS5 = ogr
+endif
+
+SUBDIRS =  $(SUBDIRS1) $(SUBDIRS2) $(SUBDIRS3) $(SUBDIRS4) $(SUBDIRS5)
 
 default: subdirs
 
