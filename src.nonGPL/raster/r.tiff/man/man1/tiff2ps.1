@@ -1,0 +1,79 @@
+.\"	$Header: /usr/people/sam/tiff/man/man1/RCS/tiff2ps.1,v 1.6 90/11/25 11:15:48 sam Exp $
+.\"
+.\" Copyright (c) 1989 by Sam Leffler.
+.\" All rights reserved.
+.\"
+.\" This file is provided for unrestricted use provided that this
+.\" legend is included on all tape media and as a part of the
+.\" software program in whole or part.  Users may copy, modify or
+.\" distribute this file at will.
+.\"
+.TH TIFF2PS 1 "May 2, 1990"
+.SH NAME
+tiff2ps \- convert a grayscale
+.SM TIFF
+image to PostScript\(tm
+.SH SYNOPSIS
+.B tiff2ps
+[
+.B \-#
+]
+.I file
+.SH DESCRIPTION
+.I Tiff2ps
+reads a grayscale
+.SM TIFF
+image and prints Encapsulated
+PostScript (EPS) on the standard output that is suitable for
+inclusion in PostScript documents.
+The
+.B \-#
+option sets the initial
+.SM TIFF
+directory to
+.IR # .
+The emitted PostScript is of the form:
+.sp .5
+.in +5
+.nf
+gsave
+10 dict begin
+/picstr \fIbytesperrow\fP string def
+\fIw\fP \fIh\fP scale
+\fIw\fP \fIh\fP \fIbitspersample\fP
+[\fIw\fP 0 0 \-\fIh\fP 0 \fIh\fP]
+{currentfile picstr readhexstring pop} image
+\&...<data>....
+end
+grestore
+.fi
+.in -5
+.sp .5
+where
+.I w
+and
+.I h
+are width and height of the image,
+.I bytesperrow
+is the number of bytes of data in each row of the image, and
+.I bitspersample
+is the either 1, 2, 4, or 8 (according to the
+.I BitsPerSample
+tag in the file).
+.PP
+To print the resultant PostScript the image must be positioned and
+scaled on a page.
+.SH BUGS
+It should probably emit the prologue and epilogue needed to
+print the image on a standard size page.
+This program is not used because there are much better ways
+to print grayscale images in PostScript.
+.SH "SEE ALSO"
+.IR pal2rgb (1),
+.IR tiffinfo (1),
+.IR tiffcp (1),
+.IR tiffgt (1),
+.IR tiffmedian (1),
+.IR tiff2bw (1),
+.IR tiffsv (1),
+.IR libtiff (3)
