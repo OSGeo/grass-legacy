@@ -193,6 +193,7 @@ int main(int argc, char *argv[]) {
 	fprintf(stdout, "Of the non-null cells:\n----------------------\n");
     }
 
+/* TODO: median, mode */
     if(shell_style->answer) {
     	fprintf(stdout, "n=%d\n", n);
 	fprintf(stdout, "min=%g\n", min);
@@ -202,6 +203,7 @@ int main(int argc, char *argv[]) {
 	fprintf(stdout, "stddev=%g\n", stdev);
 	fprintf(stdout, "variance=%g\n", variance);
 	fprintf(stdout, "coeff_var=%g\n", var_coef);
+	fprintf(stdout, "sum=%g\n", sum);
     }
     else {
 	fprintf(stdout, "n: %d\n", n);
@@ -212,6 +214,7 @@ int main(int argc, char *argv[]) {
 	fprintf(stdout, "standard deviation: %g\n", stdev);
 	fprintf(stdout, "variance: %g\n", variance);
 	fprintf(stdout, "variation coefficient: %g %%\n", var_coef);
+	fprintf(stdout, "sum: %g\n", sum);
     }
 
 /*  if(extended->answer) {
