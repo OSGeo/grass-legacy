@@ -1,0 +1,28 @@
+#!/bin/csh -f
+
+#written by Stephan Eickschen
+#           <eicksch@gfz-potsdam.de>
+#requires GMT installed.
+
+g.region -g >! tmp.tmp
+
+#
+# the following lines could be simplfied if g.region enables a
+# one line output - a single awk line would create $reg $inc
+#
+
+set N=`grep ^n= tmp.tmp | cut -f 2 -d "="`
+set S=`grep ^s= tmp.tmp | cut -f 2 -d "="`
+set E=`grep ^e= tmp.tmp | cut -f 2 -d "="`
+set W=`grep ^w= tmp.tmp | cut -f 2 -d "="`
+set NSRES=`grep ^nsres tmp.tmp | cut -f 2 -d "="`
+set EWRES=`grep ^ewres tmp.tmp | cut -f 2 -d "="`
+
+r.stats -1xmg $1 |\
+	awk '{ if($5!=0) print $1, $2, $5 }' |\
+	xyz2grd -G$1.grd -I$EWRES/$NSRES -R$W/$E/$S/$N -V -F
+
+set X=`echo $N $S $NSRES $E $W $EWRES | awk '{ print ($4-$5)/$6/(($1-$2)/$3)*2 }'`
+
+grd2cpt $1.grd >! $1.cpt
+grdimage -JX$X/2 $1.grd -C$1.cpt -Y4 -V -K -O >> $out
