@@ -1,4 +1,3 @@
-/* %W% %G% */
 unlock_file (file)
     char *file;
 {
