@@ -8,7 +8,8 @@ LIST   = main.o \
 	 center.o\
 	 returns.o \
 	 zoom.o \
-	 redraw.o
+	 redraw.o \
+	 print.o
 
 $(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)

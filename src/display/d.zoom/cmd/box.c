@@ -6,225 +6,135 @@
 
 static int max(int,int);
 
-int make_window_box ( struct Cell_head *window, double magnify, char pan)
+int make_window_box ( struct Cell_head *window, double magnify)
 {
     char buffer[64] ;
     int screen_x, screen_y ;
-    double ux1, uy1 ;
-    double ux2, uy2 ;
+    double px, py, ux1, uy1, ux2, uy2 ;
     double north,south,east,west, ns, ew;
-    int len_n, len_s, len_e, len_w;
-    int t;
     int button ;
     int cur_screen_x, cur_screen_y ;
     int quitonly;  /* required if user just wants to quit d.zoom */
     int prebutton; /* which previous button was pressed? */
+    int mode; /* 1, 2 */
+    int resetwin;
+    struct Cell_head defwin;
+    int printmenu = 1;
+    int limit;
     
-    screen_y = get_map_top() ;
-    screen_x = get_map_left() ;
-    quitonly=0;
+    G_get_default_window(&defwin);
     
-    fprintf(stderr, "\n\n");
-    fprintf(stderr, "Buttons:\n") ;
-    fprintf(stderr, "Left:   Establish a corner to zoom in\n") ;
-#ifdef ANOTHER_BUTTON
-    fprintf(stderr, "Middle: Unzoom stepwise\n") ;
-    fprintf(stderr, "Right:  Accept region/Quit\n\n") ;
-#else
-    fprintf(stderr, "Middle: Accept region/Quit\n") ;
-    fprintf(stderr, "Right:  Unzoom stepwise\n\n") ;
-#endif
+    mode = 1;
+    while (1) {
+	resetwin = 0;
+	if ( printmenu ) {
+	    fprintf(stderr, "\n\nButtons:\n") ;
+	    fprintf(stderr, "%s 1. corner\n", LBTN) ;
+	    fprintf(stderr, "%s Unzoom\n", MBTN) ;
+	    fprintf(stderr, "%s Main menu\n\n", RBTN) ;
+	    printmenu = 0;
+	}
 
-    ux1 = D_get_u_west() ;
-    uy1 = D_get_u_south() ;
-
-    G_limit_south (&uy1, window->proj);
-    G_limit_north (&uy1, window->proj);
-    G_limit_east  (&ux1, window->proj);
-    G_limit_west  (&ux1, window->proj);
-
-    cur_screen_y = (int) D_u_to_d_row (uy1);
-    cur_screen_x = (int) D_u_to_d_col (ux1);
-
-    screen_x = cur_screen_x + 10 ;
-    screen_y = cur_screen_y + 10 ;
-
-    len_n = len_s = len_e = len_w = 0;
-    do
-    {
-	R_get_location_with_box(cur_screen_x, cur_screen_y, &screen_x, &screen_y, &button) ;
-	button &= 0xf;
-/*	fprintf (stdout,"\nscreen_x: %d screen_y: %d\n",screen_x,screen_y);*/
-
-	ux2 = D_d_to_u_col((double)screen_x)  ;
-	uy2 = D_d_to_u_row((double)screen_y)  ;
-
-	G_limit_south (&uy2, window->proj);
-	G_limit_north (&uy2, window->proj);
-	G_limit_east  (&ux2, window->proj);
-	G_limit_west  (&ux2, window->proj);
-
-	screen_y = (int) D_u_to_d_row (uy2);
-	screen_x = (int) D_u_to_d_col (ux2);
-
-	switch(button)
-	{
-	case LEFTB:
-		cur_screen_x = screen_x ;
-		cur_screen_y = screen_y ;
-		ux1 = ux2 ;
-		uy1 = uy2 ;
-		quitonly=0;
+	if ( mode == 1 ) {
+            R_get_location_with_pointer(&screen_x, &screen_y, &button);
+	    cur_screen_x = screen_x;
+	    cur_screen_y = screen_y;
+	}
+	else
+	    R_get_location_with_box(cur_screen_x, cur_screen_y, &screen_x, &screen_y, &button) ;
+	
+	/* For print only */
+	px = D_d_to_u_col((double)screen_x)  ;
+	py = D_d_to_u_row((double)screen_y)  ;
+        print_coor ( window, py, px );
+	
+	switch(button) {
+	    case LEFTB:
+		if ( mode == 1 ) {
+	            fprintf(stderr, "\n\nButtons:\n") ;
+		    fprintf(stderr, "%s 1. corner (reset)\n", LBTN) ;
+		    fprintf(stderr, "%s 2. corner\n", MBTN) ;
+		    fprintf(stderr, "%s Main menu\n\n", RBTN) ;
+		}
+		if ( mode == 2 ) {
+		  cur_screen_x = screen_x ;
+		  cur_screen_y = screen_y ;
+		}
+		mode = 2;
 		break ;
-	case MIDDLEB:
-		if (prebutton == LEFTB)
-		  quitonly=0; /* box opening */
-		else
-		  quitonly=1; /* quit only, no action*/
+	    case MIDDLEB:
+		if ( mode == 1 ) { /* unzoom */
+	            ux2 = D_d_to_u_col((double)screen_x)  ;
+	            uy2 = D_d_to_u_row((double)screen_y)  ;
+		    ew = (window->east - window->west)/magnify;
+		    ns = (window->north - window->south)/magnify;
+
+		    ux1 = window->east + ew/2;
+		    ux2 = window->west - ew/2;
+		    uy1 = window->north + ns/2;
+		    uy2 = window->south - ns/2;
+		} else {
+	            ux1 = D_d_to_u_col((double)cur_screen_x)  ;
+	            uy1 = D_d_to_u_row((double)cur_screen_y)  ;
+	            ux2 = D_d_to_u_col((double)screen_x)  ;
+	            uy2 = D_d_to_u_row((double)screen_y)  ;
+	            printmenu = 1;
+		    mode = 1;
+	            fprintf(stderr, "\n") ;
+		}
+		resetwin = 1;
 		break;
-	case RIGHTB:
-			/* ALTERNATIVE
-			 *
-			if(pan)
-			    make_window_center(window, magnify, ux2, uy2);
-			else
-			    make_window_center(window, magnify, -1.0, -1.0);
-			 */
-
-			if(pan)
-			{
-				ew = (window->east - window->west) / 2;
-				ns = (window->north - window->south) / 2;
-
-				window->east = ux2 + ew;
-				window->west = ux2 - ew;
-				window->north = uy2 + ns;
-				window->south = uy2 - ns;
-			}
-
-			ew = (window->east - window->west)/magnify;
-			ns = (window->north - window->south)/magnify;
-
-			ux1 = window->east + ew/2;
-			ux2 = window->west - ew/2;
-			uy1 = window->north + ns/2;
-			uy2 = window->south - ns/2;
-
-	        button=MIDDLEB;
-	        quitonly=2;   /* leave after unzoom */
-	        break;
+	    case RIGHTB:
+		return 1;
+		break;
 	}
+	if ( resetwin ) {
+	    north = uy1>uy2?uy1:uy2 ;
+	    south = uy1<uy2?uy1:uy2 ;
+	    west  = ux1<ux2?ux1:ux2 ;
+	    east  = ux1>ux2?ux1:ux2 ;
+	    
+            limit = 0;
+	    if ( north > defwin.north ) {
+	       /* north = defwin.north; */
+	       fprintf(stderr, "\nNorth limit of region reached") ;
+               limit = 1;
+	    } 
+	    if ( south < defwin.south ) {
+	       /* south = defwin.south; */
+	       fprintf(stderr, "\nSouth limit of region reached") ;
+               limit = 1;
+	    } 
+	    if ( east > defwin.east ) {
+	       /* east = defwin.east; */
+	       fprintf(stderr, "\nEast limit of region reached") ;
+               limit = 1;
+	    } 
+	    if ( west < defwin.west ) {
+	       /* west = defwin.west; */
+	       fprintf(stderr, "\nWest limit of region reached") ;
+               limit = 1;
+	    } 
+	    if ( limit ) {
+		printmenu = 1;
+                fprintf(stderr, "\n\n") ;
+	    }
+	    
+	    window->north = north;
+	    window->south = south;
+	    window->east  = east ;
+	    window->west  = west ;
+	    
+	    print_win ( window, north, south, east, west );
 
-	if(quitonly==2)
-	   prebutton = RIGHTB;
-	else
-	   prebutton = button;
+	    G_put_window(window);
+	    G_set_window(window);
+	    redraw();
 
-	/* ALTERNATIVE
-	 *
-	if(prebutton==LEFTB)
-	 */
-	if(prebutton==LEFTB || prebutton==RIGHTB)
-	{
-	   north = uy1;
-	   east = ux1;
-
-	   G_limit_north (&north, window->proj);
-	   G_limit_east (&east, window->proj);
-
-	   t = (window->north - north) / window->ns_res;
-	   north = window->north - (t) * window->ns_res;
-	
-	   t = (window->east - east) / window->ew_res;
-	   east = window->east - (t) * window->ew_res;
-
-           strcpy (buffer, "?");
-           G_format_northing(north, buffer, window->proj)  ;
-           len_n = max (len_n, strlen(buffer));
-           fprintf(stderr,"%-*s(N)  ", len_n, buffer);
-
-           strcpy (buffer, "?");
-           G_format_easting(east, buffer, window->proj)  ;
-           len_e = max (len_e, strlen(buffer));
-           fprintf(stderr,"%-*s(E)  ", len_e, buffer);
-
-           fprintf (stderr,"\r");
-           fflush (stderr);
 	}
-    } while (button != MIDDLEB) ;
+    } ;
 
-    if(quitonly != 1)
-    {
-    /* ALTERNATIVE
-     *
-	if(prebutton == RIGHTB)
-	{
-	   east = window->east;
-	   west = window->west;
-	   south = window->south;
-	   north = window->north;
-	}
-	else
-     */
-	{
-	   north = uy1>uy2?uy1:uy2 ;
-	   south = uy1<uy2?uy1:uy2 ;
-	   west  = ux1<ux2?ux1:ux2 ;
-	   east  = ux1>ux2?ux1:ux2 ;
-	
-	   G_limit_north (&north, window->proj);
-	   G_limit_south (&south, window->proj);
-	   G_limit_east (&east, window->proj);
-	   G_limit_west (&west, window->proj);
-	
-	   t = (window->north - north) / window->ns_res;
-	   north = window->north - (t) * window->ns_res;
-	
-	   t = (south - window->south) / window->ns_res;
-	   south = window->south + (t) * window->ns_res;
-	
-	   t = (window->east - east) / window->ew_res;
-	   east = window->east - (t) * window->ew_res;
-	
-	   t = (west - window->west) / window->ew_res;
-	   west = window->west + (t) * window->ew_res;
-	}
-
-        strcpy (buffer, "?");
-        G_format_northing(north, buffer, window->proj)  ;
-        len_n = max (len_n, strlen(buffer));
-        fprintf(stderr,"north: %-*s  ", len_n, buffer);
-
-        strcpy (buffer, "?");
-        G_format_northing(south, buffer, window->proj)  ;
-        len_s = max (len_s, strlen(buffer));
-        fprintf(stderr,"south: %-*s  ", len_s, buffer);
-
-        strcpy (buffer, "?");
-        G_format_easting(east, buffer, window->proj)  ;
-        len_e = max (len_e, strlen(buffer));
-        fprintf(stderr,"east: %-*s  ", len_e, buffer);
-
-        strcpy (buffer, "?");
-        G_format_easting(west, buffer, window->proj)  ;
-        len_w = max (len_w, strlen(buffer));
-        fprintf(stderr,"west: %-*s  ", len_w, buffer);
-
-        fprintf (stderr,"\r");
-        fflush (stderr);
-
-    	window->north = north;
-    	window->south = south;
-    	window->east  = east ;
-    	window->west  = west ;
-    }
-
-    fprintf (stderr, "\n\n");
-
-    return quitonly;
+    return 1; /* not reached */
 }
 
-static int max(int a,int b)
-{
-    return a>b?a:b;
-}
+
