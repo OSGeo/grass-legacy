@@ -1,13 +1,16 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include "gis.h"
 #include "dbmi.h"
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 
 int disp_attr(char *driname, char *dbname, char *tabname, char *key, int keyval )
 {
 	int      col, ncols, ctype, sqltype, more; 
-        char     buf[5001], *colname;
+        char     buf[5000], *colname;
         dbString str, sout1, sout2, *tstr;
 	dbDriver *driver;
 	dbHandle handle;
@@ -15,6 +18,7 @@ int disp_attr(char *driname, char *dbname, char *tabname, char *key, int keyval 
         dbTable  *table;
         dbColumn *column;
         dbValue  *value;
+	int pid;
 
         driver = db_start_driver(driname);
 	if (driver == NULL) {
@@ -34,7 +38,7 @@ int disp_attr(char *driname, char *dbname, char *tabname, char *key, int keyval 
 	db_init_string (&sout1);
 	db_init_string (&sout2);	
 
-        snprintf (buf,5000, "select * from %s where %s = %d", tabname, key, keyval);
+        sprintf (buf, "select * from %s where %s = %d", tabname, key, keyval);
         G_debug ( 1, "%s", buf);
 	db_set_string (&str, buf);  
         if (db_open_select_cursor(driver, &str, &cursor, DB_SEQUENTIAL) != DB_OK) return (-1);
@@ -75,18 +79,25 @@ int disp_attr(char *driname, char *dbname, char *tabname, char *key, int keyval 
 	    }		
 	    db_append_string ( tstr, db_get_string(&str));
         } 
-        db_close_cursor(&cursor);	 																						    				
+        db_close_cursor(&cursor);
+        db_close_database(driver);
+	db_shutdown_driver(driver); 
+
 	db_append_string ( &sout1, db_get_string(&sout2));
-	snprintf ( buf, 5000, "echo '%s' | %s/etc/db.attr&", db_get_string(&sout1), G_gisbase());
-        G_debug ( 1, "%s", buf);
-	system ( buf );
+	sprintf ( buf, "echo '%s' | %s/etc/db.attr", db_get_string(&sout1), G_gisbase());
 	
 	db_free_string (&str);
 	db_free_string (&sout1);
 	db_free_string (&sout2);
 
-        db_close_database(driver);
-	db_shutdown_driver(driver); 
+        G_debug ( 1, "%s", buf);
+
+        pid = fork();
+	if ( pid == 0 ) {
+	    execl("/bin/sh", "sh", "-c", buf, 0);
+	    exit (0);
+	} 
 	
 	return (DB_OK);
 }
+
