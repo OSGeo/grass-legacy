@@ -1,18 +1,21 @@
 #define AS_CELLHD 1
 #define AS_WINDOW 0
 #define AS_DEF_WINDOW -1
+/* modified 26nov to use word region instead of window
+ * as far as the USER is concerned.
+ */
 /*
  **********************************************************************
  *
  *   G_edit_cellhd (cellhd, type)
  *      struct Cell_head *cellhd   (cellhd to be defined)
  *      int type 
- *        0 = window - user input resolutions
- *       -1 = default window - user input resolutions
+ *        0 = region - user input resolutions
+ *       -1 = default region - user input resolutions
  *        1 = cellhd - rows and cols must be set
  *
  *   Screen oriented user interactive session for modifying a cell header
- *   or window.
+ *   or region.
  *   Uses the visual_ask V_ask routines.  As such, programs including
  *   this must load the GRASS library $(VASK)
  *
@@ -26,7 +29,7 @@
 static char *cellhd_screen[] = {
 "                           IDENTIFY CELL HEADER",
 "",
-"           ============================= DEFAULT WINDOW ========",
+"           ============================= DEFAULT REGION ========",
 "           |          Default North:                           |",
 "           |                                                   |",
 "           |           =======  CELL HEADER  =======           |",
@@ -43,12 +46,12 @@ static char *cellhd_screen[] = {
 NULL};
 
 static char *window_screen[] = {
-"                              IDENTIFY WINDOW",
+"                              IDENTIFY REGION",
 "",
-"           ============================= DEFAULT WINDOW ========",
+"           ============================= DEFAULT REGION ========",
 "           |          Default North:                           |",
 "           |                                                   |",
-"           |           =======  YOUR WINDOW  =======           |",
+"           |           =======  YOUR REGION  =======           |",
 "           |           | NORTH EDGE:               |           |",
 "           |           |                           |           |",
 " Def. West |WEST EDGE  |                           |EAST EDGE  | Def. East",
@@ -60,18 +63,18 @@ static char *window_screen[] = {
 "           =====================================================",
 "           PROJECTION:                                ZONE:",
 "",
-"                   Default   GRID RESOLUTION   Window",
+"                   Default   GRID RESOLUTION   Region",
 "                            --- East-West ---",
 "                            -- North-South --",
 NULL};
 
 static char *def_window_screen[] = {
-"                         DEFINE THE DEFAULT WINDOW",
+"                         DEFINE THE DEFAULT REGION",
 "",
 "",
 "",
 "",
-"                       ====== DEFAULT WINDOW =======",
+"                       ====== DEFAULT REGION =======",
 "                       | NORTH EDGE:               |",
 "                       |                           |",
 "            WEST EDGE  |                           |EAST EDGE",
@@ -112,7 +115,7 @@ G_edit_cellhd (cellhd, type)
     char buf[64], buf2[30];
     short ok ;
     int line;
-    char *prj, *G_projection_name();
+    char *prj, *G__projection_name();
     char *err, *G_adjust_Cell_head();
 
     if (type == AS_CELLHD && (cellhd->rows <= 0 || cellhd->cols <= 0))
@@ -136,7 +139,7 @@ G_edit_cellhd (cellhd, type)
 	    cellhd->zone        = def_wind.zone ;
     }
 
-    prj = G_projection_name (cellhd->proj);
+    prj = G__projection_name (cellhd->proj);
     if (!prj) prj = "** unknown **";
     sprintf (projection, "%d (%s)", cellhd->proj, prj) ;
 
@@ -156,8 +159,8 @@ G_edit_cellhd (cellhd, type)
 
 	if (cellhd->proj != def_wind.proj)
 	{
-	    printf ("%s projection %d differs from default window projection %d\n",
-		type == AS_CELLHD?"cell header":"window", cellhd->proj, def_wind.proj);
+	    printf ("%s projection %d differs from default projection %d\n",
+		type == AS_CELLHD?"header":"region", cellhd->proj, def_wind.proj);
 	    if (!G_yes("do you want to make them match? ", 1))
 		return -1;
 	    cellhd->proj = def_wind.proj;
@@ -165,8 +168,8 @@ G_edit_cellhd (cellhd, type)
 	}
 	if (cellhd->zone != def_wind.zone)
 	{
-	    printf ("%s zone %d differs from default window zone %d\n",
-		type == AS_CELLHD?"cell header":"window", cellhd->zone, def_wind.zone);
+	    printf ("%s zone %d differs from default zone %d\n",
+		type == AS_CELLHD?"header":"region", cellhd->zone, def_wind.zone);
 	    if (!G_yes("do you want to make them match? ", 1))
 		    return -1;
 	    cellhd->zone = def_wind.zone;
@@ -397,31 +400,31 @@ SHOW:
     {
 	if (cellhd->north > def_wind.north)
 	{
-	    printf ("warning - north falls outside the default window\n");
+	    printf ("warning - north falls outside the default region\n");
 	    ok = 0;
 	}
 	if (cellhd->south < def_wind.south)
 	{
-	    printf ("warning - south falls outside the default window\n");
+	    printf ("warning - south falls outside the default region\n");
 	    ok = 0;
 	}
 	if (cellhd->proj != PROJECTION_LL)
 	{
 	    if (cellhd->east > def_wind.east)
 	    {
-		printf ("warning - east falls outside the default window\n");
+		printf ("warning - east falls outside the default region\n");
 		ok = 0;
 	    }
 	    if (cellhd->west < def_wind.west)
 	    {
-		printf ("warning - west falls outside the default window\n");
+		printf ("warning - west falls outside the default region\n");
 		ok = 0;
 	    }
 	}
     }
 ASK:
     printf("\nDo you accept this %s? (y/n) [%s] > ",
-	type==AS_CELLHD?"cell header":"window", ok?"y":"n") ;
+	type==AS_CELLHD?"header":"region", ok?"y":"n") ;
     if(!G_gets(buf))
 	goto SHOW;
     G_strip (buf);
