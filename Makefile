@@ -22,6 +22,13 @@ MODULE_TOPDIR = .
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 
+OPENGLBASED = visualization
+
+#compile if OPENGLBASED present:
+ifneq ($(strip $(OPENGLLIB)),)
+    SUBDIRS += $(OPENGLBASED)
+endif
+
 SUBDIRS = \
 	lib \
 	db \
@@ -33,8 +40,7 @@ SUBDIRS = \
 	scripts \
 	sites \
 	tools \
-	vector \
-	visualization
+	vector
 
 FILES = COPYING README 
 
