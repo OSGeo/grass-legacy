@@ -76,8 +76,8 @@ int main (int argc, char *argv[])
     any = 0;
 
     if(isatty(0))
-	{
-	  fprintf (stdout,"\nEnter the rule or 'help' for the format description:\n");
+	{ 
+	  fprintf (stdout, "Enter rule(s), \"end\" when done, \"help\" if you need it\n");
 	}
 
     while (input(buf))
