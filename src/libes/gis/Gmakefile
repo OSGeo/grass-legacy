@@ -197,7 +197,7 @@ all: \
 	$(ETC)/state27 \
 	$(ETC)/state83
 #Required for R-statistical language interface:
-	cp $(LIBDIR)/libgis.a $(GISBASE)/lib
+	cp $(GISLIB) $(GISBASE)/lib
 #Required for R-statistical language interface:
 	(cd $(SRC)/include ; cp gis.h datetime.h P_datetime.h gisdefs.h site.h P_site.h $(GISBASE)/include )
 
