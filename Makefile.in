@@ -220,6 +220,8 @@ real-install: FORCE
 	${SHELL} -c "chmod -R 1777 ${INST_DIR}/locks 2>/dev/null ; true"
 
 uninstall: FORCE
+	@ # NOTE: if anything is changed for uninstall then the same change
+	@ # needs to be made in the file binarayInstall.src
 	@ # The following action MUST be a single action. That is, all lines
 	@ # except the last line must have a backslash (\) at the end to
 	@ # continue the statement. The reason for this is that Make does not
@@ -264,6 +266,8 @@ uninstall: FORCE
 	${MAKE} real-uninstall
 	
 real-uninstall: FORCE
+	@ # NOTE: if anything is changed for real-uninstall then the same change
+	@ # needs to be made in the file binarayInstall.src
 	@ # Only recursively remove directories under INST_DIR any other
 	@ # directory needs to have the grass files removed individually
 	${SHELL} -c "rm -f ${BINDIR}/grass${NAME_VER} ; true"
