@@ -1,7 +1,7 @@
 
 
 
-s.menu               GRASS Reference Manual                s.menu
+s.menu <main>        GRASS Reference Manual         <main> s.menu
 
 
 
@@ -60,14 +60,14 @@ DESCRIPTION
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-s.menu               GRASS Reference Manual                s.menu
+s.menu <main>        GRASS Reference Manual         <main> s.menu
 
 
 
@@ -126,14 +126,14 @@ s.menu               GRASS Reference Manual                s.menu
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
 
 
 
-s.menu               GRASS Reference Manual                s.menu
+s.menu <main>        GRASS Reference Manual         <main> s.menu
 
 
 
@@ -192,14 +192,14 @@ s.menu               GRASS Reference Manual                s.menu
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
 
 
 
-s.menu               GRASS Reference Manual                s.menu
+s.menu <main>        GRASS Reference Manual         <main> s.menu
 
 
 
@@ -258,14 +258,14 @@ s.menu               GRASS Reference Manual                s.menu
 
 
 
-GRASS 4.0                U.S. Army CERL                         4
+GRASS 4.1                U.S. Army CERL                         4
 
 
 
 
 
 
-s.menu               GRASS Reference Manual                s.menu
+s.menu <main>        GRASS Reference Manual         <main> s.menu
 
 
 
@@ -324,14 +324,14 @@ s.menu               GRASS Reference Manual                s.menu
 
 
 
-GRASS 4.0                U.S. Army CERL                         5
+GRASS 4.1                U.S. Army CERL                         5
 
 
 
 
 
 
-s.menu               GRASS Reference Manual                s.menu
+s.menu <main>        GRASS Reference Manual         <main> s.menu
 
 
 
@@ -390,21 +390,22 @@ FILES
 
 
 
-GRASS 4.0                U.S. Army CERL                         6
+GRASS 4.1                U.S. Army CERL                         6
 
 
 
 
 
 
-s.menu               GRASS Reference Manual                s.menu
+s.menu <main>        GRASS Reference Manual         <main> s.menu
 
 
 
 SEE ALSO
      d.icons, d.graph, d.points, d.sites, p.icons, r.random,
-     d.what.rast, d.what.vect, r.what, s.db.rim, s.surf.idw,
-     v.db.rim, v.mkquads, v.to.sites,
+     d.what.rast, d.what.vect, r.what, s.in.ascii, s.out.ascii,
+     s.db.rim, s.surf.idw, s.surf.tps, v.db.rim, v.mkquads,
+     v.to.sites,
      and
      sites.format, sites.report, sites.occur, sites.S
 
@@ -455,8 +456,7 @@ AUTHORS
 
 
 
-
-GRASS 4.0                U.S. Army CERL                         7
+GRASS 4.1                U.S. Army CERL                         7
 
 
 
