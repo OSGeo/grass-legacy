@@ -1,0 +1,20 @@
+<h2>DESCRIPTION</h2>
+
+<em>postgisdb</em> is used to create and destroy PostGrass databases.
+
+All options that are not available in primary options scope will be ignored.
+Only Postmaster can run this script to create or delete a new database 
+(use -U to define database owner)
+
+<h2>EXAMPLE</h2>
+
+this example from the <em><a HREF="http://grass.itc.it/grass51/tutorial/geom_storage.html#PostGRASS">
+GRASS 5.1 tutorial pages</a></em> needs the file postgis.sql in the current directory.
+
+<p>
+
+<pre>postgisdb -c botswanaUTM34 -h pgserver.itc.it -U postgres -G ./</pre>
+
+<h2>AUTHOR</h2>
+
+Enrico Romano <enr.omano@genie.it> 
