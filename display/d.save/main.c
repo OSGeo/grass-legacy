@@ -55,6 +55,7 @@ int main (int argc, char **argv)
 	int p;
 	int stat;
 	int i, j;
+	int redraw;
 	int total_rno, *rno;
 	int total_mno, **mno;
 	struct list_struct *temp_list;
@@ -176,6 +177,7 @@ int main (int argc, char **argv)
 	if(!only_object->answer)
 		fprintf (stdout,":\n# Shell Script created by d.save %s\n\n", G_date());
 
+	redraw = 0;
 	/* now start at the end (the earliest made window) and process them */
 	for (p = npads-1; p >= 0; p--) {
 		if (all_flag->answer || in_frame_list(opt1, pads[p]))
@@ -211,7 +213,10 @@ int main (int argc, char **argv)
 					for (i=0; i<total_rno; i++)
 					{
 						if (rno[i]<=nlists)
+						{
+							redraw = 1;
 							live[nlists-rno[i]] = -1;
+						}
 					}
 					G_free(rno);
 				}
@@ -231,14 +236,16 @@ int main (int argc, char **argv)
 							G_free(mno[i]);
 							continue;
 						}
-						j = to;
-						to = (j<1 ? 1:(j>nlists ? nlists:j));
+
+						to = (to<1 ? 1:(to>nlists ? nlists:to));
 
 						if (from==to)
 						{
 							G_free(mno[i]);
 							continue;
 						}
+
+						redraw = 1;
 
 						tmp = live[nlists-to];
 						live[nlists-to] = live[nlists-from];
@@ -336,6 +343,9 @@ int main (int argc, char **argv)
 		fprintf (stdout,"\nd.frame -s frame=%s\n", Scurwin);
 
 	R_close_driver();
+
+	if (redraw)
+		G_system("d.redraw");
 
 	return 0;
 }
