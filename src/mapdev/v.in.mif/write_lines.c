@@ -54,6 +54,7 @@ int line_data_write(site_array *s0, line_array *l0, d_type *di, d_type del,
   struct line_pnts tline1;
 
   int i;    /* loop */
+  int k;
   int use_rec_num = 1;
 
   int len;
@@ -176,13 +177,15 @@ int line_data_write(site_array *s0, line_array *l0, d_type *di, d_type del,
 
       /* Process a point entry */
 
+      k = type0->entities[i];
+
       xpos = *(curr_pnt_x++);
       ypos = *(curr_pnt_y++);
 
       if(use_rec_num || !has_mid)
 	catval = ++pnt_cnt;
       else
-	catval = get_att_field_val( (const d_type *)di, i, attnum, fp);
+	catval = get_att_field_val( (const d_type *)di, k, attnum, fp);
 
       if(catval)
 	fprintf(att1, "P  %-12f  %-12f  %-8d \n", xpos, ypos, catval);
@@ -205,13 +208,15 @@ int line_data_write(site_array *s0, line_array *l0, d_type *di, d_type del,
 
       /* Process a line entry */
 
+      k = type0->entities[i];
+
       xpos = ( curr_line->x[0] + curr_line->x[1] ) / 2.0;
       ypos = ( curr_line->y[0] + curr_line->y[1] ) / 2.0;
 
       if(use_rec_num || !has_mid)
 	catval = ++line_cnt;
       else
-	catval = get_att_field_val( (const d_type *)di, i, attnum, fp);
+	catval = get_att_field_val( (const d_type *)di, k, attnum, fp);
 
       if(catval)
 	fprintf(att2, "L  %-12f  %-12f  %-8d \n", xpos, ypos, catval);
