@@ -24,7 +24,7 @@ LIST = 	main.o\
 	errfun.o\
 	xformation.o
 
-./$(PGM): $(LIST) $(GISLIB)
+$(HOME)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): # 
