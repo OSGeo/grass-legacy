@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-02-04 20:14+0100\n"
-"PO-Revision-Date: 2005-02-05 17:42+0100\n"
+"PO-Revision-Date: 2005-02-12 17:51+0100\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -1748,7 +1748,7 @@ msgid ""
 "Makes each cell category value a function of the category values assigned to "
 "the cells around it, and stores new cell values in an output raster map "
 "layer."
-msgstr ""
+msgstr "Weist für jeden Zellenkategoriewert eine Funktion der umgebenden Kategoriewerte basierend auf einer Fenstergröße zu und erstellt neue Zellenwerte in einer Ausgaberasterkarte."
 
 #: ../raster/r.neighbors/main.c:66
 msgid "Name of existing raster file"
@@ -2071,7 +2071,7 @@ msgstr "End-Punkte interaktiv bestimmen."
 
 #: ../raster/r.profile/main.c:103 ../raster/r.transect/main.c:79
 msgid "Output easting and northing in first two columns of four column output"
-msgstr ""
+msgstr "Gebe Nord- und Ost-Koordinaten zuerst in 2 von 4 Spalten aus."
 
 #: ../raster/r.proj/main.c:138
 msgid "Re-project a raster map from one location to the current location."
@@ -2372,7 +2372,7 @@ msgstr "Unterdrücke Seitenkopf."
 
 #: ../raster/r.report/parse.c:95
 msgid "Use formfeeds between pages"
-msgstr ""
+msgstr "Benutze Seitenvorschub zwischen den Seiten."
 
 #: ../raster/r.report/parse.c:103
 msgid "Scientific format"
@@ -2473,7 +2473,6 @@ msgid "Anisotropy scaling factor"
 msgstr "Anisotropie Skalierfaktor"
 
 #: ../raster/r.resamp.rst/main.c:284
-#, fuzzy
 msgid "Use dnorm independent tension"
 msgstr "Benutze dnorm unabhängige Spannung."
 
@@ -2516,18 +2515,16 @@ msgid "Title for new raster map"
 msgstr "Titel für die neue Rasterkarte."
 
 #: ../raster/r.rescale.eq/main.c:36
-#, fuzzy
 msgid ""
 "Rescales histogram equalized the range of categoryvalues in a raster map "
 "layer."
-msgstr "Reskaliert ein normalisiertes Histogram der Spanne der Kategoriewerte einer Rasterkarte."
+msgstr "Reskaliert ein normalisiertes Histogram basierend auf der Spanne der Kategoriewerte einer Rasterkarte."
 
 #: ../raster/r.series/main.c:84
-#, fuzzy
 msgid ""
 "Makes each output cell value a function of the values assigned to the "
 "corresponding cells in the input raster map layers."
-msgstr "Ausgabe a von."
+msgstr "Macht aus jeder Ausgabezelle eine Funktion der Werte, die einer korrespondierenden Zelle einer Eingabekarte zugewiesen ist."
 
 #: ../raster/r.series/main.c:94
 msgid "Names of existing raster files"
@@ -3137,12 +3134,10 @@ msgid "The distance between two samples (>= 1)"
 msgstr "Abstand zwischen zwei Proben (>= 1)."
 
 #: ../raster/r.texture/main.c:110
-#, fuzzy
 msgid "Normalized"
 msgstr "Normalisiert"
 
 #: ../raster/r.texture/main.c:118
-#, fuzzy
 msgid "Angular Second Moment"
 msgstr "Bogensekunde"
 
@@ -3160,7 +3155,7 @@ msgstr "Abweichung"
 
 #: ../raster/r.texture/main.c:134
 msgid "Inverse Diff Moment"
-msgstr ""
+msgstr "Inverse Diff Moment"
 
 #: ../raster/r.texture/main.c:138
 msgid "Sum Average"
@@ -3179,13 +3174,12 @@ msgid "Entropy"
 msgstr "Entropie"
 
 #: ../raster/r.texture/main.c:154
-#, fuzzy
 msgid "Difference Variance"
-msgstr "Abweichung"
+msgstr "Differenz-Abweichung"
 
 #: ../raster/r.texture/main.c:158
 msgid "Difference Entropy"
-msgstr ""
+msgstr "Differenz-Entropie"
 
 #: ../raster/r.texture/main.c:162
 msgid "Measure of Correlation-1"
@@ -3376,7 +3370,6 @@ msgid "Input map: amount of overland flow per cell"
 msgstr "Eingabekarte: Anzahl von Oerflächenabfluss pro Zelle."
 
 #: ../raster/r.watershed/front/main.c:60
-#, fuzzy
 msgid "Input map or value: percent of disturbed land, for USLE"
 msgstr "Eingabekarte oder Wert: Prozent von gestörtem Land, (für ABAG/USLE)."
 
@@ -3453,7 +3446,6 @@ msgid "Show the category label in the grid cell(s)"
 msgstr "Zeige die Kategorielabel der Rasterzelle(n)."
 
 #: ../raster/r.what/main.c:106
-#, fuzzy
 msgid "Turn on cache reporting"
 msgstr "Benutze Cache-Reporting."
 
@@ -3466,193 +3458,162 @@ msgid ""
 msgstr "Erstellt drei oder optional vier Rasterkarten, die 1) die Basisrate der (lotrechten) Ausbreitung (ROS), 2) die maximale (Vorwärts-) Ausbreitung, 3) die Richtung der größten Ausbreitung, und optional 4) die maximal zu erkennende potentielle Ausbreitung, zeigen."
 
 #: ../raster/wildfire/r.ros/main.c:231
-#, fuzzy
 msgid "Name of raster map containing fuel MODELs"
-msgstr "von"
+msgstr "Name der Rasterkarte, die Treibstoff-MODELLE beinhalten."
 
 #: ../raster/wildfire/r.ros/main.c:237
-#, fuzzy
 msgid "Name of raster map containing the 1-HOUR fuel MOISTURE (%)"
-msgstr "von"
+msgstr "Name der Rasterkarte, die die 1-Stunden Feuchtigkeit von Benzin enthält (%)."
 
 #: ../raster/wildfire/r.ros/main.c:243
-#, fuzzy
 msgid "Name of raster map containing the 10-HOUR fuel MOISTURE (%)"
-msgstr "von"
+msgstr "Name der Rasterkarte, die die 10-Stunden Feuchtigkeit von Benzin enthält (%)."
 
 #: ../raster/wildfire/r.ros/main.c:249
-#, fuzzy
 msgid "Name of raster map containing the 100-HOUR fuel MOISTURE (%)"
 msgstr "von"
 
 #: ../raster/wildfire/r.ros/main.c:256
-#, fuzzy
 msgid "Name of raster map containing LIVE fuel MOISTURE (%)"
-msgstr "von"
+msgstr "Name der Rasterkarte, die die AKTUELLE Feuchtigkeit von Benzin enthält (%)."
 
 #: ../raster/wildfire/r.ros/main.c:262
-#, fuzzy
 msgid "Name of raster map containing midflame wind VELOCITYs (ft/min)"
-msgstr "von"
+msgstr "Name der Rasterkarte, die die mittlere Windgeschwindigkeit enthält (ft/min)."
 
 #: ../raster/wildfire/r.ros/main.c:268
-#, fuzzy
 msgid "Name of raster map containing wind DIRECTIONs (degree)"
-msgstr "von"
+msgstr "Name der Rasterkarte, die die Windrichtung enthält (in Grad)."
 
 #: ../raster/wildfire/r.ros/main.c:274
-#, fuzzy
 msgid "Name of raster map containing SLOPE (degree)"
-msgstr "von"
+msgstr "Name der Rasterkarte, die die Hangneigung enthält (in Grad)."
 
 #: ../raster/wildfire/r.ros/main.c:280
-#, fuzzy
 msgid "Name of raster map containing ASPECT (degree, anti-clockwise from E)"
-msgstr "von von"
+msgstr "Name der Rasterkarte, die die Hangexposition enthält (in Grad, entgegen den Uhrzeigersinn angefangen von Osten)."
 
 #: ../raster/wildfire/r.ros/main.c:286
-#, fuzzy
 msgid "Name of raster map containing ELEVATION (m) (required w/ -s)"
-msgstr "von m"
+msgstr "Name der Rasterkarte, die die Höheninformationen (m) enthält (benötigt w/-s)."
 
 #: ../raster/wildfire/r.ros/main.c:293
-#, fuzzy
 msgid "Name of raster map to contain results (several new layers)"
-msgstr "von enthalten"
+msgstr "Name der Rasterkarten, die die Ergebnisse enthält/enthalten (mehrere neue Karten möglich)."
 
 #: ../raster/wildfire/r.ros/main.c:301
 msgid "Also produce maximum SPOTTING distance"
-msgstr ""
+msgstr "Auch die maximale zu erkennende Ausbreitungsentfernung mitberechnen."
 
 #: ../raster/wildfire/r.spread/main.c:118
-#, fuzzy
 msgid ""
 "Simulates elliptically anisotropic spread on a graphics window and generates "
 "a raster map of the cumulative time of spread, given raster maps containing "
 "the rates of spread (ROS), the ROS directions and the spread origins. It "
 "optionally produces raster maps to contain backlink UTM coordinates for "
 "tracing spread paths."
-msgstr "ein a a von Zeit von von enthalten für."
+msgstr "Simuliert die elliptische anisotrophe Ausbreitung in einem Monitor und generiert eine Rasterkarte mit der kumulativen Zeit der Ausbreitung. Als Ausgangskarten dienen die Ausbreitungsrate (ROS), Ausbreitungsrichtung und Ausbreitungsursprung. Optional können Rasterkarten mit Rückverweisen auf UTM-Koordinaten zur Findung der Ausbreitungspfade erstellt werden."
 
 #: ../raster/wildfire/r.spread/main.c:129
-#, fuzzy
 msgid "Name of raster map containing MAX rate of spread (ROS) (cm/min)"
-msgstr "von von"
+msgstr "Name der Rasterkarte, die die maximale Ausbreitungsrate (ROS) beinhaltet (in cm/min)."
 
 #: ../raster/wildfire/r.spread/main.c:136
-#, fuzzy
 msgid "Name of raster map containing DIRections of max ROS (degree)"
-msgstr "von von"
+msgstr "Name der Rasterkarte, die die Ausbreitungsrichtung beinhaltet (in Grad)."
 
 #: ../raster/wildfire/r.spread/main.c:143
-#, fuzzy
 msgid "Name of raster map containing BASE ROS (cm/min)"
-msgstr "von"
+msgstr "Name der Rasterkarte, die die Basis-Ausbreitung beinhaltet (in cm/min)."
 
 #: ../raster/wildfire/r.spread/main.c:150
-#, fuzzy
 msgid "Name of raster map containing STARTing sources"
-msgstr "von"
+msgstr "Name der Rasterkarte, die die Startpunkte der Ausbreitung enthalten."
 
 #: ../raster/wildfire/r.spread/main.c:156
-#, fuzzy
 msgid "Name of raster map containing max SPOTting DISTance (m) (required w/ -s)"
-msgstr "von m"
+msgstr "Name der Rasterkarte, die die maximale Ausdehnungsentfernung (m) beinhaltet (benötigt w/-s)."
 
 #: ../raster/wildfire/r.spread/main.c:162
-#, fuzzy
 msgid "Name of raster map containing midflame Wind SPEED (ft/min) (required w/ -s)"
-msgstr "von Wind"
+msgstr "Name der Rasterkarte, die die mittlere Windgeschwindigkeit beinhaltet (in ft/min) (benötigt w/-s)."
 
 #: ../raster/wildfire/r.spread/main.c:168
-#, fuzzy
 msgid ""
 "Name of raster map containing fine Fuel MOISture of the cell receiving a "
 "spotting firebrand (%) (required w/ -s)"
-msgstr "von Treibstoff von a"
+msgstr "Name der Rasterkarte, die die feine Benzinfeuchtigkeit für eine Zelle enthält, die durch einen Brand erreicht wird (%) (benötigt w/-s)."
 
 #: ../raster/wildfire/r.spread/main.c:175
 msgid "Basic sampling window SIZE needed to meet certain accuracy (3)"
-msgstr ""
+msgstr "Fenstergröße, die für eine bestimmte Genauigkeit benötigt wird (3)."
 
 #: ../raster/wildfire/r.spread/main.c:181
-#, fuzzy
 msgid "Sampling DENSity for additional COMPutin (range: 0.0 - 1.0 (0.5))"
-msgstr "für"
+msgstr "Sampling-Dichte für weitere Berechnung (Spanne zwischen 0.0 - 1.0 (0.5))."
 
 #: ../raster/wildfire/r.spread/main.c:187
-#, fuzzy
 msgid "INITial TIME for current simulation (0) (min)"
-msgstr "TIME für"
+msgstr "Anfangszeit für die aktuelle Simulation (0) (in min)."
 
 #: ../raster/wildfire/r.spread/main.c:193
 #, fuzzy
 msgid "Simulating time duration LAG (fill the region) (min)"
-msgstr "Zeit"
+msgstr "Simulationszeitverzögerung (in min)."
 
 #: ../raster/wildfire/r.spread/main.c:199
-#, fuzzy
 msgid "Name of raster map as a display backdrop"
-msgstr "von a"
+msgstr "Name der Rasterkarte, die als Hintergrundkarte für die Darstellung im Monitor benutzt werden soll."
 
 #: ../raster/wildfire/r.spread/main.c:206
-#, fuzzy
 msgid "Name of raster map to contain OUTPUT spread time (min)"
-msgstr "von enthalten AUSGANG Zeit"
+msgstr "Name der Rasterkarte, die die Ausbreitungszeit als Ergebnis enthalten soll."
 
 #: ../raster/wildfire/r.spread/main.c:212
-#, fuzzy
 msgid "Name of raster map to contain X_BACK coordiates"
-msgstr "von enthalten"
+msgstr "Name der Rasterkarte, die die X_BACK Koordinaten enthält."
 
 #: ../raster/wildfire/r.spread/main.c:218
-#, fuzzy
 msgid "Name of raster map to contain Y_BACK coordiates"
-msgstr "von enthalten"
+msgstr "Name der Rasterkarte, die die Y_BACK-Koordinaten enthält."
 
 #: ../raster/wildfire/r.spread/main.c:222
 msgid "Run VERBOSELY"
-msgstr ""
+msgstr "Ausführliche Ausgabe."
 
 #: ../raster/wildfire/r.spread/main.c:226
-#, fuzzy
 msgid "DISPLAY 'live' spread process on screen"
-msgstr "Live ein screen"
+msgstr "Zeige den Ausbreitungsprozess in Echtzeit auf dem Monitor."
 
 #: ../raster/wildfire/r.spread/main.c:230
 msgid "For wildfires: consider SPOTTING effect"
-msgstr ""
+msgstr "Bei Lauffeuern: beachte den Spotting-Effekt."
 
 #: ../raster/wildfire/r.spreadpath/main.c:56
-#, fuzzy
 msgid ""
 "Recursively traces the least cost path backwards to cells from which the "
 "cumulative cost was determined."
-msgstr "Pfad von."
+msgstr "Das Modul verfolgt den kürzesten Weg rekursiv zurück zu den Zellen, von denen der kumulative Weg bestimmt wurde."
 
 #: ../raster/wildfire/r.spreadpath/main.c:64
-#, fuzzy
 msgid "Name of raster map containing back-path easting information"
-msgstr "von hinten Pfad"
+msgstr "Name der Rasterkarte, die die Ost Informationen zu den Rückwegen enthält."
 
 #: ../raster/wildfire/r.spreadpath/main.c:71
-#, fuzzy
 msgid "Name of raster map containing back-path norhting information"
-msgstr "von hinten Pfad"
+msgstr "Name der Rasterkarte, die die Nord Informationen zu den Rückwegen enthält."
 
 #: ../raster/wildfire/r.spreadpath/main.c:78
-#, fuzzy
 msgid "The map E and N grid coordinates of starting points"
-msgstr "von"
+msgstr "Koordinatenpunkte (E und N) des Startpunktes."
 
 #: ../raster/wildfire/r.spreadpath/main.c:85
-#, fuzzy
 msgid "Name of spread path raster map"
-msgstr "von Pfad"
+msgstr "Name der Ausgabekarte, die den Ausbreitungspfad enthalten soll."
 
 #: ../raster/wildfire/r.spreadpath/main.c:89
 msgid "Run verbosly"
-msgstr ""
+msgstr "Ausführliche Ausgabe."
 
 #: ../vector/v.category/main.c:173
 msgid "Too many layers for this operation"
@@ -3986,7 +3947,6 @@ msgid "%s"
 msgstr "%s"
 
 #: ../vector/v.transform/creat_trans.c:100
-#, fuzzy
 msgid "Please answer yes or no"
 msgstr "Bitte antworten Sie mit Yes oder No."
 
@@ -4118,17 +4078,14 @@ msgid "%d update errors\n"
 msgstr "%d aktualisierte Fehler.\n"
 
 #: ../vector/v.db.select/main.c:89
-#, fuzzy
 msgid "Database connection not defined"
-msgstr "nicht"
+msgstr "Datenbankverbindung nicht definiert."
 
 #: ../vector/v.db.select/main.c:97
-#, fuzzy
 msgid "Cannot open select cursor"
-msgstr "Kann Datenbank '%s' nicht öffnen."
+msgstr "Kann 'Select'-Cursor nicht öfnen."
 
 #: ../vector/v.db.select/main.c:115
-#, fuzzy
 msgid "Cannot fetch data"
-msgstr "Kann Datenbanken nicht auflisten."
+msgstr "Kann die Daten nicht holen."
 
