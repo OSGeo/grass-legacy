@@ -27,7 +27,7 @@ sub GetTitle {
 }
 
 sub PrintHeader {
-      print OUT ".TH $_[0] $_[1] \"\" \"\" \"\" \"$_[2]\"\n";
+      print OUT ".TH $_[0] $_[1] \"\" \"Grass-5.0beta\" \"Grass User's Manual\"\n";
 ##      print OUT ".so /usr/share/lib/tmac/sml\n";
 ##      print OUT ".so /usr/share/lib/tmac/rsml\n";
 }
@@ -40,8 +40,8 @@ sub DoStrip {
   if (m/<.*HEADER>/i) { return 1};
   if (m/<.*BLINK>/i) { return 1};
   if (m/^<A HREF="#toc/i) {return 1};
-  if (s#<A HREF=".*">#\\*L#i) {
-      s#</A>#\\*O#i;
+  if (s#<A HREF=".*">##i) {
+      s#</A>##i;
   }
   return 0;
 }
@@ -49,13 +49,13 @@ sub DoStrip {
 sub DoLine {
 
   if (m#^ *</PRE>#i) {
-    s#^ *</PRE>#.DE\n\\*O#i;
+    s#^ *</PRE>#.DE\n\\fR#i;
     $preformat = 0;
     return 1;
   }
 ###  if ($preformat) {return 1};
   if (m#^ *<PRE>#i) {
-    s#^ *<PRE>#\\*C\n.DS#i;
+    s#^ *<PRE>#\\fC\n.DS#i;
     $preformat = 1;
     return 1;
   }
@@ -91,7 +91,7 @@ sub DoSection {
   if (m#^<A NAME=".*">$#i) {return 0;}
   s#<A NAME=".*">##i;
   s#^.*<H2>#.SH #i;
-  s#^.*<H3>#.SH #i;
+  s#^.*<H3>#.SS #i;
   if (m#^</.*>$#i) {return 0};
   s#</.*>##ig;
   s#^<BR>$#.br#i;
@@ -116,9 +116,9 @@ sub DoPara {
 sub DoList {
   if (m#^ *</DT> *$#i) {return 0};
   if (m#<DT> *$#i) {chop};
-  s#^ *<DT>#.LI \"#i;
-  s#<DT>#\n.LI \"#i;
-  s#</DT>#\"#i;
+  s#^ *<DT>#.IP \"#i;
+  s#<DT>#\n.IP \"#i;
+  s#</DT>#\" 4m#i;
 
   if (m#^ *<DD> *$#i) {return 0};
   if (m#^ *</DD> *$#i) {return 0};
@@ -126,11 +126,11 @@ sub DoList {
   s#<DD>##i;
   s#</DD>##i;
 
-  s#^.*<DL> *$#.VL 4m#i;
+  s#^.*<DL> *$##i;
   s#<DL>#\n.VL 4m\n#i;
 
-  s#^.*</DL> *$#.LE#i;
-  s#<DL>#\n.LE\n#i;
+  s#^.*</DL> *$#.PP#i;
+  s#<DL>#\n.IP\n#i;
 
   s#^.*<UL> *$#.RS#i;
   s#<UL>#\n.RS\n#i;
@@ -138,37 +138,41 @@ sub DoList {
   s#^.*</UL> *$#.RE#i;
   s#</UL>#\n.RE\n#i;
 
-  s#^.*<OL> *$#.AL#i;
+  s#^.*<OL> *$#..IP#i;
   s#<OL>#\n.AL\n#i;
 
-  s#^.*</OL> *$#.LE#i;
-  s#</OL>#\n.LE\n#i;
+  s#^.*</OL> *$#.PP#i;
+  s#</OL>#\n.PP\n#i;
 
   s#</LI>##i;
-  s#^<LI>$#.LI#i;
-  s#^ *<LI> *$#.LI#i;
-  s#<LI>#.LI\n#i;
+  s#^<LI>$#.IP#i;
+  s#^ *<LI> *$#.IP#i;
+  s#<LI>#.IP\n#i;
 
   return 1;
 }
 
 #================
 # Font transitions: 
-#   <B>  => \*L
-#   </B> => \*O
-#   <I>  => \*W
-#   </I> => \*O
+#   <B>  => \fB
+#   </B> => \fR
+#   <I>  => \fI
+#   </I> => \fR
 #
 sub DoFont {
   s# *</B> *_ *<B> *#_#ig;
   s#</B> *<B># #ig;
-  s#<B>#\\*L#ig;
-  s#</B>#\\*O#ig;
+  s#<B>#\\fB#ig;
+  s#</B>#\\fR#ig;
 
   s# *</I> *_ *<I> *#_#ig;
   s#</I> *<I># #ig;
-  s#<I>#\\*W#ig;
-  s#</I>#\\*O#ig;
+  s#<I>#\\fI#ig;
+  s#</I>#\\fR#ig;
+  s# *</EM> *_ *<EM> *#_#ig;
+  s#</EM> *<EM># #ig;
+  s#<EM>#\\fI#ig;
+  s#</EM>#\\fR#ig;
   s/^ *<P>/<P>/i;
   s/^<P>$/.PP/i;
   s/<P>/.PP\n/ig;
@@ -205,7 +209,10 @@ while (<INP>) {
   if (&DoLine($_) == 1) {
     s#&lt#<#g;
     s#&gt#>#g; 
-     print OUT;
+    print OUT;
+    if ($preformat == 1) {
+      print OUT ".br\n";
+    }
   }
 }
 close(INP);
