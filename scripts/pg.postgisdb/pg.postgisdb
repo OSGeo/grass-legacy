@@ -196,7 +196,7 @@ case "$1" in
              HANDLER plpgsql_call_handler
              LANCOMPILER 'PL/pgSQL';"
          
-         createdb ${argvect[0]} ${argvect[3]}
+         createdb ${argvect[3]} ${argvect[0]}
            if [ $? = 0 ]; then 
 	     echo "$postgisfunction" | psql ${argvect[4]} ${argvect[3]}
 	       if [ $? = 0 ]; then 
