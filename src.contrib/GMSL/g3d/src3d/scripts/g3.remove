@@ -9,6 +9,11 @@ echo "You must be in GRASS to run this program."
 exit
 fi
 
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+
+
 if [ "$1" = "" ] ; then
  echo "Specify G3D volume raster file name to remove."
  exit
