@@ -56,7 +56,7 @@ yes(prompt)
     while (1)
     {
 	fprintf (stdout,"%s (y/n) ", prompt);
-	if (!gets(ans)) exit(0);
+	if (!fgets(ans,80,stdin)) exit(0);
 	if (*ans == 'n' || *ans == 'N') return 0;
 	if (*ans == 'y' || *ans == 'Y') return 1;
     }
