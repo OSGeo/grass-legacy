@@ -120,8 +120,10 @@ struct Coor_info
 /* Shapefile */
 struct Format_info_shp {
     char       *file;    /* path to shp file without .shp */
-    char       *cat_col; /* category column */
-    int        cat_col_num; /* category column number */
+    char       *baseName; /* Name of the file without .shp */
+    char       *dirName; /* Name of the directory shape is inside */
+    /* char       *cat_col; */ /* category column */
+    /* int        cat_col_num; */ /* category column number */
     SHPHandle  hShp;     
     DBFHandle  hDbf;
     int        type;     /* shapefile type */
