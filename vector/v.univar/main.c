@@ -96,7 +96,7 @@ main (int argc, char *argv[])
     if ( (otype & GV_LINES) && ( otype & GV_AREA ) ) compatible = 0;
     
     if ( !compatible ) {
-	G_warning ("Incompatible types, only number of features, minimum, maximum and range "
+	G_warning ("Incompatible vector type(s), only number of features, minimum, maximum and range "
 		   "can be calculated");
     }
 
