@@ -1,0 +1,24 @@
+Clear_menu	curses.c	/^Clear_menu()$/
+Clear_message	curses.c	/^Clear_message()$/
+Close_curses	curses.c	/^Close_curses()$/
+Get_curses_text	curses.c	/^Get_curses_text(answer)$/
+Get_new_tty	tty.c	/^Get_new_tty()$/
+Get_old_tty	tty.c	/^Get_old_tty()$/
+Initialize_curses	curses.c	/^Initialize_curses()$/
+Mmain	main.c	/^main(argc, argv)$/
+New_tty	tty.c	/^New_tty()$/
+Old_tty	tty.c	/^Old_tty()$/
+Replot_screen	curses.c	/^Replot_screen() $/
+Write_cats	curses.c	/^Write_cats(categories, current_cat) $/
+Write_menu	curses.c	/^Write_menu()$/
+Write_menu_line	curses.c	/^Write_menu_line(line, message)$/
+Write_message	curses.c	/^Write_message(line, message)$/
+Write_status	curses.c	/^Write_status(red, grn, blu, shift_incr, at_cat, hi/
+get_map_info	get_info.c	/^get_map_info()$/
+interact	interact.c	/^interact(categories,colors) $/
+set_default_options	command.c	/^set_default_options()$/
+set_signals	set_sigs.c	/^set_signals()$/
+shift_color	interact.c	/^shift_color(colr, shift)$/
+sigint	sigint.c	/^sigint(n)$/
+stash_away	command.c	/^stash_away(pos, option)$/
+table_toggle	tbl_toggle.c	/^table_toggle(name, mapset, colors)$/
