@@ -30,7 +30,7 @@ INTER_OBJ = Build_inter.o\
 
 PGM = v.in.arc.pg
 HOME = $(BIN_CONTRIB_CMD)
-EXTRA_CFLAGS = $(VECT_INCLUDE) $(PQINCPATH)
+EXTRA_CFLAGS = $(PQINCPATH)
 
 all:  $(BIN_CONTRIB_CMD)/$(PGM)
 

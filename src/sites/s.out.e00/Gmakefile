@@ -1,6 +1,5 @@
 PGM = s.out.e00
 HOME = $(BIN_CONTRIB_CMD)
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 LDFLAGS = -g
 LIST = 	s.out.e00.o
 

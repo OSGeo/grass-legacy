@@ -2,7 +2,6 @@ PGM = ps.map
 
 LIBES = $(VECTLIB) $(GISLIB) $(DATETIMELIB) $(DATETIMELIB) $(DIG_ATTLIB) $(IMAGERYLIB)
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 OBJ =	main.o \
 	read_cfg.o \

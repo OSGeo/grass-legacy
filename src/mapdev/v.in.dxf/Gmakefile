@@ -1,5 +1,4 @@
 
-EXTRA_CFLAGS =  $(VECT_INCLUDE)
 
 PROG = $(BIN_MAIN_CMD)/v.in.dxf
 

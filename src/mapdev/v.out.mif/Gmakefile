@@ -1,7 +1,6 @@
 PGM       = $(BIN_CONTRIB_CMD)/v.out.mif
 LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB)
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 OBJS = \
 	main.o \

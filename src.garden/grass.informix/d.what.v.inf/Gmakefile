@@ -12,7 +12,6 @@ OBJS = \
 	getCat.o  \
 	openvect.o 
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 
 $(PGM): $(OBJS) $(LIBES)

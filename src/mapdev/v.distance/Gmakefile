@@ -1,6 +1,5 @@
 OFILES = main.o  distance.o
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 PROG = $(BIN_ALPHA_CMD)/v.distance
 

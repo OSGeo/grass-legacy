@@ -4,7 +4,7 @@ SHAPELIB_DIR=$(SRC)/libes/vect32_64/shapelib-1.2.8
 SHAPELIB=$(SHAPELIB_DIR)/libshape.a
 
 HOME = $(BIN_CONTRIB_CMD)
-EXTRA_CFLAGS = $(VECT_INCLUDE) -I../../libes/vect32_64/shapelib-1.2.8/
+EXTRA_CFLAGS = -I../../libes/vect32_64/shapelib-1.2.8/
 LIST = 	main.o
 
 

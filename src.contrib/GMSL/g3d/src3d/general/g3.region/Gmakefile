@@ -1,7 +1,6 @@
 PGM      = g3.region
 HOME     = $(BIN_MAIN_CMD)
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 LIST     = main.o\
 	   cur_frm_3ddb.o\

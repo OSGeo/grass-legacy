@@ -1,5 +1,4 @@
 # %W%  %G%
-EXTRA_CFLAGS	= $(VECT_INCLUDE)
 
 PGM      = v.export
 

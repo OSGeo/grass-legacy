@@ -2,7 +2,7 @@ PGM = 	v.out.sdts
 HOME = $(BIN_CONTRIB_CMD)
 FIPSLIB	=	$(LIBDIR)/libf123.a
 
-EXTRA_CFLAGS	=  -I../../libes/fips123/f123inc $(VECT_INCLUDE)
+EXTRA_CFLAGS	=  -I../../libes/fips123/f123inc
 
 OFILES = \
 	v.out.sdts.o\

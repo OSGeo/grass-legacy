@@ -1,6 +1,5 @@
 PGM=v.bubble
 HOME=$(BIN_MAIN_CMD)
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 OBJS=v.bubble.o support.o bubbling.o
 
 $(HOME)/$(PGM): $(OBJS) $(GISLIB) $(VECTLIB) $(MATHLIB) $(DATETIMELIB)

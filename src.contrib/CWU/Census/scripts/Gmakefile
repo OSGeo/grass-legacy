@@ -1,5 +1,4 @@
 LIB = $(LIBDIR)/libcoorcnv.a
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 SCRIPTS = $(GISBASE)/scripts
 

@@ -1,5 +1,5 @@
 HOME=$(BIN_CONTRIB_CMD)
-EXTRA_CFLAGS = $(VECT_INCLUDE) -I$(LIBDIR)/gis -DPARSE
+EXTRA_CFLAGS = -I$(LIBDIR)/gis -DPARSE
 
 all:  $(HOME)/f.input \
       $(HOME)/f.wsurf \

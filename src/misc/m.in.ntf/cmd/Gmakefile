@@ -28,7 +28,6 @@ INCLUDES =\
 #COMPILER_FLAGS = -O
 #-----------------^ For optimising the code.
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 
 #-----------COMPILER_FLAGS = -g

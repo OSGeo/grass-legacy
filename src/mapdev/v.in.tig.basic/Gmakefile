@@ -1,7 +1,6 @@
 # @(#)Gmakefile	1.1.2.1  1/15/93
 
 LIB = $(LIBDIR)/libcoorcnv.a
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 all:	$(BIN_ALPHA_CMD)/v.in.tig.basic
 

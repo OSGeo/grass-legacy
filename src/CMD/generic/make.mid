@@ -41,7 +41,7 @@ INCLUDE_DIR = $(SRC)/include
 #DIG_INCLUDE  = $(SRC)/libes/vect32/lib
 #VECT_INCLUDE = -I$(SRC)/include/vect
 
-VECT_INCLUDE = -I$(SRC)/include/vect32
+#VECT_INCLUDE = -I$(SRC)/include/vect32
 
 #not required any more 7/2000:
 #DIG_LIBDIR  = $(SRC)/libes/vect32/libes

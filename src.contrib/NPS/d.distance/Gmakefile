@@ -1,5 +1,5 @@
 COORCNVLIB=$(LIBDIR)/libcoorcnv.a
-EXTRA_CFLAGS= -I$(SRC)/mapdev/diglib -L$(SRC)/mapdev/diglib $(VECT_INCLUDE)
+EXTRA_CFLAGS= -I$(SRC)/mapdev/diglib -L$(SRC)/mapdev/diglib
 
 OFILES = \
 	main.o\

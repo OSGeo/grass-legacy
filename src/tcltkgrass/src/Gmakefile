@@ -1,7 +1,7 @@
 PROG = ../bin/tcltkgrass
 PROG2= ../bin/tcltkgrass2
 
-EXTRA_CFLAGS = $(VECT_INCLUDE) -I/usr/local/include
+EXTRA_CFLAGS = -I/usr/local/include
 
 TCLTKLIB = -L/usr/local/lib -ltk8.0 -ltcl8.0 -ldl
 

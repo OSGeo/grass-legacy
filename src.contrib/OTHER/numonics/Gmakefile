@@ -10,7 +10,7 @@ DRIVER_DIR	= $(DIG_DRIVER)/numonics
 
 COMPILE_DIGIT 	= $(LDFLAGS) -o  digit  $(OBJ) $(LIBDIGIT) $(VECTLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB)
 
-EXTRA_CFLAGS	= $(DIGIFLAGS)  $(VECT_INCLUDE)
+EXTRA_CFLAGS	= $(DIGITFLAGS)
 
 
 OBJ = \
@@ -82,9 +82,8 @@ geo.point: $(GEO_POINT) $(DRIVER_DIR)
 	$(CC) $(LDFLAGS) -o  $(DRIVER_DIR)/geo.point  $(GEO_POINT)  $(LIBGEO) $(LIBTRANS) $(CURSES) $(MATHLIB) $(GISLIB)  $(LOCKLIB)
 
 
-coll_pts.o: $(VECT_INCLUDE)/digit.h  $(VECT_INCLUDE)/globals.h 
+coll_pts.o:  $(VECT_INCLUDE)/globals.h 
 dig_curses.o:  dig_menu.h
-dig_curses.o:  $(VECT_INCLUDE)/digit.h
 dig_curses.o:  ../../v.digit/menu.h
 dig_curses.o:  ../../v.digit/curses.C
 
