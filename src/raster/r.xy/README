@@ -1,0 +1,20 @@
+This program will produce two raster maps for use with r.mapcalc. One file
+contains the x-coordinates of each raster map cell, the other, the y-coordinates.
+These two cells can be used to produce mathematical functions in the form:
+	z = fn(x,y)
+
+NOTE: x and y values are in RELATIVE coordinates to an origin of (0,0) at
+      the bottom left corner. To transfrom back to georeferenced coordinates
+      use r.mapcalc to add the relative offset to the origin.
+
+Jo Wood, 26th October 1991
+
+------
+
+Usage:
+ r.xy x=name y=name
+
+Parameters:
+  x   Name of the raster map layer to hold x coordinate values
+  y   Name of the raster map layer to hold y coordinate values
+
