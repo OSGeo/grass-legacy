@@ -1082,63 +1082,33 @@ int append (char *cmd, char *frm, ...)
 /* Build gui */
 int G_gui (void)
 {
-    char *cmd, *cmd2;
     char buf[1000];
-    char wish[200];
     struct Option *opt ;
     struct Flag *flag ;
     char *type;
-    char *s, *top, *p1, *p2;
+    char *s, *top, *p1;
     int i, optn, n_options;
-    int cmdl = 100000;
-    
-    cmd = G_calloc( cmdl, 1);
-    cmd2 = G_calloc( cmdl, 1);
+    FILE *fp;
 		
     if (!pgm_name)
 	pgm_name = G_program_name ();
     if (!pgm_name)
 	pgm_name = "??";
 
-    strcpy (wish, getenv("GRASS_WISH"));
-    
-    cmd[0] = '\0';
-    append(cmd, "lappend auto_path %s/bwidget\n", G_gisbase());
-    append(cmd, "package require -exact BWidget 1.2.1\n");
-    append(cmd, "wm title . \"%s\"\n", pgm_name);
-    append(cmd, "source $env(GISBASE)/etc/gtcltk/select.tcl\n"
-		"set env(GISDBASE) [exec g.gisenv get=GISDBASE]\n"
-		"set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]\n"
-		"set env(MAPSET) [exec g.gisenv get=MAPSET]\n" );
+    fp = popen("$GRASS_WISH", "w");
+    if (!fp)
+	    G_fatal_error("unable to spawn wish");
 
-    append(cmd, "set pw [PanedWindow .pw -side right ]\n");
-    append(cmd, "set optpane [$pw add -minsize 50]\n");
-    append(cmd, "set outpane [$pw add -minsize 30]\n");
-    
-    append(cmd, "set optwin [ScrolledWindow $optpane.optwin -relief sunken -borderwidth 2]\n");
-    append(cmd, "set optfra [ScrollableFrame $optwin.fra -height 200 ]\n");
-    append(cmd, "$optwin setwidget $optfra\n");
-    append(cmd, "set suf [$optfra getframe]\n");
-    append(cmd, "pack $optwin -fill both -expand yes\n");
-    append(cmd, "pack $optpane $outpane -fill both -expand yes\n");
-    append(cmd, "pack $pw -fill both -expand yes\n");
-    
-    /* Output text frame */ 
-    append(cmd, "set outwin [ScrolledWindow $outpane.win -relief sunken -borderwidth 2]\n");
-    append(cmd, "set outtext [text $outwin.text -height 5 -width 30] \n" );
-    append(cmd, "$outwin setwidget $outtext\n");
-    append(cmd, "pack $outwin $outtext -expand yes -fill both\n");
+    fprintf(fp, "set pgm_name %s\n", pgm_name);
+    fprintf(fp, "source $env(GISBASE)/etc/gui.tcl\n");
 
-    /* module description */
-    if (module_info.description) {
-       append(cmd, "label $suf.labdesc1 -text {%s} -anchor w -justify left -background white -foreground black\n", module_info.description);
-       append(cmd, "label $suf.labdesc2 -text \"\" -anchor w -justify left\n");
-       append(cmd, "pack $suf.labdesc1 $suf.labdesc2 -side top -fill x\n" );
-    }
+    if (module_info.description)
+	fprintf(fp, "module_description {%s}\n", module_info.description);
+
+    optn = 1;
     
     if(n_opts)
     {
-	optn = 1;
 	opt= &first_option;
 	while(opt != NULL)
 	{
@@ -1158,24 +1128,24 @@ int G_gui (void)
 	    }
 	    
 	    /* Set key name and type */
-	    append(cmd, "set optname(%d) \"%s\" \n", optn, opt->key);
+	    fprintf(fp, "set optname(%d) \"%s\" \n", optn, opt->key);
 	    if(opt->multiple && opt->options)
-	        append(cmd, "set opttype(%d) \"multi\" \n", optn);
+	        fprintf(fp, "set opttype(%d) \"multi\" \n", optn);
 	    else
-	        append(cmd, "set opttype(%d) \"opt\" \n", optn);
+	        fprintf(fp, "set opttype(%d) \"opt\" \n", optn);
 
 	    /* Option label */ 
-	    append(cmd, "label $suf.lab%d -text {%s (%s, %s):} -anchor w -justify left\n", 
+	    fprintf(fp, "label $suf.lab%d -text {%s (%s, %s):} -anchor w -justify left\n", 
 		          optn, opt->description, 
 			  type, opt->required == YES ? "required" : "optional");
-	    append(cmd, "pack $suf.lab%d -side top -fill x\n", optn );
+	    fprintf(fp, "pack $suf.lab%d -side top -fill x\n", optn );
 
 	    
 	    /* Option value */
-	    append(cmd, "frame $suf.val%d \n", optn );
+	    fprintf(fp, "frame $suf.val%d \n", optn );
 	    if(opt->options) {
 	        if(!opt->multiple) {
-		    append(cmd, "ComboBox $suf.val%d.val -underline 0 -labelwidth 0 -width 25 -textvariable optval(%d) -values { ", optn, optn );
+		    fprintf(fp, "ComboBox $suf.val%d.val -underline 0 -labelwidth 0 -width 25 -textvariable optval(%d) -values { ", optn, optn );
 		}
 		    
 		top = G_calloc(strlen(opt->options) + 1,1);
@@ -1185,24 +1155,24 @@ int G_gui (void)
 		i = 1;
 		while (s) {
 		    if(opt->multiple) {
-			append(cmd, "checkbutton $suf.val%d.val%d -text {%s} -variable optval(%d,%d) -onvalue 1 -offvalue 0\n", optn, i, s, optn, i );    
-			append(cmd, "pack $suf.val%d.val%d -side left\n", optn, i);
-			append(cmd, "set optvalname(%d,%d) \"%s\" \n", optn, i, s);    
+			fprintf(fp, "checkbutton $suf.val%d.val%d -text {%s} -variable optval(%d,%d) -onvalue 1 -offvalue 0\n", optn, i, s, optn, i );    
+			fprintf(fp, "pack $suf.val%d.val%d -side left\n", optn, i);
+			fprintf(fp, "set optvalname(%d,%d) \"%s\" \n", optn, i, s);    
 		    } else {
-			append(cmd, " \"%s\" ", s );
+			fprintf(fp, " \"%s\" ", s );
 		    }
 		    s = strtok(NULL, ",");
 		    i++;
 		}
 	        if(!opt->multiple) {
-		    append(cmd, " } \n");
-		    append(cmd, "pack $suf.val%d.val -side left\n", optn);
+		    fprintf(fp, " } \n");
+		    fprintf(fp, "pack $suf.val%d.val -side left\n", optn);
 		    if ( opt->answer )
-		        append(cmd, " set optval(%d) \"%s\" \n", optn, opt->answer );
+		        fprintf(fp, " set optval(%d) \"%s\" \n", optn, opt->answer );
 		    else
-		        append(cmd, " set optval(%d) \"%s\" \n", optn, p1 );
+		        fprintf(fp, " set optval(%d) \"%s\" \n", optn, p1 );
 		}
-		append(cmd, "set nmulti(%d) %d \n", optn, i - 1 );
+		fprintf(fp, "set nmulti(%d) %d \n", optn, i - 1 );
 		G_free (top);
 	    } else {
 		if ( opt->gisprompt ) {
@@ -1210,34 +1180,34 @@ int G_gui (void)
 		        strcpy(buf, opt->gisprompt);
 		        s = strtok(buf, ",");
 		        s = strtok(NULL, ",");
-			append(cmd, "button $suf.val%d.sel -text \">\" -command {\n"
+			fprintf(fp, "button $suf.val%d.sel -text \">\" -command {\n"
 				"    set filename [tk_getOpenFile -title {Load File}]\n"
 				"    if { [string length $filename] > 0 } {\n"
                         	"        set optval(%d) $filename\n"
 				"    }\n"
 				"}\n", optn, optn);
-	                append(cmd, "pack $suf.val%d.sel -side left -fill x\n", optn);
+	                fprintf(fp, "pack $suf.val%d.sel -side left -fill x\n", optn);
 		    }
 		    if ( !strncmp(opt->gisprompt, "old", 3) ) {
 		        strcpy(buf, opt->gisprompt);
 		        s = strtok(buf, ",");
 		        s = strtok(NULL, ",");
-			append(cmd, "button $suf.val%d.sel -text \">\" -command {\n"
+			fprintf(fp, "button $suf.val%d.sel -text \">\" -command {\n"
 				"    set val [GSelect_::create \"%s\"]\n"
 				"    if { [string length $val] > 0 } {\n"
                         	"        set optval(%d) $val\n"
 				"    }\n"
 				"}\n", optn, s, optn );
-	                append(cmd, "pack $suf.val%d.sel -side left -fill x\n", optn);
+	                fprintf(fp, "pack $suf.val%d.sel -side left -fill x\n", optn);
 		    }
 		}
-	        append(cmd, "Entry $suf.val%d.val -textvariable optval(%d)\n", optn, optn );
-	        append(cmd, "pack $suf.val%d.val -side left -fill x -expand yes\n", optn);
+	        fprintf(fp, "Entry $suf.val%d.val -textvariable optval(%d)\n", optn, optn );
+	        fprintf(fp, "pack $suf.val%d.val -side left -fill x -expand yes\n", optn);
 		if(opt->def) {
-		    append(cmd, " set optval(%d) {%s} \n", optn, opt->def );
+		    fprintf(fp, " set optval(%d) {%s} \n", optn, opt->def );
 		} 
 	    }
-	    append(cmd, "pack $suf.val%d -side top -fill x\n", optn );
+	    fprintf(fp, "pack $suf.val%d -side top -fill x\n", optn );
 
 	    opt = opt->next_opt ;
 	    optn++;
@@ -1249,135 +1219,23 @@ int G_gui (void)
 	flag= &first_flag;
 	while(flag != NULL)
 	{
-	    append(cmd, "set opttype(%d) \"flag\" \n", optn);
+	    fprintf(fp, "set opttype(%d) \"flag\" \n", optn);
 	    
-	    append(cmd, "frame $suf.val%d \n", optn );
-	    append(cmd, "checkbutton $suf.val%d.chk -text {%s} -variable optval(%d) -onvalue 1 -offvalue 0 -anchor w\n", optn, flag->description, optn );    
-	    append(cmd, "pack $suf.val%d.chk -side left\n", optn);
-	    append(cmd, "set optname(%d) \"%c\" \n", optn, flag->key);    
-	    append(cmd, "pack $suf.val%d -side top -fill x\n", optn );
+	    fprintf(fp, "frame $suf.val%d \n", optn );
+	    fprintf(fp, "checkbutton $suf.val%d.chk -text {%s} -variable optval(%d) -onvalue 1 -offvalue 0 -anchor w\n", optn, flag->description, optn );    
+	    fprintf(fp, "pack $suf.val%d.chk -side left\n", optn);
+	    fprintf(fp, "set optname(%d) \"%c\" \n", optn, flag->key);    
+	    fprintf(fp, "pack $suf.val%d -side top -fill x\n", optn );
 	    flag = flag->next_flag ;
 	    optn++;
 	}
     }
    
     n_options = optn - 1; 
-    append(cmd, "set nopt %d\n", n_options);
-    
-    /* Command construction */
-    append(cmd, "proc mkcmd { } {\n"
-	         "    global optname optval opttype nmulti optvalname\n"
-	         "    set cmd {%s}\n"
-		 "    for {set i 1} {$i <= %d } {incr i} {\n"
-		 "        if { $opttype($i) == \"multi\" } {\n"
-		 "            set domulti 0\n"
-		 "            for {set j 1} {$j <= $nmulti($i) } {incr j} {\n"
-		 "                if { $optval($i,$j) == 1 } {\n"
-		 "                    set domulti 1\n"
-		 "                }\n"
-		 "            }\n"
-		 "            if { $domulti == 1 } {\n"
-		 "                lappend cmd \"$optname($i)=\"\n"
-		 "                set first 1\n"
-		 "                for {set j 1} {$j <= $nmulti($i) } {incr j} {\n"
-		 "                    if { $optval($i,$j) == 1 } {\n"
-		 "                        if { $first == 1 } {\n"
-		 "                            set first 0\n"
-		 "                        } else {\n"
-		 "                            append cmd \",\"\n"
-		 "                        }\n"
-		 "                        append cmd \"$optvalname($i,$j)\"\n"
-		 "                    }\n"
-		 "                }\n"
-		 "            }\n"
-		 "        }\n"
-		 "        if { $opttype($i) == \"opt\" } {\n"
-		 "           if {[string length $optval($i)] > 0} {\n"
-		 "               lappend cmd \"$optname($i)=$optval($i)\"\n"
-		 "           }\n"
-		 "        }\n"
-		 "        if { $opttype($i) == \"flag\" } {\n"
-		 "            if { $optval($i) == 1 } {\n"
-		 "                lappend cmd \"-$optname($i)\"\n"
-		 "            }\n"
-		 "        }\n"
-		 "    }\n"
-		 "    return $cmd\n"
-	         "}\n", pgm_name, n_options );
-	    
-    /* Run button */
-    append(cmd, "proc prnout { fh } {\n"
-	         "    global outtext\n"
-		 "    if [eof $fh] {\n"
-		 "        close $fh\n"
-		 "    } else {\n"
-		 "        set str [ read $fh ]\n"
-		 "        while { [set idx [ string first \"\\b\" $str ]] != -1  } {\n"
-		 "            set last [expr $idx - 1]\n"
-		 "            set str1 [ string range $str 1 $last]\n"
-		 "            set first [expr $idx + 1]\n"
-		 "            set str [ string range $str $first end]\n"
-		 "            set pos [$outtext index \"end - 1 chars\"]\n"
-		 "            $outtext delete $pos\n"
-		 "            $outtext insert end $str1\n"
-		 "        }\n"
-		 "        $outtext insert end $str\n"
-		 "        $outtext yview end\n"
-		 "    }\n"
-	         "}\n");
-    append(cmd, "button .run -text \"Run\" -command {\n"
-	   "    global outtext pipe\n"
-	   "    set cmd [ mkcmd ]\n"
-	   "    set cmd_string {}\n"
-	   "    foreach word $cmd {\n"
-	   "        if {[llength $word] > 1} {\n"
-	   "            regsub -all -- {'} $word {'\\''} newword\n"
-	   "            append cmd_string {'} $newword {' }\n"
-	   "        } {\n"
-	   "            append cmd_string $word { }\n"
-	   "        }\n"
-	   "    }\n"
-	   "    $outtext insert end  \"\\n$cmd_string\\n\"\n"
-	   "    $outtext yview end\n"
-	   "    set cmd [concat | $cmd 2>@ stdout]\n"
- 	   "    if {[catch {open $cmd r} msg]} {\n"
- 	   "        error $msg\n"
- 	   "    } {\n"
- 	   "        fconfigure $msg -blocking 0\n"
- 	   "        fileevent $msg readable [ list prnout $msg ]\n"
- 	   "    }\n"
-	   "    update idletasks\n"
-	   "}\n");
+    fprintf(fp, "set nopt %d\n", n_options);
 
-    /* Help button */
-    append(cmd, "button .help -text \"Help\" -command \"exec $env(GRASS_HTML_BROWSER) $env(GISBASE)/docs/html/%s.html &\" \n", pgm_name);
-    append(cmd, "pack .run .help -side left -expand yes -padx 20 -pady 5\n");
-
-    /* Clear button */
-    append(cmd, "button .clear -text \"Clear\" -command { $outtext delete 1.0 end }\n");
-    append(cmd, "pack .run .clear -side left -expand yes -padx 20 -pady 5\n");
- 
-    /* Close button */
-    append(cmd, "button .close -text \"Close\" -command { exit }\n");
-    append(cmd, "pack .run .close -side left -expand yes -padx 20 -pady 5\n");
-
-    G_debug (1, "cmd:\n%s", cmd);  
-    
-    /* Add '\' before " and $ */
-    p1 = cmd; p2 = cmd2;
-    while ( *p1 != 0 ) {
-	if ( (*p1 == '"') || (*p1 == '$')) { *p2 = '\\' ; p2++; }
-	*p2 = *p1; p2++; p1++;
-    }
-    *p2 = '\0';
-/*	
-    fprintf(stdout, "cmd:\n%s", cmd);  
-    fprintf(stdout, "cmd2:\n%s", cmd2);  
-    sprintf(buf, "echo \"%s\"", cmd2);
-    system ( buf );
-*/
-    sprintf(cmd, "echo \"%s\" | %s &", cmd2, wish);
-    system (cmd);
+    fprintf(fp, "add_buttons\n");
+    pclose(fp);
 
     return 0;
 }

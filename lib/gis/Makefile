@@ -196,7 +196,8 @@ default: $(ARCH_INCDIR)/version.h \
 	$(ETC)/projections \
 	$(ETC)/FIPS.code \
 	$(ETC)/state27 \
-	$(ETC)/state83
+	$(ETC)/state83 \
+	$(ETC)/gui.tcl
 
 $(ARCH_INCDIR)/version.h:
 	echo 'static char *VERSION_STRING = "@(#) GRASS $(VERSION_NUMBER) ($(VERSION_DATE))";' > $@
@@ -226,6 +227,10 @@ $(ETC)/state83: state83
 	$(INSTALL) -m 644 $? $@
 
 $(ETC)/projections: projections
+	rm -f $@
+	$(INSTALL) -m 644 $? $@
+
+$(ETC)/gui.tcl: gui.tcl
 	rm -f $@
 	$(INSTALL) -m 644 $? $@
 
