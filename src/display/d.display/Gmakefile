@@ -1,0 +1,58 @@
+OFILES = \
+	cell3d.o \
+	cell_map.o \
+	color.o \
+	digitize.o \
+	do_exit.o \
+	do_pause.o \
+	gorun.o \
+	histo.o \
+	label.o \
+	legend.o \
+	menu_disp.o \
+	menu_info.o \
+	menu_main.o \
+	msurement.o \
+	scale.o \
+	setup.o \
+	show_cell.o \
+	show_leg.o \
+	show_region.o \
+	site.o \
+	use_mouse.o \
+	vect_map.o \
+	zoom.o
+
+$(BIN_MAIN_INTER)/d.display: $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(VASK) $(MATHLIB)
+
+cell3d.o: windows.h
+cell_map.o: variables.h
+color.o: variables.h
+digitize.o: windows.h
+do_exit.o: popup.h
+histo.o: windows.h
+histo.o: variables.h
+legend.o: windows.h
+legend.o: variables.h
+legend.o: popup.h
+menu_main.o: windows.h
+menu_main.o: variables.h
+menu_main.o: popup.h
+menu_info.o: popup.h
+scale.o: windows.h
+setup.o: windows.h
+show_cell.o: windows.h
+show_cell.o: variables.h
+show_leg.o: windows.h
+show_leg.o: variables.h
+show_win.o: windows.h
+vect_map.o: windows.h
+window.o: windows.h
+window.o: variables.h
+window.o: popup.h
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
+$(D_LIB): #
