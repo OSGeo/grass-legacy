@@ -639,15 +639,11 @@ fi
 
 if test "$GDAL_CONFIG" != "" ; then
   GDAL_LIBS="`$GDAL_CONFIG --libs`"
-  GDAL_LIBS_PATH="-L`$GDAL_CONFIG --prefix`/lib"
   GDAL_CFLAGS="`$GDAL_CONFIG --cflags` -DUSE_GDAL_H"
-  USE_GDAL=yes
+  USE_GDAL=1
   if test `$GDAL_CONFIG --ogr-enabled` = "yes" ; then
-    LOC_CHECK_LIBS(gdal,OGRFree,GDAL,$GDAL_LIBS_PATH,OGR_LIB,$MATHLIB,-lstdc++,,)
-    if [ "$OGRLIB" -ne "" ] ; then
-       AC_DEFINE(HAVE_OGR)
-       USE_OGR=yes
-    fi
+    AC_DEFINE(HAVE_OGR)
+    USE_OGR=1
   fi
 else
   GDAL_LIBS=$DLLIB
@@ -658,7 +654,7 @@ fi
 
 AC_SUBST(GDAL_LIBS)
 AC_SUBST(GDAL_CFLAGS)
-AC_SUBST(OGR_LIB)
+AC_SUBST(USE_OGR)
 
 # Enable TIFF option
 
@@ -750,6 +746,7 @@ fi # $USE_GD
 
 AC_SUBST(GDINC)
 AC_SUBST(GDLIB)
+AC_SUBST(USE_GD)
 
 # Done checking GD
 
@@ -1245,6 +1242,7 @@ fi # $USE_OPENDWG
 AC_SUBST(OPENDWGINCPATH)
 AC_SUBST(OPENDWGLIBPATH)
 AC_SUBST(OPENDWGLIB)
+AC_SUBST(USE_OPENDWG)
 
 # Done checking OPENDWG
 

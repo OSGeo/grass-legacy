@@ -134,6 +134,7 @@ TIFFLIB             = @TIFFLIB@
 #GD library (for PNGdriver):
 GDINC               = @GDINC@
 GDLIB               = @GDLIB@
+USE_GD              = @USE_GD@
 
 #openGL files for NVIZ/r3.showdspf
 OPENGLINC           = @OPENGLINC@
@@ -156,12 +157,10 @@ FFTWLIB             = @FFTWLIB@
 BLASLIB             = @BLASLIB@
 LAPACKLIB           = @LAPACKLIB@
 
-#GDAL
+#GDAL/OGR
 GDALLIBS            = @GDAL_LIBS@
 GDALCFLAGS          = @GDAL_CFLAGS@
-
-#OGR
-OGR_LIB             = @OGR_LIB@
+USE_OGR             = @USE_OGR@
 
 #FreeType:
 FTINC               = @FTINC@
@@ -175,6 +174,7 @@ PROJLIB             = @PROJLIB@
 OPENDWGINCPATH      = @OPENDWGINCPATH@
 OPENDWGLIBPATH      = @OPENDWGLIBPATH@
 OPENDWGLIB          = @OPENDWGLIB@
+USE_OPENDWG         = @USE_OPENDWG@
 
 # Uncomment below to input Korean(Asian?) characters in v.digit or etc.
 #DASIAN_CHARS        = -DASIAN_CHARS
