@@ -1,0 +1,90 @@
+LIBES  = $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(VASK)
+
+
+PGM = $(BIN_ALPHA_CMD)/r.agnps.vis
+
+LIST = \
+        cr_so_ro_maps.o\
+	cell_open.o\
+	cell_open_new.o\
+	output_option.o\
+	window_management.o\
+	display_map.o\
+	win_label.o\
+	win_label_erase.o\
+	nut_bar.o\
+	bar.o\
+	hist_main.o\
+	what.o\
+	draw_scale.o\
+	wshd_wind.o\
+	wshd_summary.o\
+	cr_usr_maps.o\
+	user_view.o\
+	save_maps.o\
+	get_inputs.o\
+	get_mapset.o\
+	get_old_name.o\
+	clean_up.o\
+	read_input.o\
+	cr_NPCOD_maps.o\
+	rename_maps.o\
+	usr_display.o\
+	display_new.o\
+	remove_scale.o\
+	color_gyr.o\
+	save_output_maps.o\
+	copy_map.o\
+	read_output.o\
+	in_wind.o\
+	line.o\
+	analyze.o\
+	get_mx_mn_inputs.o\
+	usr_avg_stats.o\
+	cdf.o\
+	cr_stats.o\
+	main.o
+
+$(PGM): $(LIST) $(LIBES)
+			$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
+
+
+clean :
+	-rm -rf OBJ*
+
+analyze.o: map_gen.h window_management.h
+bar.o: map_gen.h bar.h window_management.h
+cdf.o: map_gen.h
+clean_up.o: map_gen.h
+cr_NPCOD_maps.o: map_gen.h
+cr_so_ro_maps.o: map_gen.h
+cr_stats.o: map_gen.h
+cr_usr_maps.o: map_gen.h window_management.h
+display_map.o: map_gen.h
+draw_scale.o: map_gen.h
+get_inputs.o: map_gen.h
+get_mx_mn_inputs.o: map_gen.h
+hist_main.o: map_gen.h window_management.h
+in_wind.o: map_gen.h
+line.o: map_gen.h line.h window_management.h
+main.o: map_gen.h window_management.h
+nut_bar.o: map_gen.h nut_bar.h window_management.h
+output_option.o: map_gen.h window_management.h
+read_input.o: map_gen.h
+read_output.o: map_gen.h
+remove_scale.o: map_gen.h
+save_maps.o: map_gen.h window_management.h
+save_output_maps.o: map_gen.h window_management.h
+user_view.o: map_gen.h window_management.h
+usr_avg_stats.o: map_gen.h window_management.h
+usr_display.o: map_gen.h window_management.h
+what.o: map_gen.h
+win_label.o: map_gen.h
+win_label_erase.o: map_gen.h
+window_management.o: map_gen.h window_management.h
+wshd_summary.o: map_gen.h
+wshd_wind.o: map_gen.h
+
+$(LIST): 
+
+$(LIBES): #
