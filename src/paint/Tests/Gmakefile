@@ -1,6 +1,5 @@
-# @(#)Gmakefile	2.1  7/14/87
-
 INTERFACE = $(SRC)/paint/Interface/applib/lib.a
+LIBES=$(INTERFACE) $(GISLIB)
 HOME=$(ETC)/paint
 all:	$(HOME)/vres.test \
 	$(HOME)/hres.test \
@@ -10,17 +9,17 @@ all:	$(HOME)/vres.test \
 ####################################################################
 
 
-$(HOME)/pixel.test:	ptest.o $(INTERFACE)
-	$(CC) $(LDFLAGS) ptest.o $(INTERFACE) -o $@
+$(HOME)/pixel.test:	ptest.o $(LIBES)
+	$(CC) $(LDFLAGS) ptest.o $(LIBES) -o $@
 
-$(HOME)/hres.test:	htest.o $(INTERFACE)
-	$(CC) $(LDFLAGS) htest.o $(INTERFACE) -o $@
+$(HOME)/hres.test:	htest.o $(LIBES)
+	$(CC) $(LDFLAGS) htest.o $(LIBES) -o $@
 
-$(HOME)/vres.test:	vtest.o $(INTERFACE)
-	$(CC) $(LDFLAGS) vtest.o $(INTERFACE) -o $@
+$(HOME)/vres.test:	vtest.o $(LIBES)
+	$(CC) $(LDFLAGS) vtest.o $(LIBES) -o $@
 
-$(HOME)/char.test:	ctest.o $(INTERFACE)
-	$(CC) $(LDFLAGS) ctest.o $(INTERFACE) -o $@
+$(HOME)/char.test:	ctest.o $(LIBES)
+	$(CC) $(LDFLAGS) ctest.o $(LIBES) -o $@
 
 ######################################################################
-$(INTERFACE):	# in case the interface changes
+$(LIBES):	# in case libraries change
