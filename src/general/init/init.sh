@@ -23,7 +23,7 @@
 #
 #############################################################################
 
-trap "echo 'User break!' ; exit" 2 3
+trap "echo 'User break!' ; exit" 2 3 15
 
 # Set the GRASS_PERL variable
 GRASS_PERL=PERL_COMMAND
@@ -453,7 +453,7 @@ fi
 eval `g.gisenv`
 LOCATION=${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}
 
-trap "" 2 3
+trap "" 2 3 15
 CYGWIN=`uname | grep CYGWIN`
 
 # cygwin has many problems with the shell setup
@@ -615,7 +615,7 @@ GRASS-GRID > "
     ;;
 esac
 
-trap 2 3
+trap 2 3 15
 
 # Grass session finished
 tput clear
