@@ -250,6 +250,98 @@ G_define_option (void)
 	return(opt) ;
 }
 
+struct Option *
+G_define_standard_option (int opt)
+{
+    struct Option *Opt ;
+    
+    Opt = G_define_option();
+
+    switch ( opt ) {
+	case G_OPT_WHERE:
+	    Opt->key          = "where";
+	    Opt->type         = TYPE_STRING;
+	    Opt->required     = NO;
+	    Opt->answer       = "";
+	    Opt->description  = "WHERE conditions of SQL statement without 'where' keyword. (example: income < 1000 and inhab >= 10000)";
+	    break;
+	    
+	case G_OPT_R_INPUT:
+	    Opt->key          = "input";
+	    Opt->type         = TYPE_STRING;
+	    Opt->required     = YES;
+	    Opt->gisprompt    = "old,cell,raster";
+	    Opt->description  = "Name of input raster";
+	    break;
+	case G_OPT_R_OUTPUT:
+	    Opt->key          = "output";
+	    Opt->type         = TYPE_STRING;
+	    Opt->required     = YES;
+	    Opt->gisprompt    = "new,cell,raster";
+	    Opt->description  = "Name of output raster";
+	    break;
+	case G_OPT_R_MAP:
+	    Opt->key          = "map";
+	    Opt->type         = TYPE_STRING;
+	    Opt->required     = YES;
+	    Opt->gisprompt    = "old,cell,raster";
+	    Opt->description  = "Name of input vector";
+	    break;
+	    
+	case G_OPT_V_INPUT:
+	    Opt->key          = "input";
+	    Opt->type         = TYPE_STRING;
+	    Opt->required     = YES;
+	    Opt->gisprompt    = "old,vector,vector";
+	    Opt->description  = "Name of input vector";
+	    break;
+	case G_OPT_V_OUTPUT:
+	    Opt->key          = "output";
+	    Opt->type         = TYPE_STRING;
+	    Opt->required     = YES;
+	    Opt->gisprompt    = "new,vector,vector";
+	    Opt->description  = "Name of output vector";
+	    break;
+	case G_OPT_V_MAP:
+	    Opt->key          = "map";
+	    Opt->type         = TYPE_STRING;
+	    Opt->required     = YES;
+	    Opt->gisprompt    = "old,vector,vector";
+	    Opt->description  = "Name of input vector";
+	    break;
+	case G_OPT_V_TYPE:
+	    Opt->key          = "type";
+	    Opt->type         = TYPE_STRING;
+	    Opt->required     = NO;
+	    Opt->multiple     = YES;
+	    Opt->answer       = "point,line,boundary,centroid,area";
+	    Opt->options      = "point,line,boundary,centroid,area";
+	    Opt->description  = "Select type: point, line, boundary, centroid or area";
+	    break;
+	case G_OPT_V_FIELD:
+	    Opt->key          = "field";
+	    Opt->type         = TYPE_INTEGER;
+	    Opt->required     = NO;
+	    Opt->answer       = "1";
+	    Opt->description  = "Field value";
+	    break;
+	case G_OPT_V_CAT:
+	    Opt->key          = "cat";
+	    Opt->type         = TYPE_INTEGER;
+	    Opt->required     = NO;
+	    Opt->description  = "Category value";
+	    break;
+	case G_OPT_V_CATS:
+	    Opt->key          = "cats";
+	    Opt->type         = TYPE_STRING;
+	    Opt->required     = NO;
+	    Opt->description  = "Category values (example: 1,3,7-9,13)";
+	    break;
+    }
+
+    return(Opt);
+}
+
 struct GModule *
 G_define_module (void)
 {
