@@ -1,0 +1,153 @@
+.\" %W% %G%
+.TH Greclass 2G G-language
+.SH NAME
+Greclass \- Create new cell layer based on existing cell layer
+.br
+.I (G Language Tool)
+.SH SYNOPSIS
+.B Greclass
+\fIinput_layer output_layer\fR [\fItitle\fR]
+.SH DESCRIPTION
+.I Greclass
+allows a user to create an \fIoutput\fR grid cell data layer based on an
+\fIinput\fR data layer.
+This output layer will be a reclassification of the input map based
+on \fIreclass\fR rules input to
+.I Greclass.
+A \fItitle\fR for the output layer may be (optionally) specified on
+the command line.
+The reclass rules are read from standard input (i.e., from the keyboard,
+redirected from a file, or piped through another program).
+.SH RECLASS RULES
+Once the user has specified an input file, output file, and (optionally)
+output layer title by typing
+.br
+\fBGreclass\fR \fIinput_layer output_layer title\fR
+.br
+each line of input must have the following format:
+
+.RS
+\fBinput_categories = output_category  [label]\fR
+.RE
+
+where \fIlist\fR specifies the values in the input layer to be
+reclassified to the \fInew\fR value.  Specification of a \fIlabel\fR
+to be associated with the new output layer category is optional. If
+specified it is recorded as the category label for the new value.
+The equal sign \= is required. The \fIinput_category(ies)\fR may consist
+of single category numbers or a range of numbers in the format "\fIlow\fR
+thru \fIhigh\fR."
+The word "thru" must be present.
+
+A line containing only the word 
+.B end
+terminates the input.
+.SH EXAMPLES
+The following examples may help clarify the reclass rules.
+
+.IP 1 3
+This example reclassifies categories 1, 3 and 5 in the input map layer
+to category 1 with category label
+"poor quality"
+in the output layer, and reclassifies input layer categories 2, 4, and 6
+to category 2 with the label
+"good quality"
+in the output layer.
+
+.RS
+.RS
+.TS
+l l l l.
+1 3 5	\&=	1	poor quality
+2 4 6	\&=	2	good quality
+.TE
+.RE
+.RE
+
+.IP 2
+This example reclassifies input layer categories 1 thru 10 to output layer
+category 1, input layer categories 11 thru 20 to output layer category 2,
+and input layer categories 21 thru 30 to output layer category 3,
+all without labels.
+
+.RS
+.RS
+.TS
+l l l.
+ 1 thru 10	\&=	1
+11 thru 20	\&=	2
+21 thru 30	\&=	3
+.TE
+.RE
+.RE
+
+.IP 3
+Subsequent rules override previous rules.  Therefore, the below example
+reclassifies input file categories 1 thru 19 and 51 thru 100 to category 1
+in the output file, input map layer categories 20 thru 24 and 26 thru 50 to
+the output layer category 2, and input layer category 25 to the output
+category 3.
+
+.RS
+.RS
+.TS
+c l l l.
+1 thru 100	\&=	1	poor quality
+20 thru 50	\&=	2	medium quality
+25	\&=	3	good quality
+.TE
+.RE
+.RE
+
+.IP 4
+The previous example could also have been entered as:
+
+.ne 6
+.RS
+.RS
+.TS
+c l l l.
+ 1 thru 19  51 thru 100	\&=	1	poor quality
+20 thru 24  26 thru 50	\&=	2	medium quality
+25	\&=	3	good quality
+.TE
+.RE
+
+or as:
+
+.ne 6
+.RS
+.TS
+c l l l.
+ 1 thru 19	\&=	1	poor quality
+51 thru 100	\&=	1
+20 thru 24	\&=	2
+26 thru 50	\&=	2	medium quality
+25	\&=	3	good quality
+.TE
+.RE
+.RE
+
+.LP
+The final example was given to show how the labels are handled. If a new
+value appears in more than one rule (as is the case with new values 1 and 2)
+the last label which was specified becomes the label for that category.
+In this case the labels are assigned exactly as in the two previous
+examples.
+.SH BEWARE
+A \fIreclass\fR file is not a true cell file.  Rather, it is a table of
+reclassification values which reference the input cell file (see manual
+entry \fIreclass[1]\fR for a detailed description of reclass files).
+Therefore, users who wish to retain reclassified maps must also
+save the original input map layers from which they were generated.
+
+Values which are not explicitly reclassified will be reclassified to 0.
+.SH NOTES
+To convert a reclass file to a regular cell file, set your window to
+match the header for the reclass file and then run resample.
+.SH SEE ALSO
+\fIreclass[1]\fR
+.br
+\fIresample[1]\fR
+.SH "AUTHOR"
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
