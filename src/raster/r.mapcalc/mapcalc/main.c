@@ -31,7 +31,7 @@ main (int argc, char *argv[])
 	argc--;
     }
 
-    if (argc > 1 && strstr(argv[1], "-help")) {
+    if (argc > 1 && ( strstr(argv[1], "-help") || strstr(argv[1], "-h")) ) {
 	fprintf(stderr, "r.mapcalc - Raster map layer data calculator\n\n");
 	fprintf(stderr, "r.mapcalc performs arithmetic on raster map layers.\n");
 	fprintf(stderr, "New raster map layers can be created which are arithmetic expressions involving existing raster map layers, integer or floating point constants, and functions.\n\n");
