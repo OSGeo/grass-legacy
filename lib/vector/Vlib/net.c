@@ -23,24 +23,20 @@
 #include "Vect.h"
 
 static int clipper ( gnGrpGraph_s    *pgraph ,
-                     gnInt32_t *     pprevlink ,     /* previous link pointer */
-                     gnInt32_t *     pnodefrom ,     /* from node pointer */
-                     gnInt32_t *     plink ,         /* this link pointer */
-                     gnInt32_t *     pnodeto ,       /* to node pointer */
-                     gnInt32_t *     pcost ,         /* real cost pointer */
+                     gnGrpSPClipInput_s  * pargIn ,
+                     gnGrpSPClipOutput_s * pargOut ,
                      void *          pvarg )         /* caller's pointer */
 {
     double cost;
     
     G_debug ( 2, "Net: clipper()" );
-    /* This direct access to graph is not probably best */
-    if ( pgraph->NodeAttrSize > 0 ) {
-	memcpy( &cost, GNGRP_NODE_ATTR_PTR(pnodefrom), sizeof(cost) );
+
+    if ( gnGrpGet_NodeAttrSize(pgraph) > 0 ) {
+	memcpy( &cost, GNGRP_NODE_ATTR_PTR(pargIn->pnNodeFrom), sizeof(cost) );
 	G_debug ( 2, "  node = %d pcost = %d + %f (arc + node)", 
-		           GNGRP_NODE_ID(pnodefrom), *pcost, cost );
-	*pcost += (gnInt32_t) cost;
+		           GNGRP_NODE_ID(pargIn->pnNodeFrom), pargOut->nLinkCost, cost );
+	pargOut->nLinkCost += (gnInt32_t) cost;
     }
-    
     return 0;   
 }																															
 /* Build network graph 
