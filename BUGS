@@ -8,6 +8,15 @@ Maintained by
 [In sync with GRASS 5 beta 8/CVS]
 History at end of file.
 
+----------- drivers ---------------------------------------------
+CELL-Driver: colors are not correct
+ Comment from Carl Anderson <candrsn@mindspring.com>
+  Tracking of the "bug" will have to start in
+  src/display/d.rast/cmd/display.c
+  Since GRASS4 did the colors right, using both GRASS4 and GRASS5
+  drivers, I suspect one of the Libraries and not the XDRIVER.
+  look at D_set_colors ().
+
 ----------- modules ---------------------------------------------
 d.his: 
  - color wrong if input value=0
@@ -271,7 +280,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log: BUGS,v $
- Revision 1.2  2000-07-12 13:29:51  markus
+ Revision 1.3  2000-07-12 14:56:33  markus
+ added CELL driver color bug
+
+ Revision 1.2  2000/07/12 13:29:51  markus
  added d.rgb
 
  Revision 1.1  2000/07/12 12:48:26  markus
