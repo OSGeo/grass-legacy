@@ -1132,6 +1132,7 @@ int G_gui (void)
 	    fprintf(fp, "set optname(%d) {%s}\n", optn, opt->key);
 	    fprintf(fp, "set opttype(%d) %s\n", optn,
 		    opt->multiple && opt->options ? "multi" : "opt");
+	    fprintf(fp, "set optmulti(%d) %d\n", optn, opt->multiple);
 
 	    /* Option label */ 
 	    fprintf(fp, "do_label %d {%s} {%s} %d\n",
