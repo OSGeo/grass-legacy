@@ -129,7 +129,7 @@ Nset_focus_gui_cmd (
   GS_get_focus(realto);
   surf_list=GS_get_surf_list(&num_surfs);
 
-  if(argc == 3 && surf_list > 0){
+  if(argc == 3 && surf_list != NULL){
 	  id = surf_list[0];
 	  free(surf_list);
 	  GS_get_dims(id, &rows, &cols);
@@ -177,7 +177,7 @@ Nget_focus_gui_cmd (
   GS_get_focus(realto);
 
   surf_list=GS_get_surf_list(&num_surfs);
-  if (surf_list > 0) {
+  if (surf_list != NULL) {
   id = surf_list[0];
   free(surf_list);
   GS_get_dims(id, &rows, &cols);
