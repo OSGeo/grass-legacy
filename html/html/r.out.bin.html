@@ -8,19 +8,17 @@
 <hr width=100% align=center size=6 no shade>
 
 <H2>NAME</H2>
-<B><EM>r.out.bin</EM></B> - writes a binary array to standard output<BR>
+<B><EM>r.out.bin</EM></B> - exports a GRASS raster to a binary array<BR>
 <EM>(GRASS Raster Export Program)</EM>
 
 <H2>SYNOPSIS</H2>
 <B>r.out.bin [-i] input</B><EM>=name</EM> <B>output</B><EM>=name</EM> [<B>null</B><EM>=value</EM>]
 
 <H2>DESCRIPTION</H2>
-<EM>r.out.bin</EM> writes a binary array to standard output. 
-Depending on the data type the program will output a integer, 
-float, or double array, unless "-i" is specified, then it will be 
-forced to integer. The region parameters are printed to stderr. 
-This file is compatible with the generic mapping tools (GMT) 
-program xyz2grd if the user wants to convert to netCDF format (see below). 
+The <EM>r.out.bin</EM> program exports a GRASS raster map to a binary array file. Optionally, output can be sent to standard output (stdout) for direct input (pipe) into other applications.
+Data is exported according to the original GRASS raster type (e.g. float). If the "-i" flag is specified, an integer array is output. The region parameters are printed to stderr. 
+The output is compatible with the Generic Mapping Tools (GMT) 
+program xyz2grd (see below). 
 
 <H3>Flag:</H3>
 <DL>
@@ -34,7 +32,7 @@ program xyz2grd if the user wants to convert to netCDF format (see below).
 <DD>Name of an existing raster map
 
 <DT><B>output</B>
-<DD>Name of an output binary map (use out=- for stdout)
+<DD>Name of an output binary file (use output=- for stdout)
 
 <DT><B>null</B>
 <DD>Value to write out for null
@@ -48,10 +46,12 @@ Author: <A HREF=mailto:bcovill@tekmap.ns.ca>Bob Covill</A>
 <P>
 
 <H2>NOTE</H2>
-If exported data is moved between platforms byte swapping may be required.
+If exported data is moved between platforms, byte swapping may be required.
 <P>
-The exported data can be converted to netCDF GMT format with 
-<pre>xyz2grd .... -ZTLf -F</pre>
+Exported data can be piped directly into the GMT program xyz2grd.
+<pre>r.out.bin input=grass.raster output=- | xyz2grd -R....  -ZTLf -F
+</pre>
+The example uses the GMT program xyz2grd with the -ZTLf flag indicating that a float array was output.
 
 <H2>TODO</H2>
 - Add optional fixed size header (1024) with region specs.<P>
