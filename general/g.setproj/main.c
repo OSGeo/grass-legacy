@@ -206,8 +206,9 @@ int main(int argc, char *argv[])
 	    G_strip(lbuf);
             if ((i = G_get_datum_by_name(lbuf)) > 0)
             {
-                fprintf(stderr, "The current datum is %s\n", G_datum_name(i));
-                if (G_yes("Would you want to change the datum (or the datum transformation parameters)?", 0))
+                fprintf(stderr, "The current datum is %s (%s)\n", 
+			G_datum_name(i), G_datum_description(i));
+                if (G_yes("Do you wish to change the datum (or datum transformation parameters)?", 0))
                     sph_check = ask_datum(datum, dat_ellps, dat_params);
                 else 
 		{
