@@ -43,10 +43,10 @@ int popup (FILE *fd, int x, int y, char *msg)
     int topx, bottomx, leftx, rightx, widthx;
     char name[30], mapset[30], cur_mapset[30];
     int new_mapset;
-    char tempfile1[40], tempfile2[40];
+    char *tempfile1, *tempfile2;
 
-    sprintf (tempfile1, "/tmp/i.ask1.%d", getpid());
-    sprintf (tempfile2, "/tmp/i.ask2.%d", getpid());
+    tempfile1 = G_tempfile();
+    tempfile2 = G_tempfile();
 
     WHITE = D_translate_color ("white");
     RED   = D_translate_color ("red");
