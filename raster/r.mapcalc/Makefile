@@ -2,7 +2,7 @@ MODULE_TOPDIR = ../..
 
 PGM = r.mapcalc
 
-OBJ =	y.tab.o \
+CMD_OBJS = y.tab.o \
 	lex.yy.o \
 	\
 	expression.o \
@@ -52,8 +52,6 @@ OBJ =	y.tab.o \
 	xsqrt.o \
 	xsub.o \
 	xtan.o
-
-ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 
 EXTRA_CFLAGS = $(READLINEINCPATH)
 LIBES = $(GISLIB) $(BTREELIB) $(ROWIOLIB) $(READLINELIB) $(HISTORYLIB)
