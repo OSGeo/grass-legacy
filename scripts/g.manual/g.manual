@@ -68,7 +68,7 @@ start_browser()
     exit 1
   else
     echo "Starting browser <$BROWSERNAME> for module $1..."
-    "$GRASS_HTML_BROWSER" "file://$GRASS_DOC_BASE"/docs/html/$1.html
+    "$GRASS_HTML_BROWSER" file://"$GRASS_DOC_BASE"/docs/html/$1.html
   fi
 }
 
