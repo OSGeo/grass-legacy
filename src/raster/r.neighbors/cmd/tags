@@ -1,0 +1,26 @@
+Mmain	main.c	/^main(argc,argv)	char *argv[];$/
+allocate_bufs	bufs.c	/^allocate_bufs()$/
+ascending	sort_int.c	/^static ascending (a ,b)$/
+ask_method	ask_method.c	/^ask_method ()$/
+ask_nsize	ask_nsize.c	/^ask_nsize ()$/
+c_ave	c_ave.c	/^c_ave (values, n)$/
+c_divr	c_divr.c	/^c_divr (values, n)$/
+c_intr	c_intr.c	/^c_intr (values, n)$/
+c_max	c_max.c	/^c_max (values, n)$/
+c_min	c_min.c	/^c_min (values, n)$/
+c_mode	c_mode.c	/^c_mode (values, n)$/
+complete	complete.c	/^complete ()$/
+descending	sort_int.c	/^static descending (a ,b)$/
+divr_cats	divr_cats.c	/^divr_cats()$/
+explain	explain.c	/^explain()$/
+gather	gather.c	/^gather (values, offset)$/
+intr_cats	intr_cats.c	/^intr_cats()$/
+new_screen	new_screen.c	/^new_screen()$/
+null_cats	null_cats.c	/^null_cats ()$/
+readcell	readcell.c	/^readcell (fd, row, nrows, ncols)$/
+rotate_bufs	bufs.c	/^rotate_bufs()$/
+scan_int	scan_int.c	/^scan_int(buf,n)$/
+sort_int	sort_int.c	/^sort_int (array, n, order)$/
+title	title.c	/^title (type)$/
+uppercase	uppercase.c	/^uppercase (s)	char *s;$/
+zero	zero.c	/^zero (buf, n)$/
