@@ -1,8 +1,8 @@
 frame .main_menu
 pack .main_menu -expand yes -fill both
 
-# tcltkgrass menu.tcl v 4.0 for GRASS 5.7 2004/04/01 Michael Barton
-# based on menu.tcl for GRASS 5 by Michael Barton, Jacques Bouchard, and Markus Neteler
+# tcltkgrass menu.tcl v 4.0.1 for GRASS 5.7 2004/06/01 Michael Barton
+# based on menu.tcl for GRASS 5.3 by Michael Barton, Jacques Bouchard, and Markus Neteler
 # with scripting support by Andreas Lange
 
 # main menu
@@ -25,6 +25,8 @@ menu_build 1 .main_menu {
 		"exec  i.in.erdas &"}
 		"GRIDATB.FOR map file (TOPMODEL)" "" {
 		"exec r.in.gridatb &"}
+		"MAT-File (v.4) map file (Matlab or Octave)" "" {
+		"exec r.in.mat &"}
 	    }
 	    "Vector map" "" {
 		"Various formats using OGR" "" {
@@ -44,6 +46,12 @@ menu_build 1 .main_menu {
 		"XY points ascii file" "" {
 		"exec s.in.ascii &"}
 	    }
+	    "Grid 3D" "" {
+	     "ASCII 3D file" "" {
+		"exec r3.in.ascii &"}
+	     "Vis5D file" "" {
+		"exec r3.in.v5d &"}
+	    }
 	}
 	Export "Export maps from GRASS" {
 	    "Raster map" "" {
@@ -58,6 +66,8 @@ menu_build 1 .main_menu {
 		"exec i.out.erdas &"}
 		"GRIDATB.FOR map file (TOPMODEL)" "" {
 		"exec r.out.gridatb"}
+		"MAT-File (v.4) map file (Matlab or Octave)" "" {
+		"exec r.out.mat &"}
 		-separator
 		"Binary file" "" {
 		"exec r.out.bin &"}
@@ -88,6 +98,12 @@ menu_build 1 .main_menu {
 		"ASCII file points file" "" {
 		"exec  s.out.ascii &"}
 	    }
+	    "Grid 3D" "" {
+	     "ASCII 3D file" "" {
+		"exec r3.out.ascii &"}
+	     "Vis5D file" "" {
+		"exec r3.out.v5d &"}
+	    }
 	}
 	Scripting "" {
 	    "Start scripting" "" {
@@ -104,13 +120,9 @@ menu_build 1 .main_menu {
 	    "PNG (save currently selected display to 24 bit PNG file)" "" {
 	    "exec d.out.png"}
 	}
-	"Print driver output" "" {
-	    "Display label" "" {
-	    "exec d.paint.labels &"}
-	    "Postscript map creation" "" {"exec ps.map &"}
-	}
-	"Print (not yet implemented)" "" {"do_nothing"}
-	"Quit" "Bye" resize_menu;quit
+	"Postscript map creation" "" {"exec ps.map &"}
+	"Print (Use display manager)" "" {"do_nothing"}
+	"Quit tcltkgrass" "" resize_menu;quit
     }
     GIS "Manage GRASS GIS files" {
 	"Maps & grid3D files" "Map management (map files operations)" {
@@ -173,10 +185,7 @@ menu_build 1 .main_menu {
 	"NVIZ visualization tool" "" {
 	"exec nviz -q &"}
 	-separator
-	    "Start displays" "" {
-	    "[not functional ] All active saved X" "" {
-	    start_monitors}
-	    -separator
+	"Start displays" "" {
 	    X0 "" {
 	    "exec d.mon start=x0 &"}
 	    X1 "" {
@@ -192,16 +201,10 @@ menu_build 1 .main_menu {
 	    X6 "" {
 	    "exec d.mon start=x6 &"}
 	    -separator
-	    "[not functional ]CELL" "" {
-	    "exec d.mon start=CELL &"}
-	    -separator
 	    "Start/restart display at specified window size" "" {
 	    "exec d.monsize"}
 	}
 	"Stop displays" "" {
-	    "[not functional] All X" "" {
-	    stop_monitors}
-	    -separator
 	    X0 "" {
 	    "exec d.mon stop=x0 &"}
 	    X1 "" {
@@ -235,9 +238,6 @@ menu_build 1 .main_menu {
 	    "exec d.mon select=x5 &"}
 	    X6 "" {
 	    "exec d.mon select=x6 &"}
-	    -separator
-	    "[not functional] CELL" "" {
-	    "exec d.mon select=CELL"}
 	}
 	-separator
 	    Raster "Display raster maps" {
@@ -390,7 +390,7 @@ menu_build 1 .main_menu {
 	"Locate closest points between areas in 2 raster maps" "" {
 	"exec r.distance &"}
 	"Map calculator" "" {
-	"exec mapcalc &"}
+	"exec r.mapcalculator &"}
 	"Neighborhood analysis" "" {
 	"exec r.neighbors &"}
 	"Overlay maps" "" {
@@ -502,10 +502,15 @@ menu_build 1 .main_menu {
 	    "Interpolate surfaces from points" "" {
 		"Bilinear from points" "" {
 		"exec r.bilinear &"}
-		"Inverse distance weighted from raster (Lat./Long. locations)"
-		    "" {
+		"Inverse distance weighted from raster (Lat./Long. locations)" "" {
 		"exec r.surf.idw &"}
+		"Inverse distance weighted from vector points" "" {
+		"exec v.surf.idw &"}
+		"Regularized spline tension from vector points" "" {
+		"exec v.surf.rst &"}
 	    }
+	    "Fill NULL areas using regularized spline tension" "" {
+	    "exec r.fillnulls &"}
 	    "Interpolate surfaces from contours" "" {
 		"Regularized spline tension from raster contours" "" {
 		"exec r.surf.contour &"}
@@ -513,6 +518,8 @@ menu_build 1 .main_menu {
 		"exec v.surf.rst &"}
 	    }
 	    -separator
+	    "Generate density surface using moving Gausian kernal" "" {
+	    "exec v.kernel &"}
 	    "Generate fractal surface" "" {
 	    "exec r.surf.fractal &"}
 	    "Generate gaussian deviates surface" "" {
@@ -590,6 +597,8 @@ menu_build 1 .main_menu {
 	    "exec v.proj &"}
 	}
 	"Register/unregister connections" "" {
+	    "Create new vector as link to external OGR layer" "" {
+	    "exec  v.external &"}
 	    "Register ESRI shapefile" "" {
 	    "exec  v.shape.register &"}
 	    "Unregister ESRI shapefile" "" {
@@ -661,15 +670,21 @@ menu_build 1 .main_menu {
 	    "exec v.random &"}
 	}
 	-separator
-	    "Reports & statistics" "" {
-	    "Basic information" "" {
-	    "exec v.info &"}
+	"Reports & statistics" "" {
+	    	"Basic information" "" {
+	    	"exec v.info &"}
+		"Load vector attributes to database or create reports" "" {
+		"exec v.to.db &"}
 	}
     }
     Image "Image processing" {
 	"Develop images & groups" "" {
 	    "Create/edit imagery group" "" {
-	    "exec i.group &"}
+	    "exec i.group &"}	"Create 3D mask for grid3D operations" ""	"Create 3D mask for grid3D operations" "" {
+	"exec r3.mask &"}
+ {
+	"exec r3.mask &"}
+
 	    "Target imagery group" "" {
 	    "exec i.target &"}
 	    -separator
@@ -693,21 +708,23 @@ menu_build 1 .main_menu {
 	    "exec i.ortho.photo &"}
 	}
 	-separator
-	    "Classify image" "" {
-	    "Clustering input for unsupervised classification" "" {
-	    "exec i.cluster &"}
-	    -separator
-	    "Maximum likelyhood classification (MLC)" "" {
-	    "exec i.maxlik &"}
-	    "Sequential maximum a posteriory classification (SMAP)" "" {
-	    "exec i.smap &"}
-	    -separator
-	    "Interactive input for supervised classification" "" {
-	    "exec i.class &"}
-	    "Non-interactive input for supervised classification (MLC)" "" {
-	    "exec i.gensig &"}
-	    "Non-interactive input for supervised classification (SMAP)" "" {
-	    "exec i.gensigset &"}
+	"Brovey transformation and pan sharpening for Landsat ETM, SPOT, & Quickbird" "" {
+	"exec i.fusion.brovey &"}
+	"Classify image" "" {
+		"Clustering input for unsupervised classification" "" {
+	    	"exec i.cluster &"}
+	    	-separator
+	    	"Maximum likelyhood classification (MLC)" "" {
+	    	"exec i.maxlik &"}
+	    	"Sequential maximum a posteriory classification (SMAP)" "" {
+	    	"exec i.smap &"}
+	    	-separator
+	    	"Interactive input for supervised classification" "" {
+	    	"exec i.class &"}
+	    	"Non-interactive input for supervised classification (MLC)" "" {
+	    	"exec i.gensig &"}
+	    	"Non-interactive input for supervised classification (SMAP)" "" {
+	    	"exec i.gensigset &"}
 	}
 	"Dehaze for LandSAT 5" "" {
 	"exec i.tm.dehaze &"}
@@ -744,6 +761,24 @@ menu_build 1 .main_menu {
 	    "exec i.oif &"}
 	}
     }
+    "Grid3D" "3D volume management. Use NVIZ to view." {
+	"Develop grid3D volumes" "" {
+		"Manage nulls for grid3D volume" "" {
+		"exec r3.null &"}
+		"Manage timestamp for grid3D volume" "" {
+		"exec r3.timestamp &"}
+	}
+	"Create 3D mask for grid3D operations" "" {
+	"exec r3.mask &"}
+	"Map calculator for grid3D operations" "" {
+	"exec r3.mapcalc &"}
+	"Interpolate volume from vector points using splines" "" {
+	"exec v.vol.rst &"}
+	"Report & Statistics" "" {
+		"Display information about grid3D volume" "" {
+		"exec r3.info &"}
+	}
+    }
     Databases "Database management" {
 	"Manage database" "" {
 	    "Connect to database" "" {
@@ -774,8 +809,6 @@ menu_build 1 .main_menu {
 	    "Execute SQL statement" "" {
 	    "exec db.execute &"}
 	}
-	"Load vector to DB" "" {
-	"exec v.to.db &"}
 	"Manage PostGIS database" "" {
 	"exec pg.postgisdb &"}
     }
