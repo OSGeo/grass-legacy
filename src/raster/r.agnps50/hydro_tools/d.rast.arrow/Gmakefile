@@ -1,0 +1,13 @@
+PGM = arrow
+
+OFILES = arrow.o
+
+all: $(BIN_MAIN_CMD)/$(PGM)
+
+$(BIN_MAIN_CMD)/$(PGM): $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+saber_src:
+	load $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
