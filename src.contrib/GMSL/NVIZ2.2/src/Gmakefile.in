@@ -13,11 +13,11 @@ SURFLIB = $(LIBDIR)/ogsf/libgsf.a
 
 # Stuff for mkdspf - not yet implemented
 # DSPLIB = $(LIBDIR)/libes/dspf/libdsp3.a
-# DSPINC = $(LIBDIR)/libes/dspf
+# DSPINC = -I$(LIBDIR)/libes/dspf
 
 EXTRA_CFLAGS= ${XCFLAGS} ${TCLINCDIR} ${TKINCDIR} \
 	-I${SURF_INCDIR} $(VECT_INCLUDE) \
-	-D_NO_PROTO -D__STDC__ $(TIFFINCPATH) -I$(DSPINC) $(GISLIB) $(PQINCPATH)
+	-D_NO_PROTO -D__STDC__ $(TIFFINCPATH) $(DSPINC) $(GISLIB) $(PQINCPATH)
 
 IMGLIB= $(LIBDIR)/libimage/libimage.a
 
