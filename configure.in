@@ -1018,12 +1018,13 @@ AC_MSG_RESULT($XDRIVER)
 AC_SUBST(XDRIVER)
 
 if test "$XDRIVER" = "ipc"; then
-    echo GRASS_IN_CONFIGURE=yes ./README.ipc new
-    GRASS_IN_CONFIGURE=yes ./README.ipc new
+    xdriver=new
 else
-    echo GRASS_IN_CONFIGURE=yes ./README.ipc orig
-    GRASS_IN_CONFIGURE=yes ./README.ipc orig
+    xdriver=orig
 fi
+
+echo GRASS_IN_CONFIGURE=yes ./README.ipc $xdriver
+GRASS_IN_CONFIGURE=yes ./README.ipc $xdriver
 
 
 AC_OUTPUT(Makefile src/CMD/head/head)
