@@ -27,9 +27,7 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-	"An imagery function that creates and edits groups and subgroups "
-	"of imagery files. The interactive version provides extended "
-	"functionality.";
+	"Creates and edits groups and subgroups of imagery files.";
 
 /* Get Args */
     grp = G_define_option();

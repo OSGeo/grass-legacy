@@ -20,7 +20,7 @@ main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-        	"This program targets an imagery group to a GRASS location and mapset";
+        	"Targets an imagery group to a GRASS location and mapset.";
         	
 	grp = G_define_option();
 	grp->key             = "group";

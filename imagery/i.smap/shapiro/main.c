@@ -13,7 +13,7 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"An imagery function that performs contextual image classification "
+		"Performs contextual image classification "
 		"using sequential maximum a posteriori (SMAP) estimation.";
 
     parse (argc,argv, &parms);

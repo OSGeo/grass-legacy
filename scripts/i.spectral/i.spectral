@@ -6,7 +6,7 @@
 # this script needs gnuplot
 
 #%Module
-#%  description: i.spectral - displays spectral response at user specifified locations in images
+#%  description: displays spectral response at user specified locations in images
 #%End
 #%option
 #% key: band1
