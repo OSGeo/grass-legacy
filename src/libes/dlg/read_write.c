@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include <stdio.h>
 #define FGET 		fgets(buff,80,file)
 
@@ -8,7 +7,6 @@ dlg_read_int(file, num, buf)
 	int **buf ;
 {
 	char *calloc() ;
-	int error ;
 
 	*buf = (int *)(calloc(num,sizeof(int))) ;
 	if (*buf == NULL)
