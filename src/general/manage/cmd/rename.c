@@ -90,13 +90,13 @@ main (int argc, char *argv[])
 		continue;
 	    }
 
-            if(G_is_reclassed_by(old, mapset, &nrmaps, &rmaps) > 0)
+            if(G_is_reclassed_to(old, mapset, &nrmaps, &rmaps) > 0)
             {
 		int ptr, l;
     		char buf1[256], buf2[256], buf3[256], *str;
 		FILE *fp;
 
-		fprintf(stderr, "Renaming in reclass map%s...\n",
+		fprintf(stderr, "Renaming in reclassed map%s...\n",
 				(nrmaps > 1 ? "s" : ""));
 
 		for(; *rmaps; rmaps++)

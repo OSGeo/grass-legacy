@@ -89,7 +89,7 @@ int main (int argc, char *argv[])
                 continue;
             }
             do_copy (n, from, mapset, to);
-	    sprintf (buf1, "rm -f %s/%s/cell_misc/%s/reclassed_by",
+	    sprintf (buf1, "rm -f %s/%s/cell_misc/%s/reclassed_to",
 			    location_path, mapset, to);
 	    system(buf1);
         }
