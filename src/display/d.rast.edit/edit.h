@@ -6,8 +6,10 @@
 #include "raster.h"
 #include "display.h"
 
-/* Define ANOTHER_BUTTON to click conveniently for two button mouse */
-#define	ANOTHER_BUTTON
+/* Define ANOTHER_BUTTON to click conveniently for two button mouse.
+ * Read src/CMD/head/head and do not define here for consistency.
+#define ANOTHER_BUTTON
+*/
 
 #define LEFT	1
 
