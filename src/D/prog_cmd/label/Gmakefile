@@ -1,0 +1,19 @@
+#  %W%  %G%
+
+OFILES = \
+	command.o\
+	label.o\
+	main.o
+
+Dlabel: $(BIN)/Dlabel
+
+$(BIN)/Dlabel: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(TERMLIB)
+
+command.o: options.h
+label.o: options.h
+main.o: options.h
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
