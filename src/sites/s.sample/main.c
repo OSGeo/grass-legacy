@@ -104,10 +104,10 @@ int main (argc, argv)
   parm.sfield->answer  = "none";
   
   parm.sindex = G_define_option();
-  parm.sindex->key = "index";
+  parm.sindex->key = "field";
   parm.sindex->type = TYPE_INTEGER;
   parm.sindex->required = NO;
-  parm.sindex->description = "Site attribute index for dim or decimal fields";
+  parm.sindex->description = "Site attribute field for dim or decimal fields";
   parm.sindex->answer = "1";
 
   parm.output = G_define_option ();
