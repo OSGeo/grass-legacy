@@ -1,0 +1,6 @@
+:
+P=${GISBASE?}/etc/paint
+PAINTER=${1?}
+PAINT_DRIVER=$P/driver/$PAINTER
+export PAINTER PAINT_DRIVER
+exec $P/driver.sh/$PAINTER
