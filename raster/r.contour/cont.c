@@ -53,13 +53,13 @@ void contour (
 	hit[i] = (char *) G_malloc ((ncol-1) * sizeof (char));
     
     if (!quiet)
-	fprintf(stderr,"Total levels: %4d   Current level: ", nlevels);
+	fprintf(stderr,"Total levels: %4d   Current level:     ", nlevels);
     
     for (n = 0; n < nlevels; n++)
     {
 	level = levels[n];
 	if (!quiet)
-	    fprintf( stderr, "%4d\b\b\b\b", n+1); /* print level number */
+	    fprintf( stderr, "\b\b\b\b%4d", n+1); /* print level number */
 
 	/* initialize hit array */
 	for ( i = 0; i < nrow-1; i++)
@@ -193,7 +193,7 @@ void contour (
 	    } /* for rows */
 	} /* for columns */
     } /* for levels */
-    fprintf (stdout, "       \n");
+    fprintf (stderr, "       \n");
     Vect_destroy_line_struct(Points);
     Vect_destroy_cats_struct(Cats);
 }
