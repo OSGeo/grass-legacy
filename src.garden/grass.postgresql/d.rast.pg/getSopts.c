@@ -32,7 +32,7 @@ getSelectOpts (argc, argv)
 
         struct Option *sql, *input,*output  ;
         struct Flag *select;
-	char *key, *col;
+
 	char buf[1024] = "";
 	char SQL_stmt[1024] = "";
 	char tmpstr[8] = "";
@@ -95,11 +95,6 @@ getSelectOpts (argc, argv)
              exit(-1);
 	}
 
-/*************** INFX driver code begins ***************/
-/*
-        stat = runSQL( sql->answer, input->answer, output->answer, key, col, 0);
-	return(stat) ;
-*/
 
 	if((fp = fopen(sql->answer,"r")) == NULL) {
             fprintf(stderr, "File read error on select file (%s)\n",sql->answer);
