@@ -722,6 +722,9 @@ menu_build 1 .main_menu {
 	    "Average site attribute over cells" "" {
 	    	"source $env(TCLTKGRASSBASE)/module/s.windavg"
 	    }
+	    "Univariate stats over cells" "" {
+	        "source $env(TCLTKGRASSBASE)/module/s.cellstats"
+	    }
         }
         Interpolation "" {
             "Inverse distance weighted" "" {
