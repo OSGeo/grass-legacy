@@ -3,11 +3,25 @@
 
 <EM>r.series</EM> makes each output cell value a function of the values
 assigned to the corresponding cells in the input raster map layers.
+Following methods are available:
+
+<ul> 
+ <li>average: average value
+ <li>count: count of non-NULL cells
+ <li>median: median value
+ <li>mode: most frequently occuring value
+ <li>minimum: lowest value
+ <li>maximum: highest value
+ <li>stddev: standard deviation
+ <li>sum: sum of values
+ <li>variance: statistical variance
+ <li>diversity: number of different values
+ <li>slope: linear regression slope
+ <li>offset: linear regression offset
+</ul> 
 
 <H2>NOTES</H2>
 
-Linear regression is separated into two methods: slope and offset.
-<P>
 With <EM>-n</EM> flag, any cell for which any of the corresponding input cells are
 NULL is automatically set to NULL. The aggregate function is not
 called, so all methods behave this way with respect to the <EM>-n</EM> flag.
