@@ -9,7 +9,7 @@
 <hr width="100%" align=center size=6 noshade>
 
 <H2>NAME</H2>
-<B><EM>r.to.pg </EM></B> - exports GRASS raster map to PostgreSQL database into a one column table (raster values only).<BR>
+<B><EM>r.to.pg </EM></B> - exports GRASS raster map to PostgreSQL database into a three column table.<BR>
 <EM>(GRASS Raster Script)</EM>
 
 <P>
@@ -17,15 +17,15 @@
 <H2>SYNOPSIS</H2>
 <B>r.to.pg</B><BR>
 <B>r.to.pg help</B><BR>
-<B>r.to.pg <EM>rastermap</EM> [<EM>celltable_name</EM>]</B>
+<B>r.to.pg <EM>rastermap</EM> [<EM>table_name</EM>]</B>
 
 <P>
 
 <H3>DESCRIPTION</H3>
 
-The <EM>r.to.pg</EM> program exports GRASS raster map to PostgreSQL database into a one column table (raster values only). 
-A connection to a PostgreSQL database is needed. The new table will be created in the currently connected database, if the table name 
-does not exist - please check first.   
+The <EM>r.to.pg</EM> program exports GRASS raster map to PostgreSQL database into a three column table. 
+A connection to PostgreSQL database is needed. The new table will be created in the currently connected database, if the table name 
+does not exist - please check first.  
 
 <P>
 
@@ -34,7 +34,7 @@ does not exist - please check first.
 <DT><B>rastermap</B> 
 <DD>Name of an existing raster map to be exported to PostgreSQL.
 
-<DT><B>celltable_name</B>
+<DT><B>table_name</B>
 <DD>Name of new table to create in currently connected PostgreSQL database <EM>(Default is rastermap name)</EM>
 </DL>
 
@@ -42,24 +42,27 @@ does not exist - please check first.
 
 <H2>EXAMPLE</H2>
 
-A PostgreSQl table with one column will be created: 
+A PostgreSQl table with three columns will be created: 
 
 <PRE>
 
-  column_name   
----------------
-   45.2525		
-   45.5
-   44.124	
-   46      	
+ID   |  column_name |    label   
+-------------------------------------
+1    |   45.2525    |    text  	
+2    |   45.5       |  label text
+3    |   44.124	    |    text
+4    |   46         |	 text
+...
 </PRE>   
 
 <EM>with:</EM>
 
 <PRE>
-column_name:	Value of rastermap cells
 
-The datatype in the created table is set to float
+id:		Cell ID	    			(int8)
+column_name:	Value of rastermap cells	(float)
+label:		Category label			(text)
+
 </PRE>
 
 <P>
@@ -76,7 +79,8 @@ The number check of imported values sometimes does not work properly because of 
 <P>
 
 <H2>AUTHOR</H2>
-Markus Neteler
+Markus Neteler<br>
+category and ID  support by Otto Dassau
 
 
 <p><i>Last changed: $Date: 2002/07/27</i>
