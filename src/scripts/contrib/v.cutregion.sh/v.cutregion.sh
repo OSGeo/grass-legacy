@@ -154,12 +154,13 @@ fi
 
 #### create digit header and vertices
 cat << EOF >> $DIG
-ORGANIZATION: GRASSroots organization
+ORGANIZATION: GRASS Development Team
 DIGIT DATE:   `date +%D`
 DIGIT NAME:   $PROG
 MAP NAME:     region$$
 MAP DATE:     `date +%Y`
 MAP SCALE:    1:10000
+OTHER INFO:   -
 ZONE:         0
 WEST EDGE:    $WEST
 EAST EDGE:    $EAST
