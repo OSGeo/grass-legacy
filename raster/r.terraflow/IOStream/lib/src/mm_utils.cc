@@ -41,7 +41,13 @@
 #include <sys/types.h>
 #include <sys/mman.h>
 #include <ctype.h>
+
+#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1)
 #include <ostream>
+#else
+#include <ostream.h>
+#endif
+
 #include <iostream>
 using namespace std;
 #include <stdio.h>

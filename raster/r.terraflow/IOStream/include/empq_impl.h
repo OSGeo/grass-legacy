@@ -41,7 +41,13 @@
 #define __EMPQ_IMPL_H
 
 #include <stdio.h>
+
+#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1)
 #include <ostream>
+#else
+#include <ostream.h>
+#endif
+
 using namespace std;
 
 #include "empq.h"
