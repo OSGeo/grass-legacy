@@ -57,6 +57,7 @@ double G_database_units_to_meters_factor()
 	double factor;
     } table[] =
     {
+	{"unit", 1.0},
 	{"meter", 1.0},
 	{"foot", .3048},
 	{"inch", .0254},
