@@ -404,7 +404,7 @@ Nsurf_draw_all_cmd(data, interp, argc, argv);
 Nvect_draw_all_cmd(data, interp, argc, argv);
 Nsite_draw_all_cmd(data, interp, argc, argv);
 }
-
+return (TCL_OK);
 }
 
 int 
