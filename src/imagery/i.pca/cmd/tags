@@ -1,0 +1,11 @@
+Mmain	main.c	/^main(argc,argv)$/
+ROTATE	jacobi.c	/^#define ROTATE(a,i,j,k,l) g=a[i][j];h=a[k][l];a[i]/
+allocate	allocate.c	/^allocate(DATA,NN,bands)$/
+covariance	stats.c	/^covariance(DATA,NN,bands,mu,covar)$/
+egvorder	jacobi.c	/^egvorder(d,z,bands)$/
+freemem	allocate.c	/^freemem(DATA,bands)$/
+jacobi	jacobi.c	/^jacobi(a,n,d,v)$/
+means	stats.c	/^means(DATA,NN,bands,mu)$/
+rotate	rotate.c	/^rotate(a,i,j,k,l,g,h,s,tau)$/
+transform	transform.c	/^transform(DATA,NN,eigmat,bands,max)$/
+transpose	jacobi.c	/^transpose(eigmat,bands)$/
