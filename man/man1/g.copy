@@ -77,6 +77,9 @@ of existing files, or hit RETURN to end the file listing.
 .bp
 .LP
 \fBParameters:\fR
+.IP \fB3dview\*=\fIfrom,to\fR 20
+where \fIfrom\fR is an existing 3d options file,
+and \fIto\fR is the name given to the copy.
 .IP \fBrast\*=\fIfrom,to\fR 20
 where \fIfrom\fR is an existing raster map layer to be copied,
 and \fIto\fR is the name given to the copy.
