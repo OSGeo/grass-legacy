@@ -334,7 +334,7 @@ main (int argc, char *argv[])
 		for (i = 0; i < List->n_values; i++) {
 		    int j, aline;
 			
-		    aline = List->value[i];
+		    aline = abs ( List->value[i] );
 
 		    for (j = 0; j < TmpList->n_values; j++) {
 			int barea, bcentroid;
