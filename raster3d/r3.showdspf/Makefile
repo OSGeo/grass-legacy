@@ -1,0 +1,18 @@
+MODULE_TOPDIR = ../..
+
+PGM=r3.showdspf
+
+#OGSF_DIR     = $(SRC)/libes/ogsf
+
+OGLLIB       = $(XMLIBPATH) $(XLIBPATH) $(LGLWM) $(OPENGLULIB) $(OPENGLLIB) \
+                $(XMLIB) $(XTLIB) $(XLIB) $(XEXTRALIBS)
+
+LDIR = $(MODULE_TOPDIR)/lib/dspf
+EXTRA_CFLAGS = -I$(LDIR) -I$(INCLUDE_DIR) $(OPENGLINC) $(OPENGLwINC) $(XCFLAGS) $(XMINC)
+
+LIBES = $(DSPFLIB) $(G3DLIB) $(GISLIB) $(DATETIMELIB) $(OGLLIB)
+DEPENDENCIES = $(DSPFDEP) $(G3DDEP) $(GISDEP) $(DATETIMEDEP)
+
+include $(MODULE_TOPDIR)/include/Make/Module.make
+
+default: cmd
