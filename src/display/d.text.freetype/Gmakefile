@@ -11,7 +11,7 @@ all: $(BIN_CMD)/$(PGM) $(ETC)/$(CAPFILE)
 $(BIN_CMD)/$(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(XDRLIB) $(FTLIB) $(ICONVLIB)
 
-$(ETC)/$(CAPFILE):
+$(ETC)/$(CAPFILE): $(CAPFILE)
 	cp $(CAPFILE) $(ETC)/$(CAPFILE)
 
 $(DEPRASTERLIB): #
