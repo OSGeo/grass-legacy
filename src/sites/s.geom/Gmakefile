@@ -1,0 +1,6 @@
+all:
+	$(GMAKE) libes
+	$(GMAKE) v.geom
+	$(GMAKE) s.geom
+	$(GMAKE) s.out.minmaxer
+	$(GMAKE) v.in.minmaxer 
