@@ -56,9 +56,9 @@ proc add_tab_col { name type width namedit typedit widthedit } {
 
 proc table_buttons { } {
     global table_page
-    set addcol [Button $table_page.addcol -text "Add new column"  \
+    set addcol [Button $table_page.addcol -text [G_msg "Add new column"]  \
                        -command { add_tab_col "" "integer" 50 1 1 0 }]
-    set cretab [Button $table_page.cretab -text "Create table"  -command { make_table } ]
+    set cretab [Button $table_page.cretab -text [G_msg "Create table"]  -command { make_table } ]
     pack $addcol $cretab  -side left -anchor s
 }
 
@@ -89,7 +89,7 @@ proc add_command { } {
 
 proc command_buttons { } {
     global GWidget
-    set addcom [Button $GWidget(bgcmd).addcom -text "Add command"  \
+    set addcom [Button $GWidget(bgcmd).addcom -text [G_msg "Add command"]  \
                        -command { add_command }]
    pack $addcom -side left -anchor s
 }
@@ -124,7 +124,7 @@ proc make_table { } {
     if { $create_table_err == 1 } {
         MessageDlg .msg -type ok -message $create_table_msg
     } else {
-        MessageDlg .msg -type ok -message "Table successfully created"
+        MessageDlg .msg -type ok -message [G_msg "Table successfully created"]
         clear_table
         c_table_definition
     }
@@ -146,25 +146,25 @@ proc settings {} {
     set nb [NoteBook $stt.nb]  
     
     # --- Symbology ---
-    set symbf [$nb insert end colors -text "Symbology"]
+    set symbf [$nb insert end colors -text [G_msg "Symbology"]]
 
     # Background
     set row [ frame $symbf.row1 ]
-    Label $row.a -anchor w -width $clw -text "Background"  
+    Label $row.a -anchor w -width $clw -text [G_msg "Background"]  
     SelectColor $row.b -type menubutton -variable symb(background,color) \
                 -command { set_color background $symb(background,color) }
     pack $row.a -side left; pack $row.b -side right; pack $row -side top -fill x -expand yes
 
     # Highlight
     set row [ frame $symbf.row2 ]
-    Label $row.a -anchor w -width $clw -text "Highlight"  
+    Label $row.a -anchor w -width $clw -text [G_msg "Highlight"]  
     SelectColor $row.b -type menubutton -variable symb(highlight,color) \
                 -command { set_color highlight $symb(highlight,color) }
     pack $row.a -side left; pack $row.b -side right; pack $row -side top -fill x -expand yes
 
     # Point
     set row [ frame $symbf.row3 ]
-    Label $row.a -anchor w -width $clw -text "Point"  
+    Label $row.a -anchor w -width $clw -text [G_msg "Point"]  
     checkbutton $row.b -variable symb(point,on) -height 1 -padx 0 -width 0 \
                 -command { set_on point $symb(point,on) }
     SelectColor $row.c -type menubutton -variable symb(point,color) \
@@ -173,7 +173,7 @@ proc settings {} {
 
     # Line
     set row [ frame $symbf.row4 ]
-    Label $row.a -anchor w -width $clw -text "Line"  
+    Label $row.a -anchor w -width $clw -text [G_msg "Line"]  
     checkbutton $row.b -variable symb(line,on) -height 1 -padx 0 -width 0 \
                 -command { set_on line $symb(line,on) }
     SelectColor $row.c -type menubutton -variable symb(line,color) \
@@ -182,7 +182,7 @@ proc settings {} {
 
     # Boundary
     set row [ frame $symbf.row5 ]
-    Label $row.a -anchor w -width $clw -text "Boundary (no area)"  
+    Label $row.a -anchor w -width $clw -text [G_msg "Boundary (no area)"]  
     checkbutton $row.b -variable symb(boundary_0,on) -height 1 -padx 0 -width 0 \
                 -command { set_on boundary_0 $symb(boundary_0,on) }
     SelectColor $row.c -type menubutton -variable symb(boundary_0,color) \
@@ -190,7 +190,7 @@ proc settings {} {
     pack $row.a -side left; pack $row.c $row.b -side right; pack $row -side top -fill x -expand yes
 
     set row [ frame $symbf.row6 ]
-    Label $row.a -anchor w -width $clw -text "Boundary (1 area)"  
+    Label $row.a -anchor w -width $clw -text [G_msg "Boundary (1 area)"]  
     checkbutton $row.b -variable symb(boundary_1,on) -height 1 -padx 0 -width 0 \
                 -command { set_on boundary_1 $symb(boundary_1,on) }
     SelectColor $row.c -type menubutton -variable symb(boundary_1,color) \
@@ -198,7 +198,7 @@ proc settings {} {
     pack $row.a -side left; pack $row.c $row.b -side right; pack $row -side top -fill x -expand yes
 
     set row [ frame $symbf.row7 ]
-    Label $row.a -anchor w -width $clw -text "Boundary (2 areas)"  
+    Label $row.a -anchor w -width $clw -text [G_msg "Boundary (2 areas)"]  
     checkbutton $row.b -variable symb(boundary_2,on) -height 1 -padx 0 -width 0 \
                 -command { set_on boundary_2 $symb(boundary_2,on) }
     SelectColor $row.c -type menubutton -variable symb(boundary_2,color) \
@@ -207,7 +207,7 @@ proc settings {} {
 
     # Centroid
     set row [ frame $symbf.row8 ]
-    Label $row.a -anchor w -width $clw -text "Centroid (in area)"  
+    Label $row.a -anchor w -width $clw -text [G_msg "Centroid (in area)"]  
     checkbutton $row.b -variable symb(centroid_in,on) -height 1 -padx 0 -width 0 \
                 -command { set_on centroid_in $symb(centroid_in,on) }
     SelectColor $row.c -type menubutton -variable symb(centroid_in,color) \
@@ -215,7 +215,7 @@ proc settings {} {
     pack $row.a -side left; pack $row.c $row.b -side right; pack $row -side top -fill x -expand yes
 
     set row [ frame $symbf.row9 ]
-    Label $row.a -anchor w -width $clw -text "Centroid (outside area)"  
+    Label $row.a -anchor w -width $clw -text [G_msg "Centroid (outside area)"]  
     checkbutton $row.b -variable symb(centroid_out,on) -height 1 -padx 0 -width 0 \
                 -command { set_on centroid_out $symb(centroid_out,on) }
     SelectColor $row.c -type menubutton -variable symb(centroid_out,color) \
@@ -223,7 +223,7 @@ proc settings {} {
     pack $row.a -side left; pack $row.c $row.b -side right; pack $row -side top -fill x -expand yes
 
     set row [ frame $symbf.row10 ]
-    Label $row.a -anchor w -width $clw -text "Centroid (duplicate in area)"  
+    Label $row.a -anchor w -width $clw -text [G_msg "Centroid (duplicate in area)"]  
     checkbutton $row.b -variable symb(centroid_dupl,on) -height 1 -padx 0 -width 0 \
                 -command { set_on centroid_dupl $symb(centroid_dupl,on) }
     SelectColor $row.c -type menubutton -variable symb(centroid_dupl,color) \
@@ -232,7 +232,7 @@ proc settings {} {
 
     # Node
     set row [ frame $symbf.row11 ]
-    Label $row.a -anchor w -width $clw -text "Node (1 line)"  
+    Label $row.a -anchor w -width $clw -text [G_msg "Node (1 line)"]  
     checkbutton $row.b -variable symb(node_1,on) -height 1 -padx 0 -width 0 \
                 -command { set_on node_1 $symb(node_1,on) }
     SelectColor $row.c -type menubutton -variable symb(node_1,color) \
@@ -240,7 +240,7 @@ proc settings {} {
     pack $row.a -side left; pack $row.c $row.b -side right; pack $row -side top -fill x -expand yes
 
     set row [ frame $symbf.row12 ]
-    Label $row.a -anchor w -width $clw -text "Node (2 lines)"  
+    Label $row.a -anchor w -width $clw -text [G_msg "Node (2 lines)"]  
     checkbutton $row.b -variable symb(node_2,on) -height 1 -padx 0 -width 0 \
                 -command { set_on node_2 $symb(node_2,on) }
     SelectColor $row.c -type menubutton -variable symb(node_2,color) \
@@ -248,12 +248,12 @@ proc settings {} {
     pack $row.a -side left; pack $row.c $row.b -side right; pack $row -side top -fill x -expand yes
 
     # --- Settings ---
-    set setf [$nb insert end settings -text "Settings"]
+    set setf [$nb insert end settings -text [G_msg "Settings"]]
 
     # Snapping threshold
     set row [ frame $setf.row1 ]
 
-    Label $row.a -anchor w -text "Snapping threshold in screen pixels"  
+    Label $row.a -anchor w -text [G_msg "Snapping threshold in screen pixels"]  
     radiobutton $row.b -variable GVariable(snap_mode) -value 0 -height 1 -padx 0 -width 0 \
                 -command { c_var_set snap_mode $GVariable(snap_mode) }
     Entry $row.c -width 10 -textvariable GVariable(snap_screen) \
@@ -263,7 +263,7 @@ proc settings {} {
     pack $row -side top -fill x -expand no -anchor n 
     
     set row [ frame $setf.row2 ]
-    Label $row.a -anchor w -text "Snapping threshold in map units"  
+    Label $row.a -anchor w -text [G_msg "Snapping threshold in map units"]  
     radiobutton $row.b -variable GVariable(snap_mode) -value 1 -height 1 -padx 0 -width 0 \
                 -command { c_var_set snap_mode $GVariable(snap_mode) }
     Entry $row.c -width 10 -textvariable GVariable(snap_map) \
@@ -274,7 +274,7 @@ proc settings {} {
 
     # --- Table (define new attribute table) ---
     set tabrow 1
-    set table_page [$nb insert end table -text "Table"]
+    set table_page [$nb insert end table -text [G_msg "Table"]]
 
     set tabsw [ScrolledWindow $table_page.sw -relief sunken -borderwidth 2]
     set tabsf [ScrollableFrame $table_page.sf -width 400]
@@ -285,7 +285,7 @@ proc settings {} {
     c_table_definition
 
     # --- Background commands ---
-    set GWidget(bgcmd) [$nb insert end bgcmd -text "Background"]
+    set GWidget(bgcmd) [$nb insert end bgcmd -text [G_msg "Background"]]
 
     command_buttons
     c_create_bgcmd
