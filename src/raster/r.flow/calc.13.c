@@ -109,7 +109,8 @@ height_angle_bounding_box(sub, cut, horiz, p, b)
 	       (double) get(el, c, sub) * r;
     }
 
-    if (!(a1 == UNDEF || a2 == UNDEF))  
+    if (!(a1 == UNDEF || a2 == UNDEF) &&
+        !(G_is_d_null_value(&a1) || G_is_d_null_value(&a2)))
 /*    if (!(G_is_d_null_value(&a1) || G_is_d_null_value(&a2)))*/
     {
 	if ((d = a1 - a2) >= D_PI || d <= -D_PI)
@@ -240,7 +241,16 @@ int next_point(
 	if (oldtheta == 90 || oldtheta == 270)
 	    delta = 0;
 	else
+	{
+	    /* I don't know if this is right case.
+	     * Anyway, DY() should be avoid from dividing by zero.
+	     * Any hydrologic idea?
+	     */
+	    if(tang[oldtheta] == 0.0)
+	        tang[oldtheta] = 0.000001;
+
 	    delta = DY(bdx[semi], oldtheta);
+	}
 
 	delta	 = rectify(delta, bdy, epsilon[VERT][ads.row]);
 	p->y	+= delta;
