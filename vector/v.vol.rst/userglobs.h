@@ -13,6 +13,7 @@ double /* gcmax */ a1min, a1max, a2min, a2max;
 
 int             cursegm;
 int             iw2;
+int             n_rows_in; /* fix by JH 04/24/02 */
 
 char            msg[80];
 int             totsegm;
