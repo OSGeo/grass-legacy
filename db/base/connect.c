@@ -23,6 +23,7 @@ main(int argc, char *argv[])
     driver = G_define_option() ;
     driver->key        = "driver" ;
     driver->type       = TYPE_STRING ;
+    driver->options    = db_list_drivers();
     driver->required   = NO  ;
     driver->multiple   = NO ;
     driver->description= "driver name:" ;
