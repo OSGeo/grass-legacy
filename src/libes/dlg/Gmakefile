@@ -15,12 +15,11 @@ OBJ = \
         dlg_w_area.o
 
 
-LIB = $(LIBDIR)/libdlg.a
 #DLG = $(LIBDIR)/dlg.h
 #all: $(DLG) $(LIB)
-all: $(LIB)
+all: $(DEPDLGLIB)
 
-$(LIB): $(OBJ)
+$(DEPDLGLIB): $(OBJ)
 	$(AR)
 
 #$(DLG): dlg.h

@@ -1,7 +1,7 @@
 PGM=p.map
 INTERFACE = ../../../Interface/applib/lib.a
 EXTRA_CFLAGS = -I$(SRC)/paint
-ICONLIB = $(LIBDIR)/libicon.a
+
 LIST = main.o\
 	Pmap.o\
 	ask_bg.o \

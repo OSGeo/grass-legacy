@@ -1,4 +1,3 @@
-COORCNVLIB = $(LIBDIR)/libcoorcnv.a
 
 PGM      = r.in.miads
 

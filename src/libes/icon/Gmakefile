@@ -3,14 +3,14 @@ OBJ = ask_old.o ask_new.o ask_any.o\
        get_def.o
 
 #all: $(LIBDIR)/icon.h $(LIBDIR)/libicon.a
-all: $(LIBDIR)/libicon.a
+all: $(DEPICONLIB)
 
 #$(LIBDIR)/icon.h: icon.h
 #	rm -f $@
 #	cp $? $@
 #	chmod +r $@
 
-$(LIBDIR)/libicon.a: $(OBJ)
+$(DEPICONLIB): $(OBJ)
 	$(AR)
 
 #$(OBJ): icon.h
