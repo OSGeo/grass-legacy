@@ -76,9 +76,16 @@ main(int argc, char **argv)
 		exit(1);
 	}
 
-	if(code == 1 && !(sfile = fopen(difile, "r+"))){
-		fprintf("%s: No such file or open failed\n", difile);
-		exit(1);
+	if(code == 1){
+		if(!(sfile = fopen(difile, "r+"))){
+			fprintf("%s: No such file or open failed\n", difile);
+			exit(1);
+		}
+	}else{
+		if(!(sfile = fopen(difile, "w+"))){
+			fprintf(stderr, "%s: Open failed\n", difile);
+			exit(1);
+		}
 	}
 
 	dir = (short *)malloc((ns+2)*sizeof(short)) - 1;
@@ -88,7 +95,6 @@ main(int argc, char **argv)
 		for(i=1; i<=ns+2; i++)
 			level[i] = (double *)malloc(3*sizeof(double)) - 1;
 
-		sfile = fopen(difile, "w+");
 		for(i=1; i<=ns+2; i++){
 			dir[i] = 0;
 			level[i][1] = 0.0;
