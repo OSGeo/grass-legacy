@@ -1,9 +1,11 @@
 interface_build {
     {v.proj} 0
     {Allows projection conversion of vector files.}
-    {entry map {Input vector map:} 0 vector}
-    {entry out {Output vector map [input name]:} 0 vector}
+    {entry input {Input vector map:} 0 vector}
+    {entry output {Output vector map [input name]:} 0 vector}
     {entry dbase {GRASS database containing INPUT location [current database]:} 0 ""}
-    {entry set {GRASS mapset containing INPUT vector map [current mapset]:} 0 ""}
-    {entry inloc {Location containing INPUT vector map:} 0 ""}
+    {entry mapset {GRASS mapset containing INPUT vector map [current mapset]:} 0 ""}
+    {entry location {Location containing INPUT vector map:} 0 ""}
+    {checkbox -s {Automatically run v.support} "" -s}
+    {checkbox -l {list vector files in input location} "" -l}
 }
