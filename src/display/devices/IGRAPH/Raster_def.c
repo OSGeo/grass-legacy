@@ -38,6 +38,8 @@ Raster_short_def(num, nrows, array, overwrite, color_type)
 	int cur_x, cur_y ;
 	short begin_x, end_x ;
 
+	Hide_cursor();
+
 	Get_current_xy( &cur_x, &cur_y) ;
 
 	begin_x = (short)cur_x ;
@@ -80,68 +82,10 @@ Raster_short_def(num, nrows, array, overwrite, color_type)
 			end_x, (short)(cur_y+y),
 			Raster_Buffer) ;
 	}
-#ifdef ZULU
-	if(color_type)
-	{
-		fprintf (stderr, "color_type = 1 converting cats to indices\n");
-		if (overwrite)
-		{
-			for ( i = 0; i < num; ++i)
-			{
-				*arr1 = (short) (_get_color_index(((int)(*arr1)) + I_COLOR_OFFSET));
-			/*	 *arr1 = (short) _get_color_index((int)(*arr1)) ; */
-				arr1++;
-			}
-		}
-		else
-		{
-			for ( i = 0; i < num; ++i)
-			{
-			/*	*arr1 = (short) (_get_color_index(((int)(*arr1)) + I_COLOR_OFFSET));*/
-				 /*DEBUG*/ fprintf (stderr, "%d -> ", *arr1); 
-				 *arr1 = (short) _get_color_index((int)(*arr1)) ;
-				 /*DEBUG*/ fprintf (stderr, "%d\n",*arr1); 
-				arr1++;
-			}
-		}
-	}
-	else
-	{
-		fprintf (stderr, "color_type = 0 just setting offset\n");
-		/*
-		for ( i = 0; i < num; ++i)
-		{
-			*arr1 = *arr1 + (short) I_COLOR_OFFSET;
-			arr1++;
-		}
-		*/
-    }
-    /* not an over write it must be an overlay  */
-	if( ! overwrite)
-	{
-		Raster_overlay(num, nrows, array) ;
-		return(0) ;
-	}
 
 
-/**
-sprintf(buf, " begin_x: %d, c_y: %d,   num: %d, a22: %d",
-	begin_x, cur_y, num, array[22]) ;
-write_debug(buf) ;
-**/
+	Show_cursor();
 
-/**  there are two types of raster draws: putline and putpixelblock */
-/*
-	for ( y = 0; y < nrows; ++y)
-	{
-*/
-		putline16 (WNO, (int)VSI_PLANE_MASK,
-			begin_x, (short)(cur_y+y),
-			end_x, (short)(cur_y+y),
-			Raster_Buffer) ;
-	}
-
-#endif /*ZULU*/
 	return(0) ;
 }
 
