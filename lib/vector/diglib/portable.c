@@ -594,7 +594,7 @@ dig_init_portable ( struct Port_info *port, int byte_order )
       if ( port->byte_order == ENDIAN_BIG )
         port->dbl_cnvrt[i] = dbl_cnvrt[i];
       else
-        port->dbl_cnvrt[i] = dbl_cnvrt[PORT_DOUBLE - i];
+        port->dbl_cnvrt[i] = dbl_cnvrt[PORT_DOUBLE - i - 1];
     }
   
   if ( port->byte_order == FLOAT_ORDER )
@@ -607,7 +607,7 @@ dig_init_portable ( struct Port_info *port, int byte_order )
       if ( port->byte_order == ENDIAN_BIG )
         port->flt_cnvrt[i] = flt_cnvrt[i];
       else
-        port->flt_cnvrt[i] = flt_cnvrt[PORT_FLOAT - i];
+        port->flt_cnvrt[i] = flt_cnvrt[PORT_FLOAT - i - 1];
     }
   
   if ( port->byte_order == LONG_ORDER )
@@ -620,7 +620,7 @@ dig_init_portable ( struct Port_info *port, int byte_order )
       if ( port->byte_order == ENDIAN_BIG )
         port->lng_cnvrt[i] = lng_cnvrt[i];
       else
-        port->lng_cnvrt[i] = lng_cnvrt[PORT_LONG - i];
+        port->lng_cnvrt[i] = lng_cnvrt[PORT_LONG - i - 1];
     }
   
   if ( port->byte_order == INT_ORDER )
@@ -633,7 +633,7 @@ dig_init_portable ( struct Port_info *port, int byte_order )
       if ( port->byte_order == ENDIAN_BIG )
         port->int_cnvrt[i] = int_cnvrt[i];
       else
-        port->int_cnvrt[i] = int_cnvrt[PORT_INT - i];
+        port->int_cnvrt[i] = int_cnvrt[PORT_INT - i - 1];
     }
   
   if ( port->byte_order == SHORT_ORDER )
@@ -646,7 +646,7 @@ dig_init_portable ( struct Port_info *port, int byte_order )
       if ( port->byte_order == ENDIAN_BIG )
         port->shrt_cnvrt[i] = shrt_cnvrt[i];
       else
-        port->shrt_cnvrt[i] = shrt_cnvrt[PORT_SHORT - i];
+        port->shrt_cnvrt[i] = shrt_cnvrt[PORT_SHORT - i - 1];
     }
 
  return; 
