@@ -21,7 +21,7 @@
  *
  * modified by McCauley in August 1995
  * modified by Mitasova in August 1995
- * modified by Mitasova in November 1999 (dmax, timestamp update) 
+ * modified by Mitasova in November 1999 (dmax, timestamp update)
  * dnorm independent tension - -t flag
  * cross-validation -v flag by Jaro Hofierka 2004
  */
@@ -515,12 +515,15 @@ int main(int argc, char *argv[])
     inhead.time = (struct TimeStamp *) NULL;
     inhead.stime = NULL;
 
-    if (devi != NULL) {
+    if (devi != NULL || cvdev != NULL) {
+
           Pnts = Vect_new_line_struct();
           Cats2 = Vect_new_cats_struct ();
           db_init_string (&sql2);
 
-          Vect_open_new (&Map2, devi, 0);
+          if (devi != NULL) Vect_open_new (&Map2, devi, 1);
+	  else
+		  Vect_open_new (&Map2, cvdev, 1);
           Vect_hist_command ( &Map2 );
           ff = Vect_default_field_info ( &Map2, 1, NULL, GV_1TABLE );
           Vect_map_add_dblink ( &Map2, 1, NULL, ff->table, "cat", ff->database, ff->driver);
@@ -545,39 +548,6 @@ int main(int argc, char *argv[])
           count = 1;
 
     }
-    
-      if (cvdev != NULL)
-   {
-        Pnts = Vect_new_line_struct();
-        Cats2 = Vect_new_cats_struct ();
-        db_init_string (&sql2);
-
-      Vect_open_new (&Map2, cvdev, 0);
-      Vect_hist_command ( &Map2 );
-      ff = Vect_default_field_info ( &Map2, 1, NULL, GV_1TABLE );
-      Vect_map_add_dblink ( &Map2, 1, NULL, ff->table, "cat", ff->database, ff->driver);
-
-      /* Create new table */
-      db_zero_string (&sql2);
-      sprintf ( buf, "create table %s ( ", ff->table );
-      db_append_string ( &sql2, buf);
-      db_append_string ( &sql2, "cat integer" );
-      db_append_string ( &sql2, ", flt1 double precision" );
-      db_append_string ( &sql2, ")" );
-      G_debug ( 1, db_get_string ( &sql2 ) );
-
-      driver2 = db_start_driver_open_database ( ff->driver, ff->database );
-     if ( driver2 == NULL )
-      G_fatal_error ( "Cannot open database %s by driver %s", ff->database,ff->driver );
-
-      if (db_execute_immediate (driver2, &sql2) != DB_OK ) {
-              db_close_database(driver2);
-              db_shutdown_driver(driver2);
-              G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql2 )  );
-
-      }
-        count = 1;
-  }
 
     ertot = 0.;
     if (per)
