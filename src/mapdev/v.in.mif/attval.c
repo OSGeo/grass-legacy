@@ -41,12 +41,16 @@ int get_att_field_val(const d_type *fields, const int line_num,
 
   field_data fd1;
   d_type tmp1;
-  char delim = del0[1];
-  char delims[2] = { delim, '\0' };
+  char delim;
+  char delims[2];
   int nfields = 0, *strflags;
 
   int catval;
   int len;
+
+  delim = del0[1];
+  delims[0] = delim;
+  delims[1] = '\0';
 
   if(has_mid) {
     parse_all_fields(fields, &fd1, delims, line_num, &nfields);
