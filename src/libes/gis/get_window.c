@@ -37,7 +37,7 @@ G_get_window (window)
 
 	if(err = G__get_window (&dbwindow,"","WIND",G_mapset()))
 	{
-	    sprintf (msg, "mapset window %s\nrun \"window\"", err);
+	    sprintf (msg, "region for current mapset %s\nrun \"g.region\"", err);
 	    free (err);
 	    G_fatal_error (msg);
 	}
@@ -63,7 +63,7 @@ G_get_default_window (window)
 
     if (err = G__get_window (window,"","DEFAULT_WIND","PERMANENT"))
     {
-	sprintf (msg, "default window %s", err);
+	sprintf (msg, "default region %s", err);
 	free (err);
 	G_fatal_error (msg);
     }
@@ -89,7 +89,7 @@ char path[1024];
 G__file_name (path,element,name,mapset);
 fprintf (stderr, "G__get_window(%s)\n",path);
 */
-	return G_store ("is missing");
+	return G_store ("is not set");
     }
 
     err = G__read_Cell_head(fd, window, 0);
