@@ -16,8 +16,8 @@
 
 #define BETA       13  /* ((bitsof (Lia) - 2) / 2) */
 
-#define BASE       powerof2 (BETA)
-#define DBASE      powerof2 (2 * BETA)
+#define BASE       __powerof2 (BETA)
+#define DBASE      __powerof2 (2 * BETA)
 
 #define LIA_MAGIC  130862003
 
