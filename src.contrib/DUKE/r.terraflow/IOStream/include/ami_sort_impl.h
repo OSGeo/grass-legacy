@@ -189,7 +189,8 @@ template<class T, class Compare>
 queue<char*>*
 runFormation(AMI_STREAM<T> *instream, Compare *cmp) {
  
-  size_t run_size,last_run_size, crt_run_size, nb_runs;
+  size_t run_size,last_run_size, crt_run_size;
+  unsigned int nb_runs;
   queue<char*>* runList;
   T* data;
   AMI_STREAM<T>* str;
