@@ -20,8 +20,8 @@ equal_sites (a, b)
 cmp_sites (a, b)
     SITE_LIST *a, *b;
 {
-    int a_north, a_east;
-    int b_north, b_east;
+    double a_north, a_east;
+    double b_north, b_east;
     char *a_desc;
     char *b_desc;
 
