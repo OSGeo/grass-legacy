@@ -19,11 +19,11 @@ include $(MODULE_TOPDIR)/include/Make/Rules.make
 include $(MODULE_TOPDIR)/include/Make/Stlib.make
 include $(MODULE_TOPDIR)/include/Make/Shlib.make
 
-#lib: stlib shlib
+lib: $(GRASS_LIBRARY_TYPE)
 
 #static libs:
 #lib: stlib
 
 #shared libs:
 #also change at top of ./Grass.make
-lib: shlib
+#lib: shlib
