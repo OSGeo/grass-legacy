@@ -31,6 +31,8 @@ Panel_save(name, top, bottom, left, right)
 
 	int Top, Bot, Left, Right ;
 
+	Hide_cursor();
+
 	Screen_top( &Top) ;
 	Screen_bot( &Bot) ;
 	Screen_rite( &Right) ;
@@ -71,6 +73,8 @@ Panel_save(name, top, bottom, left, right)
 	}
 
 	close(fd) ;
+
+	Show_cursor();
 }
 
 /* The saved panel associated with "name" is restored. */
@@ -84,6 +88,7 @@ Panel_restore(name)
 	int width ;
 	int width_size ;
 
+    Hide_cursor();
 /* open the file */
 	if( (fd = open(name, 0)) < 0)
 		return(-1) ;
@@ -108,6 +113,7 @@ Panel_restore(name)
 	}
 
 	close(fd) ;
+	Show_cursor();
 
 }
 
