@@ -57,7 +57,7 @@ main (int argc, char *argv[])
 	void *cell;
 	POINT *PRES_PT=NULL, *NEW_START_PT, *PRESENT_PT=NULL;
 	double east, north;
-	struct Option *opt1, *opt2, *opt3, *opt4;
+	struct Option *opt1, *opt2, *opt3, *opt4, *opt5;
 
 	opt2 = G_define_option() ;
 	opt2->key        = "input" ;
@@ -81,13 +81,20 @@ main (int argc, char *argv[])
 	opt3->description= "The map E and N grid coordinates of a starting point";
 
 	opt4 = G_define_option() ;
-	opt4->key        = "null_value" ;
-	opt4->type       = TYPE_DOUBLE;
-	opt4->key_desc   = "null cells value" ;
+	opt4->key        = "sites" ;
+	opt4->type       = TYPE_STRING;
+	opt4->gisprompt       = "old,site_list,sites";
 	opt4->required   = NO;
-	opt4->multiple   = NO;
-/*  	opt4->answer     = ""; */
-	opt4->description= "Value assigned to null cells. Null cells are excluded by default";
+	opt4->description= "Starting points site file";
+
+	opt5 = G_define_option() ;
+	opt5->key        = "null_value" ;
+	opt5->type       = TYPE_DOUBLE;
+	opt5->key_desc   = "null cells value" ;
+	opt5->required   = NO;
+	opt5->multiple   = NO;
+/*  	opt5->answer     = ""; */
+	opt5->description= "Value assigned to null cells. Null cells are excluded by default";
 
 	G_gisinit (argv[0]);
 
@@ -108,7 +115,7 @@ main (int argc, char *argv[])
 	if (G_parser(argc, argv))
 		exit(-1);
 	
-	if ((opt4->answer != NULL) && (sscanf(opt4->answer, "%lf", &null_value) == 1))	{
+	if ((opt5->answer != NULL) && (sscanf(opt5->answer, "%lf", &null_value) == 1))	{
 		exclude_nulls = 0;
 		printf("\nnull %lf\n",null_value);
 	} 
@@ -141,6 +148,52 @@ main (int argc, char *argv[])
 			 -modified by Jianping Xu*/
 	    	}
 	    }
+	}
+
+	if (opt4->answer) 
+	{  
+#if 1
+		FILE* fp;
+		Site *site = NULL;               /* pointer to Site */
+		search_mapset = "";
+ 
+		search_mapset = G_find_file ("site_lists", opt4->answer, "");
+
+		fp = G_fopen_sites_old ( opt4->answer, search_mapset);
+
+		site = G_site_new_struct (-1, 2, 0, 0);
+
+	    for (; (G_site_get(fp,site) != EOF);) {
+			if (!G_site_in_region (site, &window))
+				continue;
+			
+/*  		G_scan_easting  (opt3->answers[n  ], &east, G_projection()) ; */
+/*  		G_scan_northing (opt3->answers[n+1], &north, G_projection()) ; */
+			col = (int)G_easting_to_col(site->east, &window);
+			row = (int)G_northing_to_row(site->north, &window );
+
+			NEW_START_PT = (POINT *) (malloc (sizeof (POINT)));
+
+			NEW_ROW = row;
+			NEW_COL = col;
+			NEW_NEXT= NULL;
+
+			if (head_start_pt == NULL)
+			{
+				head_start_pt = NEW_START_PT;
+				PRESENT_PT = head_start_pt;
+			}
+			else 
+			{
+				NEXT_START_PT = NEW_START_PT;
+				PRESENT_PT = NEXT_START_PT ;
+				/*return(0); quote this out to accept multi-starters,
+				  -modified by Jianping Xu*/
+	    	}
+		}
+		G_site_free_struct(site);	
+		fclose(fp);
+#endif
 	}
 
 /*  Check if elevation layer exists in data base  */
