@@ -1,0 +1,19 @@
+INIT	distance.h	/^#define INIT(x)$/
+MAPINDEX	distance.h	/^#define MAPINDEX(r,c) (r * window.cols + c)$/
+Mmain	main.c	/^main(argc, argv) $/
+begin_distance	find_dist.c	/^begin_distance (row)$/
+cmp	parse_dist.c	/^cmp (a, b)$/
+execute_distance	execute.c	/^execute_distance()$/
+find_distances	find_dist.c	/^find_distances (row)$/
+find_ll_distance_ncols	find_dist.c	/^find_ll_distance_ncols (i)$/
+init_grass	init.c	/^init_grass(pgm)$/
+make_support_files	support.c	/^make_support_files (output, units)$/
+parse_distances	parse_dist.c	/^parse_distances (zone_list, to_meters)$/
+process_at	process_at.c	/^process_at (from_row, to_row, start_col, first_zon/
+process_left	process_left.c	/^process_left (from_row, to_row, start_col, first_z/
+process_right	process_rite.c	/^process_right (from_row, to_row, start_col, first_/
+process_row	process_row.c	/^process_row(row, start_col)$/
+read_input_map	read_map.c	/^read_input_map (input, mapset)$/
+reset_distances	find_dist.c	/^reset_distances()$/
+scan_dist	parse_dist.c	/^scan_dist (s, dist)$/
+write_output_map	write_map.c	/^write_output_map (output, offset)$/
