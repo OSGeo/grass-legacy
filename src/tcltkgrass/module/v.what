@@ -1,0 +1,7 @@
+interface_build {
+    {v.what} 1
+    {Queries vector map layers.}
+    {entry map {Name of existing vector map:} 0 vector}
+    {checkbox -1 {Identify just one location.} "" -1}
+    {checkbox -i {Interactive.} "" -i}
+}
