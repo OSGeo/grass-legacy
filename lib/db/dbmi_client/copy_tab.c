@@ -1,16 +1,7 @@
 #include "dbmi.h"
 #include "macros.h"
 
-dbDriver *from_driver, *to_driver;
-
 /* Warning, driver opened as second must be closed as first, otherwise it hangs, not sure why */
-void closedb ( void ) 
-{
-    db_close_database(to_driver);
-    db_shutdown_driver(to_driver);
-    db_close_database(from_driver);
-    db_shutdown_driver(from_driver);
-}
 
 /*!
  \fn int db_copy_table ()
@@ -32,7 +23,7 @@ db_copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
     dbColumn *column;
     dbValue *value;
     char *colname;
-
+    dbDriver *from_driver, *to_driver;
 
     G_debug ( 3, "db_copy_table():\n  from driver = %s, db = %s, table = %s\n"
 	         "  to driver = %s, db = %s, table = %s", 
@@ -53,7 +44,7 @@ db_copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
     db_set_handle (&from_handle, from_dbname, NULL);
     if (db_open_database(from_driver, &from_handle) != DB_OK) {
 	G_warning ( "Cannot open database '%s'", from_dbname);
-	db_shutdown_driver(from_driver);
+	db_close_database_shutdown_driver(from_driver);
 	return DB_FAILED;
     }
     
@@ -61,16 +52,14 @@ db_copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
     to_driver = db_start_driver(to_drvname);
     if ( to_driver == NULL) {
 	G_warning ( "Cannot open driver '%s'", to_drvname);
-	db_close_database(from_driver);
-	db_shutdown_driver(from_driver);
+	db_close_database_shutdown_driver(from_driver);
 	return DB_FAILED;
     }
     db_set_handle (&to_handle, to_dbname, NULL);
     if (db_open_database(to_driver, &to_handle) != DB_OK) {
 	G_warning ( "Cannot open database '%s'", to_dbname);
-	db_shutdown_driver(to_driver);
-	db_close_database(from_driver);
-	db_shutdown_driver(from_driver);
+	db_close_database_shutdown_driver(to_driver);
+	db_close_database_shutdown_driver(from_driver);
 	return DB_FAILED;
     }
 
@@ -81,7 +70,8 @@ db_copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
     G_debug ( 3, db_get_string(&sql) );
     if (db_open_select_cursor(from_driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK) {
 	G_warning ( "Cannot open select cursor: '%s'", db_get_string(&sql) );
-	closedb();
+	db_close_database_shutdown_driver(to_driver);
+	db_close_database_shutdown_driver(from_driver);
 	return DB_FAILED;
     }
     G_debug ( 3, "Select cursor opened" );
@@ -133,7 +123,8 @@ db_copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
  	    default:
                 G_warning ( "Unknown column type (%s)", colname);
 	        db_close_cursor(&cursor);
-		closedb();
+		db_close_database_shutdown_driver(to_driver);
+		db_close_database_shutdown_driver(from_driver);
 		return DB_FAILED;
 	}
     }
@@ -142,7 +133,8 @@ db_copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
     if (db_execute_immediate (to_driver, &sql) != DB_OK ) {
 	G_warning ( "Cannot create new table: '%s'", db_get_string(&sql) );
 	db_close_cursor(&cursor);
-	closedb();
+	db_close_database_shutdown_driver(to_driver);
+	db_close_database_shutdown_driver(from_driver);
 	return DB_FAILED;
     }
 
@@ -151,7 +143,8 @@ db_copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
 	if ( db_fetch (&cursor, DB_NEXT, &more ) != DB_OK ) { 
 	    G_warning ( "Cannot fetch row" );
 	    db_close_cursor(&cursor);
-	    closedb();
+	    db_close_database_shutdown_driver(to_driver);
+	    db_close_database_shutdown_driver(from_driver);
 	    return DB_FAILED;
 	}
 	if (!more) break;
@@ -180,7 +173,8 @@ db_copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
 		default:
 		    G_warning ( "Unknown column type (%s)", colname);
 		    db_close_cursor(&cursor);
-		    closedb();
+		    db_close_database_shutdown_driver(to_driver);
+		    db_close_database_shutdown_driver(from_driver);
 		    return DB_FAILED;
 	    }
 	}
@@ -189,14 +183,16 @@ db_copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
 	if (db_execute_immediate (to_driver, &sql) != DB_OK ) {
 	    G_warning ( "Cannot insert new record: '%s'", db_get_string(&sql) );
 	    db_close_cursor(&cursor);
-	    closedb();
+	    db_close_database_shutdown_driver(to_driver);
+	    db_close_database_shutdown_driver(from_driver);
 	    return DB_FAILED;
 	}
     }
     G_debug ( 3, "Table copy OK" );
 
     db_close_cursor(&cursor);
-    closedb();
+    db_close_database_shutdown_driver(to_driver);
+    db_close_database_shutdown_driver(from_driver);
 
     return DB_OK;
 }
