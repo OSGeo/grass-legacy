@@ -379,12 +379,7 @@ fifoto(input,output,alarm_time)
     if( (_wfd == -1) || (_rfd == -1) )
         return -1;
 
-    /* NO_RUN */
-    return 0;
-
-    /* OK
     return 1;
-    */
 }
 
 static int
