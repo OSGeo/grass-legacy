@@ -2,7 +2,9 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <sys/stat.h>
-#include <pwd.h>
+#ifndef __MINGW32__
+#  include <pwd.h>
+#endif
 
 int can_make_location (char *gisdbase, char *location)
 {
@@ -28,7 +30,9 @@ int can_make_location (char *gisdbase, char *location)
     fprintf (stderr, "\nNote\n");
     fprintf (stderr, " You don't have permission under %s to create a new location\n",
 	gisdbase);
+#ifndef __MINGW32__
     if (pwd = getpwuid (s.st_uid))
 	fprintf (stderr, " See user %s about creating location %s\n", pwd->pw_name, location);
+#endif
     return 0;
 }
