@@ -1,5 +1,6 @@
 #ifndef MOTIFOGL
 #define MOTIFOGL
+#include <GL/glx.h>
 typedef struct window_props {
    GLXContext glx_context;
    Window window;
