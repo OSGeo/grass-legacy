@@ -16,7 +16,7 @@ src/libes/dlg
 #src/libes/dspf
 ###ogsf requires OpenGL / MESA:
 #src/libes/ogsf
-#src/libes/g3d
+src/libes/g3d
 src/libes/proj
 src/libes/display
 src/libes/dig_atts
