@@ -35,6 +35,7 @@ G_gettext(const char *package, const char *msgid)
 
 	if (!initialized)
 	{
+		setlocale(LC_CTYPE, "");
 		setlocale(LC_MESSAGES, "");
 		initialized = 1;
 	}
