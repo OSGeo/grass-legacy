@@ -1,0 +1,1882 @@
+
+
+Storing Rectangular Gridded Arrays of Scientific Data	4.1
+
+
+
+July 1990
+
+                                                                
+
+
+
+
+4.1	NCSA HDF Calling Interfaces and Utilities
+
+Storing Rectangular Gridded Arrays of Scientific Data	4.1
+
+National Center for Supercomputing Applications
+
+July 1990
+
+
+
+
+
+
+
+
+
+Chapter 4	Storing Rectangular Gridded Arrays of 
+Scientific Data
+
+
+
+Chapter Overview
+Scientific Datasets
+Reasons to Use Scientific Datasets
+Header File
+Writing Scientific Datasets to a File
+The ÒSetÓ Routines:  Preparing to Write Scientific 
+Datasets
+Writing Scientific Datasets to a File
+Writing Parts of a Scientific Dataset
+Reading Scientific Datasets from a File
+Getting the Dimensions of a Scientific Dataset
+Reading an Entire Scientific Dataset
+Getting Other Information About SDSs
+Reading Parts of a Scientific Dataset
+How SDS Routines Store and Convert Scientific 
+Data
+How HDF Normally Stores Arrays
+How HDF Normally Represents Numbers
+DFSDsettype:  Setting Scientific Dataset 
+Attributes
+Other SDS  Routines
+
+Sample Programs
+A FORTRAN Program
+A C Program
+
+Chapter Overview
+
+This chapter describes the routines that are available for storing 
+and retrieving scientific datasets.
+
+
+Scientific Datasets
+
+A Scientific DataSet (SDS) is an HDF set that stores rectangular 
+gridded arrays of floating-point data, together with information 
+about the data. Specifically, a SDS is a set of tags and associated 
+information about scientific data.  Assuming that a user of 
+scientific data often will want information about the data, an SDS 
+might contain the following information.  (The first two items are 
+required in every SDS; the rest are optional.)
+
+¥	The actual data values in floating-point format 
+
+¥	The number of dimensions (rank) and the size of each 
+dimension 
+
+¥	The coordinate system to be used when interpreting or 
+displaying the data
+
+¥	Scales to be used along the different dimensions when 
+interpreting or displaying the data
+
+¥	Labels for all dimensions (each label can be thought of as the 
+name of an independent variable) and for the data (the 
+dependent variable)
+
+¥	Units for all dimensions and for the data
+
+¥	Format specifications to be used when displaying values for the 
+dimensions and for the data
+
+¥	The maximum and minimum values of the data
+
+Other information could be added at a later time, such as the data 
+type for the data values (other than floating-point), data types for 
+the dimensions, and identification of regions of interest.
+
+Figure 4.1 shows a conceptual view of a sample scientific dataset. 
+The actual 2D array of data is only one element in the set. Other 
+elements include the number of dimensions (rank), the sizes of the 
+dimensions, identifying information about the data and axes, and 
+scales (ranges) for the axes.
+
+Figure  4.1   HDF File with Scientific Dataset
+
+                                                            
+
+
+
+The HDF library provides an SDS interface with routines for 
+storing and retrieving scientific image sets. This user interface 
+lets you (a) build an SDS and (b) extract data from an SDS. These 
+routines can be called  from C and FORTRAN programs that have 
+access to the library. They work on several computers, including 
+the Cray, Silicon Graphics, Alliant, Sun, VAX, Macintosh, and 
+IBM PC.
+
+All routines are functions of type integer.
+
+Table 4.1 lists the long and short names and the functions of the 
+SDS routines currently contained in the HDF library. The 
+following sections provide descriptions and examples of these 
+calling routines.
+
+Table 4.1	Scientific Dataset 
+Routines in the HDF 
+Library
+Long Name	Short Name	Function
+
+DFSDsetlengths	dsslens	sets maximum lengths for strings 
+		that will hold labels, units, formats, 
+		and the name of the coordinate 
+		system.
+
+DFSDsetdims	dssdims	sets the rank and dimension  sizes
+		for succeeding  SDSs
+
+DFSDsetdimstrs	dssdist	sets label, unit,  and format 	
+		specifications for a dimension and its 
+		scale.
+
+DFSDsetdimscale	dssdisc	sets the scale for a dimension.
+
+
+DFSDsetdatastrs	dissdast	sets label, unit, and format 	
+		specifications for the data.
+
+DFSDsetmaxmin	dssmaxm	sets maximum and minimum data 
+		values.
+Table 4.1	Scientific Dataset 
+Routines in the HDF 
+Library (Continued)
+Long Name	Short Name	Function
+
+DFSDputdata	dspdata	writes the data to a new file, 
+		truncating old file if it exists.
+
+DFSDadddata	dsadata	appends the data to the file, not 
+		overwriting other file contents.
+
+DFSDclear	dsclear	clears all possible set values.
+
+DFSDstartslice	dssslc	prepares system to write part of 
+		a dataset to a file.
+
+DFSDputslice	dspslc	writes part of a dataset to a file.
+
+DFSDendslice	dseslc	indicates write completion for 
+		part of a dataset.
+
+DFSDgetdims	dsgdims	gets the number of dimensions of 
+		the dataset and the sizes of the 
+		dimensions for the next SDS in 
+		the file.
+
+DFSDgetdata	dsgdata	reads the next dataset in the file.
+
+DFSDgetdimstrs	dsgdist	reads the label, unit, and format 
+		for a dimension and its scale.
+
+DFSDgetdimscale	dsgdisc	reads the scale for a dimension.
+
+DFSDgetdatastrs	dsgdast	reads the label, unit, and format  
+		specification for the data.
+
+DFSDgetmaxmin	dsgmaxm	reads the maximum and 	
+		minimum values.
+
+DFSDreadref	dsrref	sets the reference number of the 
+SDS to get next
+
+
+DFSDrestart	dsfirst	sets the next get command to 
+		read from the first SDS in the file, 
+		rather than the next.
+
+DFSDgetslice	dsgslc	reads part of a dataset.
+
+DFSDsettype	dsstype	specifies data attributesÑdata 
+		type and representation, system 
+		type, and array order.
+
+DFSDnumber		returns the number of SDSs in 
+		the file.
+
+DFSDlastref		returns the value of the last 
+		reference number of an SDS 
+		read from or written to the file.
+
+Reasons to Use Scientific Datasets
+
+HDF scientific datasets are self-describing. This means that you 
+or your programs can find out from the file itself what must be 
+known in order to interpret or display the scientific data in the file. 
+You do not have to look elsewhere to find this information, nor 
+possibly do without it.
+
+NCSA's DataScope, for instance, uses the information from an 
+SDS for displaying scientific data and images created from the 
+data. If the coordinate system is polar, it displays one kind of 
+image; if the coordinate system is cartesian, it displays another. 
+Because the system can have scales for each dimension, it can 
+present the data or its image in a more meaningful context than 
+would a display with no scales along the axes.
+
+Sometimes it is useful to be able to store different kinds of data in a 
+single file. With scientific datasets, you can store a variety of 
+different scientific datasetsÑeach accompanied by its self-
+description. You also can store one or more raster images, derived 
+from a dataset, in the same file with a scientific dataset.
+
+A frequent problem among scientists who want to share data is that 
+datasets From different sources are often stored in very different 
+formats. Since SDS provides a common data format, different 
+machines and different programs can access the same files 
+without relying on user-written conversion routines or trying to 
+decipher special data formats when new data is encountered.
+
+
+Header File
+
+The header file dfsd.h contains the declarations and definitions 
+that are used by the routines listed here. This file can, if needed, be 
+included with your C source code.
+
+
+Writing Scientific Datasets to a File
+
+SDS information is written to a file in two steps. The first involves 
+execution of a series of "set" calls, which put information about the 
+actual data into a special structure in primary memory. To set 
+information associated with an SDS, you first invoke 
+DFSDsetdims, then execute whatever set routines you need. If you 
+do not wish to specify a certain item, you need not invoke its 
+corresponding set call.
+
+The second phase involves actually writing the data to a file, along 
+with the information that has been set. To do this, execute either 
+DFSDputdata or DFSDadddata.
+
+In general, you perform these same two steps for each dataset you 
+want to write to your file. However, it is not usually necessary to 
+perform all set calls for every dataset you wish to write out. For 
+example, if the rank and dimensions of all datasets are exactly the 
+same, you only have to call the routine DFSDsetdims before 
+writing out the first set. Thereafter, you need only call 
+DFSDputdata/DFSDadddata to write out the different data sets. 
+The HDF software remembers the rank and dimension values 
+and associates them with all subsequent data arrays that are 
+written to the same file, unless you change them.
+
+In other words, once an item has been set, it does not normally go 
+away even after a DFSDputdata or DFSDadddata call. The 
+associated information is only cleared if the new DFSDputdata, 
+DFSDadddata or DFSDsetdims call has different rank or 
+dimensions, or if DFSDclear is called. (The only exception to this 
+is that the values set by DFSDsetmaxmin are cleared after they are 
+written to a file.)
+
+
+The "Set" Routines:
+Preparing to Write
+ Scientific Datasets
+DFSDsetlengths
+FORTRAN:
+INTEGER FUNCTION DFSDsetlengths(maxlen_label, 
+maxlen_unit,maxlen_format, maxlen_coordsys)
+
+INTEGER	maxlen_label	-	max length of any label
+INTEGER	maxlen_unit	-	max length of any unit
+INTEGER	maxlen_format	-	max length of any format
+INTEGER	maxlen_coordsys	-	max length of any coordsys
+
+
+C:
+int DFSDsetlengths(maxlen_label, maxlen_unit,maxlen_format, 
+maxlen_coordsys)
+
+int	maxlen_label;	/* max length of any label*/
+int	maxlen_unit;	/* max length of any unit*/
+int	maxlen_format;	/* max length of any format*/
+int	maxlen_coordsys;	/* max length of any coordsys */
+
+
+
+Purpose:  To set, optionally, the maximum lengths for the strings 
+that will hold labels, units, formats, and the name of the coordinate 
+system.
+
+Returns:  0 on success; -1 on failure.
+
+These lengths are used by the routines DFSDgetdimstrs and 
+DFSDgetdatastrs to determine the maximum lengths of strings 
+that they get from the file.
+
+Normally, DFSDsetlengths is not needed. If it is not called, 
+default maximum lengths of 255 are used for all strings.
+
+
+DFSDsetdims
+FORTRAN:
+INTEGER FUNCTION DFSDsetdims(rank, dimsizes)
+
+INTEGER	rank	-	number of dimensions
+INTEGER	dimsizes(rank)	-	dimensions of the SDS
+
+C:
+int DFSDsetdims(rank, dimsizes)
+
+int	rank;	/* number of dimensions*/
+int32	dimsizes[];	/* dimensions of the SDS */
+
+
+Purpose:  To set  the rank and dimension sizes for subsequent 
+scientific datasets that are written to the file.
+
+Returns:  0 on success; -1 on failure.
+
+This routine must be called before calling any other set routines. 
+DFSDsetdims need not be called if these routines are not called, 
+and the correct dimensions are supplied in DFSDputdata or 
+DFSDadddata.
+
+If rank or dimension sizes change, all previous set calls are 
+cleared.
+
+
+DFSDsetdimstrs
+FORTRAN:
+INTEGER FUNCTION DFSDsetdimstrs(dim, label, unit, format)
+
+INTEGER	dim		-	dimension this label, unit and format 
+				refer to
+CHARACTER*(*)	label	-	label that describes this dimension
+CHARACTER*(*)	unit	-	unit to be used with this dimension
+CHARACTER*(*)	format	-	format to be used in displaying scale 
+				for this dimension
+
+C:
+int DFSDsetdimstrs(dim, label, unit, format)
+
+int	dim;	/*	dimension this label, unit and format 
+			refer to*/
+char	*label;	/*	label that describes this dimension*/
+char	*unit;	/*	unit to be used with this dimension*/
+char	*format;	/*	format to be used to display scale  */
+
+
+Purpose:  To set the items corresponding to dimension dim that are 
+to be stored as strings in the SDS, namely label, unit, and 
+format.
+
+Returns:  0 on success; -1 on failure.
+
+
+DFSDsetdimscale
+FORTRAN:
+INTEGER FUNCTION DFSDsetdimscale(dim, size, scale)
+
+INTEGER	dim	-	dimension this scale goes with
+INTEGER	dimsize	-	size of scale
+REAL	scale(dimsize)	-	the scale
+
+C:
+int DFSDsetdimscale(dim, dimsize, scale)
+
+int	dim;	/* dimension this scale corresponds to */
+int32	dimsize;	/* size of scale */
+float32	scale[];	/* the scale */
+
+
+Purpose:  To set the scale corresponding to dimension dim by 
+taking it from the floating-point array scale.
+
+Returns:  0 on success; -1 on failure.
+
+The input parameter dimsize gives the size of the array scale.
+
+
+DFSDsetdatastrs
+FORTRAN:
+INTEGER FUNCTION DFSDsetdatastrs(label,unit,format,coordsys)
+
+CHARACTER*(*)  label	-	label that describes the data
+CHARACTER*(*)  unit	-	unit to be used with the data
+CHARACTER*(*)  format	-	format to be used in displaying data
+CHARACTER*(*)  coordsys	-	coordinate system
+
+C:
+int DFSDsetdatastrs(label, unit, format, coordsys)
+
+char	*label;	/*	label that describes the data */
+char	*unit;	/*	unit to be used with the data */
+char	*format;	/*	format to be used in displaying the data */
+char	*coordsys;	/*	coordinate system */
+
+
+Purpose:  To set the items corresponding to the data that are to be 
+stored as strings in the SDS, namely label, unit, format, and  
+coordsys (coordinate system).
+
+Returns:  0 on success; -1 on failure.
+
+
+DFSDsetmaxmin
+FORTRAN:
+DFSDsetmaxmin FUNCTION DFSDsetmaxmin(max, min)
+
+REAL	max	-	highest value in data array
+REAL	min	-	lowest value in data array
+
+C:
+int DFSDsetmaxmin(max, min)
+
+float32	max;	/*	highest value in data array */
+float32	min;	/*	lowest value in data array */
+
+
+Purpose:  To set maximum and minimum data values.
+
+Returns:  0 on success; -1 on failure.
+
+This routine does not compute the maximum and minimum 
+values. It merely stores the values it is given as maximum and 
+minimum.
+
+NOTE:  When the maximum and minimum values are written to 
+a file, the HDF element that holds these values is cleared, because 
+it is assumed that subsequent datasets will have different values 
+for max and min.
+
+
+Writing Scientific Datasets 
+to a File
+DFSDputdata
+FORTRAN:
+INTEGER FUNCTION DFSDputdata(filename, rank, dimsizes, data)
+
+CHARACTER*(*)	filename	-	name of file 
+to store SDS in
+INTEGER	rank	-	number of dimensions of data 
+			array to be stored
+INTEGER	dimsizes(rank)	-	array that holds sizes of 
+			dimensions
+REAL	data(*)	-	array holding data to be stored
+
+C:
+int DFSDputdata(filename, rank, dimsizes, data)
+
+char	*filename;	/*	name of file to store SDS in */
+int	rank;	/*	number of dimensions of data array to 
+			be stored */
+int32	dimsizes[];	/*	array that holds sizes of dimensions */
+float32	*data;	/*	array holding data to be stored */
+
+
+Purpose:  To write to the file the scientific data in the floating-point 
+array data, as well as all other information that has previously 
+been set.
+
+Returns:  0 on success; -1 on failure.
+
+If the file is not empty, DFSDputdata overwrites whatever was 
+previously in the file.
+NOTE:  In the FORTRAN case, the array in memory must have 
+the same dimensions as the array in the file.
+
+
+DFSDadddata
+FORTRAN:
+INTEGER FUNCTION DFSDadddata(filename, rank, dimsizes, data)
+
+CHARACTER*(*)	filename	-	name of file 
+to store SDS in
+INTEGER	rank	-	number of dimensions of data 
+			array to be stored
+INTEGER	dimsizes(rank)	-	array that holds sizes of 
+			dimensions
+REAL	data(*)	-	array holding data to be stored
+
+C:
+int DFSDadddata(filename, rank, dimsizes, data)
+
+char	*filename;	/*	name of file to store SDS in */
+int	rank;	/*	number of dimensions of data array to 
+			be stored */
+int32	dimsizes[];	/*	array that holds sizes of dimensions */
+float32	*data;	/*	array holding data to be stored */
+
+
+Purpose:  DFSDadddata does the same thing that DFSDputdata 
+does, except that it appends the scientific dataset to the file. If there 
+was other data in the file, it remains undisturbed.
+
+Returns:  0 on success; -1 on failure.
+
+
+DFSDclear
+FORTRAN:
+INTEGER FUNCTION DFSDclear()
+
+C:
+int DFSDclear()
+
+
+Purpose:  To cause all possible 'set' values to be cleared.
+
+Returns:  0 on success; -1 on failure.
+
+After a call to DFSDclear,  values set by the "set" calls will not be 
+written unless they have been set again.
+
+
+Example:  Writing an Array as a Scientific Dataset
+Figure 4.2 shows a sample call that stores scientific data in a 
+5 x 20 x 5000 array of reals called points. The array is to be stored 
+as an SDS in a file called 'SDex3.hdf', with no labels, scales, or 
+other information.
+
+Figure 4.2	Storing Just 
+Scientific Data
+FORTRAN:
+INTEGER	DFSDsetdims, DFSDputdata
+REAL		points(5,20,5000)
+INTEGER	shape(3), ret
+
+shape(1) = 5
+shape(2) = 20
+shape(3) = 5000
+
+ret = DFSDsetdims(3, shape)
+ret = DFSDputdata('SDex3.hdf',3, shape, points)
+  .
+  .
+  .
+
+
+Remarks:
+
+¥	This code illustrates the simplest use of DFSDputdata. No 
+values have been set for anything other than the rank and 
+dimensions of the array, so nothing is stored in the file except 
+the rank, dimensions, and data.
+
+
+Example:  Writing a Scientific Dataset with Associated 
+Information
+Figure 4.3 demonstrates a call that writes four 200 x 200 data 
+arrays in succession to a file called 'SDex4.hdf'. The first two 
+datasets have different values for data labels, but the same values 
+for all other labels, units, and formats. The second two datasets 
+have the same values for data labels, units, and formats, but no 
+information associated with the dimensions.
+
+Figure 4.3	Storing Scientific 
+Data with 
+Associated 
+Information
+FORTRAN:
+INTEGER	DFSDsetdims, DFSDsetdatastrs, DFSDsetdimstrs
+INTEGER	DFSDsetdimscale, DFSDputdata
+REAL		press1(200,200), press2(200,200)
+REAL		den1(200,200),den2(200,200)
+INTEGER	shape(2), ret
+REAL		xscale(200), yscale(200)
+
+shape(1) = 200
+shape(2) = 200
+
+ret = DFSDsetdims(2, shape)
+ret = DFSDsetdatastrs('pressure 1','Pascals','E15.9','')
+ret = DFSDsetdimstrs(1,'x','cm','F10.2')
+ret = DFSDsetdimstrs(2,'y','cm','F10.2')
+ret = DFSDsetdimscale(1, shape(1), xscale)
+ret = DFSDsetdimscale(2, shape(2), yscale)
+ret = DFSDadddata('SDex4.hdf', 2, shape, press1)
+
+ret = DFSDsetdatastrs('pressure 2','Pascals','E15.9','')
+ret = DFSDadddata('SDex4.hdf', 2, shape, press2)
+
+ret = DFSDclear()
+ret = DFSDsetdatastrs('density 1','g/cm3','E15.9','')
+ret = DFSDadddata('SDex4.hdf', 2, shape, den1)
+
+ret = DFSDsetdatastrs('density 2','g/cm3','E15.9','')
+ret = DFSDadddata('SDex4.hdf', 2, shape, den2)
+  .
+  .
+  .
+
+
+Remarks:
+
+¥	The only differences between the first and second datasets are 
+the data arrays and the two data labels ("pressure 1" and 
+"pressure 2"). All other information that is set before the first 
+DFSDputdata is associated with both scientific datasets in the 
+file.
+
+¥	Before the third and fourth calls to DFSDputdata, the 
+information that has been set has to be cleared so that it is not 
+also associated with the third and fourth scientific datasets. 
+This is done by calling DFSDclear.
+
+¥	The coordsys parameter is of no interest to the user in this 
+application, so the empty string (' ') is given as the fourth 
+argument to DFSDsetdatastrs.
+
+
+Writing Parts of a 
+Scientific Dataset
+The routines DFSDstartslice, DFSDputslice, and DFSDendslice let 
+you write an SDS in pieces, or slices. A slice is a rectilinear 
+subarray of elements that can be stored in an SDS. 
+
+Slices that are to be written to a file are restricted to those that can be 
+written physically contiguously in the SDS when they are written to 
+the file. (See the section "Restrictions on Slices To Be Written" for 
+a fuller explanation of this restriction. Slices that are to be read do 
+not suffer the same restriction.)
+
+For example, suppose you wish to write a 10 x 12 SDS in a series of 
+slices as illustrated in Figure 4.4. (The code to do this is presented 
+in Figure 4.5.) You would write the slices in order, as follows:
+
+¥	The first slice to be written begins at the origin, writing all 
+elements from (1,1) to (2,12). 
+
+¥	The second slice extends from (3,1) to (6,12).
+
+¥	The third slice covers only part of row 7, from (7,1) to (7,4).
+
+¥	The fourth slice covers the rest of row 7.
+
+¥	The fifth slice fills out the array.
+
+
+Figure 4.4	A 10 x 12 SDS 
+Divided into Slices 
+of Varying Sizes
+                                           
+
+
+Calling Sequence for the Slice-Writing Routines
+To store an array in slices, make calls to DFSDstartslice, 
+DFSDputslice, and DFSDendslice in the following order:
+
+DFSDstartslice(filename)
+DFSDputslice(windims, data, dims)
+DFSDputslice(windims, data, dims)
+...
+DFSDputslice(windims, data, dims)
+DFSDendslice()
+
+You must call DFSDstartslice before either of the other routines. 
+Thereafter, DFSDputslice may be called many times to write 
+several contiguous slices. DFSDendslice must be called to 
+complete the write. Besides DFSDputslice, no other HDF routines 
+may be called between the calls to DFSDstartslice and 
+DFSDendslice. These three routines are discussed below in more 
+detail.
+
+
+DFSDstartslice
+FORTRAN:
+INTEGER FUNCTION dfsdstartslice(filename)
+CHARACTER*(*) filename	-	name of HDF file
+
+C:
+int DFSDstartslice(filename)
+char *filename;	/* name of HDF file */
+
+
+Purpose:  To prepare the system to write a slice to a file.
+
+Returns:  0 on success; -1 on failure.
+
+Before calling DFSDstartslice, you must call DFSDsetdims to 
+specify the dimensions of the dataset to be written to the file. 
+DFSDstartslice always appends a new dataset to an existing file. 
+
+Remember, you must call DFSDstartslice before calling 
+DFSDputslice or DFSDendslice.
+
+
+DFSDputslice
+FORTRAN:
+INTEGER FUNCTION DFSDputslice(windims, source, dims)
+
+INTEGER windims(*) 	-	dimensions of slice
+REAL	source()	-	array containing slice
+INTEGER	dims(*)	-	dimensions of array source
+
+C:
+int DFSDputslice(windims, source, dims)
+
+int32 windims[];	/* dimensions of slice*/
+float32 *source;	/* array for storing slice*/
+int32 dims[];		/* dimensions of array source*/
+Purpose:  To write a slice to an SDS.
+
+Returns:  0 on success; -1 on failure.
+
+DFSDputslice stores part of an array to the dataset last declared by 
+DFSDsetdims. Slices must be stored contiguously. 
+
+Array windims ("window dimensions") specifies the size of the 
+slice to be written. windims has as many elements as there are 
+dimensions in the entire SDS array. source is an array 
+containing the slice. 
+
+See this chapter's section "Restrictions on Slices To Be Written" 
+for restrictions on what may constitute a slice.
+
+NOTE:  All parameters assume FORTRAN-style 1-based arrays.
+
+
+DFSDendslice
+FORTRAN:
+INTEGER FUNCTION DFSDendslice()
+
+C:
+int DFSDendslice()
+
+
+Purpose:  To specify that the entire dataset has been written.
+
+Returns:  0 on success; -1 on failure.
+
+DFSDendslice must call after all the slices are written. It checks 
+to ensure that the entire dataset has been written, and if it has not, 
+returns an error code.
+
+
+Example:  Writing Slices
+Figure 4.5 shows parts of a C program that writes out the slices in 
+the 10 x 12 array illustrated in Figure 4.4.
+
+Figure 4.5	Writing Slices to a 
+10x12 SDS.
+/****************************************************
+*
+* Example C code:	Write out slices of different sizes 
+*		from a 10 x 12 array.
+*
+****************************************************/
+
+...
+
+	int rank;
+	int dimsizes[2], windims[2];
+	float data[10][12];
+
+	/* code that builds the array goes here */
+	...
+
+	dimsizes[0]=10;
+	dimsizes[1]=12;
+
+	DFSDsetdims(2,dimsizes);
+
+	/* write out scientific data set in slices */
+	DFSDstartslice(filename);
+
+	windims[0]=2; windims[1]=12;	/* {(1,1) to (2,12)} */
+	DFSDputslice(windims, &data[0][0], dimsizes);
+
+	windims[0]=4; windims[1]=12;	/* {(3,1) to (6,12)} */
+	DFSDputslice(windims, &data[2][0], dimsizes);
+
+	windims[0]=1; windims[1]=4;	/* {(7,1) to (7,4)} */
+	DFSDputslice(windims, &data[6][0], dimsizes);
+
+	windims[0]=1; windims[1]=8;	/* {(7,5) to (7,12)} */
+	DFSDputslice(windims, &data[6][4], dimsizes);
+
+	windims[0]=3; windims[1]=12;	/* {(8,1) to (10,12)} */
+	DFSDputslice(windims, &data[7][0], dimsizes);
+
+	DFSDendslice();
+
+...
+
+
+
+Restrictions on Slices To Be 
+Written
+It is important to recognize that you cannot write just any subarray 
+from an SDS. The subarray must satisfy the restriction that when 
+written to an SDS it must be written in a physically contiguous 
+sequence in the file. This restriction must hold because the current 
+implementation of HDF only allows data elements to be written in 
+contiguous chunks. (Reading slices from SDSs is less restrictive.)
+
+For example, notice in the example in Figure 4.4 that the fourth 
+slice extends from the middle of the row to the end. The array 
+windims is {1,7}. The slice does not, and cannot,  extend to the 
+eighth row. For example, windims could not be {2,7}, for if it were, 
+then there would have to be a gap between the places in the file 
+where the two partial rows were stored, and this would violate the 
+restriction that slices must be written in a physically contiguous 
+chunk. 
+
+So far we have assumed implicitly that the array is stored by row 
+(row-major order), rather than by column. SDS arrays are stored 
+by row by default, but it is also possible to store arrays in column-
+major order. (See DFSDsettype.) In that case, the roles of row and 
+column are switched. If a slice starts in the middle of a column, 
+then it may not spill over into the next column.
+
+As long as you write out data in chunks that encompass an entire 
+dimension (a row or column at a time, a "slab" at a time, etc.), this 
+restriction is unnecessary. It is when you have to write unequally-
+sized chunks that you have to worry about the restriction.
+
+For higher dimensional arrays, the same rule applies, although its 
+implications may be more confusing. A more general statement of 
+the restriction for higher dimensions  can be described as follows:
+
+	dimsizes = {n1, n2, ...ni, ...nrank}.
+	windims  = {w1, w2, ...wi, ...wrank}.
+	startpos = {p1, p2, ...pi, ...prank}.
+
+
+Case (a)
+Array elements are to be stored in row-major order (the default 
+order; the last dimension varies fastest). If wi is an element of 
+windims that is greater than 1 but less than ni, then all previous 
+elements of windims must be 1, and all succeeding elements of 
+windims must be equal to their counterparts in dimsizes. 
+
+That is, if there is an i such that  1<wi<=ni, then it must be the case 
+that for all j, j<i, wj=1, and for all k, k>i, wk=nk.
+
+In other words, in a multidimensional array with
+
+		dimsizes={n1, n2, ...  ni, ni+1, ...nrank} 
+and
+		1<wi<=ni,  pi-1+ wi <= ni,
+then
+		windims ={ 1, 1, ...1, wi, ni+1, ...nrank}, and
+
+		startpos={(don't care)... pi, pi+1=1, ...prank=1}
+
+
+Case (b)
+Array elements are to be stored in column-major order (first 
+dimension varies fastest). If wi is an element of windims that is 
+greater than 1 but less than ni, then all previous elements of 
+windims must be equal to their counterparts in dimsizes, and all 
+succeeding elements of windims must be 1. 
+That is, if there is an i such that  1<wi<=ni, then it must be the case 
+that for all j, j<i, wk=nk, and for all k, k>i, wk=1.
+
+In other words, in a multidimensional array with 
+
+	dimsizes={n1, n2, ...  ni, ni+1, ...nrank} 
+and
+	1<wi<=ni,  pi-1+ wi <= ni,
+ then
+	windims ={n1, n2,...ni-1, wi, 1, 1, ...1}.
+
+		startpos={ p1=1, ...pi-1=1, pi,...(don't care)}
+
+
+3D Example
+Suppose you want to write a 5 x 6 x 9 array in 
+row-major order. An acceptable sequence of slices might be:
+
+slice	windims
+(1,1,1) to (1,6,9)	{1,6,9}	{1st slab}
+(2,1,1) to (2,2,9)	(1,2,9)	{1st 2 rows of 2nd slab}
+(2,3,1) to (2,6,9)	(1,4,9)	{next 3 rows, completing the 2nd slab}
+(3,1,1) to (3,1,5)	(1,1,4)	{5 elements of 1st row of 3rd slab}
+(3,1,6) to (3,1,9)	(1,1,5)	{next 4 elements, completing the 1st row}
+(3,2,1) to (3,6,9)	(1,5,9)	{next 5 rows, completing 3rd slab}
+(4,1,1) to (5,6,9)	(2,6,9)	{next 2 slabs, completing the array}
+
+
+Reading Scientific Datasets from a File
+
+You can read an SDS from a file by executing a series of get calls. 
+Each call retrieves from the file one or more pieces of information 
+associated with the SDS.
+
+You must invoke at least one of  two routines, DFSDgetdims or 
+DFSDgetdata, before calling any of the others. These two routines 
+open the desired file, allocate space for special HDF structures that 
+must be loaded into primary memory, and perform other 
+initializing operations. Once this initialization is done, the other 
+routines can be called in any order and as many times as desired.
+
+
+Getting the Dimensions of a 
+Scientific Dataset
+DFSDgetdims
+FORTRAN:
+INTEGER FUNCTION DFSDgetdims(filename, rank, dimsizes, maxrank)
+
+CHARACTER*(*) filename	-	name of file with SDS
+INTEGER	rank	-	number of dimensions
+INTEGER	dimsizes(maxrank)	-	array for holding dimensions of
+			data set in the file
+INTEGER	maxrank	-	size of array dimsizes
+
+C:
+int DFSDgetdims(filename, rank, dimsizes, maxrank)
+
+char	*filename;	/*	name of file with SDS */
+int	*rank;	/*	number of dimensions */
+int32	dimsizes[];	/*	array for holding dimensions of
+			data set in the file  */
+int	maxrank;	/*	size of array dimsizes */
+
+
+Purpose:  To get the rank (number of dimensions) of the dataset 
+and the dimsizes of each dimension in the next SDS in the file.
+
+Returns:  0 on success; -1 on failure.
+
+The input argument maxrank tells DFSDgetdims the size of the 
+array that is allocated for storing the array of dimension sizes. 
+The value of rank cannot exceed the value of maxrank.
+
+The allocation of space for reading in the SDS should correspond to 
+the values read in by DFSDgetdims. The first value in the array 
+dimsizes should equal the first dimension of the array that is 
+allocated to hold the dataset; the second value in dimsizes should 
+equal the second dimension of the dataset, and so forth.
+
+
+Reading an Entire 
+Scientific Dataset
+DFSDgetdata
+FORTRAN:
+INTEGER FUNCTION DFSDgetdata(filename, rank, bufsizes, data)
+
+CHARACTER*(*) filename	-	name of file with SDS
+INTEGER	rank	-	number of dimensions
+INTEGER	maxrank	-	size of array for holding dim
+ 			sizes
+INTEGER	bufsizes(maxrank)	-	array that holds dimensions of 
+			buffer that will hold the data
+REAL	data(*)	-	array for holding the data
+
+C:
+int DFSDgetdata(filename, rank, sizes, data)
+
+char	*filename;	/*	name of file with SDS */
+int	rank;	/*	number of dimensions */
+int32	maxsizes[];	/*	array that holds dimensions of buffer
+			that will hold the data */
+float32	data[];	/*	array for holding the data */
+
+
+Purpose:  To get the dataset from the next SDS in the file and store it 
+in the floating-point array data.
+
+Returns:  0 on success; -1 on failure.
+
+The input argument filename is the same as it is in 
+DFSDgetdims. rank tells the rank of the data to be read, and sizes 
+gives the actual dimensions of the array data.
+
+If you know the rank and dimensions of the dataset beforehand, 
+then there is no need to call DFSDgetdims. Simply allocate arrays 
+with the proper dimensions for the dataset and let DFSDgetdata 
+read it in.
+
+If you do not know the values of rank or sizes, you must call 
+DFSDgetdims to get them and then use them to provide the right 
+amount of space for the array data.
+
+Each new call to DFSDgetdims or DFSDgetdata (or just to 
+DFSDgetdata) reads from the SDS that succeeds the last one read. 
+For example, if DFSDgetdata is called three times in succession, 
+the third call reads data from the third SDS in the file. Of course, if 
+you do not know the values of rank or maxsizes, you must call 
+DFSDgetdims to get them and then use them to provide the right 
+amount of space for the array data.
+
+If DFSDgetdims or DFSDgetdata is called and there are no more 
+scientific datasets left in the file, an error code is returned and 
+nothing is read. DFSDrestart (see below) enables you to override 
+this convention.
+
+
+Getting Other Information 
+About SDSs
+DFSDgetdimstrs
+FORTRAN:
+INTEGER FUNCTION DFSDgetdimstrs(dim, label, unit, format)
+
+INTEGER	dim	-	dimension this label, unit and 	
+			format refer to
+CHARACTER*(*)	label	-	label that describes this dimension
+CHARACTER*(*)	unit	-	unit to be used with this dimension
+CHARACTER*(*)	format	-	format to be used in displaying 	
+			scale for this dimension
+
+C:
+int DFSDgetdimstrs(dim, label, unit, format)
+
+int	dim;	/*	dimension this label, unit and format
+ 			refer to */
+char	*label;	/*	label that describes this dimension */
+char	*unit;	/*	unit to be used with this dimension */
+char	*format;	/*	format to be used in displaying scale 
+			for this dimension */
+
+
+Purpose:  To get the items corresponding to the dimension dim that 
+are stored as strings in the SDS, namely label, unit, and format.
+Returns:  0 on success; -1 on failure.
+
+
+DFSDgetdimscale
+FORTRAN:
+INTEGER FUNCTION DFSDgetdimscale(dim, size, scale)
+
+INTEGER	dim	-	dimension this scale corresponds to
+INTEGER	size	-	size of scale
+REAL	scale(size)	-	the scale
+
+C:
+int DFSDgetdimscale(dim, size, scale)
+
+int  	dim;	/*	dimension this scale corresponds to */
+int32	size;	/*	size of scale */
+float32	scale[];	/*	the scale */
+
+Purpose:  To get the scale corresponding to the dimension dim and 
+store it in the floating-point array scale.
+
+Returns:  0 on success; -1 on failure.
+
+The input parameter size gives the size of the scale array.
+
+
+DFSDgetdatastrs
+FORTRAN: 
+INTEGER FUNCTION DFSDgetdatastrs(label, unit, format, coordsys)
+
+CHARACTER*(*)	label	-	label that Describes the data
+CHARACTER*(*)	unit	-	unit to be used with the data
+CHARACTER*(*)	format	-	format to be used in displaying data
+CHARACTER*(*)	coordsys	-	coordinate system
+
+C:
+int DFSDgetdatastrs(label, unit, format, coordsys)
+
+char	*label;	/*	label that describes the data */
+char	*unit;	/*	unit to be used with the data */
+char	*format;	/*	format to be used in displaying data */
+char	*coordsys;	/*	coordinate system */
+
+
+Purpose:  To get information about the data itself from all strings.
+
+Returns:  0 on success; -1 on failure.
+
+The parameter coordsys gives the coordinate system that is to be 
+used for interpreting the dimension information.
+
+
+DFSDgetmaxmin
+FORTRAN:
+INTEGER FUNCTION DFSDgetmaxmin(max, min)
+
+REAL	max	-	highest value in data array
+REAL	min	-	lowest value in data array
+
+C:
+int DFSDgetmaxmin(max, min)
+
+float32	*max;	/*	highest value in data array */
+float32	*min;	/*	lowest value in data array */
+
+
+Purpose:  To get the maximum and minimum of the values in the 
+data array.
+
+Returns:  0 on success; -1 on failure or if there are no max or min 
+values.
+
+NOTE:  These values need to have been set by a user via a call to 
+DFSDsetmaxmin. They are not automatically stored.
+
+
+DFSDeadref
+FORTRAN:
+INTEGER FUNCTION 
+DFSDreadref(name, ref)
+character*(*) name     - name of file containing SDS
+integer       ref      - reference number for next DFSDgetdata
+
+C:
+int 
+DFSDreadref(filename, ref)
+
+char *filename;     /* file containing SDS */
+uint16 ref;         /* reference number for next DFSDgetdata */
+
+
+Purpose:  To specify the reference number of the SDS to be read 
+when DFSDgetdata is next called.
+
+Returns:  0 on success; -1 on failure.
+
+This routine is most likely to be used in conjunction with 
+DFANgetlablist, which returns a list of labels for a given tag 
+together with their reference numbers. It provides a sort of random 
+access to SDSs.
+
+NOTE: There is no guarantee that reference numbers appear in 
+sequence in an HDF file, so it is not generally safe to assume that a 
+reference number is a sequence number for an SDS.
+
+
+DFSDrestart
+FORTRAN:
+INTEGER FUNCTION DFSDrestart()
+
+C:
+int DFSDrestart()
+
+
+Purpose:  To cause the next get to read from the first SDS in the 
+file, rather than the SDS following the one that was most recently 
+read.
+
+Returns:  0 on success; -1 on failure.
+
+
+Example: Reading in a Simple Scientific Dataset
+Figure 4.6 contains a simple call in which the dimensions of the 
+dataset are already known, and nothing other than the data itself 
+is desired.
+
+Figure 4.6	Reading in a 
+Dataset
+FORTRAN:
+INTEGER	DFSDgetdata
+REAL		density(100, 500)
+INTEGER	sizes(2), ret
+
+sizes(1) = 100
+sizes(2) = 500
+ret = DFSDgetdata('myfile.hdf', 2, sizes, density)
+  .
+  .
+  .
+
+
+Remarks:
+
+¥	The SDS is stored in a file called 'myfile.hdf'. The hdf 
+extension is not required. Any valid filename can be used.
+
+¥	The data stored in the file is known to be a 100 x 500 array, of 
+reals.
+
+¥	The array density is exactly the right size.
+
+¥	DFSDgetdata is declared as a function of type integer.
+
+¥	If DFSDgetdata executes successfully, 0 is assigned to ret. 
+Otherwise Ð1 is assigned.
+
+
+Example: Reading  Two Scientific Datasets from a File of 
+Unknown Size
+In Figure 4.7, two arrays of the same size are stored in a file. The 
+size is not known ahead of time, but it is known that the arrays are 
+two-dimensional and no larger than 800 x 500.
+
+Figure 4.7	Reading Multiple 
+SDSs from a Single 
+File of Unknown 
+Size
+FORTRAN:
+INTEGER	DFSDgetdims, DFSDgetdata, DFSDgetdatastrs
+INTEGER	DFSDgetdimstrs, DFSDgetdimscale
+INTEGER	rank, dimsizes(2), ret
+CHARACTER*100	datalabel, dataunit, datafmt
+CHARACTER*100	xlabel, ylabel, xunit, yunit, xfmt, yfmt
+REAL		xscale(800), yscale(500)
+REAL		pressure(800,500), density(800,500)
+
+ret = DFSDgetdims('SDex2.hdf', rank, dimsizes, 2)
+ret = DFSDgetdata('SDex2.hdf', rank, dimsizes, pressure)
+ret = DFSDgetdatastrs(datalabel, dataunit, datafmt)
+ret = DFSDgetdimstrs(1, xlabel, xunit, xfmt)
+ret = DFSDgetdimstrs(2, xlabel, yunit, yfmt)
+ret = DFSDgetdimscale(1, dimsizes(1), xscale)
+ret = DFSDgetdimscale(2, dimsizes(2), yscale)
+
+ret = DFSDgetdata('SDex2.hdf', 2, dimsizes, density)
+ret = DFSDgetdatastrs(datalabel, dataunit, datafmt)
+  .
+  .
+  .
+
+
+Remarks:
+
+¥	Since the data arrays in the two data sets that are loaded are of 
+the same size, the first call to DFSDgetdims provides sufficient 
+information about the data. You do not need to call it before the 
+second array is loaded.
+
+¥	The full battery of get routines is called for getting the pressure 
+data, but in this case the dimension information (scales, labels, 
+units, formats) is already available from the first call.
+
+¥	The interface remembers from the first call to the second that 
+one SDS has already been accessed, so on the second call it gets 
+the second SDS.
+
+
+Reading Parts of a SDS
+The routine DFSDgetslice lets you read in a slice from a SDS. A 
+slice is an array of elements that is a subarray, or "hypercube", of 
+the SDS from which it is read. (Note that, for the purposes of 
+reading slices, the definition of a slice is more general that it is for 
+writing slices.)
+
+A slice can be described with two one-dimensional arrays, one 
+containing the coordinates of the corner that is nearest to the origin 
+and the other containing the sizes of the slices dimensions. For 
+example, suppose you wish to read the shaded slices from the 10 x 12 
+SDS shown in Figure 4.8. The relevant corner of the first slice is 
+{3,4} and its dimensions are {4,6}. The second slice begins at {1,10} 
+and has dimensions {10,2}.
+
+Figure 4.8	A 10 x 12 SDS 
+Showing  Two Slices 
+That Are To Be 
+Read. 
+                                           
+
+
+DFSDgetslice
+Figure 4.9	FORTRAN Code for 
+DFSDgetslice
+FORTRAN:
+INTEGER FUNCTION DFSDgetslice(filename, winst, windims dest,  
+dims)
+
+CHARACTER*(*) filename	-	name of HDF file
+INTEGER	winst	-	array with coordinates of
+			start of slice
+INTEGER	windims	-	array with dimensions of slice
+REAL	dest	-	array for returning slice
+INTEGER	dims	-	dimensions of array dest
+
+
+Purpose:  To read part of an SDS from a file.
+
+Returns:  0 on success; -1 on failure.
+
+DFSDgetslice accesses the dataset last accessed by DFSDgetdims. 
+If DFSDgetdims has not been called for the named file, 
+DFSDgetslice gets a slice from the next dataset in the file.
+
+Array winst specifies the coordinates of the start of the slice. 
+Array winend gives the size of the slice. The number of elements 
+in winst and winend must be equal to the rank of the dataset. For 
+example, if the file contains a 3D dataset, winst may contain the 
+values {2, 4, 3}, while windims contains the values {3, 1, 4}. This 
+will extract a 3 x 4, two-dimensional slice, containing the 
+elements between (2, 4, 3) and (4, 4, 6) from the original dataset. 
+
+dest is the array into which the slice is read. It must be at least as 
+big as the desired slice.
+
+dims is an array containing the actual dimensions of the array 
+dest. The user assigns values to dims before calling 
+DFSDgetslice. 
+
+NOTE: All the parameters on the call assume FORTRAN-style 1-
+based arrays.
+
+
+Example: Reading Slices
+The C code in Figure 4.10 shows how you could read the two slices 
+shown in Figure 4.8.
+
+Figure 4.10	Reading Slices 
+from a 10x12 SDS in 
+Reverse Order
+
+/****************************************************
+*
+* Example C code:	Read in slices from a 10 x 12 array. 
+*
+****************************************************/
+#include "df.h"
+...
+
+	int  i, rank;
+	int32 dimsizes[2];
+
+	DFSDgetdims(filename, &rank, dimsizes, 2);
+
+	/* starting at (3,4) read 4 x 6 window */
+	getit("myfile", 3,4,4,6); 
+
+	/* starting at (1,10) read 10 x 2 window */
+	getit("myfile", 1,10,10,2);
+
+	printf("\n");
+
+}
+
+getit(filename, st0, st1, rows, cols)
+int st0, st1, rows, cols;
+char *filename;
+{
+	int i, j;
+	int32 winst[2], windims[2], dims[2];
+	float32 data[500];
+
+	winst[0]=st0; winst[1]=st1;
+	dims[0] = windims[0] = rows;
+	dims[1] = windims[1] = cols;
+	DFSDgetslice(filename, winst, windims, data,dims);
+
+	for (i=0; i<rows; i++)  {
+		printf("\n");
+		for (j=0; j<cols; j++)
+		 printf("%5.0f%c",data[i*cols+j], ' ');
+	}
+	printf("\n");
+}
+
+How SDS Routines Store and Convert Scientific Data
+
+How HDF Normally Stores 
+Arrays
+Sometimes it is helpful to know how SDS routines store scientific 
+data. When the data in a scientific dataset is stored in a file, it is 
+stored in row-major order. When the data is loaded into memory, 
+it is stored in row major order if the DFSDgetdata was called from 
+a C program, but it is stored in column-major order if the 
+DFSDgetdata was called from a FORTRAN program. This is 
+exactly the way you normally want your data to be stored if you are 
+a C or FORTRAN programmer, respectively.
+
+When a dataset is taken from memory and put into a file, the 
+reverse happens. Specifically, if the DFSDputdata is called from a 
+FORTRAN program, it is assumed that the data is stored in 
+primary memory in column major order, so the elements are 
+"flipped" in order to put them into the file in row major order. If the 
+calling program is a C program, no flipping is needed. The data is 
+stored in the file in row major order, just as it is in primary 
+memory.
+
+
+How HDF Normally 
+Represents Numbers 
+Just as the protocol for storing arrays is language dependent, the 
+internal representation of single precision floating-point numbers 
+is machine dependent. On a Cray, for instance, floating-point 
+numbers are stored in a 64-bit format. On many other machines, 
+they are stored in IEEE standard floating-point format.
+
+In HDF scientific datasets, data is stored by default in IEEE 
+standard floating-point format. Therefore, when DFSDgetdata 
+loads data from a SDS, it converts the data to the single precision 
+floating-point format that is standard for the machine that gets it. 
+And when DFSDputdata takes data from memory and stores it in 
+an SDS, it converts the data from the machine's single precision 
+floating-point format to the IEEE format. 
+
+All of this converting can result in low order inaccuracies in the 
+data. Data that has been converted from 64-bit to 32-bit floating-
+point representation is accurate to about 10-7.
+
+In many instances it does not matter to a user how data is stored or 
+what conversions it must undergo. However, sometimes these 
+conversions cannot be tolerated, either because they slow down 
+processing too much or because they introduce intolerable 
+inaccuracies. 
+
+
+DFSDsettype:  Setting Scientific Dataset Attributes
+
+
+DFSDsettype
+FORTRAN:
+INTEGER FUNCTION 
+DFSDsettype(datatype,systemtype,representation, arrayorder)
+
+INTEGER	datatype;	-	format of numbers to be assumed in 
+			subsequent SD calls
+INTEGER	systemtype;	-	type of system to organize data for
+INTEGER	numbertype;	-	representation to use for the datatype
+INTEGER	arrayorder;	-	row major or column major
+
+C:
+int DFSDsettype(datatype,systemtype,representation, arrayorder)
+
+int	datatype;	/* format of numbers to be assumed in 
+			 subsequent SD calls */
+int	systemtype;	/* type of system to organize data for */
+int	numbertype;	/* representation to use for the datatype*/
+int	arrayorder;	/* row major or column major */
+
+
+Purpose:  To specify attributes of the data to be stored in a SDS. 
+These attributes are  in effect in subsequent calls to the SDS 
+library.
+
+Returns:  0 on success; -1 on failure.
+
+datatype describes the format of numbers to be assumed in 
+subsequent SDS calls. Currently, the only legal value for 
+datatype is the constant DFNT_FLOAT; which specifies that 
+floating-point numbers are being written, or 0, which specifies the 
+default type (also floating-point). In later versions of HDF, other 
+data types will be permitted.
+
+systemtype specifies that the dataset should be written so that it 
+can be read more efficiently on the specified system. The only 
+value currently legal for systemtype is 0, which specifies the local 
+system. 
+
+representation specifies the representation to be used for the 
+datatype. The only legal values for representation currently are 
+0, specifying the default representation; DFNTF_IEEE, which 
+specifies that IEEE floating-point is to be written (the default); and 
+on UNICOS only, DFNTF_CRAY, which specifies that 64-bit CRAY 
+floating-point is to be written. 
+
+arrayorder specifies whether the data should be stored in the file 
+in row major or column major order. The legal values are 0, 
+indicating the default (row major order); DFO_FORTRAN, 
+indicating column major (FORTRAN) order; and DFO_C 
+indicating row major (C) order.
+
+Currently, the only real use of DFSDsettype is on UNICOS, to 
+specify that FORTRAN-style arrays should be written, and/or that 
+64-bit Cray floating-point  should be written. If a file is to be written 
+and read by FORTRAN programs on UNICOS, it would probably 
+be considerably quicker and also preserve precision, to write 
+column major, Cray floating-point datasets. This can be done with 
+the call DFSDsettype (0, 0, DFNTF_CRAY, DFO_FORTRAN).
+
+Note that currently, numbers in Cray floating-point format cannot 
+be read on most other machines. Column major order, however, 
+can be read. Hence if a file is produced by a FORTRAN program 
+on UNICOS and is to be read often by a FORTRAN program on an 
+Alliant, you may want to set column major order only. This may 
+speed up the read on the Alliant.
+
+WARNING:  Presently, Cray floating-point numbers cannot be on 
+machines other than the Cray. In addition, current versions of 
+NCSA DataScope, NCSA ImageTool, etc. cannot read arrays stored 
+in column major order; thus, they will display such data 
+transposed.
+
+
+Other SDS  Routines
+
+DFSDnumber
+FORTRAN:
+(not yet implemented in FORTRAN)
+
+C:
+int DFSDnumber(filename)
+
+char *filename  /* name of HDF file containing SDSs   */
+
+
+Purpose:  To get the number of scientific datasets in the file.
+
+Returns:  Number of data sets on success; -1 on failure.
+
+
+DFSDlastref
+FORTRAN:
+INTEGER FUNCTION DFSDlastref()
+
+C:
+int DFSDlastref()
+
+
+Purpose:  To get last reference number written or read for an SDS.
+
+Returns:  Reference number on success; -1 on failure.
+
+This routine is primarily used for annotations. See Chapter 5 
+"Annotating Data Objects and Files" for examples.
+Sample Programs
+
+Two complete sample programs, the first in FORTRAN, the second 
+in C, are presented below.
+
+
+A FORTRAN Program
+This program (Figure 4.11) does the following, in order:
+
+¥	Calls the routine getpressure (not shown) to generate an array 
+called pressure of random numbers
+
+¥	Calls the routine findMaxMin (listed after the main program) to 
+find the maximum and minimum values in the array 
+pressure
+
+¥	Writes the contents of pressure to an HDF file called 
+"testsds.df", together with scales, label, unit, format and 
+max/min information
+
+¥	Reads back the array from "testsds.df", together with the 
+associated information
+
+¥	Compares the contents of the information read with the original 
+information
+
+Note that if this program were run on the Cray as is, the values that 
+were written to the file would not, in general, be equal to the 
+numbers that are read back in due to the loss of precision on the 
+write. See the section on DFSDsettype for a discussion of this 
+problem.
+
+
+Figure 4.11	FORTRAN Program Dealing with Scientific Datasets
+FORTRAN:
+      PROGRAM SDex5
+
+      INTEGER           DFSDsetdims, DFSDsetdatastrs, DFSDsetdimstrs, DFSDsetdimscale
+      INTEGER           DFSDsetmaxmin, DFSDputdata, DFSDgetdims, DFSDgetdata
+      INTEGER           DFSDgetdatastrs, DFSDgetdimstrs, DFSDgetdimscale, DFSDgetmaxmin
+      INTEGER           ret, i, j
+      INTEGER           rank
+      INTEGER           shape(2), inShape(2)
+      REAL              pressure(10,10), inPressure(10,10)
+      REAL              xscales(10), inXscales(10)
+      REAL              yscales(10), inYscales(10)
+      REAL              maxpressure, inMaxpressure
+      REAL              minpressure, inMinpressure
+      CHARACTER*256     datalabel, inDatalabel
+      CHARACTER*256     dataunit, inDataunit
+      CHARACTER*256     datafmt, inDatafmt
+      CHARACTER*256     dimlabels(2), inDimlabels(2)
+      CHARACTER*256     dimunits(2), inDimunits(2)
+      CHARACTER*256     dimfmts(2), inDimfmts(2)
+      CHARACTER*q256     inDummy
+
+      rank = 2
+      shape(1) = 10
+      shape(2) = 10
+
+      datalabel         = 'Pressure 1'
+      dataunit          = 'Pascals'
+      datafmt           = 'E15.9'
+      dimlabels(1)      = 'x'
+      dimunits(1)       = 'cm'
+      dimfmts(1)        = 'F10.2'
+      dimlabels(2)      = 'y'
+      dimunits(2)       = 'cm'
+      dimfmts(2)        = 'F10.2'
+
+      call getpressure(pressure, 100)
+      call findMaxMin(pressure, 100, maxpressure, minpressure)
+
+      do 10 i = 1, 10
+         xscales(i) = i
+         yscales(i) = i
+ 10   continue
+
+C  Write data to file
+      ret = DFSDsetdims(rank, shape)
+      ret = DFSDsetdatastrs(datalabel, dataunit, datafmt, '')
+      ret = DFSDsetdimstrs(1, dimlabels(1), dimunits(1), dimfmts(1))
+      ret = DFSDsetdimstrs(2, dimlabels(2), dimunits(2), dimfmts(2))
+      ret = DFSDsetdimscale(1, shape(1), xscales)
+      ret = DFSDsetdimscale(2, shape(2), yscales)
+      ret = DFSDsetmaxmin(maxpressure, minpressure)
+      ret = DFSDputdata('testsds.df', 2, shape, pressure)
+C  Read data back
+      ret = DFSDgetdims('testsds.df', inRank, inShape, 2)
+
+Figure 4.11	FORTRAN Program Dealing with Scientific Datasets (Continued)
+      ret = DFSDgetdata('testsds.df', 2, inShape, inPressure)
+      ret = DFSDgetdatastrs(inDatalabel, inDataunits, inDatafmt, inDummy)
+      ret = DFSDgetdimstrs(1, inDimlabels(1), inDimunits(1), inDimfmts(1))
+      ret = DFSDgetdimstrs(2, inDimlabels(2), inDimunits(2), inDimfmts(2))
+      ret = DFSDgetdimscale(1, inShape(1), inXscales)
+      ret = DFSDgetdimscale(2, inShape(2), inYscales)
+      ret = DFSDgetmaxmin(inMaxpressure, inMinpressure)
+
+C  Compare information read in with original information   :
+      print *, 'Output rank is :', rank
+      print *, 'Input rank is :', inRank
+
+      print *, 'Output shape is :', shape(1), ',', shape(2)
+      print *, 'Input shape is :', inShape(1), ',', inShape(2)
+
+      do 200 i = 1, 10
+         do 210 j = 1, 10
+            if (pressure(i, j) .ne. inPressure(i, j)) then
+               print *, 'Array position ', i, ',', j, 'is different'
+            end if
+ 210     continue
+ 200  continue
+
+      print *, 'Output datalabel is :', datalabel
+      print *, 'Input datalabel is :', inDatalabel
+
+      print *, 'Output dataunit is :', dataunit
+      print *, 'Input dataunit is :', inDataunit
+
+      print *, 'Output datafmt is :', datafmt
+      pRint *, 'Input datafmt is :', inDatafmt
+
+      print *, 'Output dimlabels(1) is :', dimlabels(1)
+      print *, 'Input dimlabels(1) is :', inDimlabels(1)
+
+      print *, 'Output dimunits(1) is :', dimunits(1)
+      print *, 'Input dimunits(1) is :', inDimunits(1)
+
+      print *, 'Output dimfmts(1) is :', dimfmts(1)
+      print *, 'Input dimfmts(1) is :', inDimfmts(1)
+
+      print *, 'Output dimlabels(2) is :', dimlabels(2)
+      print *, 'Input dimlabels(2) is :', inDimlabels(2)
+
+      print *, 'Output dimunits(2) is :', dimunits(2)
+      print *, 'Input dimunits(2) is :', inDimunits(2)
+
+      print *, 'Output dimfmts(2) is :', dimfmts(2)
+      print *, 'Input dimfmts(2) is :', inDimfmts(2)
+
+      do 300 i = 1, 10
+         if (xscales(i) .ne. inXscales(i)) then
+            print *, 'Xscales is different at position ', i
+         end if
+         if (Yscales(i) .ne. inYscales(i)) then
+            print *, 'Yscales is different at position ', i
+         end if
+ 300  continue
+
+
+Figure 4.11	FORTRAN Program Dealing with Scientific Datasets (Continued)
+      print *, 'Output maxpressure is :', maxpressure
+      print *, 'Input maxpressure is :', inMaxpressure
+
+      print *, 'Output minpressure is :', minpressure
+      print *, 'Input minpressure is :', inMinpressure
+
+      print *, 'Check completed.'
+      stop
+      end
+
+
+      subroutine findMaxMin(array, size, max, min)
+
+      integer   size
+      real      array(100), max, min
+      integer   i
+
+      max = array(1)
+      min = array(1)
+      max = amax1(max, array)
+      min = amin1(min, array)
+
+      return
+      end
+
+
+
+A C Program
+This program (Figure 4.12) does the following, in order:
+
+¥	Calls the routine getpressure (also listed) to generate an array 
+called pressure of random numbers
+
+¥	Calls the routine findMaxMin (also listed) to find the maximum 
+and minimum values in the array pressure
+
+¥	Writes the contents of pressure to an HDF file called 
+"testsds.df", together with scales, label, unit, format and 
+max/min information
+
+¥	Reads back the array from "testsds.df", together with the 
+associated information
+
+¥	Compares the contents of the information read with the original 
+information
+Figure 4.12	C Program Dealing with 
+Scientific Datasets
+C:
+#include "df.h"
+#include <stdio.h>
+
+#define MAX_ROW 10
+#define MAX_COL 10
+#define SIZE_ARRAY (MAX_ROW * MAX_COL)
+
+main()
+{
+  int ret, i, j;
+  int rank, inRank;
+  int32 shape[2], inShape[2];
+  float32 pressure[MAX_ROW][MAX_COL], inPressure[MAX_ROW][MAX_COL];
+  float32 xscales[MAX_ROW], inXscales[MAX_ROW];
+  float32 yscales[MAX_COL], inYscales[MAX_COL];
+  float32 maxpressure, inMaxpressure;
+  float32 minpressure, inMinpressure;
+  char *datalabel, inDatalabel[256];
+  char *dataunit, inDataunit[256];
+  char *datafmt, inDatafmt[256];
+  char *dimlabels[2], inDimlabels[2][256];
+  char *dimunits[2], inDimunits[2][256];
+  char *dimfmts[2], inDimfmts[2][256];
+  char inDummy[256];
+
+  rank = 2;
+  shape[0] = MAX_ROW;
+  shape[1] = MAX_COL;
+
+  datalabel	= "Pressure 1";
+  dataunit	= "Pascals";
+  datafmt	= "E15.9";
+  dimlabels[0] = "x";
+  dimlabels[1] = "y";
+  dimunits[0]	= "cm";
+  dimunits[1]	= "cm";
+  dimfmts[0]	= "F10.2";
+  dimfmts[1]	= "F10.2";
+
+  getpressure(pressure, SIZE_ARRAY);
+  findMaxMin(pressure, SIZE_ARRAY, &maxpressure, &minpressure);
+
+  for(i=0;i<MAX_ROW;i++)
+    xscales[i] = i;
+  for(i=0;i<MAX_COL;i++)
+    yscales[i] = i;
+
+  ret = DFSDsetdims(rank, shape);
+  printf("Return %d\n",ret);
+  ret = DFSDsetdatastrs(datalabel, dataunit, datafmt, "");
+  printf("Return %d\n",ret);
+  ret = DFSDsetdimstrs(1, dimlabels[0], dimunits[0], dimfmts[0]);
+  printf("Return %d\n",ret);
+  ret = DFSDsetdimstrs(2, dimlabels[1], dimunits[1], dimfmts[1]);
+  printf("Return %d\n",ret);
+  ret = DFSDsetdimscale(1, shape[0], xscales);
+  printf("Return %d\n",ret);
+  ret = DFSDsetdimscale(2, shape[1], yscales);
+  printf("Return %d\n",ret);
+
+  ret = DFSDsetmaxmin(maxpressure, minpressure);
+  printf("Return %d\n",ret);
+  ret = DFSDputdata("testsds.df", 2, shape, pressure);
+  printf("Return %d\n",ret);
+
+  puts("Getting");
+  ret = DFSDgetdims("testsds.df", &inRank, inShape, 2);
+  printf("Return %d\n",ret);
+  ret = DFSDgetdata("testsds.df", 2, inShape, inPressure);
+  printf("Return %d\n",ret);
+  ret = DFSDgetdatastrs(inDatalabel, inDataunit, inDatafmt, inDummy);
+  printf("Return %d\n",ret);
+  ret = DFSDgetdimstrs(1, inDimlabels[0], inDimunits[0], inDimfmts[0]);
+  printf("Return %d\n",ret);
+  ret = DFSDgetdimstrs(2, inDimlabels[1], inDimunits[1], inDimfmts[1]);
+  printf("Return %d\n",ret);
+  ret = DFSDgetdimscale(1, inShape[0], inXscales);
+  printf("Return %d\n",ret);
+  ret = DFSDgetdimscale(2, inShape[1], inYscales);
+  printf("Return %d\n",ret);
+  ret = DFSDgetmaxmin(&inMaxpressure, &inMinpressure);
+  printf("Return %d\n",ret);
+
+  printf("Output rank is %d\nInput rank is %d\n", rank, inRank);
+
+  printf("Output shape is %d, %d\nInput shape is %d, %d\n", shape[0], shape[1], 
+	inShape[0], inShape[1]);
+
+  for(i=0;i<MAX_ROW;i++)
+    for(j=0;j<MAX_COL;j++)
+      if (pressure[i][j] != inPressure[i][j])
+	printf("Array position %d, %d is different\n", i, 
+j);
+
+  printf("Output datalabel is %s\nInput datalabel is %s\n", datalabel, inDatalabel);
+  printf("Output dataunit is %s\nInput dataunit is %s\n", dataunit, inDataunit);
+  printf("Output datafmt is %s\nInput datafmt is %s\n", datafmt, inDatafmt);
+  printf("Output dimlabels[0] is %s\nInput dimlabels[0] is %s\n", 
+	dimlabels[0], inDimlabels[0]);
+  printf("Output dimunits[0] is %s\nInput dimunits[0] is %s\n", dimunits[0], inDimunits[0]);
+  printf("Output dimfmts[0] is %s\nInput dimfmts[0] is %s\n", dimfmts[0], inDimfmts[0]);
+  printf("Output dimlabels[1] is %s\nInput dimlabels[1] is %s\n", 
+	dimlabels[1], inDimlabels[1]);
+  printf("Output dimunits[1] is %s\nInput dimunits[1] is %s\n", dimunits[1], inDimunits[1]);
+  printf("Output dimfmts[1] is %s\nInput dimfmts[1] is %s\n", dimfmts[1], inDimfmts[1]);
+
+  for(i=0;i<MAX_ROW;i++)
+    if (xscales[i] != inXscales[i])
+      printf("Xscales is different at position %d\n", i);
+  for(i=0;i<MAX_COL;i++)
+    if (yscales[i] != inYscales[i])
+      printf("Yscales is different at position %d\n", i);
+
+  printf("Output maxpressure is %s\nInput maxpressure is %s\n", maxpressure, inMaxpressure);
+  printf("Output minpressure is %s\nInput minpressure is %s\n", minpressure, inMinpressure);
+
+  puts("Check Completed");
+}
+
+
+/*
+ * findMaxMin
+ * Finds the maximum and minimum values in a data array.
+Figure 4.12	C Program Dealing with 
+Scientific Datasets  (Continued)
+ */
+findMaxMin(data, size, max, min)
+float32 data[];
+int32 size;
+float32 *max, *min;
+{
+  int32 i;
+
+  *max = *min = data[0];
+  for(i=1;i<size;i++) {
+    if (*max < data[i])
+      *max = data[i];
+    else if (*min > data[i])
+      *min = data[i];
+  }
+}
+
+/*ÐÐÐÐÐÐÐÐÐÐÐÐÐÐÐÐÐÐÐÐÐÐ new file to be linked to main program ÐÐÐÐÐÐÐÐÐÐÐÐÐÐÐÐÐÐÐÐÐ*/
+/* getpressure.c
+/*
+ * getpressure
+ *   fills an array with random chars
+ * Input:
+ *     array : pointer to the array
+ *     size  : size of the array in characters
+ */
+getpressure(array, size)
+float32 array[];
+int size;
+{
+  int i;
+
+ (code for getting pressure array)
+}
+
+
+
+
