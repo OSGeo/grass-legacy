@@ -1,4 +1,3 @@
-/* %W% %G% */
 /* tape only has 1 file, band interleaved */
 #include "tape.h"
 
