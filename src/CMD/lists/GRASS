@@ -509,7 +509,7 @@ src.contrib/SCS/vector/v.mk_stats
 src.contrib/SCS/vector/v.report
 src.contrib/SCS/vector/v.rmedge
 src.contrib/SDTS
-src.contrib/UCB/gdbase
+#src.contrib/UCB/gdbase
 #src.contrib/eurogis/v.out.DI # very special, outdated?
 #src.contrib/eurogis/v.in.EE
 #src.contrib/eurogis/r.to.SVF
