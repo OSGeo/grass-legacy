@@ -2,6 +2,7 @@
   - G_warning(), G_fatal_error() - send mail only if eviroment variable
                                    GRASS_ERROR_MAIL is set
   - G_debug() - new, print debugging info on selected level
+  - G_plot_icon() - new, plot selected mark
 - DBMI 
   - dbmscap file is not used, drivers are searched in dist.$ARCH/driver/db
   - new dbf driver
