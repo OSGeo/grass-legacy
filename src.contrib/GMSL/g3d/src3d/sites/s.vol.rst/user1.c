@@ -213,7 +213,7 @@ fprintf(stderr,"xmin=%lf,xmax=%lf,ymin=%lf,ymax=%lf,zmin=%lf,zmax=%lf,wmin=%lf,w
 
   fprintf (stderr, "\n");
   if (OUTRANGE > 0)
-    fprintf (stderr, "Warning: there are points outside specified region--ignored %d points\n", OUTRANGE);
+    fprintf (stderr, "Warning: there are points outside specified region--ignored %d points (total points: %d)\n", OUTRANGE, k);
   if (NPOINT > 0)
     fprintf (stderr, "Warning: points are more dense than specified 'DMIN'--ignored %d points\n", NPOINT);
   NPOINT = k - NPOINT - NPT - OUTRANGE;
