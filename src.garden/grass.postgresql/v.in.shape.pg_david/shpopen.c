@@ -21,7 +21,10 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.1  2000-03-06 17:07:38  markus
+ * Revision 1.1  2000-03-15 12:19:50  markus
+ * moved v.in.shape.pg/ to v.in.shape.pg_david/: renamed directory
+ *
+ * Revision 1.1  2000/03/06 17:07:38  markus
  * Alex Shevlakov: GRASS/PostgreSQL interface
  *
  * Revision 1.17  1998/12/31 15:29:39  warmerda
