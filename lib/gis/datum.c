@@ -258,6 +258,58 @@ int G_ask_datum_params(char *datumname, char *params)
 
 }
 
+/***********************************************************
+ *  G_get_datumparams_from_projinfo(projinfo, datumname, params)
+ *     struct Key_Value *projinfo Set of key_value pairs containing
+ *                       projection information in PROJ_INFO file
+ *                       format
+ *     char *datumname   Pointer into which a string containing
+ *                       the datum name (if present) will be
+ *                       placed.
+ *     char *params      Pointer into which a string containing
+ *                       the datum parameters (if present) will
+ *                       be placed.
+ *
+ *  Extract the datum transformation-related parameters from a 
+ *  set of general PROJ_INFO parameters.
+ *  This function can be used to test if a location set-up 
+ *  supports datum transformation.
+ *  
+ *  returns: -1 error or no datum information found, 
+ *           1 only datum name found, 2 params found
+ ************************************************************/
+
+int G_get_datumparams_from_projinfo(struct Key_Value *projinfo, 
+				    char *datumname, char *params)
+{
+    int returnval = -1;
+   
+    if( NULL != G_find_key_value("datum", projinfo) )
+    {
+        sprintf(datumname, G_find_key_value("datum", projinfo));
+        returnval = 1;
+    }
+          
+    if( NULL != G_find_key_value("datumparams", projinfo) )
+    {
+        sprintf(params, G_find_key_value("datumparams", projinfo));
+        returnval = 2;
+    }
+    else if( G_find_key_value("dx", projinfo) != NULL
+	  && G_find_key_value("dy", projinfo) != NULL
+	  && G_find_key_value("dz", projinfo) != NULL ) 
+    {
+        sprintf(params, "towgs84=%s,%s,%s",
+	        G_find_key_value("dx", projinfo),
+	      	G_find_key_value("dy", projinfo),
+	       	G_find_key_value("dz", projinfo) );
+        returnval = 2;
+    }
+
+    return returnval;
+   
+}
+
 /*
  ***********************************************************
  *  get_datum_transform_by_name(inputname)
