@@ -60,7 +60,7 @@ describe (name, mapset, compact, verbose, range, windowed)
     for (row = 0 ; row < nrows; row++)
     {
 	if (verbose)
-	    percent (row, nrows, 10);
+	    G_percent (row, nrows, 2);
 	if((*get_row) (fd, b = buf, row) < 0)
 	    break;
 	if (range)
@@ -93,7 +93,7 @@ describe (name, mapset, compact, verbose, range, windowed)
 	    G_update_cell_stats (buf, ncols, &statf);
     }
     if (verbose)
-	percent (nrows, nrows, 10);
+	G_percent (nrows, nrows, 2);
     G_close_cell (fd);
     free (buf);
 
