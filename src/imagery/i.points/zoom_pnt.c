@@ -33,7 +33,6 @@ zoom1(x,y)	/* called by Input_pointer */
     int mag;
     double magnification();
     double north, south, east, west;
-    char buf[100];
 
     if (In_view (pick_view = VIEW_MAP1, x, y))
     {
@@ -79,7 +78,7 @@ zoom1(x,y)	/* called by Input_pointer */
 
 /*
  * ok, erase menu messages
- *
+ */
     Menu_msg("");
 
 /* determine magnification of zoom */
