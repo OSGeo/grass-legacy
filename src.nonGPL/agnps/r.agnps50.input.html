@@ -17,34 +17,43 @@ will prepare the input data with only 8 (appendix 2) basic GIS database layers
 supplied by the user and with minimal user interaction. There are 5 (appendix 2)
 parameters needed for the whole watershed which will be obtained from the user.
 <p>
-<B>Name of the AGNPS-GRASS Input Interface Program</B>: <EM>r.agnps50.input</EM>
+<B>Name of the AGNPS-GRASS Input Interface Program</B>:
+<EM>r.agnps50.input</EM>
 <p>
 <B>Procedures to follow while executing the Input Interface</B>:
 <p>
-First start GRASS 3.1 from a shelltool window with proper mapset where
+First start GRASS 5.x from a shelltool window with proper mapset where
 the data resides
 <p>
-Execute <EM>aggrs_input</EM> program from the shelltool window where GRASS
-is running
+Execute <EM>r.agnps50.input</EM> program from the shelltool window
+where GRASS is running
 <p>
-A <EM>Watershed Input</EM> menu will appear on the shelltool window requesting the following data/information from the user:
+A <EM>Watershed Input</EM> menu will appear on the shelltool window
+requesting the following data/information from the user:
 <p>
-Watershed Description: Enter a description about the watershed. This information optional and will appear in both input and output of the AGNPS model run.
+Watershed Description: Enter a description about the watershed. This
+information optional and will appear in both input and output of the
+AGNPS model run.
 <p>
 Rainfall Amount in inches: Enter the total amount of rainfall in inches.
 <p>
-Erosivity Index Value: Enter the erosivity index value for that particular storm/rainfall event.
+Erosivity Index Value: Enter the erosivity index value for that
+particular storm/rainfall event.
 <p>
-Enter the cell size in meters: The length of the side of a cell in meters is entered. The square of the cell size will be the area of each cell.
+Enter the cell size in meters: The length of the side of a cell in
+meters is entered. The square of the cell size will be the area of
+each cell.
 <p>
-Enter a file name to save in AGNPS format: Enter a file name with <EM>.dat</EM> as the extension to save the AGNPS model input file created by the AGNPS-GRASS 
-input interface tool. This will be stored in the current working directory.
+Enter a file name to save in AGNPS format: Enter a file name with
+<EM>.dat</EM> as the extension to save the AGNPS model input file
+created by the AGNPS-GRASS input interface tool. This will be stored
+in the current working directory.
 <p>
-Enter the watershed name: The name of the watershed should be entered here.
-All the input layers should have the same watershed name with the proper 
-extension (as <EM>X</EM> in appendix 1). 
-Please refer to appendix 1 for the valid extensions and valid category
-labels/values that are allowed for each layer.
+Enter the watershed name: The name of the watershed should be entered
+here.  All the input layers should have the same watershed name with
+the proper extension (as <EM>X</EM> in appendix 1). Please refer to
+appendix 1 for the valid extensions and valid category labels/values
+that are allowed for each layer.
 <p>
 Then hit the <EM>Esc</EM> key to continue.
 
@@ -74,15 +83,16 @@ direction for any particular cell. While using the <EM>Dedit</EM> program to
 correct the errors, this map allows one to locate the cell number where 
 conflicts occur.
 <p>
-Once the input interface completes its run without errors, it saves the data
-in the AGNPS format. The AGNPS model can be executed with this data. The name
-of the executable file program to run the AGNPS model is <EM>agrun</EM>.
-Type <EM>agrun</EM> from the shelltool window where GRASS is running. The 
-program will ask for the input file name. Enter the
-name of the file that
-was saved by running the AGNPS-GRASS input interface, with the <EM>.dat</EM> extension.
-The model will output the results of the run with a <EM>.nps</EM> extension. Both
-input and output ASCII files are needed to execute the AGNPS-GRASS output interface tool (the Visualization tool).
+Once the input interface completes its run without errors, it saves
+the data in the AGNPS format. The AGNPS model can be executed with
+this data. The name of the executable file program to run the AGNPS
+model is <EM>agrun</EM>.  Type <EM>agrun</EM> from the shelltool
+window where GRASS is running. The program will ask for the input file
+name. Enter the name of the file that was saved by running the
+AGNPS-GRASS input interface, with the <EM>.dat</EM> extension.  The
+model will output the results of the run with a <EM>.nps</EM>
+extension. Both input and output ASCII files are needed to execute the
+AGNPS-GRASS output interface tool (the Visualization tool).
 <p>
 <b>Appendix 1</b>
 <p>
@@ -344,5 +354,11 @@ input data values (its distributed parameter information):
 <LI> Channel indicator (indicating existence of a defined 
      channel within a cell)
 </OL>
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="r.agnps50.run.html">r.agnps50.run</A></EM><BR>
+<EM><A HREF="r.agnps50.view.html">r.agnps50.view</A></EM><BR>
+<p>
+<a href=http://www.geog.uni-hannover.de/phygeo/grass/agnps.html>AGNPS Page</a>
 </BODY>
 </html>
