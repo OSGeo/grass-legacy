@@ -124,6 +124,13 @@ dig__falloc(nelem, elsize)
     char *calloc();
     char *ptr;
 
+    if (elsize == 0) {
+        elsize = 4;
+    }
+    if (nelem == 0) {
+        nelem = 1;
+    }
+
     ptr = calloc( (unsigned)nelem, (unsigned)elsize);
     return(ptr);
 }
@@ -136,6 +143,13 @@ dig__frealloc(oldptr, nelem, elsize, oldnelem)
 {
     char *calloc();
     char *ptr;
+
+    if (elsize == 0) {
+        elsize = 4;
+    }
+    if (nelem == 0) {
+        nelem = 1;
+    }
 
     ptr = calloc((unsigned)nelem, (unsigned)elsize);
 
