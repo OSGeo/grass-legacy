@@ -27,7 +27,7 @@ include $(MODULE_TOPDIR)/include/Make/Lib.make
 
 default: lib $(NAD_DIR) $(CSV_DIR)
 
-$(NAD_DIR): $(NAD_TABLES) $(NT_TABLES) $(NAD2BIN)
+$(NAD_DIR): $(NAD_TABLES) $(NT_TABLES)
 	@ if [ ! -d $@ ] ; then $(MKDIR) $@ ; fi
 	for i in $(NAD_TABLES) ; do $(NAD2BIN) < $$i $@/`echo $$i | sed 's/.lla//'`; done
 	$(INSTALL) -m 644 $(NT_TABLES) $@
@@ -41,4 +41,4 @@ $(CSV_DIR): $(CSV_FILES)
 # Note for future improvement:
 # nad2bin should be compiled from source if we are cross compiling and then the
 # above NAD_TABLES files created during installation rather than compilation
-$(NAD2BIN): #
+
