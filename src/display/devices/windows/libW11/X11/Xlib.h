@@ -61,9 +61,9 @@ typedef unsigned long Pixel;
 #define DoesBackingStore(s)	((s)->backing_store)
 #define DisplayString(dpy) 	((dpy)->display_name)
 #define DisplayCells(dpy, scr) 	(DefaultVisual((dpy), (scr))->map_entries)
-#define XAllocSizeHints()       ((XSizeHints *)G_malloc((size_t) sizeof(XSizeHints)))
-#define XAllocWMHints()         ((XWMHints *)G_malloc((size_t) sizeof(XWMHints)))
-#define XAllocClassHint()       ((XClassHint *)G_malloc((size_t) sizeof(XClassHint)))
+#define XAllocSizeHints()       ((XSizeHints *)allocateMemory((size_t) sizeof(XSizeHints)))
+#define XAllocWMHints()         ((XWMHints *)allocateMemory((size_t) sizeof(XWMHints)))
+#define XAllocClassHint()       ((XClassHint *)allocateMemory((size_t) sizeof(XClassHint)))
 /*#define ConnectionNumber(dpy)   ((dpy)->fd)*/
 #define ConnectionNumber(dpy)   XConnectionNumber(dpy)
 #define XUndefineCursor(dpy, win)	;
