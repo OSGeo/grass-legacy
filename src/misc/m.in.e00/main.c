@@ -33,7 +33,6 @@ FILE *fde00, *fdlog;		/* input and log file descriptors */
 int compressed;			/* 1 if e00 file is compressed, 0 else */
 int current_position;		/* Where are we in input file ? */
 int usecovnum = 1;		/* set to 1 if we want link table by COVER#  */
-int usedatabase = 0;		/* set to 1 if we use an attributes database */
 double scale = 1.0;
 
 extern void getraster( char*, int, int);
@@ -59,12 +58,16 @@ int main( int argc, char *argv[])
     char *infile, *newmapset;
     long offset_grd = 0,
 	 offset_arc = 0,
-	 offset_lab = 0,	/* offset and precision of grid */
-	 offset_pal = 0;	/* values and coordinates for   */
-    int  prec_grd, prec_arc,	/* each section in e00 file :   */
-	 prec_lab, prec_pal;	/* 0 = float, 1 = double        */
-    int cover_type;		/* type of coverage (line, point, area) */
-    int cover = 0;		/* 1 if AAT, 2 if PAT, 3 if both        */
+	 offset_lab = 0,        /* offset and precision of grid */
+	 offset_pal = 0;        /* values and coordinates for   */
+    int  prec_grd, prec_arc,    /* each section in e00 file :   */
+	 prec_lab, prec_pal;    /* 0 = float, 1 = double        */
+    int cover_type;     	/* type of coverage (line, point, area) */
+    int cover = 0;      	/* 1 if AAT, 2 if PAT, 3 if both        */
+    int cat_management = 0;	/* 0 : as many dig_cat files as attributes */
+    				/* 1 : point coverage (no dig_cat file)... */
+    				/* 2 : use an unique dig_cat file for atts */
+    				/* 3 : we use a database for cats (todo)   */
 
     char buf[1024];
     char msg[256];
@@ -74,7 +77,7 @@ int main( int argc, char *argv[])
 	struct Option *input, *mapset, *action, *verbose, *logfile;
     } parm;
     struct {
-	struct Flag *db, *link, *support;
+	struct Flag *db, *link, *table, *support;
     } flag;
 
     /* Are we running in Grass environment ? */
@@ -124,6 +127,10 @@ int main( int argc, char *argv[])
     flag.link->key         = 'i';
     flag.link->description = "Link attributes by coverage-ID not by coverage-#" ;
 
+    flag.table = G_define_flag() ;
+    flag.table->key         = 't';
+    flag.table->description = "Store all attributes in one dig_cat file" ;
+
     flag.db = G_define_flag() ;	/* not working yet... */
     flag.db->key           = 'd';
     flag.db->description   = "Use database for storing attributes" ;
@@ -162,7 +169,6 @@ int main( int argc, char *argv[])
 
     if (flag.link->answer)
 	usecovnum = 0;
-    usedatabase = flag.db->answer;
 
     if ((todo == ANALYSE) && (debug < 5))
 	debug = 5;
@@ -304,11 +310,23 @@ int main( int argc, char *argv[])
 	}
 
 	if (!strncmp( line, "IFO  ", 5)) {     /* INFO SECTION */
-	    if (todo == VECTOR || todo == ALL) /* Allways at end, but we want */
-		if (todo == ANALYSE)	       /* it just after projection to */
-		    cover = getinfo( name, 0); /* find wether it's a polygone */
-		else			       /* line or point coverage      */
-		    cover = getinfo( name, 1 + (newmapset != NULL));
+	/* Allways at end, but we want read it just after projection */
+	/* to find wether it's a polygone or line coverage           */
+	    if (todo == VECTOR || todo == ALL)
+		if (todo == ANALYSE)
+		     cover = getinfo( name, 0, 0, 0);
+		else
+	/* If we have only offset_lab != 0, it's a point coverage.  Don't */
+	/* create a dig_cat file, but keep attributes for site file       */
+	    	     if (offset_lab != 0 && offset_arc == 0 && offset_pal == 0)
+			cat_management = 1;
+	    	     else {
+			if (flag.table->answer)
+        		    cat_management = 2;
+    			if (flag.db->answer)
+    			    cat_management++;
+		    }
+		    cover = getinfo( name, cat_management, 1 + (newmapset != NULL));
 	    else
 		ignore( "EOI", 1);
 	    continue;
@@ -424,8 +442,8 @@ int main( int argc, char *argv[])
 		 else
 		    cover_type = LINE;
 		 break;
-	default: if (offset_arc != 0)
-		    cover_type = LINE;
+	default: if (offset_arc != 0)   /* No IFO section was found */
+		    cover_type = LINE;  /* or no PAT or AAT table   */
 		 else
 		    cover_type = DOT;
 		 break;
@@ -444,9 +462,9 @@ int main( int argc, char *argv[])
     if (debug)
 	fprintf( fdlog, "Import of %s complete\n", name);
     
-   /* If "-s" flag is passed as argument then run "v.support" on */
-   /* newly created vector file (output).                        */
-   if (flag.support->answer)
+   /* If "-s" flag is passed as argument then run "v.support" on  */
+   /* newly created vector file (output). Only for lines or areas */
+   if (cover_type != DOT && flag.support->answer)
     {
      sprintf(buf,"%s/bin/v.support map=%s", G_gisbase(), name);
      G_system(buf);

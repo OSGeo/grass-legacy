@@ -11,8 +11,6 @@
 /*                                                                  */
 /********************************************************************/
 
-#define ESRI_RAST_NULL -340282306073709652508363335590014353408.0
-
 extern int debug;		/* debug level (verbosity) */
 extern double scale;		/* scale of coordinates (Cf PRJ) */
 extern FILE *fdlog;		/* log file descriptor */
@@ -31,15 +29,22 @@ void getraster( char *name, int flag, int prec)
     FCELL *fbuf;
     DCELL *dbuf;
 
-    long i, j, *p;
-    float *f;
-    double *d;
+    long i, j, lmin, *p;
+    float fmin, *f;
+    double nul_val, dmin, *d;
+
+    /* null values in e00 files are represented by an integer looking   */
+    /* like 0x80000... so they are the lowest possible values for long, */
+    /* float or double (-340282306073709652508363335590014353408.0 in   */
+    /* this case). So we read a double (nul_val) and convert it to the  */
+    /* right type : lmin, fmin or dmin.  It would probably be safer to  */
+    /* compare the strings before converting them with sscanf...        */
 
     if (debug)
 	fprintf( fdlog, "Extracting grid\n");
 
     read_e00_line( line);
-    sscanf( line, "%ld%ld%ld", &cols, &rows, &depth);
+    sscanf( line, "%ld%ld%ld", &cols, &rows, &depth, &nul_val);
     read_e00_line( line);
     sscanf( line, "%lf%lf", &xres, &yres);
     read_e00_line( line);
@@ -90,6 +95,7 @@ void getraster( char *name, int flag, int prec)
     case 1 :
 	raster = G_open_cell_new( name);
 	buf = G_allocate_c_raster_buf();
+	lmin = (long)nul_val;
 	fprintf( stderr, "Percent complete : ");
 	for (i=0; i < rows; i++) {
 	/* we assume that CELL = long and that sscanf only use */
@@ -103,7 +109,7 @@ void getraster( char *name, int flag, int prec)
 		p += 5;
 	    }
 	    for (j = 0; j < cols; j++) {
-		if (buf[j] == ESRI_RAST_NULL)
+		if (buf[j] == lmin)
 		      G_set_null_value(&buf[j], 1, CELL_TYPE);
 	    }
 	    G_put_raster_row(raster, buf, CELL_TYPE);
@@ -117,6 +123,7 @@ void getraster( char *name, int flag, int prec)
 	    G_set_fp_type( DCELL_TYPE);
 	    raster = G_open_fp_cell_new( name);
 	    dbuf = G_allocate_d_raster_buf();
+	    dmin = nul_val;
 	    fprintf( stderr, "Percent complete : ");
 	    for (i=0; i < rows; i++) {
 	    /* we assume that sscanf only use */
@@ -130,7 +137,7 @@ void getraster( char *name, int flag, int prec)
 		    d += 3;
 		}
 		for (j = 0; j < cols; j++) {
-		    if (dbuf[j] == ESRI_RAST_NULL)
+		    if (dbuf[j] == dmin)
 		      G_set_null_value(&dbuf[j], 1, DCELL_TYPE);
 		}
 		G_put_d_raster_row( raster, dbuf);
@@ -140,6 +147,7 @@ void getraster( char *name, int flag, int prec)
 	    G_set_fp_type( FCELL_TYPE);
 	    raster = G_open_fp_cell_new( name);
 	    fbuf = G_allocate_f_raster_buf();
+	    fmin = (float)nul_val;
 	    fprintf( stderr, "Percent complete : ");
 	    for (i=0; i < rows; i++) {
 	    /* we assume that sscanf only use */
@@ -153,7 +161,7 @@ void getraster( char *name, int flag, int prec)
 		    f += 5;
 		}
 		for (j = 0; j < cols; j++) {
-		    if (fbuf[j] == ESRI_RAST_NULL)
+		    if (fbuf[j] == fmin)
 		      G_set_null_value(&fbuf[j], 1, FCELL_TYPE);
 		}
 		G_put_f_raster_row( raster, fbuf);

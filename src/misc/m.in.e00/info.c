@@ -26,7 +26,7 @@ Arc/Info suffixes recognised :
 .pat	Polygon or Point Attribute Table : ditto
 .acode	Arc Lookup Table : ignored
 .pcode	Polygon or Point Lookup Table : ignored
-.bnd	Boundary : set default Windows and create one named after the coverage
+.bnd	Boundary : set default Windows and creates one named after the coverage
 .tic	TIC Marks : ignored (could be used for reg files in Grass ?)
 .sta	Stats for Grid file : ignored (could be used to find the best size of
 	Grass raster file: 1, 2 or 4 bytes, or scaling a floating number grid)
@@ -72,7 +72,6 @@ FILE *fdlog;
 # define read_e00_line(x) fgets( x, 100, stdin)
 
 int usecovnum = 1;
-int usedatabase = 1;
 int
 main( void) {
     char line[100];
@@ -82,7 +81,7 @@ main( void) {
     do {
 	fgets( line, 100, stdin);
     } while (strncmp( line, "IFO", 3));
-    printf( "Cover_type = %d\n", getinfo( "xxx", 0));
+    printf( "Cover_type = %d\n", getinfo( "xxx", 2, 0));
 }
 
 #else
@@ -91,7 +90,6 @@ extern int debug;               /* debug level (verbosity) */
 extern double scale;            /* scale of coordinates (Cf PRJ) */
 extern FILE *fdlog;		/* log file descriptor */
 extern int usecovnum;		/* coverage-# instead of coverage-ID */
-extern int usedatabase;		/* Want ODBC or PosgreSQL ? */
 
 #endif
 
@@ -154,17 +152,17 @@ void igntbl( struct Info info)
 
 /* copy a table in database format */
 
-void gdbtbl( char *name, struct Info info, int ncatmin, int flag)
+void gdbtbl( char *name, struct Info info, int ncatmin, int flag_write)
 {
     if (ncatmin == 0)
 	igntbl( info);		/* still to do !!! */
     else
-	getpataat( name, info, ncatmin, flag);
+	getpataat( name, info, ncatmin, flag_write);
 }
 
 /* get boundaries and create a new region for import */
 
-void getbnd( struct Info info, int flag)
+void getbnd( struct Info info, int flag_write)
 {
     char *infoline;
     double xmin, ymin;
@@ -185,13 +183,13 @@ void getbnd( struct Info info, int flag)
         fprintf( fdlog, "xmax = %f, ymax = %f\n", xmax, ymax);
     }
 
-    if (flag == 0)		/* Only analyse */
+    if (flag_write == 0)		/* Only analyse */
         return;
     if (debug)
         fprintf( fdlog, "Creating region\n");
-    if (flag == 1)              /* We could create a WIND file */
+    if (flag_write == 1)
         G_get_window( &region);
-    else {
+    else {				/* We should use PRJ section here */
         G_get_default_window( &region);
         region.proj = 99;
         region.zone = 0;
@@ -202,7 +200,7 @@ void getbnd( struct Info info, int flag)
     region.south = ymin * scale;
     G_adjust_Cell_head( &region, 0, 0); /* compute default nb of rows and cols */
 
-    if (flag > 1)			/* We could create a WIND file */
+    if (flag_write > 1)			/* We could create a WIND file */
         G_put_window( &region);
     G_set_window( &region);
 
@@ -211,7 +209,7 @@ void getbnd( struct Info info, int flag)
 
 /* get Arc or Poly/Points attribute table => create dig_cats + dig_att files */
 
-void getpataat( char *name, struct Info info, int ncatmin, int flag)
+void getpataat( char *name, struct Info info, int ncatmin, int flag_write)
 {
     char *infoline;
     char filename[80];
@@ -255,7 +253,7 @@ void getpataat( char *name, struct Info info, int ncatmin, int flag)
     for (i = ncatmin; i < info.uitems; i++) {
 	if (debug)
 	    fprintf( fdlog, "Writing cats file \"%s\"\n", info.item[i].filename);
-	if (flag != 0)
+	if (flag_write != 0)
 	    G_write_vector_cats( info.item[i].filename, &info.item[i].cats);
 	G_free_cats( &info.item[i].cats);
     }
@@ -264,7 +262,7 @@ void getpataat( char *name, struct Info info, int ncatmin, int flag)
 
 /* read INFO tables, keep only the most usefull */
 
-int getinfo( char *name, int flag)
+int getinfo( char *name, int cat_management, int flag_write)
 {
     char line[84], tmp[12], *p;
     int cover_type = 0; /* 1 if AAT, 2 if PAT, 3 if both */
@@ -321,21 +319,21 @@ int getinfo( char *name, int flag)
 		info.item[i].fpos = info.item[i-1].fpos + info.item[i-1].fsize;
 	}
 	if (strcmp( p, "aat") == 0) {
-	    if (usedatabase)
-		gdbtbl( name, info, 7, flag);
+	    if (cat_management == 3)
+		gdbtbl( name, info, 7, flag_write);
 	    else
-		getpataat( name, info, 7, flag);
+		getpataat( name, info, 7, flag_write);
 	    cover_type += 1;
 	}
 	else if (strcmp( p, "pat") == 0) {
-	    if (usedatabase)
-		gdbtbl( name, info, 4, flag);
+	    if (cat_management == 3)
+		gdbtbl( name, info, 4, flag_write);
 	    else
-		getpataat( name, info, 4, flag);
+		getpataat( name, info, 4, flag_write);
 	    cover_type += 2;
 	}
 	else if (strcmp( p ,"bnd") == 0)
-	    getbnd( info, flag);
+	    getbnd( info, flag_write);
 	else if (strcmp( p ,"tic") == 0)
 	    igntbl( info);
 	else if (strcmp( p ,"sta") == 0)
@@ -349,7 +347,7 @@ int getinfo( char *name, int flag)
 	else if (strcmp( p ,"pcode") == 0)
 	    igntbl( info);
 	else
-	    gdbtbl( name, info, 0, flag);
+	    gdbtbl( name, info, 0, flag_write);
 
 	read_e00_line( line);
 
