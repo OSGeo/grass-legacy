@@ -185,7 +185,7 @@ fprintf(stderr,"Region from getWindow: %d %d %d\n",g3reg.rows,g3reg.cols,g3reg.d
 	Headfax.xdim -= 1;
 	Headfax.ydim -= 1;
 	Headfax.zdim -= 1;
-fprintf(stderr,"DSPF DIMS: %d %d %d\n", Headfax.ydim, Headfax.xdim, Headfax.zdim);
+fprintf(stderr,"DSPF DIMS: %d %d %d\n", Headfax.ydim+1, Headfax.xdim+1, Headfax.zdim+1);
 	if(dfwrite_header(&Headfax) < 0)
 	{
 	   fclose(Headfax.dspfoutfp);
