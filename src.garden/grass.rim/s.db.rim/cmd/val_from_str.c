@@ -34,7 +34,13 @@ int val_from_str(field, split, string)
          count = sscanf(string, "%d", (int *) Field_info[*field].value);
          break;
       case X_FIELD_CHAR:
+         G_scan_easting(string,(double *)Field_info[*field].value,Projection);
+	 count = 1; /* changed by Olga as described in Satnik's email on mar,15,93) */
+         break;
       case Y_FIELD_CHAR:
+         G_scan_northing(string,(double *)Field_info[*field].value,Projection);
+	 count = 1; /* changed by Olga as described in Satnik's email on mar,15,93) */
+         break;
       case F_FIELD_CHAR:
          count = sscanf(string, "%lf", (double *) Field_info[*field].value);
          break;
