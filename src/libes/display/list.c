@@ -53,6 +53,7 @@ char *name ;
 }
 
 D_add_to_list(string)
+char *string;
 {
 	return(R_pad_append_item("list", string)) ;
 }
