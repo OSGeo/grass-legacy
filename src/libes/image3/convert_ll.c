@@ -40,7 +40,7 @@ int convert_to_ll (Control_Points_LL *cpll, Control_Points_2D *cptemp)
   char *tmp_bob;
 
   /** TODO -- fix this and free at end  **/
-  ellps = (char *) G_malloc (40 * sizeof (char));
+  ellps = (char *) G_malloc (256 * sizeof (char));
 
 
   /* initialize */
@@ -82,7 +82,8 @@ if (!strcmp(tmp_bob, "ll")) return 0;
 
   /* save the target ellps parameter */
   ellps = G_find_key_value ("ellps", targ_proj_keys);
-  /** TODO -- check if NULL and set to default **/
+  if( ellps == NULL )
+      sprintf(ellps, "wgs84");
 
   /* set up ll_proj_keys */
   ll_proj_keys = G_create_key_value();
@@ -102,7 +103,7 @@ if (!strcmp(tmp_bob, "ll")) return 0;
   G_free_key_value (targ_unit_keys);
   G_free_key_value (ll_proj_keys);
   G_free_key_value (ll_unit_keys);
-
+  G_free (ellps);
 
   /* loop through all the temp points */
   for (i = 0; i < cptemp->count; i++) {
@@ -167,7 +168,7 @@ convert_from_ll (Control_Points_LL *cpll, Control_Points_2D *cptemp)
   char   *ellps;    /* target ellps paramet */
 
   /** TODO -- fix this and free at end  **/
-  ellps = (char *) G_malloc (40 * sizeof (char));
+  ellps = (char *) G_malloc (256 * sizeof (char));
 
 
   /* initialize */
@@ -202,7 +203,8 @@ convert_from_ll (Control_Points_LL *cpll, Control_Points_2D *cptemp)
 
   /* save the target ellps parameter */
   ellps = G_find_key_value ("ellps", targ_proj_keys);
-  /** TODO -- check if NULL and set to default **/
+  if( ellps == NULL )
+      sprintf(ellps, "wgs84");
 
   /* set up ll_proj_keys */
   ll_proj_keys = G_create_key_value();
@@ -220,9 +222,9 @@ convert_from_ll (Control_Points_LL *cpll, Control_Points_2D *cptemp)
   G_free_key_value (targ_proj_keys);
   G_free_key_value (targ_unit_keys);
   G_free_key_value (ll_proj_keys);
-  G_free_key_value (ll_unit_keys);
-
-
+  G_free_key_value (ll_unit_keys);   
+  G_free (ellps);
+   
   for (i = 0; i < cpll->count; i++) {
 
     /* allocate an empty control point */

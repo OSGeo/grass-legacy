@@ -28,6 +28,7 @@ int init_map (char	*coor_file)
         char    temp[25];
         double  X[MAX_COOR],Y[MAX_COOR];
 	char	buff[85] ;
+	char	parms_latlong[512];
 #ifdef LATLON
         struct  Key_Value *proj_keys, *unit_keys;
         static struct pj_info   info_ll, info_coord;    /* Conversion info */
@@ -81,7 +82,12 @@ int init_map (char	*coor_file)
               fprintf(stderr,_("units file not found -- run g.setproj\n"));
               last_words(CMap,-1);
             }
-            if (pj_get_string(&info_ll,"+proj=ll") <0) {
+            if( G_find_key_value("ellps", proj_keys) != NULL )
+                sprintf(parms_latlong, "+proj=ll +ellps=%s", 
+			G_find_key_value("ellps", proj_keys) );
+            else
+                sprintf(parms_latlong, "+proj=ll +ellps=wgs84");
+            if (pj_get_string(&info_ll, parms_latlong) <0) {
               fprintf(stderr,_("Could not initialize proj_ll\n"));
               last_words(CMap,-1);
             } 

@@ -38,6 +38,7 @@ main(int argc, char **argv)
   struct GModule *module;
 
   char errbuf[256];          /* buffer for error messages */
+  char parms_latlong[512];
 
   char *datumlist, *mapset, 
     *name, *outdatum;
@@ -166,7 +167,12 @@ main(int argc, char **argv)
 	G_fatal_error("Can't get projection key values of output map");
 
       /* set up projection for lat/long reprojection */
-      (void) pj_get_string(&pjll, NULL);
+      if( G_find_key_value("ellps", proj_info_map) != NULL )
+          sprintf(parms_latlong, "proj=ll ellps=%s", 
+		  G_find_key_value("ellps", proj_info_map) );
+      else
+          sprintf(parms_latlong, "proj=ll ellps=wgs84");
+      (void) pj_get_string(&pjll, parms_latlong);
     }
   
   if (molod->answer) {

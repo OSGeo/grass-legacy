@@ -60,6 +60,7 @@ long G_calc_solar_position (double longitude, double latitude, double timezone,
     struct pj_info oproj;    /* output map proj parameters  */
     extern struct Cell_head window;
     int inside;
+    char parms_out[512];
 
 
    /* we don't like to run G_calc_solar_position in xy locations */
@@ -115,7 +116,12 @@ fprintf(stderr, "IN coord: longitude: %f, latitude: %f\n", longitude, latitude);
 #endif
 
      /* set output projection to lat/long for solpos*/
-     pj_get_string(&oproj, NULL);
+     if( G_find_key_value("ellps", in_proj_info) != NULL )
+         sprintf(parms_out, "proj=ll ellps=%s", 
+		 G_find_key_value("ellps", in_proj_info) );
+     else
+         sprintf(parms_out, "proj=ll ellps=wgs84");
+     pj_get_string(&oproj, parms_out);
 
      /* XX do the transform 
       *               outx        outy    in_info  out_info */
