@@ -32,6 +32,7 @@ db_driver_describe_table (table_name, table)
     char        emsg[DBF_MSG];
 
     name = db_get_string (table_name);
+    
     tab = find_table ( name );
     describe_table ( tab, NULL, 0, table );
 
@@ -46,7 +47,6 @@ describe_table (int tab, int *scols, int nscols, dbTable **table)
     int         i, col, ncols, dbtype, precision, scale;
     dbColumn    *column;
     COLUMN      *dcol;
-    char        *name;
     char        emsg[DBF_MSG];
 
     load_table_head ( tab );
@@ -65,7 +65,7 @@ describe_table (int tab, int *scols, int nscols, dbTable **table)
 	    col = scols[i];
         else
 	    col = i;
-	
+
 	dcol = &(db.tables[tab].cols[col]);
         column = db_get_table_column (*table, i);
 	
@@ -118,7 +118,7 @@ describe_table (int tab, int *scols, int nscols, dbTable **table)
       }
     
     /* set the table name */
-    db_set_table_name (*table, name);
+    db_set_table_name (*table, db.tables[tab].name);
 
     /* set the table description */
     db_set_table_description(*table, "");
