@@ -1,0 +1,66 @@
+
+
+
+Dmeasure(2D)         GRASS Reference Manual          Dmeasure(2D)
+
+
+
+NAME
+     Dmeasure - Tool used to measure feature lengths and areas
+     (D Language Tool)
+
+SYNOPSIS
+     Dmeasure [forecolor=color] [backcolor=color]
+
+DESCRIPTION
+     Dmeasure provides the user with a way to measure the lengths
+     and areas of lines and polygons that the user has drawn on
+     the monitor.  Lines and polygons are drawn using a pointing
+     device (mouse).  A mouse button menu indicates that the user
+     can find out the screen coordinates of the cursor location,
+     draw line segments between user-specified vertices, and quit
+     Dmeasure.  Lines and polygons are defined by the series of
+     vertices marked by the user.  If more than two successive
+     vertices are drawn, Dmeasure prints the area encompassed
+     (Dmeasure will assume the area is closed even if the user
+     has not joined the first and last vertices).  Line lengths
+     are stated in the same units as those of the current
+     database.  Areas are stated in both square miles and
+     hectares.
+
+     Options that can be used with Dmeasure are the foreground
+     and background colors of line segments drawn on the screen.
+     If these options are not stated on the commmand line,
+     Dmeasure will default to the use of a foreground color of
+     white, and a background color of black.
+
+NOTES
+     The GRASS tool display also offers a way to measure line
+     lengths and areas through its measurements option.  If the
+     measurement program is run through display, however, default
+     line segment foreground and background colors will be used.
+
+SEE ALSO
+     DINTRO[2D]      Introduction to GRASS D tools
+     Dmapgraph[2D]   Draws simple graphics on a map
+     display[1]      Tool for displaying and producing maps
+
+AUTHOR
+     Jim Westervelt, U.S. Army Construction Engineering Research
+     Lab
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
