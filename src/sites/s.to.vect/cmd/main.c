@@ -1,14 +1,16 @@
-/* Changes by PWC 2/6/95  from NRCS */
-
-/*  @(#)main.c    1.0  2/26/91  */
-/*
-**  Created by R.L.Glenn
-**  USDA, Soil Conservation Service
-**
-**  Input arguements:
-**        s.to.vect input=site_list file to read
-**                  output=vector (digit) file to create
-*/
+/* 
+ * $Id$
+ * Changes by PWC 2/6/95  from NRCS
+ * 1.0  2/26/91
+ *
+ *  Created by R.L.Glenn
+ *  USDA, Soil Conservation Service
+ *
+ *  Input arguements:
+ *        s.to.vect input=site_list file to read
+ *                  output=vector (digit) file to create
+ */
+ 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
