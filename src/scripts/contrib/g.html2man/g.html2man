@@ -1,4 +1,7 @@
 #!/usr/bin/perl
+#
+# $Id$
+#
 
 sub basename {
   $slash = rindex($_[0], "/");
@@ -219,6 +222,8 @@ sub DoFont {
   s/^<P>$/.PP/;
   s/<P>/.PP\n/g;
   s/<P>/.PP\n/g;
+  s/&nbsp;/ /g;
+  s/&NBSP;/ /g;
   return;
 }
 
