@@ -7,7 +7,8 @@ SUBDIRS = \
 	v.category \
 	v.clean \
 	v.convert \
-	v.mapcalc
+	v.mapcalc \
+	v.surf.rst
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
