@@ -1,0 +1,19 @@
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+Palpha	alpha.c	/^Palpha()$/
+Pdata	data.c	/^Pdata (buf, n)$/
+Pfinish	finish.c	/^Pfinish()$/
+Pinit	init.c	/^Pinit()$/
+Pnpixels	npixels.c	/^Pnpixels (rows, cols)$/
+Ppictsize	pictsize.c	/^Ppictsize (nr, nc)$/
+Praster	raster.c	/^Praster ()$/
+Prle	rle.c	/^Prle (buf, n)$/
+Ptext	text.c	/^Ptext (s) unsigned char *s;$/
+clear	clear.c	/^clear (buf, n)$/
+clear_colors	colors.c	/^clear_colors()$/
+cym	cym.c	/^cym (n, c, y, m)$/
+dither	dither.c	/^dither (col, c, y, m)$/
+end_raster	raster.c	/^end_raster ()$/
+esc	esc.c	/^esc (s)$/
+flush_raster	raster.c	/^flush_raster()$/
+formfeed	formfeed.c	/^formfeed()$/
+output_colors	colors.c	/^output_colors()$/
