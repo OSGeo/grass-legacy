@@ -87,7 +87,7 @@ int main (int argc, char *argv[])
 
 	flag.lprint = G_define_flag();
 	flag.lprint->key         = 'l';
-	flag.lprint->description = "Print the current region in lat/long";
+	flag.lprint->description = "Print the current region in lat/long (keeping current ellipsoid/datum)";
 
 	flag.eprint = G_define_flag();
 	flag.eprint->key         = 'e';
