@@ -48,21 +48,21 @@ refer to the vector file.
 
 
 <P>
-char *G_ask_vector_old (char *prompt, char *name) prompt for an
+char *G_ask_vector_old(char *prompt, char *name) prompt for an
 existing vector file
 
 Asks the user to enter the name of an existing vector file in any
 mapset in the database.
 
 <P>
-char *G_ask_vector_in_mapset (char *prompt, char *name) prompt for an
+char *G_ask_vector_in_mapset(char *prompt, char *name) prompt for an
 existing vector file
 
 Asks the user to enter the name of an existing vector file in the
 current mapset.
 
 <P>
-char *G_ask_vector_new (char *prompt, char *name) prompt for a new
+char *G_ask_vector_new(char *prompt, char *name) prompt for a new
 vector file
 
 Asks the user to enter a name for a vector file which does not exist

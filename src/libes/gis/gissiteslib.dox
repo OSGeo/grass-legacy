@@ -1,0 +1,981 @@
+/*!
+\page gissiteslib
+<!-- doxygenized from "GRASS 5 Programmer's Manual" 
+  by M. Neteler 2/2004
+ -->
+<title>GRASS Sites File Processing</title>
+
+\section gissitesintro GRASS Sites File Processing
+
+Site List Processing (GRASS 5 Sites API)
+
+<P>
+Authors: Darrell McCauley and Bill Brown (brown@gis.uiuc.edu)
+<BR>
+
+
+<P> Site files contain records describing punctual
+information. Records are limited to files containing only characters
+from the US-ASCII character set. Records are separated by a newline
+character (ASCII 0x0a). There are three types of records: comment
+records, header records, and data records.  The formats of each these
+types of records are described in the following sections.
+
+<P> A site record in the GRASS Sites Format is divided into two parts,
+each with a different field separator. Part 1 contains location in 2
+or more dimensions and part 2 optionally contains attribute
+information for this location. Both types of fields (and thus site
+records) are variable length.
+
+
+\subsection Part1_of_a_Site_Record_Location Part 1 of a Site Record: Location
+
+<P> Part 1 of a site record gives information about location. The
+field separator in part 1 of the site record is a
+<TT>"</TT>pipe<TT>"</TT> (ASCII 0x7c) character. The last
+(non-escaped) pipe signifies the end of part 1 (an escaped character
+is defined as one prefixed by a <TT>"</TT>backslash<TT>"</TT> (ASCII
+0x5c)). Any additional fields are considered attribute information.
+
+<P> Each field in part 1 indicates a coordinate in some space. There
+must be at least two fields in part 1: the first describing a
+geographic easting and the second describing a geographic
+northing. These may be in either decimal or degrees-minutes-second
+format.
+
+<P> Additional fields in part 1 are optional but must be stored in
+decimal format. They should only be used to represent coordinate
+information about some space (e.g., elevation, time; depending upon
+how a space is defined).
+
+
+\subsection Part2_of_a_Site_Record_Attributes Part 2 of a Site Record:
+      Attributes
+
+
+<P> Part 2 contains attribute information for the location given in
+part 1. The field separator in part 2 of the site record is a
+<TT>"</TT>space<TT>"</TT> character (ASCII 0x20), except when the
+space character is contained in double quotes (ASCII 0x22). The three
+types of attributes are: category, decimal, and string. These
+attributes may be in any order. Each of these attributes have an
+associated identifier tag defining the type of attribute in a field: #
+(ASCII 0x23), % (ASCII 0x25), and @ (ASCII 0x40), for category,
+decimal, and string, respectively. No space character may immediately
+follow an identifier tag.
+
+
+\subsection Category_Attributes Category Attributes
+
+Categories are a special kind of attribute. They are used to represent
+vector or raster categories when sites are transformed into these
+different data formats.  There may be only one category field per
+record and it must be prefixed with a <TT>"</TT>pound<TT>"</TT> or
+<TT>"</TT>number<TT>"</TT> symbol (#). Categories must be integers.
+
+
+\subsection Decimal_Attributes Decimal Attributes
+
+Decimal attributes include both integers and floating-point
+numbers. They are prefixed with a <TT>"</TT>percent<TT>"</TT> symbol
+(%). There may be be zero, one, or more decimal attributes in a site
+record.
+
+
+\subsection String_Attributes String Attributes
+
+String attributes are fields that contain possibly non-numeric
+information and are prefixed with the <TT>"</TT>at<TT>"</TT> or
+<TT>"</TT>each<TT>"</TT> symbol (@). There may be be zero, one, or
+more string attributes in a site record. String attributes may contain
+space (ASCII 0x20) characters if the entire attribute, not including
+the attribute tag (@), is contained within pairs of
+<TT>"</TT>double quotes<TT>"</TT> (<TT>"</TT>). String attributes may
+also contain double quotes if they are escaped by prefixing a
+<TT>"</TT>backslash<TT>"</TT> (\).
+
+\subsection Default Default
+
+
+If no identifier tag is prefixed (i.e., none of #, %, or @), the
+type of attribute defaults to string.
+
+\subsection Header_and_Comment_Record_Format Header and Comment Record Format
+
+In addition to the data record format, the site file may contain comment
+lines (records containing a pound symbol, 0x23, in the first column) and
+header lines, both of which are optional. Header records must precede all
+data records while comment records may occur anywhere within a sites data
+file.
+
+
+There are five types of header records: (1) name, (2) description, (3)
+timestamp, (4) label, and (5) format.
+
+<DL>
+<DT><STRONG>name</STRONG></DT> <DD>A name record contains the string
+<TT>"</TT>name|<TT>"</TT> beginning in column 1 and optionally
+specifies the name of the database file.
+</DD>
+<DT><STRONG>description</STRONG></DT> <DD>A description record
+contains the string <TT>"</TT>desc|<TT>"</TT> beginning in column 1
+and optionally describes the database file (metadata).
+</DD>
+<DT><STRONG>timestamp</STRONG></DT> <DD>A timestamp record is special
+type of metadata that contains the string <TT>"</TT>time|<TT>"</TT>
+beginning in column 1 and optionally gives a time and date associated
+with the entire sites file.  GRASS timestamps may be a single
+date/time or a range (begin/end).
+
+<P>
+Valid timestamp strings should be formatted using the routine
+G_format_timestamp(), after creating a valid TimeStamp structure using
+G_set_timestamp() or G_set_timestamp_range(). Similar routines exist
+for reading (see: DateTime_Library).
+
+<P>
+The GRASS DateTime utility library (see DateTime_Library) may be used
+to easily and accurately perform DateTime arithmetic. <EM>A possible
+future upgrade would be to specify a particular format identifier tag
+to indicate a DateTime.  Currently, to store a DateTime for each site
+record, you must specify it as a string and your application must know
+to expect a DateTime.</EM>
+</DD>
+<DT><STRONG>label</STRONG></DT> <DD>A label record describes what each
+dimension and attribute field in site data records represent. It
+contains the string <TT>"</TT>labels|<TT>"</TT> beginning in column 1
+and optionally contains field descriptions. No special formatting is
+required since this record is for user convenience only.
+</DD>
+<DT><STRONG>format</STRONG></DT> <DD>A format record describes the
+format of site data records. It contains the string
+<TT>"</TT>form|<TT>"</TT> beginning in column 1 and a special sample
+data record beginning in column 6. The special sample data record is a
+site data record (as describe above) containing only field separators
+and identifier tags (i.e., all data removed).
+</DD>
+</DL>
+All header records are optional. If present in a sites data file,
+header records must occur in the before any data records in a site
+file.
+
+
+\subsection TimeStamp_GISlib_functions_for_sites TimeStamp GISlib
+    functions for sites
+
+
+\verbatim
+ #include "gis.h"
+ #include "site.h"
+\endverbatim
+
+This structure is defined in gis.h, but there should be no reason to
+access its elements directly:
+
+\verbatim
+  struct TimeStamp {
+  DateTime dt[2]; /* two datetimes */
+  int count;
+ };
+\endverbatim
+
+<P>
+Using the G_*_timestamp() routines reads/writes a timestamp file in the
+cell_misc/rastername or dig_misc/vectorname mapset element.
+
+<P>
+A TimeStamp can be one DateTime, or two DateTimes representing a
+range.  When preparing to write a TimeStamp, the programmer should use
+one of:
+
+<P>
+int G_set_timestamp() to set a single DateTime
+
+<P>
+int G_set_timestamp_range() to set two DateTimes.
+
+<P>
+int G_read_raster_timestamp(char *name, char *mapset, struct TimeStamp
+ *ts) Returns 1 on success. 0 or negative on error. 
+
+<P>
+int G_read_vector_timestamp(char *name, char *mapset, struct
+ TimeStamp *ts) Returns 1 on success. 0 or negative on error.
+
+<P>
+int G_get_timestamps(struct TimeStamp *ts, DateTime *dt1, DateTime
+ *dt2, int *count) Use to copy the TimeStamp information into Datetimes, so
+ the members of struct TimeStamp shouldn't be accessed directly. 
+
+<br>
+count=0 means no datetimes were copied 
+<br>
+count=1 means 1 datetime was copied into dt1 
+<br>
+count=2 means 2 datetimes were copied
+
+<P>
+int G_init_timestamp(struct TimeStamp *ts) Sets ts-&gt;count = 0, to
+ indicate no valid DateTimes are in TimeStamp.
+
+<P>
+int G_set_timestamp(struct TimeStamp *ts, DateTime *dt) Copies a single
+DateTime to a TimeStamp in preparation for writing. (overwrites any
+existing information in TimeStamp)
+
+<P>
+int G_set_timestamp_range(struct TimeStamp *ts, DateTime *dt1,
+DateTime *dt2) Copies two DateTimes (a range) to a TimeStamp in
+preparation for writing.  (overwrites any existing information in
+TimeStamp)
+
+<P>
+int G_write_raster_timestamp(char *name, struct TimeStamp *ts)
+Returns: 1 on success
+
+<br>
+-1 error - can't create timestamp file
+<br>
+-2 error - invalid datetime in ts
+
+<P>
+int G_write_vector_timestamp(char *name, struct TimeStamp *ts)
+Returns: 1 on success
+
+<br>
+-1 error - can't create timestamp file
+<br>
+-2 error - invalid datetime in ts
+
+<p>
+int G_format_timestamp(struct TimeStamp *ts, char *buf) Returns: 1 on
+success
+
+<br>
+-1 error
+
+<P>
+int G_scan_timestamp(struct TimeStamp *ts, char *buf) Returns: 1 on
+success
+
+<br>
+-1 error
+
+<P>
+int G_remove_raster_timestamp(char *name) Only files in current
+ mapset can be removed. Returns: 0 if no file 
+
+<br>
+1 if successful
+<br>
+-1 on fail
+
+<P>
+int G_remove_vector_timestamp(char *name) Only files in current
+ mapset can be removed Returns: 0 if no file 
+
+<br>
+1 if successful
+<br>
+-1 on fail
+
+
+\subsection Record_Structure_and_Definitions Record Structure and Definitions
+
+\verbatim
+typedef struct
+ {
+ double east, north;
+ double *dim;
+ int dim_alloc;
+ RASTER_MAP_TYPE cattype;
+ CELL ccat;
+ FCELL fcat;
+ DCELL dcat;
+ int str_alloc;
+ char **str_att;
+ int dbl_alloc;
+ double *dbl_att;
+} Site;
+\endverbatim
+
+<P>
+<DL>
+<DT><STRONG><TT>#define MAX_SITE_STRING 1024</TT></STRONG></DT>
+<DD>The maximum length of a string attribute.
+</DD>
+<DT><STRONG><TT>#define MAX_SITE_LEN 4096</TT></STRONG></DT> <DD>The
+maximum length of a site record (<EM>i.e.</EM>, the maximum number of
+characters per line). This is the same value used in GRASS 4.x.
+</DD>
+</DL>
+
+\verbatim
+typedef struct
+{
+ char *name, *desc, *form, *labels, *stime;
+ struct TimeStamp *time;
+} Site_head;
+\endverbatim
+
+
+\section Function_Prototypes Function Prototypes
+
+
+\subsection Prompting_for_Site_List_Files Prompting for Site List Files
+
+The following routines interactively prompt the user for a site list
+file name.  In each, the <TT>prompt</TT> string will be printed as the
+first line of the full prompt which asks the user to enter a site list
+file name. If <TT>prompt</TT> is the empty string <TT>""</TT> then an
+appropriate prompt will be substituted. The name that the user enters
+is copied into the <TT>name</TT> buffer.  (The size of name should be
+large enough to hold any GRASS file name. Most systems allow file
+names to be quite long. It is recommended that name be declared
+<TT>char name[50]</TT>.) These routines have a built-in
+<TT>"</TT>list<TT>"</TT> capability which allows the user to get a
+list of existing site list files.
+
+<P>
+The user is required to enter a valid site list file name, or else hit
+the RETURN key to cancel the request. If the user enters an invalid
+response, a message is printed, and the user is prompted again. If the
+user cancels the request, the NULL pointer is returned. Otherwise the
+mapset where the site list file lives or is to be created is
+returned. Both the name and the mapset are used in other routines to
+refer to the site list file.
+
+<P>
+char *G_ask_sites_old(char *prompt, char *name) Asks user to input
+name of an existing site list file in any mapset in the database.
+
+<P>
+char *G_ask_sites_in_mapset(char *prompt, char *name) Asks user to
+input name of an existing site list file in the current mapset.
+
+<P>
+char *G_ask_sites_new(char *prompt, char *name) Asks user to input
+name for a site list file which does not exist in the current mapset.
+
+<P>
+Here is an example of how to use these routines. Note that the
+programmer must handle the NULL return properly.
+
+\verbatim
+ char *mapset;
+ char name[50];
+
+ mapset = G_ask_sites_old("Enter site list file to be processed", name);
+
+ if (mapset == NULL)
+    exit(0);
+\endverbatim
+
+
+\subsection Opening_Site_List_Files Opening Site List Files
+
+The following routines open site list files:
+
+<P>
+FILE *G_sites_open_new(char *name) Creates an empty site list file
+<TT>name</TT> in the current mapset and opens it for writing.
+
+<P>
+Returns an open file descriptor is successful. Otherwise, returns NULL.
+
+<P>
+FILE *G_sites_open_old(char *name, char *mapset) Opens the site list
+file <TT>name</TT> in <TT>mapset</TT> for reading.
+
+<P>
+Returns an open file descriptor is successful. Otherwise, returns
+NULL.
+
+
+\subsection Site_Memory_Management Site Memory Management
+
+
+Sites routines require the use of a <TT>Site</TT> structure. Routines
+to allocate and deallocate memory are provided, as well as a routine
+which describes the format of a site list, helpful in determining the
+amount of memory to be allocated.
+
+<P>
+Site *G_site_new_struct(RASTER_MAP_TYPE c, int n, int s, int d)
+Allocates and returns pointer to memory for a <TT>Site</TT> structure
+for storing <TT>n</TT> dimensions (<EM>including</EM> easting and
+northing; must be &gt; 1), an optional category <TT>c</TT>, <TT>s</TT>
+string attributes, and <TT>d</TT> decimal attributes. The category
+<TT>c</TT> can be <TT>CELL_TYPE</TT>, <TT> FCELL_TYPE</TT>,
+<TT>DCELL_TYPE</TT> (as defined in <TT>gis.h</TT>), or -1 (indicating
+no category attribute). Returns a pointer to a <TT>Site</TT> structure
+or <TT>NULL</TT> on error.
+
+<P>
+int G_site_describe(FILE *fd, RASTER_MAP_TYPE n, int *c, int *s, int
+*d) Guesses the format of a sites list (the dimensionality, the
+presence and type of a category, and the number of string and decimal
+attributes) by reading the first record in the file. The type of
+category will be <TT> CELL_TYPE</TT>, <TT>FCELL_TYPE</TT> (as defined
+in <TT>gis.h</TT>), or -1 (indicating no category attribute). Reads
+<TT>fd</TT>, rewinds it, and returns:
+
+<br>
+0 on success,
+
+<br>
+-1 on EOF, and
+
+<br>
+-2 for any other error.
+
+<P>
+void G_site_free_struct(Site *site) Free memory for a <TT>site</TT>
+struct previously allocated using G_site_new_struct.
+
+<P>
+Here is an example of how to use these routines.
+
+\verbatim
+ int dims,cat,strs,dbls;
+ FILE *fp;
+ Site *mysite;
+
+ /* G_site_describe should be called immediately after the
+ * file is opened or at least before any seeks are done
+ * on the file.
+ */
+
+ if (G_site_describe (fp, &dims, &cat, &strs, &dbls)!=0)
+    G_fatal_error("failed to guess format");
+
+ /* 
+ * Allocate enough memory, according to the output 
+ * of G_site_describe(~) 
+ */
+
+ mysite = G_site_new_struct(cat, dims, strs, dbls);
+
+ G_site_free_struct(mysite);
+\endverbatim
+
+
+\subsection Reading_and_Writing_Site_List_Files Reading and Writing
+      Site List Files
+
+
+int G_site_get(FILE *fd, Site *s) Reads one site record from
+<TT>fd</TT> and returns:
+
+<br>
+0 on success
+<br>
+-1 on EOF
+<br>
+-2 on fatal error or insufficient data
+<br>
+1 on format mismatch (extra data)
+
+<P>
+int G_site_put(FILE *fd, Site *s) Writes a site to file pointed to by
+<TT>fd</TT>.
+
+<P>
+char *G_site_format(Site *s, char *fs, int id) Returns a string
+containing a formatted site record, with all fields separated by
+<TT>fs</TT>. If <TT>fs</TT> is NULL, a space character is used. If
+<TT>id</TT> is non-zero, attribute identifiers (#, %, and @) are
+included.
+
+<P>
+int G_site_get_head(FILE *fd, Site_head *head) Reads the header from
+<TT>fd</TT> and stores it in <TT>head</TT>. If a type of header record
+is not present in <TT>fd</TT>, the corresponding element of
+<TT>head</TT> is returned as NULL.
+
+<P>
+int G_site_put_head(FILE *fd, Site_head *head) Writes header
+information stored in <TT>head</TT> to <TT>fd</TT>. Only non-NULL
+fields of <TT> head</TT> struct are written.
+
+<P>
+int G_site_in_region (Site *site, struct Cell_head *region) Returns 1
+if <TT>site</TT> is contained within <TT>region</TT>, 0 otherwise.
+
+<P>
+int G_site_c_cmp(void *a, void *b) compare category attributes
+
+<P>
+int G_site_d_cmp(void *a, void *b) compare first decimal attributes
+
+<P>
+int G_site_s_cmp(void *a, void *b) compare first string attributes
+
+<P>
+Comparison functions for sorting an array of <TT>Site</TT> records
+using <TT> qsort</TT>. See examples.
+
+
+\section GRASS5_Reading_sites_with_G_readsites_xyz_GRASS5
+      Reading sites with G_readsites_xyz() 
+
+[Written by Eric G . Miller egm2 jps.net]
+
+<P>
+int G_readsites_xyz (FILE *fdsite, int type, int index, int size,
+struct Cell_head *region, SITE_XYZ *xyz) Read a chunk of a site file
+into a <TT>SITE_XYZ</TT> array setting the <B>Z </B> dimension from
+the specified attribute. The <TT>fdsite</TT> parameter is the <TT>FILE
+*</TT> for the sites file; <TT>type</TT> is the attribute type to use
+for the <TT>z</TT> variable value; the index is the 1-based index
+value for the attribute; the <TT>size</TT> is the size of the
+<TT>SITE_XYZ</TT> array passed to the function; the <TT>region</TT> is
+a pointer to a <TT>struct Cell_head</TT> for the current region or
+<TT>NULL</TT>; and, finally, <TT>xyz</TT> is a pointer to an array of
+<TT>SITE_XYZ</TT> which will be populated. The return value is the
+number of records read or <TT>EOF</TT>.
+
+<P>
+SITE_XYZ *G_alloc_site_xyz(size_t num) Allocate
+	an array of <TT>SITE_XYZ</TT> with size <TT>num</TT>.
+
+<P>
+void G_free_site_xyz(SITE_XYZ *xyz) Free a previously
+	allocated array of <TT>SITE_XYZ</TT>.
+
+<P>
+Constants and the structure used by <B>G_readsites_xyz()</B>.
+
+\verbatim
+ #define SITE_COL_NUL 0
+ #define SITE_COL_DIM 1
+ #define SITE_COL_DBL 2
+ #define SITE_COL_STR 3
+
+ typedef struct {
+  double x, y, z;
+  RASTER_MAP_TYPE cattype;
+  union {
+    double d;
+    float f;
+    int c;
+  } cat ;
+ } SITE_XYZ;
+\endverbatim
+
+<P>
+The <B>G_readsites_xyz()</B> function, and its related memory
+management functions <B>G_alloc_site_xyz()</B> and
+<B>G_free_site_xyz()</B>, allows the user to process a
+<I>site_list</I> when a third dimension is wanted, but the other
+attributes aren't needed. The third dimension can come from one of the
+<I>n-dims</I>, a numeric attribute, or a string attribute (provided it
+can be converted to a double).  The category value is also read into
+the <B>SITE_XYZ</B> struct array when it is available. If the region
+[window] parameter is not <TT>NULL</TT>, then the <I>site_list</I>
+will be filtered based on the region. <B>G_readsites_xyz()</B> can be
+used to get just the easting, northing and category value (if
+available) by passing <TT>SITE_COL_NUL</TT> for the field parameter.
+
+<P>
+A different idea about the indexing of <I>n-dims</I> is used by
+<B>G_readsites_xyz()</B> as compared to functions operating on a
+<TT>struct Site</TT>. The easting and northing are not counted, so the
+index is 2 less. Index values are 1-based; that is, the value passed
+to <B>G_readsites_xyz()</B> for the <B>index</B> should be 1 or
+greater (it can be anything if <TT>type == SITE_COL_NUL</TT>).
+
+<P>
+<B>G_readsites_xyz()</B> makes it possible to process large
+<I>site_lists</I> in memory as less space is needed for a
+<B>SITE_XYZ</B> struct versus a <B>Site</B> struct. Still, the user
+should choose a reasonably sized array and use a looping call
+structure to prevent out of memory errors. The function will die with
+a fatal error under the following conditions:
+
+<P>
+
+<UL>
+<LI>Failure to `guess'' the <I>site_list</I> structure using
+<B>G_site_describe()</B>.
+</LI>
+
+<LI>Asking for an unknown attribute type (use the #define's above).
+</LI>
+
+<LI>The <I>site_list</I> does not have a 
+consistent number and type of attributes for every record.
+</LI>
+
+<LI>The <I>Z-dimension</I> is requested from a non-existent attribute
+type or the index is out of range for the attribute type.
+</LI>
+
+<LI>Failure to convert a string attribute to a double.
+</LI>
+</UL>
+
+<P>
+The return value of <B>G_readsites_xyz()</B> will either be
+<TT>EOF</TT> (which is typically -1) or the number of records read. If
+the number of records returned is less than the size of the
+<B>SITE_XYZ</B> array, then it is safe to assume there are no more
+records. Subsequent calls will return <TT>EOF</TT>. <B>WARNING: Never
+make read calls on the <I>site_list</I> file stream in between calls
+to G_readsites_xyz() without first saving the file position and then
+restoring it. G_readsites_xyz() assumes the file stream is at the
+position left by previous calls.</B>
+
+<P>
+The following is a simple program showing the use of the functions. It
+assumes a <I>site_list</I> file with the name `test'' in the
+<TT>PERMANENT</TT> mapset.
+
+\verbatim
+/* Test the new G_readsites_xyz() interface */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "gis.h"
+#include "site.h"
+
+int main (void)
+{
+
+ int i, num, ret_code, index, type;
+ SITE_XYZ *mysites;
+ struct Cell_head *region;
+ FILE *site_file;
+
+ G_gisinit("test_readsites");
+  
+ site_file = G_sites_open_old("test", "PERMANENT");
+
+ if(!site_file) {
+  fprintf(stderr, "Failed to open test file\n");
+  exit(EXIT_FAILURE);
+ }
+
+ region = (struct Cell_head *) G_malloc(sizeof(struct Cell_head));
+ G_get_set_window(region);
+ num = 100;
+ if(NULL == (mysites = G_alloc_site_xyz(num))) {
+  fprintf(stderr, "Failed to allocate site array!\n");
+  exit(EXIT_FAILURE);
+ }
+    
+ type = SITE_COL_DIM;
+ index = 1;
+ ret_code = G_readsites_xyz(site_file, type, index, num,
+   region, mysites);
+ printf("First Run: num = %d, type = %d, index = %d\n",
+   num, type, index);
+ printf("Returned: ret_code = %d\n", ret_code);
+ printf("Values --->\n");
+ for (i = 0; i < ret_code; i++) {
+  printf ("X: %f, Y: %f, Z: %f ",
+    mysites[i].x, mysites[i].y, mysites[i].z);
+  switch (mysites[i].cattype) {
+   case CELL_TYPE:
+    printf("Cat: %d\n", mysites[i].cat.c); break;
+   case FCELL_TYPE:
+    printf("Cat: %f\n", mysites[i].cat.f); break;
+   case DCELL_TYPE:
+    printf("Cat: %f\n", mysites[i].cat.d); break;
+   default:
+    printf("Cat: (nil)\n");
+  }
+ }
+ printf("\n");
+  
+ G_free(region);
+ G_free_site_xyz(mysites);
+
+ return 0;
+}
+\endverbatim
+
+\section Sites_Programming_Examples Sites Programming Examples
+
+\section Time_as_String_Attributes Time as String Attributes
+
+<EM>(TODO: change to use TimeStamps or DateTime library as a single
+string)</EM>
+
+<P>
+In this example, we will work with the following site list:
+
+\verbatim
+name|time
+desc|Example of using time as an attribute
+time|Mon Apr 17 14:24:06 EST 1995
+10.8|0|9.8|Fri Sep 13 10:00:00 1986 %31.4
+11|5.5|9.9|Fri Sep 14 00:20:00 1985 %36.4
+5.1|3.9|10|Fri Sep 15 00:00:30 1984 %28.4
+\endverbatim
+
+<P>
+This data has three dimensions (assume easting, northing, and
+elevation), five string attributes, and one decimal attributes.
+
+<P>
+Now follow along in this skeleton C program. Remember that in real code,
+you should always check return values.
+
+\verbatim
+#include "gis.h"   /* includes stdio.h for file I/O */
+#include "site.h"   /* include definitions and prototypes */
+
+int main (int argc, char **argv)
+{
+ int dims=0,strs=0,dbls=0;
+ RASTER_MAP_TYPE map_type;
+ Site *mysite;    /* pointer to Site */
+ Site_head info;
+ FILE *fp;
+ char *mapset;
+
+ /* find mapset that site list is in and open the site list */
+ mapset = G_find_file ("site_lists", parm.input->answer, "");
+
+ fp = G_fopen_sites_old (parm.input->answer, mapset);
+
+ /* G_site_describe should be called immediately after the
+ * file is opened or at least before any seeks are done
+ * on the file.
+ */
+ if (G_site_describe (fp, &dims, &map_type, &strs, &dbls)!=0)
+ G_fatal_error("failed to guess format");
+
+ fprintf(stdout,"Guessed %d %d %d %d (should be 3 5 1 0)\n",
+   dims, strs, dbls, cat);
+
+ /* 
+ * Read header fields first, then write to stderr.
+ * This step is optional since the first call to G_site_get()
+ * would skip over any comment or header records. 
+ */
+ G_site_get_head(fp,&info);
+ G_site_put_head(stderr,&info);
+
+ /* 
+ * Allocate enough memory, according to the output 
+ * of G_site_describe()
+ */
+ mysite = G_site_new_struct (fp, &dims, &map_type, &strs, &dbls);
+ 
+ /* 
+ * G_site_get() returns -1 on EOF, -2 on error. This code ignores
+ * all records following the first invalid one.
+ */
+ while ((err=G_site_get (fp, mysite)) == 0) 
+ {
+ /* do something useful with time information */
+ 
+ /* write the site to stderr instead of output file */
+ G_site_put(stderr,mysite);
+ }
+}
+\endverbatim
+
+<P>
+Running our sample program, we get:
+
+\verbatim
+Mapset <PERMANENT> in Location <temporal>
+GRASS 5.0 > s.egtime time-h
+name|time
+desc|Example of using time as an attribute
+time|Mon Apr 17 14:24:06 EST 1995
+10.8|0|9.8|%31.4 @Fri @Sep @13 @10:00:00 @1986 
+11|5.5|9.9|%36.4 @Fri @Sep @14 @00:20:00 @1985 
+5.1|3.9|10|%28.4 @Fri @Sep @15 @00:00:30 @1984
+\endverbatim
+
+<P>
+Compare the above output to the input site list given earlier.
+
+<P>
+In this example, we read <TT>"</TT>time<TT>"</TT> as five string
+attributes.  Using the GRASS DateTime library, we could convert this
+to GRASS DateTimes and do sometime more useful with this
+information. We also could have used the TimeStamp GISlib functions to
+format a single standard GRASS TimeStamp string instead of requiring 5
+separate strings.
+
+\subsection Key_Points Key Points
+
+<P>
+After studying the above, you should:
+
+<UL>
+<LI>Understand the difference between dimensions and attributes;
+</LI>
+<LI>Understand how untagged attributes are interpreted (as string
+attributes);
+</LI>
+<LI>Know when to call <TT>G_site_get_fmt()</TT> and how to get
+<EM>all</EM> fields from a site record; and
+</LI>
+<LI>Know how to read and write a site file.
+</LI>
+</UL>
+
+\subsection Example2_Sorting_Arrays_and_Selective_Reads Example 2:
+              Sorting Arrays and Selective Reads
+
+In this example, we will work again with the site list from the Time
+Attribute Example:
+
+\verbatim
+name|time
+desc|Example of using time as an attribute
+time|Mon Apr 17 14:24:06 EST 1995
+10.8|0|9.8|Fri Sep 13 10:00:00 1986 %31.4
+11|5.5|9.9|Fri Sep 14 00:20:00 1985 %36.4
+5.1|3.9|10|Fri Sep 15 00:00:30 1984 %28.4
+\endverbatim
+
+<P>
+Recall that the data has three dimensions, five string attributes, and
+one decimal attributes. However, in this example we are writing a
+program which only uses two dimensional attributes and one decimal
+attribute.
+
+<P>
+Follow along in this skeleton C program and remember that, in real
+code, you should always check return values!
+
+\verbatim
+#include "gis.h"   /* includes stdio.h for file I/O */
+#include "site.h"   /* include definitions and prototypes */
+
+
+int main (int argc, char **argv)
+{
+ int sites_alloced=5, n=0;
+ Site **mysite;    /* pointer to pointer to Site */
+
+ /* 
+ * We allocate memory for an array of Site structs.
+ */
+ mysites=(Site **) G_malloc(sites_alloced*sizeof(Site *));
+
+ 
+ /* 
+ * Here we only allocate space for 2 dimensions and one decimal attribute.
+ * Thus any calls to G_site_get(~) will ingore dimensional fields
+ * past the first two, any category attribute, and all string attributes 
+ */
+ mysites[n] = G_site_new_struct (2, 0, 1);
+ 
+ while ((i=G_site_get (fp, mysites[n])) != EOF)
+ {
+ /*
+  * (we should test for i==2 and deal with appropriately)
+  */
+ G_site_put(stdout,mysites[n++],0);
+ /* 
+  * This snippet could have been left out for compactness since
+  * it is not critical to this example. However, this shows how
+  * to read an unknown number of sites in a robust fashion.
+  */
+ if (n==sites_alloced)
+ {
+  sites_alloced+=100;
+  mysites=(Site **) G_realloc(mysites, sites_alloced*sizeof(Site *));
+  if (mysites==NULL)
+  G_fatal_error("memory reallocation error");
+ }
+
+ /*
+  * We must call G_site_new_struct(~) for each element
+  * in this array. Doing this inside the while loop instead of
+  * before the while loop saves memory (since we are only allocating
+  * on an as-needed basis).
+  */
+ mysites[n] = G_site_new_struct (2, 0, 1);
+ }
+ G_free(mysites[n]);  /* We did not need the last one */
+ fprintf(stdout, "\n");
+ 
+ /* sort the array of sites into ascending order */
+ qsort (mysites, n, sizeof (Site *), G_site_d_cmp); 
+ 
+ /* write the sorted array to standard output */
+ for(i=0; i<n; ++i)
+    G_site_put(stdout,mysites[i],0);
+ 
+ fprintf(stdout, "\n");
+ 
+ /* write only dimensional fields and no attributes */
+ for(i=0; i<n; ++i)
+ {
+ mysites[i]->dbl_alloc=0;
+ G_site_put(stdout,mysites[i],0);
+ }
+
+ return 0;
+}
+\endverbatim
+
+<P>
+Running our sample program, we get:
+
+\verbatim
+Mapset <PERMANENT> in Location <temporal>
+GRASS 5.0 > s.egsort time-h
+10.8|0|%31.4 
+11|5.5|%36.4 
+5.1|3.9|%28.4 
+
+5.1|3.9|%28.4 
+10.8|0|%31.4 
+11|5.5|%36.4 
+ 
+5.1|3.9|
+10.8|0|
+11|5.5|
+\endverbatim
+
+<P>
+Compare the above output to the input site list given earlier. We
+<EM>read</EM> only the first two dimensional attributes and the first
+decimal attribute-all others were safely ignored.
+
+<P>
+The resulting site list is sorted into ascending order according to
+the first decimal attribute. Similar functions exist for sorting by
+the first string attribute or by category attribute. For sorting by
+second or third specific fields, you may write your own <TT>qsort</TT>
+comparison functions using these examples.
+
+<P>
+We can selectively <EM>write</EM> some or none of attribute fields by
+altering the <TT>Site</TT> structure. For situations requiring writing
+of variable attributes (more complex than this example), pointer
+manipulation may be necessary.
+
+<P>
+In this example, we read selectively read dimension and attribute fields,
+
+
+\subsection Key_Points2 Key Points
+
+
+After studying the above, you should:
+
+<UL>
+<LI>Understand memory allocation for selective reads;
+</LI>
+<LI>Understand how to re-allocate memory for vectors so that static
+limits are not necessary;
+</LI>
+<LI>Know how to sort an array of <TT>Site structs</TT> by certain
+attributes.
+</LI>
+<LI>Know how to selectively write attributes to a site file.
+</LI>
+</UL>
+
+*/
