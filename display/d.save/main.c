@@ -229,17 +229,11 @@ int main (int argc, char **argv)
 					{
 						from = mno[i][0];
 						to = mno[i][1];
-						if (live[nlists-from]<0 ||
-						    from<1 ||
-						    from>nlists)
-						{
-							G_free(mno[i]);
-							continue;
-						}
-
 						to = (to<1 ? 1:(to>nlists ? nlists:to));
-
-						if (from==to)
+						if (live[nlists-from]<0 ||
+						    from<1		||
+						    from>nlists		||
+						    from==to)
 						{
 							G_free(mno[i]);
 							continue;
