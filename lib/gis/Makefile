@@ -171,6 +171,7 @@ LIB_OBJS = \
 	trim_dec.o\
 	unctrl.o\
 	unix_socks.o\
+	version.o\
 	view.o\
 	whoami.o\
 	wind_format.o\
