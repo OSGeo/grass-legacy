@@ -30,15 +30,13 @@ G_make_colors (name, mapset, pcolr)
     int answ ;
     struct Range range;
     CELL min, max;
-    struct Histogram histo;
 
     G_init_colors (pcolr);
 
+/* determine range cell values */
     if (G_read_range (name, mapset, &range) < 0)
 	return -1;
-
-    min = range.nmin ? range.nmin : range.pmin;
-    max = range.pmax ? range.pmax : range.nmax;
+    G_get_range_min_max (&range, &min, &max);
 
 
 /* Prompting */
@@ -52,10 +50,10 @@ ASK:
     printf("    2:  Red, green, and blue color ramps\n") ;
     printf("    3:  Color wave\n") ;
     printf("    4:  Gray scale\n") ;
-    printf("    5:  Gray scale (histogram contrast stretched)\n") ;
-    printf("    6:  Aspect\n") ;
-    printf("    7:  Rainbow colors\n") ;
-    printf("    8:  Red through yellow to green\n");
+    printf("    5:  Aspect\n") ;
+    printf("    6:  Rainbow colors\n") ;
+    printf("    7:  Red through yellow to green\n");
+    printf("    8:  Green through yellow to red\n");
     printf ("RETURN  quit\n");
     printf("\n> ") ;
 
@@ -69,17 +67,13 @@ ASK:
 	switch (answ)
 	{
 	case 1: return G_make_random_colors (pcolr, min, max);
-	case 2: return G_make_color_ramp (pcolr, min, max);
-	case 3: return G_make_color_wave (pcolr, min, max);
-	case 4: return G_make_grey_scale (pcolr, min, max);
-	case 5: if (G_read_histogram (name, mapset, &histo) <= 0)
-		    goto ASK;
-		G_make_histo_grey_scale (pcolr, &histo);
-		G_free_histogram (&histo);
-		return 1;
-	case 6: return G_make_aspect_colors (pcolr, min, max);
-	case 7: return G_make_rainbow_colors (pcolr, min, max);
-	case 8: return G_make_red_yel_grn (pcolr, min, max);
+	case 2: return G_make_ramp_colors (pcolr, min, max);
+	case 3: return G_make_wave_colors (pcolr, min, max);
+	case 4: return G_make_grey_scale_colors (pcolr, min, max);
+	case 5: return G_make_aspect_colors (pcolr, min, max);
+	case 6: return G_make_rainbow_colors (pcolr, min, max);
+	case 7: return G_make_ryg_colors (pcolr, min, max);
+	case 8: return G_make_gyr_colors (pcolr, min, max);
 	default:
 	    printf("\n%s invalid; Try again > ", buff) ;
 	    break;
