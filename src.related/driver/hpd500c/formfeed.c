@@ -1,0 +1,4 @@
+formfeed()
+{
+    Pouts ("\f");
+}
