@@ -66,10 +66,8 @@ typedef struct {
 #ifndef MAIN
     DATABASE db;
     char     errMsg[DBF_MSG];
-    int st_allocated;
 #else
     extern DATABASE db;
     extern char errMsg;
-    extern int st_allocated;
 #endif 
 

@@ -83,10 +83,7 @@ db_driver_close_database()
 	save_table (i);  
 	free_table (i);  
       }
-/* avoids final driver segfault --a.sh. */
-/*
- *     free ( db.tables );
- */
+    free ( db.tables );
     
     return DB_OK;
 }
