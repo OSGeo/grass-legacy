@@ -67,6 +67,15 @@ main (int argc, char *argv[])
     if (G_parser(argc, argv))
         exit(1);
 
+/* Make sure that the current projection is not lat/long */
+    if ((G_projection() == 3))
+    {
+         char msg[256];
+         sprintf(msg,"lat/long databases not supported by r.surf.idw2.\nUse r.surf.idw instead!");
+         G_fatal_error (msg);
+         exit(1);
+    }
+                            
     if (G_legal_filename(parm.output->answer) < 0)
     {
 	fprintf (stderr, "%s=%s - illegal name\n", parm.output->key, parm.output->answer);
