@@ -12,13 +12,13 @@ SOURCE = \
 	count.c \
 	findquads.c \
 	indices.c \
-	main.c \
+	main.c
 
 LIST = \
 	count.o \
 	findquads.o \
 	indices.o \
-	main.o \
+	main.o
 
 LIBES= $(GISLIB) $(DATETIMELIB) $(MATHLIB) 
 
