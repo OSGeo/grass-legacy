@@ -569,8 +569,8 @@ int gngrp_flatten_V1( gnGrpGraph_s * pgraph )
 /*
  * SHORTEST PATH CACHE
  */
-int gngrp_initialize_sp_cache_V1( gnGrpGraph_s * pgraph, gnGrpSPCache_s * pCache ) {
-	pCache->nFromNode = 0;
+int gngrp_initialize_sp_cache_V1( gnGrpGraph_s * pgraph, gnGrpSPCache_s * pCache, gnInt32_t nFromNode ) {
+	pCache->nFromNode = nFromNode;
 	pCache->pvVisited = NULL;
 	pCache->pvPredist = NULL;
 	gnHeapInit( & pCache->NodeHeap );
@@ -585,7 +585,37 @@ void gngrp_release_sp_cache_V1( gnGrpGraph_s * pgraph, gnGrpSPCache_s * pCache )
 	gnHeapFree( & pCache->NodeHeap );
 }
 
-gnGrpSPReport_s * gngrp_sp_cache_report( gnGrpGraph_s * pgraph, gnGrpSPCache_s * pCache, gnInt32_t nFrom, gnInt32_t nTo )
+static int gngrp_sp_cache_distance(
+			gnGrpGraph_s * pgraph, gnGrpSPCache_s * pCache, gnInt32_t * pnDistance, gnInt32_t nFrom, gnInt32_t nTo
+			)
+{
+	gnTreeNode_s * 	pPredistItem;
+	gnInt32_t *		pPredist;
+
+	if ( pCache->nFromNode != nFrom ) {
+		pgraph->iErrno = GNGRP_ERR_FromNodeNotFound;
+		return -pgraph->iErrno;
+	}
+
+	if ( gnTreeSearch(pCache->pvVisited, nTo) == NULL ) {
+		pgraph->iErrno = GNGRP_ERR_ToNodeNotFound;
+		return -pgraph->iErrno;
+	}
+
+	if ( (pPredistItem = gnTreeSearch(pCache->pvPredist, nTo)) == NULL ) {
+		pgraph->iErrno = GNGRP_ERR_UnexpectedNullPointer;
+		return -pgraph->iErrno;
+	}
+
+	pPredist = pPredistItem->data.pv;
+
+	if ( pnDistance ) *pnDistance = pPredist[3];
+	return 0;
+}
+
+static gnGrpSPReport_s * gngrp_sp_cache_report(
+							gnGrpGraph_s * pgraph, gnGrpSPCache_s * pCache, gnInt32_t nFrom, gnInt32_t nTo
+							)
 {
 	gnTreeNode_s * 	pPredistItem;
 	gnInt32_t *		pPredist;
@@ -680,8 +710,10 @@ spr_error:
 /*
  * Dijkstra Shortest Path 
  */
-void * gngrp_dijkstra_V1	(
+int gngrp_dijkstra_V1	(
 							gnGrpGraph_s * 		pgraph ,
+							gnGrpSPReport_s **	ppReport ,
+							gnInt32_t *			pDistance ,
 							gnInt32_t 			from ,
 							gnInt32_t 			to ,
 							gnGrpSPClip_fn		fnClip,
@@ -697,6 +729,7 @@ void * gngrp_dijkstra_V1	(
 	register gnInt32_t *		plink_prev;			/* pointer to the previous link in path */
 	register gnInt32_t *		ptofound = NULL; 	/* to node found during calculation */
 	register int				i;
+	int nRet;
 
 	gnGrpSPCache_s spCache;
 
@@ -723,36 +756,37 @@ void * gngrp_dijkstra_V1	(
 	gnGrpSPClipInput_s 	clipInput;
 	gnGrpSPClipOutput_s	clipOutput;
 
-	/*
-	 * return value
-	 */
-	gnGrpSPReport_s *	pReport = NULL;
-
 
 	if ( ! (pgraph->Flags & 0x1) )
 	{
 		pgraph->iErrno = GNGRP_ERR_BadOnTreeGraph;
-		return NULL;
+		return -pgraph->iErrno;
 	}
 
-	/* initialize the heap and create temporary networks - The use of a predist network for predecessor and
-	   distance has two important results: 1) allows us not having to reset the whole graph status
-	   at each call; 2) use of a stack memory area for temporary (and otherwise possibly thread-conflicting)
-	   states.
+	/* Initialize the cache: initialize the heap and create temporary networks -
+	   The use of a predist network for predecessor and distance has two important results:
+	   1) allows us not having to reset the whole graph status at each call;
+	   2) use of a stack memory area for temporary (and otherwise possibly thread-conflicting) states.
+	   If the a cache pointer was supplied, do not initialize but try to get SP immediately.
 	*/
 	if ( pCache == NULL ) {
 		pCache = & spCache;
-		gngrp_initialize_sp_cache_V1( pgraph, pCache );
-		pCache->nFromNode = from;
+		gngrp_initialize_sp_cache_V1( pgraph, pCache, from );
 	}
 	else {
-		if ( (pReport = gngrp_sp_cache_report( pgraph, pCache, from, to )) != NULL ) {
-			return pReport;
+		if ( ppReport ) {
+			if ( (*ppReport = gngrp_sp_cache_report( pgraph, pCache, from, to )) != NULL ) {
+				return 1;
+			}
+		}
+		else {
+			if ( gngrp_sp_cache_distance( pgraph, pCache, pDistance, from, to ) >= 0 ) {
+				return 2;
+			}
 		}
 		if ( pgraph->iErrno == GNGRP_ERR_FromNodeNotFound ) {
 			gngrp_release_sp_cache_V1( pgraph, pCache );
-			gngrp_initialize_sp_cache_V1( pgraph, pCache );
-			pCache->nFromNode = from;
+			gngrp_initialize_sp_cache_V1( pgraph, pCache, from );
 		}
 		else if ( pgraph->iErrno != GNGRP_ERR_ToNodeNotFound ) {
 			goto sp_error;
@@ -879,6 +913,7 @@ void * gngrp_dijkstra_V1	(
 		 */
 		if ( (pVisitedItem = gnTreeSearch( pCache->pvVisited , GNGRP_NODE_ID_v1(pfromnode))) == NULL ) {
 			if ( gngrp__node( pCache->pvVisited, GNGRP_NODE_ID_v1(pfromnode) ) == NULL ) {
+				pgraph->iErrno = GNGRP_ERR_MemoryExhausted;
 				goto sp_error;
 			}
 		}
@@ -914,8 +949,14 @@ void * gngrp_dijkstra_V1	(
 		/*
 		 * Recover the from node distance from the predist network
 		 */
-		if ( (pPredistItem = gnTreeSearch( pCache->pvPredist, GNGRP_NODE_ID_v1(pfromnode) )) == NULL ) goto sp_error;
-		if ( (pPredist = pPredistItem->data.pv) == NULL ) goto sp_error;
+		if ( (pPredistItem = gnTreeSearch( pCache->pvPredist, GNGRP_NODE_ID_v1(pfromnode) )) == NULL ) {
+			pgraph->iErrno = GNGRP_ERR_UnexpectedNullPointer;
+			goto sp_error;
+		}
+		if ( (pPredist = pPredistItem->data.pv) == NULL ) {
+			pgraph->iErrno = GNGRP_ERR_UnexpectedNullPointer;
+			goto sp_error;
+		}
 		fromDist = pPredist[3];
 
 		/*
@@ -952,8 +993,14 @@ void * gngrp_dijkstra_V1	(
 			}
 
 			if ( (pPredistItem = gnTreeSearch( pCache->pvPredist, GNGRP_NODE_ID_v1(ptonode) )) == NULL ) {
-				if ( (pPredistItem = gngrp__node( pCache->pvPredist, GNGRP_NODE_ID_v1(ptonode) )) == NULL ) goto sp_error;
-				if ( (pPredist = malloc( sizeof(gnInt32_t) * 4 )) == NULL ) goto sp_error;
+				if ( (pPredistItem = gngrp__node( pCache->pvPredist, GNGRP_NODE_ID_v1(ptonode) )) == NULL ) {
+					pgraph->iErrno = GNGRP_ERR_MemoryExhausted;
+					goto sp_error;
+				}
+				if ( (pPredist = malloc( sizeof(gnInt32_t) * 4 )) == NULL ) {
+					pgraph->iErrno = GNGRP_ERR_MemoryExhausted;
+					goto sp_error;
+				}
 				pPredistItem->data.pv = pPredist;
 			}
 			else {
@@ -981,15 +1028,31 @@ sp_error:
 	if ( pCache == &spCache ) {
 		gngrp_release_sp_cache_V1( pgraph, pCache );
 	}
-	return NULL; /* if pgraph->iErrno == 0 then path not found, else report an error condition */
+	return -pgraph->iErrno; /* ==0 path not found */
 
-to_found: /* path found - build a shortest path report */
+to_found: /* path found - build a shortest path report or report the distance only */
 
-	pReport = gngrp_sp_cache_report( pgraph, pCache, from, to );
+	if ( ppReport ) {
+		*ppReport = gngrp_sp_cache_report( pgraph, pCache, from, to );
+		if ( *ppReport == NULL ) {
+			nRet = -pgraph->iErrno;
+		}
+		else {
+			nRet = 1;
+		}
+	}
+	else {
+		if ( gngrp_sp_cache_distance( pgraph, pCache, pDistance, from, to ) < 0 ) {
+			nRet = -pgraph->iErrno;
+		}
+		else {
+			nRet = 2;
+		}
+	}
 	if ( pCache == &spCache ) {
 		gngrp_release_sp_cache_V1( pgraph, pCache );
 	}
-	return pReport;
+	return nRet;
 }
 
 
