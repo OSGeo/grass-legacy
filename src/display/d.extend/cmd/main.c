@@ -1,5 +1,5 @@
 /*
- * d.extent: set window region from displayed maps.
+ * d.extend: set window region from displayed maps.
  *
  * $Id$
  *

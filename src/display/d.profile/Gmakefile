@@ -1,5 +1,4 @@
 PGM=d.profile
-EXTRA_CFLAGS	= $(DANOTHER_BUTTON)
 
 OFILES = \
 	DrawText.o\

@@ -166,8 +166,8 @@ if (max < 0) max = 0;
         R_standard_color(D_translate_color(DEFAULT_FG_COLOR));
         DrawText(15,3,1,"MOUSE   | Left:   Where am I?");
 #ifdef ANOTHER_BUTTON
-        DrawText(15,4,1,"BUTTON  | Middle: Quit this");
-        DrawText(15,5,1,"MENU    | Right:  Set FIRST point\n");
+        DrawText(15,4,1,"BUTTON  | Right:  Set FIRST point\n");
+        DrawText(15,5,1,"MENU    | Middle: Quit this");
 #else
         DrawText(15,4,1,"BUTTON  | Middle: Set FIRST point");
         DrawText(15,5,1,"MENU    | Right:  Quit this\n");
@@ -230,8 +230,8 @@ if (max < 0) max = 0;
         R_standard_color(D_translate_color(DEFAULT_FG_COLOR));
         DrawText(15,3,1,"MOUSE   | Left:   Where am I?");
 #ifdef ANOTHER_BUTTON
-        DrawText(15,4,1,"BUTTON  | Middle: Quit this");
-        DrawText(15,5,1,"MENU    | Right:  Set SECOND point\n");
+        DrawText(15,4,1,"BUTTON  | Right:  Set SECOND point\n");
+        DrawText(15,5,1,"MENU    | Middle: Quit this");
 #else
         DrawText(15,4,1,"BUTTON  | Middle: Set SECOND point");
         DrawText(15,5,1,"MENU    | Right:  Quit this\n");
@@ -381,8 +381,8 @@ if (max < 0) max = 0;
         R_standard_color(D_translate_color(DEFAULT_FG_COLOR));
         DrawText(15,3,1,"MOUSE   | Left:   DO ANOTHER");
 #ifdef ANOTHER_BUTTON
-        DrawText(15,4,1,"BUTTON  | Middle: QUIT");
-        DrawText(15,5,1,"MENU    | Right:  CLEAR DISPLAY");
+        DrawText(15,4,1,"BUTTON  | Right:  CLEAR DISPLAY");
+        DrawText(15,5,1,"MENU    | Middle: QUIT");
 #else
         DrawText(15,4,1,"BUTTON  | Middle: CLEAR DISPLAY");
         DrawText(15,5,1,"MENU    | Right:  QUIT");
