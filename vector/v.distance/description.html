@@ -10,14 +10,14 @@ A new vector map may be created where lines connecting nearest points on feature
 
 <h2>EXAMPLES</H2>
 
-1) Find nearest lines in vector map <B>ln</B> for points from vector map
+1) Find <B>nearest lines</B> in vector map <B>ln</B> for points from vector map
 <B>pnt</B> within the given threshold and write related line categories to
 column <B>linecat</B> in attribute table attached to vector map <B>pnt</B>:
 <br>
 <tt>v.distance from=pnt to=ln upload=cat column=linecat</tt>
 
 <p>
-2) For each point from vector map <B>pnt</B> find nearest area from map
+2) For each point from vector map <B>pnt</B> find <B>nearest area</B> from map
 <B>ar</B> within the given threshold and write the related area categories
 to column <B>areacat</B> in attribute table attached to vector map
 <B>pnt</B>. In case a point falls into a polygon area, the distance is zero:
@@ -25,12 +25,23 @@ to column <B>areacat</B> in attribute table attached to vector map
 <tt>v.distance from=pnt to=ar upload=cat column=areacat</tt>
 
 <p>
-3) Create a new vector map which contains lines connecting nearest
-features of maps <B>pnt</B> and map <B>ln</B>. The resulting vector map
+3) Create a new vector map which contains <B>lines connecting nearest
+features</B> of maps <B>pnt</B> and map <B>ln</B>. The resulting vector map
 can be used for example to connect points to a network as needed for
 network analysis:
 <br>
 <tt>v.distance -p from=pnt to=ln out=connections upload=dist column=dist</tt>
+
+<p>
+4) Query information from selected point(s). v.distance takes points from 
+   vector as input instead of stdin. First new vector map with query points, 
+   has to be created, then the map can be analysed:
+<br>   
+Create query map (if not present):<br>
+<tt>echo "123456|654321|1" | v.in.ascii output=pnt</tt>
+<br>
+Find nearest features:<br>
+<tt>v.distance from=pnt to=map_to_query upload=cat col=somecol -p</tt>
 
 
 <H2>NOTES</H2>
