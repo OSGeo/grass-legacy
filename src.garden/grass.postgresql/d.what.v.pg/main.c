@@ -47,8 +47,6 @@ char **argv ;
         selPassed = 0;
 
 
-	G_init_locale();
-
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
 
