@@ -4,42 +4,47 @@
 .c
 .c .F {font|path}[:charset]		font
 .c .C {color_name|0xRRGGBB}		color
-.c .S size[p]				size		p means pixel size
+.c .S [+|-]size[p]			size		p means pixel size
 .c .A {ll,lc,lr,cl,cc,cr,ul,uc,ur}	align
-.c .R rotation[r]			rotation	r means radian rotation
+.c .R [+|-]rotation[r]			rotation	r means radian rotation
 .c .X [+|-]x[%|p]			set x-coord	+|- means relative dx
 .c .Y [+|-]y[%|p]			set y-coord	% means percentage
 .c .L {0|1}				set auto-linefeed
+.c .E [+|-]east[%|p]			set x-origin
+.c .N [+|-]north[%|p]			set y-origin
 .c ..					draw one .
 .
 . ALSO COMMENT
 .
 .
 .
+.E 100p
+.N 100p
 .F gulim
 .S 10
+.R 5
 line 1
 .F batang
-line 2-1
 .L 0
+line 2-1
 line 2-2
 .L 1
 .C 0xff00ff
 line 3
 
 line 5
+.X 0
 .Y 0
 line 1 again
 .X +3
 .F /usr/X11R6/lib/X11/fonts/TrueType/gulim.ttf:EUC-KR
 .S 20p
-.R 10
+.R -10
 line 2 again
 line 3 again
 line 4
-line 5-1
-
 .L 0
+line 5-1
 line 5-2
 .A cc
 .X 50%
