@@ -28,7 +28,7 @@
 int 
 main (int argc, char *argv[])
 {
-    struct Option *opt_in, *opt_out, *opt_ver, *opt_end; 
+    struct Option *opt_in, *opt_out, *opt_end; 
     int    endian;
     struct GModule *module;
     
@@ -47,16 +47,6 @@ main (int argc, char *argv[])
     /* output vector map */
     opt_out = G_define_standard_option(G_OPT_V_OUTPUT);
 
-    /* output version */
-    opt_ver = G_define_option();
-    opt_ver->key          = "version";
-    opt_ver->type         = TYPE_INTEGER;
-    opt_ver->required     = NO;
-    opt_ver->multiple     = NO;
-    opt_ver->options      = "5,4";
-    opt_ver->description  = "version of output vector map";
-    opt_ver->answer = "5"; 
-
     /* endian of input vector map */
     opt_end = G_define_option();
     opt_end->key         = "endian";
@@ -72,19 +62,13 @@ main (int argc, char *argv[])
     if (G_parser(argc,argv))
         exit(-1);   
 
-
     /* Numbers in portable format files are saved as big endians */
     if ( opt_end->answer[0] == 'l' )  
 	endian = ENDIAN_LITTLE;
     else	
 	endian = ENDIAN_BIG;
 
-    if ( opt_ver->answer[0] == '5' )  
-        old2new (opt_in->answer, opt_out->answer, endian);
-    else {
-        fprintf(stdout,"Not yet implemented.\n");
-        /* new2old (opt_in->answer, opt_out->answer); */
-    }
+    old2new (opt_in->answer, opt_out->answer, endian);
 	    
     exit(0);
 }
