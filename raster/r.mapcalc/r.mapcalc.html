@@ -579,6 +579,69 @@ construction like:<p>
 
 <tt>C=A + if(isnull(B),0,B)</tt>
 
+<p>
+<b>NULL and conditions:</b>
+<p>
+For the one argument form:
+<pre>
+	if(x) = NULL		if x is NULL
+	if(x) = 0		if x = 0
+	if(x) = 1		otherwise (i.e. x is neither NULL nor 0).
+</pre>
+<p>
+For the two argument form:
+<pre>
+	if(x,a) = NULL		if x is NULL
+	if(x,a) = 0		if x = 0
+	if(x,a) = a		otherwise (i.e. x is neither NULL nor 0).
+</pre>
+<p>
+For the three argument form:
+<pre>
+	if(x,a,b) = NULL	if x is NULL
+	if(x,a,b) = b		if x = 0
+	if(x,a,b) = a		otherwise (i.e. x is neither NULL nor 0).
+</pre>
+<p>
+For the four argument form:
+<pre>
+	if(x,a,b,c) = NULL	if x is NULL
+	if(x,a,b,c) = a		if x > 0
+	if(x,a,b,c) = b		if x = 0
+	if(x,a,b,c) = c		if x < 0
+</pre>
+
+More generally, all operators and most functions return NULL if *any*
+of their arguments are NULL.
+<br>
+The functions if(), isnull() and eval() are exceptions.
+<br>
+The function isnull() returns 1 if its argument is NULL and 0 otherwise.
+If the user wants the opposite, the ! operator, e.g. "!isnull(x)" must be
+used.
+<p>
+All forms of if() return NULL if the first argument is NULL. The 2, 3
+and 4 argument forms of if() return NULL if the "selected" argument is
+NULL, e.g.:
+
+<pre>
+	if(0,a,b) = b	regardless of whether a is NULL
+	if(1,a,b) = a	regardless of whether b is NULL
+</pre>
+
+eval() always returns its last argument, so it only returns NULL if
+the last argument is NULL.
+<p>
+
+<b>Note</b>: The user cannot test for NULL using the == operator, as that
+returns NULL if either or both arguments are NULL, i.e. if x and y are
+both NULL, then "x == y" and "x != y" are both NULL rather than 1 and
+0 respectively.
+<br>
+The behaviour makes sense if the user considers NULL as representing an
+unknown quantity. E.g. if x and y are both unknown, then the values of
+"x == y" and "x != y" are also unknown; if they both have unknown
+values, the user doesn't know whether or not they both have the same value.
 
 
 <H2>EXAMPLES</H2>
