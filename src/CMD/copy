@@ -1,0 +1,3 @@
+:
+GMAKE=/usr/local/bin/gmake4.1
+. generic/MAKELINKS.sh
