@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     fprintf (stdout, "\n");
     fprintf (stdout, "Copyright and License Statement\n");
     fprintf (stdout, "\n");
-    fprintf (stdout, "The Geographic Resources Analysis and Support System (GRASS)\n");
+    fprintf (stdout, "The Geographic Resources Analysis Support System (GRASS)\n");
     fprintf (stdout, "Geographic Information System (GIS) is Copyright by the\n");
     fprintf (stdout, "GRASS Development Team headquartered at University of Hannover,\n");
     fprintf (stdout, "Germany, and Baylor University in Waco, Texas.\n");
