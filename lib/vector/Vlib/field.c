@@ -220,7 +220,8 @@ struct field_info
     int  type ) /* how many tables are linked to map: GV_1TABLE / GV_MTABLE */
 {
     struct field_info *fi;
-    char buf[1000];
+    char buf[1000], buf2[1000];
+    char *schema;
     char *drv, *db;
     dbConnection  connection;
     
@@ -263,15 +264,23 @@ struct field_info
     if ( field_name != NULL ) fi->name = G_store ( field_name );
     else fi->name = NULL;
     
+    /* Table name */
     if ( type == GV_1TABLE ) {
-        fi->table = G_store ( Map->name );
+	sprintf ( buf, "%s", Map->name);
     } else {
 	if ( field_name != NULL && strlen ( field_name ) > 0 )
 	    sprintf ( buf, "%s_%s", Map->name, field_name );
 	else
 	    sprintf ( buf, "%s_%d", Map->name, field );
+    }
+    
 
-	fi->table = G_store ( buf );
+    schema = G__getenv2 ( "GV_SCHEMA", G_VAR_MAPSET );
+    if ( schema && strlen(schema) > 0 ) {
+        sprintf ( buf2, "%s.%s", schema, buf );
+        fi->table = G_store ( buf2 );
+    } else { 
+        fi->table = G_store ( buf );
     }
     
     fi->key = G_store ( "cat" ); /* Should be: id/fid/gfid/... ? */
