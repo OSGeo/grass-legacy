@@ -1,0 +1,61 @@
+#!/bin/awk -f
+
+# Name       : grass2fig
+# Version    : 0.3
+# Date       : Mon Jan 25 1999
+# Author     : Jacques Bouchard
+#
+# Description: convert an ASCII vector file exported from GRASS
+#              to a file in FIG 3.2 format (to be drawn with xfig)
+#
+# Usage      : grass2fig [inputfile ...] [> outputfile]
+
+BEGIN {
+    dpi=1200
+
+    # CUSTOMIZATION PARAMETERS - BEGIN
+
+    x0 = 0.5        # distance (cm) between the page left  edge & the map west  edge
+    y0 = 0.5        # distance (cm) between the page upper edge & the map north edge
+
+    pen["L"] =  0   # pen  color of lines
+    pen["A"] =  1   # pen  color of areas
+    pen["l"] =  4   # pen  color of deleted lines
+    pen["a"] =  2   # pen  color of deleted areas
+
+    fil["L"] = -1   # fill color of lines		(no fill if < 0)
+    fil["A"] =  3   # fill color of areas		(no fill if < 0)
+    fil["l"] = -1   # fill color of deleted lines	(no fill if < 0)
+    fil["a"] = -1   # fill color of deleted areas	(no fill if < 0)
+
+    polytype =  1   # 1: polyline   3: polygone
+
+    printf "#FIG 3.2\nLandscape\nCenter\nMetric\nA4\n100.00\nSingle\n-2\n%d 2\n", dpi
+
+    # CUSTOMIZATION PARAMETERS - END
+}
+
+/MAP SCALE:/  {scale=$NF; fact=100./scale/2.54*dpi}
+/WEST EDGE:/  {west =$NF}
+/EAST EDGE:/  {east =$NF}
+/SOUTH EDGE:/ {south=$NF}
+/NORTH EDGE:/ {north=$NF}
+
+/^VERTI:/ {
+    hfont = 12
+    x0 = x0 / 2.54 * dpi
+    y0 = y0 / 2.54 * dpi
+    printf "4 0 0 100 0 0 %d 0. 4 0 0 %d %d SCALE=%d W=%s E=%s S=%s N=%s \\001\n",\
+           hfont, x0, y0 + hfont / 72. * dpi, scale, west, east, south, north
+}
+
+/^[A-Za-z]  *[0-9]+ *$/ {
+    printf "2 %d 0 1 %d %d 100 0 %d 0.000 0 0 -1 0 0 %d\n",\
+           polytype,  pen[$1], fil[$1], (fil[$1] < 0) ? -1 : 20, $2
+}
+
+NF == 2 && /^[ 0-9.+-]*$/ {
+    x = x0 + ($2 - west) * fact
+    y = y0 + (north - $1) * fact
+    printf "%d %d\n", x, y
+}
