@@ -70,6 +70,7 @@ main (int argc, char *argv[])
     OGRFeatureH Ogr_feature;  
     OGRFeatureDefnH Ogr_featuredefn;
     OGRGeometryH Ogr_geometry;
+    OGRSpatialReferenceH Ogr_projection;
 
     G_gisinit(argv[0]);
 
@@ -150,10 +151,14 @@ main (int argc, char *argv[])
 
     /* fetch PROJ info */
     G_get_default_window(&cellhd);
-    projinfo = G_get_projinfo();
-    projunits = G_get_projunits();
-    if( cellhd.proj != 0 && (projinfo == NULL || projunits == NULL) )
-        G_warning("Projection files missing");
+    if( cellhd.proj == 0 ) /* XY Location */
+        Ogr_projection = NULL;
+    else
+    {
+        projinfo = G_get_projinfo();
+        projunits = G_get_projunits();
+        Ogr_projection = GPJ_grass_to_osr(projinfo, projunits);
+    }
 
     /* Open OGR DSN */
     OGRRegisterAll();
@@ -175,7 +180,7 @@ main (int argc, char *argv[])
     Ogr_ds = OGR_Dr_CreateDataSource( Ogr_driver, dsn_opt->answer, NULL );
     if ( Ogr_ds == NULL ) G_fatal_error ("Cannot open OGR data source '%s'", dsn_opt->answer);
     
-    Ogr_layer = OGR_DS_CreateLayer( Ogr_ds, layer_opt->answer, GPJ_grass_to_osr(projinfo,projunits), wkbtype, NULL );
+    Ogr_layer = OGR_DS_CreateLayer( Ogr_ds, layer_opt->answer, Ogr_projection, wkbtype, NULL );
     
     db_init_string(&dbstring);
 

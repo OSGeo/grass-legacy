@@ -86,6 +86,9 @@ OGRSpatialReferenceH *GPJ_grass_to_osr(struct Key_Value * proj_info,
     double a, es, rf;
     int haveparams = 0;
 
+    if( (proj_info == NULL) || (proj_units == NULL) )
+        return NULL;
+   
     hSRS = OSRNewSpatialReference(NULL);
 
     if (pj_get_kv(&pjinfo, proj_info, proj_units) < 0)
