@@ -1,4 +1,3 @@
-/* %W% %G% */
 /* Written by Dave Gerdes USA-CERL  Fall 1990
 */
 #include "gis.h"
@@ -346,7 +345,7 @@ parse_command_line (argc, argv, in, outfile)
     char **in, **outfile;
 {
     struct Option *rast, *tga;
-    static char strbuf[100];
+    static char strbuf[500];
 
     rast = G_define_option ();
     rast->key 		= KEY1;
@@ -369,9 +368,9 @@ parse_command_line (argc, argv, in, outfile)
     *in = rast->answer;
     *outfile = tga->answer;
 
-    if (!strlen (outfile))
+    if (!(*outfile))
     {
-	sprintf (strbuf, "%s.tga", in);
+	sprintf (strbuf, "%s.tga", *in);
 	*outfile = strbuf;
     }
 
