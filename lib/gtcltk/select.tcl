@@ -44,6 +44,7 @@ proc GSelect_::create { element } {
 
     set location_path "$env(GISDBASE)/$env(LOCATION_NAME)/"
     set current_mapset $env(MAPSET)
+    set sympath "$env(GISBASE)/etc/symbol/"
     foreach dir [exec g.mapsets -p] {
         set windfile "$location_path/$dir/WIND"
         if { ! [ file exists $windfile ] } { continue }
@@ -58,6 +59,16 @@ proc GSelect_::create { element } {
         }
     }
 
+    $tree insert end root ms_$sympath -text SYMBOLS -data $sympath -open 1 \
+	-image [Bitmap::get openfold] -drawcross auto
+    
+    set icpath "$sympath/$element/"
+    foreach ic [ lsort [glob -nocomplain $icpath/*] ]  {
+            set icfile [file tail $ic]
+            $tree insert end ms_$sympath $icfile@$sympath -text $icfile -data $icfile \
+                  -image [Bitmap::get file] -drawcross never
+    }
+    
     $tree configure -redraw 1
 
     # buttons
@@ -88,7 +99,7 @@ proc GSelect_::create { element } {
 
     if { $selected != "" } {
         regexp {([^@]+)@(.+)} $selected x file mapset
-        if { $mapset == $current_mapset } {
+        if { $mapset == $current_mapset || $mapset == $sympath} {
             return $file
         } else {
             return "$file@$mapset"
