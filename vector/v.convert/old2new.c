@@ -97,7 +97,7 @@ old2new (char *in, char *out, int endian)
     }
      
     /* Write to new file */
-    fprintf(stdout,"Writting new file...\n");
+    fprintf(stdout,"Writing new file...\n");
     pnt_out = Vect_new_line_struct ();
     cat_out = Vect_new_cats_struct();
     
