@@ -1,0 +1,3346 @@
+%!PS-Adobe-1.0
+%%Creator: redtop.ecn.purdue.edu:rewerts (Chris C Rewerts,agen107a,0,4232836,Ag;agen;Engel;)
+%%Title: stdin (ditroff)
+%%CreationDate: Mon Jan 18 19:19:44 1993
+%%EndComments
+% Start of psdit.pro -- prolog for ditroff translator
+% Copyright (c) 1985,1987 Adobe Systems Incorporated. All Rights Reserved. 
+% GOVERNMENT END USERS: See Notice file in TranScript library directory
+% -- probably /usr/lib/ps/Notice
+% RCS: $Header: /home/aquarium/prm/usr/src/usr.lib/ps/lib/RCS/psdit.pro,v 1.2 89/02/24 09:57:06 prm Exp $
+/$DITroff 180 dict def $DITroff begin
+%% Psfig additions
+
+/DocumentInitState [ matrix currentmatrix currentlinewidth currentlinecap
+currentlinejoin currentdash currentgray currentmiterlimit ] cvx def
+
+/startFig {
+	/SavedState save def
+	userdict maxlength dict begin
+	currentpoint transform
+
+	DocumentInitState setmiterlimit setgray setdash setlinejoin setlinecap
+		setlinewidth setmatrix
+
+	itransform moveto
+
+	/ury exch def
+	/urx exch def
+	/lly exch def
+	/llx exch def
+	/y exch 72 mul resolution div def
+	/x exch 72 mul resolution div def
+	
+	currentpoint /cy exch def /cx exch def
+
+	/sx x urx llx sub div def 	% scaling for x
+	/sy y ury lly sub div def	% scaling for y
+
+	sx sy scale			% scale by (sx,sy)
+
+	cx sx div llx sub
+	cy sy div ury sub translate
+	
+	/DefFigCTM matrix currentmatrix def
+
+	/initmatrix {
+		DefFigCTM setmatrix
+	} def
+	/defaultmatrix {
+		DefFigCTM exch copy
+	} def
+
+	/initgraphics {
+		DocumentInitState setmiterlimit setgray setdash 
+			setlinejoin setlinecap setlinewidth setmatrix
+		DefFigCTM setmatrix
+	} def
+
+	/showpage {
+		initgraphics
+	} def
+
+} def
+% Args are llx lly urx ury (in figure coordinates)
+/clipFig {
+	currentpoint 6 2 roll
+	newpath 4 copy
+	4 2 roll moveto
+	6 -1 roll exch lineto
+	exch lineto
+	exch lineto
+	closepath clip
+	newpath
+	moveto
+} def
+% doclip, if called, will always be just after a `startfig'
+/doclip { llx lly urx ury clipFig } def
+/endFig {
+	end SavedState restore
+} def
+/globalstart {
+	% Push details about the enviornment on the stack.
+	fontnum fontsize fontslant fontheight firstpage 
+	mh my resolution slotno currentpoint 
+	pagesave restore gsave 
+} def
+/globalend {
+	grestore moveto
+	/slotno exch def /resolution exch def /my exch def
+	/mh exch def /firstpage exch def /fontheight exch def
+	/fontslant exch def /fontsize exch def /fontnum exch def
+	F
+	/pagesave save def
+} def
+
+%% end XMOD additions
+/fontnum 1 def /fontsize 10 def /fontheight 10 def /fontslant 0 def
+/xi {0 72 11 mul translate 72 resolution div dup neg scale 0 0 moveto
+  /fontnum 1 def /fontsize 10 def /fontheight 10 def /fontslant 0 def F
+  /pagesave save def}def
+/PB{save /psv exch def currentpoint translate
+  resolution 72 div dup neg scale 0 0 moveto}def
+/PE{psv restore}def
+/m1 matrix def /m2 matrix def /m3 matrix def /oldmat matrix def
+/tan{dup sin exch cos div}bind def
+/point{resolution 72 div mul}bind def
+/dround	{transform round exch round exch itransform}bind def
+/xT{/devname exch def}def
+/xr{/mh exch def /my exch def /resolution exch def}def
+/xp{}def
+/xs{docsave restore end}def
+/xt{}def
+/xf{/fontname exch def /slotno exch def fontnames slotno get fontname eq not
+ {fonts slotno fontname findfont put fontnames slotno fontname put}if}def
+/xH{/fontheight exch def F}bind def
+/xS{/fontslant exch def F}bind def
+/s{/fontsize exch def /fontheight fontsize def F}bind def
+/f{/fontnum exch def F}bind def
+/F{fontheight 0 le {/fontheight fontsize def}if
+   fonts fontnum get fontsize point 0 0 fontheight point neg 0 0 m1 astore
+   fontslant 0 ne{1 0 fontslant tan 1 0 0 m2 astore m3 concatmatrix}if
+   makefont setfont .04 fontsize point mul 0 dround pop setlinewidth}bind def
+/X{exch currentpoint exch pop moveto show}bind def
+/N{3 1 roll moveto show}bind def
+/Y{exch currentpoint pop exch moveto show}bind def
+/S /show load def
+/ditpush{}def/ditpop{}def
+/AX{3 -1 roll currentpoint exch pop moveto 0 exch ashow}bind def
+/AN{4 2 roll moveto 0 exch ashow}bind def
+/AY{3 -1 roll currentpoint pop exch moveto 0 exch ashow}bind def
+/AS{0 exch ashow}bind def
+/MX{currentpoint exch pop moveto}bind def
+/MY{currentpoint pop exch moveto}bind def
+/MXY /moveto load def
+/cb{pop}def	% action on unknown char -- nothing for now
+/n{}def/w{}def
+/p{pop showpage pagesave restore /pagesave save def}def
+/abspoint{currentpoint exch pop add exch currentpoint pop add exch}def
+/dstroke{currentpoint stroke moveto}bind def
+/Dl{2 copy 2 copy gsave 0 eq exch 0 eq and
+       {rlineto currentlinecap 1 setlinecap stroke setlinecap}
+       {rlineto stroke}
+     ifelse grestore rmoveto}bind def
+/arcellipse{oldmat currentmatrix pop
+ currentpoint translate 1 diamv diamh div scale /rad diamh 2 div def
+ rad 0 rad -180 180 arc oldmat setmatrix}def
+/Dc{gsave dup /diamv exch def /diamh exch def arcellipse dstroke 
+    grestore diamh 0 rmoveto}def
+/De{gsave /diamv exch def /diamh exch def arcellipse dstroke
+    grestore diamh 0 rmoveto}def
+/Da{currentpoint /by exch def /bx exch def /fy exch def /fx exch def
+   /cy exch def /cx exch def /rad cx cx mul cy cy mul add sqrt def
+   /ang1 cy neg cx neg atan def /ang2 fy fx atan def cx bx add cy by add
+   2 copy rad ang1 ang2 arcn stroke exch fx add exch fy add moveto}def
+/Barray 200 array def % 200 values in a wiggle
+/D~{mark}def
+/D~~{counttomark Barray exch 0 exch getinterval astore /Bcontrol exch def pop
+ /Blen Bcontrol length def Blen 4 ge Blen 2 mod 0 eq and
+ {Bcontrol 0 get Bcontrol 1 get abspoint /Ycont exch def /Xcont exch def
+  Bcontrol 0 2 copy get 2 mul put Bcontrol 1 2 copy get 2 mul put
+  Bcontrol Blen 2 sub 2 copy get 2 mul put
+  Bcontrol Blen 1 sub 2 copy get 2 mul put
+  /Ybi /Xbi currentpoint 3 1 roll def def 0 2 Blen 4 sub
+  {/i exch def
+   Bcontrol i get 3 div Bcontrol i 1 add get 3 div
+   Bcontrol i get 3 mul Bcontrol i 2 add get add 6 div
+   Bcontrol i 1 add get 3 mul Bcontrol i 3 add get add 6 div
+   /Xbi Xcont Bcontrol i 2 add get 2 div add def
+   /Ybi Ycont Bcontrol i 3 add get 2 div add def
+   /Xcont Xcont Bcontrol i 2 add get add def
+   /Ycont Ycont Bcontrol i 3 add get add def
+   Xbi currentpoint pop sub Ybi currentpoint exch pop sub rcurveto
+  }for dstroke}if}def
+end
+/ditstart{$DITroff begin
+ /nfonts 60 def			% NFONTS makedev/ditroff dependent!
+ /fonts[nfonts{0}repeat]def
+ /fontnames[nfonts{()}repeat]def
+/docsave save def
+}def
+
+% character outcalls
+/oc {/pswid exch def /cc exch def /name exch def
+   /ditwid pswid fontsize mul resolution mul 72000 div def
+   /ditsiz fontsize resolution mul 72 div def
+   ocprocs name known{ocprocs name get exec}{name cb}
+   ifelse}def
+/fractm [.65 0 0 .6 0 0] def
+/fraction
+ {/fden exch def /fnum exch def gsave /cf currentfont def
+  cf fractm makefont setfont 0 .3 dm 2 copy neg rmoveto
+  fnum show rmoveto currentfont cf setfont(\244)show setfont fden show 
+  grestore ditwid 0 rmoveto} def
+/oce {grestore ditwid 0 rmoveto}def
+/dm {ditsiz mul}def
+/ocprocs 50 dict def ocprocs begin
+(14){(1)(4)fraction}def
+(12){(1)(2)fraction}def
+(34){(3)(4)fraction}def
+(13){(1)(3)fraction}def
+(23){(2)(3)fraction}def
+(18){(1)(8)fraction}def
+(38){(3)(8)fraction}def
+(58){(5)(8)fraction}def
+(78){(7)(8)fraction}def
+(sr){gsave .05 dm .16 dm rmoveto(\326)show oce}def
+(is){gsave 0 .15 dm rmoveto(\362)show oce}def
+(->){gsave 0 .02 dm rmoveto(\256)show oce}def
+(<-){gsave 0 .02 dm rmoveto(\254)show oce}def
+(==){gsave 0 .05 dm rmoveto(\272)show oce}def
+end
+% DIThacks fonts for some special chars
+50 dict dup begin
+/FontType 3 def
+/FontName /DIThacks def
+/FontMatrix [.001 0.0 0.0 .001 0.0 0.0] def
+/FontBBox [-220 -280 900 900] def% a lie but ...
+/Encoding 256 array def
+0 1 255{Encoding exch /.notdef put}for
+Encoding
+ dup 8#040/space put %space
+ dup 8#110/rc put %right ceil
+ dup 8#111/lt put %left  top curl
+ dup 8#112/bv put %bold vert
+ dup 8#113/lk put %left  mid curl
+ dup 8#114/lb put %left  bot curl
+ dup 8#115/rt put %right top curl
+ dup 8#116/rk put %right mid curl
+ dup 8#117/rb put %right bot curl
+ dup 8#120/rf put %right floor
+ dup 8#121/lf put %left  floor
+ dup 8#122/lc put %left  ceil
+ dup 8#140/sq put %square
+ dup 8#141/bx put %box
+ dup 8#142/ci put %circle
+ dup 8#143/br put %box rule
+ dup 8#144/rn put %root extender
+ dup 8#145/vr put %vertical rule
+ dup 8#146/ob put %outline bullet
+ dup 8#147/bu put %bullet
+ dup 8#150/ru put %rule
+ dup 8#151/ul put %underline
+ pop
+/DITfd 100 dict def
+/BuildChar{0 begin
+ /cc exch def /fd exch def
+ /charname fd /Encoding get cc get def
+ /charwid fd /Metrics get charname get def
+ /charproc fd /CharProcs get charname get def
+ charwid 0 fd /FontBBox get aload pop setcachedevice
+ 40 setlinewidth
+ newpath 0 0 moveto gsave charproc grestore
+ end}def
+/BuildChar load 0 DITfd put
+%/UniqueID 5 def
+/CharProcs 50 dict def
+CharProcs begin
+/space{}def
+/.notdef{}def
+/ru{500 0 rls}def
+/rn{0 750 moveto 500 0 rls}def
+/vr{20 800 moveto 0 -770 rls}def
+/bv{20 800 moveto 0 -1000 rls}def
+/br{20 770 moveto 0 -1040 rls}def
+/ul{0 -250 moveto 500 0 rls}def
+/ob{200 250 rmoveto currentpoint newpath 200 0 360 arc closepath stroke}def
+/bu{200 250 rmoveto currentpoint newpath 200 0 360 arc closepath fill}def
+/sq{80 0 rmoveto currentpoint dround newpath moveto
+    640 0 rlineto 0 640 rlineto -640 0 rlineto closepath stroke}def
+/bx{80 0 rmoveto currentpoint dround newpath moveto
+    640 0 rlineto 0 640 rlineto -640 0 rlineto closepath fill}def
+/ci{355 333 rmoveto currentpoint newpath 333 0 360 arc
+    50 setlinewidth stroke}def
+
+/lt{20 -200 moveto 0 550 rlineto currx 800 2cx s4 add exch s4 a4p stroke}def
+/lb{20 800 moveto 0 -550 rlineto currx -200 2cx s4 add exch s4 a4p stroke}def
+/rt{20 -200 moveto 0 550 rlineto currx 800 2cx s4 sub exch s4 a4p stroke}def
+/rb{20 800 moveto 0 -500 rlineto currx -200 2cx s4 sub exch s4 a4p stroke}def
+/lk{20 800 moveto 20 300 -280 300 s4 arcto pop pop 1000 sub
+    currentpoint stroke moveto
+    20 300 4 2 roll s4 a4p 20 -200 lineto stroke}def
+/rk{20 800 moveto 20 300 320 300 s4 arcto pop pop 1000 sub
+    currentpoint stroke moveto
+    20 300 4 2 roll s4 a4p 20 -200 lineto stroke}def
+/lf{20 800 moveto 0 -1000 rlineto s4 0 rls}def
+/rf{20 800 moveto 0 -1000 rlineto s4 neg 0 rls}def
+/lc{20 -200 moveto 0 1000 rlineto s4 0 rls}def
+/rc{20 -200 moveto 0 1000 rlineto s4 neg 0 rls}def
+end
+
+/Metrics 50 dict def Metrics begin
+/.notdef 0 def
+/space 500 def
+/ru 500 def
+/br 0 def
+/lt 250 def
+/lb 250 def
+/rt 250 def
+/rb 250 def
+/lk 250 def
+/rk 250 def
+/rc 250 def
+/lc 250 def
+/rf 250 def
+/lf 250 def
+/bv 250 def
+/ob 350 def
+/bu 350 def
+/ci 750 def
+/bx 750 def
+/sq 750 def
+/rn 500 def
+/ul 500 def
+/vr 0 def
+end
+
+DITfd begin
+/s2 500 def /s4 250 def /s3 333 def
+/a4p{arcto pop pop pop pop}def
+/2cx{2 copy exch}def
+/rls{rlineto stroke}def
+/currx{currentpoint pop}def
+/dround{transform round exch round exch itransform} def
+end
+end
+/DIThacks exch definefont pop
+
+ditstart
+(psc)xT
+576 1 1 xr
+1(Times-Roman)xf 1 f
+2(Times-Italic)xf 2 f
+3(Times-Bold)xf 3 f
+4(Times-BoldItalic)xf 4 f
+5(Helvetica)xf 5 f
+6(Helvetica-Bold)xf 6 f
+7(Courier)xf 7 f
+8(Courier-Bold)xf 8 f
+9(Symbol)xf 9 f
+10(DIThacks)xf 10 f
+10 s
+1 f
+xi
+%%EndProlog
+
+%%Page: 1 1
+10 s 0 xH 0 xS 1 f
+11 s
+4218 354(1)N
+1487 1256(1.)N
+1597(Class)X
+1810(Exercise)X
+2135(Using)X
+2367(the)X
+2497(ANSWERS-GRASS)X
+3251(Integration)X
+3 f
+1084 1620(Note:)N
+2 f
+1338(This)X
+1518(exercise)X
+1834(was)X
+1999(used)X
+2188(as)X
+2295(part)X
+2471(of)X
+2569(a)X
+2642(class)X
+2847(assignment)X
+3272(for)X
+3404(the)X
+3541(Spring,)X
+3827(1992)X
+4032(AGEN)X
+864 1724(526)N
+1021(Class)X
+1242(in)X
+1336(Agricultural)X
+1798(Engineering,)X
+2281(Purdue)X
+2565(University.)X
+2979(The)X
+3136(exercise)X
+3449(was)X
+3611(ostensively)X
+4022(part)X
+4193(of)X
+864 1828(the)N
+996(class)X
+1196(instruction)X
+1603(about)X
+1828(watershed)X
+2215(modeling,)X
+2590(but)X
+2728(also)X
+2900(served)X
+3154(as)X
+3257(test)X
+3405(of)X
+3499(the)X
+3632(programs)X
+3998(created)X
+864 1932(for)N
+990(the)X
+1121(ANSWERS-GRASS)X
+1814(integration.)X
+2273(Map)X
+2456(names)X
+2702(used)X
+2885(herein)X
+3132(are)X
+3271(references)X
+3659(to)X
+3750(layers)X
+3987(existing)X
+864 2036(in)N
+955(the)X
+1085(sample)X
+1356(mapbase)X
+1690(for)X
+1815(the)X
+1945(Indian)X
+2197(Pine)X
+2381(Natural)X
+2678(Resource)X
+3027(Laboratory.)X
+3 f
+864 2244(Introduction)N
+1 f
+1084 2400(This)N
+1292(exercise)X
+1631(introduces)X
+2049(the)X
+2208(use)X
+2376(of)X
+2500(the)X
+2659(ANSWERS)X
+3130(watershed)X
+3538(simulation)X
+3964(program)X
+864 2504(integrated)N
+1275(with)X
+1490(GRASS.)X
+1853(ANSWERS)X
+2331(\(Areal)X
+2613(Nonpoint)X
+3003(Source)X
+3304(Watershed)X
+3737(Environmental)X
+864 2608(Response)N
+1230(Simulation\))X
+1677(is)X
+1765(an)X
+1877(event)X
+2097(oriented,)X
+2437(distributed)X
+2844(parameter)X
+3225(model)X
+3475(that)X
+3637(was)X
+3802(developed)X
+4193(to)X
+864 2712(simulate)N
+1195(the)X
+1334(behavior)X
+1673(of)X
+1777(watersheds)X
+2198(having)X
+2469(agriculture)X
+2882(as)X
+2986(their)X
+3179(primary)X
+3489(land)X
+3672(use.)X
+3864(Its)X
+3983(primary)X
+864 2816(applications)N
+1321(are)X
+1458(watershed)X
+1844(planning)X
+2184(for)X
+2317(erosion)X
+2607(and)X
+2765(sediment)X
+3115(control)X
+3396(on)X
+3515(complex)X
+3850(watersheds,)X
+864 2920(and)N
+1013(water)X
+1230(quality)X
+1498(analysis)X
+1804(associated)X
+2188(with)X
+2367(sediment)X
+2708(associated)X
+3092(chemicals.)X
+864 3128(Because)N
+1192(ANSWERS)X
+1647(is)X
+1741(a)X
+1815(distributed)X
+2228(parameter)X
+2615(model)X
+2871(that)X
+3040(divides)X
+3331(the)X
+3475(watershed)X
+3867(area)X
+4049(into)X
+4223(a)X
+864 3232(series)N
+1092(of)X
+1193(grid)X
+1363(elements,)X
+1727(one)X
+1882(of)X
+1983(the)X
+2118(primary)X
+2424(inputs)X
+2667(to)X
+2763(the)X
+2898(model)X
+3146(are)X
+3280(spatial)X
+3538(data,)X
+3734(since)X
+3942(each)X
+4130(ele-)X
+864 3336(ment)N
+1066(requires)X
+1374(input)X
+1581(describing)X
+1973(land)X
+2150(use,)X
+2314(soil)X
+2467(type,)X
+2666(slope)X
+2878(and)X
+3031(\257ow)X
+3213(direction.)X
+3597(Other)X
+3823(spatial)X
+4080(input)X
+864 3440(data)N
+1043(used)X
+1236(by)X
+1356(the)X
+1496(model)X
+1749(include)X
+2041(the)X
+2181(area)X
+2359(of)X
+2464(the)X
+2604(watershed,)X
+3014(the)X
+3154(location)X
+3471(of)X
+3576(its)X
+3692(outlet,)X
+3948(elements)X
+864 3544(containing)N
+1292(channels,)X
+1677(Best)X
+1889(Management)X
+2404(Practices)X
+2777(\(BMPs\),)X
+3132(and)X
+3314(subsurface)X
+3744(drainage.)X
+4125(The)X
+864 3648(ANSWERS-GRASS)N
+1618(integration)X
+2023(uses)X
+2196(GRASS)X
+2501(map)X
+2675(layers)X
+2907(for)X
+3031(these)X
+3234(spatial)X
+3487(ANSWERS)X
+3929(inputs.)X
+864 3856(Other)N
+1091(data)X
+1266(required)X
+1587(by)X
+1703(ANSWERS)X
+2151(include)X
+2439(physically-descriptive)X
+3246(parameters)X
+3660(for)X
+3790(each)X
+3979(soil)X
+4135(and)X
+864 3960(land)N
+1042(use)X
+1185(type,)X
+1385(the)X
+1519(size)X
+1682(\(in)X
+1806(meters\))X
+2095(to)X
+2189(be)X
+2297(used)X
+2483(for)X
+2610(dividing)X
+2930(the)X
+3063(watershed)X
+3444(into)X
+3607(grid)X
+3774(elements,)X
+4135(and)X
+864 4064(data)N
+1033(describing)X
+1422(the)X
+1552(storm)X
+1775(event\(s\))X
+2080(to)X
+2171(be)X
+2276(modeled.)X
+864 4272(You)N
+1043(will)X
+1209(be)X
+1320(using)X
+1539(a)X
+1606(tool)X
+1772(called)X
+7 f
+2042(r.answers)X
+1 f
+2547(for)X
+2677(this)X
+2834(exercise.)X
+3173(The)X
+7 f
+3370(r.answers)X
+1 f
+3876(program)X
+4203(is)X
+864 4376(central)N
+1135(to)X
+1235(the)X
+1374(integration)X
+1787(of)X
+1890(ANSWERS)X
+2340(with)X
+2527(GRASS)X
+2840(by)X
+2958(providing)X
+3331(organization)X
+3802(and)X
+3959(manage-)X
+864 4480(ment)N
+1090(of)X
+1212(simulation)X
+1635(scenarios.)X
+2055(When)X
+2314(the)X
+2471(inputs)X
+2736(have)X
+2952(been)X
+3168(collected)X
+3537(and)X
+3714(prepared)X
+4071(using)X
+7 f
+864 4584(r.answers)N
+1 f
+1341(,)X
+1387(it)X
+1461(can)X
+1607(then)X
+1783(run)X
+1924(the)X
+2055(simulation)X
+2452(and)X
+2602(capture)X
+2884(the)X
+3015(results,)X
+3290(which)X
+3528(include)X
+3811(maps)X
+4020(of)X
+4116(sed-)X
+864 4688(iment)N
+1090(loss)X
+1251(and)X
+1402(deposition)X
+1794(for)X
+1920(the)X
+2052(watershed,)X
+2454(as)X
+2551(well)X
+2727(as)X
+2824(data)X
+2995(about)X
+3215(the)X
+3347(runoff)X
+3590(and)X
+3742(sediment)X
+4086(leav-)X
+864 4792(ing)N
+999(the)X
+1129(watershed.)X
+864 5000(Before)N
+1134(you)X
+1297(use)X
+7 f
+1476(r.answers)X
+1 f
+1953(,)X
+2006(some)X
+2223(preparations)X
+2689(map)X
+2872(layers)X
+3114(to)X
+3215(be)X
+3330(used)X
+3523(as)X
+3628(ANSWERS)X
+4080(input)X
+864 5104(data)N
+1041(are)X
+1178(necessary.)X
+1571(This)X
+1758(will)X
+1925(be)X
+2037(described)X
+2403(below.)X
+2669(It)X
+2752(is)X
+2840(also)X
+3011(recommended)X
+3539(that)X
+3701(you)X
+3862(refer)X
+4056(to)X
+4154(the)X
+864 5208(GRASS)N
+1186(manual)X
+1485(entry)X
+1705(for)X
+1846(more)X
+2066(speci\256c)X
+2374(information)X
+2830(about)X
+3065(the)X
+7 f
+3243(r.answers)X
+1 f
+3759(program.)X
+4140(For)X
+864 5312(information)N
+1306(about)X
+1527(ANSWERS,)X
+1994(refer)X
+2184(to)X
+2278(the)X
+2 f
+2411(ANSWERS)X
+2818(User's)X
+3076(Manual)X
+1 f
+3374(\(1991\))X
+3632(by)X
+3744(David)X
+3983(Beasley)X
+864 5416(and)N
+1017(Larry)X
+1238(Huggins,)X
+1584(that)X
+1743(is)X
+1828(available)X
+2173(from)X
+2370(Dr.)X
+2510(Bernard)X
+2820(Engel,)X
+3075(Agricultural)X
+3533(Engineering,)X
+4013(Purdue)X
+864 5520(University,)N
+1280(West)X
+1483(Lafayette,)X
+1860(Indiana,)X
+2168(47906-1146.)X
+
+2 p
+%%Page: 2 2
+11 s 0 xH 0 xS 1 f
+4218 354(2)N
+3 f
+864 680(Input)N
+1096(data)X
+1284(description)X
+1 f
+945 940(I.)N
+1084(Watershed)X
+1482(mask)X
+1084 1148(A)N
+1183(layer)X
+1395(is)X
+1490(required)X
+1819(to)X
+1924(serve)X
+2145(as)X
+2254(a)X
+2330(watershed)X
+2723(mask.)X
+2968(All)X
+3118(cell)X
+3283(values)X
+3545(in)X
+3651(the)X
+3796(map)X
+3985(that)X
+4155(are)X
+1084 1252(greater)N
+1358(than)X
+1540(zero)X
+1721(will)X
+1889(be)X
+2002(considered)X
+2413(by)X
+7 f
+2562(r.answers)X
+1 f
+3069(to)X
+3167(be)X
+3279(part)X
+3445(of)X
+3547(the)X
+3684(watershed.)X
+4091(Note)X
+1084 1356(that)N
+1239(the)X
+1369(current)X
+1640(region)X
+1887(and)X
+2036(mask)X
+2244(will)X
+2404(be)X
+2509(ignored.)X
+2822(Use)X
+2980(the)X
+3110(map)X
+2 f
+3284(a.wshd)X
+1 f
+3531(.)X
+916 1616(II.)N
+1084(Slope)X
+1307(and)X
+1456(aspect)X
+1084 1824(Your)N
+1291(current)X
+1567(mapset)X
+1844(may)X
+2023(include)X
+2310(prepared)X
+2644(maps)X
+2857(of)X
+2957(slope)X
+3170(and)X
+3325(aspect,)X
+3595(but)X
+3736(they)X
+3916(cannot)X
+4179(be)X
+1084 1928(used)N
+1277(unless)X
+1529(they)X
+1713(were)X
+1915(prepared)X
+2254(as)X
+2359(described)X
+2728(here.)X
+2933(\(For)X
+3116(instance,)X
+3459(maps)X
+3677(produced)X
+4035(by)X
+4154(the)X
+1084 2032(regular)N
+1362(GRASS)X
+1674(program,)X
+7 f
+2054(r.slope.aspect)X
+1 f
+2825(will)X
+2992(contain)X
+3281(values)X
+3536(in)X
+3635(the)X
+3773(wrong)X
+4027(format)X
+1084 2136(as)N
+1179(required)X
+1494(by)X
+1604(ANSWERS\).)X
+1084 2344(To)N
+1210(prepare)X
+1501(slope)X
+1715(and)X
+1870(aspect)X
+2118(maps)X
+2332(for)X
+2462(ANSWERS,)X
+2932(the)X
+3068(starting)X
+3362(point)X
+3573(is)X
+3661(an)X
+3773(elevation)X
+4126(sur-)X
+1084 2448(face)N
+1257(layer,)X
+1482(otherwise)X
+1851(known)X
+2117(as)X
+2217(a)X
+2283(Digital)X
+2556(Elevation)X
+2922(Map)X
+3110(\(DEM\).)X
+3411(Elevation)X
+3776(values)X
+4027(should)X
+1084 2552(be)N
+1189(in)X
+1280(meters.)X
+1581(Use)X
+1739(the)X
+1869(map)X
+2 f
+2043(a.elevation)X
+1 f
+2433(.)X
+1155 2812(a.)N
+1304(Creating)X
+1630(ANSWERS)X
+2072(slope)X
+2280(input)X
+2484(from)X
+2677(a)X
+2738(DEM)X
+1304 3020(ANSWERS)N
+1765(requires)X
+2089(slope)X
+2316(map)X
+2509(with)X
+2708(slope)X
+2936(values)X
+3203(in)X
+3314(percent)X
+3615 0.3681(multiplied)AX
+4022(by)X
+4152(10.)X
+1304 3124(\(Thus,)N
+1560(a)X
+1628(cell)X
+1785(value)X
+2005(of)X
+2107(15)X
+2224(would)X
+2473(represent)X
+2824(a)X
+2892(slope)X
+3107(of)X
+3208(1.5%\).)X
+3470(The)X
+3635(slope)X
+3849(map)X
+4029(is)X
+4116(pro-)X
+1304 3228(duced)N
+1536(from)X
+1729(the)X
+1859(elevation)X
+2205(map.)X
+2401(The)X
+2560(program)X
+2880(to)X
+2971(do)X
+3081(this)X
+3231(with)X
+3410(is)X
+3491(called)X
+7 f
+3755(r.slope)X
+1 f
+4126(.)X
+1304 3436(Usage:)N
+7 f
+1326 3540(r.slope)N
+1750(elevation=)X
+2 f
+2280(name)X
+7 f
+2492(slope=)X
+2 f
+2810(name)X
+1 f
+1326 3644(\(i.e.)N
+7 f
+1485(r.slope)X
+1909(elevation=)X
+1 f
+2439(a.elevation)X
+7 f
+2846(slope=)X
+2 f
+3164(name)X
+1 f
+3354(\))X
+1304 3852(Parameters:)N
+1348 3956(elevation)N
+1738(Raster)X
+1985(elevation)X
+2331(\256le)X
+2466(name)X
+1436 4060(slope)N
+1688(Output)X
+1955(slope)X
+2163(\256lename)X
+1150 4320(b.)N
+1304(Creating)X
+1630(ANSWERS)X
+2072(aspect)X
+2314(input)X
+2518(from)X
+2711(a)X
+2772(DEM)X
+1304 4528(ANSWERS)N
+1771(requires)X
+2101(an)X
+2231(aspect)X
+2498(map)X
+2697(with)X
+2902(\257ow)X
+3106(directions)X
+3502(for)X
+3652(each)X
+3861(cell)X
+4037(in)X
+4154(the)X
+1304 4632(watershed.)N
+1734(The)X
+1901(aspects)X
+2185(for)X
+2317(ANSWERS)X
+2766(are)X
+2902(given)X
+3127(values)X
+3381(from)X
+3581(1-360.)X
+3837(Cells)X
+4048(where)X
+1304 4736(\257ow)N
+1490(direction)X
+1834(is)X
+1923(east)X
+2090(are)X
+2227(given)X
+2454(a)X
+2524(value)X
+2746(of)X
+2850(360,)X
+3035(south)X
+3257(east)X
+3425(are)X
+3563(315,)X
+3748(south)X
+3970(are)X
+4108(270,)X
+1304 4840(south)N
+1528(west)X
+1722(are)X
+1862(225,)X
+2049(and)X
+2209(so)X
+2320(on)X
+2440(in)X
+2541(45)X
+2661(degree)X
+2927(increments.)X
+3390(A)X
+3485(\257ow)X
+3673(direction)X
+4019(map)X
+4203(is)X
+1304 4944(produced)N
+1653(from)X
+1846(the)X
+1976(elevation)X
+2322(map)X
+2496(using)X
+2709(the)X
+7 f
+2870(r.direct)X
+1 f
+3316(program.)X
+1304 5152(Usage:)N
+7 f
+1326 5256(r.direct)N
+1803(input=)X
+2 f
+2121(name)X
+7 f
+2333(output=)X
+2 f
+2704(name)X
+7 f
+2916(type=)X
+2 f
+3181(name)X
+1 f
+1326 5360(\(i.e.)N
+7 f
+1485(r.direct)X
+1962(input=)X
+1 f
+2280(a.elevation)X
+7 f
+2687(output=)X
+2 f
+3058(name)X
+7 f
+3270(type=)X
+1 f
+3535(answers\))X
+1304 5568(Parameters:)N
+
+3 p
+%%Page: 3 3
+11 s 0 xH 0 xS 1 f
+4218 354(3)N
+1370 680(input)N
+1618(Name)X
+1850(of)X
+1945(existing)X
+2247(raster)X
+2464(map)X
+2638(containing)X
+3033(elevation)X
+3379(surface)X
+1348 784(output)N
+1640(Output)X
+1907(direction)X
+2243(raster)X
+2460(map)X
+1392 888(type)N
+1610(Output)X
+1877(direction)X
+2213(type)X
+2387(\(GRASS,)X
+2743(AGNPS,)X
+3074(or)X
+3169(ANSWERS\))X
+1155 1148(c.)N
+1304(Inspection)X
+1693(and)X
+1842(editing)X
+2110(of)X
+2205(the)X
+2335(aspect)X
+2577(map)X
+1304 1356(Currently,)N
+1699(the)X
+1842(algorithms)X
+2256(available)X
+2611(are)X
+2754(not)X
+2903(able)X
+3086(to)X
+3191(create)X
+3437(\257awless)X
+3756(\257ow)X
+3948(direction)X
+1304 1460(maps.)N
+1551(Thus)X
+1766(manual)X
+2064(inspection)X
+2465(and)X
+2630(editing)X
+2914(is)X
+3011(required.)X
+3364(When)X
+3612(editing)X
+3896(the)X
+4042(aspect)X
+1304 1564(map,)N
+1504(pay)X
+1657(careful)X
+1927(attention)X
+2263(to)X
+2358(1\))X
+2457(cells)X
+2645(on)X
+2759(the)X
+2893(watershed)X
+3275(border,)X
+3552(which)X
+3793(all)X
+3908(must)X
+4106(\257ow)X
+2 f
+1304 1668(into)N
+1 f
+1473(the)X
+1612(watershed;)X
+2024(2\))X
+2127(cells)X
+2319(that)X
+2482(will)X
+2650(be)X
+2763(declared)X
+3091(as)X
+3194("channels")X
+3604(must)X
+3806(\257ow)X
+3992(directly)X
+2 f
+1304 1772(from)N
+1494(one)X
+1645(to)X
+1738(another)X
+1 f
+2012(;)X
+2062(3\))X
+2160(\257ow)X
+2341(from)X
+2537(two)X
+2694(cells)X
+2881(must)X
+3078(not)X
+3216(point)X
+3423(directly)X
+3718(to)X
+3812(each)X
+3998(other)X
+4204(\(-)X
+1304 1876(><-\))N
+1489(or)X
+1589(otherwise)X
+1958(form)X
+2156(circuitous)X
+2531(routes.)X
+2794(In)X
+2893(the)X
+3027(\256nal)X
+3210(\257ow)X
+3392(map,)X
+3592(one)X
+3745(should)X
+4006(be)X
+4115(able)X
+1304 1980(to)N
+1399(start)X
+1577(at)X
+1667(any)X
+1820(cell)X
+1974(in)X
+2069(the)X
+2203(watershed)X
+2585(and)X
+2738(follow)X
+2994(the)X
+3128(\257ow)X
+3310(directions)X
+3685(from)X
+3883(cell)X
+4038(to)X
+4134(cell)X
+1304 2084(until)N
+1489(arriving)X
+1790(at)X
+1876(the)X
+2006(outlet)X
+2230(cell.)X
+1304 2292(The)N
+1466(inspection)X
+1854(and)X
+2006(editing)X
+2278(of)X
+2377(the)X
+2511(aspect)X
+2757(map)X
+2935(is)X
+3020(facilitated)X
+3400(by)X
+3514(the)X
+7 f
+3679(d.rast.edit)X
+1 f
+1304 2396(program.)N
+1652(This)X
+1837(program)X
+2163(allows)X
+2421(you)X
+2581(to)X
+2678(display)X
+2961(a)X
+3028(raster)X
+3251(map)X
+3430(and)X
+3584(edit)X
+3744(individual)X
+4130(ele-)X
+1304 2500(ments.)N
+1563(It)X
+1643(also)X
+1812(includes)X
+2133(several)X
+2409(GRASS)X
+2719(programs)X
+3078(as)X
+3178(internal)X
+3475(functions)X
+3830(to)X
+3926(help)X
+4105(with)X
+1304 2604(this)N
+1478(process,)X
+1809(namely)X
+2115(the)X
+7 f
+2300(d.rast.zoom)X
+1 f
+2929(program)X
+3273(what)X
+3490(provides)X
+3839(a)X
+3923(means)X
+4193(to)X
+1304 2708("zoom")N
+1600(in)X
+1697(to)X
+1794(areas)X
+2002(for)X
+2132(close)X
+2341(inspection;)X
+2757(the)X
+7 f
+2924(d.rast.arrow)X
+1 f
+3588(program)X
+3915(that)X
+4077(reads)X
+1304 2812(the)N
+1440(aspect)X
+1688(map)X
+1868(value)X
+2087(for)X
+2217(each)X
+2406(element)X
+2714(and)X
+2869(draws)X
+3106(an)X
+3216(arrow)X
+3447(over)X
+3630(the)X
+3765(displayed)X
+4130(ele-)X
+1304 2916(ment)N
+1506(on)X
+1619(the)X
+1752(screen)X
+2002(to)X
+2097(indicate)X
+2403(the)X
+2537(\257ow)X
+2719(direction;)X
+3084(the)X
+7 f
+3249(d.rast.num)X
+1 f
+3805(program)X
+4129(that)X
+1304 3020(displays)N
+1619(the)X
+1753(element)X
+2059(value)X
+2276(over)X
+2458(the)X
+2592(displayed)X
+2955(cell)X
+3108(on)X
+3221(the)X
+3354(screen;)X
+3628(and)X
+3780(the)X
+7 f
+3944(d.vect)X
+1 f
+1304 3124(program)N
+1629(that)X
+1789(can)X
+1938(be)X
+2048(used)X
+2236(to)X
+2332(display)X
+2614(vector)X
+2861(maps)X
+3074(over)X
+3258(the)X
+3394(aspect)X
+3642(map)X
+3822(being)X
+4046(edited)X
+1304 3228(\(this)N
+1483(is)X
+1564(useful)X
+1801(to)X
+1892(indicate)X
+2194(locations)X
+2535(of)X
+2630(channels\).)X
+887 3488(III.)N
+1084(Soils)X
+1283(and)X
+1432(land)X
+1606(use)X
+1745(layers)X
+1084 3696(Maps)N
+1323(will)X
+1506(be)X
+1634(required)X
+1972(for)X
+2119(both)X
+2321(soils)X
+2528(and)X
+2700(land)X
+2897(use)X
+3059(classes)X
+3348(to)X
+3462(be)X
+3590(represented)X
+4040(in)X
+4154(the)X
+1084 3800(watershed.)N
+1529(No)X
+1702(special)X
+2013(pre-processing)X
+2596(of)X
+2735(these)X
+2982(layers)X
+3258(is)X
+3383(required,)X
+3764(however,)X
+4154(the)X
+7 f
+1084 3904(r.answers)N
+1 f
+1590(program)X
+1917(will)X
+2084(prompt)X
+2368(for)X
+2499(parameter)X
+2880(values)X
+3134(describing)X
+3530(each)X
+3720(category)X
+4052(of)X
+4154(the)X
+1084 4008(maps)N
+1292(found)X
+1519(in)X
+1610(the)X
+1740(watershed.)X
+2162(Use)X
+2320(the)X
+2450(maps)X
+2 f
+2658(a.soils)X
+1 f
+2908(and)X
+2 f
+3057(a.cover)X
+1 f
+3318(.)X
+882 4268(IV.)N
+1084(Preparing)X
+1448(rainfall)X
+1725(data)X
+1084 4476(In)N
+1187(this)X
+1345(exercise)X
+1663(you)X
+1825(will)X
+1993(prepare)X
+2286(four)X
+2462(storm)X
+2694(events.)X
+2972(Using)X
+3213(methods)X
+3543(covered)X
+3852(in)X
+3952(the)X
+4091(class)X
+1084 4580(earlier)N
+1334(this)X
+1487(semester,)X
+1842(you)X
+1999(will)X
+2162(create)X
+2396(\256les)X
+2567(of)X
+2664(simulated)X
+3032(design)X
+3286(storm)X
+3511(data.)X
+3704(The)X
+3865(storms)X
+4124(will)X
+1084 4684(be)N
+1190(of)X
+1286(a)X
+1348(2)X
+1415(hour)X
+1599(duration)X
+1916(with)X
+2096(1,)X
+2185(2,)X
+2274(5,)X
+2363(and)X
+2513(10)X
+2624(year)X
+2798(return)X
+3032(periods.)X
+3359(For)X
+3505(each)X
+3690(storm)X
+3915(event)X
+4130(you)X
+1084 4788(design,)N
+1358(create)X
+1590(a)X
+1651(\256le)X
+1786(with)X
+1965(two)X
+2119(columns)X
+2440(of)X
+2535(numbers,)X
+2882(such)X
+3065(as)X
+3160(in)X
+3251(the)X
+3381(following)X
+3746(example:)X
+1372 4996(0)N
+1660(0)X
+1372 5100(6)N
+1660(2)X
+1372 5204(12)N
+1660(4)X
+1372 5308(18)N
+1660(3)X
+1372 5412(24)N
+1660(10)X
+1394 5516(.)N
+1682(.)X
+
+4 p
+%%Page: 4 4
+11 s 0 xH 0 xS 1 f
+4218 354(4)N
+1394 680(.)N
+1682(.)X
+1394 784(.)N
+1682(.)X
+1372 888(120)N
+1660(0)X
+1084 1096(In)N
+1195(this)X
+1361(example,)X
+1720(the)X
+1866(\256rst)X
+2041(column)X
+2344(is)X
+2441(time)X
+2637(\(minutes\))X
+3013(and)X
+3178(the)X
+3324(second)X
+3606(column)X
+3909(is)X
+4007(rainfall)X
+1084 1200(intensity)N
+1418(\(mm/hour\).)X
+1851(This)X
+2037(is)X
+2125(the)X
+2262(basic)X
+2472(format)X
+2736(of)X
+2838(the)X
+2975(input)X
+3186(\256le)X
+7 f
+3359(r.answers)X
+1 f
+3865(will)X
+4032(expect)X
+1084 1304(as)N
+1203(rain)X
+1386(gauge)X
+1642(data.)X
+1857(The)X
+2041(program)X
+2386(will)X
+2571(ask)X
+2735(how)X
+2933(many)X
+3176(gauges)X
+3467(you)X
+3646(are)X
+3800(using)X
+4038(in)X
+4154(the)X
+1084 1408(watershed.)N
+1487(We)X
+1634(will)X
+1797(only)X
+1978(use)X
+2119(one,)X
+2292(however,)X
+2640(if)X
+2718(more)X
+2923(are)X
+3054(used,)X
+3261(a)X
+3324(map)X
+3500(layer)X
+3700(will)X
+3862(be)X
+3969(required)X
+1084 1512(to)N
+1175(indicate)X
+1477(the)X
+1607(groups)X
+1868(of)X
+1963(elements)X
+2299(that)X
+2454(represented)X
+2881(by)X
+2991(each)X
+3174(gauge.)X
+911 1668(V.)N
+3 f
+1084(Building)X
+1431(an)X
+7 f
+1577(r.answers)X
+1 f
+2076(project)X
+1084 1876(When)N
+1320(you)X
+1478(run)X
+7 f
+1652(r.answers)X
+1 f
+2155(it)X
+2231(will)X
+2395(\256rst)X
+2558(ask)X
+2701(about)X
+2923(a)X
+2988(project.)X
+3303(A)X
+3392(project)X
+3663(is)X
+3748(a)X
+3813(collection)X
+4189(of)X
+1084 1980(all)N
+1203(the)X
+1341(information,)X
+1810(maps,)X
+2048(and)X
+2205(data)X
+2382(needed)X
+2661(to)X
+2760(run)X
+2907(an)X
+3019(ANSWERS)X
+3468(simulation)X
+3871(scenario)X
+4193(in)X
+1084 2084(GRASS.)N
+1434(Initially,)X
+1760(you)X
+1915(will)X
+2076(create)X
+2309(a)X
+2371(new)X
+2540(project.)X
+2830(Once)X
+3038(a)X
+3101(project)X
+3370(is)X
+3453(created)X
+3731(and)X
+3882(progress)X
+4203(is)X
+1084 2188(made)N
+1304(toward)X
+1577(its)X
+1690(completion,)X
+7 f
+2170(r.answers)X
+1 f
+2676(will)X
+2843 0.2604(automatically)AX
+3354(save)X
+3539(the)X
+3676(project's)X
+4013(current)X
+1084 2292(status)N
+1308(in)X
+1400(your)X
+1584(GRASS)X
+1890(workspace)X
+2288(so)X
+2389(you)X
+2544(can)X
+2689(quit)X
+2850(at)X
+2937(any)X
+3087(point)X
+3292(and)X
+3442(later)X
+3622(return)X
+3856(to)X
+3949(the)X
+4081(same)X
+1084 2396(state)N
+1268(by)X
+1378(starting)X
+7 f
+1696(r.answers)X
+1 f
+2195(and)X
+2344(giving)X
+2592(the)X
+2722(name)X
+2935(of)X
+3030(the)X
+3160(existing)X
+3462(project.)X
+1084 2604(The)N
+1243(primary)X
+1544(operation)X
+1899(of)X
+7 f
+2025(r.answers)X
+1 f
+2524(is)X
+2605(through)X
+2901(the)X
+3031(main)X
+3230(menu)X
+3448(\(shown)X
+3728(below\):)X
+1370 2812(ANSWERS)N
+1812(on)X
+1922(GRASS)X
+2227(Project)X
+2499(Manager)X
+2833(Main)X
+3041(Menu)X
+1370 2916(Project)N
+1642(Name:)X
+1899(<)X
+2 f
+1949(sample)X
+1 f
+2198(>)X
+1326 3124(Status)N
+1564(Option)X
+1831(Description)X
+1304 3228 -0.3181(---------------------------------------------------------)AN
+1524 3332(0)N
+1656(Quit)X
+1524 3436(1)N
+1656(Set)X
+1791(mask,)X
+2021(region,)X
+2290(and)X
+2439(resolution)X
+1524 3540(2)N
+1656(Catalogue)X
+2036(soils)X
+2220(parameters)X
+1524 3644(3)N
+1656(Catalogue)X
+2036(land)X
+2210(use)X
+2349(and)X
+2498(surface)X
+2773(parameters)X
+1524 3748(4)N
+1656(Identify)X
+1957(elevation-based)X
+2532(input)X
+2736(layers)X
+1524 3852(5)N
+1656(Prepare)X
+1946(rain)X
+2105(gauge)X
+2337(data)X
+1524 3956(6)N
+1656(Identify)X
+1957(outlet)X
+2181(cell)X
+1524 4060(7)N
+1656(Specify)X
+1947(areas)X
+2149(with)X
+2328(subsurface)X
+2725(drainage)X
+1524 4164(8)N
+1656(Catalogue)X
+2036(channel)X
+2332(parameters)X
+1524 4268(9)N
+1656(De\256ne)X
+1912(channel)X
+2208(slopes)X
+1502 4372(10)N
+1678(Specify)X
+1969(BMP's)X
+2240(in)X
+2331(watershed)X
+1502 4476(11)N
+1678(Prepare)X
+1968(ANSWERS)X
+2410(input)X
+2614(and)X
+2763(run)X
+2902(simulation)X
+1502 4580(12)N
+1678(Miscellaneous)X
+2209(Command)X
+2599(Menu)X
+1326 4788(Option:)N
+1618(0__)X
+1084 4996(The)N
+1245(following)X
+1612(is)X
+1695(a)X
+1758(description)X
+2174(of)X
+2271(what)X
+2466(you)X
+2622(will)X
+2784(need)X
+2974(to)X
+3067(do)X
+3179(for)X
+3305(each)X
+3491(step)X
+3658(to)X
+3752(complete)X
+4101(your)X
+1084 5100(ANSWERS)N
+1526(project.)X
+3 f
+1084 5308(Step)N
+1272(1)X
+1 f
+1084 5412(This)N
+1264(step)X
+1429(is)X
+1511(initiated)X
+1825 0.2604(automatically)AX
+2330(when)X
+2543(a)X
+2605(new)X
+2774(project)X
+3042(is)X
+3124(started.)X
+3426(It)X
+3503(will)X
+3664(ask)X
+3804(for)X
+3930(a)X
+3993(layer)X
+4193(to)X
+1084 5516(use)N
+1238(as)X
+1348(a)X
+1424(project)X
+1706(mask)X
+1929(\(use)X
+2 f
+2112(a.wshd)X
+1 f
+2359(\),)X
+2447(project)X
+2729(resolution)X
+3119(\(use)X
+3302(100)X
+3471(meters\))X
+3772(and)X
+3936(will)X
+4110(then)X
+
+5 p
+%%Page: 5 5
+11 s 0 xH 0 xS 1 f
+4218 354(5)N
+1084 680(establish)N
+1440(a)X
+1526(project)X
+1818(region.)X
+2112(This)X
+2316(step)X
+2506(will)X
+2692(create)X
+2950(a)X
+3037(new)X
+3231(map)X
+3431(with)X
+3636(a)X
+3723(name)X
+3962(<)X
+2 f
+4012(project)X
+1084 784(name)N
+1 f
+1274(>.ELEMENT;)X
+1827(This)X
+2007(map)X
+2182(will)X
+2343(act)X
+2469(as)X
+2565(a)X
+2627(reference)X
+2976(to)X
+3068(ANSWERS')X
+3539(methods)X
+3860(of)X
+3955(referring)X
+1084 888(to)N
+1182(raster)X
+1406(cells.)X
+1619(Raster)X
+1873(values)X
+2127(of)X
+2229(the)X
+2366(element)X
+2676(map)X
+2858(will)X
+3026(indicate)X
+3336(element)X
+3646(number,)X
+3967(with)X
+4154(the)X
+1084 992(category)N
+1409(description)X
+1823(giving)X
+2071(row)X
+2229(and)X
+2378(column)X
+2665(numbers.)X
+3 f
+1084 1200(Step)N
+1272(2)X
+1338(-)X
+1389(Soils)X
+1 f
+1084 1304(Use)N
+1257(the)X
+1403(map)X
+2 f
+1593(a.soils)X
+1 f
+1859(for)X
+1999(this)X
+2165(exercise.)X
+2513(Each)X
+2727(soil)X
+2893(category)X
+3234(found)X
+3477(in)X
+3584(the)X
+3730(watershed)X
+4124(will)X
+1084 1408(require)N
+1365(8)X
+1441(parameters.)X
+1881(This)X
+2070(step)X
+2244(will)X
+2414(provide)X
+2715(a)X
+2786(worksheet)X
+3179(for)X
+3313(entering)X
+3633(the)X
+3772(parameters)X
+4189(as)X
+1084 1496(shown)N
+1335(below:)X
+9 s
+10 f
+1131 1600(i)N
+1155(iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii)X
+1 f
+1583 1688(Total)N
+1941(Field)X
+2375(In\256ltration)X
+2701(Constants)X
+3262(Zone)X
+3563(Antecedent)X
+1233 1776(Map)N
+1539(Porosity)X
+1887(Capacity)X
+3248(Depth)X
+3597(Moisture)X
+3999(USLE)X
+1167 1864(Category)N
+1593(\(TP\))X
+1951(\(FP\))X
+2312(\(FC\))X
+2696(\(A\))X
+3002(\(P\))X
+3266(\(DF\))X
+3625(\(ASM\))X
+4039(\(K\))X
+10 f
+1131 1880(i)N
+1155(iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii)X
+1 f
+1263 1968(29)N
+1593(54%)X
+1949(87%)X
+2251(21)X
+2341(mm/h)X
+2617(24)X
+2707(mm/h)X
+2983(0.63)X
+3217(133)X
+3343(mm)X
+3661(60%)X
+4026(0.28)X
+1263 2056(51)N
+1593(47%)X
+1949(93%)X
+2251(21)X
+2341(mm/h)X
+2617(24)X
+2707(mm/h)X
+2983(0.56)X
+3217(108)X
+3343(mm)X
+3661(60%)X
+4026(0.33)X
+1263 2144(79)N
+1593(46%)X
+1949(74%)X
+2269(7)X
+2323(mm/h)X
+2617(14)X
+2707(mm/h)X
+2983(0.60)X
+3235(96)X
+3325(mm)X
+3661(60%)X
+4026(0.28)X
+1245 2232(103)N
+1593(47%)X
+1949(68%)X
+2269(7)X
+2323(mm/h)X
+2617(14)X
+2707(mm/h)X
+2983(0.55)X
+3235(57)X
+3325(mm)X
+3661(60%)X
+4026(0.32)X
+1245 2320(105)N
+1593(48%)X
+1949(96%)X
+2251(21)X
+2341(mm/h)X
+2617(24)X
+2707(mm/h)X
+2983(0.55)X
+3235(95)X
+3325(mm)X
+3661(60%)X
+4026(0.32)X
+1245 2408(106)N
+1593(47%)X
+1949(93%)X
+2251(21)X
+2341(mm/h)X
+2617(24)X
+2707(mm/h)X
+2983(0.55)X
+3217(108)X
+3343(mm)X
+3661(60%)X
+4026(0.32)X
+10 f
+1131 2424(i)N
+1155(iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii)X
+1131(c)X
+2392(c)Y
+2320(c)Y
+2248(c)Y
+2176(c)Y
+2104(c)Y
+2032(c)Y
+1960(c)Y
+1888(c)Y
+1816(c)Y
+1744(c)Y
+1672(c)Y
+4215 2424(c)N
+2392(c)Y
+2320(c)Y
+2248(c)Y
+2176(c)Y
+2104(c)Y
+2032(c)Y
+1960(c)Y
+1888(c)Y
+1816(c)Y
+1744(c)Y
+1672(c)Y
+11 s
+1 f
+1084 2720(After)N
+1298(entering)X
+1616(the)X
+1753(above)X
+1992(parameters,)X
+2429(two)X
+2590(other)X
+2800(inputs)X
+3045(are)X
+3182(requested)X
+3549(by)X
+3667(step)X
+3839(2;)X
+3938(complete)X
+1084 2824(them)N
+1283(as)X
+1378(shown:)X
+1106 3032(-)N
+1157(Tile)X
+1322(drainage)X
+1647(coef\256cient:)X
+2066(8.20)X
+2242(mm/day)X
+1106 3240(-)N
+1157(Groundwater)X
+1642(release)X
+1908(fraction:)X
+2229(.001)X
+3 f
+1084 3448(Step)N
+1272(3)X
+1338(-)X
+1389(Land)X
+1612(cover)X
+1 f
+1084 3552(Use)N
+1248(the)X
+1384(map)X
+2 f
+1564(a.cover)X
+1 f
+1853(for)X
+1983(this)X
+2139(exercise.)X
+2477(For)X
+2627(each)X
+2816(land)X
+2996(cover)X
+3219(class)X
+3418(found)X
+3651(in)X
+3748(the)X
+3884(watershed,)X
+1084 3656(ANSWERS)N
+1526(requires)X
+1831(6)X
+1897(parameters.)X
+2327(Fill)X
+2473(out)X
+2608(the)X
+2738(table)X
+2932(in)X
+3023(this)X
+3173(step)X
+3337(with)X
+3516(the)X
+3646(values)X
+3893(as)X
+3988(shown:)X
+10 f
+1126 3776(i)N
+1140(iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii)X
+1 f
+1170 3880(Category)N
+1625(\(CROP\))X
+2085(\(PIT\))X
+2447(\(PER\))X
+2799(\(RC\))X
+3139(\(HU\))X
+3525(\(N\))X
+3817(\(USLE)X
+4088(C\))X
+10 f
+1126 3896(i)N
+1140(iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii)X
+1 f
+1309 4104(1)N
+1642(pasture)X
+2045(3.4)X
+2177(mm)X
+2476(97%)X
+2810(0.52)X
+3107(25)X
+3217(mm)X
+3487(0.115)X
+3919(0.50)X
+1309 4208(2)N
+1691(corn)X
+2045(0.1)X
+2177(mm)X
+2498(5%)X
+2810(0.47)X
+3107(75)X
+3217(mm)X
+3487(0.099)X
+3919(0.45)X
+10 f
+1126 4224(i)N
+1140(iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii)X
+1126(c)X
+4216(c)Y
+4128(c)Y
+4040(c)Y
+3952(c)Y
+3864(c)Y
+4220 4224(c)N
+4216(c)Y
+4128(c)Y
+4040(c)Y
+3952(c)Y
+3864(c)Y
+3 f
+1084 4536(Step)N
+1272(4)X
+1338(-)X
+1389(elevation-based)X
+1993(layers)X
+1 f
+1084 4640(Enter)N
+1297(the)X
+1427(names)X
+1674(of)X
+1769(the)X
+1899(slope)X
+2107(and)X
+2256(aspect)X
+2498(\256les)X
+2667(you)X
+2821(created)X
+3097(previously.)X
+3 f
+1084 4848(Step)N
+1272(5)X
+1338(-)X
+1389(rain)X
+1568(gauge)X
+1810(data)X
+1 f
+1084 4952(Use)N
+1248(the)X
+1384(names)X
+1637(of)X
+1738(the)X
+1874(four)X
+2048(rain)X
+2213(data)X
+2388(\256les)X
+2563(\(that)X
+2753(you)X
+2913(created)X
+3195(previously\))X
+3624(to)X
+3721(enter)X
+3925(the)X
+4061(storm)X
+1084 5056(data)N
+1253(under)X
+1475(different)X
+1800(event)X
+2013(names.)X
+3 f
+1084 5264(Step)N
+1272(6)X
+1338(-)X
+1389(outlet)X
+1626(cell)X
+1 f
+1084 5368(To)N
+1207(\256nd)X
+1369(the)X
+1502(row)X
+1663(and)X
+1815(column)X
+2105(of)X
+2203(the)X
+2336(outlet)X
+2563(cell,)X
+2738(display)X
+3018(the)X
+3151(<)X
+2 f
+3201(project)X
+3476(name)X
+1 f
+3666(>.ELEMENT)X
+4174(on)X
+1084 5472(the)N
+1239(GRASS)X
+1569(graphics)X
+1914(monitor,)X
+2263(then)X
+7 f
+2493(d.vect)X
+1 f
+2858(the)X
+2 f
+3013(a.channel)X
+1 f
+3405(map.)X
+3626(Use)X
+3809(the)X
+3964(program)X
+7 f
+1084 5576(d.what.rast)N
+1 f
+1693(to)X
+1788(click)X
+1986(on)X
+2100(the)X
+2234(cell)X
+2388(at)X
+2478(the)X
+2612(outlet)X
+2840(of)X
+2939(the)X
+3073(watershed)X
+3455(\(which)X
+3725(you)X
+3884(can)X
+4033(tell)X
+4174(by)X
+
+6 p
+%%Page: 6 6
+11 s 0 xH 0 xS 1 f
+4218 354(6)N
+1084 680(the)N
+1223(vector)X
+1474(map)X
+1657(of)X
+1760(channels\).)X
+2149(The)X
+2316(output)X
+2572(of)X
+7 f
+2706(d.what.rast)X
+1 f
+3319(will)X
+3487(give)X
+3669(you)X
+3831(the)X
+3969(row)X
+4135(and)X
+1084 784(column)N
+1371(of)X
+1466(the)X
+1596(outlet.)X
+3 f
+1084 992(Step)N
+1272(7)X
+1338(-)X
+1389(subsurface)X
+1816(drainage)X
+1 f
+1084 1096(Complete)N
+1450(this)X
+1600(step)X
+1764(by)X
+1874(indicating)X
+2250(all)X
+2361(of)X
+2456(the)X
+2586(watershed)X
+2964(has)X
+3103(subsurface)X
+3500(drainage)X
+3825(installed.)X
+3 f
+1084 1304(Step)N
+1272(8)X
+1338(-)X
+1389(channels)X
+1739(and)X
+1903(their)X
+2106(parameters)X
+1 f
+1084 1408(Use)N
+1245(the)X
+1378(raster)X
+1599(channel)X
+1899(map)X
+2 f
+2077(a.channel)X
+1 f
+2422(.)X
+2470(There)X
+2701(are)X
+2834(2)X
+2904(categories)X
+3287(of)X
+3386(channels,)X
+3742(the)X
+3876(parameters)X
+1084 1512(are)N
+1213(to)X
+1304(be)X
+1409(\256lled)X
+1613(in)X
+1704(as)X
+1799(follows:)X
+1084 1720(Category:)N
+1454(1)X
+1696(Width:)X
+1964(2.0_)X
+2162(meters)X
+2551(Roughness:)X
+2984(0.060)X
+1084 1824(Category:)N
+1454(2)X
+1696(Width:)X
+1964(1.5_)X
+2162(meters)X
+2551(Roughness:)X
+2984(0.070)X
+3 f
+1084 2032(Step)N
+1272(9)X
+1338(-)X
+1389(channel)X
+1705(slopes)X
+1 f
+1084 2136(Run)N
+1253(this)X
+1403(step)X
+1567(to)X
+1658(tell)X
+1794(it)X
+1866(you)X
+2020(do)X
+2130(not)X
+2265(wish)X
+2453(to)X
+2544(input)X
+2748(channel)X
+3044(slopes.)X
+3 f
+1084 2344(Step)N
+1272(10)X
+1382(-)X
+1433(Best)X
+1616(Management)X
+2131(Practices)X
+1 f
+1084 2448(We)N
+1233(will)X
+1398(only)X
+1582(simulate)X
+1909(one)X
+2063(of)X
+2163(the)X
+2298(four)X
+2471(possible)X
+2787(BMPs,)X
+3056(Grassed)X
+3365(Waterways.)X
+3810(Use)X
+3974(the)X
+4110(map)X
+2 f
+1084 2552(a.waterway)N
+1 f
+1493(,)X
+1537(and)X
+1686(when)X
+1898(you)X
+2052(are)X
+2181(prompted)X
+2541(for)X
+2665(the)X
+2795(width)X
+3018(of)X
+3113(the)X
+3243(waterway,)X
+3628(use)X
+3767(20)X
+3877(meters.)X
+882 2708(VI.)N
+3 f
+1084(Test)X
+1267(inputs)X
+1524(by)X
+1639(running)X
+1965(ANSWERS)X
+1084 2916(Step)N
+1273(11)X
+1 f
+1384(will)X
+1545(compile)X
+1853(the)X
+1984(inputs)X
+2223(from)X
+2418(Steps)X
+2633(1)X
+2701(through)X
+2999(10)X
+3111(to)X
+3204(create)X
+3438(ANSWERS)X
+3882(input,)X
+4110(then)X
+1084 3020(will)N
+1248(run)X
+1391(the)X
+1525(simulation)X
+1925(and)X
+2078(capture)X
+2363(and)X
+2516(process)X
+2805(the)X
+2939(output.)X
+3213(Because)X
+3532(of)X
+3631(the)X
+3765(complexity)X
+4189(of)X
+1084 3124(the)N
+1215(simulation)X
+1613(and)X
+1764(its)X
+1872(inputs,)X
+2134(it)X
+2208(is)X
+2291(quite)X
+2492(possible)X
+2805(the)X
+2937(simulation)X
+3335(does)X
+3520(not)X
+3657(run)X
+3798(without)X
+4092(error)X
+1084 3228(on)N
+1205(the)X
+1346(\256rst)X
+1516(attempts.)X
+1871(\(The)X
+2069(most)X
+2273(common)X
+2614(problems)X
+2974(typically)X
+3316(stem)X
+3515(from)X
+3718(the)X
+3858(aspect)X
+4110(map)X
+1084 3332(routing)N
+1361(runoff)X
+1602(in)X
+1693(directions)X
+2063(the)X
+2193(program)X
+2513(cannot)X
+2770(follow\).)X
+1084 3540(Some)N
+1311(errors)X
+1541(may)X
+1719(be)X
+1828(captured)X
+2157(and)X
+2310(displayed)X
+2674(to)X
+2769(the)X
+2903(screen)X
+3153(by)X
+7 f
+3298(r.answers)X
+1 f
+3775(,)X
+3824(while)X
+4047(others)X
+1084 3644(may)N
+1264(be)X
+1375(buried)X
+1628(in)X
+1725(the)X
+1861(answers)X
+2171(output)X
+2425(\256le)X
+2566(created)X
+2848(when)X
+3065(the)X
+3200(simulation)X
+3601(is)X
+3687(run.)X
+3853(This)X
+4037(means)X
+1084 3748(you)N
+1246(may)X
+1428(have)X
+1624(to)X
+1724(use)X
+1872(the)X
+2011(facilities)X
+2347(in)X
+3 f
+2447(Step)X
+2644(12)X
+1 f
+2763(to)X
+2863(read)X
+3045(\256le)X
+2 f
+3189(answers_output)X
+1 f
+3778(in)X
+3878(the)X
+4017(project)X
+1084 3852(database.)N
+1431(\(The)X
+1619(project)X
+1886(database)X
+2211(is)X
+2292(where)X
+2528(all)X
+2639(data)X
+2808(\256les)X
+2977(used)X
+3160(by)X
+7 f
+3301(r.answers)X
+1 f
+3800(are)X
+3929(stored\).)X
+864 4008(VII.)N
+3 f
+1084(Run)X
+1267(scenarios)X
+1 f
+1084 4216(You)N
+1257(will)X
+1417(run)X
+1556(four)X
+1724(simulations)X
+2154(using)X
+2367(the)X
+2497(each)X
+2680(of)X
+2775(the)X
+2905(design)X
+3157(storms)X
+3414(you)X
+3568(create)X
+3800(\(as)X
+3925(described)X
+1084 4320(above\).)N
+1395(Once)X
+1608(you)X
+1768(are)X
+1903(successfully)X
+2361(getting)X
+2635(results)X
+2893(with)X
+3078(your)X
+3267(\256rst)X
+3432(scenario,)X
+3775(use)X
+3920(the)X
+4055("copy)X
+1084 4424(an)N
+1192(existing)X
+1497(project")X
+1803(function)X
+2122(on)X
+2235(the)X
+2369(initial)X
+2603(menu)X
+2825(of)X
+7 f
+2955(r.answers)X
+1 f
+3432(.)X
+3480(Create)X
+3736(three)X
+3938(copies)X
+4189(of)X
+1084 4528(your)N
+1281(original)X
+1592(project,)X
+1895(so)X
+2009(that)X
+2178(you)X
+2346(have)X
+2548(a)X
+2623(total)X
+2817(of)X
+2926(four.)X
+3152(Now)X
+3358(you)X
+3526(can)X
+3683(modify)X
+3973(the)X
+4116(new)X
+1084 4632(scenarios)N
+1435(to)X
+1528(simulate)X
+1852(different)X
+2179(conditions)X
+2571(of)X
+2668(the)X
+2800(watershed.)X
+3224(The)X
+3385(initial)X
+3617(inputs)X
+3857(for)X
+3983(the)X
+4116(pro-)X
+1084 4736(ject)N
+1235(gave)X
+1424(land)X
+1599(cover)X
+1817(inputs)X
+2056(for)X
+2181(corn)X
+2360(at)X
+2447(the)X
+2578(beginning)X
+2954(stage)X
+3158(of)X
+3254(its)X
+3361(growth.)X
+3655(In)X
+3751(the)X
+3882(other)X
+4086(three)X
+1084 4840(projects)N
+1385(you)X
+1539(will)X
+1699(simulate)X
+2021(the)X
+2151(corn)X
+2329(at)X
+2415(later)X
+2594(stages)X
+2831(of)X
+2926(growth.)X
+3219(For)X
+3363(each)X
+3546(of)X
+3641(the)X
+3772(stages)X
+4010(of)X
+4106(corn)X
+1084 4944(growth,)N
+1377(model)X
+1620(the)X
+1750(four)X
+1918(design)X
+2170(rain)X
+2329(storms.)X
+1084 5152(To)N
+1215(simulate)X
+1548(the)X
+1689(changing)X
+2045(land)X
+2230(cover)X
+2458(conditions)X
+2859(of)X
+2966(the)X
+3108(different)X
+3445(stages)X
+3694(of)X
+3801(corn)X
+3991(growth,)X
+1084 5256(you)N
+1239(will)X
+1400(run)X
+1540(step)X
+1705(3)X
+1772(again)X
+1986(in)X
+2078(each)X
+2262(of)X
+2358(the)X
+2488(copied)X
+2745(projects.)X
+3068(Use)X
+3226(the)X
+3356(same)X
+3559(cover)X
+3776(map)X
+3950(\()X
+2 f
+3979(a.cover)X
+1 f
+4240(,)X
+1084 5360(and)N
+1240(edit)X
+1403(the)X
+1541(existing)X
+1851(parameters)X
+2267(from)X
+2468(the)X
+2606(earlier)X
+2861(simulation)X
+3265(as)X
+3368(shown)X
+3627(below)X
+3872(\(note,)X
+4105(only)X
+1084 5464(corn)N
+1262(values)X
+1509(are)X
+1638(shown,)X
+1911(pasture)X
+2187(values)X
+2434(will)X
+2594(remain)X
+2861(the)X
+2991(same)X
+3194(as)X
+3289(before\):)X
+
+7 p
+%%Page: 7 7
+11 s 0 xH 0 xS 1 f
+4218 354(7)N
+10 f
+1148 592(i)N
+1162(iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii)X
+1 f
+1192 696(Category)N
+1647(\(CROP\))X
+2107(\(PIT\))X
+2469(\(PER\))X
+2821(\(RC\))X
+3161(\(HU\))X
+3525(\(N\))X
+3795(\(USLE)X
+4066(C\))X
+10 f
+1148 712(i)N
+1162(iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii)X
+1 f
+2443 816(Crop)N
+2641(Stage)X
+2859(2)X
+1331 1024(2)N
+1713(corn)X
+2067(0.5)X
+2199(mm)X
+2487(20)X
+2597(%)X
+2832(0.40)X
+3129(70)X
+3239(mm)X
+3509(0.12)X
+3897(0.30)X
+10 f
+1148 1040(i)N
+1162(iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii)X
+1 f
+2443 1144(Crop)N
+2641(Stage)X
+2859(3)X
+1331 1352(2)N
+1713(corn)X
+2067(1.0)X
+2199(mm)X
+2487(55)X
+2597(%)X
+2832(0.37)X
+3129(65)X
+3239(mm)X
+3509(0.15)X
+3897(0.20)X
+10 f
+1148 1368(i)N
+1162(iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii)X
+1 f
+2443 1472(Crop)N
+2641(Stage)X
+2859(4)X
+1331 1680(2)N
+1713(corn)X
+2067(1.4)X
+2199(mm)X
+2487(80)X
+2597(%)X
+2832(0.35)X
+3129(63)X
+3239(mm)X
+3509(0.18)X
+3897(0.14)X
+10 f
+1148 1696(i)N
+1162(iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii)X
+1148(c)X
+1648(c)Y
+1560(c)Y
+1472(c)Y
+1384(c)Y
+1296(c)Y
+1208(c)Y
+1120(c)Y
+1032(c)Y
+944(c)Y
+856(c)Y
+768(c)Y
+680(c)Y
+4198 1696(c)N
+1648(c)Y
+1560(c)Y
+1472(c)Y
+1384(c)Y
+1296(c)Y
+1208(c)Y
+1120(c)Y
+1032(c)Y
+944(c)Y
+856(c)Y
+768(c)Y
+680(c)Y
+1 f
+1084 2008(Thus)N
+1285(you)X
+1442(will)X
+1605(have)X
+1796(4)X
+1865(projects)X
+2169(for)X
+2296(the)X
+2429(4)X
+2498(stages)X
+2738(of)X
+2836(corn)X
+3017(growth.)X
+3335(Each)X
+3536(project)X
+3807(will)X
+3971(model)X
+4218(4)X
+1084 2112(design)N
+1345(storms,)X
+1633(so)X
+1742(you)X
+1905(will)X
+2074(have)X
+2271(a)X
+2341(total)X
+2530(of)X
+2634(16)X
+2753(simulations.)X
+3236(Note)X
+3437(that)X
+3600(running)X
+3904(sequential)X
+1084 2216(simulations)N
+1517(in)X
+1611(a)X
+1675(given)X
+1896(project)X
+2166(will)X
+2330(overwrite)X
+2693(previously)X
+3091(created)X
+3371(output)X
+3623(\256les...)X
+3862(so)X
+3966(you)X
+4124(will)X
+1084 2320(want)N
+1279(to)X
+1372(use)X
+1513(the)X
+1645(facilities)X
+1974(of)X
+2071(Step)X
+2252(12)X
+2364(to)X
+2456(copy)X
+2650(\256les)X
+2820(you)X
+2975(want)X
+3169(to)X
+3261(keep)X
+3450(to)X
+3542(another)X
+3829(place)X
+4038(before)X
+1084 2424(running)N
+1380(another)X
+1666(simulation)X
+2062(with)X
+2241(that)X
+2396(project)X
+2663(\(or)X
+2787(you)X
+2942(can)X
+3087(create)X
+3320(a)X
+3382(different)X
+3708(project)X
+3976(for)X
+4101(each)X
+1084 2528(simulation\).)N
+864 2684(VIII.)N
+3 f
+1084(Analyze)X
+1409(results)X
+1 f
+1084 2892(Now)N
+1276(generate)X
+1596(a)X
+1657(summary)X
+2007(of)X
+2102(what)X
+2295(happened)X
+2654(by)X
+2764(analyzing)X
+3129(the)X
+3259(results.)X
+1084 3100(ANSWERS)N
+1540(output)X
+1802(includes)X
+2132(data)X
+2315(for)X
+2454(sediment)X
+2810(movement)X
+3220(for)X
+3359(watershed)X
+3752(elements.)X
+4125(The)X
+7 f
+1084 3204(r.answers)N
+1 f
+1591(program)X
+1919(will)X
+2087(use)X
+2234(this)X
+2392(output)X
+2648(to)X
+2747(create)X
+2987(new)X
+3163(maps)X
+3379(of)X
+3481(net)X
+3618(sediment)X
+3966(loss,)X
+4154(net)X
+1084 3308(sediment)N
+1439(deposition,)X
+1865(and)X
+2028(channel)X
+2338(deposition)X
+2742(in)X
+2847(your)X
+3044(GRASS)X
+3364(workspace.)X
+3798(You)X
+3986(can)X
+4145(use)X
+1084 3412(GRASS)N
+1401(raster)X
+1630(map)X
+1816(tools)X
+2022(to)X
+2125(generate)X
+2457(reports)X
+2735(comparing)X
+3146(the)X
+3287(results)X
+3550(of)X
+3656(the)X
+3797(outputs;)X
+4115(plus)X
+1084 3516(you)N
+1243(can)X
+1392(look)X
+1576(at)X
+1667(the)X
+1802(input)X
+2011(maps)X
+2224(to)X
+2320(correlate)X
+2655(to)X
+2751(the)X
+2887(results.)X
+3189(You)X
+3368(may)X
+3548(also)X
+3718(wish)X
+3912(to)X
+4009(use)X
+4154(the)X
+7 f
+1084 3620(d.answers)N
+1 f
+1591(shell)X
+1788(script)X
+2014(to)X
+2113(view)X
+2314(a)X
+2383(summary)X
+2740(of)X
+2842(input)X
+3053(and)X
+3209(output)X
+3464(maps.)X
+7 f
+3785(d.answers)X
+1 f
+1084 3724(provides)N
+1424(an)X
+1544(option)X
+1807(to)X
+1913(use)X
+2067(the)X
+7 f
+2243(d.linegraph)X
+1 f
+2863(program)X
+3198(to)X
+3304(display)X
+3596(graph)X
+3833(plots)X
+4043(of)X
+4154(the)X
+1084 3828(outlet)N
+1308(hydrograph)X
+1735(data.)X
+1084 4036(Another)N
+1410(place)X
+1634(to)X
+1741(look)X
+1936(are)X
+2082(the)X
+2229(project)X
+2513(database)X
+2855(\256les,)X
+3063(accessible)X
+3459(via)X
+3606(the)X
+3753(Miscellaneous)X
+1084 4140(Command)N
+1481(Menu)X
+1715(\(Step)X
+1930(12)X
+2047(of)X
+2149(the)X
+7 f
+2317(r.answers)X
+1 f
+2823(Main)X
+3037(Menu.)X
+3292(See)X
+3447(the)X
+3583(appropriate)X
+4012(section)X
+1084 4244(of)N
+1184(the)X
+7 f
+1350(r.answers)X
+1 f
+1854(manual)X
+2141(handout)X
+2452(under)X
+2679(the)X
+2814(description)X
+3233(for)X
+3363(Step)X
+3548(12)X
+3664(and)X
+3819(the)X
+3955("FILES")X
+1084 4348(section.\))N
+1413(The)X
+1578(data)X
+1753(\256les)X
+1928(of)X
+2029(the)X
+2164(output)X
+2417(which)X
+2659(you)X
+2818(will)X
+2983(want)X
+3181(to)X
+3277(focus)X
+3494(on)X
+3609(will)X
+3774(be)X
+3884(the)X
+4019(\256les)X
+4193(in)X
+1084 4452(the)N
+1234(project)X
+1521(database)X
+1866(starting)X
+2173(with)X
+2372("out_".)X
+2665(Hydrograph)X
+3131(data)X
+3321(will)X
+3502(be)X
+3628(stored)X
+3886(in)X
+3998(the)X
+4149(\256le)X
+1084 4556("out_hydro".)N
+1591(This)X
+1777(\256le)X
+1919(is)X
+2007(processed)X
+2381(to)X
+2478(be)X
+2589(used)X
+2778(as)X
+2879(input)X
+3089(to)X
+3186(the)X
+7 f
+3353(d.linegraph)X
+1 f
+3964(program)X
+1084 4660(in)N
+1175(the)X
+1305(\256les)X
+1474("hydro_time",)X
+1997("hydro_rain",)X
+2499("hydro_runoff",)X
+3083("hydro_sed1",)X
+3609(and)X
+3758("hydro_sed2".)X
+1084 4764(A)N
+1177(shell)X
+1374(script)X
+1600(is)X
+1689(available)X
+2038(called)X
+7 f
+2310(d.hydro_graph)X
+1 f
+3029(which)X
+3274(demonstrates)X
+3769(the)X
+3906(use)X
+4052(of)X
+4154(the)X
+7 f
+1084 4868(d.linegraph)N
+1 f
+1705(program)X
+2041(to)X
+2148(graph)X
+2386(hydrograph)X
+2829(data.)X
+3036(To)X
+3173(use,)X
+3351(type)X
+7 f
+3573(d.hydro_graph)X
+2 f
+1084 4972(project)N
+1360(name)X
+1 f
+1576(\(where)X
+1845(project)X
+2116(name)X
+2333(is)X
+2418(the)X
+2552(name)X
+2768(of)X
+2866(the)X
+2999(project)X
+3269(where)X
+3508(an)X
+3616(ANSWERS)X
+4061(simu-)X
+1084 5076(lation)N
+1308(has)X
+1447(been)X
+1635(successfully)X
+2087(ran\).)X
+2272(These)X
+2504(data)X
+2673(can)X
+2817(also)X
+2981(be)X
+3086(imported)X
+3428(to)X
+3520(other)X
+3724(programs,)X
+4101(such)X
+1084 5180(as)N
+1196(your)X
+1396(favorite)X
+1709(spreadsheet,)X
+2180(statistical)X
+2554(analysis,)X
+2899(or)X
+3011(plotting)X
+3325(package,)X
+3673(for)X
+3813(analysis)X
+4135(and)X
+1084 5284(display.)N
+
+7 p
+%%Trailer
+xt
+
+xs
