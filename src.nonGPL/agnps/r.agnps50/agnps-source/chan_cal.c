@@ -299,4 +299,4 @@ void calculate_channel(
      }
    }
 
- } /* End of procedure */
+} /* End of procedure */
