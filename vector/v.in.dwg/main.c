@@ -109,7 +109,7 @@ main (int argc, char *argv[])
 
     /* Create table */
     sprintf ( buf, "create table %s ( cat integer, entity_name varchar(20), color int, weight int, "
-	           "block varchar(100), layer varchar(100), txt varchar(100) )", Fi->table );
+	           "layer varchar(100), block varchar(100), txt varchar(100) )", Fi->table );
     db_set_string ( &sql, buf);
     G_debug ( 3, db_get_string ( &sql ) );
 
