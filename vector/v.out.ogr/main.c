@@ -20,6 +20,8 @@
 #include "dbmi.h"
 #include "Vect.h"
 #include "ogr_api.h"
+#include "config.h"
+#include "gprojects.h"
 
 int    fout, fskip; /* features written/ skip */
 int    nocat, noatt, nocatskip; /* number of features without cats/atts written/skip */
@@ -41,6 +43,8 @@ main (int argc, char *argv[])
     struct Flag   *cat_flag;
     char   buf[2000], *pbuf;
     char   key1[200], key2[200];
+    struct Key_Value *projinfo, *projunits;
+    struct Cell_head cellhd;
 
     /* Vector */
     struct Map_info In;
@@ -144,6 +148,13 @@ main (int argc, char *argv[])
     Vect_set_open_level (2); 
     Vect_open_old (&In, in_opt->answer, mapset); 
 
+    /* fetch PROJ info */
+    G_get_default_window(&cellhd);
+    projinfo = G_get_projinfo();
+    projunits = G_get_projunits();
+    if( cellhd.proj != 0 && (projinfo == NULL || projunits == NULL) )
+        G_warning("Projection files missing");
+
     /* Open OGR DSN */
     OGRRegisterAll();
     G_debug (2, "driver count = %d", OGRGetDriverCount() ); 
@@ -164,7 +175,7 @@ main (int argc, char *argv[])
     Ogr_ds = OGR_Dr_CreateDataSource( Ogr_driver, dsn_opt->answer, NULL );
     if ( Ogr_ds == NULL ) G_fatal_error ("Cannot open OGR data source '%s'", dsn_opt->answer);
     
-    Ogr_layer = OGR_DS_CreateLayer( Ogr_ds, layer_opt->answer, NULL, wkbtype, NULL );
+    Ogr_layer = OGR_DS_CreateLayer( Ogr_ds, layer_opt->answer, GPJ_grass_to_osr(projinfo,projunits), wkbtype, NULL );
     
     db_init_string(&dbstring);
 
