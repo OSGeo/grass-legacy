@@ -19,11 +19,11 @@
 .
 .E 100p
 .N 100p
-.F gulim
+.F luximr
 .S 10
 .R 5
 line 1
-.F batang
+.F luxirbi
 .L 0
 line 2-1
 line 2-2
