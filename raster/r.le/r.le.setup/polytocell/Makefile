@@ -17,7 +17,7 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 default: $(BIN_CMD)/bmif_to_cell $(BIN_CMD)/poly_to_bmif
 
 $(BIN_CMD)/bmif_to_cell: bmf_to_cll.o $(DEPENDENCIES)
-	$(CC) $(LDFLAGS) -o $@ bmf_to_cll.o $(LIBES) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ bmf_to_cll.o $(LIBES) $(MATHLIB) $(XDRLIB)
 	
 $(BIN_CMD)/poly_to_bmif: $(OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS)
