@@ -275,6 +275,14 @@ proc menu2 { menu } {
 	-command dump_ppm -underline 0 -label "PPM Image"
 	$menu add command \
 	-command dump_tif -underline 0 -label "TIFF Image"
+        $menu add command \
+        -command {set fname [create_file_browser .file_browser 1]
+	if {$fname != -1} then {
+	appBusy
+         Nstart_zoom $fname
+	appNotBusy
+	}	
+	} -underline 0 -label "Save Max. Resolution PPM(s)"
     }
 
 proc dump_rgb { } {
