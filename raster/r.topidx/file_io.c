@@ -8,8 +8,8 @@ getcells(void)
 {
 	int	fd,i,j;
 	RASTER_MAP_TYPE	data_type;
-	CELL	*ccell;
-	FCELL	*fcell;
+	CELL	*ccell = NULL;
+	FCELL	*fcell = NULL;
 
 
 	data_type = G_raster_map_type(iname,mapset);
