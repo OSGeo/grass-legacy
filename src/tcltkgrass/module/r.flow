@@ -1,0 +1,18 @@
+interface_build {
+    {r.flow} 0
+    {Construction of slope curves (flowlines), flowpath lengths and flowline densities from DEM.}
+    {entry elevin {Input elevation raster map:} 0 raster}
+    {entry aspin {Input aspect raster map (optional):} 0 raster}
+    {entry barin {Input binary barrier raster map (optional):} 0 raster}
+    {entry skip {Set number of cells between flowlines in flowline output map (optional, def.=max):} 0 ""}
+    {entry bound {Set maximum number of segments of each flowline (optional):} 0 ""}
+    {entry flout {Flowline output map:} 0 vector}
+    {entry lgout {Flowpath length map (optional):} 0 raster}
+    {entry dsout {Output flowline density map (optional):} 0 raster}
+    {checkbox -u {Generate flowlines uphill (default: downhill).} "" -u}
+    {checkbox -3 {Compute three-dimensional length (default: two-dimensional).} "" -3}
+    {checkbox -m {Use less memory (ignore opt. aspect map, slower).} "" -m}
+    {checkbox -M {Use fixes memory size (for large files, much slower).} "" -M}
+    {checkbox -q {Run quietly.} "" -}
+
+}
