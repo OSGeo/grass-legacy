@@ -101,7 +101,7 @@ then
        #draw title
         d.frame -s at=90,100,65,100  frame=title
         d.erase col=white
-        echo "$GIS_OPT_map" | d.text col=black size=60
+        echo "$GIS_OPT_map" | d.text col=black size=30
 #         d.text.freetype -sp text=$GIS_OPT_map col=black size=30 east_north=10,10
 
        #draw legend
@@ -123,7 +123,7 @@ else
        #draw title
         d.frame -s at=90,100,65,100 frame=title
         d.erase col=white
-        echo "$GIS_OPT_map" | d.text col=black size=60
+        echo "$GIS_OPT_map" | d.text col=black size=30
 #         d.text.freetype -sp text=$GIS_OPT_map col=black size=30 east_north=10,10
 
        #draw legend
