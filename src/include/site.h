@@ -1,6 +1,9 @@
 /*-
  * $Log$
- * Revision 1.6  2000-10-07 21:23:24  eric
+ * Revision 1.7  2000-10-09 01:57:03  eric
+ * Added ability to ignore z-value completely using field=SITE_COL_NUL
+ *
+ * Revision 1.6  2000/10/07 21:23:24  eric
  * Added Cell_head *region parameter. Now respects region! Fixed index bug for
  * dimensions.
  *
@@ -119,6 +122,7 @@ typedef struct
  */
 
 /* Some defines for which column type to use */
+#define SITE_COL_NUL 0
 #define SITE_COL_DIM 1
 #define SITE_COL_DBL 2
 #define SITE_COL_STR 3
