@@ -19,7 +19,7 @@
 #############################################################################
 
 #%Module
-#% description: registers a SHAPE file into GRASS 5.1
+#% description: registers a SHAPE file into GRASS 5.7
 #%End
 #%flag
 #%  key: k
