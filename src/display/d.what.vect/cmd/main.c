@@ -113,7 +113,7 @@ int main(int argc, char **argv)
       level = Vect_open_old (&Map[i], vect[i], mapset);
       if (level < 0)
         {
-	  sprintf(temp, "%s: Can't open vector file", vect[i]);
+	  sprintf(temp, "Vector file [%s] not available", vect[i]);
           G_fatal_error (temp);
 	}
 
