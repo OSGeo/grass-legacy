@@ -1,10 +1,32 @@
-The following directories in "src.related" contain source code that,
-though not integrated into GRASS, is related to GRASS.  They are each
-complete stand-alone systems.   Only bnoise has built-in capabilities
-for generating GRASS files.   All of the others have been experimentally
-linked with GRASS for various demonstrations, but do not contain user
-supported GRASS links.
+Programs in this directory are NOT GRASS commands, but are public domain
+capabilities that may be useful to those advanced GRASS sites.
 
-bnoise          - Fortran blast-noise analysis program (CERL) with C user
-    		      front-end for GRASS users.
-grass.armsed    - Fortran watershed analysis program.
+gctp/
+  General Cartographic Transformation Package.  Product of USGS.
+  (MIT modified for State Plane in north-west hemisphere projections.)
+
+mapgen/
+  2 products:
+  * mapgen - product of USGS.  Generates cartographic quality output
+             for numerous plotters from geometric or latitude-longitude
+             coordinates.
+  * MAPGEN - product of SCS.  Seamlessly marries mapgen to GRASS
+
+pbmplus/
+  Extended Portable Bitmap Toolkit
+  Copyright (C) 1989, 1991 by Jef Poskanzer
+
+  Extensive set of conversion and manipulation programs for raster 
+  images.  Useful for manipulating paint (p.ppm) output as well as
+  X windows window dumps for plotting to numerous devices (including
+  Postscript).
+
+rim/
+  Product of UW, Seattle and Central Washington University
+  Relational Information Management system.  Freely distributable 
+  dbms married to GRASS through the programs v.db.rim and s.db.rim.
+
+xgen/
+  Product of CERL, Purdue, and MIT.  Provides shell script writers
+  with the ability to generate graphical user interfaces via X-windows.
+  Requires X and Motif to compile.  
