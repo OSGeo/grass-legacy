@@ -11,6 +11,18 @@
 
 #include <time.h>
 
+
+/*!
+ * \brief current date and time
+ *
+ * Returns a pointer to a string
+ * which is the current date and time. The format is the same as that produced by
+ * the UNIX <i>date</i> command.
+ *
+ *  \param ~
+ *  \return char * 
+ */
+
 char *
 G_date()
 {

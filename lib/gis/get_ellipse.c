@@ -31,6 +31,34 @@ static int read_ellipsoid_table(int );
  * Returns: 1 ok, 0 default values used.
  * Dies with diagnostic if there is an error
  */
+
+/*!
+ * \brief get ellipsoid parameters
+ *
+ * This routine returns the semi-major axis <b>a</b> (in meters)
+ * and the eccentricity squared <b>e2</b> for the ellipsoid associated with the
+ * database. If there is no ellipsoid explicitly associated with the database, it
+ * returns the values for the WGS 84 ellipsoid.
+ *
+ *  \param a
+ *  \param e2
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief get ellipsoid parameters
+ *
+ * This routine returns the semi-major axis <b>a</b> (in meters)
+ * and the eccentricity squared <b>e2</b> for the ellipsoid associated with the
+ * database. If there is no ellipsoid explicitly associated with the database, it
+ * returns the values for the WGS 84 ellipsoid.
+ *
+ *  \param a
+ *  \param e2
+ *  \return int
+ */
+
 int 
 G_get_ellipsoid_parameters (double *a, double *e2)
 {
@@ -121,6 +149,34 @@ G_get_ellipsoid_parameters (double *a, double *e2)
  *         0 if not found in table
  */
 
+
+/*!
+ * \brief get ellipsoid by name
+ *
+ * This routine returns the semi-major axis <b>a</b> (in
+ * meters) and eccentricity squared <b>e2</b> for the named ellipsoid.  Returns
+ * 1 if <b>name</b> is a known ellipsoid, 0 otherwise.
+ *
+ *  \param name
+ *  \param a
+ *  \param e2
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief get ellipsoid parameters by name
+ *
+ * This routine returns the semi-major axis <b>a</b> (in
+ * meters) and eccentricity squared <b>e2</b> for the named ellipsoid.  Returns
+ * 1 if <b>name</b> is a known ellipsoid, 0 otherwise.
+ *
+ *  \param name
+ *  \param a
+ *  \param e2
+ *  \return int
+ */
+
 int 
 G_get_ellipsoid_by_name (const char *name, double *a, double *e2)
 {
@@ -146,6 +202,57 @@ G_get_ellipsoid_by_name (const char *name, double *a, double *e2)
  * for (i = 0; name = G_ellipsoid_name(i); i++)
  *         ....
  */
+
+/*!
+ * \brief return ellopsoid name
+ *
+ * This routine
+ * returns a pointer to a string containg the name for the <b>n</b><i>th</i>
+ * ellipsoid in the GRASS ellipsoid table; NULL when <b>n</b> is too large. It
+ * can be used as follows:
+ \code
+  int n ; 
+  char *name ; 
+  for ( n=0 ; name=G_ellipsoid_name(n) ; n++ ) 
+     fprintf(stdout, "%s\n", name);
+ \endcode
+ *
+ *  \param n
+ *  \return char * 
+ */
+
+ 
+/*!
+ * \brief return ellopsoid name
+ *
+ * This routine
+ * returns a pointer to a string containg the name for the <b>n</b><i>th</i>
+ * ellipsoid in the GRASS ellipsoid table; NULL when <b>n</b> is below zero or
+ * too large. It can be used as follows:
+ \code
+  int n ; 
+  char *name ; 
+  for ( n=0 ; name=G_ellipsoid_name(n) ; n++ ) 
+   fprintf(stdout, "%s\n", name);
+ \endcode
+ *
+ *  \param n
+ *  \return char * 
+ */
+
+ 
+/*!
+ * \brief get ellipsoid name
+ *
+ * This function
+ * returns a pointer to the short name for the <b>n</b><i>th</i> ellipsoid.
+ * If <b>n</b> is less than 0 or greater than the number of known ellipsoids,
+ * it returns a NULL pointer. 
+ *
+ *  \param n
+ *  \return char * 
+ */
+
 char *
 G_ellipsoid_name (int n)
 {
@@ -163,6 +270,22 @@ G_ellipsoid_name (int n)
  * returns 1 if ok,
  *         0 if not found in table 
  */
+
+/*!
+ * \brief get spheroid parameters by name
+ *
+ * This function returns the
+ * semi-major axis <b>a</b> (in meters), the eccentricity squared <b>e2</b>
+ * and the inverse flattening <b>f</b> for the named ellipsoid. Returns 1 if
+ * <b>name</b> is a known ellipsoid, 0 otherwise. 
+ *
+ *  \param name
+ *  \param a
+ *  \param e2
+ *  \param f
+ *  \return int
+ */
+
 int 
 G_get_spheroid_by_name(const char *name, double *a, double *e2, double *f)
 {
@@ -182,6 +305,19 @@ G_get_spheroid_by_name(const char *name, double *a, double *e2, double *f)
     }
     return 0;
 }
+
+
+/*!
+ * \brief get description for <b>n</b><i>th</i> ellipsoid
+ *
+ * This function returns a pointer to the
+ * description text for the <b>n</b><i>th</i> ellipsoid. If <b>n</b> is less
+ * than 0 or greater than the number of known ellipsoids, it returns a NULL
+ * pointer. 
+ *
+ *  \param n
+ *  \return char * 
+ */
 
 char *
 G_ellipsoid_description(int n)
