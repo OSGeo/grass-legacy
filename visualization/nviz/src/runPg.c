@@ -10,7 +10,7 @@ char *runPg(char *SQL_stmt)
 {
     char buf[QRY_LENGTH];
     char chunk[QRY_LENGTH];
-    static char long_str[2*QRY_LENGTH];
+    static char long_str[2 * QRY_LENGTH];
 
     char sqlcmd[QRY_LENGTH];
     int i, j, nrows, nfields;
@@ -96,7 +96,7 @@ char *do_query(char *SQL_stmt, struct Sql *pts)
 {
     char buf[QRY_LENGTH];
     char chunk[QRY_LENGTH];
-    static char long_str[2*QRY_LENGTH];
+    static char long_str[2 * QRY_LENGTH];
 
     char sqlcmd[QRY_LENGTH];
     int i, j, nrows, nfields;
