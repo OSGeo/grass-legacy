@@ -1,13 +1,14 @@
 # definitions for LINUX rim
 RANLIB=ranlib
-F77=g77
 F2CLIB=/usr/lib/f2cmain.a -lf2c
+F77=g77
 EXTRA=time_date.o
 LIBEXTRA=time_date.o
 PILE = CC_f2c=$(CC) $(F77)
 LIBRIM=librim.a
 AR = ar rv
 RAN = ranlib
+# $Id: Makefile,v 1.3 2000-02-09 14:11:00 markus Exp $
 # make rim libs (generic instructions)
 
 #------------------------------------------------------------------#
@@ -112,7 +113,7 @@ RXFILES = rmxget.o rmxput.o rmxlod.o rmxdel.o
 
 .SUFFIXES = .o .f .c
 .f.o:	;$(PILE) -c -w $*.f
-.c.o:	;cc  -c -w $*.c
+.c.o:	;$(CC)  -c -w $*.c
 
 all::
 		make rim
