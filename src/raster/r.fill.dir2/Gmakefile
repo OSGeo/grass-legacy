@@ -1,4 +1,0 @@
-all:
-#	$(GMAKE) ../r.direct
-#	$(MAKEALL)
-
