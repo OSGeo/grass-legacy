@@ -1,5 +1,6 @@
-The main program is i.ortho.rectify which is just a menu driver for the 
+The main program is i.ortho.photo which is just a menu driver for the 
 following programs:
+
  photo.target
  photo.init
  photo.camera
@@ -12,19 +13,23 @@ following programs:
 
 The following directories contain the source code:
 
-	menu		-	main menu code
-                                -> menu/menu.c
+	./menu:			main menu code       (-> menu/menu.c)
 
-	select_target	-	select target location and mapset
-	select_elevation-	select elevation model 
-	select_camera	-	select a camera to use for parameters
-	image_to_photo		-	code for image to photo coordinate
-				-	transformation
-	initial_exposure	-	choose initial camera exposure station 
-				-	parameters
-	photo_to_target		-	computes photo to target location
-				-	transformation paramters
-	image_rectify		-	does the actual image rectification	
+	./photo.target:		select target location and mapset
 
-        libes		-	libraries for ortho programs	
-        man 		-       manual pages.
+	./photo.elev:		select elevation model
+ 
+	./photo.camera:		select a camera to use for parameters
+
+	./photo.2image:		code for image to photo coordinate
+				transformation
+
+	./photo.init:		choose initial camera exposure station
+				parameters
+
+	./photo.2target:	computes photo to target location
+				transformation paramters
+
+	./photo.rectify:	does the actual image rectification
+	
+	./libes:		libraries for ortho programs
