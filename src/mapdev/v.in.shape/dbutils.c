@@ -21,12 +21,13 @@
 
  ******************************************************************************/
 
+#include <stdlib.h>
 #include <math.h>
 #include <string.h>
-#include <stdlib.h>
 #include <errno.h>
 #include <setjmp.h>
 #include "dbutils.h"
+#include "shapefil.h"
 /* #include "gis.h" */
 
 
@@ -128,7 +129,9 @@ int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx ) {
     else{
       pc = *( (pntDescript **) dataHolder );
 
-      if( pt_indx > 0 ) {
+      if( pt_indx == 0 )
+	ptr_old = NULL;
+      else {
 	pb = (pntDescript *) ptr_old;
 
 	/* Is this the same vertex. If so skip */
@@ -297,6 +300,9 @@ char *calcKeyValue( pntDescript *pnt1, float sr, int decs, double efalse,
   return retbuf;
 }
 
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+
 /* Helper function definitions */
 
 int btree_compare( char *key1, char *key2 ) {
@@ -304,6 +310,62 @@ int btree_compare( char *key1, char *key2 ) {
 
   return strncmp( key1, key2, 32 );
 }
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+
+
+int parse_selection_fields(char *field, char *val, char *str_input) {
+
+  char str_buf[512];
+  char *str_indx;
+
+  strncpy(str_buf, str_input, 511);
+
+  if( (str_indx = strchr(str_buf, ':')) == NULL )
+    return 1;
+
+  else {
+    
+    *str_indx = '\0';
+    strncpy(field, str_buf, str_indx - str_buf + 1);
+    strcpy(val, str_indx + 1);
+    return 0;
+  }
+}
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+
+
+int dbf_field_query(DBFHandle db0, char *cname, int *cnum) {
+
+  int i;  /* loop */
+  int c_field;
+
+  if(!db0 || !cname) return -1;
+
+  c_field = -1;
+
+  for( i = 0; i < DBFGetFieldCount(db0); i++ )
+    {
+      char	field_name[15];
+
+      DBFGetFieldInfo( db0, i, field_name, NULL, NULL );
+      if( strcasecmp( cname, field_name ) == 0 )
+	c_field = i;
+    }
+
+  if(c_field >= 0) {
+    *cnum = c_field;
+    return 0;
+  }
+
+  else return 1;
+
+}
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
 
 int procSnapDistance( int iswitch, float *sd ) {
@@ -325,6 +387,8 @@ int procSnapDistance( int iswitch, float *sd ) {
   }
   else return 1;
 }
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
 
 int procMinSubtend( int iswitch, float *dphi ) {
@@ -348,6 +412,8 @@ int procMinSubtend( int iswitch, float *dphi ) {
   }
   else return 1;
 }
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
 
 int proc_key_params( int iswitch, int *idig, double *wbound, double *sbound ) {
@@ -383,4 +449,139 @@ int proc_key_params( int iswitch, int *idig, double *wbound, double *sbound ) {
   
 }
 
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+
+int proc_max_shapes( int iswitch, int *max_shapes ) {
+
+  /* Set or get the maximum number of shapes to be extracted */
+
+  static int max_shapes_;
+
+  if(!max_shapes )
+    return 1;
+
+  if( iswitch == SET_VAL ) {
+    max_shapes_ = *max_shapes;
+
+    return 0;
+  }
+
+  else if( iswitch == GET_VAL ) {
+    *max_shapes = max_shapes_;
+
+    return 0;
+  }
+
+  else return 1;
+  
+}
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+int proc_test_dbf( int iswitch, int *tflag, DBFHandle *hhdbf, char *fval, int *fnum ) {
+
+  /* Set and store flags for selecting particular fields for export,
+     and handle on DBF
+  */
+  static char val_str[512] = "";
+
+  static DBFHandle hdbf = NULL;
+  static do_query = 0;
+  static field_num = -1;
+
+  if( iswitch == SET_VAL ) {
+    if(hhdbf)
+      hdbf = *hhdbf;
+    else
+      hdbf = NULL;
+    do_query = *tflag;
+    if(fval)
+      strncpy(val_str, fval, 511);
+    else
+      strncpy(val_str, "", 511);
+    if(fnum)
+      field_num = *fnum;
+    else
+      field_num = -1;
+
+    return 0;
+  }
+
+  else if( iswitch == GET_VAL ) {
+    if(hdbf) 
+      *hhdbf = hdbf;
+    else
+      *hhdbf = NULL;
+    *tflag = do_query;
+    if(fval)
+      strcpy(fval, val_str);
+    if(fnum)
+      *fnum = field_num;
+
+    return 0;
+  }
+
+  else return 1;
+  
+}
+
 /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+
+ 
+int allocate_recs(duff_recs_t *duff_recs, int size) {
+
+  int incr_size;
+  int dr_incr;
+
+  dr_incr = 3000;
+
+  incr_size = dr_incr;
+
+  if(duff_recs->alloc_recs > size)
+    return 1;
+
+  if(duff_recs->alloc_recs == 0) {
+
+    if( (duff_recs->duff_rec_list = (duff_rec *)malloc(dr_incr * sizeof(duff_rec)))
+	== NULL )
+      return -1;
+
+    memset(duff_recs->duff_rec_list, 0, dr_incr * sizeof(duff_rec));
+    duff_recs->alloc_recs = dr_incr;
+  }
+
+  else {
+
+    incr_size += dr_incr;
+    if( (duff_recs->duff_rec_list = (duff_rec *)realloc(duff_recs->duff_rec_list,
+							incr_size * sizeof(duff_rec)))
+	== NULL )
+      return -1;
+
+    memset(&duff_recs->duff_rec_list[incr_size - dr_incr], 0,
+	   dr_incr * sizeof(duff_rec));
+    duff_recs->alloc_recs = incr_size;
+  }
+
+  return 0;
+
+}
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+
+ 
+int add_rec_spec(duff_recs_t *duff_recs, int recno, int fduff) { 
+
+  if(recno >= duff_recs->alloc_recs) {
+    if(allocate_recs(duff_recs, recno + 1) < 0)
+      return -1;
+  }
+
+  duff_recs->duff_rec_list[duff_recs->n_recs].rec_no = recno;
+  duff_recs->duff_rec_list[duff_recs->n_recs++].is_duff = fduff;
+
+  return 0;
+}

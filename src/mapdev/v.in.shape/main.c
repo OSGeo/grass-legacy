@@ -48,6 +48,7 @@
 #include "writelin.h"
 #include "cleanup.h"
 #include "bounds.h"
+#include "flagopts.h"
 
 
 #define	round(x)	(int)((x) + 0.5)
@@ -63,15 +64,18 @@ double scale = 1.0;
 int main( int   argc, char *argv[])
 {
     SHPHandle	hShapeDB;
-    DBFHandle   hDBF;
+    DBFHandle   hDBF, hDB1 = NULL;
+    duff_recs_t *drec0;
     double	adfMinBound[4], adfMaxBound[4];
     int		nShapeType, nShapes, iShape, iPart, iArc;
     int         iPoint, iRec, iField;
     int         pntCount;
     int		cat_field;
-    int 	pgdmp, no_rattle;
+    int         max_sh;
+    int         dres, sres; /* result indicators */
+    int 	pgdmp, no_rattle, do_exit;
 
-    char name[512], rejname[512], *p;	/* name of output files */
+    char name[512], vname[512], rejname[512], *p;	/* name of output files */
 
     char infile[512], *newmapset;
     int cover_type;		/* type of coverage (line, point, area) */
@@ -85,6 +89,10 @@ int main( int   argc, char *argv[])
     char    AttText[512];    /* added MN 10/99 */
     int attval;
     int lab_field = -1;
+
+    int unity = 1, zero = 0;
+    int f_indx = -1;
+    char s_field[512], s_val[512];
 
 
     /* DDG: Create structures for processing of shapefile contents */
@@ -111,21 +119,22 @@ int main( int   argc, char *argv[])
     int (*btrkeycmp)(char *, char *);
     char buf[256];
 
-	struct GModule *module;
+    struct GModule *module;
     struct {
-	struct Option *input, *logfile, *verbose, *attribute, *snapd, *minangle;
-	struct Option *scale, *pgdump, *dumpmode, *catlabel;
+      struct Option *input, *output, *logfile, *verbose, *attribute, *snapd, *minangle;
+      struct Option *scale, *pgdump, *dumpmode, *catlabel;
+      struct Option *selfield, *maximum;
     } parm;
 
-    struct Flag *listflag, *rejflag;
+    struct Flag *listflag, *bbflag, *rejflag, *allflag, *owflag, *selflag;
 
     /* Are we running in Grass environment ? */
 
     G_gisinit (argv[0]);
 
-	module = G_define_module();
-	module->description =
-		"Read an ArcView Shapefile.";
+    module = G_define_module();
+    module->description =
+      "Read an ArcView Shapefile.";
 
     /* define the different options */
 
@@ -134,6 +143,13 @@ int main( int   argc, char *argv[])
     parm.input->type       = TYPE_STRING;
     parm.input->required   = YES;
     parm.input->description= "Name of .shp (or just .dbf) file to be imported";
+
+    parm.output = G_define_option() ;
+    parm.output->key        = "output";
+    parm.output->type       = TYPE_STRING;
+    parm.output->required   = NO;
+    parm.output->description= "Name of vector map to be created (default: prefix of shape file)";
+    parm.output->answer     = "" ;
 
     parm.verbose = G_define_option() ;
     parm.verbose->key        = "verbose";
@@ -183,6 +199,20 @@ int main( int   argc, char *argv[])
     parm.catlabel->description= "Name of attribute to use as category label";
     parm.catlabel->answer     = "";
     
+    parm.selfield = G_define_option() ;
+    parm.selfield->key        = "select";
+    parm.selfield->type       = TYPE_STRING;
+    parm.selfield->required   = NO;
+    parm.selfield->description= "Name of field to use for selection";
+    parm.selfield->answer     = "";
+    
+    parm.maximum = G_define_option() ;
+    parm.maximum->key        = "maxshapes";
+    parm.maximum->type       = TYPE_STRING;
+    parm.maximum->required   = NO;
+    parm.maximum->description= "Maximum number of shapes to be extracted";
+    parm.maximum->answer     = "";
+    
 
     /* Set flag for listing fields of database */
 
@@ -190,11 +220,37 @@ int main( int   argc, char *argv[])
     listflag->key     = 'l';
     listflag->description = "List fields of DBF file";
 
-    /* Set flag for listing fields of database */
+    /* Set flag for displaying bounds of map */
+
+    bbflag = G_define_flag();
+    bbflag->key     = 'b';
+    bbflag->description = "Display bounds of map";
+
+    /* Set flag for writing reject lines to a lines file */
 
     rejflag = G_define_flag();
     rejflag->key     = 'r';
     rejflag->description = "Create reject lines file";
+
+    /* Set flag for dumping all fields to cats-file */
+
+    /*
+    allflag = G_define_flag();
+    allrejflag->key     = 'a';
+    rejflag->description = "Write all fields to cat string";
+    */
+
+    /* Set flag for over-writing existing files */
+
+    owflag = G_define_flag();
+    owflag->key     = 'o';
+    owflag->description = "Allow over-write of existing vector map";
+
+    /* Set flag for selecting shapes based on the value of a given field */
+
+    selflag = G_define_flag();
+    selflag->key     = 's';
+    selflag->description = "Select shapes to extract based on a field";
 
     /* get options and test their validity */
 
@@ -205,11 +261,11 @@ int main( int   argc, char *argv[])
 
     strcpy(infile, parm.input->answer);
     extract_base_name( name, infile );
-    strcpy( rejname, name );
-    strcat( rejname, "_rej" );
 
 
-    /* Examine the flag `-l' first */
+    /* Examine the `-l' flag */
+
+    do_exit = 0;
 
     if(listflag->answer) {
       int	i;
@@ -232,8 +288,47 @@ int main( int   argc, char *argv[])
         
       DBFClose( hDBF );
 
-      exit( 0 );
+      do_exit = 1;
     }
+
+    /* Examine `-b' flag */
+
+    if(bbflag->answer) {
+
+      if(listbbox(infile) < 0)
+	G_fatal_error("Error allocating dynamic memory.\n");
+      else
+	do_exit = 1;
+    }
+
+    /* If `-l' and/or `-b' not set, continue with processing */
+
+    if(do_exit)
+      exit(1);
+
+    /* Get name of output */
+
+    if( strcmp(parm.output->answer, "") == 0 ) {
+
+      strcpy(vname, name);
+    }
+
+    else {
+      if(G_legal_filename(parm.output->answer) < 0)
+	G_fatal_error("Requested name for vector map is illegal.\n");
+      strcpy(vname, parm.output->answer);
+    }
+
+    if( !owflag->answer && G_find_file("dig", vname, G_mapset()) ) {
+
+      fprintf(stderr, "Vector map `%s' already exists.\n", vname);
+      exit(1);
+    }
+
+    strcpy( rejname, vname );
+    strcat( rejname, "_rej" );
+
+    /* Get debug status: not fully developed yet 2001:01:07 */
 
     debug = atoi( parm.verbose->answer);
     if (parm.logfile->answer == NULL)
@@ -243,6 +338,9 @@ int main( int   argc, char *argv[])
 	    sprintf (buf, "Cannot open log file \"%s\"", parm.logfile->answer);
 	    G_fatal_error( buf);
 	}
+
+
+    /* Process line integrity parameters, snap and sliver tolerances */
 
     sdc = (char *)malloc(20);
     strncpy( sdc, parm.snapd->answer, 19 );
@@ -328,7 +426,7 @@ int main( int   argc, char *argv[])
 /*      Create the GRASS vector layer based on the basename of the      */
 /*      shapefile.							*/
 /* -------------------------------------------------------------------- */
-    Vect_open_new( &map, name);
+    Vect_open_new( &map, vname);
 
     if(rejflag->answer)
       Vect_open_new( &rej, rejname);
@@ -343,6 +441,7 @@ int main( int   argc, char *argv[])
     } 
 
     else {
+
       int	i;
         
       hDBF = DBFOpen( infile, "r" );
@@ -352,19 +451,12 @@ int main( int   argc, char *argv[])
 	  G_fatal_error (buf);
         }
 
-      cat_field = -1;
-      for( i = 0; i < DBFGetFieldCount(hDBF); i++ )
-        {
-	  char	field_name[15];
-
-	  DBFGetFieldInfo( hDBF, i, field_name, NULL, NULL );
-	  if( strcasecmp( parm.attribute->answer, field_name ) == 0 )
-	    cat_field = i;
-        }
+      if( (dres = dbf_field_query(hDBF, parm.attribute->answer, &cat_field)) > 0 )
+	cat_field = -1;
 
       if( cat_field == -1 ) {
 	sprintf( buf,
-		 "No attribute `%s' found on %s.\nUse attribute=list to get a list of attributes.\n",
+		 "No attribute `%s' found on %s.\nUse `-l' flag to get a list of attributes.\n",
 		 parm.attribute->answer, strcat(name, ".shp") );
             
 	DBFClose( hDBF );
@@ -372,6 +464,16 @@ int main( int   argc, char *argv[])
 
 	G_fatal_error( buf );
       }
+
+      else if( dres < 0 ) {
+	sprintf( buf, "Unable to access dbf file.\n" );
+            
+	DBFClose( hDBF );
+	SHPClose( hShapeDB );
+
+	G_fatal_error( buf );
+      }
+
 
       if (debug > 4)
 	fprintf( fdlog, "Selected attribute field %d.\n", cat_field);
@@ -384,18 +486,18 @@ int main( int   argc, char *argv[])
     /*
      * Create the dig_att file (or append).
      */
-    if (G_find_file( "dig_att", name, G_mapset()) == NULL) {
-      f_att = G_fopen_new( "dig_att", name);
+    if (G_find_file( "dig_att", vname, G_mapset()) == NULL) {
+      f_att = G_fopen_new( "dig_att", vname);
       if (debug)
-	fprintf( fdlog, "Creating dig_att(L) file \"%s\"\n", name);
+	fprintf( fdlog, "Creating dig_att(L) file \"%s\"\n", vname);
     } else {
-      f_att = G_fopen_append( "dig_att", name);
+      f_att = G_fopen_append( "dig_att", vname);
       if (debug)
-	fprintf( fdlog, "Updating dig_att(L) file \"%s\"\n", name);
+	fprintf( fdlog, "Updating dig_att(L) file \"%s\"\n", vname);
     }
     if (f_att == NULL)
       {
-	sprintf( buf, "Unable to create attribute file `%s'.", name );
+	sprintf( buf, "Unable to create attribute file `%s'.", vname );
 	G_fatal_error( buf );
       }
 
@@ -421,32 +523,108 @@ int main( int   argc, char *argv[])
       /* Find field number of category label */ /* May '00 : DDG */
 
       if( strcmp(parm.catlabel->answer, "") != 0 ) {
-	int j;
 
-	for( j = 0; j < DBFGetFieldCount(hDBF); j++ )
-	  {
-	    char label_name[15];
+	if( (dres = dbf_field_query(hDBF, parm.catlabel->answer, &lab_field)) > 0 )
+	  lab_field = -2;
 
-	    DBFGetFieldInfo( hDBF, j, label_name, NULL, NULL );
-	    if( strcasecmp( parm.catlabel->answer, label_name) == 0 ) {
-	      lab_field = j;
-	      break;
-	    }
-	    else lab_field = -2;
-	  }
+	if( lab_field == -2 ) {
+	  sprintf( buf,
+		   "No attribute `%s' found on %s.\nUse `-l' flag to get a list of attributes.\n",
+		   parm.catlabel->answer, strcat(name, ".shp") );
+            
+	  DBFClose( hDBF );
+	  SHPClose( hShapeDB );
+
+	  G_fatal_error( buf );
+	}
+
+	else if( dres < 0 ) {
+	  sprintf( buf, "Unable to access dbf file.\n" );
+            
+	  DBFClose( hDBF );
+	  SHPClose( hShapeDB );
+
+	  G_fatal_error( buf );
+	}
+
       }
-
-      if( lab_field == -2 ) {
-	sprintf( buf, "No attribute `%s' found on %s. \nNot writing category labels.\n",
-		 parm.catlabel->answer, strcat(name, ".shp") );
-	G_warning( buf );
-      }
-
 
       if(hDBF != NULL) DBFClose( hDBF );
 	
     }
 
+
+    /* If selective extraction is required, get the field and
+       value names
+    */
+
+    if(selflag->answer) {
+
+      if(strcmp(parm.selfield->answer, "") == 0) {
+	/* Selective extraction requested but no filter information supplied */
+	fprintf(stderr, "Selective extraction requested but no filter information supplied.\n");
+	proc_test_dbf(SET_VAL, &zero, NULL, NULL, NULL);
+      }
+
+      else {
+	sres = parse_selection_fields(s_field, s_val, parm.selfield->answer);
+
+	switch(sres) {
+
+	case -1:
+	  {
+	    fprintf(stderr, "Internal error. Continuing with extraction of all lines.\n");
+	    proc_test_dbf(SET_VAL, &zero, NULL, NULL, NULL);
+	  }
+
+	case 1:
+	  {
+	    fprintf(stderr, "Could not process input text. Continuing with extraction of all lines.\n");
+	    proc_test_dbf(SET_VAL, &zero, NULL, NULL, NULL);	    
+	  }
+
+	case 0:
+	  {
+	    /* Open a dbf handle */
+	    if( (hDB1 = DBFOpen( infile, "r" )) == NULL ) {
+	      G_fatal_error("Cannot open database file.\n");
+	    }
+	    else {
+	      dbf_field_query(hDB1, s_field, &f_indx);
+	    }
+	    if(f_indx < 0) {
+	      fprintf(stderr, "Requested field could not be found. Continuing with extraction of all lines.\n");
+	      proc_test_dbf(SET_VAL, &zero, NULL, NULL, NULL);	    
+	    }
+
+	    else {
+	      fprintf(stderr, "Extraction based on field `%s' with value `%s'.\n", s_field, s_val);
+	      proc_test_dbf(SET_VAL, &unity, &hDB1, s_val, &f_indx);
+	    }
+
+	  }
+
+	}  /* End switch statement */
+      }
+    }
+
+    else {
+      fprintf(stderr, "Extracting all records.\n", s_field, s_val);
+      proc_test_dbf(SET_VAL, &zero, NULL, NULL, NULL);
+    }
+
+
+    /* Set the number of shapes to be extracted, if relevant */
+
+    if(strcmp(parm.maximum->answer, "") == 0)
+      max_sh = 0;
+    else {
+      max_sh = atoi(parm.maximum->answer);
+
+      if(max_sh < 1) max_sh = 0;
+    }
+
+    proc_max_shapes(SET_VAL, &max_sh);
 
   /* -------------------------------------------------------------------- */
   /*      DDG: Create the line descriptor list and field descriptor.      */
@@ -481,9 +659,17 @@ int main( int   argc, char *argv[])
     segl->numSegments = 0;
     segl->segments = NULL;
 
+    /* Initialise valid records' list for selective extraction */
+    if( (drec0 = (duff_recs_t *)malloc( sizeof(duff_recs_t))) == NULL )
+      G_fatal_error("Error allocating dynamic memory.\n");
+    else {
+      drec0->n_recs = drec0->alloc_recs = 0;
+      drec0->duff_rec_list = NULL;
+    }
+
     /* Read shape into line list and fill out V-base */
     fprintf(stderr, "Creating vector network...\n\n");
-    linedCreate( ll0, hShapeDB, hDBF, fd0, hVB, &fc1 );
+    linedCreate( ll0, hShapeDB, hDBF, fd0, hVB, &fc1, drec0 );
 
     /* Extract arcs from V-base into segment list */
     fprintf(stderr, "Extracting and storing area edges...\n\n");
@@ -495,7 +681,7 @@ int main( int   argc, char *argv[])
      */
     if(lab_field >=  0) {
       G_init_cats( (CELL)0,"",&cats);
-      G_write_vector_cats(name, &cats);
+      G_write_vector_cats(vname, &cats);
     }
     else fprintf( stderr, "Not assigning category labels\n" );
     /* if (G_write_vector_cats(name, &cats) != 1)
@@ -511,6 +697,15 @@ int main( int   argc, char *argv[])
 
     pntCount = 0;
     for( iShape = 0; iShape < nShapes; ++iShape ) {
+
+      if(max_sh > 0 && iShape > max_sh)
+	break;
+
+      if(selflag->answer) {
+	if( drec0->duff_rec_list[iShape].is_duff )
+	  continue;
+      }
+
       for( iPart = 0; iPart < ll0->lines[iShape].numParts; ++iPart ) {
 	if( ll0->lines[iShape].parts[iPart].duff ) continue;
 	xlab[pntCount] = ll0->lines[iShape].parts[iPart].centroid->xcentroid;
@@ -613,16 +808,21 @@ int main( int   argc, char *argv[])
     }
 
     if( lab_field >= 0 ) {
-      G_write_vector_cats(name, &cats) != 0;
+      G_write_vector_cats(vname, &cats) != 0;
     }
 
-
+    if(selflag->answer) {
+      if(drec0) {
+	free(drec0->duff_rec_list);
+	free(drec0);
+      }
+    }
 	
 
     map.head.orig_scale = (long)init_scale;
     G_strncpy( map.head.your_name, G_whoami(), 20);
     G_strncpy( map.head.date, G_date(), 20);
-    G_strncpy( map.head.map_name, name, 20);
+    G_strncpy( map.head.map_name, vname, 20);
     map.head.W = adfMinBound[0];
     map.head.S = adfMinBound[1];
     map.head.E = adfMaxBound[0];
@@ -631,6 +831,8 @@ int main( int   argc, char *argv[])
     Vect_close( &map);
 
     SHPClose( hShapeDB );
+
+    if(hDB1) DBFClose(hDB1);
 
     if( hDBF != NULL )
     {
@@ -643,7 +845,7 @@ int main( int   argc, char *argv[])
     */
 
     /* Apply post-processing procedures to clean up map */
-    vector_map_cleanup(name);
+    vector_map_cleanup(vname);
     
     exit(0);
 }

@@ -24,7 +24,9 @@
 
 #define _DB_UTILS_TOPO_H
 
+#include "gbtree.h"
 #include "shp2dig.h"
+#include "shapefil.h"
 
 #define SET_SD 1
 #define GET_SD 0
@@ -39,8 +41,14 @@ char *calcKeyValue( pntDescript *, float, int, double, double );
 /* Helper Function Prototypes */
 
 int btree_compare( char *, char * );
+int parse_selection_fields(char *, char *, char *);
+int dbf_field_query(DBFHandle, char *, int *);
 int procSnapDistance( int , float * );
 int procMinSubtend( int, float * );
 int proc_key_params( int, int *, double *, double * );
+int proc_max_shapes(int, int *);
+int proc_test_dbf( int, int *, DBFHandle *, char *, int *);
+int allocate_recs(duff_recs_t *, int);
+int add_rec_spec(duff_recs_t *, int, int);
 
 #endif /* _DB_UTILS_TOPO_H */
