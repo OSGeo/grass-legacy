@@ -1,5 +1,4 @@
-/*
-****************************************************************************
+/****************************************************************************
 *
 * MODULE:       Vector library 
 *   	    	
@@ -51,22 +50,6 @@ static int (*Open_old_array[][2]) () =
 #endif
 #ifdef HAVE_OGR
    ,{ open_old_dummy, V1_open_old_ogr }
-#else   
-   ,{ open_old_dummy, format }
-#endif
-};
-
-static int (*Open_new_array[][2]) () =
-{
-    { open_new_dummy, V1_open_new_nat }
-   ,{ open_new_dummy, V1_open_new_shp }
-#ifdef HAVE_POSTGRES
-   ,{ open_new_dummy, V1_open_new_post }
-#else   
-   ,{ open_old_dummy, format }
-#endif
-#ifdef HAVE_OGR
-   ,{ open_new_dummy, V1_open_new_ogr }
 #else   
    ,{ open_old_dummy, format }
 #endif
@@ -230,6 +213,15 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
 	      G_debug( 1, "Cannot open category index file for vector '%s'.", Vect_get_full_name (Map) );
 	      dig_free_plus ( &(Map->plus) ); /* free topology */
 	      dig_spidx_free ( &(Map->plus) ); /* free spatial index */
+	      level = 1;
+	  }
+      }
+      /* Open OGR specific support files */
+      if ( level == 2 && Map->format == GV_FORMAT_OGR ) {
+	  if ( V2_open_old_ogr ( Map ) < 0 ) {
+	      dig_free_plus ( &(Map->plus) );
+	      dig_spidx_free ( &(Map->plus) );
+	      dig_cidx_free ( &(Map->plus) );
 	      level = 1;
 	  }
       }
@@ -449,7 +441,13 @@ Vect_open_new (
     Map->format = format;
     G_debug ( 3, "  format = %d", format);
 
-    if (0 > (*Open_new_array[format][1]) (Map, name, with_z)) {
+    if ( format == GV_FORMAT_NATIVE ) {
+	ret = V1_open_new_nat (Map, name, with_z);
+    } else { /* GV_FORMAT_POSTGIS */
+	ret = V1_open_new_post (Map, name, with_z);
+    }
+
+    if ( ret < 0 ) {
         sprintf ( errmsg, "Cannot open new vector %s", Vect_get_full_name(Map) ); 
 	fatal_error (ferror , errmsg );
 	return (-1);
@@ -543,6 +541,10 @@ Vect_coor_info ( struct Map_info *Map, struct Coor_info *Info )
 	    }
 	    break;
         case GV_FORMAT_POSTGIS :
+ 	    Info->size = 0L;
+	    Info->mtime = 0L;
+	    break;
+        case GV_FORMAT_OGR :
  	    Info->size = 0L;
 	    Info->mtime = 0L;
 	    break;

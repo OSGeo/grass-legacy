@@ -121,6 +121,7 @@ Vect_build_partial ( struct Map_info *Map, int build, FILE *msgout )
     int    ret;
     
     G_debug (1, "Vect_build()"); 
+    Msgout = msgout;
 
     /* If topology is already build (map on level2), set level to 1 so that lines will
     *  be read by V1_read_ (all lines) */
@@ -139,6 +140,8 @@ Vect_build_partial ( struct Map_info *Map, int build, FILE *msgout )
     ret = ( (*Build_array[Map->format]) (Map, build, msgout) );
 
     if ( ret == 0 ) { return 0; } 
+
+    prnmsg ("Topology was built.\n");
     
     Map->level = LEVEL_2;
     plus->mode = GV_MODE_WRITE;
@@ -215,7 +218,6 @@ Vect_build_partial ( struct Map_info *Map, int build, FILE *msgout )
 	prnmsg ("Number of areas     :   -\n");
 	prnmsg ("Number of isles     :   -\n");
     }
-    prnmsg ("Topology was built.\n");
     return 1;
 }
 

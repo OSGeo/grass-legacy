@@ -77,7 +77,7 @@ Vect_build_shp ( struct Map_info *Map, int build, FILE *msgout )
 	    } else if ( type == -2 ) {
 	        break;
             }
-            offset = Vect_last_line_offset (Map);
+            offset = Vect_last_line_offset_shp (Map);
 	    G_debug ( 3, "Register line: offset = %d", offset );
 	    line = dig_add_line ( plus, type, CPoints, offset ); 
 	    G_debug ( 3, "Line registered with line = %d", line );

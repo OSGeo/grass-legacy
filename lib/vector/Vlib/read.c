@@ -39,22 +39,6 @@ static int (*Read_next_line_array[][3]) () =
 #endif
 };
 
-static int (*V1_read_line_array[]) () =
-{
-   V1_read_line_nat 
-   , V1_read_line_shp 
-#ifdef HAVE_POSTGRES
-   , V1_read_line_post 
-#else
-   , format
-#endif
-#ifdef HAVE_OGR
-   , V1_read_line_ogr 
-#else
-   , format
-#endif
-};
-
 static int (*V2_read_line_array[]) () =
 {
    V2_read_line_nat 
@@ -66,38 +50,6 @@ static int (*V2_read_line_array[]) () =
 #endif
 #ifdef HAVE_OGR
    , V2_read_line_ogr
-#else
-   , format
-#endif
-};
-
-static long (*Next_line_offset_array[]) () =
-{
-   Vect_next_line_offset_nat 
-   , Vect_next_line_offset_shp 
-#ifdef HAVE_POSTGRES
-   , Vect_next_line_offset_post 
-#else
-   , format
-#endif
-#ifdef HAVE_OGR
-   , Vect_next_line_offset_ogr 
-#else
-   , format
-#endif
-};
-
-static long (*Last_line_offset_array[]) () =
-{
-   Vect_last_line_offset_nat 
-   , Vect_last_line_offset_shp  
-#ifdef HAVE_POSTGRES
-   , Vect_last_line_offset_post
-#else
-   , format
-#endif
-#ifdef HAVE_OGR
-   , Vect_last_line_offset_ogr
 #else
    , format
 #endif
@@ -129,28 +81,6 @@ Vect_read_next_line (
     return (*Read_next_line_array[Map->format][Map->level]) (Map, line_p, line_c);
 }
 
-/*
-*   returns: line type
-*           -1 on Out of memory
-*           -2 on EOF   
-*/
-int
-V1_read_line (Map, line_p, line_c, offset )
-     struct Map_info *Map;
-     struct line_pnts *line_p;
-     struct line_cats *line_c;
-     long   offset;
-{
-#ifdef GDEBUG
-    G_debug (3, "V1_read_line()");
-#endif    
-  
-    if (!VECT_OPEN (Map))
-        return -1;
-
-    return (*V1_read_line_array[Map->format]) (Map, line_p, line_c, offset);
-}
-
 /*!
  \fn int Vect_read_line ( struct Map_info *Map,
     struct line_pnts *line_p,
@@ -180,30 +110,6 @@ Vect_read_line (
 	                 line, Map->plus.n_lines );
     
     return (*V2_read_line_array[Map->format]) (Map, line_p, line_c, line);
-}
-
-/*!
- \fn long Vect_next_line_offset ( struct Map_info *Map)
- \brief ADD
- \return next line offset
- \param Map_info structure
-*/
-long
-Vect_next_line_offset ( struct Map_info *Map )
-{
-    return (*Next_line_offset_array[Map->format]) (Map);
-}
-
-/*!
- \fn long Vect_last_line_offset ( struct Map_info *Map)
- \brief ADD
- \return last line offset
- \param Map_info structure
-*/
-long
-Vect_last_line_offset ( struct Map_info *Map )
-{
-    return (*Last_line_offset_array[Map->format]) (Map);
 }
 
 /*!
