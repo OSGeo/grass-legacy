@@ -320,6 +320,7 @@ V2_read_line_ogr (struct Map_info *Map, struct line_pnts *line_p,  struct line_c
 		if ( Map->fInfo.ogr.feature_cache == NULL ) {
 		    G_fatal_error ( "Cannot read feature, FID = %d", FID );
 		}
+		Map->fInfo.ogr.feature_cache_id = FID;
 	    }
 		
 	    hGeom =  OGR_F_GetGeometryRef ( Map->fInfo.ogr.feature_cache );
