@@ -469,8 +469,6 @@ src.contrib/SCS/mapdev/v.patch.scs
 src.contrib/SCS/misc/dotmaps/v.scale.random
 src.contrib/SCS/misc/m.bsplit/cmd
 src.contrib/SCS/misc/m.futil/inter
-src.contrib/SCS/misc/m.lulc.USGS
-src.contrib/SCS/misc/m.lulc.read
 src.contrib/SCS/misc/m.qcalc
 src.contrib/SCS/misc/m.strip99s
 #  SCS paint modules need to be integrated with the src/paint
