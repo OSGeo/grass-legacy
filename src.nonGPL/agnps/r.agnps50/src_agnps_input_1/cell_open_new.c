@@ -1,3 +1,4 @@
+#include <stdio.h>
 
 	/*---------------------------------------------------------*
 	 *               AGNPS/GRASS Interface Project             *
