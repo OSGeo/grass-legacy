@@ -1,12 +1,18 @@
 <H2>DESCRIPTION</H2>
 
 <em>v.in.db</em> 
-creates new vector (points) from database table containing coordinates. 
+creates new vector (points) map from database table containing coordinates. 
 
 <H2>EXAMPLE</H2>
 
+Creating a map from PostgreSQL table:
+
+<pre>
+ v.in.db driver=pg database="host=myserver.itc.it,dbname=mydb,user=name" \
+         table=pat_stazioni x=east y=north z=quota  key=id output=pat_stazioni
+</pre>
 
 <H2>AUTHOR</H2>
-<A HREF=mailto:Radim.Blazek@dhv.cz>Radim Blazek</A>
+<A HREF=mailto:blazek@itc.it>Radim Blazek</A>
 
 <p><i>Last changed: $Date$</i>
