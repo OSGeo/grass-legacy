@@ -3,7 +3,7 @@
  * that we define Tcl_AppInit in tkAppInit.c.
  */
 
-#include "tk.h"
+#include <tk.h>
 
 /*
  * The following variable is a special hack that is needed in order for
