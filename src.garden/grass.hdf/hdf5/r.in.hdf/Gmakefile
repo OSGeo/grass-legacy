@@ -22,9 +22,10 @@ MACH_TYPE = LINUX
 ############### nothing to change below  ########################
 HDFINCL = $(HDFBASE)/$(HDFLIBDIR)/include
 HDFLIB  = $(HDFBASE)/$(HDFLIBDIR)/lib/libdf.a
-HDFEOS_LIB = $(HDFBASE)/$(HDFEOSDIR)/lib/$(EOSLIBARCH)
+MFHDFLIB  = $(HDFBASE)/$(HDFLIBDIR)/lib/libmfhdf.a
+HDFEOS_LIB = $(HDFBASE)/$(HDFEOSDIR)/lib/$(EOSLIBARCH)/libhdfeos.a
 
-LIBES = $(GISLIB) $(HDFLIB) -ljpeg
+LIBES = $(GISLIB) $(MFHDFLIB) $(HDFLIB) $(MFHDFLIB) $(HDFEOS_LIB) -ljpeg
 EXTRA_CFLAGS	=  -I$(HDFINCL) -D$(MACH_TYPE)
 
 PGM = $(BIN_CMD)/r.in.hdf
