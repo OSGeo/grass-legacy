@@ -9,7 +9,6 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 default: \
 	$(BIN)/db.columns \
 	$(BIN)/db.copy \
-	$(BIN)/db.droptable \
 	$(BIN)/db.describe \
 	$(BIN)/db.drivers \
 	$(BIN)/db.execute \
