@@ -7,7 +7,7 @@ OFILES = \
 	save_icon.o \
 	show_icon.o
 
-$(BIN_ALPHA_INTER)/$(PGM): $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+$(BIN_ALPHA_CMD)/$(PGM): $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(OFILES): ps_icon.h
