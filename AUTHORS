@@ -172,6 +172,7 @@ Institutions:
 
 
 GRASS 5 Core Team (most have CVS write access):
+ Michael Barton  <michael.barton asu edu>      (tcltkgrass menus)
  Roger Bivand    <Roger.Bivand nhh.no>         ("R" statistical language 
                                                 support)
  Radim Blazek    <blazek itc.it>               (DBMS support, ps.map, d.dm)
