@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.67 2000-11-06 20:02:44 andreas Exp $
+$Id: BUGS,v 1.68 2000-11-09 11:50:17 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -51,10 +51,6 @@ G3D libraries bug:
    Jaro
  -> needs to be fixed
    (being worked on by Jaro)
-
-* Raster/NULL lib:
-  * NULL lib problem with large maps (try r.null or r.mapcalc NULL
-    functions with 4000x4000 map, modules get killed)
 
 ----------- docs ------------------------------------------------
 html/Gmakefile:
