@@ -22,3 +22,23 @@ void G_init_locale(const char *package)
 	textdomain(package);
 #endif
 }
+
+
+#ifdef HAVE_LIBINTL_H
+char *
+libgrass_gettext(const char *msgid)
+{
+
+
+        static int      already_bound = 0;
+
+        if (!already_bound)
+        {
+                already_bound = 1;
+		G_init_locale(PACKAGE);
+        }
+
+return gettext(msgid);        
+
+}
+#endif
