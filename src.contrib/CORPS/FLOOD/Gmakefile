@@ -1,0 +1,61 @@
+HOME=$(BIN_CONTRIB_CMD)
+EXTRA_CFLAGS = $(VECT_INCLUDE) -I$(LIBDIR)/gis -DPARSE
+
+all:  $(HOME)/f.input \
+      $(HOME)/f.wsurf \
+      $(HOME)/f.econ \
+      $(HOME)/f.detail \
+      $(HOME)/f.reach \
+      $(HOME)/f.acap \
+      $(HOME)/f.xsection \
+      $(HOME)/f.clean \
+      $(HOME)/r.surf.voronoi
+
+FINPUT   = finput.o   util.o  event.o  vector.o  mkreach.o    sort.o
+FWSURF   = fwsurf.o   util.o  event.o
+FECON    = fecon.o    util.o  event.o  vector.o
+FDETAIL  = fdetail.o  util.o  event.o
+FREACH   = freach.o   util.o           vector.o  mkreach.o    sort.o
+FACAP    = facap.o    util.o
+FXSECT   = fxsect.o   util.o           vector.o  head_info.o  sort.o
+FCLEAN   = fclean.o   util.o  event.o
+RSVOR    = edgelist.o geometry.o  heap.o  memory.o  voronoi.o  vregion.o  \
+           rsv.o  interpolate.o  polygons.o   misc.o
+
+$(HOME)/f.input: $(FINPUT)
+	$(CC) $(LDFLAGS) -o $@ $(FINPUT) $(DISPLAYLIB) $(RASTERLIB) \
+                           $(VECTLIB) $(GISLIB) -lm
+
+$(HOME)/f.wsurf: $(FWSURF)
+	$(CC) $(LDFLAGS) -o $@ $(FWSURF) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) \
+                           $(VECTLIB) $(GISLIB) -lm
+
+$(HOME)/f.econ: $(FECON)
+	$(CC) $(LDFLAGS) -o $@ $(FECON) $(DISPLAYLIB) $(RASTERLIB) \
+                           $(VECTLIB) $(GISLIB) -lm
+
+$(HOME)/f.detail: $(FDETAIL)
+	$(CC) $(LDFLAGS) -o $@ $(FDETAIL) $(DISPLAYLIB) $(RASTERLIB) \
+                           $(VECTLIB) $(GISLIB) -lm
+
+$(HOME)/f.reach: $(FREACH)
+	$(CC) $(LDFLAGS) -o $@ $(FREACH) $(DISPLAYLIB) $(RASTERLIB) \
+                           $(VECTLIB) $(GISLIB) -lm
+
+$(HOME)/f.acap: $(FACAP)
+	$(CC) $(LDFLAGS) -o $@ $(FACAP) $(DISPLAYLIB) $(RASTERLIB) \
+                           $(VECTLIB) $(GISLIB) -lm
+ 
+$(HOME)/f.xsection: $(FXSECT)
+	$(CC) $(LDFLAGS) -o $@ $(FXSECT) $(DISPLAYLIB) $(RASTERLIB) \
+                           $(VECTLIB) $(VASKLIB) $(CURSES) \
+                           $(GISLIB) -lm
+
+$(HOME)/f.clean: $(FCLEAN)
+	$(CC) $(LDFLAGS) -o $@ $(FCLEAN) $(DISPLAYLIB) $(RASTERLIB) \
+                           $(VECTLIB) $(GISLIB) -lm
+
+$(HOME)/r.surf.voronoi: $(RSVOR)
+	$(CC) $(LDFLAGS) -o $@ $(RSVOR) $(DISPLAYLIB) $(RASTERLIB) \
+                           $(VECTLIB) $(GISLIB) -lm
+ 
