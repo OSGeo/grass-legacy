@@ -1,0 +1,131 @@
+
+
+
+grass.to.ipw            GRASS Reference Manual             grass.to.ipw
+
+
+
+NAME
+     grass.to.ipw - Converts GRASS raster map layer to IPW image file 
+     (GRASS Data Import/Processing Program)
+
+SYNOPSIS
+     grass.to.ipw
+     grass.to.ipw help
+     grass.to.ipw [-r] map=name [header=name] [units=name] \
+               [divisor=value] [offset=value]
+
+DESCRIPTION
+
+     grass.to.ipw converts a GRASS raster map layer to an IPW
+     (Image Processing Workbench) image file.  The GRASS map
+     data is resampled (if its geographic region or resolution
+     differs from the currently defined region - see g.region),
+     and masked by the GRASS current mask.   The IPW image is 
+     written to the standard output.
+
+     If an IPW header file is specified, the values in the given
+     header will be used for the number of bits per pixel, and
+     the linear quantization (floating point map).  The IPW
+     header may optionally be specified as stdin.  The number
+     of lines and samples in the given header must match the
+     number of rows and columns in the currently defined GRASS
+     region (see g.region -p).  If the -r flag is also specified,
+     the given linear quantization header will be written to the
+     output image, but the data values will be copied as raw pixel
+     values, bypassing the floating point mapping.
+
+     If no IPW header file is specified, the number of bits per
+     pixel will be set large enough to hold the maximum data
+     value in the GRASS map layer, i.e. N bits where N is the
+     lowest integer such that 2**N - 1 is greater than the
+     maximum data value in the GRASS map layer.  The linear
+     quantization mapping will be defined so that there is a
+     1:1 mapping of the integer data values.  If the -r (raw)
+     flag is specified, then no linear quantization header will
+     be output to the IPW image.
+
+     A divisor and/or offset may be specified for conversion of
+     the integer GRASS data values to IPW floating point values.
+     If both are specified, the offset will be added to the data
+     first, and then the result will be divided by the given
+     divisor before storing in the IPW output image.
+
+     If a units parameter is specified, the given units name will
+     be stored in the "units =" line of the lq (linear quantization)
+     header of the output IPW image file.
+
+
+     Flags:
+     -r                  raw values (don't convert to linear quantization)
+
+
+
+GRASS 4.0                U.S. Army CERL                         1
+
+
+
+
+
+
+grass.to.ipw            GRASS Reference Manual             grass.to.ipw
+
+
+
+     Parameters:
+
+     map=name            input GRASS cell file
+     header=name         input linear quantization header file
+     units=name          data units for annotation
+     divisor=value       divide each map data by this value
+                         default: 1.0
+     offset=value        add to each map data (prior to division)
+                         default: 0.0
+
+EXAMPLES
+
+
+     The following command,
+
+              grass.to.ipw map=grasslayer divisor=10.0 offset=-100.0 \
+			> ipwfile
+
+     will convert a GRASS map layer called  grasslayer to an IPW
+     image file called ipwfile, subtracting 100.0 from all input
+     values then dividing the result by 10.0 before storing in the
+     IPW output file.
+
+     The following pipeline of commands,
+
+            mkbih -l 200 -s 500 -f | mklqh -m 0,0,255,1.275 -f \
+                 | grass.to.ipw -r map=rawlayer > image
+
+     creates an 8-bit IPW image of 200 lines and 500 samples with
+     linear floating point mapping defined by the pairs (0,0) and
+     (255,1.275).  The data values in GRASS cell file rawlayer are
+     copied as raw pixel values, so that a value of 200 in input map
+     layer grasslayer is copied as raw value 200 in the IPW image,
+     and will be mapped to floating point value of 1.0.
+
+     To convert several GRASS cell files into a multi-band IPW image:
+             grass.to.ipw map=cell.1 > ipw.1
+                     ...
+             grass.to.ipw map=cell.N > ipw.N
+             mux ipw.1 ... ipw.N > image
+
+SEE ALSO
+     James Edward Frew, Jr., The Image Processing Workbench
+
+     Also read GRASS User's Reference Manual entries for:
+     grass.to.ipw, g.region
+
+AUTHOR
+     Kelly Longley, Oregon State University, EPA Environmental
+     Research Lab - Corvallis, OR
+
+
+
+GRASS 4.0                U.S. Army CERL                         2
+
+
+
