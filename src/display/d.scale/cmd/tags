@@ -1,0 +1,2 @@
+Mmain	main.c	/^main(argc, argv)$/
+draw_scale	draw_scale.c	/^draw_scale (color1, color2, east, north, have_coor/
