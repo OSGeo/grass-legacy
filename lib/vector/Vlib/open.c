@@ -414,7 +414,7 @@ Vect_open_new (
 	int over;
 
 	over = 1;
-	if ( overstr = G_getenv ( "OVERWRITE" ) ) {
+	if ( overstr = G__getenv ( "OVERWRITE" ) ) {
 	    over = atoi ( overstr );
 	} 
 
