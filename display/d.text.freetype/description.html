@@ -63,23 +63,23 @@ fonts already installed on the user's system.
 <DL>
 <DT><DD>.F {font|path}[:charset] <EM>font</EM>
 <DD>
-<DT><DD>.C {color_name|R:G:B} <EM>color</EM>
+<DT><DD>.C {color_name|R:G:B} <EM>color</EM> (default: gray)
 <DD>
-<DT><DD>.S [+|-]size[p] <EM>size</EM>
+<DT><DD>.S [+|-]size[p] <EM>size</EM> (default: 5)
 <DD>
-<DT><DD>.B {0|1} <EM>bold</EM>
+<DT><DD>.B {0|1} <EM>bold</EM> (default: 0)
 <DD>
-<DT><DD>.A {ll|lc|lr|cl|cc|cr|ul|uc|ur} <EM>align</EM>
+<DT><DD>.A {ll|lc|lr|cl|cc|cr|ul|uc|ur} <EM>align</EM> (default: ll)
 <DD>
-<DT><DD>.R [+|-]rotation[r] <EM>rotation</EM>
+<DT><DD>.R [+|-]rotation[r] <EM>rotation</EM> (default: 0)
 <DD>
-<DT><DD>.I linespacing <EM>linespacing</EM>
+<DT><DD>.I linespacing <EM>linespacing</EM> (default: 1.1)
 <DD>
 <DT><DD>.X [+|-]x[%|p] <EM>x-coord</EM>
 <DD>
 <DT><DD>.Y [+|-]y[%|p] <EM>y-coord</EM>
 <DD>
-<DT><DD>.L {0|1} <EM>linefeed</EM>
+<DT><DD>.L {0|1} <EM>linefeed</EM> (default: 1)
 <DD>
 <DT><DD>.E [+|-]east[%|p] <EM>x-origin</EM>
 <DD>
@@ -123,7 +123,7 @@ The following example prints three lines: "<TT><font color=gray>GRASS</font>
 <BR>
 
 Command mode instructions may also be read directly from a text file:<BR><BR>
-<TT><B>d.text.freetype</B> -c < test.input</TT>
+<TT><B>d.text.freetype</B> -c &lt; test.input</TT>
 <BR><BR>
 
 <H2>DEFINITION FILE</H2>
@@ -132,8 +132,8 @@ To help users select fonts conveniently, the definition file,
 <TT>$(GISBASE)/etc/freetypecap</TT>, is provided.  Its format is as follows:
 
 <PRE>
-	font:fontpath:charset:color:size:description
-	*default_font:fontpath:charset:color:size:description
+	font:fontpath:charset:description
+	*default_font:fontpath:charset:description
 </PRE>
 
 See the file for examples.
