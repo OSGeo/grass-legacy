@@ -70,8 +70,6 @@ main (int argc, char *argv[])
 
 	Vect_build ( &Map, stdout );
         
-	if ( !dump )
-	    Vect_close (&Map);
     }
     /* dump topology */
     if (dump) {
