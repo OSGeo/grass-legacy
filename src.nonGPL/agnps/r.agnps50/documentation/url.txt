@@ -17,3 +17,9 @@ http://h2osparc.wq.ncsu.edu/
                    Agricultural and Biological Engineering Department
 
 -> http://h2osparc.wq.ncsu.edu/GIS_AGNPS.html
+
+
+Reference: WATERSHEDSS Grass-AGNPS Model Tool
+
+Line, D.E., S.W. Coffey, D.L. Osmond. 1997. WATERSHEDSS Grass-AGNPS
+Model Tool, Trans. of the  ASAE 40(4):971-975. 
