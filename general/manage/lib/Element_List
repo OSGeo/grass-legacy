@@ -27,5 +27,6 @@ icons:icon:icon:paint icon files
 paint/labels:labels:label:paint label files
 site_lists:sites:site list:site list files
 windows:region:region definition:region definition files
+windows3d:region3d:region3D definition:region3D definition files
 group:group:imagery group:imagery group files
 3d.view:3dview:3D viewing parameters:3D view parameters
