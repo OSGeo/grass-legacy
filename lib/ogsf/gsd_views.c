@@ -93,15 +93,19 @@ void gsd_set_view(geoview *gv, geodisplay *gd)
     glGetIntegerv(GL_MATRIX_MODE, &mm);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(.1*(gv->fov),gd->aspect,gd->nearclip,gd->farclip);
+    gluPerspective((double).1*(gv->fov),(double)gd->aspect,(double)gd->nearclip,(double)gd->farclip);
     glMatrixMode(mm);
     
     glLoadIdentity();
-    
+
+   /* update twist parm */
+    glRotatef((float)(gv->twist/10.), 0.0, 0.0, 1.0);   
+
     /* OGLXXX lookat: replace UPx with vector */
-    gluLookAt(gv->from_to[FROM][X], gv->from_to[FROM][Y], gv->from_to[FROM][Z],
-	      gv->from_to[TO][X], gv->from_to[TO][Y], gv->from_to[TO][Z], 
-	      up[X], up[Y], up[Z]);
+    gluLookAt((double)gv->from_to[FROM][X], (double)gv->from_to[FROM][Y], 
+	(double)gv->from_to[FROM][Z], (double)gv->from_to[TO][X], 
+	(double)gv->from_to[TO][Y], (double)gv->from_to[TO][Z], 
+	      (double)up[X], (double)up[Y], (double)up[Z]);
 
     /* have to redefine clipping planes when view changes */
     gsd_update_cplanes();

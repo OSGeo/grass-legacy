@@ -83,11 +83,16 @@ fprintf(stderr, "GLX -- off screen\n");
 /* Get width and height from Viewport */
     glGetIntegerv(GL_VIEWPORT, tmp);
     l=tmp[0];
-    r=tmp[0]+tmp[2]-1;
+    r=tmp[0]+tmp[2];
     b=tmp[1];
-    t=tmp[1]+tmp[3]-1;
-    width = r - l + 1;
-    height = t - b + 1;
+    t=tmp[1]+tmp[3];
+    /* For some reason getpadding around image because
+     * width and height not right???
+     * add 5 to width seems to help?
+     */
+
+    width = r - l + 5;
+    height = t - b;
 
 dpy = glXGetCurrentDisplay();
 
