@@ -1,20 +1,17 @@
-/* @(#)atl2dig2.c	01/21/92 */
+/* atl2dig2.c  01/21/92 */
 /* Creates dig file in Grass format from ASCII file representing an
-ATLAS area, line or point file. */
+   ATLAS area, line or point file. */
 
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
 #include "gis.h"
-#include "dig_defines.h"
-#include "dig_structs.h"
-#include "dig_head.h"
 #include "Vect.h"
 
 char inbuf[2000],outbuf[1000];
 FILE *fp1, *dig, *jog;
 
-Vimport2(inp,out)
+int Vimport2(inp,out)
 char *inp,*out;
 {
 	int x, y, z, n_read, np, on_line, count=0;
@@ -25,8 +22,8 @@ char *inp,*out;
 	double Nmaxx, Smaxx, Emaxx, Wmaxx;
 	int zone=99;
 
-char b1[80],b2[80],*b,typ[4];
-int b3,b4,bs;
+	char b1[80],b2[80],*b,typ[4];
+	int b3,b4,bs;
 
 	struct Map_info Map;
 	struct line_pnts *Points;

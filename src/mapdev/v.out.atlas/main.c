@@ -1,10 +1,7 @@
-
 /* 12/17/92 */
 
 #define MAIN
 #include "gis.h"
-#include "digit.h"
-#include "dig_head.h"
 
 #define  USAGE  "v.out.atlas dig_file atlas_file type\n"
 

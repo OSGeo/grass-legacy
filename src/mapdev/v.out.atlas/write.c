@@ -1,7 +1,4 @@
-
 #include "gis.h"
-#include "digit.h"
-#include "dig_head.h"
 #include "Vect.h"
 
 write_lines(name,mapset,map,lines_file,ctype)
