@@ -440,3 +440,4 @@ src.contrib/UCB/gdbase
 #src.contrib/eurogis/v.out.DI # very special, outdated?
 #src.contrib/eurogis/v.in.EE
 #src.contrib/eurogis/r.to.SVF
+src.garden/grass.hdf/hdf3
