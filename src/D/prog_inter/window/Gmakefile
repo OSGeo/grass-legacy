@@ -1,0 +1,15 @@
+LIBES  = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+LIST   = main.o \
+	 mke_window.o \
+	 box.o\
+	 center.o\
+	 returns.o \
+	 wind_work.o
+
+$(BIN)/d.window: $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
+
+returns.o: graphics.h
+
+$(LIBES): #
