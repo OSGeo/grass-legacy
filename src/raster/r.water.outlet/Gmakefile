@@ -8,7 +8,7 @@ LIST = 	main.c over_cells.c legal.c ramseg.c \
 	flag_clr_all.c flag_create.c flag_destroy.c flag_get.c flag_set.c flag_unset.c 
 
 $(BIN)/$(PGM): $(OBJS) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(GISLIB) $(SEGMENTLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(GISLIB) $(SEGMENTLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #
 
