@@ -1,0 +1,53 @@
+<html>
+
+<TITLE>m.dem.examine</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>m.dem.examine</b></EM>  - Provides a 
+terse description of USGS Digital Elevation Model 
+(DEM) data files stored on 1/2-inch magnetic tape. 
+<BR>
+<EM>(GRASS Data Import/Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>m.dem.examine input=</B><EM>name</EM> <B>blocksize=</B><EM>value</EM> 
+
+<H2>DESCRIPTION</H2>
+
+<EM>m.dem.examine</EM> reads Digital Elevation Model (DEM)
+terrain elevation data produced and supplied by the USGS
+from the input file specified by <EM>name</EM>, in the
+block size specified by <EM>value</EM>.  If no input file
+is named on the command line, the program assumes that
+<KBD>/dev/rmt0</KBD> is the input file.  The information provided to
+the user comes from each file included on tape.  Included
+are the maximum and minimum elevation values and the
+approximate UTM boundaries of each file. The program
+assumes unlabeled tapes in ASCII format with no header or
+trailer files.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+<EM><A HREF="m.dem.extract.html">m.dem.extract</A></EM><br>
+<EM><A HREF="m.examine.tape.html">m.examine.tape</A></EM><br>
+<EM><A HREF="r.rescale.html">r.rescale</A></EM><br>
+<EM><A HREF="r.support.html">r.support</A></EM>
+
+<H2>AUTHOR</H2>
+
+Andrew Heekin, 
+U.S. Army Construction Engineering 
+Research Laboratory
+
+</body>
+</html>
+

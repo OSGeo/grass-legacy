@@ -1,0 +1,91 @@
+<html>
+
+<TITLE>m.dted.examine</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>m.dted.examine</b></EM>  - Provides a terse description of
+level 1 and 2 digital terrain elevation data (DTED) files
+produced and distributed by the Defense Mapping Agency
+(DMA) on 1/2-inch magnetic tapes.
+
+<BR>
+
+<EM>(GRASS Data Import/Processing Program) </EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>m.dted.examine</B> [<EM>tapedev</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>m.dted.examine</EM> scans digital terrain elevation
+data (DTED - Levels 1 and 2) that was produced and supplied
+by the Defense Mapping Agency (DMA) on 1/2-inch magnetic
+tape from the tape device specified by <EM>tapedev</EM>,
+and prints to the screen a terse description of each file.
+
+<P>
+
+If the user specifies no <EM>tapedev</EM> on the command
+line the program assumes that input is coming from
+<KBD>/dev/rmt0</KBD>.  The information provided by
+<EM>m.dted.examine</EM> includes the UTM borders, cell
+resolution, and number of elevation profiles in each file.
+
+<H2>BUGS</H2>
+
+The header file for DTED Level 1 and 2 data was changed in 1987.
+<EM>m.dted.examine</EM> and 
+
+<EM><A HREF="m.dted.extract.html">m.dted.extract</A></EM> 
+
+operate only on DTED data containing pre-1987 headers.
+DTED data containing the pre-1987 headers may be purchased
+from the Defense Mapping Agency (DMA) upon request.
+
+<H2>SEE ALSO</H2>
+
+<EM>Pursuance of Elevation Data</EM>, by 
+Stuart Bradshaw, USACERL
+
+<BR>
+
+<EM>DTED and DEM Elevation Data Extraction</EM>, by 
+Stuart Bradshaw, Mary Martin,
+and Chester Kos, 
+USACERL
+
+
+<P>
+
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+<EM><A HREF="m.dmaUSGSread.html">m.dmaUSGSread</A></EM><br>
+<EM><A HREF="m.dted.extract.html">m.dted.extract</A></EM><br>
+<EM><A HREF="m.examine.tape.html">m.examine.tape</A></EM><br>
+<EM><A HREF="m.region.ll.html">m.region.ll</A></EM><br>
+<EM><A HREF="m.rot90.html">m.rot90</A></EM><br>
+<EM><A HREF="r.describe.html">r.describe</A></EM><br>
+<EM><A HREF="r.in.ll.html">r.in.ll</A></EM><br>
+<EM><A HREF="r.rescale.html">r.rescale</A></EM><br>
+<EM><A HREF="r.slope.aspect.html">r.slope.aspect</A></EM>
+
+<H2>AUTHORS</H2>
+
+Michael Shapiro, U.S.Army Construction Engineering 
+Research Laboratory
+
+<BR>
+
+Andrew Heekin, 
+U.S.Army Construction Engineering 
+Research Laboratory
+
+</body>
+</html>

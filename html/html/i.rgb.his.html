@@ -1,0 +1,77 @@
+<html>
+
+<TITLE>i.rgb.his</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM>i.rgb.his</EM>  - Red-green-blue (rgb) to hue-intensity-saturation (his) 
+function for image processing. 
+<BR>
+<EM>(GRASS Image Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>i.rgb.his</B> 
+<BR>
+<B>i.rgb.his help</B> 
+<BR>
+<B>i.rgb.his</B> 
+<B>red_input=</B><EM>name</EM> 
+<B>green_input=</B><EM>name</EM> 
+<B>blue_input=</B><EM>name</EM> 
+<B>hue_output=</B><EM>name</EM> 
+<B>intensity_output=</B><EM>name</EM> 
+<B>saturation_output=</B><EM>name</EM> 
+
+<H2>DESCRIPTION</H2>
+
+<EM>i.rgb.his</EM> is an image processing program that
+processes three input raster map layers as red, green, and
+blue components and produces three output raster map layers
+representing the hue, intensity, and saturation of the
+data.  The output raster map layers are created by a
+standard red-green-blue (rgb) to hue-intensity-saturation
+(his) color transformation.  Each output raster map layer
+is given a linear gray scale color table.  The current
+geographic region definition and mask settings are
+respected.
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>red_input=</B><EM>name</EM>
+<DD>Input raster map layer representing the red component. 
+<DT><B>green_input=</B><EM>name</EM>
+<DD>Input raster map layer representing the green component. 
+<DT><B>blue_input=</B><EM>name</EM>
+<DD>Input raster map layer representing the blue component. 
+<DT><B>hue_output=</B><EM>name</EM>
+<DD>Output raster map layer representing hue. 
+<DT><B>intensity_output=</B><EM>name</EM>
+<DD>Output raster map layer representing intensity. 
+<DT><B>saturation_output=</B><EM>name</EM>
+<DD>Output raster map layer representing saturation. 
+</DL>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="hsv.rgb.sh.html">hsv.rgb.sh</A></EM><br>
+<EM><A HREF="i.his.rgb.html">i.his.rgb</A></EM><br>
+<EM><A HREF="rgb.hsv.sh.html">rgb.hsv.sh</A></EM>
+
+<H2>AUTHOR</H2>
+
+David Satnik, GIS Laboratory, 
+Central Washington University, 
+<BR>
+with acknowledgements to Ali Vali, 
+ Space Research 
+Center, for the core routine. 
+
+</body>

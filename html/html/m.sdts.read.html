@@ -1,0 +1,122 @@
+<TITLE>m.sdts.read</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+<h2>NAME</h2>
+
+<EM><b>m.sdts.read</b></EM>  - Program for reading SDTS or other data from files in 
+ISO 8211 (FIPS 123) format.
+
+<BR>
+
+(GRASS Data Import/Processing Program)
+
+<H2>SYNOPSIS</H2>
+
+<B>m.sdts.read</B>
+
+<BR>
+
+<B>m.sdts.read help</B>
+<B>m.sdts.read</B> [<B>-s</B>] <B>input=</B><EM>name</EM> [<B>output=</B><EM>name</EM>]
+
+<BR>
+
+
+<H2>DESCRIPTION</H2>
+
+
+
+<P>
+
+The program enables the user to read SDTS and other data files in ISO 8211
+(FIPS 123) format.  Output read from the file can be displayed to the
+screen and/or dumped to a user-specified file. 
+
+
+<P>
+
+Data read from the ISO 8211 file is displayed or dumped record by record.
+The contents of each field of each record are displayed along with field 
+name, subfield name, format, and length.  Binary field data are displayed 
+in hex format.
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+
+
+<P>
+
+
+<H3>Flags:</H3>
+
+<DL>
+
+
+<DT><B>-s</B> 
+
+<DD>suppress screen display of data; dump to specified file only.
+</DL>
+
+
+<P>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>input=</B><EM>name</EM> 
+
+<DD>name of SDTS ISO 8211 file to be read.
+
+<DT><B>output=</B><EM>name</EM> 
+
+<DD>name of file to store output read from the ISO 8211 file.
+</DL>
+
+
+<P>
+
+
+<H2>NOTES</H2>
+
+
+
+<P>
+
+The original version of this program, <EM>sdtsdump</EM>, is included along with 
+other utility program accompanying the U.S. Geological Survey's distribution 
+of their public domain
+FIPS 123 Function Library. Both <EM>sdtsdump</EM> and <EM>m.sdts.read</EM> make 
+use of this
+library.  To create <EM>m.sdts.read</EM>, <EM>sdtsdump</EM> was only modified 
+enough to make it conform to GRASS program conventions.
+
+<H2>SEE ALSO</H2>
+<P>
+
+<EM><A HREF="m.sdts.read.html">m.sdts.read</A> </EM><br>
+<EM><A HREF="v.in.sdts.html">v.in.sdts</A></EM><br>
+<EM><A HREF="v.out.sdts.html">v.out.sdts</A> </EM><br>
+<EM><A HREF="v.sdts.dq.cp.html">v.sdts.dp.cp</A> </EM><br>
+<EM><A HREF="v.sdts.meta.cp.html">v.sdts.meta.cp</A> </EM><br>
+<EM><A HREF="v.sdts.meta.html">v.sdts.meta</A></EM>
+
+<H2>AUTHORS</H2>
+
+Robert Lazar, U.S. Geological Survey, National Mapping Division
+
+<BR>
+
+David Stigberg, U.S.Army Construction Engineering 
+Research Laboratory
+
+
+<P>
+

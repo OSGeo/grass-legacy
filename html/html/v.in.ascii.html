@@ -1,0 +1,108 @@
+<TITLE>v.in.ascii</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.in.ascii</b></EM>  - Converts ASCII vector map layers
+into binary vector map layers.
+
+<BR>
+
+<EM>(GRASS Vector Data Import Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.in.ascii</B>
+<BR>
+<B>v.in.ascii help</B>
+<BR>
+<B>v.in.ascii</B> <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>v.in.ascii</EM> converts a vector map in ASCII format
+to a vector map in binary format.  
+
+<H2>OPTIONS</H2>
+
+The user can run this
+program non-interactively by specifying all program options
+on the command line, in the form:
+
+<DL>
+<DD>
+<B>v.in.ascii</B> <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM>
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>input=</B><EM>name</EM>
+
+<DD>Name of an ASCII vector file to be converted to binary vector file.
+
+<DT><B>output=</B><EM>name</EM>
+
+<DD>Name given to binary vector output file.
+</DL>
+
+If the user runs <EM>v.in.ascii</EM> without giving program
+arguments on the command line, the program will prompt the
+user for <EM>input</EM> and <EM>output</EM> file names.
+
+<H2>NOTES</H2>
+
+After running this program, GRASS support files must be built for
+the binary <EM>output</EM> file before the user can use the file in 
+
+<EM><A HREF="v.digit.html">v.digit</A></EM>.
+The user can run 
+
+<EM><A HREF="v.support.html">v.support</A></EM> 
+
+to create GRASS support files
+for the <EM>output</EM> file.
+
+
+<P>
+
+The GRASS program 
+
+<EM><A HREF="v.out.ascii.html">v.out.ascii</A></EM> 
+
+performs the function of <EM>v.in.ascii</EM> in reverse;
+i.e., it converts vector files in binary format to ASCII
+format.  These two companion programs are useful both for
+importing and exporting vector files between GRASS and
+other software, and for transferring data between
+machines.
+
+
+<P>
+
+The output from <EM>v.in.ascii</EM> will be placed into
+<KBD>$LOCATION/dig_ascii</KBD>.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.digit.html">v.digit</A></EM><br>
+<EM><A HREF="v.import.html">v.import</A></EM><br>
+<EM><A HREF="v.out.ascii.html">v.out.ascii</A></EM><br>
+<EM><A HREF="v.support.html">v.support</A></EM>
+
+<H2>AUTHORS</H2>
+
+Michael Higgins,
+U.S.Army Construction Engineering 
+Research Laboratory
+
+<BR>
+
+James Westervelt, U.S.Army Construction Engineering 
+Research Laboratory

@@ -1,0 +1,44 @@
+<TITLE>r.plane</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>r.plane</B></EM> - Creates a tilted plane.
+
+<H2>GRASS VERSION</H2>
+5.x
+
+<H2>SYNOPSIS</H2>
+<B>r.plane</B><BR>
+<B>r.plane help</B><BR>
+<B>r.plane</B> [<B>dip=</B><EM>value</EM>][<B>azimuth=</B><EM>value</EM>][<B>easting=</B><EM>value</EM>]
+
+<H2>OPTIONS</H2>
+<H3>Parameters:</H3>
+<DL>
+<DT><B>dip=value</B>
+<DD>Please give the value for the dip (inclination) in degrees.  The value must be between -90 and 90 from horizontal, with positive values pointing down. Real numbers are valid.  No value results in dip=0 and horizontal surface.
+
+<DT><B>azimuth=value</B>
+<DD>Please give the value for the azimuth in degrees counterclockwise from north.  The value must be between 0 and 360.  Real numbers are valid.
+
+<DT><B>easting=value</B>
+<DD>Please enter easting, northing for one point on the plane.  Real numbers are valid.
+</DL>
+
+<H2>EXAMPLE</H2>
+<EM>r.plane help</EM> - it gets the current region
+<DL>
+<PRE>
+<DD>n=5777911.25
+<DD>s=5773623.75
+<DD>w=3552072.25
+<DD>e=3557172.25
+<DD>nsres=12.5
+<DD>ewres=12.5
+</PRE>
+</DL>

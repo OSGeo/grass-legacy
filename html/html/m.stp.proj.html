@@ -1,0 +1,68 @@
+<TITLE>m.stp.proj</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>m.stp.proj</b></EM>  - Finds a State Plane projection for the user.
+
+<BR>
+
+<EM>"(SCS GRASS Data Import/Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>m.stp.proj</B>
+
+<BR>
+
+<B>m.stp.proj help</B>
+
+<H2>DESCRIPTION</H2>
+
+<EM>m.stp.proj</EM> prompts the user for a state FIPS code or its two-letter
+abbreviation, and then for the name of a county located within this state.
+The program then prints the MAPGEN style
+parameters for the State Plane Projection.
+
+<H2>EXAMPLE</H2>
+
+
+<DL> 
+
+<DD><B>m.stp.proj </B>
+
+<BR>
+
+Enter State FIPS code or press RETURN if unknown:
+
+<BR>
+
+Enter Two-Letter State or Territory Abbreviation:  <B>pa </B>
+
+<BR>
+
+Enter County Name:  <B>cambria </B>
+
+<BR>
+
+
+<BR>
+
++proj=lcc +a=0.63782064e+07 +es=0.6768657997291094e-02
++x_0=0.6096012192024384e+06 +y_0=0 +lon_0=77d45'w +lat_0=39d20'n
++lat_1=40d58'n +lat_2=39d56'n
+
+</DL>
+
+<H2>AUTHOR</H2>
+
+M.L. Holko, USDA, SCS, NHQ-CGIS
+
+
+<P>
+

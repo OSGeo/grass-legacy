@@ -1,0 +1,54 @@
+<HTML>
+
+<TITLE>hsv.rgb.sh</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>hsv.rgb.sh</b></EM>  - Converts HSV (hue, saturation, and
+value) cell values to RGB (red, green, and blue) values.
+
+<BR>
+
+<EM>(GRASS Shell Script)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>hsv.rgb.sh </B><EM>file1 file2 file3 </EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>hsv.rgb.sh</EM>
+is a Bourne shell (sh(1)) program that converts HSV to RGB using
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>.  
+The Foley and Van Dam algorithm is the basis for this program.
+Input must be three raster files - each file supplying the HSV values.
+Three new raster files are created representing RGB.
+
+<H2>NOTES</H2>
+
+Do not use the same names for input and output.
+
+<H2>FILES</H2>
+
+This program is simply a shell script stored in the file
+<EM>hsv.rgb.sh</EM> under the <KBD>$GISBASE/scripts</KBD> directory.
+Users are encouraged to make their own shell script
+programs using similar techniques.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="rgb.hsv.sh.html">rgb.hsv.sh</A></EM>
+
+<H2>AUTHOR</H2>
+
+James Westervelt,
+U.S.Army Construction Engineering 
+Research Laboratory
+</body>
+</HTML>

@@ -1,0 +1,93 @@
+<HTML>
+
+<TITLE>d.rhumbline</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.rhumbline</b></EM>  - Displays the rhumbline joining two 
+user-specified points, 
+in the active frame on the user's graphics monitor. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.rhumbline</B> 
+<BR>
+<B>d.rhumbline help</B> 
+<BR>
+<B>d.rhumbline coor=</B><EM>lon1,lat1,lon2,lat2</EM> 
+[<B>lcolor=</B><EM>name</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+A rhumbline is a line following a constant angle of the
+compass (i.e., a line of constant direction).  There are 32
+points on the compass (points are roughly 11 degrees 15
+minutes apart).  <EM>d.rhumbline</EM> displays the
+rhumbline joining any two user-specified points in the
+active frame on the user's graphics monitor.  The named
+coordinate locations must fall within the boundaries of the
+user's current geographic region.
+
+<P>
+
+The user can run this program either interactively or
+non-interactively.  If the user simply types
+<B>d.rhumbline</B> on the command line without specifying
+parameter values, the mouse will be activated and the user
+will be asked to use the mouse to indicate the two
+endpoints of the rhumbline.  The rhumbline is then drawn in
+the default color (white). The program also outputs the
+coordinate locations of the two endpoints on the user's
+terminal and the number associated with the mouse button
+depressed by the user in a format useful for input to other
+programs.
+
+<P>
+
+Alternately, the user can specify the starting and ending
+longitude/latitude coordinates of the rhumbline and
+(optionally) the color in which the rhumbline will be
+displayed; in this case, the program will run
+non-interactively.
+
+<H2>OPTIONS</H2>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>coor=</B><EM>lon1,lat1,lon2,lat2</EM>
+<DD>Starting and ending coordinates of the rhumblines to be displayed, 
+given as longitudes and latitudes. 
+<DT><B>lcolor=</B><EM>name</EM>
+<DD>Rhumbline color. 
+<BR>
+Options: red, orange, yellow, green, blue, magenta, indigo, violet, gray, white, black 
+<BR>
+Default: white 
+</DL>
+
+<H2>NOTES</H2>
+
+This program works only with longitude-latitude data bases. 
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.geodesic.html">d.geodesic</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, 
+U.S. Army Construction Engineering 
+Research Laboratory
+
+</body>
+
+</HTML>
