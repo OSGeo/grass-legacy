@@ -88,7 +88,7 @@ Vect_net_build_graph (  struct Map_info *Map,
 
     if ( gr == NULL )
         G_fatal_error ("Cannot build network graph"); 
-    
+
     db_init_handle (&handle);
     db_init_string ( &stmt);
     
@@ -111,6 +111,7 @@ Vect_net_build_graph (  struct Map_info *Map,
     G_debug ( 2, "Register arcs");
     fprintf ( stderr, "Registering arcs: ");
     for ( i = 1; i <= nlines; i++ ) {
+	G_percent ( i, nlines, 1 ); /* must be befor any continue */
 	dofw = dobw = 1;
 	Vect_get_line_nodes ( Map, i, &from, &to );
 	type = Vect_read_line ( Map, Points, Cats, i );
@@ -177,8 +178,8 @@ Vect_net_build_graph (  struct Map_info *Map,
                 G_fatal_error ("Cannot add network arc");
         }
 	    
-	G_percent ( i, nlines, 1 );
     }
+    fprintf ( stderr, "\n");
     G_debug ( 2, "Arcs registered");
     
     if ( afield > 0 && skipped > 0 ) 
@@ -252,6 +253,9 @@ Vect_net_build_graph (  struct Map_info *Map,
     ret = gnGrpFlatten ( gr );
     if ( ret < 0 )  
         G_fatal_error ("GngFlatten error");
+    
+    /* init SP cache */
+    gnGrpInitializeSPCache( gr, &(Map->spCache) );
 
     G_debug (1, "Graph was build."); 
 
@@ -261,7 +265,7 @@ Vect_net_build_graph (  struct Map_info *Map,
 
 /* Find shortest path.
 *
-*  List (must be initialised before) is filled with arcs (lines).
+*  List (must be initialised before) is filled with arcs (lines) or NULL.
 *
 *  Returns: number of segments : ( 0 is correct for from = to )
 *              ? sum of costs is better return value
@@ -274,12 +278,13 @@ Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *L
     int i, line, *pclip, cArc;
     gnGrpSPReport_s * pSPReport;
 
-    Vect_reset_list ( List);
+    if ( List != NULL )
+        Vect_reset_list ( List);
     
     pclip = NULL;
-    if ( (pSPReport =  gnGrpShortestPath ( &(Map->graph), from, to, clipper, pclip, NULL )) == NULL ) {
+    if ( (pSPReport =  gnGrpShortestPath ( &(Map->graph), from, to, clipper, pclip, &(Map->spCache))) == NULL ) {
         if (  gnGrpErrno( &(Map->graph) ) == 0  ) {
-            /* printf( "Destination node %d is unreachable from node %d\n" , to , from ); */
+            /* G_warning( "Destination node %d is unreachable from node %d\n" , to , from ); */	    
 	    if ( cost != NULL )
 		*cost = PORT_DOUBLE_MAX;
 	    
@@ -288,15 +293,19 @@ Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *L
         else
                  fprintf( stderr , "gnGrpShortestPath error: %s\n", gnGrpStrerror( &(Map->graph) ) );
     }
-    for( i = 0 ; i < pSPReport->cArc ; i ++ ) {
-	line = gnGrpGetLink_UserId(&(Map->graph), pSPReport->pArc[i].Link);
-        G_debug( 2, "From %ld to %ld - cost %ld user %d distance %ld\n" ,
-                      pSPReport->pArc[i].From,
-                      pSPReport->pArc[i].To,
-                      gnGrpGetLink_Cost(&(Map->graph), pSPReport->pArc[i].Link), /* this is the cost from clip() */
-                      line,
-                      pSPReport->pArc[i].Distance );
-        Vect_list_append ( List, line );
+
+    if ( List != NULL ) {
+	for( i = 0 ; i < pSPReport->cArc ; i ++ ) {
+	    line = gnGrpGetLink_UserId(&(Map->graph), pSPReport->pArc[i].Link);
+	    G_debug( 2, "From %ld to %ld - cost %ld user %d distance %ld\n" ,
+			  pSPReport->pArc[i].From,
+			  pSPReport->pArc[i].To,
+			  gnGrpGetLink_Cost(&(Map->graph), 
+			  pSPReport->pArc[i].Link), /* this is the cost from clip() */
+			  line,
+			  pSPReport->pArc[i].Distance );
+	    Vect_list_append ( List, line );
+	}
     }
 
     cArc = pSPReport->cArc;
