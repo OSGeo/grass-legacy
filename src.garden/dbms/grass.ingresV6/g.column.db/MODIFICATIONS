@@ -1,0 +1,40 @@
+****************************************
+g.column.db - Modifications for INGRES
+
+Katarina Johnsson, 930421
+****************************************
+
+PROBLEMS?
+	I'm not sure that verbose listing will work!
+
+INGRES version: 6
+
+INGRES version specific subroutines:
+	d.column.db is based on queries to the INGRES system tables.
+	The system tables are entirely different for INGRES ver 5 and
+ 	INGRES ver 6, and so is d.column.db.
+
+Modified and/or renamed subroutines:
+	main
+	ingresColumn <=> infxColumn
+
+New subroutines:
+	ingresUnTable
+
+Modified and/or renamed include files:
+	None
+
+New include files:
+	ingresUtils.h
+
+INGRES modifications:
+	SQL query to system tables (main).
+	Routine to read SQL output modified (ingresColumn in main)
+	Reading SQL output (ingresColumn):
+		ingresUnTable added 
+
+Improvements:
+	None
+
+Bug Fixes:
+	None
