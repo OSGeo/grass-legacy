@@ -1116,7 +1116,7 @@ int G_gui (void)
 
     /* module description */
     if (module_info.description) {
-       append(cmd, "label $suf.labdesc1 -text \"%s\" -relief sunken -anchor w -justify left\n", module_info.description);
+       append(cmd, "label $suf.labdesc1 -text \"%s\" -anchor w -justify left -background white -foreground black\n", module_info.description);
        append(cmd, "label $suf.labdesc2 -text \"\" -anchor w -justify left\n");
        append(cmd, "pack $suf.labdesc1 $suf.labdesc2 -side top -fill x\n" );
     }
