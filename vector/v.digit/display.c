@@ -1,3 +1,4 @@
+/* $Id$ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -157,22 +158,27 @@ void display_map ( void )
      *   so that dangles are not hidden, and nodes without lines (points, 
      *   centroids, are displayed) */
     n = Vect_get_num_nodes ( &Map );
-    symb_set_driver_color ( SYMB_NODE_2 );
-    for(i=1; i <= n; i++) {
-	if ( !Vect_node_alive ( &Map, i) ) continue;
-	if ( NodeSymb[i] != SYMB_NODE_2 ) continue;
-	display_node(i, NodeSymb[i], 0);
-    }
-    R_flush();
 
-    symb_set_driver_color ( SYMB_NODE_1 );
-    for(i=1; i <= n; i++) {
-	G_debug ( 2, "node = %d NodeSymb = %d", i, NodeSymb[i]); 
-	if ( !Vect_node_alive ( &Map, i) ) continue;
-	if ( NodeSymb[i] != SYMB_NODE_1 ) continue;
-	display_node(i, NodeSymb[i], 0);
+    if ( Symb[SYMB_NODE_2].on ) {
+	symb_set_driver_color ( SYMB_NODE_2 );
+	for(i=1; i <= n; i++) {
+	    if ( !Vect_node_alive ( &Map, i) ) continue;
+	    if ( NodeSymb[i] != SYMB_NODE_2 ) continue;
+	    display_node(i, NodeSymb[i], 0);
+	}
+	R_flush();
     }
-    R_flush();
+
+    if ( Symb[SYMB_NODE_1].on ) {
+	symb_set_driver_color ( SYMB_NODE_1 );
+	for(i=1; i <= n; i++) {
+	    G_debug ( 2, "node = %d NodeSymb = %d", i, NodeSymb[i]); 
+	    if ( !Vect_node_alive ( &Map, i) ) continue;
+	    if ( NodeSymb[i] != SYMB_NODE_1 ) continue;
+	    display_node(i, NodeSymb[i], 0);
+        }
+	R_flush();
+    }
 }
 
 /* Display bacground */
