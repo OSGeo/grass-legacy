@@ -51,7 +51,7 @@ main (int argc, char *argv[])
 	tool_opt->options = "break,rmdupl,svtlx";
         tool_opt->description = "Action to be done:\n"
 	                        "\t\tbreak - break lines at each intersection\n"
-			        "\t\trmdupl - remove duplicate lines (pay attention to categories!)"
+			        "\t\trmdupl - remove duplicate lines (pay attention to categories!)\n"
 			        "\t\tsvtlx - snap vertex to a line and create new vertex at that line";
 	
 	thresh_opt = G_define_option();
@@ -59,8 +59,8 @@ main (int argc, char *argv[])
 	thresh_opt ->type =  TYPE_DOUBLE;
 	thresh_opt ->required = NO;
 	thresh_opt ->multiple = YES;
-	thresh_opt ->answer = "";
-        thresh_opt ->description = "Threshold for each tool.\n";
+	/* thresh_opt ->answer = ""; */
+        thresh_opt ->description = "Threshold in map units for each tool.\n";
 
 	x_flag = G_define_flag ();
 	x_flag->key             = 'x';
