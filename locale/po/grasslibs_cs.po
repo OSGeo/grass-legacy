@@ -952,7 +952,7 @@ msgid ""
 "not exist"
 msgstr ""
 "nelze otevøít [%s] v [%s] jeliko¾ se jedná o reklasifikaci [%s] v [%s], "
-"která neexistuje"                           (?.souboru, který neexistuje)?
+"která neexistuje" 
 
 #: ../lib/gis/opencell.c:271
 #, c-format
