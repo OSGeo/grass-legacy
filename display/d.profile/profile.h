@@ -5,14 +5,14 @@
 #define ANOTHER_BUTTON
 */
 
-#define	LEFT	1
+#define	LEFTB	1
 
 #ifndef ANOTHER_BUTTON
-#	define MIDDLE	2
-#	define RIGHT	3
+#	define MIDDLEB	2
+#	define RIGHTB	3
 #else
-#	define MIDDLE	3
-#	define RIGHT	2
+#	define MIDDLEB	3
+#	define RIGHTB	2
 #endif
 
 
