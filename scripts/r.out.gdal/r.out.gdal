@@ -42,13 +42,19 @@
 #% description: Name of output file
 #% required : no
 #%END
+#%option
+#% key: meta
+#% type: string
+#% description: metadata key passed on the output dataset if possible
+#% required : no
+#%END
 
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
 fi
 
-gdal-config --formats >& /dev/null
+gdal-config --formats 2>&1 > /dev/null
 if [ $? -ne 0 ] ; then
    echo "ERROR: GDAL not installed (gdal-config not found)"
    exit 1
@@ -56,7 +62,7 @@ fi
 
 #check if GRASS is supported by gdal_translate for reading
 GDAL_INPUT_FORMATS=`gdal-config --formats`
-echo $GDAL_INPUT_FORMATS | grep grass >& /dev/null
+echo $GDAL_INPUT_FORMATS | grep grass 2>&1 > /dev/null
 if [ $? -ne 0 ] ; then
    echo "ERROR: GDAL installation does not support GRASS."
    echo "       Recompile GDAL libraries to use r.out.gdal."
@@ -66,6 +72,7 @@ fi
 INPUT="$GIS_OPT_input"
 FORMAT="$GIS_OPT_format"
 OUTPUT="$GIS_OPT_output"
+METAKEY="-co $GIS_OPT_meta"
 
 if [ $GIS_FLAG_l -eq 1 ] ; then
   gdal_translate | grep ':' | grep -v 'Usage' | grep -v 'The following'
@@ -90,4 +97,4 @@ fi
 
 #do it
 CELLHD=`echo $file | sed 's+/cell/+/cellhd/+g'`
-gdal_translate -of $FORMAT $CELLHD $OUTPUT
+gdal_translate -of $FORMAT $METAKEY $CELLHD $OUTPUT 
