@@ -21,6 +21,10 @@
  * OF SUCH ITEMS.
  *
  * Modification History:
+ *
+ * $Id$
+ *
+ * s.rand v 0.5B <25 Jun 1995> Copyright (c) 1993-1995. James Darrell McCauley
  * <?? ??? 1993> - began coding and released test version (jdm)
  * <10 Jan 1994> - changed RAND_MAX for rand(), since it is different for
  *                 SunOS 4.1.x and Solaris 2.3. stdlib.h in the latter defines
@@ -29,8 +33,6 @@
  * <25 Feb 1995> - cleaned 'gcc -Wall' warnings (jdm)
  * <25 Jun 1995> - new site API (jdm)
  */
-
-#pragma ident "s.rand v 0.5B <25 Jun 1995>; Copyright (c) 1993-1995. James Darrell McCauley"
 
 #include "gis.h"
 #include <stdlib.h>
@@ -44,9 +46,7 @@
 #endif
 double myrand(void);
 
-int main (argc, argv)
-  char **argv;
-  int argc;
+int main (int argc, char *argv[])
 {
   char *output, errmsg[256];
   double (*rng) (), max;
@@ -90,7 +90,7 @@ int main (argc, argv)
   n = atoi(parm.nsites->answer);
   b = (flag.drand48->answer == '\0') ? 0 : 1;
 
-  s = G_site_new_struct (c, 2, 0, 0); 
+  s = G_site_new_struct (c, 2, 0, 1);
 
   if (strcmp(output,"stdout")==0 || strcmp(output,"-")==0)
     fd=stdout;
@@ -127,8 +127,9 @@ int main (argc, argv)
   {
     s->east=rng()/max*(window.west-window.east)+window.east;
     s->north=rng()/max*(window.north-window.south)+window.south;
-/*    G_site_put (fd, s, 0);*/
-      G_site_put (fd, s);
+    s->ccat=(CELL)i+1;
+    s->dbl_att[0]=i+1;
+    G_site_put (fd, s);
   }
   fclose (fd);
   return (0);
@@ -138,4 +139,3 @@ double myrand()
 {
   return (double) rand();
 }
-
