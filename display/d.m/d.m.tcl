@@ -85,7 +85,8 @@ proc run {cmd args} {
 
 ###############################################################################
 proc term {cmd args} {
-    eval exec -- xterm -e $cmd $args &
+    global env
+    eval exec -- xterm -e $env(GISBASE)/etc/grass-run.sh $cmd $args &
 }
 
 
