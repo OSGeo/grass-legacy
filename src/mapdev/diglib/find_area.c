@@ -38,7 +38,7 @@ dig_find_area (map, Area, totalarea, cent_x, cent_y, south)
 
     for(cur_line = 0; cur_line < Area->n_lines ; cur_line++)
     {
-	ab_line = ABS(Area->lines[cur_line]);
+	ab_line = abs(Area->lines[cur_line]);
 	V2_read_line (map, &points, ab_line);
 	
 	area = 0.0;
@@ -108,7 +108,7 @@ dig_find_area2 (map, Area, totalarea)
     tot_area = 0.0;
     for (cur_line = 0; cur_line < Area->n_lines ; cur_line++)
     {
-	ab_line = ABS(Area->lines[cur_line]);
+	ab_line = abs(Area->lines[cur_line]);
 
 	V2_read_line (map, &points, ab_line);
 	if (points.n_points < 2)
@@ -127,6 +127,42 @@ dig_find_area2 (map, Area, totalarea)
 	else
 	    tot_area -= sum_area;
     }
+    *totalarea =  0.5 * tot_area;
+    
+    return(0);
+}
+
+
+/*
+**  old code was terrible overkill.  This routine is an efficient 
+**  fast area find replacement for above.  
+*/
+
+dig_find_area2_poly (Points, totalarea)
+    struct line_pnts *Points;
+    double *totalarea;
+{
+    int cur_line;
+    int ab_line;
+    int i;
+    double *x, *y;
+    double tot_area, sum_area;
+
+
+    *totalarea = 0.;
+
+    tot_area = 0.0;
+
+    x= Points->x;
+    y= Points->y;
+
+    sum_area = 0.0;
+    for (i=1; i < Points->n_points; i++) 
+    {
+	sum_area += (x[i]-x[i-1]) * (y[i] + y[i-1]);
+    }
+    tot_area += sum_area;
+
     *totalarea =  0.5 * tot_area;
     
     return(0);
