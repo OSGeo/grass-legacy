@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdarg.h>
+
 #include <unistd.h>
 
 #include "mapcalc.h"
@@ -175,6 +177,21 @@ exp		: exp_let
 
 %%
 
+static int syntax_error_occurred;
+
+void syntax_error(const char *fmt, ...)
+{
+	va_list va;
+
+	va_start(va, fmt);
+	vfprintf(stderr, fmt, va);
+	va_end(va);
+
+	fprintf(stderr, "\n");
+
+	syntax_error_occurred = 1;
+}
+
 void yyerror(char *s)
 {
 	fprintf(stderr, "%s\n", s);
@@ -185,11 +202,20 @@ static expr_list *parse(void)
 #if 0
 	yydebug = 1;
 #endif
+	syntax_error_occurred = 0;
+
 	if (yyparse() != 0)
 	{
 		fprintf(stderr, "Parse error\n");
 		return NULL;
 	}
+
+	if (syntax_error_occurred)
+	{
+		fprintf(stderr, "Syntax error\n");
+		return NULL;
+	}
+
 	return result;
 }
 

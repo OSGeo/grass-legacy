@@ -24,6 +24,8 @@ extern void initialize_scanner_stream(FILE *);
 extern expr_list *parse_string(const char *);
 extern expr_list *parse_stream(FILE *);
 
+extern void syntax_error(const char *fmt, ...);
+
 /* expression.c */
 
 extern int is_var(const char *);
