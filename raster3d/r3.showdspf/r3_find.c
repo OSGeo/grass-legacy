@@ -40,7 +40,7 @@ int ret;
 
     if(NULL == G_find_grid3(g3f, "")){
 	fprintf
-	(stderr, "[%s] Invalid 3dcell file\n", g3f);
+	(stderr, "[%s] Invalid 3dcell file (does not exist)\n", g3f);
 	return(NULL);
     }
 
