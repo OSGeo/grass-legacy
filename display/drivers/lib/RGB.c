@@ -40,59 +40,43 @@ static unsigned char red[256], grn[256], blu[256] ;
 int 
 Set_RGB_color (unsigned char r[256], unsigned char g[256], unsigned char b[256])
 {
-	unsigned char *R, *G, *B ;
-	unsigned char *RED, *GRN, *BLU ;
 	int i ;
 
-	R = r; G = g; B = b ;
-	RED = red; GRN = grn; BLU = blu ;
-	for(i=0; i<256; i++)
+	for(i = 0; i < 256; i++)
 	{
-		*RED++ = *R++ ;
-		*GRN++ = *G++ ;
-		*BLU++ = *B++ ;
+		red[i] = r[i];
+		grn[i] = g[i];
+		blu[i] = b[i];
 	}
 
 	return 0;
 }
 
 int 
-RGB_raster (int n, int nrows, register unsigned char *r, register unsigned char *g, register unsigned char *b, int withzeros)
+RGB_raster (int n, int nrows,
+	    unsigned char *r, unsigned char *g, unsigned char *b,
+	    unsigned char *nul)
 {
 	static int *array = NULL ;
 	static int array_alloc = 0 ;
+	int i ;
 
 	if (n > array_alloc)
 	{
-	/*  Make sure there is enough space  */
-		while (n > array_alloc)
-			array_alloc += 512 ;
+		/*  Make sure there is enough space  */
+		array_alloc += (n - array_alloc + 0x01FF) & ~0x01FF;
 		
-	/* Make sure sufficient space is allocated */
-		if (array == NULL)
-			array = (int *)G_malloc((size_t)(array_alloc * sizeof(int))) ;
-		else
-			array = (int *)G_realloc((void *)array, (size_t) (array_alloc * sizeof(int))) ;
-		if(array == NULL)
-		{
-			fprintf(stderr,"ERROR: insufficient memory in RGB_raster\n") ;
-			exit(-1) ;
-		}
+		/* Make sure sufficient space is allocated */
+		array = G_realloc(array, array_alloc * sizeof(int)) ;
 	}
 
-/* Convert RGB to color number */
-	{
-		register int i ;
-		register int *a ;
+	/* Convert RGB to color number */
+	for (i = 0; i < n; i++)
+		array[i] = (nul && nul[i])
+			? 0
+			:_get_lookup_for_color(red[r[i]], grn[g[i]], blu[b[i]]);
 
-		a = array ;
-
-		i = n ;
-		while(i-- > 0)
-			*a++ = _get_lookup_for_color (red[*r++], grn[*g++], blu[*b++] );
-	}
-
-	Raster_int(n, nrows, array, withzeros, 0) ;
+	Raster_int(n, nrows, array, !nul, 0);
 
 	return 0;
 }
