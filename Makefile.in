@@ -302,11 +302,11 @@ srcdist: FORCE distclean
 	${SHELL} -c "mkdir ./grass-${VERSION}" ; true
 	@ # needed to store code in package with grass-version path:
 	${SHELL} -c "mv * ./grass-${VERSION} " ; true
-	tar cvfz grass${VERSION}_src.tar.gz ./grass-${VERSION}/* --exclude=CVS
+	tar cvfz grass-${VERSION}_src.tar.gz ./grass-${VERSION}/* --exclude=CVS
 	@ # restore src code location:
 	${SHELL} -c "mv ./grass-${VERSION}/* ." ; true
 	${SHELL} -c "rmdir ./grass-${VERSION}" ; true
-	@ echo "Distribution source package: grass${VERSION}_src.tar.gz ready."
+	@ echo "Distribution source package: grass-${VERSION}_src.tar.gz ready."
 
 # make a binary package for distribution:
 bindist: FORCE
