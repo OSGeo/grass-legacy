@@ -35,7 +35,7 @@ GRASS 5 Core Team (most have CVS access):
  Bill Hughes     <bhughes@grasshoppernet.com>  (64bit compliance)
  Andreas Lange   <Andreas.Lange@Rhein-Main.de> (SGI/Irix compliance, 
 						Proj/Datum support)
- Pierre de Mouveaux <pmx@audiovu.com><pmx@free.fr>  (NVIZ)
+ Pierre de Mouveaux <pierre@polaris-technologies.com>  (NVIZ, d.layers)
  Lubos Mitas     <lmitas@ncsa.uiuc.edu>        (multivariate spline
                                                 interpolation (RST) and erosion modeling)
  Helena Mitasova <hmitaso@unity.ncsu.edu>      (interpolation modules, NVIZ,
