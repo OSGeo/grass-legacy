@@ -163,6 +163,7 @@ OBJ = \
 	sites.o\
 	sites_title.o\
 	sleep.o\
+	spawn.o\
 	squeeze.o\
 	store.o\
 	strings.o\
