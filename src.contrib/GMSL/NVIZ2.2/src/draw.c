@@ -351,6 +351,62 @@ Nsite_draw_one_cmd (
   return (TCL_OK);
 }
 
+
+/**********************
+* Routine to routine value of
+* auto-redraw check-button
+***********************/
+int
+Nauto_draw_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
+{
+  GS_set_cancel(0);
+  auto_draw(data, interp);
+  GS_set_cancel(0);
+  return (TCL_OK);
+}
+
+/**********************
+* Routine to call all draw
+* functions ... rast, vect
+* and sites
+**********************/
+int
+auto_draw (Nv_data *dc, Tcl_Interp *interp)
+{
+char *buf;
+int autodraw;
+char abuf[128];
+
+buf = Tcl_GetVar (interp, "auto_draw", TCL_GLOBAL_ONLY);
+if( buf != NULL) {
+autodraw = atoi(buf);
+sprintf(abuf, "%d", autodraw);
+Tcl_SetResult(interp, abuf, TCL_VOLATILE);
+}
+}
+
+int
+Ndraw_all_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
+{
+
+if(GS_check_cancel) { /* Probably irrelevant */
+Nsurf_draw_all_cmd(data, interp, argc, argv);
+Nvect_draw_all_cmd(data, interp, argc, argv);
+Nsite_draw_all_cmd(data, interp, argc, argv);
+}
+
+}
+
 int 
 Nsurf_draw_all_cmd (
     Nv_data *data,

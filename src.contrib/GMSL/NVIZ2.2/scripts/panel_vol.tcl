@@ -71,7 +71,7 @@ proc mkvolPanel { BASE } {
 
     set tmp [frame $BASE.right]
     label $tmp.label -text "Display on surface(s):"
-    Nv_mkSurfacelist $tmp.list $maplist Nvol$curr
+    Nv_mkSurfacelist $tmp.list $maplist Nvol$curr vol
     pack $tmp.label $tmp.list -expand 1
     pack $tmp -side right -fill y -expand 1
 

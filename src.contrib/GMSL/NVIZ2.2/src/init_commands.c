@@ -50,6 +50,8 @@ extern int
   Nget_exag_cmd(),
   Nset_exag_cmd(),
   Nquick_draw_cmd(),
+  Nauto_draw_cmd(),
+  Ndraw_all_cmd(),
   Nsurf_draw_all_cmd(),
   Nvect_draw_all_cmd(),
   Nsite_draw_all_cmd(),
@@ -216,6 +218,8 @@ init_commands (Tcl_Interp *interp, Nv_data *data)
   Tcl_CreateCommand(interp, "Nget_exag", Nget_exag_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nset_exag", Nset_exag_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nquick_draw", Nquick_draw_cmd, data, NULL);
+  Tcl_CreateCommand(interp, "Nauto_draw", Nauto_draw_cmd, data, NULL);
+  Tcl_CreateCommand(interp, "Ndraw_all", Ndraw_all_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nsurf_draw_all", Nsurf_draw_all_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nsurf_draw_one", Nsurf_draw_one_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nvect_draw_all", Nvect_draw_all_cmd, data, NULL);

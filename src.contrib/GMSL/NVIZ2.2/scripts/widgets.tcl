@@ -59,10 +59,12 @@ proc Nv_mkXYScale {C {type puck} {name null} {height 100} {width 100} {x 50} {y 
     }
     if {[string compare $name null] == 0} {set name $C.item}
     set Nv_($name) [St_create {item lastx lasty width height} $type $x $y $width $height]
-    bind $C <1> "Nv_itemDrag $C $Nv_($name) %x %y; Nv_xyCallback $cmd $width $height %x %y "
+    bind $C <1> "Nset_cancel 1"
+    bind $C <1> "+ Nv_itemDrag $C $Nv_($name) %x %y; Nv_xyCallback $cmd $width $height %x %y "
     bind $C <B1-Motion> "Nv_itemDrag $C $Nv_($name) %x %y; Nv_xyCallback $cmd $width $height %x %y "
     
     bind $C <B1-ButtonRelease> "Nv_itemDrag $C $Nv_($name) %x %y; Nv_xyCallback $upcmd $width $height %x %y "
+bind $C <B1-ButtonRelease> {+ if {[Nauto_draw] == 1} {Ndraw_all} }
     return $C
 }
 
@@ -113,31 +115,49 @@ proc Nv_scaleCallback { S {who s} {decimal 0} {cmd null} {val 0} } {
 
 proc Nv_floatscaleCallback { S {who s} {decimal 0} {cmd null} {val 0} } {
     if {$who == "s"} {
-	Nv_setEntry $S.f.entry $val
+	set num [llength [split [expr int($val * 1)] ""]]
+	set num [expr int($num + 3)]
+	$S.scale configure -digits $num
+	Nv_setEntry $S.f.entry [format %.2f $val]
     } elseif {$who == "e"} {
 	set min [lindex [$S.scale configure -to] 4]
 	set max [lindex [$S.scale configure -from] 4]
+	set res [lindex [$S.scale configure -resolution] 4]
 	set val [$S.f.entry get]
+        set num [llength [split [expr int($val * 1)] ""]]
+        set num [expr int($num + 3)]
+
 	if {[expr $val < $min]} then {
 	    $S.scale configure -to $val
 	}
 	if {[expr $val > $max]} then {
 	    $S.scale configure -from $val
 	}
-	
+	if {$val != 0} {
+	set res [expr $val/floor($val/$res)]
+	$S.scale configure -resolution $res
+	}
+	$S.scale configure -digits $num	
 	Nv_changeScale  $S.scale $val
     } elseif {$who == "b"} {
 	set min [lindex [$S.scale configure -to] 4]
 	set max [lindex [$S.scale configure -from] 4]
+	set res [lindex [$S.scale configure -resolution] 4]
+        set num [llength [split [expr int($val * 1)] ""]]
+        set num [expr int($num + 3)]
 	if {[expr $val < $min]} then {
 	    $S.scale configure -to $val
 	}
 	if {[expr $val > $max]} then {
 	    $S.scale configure -from $val
 	}
-
+        if {$val != 0} {
+        set res [expr $val/floor($val/$res)]
+        $S.scale configure -resolution $res
+        }
+	$S.scale configure -digits $num
 	Nv_changeScale  $S.scale $val
-	Nv_setEntry $S.f.entry $val
+	Nv_setEntry $S.f.entry [format %.2f $val]
     }
     
     $cmd $val
@@ -169,11 +189,20 @@ proc Nv_mkScale { S {orient v} {name ---} {from 10000} {to 0} {curr 500} {cmd nu
     label $S.f.label -text $name
     $S.scale set $curr
     entry $S.f.entry -width 5 -borderwidth 2 -relief sunken
-    bind $S.f.entry <Return> "Nv_scaleCallback $S e $decimal $cmd " 
     pack $S.scale -side $side 
     pack $S.f -side $side 
     pack $S.f.label -side $text_side 
     pack $S.f.entry -side $text_side 
+
+#Bind For Re-Draw Surface
+    bind $S.scale <Any-ButtonRelease> {+ 
+tkCancelRepeat
+tkScaleEndDrag %W
+tkScaleActivate %W %x %y
+if {[Nauto_draw] == 1} {Ndraw_all} }
+
+bind $S.f.entry <Return> "+ Nv_scaleCallback $S e $decimal $cmd"
+bind $S.f.entry <Return> {+ if {[Nauto_draw] == 1} {Ndraw_all} }
 
     return $S
 }
@@ -191,20 +220,32 @@ proc Nv_mkFloatScale { S {orient v} {name ---} {from 10000} {to 0} {curr 500} {c
 	set text_side left
 	set orient h
     }
+
+#calculate number length for digits var
+set num [llength [split [expr int($curr * 1)] ""]]
+set num [expr int($num + 3)]
     
     scale $S.scale -from $from -length 140 -showvalue 0 -orient $orient \
-	-digits 0 -resolution [expr abs(($to - $from)/140.0)] \
+	-digits $num -resolution [expr -1.0 * (($to - $from)/140.0)] \
 	-tickinterval 0 -to $to -width 13 \
 	-command "Nv_floatscaleCallback $S s 0 $cmd " \
 	-activebackground gray80 -background gray90
-    
     label $S.f.label -text $name
-    entry $S.f.entry -width 5 -borderwidth 2 -relief sunken
-    bind $S.f.entry <Return> "Nv_floatscaleCallback $S e 0 $cmd " 
+    entry $S.f.entry -width $num -borderwidth 2 -relief sunken
     pack $S.scale -side $side 
     pack $S.f -side $side 
     pack $S.f.label -side $text_side 
     pack $S.f.entry -side $text_side 
+
+#Bind For Re-Draw Surface
+bind $S.scale <Any-ButtonRelease> {+ 
+tkCancelRepeat
+tkScaleEndDrag %W
+tkScaleActivate %W %x %y
+if {[Nauto_draw] == 1} {Ndraw_all} }
+
+bind $S.f.entry <Return> "+ Nv_floatscaleCallback $S e 0 $cmd"
+bind $S.f.entry <Return> {+ if {[Nauto_draw] == 1} {Ndraw_all} }
     
     Nv_floatscaleCallback $S b 0 $cmd $curr
     
@@ -320,7 +361,7 @@ proc Nv_mkAttbutton {P name} {
 ###################################################################
 # makes sunken frame with a checkbutton for each item in list L
 ###################################################################
-proc Nv_mkSurfacelist { P L C} {
+proc Nv_mkSurfacelist { P L C type} {
 
     frame $P -relief sunken
     set j 0
@@ -329,14 +370,10 @@ proc Nv_mkSurfacelist { P L C} {
 	checkbutton $P.$j  -relief flat -text $name -anchor w\
 	    -command "change_surf_list $C $i" \
 	    -variable "SL$P.$j"
-	
-	if {0 != $C} {
-	    if {[$C surf_is_selected Nsurf$i]} then {
-		$P.$j select
-	    } else {
-		$P.$j deselect
-	    }
-	}
+
+#Auto-enable all surfaces for drawing
+            $P.$j select
+            auto_enable_data $i $type
 	
 	pack $P.$j -fill x -expand 1 -side top
 	incr j
@@ -355,6 +392,27 @@ proc change_surf_list {C id} {
 	$C select_surf Nsurf$id
     }
     
+}
+
+proc auto_enable_data {id type} {
+
+if {$type == "vect"} {
+	set list [Nget_vect_list]
+	foreach i $list {
+	if {0 == [Nvect$i surf_is_selected Nsurf$id]} {
+	Nvect$i select_surf Nsurf$id
+	}
+	}
+}
+if {$type == "site"} {
+        set list [Nget_site_list]
+        foreach i $list {
+        if {0 == [Nsite$i surf_is_selected Nsurf$id]} {
+        Nsite$i select_surf Nsurf$id
+        }
+        }
+}
+
 }
 
 proc Nget_map_list { type } {
