@@ -68,7 +68,7 @@ main(argc, argv)
 	param.elev			= G_define_option();
 	param.elev->key			= "elevation";
 	param.elev->description		=
-		"(i)   Elevation map";
+		"(i)   Rectangular elevation map";
 	param.elev->type		= TYPE_STRING;
 	param.elev->required		= NO;
 	param.elev->gisprompt		= "old,cell,raster";
@@ -131,14 +131,14 @@ main(argc, argv)
 	param.params			= G_define_option();
 	param.params->key		= "parameters";
 	param.params->description	=
-		"(i)   Parameters file";
+		"(i)   TOPMODEL Parameters file";
 	param.params->type		= TYPE_STRING;
 	param.params->required		= YES;
 
 	param.input			= G_define_option();
 	param.input->key		= "input";
 	param.input->description	=
-		"(i)   Input file";
+		"(i)   Rainfall and potential evapotranspiration data file";
 	param.input->type		= TYPE_STRING;
 	param.input->required		= YES;
 
@@ -159,14 +159,14 @@ main(argc, argv)
 	param.timestep			= G_define_option();
 	param.timestep->key		= "timestep";
 	param.timestep->description	=
-		"      Time step for output";
+		"      output for given time step";
 	param.timestep->type		= TYPE_INTEGER;
 	param.timestep->required	= NO;
 
 	param.idxclass			= G_define_option();
 	param.idxclass->key		= "idxclass";
 	param.idxclass->description	=
-		"      Topographic index class for output";
+		"      output for given topographic index class";
 	param.idxclass->type		= TYPE_INTEGER;
 	param.idxclass->required	= NO;
 
