@@ -28,6 +28,7 @@ SUBDIRS = \
 	sites \
 	front.end \
 	rst \
+	g3d \
 	symbol \
 	init
 
