@@ -71,15 +71,13 @@ LIBES3 = $(G3DLIB) $(GISLIB) $(BTREELIB) $(READLINELIBPATH) $(READLINELIB) $(HIS
 
 EXTRA_CLEAN_FILES = y.tab.c y.tab.h lex.yy.c y.output lex.backup
 
-default: $(BIN_CMD)/$(PGM2) $(BIN_CMD)/$(PGM3) htmlcmd
+default: $(BIN)/$(PGM2) $(BIN)/$(PGM3) htmlcmd
 
-$(BIN_CMD)/$(PGM2): $(LIST2) $(DEPLIBS2)
+$(BIN)/$(PGM2): $(LIST2) $(DEPLIBS2)
 	$(CC) $(LDFLAGS) -o $@ $(LIST2) $(LIBES2) $(MATHLIB) $(XDRLIB)
-	@test -x $(BIN)/$(PGM2) || ln $(ETC)/front.end $(BIN)/$(PGM2)
 
-$(BIN_CMD)/$(PGM3): $(LIST3) $(DEPLIBS3)
+$(BIN)/$(PGM3): $(LIST3) $(DEPLIBS3)
 	$(CC) $(LDFLAGS) -o $@ $(LIST3) $(LIBES3) $(MATHLIB) $(XDRLIB)
-	@test -x $(BIN)/$(PGM3) || ln $(ETC)/front.end $(BIN)/$(PGM3)
 
 y.tab.c y.tab.h: mapcalc.y
 	$(YACC) -b y -d mapcalc.y

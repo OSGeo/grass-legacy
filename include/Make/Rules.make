@@ -55,7 +55,7 @@ htmldesc = \
 htmlcmd: htmlcmd1 htmlgen
 
 htmlcmd1:
-	$(call htmldesc,$(ETC)/bin/cmd/$(PGM))
+	$(call htmldesc,$(BIN)/$(PGM))
 
 # html rules for scripts
 htmlscript: htmlscript1 htmlgen

@@ -1,8 +1,6 @@
 
 MODULE_TOPDIR = ../../..
 
-HOME=$(BIN_CMD)
-
 LIBES = $(MANAGELIB) $(VECTLIB) $(DBMILIB) $(GISLIB)
 LIST = $(OBJDIR)/init.o  
 DEPENDENCIES = $(GISDEP) $(VECTDEP) $(DBMIDEP) $(MANAGEDEP)
@@ -12,27 +10,23 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 
 
 default: \
-	$(HOME)/g.copy \
-	$(HOME)/g.list \
-	$(HOME)/g.remove \
-	$(HOME)/g.rename \
+	$(BIN)/g.copy \
+	$(BIN)/g.list \
+	$(BIN)/g.remove \
+	$(BIN)/g.rename \
 	htmlmulti
 
-$(HOME)/g.copy: $(OBJDIR)/copy.o $(LIST)
+$(BIN)/g.copy: $(OBJDIR)/copy.o $(LIST)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/copy.o $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
-	@test -x $(BIN)/g.copy || ln $(ETC)/front.end $(BIN)/g.copy
 
-$(HOME)/g.list: $(OBJDIR)/list.o $(LIST)
+$(BIN)/g.list: $(OBJDIR)/list.o $(LIST)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/list.o $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
-	@test -x $(BIN)/g.list || ln $(ETC)/front.end $(BIN)/g.list
 
-$(HOME)/g.remove: $(OBJDIR)/remove.o $(LIST)
+$(BIN)/g.remove: $(OBJDIR)/remove.o $(LIST)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/remove.o $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
-	@test -x $(BIN)/g.remove || ln $(ETC)/front.end $(BIN)/g.remove
 
-$(HOME)/g.rename: $(OBJDIR)/rename.o $(LIST)
+$(BIN)/g.rename: $(OBJDIR)/rename.o $(LIST)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/rename.o $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
-	@test -x $(BIN)/g.rename || ln $(ETC)/front.end $(BIN)/g.rename
 
 PROGRAMS = g.copy g.list g.remove g.rename
 
