@@ -58,8 +58,8 @@ MAIN OPTIONS
     int  list;      /* list type */
 } options;
 
-#define STAT struct _stat_
-MAIN STAT
+#define VSTAT struct _vstat_
+MAIN VSTAT
 {
     int  cat;       /* number of categories in map */
     int  alloc;     /* allocated in list */
@@ -72,7 +72,7 @@ MAIN STAT
     int  update;    /* number of updated rows */
     int  error;     /* number of errors */
     int  maxerror;  /* max errors allowed */
-} stat;
+} vstat;
 
 /* exit codes */
 #define OK    0

@@ -30,7 +30,7 @@ main (int argc, char *argv[])
     G_begin_distance_calculations();
     G_begin_polygon_area_calculations();
 
-    stat.maxerror = 10;
+    vstat.maxerror = 10;
 
     /* open labels */
     if ( options.option == O_LABEL )
@@ -47,9 +47,9 @@ main (int argc, char *argv[])
     } 
 
     /* allocate list */
-    stat.cat = stat.alloc = Map.n_atts;
-    stat.rcat = 0;
-    stat.sort = 0;    
+    vstat.cat = vstat.alloc = Map.n_atts;
+    vstat.rcat = 0;
+    vstat.sort = 0;    
     alloc_list();
 
     /* read points */

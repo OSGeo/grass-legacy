@@ -6,16 +6,16 @@ alloc_list (void)
 
     switch (options.list) {
         case LIST_CI:
-            list_ci = (CI *)G_malloc(stat.alloc * sizeof(CI));
+            list_ci = (CI *)G_malloc(vstat.alloc * sizeof(CI));
             break;
         case LIST_CD: 
-	    list_cd = (CD *)G_malloc(stat.alloc * sizeof(CD));
+	    list_cd = (CD *)G_malloc(vstat.alloc * sizeof(CD));
             break;
 	case LIST_CI2D:
-            list_ci2d = (CI2D *)G_malloc(stat.alloc * sizeof(CI2D));
+            list_ci2d = (CI2D *)G_malloc(vstat.alloc * sizeof(CI2D));
             break;
         case LIST_CC:
-            list_cc = (CC *)G_malloc(stat.alloc * sizeof(CC));
+            list_cc = (CC *)G_malloc(vstat.alloc * sizeof(CC));
             break;
     }  					    
 
