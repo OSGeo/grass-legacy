@@ -20,7 +20,7 @@
 #include <string.h>
 
 
-main(argc,argv)
+int main(argc,argv)
 int argc;
 char	*argv[];
 {
@@ -38,9 +38,6 @@ char	*argv[];
 	int     amc;
 	struct Option *parm1, *parm2, *parm3, *parm4, *parm5, *parm6;
         
-/* 6/2000: is it correct that we need *all* parameters? 
-   Compare old approach. I have no idea.*/
-
         parm1 = G_define_option() ;
         parm1->key        = "sg" ;
         parm1->type       = TYPE_STRING ;
@@ -79,7 +76,7 @@ char	*argv[];
         parm6 = G_define_option() ;
         parm6->key        = "cn" ;
         parm6->type       = TYPE_STRING ;
-        parm6->required   = NO;
+        parm6->required   = YES;
         parm6->gisprompt  = "any,cell,raster" ;
         parm6->description= "curve_number_map (output)" ;
 
@@ -196,23 +193,17 @@ char	*argv[];
 	hy_cond_id = cell_open(hy_cond_name,hy_cond_mapset);
 	cn_id = cell_open_new(cn_name);
 	land_use_id = cell_open(land_use_name,land_use_mapset);
-fprintf(stderr,"1 %s\n",veg_cover_name);
 
 
 /* get the category names and cell title */
-fprintf(stderr,"2 %s\n",hy_soil_group_name);
 	if (G_read_cats (hy_soil_group_name, hy_soil_group_mapset, &hy_soil_group_cats) < 0)
 	    exit(-1);
-fprintf(stderr,"3 %s\n",land_use_name);
 	if (G_read_cats (land_use_name, land_use_mapset, &land_use_cats) < 0)
 	    exit(-1);
-fprintf(stderr,"4 %s\n",veg_cover_name);
 	if (G_read_cats (veg_cover_name, veg_cover_mapset, &veg_cover_cats) < 0)
 	    exit(-1);
-fprintf(stderr,"5 %s\n",hy_cond_name);
 	if (G_read_cats (hy_cond_name, hy_cond_mapset, &hy_cond_cats) < 0)
 	    exit(-1);
-
 
 /*	assign curve number values for the array hy_soil_cover  */
 	data();
@@ -299,5 +290,5 @@ fprintf(stderr,"5 %s\n",hy_cond_name);
 	 if (amc == 3) strcpy(title,"Curve Number Map for AMC III");
 
 	 G_put_cell_title(cn_name,title);
-
+        return 0;
 }
