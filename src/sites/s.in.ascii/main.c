@@ -111,8 +111,10 @@ main (int argc, char *argv[])
     /* add here time parameter */
     if (parm.date->answer)
     {
-      G_scan_timestamp (&ts, parm.date->answer);
-      shead.time = &ts;
+	if(1 == G_scan_timestamp (&ts, parm.date->answer))
+	    shead.time = &ts;
+	else
+	    G_fatal_error("Invalid timestamp");
     }
     else 
       shead.time = (struct TimeStamp*)NULL; 
