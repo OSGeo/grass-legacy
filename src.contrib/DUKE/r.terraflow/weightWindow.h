@@ -42,7 +42,6 @@
 #define _weight_H
 
 #include <stdio.h>
-#include <iostream.h>
 
 #include "types.h"         
 #include "common.h"

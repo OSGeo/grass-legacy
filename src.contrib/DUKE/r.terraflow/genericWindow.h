@@ -42,7 +42,6 @@
 #define _genericwindow_H
 
 #include <stdio.h>
-#include <iostream.h>
 
 #include <ami.h>
 #include "types.h"

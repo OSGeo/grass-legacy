@@ -264,7 +264,7 @@ detectEdgeNodata::processWindow(dimension_type row, dimension_type col,
   prevCell = pt = nodataType(row, col, crtlabel);
   nodataQueue->enqueue(pt);
 
-  /* NODATA_DEBUG cout << "inserting " << pt << endl; */
+  /* NODATA_DEBUG *stats << "inserting " << pt << endl; */
   
   nodataStream->write_item(pt);	/*  save to file for later use */
 }
@@ -287,12 +287,13 @@ detectEdgeNodata::relabelNodata() {
   nodataType *pt;
 
   /* sort by label */
-  NODATA_DEBUG cout << "sort nodataStream (by nodata label): ";
+  NODATA_DEBUG *stats << "sort nodataStream (by nodata label): ";
   AMI_STREAM<nodataType> *sortedInStream;
   sortedInStream = sort(nodataStream, labelCmpNodataType());
   delete nodataStream;
 
   nodataStream = new AMI_STREAM<nodataType>();
+
   while((ae = sortedInStream->read_item(&pt)) == AMI_ERROR_NO_ERROR) {
 	cclabel_type root = colTree.findNextRoot(pt->label);
 	assert(root <= pt->label);
@@ -300,6 +301,7 @@ detectEdgeNodata::relabelNodata() {
 	ae = nodataStream->write_item(*pt);
 	assert(ae == AMI_ERROR_NO_ERROR);
   }
+
   delete sortedInStream;
 }
 
@@ -308,8 +310,15 @@ detectEdgeNodata::relabelNodata() {
 AMI_STREAM<elevation_type> *
 detectEdgeNodata::merge() {
  
-  NODATA_DEBUG cout << "sort  nodataStream (by ij): ";
+  NODATA_DEBUG *stats << "sort  nodataStream (by ij): ";
+  /*
+    AMI_STREAM<nodataType> *sortedNodataStream;
+    sortedNodataStream = sort(nodataStream, ijCmpNodataType());
+    delete nodataStream;
+    nodataStream=sortedNodataStream;
+  */
   sort(&nodataStream, ijCmpNodataType());
+  //note: nodataStream gets deleted and replaced with the sorted stream
 
   AMI_STREAM<elevation_type> *mergeStr;
   mergeStr = mergeStream2Grid(elevStream, nrows, ncols, 

@@ -42,9 +42,9 @@
 #ifndef CCFOREST_H
 #define CCFOREST_H
 
-
-#include <iostream.h>
 #include <assert.h>
+#include <iostream>
+using namespace std;
 
 #include <ami.h>
 

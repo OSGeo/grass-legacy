@@ -42,7 +42,6 @@
 #define __EMPQ_ADAPTIVE_IMPL_H
 
 #include <stdio.h>
-#include <iostream.h>
 #include <assert.h>
 
 #include "ami_config.h"

@@ -42,10 +42,10 @@
 #define __UNION_FIND
 
 #include <assert.h>
-#include <iostream.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <iostream>
+using namespace std;
 
 /* initial range guesstimate */
 #define UNION_INITIAL_SIZE 2000

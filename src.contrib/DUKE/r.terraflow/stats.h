@@ -45,8 +45,10 @@
 /* $Id$ */
 
 #include <sys/types.h>
-#include <fstream.h>
-#include <iostream.h>
+
+#include <fstream>
+#include <iostream>
+using namespace std;
 
 #include <ami.h>
 

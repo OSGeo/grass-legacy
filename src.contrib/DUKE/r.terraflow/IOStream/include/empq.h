@@ -41,7 +41,6 @@
 #define __EMPQ_H
 
 #include <stdio.h>
-#include <iostream.h>
 #include <assert.h>
 
 

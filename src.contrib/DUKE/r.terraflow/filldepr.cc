@@ -38,7 +38,6 @@
  *C*/
 
 
-#include <iostream.h>
 #include <assert.h>
 
 #include <ami.h>
