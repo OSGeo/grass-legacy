@@ -33,6 +33,6 @@ int *index;
 Get_num_colors(ncolors)
 int *ncolors;
 {
-	*ncolors = NCOLORS;
+    *ncolors = NCOLORS;
 }
 
