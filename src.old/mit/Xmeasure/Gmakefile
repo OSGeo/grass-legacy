@@ -1,0 +1,9 @@
+PGM = Xmeasure
+OFILES = \
+	main.o
+LIBES = $(GISLIB) $(XDISPLAYLIB)
+
+$(BIN)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(TERMLIB) $(MATHLIB) -lX11
+
+$(LIBES):	#
