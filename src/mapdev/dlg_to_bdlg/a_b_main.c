@@ -70,10 +70,12 @@ main(argc, argv)
 	else
 		++binary ;
 
+    /*
 	printf("\n\n Ascii DLG to binary DLG conversion routine\n") ;
 	printf("\nConverting the ascii format file: %s\n", ascii);
 	printf("     to the %sbinary file format: %s\n\n",
 		new_format ? "": "OLD " , binary);
+    */
 
 /* Read the header section */
 	if (read_dlg_head(dlg) == -1)
