@@ -1,0 +1,26 @@
+
+
+dig2ann
+=======
+
+LINE:  
+	line style
+	color
+	labelling  (cat)
+
+Poly:
+	fill style
+	fill size
+	color
+	labelling (cat)
+
+	
+
+Site2dat
+========
+	Done.  Nothing to do
+
+
+Elev2dat
+========
+	awk script
