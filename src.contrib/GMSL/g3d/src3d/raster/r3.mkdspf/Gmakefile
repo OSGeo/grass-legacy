@@ -4,7 +4,7 @@ DSPLIB	=	$(LDIR)/libdsp3.a
 EXTRA_CFLAGS	=	-I$(LDIR) -I$(INCLUDE_DIR)
 
 
-PGM	=	r3.mkdspf
+PGM=r3.mkdspf
 
 SOURCES	=	\
 		fill_cfax.c \
