@@ -8,8 +8,8 @@ static XrmOptionDescRec initTable[] = {
 {"-fn",		"*fontList",	XrmoptionSepArg, (caddr_t)"fixed"},
 };
 
-char *version = "XGRASS4.1 ";
-char *rel_date = "30 April 1992";
+char *version = "XGRASS4.2 ";
+char *rel_date = "30 September 1997";
 
 extern XtEventHandler _XgAddHistoryCommand();
 
