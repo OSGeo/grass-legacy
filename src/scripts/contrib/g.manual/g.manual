@@ -118,7 +118,7 @@ if [ "$desc" ]
 then
   if [ ! "$tentries" ]
   then
-    entries=`(cd $GISBASE/man/man1; ls *.1 | sed 's|\.1$||g')`
+    entries=`(cd $GISBASE/documents/html; ls *.html | sed 's|\.html$||g')`
   fi
 
   for i in $entries
@@ -128,11 +128,10 @@ then
       continue
     fi
     awk 'BEGIN{i=0}
-        /\.pp|\.br/i{if(i){for(j=1;j<NF;j++) printf "%s ",$j; printf "\n"; exit;}}
-    	{if(!NF) exit;
-	 if(i==1) printf "%s ",$0;
-	 if ($0==".SH NAME") i=1;
-    }' $GISBASE/man/man1/$i.1 | sed 's|\\f.||g; s| *- *| - |'
+         {if(match(tolower($0),"<br>")){print $0; exit;}
+          if(NF&&i==1) printf "%s ",$0;
+	  if(match(tolower($0),"<h2> *name *<\/h2>")) i=1;}
+    ' $GISBASE/documents/html/$i.html | sed 's@</*[^>]*>@@g; s@ *- *@  -  @'
     echo
   done
 else
