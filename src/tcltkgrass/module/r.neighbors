@@ -1,0 +1,20 @@
+interface_build {
+    {r.neighbors} 0
+    {Makes each cell category value a function of the category values assigned to the cells around it, and stores new cell values in an output raster map layer.}
+    {entry input {Input raster map:} 0 raster}
+    {entry output {Output raster map:} 0 raster}
+    {scale size {Neighborhood size:} 1 25 2}
+    {entry title {Title of the output raster map:} 0 ""}
+    {checkbox method {Average neighborhood operation.} "" average}
+    {checkbox method {Median neighborhood operation.} "" median}
+    {checkbox method {Mode neighborhood operation.} "" mode}
+    {checkbox method {Minimum neighborhood operation.} "" minimum}
+    {checkbox method {Maximum neighborhood operation.} "" maximum}
+    {checkbox method {Stddev neighborhood operation.} "" stddev}
+    {checkbox method {Variance neighborhood operation.} "" variance}
+    {checkbox method {Diversity neighborhood operation.} "" diversity}
+    {checkbox method {Interspersion neighborhood operation.} "" interspersion}
+    {separator grey 1}
+    {checkbox -a {Do not align the output with the input.} "" -a}
+    {checkbox -q {Run quietly.} "" -q}
+}
