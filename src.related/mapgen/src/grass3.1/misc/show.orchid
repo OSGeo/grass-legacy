@@ -1,0 +1,12 @@
+#!/bin/sh
+if test $# = 0
+then
+	preview -d orchid -m map.def ovm/* 
+else
+	if test "$1" = -m
+		then
+		preview -d orchid $*
+	else
+		preview -d orchid -m map.def $*
+	fi
+fi
