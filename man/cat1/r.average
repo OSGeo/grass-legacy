@@ -1,12 +1,12 @@
 
 
 
-r.average            GRASS Reference Manual             r.average
+r.average <main>     GRASS Reference Manual      <main> r.average
 
 
 
 NAME
-     r.average - Finds the average of values in a values map
+     r.average - Finds the average of values in a cover map
      within areas assigned the same category value in a user-
      specified base map.
      (GRASS Raster Program)
@@ -14,25 +14,25 @@ NAME
 SYNOPSIS
      r.average
      r.average help
-     r.average [-c] base=name values=name result=name
+     r.average [-c] base=name cover=name output=name
 
 DESCRIPTION
      r.average calculates the average value of data contained in
-     a values raster map layer for areas assigned the same
+     a cover raster map layer for areas assigned the same
      category value in the user-specified base raster map layer.
      These averaged values are stored in the category labels file
-     associated with a new result map layer.
+     associated with a new output map layer.
 
      The values to be averaged are taken from a user-specified
-     values map.  The category values for the values map will be
+     cover map.  The category values for the cover map will be
      averaged, unless the -c flag is set.  If the -c flag is set,
      the values that appear in the category labels file for the
-     values map will be averaged instead (see example below).
+     cover map will be averaged instead (see example below).
 
-     The result map is actually a reclass of the base map (see
+     The output map is actually a reclass of the base map (see
      r.reclass), and will have exactly the same category values
      as the base map.  The averaged values computed by r.average
-     are stored in the result map's category labels file.
+     are stored in the output map's category labels file.
 
      If the user simply types r.average on the command line, the
      user is prompted for the flag setting and parameter values
@@ -45,8 +45,8 @@ DESCRIPTION
      Flag:
 
      -c                Take the average of the values found in
-                       the category labels for the values map,
-                       rather than the average of the value map's
+                       the category labels for the cover map,
+                       rather than the average of the cover map's
                        category values.
 
 
@@ -56,33 +56,33 @@ DESCRIPTION
                        current mapset search path.  For each
                        group of cells assigned the same category
                        value in the base map, the values assigned
-                       these cells in the values map will be
+                       these cells in the cover map will be
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-r.average            GRASS Reference Manual             r.average
+r.average <main>     GRASS Reference Manual      <main> r.average
 
 
 
                        averaged.
 
-     values=name       An existing raster map layer containing
+     cover=name        An existing raster map layer containing
                        the values (in the form of cell category
                        values or cell category labels) to be
                        averaged within each category of the base
                        map.
 
-     result=name       The name of a new map layer to contain
+     output=name       The name of a new map layer to contain
                        program output (a reclass of the base
                        map).  Averaged values will be stored in
-                       the result map's category labels file
+                       the output map's category labels file
                        under the user's $LOCATION/cats directory.
 
 
@@ -126,14 +126,14 @@ r.average            GRASS Reference Manual             r.average
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
 
 
 
-r.average            GRASS Reference Manual             r.average
+r.average <main>     GRASS Reference Manual      <main> r.average
 
 
 
@@ -157,13 +157,13 @@ EXAMPLE
 
      Then
 
-          r.average  -c  base=farms  values=soils.Kfactor
-          result=K.by.farm
+          r.average  -c  base=farms  cover=soils.Kfactor
+          output=K.by.farm
 
      will compute the average soil K factor for each farm, and
-     store the result in the resultant map K.by.farm, which will
-     be a reclass of farms with category labels as follows
-     (example only):
+     store the result in the output map K.by.farm, which will be
+     a reclass of farms with category labels as follows (example
+     only):
 
                              cat     cat
                             value   label
@@ -177,35 +177,35 @@ EXAMPLE
 
 NOTES
      The -c option requires that the category label for each
-     category in the values map be a valid number, integer, or
+     category in the cover map be a valid number, integer, or
      decimal.  To be exact, if the first item in the label is
      numeric, then that value is used.  Otherwise, zero is used.
      The following table covers all possible cases:
 
-                   category label   value used by @
-                   ________________________________
-                      .12              .12
-                      .80 KF           .8
-                      no data          0
+                  category label   value used by -c
+                  _________________________________
+                     .12              .12
+                     .80 KF           .8
+                     no data          0
 
 
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
 
 
 
-r.average            GRASS Reference Manual             r.average
+r.average <main>     GRASS Reference Manual      <main> r.average
 
 
 
-     (This operator is very similar to the @ operator in
-     r.mapcalc, and the user is encouraged to read the manual
-     entry for r.mapcalc to see how it works there.)
+     (This flag is very similar to the @ operator in r.mapcalc,
+     and the user is encouraged to read the manual entry for
+     r.mapcalc to see how it works there.)
 
      The user should use the results of r.average with care.
      Since this utility assigns a value to each cell which is
@@ -220,7 +220,8 @@ r.average            GRASS Reference Manual             r.average
 
 SEE ALSO
      g.region, r.cats, r.clump, r.describe, r.mapcalc, r.mask,
-     r.mfilter, r.neighbors, r.reclass, r.stats, and parser
+     r.mfilter, r.mode, r.neighbors, r.reclass, r.stats, and
+     parser
 
 AUTHOR
      Michael Shapiro, U.S. Army Construction Engineering Research
@@ -257,8 +258,7 @@ AUTHOR
 
 
 
-
-GRASS 4.0                U.S. Army CERL                         4
+GRASS 4.1                U.S. Army CERL                         4
 
 
 
