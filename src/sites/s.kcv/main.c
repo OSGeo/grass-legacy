@@ -32,6 +32,7 @@
 #include "gis.h"
 #include "kcv.h"
 #include "version.h"
+#include "site.h"
 
 #ifndef RAND_MAX 
 #define RAND_MAX (pow(2.0,31.0)-1) 
@@ -60,6 +61,7 @@ main (int argc, char **argv)
   int all, field;
   D *d;
   Z *z;
+  Site *outSite;
   extern struct Cell_head window;
   struct GModule *module;
   struct
@@ -197,7 +199,7 @@ main (int argc, char **argv)
       /* for each random point */
       for (m = 0, k = 0; m < nsites; ++m)
       {
-	if (!z[m].partition)	/* if the site hasn't been taken out */
+	if (!z[m].z)	/* if the site hasn't been taken out */
 	{
 	  /* calculate the distance to this site */
 	  /* d[k].dist = G_distance (z[m].x, z[m].y, east, north); */
@@ -210,15 +212,23 @@ main (int argc, char **argv)
 
       /* now sort these distances */
       qsort (d, k, sizeof (D), dcmp);
-      z[d[0].i].partition = i + 1;
-      G_put_site (fdtest, z[d[0].i].x, z[d[0].i].y, z[d[0].i].desc);
+      z[d[0].i].z = i + 1;
+      outSite->east  = z[d[0].i].x;
+      outSite->north = z[d[0].i].y;
+      outSite->ccat  = z[d[0].i].z;
+      G_site_put (fdtest, outSite);
     }
     fclose (fdtest);
 
     fdtrain = opensites (siteslist, i + 1, "train");
     for (j = 0; j < nsites; ++j)
-      if (z[j].partition != i + 1)
-	G_put_site (fdtrain, z[j].x, z[j].y, z[j].desc);
+      if (z[j].z != i + 1)
+      {
+       outSite->east  = z[j].x;
+       outSite->north = z[j].y;
+       outSite->ccat  = z[j].z;
+       G_site_put (fdtest, outSite);
+      }
     fclose (fdtrain);
     if (verbose)
       G_percent (i, np, 1);

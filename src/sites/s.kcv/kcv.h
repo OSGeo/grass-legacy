@@ -20,9 +20,8 @@ typedef struct flag FLAG;
 
 struct zstruct
 {
-  int partition;
+  int z;
   double x, y; 
-  char desc[80];
 };
 typedef struct zstruct Z;
 
