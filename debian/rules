@@ -12,9 +12,6 @@
 DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 
-#path to GRASS 5.3 source code 
-GRASS53SRC=/usr/src/grass/grass-5.3.0
-
 CFLAGS=-Wall -g
 
 ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
@@ -35,12 +32,10 @@ config.status: configure
 		--mandir=\$${prefix}/share/man \
 		--infodir=\$${prefix}/share/info \
 		--enable-shared \
-		--with-gdal=/usr/bin/gdal-config \
+		--with-gdal=/usr/local/bin/gdal-config \
 		--with-tcltk-includes=/usr/include/tcl8.3 \
 		--with-postgres-includes=/usr/include/postgresql \
-		--with-grass50=$(GRASS53SRC)
-	#merge relevant 5.3 code into 5.7 src dir:
-	$(MAKE) mix
+		--without-odbc
 
 build: build-stamp
 
@@ -60,8 +55,6 @@ clean:
 
 	# Add here commands to clean up after the build process.
 	-$(MAKE) distclean
-	#clean links to 5.3 code
-	-$(MAKE) mixclean
 ifneq "$(wildcard /usr/share/misc/config.sub)" ""
 	cp -f /usr/share/misc/config.sub config.sub
 endif
