@@ -184,6 +184,7 @@ src/mapdev/v.import
 src/mapdev/v.geom
 src/mapdev/v.in.arc
 src/mapdev/v.in.ascii
+src/mapdev/v.in.atlas
 src/mapdev/v.in.dlg
 src/mapdev/v.in.dxf
 src/mapdev/v.in.dxf2
@@ -198,6 +199,7 @@ src/mapdev/v.merge
 src/mapdev/v.mkgrid
 src/mapdev/v.mkquads
 src/mapdev/v.out.arc
+src/mapdev/v.out.atlas
 src/mapdev/v.out.dlg
 src/mapdev/v.out.dxf
 src/mapdev/v.out.idrisi
