@@ -1,0 +1,13 @@
+
+------------------------------------------------------------------
+KEYWORD: colors
+    "colors" is used to select the colors used for graphic display
+    of the analysis.
+
+EXAMPLES:
+    colors grey    select grey scale colors
+    colors wave    select a red, green, blue color wave
+
+ALIAS: color     
+------------------------------------------------------------------
+
