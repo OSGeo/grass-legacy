@@ -1,9 +1,9 @@
 interface_build {
     {d.zoom} 0
     {Allows the user to change the current geographic region settings interactively, with a mouse.}
-    {entry el {Name of existing raster map:} 0 raster}
-    {entry ve {Name of existing vector map:} 0 vector}
-    {entry si {Name of existing sites map:} 0 sites}
+    {entry rast {Name of existing raster map:} 0 raster}
+    {entry vector {Name of existing vector map:} 0 vector}
+    {entry site {Name of existing sites map:} 0 sites}
     {checkbox -j {Just redraw given maps using default colors} "" -j}
     {checkbox -f {Full menu (zoom + pan)} "" -f}
     {checkbox -h {Handheld mode} "" -h}
