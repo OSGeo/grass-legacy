@@ -12,7 +12,10 @@
  *	Read the file COPYING coming with GRASS for details.
  *
  * $Log$
- * Revision 1.3  2000-11-05 15:47:53  cho
+ * Revision 1.1  2000-11-07 05:15:19  cho
+ * renamed
+ *
+ * Revision 1.3  2000/11/05 15:47:53  cho
  * updated to use G_parser()
  *
  * Revision 1.2  2000/11/05 13:09:39  cho
