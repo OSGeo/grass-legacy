@@ -1,4 +1,3 @@
-.\" %D% %J%
 .TH v.out.arc 1G
 .SH NAME
 v.out.arc \- export GRASS vector files to ARC/INFO 
