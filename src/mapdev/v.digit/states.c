@@ -23,6 +23,7 @@ init_states ()
     Point_Device = MOUSE; /* Pointing device (Mouse,Digitizer) */
     Changes_Made = 0;	  /* Changes made, Exit will warn or Not write*/
     Auto_Window = 0;	/* rewindow if chosen area extends outside */
+    Remove_Draw = 1;	/* Display Block removes vs. redrawing screen */
 }
 
 #ifndef  SCS_MODS
