@@ -1,0 +1,16 @@
+
+MODULE_TOPDIR = ../..
+
+PGM = v.segment
+
+include $(MODULE_TOPDIR)/include/Make/Module.make
+
+DEPENDENCIES = $(DISPLAYDEP) $(RASTERDEP) $(VECTDEP) $(DBMIDEP) $(GISDEP)
+
+LIBES        = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(DBMILIB) $(GISLIB)
+
+EXTRA_INC = $(VECT_INC)
+EXTRA_CFLAGS = $(VECT_CFLAGS)
+
+default: cmd
+
