@@ -315,6 +315,8 @@ Vect_build_nat ( struct Map_info *Map, FILE *msgout )
     P_AREA *Area;
     BOUND_BOX box;
     struct ilist *List;
+
+    G_debug (1, "Vect_build_nat()");
     
     plus = &(Map->plus);
     Msgout = msgout;
@@ -336,7 +338,7 @@ Vect_build_nat ( struct Map_info *Map, FILE *msgout )
     i = 1; j = 1;
     while ( 1 ) {
 	/* register line */
-        type = V1_read_next_line_nat (Map, Points, Cats);
+        type = Vect_read_next_line (Map, Points, Cats);
 	/* Note: check for dead lines is not needed, because they are skipped by V1_read_next_line_nat() */
 	if ( type == -1 ) { 
 	    fprintf (stderr, "\nERROR: vector file - can't read\n" );

@@ -37,48 +37,16 @@
 int
 V1_rewind_post (struct Map_info *Map)
 {
-  char *query = (char *) calloc (65536, sizeof (char));
-
-  sprintf (query, "MOVE  BACKWARD %d IN g_cursor", Map->fInfo.post.nextRow);
-  Map->fInfo.post.geomRes = PQexec (Map->fInfo.post.conn, query);
-   /**********************************************************************/
-  if (!Map->fInfo.post.geomRes
-      || PQresultStatus (Map->fInfo.post.geomRes) != PGRES_COMMAND_OK)
-    {
-      PQclear (Map->fInfo.post.geomRes);
-      Map->fInfo.post.geomRes = NULL;
-      free (query);
-      return (-1);
-    }
-  PQclear (Map->fInfo.post.geomRes);
-  Map->fInfo.post.geomRes = NULL;
-/***************************************************/
-  sprintf (query, "SELECT  min(%s) from %s",
-	   Map->fInfo.post.geom_id, Map->fInfo.post.geom_table);
-  Map->fInfo.post.geomRes = PQexec (Map->fInfo.post.conn, query);
-  if (!Map->fInfo.post.geomRes
-      || PQresultStatus (Map->fInfo.post.geomRes) != PGRES_TUPLES_OK)
-    {
-      PQclear (Map->fInfo.post.geomRes);
-      Map->fInfo.post.geomRes = NULL;
-      PQfinish (Map->fInfo.post.conn);
-      free (query);
-      return (-1);
-    }
-
-  Map->fInfo.post.nextRow = atoi (PQgetvalue (Map->fInfo.post.geomRes, 0, 0));
-  PQclear (Map->fInfo.post.geomRes);
-  Map->fInfo.post.geomRes = NULL;
-  free (query);
-/***************************************************/
+  Map->fInfo.post.lastRead = 0;
   return 0;
 }
 
 int
 V2_rewind_post (struct Map_info *Map)
 {
+  Map->fInfo.post.lastRead = 0;
   Map->next_line = 1;
-  return V1_rewind_post (Map);	/* make sure level 1 reads are reset too */
+  return 0;
 }
 
 #endif
