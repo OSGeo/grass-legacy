@@ -195,7 +195,7 @@ fprintf(stderr," %d %c complete\r",(int)100*row1/window.rows,'%');
 			}	
 		col1+=1;
 	      }
-	    G_put_raster_row(output_fd, outcellbuf, data_type);
+	    G_put_raster_row(output_fd, (CELL *)outcellbuf, CELL_TYPE);
 	    row1+=1;
 	  }
     
