@@ -290,15 +290,13 @@ sed -e 's/=/ /' -e 's/\\//' Gmakefile |\
 	then
 	    echo '$(OBJARCH)/'${file}.o: ${file}.f
 	    echo '	$(FC) $(FFLAGS) -c' ${file}.f -o '$@'
-	else
-	   if test -f $file.c
-	   then
-	    echo '$(OBJARCH)/'${file}.o: ${file}.c
-	    echo '	$(CC) $(CFLAGS) -c' ${file}.c -o '$@'
-	   else
+	elif test -f $file.cc
+	then
 	    echo '$(OBJARCH)/'${file}.o: ${file}.cc
 	    echo '	$(CC) $(CFLAGS) -c' ${file}.cc -o '$@'
-	   fi
+	else
+	    echo '$(OBJARCH)/'${file}.o: ${file}.c
+	    echo '	$(CC) $(CFLAGS) -c' ${file}.c -o '$@'
 	fi
     done
  )
