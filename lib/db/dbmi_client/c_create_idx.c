@@ -1,3 +1,4 @@
+#include <string.h>
 #include "dbmi.h"
 #include "macros.h"
 
@@ -29,4 +30,40 @@ db_create_index (dbDriver *driver, dbIndex *index)
     DB_RECV_STRING(&index->indexName);
 
     return DB_OK;
+}
+
+/*!
+ \brief  Create unique index
+ \return 
+ \param 
+*/
+int
+db_create_index2 (dbDriver *driver, char *table_name, char *column_name)
+{
+    int ret;
+    dbIndex index;
+    char buf[1000];
+    char *tbl;
+
+    db_init_index ( &index );
+    db_alloc_index_columns ( &index, 1 );
+
+    tbl = strchr ( table_name, '.' );
+    if ( tbl == NULL )
+	tbl = table_name;
+    else 
+	tbl++;
+    
+    sprintf ( buf, "%s_%s", tbl, column_name );
+    db_set_index_name ( &index, buf );
+
+    db_set_index_table_name ( &index, table_name );
+    db_set_index_column_name ( &index, 0, column_name );
+    db_set_index_type_unique ( &index );
+
+    ret = db_create_index ( driver , &index );
+
+    db_free_index ( &index );
+
+    return ret;
 }

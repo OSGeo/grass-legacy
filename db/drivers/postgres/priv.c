@@ -9,7 +9,7 @@ db__driver_grant_on_table (dbString *tableName, int priv, int to)
     dbString sql;
     dbConnection connection;
     
-    G_debug (0, "db__driver_grant_on_table()");
+    G_debug (3, "db__driver_grant_on_table()");
 
     db_get_connection(&connection);
     db_init_string (&sql);
@@ -35,7 +35,7 @@ db__driver_grant_on_table (dbString *tableName, int priv, int to)
     if ( to | DB_PUBLIC ) 
         db_append_string ( &sql, "public" );
 
-    G_debug (0, " SQL: %s", db_get_string(&sql) );
+    G_debug (3, " SQL: %s", db_get_string(&sql) );
     
     res = PQexec(pg_conn, db_get_string(&sql) ); 
 
