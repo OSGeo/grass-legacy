@@ -6,7 +6,6 @@ include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
 PGM=XDRIVER
-SWITCHER = SWITCHER.o
 
 LIBES = $(DRIVERLIB) $(D_LIB) $(GISLIB)
 
@@ -38,11 +37,9 @@ R3DEFINE=
 EXTRA_CFLAGS=$(XCFLAGS) $(R3DEFINE) $(XINCPATH) 
 
 OBJS =  \
-	$(SWITCHER)\
 	Box_abs.o\
 	Can_do.o\
 	Color.o\
-	Cont_abs.o\
 	Clr_table.o\
 	Draw_line.o\
 	Get_w_box.o\
@@ -53,10 +50,8 @@ OBJS =  \
 	Panel.o\
 	Plylne_abs.o\
 	Polygn_abs.o\
-	Returns.o\
 	Serve_Xevent.o\
 	alloc.o\
-	command_pend.o\
 	Raster.o
 
 ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
