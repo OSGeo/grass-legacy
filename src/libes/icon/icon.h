@@ -1,4 +1,3 @@
-/* %W% %G% */
 #define ICON struct _icon
 struct _icon
 {
