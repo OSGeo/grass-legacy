@@ -1,0 +1,22 @@
+*( data entry forms )                                                           
+report                                                                          
+  select from techs                                                             
+    print                                                                       
+      1 1 id     i5                                                             
+      1 10 name  a20                                                            
+      4 10 'symbol    date    time   resistivity '                              
+      5 1 ' '                                                                   
+    end print                                                                   
+                                                                                
+    loop = 1                                                                    
+    while loop <= 10                                                            
+      print                                                                     
+        1 5 loop i2                                                             
+        2 10 '------  --------  -----  ----------- '                            
+        3 1 ' '                                                                 
+      end print                                                                 
+      loop = loop + 1                                                           
+    end while                                                                   
+    newpage                                                                     
+  end select                                                                    
+end report                                                                      
