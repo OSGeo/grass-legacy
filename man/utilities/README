@@ -1,16 +1,16 @@
 
-Any and all changes should be made to the /man1 files -- not the /cat1 files.
-(However, if a /man1 file is removed, you will have to remove the corresponding
-/cat1 file by hand.)
+Any and all changes should be made to the /man? files -- not the /cat? files.
+(However, if a /man? file is removed, you will have to remove the corresponding
+/cat? file by hand.)
 
 After you add or modify a "manual" or "help" entry, type:
 
-	gmake4.0
+	gmake4.1
 
 When removing a manual page entry, remove the relevant "manual" and "help" files.
-GRASS 4.0 "manual" and "help" files are stored under:
-  /grass.src/4.0/man/man1   and   /grass.src/4.0/man/help1
-Be sure to remove the corresponding /cat1 entry as well.
+GRASS 4.1 "manual" and "help" files are stored under:
+  /grass.src/4.1/man/man?   and   /grass.src/4.1/man/help.src
+Be sure to remove the corresponding /cat? entry as well.
 
 
 To find out how well the manual entries correspond to the commands in the
@@ -20,7 +20,7 @@ bin directory, run the command:
 
 
 To peruse an entry on-line, type:
-	tbl.nroff ../man1/<entry> | more
+	tbl.nroff ../man?/<entry> | more
 
 To send it to the imagen (at CERL only):
-	imagen ../man1/<entry>
+	imagen ../man?/<entry>
