@@ -32,7 +32,6 @@ proc DmRaster::create { tree parent } {
 
     set opt($count,map) "" 
     set opt($count,overlay) 0 
-    set opt($count,bg) \#ffffff
 
     incr count
     return $node
@@ -71,13 +70,6 @@ proc DmRaster::options { id frm } {
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
-    # color
-    #set row [ frame $frm.type ]
-    #Label $row.a -text "Background color:"
-    #SelectColor $row.b -type menubutton -variable DmRaster::opt($id,bg)
-
-    #pack $row.a $row.b -side left
-    #pack $row -side top -fill both -expand yes
 }
 
 proc DmRaster::save { tree depth node } {
@@ -86,19 +78,9 @@ proc DmRaster::save { tree depth node } {
     set id [Dm::node_id $node]
 
 
-    foreach key { _check map overlay bg } {
+    foreach key { _check map overlay } {
         Dm::rc_write $depth "$key $opt($id,$key)"
     } 
-}
-
-proc DmRaster::color { color } {
-    regexp -- {#(..)(..)(..)} $color x r g b
-
-    set r [expr 0x$r ]
-    set g [expr 0x$g ]
-    set b [expr 0x$b ]
-
-    return "$r:$g:$b"
 }
 
 proc DmRaster::display { node } {
@@ -117,10 +99,6 @@ proc DmRaster::display { node } {
     if { $opt($id,overlay) } { 
         append cmd " -o"
     }
-
-    # color
-    #set color [DmRaster::color $opt($id,bg)]
-    #append cmd " bg=$color" 
 
     Dm::execute $cmd
 }
@@ -150,5 +128,5 @@ proc DmRaster::query { node } {
 
     set cmd "d.what.rast map=$opt($id,map)"
 
-    #Dm::execute $cmd
+    Dm::execute $cmd
 }

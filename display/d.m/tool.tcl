@@ -53,17 +53,22 @@ proc DmToolBar::create { tb  } {
     $bbox2 add -image [image create photo -file "$dmpath/add.group.gif"] \
         -command "Dm::add group" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Create new group"
+        -helptext "Add group"
 
     $bbox2 add -image [image create photo -file "$dmpath/add.raster.gif"] \
         -command "Dm::add raster" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Create new raster"
+        -helptext "Add raster"
 
     $bbox2 add -image [image create photo -file "$dmpath/add.vector.gif"] \
         -command "Dm::add vector" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Create new vector"
+        -helptext "Add vector"
+
+    $bbox2 add -image [image create photo -file "$dmpath/add.labels.gif"] \
+        -command "Dm::add labels" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
+        -helptext "Add paint labels (from directory paint/labes)"
 
     $bbox2 add -image [image create photo -file "$dmpath/add.cmd.gif"] \
         -command "Dm::add cmd" \
