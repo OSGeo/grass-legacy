@@ -15,6 +15,15 @@
  *
  *********************************************************************/
 
+/* 11/2000: I removed all the \n \t \b \g \h's from the parameter
+ * definitions, as they caused problems with the xml-parser 
+ * output.
+ * andreas.lange@rhein-main.de
+ *
+ * $Id$
+ *
+ */
+
 #include "gis.h"
 #define MAIN
 #include "cmd_line.h"
@@ -137,13 +146,13 @@ char *argv[];
         parm.velocity->key        = "w_speed" ;
         parm.velocity->type       = TYPE_STRING ;
         parm.velocity->gisprompt  = "old,cell,raster" ;
-        parm.velocity->description= "Name of raster map containing midflame Wind SPEED (ft/min)\n\t\t\b(required w/ -s)";
+        parm.velocity->description= "Name of raster map containing midflame Wind SPEED (ft/min) (required w/ -s)";
 
         parm.mois = G_define_option() ;
         parm.mois->key        = "f_mois" ;
         parm.mois->type       = TYPE_STRING ;
         parm.mois->gisprompt  = "old,cell,raster" ;
-        parm.mois->description= "Name of raster map containing fine Fuel MOISture of the \n\t\t\bcell receiving a spotting firebrand (%) (required w/ -s)";
+        parm.mois->description= "Name of raster map containing fine Fuel MOISture of the cell receiving a spotting firebrand (%) (required w/ -s)";
 
         parm.least = G_define_option() ;
         parm.least->key        = "least_size" ;
@@ -156,7 +165,7 @@ char *argv[];
         parm.comp_dens->key        = "comp_dens" ;
         parm.comp_dens->type       = TYPE_STRING ;
         parm.comp_dens->key_desc   = "decimal" ;
-        parm.comp_dens->description= "Sampling DENSity for additional COMPuting \n\t\t\brange: 0.0 - 1.0 (0.5)" ;
+        parm.comp_dens->description= "Sampling DENSity for additional COMPutin (range: 0.0 - 1.0 (0.5))" ;
 
         parm.init_time = G_define_option() ;
         parm.init_time->key        = "init_time" ;
@@ -232,7 +241,7 @@ char *argv[];
 	if (parm.y_out->answer)	{y_out = 1; y_out_layer = parm.y_out->answer;}
 	if (spotting) {
 		if (!(parm.spotdist->answer && parm.velocity->answer && parm.mois->answer)) {
-			printf ("Error: SPOTTING DISTANCE, fuel MOISTURE, or wind VELOCITY map not given w/ -s\n");
+			printf ("Error: SPOTTING DISTANCE, fuel MOISTURE, or wind VELOCITY map not given w/ -s\n");
 			G_usage();
 			exit(1);
 		} else {
