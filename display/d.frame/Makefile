@@ -32,17 +32,3 @@ $(ETC)/frame.list: $(OBJDIR)/list.o $(DEPLIBS)
 $(HOME)/$(PGM): $(OBJDIR)/frame.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/frame.o $(LIBES) $(MATHLIB) $(XDRLIB)
 	@test -x $(BIN)/d.frame || ln $(ETC)/front.end $(BIN)/d.frame
-
-PROGRAMS = d.frame
-
-htmlcmd:
-	for prog in $(PROGRAMS) ; do \
-		GRASS_FAKE_START=1 GISBASE=$(GISBASE) LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(GISBASE)/lib $(ETC)/bin/cmd/$$prog --html-description | grep -v '</body>' > $$prog.tmp ; true ; \
-		test ! -f $$prog.html || ( cat $$prog.html >> $$prog.tmp ) ; \
-		echo "<HR>" >> $$prog.tmp ; \
-		echo "<P><a href=index.html>Help Index</a>" >> $$prog.tmp ; \
-		echo "</body></html>" >> $$prog.tmp ; \
-		$(MKDIR) $(GISBASE)/docs/html ; \
-		$(INSTALL) -m 644 $$prog.tmp $(GISBASE)/docs/html/$$prog.html ; \
-		rm -f $$prog.tmp ; \
-	done

@@ -18,7 +18,7 @@ default: \
 	$(HOME)/db.select \
 	$(HOME)/db.tables \
 	$(HOME)/db.connect \
-	htmlcmd
+	htmlmulti
 
 $(HOME)/db.columns: $(OBJDIR)/columns.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/columns.o $(LIBES) $(XDRLIB) $(MATHLIB)
@@ -71,13 +71,3 @@ $(HOME)/db.connect: $(OBJDIR)/connect.o
 #not used: db.createdb db.dropdb db.databases
 PROGRAMS = db.columns db.copy db.droptable db.describe db.drivers db.execute db.select db.tables db.connect
 
-htmlcmd:
-	for prog in $(PROGRAMS) ; do \
-		GRASS_FAKE_START=1 GISBASE=$(GISBASE) LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(GISBASE)/lib $(ETC)/bin/cmd/$$prog --html-description | grep -v '</body>' > $$prog.tmp ; true ; \
-		test ! -f $$prog.html || ( cat $$prog.html >> $$prog.tmp ) ; \
-		echo "<HR>" >> $$prog.tmp ; \
-		echo "<P><a href=index.html>Help Index</a>" >> $$prog.tmp ; \
-		echo "</body></html>" >> $$prog.tmp ; \
-		$(MKDIR) $(GISBASE)/docs/html ; \
-		$(INSTALL) -m 644 $$prog.tmp $(GISBASE)/docs/html/$$prog.html ; \
-	done

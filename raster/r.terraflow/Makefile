@@ -54,7 +54,7 @@ DEPLIBS = $(DEPGISLIB)
 
 PGM = r.terraflow
 
-default: dofirst $(BIN_CMD)/$(PGM) $(BIN_CMD)/$(PGM).short htmlcmd
+default: dofirst $(BIN_CMD)/$(PGM) $(BIN_CMD)/$(PGM).short htmlgen
 
 dofirst:
 	$(MKDIR) $(OBJARCH)/FLOAT ; true
@@ -75,15 +75,6 @@ $(BIN_CMD)/$(PGM).short: $(SHORT_OBJ) $(GISLIB)  $(DEPLIBS)
 
 $(GISLIB):	#
 $(DEPGISLIB):	#
-
-htmlcmd:
-	@test ! -f description.html || ( cat description.html >> $(PGM).html )
-	echo "<HR>" >> $(PGM).html
-	echo "<P><a href=index.html>Help Index</a>" >> $(PGM).html
-	echo "</body></html>" >> $(PGM).html
-	$(MKDIR) $(GISBASE)/docs/html
-	$(INSTALL) -m 644 $(PGM).html $(GISBASE)/docs/html
-	$(INSTALL) -m 644 *.png $(GISBASE)/docs/html
 
 clean: 
 	(cd IOStream/lib ; $(MAKE) clean )

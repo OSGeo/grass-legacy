@@ -32,46 +32,49 @@ clean:
 	-rm -f $(EXTRA_CLEAN_FILES)
 
 #below is a dirty hack (feel free to rewrite):
+
+# generic html rules for all commands
+htmlgen:
+	@if test -f $(PGM).html ; then \
+		cat $(PGM).html >> $(PGM).tmp.html ; \
+	elif test -f description.html ; then \
+		cat description.html >> $(PGM).tmp.html ; \
+	fi
+	echo "<HR>" >> $(PGM).tmp.html
+	echo "<P><a href=index.html>Help Index</a>" >> $(PGM).tmp.html
+	echo "</body></html>" >> $(PGM).tmp.html
+	-$(MKDIR) $(GISBASE)/docs/html
+	-mv -f $(PGM).tmp.html $(GISBASE)/docs/html/$(PGM).html
+	-$(INSTALL) *.png *.jpg $(GISBASE)/docs/html 2> /dev/null
+
+htmldesc = \
+	GRASS_FAKE_START=1 \
+	GISBASE=$(GISBASE) \
+	LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(GISBASE)/lib \
+	$(1) --html-description | grep -v '</body>' > $(PGM).tmp.html ; true
+
 # html rules for cmd commands
-htmlcmd:
-	-GRASS_FAKE_START=1 GISBASE=$(GISBASE) LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(GISBASE)/lib $(ETC)/bin/cmd/$(PGM) --html-description | grep -v '</body>' > $(PGM).html
-	@test ! -f description.html || ( cat description.html >> $(PGM).html )
-	echo "<HR>" >> $(PGM).html
-	echo "<P><a href=index.html>Help Index</a>" >> $(PGM).html
-	echo "</body></html>" >> $(PGM).html
-	mkdir -p $(GISBASE)/docs/html
-	mv $(PGM).html $(GISBASE)/docs/html
-	-cp *.png *.jpg $(GISBASE)/docs/html 2> /dev/null
+htmlcmd: htmlcmd1 htmlgen
+
+htmlcmd1:
+	$(call htmldesc,$(ETC)/bin/cmd/$(PGM))
 
 # html rules for scripts
-htmlscript:
-	-GRASS_FAKE_START=1 GISBASE=$(GISBASE) LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(GISBASE)/lib $(GISBASE)/scripts/$(PGM) --html-description | grep -v '</body>' > $(PGM).html
-	@test ! -f description.html || ( cat description.html >> $(PGM).html )
-	echo "<HR>" >> $(PGM).html
-	echo "<P><a href=index.html>Help Index</a>" >> $(PGM).html
-	echo "</body></html>" >> $(PGM).html
-	mkdir -p $(GISBASE)/docs/html
-	mv $(PGM).html $(GISBASE)/docs/html
-	-cp *.png *.jpg $(GISBASE)/docs/html 2> /dev/null
+htmlscript: htmlscript1 htmlgen
+
+htmlscript1:
+	$(call htmldesc,$(GISBASE)/scripts/$(PGM))
 
 # html rules for inter commands
 # note that fakestart doesn't work here
-htmlinter:
-	@test ! -f description.html || ( cat description.html >> $(PGM).html )
-	echo "<HR>" >> $(PGM).html
-	echo "<P><a href=index.html>Help Index</a>" >> $(PGM).html
-	echo "</body></html>" >> $(PGM).html
-	mkdir -p $(GISBASE)/docs/html
-	mv $(PGM).html $(GISBASE)/docs/html
-	-cp *.png *.jpg $(GISBASE)/docs/html 2> /dev/null
+htmlinter: htmlgen
 
 # html rules for ETC commands
-htmletc:
-	-GRASS_FAKE_START=1 GISBASE=$(GISBASE) LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(GISBASE)/lib $(ETC)/$(PGM) --html-description | grep -v '</body>' > $(PGM).html
-	@test ! -f description.html || ( cat description.html >> $(PGM).html )
-	echo "<HR>" >> $(PGM).html
-	echo "<P><a href=index.html>Help Index</a>" >> $(PGM).html
-	echo "</body></html>" >> $(PGM).html
-	mkdir -p $(GISBASE)/docs/html
-	mv $(PGM).html $(GISBASE)/docs/html
-	-cp *.png *.jpg $(GISBASE)/docs/html 2> /dev/null
+htmletc: htmletc1 htmlgen
+
+htmletc1:
+	$(call htmldesc,$(ETC)/$(PGM))
+
+# html rules for multiple commands
+htmlmulti:
+	for prog in $(PROGRAMS) ; do $(MAKE) htmlcmd PGM=$$prog ; done
