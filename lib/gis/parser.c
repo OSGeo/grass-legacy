@@ -889,6 +889,9 @@ int G_gui (void)
 		    set pwd [pwd]
 		    set inpath 1
 		    set list \"\"
+		    set env(GISDBASE) [exec g.gisenv get=GISDBASE]
+		    set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
+		    set env(MAPSET) [exec g.gisenv get=MAPSET]
 		    cd $env(GISDBASE)/$env(LOCATION_NAME)
 		    foreach dir [exec g.mapsets -p] {
 			if {[string compare $dir .] == 0} {
