@@ -1,0 +1,70 @@
+.TH r.aggreg
+.SH NAME
+\fIr.aggreg\fR \- Objektaggregation und Nachbarschaftsanalyse
+.br
+.I "(GRASS Raster Program)"
+.SH SYNOPSIS
+\fBr.aggreg\fR
+.br
+\fBr.aggreg help\fR
+.br
+\fBr.aggreg\fR \fBinput=\fIname\fR \fBoutput=\fIname\fR \fBneibor=\fIname\fR
+\fB[aggregation=\fIvalue\fB]\fR
+.SH DESCRIPTION
+\fIr.aggreg\fR findet Pixel gleicher Kategorie von \fIinput\fR die flaechenhaft
+zusammenhaengen, also benachbart sind. Daraus ergeben sich Objekte von denen
+jedes in \fIoutput\fR eine neue, eindeutige Objektnummer erhaelt. Es findet
+eine Reklassifizierung statt, so dass in \fIoutput\fR die entsprechenden
+Pixel des Objektes eine einheitliche Klasse erhalten.
+
+.SH NACHBARSCHAFTSDATEI
+Zusaetzlich wird jedes Objekt hinsichtlich Nachbarobjekte untersucht und
+die Ergebnisse in der Textdatei \fIneibor\fR
+gespeichert. Diese Nachbarschaftsdatei
+hat eine genau definierte Form und enthaelt die im Folgenden aufgefuehrten
+Informationen:
+
+Fuer jedes Objekt wird ein durch Leerzeile getrennter Block geschrieben.
+Der Block enthaelt eine Kopfzeile. Dann folgt eine
+Trennungslinie und nachfolgend je eine Zeile fuer die Nachbarobjekte des
+betrachteten Objekts. Die Zeilen enthalten in der jeweiligen Reihenfolge:
+
+.IP \fBKopfzeile\fR 15
+* Anzahl der gefundenen Nachbarn
+.br
+* Objektnummer in \fIoutput\fR
+.br
+* Urspruengliche Kategorie des Objekts in \fIinput\fR
+.br
+* Groesse des Objekts in Pixel
+.br
+* Gesamte Grenzlaenge des Objektes in Pixel
+
+.IP \fBFolgezeilen\fR 15
+* Laufende Nummer des Nachbarn
+.br
+* Objektnummer des Nachbarn in \fIoutput\fR
+.br
+* Urspruengliche Kategorie des Nachbarn
+.br
+* Groesse des Nachbarn in Pixel
+.br
+* Laenge der Grenze des Nachbarn zum Objekt in der Kopfzeile
+
+.SH AGGREGATIONSUMGEBUNG
+Mit dem Parameter \fIaggregation\fR, der die Werte 4 oder 8 annehmen kann wird
+bestimmt ob alle 8 umliegenden Nachbarn des jeweils untersuchten Pixels auf
+gleiche Kategorie untersucht werden, oder ob nur die 4 horizontal bzw.
+vertikal benachbarten Pixel betrachtet werden. Die Standardeinstellung fuer
+diesen Parameter ist 8.
+
+.SH BUGS
+Das Programm ist nur fuer eine bestimmte Pixelgroesse von Objekten und eine
+bestimmte Anzahl von Objekten ausgelegt. Das Verhalten des Programms
+bei sehr grossen Dateien ist unbekannt.
+
+.SH "SEE ALSO"
+r.clump
+
+.SH AUTHOR
+Michael Saupe, Geographisches Institut, Universitaet Heidelberg
