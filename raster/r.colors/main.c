@@ -190,7 +190,7 @@ int main (int argc, char *argv[])
 	sprintf(path, "%s/etc/colors/%s", G_gisbase(), rules);
 	rules_fp = fopen(path, "r");
 	if (!rules_fp)
-	    G_fatal_error("Unable to open rules file %s", rules);
+	    G_fatal_error("Unable to open rules file %s in %s", rules, path);
 	if (!read_color_rules(rules_fp, &colors, flag2->answer, min, max, fp))
 	    exit(1); 
 	fclose(rules_fp);
