@@ -1,0 +1,66 @@
+
+
+
+r3.mapcalc <alpha>    GRASS Reference Manual   <alpha> r3.mapcalc
+
+
+
+NAME
+     r3.mapcalc	 - G3D raster volume data calculator.
+     (GRASS 3D Program)
+
+SYNOPSIS
+     r3.mapcalc [result=expression]
+
+DESCRIPTION
+     r3.mapcalc performs arithmetic on 3D raster map layers.  New
+     raster map layers can be created which are arithmetic
+     expressions involving existing raster map layers, integer or
+     floating point constants, and functions.
+
+PROGRAM USE
+     If used without command line arguments, r3.mapcalc will read
+     its input, one line at a time, from standard input (which is
+     the keyboard, unless r.directed from a file or across a
+     pipe).  Otherwise, the expression on the command line is
+     evaluated.	 r3.mapcalc expects its input to have the form:
+
+     result=expression
+
+SEE ALSO
+     r.mapcalc
+
+AUTHOR
+     Jaro Hofierka, funded by GeoModel s.r.o.
+
+NOTICE
+     This program is part of the alpha section of the GRASS
+     distribution.  Unlike the code in the main section of GRASS,
+     the alpha code has not yet been fully tested for one release
+     cycle.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 5.0beta8	      GRASS Development Team			1
+
+
+
