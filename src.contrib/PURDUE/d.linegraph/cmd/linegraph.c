@@ -74,7 +74,7 @@ main (argc, argv)
     char *name;
     char color_name[20];
     
-    FILE *fclose(), *fopen();
+/*    FILE *fclose(), *fopen();*/
  
     struct Option *dir_opt;
     struct Option *x_opt;
