@@ -9,6 +9,7 @@
 #include "dbvect.h"
 #include "glocale.h"
 
+int opencell(char*);
 
 int runPg(SQL_stmt, map, mapset, color, fillcolor)
      char *SQL_stmt, *map, *mapset;
@@ -46,6 +47,11 @@ int runPg(SQL_stmt, map, mapset, color, fillcolor)
 	return -1;
     }
     build_lookup_tables(&P_map);
+    
+    if (rmap_string)
+     if ((fd = opencell(rmap_string)) < 0) rmap_string="";
+
+
 
     /* Read SQL output and draw vectors */
 
@@ -195,4 +201,26 @@ int runPg(SQL_stmt, map, mapset, color, fillcolor)
     R_close_driver();
 #endif
     exit(stat);
+}
+
+
+int opencell(name)
+     char *name;
+{
+    char *m;
+    int fd;
+
+    m = G_find_cell2(name, "");
+    if (m == NULL) {
+	fprintf(stderr, _("warning: %s - raster map not found.\n"), name);
+	return -1;
+    }
+    if (strlen(m) == 0)
+	m = G_mapset();
+
+    fd = G_open_cell_old(name, m);
+    if (fd < 0)
+	fprintf(stderr, _("warning: can not open [%s] in [%s]\n"),
+		name, m);
+    return fd;
 }

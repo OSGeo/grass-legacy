@@ -1,6 +1,7 @@
 /*v.to.pg 
 Alex Shevlakov <sixote@yahoo.com>, 03/2002.
-Exports polygons and lines to new Postgres table as types "polygon" and "path"*/
+Exports polygons and lines to new Postgres/PostGIS table as types "polygon" and "path"
+02/2004 Added Z-coor (optional) in PostGIS export*/
 
 #include <stdio.h>
 #include <string.h>
@@ -20,6 +21,8 @@ int total_vertices = 0;
 int total_import = 0;
 int verbose = 0;
 int to_postgis = 0;
+char *rmap_string;
+int fd = -1;
 
 int main(argc, argv)
      int argc;

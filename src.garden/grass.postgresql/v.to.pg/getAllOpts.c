@@ -10,7 +10,7 @@ int getAllOpts(argc, argv)
 
 {
 
-    struct Option *key, *vtype, *where, *tab, *map, *color;
+    struct Option *key, *vtype, *where, *tab, *map, *rmap, *color;
     struct Flag *flag1, *flag2, *flag3, *flag4;
     char *mapset;
     int colr, fillcolr, retval;
@@ -61,6 +61,14 @@ int getAllOpts(argc, argv)
     color->multiple = NO;
     color->description = _("Color to draw selected vectors:");
 
+    rmap = G_define_option();
+    rmap->key = "rmap";
+    rmap->gisprompt = "old,cell,raster";
+    rmap->type = TYPE_STRING;
+    rmap->required = NO;
+    rmap->multiple = NO;
+    rmap->description = _("Raster map for Z-coord (may be used with PostGIS).");
+
 
     flag1 = G_define_flag();
     flag1->key = 'f';
@@ -107,6 +115,7 @@ int getAllOpts(argc, argv)
     key_string = key->answer;
     table_string = tab->answer;
     vtype_string = vtype->answer;
+    rmap_string = rmap->answer;
 
     retval = buildPg(where->answer, map->answer, mapset, colr, fillcolr);
 
