@@ -1,0 +1,109 @@
+.\" %W% %G%
+.TH neighbors 1
+.SH NAME
+neighbors \- GRASS 
+.CT data "cell map"
+enhancement capability
+.br
+\fI(Available through\fR \fBgrass3\fR \fImenu)\fR
+.SH SYNOPSIS
+.B neighbors 
+.SH DESCRIPTION
+The GRASS tool \fIneigbors\fR is an interactive program to enhance or
+subdue 
+.CT data category
+values by modifying a 
+.CT data category
+value based on the 
+.CT "" category
+values in
+surrounding (neighbor) cells.
+.SH USER OPTIONS
+The user must specify the size of the neighborhood and the
+function or operation to be performed in each neighborhood.
+
+.I Neighborhood Size:
+The neighborhood size specifies which cells surrounding any given
+cell fall into the neighborhood for that cell.  The size must be an odd
+integer. For example:
+.NF
+                              _ _ _
+                             |_|_|_| 
+    3 x 3 neighborhood --->  |_|_|_|
+                             |_|_|_|
+
+
+.FI
+.I Neighborhood Operations:
+The \fIneighborhood\fR operators determine what new 
+.CT "" category
+value a center cell
+in a neighborhood will have after examining 
+.CT "" category
+values inside its neighboring
+cells. Each cell in a 
+.CT "data layer" "cell map"
+becomes the center cell of a neighborhood 
+as the neighborhood window moves from cell to cell throughout the
+.CT "data layer." "cell map."
+.I neighbors
+can perform the following operations:
+
+.IP \fBmode\fR
+The most frequently occurring 
+.CT "" category
+value in the neighborhood.
+.IP \fBmin\fR
+The minimum 
+.CT "" category
+value within the neighborhood.
+.IP \fBmax\fR
+The maximum 
+.CT "" category
+value within the neighborhood.
+.IP \fBave\fR
+The average 
+.CT "" category
+value within the neighborhood.
+In the following example, the result would be:
+.br
+.ti +5
+(7*4 + 6 + 5 + 4*3)/9 + 0.5 = 6.16
+.br
+The result is rounded to the nearest integer.
+
+.ne 9
+.NF
+       Raw Data     Operation     New Data
+   ----------------          ----------------
+   | 7  | 7  |  5 |          |    |    |    |
+   |----|----|----| average  |----|----|----|
+   | 4  | 7  |  4 |--------->|    |  6 |    |
+   |----|----|----|          |----|----|----|
+   | 7  | 6  |  4 |          |    |    |    |
+   |----|----|----|          |----|----|----|
+.FI
+
+.IP \fBdiversity\fR
+The number of different 
+.CT "" category
+values within the neighborhood.
+In the above example, the diversity is four.
+.IP \fBinterspersion\fR
+The number of cells containing categories which differ from the center
+category.  In the above example, the interspersion is five.
+.SH NOTES
+The
+.I neighbors
+program works in the current 
+.CT "" geographic
+window with the current mask, if any.
+It is recommended, but not required,
+that the 
+.CT "" geographic
+window resolution be the same as that of the cell 
+.CT "file." "map."
+If the resolutions differ, the user will be notified and asked if
+it is ok to proceed.
+.SH "AUTHOR"
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
