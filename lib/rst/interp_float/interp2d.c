@@ -154,8 +154,8 @@ int IL_grid_calc_2d (
     }
     for (l = ngstc; l <= nszc; l++)
     {
-/*      if (bitmask != NULL) */
-      if(params->maskmap != NULL)
+      if (bitmask != NULL) 
+/*      if(params->maskmap != NULL)  PK Apr 03 MASK support */
 	bmask = BM_get (bitmask, l-1, k-1); /*fixed by helena jan 97*/
 /*    if(bmask==0 || bmask==-1) fprintf(stderr, "bmask=%d, at (%d,%d)\n", bmask, l, k);*/
       xg = (l - ngstc) * stepix + stepix /2.; /*fixed by J.H. in July 01 */
