@@ -1,0 +1,135 @@
+/*
+** Written by Bill Brown, Fall 1992
+*/
+
+/*
+** Copyright USA CERL 1992. All rights reserved.
+*/
+
+#include "digit.h"
+#include "color.h"
+
+double distance();
+
+
+/***********************************************************************/
+    
+pull_it()
+{
+short val;
+long dev;
+long *screen_buf;
+double  px, py, vect[2];
+int i;
+static int first=1;
+int screen_x, screen_y;
+int button;
+int npoints = 0;
+int xmin, ymin, xmax, ymax;
+int tmpx, tmpy;
+
+    redisplay_current_edit();
+    check_changes();
+    show_select_dialog("accept", "abort", "Pull line", 1);
+
+    standard_color (dcolors[XD_WHITE]);
+
+    tmpx = tmpy = 0;
+    vect[0] = vect[1] = 0.0;    
+    redisplay (NULL, NULL, NULL);
+    display_plseg (CurrPL, XD_WHITE, gc, 0);
+    display_anchors (Anchor);
+	while (TRUE)
+	{
+	action = Check_for_action(&screen_x, &screen_y);
+	if (action)
+	    switch (action) {
+		case DRAW:
+			if(first){
+			    tmpx = screen_x;
+			    tmpy = screen_y;
+	    		    screen_to_utm (screen_x, screen_y, &px, &py);
+			    
+			    if (XmToggleButtonGetState (Afillfunc4))
+			    {
+				fill_pbuf_arc2(px, py); 
+			    }
+			    else if(!set_pull_point(px, py)) 
+			    {
+				break;
+				}
+			    first = 0;
+			    PLtop = copy_pbuf_tolist (PLtoken);
+			    get_corners (PLtop, &xmin, &ymin, &xmax, &ymax);
+			}
+	    		screen_to_utm (screen_x, screen_y, &px, &py);
+		        vect[0] = px - Pullpoint[0];
+			vect[1] = py - Pullpoint[1];
+
+		/*	
+			xmin = xmin < tmpx ? xmin : tmpx;
+			xmax = xmax > tmpx ? xmax : tmpx;
+			ymin = ymin < tmpy ? ymin : tmpy;
+			ymax = ymax > tmpy ? ymax : tmpy;
+			XCopyArea (dpy, pix, XtWindow (canvas), gc,
+			 xmin, ymin, xmax*2, ymax*2, xmin, ymin);
+
+			tmpx = screen_x;
+			tmpy = screen_y;
+
+			XDrawLines (dpy, XtWindow (canvas), 
+				  gcxor, xbuf, npoints, CoordModeOrigin);
+				  */
+			redisplay (NULL, NULL, NULL);
+				  
+			npoints = display_pullseg(vect, gc, xbuf);
+		    break;
+
+		case  ACCEPT:
+		    if (first)
+		        return(0);
+		    recalc_pullbuf (vect);
+		    first = 1;
+		    Lastmove[0] = 0;
+		    Lastmove[1] = 0;
+		    if (Numppts <= 0)
+		        return(0);
+	/*	    display_plseg(CurrPL, CLR_ERASE, gc, 0);
+		    */
+		    empty_pl (PLtoken, CurrPL);
+		    CurrPL = copy_pbuf_tolist (PLtoken);
+		    empty_pl (PLtoken, PLtop);
+		    PLtop = copy_pl (PLtoken, CurrPL);
+	/*	    display_plseg (CurrPL, XD_WHITE, gc, 0);
+		    */
+		    display_anchors (Anchor);
+		    EditChanges = 1;
+		    return(1);
+		    break;
+		case DONE:
+		    if (first)
+		        return(0);
+		    first = 1;
+		    Lastmove[0] = 0;
+		    Lastmove[1] = 0;
+		    erase_pullpoint (Pullpoint);
+		   /* if (0 >= (npoints = display_pullseg(vect, gcxor, xbuf)))
+		        return(0);
+			*/
+		    redisplay (NULL, NULL, NULL);
+		    empty_pl (PLtoken, CurrPL);
+		    empty_pl (PLtoken, PLtop);
+		    fill_pbuf_orig ();
+		    CurrPL = copy_pbuf_tolist (PLtoken);
+		    PLtop = copy_pl (PLtoken, CurrPL);
+		    display_plseg (CurrPL, XD_WHITE, gc, 0);
+		    display_anchors (Anchor);
+		    return(1);
+		    break;
+	    }
+    }
+
+}
+
+/***********************************************************************/
+/***********************************************************************/
