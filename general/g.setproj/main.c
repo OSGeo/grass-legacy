@@ -200,8 +200,8 @@ int main(int argc, char *argv[])
     sph_check = 0;
     if(G_yes("Do you want to specify a map datum for this location?", 1))
     {
-        if (exist && (buf = G_find_key_value("datum", old_proj_keys)) != NULL &&
-	    (bufa = G_find_key_value("datumparams", old_proj_keys)) != NULL )
+        char buf[100], bufa[100];
+        if (exist && (G_get_datumparams_from_projinfo(old_proj_keys, buf, bufa) == 2))
 	{
 	    G_strip(buf);
             if (i = G_get_datum_by_name(buf))
@@ -230,10 +230,14 @@ int main(int argc, char *argv[])
 
     if (sph_check > 0)
     {
+        char *paramkey, *paramvalue;
         /* write out key/value pairs to out_proj_keys */
         if( G_strcasecmp(datum, "custom") != 0)
             G_set_key_value("datum", datum, out_proj_keys);
-        G_set_key_value("datumparams", dat_params, out_proj_keys);
+/*        G_set_key_value("datumparams", dat_params, out_proj_keys); */
+	paramkey = strtok(dat_params, "=");
+	paramvalue = dat_params + strlen(paramkey) + 1;
+	G_set_key_value(paramkey, paramvalue, out_proj_keys);
         sprintf(spheroid, "%s", dat_ellps);
     }    
     else   
@@ -672,10 +676,11 @@ int main(int argc, char *argv[])
 		sprintf(buffb, "Error writing PROJ_INFO file: %s\n", path);
 		G_fatal_error(buffb);
 	}
+/* Commenting this may avoid segfaults when setting units for a UTM location? PK
 	G_free_key_value(out_proj_keys);
 	if (exist)
 		G_free_key_value(old_proj_keys);
-
+*/
       write_units:
 	G__file_name(path, "", UNIT_FILE, set_name);
 
