@@ -36,7 +36,6 @@ main (int argc, char *argv[])
     struct Option *dsn_opt, *out_opt, *layer_opt, *spat_opt, *min_area_opt, *snap_opt, *type_opt;
     struct Flag *list_flag, *no_clean_flag, *z_flag, *notab_flag;
     char   buf[2000], namebuf[2000];
-    char   *namebuf2, *namebuf3, *namebuf4;
     char   *separator;
 
     /* Vector */
@@ -269,7 +268,7 @@ main (int argc, char *argv[])
 	    Vect_map_add_dblink ( &Map, layer+1, NULL, Fi->table, "cat", Fi->database, Fi->driver);
 
 	    ncols = OGR_FD_GetFieldCount( Ogr_featuredefn );
-	    G_debug ( 2, "%d columns\n", ncols );
+	    G_debug ( 2, "%d columns", ncols );
 	    
 	    /* Create table */
 	    sprintf ( buf, "create table %s (cat integer", Fi->table );
@@ -284,20 +283,22 @@ main (int argc, char *argv[])
 		 * allowed are: [A-Za-z][A-Za-z0-9_]*
 		 */
 		sprintf(namebuf, "%s", OGR_Fld_GetNameRef( Ogr_field ));
-		namebuf2      = G_strchg(namebuf , '#', '_');
-		namebuf3      = G_strchg(namebuf2, '-', '_');
-		
-		/* check if column name starts with '_', in this case we delete this leading character */
-		if (*namebuf3 == '_')
-		{
-		    G_debug(3, "init: %s",namebuf3);
-		    sprintf(namebuf4,"%s",++namebuf3);
+		G_debug(3, "namebuf = '%s'", namebuf);
+		G_strchg(namebuf , '#', '_');
+		G_strchg(namebuf, '-', '_');
+		G_strchg(namebuf, '.', '_');
+	    
+		/* Remove initial '_' */
+		Ogr_fieldname = namebuf;
+	        while ( *Ogr_fieldname == '_' )
+		    Ogr_fieldname++;
+
+		G_debug(3, "Ogr_fieldname = '%s'", Ogr_fieldname);
+
+		if ( strcmp(OGR_Fld_GetNameRef(Ogr_field), Ogr_fieldname) != 0 ) {
+		    G_warning("Column name changed from '%s' to '%s'", 
+			                OGR_Fld_GetNameRef(Ogr_field), Ogr_fieldname);
 		}
-		else
-		    sprintf(namebuf4,"%s",namebuf3); /* just copy over */
-		G_debug(3, "fixed names: %s",namebuf4);
-		
-		Ogr_fieldname = G_strchg(namebuf4, '.', '_');
 		
 		/** Simple 32bit integer                     OFTInteger = 0        **/
 		/** List of 32bit integers                   OFTIntegerList = 1    **/
