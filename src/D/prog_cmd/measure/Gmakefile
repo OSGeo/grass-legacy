@@ -1,0 +1,15 @@
+#  %W%  %G%
+
+OFILES = \
+	bnw_line.o\
+	main.o\
+	msurements.o
+
+Dmeasure: $(BIN)/Dmeasure
+
+$(BIN)/Dmeasure: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB) $(TERMLIB)
+
+$(DISPLAYLIB): #
+$(RASTERLIB): #
+$(GISLIB): #
