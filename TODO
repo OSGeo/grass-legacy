@@ -1,4 +1,4 @@
-$Id: TODO,v 1.13 2000-08-21 08:09:33 markus Exp $
+$Id: TODO,v 1.14 2000-08-26 13:00:51 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -38,6 +38,12 @@ Font selection:
   (Being worked on by )
 
 ---------------------------------------------------------------------
+Multiple languages support:
+
+- depends on truetype support
+- learn from KDE/GNOME etc.
+
+---------------------------------------------------------------------
 
 Libraries:
 - src/libes/gis/readsites.c: Required is a new function which allows
@@ -47,18 +53,58 @@ Libraries:
   (Being worked on by Markus, assistance wanted)
 
 - projection datum support for maps
-  (Being worked on by Andreas Lange)
+  (Being worked on by Andreas Lange <Andreas.Lange@Rhein-Main.de>)
 
 - new 3D vector format: evetually http://gts.sourceforge.net/ ??
   (Being worked on by )
 
+- TIN support: Probably use this library:
+    http://www.cs.cmu.edu/~quake/triangle.html
+  (Being worked on by )
+
+- Metadata: improved support, probably write a GRASS daemon serving
+  the metadata for external applications like "R" statistics interface
+
+- Parallel CPU support
+
+---------------------------------------------------------------------
+XDRIVER
+- remove fifos, use sockets (required for faster XDRIVER and WINDOWS port)
+  (Being worked on by Carl Anderson <candrsn@mindspring.com>)
+
+CELL driver
+- update to 24bit
+  (Being worked on by )                  
 
 ---------------------------------------------------------------------
 Package:
 - split into packages: GRASS-CORE, GRASS-Raster, ...
   (Being worked on by )
-- release import/export routines separately under LGPL
 
+- reorganize directory structure
+
+- release import/export routines separately under LGPL
+  add GDAL support
+  (Being worked on by Frank Warmerdam <warmerda@home.com> /
+   Bernhard Reiter <bernhard@intevation.de>)
+
+---------------------------------------------------------------------
+Lock system:
+
+Comment:
+Some lockfiles have to be global, just think of the number of
+graphic display pipes used or physical inputs devices.
+So two ways from there to improve the situation:
+ 
+      Make the locking executables setgid or setuid.
+      (and have just one executable doing the locking.)
+      And/or use the /tmp directory.
+ 
+      Localise all global lockable resources.
+      (Unlikely to work.)
+ Bernhard
+
+- this might be related to a daemnon serving a session key (see there).
 
 ---------------------------------------------------------------------
 Modules:

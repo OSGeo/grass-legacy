@@ -233,19 +233,6 @@ rm -f gis_pars.c gis_pars.h gis_pars.out
 
 
 Further discussion:
---------------- lock file ---------------------------------------
-Some lockfiles have to be global, just think of the number of
-graphic display pipes used or physical inputs devices.
-So two ways from there to improve the situation:
- 
-      Make the locking executables setgid or setuid.
-      (and have just one executable doing the locking.)
-      And/or use the /tmp directory.
- 
-      Localise all global lockable resources.
-      (Unlikely to work.)
- Bernhard
-
 -----------------------------------------------------------------------
 Two severe problems (to be checked):
 
@@ -300,7 +287,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log: BUGS,v $
- Revision 1.12  2000-08-21 17:34:08  bernhard
+ Revision 1.13  2000-08-26 13:00:51  markus
+ more wishes and bug reports...
+
+ Revision 1.12  2000/08/21 17:34:08  bernhard
  clarified r3.showdspf.openGL Mesa problem.
 
  Revision 1.11  2000/08/21 17:14:54  bernhard
