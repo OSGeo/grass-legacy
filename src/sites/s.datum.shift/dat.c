@@ -18,7 +18,7 @@ datum_list(void)
 	G_strcat (list, ",");
       else 
 	*list = '\0';
-      strcat (list, name);
+      G_strcat (list, name);
     }
   return list;
 }
