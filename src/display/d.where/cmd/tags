@@ -1,0 +1,4 @@
+Mmain	main.c	/^main(argc, argv)$/
+black_and_white_line	b_w_line.c	/^black_and_white_line(c1, c2, screen_x,screen_y,cur/
+show	where_am_i.c	/^show (buf) char *buf;$/
+where_am_i	where_am_i.c	/^where_am_i(once, have_spheroid)$/
