@@ -3,7 +3,7 @@
 # 
 
 help {About} {-width 50} {-justify center} \
-{TCLTKGRASS 2.9 (March 1999)
+{TCLTKGRASS 3.0 (March 1999)
 An open graphical user interface for GRASS GIS
 
 written by Jacques Bouchard for
@@ -15,15 +15,13 @@ Baylor University, Texas
 www.geog.uni-hannover.de/grass/
 www.baylor.edu/~grass/
 
-Please send your comments to:
+PostgreSQL interface by Alex Shevlakov
+<sixote@yahoo.com>
+
+Please send your comments and patches to:
 
 Markus Neteler
 <neteler@geog.uni-hannover.de>
-
-or
-
-Jacques Bouchard
-<bouchard@onera.fr>
 
 -----
 
