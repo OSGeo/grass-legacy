@@ -1,0 +1,5 @@
+
+R_flush()
+{
+	flushout() ;
+}
