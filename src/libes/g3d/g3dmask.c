@@ -32,7 +32,8 @@ int
 G3d_maskClose ()
 
 {
-  if (! G3d_maskMapExistsVar) return 1;
+  /* No Idea if this is correct return value */
+  if (! G3d_maskMapExistsVar) return 1;  
 
   G3d_maskMapExistsVar = 0;
 
@@ -68,7 +69,8 @@ G3d_maskOpenOld ()
   double min, max;
   G3D_Region region;
 
-  if (G3d_maskMapExistsVar) return;
+  /* No Idea if this is correct return value */
+  if (G3d_maskMapExistsVar) return 1;
 
   G3d_maskMapExistsVar = G3d_maskFileExists ();
 
@@ -108,7 +110,7 @@ G3d_getMaskFloat (map, x, y, z)
   top = ((double) z + 0.5) / (double) map->window.depths * 
           (map->window.top - map->window.bottom) + map->window.bottom;
 
-  G3d_getRegionValue (G3d_maskMap, north, east, top, &value, G3D_FLOAT);
+  G3d_getRegionValue (G3d_maskMap, north, east, top, (char *)&value, G3D_FLOAT);
   return value;
 }     
 

@@ -211,7 +211,7 @@ G3d_range_init (map)
      G3D_Map *map;
 
 {
-  G_init_fp_range (&(map->range));
+  return G_init_fp_range (&(map->range));
 }
 
 /*---------------------------------------------------------------------------*/

@@ -1,4 +1,4 @@
-
+#include "G3d.h"
 #include "G3d_intern.h"
 
 /*---------------------------------------------------------------------------*/
@@ -196,7 +196,7 @@ G3d_printHeader (map)
 
   G3d_range_min_max (map, &rangeMin, &rangeMax);
   
-  printf ("  Region: (%lf %lf) (%lf %lf) (%lf %lf)\n", 
+  printf ("  Region: (%f %f) (%f %f) (%f %f)\n", 
 	  map->region.south, map->region.north, map->region.west, 
 	  map->region.east, map->region.bottom, map->region.top);
   printf ("          (%d %d %d)\n", map->region.rows, map->region.cols, 
@@ -206,11 +206,11 @@ G3d_printHeader (map)
   if (G3d_isNullValueNum (&rangeMin, G3D_DOUBLE))
     printf ("NULL, "); 
   else
-    printf ("%lf, ", (double) rangeMin);
+    printf ("%f, ", (double) rangeMin);
   if (G3d_isNullValueNum (&rangeMax, G3D_DOUBLE))
     printf ("NULL)\n"); 
   else
-    printf ("%lf)\n", (double) rangeMax);
+    printf ("%f)\n", (double) rangeMax);
   fflush (stdout);
 }
      

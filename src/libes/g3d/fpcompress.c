@@ -14,7 +14,7 @@
 
 /*************
  * Only needed for transition */
-#define USE_LZW_COMPRESSION
+/* #define USE_LZW_COMPRESSION */
 /**************/
 
 /*--------------------------------------------------------------------------*/
