@@ -34,8 +34,6 @@ struct start_pt{
          {"coor",START_PT}
     };
 
-    static int n_variables = 3;
-
     char cum_cost_layer[64];
     char cost_layer[64];
     struct start_pt *head_start_pt = NULL;
