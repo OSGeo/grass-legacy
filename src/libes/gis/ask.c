@@ -194,8 +194,8 @@ int G_set_ask_return_msg (char *msg)
 
 char *G_get_ask_return_msg()
 {
-    static char *none = "to cancel request" ;
-
+    static char none[80];
+	strcpy(none,_("to cancel request"));
     return (ask_return_msg == NULL ? none : ask_return_msg);
 }
 

@@ -1,5 +1,6 @@
 #include <string.h>
 #include "gis.h"
+#include "glocale.h"
 
 static char *NULL_STRING = "null";
 static int reclass_type(FILE *,char *,char *);
@@ -115,10 +116,10 @@ int G_get_reclass (char *name, char *mapset, struct Reclass *reclass)
     {
 	char msg[100];
 	if (stat == -2)
-	    sprintf(msg, "Too many reclass categories for [%s in %s]",
+	    sprintf(msg, _("Too many reclass categories for [%s in %s]"),
 		    name, mapset);
 	else
-	    sprintf(msg, "Illegal reclass format in header file for [%s in %s]",
+	    sprintf(msg, _("Illegal reclass format in header file for [%s in %s]"),
 		    name, mapset);
 	G_warning (msg);
 	stat = -1;
@@ -195,19 +196,19 @@ int G_put_reclass (char *name, struct Reclass *reclass)
     case RECLASS_TABLE:
 	if (reclass->min > reclass->max || reclass->num <= 0)
 	{
-	    G_fatal_error ("Illegal reclass request");
+	    G_fatal_error (_("Illegal reclass request"));
 	    return -1;
 	}
 	break;
     default:
-	G_fatal_error ("Illegal reclass type");
+	G_fatal_error (_("Illegal reclass type"));
 	return -1;
     }
 
     fd = fopen_cellhd_new (name);
     if (fd == NULL)
     {
-	G_warning ("Unable to create header file for [%s in %s]",
+	G_warning (_("Unable to create header file for [%s in %s]"),
 		name, G_mapset());
 	return -1;
     }
@@ -257,7 +258,7 @@ int G_put_reclass (char *name, struct Reclass *reclass)
     fd = fopen(buf1, "a+");
     if (fd == NULL)
     {
-        G_warning ("Unable to create dependency file in [%s in %s]",
+        G_warning (_("Unable to create dependency file in [%s in %s]"),
     	    buf2, reclass->mapset);
         return 1;
     }

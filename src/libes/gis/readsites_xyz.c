@@ -28,6 +28,7 @@
 #include <string.h>
 #include <errno.h>
 #include "gis.h"
+#include "glocale.h"
 #include "site.h"
 
 SITE_XYZ *G_alloc_site_xyz(size_t num)
@@ -72,7 +73,7 @@ int G_readsites_xyz(
 	
 	/* note: G_site_describe only reads first record to guess format */
 	if (G_site_describe (fdsite, &dims, &map_type, &strs, &dbls) !=0) {
-		G_fatal_error("Unable to guess site format!");
+		G_fatal_error(_("Unable to guess site format!"));
 	}
 	s = G_site_new_struct (map_type, dims, strs, dbls);
 	dims = dims - 2;
@@ -86,34 +87,34 @@ int G_readsites_xyz(
 	switch (type) {
 		case SITE_COL_DIM: /* Use n-dimensions */
 			if (dims == 0) {
-				G_fatal_error("No n-dims in site_list");
+				G_fatal_error(_("No n-dims in site_list"));
 			}
 			else if (index >= dims) {
-				G_fatal_error("Dimension index out of range");
+				G_fatal_error(_("Dimension index out of range"));
 			}
 			break;
 		case SITE_COL_DBL: /* Use double attribute */
 			if (dbls == 0) {
-				G_fatal_error("No double attributes in site_list");
+				G_fatal_error(_("No double attributes in site_list"));
 			}
 			else if (index >= dbls) {
-				G_fatal_error("Double attribute index out of range");
+				G_fatal_error(_("Double attribute index out of range"));
 			}
 			break;
 		case SITE_COL_STR: /* Use string attribute */
 			if (strs == 0) {
-				G_fatal_error("No string attributes in site_list");
+				G_fatal_error(_("No string attributes in site_list"));
 			}
 			else if (index >= strs) {
-				G_fatal_error("String attribute index out of range");
+				G_fatal_error(_("String attribute index out of range"));
 			}
 			break;
 		case SITE_COL_NUL: /* Doesn't want a z-dim */
 			break;
 		default:
 			/* Die miserable death due to bad call */
-			G_fatal_error("Unknown attribute type in call to "
-				"G_readsites_xyz()!\n");
+			G_fatal_error(_("Unknown attribute type in call to "
+				"G_readsites_xyz()!\n"));
 	}
 
 	for (i = 0; i < size; ++i){
@@ -144,7 +145,7 @@ int G_readsites_xyz(
                                 errno = 0;
 				xyz[i].z = strtod(s->str_att[index], &end_ptr);
 				if (end_ptr == s->str_att[index] || errno == ERANGE) {
-					G_fatal_error("Failed to convert string attribute.");
+					G_fatal_error(_("Failed to convert string attribute."));
 				}
 				break;
 			case SITE_COL_NUL: /* No z-dim requested */

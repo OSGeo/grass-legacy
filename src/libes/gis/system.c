@@ -3,6 +3,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include "gis.h"
+#include "glocale.h"
 /****************************************************************
  * G_system (command)
  *     char *command;
@@ -46,7 +47,7 @@ int G_system ( char *command)
 
     if (pid < 0)
     {
-	fprintf (stderr, "WARNING: can not create a new process\n");
+	fprintf (stderr, _("WARNING: can not create a new process\n"));
 	status = -1;
     }
     else

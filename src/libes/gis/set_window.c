@@ -15,6 +15,7 @@
  *******************************************************************/
 
 #include "gis.h"
+#include "glocale.h"
 #include "G.h"
 
 int G_get_set_window (struct Cell_head *window)
@@ -55,7 +56,7 @@ int G_set_window (struct Cell_head *window)
 		    continue;
 	    if (i != maskfd)
 	    {
-		G_warning ("G_set_window(): projection/zone differs from that of currently open raster files");
+		G_warning (_("G_set_window(): projection/zone differs from that of currently open raster files"));
 		return -1;
 	    }
 	}
