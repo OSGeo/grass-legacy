@@ -6,7 +6,10 @@
 #include "imagery.h"
 #include "gdalbridge.h"
 
-static int oldval = 0, newval = 0;
+#ifndef MAX
+#  define MIN(a,b)      ((a<b) ? a : b)
+#  define MAX(a,b)      ((a>b) ? a : b)
+#endif
 
 static int
 wkt_to_grass( const char * wkt, 
@@ -31,7 +34,7 @@ int main (int argc, char *argv[])
     char *input;
     char *output;
     char *title;
-    struct Cell_head cellhd, loc_wind;
+    struct Cell_head cellhd, loc_wind, def_wind;
     struct Key_Value *proj_info, *proj_units;
     struct Key_Value *loc_proj_info, *loc_proj_units;
     unsigned char *x, *y;
@@ -47,7 +50,7 @@ int main (int argc, char *argv[])
     {
         struct Option *input, *output, *title, *outloc, *band;
     } parm;
-    struct Flag *flag_o;
+    struct Flag *flag_o, *flag_e;
 
 /* -------------------------------------------------------------------- */
 /*      Initialize.                                                     */
@@ -96,6 +99,10 @@ int main (int argc, char *argv[])
     flag_o = G_define_flag();
     flag_o->key = 'o';
     flag_o->description = "Override projection (use locations projection)";
+
+    flag_e = G_define_flag();
+    flag_e->key = 'e';
+    flag_e->description = "Extend location extents based on new dataset.";
 
     if (G_parser(argc,argv))
         exit(1);
@@ -284,6 +291,29 @@ int main (int argc, char *argv[])
         /* make this group the current group */
         I_put_group( output );
     }
+
+/* -------------------------------------------------------------------- */
+/*      Extend current window based on dataset.                         */
+/* -------------------------------------------------------------------- */
+    if( flag_e->answer )
+    {
+        G_get_default_window( &def_wind );
+
+        def_wind.north = MAX(def_wind.north,cellhd.north);
+        def_wind.south = MIN(def_wind.south,cellhd.south);
+        def_wind.west  = MIN(def_wind.west, cellhd.west);
+        def_wind.east  = MAX(def_wind.east, cellhd.east);
+
+        def_wind.rows = (int) ceil((def_wind.north - def_wind.south) 
+                                   / def_wind.ns_res);
+        def_wind.south = def_wind.north - def_wind.rows * def_wind.ns_res;
+        
+        def_wind.cols = (int) ceil((def_wind.east - def_wind.west) 
+                                   / def_wind.ew_res);
+        def_wind.east = def_wind.west + def_wind.cols * def_wind.ew_res;
+        
+        G__put_window( &def_wind, "../PERMANENT", "DEFAULT_WIND" );
+    } 
 
     exit (0);
 }
