@@ -200,9 +200,13 @@ Inherited from core:
 #define NoColorName "None"
 #define UNDEF_PIXEL 0x80
 
-typedef struct _PWRequestRec PWRequestRec;
 typedef char *PWRequest;
 
+/* declare specific PixmapWidget class and instance datatypes */
+typedef struct _PixmapClassRec *PixmapWidgetClass;
+typedef struct _PixmapRec      *PixmapWidget;
+/* declare the class constant */
+extern WidgetClass pixmapWidgetClass;
 /* pixmap exports */
 typedef struct _PWColorInfo
 {
@@ -708,7 +712,7 @@ extern void PWHighlightAxes(
 );
 extern void PWMove(
 #if NeedFunctionPrototypes
-     Widget     /* w */
+     Widget     /* w */,
      Position   /* at_x */,
      Position   /* at_y */,
      int        /* value */
@@ -722,8 +726,8 @@ extern void PWProportional(
 );
 extern void PWPutImage(
 #if NeedFunctionPrototypes
-     Widget     /* w */,
-     XDisplay*  /* display */,
+     PixmapWidget     /* w */,
+     Display*   /* display */,
      Drawable   /* drawable */, 
      GC         /* gc */, 
      Position   /* x */,
@@ -770,7 +774,7 @@ extern void PWRedrawPoints(
 );
 extern void PWRedrawSquares(
 #if NeedFunctionPrototypes
-     Widget     /* w */
+     Widget     /* w */,
      Position   /* from_x */,
      Position   /* from_y */,
      Position   /* to_x */,
@@ -810,7 +814,7 @@ extern void PWTerminate(
 );
 extern void PWZoomIn(
 #if NeedFunctionPrototypes
-     Widget     /* w */
+     Widget     /* w */,
      Position   /* from_x */,
      Position   /* from_y */,
      Position   /* to_x */,
@@ -828,17 +832,6 @@ extern void PWZoomOut(
 #endif
 );
 
-
 static char *rgb_fname = "/usr/lib/X11/rgb.txt";
 
-/* declare specific PixmapWidget class and instance datatypes */
-
-typedef struct _PixmapClassRec *PixmapWidgetClass;
-typedef struct _PixmapRec      *PixmapWidget;
-/* declare the class constant */
-
-extern WidgetClass pixmapWidgetClass;
-
 #endif /* _Pixmap_h */
-
-
