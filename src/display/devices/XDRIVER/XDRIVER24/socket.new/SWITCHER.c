@@ -150,7 +150,7 @@ int main (int argc, char *argv[])
         if ((listenfd = G_sock_connect(sockpath)) != -1)
         {
 	    close (listenfd);
-	    fprintf (stderr, "Monitor <%s> is already running", me);
+	    fprintf (stderr, "Monitor <%s> is already running\n", me);
             exit (EXIT_FAILURE);
         }
         if (unlink (sockpath) != 0)
@@ -733,7 +733,7 @@ int main (int argc, char *argv[])
                 break;
 
             default:
-                fprintf(stderr, "\nUnknown command: %d last: %d", c, lc);
+                fprintf(stderr, "\nUnknown command: %d last: %d\n", c, lc);
                 break;
             }
             lc = c;
