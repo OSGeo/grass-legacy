@@ -9,6 +9,7 @@
 #%option
 #% key:option
 #% type:string
+#% description: an option
 #%required : yes
 #%end
 
