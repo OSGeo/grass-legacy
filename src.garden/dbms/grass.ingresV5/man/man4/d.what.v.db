@@ -1,0 +1,35 @@
+.TH d.what.v.db
+.SH NAME
+\fId.what.v.db\fR \- ENTER ONE LINE DESCRIPTION HERE
+.br
+.I "(GRASS Display Program)"
+.SH SYNOPSIS
+\fBd.what.v.db\fR
+.br
+\fBd.what.v.db help\fR
+.br
+\fBd.what.v.db\fR \fBmap=\fIname\fR \fBkeytable=\fIname\fR \fBcol=\fIname\fR \fB[join=\fItab,key,pkey]\fR
+.SH DESCRIPTION
+enter short description of d.what.v.db here
+
+.SH "COMMAND LINE OPTIONS"
+.LP
+Parameters
+.IP \fImap\fR
+Name of vector map associated with database.
+.IP \fIkeytable\fR
+Name of table containing column with category values.
+.IP \fIcol\fR
+Name of column with category values.
+.IP \fIjoin\fR
+JOIN rules (eg. table, key, primekey). 
+
+.SH BUGS
+Describe known bugs here
+
+.SH "SEE ALSO"
+Refer reader to related programs here
+
+.SH AUTHOR
+Provide the programmers name and institution
+
