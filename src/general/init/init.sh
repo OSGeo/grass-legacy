@@ -36,7 +36,7 @@ if [ ! "$GRASS_WISH" ] ; then
 fi
 
 # Check if we need to find wish
-if [ $GRASS_GUI = "tcltk" ] ; then
+if [ "$GRASS_GUI" = "tcltk" ] ; then
     
     # Search for a wish program
     SEARCHCOMMAND=$GRASS_WISH
@@ -189,7 +189,7 @@ fi
 # User selects LOCATION and MAPSET if not set
 if [ ! "$LOCATION" ] ; then
     
-    case $GRASS_GUI in
+    case "$GRASS_GUI" in
     	
 	# Check for text interface
 	text)
@@ -240,7 +240,7 @@ export LOCATION
 trap "" 2 3
 
 sh="`basename $SHELL`"
-case $sh in
+case "$sh" in
     ksh)  shellname="Korn Shell";;
     csh)  shellname="C Shell" ;;
     tcsh) shellname="TC Shell" ;;
@@ -250,7 +250,7 @@ case $sh in
 esac
 
 # Start the chosen GUI but ignore text
-case $GRASS_GUI in
+case "$GRASS_GUI" in
     
     # Check for tcltk interface
     tcltk)
@@ -285,7 +285,7 @@ echo "This version running thru the $shellname ($SHELL)"
 echo "Help is available with the command:      g.help"
 echo "See the licence terms with:              g.version"
 
-if [ $GRASS_GUI = "text" ] ; then
+if [ "$GRASS_GUI" = "text" ] ; then
     echo "Start the graphical user interface with: tcltkgrass&"
 else
     echo "If required, restart the graphical user interface with: tcltkgrass&"
