@@ -81,7 +81,7 @@ Vect_build_nat ( struct Map_info *Map, FILE *msgout ) {
 	lineid = dig_add_line ( plus, type, Points, offset );
 	/* print progress */
 	if ( i == 10 ) {
-            prnmsg ("%6d/%6d\b\b\b\b\b\b\b\b\b\b\b\b\b", j, Map->fInfo.shp.nShapes);
+            prnmsg ("%6d\b\b\b\b\b\b", j);
 	    i = 0;
 	}
 	i++; j++;
