@@ -27,12 +27,7 @@
  * DEALINGS IN THE SOFTWARE.
  *****************************************************************************/
 
-#include "config.h"
-#ifdef USE_PROJ
-  #include "proj_api.h"
-#else
-  #include "gproj_api.h"
-#endif
+#include "proj_api.h"
 
 struct pj_info {
       projPJ     *pj;
