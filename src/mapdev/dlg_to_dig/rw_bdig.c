@@ -1,42 +1,56 @@
 /*  @ (#)rw_bdig.c	2.1  6/26/87  */
 /*  -dpg  */
 #include <stdio.h>
-#include "bdig_head.h"
+#include "Vect.h"
+#include "dig_head.h"
 #include "gis.h"
 
+#ifdef OLD_LIB
 write_head_bdig (digit, head)
 	FILE *digit ;
-	struct bdig_head *head;
+	struct dig_head *head;
 {
 	return (dig_write_head_binary (digit, head));
 }
 
 read_head_bdig (digit, head)
 	FILE *digit ;
-	struct bdig_head *head;
+	struct dig_head *head;
 {
 	return (dig_read_head_binary (digit, head));
 }
 
+#endif /*OLD_LIB*/
 
 /* dig_write_line ()  write a line to bdig file.  */
 
-dig_write_line (fp, x, y, n_coors, type)
-    FILE *fp;
+dig_write_line (Map, Points, x, y, n_coors, type)
+	struct Map_info *Map;
+	struct line_pnts *Points;
     double *x ;
     double *y ;
     int n_coors;
     int type;
 {
 
-    return (dig_Write_line (fp, (char) type, x, y, n_coors));
+	/* old
+    return (dig_Write_line (fp,(char) type, x, y, n_coors));
+	*/
+
+	/*newi with Vectlib*/
+    if (0 > Vect_copy_xy_to_pnts (Points, x, y, n_coors))
+        G_fatal_error ("Out of memory");
+
+    Vect_write_line (Map, type, Points);
+
 }
 
 /* dig_write_point ()  create a digit Point line from a single x, y and write
 *  it to bdig file.  */
 
-dig_write_point (fp, x, y, type)
-    FILE *fp;
+dig_write_point (Map, Points, x, y, type)
+    struct Map_info  *Map;
+    struct line_pnts *Points;
     double *x ;
     double *y ;
     int type;
@@ -49,7 +63,15 @@ dig_write_point (fp, x, y, type)
     n_coors = 2 ;
     xa[0] = xa[1] = *x;
     ya[0] = ya[1] = *y;
+    /*old
     return (dig_Write_line (fp, (char) type, xa, ya, n_coors));
+    */
+
+	/*newi with Vectlib*/
+    if (0 > Vect_copy_xy_to_pnts (Points, xa, ya, n_coors))
+        G_fatal_error ("Out of memory");
+
+    Vect_write_line (Map, type, Points);
 }
 
 /* breakout_xy() takes an array of x,y coordinates and  
