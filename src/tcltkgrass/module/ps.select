@@ -1,0 +1,8 @@
+interface_build {
+    {ps.select} 0
+    {Selects a device (postscript printer) for GRASS hardcopy output.}
+    {entry painter {Select postscript device:} 0 postscript}
+    {checkbox -l {List all available postscript printers.} "" -l}
+    {checkbox -p {Print name of currently selected printer.} "" -p}
+    {checkbox -q {Run quietly.} "" -q}
+}
