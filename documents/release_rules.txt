@@ -145,6 +145,8 @@ Create source and binary distributions:
 
      - mail to "grass5" to re-allow submitting
 
+     - rename 'grass' directory to 'grass5.0.0XXX'
+
      - build source tarball (including the parent directory): 
          grass5.0.0XXX_src.tar.gz
 
