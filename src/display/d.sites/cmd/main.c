@@ -135,4 +135,5 @@ char **argv ;
 
 	D_add_to_list(G_recreate_command()) ;
 	R_close_driver();
+	exit(0);
 }
