@@ -8,7 +8,7 @@
 #   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
 #   	    	Markus Neteler - Germany - neteler@geog.uni-hannover.de
 # PURPOSE:  	The source file for this shell script is in
-#   	    	src/general/init/init.head. It sets up some environment
+#   	    	src/general/init/init.sh. It sets up some environment
 #   	    	variables and the lock file. It also parses any remaining
 #   	    	command line options for setting the GISDBASE, LOCATION, and/or
 #   	    	MAPSET. Finally it starts grass with the appropriate user
