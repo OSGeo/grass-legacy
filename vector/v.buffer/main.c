@@ -261,7 +261,7 @@ main (int argc, char *argv[])
 	exit(-1); 
     
     type = Vect_option_to_types ( type_opt );
-    buffer = abs ( atof( buffer_opt->answer ) );
+    buffer = fabs ( atof( buffer_opt->answer ) );
     tolerance = atof( tolerance_opt->answer );
 
     debug = DEBUG_NONE;
@@ -339,8 +339,14 @@ main (int argc, char *argv[])
 	    /* islands */
 	    nisles = Vect_get_area_num_isles (&In, area);
 	    for ( i = 0; i < nisles; i++ ) {
+		double l;
+		
 		isle = Vect_get_area_isle (&In, area, i);
 		Vect_get_isle_points ( &In, isle, Points );
+
+		/* Check if the isle is big enough */
+		l = Vect_line_length ( Points );
+		if ( l/2 < 2*buffer ) continue;
 		
 		Vect_line_buffer ( Points, buffer, tolerance, BPoints );	
 		Vect_write_line ( &Out, GV_BOUNDARY, BPoints, Cats );  
