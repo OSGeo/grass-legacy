@@ -62,7 +62,11 @@ int use_mouse(void);
 /* main.c */
 int do_edit(int, int, double);
 int error(int, char [128]);
+#ifdef __GNUC_MINOR__
 int ext(void) __attribute__ ((__noreturn__));
+#else
+int ext(void);
+#endif
 /* menu.c */
 int main_menu(void);
 int option_menu(void);
