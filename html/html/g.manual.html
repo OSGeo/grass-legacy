@@ -12,8 +12,8 @@
 <BR>
 <B>g.manual help</B>
 <BR>
-<B>g.manual</B> [<B>-1</B>] [<B>-a</B>] [<B>-d</B>] [<B>-s</B>]
-[<B>entries=</B><EM>name</EM>[,<EM>name</EM>,...]]
+<B>g.manual</B> [<B>-1</B>] [<B>-a</B>] [<B>-d</B>] [<B>-m</B>] [<B>-s</B>]
+[<B>-q</B>] [<B>entries=</B><EM>name</EM>[,<EM>name</EM>,...]]
 <BR>
 <H2>DESCRIPTION</H2>
 The <EM>g.manual</EM> command provides user access to the
@@ -39,12 +39,24 @@ by manual section.
 specified.  If this option is used without a manual entrie's <EM>name</EM>
 a summary of all manual entries will be displayed (option yet not active).
 
+<DT><B>-m</B>
+
+<DD>Force to use man program rather than GRASS_TEXT_BROWSER, if any.
+
 <DT><B>-s</B>
 
 <DD>Run silently to set exit status if entry exists. Requires only one
 command.
 
+<DT><B>-q</B>
+
+<DD>Print man pages and quit.<BR>
+Requires rman at <A HREF="ftp://ftp.cs.berkeley.edu/ucb/people/phelps/tcltk/rman.tar.Z">ftp://ftp.cs.berkeley.edu/ucb/people/phelps/tcltk/rman.tar.Z</A>.
+
 </DL>
+
+<P>
+
 These entries may also be accessed through the 
 <EM><A HREF="g.help.html">g.help</A></EM> command.
 
