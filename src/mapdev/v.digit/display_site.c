@@ -17,7 +17,7 @@ display_site(type, points, line, map)
     struct Map_info *map;
 {
     _display_site (type, points, line, map);
-    R_flush ();
+    V_flush ();
 }
 erase_site(type, points, line, map)
     char type;
@@ -26,7 +26,7 @@ erase_site(type, points, line, map)
     struct Map_info *map;
 {
     _erase_site(type, points, line, map);
-    R_flush ();
+    V_flush ();
 }
 highlight_site(type, points, line, map)
     char type;
@@ -38,7 +38,7 @@ highlight_site(type, points, line, map)
     display_site(type, points, line, map);
 
     _highlight_site(type, points, line, map);
-    R_flush ();
+    V_flush ();
 }
 color_site(type, points, line, map, color)
     char type;
@@ -48,7 +48,7 @@ color_site(type, points, line, map, color)
     int color;
 {
     _color_site(type, points, line, map, color);
-    R_flush ();
+    V_flush ();
 }
 
 _display_site (type, points, line, map)
@@ -60,7 +60,7 @@ _display_site (type, points, line, map)
     int line_color;
     int node_color, node;
 
-    line = ABS (line);
+    line = abs (line);
 
     line_color = CLR_SITE;
 
@@ -135,7 +135,7 @@ _erase_site(type, points, line, map)
 	}
     }
     if (Disp_slabels)
-	_display_site_label (map, ABS(line), CLR_ERASE);
+	_display_site_label (map, abs(line), CLR_ERASE);
 }
 
 
@@ -148,7 +148,7 @@ _highlight_site(type, points, line, map)
     nplot_points(type, points, CLR_HIGHLIGHT, 0, 0, 0);
 
     if (Disp_slabels)
-	_display_site_label (map, ABS(line), CLR_HIGHLIGHT);
+	_display_site_label (map, abs(line), CLR_HIGHLIGHT);
 }
 
 _color_site(type, points, line, map, color)
@@ -162,7 +162,7 @@ _color_site(type, points, line, map, color)
     nplot_points(type, points, color, 0, 0, 0);
 
     if (Disp_slabels)
-	_display_site_label (map, ABS(line), color);
+	_display_site_label (map, abs(line), color);
 }
 
 _display_site_label (map, line, color)
