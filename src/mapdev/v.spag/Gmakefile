@@ -1,5 +1,5 @@
 
-BUILD_LIB = ../v.build/libbuild.a
+BUILD_LIB = $(SRC)/mapdev/v.build/libbuild.a
 
 ATTLIB	= 	$(LIBDIR)/libdig_atts.a
 
@@ -54,7 +54,7 @@ B_A_OFILES = \
 	write_ascii.o 
 
 
-PROG =    $(BIN_ALPHA_CMD)/v.spag
+PROG =    $(BIN_MAIN_CMD)/v.spag
 all:    $(PROG)
 
 
@@ -63,6 +63,8 @@ $(PROG): $(OFILES) $(BUILD_LIB) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
 	rm -f a.out $@
 	$(CC) $(LDFLAGS) $(OFILES) $(BUILD_LIB) $(VECTLIB) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)
 	mv a.out $@
+
+$(BUILD_LIB) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB): #
 
 #$(BIN)/spag2: $(OFILES2) $(VECTLIB)
 #	$(CC) $(LDFLAGS) -o $@ $(OFILES2) $(BUILD_LIB) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)
