@@ -36,7 +36,7 @@ int label (
 
 	if ( !(type & ltype) ) continue; /* used for both lines and labels */
 	
-	R_standard_color(lattr->color) ;
+	R_color(lattr->color) ;
 	R_text_size(lattr->size, lattr->size) ;
 	R_font(lattr->font) ;
 		  
@@ -98,16 +98,16 @@ int label (
 		
                 if( lattr->bgcolor)
                   {
-	            R_standard_color( lattr->bgcolor) ;
+	            R_color( lattr->bgcolor) ;
 		    R_polygon_abs(xarr, yarr, 5) ;
                   }
 		
                 if( lattr->bcolor)
 	          {
-	             R_standard_color( lattr->bcolor) ;
+	             R_color( lattr->bcolor) ;
 		     R_polyline_abs(xarr, yarr, 5) ;
 	          }
-	        R_standard_color(lattr->color) ;
+	        R_color(lattr->color) ;
 	      }
 		
 	    R_move_abs(X + Xoffset, Y + Yoffset) ;

@@ -9,13 +9,16 @@
 
 int plot1 (
     struct Map_info *Map, int type, int area, 
-    struct cat_list *Clist, int color, int fcolor, int chcat)
+    struct cat_list *Clist, int color, int fcolor, int chcat, int icon, int size)
 {
     int i, ltype;
     double *x, *y;
     struct line_pnts *Points;
     struct line_cats *Cats;
     int cat;
+    double msize;
+
+    msize = size * ( D_d_to_u_col(2) - D_d_to_u_col(1) ); /* do it better */
     
     Points = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
@@ -24,7 +27,7 @@ int plot1 (
     
     /* Is it necessary to reset line/label color in each loop ? */
 
-    R_standard_color(color) ;
+    R_color(color) ;
 
     while (1)
      {
@@ -54,7 +57,7 @@ int plot1 (
 
         if ( ltype & ELEMENT_TYPE_DOT )
 	  {
-	    G_plot_line(x[0], y[0], x[0], y[0]);
+	    G_plot_icon(x[0], y[0], icon, 0, msize);  
 	  }
 	else if ( Points->n_points == 1 ) /* line with one coor */
 	  {

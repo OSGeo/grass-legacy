@@ -10,6 +10,7 @@
 #include "raster.h"
 #include "display.h"
 #include "Vect.h"
+#include "colors.h"
 #include "plot.h"
 #include "dbmi.h"
 #include "local_proto.h"
@@ -24,12 +25,14 @@ main (int argc, char **argv)
 	int ret, level;
 	int i, stat, type, area, display;
 	int chcat = 0;
-	int color, fcolor;
-	char ncolist[200];
+	int color, fcolor, r, g, b;
+	int colornum = MAX_COLOR_NUM;
+	int icon, size;
 	char map_name[128] ;
 	struct GModule *module;
 	struct Option *map_opt, *color_opt, *fcolor_opt;
 	struct Option *type_opt, *display_opt;
+	struct Option *icon_opt, *size_opt;
 	struct Option *where_opt;
 	struct Option *field_opt, *cat_opt, *lfield_opt;
 	struct Option *lcolor_opt, *bgcolor_opt, *bcolor_opt;
@@ -43,8 +46,6 @@ main (int argc, char **argv)
         struct field_info *fi;
         dbDriver *driver;
         dbHandle handle;
-	
-        sprintf (ncolist, "none,%s", D_color_list());
 	
 	module = G_define_module();
 	module->description =
@@ -77,6 +78,21 @@ main (int argc, char **argv)
 	display_opt->options    = "shape,cat,topo,dir";
 	display_opt->description= "Display" ;
 	
+	icon_opt = G_define_option() ;
+	icon_opt->key        = "icon" ;
+	icon_opt->type       = TYPE_STRING ;
+	icon_opt->required   = NO ;
+	icon_opt->multiple   = NO ;
+	icon_opt->answer     = "cross" ;
+	icon_opt->options    = "cross,box";
+	icon_opt->description= "Point and centroid symbol" ;
+	
+	size_opt = G_define_option() ;
+	size_opt->key        = "size" ;
+	size_opt->type       = TYPE_INTEGER ;
+	size_opt->answer     = "8" ;
+	size_opt->description= "Icon size" ;
+	
 	field_opt = G_define_option() ;
 	field_opt->key        = "field" ;
 	field_opt->type       = TYPE_INTEGER ;
@@ -98,14 +114,12 @@ main (int argc, char **argv)
 	color_opt->key        = "color" ;
 	color_opt->type       = TYPE_STRING ;
 	color_opt->answer     = "white" ;
-	color_opt->options    = D_color_list();
 	color_opt->description= "Line color" ;
 
 	fcolor_opt = G_define_option() ;
 	fcolor_opt->key        = "fcolor" ;
 	fcolor_opt->type       = TYPE_STRING ;
 	fcolor_opt->answer     = "white" ;
-	fcolor_opt->options    = D_color_list();
 	fcolor_opt->description= "Area fill color" ;
 
 	lfield_opt = G_define_option() ;
@@ -118,21 +132,18 @@ main (int argc, char **argv)
 	lcolor_opt->key        = "lcolor" ;
 	lcolor_opt->type       = TYPE_STRING ;
 	lcolor_opt->answer     = "white" ;
-	lcolor_opt->options    = D_color_list();
 	lcolor_opt->description= "Label color" ;
 	
 	bgcolor_opt = G_define_option() ;
 	bgcolor_opt->key        = "bgcolor" ;
 	bgcolor_opt->type       = TYPE_STRING ;
 	bgcolor_opt->answer     = "none" ;
-	bgcolor_opt->options    = ncolist;
 	bgcolor_opt->description= "Label background color" ;
 
 	bcolor_opt = G_define_option() ;
 	bcolor_opt->key        = "bcolor" ;
 	bcolor_opt->type       = TYPE_STRING ;
 	bcolor_opt->answer     = "none" ;
-	bcolor_opt->options    = ncolist;
 	bcolor_opt->description= "Label border color" ;
 
 	lsize_opt = G_define_option() ;
@@ -174,12 +185,30 @@ main (int argc, char **argv)
 	/* Check command line */
 	if (G_parser(argc, argv))
 		exit(-1);
-
+	
 	/* Read map options */
 	strcpy(map_name, map_opt->answer);
-	color = D_translate_color(color_opt->answer);
-	fcolor = D_translate_color(fcolor_opt->answer);
+	color = WHITE;
+	if ( G_str_to_color(color_opt->answer, &r, &g, &b) ) {
+	    colornum++;
+	    R_reset_color (r, g, b, colornum); 
+	    color = colornum;
+	}
+	fcolor = WHITE;
+	if ( G_str_to_color(fcolor_opt->answer, &r, &g, &b) ) {
+	    colornum++;
+	    R_reset_color (r, g, b, colornum); 
+	    fcolor = colornum;
+	}
 	quiet = !_quiet->answer;
+
+	icon = G_ICON_CROSS;
+	if ( strcmp (icon_opt->answer, "cross") == 0 )
+	    icon = G_ICON_CROSS;
+	else if ( strcmp (icon_opt->answer, "box") == 0 )
+	    icon = G_ICON_BOX;
+
+	size = atoi (size_opt->answer);
 
 	/* Make sure map is available */
 	mapset = G_find_vector2 (map_name, "") ; 
@@ -287,9 +316,25 @@ main (int argc, char **argv)
 	
 	/* Read label options */
 	lattr.field = atoi (lfield_opt->answer);
-	lattr.color = D_translate_color(lcolor_opt->answer);
-	lattr.bgcolor = D_translate_color(bgcolor_opt->answer);
-	lattr.bcolor = D_translate_color(bcolor_opt->answer);
+	lattr.color = WHITE;
+	if ( G_str_to_color(lcolor_opt->answer, &r, &g, &b) ) {
+	    colornum++;
+	    R_reset_color (r, g, b, colornum); 
+	    lattr.color = colornum;
+	}
+	lattr.bgcolor = 0;
+	if ( G_str_to_color(bgcolor_opt->answer, &r, &g, &b) ) {
+	    colornum++;
+	    R_reset_color (r, g, b, colornum); 
+	    lattr.bgcolor = colornum;
+	}
+	lattr.bcolor = 0;
+	if ( G_str_to_color(bcolor_opt->answer, &r, &g, &b) ) {
+	    colornum++;
+	    R_reset_color (r, g, b, colornum); 
+	    lattr.bcolor = colornum;
+	}
+
 	lattr.size = atoi(lsize_opt->answer);
 	lattr.font = font_opt->answer;
 	switch ( xref_opt->answer[0] )
@@ -354,10 +399,11 @@ main (int argc, char **argv)
 	        stat = plot2 ( &Map, type, area, Clist, color, fcolor);
 	    else
 	    */
-	        stat = plot1 ( &Map, type, area, Clist, color, fcolor, chcat);
+	        stat = plot1 ( &Map, type, area, Clist, color, fcolor, chcat, 
+			             icon, size);
 	}
 
-	R_standard_color(color);
+        R_color(color);
 	if ( display & DISP_DIR )
 	    stat = dir ( &Map, type, Clist, chcat );
 	
