@@ -22,7 +22,7 @@ get_f(t, R)
 	if(!ponding){
 		if(cumf){
 			f1 = cumf;
-			R2 = - params.K / params.m *
+			R2 = - params.K0 / params.m *
 				(psi_dtheta + f1) /
 				(1 - exp(f1 / params.m));
 			if(R2 < R){
@@ -34,7 +34,7 @@ get_f(t, R)
 		}
 
 		f2 = cumf + R * input.dt;
-		R2 = - params.K / params.m *
+		R2 = - params.K0 / params.m *
 			(psi_dtheta + f2) /
 			(1 - exp(f2 / params.m));
 		if(f2 == 0.0 || R2 > R){
@@ -45,7 +45,7 @@ get_f(t, R)
 		}
 		f_ = cumf + R2 * input.dt;
 		for(i=0; i<MAXITER; i++){
-			R2 = - params.K / params.m *
+			R2 = - params.K0 / params.m *
 				(psi_dtheta + f_) /
 				(1 - exp(f_ / params.m));
 			if(R2 > R){
@@ -96,8 +96,8 @@ cont1:
 		}
 		f1  = - (log(fc) - (log(fc) + sum) / 
 				exp(psi_dtheta / params.m) - cnst) /
-					(params.K / params.m) - (t - pt);
-		f2  = (exp(f_ / params.m) - 1.0) / (fc * params.K / params.m);
+					(params.K0 / params.m) - (t - pt);
+		f2  = (exp(f_ / params.m) - 1.0) / (fc * params.K0 / params.m);
 		f   = - f1 / f2;
 		f_ += f;
 		if(fabs(f) < TOLERANCE)
