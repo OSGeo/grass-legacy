@@ -12,15 +12,21 @@
  *
  ***********************************************************************/
 
+#include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include "gis.h"
+
 int G_remove ( char *element, char *name)
 {
     char path[1040];
     char *mapset;
     char xname[512], xmapset[512];
+    char cmd[1100];
+
+    if (G_legal_filename(name) < 0)
+	    return -1;
 
 /* name in mapset legal only if mapset is current mapset */
     mapset = G_mapset();
@@ -35,5 +41,14 @@ int G_remove ( char *element, char *name)
     if (unlink(path) == 0)
 	    return 1;
 
+    if (strchr(path, '\''))
+	    return -1;
+
+    sprintf(cmd, "rm -rf '%s'", path);
+
+    if (G_system(cmd) == 0)
+	    return 1;
+
     return -1;
 }
+
