@@ -12,7 +12,7 @@
 #   lib/vector/html/index.html
 #   lib/db/html/index.html
 #
-# The master file is: ./grass51refman.dox where all sub-documents have to
+# The master file is: ./grassrefman.dox where all sub-documents have to
 # be linked into.
 # 
 #---------------------------------------------------------------------------
