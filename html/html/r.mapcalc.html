@@ -80,6 +80,7 @@ The following operators are supported:
 <PRE>
      Operator   Meaning                    Type        Precedence
      --------------------------------------------------------------
+     ^          exponentiation             Arithmetic  5
      %          modulus                    Arithmetic  4
      /          division                   Arithmetic  4
      *          multiplication             Arithmetic  4
@@ -345,15 +346,56 @@ If the map has a grey scale color table, then the grey level is what
 
 <DL>
 <DD>
- .18 * red + .81 * green + .01 * blue
+ 0.10 * red + 0.81 * green + 0.01 * blue
 </DL>
 
 
 <P>
 
-
+Alternatively, you can use:
 
 <P>
+
+<DL>
+<DD>
+result = y#map
+</DL>
+
+<P>
+
+to use the NTSC weightings:
+
+<P>
+
+<DL>
+<DD>
+ 0.30 * red + 0.59 * green + 0.11 * blue
+</DL>
+
+<P>
+
+Or, you can use:
+
+<P>
+
+<DL>
+<DD>
+result = i#map
+</DL>
+
+<P>
+
+to use equal weightings:
+
+<P>
+
+<DL>
+<DD>
+ 0.33 * red + 0.33 * green + 0.33 * blue
+</DL>
+
+<P>
+
 
 The # operator has three other forms:  r#map, g#map, b#map.
 These extract the red, green, or blue components in the named raster map,
@@ -444,11 +486,13 @@ function		description					type
 ---------------------------------------------------------------------------
 abs(x)			return absolute value of x			*
 atan(x)			inverse tangent of x (result is in degrees)	F
+atan(x,y)		inverse tangent of y/x (result is in degrees)	F
 cos(x)			cosine of x (x is in degrees)			F
+double(x)		convert x to double-precision floating point	F
 eval([x,y,...,]z)	evaluate values of listed expr, pass results to z
 exp(x)			exponential function of x			F
 exp(x,y)		x to the power y				F
-float(x)		convert x to floating point			F
+float(x)		convert x to single-precision floating point	F
 if			decision options:				*
 if(x)			1 if x not zero, 0 otherwise
 if(x,a)			a if x not zero, 0 otherwise
@@ -462,6 +506,8 @@ max(x,y[,z...])		largest value of those listed			*
 median(x,y[,z...])	median value of those listed			*
 min(x,y[,z...])		smallest value of those listed			*
 mode(x,y[,z...])        mode value of those listed                      *
+not(x)			1 if x is zero, 0 otherwise
+rand(a,b)		random value between a and b
 round(x)		round x to nearest integer			I
 sin(x)			sine of x (x is in degrees)			F
 sqrt(x)			square root of x				F
@@ -507,19 +553,11 @@ to integer number(s).
 <menu>
 <li>Division by zero should result in NULL. 
 <li>Modulus by zero should result in NULL. 
-<li>     NULL-values in any arithmetic operation should result in NULL. 
-<li>     NULL-values in logical operations should be handled as follows: 
-<pre>
-              NULL || true = true 
-              NULL || false = NULL 
-              NULL || NULL = NULL 
-              NULL &amp;&amp; true = NULL 
-              NULL &amp;&amp; false = false 
-              NULL &amp;&amp; NULL = NULL 
-</pre>
-<li>     NULL-values in function arguments should result in NULL. 
-<li>     Even though this is also true for the if() function, 
-	 if() is spelled out here for clarification: 
+<li>     NULL-values in any arithmetic or logical operation should result in NULL. 
+<li>     NULL-values in function arguments should result in NULL (however,
+         if(), eval() and isnull() are treated specially, as described below).
+<li>	 The eval() function always returns its last argument
+<li>	 The situation for if() is:
 <pre>
      if(x) 
          NULL if x is NULL; 0 if x is zero; 1 otherwise 
@@ -530,11 +568,10 @@ to integer number(s).
      if(x,n,z,p) 
          NULL if x is NULL; n if x is negative; 
 	 z if x is zero; p if x is positive 
-
-     Exceptions: The (new) function isnull(x) returns: 1 if x is NULL; 
-                 0 otherwise. The (new) function null() 
-                 (which has no arguments) returns an integer NULL. 
 </pre>
+<li>     The (new) function isnull(x) returns: 1 if x is NULL; 
+         0 otherwise. The (new) function null() 
+         (which has no arguments) returns an integer NULL. 
 <li>Non-NULL, but invalid, arguments to functions should result in NULL. 
 <pre>
      Examples: 
