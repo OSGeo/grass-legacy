@@ -1,0 +1,66 @@
+
+
+
+Dgrid(2D)            GRASS Reference Manual             Dgrid(2D)
+
+
+
+NAME
+     Dgrid - Tool for overlaying a grid on a map
+     (D Language Tool)
+
+SYNOPSIS
+     Dgrid [size [color]]
+     Dgrid [option=value] [option=value]
+
+DESCRIPTION
+     Dgrid draws a grid in the current graphics window.  The user
+     can specify grid size and color, either explicitly or
+     positionally (see DINTRO). If grid size and color arguments
+     are stated explicitly, their order on the command line is
+     immaterial.  The commands
+
+          Dgrid color=magenta size=1000
+          and
+          Dgrid size=1000 color=magenta
+
+     will therefore produce the same grid.  However, if arguments
+     are stated positionally, grid size must be stated before
+     color (i.e., Dgrid 1000 magenta ). If the user specifies
+     only one option (either size or color), the unspecified
+     option becomes the default value.
+
+     size=size
+          Size of grid to be drawn.  If the user does not specify
+          a grid size, a 10,000 meter grid will be drawn by
+          default in the current graphics window.  It should be
+          noted that, depending on the scale of the map layer
+          displayed in this window, this 10,000 meter grid may
+          fall outside the user's viewing range.
+     color=color
+          Sets the current grid color.  Options are red, orange,
+          green, blue, yellow, indigo, violet, black, white,
+          gray, brown, and magenta.  The default color is white.
+
+     Dgrid will not erase grids already created using Dgrid;
+     multiple invocations of Dgrid will therefore result in the
+     drawing of multiple grids inside the current graphics
+     window.
+
+LIMITATIONS
+     Currently, the grid size can only be drawn in the map's
+     current coordinate system.
+
+SEE ALSO
+     DINTRO[2D]   Introduction to the GRASS D tools
+
+AUTHOR
+     James Westervelt, U.S. Army Construction Engineering
+     Research Laboratory
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
