@@ -1,0 +1,14 @@
+                           TAPE EXTRACTION
+
+To load or read \digital imagery\ into GRASS, the commands listed below
+handle several different types of digital imagery: \MSS\, \TM\, \SPOT\,
+NAHP, etc.
+
+For more information on a specific command, select a command and press
+ESC.
+	
+	\-  i.tape.mss.h \
+	\-  i.tape.mss \
+	\-  i.tape.tm \
+	\-  i.tape.other \
+
