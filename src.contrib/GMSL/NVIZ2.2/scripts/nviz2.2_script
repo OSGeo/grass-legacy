@@ -492,6 +492,7 @@ proc save_3dview { dummy } {
 }
 
 proc load_3dview { dummy } {
+    global Nv_
     # Ask the user for a file name to load from
     set file_name [create_map_browser .browse_3dview_file "3d.view" 1]
     
@@ -502,6 +503,15 @@ proc load_3dview { dummy } {
 
     Nload_3dview $file_name
 
+    #Reset position GUI
+    set ht [lindex [Nget_real_position 1] 2]
+	#reset height
+	Nv_setEntry $Nv_(main_BASE).midf.height.f.entry  $ht
+	Nv_floatscaleCallback $Nv_(main_BASE).midf.height e 2 null $ht
+    change_display 2
+    change_display 1
+
+    Nquick_draw
 }
 
 # Procedure to load the state of the system, calls a special
