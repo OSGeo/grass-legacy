@@ -134,12 +134,12 @@ export PATH
 # r.in.gdal may use it to find some things.  Over time we intend to put
 # more GRASS related shared libraries in $GISBASE/lib.
 # first search local libs, then in GRASS lib/
-if [ ! "$LD_LIBRARY_PATH" ] ; then
-  LD_LIBRARY_PATH=$GISBASE/lib
-  export LD_LIBRARY_PATH
+if [ ! "$LD_LIBRARY_PATH_VAR" ] ; then
+  LD_LIBRARY_PATH_VAR=$GISBASE/lib
 else
-  LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GISBASE/lib
+  LD_LIBRARY_PATH_VAR=$LD_LIBRARY_PATH_VAR:$GISBASE/lib
 fi
+export LD_LIBRARY_PATH_VAR
 
 # Check for concurrent use
 "$ETC/lock" "$lockfile" $$

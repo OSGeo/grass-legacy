@@ -365,6 +365,8 @@ bindist: FORCE
 real-bindist: FORCE
 	${SHELL} -c "cp -f AUTHORS BUGS COPYING NEWS.html README REQUIREMENTS.html TODO.txt ${INST_DIR}/  ; true"
 	${SHELL} -c "cp -f ${BINDIR}/grass${NAME_VER} ${INST_DIR}/  ; true"
+	${SHELL} -c "mkdir -p ${INST_DIR}/etc/nad/src ; \
+	             cp -f src/libes/proj/*.lla ${INST_DIR}/etc/nad/src ; true"
 	(cd ${INST_DIR}; tar cBf - ${BIN_DIST_FILES} | gzip -fc > ${SRCDIR}/grass${VERSION}_${ARCH}_bin.tar.gz )
 	@ name=${SRCDIR}/grass${VERSION}_${ARCH}_bin.tar.gz; \
 	    size=`ls -l $$name | awk '{print $$5}'`; \

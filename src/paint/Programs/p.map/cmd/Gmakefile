@@ -148,7 +148,7 @@ all: $(BIN_CMD)/$(PGM) \
      $(PAINT)/patterns.index
 
 $(BIN_CMD)/$(PGM):	$(LIST) $(INTERFACE) $(DEPLIBS)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(INTERFACE) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(INTERFACE) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(PAINT)/patterns.index: $(PAINT)/patterns $(PAINT)/patcc
 	cd $(PAINT); ./patcc patterns

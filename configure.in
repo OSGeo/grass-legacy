@@ -102,8 +102,8 @@ VERSION_FILE=${SRCDIR}/src/CMD/VERSION
 VERSION_NUMBER=`sed -n 1p ${VERSION_FILE}`
 VERSION_DATE=`sed -n 2p ${VERSION_FILE}`
 VERSION_UPDATE_PKG=`sed -n 3p ${VERSION_FILE}`
-NAME_VER=`echo ${VERSION_NUMBER} | sed 's/\..*//'`
 changequote(,)
+NAME_VER=`echo ${VERSION_NUMBER} |  sed 's/\.//' | sed 's/^\([0-9]*\).*$/\1/'`
 LIB_VER=`echo ${VERSION_NUMBER} | sed 's/^\([0-9.]*\).*$/\1/'`
 changequote([,])
 
@@ -115,6 +115,10 @@ AC_SUBST(NAME_VER)
 AC_SUBST(LIB_VER)
 
 # Enable options
+
+AC_ARG_ENABLE(gmake,
+[  --enable-gmake          use the old GRASS gmake system for compiling],,
+[enable_gmake=yes])
 
 AC_ARG_ENABLE(sysv,
 [  --enable-sysv           define the compiler macro SYSV],,
@@ -217,6 +221,32 @@ LOC_ARG_WITH_LIB(glw, GLw)
 
 LOC_ARG_WITH_INC(proj, External PROJ.4)
 LOC_ARG_WITH_LIB(proj, External PROJ.4)
+
+# Enable gmake option
+
+AC_MSG_CHECKING(for Build Mechanism to be used)
+BUILD_MECH=Alternate
+
+case "$enable_gmake" in
+	yes)	BUILD_MECH=gmake	;;
+	no)	     		        ;;
+	*)	AC_MSG_ERROR([*** You must answer yes or no to --enable-gmake option.])	;;
+esac
+AC_MSG_RESULT("$BUILD_MECH")
+
+if test "$BUILD_MECH" = Alternate ; then
+  if test "$SRCDIR" = "$DSTDIR" ; then
+    AC_MSG_ERROR([***  Build directory should not be the same as source \
+directory for the alternate build mechanism. Create a separate build \
+directory and run again, e.g. mkdir grass-build; cd grass-build; ../configure \
+(see mk/README)]);
+  else
+    SC_ENABLE_SHARED
+  fi
+fi
+
+# Need to use this with either build mechanism to set LD_LIBRARY_PATH_VAR
+SC_CONFIG_CFLAGS
 
 # Enable SysV option
 
@@ -562,15 +592,17 @@ AC_MSG_CHECKING(if we should build directly against GDAL)
 if test "`basename xx/$with_gdal`" = "gdal-config" ; then
   GDAL_CONFIG="$with_gdal"
   AC_MSG_RESULT(yes)
-elif test "$with_gdal" = "yes" ; then
+fi
+
+if test "$with_gdal" = "no" ; then
+  AC_MSG_RESULT(no)
+else
   AC_MSG_RESULT(yes)
   AC_PATH_PROG(GDAL_CONFIG, gdal-config, no)
 
   if test "$GDAL_CONFIG" = "no" ; then
     AC_MSG_ERROR([*** couldn't find gdal-config])
   fi
-else
-  AC_MSG_RESULT(no)
 fi
 
 if test "$GDAL_CONFIG" != "" ; then
@@ -1148,7 +1180,15 @@ AC_OUTPUT(Makefile src/CMD/head/head src/CMD/lists/optional
 
 # Generate files for conventional (non-gmake5) build
 
+if test "$BUILD_MECH" = Alternate ; then
+
+LOC_MSG([Generating Makefiles for alternate build mechanism])
 cp -f src/CMD/head/head mk/vars.mk
+cp -f Makefile ${SRCDIR}
+cp -f mk/Makefile .
+( cd ${SRCDIR}; ./mk/mkmakefiles )
+
+fi
 
 LOC_MSG([Copying config.status to config.status.${ARCH}])
 cp -f config.status config.status.${ARCH}
@@ -1158,6 +1198,7 @@ cp -f config.status config.status.${ARCH}
 LOC_MSG()
 LOC_MSG([GRASS is now configured for ${host}])
 LOC_MSG()
+LOC_MSG([  Build Mechanism:           ${BUILD_MECH}])
 LOC_MSG([  Source directory:          ${SRCDIR}])
 LOC_MSG([  Build directory:           ${DSTDIR}])
 LOC_MSG([  Installation directory:    ${prefix}/grass${NAME_VER}])

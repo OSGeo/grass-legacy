@@ -1,12 +1,11 @@
 LIBDEPS= $(GLLIB) $(MATHLIB)
 
 INCLUDEDIR= ../include
-LIBDIR= ../lib
 COPTS= -cckr
 INCLUDES= -I$(INCLUDEDIR)
 EXTRA_CFLAGS= $(COPTS) -DIRIS_4D -DIRIS_NEWS $(INCLUDES)
 
-LIB= $(LIBDIR)/libpanel.a
+LIB= libpanel.a
 
 HEADER= $(INCLUDEDIR)/panel.h
 
