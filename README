@@ -1,0 +1,31 @@
+This directory is the top level of the GRASS files.  It contains the
+following directories.
+
+These directories are provided with a source code release:
+------------------------------------------------------------------------
+CMD/          Installation related files
+src/          Supported software
+src.alpha/    Software intended for future inclusion in /src
+src.contrib/  GRASS related software not worked up for general use
+src.related/  Non-grass code which may be useful with GRASS
+------------------------------------------------------------------------
+
+These directories are generated during compilation.  A binary release
+must contain these plus the menu/ directory above.
+------------------------------------------------------------------------
+bin/          User executable GRASS commands
+data/         Possible place for GRASS data.  Not required for use.
+dev/          Location for fifo files used by graphics drivers
+driver/       Contains GRASS 3.x graphics dirvers.
+etc/          Auxiliary GRASS information.
+fonts/        Fonts used by GRASS D and P commands.
+landpatterns/ Patterns used by range.place
+locks/        GRASS user and driver lock area.
+man/          GRASS manual and help files.
+txt/          Run-time help files for select GRASS programs.
+weapon_data/  Data used by Gtraj
+------------------------------------------------------------------------
+
+To compile GRASS, read the installation instructions that you
+received on paper with your release.  Compilation document in 
+nroff "-ms" format are also found in the directory: INSTALL
