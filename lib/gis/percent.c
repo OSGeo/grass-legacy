@@ -97,11 +97,17 @@ int G_percent2 (int n,int d,int s, FILE *out)
 	prev = x;
         
 	if ( format == G_INFO_FORMAT_STANDARD ) {
-	    fprintf (stderr,"%4d%%\b\b\b\b\b",x);
+	    if ( out != NULL ) {
+	        fprintf (out,"%4d%%\b\b\b\b\b",x);
+	    }
 	} else { /* GUI */
-	    if ( first ) fprintf (out,"\n");
-	    fprintf (out,"GRASS_INFO_PERCENT: %d\n", x);
-	    fflush ( out );
+	    if ( out != NULL ) {
+		if ( first ) {
+		    fprintf (out,"\n");
+		}
+		fprintf (out,"GRASS_INFO_PERCENT: %d\n", x);
+		fflush ( out );
+	    }
 	    first = 0;
 	}
     }
@@ -109,7 +115,9 @@ int G_percent2 (int n,int d,int s, FILE *out)
     if (x >= 100)
     {
 	if ( format == G_INFO_FORMAT_STANDARD ) {
-	    fprintf (out,"\n");
+	    if ( out != NULL ) {
+	        fprintf (out,"\n");
+	    }
 	}
 	prev = -1;
 	first = 1;
