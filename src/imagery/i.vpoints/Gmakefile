@@ -1,0 +1,92 @@
+PGM	= i.vpoints
+OBJS =  main.o\
+	ask.o\
+	ask_mag.o\
+	analyze.o\
+	call.o\
+	cell.o\
+	cellhd.o\
+	conv.o\
+	colors.o\
+	curses.o\
+        crs.o\
+	debug.o\
+	digit.o\
+	dot.o\
+	drawcell.o\
+	drawvect.o\
+	driver.o\
+	equ.o\
+	find.o\
+	graphics.o\
+	group.o\
+	input.o\
+	mark.o\
+	mouse.o\
+	plot1.o\
+	plot2.o\
+	points.o\
+	setup.o\
+	target.o\
+	title.o\
+	tty.o\
+	use_plot1.o\
+	view.o\
+	where.o\
+	zoom.o\
+	zoom_box.o\
+	zoom_pnt.o
+
+CFILES =main.c\
+	ask.c\
+	ask_mag.c\
+	analyze.c\
+	call.c\
+	cell.c\
+	cellhd.c\
+	conv.c\
+	colors.c\
+	curses.c\
+        crs.c\
+	debug.c\
+	digit.c\
+	dot.c\
+	drawcell.c\
+	drawvect.c\
+	driver.c\
+	equ.c\
+	find.c\
+	graphics.c\
+	group.c\
+	input.c\
+	mark.c\
+	mouse.c\
+	plot1.c\
+	plot2.c\
+	points.c\
+	setup.c\
+	target.c\
+	title.c\
+	tty.c\
+	use_plot1.c\
+	view.c\
+	where.c\
+	zoom.c\
+	zoom_box.c\
+	zoom_pnt.c
+
+LIBES = $(IMAGERYLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB) 
+
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+#$(BIN_CONTRIB_INTER)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_ALPHA_INTER)/$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(CURSES) $(MATHLIB)
+
+$(OBJS): globals.h defs.h
+
+$(LIBES): #
+
+saber_src:
+	#load $(EXTRA_CFLAGS) $(CFLAGS) $(CFILES) /grass.src/4.0/src/mapdev/Vlib/*.c /grass.src/4.0/src/mapdev/diglib/*.c $(DISPLAYLIB) $(RASTERLIB) $(GISLAB)  $(MATHLIB)
+
