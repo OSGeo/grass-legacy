@@ -172,10 +172,16 @@ write_outputs(void)
 
 	fprintf(fp, "# r.topmodel output file for \"%s\"\n",
 							params.name);
+#ifndef __CYGWIN__
 	fprintf(fp, "# Run time: %.4d-%.2d-%.2d %.2d:%.2d:%.2d %s\n", 
 			ltime->tm_year, ltime->tm_mon, ltime->tm_mday,
 			ltime->tm_hour, ltime->tm_min, ltime->tm_sec,
 			ltime->tm_zone);
+#else
+	fprintf(fp, "# Run time: %.4d-%.2d-%.2d %.2d:%.2d:%.2d\n", 
+			ltime->tm_year, ltime->tm_mon, ltime->tm_mday,
+			ltime->tm_hour, ltime->tm_min, ltime->tm_sec);
+#endif
 	fprintf(fp, "#\n");
 	fprintf(fp, "# '_' suffix means time units in time step\n");
 	fprintf(fp, "#\n");
