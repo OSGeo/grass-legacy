@@ -1,0 +1,4 @@
+Mmain	main.c	/^main(argc,argv)$/
+ask_files	ask_files.c	/^ask_files ()$/
+ask_parms	ask_parms.c	/^ask_parms()$/
+run_cluster	run_cluster.c	/^run_cluster ()$/
