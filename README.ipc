@@ -46,6 +46,7 @@
 SOURCES="
 	src/display/devices/XDRIVER/XDRIVER24/IPC_NEW/SWITCHER.c
 	src/display/devices/XDRIVER/lib/IPC_NEW/connect.c
+	src/display/devices/lib/IPC_NEW/SWITCHER.c
 	src/libes/raster/IPC_NEW/io.c
 "
 
@@ -203,9 +204,6 @@ then
 	done
 elif [ "$cmd" = "socks" ]
 then
-        SOURCES="$SOURCES
-src/display/devices/lib/IPC_NEW/SWITCHER.c
-"
 	for i in $SOURCES
 	do
 		src=`echo $i | sed 's|IPC_NEW/||'`
