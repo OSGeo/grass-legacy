@@ -1,24 +1,26 @@
 <H2>DESCRIPTION</H2>
 
-
 <EM>v.distance</EM>
-finds for features from one vector (from=) nearest feature in another vector (to=).
-Various informations about reation (distance, ...) may be uploaded to attribute
-table attached to first vector or printed to stdout.
-New vector may be created where line connecting nearest points on features are written.
+finds features from one vector (from=) feature to another vector (to=) nearest feature.
+Various information about relation (distance, ...) may be uploaded to attribute
+table attached to first vector map or printed to 'stdout'.
+A new vector map may be created where lines connecting nearest points on features are written.
 <P>
 
 
-<h2>EXAMPLE</H2>
+<h2>EXAMPLES</H2>
 
-Find nearest lines in vector <B>ln</B> for points from vector <B>pnt</B> and 
-write line categories to column <B>linecat</B> in attribute table attached to pnt:
+1) Find nearest lines in vector map <B>ln</B> for points from vector map
+<B>pnt</B> within the given threshold and write related line categories to
+column <B>linecat</B> in attribute table attached to vector map <B>pnt</B>:
 <br>
 <tt>v.distance from=pnt to=ln upload=cat column=linecat</tt>
 
 <p>
-For each point from vector <B>pnt</B> find area from <B>ar</B> it is within and 
-write area category to column <B>areacat</B> in attribute table attached to pnt:
+2) For each point from vector map <B>pnt</B> find nearest area from map
+<B>ar</B> within the given threshold and write the related area categories
+to column <B>areacat</B> in attribute table attached to vector map
+<B>pnt</B>. In case a point falls into a polygon area, the distance is zero:
 <br>
 <tt>v.distance from=pnt to=ar upload=cat column=areacat</tt>
 
@@ -40,7 +42,7 @@ island is identified as nearest and category updated to null.
 Janne Soimasuo 1994, Finland<br>
 University of Joensuu, Faculty of Forestry, Finland
 <p>
-Cmd line coordinates support: Markus Neteler, ITC-irst, Trento, Italy<BR>
+5.0 cmd line coordinates support: Markus Neteler, ITC-irst, Trento, Italy<BR>
 <p>
 5.1 update Radim Blazek, ITC-irst, Trento, Italy
 
