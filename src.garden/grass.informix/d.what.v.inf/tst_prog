@@ -1,0 +1,8 @@
+:
+# test for d.vect.db where all required command line args are provided
+# DB=tiger, GISdb=SECO
+#
+
+#d.what.v.db map=$1 tab=feature col=record_num join=cfcc_lookup,cfcc,cfcc
+
+d.what.v.db map=$1 tab=feature col=record_num 
