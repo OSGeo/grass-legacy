@@ -35,8 +35,8 @@ G_find_file (element, name, mapset)
     char *mapset;
 {
     char path[1000];
-    char cpx_name[256];
-    char cpx_maps[256];
+    char xname[512];
+    char xmapset[512];
     int n;
 
     if (*name == 0)
@@ -44,13 +44,13 @@ G_find_file (element, name, mapset)
     *path = 0;
 
 /*
- * if name is in the name_in_mapset format, split it into
+ * if name is in the fully qualified format, split it into
  * name, mapset (overrides what was in mapset)
  */
-    if (G__name_in_mapset(name, cpx_name, cpx_maps))
+    if (G__name_is_fully_qualified(name, xname, xmapset))
     {
-	name = cpx_name;
-	mapset = cpx_maps;
+	name = xname;
+	mapset = xmapset;
     }
 
 /*
@@ -73,9 +73,9 @@ G_find_file (element, name, mapset)
 		    return mapset;
     }
 /*
- * otherwise just look for the file in the specified mapset
- * since the name may have been split and mapset pointing
- * to the automatic array cpx_maps[], so we must copy it to
+ * otherwise just look for the file in the specified mapset.
+ * since the name may have been qualified, mapset may point
+ * to the xmapset, so we must should it to
  * permanent storage via G_store().
  */
     else
@@ -93,13 +93,13 @@ G_find_file2 (element, name, mapset)
     char *mapset;
 {
     char *mp;
+    char xname[512], xmapset[512];
 
     mp = G_find_file (element, name, mapset);
     if (mp)
     {
-	while (*name && (*name != ' ' && *name != '\t'))
-	    name++;
-	*name = 0;
+	if (G__name_is_fully_qualified(name, xname, xmapset))
+	    strcpy (name, xname);
     }
 
     return mp;
