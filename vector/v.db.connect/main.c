@@ -128,7 +128,7 @@ int main (int argc, char **argv)
       Vect_open_old ( &Map, inopt->answer, mapset);
     else
     {
-      Vect_open_update ( &Map, inopt->answer, G_mapset());
+      Vect_open_update_head ( &Map, inopt->answer, G_mapset());
       Vect_hist_command ( &Map );
     }
 
