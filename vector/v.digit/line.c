@@ -234,7 +234,7 @@ int delete_line (void)
     Points = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
     
-    i_prompt ( "Delete line:"); 
+    i_prompt ( "Delete area, line, or point:");
     i_prompt_buttons ( "Select", "Unselect", "Quit tool"); 
     
     driver_open();
@@ -333,7 +333,7 @@ int move_line (void)
     Points = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
     
-    i_prompt ( "Move line:"); 
+    i_prompt ( "Move area, line, or point:"); 
     
     driver_open();
     

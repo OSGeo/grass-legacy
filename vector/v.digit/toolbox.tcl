@@ -116,12 +116,12 @@ $bbox add -image [image create photo -file "$vdpath/split.line.gif"] \
 $bbox add -image [image create photo -file "$vdpath/move.line.gif"] \
         -command "c_next_tool move_line" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
-        -helptext [G_msg "Move line"]
+        -helptext [G_msg "Move area, line, or point"]
 
 $bbox add -image [image create photo -file "$vdpath/delete.line.gif"] \
         -command "c_next_tool delete_line" \
         -highlightthickness 0 -takefocus 0 -relief raised -borderwidth 3 \
-        -helptext [G_msg "Delete line"]
+        -helptext [G_msg "Delete area, line, or point"]
 
 # --- Zoom / Display ---
 $bbox add -image [image create photo -file "$vdpath/zoom.window.gif"] \
