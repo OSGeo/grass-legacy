@@ -98,6 +98,7 @@ int Vect_get_fatal_error ();
 int Vect_set_open_level (int);
 int Vect_open_old (struct Map_info *, char *, char *);
 int Vect_open_new (struct Map_info *, char *, int);
+int Vect_open_update (struct Map_info *, char *, char *);
 int Vect_copy_head_data (struct Map_info *, struct  Map_info *);
 int Vect_build ( struct Map_info *, FILE *);
 int Vect_set_constraint_region (struct Map_info *, double, double, double, double, double, double);
@@ -113,8 +114,15 @@ long Vect_write_line (struct Map_info *, int type, struct line_pnts *, struct li
 
       /* Level 2 only */
 int Vect_read_line (struct Map_info *, struct line_pnts *, struct line_cats *, int);
+int Vect_rewrite_line (struct Map_info *, int, int, struct line_pnts *, struct line_cats *);
+int Vect_delete_line (struct Map_info *, int);
+
 int Vect_line_alive ( struct Map_info *, int);
+int Vect_node_alive ( struct Map_info *, int);
+int Vect_area_alive ( struct Map_info *, int);
+int Vect_isle_alive ( struct Map_info *, int);
 int Vect_get_line_nodes (struct Map_info *, int, int *, int *);
+int Vect_get_line_areas (struct Map_info *, int, int *, int *);
 
 int Vect_get_node_coor (struct Map_info *, int, double *, double *, double *);
 int Vect_get_node_n_lines (struct Map_info *, int );
@@ -163,6 +171,14 @@ struct field_info *Vect_get_field_info (char *, char *, int);
 int Vect_topo_dump ( struct Plus_head *, FILE *);
 double Vect_points_distance ( double, double, double, double, double, double, int);
 int Vect_option_to_types (struct Option *);
+int Vect_copy_map_lines ( struct Map_info *, struct Map_info * );
+int Vect_segment_intersection ( double, double, double, double, double, double, 
+	                        double, double, double, double, double, double,    
+				double *, double *, double *, double *, double *, double *,  
+				int);
+int Vect_line_intersection ( struct line_pnts *, struct line_pnts *,
+                             struct line_pnts ***, struct line_pnts ***,
+                             int *, int *, int );
 
 /* Internal functions, MUST NOT be used in modules */
 int Vect_init (void);
@@ -173,17 +189,21 @@ int Vect__init_head (struct Map_info *);
 int Vect_coor_info ( struct Map_info *, struct Coor_info *);
 int Vect_open_topo (struct Map_info *);
 int Vect_save_topo ( struct Map_info *);
+int Vect_open_spatial_index (struct Map_info *);
+int Vect_save_spatial_index ( struct Map_info *);
+int Vect_spatial_index_dump ( struct Plus_head *, FILE * ); 
+
 int Vect__write_head (struct Map_info *);
 int Vect__read_head (struct Map_info *);
-int V1_open_old_nat (struct Map_info *);
-int V1_open_old_shp (struct Map_info *);
-int V1_open_old_post (struct Map_info *);
+int V1_open_old_nat (struct Map_info *, int);
+int V1_open_old_shp (struct Map_info *, int);
+int V1_open_old_post (struct Map_info *, int);
 int V1_open_new_nat (struct Map_info *, char *, int);
 int V1_open_new_shp (struct Map_info *, char *, int);
 int V1_open_new_post (struct Map_info *, char *, int);
-int V2_open_old_nat (struct Map_info *);
-int V2_open_old_shp (struct Map_info *);
-int V2_open_old_post (struct Map_info *);
+int V2_open_old_nat (struct Map_info *, int);
+int V2_open_old_shp (struct Map_info *, int);
+int V2_open_old_post (struct Map_info *, int);
 int V1_rewind_nat (struct Map_info *);
 int V1_rewind_shp (struct Map_info *);
 int V1_rewind_post (struct Map_info *);
@@ -203,6 +223,10 @@ long Vect_next_line_offset (struct Map_info *);
 long Vect_next_line_offset_nat (struct Map_info *);
 long Vect_next_line_offset_shp (struct Map_info *);
 long Vect_next_line_offset_post (struct Map_info *);
+long Vect_last_line_offset (struct Map_info *);
+long Vect_last_line_offset_nat (struct Map_info *);
+long Vect_last_line_offset_shp (struct Map_info *);
+long Vect_last_line_offset_post (struct Map_info *);
 int V1_read_line_nat (struct Map_info *, struct line_pnts *, struct line_cats *, long);
 int V1_read_line_shp (struct Map_info *, struct line_pnts *, struct line_cats *, long);
 int V1_read_line_post (struct Map_info *, struct line_pnts *, struct line_cats *, long);
@@ -218,15 +242,22 @@ int V2_read_next_line_nat (struct Map_info *, struct line_pnts *, struct line_ca
 int V2_read_next_line_shp (struct Map_info *, struct line_pnts *, struct line_cats *);
 int V2_read_next_line_post (struct Map_info *, struct line_pnts *, struct line_cats *);
 int V1_delete_line (struct Map_info *, long);
+int V2_delete_line (struct Map_info *, int);
 int V1_delete_line_nat (struct Map_info *, long);
+int V2_delete_line_nat (struct Map_info *, int);
 int V1_delete_line_post (struct Map_info *, long);
+int V2_delete_line_post (struct Map_info *, int);
 long V1_write_line_nat (struct Map_info *, int type, struct line_pnts *, struct line_cats *);
+long V2_write_line_nat (struct Map_info *, int type, struct line_pnts *, struct line_cats *);
 long V1_write_line_shp (struct Map_info *, int type, struct line_pnts *, struct line_cats *);
 long V1_write_line_post (struct Map_info *, int type, struct line_pnts *, struct line_cats *);
+long V2_write_line_post (struct Map_info *, int type, struct line_pnts *, struct line_cats *);
 long V1_rewrite_line (struct Map_info *, long offset, int type, struct line_pnts *, struct line_cats *);
 long V1_rewrite_line_nat (struct Map_info *, long offset, int type, struct line_pnts *, struct line_cats *);
+int V2_rewrite_line_nat (struct Map_info *, int line, int type, struct line_pnts *, struct line_cats *);
 long V1_rewrite_line_shp (struct Map_info *, long offset, int type, struct line_pnts *, struct line_cats *);
 long V1_rewrite_line_post (struct Map_info *, long offset, int type, struct line_pnts *, struct line_cats *);
+long V2_rewrite_line_post (struct Map_info *, long offset, int type, struct line_pnts *, struct line_cats *);
 
     /* Miscellaneous */
 int Vect_build_nat ( struct Map_info *, FILE *);
@@ -236,7 +267,11 @@ int Vect_type_to_code (int);
 int Vect_code_to_type (int);
 int Vect_type_to_store (int);
 int Vect_type_from_store (int);
-
+int Vect_build_line_area ( struct Map_info *, int, int);
+int Vect_isle_find_area ( struct Map_info *, int);
+int Vect_attach_isle ( struct Map_info *, int);
+int Vect_attach_isles ( struct Map_info *, BOUND_BOX *);
+int Vect_attach_centroids ( struct Map_info *, BOUND_BOX *);
 
 #endif
 
