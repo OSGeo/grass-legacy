@@ -91,10 +91,10 @@ main(argc, argv)
 
 	    G__make_mapset_element( "dig_att") ;
 
+ 	    G__file_name (file1, "dig_att", old->answer, mapset);
+	    G__file_name (file2, "dig_att", new->answer, G_mapset());
 	    if (0 ==access (file1, 0))
 	    {
-		G__file_name (file1, "dig_att", old->answer, mapset);
-		G__file_name (file2, "dig_att", new->answer, G_mapset());
 		cp_file (file1, file2);
 	    }
 
