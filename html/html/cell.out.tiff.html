@@ -1,0 +1,127 @@
+<HTML>
+<HEAD>
+<TITLE>cell_man(1)</TITLE>
+</HEAD>
+<BODY bgcolor=white>
+<img src="grass.smlogo.gif" alt="Grass-Logo">
+<hr align="center" size="6" width="100%" noshade>
+<H2>Name</H2>
+
+<P>
+<B>cell.out.tiff</B> - Plots maps with the Cell Driver and
+exports them as a tiff-image.
+
+<H2><B>Description</B></H2>
+
+<P>
+<B>cell.out.tiff</B> consists of a TCLTK-Module and a shell
+script. With the TCLTK-Module you can choose various maps
+(raster, vector and sites) and some parameters. The script
+creates a set of display commands and plots the chosen
+maps as a preview in the selected monitor. Then the script
+initializes the cell driver and plots all the maps to
+D_Cell and exports the D_Cell-map as a tiff-file. Finally
+the script restores the previous settings.
+<P>
+It is the attempt to collect as many of the most common
+display commands as possible in a single command and to
+hide some awkward commands (e.g. changing projections for
+the export) from the user.
+<P>
+The maps will be displayed in the following order:
+<P>
+Base raster map -&gt; additional raster maps -&gt; vector
+polygons -&gt; vector maps -&gt; site maps -&gt; legend.
+<P>
+You can see all the commands as they are created from the
+shell script, so if the result doesn't look like what
+you've expected, you can see, what parameters might be
+wrong. All messages from the display commands are displayed,
+too. The user can use additional display commands,
+if the pause option was set. The script waits until
+the xterm window is closed, so you can use any display
+command, you might need.
+
+<H2><B>Entries</B></H2>
+
+<P>
+<B>Background</B> <B>color</B> - Sets the background color with d.erase.
+The default is set to white, as the exported files are
+probably used for printed maps. This is different to the
+default behavior of d.erase.
+<P>
+<B>Raster</B> <B>maps</B><BR>
+
+<B>Base</B> <B>raster</B> <B>map</B> - A raster map put in the background
+with d.rast.
+<P>
+<B>Additional</B> <B>raster</B> <B>maps</B> - To display more than one
+raster maps. The maps must be separated by comma
+(this is automatically done, if the maps are chosen
+with the raster-button) These raster maps can be
+used as overlays by activating the overlay-button.
+This option is similar to the overlay option of
+d.rast.
+<P>
+<B>Vector</B> <B>maps</B><BR>
+
+<B>Vector</B> <B>polygon</B> <B>maps</B> - displays vector polygon maps
+with d.area. You can select border colors and fill
+colors for each map with the next two entries. The
+first map will be plotted with the first colors,
+the second with the second and so on. All maps with
+no color will be plotted with the default colors.
+<P>
+<B>Vector</B> <B>maps</B> - displays vector maps with d.vect. You
+can choose the colors for the maps with the next
+entry: Vector display colors.
+<P>
+<B>Site</B> <B>maps</B> - Display site markers with the d.sites command.
+The parameters color, size and type can be selected with
+the appropriate entries. As usual, the first entry of the
+parameter belongs to the first site map and so on.
+<P>
+<B>Legend</B> - Displays a legend in the map with d.legend. You
+can choose the size with the lines entry and the font
+color with the color entry.
+<P>
+<B>Cell</B> <B>size</B> - The size of the resulting map in pixels. This
+entry is required and cell.out.tiff will exit with an
+error message, if this field is empty.
+<P>
+<B>Output</B> <B>tiff</B> <B>file</B> - The name and path of the resulting tiff
+image.
+<P>
+<B>Pause</B> <B>for</B> <B>additional</B> <B>commands</B> - If this check-box is activated,
+the scripts waits for additional display commands
+after the preview has been created and before the D_Cell
+map is exported.
+<P>
+<B>Preview</B> <B>only</B> - If this check-box is activated, no export
+file is created and the script terminates after the preview.
+
+<H2><B>Notes</B></H2>
+
+<P>
+Cell.out.tiff is a shell script, so it can easily be modified
+to suit your needs.
+
+<H2><B>Bugs</B></H2>
+
+<P>
+The script doesn't terminate proper, when the kill button
+is used.
+
+<H2><B>See</B> <B>Also</B></H2>
+
+<P><I>
+<a href="d.erase.html">d.erase</a>,<BR> <a href="d.rast.html">d.rast</a>,<BR> <a href="d.area.html">d.area</a>,<BR>
+<a href="d.vect.html">d.vect</a>,<BR> <a href="d.sites.html">d.sites</a>,<BR> <a href="d.legend.html">d.legend</a>,<BR><a href="r.out.tiff.html">r.out.tiff</a></I>
+
+<H2><B>Author</B></H2>
+
+<P>
+<a href=mailto:r.brunzema@web.de>R. Brunzema, Germany</a>
+<P>
+
+</BODY></HTML>
