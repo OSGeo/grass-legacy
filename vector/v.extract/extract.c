@@ -72,6 +72,7 @@ xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_inf
 		     }
 		     /* write line */
 		     if ( cat_new > 0 && cat > 0 ) { /* assign the new category value */
+			 Vect_field_cat_del ( Cats, field, -1 ); /* delete all cats of given field */
 		         Vect_cat_set (Cats, field, cat_new); 
 		     }
 		     Vect_write_line (Out, type, Points, Cats);
