@@ -1,4 +1,7 @@
 :
+
+if [ ! -d /usr/local/bin ]; then mkdir /usr/local/bin ; fi
+
 # create gmake5 script to be used for local compiling
 echo ":"                                   > $UNIX_BIN/gmake5
 echo "SRC=$SRC/src"                       >> $UNIX_BIN/gmake5
