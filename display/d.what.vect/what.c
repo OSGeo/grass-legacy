@@ -28,8 +28,8 @@ int what(int once, int terse, int width, int mwidth,
   struct Plus_head *Plus ;
   struct field_info *Fi;
   
-  P_LINE_2D *Line ;
-  P_AREA_2D *Area ;
+  P_LINE *Line ;
+  P_AREA *Area ;
   plus_t line, area, centroid ;
   int i, j;
   struct line_pnts * Points;
@@ -181,7 +181,7 @@ int what(int once, int terse, int width, int mwidth,
               sq_meters = G_area_of_polygon(Points->x, Points->y, Points->n_points);
               
 	      /* substructing island areas */
-	      Area = Plus->Area_2d[area];
+	      Area = Plus->Area[area];
               for(j = 0;j<Area->n_isles;j++)
                 {
                   Vect_get_isle_points(&Map[i], Area->isles[j], Points);
