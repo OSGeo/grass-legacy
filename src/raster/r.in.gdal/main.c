@@ -822,6 +822,11 @@ wkt_to_grass( const char * wkt,
         if( G_strcasecmp(pszToken,"proj") == 0 )
             pszProj = pszValue;
 
+        /* All the ellipsoid keys in GRASS are lower case.  Eventually we
+           may need to remove this hack.  See bug 1047 in RT bug tracker. */
+        if( G_strcasecmp(pszToken,"ellps") == 0 )
+            G_tolcase( pszValue );
+
         /* We will handle units separately */
         if( G_strcasecmp(pszToken,"to_meter") == 0 
             || G_strcasecmp(pszToken,"units") == 0 )
