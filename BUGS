@@ -1,4 +1,4 @@
-                 $Id: BUGS,v 1.116 2001-02-23 22:04:06 markus Exp $
+                 $Id: BUGS,v 1.117 2001-02-24 17:06:02 markus Exp $
 
 Known bugs in current GRASS GIS version 5.0 CVS
 [In sync with GRASS 5.0 beta CVS version]
@@ -27,30 +27,6 @@ RC-Bug list:
     drivers, I suspect one of the Libraries and not the XDRIVER.
     look at D_set_colors ().
     (being worked on by ?)
-
-[RC]r.los:
-  r.los seems to work perfectly if the elevation data is UTM.  But if the         
-  elevation data is latitude-longitude, like most of my elevation data, the       
-  output map looks like a hollow footprint: mostly "N" for cell values, except    
-  for a few arcs of cells with values like 179 and 180, out where the horizon     
-  might be expected.  If indeed these values mark the horizon, why do so few      
-  (if any) cells between these arcs and the observer's cell have non-"N"          
-  values?
-  I tried a previous Grass version (5.0 beta 6) to see if r.los works with        
-  latitude-longitude-projected elevation data, but the output maps look just      
-  as bad.  Sometimes the output map looks like a TV-test-pattern: a really        
-  bizarre pattern of radial lines emanating from the observer towards the         
-  west.  Cells in this region have values in the millions or billions (I          
-  forget how many digits).  The lines don't converge all the way to the           
-  observer because the radial pattern is cut off along a vertical                 
-  (north-south) line.  To the east of this vertical line, the cells have          
-  smaller values - typically a few hundred - and form vertical stripes when       
-  when the color map is rescaled to the lower values.                             
-  Presumably the TV-test-pattern anomalies plagued only old versions of r.los,    
-  but the hollow footprint anomaly persists in the current version.  What am I    
-  doing wrong?
-  (reported by Pelizzari, Michael <michael.pelizzari@lmco.com>)
-  (being worked on by ?)
 
 
 [RC]r.neighbors 
@@ -319,7 +295,7 @@ r.stats: some inconsistent results comparing to r.average
 
 r.to.sites:
  -  r.to.sites -z does not output third dimension
-    however r.to.sites -cz works o.k.
+    however r.to.sites -az works o.k.
   (being worked on by ?)
 
 r.watershed:
