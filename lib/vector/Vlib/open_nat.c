@@ -115,8 +115,7 @@ V2_open_old_nat (struct Map_info *Map, int update)
     ret = Vect_open_topo ( Map );
 
     if ( ret == -1 ) { /* topo file is not available */
-	G_debug( 1, "Cannot open topo file for vector '%s@%s'.", 
-		      Map->name, Map->mapset);
+	G_debug( 1, "Cannot open topo file for vector '%s'.", Vect_get_full_name (Map)); 
 	return -1;
     }
     
@@ -124,9 +123,9 @@ V2_open_old_nat (struct Map_info *Map, int update)
     ret = Vect_open_spatial_index ( Map );
 
     if ( ret == -1 ) { /* spatial index is not available */
-	/* TODO: free topology */
-	G_debug( 1, "Cannot open spatial index file for vector '%s@%s'.", 
-		      Map->name, Map->mapset);
+	G_debug( 1, "Cannot open spatial index file for vector '%s'.", Vect_get_full_name (Map) );
+	/* free topology */
+	dig_free_plus ( &(Map->plus) );
 	return -1;
     }
     

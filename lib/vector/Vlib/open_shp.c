@@ -35,11 +35,8 @@ V1_open_old_shp ( struct Map_info *Map, int update )
 {
     SHPHandle hShp;
     DBFHandle hDbf;
-    DBFFieldType col_type;
     int       ShapeType, nShapes;
     double    MinBound[4], MaxBound[4];
-    int       i, j;
-    char      col_name[15];
 
     G_debug ( 1, "V1_open_old_shp(): shp file = %s", Map->fInfo.shp.file );
 
@@ -66,34 +63,6 @@ V1_open_old_shp ( struct Map_info *Map, int update )
 	return (-1);
     }
    
-    /* find category column */
-    Map->fInfo.shp.cat_col_num = -1;
-    if ( Map->fInfo.shp.cat_col != NULL ) {
-	for( i = 0; i < DBFGetFieldCount(hDbf); i++ ) {
-	    col_type = DBFGetFieldInfo( hDbf, i, col_name, NULL, NULL );
-	    
-	    if( strcasecmp( Map->fInfo.shp.cat_col, col_name) == 0 ) {
-		if ( col_type == FTInteger ) {
-		    Map->fInfo.shp.cat_col_num = i;
-		}
-		break;
-	    }
-	}
-	if ( Map->fInfo.shp.cat_col_num == -1 ) { /* print error message */
-	    G_warning ("Column '%s' not found or is not integer. Available columns:", 
-		             Map->fInfo.shp.cat_col);
-	    for( j = 0; j < DBFGetFieldCount(hDbf); j++ ) {
-		col_type = DBFGetFieldInfo( hDbf, j, col_name, NULL, NULL );
-		fprintf ( stderr, "%s ", col_name);
-		if ( col_type == FTInteger ) 
-		    fprintf ( stderr, "(Integer)\n");
-		else
-		    fprintf ( stderr, "(Non-Integer)\n");
-	    }
-	}
-    }
-    G_debug ( 1, "category column number = %d", Map->fInfo.shp.cat_col_num );
-    
     Map->fInfo.shp.hShp = hShp;
     Map->fInfo.shp.hDbf = hDbf;
     Map->fInfo.shp.shape = 0;
@@ -120,39 +89,37 @@ int
 V2_open_old_shp ( struct Map_info *Map, int update )
 {
     int ret;    
-    char buf[500];
-    FILE *fp;
-    struct Coor_info CInfo;
  
     if ( update ) {
         G_warning ( "Shapefile format cannot be updated.");
         return -1;
     }
 
-    /* check if topo is available */
-    Vect_coor_info ( Map, &CInfo);
+    /* open topo */
+    ret = Vect_open_topo ( Map );
+      
+    if ( ret == -1 ) { /* topo file is not available */
+        G_debug( 1, "Cannot open topo file for vector '%s'.", Vect_get_full_name (Map));
+        return -1;
+    } 
     
-    sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
-    fp = G_fopen_old (buf, GV_TOPO_ELEMENT, Map->mapset);
-
-    if ( fp == NULL ) { /* topo file is not available */
-        G_debug( 1, "Cannot open topo file for vector '%s@%s'.\n",
-	  	      Map->name, Map->mapset);
-	return -1;
+    /* open spatial index */
+    ret = Vect_open_spatial_index ( Map );
+	 
+    if ( ret == -1 ) { /* spatial index is not available */
+        G_debug( 1, "Cannot open spatial index file for vector '%s'.", Vect_get_full_name (Map) );
+	/* free topology */
+        dig_free_plus ( &(Map->plus) );
+        return -1;
     }
     
     ret = V1_open_old_shp ( Map, 0 );
     if ( ret != 0 ) {
-	fclose ( fp );
+	dig_free_plus ( &(Map->plus) );
+	/* TODO: free spatial index */
         return -1;
     }
 
-    /* load topo to memory */
-    dig_init_plus ( &(Map->plus) );
-    dig_load_plus ( &(Map->plus), fp );
-
-    fclose ( fp ); 
-	
     return 0;
 }
 

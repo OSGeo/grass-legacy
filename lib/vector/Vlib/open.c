@@ -136,7 +136,7 @@ Vect__open_old (
   /* Read vector format information */
   format = 0;
   sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
-  G_debug (1, "open format file: '%s/%s/%s", Map->mapset, buf, GRASS_VECT_FRMT_ELEMENT);
+  G_debug (1, "open format file: '%s/%s/%s'", Map->mapset, buf, GRASS_VECT_FRMT_ELEMENT);
   fp = G_fopen_old (buf, GRASS_VECT_FRMT_ELEMENT, Map->mapset);
   if ( fp == NULL) {
       G_debug ( 1, "Vector format: %d (native)", format);
