@@ -1,0 +1,2 @@
+testy: testy.c
+	/usr/ucb/cc testy.c /usr/ccs/lib/libc.a -lucb -o testy.ucb
