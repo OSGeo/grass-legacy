@@ -231,11 +231,13 @@ Vect_new_cat_list ()
   p = (struct cat_list *) malloc (sizeof (struct cat_list));
 
   /* n_ranges MUST be initialized to zero */
-  if (p)
+  if (p) {
     p->n_ranges = 0;
-
-  if (p)
     p->alloc_ranges = 0;
+    p->field = 0;
+    p->min = NULL;
+    p->max = NULL;
+  }
   
   return p;
 }
@@ -346,6 +348,7 @@ Vect_array_to_cat_list (int *vals, int nvals, struct cat_list *list)
 {
     int i, range;
 
+    G_debug (1, "Vect_array_to_cat_list()");
     range = -1;
     for (i = 0; i < nvals; i++)
       {

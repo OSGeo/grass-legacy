@@ -88,6 +88,7 @@ struct field_info
           {
 	    row++;      
             G_chop ( buf ); 
+            G_debug (1, "DB: %s", buf);
 
 	    c = (char *) strchr ( buf, '#');
 	    if ( c != NULL ) *c = '\0';
@@ -137,6 +138,7 @@ struct field_info
 	fi->driver = G_store ( m_drv );
       }
 
+    G_debug (1, "Field info is read");
     return (fi);
 }
 

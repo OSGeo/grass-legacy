@@ -53,7 +53,8 @@ V1_read_line_shp (
 	       struct line_cats *Cats,
 	       long offset)
 {
-  return Vect__Read_line_shp (Map, Points, Cats, offset);
+    G_debug (3, "V1_read_line_shp() offset = %d", offset);
+    return Vect__Read_line_shp (Map, Points, Cats, offset);
 }
 
 /*
@@ -155,6 +156,8 @@ V2_read_next_line_shp (
 {
   register int line;
   register P_LINE_2D *Line;
+
+  return V1_read_next_line_shp (Map, line_p, line_c);
 /*  
   while (1)
     {
@@ -206,10 +209,13 @@ Vect__Read_line_shp (
   int first, last; 
   SHPObject *pShape;
   
-  offset = ( Map->fInfo.shp.shape << 11 ) | ( Map->fInfo.shp.part & 0x7FF);
+  G_debug (3, "Vect__Read_line_shp() offset = %d", offset);
+  /* offset = ( Map->fInfo.shp.shape << 11 ) | ( Map->fInfo.shp.part & 0x7FF); */
   shape = ( offset >> 11 ) & 0x1FFFFF ;
   part = offset & 0x7FF;
+  G_debug (3, "shape = %d part = %d", shape, part);
   
+  G_debug (3, "nShapes = %d", Map->fInfo.shp.nShapes);
   if ( shape >= Map->fInfo.shp.nShapes ) {
       return (-2); /* EOF reached */ 
   }
@@ -285,3 +291,15 @@ Vect__Read_line_shp (
   }
 }
 
+/*
+*  Returns  next line offset
+*/
+long
+Vect_next_line_offset_shp ( struct Map_info *Map )
+{
+    long offset;
+    
+    offset = ( ( Map->fInfo.shp.shape << 11 ) | ( Map->fInfo.shp.part & 0x7FF) );
+    
+    return offset;
+}

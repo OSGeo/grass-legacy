@@ -257,3 +257,11 @@ Vect__Read_line_nat (
   return (type);
 }
 
+/*
+*  Returns  next line offset
+*/
+long 
+Vect_next_line_offset_nat ( struct Map_info *Map )
+{
+  return ftell (Map->dig_fp);
+}

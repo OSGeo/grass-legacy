@@ -65,7 +65,7 @@ Vect_build ( struct Map_info *Map, FILE *msgout ) {
     Vect_rewind ( Map );
     prnmsg ("Registering lines ...");
     while ( 1 ) {
-	offset = ftell (Map->dig_fp);
+	offset = Vect_next_line_offset (Map);
         type = Vect_read_next_line (Map, Points, Cats);
         if ( type == -1 ) {
 	    fprintf (stderr, "\nERROR: vector file - can't read\n" );
