@@ -1,0 +1,68 @@
+# %W% %G%
+###############################################################
+# Chris Rewerts, Agricultural Enginering, Purdue University
+# rewerts@ecn.purdue.edu
+# US ARMY Construction Engineering Research Laboratories
+# rewerts@zorro.cecer.army.mil
+# ANSWERS on GRASS Project
+###############################################################
+
+BIN = $(BIN_ALPHA_INTER)
+PGM = r.answers
+
+# object files
+OBJ = \
+answers_input.o\
+answers_run.o\
+bmp_menu.o\
+copy_project.o\
+croak.o\
+edit_region.o\
+extract.o\
+extract_bmp.o\
+extract_chnl_slp.o\
+extract_rain.o\
+extract_tile.o\
+get_bmp.o\
+get_channel.o\
+get_chnl_slp.o\
+get_cover.o\
+get_elevation.o\
+get_mask.o\
+get_outlet.o\
+get_rain.o\
+get_res.o\
+get_soils.o\
+get_tile.o\
+hit_return.o\
+hydro_filter.o\
+main.o\
+map_sediment.o\
+menu.o\
+misc.o\
+mk_bmp_tbl.o\
+mk_cat_tbl.o\
+mk_chnl_tbl.o\
+mk_cover_tbl.o\
+mk_elev.o\
+mk_rain.o\
+mk_soil_tbl.o\
+percent.o\
+read_project.o\
+remove_files.o\
+save_project.o\
+set_mask.o\
+set_region.o\
+show_status.o\
+step1.o\
+trim_region.o\
+user_file.o
+
+all:    $(BIN)/$(PGM)
+
+$(BIN)/$(PGM): $(OBJ) $(GISLIB) $(VASKLIB)
+	$(CC) -o $(BIN)/$(PGM) $(OBJ) $(VASK) $(LDFLAGS) $(GISLIB) $(MATHLIB) 
+ 
+
+$(GISLIB): #
+$(VASKLIB): #
