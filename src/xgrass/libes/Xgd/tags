@@ -1,0 +1,145 @@
+EAST	plot.c	/^#define EAST(x) (__xgdwindow.west + ((x)-__xgdleft/
+FIELD	drawsitefh.c	/^#define FIELD(x) strcmp(x,field)==0$/
+MONO	abwcolr.c	/^#define MONO(rd,gn,bl) (((rd)*11 + (gn)*16 + (bl)*/
+NORTH	plot.c	/^#define NORTH(y) (__xgdwindow.north - ((y)-__xgdto/
+X	plot.c	/^#define X(e) (__xgdleft + __xgdxconv * ((e) - __xg/
+XgdAddPointToPointList	object.c	/^XgdAddPointToPointList(obj, x, y)$/
+XgdAdjustEastLongitude	plot.c	/^double XgdAdjustEastLongitude (east, west)$/
+XgdAdjustEasting	plot.c	/^double XgdAdjustEasting (east, window)$/
+XgdAllocRastColors	arastcolr.c	/^XgdAllocRastColors(obj, theDpy, theScrn, name, map/
+XgdBWImage	bwimage.c	/^XgdBWImage(obj, scrn, name, mapset)$/
+XgdBoxContains	bbox.c	/^XgdBoxContains(b1, b2)$/
+XgdBoxesOverlap	bbox.c	/^XgdBoxesOverlap(b1, b2)$/
+XgdConfigureObject	object.c	/^XgdConfigureObject(gc, obj, x, y, width, height, f/
+XgdConfigureResizeHandles	object.c	/^XgdConfigureResizeHandles(obj)$/
+XgdCreateBoxForObject	bbox.c	/^XgdCreateBoxForObject(obj)$/
+XgdCreateFillPatternPad	fillbutton.c	/^XgdCreateFillPatternPad(parent, string, cols, orie/
+XgdCreateFillPixmap	object.c	/^XgdCreateFillPixmap(obj, fg, bg, fp)$/
+XgdCreateImage	crteimage.c	/^XgdCreateImage(obj, scrn,  name, mapset, mode)$/
+XgdCreateLinePatternPad	linebutton.c	/^XgdCreateLinePatternPad(parent, string, cols, orie/
+XgdCreateObject	object.c	/^XgdCreateObject(type)$/
+XgdDestroyObject	object.c	/^XgdDestroyObject(obj)$/
+XgdDitherImage	dithrimage.c	/^XgdDitherImage(obj, scrn, name, mapset, chcat, lhc/
+XgdDrawBarscale	draw.c	/^XgdDrawBarscale(obj,updtemode)$/
+XgdDrawGrid	draw.c	/^XgdDrawGrid(obj, gfnorth, gfsouth, gfeast, gfwest,/
+XgdDrawLabel	label.c	/^XgdDrawLabel(obj)$/
+XgdDrawLegend	draw.c	/^XgdDrawLegend(obj)$/
+XgdDrawObject	draw.c	/^XgdDrawObject(gc, obj, fill)$/
+XgdDrawRaster	draw.c	/^XgdDrawRaster(obj, name, mapset)$/
+XgdDrawResizeHandles	resizeh.c	/^XgdDrawResizeHandles(obj, gc)$/
+XgdDrawVector	draw.c	/^XgdDrawVector(obj, name, mapset)$/
+XgdError	error.c	/^XgdError(s)$/
+XgdGetBBoxOfObject	bbox.c	/^XgdGetBBoxOfObject(obj)$/
+XgdGetGCOfObject	object.c	/^XgdGetGCOfObject(obj)$/
+XgdGetHighlightColor	sethilite.c	/^XgdGetHighlightColor()$/
+XgdGetObjectPosition	object.c	/^XgdGetObjectPosition(obj, x, y)$/
+XgdGetVectColorNames	vectcolor.c	/^XgdGetVectColorNames()$/
+XgdInResizeHandle	resizeh.c	/^XgdInResizeHandle(obj, x, y)$/
+XgdInit	initxgd.c	/^XgdInit(dpy, cmap, vinfo)$/
+XgdInitLegend	object.c	/^XgdInitLegend(legend, geoframe)$/
+XgdInitObject	object.c	/^XgdInitObject(dpy, win, obj, fp, lp, fg, bg, lw)$/
+XgdInitVectorColors	vectcolor.c	/^XgdInitVectorColors( dpy, num )$/
+XgdIsGridOn	grid.c	/^XgdIsGridOn(obj)$/
+XgdIsObjectInBox	bbox.c	/^XgdIsObjectInBox(obj, box)$/
+XgdIsPointInObject	bbox.c	/^XgdIsPointInObject(obj, x, y)$/
+XgdLineContainedInBox	bbox.c	/^XgdLineContainedInBox(b, l)$/
+XgdLineIntersectBox	bbox.c	/^XgdLineIntersectBox(box, line)$/
+XgdMonoColor	abwcolr.c	/^XgdMonoColor(obj, name, mapset, lookup_tbl)$/
+XgdPlotLine	plot.c	/^XgdPlotLine (obj, east1, north1, east2, north2)$/
+XgdPlotPoint	plot.c	/^XgdPlotPoint(obj, east, north)$/
+XgdPlotPolygon	plot.c	/^XgdPlotPolygon (obj, x, y, n)$/
+XgdPlotWhereEN	plot.c	/^XgdPlotWhereEN (x, y, east, north)$/
+XgdPlotWhereXY	plot.c	/^XgdPlotWhereXY (east, north, x, y)$/
+XgdPointInBox	bbox.c	/^XgdPointInBox(b, x, y)$/
+XgdRasterImage	raster.c	/^XgdRasterImage(obj, scrn, name, mapset, colorsfixe/
+XgdRedrawGeoframe	draw.c	/^XgdRedrawGeoframe(obj, drawRaster)$/
+XgdResizePixmap	object.c	/^XgdResizePixmap(obj, nwidth, nheight, xoff, yoff, /
+XgdSetBarscaleColor	barscale.c	/^XgdSetBarscaleColor(obj, color)$/
+XgdSetBarscaleFont	barscale.c	/^XgdSetBarscaleFont(obj, fid)$/
+XgdSetBarscaleInterval	barscale.c	/^XgdSetBarscaleInterval(obj, interval)$/
+XgdSetBarscaleLength	barscale.c	/^XgdSetBarscaleLength(obj, length)$/
+XgdSetBarscaleLineWidth	barscale.c	/^XgdSetBarscaleLineWidth(obj, linewidth)$/
+XgdSetBarscaleStyle	barscale.c	/^XgdSetBarscaleStyle(obj, style)$/
+XgdSetBarscaleTextColor	barscale.c	/^XgdSetBarscaleTextColor(obj, textcolor)$/
+XgdSetBarscaleUnit	barscale.c	/^XgdSetBarscaleUnit(obj, unit)$/
+XgdSetBarscaleWinWidth	barscale.c	/^XgdSetBarscaleWinWidth(obj, winwidth)$/
+XgdSetBox	bbox.c	/^XgdSetBox(t, b, l, r)$/
+XgdSetGridColor	grid.c	/^XgdSetGridColor(obj, fg)$/
+XgdSetGridFont	grid.c	/^XgdSetGridFont(obj, fid)$/
+XgdSetGridGap	grid.c	/^XgdSetGridGap(obj, gap)$/
+XgdSetGridLabelOn	grid.c	/^XgdSetGridLabelOn(obj, labelon)$/
+XgdSetGridLinePattern	grid.c	/^XgdSetGridLinePattern(obj, lw, lp)$/
+XgdSetGridOffset	grid.c	/^XgdSetGridOffset(obj, xoff, yoff)$/
+XgdSetGridSpacing	grid.c	/^XgdSetGridSpacing(obj, spacing)$/
+XgdSetGridTextColor	grid.c	/^XgdSetGridTextColor(obj, textcolor)$/
+XgdSetHighlightColor	sethilite.c	/^XgdSetHighlightColor(dpy, color)$/
+XgdSetLabelColor	label.c	/^XgdSetLabelColor(obj, color)$/
+XgdSetLabelFont	label.c	/^XgdSetLabelFont(obj, font)$/
+XgdSetLabelString	label.c	/^XgdSetLabelString(obj, string, numlines)$/
+XgdSetObjectBackground	object.c	/^XgdSetObjectBackground(obj, bg)$/
+XgdSetObjectFillPattern	object.c	/^XgdSetObjectFillPattern(XgdObject *legend, XgdObje/
+XgdSetObjectForeground	object.c	/^XgdSetObjectForeground(obj, fg)$/
+XgdSetObjectLinePattern	object.c	/^XgdSetObjectLinePattern(obj, lw, lp)$/
+XgdSetObjectPosition	object.c	/^XgdSetObjectPosition(obj, x, y)$/
+XgdSetupPlot	plot.c	/^XgdSetupPlot (obj, t, b, l, r)$/
+XgdUnDrawObject	draw.c	/^XgdUnDrawObject(obj, bg, fill)$/
+XgdUpdateBarscale	barscale.c	/^XgdUpdateBarscale(obj, length, interval, linewidth/
+XgdUpdateBoxForObject	bbox.c	/^XgdUpdateBoxForObject(obj, t, b, l, r)$/
+XgdUpdateGrid	grid.c	/^XgdUpdateGrid(obj, onOff, labelon,gap, spacing, co/
+XgdWarning	warning.c	/^XgdWarning(s)$/
+Y	plot.c	/^#define Y(n) (__xgdtop + __xgdyconv * (__xgdwindow/
+_XgdAllocCells	alloccolor.c	/^_XgdAllocCells(dpy, xcolor)$/
+_XgdBuildLut	lut.c	/^_XgdBuildLut(dpy, cmap, entries, private)$/
+_XgdFreeColors	freecolr.c	/^_XgdFreeColors(obj)$/
+_XgdGetBitmapPad	object.c	/^_XgdGetBitmapPad(vinfo)$/
+_XgdLinePatternExpose	linebutton.c	/^_XgdLinePatternExpose(w, cld, cad)$/
+_xgdAddPoint	d_spline.c	/^_xgdAddPoint(x, y)$/
+_xgdBezierSpline	d_spline.c	/^_xgdBezierSpline(a0, b0, a1, b1, a2, b2, a3, b3, o/
+_xgdBoxPointsToWindowPoints	draw.c	/^_xgdBoxPointsToWindowPoints(obj, p, x, y)$/
+_xgdClearStack	d_spline.c	/^_xgdClearStack()$/
+_xgdComputeCP	crtespline.c	/^_xgdComputeCP(points, controls, path)$/
+_xgdControlPoints	crtespline.c	/^_xgdControlPoints(x, y, l1, l2, theta1, theta2, t,/
+_xgdCreateControlList	crtespline.c	/^_xgdCreateControlList(s)$/
+_xgdCreateControlPoints	crtespline.c	/^_xgdCreateControlPoints(s)$/
+_xgdCreateSplineobject	crtespline.c	/^_xgdCreateSplineobject(obj, mode)$/
+_xgdDrawClosedSpline	d_spline.c	/^_xgdDrawClosedSpline(display, window, gc, fp, lp, /
+_xgdDrawIntSpline	d_spline.c	/^_xgdDrawIntSpline(display, window, gc, fp, lp, spl/
+_xgdDrawOpenSpline	d_spline.c	/^_xgdDrawOpenSpline(display, window, gc, fp, lp, sp/
+_xgdDrawPixmapBorder	object.c	/^_xgdDrawPixmapBorder(obj, gc)$/
+_xgdDrawRaster	draw.c	/^_xgdDrawRaster(obj, name, mapset)$/
+_xgdDrawSpline	d_spline.c	/^_xgdDrawSpline(display, window, gc, fp, lp, spline/
+_xgdDrawVector	draw.c	/^_xgdDrawVector(obj, name, mapset)$/
+_xgdDrawsitefile	drawsitefh.c	/^_xgdDrawsitefile(obj,name,mapset,file)$/
+_xgdEdge	plot.c	/^_xgdEdge (x0, y0, x1, y1)$/
+_xgdEdgeOrder	plot.c	/^_xgdEdgeOrder (a, b)$/
+_xgdEdgePoint	plot.c	/^_xgdEdgePoint (x, y)$/
+_xgdFabs	plot.c	/^_xgdFabs(x)$/
+_xgdFastLine	plot.c	/^_xgdFastLine(obj, x1,y1,x2,y2)$/
+_xgdICiel	plot.c	/^_xgdICiel(x)$/
+_xgdIFloor	plot.c	/^_xgdIFloor(x)$/
+_xgdInitPointArray	d_spline.c	/^_xgdInitPointArray(init_size, step_size)$/
+_xgdIntersect	bbox.c	/^_xgdIntersect(x1, y1, x2, y2, axis_val, axis)$/
+_xgdLocation	bbox.c	/^_xgdLocation(x, y, box, top, bottom, left, right)$/
+_xgdNearest	plot.c	/^_xgdNearest(e0,e1)$/
+_xgdPop	d_spline.c	/^_xgdPop(x1, y1, x2, y2, x3, y3, x4, y4)$/
+_xgdPush	d_spline.c	/^_xgdPush(x1, y1, x2, y2, x3, y3, x4, y4)$/
+_xgdQuadraticSpline	d_spline.c	/^_xgdQuadraticSpline(a1, b1, a2, b2, a3, b3, a4, b4/
+_xgdRowFill	plot.c	/^_xgdRowFill (obj, y, x1, x2)$/
+_xgdWindowPointsToBoxPoints	object.c	/^_xgdWindowPointsToBoxPoints(obj)$/
+build	dithrcolr.c	/^build(nlevels, mult, level, value, level_to_255)$/
+build_color_tables	dithrcolr.c	/^build_color_tables()$/
+build_dither_tables	dithrcolr.c	/^build_dither_tables()$/
+clrtbl	dithrcolr.c	/^clrtbl(n, red, grn, blu)$/
+colornum	dithrcolr.c	/^colornum(red, grn, blu)$/
+drawdashedbarscale	draw.c	/^drawdashedbarscale(dpy,win,gc,x,y,thick,$/
+drawtickedbarscale	draw.c	/^drawtickedbarscale(dpy,win,gc,x,y,thick,$/
+getdlength	draw.c	/^void getdlength(dlen,wwidth,length)$/
+getlxadesc	getxlen.c	/^getlxadesc(dpy,gc,name,ascent, descent)$/
+getlxlen	getxlen.c	/^getlxlen(dpy,gc,name)$/
+half	d_spline.c	/^#define         half(z1, z2)    ((z1+z2)\/2.0)$/
+highbit	arastcolr.c	/^  highbit(ul)$/
+if	crteimage.c	/^  if (ncolors < 256 && mode == NO_DITHER) {$/
+mix	dithrcolr.c	/^mix(low, hi, extra, level_to_255, nlevels, steps)$/
+round	bbox.c	/^#define round(x) ((x > 0.0)/((int)(x + 0.5)):((int/
+t_dither	dithrcolr.c	/^t_dither(rd, gn, bu, row, col, ncols)$/
+xAllocColor	arastcolr.c	/^  xAllocColor(dp, cdef)$/
