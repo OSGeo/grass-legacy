@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "tape.h"
 
 tape_dir (buf)
