@@ -10,7 +10,7 @@ UNIX_BIN            = /usr/local/bin
 DEFAULT_DATABASE    =
 DEFAULT_LOCATION    =
 
-COMPILE_FLAGS       = -g -O2 -I/usr/include -I/usr/local/include
+COMPILE_FLAGS       = -O2 -I/usr/include -I/usr/local/include
 LDFLAGS             = -s 
 
 XCFLAGS             =  -I/usr/X11R6/include
@@ -30,7 +30,7 @@ XEXTRALIBS          =
 COMPATLIB           = 
 TERMLIB             = 
 CURSES              = -lncurses $(TERMLIB) $(COMPATLIB)
-MATHLIB             = -lm -lrpclib
+MATHLIB             = -lm
 XDRLIB              = -lrpclib
 
 PQLIB               = -L/usr/local/pgsql/lib -L/usr/lib/pgsql/lib -lpq -lcrypt
