@@ -1,4 +1,7 @@
+/* box.c  $Id$ */
 #include "gis.h"
+#include "display.h"
+#include "raster.h"
 
 
 int 
