@@ -721,7 +721,7 @@ void Gs_pack_colors_float(char *filename, float *fbuf, int *ibuf, int rows,
     struct Colors colrules;
     unsigned char *r, *g, *b, *set;
     int i, j, *icur;
-    float *fcur;
+    FCELL *fcur;
 
     Gs_status("translating colors from fp");
 
@@ -737,7 +737,7 @@ void Gs_pack_colors_float(char *filename, float *fbuf, int *ibuf, int rows,
     
     for (i=0; i<rows; i++)
     {
-	G_lookup_f_raster_colors ((DCELL *)fcur, r, g, b, set, cols, &colrules);
+	G_lookup_f_raster_colors (fcur, r, g, b, set, cols, &colrules);
 	G_percent(i, rows, 2);
 
 	for(j=0; j<cols; j++)

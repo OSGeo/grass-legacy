@@ -26,7 +26,7 @@ int exec_rectify (void)
     char *mailfile;
 
     /* allocate the output cell matrix */
-    cell_buf = (void **) G_calloc (NROWS, sizeof (void *));
+    cell_buf = (CELL **) G_calloc (NROWS, sizeof (void *));
     n = NCOLS * G_raster_size(map_type);
     for (i=0; i < NROWS; i++)
     {
