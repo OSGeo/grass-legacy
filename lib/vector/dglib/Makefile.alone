@@ -1,4 +1,4 @@
-CFLAGS = -Wall -DGNGRP_STATS -DGNGRP_NEWCLIP
+CFLAGS = -Wall -DGNGRP_STATS
 LNFLAGS =
 OBJECTS = avl.o tree.o heap.o graph.o
 INCLUDES = avl.h tree.h heap.h graph.h type.h
