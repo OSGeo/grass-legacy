@@ -197,24 +197,32 @@ int main (int argc, char *argv[])
     }
     else
     {
-        if ( !l1bdriver )
+        /* use negative XY coordinates per default for unprojected data */
+        /* for hDriver names see gdal/frmts/gdalallregister.cpp */
+
+        if ( l1bdriver || ( strcmp(GDALGetDriverShortName(hDriver),"GTiff") == 0 ))
         {
-          /* define negative xy coordinate system to avoid GCPs confusion */
-          cellhd.north  = 0.0;
-          cellhd.south  = (-1) * cellhd.rows;
-          cellhd.ns_res = 1.0;
-          cellhd.west   = (-1) * cellhd.cols;
-          cellhd.east   = 0.0;
-          cellhd.ew_res = 1.0;
-        }
-        else /* L1B - NOAA/AVHRR data must be treated differently */
-        {
+          /* e.g. L1B - NOAA/AVHRR data must be treated differently */
           /* define positive xy coordinate system to avoid GCPs confusion */
+          
+          fprintf(stderr, "Writing positive XY coordinates...");
           cellhd.north  = cellhd.rows;
           cellhd.south  = 0.0;
           cellhd.ns_res = 1.0;
           cellhd.west   = 0.0;
           cellhd.east   = cellhd.cols;
+          cellhd.ew_res = 1.0;
+        }
+        else
+        {
+          /* for all other unprojected data ... */
+          /* define negative xy coordinate system to avoid GCPs confusion */
+          fprintf(stderr, "Writing negative XY coordinates...");
+          cellhd.north  = 0.0;
+          cellhd.south  = (-1) * cellhd.rows;
+          cellhd.ns_res = 1.0;
+          cellhd.west   = (-1) * cellhd.cols;
+          cellhd.east   = 0.0;
           cellhd.ew_res = 1.0;
         }
     }
