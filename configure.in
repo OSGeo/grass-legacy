@@ -809,7 +809,7 @@ if test -n "$USE_OPENGL"; then
 
 LOC_CHECK_INC_PATH(opengl,OpenGL,OPENGLINC)
 
-LOC_CHECK_INCLUDES(GL/gl.h GL/glu.h,OpenGL,$OPENGLINC)
+LOC_CHECK_INCLUDES(GL/gl.h GL/glu.h,OpenGL,$OPENGLINC $X_CFLAGS)
 
 # With OpenGL library directory
 
