@@ -14,7 +14,7 @@ int ask_datum(char *datum, char *ellps, char *params)
     if (answer > 0)
     {
         answer = G_ask_datum_params(datum, params);
-
+ 
         if(answer > 0)
             return 1;
         else

@@ -86,14 +86,16 @@ int G_ask_datum_name(char *datumname, char *ellpsname)
     if (G_strcasecmp(answer,"custom") == 0)
     {
         /* For a custom datum we need to interactively ask for the ellipsoid */
-        i = G_ask_ellipse_name(ellipse);
-        sprintf(ellpsname, G_ellipsoid_name(i));
+        if(G_ask_ellipse_name(ellipse) < 0)
+	    return -1;        
+        sprintf(ellpsname, ellipse);
         sprintf(datumname, "custom");
     }
     else
     {
         /* else can look it up from datum.table */
-        i = G_get_datum_by_name(answer);
+        if((i = G_get_datum_by_name(answer)) < 0)
+	    return -1;
         sprintf(ellpsname, G_datum_ellipsoid(i));
         sprintf(datumname, G_datum_name(i));
     }
