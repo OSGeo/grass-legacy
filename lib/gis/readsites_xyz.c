@@ -26,6 +26,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 #include "gis.h"
 #include "site.h"
 
@@ -140,9 +141,9 @@ int G_readsites_xyz(
 			case SITE_COL_DBL: /* Dbl attribute */
 				xyz[i].z = s->dbl_att[index]; break;
 			case SITE_COL_STR: /* String Attribute */
-				end_ptr = s->str_att[index];
+                                errno = 0;
 				xyz[i].z = strtod(s->str_att[index], &end_ptr);
-				if (end_ptr == s->str_att[index]) {
+				if (end_ptr == s->str_att[index] || errno == ERANGE) {
 					G_fatal_error("Failed to convert string attribute.");
 				}
 				break;
