@@ -56,7 +56,11 @@ main( int argc , char **argv )
     opt1->key        = "font";
     opt1->type       = TYPE_STRING;
     opt1->required   = NO;
-    opt1->description= _("Font name (see also -l flag) or path to TrueType font (including file name)");
+#ifdef	USE_FREETYPECAP
+    opt1->description= _("Font name (not supported interactively, see also -l flag) or path to TrueType font (including file name)");
+#else
+    opt1->description= _("Path to TrueType font (including file name)");
+#endif
     opt1->gisprompt  = "old_file,,TrueType font";
 
     opt2 = G_define_option() ;
