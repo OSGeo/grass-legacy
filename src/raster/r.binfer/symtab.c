@@ -16,7 +16,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include "symtab.h"
-#include "gram.h"
+#include "y.tab.h"
 #include "local_proto.h"
 
 extern struct symtab table;

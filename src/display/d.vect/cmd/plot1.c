@@ -1,8 +1,16 @@
-/* plot1() - Level One vector reading */
+/* plot1() - Level One vector reading 
+*
+* Michael Shapiro,
+* U.S. Army Construction Engineering
+* Research Laboratory
+*
+*/
 
 #include "gis.h"
 #include "Vect.h"
 #include "display.h"
+
+extern int quiet;
 
 int plot1 (
     char *name,char *mapset,
@@ -12,7 +20,6 @@ int plot1 (
     struct Map_info Map;
     double *x, *y;
 
-    /*fd = open_vect (name, mapset);*/
     Vect_set_open_level (1);
     if (1 > Vect_open_old (&Map, name, mapset))
 	G_fatal_error ("Failed opening vector file");
@@ -21,8 +28,8 @@ int plot1 (
 	D_get_d_north(), D_get_d_south(), D_get_d_west(), D_get_d_east(),
 	D_move_abs, D_cont_abs);
 
-
-    fprintf (stdout,"Plotting ... "); fflush (stdout);
+	if (!quiet)
+			fprintf (stdout,"Plotting ... "); fflush (stdout);
     while (1)
     {
         switch (Vect_read_next_line (&Map, Points))
@@ -32,7 +39,8 @@ int plot1 (
 	    fprintf (stderr, "\nERROR: vector file [%s] - can't read\n", name);
 	    return -1;
 	case -2: /* EOF */
-	    fprintf (stdout,"Done\n");
+		if (!quiet)
+			fprintf (stdout,"Done\n");
 	    Vect_close (&Map);
 	    return  0;
 	}

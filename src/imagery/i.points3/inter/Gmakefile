@@ -2,18 +2,13 @@
 #### 	i.points3 (inter) 	
 ####
 
-PGR  	= i.points3
-
-HOME 	= $(BIN_MAIN_INTER)
-
-all:	$(HOME)/$(PGR)
+PGM  	= i.points3
 
 ####	required - suplimental imagery libary 
-IMAGERY_SUBINC = ../../image3
-IMAGERYLIB_SUP  = ../../image3/libimage_sup.a
+IMAGERY_SUBINC = $(SRC)/libes/image3
 
 ####	object files
-LIST	= \
+LIST	=\
 	anal_fid.o\
 	anal_control.o\
 	camera.o\
@@ -44,7 +39,6 @@ LIST	= \
 	plot_vect.o\
 	read_elev.o\
 	target.o\
-	text_tty.o\
 	transform.o\
 	view_config.o\
 	view_clear.o\
@@ -58,29 +52,28 @@ LIST	= \
 	zoom_pnt.o
 
 
-####	object dependencies
-$(LIST): globals.h defs.h camera_ref.h
-
 
 ####	libaries to link
-LIBES =  $(IMAGERYLIB) $(IMAGERYLIB_SUP) $(D_LIB)\
-	 $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) \
-	 $(GPROJLIB) $(LIBTRANS) $(PROJLIB) \
-	 $(GISLIB) $(VASK) $(XDRLIB)
+LIBES =  $(IMAGERYLIB) $(IMAGESUPLIB) $(D_LIB)\
+	 $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB)\
+	 $(GPROJLIB) $(GISLIB) $(VASKLIB)
 
-####	libarary dependencies
-$(LIBES): 			# in case of lib changes
+DEPLIBS= $(DEPIMAGERYLIB) $(DEPIMAGESUPLIB) $(DEPD_LIB)\
+	 $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPVECTLIB)\
+	 $(DEPGPROJLIB) $(DEPGISLIB) $(DEPVASKLIB)
+
 
 ####   required compile flags
 ####   NOTE: probably needs -D_NO_PROTO for now
-EXTRA_CFLAGS = $(VECT_INCLUDE) -I$(IMAGERY_SUBINC)
-
-####	any required link flags
-#EXTRA_LDFLAGS =  
+EXTRA_CFLAGS = -I$(IMAGERY_SUBINC)
 
 
 ####	the rules
-$(HOME)/$(PGR): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB)
+$(BIN_INTER)/$(PGM): $(LIST) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
+####	object dependencies
+$(LIST): globals.h defs.h camera_ref.h
 
+####	libarary dependencies
+$(DEPLIBS): 			# in case of lib changes

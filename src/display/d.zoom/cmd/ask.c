@@ -2,8 +2,23 @@
 #include "display.h"
 #include "local_proto.h"
 
-int yes (char *prompt)
+#define NEW_YES
+
+int
+yes (char *prompt)
 {
+#ifdef NEW_YES
+    int x, y, b;
+
+    fprintf(stderr, "%s\n", prompt);
+    fprintf(stderr, "Left:   Yes\n");
+    fprintf(stderr, "Middle: No\n");
+    fprintf(stderr, "Right:  No\n\n");
+
+    R_get_location_with_pointer(&x, &y, &b);
+
+    return(1==b);
+#else
     char *text[4];
 
     text[0] = prompt;
@@ -12,9 +27,11 @@ int yes (char *prompt)
     text[3] = (char *)NULL;
 
     return (1==ask(text));
+#endif
 }
 
-int just_click (char *msg)
+int
+just_click (char *msg)
 {
     char *text[3];
 
@@ -37,15 +54,3 @@ ask (char *text[])
 	0,0,3,text));
 }
 
-int 
-ask_rotate (void)
-{
-    char *text[4];
-
-    text[0] = "Select the type of \"zoom\"";
-    text[1] = "Zoom using a rubberband box";
-    text[2] = "Rotate the world by selecting center longitude";
-    text[3] = (char *) NULL;
-
-    return (2==ask(text));
-}

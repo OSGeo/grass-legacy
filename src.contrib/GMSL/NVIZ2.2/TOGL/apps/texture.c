@@ -294,7 +294,7 @@ int xrot_cb( struct Togl *togl, int argc, char *argv[] )
       return TCL_ERROR;
    }
 
-   xrot = atof( argv[2] );
+   xrot = (float)atof( argv[2] );
 
    Togl_PostRedisplay(togl);
 
@@ -307,6 +307,7 @@ int xrot_cb( struct Togl *togl, int argc, char *argv[] )
 
 int yrot_cb( struct Togl *togl, int argc, char *argv[] )
 {
+   double atof();
    Tcl_Interp *interp = Togl_Interp(togl);
 
    /* error checking */
@@ -317,7 +318,7 @@ int yrot_cb( struct Togl *togl, int argc, char *argv[] )
       return TCL_ERROR;
    }
 
-   yrot = atof( argv[2] );
+   yrot = (float)atof( argv[2] );
 
    Togl_PostRedisplay(togl);
 

@@ -35,6 +35,8 @@ int ask_newfiles_in_mapset (FILE *fd, char *mapset, struct Ref *ref, char *group
     char title[80];
     char instructions[80];
     char mp[80];
+    char next[20];
+    char next_line[80];
     int row, col, width;
 
     nfiles = NROWS * NCOLS;
@@ -71,6 +73,13 @@ int ask_newfiles_in_mapset (FILE *fd, char *mapset, struct Ref *ref, char *group
 		strcat (mp, "  (next mapset on next page)");
 	}
 
+	*next = 0;
+	*next_line = 0;
+	sprintf (next, "%s","___");
+	sprintf (next_line, "%*s%*s ", 1, "Enter 'end' to end the add query mode: ",3,"");
+	V_line (19, next_line);
+	V_ques (next, 's', 19, 39, 3);
+
 	V_intrpt_ok();
 	if(!V_call())
 	    return 0;
@@ -78,6 +87,11 @@ int ask_newfiles_in_mapset (FILE *fd, char *mapset, struct Ref *ref, char *group
 	for (i=0; i < nfiles; i++)
 	    if (use[i][0])
 		I_add_file_to_group_ref (name[i], mapset, ref);
+
+	if (strcmp (next, "end") == 0)
+	  break;
+	else
+	  *next = 0;
     }
     return 1;
 }

@@ -1,6 +1,0 @@
-This is a scrolled list, containing the names of the available mapsets
-within the current location, which is indicated by the selection in
-the location list just to the left.  If there is no location selected
-in that list, then this list is empty.  Click on a mapset here to
-choose it as your current mapset.  This list contains only the mapsets
-which you are allowed to use and modify.

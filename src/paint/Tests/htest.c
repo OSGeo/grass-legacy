@@ -30,7 +30,6 @@ int main (int argc, char *argv[])
     int repeat;
     unsigned char BLACK;
 
-
     G_gisinit(argv[0]);
     Pconnect();
     Plock();

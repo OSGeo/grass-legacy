@@ -4,6 +4,7 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include "G3d.h"
 #include "G3d_intern.h"
 
 /*---------------------------------------------------------------------------*/
@@ -222,10 +223,12 @@ G3d_openCellNew (name, typeIntern, cache, region)
 
   /* no need to write trailing zeros */
   if ((typeIntern == G3D_FLOAT) && (g3d_file_type == G3D_DOUBLE)) 
+  {
     if (precision == -1) 
       precision = 23;
     else
       precision = G3D_MIN (precision, 23);
+  }
 
   if (compression == G3D_NO_COMPRESSION) precision = G3D_MAX_PRECISION;
   if (compression == G3D_COMPRESSION) map->useXdr = G3D_USE_XDR;

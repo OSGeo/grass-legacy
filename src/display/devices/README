@@ -1,32 +1,11 @@
+A major cleanup is ongoing (4/2001)....
 
-Markus,
+The last version including fifos, ipc and sockets
+has been tagged as:
+  cvs rtag devices_cleanup_20000420 grass
 
-XDRIVER is now actually XDRIVER_24 and the libes are done.
+if anyone wants to extract the old version.
 
-
-This directory contains the source code for  the  GRASS  graphics
-drivers.  In  most  cases  the  drivers merely translates generic
-GRASS graphics calls into calls understood by local  hardware  or
-software.
-
-Contents:
-   README        this file you are reading now
-   Gmakefile     GRASS makefile which drives the compilation
-   lib           Code which provides the main body of the drivers
-   GENERIC       Documentation describing device dependent code in any driver
-   MASS          The MASSCOMP driver
-   SUN           The SUN color driver for SUN windows
-   4105          For Tektronix 4105
-   CELL          For creating images in a GRASS raster file
-   IGRAPH        Intergraph driver
-   IRIS          IRIS Personal Workstation - Silicon Graphics
-   XDRIVER       X-windows driver
-   monitorcap    generic monitorcap file installed in $GISBASE/etc
-
-To install a driver on your system, simply run the gmake  command
-on  that directory (after you have run GISGEN to build the entire
-system).
-
-After you have compiled the driver, you will need to  tell  GRASS
-about  it.  To  do  this,  edit the $GISBASE/etc/monitorcap file
-and add the driver to this file.
+ Markus Neteler
+ Glynn Clements <glynn.clements@virgin.net>                                      
+ Sat Apr 21 11:23:24 CEST 2001

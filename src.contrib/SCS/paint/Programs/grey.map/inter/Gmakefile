@@ -1,7 +1,7 @@
 PGM=grey.map
 INTERFACE = $(SRC)/paint/Interface/applib/lib.a
-ICONLIB = $(LIBDIR)/libicon.a
-LIBES = $(ICONLIB) $(GISLIB) $(TERMLIB) $(INTERFACE) $(DATETIMELIB) $(MATHLIB)
+LIBES = $(ICONLIB) $(GISLIB) $(TERMLIB) $(INTERFACE) $(DATETIMELIB) $(XDRLIB) $(MATHLIB)
+DEPLIBS= $(DEPICONLIB) $(DEPGISLIB) $(INTERFACE) $(DEPDATETIMELIB)
 
 LIST = main.o\
 	Pmap.o\
@@ -25,9 +25,8 @@ LIST = main.o\
 	scan_scale.o\
 	yes.o
 
-$(BIN_CONTRIB_INTER)/$(PGM): $(LIST)
+$(BIN_INTER)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) $(LIST) $(LIBES) -o $@
 
 $(INTERFACE): #
-$(ICONLIB): #
-$(GISLIB): #
+$(DEPLIBS): #

@@ -1,5 +1,0 @@
-
-@man("d.histogram") - Plots a histogram in the form of a pie or bar chart
-for a user-specified raster file.
-
-(GRASS Display Program)

@@ -25,8 +25,11 @@
 $Header$
 
 $Log$
-Revision 1.1  1999-12-29 15:12:33  markus
-Initial revision
+Revision 1.2  2000-02-04 08:23:05  markus
+updated
+
+Revision 1.1.1.1  1999/12/29 15:12:36  markus
+initial CVS import
 
  * Revision 1.9  1992/10/30  18:36:52  koziol
  * Fixed casts in a bunch of functions to make the SGI ANSI compiler happy

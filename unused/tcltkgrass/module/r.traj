@@ -1,0 +1,1204 @@
+
+
+proc get_feature { type } {
+
+  set dir ""
+  case $type in {
+
+       {raster} {
+                      set dir "cell"
+                  }
+
+       {vector} {
+                      set dir "dig"
+                  }
+
+       {sites} {
+                      set dir "site_lists"
+                  }
+
+       {label} {
+                      set dir "paint/labels"
+                  }
+
+       {group} {
+                      set dir "group"
+                  }
+
+       {icon} {
+                      set dir "paint/icons"
+                  }
+
+       {region} {
+                      set dir "windows"
+                  }
+
+       {dlg} {
+                      set dir "dlg"
+                  }
+
+       {dlg_ascii} {
+                      set dir "dlg_ascii"
+                  }
+
+  }
+  return $dir
+
+}
+
+
+
+
+proc put_list { the_listbox the_list } {
+
+  $the_listbox delete 0 end
+  foreach i $the_list {
+      $the_listbox insert end $i
+  }
+}
+
+
+
+
+proc get_list { path } {
+  set list ""
+  if { [file isdirectory $path] != 1 } {
+     return $list
+  }
+  set current_dir [exec pwd]
+  cd $path
+  foreach i [exec ls -a [exec pwd]] {
+     if { [string compare $i "."] != 0 && [string compare $i ".."] != 0 } {
+        lappend list $i
+     }
+  }
+  cd $current_dir
+  return $list
+}
+
+
+
+
+proc mapset_listbox { type } {
+
+  global database
+  global location
+  global mapset
+  global feature
+
+  global file_name
+  set file_name ""
+
+  toplevel .mapset
+
+  wm geometry .mapset +100+100
+  wm title .mapset {spatial layer}
+
+  set feature [get_feature $type]
+
+  global mapset_list
+
+  frame .mapset.frame0 \
+    -borderwidth {2} \
+    -relief {flat}
+
+  label .mapset.frame0.label \
+    -anchor {w} \
+    -text "Mapset"
+
+  entry .mapset.frame0.mapset \
+    -relief {sunken} \
+   -width 20
+
+  menubutton .mapset.frame0.mapsets \
+    -bitmap {@../bitmap/arrow} \
+    -menu {.mapset.frame0.mapsets.pulldown}
+
+  menu .mapset.frame0.mapsets.pulldown
+
+  set mapset_list [get_list "$database/$location"]
+  foreach i $mapset_list {
+      .mapset.frame0.mapsets.pulldown add command \
+          -label $i \
+          -command {
+                     set mapset [lindex $mapset_list \
+                               [.mapset.frame0.mapsets.pulldown index active] ]
+                     .mapset.frame0.mapset delete 0 end
+                     .mapset.frame0.mapset insert 0 $mapset
+                     put_list .mapset.frame1.listbox \
+                         [get_list "$database/$location/$mapset/$feature"]
+                     set file_name ""
+                   }
+  }
+
+  pack append .mapset.frame0 \
+    .mapset.frame0.label { left } \
+    .mapset.frame0.mapset { left } \
+    .mapset.frame0.mapsets { right }
+
+  frame .mapset.frame1 \
+    -borderwidth {2} \
+    -relief {raised}
+
+  listbox .mapset.frame1.listbox \
+    -relief {sunken} \
+    -geometry 20x10 \
+    -yscrollcommand {.mapset.frame1.vscrollbar set}
+
+  scrollbar .mapset.frame1.vscrollbar \
+    -command {.mapset.frame1.listbox yview}
+
+  pack append .mapset.frame1 \
+    .mapset.frame1.listbox { left expand fill } \
+    .mapset.frame1.vscrollbar { right fill }
+
+  frame .mapset.frame2 \
+    -borderwidth {2}
+
+  frame .mapset.frame2.frame
+
+  button .mapset.frame2.frame.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { if { $file_name != "" } {
+                   destroy .mapset
+               }
+              }
+
+  button .mapset.frame2.frame.cancel \
+    -text Cancel \
+    -relief raised \
+    -padx 10 \
+    -command { set file_name ""
+               destroy .mapset
+             }
+
+  pack append .mapset.frame2.frame \
+    .mapset.frame2.frame.ok { left expand } \
+    .mapset.frame2.frame.cancel { right expand }
+
+  pack append .mapset.frame2 \
+    .mapset.frame2.frame { bottom frame center fill }
+
+  pack append .mapset \
+    .mapset.frame0 { top expand fill } \
+    .mapset.frame1 { top expand fill } \
+    .mapset.frame2 { bottom expand fill }
+
+  bind .mapset.frame1.listbox <Button-1> {
+        %W select from [%W nearest %y]
+        %W select to [%W nearest %y]
+	    set file_name [%W get [%W nearest %y]]
+  }
+
+  bind .mapset.frame1.listbox <ButtonRelease-1> {
+        %W select from [%W nearest %y]
+        %W select to [%W nearest %y]
+	    set file_name [%W get [%W nearest %y]]
+  }
+
+  bind .mapset.frame1.listbox <Double-ButtonPress-1> {
+        %W select from [%W nearest %y]
+        %W select to [%W nearest %y]
+	    set file_name [%W get [%W nearest %y]]
+  }
+
+  .mapset.frame0.mapset delete 0 end
+  .mapset.frame0.mapset insert 0 $mapset
+
+  .mapset.frame1.listbox delete 0 end
+  put_list .mapset.frame1.listbox \
+             [get_list "$database/$location/$mapset/$feature"]
+
+  grab set .mapset
+  tkwait window .mapset
+
+  return $file_name
+
+}
+
+
+
+
+proc weapon { } {
+
+
+  toplevel .weapon
+
+  wm geometry .weapon +100+20
+  wm title .weapon "weapon"
+
+
+  global wname
+
+
+  frame .weapon.frame0 \
+    -relief {flat}
+
+  label .weapon.frame0.label \
+     -anchor {w} \
+     -text {Type of weapon used for firing:} \
+     -padx {2}
+
+  listbox .weapon.frame0.listbox \
+     -relief sunken \
+     -yscrollcommand {.weapon.frame0.vscrollbar set}
+
+  scrollbar .weapon.frame0.vscrollbar \
+     -command {.weapon.frame0.listbox yview}
+
+
+  pack append .weapon.frame0 \
+    .weapon.frame0.label { top fillx } \
+    .weapon.frame0.listbox { left expand fill } \
+    .weapon.frame0.vscrollbar { right fill }
+
+  bind .weapon.frame0.listbox <Button-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set wname [%W get [%W nearest %y]]
+  }
+
+  bind .weapon.frame0.listbox <ButtonRelease-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set wname [%W get [%W nearest %y]]
+  }
+
+  bind .weapon.frame0.listbox <Double-ButtonPress-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set wname [%W get [%W nearest %y]]
+  }
+
+  .weapon.frame0.listbox delete 0 end
+  foreach i {M48 M1 M101 M102} {
+      .weapon.frame0.listbox insert 0 $i
+  }
+
+  global value
+
+
+  frame .weapon.frame1 \
+    -relief {flat}
+
+  label .weapon.frame1.label \
+    -anchor {w} \
+    -text {Maximum weapon muzzle elevation:} \
+    -padx {2}
+
+  scrollbar .weapon.frame1.hscrollbar \
+    -command {.weapon.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .weapon.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.weapon.frame1.hscrollbar set}
+
+  pack append .weapon.frame1 \
+    .weapon.frame1.label { top fillx } \
+    .weapon.frame1.entry { top fillx } \
+    .weapon.frame1.hscrollbar { bottom fillx }
+
+  .weapon.frame1.entry configure -state normal
+
+  bind .weapon.frame1.entry <Return> {
+       set value [%W get] }
+
+
+
+  frame .weapon.frame2 \
+     -borderwidth {2}
+
+  button .weapon.frame2.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set value [.weapon.frame1.entry get]
+                 destroy .weapon }
+
+  button .weapon.frame2.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set value ""
+                 destroy .weapon }
+
+  pack append .weapon.frame2 \
+    .weapon.frame2.ok { left expand } \
+    .weapon.frame2.cancel { right expand }
+
+
+bind .weapon.frame0.listbox <Return> {
+     focus .weapon.frame1.entry
+}
+
+bind .weapon.frame1.entry <Return> {
+     focus .weapon.frame0.listbox
+}
+
+
+  pack append .weapon \
+    .weapon.frame0 { top expand fill } \
+    .weapon.frame1 { top expand fill } \
+    .weapon.frame2 { bottom expand fill }
+
+
+
+  grab set .weapon
+  tkwait window .weapon
+
+}
+
+
+
+
+proc ammunition { } {
+
+
+  toplevel .ammunition
+
+  wm geometry .ammunition +100+20
+  wm title .ammunition "ammunition"
+
+
+  global aname
+
+
+  frame .ammunition.frame0 \
+    -relief {flat}
+
+  label .ammunition.frame0.label \
+     -anchor {w} \
+     -text {Type of ammunition:} \
+     -padx {2}
+
+  listbox .ammunition.frame0.listbox \
+     -relief sunken \
+     -yscrollcommand {.ammunition.frame0.vscrollbar set}
+
+  scrollbar .ammunition.frame0.vscrollbar \
+     -command {.ammunition.frame0.listbox yview}
+
+
+  pack append .ammunition.frame0 \
+    .ammunition.frame0.label { top fillx } \
+    .ammunition.frame0.listbox { left expand fill } \
+    .ammunition.frame0.vscrollbar { right fill }
+
+  bind .ammunition.frame0.listbox <Button-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set aname [%W get [%W nearest %y]]
+  }
+
+  bind .ammunition.frame0.listbox <ButtonRelease-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set aname [%W get [%W nearest %y]]
+  }
+
+  bind .ammunition.frame0.listbox <Double-ButtonPress-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set aname [%W get [%W nearest %y]]
+  }
+
+  .ammunition.frame0.listbox delete 0 end
+  foreach i {M392 M392A2 M728 M735 M735A1 M774 M494 M456 M416 M416 M467 M490 M724 M724A1 M737 M393} {
+      .ammunition.frame0.listbox insert 0 $i
+  }
+
+
+  frame .ammunition.frame1 \
+     -borderwidth {2}
+
+  button .ammunition.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .ammunition }
+
+  button .ammunition.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .ammunition }
+
+  pack append .ammunition.frame1 \
+    .ammunition.frame1.ok { left expand } \
+    .ammunition.frame1.cancel { right expand }
+
+
+
+  pack append .ammunition \
+    .ammunition.frame0 { top expand fill } \
+    .ammunition.frame1 { bottom expand fill }
+
+
+
+  grab set .ammunition
+  tkwait window .ammunition
+
+}
+
+
+
+
+proc firing_point { } {
+
+
+  toplevel .firing_point
+
+  wm geometry .firing_point +100+20
+  wm title .firing_point "firing_point"
+
+
+  global x
+
+
+  frame .firing_point.frame0 \
+    -relief {flat}
+
+  label .firing_point.frame0.label \
+    -anchor {w} \
+    -text {Firing point x coordinate:} \
+    -padx {2}
+
+  scrollbar .firing_point.frame0.hscrollbar \
+    -command {.firing_point.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .firing_point.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.firing_point.frame0.hscrollbar set}
+
+  pack append .firing_point.frame0 \
+    .firing_point.frame0.label { top fillx } \
+    .firing_point.frame0.entry { top fillx } \
+    .firing_point.frame0.hscrollbar { bottom fillx }
+
+  .firing_point.frame0.entry configure -state normal
+
+  bind .firing_point.frame0.entry <Return> {
+       set x [%W get] }
+
+
+  global y
+
+
+  frame .firing_point.frame1 \
+    -relief {flat}
+
+  label .firing_point.frame1.label \
+    -anchor {w} \
+    -text {Firing point y coordinate:} \
+    -padx {2}
+
+  scrollbar .firing_point.frame1.hscrollbar \
+    -command {.firing_point.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .firing_point.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.firing_point.frame1.hscrollbar set}
+
+  pack append .firing_point.frame1 \
+    .firing_point.frame1.label { top fillx } \
+    .firing_point.frame1.entry { top fillx } \
+    .firing_point.frame1.hscrollbar { bottom fillx }
+
+  .firing_point.frame1.entry configure -state normal
+
+  bind .firing_point.frame1.entry <Return> {
+       set y [%W get] }
+
+
+
+  frame .firing_point.frame2 \
+     -borderwidth {2}
+
+  button .firing_point.frame2.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set x [.firing_point.frame0.entry get]
+                  set y [.firing_point.frame1.entry get]
+                 destroy .firing_point }
+
+  button .firing_point.frame2.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set x ""
+                  set y ""
+                 destroy .firing_point }
+
+  pack append .firing_point.frame2 \
+    .firing_point.frame2.ok { left expand } \
+    .firing_point.frame2.cancel { right expand }
+
+
+bind .firing_point.frame0.entry <Return> {
+     focus .firing_point.frame1.entry
+}
+
+bind .firing_point.frame1.entry <Return> {
+     focus .firing_point.frame0.entry
+}
+
+
+  pack append .firing_point \
+    .firing_point.frame0 { top expand fill } \
+    .firing_point.frame1 { top expand fill } \
+    .firing_point.frame2 { bottom expand fill }
+
+
+
+  grab set .firing_point
+  tkwait window .firing_point
+
+}
+
+
+
+
+proc firing_azimuth { } {
+
+
+  toplevel .firing_azimuth
+
+  wm geometry .firing_azimuth +100+20
+  wm title .firing_azimuth "firing_azimuth"
+
+
+  global lname
+
+
+  frame .firing_azimuth.frame0 \
+    -relief {flat}
+
+  scale .firing_azimuth.frame0.scale \
+     -label "Far left edge of allowable firing azimuth:" \
+     -from 0 \
+     -to 90 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .firing_azimuth.frame0 \
+    .firing_azimuth.frame0.scale { left expand fill }
+
+  .firing_azimuth.frame0.scale set 0
+
+  global lname
+
+
+  frame .firing_azimuth.frame1 \
+    -relief {flat}
+
+  label .firing_azimuth.frame1.label \
+    -anchor {w} \
+    -text {North/South} \
+    -padx {2}
+
+  scrollbar .firing_azimuth.frame1.hscrollbar \
+    -command {.firing_azimuth.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .firing_azimuth.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.firing_azimuth.frame1.hscrollbar set}
+
+  pack append .firing_azimuth.frame1 \
+    .firing_azimuth.frame1.label { top fillx } \
+    .firing_azimuth.frame1.entry { top fillx } \
+    .firing_azimuth.frame1.hscrollbar { bottom fillx }
+
+  .firing_azimuth.frame1.entry configure -state normal
+
+  bind .firing_azimuth.frame1.entry <Return> {
+       set lname [%W get] }
+
+
+  global lew
+
+
+  frame .firing_azimuth.frame2 \
+    -relief {flat}
+
+  label .firing_azimuth.frame2.label \
+    -anchor {w} \
+    -text {East/West} \
+    -padx {2}
+
+  scrollbar .firing_azimuth.frame2.hscrollbar \
+    -command {.firing_azimuth.frame2.entry view} \
+    -orient {horizontal}
+
+  entry .firing_azimuth.frame2.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.firing_azimuth.frame2.hscrollbar set}
+
+  pack append .firing_azimuth.frame2 \
+    .firing_azimuth.frame2.label { top fillx } \
+    .firing_azimuth.frame2.entry { top fillx } \
+    .firing_azimuth.frame2.hscrollbar { bottom fillx }
+
+  .firing_azimuth.frame2.entry configure -state normal
+
+  bind .firing_azimuth.frame2.entry <Return> {
+       set lew [%W get] }
+
+
+  global rname
+
+
+  frame .firing_azimuth.frame3 \
+    -relief {flat}
+
+  scale .firing_azimuth.frame3.scale \
+     -label "Far right edge of allowable firing azimuth:" \
+     -from 0 \
+     -to 90 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .firing_azimuth.frame3 \
+    .firing_azimuth.frame3.scale { left expand fill }
+
+  .firing_azimuth.frame3.scale set 0
+
+  global rns
+
+
+  frame .firing_azimuth.frame4 \
+    -relief {flat}
+
+  label .firing_azimuth.frame4.label \
+    -anchor {w} \
+    -text {North/South} \
+    -padx {2}
+
+  scrollbar .firing_azimuth.frame4.hscrollbar \
+    -command {.firing_azimuth.frame4.entry view} \
+    -orient {horizontal}
+
+  entry .firing_azimuth.frame4.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.firing_azimuth.frame4.hscrollbar set}
+
+  pack append .firing_azimuth.frame4 \
+    .firing_azimuth.frame4.label { top fillx } \
+    .firing_azimuth.frame4.entry { top fillx } \
+    .firing_azimuth.frame4.hscrollbar { bottom fillx }
+
+  .firing_azimuth.frame4.entry configure -state normal
+
+  bind .firing_azimuth.frame4.entry <Return> {
+       set rns [%W get] }
+
+
+  global rew
+
+
+  frame .firing_azimuth.frame5 \
+    -relief {flat}
+
+  label .firing_azimuth.frame5.label \
+    -anchor {w} \
+    -text {East/West} \
+    -padx {2}
+
+  scrollbar .firing_azimuth.frame5.hscrollbar \
+    -command {.firing_azimuth.frame5.entry view} \
+    -orient {horizontal}
+
+  entry .firing_azimuth.frame5.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.firing_azimuth.frame5.hscrollbar set}
+
+  pack append .firing_azimuth.frame5 \
+    .firing_azimuth.frame5.label { top fillx } \
+    .firing_azimuth.frame5.entry { top fillx } \
+    .firing_azimuth.frame5.hscrollbar { bottom fillx }
+
+  .firing_azimuth.frame5.entry configure -state normal
+
+  bind .firing_azimuth.frame5.entry <Return> {
+       set rew [%W get] }
+
+
+
+  frame .firing_azimuth.frame6 \
+     -borderwidth {2}
+
+  button .firing_azimuth.frame6.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set lname [.firing_azimuth.frame0.scale get]
+                  set lname [.firing_azimuth.frame1.entry get]
+                  set lew [.firing_azimuth.frame2.entry get]
+                  set rname [.firing_azimuth.frame3.scale get]
+                  set rns [.firing_azimuth.frame4.entry get]
+                  set rew [.firing_azimuth.frame5.entry get]
+                 destroy .firing_azimuth }
+
+  button .firing_azimuth.frame6.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set lname ""
+                  set lname ""
+                  set lew ""
+                  set rname ""
+                  set rns ""
+                  set rew ""
+                 destroy .firing_azimuth }
+
+  pack append .firing_azimuth.frame6 \
+    .firing_azimuth.frame6.ok { left expand } \
+    .firing_azimuth.frame6.cancel { right expand }
+
+
+bind .firing_azimuth.frame0.scale <Return> {
+     focus .firing_azimuth.frame1.entry
+}
+
+bind .firing_azimuth.frame1.entry <Return> {
+     focus .firing_azimuth.frame2.entry
+}
+
+bind .firing_azimuth.frame2.entry <Return> {
+     focus .firing_azimuth.frame3.scale
+}
+
+bind .firing_azimuth.frame3.scale <Return> {
+     focus .firing_azimuth.frame4.entry
+}
+
+bind .firing_azimuth.frame4.entry <Return> {
+     focus .firing_azimuth.frame5.entry
+}
+
+bind .firing_azimuth.frame5.entry <Return> {
+     focus .firing_azimuth.frame0.scale
+}
+
+
+  pack append .firing_azimuth \
+    .firing_azimuth.frame0 { top expand fill } \
+    .firing_azimuth.frame1 { top expand fill } \
+    .firing_azimuth.frame2 { top expand fill } \
+    .firing_azimuth.frame3 { top expand fill } \
+    .firing_azimuth.frame4 { top expand fill } \
+    .firing_azimuth.frame5 { top expand fill } \
+    .firing_azimuth.frame6 { bottom expand fill }
+
+
+
+  grab set .firing_azimuth
+  tkwait window .firing_azimuth
+
+}
+
+
+
+
+proc put_command { } {
+
+
+  global iname
+  global oname
+  global wname
+  global x
+  global y
+  global value
+  global aname
+  global lns
+  global lname
+  global lew
+  global rns
+  global rname
+  global rew
+
+
+  set cmd ""
+
+  if {  $iname != "" } {
+         set cmd "$cmd input=$iname"
+  }
+
+  if {  $oname != "" } {
+         set cmd "$cmd output=$oname"
+  }
+
+  if {  $wname != "" } {
+         set cmd "$cmd weapon=$wname"
+  }
+
+  if {  $x != "" || $y != "" } {
+         set cmd "$cmd coordinate=$x,$y"
+  }
+
+  if {  $value != "" } {
+         set cmd "$cmd elevation=$value"
+  }
+
+  if {  $aname != "" } {
+         set cmd "$cmd ammunition=$aname"
+  }
+
+  if {  $lns != "" || $lname != "" || $lew != "" } {
+         set cmd "$cmd left.azimuth=$lns,$lname,$lew"
+  }
+
+  if {  $rns != "" || $rname != "" || $rew != "" } {
+         set cmd "$cmd right.azimuth=$rns,$rname,$rew"
+  }
+
+  if { $cmd != "" } {
+     set cmd "r.traj $cmd"
+  }
+}
+
+
+
+
+proc set_command_entry { } {
+
+  .cmd.frame0.entry configure -state normal
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 [put_command]
+  .cmd.frame0.entry configure -state disabled
+
+}
+
+
+proc proc_r.traj { } {
+
+
+  global iname
+  global oname
+  global wname
+  global x
+  global y
+  global value
+  global aname
+  global lns
+  global lname
+  global lew
+  global rns
+  global rname
+  global rew
+
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "Model Ballistic Trajectory"
+
+
+  frame .cmd.frame0 \
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame0.hscrollbar set}
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {r.traj}
+
+  .cmd.frame0.entry configure -state disabled
+
+
+
+  frame .cmd.frame1 \
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame1.hscrollbar set}
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {r.traj generates a raster map layer showing cells that can be hit from a firing point by shells from a user-specified weapon.}
+
+  .cmd.frame1.entry configure -state disabled
+
+
+
+  frame .cmd.frame2 \
+    -relief {flat}
+
+  label .cmd.frame2.label \
+    -anchor {w} \
+    -text {Name of the elevation raster map:} \
+    -padx {2}
+
+  scrollbar .cmd.frame2.hscrollbar \
+    -command {.cmd.frame2.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame2.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame2.hscrollbar set}
+
+  button .cmd.frame2.button \
+    -relief {raised} \
+    -anchor {n} \
+    -text {raster} \
+    -command { set file [mapset_listbox raster]
+                if { $file != "" } {
+                   set iname $file
+                   .cmd.frame2.entry delete 0 end
+                   .cmd.frame2.entry insert 0 $file
+                   set_command_entry
+                }
+             }
+
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.label { top fillx } \
+    .cmd.frame2.button { right frame n } \
+    .cmd.frame2.entry { top fill } \
+    .cmd.frame2.hscrollbar { top fillx }
+
+
+
+  bind .cmd.frame2.entry <Return> {
+       set iname [%W get] }
+
+
+  frame .cmd.frame3 \
+    -relief {flat}
+
+  label .cmd.frame3.label \
+    -anchor {w} \
+    -text {Name of the new raster map containing the results:} \
+    -padx {2}
+
+  scrollbar .cmd.frame3.hscrollbar \
+    -command {.cmd.frame3.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame3.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame3.hscrollbar set}
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.label { top fillx } \
+    .cmd.frame3.entry { top fillx } \
+    .cmd.frame3.hscrollbar { bottom fillx }
+
+  .cmd.frame3.entry configure -state normal
+
+  bind .cmd.frame3.entry <Return> {
+       set oname [%W get] }
+
+
+
+  frame .cmd.frame4 \
+    -relief {flat}
+
+  label .cmd.frame4.label \
+    -anchor {w} \
+    -text {Other options available:} \
+    -padx {2}
+
+  button .cmd.frame4.button0 \
+     -text "weapon ..." \
+     -relief raised \
+     -padx 10 \
+     -command "weapon
+                set_command_entry"
+
+
+  button .cmd.frame4.button1 \
+     -text "ammunition ..." \
+     -relief raised \
+     -padx 10 \
+     -command "ammunition
+                set_command_entry"
+
+
+  button .cmd.frame4.button2 \
+     -text "firing_point ..." \
+     -relief raised \
+     -padx 10 \
+     -command "firing_point
+                set_command_entry"
+
+
+  button .cmd.frame4.button3 \
+     -text "firing_azimuth ..." \
+     -relief raised \
+     -padx 10 \
+     -command "firing_azimuth
+                set_command_entry"
+
+
+  frame .cmd.frame5 \
+     -borderwidth {2}
+
+  button .cmd.frame5.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 
+		if {  $iname != "" && $oname != "" && $wname != "" && $x != "" && $y != "" && $value != "" && $aname != "" && $lns != "" && $lname != "" && $lew != "" && $rns != "" && $rname != "" && $rew != "" } {
+ 		set cmd [put_command]
+ 		if { $cmd != "" } {
+ 		   eval " exec xterm -title r.traj -geometry 50x5 -exec $cmd " 
+ 		   destroy .cmd
+ 		}
+ 	}
+ }
+
+  button .cmd.frame5.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { destroy .cmd }
+
+  pack append .cmd.frame5 \
+    .cmd.frame5.ok { left expand } \
+    .cmd.frame5.cancel { right expand }
+
+  pack append .cmd.frame4 \
+    .cmd.frame4.label { top fillx } \
+    .cmd.frame4.button0 { left } \
+    .cmd.frame4.button1 { left } \
+    .cmd.frame4.button2 { left } \
+    .cmd.frame4.button3  { left }
+
+
+
+  pack append .cmd \
+    .cmd.frame1 { top expand fill } \
+    .cmd.frame2 { top expand fill } \
+    .cmd.frame3 { top expand fill } \
+    .cmd.frame4 { top expand fill } \
+    .cmd.frame0 { top expand fill } \
+    .cmd.frame5 { bottom expand fill }
+
+
+bind .cmd.frame3.entry <KeyRelease> {
+		set oname [.cmd.frame3.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame3.entry <Return> {
+		set oname [.cmd.frame3.entry get]
+		set_command_entry
+}
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global iname
+set iname ""
+
+global oname
+set oname ""
+
+global wname
+set wname ""
+
+global x
+set x ""
+
+global y
+set y ""
+
+global value
+set value ""
+
+global aname
+set aname ""
+
+global lns
+set lns ""
+
+global lname
+set lname ""
+
+global lew
+set lew ""
+
+global rns
+set rns ""
+
+global rname
+set rname ""
+
+global rew
+set rew ""
+
+
+global database
+global location
+global mapset
+global feature
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_r.traj

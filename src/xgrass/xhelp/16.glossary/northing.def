@@ -1,5 +1,0 @@
-
-
-northing - The y value of a geographic coordinate.  Frequently used
-to describe the northernmost and southernmost boundaries of a map,
-especially when stated in @glossary("UTM",16.glossary/utm.def) coordinates.

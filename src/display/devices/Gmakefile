@@ -1,3 +1,6 @@
 all:
 	$(GMAKE) lib
-	$(GMAKE) monitorcap
+	$(GMAKE) XDRIVER
+	$(GMAKE) HTMLMAP
+	$(GMAKE) CELL
+	$(GMAKE) PNGdriver

@@ -1,3 +1,11 @@
+/*
+ * Copyright (C) 1994. James Darrell McCauley.  (darrell@mccauley-usa.com)
+ * 	                                        http://mccauley-usa.com/
+ *
+ * This program is free software under the GPL (>=v2)
+ * Read the file GPL.TXT coming with GRASS for details.
+ */
+
 #include <unistd.h>
 #include <math.h>
 #include "gis.h"
@@ -13,16 +21,16 @@ double bilinear (
   char *buf;
   int i, row, col;
   double grid[2][2], tmp1, tmp2;
-  CELL *arow = NULL, *brow = NULL;
+  DCELL *arow = NULL, *brow = NULL;
 
-  arow = G_allocate_cell_buf ();
-  brow = G_allocate_cell_buf ();
+  arow = G_allocate_d_raster_buf ();
+  brow = G_allocate_d_raster_buf ();
 
   /* convert northing and easting to row and col, resp */
   row = (int) G_northing_to_row (north, &window);
   col = (int) G_easting_to_col (east, &window);
 
-  if (G_get_map_row (fd, arow, row) < 0)
+  if (G_get_d_raster_row (fd, arow, row) < 0)
     G_fatal_error ("Problem reading cell file");
   /*
    * we need 2x2 pixels to do the interpolation. First we decide if we
@@ -31,7 +39,7 @@ double bilinear (
   if (row == 0)
   {
     /* arow is at top, must get row below */
-    if (G_get_map_row (fd, brow, row + 1) < 0)
+    if (G_get_d_raster_row (fd, brow, row + 1) < 0)
       G_fatal_error ("Problem reading cell file");
   }
   else if (row+1 == G_window_rows ())
@@ -41,7 +49,7 @@ double bilinear (
     for(i=0;i<G_window_cols();++i)
       brow[i]=arow[i];
     row--;
-    if (G_get_map_row (fd, arow, row) < 0)
+    if (G_get_d_raster_row (fd, arow, row) < 0)
       G_fatal_error ("Problem reading cell file");
   }
   else if (north - G_row_to_northing ((double) row + 0.5, &window) > 0)
@@ -51,13 +59,13 @@ double bilinear (
     for(i=0;i<G_window_cols();++i)
       brow[i]=arow[i];
     row--;
-    if (G_get_map_row (fd, arow, row) < 0)
+    if (G_get_d_raster_row (fd, arow, row) < 0)
       G_fatal_error ("Problem reading cell file");
   }
   else
   {
     /* north is below a horizontal centerline going through arow */
-    if (G_get_map_row (fd, brow, row+1) < 0)
+    if (G_get_d_raster_row (fd, brow, row+1) < 0)
       G_fatal_error ("Problem reading cell file");
   }
 
@@ -75,7 +83,7 @@ double bilinear (
    * arow[col], arow[col+1],
    * brow[col], brow[col+1]
    */
-
+ 
   if (usedesc)
   {
     G_squeeze(buf = G_get_cat (arow[col], &cats));
@@ -94,6 +102,16 @@ double bilinear (
     grid[1][0] = (double) brow[col];
     grid[1][1] = (double) brow[col + 1];
   }
+
+  /* Treat NULL's as zero */
+  if (G_is_d_null_value(&(arow[col])))
+    grid[0][0] = 0.0;
+  if (G_is_d_null_value(&(arow[col+1])))
+    grid[0][1] = 0.0;
+  if (G_is_d_null_value(&(brow[col])))
+    grid[1][0] = 0.0;
+  if (G_is_d_null_value(&(brow[col+1])))
+    grid[1][1] = 0.0;
 
   east=fabs(G_col_to_easting((double)col,&window)-east);
   while (east > window.ew_res)

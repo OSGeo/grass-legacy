@@ -1,0 +1,152 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.77 [en] (X11; U; Linux 2.4.9-21smp i686) [Netscape]">
+   <meta name="Author" content="Andreas C. Lange">
+   <title>GRASS GIS on Windows/Cygwin</title>
+</head>
+<body>
+
+<center>
+<h1>
+
+<hr SIZE=5 NOSHADE WIDTH="100%"><font face="Arial,Helvetica"><font size=+4>GRASS
+GIS on Windows/Cygwin</font></font></h1></center>
+
+<center><tt>$Date$</tt></center>
+
+<hr SIZE=5 NOSHADE WIDTH="100%">
+<p><font face="Arial,Helvetica">This directory contains the latest Win32
+binary distribution of GRASS 5.0 as a gzipped tape archives. We provide
+two versions:</font>
+<ul>
+<li>
+<font face="Arial,Helvetica">winGRASS with Xserver requirement: wingrass_xserver/</font></li>
+
+<li>
+<font face="Arial,Helvetica">winGRASS without Xserver requirement: wingrass_generic/
+(eventually more limited in functionality)</font></li>
+</ul>
+<font face="Arial,Helvetica">The script <tt>grass5install.sh</tt> should
+be run from within the cygwin shell to install the binary package. Please
+read the <a href="cygwin_grass50bininstall.html">detailed
+installation instruction</a>. If you want to compile yourself, you can
+get the latest GRASS source code from the <a href="http://grass.itc.it/grasscvs.html">CVS-Server</a>
+and follow the <a href="cygwin_grass50compile.html">compiling
+instruction</a>.</font>
+<p><font face="Arial,Helvetica">The port is compiled with the <a href="http://sources.redhat.com/cygwin/">Cygnus
+compiler</a> (gcc) from the same source code as the UNIX version. The source
+code port was mostly done by John Huddleston, USA.</font>
+<p><font face="Arial,Helvetica">GRASS on Windows is still experimental.
+Please expect some functionality missing or not working. Please assist
+us to identify and fix bugs and help us to improve the Windows port.</font>
+<br><font face="Arial,Helvetica">If you need a stable version of GRASS
+for production use consider installing Linux in an additional partition
+of your computer (dual boot setup) or dedicate a computer to linux. The
+Linux/Unix version of GRASS will be more stable and get better support
+due to the greater number of users.</font>
+<p><font face="Arial,Helvetica">For general information about running GRASS
+the first time <a href="http://grass.itc.it/firsttime.html">read here</a>.</font>
+<h2>
+<font face="Arial,Helvetica">Prerequisites:</font></h2>
+<font face="Arial,Helvetica">You need three major requirements to run GRASS
+5 on Windows:</font>
+<ul>
+<li>
+<font face="Arial,Helvetica">Windows NT 4.0 (SP3 or higher) or Windows
+2000 Professional with NTFS</font></li>
+
+<br><font face="Arial,Helvetica">(Windows 9x and Windows ME are unsupported),</font>
+<li>
+<font face="Arial,Helvetica"><a href="http://sources.redhat.com/cygwin/">Cygwin</a>
+installation (Cygnus tools for Windows),</font></li>
+
+<li>
+<font face="Arial,Helvetica">Only Xserver/winGRASS version:
+<a href="http://sources.redhat.com/cygwin/xfree/">X
+Window</a> Server.</font></li>
+</ul>
+
+<h2>
+<font face="Arial,Helvetica">Status of GRASS 5.0:</font></h2>
+
+<ul>
+<li>
+<u><font face="Arial,Helvetica">Working:</font></u></li>
+
+<ul>
+<li>
+<font face="Arial,Helvetica">GRASS libraries and modules, commandline input/output
+and data manipulation, shell scripting within GRASS.</font></li>
+
+<li>
+<font face="Arial,Helvetica">All the GRASS modules work from within the
+cygwin shell (UNIX shell).</font></li>
+
+<li>
+<font face="Arial,Helvetica">GRASS monitor</font></li>
+
+<li>
+<font face="Arial,Helvetica">R-interface</font></li>
+</ul>
+
+<li>
+<u><font face="Arial,Helvetica">Partly working/functional:</font></u></li>
+
+<ul>
+<li>
+<font face="Arial,Helvetica">Only Xserver/winGRASS version: tcltkgrass
+menu system</font></li>
+</ul>
+
+<li>
+<u><font face="Arial,Helvetica">Not working/untested:</font></u></li>
+
+<ul>
+<li>
+<font face="Arial,Helvetica">tcl/tk scripts (could be ported with minor
+effort)</font></li>
+
+<li>
+<font face="Arial,Helvetica">nviz (togl needs to be ported, must be linked
+with the cygwin wish) [src.contrib/GMSL/NVIZ2.2]</font></li>
+
+<li>
+<font face="Arial,Helvetica">GRID3D raster volume support (needs to be
+ported) [src.contrib/GMSL/g3d]</font></li>
+
+<li>
+<font face="Arial,Helvetica">PostgreSQL-Interface (not tested, probably
+working) [src.garden/grass.postgresql]</font></li>
+
+<li>
+<font face="Arial,Helvetica">ODBC-Interface (compiles with unixODBC-2.0.5,
+but not tested) [src/libes/dbmi/drivers/odbc]</font></li>
+
+<li>
+<font face="Arial,Helvetica">r.in.gdal (requires external gdal library,
+compiles, but produces stackdump) [src/raster/r.in.gdal]</font></li>
+
+<li>
+<font face="Arial,Helvetica">PNGdriver (problems compiling the gd library,
+not tested) [src/display/devices/PNGdriver]<br>
+<br>
+These parts do currently not work and require some work and user feedback.</font></li>
+</ul>
+</ul>
+<i><font face="Arial,Helvetica">We are searching for developers to assist
+in finalizing the Windows port: If you are (somewhat) experienced, join
+the <a href="http://grass.itc.it/grassdevel.html">development team</a>
+to speed up the port!</font></i>
+<p><font face="Arial,Helvetica"><a href="cygwin_grass50bininstall.html">Installation
+instruction</a></font>
+<br><font face="Arial,Helvetica"><a href="cygwin_grass50compile.html">Compiling
+instruction</a></font>
+<p>
+<hr SIZE=5 NOSHADE WIDTH="100%"><font face="Arial,Helvetica"><a href="README.html">Save
+this text.
+<hr SIZE=5 NOSHADE WIDTH="100%"></a><font size=-2>Andreas Lange, andreas.lange@rhein-main.de,
+$Id$</font></font>
+</body>
+</html>

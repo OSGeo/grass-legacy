@@ -5,6 +5,6 @@ interface_build {
     {entry color {Color for axis and text [white]:} 0 color}
     {checkbox style {Bar chart [default].} "" bar}
     {checkbox style {Pie chart.} "" pie}
-    {checkbox -z {Display zero-data information.} "" -z}
+    {checkbox -n {Display information for null cells.} "" -n}
     {checkbox -q {Gather the histogram quietly.} "" -q}
 }

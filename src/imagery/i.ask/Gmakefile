@@ -1,7 +1,9 @@
+PGM=i.ask
 LIST = main.o popup.o
 LIBES = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB)
 
-$(ETC)/i.ask: $(LIST) $(LIBES)
+$(ETC)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

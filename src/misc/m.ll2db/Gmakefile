@@ -1,0 +1,9 @@
+PGM=m.ll2db
+
+LIST = main.o input.o output.o warning.o number.o
+
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPGPROJLIB) $(DEPGISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GPROJLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(DEPCOORCNVLIB): # in case LIB changes
+$(DEPGISLIB): # in case LIB changes

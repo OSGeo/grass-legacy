@@ -1,21 +1,20 @@
-These problems should replace the old ortho-rectification programs
-(including i.build.block, i.rectify.block, i.camera, and i.mod.camera)
-
 The main program is i.ortho.rectify which is just a menu driver for the 
 following programs:
-        ortho.select_target
-        ortho.select_camera
-        ortho.select_elevation
-        ortho.image_to_photo
-        ortho.photo_to_target
-        ortho.initialize_exposure
-        ortho.image_rectify
+ photo.target
+ photo.init
+ photo.camera
+ photo.elev
+ photo.2image
+ photo.2target
+ photo.rectify
 
 
 
 The following directories contain the source code:
 
 	menu		-	main menu code
+                                -> menu/menu.c
+
 	select_target	-	select target location and mapset
 	select_elevation-	select elevation model 
 	select_camera	-	select a camera to use for parameters

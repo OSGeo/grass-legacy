@@ -1,0 +1,48 @@
+#!/bin/csh
+#
+#  This C shell calls GRASS function r.reclass
+#  to generate an aspect map from elevation map 
+#  for the elevation map.   
+#
+#
+#
+#              Zhian Li, 8/8/95
+
+# ADDED BY MIKE FOSTER 10-9-95
+# unalias rm to avoid interference witih automated deletion on
+# files and directories
+unalias rm 
+
+
+# 
+# 
+#  Generate map 
+#
+           r.average base=temp_grid_map cover=$2 output=intermittent.map
+           r.mapcalc  temp_elv.map='@intermittent.map'
+           r.slope.aspect elevation=temp_elv.map aspect=temp_asp.map 
+
+# Added by MIKE FOSTER, 10-10-95, so that multiple aspect maps can
+# reside as reclasses of unique aspect maps in the same MAPSET.
+           g.rename rast=temp_asp.map,$1.tmp
+
+           echo "Start output reclass rules"
+           echo "0 = 0" > temp_reclass_rule
+           echo "1 thru 22 = 3" >>temp_reclass_rule
+           echo "23 thru 67 = 2" >>temp_reclass_rule
+           echo "68 thru 112 = 1" >>temp_reclass_rule
+           echo "113 thru 157 = 8" >>temp_reclass_rule
+           echo "158 thru 202 = 7" >>temp_reclass_rule
+           echo "203 thru 247 = 6" >>temp_reclass_rule
+           echo "248 thru 292 = 5" >>temp_reclass_rule
+           echo "293 thru 337 = 4" >>temp_reclass_rule
+           echo "338 thru 360 = 3" >>temp_reclass_rule
+           r.reclass input=$1.tmp output=$1 < temp_reclass_rule
+#
+# REMOVE UNNEEDED TEMPORARY MAPS AND FILES
+#         
+           g.remove temp_grid_map >>tmpoutfile          
+           g.remove intermittent.map >>tmpoutfile
+           g.remove temp_elv.map >>tmpoutfile
+           rm  -f temp_reclass_rule
+

@@ -1,3 +1,15 @@
+5/2002:
+Ygl emulates SGI's GL routines under X11. It compiles fine under AIX 3.2,
+HP-UX 7.0/8.0/9.0, Linux with XFree, SunOS,
+ConvexOS and others, but needs an ANSI-C compiler (gcc is ok).
+ 
+http://www.thp.uni-duisburg.de/Ygl/ReadMe.html
+ 
+ -> a way to use sg3d under Linux (should be better than NVIZ and
+    easier to maintain)
+ 
+-------------------------------------------
+
 
 	THIS VERSION NOT RELEASED WITH ANY VERSION OF GRASS
 

@@ -1,11 +1,12 @@
-This is a beta6 distribution of "GRASS 5.0".
+This is a pre-distribution of "GRASS 5.0".
 
 GRASS Development Team
-Institute of Physical Geography and Landscape Ecology at
-University of Hannover, Germany
-Schneiderberg 50
-30167 Hannover
-Germany
+c/o Markus Neteler
+ITC-irst
+SSI/MPA
+Via Sommarive, 18
+38050 Povo (Trento)
+Italy
 
 The University of Illinois GMS Lab
 220 Davenport Hall, 
@@ -17,12 +18,33 @@ Baylor University
 P.O. Box 97351
 Waco, Texas  76798-7351
 
+General Email:            grass@baylor.edu
 
+Contributions to GRASS 5: neteler@itc.it
 
-Email:     grass@baylor.edu
-
-Internet:  http://grass.baylor.edu/
-           http://www.geog.uni-hannover.de/grass/
+Internet:  http://grass.itc.it
            http://www2.gis.uiuc.edu:2280/modviz/
+           http://www3.baylor.edu/grass/
 
-GRASS Development Team 1999
+GRASS Development Team 2002
+
+-------------------------------------------------------
+GRASS Installation:
+
+Please see the INSTALL file for installation
+instructions.
+
+-------------------------------------------------------
+GRASS 5 Programmer's Manual:
+
+http://grass.itc.it/grassdevel.html
+
+Or LaTeX sources from CVS server
+(http://grass.itc.it/grasscvs.html)
+
+cvs -z3 co progmangrass50
+
+Please see the SUBMITTING file for instructions on
+submitting code to the GRASS code base
+
+-------------------------------------------------------

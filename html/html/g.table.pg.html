@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.77 [ru] (X11; U; Linux 2.2.19-3.asp i686) [Netscape]">
+   <title>g.table.pg</title>
+</head>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+<a NAME="g.table.pg"></a><img SRC="grass.smlogo.gif" >
+<hr width="100%" align=center size=6 noshade>
+<h2>
+NAME</h2>
+<b><i>g.table.pg</i></b> - Generate a list of database tables in the currently
+selected database. (GRASS-RDBMS General Interface Program)
+<h2>
+SYNOPSIS</h2>
+<b>g.table.pg</b>
+<br><b>g.table.pg help</b>
+<h2>
+DESCRIPTION</h2>
+<i>g.table.pg</i> is used to generate a list of the tables in the currently
+selected SQL database. The currently selected database is identified by
+the GRASS environment variable $PG_DBASE which is set using the <i>g.select.pg</i>
+GRASS-RDBMS interface tool. If this environment variable is not set the
+program terminates with a message to the user. Otherwise, the names of
+the tables in the currently selected database are displayed on the screen
+in three columns. The names of the tables in the current database are needed
+to construct query criteria for use in many of the other tools. This command
+can be run at any time and is provided for reference purposes, to be used
+while performing GRASS-RDBMS applications.
+<h2>
+COMMAND LINE OPTIONS</h2>
+None
+<p><b>EXAMPLE</b>
+<p><i>g.table.pg</i>
+<p>&nbsp;The following tables are available in database: nri
+<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; county&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cover&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; geoaggs
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hydros&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; landclass&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; locks
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mlra&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nrifldvals&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; point
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; practices&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; priors&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; psu
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; psutrends&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; recorders&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; state
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stdrpts&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; streams&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; treatments
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; trends82&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; trends87&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; udrpt
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; udsubj&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; utm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; valuelist
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; water&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; windbreaks</pre>
+
+<h2>
+BUGS</h2>
+None known.
+<h2>
+NOTE</h2>
+This program requires the Postgres database software.
+<h2>
+SEE ALSO</h2>
+<i><a href="g.column.pg.html">g.column.pg</a>, <a href="g.select.pg.html">g.select.pg</a>,
+<a href="g.stats.pg.html">g.stats.pg</a>, <a href="d.rast.pg.html">d.rast.pg</a>,
+<a href="d.site.pg.html">d.site.pg</a>, <a href="d.vect.pg.html">d.vect.pg</a>,
+<a href="d.what.r.pg.html">d.what.r.pg</a>, <a href="d.what.s.pg.html">d.what.s.pg</a>,
+<a href="d.what.v.pg.html">d.what.v.pg</a>, <a href="r.reclass.pg.html">r.reclass.pg</a>,
+<a href="r.rescale.pg.html">r.rescale.pg</a>, <a href="v.reclass.pg.html">v.reclass.pg</a></i>
+<h2>
+AUTHOR</h2>
+Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick
+Limp University of Arkansas, CAST
+<p>Postgres modifications: Janne Soimasuo, Faculty of Forestry, University
+of Joensuu, Finland.
+<p>Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
+</body>
+</html>

@@ -139,7 +139,7 @@ G__quant_import (name, mapset, quant)
   
   /* first check if quant2/mapset/name exists in the current mapset */
   sprintf (element, "quant2/%s", mapset);
-  if (fd = G_fopen_old (element, name, G_mapset())) 
+  if ((fd = G_fopen_old (element, name, G_mapset())))
   {
     parsStat = quant_parse_file (fd, quant);
     fclose (fd);

@@ -9,7 +9,7 @@ static const char SCCSID[]="@(#)PJ_airy.c	4.1	94/02/15	GIE	REL";
 	int		mode; \
 	int		no_cut;	/* do not cut at hemisphere limit */
 #define PJ_LIB__
-#include	<projects.h>
+#include	"projects.h"
 PROJ_HEAD(airy, "Airy") "\n\tMisc Sph, no inv.\n\tno_cut lat_b=";
 # define EPS 1.e-10
 # define N_POLE	0

@@ -1,6 +1,0 @@
-
-\p.colors\ - Allows the user to modify a color table for a raster map layer,
-assigning colors to the categories in the raster map layer based on printer
-color numbers (instead of red, green, blue percentages).
-
-(GRASS Paint/Print Output Program)

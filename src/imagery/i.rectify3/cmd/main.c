@@ -122,7 +122,7 @@ int main( int  argc, char *argv[])
 	     group.name);
   }
 
-  /** TODO
+  /** TODO */
   /** Allow user to select transformation **/
 
 

@@ -2,7 +2,7 @@
 #ifndef lint
 static const char SCCSID[]="@(#)pj_ell_set.c	4.5	93/06/12	GIE	REL";
 #endif
-#include <projects.h>
+#include "projects.h"
 #include <string.h>
 #define SIXTH .1666666666666666667 /* 1/6 */
 #define RA4 .04722222222222222222 /* 17/360 */
@@ -12,7 +12,7 @@ static const char SCCSID[]="@(#)pj_ell_set.c	4.5	93/06/12	GIE	REL";
 	int /* initialize geographic shape parameters */
 pj_ell_set(paralist *pl, double *a, double *es) {
 	int i;
-	double b, e;
+	double b=0.0, e;
 	char *name;
 	paralist *start = 0, *curr;
 

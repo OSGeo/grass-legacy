@@ -1,0 +1,11 @@
+Ideally the interactive monitor display should reflect
+islands of areas selected, if the -i flag is active.
+
+Also island and inner polygon boundaries should
+be redrawn when aan area is dismiised. Currently
+leaves then whole area balnk if the fill option
+is selected.
+
+*****************
+ddg July  2000
+*****************

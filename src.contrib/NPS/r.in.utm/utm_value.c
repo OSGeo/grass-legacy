@@ -23,7 +23,7 @@ fprintf(stderr, "COL = %d,  ROW = %d\n", col, row);
     buf = rowio_get (utm_data, row);
     if (buf != NULL)
    {
-      row = value (buf + col*utm->bpc, utm->bpc, utm->sflag);
+      row = value ((unsigned char *) buf + col*utm->bpc, utm->bpc, utm->sflag);
       return row;
    }
     else

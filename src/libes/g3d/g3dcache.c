@@ -190,7 +190,7 @@ disposeCacheWrite (map)
      G3D_Map *map;
 
 {
-  if (map->cacheFD != NULL) {
+  if (map->cacheFD >= 0) {
     if (close (map->cacheFD) != 0) {
       G3d_error ("disposeCacheWrite: could not close file");
       return 0;

@@ -1,8 +1,0 @@
-
-
-g.list - 
-
-g.list allows the user to list user-specified, available and accessible
-files from the @glossary("mapsets",16.glossary/mapset.def) in the user's search path.
-
-Manual entry for @man("g.list")

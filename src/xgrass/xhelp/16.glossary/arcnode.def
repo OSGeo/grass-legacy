@@ -1,6 +1,0 @@
-
-
-arc-node - Graphic data (e.g., maps) can be stored digitally in either
-@glossary("raster",16.glossary/rastdata.def) or @glossary("vector format",16.glossary/vecdata.def).  In GRASS, vector data are stored in an
-arc-node representation, consisting of non-intersecting curves called
-@glossary("arcs",16.glossary/arc.def) or @glossary("vectors",16.glossary/vector.def) and the @glossary("nodes",16.glossary/node.def) at their end-points.

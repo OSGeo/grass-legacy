@@ -1,0 +1,6 @@
+all: $(GISBASE)/bin/libG11.dll
+
+EXTRA_CFLAGS = -I.. -mwin32
+
+$(GISBASE)/bin/libG11.dll: xlib.o ntutil.o event.o
+	dllwrap --export-all-symbols -o $@ xlib.o ntutil.o event.o -mwindows

@@ -95,7 +95,10 @@
  ***************************************************************************
 */
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include <unistd.h>
 #include "gis.h"
 
@@ -112,6 +115,9 @@ static struct Flag *current_flag; /* Pointer for traversing list      */
 
 static struct Option first_option ;
 static struct Option *current_option ;
+
+static struct GModule module_info; /* general information on the
+									  corresponding module */
 
 static char *pgm_name = NULL;
 
@@ -244,6 +250,22 @@ G_define_option (void)
 	return(opt) ;
 }
 
+struct GModule *
+G_define_module (void)
+{
+	struct GModule *module ;
+
+	/* Allocate memory */
+
+	module = &module_info;
+
+	/* Zero structure */
+
+	G_zero ((char *) module, sizeof(struct GModule));
+
+	return(module) ;
+}
+
 /* The main parsing routine */
 
 /*
@@ -277,6 +299,19 @@ int G_parser (int argc, char **argv)
 	opt= &first_option;
 	while(opt != NULL)
 	{
+		if(opt->multiple && opt->answers && opt->answers[0])
+		{
+			opt->answer = (char *)G_malloc(strlen(opt->answers[0])+1);
+			strcpy(opt->answer, opt->answers[0]);
+			for(i=1; opt->answers[i]; i++)
+			{
+				opt->answer = (char *)G_realloc (opt->answer,
+						strlen(opt->answer)+
+						strlen(opt->answers[i])+2);
+				strcat(opt->answer, ",");
+				strcat(opt->answer, opt->answers[i]);
+			}
+		}
 		opt->def = opt->answer ;
 		opt = opt->next_opt ;
 	}
@@ -298,9 +333,19 @@ int G_parser (int argc, char **argv)
 	{
 
 		/* If first arg is "help" give a usage/syntax message */
-		if (strcmp(argv[1],"help") == 0 || strcmp(argv[1], "-help") == 0)
+		if (strcmp(argv[1],"help") == 0 ||
+			strcmp(argv[1], "-help") == 0 ||
+			strcmp(argv[1], "--help") == 0)
 		{
 			G_usage();
+			return -1;
+		}
+
+		/* If first arg is "--interface-description" then print out
+		 * a xml description of the task */
+		if (strcmp(argv[1],"--interface-description") == 0)
+		{
+			G_usage_xml();
 			return -1;
 		}
 
@@ -370,13 +415,18 @@ int G_usage (void)
 	char *key_desc;
 	int maxlen;
 	int len, n;
-
-	fprintf (stderr, "\nUsage:\n ");
-
+	
 	if (!pgm_name)		/* v.dave && r.michael */
 	    pgm_name = G_program_name ();
 	if (!pgm_name)
 	    pgm_name = "??";
+
+	if (module_info.description) {
+		fprintf (stderr, "\nDescription:\n");
+		fprintf (stderr, " %s\n", module_info.description);
+	}
+
+	fprintf (stderr, "\nUsage:\n ");
 
 	len = show(pgm_name,1);
 
@@ -473,6 +523,191 @@ int G_usage (void)
         return 0;
 }
 
+void print_escaped_for_xml (FILE * fp, char * str) {
+	for (;*str;str++) {
+		switch (*str) {
+			case '&':
+				fputs("&amp;", fp);
+				break;
+			case '<':
+				fputs("&lt;", fp);
+				break;
+			case '>':
+				fputs("&gt;", fp);
+				break;
+			default:
+				fputc(*str, fp);
+		}
+	}
+}
+
+int G_usage_xml (void)
+{
+	struct Option *opt ;
+	struct Flag *flag ;
+	char *type;
+	char *s, *top;
+	int i;
+	
+	if (!pgm_name)		/* v.dave && r.michael */
+	    pgm_name = G_program_name ();
+	if (!pgm_name)
+	    pgm_name = "??";
+
+	fprintf(stdout, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+	fprintf(stdout, "<!DOCTYPE task SYSTEM \"grass-interface.dtd\">\n");
+
+	fprintf(stdout, "<task name=\"%s\">\n", pgm_name);  
+
+	if (module_info.description) {
+		fprintf(stdout, "\t<description>\n\t\t");
+		print_escaped_for_xml (stdout, module_info.description);
+		fprintf(stdout, "\n\t</description>\n");
+	}
+
+	/***** Don't use parameter-groups for now.  We'll reimplement this later 
+	 ***** when we have a concept of several mutually exclusive option
+	 ***** groups
+	if (n_opts || n_flags)
+		fprintf(stdout, "\t<parameter-group>\n");
+	 *****
+	 *****
+	 *****/
+	
+	if(n_opts)
+	{
+		opt= &first_option;
+		while(opt != NULL)
+		{
+			/* TODO: make this a enumeration type? */
+			switch (opt->type) {
+				case TYPE_INTEGER:
+					type = "integer";
+					break ;
+				case TYPE_DOUBLE:
+					type = "float";
+					break ;
+				case TYPE_STRING:
+					type = "string";
+					break ;
+				default:
+					type = "string";
+					break;
+			}
+			fprintf (stdout, "\t<parameter "
+				"name=\"%s\" "
+				"type=\"%s\" "
+				"required=\"%s\" "
+				"multiple=\"%s\">\n",
+				opt->key,
+				type,
+				opt->required == YES ? "yes" : "no",
+				opt->multiple == YES ? "yes" : "no");
+
+			if (opt->description) {
+				fprintf(stdout, "\t\t<description>\n\t\t\t");
+				print_escaped_for_xml(stdout, opt->description);
+				fprintf(stdout, "\n\t\t</description>\n");
+			}
+
+			if (opt->key_desc)
+			{
+				fprintf (stdout, "\t\t<keydesc>\n");
+				top = G_calloc (strlen (opt->key_desc) + 1, 1);
+				strcpy (top, opt->key_desc);
+				s = strtok (top, ",");
+				for (i = 1; s != NULL; i++)
+				{
+					fprintf (stdout, "\t\t\t<item order=\"%d\">", i);
+					print_escaped_for_xml (stdout, s);
+					fprintf (stdout, "</item>\n");
+					s = strtok (NULL, ",");
+				}
+				fprintf (stdout, "\t\t</keydesc>\n");
+				G_free (top);
+			}
+			
+			if (opt->gisprompt)
+			{
+				const char *atts[] = {"age", "element", "prompt", NULL};
+				top = G_calloc (strlen (opt->gisprompt) + 1, 1);
+				strcpy (top, opt->gisprompt);
+				s = strtok (top, ",");
+				fprintf (stdout, "\t\t<gisprompt ");
+				for (i = 0; s != NULL && atts[i] != NULL; i++)
+				{
+					fprintf (stdout, "%s=\"%s\" ", atts[i], s);
+					s = strtok (NULL, ",");
+				}
+				fprintf (stdout, "/>\n");
+				G_free (top);
+			}
+
+			if(opt->def) {
+				fprintf(stdout, "\t\t\t<default>\n\t\t\t");
+				print_escaped_for_xml(stdout, opt->def);
+				fprintf(stdout, "\n\t\t\t</default>\n");
+			}
+
+			if(opt->options) {
+				fprintf(stdout, "\t\t<values>\n");
+				top = G_calloc(strlen(opt->options) + 1,1);
+				strcpy(top, opt->options);
+				s = strtok(top, ",");
+				while (s) {
+					fprintf(stdout, "\t\t\t<value>");
+					print_escaped_for_xml(stdout, s);
+					fprintf(stdout, "</value>\n");
+					s = strtok(NULL, ",");
+				}
+				fprintf(stdout, "\t\t</values>\n");
+				G_free (top);
+			}
+
+			/* TODO:
+			 * add something like
+			 * 	 <range min="xxx" max="xxx"/>
+			 * to <values>
+			 * - key_desc?
+			 * - there surely are some more. which ones?
+			 */
+
+			opt = opt->next_opt ;
+			fprintf (stdout, "\t</parameter>\n");
+		}
+	}
+
+	
+	if(n_flags)
+	{
+		flag= &first_flag;
+		while(flag != NULL)
+		{
+			fprintf (stdout, "\t<flag name=\"%c\">\n", flag->key);
+
+			if (flag->description) {
+				fprintf(stdout, "\t\t<description>\n\t\t\t");
+				print_escaped_for_xml(stdout, flag->description);
+				fprintf(stdout, "\n\t\t</description>\n");
+			}
+			flag = flag->next_flag ;
+			fprintf (stdout, "\t</flag>\n");
+		}
+	}
+
+	/***** Don't use parameter-groups for now.  We'll reimplement this later 
+	 ***** when we have a concept of several mutually exclusive option
+	 ***** groups
+	if (n_opts || n_flags)
+		fprintf(stdout, "\t</parameter-group>\n");
+	 *****
+	 *****
+	 *****/
+
+	fprintf(stdout, "</task>\n");
+    return 0;
+}
+
 /**************************************************************************
  *
  * The remaining routines are all local (static) routines used to support
@@ -490,7 +725,7 @@ static int show_options(int maxlen,char *str)
 	fprintf (stderr, "  %*s   options: ", maxlen, " ") ;
 	totlen = maxlen + 13 ;
 	p1 = buff ;
-	while(p2 = G_index(p1, ','))
+	while((p2 = G_index(p1, ',')))
 	{
 		*p2 = '\0' ;
 		len = strlen(p1) + 1 ;
@@ -621,7 +856,7 @@ static int set_option (char *string)
 	/* Allocate memory where answer is stored */
 	if (opt->count++)
 	{
-		opt->answer = G_realloc (opt->answer,
+		opt->answer = (char *)G_realloc (opt->answer,
 			strlen (opt->answer)+strlen(string)+2);
 		strcat (opt->answer, ",");
 		strcat (opt->answer, string);
@@ -654,7 +889,7 @@ static int check_opts (void)
 				    opt->options, opt->answer) ;
 			else
 			{
-				for(ans=0; opt->answers[ans] != '\0'; ans++)
+				for(ans=0; opt->answers[ans] != NULL; ans++)
 					error += check_an_opt(opt->key, opt->type,
 					    opt->options, opt->answers[ans]) ;
 			}
@@ -891,53 +1126,48 @@ static int split_opts (void)
 	if(! n_opts)
 		return 0;
 
-	opt= &first_option;
-	while(opt != NULL)
+	for (opt = &first_option; opt; opt = opt->next_opt)
 	{
-		if (/*opt->multiple && */(opt->answer != NULL))
-		{
-			/* Allocate some memory to store array of pointers */
-			allocated = 10 ;
-			opt->answers = (char **)G_malloc(allocated * sizeof(char *)) ;
+		if (!opt->answer)
+			continue;
 
-			ans_num = 0 ;
-			ptr1 = opt->answer ;
+		/* Allocate some memory to store array of pointers */
+		allocated = 10 ;
+		opt->answers = (char **)G_malloc(allocated * sizeof(char *)) ;
+
+		ans_num = 0 ;
+		ptr1 = opt->answer ;
+		opt->answers[ans_num] = NULL ;
+
+		for(;;)
+		{
+			for(len=0, ptr2=ptr1; *ptr2 != '\0' && *ptr2 != ','; ptr2++, len++)
+				;
+
+			opt->answers[ans_num]=(char *)G_malloc(len+1) ;
+			G_copy(opt->answers[ans_num], ptr1, len) ;
+			opt->answers[ans_num][len] = 0;
+
+			ans_num++ ;
+
+			if(ans_num >= allocated)
+			{
+				allocated += 10 ;
+				opt->answers =
+					(char **)G_realloc((char *)opt->answers,
+							   allocated * sizeof(char *)) ;
+			}
+
 			opt->answers[ans_num] = NULL ;
 
-			for(;;)
-			{
-				for(len=0, ptr2=ptr1; *ptr2 != '\0' && *ptr2 != ','; ptr2++, len++)
-					;
+			if(*ptr2 == '\0')
+				break ;
 
-				if (len > 0)        /* skip ,, */
-				{
-					opt->answers[ans_num]=G_malloc(len+1) ;
-					G_copy(opt->answers[ans_num], ptr1, len) ;
-					opt->answers[ans_num][len] = 0;
+			ptr1 = ptr2+1 ;
 
-					ans_num++ ;
-
-					if(ans_num >= allocated)
-					{
-						allocated += 10 ;
-						opt->answers =
-						    (char **)G_realloc((char *)opt->answers,
-						    allocated * sizeof(char *)) ;
-					}
-
-					opt->answers[ans_num] = NULL ;
-				}
-
-				if(*ptr2 == '\0')
-					break ;
-
-				ptr1 = ptr2+1 ;
-
-				if(*ptr1 == '\0')
-					break ;
-			}
+			if(*ptr1 == '\0')
+				break ;
 		}
-		opt = opt->next_opt ;
 	}
 
 	return 0;
@@ -966,7 +1196,7 @@ static int check_multiple_opts (void)
 				if (*ptr == ',')
 					n_commas++ ;
 			/* count items */
-			for(n=0;opt->answers[n] != '\0';n++)
+			for(n=0;opt->answers[n] != NULL;n++)
 				;
 			/* if not correct multiple of items */
 			if(n % n_commas)
@@ -1166,56 +1396,139 @@ static int gis_prompt (struct Option *opt, char *buff)
 		fprintf(stderr,"        Must be either new, old, mapset, or any\n") ;
 		return -1;
 	}
-	if (ptr1 == '\0')
+	if (ptr1 == NULL)
 		*buff = '\0';
 
 	return 0;
 }
 
+static struct {
+	char *buff;
+	int size;
+	int ptr;
+} buffer;
+
+static void clear(void)
+{
+	buffer.ptr = 0;
+}
+
+static void append(const char *str)
+{
+	int len;
+
+	len = strlen(str);
+
+	if (buffer.ptr + len >= buffer.size)
+	{
+		buffer.size += len + 1024;
+		buffer.buff = G_realloc(buffer.buff, buffer.size);
+	}
+
+	strcpy(buffer.buff + buffer.ptr, str);
+	buffer.ptr += len;
+
+	buffer.buff[buffer.ptr] = '\0';
+}
+
+static void append_safe(const char *str)
+{
+	static const char normal[] = "+,-./:=_";
+	const char *p;
+	int special = 0;
+	int quotes = 0;
+	int len = 0;
+
+	for (p = str; *p; p++)
+	{
+		if (!isalnum(*p) && !strchr(normal, *p))
+			special = 1;
+		if (*p == '\'')
+			quotes++;
+		len++;
+	}
+
+	if (!special)
+	{
+		append(str);
+		return;
+	}
+
+	len += 2;
+	len += quotes * 4;
+
+	if (buffer.ptr + len >= buffer.size)
+	{
+		buffer.size += len + 1024;
+		buffer.buff = G_realloc(buffer.buff, buffer.size);
+	}
+
+	if (special)
+		buffer.buff[buffer.ptr++] = '\'';
+
+	for (p = str; *p; p++)
+	{
+		if (*p == '\'')
+		{
+			strcpy(buffer.buff + buffer.ptr, "'\\''");
+			buffer.ptr += 4;
+		}
+		else
+			buffer.buff[buffer.ptr++] = *p;
+	}
+
+	if (special)
+		buffer.buff[buffer.ptr++] = '\'';
+
+	buffer.buff[buffer.ptr] = '\0';
+}
+
 char *G_recreate_command (void)
 {
-	char flg[2] ;
-	static char buff[1024] ;
-	struct Flag *flag ;
-	struct Option *opt ;
-	int n ;
+	clear();
 
-	/* Flag is not valid if there are no flags to set */
+	append(G_program_name());
 
-	*buff = '\0' ;
-	strcat(buff, G_program_name()) ;
-
-	if(n_flags)
+	if (n_flags)
 	{
-		flag= &first_flag;
-		while(flag != '\0')
+		struct Flag *flag;
+
+		for (flag = &first_flag; flag; flag = flag->next_flag)
 		{
-			if( flag->answer == 1 )
-			{
-				strcat (buff, " -") ;
-				flg[0] = flag->key ; flg[1] = '\0'; strcat (buff, flg) ;
-			}
-			flag = flag->next_flag ;
+			static char flg[4] = " -x";
+
+			if (!flag->answer)
+				continue;
+
+			flg[2] = flag->key;
+			append(flg);
 		}
 	}
 
-	opt= &first_option;
-	while(opt != '\0')
+	if (n_opts)
 	{
-		if (opt->answer != '\0')
+		struct Option *opt ;
+
+		for (opt = &first_option; opt; opt = opt->next_opt)
 		{
-			strcat(buff, " ") ;
-			strcat(buff, opt->key) ;
-			strcat(buff, "=") ;
-			strcat(buff, opt->answers[0]) ;
-			for(n=1;opt->answers[n] != '\0';n++)
+			int i;
+
+			if (!opt->answer)
+				continue;
+
+			append(" ");
+			append(opt->key);
+			append("=");
+			append_safe(opt->answers[0]);
+
+			for (i = 1; opt->answers[i]; i++)
 			{
-				strcat(buff, ",") ;
-				strcat(buff, opt->answers[n]) ;
+				append(",");
+				append_safe(opt->answers[i]);
 			}
 		}
-		opt = opt->next_opt ;
 	}
 
-	return(buff) ;
+	return buffer.buff;
 }
+

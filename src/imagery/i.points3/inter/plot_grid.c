@@ -2,10 +2,8 @@
 #include "globals.h"
 #include "raster.h"
 #include "display.h"
-/**
-#include "dig_structs.h"
-#include "dig_externs.h"
-**/
+#include "Vect.h"
+
 static int choose_gridcolor (char *,char *);
 
 
@@ -95,12 +93,12 @@ int  which)     /* 0 - both target&zoom, 1 - zoom only */
 }
 
 /***********************************************************
-/** _plotgrid_warp (color_name, which, E, N, order)
-/** char *color_name;
-/** int  which;        /* 0 - both target&zoom, 1 - zoom only */
-/** double E[];
-/** double N[];
-/** int  order;
+** _plotgrid_warp (color_name, which, E, N, order)
+** char *color_name;
+** int  which;         0 - both target&zoom, 1 - zoom only 
+** double E[];
+** double N[];
+** int  order;
 ***********************************************************/
 
 int _plotgrid_warp (

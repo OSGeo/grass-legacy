@@ -6,7 +6,7 @@ static const char SCCSID[]="@(#)PJ_omerc.c	4.2	95/01/01	GIE	REL";
 		singam, cosgam, sinrot, cosrot, u_0; \
 	int		ellips, rot;
 #define PJ_LIB__
-#include	<projects.h>
+#include	"projects.h"
 PROJ_HEAD(omerc, "Oblique Mercator")
 	"\n\tCyl, Sph&Ell\n\t no_rot rot_conv no_uoff and\n\t"
 "alpha= lonc= or\n\t lon_1= lat_1= lon_2= lat_2=";
@@ -81,10 +81,10 @@ ENTRY0(omerc)
 	int azi;
 
 	P->rot	= pj_param(P->params, "bno_rot").i == 0;
-	if (azi	= pj_param(P->params, "talpha").i) {
+	if( (azi	= pj_param(P->params, "talpha").i) != 0.0) {
 		P->lamc	= pj_param(P->params, "rlonc").f;
 		P->alpha	= pj_param(P->params, "ralpha").f;
-		if (fabs(P->alpha) <= TOL ||
+		if ( fabs(P->alpha) <= TOL ||
 			fabs(fabs(P->phi0) - HALFPI) <= TOL ||
 			fabs(fabs(P->alpha) - HALFPI) <= TOL)
 			E_ERROR(-32);

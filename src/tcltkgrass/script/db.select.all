@@ -1,0 +1,5 @@
+#!/bin/sh
+
+TABLE=`echo $1 | sed s/table=//`
+
+echo select '*' from $TABLE | db.select -c -h 

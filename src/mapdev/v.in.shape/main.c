@@ -1,357 +1,333 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <math.h>
-#include <signal.h>
-#include <ctype.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#include "gis.h"
-#include "Vect.h"
-#include "shapefil.h"
+/******************************************************************************
+ * main.c [v.in.shape]
+ * Import ESRI Shapefile.
+ * 
 
-/******************************************************************/
-/*                                                                */
-/* v.in.shape -- import an ESRI Shapefile			  */
-/*                                                                */
-/* Frank Warmerdam, warmerda@home.com				  */
-/* Based on my shapelib library:				  */
-/*   http://gdal.velocet.ca/projects/shapelib/			  */
-/******************************************************************/
-
-/* 10/1999 added dig_cats file support
- *         Markus Neteler neteler@geog.uni-hannover.de
+ * @Copyright David D.Gray <ddgray@armadce.demon.co.uk>
+ * 26th. Feb. 2002
+ * Last updated 9th. Mar. 2002
  *
- ******************************************************************/
 
-enum {ANALYSE, RASTER, LINES, VECTOR, ALL} todo;
+ * This file is part of GRASS GIS. It is free software. You can 
+ * redistribute it and/or modify it under the terms of 
+ * the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option)
+ * any later version.
 
-int debug = 0;			/* debug level (verbosity) */
-FILE *fde00, *fdlog;		/* input and log file descriptors */
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
 
-double scale = 1.0;
+ ******************************************************************************/
 
-int main( int   argc, char *argv[])
-{
-    SHPHandle	hShapeDB;
-    DBFHandle   hDBF;
-    double	adfMinBound[4], adfMaxBound[4];
-    int		nShapeType, nShapes, iShape;
-    int		cat_field;
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include "gis.h"
+#include "import.h"
+#include "basename.h"
+#include "shapefil.h"
+#include "vmap_import.h"
 
-    char name[128], *p;	/* name of output files */
+int main(int argc, char *argv[]) {
 
-    char *infile, *newmapset;
-    int cover_type;		/* type of coverage (line, point, area) */
+  struct Option *iput, *oput, *lfile, *verbose;
+  struct Option *snapd, *mscale, *attribute, *catlabel;
+  struct Flag *oflag, *fleflag, *uflag, *listflag;
+  struct GModule *module;
 
-    FILE *f_att = NULL;
-    struct Map_info map;
-    struct line_pnts *points;
+  param_import_ctrl *ctr1;
 
-    struct Categories cats;  /* added MN 10/99 */
-    char    AttText[512];    /* added MN 10/99 */
+  char src_file[512] = "", log_file[512] = "", vmap[512] = "", base0[512] = "";
+  char shp_extension[64] = "shp:shx:dbf";
+  char *ms0;
+
+  int print_to_error = 0, ires = 0, verbosity = 1, do_overwrite = 0, force_le = 0;
+  int u_val = 0;
+
+  FILE *lf;
+  DBFHandle   hDBF;
+
+  int scale1;
+  double snap1, sliver1;
+
+  G_gisinit(argv[0]);
+
+  module = G_define_module();
+  module->description = "Test routine for developing MIF import.";
+
+  iput = G_define_option() ;
+  iput->key        = "input";
+  iput->type       = TYPE_STRING;
+  iput->required   = YES;
+  iput->description= "Name of file to be imported";
+
+  oput = G_define_option() ;
+  oput->key        = "output";
+  oput->type       = TYPE_STRING;
+  oput->required   = NO;
+  oput->description= "Name of vector map to be created.";
+  oput->answer     = "" ;
+
+  verbose = G_define_option() ;
+  verbose->key        = "verbose";
+  verbose->type       = TYPE_STRING;
+  verbose->required   = NO;
+  verbose->description= "Debugging level : 0 (silent) - 3 (verbose)" ;
+  verbose->answer     = "1" ; /* Set default log reporting to basic (1) */
+
+  lfile = G_define_option() ;
+  lfile->key        = "logfile";
+  lfile->type       = TYPE_STRING;
+  lfile->required   = NO;
+  lfile->description= "Name of file where to log operations";
+  lfile->answer     = "";
+
+  snapd = G_define_option() ;
+  snapd->key        = "snapdist";
+  snapd->type       = TYPE_STRING;
+  snapd->required   = NO;
+  snapd->description= "Snap distance in ground units (Default = 10^-10)";
+  snapd->answer     = "1.0e-10";
+
+  /*
+  minangle = G_define_option() ;
+  minangle->key        = "sliver";
+  minangle->type       = TYPE_STRING;
+  minangle->required   = NO;
+  minangle->description= "Min. angle subtended by a wedge at node (degrees - default 0.0001)";
+  minangle->answer     = "0.0001";
+  */
+
+  mscale = G_define_option() ;
+  mscale->key        = "scale";
+  mscale->type       = TYPE_INTEGER;
+  mscale->required   = NO;
+  mscale->description= "Set initial scale [1:2400]";
+  mscale->answer     = "2400";
+
+  attribute = G_define_option() ;
+  attribute->key        = "attribute";
+  attribute->type       = TYPE_STRING;
+  attribute->required   = NO;
+  attribute->description= "Name of attribute to use as category";
+  attribute->answer     = "";
     
-    char buf[256];
-
-    struct {
-	struct Option *input, *mapset, *logfile, *verbose, *attribute;
-    } parm;
-
-    /* Are we running in Grass environment ? */
-
-    G_gisinit (argv[0]);
-
-    /* define the different options */
-
-    parm.input = G_define_option() ;
-    parm.input->key        = "input";
-    parm.input->type       = TYPE_STRING;
-    parm.input->required   = YES;
-    parm.input->description= "Name of .shp file to be imported";
-
-    parm.mapset = G_define_option() ;
-    parm.mapset->key        = "mapset";
-    parm.mapset->type       = TYPE_STRING;
-    parm.mapset->required   = NO;
-    parm.mapset->description= "Name of mapset to hold resulting files (Default = current)";
-
-    parm.verbose = G_define_option() ;
-    parm.verbose->key        = "verbose";
-    parm.verbose->type       = TYPE_INTEGER;
-    parm.verbose->required   = NO;
-    parm.verbose->description= "Debugging level : 0 (silent) - 9 (verbose)" ;
-    parm.verbose->answer     = "0" ;
-
-    parm.logfile = G_define_option() ;
-    parm.logfile->key        = "logfile";
-    parm.logfile->type       = TYPE_STRING;
-    parm.logfile->required   = NO;
-    parm.logfile->description= "Name of file where log operations";
-
-    parm.attribute = G_define_option() ;
-    parm.attribute->key        = "attribute";
-    parm.attribute->type       = TYPE_STRING;
-    parm.attribute->required   = NO;
-    parm.attribute->description= "Name of attribute to use as category";
-    parm.attribute->answer     = "";
-
-    /* get options and test their validity */
-
-    if (G_parser(argc, argv))
-	exit(-1);
+  catlabel = G_define_option() ;
+  catlabel->key        = "label";
+  catlabel->type       = TYPE_STRING;
+  catlabel->required   = NO;
+  catlabel->description= "Name of attribute to use as category label";
+  catlabel->answer     = "";
     
-    infile = parm.input->answer;
-    newmapset = parm.mapset->answer;
+  oflag = G_define_flag();
+  oflag->key         = 'o';
+  oflag->description = "Allow overwrite of existing vector map with the same name";
+  oflag->answer      = 0;
 
-    debug = atoi( parm.verbose->answer);
-    if (parm.logfile->answer == NULL)
-	fdlog = stderr;
-    else
-	if ((fdlog = fopen( parm.logfile->answer, "w")) == NULL) {    
-	    sprintf (buf, "Cannot open log file \"%s\"", parm.logfile->answer);
-	    G_fatal_error( buf);
-	}
+  fleflag = G_define_flag();
+  fleflag->key         = 'l';
+  fleflag->description = "Force writing  polygon coverage as a line coverage";
+  fleflag->answer      = 0;
+
+  uflag = G_define_flag();
+  uflag->key         = 'u';
+  uflag->description = "Create unique value for parts of compound object";
+  uflag->answer      = 0;
+
+  /* Set flag for listing fields of database */
+  listflag = G_define_flag();
+  listflag->key     = 'd';
+  listflag->description = "List fields of DBF file";
+
+  if (G_parser(argc, argv))
+    exit(-1);
     
-    /* Open input file and verify that's a good shapefile file */
 
-    hShapeDB = SHPOpen( infile, "r" );
-    if (hShapeDB == NULL)
+  strcpy(src_file, iput->answer);
+  strcpy(vmap, oput->answer);
+  strcpy(log_file, lfile->answer);
+
+  /* Check the input file */
+
+
+  if(!strcmp(log_file, "")) {
+    G_warning("Log file not specified. Sending messages to 'standard error'");
+    print_to_error = 1;
+  }
+
+  verbosity = atoi(verbose->answer);
+
+  if(verbosity < 0 || verbosity > 3) {
+    G_warning("Verbosity level not recognised. Setting to 1: basic");
+    verbosity = 1;
+  }
+
+
+  /* Check if the proposed vector map is a legal name */
+
+  if(!strcmp(vmap, "")) {
+    /* Vector map not specified - use the prefix */
+
+    get_file_basename(base0, src_file, shp_extension);
+    strncpy(vmap, base0, 511);
+  }
+
+  if(G_legal_filename(vmap) < 0 ) {
+    fprintf(stderr, "\nCan't find a suitable name for resulting vector map (output parameter).\n");
+    exit(1);
+  }
+
+  /* Process editing parameters */
+
+  snap1 = atof(snapd->answer);
+  sliver1 = 0.0001;
+  scale1 = atoi(mscale->answer);
+
+
+  /* Process flags */
+
+  do_overwrite = oflag->answer;
+  force_le = fleflag->answer;
+  u_val = uflag->answer;
+
+  /* Open the log file for write ops */
+
+  if(print_to_error) {
+    lf = stderr;
+  }
+
+  else {
+    lf = fopen(log_file, "w");
+    if(lf == NULL) {
+      fprintf(stderr, "ERROR: Can't open log file for writing.");
+      exit(-1);
+    }
+  }
+
+  /* Examine the `-d' flag */
+  if(listflag->answer) {
+      int	i;
+        
+      hDBF = DBFOpen( src_file, "r" );
+      if( hDBF == NULL )
+        G_fatal_error("%s - DBF not found, or wrong format.\n", src_file);
+
+      fprintf (stdout , "Attribute fields available in %s:\n", src_file );
+      for( i = 0; i < DBFGetFieldCount(hDBF); i++ )
+        {
+	  char	field_name[15];
+	  int   field_width; 
+	  char  *fld=NULL; 
+          DBFFieldType ftype;
+
+          ftype=DBFGetFieldInfo( hDBF, i, field_name, &field_width, NULL );
+
+	  switch (ftype) {
+		case 0:
+			fld="text";
+		break;
+		case 1:
+			if (field_width<=7) fld="int4";
+				else fld="int8";
+		break;
+		case 2:
+			fld="float4";
+		break;
+		case 3:
+            		G_fatal_error ("Invalid field type - bailing out");
+		break;
+	  }
+
+	  DBFGetFieldInfo( hDBF, i, field_name, NULL, NULL );
+	  fprintf (stdout, "%i: %s [%s:%i]\n", (i+1), field_name, fld , field_width);
+        }
+        
+      DBFClose( hDBF );
+      exit (0);
+  } /* -d list */
+
+
+  if((ms0 = G_find_file("dig", vmap, ""))) {
+
+    /* Is this in the current mapset. If so we can only continue
+       if over-write is allowed
+    */
+
+    if(!strcmp(ms0, G_mapset())) {
+      /* Map with same name in same mapset */
+
+      if(!do_overwrite) {
+	fprintf(stderr, "Map <%s> already exists. Please select another name.\n", vmap);
+	fprintf(stderr, "Alternatively you can force over-writing using the `-o' flag.\n");
+	exit(1);
+      }
+    }
+  }
+
+
+
+
+  /* Build import controller struct. */
+
+  ctr1 = import_ctrl_init();
+  if(ctr1 == NULL) {
+    fprintf(stderr, "Memory allocation error.\n");
+    if(!print_to_error) fclose(lf);
+    exit(-1);
+  }
+
+  import_ctrl_construct(ctr1, src_file, vmap, lf, do_overwrite, verbosity,
+			force_le, u_val, scale1, snap1, sliver1, attribute->answer,
+			catlabel->answer);
+  
+
+  /* Now pass parameters to import routine */
+
+  ires = vmap_import(ctr1);
+
+  switch(ires) {
+
+  case 1: 
     {
-	sprintf (buf, "%s - not found, or wrong format.\n", infile);
-	G_fatal_error (buf);
+      fprintf(stderr, "\n\nERROR: Map `%s' already exists.\n", vmap);
+      fprintf(stderr, "If you wish to over-write, use the `-o' flag.\n");
+      break;
     }
 
-    if (debug)
-	fprintf( fdlog, "\"%s\" successfully opened\n", infile);
-
-    /* Create a mapset and made it current mapset for this program */
-
-    if (newmapset != NULL) {
-	if (G_legal_filename( newmapset) < 0) {
-	    sprintf (buf, "MAPSET <%s> - illegal name\n", newmapset);
-	    G_fatal_error( buf);
-	}
-	if (todo == ANALYSE)
-	    fprintf( fdlog, "Mapset %s not created (analyse only)\n", newmapset);
-	else {    
-	    sprintf( buf, "%s/%s", G_location_path(), newmapset);
-	    if (access( buf, F_OK) == -1)
-		if (mkdir( buf, 0755) == -1) {
-		    sprintf( buf, "Cannot create MAPSET %s", newmapset);
-		    G_fatal_error( buf);
-		}
-	    G__setenv( "MAPSET", newmapset);
-	    if (debug > 2)
-		fprintf( fdlog, "Mapset \"%s\" created for import\n", G_mapset());
-	}
-    }
-
-    /* Establish the shape types and corresponding GRASS type */
-    
-    SHPGetInfo( hShapeDB, &nShapes, &nShapeType, adfMinBound, adfMaxBound );
-    
-    switch (nShapeType) {
-      case SHPT_POINT:
-      case SHPT_MULTIPOINT:
-      case SHPT_POINTZ:
-      case SHPT_MULTIPOINTZ:
-      case SHPT_POINTM:
-      case SHPT_MULTIPOINTM:
-        cover_type = DOT;
-        break;
-
-      case SHPT_ARC:
-      case SHPT_ARCZ:
-      case SHPT_ARCM:
-        cover_type = LINE;
-
-      case SHPT_POLYGON:
-      case SHPT_POLYGONZ:
-      case SHPT_POLYGONM:
-        cover_type = AREA;
-        break;
-    }
-    
-/* -------------------------------------------------------------------- */
-/*      Extract basename of shapefile.                                  */
-/* -------------------------------------------------------------------- */
-    for( p = infile+strlen(infile)-1;
-         p != infile-1 && (isalnum(*p) || *p == '_' || *p == '.' );
-         p-- ) {}
-    strcpy( name, p+1);
-    
-    p = strrchr( name, '.');
-    if (p != NULL)
-        *p = '\0';
-
-    if (debug > 4)
-	fprintf( fdlog, "Name of output file is \"%s\"\n", name);
-
-/* -------------------------------------------------------------------- */
-/*      Create the GRASS vector layer based on the basename of the      */
-/*      shapefile.							*/
-/* -------------------------------------------------------------------- */
-    Vect_open_new( &map, name);
-
-/* -------------------------------------------------------------------- */
-/*	Identify the attribute (if any) to be extracted.		*/
-/* -------------------------------------------------------------------- */
-    hDBF = NULL;
-    if( strcmp(parm.attribute->answer,"") == 0 ) {
-        cat_field = -1;
-        
-    } else if( strcmp(parm.attribute->answer,"list") == 0 ) {
-        int	i;
-        
-        hDBF = DBFOpen( infile, "r" );
-        if( hDBF == NULL )
-        {
-            sprintf (buf, "%s - DBF not found, or wrong format.\n", infile);
-            G_fatal_error (buf);
-        }
-
-        fprintf (stdout, "Attributes available in %s\n", infile );
-        for( i = 0; i < DBFGetFieldCount(hDBF); i++ )
-        {
-            char	field_name[15];
-
-            DBFGetFieldInfo( hDBF, i, field_name, NULL, NULL );
-            fprintf (stdout, "%s\n", field_name );
-        }
-        
-        DBFClose( hDBF );
-        SHPClose( hShapeDB );
-
-        exit( 0 );
-        
-    } else {
-        int	i;
-        
-        hDBF = DBFOpen( infile, "r" );
-        if( hDBF == NULL )
-        {
-            sprintf (buf, "%s - DBF not found, or wrong format.\n", infile);
-            G_fatal_error (buf);
-        }
-
-        for( i = 0; i < DBFGetFieldCount(hDBF); i++ )
-        {
-            char	field_name[15];
-
-            DBFGetFieldInfo( hDBF, i, field_name, NULL, NULL );
-            if( strcasecmp( parm.attribute->answer, field_name ) == 0 )
-                cat_field = i;
-        }
-
-        if( cat_field == -1 ) {
-            sprintf( buf,
-                     "No attribute `%s' found on %s.\n"
-                     "Use attribute=list to get a list of attributes.\n",
-                     parm.attribute->answer, infile );
-            
-            DBFClose( hDBF );
-            SHPClose( hShapeDB );
-
-            G_fatal_error( buf );
-        }
-
-        if (debug > 4)
-            fprintf( fdlog, "Selected attribute field %d.\n", cat_field);
-
-        /*
-         * Create the dig_att file (or append).
-         */
-        if (G_find_file( "dig_att", name, G_mapset()) == NULL) {
-            f_att = G_fopen_new( "dig_att", name);
-            if (debug)
-                fprintf( fdlog, "Creating dig_att(L) file \"%s\"\n", name);
-        } else {
-            f_att = G_fopen_append( "dig_att", name);
-            if (debug)
-                fprintf( fdlog, "Updating dig_att(L) file \"%s\"\n", name);
-        }
-        if (f_att == NULL)
-        {
-            sprintf( buf, "Unable to create attribute file `%s'.", name );
-            G_fatal_error( buf );
-        }
-
-        /*
-         * Create the dig_cats file
-         */
-        G_init_cats(nShapes,(char *)NULL,&cats);
-        if (G_write_vector_cats(name, &cats) != 1)
-                    G_fatal_error("Writing dig_cats file");
-                        
-    }
-
-  /* -------------------------------------------------------------------- */
-  /*      Loop over each shape in the file.                               */
-  /* -------------------------------------------------------------------- */
-    for( iShape = 0; iShape < nShapes; iShape++ )
+  case -1: 
     {
-        SHPObject	*psShape = SHPReadObject( hShapeDB, iShape );
-
-        if( psShape->nVertices == 0 )
-        {
-            SHPDestroyObject( psShape );
-            continue;
-        }
-
-	points = Vect_new_line_struct();
-	Vect_copy_xy_to_pnts( points, psShape->padfX, psShape->padfY,
-                              psShape->nVertices );
-	Vect_write_line( &map, cover_type, points);
-	Vect_destroy_line_struct( points );
-
-        if( f_att != NULL ) {
-            double	xc, yc;
-
-            if( psShape->nVertices == 1 )
-            {
-                xc = psShape->padfX[0];
-                yc = psShape->padfY[0];
-            }
-            else 
-            {
-                xc = (psShape->padfX[0] + psShape->padfX[1]) / 2.0;
-                yc = (psShape->padfY[0] + psShape->padfY[1]) / 2.0;
-            }
-            
-            fprintf( f_att, "L  %-12f  %-12f  %-8d \n",
-                     xc, yc,
-                     DBFReadIntegerAttribute( hDBF, iShape, cat_field ) );
-                     
-            /* set cat for dig_cats file*/ /* M Neteler 10/99 */
-            sprintf(AttText, "%-8d", DBFReadIntegerAttribute( hDBF, iShape, cat_field ));
-            if (G_set_cat(iShape, AttText, &cats) != 1)
-                       G_fatal_error("Call to G_set_cats");
-        }
-
-        SHPDestroyObject( psShape );
+      fprintf(stderr, "\n\nFATAL ERROR: There was a problem importing the map.\n");
+      if(! print_to_error) {
+        fprintf(stderr, "Please consult the log file `%s' for details.\n", log_file);
+      }
+      break;
     }
 
-    map.head.orig_scale = 100000l;
-    G_strncpy( map.head.your_name, G_whoami(), 20);
-    G_strncpy( map.head.date, G_date(), 20);
-    G_strncpy( map.head.map_name, name, 20);
-    map.head.W = adfMinBound[0];
-    map.head.S = adfMinBound[1];
-    map.head.E = adfMaxBound[0];
-    map.head.N = adfMaxBound[1];
-
-    Vect_close( &map);
-
-    SHPClose( hShapeDB );
-
-    if( hDBF != NULL )
+  case -2: 
     {
-        DBFClose( hDBF );
-        fclose( f_att );
+      fprintf(stderr, "\n\nWARNING. Map `%s' imported, but there were problems.\n", vmap);
+      if(! print_to_error) {
+        fprintf(stderr, "Please consult the log file `%s' for details.\n", log_file);
+      }
+      break;
     }
-    
-    exit(0);
+
+  default: 
+    {
+      fprintf(stderr, "\n\nMap `%s' imported, apparently without problems.\n", vmap);
+      if(! print_to_error) {
+        fprintf(stderr, "Please consult the log file `%s' for details.\n", log_file);
+      }    
+    }
+  }
+
+  if(!print_to_error)
+    fclose(lf);
+
+  import_ctrl_destroy(ctr1);
+
+  return(0);
+
 }
-

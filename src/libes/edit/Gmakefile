@@ -1,0 +1,14 @@
+
+SLIBDEPS = $(GISLIB) $(VASKLIB)
+
+EXTRA_CFLAGS = $(PICFLAGS)
+
+OBJ = \
+    edit_cats.o\
+    edit_cellhd.o\
+    edit_hist.o
+
+all:	$(DEPEDITLIB)
+
+$(DEPEDITLIB): $(OBJ)
+	$(SLIBRULE)

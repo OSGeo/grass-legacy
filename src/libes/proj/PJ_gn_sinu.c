@@ -5,7 +5,7 @@ static const char SCCSID[]="@(#)PJ_gn_sinu.c	4.1	94/02/15	GIE	REL";
 	double	*en; \
 	double	m, n, C_x, C_y;
 #define PJ_LIB__
-#include	<projects.h>
+#include	"projects.h"
 PROJ_HEAD(gn_sinu, "General Sinusoidal Series") "\n\tPCyl, Sph.\n\tm= n=";
 PROJ_HEAD(sinu, "Sinusoidal (Sanson-Flamsteed)") "\n\tPCyl, Sph&Ell";
 PROJ_HEAD(eck6, "Eckert VI") "\n\tPCyl, Sph.";

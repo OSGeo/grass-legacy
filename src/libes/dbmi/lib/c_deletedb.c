@@ -1,7 +1,7 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_delete_database (driver, handle)
+int db_delete_database (driver, handle)
     dbDriver *driver;
     dbHandle *handle;
 {

@@ -2,16 +2,15 @@
 ### 	i.rectify Gmakefile 
 ###
 
-PGR  	= i.rectify3
+PGM  	= i.rectify3
 
-HOME 	= $(BIN_MAIN_INTER)
+HOME 	= 
 
 ####    required - suplimental imagery libary
-IMAGERY_SUBINC = ../../image3
-IMAGERYLIB_SUP  = ../../image3/libimage_sup.a
+IMAGERY_SUBINC = $(SRC)/libes/image3
 
 ### 	what to make
-all:	$(HOME)/$(PGR)
+all:	$(BIN_INTER)/$(PGM)
 
 
 ###	object files
@@ -41,14 +40,19 @@ LIST = main.o\
 ###	object dependencies
 $(LIST): global.h rowcol.h
 
-LIBES =  $(IMAGERYLIB) $(IMAGERYLIB_SUP) $(D_LIB)\
+LIBES =  $(IMAGERYLIB) $(IMAGESUPLIB) $(D_LIB)\
 	 $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) \
-	 $(GPROJLIB) $(LIBTRANS) $(COORCNVLIB) \
-	 $(GISLIB) $(VASK) $(XDRLIB)
+	 $(GPROJLIB) $(COORCNVLIB) \
+	 $(GISLIB) $(VASKLIB)
+
+DEPLIBS= $(DEPIMAGERYLIB) $(DEPIMAGESUPLIB) $(DEPD_LIB)\
+	 $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPVECTLIB) \
+	 $(DEPGPROJLIB) $(DEPCOORCNVLIB) \
+	 $(DEPGISLIB) $(DEPVASKLIB)
 
 
 ###	libarary dependencies
-$(LIBES): # in case of lib changes
+$(DEPLIBS): # in case of lib changes
 
 ###	any program required compile flags
 EXTRA_CFLAGS = $(VECT_INCLUDE) -I$(IMAGERY_SUBINC)
@@ -58,8 +62,8 @@ EXTRA_CFLAGS = $(VECT_INCLUDE) -I$(IMAGERY_SUBINC)
 
 
 ###	the rules
-$(HOME)/$(PGR): $(LIST) $(LIBES) 
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+$(BIN_INTER)/$(PGM): $(LIST) $(DEPLIBS) 
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 ###	tags
 ###	the end.

@@ -1,6 +1,5 @@
 #include "gis.h"
-#include "dig_atts.h"
-#include "digit.h"
+#include "Vect.h"
 #include "vbuildlib.h"
 
 static int label_line(struct Map_info *,P_ATT *);
@@ -108,7 +107,7 @@ static int label_line (
 	Line = &(map->Line[line]);
 	if (Line->att)
 	{
-	    fprintf (stderr, "WARNING: line %d label: %d matched another label: %d.\n", line, map->Att[Line->att].cat, Att->cat);
+	    fprintf (stderr, " WARNING: line %d label: %d matched another label: %d.\n", line, map->Att[Line->att].cat, Att->cat);
 	    /* delete old att and take the new one */
 	    dig__del_att (map, Line->att);
 	    Line->att = 0;

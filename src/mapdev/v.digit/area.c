@@ -26,10 +26,10 @@ int build_area (
     P_AREA *Area)
 {
 
-    if (dig_build_area_with_line (map, line, Area) > 0)
+    if (dig_build_area_with_line (map, line, Area, NULL) > 0)
 	if (dig_point_in_area (map, x, y, Area) > 0.)
 	    return (1);
-    if (dig_build_area_with_line (map, -line, Area) > 0)
+    if (dig_build_area_with_line (map, -line, Area, NULL) > 0)
 	if (dig_point_in_area (map, x, y, Area) > 0.)
 	return (1);
     return (0);

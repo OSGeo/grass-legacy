@@ -332,7 +332,7 @@ int Nget_site_list_cmd(Nv_data *data, Tcl_Interp *interp, int argc, char *argv[]
  */
 int Nnew_map_obj_cmd(Nv_data *data, Tcl_Interp *interp, int argc, char *argv[])
 {
-  char id[128], *arglist[4], *log_name=NULL;
+  char id[128], *arglist[5], *log_name=NULL;
   char topo_string[]="topo";
   char const_string[]="constant";
   char zero_string[]="0";
@@ -894,7 +894,8 @@ int get_wirecolor(int id, int type, Nv_data *data, Tcl_Interp *interp)
 {
   int c, colr;
   char *col;
-  
+  char err[255];
+
   if (type != SURF) {
     Tcl_SetResult(interp, "Error: map object must be a surface in order to use get_wirecolor",
 		  TCL_VOLATILE);
@@ -902,7 +903,8 @@ int get_wirecolor(int id, int type, Nv_data *data, Tcl_Interp *interp)
   }
 
   if (GS_get_wire_color(id, &colr) == -1) {
-    Tcl_SetResult(interp, "Error: id in get_wirecolor is invalid", TCL_VOLATILE);
+    sprintf(err,"Error: id (%d) in get_wirecolor is invalid",id);
+    Tcl_SetResult(interp, err, TCL_VOLATILE);
     return (TCL_ERROR);
   }
 
@@ -970,9 +972,9 @@ int set_trans(Tcl_Interp *interp, int id, int type, int argc, char *argv[])
 {
   float x, y, z;
   
-  x = atof (argv[2]);
-  y = atof (argv[3]);
-  z = atof (argv[4]);
+  x = (float)atof (argv[2]);
+  y = (float)atof (argv[3]);
+  z = (float)atof (argv[4]);
   
   switch (type)
     {
@@ -1178,6 +1180,7 @@ int surf_is_selected (int id, int type, Tcl_Interp *interp, int argc, char *argv
 int set_exag_obj(int id, int type, int argc, char *argv[], Tcl_Interp *interp)
 {
   float exag;
+  double atof();
   
   if (type != SURF && type != VOL) {
     Tcl_SetResult(interp, 
@@ -1191,7 +1194,7 @@ int set_exag_obj(int id, int type, int argc, char *argv[], Tcl_Interp *interp)
     return (TCL_ERROR);
   }
 
-  exag = atof (argv[2]);
+  exag = (float)atof (argv[2]);
   if(type == SURF)
       GS_set_exag(id, exag);
   else
@@ -1281,7 +1284,7 @@ int get_att(int id, int type, Nv_data *data, Tcl_Interp *interp, int argc, char 
     float c;
     char mapname[100], temp[100];
     
-    GS_get_att(id, att_atoi(argv[2]), &set, &c, &mapname);
+    GS_get_att(id, att_atoi(argv[2]), &set, &c, mapname);
 
     switch (set) {
     case NOTSET_ATT:
@@ -1399,14 +1402,21 @@ int set_att(int id, int type, Nv_data *data, Tcl_Interp *interp, int argc, char 
   int index;
   float temp2, size;
   float temp;
-  long col;
+  double atof();
+  int col;
+  char	errStr[255];
 
   /* Switch based on the type of map object we are using */
   switch (type) {
   case SURF:
     /* Decode the attribute we are setting */
     att = att_atoi (argv[2]);
-    
+    if (att < 0) {
+	sprintf(errStr, "Internal Error: unknown attribute name '%s' in set_att", argv[2]);
+        Tcl_SetResult(interp, errStr, TCL_VOLATILE);
+        return (TCL_ERROR);
+    }
+
     /* Basically two cases, either we are setting to a constant field, or
      * we are loading an actual file.  Setting a constant is the easy part
      * so we try and do that first.
@@ -1416,7 +1426,7 @@ int set_att(int id, int type, Nv_data *data, Tcl_Interp *interp, int argc, char 
       /* Get the value for the constant
        * Note that we require the constant to be an integer
        */
-      temp=atof(argv[4]);
+      temp=(float)atof(argv[4]);
       
       /* Only special case is setting constant color.
        * In this case we have to decode the constant Tcl

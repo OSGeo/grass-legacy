@@ -1,6 +1,0 @@
-
-
-polygon - A multi-sided figure representing an @glossary("area",16.glossary/area.def) on a map.  Maps
-in GRASS @glossary("vector",16.glossary/vector.def) format represent polygons as the area edges forming
-their perimeters.  Maps in GRASS raster format store areas as a
-block of grid cells.

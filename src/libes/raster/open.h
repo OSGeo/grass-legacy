@@ -6,7 +6,7 @@
 /*                      -5 - GIS_LOCK undefined in shell environment */
 /*                      -6 - couldn't read, write or create lock file */
 
-#define OKOK     0
+#define OK       0
 #define LOCKED  -1
 #define NO_RUN  -2
 #define NO_OPEN -3

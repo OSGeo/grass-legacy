@@ -1,6 +1,6 @@
 #!/bin/sh
 # the next line restarts using wish \
-exec wish8.0 "$0" "$@"
+exec "$1" "$0" "$@"
 
 if ![info exists env(GISBASE)] {
     puts stderr {

@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include "gis.h"
+#include <string.h>
 
 int G_done_msg(char *msg)
 {

@@ -24,10 +24,17 @@ main (int argc, char *argv[])
 	CELL *rowbuffer[NBANDS];
 	struct Option *opt1, *opt3, *opt4 ;
 	struct Option *opt2, *opt5 ;
+	struct GModule *module;
 
 	G_gisinit(argv[0]);
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+	"Calculates ground features, e.g. plant cover, by "
+	"remote sensing data using a given regression model";
 
-					/* Define the different options */
+	/* Define the different options */
 
 	opt1 = G_define_option() ;
 	opt1->key        = "parms";
@@ -122,7 +129,7 @@ main (int argc, char *argv[])
 		fprintf (stdout,"processing row: %ld/%d\n", i+1, rows);
 		model(amodel, rowbuffer, cols);
 				/* write out the new row for each cell map */
-			if(G_put_map_row(fd_output, rowbuffer[0]) < 0)
+			if(G_put_raster_row(fd_output, rowbuffer[0], CELL_TYPE) < 0)
 			G_fatal_error("Error while writing new cell map.");
 	}
 

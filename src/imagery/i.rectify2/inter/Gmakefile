@@ -1,0 +1,26 @@
+PGM  = i.rectify
+LIST = main.o\
+	ask_files.o\
+	ask_files2.o\
+	ask_wind.o\
+	cp.o\
+        crs.o\
+	compress.o\
+	env.o\
+	exec.o\
+        get_wind.o\
+	mail.o\
+	matrix.o\
+	perform.o\
+	rectify.o\
+	report.o\
+	target.o\
+	write.o
+
+LIBES=$(IMAGERYLIB) $(VASKLIB) $(GISLIB)
+DEPLIBS=$(DEPIMAGERYLIB) $(DEPVASKLIB) $(DEPGISLIB)
+$(BIN_INTER)/$(PGM): $(LIST) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
+$(LIST): global.h rowcol.h crs.h
+
+$(DEPLIBS): # in case libraries change

@@ -1,19 +1,19 @@
+/* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char dxf_line */
+/* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char layername */
 /* written by J Moorman
 ** 7/23/90
 */
 
-#include <math.h>
 #include <stdlib.h>
-#include "dig_defines.h"
-#include "dig_head.h"
-#include "dxf2vect.h"
+#include <stdio.h>
+#include <math.h>
 
-/* DECLARING SUBROUTINES */
-double 	atof();
+#include "Vect.h"
+#include "dxf2vect.h"
 
 #define DEG_TO_RAD (3.141592654/180.0)
 
-int 
+int
 dxf_add_polyline (FILE *dxf_file)
 {
     /* DECLARING VARIABLES */
@@ -34,8 +34,8 @@ dxf_add_polyline (FILE *dxf_file)
     double prev_bulge = 0.0;           /* for arc curves */
     double arc_tan = 0.0;           /* for arc curves */
     char *nolayername = "UNIDENTIFIED"; 
-    char layername[80];
-    DXF_DIG *layer_fd = NULL;         /* POINTER TO LAYER NAME */
+    char layername[256];
+    DXF_DIG *layer_fd;         /* POINTER TO LAYER NAME */
     int  code;  /* VARIABLE THAT HOLDS VALUE RETURNED BY readcode() */
 
     /* READS IN LINES AND PROCESSES INFORMATION UNTIL A 0 IS READ IN */
@@ -44,7 +44,7 @@ dxf_add_polyline (FILE *dxf_file)
     {
 	if (code == -2)  /* EOF */
 	return(0);
-	dxf_fgets (dxf_line,80,dxf_file);  
+	dxf_fgets (dxf_line,256,dxf_file);  
 	if (feof(dxf_file) != 0) /* EOF */
 	return(0);
 
@@ -105,7 +105,7 @@ dxf_add_polyline (FILE *dxf_file)
 		break;
 	}
     }
-    dxf_fgets (dxf_line,80,dxf_file);  
+    dxf_fgets (dxf_line,256,dxf_file);  
     while (strcmp (dxf_line,seqend) != 0)/* LOOP UNTIL SEQEND IN THE DXF FILE */
     {
 	if (feof(dxf_file) != 0) /* EOF */
@@ -118,7 +118,7 @@ dxf_add_polyline (FILE *dxf_file)
 	    {
 		if (code == -2) /* EOF */
 		return (0);
-		dxf_fgets (dxf_line,80,dxf_file);  
+		dxf_fgets (dxf_line,256,dxf_file);  
 		if (feof(dxf_file) != 0) /* EOF */
 		return(0);
 		switch (code)
@@ -269,7 +269,7 @@ dxf_add_polyline (FILE *dxf_file)
 	    arc_tan = 0.0;
 	    bulge = 0.0;
 	} /* processing polyline vertex */
-	dxf_fgets (dxf_line,80,dxf_file);  
+	dxf_fgets (dxf_line,256,dxf_file);  
     } /* vertex loop */
     /* done reading vertices */
     if (polyline_flag & POLYFLAG1) /* ONLY DEALING WITH polyline_flag = 1 */

@@ -6,7 +6,6 @@
 #include "digit.h"
 #include "debug.h"
 #include "raster.h"
-#include "dig_head.h"
 #include "dig_curses.h"
 #include "wind.h"
 #include "local_proto.h"
@@ -22,17 +21,12 @@ set_window_w_mouse (void)
     double sx1, sy1 ;
     double sx2, sy2 ;
     int button ;
-    int cur_screen_x, cur_screen_y ;
-    double N, S, E, W;
+    int cur_screen_x, cur_screen_y;
+    double N, S, E, W, ns, ew, n, s;
     double delta;
     int yn;
+    int mode;
 
-    Clear_info ();
-    _Clear_base ();
-    _Write_base (12, "Buttons:") ;
-    _Write_base (13, "Left:   Establish a corner") ;
-    _Write_base (14, "Middle: Widen view") ;
-    Write_base  (15, "Right:  Accept window") ;
 
     cur_screen_x = (int)D_west ;
     cur_screen_y = (int)D_south ;
@@ -48,105 +42,81 @@ set_window_w_mouse (void)
     sy2 = uy2 = U_north ;
 top:
 
+    mode = 1;
     while (1)
     {
-	R_get_location_with_box(cur_screen_x, cur_screen_y, &screen_x, &screen_y, &button) ;
+	
 	Clear_info ();
+	_Clear_base ();
+	_Write_base (12, "   Buttons:") ;
+	if ( mode == 1 ) {
+	    _Write_base (13, "   Left:   1. corner") ;
+	    _Write_base (14, "   Middle: Unzoom") ;
+	    Write_base  (15, "   Right:  Main zoom menu") ;
+	} else {
+	    _Write_base (13, "   Left:   1. corner (reset)") ;
+	    _Write_base (14, "   Middle: 2. corner") ;
+	    Write_base  (15, "   Right:  Main zoom menu") ;
+	}
+
+        if ( mode == 1 ) {
+            R_get_location_with_pointer(&screen_x, &screen_y, &button);
+	}
+	else
+	    R_get_location_with_box(cur_screen_x, cur_screen_y, &screen_x, &screen_y, &button) ;
 
 	switch (button) {
-	    case 1:
+	    case LEFTB:
 		cur_screen_x = screen_x ;
 		cur_screen_y = screen_y ;
 		screen_to_utm ( cur_screen_x, cur_screen_y, &ux1, &uy1) ;
+		mode = 2;
 		break;
 
-	    case 2:
-	    {
-		double sN, sS, sE, sW;
-
-		sN = U_north; sW = U_west; sE = U_east; sS = U_south;
-
-		clear_window ();
-		W  =  CMap->head.W;
-		E  =  CMap->head.E;
-		S  =  CMap->head.S;
-		N  =  CMap->head.N;
-		delta = (CMap->head.E - CMap->head.W);
-		W -= delta;
-		E += delta;
-		delta = (CMap->head.N - CMap->head.S);
-		N += delta;
-		S -= delta;
-		/*
-		window_conversions (N, S, E, W);
-		*/
-/*DEBUG*/ debugf ("MKWIND (%lf, %lf, %lf, %lf)\n", N, S, E, W);
-		window_rout (N, S, E, W);
-/*DEBUG*/ debugf ("MKWIND Us after (%lf, %lf, %lf, %lf)\n", U_north, U_south, U_east, U_west);
-
-		cur_screen_x = (int)D_west ;
-		cur_screen_y = (int)D_south ;
-		screen_x     = (int)D_east ;
-		screen_y     = (int)D_north ;
-/*DEBUG*/ debugf ("MKWIND screen = (%d, %d, %d, %d)\n", D_north, D_south, D_west, D_east);
-/*
-		screen_x = cur_screen_x + 10 ;
-		screen_y = cur_screen_y + 10 ;
-*/
-		sx1 = ux1 = U_west ;
-		sy1 = uy1 = U_south ;
-		sx2 = ux2 = U_east ;
-		sy2 = uy2 = U_north ;
-
-		/*
-		replot (CMap);
-		*/
-/*DEBUG*/ debugf ("MKWIND default (%lf, %lf, %lf, %lf)\n", sN, sS, sE, sW);
-		draw_default_window (sN, sS, sE, sW);
-	    }
-		break;
-	    case 3:
-		if ( cur_screen_x == screen_x  ||  cur_screen_y == screen_y)
-		{
-		    Write_info(2, "Window is too small to display") ;
-		    continue ;
-		}
+	    case MIDDLEB:
 		screen_to_utm ( screen_x, screen_y, &ux2, &uy2) ;
-		    goto foo;
+		clear_window ();
+		switch ( mode ) {
+		    /* window */
+	            case ( 2 ) : 
+			if ( cur_screen_x == screen_x  ||  cur_screen_y == screen_y)
+			{
+			    Write_info(2, "Window is too small to display") ;
+			    continue ;
+			}
+			W  =  ux1<ux2?ux1:ux2 ;
+			E  =  ux1>ux2?ux1:ux2 ;
+			S =  uy1<uy2?uy1:uy2 ;
+			N =  uy1>uy2?uy1:uy2 ;
+			if (E < CMap->head.W || W > CMap->head.E || N < CMap->head.S || S > CMap->head.N)
+			{
+			    yn = curses_yes_no_default (2,"Window is outside of default. Proceed? ", 1);
+			    Clear_info ();
+			    if (!yn)
+				goto top;
+			}
+			window_rout (N, S, E, W);
+			mode = 1;
+			break;
+		    /* unzoom */
+		    case ( 1 ) : 
+			ns = U_north - U_south;
+			ew = U_east - U_west;
+			N = uy2 + ns;
+			S = uy2 - ns;
+			E = ux2 + ew;
+			W = ux2 - ew;
+			window_rout (N, S, E, W);
+			break;
+		}
+		replot(CMap);
+		break;
+	    case RIGHTB:
+	        return(0) ;
 		break;
 	}
-
-/*
-	sprintf(buffer,"NORTH: %10.2f", uy1>uy2?uy1:uy2) ;
-	    Write_menu_line(10, buffer) ;
-	sprintf(buffer,"SOUTH: %10.2f", uy1<uy2?uy1:uy2) ;
-	    Write_menu_line(11, buffer) ;
-	sprintf(buffer,"WEST:  %10.2f", ux1<ux2?ux1:ux2) ;
-	    Write_menu_line(12, buffer) ;
-	sprintf(buffer,"EAST:  %10.2f", ux1>ux2?ux1:ux2) ;
-	    Write_menu_line(13, buffer) ;
-*/
-
     }
 
-foo:
-
-	    W  =  ux1<ux2?ux1:ux2 ;
-	    E  =  ux1>ux2?ux1:ux2 ;
-	    S =  uy1<uy2?uy1:uy2 ;
-	    N =  uy1>uy2?uy1:uy2 ;
-	    if (E < CMap->head.W || W > CMap->head.E || N < CMap->head.S || S > CMap->head.N)
-	    {
-		yn = curses_yes_no_default (2,"Window is outside of default. Proceed? ", 1);
-		Clear_info ();
-		if (!yn)
-		    goto top;
-	    }
-	    clear_window ();
-	    /*
-	    window_conversions (N, S, E, W);
-	    */
-	    window_rout (N, S, E, W);
 	    return(0) ;
 }
 

@@ -8,8 +8,11 @@
 int main (int argc, char *argv[])
 {
     struct Map_info Map;
+	struct GModule *module;
     struct Option *vectfile, *value;
+    struct Option *clabel;
     struct Flag *incr, *Nosup;
+    struct Categories cats;
     char *mapset;
     char errmsg[1000];
     int level;
@@ -20,6 +23,11 @@ int main (int argc, char *argv[])
     int label;
 
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Bulk-labels unlabeled area features in "
+		"a binary GRASS vector file.";
 
     vectfile = G_define_option();
     vectfile->key 		= "map";
@@ -34,8 +42,13 @@ int main (int argc, char *argv[])
     value->type		= TYPE_INTEGER;
     value->required		= NO;
     value->multiple		= NO;
-    value->description	= "value of label";
+    value->description	= "value of category";
     value->answer = "1";
+
+    clabel              = G_define_option();
+    clabel->key         = "label";
+    clabel->type        = TYPE_STRING;
+    clabel->description = "value of category label";
 
     incr = G_define_flag ();
     incr->key 		= 'i';
@@ -95,7 +108,14 @@ int main (int argc, char *argv[])
 	exit (1);
     }
 
+    
     label = atoi (value->answer);
+    G_suppress_warnings (0);
+    if (G_read_vector_cats (vectfile->answer, mapset, &cats) != 0)
+    {
+        G_init_cats ((CELL) 0, vectfile->answer, &cats);
+    }
+    G_suppress_warnings (1);
     for (i = 1 ; i <= Map.n_areas ; i++)
     {
 	if (0 != Map.Area[i].att)
@@ -109,8 +129,12 @@ int main (int argc, char *argv[])
 	}
 
 	write_att (afp, 'A', X, Y, label);
+        G_set_cat ((CELL) label, 
+                (clabel->answer) ? clabel->answer : "", &cats);
 	if (incr->answer)
+        {
 	    label++;
+        }
 	cnt++;
     }
 
@@ -118,6 +142,9 @@ int main (int argc, char *argv[])
     fclose (afp);
 
     Vect_close (&Map);
+
+    if (G_write_vector_cats (vectfile->answer, &cats) != 1)
+        G_warning ("failed to write dig_cats.");
 
     fprintf (stderr, "Labeled %d new areas.\n\n", cnt);
 

@@ -8,6 +8,16 @@
 #include	<stdlib.h>
 #include	"image.h"
 
+/* reverse byte order for header ? */
+#ifdef __FreeBSD__
+#	define	DOREV
+#endif
+
+#ifdef __linux__
+#	define	DOREV
+#endif
+
+
 int
 iclose(image)
 register IMAGE 	*image;
@@ -18,24 +28,40 @@ register IMAGE 	*image;
     iflush(image);
     img_optseek(image, 0);
     if (image->flags&_IOWRT) {
+#ifdef DOREV
+	if(!image->dorev)
+#else
 	if(image->dorev)
+#endif
 	    cvtimage(image);
 	if (img_write(image,image,sizeof(IMAGE)) != sizeof(IMAGE)) {
 	    i_errhdlr("iclose: error on write of image header\n");
 	    return EOF;
 	}
+#ifdef DOREV
+	if(!image->dorev)
+#else
 	if(image->dorev)
+#endif
 	    cvtimage(image);
 	if(ISRLE(image->type)) {
 	    img_optseek(image, 512L);
 	    tablesize = image->ysize*image->zsize*sizeof(long);
+#ifdef DOREV
+	    if(!image->dorev)
+#else
 	    if(image->dorev)
+#endif
 		cvtlongs(image->rowstart,tablesize);
 	    if (img_write(image,image->rowstart,tablesize) != tablesize) {
 		i_errhdlr("iclose: error on write of rowstart\n");
 		return EOF;
 	    }
+#ifdef DOREV
+	    if(!image->dorev)
+#else
 	    if(image->dorev)
+#endif
 		cvtlongs(image->rowsize,tablesize);
 	    if (img_write(image,image->rowsize,tablesize) != tablesize) {
 		i_errhdlr("iclose: error on write of rowsize\n");

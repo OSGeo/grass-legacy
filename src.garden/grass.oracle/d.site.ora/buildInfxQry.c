@@ -21,7 +21,7 @@ buildInfxQry(table, xy, where, map, joinargs, plotargs )
     char buf2[1024];		/* value in Ycol column		*/
     Site *mysite;
 
-    mysite=G_site_new_struct(2,0,0);
+    mysite=G_site_new_struct(-1,2,0,0);
 
     i = 1;
     retval = 0;

@@ -25,6 +25,7 @@ main (int argc, char *argv[])
     int tape_1_rows ;
     int tape_2_rows ;
     int tape_total;
+	struct GModule *module;
     struct Option *tapename;
 
 /*
@@ -33,6 +34,12 @@ main (int argc, char *argv[])
 *	 image offset is 12 bytes into image record
 */
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"An imagery function that extracts header "
+		"information from LANDSAT Multispectral Scanner "
+		"(MSS) imagery data stored on half-inch tape.";
 
     tapename = G_define_option();
     tapename->key = "input";

@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "gis.h"
+#include "edit.h"
 #include "r.reclass.h"
 
 CELL set_new_cats( struct Categories *,struct Categories *,CELL *,CELL,CELL);
@@ -82,7 +83,7 @@ int main( int argc, char *argv[] )
     G_init_cats (0, "", &new_cats);
     max_cat = set_new_cats (&cats, &new_cats, table, min, max);
     if(!G_is_c_null_value(&max_cat))
-        G_edit_cats (new_name, &new_cats, -1);
+        E_edit_cats (new_name, &new_cats, -1);
 
 /* run reclass now */
     do_reclass (old_name, old_mapset, new_name, &cats, &new_cats, table, min, max);

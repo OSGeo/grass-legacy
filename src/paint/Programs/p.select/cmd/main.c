@@ -3,11 +3,16 @@
 
 int main (int argc, char *argv[])
 {
+	struct GModule *module;
     int stat;
     struct Option *painter;
     struct Flag *print, *list, *quiet;
 
     G_no_gisinit ();
+
+	module = G_define_module();
+	module->description =
+		"Selects a device (printer) for GRASS hardcopy output.";
 
     painter = G_define_option();
     painter->key = "painter";

@@ -1,0 +1,10 @@
+PGM=r.out.gridatb
+LIBES  = $(GISLIB)
+DEPLIBS= $(DEPGISLIB)
+
+SRCS   = main.c check_ready.c adjcellhd.c file_io.c
+OBJS   = main.o check_ready.o adjcellhd.o file_io.o
+
+$(BIN_CMD)/$(PGM): $(OBJS) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+

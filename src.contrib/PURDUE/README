@@ -1,0 +1,18 @@
+s.delaunay
+s.voronoi
+
+use s.out.ascii|etc/s.sweep| >tmpfile ...
+to generate the vector file.
+
+should this be replaced with functions from s.geom?
+at least we can use this for regression testing
+of the output of s.geom. 
+
+License for s.sweep:
+       Steve  J. Fortune (1987) A Sweepline Algorithm for Voronoi
+       Diagrams, Algorithmica 2, 153-174.
+       Modified by:
+       James Darrell McCauley, Purdue University
+       (mccauley@ecn.purdue.edu) for use with GRASS.
+
+(collected by Andreas Lange)

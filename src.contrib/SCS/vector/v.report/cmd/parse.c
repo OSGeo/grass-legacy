@@ -20,7 +20,15 @@ parse_command_line (int argc, char *argv[])
 		struct Flag *f;
 		struct Flag *h;
 		struct Flag *q;
+		struct Flag *e;
 	} flags;
+	
+	struct GModule *module;
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+	"Generates statistics for vector files.";
 
 	parms.vect = G_define_option();
 	parms.vect->key    = "map";
@@ -44,7 +52,7 @@ parse_command_line (int argc, char *argv[])
 	parms.units->required = NO ;
 	parms.units->multiple = YES ;
 	parms.units->description =
-	    "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectacres),c(ounts)";
+	    "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares),c(ounts)";
 
 	parms.pl = G_define_option();
 	parms.pl->key = "pl";
@@ -72,12 +80,17 @@ parse_command_line (int argc, char *argv[])
 	flags.q->key = 'q';
 	flags.q->description = "quiet";
 
+	flags.e = G_define_flag();
+	flags.e->key = 'e';
+	flags.e->description = "scientific format";
+
 	if (G_parser(argc,argv))
 		exit(-1);
 
 	use_formfeed = flags.f->answer;
 	with_headers = !flags.h->answer;
 	verbose      = !flags.q->answer;
+	e_format     = flags.e->answer;
 
 	if (parms.vect->answer)
 		{
@@ -146,7 +159,7 @@ int parse_units (char *s, char *t)
 		 exit(-1);
 		 }
 		}
-	else if (match (s, "hectacres",1))
+	else if (match (s, "hectares",1))
 		{
 		x = HECTARES;
 		if (!match (t, "area",1))

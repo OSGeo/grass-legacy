@@ -65,6 +65,9 @@ int set_menu_colors (struct Colors *colors)
 
 int cursor_color (void)
 {
+
+    static int use = 1;
+
     static Objects objects[] =
     {
 	MENU("DONE", done, &use),
@@ -78,7 +81,7 @@ int cursor_color (void)
 	{0} 
     };
 
-    while( (Input_pointer(objects) != -1) );
+    Input_pointer (objects);
     return 0;  /* return but don't quit */
 }
 
@@ -163,7 +166,7 @@ static int set_cur_clr(int curs_color)
  
 int get_vector_color (void)
 {
-    int x, y;
+    static int use=1;
 	
     static Objects objects[] =
     {
@@ -177,24 +180,18 @@ int get_vector_color (void)
 	{0} 
     };
 
-    x = (SCREEN_LEFT + SCREEN_RIGHT) / 2;
-    y = SCREEN_BOTTOM;
-    Set_mouse_xy( x,y );
-
     Input_pointer(objects);
     return 0;  /* return but don't quit */
 }
 
 static int setmap_blue (void)
 {
-	line_color = BLUE;
-	return 0;
+	return line_color = BLUE;
 }
 
 static int setmap_gray (void)
 {
-	line_color = GREY;
-	return 0;
+	return line_color = GREY;
 }
 
 static int setmap_green (void)

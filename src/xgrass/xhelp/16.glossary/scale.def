@@ -1,8 +1,0 @@
-
-
-scale - The relation between the size of an object on a map and its
-size in the real world.  "Large-scale" and "small-scale" are relative
-terms, denoting the relationship of mapped objects to their actual
-size.  Objects mapped at large-scale are closer to their actual sizes,
-while objects mapped at small-scale are less close to their actual
-sizes.  See also @glossary("resolution",16.glossary/res.def).

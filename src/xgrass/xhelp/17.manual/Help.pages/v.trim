@@ -1,5 +1,0 @@
-
-@man("v.trim") - Trims small spurs, and removes excessive nodes from a GRASS
-vector (digit) file.
-
-(GRASS Raster Program)

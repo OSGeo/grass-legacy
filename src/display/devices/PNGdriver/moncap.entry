@@ -1,0 +1,3 @@
+PNG:driver/PNG:Create PNG Map: \
+     dev/fifo.16a dev/fifo.16b \
+     ::any terminal

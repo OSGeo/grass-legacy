@@ -6,6 +6,7 @@
  *   0,0 is lower left; 100,100 is upper right
  */
 
+#include <stdlib.h>
 #include "gis.h"
 #include "raster.h"
 #include "display.h"
@@ -34,7 +35,8 @@ main (int argc, char *argv[])
 	at->description = "Where to place the frame";
 	at->answer = NULL;
 
-	R_open_driver ();
+	if (R_open_driver () != 0)
+		G_fatal_error ("No graphics device selected");
 
 	if (argc > 1 && G_parser(argc,argv))
 		exit(1);

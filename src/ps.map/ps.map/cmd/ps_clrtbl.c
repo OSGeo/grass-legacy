@@ -58,11 +58,14 @@ int ps_colortable (void)
     /* read cats into PostScript array "a" */
     fprintf(PS.fp, "/a [\n");
     for(i = 0; i <= num_cats; i++)
+    {
+	if ( !i && !ct.nodata )  i++; /* step over 'no data' */
 	if(!i)
 	    fprintf(PS.fp, "(%s)\n", "no data");
         else
             fprintf(PS.fp, "(%s)\n", 
 		  G_get_ith_d_raster_cat (&PS.cats, i-1, &dmin, &dmax));
+    }		  
     fprintf(PS.fp, "] def\n");
 
     /* get width of widest string in PostScript variable "mw" */
@@ -92,6 +95,8 @@ int ps_colortable (void)
     k = 0;
     for(i = 0; i <= num_cats;)
     {
+	if ( !i && !ct.nodata ) i++; /* step over 'no data' */
+
 	/* test for bottom of page */
 	y -= dy;
 	if (y < 72.0 * PS.bot_marg) 

@@ -1,6 +1,0 @@
-
-The Brush-Save Menu Option
-
-This dialog allows you to save the current brush to a text file
-in your @glossary("mapset",16.glossary/mapset.def) (under the directory "brush").
-

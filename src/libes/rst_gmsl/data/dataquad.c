@@ -10,10 +10,7 @@
  */
 
 #include <stdio.h>
-extern  char *calloc(); 
-extern  int  free();
-extern  char *malloc();
-extern  char *realloc();
+#include <stdlib.h>
 #include "dataquad.h"
 
 /* sm added to point structure */

@@ -1,0 +1,198 @@
+
+
+proc put_command { } {
+
+
+  global a
+  global w
+
+
+  set cmd ""
+
+  if {  $a != "" || $w != "" } {
+         set cmd "$cmd -$a$w"
+  }
+
+  if { $cmd != "" } {
+     set cmd "r.traj.data $cmd"
+  }
+}
+
+
+
+
+proc set_command_entry { } {
+
+  .cmd.frame0.entry configure -state normal
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 [put_command]
+  .cmd.frame0.entry configure -state disabled
+
+}
+
+
+proc proc_r.traj.data { } {
+
+
+  global a
+  global w
+
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "Review Ammunition and Weapon Data Base"
+
+
+  frame .cmd.frame0 \
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame0.hscrollbar set}
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {r.traj.data}
+
+  .cmd.frame0.entry configure -state disabled
+
+
+
+  frame .cmd.frame1 \
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame1.hscrollbar set}
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {r.traj.data reviews the ammunition and weapon data base used by r.traj.}
+
+  .cmd.frame1.entry configure -state disabled
+
+
+
+  frame .cmd.frame2 \
+    -relief {flat}
+
+  checkbutton .cmd.frame2.checkbutton \
+     -text "Print list of ammunition types." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "a" \
+     -offvalue "" \
+     -command { set_command_entry } \
+     -variable a
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.checkbutton { left }
+
+
+  frame .cmd.frame3 \
+    -relief {flat}
+
+  checkbutton .cmd.frame3.checkbutton \
+     -text "Print list of weapons." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "w" \
+     -offvalue "" \
+     -command { set_command_entry } \
+     -variable w
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.checkbutton { left }
+
+
+  frame .cmd.frame4 \
+     -borderwidth {2}
+
+  button .cmd.frame4.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 		set cmd [put_command]
+ 		if { $cmd != "" } {
+ 		   eval " exec xterm -title r.traj.data -geometry 50x5 -exec $cmd " 
+ 		   destroy .cmd
+ 		}
+ }
+
+  button .cmd.frame4.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { destroy .cmd }
+
+  pack append .cmd.frame4 \
+    .cmd.frame4.ok { left expand } \
+    .cmd.frame4.cancel { right expand }
+
+
+  pack append .cmd \
+    .cmd.frame1 { top expand fill } \
+    .cmd.frame2 { top expand fill } \
+    .cmd.frame3 { top expand fill } \
+    .cmd.frame0 { top expand fill } \
+    .cmd.frame4 { bottom expand fill }
+
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global a
+set a ""
+
+global w
+set w ""
+
+
+global database
+global location
+global mapset
+global feature
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_r.traj.data

@@ -16,16 +16,16 @@ readin_data()
 /* read in data from the input file or stdin */
   if (fscanf (fd, "%d\n", &ncat) != 1)
     G_fatal_error ("ERROR: reading error matrix size");
-  if ((mat = (int **) G_malloc (ncat * sizeof (int *))) == NULL)
+  if ((mat = (long **) G_malloc (ncat * sizeof (long *))) == NULL)
     G_fatal_error ("ERROR: can't allocate memory");
   else
     for (i=0; i<ncat; ++i)
-      if ((mat[i] = (int *) G_malloc (ncat * sizeof (int))) == NULL)
+      if ((mat[i] = (long *) G_malloc (ncat * sizeof (long))) == NULL)
 	G_fatal_error ("ERROR: can't allocate memory");
 
   for (i=0; i<ncat; ++i)
     for (j=0; j<ncat; ++j)
-      if (fscanf (fd, "%d\n", &mat[i][j]) != 1)
+      if (fscanf (fd, "%ld\n", &mat[i][j]) != 1)
 	G_fatal_error ("ERROR: read in error matrix data");
 
   fclose (fd);

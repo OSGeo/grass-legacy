@@ -1,10 +1,10 @@
 PGM=s.out.ascii
-HOME=$(BIN_MAIN_CMD)
 
 LIBES=$(GISLIB) $(DATETIMELIB)
+DEPLIBS=$(DEPGISLIB) $(DEPDATETIMELIB)
 
-$(HOME)/$(PGM): main.o $(LIBES)
+$(BIN_CMD)/$(PGM): main.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ main.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
-$(DATETIMELIB): #
+$(DEPGISLIB): #
+$(DEPDATETIMELIB): #

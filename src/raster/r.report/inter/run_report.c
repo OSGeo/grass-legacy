@@ -81,7 +81,7 @@ int run_report(int full)
            } /* read fp maps as fp */
 	} /* some maps are fp */
     }
-    build_command(command,full,0,"|","more",nv, as_int, cat_ranges, nsteps, fp);
+    build_command(command,full,0,"|","$GRASS_PAGER",nv, as_int, cat_ranges, nsteps, fp);
     if(!run(command)) exit(1);
     if (!full) return 0;
     while (G_yes("\nWould you like to save this report in a file? ", -1))

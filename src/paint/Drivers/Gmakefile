@@ -5,3 +5,4 @@ all:
 	echo GISBASE=$(GISBASE) > $P
 	cat driver.rsh >> $P
 	chmod +x $P
+	$(GMAKE) ppm

@@ -1,4 +1,5 @@
 #define MAIN
+#include <stdlib.h>
 #include <string.h>
 #include "display.h"
 #include "raster.h"
@@ -10,7 +11,6 @@
 int main(int argc,char **argv)
 {
 	char *mapset         ;
-	char buffer[256]      ;
 	char nbuf[128], ebuf[128] ;
 	extern int stash_away() ;
 	char window_name[64] ;
@@ -26,10 +26,17 @@ int main(int argc,char **argv)
 	struct Flag *flag1 ;
 	struct Flag *flag2 ;
 	struct Flag *flag3 ;
+	struct GModule *module;
 	char to_str[128] ;
 	char from_str[128] ;
 
 	G_gisinit(argv[0]) ;
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+	"Displays three-dimensional images based on raster map layers";
+	
 
 	G_get_window(&window) ;
 
@@ -174,19 +181,11 @@ int main(int argc,char **argv)
 /* Final check for existence of files */
 	mapset = G_find_cell2 (file, "") ;
 	if (mapset == NULL)
-	{
-		sprintf(buffer, "Map: [%s] not found", file) ;
-		G_fatal_error(buffer) ;
-		exit(-1) ;
-	}
+		G_fatal_error("Map: [%s] not found", file) ;
 	strcpy (file_mapset, mapset);
 	mapset = G_find_cell2 (elevfile, "") ;
 	if (mapset == NULL)
-	{
-		sprintf(buffer, "Map: [%s] not found", elevfile) ;
-		G_fatal_error(buffer) ;
-		exit(-1) ;
-	}
+		G_fatal_error("Map: [%s] not found", elevfile) ;
 	strcpy (elevfile_mapset, mapset);
 
 	if (check_options() )
@@ -221,7 +220,8 @@ int main(int argc,char **argv)
 		G_fatal_error("Inappropriate window resolution request") ;
 
 /* Set up graphics */
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	if (D_get_cur_wind(window_name))
 		G_fatal_error("No current graphics frame") ;

@@ -3,10 +3,16 @@
 
 int main (int argc, char *argv[])
 {
+	struct GModule *module;
     struct Option *input, *output, *title, *rows;
     int n;
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Create raster maps from ascii polygon/line data files "
+		"in the current directory.";
 
     input = G_define_option();
     input->key             = "input";

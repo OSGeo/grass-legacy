@@ -22,10 +22,9 @@
  *
  */
 
-#include "Vect.h"
 #include <string.h>
 #include "gis.h"
-#include "dig_head.h"
+#include "Vect.h"
 #include "v_in_arc.cmd.h"
 
 int 

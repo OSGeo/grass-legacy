@@ -1,0 +1,39 @@
+The sample.grid3 file contains a header of **** 78 bytes ****
+containing the following:
+
+| some version ID stuff
+| xdim = 75 ydim = 298 zdim = 12
+| n = 230873.328125 s = -66749.078125 e = -1176.417236 w = -76063.226563
+| t = 3.000000 b = -33.000000
+| ns_res = 998.732910 ew_res = 998.490784 tb_res = 3.000000
+| min = 0.056537 max = 1.168040 
+
+Then 75*298*12 4byte floats are written/read in xy slices, i.e.,
+
+        /* floating point data  */
+        float_size = sizeof(float);
+        if ((fdataslice = (float *)malloc(float_size*XDIMYDIM)) == NULL)
+        {
+            fprintf(stderr,"ERROR:  can't malloc enough memory\n");
+            return(-1);
+        }
+        for (z = 0; z < zdim; z++)
+        {
+            if((num = fread((char*)fdataslice,float_size,XDIMYDIM,
+                        datainfp)) !=XDIMYDIM)
+            {
+                fprintf(stderr,"ERROR  reading in data \n");
+                return(-1);
+            }
+	    /* process a slice of data */
+	    for (y = 0; y < ydim; y++)
+		for (x = 0; x < xdim; x++){
+		    do_something(fdataslice[y*xdim + x]);
+		}
+        }
+
+If you want a raw data file, you should be able to use dd:
+dd if=sample.grid3 of=raw.12.298.75 bs=78 skip=1
+
+There are some read/write routines for grid3 in ../showd/libe.
+

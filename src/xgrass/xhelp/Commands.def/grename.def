@@ -1,8 +1,0 @@
-
-
-g.rename - 
-
-g.rename allows the user to rename database element files in the user's
-current @glossary("mapset",16.glossary/mapset.def).
-
-Manual entry for @man("g.rename")

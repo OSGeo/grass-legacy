@@ -1,3 +1,9 @@
+%{
+#include "y.tab.h"
+
+extern int yylval;
+%}
+
 T  [^ ^#@,"'\t\n()\[\]+\-*/%><!=&|]+
 %%
 

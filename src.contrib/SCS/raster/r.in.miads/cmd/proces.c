@@ -172,7 +172,7 @@ fprintf(stderr," maxc %d, minc %d\n",Mhd->maxc,Mhd->minc);
 	       fputs (buffer, output_file);
 
       /* alloc memory for a [rows][cols] int. array*/
-	       ptr = G_calloc(cols,rows);
+	       ptr = (unsigned char *) G_calloc(cols,rows);
 #ifdef  DEBUG 
 fprintf(stderr,"alloc %d cols, %d rows\n",cols,rows);
 #endif

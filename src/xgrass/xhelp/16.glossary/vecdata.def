@@ -1,8 +1,0 @@
-
-
-vector data (vector format) - A data format in which area, linear,
-and point features are represented and stored as the series of @glossary("arcs",16.glossary/arc.def)
-(a.k.a., vectors) forming their perimeters.  In GRASS, map data can 
-be converted between vector and @glossary("raster",16.glossary/rastdata.def) data formats.  Typically,
-data are @glossary("digitized",16.glossary/digitize.def) in vector format and analyzed in their raster
-format.  Data can be displayed and output in either format.

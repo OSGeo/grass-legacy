@@ -9,7 +9,7 @@ int put_row (int fd, unsigned char *buf)
     c = cellbuf;
     while(nncols-- > 0)
 	*c++ = *buf++;
-    G_put_c_raster_row (fd, cellbuf);
+    G_put_raster_row (fd, cellbuf, CELL_TYPE);
 
     return 0;
 }

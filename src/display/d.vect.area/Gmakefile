@@ -1,0 +1,13 @@
+OBJS =\
+    avl.o\
+    d.vect.area.o
+
+PGM= d.vect.area
+
+LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB)
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPVECTLIB) $(DEPGISLIB)
+
+$(BIN_CMD)/$(PGM): $(OBJS) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(DEPLIBS): #

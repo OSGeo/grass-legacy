@@ -73,15 +73,17 @@ main_menu (void)
     case 2:
     /* redraw */
            R_close_driver();
-           R_open_driver();
+           if (R_open_driver() != 0)
+	       G_fatal_error ("No graphics device selected");
            Dcell(current_name, current_mapset, 0);
            use_mouse();
            break;
     case 3:
     /* zoom */
            R_close_driver();
-           G_system("d.rast.zoom");
-           R_open_driver();
+           G_system("d.zoom");
+           if (R_open_driver() != 0)
+	       G_fatal_error ("No graphics device selected");
            use_mouse();
            break;
     case 4:
@@ -94,7 +96,8 @@ main_menu (void)
     /* number */
            R_close_driver();
            G_system("d.rast.num g=black");
-           R_open_driver();
+           if (R_open_driver() != 0)
+	       G_fatal_error ("No graphics device selected");
            use_mouse();
            break;
         
@@ -102,7 +105,8 @@ main_menu (void)
     /* vector overlay */
            R_close_driver();
            G_system("d.vect");
-           R_open_driver();
+           if (R_open_driver() != 0)
+	       G_fatal_error ("No graphics device selected");
            use_mouse();
            break;
         
@@ -195,9 +199,12 @@ color_menu (char *title)
     int div_color;
     int answer;
 
+/*
     if(strlen(title) > 20)
         error(1, "color_menu: title too long");
-   
+*/
+    options[0] = (char *) malloc(sizeof(char) * strlen(title) + 1);
+
     strcpy(options[0], title);
 
     background_color = D_translate_color("indigo");
@@ -404,7 +411,8 @@ get_arrow_inputs (void)
 fprintf (stdout,line);
            R_close_driver();
            G_system(line);
-           R_open_driver();
+           if (R_open_driver() != 0)
+	       G_fatal_error ("No graphics device selected");
 
 	return 0;
 }

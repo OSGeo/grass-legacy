@@ -1,0 +1,300 @@
+
+
+proc put_command { } {
+
+
+  global iname
+  global oname
+  global value
+
+
+  set cmd ""
+
+  if {  $iname != "" } {
+         set cmd "$cmd input=$iname"
+  }
+
+  if {  $oname != "" } {
+         set cmd "$cmd output=$oname"
+  }
+
+  if {  $value != "" } {
+         set cmd "$cmd blocksize=$value"
+  }
+
+  if { $cmd != "" } {
+     set cmd "m.dem.extract $cmd"
+  }
+}
+
+
+
+
+proc set_command_entry { } {
+
+  .cmd.frame0.entry configure -state normal
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 [put_command]
+  .cmd.frame0.entry configure -state disabled
+
+}
+
+
+proc proc_m.dem.extract { } {
+
+
+  global iname
+  global oname
+  global value
+
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "Extract DEM Data from Tape"
+
+
+  frame .cmd.frame0 \
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame0.hscrollbar set}
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {m.dem.extract}
+
+  .cmd.frame0.entry configure -state disabled
+
+
+
+  frame .cmd.frame1 \
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame1.hscrollbar set}
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {m.dem.extract extracts USGS Digital Elevation Model (DEM) data from 1/2 inch magnetic tape.}
+
+  .cmd.frame1.entry configure -state disabled
+
+
+
+  frame .cmd.frame2 \
+    -relief {flat}
+
+  label .cmd.frame2.label \
+    -anchor {w} \
+    -text {Tape device from which the DEM data are to be extracted:} \
+    -padx {2}
+
+  scrollbar .cmd.frame2.hscrollbar \
+    -command {.cmd.frame2.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame2.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame2.hscrollbar set}
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.label { top fillx } \
+    .cmd.frame2.entry { top fillx } \
+    .cmd.frame2.hscrollbar { bottom fillx }
+
+  .cmd.frame2.entry configure -state normal
+
+  bind .cmd.frame2.entry <Return> {
+       set iname [%W get] }
+
+
+
+  frame .cmd.frame3 \
+    -relief {flat}
+
+  label .cmd.frame3.label \
+    -anchor {w} \
+    -text {Output file to contain the extracted data:} \
+    -padx {2}
+
+  scrollbar .cmd.frame3.hscrollbar \
+    -command {.cmd.frame3.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame3.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame3.hscrollbar set}
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.label { top fillx } \
+    .cmd.frame3.entry { top fillx } \
+    .cmd.frame3.hscrollbar { bottom fillx }
+
+  .cmd.frame3.entry configure -state normal
+
+  bind .cmd.frame3.entry <Return> {
+       set oname [%W get] }
+
+
+
+  frame .cmd.frame4 \
+    -relief {flat}
+
+  label .cmd.frame4.label \
+    -anchor {w} \
+    -text {Block size:} \
+    -padx {2}
+
+  scrollbar .cmd.frame4.hscrollbar \
+    -command {.cmd.frame4.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame4.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame4.hscrollbar set}
+
+  pack append .cmd.frame4 \
+    .cmd.frame4.label { top fillx } \
+    .cmd.frame4.entry { top fillx } \
+    .cmd.frame4.hscrollbar { bottom fillx }
+
+  .cmd.frame4.entry configure -state normal
+
+  bind .cmd.frame4.entry <Return> {
+       set value [%W get] }
+
+
+
+  frame .cmd.frame5 \
+     -borderwidth {2}
+
+  button .cmd.frame5.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 
+		if {  $iname != "" && $oname != "" && $value != "" } {
+ 		set cmd [put_command]
+ 		if { $cmd != "" } {
+ 		   eval " exec xterm -title m.dem.extract -geometry 50x5 -exec $cmd " 
+ 		   destroy .cmd
+ 		}
+ 	}
+ }
+
+  button .cmd.frame5.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { destroy .cmd }
+
+  pack append .cmd.frame5 \
+    .cmd.frame5.ok { left expand } \
+    .cmd.frame5.cancel { right expand }
+
+
+  pack append .cmd \
+    .cmd.frame1 { top expand fill } \
+    .cmd.frame2 { top expand fill } \
+    .cmd.frame3 { top expand fill } \
+    .cmd.frame4 { top expand fill } \
+    .cmd.frame0 { top expand fill } \
+    .cmd.frame5 { bottom expand fill }
+
+
+bind .cmd.frame2.entry <KeyRelease> {
+		set iname [.cmd.frame2.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame2.entry <Return> {
+		set iname [.cmd.frame2.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame3.entry <KeyRelease> {
+		set oname [.cmd.frame3.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame3.entry <Return> {
+		set oname [.cmd.frame3.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame4.entry <KeyRelease> {
+		set value [.cmd.frame4.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame4.entry <Return> {
+		set value [.cmd.frame4.entry get]
+		set_command_entry
+}
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global iname
+set iname ""
+
+global oname
+set oname ""
+
+global value
+set value ""
+
+
+global database
+global location
+global mapset
+global feature
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_m.dem.extract

@@ -40,6 +40,7 @@ NOTES:		This routine is very provisional.
 #ifndef HAVE_TERMIO_H
 #include <sgtty.h>
 #endif
+#include <stdlib.h>
 
 #define START	((char) 021)	/* ctrl-Q */
 #define STOP	((char) 023)	/* ctrl-S */
@@ -51,8 +52,6 @@ _Pwait ()
     static int wait = 0;
     char c;
     static int trace = -1;
-
-    char *getenv();
 
 
     if (!printer.tty) return (0);

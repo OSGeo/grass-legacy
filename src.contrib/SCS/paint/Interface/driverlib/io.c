@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "config.h"
 
 struct PRINTER
@@ -98,7 +99,6 @@ Popen(port)
 static
 baud ()
 {
-    char *getenv();
     char *BAUD;
     char msg[200];
 

@@ -1,0 +1,6 @@
+
+r.watershed apparently does not scale well to large raster map
+sizes.
+
+Estimated complete time:
+complete = 0.43 (cpu minutes) ^ 0.52
