@@ -1,0 +1,13 @@
+EXTRA_CFLAGS	=  $(VECT_INCLUDE) 
+
+PGM = s.buffer
+
+LIST =  main.o\
+	new_screen.o\
+	head_info.o
+
+
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST)
+	$(CC) $(LDFLAGS) -o $@  $(LIST) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(VASK) $(TERMLIB) -lm
+
+$(GISLIB):	#
