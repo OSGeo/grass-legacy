@@ -1,0 +1,37 @@
+.TH g.select.inf
+.SH NAME
+\fIg.select.inf\fR \- Select an SQL database to be used in subsequent GRASS-RDBMS applications.
+.br
+.I "(GRASS-RDBMS General Interface Program)"
+.SH SYNOPSIS
+\fBg.select.inf\fR
+.br
+\fBg.select.inf help\fR
+.br
+\fBg.select.inf\fR \fBdatabase=\fIname\fR
+.SH DESCRIPTION
+g.select.inf is used to identify an SQL database for subsequent GRASS-RDBMS applications. The program checks the directories identified in the envionment variable $DBPATH for a database directory named [name.infs]. If the database specified on the command
+line is located in the users current DBPATH g.select.inf sets the GRASS environment variable DATABASE to this name. If the database is not found a list of the database directories in $DBPATH is provided to the user. If the environment variable $DBPATH is not set the program notifies the user and terminates. This program and all other dbSQL
+tools assume that SQL CONNECT and SELECT have been granted to the user.
+
+.SH "COMMAND LINE OPTIONS"
+.LP
+Parameters
+.IP \fIdatabase=database_name\fR
+Name of existing SQL database in the users current DBPATH.
+
+.SH BUGS
+None known.
+
+.SH "NOTE"
+This program requires the Informix database software.
+
+.SH "SEE ALSO"
+g.column.inf, g.stats.inf, g.table.inf, d.rast.inf, d.site.inf,
+d.vect.inf, d.what.r.inf, d.what.s.inf, d.what.v.inf, r.reclass.inf, 
+r.rescale.inf, v.reclass.inf
+
+.SH AUTHOR
+James A. Farley, Wang Song and W. Fredrick Limp 
+University of Arkansas, CAST
+
