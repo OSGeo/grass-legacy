@@ -132,7 +132,7 @@ F		[fF]
 \'[^']+\'	{
 			yylval.sval = strdup(yytext + 1);
 			yylval.sval[yyleng - 2] = '\0';
-			return STRING; 
+			return is_var(yytext) ? VARSTRING : STRING; 
 		}
 
 \"[^"]+		|
