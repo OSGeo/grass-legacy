@@ -174,7 +174,7 @@ puts "panel area made"
 
     pack [Nv_mkMenu $Nv_(AREA).menu.file File \
 	      {"Load State..." "Save State..." "Load 3d Settings..." \
-		  "Save 3d Settings..." "Image Dump..." "Reset" "Quit" } \
+		  "Save 3d Settings..." "Image Dump (PPM)..." "Reset" "Quit" } \
 	      {0 0 1 1 0 0 0} \
 	      { "load_state" "save_state" "load_3dview" "save_3dview" \
 		  "dump_image" "reset_Nviz" "Nv_close_scripting ; exit ; puts"}]\
@@ -274,7 +274,8 @@ proc dump_image { dummy } {
     appBusy
 
     if {$fname != -1} then {
-	Nwrite_rgb $fname
+#	Nwrite_rgb $fname
+	Nwrite_ppm $fname
     }
 
     # show user can proceed
