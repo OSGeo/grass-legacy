@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "config.h"
 #ifdef HAVE_ICONV_H
@@ -19,12 +20,24 @@
 int isTrueTypeFont(char*);
 int release();
 
+#define	USE_FREETYPECAP
+#ifdef	USE_FREETYPECAP
+typedef struct	{
+	char	*font, *path, *charset, *color, *size;
+} capinfo;
+
+static int read_capfile(char *capfile, capinfo **fonts, int *fonts_count,
+		int *cur_font, char **font_names);
+static int find_font(capinfo *fonts, int fonts_count, char *name);
+#endif
+
 int
 main( int argc , char **argv )
 {
     struct GModule *module;
     struct Option *opt1;
     struct Option *opt2;
+    char *font, *charset;
 
 	G_gisinit(argv[0]);
 
@@ -54,28 +67,46 @@ main( int argc , char **argv )
     if (G_parser(argc, argv))
             exit(-1);
 
+    font = opt1->answer;
+    charset = opt2->answer;
+
     /* load the font */
     if (R_open_driver() != 0)
 	G_fatal_error (_("No graphics device selected"));
 
-	if(!opt1->answer) {
+	if(!font) {
 		release();
 		exit(-1);
 	}else{
-		int len = strlen(opt1->answer);
+		int len = strlen(font);
 		if(len==0) {
 			release();
 			exit(-1);
 		}
+#ifdef	USE_FREETYPECAP
+		{
+		capinfo *fonts;
+		int fonts_count, i;
+		read_capfile(getenv("GRASS_FREETYPECAP"), &fonts, &fonts_count,
+				NULL, NULL);
+		if(fonts_count){
+			i = find_font(fonts, fonts_count, font);
+			if(i >= 0){
+				font = fonts[i].path;
+				charset = fonts[i].charset;
+			}
+		}
+		}
+#endif
 	}
 
-	if(isTrueTypeFont(opt1->answer)==-1) {
-		G_fatal_error("Invalid font: %s", opt1->answer);
+	if(isTrueTypeFont(font)==-1) {
+		G_fatal_error("Invalid font: %s", font);
 		exit(-1);
 	}
 
-	R_font_freetype(opt1->answer) ;
-	R_charset(opt2->answer) ;
+	R_font_freetype(font) ;
+	R_charset(charset) ;
 
     /* add this command to the list */
 	D_add_to_list(G_recreate_command()) ;
@@ -119,3 +150,110 @@ int release() {
 	return 0;
 }
 
+#ifdef	USE_FREETYPECAP
+static int
+read_capfile(char *capfile, capinfo **fonts, int *fonts_count, int *cur_font,
+		char **font_names)
+{
+	char	file[4096], *ptr;
+	int	i, font_names_size = 0;
+	char	buf[4096],
+		ifont[128], ipath[4096], icharset[32], icolor[128], isize[10];
+	FILE	*fp;
+
+	*fonts = NULL;
+	*fonts_count = 0;
+	if(cur_font)
+		*cur_font = -1;
+	if(font_names)
+		*font_names = NULL;
+
+	ptr = file;
+	sprintf(file, "%s/etc/freetypecap", G_gisbase());
+	if(capfile)
+	{
+		if(access(capfile, R_OK))
+			G_warning("%s: Unable to read FreeType definition file; use the default", capfile);
+		else
+			ptr = capfile;
+	}
+	if(ptr == file && access(ptr, R_OK))
+	{
+		G_warning("%s: No FreeType definition file", ptr);
+		return -1;
+	}
+	if(!(fp = fopen(ptr, "r")))
+	{
+		G_warning("%s: Unable to read FreeType definition file", ptr);
+		return -1;
+	}
+
+	while(fgets(buf, sizeof(buf), fp) && !feof(fp))
+	{
+		capinfo *font;
+		int offset;
+		char *p;
+
+		p = strchr(buf, '#');
+		if(p)
+			*p = 0;
+
+		if(sscanf(buf, "%[^:]:%[^:]:%[^:]:%[^:]:%[^:]",
+			  ifont, ipath, icharset, icolor, isize) != 5)
+			continue;
+
+		if(access(ipath, R_OK))
+			continue;
+
+		*fonts = (capinfo *)
+			G_realloc(*fonts, (*fonts_count + 1) * sizeof(capinfo));
+
+		font = &((*fonts)[*fonts_count]);
+
+		offset = (ifont[0] == '*') ? 1 : 0;
+
+		if(cur_font && offset > 0 && *cur_font < 0)
+			*cur_font = *fonts_count;
+
+		font->font    = G_store(ifont + offset);
+		font->path    = G_store(ipath);
+		font->charset = G_store(icharset);
+		font->color   = G_store(icolor);
+		font->size    = G_store(isize);
+
+		(*fonts_count)++;
+	}
+
+	fclose(fp);
+
+	if(!font_names)
+		return 0;
+
+	font_names_size = 0;
+	for(i = 0; i < *fonts_count; i++)
+		font_names_size += strlen((*fonts)[i].font) + 1;
+
+	*font_names = (char *) G_malloc(font_names_size);
+	(*font_names)[0] = '\0';
+	for(i = 0; i < *fonts_count; i++)
+	{
+		if(i > 0)
+			strcat(*font_names, ",");
+		strcat(*font_names, (*fonts)[i].font);
+	}
+
+	return 0;
+}
+
+static int
+find_font(capinfo *fonts, int fonts_count, char *name)
+{
+	int i;
+
+	for(i = 0; i < fonts_count; i++)
+		if(strcasecmp(fonts[i].font, name) == 0)
+			return i;
+
+	return -1;
+}
+#endif
