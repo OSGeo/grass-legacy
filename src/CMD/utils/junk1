@@ -1,0 +1,9 @@
+#!/bin/sh -x
+UNIX_BIN=`(cd /usr/local/bin;pwd)`
+echo UNIX_BIN = $UNIX_BIN
+# setup the defaults
+
+CMD=`pwd`
+
+exit
+
