@@ -1,0 +1,6 @@
+interface_build {
+    {r.thin} 0
+    {Thins non-zero cells that denote linear features in a raster map layer.}
+    {entry input {Raster map containing data to be thinned:} 0 raster}
+    {entry output {Raster map to hold thinned program output:} 0 raster}
+}
