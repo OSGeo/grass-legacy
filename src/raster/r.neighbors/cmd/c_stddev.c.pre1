@@ -1,0 +1,9 @@
+#include "gis.h"
+extern double d_var();
+
+CELL
+c_stddev (values, n)
+    register CELL *values;
+{
+    return (CELL) (sqrt(d_var(values,n)) + .5);
+}
