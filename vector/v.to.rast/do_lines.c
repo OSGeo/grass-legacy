@@ -6,7 +6,8 @@
 static int plot_line(double *,double *,int);
 static int plot_points (double *,double *,int);
 
-int do_lines ( struct Map_info *Map, struct line_pnts *Points, dbCatValArray *Cvarr, int ctype, int field)
+int do_lines ( struct Map_info *Map, struct line_pnts *Points, dbCatValArray *Cvarr, int ctype, int field,
+	       int use, double value, int value_type)
 {
     int nlines, type, ret, cat;
     int index;
@@ -24,22 +25,31 @@ int do_lines ( struct Map_info *Map, struct line_pnts *Points, dbCatValArray *Cv
 	Vect_cat_get (Cats, field, &cat);
 	if ( cat <= 0 ) { continue; } 
 
-	if ( ctype == DB_C_TYPE_INT ) {
-	    ret = db_CatValArray_get_value_int ( Cvarr, cat, &cval );
-	    if ( ret != DB_OK ) {
-		G_warning ("No record for line (cat = %d)", cat );
-		continue ;
+	if ( use == USE_ATTR ) {
+	    if ( ctype == DB_C_TYPE_INT ) {
+		ret = db_CatValArray_get_value_int ( Cvarr, cat, &cval );
+		if ( ret != DB_OK ) {
+		    G_warning ("No record for line (cat = %d)", cat );
+		    continue ;
+		}
+		set_cat (cval);
+	    } else if ( ctype == DB_C_TYPE_DOUBLE ) {
+		ret = db_CatValArray_get_value_double ( Cvarr, cat, &dval );
+		if ( ret != DB_OK ) {
+		    G_warning ("No record for line (cat = %d)", cat );
+		    continue ;
+		}
+		set_dcat ( dval);
+	    } else {
+		G_fatal_error ("Column type  not supported" );
 	    }
-	    set_cat (cval);
-	} else if ( ctype == DB_C_TYPE_DOUBLE ) {
-	    ret = db_CatValArray_get_value_double ( Cvarr, cat, &dval );
-	    if ( ret != DB_OK ) {
-		G_warning ("No record for line (cat = %d)", cat );
-		continue ;
-	    }
-	    set_dcat ( dval);
+	} else if  ( use == USE_CAT ) {
+	    set_cat (cat);
 	} else {
-	    G_fatal_error ("Column type  not supported" );
+	    if ( value_type == USE_CELL )
+		set_cat ( (int) value);
+	    else
+		set_dcat ( value );
 	}
 
 	if ( (type & GV_LINES ) ) {

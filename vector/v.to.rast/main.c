@@ -8,8 +8,9 @@
 int main (int argc, char *argv[])
 {
     struct GModule *module;
-    struct Option *input, *output, *rows, *col, *field_opt;
-    int    field, n;
+    struct Option *input, *output, *rows, *col, *field_opt, *use_opt, *val_opt;
+    int    field, nrows, use, value_type;
+    double value;
 
     G_gisinit (argv[0]);
 
@@ -35,6 +36,33 @@ int main (int argc, char *argv[])
     output->gisprompt      = "new,cell,raster";
     output->description    = "raster output file";
 
+    use_opt = G_define_option();
+    use_opt->key            = "use";
+    use_opt->type           = TYPE_STRING;
+    use_opt->required       = NO;
+    use_opt->multiple       = NO;
+    use_opt->options        = "attr,cat,val";
+    use_opt->answer         = "attr";
+    use_opt->description    = "Source of raster values:\n"
+			"\t\tattr - read values from attribute table\n"
+			"\t\tcat  - use category values\n"
+			"\t\tval  - use value specified by value option";
+
+    col = G_define_option();
+    col->key            = "col";
+    col->type           = TYPE_STRING;
+    col->required       = NO;
+    col->multiple       = NO;
+    col->description    = "Column name";
+
+    val_opt = G_define_option();
+    val_opt->key              = "value";
+    val_opt->type             = TYPE_DOUBLE;
+    val_opt->required         = NO;
+    val_opt->multiple         = NO;
+    val_opt->answer           = "1";
+    val_opt->description      = "Raster value";
+
     rows = G_define_option();
     rows->key              = "rows";
     rows->type             = TYPE_INTEGER;
@@ -43,17 +71,28 @@ int main (int argc, char *argv[])
     rows->description      = "number of rows to hold in memory";
     rows->answer           = "512";
 
-    col = G_define_option();
-    col->key            = "col";
-    col->type           = TYPE_STRING;
-    col->required       = YES;
-    col->multiple       = NO;
-    col->description    = "Column name";
-
     if (G_parser (argc, argv)) exit (-1);
 
     field = atoi (field_opt->answer);
-    sscanf (rows->answer, "%d", &n);
+    nrows = atoi (rows->answer);
 
-    exit(vect_to_rast (input->answer, output->answer, field, col->answer, n));
+    if ( use_opt->answer[0] == 'a' ) {
+	use = USE_ATTR;
+	if ( !col->answer )
+    	    G_fatal_error ("col option missing" );	    
+    } else if ( use_opt->answer[0] == 'c' ) {
+	use = USE_CAT;
+    } else if ( use_opt->answer[0] == 'v' ) {
+	use = USE_VAL;
+    }
+
+    value = atof ( val_opt->answer );
+    if ( strchr ( val_opt->answer, '.') )
+	value_type = USE_DCELL;
+    else
+	value_type = USE_CELL;
+	
+
+    exit( vect_to_rast (input->answer, output->answer, field, col->answer, nrows, use, value, value_type) );
 }
+

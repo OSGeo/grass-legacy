@@ -1,3 +1,7 @@
+#include "gis.h"
+#include "dbmi.h"
+#include "Vect.h"
+
 #define ISNULL(x)   G_is_c_null_value(x)
 #define ISDNULL(x)   G_is_d_null_value(x)
 #define SETNULL(x)  G_set_c_null_value(x,1)
@@ -6,6 +10,11 @@
 #define USE_CELL  1
 #define USE_DCELL 2
 
+#define USE_ATTR  1
+#define USE_CAT   2
+#define USE_VAL   3
+
+
 /* clock.c */
 int start_clock(long *);
 int stop_clock(long *);
@@ -13,10 +22,10 @@ int stop_clock(long *);
 int inform(char *);
 
 /* do_areas.c */
-/* int do_areas(struct Map_info *, struct line_pnts *, dbCatValArray *, int ); */
+int do_areas(struct Map_info *, struct line_pnts *, dbCatValArray *, int, int, int, double, int);
 int sort_areas(struct Map_info *, struct line_pnts *, int );
 /* do_lines.c */
-/* int do_lines(struct Map_info *, struct line_pnts *, dbCatValArray *, int); */
+int do_lines(struct Map_info *, struct line_pnts *, dbCatValArray *, int, int, int, double, int);
 
 /* mapgraph.c */
 int begin_mapgraph(void);
@@ -37,4 +46,4 @@ int update_hist(char *, char *, char *, long);
 int update_colors(char *);
 int update_cats(char *, char *, char *);
 /* vect2rast.c */
-int vect_to_rast(char *, char *, int, char *, int);
+int vect_to_rast(char *, char *, int, char *, int, int, double, int);
