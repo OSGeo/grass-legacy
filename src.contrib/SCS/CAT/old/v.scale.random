@@ -1,0 +1,46 @@
+
+
+
+v.scale.dots                 GRASS Reference Manual	           v.scale.dots
+
+
+
+NAME
+     v.scale.dots - creates a site_list of randomly placed symbols 
+	   within a GRASS vector area.
+
+SYNOPSIS
+     v.scale.dots map=vector file to read 
+            site=site_list file to create
+            dot=name of file containing categories with dot counts
+			outdot=name of output file to hold scaled dot counts
+			scale=denominator of map scale
+            -n  use area numbers rather than area names
+DESCRIPTION
+     v.scale.dots:
+       - allows a user to create a site_list containing sites 
+	 randomly placed within an area. This program is designed 
+	 as an interface to v.dots to aid the user in determining
+	 the number of dots. This progam uses the same type of file
+	 listing the category and counts. This file is then modified
+	 to try to produce a pleasing dot count for a map of a 
+	 specified scale.
+
+NOTE
+	SEE: v.dots
+
+
+
+
+
+
+
+
+
+
+AUTHOR
+     R.L.Glenn, USDA, SCS, Cart. / Geo. Information Systems Division
+
+GRASS 4.0		 U.S.D.A. SCS  				1
+
+
