@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-#include "Vect.h"
-#include "Vect.h"
 #include "gis.h"
+#include "Vect.h"
 
 #define BUFFSIZE 128
 

@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "Vect.h"
 #include "conv.h"
+#include "local_proto.h"
 
 int read_line ( FILE *, struct line_pnts *);
 
@@ -14,7 +16,7 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
 {
     char	      buf[100];
     struct dig_head   In_head;
-    int               i, lalloc, line=0, type, portable=1;
+    int               lalloc, line=0, type, portable=1;
     int    npoints=0, nlines=0, nbounds=0;     
     int    ndpoints=0, ndlines=0, ndbounds=0, nunknown=0;         
     struct Line *lines;
@@ -70,7 +72,7 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
 	In_head.Version_Major = 4;
 	fprintf(stdout,"Input file is version 4.\n") ;	
 	/* determine if in portable format or not */
-	if (buf[6] == 1 && (~buf[6]&0xff) == buf[7]) {   /* portable ? */
+	if (buf[6] == 1 && (~buf[6]&0xff) == (buf[7]&0xff)) {   /* portable ? */
 	    portable = 1;  /* input vector is portable format*/
 	} else {	
 	    portable = 0;  /* input vector is not portable format*/
@@ -79,9 +81,9 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
     if ( portable == 1) {
 	fprintf(stdout,"Input file is portable.\n") ;
     } else {
-	fprintf(stdout,"Input file is not portable.\n
-			We will attempt to convert anyway but conversion may fail.\n
-			Please read manual for detail information.\n") ;	    
+	fprintf(stdout,"WARNING: Input file is not portable.\n"
+		       "We will attempt to convert anyway but conversion may fail.\n"
+		       "Please read manual for detail information.\n") ;	    
     }
 	    
     /* set Cur_Head because it is used by dig__*_convert()
@@ -123,7 +125,7 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
 		break;
 	    case 0:          /* dead */
 		break;
-	    defaul:
+	    default:
 		nunknown++;
 		break;	    
 	}
@@ -195,7 +197,7 @@ int read_line ( FILE *Digin, struct line_pnts *nline )
 /* read old 3.0, 4.0 dig_att file into array*/
 int read_att (FILE *Attin, struct Categ **pcats )
 {
-    int ctalloc=0, cat=0, att, type, ret, rcat; 
+    int ctalloc=0, cat=0, type, ret, rcat; 
     int    npoints=0, nlines=0, ncentroids=0;     
     int    ndpoints=0, ndlines=0, ndcentroids=0, nunknown=0;         
     char buf[201], ctype;
@@ -230,7 +232,7 @@ int read_att (FILE *Attin, struct Categ **pcats )
 	    case 'l':
 	    case 'a':
 		type = 0;  /* dead */
-            defaut:
+            default:
                 fprintf(stderr,"Unknown type: %c\n", ctype);
 		type = 0;
 		nunknown++;

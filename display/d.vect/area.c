@@ -12,11 +12,8 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
     struct line_pnts *Points, *IPoints;
     struct line_cats *Cats;
     int cat, centroid;
-    //struct Plus_head *Plus;
-    //P_AREA_2D *AREA;
     
     G_debug (1, "display areas:");
-    //Plus = &(Map->plus);
     Points = Vect_new_line_struct ();
     IPoints = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
@@ -33,7 +30,7 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
              centroid = Vect_get_area_centroid ( Map, area ); 
              G_debug (3, "centroid = %d", centroid);
 	     if ( centroid < 1 ) continue;
-	     V2_read_line (Map, Points, Cats, centroid );
+	     Vect_read_line (Map, Points, Cats, centroid );
              if ( Vect_cat_get(Cats, Clist->field, &cat) ) { 
 	         if ( !(Vect_cat_in_cat_list (cat, Clist)) )
                      continue;

@@ -76,6 +76,7 @@ old2new (char *in, char *out, int endian)
                     if (lines[j].type == cats[i].type) {
 	                dist = ldist ( cats[i].x, cats[i].y, 
 				       &(lines[j]));
+			
 			if (sline == -1 || dist < sdist){
 			    sline = j;
 			    sdist = dist;
