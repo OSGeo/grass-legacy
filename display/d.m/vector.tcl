@@ -16,10 +16,12 @@ proc DmVector::legend { id } {
     $leg delete all
 
     # point 
-    set xc [expr $lw / 6 ]
+    set xc [expr $lw / 6 + 1 ]
     set yc [expr $lh / 2 ]
     set size $opt($id,size)
    
+    set maxpsize  [expr $lw / 3 - 2 ]
+    if { $size > $maxpsize } { set size $maxpsize }
     set x1 [expr $xc - $size / 2 ]
     set x2 [expr $xc + $size / 2 + 1 ]
     set y1  [expr $yc - $size / 2 ]
@@ -188,7 +190,7 @@ proc DmVector::options { id frm } {
                     -width 5  -textvariable DmVector::opt($id,icon) \
                     -values {"cross" "box"} -modifycmd "DmVector::legend $id"
     Label $row.b -text "Size:" 
-    SpinBox $row.c -range {1 10 1} -textvariable DmVector::opt($id,size) \
+    SpinBox $row.c -range {1 50 1} -textvariable DmVector::opt($id,size) \
                    -width 2 -helptext "Icon size" -modifycmd "DmVector::legend $id"
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes

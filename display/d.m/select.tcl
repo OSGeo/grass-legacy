@@ -48,7 +48,7 @@ proc GSelect_::create { element } {
             -image [Bitmap::get openfold] -drawcross auto
 
         set path "$location_path/$dir/$element/"
-	foreach fp [glob -directory $path -nocomplain *]  {
+	foreach fp [ lsort [glob -directory $path -nocomplain *] ]  {
             set file [file tail $fp]
             $tree insert end $dir $file@$dir -text $file -data $file \
                   -image [Bitmap::get file] -drawcross never
