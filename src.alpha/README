@@ -1,39 +1,55 @@
-This "src.alpha" directory contains GRASS code which is intended to be
-included in the "src" directory in a future release.   They should all:
-  1.  Be organized in the same manner as the code in the "src" directory.
-  2.  Be Compileable with "Gmake"
-  3.  Contain MAN and HELP files in the man.help directory.
+The programs under this directory are in alpha testing.  Those that 
+prove serviceable will become part of the "main" programs for the next
+release.   Alpha programs need to be test compiled on numerous machines
+and then user tested.  Bug reports are encouraged (see bug.report.sh)
 
-All programs here should be considered to be in ALPHA release.  That means
-that they have been run by at least the original programmer.  The health of
-the programs are not guaranteed.  Reports on the programs are highly
-encouraged.
+Programs represented in the following directories are documented in the
+GRASS 4.0 User's Manual.
 
-All users/programmers are invited to test these programs and
-  1. Verify to CERL that they work
-  2. Identify to CERL bugs
-  3. Send repairs to CERL
+You may attempt full compilation by running gmake4.0 in this directory, or may
+do partial compiles by running gmake4.0 in sub-directories.
 
-D/prog_cmd/split  (Michael Higgins, CERL)
-                  Simple two cell file display program.
-D/prog_inter/area (Bruce Powell, NPS)
-                  Area calculations for digit files.
-D/prog_inter/rgb  (Westervelt, CERL)
-                  Multi cell file display program.
-Gline             (Jean Ezell, CERL)
-                  Raster line to digit vector line conversion.
-Glut              (Dave Johnson, DBA)
-                  Create color tables for cell files.
-Gthin             (Jean Ezell, CERL)
-                  Thins raster lines to single pixel thickness.
-Gtraj             (Chuck Ehlschlaeger, CERL)
-                  Ballistic trajectory program.
-Gvolume           (Jim Hinthorn, Central Washington University)
-                  Calculate volumes of areas based on "elevataion" data.
-Gwatershed        (Chuck Ehlschlaeger, CERL)
-                  Find watersheds, streams, etc.
-Mflip             (Donald Newcomb, NAVOCEANO)
-                  Flip an uncompressed raster file north to south 
-binfer            (Kurt Buehler, Purdue)
-                  Inference program for analyzing maps.
-mapdev/digitizers/calcomp  (Michael Higgins, CERL)
+./raster/r.out.tga
+./raster/r.in.sunrast
+./raster/r.thin
+./raster/r.line
+./raster/r.traj
+./raster/r.traj/cmd/weapon_data
+./raster/r.weight.new
+./raster/r.colors.paint
+
+./mapdev/v.in.arc
+./mapdev/v.in.arc/testdata
+./mapdev/v.out.arc
+./mapdev/v.out.arc/testdata
+./mapdev/v.to.rast.new
+./mapdev/moss
+
+./imagery/i.median
+./imagery/block.src
+./imagery/block.src/lib.ortho
+./imagery/block.src/lib.ortho/LIB.sun4
+./imagery/block.src/i.build.block
+./imagery/block.src/i.build.block/camera
+./imagery/block.src/i.build.block/editblock
+./imagery/block.src/i.build.block/subblock
+./imagery/block.src/i.build.block/elev
+./imagery/block.src/i.build.block/target
+./imagery/block.src/i.build.block/menu
+./imagery/block.src/i.build.block/title
+./imagery/block.src/i.camera
+./imagery/block.src/i.mod.camera
+./imagery/block.src/i.rectify.block
+./imagery/block.src/i.rectify.block/menu
+./imagery/block.src/i.rectify.block/choosesub
+./imagery/block.src/i.rectify.block/ref
+./imagery/block.src/i.rectify.block/initial
+./imagery/block.src/i.rectify.block/rec
+./imagery/block.src/i.rectify.block/con
+
+./display/d.rast.arrow
+./display/d.rast.edit
+./display/d.rast.num
+./display/d.rast.zoom
+
+./misc/m.flip
