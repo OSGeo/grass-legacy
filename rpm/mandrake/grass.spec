@@ -56,12 +56,9 @@ interface for X-Window is provided.
 #%patch0 -p0 
 #cd ../../..
 
-GRASS53="/usr/src/redhat/BUILD/grass-5.3.0"
-
 #configure with shared libs:
 CFLAGS="-O2" LDFLAGS="-s" ./configure \
 	--prefix=%%{buildroot}/{_prefix} --bindir=%{buildroot}/%{_bindir} \
-	--with-grass50=$GRASS53 \
 	--enable-shared \
 	--with-cxx \
 	--with-gdal=/usr/local/bin/gdal-config \
@@ -72,11 +69,6 @@ CFLAGS="-O2" LDFLAGS="-s" ./configure \
 	--with-freetype --with-freetype-includes=/usr/include/freetype2
 
 %build
-
-#no 'make mix' in case of a release package needed:
-if test ! -f SRCPKG ; then
-  make mix
-fi
 
 make prefix=%{buildroot}/%{_prefix} BINDIR=%{buildroot}/%{_bindir} \
 	PREFIX=%{buildroot}%{_prefix}
@@ -121,6 +113,9 @@ rm -rf grass-%{version}
 %doc AUTHORS COPYING GPL.TXT README REQUIREMENTS.html
 
 %changelog
+* Tue Nov 9 2004 Markus Neteler <neteler itc it> 5.7.0-2
+- GRASS 5.3 no longer required as all code moved into this repository
+
 * Wed Jun 17 2004 Markus Neteler <neteler itc it> 5.7.0-1
 - removed unixODBC, added mysql
 - specfile cleanup
