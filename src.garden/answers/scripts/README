@@ -1,0 +1,68 @@
+
+This directory contains sample shell scripts for use with the ANSWERS
+on GRASS programs. Of primary interest is d.answers, which is designed
+to read a completed r.answers scenario "project" in the current grass
+mapset to gather the names of map names involved.
+
+Usage: d.answers <project name>
+
+Upon invocation, d.answers checks to make sure you are running GRASS
+and that a GRASS graphics display monitor is running. It reads the
+r.answers project database to determine the region and MASK that
+was used for the project, and sets both. It collects the names of
+maps used for input and output for the r.answers project, then
+creates a menu (using d.menu) on the graphics monitor.
+
+SETUP: The d.answers shellscript relies on companion files
+(found in this directory: d.range, menu1, menu2, and menu3)
+for its operation. Edit the d.answers shell script to tell
+it the path to where they are on your system. 
+
+Background: r.answers provides ANSWERS simulation scenario management.
+Primary spatial inputs to answers are GRASS maps. r.answers interacts
+with the user to collect input map names, parameters, and other inputs
+to needed to create an ANSWERS input file. The r.answers program can
+then run the ANSWERS simulation and process the outputs. Spatial
+outputs (sediment movement in watershed elements) are used to
+create new GRASS raster maps.  Outlet hydrograph data is processed for
+use with the d.hydrograph program (or other plotting packages).
+
+ANSWERS has many potential uses, and the r.answers program can
+significantly decrease the time and expertise needed to run ANSWERS.
+Your goals for using ANSWERS could not be anticipated. Therefore,
+d.answers was created only as an example of how GRASS and related
+programs could be used display input maps and ANSWERS outputs. By
+copying and editing d.answers, you can mold it to meet your needs.
+
+d.answers uses the GRASS graphics monitor for display and interaction.
+By using the GRASS d.menu program, interation is by mouse. The goal of
+each main menu step is creation of display screens on the graphics monitor.
+A small menu will be created in the upper-left corner of the display to
+1) continue with program, or 2) exit program. [Note: the files menu1,
+menu2, menu3; located in this directory, are used to create the
+graphical menus.
+
+Brief description of Main Menu options:
+
+Display Input Maps - creates screens for displaying 1) elevation inputs
+  (aspect and channels), 2) soils, and 3) land cover
+
+Display Sediment Movement - displays both sediment loss and sediment
+  deposition maps. Also calculates total, average, maximun values and
+  number of cells for both maps (using r.stats and awk). Values for 
+  each cell are shown using the d.rast.num program.
+
+Display Erosion Ranges - uses r.scale program to scale values of sediment
+  loss map into 5 categories to more easily visualize map values
+  and their distribution in the watershed. d.histogram is also used.
+  [Note: The d.range shell script, located in this directory, is used
+  for part of this operation.]
+
+Display Deposition Ranges - does the same thing as the previous
+  function does, with the exception of using the element deposition 
+  map versus the erosion map.
+
+Display Outlet Hydrograph - uses the d.linegraph program to display
+  the outlet hydrograph data from the simulation output. Four graphs
+  are created for 1) rainfall, 2) runoff, 3) cumulative sediment yield, 
+  and 4) Sediment concentration 
