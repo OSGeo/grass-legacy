@@ -1,14 +1,14 @@
 frame .main_menu
 pack .main_menu -expand yes -fill both
 
-# tcltkgrass menu.tcl v 4.0.1 for GRASS 5.7 2004/06/30 Michael Barton
+# tcltkgrass menu.tcl v 4.0.1 for GRASS 5.7 2004/08/11 Michael Barton
 # based on menu.tcl for GRASS 5.3 by Michael Barton, Jacques Bouchard, and Markus Neteler
 # with scripting support by Andreas Lange
 
 # main menu
 
 menu_build 1 .main_menu {
-    File "Files in/out" {
+    "File" "Files in/out" {
 	"Import" "Import maps into GRASS" {
 	    "Raster map" "" {
 		"Multiple formats using GDAL" "r.in.gdal" {
@@ -54,7 +54,7 @@ menu_build 1 .main_menu {
 		"exec r3.in.v5d &"}
 	    }
 	}
-	Export "Export maps from GRASS" {
+	"Export" "Export maps from GRASS" {
 	    "Raster map" "" {
 		"ASCII grid (for GRASS, Surfer, Modflow, etc)" "r.out.ascii" {
 		"exec r.out.ascii &"}
@@ -105,7 +105,7 @@ menu_build 1 .main_menu {
 		"exec r3.out.v5d &"}
 	    }
 	}
-	Scripting "" {
+	"Scripting" "" {
 	    "Start scripting" "" {
 	    "script_start"}
 	    "Stop scripting" "" {
@@ -115,16 +115,16 @@ menu_build 1 .main_menu {
 	}
 	"Save display to image file" "" {
 	    "XWD (Save display, selected with mouse, to map.xwd in home directory )"
-		"r3.out.v5d" {
+		"" {
 	    "exec xwd -out map.xwd"}
-	    "PNG (save currently selected display to 24 bit PNG file)" "d.out.png" {
+	    "PNG (save currently selected display to 24 bit PNG file)" "" {
 	    "exec d.out.png &"}
 	}
 	"Postscript map creation" "ps.map" {"exec ps.map &"}
 	"Print (Use display manager)" "" {"do_nothing"}
 	"Quit tcltkgrass" "" resize_menu;quit
     }
-    GIS "Manage GRASS GIS files" {
+    "GIS" "Manage GRASS GIS files" {
 	"Maps & grid3D files" "Map management (map files operations)" {
 	    "Copy maps" "" {
 	    "exec g.copy &"}
@@ -146,7 +146,7 @@ menu_build 1 .main_menu {
 	    "Change current working session to new mapset, location, or GISDBASE" "" {
 	    "exec g.mapset &"}
 	}
-	Region "Region management" {
+	"Region" "Region management" {
 	    "Display region settings" "" {
 	    "exec g.region -p &"}
 	    "Manage region" "" {
@@ -181,7 +181,7 @@ menu_build 1 .main_menu {
 	    "exec g.version -c &"}
 	}
     }
-    Display "Display maps" {
+    "Display" "Display maps" {
 	"Start display manager" "d.m" {
 	"exec d.m &"}
 	"Start NVIZ (n-dimensional visualization module)" "nviz -q" {
@@ -242,7 +242,7 @@ menu_build 1 .main_menu {
 	    "exec d.mon select=x6 &"}
 	}
 	-separator
-	    Raster "Display raster maps" {
+	"Raster" "Display raster maps" {
 	    "Display raster maps" "" {
 	    "exec d.rast &"}
 	    "Display raster map, legend, & title in active display" "" {
@@ -258,11 +258,11 @@ menu_build 1 .main_menu {
 	    "Slide show of all raster maps in current mapset" "" {
 	    "exec d.slide.show &"}
 	}
-	Vector "Display vector maps" {
-	"exec d.vect &"}
-	Grid 3D "" {
-	"exec r3.showdspf &"}
-	Text "Display text on maps" {
+	"Vector" "Display vector maps" {
+		"exec d.vect &"}
+	"Grid 3D" "" {
+		"exec r3.showdspf &"}
+	"Text" "Display text on maps" {
 	    "Display legend for raster maps" "" {
 	    "exec d.legend &"}
 	    "Display category values in raster map cells" "" {
@@ -284,7 +284,7 @@ menu_build 1 .main_menu {
 	    "Display standard GRASS fonts" "" {
 	    "exec show.fonts.sh &"}
 	}
-	Graphics "Display graphics on maps" {
+	"Graphics" "Display graphics on maps" {
 	    "Display histogram" "" {
 	    "exec d.histogram &"}
 	    "Display line graph" "" {
@@ -346,7 +346,7 @@ menu_build 1 .main_menu {
 	"Erase active display/frame" "" {
 	"exec d.erase &"}
     }
-    Raster "Raster map analysis" {
+    "Raster" "Raster map analysis" {
 	"Develop map" "" {
 	    "Digitize" "" {
 	    "exec r.digit &"}
@@ -580,7 +580,7 @@ menu_build 1 .main_menu {
 	    "exec r.coin &"}
 	}
     }
-    Vector "Vector map analysis" {
+    "Vector" "Vector map analysis" {
 	"Develop map" "" {
 	    "Digitize" "" {
 	    "exec v.digit &"}
@@ -689,7 +689,7 @@ menu_build 1 .main_menu {
 		"exec v.univar &"}
 	}
     }
-    Image "Image processing" {
+    "Image" "Image processing" {
 	"Develop images & groups" "" {
 	    "Create/edit imagery group" "" {
 	    "exec i.group &"}	
@@ -789,7 +789,7 @@ menu_build 1 .main_menu {
 		"exec r3.info &"}
 	}
     }
-    Databases "Database management" {
+    "Databases" "Database management" {
 	"Manage database" "" {
 	    "Connect to database" "" {
 	    "exec db.connect &"}
