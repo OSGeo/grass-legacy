@@ -3,3 +3,4 @@ all:
 	$(GMAKE) ../libes/vect32/Vlib
 	$(GMAKE) ../libes/vect32/diglib
 	$(GMAKE) ../libes/vect32/libes
+	$(MAKEALL)
