@@ -27,6 +27,11 @@ source $env(GISBASE)/etc/gtcltk/gmsg.tcl
 #############################################################################
 source $env(GISBASE)/etc/epsg_option.tcl
 
+#fetch GRASS Version number:
+set fp [open $env(GISBASE)/etc/VERSIONNUMBER r]
+set GRASSVERSION [read -nonewline $fp]
+close $fp
+
 #HTML help
 source $env(GISBASE)/docs/nviz/help.tcl
 proc make_help_window { w } {
@@ -270,11 +275,12 @@ proc CheckLocation {} \
 
 
 proc gisSetWindow {} {
+    global GRASSVERSION
 
     # Window manager configurations
 
     wm geometry . +100+100
-    wm title . "Grass 5.7 Data Selection"
+    wm title . "GRASS $GRASSVERSION Data Selection"
 
     global database
     global location
@@ -300,7 +306,7 @@ proc gisSetWindow {} {
     pack .frame0.intro.msg -side top
 
     .frame0.intro.msg tag configure all -justify center
-    .frame0.intro.msg insert end [G_msg "Welcome to GRASS GIS Version 5.7\n\n"]
+    .frame0.intro.msg insert end [G_msg "Welcome to GRASS GIS Version $GRASSVERSION\n\n"]
     .frame0.intro.msg insert end [G_msg "Please select location and mapset\n"]
     .frame0.intro.msg insert end [G_msg "or define a new location\n"]
     .frame0.intro.msg tag add all 1.0 end
