@@ -41,8 +41,8 @@ pdfdocs: checkdoxygen generatelocaldox
 	doxygen ./Doxyfile_arch_latex
 #this hack is needed to make Acroread's search engine happy:
 	(cd ./latex ; echo "\usepackage[T1]{fontenc}" >> doxygen.sty)
-	(cd ./latex && $(MAKE) pdf && mv refman.pdf grass57dbmi_`date '+%Y_%m_%d'`_refman.pdf)
-	@echo "PDF reference in directory ./latex/grass57dbmi_`date '+%Y_%m_%d'`_refman.pdf"
+	(cd ./latex && $(MAKE) pdf && mv refman.pdf grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}dbmi_`date '+%Y_%m_%d'`_refman.pdf)
+	@echo "PDF reference in directory ./latex/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}dbmi_`date '+%Y_%m_%d'`_refman.pdf"
 
 cleandocs:
 	rm -rf ./latex ./html dbmi_client/*.dox
