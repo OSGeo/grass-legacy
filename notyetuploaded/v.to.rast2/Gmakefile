@@ -1,0 +1,10 @@
+PGM=v.to.rast2
+
+LIST = main.o
+
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(VECTLIB) $(GISLIB) $(SEGMENTLIB) $(DATETIMELIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VECTLIB) $(GISLIB) $(SEGMENTLIB) $(DATETIMELIB) $(MATHLIB)
+
+$(GISLIB): #
+$(VECTLIB): #
+

@@ -1,0 +1,27 @@
+Date: Fri, 23 Mar 2001 15:20:35 +0100                                           
+To: Markus Neteler <neteler@geog.uni-hannover.de>                               
+From: Marco Negretti <marco@torno.ing.unico.it>                                 
+Subject: Re: v.to.rast2                                                         
+Organization: Politecnico di Milano                                             
+
+Ciao Markus,
+
+I enclose the 'main.c' and an extract, translated in english, from the
+Trento presentation: i hope it'll be useful to understand the code.  The
+presentation is available in italian at
+
+http://www.ing.unitn.it/~zatelli/grass_days_2001/it/slides/grass_days_2001_negretti_biagi.pdf
+                                                                                
+If you need any help, please let me know.
+                                                                                
+Marco
+                                                                                
+............................................                                    
+Marco Negretti 
+Politecnico di Milano - Facoltà di Como 
+via Valleggio, 11 - Ufficio V2.8 
+22100 Como (ITALY)
+fax (+39) 031.332.7519 
+e-mail marco@torno.ing.unico.it
+http://geomatica.ing.unico.it
+............................................

@@ -1,0 +1,15 @@
+PGM=r.carve
+#was r.enforce 
+
+OBJS= main.o lobf.o line_dist.o write_sites.o enforce_ds.o
+
+EXTRA_CFLAGS= $(VECT_INCLUDE)
+
+LIBRARIES = $(BITMAPLIB) $(LINKMLIB) $(VECTLIB) $(GISLIB) $(DATETIMELIB) 
+
+$(BIN_CMD)/$(PGM): $(OBJS) $(LIBRARIES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBRARIES) $(MATHLIB) $(XDRLIB)
+
+$(OBJS): enforce.h
+
+$(GISLIB): #

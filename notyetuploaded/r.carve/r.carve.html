@@ -1,0 +1,87 @@
+<TITLE>r.carve</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>r.carve</B></EM>  - carve a vector stream into an elevation model<BR>
+<EM>(2)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>r.carve</B> [<b>-q</b>] [<b>-n</b>] 
+<b>rast=</b><i>name</i>
+<b>vect=</b><i>name</i>
+<b>output=</b><i>name</i>
+[<b>site=</b><i>name</i>]
+[<b>width=</b><i>value</i>]
+[<b>depth=</b><i>value</i>]
+
+<BR>
+
+<H2>DESCRIPTION</H2>
+<P>
+<B>r.carve</B>
+<P>
+
+The program will take the vector stream data, transform them to raster, and
+subtracts a defaultdepth+additionaldepth from the DEM. If the given width is
+more than 1 cell it will carve the stream with the given width. With -n
+option it should eliminate all flat cells within the stream, so when and if
+the water gets into the stream it will flow. Site option generates x,y,z for
+points which define the stream with the z value of the bottom of the
+carved-in stream. These sites can then be combined with contour sites to
+interpolate a new DEM with better representation of valleys. It has not been
+thoroughly tested so not all option may work properly - but this was the
+intention.
+
+<H2>OPTIONS</H2>
+
+<H3>Flags:</H3>
+<DL>
+<DT><B>-q</B>
+<DD>quiet - do not show progress
+<DT><B>-n</B>
+<DD>no flat areas allowed in flow direction
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>rast=</B><EM>name</EM>
+<DD>raster input elevation map
+<DT><B>vect=</B><EM>name</EM>
+<DD>vector input map containing stream
+<DT><B>output=</B><EM>name</EM>
+<DD>raster output map of modified elevation
+<DT><B>site=</B><EM>name</EM>
+<DD>site output map for adjusted stream points
+<DT><B>width=</B><EM>value</EM>
+<DD>width of streams (in meters)
+<DT><B>depth=</B><EM>value</EM>
+<DD>additional depth
+</DL>
+
+
+<H2>NOTES</H2>
+<em>r.carve<em> does not create a depressionless DEM because many
+depressions are in flat areas and not in the streams.
+
+<H2>BUGS AND CAVEAT</H2>
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="r.flow.html">r.flow</A></EM>,
+<EM><A HREF="r.flowmd.html">r.flowmd</A></EM>
+<EM><A HREF="r.watershed.html">r.watershed</A></EM> 
+
+
+<H2>REFERENCES</H2>
+
+<a href=http://www2.gis.uiuc.edu:2280/modviz/reports/cerl99/rep99.html>Terrain
+modeling and Soil Erosion Simulations for Fort Hood and Fort Polk test
+areas</a>, by Helena Mitasova, Lubos Mitas, William M. Brown, Douglas M.
+Johnston, GMSL (Report for CERL 1999)
+
+<H2>AUTHOR</H2>
+Bill Brown (GMSL) (<A HREF=mailto:brown@gis.uiuc.edu>brown@gis.uiuc.edu</A>)
+<BR>
+</BODY>
+</HTML>
