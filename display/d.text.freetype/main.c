@@ -186,12 +186,13 @@ main(int argc, char **argv)
 	param.charset->key         = "charset";
 	param.charset->type        = TYPE_STRING;
 	param.charset->required    = NO;
-	param.charset->description = "Character encoding";
+	param.charset->description = "Character encoding (default: "DEFAULT_CHARSET")";
 
 	param.color = G_define_option();
 	param.color->key         = "color";
 	param.color->type        = TYPE_STRING;
 	param.color->required    = NO;
+	param.color->answer      = DEFAULT_COLOR;
 	param.color->description =
 		"Text color, either a standard GRASS color or R:G:B triplet (separated by colons)";
 
@@ -199,6 +200,7 @@ main(int argc, char **argv)
 	param.size->key         = "size";
 	param.size->type        = TYPE_DOUBLE;
 	param.size->required    = NO;
+	param.size->answer      = DEFAULT_SIZE;
 	param.size->description =
 		"Height of letters (in percent of available frame height)";
 
@@ -260,15 +262,11 @@ main(int argc, char **argv)
 	if(flag.p->answer && flag.n->answer)
 		G_fatal_error("Choose only one coordinate system for placement");
 
-	if(!flag.c->answer &&
-	   ((param.font && !param.font->answer && !param.path->answer) ||
-			(!param.font && !param.path->answer)))
+	if(!flag.c->answer && !param.font->answer && !param.path->answer)
 		G_fatal_error("No font selected");
 
 	path = NULL;
 	charset = NULL;
-	tcolor = NULL;
-	size = 0.0;
 
 	if(param.font && param.font->answer)
 	{
@@ -282,25 +280,21 @@ main(int argc, char **argv)
 
 	if(param.path->answer)
 		path = param.path->answer;
-
 	if(param.charset->answer)
 		charset = transform_string(param.charset->answer, toupper);
-	if(param.color->answer)
-		tcolor = transform_string(param.color->answer, tolower);
-	if(param.size->answer)
-		size = atof(param.size->answer);
+
+	tcolor = transform_string(param.color->answer, tolower);
+	size = atof(param.size->answer);
 
 	if(!charset)
 		charset = DEFAULT_CHARSET;
-	if(!tcolor)
-		tcolor = DEFAULT_COLOR;
-	if(size == 0.0)
-		size = atof(DEFAULT_SIZE);
 
 	bold = flag.b->answer;
+#ifdef	DEBUG
 	if(!flag.c->answer)
 		fprintf(stderr, "Font=<%s:%s:%s:%.2f>\n\n",
 				path, charset, tcolor, size);
+#endif
 
 	rotation = atof(param.rotation->answer);
 	if(!flag.r->answer)
@@ -382,7 +376,7 @@ main(int argc, char **argv)
 		if(param.east_north->answer)
 			D_add_to_list(G_recreate_command());
 		else{
-			sprintf(buf, "%s east_north=%g,%g",
+			sprintf(buf, "%s east_north=%f,%f",
 					G_recreate_command(), east, north);
 			D_add_to_list(buf);
 		}
