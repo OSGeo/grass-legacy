@@ -2,7 +2,17 @@
 #include "raster.h"
 #include "graph.h"
 
-int R_erase()
+
+/*!
+ * \brief erase screen
+ *
+ * Erases the entire screen to black.
+ *
+ *  \param void
+ *  \return int
+ */
+
+int R_erase(void)
 {
 	_send_ident(ERASE) ;
 

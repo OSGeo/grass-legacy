@@ -237,6 +237,22 @@ flushout(void)
 /* by calling R__open_quiet just before calling R_open_driver. */
 /* Returns in quiet mode opens are defined in open.h */
 
+
+/*!
+ * \brief initialize graphics
+ *
+ * Initializes connection to
+ * current graphics driver. Refer to GRASS User's Manual entries on the
+ * <i>d.mon</i> command. If connection cannot be made, the application module
+ * sends a message to the user stating that a driver has not been selected or
+ * could not be opened. Note that only one application module can be connected to
+ * a graphics driver at once.
+ * After all graphics have been completed, the driver should be closed.
+ *
+ *  \param void
+ *  \return int
+ */
+
 int
 R_open_driver(void)
 {
@@ -806,6 +822,16 @@ R_kill_driver(void)
     return 0;
 }
 
+
+/*!
+ * \brief terminate graphics
+ *
+ * This routine breaks the connection with the graphics driver opened by R_open_driver().
+ *
+ *  \param void
+ *  \return int
+ */
+
 int
 R_close_driver(void)
 {
@@ -829,6 +855,20 @@ R_release_driver(void)
 
     return 0;
 }
+
+
+/*!
+ * \brief synchronize graphics
+ *
+ * Send all pending graphics
+ * commands to the graphics driver and cause all pending graphics to be drawn
+ * (provided the driver is written to comply).  This routine does more than
+ * <i>R_flush</i> and in many instances is the more appropriate routine fo the
+ * two to use.
+ *
+ *  \param void
+ *  \return int
+ */
 
 int
 R_stabilize(void)
