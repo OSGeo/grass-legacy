@@ -20,7 +20,7 @@ integrated distributed hydrologic modeling.
 <P>
 <H2>SYNOPSIS:</H2> 
 <P>
-<I>r.hydro.CASC2D, r.hydro.CASC2D help, r.hydro.CASC2D </I>[-toepidbuq]
+<I>r.hydro.CASC2D, r.hydro.CASC2D help, r.hydro.CASC2D </I>[-toepidbuqs]
 elevation=mapname time_step=value tot_time=value discharge=mapname
 outlet_east&amp;north&amp;slope=east,north,bedslope rain_duration=value
 [watershed_mask=mapname] [initial_depth=mapname] [storage_capacity=mapname]
@@ -358,6 +358,9 @@ default SI unit prints the discharges in cubic meters per second
 <P>
 <I>-q</I> quietly skips printing iteration, time, and discharge
 values to the screen. No status report is printed.
+<P>
+<I>-s</I> do not check square tolerance of a grid cell. With this option
+non-square grid cell can be simulated using width of east-west resolution.
 <P>
 <H2>IMPORTANT NOTES</H2> 
 <P>
