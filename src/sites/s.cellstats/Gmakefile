@@ -1,0 +1,22 @@
+PGM = s.cellstats
+
+# Debug dump the sorted row/col/datum array
+# EXTRA_CFLAGS = -DDEBUG=1
+
+# Some variants of sorting options, the default uses a shell sort modified 
+# from a version posted by "pete" to comp.programming/comp.lang.c
+#
+# use C library qsort()
+# EXTRA_CFLAGS = -DUSE_QSORT=1
+# use "pete's" qsort() replacement called "qisort"
+# EXTRA_CFLAGS = -DUSE_QISORT=1
+
+LIST =  main.o\
+        univar.o\
+	cell_site.o\
+        qisort.o
+
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPGISLIB) $(DEPDATETIMELIB)
+		$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
+
+$(DEPGISLIB) $(DEPDATETIMELIB):	#
