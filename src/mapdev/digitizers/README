@@ -1,9 +1,9 @@
 
   To those who have written device drivers for 'digit'.  I suggest reading the
-  GRASS 3.0 INSTALLATION GUIDE to get an over all feel for how 'digit' is
-  being compiled in 3.0 .  Also suggest reading the INSTALL in the digitizer
+  GRASS 4.0 INSTALLATION GUIDE to get an over all feel for how 'digit' is
+  being compiled in 4.0 .  Also suggest reading the INSTALL in the digitizer
   driver your compiling.
-  This is a list of changes to the code for GRASS 3.0:
+  This is a list of changes to the code for GRASS 4.0:
 
   There are five drivers.  altek, altek2, kurta, kurta2 and none.
   The difference between the altek and the altek2 is that the altek uses
