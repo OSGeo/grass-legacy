@@ -1,7 +1,8 @@
 <h2>DESCRIPTION</h2>
 
 <em>v.format</em> is an interactive GUI (Graphical User Interface) which 
-enables the user to import external shapefile into GRASS vector format.
+enables the user to register external SHAPE file into GRASS and allows to
+define PostGRASS connection.
 
 <h2>FUNCTIONS</h2>
 
@@ -11,7 +12,7 @@ Name of GRASS vector output.
 
 <h3>Shapefile</h3>
 
-Name of shapefile to import.
+Name of shapefile to register.
 
 <h3>Header informations [optional]</h3> 
 
@@ -34,6 +35,10 @@ Creates GRASS vector file from shapefile.
 <h3>Close</h3>
 
 close v.format GUI.
+
+<h2>NOTES</h2>
+
+To really import SHAPE vector files, use <a href="v.in.ogr.html">v.in.ogr</a> instead.
 
 <h2>AUTHOR</h2>
 
