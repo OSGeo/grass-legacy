@@ -257,8 +257,8 @@ pdfdocs: checkdoxygen
 	test ! -d latex || (cd ./latex && $(MAKE) clean)
 	doxygen ./Doxyfile_arch_latex
 	(cd ./latex ; echo "\usepackage[T1]{fontenc}" >> doxygen.sty)
-	(cd ./latex && $(MAKE) pdf && mv refman.pdf grass57vlib_`date '+%Y_%m_%d'`_refman.pdf)
-	@echo "PDF reference in directory ./latex/grass57vlib_`date '+%Y_%m_%d'`_refman.pdf"
+	(cd ./latex && $(MAKE) pdf && mv refman.pdf grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}vlib_`date '+%Y_%m_%d'`_refman.pdf)
+	@echo "PDF reference in directory ./latex/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}vlib_`date '+%Y_%m_%d'`_refman.pdf"
 
 cleandocs:
 	rm -rf ./latex ./html Vlib/*.dox
