@@ -35,8 +35,6 @@
 #define D  ((ax2-ax1)*(by1-by2) - (ay2-ay1)*(bx1-bx2))
 #define D1 ((bx1-ax1)*(by1-by2) - (by1-ay1)*(bx1-bx2))
 #define D2 ((ax2-ax1)*(by1-ay1) - (ay2-ay1)*(bx1-ax1))
- 
-#define EPSILON   1.0e-10
     
 /* Intersect 2 line segments.
 *
@@ -105,6 +103,10 @@ int Vect_segment_intersection (
     int    switched = 0;
     
     /* TODO: Works for points ?*/
+        
+    G_debug (4, "Vect_segment_intersection()" ); 
+    G_debug (4, "    %e , %e  - %e , %e", ax1, ay1, ax2, ay2 ); 
+    G_debug (4, "    %e , %e  - %e , %e", bx1, by1, bx2, by2 ); 
 
     /* TODO 3D */
     if ( with_z && first_3d ) {
@@ -143,7 +145,9 @@ int Vect_segment_intersection (
 
     G_debug (2, "Vect_segment_intersection(): d = %f, d1 = %f, d2 = %f", d, d1, d2 ); 
     
-    dtol = EPSILON; /* TODO: calculate something based on tresh or check in different way */
+    /* TODO: dtol was originaly set to 1.0e-10, which was usualy working but not always. 
+     *       Can it be a problem to set the tolerance to 0.0 ? */
+    dtol = 0.0;
     if (fabs (d) > dtol) { 
 	r1 = D1/d;
 	r2 = D2/d;
