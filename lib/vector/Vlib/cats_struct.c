@@ -33,6 +33,9 @@ Vect__new_cats_struct ()
   if (p)
     p->n_cats = 0;
 
+  if (p)
+    p->alloc_cats = 0;
+  
   return p;
 }
 
@@ -197,4 +200,135 @@ Vect_reset_cats (struct line_cats *Cats)
   Cats->n_cats = 0;
 
   return 0;
+}
+
+struct cat_list *
+Vect_new_cat_list ()
+{
+  struct cat_list *p;
+
+  p = (struct cat_list *) malloc (sizeof (struct cat_list));
+
+  /* n_ranges MUST be initialized to zero */
+  if (p)
+    p->n_ranges = 0;
+
+  if (p)
+    p->alloc_ranges = 0;
+  
+  return p;
+}
+
+int 
+Vect_destroy_cat_list (struct cat_list *p)
+{
+  if (p)			/* probably a moot test */
+    {
+      if (p->n_ranges)
+	{
+	  free ((char *) p->min);
+	  free ((char *) p->max);
+	}
+      free ((char *) p);
+    }
+
+  return 0;
+}
+
+
+/* 
+   **  Convert string of categories and cat ranges
+   **  separated by commas to cat_list
+   **
+   **  Examples of string: 2,3,5-9,20 
+   **
+   **  str  - input string
+   **
+   **  returns:  number of errors in ranges 
+   **            
+ */
+int 
+Vect_str_to_cat_list (char *str, struct cat_list *list)
+{
+  int i, nr, l, err = 0;
+  char *s, *e, buf[100];
+  int min, max;
+  
+  list->n_ranges = 0;
+  l = strlen (str); 
+  
+  /* find number of ranges */
+  nr = 1; /* one range */
+  for ( i=0; i < l; i++)  
+      if (str[i] == ',')
+	   nr++;
+	  
+  /* allocate space */
+  if ( list->alloc_ranges == 0 )
+    {	    
+      list->min = (GRASS_V_CAT *) G_malloc (nr * sizeof(GRASS_V_CAT));
+      list->max = (GRASS_V_CAT *) G_malloc (nr * sizeof(GRASS_V_CAT));
+    }
+  else if (nr > list->alloc_ranges)
+    {
+      list->min = (GRASS_V_CAT *) G_realloc ((void *)list->min, 
+	                                nr * sizeof(GRASS_V_CAT));
+      list->max = (GRASS_V_CAT *) G_realloc ((void *)list->max, 
+	                                nr * sizeof(GRASS_V_CAT));
+    }
+    
+  /* go through string and read ranges */
+  i = 0;  
+  s = str;  
+  
+  while (s)
+    {
+      e = (char *) strchr (s, ','); /* first comma */
+      if( e )
+        {
+          l = e - s;
+          strncpy (buf, s, l);
+	  s = e + 1;
+	}
+      else
+        {
+          strcpy (buf, s);
+	  s = NULL;
+	}
+      if ( sscanf (buf, "%d-%d", &min, &max) == 2 ) {}
+      else if ( sscanf (buf, "%d", &min) == 1 )
+          max = min;
+      else  /* error */ 
+        {
+	  err++;	
+	  continue;
+        }
+  
+      list->min[i] = min;  
+      list->max[i] = max;
+      i++;
+    }  
+      
+  list->n_ranges = i;
+  
+  return (err);
+}
+
+/* 
+   **  Find if category is in list
+   **
+   **
+   **  returns:  TRUE  if cat is in list 
+   **            FALSE if it is not
+ */
+int 
+Vect_cat_in_cat_list (GRASS_V_CAT cat, struct cat_list *list)
+{
+  int i;
+  
+  for ( i=0; i < list->n_ranges; i++)  
+      if ( cat >= list->min[i] && cat <= list->max[i] )
+	   return (TRUE);
+	  
+  return (FALSE);
 }
