@@ -66,13 +66,14 @@ int main( int argc, char *argv[])
     int cover_type;		/* type of coverage (line, point, area) */
     int cover = 0;		/* 1 if AAT, 2 if PAT, 3 if both        */
 
+    char buf[1024];
     char msg[256];
 
     struct {
 	struct Option *input, *mapset, *action, *verbose, *logfile;
     } parm;
     struct {
-	struct Flag *db, *link;
+	struct Flag *db, *link, *support;
     } flag;
 
     /* Are we running in Grass environment ? */
@@ -121,6 +122,11 @@ int main( int argc, char *argv[])
     flag.db = G_define_flag() ;	/* not working yet... */
     flag.db->key           = 'd';
     flag.db->description   = "Use database for storing attributes" ;
+
+    flag.support = G_define_flag();
+    flag.support->key = 's';
+    flag.support->description = "Automatically run \"v.support\" on newly created vector file."; 
+
 
     /* get options and test their validity */
 
@@ -430,6 +436,16 @@ int main( int argc, char *argv[])
     }
     if (debug)
 	fprintf( fdlog, "Import of %s complete\n", name);
+    
+   /* If "-s" flag is passed as argument then run "v.support" on */
+   /* newly created vector file (output).                        */
+   if (flag.support->answer)
+    {
+     sprintf(buf,"%s/bin/v.support map=%s", G_gisbase(), name);
+     G_system(buf);
+     fprintf(stderr, "Done .\n");
+    }
+
     exit(0);
 }
 
