@@ -329,9 +329,10 @@ int main (int argc, char *argv[])
 						if (G_is_null_value(ptr2,data_type)) {
   							p = null_cost;
 						} else {
-							p =  ((float*)cell)[i];
+							p = *(float*)ptr2;
 						}
-						segment_put(&in_seg, &p, row, i);
+						segment_put(&in_seg, &p,row,i);
+						ptr2 = G_incr_void_ptr(ptr2,dsize);
 					}
 					break;
 				
@@ -340,9 +341,10 @@ int main (int argc, char *argv[])
 						if (G_is_null_value(ptr2,data_type)) {
   							p = null_cost;
 						} else {
-							p = ((double*)cell)[i];
+							p = *(double*)ptr2;
 						}
-						segment_put(&in_seg,&p, row, i);
+						segment_put(&in_seg, &p,row,i);
+						ptr2 = G_incr_void_ptr(ptr2,dsize);
 					}
 					break;
 			}				
@@ -395,7 +397,6 @@ int main (int argc, char *argv[])
 		if (verbose)
 			G_percent (row, nrows, 2);
 		G_free(fbuff) ;
-		printf("---------\n");
 	}
 
 /*   Scan the existing cum_cost_layer searching for starting points.
