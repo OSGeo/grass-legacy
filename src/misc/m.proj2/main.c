@@ -186,7 +186,7 @@ int main(int argc, char *argv[])
 	G_set_key_value("proj", "ll", out_proj_info);
 	G_set_key_value("datum", "wgs84", out_proj_info);
 	G_set_key_value("unit", "degree", out_proj_units);
-	G_set_key_value("units", "degrees", in_proj_units);
+	G_set_key_value("units", "degrees", out_proj_units);
 	G_set_key_value("meters", "1.0", out_proj_units);
 
 	if (pj_get_kv(&info_out, out_proj_info, out_proj_units) < 0)
