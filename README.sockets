@@ -20,6 +20,12 @@
 #  need not to be FIFO files. It's ok if these files are just zero size
 #  file, not FIFO nor other special file. Socket drivers communicate through
 #  these files.
+#
+# KNOWN BUGS:
+#  Killing the monitor has to be done with d.mon stop=name. This is
+#  the only way to get rid of the message-queues. If you destroy a monitor
+#  without d.mon, the monitor will be unusable till your computer reboot,
+#  maybe.
 #############################################################################
 #
 # Please test new XDRIVER and report bugs to developers list.
