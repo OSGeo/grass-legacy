@@ -145,7 +145,9 @@ if (!total_import){
       } 
 
     }
- 
+     PQclear(res);
+    /* explicitly close select result to avoid memory leaks  */
+
 
 } else {
       stat = plotCat(map,mapset,Points,line_cat, &P_map, fillcolor, pg_conn);
@@ -155,8 +157,6 @@ if (!total_import){
       } 
 } /*end if !total_import*/
     
-    PQclear(res);
-    /* explicitly close select result to avoid memory leaks  */
 
     PQfinish(pg_conn);
     /* close connection to database */

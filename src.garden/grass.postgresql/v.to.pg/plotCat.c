@@ -102,11 +102,12 @@ if (!to_postgis) {
 	snprintf(tmp_string,MAXFLDNAMESZ, "INSERT into %s_bnd (%s, num, ex, boundary) values ('%d','%d','t','(",table_string, key_string, v_att,i+1);
 			
 	   for (j = 0; j < points->n_points - 1; j++){
+
 #ifndef X_DISPLAY_MISSING
                 G_plot_line (points->x[j],   points->y[j],
                         points->x[j+1], points->y[j+1]);
 #endif
-/* Here we may need remove the last point, which doubles the first -alex*/
+
 		if (j != points->n_points - 2) 
 			snprintf (u_str,128,"(%f,%f),",points->x[j],points->y[j]);
 		else 
@@ -146,6 +147,7 @@ if (!to_postgis) {
 		snprintf(tmp_string,MAXFLDNAMESZ, "INSERT into %s_bnd (%s, num, ex, boundary) values ('%d','%d','f','(",table_string, key_string, v_att,i+1);
 			   
            	for (jk = 0; jk < points_i->n_points - 1; jk++) {
+
 #ifndef X_DISPLAY_MISSING
                 	G_plot_line (points_i->x[jk],   points_i->y[jk],
                         	points_i->x[jk+1], points_i->y[jk+1]);
@@ -180,10 +182,10 @@ if (!to_postgis) {
             }
 } else { /*if to_postgis*/
 
-	snprintf(tmp_string,MAXFLDNAMESZ, "INSERT into %s_mpoly (%s, num, grass_poly) values
-	('%d','%d',GeometryFromText('POLYGON((",table_string, key_string, v_att,i+1);
+	snprintf(tmp_string,MAXFLDNAMESZ, "INSERT into %s_mpoly (%s, num, grass_poly) values ('%d','%d',GeometryFromText('POLYGON((",table_string, key_string, v_att,i+1);
 			
 	   for (j = 0; j < points->n_points - 1; j++){
+
 #ifndef X_DISPLAY_MISSING
                 G_plot_line (points->x[j],   points->y[j],
                         points->x[j+1], points->y[j+1]);
@@ -198,13 +200,13 @@ if (!to_postgis) {
 
 	   }
 
-if (!pa->n_isles) {
-	snprintf(u_str,9,"))',-1))");
-} else {
-	snprintf(u_str,4,"),(");
-}
+		if (!pa->n_isles) {
+			snprintf(u_str,9,"))',-1))");
+		} else {
+			snprintf(u_str,3,"),");
+		}
 	   
-	   strcat (tmp_string,u_str);
+	   	strcat (tmp_string,u_str);
 		
 	if (verbose) {
 		printf("n_points is %d, v_att is %d, count is %d\n", points->n_points,
@@ -228,6 +230,7 @@ if (!pa->n_isles) {
 		snprintf(tmp_string_i,MAXFLDNAMESZ, "(");
 			   
            	for (jk = 0; jk < points_i->n_points - 1; jk++) {
+
 #ifndef X_DISPLAY_MISSING
                 	G_plot_line (points_i->x[jk],   points_i->y[jk],
                         	points_i->x[jk+1], points_i->y[jk+1]);
@@ -243,11 +246,12 @@ if (!pa->n_isles) {
 
 		}
 		
-if (j == pa->n_isles - 1){
-	snprintf(u_str,9,"))',-1))");
-} else {
-	snprintf(u_str,4,"),(");
-}	   
+		if (j == pa->n_isles - 1){
+			snprintf(u_str,9,"))',-1))");
+		} else {
+			snprintf(u_str,3,"),");
+		}
+		   
 	   	strcat (tmp_string_i,u_str);
 		
 		if (verbose) {
@@ -258,18 +262,18 @@ if (j == pa->n_isles - 1){
 			total_vects++;
  		} 
 		  
-tmp_string = (char*) G_realloc(tmp_string, strlen(tmp_string) + strlen(tmp_string_i));
-strcat (tmp_string,tmp_string_i);
+		tmp_string = (char*) G_realloc(tmp_string, strlen(tmp_string) + strlen(tmp_string_i)+1);
+		strcat (tmp_string,tmp_string_i);
 
 		G_free (tmp_string_i);
 
             }
-if (verbose) printf ("Executing\n%s;\n\n",tmp_string);    
+		if (verbose) printf ("Executing\n%s;\n\n",tmp_string);    
 	
-	res1 = PQexec (pg_conn, tmp_string);
-    	PQclear(res1);
+		res1 = PQexec (pg_conn, tmp_string);
+    		PQclear(res1);
 
-	   G_free (tmp_string);
+	   	G_free (tmp_string);
 	    
 
 }/*end if !to_postgis*/
@@ -291,10 +295,6 @@ if (verbose) printf ("Executing\n%s;\n\n",tmp_string);
 
         Vect_rewind (Map);
 	  
-/*
---------------
-If we don't return now, we may draw lines which are not ours: A.Sh.
-*/	  
 	
 	return 0;
 	
@@ -332,21 +332,26 @@ if (!strncmp(vtype_string,"line",4) && (list = find_line (vect_cat, &count, Map)
 
 		tmp_string = (char*) G_malloc(points->n_points*(2*MAXFLSIZE+4) 
 		+ MAXFLDNAMESZ);
+if (!to_postgis) 
 		snprintf(tmp_string,MAXFLDNAMESZ, "INSERT into %s_arc (%s, num, segment) values ('%d','%d','[",table_string, key_string, v_att,n+1);
-
+else
+		snprintf(tmp_string,MAXFLDNAMESZ, "INSERT into %s_mstring (%s, num, grass_line) values ('%d','%d', GeometryFromText('LINESTRING(",table_string, key_string, v_att,n+1);
 
 	   	np = points->n_points;
 	   	x  = points->x;
 	   	y =  points->y;
 	   	for (i=1; i < np; i++)
 	     	{
+
 #ifndef X_DISPLAY_MISSING
 	       		G_plot_line (x[0], y[0], x[1], y[1]);
 #endif
 			if (i != points->n_points - 1) 
-		snprintf (u_str,128,"(%f,%f),",x[0],y[0]);
+				if (!to_postgis) snprintf (u_str,128,"(%f,%f),",x[0],y[0]);
+				else snprintf (u_str,128,"%f %f,",x[0],y[0]);
 			else 
-		snprintf (u_str,128,"(%f,%f)",x[1],y[1]);
+				if (!to_postgis) snprintf (u_str,128,"(%f,%f)",x[1],y[1]);
+				else snprintf (u_str,128,"%f %f",x[0],y[0]);
 			strcat (tmp_string,u_str);
 			
 			if (verbose) total_vertices++;
@@ -355,7 +360,8 @@ if (!strncmp(vtype_string,"line",4) && (list = find_line (vect_cat, &count, Map)
 	       		y++;
 	     	}
 
-	   snprintf(u_str,4,"]')");
+	   if (!to_postgis) snprintf(u_str,4,"]')");
+	   else snprintf(u_str,8,")',-1))");
 	   
 	   strcat (tmp_string,u_str);
 		
