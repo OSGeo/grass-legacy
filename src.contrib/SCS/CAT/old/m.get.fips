@@ -1,0 +1,53 @@
+
+
+g.get_fips               GRASS Reference Manual	           g.get_fips
+
+
+
+NAME
+     g.get_fips - Find a state and county FIPS code for the user.
+           (SCS map Development Tool)
+
+SYNOPSIS
+     g.get_fips
+
+DESCRIPTION
+     g.get_fips:
+       - Promts the user for State FIPS or two-letter code. Then the
+		 county name. The program then prints the State and County FIPS
+		 code numbers.
+
+
+EXAMPLE
+
+       g.get_fips
+
+	   Enter State FIPS code or RETURN if unknown :
+	   Enter Two-Letter State or Territory Abbreviation :pa
+	   Enter County Name :cambria
+	   42 21
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     M.L.Holko, USDA, SCS, Cart. / Geo. Information Systems Division
+
+GRASS 4.0		 U.S.D.A. SCS  				1
