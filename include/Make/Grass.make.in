@@ -220,7 +220,7 @@ SYMBLIB    = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(SYMB_LIBNAME).$(LIB_SUFFIX)
 
 ##################### dependencies ######################################
 D_DEP       =  $(D_LIB)
-
+DBMIDEP     =  $(DBMILIB)
 FORMDEP     =  $(GRASS_INCDIR)/form.h $(FORMLIB)
 
 GISDEP      =  $(GRASS_INCDIR)/gis.h $(GRASS_INCDIR)/gisdefs.h \
