@@ -1,0 +1,9 @@
+
+HISTORY
+
+The HISTORY command results in a review of all valid complete map
+expression commands entered during this session.
+
+syntax:   HISTORY
+
+aliases:  hist   history
