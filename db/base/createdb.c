@@ -35,6 +35,7 @@ void
 parse_command_line(int argc, char *argv[])
 {
     struct Option *driver, *database, *location;
+    struct GModule *module;
 
     driver 		= G_define_option();
     driver->key 	= "driver";
@@ -55,7 +56,14 @@ parse_command_line(int argc, char *argv[])
     location->required 	= YES;
     location->description = "database location";
 
-    G_disable_interactive();
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Create an empty database.";
+
+    /* Initialize the GIS calls */
+    G_gisinit(argv[0]) ;
+
     if(G_parser(argc, argv))
 	exit(ERROR);
 

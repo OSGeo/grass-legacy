@@ -150,6 +150,7 @@ parse_command_line(argc, argv) char *argv[];
 {
     struct Option *driver, *database, *location, *fs, *vs, *nv, *input;
     struct Flag *c,*d,*h;
+    struct GModule *module;
 
     driver 		= G_define_option();
     driver->key 	= "driver";
@@ -208,11 +209,16 @@ parse_command_line(argc, argv) char *argv[];
     h->key		= 'h';
     h->description	= "horizontal output (instead of vertical)";
 
-    G_disable_interactive();
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Select data from database.";
 
-    if (argc > 1) {
-	if(G_parser(argc, argv)) exit(ERROR);
-    }
+    /* Initialize the GIS calls */
+    G_gisinit(argv[0]) ;
+
+    if(G_parser(argc, argv))
+	exit(ERROR);
 
     parms.driver	= driver->answer;
     parms.database	= database->answer;
