@@ -16,6 +16,7 @@ get_legend_box (int *x0, int *x1, int *y0, int *y1)
     fprintf(stderr, "\n\n");
     fprintf(stderr, "Buttons:\n") ;
     fprintf(stderr, "Left:   Establish a corner\n") ;
+    fprintf(stderr, "Middle: Cancel\n") ;
     fprintf(stderr, "Right:  Accept box for legend\n\n") ;
 
     do
@@ -31,6 +32,7 @@ get_legend_box (int *x0, int *x1, int *y0, int *y1)
 		cur_screen_y = screen_y ;
 		break ;
 	case 2:
+		return(0);
 	case 3: break;
 	}
 
