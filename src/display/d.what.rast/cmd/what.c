@@ -16,7 +16,9 @@ int what (int once, int terse, int colrow, char *fs)
     int screen_x, screen_y ;
     double east, north ;
     int button ;
-    RASTER_MAP_TYPE map_type[MAX_LAYERS];
+    RASTER_MAP_TYPE *map_type;
+
+    map_type = (RASTER_MAP_TYPE *)G_malloc(nrasts*sizeof(RASTER_MAP_TYPE));
 
     G_get_set_window (&window);
     nrows = window.rows;
@@ -29,7 +31,7 @@ int what (int once, int terse, int colrow, char *fs)
 
     width = 0;
     mwidth = 0;
-    for (i=0; i < nlayers; i++)
+    for (i=0; i < nrasts; i++)
     {
         int n;
 
@@ -62,7 +64,7 @@ int what (int once, int terse, int colrow, char *fs)
         show_utm (name[0], north, east, &window, terse, colrow, button, fs);
 	G_set_c_null_value(&null_cell,1);
 	G_set_d_null_value(&null_dcell,1);
-        for (i = 0; i < nlayers; i++)
+        for (i = 0; i < nrasts; i++)
 	{
             if (G_get_c_raster_row (fd[i], buf, row) < 0)
                 show_cat (width, mwidth, name[i], mapset[i], null_cell,
