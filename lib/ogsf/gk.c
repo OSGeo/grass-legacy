@@ -125,7 +125,6 @@ void gk_follow_frames(Viewnode * view, int numsteps, Keylist * keys, int step,
 	    fprintf(stderr, "FROM: %f %f %f\n", tmp[X], tmp[Y], tmp[Z]);
 	}
 #endif
-
 	GS_get_focus(tmp);
 	if ((mask & KF_DIRX_MASK)) {
 	    tmp[X] = v->fields[KF_DIRX];
@@ -286,7 +285,10 @@ Viewnode *gk_make_framesfromkeys(Keylist * keys, int keysteps, int newsteps,
 					    &dt1, &dt2);
 		}
 
-		if (len == 0.0) {
+/* ACS 1 line: was	if (len == 0.0) {
+ 	when disabling a channel no calculation must be made at all (otherwise core dump)
+*/
+		if (len == 0.0 || nvk == 0) {
 		    if (!k) {
 			/* none valid - use first.
 			   (when showing , will be ignored anyway) */
