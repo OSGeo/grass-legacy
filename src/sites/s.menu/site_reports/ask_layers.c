@@ -4,7 +4,6 @@ ask_layers (file)
     char *file;
 {
     FILE *fd;
-    int i;
     char list[400];
     char name[100];
     char *mapset;
