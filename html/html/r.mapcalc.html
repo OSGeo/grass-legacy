@@ -539,6 +539,20 @@ to integer number(s).
 </pre>
 </menu>
 
+<P>
+NULL support: Please note that any math performed with NULL cells always
+results in a NULL value for these cells. If you want to replace a NULL cell
+on-the-fly, use the isnull() test function in a if-statement.
+<p>
+
+Example: The users wants the NULL-valued cells to be treated like zeros. To
+add maps A and B (where B contains NULLs) to get a map C the user can use a
+construction like:<p>
+
+<tt>C=A + if(isnull(B),0,B)</tt>
+
+
+
 <H2>EXAMPLES</H2>
 
 To compute the average of two raster map layers
@@ -652,10 +666,6 @@ the command line, the program will not warn the user not to overwrite
 existing map layers.  Users should therefore take care to assign program
 outputs raster file names that do not yet exist in their current mapsets.
 
-<P>
-NULL support: Please note that any math performed with NULL cells always
-results in a NULL value for these cells. If you want to replace a NULL cell
-on-the-fly, use the isnull() test function in a if-statement.
 
 <H2>BUGS</H2>
 
