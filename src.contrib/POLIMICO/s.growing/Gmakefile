@@ -1,0 +1,17 @@
+PGM = s.growing
+HOME = $(BIN_CMD)
+
+LIST =  main.o\
+        nrutil0.o\
+
+LIBES=$(GISLIB) $(RASTERLIB) $(DATETIMELIB)
+DEPLIBES=$(DEPGISLIB) $(DEPDATETIMELIB) $(DEPRASTERLIB)
+
+$(HOME)/$(PGM):$(LIST) $(DEPLIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
+$(DLGLIB): #
+
