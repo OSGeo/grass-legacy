@@ -156,6 +156,9 @@ FORM_LIBNAME     = grass_form
 # Symbols (icons, patterns)
 SYMB_LIBNAME     = grass_symb
 
+# Sites
+SITES_LIBNAME    = grass_sites
+
 ##################### library names and dependencies #################################
 BITMAPLIB   = -l$(BITMAP_LIBNAME)
 BTREELIB    = -l$(BTREE_LIBNAME)
@@ -223,8 +226,11 @@ GEOMLIB     = $(OPTRILIB) $(SOSLIB) $(LIALIB) $(BASICLIB)
 
 # misc
 XDISPLAYLIB = -l$(XDISPLAY_LIBNAME)
-FORMLIB    = -l$(FORM_LIBNAME)
-SYMBLIB    = -l$(SYMB_LIBNAME)
+FORMLIB     = -l$(FORM_LIBNAME)
+SYMBLIB     = -l$(SYMB_LIBNAME)
+
+# Sites
+SITESLIB    = -l$(SITES_LIBNAME) 
 
 ifeq ($(GRASS_LIBRARY_TYPE),stlib)
 BITMAPDEP   = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(BITMAP_LIBNAME).$(LIB_SUFFIX)
@@ -293,8 +299,12 @@ GEOMDEP     = $(OPTRIDEP) $(SOSDEP) $(LIADEP) $(BASICDEP)
 
 # misc
 XDISPLAYDEP = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(XDISPLAY_LIBNAME).$(LIB_SUFFIX)
-FORMDEP    = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(FORM_LIBNAME).$(LIB_SUFFIX)
-SYMBDEP    = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(SYMB_LIBNAME).$(LIB_SUFFIX)
+FORMDEP     = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(FORM_LIBNAME).$(LIB_SUFFIX)
+SYMBDEP     = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(SYMB_LIBNAME).$(LIB_SUFFIX)
+
+# Sites
+SITESDEP    = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(SITES_LIBNAME).$(LIB_SUFFIX)
+
 endif
 
 ##################### rules #############################################
