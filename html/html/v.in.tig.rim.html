@@ -1,4 +1,8 @@
+<html>
 <TITLE>v.in.tig.rim</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
 
 <H2>NAME</H2>
 
@@ -36,7 +40,7 @@ in GRASS will be named "dbname.Master".  The master vector file will
 include all information from the type1 and type2 TIGER files given
 on the command line as <EM>in1file</EM> and <EM>in2file</EM>.  If the user simply
 types <EM>v.in.tig.rim</EM> on the command line, all parameters will be
-queried using the standard GRASS 
+queried using the standard GRASS
 <A HREF="../html/parser.html">parser</A>
  described in the manual
 entry for <EM>
@@ -44,7 +48,6 @@ entry for <EM>
 </EM>.
 
 <H2>OPTIONS</H2>
-
 
 
 <P>
@@ -56,19 +59,19 @@ entry for <EM>
 <DL>
 
 
-<DT><B>dbname=</B><EM>name</EM> 
+<DT><B>dbname=</B><EM>name</EM>
 
 <DD>Vector/rim data name (with a maximum of 7 characters).
 
-<DT><B>in1file=</B><EM>name</EM> 
+<DT><B>in1file=</B><EM>name</EM>
 
 <DD>TIGER type1 input file name.
 
-<DT><B>in2file=</B><EM>name</EM> 
+<DT><B>in2file=</B><EM>name</EM>
 
 <DD>TIGER type2 input file name.
 
-<DT><B>zone=</B><EM>value</EM> 
+<DT><B>zone=</B><EM>value</EM>
 
 <DD>Universal Transverse Mercator (UTM) zone in which these data
 are located.
@@ -83,5 +86,38 @@ Options:  -60 - 60
 TIGER data are presented in latitude/longitude format, and are converted
 to UTM (Universal Transverse Mercator) coordinates as part of this
 importing routine.  The spheroid used in the conversion is clark 66, as
-it is the most>
-<HR><H3>Transfer interrupted!</H3>
+it is the most consistent with the original data.
+<P>
+This command must be compiled separately, and requires the use of
+<EM>rim</EM> and <EM><A HREF="v.db.rim.html">v.db.rim</A></EM> which contain FORTRAN code.
+The user must have
+access to a FORTRAN compiler in order to compile and use this command,
+since it calls both <EM>rim</EM> and <EM><A HREF="v.db.rim.html">v.db.rim</A></EM>.
+<P>
+If the user does not know the UTM zone for this data input file,
+the command <EM><A HREF="m.tiger.region.html">m.tiger.region</A>
+</EM> should be run first to determine
+the zone.
+<P>
+<EM><A HREF="v.support.html">v.support</A></EM> must be run separately on the output file if needed.
+<H2>FILES</H2>
+Source code for RIM is located under $GISBASE/../src.related/rim
+<P>
+Source code for <EM>v.db.rim</EM> is located
+under $GISBASE/../src.garden/grass.rim/v.db.rim
+<P>
+Source code for <EM>v.in.tig.rim</EM> is located
+under $GISBASE/../src.garden/grass.tig.rim/v.in.tig.rim
+<P>
+Source code for <EM>m.tiger.region</EM> is located
+under $GISBASE/../src.alpha/misc/m.tiger.region
+<H2>SEE ALSO</H2>
+<EM><A HREF="tig.rim.sh.html"> tig.rim.sh</A></EM>,
+<EM><A HREF="m.tiger.region.html"> m.tiger.region</A></EM>,
+<EM><A HREF="v.db.rim.html"> v.db.rim</A></EM>,
+<EM><A HREF="tiger.info.sh.html"> tiger.info.sh</A></EM>.
+<H2>AUTHOR</H2>
+Jim Hinthorne and David Satnik,
+<EM>S Lab, Central Washington University, Ellensburg, WA.</EM>
+</body>
+</html>
