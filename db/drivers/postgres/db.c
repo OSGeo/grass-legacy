@@ -4,7 +4,6 @@
 #include <dbmi.h>
 #include "globals.h"
 #include "proto.h"
-#include "../dialog/dbd.h"
 
 int db_driver_open_database(handle)
      dbHandle *handle;
@@ -37,24 +36,6 @@ int db_driver_open_database(handle)
     pg_conn = PQsetdbLogin( pgconn.host, pgconn.port, pgconn.options, pgconn.tty, 
 		            pgconn.dbname, pgconn.user, pgconn.password );
     
-    if (PQstatus(pg_conn) == CONNECTION_BAD) {
-        if ( pgconn.user == NULL || strlen(pgconn.user) == 0 || 
-	     pgconn.password == NULL || strlen(pgconn.password) == 0 ) {
-	   /* Ask user for login/password */
-	   G_debug (3, "User/password missing");
-	   if ( dbd_user ( "pg", name, &pgconn.user, &pgconn.password ) < 0 ) {
-		append_error ( "cannot get user/password\n" );
-		report_error ();
-		return DB_FAILED;
-	   }
-	   G_debug ( 3, "user =  %s", pgconn.user ); 
-	   
-           pg_conn = PQsetdbLogin( pgconn.host, pgconn.port, pgconn.options, pgconn.tty, 
-	 	                    pgconn.dbname, pgconn.user, pgconn.password );
-
-	}
-    }
-
     if (PQstatus(pg_conn) == CONNECTION_BAD) {
 	append_error ( "Cannot connect to Postgres: " );
         append_error ( PQerrorMessage(pg_conn) );
