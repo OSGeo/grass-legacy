@@ -20,7 +20,8 @@ default: \
 	$(HOME)/db.execute \
 	$(HOME)/db.select \
 	$(HOME)/db.tables \
-	$(HOME)/db.connect
+	$(HOME)/db.connect \
+	html
 
 $(HOME)/db.columns: $(OBJDIR)/columns.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/columns.o $(LIBES) $(XDRLIB) $(MATHLIB)
