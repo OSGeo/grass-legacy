@@ -435,20 +435,21 @@ int main( int argc, char **argv )
 		/* following covers both the above if(do_cats == cats_num) and k++ loop */
 		if(lines < 1) {
 			lines = 1;	/* ward off the dpl floating point exception */
-			sprintf(buff,"Nothing to draw! (no categories with labels? out of range?)");
-			G_fatal_error(buff) ;
+			G_fatal_error("Nothing to draw! (no categories with labels? out of range?)");
 		}
-			
+
 		/* Figure number of lines, number of pixles per line and text size */
-		dots_per_line = ((b - t) / lines);
-	
+		dots_per_line = ((y1 - y0) / lines);
+
+		/* switch to a smooth legend for CELL maps with too many cats */
+		/*  an alternate solution is to set   dots_per_line=1         */
 		if ((dots_per_line == 0) && (do_smooth == 0)) {
-			do_smooth = 1; /* for CELL maps with lot's of cats */
-			if(!use_catlist) {
-				fprintf(stderr, "Forcing smooth legend as too many categories for current monitor height.\n");
-				flip = !flip;
-			}
-		}	/* an alternate solution is to set   dots_per_line=1   */
+		    if(!use_catlist) {
+			fprintf(stderr,
+			    "Forcing a smooth legend: too many categories for current window height.\n");
+			do_smooth = 1;
+		    }
+		}
 
 		/* center really tiny legends */
 		if( !use_mouse && opt7->answer == NULL)	{	/* if defualt scaling */
