@@ -122,7 +122,9 @@
  *  or don't have ecvt(), fcvt(), and gcvt().
  */
 
+#ifndef freebsd
 #define FLOATING
+#endif
 
 /*
  *  A few other miscellaneous #definitions are possible:
