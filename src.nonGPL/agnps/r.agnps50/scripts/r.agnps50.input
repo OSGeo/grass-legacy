@@ -1,37 +1,37 @@
 #!/bin/sh
 #
+
+if test "$GISBASE" = ""; then
+    echo "You must be in GRASS GIS to run this program." >&2
+    exit 1
+fi
+
+if [ "$#" -gt 0 ]; then
+      echo "r.agnps50.input is an interactive module"
+      echo "Usage:"
+      echo "      r.agnps50.input"
+      exit
+fi
+
+
 # Remove any temp files from previous runs
-if [ "$#" -lt 1 ]; then
-      echo "r.agnps50.input is an interactive module"
-      echo "Usage:"
-      echo "      r.agnps50.input"
-      exit   
-fi
-if [ "$1" = "help" ]; then
-      echo "r.agnps50.input is an interactive module"
-      echo "Usage:"
-      echo "      r.agnps50.input"
-      exit   
-fi
-
 @unalias rm
-
 rm -f tmpoutfile 
 $GISBASE/etc/agnps50/remove_old_tmp_files.sh >tmpoutfile
+
 
 # Eliminate the MASK from the previous execution so that
 # the program can start a new MASK (with correct resolution,
 # etc.)
-
 g.remove MASK >>tmpoutfile
 
-# Run the first excecutable
 
+# Run the first excecutable
 $GISBASE/etc/agnps50/agnps_input_1
 # agnps_input_1 exits with a status of 1 if
 # the flow map was not present and had to be created.
 # The user is warned that the flow map needs to be
-# manually checked, so it this is the case, the
+# manually checked, so if this is the case, the
 # script exits before agnps_input_2, the main
 # portion of the program (and the second executable)
 # is executed.
@@ -42,10 +42,10 @@ $GISBASE/etc/agnps50/agnps_input_1
 
 if [ $? -ne 0 ]
 then
-  echo "Check for more than one outlet cell! If present, use d.rast.edit"
-  echo "on aspect map to fix this."
+    echo "Check for more than one outlet cell! If present, use d.rast.edit"
+    echo "on aspect map to fix this."
 else
-  $GISBASE/etc/agnps50/agnps_input_2a
+    $GISBASE/etc/agnps50/agnps_input_2a
 fi
 
 ##
