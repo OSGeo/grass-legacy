@@ -273,8 +273,9 @@ area_perim(y,x,map,p,mapset,name,color,fill,Dvect_color)
  prev_a_index = a_index;
 
 /* Calculate polygon area and print information */
- dig_find_area(map,&(map->Area[a_index]),&f_area,&x,&y,(double)0.0);
- fprintf(stderr,"AREA:  \t%.2lf sq meters  \t%.3lf hectares\n",
+/* dig_find_area(map,&(map->Area[a_index]),&f_area,&x,&y,(double)0.0);*/
+ f_area = G_area_of_polygon(Points->x, Points->y, Points->n_points);
+ fprintf(stderr,"AREA:  \t%.2lf sq meters   \t%.2lf hectares\n",
          f_area,(f_area/10000.) );
  fprintf(stderr,"       \t%.3lf acres  \t\t%.4lf sq miles\n",
  ((f_area*10.763649)/43560.),(((f_area*10.763649)/43560.)/640.) );
