@@ -2,7 +2,7 @@
 #
 ############################################################################
 #
-# MODULE:	d.out.png for GRASS 5.7; based on d.out.png for GRASS 5
+# MODULE:	d.out.png for GRASS 6.0; based on d.out.png for GRASS 5 (2004/12/07)
 # AUTHOR(S):	Michael Barton 
 #		 Routine to read current display geometry written by 
 #		 Hamish Bowman & Glynn Clements
@@ -65,24 +65,6 @@ curr_mon=`d.mon -p | awk '{printf "%s", $4}'`
 
 #defaults
 res=2
-
-# evaluate command arguments
-
-if [ "$GIS_OPT_output" = "(null)" ]
-then
-			echo ""
-			echo "Unrecognized option"
-			echo "Options: output=file_name res=1|[2]|4"
-			exit
-else
-	output=$GIS_OPT_output
-fi
-
-if [ "$GIS_OPT_res" != "(null)" ]
-then
-	res=$GIS_OPT_res
-fi
-
 
 #get GRASS version for display monitor name
 GRASS_VER=`g.version | awk '{printf "%s", $1 " " $2}'`
