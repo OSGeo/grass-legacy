@@ -33,7 +33,7 @@ int main (int argc, char **argv)
     char *input, *mapset;
     struct GModule *module;
     struct Option *inopt, *dbdriver, *dbdatabase, *dbtable, *field_opt, *dbkey;
-    struct Flag *overwrite, *print, *columns, *delete;
+    struct Flag *overwrite, *print, *columns, *delete, *shell_print;
     dbDriver *driver;
     dbString table_name;
     dbTable *table;
@@ -94,6 +94,11 @@ int main (int argc, char **argv)
     print->key               = 'p';
     print->description       = "print current connection parameters and exit";
 
+    shell_print = G_define_flag();
+    shell_print->key               = 'g';
+    shell_print->description       = "print current connection parameters (shell script style)\n"
+				     "layer[/layer name] table key database driver";
+
     columns = G_define_flag();
     columns->key               = 'c';
     columns->description       = "print types/names of table columns for specified field and exit";
@@ -124,7 +129,7 @@ int main (int argc, char **argv)
       
     G_debug ( 3, "Mapset = %s", mapset);
 
-    if (print->answer || columns->answer)
+    if (print->answer || shell_print->answer || columns->answer)
       Vect_open_old ( &Map, inopt->answer, mapset);
     else
     {
@@ -132,7 +137,7 @@ int main (int argc, char **argv)
       Vect_hist_command ( &Map );
     }
 
-    if (print->answer || columns->answer)
+    if (print->answer || shell_print->answer || columns->answer)
     {
       num_dblinks = Vect_get_num_dblinks(&Map);
       if (num_dblinks <= 0)
@@ -142,16 +147,29 @@ int main (int argc, char **argv)
       }
       else /* num_dblinks > 0 */
       {
-        if (print->answer)
+        if (print->answer || shell_print->answer)
         {
-          fprintf(stderr,"Vector map <%s> is connected by:\n", input);
+	  if ( !(shell_print->answer) ) {
+              fprintf(stderr,"Vector map <%s> is connected by:\n", input);
+	  }
           for (i = 0; i < num_dblinks; i++) {
             if ( (fi = Vect_get_dblink( &Map, i)) == NULL)
                G_fatal_error("Database connection not defined");
-            driver = db_start_driver(fi->driver);
-            if (driver == NULL)
-                G_warning("Cannot open driver %s", fi->driver) ; /* G_fatal_error ? */
-            fprintf(stderr,"field <%d> table <%s> in database <%s> through driver <%s> with key <%s>\n", fi->number, fi->table, fi->database, fi->driver, fi->key);
+
+	    if ( shell_print->answer ) {
+		if ( fi->name ) {
+                    fprintf(stdout,"%d/%s %s %s %s %s\n", fi->number, fi->name, fi->table, fi->key, 
+			                                  fi->database, fi->driver);
+		} else {
+                    fprintf(stdout,"%d %s %s %s %s\n", fi->number, fi->table, fi->key, 
+			                               fi->database, fi->driver);
+		}
+	    } else { 
+		driver = db_start_driver(fi->driver);
+		if (driver == NULL)
+		    G_warning("Cannot open driver %s", fi->driver) ; /* G_fatal_error ? */
+		fprintf(stderr,"field <%d> table <%s> in database <%s> through driver <%s> with key <%s>\n", fi->number, fi->table, fi->database, fi->driver, fi->key);
+	    }
           }
         } /* end print */
         else /* columns */

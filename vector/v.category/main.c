@@ -15,6 +15,7 @@
  * *
  * **************************************************************/
 #include <stdlib.h> 
+#include "glocale.h"
 #include "gis.h"
 #include "Vect.h"
 
@@ -24,6 +25,7 @@
 #define O_PRN  4
 #define O_SUM  5
 #define O_CHFIELD 6
+#define O_TYPE_REP 7 /* report number of features for each type */
 
 #define FRTYPES 7  /* number of field report types */
 
@@ -50,11 +52,11 @@ main (int argc, char *argv[])
         int    i, j, ret, option, otype, type, with_z, step;
 	int    n_areas, centr, new_centr;
 	double x, y;
-	char   *mapset, errmsg[200];
 	int    cat, ocat, *fields, nfields, field;
 	struct GModule *module;
 	struct Option *in_opt, *out_opt, *option_opt, *type_opt;
 	struct Option *cat_opt, *field_opt, *step_opt;
+	struct Flag *shell;
 	FREPORT **freps;
 	int nfreps, rtype, fld;
 
@@ -79,7 +81,8 @@ main (int argc, char *argv[])
 		"\tdel - delete category\n"
 		"\tchfield - change field number (e.g. field=3,1 changes all fields 3 to field 1)\n"
 		"\tsum - add the value specified by cat option to the current category value\n"
-		"\treport - print report (statistics)\n"
+		"\treport - print report (statistics), in shell style:\n"
+			"\t\tfield type count min max\n"
 		"\tprint - print category values";
 
 	cat_opt = G_define_standard_option(G_OPT_V_CAT);
@@ -96,6 +99,10 @@ main (int argc, char *argv[])
 	step_opt->multiple = NO;
 	step_opt->answer = "1";
         step_opt->description = "Category increment";
+
+	shell = G_define_flag();
+        shell->key               = 'g';
+        shell->description       = "shell script style, currently only for report";
 	
 	G_gisinit(argv[0]);
         if (G_parser (argc, argv))
@@ -170,8 +177,7 @@ main (int argc, char *argv[])
 	
 	if ( (option != O_REP) && (option != O_PRN) ) {
 	    if (out_opt->answer == NULL) {
-	        sprintf (errmsg, "Output vector wasn't entered.\n");
-	        G_fatal_error (errmsg);
+	        G_fatal_error ( _("Output vector wasn't entered.") );
 	    }
 	    Vect_check_input_output_name ( in_opt->answer, out_opt->answer, GV_FATAL_EXIT );
 	}
@@ -340,32 +346,57 @@ main (int argc, char *argv[])
 	          }
                 for (i=0; i < nfreps; i++)
 		  {
-		    fprintf (stdout, "FIELD %d:\n", freps[i]->field);
-		    fprintf (stdout, "type       count        min        max\n");
-		    fprintf (stdout, "point    %7d %10d %10d\n", 
-				    freps[i]->count[FR_POINT],
-				    freps[i]->min[FR_POINT],
-				    freps[i]->max[FR_POINT]);
-		    fprintf (stdout, "line     %7d %10d %10d\n", 
-				    freps[i]->count[FR_LINE],
-				    freps[i]->min[FR_LINE],
-				    freps[i]->max[FR_LINE]);
-		    fprintf (stdout, "boundary %7d %10d %10d\n", 
-				    freps[i]->count[FR_BOUNDARY],
-				    freps[i]->min[FR_BOUNDARY],
-				    freps[i]->max[FR_BOUNDARY]);
-		    fprintf (stdout, "centroid %7d %10d %10d\n", 
-				    freps[i]->count[FR_CENTROID],
-				    freps[i]->min[FR_CENTROID],
-				    freps[i]->max[FR_CENTROID]);
-		    fprintf (stdout, "area     %7d %10d %10d\n", 
-				    freps[i]->count[FR_AREA],
-				    freps[i]->min[FR_AREA],
-				    freps[i]->max[FR_AREA]);
-		    fprintf (stdout, "all      %7d %10d %10d\n", 
-				    freps[i]->count[FR_ALL],
-				    freps[i]->min[FR_ALL],
-				    freps[i]->max[FR_ALL]);
+		    if ( shell->answer ) {
+			if ( freps[i]->count[FR_POINT] > 0 )
+			    fprintf (stdout, "%d point %d %d %d\n", freps[i]->field, freps[i]->count[FR_POINT],
+					freps[i]->min[FR_POINT], freps[i]->max[FR_POINT]);
+
+			if ( freps[i]->count[FR_LINE] > 0 )
+			    fprintf (stdout, "%d line %d %d %d\n", freps[i]->field, freps[i]->count[FR_LINE], 
+					freps[i]->min[FR_LINE], freps[i]->max[FR_LINE]);
+
+			if ( freps[i]->count[FR_BOUNDARY] > 0 )
+			    fprintf (stdout, "%d boundary %d %d %d\n", freps[i]->field, 
+				    	freps[i]->count[FR_BOUNDARY], freps[i]->min[FR_BOUNDARY], 
+				    	freps[i]->max[FR_BOUNDARY]);
+
+			if ( freps[i]->count[FR_CENTROID] > 0 )
+			    fprintf (stdout, "%d centroid %d %d %d\n", freps[i]->field, 
+					freps[i]->count[FR_CENTROID], freps[i]->min[FR_CENTROID], 
+					freps[i]->max[FR_CENTROID]);
+
+			if ( freps[i]->count[FR_AREA] > 0 )
+			    fprintf (stdout, "%d area %d %d %d\n", freps[i]->field, 
+				    	freps[i]->count[FR_AREA], freps[i]->min[FR_AREA], 
+					freps[i]->max[FR_AREA]);
+		    } else {
+			fprintf (stdout, "FIELD %d:\n", freps[i]->field);
+			fprintf (stdout, "type       count        min        max\n");
+			fprintf (stdout, "point    %7d %10d %10d\n", 
+					freps[i]->count[FR_POINT],
+					freps[i]->min[FR_POINT],
+					freps[i]->max[FR_POINT]);
+			fprintf (stdout, "line     %7d %10d %10d\n", 
+					freps[i]->count[FR_LINE],
+					freps[i]->min[FR_LINE],
+					freps[i]->max[FR_LINE]);
+			fprintf (stdout, "boundary %7d %10d %10d\n", 
+					freps[i]->count[FR_BOUNDARY],
+					freps[i]->min[FR_BOUNDARY],
+					freps[i]->max[FR_BOUNDARY]);
+			fprintf (stdout, "centroid %7d %10d %10d\n", 
+					freps[i]->count[FR_CENTROID],
+					freps[i]->min[FR_CENTROID],
+					freps[i]->max[FR_CENTROID]);
+			fprintf (stdout, "area     %7d %10d %10d\n", 
+					freps[i]->count[FR_AREA],
+					freps[i]->min[FR_AREA],
+					freps[i]->max[FR_AREA]);
+			fprintf (stdout, "all      %7d %10d %10d\n", 
+					freps[i]->count[FR_ALL],
+					freps[i]->min[FR_ALL],
+					freps[i]->max[FR_ALL]);
+		    }
 
 		  }
 		break;
