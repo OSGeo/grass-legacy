@@ -40,6 +40,10 @@ Note: This text contains *some* rules only applicable to the
 
    Our GRASS web site: /announces/
 
+   Our mailing lists:  http://grass.itc.it/mailman/listinfo/grass-announce
+                       http://grass.itc.it/mailman/listinfo/grass5
+                       http://grass.itc.it/community/support.php#int_list                   
+
    news:comp.infosystems.gis
    http://spatialnews.geocomm.com/submitnews.html (not free any more)
    http://freshmeat.net/projects/grass/?highlight=GRASS
