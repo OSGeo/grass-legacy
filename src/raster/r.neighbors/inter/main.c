@@ -21,13 +21,14 @@ main(argc,argv)	char *argv[];
     if (!mapset)
 	exit(0);
 
-/* ask for new raster file name */
-    if(NULL == G_ask_cell_new ("", output))
-	exit(0);
 
 /* get the method and the neighborhood size */
     ask_method(method);
     nsize = ask_nsize();
+
+/* ask for new raster file name */
+    if(NULL == G_ask_cell_new ("", output))
+	exit(0);
 
     ask_title (input, output, method, nsize, title);
 
