@@ -1,0 +1,44 @@
+.\" %W% %G%
+.TH Dlist.mon 2D D-language
+.SH NAME
+Dlist.mon \- List all GRASS device driver programs (monitors)
+.br
+.I (D Language Tool)
+.SH SYNOPSIS
+.B Dlist.mon
+.SH DESCRIPTION
+.I Dlist.mon
+lists the names of the graphics programs which drive graphic output devices.
+These programs are called device drivers or monitors.
+.SH "SEE ALSO"
+.TS
+ll.
+\fIDINTRO[2D]\fR	Introduction to the GRASS \fID\fR tools
+.br
+\fIDrelease.mon[2D]\fR	Relinquishes control of a graphics output device
+.br
+\fIDselect.mon[2D]\fR	Selects a graphics device for output
+.br
+\fIDstart.mon[2D]\fR	T{
+Loads graphics device driver program (i.e., starts the monitor)
+T}
+.br
+\fIDstatus.mon[2D]\fR	Lists the status of all GRASS device driver programs
+.br
+\fIDstop.mon[2D]\fR	Terminates graphics device driver program
+.br
+\fIDwhich.mon[2D]\fR	T{
+States which output device is currently selected for output
+T}
+.br
+\fImonitor[1]\fR	T{
+Highly-interactive menu-driven program performing all of the functions
+of the D monitor commands listed above
+T}
+.br
+\fImonitorcap[5]\fR	Device driver database file format
+.TE
+.SH "AUTHORS"
+Jean Ezell, U.S. Army Construction Engineering Research Laboratory
+.br
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
