@@ -11,21 +11,21 @@
 
 #define WDTH 5
 
-int display ( struct Map_info *Map, struct ilist *List, int color );
+int display ( struct Map_info *Map, struct line_pnts *, int, int, int );
 
 int path ( struct Map_info *Map, int color, int hcolor, int bgcolor )
 {
     int button, ret;
     int screen_x, screen_y ;
-    double x, y, msize;
+    double x, y, nx, ny, fx, fy, tx, ty, msize;
     double x1, y1, x2, y2, maxdist;
-    struct ilist *AList;
-    int from = 0, to = 0, node;
-    double cost;
+    struct line_pnts *Points;
+    int node;
+    int from_disp = 0, to_disp = 0, sp_disp = 0, from_node = 0, to_node = 0;
 
-    AList = Vect_new_list ();
+    Points = Vect_new_line_struct();
 
-    msize = 10 * ( D_d_to_u_col(2) - D_d_to_u_col(1) ); /* do it better */ 
+    msize = 10 * ( D_d_to_u_col(2.0) - D_d_to_u_col(1.0) ); /* do it better */ 
     G_debug (1, "msize = %f\n", msize);
     
     fprintf (stderr, "L: from  M: to R: quit\n");
@@ -35,6 +35,8 @@ int path ( struct Map_info *Map, int color, int hcolor, int bgcolor )
 	
         x = D_d_to_u_col ((double)(screen_x));
         y = D_d_to_u_row ((double)(screen_y));
+    	/* fprintf (stderr, "%f %f\n", x, y); */
+	    
         x1 = D_d_to_u_col ((double)(screen_x-WDTH));
         y1 = D_d_to_u_row ((double)(screen_y-WDTH));
         x2 = D_d_to_u_col ((double)(screen_x+WDTH));
@@ -47,96 +49,118 @@ int path ( struct Map_info *Map, int color, int hcolor, int bgcolor )
         else maxdist = y1;
         G_debug (1, "Maximum distance in map units = %f\n", maxdist);
 
-	node = Vect_find_node (Map, x, y, 0, maxdist, 0);
+	node = Vect_find_node (Map, x, y, 0.0, maxdist, 0);
+
+	if ( node > 0 ) {
+	    Vect_get_node_coor ( Map, node, &nx, &ny, NULL); 
+    	    /* fprintf (stderr, "Node %d: %f %f\n", node, nx, ny); */
+    	    fprintf (stderr, "Node selected\n");
+	}
+
+	if ( sp_disp ) { /* erase old */
+	    /* delete old highlight */
+	    
+            display ( Map, Points, color, from_node, to_node );
+		
+	    R_color(bgcolor);
+	    if ( !from_node ) 
+	        G_plot_line(Points->x[0], Points->y[0], Points->x[1], Points->y[1]);
+
+	    if ( !to_node )
+	        G_plot_line(Points->x[Points->n_points-2], Points->y[Points->n_points-2], 
+			    Points->x[Points->n_points-1], Points->y[Points->n_points-1]);
+	}
 	
 	switch ( button )	{
 	    case 1:
+		if ( from_disp ) {
+		    R_color(bgcolor);
+		    G_plot_icon( fx, fy, G_ICON_BOX, 0.0, msize);
+                }
 		if ( node > 0 ) {
-		    if ( from > 0 ) {
-	                Vect_get_node_coor ( Map, from, &x, &y, NULL); 
-                        R_color(bgcolor);
-		        G_plot_icon( x, y, G_ICON_BOX, 0, msize);
-                    }
-		    from = node;
-	            Vect_get_node_coor ( Map, from, &x, &y, NULL); 
-                    R_color(hcolor);
-		    G_plot_icon( x, y, G_ICON_BOX, 0, msize);
-	            R_flush();
+		    fx = nx;
+		    fy = ny;
+		    from_node = 1;
+		} else {
+		    fx = x;
+		    fy = y;
+		    from_node = 0;
 		}
+		R_color(hcolor);
+		G_plot_icon( fx, fy, G_ICON_BOX, 0.0, msize);
+		R_flush();
+		from_disp = 1;
 	        break;
 	    case 2:
+		if ( to_disp ) {
+		    R_color(bgcolor);
+		    G_plot_icon( tx, ty, G_ICON_CROSS, 0.0, msize);
+                }
 		if ( node > 0 ) {
-		    if ( to > 0 ) {
-	                Vect_get_node_coor ( Map, to, &x, &y, NULL); 
-                        R_color(bgcolor);
-		        G_plot_icon( x, y, G_ICON_CROSS, 0, msize);
-                    }
-		    to = node;
-	            Vect_get_node_coor ( Map, to, &x, &y, NULL); 
-                    R_color(hcolor);
-		    G_plot_icon( x, y, G_ICON_CROSS, 0, msize);
-	            R_flush();
+		    tx = nx;
+		    ty = ny;
+		    to_node = 1;
+		} else {
+		    tx = x;
+		    ty = y;
+		    to_node = 0;
 		}
+		R_color(hcolor);
+		G_plot_icon( tx, ty, G_ICON_CROSS, 0.0, msize);
+		R_flush();
+		to_disp = 1;
 	        break;
 	    case 3:
-		if ( from > 0 ) {
-		    Vect_get_node_coor ( Map, from, &x, &y, NULL); 
+		if ( from_disp ) {
 		    R_color(bgcolor);
-		    G_plot_icon( x, y, G_ICON_BOX, 0, msize);
+		    G_plot_icon( fx, fy, G_ICON_BOX, 0.0, msize);
 		}
-		if ( to > 0 ) {
-		    Vect_get_node_coor ( Map, to, &x, &y, NULL); 
+		if ( to_disp ) {
 		    R_color(bgcolor);
-		    G_plot_icon( x, y, G_ICON_CROSS, 0, msize);
+		    G_plot_icon( tx, ty, G_ICON_CROSS, 0.0, msize);
 		}
-                display ( Map, AList, color );
 	        return 1;
 	        break;
 	}
-	if ( node > 0 ) {
-	    /* delete old highlight */
-            display ( Map, AList, color );
-
-	    if ( from > 0 && to > 0 && from != to ) {
-		G_debug (1, "find path %d -> %d\n", from, to);
-		ret = Vect_net_shortest_path ( Map, from, to, AList, &cost);
-		if ( ret == -1 ) 
-		    fprintf (stdout, "Destination unreachable\n" );
-		else 
-		    fprintf (stdout, "Number of arcs = %d, total costs = %f\n",  AList->n_values, cost);
+	if ( from_disp && to_disp ) {
+	    double fdist, tdist, cost;
+	    
+	    G_debug (2, "find path %f %f -> %f %f", fx, fy, tx, ty);
+	    
+	    ret = Vect_net_shortest_path_coor ( Map, fx, fy, 0.0, tx, ty, 0.0, 5*maxdist, 5*maxdist,
+				                &cost, Points, &fdist, &tdist );
+	    if ( ret == 0 ) {
+		fprintf (stdout, "Destination unreachable\n" );
+		sp_disp = 0;
+	    } else { 
+		fprintf (stdout, "Costs on the network = %f\n", cost);
+		fprintf (stdout, "  Distance to the network = %f, distance from the network = %f\n",  
+			          fdist, tdist);
 		
-                display ( Map, AList, hcolor );
+	        display ( Map, Points, hcolor, 1, 1 );
+		sp_disp = 1;
 	    }
 	    
 	}
 	R_flush();
     };
     
-    Vect_destroy_list ( AList );
-
     return 1;
 }
 
 int 
-display ( struct Map_info *Map, struct ilist *List, int color )
+display ( struct Map_info *Map, struct line_pnts *Points, int color, int first, int last )
 {
-    int i, j, line;
-    struct line_pnts *Points;
+    int i, from, to;
 
-    Points = Vect_new_line_struct ();
     R_color(color);
 
-    for ( i = 0; i < List->n_values; i++ ) {
-        line = abs(List->value[i]);
-	Vect_read_line ( Map, Points, NULL, line );
-	
-        for( j=0; j < Points->n_points - 1; j++ ) 
-            G_plot_line(Points->x[j], Points->y[j], Points->x[j+1], Points->y[j+1]);
-	
-    }	
+    if ( first ) from = 0; else from = 1;
+    if ( last ) to = Points->n_points; else to = Points->n_points - 1;
     
-    Vect_destroy_line_struct(Points);
-
+    for( i = from; i < to - 1; i++ ) 
+	G_plot_line(Points->x[i], Points->y[i], Points->x[i+1], Points->y[i+1]);
+	
     return 0;
 }
 
