@@ -1,0 +1,26 @@
+PGM = r.los
+LIST =  color_rnge.o\
+	delete.o\
+	main.o\
+	make_list.o\
+	make_point.o\
+	mark_pts.o\
+	pts_elim.o\
+	segment.o
+
+ 
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(GISLIB) $(DISPLAYLIB) $(SEGMENTLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(DISPLAYLIB) $(GISLIB) $(SEGMENTLIB) $(MATHLIB)
+ 
+$(GISLIB) $(DISPLAYLIB) $(SEGMENTLIB): #
+
+delete.o:	point.h
+main.o:	cmd_line.h
+main.o:	point.h
+make_list.o:	point.h
+make_point.o:	point.h
+mark_pts.o:	point.h
+pts_elim.o:	point.h
+pts_elim.o:	radians.h
+segment.o:	point.h
+
