@@ -54,6 +54,7 @@ TIFFLIBPATH         = @TIFF_LIBRARY_DIRS@
 OPENGLINC           = @OPENGLINC@
 OPENGLLIB           = @OPENGLLIB@
 OPENGLULIB          = @OPENGLULIB@
+LGLWM               = @LGLWM@
 
 #tcl/tk stuff
 TCLINCDIR           = @TCLINCDIR@

@@ -4,7 +4,7 @@
 # Generated automatically using autoconf version 2.13 
 # Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
 #
-# $Id: configure,v 1.20 2000-10-04 18:09:37 cho Exp $
+# $Id: configure,v 1.21 2000-10-04 18:34:16 cho Exp $
 # This configure script is free software; the Free Software Foundation
 # gives unlimited permission to copy, distribute and modify it.
 #
@@ -3575,6 +3575,34 @@ else
 fi
 echo $OPENGLULIB
 
+echo $ac_n "Checking for libGLwM... $ac_c"
+OPENGLWMLIBs="libGLwM.a libGLwM.so"    # favour .a over .so
+OPENGLWMLIB=NO
+
+LGLWM=
+if [ -z "$OPENGLLIBdir" ]; then
+   if [ "$OPENGL" != "NO" ]; then
+      for i in $OPENGLLIBdirs; do
+         for j in $OPENGLWMLIBs; do
+            if [ -r "$i/$j" ]; then
+               OPENGLWMLIB=$i/$j
+	       LGLWM=-lGLwM
+               break 2
+            fi
+         done
+      done
+   fi
+else
+   for j in $OPENGLWMLIBs; do
+      if [ -r "$OPENGLLIBdir/$j" ]; then
+         OPENGLWMLIB=$OPENGLLIBdir/$j
+	 LGLWM=-lGLwM
+         break 1
+      fi
+   done
+fi
+echo $OPENGLWMLIB
+
 trap '' 1 2 15
 cat > confcache <<\EOF
 # This file is a shell script that caches the results of configure
@@ -3747,7 +3775,8 @@ s%@TCLTKLIBS@%$TCLTKLIBS%g
 s%@OPENGLINC@%$OPENGLINC%g
 s%@OPENGLLIB@%$OPENGLLIB%g
 s%@OPENGLULIB@%$OPENGLULIB%g
-s%@TKDIR@%$TKDIR%gs%@SYSV@%$SYSV%g
+s%@LGLWM@%$LGLWM%g
+s%@SYSV@%$SYSV%g
 s%@USE_TERMIO@%$USE_TERMIO%g
 s%@PQINCPATH@%$PQINCPATH%g
 s%@PQLIBPATH@%$PQLIBPATH%g
