@@ -1,14 +1,21 @@
-EXTRA_CFLAGS	=$(VECT_INCLUDE)
+EXTRA_CFLAGS = $(VECT_INCLUDE)
 
-OBJ = v.in.dlg.o
+OFILES = \
+	v.in.dlg.o \
+	doit.o \
+	head_conv.o \
+	rw_bdig.o \
+	r_dlg_head.o \
+	dlg_to_dig.o \
+	pad.o \
+        read_write.o
 
-PROG = $(BIN_MAIN_CMD)/v.in.dlg
 
-all:  $(PROG)
-	
+all:  $(BIN_MAIN_CMD)/v.in.dlg
 
-$(PROG): $(OBJ) $(GISLIB)
-	rm -f a.out $@
-	$(CC) $(LDFLAGS) $(OBJ) $(GISLIB) $(MATHLIB)
-	mv a.out $@
+LIBS = $(GISLIB) $(VECTLIB) $(IBTREELIB) $(DIG_ATTLIB)
 
+$(BIN_MAIN_CMD)/v.in.dlg:	$(OFILES) $(LIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBS) $(MATHLIB) 
+
+$(LIBS): #
