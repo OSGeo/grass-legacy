@@ -10,6 +10,7 @@ SUBDIRS1 = \
 	v.database \
 	v.db.connect \
 	v.digit \
+	v.distance \
 	v.extract \
 	v.format \
 	v.info \
