@@ -1,0 +1,52 @@
+#!/bin/sh
+############################################################################
+#
+# MODULE:	g.manual
+# AUTHOR(S):	Markus Neteler
+# PURPOSE:	Display the HTML man pages of 5.1
+# COPYRIGHT:	(C) 2003 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+#############################################################################
+
+#%Module
+#% description: display the HTML man pages of GRASS
+#%End
+#%flag
+#%  key: i
+#%  description: display index
+#%END
+#%option
+#% key:entry
+#% type:string
+#% description: manual entry to be displayed
+#% required : no
+#%End
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec "$GISBASE"/etc/bin/cmd/g.parser "$0" "$@"
+fi
+
+if [ $GIS_FLAG_i -eq 1 ] ; then
+   echo "Starting brower <$GRASS_HTML_BROWSER> for manual page index..."
+   $GRASS_HTML_BROWSER "$GISBASE"/docs/html/index.html
+  exit 0
+fi
+
+if [ "$GIS_OPT_entry" == "(null)" ] ; then
+ g.manual help
+ exit 0
+fi
+
+if test ! -f "$GISBASE"/docs/html/"$GIS_OPT_entry".html -a "$GIS_OPT_entry" != "(null)" ; then
+    echo "ERROR: no man page entry for <$GIS_OPT_entry>."
+    exit 1
+else
+    echo "Starting brower <$GRASS_HTML_BROWSER> for module $GIS_OPT_entry..."
+    $GRASS_HTML_BROWSER "$GISBASE"/docs/html/"$GIS_OPT_entry".html
+fi
+
+exit 0
