@@ -1,0 +1,439 @@
+.\" %W% %G%
+.TH sites 1
+.SH NAME
+sites - Accesses information regarding 
+.XT point 
+sites
+.SH SYNOPSIS
+.B sites
+.SH OVERVIEW
+The \fIsites\fR program provides the user with the capability of
+interfacing site 
+.XT location 
+data with the geographic data in 
+.CT "map layers." "cell maps."
+Two spatial analysis reports of the sites are available, as well
+as an interface to the S statistical package.
+.SH DESCRIPTION
+The
+.I sites
+program is a site 
+.CT list map
+server, providing options for the manipulation
+of site 
+.CT "lists." "maps."
+A site 
+.CT list map
+is a list of eastings and northings
+describing the 
+.CT location position
+of some point feature.
+The user selects functions from a menu of functions.
+
+The main menu is:
+.in +3
+.NF
+
+SITES MAIN MENU    (current list: no sites)
+
+LOCATION: spearfish    WINDOW 4928000.00(N)  4914000.00(S) 100.00 (RES)
+MAPSET:   PERMANENT            609000.00(E)   590000.00(W) 100.00 (RES)
+MASK:  none
+
+Please select one of the following
+
+   1  Get an existing site map
+   2  Mask current site map
+   3  Save the current site map in your mapset
+
+   4  Check site map for duplicate sites
+   5  Edit site map using a UNIX editor
+
+   6  Convert site map to cell map (0/1)
+   7  Convert site map to cell map (frequency of occurrence)
+
+   8  Run reports on the current site map
+
+
+stop  Leave the SITES program
+
+.in -5
+.FI
+At the top of the menu is general information about the
+MAPSET, LOCATION, etc.  Note the above message in parentheses
+"current list:  no sites."  This message will vary
+depending on the status of the list. For example, after
+getting the existing site 
+.CT list map
+"arch_sites," the message
+would read (given the 
+.CT "" geographic
+window indicated): "current 
+list: 25 sites, 24 in current window."
+.bp
+1  Get an existing site map
+.br
+.in +3
+This option will copy an existing site 
+.CT list map
+into the current site 
+.CT list map
+within the sites server.
+Existing site 
+.CT lists maps
+are stored in the GRASS 
+.CT database "data base"
+and are pulled
+into the \fIsites\fR server via this option.
+.sp .25
+Note: site 
+.CT lists maps
+can be created and placed into a GRASS 
+.CT database "data base"
+using option 5 (edit) followed by option 3 (save), or they can be
+created using other programs.
+.in -3
+
+2  Mask current site map
+.br
+.in +3
+The site 
+.CT list map
+can be reduced to a subset which includes
+only sites which fall in specific categories within a specified 
+.CT "grid cell layer." "cell map."
+The user will be asked for the name of a 
+.CT "grid cell layer" "cell map"
+to form
+the basis for the mask, and will then be allowed to specify categories
+from this 
+.CT layer "cell map"
+which will limit the site 
+.CT "list." "map."
+As with
+.I mask[1],
+the categories selected are the ones where information will remain.
+Those categories \fInot\fR selected will be set to "0."
+.sp .25
+Note: this masking operation is performed only against the
+site 
+.CT list map
+itself and not against other 
+.CT "grid cell layers." "cell map."
+If the user desires to analyze masked
+.CT "grid cell layers," "cell maps,"
+a mask should be create using the
+.I mask[1]
+program.
+.in -3
+
+3  Save the current site map in your mapset
+.br
+.in +3
+The current site 
+.CT list map
+can be stored permanently in your
+mapset with this option.  You will be asked to name the
+saved 
+.CT list "site map"
+and to provide a short description.  Saved 
+.CT lists "site maps"
+can be retrieved (option 1) during later runs of
+.I sites.
+.sp .25
+Note: saved 
+.CT lists maps
+will be removed if the GRASS mapset is removed.
+.in -3
+
+4  Check site map for duplicate sites
+.br
+.in +3
+It is not desirable that a site 
+.CT list map
+contain multiple references
+to the same site.  This option attempts to recognize duplicate
+sites.  Duplicates are displayed to the user and can be removed
+automatically if the user desires.
+Duplicates can also be removed by hand using option 5 (edit).
+.in -3
+
+5  Edit site map using a UNIX editor
+.br
+.in +3
+The user can modify the current site 
+.CT "list," "map,"
+or create a new site
+.CT list map
+by hand using a UNIX editor.  You will be asked to specify
+the editor you prefer to use.
+You should exercise some care if you select this option.
+Lines in the site 
+.CT list map
+which have invalid formats
+will be (silently) ignored by the sites server.
+See the GRASS manual entry \fIsites.format[3]\fR
+for a description of the site 
+.CT list map
+format.
+.sp .25
+Note: this will only modify the server list. It does not modify
+stored site 
+.CT "lists." "map."
+If you wish to modify a stored 
+.CT "list," "site map,"
+you will
+have to combine options 1 (get), 5 (edit) and 3 (save).
+.in -3
+
+6  Convert site map to cell map (0/1)
+.br
+.in +3
+You can create a 
+.CT "grid cell file" "cell map"
+representation of the site 
+.CT list map
+in
+your GRASS mapset.
+.sp .25
+This 
+.CT "grid cell layer" "cell map"
+can be used with other cell 
+.CT files maps
+in further analyses.
+Allowing the user to create a 
+.CT "grid cell data layer" "cell map"
+of sites opens up the
+full analysis capabilities for site 
+.CT data maps
+that are available for 
+.CT "grid cell databases." "cell maps."
+.sp .25
+You have the option of specifying the number of cells to represent a site.
+The minimum is one cell per site.
+The alternatives are squares around the site: 3x3, 5x5, 7x7, etc.
+.sp .25
+The number of categories present in the new 
+.CT "grid cell layer" "cell map"
+will depend
+on the format of your site 
+.CT "list file" map
+(see \fIsites.format[3]\fR).
+You can create a non-binary 
+.CT "grid cell file" "cell map"
+representation of your site
+.CT file map
+by creating the site 
+.CT list map
+in the format:
+.in +2
+.B "E|N|"
+.I "#n label"
+.in -2
+where \fBE\fR is the Easting, \fBN\fR is the Northing, and \fI#n label\fR
+is the description field.  The description field consists of a
+pound sign # followed by the category 
+.CT number value
+\fIn\fR to be associated
+with the site's 
+.CT "grid cell location," "cell position,"
+and the category label \fIlabel\fR
+for \fIn\fR.
+.sp .25
+If the user does not include a description field starting with
+.in +2
+.I #n
+.in -2
+beside the Easting and Northing on \fIevery line\fR in
+the sites 
+.CT "list file," "map,"
+a binary cell 
+.CT file map
+will be created instead.
+In the binary cell 
+.CT "file," "map,"
+each site will be represented as the category
+value 1.  Non-site cells will be coded as category value 0.
+
+Note that only sites within the current 
+.CT "" geographic
+window will be considered.
+However, if the size of the sites is more than one cell ( 3x3, 5x5, etc.)
+and a site lies near an edge of the 
+.CT "" geographic
+window,
+some of the cells for the site may fall outside the 
+.CT "" geographic
+window. These cells
+will not appear in the cell 
+.CT "file," "map,"
+and the site will no longer be 3x3 or 5x5
+but will be clipped to fit the 
+.CT "" geographic
+window.
+.in -3
+
+7  Convert site map to cell map (frequency of occurrence)
+.br
+.in +3
+You can also create a frequency of occurrence
+.CT "grid cell file" "cell map"
+representation of the site 
+.CT "list." "map."
+.sp .25
+The cell 
+.CT "" category
+values will be coded as the number of sites which fall within
+the cell.
+.sp .25
+In this function, you do NOT have the option of specifying the number
+of cells to represent a site.
+.in -3
+
+8  Run reports on the current site map
+.br
+.in +3
+The current 
+.CT "list of sites" "site map"
+is passed to the report server
+after removing sites which do not fall within the GRASS mapset
+.CT "" geographic
+window.  The user then selects one or more 
+.CT "grid cell map layers" "cell maps"
+to analyze.
+Data at (or near) the sites extracted from these 
+.CT layers "cell maps"
+form the basis for all reports.
+.sp .25
+The user specifies the 'size' of a site in 
+.XT grid 
+cells.
+The 'size' may be specified as a single 
+.XT grid 
+cell, or as a 3x3 square
+around the site, or 5x5, or 7x7, etc (where the size is an odd integer).
+.in -3
+
+
+The following menu of reports is then presented:
+
+.NF
+.in +5
+SITES REPORT MENU
+
+
+Please select one of the following
+
+   1  Site characteristics report
+   2  Site occurrence report
+
+   3  Convert data to S input format
+   4  Produce machine readable data file
+
+stop  return to SITES MAIN MENU
+.in -5
+.FI
+
+1  Site characteristics report
+.br
+.in +3
+This report provides geographic information about each site.
+.sp .25
+Each site is identified by description and 
+.CT locational positional
+information.
+The 'description' is an identification of the site.
+The site 
+.CT "'location'" \'position\'
+is an easting and a northing.
+(The 
+.CT "'location'" \'position\'
+does not denote the extent of the site, since,
+for example, an archeologic site which takes up two
+hectares would be represented as a single point).
+.sp .25
+The information reported for each site is displayed by 
+.CT "grid cell layer," "cell map,"
+and, within each 
+.CT "layer," "cell map,"
+gives the categories (i.e., characteristics) that
+occurred at the site
+(as well as a count of the number of cells in each category).
+.sp .25
+This can easily generate a massive amount of information, which is difficult
+to handle or digest quickly.  Therefore, option 2
+produces a synopsis of the information.
+.in -3
+
+2  Site occurrence report
+.br
+.in +3
+This report provides aggregate site characteristic information
+organized by 
+.CT "grid cell layers." "cell map."
+The report produces chi-square statistics for each 
+.CT "layer," "cell map,"
+measuring
+number of expected sites (assuming a random distribution of sites)
+against actual site occurrence.  The site characteristic is
+the most frequently occurring 
+.XT grid 
+cell category in the site (i.e.,
+the statistical mode).
+See the GRASS manual entry for \fIsites.occur[3]\fR for details on this report.
+.in -3
+
+3  Convert data to S input format
+.br
+.in +3
+This function converts the GRASS data extracted for the sites into
+a form usable by the S statistical package.  The user
+provides a file to contain the information.
+Once the file is written, the user must exit
+.I sites,
+run S on an S 
+.CT "database," "data base,"
+and issue the S command
+.NF
+
+.B   source ("<file >")
+
+.FI
+to bring the data into the S 
+.CT "database." "data base."
+(Of course, \fI<file>\fR
+would be the name of the actual file supplied by the user.)
+See manual entry \fIsites.S[3]\fR for an explanation of the
+S data structures created by this interface.
+.in -3
+
+4  Produce machine readable data file
+.br
+.in +3
+This option provides a mechanism for the user to write his/her own
+reports.
+The data is written into a user-specified file as a text file,
+which has a format readable by UNIX utilities (e.g., \fIawk\fR)
+or user-written programs.
+See GRASS manual entry \fIsites.report[3]\fR for details on this format.
+.in -3
+.SH FILES
+$LOCATION/site_list/<file >
+.SH SEE ALSO
+.TS
+ll.
+\fIsites.format[3]\fR	Format of the site maps
+.br
+\fIsites.report[3]\fR	Format of the machine readable report
+.br
+\fIsites.occur[3]\fR	Discussion of the site occurrence report
+.br
+\fIsites.S[3]\fR	Discussion of the S interface
+.TE
+.SH "AUTHORS"
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
+.br
+James Farley, Arkansas Archeological Survey, University of Arkansas
+.in +3
+contributed the frequency of
+occurrence sites to cell function
