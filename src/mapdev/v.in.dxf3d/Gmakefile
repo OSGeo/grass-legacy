@@ -10,17 +10,15 @@ MDIR2=$(SRC)/../man/man$(MSEC2)
 
 $(PROG): main.o  $(GISLIB) 
 	rm -f a.out $@
-	$(CC) main.o  $(GISLIB)
-	mv a.out $@
+	$(CC) main.o -o $@ $(GISLIB) $(MATHLIB)
 	cp v.in.dxf3d.sh $(GISBASE)/scripts/
 
-	cp man $(MDIR)/$(NAME)
-	nroff $(MUTL)/man.version $(MDIR)/.class-header \
-	$(MUTL)/man.header $(MDIR)/$(NAME) $(MDIR)/.class-notice \
-	> $(GISBASE)/man/$(MSEC)/$(NAME)
+#	cp man $(MDIR)/$(NAME)
+#	nroff $(MUTL)/man.version $(MDIR)/.class-header \
+#	$(MUTL)/man.header $(MDIR)/$(NAME) $(MDIR)/.class-notice \
+#	> $(GISBASE)/man/$(MSEC)/$(NAME)
 
-	cp man.sh $(MDIR2)/$(NAME2)
-	nroff $(MUTL)/man.version $(MDIR2)/.class-header \
-	$(MUTL)/man.header $(MDIR2)/$(NAME2) $(MDIR2)/.class-notice \
-	> $(GISBASE)/man/$(MSEC2)/$(NAME2)
-
+#	cp man.sh $(MDIR2)/$(NAME2)
+#	nroff $(MUTL)/man.version $(MDIR2)/.class-header \
+#	$(MUTL)/man.header $(MDIR2)/$(NAME2) $(MDIR2)/.class-notice \
+#	> $(GISBASE)/man/$(MSEC2)/$(NAME2)
