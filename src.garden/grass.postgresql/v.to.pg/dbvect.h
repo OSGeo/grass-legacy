@@ -14,6 +14,8 @@ extern int total_vertices;
 extern int total_import;
 extern int verbose;
 extern int to_postgis;
+extern char *rmap_string;
+extern int fd;
 
 int getAllOpts (int, char **);
 int getSelectOpts (int, char **);

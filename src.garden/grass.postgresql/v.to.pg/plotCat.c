@@ -16,6 +16,7 @@ extern double D_d_to_u_row(), D_d_to_u_col();
 extern int D_move_abs();
 extern int D_cont_abs();
 
+double get_z(double, double);
 
 int plotCat(name, mapset, points, vect_cat, Map, fillcolr, pg_conn)
      char *name, *mapset;
@@ -55,7 +56,6 @@ int plotCat(name, mapset, points, vect_cat, Map, fillcolr, pg_conn)
 
     /* list is the list of cat numbers (ie. dig_att vals) */
 
-
     if (!strncmp(vtype_string, "area", 4)
 	&& (list = find_area(vect_cat, &count, Map)))
     {
@@ -90,9 +90,15 @@ int plotCat(name, mapset, points, vect_cat, Map, fillcolr, pg_conn)
 	    ys[0] = (double *) G_malloc(sizeof(double) * rpnts[0]);
 	    Vect_copy_pnts_to_xy(points, xs[0], ys[0], &rpnts[0]);
 
+	    if (!rmap_string)
 	    tmp_string =
 		(char *) G_malloc(points->n_points * (2 * MAXFLSIZE + 4)
 				  + MAXFLDNAMESZ);
+	    else
+	    tmp_string =
+		(char *) G_malloc(points->n_points * (3 * MAXFLSIZE + 5)
+				  + MAXFLDNAMESZ);
+	    
 
 	    if (!to_postgis) {
 
@@ -157,10 +163,17 @@ int plotCat(name, mapset, points, vect_cat, Map, fillcolr, pg_conn)
 		    Vect_copy_pnts_to_xy(points_i, xs[j + 1], ys[j + 1],
 					 &rpnts[j + 1]);
 
+		    if (!rmap_string)
 		    tmp_string =
 			(char *) G_malloc(points_i->n_points *
 					  (2 * MAXFLSIZE + 4)
 					  + MAXFLDNAMESZ);
+		    else
+		    tmp_string =
+			(char *) G_malloc(points_i->n_points *
+					  (3 * MAXFLSIZE + 5)
+					  + MAXFLDNAMESZ);
+		    
 		    snprintf(tmp_string, MAXFLDNAMESZ,
 			     "INSERT into %s_bnd (%s, num, ex, boundary) values ('%d','%d','f','(",
 			     table_string, key_string, v_att, i + 1);
@@ -226,12 +239,23 @@ int plotCat(name, mapset, points, vect_cat, Map, fillcolr, pg_conn)
 				points->x[j + 1], points->y[j + 1]);
 #endif
 
+		   if (!rmap_string) {
 		    if (j != points->n_points - 2)
 			snprintf(u_str, 128, "%f %f,", points->x[j],
 				 points->y[j]);
 		    else
 			snprintf(u_str, 128, "%f %f", points->x[j + 1],
 				 points->y[j + 1]);
+		   }
+		   else { /* raster elevation */
+		    if (j != points->n_points - 2)
+			snprintf(u_str, 128, "%f %f %f,", points->x[j],
+				 points->y[j], get_z(points->x[j], points->y[j]) );
+		    else
+			snprintf(u_str, 128, "%f %f %f", points->x[j + 1],
+				 points->y[j + 1], get_z(points->x[j + 1], points->y[j + 1]) );		   
+		   }
+				 
 		    strcat(tmp_string, u_str);
 		    if (verbose)
 			total_vertices++;
@@ -267,10 +291,17 @@ int plotCat(name, mapset, points, vect_cat, Map, fillcolr, pg_conn)
 		    Vect_copy_pnts_to_xy(points_i, xs[j + 1], ys[j + 1],
 					 &rpnts[j + 1]);
 
+		    if (!rmap_string)
 		    tmp_string_i =
 			(char *) G_malloc(points_i->n_points *
 					  (2 * MAXFLSIZE + 4)
 					  + MAXFLDNAMESZ);
+		    else
+		    tmp_string_i =
+			(char *) G_malloc(points_i->n_points *
+					  (3 * MAXFLSIZE + 5)
+					  + MAXFLDNAMESZ);
+
 		    snprintf(tmp_string_i, MAXFLDNAMESZ, "(");
 
 		    for (jk = 0; jk < points_i->n_points - 1; jk++) {
@@ -280,12 +311,24 @@ int plotCat(name, mapset, points, vect_cat, Map, fillcolr, pg_conn)
 				    points_i->x[jk + 1], points_i->y[jk + 1]);
 #endif
 
+		      if (!rmap_string) {
+
 			if (jk != points_i->n_points - 2)
 			    snprintf(u_str, 128, "%f %f,", points_i->x[jk],
 				     points_i->y[jk]);
 			else
 			    snprintf(u_str, 128, "%f %f", points_i->x[jk + 1],
 				     points_i->y[jk + 1]);
+		       }
+		       else {
+			if (jk != points_i->n_points - 2)
+			    snprintf(u_str, 128, "%f %f %f,", points_i->x[jk],
+				     points_i->y[jk], get_z(points_i->x[jk],points_i->y[jk]) );
+			else
+			    snprintf(u_str, 128, "%f %f %f", points_i->x[jk + 1],
+				     points_i->y[jk + 1], get_z(points_i->x[jk + 1],points_i->y[jk + 1]) );
+		       
+		       }
 			strcat(tmp_string_i, u_str);
 
 			if (verbose)
@@ -389,9 +432,15 @@ int plotCat(name, mapset, points, vect_cat, Map, fillcolr, pg_conn)
 	    }
 
 
+	    if (!rmap_string)
 	    tmp_string =
 		(char *) G_malloc(points->n_points * (2 * MAXFLSIZE + 4)
 				  + MAXFLDNAMESZ);
+	    else
+	    tmp_string =
+		(char *) G_malloc(points->n_points * (3 * MAXFLSIZE + 5)
+				  + MAXFLDNAMESZ);
+
 	    if (!to_postgis)
 		snprintf(tmp_string, MAXFLDNAMESZ,
 			 "INSERT into %s_arc (%s, num, segment) values ('%d','%d','[",
@@ -412,12 +461,16 @@ int plotCat(name, mapset, points, vect_cat, Map, fillcolr, pg_conn)
 		if (i != points->n_points - 1)
 		    if (!to_postgis)
 			snprintf(u_str, 128, "(%f,%f),", x[0], y[0]);
-		    else
-			snprintf(u_str, 128, "%f %f,", x[0], y[0]);
+		    else {
+			if (!rmap_string ) snprintf(u_str, 128, "%f %f,", x[0], y[0]);
+			else snprintf(u_str, 128, "%f %f %f,", x[0], y[0], get_z(x[0], y[0]) );
+		    }
 		else if (!to_postgis)
 		    snprintf(u_str, 128, "(%f,%f)", x[1], y[1]);
-		else
-		    snprintf(u_str, 128, "%f %f", x[0], y[0]);
+		    else {
+		    	if (!rmap_string ) snprintf(u_str, 128, "%f %f", x[0], y[0]);
+		    	else snprintf(u_str, 128, "%f %f %f", x[0], y[0], get_z(x[0], y[0]) );
+		    }
 		strcat(tmp_string, u_str);
 
 		if (verbose)
@@ -459,4 +512,28 @@ int plotCat(name, mapset, points, vect_cat, Map, fillcolr, pg_conn)
     }				/* end for lines  */
 
     return 0;
+}
+
+double get_z (x, y)
+	double x, y;
+{
+    int row, col;
+    int nrows, ncols;
+    CELL *buf;
+    struct Cell_head window;
+    G_get_set_window(&window);
+    nrows = window.rows;
+    ncols = window.cols;
+    buf = G_allocate_cell_buf();
+    row = (window.north - y) / window.ns_res;
+    col = (x - window.west) / window.ew_res;
+
+    if ((row < 0 || row >= nrows) || (col < 0 || col >= ncols))
+	return (0.0);
+    if (G_get_map_row(fd, buf, row) < 0) {
+	fprintf(stderr, _("Error read cell file %s."), rmap_string);
+	return (0.0);
+    }
+    else 
+        return (buf[col]);
 }

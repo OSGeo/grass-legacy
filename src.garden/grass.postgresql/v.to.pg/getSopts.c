@@ -17,7 +17,7 @@ int getSelectOpts(argc, argv)
     FILE *fp;
     char SQL_stmt[QRY_LENGTH];
 
-    struct Option *map, *vtype, *color, *sql;
+    struct Option *map, *vtype, *color, *sql, *rmap;
     struct Flag *select, *flag1, *flag3, *flag4;
 
     memset(SQL_stmt, '\0', sizeof(SQL_stmt));
@@ -60,6 +60,14 @@ int getSelectOpts(argc, argv)
     color->multiple = NO;
     color->description = _("Color for vector draw.");
 
+    rmap = G_define_option();
+    rmap->key = "rmap";
+    rmap->gisprompt = "old,cell,raster";
+    rmap->type = TYPE_STRING;
+    rmap->required = NO;
+    rmap->multiple = NO;
+    rmap->description = _("Raster map for Z-coord (may be used with PostGIS).");
+
     flag1 = G_define_flag();
     flag1->key = 'f';
     flag1->description = _("Fill polygons");
@@ -98,6 +106,7 @@ int getSelectOpts(argc, argv)
     fillcolr = flag1->answer;
     verbose = flag3->answer;
     to_postgis = flag4->answer;
+    rmap_string = rmap->answer;
 
 
 
