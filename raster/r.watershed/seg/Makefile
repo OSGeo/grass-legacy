@@ -11,5 +11,5 @@ default: etc
 	$(MKDIR) $(ETC)/water
 	$(INSTALL) -m 755 $(ETC)/$(PGM) $(ETC)/water
 
-htmletc:
+htmletc1:
 	@echo "No docs to generate."
