@@ -15,11 +15,11 @@ g.remove MASK >>tmpoutfile
 # Run the first excecutable
 #
 agnps_input_1
-# psu_agnps_input_1 exits with a status of 1 if
+# agnps_input_1 exits with a status of 1 if
 # the flow map was not present and had to be created.
 # The user is warned that the flow map needs to be
 # manually checked, so it this is the case, the
-# script exits before psu_agnps_input_2, the main
+# script exits before agnps_input_2, the main
 # portion of the program (and the second executable)
 # is executed.
 
