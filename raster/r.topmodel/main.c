@@ -6,7 +6,10 @@
  * $Id$
  *
  * $Log$
- * Revision 1.2  2000-08-20 06:35:19  cho
+ * Revision 1.3  2000-08-21 04:21:21  cho
+ * modulized and cosmetics
+ *
+ * Revision 1.2  2000/08/20 06:35:19  cho
  * cosmetics
  *
  * Revision 1.1  2000/08/20 05:57:21  cho
@@ -26,7 +29,6 @@ main(argc, argv)
 	char	**argv;
 {
 	struct	Cell_head	cellhd;
-	char	*hdmap;
 
 	struct
 	{
@@ -212,23 +214,8 @@ main(argc, argv)
 	if(check_ready())
 		exit(1);
 
-
 	/* Adjust cell header */
-	hdmap = NULL;
-	if(!flg.input){
-		hdmap = map.elev;
-	}else{
-		if(map.belev)
-			hdmap = map.belev;
-		else if(map.topidx)
-			hdmap = map.topidx;
-	}
-
-	if(hdmap){
-		sprintf(buf, "%s/bin/g.region rast=%s", gisbase, hdmap);
-		G_system(buf);
-	}
-
+	gregion();
 
 	/* Create required maps */
 	if(!flg.input){
@@ -239,14 +226,11 @@ main(argc, argv)
 
 	top_index();
 
-
 	/* Read required files */
 	read_inputs();
 
-
 	/* Implement TOPMODEL */
 	topmodel();
-
 
 	/* Write outputs */
 	write_outputs();
