@@ -1,0 +1,13 @@
+.B 0
+.S 9
+
+
+
+
+
+
+
+.C white
+The sample.loss map values rescaled
+to 5 categories of ranges 
+(values are kg/ha)
