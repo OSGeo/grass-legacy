@@ -1,4 +1,4 @@
-/* 
+/* $Id$ 
  * parser version by Bob Covill 10/2001
  * 
  * This is the CMD version of m.proj
@@ -135,7 +135,7 @@ int main(int argc, char *argv[])
 	G_free_key_value(in_proj_info);
 	G_free_key_value(in_proj_units);
 
-	proj_index_in = 3;	/* ie LL */
+	proj_index_in = PROJECTION_LL;
 
 
 	/* OUTPUT parameters from CURRENT LOCATION's projection */
@@ -200,7 +200,7 @@ int main(int argc, char *argv[])
 	G_free_key_value(out_proj_info);
 	G_free_key_value(out_proj_units);
 
-	proj_index_out = 3;	/* ie LL */
+	proj_index_out = PROJECTION_LL;
 
     }
     else {  /* not using wgs84 flag */
