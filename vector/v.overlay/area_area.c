@@ -15,7 +15,7 @@
 #include "local.h"
 
 int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct field_info *Fi, 
-	        dbDriver *driver, int operator  )
+	        dbDriver *driver, int operator, int *ofield )
 {
     int    ret, input, line, nlines, area, nareas;
     int    in_area, in_centr, out_cat;
@@ -124,7 +124,8 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 	    for ( j = -1; j < Centr[area].cat[1]->n_cats; j++ ) {
 		if ( j == -1 && Centr[area].cat[1]->n_cats > 0 ) continue; /* no need to make null */
 
-		Vect_cat_set (Cats, 1, out_cat);
+		if ( ofield[0] > 0 ) 
+		    Vect_cat_set (Cats, ofield[0], out_cat);
 
 		/* attributes */
 		if ( driver ) {
@@ -157,12 +158,16 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 	}	
     
 	/* Add all cats from imput vectors */
-        for ( i = 0 ; i < Centr[area].cat[0]->n_cats; i++ ) {
-	    Vect_cat_set ( Cats, 2, Centr[area].cat[0]->cat[i]);
+	if ( ofield[1] > 0 ) {
+	    for ( i = 0 ; i < Centr[area].cat[0]->n_cats; i++ ) {
+		Vect_cat_set ( Cats, ofield[1], Centr[area].cat[0]->cat[i]);
+	    }
 	}
 	
-        for ( i = 0 ; i < Centr[area].cat[1]->n_cats; i++ ) {
-	    Vect_cat_set ( Cats, 3, Centr[area].cat[1]->cat[i]);
+	if ( ofield[2] > 0 ) {
+	    for ( i = 0 ; i < Centr[area].cat[1]->n_cats; i++ ) {
+		Vect_cat_set ( Cats, ofield[2], Centr[area].cat[1]->cat[i]);
+	    }
 	}
 
 	Vect_write_line ( Out, GV_CENTROID, Points, Cats );

@@ -45,7 +45,7 @@ int point_area ( struct Map_info *Map, int field, double x, double y, struct lin
 }
 
 int line_area ( struct Map_info *In, int *field, struct Map_info *Out, struct field_info *Fi, 
-	        dbDriver *driver, int operator  )
+	        dbDriver *driver, int operator, int *ofield  )
 {
     int    line, nlines, ncat;
     struct line_pnts *Points;
@@ -114,7 +114,7 @@ int line_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 	    int i;
 	    
 	    /* Point is inside */
-	    G_debug (0, "  OK, write line, line ncats = %d area ncats = %d", Cats->n_cats, ACats->n_cats );
+	    G_debug (3, "  OK, write line, line ncats = %d area ncats = %d", Cats->n_cats, ACats->n_cats );
 	    
 	    Vect_reset_cats ( OCats );
 
@@ -127,7 +127,8 @@ int line_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 		for ( j = -1; j < ACats->n_cats; j++ ) {
 		    if ( j == -1 && ACats->n_cats > 0 ) continue; /* no need to make null */
 
-		    Vect_cat_set (OCats, 1, ncat);
+		    if ( ofield[0] > 0 )
+		        Vect_cat_set (OCats, ofield[0], ncat);
 
 		    /* Attributes */
 		    if ( driver ) { 
@@ -161,12 +162,16 @@ int line_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 	    }
 
 	    /* Add all cats from imput vectors */
-	    for ( i = 0 ; i < Cats->n_cats; i++ ) {
-		Vect_cat_set ( OCats, 2, Cats->cat[i]);
+	    if ( ofield[1] > 0 ) {
+		for ( i = 0 ; i < Cats->n_cats; i++ ) {
+		    Vect_cat_set ( OCats, ofield[1], Cats->cat[i]);
+		}
 	    }
 
-	    for ( i = 0 ; i < ACats->n_cats; i++ ) {
-		Vect_cat_set ( OCats, 3, ACats->cat[i]);
+	    if ( ofield[2] > 0 ) {
+		for ( i = 0 ; i < ACats->n_cats; i++ ) {
+		    Vect_cat_set ( OCats, ofield[2], ACats->cat[i]);
+		}
 	    }
 
 	    Vect_rewrite_line ( Out, line, ltype, Points, OCats );
