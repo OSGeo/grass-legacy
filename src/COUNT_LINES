@@ -1,0 +1,1 @@
+(find . -name '*.[chly]' -print | xargs cat ) | wc -l
