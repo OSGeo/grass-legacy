@@ -68,8 +68,10 @@ old2new (char *in, char *out, int endian)
      * set cat to new one.  */
      
      fprintf(stdout,"Attaching categories... ");
+     fflush (stdout);
      
      for (i=0; i < ncats; i++){
+	 G_percent ( i, ncats - 1, 1 ); 
          if ( cats[i].type & (GV_POINT | GV_LINE) ) {
 		sline = -1;
                 for (j=0; j < nlines; j++){
@@ -93,7 +95,6 @@ old2new (char *in, char *out, int endian)
 		}
 	}
     }
-    fprintf(stdout,"Done.\n");
      
     /* Write to new file */
     fprintf(stdout,"Writting new file...\n");
