@@ -241,7 +241,7 @@ main (int argc, char *argv[])
 
     /* Open OGR DSN */
     Ogr_ds = OGROpen( dsn_opt->answer, FALSE, NULL );
-    if( Ogr_ds == NULL ) G_fatal_error ("Cannot open data source");
+    if( Ogr_ds == NULL ) G_fatal_error ("Cannot open data source: %s", dsn_opt->answer);
 
     /* Make a list of available layers */
     navailable_layers = OGR_DS_GetLayerCount(Ogr_ds);
