@@ -187,7 +187,7 @@ int main (int argc, char **argv)
 
 	nocrop = G_define_flag();
 	nocrop->key = 'n';
-	nocrop->description = "Don't attempt to crop output map";
+	nocrop->description = "Do not perform region cropping optimization";
 
 	if (G_parser(argc, argv))
 		exit(1);
