@@ -74,19 +74,20 @@ V1_read_next_line_shp (
 {
   int itype;
   long offset;
+  BOUND_BOX lbox, mbox; 
 
-  double n, s;
-  double e, w;
+  if (Map->Constraint_region_flag)
+      Vect_get_constraint_box ( Map, &mbox );
  
-  offset = ( Map->fInfo.shp.shape << 11 ) | ( Map->fInfo.shp.part & 0x7FF);
   while (1)
     {
+      offset = ( Map->fInfo.shp.shape << 11 ) | ( Map->fInfo.shp.part & 0x7FF);
       itype = Vect__Read_line_shp (Map, line_p, line_c, offset);
       if (itype < 0)
 	return (itype);
 
       /* Constraint on Type of line 
-         **  Default is all of  Point, Line, Area and whatever else comes along
+       * Default is all of  Point, Line, Area and whatever else comes along
        */
       if (Map->Constraint_type_flag)
 	{
@@ -94,22 +95,13 @@ V1_read_next_line_shp (
 	    continue;
 	}
 
-      /*  calculate the bounding box for the line  */
-      /* 4.0 dig_bound_box2() needs a scale to figure fudge factor
-         **   I am not concered about fudge here, so just take 
-         **   any number.  I picked 16000 cuz that is the default
-         **   in dig_bound_box2() and thus faster.
-       */
-      /*
-         **  Constraint on specified region
-       */
-      if (Map->Constraint_region_flag)
-	{
-	  //dig_bound_box2 (line_p, &n, &s, &e, &w, 16000L);	/*4.0 */
-
-	  if (!V__map_overlap (Map, n, s, e, w))
-	    continue;
-	}
+      /* Constraint on specified region */
+      if (Map->Constraint_region_flag) {
+          Vect_line_box ( line_p, &lbox );
+		   
+          if ( !Vect_box_overlap (&lbox, &mbox) )
+               continue;
+      }
 
       return (itype);
     }
