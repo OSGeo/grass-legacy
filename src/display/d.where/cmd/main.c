@@ -56,8 +56,6 @@ int main (int argc, char **argv)
     if(have_spheroid == 1)
     {
        struct Key_Value *in_proj_info, *in_unit_info;
-       struct Key_Value *out_proj_info, *out_unit_info;
-       double a, es;
        char buff[100], dum[100];
        
        /* read current projection info */
@@ -70,24 +68,28 @@ int main (int argc, char **argv)
        if (pj_get_kv(&iproj, in_proj_info, in_unit_info) < 0)
           G_fatal_error("Can't get projection key values of current location");
 	
-       out_proj_info = G_create_key_value();
-       out_unit_info = G_create_key_value();
-       
-       /* set output projection to lat/long */
-       G_set_key_value("proj", "ll", out_proj_info);
 
        if(!wgs84->answer)
        {
 	  /* Set output to same ellipsoid as input if we're not looking
 	   * for the WGS84 values */
-          G_get_ellipsoid_parameters(&a, &es);
-          sprintf(buff, "%f", a);
-          G_set_key_value("a", buff, out_proj_info);
-          sprintf(buff, "%f", es);
-          G_set_key_value("es", buff, out_proj_info);
+	  oproj.zone = 0;
+	  oproj.meters = 1.;
+	  sprintf(oproj.proj, "ll");
+	  if ((oproj.pj = pj_latlong_from_proj(iproj.pj)) == NULL)
+	     G_fatal_error("Unable to set up lat/long projection parameters");            
+
        }
        else
        {
+          struct Key_Value *out_proj_info, *out_unit_info;
+	  
+          out_proj_info = G_create_key_value();
+          out_unit_info = G_create_key_value();
+       
+          /* set output projection to lat/long */
+          G_set_key_value("proj", "ll", out_proj_info);
+	  
 	  /* Check that datumparams are defined for this location (otherwise
 	   * the WGS84 values would be meaningless), and if they are set the 
 	   * output datum to WGS84 */
@@ -96,19 +98,21 @@ int main (int argc, char **argv)
 			    "datum transformation parameters. Try running g.setproj.");
 	  else
 	      G_set_key_value("datum", "wgs84", out_proj_info);
+	  
+          G_set_key_value("unit", "degree", out_unit_info);
+          G_set_key_value("units", "degrees", out_unit_info);
+          G_set_key_value("meters", "1.0", out_unit_info);
+       
+          if (pj_get_kv(&oproj, out_proj_info, out_unit_info) < 0)
+             G_fatal_error("Unable to set up lat/long projection parameters");
+	  
+          G_free_key_value( out_proj_info );
+          G_free_key_value( out_unit_info );
        }
-       
-       G_set_key_value("unit", "degree", out_unit_info);
-       G_set_key_value("units", "degrees", out_unit_info);
-       G_set_key_value("meters", "1.0", out_unit_info);
-       
-       if (pj_get_kv(&oproj, out_proj_info, out_unit_info) < 0)
-          G_fatal_error("Unable to set up lat/long projection parameters");       
-		
+       		
        G_free_key_value( in_proj_info );
        G_free_key_value( in_unit_info );
-       G_free_key_value( out_proj_info );
-       G_free_key_value( out_unit_info );
+       
     }
 
     if (R_open_driver() != 0)

@@ -35,8 +35,6 @@ int convert_to_ll (Control_Points_LL *cpll, Control_Points_2D *cptemp)
   struct pj_info targ_proj_info;       /* target location proj info */
   struct pj_info ll_proj_info;         /* info for lat/lon */
   struct Key_Value  *targ_proj_keys, *targ_unit_keys;
-  struct Key_Value  *ll_proj_keys,   *ll_unit_keys;
-  double a, es;    /* target ellps paramet */
   char buf[50];
   char *tmp_ll;
 
@@ -70,41 +68,22 @@ int convert_to_ll (Control_Points_LL *cpll, Control_Points_2D *cptemp)
   if (pj_get_kv(&targ_proj_info, targ_proj_keys, targ_unit_keys) < 0) {
 	exit (0);
   }
+  /* free the keys */
+  G_free_key_value (targ_proj_keys);
+  G_free_key_value (targ_unit_keys);
 
 tmp_ll  = G_find_key_value("proj", targ_proj_keys);
 
 if (!strcmp(tmp_ll, "ll")) return 0;
 
-
-  /* save the target ellps parameter */
-  G_get_ellipsoid_parameters(&a, &es);
-
   /* set up ll_proj_keys */
-  ll_proj_keys = G_create_key_value();
-  ll_unit_keys = G_create_key_value();
-  G_set_key_value ("name", "Lat/Lon", ll_proj_keys);
-  G_set_key_value ("proj", "ll", ll_proj_keys);
-  sprintf(buf, "%.16g", a);
-  G_set_key_value("a", buf, ll_proj_keys);
-  sprintf(buf, "%.16g", es);
-  G_set_key_value("es", buf, ll_proj_keys);
-
-  G_set_key_value("unit", "degree", ll_unit_keys);
-  G_set_key_value("units", "degrees", ll_unit_keys);
-  G_set_key_value("meters", "1.0", ll_unit_keys);
-   
-  /*   There is no longer a pj_get_kv() in libproj.a   Sep-15-1999 */
-  if (pj_get_kv(&ll_proj_info, ll_proj_keys, ll_unit_keys) < 0) {
+  ll_proj_info.zone = 0;
+  ll_proj_info.meters = 1.;
+  sprintf(ll_proj_info.proj, "ll");
+  if ((ll_proj_info.pj = pj_latlong_from_proj(targ_proj_info.pj)) == NULL) {
 	exit (0);
   }
 
-
-  /* free the keys */
-  G_free_key_value (targ_proj_keys);
-  G_free_key_value (targ_unit_keys);
-  G_free_key_value (ll_proj_keys);
-  G_free_key_value (ll_unit_keys);
-   
 
   /* loop through all the temp points */
   for (i = 0; i < cptemp->count; i++) {
@@ -157,8 +136,6 @@ convert_from_ll (Control_Points_LL *cpll, Control_Points_2D *cptemp)
   struct pj_info targ_proj_info;       /* target location proj info */
   struct pj_info ll_proj_info;         /* info for lat/lon */
   struct Key_Value  *targ_proj_keys, *targ_unit_keys;
-  struct Key_Value  *ll_proj_keys,   *ll_unit_keys;
-  double a, es;    /* target ellps paramet */
   char buf[50];
 
 
@@ -191,32 +168,19 @@ convert_from_ll (Control_Points_LL *cpll, Control_Points_2D *cptemp)
   if (pj_get_kv(&targ_proj_info, targ_proj_keys, targ_unit_keys) < 0) {
 	exit (0);
   }
-
-  /* save the target ellps parameter */
-  G_get_ellipsoid_parameters(&a, &es);
-
-  /* set up ll_proj_keys */
-  ll_proj_keys = G_create_key_value();
-  ll_unit_keys = G_create_key_value();
-  G_set_key_value ("name", "Lat/Lon", ll_proj_keys);
-  G_set_key_value ("proj", "ll", ll_proj_keys);
-  sprintf(buf, "%.16g", a);
-  G_set_key_value("a", buf, ll_proj_keys);
-  sprintf(buf, "%.16g", es);
-  G_set_key_value("es", buf, ll_proj_keys);
-
-  /*   There is no longer a pj_get_kv() in libproj.a   Sep-15-1999 */
-  if (pj_get_kv(&ll_proj_info, ll_proj_keys, ll_unit_keys) < 0) {
-	exit (0);
-  }
-
   /* free the keys */
   G_free_key_value (targ_proj_keys);
   G_free_key_value (targ_unit_keys);
-  G_free_key_value (ll_proj_keys);
-  G_free_key_value (ll_unit_keys);   
-
    
+
+  /* set up ll_proj_keys */
+  ll_proj_info.zone = 0;
+  ll_proj_info.meters = 1.;
+  sprintf(ll_proj_info.proj, "ll");
+  if ((ll_proj_info.pj = pj_latlong_from_proj(targ_proj_info.pj)) == NULL) {
+	exit (0);
+  }
+
   for (i = 0; i < cpll->count; i++) {
 
     /* allocate an empty control point */
