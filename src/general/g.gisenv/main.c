@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
                 if (tty)
                     fprintf (stdout,"%s=%s\n", name, value);
                 else
-                    fprintf (stdout,"%s='%s';\n", name, value, name);
+                    fprintf (stdout,"%s='%s';\n", name, value);
         }
         return 0;
     }
