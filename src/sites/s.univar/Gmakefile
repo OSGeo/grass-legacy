@@ -4,7 +4,7 @@ LIBES = $(GISLIB) $(DATETIMELIB)
 
 LIST  = \
 	univar.o \
-	main.o \
+	main.o
 
 $(BIN_CMD)/$(PGM): $(LIST) $(LIBES) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
