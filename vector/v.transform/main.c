@@ -37,7 +37,7 @@ int main (int argc, char *argv[])
 {
     struct file_info  Current, Trans, Coord ;
     struct GModule *module;
-    struct Option *old, *new, *pointsfile, *xshift, *yshift, *zshift, *zscale, *zrot;
+    struct Option *old, *new, *pointsfile, *xshift, *yshift, *zshift, *xscale, *yscale, *zscale, *zrot;
     struct Flag *quiet_flag, *tozero_flag, *shift_flag;
     char   *mapset, mon[4], date[40], buf[1000];
     struct Map_info Old, New;
@@ -61,7 +61,8 @@ int main (int argc, char *argv[])
 
     shift_flag = G_define_flag();
     shift_flag->key		= 's';
-    shift_flag->description = "Instead of points use transformation options (xshift, yshift, zrot)"; 
+    shift_flag->description = "Instead of points use transformation options "
+		"(xshift, yshift, zshif, xscale, yscale, zscale, zrot)"; 
 
     old = G_define_option();
     old->key			= "input";
@@ -109,6 +110,22 @@ int main (int argc, char *argv[])
     zshift->multiple	= NO;
     zshift->description	= "shifting value for z coordinates";
     zshift->answer     = "0.0";
+
+    xscale = G_define_option();
+    xscale->key		= "xscale";
+    xscale->type	= TYPE_DOUBLE;
+    xscale->required	= NO;
+    xscale->multiple	= NO;
+    xscale->description	= "scaling factor for x coordinates";
+    xscale->answer     = "1.0";
+
+    yscale = G_define_option();
+    yscale->key		= "yscale";
+    yscale->type	= TYPE_DOUBLE;
+    yscale->required	= NO;
+    yscale->multiple	= NO;
+    yscale->description	= "scaling factor for y coordinates";
+    yscale->answer     = "1.0";
 
     zscale = G_define_option();
     zscale->key		= "zscale";
@@ -190,7 +207,7 @@ int main (int argc, char *argv[])
 
     transform_digit_file( &Old, &New, shift_flag->answer,
 	    atof(xshift->answer), atof(yshift->answer), atof(zshift->answer), ztozero,
-	    atof(zrot->answer), atof(zscale->answer)) ;
+	    atof(zrot->answer), atof(xscale->answer), atof(yscale->answer), atof(zscale->answer)) ;
 
     Vect_copy_tables ( &Old, &New, 0 );
     Vect_close (&Old);
