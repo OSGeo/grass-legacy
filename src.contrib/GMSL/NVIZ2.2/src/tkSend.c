@@ -271,17 +271,18 @@ static int		ValidateName _ANSI_ARGS_((TkDisplay *dispPtr,
  */
 
 static NameRegistry *
-RegOpen(interp, dispPtr, lock)
-    Tcl_Interp *interp;		/* Interpreter to use for error reporting
+RegOpen (
+    Tcl_Interp *interp,		/* Interpreter to use for error reporting
 				 * (errors cause a panic so in fact no
 				 * error is ever returned, but the interpreter
 				 * is needed anyway). */
-    TkDisplay *dispPtr;		/* Display whose name registry is to be
+    TkDisplay *dispPtr,		/* Display whose name registry is to be
 				 * opened. */
-    int lock;			/* Non-zero means lock the window server
+    int lock			/* Non-zero means lock the window server
 				 * when opening the registry, so no-one
 				 * else can use the registry until we
 				 * close it. */
+)
 {
     NameRegistry *regPtr;
     int result, actualFormat;
@@ -368,11 +369,12 @@ RegOpen(interp, dispPtr, lock)
  *----------------------------------------------------------------------
  */
 
-static Window
-RegFindName(regPtr, name)
-    NameRegistry *regPtr;	/* Pointer to a registry opened with a
+static Window 
+RegFindName (
+    NameRegistry *regPtr,	/* Pointer to a registry opened with a
 				 * previous call to RegOpen. */
-    char *name;			/* Name of an application. */
+    char *name			/* Name of an application. */
+)
 {
     char *p, *entry;
     unsigned int id;
@@ -419,11 +421,12 @@ RegFindName(regPtr, name)
  *----------------------------------------------------------------------
  */
 
-static void
-RegDeleteName(regPtr, name)
-    NameRegistry *regPtr;	/* Pointer to a registry opened with a
+static void 
+RegDeleteName (
+    NameRegistry *regPtr,	/* Pointer to a registry opened with a
 				 * previous call to RegOpen. */
-    char *name;			/* Name of an application. */
+    char *name			/* Name of an application. */
+)
 {
     char *p, *entry, *entryName;
     int count;
@@ -479,15 +482,16 @@ RegDeleteName(regPtr, name)
  *----------------------------------------------------------------------
  */
 
-static void
-RegAddName(regPtr, name, commWindow)
-    NameRegistry *regPtr;	/* Pointer to a registry opened with a
+static void 
+RegAddName (
+    NameRegistry *regPtr,	/* Pointer to a registry opened with a
 				 * previous call to RegOpen. */
-    char *name;			/* Name of an application.  The caller
+    char *name,			/* Name of an application.  The caller
 				 * must ensure that this name isn't
 				 * already registered. */
-    Window commWindow;		/* X identifier for comm. window of
+    Window commWindow		/* X identifier for comm. window of
 				 * application.  */
+)
 {
     char id[30];
     char *newProp;
@@ -534,10 +538,11 @@ RegAddName(regPtr, name, commWindow)
  *----------------------------------------------------------------------
  */
 
-static void
-RegClose(regPtr)
-    NameRegistry *regPtr;	/* Pointer to a registry opened with a
+static void 
+RegClose (
+    NameRegistry *regPtr	/* Pointer to a registry opened with a
 				 * previous call to RegOpen. */
+)
 {
     if (regPtr->modified) {
 	if (!regPtr->locked && !sendDebug) {
@@ -593,17 +598,18 @@ RegClose(regPtr)
  *----------------------------------------------------------------------
  */
 
-static int
-ValidateName(dispPtr, name, commWindow, oldOK)
-    TkDisplay *dispPtr;		/* Display for which to perform the
+static int 
+ValidateName (
+    TkDisplay *dispPtr,		/* Display for which to perform the
 				 * validation. */
-    char *name;			/* The name of an application. */
-    Window commWindow;		/* X identifier for the application's
+    char *name,			/* The name of an application. */
+    Window commWindow,		/* X identifier for the application's
 				 * comm. window. */
-    int oldOK;			/* Non-zero means that we should consider
+    int oldOK			/* Non-zero means that we should consider
 				 * an application to be valid even if it
 				 * looks like an old-style (pre-4.0) one;
 				 * 0 means consider these invalid. */
+)
 {
     int result, actualFormat, argc, i;
     unsigned long length, bytesAfter;
@@ -694,9 +700,10 @@ ValidateName(dispPtr, name, commWindow, oldOK)
  *----------------------------------------------------------------------
  */
 
-static int
-ServerSecure(dispPtr)
-    TkDisplay *dispPtr;		/* Display to check. */
+static int 
+ServerSecure (
+    TkDisplay *dispPtr		/* Display to check. */
+)
 {
 #ifdef TK_NO_SECURITY
     return 1;
@@ -743,14 +750,15 @@ ServerSecure(dispPtr)
  */
 
 char *
-Tk_SetAppName(tkwin, name)
-    Tk_Window tkwin;		/* Token for any window in the application
+Tk_SetAppName (
+    Tk_Window tkwin,		/* Token for any window in the application
 				 * to be named:  it is just used to identify
 				 * the application and the display.  */
-    char *name;			/* The name that will be used to
+    char *name			/* The name that will be used to
 				 * refer to the interpreter in later
 				 * "send" commands.  Must be globally
 				 * unique. */
+)
 {
     RegisteredInterp *riPtr, *riPtr2;
     Window w;
@@ -896,13 +904,14 @@ Tk_SetAppName(tkwin, name)
  *--------------------------------------------------------------
  */
 
-int
-Tk_SendCmd(clientData, interp, argc, argv)
-    ClientData clientData;		/* Information about sender (only
+int 
+Tk_SendCmd (
+    ClientData clientData,		/* Information about sender (only
 					 * dispPtr field is used). */
-    Tcl_Interp *interp;			/* Current interpreter. */
-    int argc;				/* Number of arguments. */
-    char **argv;			/* Argument strings. */
+    Tcl_Interp *interp,			/* Current interpreter. */
+    int argc,				/* Number of arguments. */
+    char **argv			/* Argument strings. */
+)
 {
     TkWindow *winPtr;
     Window commWindow;
@@ -1192,11 +1201,12 @@ Tk_SendCmd(clientData, interp, argc, argv)
  *----------------------------------------------------------------------
  */
 
-int
-TkGetInterpNames(interp, tkwin)
-    Tcl_Interp *interp;		/* Interpreter for returning a result. */
-    Tk_Window tkwin;		/* Window whose display is to be used
+int 
+TkGetInterpNames (
+    Tcl_Interp *interp,		/* Interpreter for returning a result. */
+    Tk_Window tkwin		/* Window whose display is to be used
 				 * for the lookup. */
+)
 {
     TkWindow *winPtr = (TkWindow *) tkwin;
     char *p, *entry, *entryName;
@@ -1276,12 +1286,13 @@ TkGetInterpNames(interp, tkwin)
  *--------------------------------------------------------------
  */
 
-static int
-SendInit(interp, dispPtr)
-    Tcl_Interp *interp;		/* Interpreter to use for error reporting
+static int 
+SendInit (
+    Tcl_Interp *interp,		/* Interpreter to use for error reporting
 				 * (no errors are ever returned, but the
 				 * interpreter is needed anyway). */
-    TkDisplay *dispPtr;		/* Display to initialize. */
+    TkDisplay *dispPtr		/* Display to initialize. */
+)
 {
     XSetWindowAttributes atts;
 
@@ -1337,10 +1348,11 @@ SendInit(interp, dispPtr)
  *--------------------------------------------------------------
  */
 
-static void
-SendEventProc(clientData, eventPtr)
-    ClientData clientData;	/* Display information. */	
-    XEvent *eventPtr;		/* Information about event. */
+static void 
+SendEventProc (
+    ClientData clientData,	/* Display information. */
+    XEvent *eventPtr		/* Information about event. */
+)
 {
     TkDisplay *dispPtr = (TkDisplay *) clientData;
     char *propInfo;
@@ -1677,18 +1689,19 @@ SendEventProc(clientData, eventPtr)
  *--------------------------------------------------------------
  */
 
-static void
-AppendPropCarefully(display, window, property, value, length, pendingPtr)
-    Display *display;		/* Display on which to operate. */
-    Window window;		/* Window whose property is to
+static void 
+AppendPropCarefully (
+    Display *display,		/* Display on which to operate. */
+    Window window,		/* Window whose property is to
 				 * be modified. */
-    Atom property;		/* Name of property. */
-    char *value;		/* Characters to append to property. */
-    int length;			/* Number of bytes to append. */
-    PendingCommand *pendingPtr;	/* Pending command to mark complete
+    Atom property,		/* Name of property. */
+    char *value,		/* Characters to append to property. */
+    int length,			/* Number of bytes to append. */
+    PendingCommand *pendingPtr	/* Pending command to mark complete
 				 * if an error occurs during the
 				 * property op.  NULL means just
 				 * ignore the error. */
+)
 {
     Tk_ErrorHandler handler;
 
@@ -1705,10 +1718,11 @@ AppendPropCarefully(display, window, property, value, length, pendingPtr)
  */
 
 	/* ARGSUSED */
-static int
-AppendErrorProc(clientData, errorPtr)
-    ClientData clientData;	/* Command to mark complete, or NULL. */
-    XErrorEvent *errorPtr;	/* Information about error. */
+static int 
+AppendErrorProc (
+    ClientData clientData,	/* Command to mark complete, or NULL. */
+    XErrorEvent *errorPtr	/* Information about error. */
+)
 {
     PendingCommand *pendingPtr = (PendingCommand *) clientData;
     register PendingCommand *pcPtr;
@@ -1753,10 +1767,11 @@ AppendErrorProc(clientData, errorPtr)
  *--------------------------------------------------------------
  */
 
-static void
-DeleteProc(clientData)
-    ClientData clientData;	/* Info about registration, passed
+static void 
+DeleteProc (
+    ClientData clientData	/* Info about registration, passed
 				 * as ClientData. */
+)
 {
     RegisteredInterp *riPtr = (RegisteredInterp *) clientData;
     register RegisteredInterp *riPtr2;
@@ -1803,10 +1818,11 @@ DeleteProc(clientData)
  */
 
     /* ARGSUSED */
-static Tk_RestrictAction
-SendRestrictProc(clientData, eventPtr)
-    ClientData clientData;		/* Not used. */
-    register XEvent *eventPtr;		/* Event that just arrived. */
+static Tk_RestrictAction 
+SendRestrictProc (
+    ClientData clientData,		/* Not used. */
+    register XEvent *eventPtr		/* Event that just arrived. */
+)
 {
     TkDisplay *dispPtr;
 
@@ -1841,10 +1857,11 @@ SendRestrictProc(clientData, eventPtr)
  *----------------------------------------------------------------------
  */
 
-static void
-UpdateCommWindow(dispPtr)
-    TkDisplay *dispPtr;		/* Display whose commWindow is to be
+static void 
+UpdateCommWindow (
+    TkDisplay *dispPtr		/* Display whose commWindow is to be
 				 * updated. */
+)
 {
     Tcl_DString names;
     RegisteredInterp *riPtr;

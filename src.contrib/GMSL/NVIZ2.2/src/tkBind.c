@@ -11,8 +11,12 @@
  * See the file "license.terms" for information on usage and redistribution
  * of this file, and for a DISCLAIMER OF ALL WARRANTIES.
  *
- * RCS: @(#) $Id$
+ * $Id$
  */
+/* Don't know where these are supposed to be defined, but I don't seem
+   to have them: */
+#define MouseWheelEvent	90
+#define MouseWheelMask 0xffff
 
 #include "tkPort.h"
 #include "tkInt.h"
@@ -699,9 +703,10 @@ static int		ParseEventDescription _ANSI_ARGS_((Tcl_Interp *interp,
  *---------------------------------------------------------------------------
  */
 
-void
-TkBindInit(mainPtr)
-    TkMainInfo *mainPtr;	/* The newly created application. */
+void 
+TkBindInit (
+    TkMainInfo *mainPtr	/* The newly created application. */
+)
 {
     BindInfo *bindInfoPtr;
 
@@ -779,9 +784,10 @@ TkBindInit(mainPtr)
  *---------------------------------------------------------------------------
  */
 
-void
-TkBindFree(mainPtr)
-    TkMainInfo *mainPtr;	/* The newly created application. */
+void 
+TkBindFree (
+    TkMainInfo *mainPtr	/* The newly created application. */
+)
 {
     BindInfo *bindInfoPtr;
     
@@ -1827,9 +1833,10 @@ Tk_BindEvent(bindingTable, eventPtr, tkwin, numObjects, objectPtr)
  *---------------------------------------------------------------------------
  */
  
-void
-TkBindDeadWindow(winPtr)
-    TkWindow *winPtr;		/* The window that is being deleted. */
+void 
+TkBindDeadWindow (
+    TkWindow *winPtr		/* The window that is being deleted. */
+)
 {
     BindInfo *bindInfoPtr;
     PendingBinding *curPtr;
@@ -1880,22 +1887,22 @@ TkBindDeadWindow(winPtr)
  *----------------------------------------------------------------------
  */
 static PatSeq *
-MatchPatterns(dispPtr, bindPtr, psPtr, bestPtr, objectPtr, sourcePtrPtr)
-    TkDisplay *dispPtr;		/* Display from which the event came. */
-    BindingTable *bindPtr;	/* Information about binding table, such as
+MatchPatterns (
+    TkDisplay *dispPtr,		/* Display from which the event came. */
+    BindingTable *bindPtr,	/* Information about binding table, such as
 				 * ring of recent events. */
-    PatSeq *psPtr;		/* List of pattern sequences. */
-    PatSeq *bestPtr; 		/* The best match seen so far, from a
+    PatSeq *psPtr,		/* List of pattern sequences. */
+    PatSeq *bestPtr, 		/* The best match seen so far, from a
 				 * previous call to this procedure.  NULL
 				 * means no prior best match. */
-    ClientData *objectPtr;	/* If NULL, the sequences at psPtr
+    ClientData *objectPtr,	/* If NULL, the sequences at psPtr
 				 * correspond to "normal" bindings.  If
 				 * non-NULL, the sequences at psPtr correspond
 				 * to virtual bindings; in order to match each
 				 * sequence must correspond to a virtual
 				 * binding for which a binding exists for
 				 * object in bindPtr. */
-    PatSeq **sourcePtrPtr;	/* Filled with the pattern sequence that
+    PatSeq **sourcePtrPtr	/* Filled with the pattern sequence that
 				 * contains the eventProc and clientData
 				 * associated with the best match.  If this
 				 * differs from the return value, it is the
@@ -1903,6 +1910,7 @@ MatchPatterns(dispPtr, bindPtr, psPtr, bestPtr, objectPtr, sourcePtrPtr)
 				 * return value (a physical event).  Not
 				 * modified unless a result other than bestPtr
 				 * is returned. */
+)
 {
     PatSeq *matchPtr, *bestSourcePtr, *sourcePtr;
 
@@ -2208,18 +2216,19 @@ MatchPatterns(dispPtr, bindPtr, psPtr, bestPtr, objectPtr, sourcePtrPtr)
  *--------------------------------------------------------------
  */
 
-static void
-ExpandPercents(winPtr, before, eventPtr, keySym, dsPtr)
-    TkWindow *winPtr;		/* Window where event occurred:  needed to
+static void 
+ExpandPercents (
+    TkWindow *winPtr,		/* Window where event occurred:  needed to
 				 * get input context. */
-    char *before;		/* Command containing percent expressions
+    char *before,		/* Command containing percent expressions
 				 * to be replaced. */
-    XEvent *eventPtr;		/* X event containing information to be
+    XEvent *eventPtr,		/* X event containing information to be
 				 * used in % replacements. */
-    KeySym keySym;		/* KeySym: only relevant for KeyPress and
+    KeySym keySym,		/* KeySym: only relevant for KeyPress and
 				 * KeyRelease events). */
-    Tcl_DString *dsPtr;		/* Dynamic string in which to append new
+    Tcl_DString *dsPtr		/* Dynamic string in which to append new
 				 * command. */
+)
 {
     int spaceNeeded, cvtFlags;	/* Used to substitute string as proper Tcl
 				 * list element. */
@@ -2530,12 +2539,13 @@ ExpandPercents(winPtr, before, eventPtr, keySym, dsPtr)
  *----------------------------------------------------------------------
  */
 
-static void
-ChangeScreen(interp, dispName, screenIndex)
-    Tcl_Interp *interp;			/* Interpreter in which to invoke
+static void 
+ChangeScreen (
+    Tcl_Interp *interp,			/* Interpreter in which to invoke
 					 * command. */
-    char *dispName;			/* Name of new display. */
-    int screenIndex;			/* Index of new screen. */
+    char *dispName,			/* Name of new display. */
+    int screenIndex			/* Index of new screen. */
+)
 {
     Tcl_DString cmd;
     int code;
@@ -2572,13 +2582,14 @@ ChangeScreen(interp, dispName, screenIndex)
  *----------------------------------------------------------------------
  */
 
-int
-Tk_EventCmd(clientData, interp, argc, argv)
-    ClientData clientData;	/* Main window associated with
+int 
+Tk_EventCmd (
+    ClientData clientData,	/* Main window associated with
 				 * interpreter. */
-    Tcl_Interp *interp;		/* Current interpreter. */
-    int argc;			/* Number of arguments. */
-    char **argv;		/* Argument strings. */
+    Tcl_Interp *interp,		/* Current interpreter. */
+    int argc,			/* Number of arguments. */
+    char **argv		/* Argument strings. */
+)
 {
     int i;
     size_t length;
@@ -2675,10 +2686,11 @@ Tk_EventCmd(clientData, interp, argc, argv)
  *---------------------------------------------------------------------------
  */
 
-static void
-InitVirtualEventTable(vetPtr)
-    VirtualEventTable *vetPtr;	/* Pointer to virtual event table.  Memory
+static void 
+InitVirtualEventTable (
+    VirtualEventTable *vetPtr	/* Pointer to virtual event table.  Memory
 				 * is supplied by the caller. */
+)
 {
     Tcl_InitHashTable(&vetPtr->patternTable,
 	    sizeof(PatternTableKey) / sizeof(int));
@@ -2702,9 +2714,10 @@ InitVirtualEventTable(vetPtr)
  *---------------------------------------------------------------------------
  */
 
-static void
-DeleteVirtualEventTable(vetPtr)
-    VirtualEventTable *vetPtr;	/* The virtual event table to delete. */
+static void 
+DeleteVirtualEventTable (
+    VirtualEventTable *vetPtr	/* The virtual event table to delete. */
+)
 {
     Tcl_HashEntry *hPtr;
     Tcl_HashSearch search;
@@ -2750,13 +2763,14 @@ DeleteVirtualEventTable(vetPtr)
  *----------------------------------------------------------------------
  */
 
-static int
-CreateVirtualEvent(interp, vetPtr, virtString, eventString)
-    Tcl_Interp *interp;		/* Used for error reporting. */
-    VirtualEventTable *vetPtr;/* Table in which to augment virtual event. */
-    char *virtString;		/* Name of new virtual event. */
-    char *eventString;		/* String describing physical event that
+static int 
+CreateVirtualEvent (
+    Tcl_Interp *interp,		/* Used for error reporting. */
+    VirtualEventTable *vetPtr,/* Table in which to augment virtual event. */
+    char *virtString,		/* Name of new virtual event. */
+    char *eventString		/* String describing physical event that
 				 * triggers virtual event. */
+)
 {
     PatSeq *psPtr;
     int dummy;
@@ -2857,15 +2871,16 @@ CreateVirtualEvent(interp, vetPtr, virtString, eventString)
  *--------------------------------------------------------------
  */
 
-static int
-DeleteVirtualEvent(interp, vetPtr, virtString, eventString)
-    Tcl_Interp *interp;		/* Used for error reporting. */
-    VirtualEventTable *vetPtr;/* Table in which to delete event. */
-    char *virtString;		/* String describing event sequence that
+static int 
+DeleteVirtualEvent (
+    Tcl_Interp *interp,		/* Used for error reporting. */
+    VirtualEventTable *vetPtr,/* Table in which to delete event. */
+    char *virtString,		/* String describing event sequence that
 				 * triggers binding. */
-    char *eventString;		/* The event sequence that should be deleted,
+    char *eventString		/* The event sequence that should be deleted,
 				 * or NULL to delete all event sequences for
 				 * the entire virtual event. */
+)
 {
     int iPhys;
     Tk_Uid virtUid;
@@ -3013,11 +3028,12 @@ DeleteVirtualEvent(interp, vetPtr, virtString, eventString)
  *---------------------------------------------------------------------------
  */
 
-static int
-GetVirtualEvent(interp, vetPtr, virtString)
-    Tcl_Interp *interp;		/* Interpreter for reporting. */
-    VirtualEventTable *vetPtr;/* Table in which to look for event. */
-    char *virtString;		/* String describing virtual event. */
+static int 
+GetVirtualEvent (
+    Tcl_Interp *interp,		/* Interpreter for reporting. */
+    VirtualEventTable *vetPtr,/* Table in which to look for event. */
+    char *virtString		/* String describing virtual event. */
+)
 {
     Tcl_HashEntry *vhPtr;
     Tcl_DString ds;
@@ -3067,10 +3083,11 @@ GetVirtualEvent(interp, vetPtr, virtString)
  *--------------------------------------------------------------
  */
 
-static void
-GetAllVirtualEvents(interp, vetPtr)
-    Tcl_Interp *interp;		/* Interpreter returning result. */
-    VirtualEventTable *vetPtr;/* Table containing events. */
+static void 
+GetAllVirtualEvents (
+    Tcl_Interp *interp,		/* Interpreter returning result. */
+    VirtualEventTable *vetPtr/* Table containing events. */
+)
 {
     Tcl_HashEntry *hPtr;
     Tcl_HashSearch search;
@@ -3125,12 +3142,13 @@ GetAllVirtualEvents(interp, vetPtr)
  *
  *---------------------------------------------------------------------------
  */
-static int
-HandleEventGenerate(interp, mainwin, argc, argv)
-    Tcl_Interp *interp;	    /* Interp for error messages and name lookup. */
-    Tk_Window mainwin;	    /* Main window associated with interp. */
-    int argc;		    /* Number of arguments. */
-    char **argv;	    /* Argument strings. */
+static int 
+HandleEventGenerate (
+    Tcl_Interp *interp,	    /* Interp for error messages and name lookup. */
+    Tk_Window mainwin,	    /* Main window associated with interp. */
+    int argc,		    /* Number of arguments. */
+    char **argv	    /* Argument strings. */
+)
 {
     Pattern pat;
     Tk_Window tkwin;
@@ -3632,10 +3650,8 @@ HandleEventGenerate(interp, mainwin, argc, argv)
  *
  *-------------------------------------------------------------------------
  */
-static Tk_Uid
-GetVirtualEventUid(interp, virtString)
-    Tcl_Interp *interp;
-    char *virtString;
+static Tk_Uid 
+GetVirtualEventUid (Tcl_Interp *interp, char *virtString)
 {
     Tk_Uid uid;
     int length;
@@ -3683,26 +3699,26 @@ GetVirtualEventUid(interp, virtString)
  */
 
 static PatSeq *
-FindSequence(interp, patternTablePtr, object, eventString, create,
-	allowVirtual, maskPtr)
-    Tcl_Interp *interp;		/* Interpreter to use for error
+FindSequence (
+    Tcl_Interp *interp,		/* Interpreter to use for error
 				 * reporting. */
-    Tcl_HashTable *patternTablePtr; /* Table to use for lookup. */
-    ClientData object;		/* For binding table, token for object with
+    Tcl_HashTable *patternTablePtr, /* Table to use for lookup. */
+    ClientData object,		/* For binding table, token for object with
 				 * which binding is associated.
 				 * For virtual event table, NULL. */
-    char *eventString;		/* String description of pattern to
+    char *eventString,		/* String description of pattern to
 				 * match on.  See user documentation
 				 * for details. */
-    int create;			/* 0 means don't create the entry if
+    int create,			/* 0 means don't create the entry if
 				 * it doesn't already exist.   Non-zero
 				 * means create. */
-    int allowVirtual;		/* 0 means that virtual events are not
+    int allowVirtual,		/* 0 means that virtual events are not
 				 * allowed in the sequence.  Non-zero
 				 * otherwise. */
-    unsigned long *maskPtr;	/* *maskPtr is filled in with the event
+    unsigned long *maskPtr	/* *maskPtr is filled in with the event
 				 * types on which this pattern sequence
 				 * depends. */
+)
 {
 
     Pattern pats[EVENT_BUFFER_SIZE];
@@ -3853,16 +3869,16 @@ FindSequence(interp, patternTablePtr, object, eventString, create,
  *---------------------------------------------------------------------------
  */
 
-static int
-ParseEventDescription(interp, eventStringPtr, patPtr,
-	eventMaskPtr)
-    Tcl_Interp *interp;		/* For error messages. */
-    char **eventStringPtr;	/* On input, holds a pointer to start of
+static int 
+ParseEventDescription (
+    Tcl_Interp *interp,		/* For error messages. */
+    char **eventStringPtr,	/* On input, holds a pointer to start of
 				 * event string.  On exit, gets pointer to
 				 * rest of string after parsed event. */
-    Pattern *patPtr;		/* Filled with the pattern parsed from the
+    Pattern *patPtr,		/* Filled with the pattern parsed from the
 				 * event string. */
-    unsigned long *eventMaskPtr;/* Filled with event mask of matched event. */
+    unsigned long *eventMaskPtr/* Filled with event mask of matched event. */
+)
 				 
 {
     char *p;
@@ -4079,11 +4095,12 @@ end:
  */
 
 static char *
-GetField(p, copy, size)
-    char *p;		/* Pointer to part of pattern. */
-    char *copy;	/* Place to copy field. */
-    int size;			/* Maximum number of characters to
+GetField (
+    char *p,		/* Pointer to part of pattern. */
+    char *copy,	/* Place to copy field. */
+    int size			/* Maximum number of characters to
 				 * copy. */
+)
 {
     while ((*p != '\0') && !isspace(UCHAR(*p)) && (*p != '>')
 	    && (*p != '-') && (size > 1)) {
@@ -4113,10 +4130,8 @@ GetField(p, copy, size)
  *
  *---------------------------------------------------------------------------
  */
-static void
-GetPatternString(psPtr, dsPtr)
-    PatSeq *psPtr;
-    Tcl_DString *dsPtr;
+static void 
+GetPatternString (PatSeq *psPtr, Tcl_DString *dsPtr)
 {
     Pattern *patPtr;
     char c, buffer[10];
@@ -4237,11 +4252,12 @@ GetPatternString(psPtr, dsPtr)
  *----------------------------------------------------------------------
  */
 
-static KeySym
-GetKeySym(dispPtr, eventPtr)
-    TkDisplay *dispPtr;	/* Display in which to
+static KeySym 
+GetKeySym (
+    TkDisplay *dispPtr,	/* Display in which to
 					 * map keycode. */
-    XEvent *eventPtr;		/* Description of X event. */
+    XEvent *eventPtr		/* Description of X event. */
+)
 {
     KeySym sym;
     int index;
@@ -4320,10 +4336,11 @@ GetKeySym(dispPtr, eventPtr)
  *--------------------------------------------------------------
  */
 
-static void
-InitKeymapInfo(dispPtr)
-    TkDisplay *dispPtr;		/* Display for which to recompute keymap
+static void 
+InitKeymapInfo (
+    TkDisplay *dispPtr		/* Display for which to recompute keymap
 				 * information. */
+)
 {
     XModifierKeymap *modMapPtr;
     KeyCode *codePtr;
@@ -4449,9 +4466,8 @@ InitKeymapInfo(dispPtr)
  *---------------------------------------------------------------------------
  */
 
-static void
-FreeTclBinding(clientData)
-    ClientData clientData;
+static void 
+FreeTclBinding (ClientData clientData)
 {
     ckfree((char *) clientData);
 }
@@ -4474,9 +4490,10 @@ FreeTclBinding(clientData)
  *----------------------------------------------------------------------
  */
 
-KeySym
-TkStringToKeysym(name)
-    char *name;			/* Name of a keysym. */
+KeySym 
+TkStringToKeysym (
+    char *name			/* Name of a keysym. */
+)
 {
 #ifdef REDO_KEYSYM_LOOKUP
     Tcl_HashEntry *hPtr;
@@ -4515,8 +4532,7 @@ TkStringToKeysym(name)
  */
 
 char *
-TkKeysymToString(keysym)
-    KeySym keysym;
+TkKeysymToString (KeySym keysym)
 {
 #ifdef REDO_KEYSYM_LOOKUP
     Tcl_HashEntry *hPtr;
@@ -4548,11 +4564,12 @@ TkKeysymToString(keysym)
  *----------------------------------------------------------------------
  */
 
-int
-TkCopyAndGlobalEval(interp, script)
-    Tcl_Interp *interp;			/* Interpreter in which to evaluate
+int 
+TkCopyAndGlobalEval (
+    Tcl_Interp *interp,			/* Interpreter in which to evaluate
 					 * script. */
-    char *script;			/* Script to evaluate. */
+    char *script			/* Script to evaluate. */
+)
 {
     Tcl_DString buffer;
     int code;
