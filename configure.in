@@ -106,7 +106,13 @@ AC_SUBST(NAME_VER)
 
 # Define LOCALEDIR
 
-AC_DEFINE_UNQUOTED(LOCALEDIR, "${prefix}/grass${NAME_VER}/locale")
+if test "$prefix" = NONE ; then
+  PREFIX=$ac_default_prefix
+else
+  PREFIX=$prefix
+fi
+
+AC_DEFINE_UNQUOTED(LOCALEDIR, "$PREFIX/grass${NAME_VER}/locale")
 
 # Enable options
 
