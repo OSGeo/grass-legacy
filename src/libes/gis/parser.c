@@ -277,7 +277,7 @@ int G_parser (int argc, char **argv)
 	opt= &first_option;
 	while(opt != NULL)
 	{
-		if(opt->multiple && opt->answers)
+		if(opt->multiple && opt->answers && opt->answers[0])
 		{
 			opt->answer = (char *)G_malloc(strlen(opt->answers[0])+1);
 			strcpy(opt->answer, opt->answers[0]);
