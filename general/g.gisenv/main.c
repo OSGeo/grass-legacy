@@ -11,8 +11,9 @@ int main(int argc, char *argv[])
     char *name, *value, *ptr;
     struct Option *get, *set, *store_opt;
     struct GModule *module;
-    
-    G_gisinit (argv[0]);
+
+    G_set_program_name(argv[0]);
+    G_no_gisinit();
 
     module = G_define_module();
     module->description =
