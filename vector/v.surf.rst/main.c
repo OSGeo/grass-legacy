@@ -183,8 +183,6 @@ int main(int argc, char *argv[])
     fprintf(stdout, "Authors: original version -  H.Mitasova, L.Mitas, I. Kosinovsky, D.P. Gerdes\n");
     fprintf(stdout,
 	    "See manual pages for reference and publications\n");
-    fprintf(stdout, "\n");
-    fprintf(stdout, "\n");
 
     parm.input = G_define_option();
     parm.input->key = "input";
@@ -219,7 +217,7 @@ int main(int argc, char *argv[])
 
     flag.iselev = G_define_flag();
     flag.iselev->key = 'r';
-    flag.iselev->description = "Do zero attributes/cats represent elevation?";
+    flag.iselev->description = "Use also zero attributes/cats as elevation";
 
     parm.dmax = G_define_option();
     parm.dmax->key = "dmax";
@@ -494,17 +492,17 @@ int main(int argc, char *argv[])
 	G_fatal_error("cannot create tree info");
 
     if ((mapset = G_find_vector2(input, "")) == NULL)
-	G_fatal_error("Could not find vector file %s\n", input);
+	G_fatal_error("Could not find vector file %s", input);
 
     open_check = Vect_open_old(&Map, input, mapset);
     if (open_check < 1)
-	G_fatal_error("Could not open vector file <%s>\n", input);
+	G_fatal_error("Could not open vector file <%s>", input);
     if (open_check < 2)
-	G_fatal_error("You first need to run v.build on vector file <%s>\n",
+	G_fatal_error("You first need to run v.build on vector file <%s>",
 		      input);
     if (flag.cat->answer) {
 	if (G_read_vector_cats(input, mapset, &cats) < 0)
-	    G_fatal_error("Could not find category file for %s\n", input);
+	    G_fatal_error("Could not find category file for %s", input);
     }
 
     /* we can't read the input file's timestamp as they don't exist in   */
@@ -679,10 +677,9 @@ int main(int argc, char *argv[])
 	ddisk += disk;
     ddisk += sddisk;
     fprintf(stderr, "\n");
-    fprintf(stderr, "Processing all selected output files \n");
-    fprintf(stderr, "will require %d bytes of disk space for temp files \n",
+    fprintf(stderr, "Processing all selected output files\n");
+    fprintf(stderr, "will require %d bytes of disk space for temp files\n",
 	    ddisk);
-    fprintf(stderr, "\n");
 
     deltx = xmax - xmin;
     delty = ymax - ymin;
