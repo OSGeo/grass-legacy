@@ -9,4 +9,4 @@ OBJ = main.o\
     rg.o
 
 $(BIN_CONTRIB_INTER)/m.eigensystem: $(OBJ)
-	f77 -o $@ $(OBJ)
+	$(FC) -o $@ $(OBJ)
