@@ -11,7 +11,7 @@ I_find_group (group)
     if (group == NULL || *group == 0)
 	return 0;
 
-    return G_find_file ("group", group, G_mapset()) != NULL ;
+    return G_find_file2 ("group", group, G_mapset()) != NULL ;
 }
 
 I_find_group_file (group, file)
@@ -20,7 +20,7 @@ I_find_group_file (group, file)
 {
     char element[100];
 
-    if (group == NULL || *group == 0)
+    if (!I_find_group (group))
 	return 0;
     if (file == NULL || *file == 0)
 	return 0;
@@ -36,7 +36,7 @@ I_find_subgroup (group, subgroup)
 {
     char element[300];
 
-    if (group == NULL || *group == 0)
+    if (!I_find_group(group))
 	return 0;
     if (subgroup == NULL || *subgroup == 0)
 	return 0;
@@ -53,7 +53,7 @@ I_find_subgroup_file (group, subgroup, file)
 {
     char element[300];
 
-    if (group == NULL || *group == 0)
+    if (!I_find_group(group))
 	return 0;
     if (subgroup == NULL || *subgroup == 0)
 	return 0;
