@@ -1,31 +1,36 @@
-/**********************************************************************
- *
- *  G_make_rainbow_colors (pcolr, min, max)
- *
- *   struct Colors *pcolr    struct to hold colors
- *   CELL min,max            min,max color numbers
- *
- *  Generates color rainbow that is stored in the pcolr structure. 
- *
- **********************************************************************/
-
 #include "gis.h"
 
-G_make_rainbow_colors  (pcolr,min,max)
-    struct Colors *pcolr ;
-    CELL min,max;
+static struct
 {
-    double x, incr;
-    int i ;
-    CELL cat;
-    int num;
+    int red, grn, blu;
+} rules[] =
+{
+  255, 255,   0,       /* yellow */
+    0, 255,   0,       /* green */
+    0, 255, 255,       /* cyan */
+    0,   0, 255,       /* blue */
+  255,   0, 255,       /* magenta */
+  255,   0,   0        /* red */
+};
 
-    G_init_colors (pcolr);
-    if (max < min)
-	return -1;
+G_make_rainbow_colors (colors, min, max)
+    struct Colors *colors;
+    CELL min, max;
+{
+    G_init_colors (colors);
+    return G_add_rainbow_colors (colors, min, max);
+}
 
-    num = max - min + 1;
-    incr = 5.0 / num ;
+G_add_rainbow_colors (colors, min, max)
+    struct Colors *colors;
+    CELL min, max;
+{
+    double incr;
+    int i,n;
+    CELL cat1,cat2;
+
+    if (min > max) return -1;
+
 
 /* to generate the rainbow start with yellow (R & G)
  * decrease red (G)
@@ -33,37 +38,22 @@ G_make_rainbow_colors  (pcolr,min,max)
  * then decrease green (B)
  * then increase red (R & B)
  */
-    cat = min;
-    for (x = 1.0; cat <= max && x >= 0.0; x -= incr) /* decrease red */
-    {
-	i = x * 256;
-	G_set_color (cat++, i, 255, 0, pcolr);
-    }
-    for (x += incr; cat <= max && x <= 1.0; x += incr) /* increase blue */
-    {
-	i = x * 256;
-	G_set_color (cat++, 0, 255, i, pcolr);
-    }
-    for (x -= incr; cat <= max && x >= 0.0; x -= incr) /* decrease green */
-    {
-	i = x * 256;
-	G_set_color (cat++, 0, i, 255, pcolr);
-    }
-    for (x += incr; cat <= max && x <= 1.0; x += incr) /* increase red */
-    {
-	i = x * 256;
-	G_set_color (cat++, i, 0, 255, pcolr);
-    }
-    for (x -= incr; cat <= max && x >= 0.0; x -= incr) /* decrease blue */
-    {
-	i = x * 256;
-	G_set_color (cat++, 255, 0, i, pcolr);
-    }
-    while (cat <= max)
-	G_set_color (cat++, 255, 0, 0, pcolr);
+    n = sizeof(rules)/sizeof(*rules);
+    incr = (double) (max-min+1)/(double)(n-1);
 
-    if (min >= 0  || max <= 0)
-	G_set_color ((CELL) 0, 0, 0, 0, pcolr);
+    cat1 = min;
+    for (i = 1; i < n; i++)
+    {
+	if (i == n-1)
+	    cat2 = max;
+	else
+	    cat2 = min + incr*i;
 
+	G_add_color_rule (
+		cat1, rules[i-1].red, rules[i-1].grn, rules[i-1].blu,
+		cat2, rules[i].red, rules[i].grn, rules[i].blu,
+		colors);
+	cat1 = cat2;
+    }
     return 1;
 }
