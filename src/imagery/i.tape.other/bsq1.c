@@ -1,4 +1,3 @@
-/* %W% %G% */
 /* read each file as a complete band */
 #include "tape.h"
 
