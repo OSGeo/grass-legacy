@@ -4,13 +4,37 @@
 
 <h2>EXAMPLES</h2>
 
-<em>Buffer around input lines</em><br>
+<h3>Buffer around input lines</h3>
 <b>v.buffer input=</b><em>map</em> <b>output=</b><em>buffer</em> <b>type=</b><em>line</em>
-            <b>buffer=</b><em>100</em>
+    <b>buffer=</b><em>100</em>
 
+
+<h3>Circles around input points</h3>
+<b>v.buffer input=</b><em>pointsmap</em> <b>output=</b><em>circles</em> <b>type=</b><em>point</em>
+    <b>buffer=</b><em>1000</em>
+<br>
+Note that attributes are not transferred (due to potential buffer overlap which cannot be 
+resolved automatically).
 <P>
-<em>Circles around input points</em><br>
-<b>v.buffer input=</b><em>pointsmap</em> <b>output=</b><em>circles</em> <b>type=</b><em>point</em>  <b>buffer=</b><em>1000</em>
+
+<h3>Non-overlapping circles around input points with attribute transfer</h3>
+
+<b>v.buffer input=</b><em>archsites</em> <b>output=</b><em>circles</em> <b>type=</b><em>point</em> <b>buffer=</b><em>200</em>
+<br># change original points to centroids:
+<br><b>v.type in=</b><em>archsites</em> <b>out=</b><em>archcentroids</em> <b>type=</b><em>point,centroid</em>
+<br># patch circles and centroids:
+<br><b>v.patch in=</b><em>archcentroids,circles</em> <b>out=</b><em>circles_db</em>
+<br># attach attributes, either use
+<br># <b>db.copy ...</b>
+<br># or link to the original table:
+<br><b>v.db.connect map=</b><em>circles_db</em> <b>table=</b><em>archsites</em> <b>field=</b><em>1</em> 
+    <b>key=</b><em>cat</em> <b>driver=</b><em>dbf</em> <b>database=</b><em>'$GISDBASE/$LOCATION_NAME/$MAPSET/dbf'</em>
+
+<h2>SEE ALSO</h2>
+
+<em><a HREF="v.type.html">v.type</a></em>,
+<em><a HREF="v.patch.html">v.patch</a></em>,
+<em><a HREF="v.db.connect.html">v.db.connect</a></em>
 
 <h2>AUTHOR</h2>
 
