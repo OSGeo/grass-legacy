@@ -39,7 +39,8 @@ default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/msgs \
 	$(ETC)/gis_set.tcl \
 	$(ETC)/epsg_option.tcl \
-	$(ETC)/make_location_epsg_g57.sh
+	$(ETC)/make_location_epsg_g57.sh \
+	$(ETC)/grass-run.sh
 	$(MKDIR) $(GISBASE)/docs/html
 	$(INSTALL) -m 644 variables.html $(GISBASE)/docs/html/variables.html
 
@@ -110,3 +111,7 @@ $(ETC)/epsg_option.tcl: epsg_option.tcl
 $(ETC)/make_location_epsg_g57.sh: make_location_epsg_g57.sh
 	rm -f $@
 	$(INSTALL) -m 755 make_location_epsg_g57.sh $(ETC)
+$(ETC)/grass-run.sh: grass-run.sh
+	rm -f $@
+	$(INSTALL) -m 755 grass-run.sh $(ETC)
+
