@@ -171,6 +171,34 @@ typing coordinates.
 
 </OL>
 
+<H3>Perl Script to convert output to a site_list</H3>
+
+The script below will convert the <B>plotfile</B> output to the site_list format.
+It probably won't work 100% for lat/lon datasets.
+
+<P>
+
+<TT>
+<B>#! /usr/bin/perl -w</B><BR>
+# prof2sites.pl: converts the output of d.profile to a site_list
+<P>
+<B>my</B> (<EM>$dist</EM>, <EM>$elev</EM>, <EM>$east</EM>, <EM>$north</EM>);
+<P>
+<B>while</B> (&lt;<B>STDIN</B>&gt;)<BR>
+{<BR>
+&nbsp;&nbsp;<B>if</B> (m/^#/)<BR>
+&nbsp;&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<B>print</B> "<EM>$_</EM>";<BR>
+&nbsp;&nbsp;}<BR>
+&nbsp;&nbsp;<B>else</B><BR>
+&nbsp;&nbsp;{<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<B>chomp</B>;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;(<EM>$dist</EM>, <EM>$elev</EM>, <EM>$east</EM>, <EM>$north</EM>) = <B>split</B> / /;<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;<B>print</B> "<EM>$east</EM>|<EM>$north</EM>|<EM>$elev</EM>|#1 \%<EM>$dist</EM> \@Profile\n";<BR>
+&nbsp;&nbsp;}<BR>
+}<BR>
+</TT>
+
 <H2>BUGS</H2>
 
 None known.
