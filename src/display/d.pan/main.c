@@ -4,6 +4,8 @@
  *   Change region through graphics - select new center
  */
 
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "site.h"
 #include "display.h"
@@ -15,7 +17,6 @@
 int main (int argc, char **argv)
 {
     int stat;
-    char command[128];
 #ifdef QUIET
     struct Flag *quiet;
 #endif
