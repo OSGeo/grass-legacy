@@ -14,7 +14,7 @@ interface_build {
     {checkbox color {Red through yellow to green colors.} "" ryg}
     {checkbox color {Random color table.} "" random}
     {checkbox color {Color wave.} "" wave}
-    {separator grey 5}
+    {entry rast {Use table from existing raster map:} 0 raster}
     {checkbox -w {Don't overwrite existing color table.} "" -w}
     {checkbox -q {Run quietly.} "" -q}
 }
