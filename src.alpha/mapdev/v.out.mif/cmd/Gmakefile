@@ -1,0 +1,21 @@
+PGM       = $(BIN_CONTRIB_CMD)/v.out.mif
+LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB)
+
+EXTRA_CFLAGS = $(VECT_INCLUDE) -g
+
+OBJS = \
+	main.o \
+	plot.o
+
+CFILES = \
+	main.c \
+	plot.c
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB)
+
+$(LIBES): #
+
+saber_src:
+	#load $(EXTRA_CFLAGS) $(CFLAGS) $(CFILES)  /grass.src/4.0/src/mapdev/Vlib/*.c /grass.src/4.0/src/mapdev/diglib/*.c $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB)
+
