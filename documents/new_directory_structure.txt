@@ -22,627 +22,194 @@ New concepts:
    An example for the G3D data structure can be found here:
    http://www.geog.uni-hannover.de/grass/grid3d/index.html (sample dataset)
 
---------------------
-Code structure:
 
-/include
-[move src/includes here]
--> probably the includes should go with their .c files?
+As grass5.1 shall take off as soon as possible, we should start the
+directory structure debate. My draft proposal is looking like this:
 
 
-/lib
-[move src/libes/ here]
-   D/   -> rename to display or merge with display/
-   bitmap/
-   btree/
-   coorcnv/
-   datetime/
-   dbmi/
-   dig_atts/
-   digitizer/
-   display/   -> merge with D?
-   dlg/
-   dspf/
-   fonts/
-   front.end/
-   g3d/
-   geom/
-   gis/
-   ibtree/
-   icon/
-   image3/
-   imagery/
-   libimage/
-   linkm/
-   lock/
-   ogsf/
-   proj/ -> probably to plugins/ ?
-   raster/
-   rowio/
-   rst_gmsl/
-   segment/
-   unused/
-   vask/
-   vect32/
-   vect32_64/ -> will be integrated into vect32 by Bill Hughes
+grass51/
+
+# core includes libs, docs, import/export and basic modules:
+    /core                 (the GRASS basic package)
+	/include	: global include files
+
+	/lib		  (read src/libes/README for further design comments)
+	    /bitmap     : bitmap library for X Window Bitmaps
+	    /btree      : binary tree library
+	    /coorcnv    : coordinate conversion and datum support library
+	    /datetime   : DateTime library
+	    /dbmi       : database management interface database drivers
+	    /display    : display lib (was: D/ )
+	    /drivers
+		/cell   : CELL driver (was: display/)
+		/digitizer: raw library for general digitizer support
+		/htmlmap: HTMLMAP driver
+		/paint  : paint library (from paint/ )
+		/xdriver: XDRIVER
+	    /dspf       : G3D display files library
+	    /formats
+		/dlg    : library to manage DLG files
+		/sdts   : library to manage SDTS files (was: src.contrib/..)
+		/sgirgb : library to manage SGIs RGB-format (was: libimage)
+	    /fonts      : hershey fonts
+	    /front.end  : cmd/inter frontend
+	    /g3d        : G3D raster volume library
+	    /geom	: geometrical calculations... (will be detri)
+	    /gis        : main GRASS library (remove import/export routines)
+	    /gmath      : generic mathematical functions (to BLAS/LAPACK libs)
+	    /ibtree     : integer clone of btree lib (needed?)
+	    /icon       : icon library (required for PS/Paint)
+	    /imagery    : imagery library including image3 extra library
+	    /init       : GRASS startup (was: src/general/init/ )
+	    /java       : GRASS JAVA support (was src.garden/grass.java/ )
+	    /linkm      : linked list memory manager
+	    /lock       : locking mechanism for GRASS monitors and files
+	    /ogsf       : ported gsurf library (required for NVIZ)
+	    /plugins      (keeps external libs)
+		/bwidget : tcl/tk extra library
+		/gdal    : GDAL raster lib
+		/gdbm    : database support for GRASS (or Berkeley DB)
+		/libgrassio: GRASS import/export lib from Frank Warmerdam
+		/proj    : PROJ 4.x library from Frank Warmerdam et al.
+		/shapelib: SHAPE support lib from Frank Warmerdam
+	    /raster     : GRASS raster library
+	    /rowio      : row in/out library  
+	    /rst_gmsl   : library for interpolation with reg. splines w.t.
+	    /segment    : segment library
+	    /sites      : GRASS sites library (extract from gis/ )
+	    /testsuite  : testsuite
+	    /vask       : Curses management library
+	    /vector     : GRASS vector library
+		/Vlib     : portable GRASS vector functions
+		/dig_atts : library to read and write from attribute files
+		/diglib   : more GRASS vector functions
+		/georef   : Imagery Georeferencing Programs
+		/libes    : transformations from one coord. system to another  
+
+	/docs
+	    /docs
+	    /html
+		/html_docs_go_here
+
+	/exchange    (import/export modules)
+	    /misc
+		/m.e00
+	    /raster
+		/r.arc  (contains r.in.arc/r.out.arc)
+		/r.ascii
+		/r.tif
+		...
+	    /scripts    (move import/export scripts here from global scripts)
+	    /sites
+		/s.ascii
+	    /vector
+		/v.ascii
+		/v.shape
+		...
+
+#now a set of basic modules follows:
+	/display
+	   /basic_modules_go_here
+
+	/general
+	   /basic_modules_go_here
+
+	/gui
+	    /python
+	    /tcltkgrass
+
+	/misc
+	   /basic_modules_go_here
+
+	/paint
+	    /paint_modules_go_here
+
+	/postscript
+	    /ps_modules_go_here
+
+	/raster
+	    /basic_modules_go_here
+
+	/sites
+	    /basic_modules_go_here
+
+	/vector
+	    /basic_modules_go_here
 
 
-/plugins
-   bwidget/
-   shape_lib/
-   gdal/
-   external_math_lib/ -> suggestion
+#now topic-oriented packages follow:
+
+# vis-package:
+    /visualization
+	/nviz
+	/sg3d
+	/xganim
+
+    
+#hydro-dem-erosion-package:
+    /hydrology_dem
+	/raster
+	    /raster_hydro_dem_modules
 
 
-/base
--> does it make sense to keep a set of subdirectories (display, general etc)?
-   /display
-     d.3d
-     d.area
-     d.ask
-     d.barscale
-     d.colormode
-     d.colors
-     d.colortable
-     d.display
-     d.erase
-     d.font
-     d.frame
-     d.geodesic
-     d.graph
-     d.grid
-     d.his
-     d.histogram
-     d.icons
-     d.label
-     d.labels
-     d.leg.thin
-     d.legend
-     d.linegraph
-     d.mapgraph
-     d.measure
-     d.menu
-     d.mon
-     d.paint.labels
-     d.pan
-     d.points
-     d.rast
-     d.rast.arrow
-     d.rast.edit
-     d.rast.num
-     d.rast.zoom
-     d.rgb
-     d.rhumbline
-     d.save
-     d.scale
-     d.sites
-     d.sites.qual
-     d.text
-     d.title
-     d.vect
-     d.vect.cats
-     d.vect.zoom
-     d.what.rast
-     d.what.sites
-     d.what.vect
-     d.where
-     d.zoom
+#image-processing-package:
+    /imageprocessing
+	/imagery
+	    /image_proc_modules
 
-   /general
-     g.access
-     g.ask
-     g.copy
-     g.filename
-     g.findfile
-     g.gisenv
-     g.help
-     g.list
-     g.manual
-     g.mapsets
-     g.region
-     g.remove
-     g.rename
-     g.setproj
-     g.tempfile
-     g.version
 
-   /remote_sensing
-     d.fix.ortho
-     i.cca
-     i.class
-     i.cluster
-     i.colors
-     i.composite
-     i.fft
-     i.gensig
-     i.gensigset
-     i.grey.scale
-     i.group
-     i.his.rgb
-     i.ifft
-     i.maxlik
-     i.ortho.photo
-     i.pca
-     i.points
-     i.points3
-     i.quantize
-     i.rectify
-     i.rectify2
-     i.rgb.his
-     i.rvi.prediction  -> ?
-     r.rvi.prediction  -> ?
-     i.shape
-     i.smap
-     i.target
-     i.texture
-     i.vpoints
-     i.zc
+#database-package:
+    /database
+	/generic (db.* driver improved by Radim)
+	/oracle
+	/postgresql
+	    
 
-   /misc
-     m.bsplit
-     m.datum.shift
-     m.flip
-     m.futil
-     m.gc2ll
-     m.ipf
-     m.kappa
-     m.ll2gc
-     m.ll2u
-     m.lulc.USGS
-     m.lulc.read
-     m.proj
-     m.qcalc
-     m.region.ll
-     m.rot90
-     m.strip99s
-     m.svfit
-     m.tiger.region
-     m.u2ll
+#G3D-package:
+    /g3d  (was: src.contrib/GMSL/g3d)
+	/general3
+	/raster3
+	/scripts3
+	/sites3
+	    
 
-   /paint
-     p.chart
-     p.colors
-     p.icons
-     p.labels
-     p.map
-     p.map.new
-     p.ppm
-     p.select
+#extended-raster-package:
+    /raster_extended
+	/fuzzy_logic
+	/...
 
-   /postscript
-     ps.icon
-     ps.map
-     ps.select
+
+#interpolation-package:
+    /raster
+	/r.bilinear
+	/...
+    /sites
+    /vector (was: mapdev)
+
+#simulation-models-package:
+    /raster
+	/casc2d
+	/topmodel
+	/erosion
+
+
+#more?
+
+-----------------------------------------
+Note: Useful modules from src.contrib section shall be merged into
+      directory structure.
+
+Questions:
+  - core-package: shall we move the "/lib/plugins" to "/plugins" ?
+  - shall we keep the unused directory?
+
+Proposal:
+ - the number of import/export modules scripts needs to be heavily reduced.
+   At time there are 92 tools for import/export/tape analysis...
+
+ - Idea: The raster database structure should be changed to the G3D
+   structure: all files related to a raster map should go into one
+   directory. Currently many files are spreaded in many directories.
+   An example for the G3D data structure can be found here:
+   http://www.geog.uni-hannover.de/grass/grid3d/index.html (sample dataset)
    
-   /raster
-     r.average
-     r.binfer
-     r.buffer
-     r.cats
-     r.circle
-     r.clump
-     r.cn2
-     r.coin
-     r.colors
-     r.colors.paint
-     r.combine
-     r.compress
-     r.cost
-     r.covar
-     r.cross
-     r.describe
-     r.digit
-     r.distance
-     r.grow
-     r.infer
-     r.info
-     r.kappa
-     r.linear.regression -> useful?
-     r.mapcalc
-     r.mask
-     r.mask.points
-     r.median
-     r.mfilter
-     r.mode
-     r.neighbors
-     r.null
-     r.patch
-     r.proj      -> might be replaced by r.proj.new
-     r.proj.new
-     r.quant
-     r.random
-     r.random.cells
-     r.random.surface
-     r.rational.regression -> useful?
-     r.reclass
-     r.reclass.scs -> merge with above
-     r.recode
-     r.report
-     r.rescale
-     r.rescale.eq
-     r.statistics
-     r.stats
-     r.sum
-     r.support
-     r.thin
-     r.transect
-     r.volume
-     r.weight
-     r.weight.new
-     r.weighted.cn
-     r.what
-
-   /sites
-     s.info
-     s.kcv
-     s.normal
-     s.perturb
-     s.probplt
-     s.proj
-     s.qcount
-     s.rand
-     s.reclass
-     s.sv
-     s.univar
-
-   /vector
-     v.alabel
-     v.apply.census
-     v.area
-     v.autocorr
-     v.bubble
-     v.build.polylines
-     v.cadlabel
-     v.circle
-     v.clean
-     v.cutter
-     v.digit
-     v.distance
-     v.dump
-     v.extract
-     v.info
-     v.llabel
-     v.make.subj
-     v.merge
-     v.mk_stats
-     v.mkgrid
-     v.mkquads
-     v.patch
-     v.patch.scs
-     v.proj
-     v.prune
-     v.random
-     v.reclass
-     v.report
-     v.rm.dangles
-     v.rmdup
-     v.rmedge
-     v.scale.random
-     v.spag
-     v.stats
-     v.support
-     v.transform
-     v.trim
-     v.what
-
-/convert
-     r.line
-     r.poly
-     r.to.sites
-     s.to.rast
-     s.to.vect
-     v.to.rast
-     v.to.sites
-
-
-/import
- -> these tools should be cleaned up and partly merged to reduce number!
-     i.in.erdas
-     i.in.gtc
-     i.in.pri
-     i.tape.mss
-     i.tape.mss.h
-     i.tape.other
-     i.tape.slc
-     i.tape.spot
-     i.tape.tm
-     i.tape.tm.fast
-     m.dem.examine
-     m.dem.extract
-     m.dmaUSGSread
-     m.dted.examine
-     m.dted.extract
-     m.examine.tape
-     m.in.e00
-     m.in.pl94.db3
-     m.in.stf1.db3
-     m.in.stf1.tape
-     m.sdts.read
-     r.in.arc
-     r.in.ascii
-     r.in.bin
-     r.in.dem
-     r.in.doq
-     r.in.dted
-     r.in.elas
-     r.in.hdf
-     r.in.gridatb
-     r.in.ll
-     r.in.miads
-     r.in.png
-     r.in.poly
-     r.in.ppm
-     r.in.shape
-     r.in.sunrast
-     r.in.tang
-     r.in.tiff
-     r.in.utm
-     s.in.ascii
-     s.in.shape
-     v.import
-     v.in.arc
-     v.in.ascii
-     v.in.atlas
-     v.in.dlg
-     v.in.dlg.scs
-     v.in.dlg2
-     v.in.dxf
-     v.in.dxf2
-     v.in.dxf3d
-     v.in.poly
-     v.in.sdts
-     v.in.shape
-     v.in.tig.basic
-     v.in.tig.lndmk
-     v.in.transects
-     v.sdts.dq.cp
-     v.sdts.meta
-     v.sdts.meta.cp
-
-/importscripts
-   r.in.arctiff
-   r.in.globedem
-
-
-/export
- -> these tools should be cleaned up and partly merged to reduce number!
-     i.out.erdas
-     r.out.arc
-     r.out.ascii
-     r.out.elas
-     r.out.gridatb
-     r.out.hdf
-     r.out.mpeg
-     r.out.png
-     r.out.pov
-     r.out.ppm
-     r.out.tga
-     r.out.tiff
-     r.out.xyz
-     r.to.rlc
-     s.out.ascii
-     s.out.e00
-     v.export
-     v.out.arc
-     v.out.ascii
-     v.out.atlas
-     v.out.dlg
-     v.out.dxf
-     v.out.e00
-     v.out.idrisi
-     v.out.mapinfo
-     v.out.mif
-     v.out.moss
-     v.out.sdts
-     v.out.shape
-
-/exportscripts
-     r.out.arctiff
-     r.out.bil
-     r.out.geotiff
-
-/gui_viz
-     tcltkgrass
-     nviz2.2
-
-/datetime
-     r.timestamp
-     v.timestamp
-
-/hydro_dem
-     d.param.scale
-     d.profile
-     r.basins.fill
-     r.contour
-     r.direct
-     r.drain
-     r.fill.dir
-     r.flow
-     r.flowmd
-     r.los
-     r.param.scale
-     r.profile
-     r.slope.aspect
-     r.sun
-     r.surf.area
-     r.surf.fractal
-     r.surf.gauss
-     r.surf.random
-     r.watershed
-     s.delaunay -> still required? (s.geom)
-     s.voronoi  -> still required? (s.geom)
-     s.geom  -> not yet 5.0 sites API!
-     v.geom
-
-/interpolation
-     r.bilinear
-     r.resamp.rst
-     r.resample
-     r.surf.contour
-     r.surf.idw
-     r.surf.idw2
-     s.medp
-     s.sample
-     s.surf.idw
-     s.surf.rst
-     v.surf.rst
-
-
-/sim_models
-   /CASC2D
-     r.hydro.CASC2D -> beta only!
-
-   /topmodel
-     r.topidx
-     r.topmodel
-
-   /runoff
-     r.water.fea
-     r.water.outlet
-
-   /erosion_agnps
-     r.agnps50.run
-     r.agnps50.view
-     r.agnps50.input
-
-   /erosion_answers
-     src.answers
-
-   /erosion_kineros
-     r.kineros
-
-   /territory
-     s.territory
-
-   /wildfire
-     r.ros
-     r.spread
-     r.spreadpath
-
-
-
-/dbms
- /universal -> better name?
-    d.db
-    d.what.db
-    db.columns
-    db.connect
-    db.createdb
-    db.databases
-    db.describe
-    db.drivers
-    db.dropdb
-    db.droptable
-    db.execute
-    db.select
-    db.tables
-    v.db.reclass
-    v.to.db
-
- /postgresql
-    d.rast.pg
-    d.site.pg
-    d.vect.pg
-    d.what.r.pg
-    d.what.s.pg
-    d.what.v.pg
-    g.column.pg
-    g.select.pg
-    g.stats.pg
-    g.table.pg
-    pg.in.dbf
-    v.in.arc.pg
-    v.in.shape.pg
-    v.reclass.pg
- /oracle
- /informix
- /mysql
- /scripts
-   r.to.pg
- /gdbase
-   r.gdbase
-   s.gdbase
-   v.gdbase
-
-
-
-/scripts
-   3d.view.sh
-   blend.sh
-   bug.report.sh
-   create_fifos.sh
-   d.dm
-   d.monsize
-   d.rast.leg
-   d.rast.leg2
-   d.rast.rescale
-   d.siter
-   dcorrelate.sh
-   demo.scripts
-   demo.sh
-   fig2grass
-   g.html2man
-   g.man2html
-   grass.logo.sh
-   grass2fig
-   hsv.rgb.sh
-   i.image.mosaic
-   i.oif
-   i.spectral
-   i.tasscap.tm4
-   i.tasscap.tm5
-   intens.sh
-   ps.add.pagesize
-   ps.map.barscale
-   r.avgstats
-   r.edge.dig
-   r.plane
-   r.reclass.area
-   r.regression.line
-   r.univar
-   rgb.hsv.sh
-   s.in.garmin.sh
-   s.in.gps
-   s.in.grid
-   s.out.gps
-   s.reclass
-   shade.clr.sh
-   shade.rel.sh
-   show.color.sh
-   show.fonts.sh
-   slide.show.sh
-   split.sh
-   start.man.sh
-   tclsiter
-   v.cutter.attr
-   v.in.arc.poly
-   v.in.dxf3d.sh
-   v.in.garmin.sh
-   v.in.gps
-   v.line2area
-   v.out.xfig
-   v.plant 
-
-/raster3d
-   r3.out.v5d 
-   r3.out.ascii
-   r3.null
-   r3.mkdspf
-   r3.mask
-   r3.mapcalc
-   r3.info
-   r3.in.v5d
-   r3.in.ascii
-   r3.showdspf
-   g3.region
-   s.vol.idw
-
-/vector3d
-[empty]
-
-/man
-  /man1..5
-  /cat1..5
-  /html
-
-/java
