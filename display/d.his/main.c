@@ -9,9 +9,6 @@
 int 
 main (int argc, char **argv)
 {
-	CELL *hue_array ;
-	CELL *int_array = NULL;
-	CELL *sat_array = NULL;
 	CELL *r_array, *g_array, *b_array;
 	char *mapset ;
 	char *name_h, *name_i, *name_s ;
@@ -34,6 +31,7 @@ main (int argc, char **argv)
 	int offset ;
 	char window_name[64] ;
 	int t, b, l, r ;
+	struct { unsigned char *r, *g, *b, *i, *s; } buf;
 
 	G_gisinit(argv[0]) ;
 
@@ -105,8 +103,6 @@ main (int argc, char **argv)
 		G_fatal_error("Not able to open cellfile for [%s]",
 			      name_h) ;
 
-	hue_array = G_allocate_cell_buf () ;
-
 	/* Reading color lookup table */
 	if (G_read_colors(name_h, mapset, &hue_colors) == -1)
 		G_fatal_error("Color file for [%s] not available",
@@ -126,8 +122,6 @@ main (int argc, char **argv)
 			if ((int_file = G_open_cell_old(name_i, mapset)) == -1)
 				G_fatal_error("Not able to open cellfile for [%s]",
 					      name_i) ;
-
-			int_array = G_allocate_cell_buf () ;
 
 			/* Reading color lookup table */
 			if (G_read_colors(name_i, mapset, &int_colors) == -1)
@@ -158,8 +152,6 @@ main (int argc, char **argv)
 				G_fatal_error("Not able to open cellfile for [%s]",
 					      name_s) ;
 
-			sat_array = G_allocate_cell_buf () ;
-
 			/* Reading color lookup table */
 			if (G_read_colors(name_s, mapset, &sat_colors) == -1)
 				G_fatal_error("Color file for [%s] not available",
@@ -176,6 +168,12 @@ main (int argc, char **argv)
 	g_array = G_allocate_cell_buf () ;
 	b_array = G_allocate_cell_buf () ;
 
+	buf.r = G_malloc(window.cols);
+	buf.g = G_malloc(window.cols);
+	buf.b = G_malloc(window.cols);
+	buf.i = G_malloc(window.cols);
+	buf.s = G_malloc(window.cols);
+
 	/* Make color table */
 	make_gray_scale(&gray_colors) ;
 	D_set_colors_RGB();
@@ -188,35 +186,29 @@ main (int argc, char **argv)
 	for (atrow=0; atrow<window.rows; )
 	{
 		G_percent (atrow, window.rows, 2);
-		if(G_get_c_raster_row(hue_file, hue_array, atrow) < 0)
-			exit(1);
-		if (int_used && (G_get_c_raster_row(int_file, int_array, atrow) < 0))
-			exit(1);
-		if (sat_used && (G_get_c_raster_row(sat_file, sat_array, atrow) < 0))
-			exit(1);
+		if (int_used && (G_get_raster_row_colors(int_file, atrow, &int_colors, buf.i, buf.g, buf.b) < 0))
+			G_fatal_error("error reading intensity data");
+		if (sat_used && (G_get_raster_row_colors(sat_file, atrow, &sat_colors, buf.s, buf.g, buf.b) < 0))
+			G_fatal_error("error reading saturation data");
+		if (G_get_raster_row_colors(hue_file, atrow, &hue_colors, buf.r, buf.g, buf.b) < 0)
+			G_fatal_error("error reading hue data");
 
 		for (atcol=0; atcol<window.cols; atcol++)
 		{
 			int r, g, b ;
 
 			if (int_used)
-			{
-				G_get_color(int_array[atcol], &r, &g, &b, &int_colors) ;
-				intensity = r;
-				/* intensity = (r + g + b) / 3; */
-			}
+				intensity = buf.i[atcol];
 
 			if (sat_used)
-			{
-				G_get_color(sat_array[atcol], &r, &g, &b, &sat_colors) ;
-				saturation = r;
-				/* saturation = (r + g + b) / 3; */
-			}
+				saturation = buf.s[atcol];
 
-			G_get_color(hue_array[atcol], &r, &g, &b, &hue_colors) ;
+			r = buf.r[atcol];
+			g = buf.g[atcol];
+			b = buf.b[atcol];
 
 			HIS_to_RGB(r, g, b, intensity, saturation,
-				   &r_array[atcol], &g_array[atcol], &b_array[atcol]) ;
+				   &r_array[atcol], &g_array[atcol], &b_array[atcol]);
 		}
 
 		if (atrow == next_row)
