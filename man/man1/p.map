@@ -250,6 +250,16 @@ EXAMPLE:	\fBdefpat\fR tree
 	\fBend\fR
 .TE
 
+.SH endpanel
+Specifies which panel number to end printing.  The default is 0,
+and will print all panels from the startpanel to the last panel.
+
+.TS
+ll.
+EXAMPLE:	\fBendpanel\fR 4
+.TE
+
+This example would end output at panel 4.
 
 .SH grid
 Overlays a coordinate grid onto the output map.
@@ -623,6 +633,18 @@ EXAMPLE:	\fBraster\fR soils
 	\fBsetpat\fR 5 #1
 	\fBsetpat\fR 10 #2
 .TE
+
+.SH startpanel
+Specifies at which panel number to begin printing.  Default is 0
+and would start printing from the first panel.
+
+.TS
+l l.
+EXAMPLE:	\fBstartpanel\fR 2
+.TE
+
+This example would begin printing at panel 2.
+
 .SH sites
 Selects sites data to be placed on the output map
 (see manual entry for \fIs.menu\fR).
