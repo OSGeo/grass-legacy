@@ -1,0 +1,202 @@
+AssignComDefs	xc.assign.c	/^AssignComDefs(Global)$/
+BrowserCancelCallBack	xc.create.c	/^BrowserCancelCallBack(w,$/
+BrowserOkCallBack	xc.create.c	/^BrowserOkCallBack(w,$/
+BuildItem	create.c	/^BuildItem(parent, type, name, mnemonic, accelerato/
+CaptureToggleCallBack	xc.create.c	/^CaptureToggleCallBack(w,$/
+ChangeDatabase	xgdbset.c	/^ChangeDatabase(s)$/
+ChangeLocation	xgdbset.c	/^ChangeLocation(s)$/
+ChangeMapset	xgdbset.c	/^ChangeMapset(s)$/
+CountItems	link.c	/^CountItems(list)$/
+CountSubItems	link.c	/^CountSubItems(item, list)$/
+CreateBunch	xc.main.c	/^struct Bunch *CreateBunch(g,d)$/
+CreateInterface	xc.create.c	/^CreateInterface(Global)$/
+CreateLayout	xgdbset.c	/^CreateLayout(w)$/
+CreateMenuSystem	create.c	/^CreateMenuSystem()$/
+CreateWorkArea	xc.create.c	/^CreateWorkArea(interactor, cur, topLevel,Global)$/
+DBElementCallBack	xc.create.c	/^DBElementCallBack(w,$/
+DBListCallback	xgdbset.c	/^DBListCallback(w, data, cbs)$/
+DeleteSessionCallBack	xgdbset.c	/^DeleteSessionCallBack(w, cld, cad)$/
+DoAddDatabase	xgdbset.c	/^DoAddDatabase(w, data, cbs)$/
+DoBracketText	xc.comstr.c	/^DoBracketText(arg,Global)$/
+DoCheckDatabase	xgdbset.c	/^DoCheckDatabase(w, data, cbs)$/
+DoCheckLocation	xgdbset.c	/^DoCheckLocation(w, data, cbs)$/
+DoCheckMapset	xgdbset.c	/^DoCheckMapset(w, data, cbs)$/
+DoCreateLocation	xgdbset.c	/^DoCreateLocation(w, data, cbs)$/
+DoCreateMapset	xgdbset.c	/^DoCreateMapset(w, data, cbs)$/
+DoCreateSession	xgdbset.c	/^DoCreateSession(w, data, cbs)$/
+DoFprintf	xc.error.c	/^DoFprintf(va_alist)$/
+DoGerdesDialog	xgdbset.c	/^DoGerdesDialog(w)$/
+DoParenText	xc.comstr.c	/^DoParenText(arg,Global)$/
+Error	error.c	/^Error(s,t)$/
+FatalError	error.c	/^FatalError(s,t)$/
+FileSelectCallBack	xc.create.c	/^FileSelectCallBack(w,$/
+FileSelectCancelCallBack	xc.create.c	/^FileSelectCancelCallBack(w,$/
+FilenameEditCallBack	xc.create.c	/^FilenameEditCallBack(wid,$/
+FilenameInputCallBack	xc.create.c	/^FilenameInputCallBack(w,$/
+FindDatabaseList	xgdbset.c	/^FindDatabaseList()$/
+FreeItems	link.c	/^FreeItems(list)$/
+GerdesDialogOk	xgdbset.c	/^GerdesDialogOk(w, data, cbs)$/
+ISFLAGSTR	xc.types.h	/^#define ISFLAGSTR(s) \\$/
+ISONSTR	xc.types.h	/^#define ISONSTR(s) \\$/
+ISPARMSTR	xc.types.h	/^#define ISPARMSTR(s) \\$/
+ISTRUESTR	xc.types.h	/^#define ISTRUESTR(s) \\$/
+InitValues	xgdbset.c	/^InitValues()$/
+Interrupt	error.c	/^Interrupt()$/
+LinkItems	link.c	/^LinkItems(mblist,list)$/
+LinkMenuSystem	link.c	/^LinkMenuSystem(mblist, milist)$/
+LinkSubItems	link.c	/^LinkSubItems(item,list)$/
+LoadHistory	history.c	/^LoadHistory(file,warn)$/
+LocDialogCancel	xgdbset.c	/^LocDialogCancel(w, data)$/
+LocDialogOk	xgdbset.c	/^LocDialogOk(w, data)$/
+LocationListCallback	xgdbset.c	/^LocationListCallback(w, data, cbs)$/
+LocationSetupToggle	xgdbset.c	/^LocationSetupToggle(w, data)$/
+MakeArgValues	xc.main.c	/^MakeArgValues(s,c,v)$/
+MakeFirstMapset	xgdbset.c	/^MakeFirstMapset()$/
+MakeLocationDialog	xgdbset.c	/^MakeLocationDialog(w)$/
+MakeSelectionVisible	xgdbset.c	/^MakeSelectionVisible(list)$/
+ManageDialog	xc.create.c	/^ManageDialog(w,$/
+MapsetListCallback	xgdbset.c	/^MapsetListCallback(w, data, cbs)$/
+Mmain	main.c	/^main(argc,argv)$/
+Mxc.topmain	xc.topmain.c	/^main(argc,argv)$/
+PUSHDIALOGPTR	y.tab.c	/^#define PUSHDIALOGPTR(p) ((void)(_xc_stack[_xc_siz/
+ParmToggleCallBack	xc.create.c	/^ParmToggleCallBack(w,$/
+ParseCommand	parse.c	/^ParseCommand(argc,argv)$/
+PopupTearOff	create.c	/^void PopupTearOff(w, cld, cad)$/
+PrintItems	link.c	/^PrintItems(ptr,tabs)$/
+RadioCallBack	xc.create.c	/^RadioCallBack(w,$/
+ReadCurrentValues	exit.c	/^ReadCurrentValues()$/
+ReadDatabaseList	xgdbset.c	/^ReadDatabaseList()$/
+ReallyFatalError	error.c	/^ReallyFatalError(s,t)$/
+RegionCancelCallback	xgdbset.c	/^RegionCancelCallback(w, data, cbs)$/
+RegionOkCallback	xgdbset.c	/^RegionOkCallback(w, data, cbs)$/
+ScaleCallBack	xc.create.c	/^ScaleCallBack(w,$/
+ScaleToggleCallBack	xc.create.c	/^ScaleToggleCallBack(w,$/
+SessionListCallback	xgdbset.c	/^SessionListCallback(w, data, cbs)$/
+SetDefaultRegion	xgdbset.c	/^SetDefaultRegion(w, data, cbs)$/
+StartSession	xgdbset.c	/^StartSession(text)$/
+StartTrio	xgdbset.c	/^StartTrio(d, l, m)$/
+StrDup	strdup.c	/^char *StrDup(s)$/
+StrTol	xc.modify.c	/^StrTol(input,string)$/
+Ten	xc.create.c	/^Ten(n)$/
+ToggleCallBack	xc.create.c	/^ToggleCallBack(w,$/
+UpdateAllLists	xgdbset.c	/^UpdateAllLists()$/
+UpdateDBList	xgdbset.c	/^UpdateDBList()$/
+UpdateLocList	xgdbset.c	/^UpdateLocList()$/
+UpdateMapsetList	xgdbset.c	/^UpdateMapsetList()$/
+UpdateSessionList	xgdbset.c	/^UpdateSessionList()$/
+Usage	error.c	/^Usage(s)$/
+VerifyDBElement	xc.verify.c	/^VerifyDBElement(p)$/
+Warning	error.c	/^Warning(s,t)$/
+WriteCurrentValues	xgdbset.c	/^WriteCurrentValues()$/
+WriteDatabaseList	xgdbset.c	/^WriteDatabaseList()$/
+XCError	xc.error.c	/^XCError(s,t,Global)$/
+XCFatalError	xc.error.c	/^XCFatalError(s,t)$/
+XCInterrupt	xc.error.c	/^XCInterrupt()$/
+XCListCallBack	xc.create.c	/^XCListCallBack(w,$/
+XCParseCommand	xc.parse.c	/^XCParseCommand(argc,argv,Global)$/
+XCUsage	xc.error.c	/^XCUsage(s)$/
+XCWarning	xc.error.c	/^XCWarning(s,t,Global)$/
+XClip	xc.main.c	/^XClip(argc,argv,appContext,display,applShell,stand/
+XClipCancelCallBack	xc.create.c	/^XClipCancelCallBack(w,$/
+XClipExecuteCallBack	xc.create.c	/^XClipExecuteCallBack(w,$/
+XClipExit	xc.exit.c	/^XClipExit(w,exit_code,Global)$/
+XClipResetCallBack	xc.create.c	/^XClipResetCallBack(w,$/
+XcModifierParse	xc.modify.c	/^XcModifierParse(modifier,type,s)$/
+XcTextCallBack	xc.create.c	/^XcTextCallBack(w, cld, cad)$/
+XgDbSet	xgdbset.c	/^XgDbSet(sessions, count, useToplevel)$/
+XgExitOnIntr	exit.c	/^XgExitOnIntr()$/
+XgGisrcCleanup	exit.c	/^XgGisrcCleanup()$/
+XgdbsetApply	xgdbset.c	/^XgdbsetApply(w, data)$/
+XgdbsetCancel	xgdbset.c	/^XgdbsetCancel(w, data)$/
+XgdbsetOk	xgdbset.c	/^XgdbsetOk(w, data)$/
+XgrassBackgoundExec	exec.c	/^XgrassBackgoundExec(argc,argv)$/
+XgrassExec	exec.c	/^XgrassExec(argc,argv)$/
+XgrassExit	exit.c	/^XgrassExit(exit_code)$/
+YYBACKUP	y.tab.c	/^#define YYBACKUP( newtoken, newvalue )\\$/
+YYRECOVERING	y.tab.c	/^#define YYRECOVERING()	(!!yyerrflag)$/
+ZoneTextVerifyCallBack	xgdbset.c	/^ZoneTextVerifyCallBack(w, client_data, call_data)$/
+_XcBuildCommandString	xc.comstr.c	/^_XcBuildCommandString(Global)$/
+_XcCharCat	xc.comstr.c	/^_XcCharCat(s, c)$/
+_XcCheckOptional	xc.require.c	/^_XcCheckOptional(cur,Global)$/
+_XcCheckRequirements	xc.require.c	/^_XcCheckRequirements(cur,Global)$/
+_XcDoHelpFile	xc.create.c	/^_XcDoHelpFile(w,file)$/
+_XcEditorClear	xc.create.c	/^_XcEditorClear(w, cld, cad)$/
+_XcEditorCopy	xc.create.c	/^_XcEditorCopy(w, cld, cad)$/
+_XcEditorCut	xc.create.c	/^_XcEditorCut(w, cld, cad)$/
+_XcEditorHelp	xc.create.c	/^_XcEditorHelp(w, cld, cad)$/
+_XcEditorInsert	xc.create.c	/^_XcEditorInsert(w, cld, cad)$/
+_XcEditorLoad	xc.create.c	/^_XcEditorLoad(w, cld, cad)$/
+_XcEditorPaste	xc.create.c	/^_XcEditorPaste(w, cld, cad)$/
+_XcEditorReturn	xc.create.c	/^_XcEditorReturn(w, cld, cad)$/
+_XcEditorSave	xc.create.c	/^_XcEditorSave(w, cld, cad)$/
+_XcEditorSaveAs	xc.create.c	/^_XcEditorSaveAs(w, cld, cad)$/
+_XcEnumKeyToString	xc.create.c	/^_XcEnumKeyToString(modifier,key)$/
+_XcEnumStringToKey	xc.create.c	/^_XcEnumStringToKey(modifier,string)$/
+_XcExitOK	xc.exit.c	/^_XcExitOK(w, cld, cad)$/
+_XcExitVerify	xc.exit.c	/^_XcExitVerify(widget, exit_code, Global)$/
+_XcGetFlagByFlagData	xc.name.c	/^_XcGetFlagByFlagData(cur,f)$/
+_XcGetFlagByName	xc.name.c	/^_XcGetFlagByName(cur,s)$/
+_XcGetParmByName	xc.name.c	/^_XcGetParmByName(cur,s)$/
+_XcGetParmByParmData	xc.name.c	/^_XcGetParmByParmData(cur,p)$/
+_XcGetStringValueByName	xc.name.c	/^_XcGetStringValueByName(cur, s)$/
+_XcHandlePrecludes	xc.create.c	/^_XcHandlePrecludes(ptr,Global)$/
+_XcIsName	xc.name.c	/^_XcIsName(cur, s, type)$/
+_XcParseErrorCodes	xc.create.c	/^_XcParseErrorCodes(s,err)$/
+_XcParseHelpData	xc.create.c	/^_XcParseHelpData(hptr,s)$/
+_XcResetInterface	xc.create.c	/^_XcResetInterface(cur)$/
+_XcReturnAppropriatePrecludeData	xc.name.c	/^_XcReturnAppropriatePrecludeData(cur)$/
+_XcReturnAppropriateRequireData	xc.name.c	/^_XcReturnAppropriateRequireData(cur)$/
+_XcUniqueName	xc.name.c	/^_XcUniqueName(cur,s)$/
+_XcUnsetParmWidget	xc.create.c	/^_XcUnsetParmWidget(cur)$/
+_XcValidDependencies	xc.name.c	/^_XcValidDependencies(cur,Global)$/
+_XcWMClientMessage	xc.client.c	/^_XcWMClientMessage(w, cld, cad)$/
+_XgAddHistoryCommand	history.c	/^_XgAddHistoryCommand(w, client_data, event, contin/
+_XgDbSet	callbacks.c	/^_XgDbSet(w,cld,cad)$/
+_XgExec	callbacks.c	/^_XgExec(w,cld,cad)$/
+_XgExecCapture	callbacks.c	/^_XgExecCapture(w,cld,cad)$/
+_XgExecCaptureHist	callbacks.c	/^_XgExecCaptureHist(w,cld,cad)$/
+_XgExecHist	callbacks.c	/^_XgExecHist(w,cld,cad)$/
+_XgExitOK	exit.c	/^_XgExitOK(w, cld, cad)$/
+_XgExitVerify	exit.c	/^_XgExitVerify(exit_code)$/
+_XgHistoryClear	callbacks.c	/^_XgHistoryClear(w,cld,cad)$/
+_XgHistoryEdit	callbacks.c	/^_XgHistoryEdit(w,cld,cad)$/
+_XgHistoryEditorCancel	history.c	/^_XgHistoryEditorCancel(w,cld,cad)$/
+_XgHistoryEditorClear	history.c	/^_XgHistoryEditorClear(w,cld,cad)$/
+_XgHistoryEditorCopy	history.c	/^_XgHistoryEditorCopy(w,cld,cad)$/
+_XgHistoryEditorCut	history.c	/^_XgHistoryEditorCut(w,cld,cad)$/
+_XgHistoryEditorLoad	history.c	/^_XgHistoryEditorLoad(w,cld,cad)$/
+_XgHistoryEditorPaste	history.c	/^_XgHistoryEditorPaste(w,cld,cad)$/
+_XgHistoryEditorSaveAs	history.c	/^_XgHistoryEditorSaveAs(w,cld,cad)$/
+_XgHistoryEditorSaveEdits	history.c	/^_XgHistoryEditorSaveEdits(w,cld,cad)$/
+_XgHistoryReplay	callbacks.c	/^_XgHistoryReplay(w,cld,cad)$/
+_XgHistoryToggle	callbacks.c	/^_XgHistoryToggle(w,cld,cad)$/
+_XgSaveSession	exit.c	/^_XgSaveSession(exit_code)$/
+_XgSaveSessionApply	exit.c	/^_XgSaveSessionApply(w, cld, cad)$/
+_XgSaveSessionCancel	exit.c	/^_XgSaveSessionCancel(w, cld, cad)$/
+_XgSaveSessionOk	exit.c	/^_XgSaveSessionOk(w, cld, cad)$/
+_XgWMClientMessage	client.c	/^_XgWMClientMessage(w, cld, msg)$/
+_XgXclip	callbacks.c	/^_XgXclip(w,cld,cad)$/
+_XgrassExit	callbacks.c	/^_XgrassExit(w,cld,cad)$/
+__XcInsertFile	xc.create.c	/^__XcInsertFile(w, cld, cad)$/
+__XcLoadFile	xc.create.c	/^__XcLoadFile(w, cld, cad)$/
+__XcSaveAsFile	xc.create.c	/^__XcSaveAsFile(w, cld, cad)$/
+__XcSaveToFile	xc.create.c	/^__XcSaveToFile(text, file)$/
+__XgClearHistoryEditor	history.c	/^__XgClearHistoryEditor()$/
+__XgFreeHistItems	history.c	/^__XgFreeHistItems(ptr)$/
+__XgFreeHistoryList	history.c	/^__XgFreeHistoryList()$/
+__XgHistoryAddItem	history.c	/^__XgHistoryAddItem(ptr,type)$/
+__XgHistoryEdit	history.c	/^__XgHistoryEdit()$/
+__XgHistoryLoadCancel	history.c	/^__XgHistoryLoadCancel(w, cld, cad)$/
+__XgHistoryLoadFile	history.c	/^__XgHistoryLoadFile(w, cld, cad)$/
+__XgHistoryReplay	history.c	/^__XgHistoryReplay()$/
+__XgHistorySaveAsCancel	history.c	/^__XgHistorySaveAsCancel(w, cld, cad) $/
+__XgHistorySaveAsFile	history.c	/^__XgHistorySaveAsFile(w, cld, cad) $/
+__XgHistorySaveToFile	history.c	/^__XgHistorySaveToFile(file)$/
+__XgHistorySetup	history.c	/^__XgHistorySetup()$/
+__XgInsertHistoryText	history.c	/^__XgInsertHistoryText(text)$/
+make_location	xgdbset.c	/^make_location(newloc)$/
+make_mapset	xgdbset.c	/^make_mapset(database, location, mapset)$/
+yyerror	error.c	/^yyerror(s) $/
+yyparse	y.tab.c	/^yyparse()$/
+zzerror	xc.error.c	/^zzerror(s) $/
+zzinitParser	y.tab.c	/^zzinitParser()$/
