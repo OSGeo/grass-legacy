@@ -20,9 +20,6 @@ int bin_to_asc(
 	/*  but we can override that (in Level I only) by specifying */
 	/*  the type  -1, which means match all line types */
 
-        /* for testing set constraint to all types */
-	Vect_set_constraint_type (Map, ELEMENT_TYPE_ALL);
-
 	while(1)
 	{
 	        if (-1 == (type = Vect_read_next_line (Map, Points, Cats)))
@@ -34,31 +31,18 @@ int bin_to_asc(
 
 		switch(type)
 		{
-		case BOUNDARY:
+		case GV_BOUNDARY:
 			ctype = 'B';
 			break;
-		case CENTROID:
+		case GV_CENTROID:
 			if ( ver < 5 ) { continue; }
 			ctype = 'C';			
 			break;			
-		case LINE:
+		case GV_LINE:
 			ctype = 'L';
 			break;
-		case DOT:
+		case GV_POINT:
 			ctype = 'P';
-			break;
-		case DEAD_BOUNDARY:
-			ctype = 'b';
-			break;
-		case DEAD_CENTROID:
-			if ( ver < 5 ) { continue; }
-			ctype = 'c';
-			break;			
-		case DEAD_LINE:
-			ctype = 'l';
-			break;
-		case DEAD_DOT:
-			ctype = 'p';
 			break;
 		default:
 			ctype = 'X';

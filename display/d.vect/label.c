@@ -49,7 +49,7 @@ int label (
 	
 	if( Vect_cat_get(Cats, lattr->field, &cat) )
 	  {	    
-	    if ( (ltype & ELEMENT_TYPE_DOT) || Points->n_points == 1 )
+	    if ( (ltype & GV_POINTS) || Points->n_points == 1 )
 	      /* point/centroid or line/boundary with one coor */     
 	      {
 	        X = (int)(D_u_to_d_col(Points->x[0])) ;

@@ -145,16 +145,16 @@ main (int argc, char *argv[])
 	    switch ( type_opt->answers[i][0] )
 	      {
 	        case 'p':
-	            otype |= DOT;
+	            otype |= GV_POINT;
 		    break;
 	        case 'l':
-	            otype |= LINE;
+	            otype |= GV_LINE;
 		    break;
 	        case 'b':
-	            otype |= BOUNDARY;
+	            otype |= GV_BOUNDARY;
 		    break;
 	        case 'c':
-	            otype |= CENTROID;
+	            otype |= GV_CENTROID;
 		    break;
 	        case 'a':
 	            oarea = TRUE;
@@ -207,7 +207,7 @@ main (int argc, char *argv[])
 	    case (O_ADD):	  
 	        while ( (type = Vect_read_next_line (&In, Points, Cats)) > 0)
 	          {
-	            if ( (type & ELEMENT_TYPE_LIVE) && (type & otype) )
+	            if ( type & otype )
 	               {
                          if( (Vect_cat_get (Cats, field, &cat)) == 0)
 	                   {
@@ -235,20 +235,18 @@ main (int argc, char *argv[])
 		freps = NULL;
 	        while ( (type = Vect_read_next_line (&In, Points, Cats)) > 0)
 	          {
-	            if ( type & ELEMENT_TYPE_DEAD ) continue;
-		    
                     switch (type)
 		      {
-                        case (DOT):
+                        case (GV_POINT):
 			    rtype = FR_POINT;
 			    break;
-                        case (LINE):
+                        case (GV_LINE):
 			    rtype = FR_LINE;
 			    break;
-                        case (BOUNDARY):
+                        case (GV_BOUNDARY):
 			    rtype = FR_BOUNDARY;
 			    break;
-                        case (CENTROID):
+                        case (GV_CENTROID):
 			    rtype = FR_CENTROID;
 			    break;
 		      }

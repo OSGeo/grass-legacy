@@ -104,35 +104,28 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
     line = 0;
     while ( (type = read_line ( Digin, nline) )> 0 ) {
 	switch (type) {
-	    case DOT:
+	    case GV_POINT:
 		npoints++;
 		break;
-	    case LINE:
+	    case GV_LINE:
 		nlines++;
 		break;
-	    case BOUNDARY:
+	    case GV_BOUNDARY:
 		nbounds++;
 		break;
-	    case DEAD_DOT:
-		ndpoints++;
-		break;
-	    case DEAD_LINE:
-		ndlines++;
-		break;
-	    case DEAD_BOUNDARY:
-		ndbounds++;
+	    case 0:          /* dead */
 		break;
 	    defaul:
 		nunknown++;
 		break;	    
 	}
-	if ( !(type & (DOT | LINE | BOUNDARY )))  continue; 
+	if ( !(type & (GV_POINT | GV_LINE | GV_BOUNDARY )))  continue; 
 	
-	if ( (type & BOUNDARY) || !att){
+	if ( (type & GV_BOUNDARY) || !att){
             Vect_write_line ( Mapout, type, nline, cat_out );
             /* reset In_head */
 	    dig_set_cur_port ( &(In_head.port) );
-	} else {   /* DOT or LINE */
+	} else {   /* GV_POINT or GV_LINE */
 	    if ( line >= lalloc ) {
 	        lalloc += 10000;
 	        lines = (struct Line *) realloc ( lines, lalloc * sizeof(struct Line));
@@ -213,36 +206,28 @@ int read_att (FILE *Attin, struct Categ **pcats )
 	}
 	switch (ctype) {
 	    case 'P':
-		type = DOT;
+		type = GV_POINT;
 		npoints++;
 		break;
 	    case 'L':
-		type = LINE;
+		type = GV_LINE;
 		nlines++;
 		break;
 	    case 'A':
-		type = CENTROID;
+		type = GV_CENTROID;
 		ncentroids++;
 		break;
 	    case 'p':
-		type = DEAD_DOT;
-		ndpoints++;
-		break;
 	    case 'l':
-		type = DEAD_LINE;
-		ndlines++;
-		break;
 	    case 'a':
-		type = DEAD_CENTROID;
-		ndcentroids++;
-		break;
+		type = 0;  /* dead */
             defaut:
                 fprintf(stderr,"Unknown type: %c\n", ctype);
 		type = 0;
 		nunknown++;
                 break;
         }
-	if (!(type & (DOT | LINE | CENTROID))) { continue;} 
+	if (!(type & (GV_POINT | GV_LINE | GV_CENTROID))) { continue;} 
 			
 	if ( cat >= ctalloc ) {
 	    ctalloc += 10000;

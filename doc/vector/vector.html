@@ -76,7 +76,8 @@ This directory contains these files:<BR><BR>
                   files are written in machine native order but files
 		  in both little and big endian order may be read</TD></TR>
 <TR><TD>with_z</TD><TD>C</TD><TD>1</TD><TD>2D or 3D flag</TD></TR>
-<TR><TD>reserved</TD><TD>C</TD><TD>58</TD><TD>not used</TD></TR>
+<TR><TD>size</TD><TD>L</TD><TD>1</TD><TD>coor file size</TD></TR>
+<TR><TD>reserved</TD><TD>C</TD><TD>10</TD><TD>not used</TD></TR>
 
 </TABLE>
 
@@ -87,17 +88,28 @@ The body consists of line records:
 
 <TABLE border=2>
 <TR><TD>Name</TD><TD>Type</TD><TD>Number</TD><TD>Description</TD></TR>
-<TR><TD>type</TD><TD>I</TD><TD>1</TD><TD>One of: GV_POINT, GV_LINE, GV_BOUNDARY, 
-    GV_CENTROID, GV_DEAD_POINT, GV_DEAD_LINE, GV_DEAD_BOUNDARY, GV_DEAD_CENTROID</TD></TR>
-<TR><TD>ncats</TD><TD>C</TD><TD>1</TD><TD>number of categories</TD></TR>
-<TR><TD>field</TD><TD>I</TD><TD>ncats</TD><TD>Category identifier, 
-    distinguishes between more categories append to one line</TD></TR>
-<TR><TD>cat</TD><TD>I</TD><TD>ncats</TD><TD>category value</TD></TR>
-<TR><TD>ncoor</TD><TD>I</TD><TD>1</TD><TD>always 1 for points and centroids</TD></TR>
+<TR><TD>record header</TD><TD>I</TD><TD>1</TD><TD>
+<UL>
+  <LI><B>0. bit</B> : 1 - alive, 0 - dead line
+  <LI><B>1. bit</B> : 1 - categories, 0 - no categories
+  <LI><B>2.-3. bit</B> : type - one of: GV_POINT, GV_LINE, 
+                              GV_BOUNDARY, GV_CENTROID
+  <LI><B>4.-7. bit</B> : reserved, not used 
+<UL>
+</TD></TR>
+<TR><TD>ncats</TD><TD>C</TD><TD>1</TD><TD>number of categories 
+    (written only if categories exist) </TD></TR>
+<TR><TD>field</TD><TD>S</TD><TD>ncats</TD><TD>Category identifier, 
+    distinguishes between more categories append to one line 
+    (written only if categories exist)</TD></TR>
+<TR><TD>cat</TD><TD>I</TD><TD>ncats</TD><TD>category value 
+    (written only if categories exist)</TD></TR>
+<TR><TD>ncoor</TD><TD>I</TD><TD>1</TD><TD>written for GV_LINES and GV_BOUNDARIES 
+    only</TD></TR>
 <TR><TD>x</TD><TD>D</TD><TD>ncoor</TD><TD>&nbsp</TD></TR>
 <TR><TD>y</TD><TD>D</TD><TD>ncoor</TD><TD>&nbsp</TD></TR>
 <TR><TD>z</TD><TD>D</TD><TD>ncoor</TD><TD>present if with_z in head 
-    is set to WITH_Z</TD></TR>
+    is set to 1</TD></TR>
 </TABLE>
 
 
@@ -106,7 +118,9 @@ The body consists of line records:
 <TABLE border=2>
 <TR><TD>Type</TD><TD>Name</TD><TD>Size in Bytes</TD></TR>
 <TR><TD>D</TD><TD>Double</TD><TD>8</TD></TR>
+<TR><TD>L</TD><TD>Long  </TD><TD>4</TD></TR>
 <TR><TD>I</TD><TD>Int   </TD><TD>4</TD></TR>
+<TR><TD>S</TD><TD>Short </TD><TD>4</TD></TR>
 <TR><TD>C</TD><TD>Char  </TD><TD>1</TD></TR>
 </TABLE>
 
@@ -172,25 +186,17 @@ at least in grass5.1 or in the beginnig of grass5.1.
 
 <H2><A NAME="structures">New or Modified Constants, Structures, Functions</A></H2>
 <PRE>
-#define GV_POINT		0x01    /* DOT */
-#define GV_DEAD_DOT		0x02
-#define GV_LINE			0x04    /* LINE */
-#define GV_DEAD_LINE		0x08
-#define GV_BOUNDARY		0x10
-#define GV_DEAD_BOUNDARY	0x20
-#define GV_CENTROID		0x40
-#define GV_DEAD_CENTROID	0x80
-
-typedef char GV_NCATS;	/* number of vector categories on one element */
-typedef int GV_FIELD;	/* field number i.e. identifier for one category */
-typedef int GV_CAT;	/* vector category */
+#define GV_POINT		0x01   
+#define GV_LINE			0x02 
+#define GV_BOUNDARY		0x04
+#define GV_CENTROID		0x08
 
 struct line_cats
   {
-      GV_FIELD *field;		/* pointer to array of fields */
-      GV_CAT *cat;		/* pointer to array of categories */
-      GV_NCATS n_cats;		/* number of vector categories attached to element */
-      int alloc_cats;		/* allocated space */
+      int *field;	/* pointer to array of fields */
+      int *cat;		/* pointer to array of categories */
+      int n_cats;	/* number of vector categories attached to element */
+      int alloc_cats;	/* allocated space */
   };
 
 int Vect_open_new (struct Map_info *, char name *, int with_z);
@@ -199,16 +205,16 @@ int Vect_read_next_line (struct Map_info *, struct line_pnts *, struct line_cats
 struct line_cats *Vect_new_cats_struct (void); 
 int Vect_reset_cats (struct line_cats *);
 int Vect_destroy_cats_struct (struct line_cats *); 
-int Vect_cat_set (struct line_cats *, GRASS_V_FIELD, GRASS_V_CAT);
-int Vect_cat_get (struct line_cats *, GRASS_V_FIELD, GRASS_V_CAT *);
-int Vect_cat_del (struct line_cats *, GRASS_V_FIELD);
+int Vect_cat_set (struct line_cats *, int, int);
+int Vect_cat_get (struct line_cats *, int, int *);
+int Vect_cat_del (struct line_cats *, int);
 int Vect_reset_cats (struct line_cats *);
 
 </PRE>
 
 <HR>
 
-<H2><A NAME="attr">Attributes</A> (proposal!!!, coded for tests)</H2>
+<H2><A NAME="attr">Attributes</A></H2>
 
 dig_cats files are not used any more and
 vectors' attributes are stored in external database.
@@ -360,7 +366,7 @@ L 3 1
 
 <HR>
 
-<H2><A NAME="options">Vector modules and options</A> (proposal!!!)</H2>
+<H2><A NAME="options">Vector modules and options</A></H2>
 
 See also grass5/documents/parameter_proposal.txt
 

@@ -67,7 +67,7 @@ old2new (char *in, char *out, int endian)
      fprintf(stdout,"Attaching categories... ");
      
      for (i=0; i < ncats; i++){
-         if ( cats[i].type & (DOT | LINE) ) {
+         if ( cats[i].type & (GV_POINT | GV_LINE) ) {
 		sline = -1;
                 for (j=0; j < nlines; j++){
                     if (lines[j].type == cats[i].type) {
@@ -118,10 +118,10 @@ old2new (char *in, char *out, int endian)
     /* Write centroids */    
     j = 0;
     for (i=0; i < ncats; i++) {
-        if ( cats[i].type == CENTROID ){
+        if ( cats[i].type == GV_CENTROID ){
             Vect_append_point ( pnt_out, cats[i].x, cats[i].y); 
 	    Vect_cat_set ( cat_out, 1, cats[i].cat );
-            Vect_write_line ( &Mapout, CENTROID, pnt_out, cat_out );
+            Vect_write_line ( &Mapout, GV_CENTROID, pnt_out, cat_out );
 	    j++;
 	    Vect_reset_line (pnt_out);
             Vect_reset_cats (cat_out);
@@ -130,7 +130,10 @@ old2new (char *in, char *out, int endian)
     fprintf(stdout,"%-5d centroids written to output file.\n",j);
     
     Vect_build ( &Mapout, stdout );  
+    Vect_close ( &Mapout );
     
+    fclose (Digin);
+
     /* free memory */
     for (i=0; i < nlines; i++) {
 	free (lines[i].x);    
