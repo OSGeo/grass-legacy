@@ -1,9 +1,10 @@
 <H2>DESCRIPTION</H2>
 
-<EM>g.mlist</EM> is an extended version of <EM>g.list</EM> which
-extends <EM>g.list</EM> with regular expressions and wildcards.
-<EM>g.mlist</EM> prints out only mapnames with separator, if any,
-without garbage outputs. In addition, map search is also available.
+<EM>g.mlist</EM> is an extended version of 
+<EM><a href="g.list.html">g.list</a></EM> which
+provides regular-expression and wildcard support.
+<EM>g.mlist</EM> will only print map names and an optional separator,
+without extraneous output. In addition, map search is also available.
 
 <H2>EXAMPLES</H2>
 
@@ -29,7 +30,8 @@ Print out "tmp0" ..."tmp9" if corresponding vector map exists (each map name lin
 
 Print out "tmp0" ..."tmp9" if corresponding vector map exists (each map name comma separated):<BR>
 <TT>g.mlist -r type=vect sep=, pattern='^tmp[0-9]$'</TT><BR>
-This may be useful for other programs' parameter input (e.g. <EM>r.series</EM>).
+This may be useful for other programs' parameter input 
+(e.g. <EM><a href="r.series.html">r.series</a></EM>).
 
 <H2>SEE ALSO</H2>
 
