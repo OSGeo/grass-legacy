@@ -1,11 +1,4 @@
-#include <string.h>
-#include "gis.h"
-#include <math.h>
-#include <stdio.h>
-#include "localproto.h"
-
 /*
- * $Id$
  *
  ****************************************************************************
  *
@@ -20,9 +13,19 @@
  *   	    	License (>=v2). Read the file COPYING that comes with GRASS
  *   	    	for details.
  *
- *****************************************************************************/
+ ****************************************************************************
+*/
 
-int main(int argc, char *argv[])
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
+#include "gis.h"
+#include "localproto.h"
+
+
+int
+main(int argc, char *argv[])
 {
     RASTER_MAP_TYPE out_type, map_type;
     char *name; 
@@ -31,7 +34,7 @@ int main(int argc, char *argv[])
     char surfer_null_str[13]={"1.70141e+038"};
     int fd;
     int nrows, ncols, dp, width;
-    int do_stdout,rc;
+    int rc;
     FILE *fp;
     struct GModule *module;
     struct
@@ -82,7 +85,7 @@ int main(int argc, char *argv[])
     parm.width->key        = "width" ;
     parm.width->type       = TYPE_INTEGER;
     parm.width->required   = NO;
-    parm.width->description="Number of values printed before wrapping a line" ;
+    parm.width->description="Number of values printed before wrapping a line (only SURFER or MODFLOW format)" ;
 
     parm.null = G_define_option() ;
     parm.null->key        = "null";
@@ -100,7 +103,7 @@ int main(int argc, char *argv[])
     flag.surfer->description = "Write SURFER (Golden Software) ASCII grid";
 
     flag.modflow = G_define_flag();
-    flag.modflow->key = 'M';
+    flag.modflow->key = 'm';
     flag.modflow->description = "Write MODFLOW (USGS) ASCII array";
 
     flag.int_out = G_define_flag();
