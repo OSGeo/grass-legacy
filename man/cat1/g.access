@@ -1,7 +1,7 @@
 
 
 
-g.access             GRASS Reference Manual              g.access
+g.access <main>      GRASS Reference Manual       <main> g.access
 
 
 
@@ -60,14 +60,14 @@ NOTES
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-g.access             GRASS Reference Manual              g.access
+g.access <main>      GRASS Reference Manual       <main> g.access
 
 
 
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
