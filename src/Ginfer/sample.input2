@@ -1,0 +1,12 @@
+IFMAP road.dist 1
+ANDIFMAP slope.7 0-3
+ANDIFMAP geology 1-4
+THENMAPHYP 1
+IFMAP road.dist 2
+ANDIFMAP slope.7 4-7
+ANDIFMAP geology 1-4
+THENMAPHYP 2
+IFMAP road.dist 2
+ANDIFMAP slope.7 4-7
+ANDIFMAP geology 1-4
+THENMAPHYP 2
