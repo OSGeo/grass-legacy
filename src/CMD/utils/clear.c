@@ -5,6 +5,12 @@ char *BC;
 char *UP;
 short ospeed;
 
+static
+out (c)
+{
+    fprintf (stderr, "%c", c);
+}
+
 main()
 {
 	int out();
@@ -31,10 +37,4 @@ main()
 	if (*clear) tputs (clear, 0, out);
 	fflush (stderr);
 	fflush (stdout);
-}
-
-static
-out (c)
-{
-    fprintf (stderr, "%c", c);
 }
