@@ -33,7 +33,7 @@ int what(int once, int txt, int terse, int width, int mwidth, int topo )
     int flash_basecolr, flash_colr;
 
     plus_t line, area = 0, centroid;
-    int i, j;
+    int i;
     struct line_pnts *Points;
     struct line_cats *Cats;
     char buf[1000], *str, title[500];
@@ -149,9 +149,9 @@ int what(int once, int txt, int terse, int width, int mwidth, int topo )
 		continue;
 	    } else {
 		/* Start form */
+		db_set_string (&html, ""); 
 		if ( !txt ) {
 		    sprintf (title, "%s", Map[i].name );
-		    db_set_string (&html, ""); 
 		    db_append_string (&html, "<HTML><HEAD><TITLE>Form</TITLE><BODY>"); 
 		    sprintf ( buf,"map: '%s'<BR>mapset: '%s'<BR>", Map[i].name, Map[i].mapset);
 		    db_append_string (&html, buf);
@@ -183,6 +183,7 @@ int what(int once, int txt, int terse, int width, int mwidth, int topo )
 		    if ( G_projection() == 3) l = Vect_line_geodesic_length ( Points );
 		    else l = Vect_line_length ( Points );
 		}
+
 
 		if ( topo ) {
 		    int n, node[2], nnodes, nnlines, nli, nodeline, left, right;
@@ -225,6 +226,40 @@ int what(int once, int txt, int terse, int width, int mwidth, int topo )
 		        db_append_string (&html, buf );
 		    }
 		}
+
+		/* Height */
+		if ( Vect_is_3d(&(Map[i])) ) {
+		    int j;
+		    double min, max;
+
+		    if ( type & GV_POINTS ) {
+			if ( txt ) fprintf(stdout, "Point height: %f\n", Points->z[0]);
+			else {
+			    sprintf(buf, "Point height: %f<BR>", Points->z[0] );
+			    db_append_string (&html, buf);
+			}
+		    } else if ( type & GV_LINES ) {
+			min = max = Points->z[0];
+			for ( j = 1; j < Points->n_points; j++) {
+			    if ( Points->z[j] < min ) min = Points->z[j];
+			    if ( Points->z[j] > max ) max = Points->z[j];
+			}
+			if ( min == max ) {
+			    if ( txt ) fprintf(stdout, "Line height: %f\n", min);
+			    else {
+				sprintf(buf, "Line height: %f<BR>", min);
+				db_append_string (&html, buf);
+			    }
+			} else { 
+			    if ( txt ) fprintf(stdout, "Line height min: %f max: %f\n", min, max);
+			    else {
+				sprintf(buf, "Line height min: %f max: %f<BR>", min, max );
+				db_append_string (&html, buf);
+			    }
+			}
+		    }
+		}
+
 		flash_line(&Map[i], line, Points, BLACK);
 		flash_line(&Map[i], line, Points, flash_colr);
 	    }
@@ -298,6 +333,7 @@ int what(int once, int txt, int terse, int width, int mwidth, int topo )
 	    }
 
 	    if ( Cats->n_cats > 0 ) {
+		int j;
 		for (j = 0; j < Cats->n_cats; j++) {
 		    G_debug(2, "field = %d category = %d", Cats->field[j], Cats->cat[j]);
 		    if ( txt ) {
@@ -315,6 +351,8 @@ int what(int once, int txt, int terse, int width, int mwidth, int topo )
 			    db_append_string (&html, "Database connection not defined<BR>" );
 			}
 		    } else {
+			int format;
+			
 			if ( txt ) {
 			    fprintf( stdout, "driver: %s\ndatabase: %s\ntable: %s\nkey column: %s\n",
 				     Fi->driver, Fi->database, Fi->table, Fi->key);
@@ -326,13 +364,15 @@ int what(int once, int txt, int terse, int width, int mwidth, int topo )
 			
 			if ( strcmp(Map[i].mapset, G_mapset() ) == 0 ) edit_mode = F_EDIT;
 			else edit_mode = F_VIEW;
+
+			if ( txt ) format = F_TXT; else format = F_HTML;
 			F_generate ( Fi->driver, Fi->database, Fi->table, Fi->key, Cats->cat[j], 
-				 NULL, NULL, edit_mode, F_HTML, &form);
+				 NULL, NULL, edit_mode, format, &form);
 			
+			db_append_string (&html, form); 
+
 			if ( txt ) {
 			    fprintf( stdout, "%s", db_get_string ( &html) );
-			} else {
-			    db_append_string (&html, form); 
 			}
 			G_free (form);
 			G_free(Fi);

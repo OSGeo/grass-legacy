@@ -108,95 +108,115 @@ F_generate (char *drvname, char *dbname, char *tblname, char *key, int keyval,
 
     if ( !more ) {
 	G_warning ( "No database record" );
-        *form = G_store ("No record selected.<BR>");
+	if ( format == F_HTML ) {
+            *form = G_store ("No record selected.<BR>");
+	} else {
+            *form = G_store ("No record selected.");
+	}
     } else {
 	ncols = db_get_table_number_of_columns (table);
 
 	/* Start form */
-	if ( edit_mode == F_EDIT ) {
-	    db_append_string (&html, "<FORM>");	
+	if ( format == F_HTML ) {
+	    if ( edit_mode == F_EDIT ) {
+		db_append_string (&html, "<FORM>");	
 
-	    sprintf (buf, "<INPUT type=hidden name=%s value=\"%s\">", F_DRIVER_FNAME, drvname );
-	    db_append_string (&html, buf);
-	    /* Note: because html_library.tcl failes to parse
-	    *  <INPUT name=abc value='dbname=xxx'> and returnes
-	    *  name="xxx" value="dbname=xxx" order of value and name parameters is changed */
-	    sprintf (buf, "<INPUT type=hidden value=\"%s\" name=%s>", dbname, F_DATABASE_FNAME );
-	    db_append_string (&html, buf);
-	    sprintf (buf, "<INPUT type=hidden name=%s value=\"%s\">", F_TABLE_FNAME, tblname );
-	    db_append_string (&html, buf);
-	    sprintf (buf, "<INPUT type=hidden name=%s value=\"%s\">", F_KEY_FNAME, key );
-	    db_append_string (&html, buf);
+		sprintf (buf, "<INPUT type=hidden name=%s value=\"%s\">", F_DRIVER_FNAME, drvname );
+		db_append_string (&html, buf);
+		/* Note: because html_library.tcl failes to parse
+		*  <INPUT name=abc value='dbname=xxx'> and returnes
+		*  name="xxx" value="dbname=xxx" order of value and name parameters is changed */
+		sprintf (buf, "<INPUT type=hidden value=\"%s\" name=%s>", dbname, F_DATABASE_FNAME );
+		db_append_string (&html, buf);
+		sprintf (buf, "<INPUT type=hidden name=%s value=\"%s\">", F_TABLE_FNAME, tblname );
+		db_append_string (&html, buf);
+		sprintf (buf, "<INPUT type=hidden name=%s value=\"%s\">", F_KEY_FNAME, key );
+		db_append_string (&html, buf);
 
-	}
-	
-	for( col = 0; col < ncols; col++) {
-	    column = db_get_table_column(table, col);
-	    sqltype = db_get_column_sqltype (column);
-	    ctype = db_sqltype_to_Ctype(sqltype);
-	    value  = db_get_column_value(column);
-	    db_convert_value_to_string( value, sqltype, &str);
-	    colname = db_get_column_name (column);
-
-	    G_debug ( 2, "%s: %s", colname, db_get_string (&str) );
-
-	    if ( edit_mode == F_VIEW ) {
-		sprintf (buf, "<B>%s : </B> %s <BR>", colname, db_get_string(&str) );
-	        db_append_string (&html, buf);
-	    } else {
-	        sprintf (buf, "<B>%s : </B>", colname );
-	        db_append_string (&html, buf);
-
-		if ( G_strcasecmp (colname,key) == 0 ) {
-		    sprintf (buf, "%s<BR> <INPUT type=hidden name=%s value=\"%s\">", 
-			       db_get_string(&str), colname, db_get_string(&str) );
-		} else {
-		    switch ( ctype ) {
-			case DB_C_TYPE_INT:
-			    sprintf (buf1, "20" );
-			    break;		    
-			case DB_C_TYPE_DOUBLE:
-			    sprintf (buf1, "30" );
-			    break;	    
-			case DB_C_TYPE_STRING:
-			    sprintf (buf1, "%d", db_get_column_length (column) );
-			    break;
-			case DB_C_TYPE_DATETIME:
-			    sprintf (buf1, "20" );
-			    break;
-		    }		
-		    sprintf (buf, "<INPUT type=text size=%s name=%s value=\"%s\"><BR>", 
-				   buf1, colname, db_get_string(&str) );
-		}
-	        db_append_string (&html, buf);	
 	    }
-	} 
+	    
+	    for( col = 0; col < ncols; col++) {
+		column = db_get_table_column(table, col);
+		sqltype = db_get_column_sqltype (column);
+		ctype = db_sqltype_to_Ctype(sqltype);
+		value  = db_get_column_value(column);
+		db_convert_value_to_string( value, sqltype, &str);
+		colname = db_get_column_name (column);
 
-	if ( edit_mode == F_EDIT ) {
-	    sprintf(buf, "<HR>   Assume data encoding as:<BR><BR><SELECT NAME=%s SIZE=4><HR><BR>",
-		    F_ENCODING);
-	    db_append_string(&html, buf);
+		G_debug ( 2, "%s: %s", colname, db_get_string (&str) );
 
-	    i = 0;
-	    while (encoding_list[i] != NULL) {
+		if ( edit_mode == F_VIEW ) {
+		    sprintf (buf, "<B>%s : </B> %s <BR>", colname, db_get_string(&str) );
+		    db_append_string (&html, buf);
+		} else {
+		    sprintf (buf, "<B>%s : </B>", colname );
+		    db_append_string (&html, buf);
 
-		if (G_strcasecmp(encoding_list[i], enc_env) == 0)
-		    sprintf(buf, "<OPTION VALUE=\"%s\" SELECTED>%s",
-			    encoding_list[i], encoding_list[i]);
-		else
-		    sprintf(buf, "<OPTION VALUE=\"%s\">%s", encoding_list[i],
-			    encoding_list[i]);
-		++i;
+		    if ( G_strcasecmp (colname,key) == 0 ) {
+			sprintf (buf, "%s<BR> <INPUT type=hidden name=%s value=\"%s\">", 
+				   db_get_string(&str), colname, db_get_string(&str) );
+		    } else {
+			switch ( ctype ) {
+			    case DB_C_TYPE_INT:
+				sprintf (buf1, "20" );
+				break;		    
+			    case DB_C_TYPE_DOUBLE:
+				sprintf (buf1, "30" );
+				break;	    
+			    case DB_C_TYPE_STRING:
+				sprintf (buf1, "%d", db_get_column_length (column) );
+				break;
+			    case DB_C_TYPE_DATETIME:
+				sprintf (buf1, "20" );
+				break;
+			}		
+			sprintf (buf, "<INPUT type=text size=%s name=%s value=\"%s\"><BR>", 
+				       buf1, colname, db_get_string(&str) );
+		    }
+		    db_append_string (&html, buf);	
+		}
+	    } 
+
+	    if ( edit_mode == F_EDIT ) {
+		sprintf(buf, "<HR>   Assume data encoding as:<BR><BR><SELECT NAME=%s SIZE=4><HR><BR>",
+			F_ENCODING);
+		db_append_string(&html, buf);
+
+		i = 0;
+		while (encoding_list[i] != NULL) {
+
+		    if (G_strcasecmp(encoding_list[i], enc_env) == 0)
+			sprintf(buf, "<OPTION VALUE=\"%s\" SELECTED>%s",
+				encoding_list[i], encoding_list[i]);
+		    else
+			sprintf(buf, "<OPTION VALUE=\"%s\">%s", encoding_list[i],
+				encoding_list[i]);
+		    ++i;
+		    db_append_string(&html, buf);
+		}
+
+		sprintf(buf, "</SELECT>");
 		db_append_string(&html, buf);
 	    }
+	    
+	    /* Close form */
+	    if ( edit_mode == F_EDIT ) {
+		db_append_string (&html, "</FORM>");	
+	    }
+	} else { /* F_TXT */
+	    for( col = 0; col < ncols; col++) {
+		column = db_get_table_column(table, col);
+		sqltype = db_get_column_sqltype (column);
+		ctype = db_sqltype_to_Ctype(sqltype);
+		value  = db_get_column_value(column);
+		db_convert_value_to_string( value, sqltype, &str);
+		colname = db_get_column_name (column);
 
-	    sprintf(buf, "</SELECT>");
-	    db_append_string(&html, buf);
-	}
-	
-	/* Close form */
-	if ( edit_mode == F_EDIT ) {
-	    db_append_string (&html, "</FORM>");	
+		G_debug ( 2, "%s: %s", colname, db_get_string (&str) );
+
+		sprintf (buf, "%s : %s\n", colname, db_get_string(&str) );
+		db_append_string (&html, buf);
+	    }
 	}
     }
     G_debug ( 2, "FORM STRING:\n%s\n", db_get_string(&html) );
