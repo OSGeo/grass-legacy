@@ -405,8 +405,9 @@ proc DmVector::print { file node } {
         puts $file "  symbol $opt($id,icon)"
         puts $file "  size $opt($id,size)"
 
-        puts $file "  symbol $opt($id,xref)"
-        puts $file "  symbol $opt($id,yref)"
+       # confuses ps.map:
+       # puts $file "  xref $opt($id,xref)"
+       # puts $file "  yref $opt($id,yref)"
 
 	puts $file "end"
     } 
