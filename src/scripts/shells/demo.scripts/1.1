@@ -1,0 +1,92 @@
+#!/bin/sh
+d.frame -e
+d.erase
+d.frame -c f=abc a=5,95,5,95
+d.frame -s f=abc
+d.text << EOF
+.F romant
+.S 10
+.C green
+.B 1
+       GRASS
+.F scripts
+.S 5
+     Geographic Resources Analysis
+             Support System
+.B 0
+.F romans
+.S 4
+.C white
+
+    Grass is a Geographical Information System (GIS).
+    A GIS is a computer supported capability for
+    storing and processing mapped information.
+    
+    GRASS can support:
+
+    1) Long term planning and design
+         * Land use siting
+         * EIS and EIA studies
+         * Training range placement
+    2) Inventory and Management
+         * Geographical reference
+         * Forest management
+         * Pest management
+    3) Predictive modeling
+         * Archeology
+         * Endangered Species
+    4) Impact Assessment
+         * Satellite and Air photo imagery
+EOF
+
+if ./continue
+then
+	d.erase
+	exit 1
+fi
+
+d.erase
+d.text << EOF
+.F romans
+.S 10
+.S 5
+.C green
+
+  GRASS is a TOOL BOX
+
+.S 3
+.C white
+     Over 150 different programs (tools) that help you:
+         Digitize hard-copy (paper) maps
+         Process satellite or photographic images
+         Ask questions of the maps
+         Combine information from maps in many ways
+         Display maps
+.S 5
+.C green
+
+  GRASS is a TOOL BOX
+.S 3
+.C white
+
+    A carpenters toolbox cannot:     The GRASS toolbox cannot:
+       * Replace people                  * Replace people
+       * Design a house                  * Design an analysis
+       * Build a house                   * Write instructions
+       * Know about houses               * Know about land planning
+
+    A carpenter, using tools, can:   You, using GRASS, can:
+       * Build a bad house               * Do a bad analysis
+       * Build a good house              * Do a good analysis
+
+    To be a carpenter one must:      To be a GRASS user one must:
+       * Learn how to use tools          * Learn how to use tools
+       * Practice using the tools        * Practice using the tools
+.C yellow
+
+    GRASS needs YOUR expertise before anything useful can be done!!
+EOF
+
+./continue.yes
+
+exit 1
