@@ -1,38 +1,37 @@
 #define MAIN
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 #include "glob.h"
 #include "gis.h"
 #include "G3d.h"
+#include "local_proto.h"
 
 #define selection(x) (strcmp(buf,x)==0)
 
 /* the following is copied from wind_format.c */
-static void
+void
 format_double (value, buf)
     double value;
     char *buf;
 {
-    sprintf (buf, "%.8lf", value);
+    sprintf (buf, "%.8f", value);
     G_trim_decimal (buf);
 }
 
+int max(a,b)
+{
+    return a>b ? a:b;
+}
+
 int main(argc,argv) 
+int  argc;
 char *argv[];
 {
     char buf[200];
     int (*option)();
     int ok;
-    int cur_from_def();
-    int modify_cur();
-    int cur_from_db();
-    int cur_to_db();
-    int new_db();
-    int modify_db();
-    int from_cellhd();
-    int from_vect();
-    int from_view();
-    int from_3dcellhd(), cur_from_3ddb(), cur_from_3ddef();
-    char *G_database_projection_name();
-    char *G__get_window();
     char *prj;
     char north[20], south[20], nsres[20];
     char east[20], west[20], ewres[20];
@@ -126,7 +125,3 @@ char *argv[];
     }
 }
 
-extern max(a,b)
-{
-    return a>b ? a:b;
-}

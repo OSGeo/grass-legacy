@@ -25,8 +25,13 @@
  *       0 ok
  *
  **********************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "G3d.h"
+#include "vask.h"
+#include "local_proto.h"
 
 static char *window_screen[] = {
 "                              IDENTIFY REGION",
@@ -53,6 +58,45 @@ static char *window_screen[] = {
 "                            -- Top-Bottom ---",
 NULL};
 
+static int
+hitreturn()
+{
+    char buf[100];
+
+    fprintf(stderr, "hit RETURN -->");
+    if (!G_gets(buf)) exit(0);
+    G_strip (buf);
+    if (strcmp (buf, "exit") == 0) exit(0);
+    return 0;
+}
+
+/* the following is copied from wind_scan.c */
+static int
+scan_double (buf, value)
+    char *buf;
+    double *value;
+{
+    char junk[2];
+
+/* use sscanf to convert buf to double
+ * make sure value doesn't have other characters after it
+ */
+    *junk = 0;
+    *value = 0.0;
+    if(sscanf (buf, "%lf%1s", value, junk) == 1 && *junk == 0)
+    {
+       while(*buf) buf++;
+       buf--;
+       if(*buf>='A'&&*buf<='Z')
+ 	  return 0;
+       if(*buf>='a'&&*buf<='z')
+ 	  return 0;
+       return 1;
+     }
+     return 0;
+}
+
+int
 edit_3dcellhd (cellhd)
     G3D_Region *cellhd ;
 {
@@ -211,11 +255,11 @@ while(1)
       ok = 0;
     }
     if (!scan_double (ll_top, &cellhd->top, cellhd->proj)) {
-      fprintf(stderr, "Illegal value for west: %s\n", ll_west);
+      fprintf(stderr, "Illegal value for top: %s\n", ll_west);
       ok = 0;
     }
     if (!scan_double (ll_bottom, &cellhd->bottom)) {
-      fprintf(stderr, "Illegal value for east: %s\n", ll_east);
+      fprintf(stderr, "Illegal value for bottom: %s\n", ll_east);
       ok = 0;
     }
 
@@ -228,10 +272,42 @@ while(1)
       ok = 0;
     }
     if (!scan_double (ll_tbres, &cellhd->tb_res)) {
-      fprintf(stderr, "Illegal north-south resolution: %s\n", ll_nsres);
+      fprintf(stderr, "Illegal top-bottom resolution: %s\n", ll_nsres);
       ok = 0;
     }
-
+    
+    /* Do some checking */
+    if (   cellhd->south  >= cellhd->north )
+    {
+      fprintf(stderr, "North must be greater than south!\n");
+      ok = 0;
+    }
+    else if ( cellhd->west   >= cellhd->east )
+    {
+      fprintf(stderr, "East must be greater than west!\n");
+      ok = 0;
+    }
+    else if (  cellhd->bottom >= cellhd->top )
+    {
+      fprintf(stderr, "Top must be greater than bottom!\n");
+      ok = 0;
+    }
+    else if ( cellhd->ew_res <= 0.0 )
+    {
+      fprintf(stderr, "East-West resolution must be positive!\n");
+      ok = 0;
+    }
+    else if ( cellhd->ns_res <= 0.0 )
+    {
+      fprintf(stderr, "North-South resolution must be positive!\n");
+      ok = 0;
+    }
+    else if (  cellhd->tb_res <= 0.0 )
+    {
+       fprintf(stderr, "Top-Bottom resolution must be positive!\n");
+       ok = 0;
+    }
+     
     if (!ok) {
       hitreturn();
       continue;
@@ -413,50 +489,4 @@ ASK:
 }
 }
 
-extern
-hitreturn()
-{
-    char buf[100];
-
-    fprintf(stderr, "hit RETURN -->");
-    if (!G_gets(buf)) exit(0);
-    G_strip (buf);
-    if (strcmp (buf, "exit") == 0) exit(0);
-}
-
-/* the following is copied from wind_scan.c */
-extern
-scan_double (buf, value)
-    char *buf;
-    double *value;
-{
-    char junk[2];
-
-/* use sscanf to convert buf to double
- * make sure value doesn't have other characters after it
- */
-    *junk = 0;
-    *value = 0.0;
-    if(sscanf (buf, "%lf%1s", value, junk) == 1 && *junk == 0)
-    {
-       while(*buf) buf++;
-       buf--;
-       if(*buf>='A'&&*buf<='Z')
- 	  return 0;
-       if(*buf>='a'&&*buf<='z')
- 	  return 0;
-       return 1;
-     }
-     return 0;
-}
-
-/* the following is copied from wind_format.c */
-extern 
-format_double (value, buf)
-    double value;
-    char *buf;
-{
-    sprintf ( buf, "%.8lf", value);
-    G_trim_decimal (buf);
-}
 

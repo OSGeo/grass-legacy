@@ -8,5 +8,4 @@
 
 extern char *window_dir ;
 
-int lister();
-int lister2d();
+

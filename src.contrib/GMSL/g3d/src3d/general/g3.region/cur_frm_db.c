@@ -1,5 +1,7 @@
 #include "glob.h"
 #include "G3d.h"
+#include "local_proto.h"
+int
 cur_from_db()
 {
     char name[30];
@@ -13,7 +15,7 @@ cur_from_db()
 	name,window_dir,"region","with region values", lister2d);
     if (!mapset) return 1;
 
-    if (err = G__get_window (&window2d, window_dir, name, mapset))
+    if ((err = G__get_window (&window2d, window_dir, name, mapset)))
 	fprintf (stderr, "region [%s] in mapset [%s] %s. can't select.\n",
 		name, mapset, err);
     else

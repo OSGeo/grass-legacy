@@ -1,5 +1,7 @@
 #include "glob.h"
 #include "G3d.h"
+#include "local_proto.h"
+int
 cur_from_3ddef()
 {
     char fullName[1000];

@@ -1,5 +1,7 @@
 #include "glob.h"
 #include "G3d.h"
+#include "local_proto.h"
+int
 from_3dcellhd()
 {
     char name[30];

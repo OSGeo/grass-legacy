@@ -1,6 +1,10 @@
+#include <stdio.h>
+#include "gis.h"
 #include "glob.h"
 #include "Vect.h"
 #include "G3d.h"
+#include "local_proto.h"
+int
 from_vect()
 {
     char name[30];

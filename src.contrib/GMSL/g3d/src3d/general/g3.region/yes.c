@@ -1,5 +1,12 @@
+#include <stdio.h>
+#include "gis.h"
 #include "glob.h"
+#include "G3d.h"
+#include "local_proto.h"
+int
 yes (prompt, with_default)
+char *prompt;
+int with_default;
 {
     char ok[40];
 
@@ -17,4 +24,5 @@ yes (prompt, with_default)
 	if (*ok == 'y' || *ok == 'Y') return 1;
 	if (*ok == 'n' || *ok == 'N') return 0;
     }
+    return 0;
 }
