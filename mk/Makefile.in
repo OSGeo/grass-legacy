@@ -4,7 +4,7 @@ include @DSTDIR@/mk/vars.mk
 INST_DIR	= ${prefix}/grass${NAME_VER}
 ERROR_LOG	= error.log
 
-all: dirs binaries links documents
+all: dirs gmake binaries links documents
 
 makefiles:
 	@echo "making makefiles ..."
@@ -25,6 +25,15 @@ dirs:
 		do \
 			mkdir -p ${GISBASE}/$$dir ; \
 		done
+
+gmake:
+	@echo "making gmake${NAME_VER} ..."
+	@(	echo '#!/bin/sh'	; \
+		echo 'dir=$$1'		; \
+		echo 'shift'		; \
+		echo 'make dir -I${DSTDIR}/mk -I${SRCDIR}/mk -C ${SRCDIR}/$$dir "$$@"'	\
+	) > gmake${NAME_VER}
+	@chmod a+x gmake${NAME_VER}
 
 binaries:
 	@echo "making binaries ..."
