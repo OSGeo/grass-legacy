@@ -11,7 +11,8 @@ METHODS = \
 	o_kurt.o\
 	o_median.o\
 	o_min.o\
-	o_max.o
+	o_max.o\
+	o_sum.o
 
 OTHER =\
 	main.o\
