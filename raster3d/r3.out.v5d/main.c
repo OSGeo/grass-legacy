@@ -119,7 +119,18 @@ void convert(char *fileout) {
   G3d_getCoordsMap (map, &rows, &cols, &depths);
   typeIntern = G3d_tileTypeMap (map);
 
+  /* see v5d.h */
+  if (cols > MAXCOLUMNS)
+  	{
+  	 G_fatal_error("Viz5D allows %d cols, you have %d cols", MAXCOLUMNS, cols);
+	 exit(1);
+	}
+  if (rows > MAXROWS)
+  	{
+	 G_fatal_error("Viz5D allows %d rows, you have %d rows", MAXCOLUMNS, cols);
+	 exit(1);
 
+  	}
 /* add here grass region/window */
 
         Nl[0]=depths;
