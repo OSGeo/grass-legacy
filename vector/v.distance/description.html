@@ -42,6 +42,13 @@ Create query map (if not present):<br>
 <br>
 Find nearest features:<br>
 <tt>v.distance from=pnt to=map_to_query upload=cat col=somecol -p</tt>
+<p>
+5) Point-in-polygon: Find <B>area</B> from vector map <B>ar</B> for each point 
+from vector map <B>pnt</B> in which the individual point falls into and write
+the related area categories to column <B>areacat</B> into attribute table 
+attached to vector map <B>pnt</B>:
+<br>
+<tt>v.distance from=pnt to=ar max=0 upload=cat column=areacat</tt>
 
 
 <H2>NOTES</H2>
