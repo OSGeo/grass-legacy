@@ -1,16 +1,18 @@
 <!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en"><html><head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="GENERATOR" content="Mozilla/4.79 [en] (Win98; U) [Netscape]"><title>r.sim.water</title>
+<meta name="GENERATOR" content="Mozilla/4.79 [en] (Win98; U) [Netscape]">
+<title>r.sim.water</title>
 
 <meta name="author" content="J. Hofierka"></head>
 
 <body bgcolor="#ffffff" link="#0000df" vlink="#006000">
-<img src="r.sim.water_files/grasslogo_small.png">
-<hr width="100%" align="center" size="6" no="" shade="">        
+<img src="grass.smlogo.gif">
+<hr width="100%" align="center" size="6" noshade="">        
 <h2> NAME</h2>
-<b>r.sim.water</b> - spatially distributed, dynamic 2D hydrologic
+<b><i>r.sim.water</i></b> - spatially distributed, dynamic 2D hydrologic
 simulation model based on the continuity equations solved by Green's
-function Monte  Carlo method.             
+function Monte  Carlo method.<br>             
+<i>GRASS raster program</i>
 <h2> SYNOPSIS</h2>
 <b>r.sim.water</b><br>
 <b>r.sim.water help</b><br>
@@ -27,7 +29,7 @@ on the concept of duality between the field and particle representation of
 the modeled quantity. Green's function Monte Carlo method, used to solve the equation,
 provides robustness necessary for spatially variable conditions and high
 resolutions   (Mitas and Mitasova 1998).  The key inputs of the model include
-elevation (<i>  elevin</i> raster file), flow gradient vector given by
+elevation (<i>elevin</i> raster file), flow gradient vector given by
 first-order partial derivatives of elevation field (<i>dxin</i> and <i>dyin</i> raster files), rainfall
 excess rate (<i>rain</i> raster file) and a surface  roughness coefficient
 given by Manning's n (<i>manin</i> raster file). Partial
@@ -54,8 +56,8 @@ reference values which can be found in literature.<br>
 <!--    Unlike to other overland flow models based on finite difference or finite
   element methods, r.sim.water offers high robustness, numerical stability
  for most situations.-->
-
-</p><p>
+</p>
+<p>
 Output includes water depth raster file <i>depth</i>  in [m], 
 water   discharge raster file <i>disch</i> in [m3/s]. Error of the numerical
 solution can  be analyzed using <i>err</i> raster file  (the resulting water depth is an average, 
@@ -75,101 +77,89 @@ iteration number (e.g. name.500, name.1000, etc.).<br>
 Overland flow is routed based on partial derivatives  of elevation
 field or other landscape features influencing water flow. Simulation
 equations include a diffusion term (<i>diffc</i> parameter) which enables 
-to overcome elevation   depressions    or obstacles when water depth exceeds 
+to overcome elevation depressions or obstacles when water depth exceeds 
 a threshold water depth value (<i><i>hmax).</i></i> When it is reached,  
 diffusion term increases as given by <i>halpha</i> and advection term 
 (direction of flow) is given as "prevailing" direction of flow computed
 as  average of flow directions from the previous hbetanumber of grid cells.
 <br>
 <br>
-</p><h2><font color="#000000"> OPTIONS</font></h2>
-<font color="#000000"> The user can run this program either interactively
+</p><h2>OPTIONS</h2>
+The user can run this program either interactively
 or non- interactively. The program will be run non-interactively if
-the    user  specifies program arguments and flag settings on the command
-line  using  the  form: </font>        
-<p><font color="#000000"><b>r.<b>sim.water</b></b></font><font color="#000000">
-    [-tm] </font><font color="#000000"><b>elevin</b></font><font color="#000000">
-    =name </font><font color="#000000"><b>dxin</b></font><font color="#000000">
-    =name </font><font color="#000000"><b>dyin</b></font><font color="#000000">
-    =name </font><font color="#000000"><b>rain</b></font><font color="#000000">
-    =name </font><font color="#000000"><b>manin</b></font><font color="#000000">
-    =name [</font><font color="#000000"><b>depth</b></font><font color="#000000">
-    =name] </font><font color="#000000">[</font><font color="#000000"><b>
-    disch</b></font><font color="#000000">    =name] [</font><font color="#000000"><b>
-    err</b></font><font color="#000000">    =value] [</font><font color="#000000"><b>
-    outwalk</b></font><font color="#000000">    =value] <font color="#000000">
-    [<b>nwalk</b>=value]&nbsp;</font>  [ <b>niter</b> =value] [ <b>outiter</b>
-    =value] [ <b>density</b> =value]  [</font><font color="#000000"><b>diffc</b></font><font color="#000000">
-    =value]  [</font><font color="#000000"><b>hmax</b></font><font color="#000000">
-    =name]  [</font><font color="#000000"><b>halpha</b></font><font color="#000000">
-    =value] [</font><font color="#000000"><b>hbeta</b></font><font color="#000000">
-    =value]</font></p>
-<p><font color="#000000">Alternately, the user can simply type </font><font color="#000000">
-r.sim.water</font><font color="#000000"> on the command line
+the user specifies program arguments and flag settings on the command
+line using the form: 
+<p><b>r.sim.water</b> [-tm] <b>elevin</b>=name <b>dxin</b>=name <b>dyin</b>=name 
+<b>rain</b>=name <b>manin</b>=name [<b>depth</b>=name] [<b>disch</b>=name] 
+[<b>err</b>=value] [<b>outwalk</b>=value] [<b>nwalk</b>=value] [<b>niter</b>=value] 
+[<b>outiter</b>=value] [<b>density</b>=value]  [<b>diffc</b>=value]  [<b>hmax</b>=name]  
+[<b>halpha</b>=value] [<b>hbeta</b>=value]</p>
+<p>Alternately, the user can simply type <b>r.sim.water</b> on the command line
 without program arguments. In this case, the user will be prompted
-for parameter values using the standard GRASS parser interface.&nbsp;
-</font></p>
-<h3><font color="#000000"> Flag:</font></h3>
-<dl><dt><font color="#000000"><b>-t</b></font>   </dt><dd><font color="#000000">time series output</font>     </dd><dt><font color="#000000"><b> -m</b></font></dt><dd><font color="#000000">multiscale (not ready yet)</font>        
-  </dd></dl>
-<h3><font color="#000000"> Parameters:</font></h3>
-<dl><dt><font color="#000000"><b>elevin</b></font><font color="#000000">
-       =name</font>           </dt><dd><font color="#000000"> Use the existing raster file with elevationsname
-       as input [metres/feet].</font>             </dd><dt><font color="#000000"><b> dxin</b></font><font color="#000000">
-       =name</font></dt><dd><font color="#000000"> Use the existing raster file with
-       x-derivatives as input [-]</font><font color="#000000">.</font></dd><dt><font color="#000000"><b>dyin</b></font><font color="#000000">
-       =name</font></dt><dd><font color="#000000"> Use the existing raster file
-       with y-derivatives as input [-].</font>                     </dd><dt><font color="#000000"><b> rain</b></font><font color="#000000">
-       =name</font></dt><dd><font color="#000000"> Use the existing raster
-       file with rainfall excess [m/s].</font>                         </dd><dt><font color="#000000"><b> manin</b></font><font color="#000000">
-       =name</font></dt><dd><font color="#000000"> Use the existing raster
-       file with Manning's surface roughness n raster file [-].</font></dd><dt><font color="#000000"><b>depth</b></font><font color="#000000">
-       =name</font></dt><dd><font color="#000000"> Output water depth
-       raster file [m].</font></dd><dt><font color="#000000"><b> disch</b></font><font color="#000000">
-       =name</font></dt><dd><font color="#000000"> Output water
-       discharge raster file [m3/s].</font></dd><dt><font color="#000000"><b>err</b></font><font color="#000000">
-       =name</font></dt><dd><font color="#000000"> Output  simulation
-       error </font><font color="#000000"> raster file</font><font color="#000000">
-       [?].</font></dd><dt><font color="#000000"><b> outwalk</b></font><font color="#000000">
-       =name</font></dt><dd>Output walkers site file [-]<font color="#000000">.</font></dd><dt><font color="#ff0000"><b>
-       nwalk</b></font><font color="#ff0000">=val</font></dt><dd><font color="#ff0000"> 
-       Set the number of walkers to val </font><font color="#ff0000"> 
-       (default:2000000 CAN BE COMPUTED FROM GRID SIZE)</font><font color="#ff0000">.</font></dd><dt><font color="#000000"><b>
-       niter</b></font><font color="#000000">=val</font></dt><dd><font color="#000000">
-       Set the number of iterations to val </font><font color="#000000">
-       (default:1200)</font><font color="#000000">.</font> </dd><dt><font color="#000000"><b>
-       outiter</b></font><font color="#000000"> =val</font></dt><dd><font color="#000000">Set the t</font>ime step for saving output maps<font color="#000000">
-       to val </font><font color="#000000"> (default: 300)</font><font color="#000000">.</font></dd><dt><font color="#000000"><b>density</b>=val</font></dt><dd><font color="#000000">
-       Set the </font>density of output walkers<font color="#000000">to  val</font><font color="#000000">
-       (default: 200)</font><font color="#000000">.</font></dd><dt><font color="#000000"><b>diffc</b>=val</font></dt><dd><font color="#000000">
-       Set the w</font>ater diffusion constant<font color="#000000">to  val</font><font color="#000000">
-       (default: 0.8)</font><font color="#000000">.</font></dd><dt><font color="#000000"><b>
-       hmax</b>=val</font></dt><dd><font color="#000000">
-       Set the </font>threshold water depth (diffusion increases after this   water   depth is reached)
-       <font color="#000000"> to val </font><font color="#000000">
-       (default: 0.4)</font><font color="#000000">.</font></dd><dt><font color="#000000"><b>halpha</b>=val</font></dt><dd><font color="#000000">Set the </font>diffusion increase constant<font color="#000000"> to  val</font>
-       <font color="#000000">(default: 4.0)</font><font color="#000000">.</font></dd><dt><font color="#000000"><b>hbeta</b>=val</font></dt><dd><font color="#000000">
-       Set the w</font>eighting factor for water flow velocity vector<font color="#000000">
-       to val </font><font color="#000000"> (default: 0.5)</font><font color="#000000">
-       .</font></dd><dt><br></dt></dl>
-<h2><font color="#000000">
-NOTES</font></h2>
+for parameter values using the standard GRASS parser interface:
+</p>
+<h3> Flag:</h3>
+<dl>
+<dt><b>-t</b></dt> <dd>time series output</dd>
+<dt><b> -m</b></dt><dd>multiscale (not ready yet)</dd>
+</dl>
+<h3> Parameters:</h3>
+<dl>
+<dt><b>elevin</b> =name</dt>
+       <dd> Use the existing raster file with elevations name as input [meters/feet]</dd>
+<dt><b> dxin</b> =name</dt>
+       <dd> Use the existing raster file with dx-derivatives as input [-]</dd>
+<dt><b>dyin</b> =name</dt>
+       <dd> Use the existing raster file with dy-derivatives as input [-].</dd>
+<dt><b>rain</b> =name</dt>
+       <dd> Use the existing raster file with rainfall excess [m/s].</dd>
+<dt><b>manin</b> =name</dt>
+       <dd> Use the existing raster file with Manning's surface roughness n parameter [-].</dd>
+<dt><b>depth</b> =name</dt>
+       <dd> Output water depth raster file [m].</dd>
+<dt><b> disch</b> =name</dt>
+       <dd> Output water discharge raster file [m<sup>3</sup>/s].</dd>
+<dt><b>err</b> =name</dt>
+       <dd> Output simulation error raster file [m]</dd>
+<dt><b> outwalk</b>=name</dt>
+       <dd>Output walkers site file</dd>
+<dt><b> nwalk</b>=val</dt>
+       <dd> Set the number of walkers to val  
+       (default:2000000, can be estimated from the number of grid cells)</dd>
+<dt><b> niter</b>=val</dt>
+       <dd> Set the number of iterations to val (default:1200) </dd>
+<dt><b> outiter</b>=val</dt>
+       <dd>Set the time step for saving output maps to val (default: 300)</dd>
+<dt><b>density</b>=val</dt>
+       <dd> Set the density of output walkersto  val (default: 200)</dd>
+<dt><b>diffc</b>=val</dt>
+       <dd> Set the water diffusion constant to val (default: 0.8)</dd>
+<dt><b> hmax</b>=val</dt>
+       <dd> Set the threshold water depth (diffusion increases after this water depth is reached) 
+       to val (default: 0.4)</dd>
+<dt><b>halpha</b>=val</dt>
+       <dd>Set the diffusion increase constant to  val (default: 4.0)</dd>
+<dt><b>hbeta</b>=val</dt>
+       <dd> Set the weighting factor for water flow velocity vector to val (default: 0.5)</dd>
+<dt><br></dt></dl>
+<h2>
+NOTES</h2>
 <p>
 A 2D shallow water flow is described by the  bivariate form of Saint
-Venant   equations (e.g., Julien et al., 1995).  The continuity of water
-flow relation   is coupled with the momentum  conservation equation and
-for  a shallow water   overland flow, the  hydraulic radius is approximated
-by  the normal flow depth.  The system of  equations is closed using the
-Manning's   relation. Model assumes  that the flow is close to the kinematic
-wave approximation,    but we include  a diffusion-like term to include the
-impact of diffusive    wave effects. Such  an incorporation of diffusion
-in the water flow  simulation   is not new and  a similar term has been obtained
-in  derivations of diffusion-advection    equations  for overland flow, e.g.,
- by Lettenmeier and Wood, (1992). In   our  reformulation,  we simplify the
-diffusion coefficient to a constant  and  we use a modified  diffusion term.
-The diffusion constant which we have   used is rather small  (approximately
-one order of magnitude smaller than   the reciprocal Manning's  coefficient)
-and therefore the resulting flow  is close to the kinematic regime. However,
+Venant equations (e.g., Julien et al., 1995). The continuity of water
+flow relation is coupled with the momentum conservation equation and
+for a shallow water overland flow, the hydraulic radius is approximated
+by the normal flow depth. The system of  equations is closed using the
+Manning's relation. Model assumes that the flow is close to the kinematic
+wave approximation, but we include a diffusion-like term to incorporate the
+impact of diffusive wave effects. Such an incorporation of diffusion
+in the water flow  simulation is not new and  a similar term has been obtained
+in  derivations of diffusion-advection equations  for overland flow, e.g.,
+ by Lettenmeier and Wood, (1992). In our  reformulation,  we simplify the
+diffusion coefficient to a constant and we use a modified diffusion term.
+The diffusion constant which we have used is rather small (approximately
+one order of magnitude smaller than the reciprocal Manning's  coefficient)
+and therefore the resulting flow is close to the kinematic regime. However,
 the diffusion term improves  the kinematic solution, by overcoming small
 shallow pits common in  digital elevation models (DEM) and by smoothing out
 the flow over slope  discontinuities or abrupt changes in Manning's coefficient
@@ -177,12 +167,12 @@ the flow over slope  discontinuities or abrupt changes in Manning's coefficient
 </p>
 <p><b>
 Green's function stochastic method of solution.</b> The Saint Venant
-equations    are solved by stochastic methods called Monte Carlo (very
-similar   to Monte   Carlo methods in  computational fluid dynamics or to
+equations are solved by a stochastic method called Monte Carlo (very
+similar to Monte Carlo methods in computational fluid dynamics or to
 quantum Monte  Carlo  approaches for  solving the Schrodinger equation (Schmidt
 and Ceperley,  1992,  Hammond  et al., 1994; Mitas, 1996)). It is assumed
 that these equations  are a  representation of stochastic processes with
-diffusion and drift  components   (Fokker-Planck equations).&nbsp; </p>
+diffusion and drift  components  (Fokker-Planck equations). </p>
 The Monte Carlo technique has several unique advantages which are
 becoming   even more important due to new developments in computer  technology. 
 Perhaps   one of the most significant Monte Carlo properties  is robustness 
@@ -196,32 +186,32 @@ as they provide    scalability from a single workstation to large parallel
 machines due to   the independence of sampling points. Therefore, the methods
 are useful  both for everyday exploratory work using a desktop computer and
 for  large, cutting-edge applications using high performance computing. <br>
-<h2><font color="#000000">
-SEE ALSO</font></h2>
-<font color="#000000"><a href="http://skagit.meas.ncsu.edu/%7Echris/s.surf.rst.html">    s.surf.rst</a>
-, <a href="http://skagit.meas.ncsu.edu/%7Echris/r.slope.aspect.html">r.slope.aspect</a>
-, <a href="http://skagit.meas.ncsu.edu/%7Echris/r.sim.sediment.html">r.sim.sediment</a></font><h2><font color="#000000">
-AUTHORS</font></h2>
-<font color="#000000">     Helena Mitasova, Lubos Mitas<br>
+<h2>
+SEE ALSO</h2>
+<a href="s.surf.rst.html">s.surf.rst</a>
+<a href="r.slope.aspect.html">r.slope.aspect</a>
+<a href="r.sim.sediment.html">r.sim.sediment</a>
+
+<h2>
+AUTHORS</h2>
+Helena Mitasova, Lubos Mitas<br>
 North Carolina State University<br>
 <a href="mailto:hmitaso@unity.ncsu.edu">hmitaso@unity.ncsu.edu</a><br>
 <br>
 Jaroslav Hofierka<br>
-GeoModel, s.r.o. Bratislava, Slovakia </font><font color="#000000"><br>
-<address><font color="#000000"><a href="mailto:hofi@geomodel.sk">
+GeoModel, s.r.o. Bratislava, Slovakia <br>
+<address><a href="mailto:hofi@geomodel.sk">
 hofierka@geomodel.sk</a>
-</font></address>
+</address>
 <br>
 Chris Thaxton<br>
 North Carolina State University<br>
 csthaxto@unity.ncsu.edu<br>
-<address><font color="#000000"><a href="mailto:csthaxto@unity.ncsu.edu">
+<address><a href="mailto:csthaxto@unity.ncsu.edu">
 csthaxto@unity.ncsu.edu</a>
-</font></address>
-</font><font color="#000000"><br>                                                            
-</font>                                                    
-<h2><font color="#000000">
-REFERENCES</font></h2>
+</address>
+<h2>
+REFERENCES</h2>
 <P>
 <a href="http://skagit.meas.ncsu.edu/~helena/gmslab/gisc00/duality.html">
  Mitasova H, Mitas, L., 2000, Modeling spatial processes in multiscale framework: exploring duality between particles and fields, plenary talk at GIScience2000 conference, Savannah, GA. </a>
@@ -232,8 +222,9 @@ for effective erosion prevention. Water Resources Research, 34(3), 505-516.<p></
  Mitasova, H., Mitas, L., 2001, Multiscale soil erosion simulations for land use management, 
 In: Landscape erosion and landscape evolution modeling, Harmon R. and Doe W. eds., 
 Kluwer Academic/Plenum Publishers, pp. 321-347.
-<p><font color="#000000">
+<p>
 Neteler, M. and Mitasova, H., 2002, Open Source GIS: A GRASS
 GIS   Approach,    Kluwer Academic Publishers.</font></p>
+<P>
 Last changed: Date: 2003/11/01 15:55:10 $<p></p>
 </body></html>
