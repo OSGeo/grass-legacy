@@ -4,9 +4,8 @@ LIBES= $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(XDRLIB)
 LDFLAGS= $(MATHLIB)
 LIST= main.o selectbasin.o basinlink.o unique.o 
 
-$(PGM): $(LIST) $(LIBES)
+$(RFEA)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
-	mv $(PGM) $(RFEA)
 
 saber:
 	$(CC) -o $@ *.c 

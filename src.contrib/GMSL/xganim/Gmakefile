@@ -15,8 +15,7 @@ OFILES = \
 all: $(PHOME)/$(PGM) man
 
 $(PHOME)/$(PGM):  $(OFILES) $(GISLIB)
-	$(CC) $(LDFLAGS) $(OFILES) $(VECTLIB) $(GISLIB) $(XDRLIB) $(XLIBPATH) $(MATHLIB) $(XMLIB) $(XTLIB) $(XLIB)
-	mv a.out $@
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(VECTLIB) $(GISLIB) $(XDRLIB) $(XLIBPATH) $(MATHLIB) $(XMLIB) $(XTLIB) $(XLIB)
 
 man: 
 	-cp doc/xganim.man $(MDIR)/xganim

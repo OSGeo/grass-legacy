@@ -47,9 +47,9 @@ gsf:
 	cd $(SURF_INCDIR) ; $(GMAKE)
 	touch nviz_init.c
 
-nvwish: $(OBJS) $(VECTLIB) $(BITMAPLIB) $(LINKMLIB)
+nvwish: $(BIN_CONTRIB_CMD)/$(NVWISH_VER)
+$(BIN_CONTRIB_CMD)/$(NVWISH_VER): $(OBJS) $(VECTLIB) $(BITMAPLIB) $(LINKMLIB)
 	$(CC) -g -o $@ $(OBJS) $(LDFLAGS) $(SURFLIB) $(IMGLIB) \
 	$(BITMAPLIB) $(LINKMLIB) $(VECTLIB) \
 	$(GISLIB) $(MATHLIB) $(XDRLIB) \
 	$(LIBDIR)/libdatetime.a $(XTRA_LDFLAGS)
-	mv nvwish $(BIN_CONTRIB_CMD)/$(NVWISH_VER)
