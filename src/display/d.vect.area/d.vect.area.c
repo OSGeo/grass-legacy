@@ -364,7 +364,7 @@ static int use_legend_file (const char *filename)
 			conversions = sscanf (buff, format, &cat,
 					&red1, &green1, &blue1,
 					&red2, &green2, &blue2);
-			if (conversions == 0)
+			if (conversions < 1)
 				continue;
 			else if (!(conversions == 4 || conversions == 7)) {
 				G_warning ("ignoring line [%d] in legend file!", line_cnt);
