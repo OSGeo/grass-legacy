@@ -61,6 +61,29 @@ proc DmGroup::display { node } {
 
 }
 
+proc DmGroup::print { file  node } {
+    variable opt
+    global raster_printed
+
+    set tree $Dm::tree
+    if { $node != "root" } {
+	set id [Dm::node_id $node] 
+        if { ! ( $opt($id,_check) ) } { return }
+    } else {
+        set raster_printed 0
+    }
+
+    set lst ""
+    foreach n [$tree nodes $node] {
+        set lst [ concat $n $lst ]
+    }
+
+    foreach n $lst {
+        Dm::print_node $file $n
+    }
+
+}
+
 proc DmGroup::set_option { node key value } {
     variable opt
  

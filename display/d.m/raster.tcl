@@ -125,6 +125,19 @@ proc DmRaster::display { node } {
     Dm::execute $cmd
 }
 
+proc DmRaster::print { file node } {
+    variable opt
+    
+    set tree $Dm::tree
+    set id [Dm::node_id $node]
+
+    if { ! ( $opt($id,_check) ) } { return } 
+
+    if { $opt($id,map) == "" } { return } 
+
+    puts $file "raster $opt($id,map)"
+}
+
 proc DmRaster::query { node } {
     variable opt
     

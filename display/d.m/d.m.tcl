@@ -17,6 +17,7 @@ set dmpath $env(GISBASE)/etc/dm/
 
 source $dmpath/cmd.tcl
 source $dmpath/group.tcl
+source $dmpath/print.tcl
 source $dmpath/raster.tcl
 source $dmpath/select.tcl
 source $dmpath/tool.tcl
@@ -133,6 +134,7 @@ proc Dm::new { } {
     
     $tree delete [$tree nodes root]
     destroy $options.fr
+    DmPrint::init
 }
 
 # add new group/layer to tree
@@ -273,6 +275,32 @@ proc Dm::display_node { node } {
     } 
 }
 
+# display node
+proc Dm::print_node { file node } {
+    variable tree
+    global raster_printed
+
+    set type [Dm::node_type $node]
+
+    switch $type {
+        group {
+            DmGroup::print $file $node
+	}
+	raster {
+            if { ! $raster_printed } { 
+	        DmRaster::print $file $node
+                set raster_printed 1
+            }
+	}
+	vector {
+	    DmVector::print $file $node
+	}
+	cmd {
+            puts "Command may not be printed to postscript file"
+	}
+    } 
+}
+
 # query selected map
 proc Dm::query { } {
     variable tree
@@ -307,6 +335,7 @@ proc Dm::save { } {
     set fpath "$gisdbase/$location_name/$mapset/.dmrc"
     set rcfile [open $fpath w]
 
+    DmPrint::save
     DmGroup::save $tree 0 "root"
 
     close $rcfile
@@ -363,6 +392,7 @@ proc Dm::load { } {
     set file_size [file size $fpath]
     set nrows [expr $file_size / 15]
 
+    set print_section 0
     set parent root
     set row 0
     while { [gets $rcfile in] > -1 } {
@@ -374,55 +404,69 @@ proc Dm::load { } {
 	if { ![regexp -- {([^ ]+) (.+)$} $in r key val] } {
            set key $in
         }
-	
-        switch $key {
-            Group {
-                set current_node [DmGroup::create $tree $parent]
-                $tree itemconfigure $current_node -text $val 
-                set parent $current_node
+        
+        # Print
+        if { $print_section } {
+            if { $key == "End" } { 
+                set print_section 0 
+            } else {
+	        DmPrint::set_option $key $val
             }
-            Raster {
-                set current_node [DmRaster::create $tree $parent]
-                $tree itemconfigure $current_node -text $val 
-            }
-            Vector {
-                set current_node [DmVector::create $tree $parent]
-                $tree itemconfigure $current_node -text $val 
-            }
-            Cmd {
-                set current_node [DmCmd::create $tree $parent]
-                $tree itemconfigure $current_node -text $val 
-            }
-            End {
-                set type [Dm::node_type $current_node]
-                if { $type == "group"  } {
-                    set parent [$tree parent $parent]
-                }
-                set current_node [$tree parent $current_node]
-            }
-            default { 
-                set type [Dm::node_type $current_node]
-                switch $type {
-                    group { 
-                        DmGroup::set_option $current_node $key $val
-                    }
-                    raster { 
-                        DmRaster::set_option $current_node $key $val
-                    }
-                    vector { 
-                        DmVector::set_option $current_node $key $val
-                    }
-                    cmd { 
-                        DmCmd::set_option $current_node $key $val
-                    }
-                }
+        } else {
+            if { $key == "Print" } {
+                 set print_section 1
+	    } else {  
+		# Tree of layers	
+		switch $key {
+		    Group {
+			set current_node [DmGroup::create $tree $parent]
+			$tree itemconfigure $current_node -text $val 
+			set parent $current_node
+		    }
+		    Raster {
+			set current_node [DmRaster::create $tree $parent]
+			$tree itemconfigure $current_node -text $val 
+		    }
+		    Vector {
+			set current_node [DmVector::create $tree $parent]
+			$tree itemconfigure $current_node -text $val 
+		    }
+		    Cmd {
+			set current_node [DmCmd::create $tree $parent]
+			$tree itemconfigure $current_node -text $val 
+		    }
+		    End {
+			set type [Dm::node_type $current_node]
+			if { $type == "group"  } {
+			    set parent [$tree parent $parent]
+			}
+			set current_node [$tree parent $current_node]
+		    }
+		    default { 
+			set type [Dm::node_type $current_node]
+			switch $type {
+			    group { 
+				DmGroup::set_option $current_node $key $val
+			    }
+			    raster { 
+				DmRaster::set_option $current_node $key $val
+			    }
+			    vector { 
+				DmVector::set_option $current_node $key $val
+			    }
+			    cmd { 
+				DmCmd::set_option $current_node $key $val
+			    }
+			}
 
-            }           
+		    }           
+		}
+	    }
+	    incr row
+	    set prg [expr $max_prgindic * $row / $nrows]
+	    if { $prg > $max_prgindic } { set prg $max_prgindic }
+	    set Dm::prgindic $prg
         }
-        incr row
-        set prg [expr $max_prgindic * $row / $nrows]
-        if { $prg > $max_prgindic } { set prg $max_prgindic }
-        set Dm::prgindic $prg
     }
     close $rcfile
     set Dm::prgindic $max_prgindic
@@ -494,6 +538,11 @@ proc Dm::execute { cmd } {
     eval "exec echo \"$cmd\" | $shell >@stdout 2>@stdout"
 }
 
+# open print window
+proc Dm::print { } {
+    DmPrint::window
+}
+
 proc main {} {
     global auto_path
 
@@ -501,6 +550,7 @@ proc main {} {
     wm title . "GRASS 5.1 Display Manager"
 
     Dm::create
+    DmPrint::init
     Dm::load
     BWidget::place . 0 0 center
     wm deiconify .

@@ -79,19 +79,19 @@ proc DmVector::create { tree parent } {
     set opt($count,display_cat) 0
     set opt($count,display_topo) 0 
     set opt($count,display_dir) 0 
-    set opt($count,display_attr) 1
+    set opt($count,display_attr) 0
     set opt($count,type_point) 1 
     set opt($count,type_line) 1 
     set opt($count,type_boundary) 1 
     set opt($count,type_centroid) 1 
     set opt($count,type_area) 1 
-    set opt($count,type_face) 1 
+    set opt($count,type_face) 0 
 
     set opt($count,color) \#000000
     set opt($count,fcolor) \#AAAAAA 
     set opt($count,lcolor) \#000000
 
-    set opt($count,icon) "cross"
+    set opt($count,icon) "basic/cross"
     set opt($count,size) 5 
 
     set opt($count,field) 1 
@@ -326,6 +326,84 @@ proc DmVector::display { node } {
     Dm::execute $cmd
 }
 
+proc DmVector::print { file node } {
+    variable opt
+
+    set tree $Dm::tree
+    set id [Dm::node_id $node]
+
+    if { ! $opt($id,_check) } { return } 
+    if { $opt($id,map) == "" } { return } 
+
+    if { $opt($id,display_cat) || $opt($id,display_topo) || 
+         $opt($id,display_dir) || $opt($id,display_attr) 
+    } { puts "At least one of selected display options for vector is not supported for PS"  }
+
+    if { ! $opt($id,display_shape) } { return } 
+
+    set color [DmVector::color $opt($id,color)]
+    set fcolor [DmVector::color $opt($id,fcolor)]
+
+    # Points
+    if { $opt($id,type_point) || $opt($id,type_centroid) } {
+        puts $file "vpoints $opt($id,map)"
+
+        set str "  type"
+        if { $opt($id,type_point) } { append str " point" }
+        if { $opt($id,type_centroid) } { append str " centroid" }
+        puts $file $str
+
+	if { $opt($id,field) != "" } { puts $file "  field $opt($id,field)" }
+	if { $opt($id,cat) != "" }   { puts $file "  cats $opt($id,cat)" }
+	if { $opt($id,where) != "" } { puts $file "  where $opt($id,where)" } 
+
+	puts $file "  color $color"
+	#puts $file "width $opt($id,ps_width)"
+
+        puts $file "  symbol $opt($id,icon)"
+        puts $file "  size $opt($id,size)"
+
+	puts $file "end"
+    } 
+
+    # Lines
+    if { $opt($id,type_line) || $opt($id,type_boundary) } {
+        puts $file "vlines $opt($id,map)"
+
+        set str "  type"
+        if { $opt($id,type_line) } { append str " line" }
+        if { $opt($id,type_boundary) } { append str " boundary" }
+        puts $file $str
+
+	if { $opt($id,field) != "" } { puts $file "  field $opt($id,field)" }
+	if { $opt($id,cat) != "" }   { puts $file "  cats $opt($id,cat)" }
+	if { $opt($id,where) != "" } { puts $file "  where $opt($id,where)" } 
+
+	puts $file "  color $color"
+	#puts $file "width $opt($id,ps_width)"
+
+	puts $file "  hcolor NONE"
+
+	puts $file "end"
+    } 
+
+    # Areas
+    if { $opt($id,type_area) } {
+        puts $file "vareas $opt($id,map)"
+
+	if { $opt($id,field) != "" } { puts $file "  field $opt($id,field)" }
+	if { $opt($id,cat) != "" }   { puts $file "  cats $opt($id,cat)" }
+	if { $opt($id,where) != "" } { puts $file "  where $opt($id,where)" } 
+
+	puts $file "  color $color"
+	#puts $file "width $opt($id,ps_width)"
+
+	puts $file "  fcolor $fcolor"
+
+	puts $file "end"
+    } 
+}
+
 proc DmVector::query { node } {
     variable opt
     
@@ -351,3 +429,4 @@ proc DmVector::query { node } {
 
     Dm::execute $cmd
 }
+

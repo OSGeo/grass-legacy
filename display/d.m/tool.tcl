@@ -92,6 +92,10 @@ proc DmToolBar::create { tb  } {
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
         -helptext "Save file"
 
+    $bbox3 add -image [Bitmap::get print]  -command "Dm::print" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
+        -helptext "Print"
+
     pack $bbox3 -side left -anchor w
 }
 
