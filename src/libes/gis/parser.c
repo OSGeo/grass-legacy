@@ -113,6 +113,9 @@ static struct Flag *current_flag; /* Pointer for traversing list      */
 static struct Option first_option ;
 static struct Option *current_option ;
 
+static struct GModule module_info; /* general information on the
+									  corresponding module */
+
 static char *pgm_name = NULL;
 
 struct Item
@@ -242,6 +245,22 @@ G_define_option (void)
 	n_items++ ;
 
 	return(opt) ;
+}
+
+struct GModule *
+G_define_module (void)
+{
+	struct GModule *module ;
+
+	/* Allocate memory */
+
+	module = &module_info;
+
+	/* Zero structure */
+
+	G_zero ((char *) module, sizeof(struct GModule));
+
+	return(module) ;
 }
 
 /* The main parsing routine */
@@ -391,13 +410,18 @@ int G_usage (void)
 	char *key_desc;
 	int maxlen;
 	int len, n;
-
-	fprintf (stderr, "\nUsage:\n ");
-
+	
 	if (!pgm_name)		/* v.dave && r.michael */
 	    pgm_name = G_program_name ();
 	if (!pgm_name)
 	    pgm_name = "??";
+
+	if (module_info.description) {
+		fprintf (stderr, "\nDescription:\n");
+		fprintf (stderr, " %s\n", module_info.description);
+	}
+
+	fprintf (stderr, "\nUsage:\n ");
 
 	len = show(pgm_name,1);
 
@@ -528,6 +552,11 @@ int G_usage_xml (void)
 	fprintf(stdout, "<!DOCTYPE task SYSTEM \"grass-interface.dtd\">\n");
 
 	fprintf(stdout, "<task name=\"%s\">\n", pgm_name);  
+
+	if (module_info.description) {
+		fprintf(stdout, "\t<description>\n\t\t%s\n\t</description>\n",
+			module_info.description);
+	}
 
 	fprintf(stdout, "\t<parameter-group>\n");
 	if(n_opts)
