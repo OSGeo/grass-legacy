@@ -161,7 +161,7 @@ G_compare_projections( struct Key_Value *proj_info1,
         a1 = atof(G_find_key_value( "a", proj_info1 ));
         a2 = atof(G_find_key_value( "a", proj_info2 ));
 
-        if ( abs(a2-a1) > 0.000001 )
+        if ( a1 && a2 && ( abs(a2-a1) > 0.000001 ) )
             return -4;
     }
 
