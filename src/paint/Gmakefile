@@ -1,3 +1,5 @@
 all:
 	$(GMAKE) Interface
-	$(MAKEALL)
+	$(GMAKE) Drivers
+	$(GMAKE) Programs
+	$(GMAKE) Tests
