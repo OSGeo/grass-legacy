@@ -126,8 +126,14 @@ write_file ( LOGIN *login )
     fchmod ( fileno(fd), S_IRUSR | S_IWUSR );
     
     for ( i = 0; i < login->n; i++ ) { 
-	fprintf ( fd, "%s %s %s %s\n", login->data[i].driver, login->data[i].database,
-	                               login->data[i].user, login->data[i].password );
+	fprintf ( fd, "%s %s", login->data[i].driver, login->data[i].database );
+	if ( login->data[i].user ) {
+	    fprintf ( fd, " %s", login->data[i].user );
+
+	    if ( login->data[i].password ) 
+	        fprintf ( fd, " %s", login->data[i].password );
+	}
+	fprintf ( fd, "\n" );
     }
     
     fclose (fd);
