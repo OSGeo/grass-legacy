@@ -38,7 +38,7 @@ int G_set_window (struct Cell_head *window)
     window = &twindow;
 */
 
-    if ((err = G_adjust_Cell_head3 (window, 0,0,0)))
+    if ((err = G_adjust_Cell_head (window, 0,0)))
     {
 	G_warning ("G_set_window(): %s", err);
 	return -1;
