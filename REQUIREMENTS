@@ -68,6 +68,9 @@ Optional requirements:
           src.contrib/GMSL/ogl3d
      [http://www.lesstif.org]
 
+ - r.in.gdal requires GDAL - Geospatial Data Abstraction Library:
+    http://www.remotesensing.org/gdal/
+
 --------------
 Compiling on Mac-OS:
  
@@ -80,4 +83,4 @@ Compiling on Mac-OS:
 GRASS Development Team 2000
 grass@baylor.edu
 
-$Id: REQUIREMENTS,v 1.5 2000-11-13 12:55:59 markus Exp $
+$Id: REQUIREMENTS,v 1.6 2000-11-14 08:09:44 markus Exp $
