@@ -47,9 +47,7 @@ Vect_rewind (struct Map_info *Map)
     if (!VECT_OPEN (Map))
         return -1;
 
-#ifdef GDEBUG
     G_debug (1, "Vect_Rewind(): name = %s", Map->name);
-#endif
     return (*Rewind_array[Map->format][Map->level]) (Map);
 }
 

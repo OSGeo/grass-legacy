@@ -181,7 +181,7 @@ V2_write_line_nat (  struct Map_info *Map,
     
     /* Attach centroid */
     if ( type == GV_CENTROID ) {
-	sel_area = Vect_find_area ( Map, Node->x, Node->y );
+	sel_area = Vect_find_area ( Map, points->x[0], points->y[0] );
 	G_debug ( 3, "  new centroid %d is in area %d", line, sel_area);
 	if ( sel_area > 0 ) {
 	    Area = plus->Area[sel_area];

@@ -24,14 +24,21 @@
 int 
 V1_rewind_shp (struct Map_info *Map)
 {
-  Map->fInfo.shp.shape = 0;
-  Map->fInfo.shp.part = 0;
-  return 0;
+    G_debug (2, "V1_rewind_shp(): name = %s", Map->name);
+    
+    Map->fInfo.shp.shape = 0;
+    Map->fInfo.shp.part = 0;
+    
+    return 0;
 }
 
 int 
 V2_rewind_shp (struct Map_info *Map)
 {
-  Map->next_line = 1;
-  return V1_rewind_shp (Map);	/* make sure level 1 reads are reset too */
+    G_debug (2, "V2_rewind_shp(): name = %s", Map->name);
+
+    Map->next_line = 1;
+    
+    return V1_rewind_shp (Map);	/* make sure level 1 reads are reset too */
 }
+
