@@ -109,7 +109,7 @@ main (int argc, char **argv)
         opt3->key         = "text_color";
         opt3->type        = TYPE_STRING;
         opt3->required    = NO;
-        opt3->answer      = "black";
+        opt3->answer      = DEFAULT_FG_COLOR;
         opt3->options     = D_COLOR_LIST;
         opt3->description = "Color for drawing text";
     
