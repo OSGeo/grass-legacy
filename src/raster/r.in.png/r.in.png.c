@@ -1,3 +1,20 @@
+/*
+ * $Id$
+ *
+ ****************************************************************************
+ *
+ * MODULE:       r.in.png
+ * AUTHOR(S):    Michael Shapiro - CERL
+ *               Alex Shevlakov - sixote@yahoo.com
+ * PURPOSE:      Import non-georeferenced Images in PNG format. 
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
+
 /* code based on r.in.gif by
    Michael Shapiro, U.S.Army Construction Engineering Research Laboratory
  */
@@ -168,6 +185,8 @@ int main(int argc, char *argv[])
 	struct Option *inopt, *outopt, *titleopt;
 	struct Flag *vflag;
 	struct Flag *hflag;
+	struct GModule *module;
+
 	int Verbose = 0;
 	int Header = 0; /* added for r.in.geopng MN */
 	char command[256];
@@ -202,6 +221,10 @@ int main(int argc, char *argv[])
  */
 
 	G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description = "Import non-georeferenced PNG format Image "
+	  "into GRASS raster file.";
 
 	inopt = G_define_option();
 	outopt = G_define_option();
