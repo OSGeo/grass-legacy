@@ -80,7 +80,7 @@ typedef struct
 }
 cursor;
 
-#ifndef MAIN
+#ifdef MAIN
 DATABASE db;
 char errMsg[MYSQL_MSG];
 MYSQL mysql_conn;
