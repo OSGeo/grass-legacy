@@ -248,10 +248,10 @@ int db_select_CatValArray ( dbDriver *driver, char *tab, char *key, char *col, c
 	value  = db_get_column_value(column);
 	switch ( type ) {
 	    case ( DB_C_TYPE_INT ):
-                cvarr->value[i].i = db_get_value_int(value);
+                cvarr->value[i].val.i = db_get_value_int(value);
 	        break;
 	    case ( DB_C_TYPE_DOUBLE ):
-                cvarr->value[i].d = db_get_value_double(value);
+                cvarr->value[i].val.d = db_get_value_double(value);
 	        break;
             default:
 	    	return (-1);
@@ -281,7 +281,7 @@ db_CatValArray_get_value_int ( dbCatValArray *arr, int key, int *val )
     catval = bsearch ( (void *) &key, arr->value, arr->n_values, sizeof ( dbCatVal ), cmpcat );
     if ( catval == NULL ) { return DB_FAILED; }
 
-    *val = catval->i;
+    *val = catval->val.i;
     
     return DB_OK;
 }
@@ -299,7 +299,7 @@ db_CatValArray_get_value_double ( dbCatValArray *arr, int key, double *val )
     catval = bsearch ( (void *) &key, arr->value, arr->n_values, sizeof ( dbCatVal ), cmpcatkey );
     if ( catval == NULL ) { return DB_FAILED; }
 
-    *val = catval->d;
+    *val = catval->val.d;
     
     return DB_OK;
 }
