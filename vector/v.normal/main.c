@@ -56,7 +56,7 @@ int main (int argc, char **argv)
   } parm;
   struct
   {
-    struct Flag *q, *l, *all;
+    struct Flag *q, *l, *region;
   } flag;
   double *w, *z;
 
@@ -93,15 +93,15 @@ int main (int argc, char **argv)
   parm.tests->description = "Lists of tests (1-15): e.g. 1,3-8,13";
 
   parm.dfield = G_define_option ();
-  parm.dfield->key = "col";
+  parm.dfield->key = "column";
   parm.dfield->type = TYPE_STRING;
   parm.dfield->multiple = NO;
   parm.dfield->required = YES;
   parm.dfield->description = "Attribute column";
 
-  flag.all = G_define_flag ();
-  flag.all->key = 'a';
-  flag.all->description = "Use all sites (do not limit to current region)";
+  flag.region = G_define_flag ();
+  flag.region->key = '-r';
+  flag.region->description = "Use only points in current region";
       
   flag.q = G_define_flag ();
   flag.q->key = 'q';
@@ -120,7 +120,7 @@ int main (int argc, char **argv)
     exit (2);
   }
 
-  all = flag.all->answer;
+  all = flag.region->answer ? 0 : 1;
   verbose = (flag.q->answer == (char) NULL) ? 1 : 0;
 
   /* Open input */
