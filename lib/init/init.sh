@@ -93,8 +93,11 @@ GISRCRC="$HOME/.grassrc6"
 export GISRCRC
 # Set the session grassrc file
 USER="`whoami`"
-tmp=${TMPDIR-/tmp}  # use TMPDIR if it exists, otherwise /tmp
-tmp="$tmp/grass6-$USER-$GIS_LOCK"
+
+## use TMPDIR if it exists, otherwise /tmp
+#tmp=${TMPDIR-/tmp}
+#tmp="$tmp/grass6-$USER-$GIS_LOCK"
+tmp=/tmp/grass6-$USER-$GIS_LOCK
 (umask 077 && mkdir "$tmp") || {
     echo "Cannot create temporary directory! Exiting." 1>&2
     exit 1
