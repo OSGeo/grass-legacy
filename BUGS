@@ -80,8 +80,12 @@ p.map.new:
  -> 5/2000: still a problem??
 
 r3.showdspf.openGL:  (src.contrib/GMSL/g3d/src3d/raster/r3.showdspf.openGL)
- - the dependency to OpenGL and Mesa should be checked.
-   it looks like it only works with Mesa-3.1 rpms, because of the libMesaGLw
+ - the dependency to OpenGL and Mesa should be checked automatically
+   and maybe the sgi-widget should be compiled in statically.
+   it will not work with standard Mesa RPMS, because the sgi-widgets
+   are missing. Generally you need to have the Mesa source and compile 
+   the libGLw yourself (which is described in the README.mesa31 in the
+   source for grass.) [Bernhard]
 
 r.binfer
   bug in table.c causing segfault
@@ -296,7 +300,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log: BUGS,v $
- Revision 1.11  2000-08-21 17:14:54  bernhard
+ Revision 1.12  2000-08-21 17:34:08  bernhard
+ clarified r3.showdspf.openGL Mesa problem.
+
+ Revision 1.11  2000/08/21 17:14:54  bernhard
  Added item to be checked: r3.showdspf.openGL dependency
 
  Revision 1.10  2000/08/20 15:44:40  markus
