@@ -23,8 +23,6 @@
 
 int G_spawn(char *command, ...)
 {
-	RETSIGTYPE (*sigint)(int);
-	RETSIGTYPE (*sigquit)(int);
 	sigset_t mask, oldmask;
 	struct sigaction act, intr, quit;
 	int status = -1;
