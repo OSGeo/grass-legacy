@@ -1,0 +1,209 @@
+#!/bin/sh
+d.frame -e
+d.erase
+d.frame -c f=abc a=5,95,5,95
+d.frame -s f=abc
+d.erase white
+d.font romant
+d.graph << EOF
+size 5 5
+move 20 93
+color black
+text  GRASS HARDWARE
+# DRAW COMPUTER
+color blue
+polygon
+10 90
+30 90
+30 60
+10 60
+color black
+move 10 90
+draw 30 90
+draw 30 60
+draw 10 60
+draw 10 90
+color white
+move 12 80
+text UNIX
+move 11 70
+size 3 3
+text COMPUTER
+# DRAW MONITOR
+color red
+polygon
+51 89
+79 89
+79 71
+51 71
+color black
+move 50 90
+draw 80 90
+draw 80 70
+draw 50 70
+draw 50 90
+color white
+move 53 82
+text 256+
+# SPELL COLOR in COLORS
+color green
+move 64 82
+text C
+color blue
+move 67 82
+text O
+color yellow
+move 70 82
+text L
+color green
+move 73 82
+text O
+color blue
+move 76 82
+text R
+move 53 76
+color white
+text MONITOR
+# DRAW CONNECTION BETWEEN COMPUTER AND MONITOR
+color black
+move 30 80
+draw 50 80
+move 30 79
+draw 50 79
+# DRAW TERMINAL
+color black
+polygon
+52 68
+68 68
+68 52
+52 52
+color white
+polygon
+53 67
+67 67
+67 53
+53 53
+color black
+move 54 60
+size 2 2
+text TERMINAL
+# DRAW CONNECTION BETWEEN COMPUTER AND TERMINAL
+color black
+move 30 63
+draw 52 63
+move 30 62
+draw 52 62
+# DRAW KEYBOARD
+color black
+polygon
+51 51
+69 51
+69 49
+51 49
+color white
+move 52 51
+draw 52 49
+move 53 51
+draw 53 49
+move 54 51
+draw 54 49
+move 55 51
+draw 55 49
+move 56 51
+draw 56 49
+move 57 51
+draw 57 49
+move 58 51
+draw 58 49
+move 59 51
+draw 59 49
+move 60 51
+draw 60 49
+move 61 51
+draw 61 49
+move 62 51
+draw 62 49
+move 63 51
+draw 63 49
+move 64 51
+draw 64 49
+move 65 51
+draw 65 49
+move 66 51
+draw 66 49
+move 67 51
+draw 67 49
+move 68 51
+draw 68 49
+move 51 50
+draw 69 50
+color black
+move 51 51
+draw 69 51
+draw 69 49
+draw 51 49
+draw 51 51
+# DRAW TEXT PRINTER
+color yellow
+polygon
+20 45
+50 45
+50 35
+20 35
+color black
+move 20 45
+draw 50 45
+draw 50 35
+draw 20 35
+draw 20 45
+move 22 40
+size 3 3
+text TEXT PRINTER
+# DRAW MAP PRINTER
+color yellow
+polygon
+20 25
+50 25
+50 15
+20 15
+color black
+move 20 25
+draw 50 25
+draw 50 15
+draw 20 15
+draw 20 25
+move 22 20
+size 3 3
+text MAP PRINTER
+# DRAW CONNECTIONS TO PRINTERS
+color black
+move 12 60
+draw 12 20
+draw 20 20
+draw 20 21
+draw 13 21
+draw 13 40
+draw 20 40
+draw 20 41
+draw 13 41
+draw 13 60
+# OTHER COMPUTERS
+move 60 35
+text COMPUTERS
+move 63 30
+text SUN
+move 63 25
+text MASSCOMP
+move 63 20
+text IRIS
+move 63 15
+text INTERGRAPH
+move 63 10
+text APPLE
+move 63 5
+text 386 PC
+EOF
+
+./continue.yes
+
+exit 1
