@@ -4,9 +4,12 @@
 #include <dbmi.h>
 #include "globals.h"
 #include "proto.h"
+#include "glocale.h"
 
-/* Parse connection string in form: 1) 'database_name'
-*  2) 'host=xx,port=xx,dbname=xx,user=xx,password=xx'
+/*
+* \brief Parse connection string in form:
+*    1) 'database_name'
+*    2) 'host=xx,port=xx,dbname=xx'
 *  
 *  returns:  DB_OK     - OK
 *            DB_FAILED - error
@@ -46,13 +49,13 @@ int parse_conn ( char *str, PGCONN *pgconn )
 	   else if ( strncmp(tokens[i], "dbname", 6 ) == 0 )
 	       pgconn->dbname = G_store ( tokens[i] + 7 );
 	   else if ( strncmp(tokens[i], "user", 4 ) == 0 )
-	       G_warning ( "'user' in database definition is not supported, use db.login" );
+	       G_warning ( _("'user' in database definition is not supported, use db.login") );
 	       /* pgconn->user = G_store ( tokens[i] + 5 ); */
 	   else if ( strncmp(tokens[i], "password", 8 ) == 0 )
 	       /* pgconn->password = G_store ( tokens[i] + 9 ); */
-	       G_warning ( "'password' in database definition is not supported, use db.login" );
+	       G_warning ( _("'password' in database definition is not supported, use db.login") );
 	   else {
-	       append_error ( "Unknown option in database definition for postgres: ");
+	       append_error ( _("Unknown option in database definition for PostgreSQL: "));
 	       append_error ( tokens[i] );
 	       return DB_FAILED;
 	   }

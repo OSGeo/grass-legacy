@@ -2,6 +2,7 @@
 #include <datetime.h>
 #include "globals.h"
 #include "proto.h"
+#include "glocale.h"
 
 int db__driver_describe_table(table_name, table)
      dbString *table_name;
@@ -12,7 +13,7 @@ int db__driver_describe_table(table_name, table)
 
     db_init_string ( &sql );
 
-    db_set_string( &sql,"select * from ");
+    db_set_string( &sql, "select * from ");
     db_append_string ( &sql, db_get_string(table_name) );
     db_append_string( &sql, " where oid < 0");
 
@@ -98,29 +99,29 @@ int describe_table( PGresult *res, dbTable **table, cursor *c)
 
 	if ( sqltype == DB_SQL_TYPE_UNKNOWN ) {
 	    /* Warn, ignore and continue */
-	    G_warning ( "pg driver: column '%s', type %d  is not supported", fname, pgtype);
+	    G_warning ( _("pg driver: column '%s', type %d  is not supported"), fname, pgtype);
 	    continue;
 	}
 
 	if ( gpgtype == PG_TYPE_INT8 )
-	    G_warning ( "column '%s' : type int8 (bigint) is stored as integer (4 bytes) "
-		        "some data may be damaged", fname);
+	    G_warning ( _("column '%s' : type int8 (bigint) is stored as integer (4 bytes) "
+		          "some data may be damaged"), fname);
 	
 	if ( gpgtype == PG_TYPE_TEXT ) {
-	    G_warning ( "column '%s' : type text is stored as varchar(250) "
-		        "some data may be lost", fname);
+	    G_warning ( _("column '%s' : type text is stored as varchar(250) "
+		          "some data may be lost"), fname);
 	    fsize = 250;
 	}
 	
 	if ( gpgtype == PG_TYPE_VARCHAR && fsize < 0 ) {
-	    G_warning ( "column '%s' : type character varying is stored as varchar(250) "
-		        "some data may be lost", fname);
+	    G_warning ( _("column '%s' : type character varying is stored as varchar(250) "
+		          "some data may be lost"), fname);
 	    fsize = 250;
 	}
 	
 	if ( gpgtype == PG_TYPE_BOOL )
-	    G_warning ( "column '%s' : type bool (boolean) is stored as char(1), values: 0 (false), "
-		        "1 (true)", fname);
+	    G_warning ( _("column '%s' : type bool (boolean) is stored as char(1), values: 0 (false), "
+		          "1 (true)"), fname);
 	
 	column = db_get_table_column(*table, kcols);
 

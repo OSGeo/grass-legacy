@@ -9,6 +9,7 @@
 #include "dbmi.h"
 #include "codes.h"
 #include <stdlib.h>
+#include "glocale.h"
 
 struct {
 	char *driver, *database, *table;
@@ -29,7 +30,7 @@ main(int argc, char *argv[])
 
     driver = db_start_driver(parms.driver);
     if (driver == NULL)
-        G_fatal_error("No db connection for driver <%s> defined. Run db.connect", parms.driver);
+        G_fatal_error(_("No db connection for driver <%s> defined. Run db.connect"), parms.driver);
        
     db_init_handle (&handle);
     db_set_handle (&handle, parms.database, NULL);
@@ -65,14 +66,14 @@ parse_command_line(int argc, char *argv[])
     table->key 		= "table";
     table->type 	= TYPE_STRING;
     table->required 	= YES;
-    table->description 	= "table name";
+    table->description 	= _("table name");
 
     driver 		= G_define_option();
     driver->key 	= "driver";
     driver->type 	= TYPE_STRING;
     driver->options     = db_list_drivers();
     driver->required 	= NO;
-    driver->description = "driver name";
+    driver->description = _("driver name");
     if ( (drv=db_get_default_driver_name()) )
         driver->answer = drv;
 
@@ -80,14 +81,14 @@ parse_command_line(int argc, char *argv[])
     database->key 	= "database";
     database->type 	= TYPE_STRING;
     database->required 	= NO;
-    database->description = "database name";
+    database->description = _("database name");
     if ( (db=db_get_default_database_name()) )
          database->answer = db;
 
     /* Set description */
     module              = G_define_module();
-    module->description = ""\
-    "list all columns for a given table.";
+    module->description = _(""\
+    "list all columns for a given table.");
 
         
     if(G_parser(argc, argv))

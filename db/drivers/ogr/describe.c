@@ -19,6 +19,7 @@
 #include "ogr_api.h"
 #include "globals.h"
 #include "proto.h"
+#include "glocale.h"
 
 int db__driver_describe_table( dbString *table_name, dbTable **table )
 {
@@ -83,7 +84,7 @@ int describe_table( OGRLayerH hLayer, dbTable **table, cursor *c)
 	fieldName = OGR_Fld_GetNameRef( hFieldDefn );
 
 	if ( ogrType != OFTInteger && ogrType != OFTReal && ogrType != OFTString ) {
-	    G_warning ( "OGR driver: column '%s', OGR type %d  is not supported", fieldName, ogrType);
+	    G_warning ( _("OGR driver: column '%s', OGR type %d  is not supported"), fieldName, ogrType);
 	    cols[i] = 0;
 	} else { 
 	    cols[i] = 1;
@@ -139,15 +140,15 @@ int describe_table( OGRLayerH hLayer, dbTable **table, cursor *c)
 		sqlType = DB_SQL_TYPE_CHARACTER;
 		size = OGR_Fld_GetWidth (hFieldDefn);
 		if ( size == 0 ) {
-		   G_warning ( "column '%s', type 'string': unknown width -> stored as varchar(250) "
-			       "some data may be lost", fieldName );
+		   G_warning ( _("column '%s', type 'string': unknown width -> stored as varchar(250) "
+			         "some data may be lost"), fieldName );
 		   size = 250;
 		}
 	        precision = 0;
 		break;
 		
 	    default:
-		G_warning ( "Unknown type" );
+		G_warning ( _("Unknown type") );
 		break;
 	}
 

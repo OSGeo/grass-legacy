@@ -24,7 +24,7 @@ main(int argc, char *argv[])
     
     print = G_define_flag();
     print->key               = 'p';
-    print->description       = "print current connection parameters and exit";
+    print->description       = _("print current connection parameters and exit");
     
     driver = G_define_option() ;
     driver->key        = "driver" ;
@@ -32,7 +32,7 @@ main(int argc, char *argv[])
     driver->options    = db_list_drivers();
     driver->required   = NO  ;
     driver->multiple   = NO ;
-    driver->description= "driver name:" ;
+    driver->description= _("driver name:") ;
     driver->answer = db_get_default_driver_name();
 
     database = G_define_option() ;
@@ -40,7 +40,7 @@ main(int argc, char *argv[])
     database->type       = TYPE_STRING ;
     database->required   = NO  ;
     database->multiple   = NO ;
-    database->description= "Database name:" ;
+    database->description= _("Database name:") ;
     database->answer = db_get_default_database_name();
 
     schema = G_define_option() ;
@@ -49,8 +49,8 @@ main(int argc, char *argv[])
     schema->required   = NO  ;
     schema->multiple   = NO ;
     schema->answer     = db_get_default_schema_name();
-    schema->description = "Database schema. Don't use this option if schemas are not supported "
-                          "by driver/database server.";
+    schema->description = _("Database schema. Don't use this option if schemas are not supported "
+                          "by driver/database server.");
     
     group = G_define_option() ;
     group->key        = "group" ;
@@ -58,7 +58,7 @@ main(int argc, char *argv[])
     group->required   = NO  ;
     group->multiple   = NO ;
     group->answer     = db_get_default_group_name();
-    group->description = "Default group of database users to which select privilege is granted.";
+    group->description = _("Default group of database users to which select privilege is granted.");
 
 /* commented due to new mechanism:
     user = G_define_option() ;
@@ -78,8 +78,8 @@ main(int argc, char *argv[])
 
     /* Set description */
     module              = G_define_module();
-    module->description = ""\
-    "Connect to the database through DBMI.";
+    module->description = _(""\
+    "Connect to the database through DBMI.");
 
 
     if(G_parser(argc, argv))
@@ -120,10 +120,10 @@ main(int argc, char *argv[])
     /* get and print connection */
     db_get_connection( &conn );    
     
-    fprintf(stdout, _("driver:%s\n"), conn.driverName);
-    fprintf(stdout, _("database:%s\n"), conn.databaseName);    
-    fprintf(stdout, _("schema:%s\n"), conn.schemaName);    
-    fprintf(stdout, _("group:%s\n"), conn.group);    
+    G_message(stdout, _("driver:%s\n"), conn.driverName);
+    G_message(stdout, _("database:%s\n"), conn.databaseName);    
+    G_message(stdout, _("schema:%s\n"), conn.schemaName);    
+    G_message(stdout, _("group:%s\n"), conn.group);    
 /* commented due to new mechanism:
     fprintf(stdout, "user:%s\n", conn.user);
     fprintf(stdout, "password:%s\n", conn.password);    

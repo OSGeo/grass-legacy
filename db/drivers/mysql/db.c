@@ -25,8 +25,10 @@ typedef struct {
     int  port;
 } MYCONN;
 
-/* Parse connection string in form: 1) 'database_name'
-*  2) 'host=xx,port=xx,socket=xx,dbname=xx,user=xx,password=xx'
+/* 
+* \brief Parse connection string in form:
+*  1) 'database_name'
+*  2) 'host=xx,port=xx,socket=xx,dbname=xx'
 *  
 *  returns:  0 OK
 *           -1 error
@@ -63,13 +65,13 @@ int parse_conn ( char *str, MYCONN *myconn )
 	   else if ( strncmp(tokens[i], "dbname", 6 ) == 0 )
 	       myconn->dbname = G_store ( tokens[i] + 7 );
 	   else if ( strncmp(tokens[i], "user", 4 ) == 0 )
-	       G_warning ( "'user' in database definition is not supported, use db.login" );
+	       G_warning ( _("'user' in database definition is not supported, use db.login") );
 	      /* myconn->user = G_store ( tokens[i] + 5 ); */
 	   else if ( strncmp(tokens[i], "password", 8 ) == 0 )
-	       G_warning ( "'password' in database definition is not supported, use db.login" );
+	       G_warning ( _("'password' in database definition is not supported, use db.login") );
 	      /* myconn->password = G_store ( tokens[i] + 9 ); */
 	   else 
-               G_warning ( "Unknown option in database definition for mysql: '%s'", tokens[i] );
+               G_warning ( _("Unknown option in database definition for mysql: '%s'"), tokens[i] );
 	   
 	   i++;
 	}

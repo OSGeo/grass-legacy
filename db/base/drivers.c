@@ -21,13 +21,13 @@ main(int argc, char *argv[])
 
     list = db_read_dbmscap();
     if (list == NULL) {
-      fprintf (stderr, _("Error trying to read dbmscap file\n"));
+      G_message (stderr, _("Error trying to read dbmscap file\n"));
       exit(ERROR);
     }
 
     for (p = list; p; p = p->next) {
-      fprintf (stdout,_("%s"), p->driverName);
-      if (parms.f) fprintf (stdout,_(":%s"), p->comment);
+      G_message (stdout,_("%s"), p->driverName);
+      if (parms.f) G_message (stdout,_(":%s"), p->comment);
       fprintf (stdout,"\n");
     }
     exit(OK);

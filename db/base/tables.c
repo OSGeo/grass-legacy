@@ -9,6 +9,7 @@
 #include "dbmi.h"
 #include "codes.h"
 #include <stdlib.h>
+#include "glocale.h"
 
 struct {
 	char *driver, *database;
@@ -30,7 +31,7 @@ main(int argc, char *argv[])
 
     driver = db_start_driver(parms.driver);
     if (driver == NULL)
-	G_fatal_error("No db connection for driver <%s> defined. Run db.connect", parms.driver);
+	G_fatal_error(_("No db connection for driver <%s> defined. Run db.connect"), parms.driver);
 
     db_init_handle (&handle);
     db_set_handle (&handle, parms.database, NULL);

@@ -20,6 +20,7 @@
 #include "ogr_api.h"
 #include "globals.h"
 #include "proto.h" 
+#include "glocale.h"
 
 int
 db__driver_fetch( dbCursor *cn, int position, int *more )
@@ -120,7 +121,7 @@ db__driver_fetch( dbCursor *cn, int position, int *more )
 		break;
 
 	    default:
-		G_warning ( "Unknown type" );
+		G_warning ( _("Unknown type") );
 		break;
 	}
     }

@@ -57,7 +57,7 @@ main(int argc, char *argv[])
     }
 
     if ( password->answer )
-        G_warning ( "The password was stored in file." );
+        G_warning ( _("The password was stored in file.") );
 	
     exit(0);
 }
