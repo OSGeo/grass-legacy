@@ -1,2 +1,15 @@
-all:
-	$(MAKEALL)
+OFILES = main.o 
+
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+PROG = $(BIN_MAIN_CMD)/v.trim
+
+all: $(PROG)
+
+$(PROG): $(OFILES) $(VECTLIB) $(GISLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB)
+	mv a.out $@
+
+$(VECTLIB): #in case of library changes
+$(GISLIB): #
