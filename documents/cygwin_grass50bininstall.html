@@ -217,8 +217,24 @@ are supported.
 <h3>6.2 winGRASS with X Server support under XFree86</h3>
 
 This version supports all GRASS modules including 'tcltkgrass' and 'nviz'.
+There are two options to use the XFree86 Server: With on desktop (stable)
+or in multiwindow mode (not yet stable).
+<P>
 
-First start the X Server:
+<b>6.2.1 XFree86 desktop mode</b><P>
+
+In cygwin, launch the XFree86 server at Cygwin Bash prompt with:
+
+<pre>
+startxwin.bat
+</pre>
+
+Then start GRASS in a terminal within the X desctop.
+
+<P>
+<b>6.2.2 XFree86 multiwindow mode</b><P>
+
+In cygwin, launch the XFree86 server at Cygwin Bash prompt with:
 
 <pre>
 export DISPLAY=127.0.0.1:0
@@ -232,15 +248,19 @@ grass5
 d.mon x0
 d.mon sel=x0
 
-
 tcltkgrass &
-
 nviz elevation.dem vect=roads &
 </pre>
 
 This runs GRASS similar to a common MS-Windows application.
+<P>
+Please also read the 
+<a href=http://cygwin.com/xfree/docs/ug/cygwin-xfree-ug.html>Cygwin/XFree86
+User's Guide</a>.
 
-<h3>6.3  with X Server support and Star Net XWin-32</h3>
+
+<h3>6.3 winGRASS with X Server support and Star Net XWin-32</h3>
+
 <p>On the GRASS web site you can find a 
 <a href=http://grass.itc.it/grass5/binary/windows_cygnus/wingrass_xserver/old/><tt>StartGrass.bat</tt></a>
 script to put in your home directory. Please edit this file to adapt to your
