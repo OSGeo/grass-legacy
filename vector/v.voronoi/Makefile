@@ -1,0 +1,38 @@
+
+MODULE_TOPDIR = ../..
+
+VORONOI = v.voronoi
+DELAUNAY = v.delaunay
+
+PROGRAMS = $(VORONOI) $(DELAUNAY)
+
+SWEEP_OBJS = sw_edgelist.o sw_geometry.o sw_heap.o sw_main.o sw_memory.o sw_output.o \
+             sw_voronoi.o
+
+#VORONOI_OBJS = vo_main.o vo_polygons.o vo_inregion.o \
+               vo_extend.o vo_boundary.o $(SWEEP_OBJS)
+
+VORONOI_OBJS = vo_main.o vo_extend.o vo_write.o dt_write.o $(SWEEP_OBJS)
+
+DELAUNAY_OBJS = dt_main.o vo_extend.o vo_write.o dt_write.o $(SWEEP_OBJS)
+
+
+LIBES = $(VECTLIB) $(DISPLAYLIB) $(GISLIB)
+DEPENDENCIES= $(VECTDEP) $(DISPLAYDEP) $(GISDEP)
+EXTRA_INC = $(VECT_INC)
+EXTRA_CFLAGS = $(VECT_CFLAGS)
+
+include $(MODULE_TOPDIR)/include/Make/Module.make
+
+VORONOI_ARCH_OBJS := $(foreach obj,$(VORONOI_OBJS),$(OBJDIR)/$(obj))
+
+DELAUNAY_ARCH_OBJS := $(foreach obj,$(DELAUNAY_OBJS),$(OBJDIR)/$(obj))
+
+default: $(BIN)/$(DELAUNAY) $(BIN)/$(VORONOI) #htmlmulti
+
+$(BIN)/$(VORONOI): $(VORONOI_ARCH_OBJS) $(DEPENDENCIES)
+	$(CC) $(LDFLAGS) $(XTRA_LDFLAGS) $(EXTRA_CFLAGS) $(NLS_CFLAGS) -o $@ $(VORONOI_ARCH_OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(BIN)/$(DELAUNAY): $(DELAUNAY_ARCH_OBJS) $(DEPENDENCIES)
+	$(CC) $(LDFLAGS) $(XTRA_LDFLAGS) $(EXTRA_CFLAGS) $(NLS_CFLAGS) -o $@ $(DELAUNAY_ARCH_OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+

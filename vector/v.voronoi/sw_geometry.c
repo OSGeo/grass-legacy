@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <math.h>
 #include "sw_defs.h"
 
@@ -144,7 +145,6 @@ makefree((struct Freenode *)e, &efl);
 
 return 0;
 }
-
 
 double dist (struct Site *s, struct Site *t)
 {

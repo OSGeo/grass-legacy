@@ -2,6 +2,7 @@
 #include <math.h>
 #include <float.h>
 #include "sw_defs.h"
+#include "write.h"
 
 int openpl (void){return 0;}
 int line (int a,int b,int c,int d){return 0;}
@@ -12,72 +13,98 @@ double pxmin, pxmax, pymin, pymax, cradius;
 
 int out_bisector (struct Edge *e)
 {
-if(triangulate & plot &!debug)
-	line(e->reg[0]->coord.x, e->reg[0]->coord.y, 
-	     e->reg[1]->coord.x, e->reg[1]->coord.y);
-if(!triangulate & !plot &!debug)
-	fprintf (stdout,"l %.*g %.*g %.*g \n", DBL_DIG, e->a, DBL_DIG, e->b, DBL_DIG, e->c);
-if(debug)
-	fprintf (stdout,"line(%d) %gx+%gy=%g, bisecting %d %d\n", e->edgenbr,
-	    e->a, e->b, e->c, e->reg[le]->sitenbr, e->reg[re]->sitenbr);
+    if(triangulate & plot &!debug) {
+	    line(e->reg[0]->coord.x, e->reg[0]->coord.y, e->reg[1]->coord.x, e->reg[1]->coord.y);
+    }
+    
+    /*
+    if(!triangulate & !plot &!debug) {
+	    fprintf (stdout,"l %.*g %.*g %.*g \n", DBL_DIG, e->a, DBL_DIG, e->b, DBL_DIG, e->c);
+    }
+    
+    if(debug) {
+        fprintf (stdout,"line(%d) %gx+%gy=%g, bisecting %d %d\n", e->edgenbr,
+	  	    e->a, e->b, e->c, e->reg[le]->sitenbr, e->reg[re]->sitenbr);
+    }
+    */
 
-	return 0;
+    return 0;
 }
-
 
 int 
 out_ep (struct Edge *e)
 {
-if(!triangulate & plot) 
-	clip_line(e);
-if(!triangulate & !plot)
-{	fprintf (stdout,"e %d", e->edgenbr);
+    static struct line_pnts *Points = NULL;
+    static struct line_cats *Cats = NULL;
+
+    if ( !Points ) {
+	Points = Vect_new_line_struct ();
+	Cats = Vect_new_cats_struct ();
+    }
+
+    if(!triangulate & plot) 
+	    clip_line(e);
+    if(!triangulate & !plot)
+    {	
+	/*
+	fprintf (stdout,"e %d", e->edgenbr);
 	fprintf (stdout," %d ", e->ep[le] != (struct Site *)NULL ? e->ep[le]->sitenbr : -1);
 	fprintf (stdout,"%d\n", e->ep[re] != (struct Site *)NULL ? e->ep[re]->sitenbr : -1);
-}
+	*/
 
-return 0;
+	write_ep ( e );
+    }
+
+    return 0;
 }
 
 int 
 out_vertex (struct Site *v)
 {
-if(!triangulate & !plot &!debug)
-	fprintf (stdout,"v %.*g %.*g\n", DBL_DIG, v->coord.x, DBL_DIG, v->coord.y);
-if(debug)
-	fprintf (stdout,"vertex(%d) at %f %f\n", v->sitenbr, v->coord.x, v->coord.y);
+    /*
+    if(!triangulate & !plot &!debug)
+	    fprintf (stdout,"v %.*g %.*g\n", DBL_DIG, v->coord.x, DBL_DIG, v->coord.y);
+    if(debug)
+	    fprintf (stdout,"vertex(%d) at %f %f\n", v->sitenbr, v->coord.x, v->coord.y);
+    */
 
-return 0;
+    return 0;
 }
 
 
 int 
 out_site (struct Site *s)
 {
-if(!triangulate & plot & !debug)
-	circle (s->coord.x, s->coord.y, cradius);
-if(!triangulate & !plot & !debug)
-	fprintf (stdout,"s %f %f\n", s->coord.x, s->coord.y);
-if(debug)
-	fprintf (stdout,"site (%d) at %f %f\n", s->sitenbr, s->coord.x, s->coord.y);
+    if(!triangulate & plot & !debug)
+	    circle (s->coord.x, s->coord.y, cradius);
 
-return 0;
+    /*
+    if(!triangulate & !plot & !debug)
+	    fprintf (stdout,"s %f %f\n", s->coord.x, s->coord.y);
+    if(debug)
+	    fprintf (stdout,"site (%d) at %f %f\n", s->sitenbr, s->coord.x, s->coord.y);
+    */
+
+    return 0;
 }
-
 
 int 
 out_triple (struct Site *s1, struct Site *s2, struct Site *s3)
 {
-if(triangulate & !plot &!debug)
-	fprintf (stdout,"%d %d %d\n", s1->sitenbr, s2->sitenbr, s3->sitenbr);
-if(debug)
-	fprintf (stdout,"circle through left=%d right=%d bottom=%d\n", 
-		s1->sitenbr, s2->sitenbr, s3->sitenbr);
+    if(triangulate & !plot &!debug) {
+	/* fprintf (stdout,"%d %d %d\n", s1->sitenbr, s2->sitenbr, s3->sitenbr); */
 
-return 0;
+	write_triple ( s1, s2, s3 );
+    }
+	    
+    /*
+    if(debug)
+	    fprintf (stdout,"circle through left=%d right=%d bottom=%d\n", 
+		    s1->sitenbr, s2->sitenbr, s3->sitenbr);
+    */
+
+    return 0;
 }
-
-
 
 int plotinit (void)
 {
