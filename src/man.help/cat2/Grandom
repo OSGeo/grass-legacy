@@ -1,0 +1,132 @@
+
+
+
+Grandom(2G)          GRASS Reference Manual           Grandom(2G)
+
+
+
+NAME
+     Grandom - Create a and containing randomly located sites
+     (G Language Tool)
+
+SYNOPSIS
+     Grandom [-vz] inputmap outputmap n[%] [sitefile]
+
+DESCRIPTION
+     Grandom provides a means for creating an outputmap and a
+     sitefile containing sites whose locations are determined
+     randomly.  The general region in which to generate these
+     random locations is determined by the current and mask, and
+     within non-zero data areas on the inputmap on a current
+     specified by the user.  The user may specify the random
+     locations to be generated either as an absolute number
+     (e.g., 10), or as a percentage of the total size (e.g., 1%,
+     or 3.05%).  If specified as a percentage, the number of
+     random locations generated will be set equal to the number
+     of cells appearing in that percentage of the (Note that
+     percentages less than 1% may be stated as decimals.) The
+     outputmap is created in the current mapset and contains
+     randomly located The categories on the inputmap where random
+     cells hit are copied to the outputmap. The category names
+     from the inputmap are copied for the new A  color table for
+     the outputmap is generated to contrast with the colors in
+     the inputmap.
+
+     The sitefile created will have coordinates which are the
+     centers of the randomly selected cells.
+
+
+     The user can elect to supress generation of the outputmap by
+     specifying a dash - in place of an output name on the
+     command line.  Since generation of the sitefile is optional,
+     the user can supress generation of the sitefile simply by
+     failing to include one on the command line.
+
+     The outputmap may be suppressed by specifying "-".
+
+OPTIONS
+     -v   Supresses verbose. Grandom will normally output to the
+          error output messages as it runs. The -v option will
+          suppress the printing of these messages.
+
+     -z   Generate random locations against category zero as
+          well.  If the -z option is specified, the locations
+          which fall in category zero will be added as a new
+          category to the output
+
+NOTES
+     If it is desired to create random locations within some, but
+     not all, non-zero categories of the input the user must
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+Grandom(2G)          GRASS Reference Manual           Grandom(2G)
+
+
+
+     first create a reclassified of the original (e.g., using the
+     GRASS tool reclass) which contains only the desired
+     categories, and then use the reclassed as input to Grandom.
+
+SEE ALSO
+     random[1], reclass[1]
+
+AUTHOR
+     Dr. James Hinthorne, GIS Lab, Central Washington University
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
