@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "imagery.h"
 
 #define NFILES 10
@@ -35,7 +34,7 @@ ask_oldfiles (ref1, ref2, group)
 	    sprintf (name[i], "%s in %s", ref1->file[f].name, ref1->file[f].mapset);
 	    if (G_find_cell (ref1->file[f].name, ref1->file[f].mapset) == NULL)
 	    {
-		strcat(name[i], "  <- cell file does not exist");
+		strcat(name[i], "  <- raster file does not exist");
 		use[i][0] = 0;
 	    }
 	    V_const (name[i], 's', row, 3, 70);
