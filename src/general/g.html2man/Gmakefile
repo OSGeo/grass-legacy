@@ -1,0 +1,3 @@
+all:
+	cp g.html2man $(GISBASE)/scripts        
+	chmod 755 $(GISBASE)/scripts/*
