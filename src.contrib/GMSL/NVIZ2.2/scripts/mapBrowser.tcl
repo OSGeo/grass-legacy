@@ -38,7 +38,7 @@ proc grass_mapset_list {} {
     set list {}
     set location [grass_location]
 
-    foreach name [exec $src_boot/bin/g.mapsets -p] {
+    foreach name [exec $src_boot/bin/g.mapsets -l] {
 	if {[file isdir $location/$name]} {
 	    lappend list $name
 	}

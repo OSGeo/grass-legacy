@@ -104,7 +104,8 @@ make gmake || echo "Compilation error: " >> ${ERROR_LOG}
 ./gmake5 src/display/devices/XDRIVER || echo "Compilation error: " >> ${ERROR_LOG}
 ./gmake5 src/fonts/for_grass || echo "Compilation error: " >> ${ERROR_LOG}
 ./gmake5 src/front.end || echo "Compilation error: " >> ${ERROR_LOG}
-./gmake5 src/general/g.gisenv
+./gmake5 src/general/g.gisenv || echo "Compilation error: " >> ${ERROR_LOG}
+./gmake5 src/general/g.mapsets || echo "Compilation error: " >> ${ERROR_LOG}
 
 #build the user modules:
 ./gmake5 src/display/d.mon || echo "Compilation error: d.mon" >> ${ERROR_LOG}

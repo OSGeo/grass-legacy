@@ -14,13 +14,12 @@ static char Path[2048];
 int 
 main (int argc, char *argv[])
 {
-    char path[1024];
     int n;
     int i;
     int skip;
     char *cur_mapset;
     char **ptr;
-    char **tokens, **p;
+    char **tokens;
     FILE *fp;
 	struct GModule *module;
     struct Option *opt1;

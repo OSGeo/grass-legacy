@@ -160,7 +160,7 @@ int main(int argc, char *argv[])
 		}
 		break;
 	default:
-		G_fatal_error("Unknown projection\n");
+		G_fatal_error("Unknown projection");
 	}
 
 	proj_index = get_proj_index(proj_out);

@@ -24,7 +24,34 @@ Many thanks to all contributors!
 </ul>
 
 <hr>
-<h3><font color="#00FE00">What's new in GRASS 5.0.0/pre4 comparing to 5.0.0.pre3</font></h3>
+<h3><font color="#00FE00">What's new in GRASS 5.0.0/CVS comparing to 5.0.0.pre4</font></h3>
+
+<b>Modules fixed/updated</b> (major changes only)
+<ul>
+<li>d.his/r.his/tcltkgrass: -n flag added to re-enable shaded maps (Markus Neteler)
+<li>d.text.freetype: fixes for Thai fonts, further fixes (Anusorn
+    Chompattana, Huidae Cho, Glynn Clements)
+<li>i.vpoints: various bugs in menu system fixed (Markus Neteler)
+<li>r.mapcalc: optional readline cursor support (Alexandre Sorokine, Glynn
+ Clements); when creating an exact copy, copy categories, colour table, and
+ history to new map (Glynn Clements)
+<li>r.proj: fixes when datum not present (Roger Miller, Eric Miller)
+<li>s.proj: fixes when datum not present (Roger Miller)
+<li>v.in.shape: added back -d flag to list DBF file fields (Markus Neteler)
+<li>v.proj: fixes when datum not present (Roger Miller)
+</ul>
+ 
+<b>Source Code:</b><br>
+<ul>
+<li>i18n: internationalization started for grass (Alex Shevlakov)
+<li>configure: fixes for MaxOSX (Jeshua Lacock, Glynn Clements)
+<li>projection software: "Krovakgis" projection implemented for Czech and
+   Slovak users (Jaro Hofierka, Markus Neteler)
+</ul>
+
+
+<hr>
+<h3><font color="#00FE00">What's new in GRASS 5.0.0pre4 comparing to 5.0.0.pre3</font></h3>
 [GRASS 5.0.0pre4 released 13 May 2002]<p>
 
 <b>Modules fixed/updated</b> (major changes only)
@@ -43,10 +70,10 @@ Many thanks to all contributors!
 <li>g.mapsets: fixed problem of space required (Roger Miller)
 <li>g.manual: removed bashisms, should work on Solaris now (Andreas Lange)
 <li>i.* modules using 'groups': For portability reasons the name
-"GROUP/SUBGROUP" for file which stores the current imagery group have been
-renamed to CURGROUP and CURSUBGROUP. Users will need to rename (or
-re-create) any GROUP/SUBGROUP files after updating to th 5.0.0pre4 release
-within existing mapsets.
+ "GROUP/SUBGROUP" for file which stores the current imagery group have been
+ renamed to CURGROUP and CURSUBGROUP. Users will need to rename (or
+ re-create) any GROUP/SUBGROUP files after updating to th 5.0.0pre4 release
+ within existing mapsets.
 <li>m.in.e00: raster null values added (Michel Wurtz)
 <li>nviz: fixed rotated TIFF output (Glynn Clements)
 <li>p.vrml: cleaned code (Glynn Clements)
@@ -77,6 +104,7 @@ within existing mapsets.
 <li>r.region: added. manages the boundary definitions for a raster map
     (Glynn Clements)
 <li>r.resamp.rst added optional anisotropy (Jaro Hofierka)
+<li>r.sun: rewritten (Marcel Suri and Jaro Hofierka)
 <li>r.topmodel: fixed timestamp (Glynn Clements)
 <li>r.statistics: bugfix on '-z' problem (Glynn Clements)
 <li>r.slope.aspect: fixed crash if only pc= or tc= was selected (Glynn
@@ -86,7 +114,8 @@ within existing mapsets.
 <li>s.proj: added nad27/nad83 datum transformation for US and Canada (Roger
     Miller)
 <li>s.surf.idw: change masked cells from zero to null (Glynn Clements)
-<li>s.surf.rst: added optional anisotropy (Jaro Hofierka)
+<li>s.surf.rst: calculations > 2000% faster for dense data, 
+    added optional anisotropy (Jaro Hofierka)
 <li>tcltkgrass: several menu fixes
 <li>v.alabel: category label support added (Eric Miller)
 <li>v.build/v.support: fix for thresholds to avoid topology problems with
@@ -94,13 +123,13 @@ within existing mapsets.
 <li>v.cutter: added new options (Roger Miller)
 <li>v.digit: zoom menu simplified (Radim Blazek)
 <li>v.extract: several bugfixes (Glynn Clements)
-<li>v.in.shape: completely rewritten (David Gray)
 <li>v.in.tig.basic: segfault fixed (Roger Miller)
 <li>v.in.tig.lndmk: fixed problem with not writing to latlong locations
     (Roger Miller)
 <li>v.llabel: category label support added (Eric Miller), option to label
     area-edge arcs (Roger Miller)
 <li>v.in.dxf: fixed new line bug (Roger Miller)
+<li>v.in.shape: completely rewritten (David Gray)
 <li>v.out.shape: added database support (Radim Blazek), added export of 
     area-edge arcs (Roger Miller)
 <li>v.make.subj: fixed segmentation fault (Roger Miller)
@@ -108,6 +137,7 @@ within existing mapsets.
 <li>v.proj: added nad27/nad83 datum transformation for US and Canada (Roger Miller)
 <li>v.support: produces error vector file now (Radim Blazek)
 <li>v.surf.rst: added optional anisotropy (Jaro Hofierka)
+<li>v.to.pg: new module added (Alex Shevlakov)
 <li>v.transform: uses binary vector files now (Radim Blazek), copies category
 labels (Eric Miller)
 <p>
@@ -125,8 +155,7 @@ however, more work on this is required to enable this feature (Glynn Clements)
 <li>DBMI support: dbmscap file is not required anymore (Radim Blazek)
 <li>configure: added configure status report, fixed lex/yacc/bison test (Glynn Clements)
 <li>added false northing query for Transverse Mercator (Markus Neteler)
-<li>i18n: internationalization started for grass.postgres (Alex Shevlakov,
-    only EXP CVS)
+<li>i18n: internationalization started for grass (Alex Shevlakov)
 <li>gislib code cleanup (Eric Miller)
 </ul>
 

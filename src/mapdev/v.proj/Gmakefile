@@ -1,5 +1,4 @@
 PGM=v.proj
-
 OFILES = \
 	main.o setenv.o 
 

@@ -46,6 +46,7 @@ src/display/devices/XDRIVER
 src/fonts
 src/front.end
 src/general/g.gisenv
+src/general/g.mapsets
 src/display/d.mon
 src/display/d.rast
 src/display/d.vect

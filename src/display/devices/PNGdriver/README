@@ -19,7 +19,7 @@ USAGE
        the filename to put the resulting image in, default is map.png.
      * GRASS_BACKGROUNDCOLOR=RRGGBB
        specifies the background color to use in RGB notation (hex
-       values). Default is FFFFFF (white).
+       values). Default is 000000 (black).
      * GRASS_TRANSPARENT=[TRUE|FALSE]
        sets transparent background on (TRUE) or off (FALSE, default).
        

@@ -257,8 +257,10 @@ int G_put_reclass (char *name, struct Reclass *reclass)
     fd = fopen(buf1, "a+");
     if (fd == NULL)
     {
+#if 0
         G_warning ("Unable to create dependency file in [%s in %s]",
     	    buf2, reclass->mapset);
+#endif
         return 1;
     }
 

@@ -185,10 +185,7 @@ int main (int argc, char **argv)
 
 /* Make sure map is available */
     if (rmap->required == YES && rmap->answers == NULL)
-    {
-	fprintf(stderr, "ERROR: No map is given\n");
-	exit(1);
-    }
+        G_fatal_error("No map is given");
 
     if (rast)
     {

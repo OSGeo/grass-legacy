@@ -11,15 +11,6 @@
  *   	    	This program is free software under the GPL (>=v2)
  *   	    	Read the file COPYING that comes with GRASS for details.
  ****************************************************************************
- * $Log$
- * Revision 1.5  2001-04-02 21:38:32  andreas
- * changed to suppress datum/ellipsoid output in XY-Locations
- *
- * Revision 1.4  2000/11/26 16:33:15  andreas
- * added module description, file header, output of ellipsoid with cmdline and inter
- *
- * Revision 1.3  2000/11/08 20:31:28  andreas
- * added output of map datum
  *
  */
 

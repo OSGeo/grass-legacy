@@ -116,19 +116,16 @@ int main(int argc ,char **argv )
 	column = db_get_table_column(table, 0);
         sqltype = db_get_column_sqltype (column);
         keyctype = db_sqltype_to_Ctype(sqltype);
-        if ( keyctype != DB_C_TYPE_INT ) {
-    	    fprintf ( stderr, "Column %s is not integer.\n", db_get_column_name ( column ) );
-    	    exit (-1);
-        }
+        if ( keyctype != DB_C_TYPE_INT )
+    	    G_fatal_error ("Column %s is not integer.", db_get_column_name ( column ) );
+
 	/* check if x,y are numbers */
 	for (i=0; i<2; i++){
     	    column = db_get_table_column(table, i+1);
     	    sqltype = db_get_column_sqltype (column);
     	    coorctype[i] = db_sqltype_to_Ctype(sqltype);
-    	    if ( coorctype[i] != DB_C_TYPE_INT && coorctype[i] != DB_C_TYPE_DOUBLE ) {
-    		fprintf ( stderr, "Column %s is not number.\n", db_get_column_name ( column ) );
-    		exit (-1);
-    	    }
+    	    if ( coorctype[i] != DB_C_TYPE_INT && coorctype[i] != DB_C_TYPE_DOUBLE )
+    		G_fatal_error ("Column %s is not number.\n", db_get_column_name ( column ) );
         }
 
 	alloc = 1000;

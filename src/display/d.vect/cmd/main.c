@@ -106,11 +106,7 @@ int main( int argc , char **argv )
     /* Make sure map is available */
     mapset = G_find_file2 ("dig", map_name, "") ;
     if (mapset == NULL)
-    {
-        sprintf(buf,"Vector file [%s] not available", map_name);
-        G_fatal_error(buf) ;
-        exit(-1);
-    }
+        G_fatal_error("Vector file [%s] not available", map_name) ;
 
     if (R_open_driver() != 0)
         G_fatal_error ("No graphics device selected");

@@ -10,7 +10,7 @@ $(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 lex.yy.c : mif.l
-	$(LEX) mif.l
+	$(LEX) -t mif.l > $@
 
 $(DEPVECTLIB): #
 $(DEPGISLIB): # 

@@ -7,6 +7,8 @@
 #  define INIT(x) = x
 #endif
 
+GLOBAL int cellmap_present;
+
 GLOBAL int SCREEN_TOP;
 GLOBAL int SCREEN_BOTTOM;
 GLOBAL int SCREEN_LEFT;
@@ -115,7 +117,7 @@ int Curses_prompt_gets(char *, char *);
 int Beep(void);
 int Curses_getch(int);
 /* debug.c */
-int debug(char *);
+int debug(char *,...);
 /* digit.c */
 int setup_digitizer(void);
 int digitizer_point(double *, double *);
@@ -126,10 +128,11 @@ int restore_under_dot(void);
 int release_under_dot(void);
 /* drawcell.c */
 int drawcell(View *, int);
+int re_fresh_rast(void);
 /* drawvect.c */
 int plotvect(void);
 int zoomvect(View *);
-int re_fresh(void);
+int re_fresh_vect(void);
 int warpvect(double [], double [], int);
 /* driver.c */
 int driver(void);

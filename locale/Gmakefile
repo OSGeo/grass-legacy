@@ -8,22 +8,23 @@
 #
 #############################################################################
 
-LCL = `echo $$LANG | sed 's/\(..\)\(.*\)/\1/'`
 LOC_DIR = $(GISBASE)/locale
-NLOC_DIR = $(LOC_DIR)/$(LCL)
 MSGFMT = msgfmt
+LOCALES = ru
 
 all: mofiles
 
 mofiles:
 	@test -d $(LOC_DIR) || mkdir $(LOC_DIR)
-	@test -d $(NLOC_DIR) || mkdir $(NLOC_DIR)
-	@test -d $(LOC_DIR) || mkdir $(NLOC_DIR)/LC_MESSAGES
 
-	@(cd $(LCL)/LC_MESSAGES; \
-	for h in *.po; \
-	  do \
-	  	test -d $$h && continue; \
-		$(MSGFMT) $$h -o `basename $$h .po`.mo; \
-		mv `basename $$h .po`.mo $(NLOC_DIR)/LC_MESSAGES; \
-	  done)
+	for LCL in $(LOCALES) ; do \
+	    NLOC_DIR=$(LOC_DIR)/$$LCL; \
+	    test -d $$NLOC_DIR || mkdir $$NLOC_DIR; \
+	    test -d $$NLOC_DIR/LC_MESSAGES || mkdir $$NLOC_DIR/LC_MESSAGES; \
+	    (cd $$LCL/LC_MESSAGES; \
+	    for h in *.po; do \
+	        test -d $$h && continue; \
+	        $(MSGFMT) $$h -o `basename $$h .po`.mo; \
+	        mv `basename $$h .po`.mo $$NLOC_DIR/LC_MESSAGES; \
+	    done); \
+	done

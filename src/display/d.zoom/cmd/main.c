@@ -201,10 +201,7 @@ main (int argc, char **argv)
 
 /* Make sure map is available */
     if (rmap->required == YES && rmap->answers == NULL)
-    {
-	fprintf(stderr, "ERROR: No map is displayed in GRASS monitor\n");
-	exit(1);
-    }
+        G_fatal_error("ERROR: No map is displayed in GRASS monitor");
 
     if (rast)
     {
@@ -216,11 +213,7 @@ main (int argc, char **argv)
 	for(i=0; i<nrasts; i++){
     		mapset = G_find_cell2 (rast[i], "");
     		if (mapset == NULL)
-    		{
-			char msg[256];
-			sprintf(msg,"Raster file [%s] not available", rast[i]);
-			G_fatal_error(msg) ;
-		}
+    		    G_fatal_error("Raster file [%s] not available", rast[i]);
 		else
 		{
 	 		if(G_get_cellhd(rast[i], mapset, &window) >= 0)

@@ -253,10 +253,22 @@ void execute(expr_list *ee)
 	{
 		expression *e = l->exp;
 		const char *var = e->data.bind.var;
+		expression *val = e->data.bind.val;
 		int fd = e->data.bind.fd;
 
 		close_output_map(fd);
 		e->data.bind.fd = -1;
+
+		if (val->type == expr_type_map)
+		{
+			if (val->data.map.mod == 'M')
+			{
+				copy_cats(var, val->data.map.name);
+				copy_colors(var, val->data.map.name);
+			}
+
+			copy_history(var, val->data.map.name);
+		}
 	}
 
 	G_unset_error_routine();

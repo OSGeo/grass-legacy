@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include "gis.h"
@@ -33,13 +34,15 @@ int main(int argc, char *argv[])
     if (argc == 1)
     {
         tty = isatty(1);
-        for (n=0; name = G__env_name (n); n++)
+        for (n=0; (name = G__env_name (n)); n++)
         {
-            if (value = G__getenv(name))
+            if ((value = G__getenv(name)))
+            {
                 if (tty)
                     fprintf (stdout,"%s=%s\n", name, value);
                 else
-                    fprintf (stdout,"%s='%s';\n", name, value, name);
+                    fprintf (stdout,"%s='%s';\n", name, value);
+            }
         }
         return 0;
     }
@@ -67,7 +70,7 @@ int main(int argc, char *argv[])
 	}
 	/* Allow unset without '=' sign */
 	if (value != NULL && *value == '\0')
-	  value == NULL ;
+	  value = NULL ;
 	  
         G_setenv (name, value) ;
 

@@ -70,7 +70,7 @@ locations.
     The field separator can be a character, a space, or a tab. 
 <BR>
     Default: space 
-<DT><b>date=</b><EM>timstamp[,timstamp]
+<DT><b>date=</b><EM>timstamp[,timstamp]</EM>
 <DD>date/time stamp or date1,date2 range
 </DL>
 
@@ -184,6 +184,22 @@ or in DMS (degree, minutes, seconds) format:<br>
     8:53:51.378E  54:52:20.4708N site2
     9:32:57.7356E 54:50:02.688N site3
 </pre>
+
+<p>
+<b>Time as String Attributes</b>
+<p>
+
+In this example, we will work with the following site list:
+
+<pre>
+    10.8 0 9.8 Fri Sep 13 10:00:00 1986 31.4
+    11 5.5 9.9 Fri Sep 14 00:20:00 1985 36.4
+    5.1 3.9 10 Fri Sep 15 00:00:30 1984 28.4
+</pre>
+
+This data has three dimensions (assume easting, northing, and
+elevation),  five string attributes, and one decimal attributes.
+
 
 <H2>SEE ALSO</H2>
 

@@ -80,23 +80,47 @@ post_exec(void)
 
 /****************************************************************************/
 
-int 
-main (int argc, char *argv[])
+static const char *
+join(int argc, char **argv)
 {
-	int ok, all_ok;
+	int size = 0;
+	char *buf;
+	int i;
+
+	for (i = 0; i < argc; i++)
+		size += strlen(argv[i]) + 1;
+
+	buf = G_malloc(size);
+	*buf = '\0';
+	for (i = 0; i < argc; i++)
+	{
+		if (i)
+			strcat(buf, " ");
+		strcat(buf, argv[i]);
+	}
+
+	return buf;
+}
+
+/****************************************************************************/
+
+int 
+main(int argc, char **argv)
+{
+	int all_ok;
 
 	G_gisinit(argv[0]);
 
 	G_get_window(&current_region);
 
-	if (argc > 2 || (argc > 1 && strcmp(argv[1], "help") == 0))
+	if (argc > 1 && strcmp(argv[1], "help") == 0)
 	{
 		fputs(help_text, stderr);
 		return 0;
 	}
 
-	result = (argc == 2)
-		? parse_string(argv[1])
+	result = (argc >= 2)
+		? parse_string(join(argc - 1, argv + 1))
 		: parse_stream(stdin);
 
 	pre_exec();

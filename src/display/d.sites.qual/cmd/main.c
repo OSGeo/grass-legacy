@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "site.h"
 #include "raster.h"
@@ -15,7 +17,6 @@
 int main( int argc , char **argv )
 {
 	char *mapset;
-	char msg[200];
 	char window_name[64] ;
 	int i, num;
 	int t, b, l, r ;
@@ -90,41 +91,29 @@ int main( int argc , char **argv )
 
 	if(opt5->answers)
 	    for (i=0; opt5->answers[i]; i++)
-		if( -1 == parse_set_rules(opt5->answers[i])){
-		    sprintf (msg, "Bad rule: %s", opt5->answers[i]);
-		    G_fatal_error(msg);
-		}
+		if( -1 == parse_set_rules(opt5->answers[i]))
+		    G_fatal_error("Bad rule: %s", opt5->answers[i]);
 
 	if(opt6->answer){
 	    outfile = G_sites_open_new (opt6->answer);
 	    if (outfile == NULL)
-	    {
-		    sprintf (msg, "can't open sites file [%s]", opt6->answer);
-		    G_fatal_error (msg);
-	    }
+		    G_fatal_error ("can't open sites file [%s]", opt6->answer);
 	}
 
 	color = D_translate_color(opt1->answer) ;
 	if (color == 0)
 	{
-		fprintf (stdout,"Don't know the color %s\n", opt1->answer);
 		G_usage() ;
-		exit(-1);
+		G_fatal_error ("Don't know the color %s", opt1->answer);
 	}
 
 	mapset = G_find_file ("site_lists", opt4->answer, "");
 	if (mapset == NULL)
-	{
-		sprintf (msg, "sites file [%s] not found", opt4->answer);
-		G_fatal_error (msg);
-	}
+		G_fatal_error ("sites file [%s] not found", opt4->answer);
 
 	infile = G_sites_open_old (opt4->answer, mapset);
 	if (infile == NULL)
-	{
-		sprintf (msg, "can't open sites file [%s]", opt4->answer);
-		G_fatal_error (msg);
-	}
+		G_fatal_error ("can't open sites file [%s]", opt4->answer);
 
 
 	sscanf(opt2->answer,"%d",&size);

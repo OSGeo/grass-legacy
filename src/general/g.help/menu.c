@@ -6,6 +6,7 @@
 #include <sys/wait.h>
 #include "menu.h"
 #include "help_proto.h"
+#include "gis.h"
 
 /* Switched functions of BLANK and SPACE 7/98 Markus Neteler
  *                              neteler@geog.uni-hannover.de
@@ -288,14 +289,12 @@ int P_menuinit ()
 	if (LINES < 15)
 	{
 		endwin() ;
-		fprintf(stderr,"Sorry, screen must be 15 lines or longer\n") ;
-		exit(-1) ;
+		G_fatal_error("Sorry, screen must be 15 lines or longer");
 	}
 	if (COLS < 80)
 	{
 		endwin() ;
-		fprintf(stderr,"Sorry, screen must be 80 columns or wider\n") ;
-		exit(-1) ;
+		G_fatal_error("Sorry, screen must be 80 columns or wider") ;
 	}
 
 	crmode ();

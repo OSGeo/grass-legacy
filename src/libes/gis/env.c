@@ -121,8 +121,8 @@ static int set_env ( char *name, char *value)
     int empty;
     char *tv;
 
-/* if value is NULL convert into an unsetenv() */
-    if (!value)
+/* if value is NULL or empty string, convert into an unsetenv() */
+    if(!value || !strlen(value))
     {
 	unset_env (name);
 	return 0;

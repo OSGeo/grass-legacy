@@ -8,6 +8,9 @@
 #define FLOAT	1
 #define FIXED	2
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "display.h"
 #include "D.h"

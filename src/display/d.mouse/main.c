@@ -35,15 +35,13 @@ main(argc, argv)
 
 	if (!G_scan_easting (anchor->answers[0], &east0, G_projection()))
 	{
-	    fprintf (stderr, "%s - illegal value for easting", anchor->answers[0]);
 	    G_usage();
-	    exit(1);
+	    G_fatal_error("%s - illegal value for easting", anchor->answers[0]);
 	}
 	if (!G_scan_northing (anchor->answers[1], &north0, G_projection()))
 	{
-	    fprintf (stderr, "%s - illegal value for northing", anchor->answers[1]);
 	    G_usage();
-	    exit(1);
+	    G_fatal_error ("%s - illegal value for northing", anchor->answers[1]);
 	}
     }
     else

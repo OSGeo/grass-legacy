@@ -15,18 +15,14 @@ int disp_attr(char *tabname, char *key, int *keyval )
         dbValue  *value;
 
         driver = db_start_driver(NULL);
-	if (driver == NULL) {
-	    fprintf (stderr, "Cannot open driver\n");
-	    exit(-1);
-	}
+	if (driver == NULL)
+	    G_fatal_error ("Cannot open driver");
 
 	db_init_handle (&handle);
 	db_set_handle (&handle, NULL, NULL);
 
-	if (db_open_database(driver, &handle) != DB_OK){
-	    fprintf (stderr, "Cannot open database\n");
-	    exit(-1);
-	}
+	if (db_open_database(driver, &handle) != DB_OK)
+	    G_fatal_error ("Cannot open database");
 	
 	db_init_string (&str);
 	db_init_string (&sout1);

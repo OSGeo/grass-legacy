@@ -59,21 +59,18 @@ int main (int argc, char **argv)
 
     /* only one [-a,-1,-s] flag at a time !! */
     if ( (aflag->answer + sflag->answer + oneflag->answer) > 1 ) {
-        fprintf(stderr,"Error: only one of [-a,-1,-s] can be specified\n");
         G_usage();
-        exit(1);
+        G_fatal_error("only one of [-a,-1,-s] can be specified");
     }
 
     if ( fflag->answer && !aflag->answer ) {
-        fprintf(stderr,"Error: must specify -a when using -f\n");
         G_usage();
-        exit(1);
+        G_fatal_error("must specify -a when using -f");
     }
 
     if ( eflag->answer && !(aflag->answer || oneflag->answer) ) {
-        fprintf(stderr,"Error: must specify -a or -1 when using -e\n");
         G_usage();
-        exit(1);
+        G_fatal_error("must specify -a or -1 when using -e");
     }
 
     /* if the user wants a listing, give it to them and exit */
@@ -131,7 +128,7 @@ int display_man_page (char *path)
     char buf[1024];
 
     if (isatty(1))
-         sprintf(buf,"$PAGER %s",path);
+         sprintf(buf,"$GRASS_PAGER %s",path);
     else 
 	 sprintf(buf,"cat %s",path);
     G_system(buf);
@@ -239,10 +236,7 @@ int list_all_tty (int pretty, int fflag, int eflag)
         if ( eflag ) 
 	{
             if ( stat(last,&statbuf) != 0 ) 
-	    {
-                fprintf(stderr,"Can't stat temporary file\n");
-                exit(1);
-            } 
+	        G_fatal_error("Can't stat temporary file");
 	    else 
 	    {
                 if ( statbuf.st_size > 0 ) 
@@ -282,7 +276,7 @@ int list_all_tty (int pretty, int fflag, int eflag)
 	if(pretty)free(temp1);
 	if(pretty)free(temp2);
     if(isatty(1))
-         sprintf(buf,"$PAGER %s",tempfile);
+         sprintf(buf,"$GRASS_PAGER %s",tempfile);
     else
 	 sprintf(buf,"cat %s",tempfile);
     G_system(buf);
@@ -312,10 +306,9 @@ list_all_not_tty (int pretty, int fflag, int eflag)
         G_system(buf);
         /* eflag ? check to see if tempfile is empty */
         if ( eflag ) {
-            if ( stat(tempfile,&statbuf) != 0 ) {
-                fprintf(stderr,"Can't stat temporary file\n");
-                exit(1);
-            } else {
+            if ( stat(tempfile,&statbuf) != 0 )
+        	G_fatal_error("Can't stat temporary file");
+            else {
                 if ( statbuf.st_size > 0 ) {
 		    if ( pretty ) {
 			fprintf(stdout, section_name(section));
@@ -324,7 +317,7 @@ list_all_not_tty (int pretty, int fflag, int eflag)
 			fflush(stdout);
 		    }
 		    if(isatty(1))
-                       sprintf(buf,"$PAGER %s",tempfile);
+                       sprintf(buf,"$GRASS_PAGER %s",tempfile);
                     else
 		       sprintf(buf,"cat %s",tempfile);
                     G_system(buf);
@@ -343,7 +336,7 @@ list_all_not_tty (int pretty, int fflag, int eflag)
 		fflush(stdout);
 	    }
 	    if(isatty(1))
-                 sprintf(buf,"$PAGER %s",tempfile);
+                 sprintf(buf,"$GRASS_PAGER %s",tempfile);
             else
 		 sprintf(buf,"cat %s",tempfile);
             G_system(buf);

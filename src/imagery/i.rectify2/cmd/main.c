@@ -93,10 +93,8 @@ int main (int argc, char *argv[])
   k++;
  }
 
-if (order < 1 || order > MAXORDER) {
-  fprintf(stderr, "\nInvalid order (%d) please enter 1 to %d.\n",MAXORDER, order);
-  exit(-1);
-}
+if (order < 1 || order > MAXORDER)
+  G_fatal_error("\nInvalid order (%d) please enter 1 to %d.\n",order, MAXORDER);
 
 /* determine the number of files in this group */
     if (I_get_group_ref (group, &ref) <= 0 )

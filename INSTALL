@@ -1,6 +1,6 @@
                    INSTALL GRASS 5.0 source code
 
-($Id: INSTALL,v 1.22 2002-03-22 08:34:36 markus Exp $)
+($Id: INSTALL,v 1.22.2.1 2002-06-16 15:29:17 glynn Exp $)
 
 Welcome to the GRASS GIS source code distribution. This is the installation
 instruction file and contains the following sections:
@@ -191,6 +191,12 @@ You can always see a full list of options to configure with
 	./configure --help
 
 
+In case the include files are spreaded over two (or more) directories, you
+may need to specify both, e.g.
+ 
+	--with-tcltk-includes='/usr/include/tcl8.3 /usr/include/tk8.3'
+
+
 FILES TO CHECK
 
 The `configure' script creates the following files to contain system
@@ -353,4 +359,4 @@ http://grass.itc.it/announces/announce_lzw_removal.html
 
 
 GRASS Development Team
-$Date: 2002-03-22 08:34:36 $
+$Date: 2002-06-16 15:29:17 $

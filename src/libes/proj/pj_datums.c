@@ -28,7 +28,13 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.1  2002-04-20 19:13:44  roger
+ * Revision 1.1.2.1  2002-06-16 15:29:25  glynn
+ * Sync with CVS head
+ *
+ * Revision 1.2  2002/05/29 10:21:22  markus
+ * added Krovak and Krovakgis projection (Krovak already present in latest PROJ4 CVS version, added Hermannskogel datum for Krovakgis
+ *
+ * Revision 1.1  2002/04/20 19:13:44  roger
  * Updating Proj lib to 4.4.5, and adding two new functions for datum conversions
  *
  * Revision 1.2  2001/04/05 19:32:41  warmerda
@@ -75,5 +81,6 @@ struct PJ_DATUMS pj_datums[] = {
 "S-42",  "towgs84=28.0,-121.0,-77.0",  "krassovsky",  "S-42",
 "potsdam",  "towgs84=606.0,23.0,413.0",  "bessel",  "Potsdam Rauenberg 1950 DHDN",
 "carthage",  "towgs84=-263.0,6.0,431.0",  "clark80",  "Carthage 1934 Tunisia",
+"hermannskogel", "towgs84=653.0,-212.0,449.0",  "bessel",  "Hermannskogel",
 NULL,       NULL,                                    NULL,    NULL ,
 };
