@@ -22,7 +22,7 @@ int do_grid_numbers(void);
 int do_map_header(char *);
 int read_header_file(char *);
 /* do_labels.c */
-int do_labels(void);
+int do_labels(int);
 #ifdef _STDIO_H
 int do_label(FILE *);
 #endif
@@ -96,6 +96,8 @@ int parse_val_list(char *, DCELL **);
 /* plfile.c */
 int record_point(double, double);
 int record_line(double, double, double, double);
+int record_rectangle(double, double, double, double);
+int record_eps(double, double);
 int add_to_plfile(char *);
 /* ps_clrtbl.c */
 int ps_colortable(void);
@@ -172,3 +174,11 @@ int vlegfile(void);
 int windfile(char *, char *);
 /* yesno.c */
 int yesno(char *, char *);
+/* eps.c */
+int eps_bbox (char *, double *, double *, double *, double *);
+int eps_trans (double, double, double, double, double, double, double, double, double *, double *);
+#ifdef _STDIO_H
+int eps_save (FILE*,char*,char*);
+int eps_draw_saved (FILE *, char *, double, double, double, double);
+int eps_draw (FILE *, char *, double, double, double, double);
+#endif

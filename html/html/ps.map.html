@@ -228,6 +228,50 @@ USAGE:	<B>copies</B> n
 Each page will be printed n times.
 <P>
 
+<H2>eps</H2>
+
+Places EPS (Encapsulated PostScript) pictures on the output map.
+<PRE>
+USAGE:	<B>eps</B> east north
+	<B>eps</B> x% y%
+	<B>epsfile</B> EPS file
+	<B>scale</B> #
+	<B>rotate</B> #	
+	<B>masked</B> [y|n]
+	<B>end</B>	
+</PRE>
+The EPS picture location is entered in the main 
+instruction line by giving either the map 
+coordinates or by using percentages of the geographic region.
+The user must specify full EPS file path <B>epsfile</B>.
+The user may also specify the <B>scale</B> of the icon
+(default is 1.0), the <B>rotate</B> i.e. rotation in degrees
+(default is 0)
+and whether the point is to be <B>masked</B>
+by the current mask. (See manual entry for <EM>
+<A HREF="r.mask.html">r.mask</A>
+</EM> for more
+information on the mask.)
+
+<P>
+
+This example would place a EPS file ./epsf/logo.eps
+at the point (E456000 N7890000).  This picture would be
+rotated 20 degrees clockwise, 3 times bigger than
+in original file and would not be masked by the current mask.
+<PRE>
+EXAMPLE:
+	<B>eps</B> 456000 7890000
+	<B>epsfile</B> ./epsf/logo.eps     
+	<B>scale</B> 3
+	<B>rotate</B> 20	
+	<B>masked</B> n
+	<B>end</B>	
+</PRE>
+Of course, multiple EPS pictures may be drawn with multiple
+<EM>eps</EM>
+instructions.
+<P>
 
 <H2>greyrast</H2>
 
@@ -358,7 +402,6 @@ by the current mask. (See manual entry for <EM>
 <A HREF="r.mask.html">r.mask</A>
 </EM> for more
 information on the mask.)
-
 <P>
 
 This example would draw a yellow line from the point x=10% y=80%
@@ -600,6 +643,48 @@ for the <B>vector</B> instruction, but simply <B>read</B> the previously prepare
 file with the correct instructions.
 <P>
 
+<H2>rectangle</H2>
+
+Draws rectangle on the output map.
+<PRE>
+USAGE:	<B>rectangle</B> east north east north
+	<B>rectangle</B> x% y% x% y%
+	<B>color</B> color
+	<B>fcolor</B> fill color	
+	<B>width</B> #
+	<B>masked</B> [y|n]
+	<B>end</B>
+</PRE>
+The two corners of the rectangle are entered on the main
+instruction.  These points can be defined either by map coordinates or
+by using percentages of the geographic region.
+The user may also specify line
+<B>color</B>, fill color <B>fcolor</B>, <B>width</B>
+in pixels (accepts decimal points [floating points] as well as integers),
+and if the rectangle is to be
+<B>masked</B>
+by the current mask. (See manual entry for <EM>
+<A HREF="r.mask.html">r.mask</A>
+</EM> for more
+information on the mask.)
+<P>
+
+This example would draw a yellow rectangle filled by green from the point x=10% y=80%
+to the point x=30% y=70%. This line
+would be 2 pixels wide and would appear even if there is a mask.
+<PRE>
+EXAMPLE:
+	<B>rectangle</B> 10% 80% 30% 70%
+	<B>color</B> yellow
+	<B>fcolor</B> green	
+	<B>width</B> 2
+	<B>masked</B> n
+	<B>end</B>
+</PRE>
+Of course, multiple rectangles may be drawn with multiple
+<EM>rectangle</EM>
+instructions.
+<P>
 
 <H2>region</H2>
 
@@ -716,8 +801,10 @@ Selects sites data to be placed on the output map
 USAGE:	<B>sites</B> sitemap|<EM>list</EM>
 	<B>color</B> color
 	<B>icon</B> iconfile|<EM>list</EM>
+	<B>eps</B> epsfile	
 	<B>size</B> #
-	<B>size_att</B> #	
+	<B>size_att</B> #
+	<B>rotate</B> #		
 	<B>desc</B> [y|n]
 	<B>font</B> font name
 	<B>end</B>
@@ -728,10 +815,12 @@ the <B>icon</B> to be used to represent the presence of a site
 (see the manual entry for <EM>
 <A HREF="p.icons.html">p.icons</A>
 </EM>);
+the <B>eps</B> Encapsulate Postscript file to be used to represent the presence of a site;
 the <B>size</B> of the icon (number of times larger than the size it is in
 the icon file);
 the <B>size_att</B> number of attribute used for size (if used size is equal
-to size * attribute_value); 
+to size * attribute_value);
+the <B>rotate</B> in degrees for clockwise rotation; 
 and
 whether or not the <B>desc</B>ription associated with each site is also to be
 printed.

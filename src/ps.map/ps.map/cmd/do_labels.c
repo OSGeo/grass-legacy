@@ -22,7 +22,7 @@
 extern int verbose;
 
 int 
-do_labels (void)
+do_labels (int other)
 {
     FILE *fd;
 
@@ -33,33 +33,37 @@ do_labels (void)
     /* default is Helvetica font */
     set_font_name("Helvetica");
 
-    for (i = 0; i < labels.count; i++)
+    if (!other)
     {
-	fd = G_fopen_old("paint/labels", labels.name[i], labels.mapset[i]); 
+	for (i = 0; i < labels.count; i++)
+	{
+	    fd = G_fopen_old("paint/labels", labels.name[i], labels.mapset[i]); 
 	
-	if (fd == NULL)
-	{
-	    char msg[100];
-	    sprintf(msg, 
-		"Can't open label file %s in %s", labels.name[i], labels.mapset[i]);
-	    G_warning (msg);
-	}
-	else
-	{
-	    if (verbose > 1)
+	    if (fd == NULL)
 	    {
-	        fprintf (stdout,"PS-PAINT: reading labels file <%s in %s> ...",
-		    labels.name[i], labels.mapset[i]);
-	        fflush(stdout);
+		char msg[100];
+		sprintf(msg, 
+		    "Can't open label file %s in %s", labels.name[i], labels.mapset[i]);
+		G_warning (msg);
 	    }
-	    if (labels.font[i] != NULL) set_font_name(labels.font[i]);
-    	    set_font_size(10);
-	    do_label(fd);
-	    fclose(fd);
-	    if (verbose > 1) fprintf (stdout,"\n");
+	    else
+	    {
+		if (verbose > 1)
+		{
+	    	    fprintf (stdout,"PS-PAINT: reading labels file <%s in %s> ...",
+			labels.name[i], labels.mapset[i]);
+	    	    fflush(stdout);
+		}
+		if (labels.font[i] != NULL) set_font_name(labels.font[i]);
+    		set_font_size(10);
+		do_label(fd);
+		fclose(fd);
+		if (verbose > 1) fprintf (stdout,"\n");
+	    }
 	}
     }
-    if (labels.other)
+	
+    if ( other && labels.other)
     {
 	fd = fopen(labels.other, "r");
 	if (fd == NULL)
