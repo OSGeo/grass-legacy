@@ -13,7 +13,8 @@ int main(int argc, char **argv)
 
 	/* Initialize the GIS calls */
 	G_gisinit (argv[0]) ;
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	if(D_get_site_list (&site, &nsites) < 0)
 		site = NULL;
@@ -57,7 +58,8 @@ int main(int argc, char **argv)
 	if (G_parser(argc, argv))
 	    exit(-1);
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	if (D_get_cur_wind(temp))
 		G_fatal_error("No current graphics window") ;

@@ -12,7 +12,8 @@ int show_cell()
 	char buff[256] ;
 
 /* Show the map name in name window */
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 	Dchoose(NAM.name) ;
 	Derase("black") ;
 	R_close_driver();
@@ -24,7 +25,8 @@ int show_cell()
 		pclose(fptr) ;
 	}
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 /* Draw cell map */
 	G_get_window(&wind) ;

@@ -42,7 +42,8 @@ int main(int argc,char *argv[])
 	exit(1);
 
 /* make sure we can do graphics */
-    R_open_driver();
+    if (R_open_driver() != 0)
+	    G_fatal_error ("No graphics device selected");
     R_close_driver();
 
     tempfile = G_tempfile();

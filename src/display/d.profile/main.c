@@ -125,7 +125,8 @@ if (max < 0) max = 0;
     fprintf (stdout,"\n\nUse mouse to choose action\n");
 
     /* establish connection with graphics driver */
-    R_open_driver();
+    if (R_open_driver() != 0)
+        G_fatal_error ("No graphics device selected");
 
     /* Make sure screen is clear */
     Dclearscreen();

@@ -100,7 +100,8 @@ main (int argc, char **argv)
 
 	vsize = hsize = 5.0 ;
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	D_setup(0);
 

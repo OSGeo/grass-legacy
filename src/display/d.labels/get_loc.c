@@ -16,7 +16,8 @@ int get_location (int option, char *east, char *north)
     int t, b, l, r ;
     int flag;
 
-    R_open_driver();
+    if (R_open_driver() != 0)
+	G_fatal_error ("No graphics device selected");
 
     if (D_get_cur_wind(temp))
 	G_fatal_error("No current graphics window") ;

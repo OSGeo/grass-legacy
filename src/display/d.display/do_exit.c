@@ -22,7 +22,8 @@ int do_exit()
 	div_color        = D_translate_color(DC_EXIT) ;
 
 	tell_em_to_use_mouse() ;
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 	answer = D_popup(
 		background_color,
 		text_color,

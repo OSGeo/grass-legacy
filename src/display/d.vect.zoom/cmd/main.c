@@ -38,7 +38,8 @@ int main (int argc, char **argv)
 	}
 
 
-  	R_open_driver();
+  	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 	D_setup(0);
 
 	level = Vect_open_old (&Map, name, mapset);

@@ -12,7 +12,10 @@
  *	Read the file COPYING coming with GRASS for details.
  *
  * $Log$
- * Revision 1.3  2001-01-12 08:16:06  justin
+ * Revision 1.4  2001-02-13 02:22:03  eric
+ * Add check for the return value from R_open_driver().
+ *
+ * Revision 1.3  2001/01/12 08:16:06  justin
  * Added site.h since it was removed from gis.h
  *
  * Revision 1.2  2000/12/01 14:18:48  jan
@@ -68,7 +71,8 @@ main (int argc, char **argv)
     }
 
 
-    R_open_driver();
+    if (R_open_driver() != 0)
+	G_fatal_error ("No graphics device selected");
 
     if(D_get_cell_list (&rast, &nrasts) < 0)
 	rast = NULL;

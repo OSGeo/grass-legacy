@@ -83,7 +83,8 @@ main (int argc, char **argv)
 	if (G_parser(argc, argv))
 		exit(-1);
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	if (opt1->answer)
 		strcpy(full_name, opt1->answer);

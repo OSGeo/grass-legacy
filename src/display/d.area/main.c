@@ -72,10 +72,11 @@ main (int argc, char **argv)
 	}
 
 	
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error("No graphics driver selected");
 
 	if (D_get_cur_wind(window_name))
-		G_fatal_error("No current graphocs window");
+		G_fatal_error("No current graphics window");
 	if (D_set_cur_wind(window_name))
 		G_fatal_error("Current graphics window not available");
 	G_get_window(&window) ;

@@ -27,7 +27,8 @@ int main (int argc, char **argv)
 
 /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
-    R_open_driver();
+    if (R_open_driver() != 0)
+	    G_fatal_error ("No graphics device selected");
 
     if(D_get_cell_list (&rast, &nrasts) < 0)
 	rast = NULL;
@@ -123,7 +124,8 @@ int main (int argc, char **argv)
     cmd = NULL;
     if (!just->answer)
     {
-        R_open_driver();
+        if (R_open_driver() != 0)
+	    G_fatal_error ("No graphics device selected");
 	stat = R_pad_get_item("list", &list, &nlists);
 	R_close_driver();
 	if (stat || !nlists)
@@ -367,7 +369,8 @@ int main (int argc, char **argv)
     }
 #endif
 
-    R_open_driver();
+    if (R_open_driver() != 0)
+        G_fatal_error ("No graphics device selected");
 
     D_setup(0);
 

@@ -180,7 +180,8 @@ int main( int argc, char **argv )
 
 	G_set_c_null_value(&null_cell, 1);
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error("No graphics device selected");
 
 	if (D_get_cur_wind(window_name))
 		G_fatal_error("No current window") ;

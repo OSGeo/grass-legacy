@@ -42,7 +42,8 @@ int main(int argc, char **argv)
 	strcpy(grid_color_name, "black");
 	grid_color = D_translate_color(grid_color_name);
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 	/*
 	 * if the monitor is divided into more than one window, find which is
 	 * the choosen, current one being used

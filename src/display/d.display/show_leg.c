@@ -13,7 +13,8 @@ int show_legend(void)
 	char buff[256] ;
 
 /* Draw legend */
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 	Dchoose(LEG.name) ;
 	Derase("black") ;
 	R_close_driver();
