@@ -72,7 +72,9 @@
 #include "libtir.h"
 
 
-/* Here is a full example 'r.show' */
+/*****************************************************************************
+ * Here is a full example 'r.show'
+ *****************************************************************************/
 #ifdef	R_SHOW
 int
 main(int argc, char **argv)
@@ -550,7 +552,9 @@ r_copy_value2(RASTER_MAP_TYPE stype, RASTER_MAP_ROW sdata, int scol,
 }
 
 
-/***** new approach *****/
+/*****************************************************************************
+ * New approach
+ *****************************************************************************/
 double
 r_get_c(RASTER_MAP_ROW data, int col)
 {

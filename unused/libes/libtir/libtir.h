@@ -34,11 +34,11 @@ typedef	struct	_RASTER_ROW
 	RASTER_MAP_ROW	row;
 } RASTER_ROW;
 
-typedef	struct	_RASTER_MAP
+typedef	struct	_RASTER_ROW2
 {
 	RASTER_MAP_TYPE	type;
 	RASTER_MAP_ROW	*row;
-} RASTER_MAP;
+} RASTER_ROW2;
 
 static	char	*r_type_name[] = { "CELL", "FCELL", "DCELL" };
 static	char	*r_type_spec[] = { "%%d",  "%%f",   "%%lf"  };
@@ -48,6 +48,7 @@ double	r_get_value(RASTER_ROW buf, int col);
 void	r_set_value(RASTER_ROW buf, int col, double val);
 int	r_is_null_value(RASTER_ROW buf, int col);
 int	r_str_value(char *str, int width, int prec, RASTER_ROW buf, int col);
+
 void	r_copy_value(RASTER_ROW sbuf, int scol, RASTER_ROW dbuf, int dcol);
 
 double	r_get_value2(RASTER_MAP_TYPE type, RASTER_MAP_ROW data, int col);
@@ -56,10 +57,13 @@ void	r_set_value2(RASTER_MAP_TYPE type, RASTER_MAP_ROW data, int col,
 int	r_is_null_value2(RASTER_MAP_TYPE type, RASTER_MAP_ROW data, int col);
 int	r_str_value2(char *str, int width, int prec,
 		RASTER_MAP_TYPE type, RASTER_MAP_ROW data, int col);
+
 void	r_copy_value2(RASTER_MAP_TYPE stype, RASTER_MAP_ROW sdata, int scol,
 		RASTER_MAP_TYPE dtype, RASTER_MAP_ROW ddata, int dcol);
 
-/***** new approach *****/
+/*****************************************************************************
+ * New approach
+ *****************************************************************************/
 double	r_get_c(RASTER_MAP_ROW data, int col);
 double	r_get_f(RASTER_MAP_ROW data, int col);
 double	r_get_d(RASTER_MAP_ROW data, int col);
@@ -94,12 +98,19 @@ static	int	(*rp_str[])(char *str, int width, int prec,
 	r_str_c, r_str_f, r_str_d
 };
 
-#define	rm_get(buf, col)	(rp_get[(buf).type])((buf).row, col)
-#define	rm_set(buf, col, val)	(rp_set[(buf).type])((buf).row, col, val)
-#define	rm_is_null(buf, col)	(rp_is_null[(buf).type])((buf).row, col)
-#define	rm_str(str, width, prec, buf, col)				\
+#define	rm_get(buf, c)		(rp_get[(buf).type])((buf).row, c)
+#define	rm_set(buf, c, val)	(rp_set[(buf).type])((buf).row, c, val)
+#define	rm_is_null(buf, c)	(rp_is_null[(buf).type])((buf).row, c)
+#define	rm_str(str, width, prec, buf, c)				\
 				(rp_str[(buf).type])(str, width, prec,	\
-					(buf).row, col)
+					(buf).row, c)
+
+#define	rm_get2(buf, r, c)	(rp_get[(buf).type])((buf).row[r], c)
+#define	rm_set2(buf, r, c, val)	(rp_set[(buf).type])((buf).row[r], c, val)
+#define	rm_is_null2(buf, r, c)	(rp_is_null[(buf).type])((buf).row[r], c)
+#define	rm_str2(str, width, prec, buf, r, c)				\
+				(rp_str[(buf).type])(str, width, prec,	\
+					(buf).row[r], c)
 
 #endif
 
