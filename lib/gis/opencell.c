@@ -242,8 +242,8 @@ int G__open_cell_old (
     if (cellhd.zone != G__.window.zone)
     {
         G_warning (
-            _("[%s] in mapset [%s] - in different zone than current region"),
-            name, mapset);
+            _("[%s] in mapset [%s] - in different zone [%d] than current region [%d]"),
+            name, mapset, cellhd.zone, G__.window.zone);
         return -1;
     }
 
