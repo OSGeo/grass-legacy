@@ -99,11 +99,7 @@
 #define GRASS_V_VERSION       "5.0"
 /* The latest versions of files known by current version of the library. Used for new files */
 #define GV_COOR_VER_MAJOR  5 
-#ifdef GV_FORMAT_51
 #define GV_COOR_VER_MINOR  1
-#else /* format 5.0 */
-#define GV_COOR_VER_MINOR  0
-#endif
 
 #define GV_TOPO_VER_MAJOR  5
 #define GV_TOPO_VER_MINOR  0
@@ -114,11 +110,7 @@
 
 /* The oldest versions of the library, which are capable to read the files created by the current version */
 #define GV_COOR_EARLIEST_MAJOR  5
-#ifdef GV_FORMAT_51
 #define GV_COOR_EARLIEST_MINOR	1
-#else /* format 5.0 */
-#define GV_COOR_EARLIEST_MINOR	0
-#endif
 
 #define GV_TOPO_EARLIEST_MAJOR  5
 #define GV_TOPO_EARLIEST_MINOR	0
