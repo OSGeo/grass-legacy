@@ -1026,7 +1026,7 @@ int G_gui (void)
     
     cmd[0] = '\0';
     append(cmd, "lappend auto_path %s/bwidget\n", G_gisbase());
-    append(cmd, "package require BWidget\n");
+    append(cmd, "package require -exact BWidget 1.2.1\n");
     append(cmd, "wm title . \"%s\"\n", pgm_name);
     append(cmd, "source $env(GISBASE)/etc/gtcltk/select.tcl\n"
 		"set env(GISDBASE) [exec g.gisenv get=GISDBASE]\n"
