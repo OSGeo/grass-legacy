@@ -37,7 +37,7 @@ ARCH                = @host@
 prefix              = @prefix@
 exec_prefix         = @exec_prefix@
 UNIX_BIN            = @BINDIR@
-INST_DIR            = @prefix@/grass-@VERSION_MAJOR@.@VERSION_MINOR@.@VERSION_RELEASE@
+INST_DIR            = @prefix@/grass-@GRASS_VERSION_MAJOR@.@GRASS_VERSION_MINOR@.@GRASS_VERSION_RELEASE@
 
 
 DL_LIBS             = @DL_LIBS@

@@ -21,9 +21,9 @@ include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
 
-START_UP=grass$(VERSION_MAJOR)$(VERSION_MINOR)
+START_UP=grass$(GRASS_VERSION_MAJOR)$(GRASS_VERSION_MINOR)
 
-EXTRA_CFLAGS = -DD_LOCATION_NAME=\"$(DEFAULT_LOCATION)\" -DD_GISDBASE=\"$(DEFAULT_DATABASE)\" -DVERSION_NUMBER=\"'$(VERSION_NUMBER)'\" -DVERSION_UPDATE_PKG=\"'$(VERSION_UPDATE_PKG)'\"
+EXTRA_CFLAGS = -DD_LOCATION_NAME=\"$(DEFAULT_LOCATION)\" -DD_GISDBASE=\"$(DEFAULT_DATABASE)\" -DGRASS_VERSION_NUMBER=\"'$(GRASS_VERSION_NUMBER)'\" -DGRASS_VERSION_UPDATE_PKG=\"'$(GRASS_VERSION_UPDATE_PKG)'\"
 SET_DATA = $(OBJDIR)/set_data.o $(OBJDIR)/mke_mapset.o \
 	   $(OBJDIR)/mke_loc.o $(OBJDIR)/chk_dbase.o $(OBJDIR)/other.o
 
@@ -56,9 +56,9 @@ $(ARCH_BINDIR)/$(START_UP): init.sh
 $(ETC)/Init.sh: init.sh
 	rm -f $@
 	$(SHELL) -c "sed \
-	-e \"s#VERSION_NUMBER#$(VERSION_NUMBER)#\" \
-	-e \"s#VERSION_DATE#$(VERSION_DATE)#\" \
-	-e \"s#VERSION_UPDATE_PKG#$(VERSION_UPDATE)#\" \
+	-e \"s#GRASS_VERSION_NUMBER#$(GRASS_VERSION_NUMBER)#\" \
+	-e \"s#GRASS_VERSION_DATE#$(GRASS_VERSION_DATE)#\" \
+	-e \"s#GRASS_VERSION_UPDATE_PKG#$(GRASS_VERSION_UPDATE)#\" \
 	-e \"s#LD_LIBRARY_PATH_VAR#$(LD_LIBRARY_PATH_VAR)#g\" \
 	-e \"s#PERL_COMMAND#$(PERL)#\" \
 	-e \"s#START_UP#$(START_UP)#\" \
@@ -86,12 +86,12 @@ $(BIN)/exit:
 
 $(ETC)/grass_intro: grass_intro.txt version.sed 
 	rm -f $@
-	sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" grass_intro.txt > $@
+	sh ./version.sed "$(GRASS_VERSION_NUMBER)" "$(GRASS_VERSION_DATE)" "$(GRASS_VERSION_UPDATE_PKG)" grass_intro.txt > $@
 	chmod +r $@
 
 $(ETC)/license: license.txt version.sed
 	rm -f $@
-	sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" license.txt > $@
+	sh ./version.sed "$(GRASS_VERSION_NUMBER)" "$(GRASS_VERSION_DATE)" "$(GRASS_VERSION_UPDATE_PKG)" license.txt > $@
 	chmod +r $@
 
 $(ETC)/msgs: msgs

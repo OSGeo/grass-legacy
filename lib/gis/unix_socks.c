@@ -54,7 +54,7 @@
  * _get_make_sock_path(), builds and tests the path for the socket
  * directory.  Returns NULL on any failure, otherwise it returns the
  * directory path. The path will be like 
- * "/tmp/grass'VERSION_MAJOR''VERSION_MINOR'-$USER-$GIS_LOCK".
+ * "/tmp/grass'GRASS_VERSION_MAJOR''GRASS_VERSION_MINOR'-$USER-$GIS_LOCK".
  * ($GIS_LOCK is set in lib/init/init.sh to PID) 
  * ---------------------------------------------------------------------*/
 static char *
@@ -76,10 +76,10 @@ _get_make_sock_path (void)
     if ( (lock = getenv ( "GIS_LOCK" )) == NULL )
 	G_fatal_error ("Cannot get GIS_LOCK enviroment variable value");
 
-    len = strlen(prefix) + strlen(user) + strlen(VERSION_MAJOR) + strlen(VERSION_MINOR) + strlen(lock) + 3;
+    len = strlen(prefix) + strlen(user) + strlen(GRASS_VERSION_MAJOR) + strlen(GRASS_VERSION_MINOR) + strlen(lock) + 3;
     path = G_malloc (len);
     
-    sprintf (path, "%s%s%s-%s-%s", prefix, VERSION_MAJOR, VERSION_MINOR, user, lock);
+    sprintf (path, "%s%s%s-%s-%s", prefix, GRASS_VERSION_MAJOR, GRASS_VERSION_MINOR, user, lock);
 
     if ((status = lstat (path, &theStat)) != 0)
     {

@@ -12,8 +12,8 @@
 #ifndef D_GISDBASE
 #define D_GISDBASE "/data"
 #endif 
-#ifndef VERSION_NUMBER
-#define VERSION_NUMBER ""
+#ifndef GRASS_VERSION_NUMBER
+#define GRASS_VERSION_NUMBER ""
 #endif
 
 
@@ -91,7 +91,7 @@ int main (int argc, char *argv[])
     strcpy (gisdbase,      GISDBASE);
     G__setenv ("GISDBASE",      gisdbase) ;
 
-    sprintf (version, "                            GRASS %s", VERSION_NUMBER);
+    sprintf (version, "                            GRASS %s", GRASS_VERSION_NUMBER);
 
     for (repeat = 1; repeat ; hit_return())
     {
