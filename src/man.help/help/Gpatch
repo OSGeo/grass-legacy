@@ -1,0 +1,3 @@
+Assigns data to "no data" areas in one cell map with data from other
+cell maps.  Useful for updating maps or combining adjacent data layers.  
+
