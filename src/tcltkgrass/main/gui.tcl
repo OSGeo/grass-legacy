@@ -1205,10 +1205,10 @@ proc start_monitor {monitor} {
 
     scan $geometry {%dx%d+%d+%d} width height left top
 
-    set env(XDRIVER_WIDTH)  $width
-    set env(XDRIVER_HEIGHT) $height
-    set env(XDRIVER_LEFT)   $left
-    set env(XDRIVER_TOP)    $top
+    set env(GRASS_WIDTH)  $width
+    set env(GRASS_HEIGHT) $height
+    set env(GRASS_LEFT)   $left
+    set env(GRASS_TOP)    $top
 
     script_add "d.mon start=$monitor" "cmd"
     exec xterm -geometry 40x5 -e d.mon start=$monitor
