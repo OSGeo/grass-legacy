@@ -104,10 +104,8 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag)
 	    latitude=window->north;
 	    longitude=window->west;
 	    if(pj_do_proj(&longitude, &latitude, &iproj, &oproj) < 0)
-	    {
-	       fprintf(stderr,"Error in pj_do_proj (projection of input coordinate pair)\n");
-	               exit(0);
-	    }
+	       G_fatal_error ("Error in pj_do_proj (projection of input coordinate pair)");
+
 	    lo1=longitude;
 	    la1=latitude;
 	    fprintf (stdout, "long: %.5f lat: %.5f (north/west corner)\n", lo1, la1);
@@ -115,10 +113,8 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag)
 	    latitude=window->north;
 	    longitude=window->east;
 	    if(pj_do_proj(&longitude, &latitude, &iproj, &oproj) < 0)
-	    {
-	       fprintf(stderr,"Error in pj_do_proj (projection of input coordinate pair)\n");
-	               exit(0);
-	    }
+	       G_fatal_error ("Error in pj_do_proj (projection of input coordinate pair)");
+
 	    lo2=longitude;
 	    la2=latitude;
 	    fprintf (stdout, "long: %.5f lat: %.5f (north/east corner)\n", lo2, la2);
@@ -126,10 +122,8 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag)
 	    latitude=window->south;
 	    longitude=window->east;
 	    if(pj_do_proj(&longitude, &latitude, &iproj, &oproj) < 0)
-	    {
-	       fprintf(stderr,"Error in pj_do_proj (projection of input coordinate pair)\n");
-	               exit(0);
-	    }
+	       G_fatal_error ("Error in pj_do_proj (projection of input coordinate pair)");
+
 	    lo3=longitude;
 	    la3=latitude;
 	    fprintf (stdout, "long: %.5f lat: %.5f (south/east corner)\n", lo3, la3);
@@ -137,10 +131,8 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag)
 	    latitude=window->south;
 	    longitude=window->west;
 	    if(pj_do_proj(&longitude, &latitude, &iproj, &oproj) < 0)
-	    {
-	       fprintf(stderr,"Error in pj_do_proj (projection of input coordinate pair)\n");
-	               exit(0);
-	    }
+	       G_fatal_error ("Error in pj_do_proj (projection of input coordinate pair)");
+
 	    lo4=longitude;
 	    la4=latitude;
 	    fprintf (stdout, "long: %.5f lat: %.5f (south/west corner)\n", lo4, la4);
