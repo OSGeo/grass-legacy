@@ -67,7 +67,7 @@ D_get_screen_window(&t, &b, &l, &r);
 R_set_window(t, b, l, r);
 
 /* erase current graphics window to black */
-R_standard_color(D_translate_color("black"));
+R_standard_color(D_translate_color(DEFAULT_BG_COLOR));
 D_erase_window();
 
 /* create axis lines */
@@ -77,7 +77,7 @@ x_line[0] = x_line[1] = l+(int)(ORIGIN_X*width);
 x_line[2] = l+(int)(XAXIS_END*width);
 y_line[0] = b-(int)(YAXIS_END*height);
 y_line[1] = y_line[2] = b-(int)(ORIGIN_Y*height);
-R_standard_color(D_translate_color("white"));
+R_standard_color(D_translate_color(DEFAULT_FG_COLOR));
 
 /* figure scaling factors and offsets for profile line */
 xscale = ((double)(x_line[2]-x_line[1])/((double)profile.count));
@@ -110,7 +110,7 @@ R_polyline_abs(x_line,y_line,3);
 /* loop until coordinate text is sized correctly to fit in window */
 text_height = TEXT_HEIGHT*(b-t);
 text_width  = text_height*0.8;
-R_standard_color(D_translate_color("white"));
+R_standard_color(D_translate_color(DEFAULT_FG_COLOR));
 sprintf(txt_buf,"%s: From (%10.2f,%10.2f) to (%10.2f,%10.2f)",
         letter,profile.e1,profile.n1,profile.e2,profile.n2); 
 done=0;
