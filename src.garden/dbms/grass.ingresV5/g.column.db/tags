@@ -1,0 +1,5 @@
+Mmain	main.c	/^main(argc, argv)$/
+delcr	delcr.c	/^delcr(str)   \/* char *str   *\/$/
+ingresQry	ingresQry.c	/^ingresQry(tabname,flag, sqlFile)$/
+ingresUnTable	ingresUtils.c	/^void ingresUnTable(buf)$/
+parseType	ingresQry.c	/^parseType(cname, ctype, clength)$/
