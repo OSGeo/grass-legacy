@@ -342,7 +342,7 @@ src/raster/r.statistics
 src/raster/r.stats
 src/raster/r.sum
 src/raster/r.sun
-#src/raster/r.sunmask
+src/raster/r.sunmask
 src/raster/r.support
 src/raster/r.surf.area
 src/raster/r.surf.contour
