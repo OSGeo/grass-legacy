@@ -16,7 +16,7 @@ char *dig_float_point (char *, int, double);
 //double dig_point_in_area (struct Map_info *, double, double, P_AREA *);
 double dig_x_intersect (double, double, double, double, double);
 double dig_point_in_poly (double, double, struct line_pnts *);
-double dig_distance2_point_to_line (double, double, double, double, double, double, double *, double *, double *, int *);
+double dig_distance2_point_to_line (double, double, double, double, double, double, double, double, double, double *, double *, double *, double *, int *);
 
 double dig_unit_conversion (void);
 

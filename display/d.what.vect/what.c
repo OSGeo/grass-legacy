@@ -1,4 +1,6 @@
 #include <string.h>
+#include <unistd.h>
+#include <math.h>
 #include "gis.h"
 #include "raster.h"
 #include "display.h"
@@ -12,7 +14,6 @@ static int nlines = 50;
 int what(int once, int terse, int width, int mwidth,
 	 int dodbmi)
 {
-  int lcat, acat ;
   int row, col;
   int nrows, ncols;
   struct Cell_head window;
@@ -28,8 +29,6 @@ int what(int once, int terse, int width, int mwidth,
   struct Plus_head *Plus ;
   struct field_info *Fi;
   
-  P_LINE *Line ;
-  P_AREA *Area ;
   plus_t line, area, centroid ;
   int i, j;
   struct line_pnts * Points;
@@ -87,7 +86,7 @@ int what(int once, int terse, int width, int mwidth,
       for(i=0; i<nvects; i++)
         {
           Plus = &(Map[i].plus);
-          line = Vect_find_line (&Map[i], east, north, 
+          line = Vect_find_line (&Map[i], east, north, 0, 
 		                    GV_POINT|GV_LINE|GV_BOUNDARY|GV_CENTROID,
 				    maxdist);
           area = Vect_find_area (&Map[i], east, north) ;
@@ -181,16 +180,7 @@ int what(int once, int terse, int width, int mwidth,
 		  }
 	      }
 	      
-              Vect_get_area_points(&Map[i], area, Points);
-              sq_meters = G_area_of_polygon(Points->x, Points->y, Points->n_points);
-              
-	      /* substructing island areas */
-	      Area = Plus->Area[area];
-              for(j = 0;j<Area->n_isles;j++)
-                {
-                  Vect_get_isle_points(&Map[i], Area->isles[j], Points);
-                  sq_meters -= G_area_of_polygon(Points->x, Points->y, Points->n_points);
-                }
+              sq_meters = Vect_get_area_area (&Map[i], area);
               
               fprintf (stdout,"Size - Sq Meters: %.3f\t\tHectares: %.3f\n",
             	   sq_meters, (sq_meters/10000.) );

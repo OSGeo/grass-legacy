@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "Vect.h"
 #include "conv.h"
@@ -121,7 +122,7 @@ old2new (char *in, char *out, int endian)
     j = 0;
     for (i=0; i < ncats; i++) {
         if ( cats[i].type == GV_CENTROID ){
-            Vect_append_point ( pnt_out, cats[i].x, cats[i].y); 
+            Vect_append_point ( pnt_out, cats[i].x, cats[i].y, 0); 
 	    Vect_cat_set ( cat_out, 1, cats[i].cat );
             Vect_write_line ( &Mapout, GV_CENTROID, pnt_out, cat_out );
 	    j++;

@@ -154,6 +154,8 @@ Vect_cat_get (struct line_cats *Cats, int field, int *cat)
   if (field < 1 || field > GV_FIELD_MAX)
     return (0);
   */
+
+  *cat = 0;
     
   /* go through cats and find if field exist */
   for (n = 0; n < Cats->n_cats; n++)

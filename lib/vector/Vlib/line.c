@@ -157,21 +157,7 @@ Vect_reset_line (struct line_pnts *Points)
    **   data first by calling Vect_reset_line ()
  */
 int 
-Vect_append_point (struct line_pnts *Points, double x, double y)
-{
-  register int n;
-
-  if (0 > dig_alloc_points (Points, Points->n_points + 1))
-    return (-1);
-
-  n = Points->n_points;
-  Points->x[n] = x;
-  Points->y[n] = y;
-  return ++(Points->n_points);
-}
-
-int 
-Vect_append_3d_point (struct line_pnts *Points, double x, double y, double z)
+Vect_append_point (struct line_pnts *Points, double x, double y, double z)
 {
   register int n;
 
@@ -337,7 +323,6 @@ double
 Vect_line_length ( struct line_pnts *Points )
 {
     int j;
-    double dist = 0;
     double dx, dy, dz, len = 0;
 
     if ( Points->n_points < 2 ) return 0;
@@ -363,8 +348,8 @@ Vect_line_length ( struct line_pnts *Points )
 int 
 Vect_line_distance (
 		  struct line_pnts *points, /* line */
-		  double ux, double uy,     /* point */
-		  double *px, double *py,   /* point on line */
+		  double ux, double uy, double uz,    /* point */
+		  double *px, double *py, double *pz, /* point on line */
 		  double *dist,             /* distance to line */
 		  double *spdist,           /* distance of point from segment beginning */
 		  double *lpdist)           /* distance of point from line beginning */
@@ -372,7 +357,7 @@ Vect_line_distance (
   register int i;
   register double distance;
   register double new_dist;
-  double   tpx, tpy, tdist, tspdist, tlpdist;
+  double   tpx, tpy, tpz, tdist, tspdist, tlpdist;
   double dx, dy, dz;
   register int n_points;
   int segment;
@@ -380,11 +365,12 @@ Vect_line_distance (
   n_points = points->n_points;
 
   if ( n_points == 1 ) {
-    distance = dig_distance2_point_to_line (ux, uy, points->x[0], points->y[0],
-              					    points->x[0], points->y[0],
-				  	    NULL, NULL, NULL, NULL);
+    distance = dig_distance2_point_to_line (ux, uy, uz, points->x[0], points->y[0], points->z[0],
+              				                points->x[0], points->y[0], points->z[0],
+				  	                NULL, NULL, NULL, NULL, NULL);
     tpx = points->x[0];
     tpy = points->y[0];
+    tpz = points->z[0];
     tdist = sqrt(distance);
     tspdist = 0;
     tlpdist = 0;
@@ -392,16 +378,17 @@ Vect_line_distance (
     
   } else {
 
-      distance = dig_distance2_point_to_line (ux, uy, points->x[0], points->y[0],
-						      points->x[1], points->y[1],
-						NULL, NULL, NULL, NULL);
+      distance = dig_distance2_point_to_line (ux, uy, uz, points->x[0], points->y[0], points->z[0],
+						          points->x[1], points->y[1], points->z[1],
+						          NULL, NULL, NULL, NULL, NULL);
       segment = 1;
 	  
       for ( i = 1 ; i < n_points - 1; i++)
 	{
-	  new_dist = dig_distance2_point_to_line (ux, uy, points->x[i], points->y[i],
-					    points->x[i + 1], points->y[i + 1],
-					    NULL, NULL, NULL, NULL);
+	  new_dist = dig_distance2_point_to_line (ux, uy, uz, 
+		                                  points->x[i], points->y[i], points->z[i],
+					          points->x[i + 1], points->y[i + 1], points->z[i + 1],
+					          NULL, NULL, NULL, NULL, NULL);
 	  if (new_dist < distance)
 	    {
 	      distance = new_dist;
@@ -410,9 +397,10 @@ Vect_line_distance (
 	}
 
       /* we have segment and now we can recalculate other values (speed) */
-      new_dist = dig_distance2_point_to_line (ux, uy, points->x[segment - 1], points->y[segment - 1],
-					    points->x[segment], points->y[segment],
-					    &tpx, &tpy, &tspdist, NULL);
+      new_dist = dig_distance2_point_to_line (ux, uy, uz, 
+	                       points->x[segment - 1], points->y[segment - 1], points->z[segment - 1],
+			       points->x[segment], points->y[segment], points->z[segment],
+			       &tpx, &tpy, &tpz, &tspdist, NULL);
       
       /* calculate distance from beginning of line */
       if ( lpdist ) { 
@@ -430,6 +418,7 @@ Vect_line_distance (
   
   if (px) *px = tpx;
   if (py) *py = tpy;
+  if (pz) *pz = tpz;
   if (dist) *dist = tdist;
   if (spdist) *spdist = tspdist;
   if (lpdist) *lpdist = tlpdist;
