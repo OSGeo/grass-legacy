@@ -20,15 +20,9 @@
 
 int G_get_set_window (struct Cell_head *window)
 {
-    char *fakestart;
+    G__init_window() ;
+    G_copy((char *) window, (char *) &G__.window, sizeof(*window) ) ;
     
-    /* fake session for HTML generation with parser */
-    fakestart = getenv( "GRASS_FAKE_START" );
-    if ( fakestart == NULL ) {
-        G__init_window() ;
-        G_copy((char *) window, (char *) &G__.window, sizeof(*window) ) ;
-    }
-
     return 1;
 }
 

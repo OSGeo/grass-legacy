@@ -38,7 +38,7 @@ int main(int argc, char **argv)
     int    r, g, b, colornum = MAX_COLOR_NUM;
     char **vect = NULL;
     int nvects = 0;
-    char *fakestart;        
+            
 
     /* Initialize the GIS calls */
     G_gisinit (argv[0]) ;
@@ -47,22 +47,20 @@ int main(int argc, char **argv)
     module->description = 
     "Find shortest path for selected starting and ending node";
 
-    fakestart = getenv( "GRASS_FAKE_START" );
-    if ( fakestart == NULL ) {
-       /* Conditionalize R_open_driver() so "help" works, open quiet as well */
-       R__open_quiet();
-       if (R_open_driver() != 0) {
-          G_fatal_error ("No graphics device selected");
-       }
-       if (D_get_dig_list (&vect, &nvects) < 0)
-          G_fatal_error ("No vector map shown in monitor, use d.vect first");
-       else
-       {
-          vect = (char **)G_realloc(vect, (nvects+1)*sizeof(char *));
-          vect[nvects] = NULL;
-       }
-       R_close_driver();
+    /* Conditionalize R_open_driver() so "help" works, open quiet as well */
+    R__open_quiet();
+    if (R_open_driver() != 0) {
+       G_fatal_error ("No graphics device selected");
     }
+    if (D_get_dig_list (&vect, &nvects) < 0)
+       G_fatal_error ("No vector map shown in monitor, use d.vect first");
+    else
+    {
+       vect = (char **)G_realloc(vect, (nvects+1)*sizeof(char *));
+       vect[nvects] = NULL;
+    }
+    R_close_driver();
+
     map = G_define_standard_option(G_OPT_V_MAP);
 
     type_opt =  G_define_standard_option(G_OPT_V_TYPE);

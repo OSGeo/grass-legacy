@@ -23,18 +23,13 @@ int G_gisinit( char *pgm)
 {
     char *mapset;
     char msg[100];
-    char *fakestart;
 
     if ( initialized )
 	return 0;
 
     G_set_program_name (pgm);
 
- /* fake session for HTML generation with parser */
- fakestart = getenv( "GRASS_FAKE_START" );
- if ( fakestart == NULL )
- {
-  /* Make sure location and mapset are set */
+   /* Make sure location and mapset are set */
     G_location_path();
     switch (G__mapset_permissions (mapset = G_mapset()))
     {
@@ -53,8 +48,6 @@ int G_gisinit( char *pgm)
     }
 
     gisinit();
-
- } /* fake session */
 
     return 0;
 }

@@ -16,7 +16,8 @@ struct {
 } parms;
 
 void parse_command_line();
-
+int print_table_definition(dbTable *);
+	    
 int
 main(int argc, char *argv[])
 {
@@ -72,13 +73,9 @@ parse_command_line(int argc, char *argv[])
     struct Flag *cols;
     struct GModule *module;
     char *drv, *db;
-    char *fakestart;
 
     /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
-
-    /* fake session for HTML generation with parser */
-    fakestart = getenv( "GRASS_FAKE_START" );
 
     cols = G_define_flag();
     cols->key               = 'c';
@@ -96,7 +93,7 @@ parse_command_line(int argc, char *argv[])
     driver->options     = db_list_drivers();
     driver->required 	= NO;
     driver->description = "driver name";
-    if ( fakestart == NULL && (drv=db_get_default_driver_name()) )
+    if ( (drv=db_get_default_driver_name()) )
         driver->answer = drv;
 
     database 		= G_define_option();
@@ -104,7 +101,7 @@ parse_command_line(int argc, char *argv[])
     database->type 	= TYPE_STRING;
     database->required 	= NO;
     database->description = "database name";
-    if ( fakestart == NULL && (db=db_get_default_database_name()) )
+    if ( (db=db_get_default_database_name()) )
         database->answer = db;
 
     /* Set description */

@@ -20,15 +20,11 @@ main(int argc, char *argv[])
     struct Option *where, *select;
     struct GModule *module;
     char   *drv, *db;
-    char *fakestart;
 
     /* Set description */
     module              = G_define_module();
     module->description = "Copy a table. Either 'from_table' (optionaly with 'where') can be used "
 			"or 'select' option, but not 'from_table' and 'select' at the same time.";
-
-    /* fake session for HTML generation with parser */
-    fakestart = getenv( "GRASS_FAKE_START" );
 
     from_driver		     = G_define_option();
     from_driver->key 	     = "from_driver";
@@ -36,7 +32,7 @@ main(int argc, char *argv[])
     from_driver->options     = db_list_drivers();
     from_driver->required    = YES;
     from_driver->description = "Input driver name";
-    if ( fakestart == NULL && (drv=db_get_default_driver_name()) )
+    if ( (drv=db_get_default_driver_name()) )
          from_driver->answer = drv;
 
     from_database 	       = G_define_option();
@@ -44,7 +40,7 @@ main(int argc, char *argv[])
     from_database->type        = TYPE_STRING;
     from_database->required    = YES;
     from_database->description = "Input database name";
-    if ( fakestart == NULL && (db=db_get_default_database_name()) )
+    if ( (db=db_get_default_database_name()) )
 	from_database->answer = db;
 
     from_table 		    = G_define_option();
@@ -59,7 +55,7 @@ main(int argc, char *argv[])
     to_driver->options     = db_list_drivers();
     to_driver->required    = YES;
     to_driver->description = "Output driver name";
-    if ( fakestart == NULL && (drv=db_get_default_driver_name()) )
+    if ( (drv=db_get_default_driver_name()) )
          to_driver->answer = drv;
 
     to_database 	     = G_define_option();
@@ -67,7 +63,7 @@ main(int argc, char *argv[])
     to_database->type        = TYPE_STRING;
     to_database->required    = YES;
     to_database->description = "Output database name";
-    if ( fakestart == NULL && (db=db_get_default_database_name()) )
+    if ( (db=db_get_default_database_name()) )
 	to_database->answer = db;
 
     to_table 		  = G_define_option();
