@@ -193,7 +193,7 @@ G3d_range_write (map)
   char path[4096], element[100];
 
   G3d_filename (path, G3D_RANGE_ELEMENT, map->fileName, map->mapset);
-  unlink(path);
+  remove ( path );
 
   if (writeRange (map->fileName, &(map->range)) == -1) {
     G3d_error ("G3d_closeCellNew: error in writeRange");

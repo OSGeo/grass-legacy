@@ -31,13 +31,13 @@ int G_system ( char *command)
 {
     int status, pid, w;
     void (*sigint)()
-#ifndef __MINGW32__
+#ifdef SIGQUIT
         , (*sigquit)()
 #endif
             ;
 
     sigint  = signal (SIGINT,  SIG_IGN);
-#ifndef __MINGW32__
+#ifdef SIGQUIT
     sigquit = signal (SIGQUIT, SIG_IGN);
 #endif
 
@@ -78,7 +78,7 @@ int G_system ( char *command)
 #endif
 
     signal (SIGINT,  sigint);
-#ifndef __MINGW32__
+#ifdef SIGQUIT
     signal (SIGQUIT, sigquit);
 #endif
 
