@@ -101,13 +101,13 @@ int main(int argc, char **argv)
 	if (out_fd < 0)
 		G_fatal_error("unable to open output file <%s>", out_name);
 
-	if (G_read_cats(in_name,mapset,&cats) == -1)
+	if (G_read_cats(in_name, mapset, &cats) == -1)
 	{
 		G_fatal_error("error in reading cats file for %s", in_name);
 		exit(1);
 	}
 
-	if (G_read_colors(in_name,mapset,&colr) == -1)
+	if (G_read_colors(in_name, mapset, &colr) == -1)
 	{
 		G_warning("error in reading colr file for %s", in_name);
 		colrfile = 0;
@@ -238,11 +238,11 @@ int main(int argc, char **argv)
 	G_close_cell(in_fd);
 	G_close_cell(out_fd);
 
-	if (G_write_cats(out_name,&cats) == -1)
+	if (G_write_cats(out_name, &cats) == -1)
 		G_warning("error writing cats file for %s", out_name);
 
 	if (colrfile)
-		if (G_write_colors(out_name,mapset,&colr) == -1)
+		if (G_write_colors(out_name, G_mapset(), &colr) == -1)
 			G_warning("error writing colr file for %s", out_name);
 
 	return 0;
