@@ -313,8 +313,9 @@ main (int argc, char **argv)
 
 	fprintf(stdout, "Converting attributes to DBF file...\n");
 	sprintf(buf, "$GISBASE/etc/v.out.shape/txt2dbf -v -I6 -I6 -I6 -C80 -d' ' -U -F'ID CAT ID2 ATT' $LOCATION/arc_tmp/%s.txt %s.dbf > /dev/null; m -rf  $LOCATION/arc_tmp/", shape_prefix, shape_prefix);
+	fprintf(stderr, "$GISBASE/etc/v.out.shape/txt2dbf -v -I6 -I6 -I6 -C80 -d' ' -U -F'ID CAT ID2 ATT' $LOCATION/arc_tmp/%s.txt %s.dbf > /dev/null; m -rf  $LOCATION/arc_tmp/", shape_prefix, shape_prefix);
 	G_system(buf);
-	
+
 	exit(0);
 }
 
