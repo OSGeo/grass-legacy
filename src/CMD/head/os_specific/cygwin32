@@ -1,4 +1,4 @@
-CC                  = gcc
+CC                  = gcc -I/usr/include -I/usr/local/include
 FC                  = g77
 LEX                 = flex
 YACC                = bison -y
