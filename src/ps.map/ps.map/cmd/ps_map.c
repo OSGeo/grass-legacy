@@ -101,7 +101,12 @@ int ps_map (void)
 	     PS.map_left + 0.5, PS.map_right - 0.5);
 
     /* do the colortable, if requested */
-    if (PS.do_colortable) ps_colortable();
+    if (PS.do_colortable) {
+	if ( G_raster_map_is_fp(PS.cell_name, PS.cell_mapset) )
+       	    ps_fcolortable();
+	else
+            ps_colortable();
+    }
 
     /* do comments, if any */
     if (PS.commentfile != NULL) do_comments();

@@ -15,6 +15,7 @@ static char *help[] =
 {
     "where      x y",
     "width      table_width",
+    "height     fptable_height",
     "cols       columns",
     "font       fontname",
     "fontsize   fontsize",
@@ -29,12 +30,12 @@ ctablfile (void)
     char buf[1024];
     char *key, *data;
     int color, fontsize, cols, nodata;
-    double w, x, y;
+    double w, h, x, y;
 
     fontsize = 0;
     color = BLACK;
     cols = 1;
-    w = x = y = 0.0;
+    h = w = x = y = 0.0;
     ct.nodata = 1;
     while (input(2, buf, help))
     {
@@ -56,6 +57,16 @@ ctablfile (void)
 	    {
 		w = 0.0;
 		error(key, data, "illegal width request");
+	    }
+	    else continue;
+	}
+	
+        if (KEY("height"))
+ 	{
+	    if (sscanf(data, "%lf", &h) != 1)
+	    {
+		h = 0.0;
+		error(key, data, "illegal height request");
 	    }
 	    else continue;
 	}
@@ -106,6 +117,7 @@ ctablfile (void)
     ct.x = x;
     ct.y = y;
     ct.width = w;
+    ct.height = h;
     ct.color = color;
     ct.cols = cols;
     if (fontsize) ct.fontsize = fontsize;
