@@ -20,7 +20,8 @@ for a USGS 7.5-minute quadrangle.
 <BR>
 <B>v.mkquads help</B>
 <BR>
-<B>v.mkquads</B> [<B>-esrvx</B>] <B>map=</B><EM>name</EM> 
+<B>v.mkquads</B> [<B>-esrvx</B>] <B>map=</B><EM>name</EM>
+[<B>type=</B><EM>quad size</EM>]
 
 <H2>DESCRIPTION</H2>
 
@@ -97,6 +98,9 @@ of quads which are to be patched together.
 <DL>
 <DT><B>map=</B><EM>name</EM>
 <DD>The name of a file to contain program output. 
+<DT><B>type=</B><EM>quad size</EM></DT>
+<DD>options: full,third,quarter,1x1,1x2<BR>
+default: full</DD>
 </DL>
 
 <P>
@@ -112,15 +116,12 @@ the manual entry for
 
 All output options can be used on the command line at the
 same time.  A listing of all the quad points in
-latitude/longitude and UTM coordinates will be displayed
-each time the program is executed. The spheroid being used
-for the lat/lon to UTM conversions is <EM>clark66</EM>.
+latitude/longitude and projected coordinates will be displayed
+each time the program is executed.
 
 <H2>BUGS</H2>
 
-Currently, this program only works for GRASS locations in a
-Universal Transverse Mercator (UTM) coordinate system (in
-meters).  There are no guarantees that <EM>v.mkquads</EM>
+There are no guarantees that <EM>v.mkquads</EM>
 will function properly if a quadrangle crosses UTM zones.
 This program has not been tested outside the northwest UTM
 quadrant.

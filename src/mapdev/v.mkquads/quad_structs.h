@@ -9,7 +9,7 @@ struct quads_description
     int    north ;		/*  true if north hemisphere  */
     int    east ;		/*  true if east hemisphere  */
     int    spheroid_num ;	/*  index to spheroid array  */
-    char   *spheroid_name ;	/*  spheroid name            */
+    char   spheroid_name[100] ;	/*  spheroid name            */
     double origin_lat ;        /*  lower left point of grid  */
     double origin_lon ;
     double origin_x ;        /*  lower left point of grid  */

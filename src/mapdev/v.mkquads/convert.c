@@ -44,9 +44,26 @@ int setup_ll_to_utm (struct quads_description *quads_info)
 	/* keep ellps same as input */
         ellps = G_find_key_value("ellps", in_proj_keys);
         if( ellps != NULL )
+        {
+	    /* Try to preserve an ellipsoid name if we can as the program
+	     * wants to print it out later on */
             G_set_key_value("ellps", ellps, out_proj_keys);
+	    sprintf(quads_info->spheroid_name, ellps);
+	}
         else
-            G_set_key_value("ellps", "wgs84", out_proj_keys);
+        {
+	    double a, es;
+	    char buff[100];
+
+	    /* but the underlying parameters are all we really need for
+	     * re-projection */
+            G_get_ellipsoid_parameters(&a, &es);
+            sprintf(buff, "%f", a);
+            G_set_key_value("a", buff, out_proj_keys);
+            sprintf(buff, "%f", es);
+            G_set_key_value("es", buff, out_proj_keys);
+	    sprintf(quads_info->spheroid_name, "a=%f es=%f", a, es);
+        }
         G_set_key_value("unit", "degree", out_unit_keys);
         G_set_key_value("units", "degrees", out_unit_keys);
         G_set_key_value("meters", "1.0", out_unit_keys);
@@ -54,7 +71,10 @@ int setup_ll_to_utm (struct quads_description *quads_info)
                 G_fatal_error("Error getting out proj key values.");
                 exit (0);
         }
-	quads_info->spheroid_name = out_proj_keys->value[2];
+        G_free_key_value( in_proj_keys );  
+        G_free_key_value( in_unit_keys );
+        G_free_key_value( out_proj_keys );
+        G_free_key_value( out_unit_keys );
 
 	return(0) ;
 
@@ -130,7 +150,7 @@ int convert_window_to_ll (struct Cell_head *W)
 {
 #ifdef DEBUG
 print_wind( W, " window of utm's") ;
-#endif DEBUG
+#endif /* DEBUG */
 
 
 /*  convert south west point of window  */
@@ -145,7 +165,7 @@ print_wind( W, " window of utm's") ;
 
 #ifdef DEBUG
 print_wind( W, " window of ll") ;
-#endif DEBUG
+#endif /* DEBUG */
 	return(0) ;
 }
 
