@@ -23,6 +23,8 @@
 #define DEBUG_BUFFER 1
 #define DEBUG_CLEAN  2
 
+#define PI 3.141592653589793116
+
 /* TODO: look at RET value and use, is it OK? */
 #define RET 0.000000001 /* Representation error tolerance */
 
@@ -79,7 +81,7 @@ double input_distance ( struct Map_info *In, int type, double buffer, double x, 
 
 	ltype = Vect_read_line (In, Points, NULL, line);
 	
-	Vect_line_distance ( Points, x, y, 0, 0, NULL, NULL, NULL, &dist, NULL, NULL);
+	Vect_line_distance ( Points, x, y, 0., 0, NULL, NULL, NULL, &dist, NULL, NULL);
 	G_debug ( 3, "    dist = %f", dist );
 	if ( dist > buffer ) continue;
 	
@@ -220,11 +222,12 @@ main (int argc, char *argv[])
     struct line_cats *Cats;
     char   *mapset;
     struct GModule *module;
-    struct Option *in_opt, *out_opt, *type_opt, *buffer_opt, *tolerance_opt, *debug_opt;
-    double buffer, tolerance;
+    struct Option *in_opt, *out_opt, *type_opt, *buffer_opt, *tolerance_opt, *debug_opt, *field_opt;
+    double buffer, tolerance, dtmp;
     int    type, debug;
     int    ret, nareas, area, nlines, line;
     char   *Areas, *Lines;
+    int    field;
 
     module = G_define_module();
     module->description = "Create a buffer around features of given type (areas must contain centroid).";
@@ -236,6 +239,8 @@ main (int argc, char *argv[])
     type_opt->options = "point,line,boundary,centroid,area";
     type_opt->answer = "point,line,area";
 
+    field_opt = G_define_standard_option(G_OPT_V_FIELD);
+
     buffer_opt = G_define_option();
     buffer_opt->key = "buffer";
     buffer_opt->type = TYPE_DOUBLE;
@@ -246,8 +251,9 @@ main (int argc, char *argv[])
     tolerance_opt->key = "tolerance";
     tolerance_opt->type = TYPE_DOUBLE;
     tolerance_opt->required = NO;
-    tolerance_opt->answer = "1";
-    tolerance_opt->description = "Maximum distance between theoretical arc and polygon segments.";
+    tolerance_opt->answer = "0.01";
+    tolerance_opt->description = "Maximum distance between theoretical arc and polygon segments"
+	                         "as multiple of buffer.";
 
     debug_opt = G_define_option();
     debug_opt->key = "debug";
@@ -261,8 +267,21 @@ main (int argc, char *argv[])
 	exit(-1); 
     
     type = Vect_option_to_types ( type_opt );
+    field = atoi( field_opt->answer );
+    
     buffer = fabs ( atof( buffer_opt->answer ) );
     tolerance = atof( tolerance_opt->answer );
+    tolerance *= buffer;
+
+    G_message ("The tolerance in map units: %g", tolerance );
+
+    /* At least 8 points for circle. */
+    dtmp = 0.999 * buffer * ( 1 - cos ( 2 * PI / 8 / 2 ) );
+    G_debug ( 3, "Minimum tolerance = %f", dtmp );
+    if ( tolerance > dtmp ) {
+	tolerance = dtmp;
+        G_warning ("The tolerance was reset to %g (map units)", tolerance );
+    }
 
     debug = DEBUG_NONE;
     if ( debug_opt->answer ) {
@@ -306,11 +325,15 @@ main (int argc, char *argv[])
 	
         fprintf ( stderr, "Lines buffers ... ");
 	for ( line = 1; line <= nlines; line++ ) {
+	    int c;
+	    
 	    G_debug ( 3, "line = %d", line );
 	    G_percent ( line, nlines, 2 );
 
-	    ltype = Vect_read_line (&In, Points, NULL, line);
+	    ltype = Vect_read_line (&In, Points, Cats, line);
 	    if ( !(ltype & type ) ) continue;
+
+	    if ( !Vect_cat_get( Cats, field, &c ) ) continue;
 
 	    Vect_line_buffer ( Points, buffer, tolerance, BPoints );	
 	    Vect_write_line ( &Out, GV_BOUNDARY, BPoints, Cats );  
@@ -326,10 +349,15 @@ main (int argc, char *argv[])
 
         fprintf ( stderr, "Areas buffers ... ");
 	for ( area = 1; area <= nareas; area++ ) {
+	    int c;
+
 	    G_percent ( area, nareas, 2 );
 	    
 	    centroid = Vect_get_area_centroid ( &In, area );
 	    if ( centroid == 0 ) continue;
+	    
+	    Vect_read_line (&In, NULL, Cats, centroid);
+	    if ( !Vect_cat_get( Cats, field, &c ) ) continue;
 	    
 	    /* outer ring */
 	    Vect_get_area_points ( &In, area, Points );
@@ -422,7 +450,7 @@ main (int argc, char *argv[])
 	        Vect_cat_set (Cats, 1, 1 );
 	    
 	    Vect_reset_line ( Points );
-	    Vect_append_point ( Points, x, y, 0 );
+	    Vect_append_point ( Points, x, y, 0. );
 	    Vect_write_line ( &Out, GV_CENTROID, Points, Cats );
 	}
     }
@@ -493,7 +521,7 @@ main (int argc, char *argv[])
 	    }
 
 	    Vect_reset_line ( Points );
-	    Vect_append_point ( Points, x, y, 0 );
+	    Vect_append_point ( Points, x, y, 0. );
 	    Vect_write_line ( &Out, GV_CENTROID, Points, Cats );
 	}
     }
