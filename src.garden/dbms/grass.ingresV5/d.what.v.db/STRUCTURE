@@ -1,0 +1,13 @@
+*************************
+d.what.v.db
+
+(m) means modified for INGRES
+
+Katarina Johnsson 930415
+*************************
+
+main
+	getAllOpts 
+		buildSQL (m, <=> buildInfxQry)
+	getSelectOpts (m)
+		runSQL  (m, <=> runInfxFile)
