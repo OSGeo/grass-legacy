@@ -84,7 +84,7 @@ extern int list_length(expr_list *l);
 extern void define_variable(expression *e);
 extern char *composite(const char *name, const char *mapset);
 extern expr_list *list(expression *exp, expr_list *next);
-extern expr_list *single(expression *e1);
+extern expr_list *singleton(expression *e1);
 extern expr_list *pair(expression *e1, expression *e2);
 extern expr_list *triple(expression *e1, expression *e2, expression *e3);
 extern expression *constant_int(int x);
