@@ -8,11 +8,11 @@
 
 /*---------------------typedefs*/
 
-typedef struct {
-    double x,y;
-    double z;
-}site;
-
+struct zstruct
+{
+  double x, y, z;
+};
+typedef struct zstruct Z;
+  
 /*--------------------functions */
-int readsites(FILE *,int,int,int, site**);
-
+int G_readsites(FILE *,int,int,int, Z**);
