@@ -267,10 +267,12 @@ implement(void)
 		misc.qo_[i][misc.nidxclass] += misc.fex_[i];
 		misc.qt_[i][misc.nidxclass] = 
 				misc.qo_[i][misc.nidxclass] + misc.qs_[i];
+
+		misc.Sbar_[i] = misc.Sbar_[i] + 
+				misc.qs_[i] - misc.qv_[i][misc.nidxclass];
+
 		if(i + 1 < input.ntimestep)
-			misc.Sbar_[i + 1] = misc.Sbar_[i] + 
-						misc.qs_[i] - 
-						misc.qv_[i][misc.nidxclass];
+			misc.Sbar_[i + 1] = misc.Sbar_[i];
 
 		for(j=0; j<misc.nreach_; j++){
 			k = i + j + misc.ndelay_;
