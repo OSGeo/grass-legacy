@@ -55,9 +55,9 @@ G_fpcompress_dissectXdrDouble (numPointer)
   printf ("   exp = ");
   G_fpcompress_printBinary (&exponent, 8);
   printf ("   mantissa = ");
-  G_fpcompress_printBinary ((numPointer + 1), 7);
-  G_fpcompress_printBinary ((numPointer + 2), 8);
-  G_fpcompress_printBinary ((numPointer + 3), 8);
+  G_fpcompress_printBinary ((char *)(numPointer + 1), 7);
+  G_fpcompress_printBinary ((char *)(numPointer + 2), 8);
+  G_fpcompress_printBinary ((char *)(numPointer + 3), 8);
   printf ("\n");
 }
 
@@ -723,7 +723,8 @@ G_fpcompress_writeXdrNums (fd, src, nofNum, precision, compressBuf, isFloat,
       status = G_lzw_write (fd, compressBuf + offsetMantissa - rleLength,
 			    nBytes - offsetMantissa + rleLength + 1);
 #else
-      status = G_zlib_write (fd, compressBuf + offsetMantissa - rleLength,
+      status = G_zlib_write (fd, 
+		      (unsigned char *)(compressBuf + offsetMantissa - rleLength),
 		      nBytes - offsetMantissa + rleLength + 1);
 #endif
     else
@@ -732,7 +733,8 @@ G_fpcompress_writeXdrNums (fd, src, nofNum, precision, compressBuf, isFloat,
 	G_lzw_write_noCompress (fd, compressBuf + offsetMantissa - rleLength,
 				nBytes - offsetMantissa + rleLength + 1);
 #else
-      status = G_zlib_write_noCompress (fd, compressBuf + offsetMantissa - rleLength,
+      status = G_zlib_write_noCompress (fd, 
+		      (unsigned char *)(compressBuf + offsetMantissa - rleLength),
 		      nBytes -offsetMantissa + rleLength + 1);
 #endif
   } else {
@@ -742,13 +744,13 @@ G_fpcompress_writeXdrNums (fd, src, nofNum, precision, compressBuf, isFloat,
 #ifdef USE_LZW_COMPRESSION
       status = G_lzw_write (fd, compressBuf, nBytes + 1);
 #else
-      status = G_zlib_write (fd, compressBuf, nBytes + 1);
+      status = G_zlib_write (fd, (unsigned char *)compressBuf, nBytes + 1);
 #endif
     else
 #ifdef USE_LZW_COMPRESSION
       status = G_lzw_write_noCompress (fd, compressBuf, nBytes + 1);
 #else
-      status = G_zlib_write_noCompress (fd, compressBuf, nBytes + 1);
+      status = G_zlib_write_noCompress (fd, (unsigned char *)compressBuf, nBytes + 1);
 #endif
   }
   
@@ -828,7 +830,8 @@ G_fpcompress_readXdrNums (fd, dst, nofNum, fileBytes, precision,
 #ifdef USE_LZW_COMPRESSION
   status = G_lzw_read2 (fd, compressBuf, nofNum * nBytes + 1, fileBytes);
 #else
-  status = G_zlib_read (fd, fileBytes, compressBuf, nofNum * nBytes + 1);
+  status = G_zlib_read (fd, fileBytes, (unsigned char *)compressBuf, 
+		  nofNum * nBytes + 1);
 #endif
   if (status < 0) {
     G3d_error ("G_fpcompress_readXdrNums: read error");

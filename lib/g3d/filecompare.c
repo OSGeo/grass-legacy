@@ -373,17 +373,22 @@ compareFilesNocache (map, map2)
 	G3d_getBlock (map2, x, y, z, 1, 1, 1, (char *)n2p, typeIntern2);
 
 	if (typeIntern == G3D_FLOAT)
+	{
 	  if (typeIntern2 == G3D_FLOAT)
-	    correct = G3d_compareFloats (n1p, p1, n2p, p2);
+	    correct = G3d_compareFloats (f1p, p1, f2p, p2);
 	  else
-	    correct = G3d_compareFloatDouble (n1p, p1, n2p, p2);
+	    correct = G3d_compareFloatDouble (f1p, p1, n2p, p2);
+	}
 	else
+	{
 	  if (typeIntern2 == G3D_FLOAT)
-	    correct = G3d_compareFloatDouble (n2p, p2, n1p, p1);
+	    correct = G3d_compareFloatDouble (f2p, p2, n1p, p1);
 	  else
 	    correct = G3d_compareDoubles (n1p, p1, n2p, p2);
+	}
 
-	if (! correct) {
+	if (! correct) 
+	{
 	  int xTile, yTile, zTile, xOffs, yOffs, zOffs;
 
 	  G3d_coord2tileCoord (map2, x, y, z, &xTile, &yTile, &zTile, 
@@ -394,7 +399,7 @@ compareFilesNocache (map, map2)
 	  G3d_fatalError ("compareFilesNocache: files don't match\n");
 	}
       }
-  }
+    }
   }
 
   printf ("Files are identical up to precision.\n");
@@ -464,18 +469,25 @@ G3d_compareFiles (f1, mapset1, f2, mapset2)
   G3d_minUnlocked (map2, cols / tileX + 1); 
 
   G3d_getCoordsMap (map, &rows, &cols, &depths);
-  for (z = 0; z < depths; z++) {
+  for (z = 0; z < depths; z++) 
+  {
     printf ("comparing: z = %d\n", z);
 
-    if ((z % tileZ) == 0) 
+    if ((z % tileZ) == 0)
+    {
       if (! G3d_unlockAll (map))
 	G3d_fatalError ("G3d_compareFiles: error in G3d_unlockAll");
-    if ((z % tileZ2) == 0) 
+    }
+    if ((z % tileZ2) == 0)
+    {
       if (! G3d_unlockAll (map2))
 	G3d_fatalError ("G3d_compareFiles: error in G3d_unlockAll");
-
+    }
+    
     for (y = 0; y < rows; y++)
-      for (x = 0; x < cols; x++) {
+    {
+      for (x = 0; x < cols; x++) 
+      {
 	G3d_getValueRegion (map, x, y, z, (char *)n1p, typeIntern);
 	G3d_getValueRegion (map2, x, y, z, (char *)n2p, typeIntern2);
 
@@ -483,17 +495,22 @@ G3d_compareFiles (f1, mapset1, f2, mapset2)
 	G3d_isNullValueNum (n2p, typeIntern2);
 	
 	if (typeIntern == G3D_FLOAT)
+	{
 	  if (typeIntern2 == G3D_FLOAT)
-	    correct = G3d_compareFloats (n1p, p1, n2p, p2);
+	    correct = G3d_compareFloats (f1p, p1, f2p, p2);
 	  else
-	    correct = G3d_compareFloatDouble (n1p, p1, n2p, p2);
+	    correct = G3d_compareFloatDouble (f1p, p1, n2p, p2);
+	}
 	else
+	{
 	  if (typeIntern2 == G3D_FLOAT)
-	    correct = G3d_compareFloatDouble (n2p, p2, n1p, p1);
+	    correct = G3d_compareFloatDouble (f2p, p2, n1p, p1);
 	  else
 	    correct = G3d_compareDoubles (n1p, p1, n2p, p2);
-
-	if (! correct) {
+	}
+	
+	if (! correct) 
+	{
 	  int xTile, yTile, zTile, xOffs, yOffs, zOffs;
 
 	  G3d_coord2tileCoord (map2, x, y, z, &xTile, &yTile, &zTile, 
@@ -501,6 +518,7 @@ G3d_compareFiles (f1, mapset1, f2, mapset2)
 	  G3d_fatalError ("G3d_compareFiles: files don't match\n");
 	}
       }
+    }
   }
   
   printf ("Files are identical up to precision.\n");
