@@ -98,8 +98,8 @@ char **argv;
    sampling_method = G_define_option();
    sampling_method->answer      = "w";
    sampling_method->key         = "sam";
-   sampling_method->description = "Sampling method (choose only 1 method): 
-   \tw = whole map     u = units     m = moving window    r = regions";
+   sampling_method->description = "Sampling method (choose only 1 method): \n"
+   "\tw = whole map     u = units     m = moving window    r = regions";
    sampling_method->type        = TYPE_STRING;
    sampling_method->multiple    = NO;
    sampling_method->required    = NO;
@@ -113,10 +113,10 @@ char **argv;
 
    att = G_define_option();
    att->key              = "att";
-   att->description      = "a1 = mn. pixel att. \t\ta2 = s.d. pixel att.
-   \ta3 = mn. patch att. \t\ta4 = s.d. patch att.
-   \ta5 = cover by gp \t\ta6 = density by gp
-   \ta7 = total density \t\ta8 = eff. mesh number";
+   att->description      = "a1 = mn. pixel att. \t\ta2 = s.d. pixel att.\n"
+   "\ta3 = mn. patch att. \t\ta4 = s.d. patch att.\n"
+   "\ta5 = cover by gp \t\ta6 = density by gp\n"
+   "\ta7 = total density \t\ta8 = eff. mesh number";
    att->options		 = "a1,a2,a3,a4,a5,a6,a7,a8";
    att->type             = TYPE_STRING;
    att->multiple         = YES;
@@ -124,10 +124,10 @@ char **argv;
    
    size = G_define_option();
    size->key        = "siz";
-   size->description     = "s1 = mn. patch size\t\ts2 = s.d. patch size
-   \ts3 = mn. patch size by gp\ts4 = s.d. patch size by gp 
-   \ts5 = no. by size class\t\ts6 = no. by size class by gp
-   \ts7 = eff. mesh size \t\ts8 = deg. landsc. division";
+   size->description     = "s1 = mn. patch size\t\ts2 = s.d. patch size\n"
+   "\ts3 = mn. patch size by gp\ts4 = s.d. patch size by gp \n"
+   "\ts5 = no. by size class\t\ts6 = no. by size class by gp\n"
+   "\ts7 = eff. mesh size \t\ts8 = deg. landsc. division";
    size->options         = "s1,s2,s3,s4,s5,s6,s7,s8";
    size->type            = TYPE_STRING;
    size->multiple        = YES;
@@ -141,12 +141,12 @@ char **argv;
 
    core = G_define_option();
    core->key        = "co2";
-   core->description     = "Core size measures (required if co1 was specified):
-   \tc1 = mn. core size\t\tc2 = s.d. core size
-   \tc3 = mn. edge size\t\tc4 = s.d. edge size
-   \tc5 = mn. core size by gp\tc6 = s.d. core size by gp
-   \tc7 = mn. edge size by gp\tc8 = s.d. edge size by gp
-   \tc9 = no. by size class\t\tc10 = no. by size class by gp";
+   core->description     = "Core size measures (required if co1 was specified):\n"
+   "\tc1 = mn. core size\t\tc2 = s.d. core size\n"
+   "\tc3 = mn. edge size\t\tc4 = s.d. edge size\n"
+   "\tc5 = mn. core size by gp\tc6 = s.d. core size by gp\n"
+   "\tc7 = mn. edge size by gp\tc8 = s.d. edge size by gp\n"
+   "\tc9 = no. by size class\t\tc10 = no. by size class by gp";
    core->options         = "c1,c2,c3,c4,c5,c6,c7,c8,c9,c10";
    core->type            = TYPE_STRING;
    core->multiple        = YES;
@@ -154,18 +154,18 @@ char **argv;
 
    shape = G_define_option();
    shape->key            = "sh1";
-   shape->description    = "Shape index (choose only 1 index):
-   \tm1 = per./area    m2 = corr. per./area    m3 = rel. circum. circle";
+   shape->description    = "Shape index (choose only 1 index):\n"
+   "\tm1 = per./area    m2 = corr. per./area    m3 = rel. circum. circle";
    shape->type           = TYPE_STRING;
    shape->multiple       = NO;
    shape->required       = NO;
 
    shape_m = G_define_option();
    shape_m->key               = "sh2";
-   shape_m->description       = "Shape measures (required if sh1 was specified):
-   \th1 = mn. patch shape\t\th2 = s.d. patch shape
-   \th3 = mn. patch shape by gp\th4 = s.d. patch shape by gp
-   \th5 = no. by shape class \th6 = no. by shape class by gp";
+   shape_m->description       = "Shape measures (required if sh1 was specified):\n"
+   "\th1 = mn. patch shape\t\th2 = s.d. patch shape\n"
+   "\th3 = mn. patch shape by gp\th4 = s.d. patch shape by gp\n"
+   "\th5 = no. by shape class \th6 = no. by shape class by gp";
    shape_m->options           = "h1,h2,h3,h4,h5,h6";
    shape_m->type              = TYPE_STRING;
    shape_m->multiple          = YES;
@@ -173,8 +173,8 @@ char **argv;
 
    boundary = G_define_option();
    boundary->key                 = "bnd";
-   boundary->description         = "n1 = mn. twist number           n2 = s.d. twist number
-   \tn3 = mn. omega index            n4 = s.d. omega index";
+   boundary->description         = "n1 = mn. twist number           n2 = s.d. twist number\n"
+   "\tn3 = mn. omega index            n4 = s.d. omega index";
    boundary->options             = "n1,n2,n3,n4";
    boundary->type                = TYPE_STRING;
    boundary->multiple            = YES;
@@ -182,9 +182,9 @@ char **argv;
 
    perimeter = G_define_option();
    perimeter->key             = "per";
-   perimeter->description     = "p1 = sum of perims.\t\tp4 = sum of perims. by gp
-   \tp2 = mn. per.\t\t\tp5 = mn. per. by gp
-   \tp3 = s.d. per.\t\t\tp6 = s.d. per. by gp";
+   perimeter->description     = "p1 = sum of perims.\t\tp4 = sum of perims. by gp\n"
+   "\tp2 = mn. per.\t\t\tp5 = mn. per. by gp\n"
+   "\tp3 = s.d. per.\t\t\tp6 = s.d. per. by gp";
    perimeter->options         = "p1,p2,p3,p4,p5,p6";
    perimeter->type            = TYPE_STRING;
    perimeter->multiple        = YES;
@@ -192,8 +192,8 @@ char **argv;
 
    out = G_define_option();
    out->key          = "out";
-   out->description  = "Name of output file for individual patch measures, when sam=w,u,r;
-   \tif out=head, then column headings will be printed";
+   out->description  = "Name of output file for individual patch measures, when sam=w,u,r;\n"
+   "\tif out=head, then column headings will be printed";
    out->type         = TYPE_STRING;
    out->required     = NO;
 
