@@ -6,7 +6,7 @@
 
 
 int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor, 
-	     int chcat ) {
+	     int chcat, int id_flag ) {
     int i, ltype, num, area, isle, n_isles, n_points;
     double xl, yl;
     struct line_pnts *Points, *IPoints;
@@ -20,24 +20,31 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 
 	
     num = Vect_get_num_areas(Map);
-    G_debug (1, "n_areas = %d", num);
+    G_debug (2, "n_areas = %d", num);
     
     for ( area = 1; area <= num; area++ ) {
         G_debug (3, "area = %d", area);
 
+	if ( !Vect_area_alive (Map, area) ) continue;
         if ( chcat )
           { 
-             centroid = Vect_get_area_centroid ( Map, area ); 
-             G_debug (3, "centroid = %d", centroid);
-	     if ( centroid < 1 ) continue;
-	     Vect_read_line (Map, Points, Cats, centroid );
-             if ( Vect_cat_get(Cats, Clist->field, &cat) ) { 
-	         if ( !(Vect_cat_in_cat_list (cat, Clist)) )
-                     continue;
+	     if ( id_flag ) {
+		 if ( !(Vect_cat_in_cat_list (area, Clist)) )
+		     continue;
 	     } else {
-		 continue;
-	     } 
+		 centroid = Vect_get_area_centroid ( Map, area ); 
+		 G_debug (3, "centroid = %d", centroid);
+		 if ( centroid < 1 ) continue;
+		 Vect_read_line (Map, Points, Cats, centroid );
+		 if ( Vect_cat_get(Cats, Clist->field, &cat) ) { 
+		     if ( !(Vect_cat_in_cat_list (cat, Clist)) )
+			 continue;
+		 } else {
+		     continue;
+		 } 
+	     }
           }
+        G_debug (3, "display area %d", area);
 
         /* fill */	
 	Vect_get_area_points ( Map, area, Points );   
