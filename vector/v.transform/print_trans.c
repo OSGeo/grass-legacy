@@ -16,31 +16,32 @@
 
 
 #include <stdio.h>
-#include	"trans.h"
-
+#include "gis.h"
+#include "trans.h"
+#include "glocale.h"
 
 int 
 print_transform_resids (int n_points)
 {
-	int	i ;
+	int i ;
 
-	fprintf (stdout,"\n");
-	fprintf (stdout,"                          CHECK MAP RESIDUALS\n\n");
-	fprintf (stdout,"                Current Map                  New Map\n");
-	fprintf (stdout," POINT      X coord    Y coord  |        X coord   Y coord    |      residuals\n");
-	fprintf (stdout,"\n");
+	G_message ( "\n");
+	G_message ( _("                          CHECK MAP RESIDUALS\n\n"));
+	G_message ( _("                Current Map                  New Map\n"));
+	G_message ( _(" POINT      X coord    Y coord  |        X coord   Y coord    |      residuals\n"));
+	G_message ( "\n");
 
 	for (  i = 0 ;  i < n_points;  i++ )
  	{
 
 		if ( use[i])
-			fprintf (stdout," %2d.  %12.2f %12.2f | %12.2f   %12.2f | %12.2f\n",
+			G_message ( " %2d.  %12.2f %12.2f | %12.2f   %12.2f | %12.2f\n",
 			 i+1, ax[i], ay[i], bx[i], by[i], residuals[i]) ;
 	
  	}
 		
-	fprintf (stdout,"\n\n  Number of points: %d\n", n_points) ;
-	fprintf (stdout,"  Residual mean average   : %f", rms) ;
+	G_message ( _("\n\n  Number of points: %d\n"), n_points) ;
+	G_message ( _("  Residual mean average   : %f\n"), rms) ;
 
 	return (0) ;
 
