@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<TITLE>s.kernel</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width="100%" align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>s.kernel</b></EM> - Generates a raster density map from sites data
+using a moving 2D isotropic Gaussian kernel
+
+<BR>
+
+<EM>(GRASS Sites Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>s.kernel</B>
+<BR>
+<B>s.kernel help</B>
+<BR>
+<B>s.kernel</B>
+<B>sitefile=</B><EM>name</EM>
+<B>output=</B><EM>name</EM>
+<B>stddeviation=</B><EM>value</EM>
+<B>resolution=</B><EM>value</EM>
+
+<H2>DESCRIPTION</H2>
+<EM>s.kernel</EM>
+generates a raster density map from sites data
+using a moving 2D isotropic Gaussian kernel
+
+<H2>OPTIONS</H2>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>sitefile=</B><EM>name</EM>
+<DD>Name of sites list.
+
+<DT><B>output=</B><EM>name</EM>
+<DD>output raster map
+
+<DT><B>stddeviation</B>
+<DD>stddeviation in map units
+<DD>default: 1
+
+<DT><B>resolution</B>
+<DD>resolution of the output raster map
+<DD>default: 25.0
+</DL>
+
+</DL>
+
+<H2>NOTES</H2>
+
+<EM>s.kernel</EM> uses moving 2D isotropic Gaussian kernel.
+
+<H2>LIMITATIONS</H2>
+The modules only considers the presence of sites, but not (yet) any
+    attribute values.
+
+<H2>SEE ALSO</H2>
+<A HREF="s.surf.rst.html">s.surf.rst</A>
+
+<H2>BUGS</H2>
+Please send all bug fixes and comments to the author
+or the grass development team. <br>
+<a href="http://grass.itc.it/"><tt>http://grass.itc.it/</tt></a>
+
+<H2>AUTHOR</H2>
+
+Stefano Menegon, <a href=http://mpa.itc.it>ITC-irst</a>, Trento, Italy
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>
