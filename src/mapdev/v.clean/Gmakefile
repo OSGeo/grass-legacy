@@ -12,6 +12,8 @@ $(PROG): Vclean.o $(VECTLIB) $(GISLIB)
 	$(CC) $(LDFLAGS) Vclean.o $(VECTLIB) $(GISLIB) $(MATHLIB) 
 	mv a.out $@
 
+$(VECTLIB) $(GISLIB): #
+
 saber_src:
 	#load $(EXTRA_CFLAGS) $(CFLAGS) Vclean.c ../Vlib/*.c ../diglib/*.c $(GISLIB)
 
