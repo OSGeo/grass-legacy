@@ -53,7 +53,6 @@ static int _bst_compare(const void * bst_a, const void * bst_b, void * bst_param
 {
 	gnTreeNode_s * pa = (gnTreeNode_s*)bst_a;
 	gnTreeNode_s * pb = (gnTreeNode_s*)bst_b;
-	gnTree_s * ptree = bst_param;
 	if ( pa->key < pb->key ) return -1;
 	if ( pa->key > pb->key ) return 1;
 	return 0;
