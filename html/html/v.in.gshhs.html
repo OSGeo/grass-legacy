@@ -14,8 +14,15 @@
 <H2>SYNOPSIS</H2>
 <B>v.in.gshhs [-g] [-s] [-a] input</B><EM>=name</EM> <B>output</B><EM>=name</EM> [<B>n</B><EM>=value</EM>] [<B>s</B><EM>=value</EM>] [<B>e</B><EM>=value</EM>] [<B>w</B><EM>=value</EM>]
 
-<H2>DESCRIPTION</H2>
-The <EM>r.in.gshhs</EM> program imports Global Self-consistant Hierarchical High-resolution Shoreline (GSHHS) data available from <A HREF="http://www.soest.hawaii.edu/wessel/gshhs/gshhs.html">http://www.soest.hawaii.edu/wessel/gshhs/gshhs.html</A>.  Coordinates are projected during import to the current GRASS projection.The user may supply bounding coordianets by manually entering north, south, east, and west values, or optionally using the "-g" flag to use the current GRASS region as the bounding coordinates.
+<H2>DESCRIPTION</H2> The <EM>v.in.gshhs</EM> program imports Global
+Self-consistant Hierarchical High-resolution Shoreline (GSHHS) data
+available from <A
+HREF="http://www.soest.hawaii.edu/wessel/gshhs/gshhs.html">http://www.soest.hawaii.edu/wessel/gshhs/gshhs.html</A>. 
+Coordinates are originally lat/long and, if required, reprojected during
+import to the current GRASS projection. The user may supply bounding
+coordinates by manually entering north, south, east, and west values, or
+optionally using the "-g" flag to use the current GRASS region as the
+bounding coordinates.
 
 
 <H3>Flags:</H3>
