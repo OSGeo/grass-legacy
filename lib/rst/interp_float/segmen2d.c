@@ -55,7 +55,7 @@ Recursively processes each segment in a tree by
     static double          **matrix = NULL;
     double ew_res, ns_res;
     static int first_time = 1;
-    static int smseg;
+    static double smseg;
     int    MINPTS;
     double pr;
 
