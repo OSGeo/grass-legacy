@@ -1,0 +1,9 @@
+#  %W%  %G%
+
+OFILES = d_get_cord.o get_margin.o get_pwin.o p_get_cord.o ask.o 
+EXTRA_CFLAGS = -I$(GRAPH)/src/grass3.1/include
+
+
+gmaplib.a: $(OFILES)
+	ar  r  gmaplib.a $(OFILES)
+	$(RANLIB) gmaplib.a
