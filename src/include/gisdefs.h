@@ -1043,6 +1043,7 @@ int G_remove_vector_timestamp (char *);
 
 /* token.c */
 char **G_tokenize(char *, char *);
+int G_number_of_tokens(char **);
 int G_free_tokens(char **);
 
 /* trim_dec.c */

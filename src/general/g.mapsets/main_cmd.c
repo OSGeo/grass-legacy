@@ -11,17 +11,6 @@
 
 static char Path[4096];
 
-int G_number_of_tokens(char **tokens)
-{
-	int n;
-
-	for (n = 0; tokens[n] != NULL ; n++)
-        {
-         /* nothing */
-        }
-        return n;
-}
-
 int 
 main (int argc, char *argv[])
 {
