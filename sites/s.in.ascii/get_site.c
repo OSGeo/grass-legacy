@@ -4,7 +4,7 @@
 #include "local_proto.h"
 #include <ctype.h>
 
-#define isnull(c) (c==(char)NULL)
+#define isnull(c) (c=='\0')
 
 static char *my_next_att (char *);
 
@@ -55,7 +55,7 @@ Site *get_site (FILE *fd, int dims, char *fs, int *has_cat)
 		buf = save;
 
 		strcpy (buf, ibuf);
-		G_squeeze (buf);
+		buf = G_squeeze (buf);
 		if (*buf == 0) return (Site *) NULL;
 		if (strcmp (buf, "end") == 0) return (Site *) NULL;
 		if (fs) {
@@ -88,6 +88,7 @@ Site *get_site (FILE *fd, int dims, char *fs, int *has_cat)
 	}
 
   /* no more dimensions-now we parse attribute fields */
+  	buf = my_next_att(buf);
 	while (buf != NULL) {
 		switch (*buf) {
     /* check for prefixed atts first, then without prefix */
