@@ -8,7 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_de\n"
-"POT-Creation-Date: 2004-07-09 16:14+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-10-17 20:12+0200\n"
 "PO-Revision-Date: 2004-09-30 18:23+0200\n"
 "Last-Translator: Markus Neteler <neteler@thuille>\n"
 "Language-Team: deutch <de@li.org>\n"
@@ -17,9 +18,138 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.0\n"
 
+#: ../db/base/connect.c:103
+#, c-format
+msgid "driver:%s\n"
+msgstr ""
+
+#: ../db/base/connect.c:104
+#, c-format
+msgid "database:%s\n"
+msgstr ""
+
+#: ../db/base/databases.c:42 ../db/base/drivers.c:29 ../db/base/printtab.c:45
+#: ../db/base/select.c:126
+#, c-format
+msgid "%s"
+msgstr ""
+
+#: ../db/base/databases.c:43 ../db/base/printtab.c:21 ../db/base/printtab.c:66
+#, c-format
+msgid "\n"
+msgstr ""
+
+#: ../db/base/describe.c:53 ../db/base/printtab.c:17
+#, c-format
+msgid "ncols:%d\n"
+msgstr ""
+
+#: ../db/base/describe.c:57
+#, fuzzy, c-format
+msgid "Column %d: %s\n"
+msgstr "%s:Zeile %d:%s\n"
+
+#: ../db/base/drivers.c:24
+#, c-format
+msgid "Error trying to read dbmscap file\n"
+msgstr ""
+
+#: ../db/base/drivers.c:30
+#, c-format
+msgid ":%s"
+msgstr ""
+
+#: ../db/base/printtab.c:11
+#, c-format
+msgid "table:%s\n"
+msgstr ""
+
+#: ../db/base/printtab.c:12 ../db/base/printtab.c:35
+#, c-format
+msgid "description:%s\n"
+msgstr ""
+
+#: ../db/base/printtab.c:34
+#, c-format
+msgid "column:%s\n"
+msgstr ""
+
+#: ../db/base/printtab.c:36
+#, c-format
+msgid "type:%s\n"
+msgstr ""
+
+#: ../db/base/printtab.c:37
+#, c-format
+msgid "len:%d\n"
+msgstr ""
+
+#: ../db/base/printtab.c:38
+#, c-format
+msgid "scale:%d\n"
+msgstr ""
+
+#: ../db/base/printtab.c:39
+#, c-format
+msgid "precision:%d\n"
+msgstr ""
+
+#: ../db/base/printtab.c:40
+#, fuzzy, c-format
+msgid "default:"
+msgstr " Standardfarbe\n"
+
+#: ../db/base/printtab.c:48
+#, c-format
+msgid "nullok:%s\n"
+msgstr ""
+
+#: ../db/base/printtab.c:62
+#, c-format
+msgid "yes"
+msgstr ""
+
+#: ../db/base/printtab.c:63
+#, c-format
+msgid "no"
+msgstr ""
+
+#: ../db/base/printtab.c:64
+#, c-format
+msgid "?"
+msgstr ""
+
+#: ../db/base/select.c:307
+#, c-format
+msgid "column%s%s\n"
+msgstr ""
+
+#: ../db/base/select.c:308
+#, c-format
+msgid "type%s%s\n"
+msgstr ""
+
+#: ../db/base/select.c:309
+#, c-format
+msgid "len%s%d\n"
+msgstr ""
+
+#: ../db/base/select.c:310
+#, c-format
+msgid "scale%s%d\n"
+msgstr ""
+
+#: ../db/base/select.c:311
+#, c-format
+msgid "precision%s%d\n"
+msgstr ""
+
 #: ../raster/r.colors/rules.c:45
+#, c-format
 msgid "Enter rules, \"end\" when done, \"help\" if you need it.\n"
-msgstr "Geben Sie Regeln ein, \"end\" zum Beenden, \"help\" wenn Sie Hilfe brauchen.\n"
+msgstr ""
+"Geben Sie Regeln ein, \"end\" zum Beenden, \"help\" wenn Sie Hilfe "
+"brauchen.\n"
 
 #: ../raster/r.colors/rules.c:47
 #, c-format
@@ -31,75 +161,86 @@ msgstr "fp: Datenbereich ist %.25f bis %.25f\n"
 msgid "Data range is %ld to %ld\n"
 msgstr "Datenbereich ist %ld bis %ld\n"
 
-#: ../raster/r.colors/rules.c:109
+#: ../raster/r.colors/rules.c:110 ../raster/r.colors/rules.c:114
 msgid "Your color rules do not cover the whole range of data!"
 msgstr "Die Regeln umfassen nicht den ganzen Datenbereich!"
 
-#: ../raster/r.colors/rules.c:182
+#: ../raster/r.colors/rules.c:188
+#, c-format
 msgid "Enter a rule in one of these formats:\n"
 msgstr "Geben Sie eine Regel in einem der folgenden Formate ein:\n"
 
-#: ../raster/r.colors/rules.c:184
+#: ../raster/r.colors/rules.c:190
+#, c-format
 msgid " val color\n"
 msgstr " val Farbe\n"
 
-#: ../raster/r.colors/rules.c:185
+#: ../raster/r.colors/rules.c:191
 #, c-format
 msgid " n%% color\n"
 msgstr " n%% Farbe\n"
 
-#: ../raster/r.colors/rules.c:186
+#: ../raster/r.colors/rules.c:192
+#, c-format
 msgid " nv color\n"
 msgstr " nv Farbe\n"
 
-#: ../raster/r.colors/rules.c:187
+#: ../raster/r.colors/rules.c:193
+#, c-format
 msgid " default color\n"
 msgstr " Standardfarbe\n"
 
-#: ../raster/r.colors/rules.c:188
+#: ../raster/r.colors/rules.c:194
+#, c-format
 msgid "color can be one of:\n"
 msgstr "Farbe kann eine der folgenden Möglichkeiten sein:\n"
 
-#: ../raster/r.colors/rules.c:190
+#: ../raster/r.colors/rules.c:196
+#, c-format
 msgid "or an R:G:B triplet, e.g.: 0:127:255\n"
 msgstr "oder ein R:G:B Triplett, z.B.: 0:127:255\n"
 
-#: ../raster/r.colors/rules.c:231
+#: ../raster/r.colors/rules.c:237
 #, c-format
 msgid "** warning: R:G:B value(s) out of range [0..255]: %d:%d:%d **\n"
-msgstr "** Warnung: R:G:B Wert(e) außerhalb des Bereichs [0..255]: %d:%d:%d **\n"
+msgstr ""
+"** Warnung: R:G:B Wert(e) außerhalb des Bereichs [0..255]: %d:%d:%d **\n"
 
-#: ../raster/r.colors/rules.c:232 ../raster/r.colors/rules.c:248
-#: ../raster/r.colors/rules.c:261 ../raster/r.colors/rules.c:273
-#: ../raster/r.colors/rules.c:283 ../raster/r.colors/rules.c:295
-#: ../raster/r.colors/rules.c:370 ../raster/r.colors/rules.c:398
+#: ../raster/r.colors/rules.c:238 ../raster/r.colors/rules.c:254
+#: ../raster/r.colors/rules.c:267 ../raster/r.colors/rules.c:279
+#: ../raster/r.colors/rules.c:289 ../raster/r.colors/rules.c:301
+#: ../raster/r.colors/rules.c:376 ../raster/r.colors/rules.c:404
+#, c-format
 msgid "** rule is not added **\n"
 msgstr "** Regel wurde nicht angewendet **\n"
 
-#: ../raster/r.colors/rules.c:247
+#: ../raster/r.colors/rules.c:253
 #, c-format
 msgid "** warning: R G B value(s) out of range [0..255]: %d %d %d **\n"
-msgstr " ** warnung: R:G:B Wert(e) außerhalb des Bereichs [0..255]: %d:%d:%d **\n"
+msgstr ""
+" ** warnung: R:G:B Wert(e) außerhalb des Bereichs [0..255]: %d:%d:%d **\n"
 
-#: ../raster/r.colors/rules.c:260 ../raster/r.colors/rules.c:282
+#: ../raster/r.colors/rules.c:266 ../raster/r.colors/rules.c:288
+#, c-format
 msgid "** warning: no such value **\n"
 msgstr "** Warnung: kein solcher Wert **\n"
 
-#: ../raster/r.colors/rules.c:396
+#: ../raster/r.colors/rules.c:402
 #, c-format
 msgid "%s:line %d:%s\n"
 msgstr "%s:Zeile %d:%s\n"
 
-#: ../raster/r.colors/rules.c:397
+#: ../raster/r.colors/rules.c:403
+#, c-format
 msgid "** bad color specification **\n"
 msgstr "** fehlerhafte Farbspezifikation **\n"
 
-#: ../raster/r.colors/rules.c:418
+#: ../raster/r.colors/rules.c:424
 #, c-format
 msgid "%s - unknown color\n"
 msgstr "%s - unbekannte Farbe\n"
 
-#: ../raster/r.colors/rules.c:419
+#: ../raster/r.colors/rules.c:425
+#, c-format
 msgid "Valid colors are:\n"
 msgstr "Gültige Farben sind:\n"
-
