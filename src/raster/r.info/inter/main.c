@@ -1,9 +1,4 @@
 #include "gis.h"
-/*---------------------------------------------------------------------
- |      layer_info
- |      Map Layer Information Table
- |
- */
 
 main (argc, argv)   char *argv[];
 {
@@ -21,7 +16,8 @@ main (argc, argv)   char *argv[];
     tempfile = G_tempfile () ;
     unlink (tempfile);
 
-    sprintf (command, "r.info '%s' > %s", G_fully_qualified_name(name, mapset), tempfile);
+    sprintf (command, "r.info '%s' > %s",
+	G_fully_qualified_name(name, mapset), tempfile);
     system (command);
 
     more_print(tempfile);
