@@ -1,0 +1,964 @@
+# translation of grassmods_ru.po to Russian
+# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Markus Neteler <neteler@itc.it>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: grassmods_ru\n"
+"POT-Creation-Date: 2004-11-17 18:05+0100\n"
+"PO-Revision-Date: 2004-11-17 18:26+0100\n"
+"Last-Translator: Markus Neteler <neteler@itc.it>\n"
+"Language-Team: Russian <translations@grass.itc.it>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.0.2\n"
+
+#: ../db/base/connect.c:107
+#, c-format
+#, fuzzy
+msgid "driver:%s\n"
+msgstr " "
+
+#: ../db/base/connect.c:108
+#, c-format
+#, fuzzy
+msgid "database:%s\n"
+msgstr " "
+
+#: ../db/base/databases.c:42 ../db/base/drivers.c:29 ../db/base/printtab.c:45
+#: ../db/base/select.c:126 ../vector/v.transform/creat_trans.c:90
+#, c-format
+#, fuzzy
+msgid "%s"
+msgstr " "
+
+#: ../db/base/databases.c:43 ../db/base/printtab.c:21 ../db/base/printtab.c:66
+msgid "\n"
+msgstr ""
+
+#: ../db/base/describe.c:53 ../db/base/printtab.c:17
+#, c-format
+msgid "ncols:%d\n"
+msgstr ""
+
+#: ../db/base/describe.c:57
+#, c-format
+#, fuzzy
+msgid "Column %d: %s\n"
+msgstr " "
+
+#: ../db/base/drivers.c:24
+msgid "Error trying to read dbmscap file\n"
+msgstr ""
+
+#: ../db/base/drivers.c:30
+#, c-format
+#, fuzzy
+msgid ":%s"
+msgstr " "
+
+#: ../db/base/printtab.c:11
+#, c-format
+#, fuzzy
+msgid "table:%s\n"
+msgstr " "
+
+#: ../db/base/printtab.c:12 ../db/base/printtab.c:35
+#, c-format
+#, fuzzy
+msgid "description:%s\n"
+msgstr " "
+
+#: ../db/base/printtab.c:34
+#, c-format
+#, fuzzy
+msgid "column:%s\n"
+msgstr " "
+
+#: ../db/base/printtab.c:36
+#, c-format
+#, fuzzy
+msgid "type:%s\n"
+msgstr " "
+
+#: ../db/base/printtab.c:37
+#, c-format
+msgid "len:%d\n"
+msgstr ""
+
+#: ../db/base/printtab.c:38
+#, c-format
+msgid "scale:%d\n"
+msgstr ""
+
+#: ../db/base/printtab.c:39
+#, c-format
+msgid "precision:%d\n"
+msgstr ""
+
+#: ../db/base/printtab.c:40
+msgid "default:"
+msgstr ""
+
+#: ../db/base/printtab.c:48
+#, c-format
+#, fuzzy
+msgid "nullok:%s\n"
+msgstr " "
+
+#: ../db/base/printtab.c:62
+msgid "yes"
+msgstr ""
+
+#: ../db/base/printtab.c:63
+msgid "no"
+msgstr ""
+
+#: ../db/base/printtab.c:64
+msgid "?"
+msgstr ""
+
+#: ../db/base/select.c:311
+#, c-format
+#, fuzzy
+msgid "column%s%s\n"
+msgstr "   "
+
+#: ../db/base/select.c:312
+#, c-format
+#, fuzzy
+msgid "type%s%s\n"
+msgstr "   "
+
+#: ../db/base/select.c:313
+#, c-format
+#, fuzzy
+msgid "len%s%d\n"
+msgstr " "
+
+#: ../db/base/select.c:314
+#, c-format
+#, fuzzy
+msgid "scale%s%d\n"
+msgstr " "
+
+#: ../db/base/select.c:315
+#, c-format
+#, fuzzy
+msgid "precision%s%d\n"
+msgstr " "
+
+#: ../display/d.font.freetype/main.c:52
+#, fuzzy
+msgid ""
+"Selects the font in which text will be displayed on the user's graphics "
+"monitor."
+msgstr " ."
+
+#: ../display/d.font.freetype/main.c:60
+msgid ""
+"Font name (not supported interactively, see also -l flag) or path to "
+"TrueType font (including file name)"
+msgstr ""
+
+#: ../display/d.font.freetype/main.c:62
+msgid "Path to TrueType font (including file name)"
+msgstr ""
+
+#: ../display/d.font.freetype/main.c:71
+msgid "Character encoding"
+msgstr ""
+
+#: ../display/d.font.freetype/main.c:102
+msgid "No graphics device selected"
+msgstr ""
+
+#: ../display/d.font.freetype/main.c:170
+msgid ""
+"\n"
+"Setting release of FreeType\n"
+msgstr ""
+
+#: ../display/d.paint.labels/do_labels.c:143
+#, c-format
+#, fuzzy
+msgid "Error: %s\n"
+msgstr " "
+
+#: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:211
+#, fuzzy
+msgid "Region size is lower than minreg, nothing displayed.\n"
+msgstr " "
+
+#: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:220
+#, fuzzy
+msgid "Region size is greater than maxreg, nothing displayed.\n"
+msgstr " "
+
+#: ../display/d.path/select.c:32
+msgid "L: from  M: to R: quit\n"
+msgstr ""
+
+#: ../display/d.path/select.c:57
+#, c-format
+msgid "Node %d: %f %f\n"
+msgstr ""
+
+#: ../display/d.path/select.c:133
+msgid "Destination unreachable\n"
+msgstr ""
+
+#: ../display/d.path/select.c:136
+#, c-format
+msgid "Costs on the network = %f\n"
+msgstr ""
+
+#: ../display/d.path/select.c:137
+#, c-format
+msgid "  Distance to the network = %f, distance from the network = %f\n"
+msgstr ""
+
+#: ../display/d.vect/attr.c:54 ../display/d.vect/dir.c:34
+#: ../display/d.vect/label.c:32 ../display/d.vect/plot1.c:51
+#: ../display/d.vect/topo.c:38
+#, fuzzy
+msgid ""
+"\n"
+"ERROR: vector file - can't read\n"
+msgstr "×ÅËÔÏÒ"
+
+#: ../display/d.vect/main.c:417
+msgid "Plotting ... "
+msgstr ""
+
+#: ../display/d.vect/main.c:426
+msgid "The bounding box of the map outside current region, nothing displayed.\n"
+msgstr ""
+
+#: ../display/d.vect/main.c:480
+msgid "Done\n"
+msgstr ""
+
+#: ../display/d.what.vect/main.c:150
+msgid "Done.\n"
+msgstr ""
+
+#: ../display/d.what.vect/openvect.c:12
+#, c-format
+#, fuzzy
+msgid "warning: %s - vector file not found\n"
+msgstr "ÐÒÅÄÕÐÒÅÖÄÅÎÉÅ: %s - ×ÅËÔÏÒÎÁÑ ËÁÒÔÁ ÎÅ ÎÁÊÄÅÎÁ\n"
+
+#: ../display/d.what.vect/what.c:154 ../display/d.what.vect/what.c:155
+msgid "Nothing Found.\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:203
+#, c-format
+#, fuzzy
+msgid "Line: %d  Type: %s  Left: %d  Right: %d  "
+msgstr "ìÉÎÉÑ   "
+
+#: ../display/d.what.vect/what.c:206
+#, c-format
+msgid "Length: %f\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:216
+#, c-format
+msgid "  Node[%d]: %d  Number of lines: %d\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:221
+#, c-format
+#, fuzzy
+msgid "    Line: %5d  Angle: %.8f\n"
+msgstr "ìÉÎÉÑ"
+
+#: ../display/d.what.vect/what.c:227
+#, c-format
+msgid "length %f\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:245
+#, c-format
+msgid "Point height: %f\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:257
+#, c-format
+#, fuzzy
+msgid "Line height: %f\n"
+msgstr "ìÉÎÉÑ"
+
+#: ../display/d.what.vect/what.c:263
+#, c-format
+#, fuzzy
+msgid "Line height min: %f max: %f\n"
+msgstr "ìÉÎÉÑ"
+
+#: ../display/d.what.vect/what.c:280
+#, c-format
+msgid "Area height: %f\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:287
+msgid "Area\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:300
+#, c-format
+msgid "Area: %d  Number of isles: %d\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:304
+#, c-format
+msgid "  Isle[%d]: %d\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:311
+#, c-format
+msgid "Island: %d  In area: %d\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:315 ../display/d.what.vect/what.c:323
+#, c-format
+msgid "Size - Sq Meters: %.3f\t\tHectares: %.3f\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:318 ../display/d.what.vect/what.c:327
+#, c-format
+msgid "           Acres: %.3f\t\tSq Miles: %.4f\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:353
+#, c-format
+msgid ""
+"field: %d\n"
+"category: %d\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:362
+msgid "Database connection not defined\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:370
+#, c-format
+#, fuzzy
+msgid ""
+"driver: %s\n"
+"database: %s\n"
+"table: %s\n"
+"key column: %s\n"
+msgstr "       "
+
+#: ../display/d.what.vect/what.c:421
+msgid ""
+"\n"
+"Click mouse button on desired location\n"
+"\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:426
+msgid "Buttons\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:427
+#, fuzzy
+msgid " Left:  what's here\n"
+msgstr " "
+
+#: ../display/d.what.vect/what.c:429
+msgid " Middle: toggle flash color\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:434
+msgid " Right: quit\n"
+msgstr ""
+
+#: ../display/d.zoom/main.c:158
+#, fuzzy
+msgid "ERROR: can not get \"list\" items\n"
+msgstr "ïûéâëá"
+
+#: ../display/d.zoom/main.c:159
+msgid "-j flag forced\n"
+msgstr ""
+
+#: ../display/d.zoom/main.c:196
+#, fuzzy
+msgid "ERROR: No map is displayed in GRASS monitor\n"
+msgstr "ïûéâëá  "
+
+#: ../display/d.zoom/main.c:320
+#, c-format
+#, fuzzy
+msgid "%d raster%s, %d vector%s\n"
+msgstr "  ×ÅËÔÏÒ  "
+
+#: ../display/d.zoom/main.c:346
+msgid "Zooming finished.\n"
+msgstr ""
+
+#: ../display/d.zoom/pan.c:20 ../display/d.zoom/zoom.c:15
+#, fuzzy
+msgid ""
+"\n"
+"\n"
+"Buttons:\n"
+msgstr ""
+"\n"
+"\n"
+"ëÎÏÐËÉ:\n"
+
+#: ../display/d.zoom/pan.c:21 ../display/d.zoom/zoom.c:17
+#, c-format
+#, fuzzy
+msgid "%s Pan\n"
+msgstr " "
+
+#: ../display/d.zoom/pan.c:22 ../display/d.zoom/zoom.c:18
+#, c-format
+#, fuzzy
+msgid "%s Quit\n"
+msgstr " "
+
+#: ../display/d.zoom/zoom.c:16
+#, c-format
+#, fuzzy
+msgid "%s Zoom menu\n"
+msgstr " "
+
+#: ../display/d.zoom/zoom.c:41
+msgid ""
+"This region now saved as current region.\n"
+"\n"
+msgstr ""
+
+#: ../display/d.zoom/zoom.c:42
+msgid "Note: run 'd.erase' for the new region to affect the graphics.\n"
+msgstr ""
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_box.c:40
+#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_line.c:39
+#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_pnt.c:23
+msgid "Monitor: interactive command in redraw\n"
+msgstr ""
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:116
+#, c-format
+msgid "found %d visuals of type TrueColor\n"
+msgstr ""
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:118
+msgid "searching for highest bit depth\n"
+msgstr ""
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:135
+#, c-format
+msgid "selected %d bit depth\n"
+msgstr ""
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:197
+#, c-format
+#, fuzzy
+msgid "using default visual which is %s\n"
+msgstr "   "
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:127
+#, c-format
+msgid "Monitor: waitpid: expected %d but got %d\n"
+msgstr ""
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:338
+msgid "Monitor: XGetWMName failed\n"
+msgstr ""
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:344
+msgid "Monitor: XGetWMName: bad result\n"
+msgstr ""
+
+#: ../imagery/i.group/main.c:86
+#, fuzzy
+msgid "No input map(s) specified."
+msgstr " ."
+
+#: ../raster/r.colors/rules.c:45
+msgid "Enter rules, \"end\" when done, \"help\" if you need it.\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:47
+#, c-format
+#, fuzzy
+msgid "fp: Data range is %.25f to %.25f\n"
+msgstr " "
+
+#: ../raster/r.colors/rules.c:49
+#, c-format
+#, fuzzy
+msgid "Data range is %ld to %ld\n"
+msgstr " "
+
+#: ../raster/r.colors/rules.c:110 ../raster/r.colors/rules.c:114
+msgid "Your color rules do not cover the whole range of data!"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:188
+msgid "Enter a rule in one of these formats:\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:190
+msgid " val color\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:191
+#, c-format
+msgid " n%% color\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:192
+msgid " nv color\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:193
+msgid " default color\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:194
+msgid "color can be one of:\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:196
+msgid "or an R:G:B triplet, e.g.: 0:127:255\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:237
+#, c-format
+#, fuzzy
+msgid "** warning: R:G:B value(s) out of range [0..255]: %d:%d:%d **\n"
+msgstr " "
+
+#: ../raster/r.colors/rules.c:238 ../raster/r.colors/rules.c:254
+#: ../raster/r.colors/rules.c:267 ../raster/r.colors/rules.c:279
+#: ../raster/r.colors/rules.c:289 ../raster/r.colors/rules.c:301
+#: ../raster/r.colors/rules.c:376 ../raster/r.colors/rules.c:404
+#, fuzzy
+msgid "** rule is not added **\n"
+msgstr " "
+
+#: ../raster/r.colors/rules.c:253
+#, c-format
+#, fuzzy
+msgid "** warning: R G B value(s) out of range [0..255]: %d %d %d **\n"
+msgstr " "
+
+#: ../raster/r.colors/rules.c:266 ../raster/r.colors/rules.c:288
+msgid "** warning: no such value **\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:402
+#, c-format
+#, fuzzy
+msgid "%s:line %d:%s\n"
+msgstr "   "
+
+#: ../raster/r.colors/rules.c:403
+msgid "** bad color specification **\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:424
+#, c-format
+#, fuzzy
+msgid "%s - unknown color\n"
+msgstr " "
+
+#: ../raster/r.colors/rules.c:425
+#, fuzzy
+msgid "Valid colors are:\n"
+msgstr " "
+
+#: ../vector/v.convert/att.c:30 ../vector/v.convert/old2new.c:27
+#, fuzzy
+msgid "Input vector was not found."
+msgstr "×ÅËÔÏÒ."
+
+#: ../vector/v.convert/att.c:36
+msgid "No category labels (dig_cats) found, no table created.\n"
+msgstr ""
+
+#: ../vector/v.convert/att.c:41
+msgid "Cannot open dig_cats file."
+msgstr ""
+
+#: ../vector/v.convert/att.c:68
+#, c-format
+#, fuzzy
+msgid "Cannot open database %s"
+msgstr " "
+
+#: ../vector/v.convert/att.c:74
+#, c-format
+#, fuzzy
+msgid "Cannot create table: %s"
+msgstr " "
+
+#: ../vector/v.convert/att.c:92
+#, c-format
+#, fuzzy
+msgid "Cannot insert into table: %s"
+msgstr " "
+
+#: ../vector/v.convert/old2new.c:32
+msgid "Failed opening input dig file."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:47
+msgid "dig_att file doesn't exist."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:50
+msgid "Failed opening input dig_att file."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:71
+msgid "Attaching categories...\n"
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:89
+#, c-format
+msgid "Failed to attach an attribute (category %d) to a line."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:92
+#, c-format
+#, fuzzy
+msgid "WARNING: line %d label: %d matched another label: %d."
+msgstr "ðòåäõðòåöäåîéå."
+
+#: ../vector/v.convert/old2new.c:100
+msgid "Writing new file...\n"
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:121
+#, c-format
+msgid "%-5d points and lines written to output file.\n"
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:135
+#, c-format
+msgid "%-5d centroids written to output file.\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:41
+msgid "Reading dig file...\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:75
+#, fuzzy
+msgid "Input file is version 3.\n"
+msgstr " "
+
+#: ../vector/v.convert/read.c:78
+#, fuzzy
+msgid "Input file is version 4.\n"
+msgstr " "
+
+#: ../vector/v.convert/read.c:87
+#, fuzzy
+msgid "Input file is portable.\n"
+msgstr " "
+
+#: ../vector/v.convert/read.c:89
+#, fuzzy
+msgid ""
+"WARNING: Input file is not portable.We will attempt to convert anyway but "
+"conversion may fail.Please read manual for detail information."
+msgstr "ðòåäõðòåöäåîéå  ."
+
+#: ../vector/v.convert/read.c:161
+#, c-format
+msgid "%-5d points read to memory\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:162
+#, c-format
+msgid "%-5d lines read to memory\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:164
+#, c-format
+msgid "%-5d points read and written to output\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:165
+#, c-format
+msgid "%-5d lines read and written to output\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:167
+#, c-format
+msgid "%-5d area boundaries read and written to output\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:168
+#, c-format
+msgid "%-5d dead points skipped\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:169
+#, c-format
+msgid "%-5d dead lines skipped\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:170
+#, c-format
+msgid "%-5d dead area boundaries skipped\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:171
+#, c-format
+msgid "%-5d elements of unknown type skipped\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:173
+#, c-format
+msgid "%-5d elements read to memory.\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:212
+msgid "Reading dig_att file...\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:220
+#, c-format
+#, fuzzy
+msgid "Error: %s"
+msgstr " "
+
+#: ../vector/v.convert/read.c:241
+#, c-format
+msgid "Unknown type: %c"
+msgstr ""
+
+#: ../vector/v.convert/read.c:260
+#, c-format
+msgid "%-5d point categories read\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:261
+#, c-format
+msgid "%-5d line categories read\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:262
+#, c-format
+msgid "%-5d centroids read\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:263
+#, c-format
+msgid "%-5d dead point categories skipped\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:264
+#, c-format
+msgid "%-5d dead line categories skipped\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:265
+#, c-format
+msgid "%-5d dead centroids skipped\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:266
+#, c-format
+msgid "%-5d categories of unknown type skipped\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:268
+#, c-format
+msgid "%-5d categories read into memory.\n"
+msgstr ""
+
+#: ../vector/v.convert/type.c:29
+#, c-format
+#, fuzzy
+msgid "SYSTEM_ERROR: OLD_T_NEW Got a bad type code %x"
+msgstr "ïûéâëá"
+
+#: ../vector/v.convert/type.c:50
+#, c-format
+#, fuzzy
+msgid "SYSTEM_ERROR: NEW_T_OLD Got a bad type code %x"
+msgstr "ïûéâëá"
+
+#: ../vector/v.surf.idw/read_sites.c:34
+msgid "Cannot read field info"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:38
+#, c-format
+#, fuzzy
+msgid "Cannot open database %s by driver %s"
+msgstr "   "
+
+#: ../vector/v.surf.idw/read_sites.c:45
+msgid "Column type not supported"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:48
+msgid "Cannot select data from table"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:50
+#, c-format
+msgid "%d records selected from table"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:80
+#, c-format
+msgid "No record for line (cat = %d)"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:91
+#, c-format
+msgid "%d points loaded\n"
+msgstr ""
+
+#: ../vector/v.transform/ask_trans.c:83
+msgid "ask_transform_coor():  Leaving session.. \n"
+msgstr ""
+
+#: ../vector/v.transform/creat_trans.c:69
+#, c-format
+msgid " Number of points that have been entered: %d\n"
+msgstr ""
+
+#: ../vector/v.transform/creat_trans.c:100
+#, fuzzy
+msgid "Please answer yes or no"
+msgstr "ïÔ×ÅÔØÔÅ yes ÉÌÉ no"
+
+#: ../vector/v.transform/creat_trans.c:123
+#, c-format
+msgid "Number of points that have been entered: %d\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:166
+#, c-format
+#, fuzzy
+msgid "Could not open file with coordinates : %s\n"
+msgstr " "
+
+#: ../vector/v.transform/main.c:172
+#, c-format
+#, fuzzy
+msgid "Could not find input map <%s>\n"
+msgstr " "
+
+#: ../vector/v.transform/main.c:206
+msgid ""
+"\n"
+"Now transforming the vectors ...\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:224
+#, c-format
+#, fuzzy
+msgid "New vector map <%s> boundary coordinates:\n"
+msgstr "×ÅËÔÏÒ  "
+
+#: ../vector/v.transform/main.c:225
+#, c-format
+msgid " N: %-10.3f    S: %-10.3f\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:226
+#, c-format
+msgid " E: %-10.3f    W: %-10.3f\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:227
+#, c-format
+msgid " B: %6.3f    T: %6.3f\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:232
+#, c-format
+#, fuzzy
+msgid "'%s' has finished the transformation of the vectors.\n"
+msgstr " "
+
+#: ../vector/v.transform/print_trans.c:29
+msgid ""
+"                          CHECK MAP RESIDUALS\n"
+"\n"
+msgstr ""
+
+#: ../vector/v.transform/print_trans.c:30
+msgid "                Current Map                  New Map\n"
+msgstr ""
+
+#: ../vector/v.transform/print_trans.c:31
+msgid ""
+" POINT      X coord    Y coord  |        X coord   Y coord    |      "
+"residuals\n"
+msgstr ""
+
+#: ../vector/v.transform/print_trans.c:43
+#, c-format
+msgid ""
+"\n"
+"\n"
+"  Number of points: %d\n"
+msgstr ""
+
+#: ../vector/v.transform/print_trans.c:44
+#, c-format
+msgid "  Residual mean average   : %f\n"
+msgstr ""
+
+#: ../vector/v.transform/setup_trans.c:88
+msgid "The points weren't spread out enough."
+msgstr ""
+
+#: ../vector/v.transform/setup_trans.c:91
+#, c-format
+msgid "You need to enter at least %d points."
+msgstr ""
+
+#: ../vector/v.what.rast/main.c:330
+#, c-format
+msgid "%d categories loaded from table\n"
+msgstr ""
+
+#: ../vector/v.what.rast/main.c:331
+#, c-format
+#, fuzzy
+msgid "%d categories loaded from vector\n"
+msgstr "×ÅËÔÏÒ"
+
+#: ../vector/v.what.rast/main.c:332
+#, c-format
+#, fuzzy
+msgid "%d categories from vector missing in table\n"
+msgstr "×ÅËÔÏÒ ÏÔÓÕÔÓÔ×ÕÅÔ"
+
+#: ../vector/v.what.rast/main.c:333
+#, c-format
+#, fuzzy
+msgid "%d duplicate categories in vector\n"
+msgstr "×ÅËÔÏÒ"
+
+#: ../vector/v.what.rast/main.c:334
+#, c-format
+msgid "%d records updated\n"
+msgstr ""
+
+#: ../vector/v.what.rast/main.c:335
+#, c-format
+msgid "%d update errors\n"
+msgstr ""
+
