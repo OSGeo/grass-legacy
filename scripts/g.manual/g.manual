@@ -19,12 +19,16 @@
 #%  key: i
 #%  description: display index
 #%END
+#%flag
+#%  key: m
+#%  description: display as MAN text page instead of HTML page in browser
+#%END
 #%option
 #% key: entry
 #% type: string
 #% description: manual entry to be displayed
 #% required : no
-#%End
+#%END
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
@@ -37,23 +41,50 @@ else
     BROWSERNAME="$GRASS_HTML_BROWSER"
 fi
 
+
+start_browser()
+{
+  if test ! -f "$GISBASE"/docs/html/$1.html -a $1 != "(null)" ; then
+    echo "ERROR: no HTML manual page entry for <$1>."
+    exit 1
+  else
+    echo "Starting browser <$BROWSERNAME> for module $1..."
+    $GRASS_HTML_BROWSER "$GISBASE"/docs/html/$1.html
+  fi
+}
+
+start_man()
+{
+  if test ! -f "$GISBASE"/man/man1/$1.1 -a $1 != "(null)" ; then
+    echo "ERROR: no MAN page entry for <$1>."
+    exit 1
+  else
+    man "$GISBASE"/man/man1/$1.1
+  fi
+}
+
+#keep order!
+#first test for index...
 if [ $GIS_FLAG_i -eq 1 ] ; then
-   echo "Starting browser <$BROWSERNAME> for manual page index..."
-   $GRASS_HTML_BROWSER "$GISBASE"/docs/html/index.html
-  exit 0
+  if [ $GIS_FLAG_m -eq 1 ] ; then
+    start_man index
+    exit 0
+  else
+    start_browser index
+    exit 0
+  fi
 fi
 
-if [ "$GIS_OPT_entry" = "(null)" ] ; then
+#... then for help parameter:
+if [ -z "$GIS_OPT_entry" ] ; then
  g.manual help
  exit 0
 fi
 
-if test ! -f "$GISBASE"/docs/html/"$GIS_OPT_entry".html -a "$GIS_OPT_entry" != "(null)" ; then
-    echo "ERROR: no man page entry for <$GIS_OPT_entry>."
-    exit 1
+if [ $GIS_FLAG_m -eq 1 ] ; then
+  start_man "$GIS_OPT_entry"
 else
-    echo "Starting browser <$BROWSERNAME> for module $GIS_OPT_entry..."
-    $GRASS_HTML_BROWSER "$GISBASE"/docs/html/"$GIS_OPT_entry".html
+  start_browser "$GIS_OPT_entry"
 fi
 
 exit 0
