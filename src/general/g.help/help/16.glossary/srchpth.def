@@ -1,0 +1,9 @@
+
+
+search path - In GRASS, users may access maps, created by others,
+that are stored in \mapsets\ under the same geographic \location\.
+The user can specify the names and order in which mapsets will be
+searched for maps in his mapset search path.  More generally, in
+\UNIX\ terminology, a search path specifies the names of and order
+in which directories will be searched for user-specified files and
+programs.
