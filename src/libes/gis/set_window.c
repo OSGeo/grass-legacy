@@ -30,7 +30,7 @@ G_set_window (window)
     int i;
     int maskfd;
     char *err, *G_adjust_Cell_head();
-    struct Cell_head twindow;
+/*  struct Cell_head twindow; */
 
 /* adjust window, check for valid window */
 /* adjust the real one, not a copy
