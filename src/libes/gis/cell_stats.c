@@ -182,6 +182,8 @@ G_rewind_cell_stats (s)
 {
     int q;
 
+    if (s->N <= 0)
+	return 0;
 /* start at root and go all the way to the left */
     s->curp = 1;
     while (q = s->node[s->curp].left)
