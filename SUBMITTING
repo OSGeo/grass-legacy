@@ -1,4 +1,4 @@
-$Id: SUBMITTING,v 1.10 2000-12-01 08:21:00 justin Exp $
+$Id: SUBMITTING,v 1.11 2000-12-01 08:59:23 cho Exp $
 
 NOTE: Please improve this list!
 
@@ -159,7 +159,7 @@ care of following rules:
     the module's list in html/...  The easiest way to do this is to copy
     an existing HTML page or the template page template.ht and modify it for
     your purposes (to get the page style). The shell script makemanpage.sh
-    make things easier : look at html/README.txt for more details and the
+    make things easier : look at html/README for more details and the
     rules to be used.
     
     The online WWW man pages will be updated over-night by CVS.
