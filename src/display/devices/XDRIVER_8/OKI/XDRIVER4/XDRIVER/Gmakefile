@@ -1,0 +1,34 @@
+PGM=XDRIVER
+#EXTRA_CFLAGS = 
+
+LIB = ../lib/driverlib.a $(D_LIB)
+
+OFILES =  \
+	Box_abs.o\
+	Can_do.o\
+	Color.o\
+	Cont_abs.o\
+	Clr_table.o\
+	Draw_line.o\
+	Get_w_box.o\
+	Get_w_line.o\
+	Get_w_pnt.o\
+	Graph_Clse.o\
+	Graph_Set.o\
+	Panel.o\
+	Plylne_abs.o\
+	Polygn_abs.o\
+	Returns.o\
+	Serve_Xevent.o\
+	SWITCHER.o\
+	alloc.o\
+	command_pend.o\
+	Raster.o
+
+
+$(GIS)/driver/$(PGM): $(OFILES) $(LIB)
+	$(CC) $(LDFLAGS) $(OFILES) $(LIB) -lX11 $(MATHLIB)
+	cp a.out $(PGM)
+	mv a.out $@
+
+$(LIB): #
