@@ -1,0 +1,11 @@
+Someone pointed out that cartographers may think of aspect
+at North=0, clockwise, but r.slope.aspect is defined from
+a mathmatical point of view (East=0, counterclockwise).
+
+The included are diffs to add a -g flag to produce aspect
+maps this way.
+
+main.diffs  (r.slope.aspect/cmd/main.c)
+man.diffs (man page)
+
+--Darrell
