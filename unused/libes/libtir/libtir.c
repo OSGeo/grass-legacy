@@ -27,7 +27,7 @@ r_get_c(RASTER_MAP_ROW data, int col)
 {
 	if(col < 0){
 		G_warning("r_get_c(): col < 0");
-		return 0;
+		return 0.0;
 	}
 
 	return (double) data.c[col];
@@ -39,7 +39,7 @@ r_get_f(RASTER_MAP_ROW data, int col)
 {
 	if(col < 0){
 		G_warning("r_get_f(): col < 0");
-		return 0;
+		return 0.0;
 	}
 
 	return (double) data.f[col];
@@ -51,7 +51,7 @@ r_get_d(RASTER_MAP_ROW data, int col)
 {
 	if(col < 0){
 		G_warning("r_get_d(): col < 0");
-		return 0;
+		return 0.0;
 	}
 
 	return (double) data.d[col];
@@ -201,7 +201,7 @@ r_is_null_c(RASTER_MAP_ROW data, int col)
 {
 	if(col < 0){
 		G_warning("r_is_null_c(): col < 0");
-		return;
+		return 0;
 	}
 
 	return G_is_c_null_value(&data.c[col]);
@@ -213,7 +213,7 @@ r_is_null_f(RASTER_MAP_ROW data, int col)
 {
 	if(col < 0){
 		G_warning("r_is_null_f(): col < 0");
-		return;
+		return 0;
 	}
 
 	return G_is_f_null_value(&data.f[col]);
@@ -225,7 +225,7 @@ r_is_null_d(RASTER_MAP_ROW data, int col)
 {
 	if(col < 0){
 		G_warning("r_is_null_d(): col < 0");
-		return;
+		return 0;
 	}
 
 	return G_is_d_null_value(&data.d[col]);
