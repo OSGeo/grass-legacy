@@ -1,0 +1,15 @@
+PROG = $(BIN_ALPHA_INTER)/i.quantize
+
+LIBES = $(IMAGERYLIB) $(GISLIB) $(VASK)
+
+OBJ =\
+	main.o\
+	ask_levels.o\
+	compose.o\
+	gen_colors.o \
+	median.o
+
+$(PROG): ${OBJ}
+	$(CC) ${LDFLAGS} -o $@ ${OBJ} ${LIBES}
+
+$(IMAGERYLIB) $(GISLIB) $(VASKLIB): #
