@@ -1,0 +1,10 @@
+PGM=v.in.gef
+
+LIST=imp_main.o
+
+
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VASK) $(EXTRALIB)
+
+
+$(LIST): global.h
