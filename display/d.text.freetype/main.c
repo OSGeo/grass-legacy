@@ -3,7 +3,7 @@
 *
 ****************************************************************************
 *
-* MODULE:       d.text2
+* MODULE:       d.text.freetype
 *
 * AUTHOR(S):    Huidae Cho <hdcho@geni.cemtlo.com>
 *
@@ -57,23 +57,29 @@ int
 main(int argc, char **argv)
 {
 	struct	GModule	*module;
-	struct	Option	*opt1, *opt2, *opt3, *opt4, *opt5, *opt6;
-	unsigned char	*text, *font, tcolor[128], charset[32];
+	struct	Option	*opt1, *opt2, *opt3, *opt4, *opt5, *opt6, *opt7;
+	unsigned char	*text, *path, charset[32], tcolor[128];
 	int	size, color;
 	double	east, north;
 	int	i, j, k, l, x, y, ch, index;
 #ifdef HAVE_ICONV_H
 	iconv_t	cd;
 #endif
-	int	ol;
-	unsigned char	*p1, *p2;
-	unsigned char	*out;
+	int	ol, cn, cf;
+	unsigned char	*p1, *p2, *out;
+	char	freetypecap[128], buf[512], *ptr,
+		ifont[128], ipath[128], icharset[32], icolor[128], isize[10],
+		**cfont, **cpath, **ccharset, **ccolor, **csize,
+		*lfont;
+	FILE	*fp;
 
 	module = G_define_module();
 	module->description =
 		"Displays text.";
 
 	G_gisinit(argv[0]);
+
+	sprintf(freetypecap, "%s/etc/freetypecap", G_gisbase());
 
 	opt1 = G_define_option();
 	opt1->key        = "text";
@@ -82,54 +88,202 @@ main(int argc, char **argv)
 	opt1->description= "Text";
 
 	opt2 = G_define_option();
-	opt2->key        = "font";
-	opt2->type       = TYPE_STRING;
-	opt2->required   = YES;
-	opt2->description= "Font file [with path]";
+	opt2->key        = "east_north";
+	opt2->type       = TYPE_DOUBLE;
+	opt2->required   = NO;
+	opt2->key_desc   = "east,north";
+	opt2->description= "Coordinates";
 
-	opt3 = G_define_option();
-	opt3->key        = "size";
-	opt3->type       = TYPE_INTEGER;
-	opt3->required   = NO;
-	opt3->answer     = DEFAULT_SIZE;
-	opt3->description= "Size";
+	lfont = NULL;
+	cf = -1;
+	cn = 0;
 
-	opt4 = G_define_option();
-	opt4->key        = "color";
-	opt4->type       = TYPE_STRING;
-	opt4->required   = NO;
-	opt4->answer     = DEFAULT_COLOR;
-	/*
-	opt4->options    = D_color_list();
-	*/
-	opt4->description= "Color";
+	if(!(fp=fopen(freetypecap, "r"))){
+		G_warning("%s: No FreeType definition file", freetypecap);
+
+		opt3 = NULL;
+
+		opt4 = G_define_option();
+		opt4->key        = "path";
+		opt4->type       = TYPE_STRING;
+		opt4->required   = YES;
+		opt4->description= "FontPath";
+	}else{
+		while(fgets(buf, 512, fp) && !feof(fp)){
+			if((ptr = strchr(buf, '#')))
+				*ptr = 0;
+			if(sscanf(buf, "%[^:]:%[^:]:%[^:]:%[^:]:%[^:]",
+				ifont, ipath, icharset, icolor, isize) != 5)
+				continue;
+			if(!cn){
+				cfont = (char **)G_malloc((cn+1)*sizeof(char *));
+				cpath = (char **)G_malloc((cn+1)*sizeof(char *));
+				ccharset = (char **)G_malloc((cn+1)*sizeof(char *));
+				ccolor = (char **)G_malloc((cn+1)*sizeof(char *));
+				csize = (char **)G_malloc((cn+1)*sizeof(char *));
+			}else{
+				cfont = (char **)G_realloc(cfont, (cn+1)*sizeof(char *));
+				cpath = (char **)G_realloc(cpath, (cn+1)*sizeof(char *));
+				ccharset = (char **)G_realloc(ccharset, (cn+1)*sizeof(char *));
+				ccolor = (char **)G_realloc(ccolor, (cn+1)*sizeof(char *));
+				csize = (char **)G_realloc(csize, (cn+1)*sizeof(char *));
+			}
+			if(!cfont || !cpath || !ccharset || !ccolor || !csize)
+				error("Unable to allocate memory");
+			cfont[cn] = (char *)G_malloc(strlen(ifont)+1);
+			cpath[cn] = (char *)G_malloc(strlen(ipath)+1);
+			ccharset[cn] = (char *)G_malloc(strlen(icharset)+1);
+			ccolor[cn] = (char *)G_malloc(strlen(icolor)+1);
+			csize[cn] = (char *)G_malloc(strlen(isize)+1);
+
+			if(!cfont[cn] || !cpath[cn] || !ccharset[cn] ||
+					!ccolor[cn] || !csize[cn])
+				error("Unable to allocate memory");
+
+			strcpy(cfont[cn], ifont);
+			strcpy(cpath[cn], ipath);
+			strcpy(ccharset[cn], icharset);
+			strcpy(ccolor[cn], icolor);
+			strcpy(csize[cn], isize);
+
+			i = strlen(cfont[cn]) - (cfont[cn][0]=='*' ? 1 : 0);
+			if(!lfont){
+				l = 0;
+				lfont = (char *)G_malloc(i+1);
+			}else{
+				l = strlen(lfont);
+				lfont = (char *)G_realloc(lfont, l+i+2);
+			}
+			if(!lfont)
+				error("Unable to allocate memory");
+			lfont[l] = 0;
+			if(l)
+				strcat(lfont, ",");
+			strcat(lfont, cfont[cn] + (cfont[cn][0]=='*' ? 1 : 0));
+
+			if(cfont[cn][0] == '*' && cf < 0)
+				cf = cn;
+
+			cn++;
+		}
+		fclose(fp);
+
+		opt3 = G_define_option();
+		opt3->key        = "font";
+		opt3->type       = TYPE_STRING;
+		opt3->required   = NO;
+		if(cf >= 0)
+			opt3->answer     = cfont[cf] + 1;
+		opt3->options    = lfont;
+		opt3->description= "FontName";
+
+		opt4 = G_define_option();
+		opt4->key        = "path";
+		opt4->type       = TYPE_STRING;
+		opt4->required   = NO;
+		if(cf >= 0)
+			opt4->answer     = cpath[cf];
+		opt4->description= "FontPath";
+	}
 
 	opt5 = G_define_option();
-	opt5->key        = "east_north";
-	opt5->type       = TYPE_DOUBLE;
+	opt5->key        = "charset";
+	opt5->type       = TYPE_STRING;
 	opt5->required   = NO;
-	opt5->key_desc   = "east,north";
-	opt5->description= "Coordinates";
+	if(cf >= 0)
+		opt5->answer     = ccharset[cf];
+	else
+		opt5->answer     = DEFAULT_CHARSET;
+	opt5->description= "CharSet";
 
 	opt6 = G_define_option();
-	opt6->key        = "charset";
+	opt6->key        = "color";
 	opt6->type       = TYPE_STRING;
 	opt6->required   = NO;
-	opt6->answer     = DEFAULT_CHARSET;
-	opt6->description= "CharSet";
+	if(cf >= 0)
+		opt6->answer     = ccolor[cf];
+	else
+		opt6->answer     = DEFAULT_COLOR;
+	/*
+	opt6->options    = D_color_list();
+	*/
+	opt6->description= "Color";
+
+	opt7 = G_define_option();
+	opt7->key        = "size";
+	opt7->type       = TYPE_INTEGER;
+	opt7->required   = NO;
+	if(cf >= 0)
+		opt7->answer     = csize[cf];
+	else
+		opt7->answer     = DEFAULT_SIZE;
+	opt7->description= "Size";
 
 	if(G_parser(argc, argv))
 		exit(-1);
 
 	text = opt1->answer;
-	font = opt2->answer;
-	size = atoi(opt3->answer);
-	l = strlen(opt4->answer);
-	for(i=0; i<=l; i++)
-		tcolor[i] = tolower(opt4->answer[i]);
-	l = strlen(opt6->answer);
-	for(i=0; i<=l; i++)
-		charset[i] = toupper(opt6->answer[i]);
+
+	charset[0] = 0;
+	tcolor[0] = 0;
+	size = -1;
+
+	if(opt3){
+		if(!opt3->answer && !opt4->answer){
+			if(cn){
+				for(i=0; i<cn; i++){
+					G_free(cfont[i]);
+					G_free(cpath[i]);
+					G_free(ccharset[i]);
+					G_free(ccolor[i]);
+					G_free(csize[i]);
+				}
+				G_free(cfont);
+				G_free(cpath);
+				G_free(ccharset);
+				G_free(ccolor);
+				G_free(csize);
+
+				G_free(lfont);
+			}
+			error("No selected font");
+		}
+		if(opt4->answer)
+			path = opt4->answer;
+		else{
+			for(cf=0; cf<cn; cf++){
+				ptr = cfont[cf] + (cfont[cf][0]=='*' ? 1 : 0);
+				if(!strcmp(opt3->answer, ptr)){
+					path = cpath[cf];
+					l = strlen(ccharset[cf]);
+					for(i=0; i<=l; i++)
+						charset[i] = toupper(ccharset[cf][i]);
+					l = strlen(ccolor[cf]);
+					for(i=0; i<=l; i++)
+						tcolor[i] = tolower(ccolor[cf][i]);
+					size = atoi(csize[cf]);
+					break;
+				}
+			}
+		}
+	}else
+	if(!opt4->answer)
+		error("No font selected");
+
+	if(opt5->answer){
+		l = strlen(opt5->answer);
+		for(i=0; i<=l; i++)
+			charset[i] = toupper(opt5->answer[i]);
+	}
+
+	if(opt6->answer){
+		l = strlen(opt6->answer);
+		for(i=0; i<=l; i++)
+			tcolor[i] = tolower(opt6->answer[i]);
+	}
+
+	if(opt7->answer)
+		size = atoi(opt7->answer);
 
 	if(R_open_driver() != 0)
 		error("No graphics device selected");
@@ -138,7 +292,7 @@ main(int argc, char **argv)
 	if(FT_Init_FreeType(&library))
 		error("Unable to initialise FreeType");
 
-	if(FT_New_Face(library, font, 0, &face))
+	if(FT_New_Face(library, path, 0, &face))
 		error("Unable to create face");
 
 	if(FT_Set_Pixel_Sizes(face, size, 0))
@@ -174,9 +328,9 @@ main(int argc, char **argv)
 
 	D_setup(0);
 
-	if(opt5->answer){
-		east  = atof(opt5->answers[0]);
-		north = atof(opt5->answers[1]);
+	if(opt2->answer){
+		east  = atof(opt2->answers[0]);
+		north = atof(opt2->answers[1]);
 		x = (int)D_u_to_d_col(east);
 		y = (int)D_u_to_d_row(north);
 	}else{
@@ -214,7 +368,7 @@ main(int argc, char **argv)
 		color = D_translate_color(DEFAULT_COLOR);
 	}
 
-	for(i=0; i<l; i += 2){
+	for(i=0; i<l; i+=2){
 		ch = (out[i] << 8) | out[i+1];
 
 		if(!(index = FT_Get_Char_Index(face, ch)))
@@ -248,6 +402,23 @@ main(int argc, char **argv)
 	FT_Done_Face(face);
 	FT_Done_FreeType(library);
 	R_close_driver();
+
+	if(cn){
+		for(i=0; i<cn; i++){
+			G_free(cfont[i]);
+			G_free(cpath[i]);
+			G_free(ccharset[i]);
+			G_free(ccolor[i]);
+			G_free(csize[i]);
+		}
+		G_free(cfont);
+		G_free(cpath);
+		G_free(ccharset);
+		G_free(ccolor);
+		G_free(csize);
+
+		G_free(lfont);
+	}
 
 	exit(0);
 }
