@@ -20,7 +20,7 @@
 #include "dbmi.h"
 #include "Vect.h"
 
-int From_node;   /* from node set in SP and used by clipper for first arc */  
+static int From_node;   /* from node set in SP and used by clipper for first arc */  
 
 static int clipper ( dglGraph_s    *pgraph ,
                      dglSPClipInput_s  * pargIn ,
@@ -117,6 +117,8 @@ Vect_net_build_graph (  struct Map_info *Map,
     G_debug (1, "    afcol = %s, abcol = %s, ncol = %s", afcol, abcol, ncol); 
 
     fprintf ( stderr, "Building graph:\n");
+
+    Map->graph_line_type = ltype;
 
     Points = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
@@ -232,7 +234,7 @@ Vect_net_build_graph (  struct Map_info *Map,
 			ret = db_CatValArray_get_value_double ( &bvarr, cat, &bdcost );
 		    }
 		    if ( ret != DB_OK ) { 
-			G_warning ( "Database record for line %d (cat = %d, backword direction) not found", 
+			G_warning ( "Database record for line %d (cat = %d, backword direction) not found"
 				    "(direction of line skipped)", i, cat);
 			dobw = 0;
 		    }
@@ -509,5 +511,373 @@ Vect_net_get_node_cost ( struct Map_info *Map, int node, double *cost )
     G_debug (3, "  -> cost = %f", *cost ); 
 
     return 1;
+}
+
+/*!
+ \fn int Vect_net_nearest_nodes ( struct Map_info *Map, double x, double y, double z, 
+ 		int direction, double maxdist,
+		int *node1, int *node2, int *ln, double *costs1, double costs2,
+                struct line_pnts *Points1, struct line_pnts *Points1 )
+ \brief Find nearest node(s) on network. 
+ 
+ \return number of nodes found (0,1,2)
+ \param Map
+ \param x point x coordinate
+ \param y point y coordinate
+ \param z point z coordinate (NOT USED !)
+ \param direction (GV_FORWARD - from point to net, GV_BACKWARD - from net to point)
+ \param maxdist maximum distance to the network
+ \param node1 pointer where to store the node number (or NULL)
+ \param node2 pointer where to store the node number (or NULL)
+ \param ln    pointer where to store the nearest line number (or NULL)
+ \param costs1 pointer where to store costs on nearest line to node1 (not costs from x,y,z to the line) (or NULL)
+ \param costs2 pointer where to store costs on nearest line to node2 (not costs from x,y,z to the line) (or NULL)
+ \param Points1 pointer to structure where to store vertices on nearest line to node1 (or NULL)
+ \param Points2 pointer to structure where to store vertices on nearest line to node2 (or NULL)
+ \param pointer where to distance to the line (or NULL)
+*/
+int Vect_net_nearest_nodes ( struct Map_info *Map, 
+	                     double x, double y, double z, 
+			     int direction, double maxdist,
+		             int *node1, int *node2, int *ln, double *costs1, double *costs2,
+                             struct line_pnts *Points1, struct line_pnts *Points2,
+                             double *distance )
+{
+    int line, n1, n2, nnodes;
+    int npoints;
+    int segment; /* nearest line segment (first is 1) */
+    static struct line_pnts *Points = NULL;
+    double cx, cy, cz, c1, c2;
+    double along; /* distance along the line to nearest point */
+    double length;
+
+    G_debug (3, "Vect_net_nearest_nodes() x = %f y = %f", x, y );
+    
+    /* Reset */
+    if ( node1 ) *node1 = 0;
+    if ( node2 ) *node2 = 0;
+    if ( ln ) *ln = 0;
+    if ( costs1 ) *costs1 = PORT_DOUBLE_MAX;
+    if ( costs2 ) *costs2 = PORT_DOUBLE_MAX;
+    if ( Points1 ) Vect_reset_line ( Points1 );
+    if ( Points2 ) Vect_reset_line ( Points2 );
+    if ( distance ) *distance = PORT_DOUBLE_MAX;
+
+    if ( !Points ) Points = Vect_new_line_struct();
+
+    /* Find nearest line */
+    line = Vect_find_line ( Map, x, y, z, Map->graph_line_type, maxdist, 0, 0 );
+
+    if ( line < 1 ) return 0;
+    
+    Vect_read_line ( Map, Points, NULL, line );
+    npoints = Points->n_points;
+    Vect_get_line_nodes ( Map, line, &n1, &n2);
+
+    segment = Vect_line_distance ( Points, x, y, z, 0, &cx, &cy, &cz, distance, NULL, &along);
+
+    G_debug (4, "line = %d n1 = %d n2 = %d segment = %d", line, n1, n2, segment );
+
+    /* Check first or last point and return one node in that case */
+    G_debug (4, "cx = %f cy = %f first = %f %f last = %f %f", cx, cy, Points->x[0], Points->y[0],
+	                        Points->x[npoints-1], Points->y[npoints-1] );
+
+    if ( Points->x[0] == cx && Points->y[0] == cy ) {
+	if ( node1 ) *node1 = n1;
+        if ( ln ) *ln = line;
+        if ( costs1 ) *costs1 = 0;
+	if ( Points1 ) {
+	    Vect_append_point ( Points1, x, y, z );
+	    Vect_append_point ( Points1, cx, cy, cz );
+	}
+        G_debug (3, "first node nearest");
+	return 1;
+    }
+    if ( Points->x[npoints-1] == cx && Points->y[npoints-1] == cy ) {
+	if ( node1 ) *node1 = n2;
+        if ( ln ) *ln = line;
+        if ( costs1 ) *costs1 = 0;
+	if ( Points1 ) {
+	    Vect_append_point ( Points1, x, y, z );
+	    Vect_append_point ( Points1, cx, cy, cz );
+	}
+        G_debug (3, "last node nearest");
+	return 1;
+    }
+        
+    nnodes = 2;
+    
+    /* c1 - costs to get from/to the first vertex */
+    /* c2 - costs to get from/to the last vertex */
+    if ( direction == GV_FORWARD ) { /* from point to net */
+	Vect_net_get_line_cost ( Map, line, GV_BACKWARD, &c1 );
+	Vect_net_get_line_cost ( Map, line, GV_FORWARD, &c2 );
+    } else {
+	Vect_net_get_line_cost ( Map, line, GV_FORWARD, &c1 );
+	Vect_net_get_line_cost ( Map, line, GV_BACKWARD, &c2 );
+    }
+
+    if ( c1 < 0 ) nnodes--;
+    if ( c2 < 0 ) nnodes--;
+    if ( nnodes == 0 ) return 0; /* both directions closed */
+    
+    length = Vect_line_length ( Points );
+    
+    if ( ln ) *ln = line;
+
+    if ( nnodes == 1 && c1 < 0 ) { /* first direction is closed, return node2 as node1 */
+	if ( node1 ) *node1 = n2;
+	
+	if ( costs1 ) { /* to node 2, i.e. forward */
+	    *costs1 = c2 * (length - along) / length;
+	}
+
+	if ( Points1 ) { /* to node 2, i.e. forward */
+	    int i;
+
+            if ( direction == GV_FORWARD ) { /* from point to net */
+	        Vect_append_point ( Points1, x, y, z );
+	        Vect_append_point ( Points1, cx, cy, cz );
+	        for ( i = segment; i < npoints; i++ ) 
+		    Vect_append_point ( Points1, Points->x[i], Points->y[i], Points->z[i] );
+	    } else {
+	        for ( i = npoints - 1; i >= segment; i-- ) 
+		    Vect_append_point ( Points1, Points->x[i], Points->y[i], Points->z[i] );
+
+	        Vect_append_point ( Points1, cx, cy, cz );
+	        Vect_append_point ( Points1, x, y, z );
+	    }
+	}
+    } else { 
+	if ( node1 ) *node1 = n1;
+	if ( node2 ) *node2 = n2;
+	
+	if ( costs1 ) { /* to node 1, i.e. backward */
+	    *costs1 = c1 * along / length;
+	}
+
+	if ( costs2 ) { /* to node 2, i.e. forward */
+	    *costs2 = c2 * (length - along) / length;
+	}
+
+	if ( Points1 ) { /* to node 1, i.e. backward */
+	    int i;
+
+            if ( direction == GV_FORWARD ) { /* from point to net */
+	        Vect_append_point ( Points1, x, y, z );
+	        Vect_append_point ( Points1, cx, cy, cz );
+		for ( i = segment - 1; i >= 0; i-- ) 
+		    Vect_append_point ( Points1, Points->x[i], Points->y[i], Points->z[i] );
+	    } else {
+		for ( i = 0; i <  segment; i++ ) 
+		    Vect_append_point ( Points1, Points->x[i], Points->y[i], Points->z[i] );
+
+	        Vect_append_point ( Points1, cx, cy, cz );
+	        Vect_append_point ( Points1, x, y, z );
+	    }
+	}
+
+	if ( Points2 ) { /* to node 2, i.e. forward */
+	    int i;
+            
+	    if ( direction == GV_FORWARD ) { /* from point to net */
+	        Vect_append_point ( Points2, x, y, z );
+		Vect_append_point ( Points2, cx, cy, cz );
+		for ( i = segment; i < npoints; i++ ) 
+		    Vect_append_point ( Points2, Points->x[i], Points->y[i], Points->z[i] );
+	    } else {
+		for ( i = npoints - 1; i >= segment; i-- ) 
+		    Vect_append_point ( Points2, Points->x[i], Points->y[i], Points->z[i] );
+
+		Vect_append_point ( Points2, cx, cy, cz );
+	        Vect_append_point ( Points2, x, y, z );
+	    }
+	}
+    }
+	
+    return nnodes; 
+}
+
+/*!
+ \fn int Vect_net_shortest_path_coor ( struct Map_info *Map, 
+                double fx, double fy, double fz, double tx, double ty, double tz,
+		double fmax, double tmax,
+		double *costs, struct line_pnts *Points,
+		double *fdist, double *tdist )
+ \brief Find shortest path on network between 2 points given by coordinates. 
+
+ \return 1 OK, 0 not reachable
+ 
+ \param Map
+ \param fx from point x coordinate
+ \param fy from point y coordinate
+ \param fz from point z coordinate (ignored)
+ \param tx to point x coordinate
+ \param ty to point y coordinate
+ \param tz to point z coordinate (ignored)
+ \param fmax maximum distance to the network from 'from'
+ \param tmax maximum distance to the network from 'to'
+ \param costs pointer where to store costs on the network (or NULL)
+ \param Points pointer to the structure where to store vertices of shortest path (or NULL)
+ \param fdist distance from 'from' to the net (or NULL)
+ \param tdist distance from 'to' to the net (or NULL)
+*/
+int 
+Vect_net_shortest_path_coor ( struct Map_info *Map, 
+                double fx, double fy, double fz, double tx, double ty, double tz,
+		double fmax, double tmax,
+		double *costs, struct line_pnts *Points,
+		double *fdist, double *tdist )
+{
+    int fnode[2], tnode[2]; /* nearest nodes, *node[1] is 0 if only one was found */
+    double fcosts[2], tcosts[2], cur_cst; /* costs to nearest nodes on the network */
+    int nfnodes, ntnodes, fline, tline;
+    static struct line_pnts *APoints, *SPoints, *fPoints[2], *tPoints[2];
+    static struct ilist *List;
+    static int first = 1;
+    int reachable, shortcut;
+    int i, j, fn, tn;
+    
+    G_debug (3, "Vect_net_shortest_path_coor()");
+		    
+    if ( first ) {
+	APoints = Vect_new_line_struct();
+	SPoints = Vect_new_line_struct();
+	fPoints[0] = Vect_new_line_struct();
+	fPoints[1] = Vect_new_line_struct();
+	tPoints[0] = Vect_new_line_struct();
+	tPoints[1] = Vect_new_line_struct();
+	List = Vect_new_list ();
+	first = 0;
+    }
+    
+    /* Reset */
+    if ( costs ) *costs = PORT_DOUBLE_MAX;
+    if ( Points ) Vect_reset_line ( Points );
+    if ( fdist ) *fdist = 0;
+    if ( tdist ) *tdist = 0;
+
+    /* Find nearest nodes */
+    fnode[0] = fnode[1] = tnode[0] = tnode[1] = 0;
+
+    nfnodes = Vect_net_nearest_nodes ( Map, fx, fy, fz, GV_FORWARD, fmax, &(fnode[0]), &(fnode[1]), &fline,
+	                                &(fcosts[0]), &(fcosts[1]), fPoints[0], fPoints[1], fdist );
+    if ( nfnodes == 0 ) return 0;
+
+    ntnodes = Vect_net_nearest_nodes ( Map, tx, ty, tz, GV_BACKWARD, tmax, &(tnode[0]), &(tnode[1]), &tline,
+	                                &(tcosts[0]), &(tcosts[1]), tPoints[0], tPoints[1], tdist );
+    if ( ntnodes == 0 ) return 0;
+
+    G_debug (3, "fline = %d tline = %d", fline, tline);
+
+    reachable = shortcut = 0;
+    cur_cst = PORT_DOUBLE_MAX;
+    
+    /* It may happen, that 2 points are at the same line. */
+    if ( fline == tline && (nfnodes > 1 || ntnodes > 1)  ) {
+	double len, flen, tlen, c, fseg, tseg;
+	double fcx, fcy, fcz, tcx, tcy, tcz;
+
+	Vect_read_line ( Map, APoints, NULL, fline );
+        len = Vect_line_length ( APoints );
+		
+	/* distance along the line */
+        fseg = Vect_line_distance ( APoints, fx, fy, fz, 0, &fcx, &fcy, &fcz, NULL, NULL, &flen);
+        tseg = Vect_line_distance ( APoints, tx, ty, tz, 0, &tcx, &tcy, &tcz, NULL, NULL, &tlen);
+
+	Vect_reset_line ( SPoints );
+	if ( flen == tlen ) {
+	    cur_cst = 0;
+	    reachable = shortcut = 1;
+	} else if ( flen < tlen ) {
+	    Vect_net_get_line_cost ( Map, fline, GV_FORWARD, &c );
+	    if ( c >= 0 ) {
+		cur_cst = c * (tlen - flen) / len;
+
+		Vect_append_point (SPoints, fx, fy, fz);
+		Vect_append_point (SPoints, fcx, fcy, fcz);
+		for ( i = fseg; i < tseg; i++ )
+		    Vect_append_point (SPoints, APoints->x[i], APoints->y[i], APoints->z[i]);
+		
+		Vect_append_point (SPoints, tcx, tcy, tcz);
+		Vect_append_point (SPoints, tx, ty, tz);
+
+	        reachable = shortcut = 1;
+	    }
+	} else {  /* flen > tlen */
+	    Vect_net_get_line_cost ( Map, fline, GV_BACKWARD, &c );
+	    if ( c >= 0 ) {
+		cur_cst = c * (flen - tlen) / len;
+
+		Vect_append_point (SPoints, fx, fy, fz);
+		Vect_append_point (SPoints, fcx, fcy, fcz);
+		for ( i = fseg - 1; i >= tseg; i-- )
+		    Vect_append_point (SPoints, APoints->x[i], APoints->y[i], APoints->z[i]);
+		
+		Vect_append_point (SPoints, tcx, tcy, tcz);
+		Vect_append_point (SPoints, tx, ty, tz);
+
+	        reachable = shortcut = 1;
+	    }
+	}
+    }
+
+    /* Find the shortest variant from maximum 4 */
+    for ( i = 0; i < nfnodes; i++ ) {
+	for ( j = 0; j < nfnodes; j++ ) {
+	    double ncst, cst;
+	    int ret;
+
+	    G_debug (3, "i = %d fnode = %d j = %d tnode = %d", i, fnode[i], j, tnode[j]);
+
+	    ret = Vect_net_shortest_path ( Map, fnode[i], tnode[j], NULL, &ncst);	
+	    if ( ret == -1 ) continue; /* not reachable */
+
+	    cst = fcosts[i] + ncst + tcosts[j];
+	    if ( reachable == 0 || cst < cur_cst ) {
+		cur_cst = cst;
+		fn = i;
+		tn = j;
+		shortcut = 0;
+	    }
+	    reachable = 1;
+	}
+    }	
+
+    G_debug (3, "reachable = %d shortcut = %d cur_cst = %f", reachable, shortcut, cur_cst);
+    if ( reachable ) {
+	int ret;
+
+	if ( Points ) {
+	    if ( shortcut) {
+		Vect_append_points ( Points, SPoints, GV_FORWARD );
+	    } else {
+		ret = Vect_net_shortest_path ( Map, fnode[fn], tnode[tn], List, NULL);
+		G_debug (3, "Number of lines %d", List->n_values);
+
+		Vect_append_points ( Points, fPoints[fn], GV_FORWARD );
+
+		for ( i = 0; i < List->n_values; i++ ) {
+		    int line;
+		
+		    line = List->value[i];
+		    G_debug (3, "i = %d line = %d", i, line);
+		    
+		    Vect_read_line ( Map, APoints, NULL, abs(line) );
+
+		    if ( line > 0 ) 
+			Vect_append_points ( Points, APoints, GV_FORWARD );
+		    else
+			Vect_append_points ( Points, APoints, GV_BACKWARD );
+		}
+
+		Vect_append_points ( Points, tPoints[tn], GV_FORWARD );
+	    }
+	}
+
+	if ( costs ) *costs = cur_cst;
+    }
+    
+    return reachable;
 }
 
