@@ -1,0 +1,9 @@
+
+GRASS Debugging:
+ * Print debugging message if environment variable GRASS_DEBUG_LEVEL
+ * is set to level equal or greater
+ *
+ * Levels: (recommended levels)
+ * 1 - message is printed once or few times per module
+ * 3 - each row (raster) or line (vector)
+ * 5 - each cell (raster) or point (vector)
