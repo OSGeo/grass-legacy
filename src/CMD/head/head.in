@@ -35,9 +35,11 @@ CURSES              = @CURSESLIB@ $(TERMLIB) $(COMPATLIB)
 MATHLIB             = -lm
 XDRLIB              = @XDRLIB@
 
+#PostgreSQL:
 PQLIB               = -L/usr/local/pgsql/lib -L/usr/lib/pgsql/lib -lpq -lcrypt
-PQINCPATH           = -I/usr/local/pgsql/include -I/usr/lib/pgsql/include -I/usr/include/postgresql
+PQINCPATH           = -I/usr/local/pgsql/include -I/usr/lib/pgsql/include -I/usr/include/postgresql -I/usr/include/pgsql
 
+#Image formats:
 PNGINC              = -I/usr/X11R6/include/ -I/usr/include/gr -I/usr/local/include -I/usr/include
 PNGLIB              = -L/usr/local/lib -L/usr/X11R6/lib -L/usr/lib
 
@@ -47,6 +49,7 @@ TIFFLIBPATH         = @TIFF_LIBRARY_DIRS@
 JPEGINCPATH         = -I/usr/X11R6/include/ -I/usr/include/gr -I/usr/local/include -I/usr/include
 JPEGLIBPATH         = -L/usr/local/lib -L/usr/X11R6/lib -L/usr/lib
 
+#openGL files for NVIZ/r3.showdspf
 OGLINCPATH          = -I/usr/include -I/usr/include/GL -I/usr/include/X11/GLw -I/usr/X11R6/include/GL -I/usr/local/include/GL
 OGLLIBPATH          =
 
