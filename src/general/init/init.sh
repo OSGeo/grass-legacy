@@ -379,7 +379,7 @@ echo "General Public License for more details."
 echo 
 echo "This version running thru the $shellname ($SHELL)"
 echo "Help is available with the command:      g.help"
-echo "See the licence terms with:              g.version"
+echo "See the licence terms with:              g.version -c"
 
 if [ "$GRASS_GUI" = "text" ] ; then
     echo "Start the graphical user interface with: tcltkgrass&"
