@@ -1,49 +1,25 @@
-INTER_CFILES = Build_inter.c\
-      Col.c\
-      CountLines.c\
-      CountCats.c\
-      FindAtt_Cat.c\
-      FindIDColumn.c\
-      A_labs_inter.c\
-      GenToDig.c\
-      L_labs_inter.c\
-      DO_txt_file.c\
-      process_inp.c\
-	  main_inter.c \
-	  dbfopen.c \
-	  pgdump.c \
-	  shpopen.c \
-	  shp2dig.c \
-	  dasm_rings.c
-
-INTER_OBJ = Build_inter.o\
-      Col.o\
-      CountLines.o\
-      CountCats.o\
-      FindAtt_Cat.o\
-      FindIDColumn.o\
-      A_labs_inter.o\
-      GenToDig.o\
-      L_labs_inter.o\
-      DO_txt_file.o\
-      process_inp.o\
-      main_inter.o \
-      dbfopen.o \
-      pgdump.o \
-      shpopen.o \
-      shp2dig.o \
-      dasm_rings.o
-
 PGM = v.in.shape.pg
+# SHAPELIB=$(SRC)/libes/vect32_64/shapelib-1.2.8
+
 HOME = $(BIN_CONTRIB_CMD)
-EXTRA_CFLAGS = $(PQINCPATH)
+EXTRA_CFLAGS = $(VECT_INCLUDE) $(PQINCPATH)
+# EXTRA_CFLAGS = $(VECT_INCLUDE) -DDEBUG # for debugging
+LIST = 	main.o \
+	shpopen.o \
+	dbfopen.o \
+	dbutils.o \
+	shp2dig.o \
+	writelin.o \
+	gbtree.o \
+	cleanup.o \
+	pgdump.o
 
-all:  $(BIN_CONTRIB_CMD)/$(PGM)
+# LINK_LIST = ../../libes/vect32_64/shapelib-1.2.8/shpopen.o \
+# 	../../libes/vect32_64/shapelib-1.2.8/dbfopen.o
 
-$(HOME)/$(PGM): $(INTER_OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
-	$(CC) -o $@  $(LDFLAGS) $(INTER_OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB) $(XDRLIB) $(PQLIB)
-
+$(HOME)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) $(VASK) $(MATHLIB) \
+	$(DATETIMELIB) $(XDRLIB) $(PQLIB)
 
 $(VECTLIB): #
-$(GISLIB): #
-$(DIG_ATTLIB): #
+$(GISLIB): # 
