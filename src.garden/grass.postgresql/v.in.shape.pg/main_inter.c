@@ -226,6 +226,7 @@ int main (int argc, char **argv)
       case SHPT_ARC:
       case SHPT_ARCZ:
       case SHPT_ARCM:
+        cov_type[0] = '\0';
         strcat(cov_type,"line");
 	fprintf(stdout,"\nType of shape file found: arc\nConverting to GRASS vector lines\n");
         break;

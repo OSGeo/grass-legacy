@@ -275,8 +275,8 @@ here we hack -A.Sh.*/
     	parm.input = G_define_option() ;
     	parm.input->key        = "input";
     	parm.input->type       = TYPE_STRING;
-    	parm.input->required   = YES;
-    	parm.input->description= "Name of .dbf file to be imported";
+    	parm.input->required   = NO;
+    	parm.input->description= "Name of .dbf file to be imported (or hit ENTER for none)";
 
 	parm.dumpmode = G_define_option() ;
     	parm.dumpmode->key        = "dumpmode";
@@ -294,7 +294,8 @@ here we hack -A.Sh.*/
     	no_rattle = (int) parm.dumpmode->answer;
     
 
-    	PgDumpFromDBF(infile, no_rattle);
+    	if (infile) 
+		PgDumpFromDBF(infile, no_rattle);
 	
 	Vect_close (&VectMap);
 	fprintf (stderr, "\n\nv.in.arc.pg finished.\n");
