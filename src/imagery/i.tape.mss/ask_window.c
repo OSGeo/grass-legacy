@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "tape.h"
 ask_window (tape_cols, tape_rows)
 {
@@ -17,7 +16,7 @@ ask_window (tape_cols, tape_rows)
 	V_clear ();
 	V_line (1,"LANDSAT MSS BIL EXTRACT");
 
-	V_line (3, "please select desired tape window to extract");
+	V_line (3, "please select region of the image to extract");
 	V_line (6, "first row:         (1 -     )");
 	V_line (7, "last row:          (1 -     )");
 	V_line (9, "first col:         (1 -     )");
@@ -31,7 +30,7 @@ ask_window (tape_cols, tape_rows)
 	V_ques (&firstcol, 'i', 9, 11, 7);
 	V_ques (&lastcol,  'i', 10, 11, 7);
 	if (repeat)
-		V_line (13, "** illegal window vlaues **");
+		V_line (13, "** illegal values **");
 	repeat = 0;
 
 	I_v_exec();
@@ -62,7 +61,7 @@ ask_window (tape_cols, tape_rows)
 /* corrected images are type 0, uncorrected are type 1 */
     if(I_set_window (firstrow, lastrow, firstcol, lastcol) < 0)
     {
-	printf ("OOPS window is invalid\n");
+	printf ("OOPS region is invalid\n");
 	exit(1);
     }
 }
