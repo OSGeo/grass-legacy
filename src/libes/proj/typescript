@@ -1,0 +1,79 @@
+Script started on Tue Dec  1 18:18:35 1992
+<diego> 1: vi proj.c
+7[?47h[40;1H[7mNo lines in the buffer[m
+[7mNo lines in the buffer[m
+[?1h="proj.c" 356 lines, 9598 characters [H[2J/* <<<< Cartographic projection filter program >>>> */[H
+#ifndef lint
+static char RCSID[] = "@(#)$Id: proj.c,v 4.5 1992/07/14 01:42:39 gie Exp $";
+#endif
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+#include <math.h>
+#include "projects.h"
+/*
+#include "emess.h"
+*/
+
+#define MAX_LINE 200
+#define MAX_PARGS 100
+[8Cstatic PJ
+*Proj;
+  static UV
+(*proj) PROTO ((UV, PJ *));
+[8Cstatic int
+reversein = 0,  /* != 0 reverse input arguments */
+reverseout = 0, /* != 0 reverse output arguments */
+bin_in = 0,     /* != 0 then binary input */
+bin_out = 0,    /* != 0 then binary output */
+echoin = 0,     /* echo input data to output line */
+tag = '#',[6C/* beginning of line tag character */
+inverse = 0,    /* != 0 then inverse projection */
+prescale = 0,   /* != 0 apply cartesian scale factor */
+postscale = 0;
+[6Dstatic char
+*cheby_str,[13C/* string controlling Chebychev evaluation */
+*oform = (char *)0,     /* output format for x-y or decimal degrees */
+*oterr = "*\t*",[8C/* output line for unprojectable input */
+*usage = "usage($Revision: 4.5 $):"
+[8C" %s [ -bceEfiIlormsStTwW [args] ] [ +opts[=arg] ] [ files ]\n";
+[8Cstatic struct FACTORS
+sfactors = {0.,0.,0.,0.,0.,0.,1e-7};
+[8Cstatic double[H[39B"proj.c" 356 lines, 9598 characters[H[39B[K/main[H[2J[32Cbreak;
+[14Dif (*s == '+')
+[6D++s;
+[12Dif (c = strlen(s)) {
+[12Dif (pargc >= MAX_PARGS)
+[15Demess(1,"option input overflowed option
+table");
+[24Cif (!(pargv[pargc] = malloc(c+1)))
+[26Demess(2,"option input mem failure");[10;33H(void)strcpy(pargv[pargc++], s);[11;25H}
+s = 0;
+[14D}
+[9D}
+(void)fclose(fid);
+}
+[7Cvoid
+#ifdef __STDC__
+main(int argc, char **argv)
+main(int argc, char **argv)
+{
+[7Cchar *arg, **eargv = argv, *pargv[MAX_PARGS], **iargv = argv;
+[8CFILE *fid;
+[8Cint iargc = argc, eargc = 0, c, mon = 0;[26;9Hif (emess_dat.Prog_name = strrchr(*argv,'/')) ++emess_dat.Prog_name;
+[8Celse emess_dat.Prog_name = *argv;
+[8Cinverse = ! strncmp(emess_dat.Prog_name, "inv", 3);
+[8Cif (argc <= 1 ) {
+[9D(void)fprintf(stderr, usage, emess_dat.Prog_name);[31;17Hexit (0);
+[8C}
+[7C/* process run line arguments */
+[8Cwhile (--argc > 0) { /* collect run line arguments */[35;17Hif(**++argv == '-') for(arg = *argv;;) {[36;25Hswitch(*++arg) {
+[16Dcase '\0': /* position of "stdin" */
+[28Dif (arg[-1] == '-') eargv[eargc++] = "-";[39;33Hbreak;[19;1H[A[M[39;25Hcase 'b': /* binary I/O */[18;1H[M[39;33Hbin_in = bin_out = 1;[18;1H[26C)
+[L[21B[K[19;1H
+Your file has been preserved
+[Amain([2J[?47l8Segmentation fault
+<diego> 2: exit
+<diego> 3: 
+script done on Tue Dec  1 18:18:46 1992
