@@ -64,12 +64,13 @@ $(BIN_CMD)/$(PGM): $(FLOAT_OBJ) $(GISLIB)  $(DEPLIBS)
 	(cd IOStream/lib ; make)
 	$(CXX) -DELEV_FLOAT $(LDFLAGS) -o $@ $(FLOAT_OBJ) $(LIBS) $(MATHLIB) \
 	$(XDRLIB) $(IOSTREAM_LIB)
+	@test -x $(BIN)/$(PGM) || ln $(ETC)/front.end $(BIN)/$(PGM)
 
 $(BIN_CMD)/$(PGM).short: $(SHORT_OBJ) $(GISLIB)  $(DEPLIBS)
 	(cd IOStream/lib ; make)
 	$(CXX) -DELEV_SHORT $(LDFLAGS) -o $@ $(SHORT_OBJ) $(LIBS) $(MATHLIB) \
 	$(XDRLIB) $(IOSTREAM_LIB)
-
+	@test -x $(BIN)/$(PGM).short || ln $(ETC)/front.end $(BIN)/$(PGM).short
 
 
 $(GISLIB):	#
