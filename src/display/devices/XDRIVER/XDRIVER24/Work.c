@@ -10,6 +10,12 @@ Has_work(void)
     return 1;
 }
 
+int
+Work_stream(void)
+{
+    return ConnectionNumber(dpy);
+}
+
 void
 Do_work(int opened)
 {

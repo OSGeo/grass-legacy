@@ -34,6 +34,7 @@ int Get_num_colors(int *);
 int color(int);
 /* Work.c */
 int Has_work(void);
+int Work_stream(void);
 void Do_work(int);
 /* Client.c */
 void Client_Open(void);
