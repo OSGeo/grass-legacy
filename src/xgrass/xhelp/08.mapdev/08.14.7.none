@@ -1,0 +1,5 @@
+
+
+This is a NULL driver.  The functions do nothing but return to the calling 
+program.  This is also refered to as 'none' in the digitcap file.
+
