@@ -1,0 +1,49 @@
+Index: write_areas.c
+===================================================================
+RCS file: /cvs/grass/src.contrib/NRCS/mapdev/v.out.dlg/write_areas.c,v
+retrieving revision 1.2
+diff -r1.2 write_areas.c
+171,174c171,177
+< 	if (area == 1 && dlgtype  )
+< 		if (dlgtype != 6 || dlgtype != 7 || dlgtype != 8 )  /* not for SPECFEAT, HYDRO, CULTURE */
+< 			fprintf( dlg_attfile, "%d	%d	%d	%s\n",
+< 				1, 0, 0 ,"UNIV");
+---
+> /*rewrite this section not working correctly*/
+> if (area == 1 && dlgtype  )
+> 
+> 	if (dlgtype < 6) {  /* not for SPECFEAT, HYDRO, CULTURE */
+> 	fprintf( dlg_attfile, "%d	%d	%d	%s\n", 1, 0, 0 ,"UNIV");
+> 	}
+> 
+176,178c179,181
+< 	   	start_att ();
+< 	   	write_dlg_att (fp, 0, 0);
+< 	   	end_att (fp);
+---
+>    	start_att ();
+>    	write_dlg_att (fp, 0, 0);
+>    	end_att (fp);
+180c183,184
+< 	else
+---
+> /*rewrite this section not working correctly*/
+> else
+Index: write_lines.c
+===================================================================
+RCS file: /cvs/grass/src.contrib/NRCS/mapdev/v.out.dlg/write_lines.c,v
+retrieving revision 1.2
+diff -r1.2 write_lines.c
+83a84
+> 		        G_strcpy(buf, dlgprefix);
+174a176
+> /*DEBUG*/
+176c178
+< 
+---
+> /*DEBUG*/
+205a208,211
+> 				/*DEBUG*/
+> 				/*printf( "%d\t%d\t%d\t%s\n",
+> 				    line, specmajor, specminor, specfeat);*/
+> 				/*DEBUG*/
