@@ -87,7 +87,7 @@ header(unit1, unit2)
 		title = G_get_cats_title (&(layers[i].labels));
 		if (title) G_strip (title);
 		if (title == NULL || *title == 0)
-			title = "(unititled)";
+			title = "(untitled)";
 		sprintf (buf, "%-*s%*s%s (%s in %s)", len1, label,
 				i*2, "", title, layers[i].name, layers[i].mapset);
 
