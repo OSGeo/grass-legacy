@@ -51,8 +51,8 @@ LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 
 BOTTOM=$GIS_OPT_b
-TOP=$$GIS_OPT_t
-DRES=$$GIS_OPT_dres
+TOP=$GIS_OPT_t
+DRES=$GIS_OPT_dres
 
 echo "Creating g3-region with following parameters:"
 cat $LOCATION/WIND | awk ' /proj:/  { print "Proj: "$2 }'   > $LOCATION/WIND3
