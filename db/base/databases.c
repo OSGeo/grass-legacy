@@ -39,8 +39,8 @@ main(int argc, char *argv[])
     db_shutdown_driver (driver);
 
     for (i = 0; i < count; i++) {
-	G_message ( _("%s"), db_get_handle_dbname(&handles[i]));
-	G_message ( _("\n"));
+	fprintf(stdout, "%s", db_get_handle_dbname(&handles[i]));
+	fprintf(stdout, "\n");
     }
     exit(OK);
 }

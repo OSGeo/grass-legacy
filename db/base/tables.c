@@ -42,7 +42,7 @@ main(int argc, char *argv[])
     if(db_list_tables (driver, &names, &count, system_tables) != DB_OK)
 	exit(ERROR);
     for (i = 0; i < count; i++)
-	G_message ("%s\n", db_get_string (&names[i]));
+	fprintf(stdout, "%s\n", db_get_string (&names[i]));
 
     db_close_database(driver);
     db_shutdown_driver(driver);

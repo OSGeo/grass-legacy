@@ -51,11 +51,11 @@ main(int argc, char *argv[])
     else
     {
         ncols = db_get_table_number_of_columns(table);
-        G_message ( _("ncols:%d\n"), ncols);
+        fprintf(stdout, "ncols:%d\n", ncols);
         for (col = 0; col < ncols; col++)
         {
           column = db_get_table_column (table, col);
-          G_message ( _("Column %d: %s\n"), (col+1), db_get_column_name (column));
+          fprintf(stdout, "Column %d: %s\n", (col+1), db_get_column_name (column));
         }
     }
     
