@@ -12309,7 +12309,7 @@ fi # $USE_OPENDWG
 
 # Done checking OPENDWG
 
-# Enable LFS
+# Enable LFS (from cdr-tools)
 # Check whether --enable-largefile or --disable-largefile was given.
 if test "${enable_largefile+set}" = set; then
   enableval="$enable_largefile"
@@ -12606,6 +12606,11 @@ EOF
 
 	fi
 
+USE_LARGEFILES=
+if test $ac_cv_largefiles = yes; then
+	USE_LARGEFILES=1
+fi
+
 # Done large file support
 
 USE_TERMIO=
@@ -12839,6 +12844,7 @@ s%@OPENDWGINCPATH@%$OPENDWGINCPATH%g
 s%@OPENDWGLIBPATH@%$OPENDWGLIBPATH%g
 s%@OPENDWGLIB@%$OPENDWGLIB%g
 s%@USE_OPENDWG@%$USE_OPENDWG%g
+s%@USE_LARGEFILES@%$USE_LARGEFILES%g
 s%@USE_TERMIO@%$USE_TERMIO%g
 s%@STRIPFLAG@%$STRIPFLAG%g
 s%@GRASS_HOME@%$GRASS_HOME%g
@@ -13157,6 +13163,8 @@ echo "  openDWG support:            `if test -n "${USE_OPENDWG}" ; then echo yes
 echo "  GDAL support:               `if test -n "${USE_GDAL}" ; then echo yes ; else echo no ; fi`"
 
 echo "  OGR support:                `if test -n "${USE_OGR}" ; then echo yes ; else echo no ; fi`"
+
+echo "  Large File Support (LFS):   `if test -n "${USE_LARGEFILES}" ; then echo yes ; else echo no ; fi`"
 
 echo ""
 

@@ -195,3 +195,6 @@ USE_OPENDWG         = @USE_OPENDWG@
 
 #i18N
 HAVE_NLS            = @HAVE_NLS@
+
+#Large File Support (LFS)
+USE_LARGEFILES     = @USE_LARGEFILES@
