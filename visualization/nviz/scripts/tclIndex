@@ -6,13 +6,6 @@
 # element name is the name of a command and the value is
 # a script that loads the command.
 
-set auto_index(list_type1) [list source [file join $dir panel_mkdspf.tcl]]
-set auto_index(mkmkdspfPanel) [list source [file join $dir panel_mkdspf.tcl]]
-set auto_index(shuffle_threshold) [list source [file join $dir panel_mkdspf.tcl]]
-set auto_index(individual_add) [list source [file join $dir panel_mkdspf.tcl]]
-set auto_index(individual_delete) [list source [file join $dir panel_mkdspf.tcl]]
-set auto_index(mkdspf_go) [list source [file join $dir panel_mkdspf.tcl]]
-set auto_index(mkdspf_map_range) [list source [file join $dir panel_mkdspf.tcl]]
 set auto_index(appBusy) [list source [file join $dir extra_bindings.tcl]]
 set auto_index(appNotBusy) [list source [file join $dir extra_bindings.tcl]]
 set auto_index(script_handle_on) [list source [file join $dir extra_bindings.tcl]]
