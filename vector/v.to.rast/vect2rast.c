@@ -45,7 +45,7 @@ int vect_to_rast(char *vector_map,char *raster_map, char *column, int nrows)
     Vect_set_open_level (2);
     Vect_open_old (&Map, vector_map, vector_mapset);
 
-    Fi = Vect_get_field_info( Vect_get_name(&Map), vector_mapset, 1);
+    Fi = Vect_get_field( &Map, 1);
     if ( Fi == NULL ) {
 	G_fatal_error ("Cannot read field info");
     }
