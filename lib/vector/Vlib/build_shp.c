@@ -97,8 +97,8 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout )
     
       
 	alloc_parts = 10; 
-	Points = (struct line_pnts **) malloc ( alloc_parts * sizeof ( struct line_pnts *) );
-	ptype = (int *) malloc ( alloc_parts * sizeof ( int *) );
+	Points = (struct line_pnts **) G_malloc ( alloc_parts * sizeof ( struct line_pnts *) );
+	ptype = (int *) G_malloc ( alloc_parts * sizeof ( int *) );
 	for ( i = 0; i < alloc_parts; i++ ) {
 	    Points[i] = Vect_new_line_struct (); 
 	}
@@ -110,8 +110,8 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout )
 	    nParts = pShape->nParts;
 	
 	    if ( nParts > alloc_parts ) {
-		Points = (struct line_pnts **) realloc ( (void *) Points, nParts * sizeof ( struct line_pnts *) );
-		ptype = (int *) realloc ( (void *) ptype, alloc_parts * sizeof ( int *) );
+		Points = (struct line_pnts **) G_realloc ( (void *) Points, nParts * sizeof ( struct line_pnts *) );
+		ptype = (int *) G_realloc ( (void *) ptype, nParts * sizeof ( int *) );
 		for ( i = alloc_parts; i < nParts; i++ ) {
 		    Points[i] = Vect_new_line_struct (); 
 		}
