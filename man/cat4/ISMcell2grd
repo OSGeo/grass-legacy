@@ -60,7 +60,7 @@
 
 
 
-Printed 4/27/93          U.S. Army CERL                         1
+Printed	10/13/97	Baylor University			1
 
 
 
@@ -74,7 +74,7 @@ ISMcell2grd <contrib> GRASS Reference Manual<contrib> ISMcell2grd
 NAME
      ISMcell2grd - Converts a GRASS raster map layer into an ISM
      grid file.
-     (GRASS Raster Data Export Program)
+     (GRASS Raster Data	Export Program)
 
 SYNOPSIS
      ISMcell2grd
@@ -82,39 +82,39 @@ SYNOPSIS
      ISMcell2grd input=name output=name
 
 DESCRIPTION
-     ISMcell2grd allows a user to create a grid data file for use
-     in Interactive Surface Modeling (ISM) from an existing GRASS
-     raster map layer.
+     ISMcell2grd allows	a user to create a grid	data file for use
+     in	Interactive Surface Modeling (ISM) from	an existing GRASS
+     raster map	layer.
 
-COMMAND LINE OPTIONS
+COMMAND	LINE OPTIONS
      Parameters:
 
-     input=name          Name of a binary GRASS raster map input
-                         file.
+     input=name		 Name of a binary GRASS	raster map input
+			 file.
 
-     output=name         Name to be assigned to ISM grid data
-                         file created.
+     output=name	 Name to be assigned to	ISM grid data
+			 file created.
 
-     If the user simply types ISMcell2grd without specifying
+     If	the user simply	types ISMcell2grd without specifying
      parameter values on the command line, the program will
-     prompt the user to enter these.
+     prompt the	user to	enter these.
 
 NOTES
-     Since the grid file created by ISMcell2grd is placed in the
-     current directory, the user should run ISMcell2grd from the
-     ISM file directory or move the new file to the ISM file
-     directory.  In order to use the grid file, the user must
-     also add it to the ISM table of contents (.toc file) by
-     choosing option 3 (edit/create file) under FILE OPERATIONS.
+     Since the grid file created by ISMcell2grd	is placed in the
+     current directory,	the user should	run ISMcell2grd	from the
+     ISM file directory	or move	the new	file to	the ISM	file
+     directory.	 In order to use the grid file,	the user must
+     also add it to the	ISM table of contents (.toc file) by
+     choosing option 3 (edit/create file) under	FILE OPERATIONS.
 
-     The user should note that the maximum ISM grid size is 512 x
+     The user should note that the maximum ISM grid size is 512	x
      512, yet GRASS cell files are often much larger.
      ISMcell2grd currently resamples larger cell files at 512 x
      512 resolution.  To avoid losing information, the user may
-     want to resize the grass cell file prior to exporting the
+     want to resize the	grass cell file	prior to exporting the
      data.
 
-     Interactive Surface Modeling (ISM) is a trademark of Dynamic
+     Interactive Surface Modeling (ISM)	is a trademark of Dynamic
      Graphics, Inc., Berkeley, California.
 
 SEE ALSO
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.1                U.S. Army CERL                         2
+GRASS 4.2		Baylor University			2
 
 
 
@@ -140,9 +140,9 @@ ISMcell2grd <contrib> GRASS Reference Manual<contrib> ISMcell2grd
      Laboratory
 
 NOTICE
-     This program is part of the contrib section of the GRASS
-     distribution.  As such, it is externally contributed code
-     that has not been examined or tested by the Office of GRASS
+     This program is part of the contrib section of the	GRASS
+     distribution.  As such, it	is externally contributed code
+     that has not been examined	or tested by the Office	of GRASS
      Integration.
 
 
@@ -192,7 +192,7 @@ NOTICE
 
 
 
-GRASS 4.1                U.S. Army CERL                         3
+GRASS 4.2		Baylor University			3
 
 
 
