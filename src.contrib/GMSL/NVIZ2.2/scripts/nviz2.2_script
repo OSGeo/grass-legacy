@@ -131,6 +131,7 @@ proc Nv_makeGUI {{BASE .top}} {
     toplevel .top2
     wm geometry .top2 "+400+300"
     wm resizable .top2 false false
+    wm title .top2 "Controls"
     set Nv_(height) 720
 
 # DEBUG
