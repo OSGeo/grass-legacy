@@ -1,0 +1,12 @@
+interface_build {
+    m.ll2u 0
+    {Converts geographic coordinates to Universal Transverse Mercator (UTM) coordinates.}
+    {entry spheroid {Spheroid:} 0 spheroid}
+    {entry zone {Utm zone (1-60):} 0 ""}
+    {entry input {Input file:} 0 file}
+    {entry output {Output file:} 0 File}
+    {checkbox -r {Input is reversed: lat,lon.} "" -r}
+    {checkbox -w {Do not flag invalid lon,lat input lines as errors.} "" -w}
+    {checkbox -o {Flag other input lines as errors.} "" -o}
+    {checkbox -z {Suppress printing the utm zone.} "" -z}
+}
