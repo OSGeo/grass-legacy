@@ -36,6 +36,7 @@ LIB_OBJS = \
 	Text.o\
 	Text_rot.o\
 	Text_size.o\
+	cancel.o\
 	io.o\
 	item_appnd.o\
 	item_del.o\
@@ -50,7 +51,8 @@ LIB_OBJS = \
 	pad_list.o\
 	pad_select.o\
 	parse_mon.o\
-	perror.o
+	perror.o \
+	update.o
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
