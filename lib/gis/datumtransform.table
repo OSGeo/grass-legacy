@@ -55,7 +55,7 @@ S-42    "towgs84=28,-121,-77" "Romania" " "
 S-42    "towgs84=26,-121,-78" "Czech Republic, Slovak Republic" " "
 # http://crs.ifag.de/
 rome40  "towgs84=-104.1,-49.1,-9.9,0.971,-2.917,0.714,-11.68" "Italy (Peninsular Part)" "Accuracy 3-4m"
-rome40  "towgs84=-168.6,-34.0,-34.0,-0.374,-0.679,-1.379,-9.48" "Italy (Sardinia)" "Accuracy 3-4m"
+rome40  "towgs84=-168.6,-34.0,38.6,-0.374,-0.679,-1.379,-9.48" "Italy (Sardinia)" "Accuracy 3-4m"
 rome40  "towgs84=-50.2,-50.4,84.8,-0.690,-2.012,0.459,-28.08" "Italy (Sicily)" "Accuracy 3-4m"
 eur50   "towgs84=-81.1,-89.4,-115.8,0.485,0.024,0.413,-0.54" "Denmark" " "
 eur50   "towgs84=-84,-97,-117"  "France" "Accuracy about 2m"
