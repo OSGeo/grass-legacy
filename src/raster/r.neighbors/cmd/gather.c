@@ -24,12 +24,11 @@ int gather (DCELL *values,int offset)
 	for (col = 0; col < ncb.nsize; col++, c++)
 	{
 	    if (G_is_d_null_value(c))
-		return -1;
+		continue;
 	    *values++ = *c;
 	    n++;
 	}
     }
-    if (n == 0) n = 1;
 
-    return n;
+    return n ? n : -1;
 }
