@@ -1,0 +1,15 @@
+# setup src for SUN systems using SUN FORTRAN 1.1
+RANLIB=ranlib
+cp SUN/*.[cdf] src
+rm -f Makefile
+cat <<endmake >Makefile
+# definitions for SUN rim
+PILE = f77
+AR = ar rcvl
+RAN = ranlib
+endmake
+cp Makefile src
+cat MAKEFILE >>Makefile
+cat src/MAKEFILE >>src/Makefile
+#ar x /usr/lib/libc.a system.o
+#mv system.o src
