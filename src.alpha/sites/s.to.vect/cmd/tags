@@ -1,0 +1,7 @@
+Mmain	main.c	/^main (argc, argv)$/
+asc_to_bin	asc_to_bin.c	/^asc_to_bin(ascii, Map)$/
+bin_to_asc	bin_to_asc.c	/^bin_to_asc(binary, ascii)$/
+get_head_info	head_info.c	/^get_head_info(head)$/
+new_screen	new_screen.c	/^new_screen()$/
+read_head_ascii	rw_ascii.c	/^read_head_ascii(dascii)$/
+write_head_ascii	rw_ascii.c	/^write_head_ascii(dascii)$/
