@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.96 2000-12-11 10:55:13 markus Exp $
+$Id: BUGS,v 1.97 2000-12-17 19:21:00 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -63,6 +63,10 @@ G3D libraries bug:
 d.param.scale
  - lower axis description not readable
  - sometimes "floating point exeption", especially in par=geary
+    (being worked on by ?)
+
+d.rast.edit:
+ - update to edit float or double maps
     (being worked on by ?)
 
 d.rast.num: some numbers are displayed in wrong (unreadable) color
