@@ -9,6 +9,12 @@
 GISBASE=.
 
 ######### nothing to change below (hope so) ##############
+if [ $# -lt 1 ]
+then
+ echo "Script can be called from ../Gmakefile only within GRASS 5 sources"
+ exit 1
+fi
+
 SRCDIR=$1
 TARGETDIR=$GISBASE/man/man_new
 
