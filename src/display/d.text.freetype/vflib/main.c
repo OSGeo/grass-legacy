@@ -534,7 +534,7 @@ main(int argc, char **argv)
 						if(face && FT_Set_Pixel_Sizes(face, size, 0))
 							error("Unable to set size");
 #else
-						if(set_font(&fid, path, size))
+						if(set_font(&fid, NULL, size))
 							error("Unable to open font");
 #endif
 						break;
@@ -1139,9 +1139,14 @@ draw_text(rectinfo win, FT_Face face, FT_Vector *pen,
 static int
 set_font(int *fid, char *font, int size)
 {
+	static	char *pfont = NULL;
+
+	if(!pfont || font)
+		pfont = G_store(font);
+
 	if(*fid >= 0)
 		VF_CloseFont(*fid);
-	if((*fid = VF_OpenFont2(font, size, 1, 1)) < 0)
+	if((*fid = VF_OpenFont2(pfont, size, 1, 1)) < 0)
 		return -1;
 
 	return 0;
