@@ -1,0 +1,13 @@
+PGM=d.text2
+OBJS=main.o
+
+LIBS=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+CFLAGS+=`freetype-config --cflags`
+LDFLAGS+=`freetype-config --libs` -lgiconv
+
+$(BIN_CMD)/$(PGM): $(OBJS) $(LIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBS) $(XDRLIB)
+
+$(DEPRASTERLIB): #
+$(DEPDISPLAYLIB): #
+$(DEPGISLIB): #

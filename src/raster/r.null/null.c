@@ -1,4 +1,6 @@
 #define MAIN
+#include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include "gis.h"
 #include "mask.h"
@@ -19,6 +21,7 @@ int main(int argc, char *argv[])
     char buf[1024];
     int is_reclass;
 
+	struct GModule *module;
     struct
     {
 	struct Option *map;
@@ -33,6 +36,13 @@ int main(int argc, char *argv[])
         struct Flag *c;
         struct Flag *r;
     } flags;
+
+        G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"The function of r.null is to explicitly create the NULL-value "
+		"bitmap file.";
 
 	parms.map = G_define_option();
 	parms.map->key    = "map";
@@ -77,8 +87,6 @@ int main(int argc, char *argv[])
 	flags.r->key = 'r';
 	flags.r->description = "remove NULL-value bitmap file";
 
-        G_gisinit (argv[0]);
-
 	if (G_parser(argc,argv))
 		exit(0);
 
@@ -98,10 +106,7 @@ int main(int argc, char *argv[])
 
         is_reclass = (G_is_reclass (name, mapset, rname, rmapset) > 0);
         if (is_reclass)
-        {
-            sprintf(buf, "%s is a reclass of another map. Exiting.", name);
-			  G_fatal_error(buf);
-        }
+            G_fatal_error("%s is a reclass of map <%s> in mapset <%s>. Consider to generate a copy with r.mapcalc. Exiting.", name, rname, rmapset);
 
 
 	if(strcmp(mapset, G_mapset()) != 0)

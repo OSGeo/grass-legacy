@@ -30,11 +30,16 @@ int main (int argc,char *argv[])
     int r;
     int rows;
 
+    struct GModule *module;
 
 
     G_gisinit(argv[0]);
-    fprintf (stdout,"set printer and hit RETURN -->");
-    if(!fgets(buf,200,stdin)) exit(0);
+
+    module = G_define_module();
+    module->description = "Prints the color chart of the currently selected printer.";
+
+    if (argc > 1 && G_parser(argc, argv))
+	exit(1);
 
     Pconnect();
     Plock();

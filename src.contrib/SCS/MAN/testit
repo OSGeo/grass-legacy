@@ -1,4 +1,0 @@
-#!/bin/sh
-#MANROFF     = tbl -TX $(SRC)/man.help/man.version $(SRC)/man.help/man.header $? | nroff -Tlp | col -b > $@
-#MANROFF     = tbl -TX $(SRC)/man.help/man.version $(SRC)/man.help/man.header $? | nroff | col -b > $@
-tbl -TX man.header $1 | nroff | col -b > $2

@@ -19,7 +19,7 @@ int black_and_white_line (int screen_x, int screen_y,
 		R_cont_abs(screen_x+1, screen_y) ;
 	}
 	
-	R_flush() ;
+	R_stabilize() ;
 
 	return 0;
 }

@@ -1,3 +1,4 @@
+PGM=m.eigensystem
 OBJ = main.o\
     balanc.o \
     balbak.o \
@@ -8,5 +9,5 @@ OBJ = main.o\
     hqr2.o \
     rg.o
 
-$(BIN_CONTRIB_INTER)/m.eigensystem: $(OBJ)
-	f77 -o $@ $(OBJ)
+$(BIN_INTER)/$(PGM): $(OBJ)
+	$(FC) -o $@ $(OBJ)

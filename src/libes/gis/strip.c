@@ -14,12 +14,12 @@ int G_strip ( register char *buf)
     for (a = b = buf; *a == ' ' || *a == '\t'; a++)
 	    ;
     if (a != b)
-	while (*b++ = *a++)
+	while ((*b++ = *a++))
 	    ;
 /* remove trailing white space */
     for (a = buf; *a; a++)
 	    ;
-    if ((a != buf) && *a)    /*fix from Clifton Wood*/
+    if (a != buf)
     {
 	for (a--; *a == ' ' || *a == '\t'; a--)
 		;

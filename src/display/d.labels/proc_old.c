@@ -177,5 +177,6 @@ process_old (FILE *in, char *file, char *upd_file)
        }   /* end of got_label */
     }    /* end of make_changes */
     fclose(out);
+    remove (tmp_fname);
     return 1;
 }

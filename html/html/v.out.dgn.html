@@ -1,0 +1,97 @@
+<HTML>
+<HEAD>
+<TITLE>v.out.dgn</TITLE>
+</HEAD>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.out.dgn</b></EM> - GRASS vector format to Microstation DGN format 
+conversion program. 
+<BR>
+<EM>(GRASS Vector Data Export Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.out.dgn</B>
+<BR>
+<B>v.out.dgn help</B>
+<BR>
+<B>v.out.dgn</B> [<B>-a</B>] input=</B><EM>name</EM> <B>dgn=</B><EM>name</EM>
+[<B>type=</B><EM>name[name,...]</EM>] [<B>catas=</B><EM>name[name,...]</EM>]
+[<B>entity=</B><EM>name</EM>]
+[<B>level=</B><EM>value</EM>] [<B>color=</B><EM>value</EM>]
+[<B>cat=</B><EM>value</EM>]
+
+
+<H2>DESCRIPTION</H2>
+
+The GRASS <EM>v.out.dgn</EM> conversion program
+generates an Micostation DGN file. Lines with more than 
+101 points are written as complex chains. Areas are written
+as filled shapes and areas with islands as complex shapes with holes.
+<P>Categories may be written as texts, levels or mslinks. Mslink
+is Microstation link to external databe.
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+<H3>Flags:</H3>
+<DL>
+<DT><B>-a</B>
+<DD>Append to existing DGN file.
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+<DD>The name of an existing GRASS vector.
+
+<P>
+<DT><B>dgn=</B><EM>name</EM>
+<DD>Full path to DGN output file. 
+<BR>
+NOTE: DGN files output by Microstation have the suffix <KBD>.dgn</KBD>
+
+<P>
+<DT><B>type=</B><EM>name</EM>
+<DD>The type of grass objects which should be exported:<BR>
+<B>point,line,area,boundary or centroid</B>.<BR>
+ Area is exported as shape and boundary as line.
+
+<P>
+<DT><B>catas=</B><EM>name</EM>
+<DD>Specifies how categories should be exported. Options are:
+<B>nothing,mslink,text,level,color</B>.
+
+<P>
+<DT><B>entity=</B><EM>name</EM>
+<DD>Entity number used for mslinks if catas=mslink is used.
+
+<P>
+<DT><B>level=</B><EM>value</EM>
+<DD>The level the elements will be written on.
+
+<P>
+<DT><B>color=</B><EM>value</EM>
+<DD>Color number used for elements.
+
+<P>
+<DT><B>cat=</B><EM>value</EM>
+<DD>Output only GRASS objects of specified category.
+
+</DL>
+
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.in.dgn.html">v.in.dgn</A></EM>
+
+<H2>AUTHOR</H2>
+
+Radim Blazek
+
+</BODY>
+</HTML>

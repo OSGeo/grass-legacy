@@ -1,11 +1,11 @@
 PGM = v.in.transects
 
-EXTRA_CFLAGS=$(VECT_INCLUDE)
 LIBES = $(VECTLIB) $(DIG_ATTLIB) $(GISLIB)
+DEPLIBS= $(DEPVECTLIB) $(DEPDIG_ATTLIB) $(DEPGISLIB)
 LIST = main.o trig.o vect.o decl.o
 
 
-$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

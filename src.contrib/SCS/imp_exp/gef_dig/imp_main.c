@@ -94,14 +94,14 @@ main(argc, argv)
         if (get_dig_head(gef_name, digit) < 0) exit(-1);     
 
 /* Print warning */
-        sprintf(filename,"%s.info\0",gef_name);
+        sprintf(filename,"%s.info",gef_name);
 	if ( (gef_info = fopen(filename, "r")) == NULL)
 	   {
 	   fprintf (stdout,"Can't find create information file <%s>\n", filename) ;
 	   return (-1);
 	   }
 	/* Open file for reading */
-	sprintf(filename,"%s\0",gef_name);
+	sprintf(filename,"%s",gef_name);
 	if ( (gef_file = fopen(filename, "r")) == NULL)
 	{
 		fprintf (stdout,"Can't find input GEF file <%s>\n", filename) ;
@@ -112,7 +112,7 @@ main(argc, argv)
  	G__make_mapset_element("SUBJ") ;
 
                             /* open category file for reading, if it exists*/
-	sprintf(category_fname,"%s\0",subjopt->answer);
+	sprintf(category_fname,"%s",subjopt->answer);
 	tmp_name = G_tempfile();
   	if ((ier = access(category_fname,0)) != -1)
 	   {      /* the category file exists, copy categ. to tmp */
@@ -159,7 +159,7 @@ cat_end:   fclose (category_file);
  	G__make_mapset_element("dig_ascii") ;
 
 	/* Open file for writing */
-	sprintf(filename,"%s/dig_ascii/%s\0",getenv("LOCATION"),digit);
+	sprintf(filename,"%s/%s/dig_ascii/%s",G_location_path(),G_mapset(),digit);
 	if ( (dig_asc = fopen(filename, "w")) == NULL)
 		{
 			fprintf (stdout,"Can't open %s\n", "dig_asc") ;
@@ -167,7 +167,7 @@ cat_end:   fclose (category_file);
 		}
                             /* Make dig_att dir, if not existing */
  	G__make_mapset_element("dig_att") ;
-	sprintf(filename,"%s/dig_att/%s\0",getenv("LOCATION"),digit);
+	sprintf(filename,"%s/%s/dig_att/%s",G_location_path(),G_mapset(),digit);
 	if ( (dig_att = fopen(filename, "w")) == NULL)
 		{
 			fprintf (stdout,"Can't open %s\n", "dig_att") ;
@@ -201,12 +201,12 @@ tmp_end: fclose (category_file);
                             /* Make dig_cats dir, if not existing */
  	G__make_mapset_element("dig_cats") ;
 /* copy the master category file to this dig-map-file category file */
-        sprintf(buff,"cp %s %s/dig_cats/%s\n\0",category_fname,getenv("LOCATION"),digit);
+        sprintf(buff,"cp %s %s/%s/dig_cats/%s",category_fname,G_location_path(),G_mapset(),digit);
         system (buff); 
 
         fclose (gef_info) ;
-  	sprintf(buff,"rm %s.info\n",gef_name); 
-	system(buff); 
+  	sprintf(buff,"%s.info",gef_name); 
+	remove(buff); 
         fclose (gef_file);
 	fclose (cat) ;
         fclose (dig_asc) ;

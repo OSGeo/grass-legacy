@@ -5,12 +5,13 @@ int more_print (char *tmpname)
 {
     char line[80],command[256],name[128];
 
-    sprintf(command,"clear; more -d %s",tmpname);
-    system(command);
+/*    sprintf(command,"clear; more -d %s",tmpname);*/
+     sprintf(command,"clear; $GRASS_PAGER %s",tmpname);
+    G_system(command);
     if (G_yes("Do you wish to print this report out? ", 0))
     {
 	sprintf(command,"lpr %s",tmpname);
-	system(command);
+	G_system(command);
     }
     while (G_yes("Do you wish to save this report in a file? ",0))
     {
@@ -27,11 +28,11 @@ int more_print (char *tmpname)
 	    sprintf (command,"cp %s %s",tmpname,name);
 	    fprintf (stdout,"'%s' being saved\n",name);
 	}
-	system(command);
+	G_system(command);
 	break;
     }
     sprintf(command,"rm %s",tmpname);
-    system(command);
+    G_system(command);
 
     return 0;
 }

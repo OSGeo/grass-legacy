@@ -1,0 +1,208 @@
+# GRASS .po file.
+# Copyright (C) 2002 Free Software Foundation, Inc.
+# Alex Shevlakov<sixote@yahoo.com>, 2002.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 5.0\n"
+"POT-Creation-Date: 2002-03-07 15:00+0300\n"
+"PO-Revision-Date: 2002-03-07 15:00+0300\n"
+"Last-Translator: Alex Shevlakov<sixote@yahoo.com>, 2002\n"
+"Language-Team: ru <ru@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=8-bit\n"
+"Content-Transfer-Encoding: koi8\n"
+
+#: cleanup.c:49
+#, c-format
+msgid "Unable to find vector map `%s' in current mapset\n"
+msgstr "Не могу найти векторную карту `%s' в наборе данных\n"
+
+#: cleanup.c:83
+msgid "Insufficient environment space to run v.spag.\n"
+msgstr "Недостаточно пространства для v.spag. \n"
+
+#: cleanup.c:88
+msgid "Insufficient memory to run v.spag.\n"
+msgstr "Недостаточно памяти для v.spag. \n"
+
+#: cleanup.c:93
+msgid "v.spag returned error.\n"
+msgstr "v.spag вернул сообщение об ошибке.\n"
+
+#: dbutils.c:73
+msgid "Could not set snap distance. Aborting."
+msgstr "Не могу установить параметр snap distance. Выход."
+
+#: main.c:142
+msgid "Name of .shp (or just .dbf) file to be imported"
+msgstr "Название .shp (или только .dbf) файла для импорта"
+
+#: main.c:148
+msgid "Debugging level : 0 (silent) - 9 (verbose)"
+msgstr "Уровень debug : 0 (молча) - 9 (подробно)"
+
+#: main.c:155
+msgid "Name of file where log operations"
+msgstr "Название файла для записи логов"
+
+#: main.c:161
+msgid "Snap distance in ground units (Default = 0.1)"
+msgstr "Параметр snap distance в ед. длины (Default = 0.1)"
+
+#: main.c:168
+msgid "Min. angle subtended by a wedge at node (radians)"
+msgstr "Мин. угол соединения на узлах (радиан)"
+
+#: main.c:175
+msgid "Set initial scale [1:2400]"
+msgstr "Начальный масштаб [1:2400]"
+
+#: main.c:182
+msgid "Name of attribute column to use as category number"
+msgstr "Название столбца категорий"
+
+#: main.c:189
+msgid "Name of attribute column to use as category label"
+msgstr "Название столбца меток категорий"
+
+#: main.c:196
+msgid "Special fields to be included in table"
+msgstr "Дополнительные поля для включения в табл. БД"
+
+#: main.c:205
+msgid "List fields of DBF file"
+msgstr "Просмотреть поля файла DBF"
+
+#: main.c:211
+msgid "Create reject lines file"
+msgstr "Создать файл отброшенных линий"
+
+#: main.c:217
+msgid "Create postgres table"
+msgstr "Создать табл. Postgres"
+
+#: main.c:262 main.c:388 main.c:453 main.c:495
+#, c-format
+msgid "%s - DBF not found, or wrong format.\n"
+msgstr "%s - DBF не найден, или имеет неправильный формат.\n"
+
+#: main.c:266
+#, c-format
+msgid "Attributes available in %s\n"
+msgstr "Атрибуты в %s\n"
+
+#: main.c:285
+#, c-format
+msgid "Cannot open log file \"%s\""
+msgstr "Не могу открыть лог файл \"%s\""
+
+#: main.c:298
+msgid "Error setting snap distance"
+msgstr "Ошибка установки snap distance"
+
+#: main.c:310
+msgid "Error setting minimum angle"
+msgstr "Ошибка установки мин. угла "
+
+#: main.c:320
+#, c-format
+msgid "%s - shapefile not found, or wrong format.\n"
+msgstr "%s - shapefile не найден, или имеет неправильный формат.\n"
+
+#: main.c:325
+#, c-format
+msgid "\"%s\" successfully opened\n"
+msgstr "\"%s\" успешно открыт\n"
+
+#: main.c:333
+msgid "Multipatch type not yet supported"
+msgstr "Тип Multipatch не поддерживается "
+
+#: main.c:341
+msgid "Point map import not now supported by this module: use s.in.shape"
+msgstr "Импорт точек не поддерживается этим модулем: исп. s.in.shape"
+
+#: main.c:361
+msgid "Could not set map type. Aborting\n"
+msgstr "Не могу установить тип карты. Выход\n"
+
+#: main.c:404
+#, c-format
+msgid ""
+"No attribute `%s' found on %s.\n"
+"Use attribute=list to get a list of attributes.\n"
+msgstr ""
+"Не найден атрибут `%s' на %s.\n"
+"Исп. attribute=list для вывода списка атрибутов.\n"
+
+#: main.c:414
+#, c-format
+msgid "Selected attribute field %d.\n"
+msgstr "Выбрано поле атрибута %d.\n"
+
+#: main.c:427
+#, c-format
+msgid "Creating dig_att(L) file \"%s\"\n"
+msgstr "Создаю dig_att(L) файл \"%s\"\n"
+
+#: main.c:431
+#, c-format
+msgid "Updating dig_att(L) file \"%s\"\n"
+msgstr "Изменяю dig_att(L) file \"%s\"\n"
+
+#: main.c:435
+#, c-format
+msgid "Unable to create attribute file `%s'."
+msgstr "Не могу создать файл атрибутов `%s'."
+
+#: main.c:476
+#, c-format
+msgid ""
+"No attribute `%s' found on %s. \n"
+"Not writing category labels.\n"
+msgstr ""
+"Не найден атрибут `%s' на %s.\n"
+"Не записываю метки атрибутов.\n"
+
+#: main.c:510
+msgid "Cannot create database. Aborting"
+msgstr "Не могу создать БД. Выход"
+
+#: main.c:537
+msgid "Not assigning category labels\n"
+msgstr "Не присваиваю метки категорий\n"
+
+#: main.c:592
+msgid "No attribute value field assigned. Using record ID.\n"
+msgstr "Не указано поле величины категории. Использую ID записи.\n"
+
+#: main.c:594
+msgid "Named attribute field is not numeric value. Using record ID.\n"
+msgstr "Указанное поле атрибутов не числовое. Using record ID.\n"
+
+#: main.c:634
+msgid "Error in category type assignment, not assigning category text.\n"
+msgstr "Ошибка присвоения типа категории, не присваиваю текст категории.\n"
+
+#: main.c:640
+#, c-format
+msgid "Label `%s' already assigned to category value %d. Overwriting.\n"
+msgstr "Метка `%s' уже присвоена величине категории %d. Переписываю.\n"
+
+#: main.c:645
+msgid "Error setting category in dig_cats"
+msgstr "Ошибка установки категории в dig_cats"
+
+#: writelin.c:78
+msgid "Could not retrieve map type. Defaulting to LINE.\n"
+msgstr "Не могу понять тип карты. Использую тип LINE.\n"
+
+#: writelin.c:83
+msgid "Could not retrieve minimum angle at vertex. Setting default\n"
+msgstr "Не могу оценить мин. угол на вертексах. Устанавливаю default\n"
+
+#: writelin.c:574
+msgid "Could not retrieve snap angle at nodes\n"
+msgstr "Не могу оценить snap angle на узлах\n"

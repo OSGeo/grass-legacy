@@ -105,6 +105,9 @@ if(getenv("DEBUG"))fprintf (stderr, "# monitor colors = %d (mode: %s)\n", ncolor
     {
 	if (is_grey_scale (colors))
 	{
+	    /* restrict colortable to a feasible size */
+	    if (ncolors > 256) ncolors = 256;
+
 	    for (i = 0; i < 256; i++)
 	    {
 		RED[i] = (int) (i * (ncolors-1))/256;
@@ -121,6 +124,9 @@ if(getenv("DEBUG"))fprintf (stderr, "# monitor colors = %d (mode: %s)\n", ncolor
 	    /* compute size of color cube */
 	    for(nl=0; nl*nl*nl <= ncolors-1; nl++) {}
 	    nl--;
+
+	    /* restrict colortable to a feasible size */
+	    if (nl > 32) nl = 32;
 
 	    /* reset ncolors to what we need for color cube */
 	    ncolors = nl*nl*nl+1;

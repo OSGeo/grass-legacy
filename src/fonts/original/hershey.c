@@ -1,5 +1,6 @@
 #include "cgksincl.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 #ifndef TRUE
 #define TRUE 1

@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "gis.h"
+#include "site.h"
 #include "local_proto.h"
 
 #define SITE_BLOCK 512

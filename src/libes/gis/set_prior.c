@@ -52,7 +52,9 @@
 */
 static int swap_re_uids (void);
 
-#define    PRIO_PROCESS    0
+#ifndef PRIO_PROCESS
+  #define    PRIO_PROCESS    0
+#endif
 
 /*  WARNING  -18 gets the most CPU time, priority > -18 gets less CPU time  */
 /*  If the graphics don't come out except after digitizing a line then your
@@ -125,7 +127,6 @@ int unset_priority ()
 
 static int swap_re_uids (void)
 {
-    uid_t hold;
     static int flipflop = 0;
 
 #ifdef HAVE_SETREUID

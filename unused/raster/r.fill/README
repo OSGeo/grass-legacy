@@ -1,0 +1,12 @@
+DO NOT USE THIS MODULE FOR GENERAL PURPOSE.
+It was created only to test raster-type independent programming method.
+
+This may not fill sinks what you're thinking of because it computes sink
+pixel by pixel, not by small sink area. So it only helps you fill isolated
+NULLs or noises.
+
+If I have a documentation on sink-fill, this module could be useful then.
+
+
+Huidae Cho, 2001/04
+

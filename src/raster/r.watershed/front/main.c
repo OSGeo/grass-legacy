@@ -23,8 +23,14 @@ int main(int argc, char *argv[])
 	struct Option *opt15 ;
 	struct Flag *flag1 ;
 	struct Flag *flag2 ;
+	struct GModule *module;
 
 	G_gisinit(argv[0]) ;
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+	"Watershed basin analysis program.";
 	
 	opt1 = G_define_option() ; 
 	opt1->key            = "elevation" ; 

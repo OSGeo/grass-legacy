@@ -1,0 +1,35 @@
+#!/bin/sh
+# MN 11/2001
+# additions by andreas.lange@rhein-main.de in 12/2001
+# $Id$
+
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+     
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+
+if [ "$1" = "-help" -o "$1" = "help" -o "$1" = "-h" ]
+then
+ echo "Description:"
+ echo "This module displays the PROJ INFO and UNITS file of current location."
+ echo ""
+ echo "Usage: g.projinfo"
+ echo ""
+ exit 1
+fi
+
+echo -n "
+-----------------------------------------------------------
+PROJ_INFO file:
+`cat $GISDBASE/$LOCATION_NAME/PERMANENT/PROJ_INFO`
+-----------------------------------------------------------
+PROJ_UNITS file:
+`cat $GISDBASE/$LOCATION_NAME/PERMANENT/PROJ_UNITS`
+-----------------------------------------------------------" | \
+sed -e 's/:/:	/g' | $GRASS_PAGER 
+
+exit 0

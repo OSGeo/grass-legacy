@@ -10,5 +10,5 @@ void draw_hydrograph(void);
 void make_setup(void);
 void putxy(double *, double **, int, int);
 /* main.c */
-int compare(int *, int *);
+int compare(const void *, const void *);
 double meanslope(char *);

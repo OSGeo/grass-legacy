@@ -6,7 +6,7 @@
 static int organizing = 0;
 static int organize_lookup(struct Colors *,int);
 static int organize_fp_lookup (struct Colors *, int);
-static int double_comp (DCELL *, DCELL *);
+static int double_comp (const void *, const void *);
 
 int G__organize_colors ( struct Colors *colors)
 {
@@ -138,8 +138,9 @@ static int organize_lookup (struct Colors *colors, int mod)
     return 0;
 }
 
-static int double_comp (DCELL *x, DCELL *y)
+static int double_comp (const void *xx, const void *yy)
 {
+    const DCELL *x = xx, *y = yy;
     if(*x < *y) return -1;
     else if(*x==*y) return 0;
     else return 1;

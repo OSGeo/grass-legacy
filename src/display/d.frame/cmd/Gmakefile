@@ -1,26 +1,31 @@
 PGM=d.frame
-HOME=$(BIN_MAIN_CMD)
+HOME=$(BIN_CMD)
 all: \
 	$(ETC)/frame.create \
 	$(ETC)/frame.select \
 	$(ETC)/frame.dumper \
+	$(ETC)/frame.list \
 	$(HOME)/$(PGM)
 
 LIBES= $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+DEPLIBS= $(DEPD_LIB) $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB)
 
-$(ETC)/frame.create: create.o $(LIBES)
+$(ETC)/frame.create: create.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ create.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(ETC)/frame.select: select.o $(LIBES)
+$(ETC)/frame.select: select.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ select.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(ETC)/frame.dumper: dumper.o $(LIBES)
+$(ETC)/frame.dumper: dumper.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ dumper.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(HOME)/$(PGM): frame.o $(LIBES)
+$(ETC)/frame.list: list.o $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ list.o $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(HOME)/$(PGM): frame.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ frame.o $(LIBES) $(MATHLIB) $(XDRLIB)
 	
-$(RASTERLIB): #
-$(DISPLAYLIB): #
-$(D_LIB): #
-$(GISLIB): #
+$(DEPRASTERLIB): #
+$(DEPDISPLAYLIB): #
+$(DEPD_LIB): #
+$(DEPGISLIB): #

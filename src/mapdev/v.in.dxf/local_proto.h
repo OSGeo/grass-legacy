@@ -20,7 +20,7 @@ int dxf_check_ext(double, double);
 int dxf_close_layer(int);
 /* debug.c */
 int debuginit(void);
-int debugf(char *, int, int, int, int, int, int, int, int, int, int, int, int);
+int debugf(char *, ...);
 /* entities.c */
 int dxf_entities(FILE *);
 /* find_lines.c */
@@ -33,8 +33,6 @@ int dxf_init_chars(void);
 int dxf_add_labelbox(FILE *);
 int dxf_readcode(FILE *);
 /* main.c */
-int main(int, char *[]);
-int debugf(char *, int, int, int, int, int, int, int, int, int, int, int, int);
 int add_line_layer(char *);
 int add_att_layer(char *);
 int add_layer(char *, char *[][2], int *);

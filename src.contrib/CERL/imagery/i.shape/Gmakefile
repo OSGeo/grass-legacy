@@ -1,22 +1,17 @@
 PGM = i.shape
 
-HOME = $(BIN_CONTRIB_CMD)
-
 LIST =main.o\
 	zc_curve.o\
-	fft.o\
 	polint.o\
 	ratint.o\
 	splint.o\
-	max_pow2.o\
 	fft_curve.o\
 	class.o\
-	del2g.o\
-	getg.o\
-	mult.o\
 	findzc.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
+LIBES=$(GISLIB) $(GMATHLIB)
+DEPLIBS=$(DEPGISLIB) $(DEPGMATHLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB) $(FFTWLIB)
 
-$(GISLIB): #
+$(DEPLIBS): #

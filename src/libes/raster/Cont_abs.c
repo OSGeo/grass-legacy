@@ -1,5 +1,4 @@
 #include "raster.h"
-#include "pos.h"
 #include "graph.h"
 
 int R_cont_abs(int x,int y)
@@ -10,9 +9,6 @@ int R_cont_abs(int x,int y)
 	_send_int(&z) ;
 	z = y ;
 	_send_int(&z) ;
-
-	R__curx = x;
-	R__cury = y;
 
 	return 0;
 }

@@ -1,0 +1,29 @@
+**UPDATED          September 2000  **
+	now supports GRASS 5.0 sites files and floating-point
+	raster map creation.
+	
+	Numeric Recipes code and matrix types removed.
+	Now links to BLAS/LAPACK
+	
+-----------------------------------------------------------
+
+WARNING:           1998
+   this is still old 4.1 sites format!
+   
+-----------------------------------------------------------
+The following change was necessary for Linux:          29.11.96
+
+nr.h: deleting the following TRADITIONAL defnitions:
+> 	float erf();
+> 	float erfc();
+
+The untouched original file is nr.h.orig
+
+M. Neteler
+
+Geographical Institute at University of Hannover
+Department of Physical Geography
+Hannover, Germany
+
+
+email: neteler@geog.uni-hannover.de

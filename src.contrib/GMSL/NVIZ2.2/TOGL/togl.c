@@ -1,4 +1,5 @@
-/* $Id$ */
+/* 
+ * $Id$ */
 
 /*
  * Togl - a Tk OpenGL widget
@@ -10,8 +11,17 @@
 
 /*
  * $Log$
- * Revision 1.1  1999-12-29 15:12:26  markus
- * Initial revision
+ * Revision 1.3  2002-01-22 04:51:37  glynn
+ * Merge releasebranch_11_april_2001_5_0_0 with HEAD
+ *
+ * Revision 1.2.4.1  2001/08/23 16:23:30  markus
+ * Roberto Flor: using the right tkInt file (wrong version was included)
+ *
+ * Revision 1.2  2000/11/01 17:40:53  markus
+ * updated CVS-Id style
+ *
+ * Revision 1.1.1.1  1999/12/29 15:12:26  markus
+ * initial CVS import
  *
  * Revision 1.45  1998/08/22 03:05:53  brianp
  * added -indirect config option
@@ -105,16 +115,45 @@
 #ifndef _TKPORT
 #define _TKPORT  /* This eliminates need to include a bunch of Tk baggage */
 #endif /* X11 */
+#endif
 #include <tcl.h>
 #include <tk.h>
 #if defined(X11)
-#include "tkInt8.0.h"
-#endif
+#if TK_MAJOR_VERSION==4 && TK_MINOR_VERSION==0
+#  include "tkInt4.0.h"
+#  define NO_TK_CURSOR
+#elif TK_MAJOR_VERSION==4 && TK_MINOR_VERSION==1
+#  include "tkInt4.1.h"
+#elif TK_MAJOR_VERSION==4 && TK_MINOR_VERSION==2
+#  include "tkInt4.2.h"
+#elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==0 && TK_RELEASE_SERIAL==0
+#  include "tkInt8.0.h"
+#elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==0 && TK_RELEASE_SERIAL==2
+#  include "tkInt8.0p2.h"
+#elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==0 && TK_RELEASE_SERIAL==4
+#  include "tkInt8.0p2.h"
+#elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==0 && TK_RELEASE_SERIAL==5
+#  include "tkInt8.0p2.h"
+#elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==1
+#  include "tkInt8.1.1.h"
+#elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==2
+#  include "tkInt8.2.3.h"
+#elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==3
+#  include "tkInt8.3.h"
+#elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==4
+#  include "tkInt8.4.h"
+#else /* X11 TK_VERSION */
+   error Sorry, you will have to edit togl.c to include the right tkInt.h file
+#endif /* TK_VERSION */
+#elif defined(WIN32)
+#if TK_MAJOR_VERSION<8
+   error Sorry Windows version requires Tcl/Tk ver 8.0 or higher.
+#else  /* WIN32 TK_VERSION */
+#include "tkWinInt.h"
+#endif /* WIN32 TK_VERSION */
 #include "tkInt.h"
-/*#include "tkWinInt.h"*/
 #endif /* X11 */
 #include "togl.h"
-
 
 
 /* Defaults */

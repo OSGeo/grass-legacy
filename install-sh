@@ -1,4 +1,16 @@
 #!/bin/sh
+
+#############################################################################
+#
+# $Id: install-sh,v 1.4 2001-01-31 02:44:05 justin Exp $
+#
+# MODULE:   	Grass Compilation
+# AUTHOR(S):	Original author MIT (X11R5)
+# PURPOSE:  	This file is required by configure to create the config.cache
+#   	    	file.
+# COPYRIGHT:	Please see below for details.
+#
+#############################################################################
 #
 # install - install a program, script, or datafile
 # This comes from X11R5 (mit/util/scripts/install.sh).
@@ -22,6 +34,8 @@
 # This script is compatible with the BSD install script, but was written
 # from scratch.  It can only install one file at a time, a restriction
 # shared with many OS's install programs.
+#
+#############################################################################
 
 
 # set DOITPROG to echo to test this script

@@ -30,7 +30,7 @@ tig_close('1');
 if (nrec) {
   sprintf(cmd,"v.in.tig.basic t1=%s t2=%s out=%s tlid=%s",
              tiger[1].name, tiger[2].name, vect_name, tmpfile);
-  if (proj == PROJECTION_LL){
+  if (proj == PROJECTION_UTM){
     sprintf(buff," spheroid=%s zone=%d",sphere, zone);
     strcat(cmd,buff);
   }

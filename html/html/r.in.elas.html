@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>r.in.elas</TITLE>
+</HEAD>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width="100%" align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><B>r.in.elas</B></EM>  - Import an ELAS raster file into a GRASS raster map layer.
+<BR>
+<EM>(GRASS Raster Data Import Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.in.elas</B> 
+<BR>
+<B>r.in.elas help</B> 
+<BR>
+<B>r.in.elas [-h]</B>
+<B>channel=</B><EM>value</EM>
+<B>zone=</B><EM>value</EM> 
+<B>proj=</B><EM>value</EM> 
+<B>nbpe=</B><EM>value</EM>       
+<B>x-spot-size=</B><EM>value</EM>       
+<B>y-spot-size=</B><EM>value</EM>       
+<B>input=</B><EM>name</EM>       
+<B>output=</B><EM>name</EM>       
+
+
+<H2>DESCRIPTION</H2>
+
+r.in.elas" imports ELAS raster files to GRASS cell files.
+
+<H2>OPTIONS</H2>
+
+<H3>Flags:</H3>
+<DL>
+<DT><B> -h</B>
+<DD>Create GRASS histogram file.
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+<DD>Name of an existing binary ELAS raster file to be imported. 
+<DT><B>output=</B><EM>name</EM>
+<DD>Name to be assigned to resultant GRASS raster map layer. 
+<DT><B>channel=</B><EM>value</EM>
+<DD>ELAS channel number.<br>
+   default: 1
+<DT><B>zone=</B><EM>value</EM>     
+<DD>UTM zone number. (1-60)<br>
+                default: 0
+<DT><B>proj=</B><EM>value</EM>     
+<DD>GRASS "proj" value. (0 for XY and 1 for UTM)<br>
+                default: 1
+<DT><B>nbpe=</B><EM>value</EM>     
+<DD>(number of bytes per element) for ELAS file.
+                "nbpe" is an OPTIONAL value, only to be inputted to override
+                the ELAS header value.<br>
+                default: 0
+<DT><B>x-spot-size=</B><EM>value</EM>     
+<DD>ELAS X Spot size number.
+                "x-spot-size" is an OPTIONAL value, only to be inputted to
+                override the ELAS header value.<br>
+                default: 0
+<DT><B>y-spot-size=</B><EM>value</EM>     
+<DD>ELAS Y Spot size number.
+                "y-spot-size" is an OPTIONAL value, only to be inputted to
+                override the ELAS header value.<br>
+                default: 0
+</DL>
+
+       This program  "r.in.elas"  copies  and  converts  an  ELAS
+       raster  file  to  a GRASS cell file.  The ELAS raster file
+       must be a 1 to 4 byte integer per element file.  The GRASS
+       file created from the ELAS file will be either an unrefer
+       enced XY or a UTM projection.  The ELAS color values  will
+       be  transferred to GRASS only if there are color values in
+       the ELAS header.  If no color values are transferred  from
+       ELAS  then  a  GRASS color file will automatically be cre
+       ated.  This color file will be a RGB color ramp.  The area
+       to be transferred from ELAS to GRASS will be determined by
+       the ELAS values "il" (initial  line),  "ll"  (last  line),
+       "ie"  (initial  element),  and "le"(last element).  Multi-
+       channel ELAS raster files may be transferred to GRASS  one
+       channel  at  a  time.  Input variables: nbpe, x-spot-size,
+       and y-spot-size are OPTIONAL variables  and  can  only  be
+       inputted  non-interactively,  since these values will usu
+       ally already be stored in the ELAS header.  But  if  these
+       values  are not in the ELAS header, then the user may pro
+       vide those values by entering the non-interactive command.
+       This  program  will  produce a GRASS range file and if the
+       flag "-h" is passed to the program then a  histogram  file
+       will  be created as well.  Using the "-h" flag with larger
+       files is not recommended since creating a  histogram  file
+       will increase processing time.  You can create a histogram
+       file after this program is finished executing  by  running
+       "r.support".   This  program  will  produce  a  new "WIND"
+       (region) that will correspond to  the  new  "cellhd"  file
+       that  has  been  created.  If the user should want to save
+       their  original  "WIND"  (region)  then  they  should  run
+       "g.region" prior to executing this program.
+
+<H2>SEE ALSO</H2>
+<EM>
+<A HREF="r.out.bin.html">r.out.bin</A>,
+<A HREF="r.in.ascii.html">r.in.ascii</A>, 
+<A HREF="r.out.ascii.html">r.out.ascii</A>, 
+<A HREF="r.in.arc.html">r.in.arc</A>, 
+<A HREF="r.out.arc.html">r.out.arc</A>,
+<A HREF="r.in.gdal.html">r.in.gdal</A></EM>
+
+<H2>AUTHOR</H2>
+Bruce Powell, National Park Service
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

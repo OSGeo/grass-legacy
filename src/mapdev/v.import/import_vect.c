@@ -62,7 +62,6 @@ int main (int argc, char *argv[])
 	char  file3[128] ;
 	char  matt_file[128] ;
 	char *p;
-	char  *getenv();
 
 	char  command[256] ;
 

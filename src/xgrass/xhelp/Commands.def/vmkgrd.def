@@ -1,8 +1,0 @@
-
-
-v.mkgrid - 
-
-v.mkgrid creates a binary format, @glossary("vector",16.glossary/vector.def) map representation of a
-regular coordinate grid.
-
-Manual entry for @man("v.mkgrid")

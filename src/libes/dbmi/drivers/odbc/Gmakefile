@@ -1,0 +1,35 @@
+
+# these are DBMI definitions
+STUBLIB = ../libstubs.a
+
+DBMIDIR = $(GISBASE)/driver/db
+
+LIBES = $(DBMILIB) $(STUBLIB) $(GISLIB) 
+DEPLIBS= $(DEPDBMILIB) $(STUBLIB) $(DEPGISLIB) 
+
+EXTRA_CFLAGS = $(ODBCINC)
+
+OBJ 	=  \
+	driver.o \
+	error.o \
+	listdb.o \
+	db.o \
+	listtab.o \
+	connect.o \
+	describe.o \
+	cursor.o \
+	select.o \
+	fetch.o \
+	execute.o \
+	table.o
+
+DRIVER = main.o $(OBJ)
+
+$(DBMIDIR)/odbc: $(DBMIDIR) $(DRIVER) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(DRIVER) $(LIBES) $(EXTRA_CFLAGS) $(ODBCLIB) $(MATHLIB) $(XDRLIB)
+
+
+$(DBMIDIR):
+	-mkdir -p $(DBMIDIR)
+
+$(DEPLIBS): #

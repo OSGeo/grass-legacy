@@ -1,8 +1,0 @@
-The Brush-Create Menu Option
-
-This dialog allows you to create a MxN new brush.  You 
-will be presented with a simple dialog so that you can 
-specify how many rows (N) and columns (M) of cells the new brush 
-should have and then you will be presented with the 
-@ref("Brush-Edit",xgre/brush_edit) dialog so that you can configure the new brush.
-

@@ -7,9 +7,11 @@ interface_build {
     {entry pw {Page width, in characters [79]:} 0 ""}
     {entry output {Output file to hold the report:} 0 File}
     {checkbox -h {No page headers.} "" -h}
-    {checkbox -m {Report zero values due to mask.} "" -m}
     {checkbox -f {Use formfeeds between pages.} "" -f}
     {checkbox -q {Run quietly.} "" -q}
     {checkbox -e {Use scientific format.} "" -e}
-    {checkbox -z {Report only non-zero values.} "" -z}
+    {checkbox -n {Report only non-null values.} "" -n}
+    {checkbox -N {Filter out cells where all maps have no data.} "" -N}
+    {checkbox -C {Report for cats fp ranges (fp maps only).} "" -C}
+    {checkbox -i {Read fp map as integer (use map's quant rules).} "" -i}
 }

@@ -1,0 +1,151 @@
+<TITLE>m.in.pl94.db3</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>m.in.pl94.db3</b></EM>  - Import Demographic records from Census PL94-171 dBase3 (CDROM) Files
+
+<BR>
+
+<EM>(GRASS Sites Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>m.in.pl94.db3 help</B>
+
+<BR>
+
+<B>m.in.pl94.db3</B> [<B>-f</B>] [<B>-p</B>] [<B>-n</B>] <B>sc=</B><EM>string</EM> [<B> sc=</B><EM>str . .</EM> ] <B>in=</B><EM>/cdrom/pl9417ss.dbf &gt; result_file </EM>
+
+<P>
+
+This command may be run in command line mode only.  Parameters used
+must be in the order specified.
+
+
+<P>
+
+
+<H2>OPTIONS</H2>
+
+<B>Flags:</B>
+<DL>
+<DT><B>-f</B>
+<DD>Output to stdout the list of all field name and starting positions<BR>
+for the Identification Section of the PL94 file.  Other<BR>
+parameters are not necessary and will be ignored.
+
+<DT><B>-p</B>
+<DD>Print several information items to stderr input<BR>
+file is opened. 
+
+<DT><B>-n</B>
+<DD>Output only the sequential number and PL94 logical record<BR>
+number (LOGRECNU) of matching records to stdout.
+</DL>
+<P>
+<B>Parameters:</B>
+<DL>
+<DT><B>sc=</B><EM>string</EM>
+<DD>sc is starting column or a capitilized reference name from
+                  the Identification Section of the PL94 Data Dictionary;
+                  string is characters to match there.  A negative test may
+                  also be made with: sc!=string.  If more than one test is
+                  specified the results are "anded" resulting in a
+		  conjunction of the results of the expressions.  (See 
+		  <EM>m.in.stf1.tpe</EM> for complete details.)
+
+<DT><B>in=</B><EM>name</EM>
+<DD>Path/file for dBase files for state <EM>ss</EM>.
+</DL>
+<P>
+<H2>DESCRIPTION</H2>
+
+
+
+<P>
+
+This program is provided to read the Census PL94 data records
+from a file for one state.  The file is usually on a CD-ROM, but
+this is not necessary providing the proper path is given for the <EM>in=</EM>
+parameter and the contents of the file duplicate that on CD-ROM.
+
+
+<P>
+
+The output consists of records of 517 characters extracted from the
+input file with a suitable line termination character added (\n) to
+create a normal text file.
+
+
+<P>
+
+Users of GRASS 4.1 and the Census PL94 files on CD-ROM will generally use
+this program to select appropriate subsets of PL94 records; write them to
+one or more files; and then either process these files
+directly with <EM>
+<A HREF="v.apply.census.html">v.apply.census</A>
+</EM> to print demographics, create site maps or label
+vector maps, or use <EM>m.in.stf1.tpe</EM> to extract further subsets.
+
+
+<P>
+
+The PL94 CD-ROM data file for most states is very large, 100+ MB.  This
+program may take 20 to 60 minutes for a single extraction, so plan carefully
+and don't discard useful subsets that you create on disk.
+
+
+<P>
+
+
+<H2>EXAMPLES</H2>
+
+Insert the appropriate CD-ROM and mount it (see your system administrator).
+(We assume here that it is mounted as the file system /cdrom.)
+<P>
+To extract all Census tract summary records for the state of South Dakota:
+<P>
+<DL>
+<DD><B>m.in.pl94.db3 -p </B><EM>11=050</EM> <B>in=</B><EM>/cdrom/pl9417sd.dbf &gt; counties.sd</EM>
+</DL>
+
+<P>
+
+The 11=050 parameter selects those records which have the character string
+'050' beginning in column 11 of the assembled records.  Columns 11-13 are the 
+Summary Level (SUMLEV) field which is used in almost every selection from
+CD-ROM.
+<P>
+To extract all block records for Lawrence County, South Dakota:
+<P>
+<DL>
+<DD><B>m.in.pl94.db3 -p </B><EM>SUMLEV=100 CNTY=081</EM> <B>in=</B><EM>/cdrom/pl9417sd.dbf &gt; bk.081.sd</EM>
+</DL>
+<P>
+100 is the SUMLEV for blocks and 081 is the county code for Lawrence Co.
+<P>
+
+<H2>SEE ALSO</H2>
+
+<EM>m.in.stf1.tpe</EM> is used as a post-processor to select further subsets of
+PL94 records.  NOTE: Unix utility programs, such as <EM>grep</EM> or <EM>awk</EM>,
+can also be used for the for processing the extracted PL94 files.
+
+
+<P>
+
+
+<H2>AUTHOR</H2>
+
+Dr. James Hinthorne, GIS Laboratory, Central Washington University,
+August 1992.
+
+
+<P>
+

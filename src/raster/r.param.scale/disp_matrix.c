@@ -7,18 +7,16 @@
 
 #include "param.h"
 
-disp_matrix(a,x,z,n)
-    float **a,x[],z[];
-    int	   n;
+void disp_matrix(double **a, double *x, double *z, int n)
 			/* Displays matrices used to solve a 
 			   set of linear equations in the form 
 
 			 _                        _      _  _      _  _ 
-			| a(1,1) a(1,2) ... a(1,n) |    | x1 |    | z1 |
-			| a(2,1) a(2,2) ... a(2,n) |    | x2 |    | z2 |
+			| a(0,0) a(0,1) ... a(0,n) |    | x0 |    | z0 |
+			| a(1,0) a(1,1) ... a(1,n) |    | x1 |    | z1 |
 			|    :	    :   ...   :    | .  | :  | =  | :  |
 			|    :	    :   ...   :    |    | :  |    | :  |
-			| a(n,1) a(n,2) ... a(n,n) |    | xn |    | zn |
+			| a(n,0) a(n,1) ... a(n,n) |    | xn |    | zn |
 			 -                        -      -  -      -  -
 
 								*/
@@ -27,22 +25,21 @@ disp_matrix(a,x,z,n)
     int row,col;		/* Counts through the matrix */ 
     char dummy[128];		/* Kewboard input (pause) */
 
-    for (row=1; row<=n; row++)
+    for (row=0; row<n; row++)
     {
-	printf("[ ");
+	fprintf(stdout, "[ ");
 
-	for (col=1; col<=n; col++)
-	    printf("%.3f\t",a[row][col]/1);	
+	for (col=0; col<n; col++)
+	    fprintf(stdout, "%.3f\t",a[row][col]/1);
 
-	printf("]\t[ %.0f\t]\t[ %.0f\t]\n",x[row],z[row]);
+	fprintf(stdout, "]\t[ %.0f\t]\t[ %.0f\t]\n",x[row],z[row]);
     }
-    printf("\n\n");
+    fprintf(stdout, "\n\n");
 
-    gets(dummy);
+    fgets(dummy,70,stdin);
 }
 
-disp_wind(z)
-    CELL *z;			/* Local window */
+void disp_wind(CELL *z)			/* Local window */
 {
 
     int row,col;		/* Count through local window. */
@@ -52,10 +49,10 @@ disp_wind(z)
     for (row=0; row<wsize; row++)
     {
 	for (col=0; col<wsize; col++)
-	    printf("%d\t",*(z + (row*wsize) + col));
+	    fprintf(stdout, "%d\t",*(z + (row*wsize) + col));
 
-	printf("\n");
+	fprintf(stdout, "\n");
     }
 
-    gets(dummy);
+    fgets(dummy,70,stdin);
 }

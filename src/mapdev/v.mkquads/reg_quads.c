@@ -7,7 +7,6 @@
 #include	"gis.h"
 #include	"Vect.h"
 #include	"quad_structs.h"
-#include	"dig_defines.h"
 #include	"local_proto.h"
 
 static int write_reg_line (FILE *,double,double);

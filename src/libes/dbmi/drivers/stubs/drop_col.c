@@ -1,5 +1,6 @@
 #include "dbmi.h"
 
+int
 db_driver_drop_column (tableName, columnName)
     dbString *tableName;
     dbString *columnName;

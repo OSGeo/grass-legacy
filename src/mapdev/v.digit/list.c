@@ -5,6 +5,7 @@
 #include "gis.h"
 #include "dig_curses.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 #ifdef SCS_MODS
 int 
@@ -42,7 +43,7 @@ list (char *ELEM)
 
 	          if (ls = popen(buf,"r"))
 	          {
-	              sprintf(line, "%s files available in <%s>:", ELEM,mapset);
+	              sprintf(line, _("%s files available in <%s>:"), ELEM,mapset);
 	              Write_base(line_num++,line);
 	              while (fgets(buf, sizeof buf, ls))
 	                 {
@@ -71,7 +72,7 @@ list (char *ELEM)
        {
        Clear_info();
        Write_info( 3, "   No SEARCH_PATH in this mapset");
-       Write_info( 4, "   Hit <return> to continue ");
+       Write_info( 4, _("   Hit <return> to continue "));
        Get_curses_text (buf,1) ;
        }
     

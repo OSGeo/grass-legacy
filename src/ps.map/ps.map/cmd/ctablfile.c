@@ -4,6 +4,7 @@
 */
 
 #include <stdlib.h>
+#include <string.h>
 #include "colortable.h"
 #include "ps_info.h"
 #include "local_proto.h"
@@ -14,10 +15,12 @@ static char *help[] =
 {
     "where      x y",
     "width      table_width",
+    "height     fptable_height",
     "cols       columns",
     "font       fontname",
     "fontsize   fontsize",
     "color      color",
+    "nodata	nodata",
     ""
 };
 
@@ -26,13 +29,14 @@ ctablfile (void)
 {	
     char buf[1024];
     char *key, *data;
-    int color, fontsize, cols;
-    double w, x, y;
+    int color, fontsize, cols, nodata;
+    double w, h, x, y;
 
     fontsize = 0;
     color = BLACK;
     cols = 1;
-    w = x = y = 0.0;
+    h = w = x = y = 0.0;
+    ct.nodata = 1;
     while (input(2, buf, help))
     {
 	if (!key_data(buf, &key, &data)) continue;
@@ -53,6 +57,16 @@ ctablfile (void)
 	    {
 		w = 0.0;
 		error(key, data, "illegal width request");
+	    }
+	    else continue;
+	}
+	
+        if (KEY("height"))
+ 	{
+	    if (sscanf(data, "%lf", &h) != 1)
+	    {
+		h = 0.0;
+		error(key, data, "illegal height request");
 	    }
 	    else continue;
 	}
@@ -91,11 +105,19 @@ ctablfile (void)
 	    ct.font = G_store(data);
 	    continue;
 	}
+	if (KEY("nodata"))
+	{
+	    nodata = yesno(key, data);
+	    ct.nodata = nodata;
+	    continue;
+        }
+
 	error(key, data, "illegal colortabe sub-request");
     }
     ct.x = x;
     ct.y = y;
     ct.width = w;
+    ct.height = h;
     ct.color = color;
     ct.cols = cols;
     if (fontsize) ct.fontsize = fontsize;

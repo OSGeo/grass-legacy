@@ -40,7 +40,7 @@ char *G_whoami(void)
     {
 	struct passwd *getpwuid();
 	struct passwd *p;
-	if(p = getpwuid (getuid()))
+	if((p = getpwuid (getuid())))
 	    name = G_store (p->pw_name);
     }
     if (name == NULL)

@@ -7,8 +7,9 @@
 #include "digit.h"
 #include "dig_curses.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int leave (void)
 {
-	return (curses_yes_no_default(1, "Shall we continue? ", 1) ) ;
+	return (curses_yes_no_default(1, _("Shall we continue? "), 1) ) ;
 }

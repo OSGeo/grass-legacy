@@ -1,7 +1,0 @@
-
-
-vector file - A file storing data in an @glossary("arc-node",16.glossary/arcnode.def) (vector format).
-Previous versions of GRASS referred to this type of a file as a
-"digit file".  A GRASS vector file is generally associated with
-other supporting files describing @glossary("attribute",16.glossary/attribu.def) (category) values and
-@glossary("labels",16.glossary/label.def), and @glossary("topology",16.glossary/topology.def).

@@ -1,0 +1,22 @@
+PGM       = $(BIN_CMD)/d.rast.pg
+# EXTRA_CFLAGS = -Dunlink=puts
+LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(DATETIMELIB)
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB) $(DEPDATETIMELIB)
+PACKAGE = "d.rast.pg"
+DEFS = -Wall -DPACKAGE=\"$(PACKAGE)\"
+EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS)
+
+
+
+OBJS = \
+	main.o \
+        getAllOpts.o \
+        getSopts.o \
+	buildInfxQry.o \
+	runInfxFile.o
+
+
+$(PGM): $(OBJS) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(PQLIBPATH) $(PQLIB) $(MATHLIB) $(XDRLIB) $(INTLLIB)
+
+$(DEPLIBS): #

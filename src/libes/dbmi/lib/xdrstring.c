@@ -1,6 +1,6 @@
 #include "xdr.h"
 
-db__send_string_array(a, count)
+int db__send_string_array(a, count)
     dbString *a;
     int count;
 {
@@ -16,6 +16,7 @@ db__send_string_array(a, count)
 
 /* note: dbString *a; ...(...,&a...) */
 
+int
 db__recv_string_array (a, n)
     dbString **a;
     int *n;
@@ -52,6 +53,7 @@ db__recv_string_array (a, n)
     return DB_OK;
 }
 
+int
 db__send_string(x)
     dbString *x;
 {
@@ -88,6 +90,7 @@ db__send_string(x)
  *
  * NOTE: caller MUST initialize x by calling db_init_string()
  */
+int
 db__recv_string(x)
     dbString *x;
 {
@@ -116,6 +119,7 @@ db__recv_string(x)
     return stat;
 }
 
+int
 db__send_Cstring(s)
     char *s;
 {

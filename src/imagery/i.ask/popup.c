@@ -231,6 +231,7 @@ int popup (FILE *fd, int x, int y, char *msg)
 	}
 	downarrow (&more, page+1 < npages ? BLACK : WHITE);
 	uparrow   (&less, page   > 0      ? BLACK : WHITE);
+	R_stabilize();
 	which = -1;
 	switch(pick(x,y))
 	{

@@ -3,5 +3,4 @@ interface_build {
     {Creates new shaded raster map layer from base map with shading taken from aspect map.}
     {entry h_map {Raster map to be shaded (base map):} 0 raster}
     {entry i_map {Aspect map to be used for shading :} 0 raster}
-    {entry out   {Output raster map (optional):} 0 raster}
 }

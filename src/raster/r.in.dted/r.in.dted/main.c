@@ -19,8 +19,15 @@ main (int argc, char *argv[])
 	char ebuf[256];
 	int nrows, ncols;
 	int pole_flag, quiet=0;
+	struct GModule *module;
 
 	G_gisinit (argv[0]);
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+	"Imports DTED I & DTED II into GRASS Lat-Lon location";
+	
 	inopt = G_define_option();
 	outopt = G_define_option();
 

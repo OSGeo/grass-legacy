@@ -6,7 +6,6 @@ all: $(IMAGERYLIB2)
 
 OBJ =\
 	ask_camera.o\
-	ask_initial.o\
 	cam.o\
 	cam_info.o\
 	camera.o\
@@ -40,7 +39,7 @@ all: $(IMAGERYLIB2)
 $(OBJ): orthophoto.h
 
 $(IMAGERYLIB2): ${OBJ}
-	${AR}
+	$(LIBRULE)
 
 orthoref.o: mat.h
 orthoref.o: matrixdefs.h
@@ -62,6 +61,6 @@ m_transpose.o: matrixdefs.h
 
 
 try: try.o $(IMAGERYLIB2)
-	$(CC) try.o $(IMAGERYLIB2) $(GISLIB) $(VASK) $(MATHLIB) $(GISLIB) -o try
+	$(CC) try.o $(IMAGERYLIB2) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB) -o try
 
-$(IMAGERYLIB@) $(GISLIB) $(VASKLIB): #
+$(IMAGERYLIB@) $(DEPGISLIB) $(DEPVASKLIB): #

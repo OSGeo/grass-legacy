@@ -32,6 +32,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "gis.h"
+#include "glocale.h"
 
 static int lister(char *,char *,char *);
 
@@ -42,7 +43,7 @@ G_ask_cell_new (prompt,name)
 	char *name;
 {
 
-	return G_ask_new_ext (prompt, name, "cell", "raster", "with titles", lister);
+	return G_ask_new_ext (prompt, name, "cell", "raster", _("with titles"), lister);
 }
 
 char *
@@ -51,7 +52,7 @@ G_ask_cell_old (prompt,name)
 	char *prompt;
 	char *name;
 {
-	return G_ask_old_ext (prompt, name, "cell", "raster", "with titles", lister);
+	return G_ask_old_ext (prompt, name, "cell", "raster", _("with titles"), lister);
 }
 
 char *
@@ -60,7 +61,7 @@ G_ask_cell_in_mapset (prompt,name)
 	char *prompt;
 	char *name;
 {
-	return G_ask_in_mapset_ext (prompt, name, "cell", "raster", "with titles", lister);
+	return G_ask_in_mapset_ext (prompt, name, "cell", "raster", _("with titles"), lister);
 }
 
 char *
@@ -69,7 +70,7 @@ G_ask_cell_any (prompt,name)
 	char *prompt;
 	char *name;
 {
-	return G_ask_any_ext (prompt, name, "cell", "raster", 1, "with titles", lister);
+	return G_ask_any_ext (prompt, name, "cell", "raster", 1, _("with titles"), lister);
 }
 
 static int lister(char *name,char *mapset,char *buf)
@@ -81,7 +82,7 @@ static int lister(char *name,char *mapset,char *buf)
 
     strcpy (buf, title = G_get_cell_title (name, mapset));
     if (*buf == 0)
-	strcpy (buf, "(no title)");
+	strcpy (buf, _("(no title)"));
     free (title);
 
     return 0;

@@ -1,6 +1,0 @@
-
-\v.import\ - Converts ASCII Digital Line Graph (DLG) files, binary DLG files,
-and ASCII vector files into binary vector files and creates the needed
-vector support files.
-
-(GRASS Vector Program)

@@ -2,7 +2,7 @@
 **  Written by Dave Gerdes  6/89
 **  US Army Construction Engineering Research Lab
 */
-#include "digit.h"
+#include "Vect.h"
 #include "export_dlg.h"
 
 #define DEF_MAJOR 999

@@ -1,16 +1,17 @@
 PGM=i.maxlik
-HOME=$(BIN_MAIN_CMD)
 LIST = main.o\
 	open.o\
 	classify.o\
 	hist.o\
 	invert.o
 
-$(HOME)/$(PGM): $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
+LIBES=$(IMAGERYLIB) $(GISLIB) $(VASKLIB)
+DEPLIBS=$(DEPIMAGERYLIB) $(DEPGISLIB) $(DEPVASKLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): global.h
 
-$(IMAGERYLIB): #
-$(GISLIB): #
-$(VASKLIB): #
+$(DEPIMAGERYLIB): #
+$(DEPGISLIB): #
+$(DEPVASKLIB): #

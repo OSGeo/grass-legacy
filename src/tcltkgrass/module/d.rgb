@@ -4,5 +4,4 @@ interface_build {
     {entry red   {Raster map to be used for RED:} 0 raster}
     {entry green {Raster map to be used for GREEN:} 0 raster}
     {entry blue  {Raster map to be used for BLUE:} 0 raster}
-    {entry out   {Raster map to contain results:} 0 raster}
 }

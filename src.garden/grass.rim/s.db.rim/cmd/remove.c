@@ -5,7 +5,7 @@
 #include "parse.h"
 #include "gis.h"
 
-remove()
+remove_db()
 {
    char buffer[INP_SIZ];
    int i;

@@ -9,7 +9,7 @@ int put_row (int fd, unsigned char *buf)
     c = tape.cellbuf;
     while(ncols-- > 0)
 	*c++ = *buf++;
-    G_put_c_raster_row (fd, tape.cellbuf);
+    G_put_raster_row (fd, tape.cellbuf, CELL_TYPE);
 
     return 0;
 }

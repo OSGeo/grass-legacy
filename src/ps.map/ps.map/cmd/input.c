@@ -1,5 +1,7 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 #include "gis.h"
 #include "local_proto.h"
 

@@ -1,0 +1,28 @@
+PKG=GNUgrass
+ARCH=sparc
+# ARCH=i386
+PKGFILE=$(PKG)-$(ARCH).pkg
+STRIP=/opt/sfw/bin/gstrip
+# STRIP=/usr/ccs/bin/strip
+TMP=/var/tmp
+# TMP=/export/home/andreas/tmp
+
+pkg:
+	rm -f /opt/$(PKG)/pkginfo /opt/$(PKG)/prototype
+	rm -f /opt/$(PKG)/copyright /opt/$(PKG)/space 
+	rm -f /opt/$(PKG)/postinstall /opt/$(PKG)/checkinstall
+	cd /opt/$(PKG) && chown -R root:bin *
+	cd /opt/$(PKG) && chmod -R a+r *
+	cd /opt/$(PKG) && find . -type f -exec $(STRIP) {} \;
+	cd /opt/$(PKG) && ( echo 'i pkginfo'; echo 'i checkinstall'; echo '!default 0755 root bin';  echo 'i copyright'; echo 'i space'; echo 'i postinstall'; find /opt/$(PKG) -print | pkgproto /opt/$(PKG)=/opt/$(PKG)) > prototype
+	cp -p ./checkinstall-$(ARCH) ./checkinstall
+	cp -p ./pkginfo ./copyright ./space ./postinstall ./checkinstall /opt/$(PKG)
+	cd /opt/$(PKG) && chmod 0755 checkinstall postinstall
+	pkgmk -o -d $(TMP) -a $(ARCH) -f /opt/$(PKG)/prototype
+	touch $(PKGFILE)
+	pkgtrans -s $(TMP) $(PKGFILE) $(PKG)
+	rm -fR /opt/$(PKG)
+	rm -fR $(TMP)/$(PKG)
+	gzip $(PKGFILE)
+	@echo "check current directory for $(PKG)-$(ARCH).pkg.gz file!"
+

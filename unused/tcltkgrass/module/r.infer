@@ -1,0 +1,328 @@
+
+
+proc flags { } {
+
+
+  toplevel .flags
+
+  wm geometry .flags +100+20
+  wm title .flags "flags"
+
+
+  global v
+
+
+  frame .flags.frame0 \
+    -relief {flat}
+
+  checkbutton .flags.frame0.checkbutton \
+     -text "Run verbosely." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "v" \
+     -offvalue "" \
+     -variable v
+
+  pack append .flags.frame0 \
+    .flags.frame0.checkbutton { left }
+
+  global t
+
+
+  frame .flags.frame1 \
+    -relief {flat}
+
+  checkbutton .flags.frame1.checkbutton \
+     -text "Run in test mode." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "t" \
+     -offvalue "" \
+     -variable t
+
+  pack append .flags.frame1 \
+    .flags.frame1.checkbutton { left }
+
+
+  frame .flags.frame2 \
+     -borderwidth {2}
+
+  button .flags.frame2.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .flags }
+
+  button .flags.frame2.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .flags }
+
+  pack append .flags.frame2 \
+    .flags.frame2.ok { left expand } \
+    .flags.frame2.cancel { right expand }
+
+
+bind .flags.frame0.checkbutton <Return> {
+     focus .flags.frame1.checkbutton
+}
+
+bind .flags.frame1.checkbutton <Return> {
+     focus .flags.frame0.checkbutton
+}
+
+
+  pack append .flags \
+    .flags.frame0 { top expand fill } \
+    .flags.frame1 { top expand fill } \
+    .flags.frame2 { bottom expand fill }
+
+
+
+  grab set .flags
+  tkwait window .flags
+
+}
+
+
+
+
+proc put_command { } {
+
+
+  global v
+  global t
+  global name
+
+
+  set cmd ""
+
+  if {  $v != "" || $t != "" } {
+         set cmd "$cmd -$v$t"
+  }
+
+  if {  $name != "" } {
+         set cmd "$cmd rulesfile=$name"
+  }
+
+  if { $cmd != "" } {
+     set cmd "r.infer $cmd"
+  }
+}
+
+
+
+
+proc set_command_entry { } {
+
+  .cmd.frame0.entry configure -state normal
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 [put_command]
+  .cmd.frame0.entry configure -state disabled
+
+}
+
+
+proc proc_r.infer { } {
+
+
+  global v
+  global t
+  global name
+
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "Use Inference Engine"
+
+
+  frame .cmd.frame0 \
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame0.hscrollbar set}
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {r.infer}
+
+  .cmd.frame0.entry configure -state disabled
+
+
+
+  frame .cmd.frame1 \
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame1.hscrollbar set}
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {r.infer outputs a raster map layer whose category values represent the applications of user-specified criteria (rules statements) to other raster map layers' category values.}
+
+  .cmd.frame1.entry configure -state disabled
+
+
+
+  frame .cmd.frame2 \
+    -relief {flat}
+
+  label .cmd.frame2.label \
+    -anchor {w} \
+    -text {File containing rules:} \
+    -padx {2}
+
+  scrollbar .cmd.frame2.hscrollbar \
+    -command {.cmd.frame2.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame2.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame2.hscrollbar set}
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.label { top fillx } \
+    .cmd.frame2.entry { top fillx } \
+    .cmd.frame2.hscrollbar { bottom fillx }
+
+  .cmd.frame2.entry configure -state normal
+
+  bind .cmd.frame2.entry <Return> {
+       set name [%W get] }
+
+
+
+  frame .cmd.frame3 \
+    -relief {flat}
+
+  label .cmd.frame3.label \
+    -anchor {w} \
+    -text {Other options available:} \
+    -padx {2}
+
+  button .cmd.frame3.button0 \
+     -text "flags ..." \
+     -relief raised \
+     -padx 10 \
+     -command "flags
+                set_command_entry"
+
+
+  frame .cmd.frame4 \
+     -borderwidth {2}
+
+  button .cmd.frame4.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 
+		if {  $name != "" } {
+ 		set cmd [put_command]
+ 		if { $cmd != "" } {
+ 		   eval " exec xterm -title r.infer -geometry 50x5 -exec $cmd " 
+ 		   destroy .cmd
+ 		}
+ 	}
+ }
+
+  button .cmd.frame4.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { destroy .cmd }
+
+  pack append .cmd.frame4 \
+    .cmd.frame4.ok { left expand } \
+    .cmd.frame4.cancel { right expand }
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.label { top fillx } \
+    .cmd.frame3.button0  { left }
+
+
+
+  pack append .cmd \
+    .cmd.frame1 { top expand fill } \
+    .cmd.frame2 { top expand fill } \
+    .cmd.frame3 { top expand fill } \
+    .cmd.frame0 { top expand fill } \
+    .cmd.frame4 { bottom expand fill }
+
+
+bind .cmd.frame2.entry <KeyRelease> {
+		set name [.cmd.frame2.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame2.entry <Return> {
+		set name [.cmd.frame2.entry get]
+		set_command_entry
+}
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global v
+set v ""
+
+global t
+set t ""
+
+global name
+set name ""
+
+
+global database
+global location
+global mapset
+global feature
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_r.infer

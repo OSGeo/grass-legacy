@@ -6,7 +6,11 @@
 #include "local_proto.h"
 #include "raster.h"
 
+#ifdef __GNUC_MINOR__
 int quit (int) __attribute__ ((__noreturn__));
+#else
+int quit (int);
+#endif
 int error (char *, int);
 
 int main (int argc, char *argv[])
@@ -26,12 +30,16 @@ int main (int argc, char *argv[])
     digit_points = G_tempfile();
     digit_results = G_tempfile();
 
-    R_open_driver();
+   if (R_open_driver() != 0)
+	G_fatal_error ("No graphics device selected");
 
     if (!I_ask_group_old ("Enter imagery group to be registered", group.name))
 	exit(0);
     if (!I_get_group_ref (group.name, &group.ref))
+    {
+        fprintf (stderr, "Group [%s] contains no files\n", group.name);
 	exit(1);
+    }
     if (group.ref.nfiles <= 0)
     {
 	fprintf (stderr, "Group [%s] contains no files\n", group.name);

@@ -50,9 +50,14 @@ main (int argc, char *argv[])
 	struct Option *old, *new;
 	char *mapset, *dig_name, *dxf_name;
 	char errmsg[200];
+	struct GModule *module;
 
 	G_gisinit (argv[0]);
-
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+	"Exports GRASS vector files to DXF file format.";
 
     old = G_define_option();
     old->key			= "input";

@@ -1,12 +1,11 @@
 /* quick_draw:
  ** uses libgsf to draw wire frame surfaces
  */
+#include <stdlib.h>
 #include "tk.h"
 #include "interface.h" 
 
-Nquick_draw_cmd(dc,interp)
-     Nv_data  *dc;
-     Tcl_Interp *interp;
+int Nquick_draw_cmd (Nv_data *dc, Tcl_Interp *interp)
 {
   int i, max;
   int *surf_list;
@@ -29,8 +28,3 @@ Nquick_draw_cmd(dc,interp)
 
   return (TCL_OK);
 }
-
-
-
-
-

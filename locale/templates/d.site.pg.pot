@@ -1,0 +1,238 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2002-11-27 11:28+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: buildPg.c:26
+#, c-format
+msgid "%s and"
+msgstr ""
+
+#: buildPg.c:30
+#, c-format
+msgid ", %s "
+msgstr ""
+
+#: buildPg.c:34
+#, c-format
+msgid ""
+"SELECT %s,%s %s from %s where %s %s is not null and %s is not null order by %"
+"s,%s"
+msgstr ""
+
+#: getAllOpts.c:28
+msgid "tab"
+msgstr ""
+
+#: getAllOpts.c:32
+msgid "Table with X,Y coors:"
+msgstr ""
+
+#: getAllOpts.c:36
+msgid "coordx"
+msgstr ""
+
+#: getAllOpts.c:40
+msgid "column of X coordinates"
+msgstr ""
+
+#: getAllOpts.c:41
+msgid "X"
+msgstr ""
+
+#: getAllOpts.c:42
+msgid "Column with X-coor:"
+msgstr ""
+
+#: getAllOpts.c:45
+msgid "coordy"
+msgstr ""
+
+#: getAllOpts.c:49
+msgid "column of Y coordinates"
+msgstr ""
+
+#: getAllOpts.c:50
+msgid "Y"
+msgstr ""
+
+#: getAllOpts.c:51
+msgid "Column with Y-coor:"
+msgstr ""
+
+#: getAllOpts.c:54
+msgid "cats"
+msgstr ""
+
+#: getAllOpts.c:58
+msgid "category-column"
+msgstr ""
+
+#: getAllOpts.c:60
+msgid "Column with categories:"
+msgstr ""
+
+#: getAllOpts.c:63
+msgid "where"
+msgstr ""
+
+#: getAllOpts.c:68
+msgid "Clause for SQL query (e.g. obj='huts', num > 56, etc.):"
+msgstr ""
+
+#: getAllOpts.c:71 getSopts.c:49
+msgid "map"
+msgstr ""
+
+#: getAllOpts.c:75
+msgid "New site map name:"
+msgstr ""
+
+#: getAllOpts.c:79 getSopts.c:57
+msgid "plot"
+msgstr ""
+
+#: getAllOpts.c:83 getSopts.c:61
+msgid "Color,icon,size"
+msgstr ""
+
+#: getAllOpts.c:84 getSopts.c:62
+msgid "gray,x,3"
+msgstr ""
+
+#: getAllOpts.c:88
+msgid ""
+"Colors:red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,"
+"black;Icon:diamond, box, plus, x; Size: 1-9. "
+msgstr ""
+
+#: getAllOpts.c:92
+msgid "d.site.pg -s help"
+msgstr ""
+
+#: getSopts.c:38
+msgid "Use [s] flag to select db records using an input file."
+msgstr ""
+
+#: getSopts.c:41
+msgid "sql"
+msgstr ""
+
+#: getSopts.c:42
+msgid "file"
+msgstr ""
+
+#: getSopts.c:46
+msgid "SQL statements specifying selection criteria. "
+msgstr ""
+
+#: getSopts.c:53
+msgid "Name of sites list to output."
+msgstr ""
+
+#: getSopts.c:65
+msgid ""
+"Colors:red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,"
+"black; Icon: diamond, box, plus, x; Size: 1-9. "
+msgstr ""
+
+#: getSopts.c:69 getSopts.c:70
+msgid "help"
+msgstr ""
+
+#: getSopts.c:72 main.c:58
+msgid "-s"
+msgstr ""
+
+#: getSopts.c:83
+msgid "r"
+msgstr ""
+
+#: getSopts.c:84
+#, c-format
+msgid "File read error on %s\n"
+msgstr ""
+
+#: main.c:48 runPg.c:108
+msgid "PG_DBASE"
+msgstr ""
+
+#: main.c:51
+msgid "Please run g.select.pg to identify a current database.\n"
+msgstr ""
+
+#: plotsite.c:25
+msgid "diamond"
+msgstr ""
+
+#: plotsite.c:37
+msgid "box"
+msgstr ""
+
+#: plotsite.c:48
+msgid "plus"
+msgstr ""
+
+#: runPg.c:96
+#, c-format
+msgid "Cannot open %s"
+msgstr ""
+
+#: runPg.c:103
+#, c-format
+msgid ""
+"\n"
+"\n"
+"Executing\n"
+"%s;\n"
+"\n"
+msgstr ""
+
+#: runPg.c:106
+msgid "PG_HOST"
+msgstr ""
+
+#: runPg.c:110
+#, c-format
+msgid "Error: connect Postgres:%s\n"
+msgstr ""
+
+#: runPg.c:118
+#, c-format
+msgid "Error: select Postgres:%s\n"
+msgstr ""
+
+#: runPg.c:143
+#, c-format
+msgid "Can not use the field type id %d for category\n"
+msgstr ""
+
+#: runPg.c:157
+msgid "Display error(exiting..)\n"
+msgstr ""
+
+#: runPg.c:174
+msgid "no data"
+msgstr ""
+
+#: runPg.c:182
+#, c-format
+msgid "%d"
+msgstr ""
+
+#: runPg.c:188
+#, c-format
+msgid "%f"
+msgstr ""

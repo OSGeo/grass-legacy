@@ -9,7 +9,7 @@ static const char SCCSID[]="@(#)PJ_sconics.c	4.1	94/05/22	GIE	REL";
 	double	c1, c2; \
 	int		type;
 #define PJ_LIB__
-#include	<projects.h>
+#include	"projects.h"
 #define EULER 0
 #define MURD1 1
 #define MURD2 2
@@ -37,7 +37,7 @@ PROJ_HEAD(vitk1, "Vitkovsky I")
 /* get common factors for simple conics */
 	static int
 phi12(PJ *P, double *del) {
-	double p1, p2, d, s;
+	double p1, p2;
 	int err = 0;
 
 	if (!pj_param(P->params, "tlat_1").i ||
@@ -96,10 +96,10 @@ INVERSE(s_inverse); /* ellipsoid & spheroid */
 FREEUP; if (P) pj_dalloc(P); }
 	static PJ *
 setup(PJ *P) {
-	double del, cs, dummy;
+	double del, cs;
 	int i;
 
-	if (i = phi12(P, &del))
+	if( (i = phi12(P, &del)) )
 		E_ERROR(i);
 	switch (P->type) {
 	case TISSOT:

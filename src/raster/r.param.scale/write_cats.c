@@ -8,7 +8,7 @@
 
 #include "param.h"
 
-write_cats()
+void write_cats(void)
 {
     /*------------------------------------------------------------------------*/
     /*                            INITIALISE                                  */
@@ -16,19 +16,20 @@ write_cats()
 
     struct Categories	cats;
 
-    G_init_cats(NUM_CATS,"Surface Features",&cats);
+    G_init_cats ((CELL)0, "", &cats);
+    G_set_raster_cats_title("Surface Features",&cats);
 
     /*------------------------------------------------------------------------*/
     /*                      FILL OUT CATEGORIES STRUCTURE                     */
     /*------------------------------------------------------------------------*/ 
 
     
+    G_set_cat(FLAT,   " Planar",       &cats);
     G_set_cat(PIT,    " Pit",          &cats);
     G_set_cat(PEAK,   " Peak",         &cats);
     G_set_cat(RIDGE,  " Ridge",        &cats);
     G_set_cat(CHANNEL," Channel",      &cats);
     G_set_cat(PASS,   " Pass (saddle)",&cats);
-    G_set_cat(FLAT,   " Planar",       &cats);
 
 
     /*------------------------------------------------------------------------*/

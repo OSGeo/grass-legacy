@@ -1,0 +1,13 @@
+Displays text using TrueType fonts.
+===================================
+
+To use this module, install FreeType2 first.
+
+BUGS
+====
+With some PCF files, it cannot handle bitmap images correctly.
+Could anyone fix this?
+
+
+Huidae Cho
+2001/08/08

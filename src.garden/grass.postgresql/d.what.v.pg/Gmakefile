@@ -1,0 +1,22 @@
+PGM       = $(BIN_CMD)/d.what.v.pg
+LIBES     = $(VECTLIB) $(VECTLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+DEPLIBS= $(DEPVECTLIB) $(DEPVECTLIB) $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB)
+PACKAGE = "d.what.v.pg"
+DEFS = -Wall -DPACKAGE=\"$(PACKAGE)\"
+EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS)
+
+
+OBJS = \
+	main.o  \
+        getAllOpts.o \
+        getSopts.o \
+        buildInfxQry.o \
+        runInfxQry.o \
+	getCat.o  \
+	openvect.o
+
+
+$(PGM): $(OBJS) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(PQLIBPATH) $(PQLIB) $(MATHLIB) $(XDRLIB) $(INTLLIB)
+
+$(DEPLIBS): #

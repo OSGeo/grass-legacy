@@ -4,8 +4,8 @@ PAINT = $(ETC)/paint
 
 INTERFACE = $(SRC)/paint/Interface/applib/lib.a
 LIBES =	$(VECTLIB) $(GISLIB) $(ICONLIB)
+DEPLIBS=	$(DEPVECTLIB) $(DEPGISLIB) $(DEPICONLIB)
 
-EXTRA_CFLAGS=$(VECT_INCLUDE)
 
 LIST =	main.o\
 	alloc_pats.o\
@@ -157,7 +157,7 @@ all: $(PGM) \
     # $(PAINT)/header \
     # $(PAINT)/patterns.index
 
-$(PGM):	$(LIST) $(INTERFACE) $(LIBES)
+$(PGM):	$(LIST) $(INTERFACE) $(DEPLIBS)
 	$(CC) $(LDFLAGS) $(LIST) $(LIBES) $(INTERFACE) $(MATHLIB) -o $@
 saber:
 	#load $(CFLAGS) $(SRCLIST) nildriver/lib.a $(LIBES) $(MATHLIB)
@@ -271,9 +271,9 @@ vectr_info.o: misc.h
 windfile.o: misc.h
 window_cnv.o: graphics.h
 
-dumpfont: dumpfont.o font.o $(GISLIB)
+dumpfont: dumpfont.o font.o $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ dumpfont.o font.o $(GISLIB)
 ######################################################################
 $(INTERFACE):	#
-$(LIBES):	#
+$(DEPLIBS):	#
 

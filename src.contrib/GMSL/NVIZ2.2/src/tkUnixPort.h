@@ -74,7 +74,7 @@
 #endif
 #ifdef HAVE_UNISTD_H
 #   include <unistd.h>
-#else
+#elif !defined(__FreeBSD__)
 #   include "compat/unistd.h"
 #endif
 #include <X11/Xlib.h>
@@ -181,9 +181,9 @@ extern int errno;
  * Declarations for various library procedures that may not be declared
  * in any other header file.
  */
-
+#if (TCL_MINOR_VERSION) < 2
 extern void		panic _ANSI_ARGS_(TCL_VARARGS(char *, string));
-
+#endif
 /*
  * These functions do nothing under Unix, so we just eliminate calls to them.
  */

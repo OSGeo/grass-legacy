@@ -1,8 +1,0 @@
-
-
-v.patch - 
-
-v.patch allows the user to combine any number of @glossary("vector",16.glossary/vector.def) @glossary("map layers",16.glossary/maplayer.def)
-together to create one composite vector map layer.
-
-Manual entry for @man("v.patch")

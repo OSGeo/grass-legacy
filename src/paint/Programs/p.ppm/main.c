@@ -8,6 +8,7 @@ char *pgm;
 int 
 main (int argc, char *argv[])
 {
+	struct GModule *module;
     int irows, icols, max;
     int nrows, ncols;
     int prows, pcols;
@@ -25,6 +26,11 @@ main (int argc, char *argv[])
     /* dpg 2/92
     G_gisinit (argv[0]);
     */
+
+	module = G_define_module();
+	module->description =
+		"Reads portable pixmap (ppm) files created by PPM utilities.";
+
     pgm = G_program_name();
 
     ppmfile = G_define_option();

@@ -1,4 +1,5 @@
 #include <string.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include "list.h"
 
@@ -30,7 +31,7 @@ read_list (int check_if_empty)
     char text[100];
     int any;
     int line;
-    char *env, *getenv();
+    char *env;
 
     nlist = 0;
     list = 0;
@@ -43,11 +44,7 @@ read_list (int check_if_empty)
     fd = fopen (element_list, "r");
 
     if (!fd)
-    {
-	sprintf (buf, "can't open database element list <%s>", element_list);
-	G_fatal_error(buf);
-	exit(-1);
-    }
+	G_fatal_error("can't open database element list <%s>", element_list);
 
     line = 0;
     while (G_getl (buf, sizeof buf, fd))

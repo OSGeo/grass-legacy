@@ -1,9 +1,8 @@
 PGM=r.transect
-HOME=$(BIN_MAIN_CMD)
 
 LIST = main.o parse_line.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

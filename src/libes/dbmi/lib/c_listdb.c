@@ -1,7 +1,7 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_list_databases (driver, path, npaths, handles, count)
+int db_list_databases (driver, path, npaths, handles, count)
     dbDriver *driver;
     dbString *path;
     int npaths;

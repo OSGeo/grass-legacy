@@ -1,4 +1,9 @@
 ###########################################################
+
+SLIBDEPS = $(DIG_ATTLIB) $(GISLIB)
+# VECTLIB_REAL is a cyclic dependency
+# SLIBDEPS = $(DIG_ATTLIB) $(VECTLIB_REAL) $(GISLIB)
+
 #    set_head.o 
 
 OBJ = \
@@ -74,10 +79,10 @@ CFILES = \
     x_struct_io.c 
 
 
-$(DIG2LIB): $(OBJ)
-	$(AR)
+$(DEPDIG2LIB): $(OBJ)
+	$(SLIBRULE)
 
-EXTRA_CFLAGS    = $(VECTLIBFLAGS) $(VECT_INCLUDE)
+EXTRA_CFLAGS    = $(VECTLIBFLAGS) $(PICFLAGS)
 
 read_head: read_head.o
 	$(CC) -o $@ read_head.o $(DIGLIB) $(GISLIB)
@@ -91,7 +96,7 @@ iprint:
 	pr -l60 *.h *.c | expand -4 | ipr
 
 
-check_node.o:	dig_nodes.h 
+check_node.o:
 curses.o:	menu.h
 digitize.o:	
 edit.o:		
@@ -99,7 +104,7 @@ first_plot.o:
 interact.o:	
 mark.o:		
 move_point.o:	
-node_op.o:	dig_nodes.h 
+node_op.o:
 remove.o:	
 set_thresh.o:	
 snap.o:	

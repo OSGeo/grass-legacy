@@ -1,5 +1,6 @@
 #include "dbmi.h"
 
+int
 db_driver_create_table (table)
     dbTable *table;
 {

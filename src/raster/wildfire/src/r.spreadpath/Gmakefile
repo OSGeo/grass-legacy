@@ -1,0 +1,16 @@
+PGM = r.spreadpath
+LIST =  main.o \
+	insert.o \
+	path_finder.o \
+	drawline.o
+ 
+LIBES = $(DISPLAYLIB) $(GISLIB) $(SEGMENTLIB) $(DATETIMELIB)
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPGISLIB) $(DEPSEGMENTLIB) $(DEPDATETIMELIB)
+
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+ 
+$(LIST): point.h stash.h
+ 
+$(DEPLIBS): #
+

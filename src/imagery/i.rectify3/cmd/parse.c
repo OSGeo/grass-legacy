@@ -14,7 +14,7 @@ Modifications:
 
 #include "global.h"
 #include "parse.h"
-
+#include <stdlib.h>
 
 char *Parse (int argc, char *argv[], tRect_Data *rect_data)
 {
@@ -39,6 +39,7 @@ char *Parse (int argc, char *argv[], tRect_Data *rect_data)
    source->key           = "source";
    source->type          = TYPE_STRING;
    source->required      = YES;
+   source->gisprompt  = "old,cell,raster";
    source->description   = "Source raster file to be rectified";
 
    /* the rast=from,to options. */
@@ -46,6 +47,7 @@ char *Parse (int argc, char *argv[], tRect_Data *rect_data)
    target->key           = "target";
    target->type          = TYPE_STRING;
    target->required      = YES;
+   target->gisprompt  = "any,cell,raster";
    target->description   = "Target name of rectified image";
 
    /* transformation type */

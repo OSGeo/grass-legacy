@@ -24,6 +24,7 @@ CALLS:
 
 ***********************************************************************/
 #include <stdlib.h>
+#include "config.h"
 #include "vask.h"
 
 /*-----------------------------------------------------------------*/
@@ -51,6 +52,9 @@ int V_init()
 
     clear()  ;
     refresh();
+#ifdef HAVE_KEYPAD
+    keypad(stdscr, 1);
+#endif
 
     return(0) ;
 }

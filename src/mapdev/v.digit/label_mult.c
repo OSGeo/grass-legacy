@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <math.h>
 #include "digit.h"
@@ -7,6 +8,7 @@
 #include "debug.h"
 #include "Map_proto.h"
 #include "local_proto.h"
+#include "glocale.h"
 /*
 **  Written by Dave Gerdes  11/1989
 **  US Army Construction Engineering Research Lab
@@ -44,7 +46,7 @@ int label_mlines (struct Map_info *map, int cat)
     {
 	Clear_info ();
 	/* find_line_with_mouse  fills Gpoints */
-	if (0 >= (line = find_line_with_mouse (LINE | AREA, "Choose line:", tell_line_label)))
+	if (0 >= (line = find_line_with_mouse (LINE | AREA, _("Choose line:"), tell_line_label)))
 	{
 	    return (-1);
 	}
@@ -90,12 +92,18 @@ int label_mlines (struct Map_info *map, int cat)
 			
 			/* if line is labelled a different value then continue */
 			/* this needs to be cleaned up to allow RE-labelling of cont lines */
+
+/*
+#define RELABEL
+*/
+#ifndef RELABEL
 			if (cat)	/* else UNLABELLING */
 			    if (LINE_LABELED (Line) && cat != map->Att[Line->att].cat)
 			    {
 				lines[i][j] = 0;
 				break;
 			    }
+#endif
 		    }
 
 
@@ -125,15 +133,22 @@ int label_mlines (struct Map_info *map, int cat)
 		}
 	    }
 	    V_flush ();
+/*
+#define CONFIRM
+*/
+#ifdef CONFIRM
 	    if (pass == 1)
 	    {
 		char *str;
 		if (cat)
-		    str = "Label these lines?";
+		    str = _("Label these lines?");
 		else
-		    str = "Un-label these lines?";
+		    str = _("Un-label these lines?");
 		doit = mouse_yes_no (str);
 	    }
+#else
+	    doit = 1;
+#endif
 	}
     }
 }

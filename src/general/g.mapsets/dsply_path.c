@@ -29,11 +29,7 @@ int display_mapset_path(int verbose)
 	    for (map = 0; map < nmapsets && strcmp(mapset_name[map], name);
 	     map++);
 	    if (map == nmapsets)
-	    {
-	    	fprintf (stderr, "\n%s not found in mapset list:  call greg\n",
-	     	 name);
-	    	exit (-1);
-	    }
+	        G_fatal_error("%s not found in mapset list:  call greg", name);
 	}
 
         len = strlen (name);

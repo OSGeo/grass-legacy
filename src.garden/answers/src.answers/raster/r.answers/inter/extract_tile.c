@@ -44,10 +44,10 @@ extract_tile(option)
     CELL *mask_cell;
 
     if (option == 3)
-        fprintf (stdout,"\n\nExtracting data from <%s in %s>\n\n",
+        fprintf (stderr,"\n\nExtracting data from <%s in %s>\n\n",
         tile_layer, tile_mapset);
     else
-        fprintf (stdout,"\n\nCreating ANSWERS input data\n\n");
+        fprintf (stderr,"\n\nCreating ANSWERS input data\n\n");
 
     if (option == 3)
     {

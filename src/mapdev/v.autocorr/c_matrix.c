@@ -2,7 +2,7 @@
 #include "Vect.h"
 #define FUDGE 10
 
-int c_matrix (struct Map_info *Map, struct Plus_head *Plus)
+int c_matrix (struct Map_info *Map)
 {
   int i, j, k, m;
   P_LINE *Line;

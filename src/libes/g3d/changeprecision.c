@@ -23,7 +23,7 @@ G3d_changePrecision (map, precision, nameOut)
   int nx, ny, nz;
   int tileXsave, tileYsave, tileZsave, tileX, tileY, tileZ, saveType;
 
-  saveType = G3d_getFileType (map);
+  saveType = G3d_getFileType ();
 /*   G3d_setFileType (G3d_fileTypeMap (map)); */
   G3d_getCompressionMode (&saveCompression, &saveLzw, &saveRle, 
 			  &savePrecision);

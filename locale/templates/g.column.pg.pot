@@ -1,0 +1,121 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2002-11-27 11:29+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: main.c:40
+msgid "table"
+msgstr ""
+
+#: main.c:44
+msgid "The table name in the selected database:"
+msgstr ""
+
+#: main.c:48
+msgid "Use flag -v for full output."
+msgstr ""
+
+#: main.c:51 pgColumn.c:28
+msgid "PG_DBASE"
+msgstr ""
+
+#: main.c:54
+msgid "Please run g.select.pg to identify a current database.\n"
+msgstr ""
+
+#: main.c:64
+msgid "SELECT a.attname as ColumnName, t.typname as Type,"
+msgstr ""
+
+#: main.c:66
+msgid "Mod_Length\""
+msgstr ""
+
+#: main.c:72 main.c:82
+msgid ", tbl->answer);"
+msgstr ""
+
+#: main.c:77
+msgid "SELECT a.attname as ColumnName"
+msgstr ""
+
+#: pgColumn.c:8
+msgid "colname"
+msgstr ""
+
+#: pgColumn.c:23
+#, c-format
+msgid ""
+"\n"
+"\n"
+"Executing\n"
+"%s;\n"
+"\n"
+msgstr ""
+
+#: pgColumn.c:26
+msgid "PG_HOST"
+msgstr ""
+
+#: pgColumn.c:30
+#, c-format
+msgid "Error: connect Postgres:%s\n"
+msgstr ""
+
+#: pgColumn.c:38
+#, c-format
+msgid "Error: select Postgres:%s\n"
+msgstr ""
+
+#: pgColumn.c:46
+#, c-format
+msgid ""
+"\n"
+"| %-25.25s"
+msgstr ""
+
+#: pgColumn.c:48 pgColumn.c:54
+#, c-format
+msgid "| %-10.10s"
+msgstr ""
+
+#: pgColumn.c:49
+msgid ""
+" |\n"
+"----------------------------------------------------\n"
+msgstr ""
+
+#: pgColumn.c:52
+#, c-format
+msgid "| %-25.25s"
+msgstr ""
+
+#: pgColumn.c:58 pgColumn.c:61
+#, c-format
+msgid "| %10i"
+msgstr ""
+
+#: pgColumn.c:64
+#, c-format
+msgid "| %10s"
+msgstr ""
+
+#: pgColumn.c:64
+msgid "var"
+msgstr ""
+
+#: pgColumn.c:67
+msgid " |\n"
+msgstr ""

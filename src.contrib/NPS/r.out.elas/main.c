@@ -1,6 +1,12 @@
-
-/* Function: "main.c" for GRASS Program "r.out.elas"             */
-/* "r.out.elas" transfers GRASS cell files to ELAS raster files. */
+/* Function: "main.c" for GRASS Program "r.out.elas"             
+   "r.out.elas" transfers GRASS cell files to ELAS raster files.
+   
+   Exit status of 0 indicates program was successful.
+   Exit status of 1 indicates program was not successful.
+   
+   Author: Bruce Powell, National Park Service
+*/
+       
 
 #include <unistd.h>
 #include <string.h>
@@ -8,9 +14,6 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include "gis.h"
-
-/* Exit status of 0 indicates program was successful.     */
-/* Exit status of 1 indicates program was not successful. */
 
 int 
 main (int argc, char *argv[])
@@ -64,6 +67,7 @@ main (int argc, char *argv[])
     unsigned short int color_table[256];
     char not_used_249_256[32];
    } elas;
+  struct GModule *module;
   int elas_color_num;
   int i;
   int align;
@@ -84,6 +88,11 @@ main (int argc, char *argv[])
 
 
   G_gisinit (argv[0]);
+  
+  /* Set description */
+  module              = G_define_module();
+  module->description = ""\
+  "Export a GRASS raster map layer to an ELAS raster file";
 
   /* Request a pointer to memory for each flag. */
   flag = G_define_flag();

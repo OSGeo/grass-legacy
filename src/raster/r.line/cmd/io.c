@@ -1,3 +1,8 @@
+/*
+ * $id$
+ */
+
+/* -*-c-basic-offset:4;-*-
 /* Cell-file line extraction */
 /*   Input/output and line tracing routines */
 
@@ -44,6 +49,12 @@
 /*    show          debugging routine to print out everything imaginable */
 /*                  about a COOR structure */
 
+/*
+ * Modified for the new Grass 5.0 floating point and
+ * null values raster file format.
+ * Pierre de Mouveaux - 20 april 2000.
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <sys/wait.h>
@@ -60,6 +71,9 @@
 #define ASCII 2
 #define LINE_EDGE 1
 #define AREA_EDGE 2
+
+int data_type;
+int data_size;
 
 static struct Map_info Map;
 static struct line_pnts *Points;
@@ -78,7 +92,7 @@ static int write_ln (struct COOR *,struct COOR *,int);
 static struct COOR *move(struct COOR *);
 static struct COOR *find_end(struct COOR *,int,int *,int *);
 static int at_end(struct COOR *);
-static int blank_line(CELL *);
+static int blank_line(void *);
 static FILE *open_it (char *);
 
 /* write_line - attempt to write a line to output */
@@ -293,7 +307,14 @@ static int at_end(struct COOR *ptr)
 
 int syntax (int argc, char *argv[], char *input, char *output)
 {
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt4 ;
+
+	module = G_define_module();
+	module->description =
+		"Creates a new binary GRASS vector "
+		"(v.digit) file by extracting linear features "
+		"from a thinned raster file.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "input" ;
@@ -337,8 +358,9 @@ int syntax (int argc, char *argv[], char *input, char *output)
 	return(0);
 }
 
-int read_row (CELL *buf)
+int read_row (void *buf)
 {
+	void* p;
 	if (last_read)
 		return(0);
 	if (first_read)
@@ -355,20 +377,33 @@ int read_row (CELL *buf)
 		}
 		else
 		{
-			G_get_map_row(input_fd,buf + 1,row_count++);
-			*buf = *(buf + row_length + 1) = 0;
+			/* The buf variable is a void pointer and thus */
+			/* points to anything. Therefore, it's size is */
+			/* unknown and thus, it cannot be used for pointer */
+			/* arithmetic (some compilers treat this as an error */
+			/* - SGI MIPSPro compiler for one). Make the */
+			/* assumption that data_size is the proper number of */
+			/* bytes and cast the buf variable to char * before */
+			/* incrementing */
+			p = ((char *) buf) + data_size;
+			G_get_raster_row(input_fd,p,row_count++,data_type);
+			p = buf;
+			G_set_null_value(p,1,data_type);
+			
+			/* Again we need to cast p to char * under the */
+			/* assumption that the increment is the proper */
+			/* number of bytes. */
+			p = ((char *) p) + (row_length + 1)*data_size;
+			G_set_null_value(p,1,data_type);
 		}
 	}
 	return(row_length + 2);
 }
 
-static int blank_line(CELL *buf)
+static int blank_line(void *buf)
 {
-	int i;
-
-	for (i = 0; i < row_length + 2; i++)
-		*(buf + i) = 0;
-
+	G_set_null_value(buf, row_length + 2,data_type);
+	
 	return 0;
 }
 
@@ -393,7 +428,9 @@ int open_file (char *cell,char *digit)
 		fprintf(stderr,"%s:  open_file:  could not read header for cell file %s in %s\n",error_prefix,cell_name,mapset);
 		exit(-1);
 	}
-	G_set_window(&cell_head);
+	data_type = G_raster_map_type(cell_name,mapset);
+	data_size = G_raster_size(data_type);
+	G_get_window(&cell_head);
 	/* open digit file */
 
 	G__make_mapset_element("dig");
@@ -414,7 +451,6 @@ int open_file (char *cell,char *digit)
 	row_count = 0;
 	alloc_bufs(row_length + 2);
 	fill_head();
-
 	return 0;
 }
 

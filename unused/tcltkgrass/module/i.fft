@@ -1,0 +1,411 @@
+
+
+proc range { } {
+
+
+  toplevel .range
+
+  wm geometry .range +100+20
+  wm title .range "range"
+
+
+  global value
+
+
+  frame .range.frame0 \
+    -relief {flat}
+
+  label .range.frame0.label \
+    -anchor {w} \
+    -text {Range of values to use during transformation:} \
+    -padx {2}
+
+  scrollbar .range.frame0.hscrollbar \
+    -command {.range.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .range.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.range.frame0.hscrollbar set}
+
+  pack append .range.frame0 \
+    .range.frame0.label { top fillx } \
+    .range.frame0.entry { top fillx } \
+    .range.frame0.hscrollbar { bottom fillx }
+
+  .range.frame0.entry configure -state normal
+
+  bind .range.frame0.entry <Return> {
+       set value [%W get] }
+
+
+
+  frame .range.frame1 \
+     -borderwidth {2}
+
+  button .range.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set value [.range.frame0.entry get]
+                 destroy .range }
+
+  button .range.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set value ""
+                 destroy .range }
+
+  pack append .range.frame1 \
+    .range.frame1.ok { left expand } \
+    .range.frame1.cancel { right expand }
+
+
+
+  pack append .range \
+    .range.frame0 { top expand fill } \
+    .range.frame1 { bottom expand fill }
+
+
+
+  grab set .range
+  tkwait window .range
+
+}
+
+
+
+
+proc put_command { } {
+
+
+  global inputname
+  global realname
+  global imaginaryname
+  global value
+
+
+  set cmd ""
+
+  if {  $inputname != "" } {
+         set cmd "$cmd input_image=$inputname"
+  }
+
+  if {  $realname != "" } {
+         set cmd "$cmd real_image=$realname"
+  }
+
+  if {  $imaginaryname != "" } {
+         set cmd "$cmd imaginary_image=$imaginaryname"
+  }
+
+  if {  $value != "" } {
+         set cmd "$cmd range=$value"
+  }
+
+  if { $cmd != "" } {
+     set cmd "i.fft $cmd"
+  }
+}
+
+
+
+
+proc set_command_entry { } {
+
+  .cmd.frame0.entry configure -state normal
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 [put_command]
+  .cmd.frame0.entry configure -state disabled
+
+}
+
+
+proc proc_i.fft { } {
+
+
+  global inputname
+  global realname
+  global imaginaryname
+  global value
+
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "Perform Fast Fourier Transformation"
+
+
+  frame .cmd.frame0 \
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame0.hscrollbar set}
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {i.fft}
+
+  .cmd.frame0.entry configure -state disabled
+
+
+
+  frame .cmd.frame1 \
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame1.hscrollbar set}
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {i.fft processes a single input raster map layer and constructs the real and imaginary Fourier components in frequency space.}
+
+  .cmd.frame1.entry configure -state disabled
+
+
+
+  frame .cmd.frame2 \
+    -relief {flat}
+
+  label .cmd.frame2.label \
+    -anchor {w} \
+    -text {Input raster map layer on which the transformation is to be run:} \
+    -padx {2}
+
+  scrollbar .cmd.frame2.hscrollbar \
+    -command {.cmd.frame2.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame2.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame2.hscrollbar set}
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.label { top fillx } \
+    .cmd.frame2.entry { top fillx } \
+    .cmd.frame2.hscrollbar { bottom fillx }
+
+  .cmd.frame2.entry configure -state normal
+
+  bind .cmd.frame2.entry <Return> {
+       set inputname [%W get] }
+
+
+
+  frame .cmd.frame3 \
+    -relief {flat}
+
+  label .cmd.frame3.label \
+    -anchor {w} \
+    -text {Output raster map layer to contain real part arrays:} \
+    -padx {2}
+
+  scrollbar .cmd.frame3.hscrollbar \
+    -command {.cmd.frame3.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame3.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame3.hscrollbar set}
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.label { top fillx } \
+    .cmd.frame3.entry { top fillx } \
+    .cmd.frame3.hscrollbar { bottom fillx }
+
+  .cmd.frame3.entry configure -state normal
+
+  bind .cmd.frame3.entry <Return> {
+       set realname [%W get] }
+
+
+
+  frame .cmd.frame4 \
+    -relief {flat}
+
+  label .cmd.frame4.label \
+    -anchor {w} \
+    -text {Output raster map layer to contain imaginary part arrays:} \
+    -padx {2}
+
+  scrollbar .cmd.frame4.hscrollbar \
+    -command {.cmd.frame4.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame4.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame4.hscrollbar set}
+
+  pack append .cmd.frame4 \
+    .cmd.frame4.label { top fillx } \
+    .cmd.frame4.entry { top fillx } \
+    .cmd.frame4.hscrollbar { bottom fillx }
+
+  .cmd.frame4.entry configure -state normal
+
+  bind .cmd.frame4.entry <Return> {
+       set imaginaryname [%W get] }
+
+
+
+  frame .cmd.frame5 \
+    -relief {flat}
+
+  label .cmd.frame5.label \
+    -anchor {w} \
+    -text {Other options available:} \
+    -padx {2}
+
+  button .cmd.frame5.button0 \
+     -text "range ..." \
+     -relief raised \
+     -padx 10 \
+     -command "range
+                set_command_entry"
+
+
+  frame .cmd.frame6 \
+     -borderwidth {2}
+
+  button .cmd.frame6.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 
+		if {  $inputname != "" && $realname != "" && $imaginaryname != "" } {
+ 		set cmd [put_command]
+ 		if { $cmd != "" } {
+ 		   eval " exec xterm -title i.fft -geometry 50x5 -exec $cmd " 
+ 		   destroy .cmd
+ 		}
+ 	}
+ }
+
+  button .cmd.frame6.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { destroy .cmd }
+
+  pack append .cmd.frame6 \
+    .cmd.frame6.ok { left expand } \
+    .cmd.frame6.cancel { right expand }
+
+  pack append .cmd.frame5 \
+    .cmd.frame5.label { top fillx } \
+    .cmd.frame5.button0  { left }
+
+
+
+  pack append .cmd \
+    .cmd.frame1 { top expand fill } \
+    .cmd.frame2 { top expand fill } \
+    .cmd.frame3 { top expand fill } \
+    .cmd.frame4 { top expand fill } \
+    .cmd.frame5 { top expand fill } \
+    .cmd.frame0 { top expand fill } \
+    .cmd.frame6 { bottom expand fill }
+
+
+bind .cmd.frame2.entry <KeyRelease> {
+		set inputname [.cmd.frame2.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame2.entry <Return> {
+		set inputname [.cmd.frame2.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame3.entry <KeyRelease> {
+		set realname [.cmd.frame3.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame3.entry <Return> {
+		set realname [.cmd.frame3.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame4.entry <KeyRelease> {
+		set imaginaryname [.cmd.frame4.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame4.entry <Return> {
+		set imaginaryname [.cmd.frame4.entry get]
+		set_command_entry
+}
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global inputname
+set inputname ""
+
+global realname
+set realname ""
+
+global imaginaryname
+set imaginaryname ""
+
+global value
+set value ""
+
+
+global database
+global location
+global mapset
+global feature
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_i.fft

@@ -1,0 +1,934 @@
+                                FIPS 123 Function Library
+                                  Version 1.0.3 3/11/94
+                        Closed Discrepancy Reports / Statements of Need
+
+
+      This is a summary of all discrepancy reports and statements 
+      of need (enhancement requests) for the FIPS 123 Function Library  
+      which have been closed (either via fixes to the software or determination
+      that there is not a problem.)
+      
+
+      92DR002 05/01/92 1.0          Verify tag 0..1
+
+      No DDR functions verify that tag 0..1 exists in   
+      the directory and in the data descriptive area    
+      within the DDR.  Also, no DR functions verify that
+      tag 0..1 exists as a field in each DR.            
+
+      Modify the logic in the appropriate functions to  
+      ensure ISO 8211 conformance.                      
+
+      92DR003 05/01/92 1.0          Field tag order
+
+      According to ISO 8211, field tags within the DR   
+      directory must follow the order of the field tags 
+      within the DDR directory.  Field tags may be      
+      omitted but not reordered.                        
+
+      For the read-side, field tags can be examined when
+      loading the DR.  For the write-side, the field    
+      tags can be examined when writing them to the     
+      structures and when computing the directory before
+      unloading.  Logic within the wr123sfld() function 
+      would allow the tags to be examined when a field  
+      or subfield is written prior to completing the DR 
+      processing with end123rec().                      
+
+      Add logic to the appropriate functions to ensure  
+      ISO 8211 conformance.  Implement DR.              
+
+      92DR005 06/26/92 0.8          Binary data
+
+      The logic in function get123dval which retrieves  
+      both fixed and variable length bit-field data is  
+      incorrect.  It appears ISO 8211's bit-field       
+      implementations were interpreted incorrectly.     
+
+      Interpretation of bit-field data discussed in ISO 
+      8211 is difficult to clearly understand.  Other   
+      resources should be consulted to gain an          
+      understanding about this part of the standard.    
+
+      Consult other resources for interpretations of ISO
+      8211 and bit-field data.  Implement DR.           
+
+      92DR006 05/14/93 1.0          Tag 0..0 0..9 order
+
+      Field tags 0..0 through 0..9 must be in ascending 
+      order within the DDR directory according to ISO   
+      8211.  Additionally, field tags shall occur only  
+      once within the DDR.                              
+
+      For the read side, field tags can be examined when
+      loading the DR.  For the write side, the field    
+      tags can be examined when writing them to the     
+      structures and when computing the directory before
+      uploading.  Logic within the wr123ddsfld()        
+      function would allow the tags to be examined when 
+      a field or subfield is written prior to completing
+      DDR processing with end123ddrec().                
+
+      Add logic to the appropriate functions to ensure  
+      ISO 8211 conformance.                             
+                                                        
+      92DR008 05/06/92 0.7          'R' leader
+
+      If a data record containing a leader ID of 'R' is 
+      written, the leader and directory of subsequent   
+      data records are appropriately omitted, but the   
+      data in the user data area are terminated         
+      incorrectly.                                      
+
+      Function bak123sfld() does not locate the previous
+      dr structure when a field is written for a data   
+      record with leader ID of 'R'.  The data record    
+      length calculation in function rd123rec() is one  
+      byte too large.  The field terminator normally    
+      written after the leader and directory is written 
+      when there is no leader and directory.            
+
+      92DR009 05/06/92 0.7          Blank subfield
+
+      When writing a DR by field and setting the DDR to 
+      the "A" type format control for subfield delimited
+      input data, an input one character space, ASCII   
+      decimal 32, will not be written to the selected   
+      subfield.  The resultant output is a delimited    
+      subfield that contains no character               
+      representation.                                   
+
+      Modify software so that single space fields will  
+      not be truncated.  Implement DR.                  
+
+      92DR010 05/06/92 0.7          0..2 tag
+
+      The optional user field associated with tag 0..2  
+      of the Data Descriptive Record (DDR) is not       
+      handled properly when written using wr123ddfld(). 
+
+      An incorrect subfield option is used to invoke    
+      wr123ddsfld() before wr123ddfld() returns to the  
+      calling program/driver.  Also, er123ddsfld() does 
+      not remove the DD structure containing the actual 
+      tag 0..2 associated with the optional user field  
+      contents (cr_hd->u_afd).                          
+
+      Implement appropriate changes to correctly process
+      the optional user field within the DDR.           
+                                                        
+      92DR011 06/26/92 0.8          Nondelimited subfld
+
+      Function wr123fld() incorrectly processes         
+      nodelimited subfields within a field and stores   
+      them into one data value structure.  Thus, the    
+      field is treated as a subfield.                   
+
+      Functions wr123fld() requires modification to     
+      divide the field into subfields according to the  
+      format controls corresponding to the associated   
+      field tag.                                        
+
+      Implement appropriate changes to correctly process
+      the nondeliminated subfields.                     
+
+      92DR012 05/14/93 1.0          Array dimension
+
+      Function wr123fld() incorrectly processes a DR    
+      field that contains the number of dimensions, the 
+      dimension lengths, and data values.  A zero is    
+      inserted into the field following the number of   
+      dimensions subfield.                              
+
+      The added zero was encountered within the field   
+      described above which had delimeters among the    
+      data values and no formats described in the       
+      corresponding DDR fields.                         
+
+      Implement appropriate changes to correctly        
+      preserve the array dimension in the DR field.     
+
+      92DR013 07/17/92 0.9          Explicit beg123rec()
+
+      In the DG/UX environment, a segmentation fault    
+      occurs when function beg123rec() is explicitly    
+      invoked by an application program prior to        
+      invoking wr123fld() with the start-of-record      
+      option (2).  The application abnormally terminates
+      following the segmentation fault.                 
+                                                        
+      This problem is not specific to the DG/UX         
+      environment.  However, within the MS-DOS          
+      environment, an error indicating a segmentation   
+      fault may not appear.                             
+                                                        
+      Function beg123rec() is an "optional" function.   
+      It does not have to be explicitly invoked.  The   
+      other library functions invoke it automatically   
+      when required.  Thus, an interim resolution is to 
+      omit explicit function calls to beg123rec() in the
+      application program.                              
+                                                        
+
+      INVESTIGATIVE FINDINGS:                           
+      Function wr123fld() was modified during the       
+      resolution of 92DR005 to process binary data and  
+      also to correctly process nondelimited blank      
+      subfields (92DR011).  The additional source code  
+      to wr123fld() does not examine the beginning of   
+      the dr structure list to determine if the list was
+      initialized.  Function wr123fld() only examines   
+      the input option argument passed into it to       
+      determine if the list was initialized.            
+                                                        
+      RECOMMENDATIONS:                                  
+      In addition to examining the input option         
+      argument, logic should be inserted into wr123fld()
+      to examine the beginning of the dr structure list:
+      the header structure, and if the header structure 
+      exists, the structure which follows.  The         
+      modification should include logic to consider the 
+      "no leader R flag", contained within the current  
+      fm structure, for data records having leader IDs  
+      indicating repetition.                            
+                                                        
+      Analyst:  L. McMillion                            
+
+      92DR014 05/14/93 1.0          DOS memory mgmt
+
+      Memory management overhead problem in MS DOS      
+      environment.  Software performance is impacted    
+      when working with large transfer files.           
+
+      92DR015 05/14/93 1.0          Integers on SES
+
+      Software gets lost when reading past 1st record   
+      when recompiled on Intergraph SES workstation.    
+
+      92DR016 05/14/93 1.0          Division in ch123siz
+
+      The ANSI C library function ldiv() performs       
+      division on a long integer using the supplied     
+      arguments.  The function produces a quotient and a
+      remainder, both long integers, and stores them in 
+      a defined structure.                              
+                                                        
+      FIPS123 function ch123size() examines the         
+      remainder member of the structure incorrectly in  
+      one statement.  Instead of comparing the remainder
+      with zero, ch123size() compares the remainder with
+      NULL.  This comparison causes an implicit         
+      conversion type error.                            
+                                                        
+      The error only appeared in the Amdahl MVS         
+      environment, but the code should be corrected and 
+      implemented for all platforms.  The solution is to
+      change the conditional statement to check for zero
+      instead of NULL.                                  
+                                                        
+      92DR017 05/14/93 1.0          ch123size() buffer
+
+      If operating in the MS-DOS environment and the    
+      data descriptive file (DDF) contains either a     
+      large number of data records or large records,    
+      function end123file() sometimes fails.  This does 
+      not occur on the Data General platform.           
+
+      INVESTIGATIVE FINDINGS:                           
+      Function ch123size(), which is invoked by         
+      end123file(), truncates extraneous data from a    
+      file that was opened in write mode.  Dynamic      
+      memory allocation for a buffer of MAXSIZ bytes may
+      fail causing function end123file() to return      
+      failure.  This usually occurs when a great number 
+      of data records are processed or the records are  
+      very large.                                       
+                                                        
+      RECOMMENDATIONS:                                  
+      Instead of function ch123size() dynamically       
+      allocating a buffer, use one of the FIPS123 global
+      strings, glb_str or glb_str2, already declared.   
+                                                        
+      Resolving this problem is necessary for CSC to    
+      continue to perform regression testing for MS-DOS.
+                                                        
+      The solution is platform independent and does not 
+      require compiler directives to be inserted into   
+      the source code.                                  
+
+      92DR018 05/14/93 1.0          Binary support tools
+
+      The Topological Vector Profile (TVP) requires that
+      spatial addresses (coordinates) be encoded as     
+      32-bit binary values using "two's complement"     
+      format.  Utilities need to be written to make it  
+      easier to use binary data.                        
+                                                        
+      Two functions are to be added to the library to   
+      convert between long (32-bit) signed integers and 
+      the strings which are used by the library's read  
+      and write functions.  Because the TVP restricts   
+      binary values to long signed integers, it is not  
+      necessary to handle any other type of binary      
+      value.                                            
+                                                        
+      SDTS requires that all binary values be "big      
+      endian" with the most significant bit first.  Many
+      computers, including PC's, use "little endian" or 
+      "middle endian" for their internal storage of     
+      binary values.  These functions shall include an  
+      option to change the byte order and thus convert  
+      between big endian used in SDTS and either little 
+      or middle endian.                                 
+                                                        
+      The first function shall convert an input long    
+      signed integer into a string which can then be    
+      input to write functions.  As an option, the      
+      calling routine can specify that the byte order is
+      to be changed (the calling routine is responsible 
+      for knowing if it is necessary to change the byte 
+      order.)  This should be specified by passing a    
+      parameter which has 3 possible values:  1 - no    
+      change (keep in big endian), 2 - change to little 
+      endian, 3 - change to middle endian.              
+                                                        
+      The second function shall convert a string        
+      containing four bytes, such as that returned by   
+      read functions, into a long signed integer.  It   
+      shall also have an option to change the byte order
+      from little or middle endian to big endian.       
+
+      92DR019   /  /                Duplicate FT's
+
+      Some files in the prototype DLG-3 data set contain
+      two field terminators at the end of records.  One 
+      such file is wmhycats.ddf.  The problem appears to
+      appear in files where the leaders and directories 
+      have been dropped from data records.              
+
+      Determined not to be a problem with the current   
+      version of the library.                           
+
+      92SN001 05/14/93 1.0          DOS memory mgmt
+
+      Memory management overhead problem in MS DOS      
+      environment.  Software performance is impacted    
+      when working with large transfer files.           
+
+      92SN002   /  /                Pad with ^ character
+
+      A revision to ISO8211 has been made.  This        
+      revision pads the end of transfer files with a '^'
+      character to ensure the file ends at a certain    
+      byte count.  For additional information consult   
+      5th year revised ISO8211.                         
+
+      Section A.1.1:  Media Record Constructs of the ISO
+      8211 Revision proposed 26 June 1992, is unclear.  
+      It is difficult to evaluate its impact on the FIPS
+      Pub 123 software library at this time.  This      
+      revision seems to state that logical records are  
+      to be written, blocked, and spanned into          
+      fixed-length records and that the circumflex      
+      character, '^', is used to completely fill the    
+      last physical block.  The recieving system must be
+      able to read either a fixed or variable length    
+      record.  If a system can read variable length     
+      records, it can also read fixed-length records and
+      un-block them.  The intention of the standard is  
+      that the software recognize end-of-file when it   
+      encounters the circumflex character.              
+                                                        
+      RECOMMENDATIONS:                                  
+                                                        
+      The FIPS 123 software library currently recognizes
+      the circumflex character as the end-of-file.  The 
+      software has been implemented only on             
+      variable-length records, and it is capable of     
+      reading fixed-length records as variable length.  
+      If it becomes necessary for the software to write 
+      fixed-length records, then the end123file() or    
+      ch123size() routine will have to be modified to   
+      fill the last record with the circumflex          
+      character.  This change could be completed in     
+      about 5 days.  As of the date of this evaluation, 
+      the referenced revision to the ISO 8211 standard  
+      has not been approved.                            
+
+      Implement when revisions have been finalized and  
+      published.                                        
+
+      92SN004   /  /                Memory management
+
+      Memory management.  An alternative method of      
+      storing DR and DDR data should be implemented to  
+      reduce amount of memory fragmentation.            
+
+      92SN0004 overlaps 92SN001.  See Technical         
+      evaluationof 92SN001.                             
+
+      Close this SN, as the required modifications will 
+      be covered by 92SN0001.                           
+
+      92SN005   /  /                Integers on SES
+
+      Software gets lost when reading past 1st record   
+      when recompiled on Intergraph SES workstation.    
+
+      93DR021 05/14/93 1.0          rd_ddsfld output tag
+
+      The output argument tag of function rd123ddsfld() 
+      is declared as a 10-byte character string.  This  
+      function should declare tag as a character pointer
+      instead of a string to avoid identifier boundary  
+      problems.                                         
+                                                        
+      The application program has to declare and reserve
+      space for this argument.  All other functions     
+      which have a character string as an argument allow
+      the application program to declare the size of the
+      arrays.                                           
+                                                        
+      INVESTIGATIVE FINDINGS                            
+                                                        
+      The declaration for tag in rd123ddsfld() needs to 
+      be changed                                        
+      from                                              
+                                                        
+        char tag[10]    to      char *tag.            
+
+      93DR023 05/14/93 1.0          wr123fld temp file
+
+      Function wr123fld uses a temporary file for the   
+      processing of each field.  This potentially adds  
+      to I/O and degrades performance.  David Stigberg  
+      at CERL has noted a significant performance       
+      degradation since the use of this temporary file  
+      was added.  A degradation was also noted in the   
+      creation of the DLG-3 data sets.                  
+                                                        
+      For each field that is written by wr123fld, a new 
+      temporary file is opened, the field is written to 
+      the temporary file, the temporary file is rewound 
+      and then read by load123fld.  The original field  
+      data remains in memory.  It seems feasible that   
+      the original data in memory can be used by        
+      load123fld rather than temporarily writing the    
+      data to a temporary file.                         
+                                                        
+      Originally wr123fld() and ld123rec() performed    
+      duplicate processing to load a data field into    
+      memory.  Subroutine wr123fld() loaded the data    
+      field into the FIPS 123 memory structures which   
+      were later written to the data file by            
+      uld123rec().  Subroutine ld123rec() read a data   
+      record, field by field, from the data file and    
+      loaded it into the FIPS 123 memory structures.    
+      Since these routines duplicated processing and    
+      required individual maintenance, the duplicated   
+      section of code was extracted from ld123rec() to  
+      create subroutine load123fld().  Subroutine       
+      load123fld() reads a field, from a file, and loads
+      it into memory making it necessary for wr123fld() 
+      to create a temporary file to be read by          
+      load123fld().                                     
+                                                        
+      Recommend that load123fld() and all subordinate   
+      routines be modified to load a data field from an 
+      array of characters into memory instead of reading
+      them from a file.  Subroutine ld123rec() could    
+      read the field into an array of characters before 
+      invoking load123fld() and subroutine wr123fld()   
+      already has the field stored in an array of       
+      characters.  File I/O would be eliminated in      
+      wr123fld(). Subroutine load123fld() would no      
+      longer rely on subordinate routines to perform    
+      I/O, wr123fld() would no longer perform temporary 
+      file I/O and ld123rec() would increase in         
+      performance due to a type of field level I/O      
+      buffering.                                        
+                                                        
+      93DR025 05/14/93 1.0          Binary parentheses
+
+      When a format of ((2B(32))) is written to the DDR 
+      using wr123ddfld, the outer pair of parentheses is
+      removed from the format.                          
+                                                        
+      This format is a valid ISO 8211 format which is   
+      required by the SDTS Topological Vector Profile   
+      for spatial addresses which have repeating fields 
+      (as found in the SDTS Line module).  ISO 8211 does
+      not allow a binary field immediately after the    
+      left parenthesis to implicitly repeat, therefore  
+      it is necessary to add the additional pair of     
+      parentheses.                                      
+
+      93DR027 05/14/93 1.0          Vector with 1 subfld
+
+      Library is unable to write vectors with only one  
+      subfield label.                                   
+      This is required for some attribute primary       
+      modules in DLG-3 which have only one label.       
+
+      Findings:                                         
+                                                        
+      Functions responsible for storing data values into
+      the appropriate data structures do not handle a DR
+      field consisting of vector data with only one     
+      subfield label contained in the corresponding DDR 
+      field.  These functions were developed to handle  
+      vector data having multiple subfield labels.      
+      During development, it was decided that vector    
+      data consisting of only one subfield would better 
+      be described as elementary data.  However, SDTS   
+      does allow vector data to be only one subfield.   
+                                                        
+      Recommendations:                                  
+                                                        
+      Make the necessary modifications to the library in
+      order to correctly handle vector data containing  
+      only one subfield.                                
+
+      93DR030 09/14/93 1.0.2        Arrays & wr123sfld()
+
+      Function wr123sfld() does not consistently load   
+      into the correct data structures DR subfields (the
+      number of dimensions and the length of each       
+      dimension) that describe an array.  The function  
+      loads the structures correctly, however, when the 
+      DR field containing the numer of dimensions and   
+      dimension lengths are found in the first data     
+      record.  When this DR field is found in other data
+      records, wr123sfld() attempts to load the data    
+      into the wrong data structures and a fault        
+      segmentation occurs.                              
+                                                        
+      This problem does not occur when labels are       
+      included in the corresponding DDR field.          
+                                                        
+      At this time, the problem has been traced to      
+      beg123rec()/end123rec() which modifies the current
+      dr structure pointer.  Additional analysis is     
+      suggested.                                        
+                                                        
+      Before beginning a new data record, subroutine    
+      beg123rec() calls uld123rec(), which calls        
+      cmp123drdir() and rd123fld(), both of which change
+      the cur_dd pointer.  After unloading is completed 
+      the field control entry for the last field of the 
+      previous record is used to write the first        
+      subfield of the new record.                       
+                                                        
+      Modify uld123rec() to save the cur_dd and reset it
+      before returning to beg123rec().                  
+
+      93DR031 09/14/93 1.0.2        Arrays & chk123nsfld
+
+      A segmentation fault occurs when function         
+      chk123nsfld() is invoked for a DR field that      
+      contains Cartesian data with no labels present in 
+      the corresponding DDR field.  For example,        
+      chk123nsfld() encounters problems in the following
+      scenario:                                         
+                                                        
+      DDR field:      2600;&Field Name&&(A,I);          
+      DR field:       2&2&3&alpha&1&beta&2&gamma&3;     
+                                                        
+      The problem actually occurs below chk123nsfld()   
+      and may be related to a previous documented       
+      discrepancy in function bak123sfld() (92DR007).   
+                                                        
+      Additional analysis is suggested.                 
+
+      Resolving this discrepancy report may require that
+      93DR030 be completed first.                       
+                                                        
+      The segmentation fault results when the following 
+      occurs:                                           
+      wr123sfld() writes the record identifier subfield 
+      just prior to writing the cartesian data field.   
+      After writing the record identifier the subfield  
+      state is set to 4 (finished) and chk123nsfld() is 
+      called.  chk123nsfld() writes a dummy subfield,   
+      calls chk123sfld(), and calls bak123sfld() to     
+      delete the dummy subfield.  bak123sfld()          
+      decrements the subfield state to 3 (data          
+      subfield).  The cartesian data field is written   
+      next and because the subfield state is 3 (data    
+      subfield) the number of dimensions, and dimension 
+      lengths are stored as data values instead of being
+      placed in the proper NUM_DIM & DM structures.     
+                                                        
+
+      One or both of the following correction should be 
+      made.                                             
+                                                        
+      chk123nsfld() should save the SF_STATE_DR variable
+      and restore it to its proper value after the call 
+      to bak123sfld().                                  
+                                                        
+      and/or                                            
+                                                        
+      wr123sfld() should check the field control when   
+      the write option is start of field (6) and set the
+      SF_STATE_DR variable to the proper value for that 
+      type of subfield.  A check similar to this exists 
+      at the beginning of wr123sfld() when the          
+      SF_STATE_DR variable is out of bounds.            
+                                                        
+      The following additional problems have been       
+      identified concerning checking/backing subfields: 
+                                                        
+      When the number of dimensions subfield is written,
+      wr123sfld() increments the subfield state from 1  
+      to 2.  If bak123sfld() is called next, it will    
+      attempt to delete a non-existent dimension length 
+      instead of the number of dimensions subfield.     
+      bak123sfld() should include logic to properly     
+      delete a cartesian data field written using       
+      wr123sfld().                                      
+                                                        
+      When calling bak123sfld() to delete dimension     
+      length subfields, the DM structure pointed to by  
+      the cur_dm->next pointer is deleted. Instead,     
+      bak123sfld() should start at the dim_lptr pointer,
+      travel down to the end of the dm list, delete the 
+      last dm entry, and set the current dm to the last 
+      remaining dm entry.  Because dimension length     
+      subfields are not deleted properly, the number of 
+      DM entries can exceed the number of dimensions    
+      subfield value.  Incrementing of the SF_STATE_DR  
+      variable from dimension length (2) to data value  
+      subfield (3) is done by wr123sfld() when the      
+      number of DM entries equal the value stored in the
+      number of dimensions subfield. As a result        
+      wr123sfld() never increments the SF_STATE_DR      
+      variable to data value subfield (3). Because this 
+      never happens, all cartesian data subfield values 
+      are stored in DM entries instead of DV entries.   
+
+      93DR032 06/08/93 1.0.1        Arrays & chk123sfld
+
+      For Cartesian data with an array descriptor in the
+      data record and no labels, chk123sfld does not    
+      correctly return the description of the array data
+      for all except the last element of the array.  The
+      description of the array descriptor subfields is  
+      returned correctly.  The description of the actual
+      array elements is returned as "DIMENSION LENGTH"  
+      for all except the last element.  The format of   
+      the array elements is incorrectly returned as "I" 
+      (the format of the array descriptor) for all      
+      except the last array element.                    
+                                                        
+      The PRM needs to be updated.  It does not indicate
+      that the descriptions "NUMBER OF DIMENSIONS" or   
+      "DIMENSION LENGTH" are returned for the array     
+      descriptor subfields.  It is unclear as to what,  
+      if anything, is returned as a description for the 
+      actual array subfields.                           
+
+      Nothing is returned in the description and format 
+      fields when calling chk123sfld() for cartesian    
+      data subfields with no labels.  The               
+      description/format that appear to be returned are 
+      really just the values from the last "successful" 
+      call to chk123sfld().                             
+                                                        
+      The routine chk123sfld() performs processing based
+      on the previous state when the open mode is write 
+      and the current state when the open mode is read, 
+      in either case the variable p_state is initialized
+      to out of bounds (4) at the beginning of          
+      chk123sfld().  Cartesian data subfields without   
+      labels are not checked because the p_state        
+      variable is never set to an in bounds value in    
+      chk123sfld().                                     
+                                                        
+      Routine chk123nsfld() also produces a segmentation
+      fault with the same cartesian data field because  
+      it calls rt123pvsfld() which attempts to move to  
+      the last dimension length subfield without first  
+      positioning a pointer at the beginning of the     
+      dimension length list.                            
+
+      Modify chk123sfld() to set the p_state variable to
+      the current sf_state_dr when checking a cartesian 
+      data value subfield and data values exist.        
+                                                        
+      Modify rt123pvsfld() to position cur_fm->cur_dm to
+      cur_fm->cur_dr->dim_lptr before attemping to go to
+      the last dimension length in list.                
+                                                        
+      Modify PRM to indicate that "NUMBER OF DIMENSIONS"
+      and "DIMENSION LENGTH" are return as the          
+      description from calls to chk123sfld() and that   
+      the labels are returned as the description of the 
+      cartesian data values, hence, no labels, no       
+      description.  The same may also be needed for the 
+      chk123nsfld() entry.                              
+                                                        
+      Modify chk123sfld() to initialize descr and frmt  
+      to the null character before checking subfields.  
+
+      93DR033 03/11/94 1.0.3        Array descriptor
+
+      The library does not support the use of an array  
+      descriptor in place of labels in an ISO 8211 DDR  
+      (use of the arrray descriptor in a DR is          
+      supported.)                                       
+
+      Findings:                                         
+                                                        
+      The DDR-related functions must be modified to     
+      determine whether a label subfield in the DDR     
+      contains Cartesian labels or array descriptors and
+      store the descriptors to be used later when       
+      processing DRs.  Logic must be added to the source
+      code to read, write, and erase these array        
+      descriptors within a DDR field.  The dd structure 
+      requires two additional members to store the      
+      number of dimensions and a list of each dimension 
+      length.                                           
+                                                        
+      The DR-related functions must determine whether   
+      the new DDR structure pointers or the existing DR 
+      structure pointers are to be used to obtain the   
+      number of dimensions and each dimension length for
+      the corresponding data.  At this time, it is      
+      suggested that the new dimension length pointer in
+      the dd structure be examined to determine if the  
+&a6H
+      array is described in the DDR.  If it is NULL,    
+      then the array is described within the DR field.  
+      Fortunately, much of the logic responsible for    
+      reading, writing, and backing up among the data   
+      values using the number of dimensions and each    
+      dimension length specified within a DR field is   
+      already contained in the library.                 
+                                                        
+      Upon ending a data record, the dimension length   
+      list is normally removed from memory; however, the
+      array descriptors contained in the DDR structures 
+      field should remain unchanged until the file is   
+      closed.                                           
+                                                        
+      Prologs to functions which access the dd          
+      structures need to be  updated to show the new    
+      structure members.                                
+                                                        
+                                                        
+      Recommendations:                                  
+                                                        
+      The DR should be implemented.  However, the       
+      library currently supports array descriptions to  
+      be located within the DR fields.  This may be used
+      as a work-around until this discrepancy is        
+      resolved.                                         
+                                                        
+      93DR034 06/08/93 1.0.1        FT in binary data
+
+      If the ISO 8211 field terminator character        
+      (decimal 30) occurs in a Cartesian field with a   
+      null vector, it is interpretted incorrectly as the
+      end of the record by rd123sfld.                   
+                                                        
+
+      The routines load123fld() and ret123fv() are      
+      called when reading data records.  Both contain   
+      code that is executed when reading vectors and    
+      arrays with null labels.  The end of a vector or  
+      array is found when the primary dimension has been
+      filled and a FT is the next input character.  This
+      is a problem because binary vectors and arrays,   
+      although terminated with a FT, can contain a FT as
+      a valid binary value.  The end of a binary vector 
+      or array must be detected by determining that the 
+      complete length of the vector or array has been   
+      processed, instead of looking for the terminating 
+      FT.                                               
+
+      93DR035 06/08/93 1.0.1        FT in binary data 2
+
+      When using wr123fld to write a field which        
+      contains array descriptors in the data record,    
+      data which occurs after a decimal 30 (the field   
+      terminator character) is not written to the output
+      file even though the str_len parameter indicates  
+      that there is additional data.                    
+      
+      Fixed with 93DR034.                               
+
+      93DR036 09/14/93 1.0.2        Drop leader
+
+      When writing a field which contains array         
+      descriptors in the data record, wr123sfld fails   
+      when using 'R' in the leader to indicate that all 
+      but the first record do not have a leader and     
+      directory.  wr123sfld fails when writing data in  
+      the second record (the first record with a dropped
+      leader and directory.)                            
+                                                        
+      This may be related to 93DR030.  Sample program   
+      doq6.c has this problem.                          
+
+      93DR037 09/14/93 1.0.2        Use of memset
+
+      When writing a file using wr123sfld, 85.9% of the 
+      time is spent in the memset system function.  This
+      can potentially cause a major degradation of      
+      performance in production systems.                
+                                                        
+      The use of memset in this situation and all cases 
+      where it is used should be evaluated.  More       
+      efficient alternatives should be investigated.    
+
+      The FIP123 function library frequently uses the   
+      memset C function to initially fill character     
+      string variables with null characters.  The       
+      performance degradation seen is caused by the     
+      repeated initialization of character strings      
+      declared to the maximum possible size (global     
+      variable MAZSIX or MAXINT).  Most of these strings
+      can successfully be initialized to empty by       
+      setting the first character in the variable to the
+      null character.  These same character string      
+      variables must be terminated with a null character
+      after character string data is stored in them.    
+                                                        
+      Note: the performance degradation noted in        
+      wr123fld(), (93DR039), is also caused by same     
+      inefficient character string initialization.      
+
+      Remove all possible memset() calls.               
+
+      93DR038 09/14/93 1.0.2        Binary value 255
+
+      The library is unable to write an 8-bit binary    
+      value of 255 (decimal) using wr123sfld.  The      
+      library should be capable of reading or writing   
+      any binary value.                                 
+
+      The FIPS PUB 123 Function Library used the decimal
+      value 255 to "hold" the place of null subfields.  
+      Most of this functionality was removed for data   
+      records when load123fld() was developed and       
+      implemented into wr123fld().  The subroutine      
+      stor123dv() still contains statements that convert
+      a single 255 value to an null character string    
+      before writing it to the file.                    
+                                                        
+      Remove the statements that convert a single 255   
+      value to a null character string from stor_dv.c:  
+                                                        
+           if ((str_len == 1) && (*wr_str == SEP)) {    
+              *wr_str = NC;                             
+           }                                            
+
+      93DR039 09/14/93 1.0.2        wr123fld performance
+
+      Even with completion of 93DR023, performance of   
+      wr123fld is significantly slower than before the  
+      6/92 "binary fix" release.  A test program which  
+      wrote 1000 records using wr123fld was             
+      significantly slower using the current version of 
+      the library:                                      
+                                                        
+      Version           Elapsed time    System time   
+                                                        
+      5/92              12 seconds      0.4 seconds   
+                                                        
+      1.0.1 (6/93)      222.2 seconds   0.5 seconds   
+                                                        
+      When the same records were written by subfield    
+      using wr123sfld, performance is dramatically      
+      better:                                           
+                                                        
+                3.9 seconds     0.2 seconds           
+                                                        
+      The DLG3 to SDTS translator presently writes by   
+      field using wr123fld.  It takes approximately 13  
+      1/2 minutes to write a Line module.  Exact figures
+      are not available, but this took only a minute or 
+      two using the 5/92 version.                       
+
+      The FIP123 function library frequently uses the   
+      memset C function to initially fill character     
+      string variables with null characters. The        
+      performance degradation seen is caused by the     
+      repeated initialization of character strings      
+      declared to the maximum possible size (global     
+      variable MAZSIX or MAXINT).  Most of these strings
+      can successfully be initialized to empty by       
+      setting the first character in the variable to the
+      null character.  These samecharacter string       
+      variables must be terminated with a null character
+      after character string data is stored in them.    
+                                                        
+      Note: the performance degradation noted in        
+      wr123sfld(), (93DR037),is also caused by same     
+      inefficient character string initialization.      
+
+      Remove all possible memset() calls.               
+
+      93DR040 09/14/93 1.0.2        load123fld length
+
+      Function load123fld() calls ret123fv() to store   
+      formatted array data fields.  The field and its   
+      length is passed to ret123fv() and which fails if 
+      the array contains adjacent fixed-length binary   
+      subfields that do not end on a byte boundary.     
+                                                        
+
+      Function load123fld() passes the array field and  
+      its length to ret123fv().  The length passed is   
+      cur_fm->cur_dr->fd_len which is computed to       
+      account for any adjacent fixed-length binary      
+      subfields (compressed subfields).  The value of   
+      cur_fm->cur_dr->fd_len is correct when            
+      load123fld() is called by ld123rec().  Function   
+      ld123rec() passes adjacent fixed-length binary    
+      subfields to load123fld() in a compressed form.   
+      However, wr123fld() passes un-compressed adjacent 
+      fixed-length binary subfields to load123fld(),    
+      each adjacent fixed-length binary subfield begins 
+      on a byte boundary and is filled to a byte        
+      boundary before the next binary subfield begins.  
+      The length that must be passed to load123fld() by 
+      wr123fld() is greater than cur_fm->cur_dr->fd_len.
+      The correct length for un-compressed adjacent     
+      fixed-length binary subfields must be calculated  
+      by subtracting pointers to the end and begining of
+      the field.                                        
+
+      There are two calls to ret123fv() in load123fld().
+      One for formatted array fields with labels and one
+      for formatted array fields without labels.  Modify
+      load123fld() to computed the proper length before 
+      each call to ret123fv():                          
+                                                        
+         if (comprssed) field_length =                  
+      cur_fm->cur_dr->fd_len;                           
+         else           field_length = in_str_end -     
+      *in_str;                                          
+                                                        
+         if (!ret123fv(...,field_length,...) {          
+            return(0);                                  
+         }                                              
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&a6H

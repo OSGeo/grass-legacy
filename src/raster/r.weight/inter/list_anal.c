@@ -88,7 +88,7 @@ list_analysis (int print)
     fprintf(fd," assigned weights.\n\n") ;
 
     fclose (fd);
-    sprintf (command, "%s %s", print?"lpr":"more",tempfile);
+    sprintf (command, "%s %s", print?"lpr":"$GRASS_PAGER",tempfile);
     system (command) ;
     unlink (tempfile);
 

@@ -4,14 +4,6 @@
 #include "interface.h"
 #include <stdlib.h>
 
-/****************************************************************/
-/* JAN:								*/
-/* math.h is included in viz.h  besides, atof() returns DOUBLE! */
-/*                   						*/
-/*float	atof();							*/
-/*                   						*/
-/****************************************************************/
-
 viz_calc_linefax(linefax,args,nargs,interp)
 cmndln_info	*linefax;
 char	*args[];
@@ -137,7 +129,7 @@ Tcl_Interp *interp;
       
     case 2: /*isolated thresholds as listed on commandline */
       for (i=0; i<linefax->nthres; i++)
-	linefax->tvalue[i] = atof(thresh_values[i]);
+	linefax->tvalue[i] = (float)atof(thresh_values[i]);
       free(thresh_values);
       break;
       
@@ -148,9 +140,9 @@ Tcl_Interp *interp;
 	char **list_args;
 
 	Tcl_SplitList(interp, args[4], &num_list_args, &list_args);
-	interval = atof(list_args[2]);
-	max = atof(list_args[1]); 
-	min = atof(list_args[0]);
+	interval = (float)atof(list_args[2]);
+	max = (float)atof(list_args[1]); 
+	min = (float)atof(list_args[0]);
 	datarange = max-min;
       
 	Tcl_AppendResult(interp, "Max thresh ", list_args[1], "  Min thresh ",

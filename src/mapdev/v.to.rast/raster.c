@@ -198,7 +198,7 @@ output_raster (int fd)
 	}
 	/* insert the NULL values */
 	G_insert_c_null_values (cell, null_flags[i], page.cols);
-	if (G_put_c_raster_row (fd, cell) < 0)
+	if (G_put_raster_row (fd, cell, CELL_TYPE) < 0)
 	    return ERROR;
     }
     return configure_plot();

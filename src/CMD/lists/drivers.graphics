@@ -1,7 +1,4 @@
 src/display/devices/XDRIVER
-src/display/devices/4105
+#src/display/devices/XDRIVER2
 src/display/devices/GENERIC
-src/display/devices/IGRAPH
-src/display/devices/IRIS
-src/display/devices/MASS
-src/display/devices/SUNVIEW
+src/display/devices/CELL

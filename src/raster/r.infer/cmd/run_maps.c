@@ -70,7 +70,7 @@ for(j = 0; j < window.cols && j < 10; j++)
 fprintf (stdout,"-->"); if (!gets(buf)) exit(0);
 }
 #endif
-	G_put_map_row(newfd,new_row_buf);
+	G_put_raster_row(newfd, new_row_buf, CELL_TYPE);
     }
     close_maps() ;
     fprintf (stdout,"\nCreating support files\n");

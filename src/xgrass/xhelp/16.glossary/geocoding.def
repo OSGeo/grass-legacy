@@ -1,6 +1,0 @@
-
-
-geocoding - The activity of defining the position of geographic
-objects relative to a standard reference grid.  The assigning of
-specific @glossary("area",16.glossary/area.def), linear, and @glossary("point",16.glossary/point.def) map features to their associated
-@glossary("digital",16.glossary/digdata.def) geographic coordinates so as to enable computer manipulation.

@@ -1,0 +1,8 @@
+1/2002 (MN)
+
+- when working source=target location, the TRANS file is
+  not written (or never)?
+  -> but: it is obviously written, when clicking on "TRANS/POLY1"
+     on ANALYZE menu
+  -> looks like an initialization problem.
+

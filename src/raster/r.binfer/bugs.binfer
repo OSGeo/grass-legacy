@@ -1,0 +1,97 @@
+#
+# Filename: bugs.binfer
+#
+# SPEARFISH data set
+#
+# This is a r.binfer script that infers the probability of
+# finding pine mountain beetles, given the input layer
+# attributes below.  NOTE: Execute r.binfer as follows:
+# binfer bugs.binfer [output=name] if the user does not
+# specify an output name, the combined map will be named
+# binfer.
+#
+# Script file output keywords:
+#
+# CombinedMap (Colortable) - assigns the combined map
+# the given colortable.
+# NoCombinedMap - only generates probability maps
+# (one for each inferred attribute value).
+# NoProbabilityMaps - only generates combined map.
+# (Colortable) can be any of the following keywords:
+# Aspect - aspect colors,
+# Grey,Gray - grey scale,
+# Histo - histogram stretched grey scale,
+# Rainbow - rainbow colors,
+# Ramp - color ramp (default),
+# Random - random colors,
+# RYG - red yellow green,
+# Wave - color wave.
+#
+# Choose the combined map colortable to be a color wave
+CombinedMap Wave
+#
+# Start layer attribute section.
+#
+layer:
+#
+# Layer attribute #1 is slope
+#
+slope:
+#
+#
+(low[1 thru 10],moderate[11 12 13 14 thru 20],
+steep[21 thru 30],severe[31 thru 89]).
+#
+# Layer attribute #2 is aspect
+#
+aspect:
+#
+#
+(south[16 thru 22],east[22 23 1 thru 4],west[11 thru 15],
+north[5 thru 10]).
+#
+# Layer attribute #3 is vegcover
+#
+vegcover:
+(other[1 thru 2],coniferous[3],deciduous[4],mixed[5],
+disturbed[6]).
+#
+# Layer attribute #4 is (forest) density
+#
+density:
+(nonforest[1],sparse[2],moderate[3],dense[4]).
+%
+# End of layer section.
+
+#
+# Start inferred section
+#
+inferred:
+#
+# Inferred attribute is bugs
+#
+bugs:
+#
+# Inferred attribute value "bugs".
+# A colortable of Ramp will be assigned (default).
+# NOTE: Prior probability, and conditional probabilities
+# are given in this section.
+#
+(bugs <0.20>
+[0.124,0.416,0.371,0.090; # slope conditionals
+0.180,0.292,0.292,0.239; # myaspect,
+0.011,0.798,0.022,0.169,0.0; # vegcover,
+0.202,0.326,0.213,0.258;],  # and density (one per value).
+
+#
+# Inferred attribute value "nobugs".
+# A colortable of Rainbow will be assigned.
+#
+nobugs Rainbow <0.80>
+[0.404,0.416,0.157,0.011;
+0.225,0.281,0.281,0.225;
+0.281,0.427,0.135,0.056,0.0;
+0.584,0.112,0.202,0.112;]).
+%
+# End of inferred section.
+# End of bugs.binfer script.

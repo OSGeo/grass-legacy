@@ -1,0 +1,11 @@
+FIPS PUB 123 Function Library
+Readme File 
+Subdirectory: <f123dir>/f123obj/
+
+This subdirectory contains no files at installation.
+
+<f123dir>/f123obj/ is used to store FIPS PUB 123 Function Library 
+object code files created by the ANSI C Compiler.  The batch file 
+<f123dir>/f123bat/f123comp.m can be invoked to compile the entire 
+function library producing object code files in this subdirectory 
+and source code listing files in subdirectory <f123dir>/f123lst/.

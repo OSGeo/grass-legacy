@@ -19,10 +19,9 @@ MACH_TYPE = SUN
 #MACH_TYPE = PC
 #MACH_TYPE = HP9000
 
-EXTRA_CFLAGS	=  -I$(HDFINCL) $(VECT_INCLUDE) -D$(MACH_TYPE)
+EXTRA_CFLAGS	=  -I$(HDFINCL) -D$(MACH_TYPE)
 
-PGM = $(BIN_CONTRIB_CMD)/r.out.hdf
-#PGM = $(GARDEN_BIN)/r.out.hdf
+PGM = $(BIN_CMD)/r.out.hdf
 
 OFILES = r.out.hdf.o
 

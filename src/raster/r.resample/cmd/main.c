@@ -20,12 +20,19 @@ int main(int argc, char *argv[])
 	int verbose;
 	char buf[256] ;
 	RASTER_MAP_TYPE data_type, out_type ;
+	struct GModule *module;
 	struct
 	{
 	  struct Option *input, *output;
 	} option ;
 	struct Flag *flag1 ;
 
+	G_gisinit(argv[0]);
+
+    module = G_define_module();
+    module->description =
+		"GRASS raster map layer data resampling capability.";
+					        
 	/* Define the different options */
 
 	option.input = G_define_option() ;
@@ -48,7 +55,6 @@ int main(int argc, char *argv[])
 	flag1->key         = 'q' ;
 	flag1->description = "Quiet" ;
 
-	G_gisinit(argv[0]);
 	if (G_parser(argc, argv))
 		exit (-1);
 

@@ -115,13 +115,31 @@ do_labels (FILE *infile)
 			||  !strcmp (font, "standard"))
 				strcpy (font, STANDARD_FONT);
 		}
+		else if (! strncmp (text, "hco", 3))
+		{
+		    /* not used by this module but correct field */
+	            /*
+		    if (sscanf (text, "%1s", buff) == 1)
+		        fprintf(stderr,"Ignoring: %s\n", text) ;
+		    */
+                }
+		else if (! strncmp (text, "hwi", 3))
+		{
+		    /* not used by this module but correct field */
+		    /*	
+	            if (sscanf (text, "%1s", buff) == 1)
+		        fprintf(stderr,"Ignoring: %s\n", text) ;
+		    */
+                }
 
 		else if (! strncmp(text, "tex", 3))
 			show_it() ;
+		
+		  
 		else
 		{
 			if (sscanf (text, "%1s", buff) == 1)
-			    fprintf(stderr,"Ignoring: %s\n", text) ;
+			    fprintf(stderr,"Error: %s\n", text) ;
 		}
 	}
 
@@ -145,8 +163,10 @@ int show_it (void)
 	int Xoffset ;
 	int Yoffset ;
 
+    /*	
     fprintf(stderr,"Doing: %s\n", text) ;
-	X = (int)(D_u_to_d_col(east)) ;
+    */
+    X = (int)(D_u_to_d_col(east)) ;
 
 /* Set font */
 	R_font (font);
@@ -203,7 +223,7 @@ int show_it (void)
 	R = R + text_size / 2 ;
 
 	Xoffset = xoffset ;
-	Yoffset = yoffset ;
+	Yoffset = -yoffset ;
 
 	if (xref == CENT)
 		Xoffset -= (R - L) / 2 ;

@@ -49,13 +49,13 @@ G3d_writeCats (name, cats) /* adapted from G_write_cats */
     descr = G_get_ith_d_raster_cat(cats, i, &val1, &val2);
     if ((cats->fmt && cats->fmt[0]) ||  (descr && descr[0])) {
       if(val1 == val2) {
-	sprintf(str1, "%.10lf", val1);
+	sprintf(str1, "%.10f", val1);
 	G_trim_decimal (str1);
 	fprintf(fd,"%s:%s\n", str1, descr!=NULL?descr:"");
       } else {
-	sprintf(str1, "%.10lf", val1);
+	sprintf(str1, "%.10f", val1);
 	G_trim_decimal (str1);
-	sprintf(str2, "%.10lf", val2);
+	sprintf(str2, "%.10f", val2);
 	G_trim_decimal (str2);
 	fprintf(fd,"%s:%s:%s\n", str1, str2, descr!=NULL?descr:"");
       }
@@ -93,7 +93,7 @@ read_cats (name, mapset, pcats) /* adapted from G__read_cats */
   if (! (fd = G_fopen_old (buff, buf2, mapset))) return -2;
 
 /* Read the number of categories */
-  if (G_getl (buff,sizeof buff,fd) == NULL) goto error;
+  if (G_getl (buff,sizeof buff,fd) == 0) goto error;
 
   if (sscanf ( buff, "# %ld"   , &num) == 1)
     old = 0;
@@ -101,7 +101,7 @@ read_cats (name, mapset, pcats) /* adapted from G__read_cats */
     old = 1;
 
 /* Read the title for the file */
-  if (G_getl (buff,sizeof buff,fd) == NULL) goto error;
+  if (G_getl (buff,sizeof buff,fd) == 0) goto error;
   G_strip (buff);
 
   G_init_raster_cats (buff, pcats);
@@ -111,9 +111,9 @@ read_cats (name, mapset, pcats) /* adapted from G__read_cats */
     char fmt[256];
     float m1,a1,m2,a2;
 
-    if (G_getl(fmt,sizeof fmt,fd) == NULL) goto error;
+    if (G_getl(fmt,sizeof fmt,fd) == 0) goto error;
     /* next line contains equation coefficients */
-    if (G_getl(buff,sizeof buff,fd) == NULL) goto error;
+    if (G_getl(buff,sizeof buff,fd) == 0) goto error;
     if(sscanf(buff, "%f %f %f %f", &m1, &a1, &m2, &a2) != 4) goto error;
     G_set_raster_cats_fmt (fmt, m1, a1, m2, a2, pcats);
   }
@@ -135,7 +135,7 @@ read_cats (name, mapset, pcats) /* adapted from G__read_cats */
       /* try to read a range of data */
       if (sscanf (buff, "%lf:%lf:%[^\n]", &val1, &val2, label) == 3)
 	G_set_raster_cat (&val1, &val2, label, pcats, DCELL_TYPE);
-      else if (sscanf (buff, "%ld:%[^\n]", &cat, label) >= 1)
+      else if (sscanf (buff, "%d:%[^\n]", &cat, label) >= 1)
 	G_set_raster_cat (&cat, &cat, label, pcats, CELL_TYPE);
       else if (sscanf (buff, "%lf:%[^\n]", &val1, label) >= 1)
 	G_set_raster_cat (&val1, &val1, label, pcats, DCELL_TYPE);

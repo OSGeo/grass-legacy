@@ -14,7 +14,6 @@
 
 int 
 main (int argc, char *argv[])
-
 {
 	int i, ier, cat_index=0;
 	int dissolve=0, cnt;
@@ -22,8 +21,15 @@ main (int argc, char *argv[])
         char *input, *output, catfile[128];
         FILE *in, *outa, *outb, *catf;
 	struct Option *inopt, *outopt;
+	struct GModule *module;
 
-
+        G_gisinit(argv[0]);
+        
+        /* Set description */
+        module              = G_define_module();
+        module->description = ""\
+        "Selects edge vectors from an existing vector map, removes them, and creates a new vector map.";
+        
 	inopt = G_define_option();
         inopt->key          = "input";
         inopt->description  = "Name of vector input file";
@@ -40,8 +46,8 @@ main (int argc, char *argv[])
         outopt->multiple     = NO;
         outopt->gisprompt    = "new,dig,vector";
 
-	G_gisinit(argv[0]);
 	if (G_parser(argc, argv)) exit(-1);
+	
 	input = inopt->answer;
 	output = outopt->answer;
 

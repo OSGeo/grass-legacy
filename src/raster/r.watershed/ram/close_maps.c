@@ -22,7 +22,7 @@ close_maps (void)
 			for (c = 0; c < ncols; c++)	{
 				buf[c] = wat[SEG_INDEX(wat_seg,r,c)];
 			}
-			G_put_map_row (fd, buf);
+			G_put_raster_row (fd, buf, CELL_TYPE);
 		}
     		if(G_close_cell(fd) < 0)
 			fprintf (stderr, "Close failed\n") ;
@@ -37,7 +37,7 @@ close_maps (void)
 			for (c = 0; c < ncols; c++)	{
 				buf[c] = asp[SEG_INDEX(asp_seg,r,c)];
 			}
-			G_put_map_row (fd, buf);
+			G_put_raster_row (fd, buf, CELL_TYPE);
 		}
     		if(G_close_cell(fd) < 0)
 			fprintf (stderr, "Close failed\n") ;
@@ -66,7 +66,7 @@ close_maps (void)
 			    }
 		    }
 	        }
-		G_put_map_row (fd, buf);
+		G_put_raster_row (fd, buf, CELL_TYPE);
 	    }
     	    if(G_close_cell(fd) < 0)
 		fprintf (stderr, "Close failed\n") ;
@@ -89,7 +89,7 @@ close_maps (void)
 			for (c = 0; c < ncols; c++)	{
 				buf[c] = l_s[SEG_INDEX(l_s_seg,r,c)] + .5;
 			}
-			G_put_map_row (fd, buf);
+			G_put_raster_row (fd, buf, CELL_TYPE);
 		}
     		if(G_close_cell(fd) < 0)
 			fprintf (stderr, "Close failed\n") ;
@@ -107,7 +107,7 @@ close_maps (void)
 				if (buf[c] > max_length)
 					buf[c] = max_length + .5;
 			}
-			G_put_map_row (fd, buf);
+			G_put_raster_row (fd, buf, CELL_TYPE);
 		}
     		if(G_close_cell(fd) < 0)
 			fprintf (stderr, "Close failed\n") ;
@@ -124,7 +124,7 @@ close_maps (void)
 			for (c = 0; c < ncols; c++)	{
 			    buf[c] = s_g[SEG_INDEX(s_g_seg,r,c)] * 100 + .5;
 			}
-			G_put_map_row (fd, buf);
+			G_put_raster_row (fd, buf, CELL_TYPE);
 		}
     		if(G_close_cell(fd) < 0)
 			fprintf (stderr, "Close failed\n") ;

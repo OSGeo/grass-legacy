@@ -18,7 +18,7 @@ typedef struct {
 static G3d_paramType *param;
 
 void
-G3d_setStandart3dInputParams ()
+G3d_setStandard3dInputParams ()
 
 {
   param = G3d_malloc (sizeof (G3d_paramType));
@@ -49,7 +49,7 @@ G3d_setStandart3dInputParams ()
   param->compression->answer = "default";
   param->compression->description = 
     "The compression method used in the output file";
-  param->compression->options = "default,rle,lzw,rle+lzw,none";
+  param->compression->options = "default,rle,none";
 
   param->dimension = G_define_option();
   param->dimension->key = "tiledimension";
@@ -64,7 +64,7 @@ G3d_setStandart3dInputParams ()
 /*----------------------------------------------------------------------------*/
 
 int
-G3d_getStandart3dParams (useTypeDefault, type, 
+G3d_getStandard3dParams (useTypeDefault, type, 
 			 useLzwDefault, doLzw, 
 			 useRleDefault, doRle, 
 			 usePrecisionDefault, precision,
@@ -99,7 +99,7 @@ G3d_getStandart3dParams (useTypeDefault, type,
     else
       if ((sscanf (param->precision->answer, "%d", precision) != 1) ||
 	  (*precision < 0)) {
-	G3d_error ("G3d_getStandart3dParams: precision value invalid");
+	G3d_error ("G3d_getStandard3dParams: precision value invalid");
 	return 0;
       }
   } else
@@ -127,7 +127,7 @@ G3d_getStandart3dParams (useTypeDefault, type,
   if (strcmp (param->dimension->answer, "default") != 0) {
     if (sscanf (param->dimension->answer, "%dx%dx%d", 
 		tileX, tileY, tileZ) != 3) {
-      G3d_error ("G3d_getStandart3dParams: tile dimension value invalid");
+      G3d_error ("G3d_getStandard3dParams: tile dimension value invalid");
       return 0;
     }
   } else
@@ -160,8 +160,7 @@ G3d_setWindowParams ()
 
 /*----------------------------------------------------------------------------*/
 
-char *
-G3d_getWindowParams ()
+char * G3d_getWindowParams ()
 
 {
   if (windowParam == NULL) return NULL;

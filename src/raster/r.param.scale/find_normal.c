@@ -7,11 +7,9 @@
 
 #include "param.h"
 
-find_normal(normal,w)
-    float **normal;		/* Matrix of cross-products.	*/
-    double *w;			/* Weights matrix.		*/
+void find_normal(double **normal,	/* Matrix of cross-products.	*/
+		 double *w)		/* Weights matrix.		*/
 {
-
     int edge=EDGE;		/* Store (wsize-1)/2 to save	*/
 				/* on computation 		*/	 
 
@@ -30,8 +28,8 @@ find_normal(normal,w)
 
     /* Initialise sums-of-squares and cross products matrix */
 
-    for (row=1; row<=6; row++)
-        for (col=1; col<=6;col++)
+    for (row=0; row<6; row++)
+        for (col=0; col<6;col++)
             normal[row][col] = 0.0;
 
 
@@ -40,8 +38,8 @@ find_normal(normal,w)
     for (row=0; row<wsize; row++)
 	for (col=0; col<wsize; col++)
 	{
-	   x = resoln*(col-EDGE); 
-	   y = resoln*(row-EDGE);
+	   x = resoln*(col-edge); 
+	   y = resoln*(row-edge);
 
 	   x4   += x*x*x*x* *(w + row*wsize + col);
  	   x2y2 += x*x*y*y* *(w + row*wsize + col);
@@ -68,32 +66,32 @@ find_normal(normal,w)
 
    /* --- Store cross-product matrix elements. ---*/
 
-    normal[1][1] = x4;
-    normal[1][2] = normal[2][1] = x2y2;
-    normal[1][3] = normal[3][1] = x3y;
-    normal[1][4] = normal[4][1] = x3;
-    normal[1][5] = normal[5][1] = x2y;
-    normal[1][6] = normal[6][1] = x2;
+    normal[0][0] = x4;
+    normal[0][1] = normal[1][0] = x2y2;
+    normal[0][2] = normal[2][0] = x3y;
+    normal[0][3] = normal[3][0] = x3;
+    normal[0][4] = normal[4][0] = x2y;
+    normal[0][5] = normal[5][0] = x2;
 
-    normal[2][2] = y4;
-    normal[2][3] = normal[3][2] = xy3;
+    normal[1][1] = y4;
+    normal[1][2] = normal[2][1] = xy3;
+    normal[1][3] = normal[3][1] = xy2;
+    normal[1][4] = normal[4][1] = y3;
+    normal[1][5] = normal[5][1] = y2;
+
+    normal[2][2] = x2y2;
+    normal[2][3] = normal[3][2] = x2y;
     normal[2][4] = normal[4][2] = xy2;
-    normal[2][5] = normal[5][2] = y3;
-    normal[2][6] = normal[6][2] = y2;
+    normal[2][5] = normal[5][2] = xy;
 
-    normal[3][3] = x2y2;
-    normal[3][4] = normal[4][3] = x2y;
-    normal[3][5] = normal[5][3] = xy2;
-    normal[3][6] = normal[6][3] = xy;
-
-    normal[4][4] = x2;
-    normal[4][5] = normal[5][4] = xy;
-    normal[4][6] = normal[6][4] = x1;
+    normal[3][3] = x2;
+    normal[3][4] = normal[4][3] = xy;
+    normal[3][5] = normal[5][3] = x1;
     
-    normal[5][5] = y2;
-    normal[5][6] = normal[6][5] = y1;
+    normal[4][4] = y2;
+    normal[4][5] = normal[5][4] = y1;
 
-    normal[6][6] = N;
+    normal[5][5] = N;
 }
 
 
@@ -103,11 +101,9 @@ find_normal(normal,w)
 /* 		V.1.0, Jo Wood, 11th December, 1994.	 	*/
 /****************************************************************/
 
-find_obs(z,obs,w)
-    CELL  *z;			/* Local window of elevs.	*/
-    float *obs;			/* Observed column vector.	*/
-    double  *w;			/* Weighting matrix.		*/
-    
+void find_obs(DCELL  *z,		/* Local window of elevs.	*/
+	 double *obs,		/* Observed column vector.	*/
+	 double  *w)		/* Weighting matrix.		*/
 {
 
     int	row,col,		/* Counts through local window.	*/
@@ -116,25 +112,25 @@ find_obs(z,obs,w)
 
     float x,y;			/* Local window coordinates.	*/
 
-    for (row=1;row<=6; row++)	/* Initialise column vector.	*/
+    for (row=0;row<6; row++)	/* Initialise column vector.	*/
 	obs[row] = 0.0;
 
 
     for (row=0;row<wsize; row++)
 	for (col=0; col<wsize; col++)
 	{
-	    x = resoln*(col-EDGE); 
-	    y = resoln*(row-EDGE);
+	    x = resoln*(col-edge); 
+	    y = resoln*(row-edge);
  	    offset = row*wsize + col;
 
-	    obs[1] += *(w + offset) * *(z + offset) * x*x ;
-	    obs[2] += *(w + offset) * *(z + offset) * y*y ;
-	    obs[3] += *(w + offset) * *(z + offset) * x*y ;
-	    obs[4] += *(w + offset) * *(z + offset) * x ;
-	    obs[5] += *(w + offset) * *(z + offset) * y ;
+	    obs[0] += *(w + offset) * *(z + offset) * x*x ;
+	    obs[1] += *(w + offset) * *(z + offset) * y*y ;
+	    obs[2] += *(w + offset) * *(z + offset) * x*y ;
+	    obs[3] += *(w + offset) * *(z + offset) * x ;
+	    obs[4] += *(w + offset) * *(z + offset) * y ;
 
 	    if (!constrained)	/* If constrained, should remain 0.0 */
-	 	obs[6] += *(w + offset) * *(z + offset) ;
+	 	obs[5] += *(w + offset) * *(z + offset) ;
 	}
 }
 
@@ -148,14 +144,13 @@ find_obs(z,obs,w)
 /*               V.1.1, Jo Wood, 11th May, 1995.		*/
 /****************************************************************/
 
-find_weight(weight_ptr)
-    double *weight_ptr;
+void find_weight(double *weight_ptr)
 {
+    int	edge=EDGE;		/* EDGE = (wsize-1)/2.		*/
     int row,col;		/* Counts through the rows and	*/
 				/* columns of weights matrix.	*/
 
-    double dist,		/* Distance to centre of kernel.*/
-	   sum_weight=0;	/* Sum of weights.		*/	
+    double dist;		/* Distance to centre of kernel.*/
 
 
     /* --- Find inverse distance of all cells to centre. ---*/
@@ -164,7 +159,7 @@ find_weight(weight_ptr)
 	for (col=0; col<wsize; col++)
 	{
 	    dist = 1.0 /
-		pow(sqrt((EDGE-col)*(EDGE-col) + (EDGE-row)*(EDGE-row))+1.0,exponent);
+		pow(sqrt((edge-col)*(edge-col) + (edge-row)*(edge-row))+1.0,exponent);
 	    *(weight_ptr + row*wsize + col) = dist;
 	}
 }

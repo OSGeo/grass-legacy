@@ -1,0 +1,6 @@
+GRASS_NVIZ_DOCS=$(GISBASE)/documents/nviz
+
+all:
+	if [ ! -d $(GRASS_NVIZ_DOCS) ]; then mkdir $(GRASS_NVIZ_DOCS); fi
+#fix for CVS and Gmakefile:
+	(tar -cf - *  | (cd $(GRASS_NVIZ_DOCS); tar  -xf - 2>/dev/null ); true)

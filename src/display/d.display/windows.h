@@ -19,7 +19,7 @@ struct windows windows[] =
 	} ;
 #else
 extern struct windows windows[] ;
-#endif MAIN
+#endif /* MAIN */
 
 #define LOC	windows[0]
 #define NAM	windows[1]

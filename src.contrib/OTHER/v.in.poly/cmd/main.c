@@ -33,8 +33,14 @@ struct Option *opt0 ;
 struct Option *opt1 ;
 struct Option *opt2 ;
 struct Option *opt3 ;
+struct GModule *module;
 
-G_gisinit(argv[0]);
+    G_gisinit(argv[0]);
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Create a vector file of polygons centered on given locations.";
 
     opt0 = G_define_option() ;
     opt0->key        = "input";
@@ -222,6 +228,7 @@ struct Cell_head window;
 
   G_get_window(&window);
   min_d = (window.east - window.west) * 0.0020 ;
+  if (min_d >= r) return 6;
   theta = 2.0 * asin(min_d/r);
   if (theta > pi/3.0) return 6;
   else return  ((int) (2.0*pi/theta + 0.99999) );

@@ -1,0 +1,3 @@
+all:
+	$(GMAKE) r.cn
+	$(GMAKE) r.weighted.cn

@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "distance.h"
 
     /* write out result */
@@ -9,6 +10,7 @@ int write_output_map (char *output, int offset, int quiet)
     register int col;
     register CELL *cell;
     register MAPTYPE *ptr;
+    int k;
 
     fd_out = G_open_cell_new (output);
     if (fd_out < 0)
@@ -57,7 +59,10 @@ int write_output_map (char *output, int offset, int quiet)
 	    }
 	}
 	cell -= window.cols;
-	if (G_put_map_row (fd_out, cell) < 0)
+	/* set 0 to NULL */
+	for (k=0; k < window.cols; k++)
+	       if (cell[k] == 0) G_set_null_value(&cell[k], 1, CELL_TYPE);
+	if (G_put_raster_row (fd_out, cell, CELL_TYPE) < 0)
 	{
 	    fprintf (stderr, "%s - ERROR writing %s\n", pgm_name, output);
 	    exit(1);

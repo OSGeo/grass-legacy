@@ -1,5 +1,6 @@
 #include "gis.h"
 #include <string.h>
+#include <stdlib.h>
 #include "parms.h"
 
 header (panel, npanels, date,scale)
@@ -8,7 +9,6 @@ header (panel, npanels, date,scale)
 {
     char buf[1024];
     char *header_file;
-    char *getenv();
     FILE *fd;
 
     static int first = 1;

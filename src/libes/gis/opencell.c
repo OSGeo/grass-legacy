@@ -104,6 +104,7 @@
 #include <fcntl.h>
 #include "G.h"
 #include "gis.h"
+#include "glocale.h"
 
 #define FCB G__.fileinfo[fd]
 #define WINDOW G__.window
@@ -119,7 +120,7 @@ int G_open_cell_old (
 
     if ((fd = G__open_cell_old (name, mapset)) < 0)
     {
-        G_warning ("unable to open raster map [%s in %s]",
+        G_warning (_("unable to open raster map [%s in %s]"),
             name, mapset);
         return fd;
     }
@@ -202,7 +203,7 @@ int G__open_cell_old (
 	    if (G_find_cell (r_name, r_mapset) == NULL)
 	    {
 		G_warning (
-		    "unable to open [%s] in [%s] since it is a reclass of [%s] in [%s] which does not exist",
+		    _("unable to open [%s] in [%s] since it is a reclass of [%s] in [%s] which does not exist"),
 		    name,mapset,r_name,r_mapset);
 		return -1;
 	    }
@@ -225,7 +226,7 @@ int G__open_cell_old (
        CELL_nbytes = cellhd.format + 1;
        if (CELL_nbytes < 1)
        {
-           G_warning("[%s] in mapset [%s]-format field in header file invalid",
+           G_warning(_("[%s] in mapset [%s]-format field in header file invalid"),
                r_name, r_mapset);
            return -1;
        }
@@ -234,22 +235,22 @@ int G__open_cell_old (
     if (cellhd.proj != G__.window.proj)
     {
         G_warning (
-            "[%s] in mapset [%s] - in different projection than current region",
-            name, mapset);
+            _("[%s] in mapset [%s] - in different projection than current region:\n found map [%s] in: <%s>, should be <%s> "),
+            name, mapset, name, G__projection_name(cellhd.proj), G__projection_name(G__.window.proj));
         return -1;
     }
     if (cellhd.zone != G__.window.zone)
     {
         G_warning (
-            "[%s] in mapset [%s] - in different zone than current region",
-            name, mapset);
+            _("[%s] in mapset [%s] - in different zone [%d] than current region [%d]"),
+            name, mapset, cellhd.zone, G__.window.zone);
         return -1;
     }
 
 /* when map is int warn if too large cell size */
     if (MAP_TYPE == CELL_TYPE && CELL_nbytes > sizeof(CELL))
     {
-        G_warning ( "[%s] in [%s] - bytes per cell (%d) too large",
+        G_warning ( _("[%s] in [%s] - bytes per cell (%d) too large"),
             name, mapset, CELL_nbytes);
 	return -1;
     }
@@ -343,6 +344,7 @@ int G__open_cell_old (
     G__reallocate_work_buf(INTERN_SIZE);
     G__reallocate_mask_buf();
     G__reallocate_null_buf();
+    G__reallocate_temp_buf();
     /* work_buf is used as intermediate buf for conversions */
 /*
  * allocate/enlarge the compressed data buffer needed by get_map_row()
@@ -366,7 +368,7 @@ int G__open_cell_old (
     FCB.null_file_exists = -1;
 
     if(FCB.map_type != CELL_TYPE)
-        	xdrmem_create (&FCB.xdrstream, FCB.data, 
+        	xdrmem_create (&FCB.xdrstream, (caddr_t) FCB.data, 
             (u_int) (FCB.nbytes * FCB.cellhd.cols), XDR_DECODE);
 
     return fd;
@@ -503,17 +505,60 @@ G_open_fp_cell_new_uncompressed (char *name)
     return G__open_raster_new (name, OPEN_NEW_UNCOMPRESSED);
 }	
 
+static int
+clean_check_raster_name (char *inmap, char **outmap, char **outmapset)
+{
+	/* Remove mapset part of name if exists.  Also, if mapset
+	 * part exists, make sure it matches current mapset.
+	 */
+	int status = 0;
+	char *ptr;
+	char *buf;
+
+	buf = G_store (inmap);
+	if ((ptr = strpbrk (buf, "@")) != NULL)
+	{
+		*ptr = '\0';
+		ptr++;
+		*outmapset = G_store(G_mapset());
+		if ((status = strcmp(ptr, *outmapset)))
+		{
+			G_free (buf);
+			G_free (*outmapset);
+		}
+		else
+		{
+			*outmap = G_store (buf);
+			G_free (buf);
+		}
+	}
+	else
+	{
+		*outmap = buf;
+		*outmapset = G_store(G_mapset());
+	}
+	return status;
+}
+	
 /* opens a f-cell or cell file depending on WRITE_MAP_TYPE */
 int G__open_raster_new (char *name, int open_mode)
 {
     int i, null_fd, fd;
     char *tempname;
-
+    char *map;
+    char *mapset;
+    
 /* check for legal grass name */
     if (G_legal_filename (name) < 0)
     {
-	G_warning ("opencell: %s - illegal file name", name);
+	G_warning (_("opencell: %s - illegal file name"), name);
 	return -1;
+    }
+    
+    if(clean_check_raster_name (name, &map, &mapset) != 0)
+    {
+	    G_warning ("opencell: %s - bad mapset", name);
+	    return -1;
     }
 
 /* make sure window is set */
@@ -525,13 +570,17 @@ int G__open_raster_new (char *name, int open_mode)
     if (fd < 0)
     {   
         G_warning ("G__open_raster_new: no temp files available");
-        free (tempname);
+        G_free (tempname);
+	G_free (map);
+	G_free (mapset);
         return -1;
     }
 
     if (fd >= MAXFILES)
     {
-        free (tempname);
+        G_free (tempname);
+	G_free (map);
+	G_free (mapset);
         close (fd);
         G_warning("G__open_raster_new: too many open files");
         return -1;
@@ -575,6 +624,7 @@ int G__open_raster_new (char *name, int open_mode)
 	FCB.nbytes = 1;		/* to the minimum */
         G__reallocate_work_buf(sizeof(CELL));
         G__reallocate_mask_buf();
+        G__reallocate_temp_buf();
     }
     else
     {
@@ -590,6 +640,7 @@ int G__open_raster_new (char *name, int open_mode)
 	      FCB.cellhd.compressed = 0;
         G__reallocate_work_buf(FCB.nbytes);
         G__reallocate_mask_buf();
+        G__reallocate_temp_buf();
 
         if(FCB.map_type != CELL_TYPE)
         {
@@ -598,7 +649,7 @@ int G__open_raster_new (char *name, int open_mode)
 
 	if (open_mode == OPEN_NEW_RANDOM)
         {
-            G_warning("Can't write embedded null values for map open for random access");
+            G_warning(_("Can't write embedded null values for map open for random access"));
             if(FCB.map_type == CELL_TYPE)
                     G_write_zeros (fd, (long) WRITE_NBYTES * DATA_NCOLS * DATA_NROWS);
             else if(FCB.map_type == FCELL_TYPE)
@@ -615,8 +666,8 @@ int G__open_raster_new (char *name, int open_mode)
     }
 
 /* save name and mapset, and tempfile name */
-    FCB.name      = G_store (name);
-    FCB.mapset    = G_store (G_mapset());
+    FCB.name      = map;
+    FCB.mapset    = mapset;
     FCB.temp_name = tempname;
 
 /* next row to be written (in order) is zero */
@@ -628,14 +679,22 @@ int G__open_raster_new (char *name, int open_mode)
     if (null_fd < 0)
     {   
         G_warning ("opencell opening temp null file: no temp files available");
-        free (tempname);
+        G_free (tempname);
+	G_free (FCB.name);
+	G_free (FCB.mapset);
+	G_free (FCB.temp_name);
+	close (fd);
         return -1;
     }
 
     if (null_fd >= MAXFILES)
     {
-        free (tempname);
+        G_free (tempname);
         close (null_fd);
+	G_free (FCB.name);
+	G_free (FCB.mapset);
+	G_free (FCB.temp_name);
+	close (fd);
         G_warning("opencell: too many open files");
         return -1;
     }
@@ -750,6 +809,25 @@ int G__reallocate_mask_buf (void)
     return 0;
 }
 
+/*
+ * allocate/enlarge the temporary buffer needed by G_get_raster_row[_nomask]
+ */
+int G__reallocate_temp_buf (void)
+{
+    int n;
+    n = (WINDOW.cols + 1) * sizeof(CELL);
+    if (n > G__.temp_buf_size)
+    {
+        if (G__.temp_buf_size <= 0)
+            G__.temp_buf = (CELL *) G_malloc (n);
+        else
+            G__.temp_buf = (CELL *) G_realloc((char *) G__.temp_buf,n);
+        G__.temp_buf_size  = n;
+    }
+
+    return 0;
+}
+
 int G_set_fp_type (RASTER_MAP_TYPE map_type)
 {
     FP_TYPE_SET = 1;
@@ -776,7 +854,7 @@ int G_raster_map_is_fp (char *name, char *mapset)
 
    if (G_find_cell (name, mapset) == NULL)
    {
-      G_warning ("unable to find [%s] in [%s]",name,mapset);
+      G_warning (_("unable to find [%s] in [%s]"),name,mapset);
       return -1;
    }
    G__file_name(path,"fcell", name, mapset);
@@ -797,7 +875,7 @@ integer maps, -1 if error has occured */
 
    if (G_find_cell (name, mapset) == NULL)
    {
-      G_warning ("unable to find [%s] in [%s]",name,mapset);
+      G_warning (_("unable to find [%s] in [%s]"),name,mapset);
       return -1;
    }
    G__file_name(path,"fcell", name, mapset);
@@ -828,13 +906,13 @@ RASTER_MAP_TYPE G__check_fp_type (char *name, char *mapset)
    G__file_name(path,element,FORMAT_FILE,mapset);
      
    if (access(path,0) != 0) {
-      G_warning ("unable to find [%s]",path);
+      G_warning (_("unable to find [%s]"),path);
       return -1;
    }
    format_keys = G_read_key_value_file(path, &in_stat);
    if (in_stat !=0)
    {
-      G_warning ( "Unable to open %s",path);
+      G_warning ( _("Unable to open %s"),path);
       return -1;
    }
    if ((str = G_find_key_value("type",format_keys))!=NULL) {
@@ -843,7 +921,7 @@ RASTER_MAP_TYPE G__check_fp_type (char *name, char *mapset)
      else 
        if (strcmp(str,"float") == 0) map_type = FCELL_TYPE;
        else {
-         G_warning("invalid type: field %s in file %s ",str,path);
+         G_warning(_("invalid type: field %s in file %s "),str,path);
          G_free_key_value(format_keys);
          return -1;
        }
@@ -888,7 +966,7 @@ int G_open_raster_new_uncompressed (char *name, RASTER_MAP_TYPE wr_type)
     int fd;
 
     if (G_legal_filename (name) < 0)
-	G_fatal_error ("%s - ** illegal name **", name);
+	G_fatal_error (_("%s - ** illegal name **"), name);
 
     if(wr_type == CELL_TYPE)
        return G_open_cell_new_uncompressed (name);

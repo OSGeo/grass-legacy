@@ -1,0 +1,21 @@
+interface_build {
+    {v.to.db} 0
+    {Load vector.}
+    {entry map  {Input vector map:} 0 vector}
+    {checkbox type {Area map.} "" area}
+    {checkbox type {Line map.} "" line}
+    {checkbox type {Site map.} "" site}     
+    {entry table {Table:} 0 ""}
+    {entry key {Key column:} 0 ""}
+    {entry col1 {Column 1 to be updated:} 0 ""}
+    {entry col2 {Column 2 to be updated:} 0 ""}
+    {checkbox option {Insert new category.} "" cat}
+    {checkbox option {Load label.} "" label}
+    {checkbox option {Load count.} "" count}        
+    {checkbox option {Load length.} "" length}
+    {checkbox option {Load area.} "" area}
+    {checkbox option {Load point x,y.} "" coor}
+    {entry units {Measurement units:} 0 distance}
+    {checkbox -p {Print only} "" -p}
+    {checkbox -s {Print only SQL} "" -s}    
+}

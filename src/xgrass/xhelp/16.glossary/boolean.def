@@ -1,7 +1,0 @@
-
-
-Boolean operations - Mathematical operations which perform logical
-combinations of data, involving union, intersection, complement and
-exclusion.  GRASS analysis programs like @man("r.weight"), @man("r.combine"),
-@man("r.infer"), and @man("r.mapcalc") can be used to perform Boolean operations
-on one or more maps.

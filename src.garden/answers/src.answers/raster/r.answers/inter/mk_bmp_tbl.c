@@ -51,10 +51,10 @@ mk_bmp_tbl(num)
     else
         strcpy(filename, "field_border");
 
-    fprintf (stdout,"\n\n\n");
-    fprintf (stdout,"For each %s category found in the watershed,\n",
+    fprintf (stderr,"\n\n\n");
+    fprintf (stderr,"For each %s category found in the watershed,\n",
     bmp_tbl[num].title);
-    fprintf (stdout,"enter the width of the structure.\n\n\n\n");
+    fprintf (stderr,"enter the width of the structure.\n\n\n\n");
 
     if(bmp_tbl[num].set == 0)
         hit_return();
@@ -94,7 +94,7 @@ mk_bmp_tbl(num)
 
 	    if (cat_tbl[i].cat != check_digit)
 	    {
-		fprintf (stdout,
+		fprintf (stderr,
                 "\nERROR: Expecting category <%d> but found category <%d>\n", 
 	        cat_tbl[i].cat, check_digit);
 		sprintf(buf, "Categories found in <%s> do not match those\n",
@@ -119,7 +119,7 @@ mk_bmp_tbl(num)
    
 	    if (err != 2)
 	    {
-		fprintf (stdout,"\nERROR: Expecting 2 data items but found %d\n", err);
+		fprintf (stderr,"\nERROR: Expecting 2 data items but found %d\n", err);
 		strcpy(buf, "Problem reading previously stored parameters in project\n");
 		strcat(buf, "database. You can continue, but previously saved \n");
 		strcat(buf, "parameters will be lost.\n");

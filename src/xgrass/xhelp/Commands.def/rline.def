@@ -1,8 +1,0 @@
-
-
-r.line - 
-
-r.line creates a new GRASS @glossary("vector",16.glossary/vector.def) file by extracting linear features
-from a thinned @glossary("raster",16.glossary/rastdata.def) file.
-
-Manual entry for @man("r.line")

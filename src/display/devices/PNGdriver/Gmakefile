@@ -1,0 +1,32 @@
+
+EXTRA_CFLAGS = $(GDINC) -I../lib
+
+OFILES =  \
+	Can_do.o\
+	Clr_table.o\
+	Color.o\
+	Draw_line.o\
+	Get_w_box.o\
+	Get_w_line.o\
+	Get_w_pnt.o\
+	Graph_Clse.o\
+	Graph_Set.o\
+	Panel.o\
+	Polygn_abs.o
+
+LIBES = $(DRIVERLIB) $(GISLIB)
+DEPLIBS= $(DEPDRIVERLIB) $(DEPGISLIB)
+
+all: $(GISBASE)/driver/PNG
+	@if egrep '^PNG' $(ETC)/monitorcap >/dev/null 2>&1 ; then \
+	echo PNG already defined in $(ETC)/monitorcap ; \
+	else \
+	echo adding PNG driver to $(ETC)/monitorcap ; \
+	cat moncap.entry >> $(ETC)/monitorcap ; \
+	fi
+
+$(GISBASE)/driver/PNG: $(OFILES) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(XDRLIB) $(GDLIB)
+
+$(DEPDRIVERLIB): #
+$(DEPGISLIB): #

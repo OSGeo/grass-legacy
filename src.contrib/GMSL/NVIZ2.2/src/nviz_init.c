@@ -1,9 +1,16 @@
+/* 
+ * $Id$ 
+ */
+
 #include <stdio.h>
+#include <stdlib.h>
 #include "tk.h"
 #include "interface.h"
 #include "gis.h"
 #include "coldefs.h"
 #include "bitmap.h"
+/* get from gislib: */
+#include "version.h"
 
 char startup_script[] =
 "toplevel .wait_ok\n\
@@ -14,50 +21,18 @@ wm geometry . \"+100+100\"\n\
 update\n\
 grab .wait_ok.wait";
 
-Ninit(interp, w)
-     Tcl_Interp *interp;
-     Tk_Window w;
-{
-  static Nv_data data;
-
-  
-  init_commands(interp, &data);
-  Ninitdata(interp, &data);
-
-  /* compile in the home directory */
-  Tcl_SetVar(interp, "src_boot", SRC_BOOT, TCL_GLOBAL_ONLY);
-}  
-
-void swap_togl();
-
-Ninitdata(interp, data)
-     Tcl_Interp *interp;			/* Current interpreter. */
-     Nv_data *data;
-{
-  char rescmd[120], *string, **argv;
-  int argc;
-  int i;
-  
-  argc = Ngetargs(interp, &argv);
-  
-  G_gisinit (argv[0]);
-  GS_libinit();
-  GS_set_swap_func(swap_togl);
-  data->NumCplanes = 0;
-  data->CurCplane = 0;
-  parse_command(data, interp, argc, argv);
-
-}
-
-parse_command(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;			/* Current interpreter. */
-     int argc;
-     char **argv;
+int 
+parse_command (
+    Nv_data *data,
+    Tcl_Interp *interp,			/* Current interpreter. */
+    int argc,
+    char **argv
+)
 {
   struct Option *elev, *colr, *tricolr, *vct, *site, *view;
-  struct Option *panel_path, *script;
+  struct Option *panel_path, *script, *state;
   struct Flag *no_args, *script_kill, *demo;
+  struct GModule *module;
   char *arglist[3], *autoload;
   int i, c, aload=1;
 
@@ -76,7 +51,11 @@ parse_command(data, interp, argc, argv)
    *
    * -x : demo mode, the usual "please wait" messages are nuked.
    */	
-  
+
+module = G_define_module();
+	module->description =
+	"nviz - Visualization and animation tool for GRASS data" ;
+
   elev = G_define_option();
   elev->key                    = "elevation";
   elev->type                   = TYPE_STRING;
@@ -84,7 +63,15 @@ parse_command(data, interp, argc, argv)
   elev->multiple               = YES;
   elev->gisprompt              = "old,cell,Raster";
   elev->description            = "Raster file(s) for Elevation";
-  
+ 
+  colr = G_define_option();
+  colr->key                    = "color";
+  colr->type                   = TYPE_STRING;
+  colr->required               = NO;
+  colr->multiple               = YES;
+  colr->gisprompt              = "old,cell,Raster";
+  colr->description            = "Raster file(s) for Color";
+ 
   vct = G_define_option();
   vct->key                    = "vector";
   vct->type                   = TYPE_STRING;
@@ -102,8 +89,8 @@ parse_command(data, interp, argc, argv)
   site->description            = "Sites overlay file(s)";
 
   no_args = G_define_flag();
-  no_args->key		       = 'q';
-  no_args->description         = "No args option";
+  no_args->key                 = 'q';
+  no_args->description         = "Quickstart - Do not load any data";
 
   script_kill = G_define_flag();
   script_kill->key	       = 'k';
@@ -111,22 +98,29 @@ parse_command(data, interp, argc, argv)
 
   demo = G_define_flag();
   demo->key	               = 'x';
-  demo->description            = "Demo mode";
+  demo->description            = "Start in Demo mode";
 
   panel_path = G_define_option();
   panel_path->key              = "path";
   panel_path->type             = TYPE_STRING;
   panel_path->required         = NO;
-  panel_path->description      = "Alternative panel path";
+  panel_path->description      = "Set alternative panel path";
 
   script = G_define_option();
   script->key              = "script";
   script->type             = TYPE_STRING;
   script->required         = NO;
-  script->description      = "Startup script file";
+  script->description      = "Execute script file at startup";
+
+  state= G_define_option();
+  state->key              = "state";
+  state->type             = TYPE_STRING;
+  state->required         = NO;
+  state->description      = "Load previosly saved state file";
 
   if (G_parser (argc, argv))
-    exit (-1);
+    exit (0);
+/* Exit status is zero to avoid TCL complaints */
   
   {
     float defs[MAX_ATTS];
@@ -143,19 +137,17 @@ parse_command(data, interp, argc, argv)
   /* Put in the "please wait..." message unless we are in demo mode */
   if ((strstr(argv[0],"nviz") != NULL) &&
       (!demo->answer)) {
-    if (Tcl_Eval(interp, startup_script) != TCL_OK) {
-      fprintf(stderr,"ERROR: %s\n", interp->result);
-      exit(-1);
-    }
+    if (Tcl_Eval(interp, startup_script) != TCL_OK)
+      G_fatal_error("%s", interp->result);
+
   }
 
     fprintf (stderr, "\n");
     fprintf (stderr, "\n");
-    fprintf (stderr, "Version: GRASS5.0 beta, last update: July 1999\n");
-    fprintf (stderr, "updated to OPENGL, LINUX, Tcl/Tk 8.0\n");
+    fprintf (stderr, "Version: %s\n", VERSION_STRING);
     fprintf (stderr, "\n");
     fprintf (stderr, "Authors: Bill Brown, Terry Baker, Mark Astley, David Gerdes\n");
-    fprintf (stderr, "\tmodifications: Jaro Hofierka\n");
+    fprintf (stderr, "\tmodifications: Jaro Hofierka, Bob Covill\n");
     fprintf (stderr, "\n");
     fprintf (stderr, "\n");
     fprintf (stderr, "Please cite one or more of the following references in publications\n");
@@ -178,15 +170,15 @@ parse_command(data, interp, argc, argv)
   
 
   /* Look for quickstart flag */
-  if (no_args->answer) 
-    elev->answers=vct->answers=site->answers=NULL;
+   if (no_args->answer) {
+    elev->answers=colr->answers=vct->answers=site->answers=NULL;
+	}
+
 
   /* Look for scriptkill flag */
   if (script_kill->answer) {
-    if (Tcl_VarEval(interp,"set NvizScriptKill 1 ", NULL) != TCL_OK) {
-      fprintf(stderr,"ERROR: %s\n", interp->result);
-      exit(-1);
-    }
+    if (Tcl_VarEval(interp,"set NvizScriptKill 1 ", NULL) != TCL_OK)
+      G_fatal_error("%s", interp->result);
   }
   
   /* See if an alternative panel path is specified */
@@ -194,20 +186,23 @@ parse_command(data, interp, argc, argv)
     /* If so then set the variable NvizAltPath to the alternative path
      */
     if (Tcl_VarEval(interp,"set NvizAltPath ", panel_path->answer,
-		    NULL) != TCL_OK) {
-      fprintf(stderr,"ERROR: %s\n", interp->result);
-      exit(-1);
-    }
+		    NULL) != TCL_OK)
+      G_fatal_error("%s", interp->result);
+  }
+
+ /* Get State file from command line */
+  if (state->answer) {
+    if (Tcl_VarEval(interp,"set NvizLoadState ", state->answer,
+                    NULL) != TCL_OK)
+      G_fatal_error("%s", interp->result);
   }
   
   /* See if a script file was specified */
   if (script->answer) {
     /* If so then set the variable NvizPlayScript to the file */
     if (Tcl_VarEval(interp,"set NvizPlayScript ", script->answer,
-		    NULL) != TCL_OK) {
-      fprintf(stderr,"ERROR: %s\n", interp->result);
-      exit(-1);
-    }
+		    NULL) != TCL_OK)
+      G_fatal_error("%s", interp->result);
   }
 
 #ifdef XSCRIPT
@@ -229,6 +224,19 @@ parse_command(data, interp, argc, argv)
     aload=0;
   
   /* Parse answeres from user */
+/* Run check to make sure elev == colr */
+	if(elev->answers && colr->answers) {
+	int ee, cc;
+		for (i = 0; elev->answers[i] ; i++){
+		ee = i;
+		}
+		for (i = 0; colr->answers[i] ; i++){
+		cc = i;
+		}
+	if ( ee != cc)
+		G_fatal_error("Number of elevation files does not match number of colors files");
+	}
+
   if(elev->answers){
     char tmp[30];
     
@@ -240,10 +248,14 @@ parse_command(data, interp, argc, argv)
       /* See if we should autoload the color file */
       if (aload) {
 	strncpy(tmp, interp->result, 29);
+	if (colr->answers) {
 	if (Tcl_VarEval(interp, tmp, " set_att color ",
-			elev->answers[i], NULL) != TCL_OK) {
-	  fprintf(stderr, "ERROR: %s\n", interp->result);
-	  exit(-1);
+		colr->answers[i], NULL) != TCL_OK)
+		G_fatal_error("%s", interp->result);
+	} else {
+	if (Tcl_VarEval(interp, tmp, " set_att color ",
+			elev->answers[i], NULL) != TCL_OK)
+		G_fatal_error("%s", interp->result);
 	}
       }
     }
@@ -267,7 +279,7 @@ parse_command(data, interp, argc, argv)
       Nnew_map_obj_cmd (data, interp, 3, arglist);
     }
   }
-  
+
 }
 
 
@@ -278,57 +290,38 @@ parse_command(data, interp, argc, argv)
    so that G_parser can deal with them without getting sick. 
    */
 
-Ngetargs(interp, args)
-     Tcl_Interp *interp;			/* Current interpreter. */
-     char ***args;
+int 
+Ngetargs (
+    Tcl_Interp *interp,			/* Current interpreter. */
+    char ***args
+)
 {
   int i, n;
   char *tmp, *tmp2, *argv0;
-  int argc;
+  int argc, argc2;
   
   argv0 = Tcl_GetVar (interp, "argv0", TCL_LEAVE_ERR_MSG);
   tmp = Tcl_GetVar (interp, "argv", TCL_LEAVE_ERR_MSG);
   tmp2  = (char *) malloc ((strlen(argv0) + strlen(tmp) +2)*(sizeof (char)));
   sprintf (tmp2, "%s %s", argv0, tmp);
-  
-  if (TCL_ERROR == Tcl_SplitList (interp, tmp2, &argc, args))
+
+  if (TCL_ERROR == Tcl_SplitList (interp, tmp2, &argc, args)) 
     exit(-1);
-    
+
   return (argc);
 }
 
-set_default_wirecolors(dc, surfs)
-     Nv_data *dc;
-     int surfs;
+int make_red_yellow_ramp (int *ramp, int num, int minval, int maxval)
 {
-
-#ifdef DO_GREYSCALE
-  int *surf_list;
-  int i, color, greyincr, greyval;
+  int g, i, incr;
   
-  greyincr = 200/(surfs+1); /* just use upper values */
-  
-  surf_list=GS_get_surf_list(&i);
-  for(i = 0; i < surfs; i++){
-    greyval = 55 + greyincr*(i +1);
-    RGB_TO_INT(greyval,greyval,greyval,color);
-    GS_set_wire_color(surf_list[i], color);
+  incr = (maxval - minval)/(num-1);
+  for(i=0; i<num; i++){
+    g = minval + incr * i;
+    RGB_TO_INT(maxval,g,0,ramp[i]);
   }
-  free(surf_list);
-
-#else
   
-  int i, ramp[MAX_SURFS];
-  int sortSurfs[MAX_SURFS], sorti[MAX_SURFS];
-  make_red_yellow_ramp(ramp, surfs, 30, 255);
-  sort_surfs_mid(sortSurfs, sorti, surfs);
-  
-  for(i = 0; i < surfs; i++) {
-    GS_set_wire_color(sortSurfs[i], ramp[i]);
-  }
-
-#endif
-  
+  return 0;
 }
 
 
@@ -336,8 +329,7 @@ set_default_wirecolors(dc, surfs)
    Puts ordered id numbers in id_sort, leaving surfs unchanged.
    Puts ordered indices of surfaces from id_orig in indices.
    */
-sort_surfs_mid(id_sort, indices, num)
-     int num, *id_sort, *indices;
+int sort_surfs_mid (int *id_sort, int *indices, int num)
 {
   int i, j;
   float midvals[MAX_SURFS];
@@ -367,31 +359,68 @@ sort_surfs_mid(id_sort, indices, num)
   
 }
 
-make_red_yellow_ramp(ramp, num, minval, maxval)
-     int *ramp;
-     int num, minval, maxval;
+int set_default_wirecolors (Nv_data *dc, int surfs)
 {
-  int g, i, incr;
+
+#ifdef DO_GREYSCALE
+  int *surf_list;
+  int i, color, greyincr, greyval;
   
-  incr = (maxval - minval)/(num-1);
-  for(i=0; i<num; i++){
-    g = minval + incr * i;
-    RGB_TO_INT(maxval,g,0,ramp[i]);
+  greyincr = 200/(surfs+1); /* just use upper values */
+  
+  surf_list=GS_get_surf_list(&i);
+  for(i = 0; i < surfs; i++){
+    greyval = 55 + greyincr*(i +1);
+    RGB_TO_INT(greyval,greyval,greyval,color);
+    GS_set_wire_color(surf_list[i], color);
   }
+  free(surf_list);
+
+#else
   
+  int i, ramp[MAX_SURFS];
+  int sortSurfs[MAX_SURFS], sorti[MAX_SURFS];
+  make_red_yellow_ramp(ramp, surfs, 30, 255);
+  sort_surfs_mid(sortSurfs, sorti, surfs);
+  
+  for(i = 0; i < surfs; i++) {
+    GS_set_wire_color(sortSurfs[i], ramp[i]);
+  }
+
+#endif
+  return 0;
 }
 
+int Ninit(Tcl_Interp *interp, Tk_Window w)
+{
+  static Nv_data data;
 
+  init_commands(interp, &data);
 
+  Ninitdata(interp, &data);
 
+  /* compile in the home directory */
+Tcl_SetVar(interp, "src_boot", getenv("GISBASE"), TCL_GLOBAL_ONLY); 
 
+}  
 
+void swap_togl();
 
+int Ninitdata(
+     Tcl_Interp *interp,			/* Current interpreter. */
+     Nv_data *data)
+{
+  char rescmd[120], *string, **argv;
+  int argc;
+  int i;
 
+  argc = Ngetargs(interp, &argv);
 
+  G_gisinit (argv[0]);
 
-
-
-
-
-
+  GS_libinit();
+  GS_set_swap_func(swap_togl);
+  data->NumCplanes = 0;
+  data->CurCplane = 0;
+  parse_command(data, interp, argc, argv);
+}

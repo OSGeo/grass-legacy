@@ -67,6 +67,7 @@ weight_cmnd:    list_expr
 					{ return(NULL_EXPR) ; }
         |       error
 					{ return(ERR_EXPR) ; }
+	;
 
 list_expr:      LST_TKN MAP_TKN LINE_TKN
 					{ list_maps() ; }
@@ -76,12 +77,15 @@ list_expr:      LST_TKN MAP_TKN LINE_TKN
 					{ list_cats($2) ; }
 	|	LST_TKN ANAL_TKN LINE_TKN
 					{ list_analysis(0) ; }
+	;
 
 color_expr:	COLR_TKN NAM_STR LINE_TKN
 					{ select_colors ($2) ; }
+	;
 
 print_expr: 	PRT_TKN ANAL_TKN LINE_TKN
 					{ list_analysis(1) ; }
+	;
 
 assign_expr:    ASG_TKN NAM_STR LONG_NUM LONG_NUM LINE_TKN
 					{ assign_single($2, $3, $4) ; }
@@ -89,6 +93,7 @@ assign_expr:    ASG_TKN NAM_STR LONG_NUM LONG_NUM LINE_TKN
 					{ ask_weights($2) ; }
            |    ASG_TKN NAM_STR LONG_NUM LONG_NUM LONG_NUM LINE_TKN
 					{ assign_mult($2, $3, $4, $5) ; }
+	;
 
 unchoose_expr:    UNCH_TKN NAM_STR LINE_TKN
 					{ unchoose_map($2) ; }
@@ -127,6 +132,7 @@ unchoose_expr:    UNCH_TKN NAM_STR LINE_TKN
 					unchoose_map($6) ;
 					unchoose_map($7) ;
 				}
+	;
 
 choose_expr:    CHOS_TKN NAM_STR LINE_TKN
 					{ choose_map($2) ; }
@@ -165,19 +171,23 @@ choose_expr:    CHOS_TKN NAM_STR LINE_TKN
 					choose_map($6) ;
 					choose_map($7) ;
 				}
+	;
 
 save_expr:      SAV_TKN NAM_STR LINE_TKN
 					{ save($2) ; }
 			|	SAV_TKN LINE_TKN
 					{ save(NUL_STR) ; }
+	;
 
 recover_expr:   REC_TKN NAM_STR LINE_TKN
 					{ recover($2) ; }
 			|   REC_TKN LINE_TKN
 					{ recover(NUL_STR) ; }
+	;
 
 execute_expr:   EXEC_TKN LINE_TKN
 					{ execute() ; }
+	;
 
 misc_expr:      ADD_TKN LINE_TKN
 					{ set_to_add() ; }
@@ -199,9 +209,11 @@ misc_expr:      ADD_TKN LINE_TKN
 					{ system("ls -l") ; }
 			|   LST_TKN REC_TKN LINE_TKN
 					{ system("ls -l") ; }
+	;
 
 quit_expr:      QUIT_TKN LINE_TKN
 			{;}
+	;
 
 help_expr:      HELP_TKN LINE_TKN
 					{ G_gishelp("WEIGHT", "general") ; }
@@ -239,8 +251,11 @@ help_expr:      HELP_TKN LINE_TKN
 					{ G_gishelp("WEIGHT", "ADD_MULT") ; }
 			|	HELP_TKN NAM_STR LINE_TKN
 					{ G_gishelp("WEIGHT", $2) ; }
+	;
+
 null_expr:      LINE_TKN
 			{;}
+	;
 
 %%
 /* ========================================================================= */

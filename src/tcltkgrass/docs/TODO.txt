@@ -3,6 +3,7 @@ This is the wish-list for TCLTKGRASS
 
 Medium:
 - add a r.mapcalc gui similar to xgmapcalc
+  (see unused r.mapcalc.tcl)
 - change of database directory, LOCATION and MAPSET online
 
 

@@ -65,10 +65,11 @@ int I_list_groups (int full)
 	fprintf (temp, "no group files available\n");
     fprintf (temp, "---------------------------------\n");
     fclose (temp);
-    sprintf (buf, "more -d %s", tempfile);
-    system(buf);
-    unlink (tempfile);
+    sprintf (buf, "$GRASS_PAGER %s", tempfile);
+    G_system(buf);
+    remove ( tempfile );
     fprintf (stdout,"hit RETURN to continue -->");
+    fflush(stdout);
     G_gets(buf);
 
     return 0;
@@ -123,10 +124,11 @@ int I_list_subgroups (char *group,int full)
 	fprintf (temp, "no subgroup files available\n");
     fprintf (temp, "---------------------------------\n");
     fclose (temp);
-    sprintf (buf, "more -d %s", tempfile);
-    system(buf);
-    unlink (tempfile);
+    sprintf (buf, "$GRASS_PAGER %s", tempfile);
+    G_system(buf);
+    remove ( tempfile );
     fprintf (stdout,"hit RETURN to continue -->");
+    fflush(stdout);
     G_gets(buf);
 
     return 0;

@@ -1,9 +1,0 @@
-The File-Save Menu Option
-
-This choice allows you to save your current edit session to a
-@glossary("raster map",16.glossary/rastmap.def) in your @glossary("mapset.",16.glosary/mapset.def)  When you choose this menu option you
-will be prompted for the name of a new raster map to be created.
-Once you specify a raster map name, the current raster map @ref("segment file",xgre/segfile.def)
-will be written out to the raster map as will the segment file's
-header, color-table, category, and range information.
-

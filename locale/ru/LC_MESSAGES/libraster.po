@@ -1,0 +1,308 @@
+# GRASS .po file.
+# Copyright (C) 2002 Free Software Foundation, Inc.
+# Alex Shevlakov<sixote@yahoo.com>, 2002.
+#
+#: new_io.c:446 perror.c:11
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 5.0\n"
+"POT-Creation-Date: 2002-11-01 10:00+0400\n"
+"PO-Revision-Date: 2002-11-01 10:00+0400\n"
+"Last-Translator: Alex Shevlakov<sixote@yahoo.com>, 2002\n"
+"Language-Team: ru <ru@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=8-bit\n"
+"Content-Transfer-Encoding: koi8\n"
+
+#: Font.c:11
+msgid "romand"
+msgstr ""
+
+#: Font.c:21
+#, c-format
+msgid "%s/fonts/%s"
+msgstr ""
+
+#: io.c:188
+msgid "Unable to allocate memory\n"
+msgstr "Невозможно выделить память\n"
+
+#: io.c:209 new_io.c:118
+#, c-format
+msgid "ERROR %s from graphics driver.\n"
+msgstr "ОШИБКА %s графического драйвера.\n"
+
+#: io.c:210 new_io.c:118
+msgid "reading"
+msgstr ""
+
+#: io.c:210 new_io.c:118
+msgid "eof"
+msgstr ""
+
+#: io.c:256
+msgid "MONITOR_OVERRIDE"
+msgstr ""
+
+#: io.c:258 new_io.c:159 new_io.c:455
+msgid "MONITOR"
+msgstr ""
+
+#: io.c:264 new_io.c:163
+msgid "No graphics monitor has been selected for output.\n"
+msgstr "Не выбран графический дисплей для вывода.\n"
+
+#: io.c:265 new_io.c:164
+msgid "Please run \"d.mon\" to select a graphics monitor.\n"
+msgstr "Выполните \"d.mon\" для выбора графического дисплея.\n"
+
+#: io.c:275 new_io.c:178
+#, c-format
+msgid "No such graphics monitor as <%s>.\n"
+msgstr "Графический дисплей <%s> не существует.\n"
+
+#: io.c:276 new_io.c:179
+msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
+msgstr "Выполните \"d.mon\" для выбора существующего дисплея.\n"
+
+#: io.c:288
+#, c-format
+msgid "Failed to get socket name for monitor <%s>.\n"
+msgstr "Невозможно получить сокет для дисплея <%s>.\n"
+
+#: io.c:301
+#, c-format
+msgid "No socket to connect to for monitor <%s>.\n"
+msgstr "Невозможно соединиться через сокет для дисплея <%s>.\n"
+
+#: io.c:328
+msgid ""
+"Socket is already in use or not accepting connections.\n"
+"Use d.mon to select a monitor\n"
+msgstr ""
+"Сокет уже используется или не устанавливает соединение.\n"
+"Выполните d.mon для выбора дисплея\n"
+
+#: io.c:336
+msgid ""
+"Trying to connect to something not a socket.\n"
+"Probably program error.\n"
+msgstr ""
+"Попытка соединения не через сокет.\n"
+"Вероятна ошибка программы.\n"
+
+#: io.c:343
+msgid "Connect attempt timed out. Probably an error with the server.\n"
+msgstr "Время для установки соединения закончилось. Вероятна ошибка сервера.\n"
+
+#: io.c:350
+msgid "Not connected...\n"
+msgstr "Нет соединения...\n"
+
+#: io.c:353
+msgid "Couldn't connect to monitor. Will try once more.\n"
+msgstr "Невозможно подключить дисплей. Еще одна попытка.\n"
+
+#: io.c:359
+msgid "Connection failed.\n"
+msgstr "Нет подключения\n"
+
+#: io.c:369 new_io.c:229
+#, c-format
+msgid "%s %s"
+msgstr ""
+
+#: io.c:374
+#, c-format
+msgid "Can't stat %s\n"
+msgstr ""
+
+#: io.c:381 new_io.c:189
+msgid "GIS_LOCK"
+msgstr ""
+
+#: io.c:382 new_io.c:190
+#, c-format
+msgid "%d"
+msgstr ""
+
+#: io.c:390 new_io.c:198
+#, c-format
+msgid "Error - Monitor <%s> is in use.\n"
+msgstr "Ошибка - Дисплей <%s> занят.\n"
+
+#: io.c:392 new_io.c:201
+#, c-format
+msgid "Ошибка - Дисплей <%s> занят %s.\n"
+msgstr ""
+
+#: io.c:402 new_io.c:219
+#, c-format
+msgid "Error - Could not complete locking process for monitor <%s>.\n"
+msgstr "Ошибка - не было закончено запирание (lock) для дисплея <%s>.\n"
+
+#: io.c:404 new_io.c:221
+#, c-format
+msgid "Lock file is %s\n"
+msgstr ""
+
+#: io.c:416
+msgid "Error - Can't set up pipe to graphics device.\n"
+msgstr "Ошибка - Нет канала (pipe) к графическому устройству.\n"
+
+#: io.c:422 new_io.c:243
+#, c-format
+msgid "Error - Graphics monitor <%s> not running!\n"
+msgstr "Ошибка - Графический дисплей <%s> не включен!\n"
+
+#: io.c:426
+#, c-format
+msgid "Please start graphics monitor <%s>.\n"
+msgstr "Включите графический дисплей <%s>.\n"
+
+#: io.c:491 new_io.c:346
+msgid "ERROR - eof from graphics monitor.\n"
+msgstr "ОШИБКА - eof from graphics monitor.\n"
+
+#: io.c:508
+#, c-format
+msgid "Warning - no response from graphics monitor <%s>.\n"
+msgstr "Предупреждение - графический дисплей <%s> не отвечает.\n"
+
+#: io.c:510 new_io.c:365
+msgid "Check to see if the mouse is still active.\n"
+msgstr "Проверьте, работает ли мышь.\n"
+
+#: io.c:513 new_io.c:368
+#, c-format
+msgid "ERROR - no response from graphics monitor <%s>.\n"
+msgstr "ОШИБКА - графический дисплей <%s> не отвечает.\n"
+
+#: io.c:599
+#, c-format
+msgid "%s/locks"
+msgstr ""
+
+#: io.c:614
+msgid "/"
+msgstr ""
+
+#: io.c:620
+#, c-format
+msgid "%s/mon.%d"
+msgstr ""
+
+#: lists.c:24 lists.c:30 perror.c:14 Raster.c:51
+msgid "out of memory"
+msgstr ""
+
+#: new_io.c:237
+msgid "Error - Can't set up pipe to graphics device.\n"
+msgstr "Ошибка - Нет канала (pipe) к графическому устройству.\n"
+
+#: new_io.c:247
+#, c-format
+msgid "Please start graphics monitor <%s>.\n"
+msgstr "Включите графический дисплей <%s>.\n"
+
+#: new_io.c:363
+#, c-format
+msgid "Warning - no response from graphics monitor <%s>.\n"
+msgstr "Предупреждение - графический дисплей <%s> не отвечает.\n"
+
+#: new_io.c:454
+msgid "DISPLAY"
+msgstr ""
+
+#: new_io.c:456 parse_mon.c:25
+msgid "GISBASE"
+msgstr ""
+
+#: new_io.c:460
+msgid "unix:"
+msgstr ""
+
+#: new_io.c:466
+#, c-format
+msgid "%s:%s"
+msgstr ""
+
+#: new_io.c:468
+#, c-format
+msgid "%s/locks/%s/%s/%s"
+msgstr ""
+
+#: new_io.c:469 new_io.c:473 new_io.c:489
+#, c-format
+msgid "%s/locks/%s/%s"
+msgstr ""
+
+#: new_io.c:474 new_io.c:482
+#, c-format
+msgid "%s/locks/%s"
+msgstr ""
+
+#: parse_mon.c:28
+msgid "ERROR: GISBASE not set\n"
+msgstr "ОШИБКА: GISBASE не установлен\n"
+
+#: parse_mon.c:38
+#, c-format
+msgid "%s/etc/monitorcap"
+msgstr ""
+
+#: parse_mon.c:39
+msgid "r"
+msgstr ""
+
+#: parse_mon.c:71 parse_mon.c:75 parse_mon.c:79 parse_mon.c:83 parse_mon.c:87
+#: parse_mon.c:203
+msgid ":"
+msgstr ""
+
+#: parse_mon.c:91
+msgid "\n"
+msgstr ""
+
+#: parse_mon.c:145
+msgid "error:  input line too long\n"
+msgstr ""
+
+#: perror.c:8
+#, c-format
+msgid "%s"
+msgstr ""
+
+#: perror.c:12
+msgid "no current pad"
+msgstr ""
+
+#: perror.c:13
+msgid "pad not found"
+msgstr ""
+
+#: perror.c:15
+msgid "item not found"
+msgstr ""
+
+#: perror.c:16
+msgid "illegal request"
+msgstr ""
+
+#: perror.c:17
+msgid "duplicate name"
+msgstr ""
+
+#: perror.c:18
+msgid "unknown error"
+msgstr ""
+
+#: perror.c:21
+msgid " : "
+msgstr ""
+
+#: perror.c:22
+#, c-format
+msgid "%s\n"
+msgstr ""

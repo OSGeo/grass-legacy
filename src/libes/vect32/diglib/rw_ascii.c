@@ -1,7 +1,12 @@
-/*  @(#)rw_ascii.c	2.1  6/26/87  */
+/*
+ * $Id$
+ *
+ * 2.1  6/26/87  
+ */
+
 #include <string.h>
 #include <stdio.h>
-#include "dig_head.h"
+#include "Vect.h"
 #include "gis.h"
 
 /*
@@ -55,7 +60,11 @@ int dig_read_head_ascii(
 		if (strncmp(buff, "VERTI:", 6) == 0 )		/* Last line of header */
 			return(0) ;
 
-		if ( ! (ptr = G_rindex(buff,':')) )
+		/* DIGIT DATE:   Thu Jun  1 23:19:39 2000
+		 * 	=> ptr points the wrong date string "39 2000".
+		 * Instead of G_rindex, use G_index.
+		 */
+		if ( ! (ptr = G_index(buff,':')) )
 			return(-1);
 		ptr++ ;                 /* Search for the start of text */
 		while (*ptr == ' ')

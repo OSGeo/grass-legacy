@@ -1,0 +1,10 @@
+OBJS = main.o function.o
+PGM = s.kernel
+
+LIBES = $(RASTERLIB) $(GISLIB) $(DATETIMELIB)
+
+$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES) 
+	$(CC)  $(LDFLAGS)  -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(OBJS): #
+$(LIBES): #

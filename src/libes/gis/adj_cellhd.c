@@ -1,4 +1,5 @@
 #include "gis.h"
+#include "glocale.h"
 
 /***********************************************************
 char *
@@ -40,31 +41,31 @@ char *G_adjust_Cell_head(struct Cell_head *cellhd,int row_flag,int col_flag)
     if (!row_flag)
     {
 	if (cellhd->ns_res <= 0)
-	    return ("Illegal n-s resolution value");
+	    return (_("Illegal n-s resolution value"));
     }
     else
     {
 	if (cellhd->rows <= 0)
-	    return ("Illegal row value");
+	    return (_("Illegal row value"));
     }
     if (!col_flag)
     {
 	if (cellhd->ew_res <= 0)
-	    return ("Illegal e-w resolution value");
+	    return (_("Illegal e-w resolution value"));
     }
     else
     {
 	if (cellhd->cols <= 0)
-	    return ("Illegal col value");
+	    return (_("Illegal col value"));
     }
 
 /* for lat/lon, check north,south. force east larger than west */
     if (cellhd->proj == PROJECTION_LL)
     {
 	if (cellhd->north > 90.0)
-	    return ("Illegal latitude for North");
+	    return (_("Illegal latitude for North"));
 	if (cellhd->south < -90.0)
-	    return ("Illegal latitude for South");
+	    return (_("Illegal latitude for South"));
 	while (cellhd->east <= cellhd->west)
 	    cellhd->east += 360.0;
     }
@@ -73,12 +74,12 @@ char *G_adjust_Cell_head(struct Cell_head *cellhd,int row_flag,int col_flag)
     if (cellhd->north <= cellhd->south)
     {
 	if (cellhd->proj == PROJECTION_LL)
-	    return ("North must be north of South");
+	    return (_("North must be north of South"));
 	else
-	    return ("North must be larger than South");
+	    return (_("North must be larger than South"));
     }
     if (cellhd->east <= cellhd->west)
-	return ("East must be larger than West");
+	return (_("East must be larger than West"));
 
 
 /* compute rows and columns, if not set */
@@ -98,7 +99,7 @@ char *G_adjust_Cell_head(struct Cell_head *cellhd,int row_flag,int col_flag)
     }
 
     if (cellhd->cols < 0 || cellhd->rows < 0)
-	return ("Invalid coordinates");
+	return (_("Invalid coordinates"));
 
 
 /* (re)compute the resolutions */

@@ -1,3 +1,4 @@
+#include "gis.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "includes.h"
@@ -9,9 +10,9 @@ XPoint *AllocXPoints (int count)
 {
     if (num_alloc < count) {
         if (num_alloc == 0)
-            pnts = (XPoint *) malloc((unsigned) (count * sizeof(XPoint)));
+            pnts = (XPoint *) G_malloc((size_t) (count * sizeof(XPoint)));
         else
-            pnts = (XPoint *) realloc((char *) pnts, (unsigned) (count *
+            pnts = (XPoint *) G_realloc((void *) pnts, (size_t) (count *
                             sizeof(XPoint)));
         if (pnts == NULL) {
             fprintf(stderr, "AllocXPoints: can't alloc %d XPoints.\n",

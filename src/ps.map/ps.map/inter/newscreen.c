@@ -24,7 +24,7 @@ int newscreen (int pflag)
 
 char *PSpainter_name (void)
 {
-    char *name, *G__getenv();
+    char *name;
     static char *none = "none selected, using default configuration";
 
     name = G__getenv("PSPAINTER");

@@ -10,7 +10,7 @@ int extract (void)
     int have_uhl;
     int first_uhl;
     long xnorth, xsouth, xeast, xwest;
-    unsigned char *tapeptr;
+    char *tapeptr;
     int outlen;
     long offset ;
     int row ;
@@ -23,7 +23,7 @@ int extract (void)
  * uhl() routine will reallocate this when the size of a data record
  * is determined
  */
-    tapebuf = (unsigned char *) malloc (tapebuflen = 4096);
+    tapebuf = malloc (tapebuflen = 4096);
     if (tapebuf == NULL)
     {
 	error ("Not Enough Memory",0);
@@ -39,9 +39,10 @@ int extract (void)
     
     while (readtape())
     {
-	if (*tapebuf == 0252)
+	if (*tapebuf == '\252')
 	{
-if (verbose > 1 && !have_data) fprintf (stderr, "DATA\n");
+	    if (verbose > 1 && !have_data)
+		fprintf (stderr, "DATA\n");
 
 	    if (!have_uhl)
 	    {
@@ -67,8 +68,8 @@ if (verbose > 1 && !have_data) fprintf (stderr, "DATA\n");
 	    continue;
 	}
 
-if (verbose > 1)
-    fprintf (stderr, "%c%c%c\n", tapebuf[0],tapebuf[1],tapebuf[2]);
+	if (verbose > 1)
+	    fprintf (stderr, "%c%c%c\n", tapebuf[0],tapebuf[1],tapebuf[2]);
 
 	if (have_data)
 	    have_data = have_uhl = 0;

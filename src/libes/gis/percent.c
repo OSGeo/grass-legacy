@@ -3,7 +3,7 @@
 * G_percent (n, d, s)
 *
 *  print a counter to stderr
-*  prints percentage of n in d if divisible by s
+*  prints percentage of n in d, in increments of s
 *
 *  example:
 *
@@ -22,21 +22,16 @@ static int prev = -1;
 
 int G_percent (int n,int d,int s)
 {
-    register int x;
+    int x = (d <= 0 || s <= 0)
+	? 100
+	: 100 * n / d;
 
-    if (d <= 0 || s <= 0)
-       x = 100;
-    else
-    {
-        x = n*100/d ;
-        if (x % s) return 0;
-    }
-    if (n <= 0 || n >= d || x != prev)
+    if (n <= 0 || n >= d || x > prev + s)
     {
 	prev = x;
 	fprintf (stderr,"%4d%%\b\b\b\b\b",x);
-	fflush (stderr);
     }
+
     if (x >= 100)
     {
 	fprintf (stderr,"\n");

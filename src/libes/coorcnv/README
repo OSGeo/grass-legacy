@@ -1,0 +1,68 @@
+I changed parts of coorcnv and gis library for map datum support. 
+As the file datum.c which contains the parts of the library 
+for datum support was not compiled in any GRASS distribution
+and the CC_ functions are not documented, this should not
+affect any existing module code. 
+
+See file TODO for changes that are needed to get full
+map datum support in GRASS.
+
+The new file ellipse.table contains 50 ellipsoids (mostly from NIMA
+document TR8350.2). 
+The new file datum.table contains 19 map datum parameters (mostly
+from NIMA document TR8350.2, too).
+The file datum.table.long contains about 100 map datum parameters.  
+
+Some hints on accuracy:
+-----------------------
+Generally the accuracy depends on the transformation method
+used and the accuracy and spatially applicability of the parameters 
+supplied to the transformation function.
+You always must check if the formula is applicable to 
+your problem and supplies the needed accuracy!
+
+
+block shift with cartesian coordinates ~ 10 m
+
+molodensky transformation ~ 5 m
+
+bursa-wolf transformation ~ 1 m
+
+3d similarity transformation ~ 1 m (needs national similarity parameters)
+
+multiple regression equation (MRE) transformation, 
+other methods up to 10 cm (generally not needed for GRASS)
+
+The transformation parameters in datum.table are meant 
+to transform from local datum to wgs84 with the Block shift method or
+Molodensky function. (reverse the sign for the reverse transformation from
+wgs84 to the local datum).
+All transformations need input and output ellipsoid for the
+calculation of Rm and Rn.
+
+You can not use the parameters for the Block shift and 
+Molodensky formula with any other datum shift formula. 
+The Bursa-Wolf datum transformation needs 7 parameters 
+(3 xyz-shift, 3 xyz-rotational, 1 scale factor), which can not 
+be used with any other formula. 
+Specifically do not use the 3 xyz-shift parameters for the Bursa-
+Wolf transformation with the Block shift or Molodensky formula, 
+as the parameters are not independent from another. 
+
+-----------------------
+Metadata for GRASS GIS:
+System: (1)
+Zone: (2)
+Projection: (1)
+Datum: (3)
+Ellipsoid: (3)
+
+(1): Projection depends in most cases on System used.
+(2): Zone only for UTM projection
+(3): Map datum defines ellipsoid (in most usual cases)
+(3): Ellipsoid depends on/is defined by map datum used, 
+     exept some rare cases
+-----------------------
+
+collected 05/2000 by Andreas Lange, 
+andreas.lange@rhein-main.de

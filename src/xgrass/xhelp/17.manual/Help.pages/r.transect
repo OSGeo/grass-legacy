@@ -1,5 +1,0 @@
-
-@man("r.transect") - Outputs raster map layer category values lying along
-user-defined transect line(s).
-
-(GRASS Raster Program)

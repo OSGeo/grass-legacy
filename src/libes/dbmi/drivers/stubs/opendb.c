@@ -1,5 +1,6 @@
 #include "dbmi.h"
 
+int
 db_driver_open_database (handle)
     dbHandle *handle;
 {

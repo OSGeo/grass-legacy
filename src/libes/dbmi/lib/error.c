@@ -1,8 +1,6 @@
 #include "dbmi.h"
-
-extern int errno;
-/*extern char *sys_errlist[];*/ /* bugfix Neteler 6/99 use ANSI C*/
-extern int sys_nerr;
+#include <stdlib.h>
+#include <errno.h>
 
 static int  err_flag = 0;
 static int  err_code = DB_OK;
@@ -76,8 +74,7 @@ db_syserror(s)
     if (who)
 	sprintf (lead, "%s: ", who);
 
-    if (errno > 0 && errno < sys_nerr)
-/*	sprintf (msg, "%s%s: %s", lead, sys_errlist[errno], s);*/ /* bugfix Neteler 6/99: use ANSI C */
+    if (errno > 0)
 	sprintf (msg, "%s%s: %s", lead, strerror(errno), s);
     else
 	sprintf (msg, "%s%s: system error %d\n", lead, s, errno);

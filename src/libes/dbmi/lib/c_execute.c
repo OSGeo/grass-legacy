@@ -1,7 +1,7 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_execute_immediate (driver, SQLstatement)
+int db_execute_immediate (driver, SQLstatement)
     dbDriver *driver;
     dbString *SQLstatement;
 {

@@ -10,6 +10,8 @@
 
 	     (517) - 353-7195
 
+$Id$
+
 VERSION DATE: 6-30-92          
 
 */
@@ -118,6 +120,7 @@ setup_digitizer();
 */
  
 /*go do the work */
+    cellmap_present=0;
     driver();
 
     quit(0);
@@ -166,6 +169,6 @@ Curses_write_window (PROMPT_WINDOW,2,12,G_location());
 	quit(1);
     Mouse_pointer (&x, &y, &button);
 Curses_clear_window (PROMPT_WINDOW);
-
+    system("d.frame -s full_screen");
     return 0;
 }

@@ -1,0 +1,2 @@
+r.mpatch works around the limit of r.patch's maximum number of files.
+

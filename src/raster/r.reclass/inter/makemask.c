@@ -49,6 +49,7 @@ int makemask (void)
 	G_free (table);
 	G_free_cats (&cats);
 	fprintf (stdout,"No new categories specified. Mask not created\n");
+	fflush(stdout);
 	hitreturn();
 	return 0;
     }
@@ -71,6 +72,7 @@ int makemask (void)
 	    old_name, old_mapset, real_name, real_mapset) ;
 	fprintf (stdout,"Therefore, the mask is actually based on the\n") ;
 	fprintf (stdout,"original map [%s in %s]\n", real_name, real_mapset) ;
+	fflush(stdout);
 	hitreturn();
     }
     return 1;
@@ -81,6 +83,7 @@ hitreturn (void)
 {
     char buf[128];
     fprintf (stdout,"\nhit RETURN to continue -->");
+    fflush(stdout);
     G_gets(buf);
 
     return 0;

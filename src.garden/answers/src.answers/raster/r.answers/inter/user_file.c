@@ -112,8 +112,8 @@ user_file(tmpname)
 	  /*---*/
           case 3:  
             G_clear_screen();
-            fprintf (stdout,"\n");
-            fprintf (stdout,"\n");
+            fprintf (stderr,"\n");
+            fprintf (stderr,"\n");
             strcpy(printer, "lpr");
             if ((getenv("PRINTER")) != NULL)
             {

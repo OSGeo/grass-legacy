@@ -46,13 +46,13 @@ int
 usage (char *me)
 {
     fprintf(stderr,"Usage: %s [-f] monitor_name\n", me);
-    exit(-1);
+    exit(1);
 }
 
 int 
 stop_mon (char *name, int forced)
 {
-    char *cur, *G__getenv();
+    char *cur;
     int unset;
 
     unset = 0;

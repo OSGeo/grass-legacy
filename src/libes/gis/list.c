@@ -1,3 +1,19 @@
+/*
+ * $Id$
+ *
+ ****************************************************************************
+ *
+ * MODULE:       GRASS 5 gis library, list.c
+ * AUTHOR(S):    unknown
+ * PURPOSE:      list elements
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
+
 /**********************************************************************
  *  G_list_element (element, desc, mapset, lister)
  *
@@ -27,9 +43,11 @@
  *********************************************************************/
 
 #include "gis.h"
+#include "glocale.h"
 #include <unistd.h>
-
 #include <signal.h>
+#include <string.h>
+
 static int broken_pipe;
 static int hit_return = 0;
 static int list_element(FILE *,char *,char *,char *,int (*)());
@@ -64,7 +82,7 @@ int G_list_element (
  */
     if (isatty(1))
     {
-	more = G_popen ("more","w");
+	more = G_popen ("$GRASS_PAGER","w");
 	if (!more) more = stdout;
     }
     else
@@ -85,7 +103,7 @@ int G_list_element (
     if (!broken_pipe)
     {
 	if (count == 0)
-	    fprintf (more,"no %s files available\n", desc);
+	    fprintf (more,_("no %s files available\n"), desc);
 
 	fprintf (more,"----------------------------------------------\n");
     }
@@ -96,7 +114,7 @@ int G_list_element (
     signal (SIGPIPE, sigpipe);
     if (hit_return && isatty(1))
     {
-	fprintf (stderr, "hit RETURN to continue -->");
+	fprintf (stderr, _("hit RETURN to continue -->"));
 	while (getchar() != '\n')
 	    ;
     }
@@ -145,13 +163,13 @@ static int list_element( FILE *out, char *element,
 	else
 	    sprintf(buf,"ls -C %s", path);
 
-	if (ls = G_popen(buf,"r"))
+	if ((ls = G_popen(buf,"r")))
 	{
 	    while (!broken_pipe && fgets(buf, sizeof buf, ls))
 	    {
 		if (count++ == 0)
 		{
-		    fprintf(out, "%s files available in mapset %s:\n", desc, mapset);
+		    fprintf(out, _("%s files available in mapset %s:\n"), desc, mapset);
 		    if (lister)
 		    {
 			char title[400];

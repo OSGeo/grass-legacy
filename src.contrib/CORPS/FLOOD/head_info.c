@@ -5,7 +5,7 @@
 */
 #include "gis.h"
 #include <string.h>
-#include "dig_head.h"
+#include "vect/dig_head.h"
 #include <stdio.h>
 
 get_head_info(have_old, dhead)

@@ -9,6 +9,7 @@
 #include "dig_curses.h"
 #include "raster.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 /* returns 0 if no changes  or 1 if changes made */
 int 
@@ -130,17 +131,17 @@ Display_settings (struct Menu_head *menu)
     char tmpstr[512];
 
 
-    _Base_string (3, 27, " Current:");
-    _Base_string (4, 27, ON_OFF (Disp_labels));
-    _Base_string (5, 27, ON_OFF (Disp_llabels));
-    _Base_string (6, 27, ON_OFF (Disp_slabels));
-    _Base_string (7, 27, ON_OFF (Disp_markers));
-    _Base_string (8, 27, ON_OFF (Disp_outline));
-    _Base_string (9, 27, ON_OFF (Disp_llines));
-    _Base_string (10, 27, ON_OFF (Disp_lines));
-    _Base_string (11, 27, ON_OFF (Disp_sites));
-    _Base_string (12, 27, ON_OFF (Disp_nodes));
-    _Base_string (13, 27, ON_OFF (Disp_points));
+    _Base_string (3, 27, _(" Current:"));
+    _Base_string (4, 27, _(ON_OFF (Disp_labels)));
+    _Base_string (5, 27, _(ON_OFF (Disp_llabels)));
+    _Base_string (6, 27, _(ON_OFF (Disp_slabels)));
+    _Base_string (7, 27, _(ON_OFF (Disp_markers)));
+    _Base_string (8, 27, _(ON_OFF (Disp_outline)));
+    _Base_string (9, 27, _(ON_OFF (Disp_llines)));
+    _Base_string (10, 27, _(ON_OFF (Disp_lines)));
+    _Base_string (11, 27, _(ON_OFF (Disp_sites)));
+    _Base_string (12, 27, _(ON_OFF (Disp_nodes)));
+    _Base_string (13, 27, _(ON_OFF (Disp_points)));
     /*
     _Base_string (12, 27, ON_OFF (Disp_overlay));
     */

@@ -17,7 +17,7 @@ static const char SCCSID[]="@(#)PJ_nsper.c	4.1	94/02/15	GIE	REL";
 	int		mode; \
 	int		tilt;
 #define PJ_LIB__
-#include	<projects.h>
+#include	"projects.h"
 PROJ_HEAD(nsper, "Near-sided perspective") "\n\tAzi, Sph\n\th=";
 PROJ_HEAD(tpers, "Tilted perspective") "\n\tAzi, Sph\n\ttilt= azi= h=";
 # define EPS10 1.e-10

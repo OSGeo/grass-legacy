@@ -1,9 +1,10 @@
 :
 # is a 64bit alpha machine ? if so set sizeoflong to 8.
+#
+# $Id$
 # 
-#    script by Luca Palmeri (lpalmeri@ux1.unipd.it)
-#                                 07 Dec 1999
-#                                 grass 5.0 beta5i
+# script by Luca Palmeri (lpalmeri@ux1.unipd.it)
+# 07 Dec 1999
 #
 # To be executed right before starting compilation,
 # checks for the presence of the string 'alpha' into
@@ -12,11 +13,12 @@
 # Invoked in $SRCDIR/Makefile during pre_install.
 ###################################################
 
-HEAD_FILE=`dirname $0`"/../head/head"
-PORTABLE="src/libes/vect32/diglib/portable.h"
+ARCH=$1
+HEAD_FILE=`dirname $0`"/../head/head.$ARCH"
+GRASSLIST="src/CMD/lists/GRASS"
 
 ####################### Set ARCH and CC variables
-eval `cat ${HEAD_FILE} | grep ARCH | sed "s/ //g"`
+#eval `cat ${HEAD_FILE} | grep ARCH | sed "s/ //g"`
 eval `cat ${HEAD_FILE} | grep CC | sed "s/ //g"`
 
 ####################### Test for the 64bit pipe
@@ -28,21 +30,21 @@ int main()
 }
 EOM
 ########################
-$CC 64test.c
+$CC 64test.c -o a
 
-SIZEOFLONG=`./a.out`
+SIZEOFLONG=`./a`
 
-rm ./a.out 64test.c
+rm -f ./a a.exe 64test.c
 
 ######################## Is that an alpha ?
 ARCHIT=`echo $ARCH | grep -i "alpha"`
 
-if test $SIZEOFLONG -eq 8 -a \
-	 X$ARCHIT != X ; then
-	 echo "[ 64bit alpha ]"
-	 echo "  --> Setting size of long to 8"
-	 cat $PORTABLE | \
-         sed "s/#define LNG_SIZ  4/#define LNG_SIZ  8/" > $PORTABLE.new
-	 mv $PORTABLE.new $PORTABLE
+if [ "$SIZEOFLONG" -eq "8" -a "X$ARCHIT" != "X" ]; then
+	echo "[ 64bit alpha ]"
+	echo "  --> Using 64-bit PVF library"
+#not required any more:
+#	cat $GRASSLIST | \
+#	sed "s,vect32/diglib$,vect32/diglib64," > $GRASSLIST.new
+#	mv $GRASSLIST.new $GRASSLIST
 fi
 

@@ -24,43 +24,51 @@ main (int argc, char *argv[])
 	CELL *rowbuffer[NBANDS];
 	struct Option *opt1, *opt3, *opt4 ;
 	struct Option *opt2, *opt5 ;
+	struct GModule *module;
 
 	G_gisinit(argv[0]);
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+	"Calculates ground features, e.g. plant "
+	"cover, by remote sensing data using a given regression model";
 
-					/* Define the different options */
+	/* Define the different options */
 
 	opt1 = G_define_option() ;
-	opt1->key        = "model_input";
+	opt1->key        = "model";
 	opt1->type       = TYPE_STRING;
 	opt1->required   = YES;
-	opt1->description= "rvi regression model file" ;
+	opt1->description= "rvi regression model input file" ;
 
 	opt2 = G_define_option() ;
-	opt2->key        = "band1_input";
+	opt2->key        = "band1";
 	opt2->type       = TYPE_STRING;
 	opt2->required   = YES;
-	opt2->description= "visible band1 file" ;
+	opt2->description= "visible band1 input file" ;
 
 	opt3 = G_define_option() ;
-	opt3->key        = "band2_input";
+	opt3->key        = "band2";
 	opt3->type       = TYPE_STRING;
 	opt3->required   = YES;
-	opt3->description= "visible band2 file";
+	opt3->description= "visible band2 input file";
 
 	opt4 = G_define_option() ;
-	opt4->key        = "band3_input";
+	opt4->key        = "band3";
 	opt4->type       = TYPE_STRING;
 	opt4->required   = YES;
-	opt4->description= "infrared band3 file";
+	opt4->description= "infrared band3 input file";
 
 	opt5 = G_define_option() ;
-	opt5->key        = "ground feature_output";
+	opt5->key        = "output";
 	opt5->type       = TYPE_STRING;
 	opt5->required   = YES;
 	opt5->description= "output ground feature calculated" ;
 
 	if (G_parser(argc, argv) < 0)
 		exit(-1);
+
 	strcpy(modelfile, opt1->answer);
 	strcpy(inputfiles[0], opt2->answer);
 	strcpy(inputfiles[1], opt3->answer);
@@ -125,7 +133,7 @@ main (int argc, char *argv[])
 		fprintf (stdout,"processing row: %ld/%d\n", i+1, rows);
 		model(amodel, rowbuffer, cols);
 			/* write out the new row for each cell map */
-		if(G_put_map_row(fd_output, rowbuffer[0]) < 0)
+		if(G_put_raster_row(fd_output, rowbuffer[0], CELL_TYPE) < 0)
 			G_fatal_error("Error while writing new cell map.");
 	}
 

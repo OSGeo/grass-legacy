@@ -1,0 +1,86 @@
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [de] (X11; U; Linux 2.2.16 i686) [Netscape]">
+<title>GRASS 5.0 Tutorial for nviz</title>
+ </head>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<P>
+<A HREF="nviz_toc.html">INDEX</A>
+</P>
+
+<h3>NVIZ - Basic Animation</h3>
+</A> <P>
+
+Use the <A HREF="#AnimP">Animation</A> panel to create simple fly-bys
+of surfaces.  <P>
+
+<h3>
+<IMG SRC="nvimg/panel/anim.gif"> <A NAME="AnimP">Animation Panel</A>
+</h3>  <P>
+
+<strong>step, run, Key Frames:</em></strong> The
+<em>Frames</em></strong> slider may be thought of as a time line
+representing the path.  When a path has been loaded, clicking on
+<em>run</em></strong> will move the viewer down the path, redrawing
+the wire frame surface at each path step.  The user may cancel a
+running animation at any time by clicking on the
+<em>stop</em></strong> button.  The <em>Key Frames</em></strong>
+slider shows the progression of the animation.  Use the
+<em>step</em></strong> arrows to step forward or backward one frame at
+a time, or move the <em>Key Frames</em></strong> slider to the desired
+point in the animation.  The number to the right of the
+<em>step</em></strong> arrows is the frame number being displayed. <p>
+
+<strong>total frames:</em></strong> The value in this type-in box is
+the total number of frames in the animation.  When a vector file is
+first loaded, the number of points in the file (up to 1000) will be
+the number of frames.  Typically, to produce smooth animations, the
+user should use a vector file with 10 - 50 points, then change total
+frames to 100 or more, depending on the length of the animation
+desired. Requesting an excessive number of frames (i.e., 500,000) may
+cause memory problems.  <p>
+
+<strong>show path:</em></strong> Toggling this button ON will cause
+the path to be drawn each time a new frame is drawn.  The color and
+thickness of the path line may be changed using adjustments on the
+<strong>Vectors</em></strong> pop up panel.  Showing the path can be
+useful while previewing and adjusting the path.  <p>
+
+<strong>show vect:</em></strong> Toggling this button ON will cause
+vectors to be drawn each time a new frame is drawn, if a vector file
+has been loaded. (see also <em>Vect...</em></strong>).  <p>
+
+<strong>spline, linear, tension:</em></strong> These controls affect
+the interpolation method used when the value of <em>total
+frames</em></strong> is different than the number of points in the
+original vector file used as the path.  The points from the vector
+file are always used as control points from which the positioning
+information for the total number of requested frames is derived.  If
+<em>spline</em></strong> interpolation is selected, the user may
+adjust spline tension (how much slack there is in the path) using the
+<em>tension</em></strong> slider.  Toggling <em>show
+path</em></strong> ON prior to adjusting tension allows the user to
+judge how much tension to use for a smoother path.  <p>
+
+<A NAME="Rsavev"></A> <strong>run and save images:</em></strong>
+Prompts user in the <strong>GRASS</em></strong> window for a prefix to
+be used to name a series of rgb format image files, one for each
+frame.  The animation is then run from the beginning, with each frame
+being fully rendered using the current display type and resolution
+(see <strong><A HREF="#Ctrlp">Control</A></em></strong> panel).  If
+<em>show vect</em></strong> is toggled ON, the vector file is also
+drawn, then the finished frame is written to an rgb file. If files
+already exist with the same name, they are overwritten.  You may
+cancel <em>run and save images</em></strong> at any time by selecting
+<em>stop</em></strong> This entire process may take several hours of
+computer time for a 100 frame animation of a complex surface, but
+requires no further intervention from the user.  The finished rendered
+animation files can be played back using SGI's <em>movie</em></strong>
+program if it is a very short animation or you can capture the images
+on video (Also see <em><A HREF="#Idump">Img Dump</A></em></strong>).
+
+</BODY>
+</HTML>
+<p>

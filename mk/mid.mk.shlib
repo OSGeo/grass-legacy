@@ -1,0 +1,144 @@
+#########################################################################
+# these define the various directories which contain GRASS programs
+# or files used by GRASS programs
+BIN             = $(GISBASE)/bin
+ETC             = $(GISBASE)/etc
+BIN_INTER       = $(ETC)/bin/inter
+BIN_CMD         = $(ETC)/bin/cmd
+TXT             = $(GISBASE)/txt
+MAN1            = $(GISBASE)/man/1
+MAN2            = $(GISBASE)/man/2
+MAN3            = $(GISBASE)/man/3
+MAN4            = $(GISBASE)/man/4
+MAN5            = $(GISBASE)/man/5
+MAN6            = $(GISBASE)/man/6
+HELP            = $(GISBASE)/man/help
+HTML            = $(GISBASE)/documents
+SCRIPTS         = $(GISBASE)/scripts
+LOCALE          = $(GISBASE)/locale
+
+# other
+CFLAGS      = -I$(INCLUDE_DIR) -I$(CONFIG_DIR) $(COMPILE_FLAGS) $(EXTRA_CFLAGS) $(USE_TERMIO)
+LDFLAGS     = -L$(LIBDIR) -Wl,-rpath-link,$(LIBDIR) $(LINK_FLAGS)
+MANROFF     = # 
+LIBRULE_ST  = ar ruv $@ $?; $(RANLIB) $@
+LIBRULE     = $(LIBRULE_ST)
+LIBRULE_SH  = $(CC) -shared -o $@ $^ $(LDFLAGS) $(SLIBDEPS) && ln -sf $(notdir $@) $(patsubst %.so.$(LIB_VER),%.so,$@)
+SLIBRULE    = $(LIBRULE_SH)
+PICFLAGS    = -fPIC
+
+# various source directories and libraries
+LIBDIR      = $(DSTDIR)/src/libes
+INCLUDE_DIR = $(SRC)/include
+CONFIG_DIR  = $(DSTDIR)/src/include
+
+# libraries
+DEPGISLIB      = $(LIBDIR)/libgrass_gis.so.$(LIB_VER)
+GISLIB         = -lgrass_gis
+
+DEPVASKLIB     = $(LIBDIR)/libgrass_vask.so.$(LIB_VER)
+VASKLIB        = -lgrass_vask
+
+DEPEDITLIB     = $(LIBDIR)/libgrass_gedit.so.$(LIB_VER)
+EDITLIB        = -lgrass_gedit
+
+DEPG3DLIB      = $(LIBDIR)/libgrass_g3d.so.$(LIB_VER)
+G3DLIB         = -lgrass_g3d
+
+DEPICONLIB     = $(LIBDIR)/libgrass_icon.so.$(LIB_VER)
+ICONLIB        = -lgrass_icon
+
+DEPLOCKLIB     = $(LIBDIR)/libgrass_lock.so.$(LIB_VER)
+LOCKLIB        = -lgrass_lock
+
+DEPIMAGERYLIB  = $(LIBDIR)/libgrass_I.so.$(LIB_VER)
+IMAGERYLIB     = -lgrass_I
+
+DEPROWIOLIB    = $(LIBDIR)/libgrass_rowio.so.$(LIB_VER)
+ROWIOLIB       = -lgrass_rowio
+
+DEPCOORCNVLIB  = $(LIBDIR)/libgrass_coorcnv.so.$(LIB_VER)
+COORCNVLIB     = -lgrass_coorcnv
+
+DEPSEGMENTLIB  = $(LIBDIR)/libgrass_segment.so.$(LIB_VER)
+SEGMENTLIB     = -lgrass_segment
+
+DEPGPROJLIB    = $(LIBDIR)/libgrass_proj.so.$(LIB_VER)
+GPROJLIB       = -lgrass_proj
+
+DEPBTREELIB    = $(LIBDIR)/libgrass_btree.so.$(LIB_VER)
+BTREELIB       = -lgrass_btree
+
+DEPIBTREELIB   = $(LIBDIR)/libgrass_ibtree.so.$(LIB_VER)
+IBTREELIB      = -lgrass_ibtree
+
+DEPGMATHLIB    = $(LIBDIR)/libgrass_gmath.so.$(LIB_VER)
+GMATHLIB       = -lgrass_gmath
+
+DEPDLGLIB      = $(LIBDIR)/libgrass_dlg.so.$(LIB_VER)
+DLGLIB         = -lgrass_dlg
+
+DEPRASTERLIB   = $(LIBDIR)/libgrass_raster.so.$(LIB_VER)
+RASTERLIB      = -lgrass_raster
+
+DEPDISPLAYLIB  = $(LIBDIR)/libgrass_display.so.$(LIB_VER)
+DISPLAYLIB     = -lgrass_display
+
+DEPD_LIB       = $(LIBDIR)/libgrass_D.so.$(LIB_VER)
+D_LIB          = -lgrass_D
+
+DEPDATETIMELIB = $(LIBDIR)/libgrass_datetime.so.$(LIB_VER)
+DATETIMELIB    = -lgrass_datetime
+
+DEPDRIVERLIB   = $(LIBDIR)/libgrass_driver.so.$(LIB_VER)
+DRIVERLIB      = -lgrass_driver
+
+DEPLINKMLIB    = $(LIBDIR)/libgrass_linkm.so.$(LIB_VER)
+LINKMLIB       = -lgrass_linkm
+
+DEPBITMAPLIB   = $(LIBDIR)/libgrass_bitmap.so.$(LIB_VER)
+BITMAPLIB      = -lgrass_bitmap
+
+DEPDIGLIB      = $(LIBDIR)/libgrass_dig.so.$(LIB_VER)
+DIGLIB         = -lgrass_dig
+
+DEPDIG2LIB     = $(LIBDIR)/libgrass_dig2.so.$(LIB_VER)
+DIG2LIB        = -lgrass_dig2
+
+DEPVECTLIB_REAL= $(LIBDIR)/libgrass_vect.so.$(LIB_VER)
+VECTLIB_REAL   = -lgrass_vect
+
+DEPDIG_ATTLIB  = $(LIBDIR)/libgrass_dig_atts.so.$(LIB_VER)
+DIG_ATTLIB     = -lgrass_dig_atts
+
+DEPVECTLIB     = $(DEPVECTLIB_REAL) $(DEPDIG2LIB)
+VECTLIB        = $(VECTLIB_REAL) $(DIG2LIB)
+
+# Cannot be made shared
+DEPDBMILIB     = $(LIBDIR)/libdbmi.a
+DBMILIB        = -ldbmi
+
+DEPIMAGESUPLIB = $(LIBDIR)/libgrass_image_sup.so.$(LIB_VER)
+IMAGESUPLIB    = -lgrass_image_sup
+
+# triangulation libraries
+
+DEPSOSLIB      = $(LIBDIR)/libgrass_sos.so.$(LIB_VER)
+SOSLIB         = -lgrass_sos
+
+DEPLIALIB      = $(LIBDIR)/libgrass_lia.so.$(LIB_VER)
+LIALIB         = -lgrass_lia
+
+DEPOPTRILIB    = $(LIBDIR)/libgrass_optri.so.$(LIB_VER)
+OPTRILIB       = -lgrass_optri
+
+DEPBASICLIB    = $(LIBDIR)/libgrass_basic.so.$(LIB_VER)
+BASICLIB       = -lgrass_basic
+
+DEPGEOMLIB     = $(DEPOPTRILIB) $(DEPSOSLIB) $(DEPLIALIB) $(DEPBASICLIB)
+GEOMLIB        = $(OPTRILIB) $(SOSLIB) $(LIALIB) $(BASICLIB)
+
+DEPXDISPLAYLIB = $(LIBDIR)/libgrass_Xdisplay.so.$(LIB_VER)
+XDISPLAYLIB    = -lgrass_Xdisplay
+
+#########################################################################

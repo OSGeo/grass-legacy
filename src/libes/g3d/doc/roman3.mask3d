@@ -1,0 +1,27 @@
+From waupo@sal.cs.uiuc.edu Mon Jan 29 18:58:35 1996
+Received: from sal.cs.uiuc.edu by gomez.gis.uiuc.edu with SMTP id AA03146
+  (5.67b/IDA-1.5 for <helena@gis.uiuc.edu>); Mon, 29 Jan 1996 18:58:34 -0600
+Received: (from waupo@localhost) by sal.cs.uiuc.edu (8.7.3/8.7.3) id SAA14018; Mon, 29 Jan 1996 18:58:32 -0600 (CST)
+From: Roman Waupotitsch <waupo@cs.uiuc.edu>
+Message-Id: <199601300058.SAA14018@sal.cs.uiuc.edu>
+Subject: mask
+To: helena@gis.uiuc.edu (Helena Mitasova)
+Date: Mon, 29 Jan 1996 18:58:31 -0600 (CST)
+Cc: brown@diego.cecer.army.mil, olga@demaco1.demaco.com
+In-Reply-To: <199601271543.JAA13125@rogue.gis.uiuc.edu> from "Helena Mitasova" at Jan 27, 96 09:43:21 am
+X-Mailer: ELM [version 2.4 PL24]
+Content-Type: text
+Status: RO
+
+
+i have not implemented mask at this point, but it won't be a lot of work.
+i suggest that the functionality will be slightly different from the 2d 
+grass. there will be only one type of read and get function (in 2d there is 
+one read with mask and one without mask) and one additional funcction which
+turns masking on or off. is this a bad idea? it's no problem to use the
+original 2d scheme for me otherwise. 
+
+i cc this mail to bill and let him be the judge.
+
+roman
+

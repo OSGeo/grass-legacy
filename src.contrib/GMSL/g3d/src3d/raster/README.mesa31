@@ -1,0 +1,181 @@
+From:
+<Andreas.Lange@Rhein-Main.de>
+Location of file: src.contrib/GMSL/g3d/src3d/raster/README.mesa31
+
+Requirements for NVIZ: 
+        shared libraries of OpenGL or Mesa 3.0 or higher
+Requirements for r3.showdspf.openGL: 
+        shared libraries of OpenGL or Mesa 3.0 or higher,
+	Motif or lesstif libraries and headers 
+
+written by
+Andreas Lange, Wiesbaden, Germany
+<Andreas.Lange@Rhein-Main.de>
+and remarks form Dietrich Lange derdietrich@yahoo.de, 05.04.2002
+
+----------------------------------------------------------
+Installing Mesa 3.1 libraries (do this as root!) on linux:
+
+I did not test this on other unix platforms, but the mesa
+documentation says that autoconf works on all unix platforms
+with X11. 
+
+You must have installed the X11-development libraries, see
+the documentation of your distribution which packets you need.
+
+1. Get the sources for the libraries from:
+   http://www.mesa3d.org/
+   http://mesa3d.sourceforge.net/download.html
+   (please use a mirror near you!)
+
+   You need the file:   Mesalib-3.x.tar.gz (1.6 MB)
+   (and optional:       MesaDemos-3.x.tar.gz (1.1 MB) )
+	where x is currently sub-version 2   
+
+2. unpack the sources in a directory of your choice (e. g. /tmp):
+
+     tar xzf Mesalib-*.tar.gz
+     (tar xzf Mesa-Demos-*.tar.gz)
+
+3. cd to the new directory:
+     cd Mesa*
+   read the docs/README file (less docs/README)
+   read the docs/INSTALL file (less docs/INSTALL)
+   configure the libraries with:
+     ./configure --prefix=/usr
+   compile and install the libraries with:
+     make install 
+   
+   if you want to test the libraries:
+     make check
+   if you want to execute and install the demos:
+     make exec
+
+   In contradiction to the Mesa-docs you do not need to 
+   install the include directory or the library files 
+   manually. 
+
+   You do not need to compile the SGI widgets if you only
+   want to compile NVIZ2.2.
+
+   If you want to compile r3.showdspf.openGL you must manually
+   compile the SGI widgets from the directory widgets-sgi.
+   The mesa widgets (widgets-mesa) use autoconf, but there was
+   no shared library build when i compiled them, so i could not
+   use them. If you re-try this, use --with-motif and --prefix=/usr
+   for ./configure!
+
+   See at the end of this document for a short, prelimnary 
+   instruction for the SGI widgets. 
+
+   Do _not_ install the mesa-libraries under /usr/local/lib
+   (this is the default!), because on most systems /usr/local/lib
+   is not included in the search path for shared libraries.
+   If you must install the libraries in your home directory or another
+   local path, you must 'export LD_LIBRARY_PATH=/path/to/shared_libs'.
+   Or add manually the path to the libraries to /etc/ld.so.conf, 
+   but this requires root privileges, so you could easily install the shared 
+   libraries in /usr/lib. Run ldconfig after any change of /etc/ld.so.conf,
+   see man ldconfig for further details. 
+
+4. compile NVIZ2.2, see the file README in
+   grass5.0beta/src.contrib/GMSL/NVIZ2.2
+
+5. If you need the SGI Widgets for r3.showdspf.openGL:
+   cd to the widgets-sgi directory of the mesa distribution.
+   The SGI Widgets do _not_ use the autoconf mechanism, so you 
+   must manually invoke make and manually install the libraries.
+   First: Edit the file Makefile.X11:
+   uncomment '#SOURCES = GLwDrawA.c GLwMDrawA.c' and
+   comment 'SOURCES = GLwDrawA.c'. 
+   Next: do a 'make linux-elf' to build the shared libraries.
+   You get an error because the lib-dir is wrong. Don't care.
+   Now copy the libraries to /usr/lib (root priviledges needed):
+   cp -dpa libGLw.so* /usr/lib   
+   Now run /sbin/ldconfig and you are done! 
+
+---------------------------------------------------------------------------
+Remarks von Dietrich Lange (derdietrich@yahoo.de) 05.04.2002 to this point:
+
+Compiling of the SGI Widgets for r3.showdspf.openGL and the r3* commands.
+
+i downloaded Mesa-3.5, and in the directory wiedgets-sgi i didn't find an configure file and 
+none Makefile.X11.
+
+Therefore i used the code in widgets-mesa:
+
+./configure --with-motif --prefix=/usr
+make
+
+produces the libaries in ./src:
+
+-rw-r--r--    1 dietrich users       25428 Apr  5 14:17 libMesaGLw.a
+-rw-r--r--    1 dietrich users       27718 Apr  5 14:17 libMesaGLwM.a
+
+i copied these files to /usr/lib:
+
+cp -dpai libMesaGL* /usr/lib  
+updated the linker:
+/sbin/ldconfig
+
+still the compiling process of 
+
+gmake5 -i src.contrib/GMSL/g3d
+
+didn't work, because there the linker couldnt find libaries. 
+
+Afer some testing it worked with the following:
+
+There i changed the file:
+
+src.contrib/GMSL/g3d/src3d/raster/r3.showdspf.openGL/Gmakefile
+
+as shown below, and not as described in [GRASSLIST:1489]:Re: r3.showdspf, 
+because there they seem to work in ,my case with other libaries:
+
+original: 
+
+OGLLIB=  $(OPENGLULIB) -lGL $(LGLWM) -lXm -lX11 -lXt -lXext
+
+after some experiments it worked in my case with following configuration: 
+
+OGLLIB=  $(OPENGLULIB)  -lGL -lGLw -lMesaGLw -lMesaGLwM ${LGLWM} -lXm -lX11 -lXt -lXext
+
+then i changed back to the main-directory of grass and did:
+
+gmake5 -i src.contrib/GMSL/g3d
+gmakelinks5 -i
+
+and could use the r3* commands.
+
+Greetings Dietrich Lange
+derdietrich@yahoo.de
+
+My configuration:
+
+computer with GL-graphics card 
+
+and:
+xf86-4.1.0-45
+xf86_glx-4.1.0-45
+xf86glu-4.1.0-45
+xf86glx-devel-4.1.0-63
+xf86glu-devel-4.1.0-63
+mesa-3.4.2-42
+mesaglut-3.4.2-42
+mesasoft-3.4.2-42
+mesademos-3.4.2-57
+mesa-devel-3.4.2-57
+mesaglu-devel-3.4.2-57
+mesaglut-devel-3.4.2-57
+mesaglu-3.4.2-57
+libtiff-3.5.5-195
+lesstif-devel-0.92.32-47
+lesstif-0.92.32-47
+openmotif-devel-2.1.3
+
+
+End Remarks for Dietrich Lange
+-----------------------------------------------------------
+
+andreas.lange@rhein-main.de, 2000/05/10

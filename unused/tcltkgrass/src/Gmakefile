@@ -1,0 +1,23 @@
+PROG = ../bin/tcltkgrass
+INC = -I ./../include
+
+EXTRA_CFLAGS = $(TCLINCDIR) $(TKINCDIR) $(INC)
+
+TCLTKLIB = $(TCLTKLIBS) $(DLLIB)
+
+LIBS  = $(VECTLIB) $(GISLIB) $(DATETIMELIB)
+LLIBS = $(TCLTKLIB) $(XLIBPATH) $(XLIB) $(MATHLIB)
+
+OBJ=\
+	georeg.o\
+	layer.o\
+	view.o\
+	draw.o\
+	main.o\
+	do_labels.o
+
+all: $(PROG) 
+$(PROG): $(OBJ) $(LIBS)
+	${CC} --fwritable-strings $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(LIBS) $(LLIBS)
+
+$(LIBS): #

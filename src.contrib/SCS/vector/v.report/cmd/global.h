@@ -53,6 +53,7 @@ GLOBAL int nlines INIT(0);
 GLOBAL int with_headers INIT(1);
 GLOBAL int verbose INIT(1);
 GLOBAL int type INIT(0);
+GLOBAL int e_format INIT(0);
 
 GLOBAL char *stats_file;
 GLOBAL int stats_flag INIT(0);
@@ -75,8 +76,9 @@ GLOBAL int stats_flag INIT(0);
 int do_v_stats(int, int, char *);
 int codes(char);
 /* format.c */
-int format_parms(double, int, int *, int *);
-int format_double(double, char *, int, int, int);
+int format_parms(double, int *, int *, int *, int);
+int scient_format(double, char *, int, int);
+int format_double(double, char *, int, int);
 /* header.c */
 int header(int, int);
 int divider(char *);

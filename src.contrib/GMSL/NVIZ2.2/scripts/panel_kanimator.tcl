@@ -1609,14 +1609,17 @@ proc keyanimFindKeyForward { cname cindex } {
 proc keyanimRunAndSave { BASE } {
     global keyanimKeyList keyanimPlayState keyanimFrameRate
     global keyanimWaitPress keyanimBaseName keyanimSaveRenderStyle
-    global keyanimFrameNum
+    global IMG keyanimFrameNum
     
     if {[llength $keyanimKeyList] < 2} then { return }
     
     # First create a popup to get the filename prefix to use
     # for images
     set keyanimWaitPress false
+    set IMG 2
     toplevel .ras_fname
+    frame .ras_fname.frame1
+    frame .ras_fname.frame2
     label .ras_fname.title -text "Enter a base name:"
     entry .ras_fname.enter -relief sunken
     radiobutton .ras_fname.norm -text "Wireframe" \
@@ -1624,8 +1627,21 @@ proc keyanimRunAndSave { BASE } {
     radiobutton .ras_fname.fancy -text "Full Rendering" \
 	-variable keyanimSaveRenderStyle -value 1
     button .ras_fname.ok -text "Ok" -command "set keyanimWaitPress true"
-    pack .ras_fname.title .ras_fname.enter .ras_fname.norm \
-	.ras_fname.fancy .ras_fname.ok -fill both
+    label .ras_fname.label -text "" -relief raised
+    radiobutton .ras_fname.img1 -text "Iris RGB" -variable IMG -value 1
+    radiobutton .ras_fname.img2 -text "PPM" -variable IMG -value 2
+    radiobutton .ras_fname.img3 -text "TIFF" -variable IMG -value 3
+
+#Pack Menu
+    pack .ras_fname.frame1 -side top -fill both -expand 1
+    pack .ras_fname.frame2 -side bottom -fill both -expand 1
+    pack .ras_fname.title .ras_fname.enter -side top \
+    -in .ras_fname.frame1 -fill both
+    pack .ras_fname.img1 .ras_fname.img2 .ras_fname.img3 \
+    -in .ras_fname.frame1 -side left -fill both
+    pack .ras_fname.label .ras_fname.norm .ras_fname.fancy -side top \
+    -in .ras_fname.frame2 -fill both 
+    pack .ras_fname.ok -side bottom -fill both -in .ras_fname.frame2 -expand 1
     tkwait variable keyanimWaitPress
     set keyanimBaseName [.ras_fname.enter get]
     destroy .ras_fname
@@ -1655,7 +1671,7 @@ proc keyanimRunAndSave { BASE } {
 #
 ############################################################################
 proc keyanimSaveFrame { fnum } {
-    global keyanimBaseName keyanimSaveRenderStyle
+    global IMG keyanimBaseName keyanimSaveRenderStyle
     
     # First create a file name
     set fname $keyanimBaseName
@@ -1663,10 +1679,18 @@ proc keyanimSaveFrame { fnum } {
     while {[string length $num] < 5} {
 	set num 0$num
     }
-    
+if {$IMG == 1} {
     append fname $num ".rgb"
-    
     Nwrite_rgb $fname
+        }
+if {$IMG == 2} {
+        append fname $num ".ppm"
+        Nwrite_ppm $fname
+        }
+if {$IMG == 3} {
+        append fname $num ".tif"
+        Nwrite_tif $fname
+        }
 }
 
 ############################################################################

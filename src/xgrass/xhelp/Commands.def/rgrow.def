@@ -1,9 +1,0 @@
-
-
-r.grow - 
-
-r.grow adds one @glossary("cell",16.glossary/cell.def) around the perimeters of all areas in a
-user-specified @glossary("raster",16.glossary/rastdata.def) map layer and stores the output in a new raster
-map layer.
-
-Manual entry for @man("r.grow")

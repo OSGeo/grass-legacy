@@ -1,0 +1,67 @@
+README file:
+
+This directory contains a Spatial Data Transfer Standard (SDTS), 
+Topological Vector Profile (TVP) compliant transfer.  It was produced 
+by the Geography Division of the U.S. Census Bureau, and is based 
+on the TIGER/SDTS prototype product.
+
+Standard Authority:  FIPS 173:  The Spatial Data Transfer Standard 
+                       Part 4:  Topological Vector Profile, 7/6/93
+
+Catalog Directory file name:
+        xxxxCATD.DDF
+        This file is the catalog directory file and it carries a 
+        listing of every file to be included in the transfer including 
+        file and module names.
+
+Identification file name:
+        xxxxIDEN.DDF
+        This file contains information that describes the overall
+        characteristics of the data in this transfer, including
+        it geographical domain.
+
+ISO 8211 conformance:
+        All files with extension *.DDF are in the ISO 8211 file transfer
+        format.  All SDTS spatial addresses are expressed in two 32 bit 
+        binary sub-fields defined by the ISO8211.  Leader and directory
+        information is dropped whenever possible.  Files are Level 2 of
+        ISO 8211.
+
+Transfer produced by:  TIGER System Staff
+                       Geography Division
+                       U.S. Census Bureau 
+
+Purpose of Data Set:  Prototype of the TIGER in SDTS/TVP.
+
+TIGER/SDTS prototype dataset caveat considerations:
+     
+     (1)  The TIGER/SDTS prototype dataset includes the full 
+          suite of the TIGER model components and constructs 
+          (as described in TIGER Documentation published in 1989).
+          This prototype is a copy of the Census Bureau's 
+          internal TIGER data base and as a result contains
+          many data items which are not present in TIGER/Line.  
+
+     (2)  The TIGER/SDTS prototype datasets were produced to 
+          test the elements and functionality of the prototype 
+          production system and SDTS standard itself.
+
+     (3)  The Census Bureau has elected to distribute the TIGER/SDTS 
+          prototype datasets in order to receive user feedback 
+          on the data model concepts and data content.
+
+POINT OF CONTACT:
+
+                   SDTS Contact:  SDTS Task Force         !  Information also      
+                                  U.S. Geological Survey  !  available on FTP site
+                                  526 National Center     !  sdts.er.usgs.gov
+                                  Reston, VA  22092       !  (130.11.52.170)
+                                  email:  sdtsausgs.gov   !
+
+     U.S. Census Bureau Contact:  TIGER System Staff   
+                                  Geography Division
+                                  5001 Silver Hill Rd.
+                                  Suitland, MD  20233
+                                  PHONE: (301) 763-1796
+                                  FAX: (301) 763-4749
+  

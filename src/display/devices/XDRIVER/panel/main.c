@@ -3,7 +3,8 @@ main()
 {
     char *tmp;
     tmp = G_tempfile();
-    R_open_driver();
+    if (R_open_driver() != 0)
+	    G_fatal_error ("No graphics device selected");
     R_panel_save(tmp,
 	    R_screen_top(), R_screen_bot(),
 	    R_screen_left(),R_screen_rite());

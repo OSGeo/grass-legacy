@@ -1,5 +1,6 @@
 #include "dbmi.h"
 
+int
 db_driver_delete_database (handle)
     dbHandle *handle;
 {

@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "Vect.h"
-#include "digit.h"
+#include "Vect.h"
 #include "local_proto.h"
 
 /*

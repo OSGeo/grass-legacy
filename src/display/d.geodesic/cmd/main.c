@@ -11,12 +11,19 @@ int main (int argc, char *argv[])
     double lon1,lat1,lon2,lat2;
     char msg[100];
     char *deftcolor;
+	struct GModule *module;
     struct
     {
 	struct Option *lcolor, *tcolor, *coor;
     } parm;
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Displays a geodesic line, tracing the shortest distance "
+		"between two geographic points along a great circle, in "
+		"a longitude/latitude data set.";
 
     parm.coor = G_define_option() ;
     parm.coor->key        = "coor" ;
@@ -56,32 +63,29 @@ int main (int argc, char *argv[])
     {
         if (!G_scan_easting (parm.coor->answers[0], &lon1, G_projection())) 
 	{
-	    fprintf (stderr, "%s - illegal longitude\n", parm.coor->answers[0]);
 	    G_usage();
-            exit(-1);
+	    G_fatal_error ("%s - illegal longitude", parm.coor->answers[0]);
 	}
         if (!G_scan_northing (parm.coor->answers[1], &lat1, G_projection())) 
 	{
-	    fprintf (stderr, "%s - illegal longitude\n", parm.coor->answers[1]);
 	    G_usage();
-            exit(-1);
+	    G_fatal_error ("%s - illegal longitude", parm.coor->answers[1]);
 	}
         if (!G_scan_easting (parm.coor->answers[2], &lon2, G_projection())) 
 	{
-	    fprintf (stderr, "%s - illegal longitude\n", parm.coor->answers[2]);
 	    G_usage();
-            exit(-1);
+	    G_fatal_error ("%s - illegal longitude", parm.coor->answers[2]);
 	}
         if (!G_scan_northing (parm.coor->answers[3], &lat2, G_projection())) 
 	{
-	    fprintf (stderr, "%s - illegal longitude\n", parm.coor->answers[3]);
 	    G_usage();
-            exit(-1);
+	    G_fatal_error ("%s - illegal longitude", parm.coor->answers[3]);
 	}
 	use_mouse = 0;
     }
 
-    R_open_driver();
+    if (R_open_driver() != 0)
+	    G_fatal_error ("No graphics device selected");
 
     line_color = D_translate_color (parm.lcolor->answer);
     if (!line_color)

@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "gis.h"
+#include "site.h"
 #include "local_proto.h"
 
 #define SITE_BLOCK 512
@@ -104,7 +105,8 @@ int s_alloc=0, snum=0, outside=0, tot_mem=0;
     while((ret = G_site_get (sfd, CurSites[snum])) != -1){
 
 	if(-2 == ret){
-	    badformat++; 
+	    badformat++;
+	    fprintf(stderr, "Bad format found for site: #%i (ignored)\n", snum + 1);
 	    continue;
 	}
 	
@@ -218,6 +220,7 @@ int badformat=0, ret;
 	
 	if(-2 == ret){
 	    badformat++; 
+            fprintf(stderr, "Bad format found for site: #%i (ignored)\n", snum + 1);
 	    continue;
 	}
 	
@@ -369,20 +372,16 @@ int i;
 
 }
 
-#define TRY_LABELS
-
 void sites_describe (void)
 {
 char rtypestr[32];
 int i;
 int got_labels=0;
-#ifdef TRY_LABELS
 char dimlabel[MAX_ST_ATTS][40];
 char catlabel[40];
 char strlabel[MAX_ST_ATTS][40];
 char declabel[MAX_ST_ATTS][40];
 int ndiml, nstrl, ndecl;
-#endif
 FILE *report=stdout;
 
 
@@ -390,14 +389,7 @@ FILE *report=stdout;
 	fprintf(stderr, "\n\t - - - NO SITES FILE LOADED - - -\n\n");
 	return;
     }
-/*
-    if(!CacheSites){
-	fprintf(stderr, "\n\t - - - NO SITES FILE CACHED - - -\n");
-	return;
-    }
-*/
 
-#ifdef TRY_LABELS
     ndiml = nstrl = ndecl = 0;
     if(Shd.form && Shd.labels){
     char *pf, *pl;
@@ -406,55 +398,40 @@ FILE *report=stdout;
         pf=Shd.form;
         pl=Shd.labels;
 	i = 0;
-	while(pf[i]){
-	    switch (pf[i]) {
+	while(pf[i])
+	{
+	    switch (pf[i])
+	    {
 		case '|':
-		    ret = sscanf(pl, "%[^|#@%]s", dimlabel[ndiml]);
-/*
-fprintf(stderr,"%d %s\n", ndiml, dimlabel[ndiml]);
-*/
-		    ndiml += ret;
-		    pl = strchr(pl, pf[i]) + 1;
+		    ret = sscanf(pl, "%[^|#@%]", dimlabel[ndiml]);
+		    if (ret > 0) ndiml++;
+		    pl = strchr(pl, pf[i]);
+		    if (pl) pl++;
 		    break;
 		case '#':
-		    ret = sscanf(pl, "#%[^|#@%]s", catlabel);
-/*
-fprintf(stderr,"%s\n", catlabel);
-*/
+		    ret = sscanf(pl, "#%[^|#@%]", catlabel);
 		    if(pf[i+1] && pl[1])  pl = strchr(pl+1, pf[i+1]) ;
 		    break;
 		case '@':
-		    ret = sscanf(pl, "@%[^|#@%]s", strlabel[nstrl]);
-/*
-fprintf(stderr,"%d %s\n", nstrl, strlabel[nstrl]);
-*/
-		    nstrl += ret;
+		    ret = sscanf(pl, "@%[^|#@%]", strlabel[nstrl]);
+		    if (ret > 0) nstrl++;
 		    if(pf[i+1] && pl[1])  pl = strchr(pl+1, pf[i+1]) ;
 		    break;
 		case '%':
-		    ret = sscanf(pl, "%%%[^|#@%]s", declabel[ndecl]);
-/*
-fprintf(stderr,"%d %s\n", ndecl, declabel[ndecl]);
-*/
-		    ndecl += ret;
+		    ret = sscanf(pl, "%%%[^|#@%]", declabel[ndecl]);
+		    if (ret > 0) ndecl++;
 		    if(pf[i+1] && pl[1])  pl = strchr(pl+1, pf[i+1]) ;
 		    break;
 	    }
-	    if(!pl){
+	    if(!pl)
 		break;
-	    }
 	    i++;
 	}
 
 	if((ndiml == Sstat_min->dim_alloc + 2) && 
 	   (nstrl == Snumstrings) && 
 	   (ndecl == Sstat_min->dbl_alloc)) got_labels = 1;
-/*
-fprintf(stderr,"%d:    %d %d %d\n", got_labels, Sstat_min->dim_alloc + 2,
- Snumstrings,Sstat_min->dbl_alloc);
-*/
     }
-#endif
 
     switch(Sstat_min->cattype){
 	case  CELL_TYPE:

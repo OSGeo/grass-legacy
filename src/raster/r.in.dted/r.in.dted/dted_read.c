@@ -4,11 +4,15 @@
 #include "gis.h"
 #include "dtedgis.h"
 
+/*
+ * $Id$
+ */
+
 /* for signed bytes:
  * num must be >0 and <sizeof(int) 
  * inc must have at least num bytes
 */
-int sbytes_to_int (char *inc, int num)
+int sbytes_to_int(unsigned char *inc, int num)
 {
 int ret=0;
 int i, nbit;
@@ -32,7 +36,7 @@ int i, nbit;
  * inc must have at least num bytes
 */
 int 
-ubytes_to_int (char *inc, int num)
+ubytes_to_int(unsigned char *inc, int num)
 {
 int ret=0;
 int i;
@@ -247,7 +251,7 @@ char hbuf[RECORD_LEN], hbuf2[RECORD_LEN], hbuf3[RECORD_LEN];
 int 
 read_record (FILE *ifp, int points, dted_d *buf)
 {
-char rec[8];
+unsigned char rec[8];
 int i, dblock, checksum=0, row, col;
 
 
@@ -304,7 +308,7 @@ int dted_zone_compute(double latitude,long *zone)
 /* for debugging */
 int check_record (FILE *ifp, int points)
 {
-char rec[8];
+unsigned char rec[8];
 int i, checksum=0, row;
 /* read record header */
 

@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 
 #define DEBUG
 
 static int Debug_on = 0;
 
-int 
+int
 debuginit (void)
 {
     
@@ -17,13 +18,14 @@ debuginit (void)
     return 0;
 }
 
-#include <stdarg.h>
 int debugf (char *format, ...)
 {
     va_list a;
+
     va_start(a,format);
     if (Debug_on)
 	vfprintf (stderr, format, a);
+
     va_end(a);
 
     return 0;

@@ -7,6 +7,6 @@ OBJ  =  alpha.o close.o colornum.o colortable.o colorvalue.o \
 	misc.o painter.o lock.o colorlevel.o colormult.o
 
 $(LIB): $(OBJ)
-	$(AR)
+	$(LIBRULE)
 
 $(OBJ): ../interface.h

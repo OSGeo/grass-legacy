@@ -1,0 +1,556 @@
+
+
+proc latitude_longitude { } {
+
+
+  toplevel .latitude_longitude
+
+  wm geometry .latitude_longitude +100+20
+  wm title .latitude_longitude "latitude_longitude"
+
+
+  global nlat
+
+
+  frame .latitude_longitude.frame0 \
+    -relief {flat}
+
+  label .latitude_longitude.frame0.label \
+    -anchor {w} \
+    -text {North latitude value:} \
+    -padx {2}
+
+  scrollbar .latitude_longitude.frame0.hscrollbar \
+    -command {.latitude_longitude.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .latitude_longitude.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.latitude_longitude.frame0.hscrollbar set}
+
+  pack append .latitude_longitude.frame0 \
+    .latitude_longitude.frame0.label { top fillx } \
+    .latitude_longitude.frame0.entry { top fillx } \
+    .latitude_longitude.frame0.hscrollbar { bottom fillx }
+
+  .latitude_longitude.frame0.entry configure -state normal
+
+  bind .latitude_longitude.frame0.entry <Return> {
+       set nlat [%W get] }
+
+
+  global slat
+
+
+  frame .latitude_longitude.frame1 \
+    -relief {flat}
+
+  label .latitude_longitude.frame1.label \
+    -anchor {w} \
+    -text {South latitude value:} \
+    -padx {2}
+
+  scrollbar .latitude_longitude.frame1.hscrollbar \
+    -command {.latitude_longitude.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .latitude_longitude.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.latitude_longitude.frame1.hscrollbar set}
+
+  pack append .latitude_longitude.frame1 \
+    .latitude_longitude.frame1.label { top fillx } \
+    .latitude_longitude.frame1.entry { top fillx } \
+    .latitude_longitude.frame1.hscrollbar { bottom fillx }
+
+  .latitude_longitude.frame1.entry configure -state normal
+
+  bind .latitude_longitude.frame1.entry <Return> {
+       set slat [%W get] }
+
+
+  global elon
+
+
+  frame .latitude_longitude.frame2 \
+    -relief {flat}
+
+  label .latitude_longitude.frame2.label \
+    -anchor {w} \
+    -text {East longitude value:} \
+    -padx {2}
+
+  scrollbar .latitude_longitude.frame2.hscrollbar \
+    -command {.latitude_longitude.frame2.entry view} \
+    -orient {horizontal}
+
+  entry .latitude_longitude.frame2.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.latitude_longitude.frame2.hscrollbar set}
+
+  pack append .latitude_longitude.frame2 \
+    .latitude_longitude.frame2.label { top fillx } \
+    .latitude_longitude.frame2.entry { top fillx } \
+    .latitude_longitude.frame2.hscrollbar { bottom fillx }
+
+  .latitude_longitude.frame2.entry configure -state normal
+
+  bind .latitude_longitude.frame2.entry <Return> {
+       set elon [%W get] }
+
+
+  global wlon
+
+
+  frame .latitude_longitude.frame3 \
+    -relief {flat}
+
+  label .latitude_longitude.frame3.label \
+    -anchor {w} \
+    -text {West longitude value:} \
+    -padx {2}
+
+  scrollbar .latitude_longitude.frame3.hscrollbar \
+    -command {.latitude_longitude.frame3.entry view} \
+    -orient {horizontal}
+
+  entry .latitude_longitude.frame3.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.latitude_longitude.frame3.hscrollbar set}
+
+  pack append .latitude_longitude.frame3 \
+    .latitude_longitude.frame3.label { top fillx } \
+    .latitude_longitude.frame3.entry { top fillx } \
+    .latitude_longitude.frame3.hscrollbar { bottom fillx }
+
+  .latitude_longitude.frame3.entry configure -state normal
+
+  bind .latitude_longitude.frame3.entry <Return> {
+       set wlon [%W get] }
+
+
+
+  frame .latitude_longitude.frame4 \
+     -borderwidth {2}
+
+  button .latitude_longitude.frame4.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set nlat [.latitude_longitude.frame0.entry get]
+                  set slat [.latitude_longitude.frame1.entry get]
+                  set elon [.latitude_longitude.frame2.entry get]
+                  set wlon [.latitude_longitude.frame3.entry get]
+                 destroy .latitude_longitude }
+
+  button .latitude_longitude.frame4.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set nlat ""
+                  set slat ""
+                  set elon ""
+                  set wlon ""
+                 destroy .latitude_longitude }
+
+  pack append .latitude_longitude.frame4 \
+    .latitude_longitude.frame4.ok { left expand } \
+    .latitude_longitude.frame4.cancel { right expand }
+
+
+bind .latitude_longitude.frame0.entry <Return> {
+     focus .latitude_longitude.frame1.entry
+}
+
+bind .latitude_longitude.frame1.entry <Return> {
+     focus .latitude_longitude.frame2.entry
+}
+
+bind .latitude_longitude.frame2.entry <Return> {
+     focus .latitude_longitude.frame3.entry
+}
+
+bind .latitude_longitude.frame3.entry <Return> {
+     focus .latitude_longitude.frame0.entry
+}
+
+
+  pack append .latitude_longitude \
+    .latitude_longitude.frame0 { top expand fill } \
+    .latitude_longitude.frame1 { top expand fill } \
+    .latitude_longitude.frame2 { top expand fill } \
+    .latitude_longitude.frame3 { top expand fill } \
+    .latitude_longitude.frame4 { bottom expand fill }
+
+
+
+  grab set .latitude_longitude
+  tkwait window .latitude_longitude
+
+}
+
+
+
+
+proc put_command { } {
+
+
+  global tapedev
+  global outfile
+  global headfile
+  global nlat
+  global slat
+  global elon
+  global wlon
+
+
+  set cmd ""
+
+  if {  $tapedev != "" } {
+         set cmd "$cmd if=$tapedev"
+  }
+
+  if {  $outfile != "" } {
+         set cmd "$cmd of=$outfile"
+  }
+
+  if {  $headfile != "" } {
+         set cmd "$cmd hf=$headfile"
+  }
+
+  if {  $nlat != "" } {
+         set cmd "$cmd n=$nlat"
+  }
+
+  if {  $slat != "" } {
+         set cmd "$cmd s=$slat"
+  }
+
+  if {  $elon != "" } {
+         set cmd "$cmd e=$elon"
+  }
+
+  if {  $wlon != "" } {
+         set cmd "$cmd w=$wlon"
+  }
+
+  if { $cmd != "" } {
+     set cmd "m.dted.extract $cmd"
+  }
+}
+
+
+
+
+proc set_command_entry { } {
+
+  .cmd.frame0.entry configure -state normal
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 [put_command]
+  .cmd.frame0.entry configure -state disabled
+
+}
+
+
+proc proc_m.dted.extract { } {
+
+
+  global tapedev
+  global outfile
+  global headfile
+  global nlat
+  global slat
+  global elon
+  global wlon
+
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "Extract DMA DTED Data from Tape"
+
+
+  frame .cmd.frame0 \
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame0.hscrollbar set}
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {m.dted.extract}
+
+  .cmd.frame0.entry configure -state disabled
+
+
+
+  frame .cmd.frame1 \
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame1.hscrollbar set}
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {m.dted.extract extracts Digital Terrain Elevation Data (DTED levels 1 and 2) produced and supplied by the Defence Mapping Agency (DMA) on 1/2 inch magnetic tape.}
+
+  .cmd.frame1.entry configure -state disabled
+
+
+
+  frame .cmd.frame2 \
+    -relief {flat}
+
+  label .cmd.frame2.label \
+    -anchor {w} \
+    -text {Tape drive path name:} \
+    -padx {2}
+
+  scrollbar .cmd.frame2.hscrollbar \
+    -command {.cmd.frame2.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame2.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame2.hscrollbar set}
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.label { top fillx } \
+    .cmd.frame2.entry { top fillx } \
+    .cmd.frame2.hscrollbar { bottom fillx }
+
+  .cmd.frame2.entry configure -state normal
+
+  bind .cmd.frame2.entry <Return> {
+       set tapedev [%W get] }
+
+
+
+  frame .cmd.frame3 \
+    -relief {flat}
+
+  label .cmd.frame3.label \
+    -anchor {w} \
+    -text {Output file into which the extracted tape data is to be copied:} \
+    -padx {2}
+
+  scrollbar .cmd.frame3.hscrollbar \
+    -command {.cmd.frame3.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame3.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame3.hscrollbar set}
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.label { top fillx } \
+    .cmd.frame3.entry { top fillx } \
+    .cmd.frame3.hscrollbar { bottom fillx }
+
+  .cmd.frame3.entry configure -state normal
+
+  bind .cmd.frame3.entry <Return> {
+       set outfile [%W get] }
+
+
+
+  frame .cmd.frame4 \
+    -relief {flat}
+
+  label .cmd.frame4.label \
+    -anchor {w} \
+    -text {File to contain descriptive information about the extracted data:} \
+    -padx {2}
+
+  scrollbar .cmd.frame4.hscrollbar \
+    -command {.cmd.frame4.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame4.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame4.hscrollbar set}
+
+  pack append .cmd.frame4 \
+    .cmd.frame4.label { top fillx } \
+    .cmd.frame4.entry { top fillx } \
+    .cmd.frame4.hscrollbar { bottom fillx }
+
+  .cmd.frame4.entry configure -state normal
+
+  bind .cmd.frame4.entry <Return> {
+       set headfile [%W get] }
+
+
+
+  frame .cmd.frame5 \
+    -relief {flat}
+
+  label .cmd.frame5.label \
+    -anchor {w} \
+    -text {Other options available:} \
+    -padx {2}
+
+  button .cmd.frame5.button0 \
+     -text "latitude_longitude ..." \
+     -relief raised \
+     -padx 10 \
+     -command "latitude_longitude
+                set_command_entry"
+
+
+  frame .cmd.frame6 \
+     -borderwidth {2}
+
+  button .cmd.frame6.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 
+		if {  $tapedev != "" && $outfile != "" && $headfile != "" && $nlat != "" && $slat != "" && $elon != "" && $wlon != "" } {
+ 		set cmd [put_command]
+ 		if { $cmd != "" } {
+ 		   eval " exec xterm -title m.dted.extract -geometry 50x5 -exec $cmd " 
+ 		   destroy .cmd
+ 		}
+ 	}
+ }
+
+  button .cmd.frame6.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { destroy .cmd }
+
+  pack append .cmd.frame6 \
+    .cmd.frame6.ok { left expand } \
+    .cmd.frame6.cancel { right expand }
+
+  pack append .cmd.frame5 \
+    .cmd.frame5.label { top fillx } \
+    .cmd.frame5.button0  { left }
+
+
+
+  pack append .cmd \
+    .cmd.frame1 { top expand fill } \
+    .cmd.frame2 { top expand fill } \
+    .cmd.frame3 { top expand fill } \
+    .cmd.frame4 { top expand fill } \
+    .cmd.frame5 { top expand fill } \
+    .cmd.frame0 { top expand fill } \
+    .cmd.frame6 { bottom expand fill }
+
+
+bind .cmd.frame2.entry <KeyRelease> {
+		set tapedev [.cmd.frame2.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame2.entry <Return> {
+		set tapedev [.cmd.frame2.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame3.entry <KeyRelease> {
+		set outfile [.cmd.frame3.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame3.entry <Return> {
+		set outfile [.cmd.frame3.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame4.entry <KeyRelease> {
+		set headfile [.cmd.frame4.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame4.entry <Return> {
+		set headfile [.cmd.frame4.entry get]
+		set_command_entry
+}
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global tapedev
+set tapedev ""
+
+global outfile
+set outfile ""
+
+global headfile
+set headfile ""
+
+global nlat
+set nlat ""
+
+global slat
+set slat ""
+
+global elon
+set elon ""
+
+global wlon
+set wlon ""
+
+
+global database
+global location
+global mapset
+global feature
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_m.dted.extract

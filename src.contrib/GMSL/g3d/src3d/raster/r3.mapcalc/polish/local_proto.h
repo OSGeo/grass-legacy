@@ -1,0 +1,15 @@
+int store (char *);
+int begin_function(void);
+int another_arg (void);
+int function (int);
+int name(int n);
+int mapname (int,char,int,int,int);
+int integer (int);
+int floating_point (int);
+int unary_opcode (char *);
+int binary_opcode (char *);
+int compare (char *);
+int logical (char *);
+int assign (int);
+int find_variable (int);
+int define_variable (int);

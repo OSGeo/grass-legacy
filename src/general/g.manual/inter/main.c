@@ -32,7 +32,7 @@ int main (int argc, char **argv)
             tempfile = G_tempfile();
             sprintf(buf,"g.manual -af > %s",tempfile);
             G_system(buf);
-            sprintf(buf,"more %s",tempfile);
+            sprintf(buf,"$GRASS_PAGER %s",tempfile);
             G_system(buf);
             do_printer(tempfile);
         } else if ( !strcmp(entry,"")) {
@@ -45,7 +45,7 @@ int main (int argc, char **argv)
                 tempfile = G_tempfile();
                 sprintf(buf,"g.manual %s > %s",entry,tempfile);
                 G_system(buf);
-                sprintf(buf,"more %s",tempfile);
+                sprintf(buf,"$GRASS_PAGER %s",tempfile);
                 G_system(buf);
                 do_printer(tempfile);
             } else {

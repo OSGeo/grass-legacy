@@ -7,7 +7,7 @@ static const char SCCSID[]="@(#)PJ_lagrng.c	4.1	94/02/15	GIE	REL";
 	double	a1;
 #define TOL	1e-10
 #define PJ_LIB__
-#include	<projects.h>
+#include	"projects.h"
 PROJ_HEAD(lagrng, "Lagrange") "\n\tMisc Sph, no inv.\n\tW=";
 FORWARD(s_forward); /* spheroid */
 	double v, c;

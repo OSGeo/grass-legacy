@@ -33,7 +33,9 @@ GLOBAL int matrix_rows, matrix_cols;
 
 /* cell_buf will contain source image data */
 GLOBAL CELL **cell_buf;
-
+GLOBAL int temp_fd;
+GLOBAL RASTER_MAP_TYPE map_type;
+GLOBAL char *temp_name;
 
 /* new_name will contain the names of the rectified images */
 GLOBAL int *ref_list;

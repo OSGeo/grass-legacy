@@ -1,9 +1,9 @@
-/*  @(#)check_node.c    2.1  6/26/87  */
 #include <math.h>
-#include "digit.h"
+#include "Vect.h"
 
 /*
-**  Last Modification: Dave Gerdes 5 1988
+**  Last Modification: 
+**  - Dave Gerdes 5 1988
 **  US Army Construction Engineering Research Lab
 */
 

@@ -5,7 +5,7 @@
   struct FPReclass rcl_struct;
   CELL old_min, old_max;
   DCELL old_dmin, old_dmax;
-  int in_fd, out_fd, no_mask, align_wind, nrules, rule_size;
+  int in_fd, out_fd, no_mask, align_wind, make_dcell, nrules, rule_size;
   char *name, *mapset, *result, *title;
   char **rules;
 #else
@@ -14,7 +14,7 @@
   extern struct FPReclass rcl_struct;
   extern CELL old_min, old_max;
   extern DCELL old_dmin, old_dmax;
-  extern int in_fd, out_fd, no_mask, align_wind, nrules, rule_size;
+  extern int in_fd, out_fd, no_mask, align_wind, make_dcell, nrules, rule_size;
   extern char *name, *mapset, *result, *title;
   extern char **rules;
 #endif

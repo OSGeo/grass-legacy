@@ -17,7 +17,16 @@ main (int argc, char **argv)
 	int color ;
 	double size ;
 	double east, north ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3 ;
+
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Overlays a user-specified grid "
+		"in the active display frame on the graphics monitor.";
 
 	opt2 = G_define_option() ;
 	opt2->key        = "size" ;
@@ -42,43 +51,33 @@ main (int argc, char **argv)
 	opt3->multiple   = NO;
 	opt3->description= "Lines of the grid pass through this coordinate" ;
 
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
-
 	/* Check command line */
 	if (G_parser(argc, argv))
 		exit(-1);
 
 	color = D_translate_color(opt1->answer);
 	if (color == 0)
-	{
-		fprintf (stdout,"Don't know the color %s\n", opt1->answer);
-		exit(-1);
-	}
+		G_fatal_error ("Don't know the color %s", opt1->answer);
 
 	if(!G_scan_resolution (opt2->answer, &size, G_projection()) || size <= 0.0)
-	{
-		fprintf (stdout,"Invalid grid size <%s>\n", opt2->answer);
-		exit(-1);
-	}
+		G_fatal_error ("Invalid grid size <%s>", opt2->answer);
 
 	if(!G_scan_easting(opt3->answers[0], &east, G_projection()))
 	{
-		fprintf (stderr, "Illegal east coordinate <%s>\n",
-		    opt3->answers[0]);
 		G_usage();
-		exit(1);
+		G_fatal_error ("Illegal east coordinate <%s>",
+		    opt3->answers[0]);
 	}
 	if(!G_scan_northing(opt3->answers[1], &north, G_projection()))
 	{
-		fprintf (stderr, "Illegal north coordinate <%s>\n",
-		    opt3->answers[1]);
 		G_usage();
-		exit(1);
+		G_fatal_error ("Illegal north coordinate <%s>",
+		    opt3->answers[1]);
 	}
 
 	/* Setup driver and check important information */
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	D_setup(0);
 

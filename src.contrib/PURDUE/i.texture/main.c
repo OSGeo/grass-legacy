@@ -71,11 +71,16 @@ int main (int argc, char *argv[])
   int rows, cols;		/* Original dimensions of image */
   int **data;			/* Data structure containing image */
   struct Option *op1;
+  struct GModule *module;
   char *me;
   void texture ();
 
   G_gisinit (argv[0]);
   me = G_program_name ();
+  /* Set description */
+  module              = G_define_module();
+  module->description = ""\
+  "Calculate textural features on a raster map";
 
   /* define options */
   op1 = G_define_option ();

@@ -1,16 +1,18 @@
+EXTRA_CFLAGS = $(PICFLAGS)
+
 OBJ = ask_old.o ask_new.o ask_any.o\
        release.o read.o write.o get.o put.o scale.o \
        get_def.o
 
 #all: $(LIBDIR)/icon.h $(LIBDIR)/libicon.a
-all: $(LIBDIR)/libicon.a
+all: $(DEPICONLIB)
 
 #$(LIBDIR)/icon.h: icon.h
 #	rm -f $@
 #	cp $? $@
 #	chmod +r $@
 
-$(LIBDIR)/libicon.a: $(OBJ)
-	$(AR)
+$(DEPICONLIB): $(OBJ)
+	$(SLIBRULE)
 
 #$(OBJ): icon.h

@@ -1,0 +1,143 @@
+<title>AGNPS HW 2</title>
+
+<center><b>
+AGNPS HW  - Due April 19 (60 points) 
+<br>
+Watershed Management
+<br>
+</center></b>
+<p>
+
+It is the year 2000 and regulations concerning nonpoint source
+pollution from watersheds have been passed.
+Since you are one of nation's leading experts concerning
+nonpoint source pollution control,
+you have been hired to evaluate current nonpoint source
+pollution and to suggest potential solutions if 
+a problem exists in an
+813 acre watershed located near Lafayette, IN.
+It is suspected that the watershed 
+does not currently meet regulations for
+nitrogen, phosphorus, and sediment delivered to its outlet.
+<p>
+The nonpoint source pollution regulations require that
+watersheds of this size meet guidelines
+for 2 rainfall events.
+The 2 rainfall events are an April 1 event of 1.8 inches
+with an erosivity index (USLE R) of 16 and an antecedent moisture
+condition of 2; and
+a July 1 rainfall of 3.5 inches with an erosivity index of 24
+and an antecedent moisture
+condition of 2.
+The guidelines for each of these events require that less
+than 2 lbs of N per acre leave the watershed,
+less than 2 lbs of P per acre leave the watershed,
+and less than 0.125 tons of sediment per acre leave the watershed.
+It is also desirable to limit erosion within the watershed
+to less than 7.5 tons per acre for each of these events.
+<p>
+At the present time, the cropped area in the watershed
+is in a corn-soybean rotation (see ansi.crops71 in the agnps LOCATION 
+for crops this year).
+The corn seedbed is prepared on May 1 using a tandem disk.
+The corn is planted on May 2, cultivated on June 5,
+and harvested on October 10.
+Fertilizer for the next year's soybeans is applied before the corn stalks
+are disked on October 25.
+The soybean seedbed is prepared by disking with a tandem disk
+on May 10.
+The soybeans are planted in rows on May 15, cultivated on June 15,
+and harvested on October 10.
+Fertilizer for the next year's corn crop is applied
+and the bean stubble disked on October 20.
+The fertilizer applied would be considered moderate for the next year's
+soybean crop and high for the next year's corn crop.
+<p>
+You have decided that the best way to determine if this watershed
+meets current regulations is to simulate its response
+to the storm events described above using the AGNPS model.
+If it does not meet regulations, you will propose changes
+in land uses and management practices and evaluate these changes with AGNPS.
+The data required to run the AGNPS model for the
+current watershed land uses and management practices
+are available in the GRASS GIS (select the agnps location after starting GRASS).
+<p>
+Refer to the <a href="AGNPS/">WWW pages describing the AGNPS/GRASS interface</a>
+as you begin to evaluate the initial watershed conditions
+and potential changes.
+You may modify the following GRASS GIS files
+if you determine that changes are required:
+ansi.C (contains the USLE C factors) (use RUSLE to obtain C values),
+ansi.luse (contains land uses - initially set to fallow for the areas
+to be cropped and will be changed to row crops for the July 1 storm),
+ansi.mach (describes the primary tillage machinery used),
+and ansi.nut (describes the amount of nutrients applied).
+Refer to the WWW pages for possible map category values for these data layers.
+The ansi.farm GIS layer may be useful in defining new
+ansi.C, ansi.luse, ansi.mach, or ansi.nut layers for proposed changes
+(use r.reclass).
+Note that files must be named in the manner described in
+the AGNPS/GRASS WWW pages and use the map category
+naming convention described there as well.
+<p>
+The ansi.C41 layer contains USLE C values for current crop rotations
+and crop conditions for April 1.  
+The ansi.C71 layer contains USLE C values for current crop rotations 
+and crop conditions for July 1.
+These C values were estimated using RUSLE for the
+crop rotations and practices described above.
+One of these files will need to be copied
+to the ansi.C layer (use g.copy)
+before running the AGNPS/GRASS interface.
+<p>
+Evaluate the current conditions for the
+April 1 event (the GIS files are currently set for April 1 conditions).
+Instructions for creating AGNPS files, running AGNPS,
+and viewing the results are provided below.
+
+<p>
+Evaluate the current conditions for the July 1 event
+(you must use g.copy to copy the ansi.C71 layer to ansi.C;
+make the hydrologic conditions good since crops are growing
+by using g.copy to copy temp_hy_cond.good to temp_hy_cond 
+(you'll need to remove this file when evaluating April 1 conditions in the
+next steps);
+use r.reclass to create a new ansi.nut file with low nutrient values;
+use r.reclass to create a new ansi.luse file in which fallow
+is changed to row crops).
+<p>
+Assuming the results using the current conditions do not meet
+the regulations, evaluate the following scenarios
+to determine what action should be taken.
+<ul>
+<li>
+Evaluate a change in the timing of nutrient application from
+fall to spring just prior to planting
+(the ansi.nut file should indicate low values for nutrients
+for both the April 1 and July 1 events).
+<li>
+Evaluate a switch to no-till in the fields
+that are cropped for both the April 1 and July 1 events.
+Copy the hydrologic condition file to be
+used in generating curve numbers from the temp_hy_cond.good
+layer to the temp_hy_cond layer (g.copy temp_hy_cond.good,temp_hy_cond).
+This changes the hydrologic condition from fair to good.
+You will also need to modify the USLE C factors
+to reflect no-till conditions.
+Use RUSLE to obtain C values for the conditions described
+above for April 1 and July 1.
+You can use r.reclass to reclass the ansi.crops71 map
+to obtain appropriate C factor layers for each event (ansi.C).
+Evaluate for fertilizer application for fall and for spring just prior
+to planting.
+</ul> 
+Prepare a report that recommends an appropriate
+action(s) to comply with the regulations.
+Support your recommendation with results from
+your model runs.
+<p>
+Note that GRASS will allow you to also create a GIS layer
+with the same name that is used for layers in PERMANENT.
+For map layers named the same, the map layer that will be accessed 
+is the one in the first mapset (note g.mapsets can be used to change
+order of mapsets).

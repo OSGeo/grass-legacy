@@ -14,7 +14,8 @@ if (proj==PROJECTION_UTM) make_utms(x,y,&zone,1);
 int 
 ll_from_str (char *cp, double *lon, double *lat)
 {
-char s[20];
+	char s[20];
+
 	/* avoid sscanf for speed */
 	strncpy(s,cp,4);     /* get int part  of lon */
 	*(s+4) = '.' ;       /* add dec. pt. */

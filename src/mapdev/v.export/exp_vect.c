@@ -54,6 +54,7 @@ static char  *PROG ;
 int 
 main (int argc, char *argv[])
 {
+	struct GModule *module;
 
 	int   done;
 	int   phase ;  /*  current level  */
@@ -70,7 +71,12 @@ main (int argc, char *argv[])
 	char	*mapset ;
 	char  command[256] ;
 
-	G_gisinit("EXPORT_FROM_DIGIT") ;
+	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Converts binary vector files into formatted ASCII files "
+		"for transfer to other computer systems.";
 
         if (argc > 1 && !strcmp (argv[1], "help"))
            {

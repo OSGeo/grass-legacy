@@ -24,7 +24,8 @@ main (int argc, char *argv[])
 {
     int check_at();
     char buf[1024];
-    int create, select, print, debug;
+    int create, select, print, debug, list;
+	struct GModule *module;
     struct
     {
 	struct Option *frame, *at;
@@ -32,11 +33,18 @@ main (int argc, char *argv[])
     struct
     {
 	struct Flag *debug;
+	struct Flag *list;
 	struct Flag *select;
 	struct Flag *print;
 	struct Flag *create;
 	struct Flag *erase;
     } flag;
+
+    G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Manages display frames on the user's graphics monitor.";
 
     flag.create = G_define_flag();
     flag.create->key = 'c';
@@ -53,6 +61,10 @@ main (int argc, char *argv[])
     flag.select = G_define_flag();
     flag.select->key = 's';
     flag.select->description = "Select a frame";
+
+    flag.list = G_define_flag();
+    flag.list->key = 'l';
+    flag.list->description = "List map names displayed in GRASS monitor";
 
     flag.debug = G_define_flag();
     flag.debug->key = 'D';
@@ -71,18 +83,20 @@ main (int argc, char *argv[])
     parm.at->type = TYPE_DOUBLE;
     parm.at->required = NO;
     parm.at->multiple = NO;
-    parm.at->description = "Where to place the frame (implies -c)";
+    parm.at->description = "Where to place the frame (implies -c), values in percent";
     parm.at->checker = check_at;
 
     if (G_parser(argc,argv))
 	exit(1);
 
-    R_open_driver();
+    if (R_open_driver() != 0)
+	    G_fatal_error ("No graphics device selected");
 
     create = flag.create->answer;
     print  = flag.print->answer;
     select = flag.select->answer;
     debug  = flag.debug->answer;
+    list   = flag.list->answer;
 
     if (parm.at->answer)
     {
@@ -132,9 +146,16 @@ main (int argc, char *argv[])
 	if(system (buf)) exit(1);
     }
 
+    if (list)
+    {
+	sprintf (buf, "%s/etc/frame.list", G_gisbase());
+	if(system (buf)) exit(1);
+    }
+
     if (print)
     {
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 	D_get_cur_wind(buf) ;
 	D_set_cur_wind(buf) ;
 	R_close_driver() ;

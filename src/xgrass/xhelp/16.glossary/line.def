@@ -1,9 +1,0 @@
-
-
-line - A basic geographic element, defined by an ordered set of
-points, that describes the position and shape of a linear feature on 
-a map.  In GRASS usage, the term line does not necessarily refer to
-a straight line, but merely to a series of @glossary("arcs",16.glossary/arc.def) (vectors) forming
-the perimeter of a linear feature (e.g., stream or railroad).  Arcs
-that form linear features are sometimes called lines, and arcs that
-outline @glossary("areas",16.glossary/area.def) are called area edges or area lines.

@@ -1,8 +1,0 @@
-
-
-d.what.rast - 
-
-d.what.rast allows the user to @glossary("interactively",16.glossary/interactve.def) query the @glossary("category",16.glossary/cat.def)
-contents of multiple raster map layers.
-
-Manual entry for @man("d.what.rast")

@@ -1,0 +1,458 @@
+;; -*-Lisp-*-
+
+;;
+;; an example of 'vflibcap'
+;; by h.kakugawa@computer.org
+;;
+
+
+;; -----------------------------------------------------------------
+;;   VFlib Default
+;; -----------------------------------------------------------------
+(define-default  VFlib
+  ;; hint to find font class from font name for fast font open
+  (extension-hints  (".bdf" bdf) (".pcf" pcf) (".hbf" hbf)
+		    (".ttf" truetype) (".ttc" truetype)
+		    (".pfa" type1) (".pfb" type1)
+		    ("pk" TeX) ("gf" gf) ("tfm" tfm)
+		    (".d24" ekanji) (".D24" ekanji))
+  ;; implicit font classes
+  (implicit-font-classes  pcf bdf hbf truetype type1 zeit jg gf tfm ekanji)
+
+  ;; uncompression programs
+  (uncompression-programs  (".Z" "zcat") (".gz" "gzip -cd"))
+
+  ;; a list of default values of variables
+  ;; *Note* "variable-values" must come before variable uses
+  (variable-values  (TeX_DPI               "300")
+		    (TeX_USE_KPATHSEA      "Yes")
+		    (TeX_KPATHSEA_MODE     "cx") 
+		    (TeX_KPATHSEA_PROGRAM  "vflserver"))
+
+  ;; kpathsea: enabled/disabled 
+  (use-kpathsea           $TeX_USE_KPATHSEA)
+  ;; kpathsea device mode (e.g., "cx")
+  (kpathsea-mode          $TeX_KPATHSEA_MODE)
+  ;; kpathsea device dpi (e.g., 300)
+  (kpathsea-dpi           $TeX_DPI)
+  ;; kpathsea program name (e.g., "/usr/local/bin/xdvi")
+  (kpathsea-program-name  $TeX_KPATHSEA_PROGRAM)
+
+  ;; encoding/charset conversion files
+  (code-conversion-files  
+   "iso8859-1_unicode.ccv" "iso8859-2_unicode.ccv" "iso8859-3_unicode.ccv"
+   "iso8859-4_unicode.ccv" "iso8859-5_unicode.ccv" "iso8859-6_unicode.ccv"
+   "iso8859-7_unicode.ccv" "iso8859-8_unicode.ccv" "iso8859-9_unicode.ccv"
+   "iso8859-10_unicode.ccv" "iso8859-13_unicode.ccv" 
+   "iso8859-14_unicode.ccv" "iso8859-15_unicode.ccv"
+   "jisx0208_unicode.ccv" "jisx0208sjis_unicode.ccv" 
+   "jisx0201_unicode.ccv" "jisx0212_unicode.ccv" 
+   "ksc5601_unicode.ccv" "ksx1001_unicode.ccv"
+   "gb12345_unicode.ccv" "gb2312_unicode.ccv"
+   "big5_unicode.ccv" "cns11643-1_unicode.ccv" "cns11643-2_unicode.ccv"
+   "iso8859-5_koi8-r.ccv" "koi8-r_iso8859-5.ccv" "koi8-r_unicode.ccv"))
+
+;; -----------------------------------------------------------------
+;;   BDF Font Class Default
+;; -----------------------------------------------------------------
+(define-default  bdf
+  ;; font directories
+  (font-directories  "/usr/local/share/fonts//"
+  		     "/usr/X11R6/lib/X11/fonts//")
+  ;; extensions of compressed font files that this font class supports
+  (compression-extensions ".gz" ".Z")
+  ;; default values for fonts of this font class
+  (variable-values    (VAR1 ("PROP1" "VAL1"))  ; just for debugging...
+		      (VAR2 ("PROP2" "VAL2"))
+		      (VARX ("PROPX" "VFlib-VALX")) )
+  ;; properties for all fonts of this font class
+  (properties ("FONT_CLASS" "BDF")) )
+
+;; -----------------------------------------------------------------
+;;   PCF Font Class Default
+;; -----------------------------------------------------------------
+(define-default  pcf
+  ;; font directories
+  (font-directories  "/usr/X11R6/lib/X11/fonts//"
+		     "/usr/local/X11R6/lib/X11/fonts//"
+		     "/usr/openwin/lib/X11/fonts//"
+		     "/usr/X386/lib/X11/fonts//"
+		     "/usr/XFree86/lib/X11/fonts//"
+		     "/usr/X11/lib/X11/fonts//"
+		     "/usr/local/lib/X11/fonts//"
+		     "/usr/X11R5/lib/X11/fonts//"
+		     "/usr/local/X11R5/lib/X11/fonts//"
+		     "/usr/local/share/emacs/fonts//"
+		     "/usr/local/share/fonts//")
+  ;; extensions of compressed font files that this font class supports
+  (compression-extensions ".gz" ".Z")
+  ;; properties for all fonts of this font class
+  (properties ("FONT_CLASS" "PCF"))  )
+
+;; -----------------------------------------------------------------
+;;   HBF Font Class Default
+;; -----------------------------------------------------------------
+(define-default  hbf
+  ;; font directories
+  (font-directories  "/usr/local/share/fonts//")
+  ;; extensions of compressed font files that this font class supports
+  (compression-extensions ".gz" ".Z")
+  ;; properties for all fonts of this font class
+  (properties ("FONT_CLASS" "HBF"))  )
+
+;; -----------------------------------------------------------------
+;; TrueType Font Class Default
+;; -----------------------------------------------------------------
+(define-default  truetype
+  ;; font directories
+  (font-directories  "TEXMF"  ; - a special name to search by `kpathsea'
+		     "/usr/local/share/fonts/bakoma/ttf//"
+		     "/usr/local/share/fonts/FontCity2//"
+		     "/usr/local/share/fonts/DynaFont-Premium30/win95//"
+		     "/usr/local/share/fonts/DynaFont-SpecialPack1/win95//"
+		     "/usr/local/share/fonts/TrueTypeWorld-ValueFont141//"
+		     "/usr/local/share/fonts/FontAsia//"
+		     "/usr/local/share/fonts/FontGarden/ttf//"
+		     "/usr/local/share/fonts/Mojikyo/TTF//"
+		     "/usr/X11R6/lib/X11/fonts//")
+  ;; debugging flags   ('*' selects all)
+  ;;(debug "*")
+  ;; properties for all fonts of this font class
+  (properties ("FONT_CLASS" "TrueType"))  )
+  
+;; -----------------------------------------------------------------
+;; Type1 Font Class Default
+;; -----------------------------------------------------------------
+(define-default type1
+  ;; font (pfa, pfb) directories
+  (font-directories "TEXMF"  ; - a special name to search by `kpathsea'
+		    "/usr/local/share/fonts/bakoma/pfb/"
+		    "/usr/local/share/fonts/Mojikyo/PFB/"
+		    "/usr/X11R6/lib/X11/fonts//")
+  ;; AFM directories
+  (afm-directories "TEXMF"   ; - a special name to search by `kpathsea'
+		    "/usr/local/share/fonts/Mojikyo/AFM/"
+		    "/usr/X11R6/lib/X11/fonts")
+  ;; T1Lib logfile output level: "none", "error", "warning", "stat", "debug"
+  (log-level "none"))
+
+;; -----------------------------------------------------------------
+;;   Syotrai Club Font Class Default
+;; -----------------------------------------------------------------
+(define-default  zeit
+  ;; filename extensions ("vf" for "mincho.vf{1,2}")
+  (filename-extensions  ".vf")
+  ;; font directories
+  (font-directories   "/usr/local/share/fonts/Watanabe//"
+		      "/usr/local/share/fonts/WadaLab//")
+  ;; properties for all fonts of this font class
+  (properties  ("FONT_CLASS" "ZEIT")
+	       ("CHARSET_REGISTRY" "jisx0208.1983")
+	       ("CHARSET_ENCODING" "0") ))
+
+;; -----------------------------------------------------------------
+;;   JG Font Class Default
+;; -----------------------------------------------------------------
+(define-default  jg
+  ;; filename extensions ("fn" for "zkyo0by.fn{0,1,2}")
+  (filename-extensions ".fn")
+  ;; font directories
+  (font-directories  "/usr/local/share/fonts/JG-Fonts//")
+  ;; properties for all fonts of this font class
+  (properties  ("FONT_CLASS" "JG")
+	       ("CHARSET_REGISTRY" "jisx0208.1983")
+	       ("CHARSET_ENCODING" "0")))
+
+;; -----------------------------------------------------------------
+;;   eKanji Font Class Default 
+;;   See also http://www.zinbun.kyoto-u.ac.jp/~ekanji/
+;; -----------------------------------------------------------------
+(define-default  ekanji
+  ;; font directories
+  (font-directories  "/usr/local/share/fonts/eKanji")
+  ;; dot size of font files
+  (font-dot-size  24)
+  ;; pixel size
+  (pixel-size  24)
+  ;; point size, dpi
+  (point-size  10) (dpi 72.27)
+  ;; writing direction
+  (writing-direction  horizontal)
+  ;; debug
+  ;;(debug "cCf")
+  ;; properties for all fonts of this font class
+  (properties  ("FONT_CLASS" "EKANJI")))
+
+;; -----------------------------------------------------------------
+;;   TeX-related Font Class Default and TeX Font Mapper
+;; -----------------------------------------------------------------
+(define-default  TeX
+  ;; TFM file directories
+  (tfm-directories  "TEXMF"
+		    "/usr/local/share/fonts/bakoma/tfm/")
+  ;; possible extensions of TFM files
+  (tfm-filename-extensions  ".tfm" ".ofm")
+  ;; font name mapping rules
+  (font-mapping
+   ((ascii-jtex-kanji "%f.jtex") 
+    "min*" "goth*" "tmin*" "tgoth*" "fj*" "tfj*" "df*" "tdf*" "rc*" "trc*")
+   ((pk "%f.%dpk") (gf "%f.%dgf") *)
+   ((type1 "%f.pfb" point-size-from-tfm (magnification-adjustment 1.0)) *)
+   ;;((truetype "%f.ttf" point-size-from-tfm (magnification-adjustment 1.0)) *)
+   ((vf "%f.vf") *)
+   ((tfm "%f.%dtfm")  *))
+  ;; accuracy of device resolutions, used with 'resolution-corrections'
+  (resolution-accuracy 0.02)
+  ;; font resolution values for each device resolutions.
+  (resolution-corrections
+   (240  ;; epson, canonlbp
+    240  263  288  312  346  415  498  597)
+   (300  ;; cx
+    300  329  360  432  518  622  746  896 1075 1290  240 270)
+   (400  ;; sparcptr
+    400  438  480  576  691  829  995 1194 1433 1720  320 360)
+   (600  ;; ljfour
+    600  657  720  864 1037 1244 1493 1792 2150 2580  480 540))
+  ;; default device resolution
+  (dpi $TeX_DPI))
+
+;; -----------------------------------------------------------------
+;;   TeX GF Font Class Default
+;; -----------------------------------------------------------------
+(define-default  gf
+  ;; font directories
+  (font-directories  "TEXMF" 
+		     "/usr/local/TeX/gf//")
+  ;; properties for all fonts of this font class
+  (properties  ("FONT_CLASS" "GF")) )
+
+;; -----------------------------------------------------------------
+;;   TeX PK Font Class Default
+;; -----------------------------------------------------------------
+(define-default  pk
+  ;;(debug "m")  ;; debug flag
+  ;; font directories
+  (font-directories  "TEXMF"
+		     "/usr/local/TeX/pk//")
+  ;; properties for all fonts of this font class
+  (properties  ("FONT_CLASS" "PK")) )
+
+;; -----------------------------------------------------------------
+;;   TeX TFM Font Class Default
+;; -----------------------------------------------------------------
+(define-default  tfm
+  ;; font directories
+  (font-directories  "TEXMF"
+		     "/usr/local/TeX/tfm//")
+  ;; glyph style: "fill" (all pixels black) or "empty" (all pixels white)
+  (glyph-style  "fill")
+  ;; properties for all fonts of this font class
+  (properties  ("FONT_CLASS" "TFM")) )
+
+;; -----------------------------------------------------------------
+;;   ASCII-jTeX Kanji Font Class Default
+;; -----------------------------------------------------------------
+(define-default  ascii-jtex-kanji
+  ;; TFM file directories
+  (tfm-directories  "TEXMF")
+  ;; possible extensions of TFM files
+  (tfm-filename-extensions ".tfm")
+  ;; Suffix for name mapping
+  ;; (e.g., implicit font "min10.300pk" is mapped to "min10.jtex")
+  (implicit-font-mapping-suffix ".jtex"))
+
+;; -----------------------------------------------------------------
+;;   Japanese Comic Font Class Default
+;; -----------------------------------------------------------------
+(define-default  japanese-comic
+  ;; debugging flags   ('*' selects all)
+  ;;(debug "f")
+  ;; properties for all fonts of this font class
+  (properties  ("FONT_CLASS" "JAPANESE-COMIC")
+	       ("CHARSET_REGISTRY" "jisx0208.1983")
+	       ("CHARSET_ENCODING" "0")))
+
+
+;; -----------------------------------------------------------------
+;;   Mojikyo Font Mapper Class Default
+;; -----------------------------------------------------------------
+(define-default  mojikyo-mapper
+  ;; debugging flags   ('*' selects all)
+  ;;(debug "f")
+  ;; properties for all fonts of this font class
+  (properties  ("FONT_CLASS" "MOJIKYO-MAPPER")))
+
+
+;; -----------------------------------------------------------------
+;;  sample font definitions for Japanese TeX
+
+(define-font jtex-min    (font-class pcf) (font-file "jiskan24.pcf"))
+(define-font jtex-goth   (font-class pcf) (font-file "jiskan24.pcf"))
+(define-font jtex-tmin   (font-class pcf) (font-file "jiskan24.pcf"))
+(define-font jtex-tgoth  (font-class pcf) (font-file "jiskan24.pcf"))
+
+;; Definitions for "min10" fonts. These fonts are used by
+;; 'name mapping' feature of ascii-jtex-kanji driver.
+;; (e.g., "min10.400pk" is mapped to "min10.jtex")
+(define-macro min-common
+  (font-class ascii-jtex-kanji) (kanji-font jtex-min)
+  (kanji-font-magnification 0.85) (metric-adjustment-file "jiskan24.adj"))
+(define-macro goth-common
+  (font-class ascii-jtex-kanji) (kanji-font jtex-goth)
+  (kanji-font-magnification 0.85) (metric-adjustment-file "jiskan24.adj"))
+(define-macro tmin-common
+  (font-class ascii-jtex-kanji) (kanji-font jtex-tmin)  
+  (kanji-font-magnification 0.85) (metric-adjustment-file "tjiskan24.adj"))
+(define-macro tgoth-common
+  (font-class ascii-jtex-kanji) (kanji-font jtex-tgoth)
+  (kanji-font-magnification 0.85) (metric-adjustment-file "tjiskan24.adj"))
+(define-font min5.jtex     (kanji-font-point-size  5)  min-common)
+(define-font min6.jtex     (kanji-font-point-size  6)  min-common)
+(define-font min7.jtex     (kanji-font-point-size  7)  min-common)
+(define-font min8.jtex     (kanji-font-point-size  8)  min-common)
+(define-font min9.jtex     (kanji-font-point-size  9)  min-common)
+(define-font min10.jtex    (kanji-font-point-size 10)  min-common)
+(define-font goth5.jtex    (kanji-font-point-size  5)  goth-common)
+(define-font goth6.jtex    (kanji-font-point-size  6)  goth-common)
+(define-font goth7.jtex    (kanji-font-point-size  7)  goth-common)
+(define-font goth8.jtex    (kanji-font-point-size  8)  goth-common)
+(define-font goth9.jtex    (kanji-font-point-size  9)  goth-common)
+(define-font goth10.jtex   (kanji-font-point-size 10)  goth-common)
+(define-font tmin5.jtex    (kanji-font-point-size  5)  tmin-common)
+(define-font tmin6.jtex    (kanji-font-point-size  6)  tmin-common)
+(define-font tmin7.jtex    (kanji-font-point-size  7)  tmin-common)
+(define-font tmin8.jtex    (kanji-font-point-size  8)  tmin-common)
+(define-font tmin9.jtex    (kanji-font-point-size  9)  tmin-common)
+(define-font tmin10.jtex   (kanji-font-point-size 10)  tmin-common)
+(define-font tgoth5.jtex   (kanji-font-point-size  5)  tgoth-common)
+(define-font tgoth6.jtex   (kanji-font-point-size  6)  tgoth-common)
+(define-font tgoth7.jtex   (kanji-font-point-size  7)  tgoth-common)
+(define-font tgoth8.jtex   (kanji-font-point-size  8)  tgoth-common)
+(define-font tgoth9.jtex   (kanji-font-point-size  9)  tgoth-common)
+(define-font tgoth10.jtex  (kanji-font-point-size 10)  tgoth-common)
+
+
+(define-font kanji10.jtex 
+  (tfm-file "min10.tfm")
+  (kanji-font-point-size 10) 
+  min-common)
+
+
+;; -----------------------------------------------------------------
+;; for debugging ....
+
+
+(define-macro size-definition
+  (point-size 10)
+  (dpi 300))
+
+(define-font f5ajchm3-ttf
+  (font-class truetype)
+  (platform-id "microsoft")
+  (character-set "JISX0208")
+  (encoding "ISO2022")
+  size-definition
+  (font-file "/usr/local/share/fonts/FontCity2/f5ajchm3.ttf"))
+
+(define-font dfhsgw3-ttf
+  (font-class truetype)
+  (platform-id "microsoft")
+  (character-set "JISX0208")
+  (encoding "ISO2022")
+  size-definition
+  (font-file
+   "/usr/local/share/fonts/DynaFont-Premium30/win31/sbtt/dfhsgw3.ttf"))
+
+(define-font dfhsmw3-ttf
+  (font-class truetype)
+  (platform-id "microsoft")
+  (character-set "JISX0208")
+  (encoding "ISO2022")
+  size-definition
+  (font-file
+   "/usr/local/share/fonts/DynaFont-Premium30/win31/sbtt/dfhsmw3.ttf"))
+
+(define-font dfhsm3-comic
+  (font-class japanese-comic)
+  (kanji-font  "dfhsgw3-ttf")
+  (kana-font   "dfhsmw3-ttf"))
+
+(define-font dfhsmw5-ttc
+  (font-class truetype)
+  (platform-id "microsoft")
+  (character-set "JISX0208")
+  (encoding "ISO2022")
+  size-definition
+  (font-file
+    "/usr/local/share/fonts/DynaFont-Premium30/win95/futt/dfhsmw5.ttc"))
+
+(define-font mincho-zeit
+  (font-class zeit)
+  size-definition
+  (font-file "mincho"))
+
+(define-font zkyo0by-jg
+  (font-class jg)
+  size-definition
+  (font-file "zkyo0by"))
+
+(define-font activa-ttf
+  (font-class truetype)
+  (platform-id "microsoft")
+  (character-set "iso8859-1")
+  (encoding "unicode")
+  size-definition
+  (font-file "/usr/local/share/fonts/FontGarden/ttf/a/activa__.ttf"))
+
+(define-font  cmr10-pk
+  (font-class pk)
+  size-definition
+  (font-file "cmr10.300pk"))
+
+(define-font  cmr10-tfm
+  (font-class tfm)
+  size-definition
+  (font-file "cmr10.tfm"))
+
+(define-font  timR24-pcf
+  (font-class pcf)
+  size-definition
+  (font-file "timR24.pcf"))
+
+
+(define-default try
+  (debug "f"))
+(define-font  try-1
+  (font-class try)
+  (font-list "foobar1.pcf" "foobar2.pcf" "timR24-pcf" "foobar3.pcf"))
+
+
+
+;; Mojikyo Mapper
+
+(define-font  mojikyo-ttf
+  (font-class mojikyo-mapper)  
+  (division-scheme  TrueType)  
+  (truetype-subfont-encoding  UNICODE)  
+  (subfont-name-format "Mojik%d.ttf"))
+
+(define-font  mojikyo-type1
+  (font-class mojikyo-mapper)  
+  (division-scheme  Type1)
+  (subfont-name-format "mo%dm%02d.pfb"))
+
+
+;; Direct access to eKanji font files.
+(define-font  ekan0010    (font-class ekanji) (font-file "ekan0010.d24"))
+(define-font  ekan0020    (font-class ekanji) (font-file "ekan0020.d24"))
+(define-font  ekan0030    (font-class ekanji) (font-file "ekan0030.d24"))
+(define-font  jisx9052    (font-class ekanji) (font-file "jisx9052.d24"))
+
+
+(define-font gulim
+	(font-class truetype)
+	(character-set "ksc5601")
+	(encoding "EUC-KR")
+	(font-file "gulim.ttf"))
+;; -----------------------------------------------------------------
+;; EOF

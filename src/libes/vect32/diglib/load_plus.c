@@ -2,11 +2,9 @@
 **  Written by Dave Gerdes  5/1988
 **  US Army Construction Engineering Research Lab
 */
-
-#include "digit.h"
-#include "Vect.h"
 #include <unistd.h>
 #include <stdlib.h>
+#include "Vect.h"
 
 int dig_load_plus (
     struct Map_info *map,

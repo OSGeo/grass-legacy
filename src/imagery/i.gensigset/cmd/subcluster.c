@@ -1,4 +1,5 @@
 #include <math.h>
+#include <stdlib.h>
 #include "gis.h"
 #include "imagery.h"
 #include "local_proto.h"
@@ -570,6 +571,8 @@ compute_constants (
          singular = 1;
          fprintf(stderr, "Warning: Removed a singular subsignature; number %d;",i+1);
          fprintf(stderr, " %d remain\n", Sig->nsubclasses);
+         if(Sig->nsubclasses < 0)  /* MN added 12/2001: to avoid endless loop */
+         	Sig->nsubclasses=1;
        }
      }
      else

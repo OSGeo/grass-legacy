@@ -1,0 +1,13 @@
+cell_num_id.c:	G_system(buf);
+cell_num_id.c:	G_system(buf);
+create_grid_map.c:        system(buf1);
+get_input_map_names.c:                system(buf3);
+get_input_map_names.c:                system("clear");
+mchl_input.c:           system("get_cell_id.sh");
+mfert_input.c:           system("get_cell_id.sh");
+misc_routines.c:	G_system(buf);
+misc_routines.c:	G_system(buf);
+misc_routines.c:	G_system(buf);
+ptsrc_input.c:           system("$GISBASE/etc/agnps50/get_cell_id.sh");
+report.c:	system("enscript -h -B -Paa3 temp.nps");
+report.c:	system("rm temp.nps");

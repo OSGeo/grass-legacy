@@ -154,7 +154,8 @@ static int dotext (char *text,int top,int bottom,int left,int right,int backgrou
 /* center the text */
     left = (left + right - Text_width (text))/2;
     Text (text, top, bottom, left, right, 2);
-
+    R_flush();
+    
     return 0;
 }
 

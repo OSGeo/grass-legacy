@@ -1,3 +1,7 @@
+SLIBDEPS = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+EXTRA_CFLAGS = $(PICFLAGS)
+
 OBJ = \
     Dcell.o\
     Dclear.o\
@@ -7,5 +11,5 @@ OBJ = \
     Dnew.o\
     Dremove.o
 
-$(D_LIB): $(OBJ)
-	${AR}
+$(DEPD_LIB): $(OBJ)
+	$(SLIBRULE)

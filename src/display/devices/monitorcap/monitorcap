@@ -9,44 +9,44 @@
 #  message user gets if driver is started from wrong tty
 #
 x0:driver/XDRIVER:X-windows graphics display: \
-     BASEDIR/dev/fifo.1a BASEDIR/dev/fifo.1b \
+     dev/fifo.1a dev/fifo.1b \
      ::any terminal
 x1:driver/XDRIVER:X-windows graphics display: \
-     BASEDIR/dev/fifo.2a BASEDIR/dev/fifo.2b \
+     dev/fifo.2a dev/fifo.2b \
      ::any terminal
 x2:driver/XDRIVER:X-windows graphics display: \
-     BASEDIR/dev/fifo.3a BASEDIR/dev/fifo.3b \
+     dev/fifo.3a dev/fifo.3b \
      ::any terminal
 x3:driver/XDRIVER:X-windows graphics display: \
-     BASEDIR/dev/fifo.4a BASEDIR/dev/fifo.4b \
+     dev/fifo.4a dev/fifo.4b \
      ::any terminal
 x4:driver/XDRIVER:X-windows graphics display: \
-     BASEDIR/dev/fifo.5a BASEDIR/dev/fifo.5b \
+     dev/fifo.5a dev/fifo.5b \
      ::any terminal
 x5:driver/XDRIVER:X-windows graphics display: \
-     BASEDIR/dev/fifo.6a BASEDIR/dev/fifo.6b \
+     dev/fifo.6a dev/fifo.6b \
      ::any terminal
 x6:driver/XDRIVER:X-windows graphics display: \
-     BASEDIR/dev/fifo.7a BASEDIR/dev/fifo.7b \
+     dev/fifo.7a dev/fifo.7b \
      ::any terminal
 CELL:driver/CELL:Create GRASS Raster File: \
-     BASEDIR/dev/fifo.8a BASEDIR/dev/fifo.8b \
+     dev/fifo.8a dev/fifo.8b \
      ::any terminal
 #sunview:driver/SUNVIEW:Sun graphics display: \
-#     BASEDIR/dev/fifo.9a BASEDIR/dev/fifo.9b \
+#     dev/fifo.9a dev/fifo.9b \
 #     ::any terminal
 #4105:driver/4105:Tektronix 4105: \
-#     BASEDIR/dev/fifo.10a BASEDIR/dev/fifo.10b \
+#     dev/fifo.10a dev/fifo.10b \
 #     ::any terminal
 #iris:driver/IRIS:Silicon Graphics IRIS Workstation: \
-#     BASEDIR/dev/fifo.11a BASEDIR/dev/fifo.11b \
+#     dev/fifo.11a dev/fifo.11b \
 #     ::any terminal
 #sun:driver/SUNCORE:Sun Core graphis display: \
-#     BASEDIR/dev/fifo.12a BASEDIR/dev/fifo.12b \
+#     dev/fifo.12a dev/fifo.12b \
 #     ::any terminal
 #IGRAPH:driver/IGRAPH:Intergraph graphics display: \
-#     BASEDIR/dev/fifo.13a BASEDIR/dev/fifo.13b \
+#     dev/fifo.13a dev/fifo.13b \
 #     ::any terminal
 #mass:driver/MASS:Masscomp graphics display: \
-#     BASEDIR/dev/fifo.14a BASEDIR/dev/fifo.14b \
+#     dev/fifo.14a dev/fifo.14b \
 #     ::any terminal

@@ -1,7 +1,7 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_drop_table (driver, name)
+int db_drop_table (driver, name)
     dbDriver *driver;
     dbString *name;
 {

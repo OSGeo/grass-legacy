@@ -5,6 +5,7 @@
 int main(int argc, char *argv[])
 {
     struct Map_info Map;
+	struct GModule *module;
     struct Flag *header;
     struct Option *vectfile;
     char *mapset;
@@ -12,6 +13,10 @@ int main(int argc, char *argv[])
     int level;
 
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Prints information about a binary GRASS vector map layer.";
 
     vectfile = G_define_option();
     vectfile->key 		= "map";

@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "gis.h"
+#include "glocale.h"
 /*
  **********************************************************************
  *
@@ -49,7 +50,7 @@ int G__check_for_auto_masking (void)
     if (G__.mask_fd < 0)
     {
         G__.auto_mask = 0;
-        G_warning ("Unable to open automatic MASK file");
+        G_warning (_("Unable to open automatic MASK file"));
         return 0;
     }
 

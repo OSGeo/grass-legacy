@@ -32,14 +32,10 @@ int Begin_curses (void)
 {
 /* should only be called once at program outset */
 
-    Get_old_tty() ;    /* get current tty state                */
-
     initscr () ;       /* initialize curses standard screens   */
     raw() ;            /* set tty modes via curses calls       */
     noecho() ;
     nonl()   ;
-
-    Get_new_tty() ;    /* get the tty state as set by curses   */
 
     inited = 1;
 
@@ -71,15 +67,13 @@ int Suspend_curses (void)
     overwrite (stdscr, save);
     clear();
     refresh();
-
-    Old_tty();
+    endwin();
 
     return 0;
 }
 
 int Resume_curses (void)
 {
-    New_tty();
     clear();
     refresh();
     overwrite (save, stdscr);
@@ -88,10 +82,10 @@ int Resume_curses (void)
     return 0;
 }
 
-int Curses_allow_interrupts (int true)
+int Curses_allow_interrupts (int ok)
 {
     refresh();
-    if (true)
+    if (ok)
 	noraw();
     else
 	raw();

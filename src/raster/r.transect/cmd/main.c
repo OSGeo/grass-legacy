@@ -13,6 +13,7 @@ int main (int argc, char *argv[])
     int projection;
     char *name, *mapset;
 
+	struct GModule *module;
     struct
     {
 	struct Option *map;
@@ -22,7 +23,11 @@ int main (int argc, char *argv[])
     } parms;
 
     G_gisinit (argv[0]);
-    projection = G_projection();
+
+	module = G_define_module();
+	module->description =
+		"Outputs raster map layer values lying along "
+		"user defined transect line(s).";
 
     parms.map = G_define_option();
     parms.map->key = "map";
@@ -58,6 +63,8 @@ int main (int argc, char *argv[])
     if (G_parser(argc,argv))
 	exit(1);
 
+    projection = G_projection();
+
     sscanf (parms.width->answer, "%d", &n);
     if (n <= 0 || n%2 == 0)
     {
@@ -75,8 +82,7 @@ int main (int argc, char *argv[])
 		G_program_name(), name);
 	exit(1);
     }
-    sprintf (command, "r.profile map='%s' width=%s result=%s line=",
-	parms.map->answer, parms.width->answer, parms.result->answer);
+    sprintf (command, "r.profile input='%s' output='-'", parms.map->answer);
     err = 0;
     for (n=0; parms.line->answers[n]; n+=4)
     {

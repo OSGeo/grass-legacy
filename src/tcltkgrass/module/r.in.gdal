@@ -1,0 +1,10 @@
+interface_build {
+    {r.in.gdal} 0
+    {Import GDAL supported raster file into a binary raster map layer.}
+    {entry input {GIS file (input):} 0 file}
+    {entry output {GRASS raster file (output):} 0 raster}
+    {entry title {Title for GRASS raster file (optional):} 0 ""}
+    {entry band {Band to select (default is all bands):} 0 ""}
+    {checkbox -o {Override projection (use locations projection).} "" -o}
+    {checkbox -e {Extend location extents based on new dataset.} "" -e}
+}

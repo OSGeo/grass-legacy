@@ -26,12 +26,10 @@
  *
  */
 
-#include "digit.h"
 #include <stdlib.h>
 #include <string.h>
-#include "gis.h"
 #include "Vect.h"
-#include "dig_head.h"
+#include "gis.h"
 #include "v_in_arc.inter.h"
 
 int 

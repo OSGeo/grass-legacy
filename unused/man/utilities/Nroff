@@ -1,0 +1,111 @@
+:
+#	man/utilities/Nroff
+#
+#	Script to produce cat* entries from GRASS man* man page source.
+#	Usage:	Nroff version date directory make
+#	    version	GRASS version number, e.g. "5.0"
+#	    date	date of this GRASS version, e.g. "Spring 2000"
+#	    directory	GISBASE directory, e.g. /home/local/src/grass5
+#           make        make program
+#
+# $Id: Nroff,v 1.1 2000-11-30 10:37:34 markus Exp $
+#
+umask 0
+
+if test $# -lt 3
+then
+    echo "Usage: $0  version  date  GISBASE make"
+    exit 2
+fi
+
+MAKE=$4
+
+wd=$3\/man/utilities
+
+rm -f $wd/man.version
+echo ".ds vn $1" > $wd/man.version
+if test "$2" = ""
+then
+    echo ".ds vd" >> $wd/man.version
+else
+    echo ".ds vd ($2)" >> $wd/man.version
+fi
+
+for cmd in nroff tbl col
+do
+    sh $wd\/find_cmd $cmd
+    if [ $? != 0 ]
+    then
+	echo Note: $cmd not found on this system
+	exit 0
+    fi
+done
+
+#	Run through the 'cat' directories to look for any formatted man pages
+#	that don't have a source file in the corresponding 'man' directory.
+#	Delete any orphaned formatted pages that are found.
+#
+for dir in cat?
+do
+ echo $dir | grep CVS  # ignore CVS diretories (added 1/2000 M.N.)
+ if [ $? -eq 0 ]; then
+    srcdir=`echo $dir | sed -e s/cat/man/`
+    list=`echo $dir/*`
+    if [ "$list" != "$dir/*" ]; then		# in case directories are empty
+	for file in $list
+	do
+	    n=`basename $file`
+	    if [ ! -f $srcdir/$n ]; then
+		echo "DELETED ORPHANED FILE $file (in $dir but not $srcdir)"
+		rm -f $file
+	    fi
+	done
+    fi
+  fi
+done
+
+#	Main loop.  Find all the source man pages in the 'man' directories,
+#	and create a .makefile to run them through nroff.  Note the
+#	100-item limit on the item list, forced upon us by brain-deadness
+#	in one variant of make (SCO UNIX).
+for dir in man?
+do
+    header=$dir/.class-header
+    notice=$dir/.class-notice
+    title=$dir/.class-title
+
+    if [ -f $title ]; then	# copy .class-title file into 'catN directory
+	destdir=`echo $dir | sed -e s/man/cat/`
+	rm -f $destdir/`basename $title`	# let us overwrite it
+	cp $title $destdir
+    fi
+    i=0
+    for man in ${dir}/*
+    do
+	if test $i = 0
+	then
+	    rm -f .makefile ; touch .makefile
+	    list=
+	    echo 'all: list' >> .makefile
+	fi
+	i=`expr $i + 1`
+	cat=`echo $man | sed s/CVS// |sed s/man/cat/`
+	list="$list $cat"
+	echo "$cat: $man $header $notice ; tbl -TX $wd/man.version $header $wd/man.header $man $notice" \| nroff \| col -b \> $cat >> .makefile
+#
+	if test $i = 100
+	then
+	    echo "list: $list" >> .makefile
+	    ${MAKE} -f .makefile
+	    i=0
+	fi
+    done
+    if test $i != 0
+    then
+	echo "list: $list" >> .makefile
+	${MAKE} -f .makefile
+    fi
+done
+
+rm -f .makefile
+exit 0

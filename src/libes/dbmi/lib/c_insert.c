@@ -1,7 +1,7 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_insert (cursor)
+int db_insert (cursor)
     dbCursor *cursor;
 {
     int ret_code;

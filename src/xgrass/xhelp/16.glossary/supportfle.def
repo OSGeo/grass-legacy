@@ -1,6 +1,0 @@
-
-
-support files - Data files associated with each @glossary("raster map",16.glossary/rastmap.def) and
-@glossary("vector map",16.glossary/vecmaps.def), that contain supporting information on map category 
-values and labels, color tables, map history, etc. specific to each
-map.

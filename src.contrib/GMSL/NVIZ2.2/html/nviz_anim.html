@@ -1,0 +1,391 @@
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [de] (X11; U; Linux 2.2.16 i686) [Netscape]">
+<title>GRASS 5.0 Tutorial for nviz</title>
+ </head>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<P>
+<A HREF="nviz_toc.html">INDEX</A>
+</P>
+
+<H3>NVIZ - Key frame Animation</H3>
+</A> <P>
+
+The <A HREF="#KeyAnimP">Key frame Animation</A> panel is used to create
+more complex animations where careful control of camera motion is
+required.  The key frame animator operates using the notion of
+<I>channels</I>.  A channel describes some aspect of <I>nviz</I> which
+can be changed during an animation.  Channels can be as specific as
+necessary, isolating single attributes of <I>nviz</I>, and can be
+turned on or off allowing segments of an animation to be arbitrarily
+detailed.  <P>
+
+<H3>
+<IMG SRC="nvimg/panel/keyanim.gif"><A NAME="KeyAnimP"> Key frame Animation Panel</A>
+</H3>
+
+<H4>Channels and Key times</H4>  <P>
+
+As mentioned above, <I>what</I> the key frame animator can control is
+determined by channels.  <I>Where</I> the key frame animator creates
+changes is determined by key times.  <I>How</I> the key frame animator
+creates changes is a more advanced topic and will be discussed later.
+For now, we concern ourselves with channels and key times.
+<P>
+
+A simple example of an attribute which is controlled by a channel is
+the camera.  Although the entire camera could be controlled by a
+single channel, doing so would provide too gross a level of control.
+Instead, specific aspects of the camera are controlled by a set of
+eight channels: <I>FromX</I>, <I>FromY</I>, <I>FromZ</I>, <I>DirX</I>,
+<I>DirY</I>, <I>DirZ</I>, <I>FOV</I>, and <I>TWIST</I>.  The
+<I>From*</I> channels control the position from which the camera is
+looking.  The <I>Dir*</I> attributes control the direction in which
+the camera is looking.  Lastly, the <I>FOV</I> and <I>TWIST</I>
+attributes control the "field-of-view" and "twist" of the camera.  We
+will discuss how channel settings can be used to affect playback
+below.
+ <P>
+
+For the most part, the key frame animator and the basic animator are
+very similar.  One crucial difference is that the key frame animator
+uses <I>key times</I> to establish positions of key frames whereas the
+basic animator uses frame numbers.  A key time represents a position
+in an animation in the form of <I>mm:ss:ff</I> where <I>mm</I> is
+minutes, <I>ss</I> is seconds, and <I>ff</I> is frames.  Positioning
+key frames using key times is more precise and allows the user to more
+accurately design a timed animation.  Moreover, key times do not
+depend on the current frame rate (even though you can specify a frame
+number as part of a key time).  Key time frame numbers are automatically
+adjusted if the user modifies the frame rate.  Thus, the user can
+experiment with different frame rates without having to move key frames.
+ <P>
+
+Ultimately, the combination of key times and frame rate determines the
+overall length of the animation.  If the length of the animation in
+key times is <I>m</I> minutes, <I>s</I> seconds and <I>f</I> frames
+with a frame rate of <I>v</I>, then the total length of the animation
+is <I>(m*60 + s)*v + f</I> frames.  <P>
+
+<H4>Manipulating Key frames</H4> <P>
+
+Key frames are added in the key frame animator in the same fashion that
+they are added in the basic animator: move the view to the desired
+position and click the <I>Add</I> button.  The position at which the
+key frame is added is determined by the <I>New Key Time</I> field.
+Normally, all channels are on.  When a key frame is added, the set of
+channels are scanned and each channel which is on has its current
+status recorded.  Channels which are off do not have their status
+recorded.  Key frames are displayed on the white canvas area next to
+the list of channels.  The key time for each key frame is given below
+the channel sliders.  If a channel has an entry for a key frame, a
+light blue rectangle is created in the channel slider.  The list of
+channels may be scrolled with the slider on the left.  The bottom
+slider scrolls over the length of the animation.  The following figure
+shows the key frame area with two key frames.
+ <P>
+
+<IMG SRC="nvimg/panel/keyexample.gif"> <P>
+
+The key time display below the channel area is used to move key frames.
+To move a key frame, "drag" (i.e. hold the mouse button down while
+moving the mouse) the corresponding key time using the first mouse
+button.  While you move the mouse, the key time will change to indicate
+its new value.  When the value of the key time is correct, release the
+first mouse button to place the key frame.  <P>
+
+The second mouse button is used to delete key frames.  To delete a
+key frame, select the corresponding key time using the second mouse
+button, then click the <I>Delete</I> button.  <I>nviz</I> will ask you
+to verify your decision, but once deleted, key frames are not
+recoverable.  Note that you may delete more than one key frame at a
+time by selecting multiple key times with the second mouse button and
+pressing <I>Delete</I>.<P>
+
+<H4>Viewing Animation</H4> <P>
+
+The key frame animator provides facilities for viewing all parts of an
+animation as well as tools for running the animation in full rendering
+mode and saving the frames to disk.  The primary mechanism for
+controlling position within an animation is the current key time
+slider.  This slider is represented by a dark blue vertical bar in
+each channel slider, and a horizontal key time in large dark letters in
+the key time area.  In the figure above, the current key time slider is
+positioned at <B>00:00:00</B>.   <P>
+
+The current key time slider may be controlled using either one of the
+blue bars in the channels area or its representation in the key time
+area.  Within the channel area, simply clicking the first mouse button
+at a specified location moves the current key time slider to that
+position.  Alternatively, you may drag the slider with the first mouse
+button.  Within the key time area, you must drag the current key time
+slider to move it.  This is done by holding down the first mouse
+button over the large dark key time and moving the mouse.  Releasing
+the first mouse button sets the position.  While dragging in either
+area, the key time display updates itself to show the current position.
+<P>
+
+The tape player controls at the top of the panel can be used to view a
+running animation.  The direction of the arrows on four of the buttons
+indicate which direction the animation will play when they a pressed.
+Arrow buttons with a vertical bar will step a single frame whereas
+plain arrow buttons will play the animation until an endpoint is
+reached or the stop button is pressed (the square button).  The
+animation is always played using the current frame rate setting.  You
+can use the <I>Frame rate</I> button to change frame rate and experiment
+a bit.  <P>
+
+The final step in developing an animation is usually saving the frame
+sequence to disk.  In the key frame animator, the <I>Run and Save
+Images</I> button does just that.  Pressing this button creates a
+Popup which queries the user for a base file name and a rendering
+style.  The rendering style may either be wire frame (fastest) or full
+rendering (slowest).  The base file name is used to store frames to
+disk in the form <I>base_nameXXXXX.rgb</I> where <I>XXXXX</I> is the
+frame number.  Pressing <I>Ok</I> on the popup will start the
+rendering.  You may stop the rendering by pressing the stop tape
+button as described above.  <P>
+
+<H4>Advanced Topic: Adding Your Own Channels</H4> <P>
+
+The channels <I>nviz</I> adds by default to the key frame animator are
+rather limited.  However, the key frame animator is sophisticated
+enough to handle more general behavior.  In particular, it is possible
+(with a little minor programming) for the user to add their own
+channels.  The actual mechanism by which channels operate is a bit
+complex but necessary to understand in order to take advantage of all
+the features of the key frame animator.  During playback, each channel
+determines a value for the attribute it controls.  Thus the <I>FOV</I>
+channel is responsible for determining the Camera's "field-of-view"
+setting during animation playback.  They way channels set values for
+attributes is by <I>interpolating</I> between key frame settings.  The
+fact that not all channels may have entries for every key frame means
+that interpolation may be different for each channel.  This is where
+the key frame animator gains its flexibility. <P>
+
+What follows is a brief discussion describing key framing in the
+key frame animator, and an explicit example of adding a channel.  Using
+the example given here as a template, it should be fairly easy for
+users to add their own channels.  <P>
+
+<H5>Introduction</H5>  <P>
+
+The purpose of this section is to provide instructions for adding
+animation capability to the key frame animator in nviz.  The key frame
+animator records the state of various "channels" each time a key frame
+is added.  Frames falling in between key frames are interpolated based
+on the channel entries at bounding key frames.  The interpolation can
+either be static (that is, no interpolation) to handle changes in, for
+example, file names, colors, etc., or interpolation can be dynamic
+meaning a linear interpolation of floating point values.  Key framing
+and channel addition is discussed below.  <P>
+
+<H5>Key framing</H5>  <P>
+
+Key framing is an animation technique where we record the state of nviz
+at crucial moments (called key frames) and interpolate between these
+events to create individual animation frames.  Key framing under nviz
+is based on channels.  A channel specifies one aspect of nviz which
+may be altered at each key frame.  Nviz starts out with a default set
+of channels which govern camera position.  The user is then free to
+add other channels as described below.  <P>
+
+Separating the state of nviz into channels allows different aspects of
+nviz to have different animation characteristics.  Each channel may be
+set either active or inactive at a specific key frame.  If a channel is
+active then it specifies a change at that key frame.  Otherwise, the
+state of the channel is interpolated between the two closest enclosing
+key frames.  As an example, suppose we have six key frames as follows:  <P>
+
+<PRE>
+Camera         X----------X----I-----X-----J----X----------X----K-----X
+                               I           J                    K
+Cutplane0                 X----I-----X-----J---------------X    K
+                               I           J                    K
+Keyframe       1          2    I     3     J    4          5    K     6
+</PRE>  <P>
+
+The X's specify where a channel is active.  Thus, the camera is active
+at every key frame while cutplane0 is only active at key frames 2, 3 and
+5.  The columns of I's, J's and K's indicate the position of animation
+frames.  Now, at frame I, both camera and cutplane0 attributes are
+interpolated from their associated entries in key frames 2 and 3.  At
+frame J, however, camera attributes are interpolated from key frames 3
+and 4, while cutplane0 attributes are interpolated from key frames 3
+and 5.  Finally, at frame K, camera attributes are interpolated from
+key frames 5 and 6, while no changes are made to cutplane0.  Thus by
+changing what channels are active, we may specify different
+interpolation rates for different channels.  <P>
+
+<H5>Adding Channels</H5>  <P>
+
+Channels may be added to the key frame animator by calling the function
+keyanimAddChannel.  keyanimAddChannel requires four arguments:  <P>
+
+<OL>
+<LI> BASE name of kanimator panel
+<UL> 
+<LI> Use the tcl/tk path of the animator panel in your version of nviz
+</UL>
+<LI> Channel Name
+<UL>
+<LI> Specify a single word, unique name for your channel
+</UL>
+<LI> Entry List
+<UL>
+<LI> Specify a list describing entries this channel will control, more on this below
+</UL>
+<LI> Get Function 
+<UL>
+<LI> Specify a function which takes no arguments and returns a list of entries as described in the entry list
+</UL>
+<LI> Set Function
+<UL>
+<LI> Specify a function that, when given a list of entries as
+described in the entry list, will change the state of nviz as specified by the entry list
+</UL>
+</OL>
+ <P>
+
+The BASE name of the key frame animator panel is
+$Nv_(P_AREA).kanimator by default.  Also, be sure to specify a
+<B>one</B> word, <B>unique</B> name for the channel so there is no
+danger of interfering with existing channels.  <P>
+
+<H5>Entry Lists</H5> <P>
+
+An entry list is used to describe to the animator a list of values
+that a channel will govern.  An entry list is a list of pairs where
+each pair specifies an entry name and an interpolation type.
+ <P>
+
+As an example, consider a channel called "cplane-0" (cutplane 0).
+There are six attributes we need to keep track of for the cplane-0
+panel: the x, y, and z components of translation, the blend type, the
+rotation angle, and the tilt angle.  This corresponds to the following
+entry list:
+ <P>
+
+<PRE>
+{{pos_x dynamic} {pos_y dynamic} {pos_z dynamic} 
+ {blend_type static} {rot dynamic} {tilt dynamic}}
+</PRE> <P>
+
+Note that blend type is interpolated statically because blend type is
+not a floating point value, but rather a text string (and it makes no
+sense to linearly interpolate a text string).
+ <P>
+
+<H5>Get Functions</H5> <P>
+
+As mentioned earlier, the get function returns the current state of
+the channel it is associated with.  keyanimAddChannel expects the get
+function to return a list in the same format as the entry list except
+that interpolation types will be replaced with actual values.  Getting
+back to our cutplane example, we need to define a function which
+returns a translation positions, blend type, and rotation and tilt
+positions.  One possible tcl/tk function would be:
+ <P>
+
+<PRE>
+proc cutplane0_get_entries {} {
+  global Nv_
+
+  # Assemble the entry list showing the current state of cutplane 0
+  set ret [list]
+	
+  foreach i [list pos_x pos_y pos_z blend_type rot tilt] {
+    set val [list $i]
+
+    switch $i {
+      "pos_x"      { lappend val [lindex [Ncutplane0 get_trans] 0] }
+      "pos_y"      { lappend val [lindex [Ncutplane0 get_trans] 1] }
+      "pos_z"      { lappend val [lindex [Ncutplane0 get_trans] 2] }
+      "blend_type" { lappend val $Nv_(CutPlaneFence) }
+      "rot"        { lappend val [lindex [Ncutplane0 get_rot] 2] }
+      "tilt"       { lappend val [lindex [Ncutplane0 get_rot] 1] }
+    }
+
+    lappend ret $val
+  }
+
+  return $ret
+}
+</PRE> <P>
+
+Here we run through the list of entries for the cplane-0 channel and
+make the appropriate library calls to get the status of cutplane 0.
+The list returned has exactly the same form as the entry list except
+that interpolation types are replaced by actual values.
+ <P>
+
+<H5>Set Functions</H5> <P>
+
+The set function is required to take as argument a list of the form
+returned by the get function.  That is, an entry list with
+interpolation types replaced by actual values.  Note that the argument
+list may not contain all the entries for a channel.  In particular,
+entries for statically interpolated channel attributes will only be
+included in this list at key frames.  One possible tcl/tk set function
+for cplane-0 would be:
+ <P>
+
+<PRE>
+proc cutplane0_set_entries { elist } {
+  global Nv_
+
+  set cur_trans [Ncutplane0 get_trans]
+  set old_trans $cur_trans
+  set cur_rot   [Ncutplane0 get_rot]
+  set old_rot $cur_rot
+  set cur_blend $Nv_(CutPlaneFence)
+  set old_blend $cur_blend
+
+  foreach i $elist {
+    switch [lindex $i 0] {
+      "pos_x"      { set cur_trans [lreplace $cur_trans 0 0 [lindex $i 1]] }
+      "pos_y"      { set cur_trans [lreplace $cur_trans 1 1 [lindex $i 1]] }
+      "pos_z"      { set cur_trans [lreplace $cur_trans 2 2 [lindex $i 1]] }
+      "blend_type" { set cur_blend [lindex $i 1] }
+      "rot"        { set cur_rot [lreplace $cur_rot 2 2 [lindex $i 1]] }
+      "tilt"       { set cur_rot [lreplace $cur_rot 1 1 [lindex $i 1]] }
+    }
+  }
+
+  if {"$cur_trans" != "$old_trans"} then {
+    Ncutplane0 set_trans [lindex $cur_trans 0] [lindex $cur_trans 1] [lindex $cur_trans 2]
+  }
+
+  if {"$cur_rot" != "$old_rot"} then {
+    Ncutplane0 set_rot [lindex $cur_rot 0] [lindex $cur_rot 1] [lindex $cur_rot 2]
+  }
+
+  if {"$cur_blend" != "$old_blend"} then {
+    set Nv_(CutPlaneFence) $cur_blend
+    Nset_fence_color $cur_blend
+  }
+}
+</PRE> <P>
+
+<H5>Notes</H5> <P>
+
+The last task is to actually make the call which adds the channel.
+For the cut plane example above, we make the following call to
+keyanimAddChannel:  <P>
+
+<PRE>
+set entry_list [list [list pos_x dynamic] [list pos_y dynamic] [list pos_z dynamic]]
+lappend entry_list [list blend_type static]
+lappend entry_list [list rot dynamic] [list tilt dynamic]
+
+keyanimAddChannel $Nv_(P_AREA).kanimator "cplane-0" $entry_list \
+    cutplane0_get_entries cutplane0_set_entries
+</PRE> <P>
+
+The cutplane-0 implementation given above is the same as that used
+for the cplane-0 channel given in <I>nviz</I>.  <P>
+
+</BODY>
+</HTML>

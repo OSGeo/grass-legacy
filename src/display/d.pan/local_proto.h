@@ -1,3 +1,5 @@
+#include "gis.h"
+
 /* ask.c */
 int yes(char *);
 int just_click(char *);
@@ -24,3 +26,28 @@ int get_wind_y_pos(float);
 int get_wind_x_pos(float);
 /* zoom.c */
 int zoom(int, int);
+/* redraw.c */
+int redraw(void);
+
+
+#define LEFTB	1
+
+#ifndef ANOTHER_BUTTON
+#	define MIDDLEB	2
+#	define RIGHTB	3
+#else
+#	define MIDDLEB	3
+#	define RIGHTB	2
+#endif
+
+#ifdef MAIN
+#define GLOBAL
+#else
+#define GLOBAL	extern
+#endif
+
+GLOBAL char *cmd;
+GLOBAL char **rast, **vect, **site, **list;
+GLOBAL int nrasts, nvects, nsites, nlists;
+GLOBAL double U_east, U_west, U_south, U_north;
+

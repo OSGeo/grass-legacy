@@ -1,5 +1,4 @@
 PGM = r.neighbors
-HOME = $(BIN_MAIN_CMD)
 
 METHODS =\
 	c_ave.o\
@@ -8,6 +7,7 @@ METHODS =\
 	c_mode.o\
 	c_median.o\
 	c_stddev.o\
+	c_sum.o\
 	c_var.o\
 	c_divr.o\
 	c_intr.o
@@ -26,11 +26,10 @@ OTHERS = main.o \
 
 LIST = $(OTHERS) $(METHODS) $(CAT_NAMES)
 
-$(HOME)/$(PGM):  $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB) -o $@
+$(BIN_CMD)/$(PGM):  $(LIST) $(DEPGISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST):        ncb.h
 main.o:         method.h
 
-
-$(GISLIB):      # in case this changes
+$(DEPGISLIB):      # in case this changes

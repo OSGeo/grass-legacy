@@ -7,10 +7,14 @@ interface_build {
     {checkbox -1 {Output 1 cell per line.} "" -1}
     {checkbox -a {Print area totals in square meters.} "" -a}
     {checkbox -c {Print total cell counts.} "" -c}
-    {checkbox -m {Report zero values due to mask.} "" -m}
+    {checkbox -p {Print APPROXIMATE percents (total percent may not be 100%)} "" -p}
     {checkbox -l {Print the category labels.} "" -l}
     {checkbox -q {Run quietly.} "" -q}
-    {checkbox -z {Report only non-zero data values.} "" -z}
-    {checkbox -g {Print grid coordinates (east and north), requires -1 flag.} "" -g}
-    {checkbox -x {Print x and y values (column and row), requires -1 flag.} "" -x}
+    {checkbox -n {Suppress reporting of any NULLs} "" -n}
+    {checkbox -N {Suppress reporting of NULLs when all values are NULL} "" -N}
+    {checkbox -g {Print grid coordinates (east and north), requires -1 flag} "" -g}
+    {checkbox -x {Print x and y values (column and row), requires -1 flag} "" -x}
+    {checkbox -C {report for cats fp ranges (fp maps only)} "" -C}
+    {checkbox -r {Print raw indexes of fp ranges (fp maps only)} "" -r}
+    {checkbox -i {Read fp map as integer (use map's quant rules)} "" -i}
 }

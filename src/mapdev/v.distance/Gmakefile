@@ -1,0 +1,8 @@
+PGM=v.distance
+OFILES = main.o  distance.o
+
+$(BIN_CMD)/$(PGM): $(OFILES) $(DEPVECTLIB) $(DEPGISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(DEPVECTLIB): #in case of library changes
+$(DEPGISLIB): #

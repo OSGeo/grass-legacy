@@ -1,3 +1,7 @@
+SLIBDEPS = $(GISLIB)
+
+EXTRA_CFLAGS = $(PICFLAGS)
+
 #HEADER = $(LIBDIR)/segment.h
 
 OBJ = \
@@ -16,11 +20,11 @@ OBJ = \
 	setup.o
 
 
-#all: $(SEGMENTLIB) $(HEADER) debug.o
-all: $(SEGMENTLIB) debug.o
+#all: $(DEPSEGMENTLIB) $(HEADER) debug.o
+all: $(DEPSEGMENTLIB) debug.o
 
-$(SEGMENTLIB): $(OBJ)
-	$(AR)
+$(DEPSEGMENTLIB): $(OBJ)
+	$(SLIBRULE)
 
 $(OBJ): #segment.h
 

@@ -73,6 +73,7 @@
  *******************************************************************/
 
 #include "config.h"
+#include <string.h>
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -89,7 +90,7 @@ int G__open (
     int mode)
 {
     char path[1024];
-    char xname[512], xmapset[512];
+    char xname[512], xmapset[512], *dummy;
 
 
     G__check_gisinit();
@@ -106,8 +107,9 @@ int G__open (
 	    }
 	    name = xname;
 	}
-	if (! G_find_file (element, name, mapset))
+	if ((dummy = G_find_file (element, name, mapset)) == NULL)
 	    return -1;
+	G_free (dummy);
 	G__file_name (path, element, name, mapset);
 
 	return open (path, 0);

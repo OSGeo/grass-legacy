@@ -1,0 +1,1385 @@
+
+
+proc get_feature { type } {
+
+  set dir ""
+  case $type in {
+
+       {raster} {
+                      set dir "cell"
+                  }
+
+       {vector} {
+                      set dir "dig"
+                  }
+
+       {sites} {
+                      set dir "site_lists"
+                  }
+
+       {label} {
+                      set dir "paint/labels"
+                  }
+
+       {group} {
+                      set dir "group"
+                  }
+
+       {icon} {
+                      set dir "paint/icons"
+                  }
+
+       {region} {
+                      set dir "windows"
+                  }
+
+       {dlg} {
+                      set dir "dlg"
+                  }
+
+       {dlg_ascii} {
+                      set dir "dlg_ascii"
+                  }
+
+  }
+  return $dir
+
+}
+
+
+
+
+proc put_list { the_listbox the_list } {
+
+  $the_listbox delete 0 end
+  foreach i $the_list {
+      $the_listbox insert end $i
+  }
+}
+
+
+
+
+proc get_list { path } {
+  set list ""
+  if { [file isdirectory $path] != 1 } {
+     return $list
+  }
+  set current_dir [exec pwd]
+  cd $path
+  foreach i [exec ls -a [exec pwd]] {
+     if { [string compare $i "."] != 0 && [string compare $i ".."] != 0 } {
+        lappend list $i
+     }
+  }
+  cd $current_dir
+  return $list
+}
+
+
+
+
+proc mapset_listbox { type } {
+
+  global database
+  global location
+  global mapset
+  global feature
+
+  global file_name
+  set file_name ""
+
+  toplevel .mapset
+
+  wm geometry .mapset +100+100
+  wm title .mapset {spatial layer}
+
+  set feature [get_feature $type]
+
+  global mapset_list
+
+  frame .mapset.frame0 \
+    -borderwidth {2} \
+    -relief {flat}
+
+  label .mapset.frame0.label \
+    -anchor {w} \
+    -text "Mapset"
+
+  entry .mapset.frame0.mapset \
+    -relief {sunken} \
+   -width 20
+
+  menubutton .mapset.frame0.mapsets \
+    -bitmap {@../bitmap/arrow} \
+    -menu {.mapset.frame0.mapsets.pulldown}
+
+  menu .mapset.frame0.mapsets.pulldown
+
+  set mapset_list [get_list "$database/$location"]
+  foreach i $mapset_list {
+      .mapset.frame0.mapsets.pulldown add command \
+          -label $i \
+          -command {
+                     set mapset [lindex $mapset_list \
+                               [.mapset.frame0.mapsets.pulldown index active] ]
+                     .mapset.frame0.mapset delete 0 end
+                     .mapset.frame0.mapset insert 0 $mapset
+                     put_list .mapset.frame1.listbox \
+                         [get_list "$database/$location/$mapset/$feature"]
+                     set file_name ""
+                   }
+  }
+
+  pack append .mapset.frame0 \
+    .mapset.frame0.label { left } \
+    .mapset.frame0.mapset { left } \
+    .mapset.frame0.mapsets { right }
+
+  frame .mapset.frame1 \
+    -borderwidth {2} \
+    -relief {raised}
+
+  listbox .mapset.frame1.listbox \
+    -relief {sunken} \
+    -geometry 20x10 \
+    -yscrollcommand {.mapset.frame1.vscrollbar set}
+
+  scrollbar .mapset.frame1.vscrollbar \
+    -command {.mapset.frame1.listbox yview}
+
+  pack append .mapset.frame1 \
+    .mapset.frame1.listbox { left expand fill } \
+    .mapset.frame1.vscrollbar { right fill }
+
+  frame .mapset.frame2 \
+    -borderwidth {2}
+
+  frame .mapset.frame2.frame
+
+  button .mapset.frame2.frame.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { if { $file_name != "" } {
+                   destroy .mapset
+               }
+              }
+
+  button .mapset.frame2.frame.cancel \
+    -text Cancel \
+    -relief raised \
+    -padx 10 \
+    -command { set file_name ""
+               destroy .mapset
+             }
+
+  pack append .mapset.frame2.frame \
+    .mapset.frame2.frame.ok { left expand } \
+    .mapset.frame2.frame.cancel { right expand }
+
+  pack append .mapset.frame2 \
+    .mapset.frame2.frame { bottom frame center fill }
+
+  pack append .mapset \
+    .mapset.frame0 { top expand fill } \
+    .mapset.frame1 { top expand fill } \
+    .mapset.frame2 { bottom expand fill }
+
+  bind .mapset.frame1.listbox <Button-1> {
+        %W select from [%W nearest %y]
+        %W select to [%W nearest %y]
+	    set file_name [%W get [%W nearest %y]]
+  }
+
+  bind .mapset.frame1.listbox <ButtonRelease-1> {
+        %W select from [%W nearest %y]
+        %W select to [%W nearest %y]
+	    set file_name [%W get [%W nearest %y]]
+  }
+
+  bind .mapset.frame1.listbox <Double-ButtonPress-1> {
+        %W select from [%W nearest %y]
+        %W select to [%W nearest %y]
+	    set file_name [%W get [%W nearest %y]]
+  }
+
+  .mapset.frame0.mapset delete 0 end
+  .mapset.frame0.mapset insert 0 $mapset
+
+  .mapset.frame1.listbox delete 0 end
+  put_list .mapset.frame1.listbox \
+             [get_list "$database/$location/$mapset/$feature"]
+
+  grab set .mapset
+  tkwait window .mapset
+
+  return $file_name
+
+}
+
+
+
+
+proc from { } {
+
+
+  toplevel .from
+
+  wm geometry .from +100+20
+  wm title .from "from"
+
+
+  global fx
+
+
+  frame .from.frame0 \
+    -relief {flat}
+
+  label .from.frame0.label \
+    -anchor {w} \
+    -text {Northing:} \
+    -padx {2}
+
+  scrollbar .from.frame0.hscrollbar \
+    -command {.from.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .from.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.from.frame0.hscrollbar set}
+
+  pack append .from.frame0 \
+    .from.frame0.label { top fillx } \
+    .from.frame0.entry { top fillx } \
+    .from.frame0.hscrollbar { bottom fillx }
+
+  .from.frame0.entry configure -state normal
+
+  bind .from.frame0.entry <Return> {
+       set fx [%W get] }
+
+
+  global fy
+
+
+  frame .from.frame1 \
+    -relief {flat}
+
+  label .from.frame1.label \
+    -anchor {w} \
+    -text {Easting:} \
+    -padx {2}
+
+  scrollbar .from.frame1.hscrollbar \
+    -command {.from.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .from.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.from.frame1.hscrollbar set}
+
+  pack append .from.frame1 \
+    .from.frame1.label { top fillx } \
+    .from.frame1.entry { top fillx } \
+    .from.frame1.hscrollbar { bottom fillx }
+
+  .from.frame1.entry configure -state normal
+
+  bind .from.frame1.entry <Return> {
+       set fy [%W get] }
+
+
+  global fz
+
+
+  frame .from.frame2 \
+    -relief {flat}
+
+  label .from.frame2.label \
+    -anchor {w} \
+    -text {Elevation:} \
+    -padx {2}
+
+  scrollbar .from.frame2.hscrollbar \
+    -command {.from.frame2.entry view} \
+    -orient {horizontal}
+
+  entry .from.frame2.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.from.frame2.hscrollbar set}
+
+  pack append .from.frame2 \
+    .from.frame2.label { top fillx } \
+    .from.frame2.entry { top fillx } \
+    .from.frame2.hscrollbar { bottom fillx }
+
+  .from.frame2.entry configure -state normal
+
+  bind .from.frame2.entry <Return> {
+       set fz [%W get] }
+
+
+
+  frame .from.frame3 \
+     -borderwidth {2}
+
+  button .from.frame3.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set fx [.from.frame0.entry get]
+                  set fy [.from.frame1.entry get]
+                  set fz [.from.frame2.entry get]
+                 destroy .from }
+
+  button .from.frame3.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set fx ""
+                  set fy ""
+                  set fz ""
+                 destroy .from }
+
+  pack append .from.frame3 \
+    .from.frame3.ok { left expand } \
+    .from.frame3.cancel { right expand }
+
+
+bind .from.frame0.entry <Return> {
+     focus .from.frame1.entry
+}
+
+bind .from.frame1.entry <Return> {
+     focus .from.frame2.entry
+}
+
+bind .from.frame2.entry <Return> {
+     focus .from.frame0.entry
+}
+
+
+  pack append .from \
+    .from.frame0 { top expand fill } \
+    .from.frame1 { top expand fill } \
+    .from.frame2 { top expand fill } \
+    .from.frame3 { bottom expand fill }
+
+
+
+  grab set .from
+  tkwait window .from
+
+}
+
+
+
+
+proc to { } {
+
+
+  toplevel .to
+
+  wm geometry .to +100+20
+  wm title .to "to"
+
+
+  global tx
+
+
+  frame .to.frame0 \
+    -relief {flat}
+
+  label .to.frame0.label \
+    -anchor {w} \
+    -text {Northing:} \
+    -padx {2}
+
+  scrollbar .to.frame0.hscrollbar \
+    -command {.to.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .to.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.to.frame0.hscrollbar set}
+
+  pack append .to.frame0 \
+    .to.frame0.label { top fillx } \
+    .to.frame0.entry { top fillx } \
+    .to.frame0.hscrollbar { bottom fillx }
+
+  .to.frame0.entry configure -state normal
+
+  bind .to.frame0.entry <Return> {
+       set tx [%W get] }
+
+
+  global ty
+
+
+  frame .to.frame1 \
+    -relief {flat}
+
+  label .to.frame1.label \
+    -anchor {w} \
+    -text {Easting:} \
+    -padx {2}
+
+  scrollbar .to.frame1.hscrollbar \
+    -command {.to.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .to.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.to.frame1.hscrollbar set}
+
+  pack append .to.frame1 \
+    .to.frame1.label { top fillx } \
+    .to.frame1.entry { top fillx } \
+    .to.frame1.hscrollbar { bottom fillx }
+
+  .to.frame1.entry configure -state normal
+
+  bind .to.frame1.entry <Return> {
+       set ty [%W get] }
+
+
+  global tz
+
+
+  frame .to.frame2 \
+    -relief {flat}
+
+  label .to.frame2.label \
+    -anchor {w} \
+    -text {Elevation:} \
+    -padx {2}
+
+  scrollbar .to.frame2.hscrollbar \
+    -command {.to.frame2.entry view} \
+    -orient {horizontal}
+
+  entry .to.frame2.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.to.frame2.hscrollbar set}
+
+  pack append .to.frame2 \
+    .to.frame2.label { top fillx } \
+    .to.frame2.entry { top fillx } \
+    .to.frame2.hscrollbar { bottom fillx }
+
+  .to.frame2.entry configure -state normal
+
+  bind .to.frame2.entry <Return> {
+       set tz [%W get] }
+
+
+
+  frame .to.frame3 \
+     -borderwidth {2}
+
+  button .to.frame3.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set tx [.to.frame0.entry get]
+                  set ty [.to.frame1.entry get]
+                  set tz [.to.frame2.entry get]
+                 destroy .to }
+
+  button .to.frame3.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set tx ""
+                  set ty ""
+                  set tz ""
+                 destroy .to }
+
+  pack append .to.frame3 \
+    .to.frame3.ok { left expand } \
+    .to.frame3.cancel { right expand }
+
+
+bind .to.frame0.entry <Return> {
+     focus .to.frame1.entry
+}
+
+bind .to.frame1.entry <Return> {
+     focus .to.frame2.entry
+}
+
+bind .to.frame2.entry <Return> {
+     focus .to.frame0.entry
+}
+
+
+  pack append .to \
+    .to.frame0 { top expand fill } \
+    .to.frame1 { top expand fill } \
+    .to.frame2 { top expand fill } \
+    .to.frame3 { bottom expand fill }
+
+
+
+  grab set .to
+  tkwait window .to
+
+}
+
+
+
+
+proc exaggeration { } {
+
+
+  toplevel .exaggeration
+
+  wm geometry .exaggeration +100+20
+  wm title .exaggeration "exaggeration"
+
+
+  global evalue
+
+
+  frame .exaggeration.frame0 \
+    -relief {flat}
+
+  scale .exaggeration.frame0.scale \
+     -label "Vertical exaggeration factor:" \
+     -from 0 \
+     -to 10 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .exaggeration.frame0 \
+    .exaggeration.frame0.scale { left expand fill }
+
+  .exaggeration.frame0.scale set 2
+
+
+  frame .exaggeration.frame1 \
+     -borderwidth {2}
+
+  button .exaggeration.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set evalue [.exaggeration.frame0.scale get]
+                 destroy .exaggeration }
+
+  button .exaggeration.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set evalue ""
+                 destroy .exaggeration }
+
+  pack append .exaggeration.frame1 \
+    .exaggeration.frame1.ok { left expand } \
+    .exaggeration.frame1.cancel { right expand }
+
+
+
+  pack append .exaggeration \
+    .exaggeration.frame0 { top expand fill } \
+    .exaggeration.frame1 { bottom expand fill }
+
+
+
+  grab set .exaggeration
+  tkwait window .exaggeration
+
+}
+
+
+
+
+proc lines { } {
+
+
+  toplevel .lines
+
+  wm geometry .lines +100+20
+  wm title .lines "lines"
+
+
+  global lvalue
+
+
+  frame .lines.frame0 \
+    -relief {flat}
+
+  scale .lines.frame0.scale \
+     -label "Number of rows and columns to skip between lines:" \
+     -from 1 \
+     -to 10 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .lines.frame0 \
+    .lines.frame0.scale { left expand fill }
+
+  .lines.frame0.scale set 1
+
+
+  frame .lines.frame1 \
+     -borderwidth {2}
+
+  button .lines.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set lvalue [.lines.frame0.scale get]
+                 destroy .lines }
+
+  button .lines.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set lvalue ""
+                 destroy .lines }
+
+  pack append .lines.frame1 \
+    .lines.frame1.ok { left expand } \
+    .lines.frame1.cancel { right expand }
+
+
+
+  pack append .lines \
+    .lines.frame0 { top expand fill } \
+    .lines.frame1 { bottom expand fill }
+
+
+
+  grab set .lines
+  tkwait window .lines
+
+}
+
+
+
+
+proc field { } {
+
+
+  toplevel .field
+
+  wm geometry .field +100+20
+  wm title .field "field"
+
+
+  global fvalue
+
+
+  frame .field.frame0 \
+    -relief {flat}
+
+  scale .field.frame0.scale \
+     -label "Field of view (veiwing angle) in degrees:" \
+     -from 1 \
+     -to 180 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .field.frame0 \
+    .field.frame0.scale { left expand fill }
+
+  .field.frame0.scale set 30
+
+
+  frame .field.frame1 \
+     -borderwidth {2}
+
+  button .field.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set fvalue [.field.frame0.scale get]
+                 destroy .field }
+
+  button .field.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set fvalue ""
+                 destroy .field }
+
+  pack append .field.frame1 \
+    .field.frame1.ok { left expand } \
+    .field.frame1.cancel { right expand }
+
+
+
+  pack append .field \
+    .field.frame0 { top expand fill } \
+    .field.frame1 { bottom expand fill }
+
+
+
+  grab set .field
+  tkwait window .field
+
+}
+
+
+
+
+proc colors { } {
+
+
+  toplevel .colors
+
+  wm geometry .colors +100+20
+  wm title .colors "colors"
+
+
+  global cname
+
+
+  frame .colors.frame0 \
+    -relief {flat}
+
+  label .colors.frame0.label \
+     -anchor {w} \
+     -text {Color of vector lines:} \
+     -padx {2}
+
+  listbox .colors.frame0.listbox \
+     -relief sunken \
+     -yscrollcommand {.colors.frame0.vscrollbar set}
+
+  scrollbar .colors.frame0.vscrollbar \
+     -command {.colors.frame0.listbox yview}
+
+
+  pack append .colors.frame0 \
+    .colors.frame0.label { top fillx } \
+    .colors.frame0.listbox { left expand fill } \
+    .colors.frame0.vscrollbar { right fill }
+
+  bind .colors.frame0.listbox <Button-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set cname [%W get [%W nearest %y]]
+  }
+
+  bind .colors.frame0.listbox <ButtonRelease-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set cname [%W get [%W nearest %y]]
+  }
+
+  bind .colors.frame0.listbox <Double-ButtonPress-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set cname [%W get [%W nearest %y]]
+  }
+
+  .colors.frame0.listbox delete 0 end
+  foreach i {white red orange yellow green blue indigo violet gray black} {
+      .colors.frame0.listbox insert 0 $i
+  }
+
+
+  frame .colors.frame1 \
+     -borderwidth {2}
+
+  button .colors.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .colors }
+
+  button .colors.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .colors }
+
+  pack append .colors.frame1 \
+    .colors.frame1.ok { left expand } \
+    .colors.frame1.cancel { right expand }
+
+
+
+  pack append .colors \
+    .colors.frame0 { top expand fill } \
+    .colors.frame1 { bottom expand fill }
+
+
+
+  grab set .colors
+  tkwait window .colors
+
+}
+
+
+
+
+proc flags { } {
+
+
+  toplevel .flags
+
+  wm geometry .flags +100+20
+  wm title .flags "flags"
+
+
+  global l
+
+
+  frame .flags.frame0 \
+    -relief {flat}
+
+  checkbutton .flags.frame0.checkbutton \
+     -text "Display lines only." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "l" \
+     -offvalue "" \
+     -variable l
+
+  pack append .flags.frame0 \
+    .flags.frame0.checkbutton { left }
+
+  global zero
+
+
+  frame .flags.frame1 \
+    -relief {flat}
+
+  checkbutton .flags.frame1.checkbutton \
+     -text "Show zero elevations." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "0" \
+     -offvalue "" \
+     -variable zero
+
+  pack append .flags.frame1 \
+    .flags.frame1.checkbutton { left }
+
+  global a
+
+
+  frame .flags.frame2 \
+    -relief {flat}
+
+  checkbutton .flags.frame2.checkbutton \
+     -text "Calculate each corner to be an average." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "a" \
+     -offvalue "" \
+     -variable a
+
+  pack append .flags.frame2 \
+    .flags.frame2.checkbutton { left }
+
+
+  frame .flags.frame3 \
+     -borderwidth {2}
+
+  button .flags.frame3.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .flags }
+
+  button .flags.frame3.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .flags }
+
+  pack append .flags.frame3 \
+    .flags.frame3.ok { left expand } \
+    .flags.frame3.cancel { right expand }
+
+
+bind .flags.frame0.checkbutton <Return> {
+     focus .flags.frame1.checkbutton
+}
+
+bind .flags.frame1.checkbutton <Return> {
+     focus .flags.frame2.checkbutton
+}
+
+bind .flags.frame2.checkbutton <Return> {
+     focus .flags.frame0.checkbutton
+}
+
+
+  pack append .flags \
+    .flags.frame0 { top expand fill } \
+    .flags.frame1 { top expand fill } \
+    .flags.frame2 { top expand fill } \
+    .flags.frame3 { bottom expand fill }
+
+
+
+  grab set .flags
+  tkwait window .flags
+
+}
+
+
+
+
+proc put_command { } {
+
+
+  global l
+  global zero
+  global a
+  global mname
+  global ename
+  global fx
+  global fy
+  global fz
+  global tx
+  global ty
+  global tz
+  global evalue
+  global lvalue
+  global fvalue
+  global cname
+  global bname
+
+
+  set cmd ""
+
+  if {  $l != "" || $zero != "" || $a != "" } {
+         set cmd "$cmd -$l$zero$a"
+  }
+
+  if {  $mname != "" } {
+         set cmd "$cmd map=$mname"
+  }
+
+  if {  $ename != "" } {
+         set cmd "$cmd elevation=$ename"
+  }
+
+  if {  $fx != "" || $fy != "" || $fz != "" } {
+         set cmd "$cmd from_coordinate=$fx,$fy,$fz"
+  }
+
+  if {  $tx != "" || $ty != "" || $tz != "" } {
+         set cmd "$cmd to_coordinate=$tx,$ty,$tz"
+  }
+
+  if {  $evalue != "" } {
+         set cmd "$cmd exaggeration=$evalue"
+  }
+
+  if {  $lvalue != "" } {
+         set cmd "$cmd lines=$lvalue"
+  }
+
+  if {  $fvalue != "" } {
+         set cmd "$cmd field=$fvalue"
+  }
+
+  if {  $cname != "" } {
+         set cmd "$cmd color=$cname"
+  }
+
+  if {  $bname != "" } {
+         set cmd "$cmd box=$bname"
+  }
+
+  if { $cmd != "" } {
+     set cmd "d.3d $cmd"
+  }
+}
+
+
+
+
+proc set_command_entry { } {
+
+  .cmd.frame0.entry configure -state normal
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 [put_command]
+  .cmd.frame0.entry configure -state disabled
+
+}
+
+
+proc proc_d.3d { } {
+
+
+  global l
+  global zero
+  global a
+  global mname
+  global ename
+  global fx
+  global fy
+  global fz
+  global tx
+  global ty
+  global tz
+  global evalue
+  global lvalue
+  global fvalue
+  global cname
+  global bname
+
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "Display 3-Dimensional Images"
+
+
+  frame .cmd.frame0 \
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame0.hscrollbar set}
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {d.3d}
+
+  .cmd.frame0.entry configure -state disabled
+
+
+
+  frame .cmd.frame1 \
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame1.hscrollbar set}
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {d.3d displays three-dimensional images based on raster map layers.}
+
+  .cmd.frame1.entry configure -state disabled
+
+
+
+  frame .cmd.frame2 \
+    -relief {flat}
+
+  label .cmd.frame2.label \
+    -anchor {w} \
+    -text {Raster map used to generate color:} \
+    -padx {2}
+
+  scrollbar .cmd.frame2.hscrollbar \
+    -command {.cmd.frame2.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame2.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame2.hscrollbar set}
+
+  button .cmd.frame2.button \
+    -relief {raised} \
+    -anchor {n} \
+    -text {raster} \
+    -command { set file [mapset_listbox raster]
+                if { $file != "" } {
+                   set mname $file
+                   .cmd.frame2.entry delete 0 end
+                   .cmd.frame2.entry insert 0 $file
+                   set_command_entry
+                }
+             }
+
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.label { top fillx } \
+    .cmd.frame2.button { right frame n } \
+    .cmd.frame2.entry { top fill } \
+    .cmd.frame2.hscrollbar { top fillx }
+
+
+
+  bind .cmd.frame2.entry <Return> {
+       set mname [%W get] }
+
+
+  frame .cmd.frame3 \
+    -relief {flat}
+
+  label .cmd.frame3.label \
+    -anchor {w} \
+    -text {Raster map used to generate texture:} \
+    -padx {2}
+
+  scrollbar .cmd.frame3.hscrollbar \
+    -command {.cmd.frame3.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame3.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame3.hscrollbar set}
+
+  button .cmd.frame3.button \
+    -relief {raised} \
+    -anchor {n} \
+    -text {raster} \
+    -command { set file [mapset_listbox raster]
+                if { $file != "" } {
+                   set ename $file
+                   .cmd.frame3.entry delete 0 end
+                   .cmd.frame3.entry insert 0 $file
+                   set_command_entry
+                }
+             }
+
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.label { top fillx } \
+    .cmd.frame3.button { right frame n } \
+    .cmd.frame3.entry { top fill } \
+    .cmd.frame3.hscrollbar { top fillx }
+
+
+
+  bind .cmd.frame3.entry <Return> {
+       set ename [%W get] }
+
+
+  frame .cmd.frame4 \
+    -relief {flat}
+
+  label .cmd.frame4.label \
+    -anchor {w} \
+    -text {Other options available:} \
+    -padx {2}
+
+  button .cmd.frame4.button0 \
+     -text "from ..." \
+     -relief raised \
+     -padx 10 \
+     -command "from
+                set_command_entry"
+
+
+  button .cmd.frame4.button1 \
+     -text "to ..." \
+     -relief raised \
+     -padx 10 \
+     -command "to
+                set_command_entry"
+
+
+  button .cmd.frame4.button2 \
+     -text "exaggeration ..." \
+     -relief raised \
+     -padx 10 \
+     -command "exaggeration
+                set_command_entry"
+
+
+  button .cmd.frame4.button3 \
+     -text "lines ..." \
+     -relief raised \
+     -padx 10 \
+     -command "lines
+                set_command_entry"
+
+
+  button .cmd.frame4.button4 \
+     -text "field ..." \
+     -relief raised \
+     -padx 10 \
+     -command "field
+                set_command_entry"
+
+
+  button .cmd.frame4.button5 \
+     -text "colors ..." \
+     -relief raised \
+     -padx 10 \
+     -command "colors
+                set_command_entry"
+
+
+  button .cmd.frame4.button6 \
+     -text "flags ..." \
+     -relief raised \
+     -padx 10 \
+     -command "flags
+                set_command_entry"
+
+
+  frame .cmd.frame5 \
+     -borderwidth {2}
+
+  button .cmd.frame5.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 
+		if {  $mname != "" && $ename != "" } {
+ 		set cmd [put_command]
+ 		if { $cmd != "" } {
+ 		   catch { eval " exec $cmd " } 
+ 		   destroy .cmd
+ 		}
+ 	}
+ }
+
+  button .cmd.frame5.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { destroy .cmd }
+
+  pack append .cmd.frame5 \
+    .cmd.frame5.ok { left expand } \
+    .cmd.frame5.cancel { right expand }
+
+  pack append .cmd.frame4 \
+    .cmd.frame4.label { top fillx } \
+    .cmd.frame4.button0 { left } \
+    .cmd.frame4.button1 { left } \
+    .cmd.frame4.button2 { left } \
+    .cmd.frame4.button3 { left } \
+    .cmd.frame4.button4 { left } \
+    .cmd.frame4.button5 { left } \
+    .cmd.frame4.button6  { left }
+
+
+
+  pack append .cmd \
+    .cmd.frame1 { top expand fill } \
+    .cmd.frame2 { top expand fill } \
+    .cmd.frame3 { top expand fill } \
+    .cmd.frame4 { top expand fill } \
+    .cmd.frame0 { top expand fill } \
+    .cmd.frame5 { bottom expand fill }
+
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global l
+set l ""
+
+global zero
+set zero ""
+
+global a
+set a ""
+
+global mname
+set mname ""
+
+global ename
+set ename ""
+
+global fx
+set fx ""
+
+global fy
+set fy ""
+
+global fz
+set fz ""
+
+global tx
+set tx ""
+
+global ty
+set ty ""
+
+global tz
+set tz ""
+
+global evalue
+set evalue ""
+
+global lvalue
+set lvalue ""
+
+global fvalue
+set fvalue ""
+
+global cname
+set cname ""
+
+global bname
+set bname ""
+
+
+global database
+global location
+global mapset
+global feature
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_d.3d

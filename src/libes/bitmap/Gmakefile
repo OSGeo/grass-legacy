@@ -1,19 +1,22 @@
+EXTRA_CFLAGS = $(PICFLAGS)
+
+SLIBDEPS = $(LINKMLIB)
 
 OBJ = \
 	bitmap.o\
 	sparse.o
 
-all: $(BITMAPLIB)
+all: $(DEPBITMAPLIB)
 
-$(BITMAPLIB): $(OBJ)
-	$(AR)
+$(DEPBITMAPLIB): $(OBJ)
+	$(SLIBRULE)
 
 $(OBJ): #linkm.h
 
-main: main.o $(BITMAPLIB) $(LINKMLIB)
+main: main.o $(DEPBITMAPLIB) $(DEPLINKMLIB)
 	$(CC) $(LDFLAGS) main.o $(BITMAPLIB) $(LINKMLIB) -o main
 
-smain: smain.o $(BITMAPLIB) $(LINKMLIB)
+smain: smain.o $(DEPBITMAPLIB) $(DEPLINKMLIB)
 	$(CC) $(LDFLAGS) smain.o $(BITMAPLIB) $(LINKMLIB) -o smain
 
-$(LINKMLIB): #
+$(DEPLINKMLIB): #

@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <string.h>
 #include "gis.h"
 #include "local_proto.h"
@@ -14,15 +15,23 @@ main (int argc, char *argv[])
     char name[100];
     char *OUTPUT;
     char *INPUT; 
+	struct GModule *module;
     struct Flag *flag1 ;
     struct Option *opt1 ;
     struct Option *opt2 ;
     struct Option *opt3 ;
     static int verbose = 1;
+    char rname[256], rmapset[256];
 
+    G_gisinit (argv[0]);
 
 /* Define the different options */
 
+	module = G_define_module();
+	module->description =
+		"Recategorizes data in a raster map layer by grouping cells " 
+		"that form physically discrete areas into unique categories.";
+						
     opt1 = G_define_option() ;
     opt1->key        = "input";
     opt1->type       = TYPE_STRING;
@@ -51,8 +60,6 @@ main (int argc, char *argv[])
     flag1->key         = 'q' ;
     flag1->description = "quiet" ;
 
-    G_gisinit (argv[0]);
-
     if (G_parser(argc, argv) < 0)
 	exit(-1);
 
@@ -79,7 +86,6 @@ main (int argc, char *argv[])
     	G_fatal_error (err);
 	exit(1);
     }
-
 
     in_fd = G_open_cell_old (name, mapset);
     if (in_fd < 0)

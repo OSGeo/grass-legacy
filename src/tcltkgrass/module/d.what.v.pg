@@ -1,0 +1,13 @@
+interface_build {
+    d.what.v.pg 0
+    {Displays lines/areas selected with DB query.}
+    {entry map  {Vector map:} 0 vector}
+    {entry tab {DB table:} 0 ""}
+    {entry col  {Key column name:} 0 ""}
+    {entry color  {Line color:} 0 color}
+    {entry fillcolor  {Area color:} 0 color}
+    {entry hv  {Ouput - v(ert)/h(oriz):} 0 ""}
+    {checkbox -s {SQL file input} "" -s}
+    {checkbox -f {Fill areas} "" -f}
+    {entry sql  {Name of SQL file:} 0 file}
+}

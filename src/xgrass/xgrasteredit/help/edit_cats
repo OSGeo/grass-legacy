@@ -1,8 +1,0 @@
-
-The Edit-Categories Option
-
-This menu choice will allow you to edit the currently loaded raster
-map's category information.  You will be presented with a dialog 
-(the xgcats dialog) that will allow you to edit @glossary("category labels",16.glossary/catlab.def)
-(also known as attributes) and add new @glossary("category values.",16.glossary/catval.def) 
-

@@ -18,6 +18,7 @@
 #include "keyboard.h"
 #include        "projects.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int init_map (char	*coor_file)
 {
@@ -71,22 +72,22 @@ int init_map (char	*coor_file)
             proj_keys = G_get_projinfo();
             if (proj_keys == NULL) { 
             /* projection file had to be deleted after last registration */   
-              fprintf(stderr,"projection file not found -- run g.setproj\n");
+              fprintf(stderr,_("projection file not found -- run g.setproj\n"));
               last_words(CMap,-1);
             }
             unit_keys = G_get_projunits();
             if (unit_keys == NULL)  {
             /* units file had to be deleted after last registration */   
-              fprintf(stderr,"units file not found -- run g.setproj\n");
+              fprintf(stderr,_("units file not found -- run g.setproj\n"));
               last_words(CMap,-1);
             }
             if (pj_get_string(&info_ll,"+proj=ll") <0) {
-              fprintf(stderr,"Could not initialize proj_ll\n");
+              fprintf(stderr,_("Could not initialize proj_ll\n"));
               last_words(CMap,-1);
             } 
             if (pj_get_kv(&info_coord,proj_keys,unit_keys) <0)  {
             /* projection file had to be corrupted after last registration */   
-              fprintf(stderr,"Could not initialize proj_coord\n");
+              fprintf(stderr,_("Could not initialize proj_coord\n"));
               last_words(CMap,-1);
             }
             ll_ask = 2;  /* user can enter only lat/lon strings */
@@ -138,14 +139,14 @@ while (1)
                 if (ll_flag) {
                   if (G_scan_northing (bcx[j],Y+j,PROJECTION_LL) == 0)
                   {
-                     fprintf(stderr,"Invalid longtitude: %s\n",bcx[j]);
+                     fprintf(stderr,_("Invalid longtitude: %s\n"),bcx[j]);
                      ask_again = 1;
                      ll_ask = 2;
                      bcx[j][0] = '\0'; /* wipe out incorrect entry */
                   }
                   if (G_scan_easting (bcy[j],X+j,PROJECTION_LL) == 0)
                   {
-                     fprintf(stderr,"Invalid latitude: %s\n",bcy[j]);
+                     fprintf(stderr,_("Invalid latitude: %s\n"),bcy[j]);
                      ask_again = 1;
                      ll_ask = 2;
                      bcy[j][0] = '\0'; /* wipe out incorrect entry */
@@ -153,12 +154,12 @@ while (1)
                 }
                 else {
                   if (!sscanf(bcx[j],"%lf",&X[j])) {
-                    fprintf(stderr,"Invalid Easting : %s\n",bcx[j]);
+                    fprintf(stderr,_("Invalid Easting : %s\n"),bcx[j]);
                     ask_again = 1;
                     bcx[j][0] = '\0'; /* wipe out incorrect entry */
                   }
                   if (!sscanf(bcy[j],"%lf",&Y[j])) {
-                    fprintf(stderr,"Invalid Northing : %s\n",bcy[j]);
+                    fprintf(stderr,_("Invalid Northing : %s\n"),bcy[j]);
                     ask_again = 1;
                     bcy[j][0] = '\0'; /* wipe out incorrect entry */
                   }
@@ -167,7 +168,7 @@ while (1)
             }
             if (ask_again == 1) { 
               do {
-                fprintf(stderr,"Press <Return> to continue ");
+                fprintf(stderr,_("Press <Return> to continue "));
               } while (!G_gets(buff));
             }
 /* Make sure nonregistered fields are empty */

@@ -25,7 +25,7 @@ while (1)
 	/*
 	 *  close down curses so that Vask will work
 	 */
-	suspend() ;
+	mysuspend() ;
 
 	/*  go to Vask page to enter the coordinates  */
 	if ((n_points =  ask_map_coor (n_points)) < 0)
@@ -34,7 +34,7 @@ while (1)
 	/*
 	 * back to CURSES environment
 	 */
-	respend() ;
+	myrespend() ;
 
 	Clear_base() ;
 	Clear_info() ;

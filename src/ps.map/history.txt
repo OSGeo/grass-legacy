@@ -1,0 +1,51 @@
+Date: Mon, 21 Feb 2000 09:13:42 +0100                                                                      
+From: Radim Blazek <Radim.Blazek@dhv.cz>
+
+Attached is version  with new options for vectors:                                                         
+                                                                                                           
+- cwidth > plotted line width  =  cwidth * category                                                        
+                   ( usefull for any continuous quantity parameter such                                    
+as flow in rivers)                                                                                         
+- offset  > plots parallel line in offset distance                                                         
+- coffset > offset distance = coffset * category                                                           
+                    ( combination  of cwidth + coffset makes available                                     
+display parameters                                                                                         
+                       in each direction such as traffic on roads)                                         
+- lpos - position in legend (0-omit, repeated number - merge more                                          
+vectors in one row)                                                                                        
+                                                                                                           
+These options are not implemented in interactive mode yet.                                                 
+                                                                                                           
+Radim
+
+---------------------------------------------------------------------
+Jan 2000
+
+  Dear GRASS Team,
+  
+  I want to offer to you ps.map.new. 
+It is copy of ps.map from Grass5.beta5 with new options:
+
+acolor  r g b       - for plotting vector areas and
+label label for map - for legend labels of vectors   
+
+and few little changes.
+
+If you accept it to official distribution and if you want
+my next changes for this module (which I want to do)
+please send me instructions (or URL) 
+how to go on to avoid conflicts with other contributors.
+I have some instructions but it seems to be old. 
+
+I am in doubts how latitude-longitude areas should be correctly
+handled because d.vect displays boundaries in different way
+from d.area and v.digit or v.build builds areas. So this
+module works with LL areas as d.area, v.digit and v.build.
+It means that it doesn't calculate shortest way between points
+and the same adjusting is done for one area instead of each point.     
+
+Tested only on Linux RH6.0
+
+Please send me comments anyway.
+
+	Radim Blazek (Radim.Blazek@dhv.cz)

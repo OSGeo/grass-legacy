@@ -1,0 +1,24 @@
+SLIBDEPS = $(GISLIB) $(FFTWLIB) $(LAPACKLIB) $(BLASLIB)
+
+OBJ = fft.o \
+	del2g.o \
+	eigen.o \
+	gauss.o \
+	getg.o \
+	jacobi.o \
+	max_pow2.o \
+	mult.o \
+	rand1.o \
+	la.o
+
+LIBES = $(GISLIB)
+DEPLIBS= $(DEPGISLIB)
+
+EXTRA_CFLAGS = $(FFTWINC) $(PICFLAGS)
+
+all: $(DEPGMATHLIB)
+
+$(DEPGMATHLIB): $(OBJ)
+	$(SLIBRULE) 
+
+$(OBJ): $(INCLUDE_DIR)/la.h

@@ -1,3 +1,2 @@
 all:
-	$(GMAKE) lib
 	$(GMAKE) XDRIVER24

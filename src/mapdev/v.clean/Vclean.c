@@ -14,9 +14,7 @@
 # endif
 
 #include    "gis.h"
-#include    "digit.h"
 #include    "Vect.h"
-#include    "dig_head.h"
 #include "local_proto.h"
 
 
@@ -32,17 +30,21 @@ double dig_unit_conversion ();
 
 int main (int argc, char **argv)
 {
+	struct GModule *module;
     char *mapset;
     char *dig_name;
 
+    G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Cleans out dead lines in GRASS vector files.";
 
 /*  check args and set flags  */
 	
     parse_command_line (argc, argv, &dig_name);
      
 /* Show advertising */
-    G_gisinit(argv[0]);
-
     fprintf (stdout,"\n\n   v.clean:\n\n");
 
     if ((mapset = G_find_file2 ("dig", dig_name, "")) == NULL)
@@ -97,7 +99,8 @@ int export (char *dig_name, char *mapset)
 	    G_fatal_error ("Can't open vector file");
 
 	tmpfile = G_tempfile ();
-	Out = fopen (tmpfile, "w");
+	if( NULL == (Out = fopen (tmpfile, "w")) )
+		G_fatal_error("Can't open temp file");
 
 	if (0 > cp_filep (Map.dig_fp, Out))
 	    G_fatal_error ("File copy failed.  Cannot Proceed.");
@@ -237,15 +240,15 @@ int doit (
     /*NOTREACHED*/
 }
 
-int cp_filep (FILE *in, FILE *out)
+int cp_filep (const FILE *in, FILE *out)
 {
     char buf[BUFSIZ];
     int red;
     int err=0;
 
-    fseek (in, 0L, 0);
+    fseek ((FILE *)in, 0L, 0);
     {
-        while (red = fread (buf, 1, BUFSIZ, in))
+        while (red = fread (buf, 1, BUFSIZ, (FILE *)in))
 	{
             if (red != fwrite (buf, 1, red, out))
 	    {
@@ -253,7 +256,7 @@ int cp_filep (FILE *in, FILE *out)
 		break;
 	    }
 	}
-        fclose (in);
+ /*       fclose (in);  */
     }
     return (err);
 }

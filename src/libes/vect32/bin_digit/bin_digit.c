@@ -1,5 +1,6 @@
 
 #include	<stdio.h>
+#include	<stdlib.h>
 #include	<signal.h>
 #include	"gis.h"
 #include	"bin_digit.h"
@@ -14,7 +15,7 @@ main(argc, argv)
     char *argv[];
 {
 
-	FILE	*fp,  *fopen() ;
+	FILE	*fp ;
 
 	int   pid ;
 	int   lock ;
@@ -25,7 +26,6 @@ main(argc, argv)
 	char  *mapset ;
 	char  *env_digitizer ;
 	char  *pid_string ;
-	char  *getenv() ;
 
 
 	char  map_path[128] ;

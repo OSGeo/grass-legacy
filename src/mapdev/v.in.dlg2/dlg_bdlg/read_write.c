@@ -1,5 +1,6 @@
 /*  @(#)read_write.c	2.1  6/26/87  */
 #include <stdio.h>
+#include <stdlib.h>
 #include "dlghead.h"
 
 #define FGET 		fgets(buff,128,file)
@@ -143,8 +144,6 @@ static scan_doubles( todo, coor_str, tmp )
 	int i ;
 	int n_read ;
 	char coors[6][13] ;
-
-	double  atof() ;
 
 /**************
   This sscanf fails on coordinates with no white space between them.

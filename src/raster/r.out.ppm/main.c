@@ -19,6 +19,7 @@ typedef int FILEDESC;
 
 int main( int argc, char *argv[])
 {
+	struct GModule *module;
     struct Option 	*rast, *ppm_file;
     struct Flag 	*bequiet, *gscale;
     char 		*cellmap, *map, *p, errbuf[100], ofile[1000];
@@ -34,6 +35,11 @@ int main( int argc, char *argv[])
 
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Converts a GRASS raster file to a PPM image file "
+		"at the pixel resolution of the CURRENTLY DEFINED REGION.";
 
     rast = G_define_option();
     rast->key                    = "input";

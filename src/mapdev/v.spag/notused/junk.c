@@ -15,7 +15,7 @@ intersect (Map)
 {
     int A, B;
     P_LINE *Aline, *Bline;
-    char *p, *getenv ();
+    char *p;
 
 
     if (first)

@@ -1,8 +1,0 @@
-
-\i.points\ - An imagery function that enables the user to mark coordinate
-system points on an image to be rectified and then input the 
-coordinates of each point for creation of a coordinate transformation
-matrix.  The transformation matrix is needed as input for
-the GRASS program \i.rectify\.
-
-(GRASS Imagery Program)

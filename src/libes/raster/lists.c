@@ -7,12 +7,12 @@ int _get_list ( char ***list, int *count)
 {
     char **a;
     int n;
-    char buf[1024];
+    char *buf;
 
     *list = NULL;
     *count = 0;
 
-    _get_text (buf);
+    buf = _get_text_2 ();
     for (n = 0; *buf != 0 ; n++)
     {
 	if (n == 0)
@@ -24,14 +24,13 @@ int _get_list ( char ***list, int *count)
 	    fprintf (stderr, "out of memory");
 	    return 0;
 	}
-	a[n] = malloc (strlen(buf) + 1);
+	a[n] = strdup(buf);
 	if (a[n] == NULL)
 	{
 	    fprintf (stderr, "out of memory");
 	    return 0;
 	}
-	strcpy (a[n], buf);
-	_get_text (buf);
+	buf = _get_text_2 ();
     }
 
     *list = a ;
@@ -51,5 +50,5 @@ int R_pad_freelist ( char **list, int count)
 	free (list);
     }
 
-	return 0;
+    return 0;
 }

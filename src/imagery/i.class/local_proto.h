@@ -97,7 +97,11 @@ int nstd200(void);
 int nstd225(void);
 int nstd250(void);
 /* main.c */
+#ifdef __GNUC_MINOR__
 void quit(void) __attribute__ ((__noreturn__));
+#else
+void quit(void);
+#endif
 int error(char *, int);
 /* mouse.c */
 int Mouse_pointer(int *, int *, int *);
@@ -137,11 +141,6 @@ int save_signature(void);
 int write_signatures(void);
 /* title.c */
 int display_title(View *);
-/* tty.c */
-int Get_old_tty(void);
-int Get_new_tty(void);
-int Old_tty(void);
-int New_tty(void);
 /* view.c */
 int Configure_view(View *, char *, char *, double, double);
 int In_view(View *, int, int);

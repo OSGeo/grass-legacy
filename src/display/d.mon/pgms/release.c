@@ -85,5 +85,5 @@ int
 usage (char *me)
 {
     fprintf(stderr,"Usage:  %s [-fv] [name]\n",me);
-    exit(-1);
+    exit(1);
 }

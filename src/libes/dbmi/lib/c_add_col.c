@@ -1,7 +1,7 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_add_column (driver, tableName, column)
+int db_add_column (driver, tableName, column)
     dbDriver *driver;
     dbString *tableName;
     dbColumn *column;

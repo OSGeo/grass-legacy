@@ -1,4 +1,5 @@
 #include "gis.h"
+#include "site.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,6 +14,7 @@ int main(int argc, char *argv[])
     char msg[200];
     FILE *fd;
     struct Cell_head window;
+    struct GModule *module;
     struct
     {
 	struct Flag *full, *all, *strip;
@@ -25,6 +27,11 @@ int main(int argc, char *argv[])
 
     G_gisinit (argv[0]);
 
+    module = G_define_module();
+    module->description =        
+                    "Converts a GRASS site list file into an ASCII listing of "
+                    "site locations and their descriptions.";
+                    
     parm.input = G_define_option();
     parm.input->key = "sites";
     parm.input->type = TYPE_STRING;

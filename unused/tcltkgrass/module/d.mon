@@ -1,0 +1,413 @@
+proc flags { } {
+
+  toplevel .flags
+
+  wm geometry .flags +100+20
+  wm title .flags "Flags"
+
+  global parm
+
+  frame .flags.frame0 \
+    -borderwidth {2}\
+    -relief {flat}
+
+  radiobutton .flags.frame0.radiobutton0 \
+     -text "List all monitors" \
+     -relief flat  \
+     -anchor {w} \
+     -value l \
+     -variable parm
+
+  radiobutton .flags.frame0.radiobutton1 \
+     -text "List all monitors (with current status)" \
+     -relief flat  \
+     -anchor {w} \
+     -value L \
+     -variable parm
+
+  radiobutton .flags.frame0.radiobutton2 \
+     -text "Print name of currently selected monitor" \
+     -relief flat  \
+     -anchor {w} \
+     -value p \
+     -variable parm
+
+  radiobutton .flags.frame0.radiobutton3 \
+     -text "Release currently selected monitor" \
+     -relief flat \
+     -anchor {w} \
+     -value r \
+     -variable parm
+
+  radiobutton .flags.frame0.radiobutton4 \
+     -text "Do not automatically select when starting" \
+     -relief flat \
+     -anchor {w} \
+     -value s \
+     -variable parm
+
+
+  pack append .flags.frame0 \
+    .flags.frame0.radiobutton0 { top fill } \
+    .flags.frame0.radiobutton1 { top fill } \
+    .flags.frame0.radiobutton2 { top fill } \
+    .flags.frame0.radiobutton3 { top fill } \
+    .flags.frame0.radiobutton4 { top fill }
+
+
+  frame .flags.frame1 \
+     -borderwidth {2}
+
+  button .flags.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 
+                if { $parm != "" } {
+                   destroy .flags
+                }
+              }
+
+  button .flags.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { 
+                set parm ""
+                destroy .flags 
+              }
+
+  pack append .flags.frame1 \
+    .flags.frame1.ok { left frame center expand } \
+    .flags.frame1.cancel { right frame center expand }
+
+
+  pack append .flags \
+    .flags.frame0 { top frame center expand fill } \
+    .flags.frame1 { bottom frame center expand fill }
+
+
+  grab set .flags
+  tkwait window .flags
+
+}
+
+
+
+
+
+proc d.mon { } {
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+  wm title .cmd "Control Display Monitor"
+
+  global exec_cmd
+  global monitor_list
+  global function_list
+
+  global function
+  global monitor
+
+
+  frame .cmd.frame0 \
+    -borderwidth {2}\
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry xview} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -xscrollcommand {.cmd.frame0.hscrollbar set}
+
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {d.mon [-(l)(L)(p)(r)(s)] [(function)][(monitor)]}
+  .cmd.frame0.entry configure -state disabled
+
+
+  frame .cmd.frame1 \
+    -borderwidth {2}\
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry xview} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -xscrollcommand {.cmd.frame1.hscrollbar set}
+
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {d.mon establishes and controls the use of a graphics dislpay monitor.}
+  .cmd.frame1.entry configure -state disabled
+
+
+  frame .cmd.frame2 \
+    -borderwidth {2}\
+    -relief {flat}
+
+  label .cmd.frame2.label \
+    -anchor {w} \
+    -text {Monitor:} \
+    -padx {2}
+
+  listbox .cmd.frame2.listbox \
+    -relief {sunken} \
+    -exportselection false \
+    -width 25 -height 8 \
+    -yscrollcommand {.cmd.frame2.vscrollbar set}
+
+  scrollbar .cmd.frame2.vscrollbar \
+    -command {.cmd.frame2.listbox yview} \
+    -orient {vertical}
+
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.label { top fillx } \
+    .cmd.frame2.listbox { left expand fill } \
+    .cmd.frame2.vscrollbar { right fill }
+
+
+  bind .cmd.frame2.listbox <Button-1> {
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
+	set monitor [%W get [%W nearest %y]]
+        if { [.cmd.frame3.listbox curselection] != "" } { 
+           .cmd.frame0.entry configure -state normal
+           .cmd.frame0.entry delete 0 end
+           set select [.cmd.frame3.listbox get [.cmd.frame3.listbox curselection]]
+           .cmd.frame0.entry insert 0 "$exec_cmd $select$monitor"
+           .cmd.frame0.entry configure -state disabled
+        }
+  }
+
+  bind .cmd.frame2.listbox <ButtonRelease-1> {
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
+	set monitor [%W get [%W nearest %y]]
+        if { [.cmd.frame3.listbox curselection] != "" } { 
+           .cmd.frame0.entry configure -state normal
+           .cmd.frame0.entry delete 0 end
+           set select [.cmd.frame3.listbox get [.cmd.frame3.listbox curselection]]
+           .cmd.frame0.entry insert 0 "$exec_cmd $select$monitor"
+           .cmd.frame0.entry configure -state disabled
+        }
+  }
+
+  bind .cmd.frame2.listbox <Double-ButtonPress-1> {
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
+	set monitor [%W get [%W nearest %y]]
+        if { [.cmd.frame3.listbox curselection] != "" } { 
+           .cmd.frame0.entry configure -state normal
+           .cmd.frame0.entry delete 0 end
+           set select [.cmd.frame3.listbox get [.cmd.frame3.listbox curselection]]
+           .cmd.frame0.entry insert 0 "$exec_cmd $select$monitor"
+           .cmd.frame0.entry configure -state disabled
+        }
+  }
+
+
+
+  frame .cmd.frame3 \
+    -borderwidth {2}\
+    -relief {flat}
+
+  label .cmd.frame3.label \
+    -anchor {w} \
+    -text {Function:} \
+    -padx {2}
+
+  listbox .cmd.frame3.listbox \
+    -relief {sunken} \
+    -exportselection false \
+    -width 25 -height 5 \
+    -yscrollcommand {.cmd.frame3.vscrollbar set}
+
+  scrollbar .cmd.frame3.vscrollbar \
+    -command {.cmd.frame3.listbox yview} \
+    -orient {vertical}
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.label { top fillx } \
+    .cmd.frame3.listbox { left expand fill } \
+    .cmd.frame3.vscrollbar { right fill }
+
+  bind .cmd.frame3.listbox <Button-1> {
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
+	set function [%W get [%W nearest %y]]
+        .cmd.frame0.entry configure -state normal
+        .cmd.frame0.entry delete 0 end
+        set select ""
+        if { [.cmd.frame2.listbox curselection] != "" } { 
+           set select [.cmd.frame2.listbox get [.cmd.frame2.listbox curselection]]
+        }
+        .cmd.frame0.entry insert 0 "$exec_cmd $function$select"
+        .cmd.frame0.entry configure -state disabled
+  }
+
+  bind .cmd.frame3.listbox <ButtonRelease-1> {
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
+	set function [%W get [%W nearest %y]]
+        .cmd.frame0.entry configure -state normal
+        .cmd.frame0.entry delete 0 end
+        set select ""
+        if { [.cmd.frame2.listbox curselection] != "" } { 
+           set select [.cmd.frame2.listbox get [.cmd.frame2.listbox curselection]]
+        }
+        .cmd.frame0.entry insert 0 "$exec_cmd $function$select"
+        .cmd.frame0.entry configure -state disabled
+  }
+
+  bind .cmd.frame3.listbox <Double-ButtonPress-1> {
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
+	set function [%W get [%W nearest %y]]
+        .cmd.frame0.entry configure -state normal
+        .cmd.frame0.entry delete 0 end
+        set select ""
+        if { [.cmd.frame2.listbox curselection] != "" } { 
+           set select [.cmd.frame2.listbox get [.cmd.frame2.listbox curselection]]
+        }
+        .cmd.frame0.entry insert 0 "$exec_cmd $function$select"
+        .cmd.frame0.entry configure -state disabled
+  }
+
+
+  frame .cmd.frame4\
+    -borderwidth {2}\
+    -relief {flat}
+
+  button .cmd.frame4.button \
+     -text "Flags ..." \
+     -relief raised \
+     -padx 10 \
+     -command { 
+                flags
+                if { $parm != "" } {
+                   .cmd.frame0.entry configure -state normal
+                   .cmd.frame0.entry delete 0 end
+                   .cmd.frame0.entry insert 0 "$exec_cmd -$parm"
+                   .cmd.frame0.entry configure -state disabled
+                   .cmd.frame2.listbox select clear
+                   .cmd.frame3.listbox select clear
+                   set function ""
+                   set monitor ""
+                } 
+              }
+
+  pack append .cmd.frame4 \
+    .cmd.frame4.button { left }
+
+
+  frame .cmd.frame5 \
+     -borderwidth {2} \
+     -relief {flat}
+
+  button .cmd.frame5.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 
+                if { $parm != "" || $function != "" } {
+                   destroy .cmd
+                } 
+              }
+
+  button .cmd.frame5.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { 
+                set parm ""
+                set monitor ""
+                set function ""
+                destroy .cmd 
+              }
+
+  pack append .cmd.frame5 \
+    .cmd.frame5.ok { left expand } \
+    .cmd.frame5.cancel { right expand }
+
+
+  pack append .cmd \
+    .cmd.frame1 { top fill } \
+    .cmd.frame2 { top fill } \
+    .cmd.frame3 { top fill } \
+    .cmd.frame4 { top fill } \
+    .cmd.frame0 { top fill } \
+    .cmd.frame5 { bottom fill }
+
+
+  .cmd.frame2.listbox delete 0 end
+  foreach i $monitor_list {
+     .cmd.frame2.listbox insert 0 $i
+  }
+
+  .cmd.frame3.listbox delete 0 end
+  foreach i $function_list {
+     .cmd.frame3.listbox insert 0 $i
+  }
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global parm
+set parm ""
+
+global monitor
+set monitor ""
+
+global function
+set function ""
+
+global exec_cmd
+set exec_cmd "d.mon"
+
+global monitor_list
+set monitor_list {x6 x5 x4 x3 x2 x1 x0}
+
+global function_list
+set function_list {unlock= select= stop= start=}
+
+d.mon
+
+set cmd $exec_cmd
+if { $parm != "" } {
+   set cmd "$cmd -$parm"
+} else {
+   if { $function != "" && $monitor != "" } {
+      set cmd "$cmd $function$monitor"
+   }
+}
+
+eval "exec $cmd &" 

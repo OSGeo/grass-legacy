@@ -189,6 +189,7 @@
 #define MWC_LABELS	'A'
 #define MWC_LLINES	'l'
 #define MWC_LLABELS	'L'
+#define MWC_ULINES	'U'
 #define MWC_CLEAR	'C'
 #define MWC_WHERE	'w'
 #define MWC_SCALE	'c'

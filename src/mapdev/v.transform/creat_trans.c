@@ -1,4 +1,20 @@
 /*
+****************************************************************************
+*
+* MODULE:       v.transform
+* AUTHOR(S):    See other files as well...
+*               Eric G. Miller <egm2@jps.net>
+* PURPOSE:      To transform a vector layer's coordinates via a set of tie
+*               points.
+* COPYRIGHT:    (C) 2002 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
+
+/*
 *  create_transform_conversion () - main driver routine to prepare
 *    the transformation equation.
 *
@@ -7,10 +23,11 @@
 *  Written by the GRASS Team, 02/16/90, -mh.
 */
 
-#include	<stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
-#include	"trans.h"
-#include	"local_proto.h"
+#include "Vect.h"
+#include "trans.h"
+#include "local_proto.h"
 
 int 
 create_transform_conversion (struct file_info *Coord, int quiet)
@@ -69,6 +86,7 @@ yes_no_quest (char *s)
     while (1)
     {
 	fprintf (stdout,"%s",s);
+        fflush (stdout);
 	if (NULL == fgets(buff,200,stdin))
 		exit(-1) ;
 	switch (*buff)

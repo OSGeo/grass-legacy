@@ -30,12 +30,8 @@ int main (int argc, char **argv)
 		exit(-1) ;
 	}
 
-	font = open ("font.bin", 0);
-	if (font < 0)
-	{
-		perror ("font.bin");
-		exit(1);
-	}
+	font = 0; /* stdin */
+
 	read (font, &offset, sizeof(offset));
 	lseek (font, offset, 0);
 

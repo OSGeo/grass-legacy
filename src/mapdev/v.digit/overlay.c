@@ -13,6 +13,7 @@
 #include "dig_curses.h"
 #include "Map_proto.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 /* 
 ** Overlays:    
@@ -32,7 +33,7 @@ int ask_overlay (void)
     mapset = G_ask_old ("", over_name, "dig", "vector");
     if (mapset == NULL)
     {
-	N_overlay = "None";
+	N_overlay = _("None");
 	Overlay.digit_file = NULL;
 	disable_overlay ();
 	have_overlay = 0;
@@ -52,7 +53,7 @@ int ask_overlay (void)
 
     if (!Terse_On)
 	Disp_overlay = G_yes (
-	    "Do you want to automatically redraw overlay on re-window? ", 1);
+	    _("Do you want to automatically redraw overlay on re-window? "), 1);
     return (1);
 }
 
@@ -70,7 +71,7 @@ int display_overlay (void)
 	{
 	    _Clear_info ();
 	    BEEP;
-	    Write_info (2, "Could Not open Overlay file for read\n");
+	    Write_info (2, _("Could Not open Overlay file for read\n"));
 	    sleep (3);
 	    return (1);
 	}
@@ -102,8 +103,8 @@ int plot_overlay (struct Map_info *overlay)
 	Vect_rewind (overlay);
 
 	_Clear_info ();
-	Write_info (2, "Plotting Overlay Map");
-	Write_info (3, "                                  ...Press <ESC> key to stop");
+	Write_info (2, _("Plotting Overlay Map"));
+	Write_info (3, _("                                  ...Press <ESC> key to stop"));
 	while (1)
 	{
 		if (key_hit (buf))

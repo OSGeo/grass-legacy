@@ -1,5 +1,0 @@
-
-@man("i.camera") - An imagery function that establishes a camera reference
-file for an imagery group.
-
-(GRASS Imagery Program)

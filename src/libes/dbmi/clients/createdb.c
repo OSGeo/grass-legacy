@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "dbmi.h"
 #include "gis.h"
 #include "codes.h"
@@ -8,7 +9,8 @@ struct {
 
 void parse_command_line();
 
-main(argc, argv) char *argv[];
+int
+main (int argc, char *argv[])
 {
     dbDriver *driver;
     dbHandle handle;
@@ -34,6 +36,7 @@ void
 parse_command_line(argc, argv) char *argv[];
 {
     struct Option *driver, *database, *location;
+    struct GModule *module;
 
     driver 		= G_define_option();
     driver->key 	= "driver";
@@ -54,6 +57,12 @@ parse_command_line(argc, argv) char *argv[];
     location->description = "database location";
 
     G_disable_interactive();
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Create an empty database.";
+    
     if(G_parser(argc, argv))
 	exit(ERROR);
 

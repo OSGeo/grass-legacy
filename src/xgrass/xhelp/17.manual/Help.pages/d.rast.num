@@ -1,5 +1,0 @@
-
-@man("d.rast.num") - Displays cell category values contained in raster map layers
-displayed on the graphics monitor.
-
-(GRASS Display Program)

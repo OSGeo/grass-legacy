@@ -31,6 +31,7 @@ verifyVolumeVertices (map, v)
 	 G3d_isValidLocation (map, v[1][1][1][0], v[1][1][1][1], 
 			      v[1][1][1][2])))
     G3d_fatalError ("verifyCubeVertices: volume vertex out of range");
+  return 0;
 }
 
 
@@ -44,6 +45,7 @@ verifyVolumeEdges (nx, ny, nz)
 {
   if ((nx <= 0) || (ny <= 0) || (nz <= 0))
     G3d_fatalError ("verifyCubeEdges: Volume edge out of range");
+  return 0;
 }
 
 /*---------------------------------------------------------------------------*/

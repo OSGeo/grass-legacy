@@ -1,0 +1,43 @@
+s.datum.shift:
+datum shift module working on files (like m.datum.shift).
+Mainly needed for testing purposes of datum shift functions
+from CC library.
+Mainly modeled after s.proj of Bill Brown. 
+
+input= input sites list
+output= output sites list
+idatum= map datum of input file
+[odatum=] map datum of output file, read from PROJ_INFO if not set
+
+-m use molodensky formula, faster than block shift, but less precise
+
+not implemented:
+-w bursa-wolf/helmert transformation
+
+
+long term development:
+include this functionality to s.proj.
+add same functionality to v.proj and r.proj. 
+
+add datum shift functions from PROJ4.4.2 to GRASS
+and make them available transparently within GRASS.
+
+
+general considerations:
+
+GRASS can be used from global to microscopic scale,
+there is no way of knowing the acutal scale from the programmers
+standpoint, so that the user can not be guided to choose 
+the appropriate function/model.
+
+E. g. on a global database in lat/lon datum shifts make no sense.
+If you are in a database with nation-wide extension in the scale of 
+1:1.000.000 you do not need any datum transformation.
+Or if you have an archeological site with an extent in the range of some 
+tens of meters the block shift and molodensky transformation will give
+no reasonable results, as the error is in the range of 5 to 15 meters.
+
+So be careful and think about the precision you really need. 
+-- 
+10/2000
+andreas.lange@rhein-main.de

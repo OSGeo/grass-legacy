@@ -1,4 +1,5 @@
 #include "gis.h"
+#include "site.h"
 #include "display.h"
 #include "raster.h"
 #include "options.h"
@@ -28,8 +29,6 @@ int draw_points_box(struct Cell_head *window)
 {
 	double U_X, U_Y ;
 	int D_X, D_Y ;
-	double D_u_to_d_col() ;
-	double D_u_to_d_row() ;
 	int N=0;
 
 	while(next_point(window, &U_X, &U_Y))
@@ -109,7 +108,8 @@ int next_point (
         }
         while(!G_site_in_region(s,window));
 
-        *U_X=s->east;
+        
+        *U_X=G_adjust_easting (s->east, window);;
         *U_Y=s->north;
 
 	return 1;

@@ -7,6 +7,9 @@ parse_input (int argc, char *argv[])
 int i;
 /* Define the different options */
 
+    module = G_define_module();
+    module->description = "Import U.S. Census TIGER Landmark features";
+
     opt1 = G_define_option() ;
     opt1->key        = "t1";
     opt1->type       = TYPE_STRING;
@@ -84,13 +87,14 @@ int i;
     opts->answer     = NULL;
     opts->description= "Name of site map to create";
 
-  if (proj == PROJECTION_UTM){
-    sprintf(t1buf,"%d",G_zone() );
     optz = G_define_option() ;
     optz->key        = "zone";
     optz->type       = TYPE_INTEGER;
     optz->required   = NO;
-    optz->answer     = t1buf;
+    if (proj == PROJECTION_UTM){
+      sprintf(t1buf,"%d",G_zone() );
+      optz->answer     = t1buf;
+    }
     optz->options    = "1-60";
     optz->description= "UTM zone number; default is location zone";
 
@@ -98,9 +102,10 @@ int i;
     optsph->key        = "spheroid";
     optsph->type       = TYPE_STRING;
     optsph->required   = NO;
-    optsph->answer     = "clark66";
+    if (proj == PROJECTION_UTM){
+      optsph->answer     = "clark66";
+    }
     optsph->description= "Spheroid for LL to UTM conversion; see m.gc.ll";
-  }
 
 
 /* Define the different flags */

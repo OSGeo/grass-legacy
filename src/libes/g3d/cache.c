@@ -2,11 +2,12 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include "G3d.h"
 #include "G3d_intern.h"
 #include "cachehash.h"
 
 /*---------------------------------------------------------------------------*/
-
+#ifndef GRASS_G3D_H
 typedef struct {
   
   char *elts;       /* ptr to array of elts */
@@ -38,7 +39,7 @@ typedef struct {
                        internal indices (elts) */
 
 } G3D_cache;
-
+#endif
 /*---------------------------------------------------------------------------*/
 
 #define IS_ACTIVE_ELT(elt) (c->locks[elt] != 2)
@@ -49,13 +50,13 @@ typedef struct {
 #define IS_IN_QUEUE_ELT(elt) (! IS_NOT_IN_QUEUE_ELT (elt))
 
 #define DEACTIVATE_ELT(elt) ((IS_LOCKED_ELT(elt) ? \
-			      (c->nofUnlocked)++ : (NULL)), \
+			      (c->nofUnlocked)++ : (0)), \
 			     c->locks[elt] = 2)
 #define LOCK_ELT(elt) ((IS_LOCKED_ELT(elt) ? \
-			(NULL) : (c->nofUnlocked)--), \
+			(0) : (c->nofUnlocked)--), \
 		       (c->locks[elt] = 1))
 #define UNLOCK_ELT(elt) ((IS_LOCKED_ELT(elt) ? \
-			  (c->nofUnlocked)++ : (NULL)), \
+			  (c->nofUnlocked)++ : (0)), \
                          (c->locks[elt] = 0))
 
 #define ONE_UNLOCKED_ELT_ONLY (c->first == c->last)
@@ -745,7 +746,7 @@ cache_test_print (c)
 
 /*---------------------------------------------------------------------------*/
 
-static void
+static int
 cache_test_flush_fun (name, eltPtr, data)
 
      int name;
@@ -754,6 +755,7 @@ cache_test_flush_fun (name, eltPtr, data)
 
 {
   printf ("flushing name %d value %d\n", name, eltPtr[17]);
+  return 0;
 }
 
 /*---------------------------------------------------------------------------*/
@@ -765,7 +767,7 @@ typedef struct {
 
 } cache_test_data_type;
 
-static void
+static int
 cache_test_load_fun (name, eltPtr, data)
 
      int name;
@@ -781,6 +783,7 @@ cache_test_load_fun (name, eltPtr, data)
   src = (char *) ((cache_test_data_type *) data)->value;
   eltStop = eltPtr + ((cache_test_data_type *) data)->size;
   while (eltPtr != eltStop) *eltPtr++ = *src++;
+  return 0;
 }
 
 /*---------------------------------------------------------------------------*/
@@ -809,6 +812,7 @@ cache_test_add (c, name, val)
   
 /*---------------------------------------------------------------------------*/
 
+int
 MAIN ()
 
 {
@@ -840,6 +844,8 @@ MAIN ()
   cache_test_add (c, 1111, -11); cache_test_print (c);
   cache_test_add (c, 2222, -22); cache_test_print (c);
   cache_test_add (c, 3333, -33); cache_test_print (c);
+
+  return 0;
 }
 
 /*---------------------------------------------------------------------------*/

@@ -42,7 +42,7 @@ proc mklightsPanel { BASE } {
     checkbutton $BASE.top.left.show -relief flat -text "Show Model" \
 	-variable Nv_(ShowModel)
     Nv_mkScale $BASE.top.left.bright h Brightness 100 0 80 set_brt 2 
-    Nv_mkScale $BASE.top.left.ambient h Ambient 100 0 10 set_amb 2
+    Nv_mkScale $BASE.top.left.ambient h Ambient 100 0 20 set_amb 2
     pack $BASE.top.left.follow $BASE.top.left.show \
         $BASE.top.left.bright $BASE.top.left.ambient \
 	-side top -fill x -expand 1
@@ -54,7 +54,7 @@ proc mklightsPanel { BASE } {
 	-side top -expand 1
     
     pack \
-    [Nv_mkXYScale $BASE.bottom.xy puck LIGHT_POS 125 125 20 20 \
+    [Nv_mkXYScale $BASE.bottom.xy puck LIGHT_POS 125 125 105 105 \
 	set_lgt_position unset_follow]  \
     -side right -expand 1
 
@@ -74,20 +74,22 @@ proc mklightsPanel { BASE } {
 # Reset procedure for lights panel
 proc Nviz_lights_reset {} {
     global Light Nv_
-    
-    set light_pos {{-1.0 1.0 0.8 0.0} {0.0 0.0 1.0 0.0}}
+   
+    set light_pos {{0.68 -0.68 0.8 0} {0.0 0.0 1.0 0}} 
 
     # Reset attributes of both lights
     for {set i 1} {$i < 3} {incr i} {
 	if {$i == 1} then {
-	    set col 1.0
+		set brt 0.8
+		set amb 0.2
 	} else {
-	    set col 0.25
+		set brt 0.5
+		set amb 0.3
 	}
 
-	$Light($i) set_ambient 0.1 0.1 0.1
-	$Light($i) set_bright 0.8
-	$Light($i) set_color $col $col $col
+	$Light($i) set_ambient $amb $amb $amb
+	$Light($i) set_bright $brt
+	$Light($i) set_color 1.0 1.0 1.0
 
 	set pos_data [lindex $light_pos [expr $i - 1]]
 	$Light($i) set_position [lindex $pos_data 0] [lindex $pos_data 1] [lindex $pos_data 2] [lindex $pos_data 3]
@@ -213,7 +215,7 @@ proc set_amb {a} {
     global Light
 
     $Light(1) set_ambient $a $a $a
-    $Light(2) set_ambient $a $a $a
+#    $Light(2) set_ambient $a $a $a
 
     do_light_draw
 }

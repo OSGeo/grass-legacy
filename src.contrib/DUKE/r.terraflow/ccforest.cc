@@ -1,0 +1,364 @@
+/*C
+ * Original project: Lars Arge, Jeff Chase, Pat Halpin, Laura Toma, Dean
+ *		     Urban, Jeff Vitter, Rajiv Wickremesinghe 1999
+ * 
+ * GRASS Implementation: Lars Arge, Helena Mitasova, Laura Toma 2002
+ *
+ * Copyright (c) 2002 Duke University -- Laura Toma 
+ * 
+ * Copyright (c) 1999-2001 Duke University --
+ * Laura Toma and Rajiv Wickremesinghe
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. All advertising materials mentioning features or use of this software
+ *    must display the following acknowledgement:
+ *      This product includes software developed by Duke University
+ * 4. Neither the name of the University nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE TRUSTEES AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE TRUSTEES OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ *C*/
+
+
+#include "ccforest.h"
+#include "sortutils.h"
+#include "streamutils.h"
+
+
+
+
+
+#if(0)
+/* ---------------------------------------------------------------------- */
+static int valueCmp(const keyvalue<long> &a, const keyvalue<long> &b) {
+  if(a.dst() < b.dst()) return -1;
+  if(a.dst() > b.dst()) return 1;
+
+  if(a.src() < b.src()) return -1;
+  if(a.src() > b.src()) return 1;
+
+  return 0;
+}
+
+
+
+/* ---------------------------------------------------------------------- */
+
+static int valueCmp(const keyvalue<int> &a, const keyvalue<int> &b) {
+  if(a.dst() < b.dst()) return -1;
+  if(a.dst() > b.dst()) return 1;
+
+  if(a.src() < b.src()) return -1;
+  if(a.src() > b.src()) return 1;
+
+  return 0;
+}
+#endif
+
+
+
+
+
+/* ---------------------------------------------------------------------- */
+
+template<class T>
+ccforest<T>::ccforest() {
+  edgeStream = new AMI_STREAM<ccedge>();
+  rootStream = new AMI_STREAM<cckeyvalue>();
+  superTree = NULL;
+  rootCycles = 0;
+  foundAllRoots = 0;
+  savedRootValid = 0;
+}
+
+/* ---------------------------------------------------------------------- */
+
+template<class T>
+ccforest<T>::~ccforest() {
+  delete edgeStream;
+  delete rootStream;
+  if(superTree) delete superTree;
+}
+
+/* ---------------------------------------------------------------------- */
+
+template<class T>
+int ccforest<T>::size() {
+  size_t streamLength = edgeStream->stream_len();
+  return streamLength;
+}
+
+/* ---------------------------------------------------------------------- */
+
+
+template<class T> 
+void ccforest<T>::removeDuplicates(T src, T parent,
+				   EMPQueueAdaptive<cckeyvalue,T> &pq) {
+  cckeyvalue kv;
+  
+  while(pq.min(kv) && (src == kv.getPriority())) {
+	pq.extract_min(kv);
+	if(kv.getValue() != parent) { /* cycles... */
+	  rootCycles++;
+	  if(parent < kv.getValue()) {
+		superTree->insert(parent, kv.getValue());
+	  } else {
+		superTree->insert(kv.getValue(), parent);
+	  }
+	  DEBUG_CCFOREST cerr << "ROOT CYCLE DETECTED! " << src << " (" << 
+		parent << "," << kv.getValue() << ")" << endl;
+	}
+  }
+}
+
+/* ---------------------------------------------------------------------- */
+
+/* needs to be re-entrant */
+template<class T> 
+void ccforest<T>::findAllRoots(int depth) {
+  if(foundAllRoots) return;
+  foundAllRoots = 1;
+  Rtimer rt;
+  rt_start(rt);
+
+  if(depth > 5) {
+	cerr << "WARNING: excessive recursion in ccforest (ignored)" << endl;
+  }
+
+  int explicitRootCount = 0;
+  assert(!superTree);
+  superTree = new ccforest<T>();
+
+  DEBUG_CCFOREST cout << "sort edgeStream (by cclabel)): ";
+  keyCmpKeyvalueType<T> fo;
+  sort(&edgeStream, fo); /* XXX -changed this to use a cmp obj  */
+
+  /* time forward processing */
+  EMPQueueAdaptive<cckeyvalue,T> *pq =
+	new EMPQueueAdaptive<cckeyvalue,T>();	/* parent queue */
+
+  size_t streamLength = edgeStream->stream_len();
+  T prevSrc = T(-1);
+  T parent = T(-1);
+  ccedge prevEdge;
+  for(unsigned int i=0; i<streamLength; i++) {
+	ccedge *e;
+	AMI_err ae = edgeStream->read_item(&e);
+	assert(ae == AMI_ERROR_NO_ERROR);
+
+#if(0)
+	DEBUG_CCFOREST cout << "------------------------------" << endl;
+	DEBUG_CCFOREST cout << "processing edge " << *e << endl;
+	DEBUG_CCFOREST pq->print();
+#endif
+
+	if(*e == prevEdge) {
+	  DEBUG_CCFOREST cout << "\tduplicate " << *e << " removed\n";
+	  continue; /* already have this done */
+	}
+	prevEdge = *e;
+
+	DEBUG_CCFOREST cout << "processing edge " << *e << endl;
+
+	/* find root (assign parent) */
+	if(e->src() != prevSrc) {
+	  prevSrc = e->src();
+	  cckeyvalue kv;
+	  /* check if we have a key we don't use. */
+	  while(pq->min(kv) && (kv.getPriority() < e->src())) {
+		pq->extract_min(kv);
+		assert(kv.src() >= kv.dst());
+		removeDuplicates(kv.src(), kv.dst(), *pq);
+		ae = rootStream->write_item(kv); /* save root */
+		assert(ae == AMI_ERROR_NO_ERROR);	
+	  }
+	  /* try to find our root */
+	  if(pq->min(kv) && ((e->src() == kv.getPriority()))) {
+		pq->extract_min(kv);
+		parent = kv.getValue();
+		removeDuplicates(e->src(), parent, *pq);
+	  } else {
+		parent = e->src();		/* we are root */
+		explicitRootCount++;
+		/* technically, we could skip this part. the lookup function
+           automatically assumes that values without parents are roots */
+	  }
+
+	  /* save result */
+	  cckeyvalue kroot(e->src(), parent);
+	  assert(kroot.src() >= kroot.dst());
+	  ae = rootStream->write_item(kroot);
+	  assert(ae == AMI_ERROR_NO_ERROR);
+	}
+#ifndef NDEBUG
+	cckeyvalue kv2;
+	assert(pq->is_empty() || (pq->min(kv2) && kv2.getPriority() > e->src()));
+#endif
+
+	/* insert */
+	cckeyvalue kv(e->dst(), parent);
+	assert(kv.src() >= kv.dst());
+	pq->insert(kv);
+
+	/* cout << "identified: " << kroot << endl; */
+  }
+
+  /* drain the priority queue */
+  DEBUG_CCFOREST cout << "draining priority queue" << endl;
+  while (!pq->is_empty()) {
+	cckeyvalue kv;
+	pq->extract_min(kv);
+	assert(kv.src() >= kv.dst());
+	DEBUG_CCFOREST cout << "processing edge " << kv << endl;
+
+	removeDuplicates(kv.src(), kv.dst(), *pq);
+	AMI_err ae = rootStream->write_item(kv);
+	assert(ae == AMI_ERROR_NO_ERROR);
+  }
+  delete pq;
+
+  /* note that rootStream is naturally ordered by src */
+
+  if(superTree->size()) {
+	DEBUG_CCFOREST cout << "resolving cycles..." << endl;
+	/* printStream(rootStream); */
+	DEBUG_CCFOREST cout << "sort rootStream: ";
+
+	AMI_STREAM<cckeyvalue> *sortedRootStream; 
+	dstCmpKeyvalueType<T> dstfo;
+	sortedRootStream = sort(rootStream, dstfo); 
+	/* XXX replaced this to use a cmp object -- laura
+	   AMI_STREAM<cckeyvalue>*sortedRootStream=new AMI_STREAM<cckeyvalue>();
+	   AMI_err ae = AMI_sort(rootStream, sortedRootStream, valueCmp); 
+	   assert(ae == AMI_ERROR_NO_ERROR);
+	*/
+	delete rootStream;
+
+	cckeyvalue *kv;
+	T parent;
+	AMI_err ae;
+	
+	AMI_STREAM<cckeyvalue>* relabeledRootStream
+	  = new AMI_STREAM<cckeyvalue>();
+	ae = sortedRootStream->seek(0);
+	superTree->findAllRoots(depth+1);
+	while((ae = sortedRootStream->read_item(&kv)) == AMI_ERROR_NO_ERROR) {
+	  parent = superTree->findNextRoot(kv->dst());
+	  ae = relabeledRootStream->write_item(cckeyvalue(kv->src(), parent));
+	  assert(ae == AMI_ERROR_NO_ERROR);
+	}
+	delete sortedRootStream;
+
+	DEBUG_CCFOREST cout << "sort relabeledRootStream: ";
+	rootStream = sort(relabeledRootStream, fo);
+	/* laura: changed  this
+	   rootStream = new AMI_STREAM<cckeyvalue>();
+	   ae = AMI_sort(relabeledRootStream, rootStream);
+	   assert(ae == AMI_ERROR_NO_ERROR);
+	*/
+	delete relabeledRootStream;
+
+	DEBUG_CCFOREST cout << "resolving cycles... done." << endl;
+  }
+  rootStream->seek(0);
+
+  DEBUG_CCFOREST cout << "Rootstream length="
+					  << rootStream->stream_len() << endl;
+  DEBUG_CCFOREST printStream(cout, rootStream);
+  DEBUG_CCFOREST cout << "Explicit root count=" << explicitRootCount << endl;
+
+  rt_stop(rt);
+  stats->recordTime("ccforest::findAllRoots",  (long int)rt_seconds(rt));
+}
+
+
+/* ---------------------------------------------------------------------- */
+
+template<class T>
+void 
+ccforest<T>::insert(const T& i, const T& j) {
+  ccedge e(i,j);
+  /* assert(i<j);  not required, as long as it's consistent. */
+  assert(i!=j);					/* meaningless */
+  AMI_err ae = edgeStream->write_item(e);
+  assert(ae == AMI_ERROR_NO_ERROR);
+  /* cout << "INST " << i << ", " << j << endl; */
+}
+
+/* ---------------------------------------------------------------------- */
+
+template<class T>
+T 
+ccforest<T>::findNextRoot(const T& i) {
+  AMI_err ae;
+  cckeyvalue *kroot;
+  T retRoot;
+  
+  findAllRoots();   /* find all the roots if not done */
+  
+  DEBUG_CCFOREST cout << "looking for " << i << endl;
+  if(!savedRootValid || savedRoot.src() < i) { /* need to read more */
+    ae = rootStream->read_item(&kroot);
+	while(ae == AMI_ERROR_NO_ERROR && kroot->src() < i) {
+	  ae = rootStream->read_item(&kroot);
+	}
+	if(ae == AMI_ERROR_NO_ERROR) {
+	  savedRoot = *kroot;
+	  savedRootValid = 1;
+	} else {
+	  savedRootValid = -1;		/* to avoid reading uselessly */
+	}
+  }
+  
+  if(savedRootValid==1 && savedRoot.src() == i) { /* check savedRoot */
+    retRoot = savedRoot.dst();
+    DEBUG_CCFOREST cout << "using saved/found value" << endl;
+  } else {
+    DEBUG_CCFOREST cout << "not found" << endl;
+    retRoot = i;
+  }
+  DEBUG_CCFOREST cout << "lookup for " << i << " gives " << retRoot
+		      << "; saved = " << savedRoot << endl;
+  return retRoot;
+}
+
+/* ---------------------------------------------------------------------- */
+
+template<class T>
+void
+ccforest<T>::printRootStream() {
+  findAllRoots();  /* find all the roots if not done */
+  printStream(cout, rootStream);
+}
+
+
+template<class T> void
+ccforest<T>::printEdgeStream() {
+  printStream(cout, edgeStream);
+}
+
+/* ---------------------------------------------------------------------- */
+
+template class keyvalue<cclabel_type>;
+template class  keyCmpKeyvalueType<cclabel_type>;
+template class ccforest<cclabel_type>;
+
+

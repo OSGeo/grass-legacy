@@ -13,9 +13,15 @@ main (int argc, char **argv)
 	double E, N;
 	struct Cell_head cellhd;
     struct Option *map;
+    struct GModule *module;
 
 /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
+
+/* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Shifts raster map to position specified by mouse";
 
 /* set up command line */
     map              = G_define_option();

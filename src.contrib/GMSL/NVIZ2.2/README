@@ -1,3 +1,5 @@
+$Id: README,v 1.3 2000-10-20 05:20:59 cho Exp $
+
 This file describes the installation of nviz version 2.2.  For
 additional information on using nviz, there is a man page in this
 directory which you can install as appropriate. 
@@ -12,18 +14,18 @@ modifications were made in Tk 8.0.
 
 To install:
 
-1. Run the configure script in this directory with:
-	configure
+1. PostgreSQL support is selected by global "configure".
+   You can either 
+   - change that by using the --with-postgresql parameter
+     when calling the global GRASS "configure" or
+   - override global setting for PostgreSQL by an environment variable:
+
+         env PGSQL=NO gmake5
 
 2. Make the distribution in this directory with:
 	gmake5
 
-The configure script sets a few default values and attempts to figure
-out where the tcl/tk libraries reside.  If configure can't find a
-particular library it will ask for the directory where that library
-resides. 
-
-The Gmakefile created in this directory first builds the C portion of
+The Gmakefile in this directory first builds the C portion of
 nviz and the gsf library, and then builds and installs the Tcl scripts
 in the appropriate GRASS directories.  After installing nviz you may
 remove any of the subdirectories contained in the distribution except
@@ -47,3 +49,5 @@ Scripting: There are a few subtle "features" in the scripting
   old scripts may have unpredictable behavior.  However, any script
   created with the "Script File Tools" option under "Script Tools"
   will be unaffected.
+
+Some features of Sg3D are not yet implemented.

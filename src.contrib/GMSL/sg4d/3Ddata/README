@@ -1,0 +1,30 @@
+
+
+
+Here's a set of sample data files to test sg4d.
+
+I think you should be able to view them by creating an x-y
+location with WIND as default WIND, then make a surface using
+mapcalc and start up sg4d, then load the 3d files from the 
+"Options" panel.
+
+First I'd suggest playing with showdspf, since the command
+line interface for showdspf is what you get in sg4d when you
+pick "Options..." "set dspf parameters".
+
+Just a couple of quick hints to get you started with showdspf -
+
+ *  Z# exaggerates verticle direction by #.  For this data set,
+    Z5 works pretty good.
+
+ *  r - lets you rotate the volume using the leftmouse 
+    down in the graphics window. rightmouse click to set.
+
+ *  I think the best way to see the isosurfaces is to toggle
+    the clear flag ( C ), then hit +++++ <return> a few times
+
+You might also try making some new dspf files from the grid3
+by using mkdspf.
+
+- Bill B.
+

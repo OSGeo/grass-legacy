@@ -16,6 +16,7 @@
  *
  *************************************************************************/
 
+#include <string.h>
 #include "gis.h"
 
 static char **mapset_name ;
@@ -51,7 +52,7 @@ static int get_list_of_mapsets()
  * the list of mapsets is in SEARCH_PATH file in the mapset
  */
     mapset_name = NULL;
-    if(fd = G_fopen_old ("","SEARCH_PATH",G_mapset()))
+    if((fd = G_fopen_old ("","SEARCH_PATH",G_mapset())))
     {
 	while (fscanf (fd, "%s", name) == 1)
 	    if (G__mapset_permissions (name) >= 0)

@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <string.h>
 #include "gis.h"
 #include "local_proto.h"
@@ -20,7 +21,9 @@ main (int argc, char *argv[])
     char tmp1[100], tmp2[100], tmp3[100];
     int i;
     CELL mincat, maxcat, cat;
+    double zmin, zmax; /* min and max data values */
     FILE *out, *fopen();
+    struct FPRange range;
     struct Cell_head cellhd;
     struct Categories cats;
     struct History hist;
@@ -28,10 +31,19 @@ main (int argc, char *argv[])
     int cats_ok;
     int hist_ok;
     int is_reclass;
+    RASTER_MAP_TYPE data_type;
     struct Reclass reclass;
     char *G_program_name();
+	struct GModule *module;
     struct Option *opt1;
+    struct Flag *rflag;
 
+    G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Outputs basic information about a " 
+		"user-specified raster map layer.";
 
     opt1 = G_define_option() ;
     opt1->key        = "map" ;
@@ -40,7 +52,9 @@ main (int argc, char *argv[])
     opt1->gisprompt  = "old,cell,raster" ;
     opt1->description= "Name of existing raster map" ;
 
-    G_gisinit(argv[0]);
+    rflag = G_define_flag();
+    rflag->key            = 'r';
+    rflag->description    = "print range only.";
 
     if (G_parser(argc, argv))
         exit(1);
@@ -57,9 +71,16 @@ main (int argc, char *argv[])
     cats_ok = G_read_cats (name, mapset, &cats) >= 0;
     hist_ok = G_read_history (name, mapset, &hist) >= 0;
     is_reclass = G_get_reclass (name, mapset, &reclass);
+    data_type = G_raster_map_type(name, mapset);
+
+    if (G_read_fp_range (name, mapset, &range) < 0)
+        G_fatal_error ("could not read range file");
+    G_get_fp_range_min_max(&range,&zmin,&zmax);
 
     out = stdout;
 
+  if (!rflag->answer)
+  {
     divider ('+');
 
     sprintf (line, "Layer:    %-29.29s  Date: %s", name, hist_ok ? hist.mapid : "??");
@@ -92,6 +113,12 @@ main (int argc, char *argv[])
         strcat (line, "??");
     printline (line);
 
+    sprintf (line, "  Data Type:    %s",
+			(data_type ==  CELL_TYPE ?  "CELL" :
+			(data_type == DCELL_TYPE ? "DCELL" :
+			(data_type == FCELL_TYPE ? "FCELL" : "??"))));
+    printline (line);
+
     if (head_ok)
     {
         sprintf (line, "  Rows:         %d", cellhd.rows);
@@ -120,6 +147,12 @@ main (int argc, char *argv[])
         sprintf (line, "           E: %10s    W: %10s   Res: %5s",
 	    tmp1, tmp2, tmp3);
         printline (line);
+
+        if (data_type ==  CELL_TYPE)
+	  sprintf(line, "  Range of data:    min =  %i max = %i", (CELL)zmin, (CELL)zmax);
+        else
+	  sprintf(line, "  Range of data:    min =  %f max = %f", zmin, zmax);
+	printline (line);
     }
 
     printline ("");
@@ -154,6 +187,8 @@ main (int argc, char *argv[])
 
     if (is_reclass > 0)
     {
+	int first = 1;
+
         divider ('|');
         sprintf (line, "  Reclassification of [%s] in mapset [%s]",
             reclass.name, reclass.mapset);
@@ -162,12 +197,19 @@ main (int argc, char *argv[])
         printline ("        Category        Original categories");
         printline ("");
 
-	mincat = maxcat = reclass.table[0];
-	for (i = 1; i < reclass.num; i++)
-	    if (reclass.table[i] < mincat)
-		mincat = reclass.table[i];
-	    else if (reclass.table[i] > maxcat)
-		maxcat = reclass.table[i];
+	for (i = 0; i < reclass.num; i++)
+	{
+	    CELL x = reclass.table[i];
+	    if (G_is_c_null_value(&x))
+		continue;
+	    if (first || x < mincat)
+		mincat = x;
+	    if (first || x > maxcat)
+		maxcat = x;
+	    first = 0;
+	}
+
+	if (!first)
         for (cat = mincat; cat <= maxcat; cat++)
         {
             char text[80];
@@ -190,5 +232,19 @@ main (int argc, char *argv[])
     divider ('+');
 
     fprintf(out,"\n");
+   }
+   else /* rflag->answer */
+   {
+        if (data_type ==  CELL_TYPE)
+        {
+	  fprintf(out, "min=%i\n", (CELL)zmin);
+	  fprintf(out, "max=%i\n", (CELL)zmax);
+	}
+        else
+        {
+	  fprintf(out, "min=%f\n", zmin);
+	  fprintf(out, "max=%f\n", zmax);
+	}
+   }
     return 0;
 }

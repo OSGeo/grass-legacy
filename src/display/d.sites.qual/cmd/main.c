@@ -1,4 +1,7 @@
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
+#include "site.h"
 #include "raster.h"
 #include "display.h"
 
@@ -14,13 +17,21 @@
 int main( int argc , char **argv )
 {
 	char *mapset;
-	char msg[200];
 	char window_name[64] ;
 	int i, num;
 	int t, b, l, r ;
 	struct Cell_head window ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4, *opt5, *opt6;
 	struct Flag *do_num;
+
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Displays a subset of a sites list based on "
+		"site attributes.";
 
 	opt4 = G_define_option() ;
 	opt4->key        = "sitefile";
@@ -71,10 +82,6 @@ int main( int argc , char **argv )
 	do_num->key = 'n';
 	do_num->description = "Output number of sites displayed";
 
-
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
-
 	/* Check command line */
 
 	if (G_parser(argc, argv))
@@ -84,41 +91,29 @@ int main( int argc , char **argv )
 
 	if(opt5->answers)
 	    for (i=0; opt5->answers[i]; i++)
-		if( -1 == parse_set_rules(opt5->answers[i])){
-		    sprintf (msg, "Bad rule: %s", opt5->answers[i]);
-		    G_fatal_error(msg);
-		}
+		if( -1 == parse_set_rules(opt5->answers[i]))
+		    G_fatal_error("Bad rule: %s", opt5->answers[i]);
 
 	if(opt6->answer){
 	    outfile = G_sites_open_new (opt6->answer);
 	    if (outfile == NULL)
-	    {
-		    sprintf (msg, "can't open sites file [%s]", opt6->answer);
-		    G_fatal_error (msg);
-	    }
+		    G_fatal_error ("can't open sites file [%s]", opt6->answer);
 	}
 
 	color = D_translate_color(opt1->answer) ;
 	if (color == 0)
 	{
-		fprintf (stdout,"Don't know the color %s\n", opt1->answer);
 		G_usage() ;
-		exit(-1);
+		G_fatal_error ("Don't know the color %s", opt1->answer);
 	}
 
 	mapset = G_find_file ("site_lists", opt4->answer, "");
 	if (mapset == NULL)
-	{
-		sprintf (msg, "sites file [%s] not found", opt4->answer);
-		G_fatal_error (msg);
-	}
+		G_fatal_error ("sites file [%s] not found", opt4->answer);
 
 	infile = G_sites_open_old (opt4->answer, mapset);
 	if (infile == NULL)
-	{
-		sprintf (msg, "can't open sites file [%s]", opt4->answer);
-		G_fatal_error (msg);
-	}
+		G_fatal_error ("can't open sites file [%s]", opt4->answer);
 
 
 	sscanf(opt2->answer,"%d",&size);
@@ -133,7 +128,8 @@ int main( int argc , char **argv )
 		type = TYPE_DIAMOND ;
 
 	/* Setup driver and check important information */
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	if (D_get_cur_wind(window_name))
 		G_fatal_error("No current frame") ;

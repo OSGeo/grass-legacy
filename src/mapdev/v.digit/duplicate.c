@@ -6,6 +6,7 @@
 #include "keyboard.h"
 #include "local_proto.h"
 #include "debug.h"
+#include "glocale.h"
 
 
 /*  Looks for all duplicate lines.
@@ -30,7 +31,7 @@ int display_duplicate_lines (struct Map_info *Map)
     }
 
     _Clear_info ();
-    Write_info (3, "                                  ...Press <ESC> key to stop redraw");
+    Write_info (3, _("                                  ...Press <ESC> key to stop redraw"));
 
     set_keyboard ();		/* setup for kbhit () */
 
@@ -67,7 +68,7 @@ int display_duplicate_lines (struct Map_info *Map)
 		if (0 > V1_read_line (Map, &Points1, Line1->offset))
 		{
 		    BEEP;
-		    Write_info (2, "Error reading line.");
+		    Write_info (2, _("Error reading line."));
 		    sleep (3);
 		    ret = -1;
 		    goto leave;
@@ -75,7 +76,7 @@ int display_duplicate_lines (struct Map_info *Map)
 		if (0 > V1_read_line (Map, &Points2, Line2->offset))
 		{
 		    BEEP;
-		    Write_info (2, "Error reading line.");
+		    Write_info (2, _("Error reading line."));
 		    sleep (3);
 		    ret = -1;
 		    goto leave;

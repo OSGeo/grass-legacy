@@ -10,7 +10,7 @@ static const char SCCSID[]="@(#)PJ_lcc.c	4.2	94/03/18	GIE	REL";
 	double	c; \
 	int		ellips;
 #define PJ_LIB__
-#include	<projects.h>
+#include	"projects.h"
 PROJ_HEAD(lcc, "Lambert Conformal Conic")
 	"\n\tConic, Sph&Ell\n\tlat_1= and lat_2= or lat_0";
 # define EPS10	1.e-10
@@ -29,7 +29,7 @@ FORWARD(e_forward); /* ellipsoid & spheroid */
 INVERSE(e_inverse); /* ellipsoid & spheroid */
 	xy.x /= P->k0;
 	xy.y /= P->k0;
-	if (P->rho = hypot(xy.x, xy.y = P->rho0 - xy.y)) {
+	if( (P->rho = hypot(xy.x, xy.y = P->rho0 - xy.y)) != 0.0) {
 		if (P->n < 0.) {
 			P->rho = -P->rho;
 			xy.x = -xy.x;
@@ -77,7 +77,7 @@ ENTRY0(lcc)
 	P->n = sinphi = sin(P->phi1);
 	cosphi = cos(P->phi1);
 	secant = fabs(P->phi1 - P->phi2) >= EPS10;
-	if (P->ellips = (P->es != 0.)) {
+	if( (P->ellips = (P->es != 0.)) ) {
 		double ml1, m1;
 
 		P->e = sqrt(P->es);

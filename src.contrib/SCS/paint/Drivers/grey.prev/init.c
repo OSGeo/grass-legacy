@@ -3,6 +3,7 @@
 #include "raster.h"
 #include "display.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 Pinit()
 {
@@ -13,7 +14,7 @@ Pinit()
     int offset;
     float red, grn, blu;
     int r,g,b;
-    char *getenv(), *background;
+    char *background;
 
 	if (R_color_table_float() != 0)
 		fprintf(stderr,"could not go into float\n");

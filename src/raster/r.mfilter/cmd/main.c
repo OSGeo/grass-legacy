@@ -15,6 +15,7 @@ int main (int argc, char *argv[])
     char title[1024];
     char temp[300];
     int i;
+	struct GModule *module;
     struct Flag *flag1 ;
     struct Flag *flag2 ;
     struct Option *opt1 ;
@@ -23,6 +24,11 @@ int main (int argc, char *argv[])
     struct Option *opt4 ;
     struct Option *opt5 ;
 
+    G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Raster file matrix filter.";
 
     /* Define the different options */
 
@@ -79,8 +85,6 @@ int main (int argc, char *argv[])
     flag2 = G_define_flag() ;
     flag2->key         = 'z' ;
     flag2->description = "Apply filter only to zero data values" ;
-
-    G_gisinit (argv[0]);
 
     if (G_parser(argc, argv))
         exit(-1);

@@ -1,8 +1,0 @@
-
-
-snapping threshold - The radius within which @glossary("vector",16.glossary/vector.def) @glossary("nodes",16.glossary/node.def) will be
-"snapped" and said to be at the same geographic coordinate location.
-Used during digitizing, when importing vector files to GRASS vector
-format and when converting vector files to GRASS @glossary("raster",16.glossary/rastdata.def) format.
-Generally expressed as a map distance but may also be expressed as
-ground distance.

@@ -4,16 +4,18 @@ interface_build {
     {entry input {Binary file (input):} 0 file}
     {entry output {GRASS raster file (output):} 0 raster}
     {entry title {Title for resultant raster map:} 0 ""}
-    {entry mult {Multiplier for bin data (default: 1.0):} 0 ""}
     {entry north {Northern limit of geographic region:} 0 ""}
     {entry south {Southern limit of geographic region:} 0 ""}
     {entry east {Eastern limit of geographic region:} 0 ""}
     {entry west {Western limit of geographic region:} 0 ""}
     {entry r {Number of rows:} 0 ""}
     {entry c {Number of columns:} 0 ""}
-    {entry subst { Replace 1st value by 2nd one (default: 0,0):} 0 ""}
+    {entry anull { Replace 1st value by 2nd one (default: 0,0):} 0 ""}
     {checkbox bytes {1 byte  per cell (default).} "" 1}
     {checkbox bytes {2 bytes per cell.} "" 2}
     {checkbox bytes {4 bytes per cell.} "" 4}
     {checkbox -s {Signed data (high bit means negative value).} "" -s}
+    {checkbox -f {Import Floating Point Data.} "" -f}
+    {checkbox -b {Byte Swap the Data During Import.} "" -b}
+    {checkbox -h {Get region info from GMT style header.} "" -h}
 }

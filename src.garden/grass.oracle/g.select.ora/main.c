@@ -8,6 +8,8 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #define MAIN
 
@@ -15,7 +17,6 @@ main(argc, argv)
 int argc ;
 char **argv ;
 {
-  char  *getenv(), *strtok(), *strcat() ;
 	int i, rsCnt, hit, dblen ;
         char *dbpath, *p;  
         char dbstring[1024];

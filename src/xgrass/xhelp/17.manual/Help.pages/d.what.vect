@@ -1,6 +1,0 @@
-
-@man("d.what.vect") - Allows the user to interactively query the category
-contents of multiple (binary) vector map layers at user-selected locations
-within the current geographic region.
-
-(GRASS Display Program)

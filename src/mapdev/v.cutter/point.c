@@ -8,7 +8,7 @@
 
 #include <stdlib.h>
 #include <math.h>
-#include "digit.h"
+#include "Vect.h"
 
 #include "cutter.h"
 

@@ -1,0 +1,20 @@
+This directory contains two scripts:
+
+babyGRASS_packagingsrc.sh
+	to package a minimum GRASS version from a full source code
+	repository
+
+babyGRASS_compile.sh
+	compile the minimum with shared libraries.
+
+Current results: 1.8MB binary size on iPAQ
+
+---------------------
+iPAQ support:
+Binaries can be compiled here
+	http://handhelds.org/projects/skiffcluster.html
+	(upload babyGRASS package, compile with above script, download
+	iPAQ-Linux binaries)
+
+         The iPAQs are here:
+         telnet ipaq[1..7].handhelds.org

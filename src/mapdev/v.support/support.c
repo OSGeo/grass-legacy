@@ -30,7 +30,8 @@ int
 main (int argc, char *argv[])
 {
 
-	struct Option *option, *map, *s_val;
+	struct GModule *module;
+	struct Option *option, *map, *s_val, *err;
 	int opt;
 	struct Flag *s_flag, *p_flag, *r_flag;
 	/*    struct Flag *s_flag, *c_flag, *t_flag, *p_flag;*/
@@ -38,10 +39,17 @@ main (int argc, char *argv[])
 	int Interactive = 0;
 
 	char buf[BUFSIZ];
+	char *mapset = NULL;
+	char *current_mapset = NULL;
 
 	/*  store filename and path  */
 
 	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Creates GRASS support files for "
+		"(binary) GRASS vector data.";
 
 	/*****************************COMMAND PARSER******************************/
 
@@ -52,6 +60,14 @@ main (int argc, char *argv[])
 	map->multiple               = NO;
 	map->gisprompt              = "old,dig,vector";
 	map->description            = "vector file name";
+	
+	err = G_define_option();
+	err->key                    = "err";
+	err->type                   = TYPE_STRING;
+	err->required               = NO;
+	err->multiple               = NO;
+	err->gisprompt              = "new,dig,vector";
+	err->description            = "error vector file name";
 
 	option = G_define_option();
 	option->key                    = "option";
@@ -59,7 +75,7 @@ main (int argc, char *argv[])
 	option->options				   = "build,edit";
 	option->required               = NO;
 	option->multiple               = NO;
-	option->description            = "Build topology info OR Edit categories";
+	option->description            = "Build topology info (default) OR Edit categories";
 
 	/*
     c_flag = G_define_flag ();
@@ -129,6 +145,18 @@ main (int argc, char *argv[])
 	if (Interactive)
 		return go_interactive (argc, argv, PROG, NULL);
 
+	current_mapset = G_mapset();
+	if ((mapset = G_find_file(B_DIG, map->answer,current_mapset)) == NULL)
+	{
+		G_fatal_error("Vector [%s] not found in current mapset.",
+				map->answer);
+	}
+	if (strcmp(mapset, current_mapset) != 0)
+	{   
+	        /* do we ever reach this? G_fatal_error() above */
+		G_fatal_error("Vector [%s] must be in current mapset",
+				map->answer);
+	}
 	if (option->answer != NULL && (strcmp (option->answer, "edit") == 0))
 		opt = EDIT_OPT;
 	else
@@ -157,6 +185,10 @@ main (int argc, char *argv[])
 		    s_flag->answer ? "-s" : "",
 		    p_flag->answer ? "-p" : "",
 		    r_flag->answer ? "-r" : "");
+ 
+	if (err->answer)
+		sprintf (buf, "%s err=%s", buf, err->answer);
+	
 	exit (system (buf));
 }
 
@@ -177,7 +209,7 @@ go_interactive (int argc, char *argv[], char *PROG, char *fname)
 	char  file2[128] ;
 
 	char  command[500] ;
-
+	char *mapset = NULL;
 	phase = 0 ;
 
 
@@ -190,6 +222,16 @@ go_interactive (int argc, char *argv[], char *PROG, char *fname)
 		ask_for_name(file2, " VECTOR (DIGIT) FILENAME ",name,B_DIG,"binary vector");
 
 
+	if ((mapset = G_find_file(B_DIG, name,current_mapset)) == NULL)
+	{
+		G_fatal_error("Vector [%s] not found.",
+				name);
+	}
+	if (strcmp(mapset, current_mapset) != 0)
+	{
+		G_fatal_error("Vector [%s] must be in current mapset",
+				name);
+	}
 	while (1)
 	{
 		system("clear") ;

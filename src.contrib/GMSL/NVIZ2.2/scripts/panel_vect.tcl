@@ -71,7 +71,7 @@ proc mkvectPanel { BASE } {
 
     set tmp [frame $BASE.right]
     label $tmp.label -text "Display on surface(s):"
-    Nv_mkSurfacelist $tmp.list $maplist Nvect$curr
+    Nv_mkSurfacelist $tmp.list $maplist Nvect$curr vect
     pack $tmp.label $tmp.list -expand 1
     pack $tmp -side right -fill y -expand 1
 

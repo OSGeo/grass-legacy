@@ -1,6 +1,7 @@
 #include "digit.h"
 #include "dig_curses.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int get_point (double *x, double *y, char *str)
 {
@@ -36,7 +37,7 @@ int new_point_with_digitizer (double *x, double *y, char *str)
 #endif
     {
 	i = D_start_button();
-	sprintf (buffer, "Press any key <%d> - <%d>:", i, i+4);
+	sprintf (buffer, _("Press any key <%d> - <%d>:"), i, i+4);
 	_Write_base (13, buffer);
 	Write_base (14, str);
 	button = get_digitizer_button_xy (x, y);
@@ -48,7 +49,7 @@ int new_point_with_digitizer (double *x, double *y, char *str)
 	char buf[BUFSIZ];
 
 	_Write_base (13, str);
-	Write_base (14, "Press ENTER to collect point:");
+	Write_base (14, _("Press ENTER to collect point:"));
 	Get_curses_text (buf);
 	if (*buf == 'q' || *buf == 'Q')
 	    return (-2);

@@ -6,14 +6,14 @@ LIST   =  tree.o
 SRCS   =  tree.c
 
 $(LIB): $(LIST) 
-	$(AR)
+	$(LIBRULE)
 
 saber_src:
 	#load $(CFLAGS) $(LDFLAGS) $(SRCS)  $(BITMAPLIB) $(LINKMLIB) $(GISLIB) $(MATHLIB) 
 
 tree.o: tree.h
 
-$(GISLIB): #
+$(DEPGISLIB): #
 
 
 

@@ -1,7 +1,7 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_fetch (cursor, position, more)
+int db_fetch (cursor, position, more)
     dbCursor *cursor;
     int position;
     int *more;

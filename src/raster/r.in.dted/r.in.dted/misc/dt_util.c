@@ -1,4 +1,5 @@
 #include "ixvt.h"
+#include <stdlib.h>
 #include <math.h>
 #include "typedef.h"
 #include "extent.h"

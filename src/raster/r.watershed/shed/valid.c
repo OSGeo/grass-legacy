@@ -43,7 +43,7 @@ int valid_basins (char *accum_name, OUTPUT *output)
 				exit (-1);
 			}
 			*/
-			G_get_map_row (fd, buf, r);
+			G_get_c_raster_row (fd, buf, r);
 			if (buf[c] < 0)	{
 				basin->valid = 0;
 				if (down_basin != NULL)

@@ -1,0 +1,12 @@
+interface_build {
+    {v.db.reclass} 0
+    {Reclass vector.}
+    {entry input  {Input vector map:} 0 vector}
+    {entry output {Resulting vector map:} 0 vector} 
+    {entry table {Table:} 0 ""}
+    {entry key {Key column:} 0 ""}
+    {entry rules {Reclass rule file:} 0 file}
+    {entry type  {Type of elements: line,area,site} 0 ""}
+    {entry title  {Title for the resulting vector map} 0 ""}
+    {checkbox -d {Dissolve boundaries} "" -d}
+}

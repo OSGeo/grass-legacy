@@ -25,11 +25,9 @@ static int Code;		/* Active code */
 **       - increasing distance from beginning of line segment
 **
 */
-static int inter_compare (		/* ==ISLE== */
-    struct t_data **a,
-    struct t_data **b
-)
+static int inter_compare (const void *aa, const void *bb)		/* ==ISLE== */
 {
+  struct t_data * const *a = aa, * const *b = bb;
   int line;
   int segment;
   int pos;

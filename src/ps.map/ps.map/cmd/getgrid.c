@@ -4,6 +4,7 @@
 */
 
 #include <stdlib.h>
+#include <string.h>
 #include "ps_info.h"
 #include "local_proto.h"
 
@@ -21,7 +22,7 @@ static char *help[]=
 int getgrid (void)
 {
     int spacing;
-    int color=0, fontsize=0;
+    int color=0, fontsize = PS_FONT_DEFAULT_SIZE;
     char temp[30];
     char buf[1024];
     char ch, *key, *data;
@@ -66,7 +67,10 @@ int getgrid (void)
 	if (KEY("fontsize"))
 	{
 	    fontsize = atoi(data);
-	    if (fontsize < 4 || fontsize > 50) fontsize = 8;
+	    if (fontsize < PS_FONT_MIN_SIZE ||
+	               fontsize > PS_FONT_MAX_SIZE ) {
+		               fontsize = PS_FONT_DEFAULT_SIZE;
+		 }
 	    continue;
 	}
 

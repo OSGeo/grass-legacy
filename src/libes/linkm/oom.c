@@ -1,4 +1,5 @@
 #include "linkm.h"
+#include <stdlib.h>
 
 int 
 link_out_of_memory (void)

@@ -1,0 +1,129 @@
+Proposal for linking external raster data into GRASS mapsets through GDAL
+=========================================================================
+
+Nowadays GIS raster data can require a tremendous amount of harddrive space.
+Especially in image processing of high resolution data hardware limitations
+are reached quickly. The current implementation of GRASS 5.0 requires to
+import raster data into a LOCATION before allowing for spatial analysis.
+This leads to a replication of the data which is often not desired.
+
+Our proposal is to modify the GRASS 5 raster library to additionally enable
+GRASS to read from external raster files directly. Like that data can be
+shared with other applications such as MapServer etc. The data might even be
+shared over the network (by NFS for instance) but still appear within
+your grass database as part of a mapset.
+
+The idea is to implement read routines based on GDAL to enable GRASS to
+read from raster files linked or copied into a LOCATION/MAPSET. The 
+'cellhd/' might contain a pathname to the raster file as an extra line 
+and this could be the "clue" to the raster reading code to use GDAL.
+
+We would imagine something like r.link.gdal (as opposed to r.in.gdal) being
+used to setup the virtual raster map without actually copying any raster
+data and thereafter it would appear as a first class raster to all other
+GRASS tools. The implementation might be a conditionally compiled in option
+for libgis.
+
+
+Database File Changes
+---------------------
+
+The metadata (color table, cellhd info, null and range info) would all
+remain in the existing file types within the GRASS mapset.  However the
+actual raster data (normally found in the cell/<name> or fcell/<name>
+directories within the mapset would be missing in the case of linked
+datasets.
+
+As well, the cellhd file would have an additional "link_filename:" line 
+containing the file containing the actual raster file being linked to, and
+a "link_band:" line indicating what band within the referred to file was
+linked to.  These extra lines would only occure in "linked" cell headers, 
+not regular local ones. 
+
+
+API Changes
+-----------
+
+Because virtually all of the metadata is stored in the regular auxilary
+files, it is anticipated that not very many functions would need to be
+altered.  In particular the following (or underlying internal functions) 
+would need to be altered:
+
+  G_open_cell_old()
+  G_close_cell()
+  G_get_raster_row*()
+  
+Add:
+  G_open_cell_new_linked() 
+or 
+  G_set_cell_link() 
+
+Add:
+  G_get_cell_link()
+
+Conditional Compilation:
+
+It is anticipated that the changes to support GDAL would be conditionally
+compiled into libgis and that configure options would be supplied to
+determine if linking is to be compiled in.
+
+Target Code Base:
+
+It is intended that this change would be developed in the GRASS 5.1 tree.
+
+Program Changes
+---------------
+
+r.link:
+
+The r.link.gdal (or perhaps just r.link?) program would be added.  It would
+operate similarly to r.in.gdal but instead of actually copying the raster
+data it would setup a link.  The rest of the program operation would be the
+same as r.in.gdal including support for image groups, GCPs and so forth.
+
+In fact, it might be best to add a "link" option to r.in.gdal, with r.link
+possibly being a shell script over r.in.gdal. 
+
+g.remove:
+
+It might be necessary to modify this slightly to remove linked cells properly
+(though it shouldn't delete the file linked to). 
+
+r.info:
+
+Modify to list linked filename and band for linked datasets. 
+
+r.link.update:
+
+Potentially a new program will be needed to update the link pointer if the
+external file moves.  Should this program also support "refreshing" metadata
+with regard to raster updates to the external file?  I am suggesting
+updating the null mask, range info and histogram info.
+
+Open Issues
+-----------
+
+ o Should we really put the link information in the cellhd file?  I don't
+   think it is desirable to extend the Cell_Head structure, so perhaps we 
+   should keep the link information somewhere else? 
+
+ o The G_open_cell_old() code for linked rasters would need to do some
+   consistency checking to ensure that the GDAL raster size still matches
+   that in the cellhd file.  Should we try to recognise when the raster file
+   has changed, and that information about the linked file in GRASS, such as
+   the histogram, range and nulls may be wrong?  I think we should not but
+   this may cause problems if the linked file is altered outside of GRASS.
+
+ o Should we try to use the GDAL file's native concept of nulls instead of
+   that in GRASS?  For now I think not, but perhaps eventually.  
+
+ o At the code level GRASS already supports virtual datasets defined by 
+   r.mapcalc, right?  Perhaps the code that supports this will provide a
+   guide for where to hook in the GDAL support code. 
+
+ o Are the code segments that maintain range information, histograms and so
+   forth abstracted from the raster data access?  If they are built right
+   into the code that writes the cells there could be problems with linked
+   files and extra work to be done.  If they build up their meta information
+   using the "regular" raster access API there should be no problems.
+

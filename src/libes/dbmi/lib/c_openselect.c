@@ -1,7 +1,7 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_open_select_cursor (driver, select, cursor, mode)
+int db_open_select_cursor (driver, select, cursor, mode)
     dbDriver *driver;
     dbString *select;
     dbCursor *cursor;

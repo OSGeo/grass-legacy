@@ -32,7 +32,7 @@ main (int argc, char *argv[])
     for (i = 0; intro[i]; i++)
 	fprintf (stdout,"%s\n", intro[i]);
 
-    sprintf (command, "Gpatch ");
+    sprintf (command, "r.patch ");
     for (nfiles = 0; nfiles < MAXFILES; nfiles++)
     {
 	if (nfiles == 0)

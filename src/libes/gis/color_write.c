@@ -16,6 +16,8 @@
  * don't yet have 4.0
  ***********************************************************************/
 #include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include "gis.h"
 #define PRECISION 30
 #define THRESHOLD .0000000000000000000000000000005
@@ -62,8 +64,6 @@ int G_write_colors (char *name, char *mapset, struct Colors *colors)
 
 int G__write_colors ( FILE *fd, struct Colors *colors)
 {
-    char *getenv();
-
     if (getenv("FORCE_GRASS3_COLORS"))
 	return forced_write_old_colors (fd, colors);
     else if (colors->version < 0)

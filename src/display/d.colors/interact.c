@@ -103,7 +103,7 @@ interact (struct Categories *categories, struct Colors *colors, char *name, char
                         tmp++ ;
                         break ;
                     case 'u':
-                        tmp += categories->num ;
+                        tmp += categories->num + 1;
                         break ;
                     case 'D':
                         tmp += 10 ;

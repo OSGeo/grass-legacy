@@ -12,6 +12,7 @@ int listdb(dbtemp)
     DIR *dirp;
     struct dirent *dp;
     int j;
+    int l;
     unsigned short i;
     char dbname[1024];
 
@@ -19,9 +20,16 @@ int listdb(dbtemp)
     G_squeeze(dbtemp);
     if(dirp = opendir(dbtemp))
     for (dp = readdir(dirp); dp != NULL; dp = readdir(dirp)) 
+#ifndef __CYGWIN__
 	if (dp->d_name[dp->d_namlen-strlen(EXT)] == FS) {
 		j = 0;
 		for(i=dp->d_namlen-strlen(EXT); i < dp->d_namlen; i++) {
+#else 
+	l=strlen(dp->d_name);
+	if (dp->d_name[l-strlen(EXT)] == FS) {
+		j = 0;
+		for(i=l-strlen(EXT); i < l; i++) {
+#endif
 			dbname[j] = dp->d_name[i];
 			j++;
 		}

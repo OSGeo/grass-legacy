@@ -1,4 +1,0 @@
- SELECT OVERLAY MAP
-   This option will allow you to lay one map layer over the current one for
- visual inspection.  You may specify whether or not this map is displayed 
- every time the window is redrawn.

@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include "gis.h"
@@ -8,16 +9,13 @@
 int 
 main (int argc, char **argv)
 {
-	CELL *hue_array ;
-	CELL *int_array = NULL;
-	CELL *out_array;
-	CELL *sat_array = NULL;
+	unsigned char *hue_n, *hue_r, *hue_g, *hue_b;
+	unsigned char *int_n, *int_r;
+	unsigned char *sat_n, *sat_r;
+	unsigned char *dummy;
+	CELL *r_array, *g_array, *b_array;
 	char *mapset ;
-	char name1[100] ;
-	char name2[100];
-	char name3[100];
-	char name4[100];
-	char buff[128] ;
+	char *name_h, *name_i, *name_s ;
 	int intensity ;
 	int saturation ;
 	int atrow, atcol ;
@@ -27,45 +25,51 @@ main (int argc, char **argv)
 	int int_used ;
 	int sat_file = 0;
 	int sat_used ;
-	int out_file = 0;
-	int out_used ;
 	struct Cell_head window ;
 	struct Colors hue_colors ;
 	struct Colors int_colors ;
-	struct Colors out_colors ;
 	struct Colors sat_colors ;
-	struct Option *opt1, *opt2, *opt3, *opt4 ;
-	char mg[100];
-
-	opt1 = G_define_option() ;
-	opt1->key        = "h_map" ;
-	opt1->type       = TYPE_STRING ;
-	opt1->required   = YES ;
-	opt1->gisprompt  = "old,cell,raster" ;
-	opt1->description= "Name of layer to be used for HUE" ;
-
-	opt2 = G_define_option() ;
-	opt2->key        = "i_map" ;
-	opt2->type       = TYPE_STRING ;
-	opt2->required   = NO ;
-	opt2->gisprompt  = "old,cell,raster" ;
-	opt2->description= "Name of layer to be used for INTENSITY" ;
-
-	opt3 = G_define_option() ;
-	opt3->key        = "s_map" ;
-	opt3->type       = TYPE_STRING ;
-	opt3->required   = NO ;
-	opt3->gisprompt  = "old,cell,raster" ;
-	opt3->description= "Name of layer to be used for SATURATION" ;
-
-	opt4 = G_define_option() ;
-	opt4->key        = "out" ;
-	opt4->type       = TYPE_STRING ;
-	opt4->required   = NO ;
-	opt4->gisprompt  = "new,cell,raster" ;
-	opt4->description= "Name of raster map to contain results" ;
+	struct Colors gray_colors ;
+	struct GModule *module;
+	struct Option *opt_h, *opt_i, *opt_s;
+	struct Flag *nulldraw;
+	int offset ;
+	char window_name[64] ;
+	int t, b, l, r ;
 
 	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Displays the result obtained by combining "
+		"hue, intensity, and saturation (his) values "
+		"from user-specified input raster map layers.";
+
+	opt_h = G_define_option() ;
+	opt_h->key        = "h_map" ;
+	opt_h->type       = TYPE_STRING ;
+	opt_h->required   = YES ;
+	opt_h->gisprompt  = "old,cell,raster" ;
+	opt_h->description= "Name of layer to be used for HUE" ;
+
+	opt_i = G_define_option() ;
+	opt_i->key        = "i_map" ;
+	opt_i->type       = TYPE_STRING ;
+	opt_i->required   = NO ;
+	opt_i->gisprompt  = "old,cell,raster" ;
+	opt_i->description= "Name of layer to be used for INTENSITY" ;
+
+	opt_s = G_define_option() ;
+	opt_s->key        = "s_map" ;
+	opt_s->type       = TYPE_STRING ;
+	opt_s->required   = NO ;
+	opt_s->gisprompt  = "old,cell,raster" ;
+	opt_s->description= "Name of layer to be used for SATURATION" ;
+	
+	nulldraw = G_define_flag();
+	nulldraw->key = 'n';
+	nulldraw->description = "Respect NULL values while drawing";
+
 
 	if (G_parser(argc, argv))
 		exit(-1);
@@ -74,193 +78,171 @@ main (int argc, char **argv)
 	G_get_window(&window) ;
 
 	/* Do screen initializing stuff */
-	if (init_his())
-	{
-		fprintf(stderr,"Error: problem initializing graphics\n") ;
-		exit(1) ;
-	}
+
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
+
+	if (D_get_cur_wind(window_name))
+		G_fatal_error("No current graphics window") ;
+
+	if (D_set_cur_wind(window_name))
+		G_fatal_error("Current graphics window not available") ;
+
+	D_set_cell_name("his result") ;
+
+	/* Get color offset value for current graphics window and pass to driver */
+	D_offset_is(&offset) ;
+	R_color_offset(offset) ;
+
+	/* Prepare the raster cell drawing functions */
+	D_get_screen_window(&t, &b, &l, &r) ;
+	D_cell_draw_setup_RGB(t, b, l, r) ;
 
 	/* Get name of layer to be used for hue */
-	strcpy (name1, opt1->answer);
+	name_h = opt_h->answer;
 
-	mapset = G_find_cell2(name1, "");
+	mapset = G_find_cell2(name_h, "");
 	if (mapset == NULL)
-	{
-		sprintf(mg, "%s: <%s> cell file not found\n", G_program_name(),
-		    opt1->answer);
-		G_fatal_error(mg);
-		exit(0) ;
-	}
+		G_fatal_error("%s: <%s> cell file not found\n",
+			      G_program_name(),
+			      opt_h->answer);
 
 	/* Make sure map is available */
-	if ((hue_file = G_open_cell_old(name1, mapset)) == -1)
-	{
-		sprintf(buff,"Not able to open cellfile for [%s]", name1) ;
-		G_fatal_error(buff) ;
-		exit(1);
-	}
+	if ((hue_file = G_open_cell_old(name_h, mapset)) == -1)
+		G_fatal_error("Not able to open cellfile for [%s]",
+			      name_h) ;
 
-	hue_array = G_allocate_cell_buf () ;
+	hue_r = G_malloc(window.cols);
+	hue_g = G_malloc(window.cols);
+	hue_b = G_malloc(window.cols);
+	hue_n = G_malloc(window.cols);
+
+	dummy = G_malloc(window.cols);
 
 	/* Reading color lookup table */
-	if (G_read_colors(name1, mapset, &hue_colors) == -1)
-	{
-		sprintf(buff,"Color file for [%s] not available", name1) ;
-		G_fatal_error(buff) ;
-		exit(-1);
-	}
-
-	/* Get name of layer to be used for intensity */
+	if (G_read_colors(name_h, mapset, &hue_colors) == -1)
+		G_fatal_error("Color file for [%s] not available",
+			      name_h) ;
 
 	int_used = 0 ;
 
-	if (opt2->answer != NULL)
+	if (opt_i->answer != NULL)
 	{
-		strcpy (name2, opt2->answer);
-		mapset = G_find_cell2(name2, "");
-		if (mapset == NULL)
-		{
-			int_used = 0 ;
-		}
-		else
+		/* Get name of layer to be used for intensity */
+		name_i = opt_i->answer;
+		mapset = G_find_cell2(name_i, "");
+		if (mapset != NULL)
 		{
 			int_used = 1 ;
 			/* Make sure map is available */
-			if ((int_file = G_open_cell_old(name2, mapset)) == -1)
-			{
-				sprintf(buff,"Not able to open cellfile for [%s]", name2) ;
-				G_fatal_error(buff) ;
-				exit(-1);
-			}
+			if ((int_file = G_open_cell_old(name_i, mapset)) == -1)
+				G_fatal_error("Not able to open cellfile for [%s]",
+					      name_i) ;
 
-			int_array = G_allocate_cell_buf () ;
+			int_r = G_malloc(window.cols);
+			int_n = G_malloc(window.cols);
 
 			/* Reading color lookup table */
-			if (G_read_colors(name2, mapset, &int_colors) == -1)
-			{
-				sprintf(buff,"Color file for [%s] not available", name2) ;
-				G_fatal_error(buff) ;
-			}
+			if (G_read_colors(name_i, mapset, &int_colors) == -1)
+				G_fatal_error("Color file for [%s] not available",
+					      name_i) ;
 		}
+		else
+			G_fatal_error("Not able to find cellfile [%s]", name_i) ;
+					      
 	}
-
-	/* Get name of layer to be used for saturation */
 
 	sat_used = 0 ;
 
-	if (opt3->answer != NULL)
+	if (opt_s->answer != NULL)
 	{
-		strcpy (name3, opt3->answer);
-		mapset = G_find_cell2 (name3, "");
-		if (mapset == NULL)
-		{
-			sat_used = 0 ;
-		}
-		else
+		/* Get name of layer to be used for saturation */
+		name_s = opt_s->answer;
+		mapset = G_find_cell2 (name_s, "");
+		if (mapset != NULL)
 		{
 			sat_used = 1 ;
 
 			/* Make sure map is available */
-			if ((sat_file = G_open_cell_old(name3, mapset)) == -1)
-			{
-				sprintf(buff,"Not able to open cellfile for [%s]", name3) ;
-				G_fatal_error(buff) ;
-			}
+			if ((sat_file = G_open_cell_old(name_s, mapset)) == -1)
+				G_fatal_error("Not able to open cellfile for [%s]",
+					      name_s) ;
 
-			sat_array = G_allocate_cell_buf () ;
+			sat_r = G_malloc(window.cols);
+			sat_n = G_malloc(window.cols);
 
 			/* Reading color lookup table */
-			if (G_read_colors(name3, mapset, &sat_colors) == -1)
-			{
-				sprintf(buff,"Color file for [%s] not available", name3) ;
-				G_fatal_error(buff) ;
-			}
-		}
-	}
-
-	out_used = 0;
-
-	if (opt4->answer != NULL)
-	{
-		strcpy (name4, opt4->answer);
-
-		mapset = G_find_cell2( name4, "");
-		if (mapset == NULL)
-		{
-			out_used = 0;
+			if (G_read_colors(name_s, mapset, &sat_colors) == -1)
+				G_fatal_error("Color file for [%s] not available",
+					      name_s) ;
 		}
 		else
-		{
-			sprintf (mg, "%s: <%s> cell file exists already\n", 
-			    G_program_name(), opt4->answer);
-			G_fatal_error(mg);
-			exit(-1);
-		}
-		if ((out_file = G_open_cell_new (name4)) < 0)
-		{
-			out_used = 0;
-		}
-		else
-		{
-			out_used = 1;
-		}
+			G_fatal_error("Not able to find cellfile [%s]", name_s) ;
 	}
 
-	out_array = G_allocate_cell_buf () ;
+	r_array = G_allocate_cell_buf () ;
+	g_array = G_allocate_cell_buf () ;
+	b_array = G_allocate_cell_buf () ;
 
 	/* Make color table */
-	G_make_HIS_color(&out_colors) ;
-	D_set_colors (&out_colors);
+	make_gray_scale(&gray_colors) ;
+	D_set_colors_RGB();
 
 	/* Now do the work */
-	intensity =  127 ;  /* default is to not change intensity */
+	intensity =  255 ;  /* default is to not change intensity */
 	saturation = 255 ;  /* default is to not change saturation */
-
-	alloc_pass_buff(window.cols) ;
 
 	next_row = 0;
 	for (atrow=0; atrow<window.rows; )
 	{
-		G_percent (atrow, window.rows, 5);
-		if(G_get_map_row(hue_file, hue_array, atrow) < 0)
-			exit(1);
-		if (int_used && (G_get_map_row(int_file, int_array, atrow) < 0))
-			exit(1);
-		if (sat_used && (G_get_map_row(sat_file, sat_array, atrow) < 0))
-			exit(1);
+		G_percent (atrow, window.rows, 2);
+
+		if (G_get_raster_row_colors(hue_file, atrow, &hue_colors, hue_r, hue_g, hue_b, hue_n) < 0)
+			G_fatal_error("error reading hue data");
+		if (int_used && (G_get_raster_row_colors(int_file, atrow, &int_colors, int_r, dummy, dummy, int_n) < 0))
+			G_fatal_error("error reading intensity data");
+		if (sat_used && (G_get_raster_row_colors(sat_file, atrow, &sat_colors, sat_r, dummy, dummy, sat_n) < 0))
+			G_fatal_error("error reading saturation data");
 
 		for (atcol=0; atcol<window.cols; atcol++)
 		{
-			int r, g, b ;
+			if (nulldraw->answer)
+			{
+				if (hue_n[atcol]
+				    || (int_used && int_n[atcol])
+				    || (sat_used && sat_n[atcol]))
+				{
+					G_set_c_null_value(&r_array[atcol], 1);
+					G_set_c_null_value(&g_array[atcol], 1);
+					G_set_c_null_value(&b_array[atcol], 1);
+					continue;
+				}
+			}
 
 			if (int_used)
-				G_get_color(int_array[atcol], &intensity, &g, &b, &int_colors) ;
+				intensity = int_r[atcol];
+
 			if (sat_used)
-				G_get_color(sat_array[atcol], &saturation,&g, &b, &sat_colors) ;
+				saturation = sat_r[atcol];
 
-			G_get_color(hue_array[atcol], &r, &g, &b, &hue_colors) ;
-
-			out_array[atcol] = (CELL) G_HIS(atcol, r, g, b, intensity, saturation ) ;
+			HIS_to_RGB(hue_r[atcol], hue_g[atcol], hue_b[atcol],
+				   intensity, saturation,
+				   &r_array[atcol], &g_array[atcol], &b_array[atcol]);
 		}
 
 		if (atrow == next_row)
-			next_row = D_draw_cell(next_row, out_array, &out_colors);
-		if (out_used)
-		{
-			/*if(G_put_map_row (out_file, out_array, &out_colors) < 0)*/
-			if(G_put_map_row (out_file, out_array) < 0)
-				out_used = 0;
-		}
-		if (out_used)
-			atrow++;
-		else if (next_row > 0)
+			next_row = D_draw_cell_RGB(next_row,
+						   r_array, g_array, b_array,
+						   &gray_colors, &gray_colors, &gray_colors);
+
+		if (next_row > 0)
 			atrow = next_row;
 		else
 			break;
 	}
 	G_percent (window.rows, window.rows, 5);
 
-	/* Close down connection to window driver */
+	/* Close down connection to display driver */
 	D_add_to_list(G_recreate_command()) ;
 	R_close_driver() ;
 
@@ -270,11 +252,6 @@ main (int argc, char **argv)
 		G_close_cell(int_file) ;
 	if (sat_used)
 		G_close_cell(sat_file) ;
-	if (out_used)
-	{
-		fprintf (stdout,"CREATING SUPPORT FILES FOR %s\n", name4);
-		G_close_cell(out_file);
-		G_write_colors (name4, G_mapset(), &out_colors);
-	}
+
 	exit(0);
 }

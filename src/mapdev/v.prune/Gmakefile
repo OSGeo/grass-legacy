@@ -1,26 +1,17 @@
-EXTRA_CFLAGS	=$(VECT_INCLUDE)
-
-
-PROG_CMD = $(BIN_MAIN_CMD)/v.prune 
-PROG_INT = $(BIN_MAIN_INTER)/v.prune
-
-#all:  $(PROG_CMD)
+PROG_CMD = $(BIN_CMD)/v.prune 
+PROG_INT = $(BIN_INTER)/v.prune
 
 all:  $(PROG_CMD) $(PROG_INT)
 	
 
 #  interactive version
 
-$(PROG_INT): prune.o $(VECTLIB) $(GISLIB)
+$(PROG_INT): prune.o $(DEPVECTLIB) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ prune.o $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 #  command line version
 
-$(PROG_CMD): v.prune.o $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
+$(PROG_CMD): v.prune.o $(DEPVECTLIB) $(DEPGISLIB) $(DEPDIG_ATTLIB)
 	$(CC) $(LDFLAGS) -o $@ v.prune.o $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(MATHLIB) $(LINKMLIB) $(XDRLIB)
 
-$(VECTLIB) $(GISLIB) $(DIG_ATTLIB): #
-
-saber_src:
-	#load v.prune.c $(CFLAGS) $(DIG_ATTLIB) $(VECTLIB) $(MATHLIB) $(GISLIB) $(LINKMLIB)
-
+$(DEPVECTLIB) $(DEPGISLIB) $(DEPDIG_ATTLIB): #

@@ -13,7 +13,6 @@ struct ustruct
 typedef struct ustruct UNIV;
 
 int dblcompare();
-int readsites();
 double median ();
 double firstquartile ();
 double thirdquartile ();

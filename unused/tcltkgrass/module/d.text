@@ -1,0 +1,399 @@
+
+
+proc colors { } {
+
+
+  toplevel .colors
+
+  wm geometry .colors +100+20
+  wm title .colors "colors"
+
+
+  global name
+
+
+  frame .colors.frame0 \
+    -relief {flat}
+
+  label .colors.frame0.label \
+     -anchor {w} \
+     -text {Text color:} \
+     -padx {2}
+
+  listbox .colors.frame0.listbox \
+     -relief sunken \
+     -yscrollcommand {.colors.frame0.vscrollbar set}
+
+  scrollbar .colors.frame0.vscrollbar \
+     -command {.colors.frame0.listbox yview}
+
+
+  pack append .colors.frame0 \
+    .colors.frame0.label { top fillx } \
+    .colors.frame0.listbox { left expand fill } \
+    .colors.frame0.vscrollbar { right fill }
+
+  bind .colors.frame0.listbox <Button-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set name [%W get [%W nearest %y]]
+  }
+
+  bind .colors.frame0.listbox <ButtonRelease-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set name [%W get [%W nearest %y]]
+  }
+
+  bind .colors.frame0.listbox <Double-ButtonPress-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set name [%W get [%W nearest %y]]
+  }
+
+  .colors.frame0.listbox delete 0 end
+  foreach i {red orange yellow green blue indigo violet gray white black} {
+      .colors.frame0.listbox insert 0 $i
+  }
+
+
+  frame .colors.frame1 \
+     -borderwidth {2}
+
+  button .colors.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .colors }
+
+  button .colors.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .colors }
+
+  pack append .colors.frame1 \
+    .colors.frame1.ok { left expand } \
+    .colors.frame1.cancel { right expand }
+
+
+
+  pack append .colors \
+    .colors.frame0 { top expand fill } \
+    .colors.frame1 { bottom expand fill }
+
+
+
+  grab set .colors
+  tkwait window .colors
+
+}
+
+
+
+
+proc line_number { } {
+
+
+  toplevel .line_number
+
+  wm geometry .line_number +100+20
+  wm title .line_number "line_number"
+
+
+  global lvalue
+
+
+  frame .line_number.frame0 \
+    -relief {flat}
+
+  scale .line_number.frame0.scale \
+     -label "Screen line number on which first line will be drawn:" \
+     -from 1 \
+     -to 1000 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .line_number.frame0 \
+    .line_number.frame0.scale { left expand fill }
+
+  .line_number.frame0.scale set 1
+
+
+  frame .line_number.frame1 \
+     -borderwidth {2}
+
+  button .line_number.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set lvalue [.line_number.frame0.scale get]
+                 destroy .line_number }
+
+  button .line_number.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set lvalue ""
+                 destroy .line_number }
+
+  pack append .line_number.frame1 \
+    .line_number.frame1.ok { left expand } \
+    .line_number.frame1.cancel { right expand }
+
+
+
+  pack append .line_number \
+    .line_number.frame0 { top expand fill } \
+    .line_number.frame1 { bottom expand fill }
+
+
+
+  grab set .line_number
+  tkwait window .line_number
+
+}
+
+
+
+
+proc put_command { } {
+
+
+  global svalue
+  global name
+  global lvalue
+
+
+  set cmd ""
+
+  if {  $svalue != "" } {
+         set cmd "$cmd size=$svalue"
+  }
+
+  if {  $name != "" } {
+         set cmd "$cmd color=$name"
+  }
+
+  if {  $lvalue != "" } {
+         set cmd "$cmd line=$lvalue"
+  }
+
+  if { $cmd != "" } {
+     set cmd "d.text $cmd"
+  }
+}
+
+
+
+
+proc set_command_entry { } {
+
+  .cmd.frame0.entry configure -state normal
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 [put_command]
+  .cmd.frame0.entry configure -state disabled
+
+}
+
+
+proc proc_d.text { } {
+
+
+  global svalue
+  global name
+  global lvalue
+
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "Draw Text"
+
+
+  frame .cmd.frame0 \
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame0.hscrollbar set}
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {d.text}
+
+  .cmd.frame0.entry configure -state disabled
+
+
+
+  frame .cmd.frame1 \
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame1.hscrollbar set}
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {d.text draws text in the active display frame on the graphics monitor.}
+
+  .cmd.frame1.entry configure -state disabled
+
+
+
+  frame .cmd.frame2 \
+    -relief {flat}
+
+  scale .cmd.frame2.scale \
+     -label "Height of letters:" \
+     -from 0 \
+     -to 100 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.scale { left expand fill }
+
+  .cmd.frame2.scale set 5
+
+
+  frame .cmd.frame3 \
+    -relief {flat}
+
+  label .cmd.frame3.label \
+    -anchor {w} \
+    -text {Other options available:} \
+    -padx {2}
+
+  button .cmd.frame3.button0 \
+     -text "colors ..." \
+     -relief raised \
+     -padx 10 \
+     -command "colors
+                set_command_entry"
+
+
+  button .cmd.frame3.button1 \
+     -text "line_number ..." \
+     -relief raised \
+     -padx 10 \
+     -command "line_number
+                set_command_entry"
+
+
+  frame .cmd.frame4 \
+     -borderwidth {2}
+
+  button .cmd.frame4.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 
+		if {  $svalue != "" } {
+ 		set cmd [put_command]
+ 		if { $cmd != "" } {
+ 		   eval " exec xterm -title d.text -geometry 50x5 -exec $cmd " 
+ 		   destroy .cmd
+ 		}
+ 	}
+ }
+
+  button .cmd.frame4.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { destroy .cmd }
+
+  pack append .cmd.frame4 \
+    .cmd.frame4.ok { left expand } \
+    .cmd.frame4.cancel { right expand }
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.label { top fillx } \
+    .cmd.frame3.button0 { left } \
+    .cmd.frame3.button1  { left }
+
+
+
+  pack append .cmd \
+    .cmd.frame1 { top expand fill } \
+    .cmd.frame2 { top expand fill } \
+    .cmd.frame3 { top expand fill } \
+    .cmd.frame0 { top expand fill } \
+    .cmd.frame4 { bottom expand fill }
+
+
+bind .cmd.frame2.scale <ButtonPress-1> {
+		set svalue [.cmd.frame2.scale get]
+		set_command_entry
+}
+
+bind .cmd.frame2.scale <ButtonRelease-1> {
+		set svalue [.cmd.frame2.scale get]
+		set_command_entry
+}
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global svalue
+set svalue ""
+
+global name
+set name ""
+
+global lvalue
+set lvalue ""
+
+
+global database
+global location
+global mapset
+global feature
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_d.text

@@ -15,11 +15,19 @@ main (int argc, char *argv[])
     double dx;
     RASTER_MAP_TYPE map_type;
     int i;
+	struct GModule *module;
 
     struct
     {
 	struct Option *raster, *fs, *cats, *vals;
     } parm;
+
+    G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Prints category values and labels associated "
+		"with user-specified raster map layers.";
 
     parm.raster = G_define_option() ;
     parm.raster->key        = "map";
@@ -50,9 +58,6 @@ main (int argc, char *argv[])
     parm.fs->type       = TYPE_STRING ;
     parm.fs->required   = NO;
     parm.fs->description= "Output separator character (default: tab)" ;
-
-
-    G_gisinit (argv[0]);
 
     if (G_parser(argc, argv))
 	exit(-1);

@@ -8,7 +8,7 @@ static const char SCCSID[]="@(#)PJ_stere.c	4.1	94/02/15	GIE	REL";
 	double akm1; \
 	int	mode;
 #define PJ_LIB__
-#include	<projects.h>
+#include	"projects.h"
 PROJ_HEAD(stere, "Stereographic") "\n\tAzi, Sph&Ell\n\tlat_ts=";
 PROJ_HEAD(ups, "Universal Polar Stereographic") "\n\tAzi, Sph&Ell\n\tsouth";
 #define sinph0	P->sinX1
@@ -28,7 +28,7 @@ ssfn_(double phit, double sinphi, double eccen) {
 	   pow((1. - sinphi) / (1. + sinphi), .5 * eccen));
 }
 FORWARD(e_forward); /* ellipsoid */
-	double coslam, sinlam, sinX, cosX, X, A, sinphi;
+	double coslam, sinlam, sinX=0.0, cosX=0.0, X, A, sinphi;
 
 	coslam = cos(lp.lam);
 	sinlam = sin(lp.lam);
@@ -92,7 +92,7 @@ oblcon:
 	return (xy);
 }
 INVERSE(e_inverse); /* ellipsoid */
-	double cosphi, sinphi, tp, phi_l, rho, halfe, halfpi;
+	double cosphi, sinphi, tp=0.0, phi_l=0.0, rho, halfe=0.0, halfpi=0.0;
 	int i;
 
 	rho = hypot(xy.x, xy.y);
@@ -101,7 +101,11 @@ INVERSE(e_inverse); /* ellipsoid */
 	case EQUIT:
 		cosphi = cos( tp = 2. * atan2(rho * P->cosX1 , P->akm1) );
 		sinphi = sin(tp);
-		phi_l = asin(cosphi * P->sinX1 + (xy.y * sinphi * P->cosX1 / rho));
+                if( rho == 0.0 )
+		    phi_l = asin(cosphi * P->sinX1);
+                else
+		    phi_l = asin(cosphi * P->sinX1 + (xy.y * sinphi * P->cosX1 / rho));
+
 		tp = tan(.5 * (HALFPI + phi_l));
 		xy.x *= sinphi;
 		xy.y = rho * P->cosX1 * cosphi - xy.y * P->sinX1* sinphi;

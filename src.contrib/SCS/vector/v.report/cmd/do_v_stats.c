@@ -30,7 +30,7 @@ struct Line_List
 	double length     ;   /* length */
 	int line_cnt      ;   /* number of lines of this category number */
 } *vect               ;
-static int cmp ( char *,char *);
+static int cmp (const void *,const void *);
 static int ABS (int);
 
 int do_v_stats(int verbose, int lay_no, char *fd)
@@ -40,13 +40,13 @@ int do_v_stats(int verbose, int lay_no, char *fd)
 	int cnt=0, line, linea, island;
 	CELL cat_no;
 	int first, tot_cats, n_points;
-	register int area_num, line_num, i, ii, jj, kk;
+	register int area_num, line_num, i, ii, jj, kk, p;
 	char *label_name, null[1];
 	char aline[80];
 	char map_name[100], *mapset;
 	long len, nalloc=1024;
 	double xcent, ycent, *X, *Y;
-	double perim;
+	double length;
 	double f_area;
 	double ot_area;
 	double tot_area;
@@ -68,7 +68,7 @@ int do_v_stats(int verbose, int lay_no, char *fd)
 	tot_area = 0.0;
 verbose=1;
 	if(verbose)
-          fprintf(stderr,"\nLoading vector information.\n\n");
+          fprintf(stderr,"Loading vector information...\n");
 
 /*fprintf(stderr,"cat.count = %d,  cat.num= %d\n",cats.count,cats.num);*/
 
@@ -245,23 +245,26 @@ verbose=1;
 					sleep(2);
 					return (-1);
 					}
-				/* Calculate line length */
+			   /* Calculate line length */
                            n_points = Points->n_points;
 			   X = Points->x;
 			   Y = Points->y;
 
-			   perim = perimeter(n_points,X,Y);
+			   length = 0.0;
+			   for ( p = 0; p < Points->n_points - 1; p++ ) {
+                               length += G_distance( Points->x[p], Points->y[p], Points->x[p+1], Points->y[p+1]); 
+			   }
 			}
 			else 
 			{
-				perim = 0.0;
+				length = 0.0;
 			}
 
 			if (first)
 			{
 				vect[0].num = cat_no;
 				vect[0].line_cnt = 1;
-				vect[0].length = perim;
+				vect[0].length = length;
 				i = 0;
 				cnt = 1;
 				first = 0;
@@ -273,7 +276,7 @@ verbose=1;
 					if (vect[i].num == cat_no)
 					{
 					vect[i].line_cnt = vect[i].line_cnt + 1;
-					vect[i].length = vect[i].length + perim;
+					vect[i].length = vect[i].length + length;
 					break;
 					}
 				}
@@ -282,7 +285,7 @@ verbose=1;
 					cnt++;
 					vect[i].num = cat_no;
 					vect[i].line_cnt = 1;
-					vect[i].length = perim;
+					vect[i].length = length;
 					qsort (vect, cnt, sizeof (struct Line_List), cmp);
 	                                if (cnt == nalloc)
 	                                 {
@@ -371,7 +374,7 @@ int codes ( char ctype)
 	}
 }
 
-static int cmp ( char *a,char *b)
+static int cmp (const void *a,const void *b)
 {
 	if(a < b)
 		return -1;

@@ -1,6 +1,6 @@
 #include "xdr.h"
 
-db__send_double(d)
+int db__send_double(d)
     double d;
 {
     XDR xdrs;

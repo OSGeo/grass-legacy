@@ -1,0 +1,17 @@
+Data can be piped into m.proj2 only if the proj1 and proj2 parameters
+are supplied. This is one of the bugs(?) with the program. For example:
+ 
+cat ll | m.proj2 proj1=proj=ll
+proj2=proj=utm,a=6378137.0000000000,es=0.0066943800,zone=20,unfact=1.00
+ 
+will work ... but
+ 
+cat ll | m.proj2
+ 
+will not.
+ 
+I suspect that a good programmer could fix this. Also, you can just run
+m.proj2 by itself and enter coordinates individually.
+---------------------------
+
+A datum is silently ignored.

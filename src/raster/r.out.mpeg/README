@@ -9,7 +9,7 @@ Both source code and binaries for several platforms are available.
 
 After successful compilation, put the executable named "mpeg_encode" in
 a bin that any users of GRASS have in their path (I put it in /usr/local/bin 
-or you could put it in $(GISBASE)/bin or $(GISBASE)/garden/bin)
+or you could put it in $(GISBASE)/bin)
 
 I have version 1.3 and found one bug that you may need to fix (it's been
 reported, but probably not fixed in the current release yet):

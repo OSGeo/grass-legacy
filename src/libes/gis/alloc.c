@@ -52,9 +52,9 @@
 #include <stdlib.h>
 #include "gis.h"
 
-char *G_malloc (int n)
+void *G_malloc (int n)
 {
-    char *buf;
+    void *buf;
 
     if (n <= 0) n = 1;	/* make sure we get a valid request */
 
@@ -65,9 +65,9 @@ char *G_malloc (int n)
     return NULL;
 }
 
-char *G_calloc (int m,int n)
+void *G_calloc (int m,int n)
 {
-    char *buf;
+    void *buf;
 
     if (m <= 0) m = 1;	/* make sure we get a valid requests */
     if (n <= 0) n = 1;
@@ -79,7 +79,7 @@ char *G_calloc (int m,int n)
     return NULL;
 }
 
-char *G_realloc (void *buf,int n)
+void *G_realloc (void *buf,int n)
 {
     if (n <= 0) n = 1;	/* make sure we get a valid request */
 
@@ -92,8 +92,7 @@ char *G_realloc (void *buf,int n)
     return NULL;
 }
 
-int G_free(void *buf)
+void G_free(void *buf)
 {
 	free(buf);
-	return 0;
 }

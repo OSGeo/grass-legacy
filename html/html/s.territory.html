@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>s.territory</title>
+</head>
+<body bgcolor="#FFFFFF">
+<img SRC="grass.smlogo.gif" >
+<hr width="100%" align=center size=6 noshade>
+<h2>
+NAME</h2>
+<b><i>s.territory</i></b> - Calculates territory consumption for animal
+based on distributed positions.
+<br><i>(GRASS Sites Program)</i>
+<h2>
+SYNOPSIS</h2>
+<b>s.territory</b>
+<br><b>s.territory help</b>
+<br><b>s.territory</b> <b>rast=</b><i>value</i> <b>sites=</b><i>name&nbsp;
+</i>[<b>output=</b><i>name</i>]<i> </i>[<b>claim=</b><i>name</i>]<i> </i>[<b>thresh=</b><i>name</i>]<i>
+</i>[<b>incr=</b><i>name</i>]
+<br><i></i>&nbsp;
+<h2>
+DESCRIPTION</h2>
+<i>s.territory</i> calculates territory consumption for animal based on
+distributed positions.
+<h2>
+OPTIONS</h2>
+
+<h3>
+Parameters:</h3>
+<dl>
+<dt><b>rast=</b><i>value</i>
+<dd>Name of incidence or density file<br>
+
+<dt><b>sites=</b><i>name</i>
+<dd>Name of sites file with threshold locations
+
+<dt><b>output=</b><i>name</i>
+<dd>Name of new sites file to contain radius
+
+<dt><b>claim=</b><i>name</i>
+<dd>Simultaneous growth map. (ignored if site output given)
+
+<dt><b>thresh=</b><i>name</i>
+<dd>Field in sites file containing thresholds. Threshold is target amount
+of resources that site wants to consume
+
+<dt><b>incr=</b><i>name</i>
+<dd>Field in sites file containing radius increment (meters). incr is radius
+increment for each iteration
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - default incr is min distance between
+cells
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - not currently implemented for sequential,
+only simult.
+</dl>
+
+<h2>NOTES</h2>
+<b>OUTPUT</b> is a sites file containing:
+<p>&nbsp;&nbsp;&nbsp; easting|northing|#cat %threshold %radius
+<p>where radius is the minimum radius of a circle which surrounds enough
+cells in the incidence map to sum up to threshold.
+<br>If neither a sites output file nor a claim map is named, output is
+simply the radius followed by a newline for each site (for easier use in
+scripts).
+<p><b>EXAMPLES:</b>
+<ul>
+<li>
+Lion's territory</li>
+</ul>
+
+<ol>
+<li>
+you have sites for lion's lairs with food needs as the "threshold"</li>
+
+<li>
+you have an incidence map for&nbsp; frequency of prey or hunting success
+probability (Kg/week or something)</li>
+
+<li>
+s.territory creates a circular range for each lair which you might use
+to create vector or raster files and predict areas of conflict in overlapping
+"territories"<br>
+<BR></li>
+</ol>
+
+<ul>
+<li>
+School children</li>
+</ul>
+
+<ol>
+<li>
+&nbsp;you have sites for schools with school capacity as the "threshold"</li>
+
+<li>
+you have population density maps for school-age children</li>
+
+<li>
+s.territory creates ranges for each school that encompass an area in which
+enough children live to fill the school</li>
+</ol>
+&nbsp;
+<br><b>ALGORITHM:</b>
+<br>&nbsp;
+<br>&nbsp;<font face="Courier New,Courier">&nbsp;&nbsp; radius increment
+set to lesser of ns_res and ew_res</font>
+<br><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp; ( or incr if given
+)</font><font face="Courier New,Courier"></font>
+<p><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp; for each site</font>
+<br><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp; {</font>
+<br><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for
+(radius = increment; cells remaining; incr+=incr)</font>
+<br><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {</font>
+<br><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+sum incidence cell centers which fall within radius</font>
+<br><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+if >= threshold, break</font>
+<br><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</font>
+<br><font face="Courier New,Courier">&nbsp;&nbsp;&nbsp; }</font>
+<br>&nbsp;
+<ul>
+<li>
+<i>&nbsp;implementation (fast, high memory):<br>
+</i>read density map into buffer<br>
+use additional buffer to calculate distances(squared)&nbsp;<br>
+&nbsp;&nbsp;&nbsp; to current site (as needed)<br>
+&nbsp;if distance_squared > prev radius, add it in<br>
+<BR></li>
+
+<li>
+<i>&nbsp;implementation for simultaneous growth (much much slower):<br>
+</i>reads density map, then repeatedly traverses<br>
+output map looking for null cells, then checking to<br>
+see if it's in any of the sites current radius, etc.<br>
+<BR></li>
+
+<li>
+<i>alternatives:</i></li>
+</ul>
+&nbsp;&nbsp;&nbsp; 1. let max increase until entire map is covered,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; using zero for outside incidence
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; >>> currently implemented
+<p>&nbsp;&nbsp;&nbsp; 2. use a rectangular(square) territory rather than
+circle?
+<p>&nbsp;&nbsp;&nbsp; 3. somehow "weight" expansion toward successful areas
+<p>&nbsp;&nbsp;&nbsp; 4. save combined nearest distances map
+<br>&nbsp;
+<p>ADDENDUM
+<p>Think about:
+<p>1.&nbsp; Make already claimed territory uninhabitable - as each site
+is
+<br>&nbsp;&nbsp;&nbsp; processed, zero out resources within territory.
+<br>&nbsp;&nbsp;&nbsp; >>> This can be done in scripts, using masks. (slower
+though)
+<p>2.&nbsp; Instead of just going through in order, attack them all at
+the
+<br>&nbsp;&nbsp;&nbsp; same time, zeroing out resources as it goes and
+assigning a
+<br>&nbsp;&nbsp;&nbsp; category value to a "claim" map.
+<br>&nbsp;
+<h2>
+AUTHOR</h2>
+Bill Brown, GMSL, 1999
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

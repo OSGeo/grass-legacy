@@ -11,6 +11,7 @@
 #include "dig_curses.h"
 #include "display_line.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 /*
 ** highlight every area line that does not have an area attached to it. 
@@ -29,7 +30,7 @@ int unfinished_areas (struct Map_info *map)
     ret = 0;
     error = 0;
     set_keyboard ();
-    Write_info (3, "                                  ...Press <ESC> key to stop redraw");
+    Write_info (3, _("                                  ...Press <ESC> key to stop redraw"));
     for (i = 1 ; i <= map->n_lines ; i++)
     {
 	if (key_hit (buf))

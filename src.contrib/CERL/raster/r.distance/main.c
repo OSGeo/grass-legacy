@@ -7,10 +7,15 @@ main (int argc, char *argv[])
     extern void find_edge_cells();
     extern void report();
     extern void read_labels();
-
     struct Parms parms;
+    struct GModule *module;
 
     G_gisinit (argv[0]);
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Locates the closest points between objects in two raster maps.";
 
     parse (argc, argv, &parms);
     if (parms.labels)

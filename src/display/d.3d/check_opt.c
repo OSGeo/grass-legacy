@@ -1,6 +1,7 @@
 #include "gis.h"
 #include "3d.h"
 #include "options.h"
+#include <stdlib.h>
 
 int 
 check_options (void)

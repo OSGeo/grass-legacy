@@ -1,7 +1,0 @@
-
-@man("i.class") - An imagery function that generates spectral signatures
-for an image by allowing the user to outline regions of interest.
-The resulting signature file can be used as input for @man("i.maxlik") or
-as a seed signature file for @man("i.cluster").
-
-(GRASS Imagery Program)

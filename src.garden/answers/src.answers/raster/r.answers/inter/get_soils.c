@@ -31,10 +31,10 @@ get_soils()
     char        line[200];
 
     G_clear_screen();
-    fprintf (stdout,"\n\n          ANSWERS on GRASS Soil Catalogue Utility \n\n");
-    fprintf (stdout,"To prepare soils data for use with ANSWERS, the followng is\n");
-    fprintf (stdout,"needed: a raster map layer of the soil series in the watershed\n");
-    fprintf (stdout,"and a description of each soil series found in the layer.\n\n");
+    fprintf (stderr,"\n\n          ANSWERS on GRASS Soil Catalogue Utility \n\n");
+    fprintf (stderr,"To prepare soils data for use with ANSWERS, the followng is\n");
+    fprintf (stderr,"needed: a raster map layer of the soil series in the watershed\n");
+    fprintf (stderr,"and a description of each soil series found in the layer.\n\n");
 
   /* check to see if read_project found any previously recorded info
      in the project file about the soils layer. If so, make sure the
@@ -43,11 +43,11 @@ get_soils()
     check = 0;
     if ((complete[2] > 0) && (soil_mapset) && (soil_layer[0] != 0)) {
         check = 1;
-        fprintf (stdout,"This utility was previously completed. You can:\n\n");
-        fprintf (stdout,"- Use a different layer for soils \n");
-        fprintf (stdout,"  (this erases previously set parameters)\n");
-        fprintf (stdout,"- Use a same layer for soils and edit previously set \n");
-        fprintf (stdout,"  parameters.\n\n");
+        fprintf (stderr,"This utility was previously completed. You can:\n\n");
+        fprintf (stderr,"- Use a different layer for soils \n");
+        fprintf (stderr,"  (this erases previously set parameters)\n");
+        fprintf (stderr,"- Use a same layer for soils and edit previously set \n");
+        fprintf (stderr,"  parameters.\n\n");
         sprintf(line, "Use the raster map %s in %s for SOILS?",
                        soil_layer, soil_mapset);
         if(!G_yes(line, 1)) 
@@ -56,19 +56,19 @@ get_soils()
 
     if (check == 0){
         complete[2] = 0;
-        fprintf (stdout,"\n\nEnter the name of the SOIL SERIES raster map.\n");
+        fprintf (stderr,"\n\nEnter the name of the SOIL SERIES raster map.\n");
         soil_mapset = G_ask_cell_old ("",soil_layer);
             if(!soil_mapset) {
                 return(0);
              }
         }
-    fprintf (stdout,"\n");
+    fprintf (stderr,"\n");
     if (mk_cat_tbl(1, soil_layer, soil_mapset) == -1)
     {
         complete[2] = 0;
         return(0);
     }
-    fprintf (stdout,"\nNumber of soil categories found: %d \n", cat_tbl[0].cat);
+    fprintf (stderr,"\nNumber of soil categories found: %d \n", cat_tbl[0].cat);
     for (i = 1, j = 0; i <= cat_tbl[0].cat; i++, j++)
         {
         if (j > 9) 
@@ -76,11 +76,11 @@ get_soils()
             j = 0;
             hit_return();
             }
-        fprintf (stdout," %3ld %s\n", cat_tbl[i].cat, cat_tbl[i].label);
+        fprintf (stderr," %3ld %s\n", cat_tbl[i].cat, cat_tbl[i].label);
         }
-    fprintf (stdout,"\n");
+    fprintf (stderr,"\n");
     if (cat_tbl[0].cat > 21) {
-        fprintf (stdout,"\n\n\nmore than 20 categories were found.\n");
+        fprintf (stderr,"\n\n\nmore than 20 categories were found.\n");
         croak(1, "The ANSWERS could be reconfigured or the input layer reclassed.");
     }
     else

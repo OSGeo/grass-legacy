@@ -1,0 +1,169 @@
+#!/bin/sh
+
+# r.to.pg:
+# exports GRASS raster map to PostgreSQL database
+# supports cell value and attribute cats
+#
+#
+# $Id$
+#
+#        Copyright (C) 2000 by the GRASS Development Team
+#        Author:  Markus Neteler <neteler@geog.uni-hannover.de>
+#                 Institute of Physical Geography and Landscape Ecology
+#                 University of Hannover
+#
+#	 2002/07/26 Attribute and ID support added by 
+#		    Otto Dassau <otto.dassau@gmx.de>
+#        This program is free software under the GPL (>=v2)
+#        Read the file COPYING coming with GRASS for details.
+
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+     
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+
+TMP=/tmp
+
+### what to do in case of user break:
+exitprocedure()
+        {
+        echo ""
+        echo "User break!"
+        rm -f $TMP/pgimport.sql $TMP/pgimport.csv
+        echo "cleanup temporary files"
+        exit 1
+        }
+ 
+### shell check for user break (signal list: trap -l)
+trap "exitprocedure" 2 3 9 15
+
+which psql > /dev/null
+if [ $? != 0 ]; then
+ echo "ERROR: psql not found. Required for PostgreSQL import!"
+ exit
+fi
+
+if [ "$1" = "help" -o "$1" = "-help" -o "$#" -lt 1 ]; then
+ echo ""
+ echo "r.to.pg exports GRASS raster map to PostgreSQL database"
+ echo "into a three column table."
+ echo ""
+ echo "       ID  | cell value | category label"
+ echo ""
+ echo "Usage:"
+ echo "        r.to.pg rastermap [table_name]"
+ exit
+fi
+
+#check if map exists:
+test -f $LOCATION/cell/$1
+if [ $? != 0 ]; then
+ echo "ERROR: Raster map $1 does not exist in your current mapset."
+ exit 1
+fi
+
+#replacing eventual dots from table name to avoid name conflicts:
+FIELDNAME=`echo $1 | sed 's/\.//'`
+
+if [ "$2" = "" ]
+then
+ CELLTABLE=$FIELDNAME
+else
+ CELLTABLE=`echo $2 | sed 's/\.//'`
+fi
+
+# check for database settings
+DB_DATABASE=`cat ~/.grassrc5 | grep DB_DATABASE| cut -d' ' -f2`
+
+if [ "$DB_DATABASE" = "" ]
+then
+ DB_DATABASE=`cat ~/.grassrc5 | grep PG_DBASE| cut -d' ' -f2`
+fi
+
+if [ "$DB_DATABASE" = "" ]
+then
+ echo "Please select database with g.select.pg or db.connect"
+ exit
+fi
+echo ""
+echo "Importing raster map $1 into PostgreSQL"
+echo ""
+echo "  current database is: '$DB_DATABASE'"
+echo ""
+
+#create DB if not existing
+# mhhh, error check is not very elegant:
+#createdb $DB_DATABASE > /dev/null
+#if [ $? != 0 ]; then
+# echo "... ignoring error..."
+# echo ""
+#else
+# echo "Created database $DB_DATABASE"
+# echo ""
+#fi
+
+# start writing SQL file:
+echo "CREATE TABLE $CELLTABLE (" > $TMP/pgimport.sql
+echo "	  id int8, " >>  $TMP/pgimport.sql
+echo "    $FIELDNAME float, " >> $TMP/pgimport.sql
+echo "    label text );"  >> $TMP/pgimport.sql
+
+#check if table already exists
+psql -q  -d $DB_DATABASE < $TMP/pgimport.sql
+
+#if [ $? != 0 ]; then
+# echo "Table $CELLTABLE already exists."
+# echo "Replace existing table [y/n]?"
+# read ans
+# if [ "$ans" = "Y" -o "$ans" = "y" ]
+#  then
+#     SQL_COMMAND="drop table $CELLTABLE;"
+#     echo $SQL_COMMAND | psql -q -d $DB_DATABASE
+#     echo "Replacing table..."
+#     psql -q -d $DB_DATABASE < $TMP/pgimport.sql
+#     rm -f $TMP/pgimport.sql
+#  else
+#     echo "Stopped. Existing table not replaced." 
+#     rm -f $TMP/pgimport.sql
+#     exit
+#  fi
+#fi
+rm -f $TMP/pgimport.sql
+
+#get the raster values and write to SQL table
+r.stats -1l nv='-9999' in=$1 > /tmp/mxy$$
+
+# with quotation
+# cat -n /tmp/mxy$$ | tr -s '\t' ' ' | sed -e 's/^ //g' | sed -e 's/ /,/1' | sed -e 's/ /,\"/1' | sed -e 's/$/"/g' > /tmp/pgimport.csv
+
+# without quotation
+cat -n /tmp/mxy$$ | tr -s '\t' ' ' | sed -e 's/^ //g' | sed -e 's/ /,/1' | sed -e 's/ /,/1' > /tmp/pgimport.csv
+
+echo "COPY $CELLTABLE FROM '/tmp/pgimport.csv' USING DELIMITERS ',';" > /tmp/pgimport.sql
+psql -q -d $DB_DATABASE < /tmp/pgimport.sql
+
+# proceeding with field entries:
+#echo "Importing into PostgreSQL table: $CELLTABLE...."
+#psql -q -d $DB_DATABASE < $TMP/pgimport.sql
+#check the exit status:
+#if [ $? != 0 ]; then
+# echo "ERROR. Stopped."
+# exit
+#fi
+
+rm -f $TMP/pgimport.* $TMP/mxy*
+
+#check number of imported values:
+#not working yet (some shell problem with asterix)
+echo ""
+echo "Number of imported cell values (= rows in $CELLTABLE):"
+SQL_COMMAND="select count(*) from $CELLTABLE;"
+echo $SQL_COMMAND | psql -q -d $DB_DATABASE
+echo ""
+echo "Finished import of $1 into PostgreSQL"
+echo "Created table $CELLTABLE with columns:"
+echo "     id | $FIELDNAME | label"

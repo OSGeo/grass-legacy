@@ -1,9 +1,13 @@
-/*  @(#)main.c     1.1  6/03/91   
+/*
+ * $Id$
+ *
+ * @(#)main.c     1.1  6/03/91   
  *  created by:         R.L.Glenn, SCS
  *
  * Program will read vector maps, areas, lines, islands, etc.
+ * Reports details information on vector map contents
  *
- * snoop [-falicne] map=name[,name,...]
+ * v.dump [-falicne] map=name[,name,...]
  *                  num=ent number
  *
  *  flags:    -f(default)   full reports:   All areas, lines, islands, etc.\n");
@@ -15,6 +19,7 @@
  *            -e   modifies header records
  */
 
+#include <stdlib.h>
 #include <stdio.h>
 #include  "gis.h"
 #include "Vect.h"
@@ -27,7 +32,6 @@ struct Categories cats;
 
 int 
 main (int argc, char *argv[])
-
 {
 	register int area_num, line_num, isle_num, node_num, i;
 	int vect_read, got_cats;
@@ -48,16 +52,15 @@ main (int argc, char *argv[])
 		struct Flag *n;
 		struct Flag *e;
 	} flags;
+	struct GModule *module;
+	
 
         G_gisinit(argv[0]);
-
-        parms.entopt = G_define_option();
-        parms.entopt->key                = "num";
-        parms.entopt->type               = TYPE_INTEGER;
-        parms.entopt->required           = NO;                 
-        parms.entopt->multiple           = NO; 
-        parms.entopt->gisprompt          = "entity number";
-        parms.entopt->description        = "Unique number of an area,line,site,category, or node";
+        
+        /* Set description */
+        module              = G_define_module();
+        module->description = ""\
+        "Reports details information on vector map contents";
 
         parms.mapopt = G_define_option();
         parms.mapopt->key                = "map";
@@ -66,6 +69,13 @@ main (int argc, char *argv[])
         parms.mapopt->multiple           = YES; 
         parms.mapopt->gisprompt          = "old,dig,vector"; 
         parms.mapopt->description        = "vector map(s)";
+
+        parms.entopt = G_define_option();
+        parms.entopt->key                = "num";
+        parms.entopt->type               = TYPE_INTEGER;
+        parms.entopt->required           = NO;                 
+        parms.entopt->multiple           = NO; 
+        parms.entopt->description        = "Unique number of an area,line,site,category, or node";
 
         flags.f = G_define_flag();
         flags.f->key              = 'f';

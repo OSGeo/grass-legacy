@@ -1,4 +1,0 @@
- (^)  Temporarily release the graphics driver
-    The SUNVIEW driver has a bug that causes the screen to stop being updated,
- if it has been moved, covered, or uncovered; or the screen saver blanked the 
- screen.  When this occurs, pressing this key should fix the lockup.

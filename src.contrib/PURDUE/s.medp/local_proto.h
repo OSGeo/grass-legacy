@@ -8,7 +8,7 @@ int iteration(int);
 double length(int, int, int, int);
 /* medpolish.c */
 int median_polish(double ***, double ***, int *, int, int, int, double, int);
-int dblcompare(double *, double *);
+int dblcompare(const void *, const void *);
 int converged(double ***, double ***, int, int, int, double);
 /* myprint.c */
 int myprint(double ***, double ***);

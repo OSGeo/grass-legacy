@@ -1,5 +1,6 @@
 #include "dbmi.h"
 
+int
 db_driver_list_indexes (tableName, indexes, count)
     dbString *tableName;
     dbIndex **indexes;

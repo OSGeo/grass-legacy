@@ -1,8 +1,8 @@
+#include <stdlib.h>
 #define GLOBAL
 #include "P.h"
 Pinit()
 {
-    char *getenv();
     char *q;
 
     quality = 1;

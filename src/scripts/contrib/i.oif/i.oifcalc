@@ -1,4 +1,4 @@
-:
+#!/bin/sh
 # Parameters: 1, 2, 3 - number of LANDSAT band
 # written by Markus Neteler 21. Jul. 1998, 5. Jan. 1999
 #            neteler@geog.uni-hannover.de 

@@ -7,11 +7,11 @@
 *  get_reg_response()  -  get user response (puck or keyboard)
 */
 
-#include	<stdio.h>
+#include <stdio.h>
 #include <unistd.h>
 #include "libtrans.h"
-#include "dig_inter.h"
-#include	"map.h"
+#include "Vect.h"
+#include "map.h"
 #include "georef.h"
 
 #define	LEAVE -1

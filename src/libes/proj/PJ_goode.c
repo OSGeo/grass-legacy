@@ -5,7 +5,7 @@ static const char SCCSID[]="@(#)PJ_goode.c	4.1 94/02/15     GIE     REL";
 	struct PJconsts	*sinu; \
 	struct PJconsts	*moll;
 #define PJ_LIB__
-#include	<projects.h>
+#include	"projects.h"
 PROJ_HEAD(goode, "Goode Homolosine") "\n\tPCyl, Sph.";
 	extern PJ
 *pj_sinu(PJ *), *pj_moll(PJ *);

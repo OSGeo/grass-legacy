@@ -67,7 +67,7 @@ plot (double lon1, double lat1, double lon2, double lat2, int line_color, int te
 	G_plot_where_xy (lon1, (lat1+lat2)/2, &text_x, &text_y);
 	G_plot_line (lon1, lat1, lon2, lat2);
     }
-    R_flush();
+    R_stabilize();
 /*
     distance = G_rhumbline_distance (lon1, lat1, lon2, lat2);
     sprintf (buf, "%.0lf miles\n", METERS_TO_MILES(distance));

@@ -1,0 +1,18 @@
+
+12/1996:
+Changed the number of Maximum cells from 10000 to 50000.
+This change was made in agnps_input.h
+
+Other changes were made in 
+          src_agnps_input_2/agnps_input.c
+          src_agnps_input_2/agnps_input.h
+
+See COMMENTS.txt there.
+
+                  December 1996
+                  Markus Neteler
+                  Department of Geography
+                  Institute of Physical Geography and Landscape-ecology
+                  30167 Hannover, Germany
+                  email: neteler@geog.uni-hannover.de
+ 

@@ -4,8 +4,7 @@
 */
 
 #include  "gis.h"
-#include "digit.h"
-#include "dig_head.h"
+#include "Vect.h"
 
 
 #define V_PROG  "v.out.dlg"   /* non-interactive version */

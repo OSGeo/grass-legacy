@@ -1,4 +1,5 @@
 #include "gis.h"
+#include "glocale.h"
 
 int G__projection_units(int n)
 {
@@ -45,9 +46,9 @@ char *G__projection_name(int n)
     case PROJECTION_SP:
 	return "State Plane";
     case PROJECTION_LL:
-	return "Latitude-Longitude";
+	return _("Latitude-Longitude");
     case PROJECTION_OTHER:
-	return "Other Projection";
+	return _("Other Projection");
     default:
 	return NULL;
     }

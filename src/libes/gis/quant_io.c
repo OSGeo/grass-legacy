@@ -58,6 +58,7 @@
 /*--------------------------------------------------------------------------*/
 
 #include "gis.h"
+#include "glocale.h"
 #include <string.h>
 
 /*--------------------------------------------------------------------------*/
@@ -87,7 +88,7 @@ quant_load_range (
   G_get_fp_range_min_max (&fprange, &dMin, &dMax);
   if(G_is_d_null_value(&dMin) || G_is_d_null_value(&dMax))
   {
-     sprintf(buf, "The floating data range for %s@%s is empty", name, mapset);
+     sprintf(buf, _("The floating data range for %s@%s is empty"), name, mapset);
      G_warning(buf);
      return -3;
   }
@@ -96,7 +97,7 @@ quant_load_range (
   G_get_range_min_max (&range, &min, &max);
   if(G_is_c_null_value(&min) && G_is_c_null_value(&max))
   {
-     sprintf(buf, "The integer data range for %s@%s is empty", name, mapset);
+     sprintf(buf, _("The integer data range for %s@%s is empty"), name, mapset);
      G_warning(buf);
      return -3;
   }
@@ -139,7 +140,7 @@ G__quant_import (name, mapset, quant)
   
   /* first check if quant2/mapset/name exists in the current mapset */
   sprintf (element, "quant2/%s", mapset);
-  if (fd = G_fopen_old (element, name, G_mapset())) 
+  if ((fd = G_fopen_old (element, name, G_mapset())))
   {
     parsStat = quant_parse_file (fd, quant);
     fclose (fd);
@@ -167,7 +168,7 @@ G__quant_import (name, mapset, quant)
   }
   
   sprintf (buf, 
-      "quantization file [%s] in mapset [%s] %s", 
+      _("quantization file [%s] in mapset [%s] %s"), 
       name, mapset, err);
   G_warning (buf);
 

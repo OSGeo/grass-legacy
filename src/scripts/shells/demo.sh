@@ -1,5 +1,14 @@
-:
+#!/bin/sh
+
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+     
 eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+
 cd ${GISBASE?}/scripts/demo.scripts
 : ${LOCATION_NAME?}
 trap "" 2 3
@@ -49,11 +58,13 @@ EOF
 if [ $i -ge $MAXVAL ] 
 then
 	g.region $region
+        d.frame -e
 	exit 1
 fi
 
-$i
+./$i
 
 do
 echo "" > /dev/null
 done
+d.frame -e

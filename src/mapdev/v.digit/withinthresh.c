@@ -2,11 +2,11 @@
 #include <math.h>
 #include "digit.h"
 #include "raster.h"
-#include "dig_head.h"
 #include "dig_curses.h"
 #include "keyboard.h"
 #include "Map_proto.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 /*  turns on (highlights) any beginning or ending nodes within the user set
 *    threshold of any other beginning or ending node.
@@ -26,7 +26,7 @@ within_a_thresh (struct Map_info *map)
     char    buf[80];
     int ret;
 
-    sprintf ( buf, " Current threshold: %8.2f .    Enter temp threshold:  ",
+    sprintf ( buf, _(" Current threshold: %8.2f .    Enter temp threshold:  "),
     map->snap_thresh);
     Write_info ( 2, buf);
 
@@ -35,14 +35,14 @@ within_a_thresh (struct Map_info *map)
 
     if (new_thresh <= map->snap_thresh)
      {
-	Write_info ( 3, "  The threshold entered is less then the current threshold.");
-	Write_info ( 4, "  No action taken.");
+	Write_info ( 3, _("  The threshold entered is less then the current threshold."));
+	Write_info ( 4, _("  No action taken."));
 
 	sleep (3);
 	return (-1);
      }
 
-    Write_info ( 3, " .. processing ..                 ...Press <ESC> key to stop");
+    Write_info ( 3, _(" .. processing ..                 ...Press <ESC> key to stop"));
 
     /*  loop thru coord.[] for each coord   */
 

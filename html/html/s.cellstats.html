@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<TITLE>s.cellstats</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width="100%" align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>s.cellstats</b></EM>  - Univariate statistics for a GRASS sites list within
+cells.
+<BR>
+<EM>(GRASS Sites Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>s.cellstats</B>
+<BR>
+<B>s.cellstats help</B>
+<BR>
+<B>s.cellstats</B> [<B>-q</B>]
+<B>input=</B><EM>name</EM> 
+<B>[output=</B><EM>name</EM><B>]</B>
+<B>[field=</B><EM>value</EM><B>]</B>
+<B>[min=</B><EM>value</EM><B>]</B>
+<B>[stats=</B><EM>stat[,stat,...]</EM><B>]</B>
+
+<H2>DESCRIPTION</H2>
+
+<EM>s.cellstats</EM> calculates univariate statistics of sites
+lists for each cluster of input sites falling within each cell of
+the current region. This includes the number of sites, mean, standard
+deviation, coefficient of variation, mininum, first
+quartile, median, third quartile, and maximum.  The output is a sites
+list where the coordinates are cell centers, the category is the
+count of sites falling within the cell, and the decimal attributes
+are the statistics.  Sites falling outside the current region are
+discarded.
+
+<H2>OPTIONS</H2>
+
+<H3>Flags:</H3>
+
+<DT><B>-q</B> 
+<DD>Quiet. Turn off informational messages.
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM> 
+<DD>Name of an existing sites file.
+
+<DT><B>output=</B><EM>name</EM>
+<DD>Name of the output sites file.  If not specified, the
+program writes to standard output.
+
+<DT><B>field=</B><EM>value</EM>
+<DD>Decimal attribute to use for calculation
+<BR>default: 1  
+
+
+<DT><B>min=</B><EM>value</EM>
+<DD>Set a minimum sample size per cell.  If there are fewer than
+<EM>value</EM> sites found for a given cell, statistics are not calculated for
+that cell.
+<BR>default: 1
+
+<DT><B>stats=</B><EM>stat[,stat,...]</EM>
+<DD>Specify which statistics should be reported.  Statistics
+will be reported in the order specified, otherwise
+they are output in the order below.  The statistics are:<BR>
+<EM>m  </EM> - mean<BR>
+<EM>s  </EM> - standard deviation<BR>
+<EM>cv </EM> - coefficient of variation<BR>
+<EM>skw</EM> - skewness<BR>
+<EM>kur</EM> - kurtosis<BR>
+<EM>mse</EM> - mean of squares<BR>
+<EM>mav</EM> - mean of absolute values<BR>
+<EM>min</EM> - minimum<BR>
+<EM>q1 </EM> - first quartile<BR>
+<EM>med</EM> - median<BR>
+<EM>q3 </EM> - third quartile<BR>
+<EM>max</EM> - maximum<BR>
+
+</DL>
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="s.univar.html">s.univar</A></EM>,
+<EM><A HREF="s.windavg.html">s.windavg</A></EM>,
+<EM><A HREF="s.normal.html">s.normal</A></EM>,
+<EM><A HREF="r.univar.html">r.univar</A></EM>
+
+
+<H2>NOTES</H2>
+
+<P>
+Requires at least 16 bytes of memory per input site plus some other overhead. 
+Very large input sites files may cause excessive swap file usage or 
+cause the program to fail with an out of memory error.
+
+<P>
+Certain statistics are invalid when calculated for a single site.  These
+statistics are the standard deviation, coefficient of variation, skewness and
+kurtosis.  The <EM>min</EM> parameter may be used to insure the sample size
+is large enough to approximate normality.  Additionally, the cell size for the
+current region may be enlarged to capture more sites per cell.  No test for 
+normality is performed on the input and some statistics may not be valid
+if normality is violated.
+
+<H2>BUGS</H2>
+<P>
+None known.
+<P>
+Please send all bug fixes and comments to the grass development team. <br>
+<a href="http://grass.itc.it"><tt>http://grass.itc.it</tt></a>.
+
+<H2>AUTHOR</H2>
+Eric G. Miller, adapted from s.univar written by
+<A HREF="http://mccauley-usa.com/">James Darrell McCauley</A>
+<A HREF="mailto:darrell@mccauley-usa.com">&lt;darrell@mccauley-usa.com&gt;</A>,
+when he was at 
+<A HREF="http://ABE.www.ecn.purdue.edu/ABE/">Agricultural
+Engineering</A>,
+<A HREF="http://www.purdue.edu/">Purdue University</A>
+<p><i>Last changed: $Date$</i>
+</body>
+</html>
+

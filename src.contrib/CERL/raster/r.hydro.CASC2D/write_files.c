@@ -189,11 +189,11 @@ OUT:
       }
    }
 
-   if(yes_w_surf_dep) G_put_map_row(depth_fd[nf], depth_tmp);
-   if(yes_w_inf_dep)  G_put_map_row(inf_fd[nf], inf_tmp);
-   if(yes_w_surf_moist)  G_put_map_row(surf_moist_fd[nf], surf_moist_tmp);
-   if(yes_w_inf_rate)  G_put_map_row(inf_rate_fd[nf], inf_rate_tmp);
-   if(yes_w_dis_rain && rindex==1) G_put_map_row(dis_rain_fd[nf], dis_rain_tmp);
+   if(yes_w_surf_dep) G_put_raster_row(depth_fd[nf], depth_tmp, CELL_TYPE);
+   if(yes_w_inf_dep)  G_put_raster_row(inf_fd[nf], inf_tmp, CELL_TYPE);
+   if(yes_w_surf_moist)  G_put_raster_row(surf_moist_fd[nf], surf_moist_tmp, CELL_TYPE);
+   if(yes_w_inf_rate)  G_put_raster_row(inf_rate_fd[nf], inf_rate_tmp, CELL_TYPE);
+   if(yes_w_dis_rain && rindex==1) G_put_raster_row(dis_rain_fd[nf], dis_rain_tmp, CELL_TYPE);
 
 }
 

@@ -1,5 +1,6 @@
 #include "dbmi.h"
 
+int
 db_driver_describe_table (name, table)
     dbString *name;
     dbTable *table;

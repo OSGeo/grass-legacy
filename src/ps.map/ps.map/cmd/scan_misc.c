@@ -1,4 +1,5 @@
 #include "ps_info.h"
+#include <string.h>
 
 static int scan_percent(char *,double *,double,double);
 

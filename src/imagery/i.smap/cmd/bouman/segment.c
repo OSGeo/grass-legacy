@@ -92,8 +92,7 @@ int segment (
 
   } while(increment_reg(&region,wd,ht,block_size));
 
-  /* write_img(sf_pym[0],wd,ht,S,parms,files); */
-  write_img(img[0],wd,ht,S,parms,files);
+  write_img(sf_pym[0],wd,ht,S,parms,files);
 
   return 0;
 }

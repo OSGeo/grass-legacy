@@ -1,6 +1,6 @@
 %{
 #include <string.h>
-#include "gis_pars.h"
+#include "y.tab.h"
 #include "local_proto.h"
 #ifdef getc
 #undef getc

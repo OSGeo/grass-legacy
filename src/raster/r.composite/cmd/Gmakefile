@@ -1,0 +1,10 @@
+PGM=r.composite
+OFILES =  main.o
+
+LIBES=$(GISLIB)
+DEPLIBS=$(DEPGISLIB)
+
+$(BIN_CMD)/$(PGM): $(OFILES) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(XDRLIB) $(MATHLIB)
+
+$(DEPGISLIB): #

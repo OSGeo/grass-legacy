@@ -17,4 +17,7 @@ interface_build {
     {entry save {Name the current region:} 0 region}
     {checkbox -d {Set region from default region.} "" -d}
     {checkbox -u {Do not update the current region.} "" -u}
+    {checkbox -l {Print region settings in lat/long coord.} "" -l}
+    {checkbox -a {Align boundaries to resolution (use with res=).} "" -a}
+    {checkbox -m {Display resolution in meters.} "" -m}
 }

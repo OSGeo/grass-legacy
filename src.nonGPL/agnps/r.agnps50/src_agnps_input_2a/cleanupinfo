@@ -1,0 +1,44 @@
+Gmakefile:	clean_up.o\
+Gmakefile.bak:	clean_up.o\
+agnps_input.c:		clean_up();
+agnps_input.c:		clean_up();
+agnps_input.c:		clean_up();
+agnps_input.c:		clean_up();
+agnps_input.c:		clean_up();
+agnps_input.c:		clean_up();
+agnps_input.c:		clean_up();
+agnps_input.c:		clean_up();
+agnps_input.c:		clean_up();
+agnps_input.c:		clean_up();
+agnps_input.c:		     clean_up();
+agnps_input.c:			clean_up();
+agnps_input.c:	clean_up();
+agnps_input.c.bak:		clean_up();
+agnps_input.c.bak:		clean_up();
+agnps_input.c.bak:		clean_up();
+agnps_input.c.bak:		clean_up();
+agnps_input.c.bak:		clean_up();
+agnps_input.c.bak:		clean_up();
+agnps_input.c.bak:		clean_up();
+agnps_input.c.bak:		clean_up();
+agnps_input.c.bak:		clean_up();
+agnps_input.c.bak:		clean_up();
+agnps_input.c.bak:		     clean_up();
+agnps_input.c.bak:			clean_up();
+agnps_input.c.bak:	clean_up();
+assign_landuse.c:	   clean_up();
+chkdata.c:		if (error == YES) {clean_up(); exit(0);}
+clean_up.c:	clean_up()
+clean_up.c:clean_up()
+get_input_map_names.c:	clean_up();
+get_mapset.c:	     clean_up();
+get_new_name.c:	     clean_up();
+get_old_name.c:	     clean_up();
+info:	clean_up.o\
+info:clean_up.c
+rules_ch_side_slope.c:	   clean_up();
+rules_cod.c:	   clean_up();
+rules_fert_aval.c:	   clean_up();
+rules_man_n.c:	   clean_up();
+rules_soil_texture.c:	   clean_up();
+rules_sur_cond.c:	   clean_up();
