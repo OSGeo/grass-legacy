@@ -1,3 +1,24 @@
+Notes on SGI compiling:
+The freeware page of gcc 2.8.1 (http://freeware.sgi.com ...) says that                                     
+gcc does not support the old 32 bit ABI (o32 option, see your section                                      
+9.)!                                                                                                       
+                                                                                                           
+The same source states that the compiler option for n32 is:                                                
+-mabi=n32                                                                                                  
+and for 64:                                                                                                
+-mabi=64                                                                                                   
+but I think that doesn't matter.
+Andreas.Lange@Rhein-Main.de
+
+
+
+
+---------------------------------------------------------------
+rado@cosmos.unomaha.edu
+Kees Krikke <krikke@nlr.nl>
+
+Compile problems:
+
 > gcc -g -O2  -I. -I/usr/people/krikke/grass5.0/grass5.0beta/src/include  -c
 > biveval.c
 > gcc: Internal compiler error: program cc1 got fatal signal 6
