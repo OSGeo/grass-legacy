@@ -1,0 +1,32 @@
+MAN	  = doc/d.vect.db
+PGM       = $(BIN_CONTRIB_CMD)/d.vect.db
+LIBES     = $(DISPLAYLIB) $(VECTLIB) $(RASTERLIB) $(GISLIB) -ltermcap
+
+
+EXTRA_CFLAGS = $(VECT_INCLUDE)  # -Dunlink=puts
+
+OBJS = \
+	main.o  \
+	bsearch.o \
+	find.o \
+	getAllOpts.o \
+	getSopts.o \
+	buildSQL.o \
+	runSQL.o \
+	ingresUtils.o \
+	plotCat.o 
+
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB)
+	ln $(GISBASE)/etc/front.end $(BIN)/d.vect.db
+	cp $(MAN)  $(GISBASE)/man/4
+$(LIBES): #
+#####################################
+#
+	ctags *.[ch]
+	sed 's/\?/\//g' tags > tags.tmp
+	mv tags.tmp tags
+
+
