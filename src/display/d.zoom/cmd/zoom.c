@@ -56,7 +56,7 @@ int zoomwindow ( struct Cell_head *window, int quiet, double magnify)
 		ux1 = uxc - ew/2;
                 ux2 = uxc + ew/2;
                 uy1 = uyc - ns/2;
-                uy2 = uyc + ns/2;\
+                uy2 = uyc + ns/2;
 
 		north = uy1>uy2?uy1:uy2 ;
 		south = uy1<uy2?uy1:uy2 ;
