@@ -1,53 +1,11 @@
-# $Log: Gmakefile,v $
-# Revision 1.8  2000-10-02 16:00:02  markus
-# cosmetics
-#
-# Revision 1.9  2000/09/25 12:02:07  markus
-# added missing lib path
-#
-# Revision 1.8  2000/09/05 09:14:20  markus
-# libpg disabled if PostgreSQL not wanted
-#
-# Revision 1.7  2000/06/12 14:09:32  cho
-# Huidae Cho <hdcho@geni.knu.ac.kr>: added FreeBSD sensivity: -ldl
-#
-# Revision 1.6  2000/03/06 17:17:22  markus
-# Alex Shevlakov: added new fields in WHATS HERE menu for GRASS/PostgreSQL interface
-#
-# Revision 1.5  2000/03/06 09:04:07  markus
-# Philip Warner/Markus Neteler: updated to relative paths
-#
-# Revision 1.4  2000/02/29 14:38:28  markus
-# Philip Warner (pjw@rhyme.com.au): Handle Tcl/Tk shared libs (remove tkBind.c), Remove tk*.c as far as possible, Use idle handler instead of SpecialWait
-#
-# 26-Feb-2000 Philip Warner (pjw@rhyme.com.au)
-# 	Handle Tcl/Tk shared libs (remove tkBind.c)
-#	Remove tk*.c as far as possible
-#	Use idle handler instead of SpecialWait
-#
-# Revision 1.3  2000/02/22 19:02:48  markus
-# added XEXTRALIBS for Solaris2.6
-#
-# Revision 1.2  2000/02/22 18:21:23  markus
-# added XDRLIB
-#
-# updated -ldl lib added (10/199) (pmx)
-# updated ogsf path to src/libes/ 10/99 MN
-# bugfixes 8/99 MN
-# nviz 2.2 based in tcl/tk 8.x (7/99)
-#	
-# nviz v1.1
-# 5/1/96
+# $Id: Gmakefile,v 1.9 2000-10-04 12:50:50 markus Exp $
 # Makefile for building nvwish
-# Requires Tk 8.0 and Tcl 8.0
+# Requires Tk 8.x and Tcl 8.x
 
 # These should be set by the configure script
-TK_LIB_PATH=-L/lib -L/usr/lib -ltk8.0 -ltcl8.0
-TK_INCLUDE_PATH=-I/usr/include/GL -I/usr/include/X11 -I/usr/local/include
 NVWISH_VER=NVWISH2.2
 PQ_OBJS=
 PQLIB=
-DLLIB=-ldl
 
 OGL_LIBS = -lGLU -lGL $(XLIB) -lXmu -lXext $(MATHLIB) $(DLLIB) $(XDRLIB) $(XEXTRALIBS) $(XLIBPATH)
 
@@ -59,11 +17,11 @@ SURFLIB = $(LIBDIR)/ogsf/libgsf.a
 # DSPINC = $(LIBDIR)/libes/dspf
 
 EXTRA_CFLAGS= -I${SURF_INCDIR} $(VECT_INCLUDE) -D_NO_PROTO\
-        -D__STDC__ $(TK_INCLUDE_PATH) -I$(DSPINC) $(GISLIB) $(PQINCPATH)
+        -D__STDC__ $(TIFFINCPATH) -I$(DSPINC) $(GISLIB) $(PQINCPATH)
 
 IMGLIB= $(LIBDIR)/libimage/libimage.a
 
-XTRA_LDFLAGS=$(DFLAGS) $(TK_LIB_PATH) $(OGL_LIBS) $(PQLIB)
+XTRA_LDFLAGS=$(DFLAGS) $(TCLTKLIBS) $(OGL_LIBS) $(PQLIB)
 
 OBJS = nvizAppInit.o change_view.o draw.o exag.o glwrappers.o \
 	init_commands.o lights.o map_obj.o misc.o nviz_init.o \

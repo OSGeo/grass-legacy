@@ -1,15 +1,4 @@
-# $Id: Gmakefile,v 1.4 2000-10-02 15:59:48 markus Exp $
-# updated 2. Nov. 1999 
-# updated 31 octobre 1999 to build libimage.a - Pierre de Mouveaux.
-#                                       (p_de_mouveaux@hotmail.com)
-#
-# tcltkNVIZ2.2 - 8/1999 Jaro Hofierka
-#
-# 10/99: move libimage to src/libes and
-#          updated libimage path to src/libes/libimage
-#        updated ogsf path to src/libes/ogsf/
-#
-# olgnviz v1.0 - 5/1/96
+# $Id: Gmakefile,v 1.5 2000-10-04 12:50:48 markus Exp $
 #
 # Toplevel makefile for building everything - used by configure script to 
 # build Gmakefile
@@ -28,17 +17,8 @@ nvwish:
 	cd src ; $(GMAKE) 
 
 nviz:
-#	'rm' -rf $(NV_VER)
-#	mkdir $(NV_VER)
 	'rm' -rf $(GISBASE)/etc/$(NV_VER)
 	mkdir $(GISBASE)/etc/$(NV_VER)
-
-# do we need this? MN 3/2000: - obviously not
-#	cat scripts/script_file_tools.in | sed s/ProcessName/$(NV_VER)/g >> \
-#	    $(SCRIPTDIR)/script_file_tools
-#	cat scripts/script_tools.in | sed s/ProcessName/$(NV_VER)/g >> \
-#	    $(SCRIPTDIR)/script_tools
-
 
 # Install the scripts in the appropriate directory
 install:
@@ -58,5 +38,4 @@ install:
 		$(INSTALL_DIR)/scripts/script_play \
 		$(INSTALL_DIR)/scripts/script_tools \
 		$(GISBASE)/bin/$(NV_VER)
-#	'cp' nviz.man.1 $(GISBASE)/man/1/$(NV_VER)
 	gmakelinks5
