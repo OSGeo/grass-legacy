@@ -46,7 +46,7 @@ static int (*V1_delete_line_array[][2]) () =
     { delete_dummy, V1_delete_line_nat } 
    ,{ delete_dummy, delete_dummy }
 #ifdef HAVE_POSTGRES
-   ,{ delete_dummy, delete_dummy } 
+   ,{ delete_dummy, V1_delete_line_post } 
 #endif
 };
 

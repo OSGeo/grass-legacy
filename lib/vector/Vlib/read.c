@@ -26,7 +26,7 @@ static int (*Read_next_line_array[][3]) () =
     { read_next_dummy, V1_read_next_line_nat, V2_read_next_line_nat }
    ,{ read_next_dummy, V1_read_next_line_shp, V2_read_next_line_shp }
 #ifdef HAVE_POSTGRES
-   ,{ read_next_dummy, V1_read_next_line_post }
+   ,{ read_next_dummy, V1_read_next_line_post, V2_read_next_line_post }
 #endif
 };
 
@@ -44,7 +44,7 @@ static int (*V2_read_line_array[]) () =
    V2_read_line_nat 
    , V2_read_line_shp 
 #ifdef HAVE_POSTGRES
-   /*, V2_read_line_post */
+   , V2_read_line_post
 #endif
 };
 
@@ -53,7 +53,7 @@ static long (*Next_line_offset_array[]) () =
    Vect_next_line_offset_nat 
    , Vect_next_line_offset_shp 
 #ifdef HAVE_POSTGRES
-   /* , Vect_next_line_offset_post */
+   , Vect_next_line_offset_post 
 #endif
 };
 
