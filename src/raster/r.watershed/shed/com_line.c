@@ -6,7 +6,7 @@ com_line_Gwater (input, output)
 	OUTPUT	*output;
 {
   struct Cell_head *window;
-  char	map_layer[48], char_input[48], buf[100], *prog_name, *mapset;
+  char	map_layer[48], char_input[1024], buf[100], *prog_name, *mapset;
   double d;
   int	i;
   
@@ -151,7 +151,7 @@ com_line_Gwater (input, output)
   }
   printf ("\n%s must create a map layer of watershed basins\n", prog_name);
   printf ("before %s can run properly.\n", G_program_name());
-  strcpy (buf, "Please input watershed basin map name:");
+  strcpy (buf, "Please name the output watershed basin map:");
   do	{
   	mapset = G_ask_new (buf, input->haf_name, "cell", "");
   } while (NULL == mapset);
@@ -159,36 +159,61 @@ com_line_Gwater (input, output)
 	com_line_add (&(input->com_line_ram), " ba=", input->haf_name, NULL);
   if (input->slow)
 	com_line_add (&(input->com_line_seg), " ba=", input->haf_name, NULL);
+
+  /* 
+  This section queries the user about the armsed file input. If
+  you want to make this an option,  the code below "COMMENT2" needs to be
+  modified. 
+  */
+
+#ifdef ARMSED
   printf ("\n%s must create a file of watershed basin relationships \n", prog_name);
-  printf ("before %s can run properly (this file is also used by the \n", G_program_name());
-  printf ("grass.armsed program).\n");
+  printf ("before %s can run properly.\n", G_program_name());
   input->ar_file_name = NULL;
   while (input->ar_file_name == NULL)	{
-  	printf ("\nPlease input the name that this file will use:");
+  	printf ("\nPlease name this file:");
   	G_gets (char_input);
   	if ( 1 != G_legal_filename (char_input))	{
 		printf ("[%s] file name not legal\n", char_input);
-		free (char_input);
 	} else	input->ar_file_name = G_store (char_input);
   }
   if (input->fast)
 	com_line_add (&(input->com_line_ram), " ar=", input->ar_file_name, NULL);
   if (input->slow)
 	com_line_add (&(input->com_line_seg), " ar=", input->ar_file_name, NULL);
+
+/*
+end of ARMSED comment code
+*/
+
+/*
+COMMENT2 This section of code tells the program where to place the statistics
+about the watershed basin. GRASS users don't need this (w/ r.stats), but the
+format is suppossed to be "user-friendly" to hydrologists. For the stats to be
+created, the armsed file output needs to exist. For the stats to be an option
+in this program: 1) it should be querried before the armsed file query, and 2)
+make the armsed file query manditory if this option is invoked.
+*/
+
   printf ("\n%s will generate a lot of output.  Indicate a file\n", G_program_name());
   printf ("name for %s to send the output to.\n", G_program_name());
   output->file_name = NULL;
   while (output->file_name == NULL)	{
-  	printf ("\nPlease input the name of this file:");
+  	printf ("\nPlease name this file:");
   	G_gets (char_input);
   	if ( 1 != G_legal_filename (char_input))	{
 		printf ("[%s] file name not legal\n\n", char_input);
-		free (char_input);
 	} else	output->file_name = G_store (char_input);
   }
+ 
+ /* 
+ end of COMMENT2
+ */
+#endif
+
   printf("\nThe accumulation map from %s must be present for\n", prog_name, G_program_name());
   printf ("%s to work properly.\n", G_program_name());
-  strcpy (buf, "Please input accumulation map name:");
+  strcpy (buf, "Please name the accumulation map:");
   do	{
   	mapset = G_ask_new (buf, input->accum_name, "cell", "");
   } while (NULL == mapset);
@@ -240,7 +265,7 @@ com_line_Gwater (input, output)
 	    if(input->slow)
 		com_line_add (&(input->com_line_seg), " LS=", map_layer, NULL);
 	}
-	mapset = G_ask_new ("", map_layer, "cell", "Slope Steepnes");
+	mapset = G_ask_new ("", map_layer, "cell", "Slope Steepness");
 	if (mapset != NULL) {
 	    i = 1;
 	    if(input->fast)
