@@ -77,7 +77,7 @@ Vect__P_init (map, name, mapset)
 {
     FILE *plusfp;
     int have_old, have_plus, have_attr;
-    char file[100];
+    char file[1024];
 
     Vect_init ();
 
@@ -104,7 +104,11 @@ Vect__P_init (map, name, mapset)
 	have_plus = 1;
     }
     else
+    {
+	fclose(map->dig_fp);   
+	map->dig_fp=NULL;    
 	return ("Cannot open dig_plus file");
+    }
 
 
     G__file_name (file, "dig_att", name, mapset);
@@ -141,7 +145,7 @@ Vect__P_init_new_plus (map, name)
 {
     FILE *plusfp;
     int have_old, have_plus, have_attr;
-    char file[200];
+    char file[1024];
 
     Vect_init ();
 
@@ -168,10 +172,14 @@ Vect__P_init_new_plus (map, name)
 	have_plus = 1;
     }
     else
+    {
+	fclose(map->dig_fp); 
+	map->dig_fp=NULL;    
 	have_plus = 0;
 	/*
 	return ("Cannot open dig_plus file");
 	*/
+    }
 
 
     G__file_name (file, "dig_att", name, G_mapset());
