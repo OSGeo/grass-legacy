@@ -47,6 +47,7 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
  href=http://www.remotesensing.org/gdal/formats_list.html>GDAL</a> (Frank
      Warmerdam)
 <li> r.in.gridatb: added, imports GRIDATB map file (Huidae Cho/Keith Beven)
+<li> r.in.tiff/r.out.tiff: bugfix, added .tfw support (Eric G. Miller)
 <li> r.in.utm: bugfix (Andreas Lange)
 <li> r.hydro.CASC2D: added new flags (Huidae Cho)
 <li> r.mapcalc: bugfix for map=-129 results in NULL (Huidae Cho)
@@ -123,6 +124,13 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
      code (Beverly Wallace, Markus Neteler)
 </menu>
 <p>
+<li> Removed code:
+<menu>
+<li> d.rast.zoom, d.vect.zoom: replaced by d.zoom
+<li> r.in.arctiff, r.out.arctiff, r.out.geotiff: replaced by r.in.tiff/r.out.tiff
+<li> m.in.pl94.db3,  m.in.stf1.db3
+</menu>
+
 </menu>
 <hr>
 <p>
