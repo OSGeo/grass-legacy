@@ -19,6 +19,7 @@ OBJ = \
     cell_stats.o\
     cellstats_eq.o\
     cell_title.o\
+    chop.o\
     clear_scrn.o\
     clicker.o\
     closecell.o\
