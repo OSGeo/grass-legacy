@@ -63,6 +63,8 @@ db_copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
 	return DB_FAILED;
     }
 
+    db_begin_transaction ( to_driver );
+
     /* Create new table */
     /* TODO test if the tables exist */
     db_set_string ( &sql, "select * from ");
@@ -191,6 +193,7 @@ db_copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
     G_debug ( 3, "Table copy OK" );
 
     db_close_cursor(&cursor);
+    db_commit_transaction ( to_driver );
     db_close_database_shutdown_driver(to_driver);
     db_close_database_shutdown_driver(from_driver);
 
