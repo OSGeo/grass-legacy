@@ -169,7 +169,7 @@ int points_to_bin( FILE *ascii, int rowlen, struct Map_info *Map, dbDriver *driv
 	Vect_hist_write(Map, buf);
     }
 
-    while ( G_getl2(buf, rowlen+1, ascii) != 0 ) {
+    while ( G_getl2(buf, rowlen, ascii) != 0 ) {
 	int i, len;
 	double x, y, z;
 	char **tokens;
