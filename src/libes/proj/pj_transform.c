@@ -30,7 +30,10 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.1  2002-04-20 19:13:44  roger
+ * Revision 1.2  2003-04-03 15:25:49  paul
+ * PROJ.4 update to fix bug in 7-parameter datum shifting
+ *
+ * Revision 1.1  2002/04/20 19:13:44  roger
  * Updating Proj lib to 4.4.5, and adding two new functions for datum conversions
  *
  * Revision 1.3  2001/04/04 21:13:21  warmerda
@@ -333,15 +336,16 @@ int pj_geocentric_from_wgs84( PJ *defn,
         for( i = 0; i < point_count; i++ )
         {
             long io = i * point_offset;
-            double x_out, y_out, z_out;
-
-            x_out = M_BF*(       x[io] + Rz_BF*y[io] - Ry_BF*z[io]) - Dx_BF;
-            y_out = M_BF*(-Rz_BF*x[io] +       y[io] + Rx_BF*z[io]) - Dy_BF;
-            z_out = M_BF*( Ry_BF*x[io] - Rx_BF*y[io] +       z[io]) - Dz_BF;
-
-            x[io] = x_out;
-            y[io] = y_out;
-            z[io] = z_out;
+            double x_tmp, y_tmp, z_tmp;
+	   
+            x_tmp = (x[io] - Dx_BF) / M_BF;
+            y_tmp = (y[io] - Dy_BF) / M_BF;
+            z_tmp = (z[io] - Dz_BF) / M_BF;
+	   
+            x[io] =        x_tmp + Rz_BF*y_tmp - Ry_BF*z_tmp;
+            y[io] = -Rz_BF*x_tmp +       y_tmp + Rx_BF*z_tmp;
+            z[io] =  Ry_BF*x_tmp - Rx_BF*y_tmp +       z_tmp;
+	   
         }
     }
 
