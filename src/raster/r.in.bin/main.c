@@ -68,6 +68,7 @@ int main (int argc, char *argv[])
 	struct Cell_head cellhd;
 	CELL *cell;
 	FCELL *fcell;
+	DCELL *dcell;
 	RASTER_MAP_TYPE map_type;
 	int row, col;
 	int nrows=0, ncols=0;
@@ -79,6 +80,7 @@ int main (int argc, char *argv[])
 	short *x_s;
 	int *x_i;
 	float *x_f;
+	double *x_d;
 	struct stat fileinfo;
 	int FILE_SIZE;
 	char *err;
@@ -92,7 +94,7 @@ int main (int argc, char *argv[])
 	} parm;
 	struct
 	{
-		struct Flag *s, *f, *b, *gmt_hd;
+		struct Flag *s, *f, *d, *b, *gmt_hd;
 	} flag;
 	struct GModule *module;
 	union {
@@ -115,6 +117,10 @@ int main (int argc, char *argv[])
 	flag.f = G_define_flag();
 	flag.f->key = 'f';
 	flag.f->description = "Import as Floating Point Data (default: Integer)";
+
+	flag.d = G_define_flag();
+	flag.d->key = 'd';
+	flag.d->description = "Import as Double Precision Data (default: Integer)";
 
 	flag.b = G_define_flag();
 	flag.b->key = 'b';
@@ -203,6 +209,8 @@ int main (int argc, char *argv[])
 	
 	if (flag.f->answer)
 		bytes = 4;
+	else if (flag.d->answer)
+		bytes = 8;
 	else
 		if (sscanf(parm.bytes->answer,"%d%1s",&bytes, dummy) != 1)
 			return 1;
@@ -420,6 +428,9 @@ int main (int argc, char *argv[])
 	if (flag.f->answer) { 
 		map_type = FCELL_TYPE;
 		fcell = G_allocate_f_raster_buf();
+	} else if (flag.d->answer) { 
+		map_type = DCELL_TYPE;
+		dcell = G_allocate_d_raster_buf();
 	} else {
 		cell = G_allocate_c_raster_buf();
 		map_type = CELL_TYPE;
@@ -436,6 +447,7 @@ int main (int argc, char *argv[])
 
 	x_v = G_malloc(ncols * bytes);
 	x_f = (float *) x_v;
+	x_d = (double *) x_v;
 	x_i = (int *)   x_v;
 	x_s = (short *) x_v;
 	x_c = (char *)  x_v;
@@ -458,6 +470,11 @@ int main (int argc, char *argv[])
 				if (swap)
 					SwabFloat(&x_f[col]);
 				fcell[col] = (FCELL) x_f[col] ;
+			} else if (flag.d->answer) {
+				/* Import Double */
+				if (swap)
+					SwabDouble(&x_d[col]);
+				dcell[col] = (DCELL) x_d[col] ;
 			} else if(bytes == 1) {
 				/* Import 1 byte Byte */
 				if (sflag)
@@ -488,6 +505,8 @@ int main (int argc, char *argv[])
 
 		if (flag.f->answer)
 			G_put_f_raster_row(cf, fcell);
+		else if (flag.d->answer)
+			G_put_d_raster_row(cf, dcell);
 		else
 			G_put_c_raster_row(cf, cell);
 
