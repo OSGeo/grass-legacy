@@ -424,7 +424,7 @@ proc gisSetWindow {} {
 		cd $database
         	cd $location
                 file mkdir $mymapset
-		file copy $mymapset/../PERMANENT/WIND $mymapset
+                file copy $mymapset/../PERMANENT/WIND $mymapset
 		.frame0.frameMS.listbox insert end $mymapset
 		#TODO: select new MAPSET
             }
@@ -451,9 +451,9 @@ proc gisSetWindow {} {
      	-command { 
             if { $mapset != "" } {
             	CheckLocation
-                puts stdout "GISDBASE='$database'; export GISDBASE;"
-                puts stdout "LOCATION_NAME='$location'; export LOCATION_NAME;"
-                puts stdout "MAPSET='$mapset'; export MAPSET;"
+                puts stdout "GISDBASE='$database';"
+                puts stdout "LOCATION_NAME='$location';"
+                puts stdout "MAPSET='$mapset';"
                 if {[string compare $location "##ERROR##"] != 0} {
 		    putGRASSRC $gisrc_name
 		}
@@ -469,9 +469,9 @@ proc gisSetWindow {} {
             puts stdout "OLD_DB='$oldDb';"
             puts stdout "OLD_LOC='$oldLoc';"
             puts stdout "OLD_MAP='$oldMap';"
-	    puts stdout "GISDBASE='$database'; export GISDBASE;"
-    	    puts stdout "LOCATION_NAME='##NONE##'; export LOCATION_NAME;"
-            puts stdout "MAPSET=''; export MAPSET;"
+	    puts stdout "GISDBASE='$database';"
+    	    puts stdout "LOCATION_NAME='##NONE##';"
+            puts stdout "MAPSET='';"
             set location ""
 	    set mapset ""
 	    putGRASSRC $gisrc_name
