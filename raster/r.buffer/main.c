@@ -11,10 +11,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define GLOBAL
 #include "distance.h"
 #include "local_proto.h"
-
-#define GLOBAL
 
 int main (int argc, char *argv[])
 {
