@@ -39,8 +39,9 @@ Explanation of all targets:
 make mix           - create symbolic links to grass50 for file not yet 
                       uploaded into the 5.7.x CVS repository
 make copymix       - copy files from grass50 instead of linking
+                      (NOT RECOMMENDED!!)
 make binmix        - Copy binary modules not yet updated to 5.7.x 
-                      from compiled 5.3.x
+                      from compiled 5.3.x (NOT RECOMMENDED!!)
 
 make install       - installs the binary
 
@@ -95,6 +96,13 @@ cvs update -dP
 make mix
 configure ...
 make
+
+
+COMPILING INDIVIDUAL MODULES - OWN MODULES
+
+Compiling own GRASS 5.7 modules or modified modules:
+Simply run "make" in the appropriate directory
+and then "make install" from the top source directory.
 
 
 SUPPORT
