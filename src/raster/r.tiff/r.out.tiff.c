@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <float.h>
 #include <sys/types.h>
 #include "gis.h"
 #include "rasterfile.h"
@@ -44,14 +45,14 @@ main (int argc, char *argv[])
 	u_char *buf, *tmpptr;
 	int row, linebytes;
 	TIFF *out;
-	int in;
+	int in, len;
 	struct rasterfile h;
 	struct Option *inopt, *outopt, *compopt;
 	struct Flag *pflag, *vflag, *tflag;
 	CELL *cell, *cellptr;
 	struct Cell_head cellhd;
 	int col,verbose;
-	char *mapset;
+	char *mapset, *filename;
 	struct Colors colors;
 	int red, grn, blu, mapsize;
 
@@ -122,7 +123,11 @@ main (int argc, char *argv[])
 		fprintf(stderr, "%s - can't open raster map\n", inopt->answer);
 		exit(1);
 	}
-	out = TIFFOpen(outopt->answer, "w");
+	len = strlen (filename) + 5 ;
+	if ((filename = G_malloc (len)) == NULL)
+		G_fatal_error ("Memory Allocation failed.");
+	snprintf (filename, len, "%s.tif", outopt->answer);
+	out = TIFFOpen(filename, "w");
 	if (out == NULL)
 		exit(-4);
 	h.ras_width = cellhd.cols;
@@ -224,16 +229,19 @@ main (int argc, char *argv[])
 	(void) TIFFClose(out);
 	
 	if (tflag->answer)
-		write_tfw(outopt->answer, &cellhd, verbose);
+	{
+		snprintf (filename, len, "%s.tfw", outopt->answer);
+		write_tfw(filename, &cellhd, verbose);
+	}
 	
 	return 0;
 }
 
+
 int
 write_tfw(char *fname, struct Cell_head *win, int verbose) {
-	
-	int  len, i, has_suf = 0;
-	char *name, *ptr, suf[4][4] = {"tif", "tiff", "TIFF", "TIF"};
+
+	int  width = DBL_DIG;
 	FILE *outfile;
 	
 	if (verbose)
@@ -244,42 +252,20 @@ write_tfw(char *fname, struct Cell_head *win, int verbose) {
 	if (win == NULL)
 		G_fatal_error("Got null region struct");
 	
-	len = strlen(fname) + 4 + 1;
-	name = G_malloc(len);
-	if (name == NULL)
-		G_fatal_error("Out of Memory");
-	
-	strncpy(name, fname, len-4);
-	
-	for (i = 0; i < 4; i++)
-		if ((ptr = strstr(name, suf[i])) != NULL) {
-			if (*(ptr-1) == '.') {
-				has_suf = 1;
-				break;
-			}
-		}
-
-	if (has_suf) {
-		strncpy(ptr,"tfw\0", 4);
-	}	
-	else {
-		ptr = strchr(name, '\0');
-		strncpy(ptr,".tfw", 4);
-	}
-
-	outfile = fopen(name, "w");
+	outfile = fopen(fname, "w");
 	if (outfile == NULL)
 		G_fatal_error("Couldn't open TIFF world file for writing");
 	
-	fprintf (outfile, "%.8f\n%.8f\n%.8f\n%.8f\n%.8f\n%.8f\n",
-			win->ew_res, 0.0, 0.0, -1 * win->ns_res,
-			win->west + win->ew_res / 2.0, 
-			win->north - win->ns_res / 2.0);
+	fprintf (outfile, "%36.*f\n", width, win->ew_res);
+	fprintf (outfile, "%36.*f\n", width, 0.0);
+	fprintf (outfile, "%36.*f\n", width, 0.0);
+	fprintf (outfile, "%36.*f\n", width, -1 * win->ns_res);
+	fprintf (outfile, "%36.*f\n", width, win->west + win->ew_res / 2.0 );
+        fprintf (outfile, "%36.*f\n", width, win->north - win->ns_res / 2.0);
 
 	fclose(outfile);
 	if (verbose)
 		fprintf(stderr,"Done\n");
-	free(name);
 
 	return 0;
 }
