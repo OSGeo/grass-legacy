@@ -39,6 +39,7 @@
 
 typedef struct {
     int field;
+    char *table;
     int count[FRTYPES];
     int min[FRTYPES], max[FRTYPES];
 } FREPORT;
@@ -49,6 +50,7 @@ main (int argc, char *argv[])
 	struct Map_info In, Out;
 	static struct line_pnts *Points;
 	struct line_cats *Cats;
+	struct field_info *Fi;
         int    i, j, ret, option, otype, type, with_z, step;
 	int    n_areas, centr, new_centr;
 	double x, y;
@@ -326,6 +328,12 @@ main (int argc, char *argv[])
                             fld = nfreps - 1;
                             freps[fld] = (FREPORT *) calloc ( 1, sizeof (FREPORT));
                             freps[fld]->field = field;
+			    if ((Fi = Vect_get_field (&In, field)) != NULL) {
+			      freps[fld]->table = G_store (Fi->table);
+			    }
+			    else {
+			      freps[fld]->table = '\0';
+			    }
 			  }
 			
                         freps[fld]->count[rtype]++;
@@ -370,7 +378,12 @@ main (int argc, char *argv[])
 				    	freps[i]->count[FR_AREA], freps[i]->min[FR_AREA], 
 					freps[i]->max[FR_AREA]);
 		    } else {
-			fprintf (stdout, "LAYER %d:\n", freps[i]->field);
+		        if (freps[i]->table != '\0') {
+			  fprintf (stdout, "LAYER/TABLE %d/%s:\n", freps[i]->field, freps[i]->table);
+		        }
+		        else {
+			  fprintf (stdout, "LAYER %d:\n", freps[i]->field);
+		        }
 			fprintf (stdout, "type       count        min        max\n");
 			fprintf (stdout, "point    %7d %10d %10d\n", 
 					freps[i]->count[FR_POINT],
