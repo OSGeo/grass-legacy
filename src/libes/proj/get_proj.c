@@ -25,12 +25,12 @@ struct Key_Value *in_proj_keys, *in_units_keys;
 
 {
 	char *str;
-	int i, south;
+	int i;
         int returnval = 1;
         double a, es, f;
         double dx, dy, dz;
 	char buffa[300], factbuff[50];
-	char proj_in[50];
+	char proj_in[50], dum[100], params[100];
 	projPJ *pj;
 
         proj_in[0] = '\0';
@@ -52,24 +52,19 @@ struct Key_Value *in_proj_keys, *in_units_keys;
 	if (str != NULL) {
 		sprintf(info->proj, "%s", str);
 	}
-	str = G_find_key_value("zone", in_proj_keys);
-	if (str != NULL) {
-		if (sscanf(str, "%d", &(info->zone)) != 1) {
-			sprintf(buffa, "Invalid zone %s specified", str);
-			G_fatal_error(buffa);
-		}
-	}
 	if (strlen(info->proj) <= 0)
 		sprintf(info->proj, "ll");
 
 	nopt1 = 0;
-	south = 0;
-	/* if zone is negative, write abs(zone) and define south */
 	for (i = 0; i < in_proj_keys->nitems; i++) {
                 /* the name parameter is just for grasses use */
                 if( strncmp(in_proj_keys->key[i],"name",4) == 0 ) {
                     continue;
 
+                /* zone handled separately at end of loop */
+		} else if (strncmp(in_proj_keys->key[i], "zone", 4) == 0) {
+                    continue;
+		   
 		/* Datum-related parameters will be handled separately
 		 * after end of this loop PK */
 
@@ -78,6 +73,8 @@ struct Key_Value *in_proj_keys, *in_units_keys;
 		   || strncmp(in_proj_keys->key[i], "dy", 2) == 0
 		   || strncmp(in_proj_keys->key[i], "dz", 2) == 0
 		   || strncmp(in_proj_keys->key[i], "datumparams", 11) == 0
+		   || strncmp(in_proj_keys->key[i], "nadgrids", 8) == 0
+		   || strncmp(in_proj_keys->key[i], "towgs84", 7) == 0
 		   || strncmp(in_proj_keys->key[i], "ellps", 5) == 0 ) {
 		    continue;
 		
@@ -103,46 +100,17 @@ struct Key_Value *in_proj_keys, *in_units_keys;
 		/* PROJ.4 uses latlong instead of ll as 'projection name' */
 		   
 		} else if( strncmp(in_proj_keys->key[i], "proj", 4) == 0 ) {
-		    if( strncmp(G_find_key_value("proj", in_proj_keys), "ll", 2) == 0)
-                        sprintf(buffa, "%s=latlong", in_proj_keys->key[i]);
+		    if( strncmp(in_proj_keys->value[i], "ll", 2) == 0)
+                        sprintf(buffa, "proj=latlong");
 		    else
-                        sprintf(buffa, "%s=%s", 
-                                in_proj_keys->key[i], in_proj_keys->value[i]);
+                        sprintf(buffa, "proj=%s", in_proj_keys->value[i]);
 		     		   		   
-                } else if (strncmp(in_proj_keys->key[i], "south", 5) == 0) {
-			sprintf(buffa, "south");
-			south = 1;
-		} else if (strncmp(in_proj_keys->key[i], "zone", 4) == 0) {
-			if (info->zone < 0) {
-				info->zone = -info->zone;
+		/* 'One-sided' PROJ.4 flags will have the value in
+		 * the key-value pair set to 'defined' and only the
+		 * key needs to be passed on. */
+		} else if (strncmp(in_proj_keys->value[i], "defined", 7) == 0)
+			sprintf(buffa, in_proj_keys->key[i]);
 
-				if (!south)
-					sprintf(buffa, "south");
-			}
-			sprintf(buffa, "zone=%d", info->zone);
-		} else if (strncmp(in_proj_keys->key[i], "ns", 2) == 0)
-			sprintf(buffa, "ns");
-
-		else if (strncmp(in_proj_keys->key[i], "no_rot", 6) == 0)
-			sprintf(buffa, "no_rot");
-
-		else if (strncmp(in_proj_keys->key[i], "no_uoff", 7) == 0)
-			sprintf(buffa, "no_uoff");
-
-		else if (strncmp(in_proj_keys->key[i], "rot_conv", 8) == 0)
-			sprintf(buffa, "rot_conv");
-
-		else if (strncmp(in_proj_keys->key[i], "no_cut", 6) == 0)
-			sprintf(buffa, "no_cut");
-
-		else if (strncmp(in_proj_keys->key[i], "guam", 4) == 0)
-			sprintf(buffa, "guam");
-
-		else if (strncmp(in_proj_keys->key[i], "lotsa", 5) == 0)
-			sprintf(buffa, "lotsa");
-
-		else if (strncmp(in_proj_keys->key[i], "no_defs", 7) == 0)
-			sprintf(buffa, "no_defs");
 		else 
 			sprintf(buffa, "%s=%s", 
                                 in_proj_keys->key[i], in_proj_keys->value[i]);
@@ -150,15 +118,36 @@ struct Key_Value *in_proj_keys, *in_units_keys;
                 alloc_options(buffa);
 	}
 
-    if (G_find_key_value("datum", in_proj_keys) != NULL ||
-	G_find_key_value("ellps", in_proj_keys) != NULL) {
+	str = G_find_key_value("zone", in_proj_keys);
+	if (str != NULL) {
+		if (sscanf(str, "%d", &(info->zone)) != 1) {
+			sprintf(buffa, "Invalid zone %s specified", str);
+			G_fatal_error(buffa);
+		}
+	      	if (info->zone < 0) {
+		   
+ 	            /* if zone is negative, write abs(zone) and define south */
+		    info->zone = -info->zone;
+		   
+		    if (G_find_key_value("south", in_proj_keys) == NULL) {
+		        sprintf(buffa, "south");
+		        alloc_options(buffa);
+		    }
+	        }
+	        sprintf(buffa, "zone=%d", info->zone);
+	        alloc_options(buffa);
+	}
+
+   
+        if (G_find_key_value("datum", in_proj_keys) != NULL ||
+        G_find_key_value("ellps", in_proj_keys) != NULL) {
         str = G_find_key_value("datum", in_proj_keys);
        
-        if( str != NULL )	 
-	    /* If 'datum' key is present, look up correct ellipsoid
-	     * from datum.table */
-	    str = G_datum_ellipsoid(G_get_datum_by_name(str));
-	else         
+        if( str != NULL )         
+            /* If 'datum' key is present, look up correct ellipsoid
+             * from datum.table */
+            str = G_datum_ellipsoid(G_get_datum_by_name(str));
+        else         
             /* else use ellipsoid defined in PROJ_INFO */
             str = G_find_key_value("ellps", in_proj_keys);
        
@@ -182,21 +171,10 @@ struct Key_Value *in_proj_keys, *in_units_keys;
     } /* else if 'datum' or 'ellps' keys were not present ellipsoid 
        * parameters will have been set in loop above */    
 
-    /* If new 'datumparams' key is present, pass the options on */
-    str = G_find_key_value("datumparams", in_proj_keys);
-    if( str != NULL ) { 
-        sprintf(buffa, str);
-        alloc_options(buffa);
-       
-    /* else see if the old-style dx dy dz params are there on their own */
-    } else if( G_find_key_value("datum", in_proj_keys) == NULL
-             && G_find_key_value("dx", in_proj_keys) != NULL
-             && G_find_key_value("dy", in_proj_keys) != NULL
-             && G_find_key_value("dz", in_proj_keys) != NULL ) {
-        sprintf(buffa, "towgs84=%s,%s,%s",
-                G_find_key_value("dx", in_proj_keys),
-                G_find_key_value("dy", in_proj_keys),
-                G_find_key_value("dz", in_proj_keys) );
+    /* If datum parameters are present in the PROJ_INFO keys, pass them on */
+    if( G_get_datumparams_from_projinfo( in_proj_keys, dum, params ) == 2)
+    {
+        sprintf(buffa, params);
         alloc_options(buffa);
        
     /* else if a datum name is present take it and look up the parameters 
@@ -370,24 +348,30 @@ const char * set_proj_lib (const char *name)
 int pj_print_proj_params(struct pj_info *iproj, struct pj_info *oproj)
 {
     char *str;
-   
-    str = pj_get_def(iproj->pj, 1);
-    if(str != NULL)
+
+    if(iproj)
     {
-        fprintf(stderr, "\nInput Projection Parameters:%s\n", str);
-        G_free(str);
+        str = pj_get_def(iproj->pj, 1);
+        if(str != NULL)
+        {
+            fprintf(stderr, "\nInput Projection Parameters:%s\n", str);
+            G_free(str);
+        }
+        else
+            return -1;
     }
-    else
-        return -1;
    
-    str = pj_get_def(oproj->pj, 1);
-    if(str != NULL)
+    if(oproj)
     {
-        fprintf(stderr, "\nOutput Projection Parameters:%s\n", str);
-        G_free(str);
+        str = pj_get_def(oproj->pj, 1);
+        if(str != NULL)
+        {
+            fprintf(stderr, "\nOutput Projection Parameters:%s\n", str);
+            G_free(str);
+        }
+        else
+            return -1;
     }
-    else
-        return -1;
    
     return 1;
 }

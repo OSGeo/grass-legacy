@@ -290,9 +290,19 @@ int G_get_datumparams_from_projinfo(struct Key_Value *projinfo,
         returnval = 1;
     }
           
-    if( NULL != G_find_key_value("datumparams", projinfo) )
+    if( G_find_key_value("datumparams", projinfo) != NULL )
     {
         sprintf(params, G_find_key_value("datumparams", projinfo));
+        returnval = 2;
+    }
+    else if( G_find_key_value("nadgrids", projinfo) != NULL )
+    {
+        sprintf(params, "nadgrids=%s", G_find_key_value("nadgrids", projinfo));
+        returnval = 2;
+    }
+    else if( G_find_key_value("towgs84", projinfo) != NULL )
+    {
+        sprintf(params, "towgs84=%s", G_find_key_value("towgs84", projinfo));
         returnval = 2;
     }
     else if( G_find_key_value("dx", projinfo) != NULL
