@@ -1,0 +1,456 @@
+<html><head>
+<!-- This document was created from RTF source by rtftohtml version 2.7.5,
+     extended by rtftoweb version 1.2. -->
+<title>Arbeitsbericht Regionalisierung in der Hydrologie '94 - Zusammenarbeit mit anderen Arbeitsgruppen im Schwerpunktprogramm</title></head><body>
+<a href="arb94-Bearbeit.html">&lt;&lt;</a>
+, <a href="arb94-Systemte.html">&gt;&gt;</a>
+, <a href="arb94.html">Titelseite</a>
+, <a href="arb94-Contents.html">Inhaltsverzeichnis</a>
+<hr>
+<h1>
+Zusammenarbeit mit anderen Arbeitsgruppen im Schwerpunktprogramm</h1>
+<ul>
+<li><a href="#Heading19"> Einzelbesprechungen und Kooperationen </a>
+<li><a href="#Heading20"> Kolloquien </a>
+<li><a href="#Heading21"> Softwarepool </a>
+</ul>
+<hr>
+<p>
+Die Zusammenarbeit mit anderen Arbeitsgruppen im Schwerpunktprogramm ist
+wegen der Verifizierung der von uns entwickelten Parameter von besonderer
+Bedeutung und auch Teil unseres Arbeitsprogrammes (siehe 
+<a href="arb94-Einfueru.html#Heading4">Kapitel 1.3</a>). <p>
+Wir stehen mit folgenden Arbeitsgruppen in aktivem Kontakt:<p>
+<p>
+<ul>
+<li>	Arbeitsgruppe Schwarze (Dresden)
+<li>	Arbeitsgruppe Peschke (Zittau)
+<li>	Arbeitsgruppe Schulz (Bochum)
+<li>	Arbeitsgruppe Streit (M&uuml;nster)
+<li>	Arbeitsgruppe Maniak (Braunschweig)
+<li>	Arbeitsgruppe Plate (Karlsruhe)
+</ul>
+<p>
+Die Zusammenarbeit beeinhaltet:<p>
+<ul>
+<li>	Versenden von erzeugten Parametern an andere Arbeitsgruppen zur direkten
+&Uuml;berpr&uuml;fung an hydrologischen Modellen<p>
+<li>	Bearbeitung von Anforderungskatalogen anderer Arbeitsgruppen, die von
+uns in entsprechende Module umgesetzt werden.<p>
+<li>	Direkte Hilfestellung und Schulung bei der GRASS-Anwendung in Bezug auf
+die Erzeugung von geomorphometrischen Parametern<p>
+<li>	Direkte Gespr&auml;che und Methodenvergleich<p>
+<li>	Lieferung der von uns entwickelten Module<p>
+</ul>
+<p>
+Im folgenden werden Ergebnisse der bisherigen internen Einzelbesprechungen und
+Kolloquien dargestellt.<p>
+
+<a name="Heading19">
+<h2> Einzelbesprechungen und Kooperationen </h2></a>
+<p>
+<b>Arbeitsgruppe Schwarze (Dresden)</b><p>
+<p>
+(a) Anforderungskatalog an unsere Gruppe<p>
+<p>
+Ein Anforderungskatalog von zu erzeugenden Parametern wurde uns zugesandt und
+bearbeitet. Die Ergebnisse wurden der Arbeitsgruppe Schwarze zur Verf&uuml;gung
+gestellt (siehe unten). In Anhang 2 sind einige Beispiele der Anwendung der
+entwickelten Module bei der Erzeugung von Parametern aus dem
+Anforderungskatalog dargestellt.<p>
+<p>
+<cite>Anforderungskatalog</cite><p>
+<p>
+Ausgehend von einem Punkt der Tiefenlinie sollen &uuml;ber die Bestimmung des
+Einzugsgebietes oberhalb dieses Punktes folgende Parameter bestimmt werden:<p>
+<p>
+<ol>
+<li><a href="#pos1">	mittlere Gel&auml;ndeh&ouml;he	{geliefert im Juli 94}</a>
+<li><a href="#pos2">	maximale und mittlere Gel&auml;ndeh&ouml;hendifferenzen	{ " }</a>
+<li><a href="#pos3">	Fl&auml;chenanteile bezogen auf H&ouml;henstufen	{ " }</a>
+<li><a href="#pos5">	mittleres Gel&auml;ndegef&auml;lle	{ " }</a>
+<li><a href="#pos6">	mittleres Gel&auml;ndegef&auml;lle in H&ouml;henstufen	{ " }</a>
+<li><a href="#pos8">	Verh&auml;ltnis theoretischer und realer Flu&szlig;dichte { " }</a>
+<li><a href="#pos7">	hypsometrische Kurve	{ " }</a>
+<li><a href="#pos4">	Exposition	{               "            }</a>
+<li>	entlang der Flie&szlig;wege berechnete Entfernungen und Gef&auml;lle (in Bearbeitung)
+<li>	Formfaktor 	(in Bearbeitung)
+</ol>
+<p>
+<cite>Bericht &uuml;ber die Bearbeitung der angeforderten Module</cite><p>
+<p>
+Mit Hilfe von GRASS und UNIX Tools lassen sich zur Zeit folgende
+geomorphometrischen Parameter des Anforderungskataloges bestimmen. Die dabei
+als Ausgangsdaten ben&ouml;tigten Einzugsgebiete lassen sich direkt &uuml;ber
+die Module r.watershed oder r.water.outlet berechnen:<p>
+<p>
+<a name="pos1"><b><i>1. Mittlere Gebietsh&ouml;he</i></b><p>
+</a>
+Werkzeug:<i>	r.statistics</i> 
+<dl>
+<dt>Parameter:	
+<dd>
+base	- Layer mit den Einzugsgebieten<br>
+cover	- Layer mit den H&ouml;hen.<br>
+method	- average<br>
+output	- Ausgabedatei<br><p>
+<dt>Beispiel:	
+<dd><pre>
+r.statistics base=ezg.dat cover=hoh.dat meth=average out=hoh.ave
+</pre>
+</dl>
+Anmerkung:	Das Ergebnis wird als <u>Label</u> der Werte der
+Ausgabedatei abgespeichert.<p>
+<a name="pos2">
+<b><i>2. Maximale und mittlere Gel&auml;ndeh&ouml;hendifferenz</i></b><p>
+</a>
+<b>Schritt 1</b>: Berechnung von minimaler, maximaler und mittlerer
+H&ouml;he im Einzugsgebiet.<p>
+Werkzeuge:	<i>r.statistics</i>
+<dl>
+<dt>Parameter:	
+<dd>
+base	- Layer mit den Einzugsgebieten <br>
+cover	- Layer mit den H&ouml;hen<br>
+method	- min, max, average<br>
+output	- Ausgabedatei<br><p>
+<dt>Beispiel:
+<dd><pre>r.statistics base=ezg.dat cover=hoh.dat meth=min \
+out=hoh.min
+</pre>
+</dl>
+Anmerkung:	F&uuml;r die Berechnung von Minimum, Maximum und
+Average ist jeweils ein eigener Programmlauf notwendig. Das Ergebnis wird als
+<u>Label</u> der Werte der Ausgabedatei abgespeichert.<p>
+<b>Schritt 2:</b> Berechnung der Differenzen<p>
+Werkzeug:	<i>r.mapcalc</i>
+<dl>
+<dt>Parameter:	
+<dd>
+Regel f&uuml;r die Berechnung der max. H&ouml;hendifferenz.<br>
+Regel f&uuml;r die Berechnung der mittleren Gel&auml;ndeh&ouml;hendifferenz.<br><p>
+<dt>Beispiel:	
+<dd><pre>r.mapcalc maxdiff.dat='hoh.max - hoh.min'<br>
+bzw.<br>
+r.mapcalc avediff.dat='round(hoh.ave - hoh.min)'
+</pre>
+</dl>
+Anmerkung:	Das Ergebnis ist im zweiten Fall arithmetrisch auf den 
+n&auml;chsten ganzzahligen Wert der
+vertikalen Aufl&ouml;sung gerundet. Werden h&ouml;here Aufl&ouml;sungen
+gew&uuml;nscht, ist vorher eine Multiplikation der H&ouml;hen
+erforderlich.<br><p>
+<a name="pos3">
+<b><i>3. Fl&auml;chenanteile der H&ouml;henstufen im Einzugsgebiet.</i></b><p>
+</a>
+<b>Schritt 1:</b> Generierung eines passenden H&ouml;henschichtlayers
+durch Reklassifizierung des H&ouml;henmodells.<p>
+Werkzeug:	<i>r.reclass</i>
+<dl>
+<dt>Parameter:	
+<dd>
+input	- Layer mit den H&ouml;hen<br>
+output	- Layer mit den H&ouml;henschichten.<br>
+Reklassifizierungsregel<br><p>
+<dt>Beispiel:	
+<dd><pre>r.reclass input=hoh.dat output=hoh.schicht<br>
+&gt;100 thru 199 = 1 100-199m<br>
+&gt;200 thru 299 = 2 200-299m<br>
+&gt;300 thru 399 = 3 300-399m<br>
+&gt;end
+</pre>
+</dl>
+<b>Schritt 2:</b> Berechnung des Fl&auml;chenanteils
+jeder H&ouml;henschicht am Einzugsgebiet. <p>
+Werkzeug:<i>	r.statistics</i>
+<dl>
+<dt>Parameter:	
+<dd>
+base	- Layer mit den Einzugsgebieten <br>
+cover	- Layer mit den H&ouml;henschichten<br>
+method	- sum<br>
+output	- Ausgabedatei<br><p>
+<dt>Beispiel:	
+<dd><pre>
+r.statistics base=ezg.dat cover=hoh.dat meth=area \
+out=hohschicht.sum
+</pre>
+</dl>
+Anmerkung:	Die Fl&auml;chenanteile jeder
+H&ouml;henschicht in Pixeln stehen als Label in der Ausgabedatei
+hohschicht.sum.<p>
+<a name="pos4">
+<b><i>4. Gef&auml;lle und Exposition.</i></b><p>
+</a>
+Werkzeug:	<i>r.slope.aspect</i>
+<dl>
+<dt>Parameter:	
+<dd>
+input	- Layer mit den H&ouml;hen<br>
+slope	- Ausgabelayer mit den Neigungen.<br>
+aspect	- Ausgabelayer mit der Exposition.<pr><p>
+<dt>Beispiel:
+<dd><pre>r.slope.aspect input=hoh.dat aspect=asp.dat \
+slope=neig.dat
+</pre>
+</dl>
+<a name="pos5">
+<b><i>5. Mittleres Gef&auml;lle im Einzugsgebiet.</i></b><p>
+</a>
+Werkzeug: <i>r.statistics</i>
+<dl>
+<dt>Parameter:	
+<dd>
+base	- Layer mit den Einzugsgebieten<br>
+cover	- Layer mit den Neigungen.<br>
+method	- average<br>
+output	- Ausgabedatei<br><p>
+<dt>Beispiel:
+<dd><pre>r.statistics base=ezg.dat cover=neig.dat meth=average \
+out=neig.ave
+</pre>
+</dl>
+Anmerkung:	Das Ergebnis wird als <u>Label</u> der Werte der Ausgabedatei
+abgespeichert. Soll das mittlere Gef&auml;lle f&uuml;r jedes Einzugsgebiet
+berechnet werden, ist eine Maskierung des jeweiligen Einzugsgebiets notwendig.
+Die Maskierung kann mit <i>r.reclass</i> beispielsweise so
+erfolgen:<br>Angenommen es soll das Einzugsgebiets Nr. 12 betrachtet werden.
+<pre>
+     r.reclass i=ezg.dat o=MASK<br>
+     &gt; 12 = 12<br>
+     END
+
+</pre>
+<p>
+<a name="pos6">
+<b><i>6. Mittleres Gel&auml;ndegef&auml;lle in H&ouml;henstufen.</i></b><p>
+</a>
+<b>Schritt 1:</b> Generierung des H&ouml;henschichtlayers wie in 3). <p>
+<b>Schritt 2:</b> Erzeugen des Neigungslayers wie in 4).<p>
+<b>Schritt 3:</b> Berechnung des mittleren Gef&auml;lles<p>
+Werkzeug:	<i>r.statistics</i>
+<dl>
+<dt>Parameter:	
+<dd>
+base	- Layer mit den H&ouml;henschichten<br>
+cover	- Layer mit den Hangneigungen<br>
+method	- average<br>
+output	- Ausgabedatei<p>
+<dt>Beispiel:
+<dd><pre>r.statistics base=hoh.schicht cover=neigung \
+meth=average out=neig.ave
+</pre>
+</dl>
+Anmerkung:	Das Ergebnis von <i>r.statistics</i> wird als
+<u>Label</u> der Werte der Ausgabedatei abgespeichert. Auch hier ist eine auf
+das Einzugsgebiet bezogene Betrachtung durch geeignete Maskierung zu
+erreichen.<p>
+<a name="pos7">
+<b><i>7. Hypsometrische Kurve</i></b><p>
+</a>
+Werkzeug: <i>r.statistics</i>
+<dl>
+<dt>Parameter:	
+<dd>
+base	- Layer mit den Einzugsgebieten<br>
+cover	- Layer mit den H&ouml;hen.<br>
+method	- distribution<p>
+<dt>Beispiel:	
+<dd><pre>r.statistics base=ezg.dat cover=hoh.dat meth=distribution \
+&gt;distrib.dat
+</pre>
+</dl>
+Anmerkung:	Das Ergebnis wird nach STDOUT geschrieben und
+mu&szlig; via '&gt;' in eine Datei umgeleitet werden. Das Ausgabeformat besteht
+aus drei Spalten.
+<pre>
+	1	102	11<br>
+	1	103	8<br>
+	1	104	21<br>
+	1	106	28<br>
+	1	110	32<br>
+	2	237	4<br>
+	2	238	8<br>
+		.<br>
+		.<br>
+		.<br>
+</pre>
+
+In Spalte eins
+befindet sich die Kategorie des Base Layers, in diesem Fall die Nummer des
+Einzugsgebiets. In Spalte zwei eine H&ouml;he aus dem Cover Layer und in der
+dritten Spalte der prozentuale Anteil dieser H&ouml;he am Einzugsgebiet. Dieses
+Datenformat l&auml;&szlig;t sich beispielsweise in Excel einlesen, um die
+hypsometrische Kurve darzustellen. <p>
+<a name="pos8">
+<b><i>8. Verh&auml;ltnis theoretischer und realer Flu&szlig;dichte</i></b><p>
+</a>
+<b>Schritt 1:</b> Berechnung der Tiefenliniendichten und der
+Flu&szlig;dichte <p>
+<b>Schritt 2:</b> Berechnung des Quotienten<p>
+Werkzeug:	<i>r.density.sh</i>
+<dl>
+<dt>Parameter:	
+<dd>
+base	- Layer mit den Einzugsgebieten<br>
+cover	- Layer mit den Tiefenlinien bzw. Fl&uuml;ssen<br>
+output	- Ausgabedatei<p>
+<dt>Beispiel:	
+<dd><pre>r.density.sh base=ezg.dat cover=tief.theo\tief.real output=tief.dens
+</pre>
+</dl>
+Anmerkung:	Das Ergebnis von <i>r.density.sh</i> wird als
+<u>Label</u> der Werte der Ausgabedatei abgespeichert. Auch hier ist eine auf
+das Einzugsgebiet bezogene Betrachtung durch geeignete Maskierung zu erreichen.
+Der Quotient von theoretischer und realer Flu&szlig;dichte kann 'von Hand' oder
+&uuml;ber <i>r.mapcalc</i> berechnet werden.<p>
+<p>
+(b) GRASS-Unterst&uuml;tzung<p>
+<p>
+Ein Mitarbeiter (Herr Dr. Dr&ouml;ge) der AG besuchte uns mehrmals und
+unterrichtete sich &uuml;ber die GRASS-Implementierung und die Anwendung von
+GRASS zur morphometrischen Analyse.<p>
+<p>
+(c) MilGeo - Datensatz<p>
+<p>
+Bez&uuml;glich der GRASS-Implementierung und des Imports der
+Milgeo-Datens&auml;tze in GRASS wurde eine intensive Unterst&uuml;tzung
+betrieben, die von technischer Anleitung bis zur Lieferung der von uns
+entwickelten Import-Programme reichte (siehe 
+<a href="arb94-Bearbeit.html#Heading15">Kapitel 3.1</a>).<p>
+<p>
+<p>
+<b>Arbeitsgruppe Peschke (Zittau)</b><p>
+<p>
+(a) Anforderungskatalog an unsere Gruppe<p>
+<p>
+<ul>
+<li>	Interpolation von Raster-H&ouml;henmodellen aus Konturlinien<br>
+<li>	Generierung von Subeinzugsgebieten<br>
+<li>	Berechnung prim&auml;rer Parameter<br>
+<li>	Statistische Parameter im Objekt<p>
+</ul>
+<p>
+W&auml;hrend des Aufenthalts einer Mitarbeiterin wurden Anwendungen des GPM
+erprobt.<p>
+<p>
+<dl>
+<dt>(b) GRASS - Unterst&uuml;tzung<p>
+<p>
+<dd>
+Eine Mitarbeiterin (Frau Kutter) der AG besuchte uns f&uuml;r mehrere Tage und
+erhielt eine intensive GRASS-Schulung zu Datenformaten und -import sowie zur
+morphometrischen Analyse. Auf Basis des Digitalen H&ouml;henmodells des
+Wernersbaches wurden einfache morphometrische Analysen durchgef&uuml;hrt, die
+Grundlage f&uuml;r die zum Workshop in M&uuml;nster von uns vorgelegte
+Brosch&uuml;re bildeten (siehe 
+<a href="arb94-Zusammen.html#Heading20">Kapitel 4.2</a> und Anhang 2).<p>
+<p>
+<dt>(c) Digitales H&ouml;henmodell des Wernersbaches<p>
+<p>
+<dd>Bez&uuml;glich der Interpolation eines Raster-Datensatzes f&uuml;r das
+Einzugsgebiet des Wernersbaches stehen wir mit der Arbeitsgruppe in intensivem
+Kontakt. Der Orginal-Datensatz wurde uns zur morphometrischen Analyse
+&uuml;berlassen.<p>
+<p>
+</dl>
+
+<b>Arbeitsgruppe Schulz (Bochum)</b><p>
+<p>
+Anforderungskatalog an unsere Gruppe:<p>
+<p>
+Folgende morphometrischen Parameter wurden von der AG angefordert:<p>
+<p>
+<ul>
+<li>	Hangneigung<br>
+<li>	Exposition<br>
+<li>	Distanz zum Vorfluter<br>
+<li>	H&ouml;hendifferenz Vorfluter/Wasserscheide<br>
+<li>	Einzugsgebietsgr&ouml;&szlig;e oberhalb eines Pixels<p>
+</ul>
+<p>
+Die Parameter wurden von uns im Juni 1993 geliefert.<p>
+ <p>
+<b>Arbeitsgruppe Streit (M&uuml;nster)</b><p>
+<p>
+Die Kooperation mit der AG beruht zur Zeit auf der Lieferung der von uns
+entwickelten und getesteten GRASS-Module, die in die T4HIM -Umgebung
+eingebunden werden. Die im ersten Antragszeitraum begonne Zusammenarbeit wurde
+durch die Lieferung weiterer Module fortgef&uuml;hrt.<p>
+Im Berichtszeitraum wurden geliefert (siehe auch <a href="arb94-Systemte.html">
+Kapitel 5</a>):<p>
+<p>
+<ul>
+<li>r.aggreg	(Mai 1994)<br>
+<li>r.statistics	(Mai 1994)<br>
+<li>r.fit.sh		(September 1994)<br>
+<li>r.fitmap.sh	(September 1994)<p>
+</ul>
+<p>
+<b>Arbeitsgruppe Maniak (Braunschweig)</b><p>
+<p>
+Bei einem Besuch der Arbeitsgruppe wurden Methoden der beiden Arbeitsgruppen in
+Bezug auf die Regionalisierung diskutiert. Au&szlig;erdem wurde vereinbart,
+anhand des H&ouml;henmodells des Ohebachs die unterschiedlichen Methoden
+quantitativ zu analysieren, indem morphometrische Parameter und
+Flie&szlig;zeitdiagramme verglichen werden. Dieses Vorhaben befindet sich in
+Vorbereitung.<p>
+<p>
+<b>Arbeitsgruppe Plate (Karlsruhe)</b><p>
+<p>
+Zwei Mitarbeiter unserer Arbeitsgruppe nahmen an einer gef&uuml;hrten
+Gel&auml;ndebegehung des Einzugsgebiets des Weihersbach teil. Au&szlig;erdem
+wurden von unserer Arbeitsgruppe eine gr&ouml;&szlig;ere Anzahl von
+Gel&auml;ndeparametern aus dem Digitalen Gel&auml;ndemodell des Weihersbach
+berechnet, und der Arbeitsgruppe Plate geliefert. Es wurde vereinbart,
+morphometrische Parameter an das von der Arbeitsgruppe Plate verwendete
+hydrologische Modell anzupassen und zum Zweck der Verifizierung unser Parameter
+nach Karlsruhe zu liefern. Dies soll Ende dieses Jahres erfolgen.<p>
+
+<a name="Heading20">
+<h2> Kolloquien</h2></a>
+<p>
+Anl&auml;&szlig;lich des Workshops am 9. und 10.6.1994 in M&uuml;nster
+wurde von uns eine Brosch&uuml;re zu <b>"Methoden und Verfahren der
+geomorphometrischen Reliefanalyse unter GRASS"</b> vorgelegt und verteilt.
+Inhalt waren neben der Beschreibung einiger der von uns entwickelten
+GRASS-Werkzeuge mehrere Beispiele der Berechnung geomorphometrischer Parameter
+(die Beispiele orientierten sich am Anforderungskatalog der AG Schwarze und der
+Zusammenarbeit mit der AG Peschke (siehe Anhang 2). Weiterhin haben wir unsere
+theoretische Konzeption vorgestellt und einige morphometrische
+Regionalisierungsverfahren unter GRASS vorgef&uuml;hrt.<p>
+
+<a name="Heading21">
+<h2> Softwarepool </h2></a>
+<p>
+Eine getestete Sammlung der von uns entwickelten Module des
+geomorphometrischen Parametermodells sind in einem Softwarepool unserer Rechner
+gespeichert und &uuml;ber Internet den Arbeitsgruppen des SPP verf&uuml;gbar.<p>
+<p>
+<dl>
+<dd><i>Adresse :	geo1.geog.uni-heidelberg.de</i><br>
+<i>login:	transfer</i><br>
+<i>password:	hydro94</i><p>
+</dl>
+<p>
+Diese Adresse wird ebenfalls zum Datenaustausch mit anderen Arbeitsgruppen
+genutzt.<p>
+<p>
+<p>
+Die im Bearbeitungszeitraum intensivierte Zusammenarbeit mit den genannten
+Arbeitsgruppen hat uns gezeigt, da&szlig; das von uns entwickelte
+Parametermodell im SPP noch nicht gen&uuml;gend bekannt war. Da wir uns, wie
+von den Gutachtern vorgeschlagen, von der N-A-Modellierung zur&uuml;ckgezogen
+haben, kann die Parameterverifizierung nur in enger Kooperation mit den
+Modellgruppen  erfolgen. Diese Kooperation wird im n&auml;chsten
+Bearbeitungszeitraum weiterverfolgt werden. Besonders hervorzuheben sind die
+Anforderungskataloge, die uns ein klareres Bild von den Erwartungen der
+hydrologisch modellierenden Gruppen in Bezug auf morphometrische Parameter
+geben.<p>
+<p>
+<p><hr>
+<a href="arb94-Bearbeit.html">&lt;&lt;</a>
+, <a href="arb94-Systemte.html">&gt;&gt;</a>
+, <a href="arb94.html">Titelseite</a>
+, <a href="arb94-Contents.html">Inhaltsverzeichnis</a>
+</body></html>
