@@ -1,0 +1,152 @@
+.TH i.regression
+.SH NAME
+\fIi.regression\fR \- linear and nonlinear regression calculation
+.br
+.I "(GRASS Image Processing Program)"
+.SH SYNOPSIS
+\fBi.regression\fR
+.br
+\fBi.regression help\fR
+.br
+.nf
+\fBi.regression \fR \fBinput\*=\fIname \fBoutput\*=\fIname \fR[\fBcheck\*="\fIphrase\fR"] \[\fBpredict\*="\fIphrase\fR"] \fR[\fBplot\*="\fIphrase\fR"] 
+.br 
+.IP
+\fR[\fBcalculat\*="\fIphrase\fR"]
+.fi
+.SH DESCRIPTION
+The \fIi.regression\fR program calculates the linear or nonlinear regression model.  If it is used as an image precessing tool, the multispectral space remote sensing data will be the regression variables (ascii file) and the ground vegetation coverage measurements will be the response variables (also ascii file) and this command will be useful for obtaining linear or nonlinear regression models from the remote-sensing data which have corresponding ground mearsurement and for predicting vegetation coverage using other remote-sensing data which have no corresponding ground truth records.  The \fBinput\fR file has the following format
+.IP
+----- regression valuables x1, x2, ... -----     response variable y 
+.IP
+     channel 1 (x1) channel 2 (x2) ...		    coverage
+.LP
+For a three channel remote-sensing data the following is an example of input ascii file
+.IP
+0.4350    0.2616      0.7016        0.98
+.IP
+0.4140    0.2620      0.6520        0.99
+.IP
+0.4940    0.3500      0.5580        0.34
+.IP
+0.5983    0.5350      0.5650        0.10
+.IP
+0.4883    0.3733      0.5533        0.88
+.IP
+0.4150    0.2916      0.5116        0.60
+.IP
+0.5566    0.5250      0.5466        0.09
+.IP
+0.4420    0.2820      0.6800        0.86
+.IP
+0.4220    0.2620      0.6260        0.88
+.IP
+0.4766    0.3666      0.5933        0.61
+.IP
+0.5180    0.4300      0.5140        0.60
+.IP
+0.4416    0.2700      0.7383        0.96
+.IP
+0.4583    0.3116      0.5133        0.76
+.IP
+0.4300    0.2750      0.7233        0.98
+.IP
+0.4320    0.2760      0.6460        1.00
+.IP
+0.4733    0.3566      0.5616        0.53
+.IP
+0.4200    0.2450      0.7966        1.00
+.IP
+0.4850    0.3533      0.7216        0.99
+.IP
+0.4360    0.2620      0.7620        0.99
+.IP
+0.4283    0.2650      0.6783        0.91
+.IP
+0.4633    0.3200      0.6750        0.94
+
+.LP
+The resulted regression model (coefficient numbers) and related information about the confidencial test, goodness or utility test (e.g., correlation coefficient r between observed and calculated coverage, F value and t value) are put on the output file (ascii file also).  
+.EQ 
+delim $$
+.EN
+.LP
+Eight models can be choosen by user after prompted by the program.  They are: 
+.IP
+1) usual linear model; 
+.IP
+2) linear model with remote-sensing data normalized by the data in the first spectrial band; 
+.IP
+3) linear model with normalization by the second band; 
+.IP
+4) NDVI (normalized differential vegetation index) model; 
+.IP
+5) NDVI model for intensity instead of radiance; 
+.IP
+6) NDVI model for reflectance; 
+.IP
+7) semi-relaxation vegetation index model; 
+.IP
+8) RVI (relaxation vegetation index) nonlinear model.
+.LP
+The user has three options for \fBcheck\fR : \fImultx1\fR, \fImultx2\fR, and \fImultx3\fR.  These options check multi-collinearity of the input data.  
+\fImultx1\fR calculates $R sup 2$ for channel x1 being replaced by coverage y.  
+\fImultx2\fR for channel x2 if input data are composed of two remote-sensing channels.   And 
+\fImultx3\fR for channel x3 if input data are composed of at least three channels. 
+.LP
+The program provides three methods to conduct the nonlinear regression calculation.  These methods can be invoked by the user as options of \fBcalculat\fR.  The first one is rational fraction method.  If no any option of \fBcalculat\fR is given by the user, the program will adopt the first method.  If 
+\fBcalculat\fR = \fIrvi_linear\fR the linearization method is taken to conduct the nonlinear relaxation index regression.  If the user set 
+\fBcalculat\fR = \fIrvi_nonlinear\fR the general nonlinear regression method is used.  If 
+\fBcalculat\fR = \fIall\fR,  the program will conduct nonlinear regression first using the rational fraction method and then using the obtained coefficients as initial values to conduct the second method calculation and finally using the third method to improve the results.  
+For nonlinear regression calculation there may exist multi-minimums.  We can not be in reliance on the existing usual algorithms which can find one minimum only.  The computer will not scan the possible minimums in order to save computer time.  The user should judge and select a least minimum during the iteration.  The necessary parameters which will facilitate the judgement for each iteration are displaied in the screen and also output to the \fBoutput\fR file.
+.LP
+For plots of relavant features of the regression calculation the user can set option for \fBplot\fR.  There are four options for the \fBplot\fR.  If \fBplot\fR = \fIradiance-coverage\fR computer will send radiance data against coverage data for further plotting radiance-coverage curves or figures to show the scatter of input data.  This data will stored in ascii files named "curve.radiance_coverage_x1y", "curve.radiance_coverage_x2y" and "curve.radiance_coverage_x3y".
+If \fBplot\fR = \fIvegetation-soil\fR three ascii data files will be generated by the program for further figuers.  Their names are "curve.veget_soil_x1x2", "curve.veget_soil_x1x3" and "curve.veget_soil_x2x3".  If the user set \fBplot\fR = \fIadequacy\fR the program will generate residual data files for plotting figures of residuals against predictors and dependent variable to show the adequacy.  These files named "curve_residual_x1", "curve_residual_x2", "curve_residual_x3" and "curve_residual_y".
+If \fBplot\fR = \fIall\fR the program will generate all these above mentioned data files for further plotting of different figures.
+.LP
+The program not only can calculate regression models but also can make prediction to new remote sensing data using the obtained model.  The user can set option of \fBpredict\fR = \fIsame\fR to calculate regression model using part of one imagery data and predict vegetation coverage for another part of remote sensing data in the same imagery.  If \fBpredict\fR = \fIother\fR the program will use one imagery to get regression model and predict vegetation coverage for other imagery.
+If the user did not give any option for \fBpredict\fR the program calculates model based on the whole input data and not conduct any prediction.  The program still generate a set of "calculated vegetation coverage" using the obtained model and the same input data in order for the user to check the utility, goodness and confidencial status of the regression.   
+.br
+\fIi.regression\fR will be run non-interactively if the user specifies program arguments on the command line, using the form:
+.br
+.nf
+\fBi.regression \fR \fBinput\*=\fIname \fBoutput\*=\fIname \fR[\fBcheck\*="\fIphrase\fR"] \[\fBpredict\*="\fIphrase\fR"] \fR[\fBplot\*="\fIphrase\fR"] 
+.br 
+.IP
+\fR[\fBcalculat\*="\fIphrase\fR"]
+.LP
+But after run, the computer will prompt the user to select model number.
+.fi
+Alternately, the user can simply type:
+.LP
+.RS
+\fBi.regression\fR
+.RE
+.LP
+on the command line without program arguments.  In this case, the user will be prompted for parameter values using the standard GRASS user interface described in the manual entry for \fIparser\fR.
+.SH OPTIONS
+.LP
+.IP \fBcheck\*="\fIphrase\fR" 18
+For check of multi-collinearity.  Three options: \fImultx1\fR, \fImultx2\fR and \fImultx3\fR.
+.IP \fBcalculat\fR="\fIphrase\fR" 18
+Method of calculation for nonlinear regression.  Three options: \fIrvi_linear\fR, \fIrvi_nonlinear\fR and \fIall\fR.
+.IP \fBplot\*="\fIphrase\fR" 18
+Name of data files generated by the program for further plotting.  Four options: \fIradiance-coverage\fR, \fIvegetation-soil\fR, \fIadequacy\fR and \fIall\fR.
+.IP \fBpredict\*=\"fIphrase\fR" 18
+Fashion of prediction.  Two options: \fIsame\fR and \fIother\fR.
+.SH SEE ALSO
+.br
+.I i.rvi,
+.br
+.I i.ndvi
+.SH "AUTHORS"
+Hong C. Zhuang, U.S. Army Construction Engineering Research Laboratory 
+.sp -0.3
+.IP
+Department of Electrical Computer Engeering, University of Illinois at Urbana-Champiagn.
+.br
+.LP
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory.
+.EQ 
+delim off
+.EN
