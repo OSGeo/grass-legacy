@@ -1,4 +1,3 @@
-/* %W% %G% */
 Ptext (buf) char *buf;
 {
     char *s;
