@@ -1,0 +1,5 @@
+Lists area statistics for map layers. Statistics for a map layer
+correspond to an area of interest defined by WINDOW or AREA_MASK.
+For each category, total area is given in one or more units of
+#cells, %cover including/excluding no data cells, acres, hectares,
+sq. kms and sq. miles.
