@@ -72,7 +72,7 @@ proc map_browser_list_mapset {w} {
 
     set mapset [get_map_browser_mapset $w]
     set element [get_map_browser_element $w]
-    
+
     $w.main.files.f.list delete 0 end
     update
     if {[string length $mapset] == 0} {return}
@@ -92,15 +92,17 @@ proc get_map_browser_element {w} {
     } elseif {![string compare $element Surface]} {
 	set element cell
     } elseif {![string compare $element Site]} {
-	set element site_lists 
+	set element site_lists
     } elseif {![string compare $element Region]} {
 	set element windows
     } elseif {![string compare $element Labels]} {
 	set element paint/labels
     } elseif {![string compare $element Icons]} {
-	set element icons 
-    } 
-    return $element 
+	set element icons
+    } elseif {![string compare $element G3D]} {
+	set element grid3
+    }
+    return $element
 }
 
 proc set_map_browser_element {w name} {
@@ -111,7 +113,7 @@ proc set_map_browser_element {w name} {
 
 proc get_map_browser_mapset {w} {
     global map_browser
-	
+
     if {[info exists map_browser($w,mapset)]} {
 	return $map_browser($w,mapset)
     }
@@ -127,17 +129,18 @@ proc set_map_browser_mapset {w name} {
 
 
 proc set_selection_from_map_browser_filename { w } {
-    $w.filename selection from 0 
-    $w.filename selection to end 
+    $w.filename selection from 0
+    $w.filename selection to end
 }
 
 proc create_map_browser {{w .map_browser} {type all} {mode 0}} {
-    global map_browser 
+    global map_browser
 
-    toplevel $w 
+    toplevel $w
     tkwait visibility $w
 
     puts "BROWSER: $w TYPE: $type MODE: $mode"
+
     entry $w.filename -bd 2 -relief sunken
     bind $w.filename <Return> "set_selection_from_map_browser_filename $w"
     frame $w.main
@@ -158,7 +161,7 @@ proc create_map_browser {{w .map_browser} {type all} {mode 0}} {
 
     bind $w.main.mapsets.f.list <ButtonRelease-1> \
 	"map_browser_select_mapset  %W %y $w"
-    
+
     frame     $w.main.files
     label     $w.main.files.label -text FILES
     frame     $w.main.files.f
@@ -176,12 +179,12 @@ proc create_map_browser {{w .map_browser} {type all} {mode 0}} {
 
     bind $w.main.files.f.list <ButtonRelease-1> \
 	"map_browser_select_file %W %y $w"
-    
+
     frame $w.element
     entry $w.element.entry -bd 2 -relief sunken
     bind $w.element.entry <Return> "map_browser_list_mapset $w"
-    
-    if { ![string compare rast $type]} { 
+
+    if { ![string compare rast $type]} {
 	set name Raster
     } elseif { ![string compare vect $type]} {
 	set name Vector
@@ -191,8 +194,10 @@ proc create_map_browser {{w .map_browser} {type all} {mode 0}} {
 	set name Surface
     } elseif { ![string compare 3d.view $type]} {
 	set name 3d.view
+    } elseif {![string compare vol $type]} {
+	set name G3D
     }
-    
+
     if [string compare $type all] {
 	label $w.element.menu -text "Map Type:" -relief raised
     } else {
@@ -219,29 +224,29 @@ proc create_map_browser {{w .map_browser} {type all} {mode 0}} {
     }
     button $w.accept -text Accept -command "mapBrowser_accept_cmd $w"
     button $w.cancel -text Cancel -command "mapBrowser_cancel_cmd $w"
-    
+
     pack $w.filename -side top -expand yes -fill x
     pack $w.main     -side top -expand yes -fill both
-    
+
     pack $w.main.mapsets -side left -expand yes -fill both
     pack $w.main.mapsets.label -side top
     pack $w.main.mapsets.f.scrollx -side bottom -expand no -fill x
     pack $w.main.mapsets.f -side top -expand yes -fill both
     pack $w.main.mapsets.f.list -side left -expand yes -fill both
     pack $w.main.mapsets.f.scroll -side left -expand no -fill y
-    
+
     pack $w.main.files -side left -expand yes -fill both
     pack $w.main.files.label -side top
     pack $w.main.files.f.scrollx -side bottom -expand no -fill x
     pack $w.main.files.f -side top -expand yes -fill both
     pack $w.main.files.f.list -side left -expand yes -fill both
     pack $w.main.files.f.scroll -side left -expand no -fill y
-    
+
     pack $w.element  -side top -expand yes -fill x
     pack $w.element.menu  -side left
     pack $w.element.entry  -side left -expand yes -fill x
     pack $w.accept $w.cancel -side left -expand 1
-    
+
     foreach mapset [grass_mapset_list] {
 	$w.main.mapsets.f.list insert end $mapset
     }
@@ -250,30 +255,29 @@ proc create_map_browser {{w .map_browser} {type all} {mode 0}} {
     wm title $w "Map Browser"
     wm protocol $w WM_DELETE_WINDOW "destroy $w"
 
-    
     if {$mode} {grab $w}
 
     tkwait window $w
-    
+
     return $map_browser($w,Answer)
-    
+
 }
 
 proc mapBrowser_accept_cmd  {w} {
-    global map_browser 
-	
+    global map_browser
+
     # Make sure a file has been selected first
     set temp [$w.filename get]
     if {$temp != ""} then {
     	set map_browser($w,Answer) [$w.filename get]
     	destroy $w
-    } else {	
+    } else {
 	return
     }
 
 }
 proc mapBrowser_cancel_cmd {w} {
-    global map_browser 
+    global map_browser
     set map_browser($w,Answer) -1
     destroy $w
 }
