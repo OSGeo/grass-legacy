@@ -34,7 +34,7 @@
 #include "raster.h"
 
 #define	DEFAULT_CHARSET		"ISO-8859-1"
-#define	DEFAULT_SIZE		"30"
+#define	DEFAULT_SIZE		"10"
 #define	DEFAULT_COLOR		"gray"
 
 #define	DEFAULT_ALIGN		"ll"
@@ -63,21 +63,20 @@ static int	read_capfile(char *capfile, capinfo **fonts, char **font_names,
 			int *fonts_count, int *cur_font);
 static int	find_font(capinfo *fonts, int fonts_count, char *name);
 static char	*transform_string(char *str, int (*func)(int));
-static int	set_font(FT_Library library, FT_Face *face, char *path,
-			int size);
+static int	set_font(FT_Library library, FT_Face *face, char *path);
 static int	convert_text(char *charset, char *text, unsigned char **out);
 static int	get_coordinates(rectinfo win, char **ans, char p,
 			double *east, double *north, int *x, int *y);
 static void	get_color(char *tcolor, int *color);
 static void	get_dimension(FT_Face face, unsigned char *out, int l,
-			int *width, int *height);
+			FT_Vector *dim);
 static void	get_ll_coordinates(FT_Face face, unsigned char *out, int l,
 			char *align, double rotation, FT_Vector *pen);
-static void	set_transform(FT_Matrix *matrix, double rotation);
+static void	set_matrix(FT_Matrix *matrix, double rotation);
 static int	draw_glyph(rectinfo win, FT_Face face, FT_Matrix *matrix,
 			FT_Vector *pen, int ch, int color);
-static void	draw_text(rectinfo win, FT_Face face, FT_Matrix *matrix,
-			FT_Vector *pen, unsigned char *out, int ol, int color);
+static void	draw_text(rectinfo win, FT_Face face, FT_Vector *pen,
+			unsigned char *out, int ol, int color, double rotation);
 
 
 int
@@ -102,6 +101,7 @@ main(int argc, char **argv)
 		struct	Flag	*r;
 		struct	Flag	*p;
 		struct	Flag	*s;
+		struct	Flag	*c;
 	} flag;
 
 	char	capfile[4096];
@@ -112,8 +112,7 @@ main(int argc, char **argv)
 
 	FT_Library	library = NULL;
 	FT_Face		face = NULL;
-	FT_Matrix	matrix;
-	FT_Vector	pen;
+	FT_Vector	dim, pen;
 
 	int	driver = 0;
 	char	win_name[64];
@@ -136,7 +135,7 @@ main(int argc, char **argv)
 	{
 		strcpy(capfile, getenv("GRASS_FREETYPECAP"));
 		if(access(capfile, R_OK))
-			G_warning("%s: No such FreeType definition file; "
+			G_warning("%s: Can not read FreeType definition file; "
 					"use the default", capfile);
 		else
 		if(!read_capfile(capfile, &fonts, &font_names,
@@ -153,7 +152,7 @@ main(int argc, char **argv)
 	param.text = G_define_option();
 	param.text->key         = "text";
 	param.text->type        = TYPE_STRING;
-	param.text->required    = YES;
+	param.text->required    = NO;
 	param.text->description = "Text";
 
 	param.east_north = G_define_option();
@@ -229,14 +228,22 @@ main(int argc, char **argv)
 	flag.s->key         = 's';
 	flag.s->description = "Pixel size";
 
+	flag.c = G_define_flag();
+	flag.c->key         = 'c';
+	flag.c->description = "Compatibility with d.text";
+
 
 	if(G_parser(argc, argv))
 		exit(1);
 
+	if(!param.text->answer && !flag.c->answer)
+		G_fatal_error("text or -c should be given");
+
 	text = param.text->answer;
 
-	if((param.font && !param.font->answer && !param.path->answer) ||
-			(!param.font && !param.path->answer))
+	if(!flag.c->answer &&
+	   ((param.font && !param.font->answer && !param.path->answer) ||
+			(!param.font && !param.path->answer)))
 		G_fatal_error("No font selected");
 
 	charset = NULL;
@@ -280,7 +287,7 @@ main(int argc, char **argv)
 
 	rotation = fmod(rotation, 2 * M_PI);
 	if(rotation < 0.0)
-		rotation = 2 * M_PI + rotation;
+		rotation += 2 * M_PI;
 
 	if(R_open_driver() != 0)
 		error("No graphics device selected");
@@ -302,38 +309,221 @@ main(int argc, char **argv)
 	if(FT_Init_FreeType(&library))
 		error("Unable to initialise FreeType");
 
-	i = set_font(library, &face, path, size);
-	if(i == -1)
-		error("Unable to create face");
-	if(i == -2)
-		error("Unable to set size");
+	if(path)
+	{
+		if(set_font(library, &face, path))
+			error("Unable to create face");
 
-	ol = convert_text(charset, text, &out);
-	if(ol == -1)
-		error("Unable to create text conversion context");
-	if(ol == -2)
-		error("Text conversion error");
+		if(FT_Set_Pixel_Sizes(face, size, 0))
+			error("Unable to set size");
+	}
 
 	R_color_table_fixed();
 
-	if(get_coordinates(win, param.east_north->answers, flag.p->answer,
-				&east, &north, &x, &y))
-	{
-		deinit();
-		exit(0);
-	}
 	get_color(tcolor, &color);
 
-	pen.x = x;
-	pen.y = y;
+	if(!flag.c->answer)
+	{
+		if(get_coordinates(win, param.east_north->answers,
+					flag.p->answer, &east, &north, &x, &y))
+		{
+			deinit();
+			exit(0);
+		}
 
-	get_ll_coordinates(face, out, ol, param.align->answer, rotation, &pen);
-	set_transform(&matrix, rotation);
+		pen.x = x;
+		pen.y = y;
 
-	draw_text(win, face, &matrix, &pen, out, ol, color);
+		ol = convert_text(charset, text, &out);
+		if(ol == -1)
+			error("Unable to create text conversion context");
+		if(ol == -2)
+			error("Text conversion error");
 
-	if(param.east_north->answer)
-		D_add_to_list(G_recreate_command());
+		get_ll_coordinates(face, out, ol,
+				param.align->answer, rotation, &pen);
+
+		draw_text(win, face, &pen, out, ol, color, rotation);
+
+		if(param.east_north->answer)
+			D_add_to_list(G_recreate_command());
+	}
+	else
+	{
+		char	*tmpfile, buf[512], *p, *c, ch, align[3], linefeed;
+		FILE	*fp;
+		int	d, sx, sy;
+
+		x = sx = win.l;
+		y = sy = win.t + size;
+		linefeed = 1;
+
+		if(param.east_north->answer &&
+				get_coordinates(win, param.east_north->answers,
+					flag.p->answer, &east, &north, &x, &y))
+		{
+			deinit();
+			exit(0);
+		}
+
+		y -= size;
+		pen.x *= 64;
+		pen.y = - pen.y * 64;
+
+		strncpy(align, param.align->answer, 2);
+
+		tmpfile = G_tempfile();
+		if(!(fp = fopen(tmpfile, "w")))
+			G_fatal_error("Unable to write the temporary file");
+
+		while(fgets(buf, 512, stdin))
+		{
+			fprintf(fp, "%s", buf);
+			if(buf[0] == '.' && buf[1] != '.')
+			{
+				G_squeeze(buf);
+				for(p = buf + 2; *p == ' '; p++);
+				l = strlen(p);
+				switch(buf[1])
+				{
+					case 'F':
+						if((c = strchr(p, ':')))
+						{
+							*c = 0;
+							c++;
+							charset = transform_string(c, toupper);
+						}
+						if(*p != '/')
+						{
+							if(!fonts_count)
+							{
+								G_warning("No predefined font");
+								break;
+							}
+							cur_font = find_font(fonts, fonts_count, p);
+							if(cur_font < 0)
+							{
+								G_warning("Invalid font: %s", p);
+								break;
+							}
+							path = fonts[cur_font].path;
+							charset = transform_string(fonts[cur_font].charset, toupper);
+						}
+						else
+						{
+							path = p;
+							if(access(path, R_OK))
+							{
+								G_warning("%s: Can not read font", p);
+								break;
+							}
+						}
+						if(set_font(library, &face, path))
+							error("Unable to create face");
+						if(FT_Set_Pixel_Sizes(face, size, 0))
+							error("Unable to set size");
+						break;
+					case 'C':
+						tcolor = transform_string(p, tolower);
+						get_color(tcolor, &color);
+						break;
+					case 'S':
+						size = atoi(p);
+						if(p[l-1] != 'p')
+							size = (int)(size/100.0 * (double)(win.b - win.t));
+						if(face && FT_Set_Pixel_Sizes(face, size, 0))
+							error("Unable to set size");
+						break;
+					case 'A':
+						strncpy(align, p, 2);
+						break;
+					case 'R':
+						rotation = atof(p);
+						if(p[l-1] != 'r')
+							rotation *= M_PI / 180.0;
+						rotation = fmod(rotation, 2 * M_PI);
+						if(rotation < 0.0)
+							rotation += 2 * M_PI;
+						break;
+					case 'X':
+						i = 0;
+						if(strchr("+-", p[0]))
+							i = 1;
+						d = atoi(p);
+						if(p[l-1] != 'p')
+							d *= size;
+						x = d + (i ? x : sx);
+						pen.x = x * 64;
+						break;
+					case 'Y':
+						i = 0;
+						if(strchr("+-", p[0]))
+							i = 1;
+						d = atoi(p);
+						if(p[l-1] != 'p')
+							d *= size;
+						y = d + (i ? y : sy) - size;
+						pen.y = - y * 64;
+						break;
+					case 'L':
+						linefeed = (atoi(p) ? 1 : 0);
+						break;
+				}
+			}
+			else
+			if(face)
+			{
+				i = 0;
+				if(buf[0] == '.' && buf[1] == '.')
+					i = 1;
+
+				ol = convert_text(charset, buf + i, &out);
+				if(ol == -1)
+					error("Unable to create text conversion context");
+				if(ol == -2)
+					error("Text conversion error");
+
+				if(linefeed)
+				{
+					x += size * sin(rotation);
+					y += size * cos(rotation);
+				}
+				else
+				{
+					x = pen.x / 64;
+					y = - pen.y / 64;
+				}
+
+				pen.x = x;
+				pen.y = y;
+
+				get_ll_coordinates(face, out, ol,
+						align, rotation, &pen);
+				draw_text(win, face, &pen, out, ol,
+						color, rotation);
+			}
+			else
+				G_warning("No font selected");
+		}
+
+		fclose(fp);
+
+		l = strlen(G_recreate_command()) + 4 + strlen(tmpfile);
+
+		if(!param.east_north->answers)
+			l += 25;
+
+		p = (char *) G_malloc(l);
+		sprintf(p, "%s", G_recreate_command());
+
+		if(!param.east_north->answers)
+			sprintf(p + strlen(p), " east_north=%d,%d", sx, sy);
+
+		sprintf(p + strlen(p), " < %s", tmpfile);
+
+		D_add_to_list(p);
+		G_free(p);
+	}
 
 	deinit();
 
@@ -351,7 +541,7 @@ read_capfile(char *capfile, capinfo **fonts, char **font_names,
 
 	if(!(fp = fopen(capfile, "r")))
 	{
-		G_warning("%s: No FreeType definition file", capfile);
+		G_warning("%s: Can not read FreeType definition file", capfile);
 		return -1;
 	}
 
@@ -441,12 +631,12 @@ transform_string(char *str, int (*func)(int))
 }
 
 static int
-set_font(FT_Library library, FT_Face *face, char *path, int size)
+set_font(FT_Library library, FT_Face *face, char *path)
 {
+	if(*face)
+		FT_Done_Face(*face);
 	if(FT_New_Face(library, path, 0, face))
 		return -1;
-	if(FT_Set_Pixel_Sizes(*face, size, 0))
-		return -2;
 
 	return 0;
 }
@@ -562,13 +752,22 @@ get_color(char *tcolor, int *color)
 }
 
 static void
-get_dimension(FT_Face face, unsigned char *out, int l, int *width, int *height)
+get_dimension(FT_Face face, unsigned char *out, int l, FT_Vector *dim)
 {
-	int	i, index, x = 0, y = 0, first = 1, minx, maxx, miny, maxy, ch;
+	int	i, index, first = 1, minx, maxx, miny, maxy, ch;
+	FT_Matrix	matrix;
+	FT_Vector	pen;
+
+	set_matrix(&matrix, 0);
+
+	pen.x = 0;
+	pen.y = 0;
 
 	for(i = 0; i < l; i += 4)
 	{
 		ch = (out[i+2] << 8) | out[i+3];
+
+		FT_Set_Transform(face, &matrix, &pen);
 
 		if(!(index = FT_Get_Char_Index(face, ch)))
 			continue;
@@ -580,33 +779,33 @@ get_dimension(FT_Face face, unsigned char *out, int l, int *width, int *height)
 		if(first)
 		{
 			first = 0;
-			minx = x + face->glyph->bitmap_left;
+			minx = face->glyph->bitmap_left;
 			maxx = minx + face->glyph->bitmap.width;
-			miny = y - face->glyph->bitmap_top;
+			miny = - face->glyph->bitmap_top;
 			maxy = miny + face->glyph->bitmap.rows;
 		}
 		else
 		{
-			if(minx > x + face->glyph->bitmap_left)
-				minx = x + face->glyph->bitmap_left;
-			if(maxx < x + face->glyph->bitmap_left +
+			if(minx > face->glyph->bitmap_left)
+				minx = face->glyph->bitmap_left;
+			if(maxx < face->glyph->bitmap_left +
 					face->glyph->bitmap.width)
-				maxx = x + face->glyph->bitmap_left +
+				maxx = face->glyph->bitmap_left +
 					face->glyph->bitmap.width;
-			if(miny > y - face->glyph->bitmap_top)
-				miny = y - face->glyph->bitmap_top;
-			if(maxy < y - face->glyph->bitmap_top +
+			if(miny > - face->glyph->bitmap_top)
+				miny = - face->glyph->bitmap_top;
+			if(maxy < - face->glyph->bitmap_top +
 					face->glyph->bitmap.rows)
-				maxy = y - face->glyph->bitmap_top +
+				maxy = - face->glyph->bitmap_top +
 					face->glyph->bitmap.rows;
 		}
 
-		x += face->glyph->advance.x >> 6;
-		y += face->glyph->advance.y >> 6;
+		pen.x += face->glyph->advance.x;
+		pen.y += face->glyph->advance.y;
 	}
 
-	*width  = maxx - minx;
-	*height = maxy - miny;
+	dim->x = maxx - minx;
+	dim->y = maxy - miny;
 
 	return;
 }
@@ -615,37 +814,37 @@ static void
 get_ll_coordinates(FT_Face face, unsigned char *out, int l,
 		char *align, double rotation, FT_Vector *pen)
 {
-	int	width, height;
+	FT_Vector	dim;
 
 	if(strcmp(align, "ll"))
 	{
-		get_dimension(face, out, l, &width, &height);
+		get_dimension(face, out, l, &dim);
 
 		switch(align[0])
 		{
 			case 'l':
 				break;
 			case 'c':
-				pen->x += height / 2.0 * sin(rotation);
-				pen->y += height / 2.0 * cos(rotation);
+				pen->x += dim.y / 2.0 * sin(rotation);
+				pen->y += dim.y / 2.0 * cos(rotation);
 				break;
 			case 'u':
-				pen->x += height * sin(rotation);
-				pen->y += height * cos(rotation);
+				pen->x += dim.y * sin(rotation);
+				pen->y += dim.y * cos(rotation);
 				break;
 		}
-
+	
 		switch(align[1])
 		{
 			case 'l':
 				break;
 			case 'c':
-				pen->x -= width / 2.0 * cos(rotation);
-				pen->y += width / 2.0 * sin(rotation);
+				pen->x -= dim.x / 2.0 * cos(rotation);
+				pen->y += dim.x / 2.0 * sin(rotation);
 				break;
 			case 'r':
-				pen->x -= width * cos(rotation);
-				pen->y += width * sin(rotation);
+				pen->x -= dim.x * cos(rotation);
+				pen->y += dim.x * sin(rotation);
 				break;
 		}
 	}
@@ -657,7 +856,7 @@ get_ll_coordinates(FT_Face face, unsigned char *out, int l,
 }
 
 static void
-set_transform(FT_Matrix *matrix, double rotation)
+set_matrix(FT_Matrix *matrix, double rotation)
 {
 	matrix->xx = (FT_Fixed)( cos(rotation)*0x10000);
 	matrix->xy = (FT_Fixed)(-sin(rotation)*0x10000);
@@ -730,6 +929,8 @@ draw_glyph(rectinfo win, FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
 			R_move_abs(rect.l + start_col, rect.t + i);
 			R_raster_char(w, 1, 0, buffer + width * i + start_col);
 		}
+
+		R_flush();
 	
 		G_free(buffer);
 	}
@@ -741,15 +942,18 @@ draw_glyph(rectinfo win, FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
 }
 
 static void
-draw_text(rectinfo win, FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
-		unsigned char *out, int ol, int color)
+draw_text(rectinfo win, FT_Face face, FT_Vector *pen,
+		unsigned char *out, int ol, int color, double rotation)
 {
 	int	i, ch;
+	FT_Matrix	matrix;
+
+	set_matrix(&matrix, rotation);
 
 	for(i = 0; i < ol; i += 4)
 	{
 		ch = (out[i+2] << 8) | out[i+3];
-		draw_glyph(win, face, matrix, pen, ch, color);
+		draw_glyph(win, face, &matrix, pen, ch, color);
 	}
 
 	return;
