@@ -1,0 +1,12 @@
+
+
+d.mapgraph - 
+
+d.mapgraph draws graphics that are described in standard input (default)
+or the \UNIX\ filename.  This program essentially performs the same
+functions as \d.graph\; however, point locations are specified to
+d.mapgraph in the geographic coordinate system of the user's current
+\mapset\ and \location\ rather than in graphics display screen
+coordinates.
+
+Manual entry for \d.mapgraph\
