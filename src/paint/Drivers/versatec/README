@@ -1,0 +1,43 @@
+The driver executable lives in driver/ and the shell script(s) live in
+their own directory. The driver/ hopefully will be the same for all
+versatec eloctrostatic plotters, since it just produces a rasterfile in
+a format which the versatec rgb utility knows how to plot. The rgb
+utility (i.e, the sprint command), has the -p <model> option to tell it
+what knid of printer it is send output to. The shell script(s) will
+tell the driver how to run the sprint command.
+
+To compile one driver, e.g. the 3236,
+add two lines to the GRASS list of programs to
+compile
+  paint/Drivers/versatec/driver
+  paint/Drivers/versatec/3236
+The first compiles the driver, the second installs the shell script for
+the printer (which sets some environment variables and then runs the
+driver).
+
+However, you will have to edit the driver shell script in the 3236
+directory before compiling. See the README in paint/Drivers/versatek/3236
+
+The driver will produce a sun rasterfile format (same format as
+produced by the sun screendump command) since it is understood by the
+sprint utility and is the most compact format recognized by the sprint
+command.
+
+The sprint utility understand sun's standard raster format, but not
+the byte-encoded format.
+
+Notes.
+ When we first got the 3236e (with embedded raster controller), the
+ 117a interface board was installed in the sun machine with switches
+ set to the test positions. The versatec print.file and plot.file test
+ plots worked, but sprint <screendump-file> failed. FLipping the
+ switches to the correct positions was the right thing to do, but
+ caused UNix to think the 117a board was offline. We has to power the
+ baord (ie. the machine) down and up to get it back online.
+
+ The embedded raster controller, which converts vector data to raster
+ format, works fine with raster data as output by the sprint utility.
+ This means both vector and raster output is possible with the
+ controller in place.
+
+
