@@ -1,0 +1,132 @@
+
+
+
+Dhistogram(2D)       GRASS Reference Manual        Dhistogram(2D)
+
+
+
+NAME
+     Dhistogram - Plots a cell-file histogram (D Language Tool)
+
+SYNOPSIS
+     Dhistogram cell-filename [style=bar|pie] [nodata=no|yes]
+     [color=color] [type=area|count]
+
+DESCRIPTION
+     Dhistogram scans the named and extracts lines.
+
+     Dhistogram plots the area statistics, or the category-value
+     distribution, for a user-specified cell-file, in the form of
+     a bar-chart or a pie-chart. The cell-file's name MUST be
+     supplied on the command line. The plot will be displayed in
+     the currenly selected window on the graphics display,
+     colored according to the cell-file's color-table.
+
+
+
+OPTIONS
+     style=[pie|bar]
+
+     If style=bar, then Dhistogram will plot the statistics int
+     the form of a bar-chart.  If style=pie, then Dhistogram will
+     plot the statistics in the form of a pie-chart.  Default is
+     style=bar.
+
+     type=[count|area]
+
+     If type=count, then Dhistogram determines cell-file category
+     value distribution by counting cells.  If type=area, then
+     Dhistogram determines cell-file category value distribution
+     by area calculations.  Default is type=count.
+
+     nodata=[yes|no]
+
+     If nodata=no, then cells with the value 0 will be left out
+     of the pie or bar-chart.  If nodata=yes, then cells with the
+     value 0 will be included in the bar-chart.  Default is
+     nodata=no.
+
+     color=color
+
+     Color is the color desired for the axis, text-labels, and
+     tic-marks on the pie or bar-chart.  Default is color=white.
+
+
+
+NOTES
+     Dhistogram works in the current window and with the current
+     mask.
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+Dhistogram(2D)       GRASS Reference Manual        Dhistogram(2D)
+
+
+
+SEE ALSO
+     Gstats[2]
+
+
+AUTHOR
+     Dave Johnson
+     DBA Systems, Inc.
+     10560 Arrowhead Drive
+     Fairfax, Virginia 22030
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
