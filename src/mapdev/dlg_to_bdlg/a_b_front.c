@@ -1,6 +1,7 @@
 #include  "gis.h"
 
-main()
+main(argc,argv)
+	char **argv ;
 {
 
 	char  name[150] ;
@@ -8,7 +9,7 @@ main()
 	char  new_file[80] ;
 	char  *mapset ;
 
-	G_gisinit("DLG_CONVERTION") ;
+	G_gisinit(argv[0]) ;
 
 
 	mapset = G_ask_old( " ASCII DLG FILE TO CONVERT",
