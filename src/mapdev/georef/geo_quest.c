@@ -15,7 +15,7 @@ main( argc, argv)
 	struct  driver_desc  Driver ;
 	FILE	*fp,  *fopen() ;
 
-	G_gisinit("GEO_QUEST") ;
+	G_gisinit(argv[0]) ;
 
 /*  open digitizer cap file  */
 
