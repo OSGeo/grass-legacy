@@ -13,19 +13,19 @@
 
 static char *color_names[] = {
     "        ",
-    "   white",
-    "   black",
-    "  yellow",
-    "    blue",
     "     red",
-    "   green",
     "  orange",
-    "    grey",
-    " magenta",
-    "    aqua",
+    "  yellow",
+    "   green",
+    "    blue",
     "  indigo",
     "  violet",
+    "   white",
+    "   black",
+    "    gray",
     "   brown",
+    " magenta",
+    "    aqua",
     "        ",
     "        "
 };
