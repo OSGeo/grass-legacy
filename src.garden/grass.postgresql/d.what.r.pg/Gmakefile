@@ -1,8 +1,5 @@
-#PGM = d.what.r.pg
 PGM       = $(BIN_CONTRIB_CMD)/d.what.r.pg
-LIBES     = $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) $(PQLIB) $(MATHLIB)
-
-
+LIBES     = $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) $(PQLIB)
 
 OBJS = \
 	main.o  \
@@ -16,6 +13,6 @@ OBJS = \
 EXTRA_CFLAGS = $(PQINCPATH)
 
 $(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

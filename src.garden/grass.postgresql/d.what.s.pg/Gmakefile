@@ -1,8 +1,6 @@
 PGM       = $(BIN_CONTRIB_CMD)/d.what.s.pg
-#PGM       = d.what.s.pg
-LIBES     = $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) $(PQLIB) $(MATHLIB)
+LIBES     = $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) $(PQLIB)
 EXTRA_CFLAGS = $(PQINCPATH)
-
 # EXTRA_CFLAGS 	= -Dunlink=puts
 
 OBJS = \
@@ -14,9 +12,7 @@ OBJS = \
         buildInfxQry.o \
         runInfxFile.o 
 
-
-
 $(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) 
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #
