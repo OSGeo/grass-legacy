@@ -31,3 +31,10 @@ clean:
 	rm -rf $(EXTRA_CLEAN_DIRS)
 	rm -f $(EXTRA_CLEAN_FILES)
 
+# default html rules
+html:
+	GRASS_FAKE_START=1 $(ETC)/bin/cmd/$(PGM) --html-description | grep -v '</body>' > $(PGM).html ; true
+	@test ! -f description.html || ( cat description.html >> $(PGM).html )
+	echo "</body></html>" >> $(PGM).html
+	mkdir -p $(GISBASE)/docs/html
+	mv $(PGM).html $(GISBASE)/docs/html
