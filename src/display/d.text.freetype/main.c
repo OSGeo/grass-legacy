@@ -55,10 +55,10 @@ error(const char *msg)
 	G_fatal_error("%s", msg);
 }
 
-static capinfo *fonts;
-static int fonts_count;
+static capinfo *fonts = NULL;
+static int fonts_count = 0;
 
-static char *font_names;
+static char *font_names = NULL;
 
 static int cur_font = -1;
 
@@ -98,7 +98,8 @@ read_capfile(void)
 		if (fonts_count >= fonts_size)
 		{
 			fonts_size = fonts_size ? fonts_size * 2 : 10;
-			fonts = G_realloc(fonts, fonts_size * sizeof(capinfo));
+			fonts = (capinfo *)
+				G_realloc(fonts, fonts_size * sizeof(capinfo));
 		}
 
 		font = &fonts[fonts_count];
@@ -193,6 +194,9 @@ main(int argc, char **argv)
 	opt2->key_desc   = "east,north";
 	opt2->description= "Coordinates";
 
+	opt3 = NULL;
+	if (fonts_count)
+	{
 	opt3 = G_define_option();
 	opt3->key        = "font";
 	opt3->type       = TYPE_STRING;
@@ -201,11 +205,12 @@ main(int argc, char **argv)
 	opt3->answer     = fonts[cur_font].cfont;
 	opt3->options    = font_names;
 	opt3->description= "Font name";
+	}
 
 	opt4 = G_define_option();
 	opt4->key        = "path";
 	opt4->type       = TYPE_STRING;
-	opt4->required   = NO;
+	opt4->required   = fonts_count ? NO : YES;
 	opt4->description= "Font path";
 
 	opt5 = G_define_option();
@@ -237,14 +242,14 @@ main(int argc, char **argv)
 
 	text = opt1->answer;
 
-	if(!opt3->answer && !opt4->answer)
-		G_fatal_error("No selected font");
+	if((opt3 && !opt3->answer && !opt4->answer) || (!opt3 && !opt4->answer))
+		G_fatal_error("No font selected");
 
 	charset = NULL;
 	tcolor = NULL;
 	size = 0;
 
-	if (opt3->answer)
+	if (opt3 && opt3->answer)
 	{
 		cur_font = find_font(opt3->answer);
 		if (cur_font < 0)
