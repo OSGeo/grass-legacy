@@ -1,11 +1,12 @@
 #include "segment.h"
 
-int segment_get (SEGMENT *SEG, register int *buf,int row,int col)
+/*  int segment_get (SEGMENT *SEG, register int *buf,int row,int col) */
+int segment_get (SEGMENT *SEG,void *buf,int row,int col)
 {
     int n;
     int index;
     int i;
-    register char *b;
+    register char *b, *p=buf;
 
     segment_address (SEG, row, col, &n, &index);
     if((i = segment_pagein (SEG, n)) < 0)
@@ -14,7 +15,7 @@ int segment_get (SEGMENT *SEG, register int *buf,int row,int col)
 
     n = SEG->len;
     while (n-- > 0)
-	*buf++ = *b++;
+	*p++ = *b++;
     
     return 1;
 }

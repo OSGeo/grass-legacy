@@ -6,16 +6,19 @@
 #include "gis.h"
 
 /*	buf is CELL *   WRAT code	*/
-int segment_put_row (SEGMENT *SEG, CELL *buf,int row)
+/*  int segment_put_row (SEGMENT *SEG, CELL *buf,int row) */
+int segment_put_row (SEGMENT *SEG, void *buf,int row)
 {
     int size;
     int ncols;
     int scols;
     int n, index, col;
+	int result;
 
     ncols = SEG->ncols - SEG->spill ;
     scols = SEG->scols ;
     size = scols * SEG->len;
+/*  	printf("segment_put_row ncols: %d, scols %d, size: %d, col %d, row: %d,  SEG->fd: %d\n",ncols,scols,size,col,row, SEG->fd); */
 
     for (col = 0; col < ncols; col += scols)
     {
@@ -26,9 +29,10 @@ int segment_put_row (SEGMENT *SEG, CELL *buf,int row)
 	        index,n,col,row);
 	    return -1;
 	}
-	if(write (SEG->fd, buf, size) != size)
+	if((result = write (SEG->fd, buf, size)) != size)
 	{
 	    G_warning ("segment_put_row write error %s\n",strerror(errno));
+/*  	printf("segment_put_row result = %d. ncols: %d, scols %d, size: %d, col %d, row: %d,  SEG->fd: %d\n",result,ncols,scols,size,col,row, SEG->fd); */
 	    return -1;
 	}
 	buf += size;
