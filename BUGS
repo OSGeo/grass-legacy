@@ -1,4 +1,4 @@
-                 $Id: BUGS,v 1.115 2001-02-21 18:08:06 markus Exp $
+                 $Id: BUGS,v 1.116 2001-02-23 22:04:06 markus Exp $
 
 Known bugs in current GRASS GIS version 5.0 CVS
 [In sync with GRASS 5.0 beta CVS version]
@@ -73,10 +73,6 @@ but I may be related with another bug on v.trim that I'm going to
 point out in a separate bug report
 (reported by: Andrea Aime <aaime@comune.modena.it>)
 
-[RC]r.to.sites:
- -  r.to.sites -z does not output third dimension
-    however r.to.sites -cz works o.k.
-  (being worked on by ?)
 
 [RC]v.trim 
  bugreport: If a polygon has island, v.trim removes such islands
@@ -319,6 +315,11 @@ r.stats: some inconsistent results comparing to r.average
        ...
  *While d.what.rast was giving 110.794075. Is this a bug?
      Dr. Agustin Lobo, alobo@ija.csic.es
+  (being worked on by ?)
+
+r.to.sites:
+ -  r.to.sites -z does not output third dimension
+    however r.to.sites -cz works o.k.
   (being worked on by ?)
 
 r.watershed:
