@@ -1,3 +1,23 @@
+#############################################################################
+#
+# $Id$
+#
+# MODULE:   	Grass Compilation
+# AUTHOR(S):	Original author unknown - probably CERL
+#   	    	Eric G. Miller - egm2@jps.net
+#   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
+#		Markus Neteler - Germany - neteler@geog.uni-hannover.de
+# PURPOSE:  	This configure runs all the tests to determine what components
+#   	    	are installed on the current system. It also defines certain
+#   	    	configuration variables for compilation and installation.
+# COPYRIGHT:    (C) 2000 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#   	    	License (>=v2). Read the file COPYING that comes with GRASS
+#   	    	for details.
+#
+#############################################################################
+
 AC_INIT(README)
 AC_PREFIX_DEFAULT(/usr/local)
 AC_CONFIG_HEADER(src/include/config.h)
@@ -407,7 +427,7 @@ if test -z "$TCLTKLIBPATH"; then
     AC_MSG_RESULT($TCLTKLIBPATH)
 fi
 if test -z "$TCLTKLIBPATH"; then
-	AC_MSG_WARN([*** Couldn't find tcl/tk library.])
+	AC_MSG_WARN([*** Could not find tcl/tk library.])
 fi
 AC_SUBST(TCLTKLIBPATH)
 
@@ -471,15 +491,6 @@ AC_SUBST(USE_TERMIO)
 SRCDIR=`pwd`
 AC_SUBST(SRCDIR)
 
-# Add VERSION and GISBASE
-VERSION=`cat ${SRCDIR}/src/CMD/VERSION | head -1`
-NAME_VER=`echo ${VERSION} | sed 's/\..*//'`
-#GISBASE="${prefix}/grass${NAME_VER}"
-
-AC_SUBST(VERSION)
-AC_SUBST(NAME_VER)
-#AC_SUBST(GISBASE)
-
 ARCH=
 if test -z "${host}"; then
 ARCH="unknown"
@@ -487,6 +498,17 @@ else
 ARCH="${host}"
 fi
 AC_SUBST(ARCH)
+
+# Add VERSION, GISBASE, and GRASS_BIN
+VERSION=`cat ${SRCDIR}/src/CMD/VERSION | head -1`
+NAME_VER=`echo ${VERSION} | sed 's/\..*//'`
+GISBASE=${SRCDIR}/dist.${ARCH}
+GRASS_BIN=${SRCDIR}/bin.${ARCH}
+
+AC_SUBST(VERSION)
+AC_SUBST(NAME_VER)
+AC_SUBST(GISBASE)
+AC_SUBST(GRASS_BIN)
 
 # Enable PostgreSQL always ...
 USE_POSTGRES=
@@ -864,4 +886,4 @@ AC_SUBST(JPEGLIBPATH)
 AC_SUBST(JPEGINCPATH)
 # Done with JPEG library
 
-AC_OUTPUT(Makefile src/CMD/head/head src/scripts/shells/create_fifos.sh)
+AC_OUTPUT(Makefile src/CMD/head/head)
