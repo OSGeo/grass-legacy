@@ -1,0 +1,264 @@
+
+
+
+range.place(1)	     GRASS Reference Manual	   range.place(1)
+
+
+
+NAME
+     range.place - interactive graphic tool for	range planning
+     session.
+
+SYNOPSIS
+     range.place
+
+DESCRIPTION
+     range.place is an interactive and graphic version of the
+     GRASS functions Gpat.place, Glos and  Gtraj.  Instead of the
+     non-interactive and relatively cumbersome approach	of
+     entering the parameters of	the function on	the command line,
+     the user can step through the various parts of his	analysis
+     using the mouse (or any available pointing	device)	to choose
+     desired options from displayed menus of available choices.
+     Menus will	pop down and roll up as	needed.
+
+     The D language programs Dnew and Dchoose must be run in
+     order to prepare a	window as the current graphics window for
+     running this program.
+
+     The user is presented with	a graphics window and, across the
+     top, various options from which he	can choose: window,
+     overlay, landpat, range, los, traj	and quit.  Most	choices
+     made on the main menu will	route program control to another
+     menu.  From there,	choices	will either display another menu
+     or	execute	a command.  While executing different functions,
+     the user is often given messages or prompted to type
+     specific requested	information inside the "talk window".
+
+
+
+
+RANGE PLACEMENT
+     The following steps should	be used	to call	up and place a
+     pattern on	the landscape using a base map as reference.
+
+     1)	The user chooses a base	map to be shown	in the display
+     window (which becomes the current window upon entering the
+     program) using the	options
+
+     overlay --> display --> perm/user --> basemap.
+
+     2)	The user defines the pattern that has to be placed over
+     the base map.  This is done with the menu choices
+
+     landpat --> display --> add --> any_basic_pattern
+
+     in	case of	a globally unregistered	pattern	or
+
+     landpat --> display --> modify -->	land_pattern
+
+
+
+
+GRASS 3.0		 U.S. Army CERL				1
+
+
+
+
+
+
+range.place(1)	     GRASS Reference Manual	   range.place(1)
+
+
+
+     when the user wants to modify a previously	stored land
+     pattern. The chosen pattern is displayed in the display
+     window according to the scale of the base map.
+
+     3)	After choosing the options
+
+     range --> locate,
+
+     the user can use the mouse	to place the pattern in	the
+     desired location.	A click	of the left mouse button will
+     translate the pattern so that its origin now lies at the
+     pointed location. The middle button is clicked to signify
+     the direction in which the	pattern	has to be oriented after
+     rotation. The right button	signals	the end	of the location
+     process.
+
+     4)	In its final position, the pattern overlayed on	a base
+     map can be	stored in a digit format file by activating the
+     store function and	typing a unique	filename when prompted
+     for one.
+
+LINE OF	SITE ANALYSIS
+     The following steps should	be used	to determine the
+     visibility	of landscape from a specified observer location
+     on	a base map which gives elevation data for all grid cells.
+
+     1)	The user chooses the overlay of	elevation data to be
+     shown in the display window using the options overlay -->
+     display --> perm/user --> elevation_overlay.
+
+     2)	The line of sight application is activated by clicking on
+     the main menu option los.
+
+     3)	The user specifies the observer	location by either of the
+     following two ways:
+
+	     (i)  viewpt --> text : The	user is	then prompted for
+	     the global	UTM coordinates	of the observer	location.
+
+	     (ii)  viewpt --> mouse : The user specifies the
+	     observer location by clicking the mouse at	the
+	     desired spot on the displayed elevation overlay.
+
+     4)	The user can specify the height	of the observer	(in
+     metres) above the viewing point's elevation by using the
+     option obs_elev. If omitted, a default value of 1.75m is
+     assumed.
+
+     5)	The user can specify the maximum distance (in metres)
+     from the viewing point inside which the line of sight
+     analysis will be performed	by choosing the	option max_dist.
+     The grid cells outside this distance range	are coded with
+
+
+
+GRASS 3.0		 U.S. Army CERL				2
+
+
+
+
+
+
+range.place(1)	     GRASS Reference Manual	   range.place(1)
+
+
+
+     '0'. If omitted, a	default	maximum	distance of 100	grid
+     cells is assumed.
+
+     6)	The user must specify the filename of the output grid
+     cell overlay that will be produced	by the program.	 Upon
+     choosing the option outmap, the user is prompted for a
+     filename unique among overlays existing under the user's
+     individual	mapset.	 If a duplicate	overlay	exists,	a warning
+     is	given and if accepted the existing overlay will	be
+     overwritten.
+
+     7)	The execute option starts the program which generates an
+     output map	on which the cells that	are visible from the
+     observer's	location are marked with integer values	that
+     represent a measure of the	vertical angle required	to see
+     those cells.
+
+TRAJECTORY ANALYSIS
+     The following steps should	be used	to perform the trajectory
+     analysis on a base	elevation map.
+
+     1)	The user chooses a base	map to be shown	in the display
+     window  using the options overlay --> display --> perm/user
+     --> basemap.
+
+     2)	The trajectory analysis	tool is	activated by clicking on
+     the main menu option traj.
+
+     3)	The user specifies the weapon location by either of the
+     following two ways:
+
+	     (i)  firingpt --> text :  The user	is then	prompted
+	     for the global UTM	coordinates of the weapon
+	     location.
+
+	     (ii)  firingpt -->	mouse :	 The user specifies the
+	     weapon location by	clicking the mouse at the desired
+	     spot on the displayed elevation overlay.
+
+     4)	The user can specify the height	of the weapon (in metres)
+     above the viewing point's elevation by using the option
+     gun_elev.
+
+     5)	The user can specify the two azimuth angles indicating
+     the horizontal angle range	of firing by using the option
+     azimuth.
+
+     6)	The user can specify the low and high veritcal angles (in
+     degrees) of firing	by using the option altitude.
+
+     6)	The user can specify the muzzle	velocity (metres/sec) by
+     using the option velocity.
+
+
+
+GRASS 3.0		 U.S. Army CERL				3
+
+
+
+
+
+
+range.place(1)	     GRASS Reference Manual	   range.place(1)
+
+
+
+     7)	The user must specify the filename of the output grid
+     cell overlay that will be produced	by the program.	 Upon
+     choosing the option outmap, the user is prompted for a
+     filename unique among overlays existing under the user's
+     individual	mapset.
+
+     8)	The execute option starts the program that generates an
+     output map	on which the cells that	can be hit by a	shell are
+     marked with integer values	that represent a measure of the
+     muzzle firing angles required to hit the specific cells.
+
+MISCELLANEOUS
+     1)	The user can delete any	vector or cell overlay in his
+     individual	mapset by activating the function overlay -->
+     delete or landpat --> delete.
+
+     2)	The contents of	the display window can be erased or
+     refreshed by activating the functions window --> screen -->
+     erase/refresh.
+
+     3)	The characteristics of the database window can be altered
+     after activating window --> database and then selecting the
+     desired parameter to change from the sub-menu.  The user is
+     prompted for the necessary	information.
+
+SEE ALSO
+     Glos[2]
+     Gpat.place[2]
+     Gtraj[2]
+
+AUTHOR
+     Kewan Q. Khawaja, Intelligent Engineering Systems
+     Laboratory, M.I.T.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.0		 U.S. Army CERL				4
+
+
+
