@@ -230,7 +230,7 @@ typedef struct
         double     d;
         /* dbString   s; */
         /* dbDateTime t; */
-    };
+    } val;
 }dbCatVal;
 
 /* category value array */
