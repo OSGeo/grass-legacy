@@ -493,12 +493,6 @@ AC_CHECK_LIB(giconv, libiconv, ICONVLIB=-lgiconv, [
 ])])])])])])
 AC_SUBST(ICONVLIB)
 
-AC_CHECK_FUNC(gettext, INTLLIB=, [
-AC_CHECK_LIB(intl, gettext, INTLLIB=-lintl, [
-    AC_MSG_WARN([*** Unable to locate gettext() function.])
-])])
-AC_SUBST(INTLLIB)
-
 AC_CHECK_FUNC(socket, SOCKLIB=, [
 AC_CHECK_LIB(socket, socket, SOCKLIB=-lsocket, [
     AC_MSG_WARN([*** Unable to locate socket() function.])
@@ -1129,9 +1123,19 @@ AC_SUBST(FTLIB)
 
 LOC_CHECK_USE(nls,NLS,USE_NLS)
 
+INTLLIB=
+
 if test -n "${USE_NLS}" ; then
     AC_DEFINE(USE_NLS)
+
+AC_CHECK_FUNC(gettext, INTLLIB=, [
+AC_CHECK_LIB(intl, gettext, INTLLIB=-lintl, [
+    AC_MSG_ERROR([*** Unable to locate gettext() function.])
+])])
+
 fi
+
+AC_SUBST(INTLLIB)
 
 # Enable C++ option
  
