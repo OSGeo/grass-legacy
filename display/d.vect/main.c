@@ -164,7 +164,7 @@ main (int argc, char **argv)
 	icon_opt->multiple   = NO ;
 	icon_opt->answer     = "basic/x" ;
 	icon_opt->description= "Point and centroid symbol" ;
-	icon_opt->options     = icon_files();
+/*	icon_opt->options     = icon_files();*/
 
 	size_opt = G_define_option() ;
 	size_opt->key        = "size" ;
