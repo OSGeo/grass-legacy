@@ -1632,7 +1632,10 @@ proc keyanimRunAndSave { BASE } {
     set basedir $env(GISDBASE)/$env(LOCATION_NAME)/$env(MAPSET)/rgb
 
     if {![file isdirectory $basedir]} {
-        set basedir "."
+        set basedir $env(HOME)
+	if {![file isdirectory $env(HOME)]} {
+            set basedir "."
+	}
     }
 
     set keyanimBaseName $basedir/[.ras_fname.enter get]
