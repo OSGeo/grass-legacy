@@ -3,7 +3,7 @@ MODULE_TOPDIR = ../..
 
 PGM = v.clean
 
-LIBES = $(VECTLIB) $(GISLIB) $(VASKLIB)
+LIBES = $(VECTLIB) $(DBMILIB) $(GISLIB) $(VASKLIB)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
