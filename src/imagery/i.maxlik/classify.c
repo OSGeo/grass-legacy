@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "global.h"
 
 static double chisq[] =
