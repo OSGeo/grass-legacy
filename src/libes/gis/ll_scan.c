@@ -126,7 +126,7 @@ scan_ll (buf, dir, result, max)
     if (h[1] != MARKER)
 	return 0;
 
-    if (*h == dir[0])
+    if (*h == dir[0] && *result != 0.0)
 	*result = -(*result);
     return 1;
 }
