@@ -37,6 +37,7 @@
 #define	DEFAULT_SIZE		"30"
 #define	DEFAULT_COLOR		"gray"
 
+#define	DEFAULT_ALIGN		"ll"
 #define	DEFAULT_ROTATION	"0"
 
 typedef struct {
@@ -62,17 +63,18 @@ int
 main(int argc, char **argv)
 {
 	struct	GModule	*module;
-	struct	Option	*opt1, *opt2, *opt3, *opt4, *opt5, *opt6, *opt7, *opt8;
+	struct	Option	*opt1, *opt2, *opt3, *opt4, *opt5, *opt6, *opt7, *opt8,
+			*opt9;
 	struct	Flag	*flag1;
 	unsigned char	*text, *path, *charset, *tcolor;
 	int	size, color;
 	double	east, north, rotation;
-	int	i, j, k, l, r, g, b, ch, index;
+	int	i, j, k, l, x, y, minx, maxx, miny, maxy, r, g, b, ch, index;
 #ifdef HAVE_ICONV_H
 	iconv_t	cd;
 #endif
 	int	ol;
-	unsigned char	*p1, *p2, *out, *buffer;
+	unsigned char	*p1, *p2, *out, *buffer, *align;
 	FT_Matrix	matrix;
 	FT_Vector	pen;
 
@@ -96,7 +98,7 @@ main(int argc, char **argv)
 	opt2->type       = TYPE_DOUBLE;
 	opt2->required   = NO;
 	opt2->key_desc   = "east,north";
-	opt2->description= "Lower left coordinates";
+	opt2->description= "Coordinates";
 
 	opt3 = NULL;
 	if(fonts_count)
@@ -136,11 +138,19 @@ main(int argc, char **argv)
 	opt7->description= "Size";
 
 	opt8 = G_define_option();
-	opt8->key        = "rotation";
-	opt8->type       = TYPE_DOUBLE;
+	opt8->key        = "align";
+	opt8->type       = TYPE_STRING;
 	opt8->required   = NO;
-	opt8->answer     = DEFAULT_ROTATION;
-	opt8->description= "Rotation angle";
+	opt8->answer     = DEFAULT_ALIGN;
+	opt8->options    = "ll,lc,lr,cl,cc,cr,ul,uc,ur";
+	opt8->description= "Text align";
+
+	opt9 = G_define_option();
+	opt9->key        = "rotation";
+	opt9->type       = TYPE_DOUBLE;
+	opt9->required   = NO;
+	opt9->answer     = DEFAULT_ROTATION;
+	opt9->description= "Rotation angle (counterclockwise)";
 
 
 	flag1 = G_define_flag();
@@ -191,9 +201,14 @@ main(int argc, char **argv)
 
 	fprintf(stdout, "Font=<%s:%s:%s:%d>\n\n", path, charset, tcolor, size);
 
-	rotation = atof(opt8->answer);
+	rotation = atof(opt9->answer);
 	if(!flag1->answer)
 		rotation *= M_PI / 180.0;
+	rotation = fmod(rotation, 2 * M_PI);
+	if(rotation < 0.0)
+		rotation = 2 * M_PI + rotation;
+
+	align = opt8->answer;
 
 	if(R_open_driver() != 0)
 		error("No graphics device selected");
@@ -242,8 +257,8 @@ main(int argc, char **argv)
 	{
 		east  = atof(opt2->answers[0]);
 		north = atof(opt2->answers[1]);
-		pen.x = (FT_Pos)D_u_to_d_col(east);
-		pen.y = (FT_Pos)D_u_to_d_row(north);
+		x = (int)D_u_to_d_col(east);
+		y = (int)D_u_to_d_row(north);
 	}
 	else
 	{
@@ -251,7 +266,7 @@ main(int argc, char **argv)
 		fprintf(stdout, " Left:    Place text here\n");
 		fprintf(stdout, " Right:   Quit\n");
 
-		R_get_location_with_pointer((int *)&pen.x, (int *)&pen.y, &i);
+		R_get_location_with_pointer(&x, &y, &i);
 		i &= 0x0f;
 		if(i != 1)
 		{
@@ -260,8 +275,8 @@ main(int argc, char **argv)
 			R_close_driver();
 			exit(1);
 		}
-		east  = D_d_to_u_col((double)pen.x);
-		north = D_d_to_u_row((double)pen.y);
+		east  = D_d_to_u_col((double)x);
+		north = D_d_to_u_row((double)y);
 	}
 
 	R_color_table_fixed();
@@ -280,19 +295,99 @@ main(int argc, char **argv)
 		color = D_translate_color(DEFAULT_COLOR);
 	}
 
+	pen.x = x;
+	pen.y = y;
+
+	if(strcmp(align, "ll"))
+	{
+	j = 1;
+	for(i=0; i<ol; i+=4)
+	{
+		ch = (out[i+2] << 8) | out[i+3];
+
+		if(!(index = FT_Get_Char_Index(face, ch)))
+			continue;
+		if(FT_Load_Glyph(face, index, FT_LOAD_DEFAULT))
+			continue;
+		if(FT_Render_Glyph(face->glyph, ft_render_mode_mono))
+			continue;
+
+		if(j)
+		{
+			j = 0;
+			minx = pen.x + face->glyph->bitmap_left;
+			maxx = minx + face->glyph->bitmap.width;
+			miny = pen.y - face->glyph->bitmap_top;
+			maxy = miny + face->glyph->bitmap.rows;
+		}
+		else
+		{
+			if(minx > pen.x + face->glyph->bitmap_left)
+				minx = pen.x + face->glyph->bitmap_left;
+			if(maxx < pen.x + face->glyph->bitmap_left +
+					face->glyph->bitmap.width)
+				maxx = pen.x + face->glyph->bitmap_left +
+					face->glyph->bitmap.width;
+			if(miny > pen.y - face->glyph->bitmap_top)
+				miny = pen.y - face->glyph->bitmap_top;
+			if(maxy < pen.y - face->glyph->bitmap_top +
+					face->glyph->bitmap.rows)
+				maxy = pen.y - face->glyph->bitmap_top +
+					face->glyph->bitmap.rows;
+		}
+
+		pen.x += face->glyph->advance.x >> 6;
+		pen.y += face->glyph->advance.y >> 6;
+	}
+
+	pen.x = x;
+	pen.y = y;
+
+	i = maxx - minx;
+	j = maxy - miny;
+
+	switch(align[0])
+	{
+		case 'l':
+			break;
+		case 'c':
+			pen.x += j / 2.0 * sin(rotation);
+			pen.y += j / 2.0 * cos(rotation);
+			break;
+		case 'u':
+			pen.x += j * sin(rotation);
+			pen.y += j * cos(rotation);
+			break;
+	}
+
+	switch(align[1])
+	{
+		case 'l':
+			break;
+		case 'c':
+			pen.x -= i / 2.0 * cos(rotation);
+			pen.y += i / 2.0 * sin(rotation);
+			break;
+		case 'r':
+			pen.x -= i * cos(rotation);
+			pen.y += i * sin(rotation);
+			break;
+	}
+	}
+
+	pen.x *= 64;
+	pen.y = - pen.y * 64;
+
 	matrix.xx = (FT_Fixed)( cos(rotation)*0x10000);
 	matrix.xy = (FT_Fixed)(-sin(rotation)*0x10000);
 	matrix.yx = (FT_Fixed)( sin(rotation)*0x10000);
 	matrix.yy = (FT_Fixed)( cos(rotation)*0x10000);
 
-	pen.x *= 64;
-	pen.y = - pen.y * 64;
-
 	for(i=0; i<ol; i+=4)
 	{
-		FT_Set_Transform(face, &matrix, &pen);
-
 		ch = (out[i+2] << 8) | out[i+3];
+
+		FT_Set_Transform(face, &matrix, &pen);
 
 		if(!(index = FT_Get_Char_Index(face, ch)))
 			continue;
