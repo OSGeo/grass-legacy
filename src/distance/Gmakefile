@@ -1,0 +1,35 @@
+HEAD     = distance.o makenew.o maketable.o getdists.o writecats.o dots.o
+GHEAD    = Gdistance.o makenew.o writecats.o Get_input.o input.o
+TOCELL   = tocell.o tohead.o make_cats.o error.o
+FROMCELL = fromcell.o fromhead.o make_cats.o error.o
+
+all: $(BIN)/distance $(BIN)/Gdistance $(ETC)/fromcell $(ETC)/tocell text
+
+$(BIN)/Gdistance: $(GHEAD) $(GISLIB)
+	$(CC) $(LDFLAGS) $(GHEAD) $(GISLIB) $(MATHLIB)
+	mv a.out $(BIN)/Gdistance
+
+$(BIN)/distance: $(HEAD) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) $(HEAD) $(GISLIB) $(VASK) $(MATHLIB)
+	mv a.out $(BIN)/distance
+
+$(ETC)/tocell: $(TOCELL) $(GISLIB)
+	$(CC) ${LDFLAGS} $(TOCELL) $(GISLIB) $(MATHLIB)
+	mv a.out $(ETC)/tocell
+
+$(ETC)/fromcell: $(FROMCELL) $(GISLIB)
+	$(CC) $(LDFLAGS) $(FROMCELL) $(GISLIB) $(MATHLIB)
+	mv a.out $(ETC)/fromcell
+
+text:
+	rm -rf $(TXT)/DISTANCE
+	mkdir $(TXT)/DISTANCE
+	cp HELP_TEXT/* $(TXT)/DISTANCE
+
+distance.o: disfrm.h
+fromcell.o: disfrm.h
+getdists.o: disfrm.h
+writecats.o: disfrm.h
+
+$(GISLIB): #
+$(VASKLIB): #
