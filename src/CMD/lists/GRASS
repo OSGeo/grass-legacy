@@ -1,4 +1,5 @@
 man
+html
 src/libes/vask
 src/libes/segment
 src/libes/rowio
