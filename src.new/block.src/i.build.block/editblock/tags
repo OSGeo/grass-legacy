@@ -1,0 +1,7 @@
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+ask_newfiles	ask_files2.c	/^ask_newfiles (fd, ref, group)$/
+ask_newfiles_in_mapset	ask_files2.c	/^ask_newfiles_in_mapset (fd, mapset, ref, group)$/
+ask_oldfiles	ask_files1.c	/^ask_oldfiles (ref1, ref2, group)$/
+find_all_cellfiles	cellfiles.c	/^find_all_cellfiles (fd, ref)$/
+get_name	ask_files2.c	/^get_name (fd, name)$/
+new_mapset	ask_files2.c	/^new_mapset (fd, mapset)$/
