@@ -290,7 +290,7 @@ proc DmVector::save { tree depth node } {
 
     foreach key { _check map display_shape display_cat display_topo display_dir display_attr
                   type_point type_line type_boundary type_centroid type_area type_face
-                  color fcolor _use_fcolor lcolor icon size field lfield attribute
+                  color fcolor _use_fcolor lcolor sqlcolor icon size field lfield attribute
                   xref yref lsize cat where _query_text _query_edit _use_where minreg maxreg _width } {
         Dm::rc_write $depth "$key $opt($id,$key)"
 
