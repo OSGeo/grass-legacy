@@ -24,8 +24,7 @@ mofiles:
 	    (cd $$LCL/LC_MESSAGES; \
 	    for h in *.po; do \
 	        test -d $$h && continue; \
-	        $(MSGFMT) $$h -o `basename $$h .po`.mo; \
-	        mv `basename $$h .po`.mo $$NLOC_DIR/LC_MESSAGES; \
+	        $(MSGFMT) $$h -o $$NLOC_DIR/LC_MESSAGES/`basename $$h .po`.mo; \
 	    done); \
 	done
 
