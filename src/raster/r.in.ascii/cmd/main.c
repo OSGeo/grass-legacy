@@ -51,6 +51,7 @@ main (int argc, char *argv[])
 	parm.input->type = TYPE_STRING;
 	parm.input->required = YES;
 	parm.input->description = "Ascii raster file to be imported";
+	parm.input->gisprompt = "file,file,file";
 
 	parm.output = G_define_option();
 	parm.output->key = "output";
