@@ -203,6 +203,9 @@ then
 	done
 elif [ "$cmd" = "socks" ]
 then
+        SOURCES="$SOURCES
+src/display/devices/lib/IPC_NEW/SWITCHER.c
+"
 	for i in $SOURCES
 	do
 		src=`echo $i | sed 's|IPC_NEW/||'`
