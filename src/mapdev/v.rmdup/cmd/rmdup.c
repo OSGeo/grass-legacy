@@ -190,7 +190,7 @@ killdups (Closet, Suitcase)
  * -> but today?
  */
  /*     while (match == 0 && Closet->dig_fp->_cnt) */
-#ifndef __CYGWIN__
+#if !defined(__CYGWIN__) && !defined(__FreeBSD__)
     while (match == 0 && Closet->dig_fp->_shortbuf[1])  /* try to upgrade in 5/2000 */
 #else
     while (match == 0 && Closet->dig_fp->_bf._size)
