@@ -56,7 +56,7 @@ $(CMD_OUT):  $(B_A_OFILES) $(VECTLIB) $(GISLIB)
 	$(CC) $(LDFLAGS) $(B_A_OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB)
 	mv a.out $@
 
-
+$(VECTLIB) $(GISLIB) $(DIG_ATTLIB): #
 
 saber_ab:
 	#load $(CFLAGS) $(A_B_CFILES) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)
