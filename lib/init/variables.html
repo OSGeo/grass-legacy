@@ -8,6 +8,10 @@
 
 <H2>GRASS variables and environment variables</H2>
 
+<!-- file source:
+     ./lib/init/variables.html
+-->
+
 <P>
 There are two types of variables:
 <ul>
@@ -18,9 +22,23 @@ There are two types of variables:
 <h2>Setting environment variables</h2>
 
 <br>Setting environment variables depends on the shell being used:
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <tt>export VARIABLE=value</tt>
-<p>or
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <tt>setenv VARIABLE value</tt>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <tt>export VARIABLE=value</tt>
+<br>or
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <tt>setenv VARIABLE value</tt>
+
+<h2>Setting environment variables permanently</h2>
+<ul>
+<li>
+To get personal BASH shell definitions (aliases, color listing option, ...)
+into GRASS, store them in:<br>
+<tt>$HOME/.grass.bashrc</tt></li>
+
+<li>
+To get personal CSH shell definitions (aliases, color listing option, ...)
+into GRASS, store them in:<br>
+<tt>$HOME/.grass.cshrc</tt></li>
+</ul>
+
 
 <h2>Setting GRASS variables</h2>
 You have to use "g.gisenv" (within GRASS):<br>
@@ -41,7 +59,6 @@ a variable name, it defaults to "get" mode. Example:
 <p>
 To <b>permanently</b> predefine GRASS environment variables the user may specify
 the variable(s) in the <tt>.grassrc57</tt> file.
-
 
 <hr WIDTH="100%">
 <h2>List of selected (GRASS related) environment variables</h2>

@@ -42,7 +42,7 @@ default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/epsg_option.tcl \
 	$(ETC)/make_location_epsg_g57.sh
 	mkdir -p $(GISBASE)/docs/html
-	cp description.html $(GISBASE)/docs/html/variables.html
+	cp variables.html $(GISBASE)/docs/html/variables.html
 
 
 $(ARCH_BINDIR)/$(START_UP): init.sh 
