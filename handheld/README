@@ -9,3 +9,9 @@ babyGRASS_compile.sh
 
 Current results: 1.8MB binary size on iPAQ
 
+---------------------
+iPAQ support:
+Binaries can be compiled here
+	http://handhelds.org/projects/skiffcluster.html
+	(upload babyGRASS package, compile with above script, download
+	iPAQ-Linux binaries)
