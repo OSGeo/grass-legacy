@@ -640,7 +640,6 @@ void gsd_set_material(int set_shin, int set_emis, float sh, float em,
 	ogl_mat_shin = 60. + (int) (sh * 68.);
 
 	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, ogl_mat_shin);
-	fprintf(stderr, "shine set to: %f\n", ogl_mat_shin);
     }
 
     if (set_emis) {
