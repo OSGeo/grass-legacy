@@ -165,7 +165,7 @@ int main(int argc ,char **argv )
         fprintf ( stderr, "%d sites read from DB\n", nsites); 
 	
 	/* read selected point and find site */
-	maxdsq = D_d_to_u_col( 100 ); /* maximum acceptable distance from site */
+	maxdsq = D_d_to_a_col( 100 ); /* maximum acceptable distance from site */
 	do {
     	    show_buttons(once);
 	    R_get_location_with_pointer(&d_x, &d_y, &button) ;
