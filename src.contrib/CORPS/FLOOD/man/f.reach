@@ -1,0 +1,25 @@
+f.reach
+
+This tool provides floodwater statistics, including areal extent of flooding, average
+flood depth, and volume of water, calculated on a reach-by-reach basis.
+
+Reach boundaries are based on the input cross section map.  The determination of reach
+boundaries assumes that cross sections in the input vector map occur in sequence, i.e.,
+the cross sections were digitized in order from upstream down or from downstream up.
+
+In addition to a vector cross map, f.reach requires as input a raster map of flood
+depths.  If a raster map is displayed in the GRASS graphics window, that map will be used
+as the input depth map.  If no raster map is displayed, the user will be promoted for the
+appropriate depth map.
+
+Since flood depths are required to calculate reach statistics, f.input and f.wsurf should
+be run prior to f.reach to provide depth maps as input.  Since depth maps from f.wsurf
+contain a factor of 10 to provide one-tenth foot precision in the data, f.reach adjusts
+for this factor in its calculations.
+
+f.reach will function successfully with raster maps other than flood depth; however,
+interpretation of the calculated statistics is left to the user.
+
+This is a fully interactive tool, i.e., no control file is processed and reaches of
+interest are identified by mouse selection.  Research statistics are printed to the
+screen.
