@@ -1,27 +1,39 @@
-.\" @(#)proj.1 - 1.1
+.\" @(#)proj.1 - 3.5
 .nr LL 5.5i
 .ad b
 .hy 1
-.TH PROJ 1 4/25/89 "USGS/OEMG Systems"
+.TH PROJ 1 "90/05/08 Rel. 3, Ver. 1" "USGS"
 .SH NAME
-proj \- forward or inverse cartographic projection
+proj \- forward cartographic projection filter
+.br
+invproj \- inverse cartographic projection filter
 .SH SYNOPSIS
 .B proj
-proj_name
 [
-.B \-bcdefimorswt
+.B \-bcefimorstTwW
 [
 .I args
 ] ] [
 .B +args
-] [
-file
-\&... ]
+]
+file[s]
+.br
+.B invproj
+[
+.B \-bcefimorstTwW
+[
+.I args
+] ] [
+.B +args
+]
+file[s]
 .SH DESCRIPTION
 .I Proj
-performs forward or inverse transformations of cartographic data with
-a wide range of projection functions.
-.P
+and
+.I invproj
+perform respective forward and inverse transformation of cartographic data
+to or from cartesian data with a wide range of selectable projection functions.
+.PP
 The following control parameters can appear in any order:
 .TP
 .BI \-b
@@ -36,60 +48,47 @@ is a
 .I son
 process and allows bypassing formatting operations.
 .TP
-.BI \-c
-This is a special option for check the veracity of forward-inverse
-operations and not normally of interest to general applications.
-If selected the absolute difference between the input values
-and the inverse operation are output as a field following the
-respective coordinates.
+.BI \-i
+Selects binary input only (see
+.B \-b option).
 .TP
-.BI \-d "a"
-.I A
-specifies the character to be employed as field delimiter.
-If this option is omitted, any contiguous group of
-white space characters (tabs, blanks, etc.)
-will delimit the input fields.
-Output field delimiter is always a tab character.
+.BI \-o
+Selects binary output only (see
+.B \-b option).
 .TP
 .BI \-t "a"
 .I A
 specifies a character employed as the first character to denote
 a control line to be passed through without processing.
+This option applicable to ascii input only.
 (# is the default value).
 .TP
 .BI \-e " string"
 .I String
 is an arbitrary string to be output if an error is detected during
 data transformations.
-The default value is: *.
+The default value is: *\et*.
 Note that if the
-.B \-b
-option is employed, an error is returned as
+.B \-b,
+.B \-i
+or
+.B \-o
+options are employed, an error is returned as
 .I HUGE
 value for both return values.
 .TP
-.BI \-f " file"
+.BI \-c " file"
 .I File
-is the source file name of additional control data for the projection
+is the source file name of additional + option control data for the projection
 procedures.
 .TP
-.BI \-o " file"
-.I File
-is the name of an output file to be employed in lieu of
-standard output.
-.TP
-.BI \-r "list"
-is one or two numbers (separated by a comma) selecting the respective
-field position of longitude and latitude
-(default:
-.BI \-r 1,2
-).
-If the second number is omitted, the latitude field is assumed
-to follow the longitude value.
+.BI \-r
+This options reverses the order of the
+expected input from longitude-latitude or x-y to latitude-longitude or y-x.
 .TP
 .BI \-s
-Output of lon\-lat or x\-y will be reversed to respective
-lat\-lon or y\-x.
+This options reverses the order of the
+output from x-y or longitude-latitude to y-x or latitude-longitude.
 .TP
 .BI \-m " mult"
 The cartesian data may be scaled by the
@@ -101,13 +100,13 @@ cartesian output values are multiplied by
 otherwise the input cartesian values are divided by
 .I mult
 before inverse projection.
-If
+If the first two characters of
 .I mult
-consists of two real values are separated by a / then the arithmetic
-ratio is employed (i.e. \-m 1/25000 will result in a multiplier of .00004).
-The default value is 1.
+are 1/ or 1: then the reciprocal value of
+.I mult
+is employed.
 .TP
-.BI \-w " format"
+.BI \-f " format"
 .I Format
 is a
 .I printf
@@ -116,246 +115,110 @@ For inverse projections, the output will be in degrees when this option
 is employed.
 If a format is specified for inverse projection the
 output data will be in decimal degrees.
-The default format is \(``%.2f\('' for forward projection and
-.SM DMS
+The default format is \(``%.2f\('' for forward projection and DMS
 for inverse.
-.P
-The following parameters are associated with cartographic parameters
-and usage varies with projection selected.
+.TP
+.BI \-[w|W] n
+.I N
+is the number of significant fractional digits to employ for
+seconds output (when the option is not specified,
+.B \-w3
+is assumed).
+When
+.B \-W
+is employed the fields will be constant width with leading zeroes.
+.TP
+.BI \-T " ulow,uhi,vlow,vhi,res[,umax,vmax]"
+This option creates a set of bivariate Chebyshev polynomial
+coefficients that approximate the selected cartographic projection on
+.I stdout.
+The values
+.I low
+and
+.I hi
+denote the range of the input where the
+.I u
+or
+.I v
+prefixes apply to respective longitude-x or latitude-y
+depending upon whether a forward or inverse projection is selected.
+.I Res
+is an integer number specifying the power of 10 precision of the
+approximation.
+For example, a
+.I res
+of -3 specifies an approximation accuracy better than .001.
+.I Umax,
+and
+.I vmax
+specify maximum degree of the polynomials (default: 15).
+See also:
+.B fproj(1).
+.PP
+The
+.B +args
+run-line arguments are associated with cartographic parameters
+and usage varies with projection and for a complete description see
+.I "Cartographic Projection Procedures for the UNIX Environment\(emA User's Manual" )
 They may be either entered on the run line where they must be preceeded
 by the + symbol or specified in the file reference by the
-.B \-f
-option.
-The + is optional for file entries.
+.B \-c
+option where the + prefix is optional.
 The options are processed in left to right order
 from the run line followed by processing the entries in the
-.B-f
+.B\-c
 file.
 Reentry of an option is ignored with the first occurance assumed to
 be the desired value.
-.P
-The default values for projections parameters are 0
-unless otherwise specified.
-.TP
-.BI +inv
-Parameter
-.B +inv
-is required for inverse (cartesian to geographic) projection,
-otherwise a forward projection (geographic to cartesian) is performed.
-.TP
-.BI +proj= acronym
-is
-.I always
-required for selection of the transformation function
-and where
-.I acronym
-is selected from the following list of projections:
-.RS
-.ps 9p
-.vs 11p
-.sp .5
-.TS
-box;
-l l l.
-proj=	Common name	Additional + parameters*
-_	_	_
-aea	Albers Equal Area	es, lat_1, lat_2, lat_0
-aeqd	Azimuthal Equi-distant	lat_0
-bipc	Bipolar Conic	ns
-bonne	Bonne	es, lat_0
-cass	Cassini	es, lat_0
-cea	Cylindrical Equal Area	es, lat_ts
-eck4	Eckert IV
-eck6	Eckert VI
-eqc	Equi-distant Cylindrical	lat_ts
-eqdc	Equi-distant Conic	es, lat_1, lat_2, lat_0
-gnom	Gnomonic	lat_0
-laea	Lambert Azimuthal Equal Area	es, lat_0
-lcc	Lambert Conformal Conic	es, lat_1, lat_2, lat_0
-merc	Mercator	es, lat_ts
-mill	Miller
-moll	Molleweides
-nsper	Near-sided Perspective	h, lat_0
-omerc	Oblique Mercator	es, k, lat_0, no_rot and\s-2\u(1)\d\s+2
-		lat_1, lon_1, lat_2, lon_2 or
-		azi, lonc, alpha
-ortho	Orthographic	lat_0
-poly	Polyconic (American)	es, lat_0
-sinu	Sinusoidal	es
-stere	Stereographic	es, k, lat_ts, lat_0
-tmerc	Transverse Mercator	es, k, lat_0
-ups	Universal Polar Stereographic	south\s-2\u(2)\d\s+2
-utm	Universal Transverse Mercator	es, zone, south\s-2\u(3)\d\s+2
-vandg	Van der Grinten	
-.TE
-*except where noted arguments a, lon_0, x_0, and y_0 always apply.
-.br
-\s-2\u(1)\d\s+2 lon_0 not applicable; projection specialized.
-.br
-\s-2\u(2)\d\s+2 a, lon_0, x_0, and y_0 not applicable.
-.br
-\s-2\u(3)\d\s+2 a, es restricted in usage, lon_0 is adjusted to zone.
-.ps 10p
-.vs 12p
-.RE
-.TP
-.BI +a= axis
-Either earth's radius when
-.B es
-not specified or assigned 0 or semi-major axis when
-.B es
-is specified.
-Listed projections without
-.B es
-in above list are available only in spherical form.
-For a spherical projections the default value is 6370997 m and for
-elliptical projections the default values of
-.BI a= 6378206.4 m
-and
-.BI es= 0.006768658
-are employed (Clarke 1866).
-.TP
-.BI +es= val
-Elliptical earth's eccentricity squared.
-The elliptical factor may be alternately specified as:
-.B +b=
-semi-minor axis,
-.B +e=
-eccentricity,
-.B +f=
-flattening, or
-.B +rf=
-reciprocal flattening.
-If
-.B +es
-is specified as non-zero
-then
-.B +a
-must also be specified.
-.TP
-.BI +lon_0= lon
-Longitude of projection origin.
-.TP
-.BI +lat_0= lat
-Latitude of projection origin.
-.TP
-.BI +[x|y]_0= val
-False easting (\fB+x_0\fR)
-and false northing (\fB+y_0\fR).
-Units of
-.I val
-must be same as
-.B +a.
-.TP
-.BI +lat_[1|2]= lat
-Standard parallels for conic projections.
-Restriction:
-.B +lat_1
-\(!=
-.B \-(+lat_2)
-(cylinder).
-Default values for
-.I aea
-and
-.I eqdc
-are 29\(12\(deN and 45\(12\(deN, and 33\(deN and 45\(deN are default for
-.I lcc.
-.TP
-.BI +lat_ts= lat
-Latitude of true scale for cylindrical projections.
-.TP
-.BI +h= val
-Height of the prespective point above the sphere.
-.I val
-> 0.
-.TP
-.BI +ns
-If specified, cartesian units are in non-skewed form.
-.TP
-.BI +k= val
-Scaling parameter.
-.TP
-.BI +south
-Southern hemisphere coordinate system selection for flag for
-.SM UTM
-and
-.SM UPS.
-.TP
-.BI +zone= val
-.SM UTM
-zone number which may be specified in lieu of
-.B +lon_0.
-.TP
-.BI files
+.PP
 One or more
 .I files
 (processed in left to right order)
 specify the source of data to be transformed.
-A \- will specify the location of processing
-standard input.
+A \- will specify the location of processing standard input.
 If no files are specified, the input is assumed to be from
-standard input.
-.P
+.I stdin.
+For ASCII input data the two data values must be in the
+first two white space separated fields and
+when both input and output are ASCII all trailing portions
+of the input line are appended to the output line.
+.PP
 Input geographic data
-(longitude and latitude) must be in
-.SM DMS
-format summarized by
-the incomplete lexical definition:
-.sp
-.RS 5
-[\-]xx[dxx['xx.xxx"]][NnSsEeWw].
-.RE
-.sp
-Output geographic coordinates will be in
-.SM DMS
+(longitude and latitude) must be in DMS format and input
+cartesian data must be in units consistent with the ellipsoid
+major axis or sphere radius units.
+Output geographic coordinates will be in DMS
 (if the
 .B \-w
 switch is not employed) and precise to 0.001"
 with trailing, zero-valued minute-second fields deleted.
-.P
-The units of cartesian data is determined by the major axis, +a, units
-(typically meters).
-.ne 8
 .SH EXAMPLE
 The following script
 .RS 5
- 
- \f(CWproj +proj=utm +lon_0=112w -r2,1 <<EOF
+ \f(CWproj +proj=utm +lon_0=112w -r <<EOF
  45d15'33.1"	111.5W
  45d15.551666667N	-111d30
  +45.25919444444	111d30'000w
  EOF\fR
- 
 .RE
-will perform
-.SM UTM
-forward projection
-with a standard
-.SM UTM
+will perform UTM forward projection with a standard UTM
 central meridian nearest longitude 112\(deW.
 The geographic values of this example are equivalent and meant
-as examples of various forms of
-.SM DMS
-input.
-The x\-y output data will appear as:
+as examples of various forms of DMS input.
+The x\-y output data will appear as three lines of:
 .RS 5
- 
- \f(CW460769.27	5011648.43
- 460769.27	5011648.43
- 460769.27	5011648.43\fR
- 
+ \f(CW460769.27	5011648.45
 .RE
 .SH SEE ALSO
-.I Projection Parameters.
-.br
-Program
-.B ellipse(1)
-for generating standard ellipsoid constants.
+.I "Cartographic Projection Procedures for the UNIX Environment\(emA User's Manual,"
+(Evenden, 1990, Open-file report 90\-xxx).
 .br
 .I "Map Projections Used by the U. S. Geological Survey"
 (Snyder, 1984,
 USGS Bulletin 1532).
-.SH DIAGNOSTICS
-Error monitoring only.
-.SH AUTHOR/MAINTENANCE
-Gerald I. Evenden, USGS, Woods Hole, MA.
+.br
+.I "Map Projections\(emA Working Manual"
+(Synder, 1988, USGS Prof. Paper 1395).
+.br
+.I "An Album of Map Projections"
+(Snyder & Voxland, 1989, USGS Prof. Paper 1453).
