@@ -24,7 +24,7 @@ int main(argc,argv)
 int argc;
 char	*argv[];
 {
-	char    buf[100], *title[100];
+	char    buf[100], title[100];
 
 	int     i, j; 
 	int	row_id, col_id;
