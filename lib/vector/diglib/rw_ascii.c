@@ -39,7 +39,7 @@ dig_write_head_ascii (
   fprintf (dascii, "NORTH EDGE:   %s\n", buf);
   G_format_northing (head->map_thresh, buf, -1);
   */
-  fprintf (dascii, "MAP THRESH:   %s\n", buf);
+  fprintf (dascii, "MAP THRESH:   %f\n", head->map_thresh);
   /*
   fprintf (dascii, "VERTI:\n");
   */
