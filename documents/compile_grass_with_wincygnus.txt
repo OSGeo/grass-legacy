@@ -1,0 +1,134 @@
+                                              Fri May 19 09:59:23 MEST 2000
+
+This directory contains the experimental binary
+version of GRASS under WINDOWS/Cygnus.
+
+NOTE: The graphical output is not ported yet.
+      -> no graphics yet, friends!!
+
+---------------------------------------------------------
+
+From: John Huddleston <John.Huddleston@usda.gov>
+Cc: Markus Neteler <neteler@geog.uni-hannover.de>
+Subject: updated grass5 instructions for Cygwin compile
+
+1. Get latest GRASS source code
+http://www.geog.uni-hannover.de/grass/grass5/source/experimental/
+
+2. To compile and link under the Windows 98/NT go to
+http://sourceware.cygnus.com/cygwin/download.html
+and get the binary distribution full.exe.   Install
+it.
+
+3. Get a X-Server:
+
+ Non-commercial: ******************************
+ The previous free version of MI/X can be obtained from: 
+
+    ftp://ftp.suse.com/pub/suse/i386/current/dosutils/mix 
+
+ This server is somewhat limited as it does not fully support the Athena
+ widgets (menu items when selected become invisible!). 
+
+ WeirdX is an X Window System server in pure Java under GNU GPL: 
+
+    http://www.jcraft.com/weirdx/index.html 
+
+ Currently, there is a group working on a port of XFree86 to cygwin. This
+ will provide the community with a really free, open source, X server for
+ win32. For project status and see how you could
+ contribute please check: 
+
+    http://sourceware.cygnus.com/cygwin/xfree/ 
+    ftp://sourceware.cygnus.com/pub/cygwin/xfree/
+
+ And finally:
+
+    http://siddiqi.webjump.com/
+
+ Choose one of above Xservers.
+
+4. Get the precompiled X11R6.4 binaries for Cygwin from
+  http://dao.gsfc.nasa.gov/software/grads/win32/X11R6.4/
+
+5. Download the sunrpc tar.gz file from Corinna Vinschen
+  site and install the binary files:
+ ftp://ftp.franken.de/pub/win32/develop/gnuwin32/cygwin/porters/Vinschen_Corinna/
+
+6. Download the ncurses tar.gz file from Michael Hirmke's page:
+ftp://ftp.franken.de/pub/win32/develop/gnuwin32/cygwin/porters/Hirmke_Michael/
+
+6.b Read on here:
+    http://cygutils.netpedia.net/V1.1/index.html
+    http://sourceware.cygnus.com/cygwin/docs.html
+
+-----------------------------------------------------------------------------
+
+7. To start GRASS compilation proceed like this:
+
+    Set the execute permission on the gmake5.0 script in the
+    repository so that is is executable.
+                                                                                                           
+       chmod +x src/CMD/gmake5.0
+
+    I made my life easy by creating a mount point for /grass
+    so from the Windows CMD prompt do:
+       
+       mkdir c:\grass
+       mount e:\cvs\grass5\grass /grass
+
+       sh
+       cd /grass
+       GMAKE=/grass/src/CMD/gmake5.0
+       GRASSSRC=/grass/src
+       export GMAKE GRASSSRC
+
+    The configure does not create the /usr/local/grass-5.0b directory.
+    This must be created:
+   
+       mkdir /usr/local/grass-5.0b
+       cd /grass
+       ./configure
+
+    Now we copy the ready-to-use "head" file:
+
+       cd src/CMD/head
+       cp os_specific/cygwin32 head
+       cd -
+
+    In the CMD/head/head file then include the following line 
+    XDRLIB              = /usr/local/lib/librpclib.a
+
+  Check the src/include/config.h file, if the #define CURSORS_MAXY
+  is NONE, change this to _maxy and define
+  #define HAVE_CURSORS in one of the lines
+  previous to this line.   
+
+  Modify the line in the src/CMD/head/head file
+  and replace the word "yacc" with "bison -y".
+
+  set MAKE_MODE=unix from the CMD (COMMAND for 98) window
+  before entering the sh or set it from the shell (sh,bash) 
+  line before starting to compile using Cygwin.
+
+
+  And finally start compilation process:
+    
+       src/CMD/generic/GISGEN.sh > cygwin.er 2>&1    
+
+  It should compile (more or less)...
+
+  One other item to run the X under NT                                            
+   set DISPLAY=127.0.0.1:0.0
+
+Comments are welcome!
+
+John.Huddleston@usda.gov
+
+------------------
+If required:
+ The IPC code is available from llange@capgemini.fr the                          
+ current maintainer of the package.
+ (inter-process communication)
+
+</pre></body></html>
