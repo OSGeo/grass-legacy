@@ -34,18 +34,18 @@ int
 Vect_build_shp ( struct Map_info *Map, FILE *msgout )
 {
     struct Plus_head *plus ;
-    int    i, n, lineid, offset, ret;
+    int    i, n, offset, ret;
     int    line, type;
     int    area, isle;
     plus_t lines[1];
     struct line_pnts **Points, *CPoints;
     int    alloc_parts;
-    int    *ptype;
+    int    *ptype, *pline;
     struct line_cats *Cats;
     P_LINE *Line;
     P_AREA *Area;
     P_ISLE *Isle;
-    double area_size;
+    double area_size, x, y, fret;
     int     progress;
     int     nShapes, nParts, shape, part;
     int     first, last;
@@ -69,9 +69,8 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout )
         prnmsg ("Build topology for %d shapes:\n", nShapes );
         /* return ( Vect_build_nat ( Map, msgout) ); */
 	
-	i = 1;
 	while ( 1 ) {
-	    G_debug ( 3, "line = %d", i );
+	    G_debug ( 3, "register line" );
 	    type = V1_read_next_line_shp (Map, CPoints, Cats);
 	    if ( type == -1 ) {
 		G_fatal_error ("Can't read data from vector '%s'",Vect_get_full_name(Map));
@@ -80,15 +79,13 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout )
             }
             offset = Vect_last_line_offset (Map);
 	    G_debug ( 3, "Register line: offset = %d", offset );
-	    lineid = dig_add_line ( plus, type, CPoints, offset ); 
-	    G_debug ( 3, "Line registered with lineid = %d", lineid );
+	    line = dig_add_line ( plus, type, CPoints, offset ); 
+	    G_debug ( 3, "Line registered with line = %d", line );
 	    
             /* Set box */
 	    dig_line_box ( CPoints, &box );
-            if ( i = 1 ) Vect_box_copy (&(plus->box), &box);
+            if ( line == 1 ) Vect_box_copy (&(plus->box), &box);
             else Vect_box_extend (&(plus->box), &box);
-
-	    i++;
 	}	
     } 
     else 
@@ -99,6 +96,7 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout )
 	alloc_parts = 10; 
 	Points = (struct line_pnts **) G_malloc ( alloc_parts * sizeof ( struct line_pnts *) );
 	ptype = (int *) G_malloc ( alloc_parts * sizeof ( int *) );
+	pline = (int *) G_malloc ( alloc_parts * sizeof ( int *) );
 	for ( i = 0; i < alloc_parts; i++ ) {
 	    Points[i] = Vect_new_line_struct (); 
 	}
@@ -112,6 +110,7 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout )
 	    if ( nParts > alloc_parts ) {
 		Points = (struct line_pnts **) G_realloc ( (void *) Points, nParts * sizeof ( struct line_pnts *) );
 		ptype = (int *) G_realloc ( (void *) ptype, nParts * sizeof ( int *) );
+		pline = (int *) G_realloc ( (void *) pline, nParts * sizeof ( int *) );
 		for ( i = alloc_parts; i < nParts; i++ ) {
 		    Points[i] = Vect_new_line_struct (); 
 		}
@@ -132,19 +131,21 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout )
 		    /* TODO do it better (speed) */
 		    Vect_append_point ( Points[part], pShape->padfX[i], pShape->padfY[i], 0 );
 		}
+		G_debug ( 3, "   -> n_points = %d",  Points[part]->n_points );
 		
 		/* register line */
 		offset = ( ( shape << 11 ) | ( part & 0x7FF) );
 		G_debug ( 3, "Register line: offset = %d", offset );
 		line = dig_add_line ( plus, GV_BOUNDARY, Points[part], offset );
+		pline[part] = line;
 		dig_line_box ( Points[part], &box );
 		dig_line_set_box (plus, line, &box);
-		if ( lineid == 1 )
+		if ( line == 1 )
 		    Vect_box_copy (&(plus->box), &box);
 		else
 		    Vect_box_extend (&(plus->box), &box);
 				
-		if ( part == 0 ) { lineid = line; }
+		//if ( part == 0 ) { lineid = line; }
 	    
 		/* Check part type: area or isle */
 		dig_find_area_poly (Points[part], &area_size);
@@ -165,37 +166,20 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout )
 		G_debug ( 3, "  part = %d ptype = %d", part, ptype[part] );
 		if ( ptype[part] == 1 ) { /* area */
 		    /* register area */
-		    lines[0] = lineid + part; 
+		    lines[0] = pline[part]; 
 		    area = dig_add_area (plus, 1, lines);
 		    dig_line_box ( Points[part], &box );
 		    dig_area_set_box (plus, area, &box);
 		    
-		    /* create virtual centroid */
-		    /* !! offset for virtual centroids is offset for part 0 */
-		    /* TODO calculate better centroid coordinates */
-		    offset =  ( shape << 11 ) ;
-		    Vect_reset_line ( CPoints );
-		    Vect_append_point ( CPoints, Points[part]->x[0], Points[part]->y[0], 0 );
-		    line = dig_add_line ( plus, GV_CENTROID, CPoints, offset );
-		    dig_line_box ( CPoints, &box );
-		    dig_line_set_box (plus, line, &box);
-		    
-		    Line = plus->Line[line];
-		    Line->left = area;
-
-		    /* register centroid to area */
-		    Area = plus->Area[area];
-		    Area->centroid = line;
-
 		    /* find islands inside area */
 		    for ( i = 0; i < nParts; i++ ) {
 			if ( ptype[i] == 2 ) { /* not registerd island */
-			    ret = dig_point_in_poly ( Points[i]->x[0], 
-					  Points[i]->y[0], Points[part]);
-			    if ( ret > 0 ) { /* isle inside ares */
+			    fret = dig_point_in_poly ( Points[i]->x[0], Points[i]->y[0], Points[part]);
+			    G_debug ( 3, "isle in area ? = %f", fret );
+			    if ( fret > 0 ) { /* isle inside area */
 				G_debug ( 3, "isle (part = %d) in area", i );
 				/* register island */ 
-				lines[0] = lineid + i; 
+				lines[0] = pline[i]; 
 				isle = dig_add_isle (plus, 1, lines);
 				dig_line_box ( Points[i], &box );
 				dig_area_set_box (plus, isle, &box);
@@ -213,13 +197,37 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout )
 				Area->n_isles++;
 				G_debug ( 3, "n_isles = %d", Area->n_isles);
 				ptype[i] = 0; /* used */
+			    } else { 
+				G_debug ( 3, "isle (part = %d) is not in area %d", i, area );
 			    }
 			}
 
 		    }
+
+		    /* create virtual centroid */
+		    /* !! offset for virtual centroids is offset for part 0 */
+		    /* TODO calculate better centroid coordinates */
+		    offset =  ( shape << 11 ) ;
+		    Vect_reset_line ( CPoints );
+		    ret = Vect_get_point_in_area ( Map, area, &x, &y ); 
+		    if ( ret < -1 ) {
+			G_warning ( "Cannot calculate centroid for shape area (area %d, shape %d, part %d)",
+				                area, shape, part );
+			x = Points[part]->x[0];
+			y = Points[part]->y[0];
+		    }
+		    Vect_append_point ( CPoints, x, y, 0 );
+		    line = dig_add_line ( plus, GV_CENTROID, CPoints, offset );
+		    dig_line_box ( CPoints, &box );
+		    dig_line_set_box (plus, line, &box);
 		    
+		    Line = plus->Line[line];
+		    Line->left = area;
+
+		    /* register centroid to area */
+		    Area = plus->Area[area];
+		    Area->centroid = line;
 		}
-		
 	    }
 	    
 	    /* print progress */
