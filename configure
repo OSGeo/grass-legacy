@@ -23,7 +23,7 @@ ac_help="$ac_help
 ac_help="$ac_help
   --enable-w11            use W11 library for Windows X11 emulation"
 ac_help="$ac_help
-  --with-dbm              support DBM functionality (default: yes)"
+  --with-dbm              support DBM functionality (default: no)"
 ac_help="$ac_help
   --with-jpeg             support JPEG functionality (default: yes)"
 ac_help="$ac_help
@@ -1169,7 +1169,7 @@ if test "${with_dbm+set}" = set; then
   withval="$with_dbm"
   :
 else
-  with_dbm=yes
+  with_dbm=no
 fi
 
 
