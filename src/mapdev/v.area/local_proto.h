@@ -14,5 +14,5 @@ int where_am_i(char *, char *, char *, int, char *);
 #ifdef GRASS_VECT_H
 /* area_perim.c */
 int area_perim(double, double, struct Map_info *,
-    struct line_pnts *, char *, char *, char *, int, char *);
+    struct line_pnts *, char *, char *, char *, int, char *, struct Categories *cats);
 #endif
