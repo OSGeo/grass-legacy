@@ -43,7 +43,13 @@ int main (int argc, char *argv[])
   CELL *rowbuf1, *rowbuf2;
   double *d_buf; /* a cell buf only double in order not to loose precision */
 
+  struct GModule *module;
   struct Option *opt1, *opt2, *opt3 ;
+
+  module = G_define_module();
+  module->description =
+	"Principal components analysis (pca) "
+	"program for image processing.";
 
   /* Define the different options */
 
