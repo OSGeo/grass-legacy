@@ -1,0 +1,62 @@
+.\" %W% %G%
+.TH Dstop.mon 2D D-language
+.SH NAME
+Dstop.mon \- Terminate graphics device driver program
+.br
+.I (D Language Tool)
+.SH SYNOPSIS
+.B Dstop.mon
+[-f] \fImonitor_name\fR
+.SH DESCRIPTION
+.I Dstop.mon
+terminates the named graphics device controller
+program (also called a monitor).  If the controller program is locked
+by another user or is not loaded into memory, no action is taken.
+Use of the option \fI-f\fR
+will override the protection mechanisms and allow the device to be terminated
+even if it is locked by another user.  This is not a very friendly thing
+to do, but is sometimes necessary.
+The \fI-f\fR option can be used in the event of a locking mechanism failure
+(which shouldn't happen).
+.SH DIAGNOSTICS
+.I Dstop.mon
+will complain if the control program is not running, or if it is in use
+by another user.
+.SH BUGS
+If the monitor is hung-up,
+.I Dstop.mon
+will fail.  In this case, the monitor must be stopped with
+the UNIX command
+.IR kill.
+.SH "SEE ALSO"
+.TS
+ll.
+\fIDINTRO[2D]\fR	Introduction to the GRASS \fID\fR tools
+.br
+\fIDlist.mon[2D]\fR	Lists all GRASS device driver programs (monitors)
+.br
+\fIDrelease.mon[2D]\fR	Relinquishes control of a graphics output device
+.br
+\fIDselect.mon[2D]\fR	Selects a graphics device for output
+.br
+\fIDstart.mon[2D]\fR	T{
+Loads graphics device driver program (i.e., starts the monitor)
+T}
+.br
+\fIDstatus.mon[2D]\fR	Lists the status of all GRASS device driver programs
+.br
+\fIDwhich.mon[2D]\fR	T{
+States which output device is currently selected for output
+T}
+.br
+\fImonitor[1]\fR	T{
+Highly interactive, menu-driven program performing all of the functions
+of the \fID\fR monitor commands listed above
+T}
+.br
+\fImonitorcap[5]\fR	Device driver database file format
+.TE
+.SH "AUTHORS"
+Jean Ezell, U.S. Army Construction Engineering Research Laboratory
+.br
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
