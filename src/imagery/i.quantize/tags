@@ -1,0 +1,6 @@
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+ask_levels	ask_levels.c	/^ask_levels()$/
+compose	compose.c	/^compose ()$/
+gen_colors	gen_colors.c	/^gen_colors ()$/
+make_lookup	compose.c	/^make_lookup(table, min, max, level, mult)$/
+paint	compose.c	/^paint (out, in, ncols, table, min, max)$/
