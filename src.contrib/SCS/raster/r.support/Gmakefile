@@ -1,0 +1,10 @@
+HOME=$(BIN_CONTRIB_INTER)
+all: $(ETC)/modcats
+
+MODCATS = modcats.o
+
+$(ETC)/modcats: $(MODCATS) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(MODCATS) $(GISLIB) $(VASK) $(EXTRALIB)
+
+$(GISLIB): #
+$(VASKLIB): #
