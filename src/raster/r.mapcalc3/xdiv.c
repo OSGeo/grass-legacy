@@ -28,7 +28,7 @@ f_div(int argc, const int *argt, void **args)
 		CELL *arg2 = args[2];
 		for (i = 0; i < columns; i++)
 		{
-			if (IS_NULL_C(&arg1[i]) || IS_NULL_C(&arg2[i]))
+			if (IS_NULL_C(&arg1[i]) || IS_NULL_C(&arg2[i]) || arg2[i] == 0)
 				SET_NULL_C(&res[i]);
 			else
 				res[i] = arg1[i] / arg2[i];
@@ -42,7 +42,7 @@ f_div(int argc, const int *argt, void **args)
 		FCELL *arg2 = args[2];
 		for (i = 0; i < columns; i++)
 		{
-			if (IS_NULL_F(&arg1[i]) || IS_NULL_F(&arg2[i]))
+			if (IS_NULL_F(&arg1[i]) || IS_NULL_F(&arg2[i]) || arg2[i] == 0.0f)
 				SET_NULL_F(&res[i]);
 			else
 			{
@@ -61,7 +61,7 @@ f_div(int argc, const int *argt, void **args)
 		DCELL *arg2 = args[2];
 		for (i = 0; i < columns; i++)
 		{
-			if (IS_NULL_D(&arg1[i]) || IS_NULL_D(&arg2[i]))
+			if (IS_NULL_D(&arg1[i]) || IS_NULL_D(&arg2[i]) || arg2[i] == 0.0)
 				SET_NULL_D(&res[i]);
 			else
 			{
