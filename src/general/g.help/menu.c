@@ -197,7 +197,7 @@ int Curline ;
 				(*hilite)++ ;
 				break ;
 				}
-
+/* Switched functions of BLANK and SPACE 7/98 Markus Neteler
 			case BLANK:
 				{
 				*Respbuf = ESC ; *(Respbuf+1) = NULL ;
@@ -205,6 +205,17 @@ int Curline ;
 				}
 
 			case ESC:
+				{
+				goto doreturn;
+				}
+*/
+			case ESC:
+				{
+				*Respbuf = ESC ; *(Respbuf+1) = NULL ;
+				goto doreturn ;
+				}
+
+			case BLANK:
 				{
 				goto doreturn;
 				}
@@ -549,6 +560,7 @@ char	*Prmptstr;
 {
 char	*Saveptr;
 int	Charcntr;
+int	curx, cury;
 
 	Charcntr = 0;
 	Saveptr = Respbuf;
@@ -580,7 +592,7 @@ int	Charcntr;
 				}
 			}
 		else if ((*Respbuf != BKSPC)
-			 && (PrmptW->_curx <= (COLS - 5)))
+			 && (getyx(PrmptW, cury, curx), curx <= (COLS - 5)))
 			{
 			waddch (PrmptW, *Respbuf++);
 			wrefresh (PrmptW);
@@ -727,6 +739,7 @@ int		Firstline, Buflength, Numlines;
 	int	Index, Maxlines;
 	int std_out_on ;
 	char	*bufptr ;
+	int	curx, cury;
 
 
 	if (Bufptr == NULL)
@@ -760,7 +773,7 @@ int		Firstline, Buflength, Numlines;
 	{
 		wmove (Windoname, Index, LEFTMARG+1);
 		while ((*Bufptr != LF) && (*Bufptr != NULL) &&
-				(Windoname->_curx < (COLS - 3)))
+				(getyx(Windoname, cury, curx), curx < (COLS - 3)))
 		{
 			if(*Bufptr == '\134')
 			{
@@ -801,6 +814,7 @@ char 	*response ;
 	int do_hilite ;
 	int at_hilite ;
 	char	*bufptr ;
+	int	curx, cury;
 
 
 	if (Bufptr == NULL)
@@ -866,7 +880,7 @@ char 	*response ;
 		char *ptr1, *ptr2 ;
 		wmove (Windoname, Index, LEFTMARG+1);
 		while ((*Bufptr != LF) && (*Bufptr != NULL) &&
-				(Windoname->_curx < (COLS - 3)))
+				(getyx(Windoname, cury, curx), curx < (COLS - 3)))
 		{
 			if(*Bufptr == '\134')
 			{
