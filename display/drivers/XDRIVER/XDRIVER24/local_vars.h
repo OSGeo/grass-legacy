@@ -19,6 +19,8 @@ extern u_long gemask;
 extern Pixmap bkupmap;
 extern int truecolor;
 
+extern int external_window;
+
 extern unsigned long *xpixels;
 
 extern int needs_flush;
