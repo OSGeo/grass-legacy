@@ -1,0 +1,144 @@
+.TH d.what.s.inf
+.SH NAME
+\fId.what.s.inf\fR \-  Report database attributes associated with a
+specific point location.
+.br
+.I "(GRASS-RDBMS Attribute Interface Program)"
+.SH SYNOPSIS
+\fBd.what.s.inf\fR
+.br
+\fBd.what.s.inf help\fR
+.br
+\fBd.what.s.inf\fR \fBtab=\fIname\fR \fBxcol=\fIname\fR \fBycol=\fIname\fR \fBdistance=\fIvalue\fR \fB[join=\fItab,tabkey,pkey]\fR
+.br
+.SH ALTERNATE
+\fBd.what.s.inf help -s\fR
+.br
+\fBd.what.s.inf\fR \fB-s\fR \fBsql=\fIfilename\fR \fBdistance=\fIsearch radius\fR
+.SH DESCRIPTION
+d.what.s.inf reports database attributes in the currently selected
+database which are associated with a specific point location. The
+current database is identified by the GRASS environment variable
+$DATABASE which is set using the g.select.inf GRASS-RDBMS interface
+tool. The location to query is selected by the user with the mouse. The
+radius around this point to search is specified by the distance
+argument. Sites are selected by comparing the values in the database
+columns containing X and Y coordinate data against the coordinate data
+at the current mouse location. If no join arguments are supplied by the user the 
+columns in the table containing the coordinate values are returned in
+the report. By specifying a join criteria attribute information from a
+related table can be returned in the report. If information from more
+than one table is required use the -s flag and the alternate command
+line format (see below).
+.SH "COMMAND LINE OPTIONS"
+.LP
+Parameters:
+.IP \fItab=database_table_name\fR
+Table containing X, Y coordinate values.
+.IP \fIxcol=database_column_name\fR
+Column containing the X coordinate (E/W) value.
+.IP \fIycol=database_column_name\fR
+Column containing the Y coordinate (N/S) value.
+.IP \fIdistance=value\fR
+Radius distance from the current mouse location to conduct database search.
+.IP \fIjoin=tab,tabkey,pkey\fR
+Optionally, a series of join parameters can be supplied to retrieve
+information from related database tables. The format for these
+parameters is reviewed in the following discussion.
+Tab is the table used to develop the current SQL query. Tabkey is the database 
+column used to relate information in this table with data in the table linked 
+to the GRASS category file. Pkey is the associated column in the table linked 
+to the GRASS category file which is related to tabkey in the current table.
+
+d.what.s.inf  tab=well xcol=utm_east ycol=utm_north distance=500
+
+For instance, assume that well is a table containing X,Y coordinate values and that well_owners is a
+table containing ownership information associated with well logs. To base a query on site location which
+would return attribute data on ownership and locational information in the table well the following join
+would be needed on the command line:.
+
+	tab = well 
+	join=well_owners,well_owners.well_id,well.well_id
+
+The column well_id is common to both the well and the well_owners table. Because of this attribute data
+from both tables will be returned if the coordinates registered by the mouse return a record from the
+table well within a radius specified by the distance parameter on the command line.
+Specifying these conditions would insure that all rows from table roads which satisfy the query criteria would be matched with the corresponding rows in table main, which are then related to the spatial features in the GRASS data layer via the GRASS category values.
+
+This syntax is adequate to accomplish 2 table joins. However, if the query demands joins between more than 2 tables it is advisable to use the -s option [see Alternate Command Line Usage] to read a user prepared query, complete with join requirements, from a file.
+.SH "ALTERNATE COMMAND LINE USAGE"
+The alternate command line usage is provided to simplify the process of retrieving information from more than one table in the query criteria. The alternate command line structure is selected using the the [-s] flag on the command line. When using this flag the user must include the name of a text file on the command line as well. This file must include a complete, well formed SQL SELECT statement specifying the query criteria and all relevant JOINS needed to retrieve values which correspond to category values in a GRASS data layer. 
+
+The user must also specify the name of the GRASS data layer containing these category values on the command line. The following example illustrates the syntax which must be used in constructing a SELECT statement for use with the -s flag.
+
+.SH "EXAMPLE (single table)"
+
+.br
+d.what.s.inf  -s sql=well.sql map=seco_soils
+
+.br
+well.sql:
+.br
+	SELECT * FROM well
+.br
+	WHERE 
+.br
+	(  ( ( utm_east-?) * (utm_east-?)  +
+.br
+	     ( utm_north-?) * (utm_north-?) ) < ? )
+.br
+	       AND utm_east > 0 AND utm_north >0
+.br
+
+
+
+.SH "EXAMPLE (two table join )"
+.br
+d.what.r.inf  -s sql=nri.sql map=mlra
+
+.br
+well.sql:
+.br
+	SELECT * FROM well,well_owners
+.br
+	WHERE
+	(  ( ( utm_east-?) * (utm_east-?)  +
+.br
+	     ( utm_north-?) * (utm_north-?) ) < ? )
+.br
+	       AND utm_east > 0 AND utm_north >0
+.br
+	       AND well_owners.lastname matches "SM*"
+.br
+	       AND well_owners.well_id=well.well_id
+.br
+
+.SH "NOTE:"
+The symbol ? in these examples is a meta character used to
+evaluate coordinate locations returned by the GRASS pointer
+against records in the database. The ? symbols must be
+included in the sql file.
+
+
+.LP
+Flags:
+.IP \fI-s\fR
+SQL select statements are input from a prepared file.
+.LP
+Parameters:
+.IP \fIsql=filename\fR
+SQL statements specifying well formed selection criteria. These criteria must include the database table name, the Xcol and Ycol names as well as the search distance and any "JOINS" needed to retrieve the coordinate values. Additional criteria may be placed in the "WHERE" clause to further subset information returned from the database.
+.IP \fIinput=map\fR
+Name of an existing raster map.
+.SH BUGS
+None known.
+
+.SH "NOTE"
+This program requires the Informix database software.
+
+.SH "SEE ALSO"
+g.column.inf, g.select.inf, g.stats.inf, g.table.inf, d.rast.inf, d.site.inf, d.vect.inf, d.what.r.inf, d.what.v.inf, r.reclass.inf, r.rescale.inf, v.reclass.inf
+.SH AUTHOR
+James A. Farley, Wang Song and W. Fredrick Limp
+University of Arkansas, CAST
+
