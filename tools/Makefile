@@ -7,6 +7,6 @@ PROGDIR =  $(GISBASE)/scripts/
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
 PGM1:
-	(cd timer ; make)
+	(cd timer ; $(MAKE) )
 
 default: PGM1

@@ -55,5 +55,5 @@ install:
 #	$(GMAKE) html
 
 clean: 
-	(cd src && make clean) || exit 1;
+	(cd src && $(MAKE) clean) || exit 1;
 

@@ -61,13 +61,13 @@ dofirst:
 	-mkdir -p $(OBJARCH)/SHORT ; true
 
 $(BIN_CMD)/$(PGM): $(FLOAT_OBJ) $(GISLIB)  $(DEPLIBS)
-	(cd IOStream/lib ; make)
+	(cd IOStream/lib ; $(MAKE) )
 	$(CXX) -DELEV_FLOAT $(LDFLAGS) -o $@ $(FLOAT_OBJ) $(LIBS) $(MATHLIB) \
 	$(XDRLIB) $(IOSTREAM_LIB)
 	@test -x $(BIN)/$(PGM) || ln $(ETC)/front.end $(BIN)/$(PGM)
 
 $(BIN_CMD)/$(PGM).short: $(SHORT_OBJ) $(GISLIB)  $(DEPLIBS)
-	(cd IOStream/lib ; make)
+	(cd IOStream/lib ; $(MAKE) )
 	$(CXX) -DELEV_SHORT $(LDFLAGS) -o $@ $(SHORT_OBJ) $(LIBS) $(MATHLIB) \
 	$(XDRLIB) $(IOSTREAM_LIB)
 	@test -x $(BIN)/$(PGM).short || ln $(ETC)/front.end $(BIN)/$(PGM).short
@@ -86,7 +86,7 @@ htmlcmd:
 	cp *.png $(GISBASE)/docs/html
 
 clean: 
-	(cd IOStream/lib ; make clean )
+	(cd IOStream/lib ; $(MAKE) clean )
 	-rm $(OBJARCH)/FLOAT/*
 	-rm $(OBJARCH)/SHORT/*
 	-rmdir $(OBJARCH)/FLOAT

@@ -27,18 +27,18 @@ htmldocs: checkdoxygen generatelocaldox
 # NOTE: dglib, diglib and rtree are excluded in ./Doxyfile_arch_latex
 # currently only Vect_*() functions in document:
 latexdocs: checkdoxygen generatelocaldox
-	test ! -d latex || (cd ./latex && make clean)
+	test ! -d latex || (cd ./latex && $(MAKE) clean)
 	doxygen ./Doxyfile_arch_latex
 #this hack is needed to make Acroread's search engine happy:
 	(cd ./latex ; echo "\usepackage[T1]{fontenc}" >> doxygen.sty)
-	(cd ./latex && make)
+	(cd ./latex && $(MAKE) )
 	@echo "Latex reference in directory ./latex/refman.dvi"
 
 pdfdocs: checkdoxygen generatelocaldox
-	test ! -d latex || (cd ./latex && make clean)
+	test ! -d latex || (cd ./latex && $(MAKE) clean)
 	doxygen ./Doxyfile_arch_latex
 	(cd ./latex ; echo "\usepackage[T1]{fontenc}" >> doxygen.sty)
-	(cd ./latex && make pdf && mv refman.pdf grass57vlib_`date '+%Y_%m_%d'`_refman.pdf)
+	(cd ./latex && $(MAKE) pdf && mv refman.pdf grass57vlib_`date '+%Y_%m_%d'`_refman.pdf)
 	@echo "PDF reference in directory ./latex/grass57vlib_`date '+%Y_%m_%d'`_refman.pdf"
 
 cleandocs:
