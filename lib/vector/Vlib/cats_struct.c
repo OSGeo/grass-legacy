@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "gis.h"
 
+static int cmp();
+
 /*
    **
    **  Creates and initializes a  struct line_cats  
@@ -315,6 +317,45 @@ Vect_str_to_cat_list (char *str, struct cat_list *list)
 }
 
 /* 
+   **  Convert ordered array of integers to cat_list
+   **
+   **  returns:  number of ranges 
+   **            
+ */
+int
+Vect_array_to_cat_list (int *vals, int nvals, struct cat_list *list)
+{
+    int i, range;
+
+    range = -1;
+    for (i = 0; i < nvals; i++)
+      {
+	if ( i == 0 || (vals[i] - list->max[range]) > 1 )
+	  {
+            range++;
+            if ( range == list->alloc_ranges)
+              {
+	        list->alloc_ranges += 1000;	  
+                list->min = (GRASS_V_CAT *) G_realloc ((void *)list->min, 
+	                                list->alloc_ranges * sizeof(GRASS_V_CAT));
+                list->max = (GRASS_V_CAT *) G_realloc ((void *)list->max, 
+	                                list->alloc_ranges * sizeof(GRASS_V_CAT));
+              }
+	    list->min[range] = vals[i];
+	    list->max[range] = vals[i];
+	  }
+	else
+	  {
+	    list->max[range] = vals[i];
+	  }
+      }
+    
+    list->n_ranges = range+1;
+
+    return (list->n_ranges);
+}
+
+/* 
    **  Find if category is in list
    **
    **
@@ -331,4 +372,36 @@ Vect_cat_in_cat_list (GRASS_V_CAT cat, struct cat_list *list)
 	   return (TRUE);
 	  
   return (FALSE);
+}
+
+/* 
+   **  Find if category is in ordered array of integers
+   **
+   **
+   **  returns:  TRUE  if cat is in list 
+   **            FALSE if it is not
+ */
+int 
+Vect_cat_in_array (GRASS_V_CAT cat, int *array, int ncats)
+{
+  int *i;
+  
+  i = bsearch ( (void *) &cat, (void *) array, ncats,
+		sizeof (int), cmp);
+
+  if ( i != NULL ) return (TRUE);
+  
+  return (FALSE);
+}
+
+int cmp ( const void *pa, const void *pb)
+{
+    int *p1 = (int *) pa;
+    int *p2 = (int *) pb;
+	 
+    if( *p1 < *p2 )
+       return -1;
+    if( *p1 > *p2 )
+       return 1;
+    return 0;
 }
