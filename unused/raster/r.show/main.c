@@ -52,6 +52,7 @@
 #include <stdio.h>
 #include "gis.h"
 
+
 typedef	union	_RASTER_MAP_DATA
 {
 	void	*v;
@@ -89,11 +90,11 @@ main(int argc, char **argv)
 	RASTER_MAP	buf;
 
 	opt = G_define_option() ;
-	opt->key        = "map" ;
-	opt->description= "Map to manipulate" ;
-	opt->type       = TYPE_STRING ;
-	opt->required   = YES ;
-	opt->gisprompt  = "old,cell,raster";
+	opt->key         = "map" ;
+	opt->description = "Map to manipulate" ;
+	opt->type        = TYPE_STRING ;
+	opt->required    = YES ;
+	opt->gisprompt   = "old,cell,raster";
 
 	G_gisinit(argv[0]);
 
