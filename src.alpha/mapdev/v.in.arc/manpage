@@ -1,4 +1,3 @@
-.\" %D% %J%
 .TH v.in.arc 1G
 .SH NAME
 v.in.arc \- import ARC/INFO vector files into GRASS 
