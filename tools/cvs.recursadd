@@ -8,7 +8,7 @@
 # from useful hints by Bernhard Reiter
 
 # add files recursivly to CVS
-if [ $# = 0 ] || [ $1 = "" ]
+if [ $# = 0 ] || [ $1 = "" ] || [ $1 = "help" ] || [ $1 = "-h" ] || [ $1 = "-help" ]
     then
      echo "USAGE: cvs.r.add comment"
      echo "  This command runs recursively within a directory tree"
@@ -16,6 +16,7 @@ if [ $# = 0 ] || [ $1 = "" ]
     else
      comment=$1
 fi
+
 if [ ! "$comment" ]
 then
    exit
