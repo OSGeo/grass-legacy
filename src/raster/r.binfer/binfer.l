@@ -9,8 +9,6 @@
 /**(lex doesn't like my normal comment style...?)**/
 /**/
 
-%option lex-compat
-
 
 %{
 int s_lookup(int);
@@ -120,7 +118,7 @@ return token(Constant);
 {white_space}+             ;
 
 {new_line}                 {
-yylineno++;
+  yylineno++;
 }
 
 {other}                    return token(yytext[0]);
