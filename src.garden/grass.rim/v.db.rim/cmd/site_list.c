@@ -120,11 +120,11 @@ for (s1=Record_list; s1<=Last_record; s1++)
 
         }
 
-                G_strip(desc);
+       G_strip(desc);
 /* Use next line for GRASS 3.1 and later */
-/*              G_put_site(fp,s1->east,s1->north,desc); */
+       G_put_site(fp,s1->east,s1->north,desc);
 /* and remove the following line */
-                fprintf(fp,"%.2f|%.2f|%s\n",s1->east,s1->north,desc?desc:"");
+/*     fprintf(fp,"%.2f|%.2f|%s\n",s1->east,s1->north,desc?desc:""); */
         }  /* end of for loop for all sites */
 fclose(fp);
 }
