@@ -3,7 +3,7 @@
 #define		WRITE_ATT_FORMAT	"%c  %12.2lf  %12.2lf  %8d"
 #define		WRITE_ATT_FORMAT	"%c %14.2lf %14.2lf %7d"
 */
-#define		WRITE_ATT_FORMAT	"%c %14s %14s %7d"
+#define		WRITE_ATT_FORMAT	"%c %14s %14s %10d"
 #define FlSIZ 14
 #define		READ_ATT_FORMAT		"%c %lf %lf %d"
 
@@ -12,12 +12,14 @@
 */
 #define		ATT_TYPES		"LAP"
 
+/*	removed Jun 25 1991  dpg
 #define LINE 0
 #define AREA 1
 #define DOT 2
 #define DEAD_LINE 4
 #define DEAD_AREA 5
 #define DEAD_DOT 6
+*/
 
 struct attribute
 {
