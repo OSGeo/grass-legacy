@@ -1,0 +1,15 @@
+OFILES = \
+    fancy.o\
+    main.o\
+    normal.o
+
+$(BIN_MAIN_CMD)/d.title: $(OFILES) $(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(GISLIB): #
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+
+main.o:	options.h
+fancy.o:	options.h
+normal.o:	options.h
