@@ -87,7 +87,7 @@ y.tab.c y.tab.h: mapcalc.y
 lex.yy.c: mapcalc.l y.tab.h
 	rm -f lex.yy.c y.output lex.backup
 	$(LEX) -t mapcalc.l > $@
-	$(CC) $(LDFLAGS) $(INC) $(XTRA_LDFLAGS) -o $(OBJDIR)/$*.o -c $*.c
+	$(CC) $(EXTRA_CFLAGS) $(LDFLAGS) $(INC) $(XTRA_LDFLAGS) -o $(OBJDIR)/$*.o -c $*.c
 
 #clean:
 #	rm -f y.tab.c y.tab.h lex.yy.c y.output lex.backup *~
