@@ -66,8 +66,6 @@ char **argv ;
 
   if ( pghost->answer )
        G_setenv("PG_HOST", pghost->answer);
-  else
-       G_setenv("PG_HOST", "localhost");
 
   if(list->answer) {
         printf("The following databases are in the Unix catalogue:\n");

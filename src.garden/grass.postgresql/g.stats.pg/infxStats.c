@@ -23,7 +23,7 @@ infxStats(tab, col, freq, where, verbose)
 
   if ( where ) sprintf (wherecl," WHERE %s ",where);
 
-    if ((pghost=G_getenv("PG_HOST"))==NULL) pghost == NULL;
+    pghost = G__getenv("PG_HOST");
         
     pg_conn = PQsetdb(pghost,NULL, NULL,NULL,G_getenv("PG_DBASE"));
     if (PQstatus (pg_conn) == CONNECTION_BAD) {

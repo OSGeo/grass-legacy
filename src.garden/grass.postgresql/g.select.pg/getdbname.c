@@ -20,7 +20,7 @@ int        i;
 int  	   ok;
 int	   rec_num;
 
-if ((pghost=(char*) G_getenv("PG_HOST")) == NULL) pghost = NULL;
+pghost = (char*) G__getenv("PG_HOST");
 
 pg_conn = PQsetdb(pghost, NULL, NULL, NULL, "template1");
 
