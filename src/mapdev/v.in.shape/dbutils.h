@@ -33,13 +33,14 @@
 #define SET_VAL 1
 
 /* Functions */
-int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx );
-char *calcKeyValue( pntDescript *pnt1, float sr );
+int vertRegister( BTREE *, partDescript *, int );
+char *calcKeyValue( pntDescript *, float, int, double, double );
 
 /* Helper Function Prototypes */
 
-int btree_compare( char *key1, char *key2 );
-int procSnapDistance( int iswitch, float *sd );
-int procMinSubtend( int iswitch, float *sd );
+int btree_compare( char *, char * );
+int procSnapDistance( int , float * );
+int procMinSubtend( int, float * );
+int proc_key_params( int, int *, double *, double * );
 
 #endif /* _DB_UTILS_TOPO_H */

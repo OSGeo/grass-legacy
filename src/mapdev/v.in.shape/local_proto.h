@@ -43,10 +43,11 @@ void recalcCentroid( partDescript *part1, double intsect );
 int procMapType( int iswitch, int *mtype );
 /* dbutils.c */
 int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx );
-char *calcKeyValue( pntDescript *pnt1, float sr );
+char *calcKeyValue( pntDescript *pnt1, float sr, int decs, double fe, double fn );
 int btree_compare( char *key1, char *key2 );
 int procSnapDistance( int iswitch, float *sd );
 int procMinSubtend( int iswitch, float *sd );
+int proc_key_params( int, int *, double *, double * );
 /* writelin.c */
 int vbase2segd( segmentList *seg0, BTREE *btr0 );
 int segLDispose( segmentList *seg0 );

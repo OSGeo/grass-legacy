@@ -45,6 +45,8 @@ int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx ) {
   int result = 0;
   char *pkey;
   float snap;
+  double fe, fn;
+  int idig, declen;
 
   double angle0, angle1;
   int linked, lnum;
@@ -71,9 +73,24 @@ int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx ) {
     exit(1);
   }
 
+  /* Retrieve the parameters for the vbase key */
+
+  if( proc_key_params( GET_VAL, &idig, &fe, &fn ) ) {
+    fprintf(stderr, "Could not aquire parameters for setting key values. Aborting." );
+    exit(1);
+  }
+
+  declen = 16 - idig;
+  if( declen < 0 || declen > 16 ) {
+    fprintf(stderr, "Key parameters outside acceptable range. Aborting." );
+    exit(1);
+  }
+
+
   /* Assign key value */
   pkey = (char *)malloc( 33 );
-  strncpy( pkey, calcKeyValue( &part1->linepnts[pt_indx], snap ), 33 );
+  strncpy( pkey, calcKeyValue( &part1->linepnts[pt_indx], snap,
+			       declen, fe, fn ), 33 );
 
 
   /* Is this point registered in the database? */
@@ -237,7 +254,8 @@ int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx ) {
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
-char *calcKeyValue( pntDescript *pnt1, float sr ) {
+char *calcKeyValue( pntDescript *pnt1, float sr, int decs, double efalse,
+		    double nfalse ) {
   /* local */
 
   double xtmp, ytmp;
@@ -245,9 +263,15 @@ char *calcKeyValue( pntDescript *pnt1, float sr ) {
   char *retbuf;
   int indx;
   char *indx_ptr;
+  int idigits;
 
-  xtmp = ((int)( pnt1->xPosn / sr )) * sr;
-  ytmp = ((int)( pnt1->yPosn / sr )) * sr;
+  xtmp = ((int)( (pnt1->xPosn + efalse) / sr )) * sr;
+  ytmp = ((int)( (pnt1->yPosn + nfalse) / sr )) * sr;
+
+  if(decs < 0 || decs > 16)
+    return NULL;
+
+  idigits = 16 - decs;
 
   retbuf = (char *)malloc( 33 );
   
@@ -255,15 +279,15 @@ char *calcKeyValue( pntDescript *pnt1, float sr ) {
   snprintf( ybuf, 35, "%035.10f", ytmp );
 
   indx_ptr = strchr( xbuf, '.' );
-  strncpy( retbuf, indx_ptr - 13, 13 );
-  retbuf[13] = '\0';
-  strncat( retbuf, indx_ptr + 1, 3 );
+  strncpy( retbuf, indx_ptr - idigits, idigits );
+  retbuf[idigits] = '\0';
+  strncat( retbuf, indx_ptr + 1, decs );
   retbuf[16] = '\0';
 
   indx_ptr = strchr( ybuf, '.' );
-  strncat( retbuf, indx_ptr - 13, 13 );
-  retbuf[29] = '\0';
-  strncat( retbuf, indx_ptr + 1, 3 );
+  strncat( retbuf, indx_ptr - idigits, idigits );
+  retbuf[16 + idigits] = '\0';
+  strncat( retbuf, indx_ptr + 1, decs );
   retbuf[32] = '\0';
 
   return retbuf;
@@ -319,6 +343,40 @@ int procMinSubtend( int iswitch, float *dphi ) {
     return 0;
   }
   else return 1;
+}
+
+
+int proc_key_params( int iswitch, int *idig, double *wbound, double *sbound ) {
+
+  /* Set or get the parameters for fixing the vbase key value from
+     the value of a location's co-ordinates
+  */
+
+  static int whole_;
+  static double west_;
+  static double south_;
+
+  if(!idig || !wbound || !sbound)
+    return 1;
+
+  if( iswitch == SET_VAL ) {
+    whole_ = *idig;
+    west_ = *wbound;
+    south_ = *sbound;
+
+    return 0;
+  }
+
+  else if( iswitch == GET_VAL ) {
+    *idig = whole_;
+    *wbound = west_;
+    *sbound = south_;
+
+    return 0;
+  }
+
+  else return 1;
+  
 }
 
 /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
