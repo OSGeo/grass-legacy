@@ -11,9 +11,9 @@ int R_set_RGB_color(unsigned char *r,unsigned char *g,unsigned char *b)
 	return 0;
 }
 
-int R_RGB_raster( int n , int nrows ,
-	unsigned char *red,unsigned char *grn,unsigned char *blu ,
-	int withzeros )
+int R_RGB_raster(int n, int nrows,
+	unsigned char *red, unsigned char *grn, unsigned char *blu,
+	unsigned char *nul)
 {
 	int z ;
 	_send_ident(RGB_RASTER) ;
@@ -24,7 +24,8 @@ int R_RGB_raster( int n , int nrows ,
 	_send_char_array(n,red) ;
 	_send_char_array(n,grn) ;
 	_send_char_array(n,blu) ;
-	z = withzeros ;
+	_send_char_array(n,nul ? nul : red) ;
+	z = nul ;
 	_send_int(&z) ;
 
 	return 0;

@@ -19,11 +19,10 @@
  * any given RGB color intensity cmbination.
  *
  ******************************************************************************
- * RGB_raster(n, nrows, red, grn, blu, withzeros)
+ * RGB_raster(n, nrows, red, grn, blu, nul)
  *     int n ;
  *     int nrows ;
- *     unsigned char *red, *grn, *blu ;
- *     int withzeros ;
+ *     unsigned char *red, *grn, *blu, *nul ;
  * Renders the data based on the red, grn, and blu array information
  * and the intensity function provided in the last Set_RGB_color()
  * call.
@@ -60,17 +59,11 @@ Set_RGB_color(unsigned char r[256], unsigned char g[256], unsigned char b[256])
 int 
 RGB_raster(int n, int nrows,
 	   unsigned char *r, unsigned char *g, unsigned char *b,
-	   int withzeros)
+	   unsigned char *nul)
 {
 	XWindowAttributes attr;
 	XImage *img;
 	int i;
-
-	if (!withzeros)
-	{
-		G_warning("RGB_raster: overlay mode not supported");
-		return -1;
-	}
 
 	XGetWindowAttributes(dpy, grwin, &attr);
 
@@ -83,18 +76,31 @@ RGB_raster(int n, int nrows,
 	if (!img)
 		G_fatal_error("unable to allocate XImage");
 
-	for (i = 0; i < n; i++)
+	for (i = 0; i < n; )
 	{
-		int rr = red[r[i]];
-		int gg = grn[g[i]];
-		int bb = blu[b[i]];
-		unsigned long pixel = find_color(rr, gg, bb);
+		int i0, j;
 
-		XPutPixel(img, i, 0, pixel);
+		for ( ; i < n && nul && nul[i]; i++)
+			;
+
+		i0 = i;
+
+		for ( ; i < n && (!nul || !nul[i]); i++)
+		{
+			int rr = red[r[i]];
+			int gg = grn[g[i]];
+			int bb = blu[b[i]];
+			unsigned long pixel = find_color(rr, gg, bb);
+
+			XPutPixel(img, i, 0, pixel);
+		}
+
+		if (i == i0)
+			continue;
+
+		for (j = 0; j < nrows; j++)
+			XPutImage(dpy, bkupmap, gc, img, i0, 0, cur_x + i0, cur_y + j, i - i0, 1);
 	}
-
-	for (i = 0; i < nrows; i++)
-		XPutImage(dpy, bkupmap, gc, img, 0, 0, cur_x, cur_y + i, n, 1);
 
 	XDestroyImage(img);
 	needs_flush = 1;
