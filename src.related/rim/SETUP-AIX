@@ -10,4 +10,4 @@ LIBEXTRA = csubs.o
 endmake
 cp Makefile src
 cat MAKEFILE >>Makefile
-cat src/MAKEFILE >>src/Makefile
+cat src/MAKEFILE.in >>src/Makefile
