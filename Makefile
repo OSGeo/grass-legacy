@@ -42,6 +42,7 @@ SUBDIRS = \
 	imagery \
 	ps \
 	raster \
+	raster3d \
 	scripts \
 	sites \
 	tools \
