@@ -21,6 +21,9 @@
 *
 *****************************************************************************/
 
+/* uncomment to get debug output: */
+/* #define DEBUG */
+
 /*============================= Include Files ==============================*/
 
 /* System include files */
@@ -90,16 +93,28 @@ int main(int argc,char *argv[])
     /* If there are arguments on the command line, run the command line */
     /* version, else run the interactive version. First check for any */
     /* command line arguments */
-    if (argc > 1)
+    
+    cmdLine = FALSE;
+    
+    if (argc > 1)   /* parameter/flag specified */
     {
     	cmdLine = TRUE;
     }
+
+#ifdef DEBUG
+fprintf(stderr, "argc: %i\n", argc);
+fprintf(stderr, "Commandline?: %i\n", cmdLine);
+#endif
 
     /* If input isn't a tty, run command-line version, even if no args */
     if (!isatty(0))
     {
     	cmdLine = TRUE;
     }
+
+#ifdef DEBUG
+fprintf(stderr, "Commandline?: %i\n", cmdLine);
+#endif
 
     /* Check if the user supplied command line arguments */
     if (cmdLine)
@@ -119,7 +134,11 @@ int main(int argc,char *argv[])
 	/* If we get here, command line version didn't exist, check to see */
 	/* if interactive version exists and inform user -dpg */
 	pgm_name(pgm, INTERACTIVE, cmdName);
-	
+
+#ifdef DEBUG
+fprintf(stderr, "p:%s i:%s c:%s\n", pgm, INTERACTIVE, cmdName);
+#endif
+
 	if (access(pgm, F_OK | X_OK) == 0)
 	{
 	    /* Exit program with proper message */
