@@ -36,6 +36,7 @@ proc mkcutplanePanel { BASE } {
     append update_routine $BASE
     set ucmd "proc $update_routine \{ x y \} \{ cutplaneXYTrans $BASE \$x \$y \}"
     uplevel #0 $ucmd
+    #Create XY canvas
     set pos [Nv_mkXYScale $BASE.pos cross CPLANE_POS 125 125 63 63 $update_routine $update_routine]
     pack $pos -side top
     
@@ -79,7 +80,7 @@ proc mkcutplanePanel { BASE } {
     set ucmd "proc $update_routine \{ z \} \{ cutplaneZTrans $BASE \$z \}"
     uplevel #0 $ucmd
     set range [Nget_zrange]
-    set range [list 0 1000]
+#    set range [list 0 1000]
     scale $BASE.zslide -orient vertical -to [expr int([lindex $range 0])] \
 	-from [expr int([lindex $range 1])] -showvalue false \
 	-activebackground gray80 -background gray90 -command $update_routine
@@ -410,6 +411,8 @@ proc cutplaneZTrans { w z } {
 # Routine to set cutplane translation from an entry widget
 ##########################################################################
 proc cutplaneSetTransFromEntry { BASE coord } {
+	global Nv_
+
 	set curr [Nget_current_cutplane]
 
 	if {"$curr" != "None"} then {
@@ -431,6 +434,23 @@ proc cutplaneSetTransFromEntry { BASE coord } {
 		if {[catch "expr $new_x + 0"] != 0} then { set new_x 0 }
 		if {[catch "expr $new_y + 0"] != 0} then { set new_y 0 }
 		if {[catch "expr $new_z + 0"] != 0} then { set new_z 0 }
+
+		#Update Z-scale to match entry value
+		#Reset to / from limits if required
+		if {$new_z < [lindex [$BASE.zslide configure -to] 4]} {
+		$BASE.zslide configure -to [expr int($new_z - 1)]
+		}
+		if {$new_z > [lindex [$BASE.zslide configure -from] 4]} {
+                $BASE.zslide configure -from [expr int($new_z + 1)]
+                }
+		$BASE.zslide set $new_z
+
+		#Update Canvas position based on entered XY
+		if { [Nget_xyrange] > 0} {
+		set dis_x [expr int( ($new_x/([Nget_xyrange]/2))*63)+63]
+		set dis_y [expr int( ($new_y/([Nget_xyrange]/2))*63)+63]
+		Nv_itemDrag $BASE.pos $Nv_(CPLANE_POS) $dis_x $dis_y
+		}
 
 		# Finally set the translation
 		cutplaneSetTrans $BASE $new_x $new_y $new_z
