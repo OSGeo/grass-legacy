@@ -13,10 +13,10 @@ int driver (void)
     {
 	MENU("QUIT",really_quit,&use),
 	MENU("zoom",zoom,&use),
-	MENU("RASTER IMAGE",plotcell,&use),
-	MENU("VECTOR MAPS",plotvect,&use),
+	MENU("RASTER",plotcell,&use),
+	MENU("VECTOR",plotvect,&use),
         MENU("refresh",do_re_fresh,&use),
-MENU("+color", cursor_color, &use),
+	MENU("cursorcol", cursor_color, &use),
 	MENU("ANALYZE",analyze,&use),
 	INFO("  Input method -> ", &from_flag),
 /*	OPTION("DIGITIZER",2,&from_digitizer),  */
@@ -63,7 +63,7 @@ stop (void)
 static int 
 go_refresh (void)
 {
-    re_fresh();
+    re_fresh_vect(); /* only vect implemented */
     return 1;
 }
 
@@ -72,12 +72,12 @@ do_re_fresh (void)
 {
     static Objects objects[] =
     {
-	INFO("Refresh Map? ",&use),
+	INFO("Refresh vector map? ",&use),
 	MENU("NO",dont_stop,&use),
 	MENU("YES",go_refresh,&use),
 	{0}
     };
-    if (Input_pointer (objects) < 0)
-	return -1;
+    
+    Input_pointer (objects);
     return 0; /* don't quit */
 }
