@@ -245,14 +245,16 @@ dig_load_plus (	struct Plus_head *Plus, GVFILE * plus, int head_only)
   
   /* Now let's begin reading the Plus file nodes, lines, areas and isles */
   
-  dig_Rd_Plus_head (plus, Plus);
+  if ( dig_Rd_Plus_head (plus, Plus) == -1 ) return 0;
 
   if ( head_only ) return 1;
   
   dig_set_cur_port ( &(Plus->port) ); 
 
   /* Nodes */
-  dig_fseek (plus, Plus->Node_offset, 0);
+  if ( dig_fseek (plus, Plus->Node_offset, 0) == -1 )
+    G_fatal_error ("Cannot read topo for nodes" );
+    
   dig_alloc_nodes ( Plus, Plus->n_nodes );
   for (i = 1; i <= Plus->n_nodes; i++)
     {
@@ -261,7 +263,9 @@ dig_load_plus (	struct Plus_head *Plus, GVFILE * plus, int head_only)
     }
   
   /* Lines */
-  dig_fseek (plus, Plus->Line_offset, 0);
+  if ( dig_fseek (plus, Plus->Line_offset, 0) == -1 )
+    G_fatal_error ("Cannot read topo for lines" );
+
   dig_alloc_lines ( Plus, Plus->n_lines );
   for (i = 1; i <= Plus->n_lines; i++)
     {
@@ -270,7 +274,9 @@ dig_load_plus (	struct Plus_head *Plus, GVFILE * plus, int head_only)
     }
   
   /* Areas */
-  dig_fseek (plus, Plus->Area_offset, 0);
+  if ( dig_fseek (plus, Plus->Area_offset, 0) == -1 )
+    G_fatal_error ("Cannot read topo for areas" );
+
   dig_alloc_areas ( Plus, Plus->n_areas );
   for (i = 1; i <= Plus->n_areas; i++)
     {
@@ -279,7 +285,9 @@ dig_load_plus (	struct Plus_head *Plus, GVFILE * plus, int head_only)
     }
   
   /* Isles */
-  dig_fseek (plus, Plus->Isle_offset, 0);
+  if ( dig_fseek (plus, Plus->Isle_offset, 0) == -1 )
+      G_fatal_error ("Cannot read topo for isles" );
+  
   dig_alloc_isles ( Plus, Plus->n_isles );
   for (i = 1; i <= Plus->n_isles; i++)
     {

@@ -15,6 +15,7 @@
 *****************************************************************************/
 #include <string.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "gis.h"
@@ -41,7 +42,7 @@ dig_ftell ( GVFILE *file )
 
 /* Set GVFILE position.
 *
-*  Returns: current file position
+*  Returns: 0 OK, -1 error
 */           
 int 
 dig_fseek ( GVFILE *file, long offset, int whence )
@@ -129,7 +130,8 @@ dig_fwrite ( void *ptr, size_t size, size_t nmemb, GVFILE *file )
     if ( file->loaded ) {  /* using memory */
 	G_fatal_error ( "Writing to file loaded to memory not supported" );
     }
-    return ( fwrite (ptr, size, nmemb, file->file) );
+
+    return fwrite (ptr, size, nmemb, file->file);
 }
 
 /* Init GVFILE.
