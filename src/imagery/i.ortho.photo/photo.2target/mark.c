@@ -379,7 +379,12 @@ double atof();
     }
     else if (G_get_raster_row ( elev, elevbuf, row, data_type) > 0)
     {
-	if(!G_is_null_value((char *)elevbuf+col*G_raster_size(data_type), data_type))
+	if((data_type ==  CELL_TYPE &&
+		!G_is_c_null_value(( CELL *)&(( CELL *) elevbuf)[col])) ||
+	   (data_type == FCELL_TYPE &&
+	    	!G_is_f_null_value((FCELL *)&((FCELL *) elevbuf)[col])) ||
+	   (data_type == DCELL_TYPE &&
+	    	!G_is_d_null_value((DCELL *)&((DCELL *) elevbuf)[col])))
 	{
             if(data_type == CELL_TYPE)
               Z = (double) ((CELL *) elevbuf)[col];
