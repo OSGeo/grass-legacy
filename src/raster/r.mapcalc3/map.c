@@ -223,6 +223,7 @@ static void column_shift(void *buf, int res_type, int col)
 			}
 			for ( ; i < columns; i++)
 				SET_NULL_C(&ibuf[i]);
+			break;
 
 		case FCELL_TYPE:
 			for (i = 0; i < columns - col; i++)
