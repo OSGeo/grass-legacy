@@ -12,24 +12,32 @@
 #define CENTER 2
 
 int 
-text_box_path (int x, int y, int xref, int yref, char *text, int fontsize)
+text_box_path (double x, double y, int xref, int yref, char *text, int fontsize, float rotate)
 {
     /* get relative box coordinates */
     fprintf(PS.fp, "ZB (%s) PB\n", text);
 
     /* set box x coordinate */
-    fprintf(PS.fp, "%d ", x);
+    fprintf(PS.fp, "%.2f ", x);
+    
+    /* set box y coordinate */
+    fprintf(PS.fp, " %.2f ", y);
+    
+    fprintf(PS.fp, "translate %.2f rotate ", rotate); 
+    
+    fprintf(PS.fp, " 0 ");     
+    
     switch (xref)
     {
    	case LEFT: fprintf(PS.fp, "LTX");  break;
-	case RIGHT: fprintf(PS.fp, "CTX"); break;
+	case RIGHT: fprintf(PS.fp, "RTX"); break;
 	case CENTER:
 	default:
 		fprintf(PS.fp, "CTX"); break;
     }
 
-    /* set box y coordinate */
-    fprintf(PS.fp, " %d ", y);
+    fprintf(PS.fp, " 0 ");
+    
     switch (yref)
     {
 	case UPPER: fprintf(PS.fp, "UTY");  break;
