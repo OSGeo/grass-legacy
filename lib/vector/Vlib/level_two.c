@@ -34,29 +34,25 @@ Vect_get_num_nodes (struct Map_info *map)
 }
 
 /*!
- \fn int Vect_get_num_points (struct Map_info *map)
- \brief get number of points
- \return number of points
+ \fn int Vect_get_num_primitives (struct Map_info *map, int type)
+ \brief get number of primitives
+ \return number of primitives of given type 
  \param Map_info structure
  */
 int 
-Vect_get_num_points (struct Map_info *map)
+Vect_get_num_primitives (struct Map_info *map, int type)
 {
-  return (map->plus.n_plines);
+    int num = 0;
+    
+    if ( type & GV_POINT ) num += map->plus.n_plines;
+    if ( type & GV_LINE ) num += map->plus.n_llines;
+    if ( type & GV_BOUNDARY ) num += map->plus.n_blines;
+    if ( type & GV_CENTROID ) num += map->plus.n_clines;
+    if ( type & GV_FACE ) num += map->plus.n_flines;
+    if ( type & GV_KERNEL ) num += map->plus.n_klines;
+  
+    return num;
 }
-
-/*!
- \fn int Vect_get_num_centroids (struct Map_info *map)
- \brief get number of centroids
- \return number of centroids
- \param Map_info structure
- */
-int 
-Vect_get_num_centroids (struct Map_info *map)
-{
-  return (map->plus.n_clines);
-}
-
 
 /*!
  \fn int Vect_get_num_lines (struct Map_info *map)
@@ -92,30 +88,6 @@ int
 Vect_get_num_islands (struct Map_info *map)
 {
   return (map->plus.n_isles);
-}
-
-/*!
- \fn int Vect_get_num_faces (struct Map_info *map)
- \brief get number of faces
- \return number of faces
- \param Map_info structure
- */
-int 
-Vect_get_num_faces (struct Map_info *map)
-{
-  return (map->plus.n_flines);
-}
-
-/*!
- \fn int Vect_get_num_kernels (struct Map_info *map)
- \brief get number of kernels
- \return number of kernels
- \param Map_info structure
- */
-int 
-Vect_get_num_kernels (struct Map_info *map)
-{
-  return (map->plus.n_klines);
 }
 
 /*!
