@@ -129,7 +129,7 @@ main(int argc, char **argv)
 
 	module = G_define_module();
 	module->description =
-		"Draws text on the graphics monitor using TrueType fonts.";
+		"Draws text in the active display frame on the graphics monitor using TrueType fonts.";
 
 	i = 0;
 	if(getenv("GRASS_FREETYPECAP"))
@@ -198,7 +198,8 @@ main(int argc, char **argv)
 	param.size->key         = "size";
 	param.size->type        = TYPE_INTEGER;
 	param.size->required    = NO;
-	param.size->description = "Size";
+	param.size->description =
+		"Height of letters (in percent of available frame height)";
 
 	param.align = G_define_option();
 	param.align->key         = "align";
