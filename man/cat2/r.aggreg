@@ -1,0 +1,132 @@
+
+
+
+r.aggreg <alpha>     GRASS Reference Manual	 <alpha> r.aggreg
+
+
+
+NAME
+     r.aggreg -	Objektaggregation und Nachbarschaftsanalyse
+     (GRASS Raster Program)
+
+SYNOPSIS
+     r.aggreg
+     r.aggreg help
+     r.aggreg input=name output=name neibor=name
+     [aggregation=value]
+
+DESCRIPTION
+     r.aggreg findet Pixel gleicher Kategorie von input	die
+     flaechenhaft zusammenhaengen, also	benachbart sind. Daraus
+     ergeben sich Objekte von denen jedes in output eine neue,
+     eindeutige	Objektnummer erhaelt. Es findet	eine
+     Reklassifizierung statt, so dass in output	die
+     entsprechenden Pixel des Objektes eine einheitliche Klasse
+     erhalten.
+
+
+NACHBARSCHAFTSDATEI
+     Zusaetzlich wird jedes Objekt hinsichtlich	Nachbarobjekte
+     untersucht	und die	Ergebnisse in der Textdatei neibor
+     gespeichert. Diese	Nachbarschaftsdatei hat	eine genau
+     definierte	Form und enthaelt die im Folgenden aufgefuehrten
+     Informationen:
+
+     Fuer jedes	Objekt wird ein	durch Leerzeile	getrennter Block
+     geschrieben.  Der Block enthaelt eine Kopfzeile. Dann folgt
+     eine Trennungslinie und nachfolgend je eine Zeile fuer die
+     Nachbarobjekte des	betrachteten Objekts. Die Zeilen
+     enthalten in der jeweiligen Reihenfolge:
+
+
+     Kopfzeile	    * Anzahl der gefundenen Nachbarn
+		    * Objektnummer in output
+		    * Urspruengliche Kategorie des Objekts in
+		    input
+		    * Groesse des Objekts in Pixel
+		    * Gesamte Grenzlaenge des Objektes in Pixel
+
+
+     Folgezeilen    * Laufende Nummer des Nachbarn
+		    * Objektnummer des Nachbarn	in output
+		    * Urspruengliche Kategorie des Nachbarn
+		    * Groesse des Nachbarn in Pixel
+		    * Laenge der Grenze	des Nachbarn zum Objekt
+		    in der Kopfzeile
+
+
+AGGREGATIONSUMGEBUNG
+     Mit dem Parameter aggregation, der	die Werte 4 oder 8
+
+
+
+GRASS 4.3		Baylor University			1
+
+
+
+
+
+
+r.aggreg <alpha>     GRASS Reference Manual	 <alpha> r.aggreg
+
+
+
+     annehmen kann wird	bestimmt ob alle 8 umliegenden Nachbarn
+     des jeweils untersuchten Pixels auf gleiche Kategorie
+     untersucht	werden,	oder ob	nur die	4 horizontal bzw.
+     vertikal benachbarten Pixel betrachtet werden. Die
+     Standardeinstellung fuer diesen Parameter ist 8.
+
+
+BUGS
+     Das Programm ist nur fuer eine bestimmte Pixelgroesse von
+     Objekten und eine bestimmte Anzahl	von Objekten ausgelegt.
+     Das Verhalten des Programms bei sehr grossen Dateien ist
+     unbekannt.
+
+
+SEE ALSO
+     r.clump
+
+
+AUTHOR
+     Michael Saupe, Geographisches Institut, Universitaet
+     Heidelberg
+
+NOTICE
+     This program is part of the alpha section of the GRASS
+     distribution.  Unlike the code in the main	section	of GRASS,
+     the alpha code has	not yet	been fully tested for one release
+     cycle.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.3		Baylor University			2
+
+
+
