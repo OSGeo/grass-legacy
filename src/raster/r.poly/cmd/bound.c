@@ -1,62 +1,72 @@
-/* Cell-file area extraction */
-/*   Boundary tracing algorithm */
-
-/* Jean Ezell */
-/* US Army Corps of Engineers */
-/* Construction Engineering Research Lab */
-/* Modelling and Simulation Team */
-/* Champaign, IL  61820 */
-/* January 1988 */
-
-/* The algorithm allocates COOR structures as necessary to mark endpoints of */
-/* and bends in boundaries between areas.  Each COOR structure contains the */
-/* row and column coordinates of a point which is either an endpoint or a */
-/* bend.  If the point represents a bend, fptr and bptr point to the adjacent */
-/* endpoint(s) or bend(s); if an endpoint, one of fptr or bptr points to the */
-/* point itself and the other to the adjacent bend or endpoint.  While a */
-/* boundary is under construction, fptr of the "free" end is NULL. */
-/* The right and left fields contain the area numbers to the right and */
-/* left of the line under construction.  When two lines are joined, it */
-/* will be necessary to make the area numbers agree.  This is done by mapping */
-/* one of the area numbers to another.  The mapping is done in such a way */
-/* that the smallest number in each equivalence class is chosen to represent */
-/* the class.  We also keep track of the longest horizontal strip in each */
-/* area.  The left end of this strip will be used as the position of the */
-/* label in the dlg label file. */
-
-/* Global variables: */
-/*   v_list          pointer to allocated array of pointers to endpoints of */
-/*                   vertical lines currently under construction */
-/*   h_ptr           pointer to endpoint of horizontal line currently */
-/*                   under construction */
-/*   col, row        column and row of current position in file */
-/*   buffer[]        pointers to the two allocated areas which hold the */
-/*                   two rows currently being processed */
-/*   top, bottom     which row of buffer[] is "top" line from file and */
-/*                   which is "bottom" */
-/*   scan_length     length of a row from the data file */
-/*   tl, tr, bl, br  top left and right, bottom left and right elements */
-/*                   in current 2 by 2 data window; one-time calculation */
-/*                   prevents multiple indexing and indirection */
-/*                   computations */
-/*   a_list          pointer to allocated array of correspondences between */
-/*                   areas and categories */
-/*   n_areas         current length of a_list */
-/*   area_num        lowest area number available for use */
-/*   a_list_new      pointer to next a_list entry to be used */
-/*   a_list_old      pointer to a_list entry just filled */
-/*   e_list          pointer to allocated array which is used to form */
-/*                   mapping of all equivalent area numbers onto one */
-/*                   number from the class */
-/*   n_equiv         current length of e_list */
-
-/* Entry points: */
-/*   extract_areas   driver for boundary extraction, area labelling */
-/*                   algorithm */
-/*   alloc_bufs      allocate buffers for cell file data and storage of */
-/*                   information obtained in the extraction process (v_list, */
-/*                   a_list, e_list, buffer[0], buffer[1]) */
-
+/*
+* $Id$
+*
+* Cell-file area extraction
+*   Boundary tracing algorithm
+* 
+* Jean Ezell
+* US Army Corps of Engineers
+* Construction Engineering Research Lab
+* Modelling and Simulation Team
+* Champaign, IL  61820
+* January 1988
+*
+* Fixed 3/2001 by Andrea Aime <aaime@comune.modena.it>
+*   fixed area label problem with r.poly (it was creating more        
+*   label than required it there were islands)
+*
+*************************
+* The algorithm allocates COOR structures as necessary to mark endpoints of
+* and bends in boundaries between areas.  Each COOR structure contains the
+* row and column coordinates of a point which is either an endpoint or a
+* bend.  If the point represents a bend, fptr and bptr point to the adjacent
+* endpoint(s) or bend(s); if an endpoint, one of fptr or bptr points to the
+* point itself and the other to the adjacent bend or endpoint.  While a
+* boundary is under construction, fptr of the "free" end is NULL.
+* The right and left fields contain the area numbers to the right and
+* left of the line under construction.  When two lines are joined, it
+* will be necessary to make the area numbers agree.  This is done by mapping
+* one of the area numbers to another.  The mapping is done in such a way
+* that the smallest number in each equivalence class is chosen to represent
+* the class.  We also keep track of the longest horizontal strip in each
+* area.  The left end of this strip will be used as the position of the
+* label in the dlg label file.
+* 
+* Global variables:
+*   v_list          pointer to allocated array of pointers to endpoints of
+*                   vertical lines currently under construction
+*   h_ptr           pointer to endpoint of horizontal line currently
+*                   under construction
+*   col, row        column and row of current position in file
+*   buffer[]        pointers to the two allocated areas which hold the
+*                   two rows currently being processed
+*   top, bottom     which row of buffer[] is "top" line from file and
+*                   which is "bottom"
+*   scan_length     length of a row from the data file
+*   tl, tr, bl, br  top left and right, bottom left and right elements
+*                   in current 2 by 2 data window; one-time calculation
+*                   prevents multiple indexing and indirection
+*                   computations
+*   a_list          pointer to allocated array of correspondences between
+*                   areas and categories
+*   n_areas         current length of a_list
+*   area_num        lowest area number available for use
+*   a_list_new      pointer to next a_list entry to be used
+*   a_list_old      pointer to a_list entry just filled
+*   e_list          pointer to allocated array which is used to form
+*                   mapping of all equivalent area numbers onto one
+*                   number from the class
+*   n_equiv         current length of e_list
+* 
+* Entry points:
+*   extract_areas   driver for boundary extraction, area labelling
+*                   algorithm
+*   alloc_bufs      allocate buffers for cell file data and storage of
+*                   information obtained in the extraction process (v_list,
+*                   a_list, e_list, buffer[0], buffer[1])
+*
+********************************************************************/
+ 
 #include <stdio.h>
 #include <unistd.h>
 #include "gis.h"
@@ -68,7 +78,7 @@ static struct COOR **v_list;
 static struct COOR *h_ptr;
 static CELL *buffer[2];
 static int scan_length;
-static int n_areas, area_num, n_equiv;
+static int n_areas, area_num, n_equiv, tl_area;
 static struct area_table *a_list, *a_list_new, *a_list_old;
 static struct equiv_table *e_list;
 
@@ -92,7 +102,7 @@ int extract_areas (void)
 {
   row = col = top = 0;			/* get started for read of first */
   bottom = 1;				/*   line from cell file */
-  area_num = 0;
+  area_num = 0; tl_area = 0;
   scan_length = read_next();
   while (read_next())			/* read rest of file, one row at */
   {					/*   a time */
@@ -131,6 +141,7 @@ static int update_list (int i)
     case 0:
       /* Vertical line - Just update width information */
       update_width(a_list + v_list[col]->left,0);
+      tl_area = v_list[col]->left;
       break;
     case 1:
       /* Bottom right corner - Point in middle of new line */
@@ -142,8 +153,13 @@ static int update_list (int i)
       new_ptr1->bptr = new_ptr2;
       new_ptr1->fptr = new_ptr3;
       new_ptr2->bptr = new_ptr3->bptr = new_ptr1;
-      new_ptr1->left = new_ptr2->right = new_ptr3->left = area_num;
-      assign_area(tl,1);
+
+     	if(tl_area == 0) {
+				new_ptr1->left = new_ptr2->right = new_ptr3->left = 0;
+     		assign_area(tl,1);
+     	} else {
+     		new_ptr1->left = new_ptr2->right = new_ptr3->left = tl_area;
+     	}
       new_ptr1->right = new_ptr2->left = new_ptr3->right = area_num;
       assign_area(br,1);
       update_width(a_list_old,1);
@@ -154,6 +170,7 @@ static int update_list (int i)
       /* Bottom left corner - Add point to line already under construction */
       /* (fixed) -><- original h_ptr -><- new_ptr -> (growing) */
       /*                (row, col)       (?, col) */
+		  tl_area = h_ptr->left;
       new_ptr = get_ptr();		/* downward-growing point */
       h_ptr->col = col;
       h_ptr->fptr = new_ptr;
@@ -168,6 +185,7 @@ static int update_list (int i)
       /* Top left corner - Join two lines already under construction */
       /* (fixed) -><- original v_list -><- (fixed) */
       /*                 (row, col) */
+			tl_area = v_list[col]->left;
       equiv_areas(h_ptr->left,v_list[col]->right);
       equiv_areas(h_ptr->right,v_list[col]->left);
       v_list[col]->row = row;		/* keep downward-growing point */
@@ -223,6 +241,7 @@ static int update_list (int i)
     case 8:
       /* T left - End one vertical and one horizontal line */
       /*          Start one vertical line */
+			tl_area = v_list[col]->left;
       h_ptr->node = v_list[col]->node = 1;
       right = h_ptr->right;
       left = v_list[col]->left;
