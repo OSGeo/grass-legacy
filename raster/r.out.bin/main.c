@@ -353,7 +353,7 @@ fprintf(stderr, "Percent complete: ");
                if(out_type == CELL_TYPE) {
 		number_i = *((CELL *) ptr);
 		if(flag.swap->answer)
-		TIFFSwabShort(&number_i);
+		TIFFSwabShort((uint16 *)&number_i);
 		fwrite (&number_i, sizeof(short), 1, fp);
 		}
                else if(out_type == FCELL_TYPE)
@@ -367,7 +367,7 @@ fprintf(stderr, "Percent complete: ");
 	       {
 		number_d = *((DCELL *) ptr);
 		if(flag.swap->answer)
-		TIFFSwabDouble(&number_d);
+		TIFFSwabDouble((double *)&number_d);
 		fwrite (&number_d,sizeof(double), 1, fp);
 	       }
             }
@@ -375,7 +375,7 @@ fprintf(stderr, "Percent complete: ");
 	if(out_type == CELL_TYPE) {
 		null_val_i = (int)null_str;
 		if(flag.swap->answer)
-		TIFFSwabShort(&null_val_i);
+		TIFFSwabShort((uint16 *)&null_val_i);
 		fwrite(&null_val_i, sizeof(int), 1, fp);
 		}
 	if( out_type == FCELL_TYPE ) {
@@ -387,7 +387,7 @@ fprintf(stderr, "Percent complete: ");
 	if( out_type == DCELL_TYPE ) {
                 null_val_d = (double)null_str;
 		if(flag.swap->answer)
-		TIFFSwabDouble(&null_val_d);
+		TIFFSwabDouble((double *)&null_val_d);
                 fwrite(&null_val_d, sizeof(double), 1, fp);
                 }
 
