@@ -1,5 +1,10 @@
-/* plot() - vector reading */
+/* 
+ * $Id$
+ *
+ * plot() - vector reading
+ */
 
+#include <string.h>
 #include "gis.h"
 #include "Vect.h"
 

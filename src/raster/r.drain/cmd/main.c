@@ -1,4 +1,8 @@
-/* -*-c-basic-offset: 4;-*-
+/*
+ * $Id$
+ */
+
+/* -*-c-basic-offset: 4;-*- */
 /**********************************************************************/ 
 /*                                                                    */
 /*      This is the main program for tracing out the path that a      */
@@ -369,9 +373,9 @@ main (int argc, char *argv[])
 	}
 	segment_flush(&in_seg);
 
-//	G_close_cell(elevation_fd);
+/*	G_close_cell(elevation_fd); */
 
-//	G_free(cell);
+/*	G_free(cell); */
 
 	cell = G_allocate_raster_buf(data_type2); 
 	G_set_null_value(cell,ncols,data_type2);
@@ -512,14 +516,14 @@ int drain_path_finder ( POINT *PRES_PT)
 		int data,row,col, val,val2;
 		double p_elev, fdata;
 		float f;
-//		value = &data;
+/*		value = &data; */
 
 		/* if the pt has already been traversed, return			*/
 /*  		segment_get(&out_seg, value, PRES_PT_ROW, PRES_PT_COL); */
 /*  		if(data  > 0 ) return 0;	 */	/* already traversed	*/
 
 		/* otherwise, mark on output					*/
-//		data = 1;
+/*		data = 1; */
 
 /*		segment_put(&out_seg, value, PRES_PT_ROW, PRES_PT_COL); */ /* (pmx - for Markus 20 april 2000 */
 

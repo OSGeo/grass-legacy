@@ -1,3 +1,7 @@
+/*
+ * $Id$
+ */
+
 #include <stdlib.h>
 #include <gis.h>
 #include <dbmi.h>
@@ -13,7 +17,7 @@ int db_rcls (dbRclsRule *rule, dbCatValI **rcl, int *num)
     char sel[1024];
     int more;
     int oldcat, found;
-    int *fcat;  //array for index of first structure written to *lrcl for each rule
+    int *fcat;  /* array for index of first structure written to *lrcl for each rule */
     dbConnection connection;    
     dbString stmt;
     dbDriver *driver;
@@ -85,7 +89,7 @@ int db_rcls (dbRclsRule *rule, dbCatValI **rcl, int *num)
 	if(db_fetch (&cursor, DB_NEXT, &more) != DB_OK)
 	    return DB_FAILED;
 
-        column = db_get_table_column(table, 0); // first column (key)
+        column = db_get_table_column(table, 0); /* first column (key) */
 	value  = db_get_column_value(column);
 	nmax += db_get_value_int(value);
 	
@@ -98,7 +102,7 @@ int db_rcls (dbRclsRule *rule, dbCatValI **rcl, int *num)
     /* SQL */
     for(i=0;i<rule->count;i++)
     {
-	fcat[i+1] = fcat[i];  //index for first structere used for next rule
+	fcat[i+1] = fcat[i];  /* index for first structere used for next rule */
 	snprintf(sel,1024,
 	    "SELECT DISTINCT %s FROM %s WHERE %s > 0 and ( %s ) ORDER BY %s",key,rule->table,key,rule->where[i], key);
 #ifdef DEBUG
@@ -122,28 +126,28 @@ int db_rcls (dbRclsRule *rule, dbCatValI **rcl, int *num)
 	    if (!more)
 	        break;  
 						
-            column = db_get_table_column(table, 0); // first column (key)
+            column = db_get_table_column(table, 0); /* first column (key) */
 	    value  = db_get_column_value(column);
 	    oldcat = db_get_value_int(value);
 
 	    found=0;
-	    for(j=0; j<= i; j++) // go through processed rules  
+	    for(j=0; j<= i; j++) /* go through processed rules   */
 	    {
 		cval = (dbCatValI *) bsearch((void *) &oldcat, &lrcl[fcat[j]], fcat[j+1]-fcat[j], sizeof(dbCatValI), srch);
-	        if ( cval != NULL)            // oldcat already exist, 
-		{                             // usually should not happen - results of rules overlap ,
-	            cval->val = rule->cat[i]; // replace by new one 
+	        if ( cval != NULL)            /* oldcat already exist, */
+		{                             /* usually should not happen - results of rules overlap , */
+	            cval->val = rule->cat[i]; /* replace by new one */
 		    found = 1;
 		    break;
 	        }
 	    }	    
 	    
-	    if ( found == 0 && nused < nmax) // usually nused should be < nmax if no changes happend in DB since we found nmax 
+	    if ( found == 0 && nused < nmax) /* usually nused should be < nmax if no changes happend in DB since we found nmax */
 	    {
 		lrcl[nused].cat = oldcat;
 		lrcl[nused].val = rule->cat[i];
 		nused++;
-		fcat[i+1] = nused;  //first index for next rule
+		fcat[i+1] = nused;  /* first index for next rule */
 	    }
 	}
 	db_close_cursor(&cursor);

@@ -1,3 +1,7 @@
+/*
+ * $Id$
+ */
+
 #include <stdio.h>
 #include <gis.h>
 
@@ -211,8 +215,8 @@ typedef struct _db_driver_state
 /* category value */
 typedef struct
 {
-    int  cat;  // category
-    int  val;  // value
+    int  cat;  /* category */
+    int  val;  /* value */
 }dbCatValI;
 
 /* parameters of connection */
@@ -223,19 +227,19 @@ typedef struct _db_connection
     char *location;
     char *user;
     char *password;
-    char *keycol;        // name of default key column
+    char *keycol;        /* name of default key column */
 }dbConnection;
 
 /* reclass rule */
 typedef struct
 {
-    int  count;     // number of defined rules
-    int  alloc;     // size of allocated array
-    char *table;    // table name
-    char *key;      // key column name
-    int  *cat;      // array of new category numbers
-    char **where;   // array of SQL WHERE conditions
-    char **label;   // array of new category labels
+    int  count;     /* number of defined rules */
+    int  alloc;     /* size of allocated array */
+    char *table;    /* table name */
+    char *key;      /* key column name */
+    int  *cat;      /* array of new category numbers */
+    char **where;   /* array of SQL WHERE conditions */
+    char **label;   /* array of new category labels */
 }dbRclsRule;
 
 #include "proto_dbmi.h"

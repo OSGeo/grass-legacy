@@ -1,3 +1,7 @@
+/*
+ * $Id$
+ */
+
 /******************************************************************/
 /*                                                                */
 /* r.in.shape -- import an ESRI Shapefile, creates ASCII and      */
@@ -29,9 +33,9 @@ static void get_startend ( );
 static void get_catlab ( );
 
 typedef struct {  
-	int shape;    // shape (record) number
-	int part;     // part number
-	double area;  // area
+	int shape;    /* shape (record) number */
+	int part;     /* part number */
+	double area;  /* area */
 } POLY;
 
 int main( int   argc, char *argv[])
@@ -45,11 +49,11 @@ int main( int   argc, char *argv[])
     int		 iShape, iPart, nShapeType, nShapes;
     int		 cat_field, lab_field = -1;
     char         label[1024];
-    POLY         *poly;   // list of polygons
-    int          npoly=0; //number of polygons
-    int          apoly=0; //size of allocated poly 
-    int          nhole=0; //number of holes
-    int          nline=0; //number of lines
+    POLY         *poly;   /* list of polygons */
+    int          npoly=0; /* number of polygons */
+    int          apoly=0; /* size of allocated poly */
+    int          nhole=0; /* number of holes */
+    int          nline=0; /* number of lines */
     char         *tmpfile;
     struct line_pnts points;    
     FILE         *tmp;
@@ -244,9 +248,9 @@ int main( int   argc, char *argv[])
 	for( iShape = 0; iShape < hShapeDB->nRecords; iShape++ ) {
 	    psShape = SHPReadObject( hShapeDB, iShape );
 	    for( iPart = 0; iPart < psShape->nParts; iPart++ ) {
-		if ( ring_dir(psShape, iPart)  == 1) { //polygon not hole
+		if ( ring_dir(psShape, iPart)  == 1) { /* polygon not hole */
 		    if ( npoly >= apoly){ 
-			apoly += (int) 1.2 * hShapeDB->nRecords / iShape; // ?? good size guess  
+			apoly += (int) 1.2 * hShapeDB->nRecords / iShape; /* ?? good size guess  */
 			poly = ( POLY *) G_realloc( poly, apoly * sizeof( POLY ));
 		    }
 		    poly[npoly].shape = iShape;
@@ -283,7 +287,7 @@ int main( int   argc, char *argv[])
 	    /* write all holes inside this polygon */ 
 	    for( iPart = 0; iPart < psShape->nParts; iPart++ ) {
 		if ( iPart == poly[i].part) continue;
-		if ( ring_dir(psShape, iPart) == -1 ) {  //hole
+		if ( ring_dir(psShape, iPart) == -1 ) {  /* hole */
 		    /* test if hole in polygon */
 		    get_startend ( psShape, iPart, &hstart, &hend );
             	    points.x = &psShape->padfX[pstart];

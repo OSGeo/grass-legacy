@@ -2328,7 +2328,7 @@ cat > conftest.$ac_ext <<EOF
   WINDOW w;
   
 int main() {
-void t () { w.maxy = 0; }
+w.maxy = 0;
 ; return 0; }
 EOF
 if { (eval echo configure:2335: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
@@ -2347,7 +2347,7 @@ cat > conftest.$ac_ext <<EOF
   WINDOW w;
   
 int main() {
-void t () { w._maxy = 0; }
+w._maxy = 0;
 ; return 0; }
 EOF
 if { (eval echo configure:2354: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then

@@ -1,3 +1,5 @@
+# $Id: Gmakefile,v 1.2 2000-09-11 09:47:39 justin Exp $
+
 all:
 	$(GMAKE) agnps-source
 	$(GMAKE) agview
@@ -6,4 +8,4 @@ all:
 	$(GMAKE) src_agnps_input_2a
 	cp scripts/r.agnps50.input $(GISBASE)/scripts/
 	if [ ! -d $(GISBASE)/etc/agnps50 ]; then mkdir $(GISBASE)/etc/agnps50 ; fi
-	(cd scripts/ ; tar --exclude=CVS -cvf - * | tar -C $(GISBASE)/etc/agnps50 -xvf - 2>/dev/null ; true )
+	(cd scripts/ ; ls -1 | grep -v CVS | grep -v Gmakefile | tar -cvf - - | ( cd $(GISBASE)/etc/agnps50 ; tar -xvf - ) 2>/dev/null ; true )
