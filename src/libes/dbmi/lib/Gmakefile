@@ -1,6 +1,6 @@
 EXTRA_CFLAGS = $(USE_DIRECT) $(USE_BUFFERED_IO)
 
-LIB = libdbmi.a
+LIB =  $(LIBDIR)/libdbmi.a
 OBJ = \
 	c_add_col.o	\
 	c_bindupdate.o	\
@@ -60,6 +60,7 @@ OBJ = \
 	case.o		\
 	column.o	\
 	columnfmt.o	\
+	connect.o	\
 	cursor.o	\
 	datetime.o	\
 	dbmscap.o	\
@@ -73,6 +74,8 @@ OBJ = \
 	isdir.o		\
 	printtab.o	\
 	ret_codes.o	\
+	rclsrule.o	\
+	reclass.o	\
 	shutdown.o	\
 	sqlCtype.o	\
 	sqltype.o	\
