@@ -387,7 +387,7 @@ int
 Gs_loadmap_as_char(wind, map_name, buff, nullmap, has_null)
 struct Cell_head *wind;
 char *map_name;
-char *buff;
+unsigned char *buff;
 struct BM *nullmap;
 int *has_null;
 {
