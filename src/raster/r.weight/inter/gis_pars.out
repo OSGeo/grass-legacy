@@ -1,829 +1,911 @@
+   0  $accept : weight_cmnd $end
 
+   1  weight_cmnd : list_expr
+   2              | print_expr
+   3              | assign_expr
+   4              | choose_expr
+   5              | unchoose_expr
+   6              | color_expr
+   7              | save_expr
+   8              | recover_expr
+   9              | execute_expr
+  10              | quit_expr
+  11              | misc_expr
+  12              | help_expr
+  13              | null_expr
+  14              | error
+
+  15  list_expr : LST_TKN MAP_TKN LINE_TKN
+  16            | LST_TKN CATS_TKN NAM_STR LINE_TKN
+  17            | LST_TKN NAM_STR CATS_TKN LINE_TKN
+  18            | LST_TKN ANAL_TKN LINE_TKN
+
+  19  color_expr : COLR_TKN NAM_STR LINE_TKN
+
+  20  print_expr : PRT_TKN ANAL_TKN LINE_TKN
+
+  21  assign_expr : ASG_TKN NAM_STR LONG_NUM LONG_NUM LINE_TKN
+  22              | ASG_TKN NAM_STR LINE_TKN
+  23              | ASG_TKN NAM_STR LONG_NUM LONG_NUM LONG_NUM LINE_TKN
+
+  24  unchoose_expr : UNCH_TKN NAM_STR LINE_TKN
+  25                | UNCH_TKN NAM_STR NAM_STR LINE_TKN
+  26                | UNCH_TKN NAM_STR NAM_STR NAM_STR LINE_TKN
+  27                | UNCH_TKN NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN
+  28                | UNCH_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN
+  29                | UNCH_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN
+
+  30  choose_expr : CHOS_TKN NAM_STR LINE_TKN
+  31              | CHOS_TKN NAM_STR NAM_STR LINE_TKN
+  32              | CHOS_TKN NAM_STR NAM_STR NAM_STR LINE_TKN
+  33              | CHOS_TKN NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN
+  34              | CHOS_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN
+  35              | CHOS_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN
+
+  36  save_expr : SAV_TKN NAM_STR LINE_TKN
+  37            | SAV_TKN LINE_TKN
+
+  38  recover_expr : REC_TKN NAM_STR LINE_TKN
+  39               | REC_TKN LINE_TKN
+
+  40  execute_expr : EXEC_TKN LINE_TKN
+
+  41  misc_expr : ADD_TKN LINE_TKN
+  42            | MULT_TKN LINE_TKN
+  43            | ERAS_TKN LINE_TKN
+  44            | LST_TKN SAV_TKN ANAL_TKN LINE_TKN
+  45            | LST_TKN REC_TKN ANAL_TKN LINE_TKN
+  46            | LST_TKN SAV_TKN LINE_TKN
+  47            | LST_TKN REC_TKN LINE_TKN
+
+  48  quit_expr : QUIT_TKN LINE_TKN
+
+  49  help_expr : HELP_TKN LINE_TKN
+  50            | HELP_TKN COLR_TKN LINE_TKN
+  51            | HELP_TKN LST_TKN LINE_TKN
+  52            | HELP_TKN PRT_TKN LINE_TKN
+  53            | HELP_TKN ASG_TKN LINE_TKN
+  54            | HELP_TKN ANAL_TKN LINE_TKN
+  55            | HELP_TKN UNCH_TKN LINE_TKN
+  56            | HELP_TKN CHOS_TKN LINE_TKN
+  57            | HELP_TKN REC_TKN LINE_TKN
+  58            | HELP_TKN SAV_TKN LINE_TKN
+  59            | HELP_TKN MAP_TKN LINE_TKN
+  60            | HELP_TKN CATS_TKN LINE_TKN
+  61            | HELP_TKN EXEC_TKN LINE_TKN
+  62            | HELP_TKN QUIT_TKN LINE_TKN
+  63            | HELP_TKN HELP_TKN LINE_TKN
+  64            | HELP_TKN ADD_TKN LINE_TKN
+  65            | HELP_TKN MULT_TKN LINE_TKN
+  66            | HELP_TKN NAM_STR LINE_TKN
+
+  67  null_expr : LINE_TKN
+
 state 0
-	$accept : _weight_cmnd $end 
+	$accept : . weight_cmnd $end  (0)
 
-	error  shift 15
-	ERAS_TKN  shift 28
-	LST_TKN  shift 16
-	COLR_TKN  shift 21
-	PRT_TKN  shift 17
-	ASG_TKN  shift 18
-	UNCH_TKN  shift 20
-	CHOS_TKN  shift 19
-	REC_TKN  shift 23
-	SAV_TKN  shift 22
-	LINE_TKN  shift 30
-	EXEC_TKN  shift 24
-	QUIT_TKN  shift 25
-	HELP_TKN  shift 29
-	ADD_TKN  shift 26
-	MULT_TKN  shift 27
+	error  shift 1
+	ERAS_TKN  shift 2
+	LST_TKN  shift 3
+	COLR_TKN  shift 4
+	PRT_TKN  shift 5
+	ASG_TKN  shift 6
+	UNCH_TKN  shift 7
+	CHOS_TKN  shift 8
+	REC_TKN  shift 9
+	SAV_TKN  shift 10
+	LINE_TKN  shift 11
+	EXEC_TKN  shift 12
+	QUIT_TKN  shift 13
+	HELP_TKN  shift 14
+	ADD_TKN  shift 15
+	MULT_TKN  shift 16
 	.  error
 
-	weight_cmnd  goto 1
-	list_expr  goto 2
-	print_expr  goto 3
-	assign_expr  goto 4
-	choose_expr  goto 5
-	unchoose_expr  goto 6
-	color_expr  goto 7
-	save_expr  goto 8
-	recover_expr  goto 9
-	execute_expr  goto 10
-	quit_expr  goto 11
-	misc_expr  goto 12
-	help_expr  goto 13
-	null_expr  goto 14
+	weight_cmnd  goto 17
+	list_expr  goto 18
+	print_expr  goto 19
+	assign_expr  goto 20
+	choose_expr  goto 21
+	unchoose_expr  goto 22
+	color_expr  goto 23
+	save_expr  goto 24
+	recover_expr  goto 25
+	execute_expr  goto 26
+	quit_expr  goto 27
+	misc_expr  goto 28
+	help_expr  goto 29
+	null_expr  goto 30
+
 
 state 1
-	$accept :  weight_cmnd_$end 
-
-	$end  accept
-	.  error
-
-
-state 2
-	weight_cmnd :  list_expr_    (1)
-
-	.  reduce 1
-
-
-state 3
-	weight_cmnd :  print_expr_    (2)
-
-	.  reduce 2
-
-
-state 4
-	weight_cmnd :  assign_expr_    (3)
-
-	.  reduce 3
-
-
-state 5
-	weight_cmnd :  choose_expr_    (4)
-
-	.  reduce 4
-
-
-state 6
-	weight_cmnd :  unchoose_expr_    (5)
-
-	.  reduce 5
-
-
-state 7
-	weight_cmnd :  color_expr_    (6)
-
-	.  reduce 6
-
-
-state 8
-	weight_cmnd :  save_expr_    (7)
-
-	.  reduce 7
-
-
-state 9
-	weight_cmnd :  recover_expr_    (8)
-
-	.  reduce 8
-
-
-state 10
-	weight_cmnd :  execute_expr_    (9)
-
-	.  reduce 9
-
-
-state 11
-	weight_cmnd :  quit_expr_    (10)
-
-	.  reduce 10
-
-
-state 12
-	weight_cmnd :  misc_expr_    (11)
-
-	.  reduce 11
-
-
-state 13
-	weight_cmnd :  help_expr_    (12)
-
-	.  reduce 12
-
-
-state 14
-	weight_cmnd :  null_expr_    (13)
-
-	.  reduce 13
-
-
-state 15
-	weight_cmnd :  error_    (14)
+	weight_cmnd : error .  (14)
 
 	.  reduce 14
 
 
-state 16
-	list_expr :  LST_TKN_MAP_TKN LINE_TKN 
-	list_expr :  LST_TKN_CATS_TKN NAM_STR LINE_TKN 
-	list_expr :  LST_TKN_NAM_STR CATS_TKN LINE_TKN 
-	list_expr :  LST_TKN_ANAL_TKN LINE_TKN 
-	misc_expr :  LST_TKN_SAV_TKN ANAL_TKN LINE_TKN 
-	misc_expr :  LST_TKN_REC_TKN ANAL_TKN LINE_TKN 
-	misc_expr :  LST_TKN_SAV_TKN LINE_TKN 
-	misc_expr :  LST_TKN_REC_TKN LINE_TKN 
+state 2
+	misc_expr : ERAS_TKN . LINE_TKN  (43)
 
-	ANAL_TKN  shift 34
-	REC_TKN  shift 36
-	SAV_TKN  shift 35
-	MAP_TKN  shift 31
-	CATS_TKN  shift 32
-	NAM_STR  shift 33
+	LINE_TKN  shift 31
 	.  error
 
 
-state 17
-	print_expr :  PRT_TKN_ANAL_TKN LINE_TKN 
+state 3
+	list_expr : LST_TKN . MAP_TKN LINE_TKN  (15)
+	list_expr : LST_TKN . CATS_TKN NAM_STR LINE_TKN  (16)
+	list_expr : LST_TKN . NAM_STR CATS_TKN LINE_TKN  (17)
+	list_expr : LST_TKN . ANAL_TKN LINE_TKN  (18)
+	misc_expr : LST_TKN . SAV_TKN ANAL_TKN LINE_TKN  (44)
+	misc_expr : LST_TKN . REC_TKN ANAL_TKN LINE_TKN  (45)
+	misc_expr : LST_TKN . SAV_TKN LINE_TKN  (46)
+	misc_expr : LST_TKN . REC_TKN LINE_TKN  (47)
 
-	ANAL_TKN  shift 37
+	ANAL_TKN  shift 32
+	REC_TKN  shift 33
+	SAV_TKN  shift 34
+	MAP_TKN  shift 35
+	CATS_TKN  shift 36
+	NAM_STR  shift 37
 	.  error
 
 
-state 18
-	assign_expr :  ASG_TKN_NAM_STR LONG_NUM LONG_NUM LINE_TKN 
-	assign_expr :  ASG_TKN_NAM_STR LINE_TKN 
-	assign_expr :  ASG_TKN_NAM_STR LONG_NUM LONG_NUM LONG_NUM LINE_TKN 
+state 4
+	color_expr : COLR_TKN . NAM_STR LINE_TKN  (19)
 
 	NAM_STR  shift 38
 	.  error
 
 
-state 19
-	choose_expr :  CHOS_TKN_NAM_STR LINE_TKN 
-	choose_expr :  CHOS_TKN_NAM_STR NAM_STR LINE_TKN 
-	choose_expr :  CHOS_TKN_NAM_STR NAM_STR NAM_STR LINE_TKN 
-	choose_expr :  CHOS_TKN_NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN 
-	choose_expr :  CHOS_TKN_NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN 
-	choose_expr :  CHOS_TKN_NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN 
+state 5
+	print_expr : PRT_TKN . ANAL_TKN LINE_TKN  (20)
 
-	NAM_STR  shift 39
+	ANAL_TKN  shift 39
 	.  error
 
 
-state 20
-	unchoose_expr :  UNCH_TKN_NAM_STR LINE_TKN 
-	unchoose_expr :  UNCH_TKN_NAM_STR NAM_STR LINE_TKN 
-	unchoose_expr :  UNCH_TKN_NAM_STR NAM_STR NAM_STR LINE_TKN 
-	unchoose_expr :  UNCH_TKN_NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN 
-	unchoose_expr :  UNCH_TKN_NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN 
-	unchoose_expr :  UNCH_TKN_NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN 
+state 6
+	assign_expr : ASG_TKN . NAM_STR LONG_NUM LONG_NUM LINE_TKN  (21)
+	assign_expr : ASG_TKN . NAM_STR LINE_TKN  (22)
+	assign_expr : ASG_TKN . NAM_STR LONG_NUM LONG_NUM LONG_NUM LINE_TKN  (23)
 
 	NAM_STR  shift 40
 	.  error
 
 
-state 21
-	color_expr :  COLR_TKN_NAM_STR LINE_TKN 
+state 7
+	unchoose_expr : UNCH_TKN . NAM_STR LINE_TKN  (24)
+	unchoose_expr : UNCH_TKN . NAM_STR NAM_STR LINE_TKN  (25)
+	unchoose_expr : UNCH_TKN . NAM_STR NAM_STR NAM_STR LINE_TKN  (26)
+	unchoose_expr : UNCH_TKN . NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN  (27)
+	unchoose_expr : UNCH_TKN . NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN  (28)
+	unchoose_expr : UNCH_TKN . NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN  (29)
 
 	NAM_STR  shift 41
 	.  error
 
 
-state 22
-	save_expr :  SAV_TKN_NAM_STR LINE_TKN 
-	save_expr :  SAV_TKN_LINE_TKN 
+state 8
+	choose_expr : CHOS_TKN . NAM_STR LINE_TKN  (30)
+	choose_expr : CHOS_TKN . NAM_STR NAM_STR LINE_TKN  (31)
+	choose_expr : CHOS_TKN . NAM_STR NAM_STR NAM_STR LINE_TKN  (32)
+	choose_expr : CHOS_TKN . NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN  (33)
+	choose_expr : CHOS_TKN . NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN  (34)
+	choose_expr : CHOS_TKN . NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN  (35)
 
-	LINE_TKN  shift 43
 	NAM_STR  shift 42
 	.  error
 
 
-state 23
-	recover_expr :  REC_TKN_NAM_STR LINE_TKN 
-	recover_expr :  REC_TKN_LINE_TKN 
+state 9
+	recover_expr : REC_TKN . NAM_STR LINE_TKN  (38)
+	recover_expr : REC_TKN . LINE_TKN  (39)
 
-	LINE_TKN  shift 45
+	LINE_TKN  shift 43
 	NAM_STR  shift 44
 	.  error
 
 
-state 24
-	execute_expr :  EXEC_TKN_LINE_TKN 
+state 10
+	save_expr : SAV_TKN . NAM_STR LINE_TKN  (36)
+	save_expr : SAV_TKN . LINE_TKN  (37)
 
-	LINE_TKN  shift 46
+	LINE_TKN  shift 45
+	NAM_STR  shift 46
 	.  error
 
 
-state 25
-	quit_expr :  QUIT_TKN_LINE_TKN 
+state 11
+	null_expr : LINE_TKN .  (67)
+
+	.  reduce 67
+
+
+state 12
+	execute_expr : EXEC_TKN . LINE_TKN  (40)
 
 	LINE_TKN  shift 47
 	.  error
 
 
-state 26
-	misc_expr :  ADD_TKN_LINE_TKN 
+state 13
+	quit_expr : QUIT_TKN . LINE_TKN  (48)
 
 	LINE_TKN  shift 48
 	.  error
 
 
-state 27
-	misc_expr :  MULT_TKN_LINE_TKN 
+state 14
+	help_expr : HELP_TKN . LINE_TKN  (49)
+	help_expr : HELP_TKN . COLR_TKN LINE_TKN  (50)
+	help_expr : HELP_TKN . LST_TKN LINE_TKN  (51)
+	help_expr : HELP_TKN . PRT_TKN LINE_TKN  (52)
+	help_expr : HELP_TKN . ASG_TKN LINE_TKN  (53)
+	help_expr : HELP_TKN . ANAL_TKN LINE_TKN  (54)
+	help_expr : HELP_TKN . UNCH_TKN LINE_TKN  (55)
+	help_expr : HELP_TKN . CHOS_TKN LINE_TKN  (56)
+	help_expr : HELP_TKN . REC_TKN LINE_TKN  (57)
+	help_expr : HELP_TKN . SAV_TKN LINE_TKN  (58)
+	help_expr : HELP_TKN . MAP_TKN LINE_TKN  (59)
+	help_expr : HELP_TKN . CATS_TKN LINE_TKN  (60)
+	help_expr : HELP_TKN . EXEC_TKN LINE_TKN  (61)
+	help_expr : HELP_TKN . QUIT_TKN LINE_TKN  (62)
+	help_expr : HELP_TKN . HELP_TKN LINE_TKN  (63)
+	help_expr : HELP_TKN . ADD_TKN LINE_TKN  (64)
+	help_expr : HELP_TKN . MULT_TKN LINE_TKN  (65)
+	help_expr : HELP_TKN . NAM_STR LINE_TKN  (66)
 
-	LINE_TKN  shift 49
+	LST_TKN  shift 49
+	COLR_TKN  shift 50
+	PRT_TKN  shift 51
+	ASG_TKN  shift 52
+	ANAL_TKN  shift 53
+	UNCH_TKN  shift 54
+	CHOS_TKN  shift 55
+	REC_TKN  shift 56
+	SAV_TKN  shift 57
+	MAP_TKN  shift 58
+	CATS_TKN  shift 59
+	LINE_TKN  shift 60
+	EXEC_TKN  shift 61
+	QUIT_TKN  shift 62
+	HELP_TKN  shift 63
+	ADD_TKN  shift 64
+	MULT_TKN  shift 65
+	NAM_STR  shift 66
 	.  error
+
+
+state 15
+	misc_expr : ADD_TKN . LINE_TKN  (41)
+
+	LINE_TKN  shift 67
+	.  error
+
+
+state 16
+	misc_expr : MULT_TKN . LINE_TKN  (42)
+
+	LINE_TKN  shift 68
+	.  error
+
+
+state 17
+	$accept : weight_cmnd . $end  (0)
+
+	$end  accept
+
+
+state 18
+	weight_cmnd : list_expr .  (1)
+
+	.  reduce 1
+
+
+state 19
+	weight_cmnd : print_expr .  (2)
+
+	.  reduce 2
+
+
+state 20
+	weight_cmnd : assign_expr .  (3)
+
+	.  reduce 3
+
+
+state 21
+	weight_cmnd : choose_expr .  (4)
+
+	.  reduce 4
+
+
+state 22
+	weight_cmnd : unchoose_expr .  (5)
+
+	.  reduce 5
+
+
+state 23
+	weight_cmnd : color_expr .  (6)
+
+	.  reduce 6
+
+
+state 24
+	weight_cmnd : save_expr .  (7)
+
+	.  reduce 7
+
+
+state 25
+	weight_cmnd : recover_expr .  (8)
+
+	.  reduce 8
+
+
+state 26
+	weight_cmnd : execute_expr .  (9)
+
+	.  reduce 9
+
+
+state 27
+	weight_cmnd : quit_expr .  (10)
+
+	.  reduce 10
 
 
 state 28
-	misc_expr :  ERAS_TKN_LINE_TKN 
+	weight_cmnd : misc_expr .  (11)
 
-	LINE_TKN  shift 50
-	.  error
+	.  reduce 11
 
 
 state 29
-	help_expr :  HELP_TKN_LINE_TKN 
-	help_expr :  HELP_TKN_COLR_TKN LINE_TKN 
-	help_expr :  HELP_TKN_LST_TKN LINE_TKN 
-	help_expr :  HELP_TKN_PRT_TKN LINE_TKN 
-	help_expr :  HELP_TKN_ASG_TKN LINE_TKN 
-	help_expr :  HELP_TKN_ANAL_TKN LINE_TKN 
-	help_expr :  HELP_TKN_UNCH_TKN LINE_TKN 
-	help_expr :  HELP_TKN_CHOS_TKN LINE_TKN 
-	help_expr :  HELP_TKN_REC_TKN LINE_TKN 
-	help_expr :  HELP_TKN_SAV_TKN LINE_TKN 
-	help_expr :  HELP_TKN_MAP_TKN LINE_TKN 
-	help_expr :  HELP_TKN_CATS_TKN LINE_TKN 
-	help_expr :  HELP_TKN_EXEC_TKN LINE_TKN 
-	help_expr :  HELP_TKN_QUIT_TKN LINE_TKN 
-	help_expr :  HELP_TKN_HELP_TKN LINE_TKN 
-	help_expr :  HELP_TKN_ADD_TKN LINE_TKN 
-	help_expr :  HELP_TKN_MULT_TKN LINE_TKN 
-	help_expr :  HELP_TKN_NAM_STR LINE_TKN 
+	weight_cmnd : help_expr .  (12)
 
-	LST_TKN  shift 53
-	COLR_TKN  shift 52
-	PRT_TKN  shift 54
-	ASG_TKN  shift 55
-	ANAL_TKN  shift 56
-	UNCH_TKN  shift 57
-	CHOS_TKN  shift 58
-	REC_TKN  shift 59
-	SAV_TKN  shift 60
-	MAP_TKN  shift 61
-	CATS_TKN  shift 62
-	LINE_TKN  shift 51
-	EXEC_TKN  shift 63
-	QUIT_TKN  shift 64
-	HELP_TKN  shift 65
-	ADD_TKN  shift 66
-	MULT_TKN  shift 67
-	NAM_STR  shift 68
-	.  error
+	.  reduce 12
 
 
 state 30
-	null_expr :  LINE_TKN_    (67)
+	weight_cmnd : null_expr .  (13)
 
-	.  reduce 67
+	.  reduce 13
 
 
 state 31
-	list_expr :  LST_TKN MAP_TKN_LINE_TKN 
+	misc_expr : ERAS_TKN LINE_TKN .  (43)
+
+	.  reduce 43
+
+
+state 32
+	list_expr : LST_TKN ANAL_TKN . LINE_TKN  (18)
 
 	LINE_TKN  shift 69
 	.  error
 
 
-state 32
-	list_expr :  LST_TKN CATS_TKN_NAM_STR LINE_TKN 
-
-	NAM_STR  shift 70
-	.  error
-
-
 state 33
-	list_expr :  LST_TKN NAM_STR_CATS_TKN LINE_TKN 
+	misc_expr : LST_TKN REC_TKN . ANAL_TKN LINE_TKN  (45)
+	misc_expr : LST_TKN REC_TKN . LINE_TKN  (47)
 
-	CATS_TKN  shift 71
+	ANAL_TKN  shift 70
+	LINE_TKN  shift 71
 	.  error
 
 
 state 34
-	list_expr :  LST_TKN ANAL_TKN_LINE_TKN 
+	misc_expr : LST_TKN SAV_TKN . ANAL_TKN LINE_TKN  (44)
+	misc_expr : LST_TKN SAV_TKN . LINE_TKN  (46)
 
-	LINE_TKN  shift 72
+	ANAL_TKN  shift 72
+	LINE_TKN  shift 73
 	.  error
 
 
 state 35
-	misc_expr :  LST_TKN SAV_TKN_ANAL_TKN LINE_TKN 
-	misc_expr :  LST_TKN SAV_TKN_LINE_TKN 
+	list_expr : LST_TKN MAP_TKN . LINE_TKN  (15)
 
-	ANAL_TKN  shift 73
 	LINE_TKN  shift 74
 	.  error
 
 
 state 36
-	misc_expr :  LST_TKN REC_TKN_ANAL_TKN LINE_TKN 
-	misc_expr :  LST_TKN REC_TKN_LINE_TKN 
+	list_expr : LST_TKN CATS_TKN . NAM_STR LINE_TKN  (16)
 
-	ANAL_TKN  shift 75
-	LINE_TKN  shift 76
+	NAM_STR  shift 75
 	.  error
 
 
 state 37
-	print_expr :  PRT_TKN ANAL_TKN_LINE_TKN 
+	list_expr : LST_TKN NAM_STR . CATS_TKN LINE_TKN  (17)
+
+	CATS_TKN  shift 76
+	.  error
+
+
+state 38
+	color_expr : COLR_TKN NAM_STR . LINE_TKN  (19)
 
 	LINE_TKN  shift 77
 	.  error
 
 
-state 38
-	assign_expr :  ASG_TKN NAM_STR_LONG_NUM LONG_NUM LINE_TKN 
-	assign_expr :  ASG_TKN NAM_STR_LINE_TKN 
-	assign_expr :  ASG_TKN NAM_STR_LONG_NUM LONG_NUM LONG_NUM LINE_TKN 
-
-	LINE_TKN  shift 79
-	LONG_NUM  shift 78
-	.  error
-
-
 state 39
-	choose_expr :  CHOS_TKN NAM_STR_LINE_TKN 
-	choose_expr :  CHOS_TKN NAM_STR_NAM_STR LINE_TKN 
-	choose_expr :  CHOS_TKN NAM_STR_NAM_STR NAM_STR LINE_TKN 
-	choose_expr :  CHOS_TKN NAM_STR_NAM_STR NAM_STR NAM_STR LINE_TKN 
-	choose_expr :  CHOS_TKN NAM_STR_NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN 
-	choose_expr :  CHOS_TKN NAM_STR_NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN 
+	print_expr : PRT_TKN ANAL_TKN . LINE_TKN  (20)
 
-	LINE_TKN  shift 80
-	NAM_STR  shift 81
+	LINE_TKN  shift 78
 	.  error
 
 
 state 40
-	unchoose_expr :  UNCH_TKN NAM_STR_LINE_TKN 
-	unchoose_expr :  UNCH_TKN NAM_STR_NAM_STR LINE_TKN 
-	unchoose_expr :  UNCH_TKN NAM_STR_NAM_STR NAM_STR LINE_TKN 
-	unchoose_expr :  UNCH_TKN NAM_STR_NAM_STR NAM_STR NAM_STR LINE_TKN 
-	unchoose_expr :  UNCH_TKN NAM_STR_NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN 
-	unchoose_expr :  UNCH_TKN NAM_STR_NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN 
+	assign_expr : ASG_TKN NAM_STR . LONG_NUM LONG_NUM LINE_TKN  (21)
+	assign_expr : ASG_TKN NAM_STR . LINE_TKN  (22)
+	assign_expr : ASG_TKN NAM_STR . LONG_NUM LONG_NUM LONG_NUM LINE_TKN  (23)
 
-	LINE_TKN  shift 82
-	NAM_STR  shift 83
+	LINE_TKN  shift 79
+	LONG_NUM  shift 80
 	.  error
 
 
 state 41
-	color_expr :  COLR_TKN NAM_STR_LINE_TKN 
+	unchoose_expr : UNCH_TKN NAM_STR . LINE_TKN  (24)
+	unchoose_expr : UNCH_TKN NAM_STR . NAM_STR LINE_TKN  (25)
+	unchoose_expr : UNCH_TKN NAM_STR . NAM_STR NAM_STR LINE_TKN  (26)
+	unchoose_expr : UNCH_TKN NAM_STR . NAM_STR NAM_STR NAM_STR LINE_TKN  (27)
+	unchoose_expr : UNCH_TKN NAM_STR . NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN  (28)
+	unchoose_expr : UNCH_TKN NAM_STR . NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN  (29)
 
-	LINE_TKN  shift 84
+	LINE_TKN  shift 81
+	NAM_STR  shift 82
 	.  error
 
 
 state 42
-	save_expr :  SAV_TKN NAM_STR_LINE_TKN 
+	choose_expr : CHOS_TKN NAM_STR . LINE_TKN  (30)
+	choose_expr : CHOS_TKN NAM_STR . NAM_STR LINE_TKN  (31)
+	choose_expr : CHOS_TKN NAM_STR . NAM_STR NAM_STR LINE_TKN  (32)
+	choose_expr : CHOS_TKN NAM_STR . NAM_STR NAM_STR NAM_STR LINE_TKN  (33)
+	choose_expr : CHOS_TKN NAM_STR . NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN  (34)
+	choose_expr : CHOS_TKN NAM_STR . NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN  (35)
+
+	LINE_TKN  shift 83
+	NAM_STR  shift 84
+	.  error
+
+
+state 43
+	recover_expr : REC_TKN LINE_TKN .  (39)
+
+	.  reduce 39
+
+
+state 44
+	recover_expr : REC_TKN NAM_STR . LINE_TKN  (38)
 
 	LINE_TKN  shift 85
 	.  error
 
 
-state 43
-	save_expr :  SAV_TKN LINE_TKN_    (37)
+state 45
+	save_expr : SAV_TKN LINE_TKN .  (37)
 
 	.  reduce 37
 
 
-state 44
-	recover_expr :  REC_TKN NAM_STR_LINE_TKN 
+state 46
+	save_expr : SAV_TKN NAM_STR . LINE_TKN  (36)
 
 	LINE_TKN  shift 86
 	.  error
 
 
-state 45
-	recover_expr :  REC_TKN LINE_TKN_    (39)
-
-	.  reduce 39
-
-
-state 46
-	execute_expr :  EXEC_TKN LINE_TKN_    (40)
+state 47
+	execute_expr : EXEC_TKN LINE_TKN .  (40)
 
 	.  reduce 40
 
 
-state 47
-	quit_expr :  QUIT_TKN LINE_TKN_    (48)
+state 48
+	quit_expr : QUIT_TKN LINE_TKN .  (48)
 
 	.  reduce 48
 
 
-state 48
-	misc_expr :  ADD_TKN LINE_TKN_    (41)
-
-	.  reduce 41
-
-
 state 49
-	misc_expr :  MULT_TKN LINE_TKN_    (42)
-
-	.  reduce 42
-
-
-state 50
-	misc_expr :  ERAS_TKN LINE_TKN_    (43)
-
-	.  reduce 43
-
-
-state 51
-	help_expr :  HELP_TKN LINE_TKN_    (49)
-
-	.  reduce 49
-
-
-state 52
-	help_expr :  HELP_TKN COLR_TKN_LINE_TKN 
+	help_expr : HELP_TKN LST_TKN . LINE_TKN  (51)
 
 	LINE_TKN  shift 87
 	.  error
 
 
-state 53
-	help_expr :  HELP_TKN LST_TKN_LINE_TKN 
+state 50
+	help_expr : HELP_TKN COLR_TKN . LINE_TKN  (50)
 
 	LINE_TKN  shift 88
 	.  error
 
 
-state 54
-	help_expr :  HELP_TKN PRT_TKN_LINE_TKN 
+state 51
+	help_expr : HELP_TKN PRT_TKN . LINE_TKN  (52)
 
 	LINE_TKN  shift 89
 	.  error
 
 
-state 55
-	help_expr :  HELP_TKN ASG_TKN_LINE_TKN 
+state 52
+	help_expr : HELP_TKN ASG_TKN . LINE_TKN  (53)
 
 	LINE_TKN  shift 90
 	.  error
 
 
-state 56
-	help_expr :  HELP_TKN ANAL_TKN_LINE_TKN 
+state 53
+	help_expr : HELP_TKN ANAL_TKN . LINE_TKN  (54)
 
 	LINE_TKN  shift 91
 	.  error
 
 
-state 57
-	help_expr :  HELP_TKN UNCH_TKN_LINE_TKN 
+state 54
+	help_expr : HELP_TKN UNCH_TKN . LINE_TKN  (55)
 
 	LINE_TKN  shift 92
 	.  error
 
 
-state 58
-	help_expr :  HELP_TKN CHOS_TKN_LINE_TKN 
+state 55
+	help_expr : HELP_TKN CHOS_TKN . LINE_TKN  (56)
 
 	LINE_TKN  shift 93
 	.  error
 
 
-state 59
-	help_expr :  HELP_TKN REC_TKN_LINE_TKN 
+state 56
+	help_expr : HELP_TKN REC_TKN . LINE_TKN  (57)
 
 	LINE_TKN  shift 94
 	.  error
 
 
-state 60
-	help_expr :  HELP_TKN SAV_TKN_LINE_TKN 
+state 57
+	help_expr : HELP_TKN SAV_TKN . LINE_TKN  (58)
 
 	LINE_TKN  shift 95
 	.  error
 
 
-state 61
-	help_expr :  HELP_TKN MAP_TKN_LINE_TKN 
+state 58
+	help_expr : HELP_TKN MAP_TKN . LINE_TKN  (59)
 
 	LINE_TKN  shift 96
 	.  error
 
 
-state 62
-	help_expr :  HELP_TKN CATS_TKN_LINE_TKN 
+state 59
+	help_expr : HELP_TKN CATS_TKN . LINE_TKN  (60)
 
 	LINE_TKN  shift 97
 	.  error
 
 
-state 63
-	help_expr :  HELP_TKN EXEC_TKN_LINE_TKN 
+state 60
+	help_expr : HELP_TKN LINE_TKN .  (49)
+
+	.  reduce 49
+
+
+state 61
+	help_expr : HELP_TKN EXEC_TKN . LINE_TKN  (61)
 
 	LINE_TKN  shift 98
 	.  error
 
 
-state 64
-	help_expr :  HELP_TKN QUIT_TKN_LINE_TKN 
+state 62
+	help_expr : HELP_TKN QUIT_TKN . LINE_TKN  (62)
 
 	LINE_TKN  shift 99
 	.  error
 
 
-state 65
-	help_expr :  HELP_TKN HELP_TKN_LINE_TKN 
+state 63
+	help_expr : HELP_TKN HELP_TKN . LINE_TKN  (63)
 
 	LINE_TKN  shift 100
 	.  error
 
 
-state 66
-	help_expr :  HELP_TKN ADD_TKN_LINE_TKN 
+state 64
+	help_expr : HELP_TKN ADD_TKN . LINE_TKN  (64)
 
 	LINE_TKN  shift 101
 	.  error
 
 
-state 67
-	help_expr :  HELP_TKN MULT_TKN_LINE_TKN 
+state 65
+	help_expr : HELP_TKN MULT_TKN . LINE_TKN  (65)
 
 	LINE_TKN  shift 102
 	.  error
 
 
-state 68
-	help_expr :  HELP_TKN NAM_STR_LINE_TKN 
+state 66
+	help_expr : HELP_TKN NAM_STR . LINE_TKN  (66)
 
 	LINE_TKN  shift 103
 	.  error
 
 
-state 69
-	list_expr :  LST_TKN MAP_TKN LINE_TKN_    (15)
+state 67
+	misc_expr : ADD_TKN LINE_TKN .  (41)
 
-	.  reduce 15
+	.  reduce 41
+
+
+state 68
+	misc_expr : MULT_TKN LINE_TKN .  (42)
+
+	.  reduce 42
+
+
+state 69
+	list_expr : LST_TKN ANAL_TKN LINE_TKN .  (18)
+
+	.  reduce 18
 
 
 state 70
-	list_expr :  LST_TKN CATS_TKN NAM_STR_LINE_TKN 
+	misc_expr : LST_TKN REC_TKN ANAL_TKN . LINE_TKN  (45)
 
 	LINE_TKN  shift 104
 	.  error
 
 
 state 71
-	list_expr :  LST_TKN NAM_STR CATS_TKN_LINE_TKN 
+	misc_expr : LST_TKN REC_TKN LINE_TKN .  (47)
+
+	.  reduce 47
+
+
+state 72
+	misc_expr : LST_TKN SAV_TKN ANAL_TKN . LINE_TKN  (44)
 
 	LINE_TKN  shift 105
 	.  error
 
 
-state 72
-	list_expr :  LST_TKN ANAL_TKN LINE_TKN_    (18)
-
-	.  reduce 18
-
-
 state 73
-	misc_expr :  LST_TKN SAV_TKN ANAL_TKN_LINE_TKN 
+	misc_expr : LST_TKN SAV_TKN LINE_TKN .  (46)
+
+	.  reduce 46
+
+
+state 74
+	list_expr : LST_TKN MAP_TKN LINE_TKN .  (15)
+
+	.  reduce 15
+
+
+state 75
+	list_expr : LST_TKN CATS_TKN NAM_STR . LINE_TKN  (16)
 
 	LINE_TKN  shift 106
 	.  error
 
 
-state 74
-	misc_expr :  LST_TKN SAV_TKN LINE_TKN_    (46)
-
-	.  reduce 46
-
-
-state 75
-	misc_expr :  LST_TKN REC_TKN ANAL_TKN_LINE_TKN 
+state 76
+	list_expr : LST_TKN NAM_STR CATS_TKN . LINE_TKN  (17)
 
 	LINE_TKN  shift 107
 	.  error
 
 
-state 76
-	misc_expr :  LST_TKN REC_TKN LINE_TKN_    (47)
-
-	.  reduce 47
-
-
 state 77
-	print_expr :  PRT_TKN ANAL_TKN LINE_TKN_    (20)
+	color_expr : COLR_TKN NAM_STR LINE_TKN .  (19)
+
+	.  reduce 19
+
+
+state 78
+	print_expr : PRT_TKN ANAL_TKN LINE_TKN .  (20)
 
 	.  reduce 20
 
 
-state 78
-	assign_expr :  ASG_TKN NAM_STR LONG_NUM_LONG_NUM LINE_TKN 
-	assign_expr :  ASG_TKN NAM_STR LONG_NUM_LONG_NUM LONG_NUM LINE_TKN 
-
-	LONG_NUM  shift 108
-	.  error
-
-
 state 79
-	assign_expr :  ASG_TKN NAM_STR LINE_TKN_    (22)
+	assign_expr : ASG_TKN NAM_STR LINE_TKN .  (22)
 
 	.  reduce 22
 
 
 state 80
-	choose_expr :  CHOS_TKN NAM_STR LINE_TKN_    (30)
+	assign_expr : ASG_TKN NAM_STR LONG_NUM . LONG_NUM LINE_TKN  (21)
+	assign_expr : ASG_TKN NAM_STR LONG_NUM . LONG_NUM LONG_NUM LINE_TKN  (23)
 
-	.  reduce 30
+	LONG_NUM  shift 108
+	.  error
 
 
 state 81
-	choose_expr :  CHOS_TKN NAM_STR NAM_STR_LINE_TKN 
-	choose_expr :  CHOS_TKN NAM_STR NAM_STR_NAM_STR LINE_TKN 
-	choose_expr :  CHOS_TKN NAM_STR NAM_STR_NAM_STR NAM_STR LINE_TKN 
-	choose_expr :  CHOS_TKN NAM_STR NAM_STR_NAM_STR NAM_STR NAM_STR LINE_TKN 
-	choose_expr :  CHOS_TKN NAM_STR NAM_STR_NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN 
+	unchoose_expr : UNCH_TKN NAM_STR LINE_TKN .  (24)
+
+	.  reduce 24
+
+
+state 82
+	unchoose_expr : UNCH_TKN NAM_STR NAM_STR . LINE_TKN  (25)
+	unchoose_expr : UNCH_TKN NAM_STR NAM_STR . NAM_STR LINE_TKN  (26)
+	unchoose_expr : UNCH_TKN NAM_STR NAM_STR . NAM_STR NAM_STR LINE_TKN  (27)
+	unchoose_expr : UNCH_TKN NAM_STR NAM_STR . NAM_STR NAM_STR NAM_STR LINE_TKN  (28)
+	unchoose_expr : UNCH_TKN NAM_STR NAM_STR . NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN  (29)
 
 	LINE_TKN  shift 109
 	NAM_STR  shift 110
 	.  error
 
 
-state 82
-	unchoose_expr :  UNCH_TKN NAM_STR LINE_TKN_    (24)
-
-	.  reduce 24
-
-
 state 83
-	unchoose_expr :  UNCH_TKN NAM_STR NAM_STR_LINE_TKN 
-	unchoose_expr :  UNCH_TKN NAM_STR NAM_STR_NAM_STR LINE_TKN 
-	unchoose_expr :  UNCH_TKN NAM_STR NAM_STR_NAM_STR NAM_STR LINE_TKN 
-	unchoose_expr :  UNCH_TKN NAM_STR NAM_STR_NAM_STR NAM_STR NAM_STR LINE_TKN 
-	unchoose_expr :  UNCH_TKN NAM_STR NAM_STR_NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN 
+	choose_expr : CHOS_TKN NAM_STR LINE_TKN .  (30)
+
+	.  reduce 30
+
+
+state 84
+	choose_expr : CHOS_TKN NAM_STR NAM_STR . LINE_TKN  (31)
+	choose_expr : CHOS_TKN NAM_STR NAM_STR . NAM_STR LINE_TKN  (32)
+	choose_expr : CHOS_TKN NAM_STR NAM_STR . NAM_STR NAM_STR LINE_TKN  (33)
+	choose_expr : CHOS_TKN NAM_STR NAM_STR . NAM_STR NAM_STR NAM_STR LINE_TKN  (34)
+	choose_expr : CHOS_TKN NAM_STR NAM_STR . NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN  (35)
 
 	LINE_TKN  shift 111
 	NAM_STR  shift 112
 	.  error
 
 
-state 84
-	color_expr :  COLR_TKN NAM_STR LINE_TKN_    (19)
-
-	.  reduce 19
-
-
 state 85
-	save_expr :  SAV_TKN NAM_STR LINE_TKN_    (36)
-
-	.  reduce 36
-
-
-state 86
-	recover_expr :  REC_TKN NAM_STR LINE_TKN_    (38)
+	recover_expr : REC_TKN NAM_STR LINE_TKN .  (38)
 
 	.  reduce 38
 
 
+state 86
+	save_expr : SAV_TKN NAM_STR LINE_TKN .  (36)
+
+	.  reduce 36
+
+
 state 87
-	help_expr :  HELP_TKN COLR_TKN LINE_TKN_    (50)
-
-	.  reduce 50
-
-
-state 88
-	help_expr :  HELP_TKN LST_TKN LINE_TKN_    (51)
+	help_expr : HELP_TKN LST_TKN LINE_TKN .  (51)
 
 	.  reduce 51
 
 
+state 88
+	help_expr : HELP_TKN COLR_TKN LINE_TKN .  (50)
+
+	.  reduce 50
+
+
 state 89
-	help_expr :  HELP_TKN PRT_TKN LINE_TKN_    (52)
+	help_expr : HELP_TKN PRT_TKN LINE_TKN .  (52)
 
 	.  reduce 52
 
 
 state 90
-	help_expr :  HELP_TKN ASG_TKN LINE_TKN_    (53)
+	help_expr : HELP_TKN ASG_TKN LINE_TKN .  (53)
 
 	.  reduce 53
 
 
 state 91
-	help_expr :  HELP_TKN ANAL_TKN LINE_TKN_    (54)
+	help_expr : HELP_TKN ANAL_TKN LINE_TKN .  (54)
 
 	.  reduce 54
 
 
 state 92
-	help_expr :  HELP_TKN UNCH_TKN LINE_TKN_    (55)
+	help_expr : HELP_TKN UNCH_TKN LINE_TKN .  (55)
 
 	.  reduce 55
 
 
 state 93
-	help_expr :  HELP_TKN CHOS_TKN LINE_TKN_    (56)
+	help_expr : HELP_TKN CHOS_TKN LINE_TKN .  (56)
 
 	.  reduce 56
 
 
 state 94
-	help_expr :  HELP_TKN REC_TKN LINE_TKN_    (57)
+	help_expr : HELP_TKN REC_TKN LINE_TKN .  (57)
 
 	.  reduce 57
 
 
 state 95
-	help_expr :  HELP_TKN SAV_TKN LINE_TKN_    (58)
+	help_expr : HELP_TKN SAV_TKN LINE_TKN .  (58)
 
 	.  reduce 58
 
 
 state 96
-	help_expr :  HELP_TKN MAP_TKN LINE_TKN_    (59)
+	help_expr : HELP_TKN MAP_TKN LINE_TKN .  (59)
 
 	.  reduce 59
 
 
 state 97
-	help_expr :  HELP_TKN CATS_TKN LINE_TKN_    (60)
+	help_expr : HELP_TKN CATS_TKN LINE_TKN .  (60)
 
 	.  reduce 60
 
 
 state 98
-	help_expr :  HELP_TKN EXEC_TKN LINE_TKN_    (61)
+	help_expr : HELP_TKN EXEC_TKN LINE_TKN .  (61)
 
 	.  reduce 61
 
 
 state 99
-	help_expr :  HELP_TKN QUIT_TKN LINE_TKN_    (62)
+	help_expr : HELP_TKN QUIT_TKN LINE_TKN .  (62)
 
 	.  reduce 62
 
 
 state 100
-	help_expr :  HELP_TKN HELP_TKN LINE_TKN_    (63)
+	help_expr : HELP_TKN HELP_TKN LINE_TKN .  (63)
 
 	.  reduce 63
 
 
 state 101
-	help_expr :  HELP_TKN ADD_TKN LINE_TKN_    (64)
+	help_expr : HELP_TKN ADD_TKN LINE_TKN .  (64)
 
 	.  reduce 64
 
 
 state 102
-	help_expr :  HELP_TKN MULT_TKN LINE_TKN_    (65)
+	help_expr : HELP_TKN MULT_TKN LINE_TKN .  (65)
 
 	.  reduce 65
 
 
 state 103
-	help_expr :  HELP_TKN NAM_STR LINE_TKN_    (66)
+	help_expr : HELP_TKN NAM_STR LINE_TKN .  (66)
 
 	.  reduce 66
 
 
 state 104
-	list_expr :  LST_TKN CATS_TKN NAM_STR LINE_TKN_    (16)
-
-	.  reduce 16
-
-
-state 105
-	list_expr :  LST_TKN NAM_STR CATS_TKN LINE_TKN_    (17)
-
-	.  reduce 17
-
-
-state 106
-	misc_expr :  LST_TKN SAV_TKN ANAL_TKN LINE_TKN_    (44)
-
-	.  reduce 44
-
-
-state 107
-	misc_expr :  LST_TKN REC_TKN ANAL_TKN LINE_TKN_    (45)
+	misc_expr : LST_TKN REC_TKN ANAL_TKN LINE_TKN .  (45)
 
 	.  reduce 45
 
 
+state 105
+	misc_expr : LST_TKN SAV_TKN ANAL_TKN LINE_TKN .  (44)
+
+	.  reduce 44
+
+
+state 106
+	list_expr : LST_TKN CATS_TKN NAM_STR LINE_TKN .  (16)
+
+	.  reduce 16
+
+
+state 107
+	list_expr : LST_TKN NAM_STR CATS_TKN LINE_TKN .  (17)
+
+	.  reduce 17
+
+
 state 108
-	assign_expr :  ASG_TKN NAM_STR LONG_NUM LONG_NUM_LINE_TKN 
-	assign_expr :  ASG_TKN NAM_STR LONG_NUM LONG_NUM_LONG_NUM LINE_TKN 
+	assign_expr : ASG_TKN NAM_STR LONG_NUM LONG_NUM . LINE_TKN  (21)
+	assign_expr : ASG_TKN NAM_STR LONG_NUM LONG_NUM . LONG_NUM LINE_TKN  (23)
 
 	LINE_TKN  shift 113
 	LONG_NUM  shift 114
@@ -831,16 +913,16 @@ state 108
 
 
 state 109
-	choose_expr :  CHOS_TKN NAM_STR NAM_STR LINE_TKN_    (31)
+	unchoose_expr : UNCH_TKN NAM_STR NAM_STR LINE_TKN .  (25)
 
-	.  reduce 31
+	.  reduce 25
 
 
 state 110
-	choose_expr :  CHOS_TKN NAM_STR NAM_STR NAM_STR_LINE_TKN 
-	choose_expr :  CHOS_TKN NAM_STR NAM_STR NAM_STR_NAM_STR LINE_TKN 
-	choose_expr :  CHOS_TKN NAM_STR NAM_STR NAM_STR_NAM_STR NAM_STR LINE_TKN 
-	choose_expr :  CHOS_TKN NAM_STR NAM_STR NAM_STR_NAM_STR NAM_STR NAM_STR LINE_TKN 
+	unchoose_expr : UNCH_TKN NAM_STR NAM_STR NAM_STR . LINE_TKN  (26)
+	unchoose_expr : UNCH_TKN NAM_STR NAM_STR NAM_STR . NAM_STR LINE_TKN  (27)
+	unchoose_expr : UNCH_TKN NAM_STR NAM_STR NAM_STR . NAM_STR NAM_STR LINE_TKN  (28)
+	unchoose_expr : UNCH_TKN NAM_STR NAM_STR NAM_STR . NAM_STR NAM_STR NAM_STR LINE_TKN  (29)
 
 	LINE_TKN  shift 115
 	NAM_STR  shift 116
@@ -848,16 +930,16 @@ state 110
 
 
 state 111
-	unchoose_expr :  UNCH_TKN NAM_STR NAM_STR LINE_TKN_    (25)
+	choose_expr : CHOS_TKN NAM_STR NAM_STR LINE_TKN .  (31)
 
-	.  reduce 25
+	.  reduce 31
 
 
 state 112
-	unchoose_expr :  UNCH_TKN NAM_STR NAM_STR NAM_STR_LINE_TKN 
-	unchoose_expr :  UNCH_TKN NAM_STR NAM_STR NAM_STR_NAM_STR LINE_TKN 
-	unchoose_expr :  UNCH_TKN NAM_STR NAM_STR NAM_STR_NAM_STR NAM_STR LINE_TKN 
-	unchoose_expr :  UNCH_TKN NAM_STR NAM_STR NAM_STR_NAM_STR NAM_STR NAM_STR LINE_TKN 
+	choose_expr : CHOS_TKN NAM_STR NAM_STR NAM_STR . LINE_TKN  (32)
+	choose_expr : CHOS_TKN NAM_STR NAM_STR NAM_STR . NAM_STR LINE_TKN  (33)
+	choose_expr : CHOS_TKN NAM_STR NAM_STR NAM_STR . NAM_STR NAM_STR LINE_TKN  (34)
+	choose_expr : CHOS_TKN NAM_STR NAM_STR NAM_STR . NAM_STR NAM_STR NAM_STR LINE_TKN  (35)
 
 	LINE_TKN  shift 117
 	NAM_STR  shift 118
@@ -865,28 +947,28 @@ state 112
 
 
 state 113
-	assign_expr :  ASG_TKN NAM_STR LONG_NUM LONG_NUM LINE_TKN_    (21)
+	assign_expr : ASG_TKN NAM_STR LONG_NUM LONG_NUM LINE_TKN .  (21)
 
 	.  reduce 21
 
 
 state 114
-	assign_expr :  ASG_TKN NAM_STR LONG_NUM LONG_NUM LONG_NUM_LINE_TKN 
+	assign_expr : ASG_TKN NAM_STR LONG_NUM LONG_NUM LONG_NUM . LINE_TKN  (23)
 
 	LINE_TKN  shift 119
 	.  error
 
 
 state 115
-	choose_expr :  CHOS_TKN NAM_STR NAM_STR NAM_STR LINE_TKN_    (32)
+	unchoose_expr : UNCH_TKN NAM_STR NAM_STR NAM_STR LINE_TKN .  (26)
 
-	.  reduce 32
+	.  reduce 26
 
 
 state 116
-	choose_expr :  CHOS_TKN NAM_STR NAM_STR NAM_STR NAM_STR_LINE_TKN 
-	choose_expr :  CHOS_TKN NAM_STR NAM_STR NAM_STR NAM_STR_NAM_STR LINE_TKN 
-	choose_expr :  CHOS_TKN NAM_STR NAM_STR NAM_STR NAM_STR_NAM_STR NAM_STR LINE_TKN 
+	unchoose_expr : UNCH_TKN NAM_STR NAM_STR NAM_STR NAM_STR . LINE_TKN  (27)
+	unchoose_expr : UNCH_TKN NAM_STR NAM_STR NAM_STR NAM_STR . NAM_STR LINE_TKN  (28)
+	unchoose_expr : UNCH_TKN NAM_STR NAM_STR NAM_STR NAM_STR . NAM_STR NAM_STR LINE_TKN  (29)
 
 	LINE_TKN  shift 120
 	NAM_STR  shift 121
@@ -894,15 +976,15 @@ state 116
 
 
 state 117
-	unchoose_expr :  UNCH_TKN NAM_STR NAM_STR NAM_STR LINE_TKN_    (26)
+	choose_expr : CHOS_TKN NAM_STR NAM_STR NAM_STR LINE_TKN .  (32)
 
-	.  reduce 26
+	.  reduce 32
 
 
 state 118
-	unchoose_expr :  UNCH_TKN NAM_STR NAM_STR NAM_STR NAM_STR_LINE_TKN 
-	unchoose_expr :  UNCH_TKN NAM_STR NAM_STR NAM_STR NAM_STR_NAM_STR LINE_TKN 
-	unchoose_expr :  UNCH_TKN NAM_STR NAM_STR NAM_STR NAM_STR_NAM_STR NAM_STR LINE_TKN 
+	choose_expr : CHOS_TKN NAM_STR NAM_STR NAM_STR NAM_STR . LINE_TKN  (33)
+	choose_expr : CHOS_TKN NAM_STR NAM_STR NAM_STR NAM_STR . NAM_STR LINE_TKN  (34)
+	choose_expr : CHOS_TKN NAM_STR NAM_STR NAM_STR NAM_STR . NAM_STR NAM_STR LINE_TKN  (35)
 
 	LINE_TKN  shift 122
 	NAM_STR  shift 123
@@ -910,20 +992,20 @@ state 118
 
 
 state 119
-	assign_expr :  ASG_TKN NAM_STR LONG_NUM LONG_NUM LONG_NUM LINE_TKN_    (23)
+	assign_expr : ASG_TKN NAM_STR LONG_NUM LONG_NUM LONG_NUM LINE_TKN .  (23)
 
 	.  reduce 23
 
 
 state 120
-	choose_expr :  CHOS_TKN NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN_    (33)
+	unchoose_expr : UNCH_TKN NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN .  (27)
 
-	.  reduce 33
+	.  reduce 27
 
 
 state 121
-	choose_expr :  CHOS_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR_LINE_TKN 
-	choose_expr :  CHOS_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR_NAM_STR LINE_TKN 
+	unchoose_expr : UNCH_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR . LINE_TKN  (28)
+	unchoose_expr : UNCH_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR . NAM_STR LINE_TKN  (29)
 
 	LINE_TKN  shift 124
 	NAM_STR  shift 125
@@ -931,14 +1013,14 @@ state 121
 
 
 state 122
-	unchoose_expr :  UNCH_TKN NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN_    (27)
+	choose_expr : CHOS_TKN NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN .  (33)
 
-	.  reduce 27
+	.  reduce 33
 
 
 state 123
-	unchoose_expr :  UNCH_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR_LINE_TKN 
-	unchoose_expr :  UNCH_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR_NAM_STR LINE_TKN 
+	choose_expr : CHOS_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR . LINE_TKN  (34)
+	choose_expr : CHOS_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR . NAM_STR LINE_TKN  (35)
 
 	LINE_TKN  shift 126
 	NAM_STR  shift 127
@@ -946,53 +1028,42 @@ state 123
 
 
 state 124
-	choose_expr :  CHOS_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN_    (34)
+	unchoose_expr : UNCH_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN .  (28)
 
-	.  reduce 34
+	.  reduce 28
 
 
 state 125
-	choose_expr :  CHOS_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR_LINE_TKN 
+	unchoose_expr : UNCH_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR . LINE_TKN  (29)
 
 	LINE_TKN  shift 128
 	.  error
 
 
 state 126
-	unchoose_expr :  UNCH_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN_    (28)
+	choose_expr : CHOS_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN .  (34)
 
-	.  reduce 28
+	.  reduce 34
 
 
 state 127
-	unchoose_expr :  UNCH_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR_LINE_TKN 
+	choose_expr : CHOS_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR . LINE_TKN  (35)
 
 	LINE_TKN  shift 129
 	.  error
 
 
 state 128
-	choose_expr :  CHOS_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN_    (35)
-
-	.  reduce 35
-
-
-state 129
-	unchoose_expr :  UNCH_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN_    (29)
+	unchoose_expr : UNCH_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN .  (29)
 
 	.  reduce 29
 
 
-23/600 terminals, 14/2000 nonterminals
-68/1200 grammar rules, 130/1500 states
-0 shift/reduce, 0 reduce/reduce conflicts reported
-68/2001 working sets used
-memory: states,etc. 340/48000, parser 13/24000
-16/2001 distinct lookahead sets
-0 extra closures
-115 shift entries, 1 exceptions
-14 goto entries
-0 entries saved by goto default
-Optimizer space used: input 246/48000, output 129/24000
-129 table entries, 0 zero
-Maximum spread: 277, maximum offset: 277
+state 129
+	choose_expr : CHOS_TKN NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR NAM_STR LINE_TKN .  (35)
+
+	.  reduce 35
+
+
+23 terminals, 15 nonterminals
+68 grammar rules, 130 states

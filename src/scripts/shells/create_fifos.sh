@@ -1,6 +1,6 @@
 # create_fifos.sh.in
 
-DEV=/usr/people/jhickey/grassCVS/grass/dev
+DEV=/usr/local/grass-5.0b/dev
 
 test -d ${DEV} || mkdir ${DEV}
 
