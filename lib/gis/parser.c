@@ -1302,7 +1302,7 @@ int G_gui (void)
 	   "}\n");
 
     /* Help button */
-    append(cmd, "button .help -text \"Help\" -command \"exec $env(GRASS_HTML_BROWSER) $env(GISBASE)/docs/html/%s.html\" \n", pgm_name);
+    append(cmd, "button .help -text \"Help\" -command \"exec $env(GRASS_HTML_BROWSER) $env(GISBASE)/docs/html/%s.html &\" \n", pgm_name);
     append(cmd, "pack .run .help -side left -expand yes -padx 20 -pady 5\n");
 
     /* Close button */
