@@ -45,6 +45,9 @@ tcltkgrass:
 	        test -d $$h && continue; \
 		cp $$h $$NLOC_DIR/tcltkgrass/main; \
 	    done); \
+	    TCLTKREAL_DIR=$(GISBASE)/tcltkgrass; \
+	    cp $$TCLTKREAL_DIR/main/gui.tcl $$NLOC_DIR/tcltkgrass/main/gui.tcl; \
+	    cp $$TCLTKREAL_DIR/main/balloon.tcl $$NLOC_DIR/tcltkgrass/main/balloon.tcl; \
 	    test -d $$LCL/tcltkgrass/module && (cd $$LCL/tcltkgrass/module; \
 	    for h in *; do \
 	        test -d $$h && continue; \
