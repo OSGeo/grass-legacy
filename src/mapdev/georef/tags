@@ -67,7 +67,6 @@ respend	curses.c	/^respend ()$/
 rindex	rindex.c	/^rindex(s, c)$/
 save_coor_to_file	map_coor.c	/^save_coor_to_file (fp) $/
 select_digitizer	select_digit.c	/^select_digitizer( fp, selected_digitizer, Driver)$/
-set_gis_uid	set_prior.c	/^set_gis_uid (on)$/
 set_keyboard	set_key.c	/^set_keyboard ()$/
 set_priority	set_prior.c	/^set_priority ()$/
 set_priority_3b2	set_prior.c	/^set_priority_3b2 ()$/
