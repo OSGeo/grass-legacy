@@ -1,0 +1,50 @@
+
+
+This directory contains the graphics library that is compiled into
+GRASS graphics tools and programs.  At runtime GRASS programs, through
+this library, connect themselves to a graphics driver.   This connection
+is made through fifo (first-in-first-out) files on BELL Unix systems (e.g. 
+MASSCOMP and ATT 3B2), and through INET sockets on Berkley machines (eg. SUN).
+The OS flag (set in src/CMD/makehead) is set to BERK or SYSV (System five).
+
+
+If you are running a version of Unix which supports fifo files do the
+following:
+
+fifo files are used for GRASS application program - GRASS graphics driver
+communication.  One drawback from the Berkley socket version is that both
+programs must run on the same machine.  Edit the io.c file and find the
+following two lines:  (they will not be together)
+    _wfd = open("/dev/fifo.a", WRITE) ;
+    _rfd = open("/dev/fifo.b", READ) ;
+You may choose to leave these lines alone (suggested), in which case you will
+need to create these two files (as root):
+    login root
+    cd /dev
+    mknod fifo.a p
+    mknod fifo.b p
+    chmod 0666 fifo.a fofo.b
+    exit
+If you choose to change these, you must create the corresponding files as
+just described and you must make corresponding changes in the file
+.../gis/src/D/devices/SWITCHER.c .   This switcher routine is the main routine
+for the graphics driver which communicates with this library.  Read the README
+file in that directory.
+
+Note that GRASS is released to use /dev/fifo.a and /dev/fifo.b as is.  No
+editing is necessary.
+
+------------------------------------------------------------------------
+
+If you are running a BERKLEY Unix which does not support FIFO files or
+you wish to run the graphics driver on a different machine than the 
+GRASS application programs do the following:
+
+In the file io.c find a line that looks something like this the following. It
+should be in a routine called socketto:
+	char 			*host = "illinois", *service = "sunmonitor";
+The variable "host" must be set to the name of the machine on which the 
+graphics driver program is running.  Internet sockets are used and will allow
+the GRASS application program to run on a machine different from the driver
+program.  That machine name however must be assigned to "host".   An alternate
+version would set host to some environment variable.
