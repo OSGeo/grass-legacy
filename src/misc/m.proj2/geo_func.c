@@ -51,7 +51,7 @@ int get_easting(void)
 	}
 	get_num(answer, 0);
 	if (ier)
-		exit(0);
+		return (0);
 	return (1);
 }
 
