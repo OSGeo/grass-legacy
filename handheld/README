@@ -15,3 +15,6 @@ Binaries can be compiled here
 	http://handhelds.org/projects/skiffcluster.html
 	(upload babyGRASS package, compile with above script, download
 	iPAQ-Linux binaries)
+
+         The iPAQs are here:
+         telnet ipaq[1..7].handhelds.org
