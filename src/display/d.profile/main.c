@@ -96,7 +96,7 @@ if (max < 0) max = 0;
     R_open_driver();
 
     /* Make sure screen is clear */
-    D_setup(1);
+    Dclearscreen();
 
     /* Establish windows on screen */
 #ifdef USE_OLD_CODE
