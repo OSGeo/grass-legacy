@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.37 2000-10-18 15:52:00 markus Exp $
+$Id: BUGS,v 1.38 2000-10-18 17:35:32 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -158,6 +158,11 @@ p.map.new:
  - bug in table.c causing segfault
  - probability "1" not accepted
   (being worked on by David D Gray)  
+
+[RC]r.buffer
+  r.buffer doesn't treat zero as nulls anymore (contrary to documentation)
+  (reported by Malcolm Williamson <malcolm@cast.uark.edu>)
+  (being worked on by ?)
 
 [RC]r.contour: (reported by D D Gray <ddgray@armadce.demon.co.uk>)
   Though it is not a stability problem, I've found that if this module is
