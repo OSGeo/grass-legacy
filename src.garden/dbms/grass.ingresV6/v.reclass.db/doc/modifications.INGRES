@@ -1,0 +1,27 @@
+**************************************
+v.reclass.db - Modifications for INGRES
+
+Katarina Johnsson 930417
+**************************************
+
+Name of the sub routine has been changed:
+	sqlQry <=> infxQry
+
+'\g' is added to each select statement in SQL file.
+
+ingresUnTable added (in sqlQry) to read output from SQL query.
+
+Syntax for execution of SQL command modified.
+
+ingresGetKey added (in sqlQry) so that SQL queries on the form
+	SELECT * from ...
+are allowed, ie the key column is extracted (assuming that it is the 
+first column) and the other columns are disregarded.
+
+Bug fixes in loop to reclassify the vectors:
+	Loop control by 'firstFlag' instead of 'curcat'.
+	1st argument in G_set_cat is 'catcnt' instead of 'line_cat'.
+	Label is 'dbname category catcnt' instead of 'dbname category line_cat'.
+
+
+	
