@@ -480,6 +480,13 @@ int check_terminal_snapback( pntDescript *ppnt1, pntDescript *ppnt2, pntDescript
   /* Start tracking */
   while(ptmp1->linknum == 2) {
     /* Go on tracking */
+
+    if(ptmp3 == NULL) {
+      /* Bad line. Probably will not be labelled. Abort. */
+      *pmiddle = NULL;
+      return(0);
+    }
+
     nvert++;
     midvert = nvert / 2;
 
