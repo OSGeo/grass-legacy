@@ -1,0 +1,490 @@
+
+
+proc frame_name { } {
+
+
+  toplevel .frame_name
+
+  wm geometry .frame_name +100+20
+  wm title .frame_name "frame_name"
+
+
+  global name
+
+
+  frame .frame_name.frame0 \
+    -relief {flat}
+
+  label .frame_name.frame0.label \
+    -anchor {w} \
+    -text {Name of the display frame to be created/selected:} \
+    -padx {2}
+
+  scrollbar .frame_name.frame0.hscrollbar \
+    -command {.frame_name.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .frame_name.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.frame_name.frame0.hscrollbar set}
+
+  pack append .frame_name.frame0 \
+    .frame_name.frame0.label { top fillx } \
+    .frame_name.frame0.entry { top fillx } \
+    .frame_name.frame0.hscrollbar { bottom fillx }
+
+  .frame_name.frame0.entry configure -state normal
+
+  bind .frame_name.frame0.entry <Return> {
+       set name [%W get] }
+
+
+
+  frame .frame_name.frame1 \
+     -borderwidth {2}
+
+  button .frame_name.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set name [.frame_name.frame0.entry get]
+                 destroy .frame_name }
+
+  button .frame_name.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set name ""
+                 destroy .frame_name }
+
+  pack append .frame_name.frame1 \
+    .frame_name.frame1.ok { left expand } \
+    .frame_name.frame1.cancel { right expand }
+
+
+
+  pack append .frame_name \
+    .frame_name.frame0 { top expand fill } \
+    .frame_name.frame1 { bottom expand fill }
+
+
+
+  grab set .frame_name
+  tkwait window .frame_name
+
+}
+
+
+
+
+proc put_command { } {
+
+
+  global c
+  global e
+  global p
+  global s
+  global D
+  global name
+  global bottom
+  global top
+  global left
+  global right
+
+
+  set cmd ""
+
+  if {  $c != "" || $e != "" || $p != "" || $s != "" || $D != "" } {
+         set cmd "$cmd -$c$e$p$s$D"
+  }
+
+  if {  $name != "" } {
+         set cmd "$cmd frame=$name"
+  }
+
+  if {  $bottom != "" || $top != "" || $left != "" || $right != "" } {
+         set cmd "$cmd at=$bottom,$top,$left,$right"
+  }
+
+  if { $cmd != "" } {
+     set cmd "d.frame $cmd"
+  }
+}
+
+
+
+
+proc set_command_entry { } {
+
+  .cmd.frame0.entry configure -state normal
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 [put_command]
+  .cmd.frame0.entry configure -state disabled
+
+}
+
+
+proc proc_d.frame { } {
+
+
+  global c
+  global e
+  global p
+  global s
+  global D
+  global name
+  global bottom
+  global top
+  global left
+  global right
+
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "Manage Display Frames"
+
+
+  frame .cmd.frame0 \
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame0.hscrollbar set}
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {d.frame}
+
+  .cmd.frame0.entry configure -state disabled
+
+
+
+  frame .cmd.frame1 \
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame1.hscrollbar set}
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {d.frame manages display frames on the user's graphics monitor.}
+
+  .cmd.frame1.entry configure -state disabled
+
+
+
+  frame .cmd.frame2 \
+    -relief {flat}
+
+  label .cmd.frame2.label \
+    -anchor {w} \
+    -text {Other options available:} \
+    -padx {2}
+
+  button .cmd.frame2.button0 \
+     -text "frame_name ..." \
+     -relief raised \
+     -padx 10 \
+     -command "frame_name
+                set_command_entry"
+
+
+  frame .cmd.frame3 \
+    -relief {flat}
+
+  checkbutton .cmd.frame3.checkbutton \
+     -text "Remove all existing display frames and reinitializes the entire graphics screen." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "e" \
+     -offvalue "" \
+     -command { set_command_entry } \
+     -variable e
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.checkbutton { left }
+
+
+  frame .cmd.frame4 \
+    -relief {flat}
+
+  checkbutton .cmd.frame4.checkbutton \
+     -text "Print the name of the active frame in which GRASS display output will appear." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "p" \
+     -offvalue "" \
+     -command { set_command_entry } \
+     -variable p
+
+  pack append .cmd.frame4 \
+    .cmd.frame4.checkbutton { left }
+
+
+  frame .cmd.frame5 \
+    -relief {flat}
+
+  checkbutton .cmd.frame5.checkbutton \
+     -text "Select a frame for the display of GRASS graphics." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "s" \
+     -offvalue "" \
+     -command { set_command_entry } \
+     -variable s
+
+  pack append .cmd.frame5 \
+    .cmd.frame5.checkbutton { left }
+
+
+  frame .cmd.frame6 \
+    -relief {flat}
+
+  checkbutton .cmd.frame6.checkbutton \
+     -text "Print the status of the user's graphics monitor and active display frame to standard output." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "D" \
+     -offvalue "" \
+     -command { set_command_entry } \
+     -variable D
+
+  pack append .cmd.frame6 \
+    .cmd.frame6.checkbutton { left }
+
+
+  frame .cmd.frame7 \
+    -relief {flat}
+
+  scale .cmd.frame7.scale \
+     -label "Bottom boundary of the newly created frame:" \
+     -from 0 \
+     -to 100 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .cmd.frame7 \
+    .cmd.frame7.scale { left expand fill }
+
+  .cmd.frame7.scale set 25
+
+
+  frame .cmd.frame8 \
+    -relief {flat}
+
+  scale .cmd.frame8.scale \
+     -label "Top boundary of the newly created frame:" \
+     -from 0 \
+     -to 100 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .cmd.frame8 \
+    .cmd.frame8.scale { left expand fill }
+
+  .cmd.frame8.scale set 75
+
+
+  frame .cmd.frame9 \
+    -relief {flat}
+
+  scale .cmd.frame9.scale \
+     -label "Left boundary of the newly created frame:" \
+     -from 0 \
+     -to 100 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .cmd.frame9 \
+    .cmd.frame9.scale { left expand fill }
+
+  .cmd.frame9.scale set 25
+
+
+  frame .cmd.frame10 \
+    -relief {flat}
+
+  scale .cmd.frame10.scale \
+     -label "Right boundary of the newly created frame:" \
+     -from 0 \
+     -to 100 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .cmd.frame10 \
+    .cmd.frame10.scale { left expand fill }
+
+  .cmd.frame10.scale set 75
+
+
+  frame .cmd.frame11 \
+     -borderwidth {2}
+
+  button .cmd.frame11.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 		set cmd [put_command]
+ 		if { $cmd != "" } {
+ 		   catch { eval " exec $cmd " } 
+ 		   destroy .cmd
+ 		}
+ }
+
+  button .cmd.frame11.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { destroy .cmd }
+
+  pack append .cmd.frame11 \
+    .cmd.frame11.ok { left expand } \
+    .cmd.frame11.cancel { right expand }
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.label { top fillx } \
+    .cmd.frame2.button0  { left }
+
+
+
+  pack append .cmd \
+    .cmd.frame1 { top expand fill } \
+    .cmd.frame2 { top expand fill } \
+    .cmd.frame3 { top expand fill } \
+    .cmd.frame4 { top expand fill } \
+    .cmd.frame5 { top expand fill } \
+    .cmd.frame6 { top expand fill } \
+    .cmd.frame7 { top expand fill } \
+    .cmd.frame8 { top expand fill } \
+    .cmd.frame9 { top expand fill } \
+    .cmd.frame10 { top expand fill } \
+    .cmd.frame0 { top expand fill } \
+    .cmd.frame11 { bottom expand fill }
+
+
+bind .cmd.frame7.scale <ButtonPress-1> {
+		set bottom [.cmd.frame7.scale get]
+		set_command_entry
+}
+
+bind .cmd.frame7.scale <ButtonRelease-1> {
+		set bottom [.cmd.frame7.scale get]
+		set_command_entry
+}
+
+bind .cmd.frame8.scale <ButtonPress-1> {
+		set top [.cmd.frame8.scale get]
+		set_command_entry
+}
+
+bind .cmd.frame8.scale <ButtonRelease-1> {
+		set top [.cmd.frame8.scale get]
+		set_command_entry
+}
+
+bind .cmd.frame9.scale <ButtonPress-1> {
+		set left [.cmd.frame9.scale get]
+		set_command_entry
+}
+
+bind .cmd.frame9.scale <ButtonRelease-1> {
+		set left [.cmd.frame9.scale get]
+		set_command_entry
+}
+
+bind .cmd.frame10.scale <ButtonPress-1> {
+		set right [.cmd.frame10.scale get]
+		set_command_entry
+}
+
+bind .cmd.frame10.scale <ButtonRelease-1> {
+		set right [.cmd.frame10.scale get]
+		set_command_entry
+}
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global c
+set c ""
+
+global e
+set e ""
+
+global p
+set p ""
+
+global s
+set s ""
+
+global D
+set D ""
+
+global name
+set name ""
+
+global bottom
+set bottom ""
+
+global top
+set top ""
+
+global left
+set left ""
+
+global right
+set right ""
+
+
+global database
+global location
+global mapset
+global feature
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_d.frame

@@ -1,0 +1,498 @@
+
+
+proc sizes { } {
+
+
+  toplevel .sizes
+
+  wm geometry .sizes +100+20
+  wm title .sizes "sizes"
+
+
+  global value
+
+
+  frame .sizes.frame0 \
+    -relief {flat}
+
+  scale .sizes.frame0.scale \
+     -label "Size of the text label to be created:" \
+     -from 0 \
+     -to 100 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .sizes.frame0 \
+    .sizes.frame0.scale { left expand fill }
+
+  .sizes.frame0.scale set 10
+
+
+  frame .sizes.frame1 \
+     -borderwidth {2}
+
+  button .sizes.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set value [.sizes.frame0.scale get]
+                 destroy .sizes }
+
+  button .sizes.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set value ""
+                 destroy .sizes }
+
+  pack append .sizes.frame1 \
+    .sizes.frame1.ok { left expand } \
+    .sizes.frame1.cancel { right expand }
+
+
+
+  pack append .sizes \
+    .sizes.frame0 { top expand fill } \
+    .sizes.frame1 { bottom expand fill }
+
+
+
+  grab set .sizes
+  tkwait window .sizes
+
+}
+
+
+
+
+proc fonts { } {
+
+
+  toplevel .fonts
+
+  wm geometry .fonts +100+20
+  wm title .fonts "fonts"
+
+
+  global fname
+
+
+  frame .fonts.frame0 \
+    -relief {flat}
+
+  label .fonts.frame0.label \
+     -anchor {w} \
+     -text {Font:} \
+     -padx {2}
+
+  listbox .fonts.frame0.listbox \
+     -relief sunken \
+     -yscrollcommand {.fonts.frame0.vscrollbar set}
+
+  scrollbar .fonts.frame0.vscrollbar \
+     -command {.fonts.frame0.listbox yview}
+
+
+  pack append .fonts.frame0 \
+    .fonts.frame0.label { top fillx } \
+    .fonts.frame0.listbox { left expand fill } \
+    .fonts.frame0.vscrollbar { right fill }
+
+  bind .fonts.frame0.listbox <Button-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set fname [%W get [%W nearest %y]]
+  }
+
+  bind .fonts.frame0.listbox <ButtonRelease-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set fname [%W get [%W nearest %y]]
+  }
+
+  bind .fonts.frame0.listbox <Double-ButtonPress-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set fname [%W get [%W nearest %y]]
+  }
+
+  .fonts.frame0.listbox delete 0 end
+  foreach i {romancs romand romanp romant romans scriptc scripts italicc italiccs gothitt gothgrt gothgbt} {
+      .fonts.frame0.listbox insert 0 $i
+  }
+
+
+  frame .fonts.frame1 \
+     -borderwidth {2}
+
+  button .fonts.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .fonts }
+
+  button .fonts.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .fonts }
+
+  pack append .fonts.frame1 \
+    .fonts.frame1.ok { left expand } \
+    .fonts.frame1.cancel { right expand }
+
+
+
+  pack append .fonts \
+    .fonts.frame0 { top expand fill } \
+    .fonts.frame1 { bottom expand fill }
+
+
+
+  grab set .fonts
+  tkwait window .fonts
+
+}
+
+
+
+
+proc put_command { } {
+
+
+  global value
+  global bname
+  global tname
+  global fname
+
+
+  set cmd ""
+
+  if {  $value != "" } {
+         set cmd "$cmd size=$value"
+  }
+
+  if {  $bname != "" } {
+         set cmd "$cmd backcolor=$bname"
+  }
+
+  if {  $tname != "" } {
+         set cmd "$cmd textcolor=$tname"
+  }
+
+  if {  $fname != "" } {
+         set cmd "$cmd font=$fname"
+  }
+
+  if { $cmd != "" } {
+     set cmd "d.label $cmd"
+  }
+}
+
+
+
+
+proc set_command_entry { } {
+
+  .cmd.frame0.entry configure -state normal
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 [put_command]
+  .cmd.frame0.entry configure -state disabled
+
+}
+
+
+proc proc_d.label { } {
+
+
+  global value
+  global bname
+  global tname
+  global fname
+
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "Display Text Labels"
+
+
+  frame .cmd.frame0 \
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame0.hscrollbar set}
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {d.label}
+
+  .cmd.frame0.entry configure -state disabled
+
+
+
+  frame .cmd.frame1 \
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame1.hscrollbar set}
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {d.label creates and displays text labels in the active display frame on the graphics monitor.}
+
+  .cmd.frame1.entry configure -state disabled
+
+
+
+  frame .cmd.frame2 \
+    -relief {flat}
+
+  label .cmd.frame2.label \
+    -anchor {w} \
+    -text {Other options available:} \
+    -padx {2}
+
+  button .cmd.frame2.button0 \
+     -text "sizes ..." \
+     -relief raised \
+     -padx 10 \
+     -command "sizes
+                set_command_entry"
+
+
+  frame .cmd.frame3 \
+    -relief {flat}
+
+  label .cmd.frame3.label \
+     -anchor {w} \
+     -text {Background color:} \
+     -padx {2}
+
+  listbox .cmd.frame3.listbox \
+     -relief sunken \
+     -yscrollcommand {.cmd.frame3.vscrollbar set}
+
+  scrollbar .cmd.frame3.vscrollbar \
+     -command {.cmd.frame3.listbox yview}
+
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.label { top fillx } \
+    .cmd.frame3.listbox { left expand fill } \
+    .cmd.frame3.vscrollbar { right fill }
+
+  bind .cmd.frame3.listbox <Button-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set Sizes [%W get [%W nearest %y]]
+  }
+
+  bind .cmd.frame3.listbox <ButtonRelease-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set Sizes [%W get [%W nearest %y]]
+  }
+
+  bind .cmd.frame3.listbox <Double-ButtonPress-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set Sizes [%W get [%W nearest %y]]
+  }
+
+  .cmd.frame3.listbox delete 0 end
+  foreach i {red orange yellow green blue indigo violet gray white black} {
+      .cmd.frame3.listbox insert 0 $i
+  }
+
+
+  frame .cmd.frame4 \
+    -relief {flat}
+
+  label .cmd.frame4.label \
+     -anchor {w} \
+     -text {Text color:} \
+     -padx {2}
+
+  listbox .cmd.frame4.listbox \
+     -relief sunken \
+     -yscrollcommand {.cmd.frame4.vscrollbar set}
+
+  scrollbar .cmd.frame4.vscrollbar \
+     -command {.cmd.frame4.listbox yview}
+
+
+  pack append .cmd.frame4 \
+    .cmd.frame4.label { top fillx } \
+    .cmd.frame4.listbox { left expand fill } \
+    .cmd.frame4.vscrollbar { right fill }
+
+  bind .cmd.frame4.listbox <Button-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set tname [%W get [%W nearest %y]]
+  }
+
+  bind .cmd.frame4.listbox <ButtonRelease-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set tname [%W get [%W nearest %y]]
+  }
+
+  bind .cmd.frame4.listbox <Double-ButtonPress-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set tname [%W get [%W nearest %y]]
+  }
+
+  .cmd.frame4.listbox delete 0 end
+  foreach i {red orange yellow green blue indigo violet gray white black} {
+      .cmd.frame4.listbox insert 0 $i
+  }
+
+
+  button .cmd.frame2.button1 \
+     -text "fonts ..." \
+     -relief raised \
+     -padx 10 \
+     -command "fonts
+                set_command_entry"
+
+
+  frame .cmd.frame5 \
+     -borderwidth {2}
+
+  button .cmd.frame5.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 		set cmd [put_command]
+ 		if { $cmd != "" } {
+ 		   catch { eval " exec $cmd " } 
+ 		   destroy .cmd
+ 		}
+ }
+
+  button .cmd.frame5.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { destroy .cmd }
+
+  pack append .cmd.frame5 \
+    .cmd.frame5.ok { left expand } \
+    .cmd.frame5.cancel { right expand }
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.label { top fillx } \
+    .cmd.frame2.button0 { left } \
+    .cmd.frame2.button1  { left }
+
+
+
+  pack append .cmd \
+    .cmd.frame1 { top expand fill } \
+    .cmd.frame2 { top expand fill } \
+    .cmd.frame3 { top expand fill } \
+    .cmd.frame4 { top expand fill } \
+    .cmd.frame0 { top expand fill } \
+    .cmd.frame5 { bottom expand fill }
+
+
+bind .cmd.frame3.listbox <ButtonPress-1> {
+ %W select from [%W nearest %y]
+ %W select to [%W nearest %y]
+		set Sizes [%W get [%W nearest %y]]
+		set_command_entry
+}
+
+bind .cmd.frame3.listbox <ButtonRelease-1> {
+ %W select from [%W nearest %y]
+ %W select to [%W nearest %y]
+		set Sizes [%W get [%W nearest %y]]
+		set_command_entry
+}
+
+bind .cmd.frame4.listbox <ButtonPress-1> {
+ %W select from [%W nearest %y]
+ %W select to [%W nearest %y]
+		set tname [%W get [%W nearest %y]]
+		set_command_entry
+}
+
+bind .cmd.frame4.listbox <ButtonRelease-1> {
+ %W select from [%W nearest %y]
+ %W select to [%W nearest %y]
+		set tname [%W get [%W nearest %y]]
+		set_command_entry
+}
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global value
+set value ""
+
+global bname
+set bname ""
+
+global tname
+set tname ""
+
+global fname
+set fname ""
+
+
+global database
+global location
+global mapset
+global feature
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_d.label
