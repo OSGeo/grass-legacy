@@ -1,7 +1,7 @@
 Code in this subdirectory is not free. This code is not
 distributed under GNU General Public license.
 
-It will be replaced as soon as possible.
+It will be replaced as soon as possible. Volunteers?
 
 --------------------------------------------------------------------
 Part of the code found in this directory is based on:
@@ -13,6 +13,8 @@ Part of the code found in this directory is based on:
     [...]
     Bill Press
   */
-    
 
 --------------------------------------------------------------------
+
+-> use the src/libes/gmath/ library which is based on LAPACK/BLAS.
+   It provides all required functions.
