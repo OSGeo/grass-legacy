@@ -1,56 +1,80 @@
 
 
 
-r.in.erdas <contrib> GRASS Reference Manual  <contrib> r.in.erdas
+r.in.erdas <contrib>  GRASS Reference Manual <contrib> r.in.erdas
 
 
 
 NAME
-     r.in.erdas	- Creates raster files from ERDAS files.  It
-     creates one raster	file for each band, and	creates	color
-     support if	an ERDAS trailer file is specified.
-     (SCS GRASS	Raster Program)
+     r.in.erdas - creates raster files from ERDAS files.
+	   - creates one raster file for each band.	    -
+     creates color support if an erdas trailer file is specified.
+     (GRASS Raster Program)
 
 SYNOPSIS
      r.in.erdas
-     r.in.erdas	help
-     r.in.erdas	erdas=name [trl=name] prefix=name
+     r.in.erdas help
+     r.in.erdas erdas=name [trl=name] prefix=name
 
 DESCRIPTION
      This command prompts the user twice:
 
-	  First	the user is asked if he	wishes to select a subset of
-	  the bands available in the ERDAS file	for output.
-	  If unspecified by the	user, all bands	are used, by default.
+	  First the user is asked if they want to select a subset of
+	  the bands available in the ERDAS file for output. The default
+	  is all bands.
 
-	  Second, the user is asked if he wishes to select a subregion
-	  of the image available in the	ERDAS file.  If	unspecified by the
-	  user,	the complete image is used, by default.
+	  Secondly the user is asked if they want to select a subwindow
+	  of the image available in the ERDAS file. The default is the
+	  complete image.
 
      Note:
-	  GRASS	raster files will be named prefix.band
-	  Remember that	it is necessary	to run:
-	  r.support: to	create the histogram or	change the color table.
-	  i.group: to associate	the individual raster files as an image	group.
+	  GRASS raster files will be named prefix.band
+	  Remember that it is necessary to run:
+	  support : To create the histogram or change the color table.
+	  group: To associate the individual raster files as an image group.
 
-COMMAND	LINE OPTIONS
-     Parameters:
 
-     erdas=name	       Input ERDAS file	name.
+COMMAND LINE OPTIONS
+     Usage.
 
-     trl=name	       Input ERDAS trailer file	name.
+     r.in.erdas
+	  erdas=name [trl=name] prefix=name.
 
-     prefix=name       Prefix of the GRASS raster files	to be
-		       created.
+     Parameters.
 
+     erdas
+	  input erdas file name.
+
+     trl  input erdas trailer file name.
+
+     prefix
+	  Prefix of the GRASS raster files to be created..
+
+BUGS
+SEE ALSO
 AUTHOR
-     M.L. Holko, USDA, SCS, NHQ-CGIS
+     M.L.Holko, USDA, SCS, NHQ-CGIS
+
+
+
+
+
+
+GRASS 4.2.1		Baylor University			1
+
+
+
+
+
+
+r.in.erdas <contrib>  GRASS Reference Manual <contrib> r.in.erdas
+
 
 
 NOTICE
-     This program is part of the contrib section of the	GRASS
-     distribution.  As such, it	is externally contributed code
-     that has not been examined	or tested by the Office	of GRASS
+     This program is part of the contrib section of the GRASS
+     distribution.  As such, it is externally contributed code
+     that has not been examined or tested by the Office of GRASS
      Integration.
 
 
@@ -60,7 +84,49 @@ NOTICE
 
 
 
-GRASS 4.2		Baylor University			1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.2.1		Baylor University			2
 
 
 
