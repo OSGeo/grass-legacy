@@ -30,30 +30,45 @@
 #
 # Markus Neteler 8/2002: added simple d.legend logic
 # Jianping Xu and Scott Madry, Rutgers University. October 19, 1993
+# Markus Neteler 10/2003: added g.parser
 ##############################################################################
+
+#%Module
+#%  description: d.rast.leg - displays a raster map and its legend on a graphics window
+#%End
+#%flag
+#%  key: n
+#%  description: omit entries with missing label
+#%END
+#%option
+#% key: map
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: raster input map
+#% required : yes
+#%end
+#%option
+#% key: num_of_lines
+#% type: integer
+#% description: Number of lines to appear in the legend
+#% required : no
+#%end
 
 if test "$GISBASE" = ""; then
  echo "You must be in GRASS GIS to run this program." >&2
  exit 1
-fi   
+fi
 
-eval `g.gisenv`
-: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
-LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+fi
 
-
-if [ "$1" = "-help" -o "$1" = "help" -o "$1" = "-h" ] 
-then
-	echo 
-    	echo "Usage:	d.rast.leg"
-    	echo "    or	d.rast.leg help"
-    	echo "    or	d.rast.leg rast_map [num_of_lines]"
-    	echo
-    	exit 1
+if [ $GIS_FLAG_n -eq 1 ] ; then
+  OMIT="-n"
 fi
 
 #for -n flag of d.legend
-eval `g.findfile el=cell file=$1`
+eval `g.findfile el=cell file=$GIS_OPT_map`
 filemapset="${mapset}"
 HISTFILEDIR=$GISDBASE/$LOCATION_NAME/$filemapset/cell_misc/
 
@@ -62,7 +77,7 @@ d.frame -e
 
 #at=bottom,top,left,right
 
-if [ $# = 0 ]
+if [ "$GIS_OPT_map" = "(null)" ]
 then
     d.frame -s at=0,100,0,65 frame=left
     d.rast
@@ -74,53 +89,54 @@ then
     d.frame -s at=0,100,65,100 frame=right
     d.legend 
     d.frame -s frame=left
-else
-    if [ $# = 1 ]
-    then
+    exit
+fi
+
+if [ "$GIS_OPT_num_of_lines" = "(null)" ]
+then
 	d.frame -s at=0,100,0,65 frame=left
         d.erase col=white
-    	d.rast map=$1 b=white
+    	d.rast map=$GIS_OPT_map b=white
 
        #draw title
         d.frame -s at=90,100,65,100  frame=title
         d.erase col=white
-        echo "$1" | d.text col=black size=60
-#         d.text.freetype -sp text=$1 col=black size=30 east_north=10,10
+        echo "$GIS_OPT_map" | d.text col=black size=60
+#         d.text.freetype -sp text=$GIS_OPT_map col=black size=30 east_north=10,10
 
        #draw legend
     	d.frame -s at=0,90,65,100 frame=right
-        if test -f $HISTFILEDIR/$1/histogram
+        if test -f $HISTFILEDIR/$GIS_OPT_map/histogram
           then
              d.erase col=white
-    	     d.legend -n map=$1 col=black
+    	     d.legend -n map=$GIS_OPT_map col=black
           else
              d.erase col=white
-             d.legend map=$1 col=black
+             d.legend $OMIT map=$GIS_OPT_map col=black
           fi
     	d.frame -s frame=left
-    else
+else
 	d.frame -s at=0,100,0,65 frame=left
         d.erase col=white
-    	d.rast map=$1 b=white
+    	d.rast map=$GIS_OPT_map b=white
 
        #draw title
         d.frame -s at=90,100,65,100 frame=title
         d.erase col=white
-        echo "$1" | d.text col=black size=60
-#         d.text.freetype -sp text=$1 col=black size=30 east_north=10,10
+        echo "$GIS_OPT_map" | d.text col=black size=60
+#         d.text.freetype -sp text=$GIS_OPT_map col=black size=30 east_north=10,10
 
        #draw legend
     	d.frame -s at=0,90,65,100 frame=right
-        if test -f $HISTFILEDIR/$1/histogram
+        if test -f $HISTFILEDIR/$GIS_OPT_map/histogram
           then
              d.erase col=white
-             d.legend -n map=$1 col=black lines=$2
+             d.legend -n map=$GIS_OPT_map col=black lines=$GIS_OPT_num_of_lines
           else
              d.erase col=white
-             d.legend map=$1 col=black
+             d.legend $OMIT map=$GIS_OPT_map col=black
           fi
     	d.frame -s frame=left
-    fi
 fi
 
 
