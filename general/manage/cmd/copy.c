@@ -78,9 +78,9 @@ int main (int argc, char *argv[])
                 fprintf (stderr, "<%s> not found\n", from);
                 continue;
             }
-	    if (find (n, to, "") && !(module->overwrite))
+	    if (find (n, to, G_mapset()) && !(module->overwrite))
 	    {
-		fprintf (stderr, "ERROR: <%s> already exists in mapset <%s>\n", to, mapset);
+		fprintf (stderr, "ERROR: <%s> already exists\n", to);
 		continue;
 	    }
             if (G_legal_filename (to) < 0)
