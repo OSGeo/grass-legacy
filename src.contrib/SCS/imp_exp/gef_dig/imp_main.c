@@ -8,7 +8,7 @@
 *    Input arguements:
 *             v.in.scsgef [-o]  gef=ascii-gef-name
 *                               output=vector-name
-*                               cat=category-file-name
+*                               subj=subject-file-name
 *
 *    flags:
 *         -o      : old scsgef format
@@ -34,7 +34,7 @@ main(argc, argv)
 	char  *rindex(), *G_tempfile() ;
 	char buff[128], gef_name[100], dig_name[100];
 	struct bdig_head head;
-        struct Option *inopt, *outopt, *catopt;
+        struct Option *inopt, *outopt, *subjopt;
         struct Flag *o_flag;
 	extern	int	gef_format ;
 	extern	int	cat_cnt ;
@@ -61,11 +61,11 @@ main(argc, argv)
         outopt->required         =  NO;
         outopt->description      = "vector file name";
 
-        catopt = G_define_option();
-        catopt->key              = "cat";
-        catopt->type             =  TYPE_STRING;
-        catopt->required         =  NO;
-        catopt->description      = "category file name";
+        subjopt = G_define_option();
+        subjopt->key              = "subj";
+        subjopt->type             =  TYPE_STRING;
+        subjopt->required         =  NO;
+        subjopt->description      = "category file name";
 
                 /* heeeerrrrrre's the   PARSER */                
         if (G_parser (argc, argv))
@@ -100,7 +100,8 @@ main(argc, argv)
 	   printf("Can't find create information file <%s>\n", filename) ;
 	   return (-1);
 	   }
-        sprintf(filename,"%s\0",gef_name);
+	/* Open file for reading */
+	sprintf(filename,"%s\0",gef_name);
 	if ( (gef_file = fopen(filename, "r")) == NULL)
 	{
 		printf("Can't find input GEF file <%s>\n", filename) ;
@@ -111,7 +112,7 @@ main(argc, argv)
  	G__make_mapset_element("SUBJ") ;
 
                             /* open category file for reading, if it exists*/
-	sprintf(category_fname,"%s\0",catopt->answer);
+	sprintf(category_fname,"%s\0",subjopt->answer);
 	tmp_name = G_tempfile();
   	if ((ier = access(category_fname,0)) != -1)
 	   {      /* the category file exists, copy categ. to tmp */
