@@ -1,7 +1,7 @@
 /* main.c */
 
 /* read the target for the block and cast it into the alternate GRASS env */
-
+#define MAIN
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
