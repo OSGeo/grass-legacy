@@ -64,6 +64,7 @@ src/display/d.ask
 src/display/d.barscale
 src/display/d.colormode
 src/display/d.colors
+src/display/d.colorlist
 src/display/d.colortable
 src/display/d.db
 src/display/d.display
