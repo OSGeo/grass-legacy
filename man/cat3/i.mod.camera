@@ -1,0 +1,132 @@
+
+
+
+i.mod.camera         GRASS Reference Manual          i.mod.camera
+
+
+
+NAME
+     i.mod.camera - An imagery function that creates or modifies
+     entries in a camera reference file.
+     (GRASS Image Processing Program)
+
+SYNOPSIS
+     i.mod.camera
+     i.mod.camera help
+
+DESCRIPTION
+     i.mod.camera creates or modifies entries in a camera
+     reference file.  In the imagery programs i.ortho.reference,
+     i.ortho.control, and i.ortho.rectify, a camera reference
+     file is required for computation of reference points and
+     ortho-rectification parameters.  The program i.camera, which
+     selects a camera reference file to be used with an imagery
+     group, also requires an existing camera reference file.
+
+     This program runs interactively.  It first prompts the user
+     for the name of the camera reference file to be created or
+     modified.
+
+     The following menu is then displayed:
+
+               Please provide the following information
+
+          Camera Name:                               camera name______
+          Camera Identification:                     identification___
+          Calibrated Focal Length mm.:                _________________
+          Point of Symmetry: X-coordinate mm.:        _________________
+          Point of Symmetry: Y-coordinate mm.:        _________________
+          Maximum number of fiducial or reseau marks: _________________
+
+         AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE
+                       (OR <Ctrl-C> TO CANCEL)
+
+
+     The user is then asked to enter the X and Y photo
+     coordinates of each fiducial as follows:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.0                U.S. Army CERL                         1
+
+
+
+
+
+
+i.mod.camera         GRASS Reference Manual          i.mod.camera
+
+
+
+               Please provide the following information
+
+          Fid# Fid ID           Xf          Yf
+
+
+          1__  _____          0.0___    0.0___
+          2__  _____          0.0___    0.0___
+          3__  _____          0.0___    0.0___
+          4__  _____          0.0___    0.0___
+          5__  _____          0.0___    0.0___
+          6__  _____          0.0___    0.0___
+          7__  _____          0.0___    0.0___
+          8__  _____          0.0___    0.0___
+          9__  _____          0.0___    0.0___
+          10_  _____          0.0___    0.0___
+
+                    next:  end__
+
+         AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE
+                       (OR <Ctrl-C> TO CANCEL)
+
+     The input display is repeated until the maximum number of
+     fiducials specified by the user is reached.
+
+FILES
+     Camera reference files are stored under the directory
+     $GISDBASE/$LOCATION_NAME/$MAPSET/camera.  (This is the same
+     as $LOCATION/camera, the /camera directory under the user's
+     current mapset.)
+
+SEE ALSO
+     i.camera, i.ortho.control, i.ortho.rectify,
+     i.ortho.reference
+
+AUTHOR
+     Mike Baba
+     DBA Systems, Inc.
+     10560 Arrowhead Drive
+     Fairfax, Virginia 22030
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.0                U.S. Army CERL                         2
+
+
+
