@@ -18,16 +18,169 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <fnmatch.h> 
 #include "Vect.h"
 #include "gis.h"
 
-int replace (char *, char *, char *, int);
+
+/*!
+ \fn struct dblinks *Vect_dblinks_struct ( void )
+ \brief create and init new dblinks ctructure
+ \return pointer to new dblinks structure
+ \param 
+*/
+struct dblinks *
+Vect_new_dblinks_struct ( void )
+{
+  struct dblinks *p;
+
+  p = (struct dblinks *) G_malloc (sizeof (struct dblinks));
+
+  if (p) {
+      p->alloc_fields = p->n_fields = 0;
+      p->field = NULL;
+  }
+
+  return p;
+}
+
+
+/*!
+ \fn void Vect_dblinks_struct ( struct dblinks )
+ \brief reset dblinks structure
+ \return 
+ \param pointer to existing dblinks structure
+*/
+void
+Vect_reset_dblinks ( struct dblinks *p )
+{
+    p->n_fields = 0;
+}
+
+/*!
+ \fn int Vect_map_add_dblink ( struct dblinks, ... )
+ \brief add new db connection to Map_info structure
+ \return 0 OK; -1 error
+ \param pointer to existing dblinks structure
+*/
+int
+Vect_map_add_dblink ( struct Map_info *Map, int number, char *name, char *table, char *key, 
+	             char *db, char *driver )
+{
+    return ( Vect_add_dblink ( Map->dblnk, number, name, table, key, db, driver ) );
+}
+    
+/*!
+ \fn int Vect_add_dblink ( struct dblinks, ... )
+ \brief add new db connection to dblinks structure
+ \return 0 OK; -1 error
+ \param pointer to existing dblinks structure
+*/
+int
+Vect_add_dblink ( struct dblinks *p, int number, char *name, char *table, char *key, char *db, char *driver )
+{
+    if ( p->n_fields == p->alloc_fields ) {
+       p->alloc_fields += 10;
+       p->field = ( struct field_info *) G_realloc ( (void *) p->field, 
+	                   p->alloc_fields * sizeof (struct field_info) );
+    }
+
+    p->field[p->n_fields].number =  number;
+    
+    if ( name != NULL ) p->field[p->n_fields].name = G_store ( name );
+    else  p->field[p->n_fields].name = NULL;
+    
+    if ( table != NULL ) p->field[p->n_fields].table = G_store ( table );
+    else p->field[p->n_fields].table = NULL;
+    
+    if ( key != NULL ) p->field[p->n_fields].key = G_store ( key );
+    else p->field[p->n_fields].key = NULL;
+    
+    if ( db != NULL ) p->field[p->n_fields].database = G_store ( db );
+    else p->field[p->n_fields].database = NULL;
+    
+    if ( driver != NULL ) p->field[p->n_fields].driver = G_store ( driver );
+    else p->field[p->n_fields].driver = NULL;
+    
+    p->n_fields++;
+
+    return 0;
+}
+
+/*!
+ \fn struct field_info *Vect_get_field_info ( char *m,  int  field, char field_name)
+ \brief get default information about link to database for new dblink
+ \return pointer to new field_info structure
+ \param pointer to map name, category field
+*/
+struct field_info
+*Vect_default_field_info (
+    char *map,       /* pointer to map name */		
+    int  field,    /* category field */
+    char *field_name, /* field name or NULL */
+    int  type ) /* how many tables are linked to map: GV_1TABLE / GV_MTABLE */
+{
+    struct field_info *fi;
+    char buf[500];
+    
+    G_debug (1, "Vect_default_field_info(): map = %s field = %d", map, field);
+    
+    fi = (struct field_info *) G_malloc( sizeof(struct field_info) );
+    
+    fi->number = field;
+    if ( field_name != NULL ) fi->name = G_store ( field_name );
+    else fi->name = NULL;
+    
+    if ( type == GV_1TABLE ) {
+        fi->table = G_store ( map );
+    } else {
+	if ( field_name != NULL && strlen ( field_name ) > 0 )
+	    sprintf ( buf, "%s_%s", map, field_name );
+	else
+	    sprintf ( buf, "%s_%d", map, field );
+
+	fi->table = G_store ( buf );
+    }
+    
+    fi->key = G_store ( "cat" ); /* Should be: id/fid/gfid/... ? */
+    fi->database = G_store( "$GISDBASE/$LOCATION_NAME/$MAPSET/dbf" );
+    fi->driver = G_store("dbf");
+
+    return (fi);
+}
+
+/*!
+ \fn struct field_info *Vect_get_dblink (  struct Map_info *Map, int info)
+ \brief get information about link to database, variables are substituted by values 
+ \return pointer to new field_info structure
+ \param pointer Map_info structure, link number
+*/
+struct field_info
+*Vect_get_dblink (  struct Map_info *Map, int link )
+{
+    struct field_info *fi;
+
+    G_debug (1, "Vect_get_dblink(): link = %d", link);
+
+    if ( link >= Map->dblnk->n_fields ) {
+	G_warning ( "Requested dblink %d, maximum link number %d", link, Map->dblnk->n_fields - 1 );
+	return NULL;
+    }
+
+    fi = (struct field_info *) malloc( sizeof(struct field_info) );
+    fi->number = Map->dblnk->field[link].number;
+    fi->name = G_store ( Map->dblnk->field[link].name );
+    fi->table = G_store ( Map->dblnk->field[link].table );
+    fi->key = G_store ( Map->dblnk->field[link].key );
+    fi->database = Vect_subst_var ( Map->dblnk->field[link].database, Map->name, Map->mapset );
+    fi->driver = G_store ( Map->dblnk->field[link].driver );
+
+    return fi;
+}
 
 /*!
  \fn struct field_info *Vect_get_field_info (    char *m,     char *ms,     int  field)
- \brief get information about link to database
- \return ADD
+ \brief get information about link to database, variables are substituted by values 
+ \return pointer to new field_info structure
  \param pointer to map name, pointer to mapset name, category field
 */
 struct field_info
@@ -36,35 +189,71 @@ struct field_info
     char *ms,      /* pointer to mapset name */		
     int  field)    /* category field */
 {
-    int  i;	
+    int i, nfld;
+    struct dblinks *dbl;
     struct field_info *fi;
-    FILE *fd;
-    char files[2][1024],msets[2][200];
-    char buf[1024];
-    char map[1024], tmp1[1024], tmp2[1024];
-    char md[1024], mp[1024], mpset[1024];
-    char tab[1024], col[1024], db[1024], drv[1024];
-    char m_tab[1024], m_col[1024], m_db[1024], m_drv[1024];
-    int  fld;
-    char *c;
-    int  ndef, row, rule, nfiles;
-    int  matched;
-    FILE *fp;
-    int  format = GV_FORMAT_NATIVE;
-    struct Format_info Forminfo;
     
     G_debug (1, "Vect_get_field_info(): map = %s, mapset = %s", m, ms);
     
     fi = NULL;
+    dbl = Vect_new_dblinks_struct ( );
     
-    if ( ms == NULL || strlen(ms) == 0 )
-       ms = G_mapset();	    
+    if ( ms == NULL || strlen(ms) == 0 ) ms = G_mapset();	    
 
-    if ( !(G__name_is_fully_qualified(m, tmp1, tmp2)) )
-        strcpy (map, G_fully_qualified_name ( m, ms ) );
-    else 
-	strcpy (map, m);
+    nfld = Vect_read_dblinks ( m, ms, dbl );
+    if ( nfld < 0 ) return NULL;
+
+    for ( i = 0; i < dbl->n_fields; i++ ) { 
+	if ( dbl->field[i].number == field ) {
+	    fi = (struct field_info *) malloc( sizeof(struct field_info) );
+	    fi->number = field;
+	    fi->name = dbl->field[i].name;
+	    fi->table = dbl->field[i].table;
+	    fi->key = dbl->field[i].key;
+	    fi->database = Vect_subst_var(dbl->field[i].database, m, ms);
+	    fi->driver = dbl->field[i].driver;
+
+	    G_debug (1, "field name = %s, table = %s, key = %s, database = %s, driver = %s",
+		         fi->name, fi->table, fi->key, fi->database, fi->driver );
+	    break;
+        }
+    }
+
+    /* TODO: free dbl */
+
+    G_debug (1, "Field info is read");
+    return (fi);
+}
+
+/*!
+ \fn int *Vect_read_dblinks ( char *m, char *ms, struct dblinks *p)
+ \brief read dblinks to existing structure, variables are not substituted by values
+ \return number of links read or -1 on error
+ \param pointer to map name, pointer to mapset name, pointer to dblinks structure
+*/
+int
+Vect_read_dblinks (
+    char *m,       /* pointer to map name */		
+    char *ms,      /* pointer to mapset name */		
+    struct dblinks *dbl)    
+{
+    int  ndef;	
+    FILE *fd;
+    char file[1024], buf[1024];
+    char tab[1024], col[1024], db[1024], drv[1024], fldstr[1024], *fldname;
+    int  fld;
+    char *c;
+    int  row, rule;
+    FILE *fp;
+    int  format = GV_FORMAT_NATIVE;
+    struct Format_info Forminfo;
     
+    G_debug (1, "Vect_read_dblinks(): map = %s, mapset = %s", m, ms);
+    
+    Vect_reset_dblinks ( dbl );
+    
+    if ( ms == NULL || strlen(ms) == 0 ) ms = G_mapset();	    
+
     /* Find format first */
     sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, m);
     G_debug (3, "open format file: '%s/%s/%s'", ms, buf, GRASS_VECT_FRMT_ELEMENT);
@@ -77,151 +266,159 @@ struct field_info
         fclose (fp);
         G_debug ( 3, "Vector format: %d (non-native)", format);
 	if ( format == GV_FORMAT_SHAPE ) {
-	    fi = (struct field_info *) malloc( sizeof(struct field_info) );
-            
-	    /* Table is name of shape */
-	    fi->table = G_store ( Forminfo.shp.baseName );
-	    fi->key = G_store ( "shp_fid" );
-	    /* Path to the shape directory */
-	    fi->database = G_store ( Forminfo.shp.dirName );
-	    fi->driver = G_store ( "shp" );
-
-	    G_debug (1, "Field info for shapefile is read");
-	    return (fi);
+            Vect_add_dblink ( dbl, 1, NULL, Forminfo.shp.baseName, "shp_fid", Forminfo.shp.dirName, "shp" );
+	    return ( 1 );
 	}
     }
     
-    G_debug (1, "map = %s", map);
-    sprintf ( files[0], "%s/%s/DB", G_location_path(), G_mapset());
-    strcpy ( msets[0], G_mapset() );
-    nfiles = 1;
+    sprintf ( file, "%s/%s/%s/%s/%s", G_location_path(), ms, GRASS_VECT_DIRECTORY, m, 
+	                              GRASS_VECT_DBLN_ELEMENT );
+    G_debug (1, "dbln file: %s", file);
 
-    G_debug (1, "file 1 = %s", files[0]);
-    if ( strcmp ( ms, G_mapset() ) != 0 )
-      {
-        sprintf ( files[1], "%s/%s/DB", G_location_path(), ms);
-	strcpy ( msets[1], ms );
-        nfiles = 2;
-      }
+    fd = fopen ( file, "r" );
+    if ( fd == NULL ) { /* This may be correct, no tables defined */
+	G_debug ( 1, "Cannot open vector database definition file");
+	return (-1);
+    }
 
-    G_debug (1, "nfiles = %d", nfiles);
-    matched = FALSE;
-    for (i=nfiles-1; i >= 0; i--)
-      {
-        fd = fopen ( files[i], "r" );
-        if ( fd == NULL )
-          { 
-            sprintf ( buf, "Cannot open vector database definition file %s", files[i]);
-            G_warning ( buf );
-	    return (NULL);      
-          }	
-    
-        row = 0;
-        rule = 0;
-        while (fgets (buf, 1023, fd) != NULL)
-          {
-	    row++;      
-            G_chop ( buf ); 
-            G_debug (1, "DB: %s", buf);
+    row = 0;
+    rule = 0;
+    while (fgets (buf, 1023, fd) != NULL) {
+	row++;      
+	G_chop ( buf ); 
+	G_debug (1, "dbln: %s", buf);
 
-	    c = (char *) strchr ( buf, '#');
-	    if ( c != NULL ) *c = '\0';
+	c = (char *) strchr ( buf, '#');
+	if ( c != NULL ) *c = '\0';
 
-	    if ( strlen(buf) == 0 ) continue;
-	    
-	    ndef = sscanf ( buf, "%s %d %s %s %s %s", md, &fld, tab, col, db, drv);
+	if ( strlen(buf) == 0 ) continue;
 	
-	    if ( ndef < 3 || (ndef < 6 && rule < 1 ) )
-	      {
-                sprintf ( buf, "Error in rule on row %d in %s", row, files[i]);
-                G_warning ( buf );
-	        continue;
-	      }
-	
-	    rule++;
-            if ( !(G__name_is_fully_qualified(md, mp, mpset)) )
-	      {
-                strcpy ( mpset, msets[i] );
-                strcpy ( md, G_fully_qualified_name(md, mpset) );
-	      }
-		
-	    if ( fnmatch ( md, map, 0) == 0 && field == fld )
-	      {
-                strcpy (m_tab, tab);
-                strcpy (m_col, col);
-                strcpy (m_db, db);
-                strcpy (m_drv, drv);
-	        matched = TRUE;
-	      }
-          }
-        fclose (fd);
-      }
+	ndef = sscanf ( buf, "%s %s %s %s %s", fldstr, tab, col, db, drv);
     
-    if ( matched )		  
-      {
-        /* replace variables */
-        replace ( m_tab, m, ms, field );
-        replace ( m_col, m, ms, field );
-        replace ( m_db, m, ms, field );
-        replace ( m_drv, m, ms, field );
-		
-        fi = (struct field_info *) malloc( sizeof(struct field_info) );
-	fi->table = G_store ( m_tab );
-	fi->key = G_store ( m_col );
-	fi->database = G_store ( m_db );
-	fi->driver = G_store ( m_drv );
-      }
+	if ( ndef < 2 || (ndef < 5 && rule < 1 ) ) {
+	    G_warning ( "Error in rule on row %d in %s", row, file);
+	    continue;
+        }
 
-    G_debug (1, "Field info is read");
-    return (fi);
+	/* get field and field name */
+	fldname = strchr ( fldstr, '/' );
+	if ( fldname != NULL ) { /* field has name */
+	    fldname[0] = 0;
+	    fldname++;
+	}
+	fld = atoi ( fldstr );
+	
+	Vect_add_dblink ( dbl, fld, fldname, tab, col, db, drv );
+
+	G_debug (1, "field = %d name = %s, table = %s, key = %s, database = %s, driver = %s",
+		     fld, fldname, tab, col, db, drv );
+
+	rule++;
+    }
+    fclose (fd);
+
+    G_debug (1, "Dblinks read");
+    return ( rule );
 }
 
-int replace ( char *str, char *map, char *mapset, int field )
+/*!
+ \fn int *Vect_write_dblinks ( char *m, char *ms, struct dblinks *p)
+ \brief write dblinks to file
+ \return 0 OK, -1 on error
+ \param pointer to map name, pointer to mapset name, pointer to dblinks structure
+*/
+int
+Vect_write_dblinks (
+    char *m,       /* pointer to map name */		
+    char *ms,      /* pointer to mapset name */		
+    struct dblinks *dbl)    
+{
+    int    i;	
+    FILE *fd;
+    char file[1024], buf[1024];
+    
+    G_debug (1, "Vect_write_dblinks(): map = %s, mapset = %s, n_fields = %d", m, ms, dbl->n_fields);
+    
+    if ( ms == NULL || strlen(ms) == 0 ) ms = G_mapset();	    
+
+    sprintf ( file, "%s/%s/%s/%s/%s", G_location_path(), ms, GRASS_VECT_DIRECTORY, m, 
+	                              GRASS_VECT_DBLN_ELEMENT );
+    G_debug (1, "dbln file: %s", file);
+
+    fd = fopen ( file, "w" );
+    if ( fd == NULL ) { /* This may be correct, no tables defined */
+	G_warning ( "Cannot open vector database definition file: '%s'", file);
+	return (-1);
+    }
+
+    for ( i = 0; i < dbl->n_fields; i++ ) {
+        if ( dbl->field[i].name != NULL )
+	    sprintf ( buf , "%d/%s", dbl->field[i].number, dbl->field[i].name );
+	else 
+	    sprintf ( buf , "%d", dbl->field[i].number );
+        	    
+        fprintf ( fd, "%s %s %s %s %s\n", buf, dbl->field[i].table, dbl->field[i].key,
+		                dbl->field[i].database, dbl->field[i].driver );
+	G_debug (1, "%s %s %s %s %s", buf, dbl->field[i].table, dbl->field[i].key,
+		                dbl->field[i].database, dbl->field[i].driver );
+    }
+    fclose (fd);
+
+    G_debug (1, "Dblinks written");
+    return 0;
+}
+
+/*!
+ \fn chart *Vect_subst_var ( char in, char *map, char *mapset, in field)
+ \brief substitute variable in string
+ \return pointer to new string
+ \param pointer to map name, pointer to mapset name, pointer to dblinks structure
+*/
+char *
+Vect_subst_var ( char *in, char *map, char *mapset )
 {
     char *c;
-    char buf[1024];
+    char buf[1000], str[1000];
+    
+    
+    strcpy ( str, in );
     
     strcpy ( buf, str );
     c = (char *) strstr ( buf, "$GISDBASE" );
-    if ( c != NULL )
-      {
+    if ( c != NULL ) {
         *c = '\0';	      
         sprintf (str, "%s%s%s", buf, G_gisdbase(), c+9);
-      }
+    }
+
+    strcpy ( buf, str );
+    c = (char *) strstr ( buf, "$LOCATION_NAME" );
+    if ( c != NULL ) {
+        *c = '\0';	      
+        sprintf (str, "%s%s%s", buf, G_location(), c+14);
+    }
 
     strcpy ( buf, str );
     c = (char *) strstr ( buf, "$LOCATION" );
-    if ( c != NULL )
-      {
+    if ( c != NULL ) {
         *c = '\0';	      
-        sprintf (str, "%s%s%s", buf, G_location(), c+9);
-      }
+        sprintf (str, "%s%s%s", buf, G_location_path(), c+9);
+    }
     
     strcpy ( buf, str );
     c = (char *) strstr ( buf, "$MAPSET" );
-    if ( c != NULL )
-      {
+    if ( c != NULL ) {
         *c = '\0';	      
         sprintf (str, "%s%s%s", buf, mapset, c+7);
-      }
+    }
     
     strcpy ( buf, str );
     c = (char *) strstr ( buf, "$MAP" );
-    if ( c != NULL )
-      {
+    if ( c != NULL ) {
         *c = '\0';	      
         sprintf (str, "%s%s%s", buf, map, c+4 );
-      }
-
-    strcpy ( buf, str );
-    c = (char *) strstr ( buf, "$FIELD" );
-    if ( c != NULL )
-      {
-        *c = '\0';	      
-        sprintf (str, "%s%d%s", buf, field, c+6 );
-      }
+    }
     
-    return (1);
+    return ( G_store(str) );
 }
 
 

@@ -83,6 +83,18 @@ Vect_get_num_islands (struct Map_info *map)
 }
 
 /*!
+ \fn int Vect_get_num_dblinks (struct Map_info *map)
+ \brief get number of defined dblinks
+ \return number of dblinks
+ \param Map_info structure
+ */
+int 
+Vect_get_num_dblinks (struct Map_info *map)
+{
+  return (map->dblnk->n_fields);
+}
+
+/*!
  \fn int Vect_get_num_updated_lines (struct Map_info *map)
  \brief get number of updated lines
  \return number of updated lines

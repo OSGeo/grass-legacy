@@ -222,6 +222,14 @@ V1_open_new_post (struct Map_info *Map, char *name, int with_z)
   /* TODO: both tables should be in transaction */
   /* Create geometry table */
   sprintf (query, "CREATE TABLE %s  ( %s int4 PRIMARY KEY, %s int4 CHECK ((%s > 0) "
+	   "AND (%s < 5)), %s  geometry);\n",
+	   Map->fInfo.post.geom_table, Map->fInfo.post.geom_id,
+	   Map->fInfo.post.geom_type, Map->fInfo.post.geom_type,
+	   Map->fInfo.post.geom_type, Map->fInfo.post.geom_geom );
+  /* Originaly was as below, but "WITH ( ISLOSSY )" was problem on Postgres 7.2.1
+  *  (not sure why) and "GRANT TO PUBLIC" probably is not best */
+  /*
+  sprintf (query, "CREATE TABLE %s  ( %s int4 PRIMARY KEY, %s int4 CHECK ((%s > 0) "
 	   "AND (%s < 5)), %s  geometry);\n"
 	   "GRANT SELECT ON  %s TO PUBLIC;\n"
 	   "CREATE INDEX %s_sidx ON %s USING GIST (%s GIST_GEOMETRY_OPS ) WITH ( ISLOSSY );\n",
@@ -230,6 +238,7 @@ V1_open_new_post (struct Map_info *Map, char *name, int with_z)
 	   Map->fInfo.post.geom_type, Map->fInfo.post.geom_geom,
 	   Map->fInfo.post.geom_table, Map->fInfo.post.geom_table,
 	   Map->fInfo.post.geom_table, Map->fInfo.post.geom_geom);
+  */
 
   G_debug(1,"%s", query);
   res = PQexec (Map->fInfo.post.conn, query);

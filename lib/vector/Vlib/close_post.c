@@ -42,8 +42,10 @@ V1_close_post (struct Map_info *Map)
 
   if (!VECT_OPEN (Map)) return -1;
 
-  if (Map->mode & (GV_MODE_WRITE | GV_MODE_RW))
-    Vect__write_head (Map);
+  if (Map->mode & (GV_MODE_WRITE | GV_MODE_RW)) {
+      Vect__write_head (Map);
+      Vect_write_dblinks ( Map->name, Map->mapset, Map->dblnk );
+  }
 
   free (Map->name);
   free (Map->mapset);
@@ -80,6 +82,8 @@ V2_close_post (struct Map_info *Map)
       Vect_save_topo (Map);
       Vect_save_spatial_index ( Map );
       dig_free_plus (Plus);
+
+      Vect_write_dblinks ( Map->name, Map->mapset, Map->dblnk );
   }
 
   return (V1_close_post (Map));
