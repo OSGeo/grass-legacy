@@ -1,6 +1,6 @@
 #############################################################################
 #
-# $Id: Gmakefile,v 1.30 2002-01-22 04:50:48 glynn Exp $
+# $Id: Gmakefile,v 1.31 2002-04-09 23:31:56 glynn Exp $
 #
 # MODULE:   	Grass Documentation
 # AUTHOR(S):	Original author unknown - probably CERL
@@ -49,12 +49,8 @@ all: htmlpages g.help-manpages
 htmlpages:
 	@test -d $(GRASS_HTMLDIR) || mkdir $(GRASS_HTMLDIR)
 	@test -d $(GRASS_HTMLDIR)/html || mkdir $(GRASS_HTMLDIR)/html
-	@(for i in `find nviz -type d | grep -v /CVS$$`; \
-	  do \
-	  	test -d $(GRASS_HTMLDIR)/$$i || mkdir $(GRASS_HTMLDIR)/$$i; \
-	  done)
 	@echo Copying html module pages
-	@(for h in `find $(HTML_DIR) nviz *.html *.gif | grep -v /CVS`; \
+	@(for h in `find $(HTML_DIR) *.html *.gif | grep -v /CVS`; \
 	  do \
 	  	test -d $$h && continue; \
 		f=`echo $$h | sed 's@^@$(GRASS_HTMLDIR)/@;'`; \
