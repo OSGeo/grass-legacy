@@ -1048,7 +1048,7 @@ AC_SUBST(JPEGINCPATH)
 XDRIVER=socket
 
 AC_ARG_WITH(fifo,
-    [  --with-fifo             use fifo XDriver instead of ipc (default)],
+    [  --with-fifo             use fifo XDriver instead of sockets],
     [
 	case "$withval" in
 	"" | y | ye | yes)
@@ -1058,7 +1058,7 @@ AC_ARG_WITH(fifo,
     ])
 
 AC_ARG_WITH(ipc,
-    [  --with-ipc              use ipc XDriver instead of fifo (for Cygwin)],
+    [  --with-ipc              use ipc XDriver instead of sockets],
     [
 	case "$withval" in
 	"" | y | ye | yes)
@@ -1068,7 +1068,7 @@ AC_ARG_WITH(ipc,
     ])
 
 AC_ARG_WITH(socket,
-    [  --with-socket           use socket XDriver instead of ipc or fifo],
+    [  --with-socket           use socket XDriver instead of ipc or fifo (default)],
     [
        case "$withval" in
        "" | y | ye | yes)

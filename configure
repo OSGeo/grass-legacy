@@ -71,11 +71,11 @@ ac_help="$ac_help
 ac_help="$ac_help
   --with-jpeg-libs=DIR    Specify directory for jpeg library"
 ac_help="$ac_help
-  --with-fifo             use fifo XDriver instead of ipc (default)"
+  --with-fifo             use fifo XDriver instead of sockets"
 ac_help="$ac_help
-  --with-ipc              use ipc XDriver instead of fifo (for Cygwin)"
+  --with-ipc              use ipc XDriver instead of sockets"
 ac_help="$ac_help
-  --with-socket           use socket XDriver instead of ipc or fifo"
+  --with-socket           use socket XDriver instead of ipc or fifo (default)"
 
 # Initialize some variables set by options.
 # The variables have the same names as the options, with
