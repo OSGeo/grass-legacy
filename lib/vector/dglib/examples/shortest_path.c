@@ -62,19 +62,22 @@ static int 	clipper 	(
 						)
 {
 	ClipperContext_s * pclip = (ClipperContext_s*) pvarg;
-	/*
-	gnInt32_t * pnFromXYZ = (gnInt32_t*) gnGrpGetNodeAttr( pgraph, GNGRP_NODE_ID(pIn->pnNodeFrom) );
-	gnInt32_t * pnToXYZ   = (gnInt32_t*) gnGrpGetNodeAttr( pgraph, GNGRP_NODE_ID(pIn->pnNodeTo) );
+#if 0
+	gnInt32_t * pnFromXYZ = (gnInt32_t*) gnGrpGetNode_Attr( pgraph, pIn->pnNodeFrom );
+	gnInt32_t * pnToXYZ   = (gnInt32_t*) gnGrpGetNode_Attr( pgraph, pIn->pnNodeTo );
 
 	printf( "clipper called:\n" );
-	printf( "        from node: %d - attributes x=%d y=%d z=%d\n", GNGRP_NODE_ID(pIn->pnNodeFrom), pnFromXYZ[0], pnFromXYZ[1], pnFromXYZ[2]);
-	printf( "        to   node: %d - attributes x=%d y=%d z=%d\n", GNGRP_NODE_ID(pIn->pnNodeTo), pnToXYZ[0], pnToXYZ[1], pnToXYZ[2]);
-	printf( "        link     : %d\n", GNGRP_LINK_USER(pIn->pnLink) );
-	*/
+	printf( "        from node: %ld - attributes x=%ld y=%ld z=%ld\n",
+		gnGrpGetNode_Id(pgraph, pIn->pnNodeFrom), pnFromXYZ[0], pnFromXYZ[1], pnFromXYZ[2]);
+	printf( "        to   node: %ld - attributes x=%ld y=%ld z=%ld\n",
+		gnGrpGetNode_Id(pgraph, pIn->pnNodeTo), pnToXYZ[0], pnToXYZ[1], pnToXYZ[2]);
+	printf( "        link     : %ld\n",
+		gnGrpGetLink_UserId(pgraph, pIn->pnLink) );
+#endif
 
 	if ( pclip )
 	{
-		if ( GNGRP_NODE_ID(pIn->pnNodeTo) == pclip->node_to_discard )
+		if ( gnGrpGetNode_Id(pgraph, pIn->pnNodeTo) == pclip->node_to_discard )
 		{
 			/*
 			printf( "        discarder.\n" );
@@ -97,6 +100,7 @@ int main( int argc , char ** argv )
 
 	int					fd , nret;
 	gnGrpSPReport_s *	pSPReport;
+	gnGrpSPCache_s		spCache;
 	ClipperContext_s	clipctx , * pclipctx;
 
 	/* program options
@@ -156,7 +160,9 @@ int main( int argc , char ** argv )
 
 	printf( "shortest path: from-node %ld - to-node %ld\n\n" , from , to );
 
-	pSPReport = gnGrpShortestPath( & graph , from , to , clipper , pclipctx );
+	gnGrpInitializeSPCache( & graph, & spCache );
+	pSPReport = gnGrpShortestPath( & graph , from , to , clipper , pclipctx , & spCache );
+	gnGrpReleaseSPCache( & graph, & spCache );
 
 	if ( pSPReport == NULL )
 	{
@@ -179,10 +185,10 @@ int main( int argc , char ** argv )
 		{
 			printf(	"link[%d]: from %ld to %ld - travel cost %ld - user linkid %ld - distance from start node %ld\n" ,
 					i,
-					GNGRP_NODE_ID(pSPReport->pArc[i].From),
-					GNGRP_NODE_ID(pSPReport->pArc[i].To),
-					GNGRP_LINK_COST(pSPReport->pArc[i].Link), /* this is the cost from clip() */
-					GNGRP_LINK_USER(pSPReport->pArc[i].Link),
+					pSPReport->pArc[i].From,
+					pSPReport->pArc[i].To,
+					gnGrpGetLink_Cost(&graph, pSPReport->pArc[i].Link), /* this is the cost from clip() */
+					gnGrpGetLink_UserId(&graph, pSPReport->pArc[i].Link),
 					pSPReport->pArc[i].Distance
 					);
 		}

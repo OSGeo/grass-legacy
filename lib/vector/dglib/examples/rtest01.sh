@@ -31,7 +31,7 @@ echo "convert 'B' to 'B.txt'"
 echo "done"
 
 echo "compare 'A.txt' with 'B.txt'"
-(diff -q g1.grp.txt g2.grp.txt && \
+(diff -q A.txt B.txt && \
 	 echo "'A.txt' and 'B.txt' are identical") ||
-	(echo "'A.txt' and 'B.txt' differ") || exit 1
+	(echo "'A.txt' and 'B.txt' differ"; exit 1) || exit 1
 exit 0

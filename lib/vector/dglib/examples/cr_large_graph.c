@@ -78,7 +78,7 @@ static int _add_link( 	gnGrpGraph_s * pgraph ,
 		direction[1] = 0;
 
 
-		nret = gnGrpAddLink	( pgraph , from , to , cost , arc , xyz_from , xyz_to , direction );
+		nret = gnGrpAddLinkX( pgraph , from , to , cost , arc , xyz_from , xyz_to , direction , 0 );
 		if ( nret < 0 ) {
 			fprintf( stderr, "gnGrpAddLink error: %s\n", gnGrpStrerror( pgraph ) );
 			return 1;
@@ -218,6 +218,7 @@ int main( int argc , char ** argv )
 	_add_link( &graph, to  , from , cost , arc , 'x' , 1 );
 
 
+#if 0
 	printf( "\nadd oblique links...\n" );
 	for ( irow = 0 ; irow < NROWS ; irow ++ ) {
 		for ( icol = 0 ; icol < NCOLS ; icol ++ ) {
@@ -243,6 +244,7 @@ int main( int argc , char ** argv )
 	}
 	_add_link( &graph, to  , from , cost , arc , 'x' , 1 );
 	printf( "\ndone.\n" );
+#endif
 
 
 	printf( "graph flattening..." ); fflush(stdout);

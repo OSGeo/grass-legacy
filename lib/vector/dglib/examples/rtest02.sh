@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #
-# 1. create a graph A
+# 1. create graph A
 # 2. convert A to A.txt
 # 3. import A.txt to B
 # 4. convert B to B.txt
@@ -29,5 +29,5 @@ echo "done"
 echo "compare 'A.txt' with 'B.txt'"
 (diff -q A.txt B.txt && \
 	 echo "'A.txt' and 'B.txt' are identical") ||
-	(echo "'A.txt' and 'B.txt' differ") || exit 1
+	(echo "'A.txt' and 'B.txt' differ"; exit 1) || exit 1
 exit 0

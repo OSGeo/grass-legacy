@@ -7,14 +7,17 @@ LIB_OBJS = \
 	avl.o \
 	graph.o \
 	heap.o \
-	tree.o 
+	tree.o \
+	helpers.o \
+	graph_v1.o
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
 DGLINC = $(ARCH_INCDIR)/dgl/
 
 default: $(DGLINC)/avl.h $(DGLINC)/graph.h $(DGLINC)/heap.h \
-	 $(DGLINC)/tree.h $(DGLINC)/type.h $(ARCH_INCDIR)/dgl.h lib
+	 $(DGLINC)/tree.h $(DGLINC)/type.h $(DGLINC)/helpers.h $(DGLINC)/graph_v1.h \
+	 $(ARCH_INCDIR)/dgl.h lib
 
 $(DGLINC)/avl.h: avl.h
 	mkdir -p $(DGLINC)
@@ -31,6 +34,12 @@ $(DGLINC)/tree.h: tree.h
 
 $(DGLINC)/type.h: type.h
 	cp type.h $(DGLINC)/type.h
+
+$(DGLINC)/graph_v1.h: graph_v1.h
+	cp graph_v1.h $(DGLINC)/graph_v1.h
+
+$(DGLINC)/helpers.h: helpers.h
+	cp helpers.h $(DGLINC)/helpers.h
 
 $(ARCH_INCDIR)/dgl.h: dgl.h
 	cp dgl.h $(ARCH_INCDIR)/dgl.h
