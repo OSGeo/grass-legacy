@@ -1,3 +1,4 @@
+/* -*-c-basic-offset:4;-*-
 /* Cell-file line extraction */
 /*   Input/output and line tracing routines */
 
@@ -44,6 +45,12 @@
 /*    show          debugging routine to print out everything imaginable */
 /*                  about a COOR structure */
 
+/*
+ * Modified for the new Grass 5.0 floating point and
+ * null values raster file format.
+ * Pierre de Mouveaux - 20 april 2000.
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <sys/wait.h>
@@ -60,6 +67,9 @@
 #define ASCII 2
 #define LINE_EDGE 1
 #define AREA_EDGE 2
+
+int data_type;
+int data_size;
 
 static struct Map_info Map;
 static struct line_pnts *Points;
@@ -78,7 +88,7 @@ static int write_ln (struct COOR *,struct COOR *,int);
 static struct COOR *move(struct COOR *);
 static struct COOR *find_end(struct COOR *,int,int *,int *);
 static int at_end(struct COOR *);
-static int blank_line(CELL *);
+static int blank_line(void *);
 static FILE *open_it (char *);
 
 /* write_line - attempt to write a line to output */
@@ -337,8 +347,9 @@ int syntax (int argc, char *argv[], char *input, char *output)
 	return(0);
 }
 
-int read_row (CELL *buf)
+int read_row (void *buf)
 {
+	void* p;
 	if (last_read)
 		return(0);
 	if (first_read)
@@ -355,20 +366,21 @@ int read_row (CELL *buf)
 		}
 		else
 		{
-			G_get_map_row(input_fd,buf + 1,row_count++);
-			*buf = *(buf + row_length + 1) = 0;
+			p = buf + data_size;
+			G_get_raster_row(input_fd,p,row_count++,data_type);
+			p = buf;
+			G_set_null_value(p,1,data_type);
+			p += (row_length + 1)*data_size;
+			G_set_null_value(p,1,data_type);
 		}
 	}
 	return(row_length + 2);
 }
 
-static int blank_line(CELL *buf)
+static int blank_line(void *buf)
 {
-	int i;
-
-	for (i = 0; i < row_length + 2; i++)
-		*(buf + i) = 0;
-
+	G_set_null_value(buf, row_length + 2,data_type);
+	
 	return 0;
 }
 
@@ -393,6 +405,8 @@ int open_file (char *cell,char *digit)
 		fprintf(stderr,"%s:  open_file:  could not read header for cell file %s in %s\n",error_prefix,cell_name,mapset);
 		exit(-1);
 	}
+	data_type = G_raster_map_type(cell_name,mapset);
+	data_size = G_raster_size(data_type);
 	G_set_window(&cell_head);
 	/* open digit file */
 
@@ -414,7 +428,6 @@ int open_file (char *cell,char *digit)
 	row_count = 0;
 	alloc_bufs(row_length + 2);
 	fill_head();
-
 	return 0;
 }
 
