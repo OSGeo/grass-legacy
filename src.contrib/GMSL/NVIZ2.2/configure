@@ -3,7 +3,10 @@
 
 # Revisions:
 #  $Log: configure,v $
-#  Revision 1.6  2000-05-05 14:22:03  markus
+#  Revision 1.7  2000-05-26 14:04:36  markus
+#  Huidae Cho <hdcho@geni.knu.ac.kr>: added FreeBSD sensivity
+#
+#  Revision 1.6  2000/05/05 14:22:03  markus
 #  Andreas Lange: /usr/freeware/include /usr/freeware/lib32 added (SGI)
 #
 #  Revision 1.5  2000/04/03 16:09:51  markus
@@ -47,9 +50,16 @@ set TOP=$cwd
 #  exit
 #endif
 
+set OS=`uname -s`
+
 # Look for tcl, tk libraries
-set spath=(/lib /usr/lib /usr/local/lib /usr/X11R6/lib)
-set libs_reqd=(libtcl8.0 libtk8.0 libX11 libGL )
+if ("$OS" == "FreeBSD") then
+	set spath=(/usr/lib /usr/local/lib /usr/X11R6/lib)
+	set libs_reqd=(libtcl80 libtk80 libX11 libGL )
+else
+	set spath=(/lib /usr/lib /usr/local/lib /usr/X11R6/lib)
+	set libs_reqd=(libtcl8.0 libtk8.0 libX11 libGL )
+endif
 set def_dirs=(/usr/local/lib /usr/local/lib /usr/local/lib /usr/lib /usr/freeware/lib32)
 set TK_LIB_PATH=''
 set index=1
@@ -86,10 +96,18 @@ end
 # Remove duplicates and set the path
 set TK_LIB_PATH=`echo $TK_LIB_PATH | sed -e 's/ /\\n/g'`
 set TK_LIB_PATH=`echo $TK_LIB_PATH | sort -u | sed -e 's/\\n/ /g'`
-set TK_LIB_PATH="$TK_LIB_PATH -ltk8.0 -ltcl8.0"
+if ("$OS" == "FreeBSD") then
+	set TK_LIB_PATH="$TK_LIB_PATH -ltk80 -ltcl80"
+else
+	set TK_LIB_PATH="$TK_LIB_PATH -ltk8.0 -ltcl8.0"
+endif
 
 # Look for tcl, tk includes
-set spath=(/usr/local/include /usr/local/lib/tk8.0/include /usr/local/lib/tcl8.0/include /usr/include /usr/include/X11 /usr/include/gl /usr/X11R6/include /usr/include/GL /usr/freeware/include)
+if ("$OS" == "FreeBSD") then
+	set spath=(/usr/local/include /usr/local/include/tk8.0 /usr/local/include/tcl8.0 /usr/include /usr/X11R6/include/GL /usr/X11R6/include/X11)
+else
+	set spath=(/usr/local/include /usr/local/lib/tk8.0/include /usr/local/lib/tcl8.0/include /usr/include /usr/include/X11 /usr/include/gl /usr/X11R6/include /usr/include/GL /usr/freeware/include)
+endif
 set includes_reqd=(tk.h tcl.h gl.h X.h)
 set def_dirs=(/usr/local/include /usr/include /usr/include/X11 /usr/include/GL /usr/include/gl /usr/freeware/include)
 set TK_INCLUDE_PATH=''
@@ -123,6 +141,10 @@ foreach k ($includes_reqd)
   set TK_INCLUDE_PATH="$TK_INCLUDE_PATH $found"
   @ index++
 end
+
+if ("$OS" == "FreeBSD") then
+  set TK_INCLUDE_PATH="$TK_INCLUDE_PATH -I/usr/X11R6/include"
+endif
 
 # Remove duplicates and set the path
 set TK_INCLUDE_PATH=`echo $TK_INCLUDE_PATH | sed -e 's/ /\\n/g'`
