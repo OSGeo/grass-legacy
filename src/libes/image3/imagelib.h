@@ -1,8 +1,6 @@
 /*  This is a dummy proto for a routine that exists somewhere else */
 int mark_control(void);
 int select_target_env();
-int pj_get_kv();
-int pj_do_proj();
 int select_current_env();
 int Menu_msg();
 int read_elev();

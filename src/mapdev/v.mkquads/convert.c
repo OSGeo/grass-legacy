@@ -16,8 +16,6 @@
 #undef DEBUG
 struct pj_info info_in, info_out;
 struct Key_Value *in_proj_keys, *in_unit_keys;
-struct Key_Value *out_proj_keys, *out_unit_keys;
-
 
 int setup_ll_to_utm (struct quads_description *quads_info)
 {
@@ -37,44 +35,34 @@ int setup_ll_to_utm (struct quads_description *quads_info)
                 G_fatal_error("Error getting in proj key values.");
                 exit (0);
         }
-        out_proj_keys = G_create_key_value();
-        out_unit_keys = G_create_key_value();
-        G_set_key_value("name", "Latitude-Longitude", out_proj_keys);
-        G_set_key_value("proj", "ll", out_proj_keys);
+        G_free_key_value( in_proj_keys );  
+        G_free_key_value( in_unit_keys );
+   
 	/* keep ellps same as input */
         ellps = G_find_key_value("ellps", in_proj_keys);
         if( ellps != NULL )
         {
 	    /* Try to preserve an ellipsoid name if we can as the program
 	     * wants to print it out later on */
-            G_set_key_value("ellps", ellps, out_proj_keys);
 	    sprintf(quads_info->spheroid_name, ellps);
 	}
         else
         {
 	    double a, es;
-	    char buff[100];
 
 	    /* but the underlying parameters are all we really need for
 	     * re-projection */
             G_get_ellipsoid_parameters(&a, &es);
-            sprintf(buff, "%f", a);
-            G_set_key_value("a", buff, out_proj_keys);
-            sprintf(buff, "%f", es);
-            G_set_key_value("es", buff, out_proj_keys);
 	    sprintf(quads_info->spheroid_name, "a=%f es=%f", a, es);
         }
-        G_set_key_value("unit", "degree", out_unit_keys);
-        G_set_key_value("units", "degrees", out_unit_keys);
-        G_set_key_value("meters", "1.0", out_unit_keys);
-        if (pj_get_kv( &info_out, out_proj_keys, out_unit_keys) < 0) {
-                G_fatal_error("Error getting out proj key values.");
+   
+	info_out.zone = 0;
+	info_out.meters = 1.;
+	sprintf(info_out.proj, "ll");
+	if ((info_out.pj = pj_latlong_from_proj(info_in.pj)) == NULL) {		
+            G_fatal_error("Error getting out proj key values.");
                 exit (0);
         }
-        G_free_key_value( in_proj_keys );  
-        G_free_key_value( in_unit_keys );
-        G_free_key_value( out_proj_keys );
-        G_free_key_value( out_unit_keys );
 
 	return(0) ;
 

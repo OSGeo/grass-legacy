@@ -51,7 +51,6 @@ main(int argc, char **argv)
     pjll;                    /* projection structure for map and lat/lon*/
 
   struct Key_Value 
-    *proj_info_ll, *unit_info_ll,
     *proj_info_map, *unit_info_map;
                              /* proj and unit information */
   
@@ -159,8 +158,6 @@ main(int argc, char **argv)
   
   if (proj != PROJECTION_LL)	/* lat/lon needs no reprojection */ 
     {
-      double a, es;
-       
       if ((proj_info_map = G_get_projinfo()) == NULL)
 	G_fatal_error("Can't get projection info of map");
       if ((unit_info_map = G_get_projunits()) == NULL)
@@ -168,29 +165,16 @@ main(int argc, char **argv)
       if (pj_get_kv(&pjmap,proj_info_map,unit_info_map) < 0)
 	G_fatal_error("Can't get projection key values of output map");
 
-      /* set up projection for lat/long reprojection */
-      proj_info_ll = G_create_key_value();
-      unit_info_ll = G_create_key_value();
-	    
-      G_set_key_value("proj", "ll", proj_info_ll);
-
-      G_get_ellipsoid_parameters(&a, &es);
-      sprintf(errbuf, "%.16g", a);
-      G_set_key_value("a", errbuf, proj_info_ll);
-      sprintf(errbuf, "%.16g", es);
-      G_set_key_value("es", errbuf, proj_info_ll);
-	    
-      G_set_key_value("unit", "degree", unit_info_ll);
-      G_set_key_value("units", "degrees", unit_info_ll);
-      G_set_key_value("meters", "1.0", unit_info_ll);
-	    
-      if (pj_get_kv(&pjll, proj_info_ll, unit_info_ll) < 0)
-          G_fatal_error("Unable to set up lat/long projection parameters");            
-
       G_free_key_value( proj_info_map );
       G_free_key_value( unit_info_map );
-      G_free_key_value( proj_info_ll );
-      G_free_key_value( unit_info_ll );
+       
+      /* set up projection for lat/long reprojection */
+      pjll.zone = 0;
+      pjll.meters = 1.;
+      sprintf(pjll.proj, "ll");
+      if ((pjll.pj = pj_latlong_from_proj(pjmap.pj)) == NULL) {		  
+          G_fatal_error("Unable to set up lat/long projection parameters");            
+
     }
   
   if (molod->answer) {

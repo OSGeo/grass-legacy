@@ -45,9 +45,7 @@ int main (int argc, char **argv)
         struct GSHHS h;
 	struct pj_info info_in;
 	struct pj_info info_out;
-	struct Key_Value *in_proj_keys, *in_unit_keys;
 	struct Key_Value *out_proj_keys, *out_unit_keys;
-	double a, es;   
 	int    day, yr;
 	char  date[25], mon[4];
 	int type, zone;
@@ -149,6 +147,8 @@ out_unit_keys = G_get_projunits();
 if (pj_get_kv(&info_out,out_proj_keys,out_unit_keys) < 0) {
 exit (0);
 }
+G_free_key_value( out_proj_keys );
+G_free_key_value( out_unit_keys );
 
 /* In Info */
 /* N.B. GSHHS data is not referenced to any ellipsoid or datum. This
@@ -159,28 +159,11 @@ exit (0);
  * Anyone who understands this better than me feel free to change it.
  * PK March 2003 */
 /* set input projection to lat/long w/ same ellipsoid as output */
-in_proj_keys = G_create_key_value();
-in_unit_keys = G_create_key_value();
-	    
-G_set_key_value("proj", "ll", in_proj_keys);
-
-G_get_ellipsoid_parameters(&a, &es);
-sprintf(buf, "%.16g", a);
-G_set_key_value("a", buf, in_proj_keys);
-sprintf(buf, "%.16g", es);
-G_set_key_value("es", buf, in_proj_keys);
-	    
-G_set_key_value("unit", "degree", in_unit_keys);
-G_set_key_value("units", "degrees", in_unit_keys);
-G_set_key_value("meters", "1.0", in_unit_keys);
-	    
-if (pj_get_kv(&info_in, in_proj_keys, in_unit_keys) < 0)
+info_in.zone = 0;
+info_in.meters = 1.;
+sprintf(info_in.proj, "ll");
+if ((info_in.pj = pj_latlong_from_proj(info_out.pj)) == NULL)
     G_fatal_error("Unable to set up lat/long projection parameters");
-
-G_free_key_value( out_proj_keys );
-G_free_key_value( out_unit_keys );
-G_free_key_value( in_proj_keys );
-G_free_key_value( in_unit_keys );
    
 if (flag.g->answer) {
 /* Get Coordinates from Current Region */

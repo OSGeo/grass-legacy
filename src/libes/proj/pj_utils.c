@@ -29,7 +29,11 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.1  2002-04-20 19:13:44  roger
+ * Revision 1.2  2004-05-13 09:04:09  paul
+ * use pj_latlong_from_proj() to work around PROJ feature (bug  no. 368). Use
+ * GPJ_get_equivalent_latlong() in 5.7.
+ *
+ * Revision 1.1  2002/04/20 19:13:44  roger
  * Updating Proj lib to 4.4.5, and adding two new functions for datum conversions
  *
  * Revision 1.1  2001/04/05 04:22:46  warmerda
@@ -146,8 +150,6 @@ PJ *pj_latlong_from_proj( PJ *pj_in )
     if( pj_param(pj_in->params, "tR_lat_g").i )
         sprintf( defn+strlen(defn), " +R_lat_g=%s", 
                  pj_param(pj_in->params,"sR_lat_g").s );
-
-    printf( "pj_latlong_from_proj->%s\n", defn );
 
     return pj_init_plus( defn );
 }
