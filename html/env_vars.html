@@ -52,7 +52,7 @@ the variable(s) in the <a href=html/grass5.html>.grassrc5</a> file.
 <hr WIDTH="100%">
 <H2>List of GRASS environment variables</H2>
 
-<br>ANGLE
+<br>ANGLE -?
 <p>ANOTHER_BUTTON
 <br>[v.digit]
 <br>&nbsp; define to click conveniently for two button mouse.
@@ -67,57 +67,52 @@ mouse,
 <br>&nbsp; #&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; define RIGHTB&nbsp;&nbsp;
 2
 <br>&nbsp; #endif
-<p>GRASS_BACKGROUNDCOLOR
-<br>[PNGdriver]
-<br>&nbsp; defines the background color of the image created by the PNG driver
-<p>BAUD
-<p>CMAP_SIZE
-<p>CODECENTER
-<p>DARKEN
-<p>DATABASE
+<p>BAUD -?
+<p>CMAP_SIZE -?
+<p>CODECENTER -?
+<p>DARKEN -?
+<p>DATABASE -?
 <p>DBMSCAP
 <br>[db.connect]
 <br>&nbsp; defines DBMI driver
-<p>DBPATH
-<p>DB_DATABASE
-<p>DB_DRIVER
-<p>DB_KEYCOL
-<p>DB_LOCATION
-<p>DB_PASSWORD
-<p>DB_USER
-<p>DEB
-<p>DEBUG
+<p>DBPATH -?
+<p>DB_DATABASE -?
+<p>DB_DRIVER -?
+<p>DB_KEYCOL -?
+<p>DB_LOCATION -?
+<p>DB_PASSWORD -?
+<p>DB_USER -?
+<p>DEB -?
+<p>DEBUG -?
 <p>DIGITIZER
 <br>[v.digit]
 <br>&nbsp; name of currently selected digitizer board
-<p>DPG_LOCK
-<p>DUMP
+<p>DPG_LOCK -?
+<p>DUMP -?
 <p>ELEMENT_LIST
 <br>&nbsp; pathname of element list file to use instead of $GISBASE/etc/element_list
-<p>ENDPANEL
+<p>ENDPANEL -?
 <p>FORCE_GRASS3_COLORS
 <br>&nbsp; define to force color table output format in 3.0, even if the
 structure
 <br>&nbsp; contains 4.0 rules
-<p>GRASS_FP_DOUBLE
-<br>&nbsp; define GRASS floating point type (DCELL_TYPE, FCELL_TYPE)
-<p>G3D_CACHE_SIZE_ENV_VAR
-<p>G3D_CACHE_SIZE_MAX_ENV_VAR
-<p>G3D_COMPRESSION_ENV_VAR_NO
-<p>G3D_COMPRESSION_ENV_VAR_YES
-<p>G3D_DEFAULT_WINDOW3D
-<p>G3D_FATAL_ERROR_ENV_VAR
-<p>G3D_FILE_DOUBLE_ENV_VAR
-<p>G3D_FILE_FLOAT_ENV_VAR
-<p>G3D_PRECISION_ENV_VAR
-<p>G3D_PRECISION_ENV_VAR_MAX
-<p>G3D_PRINT_ERROR_ENV_VAR
-<p>G3D_RLE_ENV_VAR_NO
-<p>G3D_RLE_ENV_VAR_YES
-<p>G3D_TILE_DIM_X_ENV_VAR
-<p>G3D_TILE_DIM_Y_ENV_VAR
-<p>G3D_TILE_DIM_Z_ENV_VAR
-<p>GDAL_HOME
+<p>G3D_CACHE_SIZE_ENV_VAR -?
+<p>G3D_CACHE_SIZE_MAX_ENV_VAR -?
+<p>G3D_COMPRESSION_ENV_VAR_NO -?
+<p>G3D_COMPRESSION_ENV_VAR_YES -?
+<p>G3D_DEFAULT_WINDOW3D -?
+<p>G3D_FATAL_ERROR_ENV_VAR -?
+<p>G3D_FILE_DOUBLE_ENV_VAR -?
+<p>G3D_FILE_FLOAT_ENV_VAR -?
+<p>G3D_PRECISION_ENV_VAR -?
+<p>G3D_PRECISION_ENV_VAR_MAX -?
+<p>G3D_PRINT_ERROR_ENV_VAR -?
+<p>G3D_RLE_ENV_VAR_NO -?
+<p>G3D_RLE_ENV_VAR_YES -?
+<p>G3D_TILE_DIM_X_ENV_VAR -?
+<p>G3D_TILE_DIM_Y_ENV_VAR -?
+<p>G3D_TILE_DIM_Z_ENV_VAR -?
+<p>GDAL_HOME -?
 <p>GISBASE
 <br>&nbsp; directory where GRASS lives
 <p>GISDBASE
@@ -125,15 +120,19 @@ structure
 <p>GISRC
 <br>&nbsp; name of .grassrc5 file
 <p>GIS_LOCK
-<br>&nbsp; lock ID to prevent parallel GRAS use,
+<br>&nbsp; lock ID to prevent parallel GRASS use,
 <br>&nbsp; process id of the start-up shell script
-<p>GMPEG_SIZE
-<p>GRAPH
-<p>HEIGHT
+<p>GMPEG_SIZE -?
+<p>GRAPH -?
 <p>GRASS_ADDON_PATH
 <br>[grass5] startup script
 <br>&nbsp; allows to specify additional paths to local GRASS modules extra
     to standard distribution
+<p>GRASS_BACKGROUNDCOLOR
+<br>[PNGdriver]
+<br>&nbsp; defines the background color of the image created by the PNG driver
+<p>GRASS_FP_DOUBLE
+<br>&nbsp; define GRASS floating point type (DCELL_TYPE, FCELL_TYPE)
 <p>GRASS_GNUPLOT
 <br>[m.svfit, s.probplt, s.sv]
 <br>&nbsp; program to use for plotting "gnuplot" data
@@ -141,46 +140,12 @@ structure
 <br>&nbsp; either "text" or "tcltk" to define non-/graphical startup
 <p>GRASS_HEIGHT
 <br>[d.mon]
-<br>&nbsp; defines the height of GRASS monitor
-<p>GRASS_WIDTH
-<br>[d.mon]
-<br>&nbsp; defines the width of GRASS monitor
-<p>GTUNE_VSUP_RAM
-<p>GTUNE_VTOC_RAM
-<p>HOME
-<br>&nbsp; user's home directory
-<p>GRASS_HTMLFILE
-<p>GRASS_HTMLMAXPOINTS
-<p>GRASS_HTMLMINBBOX
-<p>GRASS_HTMLMINDIST
-<p>GRASS_HTMLTYPE
-<p>LOCATION
-<br>&nbsp;full path to location directory
-<p>LOCATION_NAME
-<br>&nbsp;initial location name
-<p>MAPLP
-<br>[ppm driver]
-<p>MAPSET
-<br>&nbsp; initial mapset
-<p>MONITOR
-<br>[d.mon]
-<br>&nbsp; name of selected GRASS monitor
-<p>NODUMP
-<p>NO_DRAW
-<p>NPIXELS
-<p>Nviz_AutoSurfColors
-<br>[nviz]
-<p>ORACLE_HOME
-<p>GRASS_PAGER
-<br>[various modules]
-<br>Maybe set to either "less" or "more"
-<p>PAINT
-<p>PAINTER
-<br>&nbsp; currently selected paint output device
-<p>PAINT_DRIVER
-<p>PAINT_DRIVER_SHELL
-<p>PAINT_HEADER
-<p>PAINT_TRACE
+<br>&nbsp; defines the height of GRASS monitor, see also GRASS_WIDTH
+<p>GRASS_HTMLFILE -?
+<p>GRASS_HTMLMAXPOINTS -?
+<p>GRASS_HTMLMINBBOX -?
+<p>GRASS_HTMLMINDIST -?
+<p>GRASS_HTMLTYPE -?
 <p>GRASS_ORGANIZATION
 <br>[various vector modules which generate new vector maps]
 <br>&nbsp; To set the owner of the vector map ("Organization"). Default
@@ -191,42 +156,11 @@ is "GRASS Development Team"
 <br>&nbsp; GRASS_PAN_THRESHOLD=0
 <p>GRASS_PERL
 <br>&nbsp; set perl with path
-<p>PGSQL - not found in source 20/02/01
-<p>PG_HOST
-<br>[g.select.pg]
-<br>&nbsp; name of PostgreSQL host
-<p>PG_DBASE
-<br>[g.select.pg]
-<br>&nbsp; name of selected PostgreSQL database
 <p>GRASS_PNGFILE
 <br>[PNGdriver]
 <br>&nbsp; name of PNG output file
-<p>PREVIEW_BACKGROUND
-<p>PROJ_LIB
-<p>PSPAINTER
-<br>[ps.select]
-<br>&nbsp; naem of ps device to print to
-<p>PWAIT
-<p>QUALITY
-<p>RASTERFILE
-<p>SG3D_HEIGHT
-<br>[sg3d]
-<p>SG3D_SITE_CACHE
-<br>[sg3d]
-<p>SG3D_WIDTH
-<br>[sg3d]
-<p>SHORT
-<p>GRASS_SLEEP - not found in source 20/02/01
-<p>SPAG_THRESH
-<br>[v.spag]
-<br>&nbsp; snap threshold value
-<p>SPRINT_COMMAND
-<p>SQLBASE_DIR
-<p>SQLBASE_DRIVER_STDERR
-<p>SQLBASE_SERVER
-<p>STARTPANEL
 <p>GRASS_STDERR
-<br>&nbsp; set to prevent user mail on error
+<br>&nbsp; set to any value to prevent user mail on error
 <p>GRASS_TCLSH
 <br>[tcltkgrass, nviz]
 <br>&nbsp; set tclsh shell name to override 'tclsh'
@@ -239,23 +173,90 @@ is "GRASS Development Team"
 <p>GRASS_TRUECOLOR
 <br>[PNGdriver]
 <br>&nbsp; if "TRUE", the PNG driver generates a true-color image (requires GD 2.0)
-<p>USER
-<p>WIDTH
+<p>GRASS_WIDTH
+<br>[d.mon]
+<br>&nbsp; defines the width of GRASS monitor, see also GRASS_HEIGHT
 <p>GRASS_WISH
 <br>[tcltkgrass, nviz]
 <br>&nbsp; set wish shell name to override 'wish'
-<p>WRITE
-<p>X3D_HEIGHT
-<p>X3D_WIDTH
+<p>GTUNE_VSUP_RAM -?
+<p>GTUNE_VTOC_RAM -?
+<p>HEIGHT -?
+<p>HOME
+<br>&nbsp; user's home directory
+<p>LOCATION
+<br>&nbsp;full path to location directory
+<p>LOCATION_NAME
+<br>&nbsp;initial location name
+<p>MAPLP
+<br>[ppm driver]
+<p>MAPSET
+<br>&nbsp; initial mapset
+<p>MONITOR
+<br>[d.mon]
+<br>&nbsp; name of selected GRASS monitor
+<p>NODUMP -?
+<p>NO_DRAW -?
+<p>NPIXELS -?
+<p>Nviz_AutoSurfColors
+<br>[nviz]
+<p>ORACLE_HOME -?
+<p>GRASS_PAGER
+<br>[various modules]
+<br>Maybe set to either "less" or "more"
+<p>PAINT -?
+<p>PAINTER
+<br>&nbsp; currently selected paint output device
+<p>PAINT_DRIVER -?
+<p>PAINT_DRIVER_SHELL -?
+<p>PAINT_HEADER -?
+<p>PAINT_TRACE -?
+<p>PGSQL - not found in source 20/02/01
+<p>PG_HOST
+<br>[g.select.pg]
+<br>&nbsp; name of PostgreSQL host
+<p>PG_DBASE
+<br>[g.select.pg]
+<br>&nbsp; name of selected PostgreSQL database
+<p>PREVIEW_BACKGROUND -?
+<p>PROJ_LIB -?
+<p>PSPAINTER
+<br>[ps.select]
+<br>&nbsp; naem of ps device to print to
+<p>PWAIT -?
+<p>QUALITY -?
+<p>RASTERFILE -?
+<p>SG3D_HEIGHT
+<br>[sg3d]
+<p>SG3D_SITE_CACHE
+<br>[sg3d]
+<p>SG3D_WIDTH
+<br>[sg3d]
+<p>SHORT -?
+<p>GRASS_SLEEP - not found in source 20/02/01
+<p>SPAG_THRESH
+<br>[v.spag]
+<br>&nbsp; snap threshold value
+<p>SPRINT_COMMAND -?
+<p>SQLBASE_DIR -?
+<p>SQLBASE_DRIVER_STDERR -?
+<p>SQLBASE_SERVER -?
+<p>STARTPANEL -?
+<p>USER
+<br>user name
+<p>WIDTH -?
+<p>WRITE -?
+<p>X3D_HEIGHT -?
+<p>X3D_WIDTH -?
 <p>XDRIVER_PRIVATE_CMAP
 <br>[d.mon]
 <br>&nbsp; if set, use a private colormap
 <p>XDRIVER_WINDOW
 <br>[d.mon]
 <br>&nbsp; if set, should contain an X window ID; XDRIVER will use this window instead of creating its own
-<p>XGANIM_SIZE
-<p>_XPG
-<p>
+<p>XGANIM_SIZE -?
+<p>_XPG -?
+
 <hr WIDTH="100%">
 <br>GRASS-related Files:
 <p>$HOME/.grassrc5
