@@ -1,0 +1,9 @@
+# %W% %G%
+
+LIBES = $(IMAGERYLIB) $(GISLIB)
+LIST = main.o
+
+$(ETC)/imagery/colors: $(LIST) $(LIBES) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VASK)
+
+$(LIBES) $(VASKLIB): #
