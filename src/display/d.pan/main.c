@@ -34,10 +34,7 @@ int main (int argc, char **argv)
     rmap->type = TYPE_STRING;
     if (*rast)
           rmap->answer = rast;
-    if (*rast)
-          rmap->required = NO;
-       else
-          rmap->required = YES;
+    rmap->required = NO;
     rmap->gisprompt = "old,cell,raster" ;
     rmap->description = "Name of raster map";
                                                         
@@ -46,13 +43,15 @@ int main (int argc, char **argv)
     vmap->type = TYPE_STRING;
     if (*vect)
           vmap->answer = vect;
-    if (*vect)
-          vmap->required = NO;
-       else
-          vmap->required = YES;
+    vmap->required = NO;
     vmap->gisprompt = "old,dig,vector" ;
     vmap->description = "Name of vector map";
                                                         
+    if(!*rast && !*vect)
+    {
+	    rmap->required = YES;
+    }
+
     quiet = G_define_flag();
     quiet->key = 'q';
     quiet->description = "Quiet";
@@ -71,13 +70,32 @@ int main (int argc, char **argv)
     sscanf(zoom->answer,"%lf", &magnify); 
 
 /* Make sure map is available */
-    if (rmap->answer == NULL) exit(0);
-       mapset = G_find_cell2 (rmap->answer, "");
-    if (mapset == NULL)
+    if (rmap->required == YES && rmap->answer == NULL)
+	exit(0);
+
+    if (rmap->answer)
     {
-	char msg[256];
-	sprintf(msg,"Raster file [%s] not available", rmap->answer);
-	G_fatal_error(msg) ;
+    	mapset = G_find_cell2 (rmap->answer, "");
+    	if (mapset == NULL)
+    	{
+		char msg[256];
+		sprintf(msg,"Raster file [%s] not available", rmap->answer);
+		G_fatal_error(msg) ;
+	}
+    }
+
+    if (vmap->required == YES && vmap->answer == NULL)
+	exit(0);
+
+    if (vmap->answer)
+    {
+    	mapset = G_find_vector2 (vmap->answer, "");
+    	if (mapset == NULL)
+    	{
+		char msg[256];
+		sprintf(msg,"Vector file [%s] not available", vmap->answer);
+		G_fatal_error(msg) ;
+	}
     }
 
     /* if map was found in monitor: */
@@ -97,10 +115,13 @@ int main (int argc, char **argv)
 
     R_close_driver();
 
+    sprintf(command, "d.erase");
+    system(command);
+
 /* Redraw raster map */
     if (*rast)
     {
-      sprintf(command, "d.erase; d.rast map=%s", rmap->answer);
+      sprintf(command, "d.rast map=%s", rmap->answer);
       system(command);
     }
 
