@@ -1,4 +1,3 @@
-/* %W% %G% */
 #define ESC 033
 main()
 {
