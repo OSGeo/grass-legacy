@@ -1,0 +1,11 @@
+
+
+m.ll2u - 
+
+m.ll2u converts geographic coordinates (i.e., longitudes and latitudes)
+to Universal Transverse Mercator (\UTM\) \eastings\ and \northings\.
+The user must specify the spheroid on which to base the UTM conversion.
+The user may optionally specify the \UTM zone\, however the program can
+determine this from the geographic coordinates submitted.
+
+Manual entry for \m.ll2u\
