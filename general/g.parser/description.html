@@ -57,7 +57,11 @@ else
   echo "Flag -f not set"
 fi
 
-echo "Value of GIS_OPT_option1: '$GIS_OPT_option1'"
+#test if parameter present:
+if [ "$GIS_OPT_option1" != "(null)" ] ; then
+  echo "Value of GIS_OPT_option1: '$GIS_OPT_option1'"
+fi
+
 echo "Value of GIS_OPT_raster: '$GIS_OPT_raster'"
 echo "Value of GIS_OPT_vect: '$GIS_OPT_vector'"
 
