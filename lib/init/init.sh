@@ -267,7 +267,12 @@ if [ ! "$LOCATION" ] ; then
 	
 	# Check for tcltk interface
 	tcltk)
-	    eval `$WISH -file $TCLTKGRASSBASE/script/gis_set.tcl`
+	    if test -f $TCLTKGRASSBASE/script/gis_set.tcl
+	    then
+	      eval `$WISH -file $TCLTKGRASSBASE/script/gis_set.tcl`
+	    else
+	      GRASS_GUI=text
+	    fi
 	    
 	    case $? in
      	    	1)
@@ -464,7 +469,7 @@ bash)
     echo "test -z $PROFILEREAD && . /etc/profile" > $bashrc
     echo "test -e ~/.alias && . ~/.alias" >> $bashrc
     echo "umask 022" >> $bashrc
-    echo "PS1='GRASS:\w > '" >> $bashrc
+    echo "PS1='GRASS VERSION_NUMBER:\w > '" >> $bashrc
 
     if [ -r $USERHOME/.grass.bashrc ]
     then
@@ -489,7 +494,7 @@ cygwin)
     # echo "test -z $PROFILEREAD && . /etc/profile" > $bashrc
     echo "test -e ~/.alias && . ~/.alias" >> $bashrc
     echo "umask 022" >> $bashrc
-    echo "PS1='GRASS:\w > '" >> $bashrc
+    echo "PS1='GRASS VERSION_NUMBER:\w > '" >> $bashrc
 
     if [ -r $USERHOME/.grass.bashrc ]
     then
