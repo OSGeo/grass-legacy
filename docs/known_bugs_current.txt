@@ -43,11 +43,11 @@ i.ortho.photo
 i.rectify/i.rectify2
  - do not work properly
 
+i.shape
+ seg.fault at zc_curve.c:137
+
 r.binfer
   bug in table.c causing segfault
-
-r.coin
-  fixed. Please check if working properly.
 
 r.cost
  segment_put_row write error Bad address (same problem with r.surf.contour)
@@ -229,7 +229,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log$
- Revision 1.8  2000-02-09 16:15:56  markus
+ Revision 1.9  2000-02-09 16:28:12  markus
+ added i.shape segfault
+
+ Revision 1.8  2000/02/09 16:15:56  markus
  d.param.scale bug added, r.binfer bug specified
 
  Revision 1.7  2000/02/07 17:39:21  markus
