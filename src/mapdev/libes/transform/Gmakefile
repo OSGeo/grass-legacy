@@ -1,0 +1,11 @@
+EXTRA_CFLAGS		= -I..
+LIB			= ../libtrans.a
+
+OBJ = \
+	inverse.o\
+	m_mult.o\
+	transform.o
+
+$(LIB): $(OBJ)
+	$(AR)
+
