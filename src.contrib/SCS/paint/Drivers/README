@@ -1,0 +1,278 @@
+The paint system achieves device independence by separating the
+application code from the device dependent code as follow:
+
+The application code calls routines in the interface library (see
+Interface/applib).  These routines communicate with a device driver
+program via unix pipes, parent to child. The driver consists of device
+dependent code loaded with the interface routine paint_interface() (see
+Interface/driverlib) that knows how to talk to the application
+program.
+
+Source code directories:
+
+  Interface: this directory contains the source code for the
+	     interface.  Both the application and driver libraries
+	     are found here.
+
+  Drivers:   this directory contains directories for each driver
+	     supported by paint. These directories contain the
+	     C routines which are required by the interface and
+	     a shell script which sets the necessary device driver
+	     parameters and calls the real driver.
+
+The interface, consisting of the application library and the
+driver library, is defined as follows:
+
+application library (applib.a) has the following routines:
+
+    Pconnect()
+
+     Must be the first routine called by an application.  Executes the
+     driver shell (as specified by the unix environment variable
+     PAINT_DRIVER, which must be a full path reference) and opens a two
+     way pipe to this process.  The application program uses these
+     pipes to talk to the driver, which in turn uses stdin and stdout
+     to talk to the application program.
+
+    Pdisconnect()
+
+     Must be the last routine called by an application.  Sends a close
+     request to the driver and closes the communication pipes to the
+     driver.
+
+    Popen()
+
+     If application intends actually send output to the printer,
+     this routine must be called after the call to Pconnect().
+     If the application only needs to know the number of colors, or the
+     other configuration parameters fo the printer, Popen() need not
+     be called.
+    
+    Pclose()
+
+     If Popen() was called, this routine must be closed to flush any output
+     to the printce. This should be called just before Pdisconnect().
+     If Popen() was not called, Pclose() should NOT be called.
+
+    double Phres()
+
+     Returns the horizontal resolution of the device in pixels per
+     inch.
+
+    double Pvres()
+
+     Returns the vertical resolution of the device in pixels per inch.
+
+    Pnpixels()
+
+     Returns the number of pixels in the horizontal
+     (No limit is assumed in the vertical)
+
+    Pncolors()
+
+     Number of colors available. currently this routine
+     should never return a number larger than 256.
+
+    Pnchars()
+
+     Returns the number of characters in the horizontal
+
+    Palpha()
+
+     Puts the printer in alpha-numeric (ie, text) mode.
+     Should be called once before call to Ptext().
+
+    Ptext(s)
+     char *s;
+
+     Prints the text s on the printer.  Assumes one text string per
+     line.  The text itself should not have any non-printing characters
+     (eg. linefeeds, tabs, or newlines) and the driver is free to
+     discard any such characters.  The driver can append as many
+     newlines as required to effect the printing.
+
+    Praster()
+
+     Puts the printer in raster (ie, graphic) mode.
+     Should be called once before each Ppictsize() call.
+
+    Ppictsize (nrows, ncols)
+
+     Sends size of picture to be drawn to driver.
+     Should be called before any raster data is sent to the driver.
+
+    Pdata_begin()
+
+     Indicates one line of raster data to begin.
+
+    Pdata (buf, n)
+     unsigned char *buf;
+     int n;
+
+     Sends n bytes of data starting at buf to driver.  Repeated calls
+     to Pdata() can be made between calls to Pdata_begin() and
+     Pdata_end() with exactly ncols of data as specified in the the
+     call to Ppictsize().
+
+    Pdata_end()
+
+     Ends one line of raster data
+     It is important that exactly ncols of data be sent before
+     this call is made.
+
+    Prle_begin()
+
+     Indicates one line of run-length-encoded raster data to begin.
+
+    Prle (value, n)
+     unsigned char value;
+     int n;
+
+     Sends rle value n times to driver.
+     Repeated calls to Prle() can be made as long as exactly ncols of
+     data are sent.
+
+    Prle_end()
+
+     Ends of line of rle raster data.
+
+    Pcolornum (red, grn, blu)
+     float red, grn, blu;
+
+     Returns the color number (according to the predefined color table)
+     for the color specified by the red, grn, blu intensity percentages.
+
+    Pcolorvalue (n, red, grn, blu)
+     int n;
+     float *red, *grn, *blu;
+
+     Computes the red, grn, and blu components of the predefined
+     color n.
+    
+    Ptranslate_colors (red, grn, blu, table, n)
+     unsigned char *red, *grn, *blu;
+     unsigned char *table;
+
+     Translates the colors (red,grn,blu) which are in the range (0-255)
+     into corresponding printer color numbers and stores them in table
+
+The driver interface requires the writing of the following
+routines for each driver to be implemented:
+
+    Popen (device)
+     char *device;
+
+     Open the printer on "device" for output, and perform
+     whatever intialization is required by the printer.
+     Load the predefined color table.
+
+    Pclose()
+
+     Flush pending output to the printer and close the device.
+
+    Pflush()
+
+     Flush pending output to the printer.
+
+    Palpha()
+
+     Put printer in alpha-numeric mode (ie, text mode)
+
+    Ptext (s)
+     char *s;
+
+     Print string s on printer. Non-printing characters can be
+     ignored or suppressed. Linefeed or newlines should be
+     appending as necessary (at least one).
+
+    Praster()
+
+     Put printer is raster (ie, graphics) mode.
+
+    Ppictsize (nrows, ncols)
+
+     Prepare printer for a picture with nrows and ncols.
+
+    Pdata (buf, n)
+     unsigned char *buf;
+     int n;
+
+     Output the raster data in buf. n will be ncols as specified
+     in Ppictsize.
+
+    Prle (buf, n)
+     unsigned char *buf;
+     int n;
+
+     Output the run-length-encoded raster data in buf.
+     The data is in pairs: value,repeat
+     where repeat can be 0-255, with 0 meaning 256.
+     n will be the number of pairs.  (Of course the
+     n repeat counts had better add up to ncols.
+     The interface should check this, just to be nice).
+
+    Pncolors()
+
+     Number of colors available. currently this routine
+     should never return a number larger than 256.
+
+    Pcolornum (red, grn, blu)
+     float red, grn, blu;
+
+     Returns the color number (according to the predefined color table)
+     for the color specified by the red, grn, blu intensity percentages.
+
+    Pcolorvalue (n, red, grn, blu)
+     int n;
+     float *red, *grn, *blu;
+
+     Computes the red, grn, and blu components of the predefined
+     color n.
+
+A main() must be written which looks like:
+
+	main(argc,argv) char *argv[];
+	{
+	    paint_interface(argc,argv);
+	}
+
+This main() must then be linked with the routines describes above and
+the driverlib.a to form the driver program.
+
+How the user selects the printer.
+
+   The user selects the printer by setting the grass envirnoment variable
+   PAINTER to a driver name. This is done using the p.select command.
+
+How the application program starts the driver.
+
+   The Pconnect() call runs the command
+
+	$GISBASE/etc/paint/driver.shell $PAINTER
+    
+   which sets some unix environement variables and runs the shell
+   script
+
+       $GISBASE/etc/paint/driver.sh/$PAINTER
+
+   This shell script must be written by the driver writer. It is
+   responsible for setting some other unix env variables (described
+   below) and then running the driver program which is named
+
+	$GISBASE/etc/paint/driver/$PAINTER
+
+
+   The driver shell script must set the following unix env variables
+
+   HRES=     horizontal resolution, pixels per inch
+   VRES=     vertical resolution, pixels per inch
+   NPIXELS=  number of pixels in the horizontal
+   NCHARS=   number of alpha-numeric characters in the horizontal
+   MAPLP=    output port (eg, /dev/tty1)
+
+   also, if the driver is on a different machine than the application
+   program (eg, using rsh to run the driver), and the two machines
+   do not have the same integer format, then the following parameter
+   must also be set
+
+   TRANSPARENT=y    integers should be sent in ascii instead of binary
