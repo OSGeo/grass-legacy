@@ -1,5 +1,5 @@
 PGM=r.out.png
-EXTRA_CFLAGS=-I/usr/X11R6/include/
+EXTRA_CFLAGS=-I/usr/X11R6/include/ -I/usr/include/gr
 
 LIST= r.out.png.o
 
