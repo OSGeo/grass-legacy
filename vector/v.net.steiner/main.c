@@ -345,6 +345,7 @@ int main(int argc, char **argv)
     
     term_opt = G_define_standard_option(G_OPT_V_CATS);
     term_opt->key         = "tcats" ;
+    term_opt->required    = YES ; 
     term_opt->description = "Categories of points on terminals (field is specified by nfield)" ;
     
     nsp_opt = G_define_option() ;
