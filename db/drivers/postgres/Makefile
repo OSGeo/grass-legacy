@@ -1,4 +1,3 @@
-
 MODULE_TOPDIR = ../../..
 
 DEPENDENCIES = $(GISDEP)
@@ -9,7 +8,8 @@ include $(MODULE_TOPDIR)/include/Make/Rules.make
 
 DRIVER=$(DBDRIVERDIR)/pg
 
-CRYPTLIB = -lcrypt
+#should be caught by configure:
+#CRYPTLIB = -lcrypt
 
 LIBES = $(DBMIDRIVERLIB) $(DBMIBASELIB) $(SQLPLIB) $(DBSTUBSLIB) \
 	-l$(DBDIALOG_LIBNAME) \
