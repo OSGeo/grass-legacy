@@ -230,10 +230,10 @@ typedef struct {
 /* grass/src/libes/g3d/cache.c */
 void G3d_cache_reset(G3D_cache *);
 void G3d_cache_dispose(G3D_cache *);
-void *G3d_cache_new(int, int, int, int (*)(void), void *, int (*)(void), void *);
-void G3d_cache_set_removeFun(G3D_cache *, int (*)(void), void *);
-void G3d_cache_set_loadFun(G3D_cache *, int (*)(void), void *);
-void *G3d_cache_new_read(int, int, int, int (*)(void), void *);
+void *G3d_cache_new(int, int, int, int (*)(), void *, int (*)(), void *);
+void G3d_cache_set_removeFun(G3D_cache *, int (*)(), void *);
+void G3d_cache_set_loadFun(G3D_cache *, int (*)(), void *);
+void *G3d_cache_new_read(int, int, int, int (*)(), void *);
 int G3d_cache_lock(G3D_cache *, int);
 void G3d_cache_lock_intern(G3D_cache *, int);
 int G3d_cache_unlock(G3D_cache *, int);
@@ -398,9 +398,9 @@ int G3d_readRegionMap (char *, char *,G3D_Region *);
 
 /* grass/src/libes/g3d/g3dresample.c */
 void G3d_nearestNeighbor(G3D_Map *, int, int, int, char *, int);
-void G3d_setResamplingFun(G3D_Map *, void (*)(void));
-void G3d_getResamplingFun(G3D_Map *, void (**)(void));
-void G3d_getNearestNeighborFunPtr(void (**)(void));
+void G3d_setResamplingFun(G3D_Map *, void (*)());
+void G3d_getResamplingFun(G3D_Map *, void (**)());
+void G3d_getNearestNeighborFunPtr(void (**)());
 /* grass/src/libes/g3d/g3dvolume.c */
 void G3d_getVolumeA(void *, double [2][2][2][3], int, int, int, char *, int);
 void G3d_getVolume(void *, double, double, double, double, double, double, double, double, double, double, double, double, int, int, int, char *, int);
