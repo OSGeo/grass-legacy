@@ -28,7 +28,10 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.1  2003-04-07 15:15:19  paul
+ * Revision 1.2  2003-04-14 15:11:30  paul
+ * Fix for using internal GRASS copy of proj
+ *
+ * Revision 1.1  2003/04/07 15:15:19  paul
  * External PROJ.4 (libproj) support
  *
  * Revision 1.9  2001/04/06 01:24:13  warmerda
@@ -214,7 +217,7 @@ PROJ_PARMS__
 } PJ;
 
 /* public API */
-#include "proj_api.h"
+#include "gproj_api.h"
 
 /* Generate pj_list external or make list from include file */
 #ifndef PJ_LIST_H
