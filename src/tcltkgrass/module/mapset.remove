@@ -1,0 +1,5 @@
+interface_build {
+    {mapset.remove} 0
+    {Remove a mapset.}
+    {entry mapset {Raster to be removed:} 0 Mapset}
+}
