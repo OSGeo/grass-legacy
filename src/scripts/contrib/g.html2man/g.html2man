@@ -68,7 +68,7 @@ sub GetTitle {
       @TITLE = split;
       return 1;
     }
-    if (m#<TITLE>#) {
+    if (m#<TITLE>#i) {
       return 1;
     }
   }
@@ -109,10 +109,10 @@ sub DoLine {
     return 1;
   }
   s#<IMG SRC=.*>##i;
-  if (m#<A NAME="toc">#) {return 2};
+  if (m#<A NAME="toc">#i) {return 2};
   s#<A NAME=".*">##i;
-  s#<\!\-\-#.\\\" #;
-  s#\-\->##;
+  s#<\!\-\-#.\\\" #i;
+  s#\-\->##i;
   if (m#^<HR.*>$#i) {return 0};
   s#<HR>##i;
   s#<HR .*>##i;
@@ -136,7 +136,7 @@ sub DoEscape {
 }
 
 sub DoSection {
-  if (m#^ *Table of Contents *$#) {return 0};
+  if (m#^ *Table of Contents *$#i) {return 0};
   if (m#^<A NAME=".*">$#i) {return 0;}
   s#<A NAME=".*">##i;
   s#^.*<H2>#.SH #i;
@@ -153,8 +153,8 @@ sub DoSection {
 # Paragraph breaks: <P>
 #
 sub DoPara {
-  s/^<P>/.PP\n/;
-  s/<P>/\n.PP\n/g;
+  s/^<P>/.PP\n/i;
+  s/<P>/\n.PP\n/ig;
   return;
 }
 
@@ -218,12 +218,11 @@ sub DoFont {
   s#</I> *<I># #ig;
   s#<I>#\\*W#ig;
   s#</I>#\\*O#ig;
-  s/^ *<P>/<P>/;
-  s/^<P>$/.PP/;
-  s/<P>/.PP\n/g;
-  s/<P>/.PP\n/g;
-  s/&nbsp;/ /g;
-  s/&NBSP;/ /g;
+  s/^ *<P>/<P>/i;
+  s/^<P>$/.PP/i;
+  s/<P>/.PP\n/ig;
+  s/<P>/.PP\n/ig;
+  s/&NBSP;/ /ig;
   return;
 }
 
