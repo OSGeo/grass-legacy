@@ -17,8 +17,12 @@ SHAPE</font>
 <h2>
 SYNOPSIS</h2>
 <font size=+0><b>v.out.shape</b>&nbsp;&nbsp; map=<i>name</i>&nbsp;&nbsp;
-type=<i>area,line,[both]</i>&nbsp;&nbsp; mapset=<i>name&nbsp;&nbsp; </i>cats=<i>[string],integer,float</i>&nbsp;&nbsp;
-prefix=<i>name&nbsp;&nbsp; </i>log=<i>filename</i></font>
+type=<i>area,line,point</i>&nbsp;&nbsp; mapset=<i>name&nbsp;&nbsp; </i>cats=<i>[string],integer,float</i>&nbsp;&nbsp;
+prefix=<i>name&nbsp;&nbsp; </i>
+log=<i>filename</i>&nbsp;&nbsp; 
+table=<i>name</i>&nbsp;&nbsp; 
+key=<i>name</i>&nbsp;&nbsp; 
+</font>
 <br>&nbsp;
 <h2>
 DESCRIPTION</h2>
@@ -39,7 +43,7 @@ Parameters:</h3>
 <DT><b><font size=+0>type=</font></b><EM>option</EM>
 <DD>coverage type.
 <BR>
-<b>Options</b>: area, line, both(default)
+<b>Options</b>: area, line, point
 
 <DT><b><font size=+0>mapset=</font></b><EM>name</EM>
 <DD>name of mapset containing vector file (default current).
@@ -59,10 +63,17 @@ number. Otherwise ignored.
 <DT><b><font size=+0>log=</font></b><EM>filename</EM>
 <DD>choose a logfile. If the file cannot be opened, standard error stream is used.
 <BR>
+
+<DT><b><font size=+0>table=</font></b><EM>name</EM>
+<DD>name of database table used as attributes source.
+<BR>
+
+<DT><b><font size=+0>key=</font></b><EM>name</EM>
+<DD>key column in table used for linking rows to shapes.
+<BR>
+
 </DL>
 
-
-<br>&nbsp;
 <br>&nbsp;
 <h2>
 NOTES</h2>
@@ -70,24 +81,37 @@ NOTES</h2>
 you to enter the name of a GRASS vector file to be exported to SHAPE and
 for various options, see above.</font>
 <p><font size=+0>A GRASS vector file to be exported to SHAPE may contain
-both LINE and POLYGON coverage. If you select type <i>both</i> for conversion,
-two layers will be produced with the appended suffixes <b>_line</b> and
-<b>_area</b>
-respectively for lines and polygons. Lines used as area edges however are
+POINT, LINE and POLYGON coverage. If you select more types for conversion,
+more layers will be produced with the appended suffixes <b>_line</b>,
+<b>_point</b> and <b>_area</b>. Lines used as area edges however are
 not duplicated in the lines layer. If one layer is empty the unused files
-are deleted.</font>
-<br>&nbsp;
-<br>&nbsp;
-<h2>
-SEE ALSO</h2>
+are deleted.
+<p>
+If <i>table=</i> option is specified, dbf table structure and data is
+used for output dbf table. <i>key=</i> option is name of column used
+as link between table rows and GRASS categories. Database connection
+must be established by db.connect first. Supported column types are
+numbers and strings (int, double, char, varchar,...). Time and other
+types are not supported.
+</font>
+
+<h2>BUGS</h2>
+If data are read from table, problem with char and varchar column types
+may occur. For example for MySQL column width is set according to first record
+instead of column size. PostgreSQL tables are OK. Problem is in ODBC
+driver and database specific drivers.
+
+<h2>SEE ALSO</h2>
 <i><a href="v.in.shape.html">v.in.shape</a>, <a href="m.in.e00.html">m.in.e00</a>,
-v.out.e00, <a href="v.in.arc.html">v.in.arc</a>, <a href="v.out.arc.html">v.out.arc</a>,
-<a href="v.out.dlg.html">v.out.dlg</a></i>
+v.out.e00, <a href="v.in.arc.html">v.in.arc</a>, <a href="v.out.arc.html">v.out.arc</a>,<a href="v.out.dlg.html">v.out.dlg</a>,
+<a href="db.connect.html">db.connect</a></i>
 <br>&nbsp;
 <h2>
 AUTHOR</h2>
 <font size=+0>David D. Gray</font>
 <br><i><font size=+0>&lt;ddgray@armadce.demon.co.uk&gt;</font></i>
 <p><font size=+0>Depends on shapelib-1.2.8 or later by Frank Warmerdam.</font>
+<P>
+DBMI support by Radim Blazek
 </body>
 </html>
