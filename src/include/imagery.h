@@ -3,14 +3,14 @@
 
 #include "gis.h"
 
-#define NAME_LEN 30
+#define INAME_LEN 30
 
 struct Ref
 {
     int nfiles;
     struct Ref_Files
     {
-	char name[30];
+	char name[30]; /* length is not in sync with other definitions */
 	char mapset[30];
     } *file;
     struct Ref_Color
