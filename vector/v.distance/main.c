@@ -129,7 +129,7 @@ int main (int argc, char *argv[])
     out_opt->description = "New vector map containing lines connecting nearest elements";
     
     max_opt = G_define_option();
-    max_opt->key = "max";
+    max_opt->key = "maxdist";
     max_opt->type = TYPE_DOUBLE;
     max_opt->required = NO;
     max_opt->answer = "1000000";
