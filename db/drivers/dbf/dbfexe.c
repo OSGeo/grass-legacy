@@ -22,8 +22,9 @@
 #include "globals.h"
 #include "proto.h"
 
-int sel(SQLPSTMT * st, int tab, int **set);
+int sel(int tab, int **set, char *sql);
 int set_val(int tab, int row, int col, SQLPVALUE * val);
+int ParseSqlStmt( SQLPSTMT *st, char *sql);  
 
 int execute(char *sql, cursor * c)
 {
@@ -35,40 +36,43 @@ int execute(char *sql, cursor * c)
     int *selset;
     int dtype, stype;
     int width, decimals;
-
+    
     /* parse sql statement */
     st = sqpInitStmt();
+    st_allocated = 1;
     st->stmt = sql;
     sqpInitParser(st);
 
     if (yyparse() != 0) {
 	sqpFreeStmt(st);
+	st_allocated=0;
 	sprintf(errMsg, "SQL parser error in statement:\n%s\n", sql);
 	return DB_FAILED;
     }
 
-/* sqpPrintStmt(st); *//* debug output only */
 
     /* find table */
     tab = find_table(st->table);
     if (tab < 0 && st->command != SQLP_CREATE) {
 	sprintf(errMsg, "Table '%s' doesn't exist.\n", st->table);
+        sqpFreeStmt(st);
+	st_allocated=0;
 	return DB_FAILED;
     }
 
     if ((st->command != SQLP_CREATE) && (st->command != SQLP_DROP))
 	load_table_head(tab);
-
+    
     /* find columns */
     ncols = st->nCol;
     if (st->command == SQLP_INSERT || st->command == SQLP_SELECT
 	|| st->command == SQLP_UPDATE) {
-	if (ncols > 0) {	/* colums were specified */
+	if (ncols > 0) {	
 	    cols = (int *) malloc(ncols * sizeof(int));
 	    for (i = 0; i < ncols; i++)
 		cols[i] = find_column(tab, st->Col[i].s);
 	}
-	else {			/* all columns */
+	else {			
 
 	    ncols = db.tables[tab].ncols;
 	    cols = (int *) malloc(ncols * sizeof(int));
@@ -87,6 +91,8 @@ int execute(char *sql, cursor * c)
 		|| (dtype == DBF_DOUBLE && stype == SQLP_S)
 		|| (dtype == DBF_CHAR && stype != SQLP_S)) {
 		sprintf(errMsg, "Incompatible value type.\n");
+        	sqpFreeStmt(st);
+		st_allocated=0;
 		return DB_FAILED;
 	    }
 	}
@@ -133,9 +139,12 @@ int execute(char *sql, cursor * c)
 	break;
 
     case (SQLP_INSERT):
-	load_table(tab);
 
-	/* add row */
+	sqpFreeStmt(st); /* need this because of the malloc conflict in DBFOpen,.. etc  --alex*/
+	st_allocated=0;
+	
+	load_table(tab);
+	
 	if (db.tables[tab].nrows == db.tables[tab].arows) {
 	    db.tables[tab].arows += 1000;
 	    db.tables[tab].rows =
@@ -148,7 +157,13 @@ int execute(char *sql, cursor * c)
 	    (VALUE *) calloc(db.tables[tab].ncols, sizeof(VALUE));
 	dbrows[row].alive = TRUE;
 
-	/* set values */
+	/* parse sql statement */
+    	st = sqpInitStmt();
+	st_allocated = 1;
+	if ( ParseSqlStmt(st, sql) != DB_OK) 
+	    return DB_FAILED;
+
+	
 	for (i = 0; i < st->nVal; i++) {
 	    col = cols[i];
 	    set_val(tab, row, col, &(st->Val[i]));
@@ -159,11 +174,16 @@ int execute(char *sql, cursor * c)
 	break;
 
     case (SQLP_SELECT):
+
 	c->st = st;
 	c->table = tab;
 	c->cols = cols;
 	c->ncols = ncols;
-	c->nrows = sel(st, tab, &(c->set));
+	
+	sqpFreeStmt(st); /* need this because of the malloc conflict in DBFOpen,.. etc  --alex*/
+	st_allocated=0;
+		
+	c->nrows = sel(tab, &(c->set), sql);
 	if (c->nrows < 0) {
 	    sprintf(errMsg, "%sError in selecting rows\n", errMsg);
 	    return DB_FAILED;
@@ -172,14 +192,18 @@ int execute(char *sql, cursor * c)
 	break;
 
     case (SQLP_UPDATE):
-	nrows = sel(st, tab, &selset);
+
+	sqpFreeStmt(st); /* need this because of the malloc conflict in DBFOpen,.. etc  --alex*/
+	st_allocated=0;
+	
+	nrows = sel(tab, &selset, sql);
 	if (nrows < 0) {
 	    sprintf(errMsg, "%sError in selecting rows\n", errMsg);
 	    return DB_FAILED;
 	}
 	dbrows = db.tables[tab].rows;
 
-	/* update rows */
+	
 	for (i = 0; i < nrows; i++) {
 	    row = selset[i];
 	    for (j = 0; j < st->nVal; j++) {
@@ -191,14 +215,18 @@ int execute(char *sql, cursor * c)
 	break;
 
     case (SQLP_DELETE):
-	nrows = sel(st, tab, &selset);
+
+	sqpFreeStmt(st); /* need this because of the malloc conflict in DBFOpen,.. etc  --alex*/
+	st_allocated=0;
+	
+	nrows = sel(tab, &selset, sql);
 	if (nrows < 0) {
 	    sprintf(errMsg, "%sError in selecting rows\n", errMsg);
 	    return DB_FAILED;
 	}
 	dbrows = db.tables[tab].rows;
 
-	/* delete rows */
+	
 	for (i = 0; i < nrows; i++) {
 	    row = selset[i];
 	    dbrows[row].alive = FALSE;
@@ -206,6 +234,11 @@ int execute(char *sql, cursor * c)
 	}
 	break;
 
+    }
+
+    if (st_allocated) {
+        sqpFreeStmt(st);
+	st_allocated=0;
     }
 
     return DB_OK;
@@ -234,7 +267,7 @@ int set_val(int tab, int row, int col, SQLPVALUE * val)
     return (1);
 }
 
-int sel(SQLPSTMT * st, int tab, int **selset)
+int sel(int tab, int **selset, char *sql)
 {
     int i, j, ccol, condition, group_condition, g_count;
     int *comcol;		/* array of indexes of comparison cols */
@@ -243,6 +276,20 @@ int sel(SQLPSTMT * st, int tab, int **selset)
     COLUMN *col;
     VALUE *val;
     double dc, dv;
+    SQLPSTMT *st;
+
+    load_table(tab);
+
+    aset = db.tables[tab].nrows;
+    /* aset = 1; */
+    /* avoid realloc because of the memory conflict with alive SQLPSTMT struct --alex*/
+    set = (int *) malloc(aset * sizeof(int));
+ 
+    /* parse sql statement */
+    st = sqpInitStmt();
+    st_allocated = 1;
+    if ( ParseSqlStmt(st, sql) != DB_OK) 
+        return DB_FAILED;
 
     comcol = (int *) malloc(st->nCom);
 
@@ -260,11 +307,6 @@ int sel(SQLPSTMT * st, int tab, int **selset)
 	    return (-1);
 	}
     }
-
-    load_table(tab);
-
-    aset = 1;
-    set = (int *) malloc(aset * sizeof(int));
 
     if (st->nCom > 0) {
 	for (i = 0; i < db.tables[tab].nrows; i++) {
@@ -337,15 +379,27 @@ int sel(SQLPSTMT * st, int tab, int **selset)
 		}		/*end for num of comparisons in group */
 
 		group_condition |= condition;
-		G_debug(3, "for group number %d total condition is %d",
-			g_count, group_condition);
 
 	    }			/*end for num of groups */
+	    
+	    G_debug(3, "for row number %d total condition is %d",
+			i, group_condition);
+
 
 	    if (group_condition == TRUE) {
+
 		if (nset == aset) {
-		    aset += 1000;
+
+       	            sqpFreeStmt(st);
+		    st_allocated=0;
+		    aset += 100;
 		    set = (int *) realloc(set, aset * sizeof(int));
+		    
+		    /* parse sql statement */
+    		    st = sqpInitStmt();
+		    st_allocated = 1;
+		    if (ParseSqlStmt(st, sql) != DB_OK) 
+		        return DB_FAILED;
 		}
 		set[nset] = i;
 		nset++;
@@ -353,6 +407,9 @@ int sel(SQLPSTMT * st, int tab, int **selset)
 	}
     }
     else {
+    
+        sqpFreeStmt(st);
+	st_allocated=0;
 	aset = db.tables[tab].nrows;
 	set = (int *) realloc(set, aset * sizeof(int));
 	for (i = 0; i < db.tables[tab].nrows; i++) {
@@ -360,7 +417,28 @@ int sel(SQLPSTMT * st, int tab, int **selset)
 	}
 	nset = db.tables[tab].nrows;
     }
+
     *selset = set;
+    if (st_allocated) {
+        sqpFreeStmt(st);
+	st_allocated=0;
+    }
 
     return nset;
+}
+
+int ParseSqlStmt( SQLPSTMT * st, char *sql) 
+{
+    
+    st->stmt = sql;
+    sqpInitParser(st);
+
+    if (yyparse() != 0) {
+	sqpFreeStmt(st);
+	st_allocated=0;
+	sprintf(errMsg, "SQL parser error in statement:\n%s\n", sql);
+	return DB_FAILED;
+    }
+/* sqpPrintStmt(st); *//* debug output only */
+    return DB_OK;
 }
