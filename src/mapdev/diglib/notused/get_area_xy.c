@@ -58,7 +58,7 @@ dig__P_get_area_xy (Map, area)
 
 	for (i = 0 ; i < Area->n_lines ; i++)
 	{
-		line = ABS(Area->lines[i]);
+		line = abs(Area->lines[i]);
 
 		if (0 > dig__Read_line (&Points, Map->dig_fp, Map->Line[line].offset))
 			return (NULL);
