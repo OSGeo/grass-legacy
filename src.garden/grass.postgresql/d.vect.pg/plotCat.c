@@ -31,7 +31,7 @@ int plotCat (name, mapset, points, vect_cat, Map, fillcolr)
 {
     double *x, *y;
     int *list, count, idx, i, j, jk;
-    int ret, n,np, a_index;
+    int ret, n,np, a_index, k_index;
     double N,S,E,W;
     struct Cell_head window;
     int *find_area(), *find_line();
@@ -67,8 +67,9 @@ int plotCat (name, mapset, points, vect_cat, Map, fillcolr)
                     W > window.east  || E < window.west)
                 continue;
 	
-	    
-	    a_index = Map->Att[Map->Area[idx].att].index;
+	    k_index = Map->Area[idx].att;
+	    if (!k_index) continue;
+	    a_index = Map->Att[k_index].index;
 		
             V2_get_area (Map, a_index, &pa);
 
