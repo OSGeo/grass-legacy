@@ -1,0 +1,6 @@
+:
+# test for d.what.s.db where all required command line args are provided
+# DB=seco_wells,  GISdb=SECO
+#
+
+d.what.s.db  tab=well xcol=utm_east ycol=utm_north distance=500  
