@@ -163,7 +163,8 @@ a vector coverage.
 are found, or when the input file is corrupted.
 <p>There is no support for projection. Using verbose=1 lets you see the
 parameters of the e00 file, but you must create the DEFAULT_WIND and the
-PROJ file yourself.
+PROJ file yourself. Using verbose=4 (at least), the logfile will show
+the content of the projection info of the e00 file imported.
 <p>New mapset are always created with proj=0 zone=99. If the default proj
 and zone are not the same, g.region complains and d.vect or d.rast refuse
 to display your data. The only thing to do is to import in the current
