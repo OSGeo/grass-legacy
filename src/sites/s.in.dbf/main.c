@@ -27,10 +27,11 @@ int main( int   argc, char *argv[])
 
     struct {
 	struct Option *input, *output;
-	/*struct Option *order;*/
+	/*struct Option *date, *order;*/
     } parm;
     struct GModule *module;
     struct Flag *listflag;
+    struct TimeStamp ts;
     DBFHandle   hDBF;
     char *buf;
      
@@ -58,6 +59,15 @@ int main( int   argc, char *argv[])
     parm.output->required = NO;
     parm.output->description = "sites file to be created";
     parm.output->gisprompt = "any,site_lists,sites";
+
+/* not yet implemented. See dump.c as well.
+    parm.date = G_define_option();
+    parm.date->key = "date";
+    parm.date->key_desc = "timestamp";
+    parm.date->required = NO;
+    parm.date->type = TYPE_STRING;
+    parm.date->description = "datetime or none (default: none)";
+*/
 
 /* not yet implemented. See dump.c DBFDumpASCII as well.
     parm.order = G_define_option() ;
@@ -87,6 +97,8 @@ int main( int   argc, char *argv[])
     else
 	outfile = parm.output->answer;
 
+    /* G_scan_timestamp (&ts, parm.date->answer);*/ 
+    
     /* Examine the `-l' flag: Borrowed from David Gray's v.in.shape */
     if(listflag->answer) {
       int	i;
@@ -111,7 +123,7 @@ int main( int   argc, char *argv[])
 
     }
     else
-        DumpFromDBF(infile, outfile);
+        DumpFromDBF(infile, outfile, "none" ); /* timestamp not yet implemented */
     
     exit(0);
 }
