@@ -6,7 +6,6 @@ int dxf_add_extents (void)
 {
     int		count;
     char	filename[300];
-    int		afd;
     FILE    *fp;
 
     if(!ascii_flag->answer) /* FOR USE IN BINARY FILE */
