@@ -19,8 +19,7 @@ NAME</h2>
 <tr ALIGN=LEFT VALIGN=TOP>
 <td ALIGN=LEFT VALIGN=TOP WIDTH="60%"><font size=+0><b>v.in.shape</b> [
 <b>-l</b>
-]&nbsp; [<b>-r </b>]&nbsp; [ <b>-p</b> ]&nbsp; [ <b>-n</b> ]&nbsp; <b>in=</b><i>name</i>
-[<b>mapset=</b><i>name</i>]</font>
+]&nbsp; [<b>-r </b>]&nbsp; <b>in=</b><i>name</i> [<b>mapset=</b><i>name</i>]</font>
 <br><font size=+0>[<b>verbose=</b><i>debug level</i>] [<b>logfile=</b><i>name</i>]
 [<b>snapdist=</b><i>snap distance</i>]</font>
 <br><font size=+0>[<b>sliver=</b><i>min. angle</i>] [<b>scale=</b><i>orig.
@@ -31,7 +30,15 @@ scale</i>] [<b>attribute=</b><i>attribute category</i>]</font>
 </tr>
 </table>
 
-<p><a NAME="DESCRIPTION"></a>
+<p><font size=+0><b>v.in.shape.pg</b> [
+<b>-l</b> ]&nbsp; [<b>-r </b>]&nbsp;
+[ <b>-p</b> ]&nbsp; <b>in=</b><i>name</i> [<b>mapset=</b><i>name</i>]</font>
+<br><font size=+0>[<b>verbose=</b><i>debug level</i>] [<b>logfile=</b><i>name</i>]
+[<b>snapdist=</b><i>snap distance</i>]</font>
+<br><font size=+0>[<b>sliver=</b><i>min. angle</i>] [<b>scale=</b><i>orig.
+scale</i>] [<b>attribute=</b><i>attribute category</i>]</font>
+<br><font size=+0>[<b>label=</b><i>category label</i>]</font>
+<br><a NAME="DESCRIPTION"></a>
 <h2>
 <font size=+0>DESCRIPTION</font></h2>
 <font size=+0>The <i>v.in.shape</i> program is designed to import ArcView
@@ -43,8 +50,15 @@ user specifies program arguments on the command line, using the form:</font>
 <tr ALIGN=LEFT VALIGN=TOP>
 <td ALIGN=LEFT VALIGN=TOP WIDTH="60%"><font size=+0><b>v.in.shape</b> [
 <b>-l</b>
-]&nbsp; [<b>-r </b>]&nbsp; [ <b>-p</b> ]&nbsp; [ <b>-n</b> ]&nbsp;&nbsp;
-<b>in=</b><i>name</i> [<b>mapset=</b><i>name</i>]</font>
+]&nbsp; [<b>-r </b>]&nbsp; <b>in=</b><i>name</i> [<b>mapset=</b><i>name</i>]</font>
+<br><font size=+0>[<b>verbose=</b><i>debug level</i>] [<b>logfile=</b><i>name</i>]
+[<b>snapdist=</b><i>snap distance</i>]</font>
+<br><font size=+0>[<b>sliver=</b><i>min. angle</i>] [<b>scale=</b><i>orig.
+scale</i>] [<b>attribute=</b><i>attribute category</i>]</font>
+<br><font size=+0>[<b>label=</b><i>category label</i>]</font>
+<p><font size=+0><b>v.in.shape.pg</b> [
+<b>-l</b> ]&nbsp; [<b>-r </b>]&nbsp;
+[ <b>-p</b> ]&nbsp; <b>in=</b><i>name</i> [<b>mapset=</b><i>name</i>]</font>
 <br><font size=+0>[<b>verbose=</b><i>debug level</i>] [<b>logfile=</b><i>name</i>]
 [<b>snapdist=</b><i>snap distance</i>]</font>
 <br><font size=+0>[<b>sliver=</b><i>min. angle</i>] [<b>scale=</b><i>orig.
@@ -56,7 +70,8 @@ scale</i>] [<b>attribute=</b><i>attribute category</i>]</font>
 </tr>
 </table>
 
-<p><b><font size=+0>v.in.shape</font></b>
+<p><font size=+0><b>v.in.shape&nbsp;&nbsp;</b><i> or&nbsp;</i><b>&nbsp;
+v.in.shape.pg</b></font>
 <p><font size=+0>on the command line without program arguments. In this
 case, the user will be prompted for parameter values using the standard
 GRASS user interface described in the manual entry for <i>parser</i>.</font>
@@ -80,15 +95,12 @@ This option creates a new Level 1 vector map (ie. without topology), which
 can be</font>
 <br><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 used to display these lines.</font>
+<p>*NOTE*&nbsp;&nbsp; The following option is only available in the version
+with postgres support <i>(v.in.shape.pg)</i>
 <p><font size=+0><b>-p</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dump the fields
 of the shapefile from DBF to a postgres table.</font>
-<p><font size=+0><b>-n</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Access postgres
-as a normal user (the default is as postgres superuser).</font>
-<br><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Most users will want to select this option. If postgres cannot be accessed</font>
-<br><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-as postgres superuser, an ASCII database is dumped.</font>
-<br><a NAME="OPTIONS"></a>
+<br>&nbsp;
+<br>&nbsp;
 <h2>
 <font size=+0>OPTIONS</font></h2>
 
@@ -131,7 +143,7 @@ log info are directed to <i>stderr</i>.</font></td>
 </tr>
 </table>
 
-<p><font size=+0><b>snapdist=</b><i>snap distance</i></font>
+<p><font size=+0><b>&nbsp;snapdist=</b><i>snap distance</i></font>
 <br>&nbsp;
 <table COLS=3 WIDTH="100%" rules="none" frame="none" >
 <tr ALIGN=LEFT VALIGN=TOP>
@@ -233,7 +245,6 @@ be quite correct if the lines have been adjusted to correct topology problems.</
 <a href="s.in.shape.html">s.in.shape</a>,
 <a href="v.support.html">v.support</a>,
 <a href="v.to.rast.html">v.to.rast</a>,
-
 <a href="v.out.shape.html">v.out.shape</a></font></i>
 <br><a NAME="AUTHORS"></a>
 <h2>
