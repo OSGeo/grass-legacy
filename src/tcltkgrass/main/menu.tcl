@@ -337,10 +337,10 @@ menu_build 1 .main_menu {
     }
     Region "Region coordinates management" {
         "ZOOM in the monitor" "" {
-            "source $env(TCLTKGRASSBASE)/module/d.zoom.sh"
+            "source $env(TCLTKGRASSBASE)/module/d.zoom"
         }
         "PAN in the monitor" "" {
-            "source $env(TCLTKGRASSBASE)/module/d.pan.sh"
+            "source $env(TCLTKGRASSBASE)/module/d.pan"
         }
         "Set/Remove MASK" "" {
             "run r.mask &"
@@ -416,7 +416,7 @@ menu_build 1 .main_menu {
             "source $env(TCLTKGRASSBASE)/module/d.erase"
         }
         "ZOOM in the monitor" "" {
-        "source $env(TCLTKGRASSBASE)/module/d.zoom.sh"
+        "source $env(TCLTKGRASSBASE)/module/d.zoom"
         }
         "Manage display frames" "" {
             "source $env(TCLTKGRASSBASE)/module/d.frame"
