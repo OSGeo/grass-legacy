@@ -1,37 +1,9 @@
 #include <stdio.h> 
 #include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
 #include <unistd.h>
 #include "gis.h"
 #include "options.h"
 #include "dhist.h"
-
-static char *
-mk_command (const char *fmt, int nargs, ...)
-{
-    /* asprintf() would solve this problem better */
-    size_t len = strlen(fmt) + 1;
-    char *cmd;
-    va_list    ap, copy;
-    
-    va_start (ap, nargs);
-    va_copy (copy, ap);
-    
-    while (nargs--) {
-        cmd = va_arg (ap, char *);
-        len += strlen (cmd);
-    }
-
-    cmd = G_malloc (len);
-    
-    vsprintf (cmd, fmt, copy);
-
-    va_end (ap);
-    va_end (copy);
-
-    return cmd;
-}
 
 int get_stats(
 char *mapname,
@@ -39,11 +11,10 @@ char *mapset,
 struct stat_list *dist_stats,      /* linked list of stats */
 int quiet)
 {
-    char              buf[1024];    /* input buffer for reading stats */
+    char              buf[4096];    /* input buffer for reading stats */
     int               done = 0;
     char              *tempfile;     /* temp file name */
     char              *fullname;
-    char              *cmd;
     FILE              *fd;      /* temp file pointer */
 
     long int          cat;             /* a category value */
@@ -70,18 +41,11 @@ int quiet)
         if(G_read_fp_range (map_name, mapset, &fp_range) <= 0)
 	      G_fatal_error("Can't read frange file");
     }
-    if(cat_ranges) {
-        cmd = mk_command ("r.stats -Cr%s%s '%s' > '%s'\n", 4, 
-                type==COUNT?"c":"a", quiet?"q":"", fullname, tempfile);
-    }
-    else {
-        sprintf (buf, "%d", nsteps);
-        cmd = mk_command ("r.stats -r%s%s '%s' nsteps=%s > '%s'\n", 5, 
-                type==COUNT?"c":"a", quiet?"q":"", fullname, 
-                buf, tempfile);
-    }
-   
-    if(system(cmd))
+    if(cat_ranges)
+        sprintf(buf,"r.stats -Cr%s%s '%s' > %s\n", type==COUNT?"c":"a", quiet?"q":"", fullname, tempfile);
+    else
+	sprintf(buf,"r.stats -r%s%s '%s' nsteps=%d> %s\n", type==COUNT?"c":"a", quiet?"q":"", fullname, nsteps, tempfile);
+    if(system(buf))
         G_fatal_error ("%s: ERROR running r.stats", G_program_name());
 
     /* open temp file and read the stats into a linked list */
