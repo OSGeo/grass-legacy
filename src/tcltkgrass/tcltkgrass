@@ -19,4 +19,12 @@ append regexp .* $env(GISBASE) {[^:]*}
 regsub -- $regexp $env(PATH) "&:$env(TCLTKGRASSBASE)/script" env(PATH)
 
 source $env(TCLTKGRASSBASE)/main/gui.tcl
-source $env(TCLTKGRASSBASE)/main/menu.tcl
+if {[info exists env(LANG)]} {
+    regexp {([^_]*)_} $env(LANG) match env(LCL)
+set env(TCLTKGRASSBASE) $env(GISBASE)/locale/$env(LCL)/tcltkgrass
+}
+
+if [catch {source $env(TCLTKGRASSBASE)/main/menu.tcl}] {
+	set env(TCLTKGRASSBASE) $env(GISBASE)/tcltkgrass
+	source $env(TCLTKGRASSBASE)/main/menu.tcl
+}
