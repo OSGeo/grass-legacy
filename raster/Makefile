@@ -64,6 +64,7 @@ SUBDIRS = \
 	r.region \
 	r.report \
 	r.resample \
+	r.resamp.rst \
 	r.rescale \
 	r.rescale.eq \
 	r.series \
