@@ -20,6 +20,16 @@ if [ "$#" -lt 1 ]; then
       exit
 fi
 
+if [ "$1" = "help" ]; then
+      echo ""
+      echo ""
+      echo "Import of TIFF (8bit) raster file and ARC/INFO .tfw file as GRASS raster map"
+      echo ""
+      echo "Usage: r.in.arctiff filename (without .tif extension!)"
+      echo ""
+      exit
+fi
+
 # Convert spaces in input file name to underscores for name of 
 # cell files.
 
@@ -29,12 +39,12 @@ cellfile=`echo $1 | sed 's/\ /_/g'`
 r.in.tiff -v input="$1.tif" output=${cellfile}
 
 #check the exit status:
- #if [ $? ]; then
- # echo ""
- # echo "This TIFF-format is not yet supported... Sorry! "
- # echo "Import stopped."
- # exit
- #fi
+if [ $? != 0 ]; then
+  echo ""
+  echo "ERROR! r.in.tiff not installed or TIFF-format unsupported... Sorry!"
+  echo "Import stopped."
+  exit
+fi
 
 ## not required in GRASS 5.0
 #echo ""
@@ -52,6 +62,13 @@ XWIDTH="`tiffinfo \"$1.tif\" | sed -n \
 's/^\ *Image\ Width:\ \([0-9]*\)\ Image\ Length:\ [0-9]*$/\1/p'`" 
 YHEIGHT="`tiffinfo \"$1.tif\" | sed -n \
 's/^\ *Image\ Width:\ [0-9]*\ Image\ Length:\ \([0-9]*\)$/\1/p'`"
+#check the exit status:
+if [ $? != 0 ]; then
+  echo ""
+  echo "ERROR! tiffinfo not installed ... Sorry!"
+  echo "Import stopped."
+  exit
+fi
 
 ## tfw-format example:
 ## 10.0	 "e-w resol" Size of pixel in x direction.
@@ -141,4 +158,3 @@ rm -f "/tmp/$1.info"
 # The cell-header file is complete now.
 
 echo "Your file $1.tif was successfully imported into GRASS."
-
