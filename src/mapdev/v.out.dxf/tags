@@ -1,0 +1,8 @@
+Mcell.to.dat	cell.to.dat.c	/^main(argc,argv)$/
+Mv.out.dxf	v.out.dxf.c	/^main(argc,argv)$/
+add_plines	v.out.dxf.c	/^add_plines()$/
+add_text	v.out.dxf.c	/^add_text(textsize)$/
+do_eof	v.out.dxf.c	/^do_eof()$/
+do_limits	v.out.dxf.c	/^do_limits()$/
+init_vars	cell.to.dat.c	/^init_vars(argc,argv)$/
+make_layername	v.out.dxf.c	/^make_layername(filename)$/
