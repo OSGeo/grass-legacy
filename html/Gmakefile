@@ -1,6 +1,6 @@
 #############################################################################
 #
-# $Id: Gmakefile,v 1.21 2001-01-31 07:15:02 justin Exp $
+# $Id: Gmakefile,v 1.22 2001-02-05 13:45:13 markus Exp $
 #
 # MODULE:   	Grass Documentation
 # AUTHOR(S):	Original author unknown - probably CERL
@@ -28,11 +28,14 @@ SECT = 1
 GRASS_MANDIR=$(GISBASE)/man/man$(SECT)
 GRASS_HTMLDIR=$(GISBASE)/documents
 GRASS_PSDIR=$(GISBASE)/documents/postscript
+GRASS_PDFDIR=$(GISBASE)/documents/pdf
 HTML_DIR = html
 HTML2MAN = $(SRC)/scripts/contrib/g.html2man/g.html2man
-HTML2PS = html2ps -n
+HTML2PS  = html2ps -n
+HTML2PDF = htmldoc
 
 all: htmlpages g.help-manpages
+#all: htmlpages g.help-manpages pdf-docs
 
 # copy the HTML pages only and related images
 htmlpages:
@@ -97,3 +100,20 @@ postscript-docs:
 	$(HTML2PS) html/?3*.html html/*.vol.*.html > $(GRASS_PSDIR)/grass5grid3d.ps
 	$(HTML2PS) html/db*.html html/*pg.html > $(GRASS_PSDIR)/grass5database.ps
 	$(HTML2PS) html/*sh.html > $(GRASS_PSDIR)/grass5shells.ps
+
+#PDF-docs:
+# GPL2 software: htmldoc needed
+#ftp://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/htmldoc/
+pdf-docs:
+	if [ ! -d $(GRASS_PDFDIR) ]; then mkdir $(GRASS_PDFDIR); fi
+	$(HTML2PDF) --webpage database.html html/db*.html html/*pg.html -f $(GRASS_PDFDIR)/grass5database.pdf
+	$(HTML2PDF) --webpage display.html html/d*.html -f $(GRASS_PDFDIR)/grass5display.pdf
+	$(HTML2PDF) --webpage drivers.html html/celldriver.html html/htmlmapdriver.html html/xdriver.html html/*pg.html -f $(GRASS_PDFDIR)/grass5database.pdf
+	$(HTML2PDF) --webpage general.html html/g*.html -f $(GRASS_PDFDIR)/grass5general.pdf
+	$(HTML2PDF) --webpage imagery.html html/i*.html -f $(GRASS_PDFDIR)/grass5imagery.pdf
+	$(HTML2PDF) --webpage misc.html html/m*.html -f $(GRASS_PDFDIR)/grass5misc.pdf
+	$(HTML2PDF) --webpage raster.html html/r*.html -f $(GRASS_PDFDIR)/grass5raster.pdf
+	$(HTML2PDF) --webpage        html/s*.html -f $(GRASS_PDFDIR)/grass5sites.pdf
+	$(HTML2PDF) --webpage vector.html html/v*.html -f $(GRASS_PDFDIR)/grass5vector.pdf
+	$(HTML2PDF) --webpage grid3d.html html/?3*.html html/*.vol.*.html -f $(GRASS_PDFDIR)/grass5grid3d.pdf
+	$(HTML2PDF) --webpage scripts.html html/*sh.html -f $(GRASS_PDFDIR)/grass5shells.pdf
