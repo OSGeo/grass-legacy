@@ -36,6 +36,10 @@
 #%Module
 #%  description: d.rast.leg - displays a raster map and its legend on a graphics window
 #%End
+#%flag
+#%  key: n
+#%  description: omit entries with missing label
+#%END
 #%option
 #% key: map
 #% type: string
@@ -57,6 +61,10 @@ fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+fi
+
+if [ $GIS_FLAG_n -eq 1 ] ; then
+  OMIT="-n"
 fi
 
 #for -n flag of d.legend
@@ -104,7 +112,7 @@ then
     	     d.legend -n map=$GIS_OPT_map col=black
           else
              d.erase col=white
-             d.legend map=$GIS_OPT_map col=black
+             d.legend $OMIT map=$GIS_OPT_map col=black
           fi
     	d.frame -s frame=left
 else
@@ -126,7 +134,7 @@ else
              d.legend -n map=$GIS_OPT_map col=black lines=$GIS_OPT_num_of_lines
           else
              d.erase col=white
-             d.legend map=$GIS_OPT_map col=black
+             d.legend $OMIT map=$GIS_OPT_map col=black
           fi
     	d.frame -s frame=left
 fi
