@@ -204,8 +204,6 @@ int main (int argc, char *argv[])
         {
           /* e.g. L1B - NOAA/AVHRR data must be treated differently */
           /* define positive xy coordinate system to avoid GCPs confusion */
-          
-          fprintf(stderr, "Writing positive XY coordinates...");
           cellhd.north  = cellhd.rows;
           cellhd.south  = 0.0;
           cellhd.ns_res = 1.0;
@@ -217,7 +215,6 @@ int main (int argc, char *argv[])
         {
           /* for all other unprojected data ... */
           /* define negative xy coordinate system to avoid GCPs confusion */
-          fprintf(stderr, "Writing negative XY coordinates...");
           cellhd.north  = 0.0;
           cellhd.south  = (-1) * cellhd.rows;
           cellhd.ns_res = 1.0;
