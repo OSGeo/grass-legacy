@@ -256,7 +256,7 @@ read_input_files()
     int     fd, row, col;
     struct  Cell_head hd;
 
-    diag("Reading input files: elevation");
+    diag("Reading input files: elevation...\n");
 
     fd = open_existing_cell_file(parm.elevin, &hd);
     if (!((region.ew_res == hd.ew_res)
