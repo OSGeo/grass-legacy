@@ -143,6 +143,8 @@ menu_build 1 .main_menu {
 	    "exec g.access &"}
 	    "Modify mapset search path" "" {
 	    "exec g.mapsets &"}
+	    "Change current working session to new mapset, location, or GISDBASE" "" {
+	    "exec g.mapset &"}
 	}
 	Region "Region management" {
 	    "Display region settings" "" {
@@ -258,6 +260,8 @@ menu_build 1 .main_menu {
 	}
 	Vector "Display vector maps" {
 	"exec d.vect &"}
+	Grid 3D "" {
+	"exec r3.showdspf &"}
 	Text "Display text on maps" {
 	    "Display legend for raster maps" "" {
 	    "exec d.legend &"}
@@ -332,6 +336,8 @@ menu_build 1 .main_menu {
 	"exec d.zoom -f &"}
 	"Show geographical position" "" {
 	"exec d.where &"}
+	"Create fly-through animation for NVIZ" "" {
+	"exec d.nviz &"}
 	"Measure lengths and areas" "" {
 	"exec d.measure &"}
 	"Zoom/Unzoom in active display" "" {
@@ -357,6 +363,8 @@ menu_build 1 .main_menu {
 	    "exec r.quant &"}
 	    "Resample (change resolution)" "" {
 	    "exec r.resample &"}
+	    "Resample (change resolution) using splines" "" {
+	    "exec r.resamp.rst &"}
 	    -separator
 	    "Reproject raster from other location" "" {
 	    "exec r.proj &"}
@@ -556,6 +564,8 @@ menu_build 1 .main_menu {
 	    "exec r.surf.area &"}
 	    "Univariate statistics" "" {
 	    "exec r.univar &"}
+	    "Univariate statistics (scripted version)" "" {
+	    "exec r.univar.sh &"}
 	    -separator
 	    "Sample values along transects" "" {
 	    "exec r.profile &"}
@@ -759,7 +769,7 @@ menu_build 1 .main_menu {
 	    "exec i.oif &"}
 	}
     }
-    "Grid3D" "3D volume management. Use NVIZ to view." {
+    "Grid3D" "3D volume management. Use r3.showdspf or NVIZ to view." {
 	"Develop grid3D volumes" "" {
 		"Manage nulls for grid3D volume" "" {
 		"exec r3.null &"}
@@ -768,6 +778,8 @@ menu_build 1 .main_menu {
 	}
 	"Create 3D mask for grid3D operations" "" {
 	"exec r3.mask &"}
+	"Create display file grid3D volume" "" {
+	"exec r3.mkdspf &"}
 	"Map calculator for grid3D operations" "" {
 	"exec r3.mapcalc &"}
 	"Interpolate volume from vector points using splines" "" {
