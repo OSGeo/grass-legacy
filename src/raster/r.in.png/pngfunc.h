@@ -8,6 +8,7 @@
  *  error-handler to avoid jmp_buf size-related problems (i.e., jmp_buf
  *  compiled with one size in libpng and another size here).  */
 
+#include "png.h"
 #include "pnm.h"
 #include "zlib.h"
 #include "setjmp.h"
