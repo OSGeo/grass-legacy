@@ -1,12 +1,10 @@
-/*	A.Sh. jan'00
-*/
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <libpq-fe.h>
 #include "gis.h"
-
+#include "glocale.h"
 
 int runInfxFile(SQL_stmt, input,output, vtype, disolve )
   char *SQL_stmt, *input, *output, *vtype;
@@ -35,14 +33,14 @@ int runInfxFile(SQL_stmt, input,output, vtype, disolve )
         
     pg_conn = PQsetdb(pghost,NULL, NULL,NULL,G_getenv("PG_DBASE"));
     if (PQstatus (pg_conn) == CONNECTION_BAD) {
-      printf ("Error: Selecting from Postgres:%s\n",PQerrorMessage(pg_conn));
+      printf (_("Error: Selecting from Postgres:%s\n"),PQerrorMessage(pg_conn));
       PQfinish(pg_conn);
       exit (-1); 
     }
   	   
     res = PQexec (pg_conn, SQL_stmt);
     if ( PQresultStatus (res) != PGRES_TUPLES_OK ) {
-      printf ("Error: Connecting to Postgres:%s\n",PQerrorMessage(pg_conn)); 
+      printf (_("Error: Connecting to Postgres:%s\n"),PQerrorMessage(pg_conn)); 
       PQfinish(pg_conn);
       exit (-1);      
     }
@@ -50,7 +48,7 @@ int runInfxFile(SQL_stmt, input,output, vtype, disolve )
 	tmpfile_rules = G_tempfile() ;
 	
 	if((fpout = fopen(tmpfile_rules,"w")) == NULL) {
-            fprintf(stderr, "File write error on temporary file (rules)\n");
+            fprintf(stderr, _("File write error on temporary file (rules)\n"));
 	    exit(-1);
            }
 

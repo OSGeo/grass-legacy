@@ -1,9 +1,3 @@
-/* v.reclass.pg   */
-/* buildInfxQry.c  */
-
-/* A.Sh - 12.01.00
-*/
-
 #include <stdlib.h>
 #include <stdio.h>
 #include "gis.h"
@@ -27,9 +21,6 @@ int buildInfxQry(key,col,table,where,input,output, vtype, disolve)
     if ( where ) snprintf (wherecl,1024, "%s and",where);
        
 /* build a clause to hold where clause -- if it exists */
-
-
-/************************ BEGIN SQL Processing ************************/
 
 snprintf(SQL_stmt,1024,
 	"SELECT %s,%s from %s where %s %s is not null and %s is not null order by %s,%s",key,col,table,wherecl,key,col,key,col);		

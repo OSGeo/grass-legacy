@@ -1,7 +1,10 @@
 PGM       = $(BIN_CMD)/v.reclass.pg
 # EXTRA_CFLAGS = -Dunlink=puts
 LIBES     = $(DISPLAYLIB) $(GISLIB) 
-EXTRA_CFLAGS    = $(PQINCPATH)
+PACKAGE = "v.reclass.pg"
+DEFS = -Wall -DPACKAGE=\"$(PACKAGE)\"
+EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS)
+
 
 OBJS = \
 	main.o \
