@@ -1,0 +1,34 @@
+.\" %W% %G%
+.TH a_b_dlg 1
+.SH NAME
+a_b_dlg \- convert ascii dlg-3 file  to  binary dlg-3 file.
+.br
+b_a_dlg \- convert binary dlg-3 file  to  ascii dlg-3 file.
+.br
+.I (Map Development Tool)
+.SH SYNOPSIS
+.I b_a_dlg
+.sp
+.I a_b_dlg
+.SH DESCRIPTION
+.I b_a_dlg
+converts a binary
+.I dlg-3
+file into a readable ascii file.
+
+.I a_b_dlg
+converts an ascii vector file into a binary
+.I dlg-3
+vector file.
+
+.I b_a_dlg
+and
+.I a_b_dlg
+are non-interactive programs and are useful when a map has to be in ascii format
+to send to another computer.
+.SH "SEE ALSO"
+dig_to_dlg(1), dlgedit(1), dlg_to_cell(1)
+.SH "AUTHOR"
+Michael Higgins, U.S. Army Construction Engineering Research Laboratory
+.br
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
