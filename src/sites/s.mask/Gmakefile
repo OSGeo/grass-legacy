@@ -1,0 +1,11 @@
+PGM=s.mask
+
+OBJS = s.mask.o
+
+LIBES=$(GISLIB) $(DATETIMELIB)
+
+$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(XDRLIB)
+
+$(GISLIB): #
+$(DATETIMELIB): #
