@@ -79,7 +79,7 @@ proc Dm::create { } {
     set tb1  [$mainframe addtoolbar]
     DmToolBar::create $tb1
 
-    set pw [PanedWindow $mainwindow.pw -side left ]
+    set pw [PanedWindow $mainwindow.pw -side right ]
    
     pack $pw -side top -expand yes -fill both -anchor n 
 
