@@ -207,6 +207,7 @@ src/mapdev/v.out.arc
 src/mapdev/v.out.atlas
 src/mapdev/v.out.dlg
 src/mapdev/v.out.dxf
+src/mapdev/v.out.e00
 src/mapdev/v.out.idrisi
 src/mapdev/v.out.mapinfo
 src/mapdev/v.out.mif
@@ -241,7 +242,7 @@ src/misc/m.examine.tape
 src/misc/m.flip
 src/misc/m.gc2ll
 src/misc/m.in.e00
-src/misc/m.in.ntf
+#src/misc/m.in.ntf
 src/misc/m.in.pl94.db3
 src/misc/m.in.stf1.db3
 src/misc/m.in.stf1.tape
