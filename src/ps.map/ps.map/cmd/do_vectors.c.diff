@@ -1,0 +1,27 @@
+@@ -1,6 +1,7 @@
+ /* Function: do_vectors
+ **
+ ** Author: Paul W. Carlson	March 1992
++** Modified by: Janne Soimasuo August 1994 line_cat added
+ */
+ 
+ #include "ps_info.h"
+@@ -27,7 +28,9 @@
+ 	    fflush(stdout);
+ 	}
+ 
++/*
+ 	Vect_set_open_level(1);
++*/
+ 	if (0 >= Vect_open_old(&Map, vector.name[n], vector.mapset[n]))
+ 	{
+ 	    char name[100];
+@@ -96,7 +99,7 @@
+ 	strcat(dashes, buf);
+ 	fprintf(PS.fp, "%s setdash\n", dashes);
+ 	vector.setdash[n] = G_store(dashes);
+-	PS_vector_plot(&Map);
++	PS_vector_plot(&Map,vector.line_cat[n]);
+ 	Vect_close(&Map);
+ 
+ 	fprintf(PS.fp, "[] 0 setdash\n");
