@@ -1,0 +1,8 @@
+LIBES  = $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+LIST   = command.o main.o
+
+$(BIN)/Dcell: $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
+
+$(LIBES): #
