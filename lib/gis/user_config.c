@@ -48,14 +48,30 @@ _make_toplevel (void)
 {
     size_t len;
     int status;
+#ifdef __MINGW32__
+    char *defaulthomedir = "c:";
+    char *homedir = getenv ( "HOME" );
+#else    
     uid_t me;
     struct passwd *my_passwd;
+#endif    
     struct stat buf;
     char *path;
 
     errno = 0;
 
     /* Query whatever database to get user's home dir */
+#ifdef __MINGW32__
+    if ( NULL == homedir ) {
+        homedir = defaulthomedir;
+    }
+    
+    len = strlen ( homedir ) + 8; /* + "/.grass\0" */
+    if ( NULL == ( path = G_calloc ( 1, len ) ) ) {
+        return NULL;
+    }
+    snprintf ( path, len, "%s%s", homedir, "/.grass" );
+#else
     me = getuid();
     my_passwd = getpwuid (me);
     if (my_passwd == NULL)
@@ -66,6 +82,7 @@ _make_toplevel (void)
         return NULL;
 
     snprintf (path, len, "%s%s", my_passwd->pw_dir, "/.grass");
+#endif
 
     status = lstat (path, &buf);
 

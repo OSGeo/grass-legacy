@@ -69,6 +69,10 @@ int G_gets (char *buf)
   
 static void catch_ctrlz (int n)
   {
+#ifdef __MINGW32__
+      G_warning ( "catch_ctrlz: ignored Ctrl-z" );
+#else
+      
   	void (*sigint)();
   
   /* having caught ctrlz - effect a ctrl-z using kill */
@@ -80,6 +84,7 @@ static void catch_ctrlz (int n)
 	sigint = signal (SIGINT, catch_int);
 	kill (getpid(), SIGINT);
 	signal (SIGINT, sigint);
+#endif
 }
 
 static void catch_int (int n)
