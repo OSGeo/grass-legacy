@@ -1,4 +1,3 @@
-
 MODULE_TOPDIR = ../../..
 
 LIB_NAME = $(GRAPH_LIBNAME)
@@ -22,33 +21,33 @@ default: $(DGLINC)/avl.h $(DGLINC)/tavl.h $(DGLINC)/graph.h $(DGLINC)/heap.h \
 	 $(ARCH_INCDIR)/dgl.h lib
 
 $(DGLINC)/avl.h: avl.h
-	mkdir -p $(DGLINC)
-	cp avl.h $(DGLINC)/avl.h
+	$(MKDIR) $(DGLINC)
+	$(INSTALL) -m 644 avl.h $(DGLINC)/avl.h
 
 $(DGLINC)/tavl.h: tavl.h
-	cp tavl.h $(DGLINC)/tavl.h
+	$(INSTALL) -m 644 tavl.h $(DGLINC)/tavl.h
 
 $(DGLINC)/heap.h: heap.h
-	cp heap.h $(DGLINC)/heap.h
+	$(INSTALL) -m 644 heap.h $(DGLINC)/heap.h
 
 $(DGLINC)/graph.h: graph.h
-	cp graph.h $(DGLINC)/graph.h
+	$(INSTALL) -m 644 graph.h $(DGLINC)/graph.h
 
 $(DGLINC)/tree.h: tree.h
-	cp tree.h $(DGLINC)/tree.h
+	$(INSTALL) -m 644 tree.h $(DGLINC)/tree.h
 
 $(DGLINC)/type.h: type.h
-	cp type.h $(DGLINC)/type.h
+	$(INSTALL) -m 644 type.h $(DGLINC)/type.h
 
 $(DGLINC)/graph_v1.h: graph_v1.h
-	cp graph_v1.h $(DGLINC)/graph_v1.h
+	$(INSTALL) -m 644 graph_v1.h $(DGLINC)/graph_v1.h
 
 $(DGLINC)/graph_v2.h: graph_v2.h
-	cp graph_v2.h $(DGLINC)/graph_v2.h
+	$(INSTALL) -m 644 graph_v2.h $(DGLINC)/graph_v2.h
 
 $(DGLINC)/helpers.h: helpers.h
-	cp helpers.h $(DGLINC)/helpers.h
+	$(INSTALL) -m 644 helpers.h $(DGLINC)/helpers.h
 
 $(ARCH_INCDIR)/dgl.h: dgl.h
-	cp dgl.h $(ARCH_INCDIR)/dgl.h
+	$(INSTALL) -m 644 dgl.h $(ARCH_INCDIR)/dgl.h
 

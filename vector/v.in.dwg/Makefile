@@ -1,4 +1,3 @@
-
 MODULE_TOPDIR = ../..
 
 PGM=v.in.dwg
@@ -18,4 +17,4 @@ chck:
 
 #a bit ugly:
 $(ADINIT):
-	cp `echo $(OPENDWGINCPATH) | cut -b3-`/adinit/adinit.dat $(ADINIT)
+	$(INSTALL) -m 644 `echo $(OPENDWGINCPATH) | cut -b3-`/adinit/adinit.dat $(ADINIT)

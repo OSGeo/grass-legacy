@@ -57,8 +57,8 @@ PGM = r.terraflow
 default: dofirst $(BIN_CMD)/$(PGM) $(BIN_CMD)/$(PGM).short htmlcmd
 
 dofirst:
-	-mkdir -p $(OBJARCH)/FLOAT ; true
-	-mkdir -p $(OBJARCH)/SHORT ; true
+	$(MKDIR) $(OBJARCH)/FLOAT ; true
+	$(MKDIR) $(OBJARCH)/SHORT ; true
 
 $(BIN_CMD)/$(PGM): $(FLOAT_OBJ) $(GISLIB)  $(DEPLIBS)
 	(cd IOStream/lib ; $(MAKE) )
@@ -81,9 +81,9 @@ htmlcmd:
 	echo "<HR>" >> $(PGM).html
 	echo "<P><a href=index.html>Help Index</a>" >> $(PGM).html
 	echo "</body></html>" >> $(PGM).html
-	mkdir -p $(GISBASE)/docs/html
-	mv $(PGM).html $(GISBASE)/docs/html
-	cp *.png $(GISBASE)/docs/html
+	$(MKDIR) $(GISBASE)/docs/html
+	$(INSTALL) -m 644 $(PGM).html $(GISBASE)/docs/html
+	$(INSTALL) -m 644 *.png $(GISBASE)/docs/html
 
 clean: 
 	(cd IOStream/lib ; $(MAKE) clean )

@@ -42,6 +42,7 @@ htmlcmd:
 		echo "<HR>" >> $$prog.tmp ; \
 		echo "<P><a href=index.html>Help Index</a>" >> $$prog.tmp ; \
 		echo "</body></html>" >> $$prog.tmp ; \
-		mkdir -p $(GISBASE)/docs/html ; \
-		mv $$prog.tmp $(GISBASE)/docs/html/$$prog.html ; \
+		$(MKDIR) $(GISBASE)/docs/html ; \
+		$(INSTALL) -m 644 $$prog.tmp $(GISBASE)/docs/html/$$prog.html ; \
+		rm -f $$prog.tmp ; \
 	done

@@ -1,4 +1,3 @@
-
 MODULE_TOPDIR = ../../..
 
 LIB_NAME = $(SHAPE_LIBNAME)
@@ -12,4 +11,4 @@ include $(MODULE_TOPDIR)/include/Make/Lib.make
 default: $(ARCH_INCDIR)/shapefil.h lib
 
 $(ARCH_INCDIR)/shapefil.h: shapefil.h
-	cp shapefil.h $(ARCH_INCDIR)/shapefil.h
+	$(INSTALL) -m 644 shapefil.h $(ARCH_INCDIR)/shapefil.h

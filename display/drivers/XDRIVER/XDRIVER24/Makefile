@@ -65,8 +65,8 @@ default: $(ARCH_INCDIR)/winname.h $(DRIVERDIR)/$(PGM)
 	echo "<HR>" >> $(XDRIVERPGM).html
 	echo "<P><a href=index.html>Help Index</a>" >> $(XDRIVERPGM).html
 	echo "</body></html>" >> $(XDRIVERPGM).html
-	mkdir -p $(GISBASE)/docs/html
-	mv $(XDRIVERPGM).html $(GISBASE)/docs/html
+	$(MKDIR) $(GISBASE)/docs/html
+	$(INSTALL) -m 644 $(XDRIVERPGM).html $(GISBASE)/docs/html
 
 $(DRIVERDIR)/$(PGM): $(ARCH_OBJS) $(DEPENDENCIES)
 	$(CC) $(LDFLAGS) -o $@ $(XLDFLAGS) $(LIBPATH) $(ARCH_OBJS) $(LIBES) $(XLIBPATH) $(XLIB) $(XEXTRALIBS) $(MATHLIB) $(XDRLIB)

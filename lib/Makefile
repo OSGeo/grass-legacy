@@ -1,4 +1,3 @@
-
 MODULE_TOPDIR = ..
 
 #order is relevant:
@@ -44,10 +43,10 @@ endif
 default: headers subdirs
 
 headers: 
-	if [ ! -d $(GISBASE)/include ]; then mkdir $(GISBASE)/include; fi
-	if [ ! -d $(GISBASE)/include/vect ]; then mkdir $(GISBASE)/include/vect; fi
-	cp ../include/*.h $(GISBASE)/include/
-	cp ../include/vect/*.h $(GISBASE)/include/vect/
+	if [ ! -d $(GISBASE)/include ]; then $(MKDIR) $(GISBASE)/include; fi
+	if [ ! -d $(GISBASE)/include/vect ]; then $(MKDIR) $(GISBASE)/include/vect; fi
+	$(INSTALL) -m 644 ../include/*.h $(GISBASE)/include/
+	$(INSTALL) -m 644 ../include/vect/*.h $(GISBASE)/include/vect/
 
 clean: cleansubdirs
 

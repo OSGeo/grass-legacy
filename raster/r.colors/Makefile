@@ -17,5 +17,5 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 default: $(ETC)/colors cmd
 
 $(ETC)/colors: $(COLRFILES)
-	-mkdir -p $@
-	cp -f $^ $@
+	$(MKDIR) $@
+	$(INSTALL) -m 644 $^ $@

@@ -28,14 +28,14 @@ include $(MODULE_TOPDIR)/include/Make/Lib.make
 default: lib $(NAD_DIR) $(CSV_DIR)
 
 $(NAD_DIR): $(NAD_TABLES) $(NT_TABLES) $(NAD2BIN)
-	@ if [ ! -d $@ ] ; then mkdir $@ ; fi
+	@ if [ ! -d $@ ] ; then $(MKDIR) $@ ; fi
 	for i in $(NAD_TABLES) ; do $(NAD2BIN) < $$i $@/`echo $$i | sed 's/.lla//'`; done
-	cp -f $(NT_TABLES) $@
+	$(INSTALL) -m 644 $(NT_TABLES) $@
 	@ touch $@
 
 $(CSV_DIR): $(CSV_FILES)
-	@ if [ ! -d $@ ] ; then mkdir $@ ; fi
-	cp -f $(CSV_FILES) $@
+	@ if [ ! -d $@ ] ; then $(MKDIR) $@ ; fi
+	$(INSTALL) -m 644 $(CSV_FILES) $@
 	@ touch $@
 
 # Note for future improvement:

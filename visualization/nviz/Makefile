@@ -1,5 +1,3 @@
-# $Id$
-#
 # Toplevel makefile for building everything
 
 MODULE_TOPDIR = ../..
@@ -27,26 +25,20 @@ nvwish:
 
 nviz:
 	'rm' -rf $(INSTALL_DIR)
-	mkdir $(INSTALL_DIR)
+	$(MKDIR) $(INSTALL_DIR)
 
 # Install the scripts in the appropriate directory
 install:
 	'rm' -rf $(INSTALL_DIR)/
-	mkdir $(INSTALL_DIR)
-	mkdir $(INSTALL_DIR)/scripts
-	mkdir $(INSTALL_DIR)/bitmaps
-	(cd scripts; cp script_get_line script_play script_tools script_file_tools $(INSTALL_DIR)/scripts)
-	cp scripts/*.tcl $(INSTALL_DIR)/scripts
-	cp scripts/*Index $(INSTALL_DIR)/scripts
+	$(MKDIR) $(INSTALL_DIR)
+	$(MKDIR) $(INSTALL_DIR)/scripts
+	$(MKDIR) $(INSTALL_DIR)/bitmaps
+	(cd scripts; $(INSTALL) script_get_line script_play script_tools script_file_tools $(INSTALL_DIR)/scripts)
+	$(INSTALL) scripts/*.tcl $(INSTALL_DIR)/scripts
+	$(INSTALL) scripts/*Index $(INSTALL_DIR)/scripts
 	(cd bitmaps; tar -cf - *  | (cd $(INSTALL_DIR)/bitmaps; tar  -xf - 2>/dev/null ); true)
-	cp scripts/$(NV_VER)_script $(INSTALL_DIR)/scripts
-	cp scripts/$(PROG) $(GISBASE)/bin
-	chmod ugo+x $(INSTALL_DIR)/scripts/$(NV_VER)_script \
-		$(INSTALL_DIR)/scripts/script_file_tools \
-		$(INSTALL_DIR)/scripts/script_get_line \
-		$(INSTALL_DIR)/scripts/script_play \
-		$(INSTALL_DIR)/scripts/script_tools \
-		$(GISBASE)/bin/$(PROG)
+	$(INSTALL) scripts/$(NV_VER)_script $(INSTALL_DIR)/scripts
+	$(INSTALL) scripts/$(PROG) $(GISBASE)/bin
 # test required for winGRASS, check for cygwin first:
 	if test -f "src/nvwish.exe" ; then mv src/nvwish.exe $(INSTALL_DIR)/$(NVWISH_VER) ; fi
 	if test -f "src/nvwish" ; then mv src/nvwish $(INSTALL_DIR)/$(NVWISH_VER) ; fi

@@ -1,4 +1,3 @@
-
 MODULE_TOPDIR = ../../..
 
 LIB_NAME = $(SQLP_LIBNAME)
@@ -15,13 +14,12 @@ EXTRA_CLEAN_FILES = lex.yy.c y.tab.c y.output y.tab.h
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
 default: lib
-	mkdir -p $(GISBASE)/docs/html
-	cp description.html $(GISBASE)/docs/html/sql.html
+	$(MKDIR) $(GISBASE)/docs/html
+	$(INSTALL) -m 644 description.html $(GISBASE)/docs/html/sql.html
  
 y.tab.c: yac.y
 	$(YACC) -d -v yac.y
 
 lex.yy.c: lex.l y.tab.c
 	$(LEX) lex.l
-
 

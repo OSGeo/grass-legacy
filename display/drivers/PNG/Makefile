@@ -38,8 +38,8 @@ default: $(DRIVERDIR)/PNG
 	echo "<HR>" >> $(HTMLPGM).html
 	echo "<P><a href=index.html>Help Index</a>" >> $(HTMLPGM).html
 	echo "</body></html>" >> $(HTMLPGM).html
-	mkdir -p $(GISBASE)/docs/html
-	mv $(HTMLPGM).html $(GISBASE)/docs/html
+	$(MKDIR) $(GISBASE)/docs/html
+	$(INSTALL) -m 644 $(HTMLPGM).html $(GISBASE)/docs/html
 
 
 $(DRIVERDIR)/PNG: $(ARCH_OBJS) $(DEPENDENCIES)

@@ -23,12 +23,12 @@ include $(MODULE_TOPDIR)/include/Make/Lib.make
 default: lib $(GTCLTKFORM)
 
 $(HTMLLIB): html_library_grass.tcl
-	if [ ! -d $(GISBASE)/etc ]; then mkdir $(GISBASE)/etc; fi
-	if [ ! -d $(GISBASE)/etc/form ]; then mkdir $(GISBASE)/etc/form; fi
-	cp html_library_grass.tcl $(HTMLLIB)
+	if [ ! -d $(GISBASE)/etc ]; then $(MKDIR) $(GISBASE)/etc; fi
+	if [ ! -d $(GISBASE)/etc/form ]; then $(MKDIR) $(GISBASE)/etc/form; fi
+	$(INSTALL) -m 644 html_library_grass.tcl $(HTMLLIB)
 
 $(FORM): form.tcl
-	cp form.tcl $(FORM)
+	$(INSTALL) -m 644 form.tcl $(FORM)
 
 $(FORMPROG): $(OBJDIR)/form.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/form.o $(DBMILIB) $(GISLIB) $(DATETIMELIB) \

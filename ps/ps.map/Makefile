@@ -16,5 +16,5 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 default: cmd $(PROLOG)
 
 $(PROLOG): prolog.ps
-	mkdir $(ETC)/paint
-	cp prolog.ps $(PROLOG)
+	$(MKDIR) $(ETC)/paint
+	$(INSTALL) -m 644 prolog.ps $(PROLOG)

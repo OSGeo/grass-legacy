@@ -1,4 +1,3 @@
-
 MODULE_TOPDIR = ../..
 
 PGM=v.digit
@@ -19,18 +18,15 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 default: cmd $(TBOX) $(SET) $(CAT) ico
 
 $(TBOX): toolbox.tcl
-	if [ ! -d $(GISBASE)/etc ]; then mkdir $(GISBASE)/etc; fi
-	if [ ! -d $(GISBASE)/etc/v.digit ]; then mkdir $(GISBASE)/etc/v.digit; fi
-	cp toolbox.tcl $(TBOX)
-	chmod 0755 $(TBOX)
+	if [ ! -d $(GISBASE)/etc ]; then $(MKDIR) $(GISBASE)/etc; fi
+	if [ ! -d $(GISBASE)/etc/v.digit ]; then $(MKDIR) $(GISBASE)/etc/v.digit; fi
+	$(INSTALL) -m 755 toolbox.tcl $(TBOX)
 
 $(SET): settings.tcl
-	cp settings.tcl $(SET)
-	chmod 0755 $(SET)
+	$(INSTALL) -m 755 settings.tcl $(SET)
 
 $(CAT): cats.tcl
-	cp cats.tcl $(CAT)
-	chmod 0755 $(CAT)
+	$(INSTALL) -m 755 cats.tcl $(CAT)
 
 ico:
-	cp icons/*.gif $(GISBASE)/etc/v.digit/
+	$(INSTALL) -m 644 icons/*.gif $(GISBASE)/etc/v.digit/
