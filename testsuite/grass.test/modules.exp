@@ -1,0 +1,49 @@
+# automated GRASS5 functionality check
+# see grass/documents/list5_of_modules
+
+
+source ./grass.test/grass.tcl
+
+
+# read in GRASS modules list
+set fn [file join $env(SRCDIR) "src" "CMD" "lists" "GRASS"]
+if { [catch {open $fn r} fd] } {
+    perror "$fn missing"
+}
+
+foreach line [split [read $fd] \n] {
+    if { [empty_line $line] } {
+	continue
+    }
+    set fqn "/$line"
+    set module [string trim [file tail $fqn]]
+    if { [regexp {.*\..*} $module] } {
+	set test "module: $module"
+	verbose "checking $module"
+	set type "exe"
+	if { ![file exists [file join $env(GISBASE) "bin" "$module"]] } {
+	    if { ![file exists [file join $env(GISBASE) "scripts" "$module"]] } {
+		fail "$module missing in $env(GISBASE)/bin and in scripts"
+	    } else {
+		verbose "$module is script"
+		set type "script"
+	    }
+	} else {
+	    if { $type == "exe" } {
+		verbose "$module is executable"
+		send "$module help \n"
+		expect {
+		    -re {.*Usage.*}       { unresolved "$module: basic test worked" }
+		    -re {.*Help System.*} { unresolved "$module: interactive module" }
+		    -re {.*not found.*}   { fail "$module: not found" }
+		    -re {.*egmentation.*} { fail "$module: segmentation fault" }
+		    -re {.*core dump.*}   { fail "$module: dumps core" }
+		    timeout               { fail "$module: timed out" }
+		} else {
+		    verbose "$module can not be tested"
+		    untested "$module: script"
+		}
+	    }
+	}
+    }
+} 

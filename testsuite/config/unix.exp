@@ -1,0 +1,75 @@
+# unix initialization file for GRASS GIS testsuite
+# c) Andreas Lange, andreas.lange@rhein-main.de
+# $Id$
+#
+
+
+if ![info exists prompt] then {
+    set prompt "GRASS GRID >"
+}
+
+
+proc grass_exit { } {
+    global GRASS
+    global env
+
+    send_user "Exiting $GRASS\n"
+    send "exit \n"
+    expect {
+	-re {.*Goodbye from GRASS GIS.*} { send_user "GRASS GIS exited\n" }
+	timeout { send_user "timeout" }
+    }
+    if { [file isdirectory "$env(LOCATION)"] } {
+	if { [regexp {test} $env(LOCATION) ] } { 
+	    exec rm -fR $env(LOCATION)
+	}
+    }
+
+    # exit 0
+}
+
+
+proc grass_version { } {
+    global env
+    global GRASS
+    global version
+
+    # send_user "checking $GRASS version: "
+    send "g.version |head -1 \n"
+    expect {
+	-re {GRASS.*}       { send_user [lindex [split $expect_out(buffer) \n] 2] }
+	timeout             { perror "timeout"   }
+	-re {.*not found.*} { perror "g.version module not found" }
+    }
+}
+
+
+proc grass_start { } {
+    global GRASS
+    global prompt
+    global verbose
+    global spawn_id
+    global env
+
+    if { $env(GISBASE) == "" } {
+	perror "GRASS GISBASE not found, use export to set GISBASE!"
+	exit 1
+    }
+    set env(GISDBASE) "/tmp"
+    set env(LOCATION) "/tmp/grasstestsuite"
+    set env(LOCATION_NAME) "grasstestsuite"
+    set env(MAPSET) "PERMANENT"
+    exec mkdir -p "$env(LOCATION)/$env(MAPSET)"
+    exec touch "$env(LOCATION)/$env(MAPSET)/WIND"
+    spawn $GRASS "$env(LOCATION)/$env(MAPSET)"
+    expect {
+	-re "No such file." { perror "Can't start $GRASS"; exit 1 }
+	-re {.*GRASS.*}     { send_user "ok, $GRASS started\n" }
+	timeout             { perror "Timeout starting $GRASS"; exit 1 }
+    }
+    send_user "testsuite $GRASS running\n\n"
+}
+
+
+set GRASS "grass5"
+grass_start
