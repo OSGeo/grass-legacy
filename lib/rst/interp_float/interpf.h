@@ -95,7 +95,7 @@ int IL_secpar_loop_2d(struct interp_params *, int, int, int, struct BM *, double
 int IL_interp_segments_2d(struct interp_params *, struct tree_info *, struct multtree *, struct BM *, double, double, double *, double *, double *, double *, double *, double *, double *, double *, double *, int, int, double);
 /* vinput2d.c */
 int IL_vector_input_data_2d(struct interp_params *, struct Map_info *, int, char *, char *, int, struct tree_info *, double *, double *, double *, double *, double *, double *, int *, double *);
-int process_point(double, double, double, struct tree_info *, double, double *, double *, double *, double *, double *, double *, int *, int *, int, int *);
+int process_point(double, double, double, double, struct tree_info *, double, double *, double *, double *, double *, double *, double *, int *, int *, int, int *);
 /* write2d.c */
 int IL_write_temp_2d(struct interp_params *, int, int, int);
 
