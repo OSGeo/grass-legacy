@@ -19,7 +19,7 @@ LIST = main.o\
 all: $(BIN_CONTRIB_CMD)/$(PGM)
 
 $(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES) 
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VECTLIB) $(LIBES) $(MATHLIB) $(XDRLIB) $(DBMILIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VECTLIB) $(LIBES) $(DBMILIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST): global.h
 
