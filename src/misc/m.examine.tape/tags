@@ -1,0 +1,5 @@
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+ask	ask.c	/^ask (prompt, answer, dflt)$/
+counter	counter.c	/^counter(n)$/
+sigint	main.c	/^sigint(n)$/
+yes	yes.c	/^yes()$/
