@@ -53,7 +53,7 @@ void
 parse_command_line(int argc, char *argv[])
 {
     struct Option *driver, *database, *location;
-    struct Flag *s;
+    struct Flag *p, *s;
     struct GModule *module;
 
     driver 		= G_define_option();
@@ -74,6 +74,10 @@ parse_command_line(int argc, char *argv[])
     location->type 	= TYPE_STRING;
     location->required 	= NO;
     location->description = "database location";
+
+    p = G_define_flag();
+    p->key               = 'p';
+    p->description       = "print tables and exit";    
 
     s			= G_define_flag();
     s->key		= 's';
