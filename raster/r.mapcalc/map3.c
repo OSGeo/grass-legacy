@@ -497,8 +497,9 @@ int map_type(const char *name, int mod)
 		mapset = G_find_grid3(tmpname, "");
 		if (mapset)
 		{
+		    	void *handle;
 			setup_region(); /* TODO: setup_region should be called by evaluate() ? */
-			void *handle = G3d_openCellOld(
+			handle = G3d_openCellOld(
 				tmpname, mapset, &current_region3,
 				G3D_TILE_SAME_AS_FILE, G3D_NO_CACHE);
 			result = (G3d_fileTypeMap == G3D_FLOAT)
