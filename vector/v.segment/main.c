@@ -4,7 +4,7 @@
  * 
  * AUTHOR(S):    Radim Blazek
  *               
- * PURPOSE:      Generate segments or points from imput map and segments read from stdin 
+ * PURPOSE:      Generate segments or points from input map and segments read from stdin 
  *               
  * COPYRIGHT:    (C) 2002 by the GRASS Development Team
  *
@@ -43,7 +43,7 @@ int main(int argc, char **argv)
     G_gisinit (argv[0]) ;
 
     module = G_define_module();
-    module->description = "Create points/segments from imput lines, "
+    module->description = "Create points/segments from input lines, "
 	   "and positions read from stdin in format:\n"
            "P <point id> <line cat> <offset> [<side offset>]\n"
            "L <segment id> <line cat> <start offset> <end offset> [<side offset>]\n"
