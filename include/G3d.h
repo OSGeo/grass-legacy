@@ -392,8 +392,10 @@ void G3d_getRegionValue(G3D_Map *, double, double, double, char *, int);
 void G3d_adjustRegion (G3D_Region *);
 void G3d_regionCopy (G3D_Region *,G3D_Region *);
 void G3d_incorporate2dRegion (struct Cell_head *, G3D_Region *);
+void G3d_regionFromToCellHead (struct Cell_head *, G3D_Region *);
 void G3d_adjustRegionRes (G3D_Region *);
 void G3d_extract2dRegion (G3D_Region *, struct Cell_head *);
+void G3d_regionToCellHead (G3D_Region *, struct Cell_head *);
 int G3d_readRegionMap (char *, char *,G3D_Region *);
 
 /* grass/src/libes/g3d/g3dresample.c */
