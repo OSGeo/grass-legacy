@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include  "gis.h"
 #include "Vect.h"
+#include "dbmi.h"
 
 int 
 xtract_line (int num_index, int num_array[], char *in_name, char *mapset, char *out_name,
@@ -18,11 +19,13 @@ xtract_line (int num_index, int num_array[], char *in_name, char *mapset, char *
 {
 	int cat, cat1, areal, arear, catl, catr, centroid, line;
 	int max_att=0, type;
-	int i;
+	int i, n, tbtype, ret;
 	struct Map_info Map;
 	struct Map_info Out_Map;
 	struct line_pnts *Points, *CPoints;
-	struct line_cats *Cats, *CCats; 
+	struct line_cats *Cats, *CCats;
+	struct field_info *Fi, *Fin;
+
 
         fprintf(stderr,"\nLoading vector information.\n");
 
@@ -96,6 +99,31 @@ xtract_line (int num_index, int num_array[], char *in_name, char *mapset, char *
 	         }
              } /* end for num_index */
         }  /* end lines section */
+
+    /* Copy tables */
+    fprintf (stdout,"Copying tables ...\n") ;
+    n = Vect_get_num_dblinks ( &Map );
+    tbtype = GV_1TABLE;
+    if ( n > 1 ) tbtype = GV_MTABLE;
+    for ( i = 0; i < n; i++ ) {
+	Fi = Vect_get_dblink ( &Map, i );
+	if ( Fi == NULL ) {
+	    G_warning ( "Cannot get db link info -> cannot copy table." );
+	    continue;
+	}
+	Fin = Vect_default_field_info ( Out_Map.name, Fi->number, Fi->name, tbtype );
+        G_debug (3, "Copy drv:db:table '%s:%s:%s' to '%s:%s:%s'", 
+	              Fi->driver, Fi->database, Fi->table, Fin->driver, Fin->database, Fin->table );
+	Vect_map_add_dblink ( &Out_Map, Fi->number, Fi->name, Fin->table, Fi->key, Fin->database, Fin->driver);
+        
+	ret = db_copy_table ( Fi->driver, Fi->database, Fi->table, 
+		    Fin->driver, Vect_subst_var(Fin->database,Out_Map.name,G_mapset()), Fin->table );
+	if ( ret == DB_FAILED ) {
+	    G_warning ( "Cannot copy table" );
+	    continue;
+	}
+    } /* for of copy table*/
+
 
 	Vect_close (&Map);
 	Vect_build ( &Out_Map, stdout );

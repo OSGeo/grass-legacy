@@ -1,26 +1,25 @@
-/*
-*    Created by : R.L.Glenn , Soil Conservation Service, USDA
-*    Purpose: Productivity tool
-*	      Provides a means of generating vector (digit) files
-*             from an existing vector maplayer. Selects all vector
-*             boundaries for 1 or several areas of a list of
-*             user provided categories.
-*
-*    Input arguements:
-*             v.extract [-dn]  input=vector file to read 
-*                              output=vector file to create
-*                              list=list of categories 
-*                                        separated by commas
-*                              new=new category value or 0
-*                              type=area,line, or site
-*                              [file=category label file]
-*
-*    flags:
-*         -d      : dissolve common boundaries
-*         -n      : use category names, NOT numbers
-*
-* TODO: fix white space problems for file= option
-*/
+/****************************************************************
+ *
+ * MODULE:     v.extract
+ * 
+ * AUTHOR(S):  R.L.Glenn , Soil Conservation Service, USDA
+ *             update to 5.1:  Radim Blazek
+ *               
+ * PURPOSE:    Provides a means of generating vector (digit) files
+ *             from an existing vector maplayer. Selects all vector
+ *             boundaries for 1 or several areas of a list of
+ *             user provided categories.
+ *
+ * COPYRIGHT:  (C) 2002 by the GRASS Development Team
+ *
+ *             This program is free software under the 
+ *             GNU General Public License (>=v2). 
+ *             Read the file COPYING that comes with GRASS
+ *             for details.
+ *
+ * TODO:       - fix white space problems for file= option
+ *             - copy only relevant rows of the table, not full table
+ ****************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -56,11 +55,11 @@ int main (int argc, char **argv)
     struct GModule *module;
     struct Option *inopt, *outopt, *fileopt, *newopt, *typopt, *listopt;
     struct Option *whereopt;
-    struct Flag *d_flag;
+    struct field_info *Fi;
+/*    struct Flag *d_flag;*/
     FILE *in;
     dbDriver *driver;
     dbHandle handle;
-    struct field_info *Fi;
 
     /* TODO: Dissolve common boundaries and output are centroids */
     /* TODO: field number */
@@ -78,11 +77,13 @@ int main (int argc, char **argv)
     d_flag->description      = "Dissolve common boundaries (default is no) ";
     */
     
-    inopt = G_define_standard_option(G_OPT_V_MAP);
+    inopt = G_define_standard_option(G_OPT_V_INPUT);
 
     outopt = G_define_standard_option(G_OPT_V_OUTPUT);
 
     typopt = G_define_standard_option(G_OPT_V_TYPE);
+    typopt->answer     = "point,line,boundary,centroid,area,face" ;
+    typopt->options    = "point,line,boundary,centroid,area,face" ;
 
     newopt = G_define_option();
     newopt->key              = "new";
@@ -198,7 +199,7 @@ int main (int argc, char **argv)
 	G_fatal_error("Error in line/site extraction processing");
 
     /* give the user this message  */
-    fprintf(stderr, "\n\nExtracted vector file <%s> has been created.\n\n",output);
+    fprintf(stderr, "\nExtracted vector map <%s> has been created.\n",output);
 
     exit(0);
 }
