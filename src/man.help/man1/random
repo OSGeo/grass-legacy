@@ -1,0 +1,107 @@
+.\" %W% %G%
+.TH random 1
+.SH NAME
+random \- Create a 
+.CT map "cell map"
+and 
+.CT "sites list" "site map"
+containing random locations
+.br
+.SH SYNOPSIS
+.B random
+.SH DESCRIPTION
+The GRASS tool
+.I random
+allows the user to create a 
+.CT "map layer" "cell map"
+and a 
+.CT "sites list file" "site map"
+containing
+.I "locations"
+which have been determined randomly.  The general region in which to generate
+these random locations is determined by the current GRASS 
+.CT "" geographic
+\fIwindow\fR and
+\fImask\fR.  The locations will fall within non-zero 
+.CT data "category value"
+areas on a current 
+.CT "map layer" "cell map"
+specified by the user.  The user may specify
+the quantity of random locations to be generated either as an
+\fIabsolute number\fR (e.g., 10), or as a
+\fIpercentage of the cell map's total area\fR (e.g., 10%, or 3.05%).  
+If specified
+as a percentage of total 
+.CT map "cell map"
+size, the number of random locations will be
+set equal to the number of 
+.XT grid 
+cells contained within that percentage
+of the 
+.CT "map." "cell map."
+Percentages under one percent may be specified using a
+decimal point.  (Note that choosing 1% of a cell map's cells 
+produces an abundance
+of random locations.)
+
+The new 
+.CT "map layer" "cell map"
+is created
+in the current mapset and contains randomly located 
+.CT pixels cells
+on a 
+background of category zero.  The categories on the original 
+.CT map "cell map"
+where
+random cells hit are copied to the new 
+.CT "map." "cell map."
+The category names from the input 
+.CT map "cell map"
+are also copied for the new 
+.CT "map." "cell map."
+A color table which will contrast with that of the input 
+.CT map "cell map"
+is generated
+for the new 
+.CT "map." "cell map."
+
+The coordinates that are put into the 
+.CT "sites file" "site map"
+are the
+.I centers
+of the randomly selected cells.
+.fi
+
+The user may choose to create \fIboth\fR the cell map and the 
+.CT "sites file;" "site map;"
+or, the user may choose to create \fIonly\fR the cell 
+.CT "file," "map,"
+or \fIonly\fR
+the 
+.CT "sites file." "site map."
+.SH NOTES
+If it is desired to create random locations within some, but not all
+non-zero categories of the input 
+.CT "map," "cell map,"
+the user must first create
+a \fIreclass[1]\fR 
+.CT map "cell map"
+of the original 
+.CT map "cell map"
+containing
+.XT with 
+only the
+desired categories, and use the reclassed 
+.CT map "cell map"
+as input to
+.I random.
+
+The \fIrandom\fR program
+does allow the user the option of generating locations within category
+zero as well. In this case, the locations which fall in areas of
+category zero will be added as a new category to the output 
+.CT "map." "cell map."
+.SH "SEE ALSO"
+\fIGrandom[2G], reclass[1]\fR
+.SH "AUTHOR"
+Dr. James Hinthorne, GIS Lab, Central Washington University
