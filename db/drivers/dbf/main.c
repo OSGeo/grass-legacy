@@ -24,6 +24,9 @@ int
 main(int argc, char *argv[])
 {
     char *name;
+
+    /* Do not call G_getenv() nor other functions reading GISRC here! It may be that grass variables are
+     * not available here, but will be set in db_driver() */
     
     /* Set pointer to driver name */
     name = argv[0] + strlen ( argv[0] );
@@ -36,14 +39,10 @@ main(int argc, char *argv[])
 	name--;
     }
     
-    G_debug ( 3, "driver file base name: '%s'", name);
-
     if ( strcmp ( name, "shp" ) == 0 ) {
 	drv_mode = DBF_MODE_SHP;
-        G_debug ( 3, "driver mode: DBF_MODE_SHP");
     } else {
 	drv_mode = DBF_MODE_DBF;
-        G_debug ( 3, "driver mode: DBF_MODE_DBF");
     }
 	
     exit (db_driver (argc, argv));
