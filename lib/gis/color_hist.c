@@ -24,6 +24,20 @@
 #include "gis.h"
 #include <math.h>
 
+
+/*!
+ * \brief make histogram-stretched grey colors
+ *
+ * Generates a histogram
+ * contrast-stretched grey scale color table that goes from the ,histogram
+ * information in the Cell_stats structure <b>s.</b>  (See
+ * Raster_Histograms).
+ *
+ *  \param colors
+ *  \param s
+ *  \return int
+ */
+
 int G_make_histogram_eq_colors (
     struct Colors *colors,
     struct Cell_stats *statf)

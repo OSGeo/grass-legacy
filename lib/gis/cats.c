@@ -327,6 +327,21 @@ static int get_cond ( char **, char *, DCELL);
 static int get_fmt ( char **, char *, int *);
 static int cmp (const void *, const void *);
 
+
+/*!
+ * \brief read raster category file
+ *
+ * The category file for raster file
+ * <b>name</b> in <b>mapset</b> is read into the <b>cats</b> structure. If
+ * there is an error reading the category file, a diagnostic message is printed
+ * and -1 is returned. Otherwise, 0 is returned.
+ *
+ *  \param name
+ *  \param mapset
+ *  \param cats
+ *  \return int
+ */
+
 int G_read_cats (
     char *name ,
     char *mapset ,
@@ -335,6 +350,18 @@ int G_read_cats (
     return G_read_raster_cats (name, mapset, pcats);
 }
     
+
+/*!
+ * \brief 
+ *
+ * Is the same as existing G_read_cats()
+ *
+ *  \param name
+ *  \param mapset
+ *  \param pcats
+ *  \return int
+ */
+
 int G_read_raster_cats (
     char *name ,
     char *mapset ,
@@ -358,6 +385,21 @@ int G_read_raster_cats (
 		    name, mapset, type);
     return -1;
 }
+
+
+/*!
+ * \brief read vector category file
+ *
+ * The category file for vector file
+ * <b>name</b> in <b>mapset</b> is read into the <b>cats</b> structure. If
+ * there is an error reading the category file, a diagnostic message is printed
+ * and -1 is returned. Otherwise, 0 is returned.
+ *
+ *  \param name
+ *  \param mapset
+ *  \param cats
+ *  \return int
+ */
 
 int G_read_vector_cats (
     char *name ,
@@ -495,10 +537,34 @@ error:
     return -1 ;
 }
 
+
+/*!
+ * \brief  get title from category structure struct
+ *
+ * Map layers store a one-line title in the category structure
+ * as well. This routine returns a pointer to the title contained in the
+ * <b>cats</b> structure.  A legal pointer is always returned. If the map
+ * layer does not have a title, then a pointer to the empty string "" is
+ * returned.
+ *
+ *  \param cats
+ *  \return char * 
+ */
+
 char *G_get_cats_title (struct Categories *pcats)
 {
    return G_get_raster_cats_title (pcats);
 }
+
+
+/*!
+ * \brief get raster cats title
+ *
+ * Returns pointer to a string with title.
+ *
+ *  \param pcats
+ *  \return char * 
+ */
 
 char *G_get_raster_cats_title (struct Categories *pcats)
 {
@@ -506,16 +572,56 @@ char *G_get_raster_cats_title (struct Categories *pcats)
     return pcats->title ? pcats->title : none;
 }
 
+
+/*!
+ * \brief get a category label
+ *
+ * This routine looks up category <b>n</b> in the <b>cats</b>
+ * structure and returns a pointer to a string which is the label for the
+ * category. A legal pointer is always returned. If the category does not exist
+ * in <b>cats,</b> then a pointer to the empty string "" is returned.
+ * <b>Warning.</b> The pointer that is returned points to a hidden static
+ * buffer. Successive calls to G_get_cat( ) overwrite this buffer.
+ *
+ *  \param n
+ *  \param cats
+ *  \return char * 
+ */
+
 char *G_get_cat (CELL num, struct Categories *pcats)
 {
     CELL tmp=num;
     return G_get_c_raster_cat(&tmp, pcats);
 }
 
+
+/*!
+ * \brief 
+ *
+ * given a CELL value <em>val</em> Returns pointer to a string describing
+ * category.
+ *
+ *  \param val
+ *  \param pcats
+ *  \return char * 
+ */
+
 char *G_get_c_raster_cat ( CELL *rast, struct Categories *pcats)
 {
     return G_get_raster_cat(rast, pcats, CELL_TYPE);
 }
+
+
+/*!
+ * \brief 
+ *
+ * given a FCELL value <em>val</em> Returns pointer to a string
+ * describing category.
+ *
+ *  \param val
+ *  \param pcats
+ *  \return char * 
+ */
 
 char *G_get_f_raster_cat (
     FCELL *rast,
@@ -524,12 +630,37 @@ char *G_get_f_raster_cat (
     return G_get_raster_cat(rast, pcats, FCELL_TYPE);
 }
 
+
+/*!
+ * \brief 
+ *
+ * given a DCELL value <em>val</em> Returns pointer to a string
+ * describing category.
+ *
+ *  \param val
+ *  \param pcats
+ *  \return char * 
+ */
+
 char *G_get_d_raster_cat (
     DCELL *rast,
     struct Categories *pcats)
 {
     return G_get_raster_cat(rast, pcats, DCELL_TYPE);
 }
+
+
+/*!
+ * \brief 
+ *
+ *  given a raster value <em>val</em> of type <em>data_type</em> Returns pointer to a string
+ *  describing category.
+ *
+ *  \param val
+ *  \param pcats
+ *  \param data_type
+ *  \return char * 
+ */
 
 char *G_get_raster_cat (
     void *rast,
@@ -599,6 +730,22 @@ char *G_get_raster_cat (
     return label;
 }
 
+
+/*!
+ * \brief 
+ *
+ * Sets marks
+ * for all categories to 0. This initializes Categories structure for subsequest
+ * calls to G_mark_raster_cats (rast_row,...) for each row of data, where
+ * non-zero mark for i-th label means that some of the cells in rast_row are
+ * labeled with i-th label and fall into i-th data range.
+ * These marks help determine from the Categories structure which labels were
+ * used and which weren't.
+ *
+ *  \param pcats
+ *  \return int
+ */
+
 int G_unmark_raster_cats (
       struct Categories *pcats)    /* structure to hold category info */
 {
@@ -607,6 +754,21 @@ int G_unmark_raster_cats (
 	 pcats->marks[i] = 0;
       return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ * Looks up the category label for each raster value in
+ * the <em>rast_row</em> and updates the marks for labels found.
+ * NOTE: non-zero mark for i-th label stores the number of of raster cells read
+ * so far which are labeled with i-th label and fall into i-th data range.
+ *
+ *  \param rast_row
+ *  \param ncols
+ *  \param pcats
+ *  \return int
+ */
 
 int G_mark_c_raster_cats (
       CELL *rast_row,            /* raster row to update stats */
@@ -617,6 +779,21 @@ int G_mark_c_raster_cats (
       return 0;
 }
 
+
+/*!
+ * \brief 
+ *
+ * Looks up the category label for each raster value in
+ * the <em>rast_row</em> and updates the marks for labels found.
+ * NOTE: non-zero mark for i-th label stores the number of of raster cells read
+ * so far which are labeled with i-th label and fall into i-th data range.
+ *
+ *  \param rast_row
+ *  \param ncols
+ *  \param pcats
+ *  \return int
+ */
+
 int G_mark_f_raster_cats (
       FCELL *rast_row,            /* raster row to update stats */
       int ncols,
@@ -626,6 +803,21 @@ int G_mark_f_raster_cats (
       return 0;
 }
 
+
+/*!
+ * \brief 
+ *
+ * Looks up the category label for each raster value in
+ * the <em>rast_row</em> and updates the marks for labels found.
+ * NOTE: non-zero mark for i-th label stores the number of of raster cells read
+ * so far which are labeled with i-th label and fall into i-th data range.
+ *
+ *  \param rast_row
+ *  \param ncols
+ *  \param pcats
+ *  \return int
+ */
+
 int G_mark_d_raster_cats (
       DCELL *rast_row,            /* raster row to update stats */
       int ncols,
@@ -634,6 +826,23 @@ int G_mark_d_raster_cats (
       G_mark_raster_cats (rast_row, ncols, pcats, DCELL_TYPE);
       return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ * Looks up the category
+ * label for each raster value in the <em>rast_row</em> (row of raster cell value)
+ * and updates the marks for labels found.
+ * NOTE: non-zero mark for i-th label stores the number of of raster cells read
+ * so far which are labeled with i-th label and fall into i-th data range.
+ *
+ *  \param rast_row
+ *  \param ncols
+ *  \param pcats
+ *  \param data_type
+ *  \return int
+ */
 
 int G_mark_raster_cats (
       void *rast_row,            /* raster row to update stats */
@@ -654,6 +863,18 @@ int G_mark_raster_cats (
    }
    return 1;
 }
+
+
+/*!
+ * \brief 
+ *
+ * after call to
+ * this function G_get_next_marked_raster_cat() returns the first marked
+ * cat label.
+ *
+ *  \param pcats
+ *  \return int
+ */
 
 int G_rewind_raster_cats (struct Categories *pcats)
 {
@@ -792,6 +1013,19 @@ static int get_cond ( char **f, char *value, DCELL val)
     return 0;
 }
 
+
+/*!
+ * \brief set a category label
+ *
+ * The <b>label</b> is copied into the <b>cats</b> structure
+ * for category <b>n.</b>
+ *
+ *  \param n
+ *  \param label
+ *  \param cats
+ *  \return int
+ */
+
 int G_set_cat (
     CELL num ,
     char *label ,
@@ -801,6 +1035,19 @@ int G_set_cat (
     return G_set_c_raster_cat(&tmp, &tmp, label, pcats);
 }
 
+
+/*!
+ * \brief 
+ *
+ * Adds the label for range <em>rast1</em> through <em>rast2</em> in
+ * category structure <em>pcats</em>.
+ *
+ *  \param rast1
+ *  \param rast2
+ *  \param pcats
+ *  \return int
+ */
+
 int G_set_c_raster_cat (
     CELL *rast1,CELL *rast2,
     char *label ,
@@ -809,6 +1056,19 @@ int G_set_c_raster_cat (
     return G_set_raster_cat (rast1, rast2, label, pcats, CELL_TYPE);
 }
 
+
+/*!
+ * \brief 
+ *
+ * Adds the label for range <em>rast1</em> through <em>rast2</em>
+ * in category structure <em>pcats</em>.
+ *
+ *  \param rast1
+ *  \param rast2
+ *  \param pcats
+ *  \return int
+ */
+
 int G_set_f_raster_cat (
     FCELL *rast1,FCELL *rast2,
     char *label ,
@@ -816,6 +1076,19 @@ int G_set_f_raster_cat (
 {
     return G_set_raster_cat (rast1, rast2, label, pcats, FCELL_TYPE);
 }
+
+
+/*!
+ * \brief 
+ *
+ * Adds the label for range <em>rast1</em> through <em>rast2</em>
+ * in category structure <em>pcats</em>.
+ *
+ *  \param rast1
+ *  \param rast2
+ *  \param pcats
+ *  \return int
+ */
 
 int G_set_d_raster_cat (
     DCELL *rast1,DCELL *rast2,
@@ -907,6 +1180,19 @@ rast1,rast2,label,pcats); */
     return 1;
 }
 
+
+/*!
+ * \brief 
+ *
+ * Adds the label for range <em>rast1</em> through <em>rast2</em> in category structure <em>pcats</em>.
+ *
+ *  \param rast1
+ *  \param rast2
+ *  \param pcats
+ *  \param data_type
+ *  \return int
+ */
+
 int G_set_raster_cat (
     void *rast1,void *rast2,
     char *label ,
@@ -920,15 +1206,55 @@ int G_set_raster_cat (
     return G_set_d_raster_cat (&val1, &val2, label, pcats);
 }
 
+
+/*!
+ * \brief write raster category file
+ *
+ * Writes the category file for the raster file <b>name</b> in
+ * the current mapset from the <b>cats</b> structure.
+ * Returns 1 if successful. Otherwise, -1 is returned (no diagnostic is
+ * printed).
+ *
+ *  \param name
+ *  \param cats
+ *  \return int
+ */
+
 int G_write_cats ( char *name , struct Categories *cats )
 {
     return G__write_cats ("cats", name, cats);
 }
 
+
+/*!
+ * \brief 
+ *
+ * Same as existing G_write_cats()
+ *
+ *  \param name
+ *  \param pcats
+ *  \return int
+ */
+
 int G_write_raster_cats ( char *name , struct Categories *cats )
 {
     return G__write_cats ("cats", name, cats);
 }
+
+
+/*!
+ * \brief write
+ *       vector category file
+ *
+ * Writes the category file for the vector file
+ * <b>name</b> in the current mapset from the <b>cats</b> structure.
+ * Returns 1 if successful. Otherwise, -1 is returned (no diagnostic is 
+ * printed).
+ *
+ *  \param name
+ *  \param cats
+ *  \return int
+ */
 
 int G_write_vector_cats ( char *name , struct Categories *cats )
 {
@@ -996,6 +1322,21 @@ int G__write_cats( char *element, char *name, struct Categories *cats)
     return(1) ;
 }
 
+
+/*!
+ * \brief 
+ *
+ * Returns i-th description and i-th data range
+ * from the list of category descriptions with corresponding data ranges. end
+ * points of data interval in <em>rast1</em> and <em>rast2</em>.
+ *
+ *  \param pcats
+ *  \param i
+ *  \param rast1
+ *  \param rast2
+ *  \return char * 
+ */
+
 char *G_get_ith_d_raster_cat (
      struct Categories *pcats,
      int i,
@@ -1012,6 +1353,21 @@ char *G_get_ith_d_raster_cat (
      return pcats->labels[index];
 }
 
+
+/*!
+ * \brief 
+ *
+ * Returns i-th description and i-th data range
+ * from the list of category descriptions with corresponding data ranges. end
+ * points of data interval in <em>rast1</em> and <em>rast2</em>.
+ *
+ *  \param pcats
+ *  \param i
+ *  \param rast1
+ *  \param rast2
+ *  \return char * 
+ */
+
 char *G_get_ith_f_raster_cat (
      struct Categories *pcats,
      int i,
@@ -1025,6 +1381,21 @@ char *G_get_ith_f_raster_cat (
      G_set_raster_value_d(rast2, val2, data_type);
      return tmp;
 }
+
+
+/*!
+ * \brief 
+ *
+ * Returns i-th description and i-th data range
+ * from the list of category descriptions with corresponding data ranges. end
+ * points of data interval in <em>rast1</em> and <em>rast2</em>.
+ *
+ *  \param pcats
+ *  \param i
+ *  \param rast1
+ *  \param rast2
+ *  \return char * 
+ */
 
 char *G_get_ith_c_raster_cat (
      struct Categories *pcats,
@@ -1040,6 +1411,23 @@ char *G_get_ith_c_raster_cat (
      return tmp;
 }
 
+
+/*!
+ * \brief 
+ *
+ * Returns i-th
+ * description and i-th data range from the list of category descriptions with
+ * corresponding data ranges. Stores end points of data interval in <em>rast1</em>
+ * and <em>rast2</em> (after converting them to <em>data_type</em>.
+ *
+ *  \param pcats
+ *  \param i
+ *  \param rast1
+ *  \param rast2
+ *  \param data_type
+ *  \return char * 
+ */
+
 char *
 G_get_ith_raster_cat (struct Categories *pcats, int i, void *rast1, void *rast2, RASTER_MAP_TYPE data_type)  
 {
@@ -1051,6 +1439,26 @@ G_get_ith_raster_cat (struct Categories *pcats, int i, void *rast1, void *rast2,
      return tmp;
 }
 
+
+/*!
+ * \brief initialize category structure
+ *
+ * To construct a new category file, the
+ * structure must first be initialized.  This routine initializes the
+ * <b>cats</b> structure, and copies the <b>title</b> into the structure.
+ * The number of categories is set initially to <b>n.</b>
+ * For example:
+  \code
+    struct Categories cats;
+    G_init_cats ( (CELL)0, "", &cats);
+  \endcode
+ *
+ *  \param n
+ *  \param title
+ *  \param cats
+ *  \return int
+ */
+
 int G_init_cats (
     CELL num,
     char *title,
@@ -1060,6 +1468,19 @@ int G_init_cats (
     pcats->num = num;
       return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ * Same as existing G_init_raster_cats() only ncats argument is
+ * missign. ncats has no meaning in new Categories structure and only stores
+ * (int) largets data value for backwards compatibility.
+ *
+ *  \param title
+ *  \param pcats
+ *  \return int
+ */
 
 int 
 G_init_raster_cats (char *title, struct Categories *pcats)
@@ -1079,12 +1500,35 @@ G_init_raster_cats (char *title, struct Categories *pcats)
       return 0;
 }
 
+
+/*!
+ * \brief set title in category structure
+ *
+ * The <b>title</b> is copied into the
+ * <b>cats</b> structure.
+ *
+ *  \param title
+ *  \param cats
+ *  \return int
+ */
+
 int 
 G_set_cats_title (char *title, struct Categories *pcats)
 {
     G_set_raster_cats_title (title, pcats);
       return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ * Same as existing G_set_cats_title()
+ *
+ *  \param title
+ *  \param pcats
+ *  \return int
+ */
 
 int 
 G_set_raster_cats_title (char *title, struct Categories *pcats)
@@ -1102,6 +1546,21 @@ int G_set_cats_fmt (char *fmt, double m1, double a1, double m2, double a2, struc
     return 0;
 }
 
+
+/*!
+ * \brief 
+ *
+ * Same as existing G_set_cats_fmt()
+ *
+ *  \param fmt
+ *  \param m1
+ *  \param a1
+ *  \param m2
+ *  \param a2
+ *  \param pcats
+ *  \return int
+ */
+
 int G_set_raster_cats_fmt (char *fmt, double m1, double a1, double m2, double a2, struct Categories *pcats)
 {
     pcats->m1 = m1;
@@ -1115,11 +1574,32 @@ int G_set_raster_cats_fmt (char *fmt, double m1, double a1, double m2, double a2
     return 0;
 }
 
+
+/*!
+ * \brief free category structure memory
+ *
+ * Frees memory allocated by<i>G_read_cats, G_init_cats</i>
+ * and<i>G_set_cat.</i>
+ *
+ *  \param cats
+ *  \return int
+ */
+
 int G_free_cats (struct Categories *pcats)
 {
     G_free_raster_cats (pcats);
     return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ * Same as existing G_free_cats()
+ *
+ *  \param pcats
+ *  \return int
+ */
 
 int G_free_raster_cats (struct Categories *pcats)
 {
@@ -1149,6 +1629,21 @@ int G_free_raster_cats (struct Categories *pcats)
     pcats->nalloc = 0;
     return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ * Allocates NEW space for quant rules and labels n
+ * <em>pcats_to</em> and copies all info from <em>pcats_from</em> cats to <em>pcats_to</em> cats.
+ * returns:
+ * 0 if successful
+ * -1 on fail
+ *
+ *  \param pcats_to
+ *  \param pcats_from
+ *  \return int
+ */
 
 int 
 G_copy_raster_cats (struct Categories *pcats_to, struct Categories *pcats_from)

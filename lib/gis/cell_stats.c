@@ -11,6 +11,26 @@ static int NCATS = 1<<SHIFT;
 static int next_node (struct Cell_stats *);
 static int init_node(NODE *,int,int);
 
+
+/*!
+ * \brief initialize cell stats
+ *
+ * This routine, which must be called first, initializes the Cell_stats
+ * structure <b>s.</b>
+ *
+ *  \param s
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief 
+ *
+ * Set the count for NULL-values to zero.
+ *
+ *  \return int
+ */
+
 int G_init_cell_stats(struct Cell_stats *s)
 {
     s->N = 0;
@@ -20,6 +40,29 @@ int G_init_cell_stats(struct Cell_stats *s)
 
     return 1;
 }
+
+
+/*!
+ * \brief add data to cell stats
+ *
+ * The <b>n</b> CELL values in the <b>data</b>
+ * array are inserted (and counted) in the Cell_stats structure <b>s.</b>
+ *
+ *  \param data
+ *  \param n
+ *  \param s
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief 
+ *
+ * Look for NULLs and update the
+ * NULL-value count.
+ *
+ *  \return int
+ */
 
 int G_update_cell_stats (CELL *cell, int n, struct Cell_stats *s)
 {
@@ -144,6 +187,31 @@ static int init_node(NODE *node,int idx,int offset)
     return 0;
 }
 
+
+/*!
+ * \brief random query of cell stats
+ *
+ * This routine allows a random query of the
+ * Cell_stats structure <b>s.</b>  The <b>count</b> associated with the
+ * raster value <b>cat</b> is set. The routine returns 1 if <b>cat</b> was
+ * found in the structure, 0 otherwise.
+ *
+ *  \param cat
+ *  \param count
+ *  \param s
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief 
+ *
+ * Allow finding the count for the
+ * NULL-value
+ *
+ *  \return int
+ */
+
 int G_find_cell_stat (
     CELL cat,
     long *count,
@@ -202,6 +270,17 @@ int G_find_cell_stat (
     return 0;
 }
 
+
+/*!
+ * \brief reset/rewind cell stats
+ *
+ * The structure <b>s</b> is rewound (i.e., positioned at the first
+ * raster category) so that sorted sequential retrieval can begin.
+ *
+ *  \param s
+ *  \return int
+ */
+
 int G_rewind_cell_stats (struct Cell_stats *s)
 {
     int q;
@@ -238,6 +317,43 @@ static int next_node (struct Cell_stats *s)
 
     return 1;
 }
+
+
+/*!
+ * \brief retrieve sorted cell stats
+ *
+ * Retrieves the next <b>cat,count</b>
+ * combination from the structure <b>s.</b> Returns 0 if there are no more
+ * items, non-zero if there are more.
+ * For example:
+ * 
+\code
+  struct Cell_stats s;
+  CELL cat;
+  long count;
+  
+  // updating <b>s</b> occurs here
+  
+  G_rewind_cell_stats(&s);
+  while (G_next_cell_stat(&cat,&count,&s)
+  fprintf(stdout, "%ld %ld\n", (long) cat, count);
+\endcode
+ *
+ *  \param cat
+ *  \param count
+ *  \param s
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief 
+ *
+ * Do not return a record for the
+ * NULL-value
+ *
+ *  \return int
+ */
 
 int G_next_cell_stat (
     CELL *cat,
@@ -289,11 +405,36 @@ int G_next_cell_stat (
     }
 }
 
+
+/*!
+ * \brief 
+ *
+ * Get a number of null values from stats structure. Note: when reporting
+ * values which appear in a map using G_next_cell_stats(), to get stats for
+ * null, call G_get_stats_for_null_value() first, since
+ * G_next_cell_stats() does not report stats for null.
+ *
+ *  \param count
+ *  \param s
+ *  \return int
+ */
+
 int G_get_stats_for_null_value (long *count, struct Cell_stats *s)
 {
     *count =  s->null_data_count;
     return 1;
 }
+
+
+/*!
+ * \brief free cell stats
+ *
+ * The memory associated with structure <b>s</b> is freed. This routine may be
+ * called any time after calling<i>G_init_cell_stats.</i>
+ *
+ *  \param s
+ *  \return int
+ */
 
 int G_free_cell_stats (struct Cell_stats *s)
 {

@@ -2,6 +2,32 @@
 
 /* return RGB for given category */
 /* works for null values too */
+
+/*!
+ * \brief get a category color
+ *
+ * The <b>red, green</b>, and
+ * <b>blue</b> intensities for the color associated with category <b>cat</b>
+ * are extracted from the <b>colors</b> structure. The intensities will be in
+ * the range 0 ­- 255.
+ *
+ *  \param cat
+ *  \param red
+ *  \param green
+ *  \param blue
+ *  \param colors
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief 
+ *
+ * Modified to return a color for the NULL-value.
+ *
+ *  \return int
+ */
+
 int G_get_color (CELL n, int *red, int *grn, int *blu, struct Colors *colors)
 {
     CELL cat;
@@ -16,6 +42,22 @@ int G_get_color (CELL n, int *red, int *grn, int *blu, struct Colors *colors)
 
     return (int)set;
 }
+
+
+/*!
+ * \brief 
+ *
+ * Looks up the rgb colors for
+ * <em>v</em> in the color table <em>colors</em>
+ *
+ *  \param v
+ *  \param r
+ *  \param g
+ *  \param b
+ *  \param colors
+ *  \param data_type
+ *  \return int
+ */
 
 int G_get_raster_color (void *rast,
     int *red, int *grn, int *blu,
@@ -32,6 +74,20 @@ int G_get_raster_color (void *rast,
     return (int)set;
 }
 
+
+/*!
+ * \brief 
+ *
+ *  Calls G_get_color(*v, r, g, b, colors).
+ *
+ *  \param v
+ *  \param r
+ *  \param g
+ *  \param b
+ *  \param colors
+ *  \return int
+ */
+
 int G_get_c_raster_color (CELL *rast,
     int *red, int *grn, int *blu, struct Colors *colors)
 {
@@ -45,6 +101,21 @@ int G_get_c_raster_color (CELL *rast,
 
     return (int)set;
 }
+
+
+/*!
+ * \brief 
+ *
+ *  Looks up the rgb colors for <em>v</em> in the color table
+ * <em>colors</em>
+ *
+ *  \param v
+ *  \param r
+ *  \param g
+ *  \param b
+ *  \param colors
+ *  \return int
+ */
 
 int G_get_f_raster_color (FCELL *rast,
     int *red, int *grn, int *blu, struct Colors *colors)
@@ -60,6 +131,21 @@ int G_get_f_raster_color (FCELL *rast,
     return (int)set;
 }
 
+
+/*!
+ * \brief 
+ *
+ *  Looks up the rgb colors for <em>v</em> in the color table
+ * <em>colors</em>
+ *
+ *  \param v
+ *  \param r
+ *  \param g
+ *  \param b
+ *  \param colors
+ *  \return int
+ */
+
 int G_get_d_raster_color (DCELL *rast,
     int *red, int *grn, int *blu, struct Colors *colors)
 {
@@ -73,6 +159,20 @@ int G_get_d_raster_color (DCELL *rast,
 
     return (int)set;
 }
+
+
+/*!
+ * \brief 
+ *
+ * Puts the red, green, and blue components of the color for the
+ * NULL-value into <em>r,g,b</em>.
+ *
+ *  \param r
+ *  \param g
+ *  \param b
+ *  \param colors
+ *  \return int
+ */
 
 int G_get_null_value_color (int *red, int *grn, int *blu,
     struct Colors *colors)
@@ -94,6 +194,20 @@ int G_get_null_value_color (int *red, int *grn, int *blu,
 
   return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ *  Puts the red, green, and blue components of the
+ * <tt>"default"</tt> color into <em>r,g,b</em>.
+ *
+ *  \param r
+ *  \param g
+ *  \param b
+ *  \param colors
+ *  \return int
+ */
 
 int G_get_default_color (int *red, int *grn, int *blu,
     struct Colors *colors)

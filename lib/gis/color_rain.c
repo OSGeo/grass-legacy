@@ -15,6 +15,22 @@ static struct
 
 static int add_rainbow_colors (struct Colors *, DCELL, DCELL);
 
+
+/*!
+ * \brief make rainbow colors
+ *
+ * Generates a "shifted" rainbow color table - yellow
+ * to green to cyan to blue to magenta to red. The color table is based on
+ * rainbow colors. (Normal rainbow colors are red, orange, yellow, green, blue,
+ * indigo, and violet.)  This table is good for continuous data, such as
+ * elevation.
+ *
+ *  \param colors
+ *  \param min
+ *  \param max
+ *  \return int
+ */
+
 int 
 G_make_rainbow_colors (struct Colors *colors, CELL min, CELL max)
 {

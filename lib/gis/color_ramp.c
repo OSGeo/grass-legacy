@@ -13,6 +13,20 @@
 
 static int add_ramp_colors (struct Colors *, DCELL, DCELL);
 
+
+/*!
+ * \brief make color ramp
+ *
+ * Generates a color table with 3 sections: red only,
+ * green only, and blue only, each increasing from none to full intensity. This
+ * table is good for continuous data, such as elevation.
+ *
+ *  \param colors
+ *  \param min
+ *  \param max
+ *  \return int
+ */
+
 int 
 G_make_ramp_colors (struct Colors *colors, CELL min, CELL max)
 {

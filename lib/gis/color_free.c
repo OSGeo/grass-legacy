@@ -1,6 +1,19 @@
 #include <stdlib.h>
 #include "gis.h"
 
+
+/*!
+ * \brief free color structure memory
+ *
+ * The dynamically allocated memory associated with the <b>colors</b>
+ * structure is freed.
+ * <b>Note.</b> This routine may be used after <i>G_read_colors</i> as
+ * well as after <i>G_init_colors.</i>
+ *
+ *  \param colors
+ *  \return int
+ */
+
 int G_free_colors (
     struct Colors *colors)
 {

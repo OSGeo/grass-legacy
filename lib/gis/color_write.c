@@ -30,6 +30,49 @@ static int forced_write_old_colors ( FILE *, struct Colors *);
 static int format_min (char *, double);
 static int format_max (char *, double);
 
+
+/*!
+ * \brief write map layer color table
+ *
+ * The color table is written for the
+ * raster file <b>name</b> in the specified <b>mapset</b> from the
+ * <b>colors</b> structure.
+ * If there is an error, -1 is returned. No diagnostic is printed. Otherwise, 1
+ * is returned.
+ * The <b>colors</b> structure must be created properly, i.e.,
+ * <i>G_init_colors</i> to initialize the structure and
+ * <i>G_add_color_rule</i> to set the category colors.\remarks{These
+ * routines are called by higher level routines which read or create entire
+ * color tables, such as<i>G_read_colors</i> or
+ * <i>G_make_ramp_colors.</i>}
+ * <b>Note.</b> The calling sequence for this function deserves special
+ * attention. The <b>mapset</b> parameter seems to imply that it is possible
+ * to overwrite the color table for a raster file which is in another mapset.
+ * However, this is not what actually happens. It is very useful for users to
+ * create their own color tables for raster files in other mapsets, but without
+ * overwriting other users' color tables for the same raster file. If
+ * <b>mapset</b> is the current mapset, then the color file for <b>name</b>
+ * will be overwritten by the new color table. But if <b>mapset</b> is not the
+ * current mapset, then the color table is actually written in the current
+ * mapset under the <b>colr2</b> element as: colr2/mapset/name.
+ *
+ *  \param name
+ *  \param mapset
+ *  \param colors
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief 
+ *
+ * The rules are written out using
+ * floating-point format, removing trailing zeros (possibly producing integers).
+ * The flag marking the colors as floating-point is <b>not</b> written.
+ *
+ *  \return int
+ */
+
 int G_write_colors (char *name, char *mapset, struct Colors *colors)
 {
     char element[512];
