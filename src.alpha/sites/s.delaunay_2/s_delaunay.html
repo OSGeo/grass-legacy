@@ -1,0 +1,98 @@
+<HTML>
+<HEAD>
+	<TITLE>GRASS Source Code Details</TITLE>
+	<LINK REV="made" HREF="jwo@le.ac.uk">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+
+<CENTER>
+	<IMG ALT="[-----]" ALIGN=MIDDLE SRC="http://www.geog.le.ac.uk/assist/gif/line.gif"> 
+	<H2><img alt="[Software]" ALIGN=MIDDLE SRC="http://www.geog.le.ac.uk/assist/gif/software.gif">
+	GRASS Source Code: s.delaunay
+	</H2>
+	<IMG ALT="[-----]" ALIGN=MIDDLE SRC="http://www.geog.le.ac.uk/assist/gif/line.gif"> 
+</CENTER>
+
+<P>
+	 	
+	Program to create a vector delaunay triangulation from a sites 
+	file. Delaunay triangualtion is based on the 'hull' software, by 
+	Ken Clarkson (<A HREF=MAILTO:clarkson@research.att.com>clarkson@research.att.com</A>
+	). See the directory <CODE>hull</CODE> for more details.
+</P>
+
+<PRE>
+
+Jo Wood, Department of Geography.  19th July, 1995.
+
+----------
+
+Modified to use the GRASS 4.2 sites API. Allows x,y,z,attribute format for 
+sites files. This enables a single sites file to carry all necessary 
+information for TIN construction.
+
+Modified to allow VRML 1.0 output as indexed face set.
+
+Jo Wood, 4th September, 1996
+
+----------
+
+Modified to allow vertical scaling of elevation values.
+
+Jo Wood, 23rd July, 1997
+
+----------
+
+TODO:
+	Constrain triangulation along channels and ridges.
+
+----------
+
+Usage:
+ s.delaunay [-v] in=name out=name [zscale=value]
+
+Flags:
+  -v   Create VRML 1.0 output
+
+Parameters:
+      in   Sites file to process
+     out   Vector map layer to contain delaunay triangulation.
+  zscale   Vertical scaling of elevation.
+           default: 1.0
+
+</PRE> 
+
+
+<P> </P>
+
+<CENTER>
+	<IMG ALT="[-----]" ALIGN=MIDDLE SRC="http://www.geog.le.ac.uk/assist/gif/line.gif"> 
+	<BR>
+	<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=20 >
+	<TR>
+	<TD>
+	<A HREF="http://www.geog.le.ac.uk/assist/index.html">
+	<IMG BORDER=0 ALT="[ASSIST's Home]" ALIGN=MIDDLE SRC="http://www.geog.le.ac.uk/assist/gif/assist50.gif">
+	ASSIST's home
+	</A>
+	</TD>
+	<TD>
+	<A HREF="http://www.geog.le.ac.uk/jwo/index.html">
+	<IMG BORDER=0 ALT="[Jo's Home]" ALIGN=MIDDLE SRC="http://www.geog.le.ac.uk/jwo/images/home.gif">
+	Jo Wood's home
+	</A>
+	</TD>
+	</TR>
+	</TABLE>
+</CENTER>
+
+<ADDRESS>
+	<P ALIGN="RIGHT"> <FONT SIZE=-3>
+	Last modified, 3rd August, 1997 <BR>
+	<A HREF="MAILTO:jwo@le.ac.uk">jwo@le.ac.uk</A>
+	</P>
+</ADDRESS>
+
+</BODY>
+</HTML>
