@@ -1,8 +1,9 @@
+# %W%  %G%
 EXTRA_CFLAGS	= $(VECT_INCLUDE)
 
 PGM      = v.export
 
-LIST =  export_vect.o
+LIST =  exp_vect.o
 
 all: $(BIN_CONTRIB_INTER)/$(PGM)
 
