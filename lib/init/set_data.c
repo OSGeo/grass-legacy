@@ -47,6 +47,7 @@ static char *map_text=
 #include <stdlib.h>
 #include "gis.h"
 #include "vask.h"
+#include "edit.h"
 #include "local_proto.h"
 
 int main (int argc, char *argv[])
@@ -178,7 +179,7 @@ int main (int argc, char *argv[])
                     if (system("g.setproj"))
 		    {
                         G_get_default_window (&window);
-                        if(G_edit_cellhd(&window, -1) < 0)
+                        if(E_edit_cellhd(&window, -1) < 0)
 			   fprintf(stderr, "WARNING: You did not provide default region for %s!\n", location_name);
                         
                         G__put_window (&window, "", "DEFAULT_WIND");
@@ -191,7 +192,7 @@ int main (int argc, char *argv[])
 		    else
 		    {
                         G_get_default_window (&window);
-                        if(G_edit_cellhd(&window, -1) < 0)
+                        if(E_edit_cellhd(&window, -1) < 0)
 			   fprintf(stderr, "WARNING: You did not provide default region for %s!\n", location_name);
                         G__put_window (&window, "", "DEFAULT_WIND");
                         G__put_window (&window, "", "WIND");
