@@ -1,0 +1,33 @@
+.\" %W% %G%
+.TH Dvect.dlg 2D D-language
+.SH NAME
+Dvect.dlg \- Tool for viewing DLG map
+.br
+.I (D Language Tool)
+.SH SYNOPSIS
+.B Dvect.dlg
+\fIname\fR [\fIcolor\fR]
+.br
+.B Dvect.dlg
+[option\*=\fIvalue\fR] [option\*=\fIvalue\fR]
+.SH DESCRIPTION
+.I Dvect.dlg 
+displays the map (Digital Line Graph - Level 3, DLG-3, in binary form)
+.I name
+in the current graphics window.  Options are:
+.ns
+.TP 
+.RI name\*= mapname
+Name of map to be displayed.
+.br
+.ns
+.TP 
+.RI color\*= color
+Color desired for drawing map.  Default color is white, if unstated.
+.br
+.PP
+.SH NOTE
+This program will probably be phased out and is included only to
+provide some backward compatibility with GRASS 2.0.
+.SH "AUTHOR"
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
