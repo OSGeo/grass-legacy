@@ -1,0 +1,6 @@
+The current algorithm source of r.sunmask is unknown.
+
+
+For possible re-implementation, here is another reference:
+ Fast Hill Shading with Specular Reflection and Cast Shadows - by C Ware         
+ "Computers and Geosciences" 1989, 15, pages 1327-1334
