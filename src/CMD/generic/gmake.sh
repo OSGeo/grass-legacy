@@ -220,7 +220,7 @@ then
     echo "  mkdir $OBJARCH"
     mkdir $OBJARCH || exit 1
 fi
-if test -e $makefile
+if test -f $makefile
 then
     rm -f $makefile
 fi
