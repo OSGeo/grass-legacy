@@ -498,6 +498,7 @@ char *G_tolcase(char *);
 char *G_toucase(char *);
 /* mapset.c */
 char *G_mapset(void);
+char *G__mapset(void);
 /* mapset_msc.c */
 int G__make_mapset_element(char *);
 int G__mapset_permissions(char *);
