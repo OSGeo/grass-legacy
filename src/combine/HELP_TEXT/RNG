@@ -1,0 +1,14 @@
+
+RANGE
+
+The RANGE symbol, -, is used in GROUP expressions.  It is used to
+specify a range of consecutive category numbers.
+discarding others.
+
+operation:   (using the group operator as examples)
+    (GROUP 3-5 (soils))
+    (GROUP 1005-1234 (elevation))
+    (GROUP 2-5 8-11 (geology))
+
+aliases:
+    rng     range     RNG     RANGE
