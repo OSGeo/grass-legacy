@@ -1,4 +1,5 @@
 
+
 MODULE_TOPDIR = ../../..
 
 LIB_NAME = $(DRIVER_LIBNAME)
@@ -45,17 +46,9 @@ LIB_OBJS =\
 	RGB.o\
 	Text2.o
 
+
+
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
 default: lib
 
-$(OBJDIR)/Cont_abs.o: driver.h
-$(OBJDIR)/Cont_rel.o: driver.h
-$(OBJDIR)/Get_t_box.o: driver.h
-$(OBJDIR)/Move_abs.o: driver.h
-$(OBJDIR)/Move_rel.o: driver.h
-$(OBJDIR)/Plylne_rel.o: driver.h
-$(OBJDIR)/Polygn_rel.o: driver.h
-$(OBJDIR)/Raster.o: driver.h
-$(OBJDIR)/Text.o: driver.h
-$(OBJDIR)/Text_size.o: driver.h
