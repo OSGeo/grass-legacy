@@ -75,7 +75,7 @@ int main( int   argc, char *argv[])
     parm.date->key_desc = "timestamp";
     parm.date->required = NO;
     parm.date->type = TYPE_STRING;
-    parm.date->description = "datetime or none (default: none)";
+    parm.date->description = "datetime or datetime1/datetime2";
 
 /* not yet implemented. See dump.c DBFDumpASCII as well.
     parm.order = G_define_option() ;
@@ -114,7 +114,10 @@ int main( int   argc, char *argv[])
 	strcpy(outfile, parm.output->answer);
 
     if (parm.date->answer)
-       G_scan_timestamp (&ts, parm.date->answer);
+    {
+	if(1 != G_scan_timestamp (&ts, parm.date->answer))
+	    G_fatal_error("Invalid timestamp");
+    }
     else
        G_init_timestamp(&ts);
     
