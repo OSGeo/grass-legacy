@@ -1,0 +1,10 @@
+
+
+show.fonts.sh - 
+
+show.fonts.sh is a \UNIX\ Bourne shell macro which runs the \d.erase\
+command, then names and displays the font types that can be selected
+using \d.font\.  This macro also runs the GRASS commands \d.font\ and
+\d.text\.
+
+Manual entry for \show.fonts.sh\
