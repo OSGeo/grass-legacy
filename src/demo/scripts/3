@@ -1,0 +1,276 @@
+#!/bin/sh
+Dclear.screen
+
+Dnew text 1 99 1 60
+Dnew digit 67 99 61 99
+Dnew image 34 66 61 99
+Dnew other  1 33 61 99
+
+Dchoose text
+Dtext << EOF
+.F romant
+.S 10
+.C green
+.B 1
+ GRASS DATA
+.C white
+.F romans
+.B 0
+.S 3
+
+  GRASS data originates from three
+  distinct sources.
+
+  The most common is hardcopy  maps.
+.C yellow
+    For example: landuse
+EOF
+Dchoose digit
+Derase red
+Dcell landuse
+
+# Erase the word landuse
+Dchoose text
+Dtext << EOF
+.S 10
+
+.S 3
+
+ 
+ 
+
+ 
+.C black
+                 landuse
+EOF
+# Put the word geology
+Dchoose text
+Dtext << EOF
+.S 10
+
+.S 3
+
+ 
+ 
+
+ 
+.C white
+                 geology
+EOF
+
+Dchoose digit
+Derase red
+Dcell geology
+
+# Erase the word geology
+Dchoose text
+Dtext << EOF
+.S 10
+
+.S 3
+
+
+ 
+ 
+ 
+.C black
+                 geology
+EOF
+# Put the word soils
+Dchoose text
+Dtext << EOF
+.S 10
+
+.S 3
+
+ 
+ 
+
+ 
+.C white
+                 soils
+EOF
+
+Dchoose digit
+Derase red
+Dcell soils
+
+Dchoose text
+Dtext << EOF
+.S 10
+
+.C white
+.S 3
+
+
+
+ 
+  
+ 
+
+  The second common source is image data.
+.C yellow
+    This could be satellite or high
+    altitude photography.
+EOF
+Dchoose image
+Derase white
+Dcell mss.image
+
+Dchoose text
+Dtext << EOF
+.S 10
+
+.C white
+.S 3
+
+
+ 
+
+ 
+  
+ 
+
+
+
+
+  The last most common source is other
+  computers.
+.C yellow
+    This could mean a complete data base
+    from another machine, or a special
+    map like: elevation.
+EOF
+
+Dchoose other
+Derase blue
+Dcell elevation
+
+if ./continue
+then
+        exit 1
+fi
+
+Dchoose text
+Dtext << EOF
+.S 10
+
+.C white
+.S 3
+
+ 
+  
+ 
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+  A final type of data is "interpreted
+  data".  This is information which is
+  based on one or more of the above
+  sources.
+.C yellow
+    For example, from elevation we can
+    interpret slope percent and aspect
+    (direction of slope.)
+EOF
+
+Dchoose other
+Derase blue
+Dnew elev.a  1 33 61 80
+Dnew slope  17 33 80 99
+Dnew aspect  1 17 80 99
+Dchoose elev.a
+Dcell elevation
+Dchoose slope
+Dcell slope
+Dchoose aspect
+Dcell aspect
+
+if ./continue
+then
+        exit 1
+fi
+
+Dchoose text
+Derase
+Dtext << EOF
+.S 5
+.C green
+How to get data into GRASS
+.C white
+.S 3
+
+  Data is brought into GRASS through:
+
+  * Hand digitizing using a cursor on
+    a drafting table.
+
+  * Hand digitizing using an image on
+    the screen
+
+  * Reading data on computer tape from
+    another GIS.
+
+  * Manipulation of existing data
+EOF
+
+if ./continue
+then
+        exit 1
+fi
+
+Dchoose digit; Derase
+Dchoose image; Derase
+Dchoose other; Derase
+
+Dchoose text
+Derase
+Dtext << EOF
+.S 5
+.C green
+Themes and Categories
+.C white
+.S 3
+
+  GRASS data bases consist of maps.
+  Each map contains a different theme.
+  Each theme is characterized by a set
+  of "categories". E.g.:
+
+.C yellow
+  Map theme        Categories
+.C white
+   landuse          roads
+                    buildings
+                    park
+   vegetation       none
+                    trees
+                    grass
+   etc.
+
+   Each category in a given map is
+   displayed with a distinct color.
+.C yellow
+
+   For example, a landuse map with
+   its categories displayed.
+EOF
+
+Dchoose image
+Dcell landuse
+Dchoose other
+Dlegend landuse
+
+continue.yes
+
+exit 1
