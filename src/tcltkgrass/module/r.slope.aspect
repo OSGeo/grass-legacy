@@ -1,0 +1,14 @@
+interface_build {
+    {r.slope.aspect} 0
+    {Generates raster map layers of slope and aspect from a raster map layer of true elevation values.}
+    {entry elevation {Input elevation map:} 0 raster}
+    {entry slope {Output slope map:} 0 raster}
+    {entry aspect {Output aspect map:} 0 raster}
+    {entry zfactor {Multiplicative factor to convert elevation units to meters [1]:} 0 ""}
+    {entry min_slp {Minimum slope for which aspect is computed [0].} 0 ""}
+    {checkbox format {Slope in degrees (default).} "" degrees}
+    {checkbox format {Slope in percent.} "" percent}
+    {checkbox -a {Do not align the current region to the elevation layer.} "" -a}
+    {checkbox -q {Run quietly.} "" -q}
+    {checkbox -z {Zero values in elevation layer are true elevations.} "" -z}
+}
