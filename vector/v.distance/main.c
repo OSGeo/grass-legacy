@@ -247,6 +247,7 @@ int main (int argc, char *argv[])
     /* Open output vector */
     if ( out_opt->answer ) {
         Vect_open_new (&Out, out_opt->answer, WITHOUT_Z);
+	Vect_hist_command ( &Out );
 	Outp = &Out;
     } else {
 	Outp = NULL;
