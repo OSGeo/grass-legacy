@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include "gis.h"
-/*define DEBUG 1*/
+/*#define DEBUG 1*/
 
 main (argc, argv)
 int argc;
@@ -60,7 +60,6 @@ char *argv[];
 	subj->type			= TYPE_STRING;
 	subj->required		= YES;
 	subj->multiple		= NO;
-	subj->gisprompt		= "SUBJ";
 	subj->description		= "SUBJ file";
 
         m_flag = G_define_flag();
@@ -287,6 +286,14 @@ sleep(1);
 
         if (system(path) )
 	   G_fatal_error ("ERROR(v.merge):  Could not patch map files\n") ;
+
+                  /* copy the SUBJ file to patched dig_cats file */
+        sprintf(buffer,"cp %s/%s/%s/SUBJ/%s %s/%s/%s/dig_cats/%s",
+		getenv("GISDBASE"),getenv("LOCATION_NAME"),mapset,subj_file,
+		getenv("GISDBASE"),getenv("LOCATION_NAME"),mapset,new->answer);
+        if (system(buffer) )
+	   G_fatal_error ("ERROR(v.merge):  Could not create dig_cats file for %s\n",
+	      new->answer ) ;
 
                   /* remove the tmp_file*/
         unlink(tmp_file); 
