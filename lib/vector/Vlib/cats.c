@@ -83,14 +83,14 @@ Vect_destroy_cats_struct (struct line_cats *p)
 
 /*!
  \fn int Vect_cat_set (struct line_cats *Cats, int field, int cat)
- \brief set category to value; if field already exist old value is
-     overwritten; if field does not exist new category is appended to
-     the end.  field = field, cat = category
+ \brief add new field/cat to category structure if doesn't exist yet.
  \return new number of categories
                0 if no space for new category in structure, n_cats would be > GV_NCATS_MAX
               -1 on out of memory
               -2 if field out of range: 1 - GV_FIELD_MAX or cat out of range:  1 - GV_CAT_MAX
- \param line_cats structure, field number, category number
+ \param Cats
+ \param field
+ \param cat
 */
 int 
 Vect_cat_set (struct line_cats *Cats, int field, int cat)
@@ -107,15 +107,11 @@ Vect_cat_set (struct line_cats *Cats, int field, int cat)
     return (-2);
    */
     
-  /* go through old cats and find if category number exist */
-  for (n = 0; n < Cats->n_cats; n++)
-    {
-      if (Cats->field[n] == field)
-	{
-	  Cats->cat[n] = cat;
+  /* go through old cats and find if field/category exists */
+  for (n = 0; n < Cats->n_cats; n++) {
+      if (Cats->field[n] == field && Cats->cat[n] == cat )
 	  return (1);
-	}
-    }
+  }
 
   /* field was not found so we shall append new cat */
   /* test if space exist */
@@ -134,9 +130,11 @@ Vect_cat_set (struct line_cats *Cats, int field, int cat)
 
 /*!
  \fn int Vect_cat_get (struct line_cats *Cats, int field, int *cat)
- \brief get category, field  - input field, cat - output category
+ \brief get first found category of given field
  \return 1 found, 0 field does not exist
- \param line_cats structure, field number, category number
+ \param Cats
+ \param field
+ \param cat pointer to variable where cat will be written
 */
 int 
 Vect_cat_get (struct line_cats *Cats, int field, int *cat)
@@ -165,17 +163,17 @@ Vect_cat_get (struct line_cats *Cats, int field, int *cat)
   return (0);
 }
 
-
 /*!
  \fn int Vect_cat_del (struct line_cats *Cats, int field)
- \brief delete category, field  - input field
+ \brief delete all categories of given field
  \return 1 deleted, 0 category number does not exist
- \param line_cats structure, field number
+ \param Cats
+ \param field
 */
 int 
 Vect_cat_del (struct line_cats *Cats, int field)
 {
-  register int n;
+  register int n, found = 0;
 
   /* check input value */
   /*
@@ -184,24 +182,53 @@ Vect_cat_del (struct line_cats *Cats, int field)
    */
     
   /* go through cats and find if field exist */
-  for (n = 0; n < Cats->n_cats; n++)
-    {
-      if (Cats->field[n] == field)
-	{
-	  for (n = n; n < Cats->n_cats - 1; n++)
-	    {
+  for (n = 0; n < Cats->n_cats; n++) {
+      if (Cats->field[n] == field) {
+	  for (n = n; n < Cats->n_cats - 1; n++) {
 	      Cats->field[n] = Cats->field[n + 1];
 	      Cats->cat[n] = Cats->cat[n + 1];
-	    }
+	  }
 	  Cats->n_cats--;
-	  return (1);
-	}
-    }
+	  found = 1;
+      }
+  }
 
-  /* field was not found */
-  return (0);
+  return (found);
 }
 
+/*!
+ \fn int Vect_field_cat_del (struct line_cats *Cats, int field, int cat)
+ \brief delete field/cat from line_cats structure
+ \return 1 deleted, 0 field/category number does not exist
+ \param Cats
+ \param field
+ \param cat
+*/
+int 
+Vect_field_cat_del (struct line_cats *Cats, int field, int cat)
+{
+  register int n, found = 0;
+
+  /* check input value */
+  /*
+  if (field < 1 || field > GV_FIELD_MAX)
+    return (0);
+   */
+    
+  /* go through cats and find if field exist */
+  for (n = 0; n < Cats->n_cats; n++) {
+      if (Cats->field[n] == field && Cats->cat[n] == cat) {
+	  for (n = n; n < Cats->n_cats - 1; n++) {
+	      Cats->field[n] = Cats->field[n + 1];
+	      Cats->cat[n] = Cats->cat[n + 1];
+	  }
+	  Cats->n_cats--;
+	  found = 1;
+      }
+  }
+
+  return (found);
+}
 
 /*!
  \fn int Vect_reset_cats (struct line_cats *Cats)
