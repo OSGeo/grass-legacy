@@ -1,0 +1,73 @@
+.\"	$Header: /usr/people/sam/tiff/man/man1/RCS/ras2tiff.1,v 1.5 90/11/25 11:15:45 sam Exp $
+.\"
+.\" Copyright (c) 1988 by Sam Leffler.
+.\" All rights reserved.
+.\"
+.\" This file is provided for unrestricted use provided that this
+.\" legend is included on all tape media and as a part of the
+.\" software program in whole or part.  Users may copy, modify or
+.\" distribute this file at will.
+.\"
+.TH RAS2TIFF 1 "May 2, 1989"
+.SH NAME
+ras2tiff \- create a
+.SM TIFF
+file from a Sun rasterfile
+.SH SYNOPSIS
+.B ras2tiff
+[
+.B \-none
+] [
+.B \-packbits
+] [
+.B \-lzw
+] [
+.B \-rowsperstrip
+.I n
+]
+.I "rasterfile tiff-file"
+.SH DESCRIPTION
+.I Ras2tiff
+converts a file in the Sun rasterfile format to
+.SM TIFF.
+By default, the
+.SM TIFF
+image is created with data samples packed (\c
+.IR PlanarConfiguration =1),
+compressed with the Lempel-Ziv & Welch algorithm (\c
+.IR Compression =5),
+and with each strip no more than 8 kilobytes.
+These characteristics can overriden, or explicitly specified
+with the following options:
+.B \-none
+(use no compression),
+.B \-packbits
+(use the PackBits compression algorithm),
+.B \-lzw
+(use Lempel-Ziv & Welch \- default),
+.B \-rowsperstrip
+.I n
+(pack
+.I n
+rows in each strip).
+Any colormap information in the rasterfile is carried over to the
+.SM TIFF
+file by including a
+.I Colormap
+tag in the output file.
+If the rasterfile has a colormap, the
+.I PhotometricInterpretation
+tag is set to 3 (palette);
+otherwise it is set to 2 (RGB) if the depth
+is 24 or 1 (min-is-black) if the depth is not 24.
+.SH BUGS
+Does not handle all possible rasterfiles.
+In particular, 
+.I ras2tiff
+does not handle run-length encoded images.
+.SH "SEE ALSO"
+.IR pal2rgb (1),
+.IR tiffinfo (1),
+.IR tiffcp (1),
+.IR tiffmedian (1),
+.IR libtiff (3)
