@@ -19,7 +19,9 @@ PROG =   $(BIN_MAIN_CMD)/v.mkquads
 all:  $(PROG)
 
 
-$(PROG): $(OFILES) $(GISLIB) $(VECTLIB)
+$(PROG): $(OFILES) $(GISLIB) $(VECTLIB) $(COORCNVLIB)
 	rm -f a.out $@
 	$(CC) $(LDFLAGS) $(OFILES) $(GISLIB) $(VECTLIB) $(COORCNVLIB) $(MATHLIB)
 	mv a.out $@
+
+$(GISLIB) $(VECTLIB) $(COORCNVLIB): #
