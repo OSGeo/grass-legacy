@@ -1,5 +1,5 @@
 #define SITE_LIST
-
+#include <strings.h>
 #include "gis.h"
 #include "globals.h"
 #include "rim.h"
