@@ -1,0 +1,14 @@
+                    EDITING AND PATCHING MAP DATA
+
+Frequently, (due to the size of digitizing tablets) users \digitize\
+data in relatively small chunks which must be "patched" together before
+data are analyzed.  The GRASS commands listed below can be used to edit
+and patch digital data.  Prefixes denote whether commands operate on
+data in vector ("v.") or raster ("r.") file format.
+
+              \-  v.patch \        \-  r.patch \
+              \-  v.prune \        \-  r.mapcalc \
+              \-  v.spag \
+
+For more information on a specific command, select a command and press
+ESC.
