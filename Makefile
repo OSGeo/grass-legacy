@@ -322,7 +322,7 @@ changelog:
 GISRCFILE = ${ARCH_DISTDIR}/demolocation/.grassrc${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}
 
 builddemolocation:
-	@ cp -rpf demolocation/ ${ARCH_DISTDIR}/
+	@ cp -rpf demolocation ${ARCH_DISTDIR}/
 	@ echo "GISDBASE: ${ARCH_DISTDIR}" > ${GISRCFILE}
 	@ echo "LOCATION_NAME: demolocation" >> ${GISRCFILE}
 	@ echo "MAPSET: PERMANENT" >> ${GISRCFILE}
