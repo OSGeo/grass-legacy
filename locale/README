@@ -18,27 +18,24 @@ message strings in GRASS must be modified from
 
  fprintf ( ..., "...\n", ...);
 to
- G_message ( _("..."), ...);
+ G_message ( _("...\n"), ...);
 
-Four steps:
+Three steps:
 1) to replace (see example above:
      a) fprintf (stdout,    with G_message (
      b) fprintf (stderr,    with G_message (
 
 2) to add (see example above):
-     the macro _( ) 
+     the macro _( ) which encapulates the message
 
-3) to remove (see example above:
-     \n at the end of single message strings
-
-4) to be added to file.c header:
+3) to be added to file.c header:
      #include "glocale.h"
 
    This line has to be added to each C file which contains
    user messages, preferably as last #include statement.
 
 All these messages strings will be then automatically 
-extracted.
+extracted into the message files.
 
 See for example ./vector/v.what.rast/main.c
 
