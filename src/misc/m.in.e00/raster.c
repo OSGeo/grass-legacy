@@ -11,6 +11,8 @@
 /*                                                                  */
 /********************************************************************/
 
+#define ESRI_RAST_NULL -340282306073709652508363335590014353408.0
+
 extern int debug;		/* debug level (verbosity) */
 extern double scale;		/* scale of coordinates (Cf PRJ) */
 extern FILE *fdlog;		/* log file descriptor */
@@ -100,6 +102,10 @@ void getraster( char *name, int flag, int prec)
 		sscanf( line, "%ld%ld%ld%ld%ld", p, p+1, p+2, p+3, p+4);
 		p += 5;
 	    }
+	    for (j = 0; j < cols; j++) {
+		if (buf[j] == ESRI_RAST_NULL)
+		      G_set_null_value(&buf[j], 1, CELL_TYPE);
+	    }
 	    G_put_raster_row(raster, buf, CELL_TYPE);
 	    G_percent( i, rows, 10);
 	}
@@ -123,6 +129,10 @@ void getraster( char *name, int flag, int prec)
 		    sscanf( line, "%lf%lf%lf", d, d+1, d+2);
 		    d += 3;
 		}
+		for (j = 0; j < cols; j++) {
+		    if (dbuf[j] == ESRI_RAST_NULL)
+		      G_set_null_value(&dbuf[j], 1, DCELL_TYPE);
+		}
 		G_put_d_raster_row( raster, dbuf);
 		G_percent( i, rows, 10);
 	    }
@@ -141,6 +151,10 @@ void getraster( char *name, int flag, int prec)
 			line[ 14 * (cols-j+1)] = 0;
 		    sscanf( line, "%f%f%f%f%f", f, f+1, f+2, f+3, f+4);
 		    f += 5;
+		}
+		for (j = 0; j < cols; j++) {
+		    if (fbuf[j] == ESRI_RAST_NULL)
+		      G_set_null_value(&fbuf[j], 1, FCELL_TYPE);
 		}
 		G_put_f_raster_row( raster, fbuf);
 		G_percent( i, rows, 10);
