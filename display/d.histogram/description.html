@@ -1,0 +1,45 @@
+<H2>DESCRIPTION</H2>
+
+<EM>d.histogram</EM> displays the category-value distribution for a
+user-specified raster map layer, in the form of a bar chart or a pie chart. 
+The display will be displayed in the active display frame on the graphics
+monitor, using the colors in the raster map layer's color table.  The
+program determines the raster file's category value distribution by counting
+cells.
+
+<H2>NOTES</H2>
+
+<EM>d.histogram</EM>
+uses the current geographic region settings 
+and the current mask (if one exists). 
+
+<P>
+<EM>d.histogram</EM> uses the colors in the map's color look-up table
+(i.e., the map's <EM>colr</EM> or <EM>colr2</EM> file). To view results
+correctly on the display monitor, make sure the color mode is correctly set
+before running <EM>d.histogram</EM> (i.e., execute <B><A
+HREF="d.colormode.html">d.colormode</A> mode=float</B>).
+
+<P>
+<EM>d.histogram</EM>
+does not erase the active frame before displaying output. 
+
+<H2>SEE ALSO</H2>
+
+<em><a href="d.colormode.html">d.colormode</a></em>,
+<em><a href="d.colors.html">d.colors</a></em>,
+<em><a href="d.colortable.html">d.colortable</a></em>,
+<em><a href="d.display.html">d.display</a></em>,
+<em><a href="d.erase.html">d.erase</a></em>,
+<em><a href="g.region.html">g.region</a></em>,
+<em><a href="r.mask.html">r.mask</a></em>,
+<em><a href="r.stats.html">r.stats</a></em>,
+<em><a href="parser.html">parser</a></em>,
+
+<H2>AUTHOR</H2>
+
+Dave Johnson
+<BR> DBA Systems, Inc. 
+<BR> 10560 Arrowhead Drive 
+<BR> Fairfax, Virginia 22030
+<p><i>Last changed: $Date$</i>

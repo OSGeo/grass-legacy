@@ -1,0 +1,50 @@
+<H2>DESCRIPTION</H2>
+
+<EM>d.grid</EM> overlays a grid of user-defined size and
+color in the active display frame on the graphics monitor.
+The grid will overlay, not overwrite, the contents of the
+active display frame.
+
+<P>
+
+<EM>d.grid</EM> can be run non-interactively or
+interactively.  If the user specifies the grid
+<EM>size</EM> and (optionally) the grid <EM>color</EM> on
+the command line the program will run non-interactively; if
+no grid <EM>color</EM> is given the default will be used.
+Alternately, the user may simply type <B>d.grid</B> on the
+command line; in this case, the program will prompt the
+user for parameter values using the standard GRASS user
+interface described in the manual entry for 
+<EM><A HREF="parser.html">parser</A>.</EM>
+
+<H2>NOTES</H2>
+
+<EM>d.grid</EM> will not erase grids already displayed in
+the active graphics display frame by previous invocations
+of <EM>d.grid</EM>; multiple invocations of <EM>d.grid</EM>
+will therefore result in the drawing of multiple grids
+inside the active graphics frame.  (A command like 
+<EM><A HREF="d.erase.html">d.erase</A></EM>, which erases the
+entire contents of the active display frame, must be run to
+erase previously drawn grids from the display frame.)
+
+<P>
+
+Currently, the grid size can only be drawn in the units of
+the map coordinate system used by the current GRASS
+location.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.erase.html">d.erase</A></EM><br>
+<EM><A HREF="d.frame.html">d.frame</A></EM><br>
+<EM><A HREF="d.legend.html">d.legend</A></EM><br>
+<EM><A HREF="d.rast.html">d.rast</A></EM><br>
+<EM><A HREF="d.scale.html">d.scale</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
+<p><i>Last changed: $Date$</i>
