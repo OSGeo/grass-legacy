@@ -1,7 +1,7 @@
                     CUSTOMIZING REPORTS
 
 GRASS programs like @man("r.report"), @man("r.coin"), and @man("s.menu") output their results
-in the form of reports.  New options made available in GRASS 4.0 allow
+in the form of reports.  New options made available in GRASS 4.2 allow
 the user added flexibility in designing the form of these reports.
 
 Users can also use GRASS programs in combination with UNIX programs like
