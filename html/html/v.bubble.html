@@ -1,6 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
+<head>
 <TITLE>v.bubble</TITLE>
+</head>
 <body bgcolor="white">
 <img src="grass.smlogo.gif">
 <hr width="100%" align=center size=6 noshade>
@@ -99,10 +101,19 @@ sites maps.
 
 <DT><EM>-s</EM> 
 
-<DD>Automatically run "v.support" on newly created vector file.
+<DD>Automatically run "<a href="v.support.html">v.support</a>" on newly created vector file.
 
 <H2>NOTES</H2>
 The programm is based on <a href=v.circle.html>v.circle</a>
+<BR>
+
+<H2>BUGS</H2>
+Due to the limitations of the vector engine in versions of GRASS prior to 5.7,
+display of overlapping circles may not work correctly. You have two options: 
+a) make your radius smaller.
+b) Install GRASS 5.7 or newer and use either <b>v.buffer</b> and <b>v.patch</b> 
+in a loop or <b>d.vect.chart ctype=pie</b> with one data column. Sorry for the 
+inconvenience.
 
 <H2>SEE ALSO</H2>
 <a href=s.buffer.html>s.buffer</a>,
