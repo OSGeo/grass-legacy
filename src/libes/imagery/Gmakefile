@@ -29,6 +29,7 @@ OBJ =\
 	find.o\
 	fopen.o\
 	georef.o\
+	grey.o\
 	group.o\
 	histo.o\
 	histo_eq.o\
