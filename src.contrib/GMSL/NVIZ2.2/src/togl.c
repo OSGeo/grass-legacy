@@ -11,7 +11,10 @@
 
 /*
  * $Log$
- * Revision 1.3  2002-05-09 20:58:46  glynn
+ * Revision 1.4  2002-05-13 08:52:14  glynn
+ * Remove (Debian-specific) tkInt8.0.5.h, and references thereto
+ *
+ * Revision 1.3  2002/05/09 20:58:46  glynn
  * Add tkInt8.0.5.h
  * Rename tkInt8.0p2.h to tkInt8.0.2.h for consistency
  *
@@ -144,7 +147,7 @@
 #elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==0 && TK_RELEASE_SERIAL==2
 #  include "tkInt8.0.2.h"
 #elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==0 && TK_RELEASE_SERIAL==5
-#  include "tkInt8.0.5.h"
+#  include "tkInt8.0.2.h"
 #elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==1
 #  include "tkInt8.1.1.h"
 #elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==2
