@@ -100,6 +100,7 @@ int
 main (int argc, char *argv[])
 {
 
+ struct GModule *module;
  struct
   {
   struct Option *elevin, *aspin, *slopein, *incidout, *energyout, *latitude, *dej, *lum_time, *linke;
@@ -110,6 +111,17 @@ main (int argc, char *argv[])
         } flag;
 
 	  G_gisinit (argv[0]);
+
+	  module = G_define_module();
+	  module->description =
+		"Computes solar illumination (incidence) angle raster maps "
+		"for given time and latitude and solar irradiance (direct "
+		"solar radiation) raster maps for given day and latitude. "
+		"They are computed from elevation, slope and aspect raster "
+		"maps. Sunrise, sunset times, declination for given day "
+		"are displayed along with solar azimuth and zenith angle "
+		"for specified local time. The shadowing effect of the "
+		"topography is optionally incorporated.";
 
 		if(G_get_set_window(&cellhd)==-1) exit(0);
 		/*ew_res = cellhd.ew_res;*/

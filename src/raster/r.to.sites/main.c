@@ -12,6 +12,7 @@ double atof();
 int main(int argc, char *argv[])
 {
 
+	struct GModule *module;
     struct Option 	*rast, *sites, *lab;
     struct Flag 	*attr, *dim;
     char		*cellmap, *sitesmap;
@@ -30,6 +31,11 @@ int main(int argc, char *argv[])
 
     G_gisinit (argv[0]);
 
+    module = G_define_module();
+    module->description =
+		"Converts point data in a GRASS raster map "
+		"layer into a GRASS site_lists file.";
+					        
     attr = G_define_flag ();
     attr->key = 'a';
     attr->description = "Output as decimal attribute rather than cat";

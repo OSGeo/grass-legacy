@@ -20,6 +20,7 @@ main (int argc, char *argv[])
     char msg[100];
     struct rr_state  myState;
 
+    struct GModule *module;
     struct
     {
 	struct Option *input, *raster, *sites, *npoints;
@@ -30,6 +31,11 @@ main (int argc, char *argv[])
     } flag;
 
     G_gisinit (argv[0]);
+
+    module = G_define_module();
+    module->description =
+        "Creates a raster map layer and site list file "
+        "containing randomly located sites.";
 
     parm.input = G_define_option() ;
     parm.input->key        = "input" ;

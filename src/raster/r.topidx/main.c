@@ -16,7 +16,10 @@
  *
  *
  * $Log$
- * Revision 1.2  2000-11-01 17:26:35  cho
+ * Revision 1.3  2000-11-22 09:34:40  jan
+ * added module description
+ *
+ * Revision 1.2  2000/11/01 17:26:35  cho
  * updated copyleft
  *
  * Revision 1.1  2000/08/20 05:57:16  cho
@@ -35,6 +38,7 @@ main(argc,argv)
 	int	argc;
 	char	**argv;
 {
+	struct GModule *module;
 	struct
 	{
 		struct	Option	*input;
@@ -47,6 +51,9 @@ main(argc,argv)
 		struct	Flag	*verbose;
 	} flags;
 
+	module = G_define_module();
+    module->description =
+		"Creates topographic index, ln(a/tan(beta)), map from elevation map.";
 
 	params.input			= G_define_option();
 	params.input->key		= "input";

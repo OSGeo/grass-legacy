@@ -44,6 +44,7 @@ int main(int argc, char *argv[])
     float null_val_f;
     double null_val_d;
     struct Cell_head region;
+	struct GModule *module;
     struct
     {
 	struct Option *input ;
@@ -62,6 +63,10 @@ int main(int argc, char *argv[])
 
 
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+    module->description =
+		"Exports a GRASS raster to a binary array.";
 
 /* Define the different options */
 

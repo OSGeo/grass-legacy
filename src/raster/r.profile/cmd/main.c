@@ -8,6 +8,7 @@ int main (int argc, char *argv[])
     int projection;
     char *name, *mapset;
 
+	struct GModule *module;
     struct
     {
 	struct Option *map;
@@ -20,6 +21,11 @@ int main (int argc, char *argv[])
     CELL *cell;
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+    module->description =
+		"Outputs the raster map layer values "
+		"lying on user-defined line(s).";
 
     G_get_window(&window);
     projection = G_projection();

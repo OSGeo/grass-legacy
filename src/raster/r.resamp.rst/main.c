@@ -137,6 +137,7 @@ int main (int argc, char *argv[])
   DCELL cellmin, cellmax;
   FCELL *cellrow,fcellmin;
 
+  struct GModule *module;
   struct
   {
     struct Option *input, *elev, *slope, *aspect, *pcurv, *tcurv, *mcurv, *smooth,
@@ -150,6 +151,13 @@ int main (int argc, char *argv[])
 
   G_gisinit (argv[0]);
 
+  module = G_define_module();
+  module->description =
+	"Reinterpolates and computes topographic analysis from "
+	"input raster file to a new raster file (possibly with "
+	"different resolution) using regularized spline with "
+	"tension and smoothing.";
+			          
   if (G_get_set_window (&winhd) == -1)
     G_fatal_error ("G_get_set_window failed");
 

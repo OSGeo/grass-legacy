@@ -27,12 +27,18 @@ extern struct symtab table;
 int main (int argc, char **argv)
 {
     struct symtab *ptr;
+	struct GModule *module;
 
     probabilitymaps = 1;
     combinedmap = 1;
     colortable = Ramp;
 
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Bayesian expert system development program.";
+
     parse_arglist(argc,argv);
     if(-1 == yyparse()) {
         ptr = &table;

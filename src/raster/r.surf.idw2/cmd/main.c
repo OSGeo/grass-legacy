@@ -29,11 +29,16 @@ main (int argc, char *argv[])
     double maxdist,dist;
     double sum1, sum2;
     int i,n,max;
+	struct GModule *module;
     struct
     {
 	struct Option *input, *npoints, *output;
     } parm;
 
+    module = G_define_module();
+    module->description =
+		"Surface generation program.";
+					        
     parm.input = G_define_option() ;
     parm.input->key        = "input" ;
     parm.input->type       = TYPE_STRING ;

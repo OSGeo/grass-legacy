@@ -18,12 +18,21 @@ interface (
     /*                               INITIALISE				   */
     /*---------------------------------------------------------------------*/ 
 
+	struct GModule *module;
     struct Option       *rast_out;      /* Structure for output raster     */           
     struct Option	*frac_dim;	/* Fractal dimension of surface.   */	
     struct Option	*num_images;	/* Number of images to produce.	   */
 
     G_gisinit (argv[0]);                /* Link with GRASS interface.	   */
 
+    module = G_define_module();
+    module->description =
+		"GRASS module to create a fractal surface of a given "
+		"fractal dimension. Uses spectral synthesis method. "
+		"Can create intermediate layers showing the build up "
+		"of different spectral coefficients (see Saupe, pp.106-107 "
+		"for an example of this). Use this module to generate "
+		"naturally looking sythetical elevation models (DEM).";
 
     /*---------------------------------------------------------------------*/
     /*                              SET PARSER OPTIONS                     */
