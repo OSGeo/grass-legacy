@@ -81,8 +81,13 @@ if test -d $GISDBASE/$LOCATION ; then
  exit 1
 fi
 
-#extend LD_LIBRARY_PATH to find GRASS libs:
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GISBASE/lib
+# Set LD_LIBRARY_PATH to find GRASS shared libraries
+if [ ! "$LD_LIBRARY_PATH" ] ; then
+  LD_LIBRARY_PATH=$GISBASE/lib
+else
+  LD_LIBRARY_PATH=$GISBASE/lib:$LD_LIBRARY_PATH
+fi
+export LD_LIBRARY_PATH
 
 #generate temporal LOCATION:
 TEMPDIR=$$.tmp
