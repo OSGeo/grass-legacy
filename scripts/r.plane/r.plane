@@ -106,7 +106,7 @@ fi
 aztest=`echo $az | awk '{ printf("%8d", int($1 + 0.5))'}`
 if  [ $aztest -lt 0 -o $aztest -ge 360 ]
 then
-	echo Sorry, azimuth must be greater than -1 and less than 360
+	echo Sorry, azimuth must be no less than 0 and less than 360
 	exit 1
 fi
 
