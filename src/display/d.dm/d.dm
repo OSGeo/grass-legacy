@@ -106,12 +106,14 @@ proc set_display { dtype } {
 	execute $cmd
     }
 
-    set cmd "d.erase"
-    execute $cmd
     set f $set($s,frame)
-    foreach mw [pack slaves $f] {
-	regexp -- {.*\.([^.]*)$} $mw p m 
-        map_display $s $m
+    if { $dtype == "d" || $dtype == "a" } {
+        set cmd "d.erase"
+        execute $cmd
+        foreach mw [pack slaves $f] {
+	    regexp -- {.*\.([^.]*)$} $mw p m 
+            map_display $s $m
+        }
     }
     
     set cmd "g.region save=_d.dm.$smon"
@@ -130,8 +132,9 @@ proc set_display { dtype } {
 		set cmd "d.erase"
 		execute $cmd	    
 	    }
-	    set cmd "d.legend map=$map($s,$m,map) color=$map($s,$m,_leg_color) show=$map($s,$m,_leg_show)"
+	    set cmd "d.leg.thin map=$map($s,$m,map) color=$map($s,$m,_leg_color)"
 	    if { $map($s,$m,_leg_lines) > 0 } { append cmd " lines=$map($s,$m,_leg_lines)" }
+	    if { $map($s,$m,_leg_thin) > 0 } { append cmd " thin=$map($s,$m,_leg_thin)" }
 	    execute $cmd	    
     	    
 	}
@@ -230,13 +233,11 @@ proc map_create { type } {
 	    Label $f.$m.lab1 -text "lines" 
 	    Entry $f.$m._leg_lines -width 3 -text "" -textvariable map($s,$m,_leg_lines) \
 		-helptext "Number of legend lines"
-	    ComboBox $f.$m._leg_show -label "show" -underline 0 \
-		-labelwidth 0 -width 7 -textvariable map($s,$m,_leg_show) \
-		-values {"val,cat" "val" "cat"} \
-		-helptext "Show either values or categories"
-	    set map($s,$m,_leg_show) "val,cat"			
+	    Label $f.$m.lab2 -text "thin" 
+	    Entry $f.$m._leg_thin -width 3 -text "" -textvariable map($s,$m,_leg_thin) \
+		-helptext "Thinning factor"
 	    pack $f.$m.map $f.$m.o $f.$m._leg_mon $f.$m._leg_color $f.$m.lab1 $f.$m._leg_lines \
-		 $f.$m._leg_show -side left   
+		 $f.$m.lab2 $f.$m._leg_thin -side left   
 	}    
 	l {
 	    Entry $f.$m.map -width 10 -text "" -textvariable map($s,$m,map) \
@@ -462,7 +463,7 @@ proc dm_save { } {
        		r {
 		    puts $file "_map_type=r\nmap=$map($s,$m,map)\n-o=$map($s,$m,-o)"
 		    puts $file "_leg_mon=$map($s,$m,_leg_mon)\n_leg_color=$map($s,$m,_leg_color)"
-		    puts $file "_leg_lines=$map($s,$m,_leg_lines)\n_leg_show=$map($s,$m,_leg_show)\n"		    
+		    puts $file "_leg_lines=$map($s,$m,_leg_lines)\n_leg_thin=$map($s,$m,_leg_thin)\n"		    
     		}    
     		l {
 		    puts $file "_map_type=l\nmap=$map($s,$m,map)\ncolor=$map($s,$m,color)\n"		
@@ -529,7 +530,7 @@ proc dm_read { } {
            			    _leg_mon { set map($s,$m,_leg_mon) $d(val) }
            			    _leg_color { set map($s,$m,_leg_color) $d(val) }
            			    _leg_lines { set map($s,$m,_leg_lines) $d(val) }
-           			    _leg_show { set map($s,$m,_leg_show) $d(val) }
+           			    _leg_thin { set map($s,$m,_leg_thin) $d(val) }
     				}
 			    }
            		    l {
@@ -722,11 +723,11 @@ set ebf [frame .ebf]
 pack $ebf -fill x -side top 
 
 # ----- set buttons
-Button $ebf.set_add -text "+" -command { set_create } \
+Button $ebf.set_add -text "Add\nset" -command { set_create } \
     -helptext "Add set"
 pack $ebf.set_add -side left -padx 5 -pady 2
 
-Button $ebf.set_rm -text "x" -command set_rm -foreground red -activeforeground red \
+Button $ebf.set_rm -text "Del\nset" -command set_rm -foreground red -activeforeground red \
     -helptext "Remove selected set"
 pack $ebf.set_rm -side left -padx 5 -pady 2
 
@@ -734,7 +735,7 @@ Separator $ebf.sep1 -orient vertical
 pack $ebf.sep1 -padx 5 -pady 2 -fill y -side left 
 
 # ----- map buttons
-Button $ebf.map_add -text "+" \
+Button $ebf.map_add -text "Add\nmap" \
     -command { 	global $sset 
 	if { $sset < 0 } { puts stdout "Set not selected."; return } 	
 	set t [map_type_get]
@@ -742,7 +743,7 @@ Button $ebf.map_add -text "+" \
     -helptext "Add map"
 pack $ebf.map_add -side left -padx 5 -pady 2
 
-Button $ebf.map_rm -text "x" -foreground red -activeforeground red -command map_rm \
+Button $ebf.map_rm -text "Del\nmap" -foreground red -activeforeground red -command map_rm \
     -helptext "Remove selected map"
 pack $ebf.map_rm -side left -padx 2 -pady 5
 
