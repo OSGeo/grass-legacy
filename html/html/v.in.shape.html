@@ -23,11 +23,16 @@
 
 <B>v.in.shape</B>
 <br><br>
-<b>v.in.shape[.pg] [-l][-r][-p] in=</b><EM>name</EM> [<b>mapset=</b><EM>name</EM>]
-<br>[<b>verbose=</b><EM>debug level</EM>] [<b>logfile=</b><EM>name</EM>]
+<b>v.in.shape[.pg] [-lbros]
+input=</b><EM>name</EM>
+[output=</b><EM>name</EM>]
+[<b>mapset=</b><EM>name</EM>]
+[<b>verbose=</b><EM>debug level</EM>] 
+[<b>logfile=</b><EM>name</EM>]
 [<b>snapdist=</b><EM>snap distance</EM>]
-<br>[<b>sliver=</b><EM>min. angle</EM>] [<b>scale=</b><EM>orig.
-scale</EM>] [<b>attribute=</b><EM>attribute category</EM>]
+<br>[<b>sliver=</b><EM>min. angle</EM>] 
+[<b>scale=</b><EM>orig. scale</EM>] 
+[<b>attribute=</b><EM>attribute category</EM>]
 <br>[<b>label=</b><EM>category label</EM>]
 
 
@@ -67,9 +72,18 @@ that are frequently met with in shapefiles.
 <DD>List the fields contained in the DBF file associated with the
 input shapefile, then exit.
 
+<DT><b>-b</b>
+<DD>Display bounds of map (north, south, east, west coordinates), then exit.
+
 <DT><b>-r</b>
 <DD>Create a reject lines file. During import some lines are not
 imported for a variety of reasons.
+
+<DT><b>-o</b>
+<DD>Allow over-write of existing vector map.
+
+<DT><b>-s</b>
+<DD>Select shapes to extract based on a field
 
 <DT><b>-p</b>
 <DD>Dump the fields of the shapefile from DBF to a postgres table. 
@@ -85,6 +99,10 @@ imported for a variety of reasons.
 <DD>Name of input shape file. Provide a full path name or the name
 of a file in the current directory. Any of the full pathname, basename, 
 or prefix only will suffice.
+
+<DT><B>output</B>=<EM>filename</EM>
+<DD>Name of vector map to be created (default: prefix of shape file). By
+default prefix of shape file name is used.
 
 <DT><B>verbose</B>=<EM>integer</EM> 
 <DD>Number between 0 (no trace of what's happening) and 9 (very verbose log).
