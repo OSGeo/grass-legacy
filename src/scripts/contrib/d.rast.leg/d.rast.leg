@@ -28,7 +28,7 @@
 #
 # See also:	d.rast, d.legend.
 #
-# Markus Neteler 8/2002: added simple d.legend logic (-o), cosmetics
+# Markus Neteler 8/2002: added simple d.legend logic
 # Jianping Xu and Scott Madry, Rutgers University. October 19, 1993
 ##############################################################################
 
@@ -41,8 +41,6 @@ eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
-#for -o flag of d.legend
-HISTFILEDIR=$LOCATION/cell_misc/
 
 if [ $# -lt 1 -o "$1" = "-help" -o "$1" = "help" ] 
 then
@@ -53,6 +51,12 @@ then
     	echo
     	exit 1
 fi
+
+#for -o flag of d.legend
+eval `g.findfile el=cell file=$1`
+filemapset="${mapset}"
+HISTFILEDIR=$GISDBASE/$LOCATION_NAME/$filemapset/cell_misc/
+
 
 d.frame -e
 
