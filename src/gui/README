@@ -1,0 +1,12 @@
+$Id: README,v 1.1 2000-10-31 16:58:01 jan Exp $
+
+Contents of this directory:
+
+grass-interface.dtd	
+	The document type definition for
+	xml-based GRASS user interface descriptions.
+
+python/
+	A simple automatic wxPython GUI builder
+	based on the xml-based GRASS user interface
+	descriptions.
