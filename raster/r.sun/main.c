@@ -250,16 +250,16 @@ int main(int argc, char *argv[])
     parm.coefbh->key = "coefbh";
     parm.coefbh->type = TYPE_STRING;
     parm.coefbh->required = NO;
-    parm.coefbh->gisprompt = "new,cell,raster";
-    parm.coefbh->description = _("Output real-sky beam radiation coefficient raster map [-]");
+    parm.coefbh->gisprompt = "old,cell,raster";
+    parm.coefbh->description = _("Name of real-sky beam radiation coefficient raster map [-]");
 
     parm.coefdh = G_define_option();
     parm.coefdh->key = "coefdh";
     parm.coefdh->type = TYPE_STRING;
     parm.coefdh->required = NO;
-    parm.coefdh->gisprompt = "new,cell,raster";
+    parm.coefdh->gisprompt = "old,cell,raster";
     parm.coefdh->description =
-	_("Output real-sky diffuse radiation coefficient raster map [-]");
+	_("Name of real-sky diffuse radiation coefficient raster map [-]");
 
     parm.incidout = G_define_option();
     parm.incidout->key = "incidout";
