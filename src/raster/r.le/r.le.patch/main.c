@@ -20,6 +20,7 @@
 ************************************************************/
 
 #include "config.h"
+#define MAIN
 #include "patch.h"
 
 
