@@ -1,0 +1,19 @@
+#  %W%  %G%
+
+PGM = Dwhat.once
+OFILES = \
+	main.o \
+	opencell.o\
+	what.o
+
+
+all: $(BIN)/$(PGM)
+
+$(BIN)/$(PGM): $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(CURSES)
+
+$(OFILES): what.h
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
