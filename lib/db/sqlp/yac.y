@@ -67,6 +67,7 @@
 %token ALTER TABLE
 %token CREATE TABLE
 %token DROP TABLE
+%token NULL_VALUE
 %token VARCHAR
 %token INT
 %token INTEGER
@@ -165,12 +166,14 @@ y_values:
 	;
 
 y_value_list:
-		STRING				{ sqpValue( $1, 0, 0, SQLP_S ); }
-        |	INTNUM				{ sqpValue( NULL, $1, 0, SQLP_I ); }
-	|	FLOATNUM			{ sqpValue( NULL, 0, $1, SQLP_D ); }
-	|	y_value_list ',' STRING		{ sqpValue( $3, 0, 0, SQLP_S ); }
-	|	y_value_list ',' INTNUM		{ sqpValue( NULL, $3, 0, SQLP_I ); }
-	|	y_value_list ',' FLOATNUM	{ sqpValue( NULL, 0, $3, SQLP_D ); }
+		NULL_VALUE			{ sqpValue( NULL,  0, 0.0, 1, SQLP_UNKNOWN ); }
+	|	STRING				{ sqpValue( $1,    0, 0.0, 0, SQLP_S ); }
+        |	INTNUM				{ sqpValue( NULL, $1, 0.0, 0, SQLP_I ); }
+	|	FLOATNUM			{ sqpValue( NULL,  0,  $1, 0, SQLP_D ); }
+	|	y_value_list ',' NULL_VALUE	{ sqpValue( NULL,  0, 0.0, 1, SQLP_UNKNOWN ); }
+	|	y_value_list ',' STRING		{ sqpValue( $3,    0, 0.0, 0, SQLP_S ); }
+	|	y_value_list ',' INTNUM		{ sqpValue( NULL, $3, 0.0, 0, SQLP_I ); }
+	|	y_value_list ',' FLOATNUM	{ sqpValue( NULL,  0,  $3, 0, SQLP_D ); }
 	;
 
 y_assignments:
@@ -179,9 +182,10 @@ y_assignments:
 	;
 	
 y_assignment:
-		NAME EQUAL STRING	{ sqpAssignment( $1,   $3,  0, 0, SQLP_S ); }
-        |	NAME EQUAL INTNUM	{ sqpAssignment( $1, NULL, $3, 0, SQLP_I ); }
-        |	NAME EQUAL FLOATNUM	{ sqpAssignment( $1, NULL,  0,$3, SQLP_D ); }
+		NAME EQUAL NULL_VALUE	{ sqpAssignment( $1, NULL,  0, 0.0, 1, SQLP_UNKNOWN ); }
+	|	NAME EQUAL STRING	{ sqpAssignment( $1,   $3,  0, 0.0, 0, SQLP_S ); }
+        |	NAME EQUAL INTNUM	{ sqpAssignment( $1, NULL, $3, 0.0, 0, SQLP_I ); }
+        |	NAME EQUAL FLOATNUM	{ sqpAssignment( $1, NULL,  0,  $3, 0, SQLP_D ); }
 	;
 
 y_condition:			
@@ -225,14 +229,14 @@ y_name:
 	|	y_name '+' y_cnam		{$$ = makeArithmExpr(SQLP_ADD, $1, $3);}
 	|	y_name '*' y_cnam		{$$ = makeArithmExpr(SQLP_MLTP, $1, $3);}
 	|	y_name '/' y_cnam		{$$ = makeArithmExpr(SQLP_DIV, $1, $3);}
-	|	y_name INTNUM			{$$ = makeArithmExpr(SQLP_ADD, $1, makeArithmValue(NULL,$2,0,SQLP_I,1));}
+	|	y_name INTNUM			{$$ = makeArithmExpr(SQLP_ADD, $1, makeArithmValue(NULL,$2,0.0,SQLP_I,1));}
 	|	y_name FLOATNUM			{$$ = makeArithmExpr(SQLP_ADD, $1, makeArithmValue(NULL,0,$2,SQLP_D,1));}
 	;
 y_cnam:
-		NAME				{$$ = makeArithmValue($1,0,0,SQLP_COL,1);}
-	|	STRING				{$$ = makeArithmValue($1,0,0,SQLP_S,1);}
-	|	INTNUM				{$$ = makeArithmValue(NULL,$1,0,SQLP_I,1);}
-	|	FLOATNUM			{$$ = makeArithmValue(NULL,0,$1,SQLP_D,1);}
+		NAME				{$$ = makeArithmValue(  $1, 0,0.0,SQLP_COL,1);}
+	|	STRING				{$$ = makeArithmValue(  $1, 0,0.0,  SQLP_S,1);}
+	|	INTNUM				{$$ = makeArithmValue(NULL,$1,0.0,  SQLP_I,1);}
+	|	FLOATNUM			{$$ = makeArithmValue(NULL, 0, $1,  SQLP_D,1);}
 	|	'(' y_name ')'			{$$ = $2;}
 	;
 

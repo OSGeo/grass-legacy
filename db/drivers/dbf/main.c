@@ -19,6 +19,7 @@
 #include <string.h>
 #include <dbmi.h>
 #include "globals.h"
+#include "proto.h"
 
 int
 main(int argc, char *argv[])

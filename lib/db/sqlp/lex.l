@@ -60,6 +60,7 @@
 [Cc][Rr][Ee][Aa][Tt][Ee]	{ return CREATE; }
 [Dd][Rr][Oo][Pp]		{ return DROP; }
 [Tt][Aa][Bb][Ll][Ee]		{ return TABLE; }
+[Nn][Uu][Ll][Ll]		{ return NULL_VALUE; }
 [Vv][Aa][Rr][Cc][Hh][Aa][Rr]	{ return VARCHAR; }
 [Ii][Nn][Tt]			{ return INT; }
 [Ii][Nn][Tt][Ee][Gg][Ee][Rr]	{ return INTEGER; }

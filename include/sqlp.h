@@ -30,6 +30,7 @@
 
 /* SQL VALUE TYPES, NOT COLUMN TYPES -
 -do not change these! leval/reval =2 or .5 for int/double compat.*/
+#define SQLP_UNKNOWN 0x00 /* UNKNOWN TYPE */ 
 #define SQLP_S 0x01 /* string */ 
 #define SQLP_I 0x04 /* integer */
 #define SQLP_D 0x08 /* float */
@@ -97,6 +98,7 @@ typedef struct
     char   *s;
     int    i;
     double d;
+    int    is_null;
 } SQLPVALUE;
 
 typedef struct
@@ -138,8 +140,8 @@ void sqpCommand( int command );
 void sqpTable( char *table );
 void sqpColumn( char *column );
 void sqpColumnDef( char *column, int type, int width, int decimals );
-void sqpValue( char *strval, int intval, double dblval, int type );
-void sqpAssignment( char *column, char *strval, int intval, double dblval, int type );
+void sqpValue( char *strval, int intval, double dblval, int is_null, int type );
+void sqpAssignment( char *column, char *strval, int intval, double dblval, int is_null, int type );
 void sqpOrderColumn( char *col );
 int translate_Operator( char *oper);
 

@@ -185,20 +185,22 @@ load_table ( int t)
 	     } else {
 		 dbfcol = j;
 	     }
-	     switch ( db.tables[t].cols[j].type )
-	       {
-                 case DBF_INT:    
-                     val->i = DBFReadIntegerAttribute( dbf, i, dbfcol );
-                     break;
-                 case DBF_CHAR:    
-                     buf = (char *) DBFReadStringAttribute( dbf, i, dbfcol );
-		     save_string ( val, buf);
-                     break;
-                 case DBF_DOUBLE:    
-                     val->d = DBFReadDoubleAttribute( dbf, i, dbfcol );
-                     break;
-               }
-             
+	     val->is_null = DBFIsAttributeNULL ( dbf, i, dbfcol );
+	     if ( !(val->is_null) ) {
+		 switch ( db.tables[t].cols[j].type )
+		   {
+		     case DBF_INT:    
+			 val->i = DBFReadIntegerAttribute( dbf, i, dbfcol );
+			 break;
+		     case DBF_CHAR:    
+			 buf = (char *) DBFReadStringAttribute( dbf, i, dbfcol );
+			 save_string ( val, buf);
+			 break;
+		     case DBF_DOUBLE:    
+			 val->d = DBFReadDoubleAttribute( dbf, i, dbfcol );
+			 break;
+		   }
+	     }
            }
       }
 
@@ -284,21 +286,24 @@ save_table ( int t)
 	     }
 		 
              val = &(rows[i].values[j]);		   
-	     switch ( db.tables[t].cols[j].type )
-	       {
-                 case DBF_INT:    
-		     ret = DBFWriteIntegerAttribute( dbf, rec, field, val->i ); 
-                     break;
-                 case DBF_CHAR:    
-		     if ( val->c != NULL )
-		         ret = DBFWriteStringAttribute( dbf, rec, field, val->c ); 
-		     else
-		         ret = DBFWriteStringAttribute( dbf, rec, field, "" ); 
-                     break;
-                 case DBF_DOUBLE:    
-		     ret = DBFWriteDoubleAttribute( dbf, rec, field, val->d ); 
-                     break;
-               }
+	     if ( val->is_null ) {
+	         DBFWriteNULLAttribute ( dbf, rec, field );
+	     } else { 
+		 switch ( db.tables[t].cols[j].type ) {
+		     case DBF_INT:    
+			 ret = DBFWriteIntegerAttribute( dbf, rec, field, val->i ); 
+			 break;
+		     case DBF_CHAR:    
+			 if ( val->c != NULL )
+			     ret = DBFWriteStringAttribute( dbf, rec, field, val->c ); 
+			 else
+			     ret = DBFWriteStringAttribute( dbf, rec, field, "" ); 
+			 break;
+		     case DBF_DOUBLE:    
+			 ret = DBFWriteDoubleAttribute( dbf, rec, field, val->d ); 
+			 break;
+		 }
+	     }
            }
 	 rec++;
       }
@@ -325,7 +330,7 @@ int free_table (int tab)
       {
 	for( j = 0; j < db.tables[tab].ncols; j++ )
 	  {
-            if ( db.tables[tab].cols[j].type == DBF_CHAR )
+            if ( db.tables[tab].cols[j].type == DBF_CHAR && db.tables[tab].rows[i].values[j].c != NULL )
 	      {	    
                 free ( db.tables[tab].rows[i].values[j].c );
 	      }
