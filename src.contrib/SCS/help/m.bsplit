@@ -1,0 +1,4 @@
+    program to split large binary files, such a cell files,
+    into 500,000 byte or less size files.  Primarily to 
+    allow uucp movement of such files between unix machines.
+
