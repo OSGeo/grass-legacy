@@ -227,7 +227,7 @@ if test -z "$TIFF_INCLUDE_DIRS"; then
     AC_MSG_RESULT($TIFF_INCLUDE_DIRS)
 fi
 if test -z "$TIFF_INCLUDE_DIRS"; then
-	AC_MSG_WARN([*** Couldn't find 'tiffio.h'.])
+	AC_MSG_WARN([*** Could not find 'tiffio.h'.])
 fi
 AC_SUBST(TIFF_INCLUDE_DIRS)
 
@@ -265,7 +265,7 @@ if test -z "$TIFF_LIBRARY_DIRS"; then
     AC_MSG_RESULT($TIFF_LIBRARY_DIRS)
 fi
 if test -z "$TIFF_LIBRARY_DIRS"; then
-	AC_MSG_WARN([*** Couldn't find 'libtiff.a'.])
+	AC_MSG_WARN([*** Could not find 'libtiff.a'.])
 fi
 AC_SUBST(TIFF_LIBRARY_DIRS)
 
@@ -279,14 +279,6 @@ fi
 AC_SUBST(TIFF_LIBRARY_DIRS)
 
 # TCL/TK includes and library tests...
-# Check headers in default location first.
-HAVE_TK_H= 
-#AC_CHECK_HEADER(/usr/include/tk.h, HAVE_TK_H=1)
-#AC_CHECK_HEADER(/usr/include/tcl.h,HAVE_TCL_H=1)
-#tcltk_ver=
-#if test "$HAVE_TK_H"; then
-#    tcltk_ver=`grep TK_VERSION "/usr/include/tk.h" | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/'`
-#fi
 
 AC_ARG_WITH(tcltk-includes,
     [  --with-tcltk-includes=DIR
@@ -304,7 +296,7 @@ AC_ARG_WITH(tcltk-includes,
 tcltk_ver=
 
 TCLINCDIR=
-if test "$tclincdir" && test -z "$HAVE_TCL_H"; then
+if test "$tclincdir" ; then
     for dir in $tclincdir; do
         if test -d "$dir"; then
             TCLINCDIR="$TCLINCDIR -I${dir}"
@@ -320,7 +312,7 @@ if test "$tclincdir" && test -z "$HAVE_TCL_H"; then
     AC_MSG_RESULT($TCLINCDIR)
 fi
 # NEEDS else check known places ...
-if test -z "$TCLINCDIR" && test -z "$HAVE_TCL_H"; then
+if test -z "$TCLINCDIR" ; then
     AC_MSG_CHECKING(Tcl include dirs)
     tk_try="tcl8.3 tcl8.2 tcl8.1 tcl8.0"
     for my_dir in $my_inc_dirs; do
@@ -341,13 +333,13 @@ if test -z "$TCLINCDIR" && test -z "$HAVE_TCL_H"; then
     done
     AC_MSG_RESULT($TCLINCDIR)
 fi
-if test -z "$TCLINCDIR" && test -z "$HAVE_TCL_H"; then
-    AC_MSG_WARN([*** Didn't find tcl.h, maybe okay...])
+if test -z "$TCLINCDIR" ; then
+    AC_MSG_WARN([*** Did not find tcl.h, maybe okay...])
 fi
 AC_SUBST(TCLINCDIR)
 
 TKINCDIR=
-if test $tkincdir && test -z $HAVE_TK_H ; then
+if test $tkincdir ; then
     for dir in $tkincdir; do
         if test -d "${dir}"; then
             TKINCDIR="$TKINCDIR -I${dir}"
@@ -362,7 +354,7 @@ if test $tkincdir && test -z $HAVE_TK_H ; then
     AC_MSG_CHECKING(Tk include dirs)
     AC_MSG_RESULT($TKINCDIR)
 fi
-if test -z "$TKINCDIR" && test -z "$HAVE_TK_H"; then
+if test -z "$TKINCDIR" ; then
     AC_MSG_CHECKING(Tk include dirs)
     tk_try="tk8.3 tk8.2 tk8.1 tk8.0"
     for my_dir in $my_inc_dirs; do
@@ -384,7 +376,7 @@ if test -z "$TKINCDIR" && test -z "$HAVE_TK_H"; then
     AC_MSG_RESULT($TKINCDIR)
 fi
 
-if test -z "$TKINCDIR" && test -z "$HAVE_TK_H"; then
+if test -z "$TKINCDIR" ; then
     AC_MSG_WARN([*** Didn't find tk.h, maybe okay...])
 fi
 AC_SUBST(TKINCDIR)
