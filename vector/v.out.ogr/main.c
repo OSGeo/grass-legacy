@@ -254,10 +254,26 @@ main (int argc, char *argv[])
 
     fout = fskip = nocat = noatt = nocatskip = 0;
 
+    /* check what users wants to export and what's present in the map */
+    if ( Vect_get_num_primitives(&In, GV_POINT) > 0 && !(otype & GV_POINTS) )
+      G_warning("%d Point(s) found, but not requested to be exported. Verify 'type' parameter.",Vect_get_num_primitives(&In, GV_POINT));
+
+    if ( Vect_get_num_primitives(&In, GV_LINE) > 0 && !(otype & GV_LINES) )
+      G_warning("%d Line(s) found, but not requested to be exported. Verify 'type' parameter.",Vect_get_num_primitives(&In, GV_LINE));
+
+    if ( Vect_get_num_primitives(&In, GV_BOUNDARY) > 0 && !(otype & GV_BOUNDARY) && !(otype & GV_AREA) )
+      G_warning("%d Boundary(ies) found, but not requested to be exported. Verify 'type' parameter.",Vect_get_num_primitives(&In, GV_BOUNDARY));
+
+    if ( Vect_get_num_primitives(&In, GV_CENTROID) > 0 && !(otype & GV_CENTROID) && !(otype & GV_AREA) )
+      G_warning("%d Centroid(s) found, but not requested to be exported. Verify 'type' parameter.",Vect_get_num_primitives(&In, GV_CENTROID));
+
+    if ( Vect_get_num_primitives(&In, GV_AREA) > 0  && !(otype & GV_AREA) )
+       G_warning("%d Areas found, but not requested to be exported. Verify 'type' parameter.",Vect_get_num_primitives(&In, GV_AREA));
+
+    /* add? GV_FACE GV_KERNEL */
+
     /* Lines (run always to count features of different type) */
     if ( (otype & GV_POINTS) || (otype & GV_LINES) ) {
-	if ( Vect_get_num_areas(&In) > 0)
-	   G_warning("Requested types: points and lines, but (additionally) areas found. Check 'type' parameter.");
 	for ( i = 1; i <= Vect_get_num_lines(&In) ; i++ ) {
 	    int j;
 
