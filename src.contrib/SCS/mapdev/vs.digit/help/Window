@@ -1,0 +1,8 @@
+ Window Menu 
+
+   This menu allows you to directly affect what is displayed on the
+   screen.  The existing display will be changed on rewindowing.  
+
+   If you want the window to remain each time you change the working 
+   window, you can use the Display Options menu (Auto_window) which
+   is available as an option in the Customize menu.
