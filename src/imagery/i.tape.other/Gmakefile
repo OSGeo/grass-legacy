@@ -1,21 +1,29 @@
+SOURCES = main.c ask_format.c ask_window.c bil.c bsq1.c bsq2.c\
+	  mnt_tape.c number.c put_row.c readbil.c readbsq.c\
+	  tapename.c
+
 LIST	= main.o\
 	  ask_format.o\
 	  ask_window.o\
 	  bil.o\
 	  bsq1.o\
 	  bsq2.o\
-	  tapename.o\
 	  mount_tape.o\
 	  put_row.o\
 	  readbil.o\
-	  readbsq.o
+	  readbsq.o\
+	  tapename.o
 
 LIBES= $(IMAGERYLIB) $(GISLIB)
 
 $(BIN_MAIN_INTER)/i.tape.other: $(LIST) $(LIBES) $(VASKLIB)
-	$(CC) $(LDFLAGS) $(LIST) $(LIBES) $(VASK) -o $@
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VASK)
+
+$(LIST):	tape.h
 
 $(LIBES):	# in case library changes
 $(VASKLIB):	# in case library changes
 
-$(LIST):	tape.h
+saber_src:
+	#load $(EXTRA_FLAGS) $(CFLAGS) $(SOURCES) $(IMAGERYLIB) $(VECTLIB)\ 
+	$(GISLIB) $(VASKLIB) $(CURSES) $(TERMCAP) $(MATHLIB)
