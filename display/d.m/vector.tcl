@@ -105,7 +105,7 @@ proc DmVector::create { tree parent } {
 
     set opt($count,attribute) "" 
 
-    set opt($count,_query_attr) 0 
+    set opt($count,_query_text) 0 
 
     DmVector::legend $count
 
@@ -229,8 +229,8 @@ proc DmVector::options { id frm } {
 
     # query
     set row [ frame $frm.query ]
-    checkbutton $row.a -text "Query with attributes" \
-                -variable DmVector::opt($id,_query_attr) 
+    checkbutton $row.a -text "Print query output as text in terminal" \
+                -variable DmVector::opt($id,_query_text) 
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
@@ -245,7 +245,7 @@ proc DmVector::save { tree depth node } {
     foreach key { _check map display_shape display_cat display_topo display_dir display_attr
                   type_point type_line type_boundary type_centroid type_area 
                   color fcolor lcolor icon size field lfield attribute cat where 
-                  _query_attr } {
+                  _query_text } {
         Dm::rc_write $depth "$key $opt($id,$key)"
 
     } 
@@ -346,8 +346,8 @@ proc DmVector::query { node } {
          !$opt($id,type_area) } { return } 
 
     set cmd "d.what.vect map=$opt($id,map)"
-    if { $opt($id,_query_attr) } { 
-        append cmd " -a" 
+    if { $opt($id,_query_text) } { 
+        append cmd " -t" 
     } 
 
     Dm::execute $cmd
