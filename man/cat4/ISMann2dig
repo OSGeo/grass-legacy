@@ -6,44 +6,44 @@ ISMann2dig <contrib> GRASS Reference Manual  <contrib> ISMann2dig
 
 
 NAME
-     ISMann2dig - Converts an ISM annotation data file to a
+     ISMann2dig	- Converts an ISM annotation data file to a
      binary GRASS vector (dig) file.
-     (GRASS Vector Data Import Program)
+     (GRASS Vector Data	Import Program)
 
 SYNOPSIS
      ISMann2dig
-     ISMann2dig help
-     ISMann2dig input=name output=name
+     ISMann2dig	help
+     ISMann2dig	input=name output=name
 
 DESCRIPTION
      This program converts an ISM annotation data file into a
      binary GRASS vector (dig) file.
 
-     ISMann2dig also creates a dig_att file containing the label
+     ISMann2dig	also creates a dig_att file containing the label
      information 'stripped' from the ISM annotation file.
-     However, the user must run v.support (or v.import option 4)
-     on the output file created by ISMann2dig to create a
-     dig_plus file containing the file topology, before using the
+     However, the user must run	v.support (or v.import option 4)
+     on	the output file	created	by ISMann2dig to create	a
+     dig_plus file containing the file topology, before	using the
      output file in v.digit.
 
-COMMAND LINE OPTIONS
+COMMAND	LINE OPTIONS
      Parameters:
 
-     input=name        Name of ISM annotation data input file.
+     input=name	       Name of ISM annotation data input file.
 
      output=name       Name to be assigned to the binary GRASS
-                       vector files created.
+		       vector files created.
 
-     If the user simply types ISMann2dig without specifying
+     If	the user simply	types ISMann2dig without specifying
      parameter values on the command line, the program will
-     prompt the user to enter these.
+     prompt the	user to	enter these.
 
 NOTES
-     GRASS does not currently support multiple line styles and
+     GRASS does	not currently support multiple line styles and
      colors, but any existing text labels in the annotation data
      file are used to identify unique attributes for dig vectors.
 
-     Interactive Surface Modeling (ISM) is a trademark of Dynamic
+     Interactive Surface Modeling (ISM)	is a trademark of Dynamic
      Graphics, Inc., Berkeley, California.
 
 SEE ALSO
@@ -55,12 +55,12 @@ AUTHOR
      Laboratory
 
 NOTICE
-     This program is part of the contrib section of the GRASS
-     distribution.  As such, it is externally contributed code
+     This program is part of the contrib section of the	GRASS
+     distribution.  As such, it	is externally contributed code
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
@@ -71,7 +71,7 @@ ISMann2dig <contrib> GRASS Reference Manual  <contrib> ISMann2dig
 
 
 
-     that has not been examined or tested by the Office of GRASS
+     that has not been examined	or tested by the Office	of GRASS
      Integration.
 
 
@@ -126,7 +126,7 @@ ISMann2dig <contrib> GRASS Reference Manual  <contrib> ISMann2dig
 
 
 
-GRASS 4.1                U.S. Army CERL                         2
+GRASS 4.2		Baylor University			2
 
 
 
