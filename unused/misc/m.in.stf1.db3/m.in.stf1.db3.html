@@ -1,0 +1,86 @@
+<TITLE>m.in.stf1.db3</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+<EM><b>m.in.stf1.db3</b></EM> - Import Demographic records from Census STF1A dBase3 (CDROM) Files
+<br>
+<EM>(GRASS Sites Program)</EM>
+
+<H2>GRASS VERSION</H2>
+4.x, 5.x
+
+<H2>SYNOPSIS</H2>
+<B>m.in.stf1.db3 help</B>
+<br>
+<B>m.in.stf1.db3</B> [<B>-f, -p, -n</B>] <B>sc=</B><EM>string</EM> [ <B>sc=</B><EM>str . . </EM>] <B>in=</B><EM>/cdrom/stf1a0ss.dbf > result_file</EM>
+
+<H2>DESCRIPTION</H2>
+This command may be run in command line mode only.  This program is provided to read and assemble the Census STF1A data records from a set of 10 files for one state.  The files are usually on a CD-ROM, but this is not necessary providing the proper path is given for the in= parameter and all 10 files are in the same directory with their normal names.
+
+<P>
+
+The output consists of data from the 10 input files assembled into records identical to the STF1A tape distribution format.  The output records are each about 4800 characters and a pair constitute a logical STF1A record.
+
+<P>
+
+Users of GRASS 4.1 and the Census STF1A files on CD-ROM will generally use this program to select appropriate subsets of STF1A records; write them to one or more files (in the STF1A tape format); and then either process these files directly with <EM>v.apply.census</EM> to print demographics, create site maps or label vector maps, or use <EM>m.in.stf1.tpe</EM> to extract further subsets.
+
+<P>
+
+The STF1A CD-ROM data sets for most states are very large, 100+ MB.  This program may take 20 to 60 minutes for a single extraction, so plan carefully and don't discard useful subsets that you create on disk.
+
+<P>
+
+<EM>m.in.stf1.tpe</EM> is used as a post-processor to select further subsets of STF1A records.
+NOTE: Unix utility programs such as awk and grep cannot be used for processing the STF1 files due to their very long record lengths.
+
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-f</B>
+<DD>Output to stdout the list of all field name and starting positions for the Identification Section of the STF1A file.  Other parameters are not necessary and will be ignored.
+
+<DT><B>-p</B>
+<DD>Print several information items to stderr as the 10 input files are opened.
+
+<DT><B>-n</B>
+<DD>Output only the sequential number and STF1A logical record number (LOGRECNU) of matching records to stdout.
+</DL>
+
+<H3>Parameters:</H3>
+Parameters used must be in the order specified.
+<P>
+<DL>
+<DT><B>sc=</B><EM>string</EM>
+<DD>sc is starting column or a capitalized reference name from the Identification Section of the STF1A Data Dictionary; string is characters to match there.  A negative test may also be made with: sc!=string.  If more than one test is specified the results are "anded" resulting in a conjunction of the results of the expressions.  (See <EM>m.in.stf1.tpe</EM> for complete details.)
+
+<DT><B>in=</B>
+<DD>Path/file for dBase files for state ss.
+</DL>
+
+<H2>EXAMPLES</H2>
+Insert the appropriate CD-ROM and mount it (see your system administrator).  (We assume here that it is mounted as the file system /cdrom.)
+
+<P>
+
+To extract all Census tract summary records for the state of South Dakota:
+<p>
+<DD><B>m.in.stf1.db3 -p 11=</B><EM>140</EM> <B>in=</B><EM>/cdrom/stf1a0sd.dbf > tracts.SD</EM>
+<p>
+The 11=140 parameter selects those records which have the character string Summary Level (SUMLEV) field which is used in almost every selection from CD-ROM.
+
+<P>
+
+To extract all block group records for Lawrence County, South Dakota:
+<P>
+<DD><B>m.in.stf1.db3 -p SUMLEV=</B><EM>150</EM> <B>CNTY=</B><EM>081</EM> <B>in=</B><EM>/cdrom/stf1a0sd.dbf</EM>
+<P>
+150 is the SUMLEV for block groups and 081 is the county code for Lawrence Co.
+
+<H2>AUTHOR</H2>
+Dr. James Hinthorne, GIS Laboratory, Central Washington University, May 1992.
