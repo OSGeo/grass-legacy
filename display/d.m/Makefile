@@ -23,5 +23,6 @@ $(PROG2): *.gif *.tcl
 	for tcl in $(TCL); do \
 	    cp $$tcl $(ETC)/dm/ ; \
 	done
+	chmod a+x $(ETC)/dm/tksys.tcl
 	cp $(PGM2) $(PROG2)
 	chmod 0755 $(PROG2)
