@@ -92,7 +92,7 @@ FILE=`echo $GIS_OPT_input | sed 's+.hgt++g'| sed 's+.zip++g'`
 TILE=`echo "$FILE" | sed 's+^.*/++'`
 FDIR=`echo "$FILE" | sed 's+[^/]*$++'`
 
-if [ "$GIS_OPT_output" == "" ] ; then
+if [ -z "$GIS_OPT_output" ] ; then
   TILEOUT=$TILE
 else
   TILEOUT=$GIS_OPT_output
