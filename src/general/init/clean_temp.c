@@ -1,5 +1,6 @@
 #include <signal.h>
 #include <unistd.h>
+#include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "gis.h"
@@ -29,12 +30,11 @@ main (int argc, char *argv[])
     int pid;
     int uid;
     int n;
-    int now;
+    time_t now;
     struct stat info;
     long max_age;
 
     FILE *ls, *popen();
-    long time();
 
     G_gisinit(argv[0]) ;
     ppid = 0;
@@ -50,7 +50,7 @@ main (int argc, char *argv[])
 /* get user id and current time in seconds */
 
     uid = getuid () ;
-    now = time(0) ;
+    now = time(NULL) ;
 
 /* set maximum age in seconds (4 days) */
     max_age = 4 * 24 * 60 * 60 ;
