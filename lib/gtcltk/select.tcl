@@ -40,6 +40,7 @@ proc GSelect_::create { element } {
     $tree bindText  <ButtonPress-1>        "GSelect_::select $tree"
     $tree bindImage <ButtonPress-1>        "GSelect_::select $tree"
     $tree bindText  <Double-ButtonPress-1> "GSelect_::selectclose $tree"
+    $tree bindImage <Double-ButtonPress-1> "GSelect_::selectclose $tree"
 
     set location_path "$env(GISDBASE)/$env(LOCATION_NAME)/"
     set current_mapset $env(MAPSET)
