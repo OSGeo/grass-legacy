@@ -4,7 +4,7 @@
 # Generated automatically using autoconf version 2.13 
 # Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
 #
-# $Id: configure,v 1.23 2000-10-05 09:12:26 markus Exp $
+# $Id: configure,v 1.24 2000-10-05 09:22:53 cho Exp $
 # This configure script is free software; the Free Software Foundation
 # gives unlimited permission to copy, distribute and modify it.
 #
@@ -43,9 +43,9 @@ ac_help="$ac_help
 ac_help="$ac_help
   --with-tcltk=DIR        Change default top-level Tcl/Tk directory"
 ac_help="$ac_help
-  --with-tkdir=DIR        Change default top-level Tk directory"
-ac_help="$ac_help
   --with-tcldir=DIR       Change default top-level Tcl directory"
+ac_help="$ac_help
+  --with-tkdir=DIR        Change default top-level Tk directory"
 ac_help="$ac_help
   --with-opengl=DIR       Path to OpenGL directory"
 
@@ -83,7 +83,7 @@ oldincludedir='/usr/include'
 infodir='${prefix}/info'
 mandir='${prefix}/man'
 
-WANT_TKTCL=yes
+WANT_TCLTK=yes
 TKDIR=/usr
 TKLIBDIR=
 TKINCDIR=
@@ -3359,13 +3359,13 @@ if test "${with_tcldir+set}" = set; then
   tcldirdone=1
 fi
 
-# Check whether --with-tktcl or --without-tktcl was given.
-if test "${with_tktcl+set}" = set; then
-  withval="$with_tktcl"
+# Check whether --with-tcltk or --without-tcltk was given.
+if test "${with_tcltk+set}" = set; then
+  withval="$with_tcltk"
   if test "$withval" = "no"; then
-    WANT_TKTCL=$withval
+    WANT_TCLTK=$withval
   else
-    WANT_TKTCL=yes
+    WANT_TCLTK=yes
     if test $tkdirdone -eq 0 -a $tcldirdone -eq 0; then
       TKDIR=$withval
       TCLDIR=$withval
@@ -3374,17 +3374,17 @@ if test "${with_tktcl+set}" = set; then
 fi
 
 if test "${TKDIR}" = "no" -a "${TCLDIR}" = "no"; then
-  WANT_TKTCL=no
+  WANT_TCLTK=no
 fi
 
 
 #TCLTKLIBS=
-if test "$WANT_TKTCL" = "yes"; then
+if test "$WANT_TCLTK" = "yes"; then
     cat >> confdefs.h <<\EOF
-#define WANT_TKTCL 1
+#define WANT_TCLTK 1
 EOF
 
-    WANT_TKTCL="1"
+    WANT_TCLTK="1"
     echo $ac_n "checking for matching Tk/Tcl libraries""... $ac_c" 1>&6
 echo "configure:2632: checking for matching Tk/Tcl libraries" >&5
 
