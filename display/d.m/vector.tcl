@@ -334,7 +334,7 @@ proc DmVector::display { node } {
         append cmd " field=$opt($id,field)" 
     } 
     if { $opt($id,attribute) != "" && $opt($id,display_attr) } { 
-        append cmd " att=$opt($id,attribute) lsize=$opt($id,lsize)" 
+        append cmd " {att=$opt($id,attribute)} lsize=$opt($id,lsize)" 
     } 
     if { $opt($id,lfield) != "" } { 
         append cmd " lfield=$opt($id,lfield)" 
