@@ -16,6 +16,8 @@ static char *help[] =
     "where      x y",
     "font       fontname",
     "fontsize   fontsize",
+    "width	width",
+    "cols	cols",
     ""
 };
 
@@ -24,12 +26,13 @@ read_vlegend (void)
 {	
     char buf[1024];
     char *key, *data;
-    int fontsize;
+    int fontsize, cols;
     double x, y, width;
 
     fontsize = 0;
     x = y = 0.0;
     width = -1;
+    cols = 1;
     while (input(2, buf, help))
     {
 	if (!key_data(buf, &key, &data)) continue;
@@ -65,6 +68,13 @@ read_vlegend (void)
 	    continue;
 	}
 
+	if (KEY("cols"))
+	{
+	    cols = atoi (data);
+	    if (cols < 1 || cols > 10) cols = 1;
+	    continue;
+	}
+
 	error(key, data, "illegal vlegend sub-request");
     }
     vector.x = x;
@@ -73,6 +83,8 @@ read_vlegend (void)
 
     if (width > 0) vector.width = width;
     else vector.width = 3 * fontsize / 72.0;
+
+    vector.cols = cols;
 
     return 0;
 }
