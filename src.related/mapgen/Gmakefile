@@ -1,0 +1,36 @@
+###########################################################
+
+
+###########################################################
+#  %W%  %G%
+# set variables to appropriate path
+GRAPH=$(GISBASE)/mapgen
+MAPGEN_BIN=$(GRAPH)/interface
+BIN=$(GRAPH)/bin
+
+
+
+all:  START
+	$(GMAKE) SCS/libes
+	$(GMAKE) SCS/plotter
+	$(GMAKE) SCS/dig.to.geo
+	$(GMAKE) SCS/get.coord
+	$(GMAKE) SCS/make.grid
+	$(GMAKE) SCS/make.arrow
+	$(GMAKE) SCS/make.barscale
+	$(GMAKE) SCS/make.legend
+	$(GMAKE) SCS/make.text
+	$(GMAKE) SCS/make.box
+	$(GMAKE) SCS/make.line
+	$(GMAKE) SCS/make.fill
+	$(GMAKE) SCS/make.mapdef
+	$(GMAKE) SCS/sym_labels
+	$(GMAKE) SCS/misc
+	$(GMAKE) SCS/make.soilquad
+	$(GMAKE) SCS/man
+	$(GMAKE) man/cat
+	$(GMAKE) ../../src.contrib/SCS/misc/FIPS_proj
+	$(GMAKE) ../../src.contrib/SCS/misc/g.setproj
+
+START:
+	./INSTALL $(GISBASE) $(LIBARCH)
