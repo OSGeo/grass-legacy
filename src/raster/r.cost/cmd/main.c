@@ -128,6 +128,24 @@ int main (int argc, char *argv[])
 /*  	opt6->answer     = ""; */
 	opt6->description= "Cost assigned to null cells. By defaults, null cells are excluded";
 
+	opt6 = G_define_option() ;
+	opt6->key        = "null_cost" ;
+	opt6->type       = TYPE_DOUBLE;
+	opt6->key_desc   = "null cost" ;
+	opt6->required   = NO;
+	opt6->multiple   = NO;
+/*  	opt6->answer     = ""; */
+	opt6->description= "Cost assigned to null cells. By defaults, null cells are excluded";
+
+	opt6 = G_define_option() ;
+	opt6->key        = "null_cost" ;
+	opt6->type       = TYPE_DOUBLE;
+	opt6->key_desc   = "null cost" ;
+	opt6->required   = NO;
+	opt6->multiple   = NO;
+/*  	opt6->answer     = ""; */
+	opt6->description= "Cost assigned to null cells. By defaults, null cells are excluded";
+
 	flag1 = G_define_flag();
 	flag1->key = 'v';
 	flag1->description = "Run verbosly";
@@ -135,6 +153,14 @@ int main (int argc, char *argv[])
 	flag2 = G_define_flag();
 	flag2->key = 'k';
 	flag2->description = "Use the 'Knight's move'; slower, but more accurate";
+
+	flag3 = G_define_flag();
+	flag3->key = 'n';
+	flag3->description = "Keep null values in output map";
+
+	flag3 = G_define_flag();
+	flag3->key = 'n';
+	flag3->description = "Keep null values in output map";
 
 	/* initalize access to database and create temporary files */
 
@@ -176,6 +202,12 @@ int main (int argc, char *argv[])
 	else
 		total_reviewed =  8 ;
 
+	keep_nulls = flag3->answer;
+
+
+	keep_nulls = flag3->answer;
+
+
 	have_start_points = process_answers(opt3->answers, &head_start_pt) ;
 
 	have_stop_points  = process_answers(opt4->answers, &head_end_pt) ;
@@ -193,6 +225,46 @@ int main (int argc, char *argv[])
 		if (verbose)
 			fprintf(stderr,"Null cells excluded.\n");
 		null_cost = INFINITY;
+	}
+	
+ 
+	if ((opt6->answer == NULL) ||(sscanf(opt6->answer, "%lf", &null_cost) != 1))
+	{
+		if (verbose)
+			fprintf(stderr,"Null cells excluded from cost evaluation.\n");
+		null_cost = INFINITY;
+	} 
+	else if (verbose && keep_nulls)
+			fprintf(stderr,"Input null cell will be retained into output map\n");
+
+
+	if(isfinite(null_cost)) {
+		if (null_cost <0.0) {
+			printf("Warning: assigning negative cost to null cell. Null cells excluded.\n"); 
+			null_cost = INFINITY;
+		}
+	} else {
+		keep_nulls = 0; /* handled automagically... */
+	}
+	
+ 
+	if ((opt6->answer == NULL) ||(sscanf(opt6->answer, "%lf", &null_cost) != 1))
+	{
+		if (verbose)
+			fprintf(stderr,"Null cells excluded from cost evaluation.\n");
+		null_cost = INFINITY;
+	} 
+	else if (verbose && keep_nulls)
+			fprintf(stderr,"Input null cell will be retained into output map\n");
+
+
+	if(isfinite(null_cost)) {
+		if (null_cost <0.0) {
+			printf("Warning: assigning negative cost to null cell. Null cells excluded.\n"); 
+			null_cost = INFINITY;
+		}
+	} else {
+		keep_nulls = 0; /* handled automagically... */
 	}
 
 	if(isfinite(null_cost))
@@ -482,8 +554,11 @@ int main (int argc, char *argv[])
  *   3) Free the memory allocated to the present cell.
  */
 
-	if (verbose)
+
+	if (verbose) {
+			system("date");
 		fprintf (stderr, "Finding cost path\n");
+	}
 	n_processed = 0;
 	total_cells = nrows * ncols ;
 	at_percent = 0;
