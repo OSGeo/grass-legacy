@@ -61,7 +61,7 @@ echo ''
 $ECHON "Want to rename $name.2 to $name (overwriting the original map)? (n) "
 read ans
 if [ "$ans" = "Y" -o "$ans" = "y" ] ; then
-  g.rename vect=$name.2,$name
+  g.rename -o vect=$name.2,$name
   echo ''
   echo "$name now contains line vectors instead of area vectors."
 else
