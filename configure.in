@@ -320,7 +320,7 @@ if test -z "$TCLINCDIR" && test -z "$HAVE_TCL_H"; then
 			for dir in $tk_try; do
 				if test -z "$TCLINCDIR" && test -d "$my_dir/$dir" && test -f "$my_dir/$dir/tcl.h"; then
 					TCLINCDIR="-I$my_dir/$dir"
-					tcltk_ver=$(grep '#define TCL_VERSION' "$my_dir/$dir/tcl.h" | sed -e 's/^\(.*\)\"\(.*\)\"/\2/' )
+					tcltk_ver=$(grep '#define TCL_VERSION' "$my_dir/$dir/tcl.h" | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/' )
 				fi
 			done
 		fi
@@ -496,20 +496,13 @@ if test "$pg_includes"; then
 fi
 
 if test "$pg_libs"; then
-	AC_MSG_CHECKING(libpq)
+	AC_MSG_CHECKING(libpq path)
 	for dir in $pg_libs; do
-		if test -z "$PQLIB" && test -d "$dir"; then
-			ac_save_ldflags=${LDFLAGS}
-			LDFLAGS="-L$dir"
-			AC_CHECK_LIB(pq,PQcmdTuples,
-			[ 
-			  PQLIB=-lpq
+		if test -d "$dir"; then
 			  PQLIBPATH="$PQLIBPATH -L$dir"
-			])
-			LDFLAGS=${ac_save_ldflags}
 		fi
 	done
-	AC_MSG_RESULT($PQLIBPATH $PQLIB)
+	AC_MSG_RESULT($PQLIBPATH)
 fi
 
 # If enabled but no paths given, look in our search paths
@@ -527,25 +520,22 @@ if test "$enable_POSTGRES"; then
 			AC_MSG_WARN([*** libpq-fe.h not found, but needed for PostgreSQL support])
 		fi
 	fi
-	if test -z "$PQLIB"; then
+	if test -z "$PQLIBPATH"; then
 		my_pglib_path="/usr/lib /usr/local/lib /usr/local/pgsql/lib /usr/lib/pgsql /usr/lib/postgres /opt/pgsql/lib"
+		AC_MSG_CHECKING(libpq paths)
 		for dir in $my_pglib_path; do
-			if test -z "$PQLIB" && test -d "$dir"; then
-				ac_save_ldflags=${LDFLAGS}
-				LDFLAGS="-L$dir"
-				AC_CHECK_LIB(pq,PQcmdTuples,
-				[
-				  PQLIB=-lpq
+			if test -d "$dir"; then
 				  PQLIBPATH="$PQLIBPATH -L$dir"
-				])
-				LDFLAGS=${ac_save_ldflags}
 			fi
 		done
-		if test -z "$PQLIB"; then
-			AC_MSG_WARN([*** library 'pq' not found, but needed for PostgreSQL support])
-		fi
+		AC_MSG_RESULT($PQLIBPATH)
 	fi
 fi
+
+ac_save_ldflags=${LDFLAGS}
+LDFLAGS="$LDFLAGS $PQLIBPATH"
+AC_CHECK_LIB(pq,PQcmdTuples, PQLIB=-lpq)
+LDFLAGS=${ac_save_ldflags}
 
 # Done with PostgreSQL
 AC_SUBST(PQINCPATH)
@@ -617,58 +607,33 @@ fi
 
 if test "$opengl_libs"; then
 	for dir in $opengl_libs; do
-		if test -z "$OPENGLLIB" && test -d "$dir"; then
-			ac_save_ldflags=${LDFLAGS}
-			LDFLAGS="-L$dir"
-			AC_CHECK_LIB(GL,glBegin,
-			[
-			  OPENGLLIB="$OPENGLLIB -L$dir -lGL"
-			])
-			LDFLAGS=${ac_save_ldflags}
-		fi
-		if test -z "$OPENGLULIB" && test -d "$dir"; then
-			ac_save_ldflags=${LDFLAGS}
-			LDFLAGS="$LDFLAGS -L$dir $OPENGLLIB"
-			AC_CHECK_LIB(GLU,gluBeginCurve,
-			[
-			  OPENGLULIB="$OPENGLULIB -L$dir -lGLU"
-			])
-			LDFLAGS=${ac_save_ldflags}
-		fi
-# This is not working...
-#		if test -z "$LGLWM" && test -d "$dir"; then
-#			ac_save_ldflags=${LDFLAGS}
-#			LDFLAGS="$LDFLAGS -L/usr/X11R6/lib -lXm -L$dir $OPENGLLIB $OPENGLULIB"
-#			AC_CHECK_LIB(GLwM,GLwCreateMDrawingArea,
-#			[
-#			  LGLWM="$LGLWM -L$dir -lGLwM"
-#			])
-#			AC_CHECK_LIB(MesaGLwM,GLwCreateMDrawingArea,
-#			[
-#			  LGLWM="$LGLWM -L$dir -lMesaGLwM"
-#			])
-#			LDFLAGS=${ac_save_ldflags}
-#		fi
-		if test "$OPENGLLIB" && test "$OPENGLULIB" && test "$OPENGLwINC"; then
-			LGLWM=-lGLwM
+		if test -d "$dir"; then
+			OPENGLLIB="$OPENGLLIB -L$dir"
 		fi
 	done
-	if test -z "$OPENGLLIB"; then
-		AC_MSG_ERROR([*** libGL not found, though required])
-	fi
-	if test -z "$OPENGLULIB"; then
-		AC_MSG_ERROR([*** libGLU not found, though required])
-	fi
-	if test -z "LGLWM"; then
-		AC_MSG_ERROR([*** libGLwM not found, though required])
-	fi
 fi
 
+ac_save_ldflags="$LDFLAGS"
+LDFLAGS="$OPENGLLIB"
+AC_CHECK_LIB(GL,glBegin,OPENGLLIB="$OPENGLLIB -lGL")
+LDFLAGS=${ac_save_ldflags}
+
+ac_save_ldflags="$LDFLAGS"
+LDFLAGS="$LDFLAGS $OPENGLLIB"
+AC_CHECK_LIB(GLU,gluBeginCurve, OPENGLULIB="-lGLU")
+LDFLAGS=${ac_save_ldflags}
+
+ac_save_ldflags="$LDFLAGS"
+LDFLAGS="$LDFLAGS $OPENGLLIB $OPENGLULIB $X_LIBS -lXt -lXm"
+AC_CHECK_LIB(GLw,GLwDrawingAreaMakeCurrent,LGLWM=-lGLw)
+AC_CHECK_LIB(GLwM,GLwCreateMDrawingArea,LGLWM="$LGLWM -lGLwM")
+LDFLAGS=${ac_save_ldflags}
 
 AC_SUBST(OPENGLINC)
 AC_SUBST(OPENGLwINC)
 AC_SUBST(OPENGLLIB)
 AC_SUBST(OPENGLULIB)
 AC_SUBST(LGLWM)
+#End of OpenGL tests
 
 AC_OUTPUT(Makefile src/CMD/head/head src/scripts/shells/create_fifos.sh)
