@@ -25,7 +25,7 @@
 
 int sqpPrintStmt(SQLPSTMT *st)
 {
-    int i;
+    int i, c_group = 0;
 
     fprintf( stderr, "********** SQL PARSER RESULT **********\n" );
     fprintf( stderr, "INPUT: %s\n", sqlpStmt->stmt );
@@ -109,7 +109,11 @@ int sqpPrintStmt(SQLPSTMT *st)
     /* comparisons */
     for (i=0; i < st->nCom; i++)
       {	    
-        fprintf( stderr, "COMPARISON %2d: ", i+1);
+        if (c_group < sqlpStmt->ComGrp[i])
+	    fprintf( stderr, "OR-clause group number: %d\n", sqlpStmt->ComGrp[i]);
+	c_group = sqlpStmt->ComGrp[i];
+
+	fprintf( stderr, "COMPARISON %2d: ", i+1);
         fprintf( stderr, "column:%s ", sqlpStmt->ComCol[i].s);
     
         fprintf( stderr, "operator:");

@@ -58,6 +58,8 @@ typedef struct
     SQLPVALUE *ComCol; /* comparison columns */
     int	      *ComOpe;    /* comparison operators */
     SQLPVALUE *ComVal; /* comparison values */
+    int       numGroupCom; /* number of comparison groups */
+    int       *ComGrp;   /*number of current group*/
 } SQLPSTMT;
 
 int	my_yyinput(char *buf, int max_size);
@@ -82,6 +84,7 @@ void sqpColumnDef( char *column, int type, int width, int decimals );
 void sqpValue( char *strval, int intval, double dblval, int type );
 void sqpAssignment( char *column, char *strval, int intval, double dblval, int type );
 void sqpComparison( char *column, char *oper, char *strval, int intval, double dblval, int type );
+void sqpGroupIncrement( void );
 
 #ifdef SQLP_MAIN
 SQLPSTMT *sqlpStmt;
