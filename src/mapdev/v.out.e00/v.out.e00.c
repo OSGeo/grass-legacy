@@ -263,12 +263,15 @@ int main( int argc, char *argv[])
 		    break;
 		}
 	    }
-	    if (npts == np_old) /* oops, we are in a loop! should never happen */
-		break;          /* dirty exit - must put a warning here */
+	    if (npts == np_old) {	/* oops, a loop! should never happen */
+		fprintf( stderr,
+			"Oops ! loop while creating universe polygon\n");
+		break;
+	    }
 	}
 	/* new segment, put 0 0 0 here */
 	if (stack == (struct Univ *)NULL)
-	    return npts;
+	    break;
 	pu = (struct Univ *)G_malloc( sizeof(struct Univ));
 	current->next = pu;
 	pu->line = 0;
