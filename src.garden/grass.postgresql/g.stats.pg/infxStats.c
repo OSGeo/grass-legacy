@@ -4,6 +4,8 @@
 #include <libpq-fe.h>
 #include <stdlib.h>
 #include <string.h>
+#include "glocale.h" /*March 02*/
+
 /*A.Sh 12.99*/
 
 
@@ -29,7 +31,7 @@ int infxStats(tab, col, freq, where, verbose)
         
     pg_conn = PQsetdb(pghost,NULL, NULL,NULL,G_getenv("PG_DBASE"));
     if (PQstatus (pg_conn) == CONNECTION_BAD) {
-      fprintf (stderr, "Error: select Postgres:%s\n",PQerrorMessage(pg_conn));
+      fprintf (stderr, _("Error: select Postgres:%s\n"),PQerrorMessage(pg_conn));
       PQfinish(pg_conn);
       exit (-1); 
     }
@@ -60,7 +62,7 @@ int infxStats(tab, col, freq, where, verbose)
 
     res = PQexec (pg_conn, SQL_stmt);
     if ( PQresultStatus (res) != PGRES_TUPLES_OK ) {
-      printf ("Error: connect Postgres:%s\n",PQerrorMessage(pg_conn)); 
+      printf (_("Error: connect Postgres:%s\n"),PQerrorMessage(pg_conn)); 
       PQfinish(pg_conn);
       exit (-1);      
     }

@@ -1,7 +1,8 @@
 PGM       = $(BIN_CMD)/g.stats.pg
 LIBES     = $(GISLIB)
-EXTRA_CFLAGS = $(PQINCPATH)
-#EXTRA_CFLAGS	= -Dunlink=puts
+PACKAGE = "g.stats.pg"
+DEFS = -Wall -DPACKAGE=\"$(PACKAGE)\"
+EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS)
 
 OBJS = \
 	main.o \
