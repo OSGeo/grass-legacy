@@ -162,10 +162,8 @@ PAINT_TRACE
 
 GRASS_PAN_THRESHOLD
 [v.digit]
-  auto-pan moving speed
-  
-PATH
-  current directory
+  auto-pan moving speed. Auto panning can be set off by setting
+  GRASS_PAN_THRESHOLD=0
 
 PGSQL - not found in source 20/02/01
 
