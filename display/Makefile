@@ -6,6 +6,7 @@ SUBDIRS = \
 	d.erase \
 	d.m \
 	d.mon \
+	d.rast \
 	d.vect \
 	d.what.vect \
 	d.zoom
