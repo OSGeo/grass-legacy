@@ -62,8 +62,6 @@
 #include "projects.h"
 #include "r.proj.h"
 
-extern void set_datumshift(char *, char *, char *, char *);
-
 /* modify this table to add new methods */
 struct menu menu[] = {
 	{ p_nearest,	"nearest",	"nearest neighbor" },
@@ -79,11 +77,7 @@ int main (int argc, char **argv)
 	char     *mapname,		 /* ptr to name of output layer	 */
 	         *setname,		 /* ptr to name of input mapset	 */
 	         *ipolname,		 /* name of interpolation method */
-	          errbuf[256],		 /* buffer for error messages	 */
-		 *in_datum,		 /* data and ellipses for datum  */
-		 *in_ellipse,		 /* conversion */
-		 *out_datum,
-		 *out_ellipse;
+	          errbuf[256];		 /* buffer for error messages	 */
 
 	int       fdi,			 /* input map file descriptor	 */
 	          fdo,			 /* output map file descriptor	 */
@@ -138,7 +132,7 @@ int main (int argc, char **argv)
 
 	module = G_define_module();
 	module->description =
-		"re-project a raster map from one location to the current location (no datum transformation yet)";
+		"re-project a raster map from one location to the current location.";
 
 
 	inmap = G_define_option();
@@ -230,12 +224,6 @@ int main (int argc, char **argv)
 	if (pj_get_kv(&oproj, out_proj_info, out_unit_info) < 0)
 		G_fatal_error("Can't get projection key values of output map");
 
-	out_datum = G_database_datum_name();
-	out_datum = out_datum ? G_store(out_datum) : "";
-
-	out_ellipse = G_database_ellipse_name();
-	out_ellipse = out_ellipse ? G_store(out_ellipse) : "";
-
 	/* Change the location 		 */
 	G__create_alt_env();
 	G__setenv("GISDBASE", indbase->answer ? indbase->answer : G_gisdbase());
@@ -275,23 +263,12 @@ int main (int argc, char **argv)
 
 	/* this call causes r.proj to read the entire map into memeory */
 	G_get_cellhd(inmap->answer, setname, &incellhd);
-	/* this call causes r.proj to use the WIND file settings */
-	/*G_get_window(&incellhd);*/
 
 	G_set_window(&incellhd);
 	cell_type = G_raster_map_type(inmap->answer, setname);
 
 	if (G_projection() == PROJECTION_XY)
 		G_fatal_error("Can't work with xy data");
-
-	in_datum = G_database_datum_name();
-	in_datum = in_datum ? G_store(in_datum) : "";
-
-	in_ellipse = G_database_ellipse_name();
-	in_ellipse = in_ellipse ? G_store(in_ellipse) : "";
-
-	/* determine which do_proj function to use */
-	set_datumshift(in_datum, in_ellipse, out_datum, out_ellipse);
 
 	/* Save default borders so we can show them later */
 	inorth = incellhd.north;
@@ -343,7 +320,7 @@ int main (int argc, char **argv)
 		for(col=0;col<incellhd.cols;col++)
 		{
 			xcoord1=G_col_to_easting((double)(col+0.5),&incellhd);
-			proj_f(&xcoord1,&ycoord1,&iproj,&oproj);
+			pj_do_proj(&xcoord1,&ycoord1,&iproj,&oproj);
 			if(xcoord1>outcellhd.east)outcellhd.east=xcoord1;
 			if(ycoord1>outcellhd.north)outcellhd.north=ycoord1;
 			if(xcoord1<outcellhd.west)outcellhd.west=xcoord1;
@@ -420,7 +397,7 @@ int main (int argc, char **argv)
 		{
 			/* project coordinates in output matrix to	 */
 			/* coordinates in input matrix			 */
-			if (proj_f(&xcoord1, &ycoord1, &oproj, &iproj) < 0)
+			if (pj_do_proj(&xcoord1, &ycoord1, &oproj, &iproj) < 0)
 				G_set_null_value(obufptr, 1, cell_type);
 			else
 			{
