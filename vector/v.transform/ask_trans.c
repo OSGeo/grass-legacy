@@ -25,9 +25,11 @@
 */
 
 #include <unistd.h>
-#include    <stdio.h>
-#include    "trans.h"
+#include <stdio.h>
+#include "gis.h"
+#include "trans.h"
 #include "vask.h"
+#include "glocale.h"
 
 static int shrink_map_coor (void);
 
@@ -78,7 +80,7 @@ int ask_transform_coor (int n_points)
 	if (!V_call()) 
 	{
 		V_exit ();
-		fprintf(stderr,"ask_transform_coor():  Leaving session.. \n");
+		G_message ( _("ask_transform_coor():  Leaving session.. \n"));
 		sleep(2);
 		return(-1);
 	}

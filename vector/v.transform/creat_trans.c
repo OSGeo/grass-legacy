@@ -66,7 +66,7 @@ while (! ok)
 
 	if (status != ALL_OK )
 	{
-		fprintf (stdout," Number of points that have been entered: %d\n", n_points );
+		G_message ( _(" Number of points that have been entered: %d\n"), n_points );
 		print_transform_error(status) ;
 		continue ;
 	}
@@ -87,8 +87,7 @@ yes_no_quest (char *s)
     char buff[200];
     while (1)
     {
-	fprintf (stdout,"%s",s);
-        fflush (stdout);
+	G_message ( _("%s"),s);
 	if (NULL == fgets(buff,200,stdin))
 		exit(-1) ;
 	switch (*buff)
@@ -98,7 +97,7 @@ yes_no_quest (char *s)
 	    case 'N': case 'n':
 		return(0);
 	    default:
-		fprintf (stdout,"Please answer yes or no");
+		G_message ( _("Please answer yes or no"));
 	}
     }
 }
@@ -121,7 +120,7 @@ create_transform_from_file (struct file_info *Coord, int quiet)
 
 	if (status != ALL_OK )
 	{
-		G_message ( _("Number of points that have been entered: %d"), n_points );
+		G_message ( _("Number of points that have been entered: %d\n"), n_points );
 		print_transform_error(status) ;
 		exit(-1) ;
 	}

@@ -33,6 +33,7 @@
 #include "Vect.h"
 #include "dbmi.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int main (int argc, char *argv[])
 {
@@ -162,13 +163,13 @@ int main (int argc, char *argv[])
 	/* open coord file */
 	if ( Coord.name[0] != '\0' ){
 	    if ( (Coord.fp = fopen(Coord.name, "r"))  ==  NULL) 
-		G_fatal_error ("Could not open file with coordinates : %s\n", Coord.name) ;
+		G_fatal_error ( _("Could not open file with coordinates : %s\n"), Coord.name) ;
 	}
     }
     
     /* open vectors */
     if ( (mapset = G_find_vector2 ( old->answer, "")) == NULL)
-	G_fatal_error ("Could not find input map <%s>\n", old->answer);
+	G_fatal_error ( _("Could not find input map <%s>\n"), old->answer);
     
     Vect_open_old(&Old, old->answer, mapset);
 
@@ -190,7 +191,7 @@ int main (int argc, char *argv[])
     sprintf (buf, "transformed from %s", old->answer);
     Vect_set_map_name ( &New, buf);
     
-    Vect_set_scale ( &New, 0.0 );
+    Vect_set_scale ( &New, 0 );
     Vect_set_zone ( &New, 0 );
     Vect_set_thresh ( &New, 0.0 );
     
@@ -201,7 +202,8 @@ int main (int argc, char *argv[])
 		fclose( Coord.fp) ;
     }
     
-    if (!quiet_flag->answer) fprintf (stdout,"\nNow transforming the vectors ...\n") ;
+    if (!quiet_flag->answer)
+       G_message ( _("\nNow transforming the vectors ...\n"));
     
     Vect_get_map_box (&Old, &box );
     if (tozero_flag->answer)
@@ -219,15 +221,15 @@ int main (int argc, char *argv[])
     if (!quiet_flag->answer) Vect_build (&New, stdout); else Vect_build (&New, NULL);
 
     Vect_get_map_box (&New, &box );
-    fprintf (stdout,"New vector map <%s> boundary coordinates:\n", new->answer);
-    fprintf (stdout, " N: %-10.3f    S: %-10.3f\n", box.N, box.S);
-    fprintf (stdout, " E: %-10.3f    W: %-10.3f\n", box.E, box.W);
-    fprintf (stdout, " B: %6.3f    T: %6.3f\n", box.B, box.T);
+    G_message ( _("New vector map <%s> boundary coordinates:\n"), new->answer);
+    G_message ( _(" N: %-10.3f    S: %-10.3f\n"), box.N, box.S);
+    G_message ( _(" E: %-10.3f    W: %-10.3f\n"), box.E, box.W);
+    G_message ( _(" B: %6.3f    T: %6.3f\n"), box.B, box.T);
 
     Vect_close (&New);
 
     if (!quiet_flag->answer)
-	    fprintf (stdout,"'%s' has finished the transformation of the vectors.\n", argv[0]) ;
+	    G_message ( _("'%s' has finished the transformation of the vectors.\n"), argv[0]) ;
 
     exit(0) ;
 }
