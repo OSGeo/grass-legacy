@@ -1,0 +1,14 @@
+The AGNPS uses r.cn2 instead of r.cn.
+
+r.cn2 is slightly improved.
+6/2000
+ Code structure update to have parameter query
+ in common GRASS coding style.
+
+12/96
+
+ Changes:  added landuse "water" (data.c)
+           corrected import of landuse "fallow" ("good condition") (rules.c)
+
+Markus Neteler
+email: neteler@geog.uni-hannover.de
