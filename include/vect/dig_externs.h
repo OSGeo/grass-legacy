@@ -14,7 +14,7 @@ float dig_calc_begin_angle (struct line_pnts *, double);
 float dig_calc_end_angle (struct line_pnts *, double);
 int dig_line_degenerate ( struct line_pnts *);
 char *dig_float_point (char *, int, double);
-//double dig_point_in_area (struct Map_info *, double, double, P_AREA *);
+/* double dig_point_in_area (struct Map_info *, double, double, P_AREA *); */
 double dig_x_intersect (double, double, double, double, double);
 double dig_point_in_poly (double, double, struct line_pnts *);
 double dig_distance2_point_to_line (double, double, double, double, double, double, double, double, double, 
@@ -41,7 +41,7 @@ struct dig_head *dig__get_head (void);
 void dig_init_portable (struct Port_info *, int);
 int dig__byte_order_out ();
 
-//int dig__set_cur_head (struct dig_head *);
+/* int dig__set_cur_head (struct dig_head *); */
 int dig_set_cur_port (struct Port_info *);
 int dig__write_head (struct Map_info *);
 int dig__read_head (struct Map_info *);
@@ -71,7 +71,7 @@ int dig_area_add_isle (struct Plus_head *, int, int);
 int dig_area_del_isle (struct Plus_head *, int, int);
 int dig_del_area (struct Plus_head *, int );
 int dig_angle_next_line (struct Plus_head *, plus_t, int, int);
-//int dig_area_bound_box (struct Map_info *, P_AREA *);
+/* int dig_area_bound_box (struct Map_info *, P_AREA *); */
 int dig_bound_box2 (struct line_pnts *, double *, double *, double *, double *, long);
 int dig_box_copy (BOUND_BOX *, BOUND_BOX *);
 int dig_box_extend (BOUND_BOX *, BOUND_BOX *);
@@ -84,15 +84,15 @@ int dig_isle_set_box (struct Plus_head *, plus_t, BOUND_BOX *);
 int dig_isle_get_box (struct Plus_head *, plus_t, BOUND_BOX *);
 
 int dig_is_line_degenerate (struct line_pnts *, double);
-//int dig_check_nodes (struct Map_info *, struct new_node *, struct line_pnts *);
-  //int dig_in_area_bbox (P_AREA *, double, double);
+/* int dig_check_nodes (struct Map_info *, struct new_node *, struct line_pnts *);
+int dig_in_area_bbox (P_AREA *, double, double); */
 int dig_start_clock (long *);
 int dig_stop_clock (long *);
 char *dig_stop_clock_str (long *);
 int dig_write_file_checks (FILE *, struct Plus_head *);
 int dig_do_file_checks (struct Map_info *, char *, char *);
-//int dig_find_area (struct Map_info *, P_AREA *, double *, double *, double *, double);
-//int dig_find_area2 (struct Map_info *, P_AREA *, double *);
+/* int dig_find_area (struct Map_info *, P_AREA *, double *, double *, double *, double);
+int dig_find_area2 (struct Map_info *, P_AREA *, double *); */
 int dig_find_area_poly (struct line_pnts *, double *);
 int dig_get_poly_points ( int, struct line_pnts **, int *, struct line_pnts *);
 int dig_add_isle (struct Plus_head *, int, plus_t *);
@@ -108,7 +108,7 @@ int dig_map_to_head (struct Map_info *, struct Plus_head *);
 int dig_head_to_map (struct Plus_head *, struct Map_info *);
 int dig_spindex_init ( struct Plus_head *);
 
-//int dig_snap_line_to_node (struct Map_info *, int, int, struct line_pnts *);
+/* int dig_snap_line_to_node (struct Map_info *, int, int, struct line_pnts *); */
 
 int dig_add_node (struct Plus_head *, double, double, double );
 int dig_which_node (struct Plus_head *, double, double, double);
@@ -117,8 +117,8 @@ int dig_del_line (struct Plus_head *, int );
 int dig_node_add_line (struct Plus_head *, int, int, struct line_pnts *, int);
 float dig_node_line_angle ( struct Plus_head *, int , int );
 int dig_node_angle_check (struct Plus_head *, int, int );
-//int dig_node_del_line (struct Plus_head *plus, int node, int line);
-//int dig_add_line_to_node (int, int, char, struct Map_info *, struct line_pnts *);
+/* int dig_node_del_line (struct Plus_head *plus, int node, int line);
+int dig_add_line_to_node (int, int, char, struct Map_info *, struct line_pnts *); */
 int dig_point_to_area (struct Map_info *, double, double);
 int dig_point_to_next_area (struct Map_info *, double, double, double *);
 int dig_point_to_line (struct Map_info *, double, double, char);
@@ -163,12 +163,12 @@ int dig_read_spidx_lines ( FILE *, struct Plus_head *);
 int dig_read_spidx_areas ( FILE *, struct Plus_head *);
 int dig_read_spidx_isles ( FILE *, struct Plus_head *);
 */
-//int dig_in_line_bbox (P_LINE *, double, double);
+/* int dig_in_line_bbox (P_LINE *, double, double); */
 int dig_check_dist (struct Map_info *, int, double, double, double *);
 int dig__check_dist (struct Map_info *, struct line_pnts *, double, double, double *);
-//int dig_center_check (P_LINE *, int, int, double, double);
+/* int dig_center_check (P_LINE *, int, int, double, double); */
 int dig_point_by_line (struct Map_info *, double, double, double, double, char);
-//int dig_by_line_bbox (P_LINE *, double, double, double, double);
+/* int dig_by_line_bbox (P_LINE *, double, double, double, double); */
 int dig_prune (struct line_pnts *, double);
 int dig_write_head_ascii (FILE *, struct dig_head *);
 int dig_read_head_ascii (FILE *, struct dig_head *);
