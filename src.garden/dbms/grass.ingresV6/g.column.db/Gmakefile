@@ -1,0 +1,24 @@
+MAN	  = doc/g.column.db
+#PGM       = $(BIN_CONTRIB_CMD)/g.column.db
+PGM       = g.column.db
+LIBES     = $(GISLIB) $(VASKLIB) -ltermcap
+
+
+
+OBJS = \
+	main.o \
+	ingresColumn.o \
+	ingresUtils.o \
+	delcr.o
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB)
+	#cp $(MAN)  $(GISBASE)/man/4
+$(LIBES): #
+#####################################
+#
+	ctags *.[ch]
+	sed 's/\?/\//g' tags > tags.tmp
+	mv tags.tmp tags
+
