@@ -1,67 +1,61 @@
 <h2>DESCRIPTION</h2>
 
-<em>v.build.polylines</em> builds polylines from the lines in a binary vector 
-file. It outputs the polylines in either binary or ASCII vector format, and if 
-requested, copies the attribute and category files from the original file.
-
+<em>v.build.polylines</em> builds polylines from the lines in a binary vector file. 
+<!-- ???? and copies the attribute and category files from the original file. -->
+<P>
 A line is a single straight line segment defined by one start node, one end 
 node and no other nodes. A polyline is also defined by one start node, one end 
 node and no other nodes, but is made of two or more consecutive straight line 
 segments. The connections between the constituent line segments of a polyline 
 do not appear as nodes in the vector map.
-
+<P>
 Polylines provide the most appropriate representation of curved lines when it 
 is important that nodes serve to define topology rather than geometry. Curved 
 lines are usually digitized as polylines, but these are sometimes broken into 
 their constituent straight line segments during conversion from one data 
-format to another. v.build.polylines can be used to rebuild such broken 
+format to another. <em>v.build.polylines</em> can be used to rebuild such broken 
 polylines. 
 
 <h2>NOTES</h2>
-
-For full functionality <i>v.build.polylines </i> requires <i>v.build</i> and 
-<i>v.in.ascii </i>. 
-
 <p>
 
+<!-- begin untrue?? -->
 If the lines that make up a polyline are of different types, then 
-<i>v.build.polylines 
-
-</i> will set the type from the first constituent line.  
-<i>v.build.polylines </i> will issue a warning unless the flag <i>-q </i> has 
-been set.  It is possible to keep a list of all such warnings by redirecting 
+<i>v.build.polylines</i> will set the type from the first constituent line.  
+<i>v.build.polylines </i> will issue a warning unless the flag <b>-q</b> has 
+been set. It is possible to keep a list of all such warnings by redirecting 
 standard output to a file. 
-
+<!-- end untrue ??-->
 <p>
 
 If the lines that make up a polyline have different attribute values 
-then <i>v.build.polylines </i> will set the attribute value of the polyline to 
-that of the last line (this is the behaviour of  <i>v.build </i>, which is 
-used to assign the attribute values).  
+then <i>v.build.polylines</i> will set the attribute value of the polyline to 
+that of the last line <!-- still true?? --> (this is the behaviour of 
+<i>v.build</i>, which is used to assign the attribute values). <!-- untrue?? -->
 
 <p>
-
-<i>v.build.polylines </i> correctly 
-handles <i>input </i> maps containing lines, area edges and points.  Lines and 
-area edges will be converted to polylines  of the desired type.  Areas 
+<i>v.build.polylines</i> correctly 
+handles <b>input</b> maps containing lines, area edges and points. Lines and 
+area edges will be converted to polylines of the desired type.  Areas 
 are only guaranteed to be preserved if the  constituent lines of the polylines 
-that define them are all area edges in  the input map. Points will remain 
-points provided that <i>type </i> has been set to `source'.  It is possible to 
-convert lines and area edges to points or vice versa, but this is rarely useful. 
+that define them are all area edges in the input map.
+
+<!-- Points will remain points provided that <b>type</b> has been set to `source'.
+It is possible to convert lines and area edges to points or vice versa, but this 
+is rarely useful.   [type no longer exists, other behaviour still true??] -->
 
 
 <h2>ACKNOWLEDGEMENTS</h2>
-This program was written during the author's tenure of a Leverhulme Special 
-Research Fellowship at University College London. 
+This program was originally written during Mark Lake's tenure of a 
+Leverhulme Special Research Fellowship at University College London. 
 
 <h2>SEE ALSO</h2> 
-<i><a href=v.build.html>v.support</a></i>, 
-<i><a href=v.in.ascii.html>v.in.ascii</a></i>, 
+<i><a href=v.build.html>v.support</a></i><br>
+<i><a href=v.in.ascii.html>v.in.ascii</a></i><br> 
 <i><a href=parser.html>parser</a></i> <p>
 
-<h2>AUTHOR</h2>
-
-Mark Lake, 
-Institute of Archaeology, University College London. 
+<h2>AUTHORS</h2>
+Mark Lake, Institute of Archaeology, University College London. 
+Major rewrite by Radim Blazek, October 2002
 
 <p><i>Last changed: $Date$</i>
