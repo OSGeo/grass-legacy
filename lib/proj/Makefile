@@ -13,17 +13,26 @@ NAD_TABLES = FL.lla MD.lla TN.lla WI.lla WO.lla alaska.lla conus.lla \
 
 NT_TABLES = ntv1_can.dat nzgd2kgrid0005.gsb
 
+CSV_FILES = datum.csv gdal_datum.csv projop_wparm.csv ellipsoid.csv pcs.csv \
+            stateplane.csv gcs.csv prime_meridian.csv unit_of_measure.csv
+
 NAD_DIR = $(GISBASE)/etc/nad
 NAD2BIN = nad2bin
+CSV_DIR = $(GISBASE)/etc/ogr_csv
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make 
 
-default: lib $(NAD_DIR)
+default: lib $(NAD_DIR) $(CSV_DIR)
 
 $(NAD_DIR): $(NAD_TABLES) $(NT_TABLES) $(NAD2BIN)
 	@ if [ ! -d $@ ] ; then mkdir $@ ; fi
 	for i in $(NAD_TABLES) ; do $(NAD2BIN) < $$i $@/`echo $$i | sed 's/.lla//'`; done
 	cp -f $(NT_TABLES) $@
+	@ touch $@
+
+$(CSV_DIR): $(CSV_FILES)
+	@ if [ ! -d $@ ] ; then mkdir $@ ; fi
+	cp -f $(CSV_FILES) $@
 	@ touch $@
 
 # Note for future improvement:

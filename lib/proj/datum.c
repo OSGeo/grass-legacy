@@ -24,13 +24,7 @@
 #include "gis.h"
 #include "glocale.h"
 #include "gprojects.h"
-
-struct datum_list
-{
-    char *name, *longname, *ellps;
-    double dx, dy, dz;
-    struct datum_list *next;
-};
+#include "local_proto.h"
 
 struct datum_transform_list
 {
@@ -43,11 +37,8 @@ struct datum_transform_list
 					 * transform parameters in linked list */
 };
 
-static struct datum_list *read_datum_table(void);
 static struct datum_transform_list *get_datum_transform_by_name(const char
 								*inputname);
-static void free_datum_list(struct datum_list *);
-
 /**
  * \brief Look up a string in datum.table file to see if it is a valid datum 
  *        name and if so place its information into a gpj_datum struct
@@ -61,7 +52,6 @@ static void free_datum_list(struct datum_list *);
 
 int GPJ_get_datum_by_name(const char *name, struct gpj_datum *dstruct)
 {
-    int i;
     struct datum_list *list, *listhead;
 
     list = listhead = read_datum_table();
@@ -82,6 +72,44 @@ int GPJ_get_datum_by_name(const char *name, struct gpj_datum *dstruct)
     free_datum_list(listhead);
     return -1;
 }
+
+/* Kind of a "last resort" function as there really is no such thing
+ * as a default set of datum transformation parameters. Only should 
+ * really be used where user interaction to choose a set of parameters
+ * is not desirable. Use of this function is not likely to result in
+ * selection of the optimum set of datum transformation parameters
+ * for the location */
+
+int GPJ_get_default_datum_params_by_name(const char *name, char **params)
+{
+   struct datum_transform_list *list, *old;
+   int count = 1;
+
+   list = get_datum_transform_by_name( name );
+   
+   if( list == NULL)
+   {
+      *params = NULL;
+      return -1;
+   }
+   
+   while(list->next != NULL)
+   {
+        count++;
+	old = list;
+	list = list->next;
+	G_free( old );
+   }
+   
+   /* Take the last parameter set in the list as the default
+    * (will normally be a 3-parameter transformation)        */
+   
+   *params = G_store( list->params );
+   G_free( list );
+   return count;
+   
+}
+
 
 int GPJ_get_datum_params(char **name, char **params)
 {
@@ -160,6 +188,129 @@ int GPJ__get_datum_params(struct Key_Value *projinfo,
 	*params = NULL;
 
     return returnval;
+
+}
+
+/***********************************************************
+ *  G_ask_datum_params(datumname, params)
+ *     char *datumname   String containing datum name that
+ *                       parameters are to be found for. Must
+ *                       exist in datum.table or be "custom"
+ *     char **params     Pointer to a pointer that will have 
+ *                       memory allocated and into which a string 
+ *                       containing the datum parameters chosen 
+ *                       by the user will be placed.
+ *
+ *  Interactively ask for datum parameters for a particular datum
+ *  
+ *  returns: 1 ok, -1 error
+ ************************************************************/
+
+int GPJ_ask_datum_params(char *datumname, char **params)
+{
+    char buff[1024], answer[100];
+    char *Tmp_file;
+    FILE  *Tmp_fd = NULL;
+    struct datum_transform_list *list, *listhead, *old;
+    int transformcount, currenttransform;
+
+    if( G_strcasecmp(datumname, "custom") != 0)
+    {
+        Tmp_file = G_tempfile ();
+        if (NULL == (Tmp_fd = fopen (Tmp_file, "w"))) {
+            G_warning(_("Cannot open temp file") );
+        }
+
+        fprintf(Tmp_fd,"Number\tDetails\t\n---\n");
+        listhead = get_datum_transform_by_name( datumname );
+        list = listhead;
+        transformcount = 0;
+        while( list != NULL)
+        {	   
+	    /* Count how many sets of transformation paramters have been 
+	     * defined for this datum and print them to a temporary file 
+	     * in case the user asks for them to be displayed */
+            fprintf(Tmp_fd,"%d\tUsed in %s\n\t(PROJ.4 Params %s)\n\t%s\n---\n",
+        	   list->count, list->where_used, list->params, list->comment);
+            list = list->next;
+            transformcount++;
+        }      
+        fclose(Tmp_fd);
+
+        for(;;) {
+            do {
+                fprintf(stderr,("\nNow select Datum Transformation Parameters\n"));
+                fprintf(stderr,("Enter 'list' to see the list of available Parameter sets\n"));
+                fprintf (stderr,("Enter the corresponding number, or <RETURN> to cancel request\n"));
+                fprintf(stderr,">");
+            } while(!G_gets(answer));
+            G_strip(answer); 
+            if(strlen(answer)==0) 
+            {
+                remove( Tmp_file );
+                G_free( Tmp_file );
+                return -1;
+            }
+            if (strcmp(answer,"list") == 0) {
+		/* Always print interactive output to stderr */
+                sprintf(buff,"/bin/sh -c \"$GRASS_PAGER %s 1>&2\"",Tmp_file);
+                G_system(buff);
+            }
+            else {
+                if ( (sscanf(answer, "%d", &currenttransform) != 1) ||
+                    currenttransform > transformcount || currenttransform < 1) {
+
+		    /* If a number was not typed, was less than 0 or greater
+		     * than the number of sets of parameters, ask again */
+                    fprintf(stderr,("\ninvalid transformation number\n"));
+                }
+                else break;
+            }
+
+        }
+        remove ( Tmp_file );
+        G_free ( Tmp_file );
+   
+        list = listhead;
+        while (list != NULL)
+        {
+	    /* Search through the linked list to find the parameter string
+	     * that corresponds to the number entered */
+            if( list->count == currenttransform )
+                G_asprintf(params, list->params);
+	   
+	    /* Continue to end of list even after we find it, to free all
+	     * the memory used */
+            old = list;
+            list = old->next;
+            G_free( old );
+        }
+    }
+    else
+    {
+        /* Here we ask the user to enter customised parameters */
+        for(;;) {
+            do {
+                fprintf(stderr,("\nPlease specify datum transformation parameters in PROJ.4 syntax. Examples:\n"));
+                fprintf(stderr,("\ttowgs84=dx,dy,dz\t(3-parameter transformation)\n"));
+                fprintf(stderr,("\ttowgs84=dx,dy,dz,rx,ry,rz,m\t(7-parameter transformation)\n"));
+                fprintf(stderr,("\tnadgrids=alaska\t(Tables-based grid-shifting transformation)\n"));
+                fprintf (stderr,_("Hit RETURN to cancel request\n"));
+                fprintf(stderr,">");
+            } while(!G_gets(answer));
+            G_strip(answer); 
+            if(strlen(answer)==0)
+                return -1;
+	    G_asprintf(params, answer);
+            sprintf(buff, "Parameters to be used are:\n\"%s\"\nIs this correct?", *params);
+            if (G_yes(buff, 1))
+                break;
+
+        }
+
+    }
+   
+    return 1;
 
 }
 
@@ -251,7 +402,7 @@ static struct datum_transform_list *get_datum_transform_by_name(const char
 
 }
 
-static struct datum_list *read_datum_table(void)
+struct datum_list *read_datum_table(void)
 {
     FILE *fd;
     char *file;
@@ -314,7 +465,7 @@ void GPJ_free_datum(struct gpj_datum *dstruct)
     return;
 }
 
-static void free_datum_list(struct datum_list *dstruct)
+void free_datum_list(struct datum_list *dstruct)
 {
     struct datum_list *old;
 
