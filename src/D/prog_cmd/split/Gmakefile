@@ -1,0 +1,12 @@
+
+all: $(BIN)/Dsplit $(BIN)/DD
+
+$(BIN)/Dsplit: split.sh
+	rm -f $@
+	cp $? $@
+	chmod +rx $@
+
+$(BIN)/DD: DD.sh
+	rm -f $@
+	cp $? $@
+	chmod +rx $@
