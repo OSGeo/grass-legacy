@@ -41,7 +41,6 @@ Get_location_with_box(cx, cy, wx, wy, button)
 	int  tmp ;
 	int  raw_button ;
 	int  cur_events ;
-	int  not_finished ;
 	int  base_x, base_y ;
 
 
@@ -57,6 +56,10 @@ Get_location_with_box(cx, cy, wx, wy, button)
 /* set all buttons to mode 1 ( up, down, single-click) */
 	Set_win_button_mode( WNO, 1) ;
 
+/*  hide cursor so it won't interfere with band-box*/
+
+	Hide_cursor();
+
 /*  clear buttons hits in the event queue  */
 	Clear_motion_data() ;
 	Clear_button_hits() ;
@@ -64,7 +67,8 @@ Get_location_with_box(cx, cy, wx, wy, button)
 	base_x = cx ;
 	base_y = cy ;
 
-	while (not_finished)
+
+	while (1)
 	{
 		Wait_for_next( CURRENT_EVENTS, &cur_events) ;
 		if ( cur_events & MOTION_EVENT)
@@ -80,8 +84,8 @@ Get_location_with_box(cx, cy, wx, wy, button)
 			Get_button_data( &tmp, &mouse_x, &mouse_y,
 				&raw_button, &tmp, &tmp) ;
 			*button = ++raw_button ;
-			not_finished = 0 ;
 			Restore_band_box() ;
+			break;
 		}
 	}
 
@@ -90,5 +94,8 @@ Get_location_with_box(cx, cy, wx, wy, button)
 
 	*wx = mouse_x ;
 	*wy = mouse_y ;
+
+/*redisplay normal cursor*/
+	Show_cursor();
 
 }
