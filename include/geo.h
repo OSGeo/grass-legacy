@@ -130,8 +130,9 @@
 #define WINK1  118
 #define WINK2  119
 #define WINTRI 120
+#define KROVAK 121
 
-#define NPROJES 121
+#define NPROJES 122
 
 /* LATSTUFF  -90 <> +90 */
 #define LAT0     0

@@ -44,7 +44,7 @@ int main (int argc, char *argv[])
     opt2->key_desc    = "type";
     opt2->type        = TYPE_STRING;
     opt2->required    = NO;
-    opt2->options     = "aspect,grey,grey.eq,grey.log,gyr,rainbow,ramp,random,ryg,wave,rules";
+    opt2->options     = "aspect,grey,grey.eq,grey.log,byr,gyr,rainbow,ramp,random,ryg,wave,rules";
     opt2->description = "type of color table";
 
     opt3 = G_define_option();
@@ -150,6 +150,8 @@ int main (int argc, char *argv[])
 	    G_make_ryg_fp_colors (&colors, min, max);
 	else if (strcmp (type, "gyr") == 0)
 	    G_make_gyr_fp_colors (&colors, min, max);
+	else if (strcmp (type, "byr") == 0)
+	    G_make_byr_fp_colors (&colors, min, max);
 	else if (strcmp (type, "rules") == 0)
 	{
 	    if (!read_color_rules(&colors, min, max, fp))
