@@ -388,6 +388,7 @@ main (int argc, char **argv)
 
     do
     {
+
         fprintf(stderr, "%d raster%s, %d vector%s, %d site file%s\n",
 		    nrasts, (nrasts > 1 ? "s":""),
 		    nvects, (nvects > 1 ? "s":""),
