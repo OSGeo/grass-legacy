@@ -49,14 +49,14 @@ int main( int argc, char **argv )
 	struct Categories cats ;
 	struct Colors colors ;
 	struct GModule *module;
-	struct Option *opt1, *opt2, *opt4, *opt5, *opt6;
+	struct Option *opt1, *opt2, *opt4, *opt5, *opt6, *opt7;
 	struct Flag *hidestr, *hidenum, *smooth, *catsonly, *mouse;
 	struct Range range ;
 	struct FPRange fprange ;
 	CELL min_ind, max_ind, null_cell;
 	DCELL dmin, dmax, val;
 	int x0, x1, y0, y1;
-	int plaincats_num;
+	int plaincats_num, maxfontsize;
 	struct Histogram histogram;
 
 	/* Initialize the GIS calls */
@@ -111,6 +111,15 @@ int main( int argc, char **argv )
 	opt6->answer     = "5" ;
 	opt6->options    = "2-100" ;
 	opt6->description= "Number of labels for legend description" ;
+
+	opt7 = G_define_option() ;
+	opt7->key        = "maxfontsize" ;
+	opt7->type       = TYPE_INTEGER ;
+	opt7->required   = NO;
+	opt7->answer     = "20" ;
+	opt7->options    = "0-1000" ;
+	opt7->description= "Max font size for text labels";
+
 
 	hidestr = G_define_flag ();
 	hidestr->key = 'v';
@@ -177,6 +186,9 @@ int main( int argc, char **argv )
 
 	if (opt6->answer != NULL)
 		sscanf(opt6->answer,"%d",&steps);
+
+	if (opt7->answer != NULL)
+		sscanf(opt7->answer,"%d",&maxfontsize);
 
 
 	/* Make sure map is available */
@@ -270,7 +282,9 @@ int main( int argc, char **argv )
 	do_cats = cats_num > (lines - 1) ? lines - 1 : cats_num ;
 
 	/* Figure number of lines, number of pixles per line and text size */
-	dots_per_line = (b - t) / lines ;
+        dots_per_line = (b - t) / lines;
+        if (dots_per_line > maxfontsize) 
+           dots_per_line = maxfontsize;  /* avoid BIG characters in legend */
 	if ((dots_per_line == 0) && (do_smooth == 0))
 	{
 	   do_smooth = 1; /* for CELL maps with lot's of cats */
