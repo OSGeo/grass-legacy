@@ -1,0 +1,24 @@
+Any and all changes should be made to the man? files not the cat? files.
+(Except if a man? file is removed, you will have to remove the corresponding
+cat? file by hand).
+
+If you add a new manual or help entry or modify one, type
+
+	gmake
+
+If you remove a man? entry, be sure to remove the corresponding cat?
+entry and the /usr/grass3/man/? (or /usr/grass3/help) entry as well.
+
+To find out how well the manual entries correspond to the commands in the
+bin directory, run the command
+
+	missing
+
+
+To peruse an entry on-line, type:
+	tbl.nroff man1/<entry> | more
+	tbl.nroff man2/<entry> | more
+	etc.
+To send it to the imagen (at CERL only):
+	imagen man1/<entry>
+	etc.
