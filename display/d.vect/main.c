@@ -76,6 +76,8 @@ main (int argc, char **argv)
 	attrcol_opt = G_define_option() ;
 	attrcol_opt->key        = "attrcol" ;
 	attrcol_opt->type       = TYPE_STRING ;
+	attrcol_opt->required   = NO ;
+	attrcol_opt->multiple   = NO ; /* or fix attr.c, around line 102 */
 	attrcol_opt->description= "Name of column to be displayed" ;
 	
 	icon_opt = G_define_option() ;
