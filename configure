@@ -3112,6 +3112,49 @@ echo "configure:3108: checking additional TIFF library dirs" >&5
 	echo "$ac_t""$TIFF_LIBRARY_DIRS" 1>&6
 fi
 
+#DLLIB=
+# taken from: http://hpdrc.cs.fiu.edu/~sdbtools/ip_tools/PIPT-2.1/configure
+echo $ac_n "checking for dlsym in -ldl""... $ac_c" 1>&6
+echo "configure:2711: checking for dlsym in -ldl" >&5
+ac_lib_var=`echo dl'_'dlsym | sed 'y%./+-%__p_%'`
+if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
+  echo $ac_n "(cached) $ac_c" 1>&6
+else
+  ac_save_LIBS="$LIBS"
+LIBS="-ldl  $LIBS"
+cat > conftest.$ac_ext <<EOF
+#line 2719 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char dlsym();
+
+int main() {
+dlsym()
+; return 0; }
+EOF
+if { (eval echo configure:2730: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest; then
+  rm -rf conftest*
+  eval "ac_cv_lib_$ac_lib_var=yes"
+else
+  echo "configure: failed program was:" >&5
+  cat conftest.$ac_ext >&5
+  rm -rf conftest*
+  eval "ac_cv_lib_$ac_lib_var=no"
+fi
+rm -f conftest*
+LIBS="$ac_save_LIBS"
+
+fi
+if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
+  echo "$ac_t""yes" 1>&6
+  DLLIB="-ldl"
+else
+  echo "$ac_t""no" 1>&6
+DLLIB=""
+fi
+
 
 SYSV=
 # Check whether --with-SYSV or --without-SYSV was given.
@@ -3310,6 +3353,7 @@ s%@RANLIB@%$RANLIB%g
 s%@ENV@%$ENV%g
 s%@F77@%$F77%g
 s%@CPP@%$CPP%g
+s%@DLLIB@%$DLLIB%g
 s%@X_CFLAGS@%$X_CFLAGS%g
 s%@X_PRE_LIBS@%$X_PRE_LIBS%g
 s%@X_LIBS@%$X_LIBS%g
