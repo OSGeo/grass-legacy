@@ -217,11 +217,14 @@ proc CheckLocation {} \
     
     set found 0
     set dir $database
-    append dir $location 
+    append dir "/$location"
+    
+    set currDir [pwd]
+    cd $dir
     
     foreach filename [glob -nocomplain *] \
     {
-    	if {[string compare $dir "PERMANENT"] == 0} \
+	if {[string compare $filename "PERMANENT"] == 0} \
 	{
 	    set found 1
 	}
@@ -231,6 +234,8 @@ proc CheckLocation {} \
     {
     	set location "##ERROR##"
     }
+    
+    cd $currDir
 }
 
 proc gisSetWindow {} {
