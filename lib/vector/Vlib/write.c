@@ -70,20 +70,20 @@ static int (*Vect_delete_line_array[][3]) () =
 
 /*!
  \fn long Vect_write_line (
-     struct Map_info *Map;
-     int type;
-     struct line_pnts *points;
+     struct Map_info *Map,
+     int type,
+     struct line_pnts *points,
      struct line_cats *cats)
  \brief writes new line to the end of file (table)
  \return offset into file where the line starts, -1 on error
  \param Map_info structure, vector type, line_pnts structure, line_cats structure
 */
 long
-Vect_write_line (Map, type, points, cats)
-     struct Map_info *Map;
-     int type;
-     struct line_pnts *points;
-     struct line_cats *cats;
+Vect_write_line (
+     struct Map_info *Map,
+     int type,
+     struct line_pnts *points,
+     struct line_cats *cats)
 {
 #ifdef GDEBUG
     G_debug (3, "Vect_write_line(): name = %s, format = %d, level = %d", 
