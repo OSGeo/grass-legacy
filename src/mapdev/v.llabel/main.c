@@ -46,7 +46,8 @@ main (argc, argv)
     typopt->key              = "type";
     typopt->type             =  TYPE_STRING;
     typopt->required         =  NO;
-    typopt->answer           =  "all";
+    typopt->multiple         =  YES;
+    typopt->answer           =  "point,line,edge";
     typopt->options          =  "point,line,edge";
     typopt->description      =  "Select type of arc to label.";
 
@@ -76,14 +77,17 @@ main (argc, argv)
 
     Points = Vect_new_line_struct ();
 
-    otype = DOT | LINE | AREA;
-    if (typopt->answer[0] == 'p')
-        otype = DOT;
-    else if (typopt->answer[0] == 'l')
-        otype = LINE;
-    else if (typopt->answer[0] == 'e')
-        otype = AREA;
-
+    i = 0;
+    otype = 0;
+    while ( typopt->answers[i] ) {
+	if (*typopt->answers[i] == 'p')
+	    otype |= DOT;
+	else if (*typopt->answers[i] == 'l')
+	    otype |= LINE;
+	else if (*typopt->answers[i] == 'e')
+	    otype |= AREA;
+	i++;
+    }
 
     if (!*(vectfile->answer))
     {
