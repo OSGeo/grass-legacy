@@ -1,30 +1,34 @@
 #include <stdio.h>
+#include <string.h>
+#include "config.h"
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+#include <fcntl.h>
 #include <signal.h>
+#include <errno.h>
 #include "graph.h"
 #include "monitors.h"
 #include "gis.h"
-#include <errno.h>
+#include "raster.h"
+
+/* for locking based on inode number of a fifo */
+#ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
-#include <sys/ipc.h>
-#include <sys/msg.h>
+#endif
+#include <sys/stat.h>
+static int _fifo_ino;
 
 extern int errno;
 
 #define BUFFERSIZ   2048
 
-/*
 static unsigned char outbuf[BUFFERSIZ] ;
-*/
-static struct MESS {long mtype; unsigned char outbuf[BUFFERSIZ];} sb,rb;
 static int cursiz = 0 ;
-static int n_read = 0 ;
-static int atbuf = 0 ;
 static int no_mon ;
 
 static int _rfd;
 static int _wfd;
-
-char *getenv();
 
 static int unlock_driver (int);
 static int find_process (int);
@@ -38,177 +42,129 @@ static void dead(int);
 static void (*sigalarm)();
 static void (*sigint)();
 static void (*sigquit)();
-static int _get(char *,int);
-static int _rec (char *);
 
 
-int
-_send_ident(anint)
-    int anint ;
+
+int _send_ident(int anint)
 {
     unsigned char achar ;
     achar = anint;
 
     if( (cursiz+2) >= BUFFERSIZ)
         flushout() ;
-    sb.outbuf[cursiz++] = COMMAND_ESC ;
-    sb.outbuf[cursiz++] = achar ;
+    outbuf[cursiz++] = COMMAND_ESC ;
+    outbuf[cursiz++] = achar ;
 
-    return 0;
+	return 0;
 }
 
-int
-_send_char (achar)
-    unsigned char *achar ;
+int _send_char ( unsigned char *achar )
 {
     if( (cursiz+2) >= BUFFERSIZ)
         flushout() ;
-    sb.outbuf[cursiz++] = *achar ;
+    outbuf[cursiz++] = *achar ;
     if (*achar == COMMAND_ESC)
-        sb.outbuf[cursiz++] = 0 ;
+        outbuf[cursiz++] = 0 ;
 
-    return 0;
+	return 0;
 }
 
-int
-_send_char_array(num, achar)
-    register int num ;
-    register unsigned char *achar ;
+int _send_char_array(register int num , register unsigned char *achar )
 {
     while (num-- > 0)
         _send_char (achar++);
 
-    return 0;
+	return 0;
 }
 
-int
-_send_int_array(num, anint)
-    int num ;
-    int *anint ;
+int _send_int_array(int num ,int *anint )
 {
-    _send_char_array(num * sizeof(int), (unsigned char *)anint) ;
-
-    return 0;
+    return _send_char_array(num * sizeof(int), (unsigned char *)anint) ;
 }
 
-int
-_send_float_array(num, afloat)
-    int num ;
-    float *afloat ;
+int _send_float_array(int num , float *afloat )
 {
-    _send_char_array(num * sizeof(float), (unsigned char *)afloat) ;
-
-    return 0;
+    return _send_char_array(num * sizeof(float), (unsigned char *)afloat) ;
 }
 
-int
-_send_int(anint)
-    int *anint ;
+int _send_int( int *anint )
 {
-    _send_char_array(sizeof(int), (unsigned char *)anint) ;
-
-    return 0;
+    return _send_char_array(sizeof(int), (unsigned char *)anint) ;
 }
 
-int
-_send_float(afloat)
-    float *afloat ;
+int _send_float( float *afloat )
 {
-    _send_char_array(sizeof(float), (unsigned char *)afloat) ;
-
-    return 0;
+    return _send_char_array(sizeof(float), (unsigned char *)afloat) ;
 }
 
-int
-_send_text(text)
-    char *text ;
+int _send_text( char *text )
 {
-    _send_char_array(1 + strlen(text), (unsigned char *)text) ;
-
-    return 0;
+    return _send_char_array(1 + strlen(text), (unsigned char *)text) ;
 }
 
-int
-_get_char(achar)
-    char *achar ;
+int _get_char( char *achar )
 {
     flushout() ;
     _get (achar, 1);
 
-    return 0;
+	return 0;
 }
 
-int
-_get_int(anint)
-    int *anint ;
+int _get_int(int *anint )
 {
     flushout() ;
     _get( (char *)anint, sizeof(int));
 
-    return 0;
+	return 0;
 }
 
-int
-_get_float(afloat)
-    float *afloat ;
+int _get_float(float *afloat )
 {
     flushout() ;
     _get( (char *)afloat, sizeof(float));
 
-    return 0;
+	return 0;
 }
 
-int
-_get_text (buf)
-    char *buf;
+int _get_text (char *buf)
 {
     char *b;
 
     b = buf;
     do
-	_get_char (b);
+        _get_char (b);
     while (*b++ != 0);
 
-    return 0;
+	return 0;
 }
 
-static int
-_get(buf, n)
-char *buf;
-int n;
+int _get (char *buf,int n)
 {
-    int stat;
-    while (n-- > 0) _rec(buf++);
-
-    return 0;
-}
-
-
-static int
-_rec (buf)
-    char *buf;
-{
-    if (atbuf == n_read)
+    int x;
+    while (n > 0)
     {
-	atbuf = 0;
-        n_read = msgrcv (_rfd, (struct msgbuff *) &rb, sizeof rb.outbuf , 0L ,0);
+        x = read (_rfd, buf, n);
+        if (x <= 0)
+        {
+            fprintf (stderr, "ERROR %s from graphics driver.\n", x?"reading":"eof");
+            exit(1);
+        }
+        n -= x;
+        buf += x;
     }
-    *buf = rb.outbuf[atbuf++];
 
-    return 0;
+	return 0;
 }
 
-int
-flushout(void)
+int flushout()
 {
-    sb.mtype = 1L;
     if (cursiz)
     {
-        msgsnd (_wfd, (struct msgbuff *) &sb, (size_t) cursiz, 0);
+        write (_wfd, outbuf, cursiz);
         cursiz = 0 ;
     }
 
-    return 0;
+	return 0;
 }
 
 
@@ -223,8 +179,7 @@ flushout(void)
 static int quiet = 0;        /* #9 Sep 87 */
 
 
-int
-R_open_driver()
+int R_open_driver()
 {
     int verbose;
     int try, key, lock;
@@ -232,6 +187,7 @@ R_open_driver()
     struct MON_CAP *mon, *R_parse_monitorcap();
     char *name, *G__getenv(), *getenv(), *key_string;
     char *user, *who_locked_driver();
+    struct stat stat_buf;
 
     verbose = !quiet;
     quiet = 0;
@@ -243,115 +199,110 @@ R_open_driver()
             fprintf(stderr,"Please run \"d.mon\" to select a graphics monitor.\n");
             exit(-1);
         }
-        else
-        {
-            return(NO_MON);
-        }
+	return(NO_MON);
     }
-    else
+
+    if ((mon = R_parse_monitorcap(MON_NAME,name)) == NULL)
     {
-        if ((mon = R_parse_monitorcap(MON_NAME,name)) == NULL)
-        {
-            if (verbose)
-            {
-                fprintf(stderr,"No such graphics monitor as <%s>.\n",name);
-                fprintf(stderr,"Please run \"d.mon\" to select a valid graphics monitor.\n");
-                exit(-1);
-            }
-            else
-            {
-                return(NO_MON);
-            }
-        }
-        else
-        {
-            key_string = getenv("GIS_LOCK");
-            if (key_string == NULL || sscanf(key_string,"%d",&key) != 1 || key <= 0)
-		key = 0;
-            lock = lock_driver(key);
-            if (lock == 0)
-            {
-                if (verbose)
-                {
-                    if ((user = who_locked_driver()) == NULL)
-                        fprintf(stderr,"Error - Monitor <%s> is in use.\n",name);
-                    else
-                        fprintf(stderr,"Error - Monitor <%s> is in use by %s.\n",name,user);
-                    exit(-1);
-                }
-                else
-                {
-                    return(LOCKED);
-                }
-            }
-            if (lock < 0)
-            {
-                if (verbose)
-                {
-		    char file[512];
-                    fprintf(stderr,"Error - Could not complete locking process for monitor <%s>.\n",name);
-		    lockfile(file);
-		    fprintf (stderr, "Lock file is %s\n", file);
-                    exit(-1);
-                }
-                else
-                {
-                    return(LOCK_FAILED);
-                }
-            }
-            sscanf(mon->link,"%s %s",our_output_file,our_input_file);
-            if (verbose)
-            {
-                for (try = 0; try < 2; try++)
-                {
-                    switch (fifoto (our_input_file,our_output_file,try?15:3))
-                    {
-                    case -1:
-                        fprintf(stderr, "\07Error - Can't set up pipe to graphics device.\n");
-                        unlock_driver(1);
-                        exit(-1);
-                    case 0:
-                        if (try)
-                        {
-                            fprintf (stderr, "Error - Graphics monitor <%s> not running!\n",name);
-                            unlock_driver(1);
-                            exit(1);
-                        }
-                        fprintf (stderr, "\07Please start graphics monitor <%s>.\n",name);
-                        break;
-                    default:
-                        sync_driver(name); /* syncronize driver */
-                        return(0);
-                    }             /* switch */
-                }               /* for */
-            }
-            else /* non-verbose mode */
-            {
-            /*  switch (fifoto(our_input_file,our_output_file,3)) */
-                switch (fifoto(our_input_file,our_output_file,1))
-                {
-                case -1:
-                    unlock_driver(1);
-                    return(NO_OPEN);
-                case 0:
-                    unlock_driver(1);
-                    return(NO_RUN);
-                default:
-                    return(OKOK);
-                }
-            }
-        }
+	if (verbose)
+	{
+	    fprintf(stderr,"No such graphics monitor as <%s>.\n",name);
+	    fprintf(stderr,"Please run \"d.mon\" to select a valid graphics monitor.\n");
+	    exit(-1);
+	}
+	return(NO_MON);
+    }
+
+/* get the fifos and get the inode number of one of them */
+    sscanf(mon->link,"%s %s",our_output_file,our_input_file);
+    if (stat (our_output_file, &stat_buf) != 0)
+    {
+	if (verbose)
+	{
+	    fprintf (stderr, "Can't stat %s\n", our_output_file);
+	    exit(-1);
+	}
+	return (LOCK_FAILED);
+    }
+    _fifo_ino = stat_buf.st_ino; /* global: used by lockfile() */
+
+    key_string = getenv("GIS_LOCK");
+    if (key_string == NULL || sscanf(key_string,"%d",&key) != 1 || key <= 0)
+	key = 0;
+    lock = lock_driver(key);
+    if (lock == 0)
+    {
+	if (verbose)
+	{
+	    if ((user = who_locked_driver()) == NULL)
+		fprintf(stderr,"Error - Monitor <%s> is in use.\n",name);
+	    else
+		fprintf(stderr,"Error - Monitor <%s> is in use by %s.\n",name,user);
+	    exit(-1);
+	}
+	return(LOCKED);
+    }
+    if (lock < 0)
+    {
+	if (verbose)
+	{
+	    char file[512];
+	    fprintf(stderr,"Error - Could not complete locking process for monitor <%s>.\n",name);
+	    lockfile(file);
+	    fprintf (stderr, "Lock file is %s\n", file);
+	    exit(-1);
+	}
+	return(LOCK_FAILED);
+    }
+    if (verbose)
+    {
+	for (try = 0; try < 2; try++)
+	{
+	    switch (fifoto (our_input_file,our_output_file,try?15:3))
+	    {
+	    case -1:
+		fprintf(stderr, "\07Error - Can't set up pipe to graphics device.\n");
+		unlock_driver(1);
+		exit(-1);
+	    case 0:
+		if (try)
+		{
+		    fprintf (stderr, "Error - Graphics monitor <%s> not running!\n",name);
+		    unlock_driver(1);
+		    exit(1);
+		}
+		fprintf (stderr, "\07Please start graphics monitor <%s>.\n",name);
+		break;
+	    default:
+		sync_driver(name); /* syncronize driver */
+		return(0);
+	    }             /* switch */
+	}               /* for */
+    }
+    else /* non-verbose mode */
+    {
+    /*  switch (fifoto(our_input_file,our_output_file,3)) */
+	switch (fifoto(our_input_file,our_output_file,1))
+	{
+	case -1:
+	    unlock_driver(1);
+	    return(NO_OPEN);
+	case 0:
+	    unlock_driver(1);
+	    return(NO_RUN);
+	default:
+	    return(OKOK);
+	}
     }
 
     return 0;
 }
 
-int
-R__open_quiet()
+int R__open_quiet()
 {
     quiet = 1;
 
-    return 0;
+	return 0;
 }
 
 
@@ -364,27 +315,38 @@ R__open_quiet()
 #define READ  0
 #define WRITE 1
 
-static int
-fifoto(input,output,alarm_time)
-    char *input, *output;
+static int fifoto( char *input,char *output,int alarm_time)
 {
     no_mon = 0;
-    _wfd = msgget(ftok(output,0), 0600);
-    _rfd = msgget(ftok(input,0),  0600) ;
+    sigalarm = signal(SIGALRM, dead);
+    alarm(alarm_time);
+    _wfd = open(output, WRITE) ;
+    alarm(0);
+    signal(SIGALRM, sigalarm);
+    if (no_mon)
+        return 0 ;
+
+    no_mon = 0;
+    signal(SIGALRM, dead);
+    alarm(alarm_time);
+    _rfd = open(input, READ) ;
+    alarm(0);
+    signal(SIGALRM, sigalarm);
+    if (no_mon)
+        return 0 ;
+
+
     if( (_wfd == -1) || (_rfd == -1) )
         return -1;
 
     return 1 ;
 }
 
-static int
-sync_driver(name)
-    char *name;
+static int sync_driver(char *name)
 {
     int try;
     int count;
     unsigned char c;
-    struct MESS {long mtype; char c[1];} cb;
 
     _send_ident (BEGIN);
     flushout();
@@ -403,14 +365,13 @@ sync_driver(name)
         alarm(try?10:5);
         while(no_mon == 0)
         {
-            if (msgrcv (_rfd, (struct msgbuff *) &cb, (size_t) 1, 0L, 0 ) != 1)
+            if (read (_rfd, &c, 1) != 1)
             {
                 if (no_mon)
                     break; /* from while */
                 fprintf (stderr, "ERROR - eof from graphics monitor.\n");
                 exit(-1);
             }
-	    c = cb.c[0];
             if (c == 0)
                 count++;
             else if (c == COMMAND_ESC && count >= BEGIN_SYNC_COUNT)
@@ -435,14 +396,13 @@ sync_driver(name)
     exit(-1);
 }
 
-static void
-dead(int dummy)
+/*   Signal handlers have arguments:  it keeps 'lint' happy.  */
+static void dead(int a)
 {
     no_mon = 1 ;
 }
 
-int
-_hold_signals (hold)
+int _hold_signals (int hold)
 {
     if (hold)
     {
@@ -455,7 +415,7 @@ _hold_signals (hold)
         signal (SIGQUIT, sigquit);
     }
 
-    return 0;
+	return 0;
 }
 
 /******************************************************************
@@ -498,77 +458,45 @@ _hold_signals (hold)
 #define CANT_READ -2
 #define CANT_WRITE -3
 
-static int
-lockfile(file)
-    char *file;
+static int lockfile(char *file)
 {
-	char *G__getenv();
-	char *G_getenv();
-	char *G__machine_name();
-	char *name;
-	char *disp, display[64] ;
-	char *base ;
-	char *hostname ;
-	int mask;
-	char lock_dir[256] ;
+    char *G_gisbase();
+    char *G__machine_name();
+    char *name;
+    char *hostname ;
+    int mask;
+    char lock_dir[1024] ;
+
+/* create the lock_dir */
+    mask = umask(0);
+    sprintf (lock_dir, "%s/locks", G_gisbase());
+    mkdir (lock_dir,0777);
 
 /* get machine name, if it has one */
     hostname = G__machine_name();
-    if (hostname == NULL) hostname = "";
-    for(name=hostname; *name!=NULL; name++) /* use only first part */
-	if (*name == '.')
-	{
-	    *name = 0 ;
-	    break ;
-    }
-
-    disp   = getenv("DISPLAY") ;
-    name   = G__getenv ("MONITOR");
-    base   = G_getenv ("GISBASE");
-
-    if(disp)
-	{
-		if(strncmp(disp,"unix:",5))
-			strcpy(display, disp) ;
-		else
-		{
-			char *disptr ;
-			disptr = disp + 5 ;
-			sprintf(display,"%s:%s",hostname,disptr) ;
-		}
-        sprintf (file, "%s/locks/%s/%s/%s", base, hostname, display, name);
-        sprintf (lock_dir, "%s/locks/%s/%s", base, hostname, display);
-	}
-    else
-	{
-        sprintf (file, "%s/locks/%s/%s", base, hostname, name);
-        sprintf (lock_dir, "%s/locks/%s", base, hostname);
-	}
-
-	if (access(lock_dir, 0) == 0)
-		return(0) ;
-
-/* make sure lock directory exists */
-    *file = 0;
-    sprintf (lock_dir, "%s/locks/%s", base, hostname);
-    mask=umask(0) ;
-    mkdir(lock_dir,0777) ;
-    umask(mask);
-
-    if(disp)
+    if (hostname)
     {
-        sprintf (lock_dir, "%s/locks/%s/%s", base, hostname, display);
-        mask=umask(0) ;
-        mkdir(lock_dir,0777) ;
-	umask(mask);
+	for(name=hostname; *name!='\0'; name++) /* use only first part */
+	{
+	    if (*name == '.')
+	    {
+		*name = 0 ;
+		break ;
+	    }
+	}
+	strcat (lock_dir, "/");
+	strcat (lock_dir, hostname);
+	mkdir (lock_dir,0777);
     }
+    umask (mask);
 
-    return 0;
+    sprintf (file, "%s/mon.%d", lock_dir, _fifo_ino);
+
+	return 0;
 }
 
 #include <pwd.h>
-static int
-lock_driver (lock_pid)
+static int lock_driver (int lock_pid)
 {
     char file[512];
     int fd;
@@ -614,8 +542,7 @@ lock_driver (lock_pid)
     return LOCK_OK;
 }
 
-static char *
-who_locked_driver()
+static char *who_locked_driver()
 {
     char file[512];
     int id[3];
@@ -629,10 +556,7 @@ who_locked_driver()
     return (pw->pw_name);
 }
 
-static int
-get_ids (file, id, x)
-    char *file;
-    int *id;
+static int get_ids ( char *file, int *id, int x)
 {
     int fd;
     int n;
@@ -644,8 +568,7 @@ get_ids (file, id, x)
     return (n == x*sizeof (*id));
 }
 
-static int
-find_process (pid)
+static int find_process (int pid)
 {
 /* attempt to kill pid with NULL signal. if success, then
    process pid is still running. otherwise, must check if
@@ -660,8 +583,7 @@ find_process (pid)
     return errno != ESRCH;
 }
 
-static int
-unlock_driver (wipeout)
+static int unlock_driver (int wipeout)
 {
     char file[512];
     int fd;
@@ -697,43 +619,36 @@ unlock_driver (wipeout)
     return -1;
 }
 
-int
-R_kill_driver()             /* #31 Aug 87 - stop a driver */
+int R_kill_driver()             /* #31 Aug 87 - stop a driver */
 {
     _send_ident(GRAPH_CLOSE);       /* #31 Aug 87 - tell driver to exit */
     flushout();
-/*
-    msgctl (_rfd, IPC_RMID);
-    msgctl (_wfd, IPC_RMID);
-*/
+    close (_rfd);
+    close (_wfd);
     R_release_driver();
 
-    return 0;
+	return 0;
 }
 
-int
-R_close_driver()
+int R_close_driver()
 {
     R_stabilize();
-/*
-    msgctl (_rfd, IPC_RMID);
-    msgctl (_wfd, IPC_RMID);
-*/
+
+    close (_rfd);
+    close (_wfd);
     unlock_driver(0);
 
-    return 0;
+	return 0;
 }
 
-int
-R_release_driver()
+int R_release_driver()
 {
     unlock_driver (1);
 
-    return 0;
+	return 0;
 }
 
-int
-R_stabilize()
+int R_stabilize()
 {
     char c;
 
@@ -741,5 +656,5 @@ R_stabilize()
     _send_ident (RESPOND);
     _get_char (&c);
 
-    return 0;
+	return 0;
 }
