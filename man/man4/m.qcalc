@@ -15,10 +15,10 @@ This program
 .IP
 - allows a user to create a table of cell sizes, 
 showing how many square feet, acres, and 
-hectacres each cell would represent.
+hectares each cell would represent.
 .IP
 - allows a user to create a table of acreage sizes, 
-showing how many square feet, hectacres, and 
+showing how many square feet, hectares, and 
 what cell size would be represented.
 .IP
 - allows a user to create a table of hectare sizes, 
