@@ -128,9 +128,11 @@ main (int argc, char *argv[])
     if (dims<2)
       G_fatal_error ("number of dimensions must be greater than 1");
 
-    fs = parm.fs->answer;
-    if (fs != NULL)
-    {
+    if ( strlen(parm.fs->answer) < 1 )
+      G_fatal_error ("field separator cannot be empty");
+    else
+    {   
+        fs = parm.fs->answer;
 	if(strcmp (fs, "space") == 0)
 	    fs = NULL;
 	else if(strcmp (fs, "tab") == 0)
@@ -139,11 +141,8 @@ main (int argc, char *argv[])
 
     out_fd = G_fopen_sites_new (output);
     if (out_fd == NULL)
-    {
-	fprintf (stderr, " %s - can't create sites file [%s]",
-		me, output);
-	exit(1);
-    }
+        G_fatal_error ("can't create sites file [%s].", output);
+
 
     G_site_put_head (out_fd, &shead);
 /*    G_free(shead.name);
