@@ -33,7 +33,7 @@ int main (int argc, char **argv)
 	struct Cell_head window ;
 	int    t, b, l, r ;
 	int    i,CurrentWin=0;
-	int    min,max;
+	long   min,max;
 	struct Option *map;
 
 	/* Initialize the GIS calls */
@@ -63,7 +63,7 @@ int main (int argc, char **argv)
 	/* get cell-file range */
 	WindowRange(old_mapname,old_mapset,&min,&max);
 
-	/* 
+	/* the following code should not be used to get fp range correctly.
 if (!quick_range(old_mapname,old_mapset,&min,&max))
    {
    if (!slow_range(old_mapname,old_mapset,&min,&max))
