@@ -19,4 +19,4 @@ typedef struct {
 #define DISP_TOPO  0x04
 #define DISP_DIR   0x08
 #define DISP_ATTR  0x10
-
+#define DISP_ZCOOR 0x20
