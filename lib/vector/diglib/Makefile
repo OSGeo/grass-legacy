@@ -11,6 +11,7 @@ LIB_OBJS = \
     frmt.o \
     head.o \
     inside.o \
+    linecros.o \
     line_dist.o \
     list.o \
     plus.o \
