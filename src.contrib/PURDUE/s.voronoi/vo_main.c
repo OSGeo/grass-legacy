@@ -54,8 +54,14 @@ main (int argc, char **argv)
     struct Option *input, *output;
   } parm;
 
+  struct GModule *module;
 
   G_gisinit (argv[0]);
+
+  module = G_define_module();
+  module->description = 
+    "Create a Voronoi diagram (Thiessen polygon) from a sites list "
+    "in a GRASS binary vector file. ";
 
   parm.input = G_define_option ();
   parm.input->key = "sites";
