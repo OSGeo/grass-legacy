@@ -1,0 +1,122 @@
+<HTML>
+<HEAD>
+<TITLE>
+s.windavg
+</TITLE>
+</HEAD>
+<BODY BGCOLOR="white">
+<IMG SRC="grass.smlogo.gif">
+<HR WIDTH=100% ALIGN=center SIZE=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><B>s.windavg</B></EM> - Average an attribute of a site_list for all the 
+sites within each cell of the current region. 
+<BR>
+<EM>(GRASS Sites Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>s.windavg</B> 
+<BR>
+<B>s.windavg help</B>
+<BR>
+<B>s.windavg</B> 
+[<B>-qzp</B>] <B>input=</B><EM>name</EM>
+<B>attr=</B><EM>name</EM> [<B>index=</B><EM>value</EM>] 
+[<B>output=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>s.windavg</EM> reads a sites list averaging the selected attribute
+for each site that falls within each cell defined by the current region
+settings.  The output gives the coordinates of the center of the cell and
+the average (mean) of the attribute values.
+<P>
+
+This program may be especially useful for generalizing data to a specific
+cell resolution.
+
+<H2>OPTIONS</H2>
+
+<H3>Flags:</H3>
+
+<DL>
+
+<DT><B>-q</B>
+
+<DD>Run quietly 
+
+<DT><B>-z</B>
+
+<DD>Don't output cells without sites (averages of 0.0) 
+
+<DT><B>-p</B>
+
+<DD>Create output in g.gnuplot format (overrides -z and writes to Standard Output)
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>input=</B><EM>name</EM>
+<DD>Name of the input sites list. 
+
+<DT><B>attr=</B><EM>type</EM>
+<DD>Site attribute type to average values over.<BR>
+<B>Options:</B> <EM>cat, dim, decimal, string</EM><BR>
+<B>Default:</B> <EM>cat</EM>
+
+<DT><B>index=</B><EM>value</EM>
+<DD>Site attribute index to average values over.<BR>
+Ignored when the attribute is <EM>cat</EM>.<BR>
+<B>Default:</B> 1
+
+<DT><B>output=</B><EM>name</EM>
+<DD>Optional name of sites list in which output of means will be
+written.  Standard output is used if this is missing.
+
+</DL>
+
+<H2>NOTES</H2>
+
+<P>
+
+Results are highly dependent on the settings of the current region.
+Only those sites within the current region will be considered.  It may be 
+desirable to decrease the cell resolution (make cells bigger) to get
+good results.
+
+<P>
+
+Processing time increases geometrically with increasing cell resolution 
+(smaller cells).  However, available memory should never be an issue.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+<EM><A HREF="s.rand.html">s.rand</A></EM><br>
+<EM><A HREF="s.sample.html">s.sample</A></EM><BR>
+
+
+<H2>BUGS</H2>
+Please send all bug fixes and comments to the author
+or the grass development team. <br>
+<a  
+href="http://www.geog.uni-hannover.de/grass/"><tt>http://www.geog.uni-hannover/grass/</tt></A>
+
+<H2>AUTHOR</H2>
+
+<A HREF="http://mccauley-usa.com/">James Darrell McCauley</A>
+<A
+HREF="mailto:darrell@mccauley-usa.com">&lt;darrell@mccauley-usa.com&gt;</A>,
+<br>when he was at: 
+<A HREF="http://ABE.www.ecn.purdue.edu/ABE/">Agricultural
+Engineering</A>
+<A HREF="http://www.purdue.edu/">Purdue University</A>
+<P>
+Updated for GRASS 5.0 by Eric G. Miller (30 Oct 2000)
+
+
+</BODY>
+</HTML>
