@@ -1,7 +1,7 @@
 
 
 
-i.group              GRASS Reference Manual               i.group
+i.group <main>       GRASS Reference Manual        <main> i.group
 
 
 
@@ -60,14 +60,14 @@ DESCRIPTION
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-i.group              GRASS Reference Manual               i.group
+i.group <main>       GRASS Reference Manual        <main> i.group
 
 
 
@@ -126,14 +126,14 @@ i.group              GRASS Reference Manual               i.group
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
 
 
 
-i.group              GRASS Reference Manual               i.group
+i.group <main>       GRASS Reference Manual        <main> i.group
 
 
 
@@ -192,14 +192,14 @@ i.group              GRASS Reference Manual               i.group
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
 
 
 
-i.group              GRASS Reference Manual               i.group
+i.group <main>       GRASS Reference Manual        <main> i.group
 
 
 
@@ -258,14 +258,14 @@ i.group              GRASS Reference Manual               i.group
 
 
 
-GRASS 4.0                U.S. Army CERL                         4
+GRASS 4.1                U.S. Army CERL                         4
 
 
 
 
 
 
-i.group              GRASS Reference Manual               i.group
+i.group <main>       GRASS Reference Manual        <main> i.group
 
 
 
@@ -324,14 +324,14 @@ i.group              GRASS Reference Manual               i.group
 
 
 
-GRASS 4.0                U.S. Army CERL                         5
+GRASS 4.1                U.S. Army CERL                         5
 
 
 
 
 
 
-i.group              GRASS Reference Manual               i.group
+i.group <main>       GRASS Reference Manual        <main> i.group
 
 
 
@@ -390,7 +390,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         6
+GRASS 4.1                U.S. Army CERL                         6
 
 
 
