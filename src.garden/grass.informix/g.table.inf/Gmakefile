@@ -1,0 +1,15 @@
+PGM       = $(GARDEN_BIN)/g.table.inf
+LIBES     = $(GISLIB)
+
+
+
+OBJS = \
+	main.o \
+	infxTable.o \
+	delcr.o
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+
+$(LIBES): #
+
