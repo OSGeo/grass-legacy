@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh 
 
 ############################################################################
 #
@@ -34,6 +34,7 @@
 #% type: string
 #% description: GIS format to write (case sensitive, see also -l flag)
 #% options: AAIGrid,BMP,BSB,DTED,ELAS,ENVI,FIT,GIF,GTiff,HFA,JPEG,MEM,MFF,MFF2,NITF,PAux,PNG,PNM,VRT,XPM
+#% answer: GTiff
 #% required : no
 #%END
 #%option
@@ -108,6 +109,11 @@ fi
 if [ "$FORMAT" = "(null)" ] ; then
   echo "ERROR: output format not specified"
   exit 1
+fi
+
+#set output if required
+if [ "$OUTPUT" = "(null)" ] ; then
+  OUTPUT=$INPUT
 fi
 
 if [ "$TYPE" = "(null)" ] ; then
