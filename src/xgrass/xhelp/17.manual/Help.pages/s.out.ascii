@@ -1,0 +1,5 @@
+
+@man("s.out.ascii") - Converts a GRASS site_lists file in binary format to
+ASCII format.
+
+(GRASS Sites Program)
