@@ -421,4 +421,5 @@ struct bdig_head *HEAD;
            }
        *(nor) = NOR;
        *(eas) = EAS;
+/*printf("convert: lon %lf lat %lf   E %lf N %lf\n",lon,lat,EAS,NOR);*/
 }
