@@ -1,0 +1,6 @@
+OFILES =  main.o 
+
+$(BIN_MAIN_CMD)/r.watershed4.0: $(OFILES) $(GISLIB) 
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) 
+
+$(GISLIB):	#
