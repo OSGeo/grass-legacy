@@ -1,0 +1,43 @@
+Date: Sun, 17 Sep 2000 09:26:45 -0700
+From: "Eric G . Miller" <egm2@jps.net>
+To: grass5@geog.uni-hannover.de
+
+[...]
+
+Well, I'm no expert but I've got at least a vague idea of a directory
+hierarchy for attribute tables in GRASS:
+
+                 [mapset]
+                     |
+                   [tbl]
+                     |
+        ------------------------------------------------
+        |                 |                            |
+     [free]            [vector]                      [cell]
+        |                  |                            |
+        |---table1       [map]                        [map]
+        |                  |                            |
+        |---table2         |                           cat
+        |                  |---area
+        ...                |---line
+                           |---site(?)
+                           |---node(?)
+                           |---network(?)
+                           |---route(?)
+            
+Generally, the idea is, there's a 'tbl' directory.  Under the table
+directory there are three directories 'free', 'vector' and 'cell'.
+'free' would refer to any extra table not bound to a spatial layer
+through a cat #.  Under both 'vector' and 'cell' would be a directory
+for each raster or vector map.  Only integer cells are considered, maybe
+all types?  Under vector, there'd be files for line attributes and area
+attributes keyed on cat#.  I don't know about sites or labels or
+possible additions to the current vector model.  At the top level
+directory 'tbl' some kind of file listing 'tied' tables and their join
+key(s) could be listed (so things like the USDA SSURGO database could be
+accomodated).
+
+This'd all take a bit more consideration... Definitely a post GRASS 5.0
+stable thing.
+
+Eric G . Miller
