@@ -1,0 +1,5 @@
+Mv.in.dlg	v.in.dlg.c	/^main (argc, argv)$/
+if	v.in.dlg.c	/^xx	if (level == 1 )$/
+run_a_b_dlg	v.in.dlg.c	/^run_a_b_dlg( command, name, ascii_dlg, binary_dlg)/
+run_dlg_to_digit	v.in.dlg.c	/^run_dlg_to_digit( command, digname, binary_dlg, fo/
+show_phase	v.in.dlg.c	/^show_phase( phase, describe)$/
