@@ -1,0 +1,15 @@
+Postgres driver.
+
+This driver was originaly written by Alex Shevlakov using dbf driver
+(PostgreSQL driver forked from DBF driver by Radim Blazek).
+DBF driver was not good starting point, so I (R. Blazek) have rewritten it again
+using ODBC, postgres driver and adding new code.
+
+Driver supports only some field types, other types are ignored and warning is printed 
+by G_warning().
+
+FIELD TYPES:
+Field type code may change. See for example
+http://developer.postgresql.org/cvsweb.cgi/pgsql-server/src/include/catalog/pg_type.h.diff?r1=text&tr1=1.111&r2=text&tr2=1.112&f=h
+
+Because of this, type codes must be read from server when database is opened.

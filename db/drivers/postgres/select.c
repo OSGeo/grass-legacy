@@ -1,19 +1,3 @@
-/*****************************************************************************
-*
-* MODULE:       PostgreSQL driver forked from DBF driver by Radim Blazek 
-*   	    	
-* AUTHOR(S):    Alex Shevlakov
-*
-* PURPOSE:      Simple driver for reading and writing data     
-*
-* COPYRIGHT:    (C) 2000 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
-
 #include <dbmi.h>
 #include "globals.h"
 #include "proto.h"
@@ -23,10 +7,23 @@ int db_driver_open_select_cursor(sel, dbc, mode)
      dbCursor *dbc;
      int mode;
 {
-    int ret;
+    PGresult *res;
     cursor *c;
-    char *sql;
     dbTable *table;
+
+    init_error();
+
+    /* Set datetime style */
+    res = PQexec(pg_conn, "SET DATESTYLE TO ISO");
+
+    if (!res || PQresultStatus(res) != PGRES_COMMAND_OK) {
+	append_error( "Cannot set DATESTYLE\n" );
+	report_error();
+	PQclear(res);
+	return DB_FAILED;
+    }
+    
+    PQclear(res);
 
     /* allocate cursor */
     c = alloc_cursor();
@@ -36,19 +33,27 @@ int db_driver_open_select_cursor(sel, dbc, mode)
     db_set_cursor_mode(dbc, mode);
     db_set_cursor_type_readonly(dbc);
 
-    sql = db_get_string(sel);
-
-    ret = execute(sql, c);
-
-    G_debug (3, "execute() -> %d", ret ); 
-
-    if (ret == DB_FAILED) {
-	db_append_string ( &errMsg, "Error in db_open_select_cursor()\n");
-	report_error( db_get_string (&errMsg) );
+    c->res = PQexec(pg_conn, db_get_string(sel) );
+    
+    if (!c->res || PQresultStatus(c->res) != PGRES_TUPLES_OK) {
+	append_error("Cannot select: \n");
+	append_error(db_get_string(sel) );
+	append_error( "\n" );
+	append_error(PQerrorMessage(pg_conn));
+	report_error();
+	PQclear(c->res);
 	return DB_FAILED;
     }
 
-    describe_table(c->table, c->cols, c->ncols, &table);
+    if ( describe_table( c->res, &table, c) == DB_FAILED ) {
+	append_error("Cannot describe table\n");
+	report_error();
+	PQclear(res);
+	return DB_FAILED;
+    }
+
+    c->nrows = PQntuples(c->res);
+    c->row = -1;
 
     /* record table with dbCursor */
     db_set_cursor_table(dbc, table);
