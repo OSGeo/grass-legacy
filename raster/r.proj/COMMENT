@@ -33,4 +33,22 @@ of input map and output region. Plus I moved the memory allocation routine
 forward in the main code, and made some other smaller changes. There are
 some comments in boardwalk.c, and under Changes in main.c
 
+----------------------
+Error message comments:
+
+'Error in pj_do_proj' can happen in any module that uses the proj routines,
+for a variety of reasons:
+
+        -user is trying to project something where source and destination       
+are in the same projection already (like LL->LL). Perhaps the error message
+could be more descriptive in this case, or the module should abort earlier
+(i.e. immediately after checking the PROJ_INFO of source and destination. I
+think m.proj does this, exits with 'No projection needed' message)
+
+        -stepping on a no-no point. This cannot be prevented because in         
+both raster and vector maps there is always a small chance that a node/cell
+falls on a co-ordinate that is a reference point for the projection in
+question, resulting in a division by zero error. (we had an earlier
+discussion on this).
+
 Morten Hulden <morten@ngb.se>
