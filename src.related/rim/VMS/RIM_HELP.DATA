@@ -1,0 +1,1050 @@
+*********************************************
+* Help database source for RIM vers 6.0     *
+*                                           *
+* by Jim Fox                                *
+* updated november 3, 1988  for VMS         *
+*                                           *
+*********************************************
+*
+*  Help text template
+*
+ +----------------------------------------------------------------------+
+ |  XXXXXX  |this|or|that|required| +                                   |
+ |        <optional stuff>                                              |
+ |                                                                      |
+ |                                                                      |
+ +----------------------------------------------------------------------+
+ 
+ Commentary.
+ 
+ 
+*  end of the template
+*
+*
+*  Macros
+*
+&syntax
+ Conventions used in the command syntax display:
+ 
+         - UPPER case must be typed asis. (3 char substring ok)
+         - lower case is replaced with your specific choice
+         - { required phrase }
+         - < optional phrase >
+         - | delimits multiple choices; e.g., choice1 | choice2
+             means you may enter choice1 OR choice2
+         - ... indicates the preceding phrase may be repeated
+ 
+&fmt Column formats
+ 
+     Valid format specifications are:
+ 
+        Text columns:     An       (where: n = field width,
+        Integers:         rIn.d            d = decimal places,
+        Reals:            rRn.d            r = items per line)
+        Dates:            text     text may be any reasonable combination
+                                    of mm, mmm, dd, yy, and yyyy. (dd optional)
+                                    eg. 'mm/dd/yy', 'mmm dd, yyyy'
+        Times:            text     text may be any reasonable combination
+                                    of hh, mm, ss. (ss optional)
+                                    eg. 'hh:mm:ss', 'hh:mm'
+ 
+*
+&where   Where clause
+ +----------------------------------------------------------------------+
+ |  WHERE <(> column_comparison <|AND|OR| column_comparison> <)> ...    |
+ |                                                                      |
+ |  column_comparison = column operator value                           |
+ |                      column operator column                          |
+ |                      column <|EXISTS|FAILS>                          |
+ +----------------------------------------------------------------------+
+ 
+ Operators are: LT, LE, EQ, GE, GT, NE, LIKE
+            or:  <  <=   =  >=   >  <>
+ 
+ The where clause selects only those rows that satisfy the logical
+ conditions of the clause.  Parentheses may be used to indicate
+ the precedence of the logical operators.
+ 
+ String comparison may be either sensitive or insensitive to case.
+ The command SET CASE controls this option.  Case sensitivity defaults.
+ 
+ The value string for the 'LIKE' comparison may contain 'wild-card'
+ characters.  A '?' will match any single character, while
+ an '*' will match any number of characters. The 'wild-card' characters
+ may be changed with the SET ARBCHAR command.  'LIKE' may be used
+ only with a value---'column LIKE column' is not valid.
+ 
+*
+&sort    Sort clause
+ +----------------------------------------------------------------------+
+ |  SORT <BY> column1<|=A|=D|> column2<=A|=D> ...                 |
+ +----------------------------------------------------------------------+
+ 
+ The sort qualifier =A specifies ascending; =D descending.
+ 
+*
+&to      To clause
+ +----------------------------------------------------------------------+
+ |  TO filename                                                         |
+ +----------------------------------------------------------------------+
+ 
+ Output will be written to the specified file, rather than to
+ the terminal.  If the filename contains spaces, commas, or other RIM
+ delimiters you must enclose it in quotes.
+ If the name does not include an extension, Rim will assume '.rim'
+ 
+ 
+*
+************************************************************************
+*
+*   Beginning of command help text
+*
+* Generic help
+.
+ 
+ RIM is a powerful, yet modest, relational database manager
+ available on all ACS mainframe computers.
+ 
+ A relational database consists of tables The tables consist of
+ columns and  rows. SQL style commands let you define database
+ tables and load and retrieve data.  In addition you can create
+ new tables from existing ones using relational algebra.
+ 
+ 
+ Type  'HELP command'  to get help for a particular command.
+ For example,
+ 
+    HELP SELECT
+ 
+ will show you how to use the SELECT command.
+ 
+ There is also HELP TYPING which explains how to enter RIM commands.
+ 
+ +----------------------------------------------------------------------+
+ 
+ These are the RIM commands:
+ 
+    Accessing a database
+ 
+    OPEN                Opens a database for access by other commands
+    CLOSE               Closes the database
+    USER                Identifies the user's password
+ 
+    Defining a database
+ 
+    DEFINE              Defines tables and columns
+    LIST                Lists tables and columns
+    EXHIBIT             Lists tables containing a given column
+    CHANGE OWNER        Changes the owner password
+    CHANGE RPW          Changes the read password for a table
+    CHANGE MPW          Changes the modify password for a table
+    REFORMAT            Change a column's default format
+    REMOVE LINK         Removes a link from the database
+    REMOVE TABLE        Removes a table from the database
+    RENAME LINK         Renames a link
+    RENAME TABLE        Renames a table
+    RENAME COLUMN       Renames a column
+ 
+    Loading a database
+ 
+    LOAD                Loads data into a table
+ 
+    Changing and deleting data
+ 
+    BUILD KEY           Builds a key for an column in a table
+    CHANGE              Changes data
+    DELETE ROWS         Deletes one or more rows from a table
+    DELETE DUPLICATES   Deletes duplicate rows from a table
+    REMOVE KEY          Deletes a key for an column in a table
+ 
+    Data retrieval
+ 
+    SELECT              Lists rows from one or more tables
+    REPORT              Report writing
+      =                   Define variable
+      FOOTER              Define footers
+      HEADER              Define headers
+      IF                  Conditional processing
+      NEWPAGE             Page eject
+      PRINT               Print data
+      PROCEDURE           Define procedure
+      SELECT              Select rows
+      WHILE               Looping
+ 
+    Relational algebra
+ 
+    INTERSECT           Creates an intersection of two tables
+    JOIN                Creates a join of two tables
+    PROJECT             Creates a subset of a table
+    SUBTRACT            Creates a difference of two tables
+    UNION               Creates a union of two tables
+ 
+    Macro definitions
+ 
+    MACRO               Defines a macro
+ 
+    RIM parameters and miscellaneous
+ 
+    SET                 Sets the value of a parameter
+    SHOW                Shows the value of one or more parameters
+    SHOW LIMITS         Displays Rim's buffer size limitations
+    SHOW MACROS         Displays macro definitions
+    ECHO                Echo commands
+    NOECHO              Stop echoing commands
+    INPUT               Input commands from a file
+    OUTPUT              Direct output to a file
+ 
+    Exit from RIM
+ 
+    EXIT                Exits from RIM
+    QUIT                Also exits from RIM
+ 
+ +----------------------------------------------------------------------+
+ 
+ In all cases a RIM command or keyword may be abbreviated to
+ the first three letters.
+ 
+ Type  'HELP command'  to get help for a particular command.
+ For example,
+ 
+    HELP SELECT
+ 
+ will show you how to use the SELECT command.
+ 
+*
+.BUILD KEY
+ +----------------------------------------------------------------------+
+ |  BUILD KEY FOR column IN table                                       |
+ +----------------------------------------------------------------------+
+ 
+ Builds a key for the specified column in the specified table.
+ Selections based on keyed columns are much more efficient than
+ those on un-keyed columns.  However, updates are more costly for
+ the keyed columns.
+ 
+*
+.CHANGE
+ +----------------------------------------------------------------------+
+ |  CHANGE column TO value IN table  WHERE conditions                   |
+ +----------------------------------------------------------------------+
+ 
+ Changes the value of the column in the specified table
+ for all rows selected by the WHERE clause.  Absence of the WHERE
+ clause selects all rows for change.
+ 
+ The 'value' must conform to the column's type.
+ 
+=where
+ 
+    +------------------------------------------------------------------+
+    |    There are two other change commands, which modify             |
+    |    the schema of the database.  They are:                        |
+    |                                                                  |
+    |    - CHANGE OWNER      Changes the owner password                |
+    |    - CHANGE MPW        Changes the modify password of a table    |
+    |    - CHANGE RPW        Changes the read password of a table      |
+    +------------------------------------------------------------------+
+ 
+*
+.CHANGE OWNER
+ +----------------------------------------------------------------------+
+ |  CHANGE OWNER TO new_owner                                           |
+ +----------------------------------------------------------------------+
+ 
+ Changes the owner password to 'new_owner'.
+ The user must be the owner of the database in order to use
+ this command (see the USER command).
+ 
+ The 'new_owner' password may be from 1 to 16 characters.
+ 
+*
+.CHANGE MPW
+ +----------------------------------------------------------------------+
+ |  CHANGE MPW TO new_password FOR table                                |
+ +----------------------------------------------------------------------+
+ 
+ Changes the specified table's modify password to 'new_password'.
+ The user must be the owner of the database in order to use
+ this command (see the USER command).
+ 
+ The 'new_password' may be from 1 to 16 characters.
+ 
+*
+.CHANGE RPW
+ +----------------------------------------------------------------------+
+ |  CHANGE RPW TO new_password FOR table                                |
+ +----------------------------------------------------------------------+
+ 
+ Changes the specified table's read password to 'new_password'.
+ The user must be the owner of the database in order to use
+ this command (see the USER command).
+ 
+ The 'new_password' may be from 1 to 16 characters.
+ 
+.CLOSE
+ +----------------------------------------------------------------------+
+ |  CLOSE                                                               |
+ +----------------------------------------------------------------------+
+ 
+ Closes the current database.  All files are updated and closed also.
+ 
+ Exiting from RIM will automatically close an open database.
+ 
+*
+.DEFINE
+ +----------------------------------------------------------------------+
+ |  DEFINE < <path>filename  >                                          |
+ +----------------------------------------------------------------------+
+ 
+ Begin definition of a database on the specified file.  If the file
+ exists, it must contain a RIM database and will be edited.
+ 
+ If no filename is given then the currently open database will be edited.
+ If a path is specified, the entire name should be enclosed in quotes.
+ 
+ +----------------------------------------------------------------------+
+ A database definition is actually many commands.  This is the order
+ in which they must appear:
+ 
+        <OWNER  owner_name>            Identifies the owner password
+ 
+        <COLUMNS>                      Describes new columns
+         column specifications
+ 
+        <TABLES>                       Describes new tables
+         table specifications
+ 
+        <LINKS>                        Defines table links
+         link specifications
+ 
+        <PASSWORDS>                    Associates passwords with tables
+         password specifications
+ 
+         END                           Ends database definition
+ 
+ You may obtain help with any of the define sub-commands by:
+ 
+         HELP DEFINE sub-command
+ 
+*
+.define OWNER
+ +----------------------------------------------------------------------+
+ |  DEFINE database_name                                                |
+ |  OWNER owner_name                                                    |
+ |   . . .                                                              |
+ +----------------------------------------------------------------------+
+ 
+ Defines the owner password of the database.  If this is an existing
+ database the 'owner_name' must equal the existing owner password
+ 
+.define COLUMNS
+ +----------------------------------------------------------------------+
+ |  DEFINE database_name                                                |
+ |   . . .                                                              |
+ |  COLUMNS                                                             |
+ |  column_name type1 <length|VAR> <FORMAT fmt>                         |
+ |   ...                                                                |
+ |  column_name type2 {row,col|row,VAR|VAR,VAR}  +                      |
+ |              <FORMAT fmt>                                            |
+ |   ...                                                                |
+ +----------------------------------------------------------------------+
+ 
+ Defines column_names that can be used later in table definitions.
+ 
+         type1       length
+         -----       ------
+         INT          na               integer
+         REAL         na               real
+         DATE         na               date
+         TEXT         # of chars       text
+         DOUB         na               double precision real
+         IVEC         # of integers    integer vector
+         RVEC         # of reals       real vector
+         DVEC         # of reals       double precision vector
+ 
+         type2       row      col
+         -----       ------   ------
+         IMAT        # rows   # cols   integer matrix
+         RMAT        # rows   # cols   real matrix
+         DMAT        # rows   # cols   double precision matrix
+ 
+ VAR means the particular dimension is variable.
+ 
+=fmt
+ 
+*
+.define TABLES
+ +----------------------------------------------------------------------+
+ |  DEFINE database_name                                                |
+ |   . . .                                                              |
+ |  TABLES                                                              |
+ |  table_name WITH column1 <column2> ...                               |
+ |   . . .                                                              |
+ +----------------------------------------------------------------------+
+ 
+ Defines the tables of a database.
+ 
+*
+.define LINKS
+ +----------------------------------------------------------------------+
+ |  DEFINE database_name                                                |
+ |   . . .                                                              |
+ |  LINKS                                                               |
+ |  link_name FROM column1 IN table1 TO column2 IN table2               |
+ |   . . .                                                              |
+ +----------------------------------------------------------------------+
+ 
+ Defines links between tables.  The link may be used during data
+ selection from 'table1' to access data from the row in 'table2'
+ where 'column1' in 'table1' is equal to 'column2' in 'table2'.
+ 
+*
+.define PASSWORDS
+ +----------------------------------------------------------------------+
+ |  PASSWORDS                                                           |
+ |  RPW FOR table_name IS read_password                                 |
+ |   . . .                                                              |
+ |  MPW FOR table_name IS modify_password                               |
+ |   . . .                                                              |
+ +----------------------------------------------------------------------+
+ 
+ Sets the read or modify password for the indicated table.
+ 
+*
+.EXIT
+ +----------------------------------------------------------------------+
+ |  EXIT                                                                |
+ +----------------------------------------------------------------------+
+ 
+ Exits from Rim.
+ 
+*
+.EXHIBIT
+ +----------------------------------------------------------------------+
+ |  EXHIBIT column <column ...>                                         |
+ +----------------------------------------------------------------------+
+ 
+ Lists the tables that contain the specified columns.
+ 
+*
+.HELP
+ +----------------------------------------------------------------------+
+ |  HELP < command < sub-command > >                                    |
+ +----------------------------------------------------------------------+
+ 
+ Provides help with the specified command.
+ 
+ Help text for most commands includes the following:
+ 
+         - A display of the command's syntax
+         - A description of the command's function
+         - More detail concerning syntax and function
+         - Examples
+ 
+=syntax
+ 
+*
+.INTERSECT
+ +----------------------------------------------------------------------+
+ |  INTERSECT table_1 WITH table_2 FORMING table_3 +                    |
+ |        <USING column_1 <column_2 <...>>>                             |
+ +----------------------------------------------------------------------+
+ 
+ Forms table_3 which is the intersection of table_1 and table_2.
+ If columns are listed then only those are included in table_3.
+ 
+*
+.JOIN
+ +----------------------------------------------------------------------+
+ |  JOIN table_1 USING column-1 WITH table_2 USING column-2 +           |
+ |        FORMING table_3 <WHERE comparison>                            |
+ +----------------------------------------------------------------------+
+ 
+ Forms table_3 which is the logical join of table_1 and table_2.
+ Rows are joined where: column-1 'compares to' column-2.
+ The default comparison is 'EQ'.
+ 
+*
+.LIST
+ +----------------------------------------------------------------------+
+ |  LIST <table_name | * >                                              |
+ +----------------------------------------------------------------------+
+ 
+ Lists information about tables and columns in the currently open database.
+ 
+    If 'table_name' is not given then a summary of all tables
+    is listed.
+ 
+    If 'table_name' is given then all columns in the specified table.
+    are listed.  Links associated with the table are also listed.
+ 
+    If '*' is given then all columns for all tables are listed.
+ 
+*
+.LOAD
+ +----------------------------------------------------------------------+
+ |  LOAD table_name <FROM datafile> <USING formatfile>                  |
+ +----------------------------------------------------------------------+
+ 
+ Loads data into the specified table.
+ 
+ Data loading is terminated by a line beginning with END or by
+ an end-of-file.
+ 
+ Unformatted loading:  (USING not specified)
+ 
+    Each input record must contain an entry for each column of the table.
+    The input lines may be continued with '+'.
+ 
+ Formatted loading:    (USING specified)
+ 
+    A format is read from 'formatfile' which specifies the position
+    of each column's data on the input records.
+ 
+    The 'formatfile' looks like:
+ 
+        FORMAT
+        line  position  column  format
+         ...
+ 
+        END
+ 
+    where   'line' is the relative line number (first is 1),
+            'position' is the character position on the line,
+            'column' is the column name to be loaded, and
+            'format' is the format of the data.
+ 
+    All fields are required.
+ 
+*
+.MACRO
+ +----------------------------------------------------------------------+
+ |  MACRO name = definition                                             |
+ |  MACRO name CLEAR                                                    |
+ +----------------------------------------------------------------------+
+ 
+ Defines a macro.  The definition consists of text (should be quoted)
+ and integers (1-32). Text represents actual replacement text. Integers
+ represent arguments - they will be replaced with argument tokens when
+ the macro is invoked.
+ 
+ The macro is invoked whenever its name appears in input text.
+ 
+ The CLEAR variation deletes a macro definition.
+ 
+*
+.NEWPAGE
+ +----------------------------------------------------------------------+
+ |  NEWPAGE                                                             |
+ +----------------------------------------------------------------------+
+ 
+ Causes a page eject in the output file.
+ 
+*
+.OPEN
+ +----------------------------------------------------------------------+
+ |  OPEN <path>file                                                     |
+ +----------------------------------------------------------------------+
+ 
+ Opens the specified database.  A database must be opened
+ before any operations can be performed on it.
+ 
+ If a path is specified, the entire name should be enclosed in quotes.
+ 
+*
+.PROJECT
+ +----------------------------------------------------------------------+
+ |  PROJECT table_1 FROM table_2 <USING column_1 <column_2 <...>>>   +  |
+ |        <WHERE clause>                                                |
+ +----------------------------------------------------------------------+
+ 
+ Forms table_1 which is a subset of table_2.  If columns are
+ specified then only those will be included in table_1.  If a
+ where clause is specified then only the selected rows will be
+ included in table_1.
+ 
+=where
+ 
+*
+.QUIT
+ +----------------------------------------------------------------------+
+ |  QUIT                                                                |
+ +----------------------------------------------------------------------+
+ 
+ Exits from Rim.
+ 
+*
+.REFORMAT
+ +----------------------------------------------------------------------+
+ |  REFORMAT column TO format <IN table>                                |
+ +----------------------------------------------------------------------+
+ 
+ Changes the format of the specified column.  If no table name
+ is specified then the column is changed in all tables.
+ 
+=fmt
+ 
+*
+.RENAME COLUMN
+ +----------------------------------------------------------------------+
+ |  RENAME <COLUMN> column TO new_name <IN table>                       |
+ +----------------------------------------------------------------------+
+ 
+ Changes the name of the specified column to 'new_name'.  If no
+ table name is specified then the column is renamed in all tables.
+ 
+*
+.RENAME LINK
+ +----------------------------------------------------------------------+
+ |  RENAME LINK link TO new_name                                        |
+ +----------------------------------------------------------------------+
+ 
+ Changes the name of the specified link to 'new_name'.
+ 
+*
+.RENAME TABLE
+ +----------------------------------------------------------------------+
+ |  RENAME TABLE table TO new_name                                      |
+ +----------------------------------------------------------------------+
+ 
+ Changes the name of the specified table to 'new_name'.
+ 
+*
+.REPORT
+ +----------------------------------------------------------------------+
+ |  REPORT <TO filename>                                                |
+ |    report statements                                                 |
+ |  END <REPORT>                                                        |
+ +----------------------------------------------------------------------+
+ 
+ Writes a report, to filename if it is given, otherwise to
+ the current output.
+ 
+ Report statements include:
+ 
+    FOOTER                                        Defines footer
+    ...
+    END <FOOTER>
+ 
+    HEADER                                        Defines header
+    ...
+    END <HEADER>
+ 
+    IF test                                       Conditional processing
+    ...
+    <ELSE>
+    <...>
+    END <IF>
+ 
+    NEWPAGE                                       Page eject
+ 
+    PROCEDURE <name>                              Defines procedure
+    ...
+    END <PROCEDURE>
+ 
+    PRINT                                         Prints data
+    ...
+    END <PRINT>
+ 
+    SELECT FROM table <WHERE ...> <SORT ...>      Select rows from a
+    ...                                           table
+    END <SELECT>
+ 
+    SET ---                                       Set parameters
+        --- CASE <IGNORE|RESPECT>
+        --- INPUT filename
+        --- OUTPUT filename
+        --- REPORT HEIGHT n
+        --- REPORT WIDTH n
+ 
+    variable = expression                         Defines variable
+ 
+    WHILE test                                    Looping
+    ...
+    END <WHILE>
+ 
+ You may obtain help with any of the report statements by:
+ 
+         HELP REPORT statement
+ 
+*
+.report FOOTER
+ +----------------------------------------------------------------------+
+ |  REPORT                                                              |
+ |  ...                                                                 |
+ |    FOOTER                                                            |
+ |    line position text                                                |
+ |    line position variable format                                     |
+ |    ...                                                               |
+ |    END <FOOTER>                                                      |
+ |  ...                                                                 |
+ |  END <REPORT>                                                        |
+ +----------------------------------------------------------------------+
+ 
+ Defined the page footer for the report.
+ The footer is printed only if the report height is non-zero.
+ 
+    line -     relative line number within the footer
+    position - relative character position on the line
+    text -     text string
+    variable - variable name
+    format -   format for printing variable
+ 
+=fmt
+ 
+*
+.report HEADER
+ +----------------------------------------------------------------------+
+ |  REPORT                                                              |
+ |  ...                                                                 |
+ |    HEADER                                                            |
+ |    line position text                                                |
+ |    line position variable format                                     |
+ |    ...                                                               |
+ |    END <HEADER>                                                      |
+ |  ...                                                                 |
+ |  END <REPORT>                                                        |
+ +----------------------------------------------------------------------+
+ 
+ Defined the page header for the report.
+ The header is printed only if the report height is non-zero.
+ 
+    line -     relative line number within the header
+    position - relative character position on the line
+    text -     text string
+    variable - variable name
+    format -   format for printing variable
+ 
+=fmt
+ 
+*
+.report IF
+ +----------------------------------------------------------------------+
+ |  REPORT                                                              |
+ |  ...                                                                 |
+ |    IF test                                                           |
+ |      statements if test is true                                      |
+ |    <ELSE>                                                            |
+ |      statements if test is false                                     |
+ |    END <IF>                                                          |
+ |  ...                                                                 |
+ |  END <REPORT>                                                        |
+ +----------------------------------------------------------------------+
+ 
+    test -  a where clause (without the WHERE). It may also
+            contain variables.
+ 
+ If test is true then the first group of statements are executed.
+ Otherwise the second group of statements are executed.
+ 
+=where
+ 
+*
+.report NEWPAGE
+ +----------------------------------------------------------------------+
+ |  REPORT                                                              |
+ |  ...                                                                 |
+ |    NEWPAGE                                                           |
+ |  ...                                                                 |
+ |  END <REPORT>                                                        |
+ +----------------------------------------------------------------------+
+ 
+ Causes a page eject in the report.
+ 
+*
+.report PRINT
+ +----------------------------------------------------------------------+
+ |  REPORT                                                              |
+ |  ...                                                                 |
+ |    PRINT                                                             |
+ |    line position text                                                |
+ |    line position variable format                                     |
+ |    line position column format                                       |
+ |    ...                                                               |
+ |    END <PRINT>                                                       |
+ |  ...                                                                 |
+ |  END <REPORT>                                                        |
+ +----------------------------------------------------------------------+
+ 
+ Prints a block of lines on the report.
+ 
+    line -     relative line number within the block
+    position - relative character position on the line
+    text -     text string
+    variable - variable name
+    column -   column name in the current selection table
+    format -   format for printing variable or column
+ 
+=fmt
+ 
+*
+.report PROCEDURE
+ +----------------------------------------------------------------------+
+ |  REPORT                                                              |
+ |  ...                                                                 |
+ |    PROCEDURE name                                                    |
+ |      statements                                                      |
+ |    END <PROCEDURE>                                                   |
+ |  ...                                                                 |
+ |  END <REPORT>                                                        |
+ +----------------------------------------------------------------------+
+ 
+ Defines a procedure.  The procedure name becomes a report writer
+ statement that executes all the statements within the procedure.
+ 
+*
+.report SELECT
+ +----------------------------------------------------------------------+
+ |  REPORT                                                              |
+ |  ...                                                                 |
+ |    SELECT FROM table <WHERE ...> <SORT ...>                          |
+ |      statements                                                      |
+ |    END <SELECT>                                                      |
+ |  ...                                                                 |
+ |  END <REPORT>                                                        |
+ +----------------------------------------------------------------------+
+ 
+ Selects rows from the indicated table.  All statements within the
+ selection block will be executed for each selected row.
+ 
+=where
+=sort
+ 
+*
+.report WHILE
+ +----------------------------------------------------------------------+
+ |  REPORT                                                              |
+ |  ...                                                                 |
+ |    WHILE test                                                        |
+ |      statements                                                      |
+ |    END <WHILE>                                                       |
+ |  ...                                                                 |
+ |  END <REPORT>                                                        |
+ +----------------------------------------------------------------------+
+ 
+    test -  a where clause (without the WHERE). It may also
+            contain variables.
+ 
+ The statements within the WHILE block are executed as long as
+ the test is true.  The test is made at the start of each loop.
+ 
+=where
+ 
+*
+.report variable
+ +----------------------------------------------------------------------+
+ |  REPORT                                                              |
+ |  ...                                                                 |
+ |    variable <type> = expression                                      |
+ |  ...                                                                 |
+ |  END <REPORT>                                                        |
+ +----------------------------------------------------------------------+
+ 
+ Assigns value of 'expression' to the variable.
+ 
+    variable --- name of variable to be assigned
+ 
+    type ---  INT (default) | REAL | DOUBLE | number
+              where 'number' is number of characters for a text variable.
+ 
+    expression --- reasonable combination of variables, columns, and
+                   values combined by +, -, *, /, and ().
+                   Text may be concatenated with the + operator.
+ 
+*
+.SELECT
+ +----------------------------------------------------------------------+
+ |  SELECT  | * | <link:>column<@format><%title><=S> ...  +             |
+ |        <FROM table> +                                                |
+ |        <WHERE conditions> +                                          |
+ |        <SORT <BY> columns> +                                         |
+ |        <TO filename>                                                 |
+ +----------------------------------------------------------------------+
+ 
+ Displays data for the selected columns from the specified table.
+ The display includes titles, page breaks, and a summary line.
+ If a link is specified then the column name applies to the
+ 'linked to' table.
+ 
+ The table may be omitted only if there is a current table.
+ 
+=fmt
+=where
+=sort
+=to
+ 
+*
+.SET
+ +----------------------------------------------------------------------+
+ |  SET options                                                         |
+ +----------------------------------------------------------------------+
+ 
+ Sets a RIM flag or parameter.
+ 
+    SET CASE <IGNORE|RESPECT>     Ignore or respect case differences
+                                  during string comparisons
+ 
+    SET DATE FORMAT format        Sets the default date format
+                                  (format may be any reasonable combination
+                                     of mm, mmm, dd, yy, and yyyy.
+                                     eg. 'mm/dd/yy', 'mmm dd, yyyy')
+ 
+    SET ECHO <ON|OFF>             Sets or resets echo of terminal input
+                                  (no specification means set ON)
+ 
+    SET INPUT   filename          Reads commands from the specified file
+                                  (If the filename contains spaces,
+                                  commas, or other RIM delimiters
+                                  you must enclose it in quotes.)
+                                  If the name does not include an extension
+                                  Rim will assume '.rim'
+ 
+    SET INTEGER FORMAT <r>In<.d>  Sets the default integer format
+                                  (n=field width, d=decimal places,
+                                   r=items per line, e.g. I7, 5I1, I8.2)
+ 
+    SET MULTIPLE ARBCHAR m        Sets the multiple 'wild-card' character
+                                  for the 'LIKE' text match.
+ 
+    SET MV 'string'               Set 'missing value' string for
+                                  input and output
+ 
+    SET NA 'string'               Set 'not applicable' string for
+                                  input and output
+ 
+    SET OUTPUT 'filename'         Writes reports to the specified file
+                                  (If the filename contains spaces,
+                                  commas, or other RIM delimiters
+                                  you must enclose it in quotes.)
+                                  If the name does not include an extension
+                                  Rim will assume '.lis'
+ 
+    SET REAL FORMAT <r>Rn<.d>     Sets the default real format
+                                  (n=field width, d=decimal places,
+                                   r=items per line, e.g. R7, 5R8.2)
+ 
+    SET REPORT HEIGHT n           Sets the lines per page for reports
+                                  (0 = no paging)
+ 
+    SET REPORT WIDTH n            Sets the maximum characters per line
+                                  for reports (file output)
+ 
+    SET SINGLE ARBCHAR m          Sets the single 'wild-card' character
+                                  for the 'LIKE' text match.
+ 
+    SET TERMINAL WIDTH n          Sets the maximum characters per line
+                                  for the terminal
+ 
+    SET USER <password>           Sets the user password
+                                  (same as USER command)
+ 
+*
+.SHOW
+ +----------------------------------------------------------------------+
+ |  SHOW <|LIMITS|MACROS <macro name|>>                                 |
+ +----------------------------------------------------------------------+
+ 
+ Shows the current setting of many RIM parameters.
+ 
+ Presence of the LIMITS keyword shows many of Rim's buffer size limitations.
+ 
+ Presence of the MACROS keyword shows macro definitions. If a macro name
+ is also specified, only that macro is displayed.
+ 
+*
+.SUBTRACT
+ +----------------------------------------------------------------------+
+ |  SUBTRACT table_1 FROM table_2 FORMING table_3 +                     |
+ |        <USING column_1 <column_2 <...>>>                             |
+ +----------------------------------------------------------------------+
+ 
+ Forms table_3 which is the difference of table_1 and table_2.
+ If columns are listed then only those are included in table_3.
+ 
+*
+.typing
+ 
+ RIM commands consist of a command name (SELECT, for example) which
+ may be followed by required and optional arguments (depends on command).
+ The arguments, normally seperated by spaces, may be table or
+ column names (which must be typed in full), keywords (which usually
+ may be abbreviated to three letters), values, and symbols.
+ 
+     - Table and column names and passwords may be typed either in
+       upper or lower case.
+ 
+     - Integer values must be all digits with no decimal.
+       e.g.: 1  -99
+ 
+     - Real values may contain digits, a decimal, and an exponent.
+       e.g., 1  -99.9   9.01e4  1.0e-3
+ 
+     - Text values are normally enclosed in quotes (single or double),
+       but the quotes may be omitted if: the value contains no spaces or
+       special symbols AND the value is not an column name.  When
+       in doubt use quotes.
+ 
+     - Date values must be entered in the default format (see SET).
+ 
+ 
+ A trailing plus sign allows a command to continue on the next input line.
+ A semi-colon is a logical end-of-line and may be used to seperate two
+ commands on the same line.
+ 
+ +----------------------------------------------------------------------+
+ 
+ Recalling and editing previous commands
+ 
+ Typing a single 'r' will recall the previous input line for editing
+ and re-execution. The line will be displayed and edits requested.
+ 
+     r     - (by itself) recalls next previous line
+ 
+     space - keeps the corresponding old character
+ 
+     !     - ends new line
+ 
+     #     - deletes the corresponding old character from the new line
+ 
+     <     - begins insertion of new text
+ 
+     >     - ends insertion of new text
+ 
+     other - new character replaces old
+ 
+     A completely empty line executes the edited command
+ 
+ +----------------------------------------------------------------------+
+ 
+ 
+*
+.UNION
+ +----------------------------------------------------------------------+
+ |  UNION table_1 WITH table_2 FORMING table_3 +                        |
+ |        <USING column_1 <column_2 <...>>>                             |
+ +----------------------------------------------------------------------+
+ 
+ Forms table_3 which is the union of table_1 and table_2.
+ If columns are listed then only those are included in table_3.
+ 
+*
+.UNLOAD
+ +----------------------------------------------------------------------+
+ |  UNLOAD  <ALL|DEFINITIONS|DATA> <table1<=mpw1>> <table2<=mpw2>> ...+ |
+ |        <TO filename>                                                 |
+ +----------------------------------------------------------------------+
+ 
+ Unloads all or selected portions of the database.  The output appears
+ as a RIM input file and can be used to rebuild the database.
+ 
+ ALL (default) unloads both the schema and the data.
+ DEFINITIONS unloads only the schema.
+ DATA unloads only the data.
+ 
+ Omission of the table list unloads all tables.
+ Passwords for tables (modify passwords) must be given only if
+ you are not the database owner.
+ 
+=to
+ 
+*
