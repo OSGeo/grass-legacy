@@ -269,7 +269,11 @@ int main (int argc, char **argv)
 	{
 	    if(new_cat == 0)
 		for (i = 0; i < cat_count; i++)
-		    G_set_cat(cat_array[i], G_get_cat(cat_array[i],&cats), &temp_cats);
+		{
+		    char *label = G_get_cat(cat_array[i],&cats);
+		    if (label)
+			G_set_cat(cat_array[i], label, &temp_cats);
+		}
 	    else
 		G_set_cat(new_cat, G_get_cat(new_cat, &cats), &temp_cats);
 	}
