@@ -3,7 +3,7 @@ HOME=$(GISBASE)/etc/bin/main/cmd
 INCLUDE = ../include
 DBMILIB = $(LIBDIR)/libdbmi.a
 
-LIBES = $(GISLIB) $(DBMILIB)
+LIBES = $(DBMILIB) $(GISLIB) 
 EXTRA_CFLAGS=-I$(INCLUDE)
 
 all: 	$(HOME)/db.columns \
