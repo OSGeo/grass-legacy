@@ -14,6 +14,7 @@ all:
 	$(GMAKE) geom
 	$(GMAKE) gis
 	$(GMAKE) ibtree
+	$(GMAKE) gmath
 	$(GMAKE) icon
 	$(GMAKE) imagery
 	$(GMAKE) linkm
