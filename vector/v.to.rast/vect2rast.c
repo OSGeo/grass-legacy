@@ -92,9 +92,9 @@ int vect_to_rast(char *vector_map,char *raster_map, char *column, int nrows)
 
     for ( i = 0; i < cvarr.n_values; i++ ) {
 	if ( ctype == DB_C_TYPE_INT ) {
-	    G_debug (3, "cat = %d val = %d", cvarr.value[i].cat, cvarr.value[i].i );
+	    G_debug (3, "cat = %d val = %d", cvarr.value[i].cat, cvarr.value[i].val.i );
 	} else if ( ctype == DB_C_TYPE_DOUBLE ) {
-	    G_debug (3, "cat = %d val = %f", cvarr.value[i].cat, cvarr.value[i].d );
+	    G_debug (3, "cat = %d val = %f", cvarr.value[i].cat, cvarr.value[i].val.d );
 	}
     }
 
