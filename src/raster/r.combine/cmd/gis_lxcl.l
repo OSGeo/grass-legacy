@@ -173,7 +173,7 @@ paint   {
 
 "#"     { char achar ;
 		printf("# ") ;
-		while ((achar=yyinput()) != 012)
+		while ((achar = input()) != 012)
 			putchar(achar) ;
 		printf("\n") ;
 	}
