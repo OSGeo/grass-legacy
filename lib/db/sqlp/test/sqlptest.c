@@ -6,12 +6,12 @@ int
 main (int argc, char **argv) 
 {
     SQLPSTMT *st;
-    char sql[1024];
+    char sql[5000];
 
     st = sqpInitStmt();
     
     
-    while ( fgets ( sql, 1023, stdin) )
+    while ( fgets ( sql, 5000, stdin) )
       {
         fprintf (stdout, "\nInput statement: %s", sql);
     
