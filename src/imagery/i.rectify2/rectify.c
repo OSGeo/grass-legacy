@@ -1,6 +1,12 @@
 #include <unistd.h>
 #include "global.h"
 
+/* Modified to support Grass 5.0 fp format 11 april 2000
+ *
+ * Pierre de Mouveaux - pmx@audiovu.com
+ *
+ */
+
 int rectify (char *name, char *mapset, char *result, int order)
 {
     struct Cell_head cellhd, win;
@@ -61,7 +67,7 @@ int rectify (char *name, char *mapset, char *result, int order)
 	    if ((win.rows = nrows) > NROWS)
 		win.rows = NROWS;
 
-            compute_georef_matrix (&cellhd, &win,order);
+		compute_georef_matrix (&cellhd, &win,order);
 	    perform_georef (infd, rast);
 	    write_matrix (row, col);
 

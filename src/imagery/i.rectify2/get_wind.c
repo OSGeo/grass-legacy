@@ -18,11 +18,8 @@ int get_target_window (int order)
 	if (!G_gets(buf)) continue;
 	G_strip (buf);
 	if (strcmp (buf,"1") == 0) {
-	/* Pierre de Mouveaux - 05 april 2000*/
-		ask_file_from_list (name, mapset);
-		if (G_get_cellhd (name, mapset, &cellhd) < 0)
-			exit(-1);
-		G_get_cellhd(name,mapset,&target_window);
+/*	Pierre de Mouveaux - 11 april 2000*/
+		G_get_window(&target_window);
 		return 1;
 	}
 	if (strcmp (buf,"2") == 0) break;
