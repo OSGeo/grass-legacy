@@ -2,7 +2,7 @@ Source: grass
 Section: science
 Priority: optional
 Maintainer: Markus Neteler <neteler@itc.it>
-Build-Depends: bison | byacc, csh | c-shell, debhelper (>= 4.0.2), doxygen, fftw-dev, flex, lesstif2-dev, libc6-dev, libfreetype6-dev, libgdal1, libgdal1-dev, libjpeg62-dev | libjpeg-mmx-dev, libncurses5-dev, libpng12-dev, libreadline4-dev, libtiff4-dev, postgresql-client, postgresql-dev, proj (>= 4.4.7), tcl8.3-dev, tk8.3-dev, unixodbc-dev, xlibmesa-gl-dev, xlibmesa-glu-dev, xlibs-dev, zlib1g-dev
+Build-Depends: bison | byacc, debhelper (>= 4.0.2), doxygen, fftw-dev, flex, lesstif2-dev, libc6-dev, libfreetype6-dev, libgdal1, libgdal1-dev, libjpeg62-dev | libjpeg-mmx-dev, libncurses5-dev, libpng12-dev, libreadline4-dev, libtiff4-dev, postgresql-client, postgresql-dev, proj (>= 4.4.7), tcl8.3-dev, tk8.3-dev, unixodbc-dev, xlibmesa-gl-dev, xlibmesa-glu-dev, xlibs-dev, zlib1g-dev
 Standards-Version: 3.6.1
 
 Package: grass
