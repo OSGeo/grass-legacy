@@ -330,11 +330,11 @@ static int current;
 static int second;  /* line whic is not current */
 
 static int a_cross = 0;
-int n_cross;
+static int n_cross;
 static CROSS *cross = NULL;
 static int *use_cross = NULL;
 
-void add_cross ( int asegment, double adistance, int bsegment, double bdistance, double x, double y) 
+static void add_cross ( int asegment, double adistance, int bsegment, double bdistance, double x, double y) 
 {
     if ( n_cross == a_cross ) { 
         cross = (CROSS *) G_realloc ( (void *) cross, (a_cross + 100) * sizeof(CROSS) );
@@ -353,7 +353,7 @@ void add_cross ( int asegment, double adistance, int bsegment, double bdistance,
     n_cross++;
 }
 
-int cmp_cross ( const void *pa, const void *pb)
+static int cmp_cross ( const void *pa, const void *pb)
 {
     CROSS *p1 = (CROSS *) pa;
     CROSS *p2 = (CROSS *) pb;
@@ -366,7 +366,7 @@ int cmp_cross ( const void *pa, const void *pb)
     return 0;
 }
 
-double dist2 (double x1, double y1, double x2, double y2 ) { 
+static double dist2 (double x1, double y1, double x2, double y2 ) { 
     double dx, dy;
     dx = x2 - x1; dy = y2 - y1;
     return ( dx * dx + dy * dy );
@@ -384,10 +384,11 @@ int ident (double x1, double y1, double x2, double y2, double thresh ) {
 }
 */
 
-struct line_pnts *APnts, *BPnts;
+/* shared by Vect_line_intersection, Vect_line_check_intersection, cross_seg, find_cross */
+static struct line_pnts *APnts, *BPnts; 
 
 /* break segments (called by rtree search) */
-int cross_seg(int id, int *arg)
+static int cross_seg(int id, int *arg)
 {
     double x1, y1, z1, x2, y2, z2;
     int i, j, ret;
@@ -410,22 +411,30 @@ int cross_seg(int id, int *arg)
 	G_debug(2, "  -> %d x %d: intersection type = %d", i, j, ret );
 	if ( ret == 1 || ret == 2 ) { /* one intersection on segment A */
 	    G_debug(3, "    in %f, %f ",  x1, y1 );
-	    add_cross ( i, 0, j, 0, x1, y1 );
+	    add_cross ( i, 0.0, j, 0.0, x1, y1 );
 	} else if ( ret == 3 || ret == 4 || ret == 5 ) { 
 	    /* a contains b; a is broken in 2 points (but 1 may be end)
 	     *  or b contains a; b is broken in 2 points (but 1 may be end) 
 	     *  or identical */ 
 	    G_debug(3, "    in %f, %f; %f, %f",  x1, y1, x2, y2 );
-	    add_cross ( i, 0, j, 0, x1, y1 );
-	    add_cross ( i, 0, j, 0, x2, y2 );
+	    add_cross ( i, 0.0, j, 0.0, x1, y1 );
+	    add_cross ( i, 0.0, j, 0.0, x2, y2 );
 	}
     }
     return 1; /* keep going */
 }
 
-/* Intersect 2 lines. 
-*  Creates array of new lines created from original A line, by intersection with B line.
-* 
+/*!
+ \fn int Vect_line_check_intersection ( struct line_pnts *APoints, struct line_pnts *BPoints, 
+                   struct line_pnts ***ALines, struct line_pnts ***BLines,
+		   int    *nalines, int    *nblines, int with_z)
+ \brief Intersect 2 lines. Creates array of new lines created from original A line, 
+        by intersection with B line. Points (Points->n_points == 1) are not supported.
+ \return 0 no intersection 
+ \return 1 intersection found
+ \param APoints first input line 
+ \param BPoints second input line 
+ \param with_z 3D, not supported!
 */
 int 
 Vect_line_intersection (
@@ -810,7 +819,7 @@ Vect_line_intersection (
 		}
 		
 		/* add current cross or end point */
-		Vect_append_point (  XLines[k], cross[i].x, cross[i].y, 0 );
+		Vect_append_point (  XLines[k], cross[i].x, cross[i].y, 0.0 );
 		G_debug ( 2, "   append cross / last point: %f %f", cross[i].x, cross[i].y );
 		last_seg = seg; last_x = cross[i].x; last_y = cross[i].y, last_z = 0;
 
@@ -833,5 +842,164 @@ Vect_line_intersection (
     }
     	
     return 1;
+}
+
+static struct line_pnts *APnts, *BPnts;
+
+static int cross_found; /* set by find_cross() */
+
+/* break segments (called by rtree search) */
+static int find_cross(int id, int *arg)
+{
+    double x1, y1, z1, x2, y2, z2;
+    int i, j, ret;
+
+    /* !!! segment number for B lines is returned as +1 */
+    i = *arg;
+    j = id - 1;
+    /* Note: -1 to make up for the +1 when data was inserted */
+    
+    ret = Vect_segment_intersection (
+	      APnts->x[i], APnts->y[i], APnts->z[i],
+	      APnts->x[i+1], APnts->y[i+1], APnts->z[i+1],
+	      BPnts->x[j], BPnts->y[j], BPnts->z[j],
+	      BPnts->x[j+1], BPnts->y[j+1], BPnts->z[j+1],
+	      &x1, &y1, &z1, &x2, &y2, &z2,
+	      0);
+    
+    /* add ALL (including end points and duplicates), clean later */
+    if ( ret > 0 ) {
+	cross_found = 1;
+	return 0;
+    }
+    return 1; /* keep going */
+}
+
+/*!
+ \fn int Vect_line_check_intersection ( struct line_pnts *APoints, struct line_pnts *BPoints, int with_z)
+ \brief Check if 2 lines intersect. Points (Points->n_points == 1) are also supported.
+ \return 0 no intersection 
+ \return 1 intersection found
+ \param APoints first input line 
+ \param BPoints second input line 
+ \param with_z 3D, not supported (only if one or both are points) !
+*/
+int 
+Vect_line_check_intersection (
+    struct line_pnts *APoints, 
+    struct line_pnts *BPoints,
+    int    with_z)
+{
+    int    i;
+    double dist, rethresh;
+    struct Rect rect;
+    struct Node *RTree;
+
+    rethresh = 0.000001; /* TODO */
+    APnts = APoints;
+    BPnts = BPoints;
+
+    /* TODO: 3D, RE (representation error) threshold, GV_POINTS (line x point) */
+
+    /* If one or both are point (Points->n_points == 1) */
+    if ( APoints->n_points == 1 && BPoints->n_points == 1 ) {
+	if ( APoints->x[0] == BPoints->x[0] && APoints->y[0] == BPoints->y[0] ) {
+	    if ( !with_z ) {
+		return 1;
+	    } else {
+		if ( APoints->z[0] == BPoints->z[0] )
+		    return 1;
+		else
+		    return 0;
+	    }
+	} else {
+	    return 0;
+	}
+    }
+	
+    if ( APoints->n_points == 1 ) {
+	Vect_line_distance ( BPoints, APoints->x[0], APoints->y[0], APoints->z[0], with_z,
+		             		NULL, NULL, NULL, &dist, NULL, NULL );
+
+	if ( dist <= rethresh ) {
+	    return 1;
+	} else {
+	    return 0;
+	}
+    }
+
+    if ( BPoints->n_points == 1 ) {
+	Vect_line_distance ( APoints, BPoints->x[0], BPoints->y[0], BPoints->z[0], with_z,
+		             		NULL, NULL, NULL, &dist, NULL, NULL );
+	
+	if ( dist <= rethresh ) 
+	    return 1;
+	else 
+	    return 0;
+    }
+    
+    /* Take each segment from A and find if intersects any segment from B. */
+
+    /* Spatial index: lines may be very long (thousands of segments) and check each segment 
+    *  with each from second line takes a long time (n*m). Because of that, spatial index
+    *  is build first for the second line and segments from the first line are broken by segments
+    *  in bound box */
+
+    /* Create rtree for B line */
+    RTree = RTreeNewIndex();
+    for (i = 0; i < BPoints->n_points - 1; i++) {
+	if ( BPoints->x[i] <= BPoints->x[i+1] ) {
+	    rect.boundary[0] = BPoints->x[i];  rect.boundary[3] = BPoints->x[i+1]; 
+	} else {
+	    rect.boundary[0] = BPoints->x[i+1];  rect.boundary[3] = BPoints->x[i]; 
+	}
+	
+	if ( BPoints->y[i] <= BPoints->y[i+1] ) {
+	    rect.boundary[1] = BPoints->y[i];  rect.boundary[4] = BPoints->y[i+1]; 
+	} else {
+	    rect.boundary[1] = BPoints->y[i+1];  rect.boundary[4] = BPoints->y[i]; 
+	}
+	
+	if ( BPoints->z[i] <= BPoints->z[i+1] ) {
+	    rect.boundary[2] = BPoints->z[i];  rect.boundary[5] = BPoints->z[i+1]; 
+	} else {
+	    rect.boundary[2] = BPoints->z[i+1];  rect.boundary[5] = BPoints->z[i]; 
+	}
+
+	RTreeInsertRect( &rect, i+1, &RTree, 0); /* B line segment numbers in rtree start from 1 */
+    }
+
+    /* Find intersection */
+    cross_found = 0;
+
+    for (i = 0; i < APoints->n_points - 1; i++) {
+	if ( APoints->x[i] <= APoints->x[i+1] ) {
+	    rect.boundary[0] = APoints->x[i];  rect.boundary[3] = APoints->x[i+1]; 
+	} else {
+	    rect.boundary[0] = APoints->x[i+1];  rect.boundary[3] = APoints->x[i]; 
+	}
+	
+	if ( APoints->y[i] <= APoints->y[i+1] ) {
+	    rect.boundary[1] = APoints->y[i];  rect.boundary[4] = APoints->y[i+1]; 
+	} else {
+	    rect.boundary[1] = APoints->y[i+1];  rect.boundary[4] = APoints->y[i]; 
+	}
+	if ( APoints->z[i] <= APoints->z[i+1] ) {
+	    rect.boundary[2] = APoints->z[i];  rect.boundary[5] = APoints->z[i+1]; 
+	} else {
+	    rect.boundary[2] = APoints->z[i+1];  rect.boundary[5] = APoints->z[i]; 
+	}
+	
+        RTreeSearch(RTree, &rect, (void *)find_cross, &i); /* A segment number from 0 */
+
+	if ( cross_found ) {
+	    break;
+	}
+    }
+
+    /* Free RTree */
+    RTreeDestroyNode ( RTree );
+
+    return cross_found;
 }
 
