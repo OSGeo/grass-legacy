@@ -1,0 +1,12 @@
+#!/bin/sh
+d.frame -e
+d.erase
+d.frame -c f=a a=47,53,30,70
+d.frame -s f=a
+d.erase red
+echo Not Available | d.text size=95 color=yellow
+sleep 2
+echo Not Available | d.text size=95 color=red
+d.erase
+d.frame -e
+exit 1
