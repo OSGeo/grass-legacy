@@ -30,9 +30,6 @@
 #include "local_structs.h"
 #include "local_proto.h"
 
-static P_AREA *Area;
-/* static P_ISLE *Isle; */
-
 int extract_lines( SHPObject **hObj, struct Map_info *Map, int *indx_list, int *nIndices,
 		   const int curr_indx ) {
 
@@ -57,7 +54,7 @@ int extract_lines( SHPObject **hObj, struct Map_info *Map, int *indx_list, int *
 
   /* Deal only with linear elements (reject area edges) */
 
-  if(Map->Line[cindx].type == AREA || Map->Line[cindx].type == DOT)
+  if(Map->Line[cindx].type != LINE)
     return -1;
 
   /* Initialise line structure */
@@ -66,7 +63,7 @@ int extract_lines( SHPObject **hObj, struct Map_info *Map, int *indx_list, int *
 
   /* Read the line */
 
-  if( V2_read_line(Map, line1, cindx ) != LINE ) return 1;
+  if( V2_read_line(Map, line1, cindx ) != LINE ) return -1;
 
   tvertices = line1->n_points;
 
@@ -86,11 +83,53 @@ int extract_lines( SHPObject **hObj, struct Map_info *Map, int *indx_list, int *
   indx_list[*nIndices] = cindx;
   (*nIndices)++;
   return 1;
-
-  
 }
 
+int extract_points( SHPObject **hObj, struct Map_info *Map, int *indx_list, int *nIndices,
+		   const int curr_indx ) {
 
+  /* Extract points from a POINT dig file and add to shapefile */
+
+  SHPObject *obj1;
+  struct line_pnts *line1;
+  char buf[128] = "";
+  int cindx;
+
+  /* Loop */
+  int i, j;
+
+  /* Fields for shape object */
+  double *listX, *listY;
+
+  cindx = curr_indx + 1;
+
+  /* If we have come to the end of the lines, exit with 0 */
+  if( curr_indx >= Map->n_lines ) return 0;
+
+  /* Deal only with point elements (reject area edges and lines) */
+  if(Map->Line[cindx].type != DOT)
+    return -1;
+
+  /* Initialise line structure */
+  line1 = Vect_new_line_struct();
+
+  /* Read the line */
+  if( V2_read_line(Map, line1, cindx ) != DOT ) return -1;
+
+  if( (obj1 = SHPCreateSimpleObject( SHPT_POINT, 1, line1->x, line1->y, NULL )) == NULL ) {
+    sprintf(buf, "Could not build shape object for point %d\n", cindx );
+    G_fatal_error(buf);
+  }
+
+  *hObj = obj1;
+
+  Vect_destroy_line_struct(line1);
+
+  /* Clean up and finish */
+  indx_list[*nIndices] = cindx;
+  (*nIndices)++;
+  return 1;
+}
 
 int extract_ring( SHPObject **sh1, struct Map_info *Map, int *indx_list, int *nIndices,
 		  const int curr_indx ) {
@@ -100,6 +139,8 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map, int *indx_list, int *nI
   */
 
   SHPObject *obj1;
+  P_AREA *Area;
+  P_ISLE *Isle;
   struct line_pnts *Points;
 
   char *logfile_name;
@@ -121,6 +162,7 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map, int *indx_list, int *nI
   cindx = curr_indx + 1;
   if( curr_indx >= Map->n_areas ) return 0;
 
+  
   logfile_name = (char *)malloc(128);
 
   proc_logfile( GET_VAL, logfile_name );
@@ -140,7 +182,7 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map, int *indx_list, int *nI
     fprintf( lfp, "Area %d unassigned\n", cindx );
     return 1;
   }
-
+  
   /* fprintf(lfp, "\nArea %d has %d isles: \n", cindx, Area->n_isles ); */
   
   /* Determine initial information on shape */
@@ -172,8 +214,6 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map, int *indx_list, int *nI
 
   free(Points->x);
   free(Points->y);
-  Points->alloc_points = 0;
-  Points->n_points = 0;
 
   totalvertices = numvertices;
 
@@ -208,13 +248,11 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map, int *indx_list, int *nI
 
     free(Points->x);
     free(Points->y);
-    Points->alloc_points = 0;
-    Points->n_points = 0;
   }
 
-  /* free(Area); */
+  /*free(Area);
   Vect_destroy_line_struct(Points);
-  
+  */
 
   /* Log vertex lists */
   /*
@@ -240,9 +278,9 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map, int *indx_list, int *nI
     G_fatal_error(buf);
   }
 
-  free(listX);
+  /*free(listX);
   free(listY);
-  
+  */
   free(partoffsets);
 
   *sh1 = obj1;
