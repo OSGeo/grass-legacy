@@ -1,0 +1,66 @@
+
+
+
+DOS.list(1)  	     GRASS Reference Manual	      DOS.list(1)
+
+
+
+NAME
+     DOS.list - lists stored screen images on the PC6300 MS_DOS hard disk.
+     (Available for PC6300 workstations, only)
+
+SYNOPSIS
+     DOS.list
+
+DESCRIPTION
+     DOS.list allows a user to :
+     interactively list PC6300 screen images saved by DOS.save,
+     on the PC6300 hard disk. Program will find DOS files with
+     the extension ".GRS" in the current DOS directory. 
+
+AUTHOR
+     P.W.Carlson, USDA, Soil Conservation Service
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.0		 U.S.D.A. SCS  				1
+
+
+
