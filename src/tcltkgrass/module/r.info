@@ -2,4 +2,5 @@ interface_build {
     {r.info} 0
     {Outputs basic information about a user-specified raster map layer.}
     {entry map {Raster map:} 0 raster}
+    {checkbox -r {print range only.} "" -r}
 }
