@@ -27,10 +27,10 @@ else
     SUBDIRS4 = $(SUBDIRS3)
 endif
 
-#add new driver here, increase SUBDIRSx number
+#1. add new driver here, increase SUBDIRSx number
 
-#cp last SUBDIRSx to SUBDIRS
-SUBDIRS = $(SUBDIRS3)
+#2. increase number here
+SUBDIRS = $(SUBDIRS4)
 
 default: subdirs
 
