@@ -47,7 +47,7 @@ int main (int argc, char *argv[])
 	parm.tcolor->options    = D_color_list();
 #endif
 
-	if (argc > 1 && G_parser(argc, argv))
+	if (G_parser(argc, argv))
 		exit(-1);
 
 	if (G_projection() != PROJECTION_LL)

@@ -42,7 +42,7 @@ int main (int argc, char **argv)
                         "       transformation parameters defined in current location if available";
      
      
-    if (argc > 1 && G_parser(argc,argv))
+    if (G_parser(argc,argv))
 	exit(1);
 
     if ( ((G_projection() == PROJECTION_LL) && wgs84->answer) || 
