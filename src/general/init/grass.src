@@ -96,7 +96,7 @@ for i in "$@" ; do
 done
 
 # Set the GRASSRC file
-GISRC=$HOME/.grassrc5
+GISRC="$HOME/.grassrc5"
 export GISRC
 
 # At this point the grass user interface variable has been set from the
@@ -105,7 +105,7 @@ export GISRC
 if [ ! "$GRASS_GUI" ] ; then
     
     # Check for a reference to the grass user interface in the grassrc file
-    if [ -f $GISRC ] ; then
+    if [ -f "$GISRC" ] ; then
     	GRASS_GUI=`awk '/GRASS_GUI/ {print $2}' "$GISRC"`
     fi
     
