@@ -1,11 +1,11 @@
-$Id: SUBMITTING,v 1.3 2000-10-31 16:10:14 markus Exp $
+$Id: SUBMITTING,v 1.4 2000-11-02 09:35:57 justin Exp $
 
 Dear (new) GRASS Developer,
 
-when submitting to GRASS CVS repositiory, please take
+When submitting to GRASS CVS repositiory, please take
 care of following rules:
 
-- for programming style, please take a look at 
+- For programming style, please take a look at 
   STYLE_PROGRAMMING file
 
 - Get the latest GRASS 5 Programmer's Manual here:
@@ -14,29 +14,50 @@ care of following rules:
   or (better) grab it from CVS server (Latex):
     cvs -z3 co progmangrass50
 
-- add your copyright into your module code like this:
+- Add a header section to each file you submit and make sure you include
+  the copyright:
   Example:
 
-      /*
-       * Copyright (C) 2000 by the GRASS Development Team
-       * Author: Jan-Oliver Wagner <jan@intevation.de>
-       *
-       * This program is free software under the GPL (>=v2)
-       * Read the file COPYING coming with GRASS for details.
-       */
-  This protects your rights according to GNU GPL (www.gnu.org).
+/*
+* <Id flag - see STYLE_PROGRAMMING for proper syntax>
+*
+****************************************************************************
+* 	               -- GRASS Development Team --
+*
+* MODULE: 	GRASS gis library
+* FILENAME:	env.c
+* AUTHOR(S):	Original author unknown - probably CERL
+*  	    	Justin Hickey - Bangkok Thailand - jhickey@hpcc.nectec.or.th
+*   	    	Roger Bivand - rsb@reclus.nhh.no
+* PURPOSE: 	To provide functionality for GRASS programs to set and get
+*  	    	environment variables. The set environment functions can set
+*  	    	variables for the duration of the program, or variables can be
+*  	    	set permanently by adding them to the GISRC file. The get
+*  	    	environment functions simply get the given variable from the
+*  	    	environment regardless of whether it is permanent or not. 
+*  	    	Functions are also provided to read and write the GISRC file.
+*  	    	This file has been rewritten by Justin Hickey.
+* DATE CREATED: Jul 14 2000
+* COPYRIGHT:  	(C) 2000 by the GRASS Development Team
+*
+*   	    	This program is free software under the GPL (>=v2)
+*   	    	Read the file COPYING that comes with GRASS for details.
+*
+*****************************************************************************/
 
-- place your module into the appropriate directory:
+  The copyright protects your rights according to GNU GPL (www.gnu.org).
+
+- Place your module into the appropriate directory:
   - libes go into src/libes/
   - raster goes into src/raster/
   - vector goes into src/mapdev/
   - sites goes into src/sites
   - ...
 
-- add the module's directory name (pointing to the local Gmakefile)
+- Add the module's directory name (pointing to the local Gmakefile)
   to the compile list at src/CMD/lists/GRASS
 
-- place the documentation in HTML format into html/html/ and
+- Place the documentation in HTML format into html/html/ and
   add it to the module's list in html/
   Easiest way is to modify an existing HTML page for your purposes
   (to get the page style). There is a local README telling more details.
