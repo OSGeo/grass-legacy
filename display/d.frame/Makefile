@@ -12,18 +12,18 @@ default: \
 	$(ETC)/frame.list \
 	$(BIN_CMD)/d.frame
 
-$(ETC)/frame.create: create.o $(DEPLIBS)
+$(ETC)/frame.create: $(OBJDIR)/create.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/create.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(ETC)/frame.select: select.o $(DEPLIBS)
+$(ETC)/frame.select: $(OBJDIR)/select.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/select.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(ETC)/frame.dumper: dumper.o $(DEPLIBS)
+$(ETC)/frame.dumper: $(OBJDIR)/dumper.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/dumper.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(ETC)/frame.list: list.o $(DEPLIBS)
+$(ETC)/frame.list: $(OBJDIR)/list.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/list.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(BIN_CMD)/d.frame: frame.o $(DEPLIBS)
+$(BIN_CMD)/d.frame: $(OBJDIR)/frame.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/frame.o $(LIBES) $(MATHLIB) $(XDRLIB)
 	@test -x $(BIN)/d.frame || ln $(ETC)/front.end $(BIN)/d.frame
