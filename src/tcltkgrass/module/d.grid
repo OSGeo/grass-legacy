@@ -3,8 +3,5 @@ interface_build {
     {Overlays a user-specified grid in the active display frame on the graphics monitor.}
     {entry size {Size of grid to be drawn, required (0-100000):} 0 ""}
     {entry color {Grid color [gray]:} 0 color}
-    {entry bordercolor {border color [brown]:} 0 color}
     {entry origin {Lines of the grid pass through this coordinate [0,0]:} 0 xy}
-    {checkbox -b {Disable border drawing.} "" -b}
-    {checkbox -g {Disable grid drawing.} "" -g}
 }
