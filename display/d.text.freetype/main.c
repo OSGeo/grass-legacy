@@ -969,7 +969,7 @@ draw_character(rectinfo win, FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
 		buffer = (char *) G_malloc(l);
 		memset(buffer, 0, l);
 	
-		j = width / 8 + (width % 8 ? 1 : 0);
+		j = (width + 7) / 8;
 	
 		for(i = 0; i < l; i++)
 		{
