@@ -1281,14 +1281,6 @@ int G_geo_init_table(void)
 	TABLE[TPERS][HEIGH].def_exists = 1;
 	TABLE[TPERS][HEIGH].deflt = 10000.0;
 
-	TABLE[UPS][LON0].ask = 1;
-	TABLE[UPS][LON0].def_exists = 1;
-	TABLE[UPS][LON0].deflt = 20.0;
-
-	TABLE[UPS][LAT0].ask = 1;
-	TABLE[UPS][LAT0].def_exists = 1;
-	TABLE[UPS][LAT0].deflt = 55.0;
-
 	TABLE[UPS][SOUTH].ask = 1;
 
 	TABLE[URM5][LON0].ask = 1;
