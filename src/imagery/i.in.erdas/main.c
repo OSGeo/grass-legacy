@@ -1,4 +1,3 @@
-static char rcsid[]="$Header$";
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -197,7 +196,7 @@ int
 getwin (double *row, double *col, double *lrow, double *lcol)
 {
 	double srow = -1.0, scol = -1.0, nrow = MAXNUMBER, ncol = MAXNUMBER;
-	char OK = 0,line[150];
+	char line[150];
 
 	fprintf(stderr, "Do you want to subwindow the erdas file (y/n)[n] ");
 
@@ -443,7 +442,8 @@ int main (int argc, char *argv[])
 	struct Option *start_row, *start_col, *num_rows, *num_cols, *sel_bands;
 	struct Flag *headflag,*autoswapflag,*swapflag,*mapcoord;
 	struct GModule *module;
-
+	int fixint;
+	float *fptr;
 
 	G_gisinit(argv[0]);
 
@@ -456,16 +456,16 @@ int main (int argc, char *argv[])
 	headflag->description = "List the ERDAS header only";
 
 	autoswapflag = G_define_flag();
-    autoswapflag->key = 'a';
-    autoswapflag->description = "Disable autoswap detection";
+	autoswapflag->key = 'a';
+	autoswapflag->description = "Disable autoswap detection";
 	
-    swapflag = G_define_flag();
-    swapflag->key = 's';
-    swapflag->description = "Force Swapping (overrides default auto)";
+	swapflag = G_define_flag();
+	swapflag->key = 's';
+	swapflag->description = "Force Swapping (overrides default auto)";
 
-    mapcoord = G_define_flag();
-    mapcoord->key = 'm';
-    mapcoord->description = "Use \"Map Coordinates\" for coordinates";
+	mapcoord = G_define_flag();
+	mapcoord->key = 'm';
+	mapcoord->description = "Use \"Map Coordinates\" for coordinates";
 
 	erdasopt = G_define_option();
 	erdasopt->key             = "input";
@@ -578,7 +578,7 @@ int main (int argc, char *argv[])
 /*skip anything less than 7.4 file type */
 	if ((erdashd.hdwrd[4] - 0x30) < 7 || (erdashd.hdwrd[5] - 0x30) < 4)
 		G_fatal_error("ERDAS files before version 7.4 are not supported.");
-/*	if (ERDFTYP != 4){
+	if (ERDFTYP != 4 && erdashd.hdwrd[4] == 'E' && erdashd.hdwrd[5] == 'R'){
 		fptr = (float *)&(erdashd.rrows);
 		fixint = *fptr;
 		erdashd.rrows = fixint;
@@ -592,7 +592,7 @@ int main (int argc, char *argv[])
 		fixint = *fptr;
 		erdashd.ry = fixint;
 	}
-*/
+
 	printhd(&erdashd);
 	if (showhead)
 		exit(1);
