@@ -70,6 +70,18 @@ typedef char *XPointer;
 #endif
 #endif
 
+/**********/
+typedef struct {
+  char       *name;
+  int         status_size;
+  void      (*engage)();
+  XPointer     engage_client_data;
+  void      (*terminate)();
+  XPointer     terminate_client_data;
+  void      (*remove)();
+  XPointer     remove_client_data;
+} PWRequestRec;
+
 typedef struct {
     Atom           *targets;
     Cardinal        num_targets;
@@ -86,18 +98,6 @@ typedef struct _PixmapClassRec {
 } PixmapClassRec;
 
 extern PixmapClassRec pixmapClassRec;
-
-/**********/
-typedef struct _PWRequestRec {
-  char       *name;
-  int         status_size;
-  void      (*engage)();
-  XPointer     engage_client_data;
-  void      (*terminate)();
-  XPointer     terminate_client_data;
-  void      (*remove)();
-  XPointer     remove_client_data;
-};
 
 typedef struct {
   Position from_x, from_y,
