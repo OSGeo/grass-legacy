@@ -99,10 +99,11 @@ echo "Importing $INFILE_RAW..."
 `cat ./$INFILE_RAW | grep -v D | sed -e "s/
 //g"> /tmp/$INFILE`
 
-# converting /tmp/$INFILE in $LOCATION/site_lists/xxx.ktb
-
-cut -b'7-28' /tmp/$INFILE | tr -s ' ' '|' > /tmp/mxy1
-cut -b'34-'  /tmp/$INFILE | tr -s ' ' '|' | sed -e "s/|/|%/g" |sed -e "s/|%//2"> /tmp/mxy2
+# converting /tmp/$INFILE in $LOCATION/site_lists/xxx.ktb, ignore 9999.99m
+#get coordinate columns:
+cat /tmp/$INFILE | grep -v 9999 | cut -b'7-28' | tr -s ' ' '|' > /tmp/mxy1
+#get heights:
+cut -b'34-'  /tmp/$INFILE | grep -v 9999 | tr -s ' ' '|' | sed -e "s/|/|%/g" |sed -e "s/|%//2" > /tmp/mxy2
 paste -d' ' /tmp/mxy1 /tmp/mxy2 |sed -e "s/\ //g" > /tmp/mxy3
 
 #add map's date:
