@@ -37,22 +37,25 @@ typedef union _gnTreeData
 typedef struct _gnTreeNode
 {
 	long 					key;
-	gnTreeData_u 			data;
+	gnTreeData_u 			data , data2;
 } gnTreeNode_s;
 
 extern void 			gnTreeInitNode			(
-												gnTreeNode_s * pnode , long key , gnTreeData_u data
+												gnTreeNode_s * pnode , long key , gnTreeData_u data , gnTreeData_u data2
 												);
 
+/*
 extern void 			gnTreeSetNode			(
 												gnTreeNode_s * pnode , 
 												long key , 
 												gnTreeData_u data 
 												);
+*/
 
 extern gnTreeNode_s * 	gnTreeNewNode			(
 												long key ,
-												gnTreeData_u data
+												gnTreeData_u data ,
+												gnTreeData_u data2
 												);
 
 extern void * 			gnTreeCreate			(
@@ -69,7 +72,13 @@ extern gnTreeNode_s * 	gnTreeSearch 			(
 												long key
 												);
 
+/*
 extern int 				gnTreeInsert			(
+												void * pvtree ,
+												gnTreeNode_s *pnode
+												);
+*/
+extern gnTreeNode_s *	gnTreeInsert			(
 												void * pvtree ,
 												gnTreeNode_s *pnode
 												);
