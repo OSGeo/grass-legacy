@@ -1,0 +1,120 @@
+12 Oct 1993
+
+Things to finish for the ALPHA source for three programs:
+i.points3      - modified i.points program
+i.rectify3     - modified i.rectify program
+i.tape.tm3     - modified i.tape.tm program.
+
+See the README file for a description of the programs.
+
+
+-------------------------------------------------------------------------------
+I.TAPE.TM3
+
+I haven't touch this program yet since the last time.  Waiting for DBA code.  
+
+(1) Clean up the parser options.
+(2) Check the control-point extraction for full scene and fast format
+    landsat data.  
+(3) Check the information printed when examining the data sets.
+(4) When extracting from files, the program requires the original landsat
+    data to be stored in separate files as oposed to a single huge file.
+(5) When extracting from a tape that is not the origianal LANDSAT tape,
+    there are some questions about the blocking factor to be used.
+
+
+-------------------------------------------------------------------------------
+I.POINTS3
+
+(1) The control-points are stored as [source (x,y)  -- target (lat,lon)].
+    This is to facilitate the rectification to non-UTM targets, as well as
+    to have more than a single target location.   The code that handles the
+    Lat/Lon transformation uses the older $(COORCNVLIB).  Need to use 
+    the newer projection routines, as well as check error codes.
+
+*** i.points3 now uses the PROJ4 routines.  I haven't tested them much on
+*** the different possible projections. 
+
+
+(2) The auxillary data for the ORTHO-PHOTO transformation still asumes
+    that we are in an xy-location and have a target UTM location.
+
+*** Doesn't care what the target projection is.  I still need to put in
+*** some code to take into account for Meter vs. Feet units of the 
+*** target location and elevation units. 
+
+(3) The auxillary data for the LANDSAT-TM transformation also asumes
+    that we are in an xy-location and have a target UTM location.
+
+*** Havent touched.
+
+(4) Warning messages appear on the graphics window, and ask for a mouse
+    click to continue.  This is not very intuitive.
+
+*** Things have been improved.
+
+(5) The vector "OVERLAY" functions are very time consuming for both the
+    ORTHO-PHOTO and LANDSAT-TM transfromations (possible several minutes).
+    This could use an abort but to stop the overlay.
+
+*** This has been done
+
+(6) The LANDSAT-TM transformation will probalby only work with QUAD FORMAT
+    data sets at present. 
+
+*** I still need to work on this.  Waiting for the effects of i.tape.tm3 
+
+(7) There is a warning about redefinetion of the COLORS I've used for 
+    displaying the vectors.  Conflicts with somtething in DIGLIB or VLIB.
+
+*** Michael Shapiro fixed this, thanks.
+*** Lots of other bugs have been identified and fixed as per our mail messages.
+
+New things identified in mail from Michael and still outstanding:
+(a) Allow user to enter lat/lon controll points for keyboard.
+(b) What to do with the digitzer.
+(c) Faster read of elevation data through buffering in OVERLAY
+(d) Ooops, I forgot the where-am-i when marking control points.
+
+-------------------------------------------------------------------------------
+I.RECTIFY3
+
+Nothing done here yet, other than changes in libes_new.
+
+(1) Needs to use the parser.  Currently the program in interactive.
+(2) Currently, you can only set the desired transformation by going into
+    the i.points program.  This will be change in the cmd line version.
+(3) The LANDSAT-TM transformation will probalby only work with QUAD FORMAT
+    data sets at present.   
+(4) The elevation data for the ORTHO-PHOTO and LANDSAT-TM transfromations
+    is read pixel by pixel (with a G_set_window, G_open_cell_old, and 
+    G_close_cell) for each pixel.  This is totally stupid and slow on my part.
+(5) Clean out the routine prototypes that listed in libes_new but are only
+    used by i.points3.
+
+
+-------------------------------------------------------------------------------
+GENERAL THINGS TO FIX
+
+I've been tackling this in i.points3 but not the other programs, so I'll
+leave the list here for now.
+
+(1) The include files are a total mess.  
+(2) Some routines that appear both in i.points3 and i.rectify3 should be 
+    moved to the library.
+(3) Some routines in the library are used only by on or the other of the
+    programs and should be moved to the appropriate place.
+(4) The function prototypes are a complete mess, currently requires _NO_PROTO
+    because the paramter list dont match the actual routines.
+(5) Genneral error checking is disarray.  Should explicity check all routines
+    with something like
+       if ( some_thing(..) < NUMBER) 
+    rather than
+       if ( ! something (...) ).
+    I've start this with i.points but needs to be completed. 
+(6) Comments in i.rectify3 are pretty scarce,  mainly because the code is basicly
+    taken from the older program. 
+(7) The floating points exception code has been commented out in the programs.
+    Floating point exceptions need to be handled correctly.  I havn't had any 
+    problems with them, but others might.
+
