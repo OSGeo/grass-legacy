@@ -313,13 +313,13 @@ main (int argc, char **argv)
 	    lattr.color = colornum;
 	}
 	lattr.bgcolor = 0;
-	if ( G_str_to_color(bgcolor_opt->answer, &r, &g, &b) ) {
+	if ( G_str_to_color(bgcolor_opt->answer, &r, &g, &b) == 1 ) {
 	    colornum++;
 	    R_reset_color (r, g, b, colornum); 
 	    lattr.bgcolor = colornum;
 	}
 	lattr.bcolor = 0;
-	if ( G_str_to_color(bcolor_opt->answer, &r, &g, &b) ) {
+	if ( G_str_to_color(bcolor_opt->answer, &r, &g, &b) == 1 ) {
 	    colornum++;
 	    R_reset_color (r, g, b, colornum); 
 	    lattr.bcolor = colornum;
