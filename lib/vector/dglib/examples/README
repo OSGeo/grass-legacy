@@ -71,12 +71,11 @@ sys     0m1.020s
 
 When compiled with the -DGNGRP_STATS, cr_large_graph prints a line like this at (almost)
 each arc insertion:
-add arc 0238592 - from 0000203 - to 0000103 - cost 0010000 . Clock: tot 000000029 nt 000000015 lt 000000009 nh 000000000 o 000000003
+add arc 0238592 - from 0000203 - to 0000103 - cost 0010000 . Clock: tot 000000029 nt 000000015 nh 000000000 o 000000003
 
 The meaning of clocks are:
 tot = average number of clocks consumed by calls to gnGrpAddLink()
 nt = component of 'tot' spent in the node binary tree
-lt = component of 'tot' spent in the link binary tree
 nh = component of 'tot' spent in the node heap
 o  = component of 'tot' spent for all other operations
 
