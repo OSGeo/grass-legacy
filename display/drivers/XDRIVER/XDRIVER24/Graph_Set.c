@@ -388,6 +388,8 @@ Graph_Set(int argc, char **argv)
     XSetBackground(dpy, gc, BlackPixel(dpy, scrn));
     XSetForeground(dpy, gc, WhitePixel(dpy, scrn));
 
+    XClearWindow(dpy, grwin);
+
     /* prepare to catch signals */
     signal(SIGHUP, sigint);
     signal(SIGINT, sigint);
