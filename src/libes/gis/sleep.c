@@ -61,9 +61,8 @@ long sleep_ltp( double tm)
 int time_ltp( double *time)
 {
 	struct timeval tstruct;
-	struct timezone tzone;
 
-	gettimeofday (&tstruct, &tzone);
+	gettimeofday (&tstruct, NULL);
 	*time = tstruct.tv_sec + tstruct.tv_usec / 1000000.0;
 	return(0);
 }
