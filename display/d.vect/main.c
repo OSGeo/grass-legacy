@@ -1,7 +1,6 @@
 /*
  *   d.vect
  *
- *
  *   Draw the binary vector (dig) file that
  *   the user wants displayed on top of the current image.
  */
@@ -12,6 +11,7 @@
 #include "display.h"
 #include "Vect.h"
 #include "plot.h"
+#include "dbmi.h"
 #include "local_proto.h"
 
 int quiet = 1;
@@ -29,14 +29,19 @@ main (int argc, char **argv)
 	struct GModule *module;
 	struct Option *map_opt, *color_opt, *fcolor_opt;
 	struct Option *type_opt, *display_opt;
+	struct Option *where_opt;
 	struct Option *field_opt, *cat_opt, *lfield_opt;
 	struct Option *lcolor_opt, *bgcolor_opt, *bcolor_opt;
 	struct Option *lsize_opt, *font_opt, *xref_opt, *yref_opt;
 	struct Flag   *_quiet;
 	struct line_pnts *Points;
 	struct cat_list *Clist;
+	int *cats, ncat;
 	LATTR lattr;
         struct Map_info Map;
+        struct field_info *fi;
+        dbDriver *driver;
+        dbHandle handle;
 	
         sprintf (ncolist, "none,%s", D_color_list());
 	
@@ -82,6 +87,12 @@ main (int argc, char **argv)
 	cat_opt->type       = TYPE_STRING ;
 	cat_opt->description= "Categories to be displayed. "
                               "Example: cat=3,7,15-21,45" ;
+	
+	where_opt = G_define_option() ;
+	where_opt->key        = "where" ;
+	where_opt->type       = TYPE_STRING ;
+	where_opt->description= "WHERE conditions of SQL statement without 'where' keyword. "
+                                "Example: income < 1000 and inhab >= 10000" ;
 	
 	color_opt = G_define_option() ;
 	color_opt->key        = "color" ;
@@ -169,14 +180,59 @@ main (int argc, char **argv)
 	color = D_translate_color(color_opt->answer);
 	quiet = !_quiet->answer;
 
+	/* Make sure map is available */
+	mapset = G_find_vector2 (map_name, "") ; 
+	
+	if (mapset == NULL)
+	{
+		sprintf(buf,"Vector file [%s] not available", map_name);
+		G_fatal_error(buf) ;
+		exit(-1);
+	}
+
+	/* if where_opt was specified select categories from db 
+	 * otherwise parse cat_opt */
         Clist = Vect_new_cat_list ();
 	Clist->field = atoi (field_opt->answer);
-	if (cat_opt->answer)
+	if (where_opt->answer)
 	  {
-	    ret = Vect_str_to_cat_list ( cat_opt->answer, Clist);
-	    if ( ret > 0 )
-	        G_warning ( "%d errors in cat option\n", ret);
-          }
+            fi = Vect_get_field_info(map_name, mapset, Clist->field);
+            if ( fi != NULL )
+	      {
+                driver = db_start_driver(fi->driver);
+		if (driver == NULL)
+		  {
+		    sprintf(buf,"Cannot open driver %s", fi->driver);
+		    G_fatal_error(buf) ;
+		    exit(-1);
+		  }
+		
+ 	        db_init_handle (&handle);
+	        db_set_handle (&handle, fi->database, NULL);
+	        if (db_open_database(driver, &handle) != DB_OK)
+		  {
+		    sprintf(buf,"Cannot open database %s", fi->database);
+		    G_fatal_error(buf) ;
+		    exit(-1);
+		  }
+		
+		ncat = db_select_int( driver, fi->table, fi->key, where_opt->answer, &cats);
+
+		db_close_database(driver);
+		db_shutdown_driver(driver);
+			
+	        Vect_array_to_cat_list ( cats, ncat, Clist);
+	      }
+	  }
+        else
+	  {
+	    if (cat_opt->answer)
+	      {
+	        ret = Vect_str_to_cat_list ( cat_opt->answer, Clist);
+	        if ( ret > 0 )
+	            G_warning ( "%d errors in cat option\n", ret);
+              }
+	  }
 	
 	i = 0;
         type = 0; area = FALSE;
@@ -251,15 +307,6 @@ main (int argc, char **argv)
 		break;
 	  }
 	
-	/* Make sure map is available */
-	mapset = G_find_vector2 (map_name, "") ; 
-	
-	if (mapset == NULL)
-	{
-		sprintf(buf,"Vector file [%s] not available", map_name);
-		G_fatal_error(buf) ;
-		exit(-1);
-	}
 
         /* open vector */
         Vect_set_open_level (1);
