@@ -20,15 +20,28 @@ int main (int argc, char **argv)
 	/* Initialize the GIS calls */
 	G_gisinit (argv[0]) ;
 
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
+
+	if (D_get_cell_list (&rast, &nrasts) < 0)
+		rast = NULL;
+	else
+	{
+		rast = (char **)G_realloc(rast, (nrasts+1)*sizeof(char *));
+		rast[nrasts] = NULL;
+	}
+
+	R_close_driver();
 
 	opt1 = G_define_option() ;
 	opt1->key        = "map" ;
 	opt1->type       = TYPE_STRING ;
 	opt1->required   = NO ;
 	opt1->multiple   = YES ;
+	if (rast)
+		opt1->answers = rast;
 	opt1->gisprompt  = "old,cell,raster" ;
-	opt1->description= G_malloc(120);
-	sprintf(opt1->description, "Name of existing raster map(s). Limit: %d maps.\n\tDefault: Current maps on screen", MAX_LAYERS);
+	opt1->description= "Name of existing raster map(s)";
 
 	fs = G_define_option ();
 	fs->key 	= "fs";
@@ -43,7 +56,7 @@ int main (int argc, char **argv)
 
 	terse = G_define_flag();
 	terse->key 	   = 't';
-	terse->description = "Terse output. For parsing by programs.";
+	terse->description = "Terse output. For parsing by programs";
 
 	colrow = G_define_flag();
 	colrow->key 	    = 'c';
@@ -55,11 +68,14 @@ int main (int argc, char **argv)
 	  "of multiple raster map layers at user specified locations "
 	  "within the current geographic region. ";
 
-	if (argc != 1)		/* NON-interactive */
-	{
-		if (G_parser(argc, argv))
-			exit(-1);
-	}
+	if (!rast)
+		opt1->required = YES;
+
+	if ((argc > 1 || !rast) && G_parser(argc, argv))
+		exit(-1);
+
+	if (opt1->answers && opt1->answers[0])
+		rast = opt1->answers;
 
 	if (R_open_driver() != 0)
 		G_fatal_error ("No graphics device selected");
@@ -85,42 +101,31 @@ int main (int argc, char **argv)
 	if (D_do_conversions(&window, t, b, l, r))
 		G_fatal_error("Error in calculating conversions") ;
 
-	nlayers = 0;
+	if (rast)
+	{
+		for(i=0; rast[i]; i++);
+		nrasts = i;
 
-	/* Look at maps given on command line */
-	if((ptr = opt1->answers) != NULL)
-		for (; *ptr != NULL; ptr++)
+		fd = (int *)G_malloc(nrasts*sizeof(int));
+		name = (char **)G_malloc(nrasts*sizeof(char *));
+		mapset = (char **)G_malloc(nrasts*sizeof(char *));
+		cats = (struct Categories *)G_malloc(nrasts*sizeof(struct Categories));
+
+		for (i=0; i<nrasts; i++)
 		{
-			if (nlayers >= MAX_LAYERS)
+			name[i] = (char *)G_malloc(80);
+			mapset[i] = (char *)G_malloc(80);
+
+			if ((fd[i] = opencell (rast[i], name[i], mapset[i])) < 0)
 			{
-				fprintf (stderr, "warning: only first %d files specified will be used\n", MAX_LAYERS);
-				break;
-			}
-			if ((fd[nlayers] = opencell (*ptr, name[nlayers], mapset[nlayers])) >= 0)
-				nlayers++;
-		}
-	/* If we are to use currently displayed map */
-	else /* if (isatty(0))    I dont figure this one??  -dpg */
-	{
-		if(D_get_cell_list (&maps, &nmaps))
-			fprintf (stderr, "warning: no data layer drawn in current window\n");
-		else
-		{	
-			for(i=0; i<nmaps; i++)
-			{
-				if ((fd[nlayers] = opencell (maps[i], name[nlayers], mapset[nlayers])) >= 0)
-					nlayers++;
+				char msg[256];
+				sprintf(msg, "Raster file [%s] not available", rast[i]);
+				G_fatal_error(msg);
 			}
 		}
 	}
 
-	if (nlayers == 0)
-	{
-		G_usage() ;
-		exit(-1);
-	}
-
-	for (i = 0; i < nlayers; i++)
+	for (i = 0; i < nrasts; i++)
 	{
 		if (G_read_cats (name[i], mapset[i], &cats[i]) < 0)
 			cats[i].ncats = -1;
