@@ -393,6 +393,20 @@ process_command(int c)
 	x = Font_get(text);
 	SEND(&x, sizeof x);
 	break;
+    case FONT_FREETYPE:
+	RECTEXT(text, text_size);
+	x = Font_freetype_get(text);
+	SEND(&x, sizeof x);
+	break;
+    case FONT_FREETYPE_RELEASE:
+	x = Font_freetype_release();
+	SEND(&x, sizeof x);
+	break;
+    case CHARSET:
+	RECTEXT(text, text_size);
+	x = init_font_charset(text);
+	SEND(&x, sizeof x);
+	break;
     case TEXT:
 	RECTEXT(text, text_size);
 	Text(text);
