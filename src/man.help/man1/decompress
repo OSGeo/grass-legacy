@@ -1,0 +1,165 @@
+.\" %W% %G
+.TH decompress 1
+.SH NAME
+decompress \- Decompresses 
+.CT "grid cell files" "cell maps"
+.SH SYNOPSIS
+.B decompress
+.I [layer]
+.SH DESCRIPTION
+The GRASS tool \fIdecompress\fR returns 
+.CT files "cell maps"
+that have been compressed
+to their 
+.CT standard uncompressed
+format.
+.PP
+Alternately, the GRASS tool
+.I compress[1]
+reformats 
+.CT "grid cell files" "cell maps"
+using a run-length-encoding (RLE) algorithm.
+.CT Maps "Cell maps"
+which contain very little information (such as boundary, geology,
+land use, and soils 
+.CT "maps)" "cell maps)"
+can be greatly reduced in size.  Some 
+.CT maps "cell maps"
+are
+shrunk to roughly 1% of their original sizes.  
+.CT Maps "Cell maps"
+containing complex images
+such as elevation and photo or satellite images may increase slightly in
+size.
+.PP
+GRASS programs read both compressed and decompressed (i.e., standard)
+formats.  This allows the use of whichever 
+.CT data "cell map"
+format consumes less space.
+\fIDecompress\fR will not bother an already decompressed 
+.CT "file;" "cell map;"
+similarly,
+\fIcompress[1]\fR will not attempt to compress a 
+.CT file "cell map"
+which has already
+been compressed.
+.SH FORMATS
+Conceptually a 
+.XT "grid cell" "cell map"
+consists of rows of cells, with each row containing
+the same number of cells. A cell consists of one or more bytes.
+The number of bytes per cell depends on the 
+.CT data category 
+values in the 
+.CT "grid cell." "cell map."
+.CT Data "Category values"
+in the range 0-255 require 1 byte per cell, while 
+.CT data "category values"
+in the range
+256-65535 require 2 bytes per cell, and 
+.CT data "category values"
+in the range above 65535 require
+3 (or more) bytes per cell.
+.PP
+The
+.B decompressed
+.CT "grid cell" "cell map"
+format matches the conceptual format.
+For example, a 
+.CT map "cell map"
+with 1 byte cells that is 100 rows with 200 cells per row,
+consists of 20,000 bytes.
+The UNIX command "ls -l" on this file will show a size of 20,000. 
+If the cells were 2 byte cells, the file would require 40,000 bytes.
+The 
+.CT "map data" "cell map category values"
+start with the upper left corner cell followed by the other cells
+along the northern boundary.  The byte following the last byte of that first
+row is the first cell of the second row of 
+.CT data "category values"
+(moving from left to right).
+There are no end-of-row markers or other syncing codes in the 
+.CT "data." "category values."
+A cell
+header file 
+.XT ", \fBcellhd\fR,"
+is used to define how this string of bytes is broken
+up into rows of 
+.CT "data." "category values."
+.PP
+The
+.B compressed
+format is not so simple, but is quite elegant in its design.  It not only
+requires less disk space to store the 
+.CT "data," "cell map,"
+but often can result in faster execution
+of graphic and analysis programs since there is less disk i/o. There are two
+compressed formats:  the pre-3.0 format (which GRASS programs can read
+but no longer produce), and the 3.0 format (which is automatically used when
+new cell 
+.CT files maps
+are created).
+
+Pre-3.0 Format:
+.RS
+.sp
+.ti -.5i
+First 3 bytes (chars) - These are a special code that identifies
+the 
+.CT file "cell map"
+as compressed.
+.sp
+.ti -.5i
+Address array (long) - array (size of the number of rows + 1)
+of addresses pointing to the internal start of each row.  Because each row may
+be a different size, this array is necessary to provide a mapping of the
+data.
+.sp
+.ti -.5i
+Row by row, beginning at the northern edge of the data,  a series of 
+byte groups describes the data.
+The number of bytes in each group is the number of bytes per cell plus one.
+The first byte of each group gives a count (up to 255)
+of the number of cells that contain the category 
+.CT number value
+given by the remaining bytes of the group.
+.RE
+.sp
+3.0 Format:
+.sp
+.RS
+.ti -.5i
+The 3 byte code is not used.
+Instead, a field in the cell header is used to indicate compressed format.
+.sp
+.ti -.5i
+The address array is the same.
+.sp
+.ti -.5i
+The RLE format is the same as the pre-3.0 RLE, except that
+each row of
+data is preceded by a single byte containing the number of bytes per cell for
+the row, and if run-length-encoding the row would not require less space than
+non-run-length-encoding, then the row is not encoded.
+.sp
+.RE
+These improvements
+give better compression than the pre-3.0 format in 99% of the 
+.CT "maps." "cell maps."
+The
+kinds of 
+.CT maps "cell maps"
+which get bigger are those in which each row would be
+larger if compressed (e.g., imagery band 
+.CT "files)." "cell maps)."
+But even in this case
+the cell 
+.CT file map
+would only be larger by the size of the address array and
+the single byte preceding each row.
+.SH "SEE ALSO"
+\fIcompress[1]\fR
+.SH "AUTHOR"
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
+.br
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
