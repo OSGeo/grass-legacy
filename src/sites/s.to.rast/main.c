@@ -1,6 +1,6 @@
-/* $Id$ 
+/* 
+ * $Id$ 
  *
- * Update 12/99 Markus Neteler for GRASS 5
  */
 /*
 s.to.rast - this program was created to provided a command-line operability
