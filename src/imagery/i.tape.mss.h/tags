@@ -1,0 +1,8 @@
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+annotation	annotation.c	/^annotation(buf)$/
+header	header.c	/^header(buf)$/
+integer	header.c	/^#define integer(x) buf[x] * 256 + buf[x+1]$/
+read_tape	read_tape.c	/^read_tape(tape, buf)$/
+record_type	rec_type.c	/^record_type(type)$/
+tape_dir	tape_dir.c	/^tape_dir (buf)$/
+tape_vol	tape_vol.c	/^tape_vol(v)$/
