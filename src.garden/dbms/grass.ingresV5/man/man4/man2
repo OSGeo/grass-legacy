@@ -1,0 +1,66 @@
+
+
+
+d.site.db()       MISC. REFERENCE MANUAL PAGES        d.site.db()
+
+
+
+NAME
+     _d._s_i_t_e._d_b - ENTER ONE LINE DESCRIPTION HERE
+     (_G_R_A_S_S _D_i_s_p_l_a_y _P_r_o_g_r_a_m)
+
+SYNOPSIS
+     d.site.db
+     d.site.db help
+     d.site.db   tab=_n_a_m_e   coords=_X-_c_o_l_u_m_n,_Y-_c_o_l_u_m_n   where=_n_a_m_e
+     [map=_n_a_m_e]
+        [plot=_C_o_l_o_r,_i_c_o_n,_s_i_z_e] [join=_t_a_b,_t_a_b_k_e_y,_p_k_e_y]
+
+DESCRIPTION
+     enter short description of d.site.db here
+
+
+COMMAND LINE OPTIONS
+     Parameters
+
+     _t_a_b  Table containing X, Y coordinate values.
+
+     _c_o_o_r_d_s
+          Column containing coordinate values.
+
+     _w_h_e_r_e
+          Where  clause  for  query   (eg.   where   col='paved',
+          col=56).
+
+     _m_a_p  Name of sites list to output.
+
+     _p_l_o_t Colors:red,  orange,  yellow,  green,   blue,   indigo,
+          violet,  magenta, brown, gray, white, black; Icon: dia-
+          mond,  box,  plus,  x; Size: 1-9.
+          default: gray, x, 3
+
+     _j_o_i_n JOIN rules (eg. table, key, primekey).
+
+
+BUGS
+     Describe known bugs here
+
+
+SEE ALSO
+     Refer reader to related programs here
+
+
+AUTHOR
+     Provide the programmers name and institution
+
+
+
+
+
+
+
+
+Sun Release 4.1           Last change:                          1
+
+
+
