@@ -25,6 +25,7 @@ CMD_OBJS = y.tab.o \
 	xexp.o \
 	xfloat.o \
 	xge.o \
+	xgraph.o \
 	xgt.o \
 	xif.o \
 	xint.o \
