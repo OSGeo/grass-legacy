@@ -1,20 +1,16 @@
-Known bugs in current GRASS GIS version 5.0 CVS
+                 $Id: BUGS,v 1.109 2001-01-27 19:08:05 markus Exp $
 
-$Id: BUGS,v 1.108 2001-01-22 10:21:49 markus Exp $
+Known bugs in current GRASS GIS version 5.0 CVS
 [In sync with GRASS 5.0 beta CVS version]
 
 Maintained by
-   Markus Neteler
-   neteler@geog.uni-hannover.de
-Please send a note if detecting an unknown bug.
-Bugfixes are very welcome!
+   Markus Neteler  <neteler@geog.uni-hannover.de>
 
-Bug report page:
+Please send a note if detecting an unknown bug:
 http://www.geog.uni-hannover.de/grass/bugtracking/bugreport.html
 
-
-For the forthcoming GRASS 5.0 stable release there are some bugs
-being release-critical. They are indicated [RC].
+Bugs being release-critical with regard to GRASS 5.0stable release 
+are indicated [RC].
 
 ----------- drivers ---------------------------------------------
 [RC] CELL-Driver: colors are not correct
@@ -97,7 +93,7 @@ g.help:
  - implement correct keycodes for "arrow down/up" instead of d, u
 
 g3.region:
- - no parser implemented yet
+ - no parser implemented yet (but attempt in main.c.new)
  - bug: if modeling soils data (top=0, bottom=-100 cm), you cannot set
    top below surface:
    [...]
@@ -149,6 +145,7 @@ p.map.new:
   (being worked on by ?)  
 
 r.contour: (reported by D D Gray <ddgray@armadce.demon.co.uk>)
+  MASK problem:
   Though it is not a stability problem, I've found that if this module is
   run on an elev raster with an active old-style mask, i.e applied with
   r.mask, the contour lines which terminate on the mask boundary (but only
@@ -189,7 +186,7 @@ r.fill.dir:
  - stops working somewhere in the map if DEM contains NULL holes
    (reported by Markus Neteler)
  - requires FP update
-   (being worked on by Markus, Fortran help needed)
+   (being worked on by Roger S. Miller <rgrmill@rt66.com>)
 
 r.in.bin:
  not a bug:
@@ -202,12 +199,11 @@ r.in.hdf/r.out.hdf (src.garden/grass.hdf)
   (being worked on by ?)
 
 [RC]r.in.png:
- - remove dependency on "netpbm" libs: pnm.h
  -  seg. faults on Pentium CPU (compare r.binfer)
  -  r.in.png refused to import a 24-bit image.  However it seems to work 
     OK with an 8-bit image.
     (reported by Steve Trick <TrickSG1@cf.ac.uk>)
-  (being worked on by David D Gray)
+  (being worked on by ?)
  - r.in.png does not work                                                          
   (r.out.png, then r.in.png with this image gives me a totally white              
   raster on IRIX). r.stats says: 100% * (NULL)                                    
@@ -216,7 +212,7 @@ r.in.hdf/r.out.hdf (src.garden/grass.hdf)
 [RC]r.in.ppm
   seg. fault on Pentium CPU (compare r.binfer)
   Memory bug fixed by Alex Shevlakov
-  (being worked on by David D Gray)
+  (being worked on by ?)
 
 [RC]r.los:
   r.los seems to work perfectly if the elevation data is UTM.  But if the         
@@ -339,18 +335,17 @@ r3.in.v5d/r3.out.v5d:
  src.contrib/GMSL/g3d/src3d/raster/r3.out.v5d/binio.c
  -> does not yet contain little/big endian sensivity (currently set only by
    compiler flag)
-  solution:  code could be taken from src/libes/ogsf/gsd_img_ppm.c
+  solution: use G_is_little_endian() - see: gsd_img_ppm.c
   (being worked on by ?)
 
 r3.showdspf.openGL:  (src.contrib/GMSL/g3d/src3d/raster/r3.showdspf.openGL)
  - the dependency to OpenGL and Mesa should be checked automatically
    and maybe the sgi-widget should be compiled in statically.
-   it will not work with standard Mesa RPMS, because the sgi-widgets
+   Module will not work with standard Mesa RPMS, because the sgi-widgets
    are missing. Generally you need to have the Mesa source and compile 
-   the libGLw yourself (which is described in the README.mesa31 in the
-   source for grass.) [Bernhard]
+   the libGLw yourself (which is described in the MESA32/ in the
+   source of r3.showdspf.openGL.) [Bernhard]
    -> partly done by global configure
-   -> runs fine with MESA 3.2
   (being worked on by ?)
 
 s.kcv 
@@ -402,7 +397,7 @@ v.support/v.build
   and so is a bug. But where is it? It affects manually digitised maps      
   much more than autodigitised (like those done with v.mkgrid), so         
   perhaps it is in v.digit, or maybe in v.build.                           
-  (being worked on by ?)
+  (being worked on by Daid D. Gray)
 
 [RC]v.trim 
  bugreport: If a polygon has island, v.trim removes such islands
@@ -500,7 +495,4 @@ Further discussion/hints:
   as well, and probably these can be deleted, or use 'cats->num' instead.
   The cats.count is cats.ncats now (see src/include/gis.h).
 
-  Already sucessfully updated: v.random,v.extract,v.merge,v.autocorr
-  updated src.contrib tree as well (10/99, Bill H.)
-
-
+  ->Note:  All vector modules should be updated
