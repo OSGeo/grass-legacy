@@ -12,8 +12,6 @@
 * G_ask_old_ext       (prompt, name, element, desc, option, lister)
 * G_ask_any_ext       (prompt, name, element, desc, warn, option, lister)
 * G_ask_in_mapset_ext (prompt, name, element, desc, option, lister)
-* G_ask_new_file_ext  (prompt, name, element, desc, option, lister)
-* G_ask_old_file_ext  (prompt, name, element, desc, option, lister)
 *
 *   char *prompt      prompt to be printed. can be "" in which
 *                     case an appropriate prompt will be printed.
@@ -43,8 +41,7 @@
 *
 * G_ask_new_file() requires the user to enter the name of a new file.
 *
-* G_ask_old_file() requires the user to enter the name of
-*                  any existing file.
+* G_ask_old_file() requires the user to enter the name of any existing file.
 *
 * returns:
 *   char *    mapset where file was found, or
@@ -269,7 +266,7 @@ G_ask_in_mapset_ext (prompt, name, element, desc, option, lister)
 /*!
  * \brief prompt for existing database file
  *
- * The user is asked to enter the name of an file which exists.
+ * The user is asked to enter the name of an file which doesn't exist.
  *
  *  \param prompt
  *  \param name
@@ -285,9 +282,11 @@ G_ask_new_file (prompt, name, element, desc)
     char *element;
     char *desc;
 {
+    /* element is a dummy parameter for this function */
     return ask (prompt, name, element, desc, (char *) NULL, no_lister, NEW_FILE);
 }
 
+/* do we need this function?
 char *
 G_ask_new_file_ext (prompt, name, element, desc, option, lister)
     char *prompt;
@@ -299,6 +298,7 @@ G_ask_new_file_ext (prompt, name, element, desc, option, lister)
 {
     return ask (prompt, name, element, desc, option, lister, NEW_FILE);
 }
+*/
 
 
 /*!
@@ -320,9 +320,11 @@ G_ask_old_file (prompt, name, element, desc)
     char *element;
     char *desc;
 {
+    /* element is a dummy parameter for this function */
     return ask (prompt, name, element, desc, (char *) NULL, no_lister, OLD_FILE);
 }
 
+/* do we need this function?
 char *
 G_ask_old_file_ext (prompt, name, element, desc, option, lister)
     char *prompt;
@@ -334,6 +336,7 @@ G_ask_old_file_ext (prompt, name, element, desc, option, lister)
 {
     return ask (prompt, name, element, desc, option, lister, OLD_FILE);
 }
+*/
 
 
 /*!
@@ -425,10 +428,12 @@ static char *ask (
 	switch (type)
 	{
 	case NEW:
+	case NEW_FILE:
 	    sprintf(prompt = tprompt,_("Enter a new %s file name"), desc);
 	    break;
 	case OLD:
 	case PRJ:
+	case OLD_FILE:
 	    sprintf(prompt = tprompt,_("Enter the name of an existing %s file"), desc);
 	    break;
 	default:
@@ -449,7 +454,9 @@ static char *ask (
  */
 	do{
 	    fprintf (stderr,"\n%s\n", prompt);
-	    fprintf (stderr,_("Enter 'list' for a list of existing %s files\n"), desc);
+	    /* no listing function implemented for old_file and new_file */
+	    if (type != OLD_FILE && type != NEW_FILE)
+	        fprintf (stderr,_("Enter 'list' for a list of existing %s files\n"), desc);
 	    if (lister)
 	    {
 		fprintf (stderr,_("Enter 'list -f' for "));
