@@ -215,11 +215,14 @@ proc create_vect { } {
 }
 
 # BUTTONS
-set efok [Button $efframe.ok -text "Create vector" -command create_vect ]
-pack $efok 
+set efbut [ frame $efframe.buttons] 
+pack $efbut -side top 
 
-button .close -text "Close" -command { exit }
-pack .close -side left -expand yes
+set efok [Button $efbut.ok -text "Create vector" -command create_vect ]
+pack $efok -side left
+
+set close [button $efbut.close -text "Close" -command { exit } ]
+pack $close -side right
 
 set row [ frame $efframe.res ]
 Label $row.a -text "" -justify left -textvariable resultmsg
