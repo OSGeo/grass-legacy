@@ -12,6 +12,9 @@ NAME
      different spectral coefficients (see Saupe, pp.106-107 for
      an example of this).
 
+     Use this module to generate naturally looking sythetical
+     elevation models (DEM).
+
 Usage:
      r.surf.fractal out=name]
 
@@ -57,10 +60,7 @@ REFERENCE
 
 
 
-
-
-
-GRASS 5.0beta5	      GRASS Development Team			1
+GRASS 5.0beta6	      GRASS Development Team			1
 
 
 
