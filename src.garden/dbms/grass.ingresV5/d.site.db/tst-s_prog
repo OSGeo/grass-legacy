@@ -1,0 +1,6 @@
+:
+# test for d.site.db using prebuilt SQL command file
+# DB=seco_well, GISdb=SECO
+# $1=color, $2=icon, $3=size
+#
+d.site.db -s sql=tst_dbs.sql map=tst.seco plot=$1,$2,$3
