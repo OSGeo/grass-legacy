@@ -1,0 +1,66 @@
+This module reads in german MilGeo- digital height models (DHM)
+
+-------------------------------------------------------------
+
+Programm     read_dhm    
+
+Funktion:  read_dhm liest MilGeo - Digitale Hoehenmodelle
+
+Einzulesende Parameter:  MilGeo-DHM File
+Formatbeschreibung zu den MilGeo-Files: stanag.dhm
+
+Ausgabe:  "Eingabefile.dat" = Hoehendatensatz als reines Datenfile
+          "Eingabefile.srf" = Hoehendatensatz als SUN Raster File
+          "Eingabefile.dsi" = Information ueber geographische Koordinaten
+                         der Daten und die Filestruktur des Eingabe- wie
+                         des Ausgabefiles
+          "Eingabefile.acc" = Information ueber die Genauigkeit der Daten
+
+Bearbeiter:             Thomas Huegel
+                        Universitaet der Bundeswehr Neubiberg
+                        Tel. 089 / 6004-3491
+
+Programmiersprache:           C
+
+Quelldateien:            Makefile
+                         main.c
+                         dsiread.c
+                         accread.c
+                         datacompress.c
+                         dataread.c
+                         rotation.c
+                         atoint.c
+                         error.c
+
+Include-Dateien:              dev.h
+
+Ausfuehrbare Programmdatei:    read_dhm
+
+Compilieren und linken:  Mit dem Befehl make (unter UNIX) werden alle
+                         Programme compiliert und gelinkt.
+
+Letzte Aenderung:             21.07.1993
+
+Aufruf:   read_dhm [input_dhm_file] [optionen]
+          
+Optionen: -r        dreht den Datensatz um 270 Grad, um ihn korrekt nach
+                    Norden auszurichten
+          -c        komprimiert die 16-bit Eingabedaten auf 8bit, die
+                    Kompressionsgrenzen werden anhand des Minimums
+                    und Maximums der Daten ermittelt
+          -c -l nnn lower limit = frei waehlbare Untergrenze des
+                    Kompressionsbereichs, ist NULL, wenn -u gesetzt,
+                    -l aber nicht
+          -c -u nnn      upper limit = frei waehlbare Obergrenze des
+                    Kompressionsbereichs, ist 255, wenn -l gesetzt,
+                    -u aber nicht
+
+          -oD       Ausgabe der Daten als reines Datenfile, ohne Header
+                    oder Trailer, koennen so z.B. mit LDDATA in ERDAS
+                    leicht eingelesen werden
+
+          -oS       Ausgabe der Daten als SUN Raster File, koennen so
+                    mit ERDAS7.5 mit READSRF eingelesen werden
+
+                    fehlt die -o Option, wird standardmaessig die Ausgabe
+                    als reines Datenfile, wie mit -oD, gesetzt.
