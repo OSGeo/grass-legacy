@@ -151,7 +151,7 @@ int main (int argc, char **argv)
 	indbase->key = "dbase";
 	indbase->type = TYPE_STRING;
 	indbase->required = NO;
-	indbase->description = "path to GRASS database of input map";
+	indbase->description = "path to GRASS database of input location";
 
 	interpol = G_define_option();
 	interpol->key = "method";
