@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-26 08:52+0100\n"
-"PO-Revision-Date: 2004-11-26 08:57+0100\n"
+"POT-Creation-Date: 2004-12-05 15:40+0100\n"
+"PO-Revision-Date: 2004-12-05 15:58+0100\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -17,20 +17,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 
-#: ../db/base/connect.c:112
+#: ../db/base/connect.c:123
 #, c-format
 msgid "driver:%s\n"
 msgstr "Treiber: %s\n"
 
-#: ../db/base/connect.c:113
+#: ../db/base/connect.c:124
 #, c-format
 msgid "database:%s\n"
 msgstr "Datenbank: %s\n"
 
-#: ../db/base/connect.c:114
+#: ../db/base/connect.c:125
 #, c-format
 msgid "schema:%s\n"
 msgstr "Schema: %s\n"
+
+#: ../db/base/connect.c:126
+#, c-format
+msgid "group:%s\n"
+msgstr "Gruppe: %s\n"
 
 #: ../db/base/databases.c:42 ../db/base/drivers.c:29 ../db/base/printtab.c:45
 #: ../db/base/select.c:126 ../vector/v.transform/creat_trans.c:90
@@ -43,12 +48,12 @@ msgstr "%s"
 msgid "\n"
 msgstr "\n"
 
-#: ../db/base/describe.c:53 ../db/base/printtab.c:17
+#: ../db/base/describe.c:54 ../db/base/printtab.c:17
 #, c-format
 msgid "ncols:%d\n"
 msgstr "ncols:%d\n"
 
-#: ../db/base/describe.c:57
+#: ../db/base/describe.c:58
 #, c-format
 msgid "Column %d: %s\n"
 msgstr "Zeile %d: %s\n"
@@ -123,27 +128,27 @@ msgstr "Nein"
 msgid "?"
 msgstr "?"
 
-#: ../db/base/select.c:311
+#: ../db/base/select.c:308
 #, c-format
 msgid "column%s%s\n"
 msgstr "Spalte%s%s\n"
 
-#: ../db/base/select.c:312
+#: ../db/base/select.c:309
 #, c-format
 msgid "type%s%s\n"
 msgstr "Type%s%s\n"
 
-#: ../db/base/select.c:313
+#: ../db/base/select.c:310
 #, c-format
 msgid "len%s%d\n"
 msgstr "Länge%s%d\n"
 
-#: ../db/base/select.c:314
+#: ../db/base/select.c:311
 #, c-format
 msgid "scale%s%d\n"
 msgstr "Maßstab%s%d\n"
 
-#: ../db/base/select.c:315
+#: ../db/base/select.c:312
 #, c-format
 msgid "precision%s%d\n"
 msgstr "Präzision%s%d\n"
@@ -194,12 +199,12 @@ msgstr ""
 msgid "Error: %s\n"
 msgstr "Fehler: %s\n"
 
-#: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:211
+#: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:215
 #, c-format
 msgid "Region size is lower than minreg, nothing displayed.\n"
 msgstr "Region-Größe ist kleiner als die Minimal-Region; es wird nichts angzeigt.\n"
 
-#: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:220
+#: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:224
 #, c-format
 msgid "Region size is greater than maxreg, nothing displayed.\n"
 msgstr "Region-Größe ist größer als die Maximal-Region; es wird nichts angezeigt.\n"
@@ -240,17 +245,17 @@ msgstr ""
 "\n"
 " FEHLER: Kann Vektordatei nicht lesen.\n"
 
-#: ../display/d.vect/main.c:417
+#: ../display/d.vect/main.c:421
 #, c-format
 msgid "Plotting ... "
 msgstr "Zeichne..."
 
-#: ../display/d.vect/main.c:426
+#: ../display/d.vect/main.c:430
 #, c-format
 msgid "The bounding box of the map outside current region, nothing displayed.\n"
 msgstr "Die Karte liegt außerhalb der derzeitigen Region, es wird nichts angezeigt.\n"
 
-#: ../display/d.vect/main.c:481
+#: ../display/d.vect/main.c:487
 #, c-format
 msgid "Done\n"
 msgstr "Fertig\n"
@@ -625,6 +630,135 @@ msgstr "%s - unbekannte Farbe\n"
 msgid "Valid colors are:\n"
 msgstr "Mögliche Farben sind:\n"
 
+#: ../raster/r.sunmask/main.c:226
+msgid "Using map center coordinates\n"
+msgstr "Benutzte Koordinaten der Kartenmitte.\n"
+
+#: ../raster/r.sunmask/main.c:235
+msgid "Empty east coordinate specified!"
+msgstr "Leere Ostkoordinate definiert!"
+
+#: ../raster/r.sunmask/main.c:237
+msgid "Empty north coordinate specified!"
+msgstr "Leere Nordkoordinate definiert!"
+
+#: ../raster/r.sunmask/main.c:256
+msgid "Either define sun position or location/date/time parameters."
+msgstr "Definiere entweder Sonnenposition oder Ort/Datum/Zeit."
+
+#: ../raster/r.sunmask/main.c:259
+msgid ""
+"Neither sun position nor east/north, date/time/timezone definition are "
+"complete."
+msgstr "Weder Sonnenposition noch Ost/Nord, Datum/Uhrzeit/Zeitzone sind komplett angeben."
+
+#: ../raster/r.sunmask/main.c:264
+#, c-format
+msgid "Calculating sun position... (using solpos (V. %s) from NREL)\n"
+msgstr "Berechne Sonnenposition... (benutze solpos (V, %s) vom NREL)\n"
+
+#: ../raster/r.sunmask/main.c:269
+msgid ""
+"Using user defined sun azimuth, altitude settings (ignoring eventual other "
+"values)\n"
+msgstr "Benutze die durch den Nutzer angegebenen Angaben für Sonnenazimuth und Höhe (ignoriere eventuelle anderen Werte)\n"
+
+#: ../raster/r.sunmask/main.c:307
+#, c-format
+msgid ""
+"\n"
+"lat:%f  long:%f\n"
+msgstr ""
+"\n"
+"geogr. Breite:%f  geogr. Länge:%f\n"
+
+#: ../raster/r.sunmask/main.c:330
+#, c-format
+msgid " %d.%02d.%02d, daynum %d, time: %02i:%02i:%02i (decimal time: %f)\n"
+msgstr " %d.%02d.%02d, Tagnummer %d, Zeit: %02i:%02i:%02i (dezimale Zeit: %f)\n"
+
+#: ../raster/r.sunmask/main.c:334
+#, c-format
+msgid " long: %f, lat: %f, timezone: %f\n"
+msgstr "geogr. Länge: %f, geogr. Breite: %f, Zeitzone: %f\n"
+
+#: ../raster/r.sunmask/main.c:335
+#, c-format
+msgid ""
+" Solar position: sun azimuth: %f,\n"
+"   sun angle above horz.(refraction corrected): %f\n"
+msgstr ""
+"Solare Position: Sonnenazimuth: %f,\n"
+"   Sonnenwinkel über Horizont (Brechung korrigiert: %f\n"
+
+#: ../raster/r.sunmask/main.c:337
+#, c-format
+msgid " Sunrise time (without refraction): %02.0f:%02.0f\n"
+msgstr " Sonnenaufgang (ohne Brechung): %02.0f:%02.0f\n"
+
+#: ../raster/r.sunmask/main.c:338
+#, c-format
+msgid " Sunset time  (without refraction): %02.0f:%02.0f\n"
+msgstr "Sonnenuntergang (ohne Brechung): %02.0f: %02.0f\n"
+
+#: ../raster/r.sunmask/main.c:346
+msgid "Please correct settings."
+msgstr "Bitte korrigieren Sie die Eingaben."
+
+#: ../raster/r.sunmask/main.c:361
+#, c-format
+msgid "Time (%02i:%02i:%02i) is before sunrise (%02.0f:%02.0f)!\n"
+msgstr "Zeit (%02i:%02i:%02i) ist vor dem Sonnenaufgang (%02.0f:%02.0f)!\n"
+
+#: ../raster/r.sunmask/main.c:363 ../raster/r.sunmask/main.c:369
+msgid "Please correct time settings."
+msgstr "Bitte korrigieren Sie die Zeitangaben."
+
+#: ../raster/r.sunmask/main.c:367
+#, c-format
+msgid "Time (%02i:%02i:%02i) is after sunset (%02.0f:%02.0f)!\n"
+msgstr "Zeit (%02i:%02i:%02i) ist nach dem Sonnenuntergang (%02.0f:%02.0f)!\n"
+
+#: ../raster/r.sunmask/main.c:375
+msgid "No map calculation requested. Finished.\n"
+msgstr "Keine Kartenberechnung gefragt. Fertig!\n"
+
+#: ../raster/r.sunmask/main.c:382
+msgid "You already know the sun position.\n"
+msgstr "Sie wissen bereits die Sonnenposition.\n"
+
+#: ../raster/r.sunmask/main.c:390 ../raster/r.sunmask/main.c:392
+#, c-format
+msgid "can't open %s"
+msgstr "Kann '%s' nicht öffnen."
+
+#: ../raster/r.sunmask/main.c:402
+#, c-format
+msgid "can't open range file for %s"
+msgstr "Kann Range-Datei für Karte %s nicht öffnen."
+
+#: ../raster/r.sunmask/main.c:419
+msgid "Calculating shadows from DEM..."
+msgstr "Berechne Schatten des DHM..."
+
+#: ../raster/r.sunmask/main.c:427
+msgid "can't read row in input elevation map"
+msgstr "Kann Reihe im Eingabehöhenmodell nicht lesen."
+
+#: ../raster/r.sunmask/main.c:473
+#, c-format
+msgid "Analysing col %i\n"
+msgstr "Analysiere Spalte %i.\n"
+
+#: ../raster/r.sunmask/main.c:478
+#, c-format
+msgid "Writing result row %i of %i\n"
+msgstr "Schreibe Ergebnisreihe %i von %i.\n"
+
+#: ../raster/r.sunmask/main.c:496
+msgid "Finished.\n"
+msgstr "Zoomfunktion beendet.\n"
+
 #: ../vector/v.category/main.c:173
 msgid "Too many layers for this operation"
 msgstr "Zu viele Layer für diese Operation."
@@ -659,7 +793,7 @@ msgstr "Kann Datenbank '%s' nicht öffnen."
 msgid "Cannot create table: %s"
 msgstr "Kann Tabelle '%s' nicht erstellen."
 
-#: ../vector/v.convert/att.c:92
+#: ../vector/v.convert/att.c:99
 #, c-format
 msgid "Cannot insert into table: %s"
 msgstr "Kann nicht an Tabelle '%s' anfügen."
@@ -761,17 +895,17 @@ msgstr ""
 "geschrieben worden.\n"
 
 #: ../vector/v.convert/read.c:168
-#, fuzzy, c-format
+#, c-format
 msgid "%-5d dead points skipped\n"
 msgstr "%-5d tote Punkte (dead points) übersprungen.\n"
 
 #: ../vector/v.convert/read.c:169
-#, fuzzy, c-format
+#, c-format
 msgid "%-5d dead lines skipped\n"
 msgstr "%-5d tote Linien (dead lines) übersprungen.\n"
 
 #: ../vector/v.convert/read.c:170
-#, fuzzy, c-format
+#, c-format
 msgid "%-5d dead area boundaries skipped\n"
 msgstr "%-5d tote Flächenumrandungen (dead area boundaries) übersprungen.\n"
 
@@ -815,22 +949,22 @@ msgid "%-5d centroids read\n"
 msgstr "%-5d Zentroiden gelesen.\n"
 
 #: ../vector/v.convert/read.c:263
-#, fuzzy, c-format
+#, c-format
 msgid "%-5d dead point categories skipped\n"
 msgstr "%-5d Kategorien toter Punkte übersprungen.\n"
 
 #: ../vector/v.convert/read.c:264
-#, fuzzy, c-format
+#, c-format
 msgid "%-5d dead line categories skipped\n"
 msgstr "%-5d Kategorien toter Linien übersprungen.\n"
 
 #: ../vector/v.convert/read.c:265
-#, fuzzy, c-format
+#, c-format
 msgid "%-5d dead centroids skipped\n"
 msgstr "%-5d tote Zentroiden übersprungen.\n"
 
 #: ../vector/v.convert/read.c:266
-#, fuzzy, c-format
+#, c-format
 msgid "%-5d categories of unknown type skipped\n"
 msgstr "%-5d Kategorien unbekannten Types übersprungen.\n"
 
@@ -978,8 +1112,7 @@ msgstr ""
 "  Anzahl der Punkte: %d\n"
 
 #: ../vector/v.transform/print_trans.c:44
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "  Residual mean average   : %f\n"
 msgstr "Mittlerer Residual Durchschnitt: %f\n"
 
