@@ -1,0 +1,4 @@
+Pncolors()
+{
+    return 125;
+}
