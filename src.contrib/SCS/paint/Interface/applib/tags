@@ -1,0 +1,51 @@
+P__closedev	device.c	/^P__closedev ()$/
+P__errordev	device.c	/^P__errordev (err)$/
+P__flushdev	device.c	/^P__flushdev ()$/
+P__get	io.c	/^P__get (buf, n)$/
+P__getf	io.c	/^P__getf ()$/
+P__geti	io.c	/^P__geti ()$/
+P__gets	io.c	/^P__gets (buf)$/
+P__opcode	io.c	/^P__opcode (c)$/
+P__opendev	device.c	/^P__opendev (pgm)$/
+P__readdev	device.c	/^P__readdev (buf, n)$/
+P__send	io.c	/^P__send (buf, n)$/
+P__sendf	io.c	/^P__sendf (f)$/
+P__sendi	io.c	/^P__sendi (i)$/
+P__sends	io.c	/^P__sends (buf)$/
+P__transparent	io.c	/^P__transparent (t)$/
+P__writedev	device.c	/^P__writedev (buf, n)$/
+Palpha	alpha.c	/^Palpha()$/
+Pblocksize	misc.c	/^Pblocksize()$/
+Pblockspace	misc.c	/^Pblockspace()$/
+Pclose	close.c	/^Pclose()$/
+Pcolorlevels	colorlevel.c	/^Pcolorlevels (red, grn, blu)$/
+Pcolormultipliers	colormult.c	/^Pcolormultipliers (red, grn, blu)$/
+Pcolornum	colornum.c	/^Pcolornum (red, grn, blu)$/
+Pcolortable	colortable.c	/^Pcolortable (red, grn, blu, table, n)$/
+Pcolorvalue	colorvalue.c	/^Pcolorvalue (n, red, grn, blu)$/
+Pconnect	connect.c	/^Pconnect()$/
+Pdata	data.c	/^Pdata (buf, n)$/
+Pdata_begin	data.c	/^Pdata_begin()$/
+Pdata_end	data.c	/^Pdata_end()$/
+Pdisconnect	connect.c	/^Pdisconnect()$/
+Pflush	flush.c	/^Pflush()$/
+Phres	hres.c	/^Phres()$/
+Plock	lock.c	/^Plock()$/
+Pnblocks	misc.c	/^Pnblocks()$/
+Pnchars	nchars.c	/^Pnchars()$/
+Pncolors	ncolors.c	/^Pncolors()$/
+Pnpixels	npixels.c	/^Pnpixels(rows,cols)$/
+Popen	open.c	/^Popen()$/
+Ppainter_name	painter.c	/^Ppainter_name()$/
+Ppictsize	pictsize.c	/^Ppictsize(nrows,ncols)$/
+Praster	raster.c	/^Praster()$/
+Prle	rle.c	/^Prle (v, n)$/
+Prle_begin	rle.c	/^Prle_begin()$/
+Prle_end	rle.c	/^Prle_end()$/
+Prle_set_cols	rle.c	/^Prle_set_cols (nc)		\/* allocate rle buffer and dat/
+Ptext	text.c	/^Ptext(s)$/
+Ptextfudge	misc.c	/^Ptextfudge()$/
+Ptextscale	misc.c	/^Ptextscale()$/
+Ptextspace	misc.c	/^Ptextspace()$/
+Pvres	vres.c	/^Pvres()$/
+rle_flush	rle.c	/^rle_flush()$/
