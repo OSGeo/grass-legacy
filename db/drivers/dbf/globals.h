@@ -20,10 +20,11 @@ typedef struct {
     int  decimals; 
 } COLUMN;
 
-typedef union {
+typedef struct {
     char  *c; 
     int    i; 
     double d; 
+    int    is_null;
 } VALUE;
 
 typedef struct {

@@ -118,13 +118,15 @@ int execute(char *sql, cursor * c)
     if (st->command == SQLP_INSERT || st->command == SQLP_UPDATE) {
 	for (i = 0; i < st->nVal; i++) {
 	    col = cols[i];
-	    dtype = db.tables[tab].cols[col].type;
-	    stype = st->Val[i].type;
-	    if ((dtype == DBF_INT && stype != SQLP_I)
-		|| (dtype == DBF_DOUBLE && stype == SQLP_S)
-		|| (dtype == DBF_CHAR && stype != SQLP_S)) {
-		 append_error("Incompatible value type.\n");
-		return DB_FAILED;
+	    if ( !(st->Val[i].is_null) ) {
+		dtype = db.tables[tab].cols[col].type;
+		stype = st->Val[i].type;
+		if ((dtype == DBF_INT && stype != SQLP_I)
+		    || (dtype == DBF_DOUBLE && stype == SQLP_S)
+		    || (dtype == DBF_CHAR && stype != SQLP_S)) {
+		     append_error("Incompatible value type.\n");
+		    return DB_FAILED;
+		}
 	    }
 	}
     }
@@ -297,6 +299,9 @@ int set_val(int tab, int row, int col, SQLPVALUE * val)
 
     dbval = &(db.tables[tab].rows[row].values[col]);
 
+    dbval->is_null = val->is_null;
+    if ( dbval->is_null ) return 1;
+	
     switch (db.tables[tab].cols[col].type) {
     case DBF_INT:
 	dbval->i = val->i;
@@ -429,8 +434,6 @@ int sel(SQLPSTMT * st, int tab, int **selset)
     return nset;
 }
 
-/* TODO: don't use exit, set error message and return DB_FAILED to application */
-	
 /* Returns -1 on error */
 double eval_node(Node * nptr, int tab, int i)
 {
@@ -476,14 +479,14 @@ double eval_node(Node * nptr, int tab, int i)
 	reval = eval_arithmvalue_type(aexprptr->rexpr, tab);
 	
 	if ((leval != reval) && (leval/reval !=2) && (reval/leval !=2) ) {
-	    G_debug(0,"Incompatible types in comparison."); 
+	    append_error ("Incompatible types in comparison."); 
 	    G_debug(3,"Exiting in eval_node, T_A_Expr."); 
-	    exit (-1);
+	    return (-1);
 	}
 	if ( leval == reval && leval == SQLP_S) {
 	    if ( aexprptr->opname != SQLP_EQ && aexprptr->opname != SQLP_MTCH ) {
-	        G_debug(0,"Impossible operator for string values."); 
-		exit(-1);
+	        append_error("Impossible operator for string values."); 
+		return (-1);
 	    }
 	    if ( aexprptr->opname == SQLP_EQ) { 
 	
@@ -544,9 +547,9 @@ double eval_node(Node * nptr, int tab, int i)
 	if (arithmptr->rexpr != NULL ) {
 	    reval = eval_arithmvalue_type(arithmptr->rexpr, tab);
 	    if ((leval != reval) && (leval/reval !=2) && (reval/leval !=2) ) {
-	        G_debug(0,"Incompatible types in comparison."); 
+	        append_error("Incompatible types in comparison."); 
 		G_debug(3,"Exiting in eval_node, T_ArithmExpr."); 
-		exit (-1);
+		return (-1);
 	    }
 	}
 
@@ -566,7 +569,7 @@ double eval_node(Node * nptr, int tab, int i)
 	case SQLP_DIV:
 	    if (dreval != 0.0) condition = dleval / dreval;
 	    else {
-	    G_debug(0,"Floating point exception - division by zero inside comparison\n");
+	    append_error ("Floating point exception - division by zero inside comparison\n");
 	    return ((double) 0xfffffffe);
 	    }		
 	    break;
@@ -575,6 +578,7 @@ double eval_node(Node * nptr, int tab, int i)
     return condition;
 }
 
+/* returns -1 on error */
 int eval_arithmvalue_type(Node * nptr, int tab ) {
     int leval = 0, reval = 0;
     int ccol;
@@ -591,9 +595,9 @@ int eval_arithmvalue_type(Node * nptr, int tab ) {
 	if (arithmptr->rexpr != NULL ) {
 	    reval = eval_arithmvalue_type(arithmptr->rexpr, tab);
 	    if ((leval != reval) && (leval/reval !=2) && (reval/leval !=2) ) {
-	        fprintf(stderr,"Incompatible types in comparison."); 
+	        append_error ("Incompatible types in comparison."); 
 	        G_debug(3,"Exiting in eval_arithmvalue_type"); 
-		exit (-1);
+		return (-1);
 	    }
 	}
 
@@ -606,8 +610,8 @@ int eval_arithmvalue_type(Node * nptr, int tab ) {
 	else {
 	    ccol = find_column(tab, valueptr->s);
 	    if ( ccol == -1 ) {
-		fprintf(stderr, "Column '%s' not found\n", valueptr->s);
-		exit (-1);
+		append_error ("Column '%s' not found\n", valueptr->s);
+		return (-1);
 	    }
 	    col = &(db.tables[tab].cols[ccol]);
 	    switch (col->type) {
@@ -656,7 +660,7 @@ double get_arithmvalue(Node * nptr, int tab, int i, SQLPVALUE * res) {
 	case SQLP_DIV:
 	    if (dreval != 0.0) return (dleval / dreval);
 	    else {
-	    G_debug(0,"Floating point exception - division by zero inside comparison\n");
+	    append_error("Floating point exception - division by zero inside comparison\n");
 	    return ((double) 0xfffffffe);
 	    }		
 	    break;

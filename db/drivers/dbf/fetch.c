@@ -84,17 +84,22 @@ db_driver_fetch(cn, position, more)
 	ctype   = db_sqltype_to_Ctype(sqltype);
 	htype   = db_get_column_host_type(column);
 	
-	switch (ctype)
-	{
-	case DB_C_TYPE_STRING:
-		db_set_string ( &(value->s), db.tables[c->table].rows[dbfrow].values[dbfcol].c);
-	    break;
-	case DB_C_TYPE_INT:
-	    value->i = db.tables[c->table].rows[dbfrow].values[dbfcol].i;
-	    break;
-	case DB_C_TYPE_DOUBLE:
-	    value->d = db.tables[c->table].rows[dbfrow].values[dbfcol].d;
-	    break;
+	if ( db.tables[c->table].rows[dbfrow].values[dbfcol].is_null ) {
+	    db_set_value_null ( value ) ;
+	} else {
+	    db_set_value_not_null ( value ) ;
+	    switch (ctype)
+	    {
+	    case DB_C_TYPE_STRING:
+		    db_set_string ( &(value->s), db.tables[c->table].rows[dbfrow].values[dbfcol].c);
+		break;
+	    case DB_C_TYPE_INT:
+		value->i = db.tables[c->table].rows[dbfrow].values[dbfcol].i;
+		break;
+	    case DB_C_TYPE_DOUBLE:
+		value->d = db.tables[c->table].rows[dbfrow].values[dbfcol].d;
+		break;
+	    }
 	}
     }
     return DB_OK;

@@ -93,7 +93,7 @@ void sqpColumnDef( char *col, int type, int width, int decimals )
     return;
 }
 
-void sqpValue( char *strval, int intval, double dblval, int type )
+void sqpValue( char *strval, int intval, double dblval, int is_null, int type )
 {
     int i;
     
@@ -104,6 +104,7 @@ void sqpValue( char *strval, int intval, double dblval, int type )
     sqpAllocCol(sqlpStmt, i + 1 );
     
     sqlpStmt->Val[i].type = type;
+    sqlpStmt->Val[i].is_null = is_null;
     switch ( type  )
       {
         case (SQLP_S):
@@ -115,13 +116,14 @@ void sqpValue( char *strval, int intval, double dblval, int type )
         case (SQLP_D):
             sqlpStmt->Val[i].d = dblval;
             break;	
+	/* SQLP_UNKNOWN if is_null, nothing to do */
       }
 
     sqlpStmt->nVal++;
     return;
 }
 
-void sqpAssignment( char *col, char *strval, int intval, double dblval, int type )
+void sqpAssignment( char *col, char *strval, int intval, double dblval, int is_null, int type )
 {
     int i;
     
@@ -131,6 +133,7 @@ void sqpAssignment( char *col, char *strval, int intval, double dblval, int type
     
     sqpSaveStr ( &(sqlpStmt->Col[i]), col );
     sqlpStmt->Val[i].type = type;
+    sqlpStmt->Val[i].is_null = is_null;
     switch ( type  )
       {
         case (SQLP_S):
@@ -142,6 +145,7 @@ void sqpAssignment( char *col, char *strval, int intval, double dblval, int type
         case (SQLP_D):
             sqlpStmt->Val[i].d = dblval;
             break;	
+	/* SQLP_UNKNOWN if is_null, nothing to do */
       }
 
     sqlpStmt->nCol++;

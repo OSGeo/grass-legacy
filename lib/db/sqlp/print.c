@@ -93,21 +93,25 @@ int sqpPrintStmt(SQLPSTMT *st)
     for (i=0; i < st->nVal; i++)
       {	    
         fprintf( stderr, "VALUE %2d ", i+1);
-        switch ( sqlpStmt->Val[i].type )
-          {
-	    case (SQLP_S):
-                fprintf( stderr, "(string) : %s\n", sqlpStmt->Val[i].s );
-	        break;			
-	    case (SQLP_I):
-                fprintf( stderr, "(integer): %d\n", sqlpStmt->Val[i].i );
-	        break;			
-	    case (SQLP_D):
-                fprintf( stderr, "(float)  : %f\n", sqlpStmt->Val[i].d );
-	        break;			
-            default:
-                fprintf( stderr, "unknown\n" );
-	        break;			
-          }
+	if ( sqlpStmt->Val[i].is_null ) {
+            fprintf( stderr, "(unknown) : null\n" );
+	} else { 
+	    switch ( sqlpStmt->Val[i].type )
+	      {
+		case (SQLP_S):
+		    fprintf( stderr, "(string) : %s\n", sqlpStmt->Val[i].s );
+		    break;			
+		case (SQLP_I):
+		    fprintf( stderr, "(integer): %d\n", sqlpStmt->Val[i].i );
+		    break;			
+		case (SQLP_D):
+		    fprintf( stderr, "(float)  : %f\n", sqlpStmt->Val[i].d );
+		    break;			
+		default:
+		    fprintf( stderr, "unknown\n" );
+		    break;			
+	      }
+	}
       }
 
     if ( sqlpStmt->command == SQLP_SELECT )
