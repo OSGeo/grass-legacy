@@ -91,7 +91,7 @@ read_head.c: read_head.C
 port_test: port_test.c
 	$(CC) -o $@ port_test.c
 	cp portable.h.in portable.h
-	$@ >> portable.h
+	./$@ >> portable.h
 	-rm port_test
 
 iprint:
