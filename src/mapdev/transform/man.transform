@@ -1,0 +1,151 @@
+.\" %W% %G%
+.TH v.transform 2
+.SH NAME
+v.transform \- Transforms a vector map from one coordinate system to another coordinate system.
+.br
+.I (Map Development Tool)
+.SH SYNOPSIS
+.B v.transform
+.br
+or
+.br
+.B v.transform
+\fBmapin=\fR\fIname\fR \fBmapout=\fR\fIname\fR
+\fBcoord=\fR\fIname\fR [\fBverbose=\fR(\fByes,no\fR)]
+.br
+.SH DESCRIPTION
+.LP
+The program can be run interactively or with command line arguments.
+It will prompt the user for any inputs not provided on the the command
+line, except for the \fBverbose\fR option.
+When the program is run interactively, it will ask for
+the input map and an output map name.
+It will then ask for two sets of transformation points.
+
+The first set of points is in the coordinate system of the input map;
+the second set of points represents the corresponding geographic points
+in the coordinate system into which the map will transformed.
+A user must enter \fB4\fR to \fB10\fR of each set of points for
+the transformation to work correctly.
+
+After the user has entered both sets of points, the program will show
+the amount of error associated with the transformation of the given points
+as the residual mean average (RMS).
+(An acceptable RMS for a 1:24,000 UTM map would be 1.2 to 2.4 (meters).)
+It will then ask if the transformation RMS value is acceptable.
+After an RMS is accepted by the user, \fBv.transform\fR will transform the
+ascii (dig_ascii) vector map and its associated attribute (dig_att) file
+into the requested coordinate system.
+Remember to run \fBsupport.vect\fR or \fBimport.to.vect\fR on the
+output map.
+
+We have used this program to import vector files that were in scanner or
+digitizer (x,y) coordinates and to transform these into UTM coordinates.  It is a way of
+rectifying vector maps.
+
+.SH COMMAND LINE OPTIONS
+.LP
+Four command line arguments can be used with \fBv.transform\fR :  
+
+.TS
+box, center;
+l l.
+[mapin=name]	Name of the existing ascii (dig_ascii) map to be transformed.
+[mapout=name]	Name of the ascii map to be created (result of the transformation).
+[coord=name]	Name of the file holding the input and output transformation coordinates.
+ 	Give a full path name for this file or the current directory will be assumed.
+[verbose=(yes,no)]	Allows printing of residuals and other information; default is yes.
+.TE
+.LP
+When rectifying a map to another coordinate system using \fBv.transform\fR,
+the user should specify the coordinates of between \fB4\fR to \fB10\fR points,
+and state these both in the coordinate systems of the input and output maps.
+The two sets of coordinates can be input to \fBv.transform\fR interactively,
+or from a file specified on the command line with the \fBcoord\fR option.
+The \fBcoord\fR option is especially useful when several maps in the same 
+geographic area require transformation, as it eliminates the necessity for the
+user to repeatedly type in the same transformation coordinates. 
+
+A \fBcoord\fR file will contain between \fB4\fR to \fB10\fR lines; each line
+will contain the set of coordinate transformation points for the input map
+and the corresponding set of coordinates for the output map.  The minimum
+number of lines for the transformation to take place is four.
+
+.bp
+
+.KS
+The format of the \fBcoord\fR file is shown below:
+
+.TS
+box, center;
+l s l s,
+l l l l.
+Input Map	Output Map
+_
+x	y	x	y
+x	y	x	y
+x	y	x	y
+x	y	x	y
+.TE
+
+In the format above the \fBx\fR's and \fBy\fR's can be thought of as
+eastings and northings, depending on what coordinate systems you are
+transforming to and from.
+.KE
+
+.KS
+An example of the \fBcoord\fR file:
+
+.TS
+box, center;
+l l l l.
+1	1	589000	4913000
+1	17000	589000	4930000
+17000	17000	610000	4930000
+17000	1	610000	4913000
+.TE
+.KE
+
+Within the \fBcoord\fR file, numbers on a line must be spaced apart with
+tabs or blanks.
+The example shown above was used to convert a map in digitizer
+coordinates (range of 1-18000) to UTM coordinates within the UTM zone
+for the Spearfish database location.
+Because this \fBcoord\fR file is not your usual GRASS data file, the user
+will have to keep track of where it is on the system.
+When the \fBcoord\fR option is used on the
+command line to input the transformation points, the program does not ask if
+everything is acceptable before converting the vector file and the attribute file.
+.LP
+The \fBverbose\fR option is used to specify whether program messages
+will be written to the screen.
+Its default is \fByes\fR if unspecified on the command line.
+.SH NOTES
+.LP
+It is advisable to run this program interactively with a specific set
+of transformation coordinates and to look at the resulting residuals,
+to determine how accurate the transformation will be (ie., pick points with
+known values in both coordinate systems).
+After the residuals are acceptable, those transformation coordinates can
+be used with the program non-interactively to
+transform other maps in the same geographic area.
+.SH WARNING
+.LP
+This is a general purpose program and can be fooled into giving
+low residuals.  It is strongly suggested that any transformed map
+be checked for accuracy.
+The program assumes that the coordinate systems will be planimetric
+and has never been tested with negative values.
+.LP
+If this program is being used to transform maps from State Plane to UTM and vice versa
+there are couple of things to be aware of.  This program will work better with
+State Plane zones that use the Transverse Mercator projection.  Those are states
+that have their state zones splitting the state vertically, like Illinois.
+This program will not work as well with states that use the Lambert Conformal
+Conic projection.  Those are states that have their state zones splitting the
+state horizontally, like Wisconsin.  It is also best to keep the area being
+transformed small.
+.SH SEE ALSO
+\fBsupport.vect[1], import.to.vect[1]\fR
+.SH AUTHOR
+Michael Higgins, U.S. Army Construction Engineering Research Laboratory
