@@ -1,5 +1,5 @@
 :
 SRC=${GRASSSRC}
 CMD=${SRC}/CMD
-HEADER=head
+HEADER=${HEAD}
 . $CMD/generic/gmake.sh
