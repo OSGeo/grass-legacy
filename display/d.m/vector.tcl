@@ -52,7 +52,7 @@ proc DmVector::legend { id } {
 
 proc DmVector::create { tree parent } {
     variable opt
-    variable count 
+    variable count
 
     set node "vector:$count"
 
@@ -81,10 +81,10 @@ proc DmVector::create { tree parent } {
     set opt($count,display_dir) 0 
     set opt($count,display_attr) 0
     set opt($count,type_point) 1 
-    set opt($count,type_line) 1 
-    set opt($count,type_boundary) 1 
-    set opt($count,type_centroid) 1 
-    set opt($count,type_area) 1 
+    set opt($count,type_line) 1
+    set opt($count,type_boundary) 1
+    set opt($count,type_centroid) 1
+    set opt($count,type_area) 1
     set opt($count,type_face) 0 
 
     set opt($count,color) \#000000
@@ -93,7 +93,8 @@ proc DmVector::create { tree parent } {
     set opt($count,lcolor) \#000000
     set opt($count,_use_fcolor) 1
 
-    set opt($count,icon) "basic/cross"
+    set opt($count,symdir) "basic"
+    set opt($count,icon) "basic/x"
     set opt($count,size) 5 
 
     set opt($count,field) 1 
@@ -134,6 +135,16 @@ proc DmVector::select_map { id } {
     set m [GSelect vector]
     if { $m != "" } { 
         set DmVector::opt($id,map) $m 
+    }
+}
+
+# select symbols from directories
+proc DmVector::select_symbol { id } {
+    variable opt
+    set i [GSelect $opt($id,symdir)]
+    if { $i != "" } {
+	set tmp_i "$opt($id,symdir)/$i"
+        set DmVector::opt($id,icon) $tmp_i
     }
 }
 
@@ -205,10 +216,23 @@ proc DmVector::options { id frm } {
 
     # point icon / size
     set row [ frame $frm.icon ]
-    ComboBox $row.a -label [G_msg "Symbol:"] \
-                    -width 20  -textvariable DmVector::opt($id,icon) \
-                    -values {"basic/cross" "basic/circle" "basic/box" "basic/diamond"} \
-                    -modifycmd "DmVector::legend $id"
+ #  ComboBox $row.a -label [G_msg "Symbol:"] \
+ #        -width 20  -textvariable DmVector::opt($id,icon) \
+ #        -values {"basic/cross" "basic/circle" "basic/box" "basic/diamond"} \
+ #        -modifycmd "DmVector::legend $id"
+    
+    ComboBox $row.e -label [G_msg "Symbol collection:"] \
+ 	-width 10 -textvariable DmVector::opt($id,symdir)  \
+ 	-values {"basic" "demo"} \
+ 	-modifycmd "DmVector::legend $id"
+  
+    Button $row.a -text [G_msg "Symbol:"] \
+	-command "DmVector::select_symbol $id"
+    Entry $row.d -width 15 -text "$opt($id,icon)" \
+	-textvariable DmVector::opt($id,icon)
+    pack $row.e $row.a $row.d -side left
+    pack $row -side top -fill both -expand yes
+
     Label $row.b -text "Size:" 
     SpinBox $row.c -range {1 50 1} -textvariable DmVector::opt($id,size) \
                    -width 2 -helptext "Icon size" -modifycmd "DmVector::legend $id"

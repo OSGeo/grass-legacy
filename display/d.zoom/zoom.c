@@ -15,7 +15,7 @@ int zoomwindow ( struct Cell_head *window, int quiet, double magnify)
 	    fprintf(stderr, _("\n\nButtons:\n")) ;
 	    fprintf(stderr, _("%s Zoom menu\n"), lefts);
 	    fprintf(stderr, _("%s Pan\n"), middles);
-	    fprintf(stderr, _("%s Quit\n"), rights);
+	    fprintf(stderr, _("%s Quit menu\n"), rights);
 	    printmenu = 0;
 	}
 

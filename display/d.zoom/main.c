@@ -5,7 +5,7 @@
  */
 
 #include <stdlib.h>
-#include <string.h>
+#include <string.h> 
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
@@ -21,13 +21,14 @@ main (int argc, char **argv)
 #ifdef QUIET
     struct Flag *quiet;
 #endif
-    struct Flag *just, *full, *hand, *pan;
+    struct Flag *just, *full, *hand, *pan, *last;
     struct Option *rmap, *vmap, *zoom;
     struct GModule *module;
     double magnify;
     int i, first=1;
-    char *mapset;
-    struct Cell_head window;
+    char *mapset, *map;
+    double ux1, uy1, ux2, uy2;
+    struct Cell_head window, defwin, currwin, tmpwin;
 
     /* Initialize globals */
     rast = vect = NULL;
@@ -100,7 +101,7 @@ main (int argc, char **argv)
 
     full = G_define_flag();
     full->key = 'f';
-    full->description = "Full menu (zoom + pan)";
+    full->description = "Full menu (zoom + pan) & Quit menu";
 
     pan = G_define_flag();
     pan->key = 'p';
@@ -114,7 +115,9 @@ main (int argc, char **argv)
     just->key = 'j';
     just->description = "Just redraw given maps using default colors";
 
-
+    last = G_define_flag();
+    last->key = 'r';
+    last->description = "Return to previous zoom";
 
     if(!rast && !vect )
     {
@@ -189,6 +192,7 @@ main (int argc, char **argv)
 	    nvects = 0;
 	}
     }
+
 
 /* Make sure map is available */
     if (rmap->required == YES && rmap->answers == NULL)
@@ -322,8 +326,34 @@ main (int argc, char **argv)
 		    nvects, (nvects > 1 ? "s":""));
     }
 
+   if (last->answer)  /* restoring temporary region */
+   {
+      map = G_find_file ("windows", "zoom_temp", "");
+      
+      if (!map) {
+	fprintf(stderr,_("this is the first d.zoom run; no previous zoom availible\n"));
+	return(0);
+      }
+
+      G__get_window (&tmpwin, "windows", "zoom_temp", map);
+ 
+      fprintf(stderr, "returning to last zoom\n") ;
+ 
+      ux1 = tmpwin.east;
+      ux2 = tmpwin.west;
+      uy1 = tmpwin.north;
+      uy2 = tmpwin.south;
+
+      set_win(&tmpwin, ux1, uy1, ux2, uy2, hand);
+      
+      exit(0);
+    }
+
     /* Do the zoom */
     G_get_window(&window);
+    G__put_window(&window, "windows", "zoom_temp"); /* Save current region before it is changed */
+    G_get_window(&currwin);
+    G_get_default_window(&defwin);
     if ( full->answer == 1 )
 	stat = zoomwindow(&window, 1, magnify);
     else if(pan->answer == 1)
@@ -333,6 +363,10 @@ main (int argc, char **argv)
             make_window_box (&window, magnify, 0, 0);
 	else
 	    make_window_box (&window, magnify, 0, 1);
+    }
+    
+    if (full->answer) {
+      quit(&defwin,&currwin); /* calling the quit menu function */
     }
 
     R_close_driver();
@@ -346,4 +380,3 @@ main (int argc, char **argv)
     fprintf(stdout,_("Zooming finished.\n"));
     exit(stat);
 }
-

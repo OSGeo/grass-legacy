@@ -421,6 +421,14 @@ proc Dm::zoom { } {
 
 }
 
+# zoom back
+proc Dm::zoom_back { } {
+    
+    set cmd "d.zoom -r"
+    term $cmd
+
+}
+
 # pan
 proc Dm::pan { } {
     

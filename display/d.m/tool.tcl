@@ -40,6 +40,12 @@ proc DmToolBar::create { tb  } {
         -command "Dm::zoom" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 \
         -helptext [G_msg "Zoom"]
+    
+    # zoom.back
+    $bbox1 add -image [image create photo -file "$dmpath/zoom.back.gif"] \
+        -command "Dm::zoom_back" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 \
+        -helptext [G_msg "Return to previous zoom"]
 
     # pan
     $bbox1 add -image [image create photo -file "$dmpath/pan.gif"] \

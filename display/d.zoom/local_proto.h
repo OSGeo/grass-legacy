@@ -36,6 +36,9 @@ int print_limit ( struct Cell_head *, struct Cell_head *);
 /* set.c */
 int set_win ( struct Cell_head *, double, double, double, double, int);
 
+/* quit.c */
+int quit (struct Cell_head *, struct Cell_head *);
+
 #ifdef MAIN
 #define	GLOBAL
 #else
