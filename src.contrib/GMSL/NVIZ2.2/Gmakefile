@@ -1,7 +1,6 @@
-# $Id: Gmakefile,v 1.7 2000-10-11 06:46:30 cho Exp $
+# $Id: Gmakefile,v 1.8 2000-10-11 06:52:24 cho Exp $
 #
-# Toplevel makefile for building everything - used by configure script to 
-# build Gmakefile
+# Toplevel makefile for building everything
 
 VER=2.2
 NV_VER=nviz$(VER)
