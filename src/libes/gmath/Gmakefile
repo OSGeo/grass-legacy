@@ -1,6 +1,7 @@
 SLIBDEPS = $(GISLIB) $(FFTWLIB) $(LAPACKLIB) $(BLASLIB)
 
-OBJ = fft.o \
+OBJ = brent.o \
+	fft.o \
 	del2g.o \
 	eigen.o \
 	gauss.o \
