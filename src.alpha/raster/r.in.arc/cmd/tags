@@ -1,0 +1,7 @@
+Mmain	main.c	/^main (argc, argv) char *argv[];$/
+error	gethead.c	/^error(msg)$/
+extract	gethead.c	/^extract (count, label, value, data, proj, scanner)/
+file_cpy	main.c	/^file_cpy (from, to)$/
+gethead	gethead.c	/^gethead (fd, cellhd)$/
+missing	gethead.c	/^missing (count, label)$/
+scan_int	gethead.c	/^scan_int (s, i, proj)$/
