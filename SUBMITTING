@@ -1,4 +1,4 @@
-$Id: SUBMITTING,v 1.12 2000-12-01 12:47:01 markus Exp $
+$Id: SUBMITTING,v 1.13 2000-12-06 07:13:03 cho Exp $
 
 NOTE: Please improve this list!
 
@@ -171,7 +171,8 @@ care of following rules:
     supported on all platforms, thus causing problems for some people. As an
     alternative, please use code similar to the following shell script snippet
     which will perform the same function. In this case, the path of the grass5
-    command is saved if grass5 is found in $PATH.
+    command is saved if grass5 is found in $PATH. This won't recognize aliased
+    command name.
     
 	# Search for grass5 command in user's path
 	for i in `echo $PATH | sed 's/^:/.:/
@@ -183,18 +184,38 @@ care of following rules:
     		
 		# Save the path of the grass5 command
 		GRASS_PATH=$i/grass5
+		# Use the first one in user's path
+		break
 	    fi
 	done
 
-18. For consistency, use README rather than README.txt for any README files.
+18. Use "GRASS_TCLSH" and "GRASS_WISH" environmental variables instead of
+    "tclsh" and "wish" at the start of Tcl/Tk scripts. This allows users to
+    override the default names, so that developers don't need worry about the
+    shell names.
 
-19. Tell the other developers about the new code using the following e-mail:
+    Tcl script:
+
+    	#!/bin/sh
+	# the next line restarts using tclsh \
+	exec $GRASS_TCLSH "$0" "$@"
+
+
+    Tk script:
+
+    	#!/bin/sh
+	# the next line restarts using wish \
+	exec $GRASS_WISH "$0" "$@"
+
+19. For consistency, use README rather than README.txt for any README files.
+
+20. Tell the other developers about the new code using the following e-mail:
     grass5@geog.uni-hannover.de
  
     To subscribe to this mailing list, see
     http://www.geog.uni-hannover.de/grass/grassdevel.html
 
-20. In case of questions feel free to contact the developers at the above
+21. In case of questions feel free to contact the developers at the above
     mailing list.
 
 ...
