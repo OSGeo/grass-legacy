@@ -1,0 +1,8 @@
+# %W% %G%
+
+LIST=main.o
+
+$(BIN)/Gdumpcell: $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB)
+
+$(GISLIB): #
