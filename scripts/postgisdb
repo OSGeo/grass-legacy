@@ -198,7 +198,6 @@ case "$1" in
            if [ $? = 0 ]; then 
 	     echo "$postgisfunction" | psql ${argvect[4]} ${argvect[3]}
 	       if [ $? = 0 ]; then 
-echo "cat $postgisfile | tr -d '\015' | sed -e 's#/usr/local/pgsql/lib/contrib/#$libpostgisdir#g' | psql  ${argvect[1]} ${argvect[3]}"
 		 cmd="cat $postgisfile | tr -d '\015' | sed -e 's#/usr/local/pgsql/lib/contrib/#$libpostgisdir#g' | psql  ${argvect[1]} ${argvect[3]}"
 		 eval "$cmd"
 		   if [ ! $? = 0 ]; then   dropdb  $dbname ${argvect[3]}; Error "Error on adding postgis featuress";
