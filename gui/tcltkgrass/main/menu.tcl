@@ -106,7 +106,7 @@ menu_build 1 .main_menu {
 	}
 	"Save display to image file" "" {
 	    "XWD (Save display, selected with mouse, to map.xwd in home directory )" ""
-	        {"exec xwd -out map.xwd &"}
+	        {"spawn xwd -out map.xwd"}
 	    "PNG (save currently selected display to 24 bit PNG file)" ""
 	        {"execute d.out.png"}
 	}
@@ -130,6 +130,13 @@ menu_build 1 .main_menu {
 	    "Remove maps using expressions & 'wildcards'" ""
 	        {"execute g.mremove"}
 	    -separator "" ""
+	    "List Grid3D files" ""
+	        {"execute g3.list"}
+	    "Rename Grid3D volumes" ""
+	        {"execute g3.rename"}
+	    "Remove Grid3D volumes" ""
+	        {"execute g3.remove"}
+	    -separator "" ""
 	    "Modify access to current mapset" ""
 	        {"execute g.access"}
 	    "Modify mapset search path" ""
@@ -139,17 +146,16 @@ menu_build 1 .main_menu {
 	}
 	"Region" "Region management" {
 	    "Display region settings" ""
-	        {"exec g.region -p &"}
+	        {"run g.region -p"}
 	    "Manage region" ""
 	        {"execute g.region"}
 	    "Select default region" ""
-	        {"exec g.region -d &; exec d.redraw &"}
-	}
-	"3D region" "Grid3D region management" {
+	        {"run g.region -d ; run d.redraw"}
+	    -separator "" ""
 	    "Create WIND3 (default 3D window) from current 2D region" ""
-	        {"exec g3.createwind"}
+	        {"execute g3.createwind"}
 	    "Manage 3D region" ""
-	        {"exec g3.setregion"}
+	        {"execute g3.setregion"}
 	}
 	"Map type conversions" "raster<->vector<->sites<->grid3D" {
 	    "Raster to vector map" "r.to.vect"
@@ -163,56 +169,56 @@ menu_build 1 .main_menu {
 	}
 	"Projections & GRASS environment" "" {
 	    "Create/edit projection information for current location" "g.setproj"
-	        {"exec xterm -e g.setproj"}
+	        {"term g.setproj"}
 	    "Show projection information & create projection files" "g.proj"
 	        {"execute g.proj"}
 	    "Show current GRASS environment settings" "g.gisenv"
 	        {"execute g.gisenv"}
 	    "Show current GRASS version" "g.version -c"
-	        {"exec g.version -c"}
+	        {"run g.version -c"}
 	}
 }
 "Display" "Display maps" {
 	"Start display manager" "d.m"
 	    {"execute d.m"}
 	"Start NVIZ (n-dimensional visualization module)" "nviz -q"
-	    {"exec nviz -q &"}
+	    {"spawn nviz -q"}
 	-separator "" ""
 	"Start displays" "" {
-	    X0 "" {"exec d.mon start=x0 &"}
-	    X1 "" {"exec d.mon start=x1 &"}
-	    X2 "" {"exec d.mon start=x2 &"}
-	    X3 "" {"exec d.mon start=x3 &"}
-	    X4 "" {"exec d.mon start=x4 &"}
-	    X5 "" {"exec d.mon start=x5 &"}
-	    X6 "" {"exec d.mon start=x6 &"}
+	    X0 "" {"run d.mon start=x0"}
+	    X1 "" {"run d.mon start=x1"}
+	    X2 "" {"run d.mon start=x2"}
+	    X3 "" {"run d.mon start=x3"}
+	    X4 "" {"run d.mon start=x4"}
+	    X5 "" {"run d.mon start=x5"}
+	    X6 "" {"run d.mon start=x6"}
 	    -separator "" ""
-	    PNG "" {"exec d.mon start=PNG &"}
+	    PNG "" {"run d.mon start=PNG"}
 	    -separator "" ""
 	    "Start/restart display at specified window size" ""
 	        {"execute d.monsize"}
 	}
 	"Stop displays" "" {
-	    X0 "" {"exec d.mon stop=x0 &"}
-	    X1 "" {"exec d.mon stop=x1 &"}
-	    X2 "" {"exec d.mon stop=x2 &"}
-	    X3 "" {"exec d.mon stop=x3 &"}
-	    X4 "" {"exec d.mon stop=x4 &"}
-	    X5 "" {"exec d.mon stop=x5 &"}
-	    X6 "" {"exec d.mon stop=x6 &"}
+	    X0 "" {"run d.mon stop=x0"}
+	    X1 "" {"run d.mon stop=x1"}
+	    X2 "" {"run d.mon stop=x2"}
+	    X3 "" {"run d.mon stop=x3"}
+	    X4 "" {"run d.mon stop=x4"}
+	    X5 "" {"run d.mon stop=x5"}
+	    X6 "" {"run d.mon stop=x6"}
 	    -separator "" ""
-	    PNG "" {"exec d.mon stop=PNG &"}
+	    PNG "" {"run d.mon stop=PNG"}
 	}
 	"Select displays" "" {
-	    X0 "" {"exec d.mon select=x0 &"}
-	    X1 "" {"exec d.mon select=x1 &"}
-	    X2 "" {"exec d.mon select=x2 &"}
-	    X3 "" {"exec d.mon select=x3 &"}
-	    X4 "" {"exec d.mon select=x4 &"}
-	    X5 "" {"exec d.mon select=x5 &"}
-	    X6 "" {"exec d.mon select=x6 &"}
+	    X0 "" {"run d.mon select=x0"}
+	    X1 "" {"run d.mon select=x1"}
+	    X2 "" {"run d.mon select=x2"}
+	    X3 "" {"run d.mon select=x3"}
+	    X4 "" {"run d.mon select=x4"}
+	    X5 "" {"run d.mon select=x5"}
+	    X6 "" {"run d.mon select=x6"}
 	    -separator "" ""
-	    PNG "" {"exec d.mon select=PNG &"}
+	    PNG "" {"run d.mon select=PNG"}
 	}
 	-separator "" ""
 	"Raster" "Display raster maps" {
@@ -304,13 +310,13 @@ menu_build 1 .main_menu {
 	"Create fly-through animation path for NVIZ" ""
 		{"execute d.nviz"}
 	"Pan and zoom in active display" ""
-	    {"exec xterm -e d.zoom -f &"}
+	    {"term d.zoom -f"}
 	"Show geographical position" ""
 	    {"execute d.where"}
 	"Measure lengths and areas" ""
 	    {"execute d.measure"}
 	"Zoom/Unzoom in active display" ""
-	    {"exec xterm -e d.zoom &"}
+	    {"term d.zoom"}
 	-separator "" ""
 	"Erase active display/frame" ""
 	    {"execute d.erase"}
@@ -318,7 +324,7 @@ menu_build 1 .main_menu {
 "Raster" "Raster map analysis" {
 	"Develop map" "" {
 	    "Digitize" ""
-	        {"exec xterm -e r.digit &"}
+	        {"term r.digit"}
 	    -separator "" ""
 	    "Compress/decompress raster file" ""
 	        {"execute r.compress"}
@@ -429,7 +435,7 @@ menu_build 1 .main_menu {
 	}
 	"Landscape structure modeling" "" {
 	    "Set up sampling and analysis framework" ""
-	        {"exec xterm -e r.le.setup &"}
+	        {"term r.le.setup"}
 	    -separator "" ""
 	    "Analyze landscape characteristics" ""
 	        {"execute r.le.pixel"}
@@ -596,7 +602,7 @@ menu_build 1 .main_menu {
 	"Query by map features" ""
 	    {"execute v.select"}
 	"Query with mouse" ""
-	    {"exec d.what.vect -xf &"}
+	    {"spawn d.what.vect -xf"}
 	-separator "" ""
 	"Buffer features" ""
 	    {"execute v.buffer"}
@@ -792,13 +798,11 @@ menu_build 1 .main_menu {
 	    {resize_menu}
 	-separator "" ""
 	"Set menu font" ""
-	    {"fontsel {Menu font} main_menu(font);\
-			setfont .main_menu $main_menu(font);\
-			resize_menu"}
+	    {"set_menu_font"}
 }
 "Help" "Help" {
 	"Manual pages" ""
-	    {"exec g.manual -i &"}
+	    {"spawn g.manual -i"}
 	-separator "" ""
 	"Tcltkgrass menus help" ""
 	    {"source $env(TCLTKGRASSBASE)/main/help.tcl"}
