@@ -1,8 +1,7 @@
 #include "digit.h"
 #include "gis.h"
 
-drawcell(window)
-    struct Cell_head *window;
+drawcell()
 {
     int fd;
     int left, top;
@@ -20,17 +19,12 @@ drawcell(window)
     D_clear_screen ();
     */
 
-    G_get_set_window (&cellhd);  /* read window information from window_rout () */
+    G_get_set_window (&cellhd);  /* read WINDOW Information from window_rout () */
 
     if(G_read_colors (N_backdrop, N_backdrop_mapset, &colr) < 0)
 	return 0;
 
-#ifdef GRASS3.1
-    D_reset_colors (&colr);
-    G_free_colors (&colr);
-#else
     D_set_colors (&colr);
-#endif
 
     nrows = G_window_rows();
     ncols = G_window_cols();
@@ -71,12 +65,10 @@ drawcell(window)
 	repeat = G_row_repeat_nomask (fd, row);
 	D_raster (cell, ncols, repeat, &colr);
     }
-    R_flush ();
+    V_flush ();
     unset_keyboard ();
     G_close_cell (fd);
-#ifndef GRASS3.1
     G_free_colors (&colr);
-#endif
     free (cell);
 
     return ret;
