@@ -17,20 +17,36 @@ SYNOPSIS</h2>
 <b>pg.in.dbf</b>
 <br><b>pg.in.dbf help</b>
 <br><b>pg.in.dbf input</b><i>=name</i> [<b>dumpmode</b><i>=name</i>]
+[<b>delimiter</b><i>=char</i>] [<b>null</b><i>=string</i>]
 <h2>
 DESCRIPTION</h2>
 <i>pg.in.dbf</i> imports a dBase database table into PostgreSQL for later
 use with GRASS-RDBMS modules.
-<p>You can also choose to dump data from the dbf file into text format
-file for further use. In such case,
-<br>you should type in the full Unix path to the new text file location
-when prompted.
-<p>The program can run in two modes: 'admin' is when the GRASS user has
-a superuser account in Postgres,
+
+<p>The program can run in two modes: 
+<br>
+<br>'admin' is when the GRASS user has a superuser account in Postgres,
 <br>'normal'&nbsp; - when the Postgres user is normal (not administrator).
 You should choose the mode adequately.
 <br>In the latter case, large files can take much time to import (as each
 line would be inserted separately).
+<p>When you have PostgreSQL admin privileges, the import of the DBF
+database is done via the <tt>COPY FROM</tt> command. This allows to
+tune several options :
+<br>
+<br>You will be asked if you want to save the dump of the data 
+from the dbf file into text format. In this case you <b>MUST</b>
+give an absolute path name, and you need, obviously, to have 
+the corresponding rights ;
+<br>
+<br>You can also specify a custom <b>delimiter</b> to be used to
+separate the fields (the default for the COPY FROM command is the
+tabulation);
+<br>
+<br>And finally you can specify a custom <b>null</b> string i.e. a
+string PostgreSQL has to interpret as a NULL value (the default is the
+empty string, meaning that void fields will be considered null).
+
 <h2>
 COMMAND LINE OPTIONS</h2>
 
@@ -42,13 +58,31 @@ Parameters:</h3>
 <b>input=name</b></dt>
 
 <dd>
-Name of .dbf file to be imported (example: 'simple.dbf'</dd>
+Name of .dbf file to be imported (example: 'simple.dbf')</dd>
 
 <dt>
 <b>dumpmode=name</b></dt>
 
 <dd>
-Admin/normal user dump mode (Default = Postgres super-user)</dd>
+Admin/normal user dump mode [Default = Postgres super-user]</dd>
+
+<dt>
+<b>delimiter=char</b>
+</dt>
+
+<dd>
+Specify char as the delimiter (escaped sequences are allowed). 
+<br>[Default = tabulation '\t']
+</dd>
+
+<dt>
+<b>null=string</b>
+</dt>
+
+<dd>
+Specify the string PostgreSQL will have to consider as a NULL value.
+[Default = empty string ""]
+</dd>
 
 <br>&nbsp;
 <p>&nbsp;</dl>
@@ -70,5 +104,6 @@ SEE ALSO</h2>
 <h2>
 AUTHOR</h2>
 Alex Shevlakov (sixote@yahoo.com)
+<br>Some additions and fixes by Thierry Laronde (tlaronde@polynum.org)
 </body>
 </html>
