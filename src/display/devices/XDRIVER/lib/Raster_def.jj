@@ -1,0 +1,126 @@
+#include <stdio.h>
+#include <sys/types.h>
+#include "driver.h"
+
+
+Raster_char(num, nrows, array, withzeros, color_type)
+int num, nrows;
+u_char *array;
+int withzeros, color_type;
+{
+    register u_char cur_color, *arr;
+    register int npixles;
+    int our_x, our_y;
+    int (*ColorFunc) ();
+    int Color();                /* GRASS driver color call - maps color */
+    int SetXColor();            /* device color call (generally useful
+                                 *e for fixed only) - no color mapping */
+    if (color_type)
+        ColorFunc = Color;
+    else
+        ColorFunc = SetXColor;
+    arr = array;
+    cur_color = *array;
+    (*ColorFunc) ((unsigned) cur_color);
+    npixles = 0;
+    our_x = cur_x;
+    our_y = cur_y;
+	/*
+	printf ("2. cur_color is %d \n", cur_color);
+	printf (" num is %d \n", num);
+	printf (" nrows is %d \n", nrows);
+	*/
+    while (--num) {
+        if (*(++arr) != cur_color) {
+            if (nrows <= 1) {
+                if (withzeros || cur_color)
+                    Cont_rel(npixles, 0);
+                else
+                    Move_rel(npixles, 0);
+                cur_x++;
+            } else {
+                if (withzeros || cur_color)
+                    Box_abs2(our_x, our_y, npixles + 1, nrows);
+                our_x += npixles;
+            }
+            our_x++;
+            cur_color = *arr;
+            (*ColorFunc) ((unsigned) cur_color);
+            npixles = 0;
+        } else
+            npixles++;
+    }
+    if (nrows == 1) {
+        if (withzeros || cur_color)
+            Cont_rel(npixles, 0);
+        else
+            Move_rel(npixles, 0);
+        cur_x++;
+    } else {
+        if (withzeros || cur_color)
+            Box_abs2(our_x, our_y, npixles + 1, nrows);
+        cur_y = our_y + nrows;
+        cur_x = our_y + npixles;
+    }
+}
+
+
+Raster_int_def(num, nrows, array, withzeros, color_type)
+int num, nrows;
+unsigned int *array;
+int withzeros, color_type;
+{
+    register unsigned cur_color, *arr;
+    register int npixles;
+    int our_x, our_y;
+    int (*ColorFunc) ();
+    int Color();                /* GRASS driver color call - maps color */
+    int SetXColor();            /* device color call (generally useful
+
+    if (color_type)
+        ColorFunc = Color;
+    else
+        ColorFunc = SetXColor;
+
+    arr = array;
+    cur_color = *array;
+    (*ColorFunc) (cur_color);
+    npixles = 0;
+    our_x = cur_x;
+    our_y = cur_y;
+    while (--num) {
+        if (*(++arr) != cur_color) {
+            if (nrows == 1) {
+                if (withzeros || cur_color)
+                    Cont_rel(npixles, 0);
+                else
+                    Move_rel(npixles, 0);
+                cur_x++;
+            } else {
+                if (withzeros || cur_color)
+                    Box_abs2(our_x, our_y, npixles, nrows);
+                /* Box_abs(our_x, our_y, our_x+npixles, our_y+nrows); */
+                our_x += npixles;
+            }
+            our_x++;
+            cur_color = *arr;
+            (*ColorFunc) (cur_color);
+            npixles = 0;
+        } else
+            npixles++;
+    }
+    if (nrows == 1) {
+        if (withzeros || cur_color)
+            Cont_rel(npixles, 0);
+        else
+            Move_rel(npixles, 0);
+        cur_x++;
+    } else {
+        if (withzeros || cur_color)
+            Box_abs2(our_x, our_y, npixles, nrows);
+        cur_y = our_y + nrows;
+        cur_x = our_y + npixles;
+    }
+}
+
+/*** end Raster_def.c ***/
