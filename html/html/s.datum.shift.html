@@ -1,0 +1,50 @@
+<html>
+<A NAME="s.datum.shift">
+
+<TITLE>s.datum.shift</TITLE>
+
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>s.datum.shift</b></EM>  - Allows the user to apply a datum transformation on a sites file<BR>
+<EM>(GRASS Sites Program)</EM> 
+
+<H2>SYNOPSIS</H2>
+
+<B>s.datum.shift</B><BR>
+<B>s.datum.shift help</B><BR>
+<B>s.datum.shift input=</B><EM>name</EM> <B>output=</B><EM>name</EM><B>[idatum=</B><EM>name</EM>] <B>odatum=</B><EM>name</EM> <B>[-m]</B></B>
+
+<H2>DESCRIPTION</H2>
+Allows the user to perform a datum transformation on a sites file. The map datum of the output file is read from the current location if not specified on the command line. Each site will retain all associated category, double, and string attributes.  The header information is copied and an additional header comment is written containing the <EM>s.datum.shift</EM> command line used to create the new file.
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input</B>
+<DD>Name of the input sites list.
+
+<DT><B>output</B>
+<DD>Name of the output sites list.
+
+<DT><B>idatum</B>
+<DD>Map Datum of the input sites list.
+
+<DT><B>odatum</B>
+<DD>Map Datum of the output sites list.
+
+<DT><B>-m</B>
+<DD>use Molodensky formula, faster but less precise.
+</DL>
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="s.proj.html">s.proj</A>, <A HREF="m.datum.shift.html">m.datum.shift</A></EM>
+
+<H2>AUTHOR</H2>
+Andreas Lange, andreas.lange@rhein-main.de
+
+</body>
+</HTML>
