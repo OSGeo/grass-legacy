@@ -1,5 +1,5 @@
 PGM       = $(BIN_CMD)/g.select.pg
-LIBES     = $(GISLIB) $(PQLIB) $(XEXTRALIBS)
+LIBES     = $(GISLIB) $(PQLIBPATH) $(PQLIB) $(XEXTRALIBS)
 EXTRA_CFLAGS    = $(PQINCPATH)
 
 OBJS = \

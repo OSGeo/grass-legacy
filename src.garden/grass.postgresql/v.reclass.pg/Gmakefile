@@ -1,6 +1,6 @@
 PGM       = $(BIN_CMD)/v.reclass.pg
 # EXTRA_CFLAGS = -Dunlink=puts
-LIBES     = $(DISPLAYLIB) $(GISLIB) $(PQLIB) $(XEXTRALIBS)
+LIBES     = $(DISPLAYLIB) $(GISLIB) $(PQLIBPATH) $(PQLIB) $(XEXTRALIBS)
 EXTRA_CFLAGS    = $(PQINCPATH)
 
 OBJS = \

@@ -1,5 +1,6 @@
 PGM       = $(BIN_CMD)/d.what.r.pg
-LIBES     = $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) $(PQLIB) $(XEXTRALIBS)
+LIBES     = $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) $(PQLIBPATH) $(PQLIB) \
+		$(XEXTRALIBS)
 
 OBJS = \
 	main.o  \
