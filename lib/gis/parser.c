@@ -1234,7 +1234,7 @@ int G_gui (void)
 	        append(cmd, "Entry $suf.val%d.val -textvariable optval(%d)\n", optn, optn );
 	        append(cmd, "pack $suf.val%d.val -side left -fill x -expand yes\n", optn);
 		if(opt->def) {
-		    append(cmd, " set optval(%d) \"%s\" \n", optn, opt->def );
+		    append(cmd, " set optval(%d) {%s} \n", optn, opt->def );
 		} 
 	    }
 	    append(cmd, "pack $suf.val%d -side top -fill x\n", optn );
