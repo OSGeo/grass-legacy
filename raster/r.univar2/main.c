@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
     double min = 0.0/0.0; /* init as nan */
     double max = 0.0/0.0; /* init as nan */
     double mean, stdev, var_coef;
-    double variance;       /* unbiased! (n-1) */
+    double variance;
 
     char *infile, *mapset;
     void *raster_row, *ptr;
