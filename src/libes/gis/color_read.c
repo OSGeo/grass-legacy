@@ -144,7 +144,8 @@ read_new_colors (fd, colors)
     G_strip (buf);
     if(sscanf (buf+1, "%ld %ld", &cat1, &cat2) == 2)
 	G_set_color_range ((CELL)cat1, (CELL)cat2, colors);
-    {
+/*
+   {
 	if (cat1 < cat2)
 	{
 	    colors->cmin = cat1;
@@ -156,6 +157,7 @@ read_new_colors (fd, colors)
 	    colors->cmax = cat1;
 	}
     }
+*/
 
     modular = 0;
     while (fgets(buf, sizeof buf, fd))
