@@ -57,14 +57,9 @@ main (int argc, char **argv)
 
 	map_opt = G_define_standard_option(G_OPT_V_MAP); 
 
-	type_opt = G_define_option() ;
-	type_opt->key        = "type" ;
-	type_opt->type       = TYPE_STRING ;
-	type_opt->required   = NO ;
-	type_opt->multiple   = YES ;
+	type_opt =  G_define_standard_option(G_OPT_V_TYPE);
 	type_opt->answer     = "point,line,boundary,centroid,area,face" ;
 	type_opt->options    = "point,line,boundary,centroid,area,face" ;
-	type_opt->description= "Type" ;
 	
 	display_opt = G_define_option() ;
 	display_opt->key        = "display" ;
