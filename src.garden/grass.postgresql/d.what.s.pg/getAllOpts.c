@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include "gis.h"
 #include "infx.h"
-
+#include "glocale.h"
 
 
 int getAllOpts(argc, argv)
@@ -33,35 +33,35 @@ int getAllOpts(argc, argv)
 	keytable->type       = TYPE_STRING ;
 	keytable->required   = YES  ;
 	keytable->multiple   = NO ;
-	keytable->description= "Name of the table with X,Y coord.:" ;
+	keytable->description= _("Name of the table with X,Y coord.:") ;
 
 	xcol = G_define_option() ;
 	xcol->key        = "xcol" ;
 	xcol->type       = TYPE_STRING ;
 	xcol->required   = YES  ;
 	xcol->multiple   = NO ;
-	xcol->description= "X coord. (E/W) column:" ;
+	xcol->description= _("X coord. (E/W) column:") ;
 
 	ycol = G_define_option() ;
 	ycol->key        = "ycol" ;
 	ycol->type       = TYPE_STRING ;
 	ycol->required   = YES  ;
 	ycol->multiple   = NO ;
-	ycol->description= "Y coord. (N/S) column:" ;
+	ycol->description= _("Y coord. (N/S) column:") ;
 
 	xpos = G_define_option() ;
 	xpos->key        = "xpos" ;
 	xpos->type       = TYPE_STRING ;
 	xpos->required   = NO  ;
 	xpos->multiple   = NO ;
-	xpos->description= "X coord. (E/W) of search:" ;
+	xpos->description= _("X coord. (E/W) of search:") ;
 
 	ypos = G_define_option() ;
 	ypos->key        = "ypos" ;
 	ypos->type       = TYPE_STRING ;
 	ypos->required   = NO  ;
 	ypos->multiple   = NO ;
-	ypos->description= "Y coord. (N/S) of search:" ;
+	ypos->description= _("Y coord. (N/S) of search:") ;
 
 
 	distance = G_define_option() ;
@@ -69,13 +69,13 @@ int getAllOpts(argc, argv)
 	distance->type       = TYPE_STRING ;
 	distance->required   = YES  ;
 	distance->multiple   = NO ;
-	distance->description= "Radius of cursor:" ;
+	distance->description= _("Radius of cursor:") ;
 
 	hv = G_define_option() ;
 	hv->key        = "hv" ;
 	hv->type       = TYPE_STRING ;
 	hv->answer     = "v" ;
-	hv->description= "DB output type - [v(ert)/h(oriz)]:";
+	hv->description= _("DB output type - [v(ert)/h(oriz)]:");
 
 
 
@@ -119,4 +119,3 @@ int getAllOpts(argc, argv)
         return stat ;
 
 }
-

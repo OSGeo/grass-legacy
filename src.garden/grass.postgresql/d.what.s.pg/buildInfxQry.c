@@ -9,8 +9,7 @@ char* buildInfxQry(ktab,ycol, xcol, dist)
 
 
            sprintf(SQL_stmt, 
-          "SELECT * from %s where 
-            point(%s,%s) ",ktab->answer,
+          "SELECT * from %s where point(%s,%s)",ktab->answer,
             xcol->answer,ycol->answer);
 	/* use Postgres graphic operators 
 	     @ operator test point in box 

@@ -30,6 +30,8 @@
 #include <string.h>
 #include "gis.h"
 #include "infx.h"
+#include "glocale.h"
+
 #define MAIN
 
 
@@ -42,6 +44,12 @@ char **argv ;
     int i,selPassed;
     int stat = 0 ;
 
+#ifdef HAVE_LIBINTL_H
+  setlocale (LC_MESSAGES, "");
+  bindtextdomain (PACKAGE, LOCALEDIR);
+  textdomain (PACKAGE);
+#endif
+
 	selPassed = 0;
 
 
@@ -51,7 +59,7 @@ char **argv ;
 	/* Check DATABASE env variable */
         if ((dbname=G__getenv("PG_DBASE")) == NULL) {
             fprintf(stderr,
-                  "Please run g.select.pg to identify a current database.\n");
+                  _("Please run g.select.pg to identify a current database.\n"));
 	    exit(-1);
            }
 
