@@ -9,8 +9,8 @@
  *
  *   returns:    1  if name is OK
  *              -1  if name does not start with letter A..Za..z
- *                  or if name does not continue with A..Za..z0..9_
- *                  Rule:  [A-Za-z][A-Za-z0-9_]*
+ *                  or if name does not continue with A..Za..z0..9_@
+ *                  Rule:  [A-Za-z][A-Za-z0-9_@]*
  **********************************************************************/
 
 int Vect_legal_filename (char *s)
@@ -31,7 +31,7 @@ int Vect_legal_filename (char *s)
     }
 
     for (s++ ; *s; s++)
-	if (! ((*s >= 'A' && *s <= 'Z') || (*s >= 'a' && *s <= 'z') || (*s >= '0' && *s <= '9') || *s == '_' ) ) {
+	if (! ((*s >= 'A' && *s <= 'Z') || (*s >= 'a' && *s <= 'z') || (*s >= '0' && *s <= '9') || *s == '_' || *s == '@' ) ) {
 		fprintf(stderr, _("Illegal vector map name <%s>. Character <%c> not allowed.\n"), buf, *s);
 	    return -1;
 	}
