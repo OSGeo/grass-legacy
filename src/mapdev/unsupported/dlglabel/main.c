@@ -17,7 +17,7 @@ main(argc, argv)
 	setbuf(stdout, 0) ;
 
 /* Show advertising */
-	G_gisinit("dlglabel");
+	G_gisinit(argv[0]) ;
 	clear_screen() ;
 	printf("\n\n   DLG LABEL FACILITY\n") ;
 
