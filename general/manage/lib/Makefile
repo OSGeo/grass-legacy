@@ -8,6 +8,7 @@ LIB_OBJS = add_elem.o ask.o copyfile.o do_copy.o do_list.o do_remove.o \
            show_elem.o sighold.o
 
 EXTRA_INC = -I ../ $(VECT_INC)
+EXTRA_CFLAGS = $(VECT_CFLAGS)
 DEPENDENCIES = $(GISDEP) $(VECTDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
