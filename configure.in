@@ -56,16 +56,14 @@ AC_SUBST(BINDIR)
 
 # Set SRCDIR and DSTDIR
 
+AC_PATH_PROG(pwd, pwd, pwd)
+
 AC_MSG_CHECKING(for source directory)
 
-if echo "$srcdir" | grep '^/' &>/dev/null ; then
-  SRCDIR=$srcdir
+if test -z "$srcdir" ; then
+  SRCDIR=`pwd`
 else
-  if test -z "$srcdir" -o "$srcdir" = "." ; then
-    SRCDIR=`pwd`
-  else
-    SRCDIR=`pwd`/$srcdir
-  fi
+  SRCDIR=`(cd "$srcdir" ; $pwd)`
 fi
 
 AC_MSG_RESULT("$SRCDIR")
