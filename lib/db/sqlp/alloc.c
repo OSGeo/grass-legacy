@@ -100,6 +100,10 @@ int sqpFreeStmt(SQLPSTMT *st)
     st->nVal = 0;
 
     free (st->orderCol);
+
+    /* Nodes (where) */
+    if ( st->upperNodeptr )
+	sqpFreeNode ( st->upperNodeptr );
     
     free ( st );
     return (1);

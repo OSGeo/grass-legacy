@@ -1,10 +1,6 @@
 /* SQL Parser */
 
 /* KEYWORD OPS */
-#define SQLP_OP   1
-#define SQLP_AND  2
-#define SQLP_OR   3
-#define SQLP_NOT  4
 
 /* SQL COMMANDS */
 #define SQLP_CREATE 1
@@ -16,25 +12,32 @@
 #define SQLP_ADD_COLUMN 7
 
 /* SQL OPERATORS */
-#define SQLP_EQ 1    /* =  */
-#define SQLP_LT 2    /* <  */
-#define SQLP_LE 3    /* <= */
-#define SQLP_GT 4    /* >  */
-#define SQLP_GE 5    /* >= */
-#define SQLP_NE 6    /* <> */
-#define SQLP_ADD 7    /* + */
-#define SQLP_SUBTR 8    /* - */
-#define SQLP_MLTP 9    /* * */
-#define SQLP_DIV 10    /* / */
-#define SQLP_MTCH 11    /* ~ */
+  /* Arithmetical */
+#define SQLP_ADD   1    /* + */
+#define SQLP_SUBTR 2    /* - */
+#define SQLP_MLTP  3    /* * */
+#define SQLP_DIV   4    /* / */
 
-/* SQL VALUE TYPES, NOT COLUMN TYPES -
--do not change these! leval/reval =2 or .5 for int/double compat.*/
-#define SQLP_UNKNOWN 0x00 /* UNKNOWN TYPE */ 
-#define SQLP_S 0x01 /* string */ 
-#define SQLP_I 0x04 /* integer */
-#define SQLP_D 0x08 /* float */
-#define SQLP_COL 0x0C /* just column */
+  /* Comparison */
+#define SQLP_EQ   11    /* =  */
+#define SQLP_LT   12    /* <  */
+#define SQLP_LE   13    /* <= */
+#define SQLP_GT   14    /* >  */
+#define SQLP_GE   15    /* >= */
+#define SQLP_NE   16    /* <> */
+#define SQLP_MTCH 17    /* ~ */
+
+   /* Logical */
+#define SQLP_AND  21
+#define SQLP_OR   22
+#define SQLP_NOT  23
+
+/* SQL VALUE TYPES, NOT COLUMN TYPES */
+#define SQLP_NULL 1 /* value NULL -> unknown type */ 
+#define SQLP_S    2 /* string */ 
+#define SQLP_I    3 /* integer */
+#define SQLP_D    4 /* float */
+#define SQLP_BOOL 5 /* used only for type of expression */
 
 /* SQL COLUMN TYPES */
 #define SQLP_VARCHAR 1 
@@ -45,61 +48,28 @@
 #define SQLP_MAX_TABLE  200  
 #define SQLP_MAX_ERR    500  
 
-typedef enum NodeTag
-{
-	T_A_Expr = 700,
-	T_ArithmExpr,
-	T_ArithmValue
-} NodeTag;
-
-typedef struct Node
-{
-	NodeTag		type;
-} Node;
-
-typedef struct A_Expr
-{
-	NodeTag		type;
-	int		oper;			/* type of operation (OP,OR,AND,NOT) */
-	int	        opname;			/* name of operator */
-	Node	   *lexpr;			/* left argument */
-	Node	   *rexpr;			/* right argument */
-} A_Expr;
-
-typedef struct ArithmExpr
-{
-	NodeTag		type;
-	int		oper;			/* type of operation (OP,OR,AND,NOT) */
-	int	        opname;			/* name of operator */
-	Node	   *lexpr;			/* left argument */
-	Node	   *rexpr;			/* right argument */
-} ArithmExpr;
-
-typedef struct ArithmValue
-{
-	NodeTag		type;
-	int		vtype;			/* type of operation (OP,OR,AND,NOT) */
-	char 		*s;
-	int		i;
-	double		d;
-} ArithmValue;
-
-#define nodeTag(nodeptr)		(((Node*)(nodeptr))->type)
-
-#define makeNode(_type_)		((_type_ *) newNode(sizeof(_type_),T_##_type_))
-#define NodeSetTag(nodeptr,t)	(((Node*)(nodeptr))->type = (t))
-
-#define IsA(nodeptr,_type_)		(nodeTag(nodeptr) == T_##_type_)
-
+/* Condition node */
+#define SQLP_NODE_COLUMN     1
+#define SQLP_NODE_VALUE      2
+#define SQLP_NODE_EXPRESSION 3
 
 typedef struct
 {
-    int    type;
-    char   *s;
+    int    type; /* SQLP_S, SQLP_I, SQLP_D, SQLP_NULL */
+    char   *s; /* pointer to string or NULL */
     int    i;
     double d;
-    int    is_null;
 } SQLPVALUE;
+
+typedef struct sqlpnode 
+{
+    int node_type;    /* Node type: SQLP_NODE_COLUMN, SQLP_NODE_VALUE, SQLP_NODE_EXPRESSION */
+    int oper;         /* Operator code */
+    struct sqlpnode *left;   /* left argument, sometimes NULL */
+    struct sqlpnode *right;  /* right argument, sometimes NULL*/
+    char *column_name;
+    SQLPVALUE value;
+} SQLPNODE;
 
 typedef struct
 {
@@ -117,7 +87,7 @@ typedef struct
     SQLPVALUE *Val;    /* values */
     int	      aVal; 	
     int	      nVal;
-    Node      *upperNodeptr;
+    SQLPNODE  *upperNodeptr;
     char      *orderCol;  /* column name which should be used for sorting (ORDER BY) or NULL (no sorting) */
 } SQLPSTMT;
 
@@ -127,6 +97,8 @@ int     yyparse();
 int     yywrap();
 
 int sqpSaveStr(SQLPVALUE *st, char *c);
+void sqpInitValue ( SQLPVALUE *val);
+void sqpCopyValue ( SQLPVALUE *from, SQLPVALUE *to);
 
 SQLPSTMT *sqpInitStmt( void ); 
 int sqpFreeStmt(SQLPSTMT *st);
@@ -136,20 +108,24 @@ int sqpAllocVal(SQLPSTMT *st, int n );
 int sqpAllocCom(SQLPSTMT *st, int n );
 int sqpInitParser(SQLPSTMT *st);
 
+
 void sqpCommand( int command );
 void sqpTable( char *table );
 void sqpColumn( char *column );
 void sqpColumnDef( char *column, int type, int width, int decimals );
-void sqpValue( char *strval, int intval, double dblval, int is_null, int type );
-void sqpAssignment( char *column, char *strval, int intval, double dblval, int is_null, int type );
+void sqpValue( char *strval, int intval, double dblval, int type );
+void sqpAssignment( char *column, char *strval, int intval, double dblval, int type );
 void sqpOrderColumn( char *col );
-int translate_Operator( char *oper);
+int sqpOperatorCode( char *);
+char *sqpOperatorName( int );
 
-Node *makeA_Expr(int oper, int opname, Node *lexpr, Node *rexpr);
-Node *makeArithmExpr(int opname, Node *lexpr, Node *rexpr);
-Node *makeArithmValue( char *strval, int intval, double dblval, int type, int factor );
+SQLPNODE *sqpNewNode ( void );
 
-static Node *newNode(int size, NodeTag tag);
+SQLPNODE *sqpNewExpressionNode (int oper, SQLPNODE *left, SQLPNODE *right);
+SQLPNODE *sqpNewColumnNode ( char *name );
+SQLPNODE *sqpNewValueNode (char *strval, int intval, double dblval, int type);
+
+void sqpFreeNode ( SQLPNODE * );
 
 #ifdef SQLP_MAIN
 SQLPSTMT *sqlpStmt;

@@ -21,6 +21,42 @@
 #include "sqlp.h"
 #include <stdio.h>
 
+static void print_node ( SQLPNODE *nptr, int level) 
+{
+    int i;
+
+    for ( i = 0; i < level ; i++ ) {
+	fprintf( stderr, "  ");
+    }
+
+    if ( nptr->node_type == SQLP_NODE_EXPRESSION ) {
+	fprintf( stderr, "op: %s\n", sqpOperatorName(nptr->oper) ); 
+	if ( nptr->left ) {
+	    print_node ( nptr->left, level+1 );
+	}
+	if ( nptr->right ) {
+            print_node ( nptr->right, level+1 );
+	}
+    } else if ( nptr->node_type == SQLP_NODE_VALUE ) {
+	switch ( nptr->value.type ) {
+	    case SQLP_NULL:
+		fprintf( stderr, "val: NULL\n" ); 
+		break;
+	    case SQLP_D:
+	        fprintf( stderr, "val: %e\n", nptr->value.d); 
+	        break;
+	    case SQLP_I:
+	        fprintf( stderr, "val: %d\n", nptr->value.i); 
+	        break;
+	    case SQLP_S:
+	        fprintf( stderr, "val: %s\n", nptr->value.s); 
+	        break;
+	}
+    } else { /* SQLP_NODE_COLUMN */
+        fprintf( stderr, "col: %s\n", nptr->column_name); 
+    }
+}
+
 int sqpPrintStmt(SQLPSTMT *st)
 {
     int i;
@@ -93,26 +129,29 @@ int sqpPrintStmt(SQLPSTMT *st)
     for (i=0; i < st->nVal; i++)
       {	    
         fprintf( stderr, "VALUE %2d ", i+1);
-	if ( sqlpStmt->Val[i].is_null ) {
-            fprintf( stderr, "(unknown) : null\n" );
-	} else { 
-	    switch ( sqlpStmt->Val[i].type )
-	      {
-		case (SQLP_S):
-		    fprintf( stderr, "(string) : %s\n", sqlpStmt->Val[i].s );
-		    break;			
-		case (SQLP_I):
-		    fprintf( stderr, "(integer): %d\n", sqlpStmt->Val[i].i );
-		    break;			
-		case (SQLP_D):
-		    fprintf( stderr, "(float)  : %f\n", sqlpStmt->Val[i].d );
-		    break;			
-		default:
-		    fprintf( stderr, "unknown\n" );
-		    break;			
-	      }
-	}
+	switch ( sqlpStmt->Val[i].type )
+	  {
+	    case (SQLP_S):
+		fprintf( stderr, "(string) : %s\n", sqlpStmt->Val[i].s );
+		break;			
+	    case (SQLP_I):
+		fprintf( stderr, "(integer): %d\n", sqlpStmt->Val[i].i );
+		break;			
+	    case (SQLP_D):
+		fprintf( stderr, "(float)  : %f\n", sqlpStmt->Val[i].d );
+		break;			
+	    case (SQLP_NULL):
+		fprintf( stderr, "(unknown) : null\n" );
+	    default:
+		fprintf( stderr, "unknown\n" );
+		break;			
+	  }
       }
+
+    if ( sqlpStmt->upperNodeptr ) {
+        fprintf( stderr, "WHERE:\n");
+	print_node ( sqlpStmt->upperNodeptr, 0 );
+    }
 
     if ( sqlpStmt->command == SQLP_SELECT )
         fprintf( stderr, "ORDER BY: %s\n", sqlpStmt->orderCol );

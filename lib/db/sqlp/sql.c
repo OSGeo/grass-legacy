@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include <assert.h>
 #include "sqlp.h"
 
@@ -37,6 +38,30 @@ int sqpSaveStr(SQLPVALUE *val, char *c )
     strcpy ( val->s, c );
 
     return (1);
+}
+
+void
+sqpInitValue ( SQLPVALUE *val)
+{
+    val->type = SQLP_NULL;
+    val->s = NULL;
+    val->i = 0;
+    val->d = 0.0;
+}
+
+void
+sqpCopyValue ( SQLPVALUE *from, SQLPVALUE *to)
+{
+    to->type = from->type;
+    
+    if ( to->s )
+	free ( to->s );
+	
+    if ( from->s ) 
+        to->s = strdup ( from->s );
+    
+    to->i = from->i;
+    to->d = from->d;
 }
     
 int sqpInitParser(SQLPSTMT *st)
@@ -93,18 +118,22 @@ void sqpColumnDef( char *col, int type, int width, int decimals )
     return;
 }
 
-void sqpValue( char *strval, int intval, double dblval, int is_null, int type )
+void sqpValue( char *strval, int intval, double dblval, int type )
 {
     int i;
     
     i = sqlpStmt->nVal;
-    sqpAllocVal(sqlpStmt, i + 1 );
+
     /* allocate space for cols because if in INSERT cols were not
      * specified array for ColNum would not be allocated */
     sqpAllocCol(sqlpStmt, i + 1 );
+
+    sqpAllocVal(sqlpStmt, i + 1 );
+    sqlpStmt->Val[i].s = NULL;
+    sqlpStmt->Val[i].i = 0;    /* not necessay I think */
+    sqlpStmt->Val[i].d = 0.0;  /* not necessay I think */
     
     sqlpStmt->Val[i].type = type;
-    sqlpStmt->Val[i].is_null = is_null;
     switch ( type  )
       {
         case (SQLP_S):
@@ -116,24 +145,28 @@ void sqpValue( char *strval, int intval, double dblval, int is_null, int type )
         case (SQLP_D):
             sqlpStmt->Val[i].d = dblval;
             break;	
-	/* SQLP_UNKNOWN if is_null, nothing to do */
+	/* SQLP_NULL, nothing to do */
       }
 
     sqlpStmt->nVal++;
     return;
 }
 
-void sqpAssignment( char *col, char *strval, int intval, double dblval, int is_null, int type )
+void sqpAssignment( char *col, char *strval, int intval, double dblval, int type )
 {
     int i;
     
     i = sqlpStmt->nCol;
+
     sqpAllocCol(sqlpStmt, i + 1 );
-    sqpAllocVal(sqlpStmt, i + 1 );
-    
     sqpSaveStr ( &(sqlpStmt->Col[i]), col );
+
+    sqpAllocVal(sqlpStmt, i + 1 );
+    sqlpStmt->Val[i].s = NULL;
+    sqlpStmt->Val[i].i = 0;    /* not necessay I think */
+    sqlpStmt->Val[i].d = 0.0;  /* not necessay I think */
+
     sqlpStmt->Val[i].type = type;
-    sqlpStmt->Val[i].is_null = is_null;
     switch ( type  )
       {
         case (SQLP_S):
@@ -145,7 +178,7 @@ void sqpAssignment( char *col, char *strval, int intval, double dblval, int is_n
         case (SQLP_D):
             sqlpStmt->Val[i].d = dblval;
             break;	
-	/* SQLP_UNKNOWN if is_null, nothing to do */
+	/* SQLP_NULL, nothing to do */
       }
 
     sqlpStmt->nCol++;
@@ -160,56 +193,93 @@ void sqpOrderColumn( char *col )
     return;
 }
 
-
-Node *
-makeA_Expr(int oper, int opname, Node *lexpr, Node *rexpr)
+/* Create and init new node */
+SQLPNODE *sqpNewNode ( void ) 
 {
-	A_Expr *a = makeNode(A_Expr);
-	a->oper = oper;
-	a->opname = opname;
-	a->lexpr = lexpr;
-	a->rexpr = rexpr;
-	return (Node *)a;
+    SQLPNODE *np;
+
+    np = (SQLPNODE *) calloc ( 1, sizeof (SQLPNODE) );
+    return np;
 }
 
-Node *
-makeArithmExpr(int opname, Node *lexpr, Node *rexpr)
+SQLPNODE *
+sqpNewExpressionNode (int oper, SQLPNODE *left, SQLPNODE *right)
 {
-	ArithmExpr *a = makeNode(ArithmExpr);
-	a->oper = SQLP_OP;
-	a->opname = opname;
-	a->lexpr = lexpr;
-	a->rexpr = rexpr;
-	return (Node *)a;
+    SQLPNODE *np;
+
+    np = sqpNewNode ();
+
+    np->node_type = SQLP_NODE_EXPRESSION;
+    np->oper = oper;
+    np->left = left;
+    np->right = right;
+
+    return np;
 }
 
-Node *
-makeArithmValue(char *strval, int intval, double dblval, int type, int factor)
+SQLPNODE *
+sqpNewColumnNode ( char *name )
 {
-	ArithmValue *a = makeNode(ArithmValue);
-	a->vtype = type;
-	a->s = strval;
-	a->i = factor * intval;
-	a->d = (double) (factor * dblval);	
-	return (Node *)a;
+    SQLPNODE *np;
+
+    np = sqpNewNode ();
+
+    np->node_type = SQLP_NODE_COLUMN;
+    np->column_name = strdup ( name );
+
+    return np;
 }
 
-static Node *
-newNode(int size, NodeTag tag)
+SQLPNODE *
+sqpNewValueNode (char *strval, int intval, double dblval, int type)
 {
-	Node	   *newNode;
+    SQLPNODE *np;
 
-	assert(size >= sizeof(Node));		/* need the tag, at least */
+    np = sqpNewNode ();
 
-	newNode = (Node *) malloc(size);
-	memset(newNode, '\0', size);
-	newNode->type = tag;
-	return newNode;
+    np->node_type = SQLP_NODE_VALUE;
+
+    np->value.type = type;
+    if ( strval )
+        np->value.s = strdup ( strval );
+    np->value.i = intval;
+    np->value.d = dblval;
+
+    return np;
+}
+
+void 
+sqpFreeNode ( SQLPNODE *np ) 
+{
+    if ( !np ) return;
+
+    if ( np->left )
+	sqpFreeNode ( np->left );
+
+    if ( np->right )
+	sqpFreeNode ( np->right );
+
+    if ( np->column_name )
+	free ( np->column_name );
+
+    if ( np->value.s )
+	free ( np->value.s );
+
+    free ( np );
 }
 
 int
-translate_Operator( char *oper)
+sqpOperatorCode( char *oper)
 {
+    char *tmp, *ptr;
+
+    /* Convert to lower case */
+    tmp = strdup ( oper );
+    ptr = tmp;
+    while ( *ptr ) {
+	*ptr = tolower ( *ptr );
+	ptr++;
+    }
 
     if ( strcmp ( oper, "=") == 0 )
 	return SQLP_EQ;
@@ -225,6 +295,72 @@ translate_Operator( char *oper)
 	return SQLP_NE;
     else if ( strcmp ( oper, "~") == 0 )
 	return SQLP_MTCH;
+    else if ( strcmp ( oper, "+") == 0 )
+	return SQLP_ADD;
+    else if ( strcmp ( oper, "-") == 0 )
+	return SQLP_SUBTR;
+    else if ( strcmp ( oper, "*") == 0 )
+	return SQLP_MLTP;
+    else if ( strcmp ( oper, "/") == 0 )
+	return SQLP_DIV;
+    else if ( strcmp ( oper, "and") == 0 )
+	return SQLP_AND;
+    else if ( strcmp ( oper, "or") == 0 )
+	return SQLP_OR;
+    else if ( strcmp ( oper, "not") == 0 )
+	return SQLP_NOT;
 
-    else return 0;
+    free ( tmp );
+    
+    return 0;
+}
+
+char *
+sqpOperatorName( int oper )
+{
+    switch ( oper ) { 
+	case SQLP_EQ:
+	    return "=";
+	    break;
+	case SQLP_LT:
+	    return "<";
+	    break;
+	case SQLP_LE:
+	    return "<=";
+	    break;
+	case SQLP_GT:
+	    return ">";
+	    break;
+	case SQLP_GE:
+	    return ">=";
+	    break;
+	case SQLP_NE:
+	    return "<>";
+	    break;
+	case SQLP_MTCH:
+	    return "~";
+	    break;
+	case SQLP_ADD:
+	    return "+";
+	    break;
+	case SQLP_SUBTR:
+	    return "-";
+	    break;
+	case SQLP_MLTP:
+	    return "*";
+	    break;
+	case SQLP_DIV:
+	    return "/";
+	    break;
+	case SQLP_AND:
+	    return "AND";
+	    break;
+	case SQLP_OR:
+	    return "OR";
+	    break;
+	case SQLP_NOT:
+	    return "NOT";
+	    break;
+    }
+    return "?";
 }
