@@ -1,0 +1,54 @@
+                  EXTRACTING DIGITAL ELEVATION DATA
+
+Elevation data are used in a variety of GRASS applications.  Alone,
+they can be used to generate maps of slope, \aspect\, and 3-D
+graphics. They can also be used in combination with other data types
+as, for example, with vegetation or soils to delineate species' habitats
+or correlate changes in vegetation or soil types with elevation.  Other
+applications include hydrologic modeling, soil erosion evaluation and
+prediction, and line of sight analyses.  Before such data can be used,
+however, they must be converted to a \raster\ format usable within GRASS.
+\"DTED and DEM Elevation Data Extraction"\ describes specific procedures
+by which users can convert digital elevation data produced by the
+Defense Mapping Agency (\DMA\) and the U.S. Geological Survey (USGS)
+into GRASS raster format.  It also details processes for generating
+slope and aspect raster map layers from the imported elevation data,
+and for rescaling these elevation data.
+
+See also \"Options for Acquiring Elevation Data"\ for a more
+detailed look at how elevation data are produced and the forms in which
+they are available.
+
+The U.S. Geological Survey (USGS) and the Defense Mapping Agency (DMA)
+distribute digital elevation data at several resolutions and in
+different tape formats.  These data are referred to as digital elevation
+models (DEMs) and digital terrain elevation data (DTED).  The GRASS
+programs listed below extract this data from 1/2" magnetic tape, list
+tape contents and rotate the data.
+
+            \-  m.examine.tape \      \-  m.dted.examine \
+            \-  m.dem.examine \       \-  m.dted.extract \
+            \-  m.dem.extract \       \-  m.rot90 \
+            \-  m.dmaUSGSread \     
+
+For more information on a specific command, select a command and press
+ESC.
+
+For more information on the different digital elevation data products,
+production methods, and distribution information available from the
+USGS, DMA or private comapanies, select an area from the list below.
+
+   1)  \Elevation Data Distributed by the USGS\
+   2)  \Elevation Data Distributed by the DMA\
+   3)  \Elevation Data Distributed by Private Companies\
+
+
+
+
+
+
+
+
+
+
+
