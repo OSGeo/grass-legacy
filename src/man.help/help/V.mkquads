@@ -1,0 +1,3 @@
+Creates a quads vector (digit) map
+  and/or a sites file containing the corner coordinates of each quad
+  and/or GRASS windows associated with each of the quads created.
