@@ -30,11 +30,7 @@ HOME = $(BIN_ALPHA_CMD)
 
 
 $(HOME)/$(PROG): $(OBJ) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB) $(DATETIMELIB)
 
 $(LIBES): #
 
-$(OBJ): glob.h proto.h
-
-proto:
-	make.proto *.c > proto.h
