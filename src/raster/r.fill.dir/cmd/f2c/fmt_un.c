@@ -10,12 +10,15 @@ main(int argc, char **argv)
 	int	nl,ns,m,m2;
 	FILE	*fp, *fp2;
 
+#if 0
 	if(argc < 2){
 		fprintf(stderr, "fmt_un input_file\n");
 		exit(1);
 	}
-
 	strcpy(tfile, argv[1]);
+#endif
+
+	scanf("%s", tfile);
 	if(!(fp = fopen(tfile, "r"))){
 		fprintf(stderr, "%s: No such file or open failed\n", tfile);
 		exit(1);
