@@ -5,6 +5,8 @@ DEPLIBS = $(D_DEP) $(DISPLAYDEP) $(RASTERDEP) $(GISDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
+HOME=$(BIN_CMD)
+
 PGM=d.frame
 
 default: \
@@ -12,7 +14,8 @@ default: \
 	$(ETC)/frame.select \
 	$(ETC)/frame.dumper \
 	$(ETC)/frame.list \
-	$(BIN_CMD)/$(PGM)
+	$(HOME)/$(PGM) \
+	html
 
 $(ETC)/frame.create: $(OBJDIR)/create.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/create.o $(LIBES) $(MATHLIB) $(XDRLIB)
@@ -26,6 +29,17 @@ $(ETC)/frame.dumper: $(OBJDIR)/dumper.o $(DEPLIBS)
 $(ETC)/frame.list: $(OBJDIR)/list.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/list.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(BIN_CMD)/$(PGM): $(OBJDIR)/frame.o $(DEPLIBS)
+$(HOME)/$(PGM): $(OBJDIR)/frame.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/frame.o $(LIBES) $(MATHLIB) $(XDRLIB)
 	@test -x $(BIN)/d.frame || ln $(ETC)/front.end $(BIN)/d.frame
+
+PROGRAMS = d.frame
+
+html:
+	for prog in $(PROGRAMS) ; do \
+		GRASS_FAKE_START=1 GISBASE=$(GISBASE) $(ETC)/bin/cmd/$$prog --html-description | grep -v '</body>' > $$prog.tmp ; true ; \
+		test ! -f $$prog.html || ( cat $$prog.html >> $$prog.tmp ) ; \
+		echo "</body></html>" >> $$prog.tmp ; \
+		mkdir -p $(GISBASE)/docs/html ; \
+		mv $$prog.tmp $(GISBASE)/docs/html/$$prog.html ; \
+	done
