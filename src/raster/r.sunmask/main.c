@@ -2,9 +2,7 @@
 #include <math.h>
 #include "gis.h"
 
-main(argc, argv) 
-int   argc;
-char *argv[];
+int main(int argc, char *argv[]) 
 {
     char *mapset;
     struct Cell_head window;
@@ -88,7 +86,7 @@ char *argv[];
     sscanf(opt3->answer,"%lf",&dalti);
     sscanf(opt4->answer,"%lf",&dazi);
     sscanf(opt5->answer,"%lf",&zmult);
-    name=opt1->answer;
+    name = opt1->answer;
     name2= opt2->answer;
 
 
@@ -100,7 +98,6 @@ char *argv[];
  
     if((output = G_open_cell_new(new_name=name2)) == NULL) 
       die ("cannot open output file ");
-
 
 /*
     if ((G_read_range(name, mapset,&range))<0)
