@@ -51,15 +51,16 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag)
 	{
 		prj = G_database_projection_name();
 		if (!prj) prj = "** unknown **";
-                datum = G_database_datum_name();
-		if (!datum) datum = "** unknown (default: WGS84) **";
-		ellps = G_database_ellipse_name();
-		if (!ellps) ellps = "** unknown (default: WGS84) **";
 		fprintf (stdout, "%-11s %d (%s)\n","projection:", window->proj, prj);
 		fprintf (stdout, "%-11s %d\n","zone:",  window->zone);
 		/* don't print datum/ellipsoid in XY-Locations */
 		if (window->proj != 0) 
 		{
+		        datum = G_database_datum_name();
+		        if (!datum) datum = "** unknown (default: WGS84) **";
+		        ellps = G_database_ellipse_name();
+		        if (!ellps) ellps = "** unknown (default: WGS84) **";
+
 			fprintf (stdout, "%-11s %s\n","datum:", datum);
 			fprintf (stdout, "%-11s %s\n","ellipsoid:", ellps);
 		}
