@@ -1,0 +1,47 @@
+
+I have made some handy tools for grass. They all have to do
+something with displaying maps:
+
+d.area:     Display a vectormap as filled polygons in one color
+d.area.lu:  Display a vectormap as filled polygons in rastercolors,
+            Tip: Rasterize the vectormap, edit the colortable
+            (using d.colors, r.colors e.g.), copy the colortable
+            in $LOCATION/colr to another filename in the same
+            direcory, delete the rastermap, run the program
+d.myzoom:   Same as d.zoom but without annoying dialog boxes
+d.pan:      Shift entire region by pointing at a new region center.
+d.myscale:  Display a barscale with dragoption with the mouse.
+            (the scale itself has black and white boxes)
+d.site.labels: Display sitelabels. either display of all sitelabels
+            or by pointing at individual sites (with drag option)
+d.v.zoom:   Zoom in to the bounding box of a mouse-selectable polygon
+            in a vectormap.
+
+I have put a file on moon in the incoming directory, called
+ARCHIS.prgs.tar.Z, instalation is very simple, get the file from
+moon, type:
+
+   cd $GISBASE/src.alpha/display
+   zcat ARCHIS.prgs.tar.Z | tar xvf -
+
+For each program:
+
+   cd progname/cmd
+   gmake4.1
+
+don't forget to run MAKELINKS.head
+
+The programs do not have a manpage yet, since I only use them in
+scripts. Hope you enjoy them.
+I also modified d.vect, with an option to specify both color
+and linewidth and made a program called d.vect.lu, with the
+possibility to display LINE vectormaps in category dependant colors
+and linewidth. These latter programs require modification of the
+raster library and the XDRIVER (or other drivers). I will make
+these programs available as soon as linewidth is a standard option
+in the raster library.
+
+Ronald Wiemer
+ARCHIS, Amersfoort
+The Netherlands
+
