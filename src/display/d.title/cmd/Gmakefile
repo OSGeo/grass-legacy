@@ -4,7 +4,7 @@ OFILES = \
     main.o\
     normal.o
 
-LIBES=$(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
+LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB) 
 $(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 

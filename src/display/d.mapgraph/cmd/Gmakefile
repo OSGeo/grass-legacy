@@ -1,5 +1,5 @@
 PGM=d.mapgraph
-LIBES  = $(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
+LIBES  = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) 
 
 LIST = \
 	do_graph.o \
