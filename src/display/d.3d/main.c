@@ -1,7 +1,7 @@
 #include "gis.h"
 #define MAIN
 #include "options.h"
-/* 3d program gathers input for D3d which is then executed */
+/* 3d program gathers input for d.3d which is then executed */
 
 main(argc,argv) char *argv[];
 {
@@ -19,7 +19,7 @@ main(argc,argv) char *argv[];
 	printf("\nFirst enter the names of the maps to be used to") ;
 	printf("\nfor color and for elevation:\n\n") ;
 	mapset =
-		G_ask_cell_old("Enter raster file to be displayed: ", file) ;
+		G_ask_cell_old("Enter raster file to used for color: ", file) ;
 	if(mapset == NULL)
 		exit(0) ;
 	else
