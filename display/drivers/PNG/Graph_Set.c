@@ -18,116 +18,92 @@
 
 #include <string.h>
 #include <stdlib.h>
-#include <gd.h>
 
 #include "gis.h"
-#include "driverlib.h"
-#include "png.h"
+#include "pngdriver.h"
 
 char *file_name;
-FILE *output;
-gdImagePtr im;
 int currentColor;
-unsigned long *xpixels;
-int true_color=0;
+unsigned int *xpixels;
+int true_color;
 
-int Graph_Set (int argc, char **argv) 
+int width, height;
+unsigned int *grid;
+unsigned char palette[256][4];
+unsigned int transparent;
+
+static void 
+clear(int color)
 {
-    unsigned int bgcol;
-    char *p;
+	int n = width * height;
+	int i;
 
-    G_gisinit("PNG driver") ;
+	for (i = 0; i < n; i++)
+		grid[i] = color;
+}
 
-    /*
-     * open the output file
-     */
+int
+Graph_Set(int argc, char **argv)
+{
+	unsigned int bgcol;
+	char *p;
 
-    if (NULL != (p = getenv ("GRASS_PNGFILE"))) {
-        if (strlen(p) == 0) {
-            p = FILE_NAME;
-        }
-    } else {
-        p = FILE_NAME;
-    }
-    file_name = p;
+	G_gisinit("PNG driver") ;
 
-    output = fopen(file_name, "w");
-    if (output == NULL) {
-      fprintf(stderr,"PNG: couldn't open output file %s\n",file_name);
-      exit(1);
-    }
+	p = getenv("GRASS_PNGFILE");
+	if (!p || strlen(p) == 0)
+		p = FILE_NAME;
 
-    /*
-     * Creating the image
-     */
+	file_name = p;
 
-#ifdef HAVE_GDIMAGECREATETRUECOLOR
-    p = getenv("GRASS_TRUECOLOR");
-    if (p && strcmp(p, "TRUE") == 0) {
-	true_color = 1;
-	fprintf(stderr,"PNG: GRASS_TRUECOLOR status: TRUE\n");
-	im = gdImageCreateTrueColor(screen_right - screen_left, screen_bottom - screen_top);
-    }
-    else
-#endif
-    im = gdImageCreate(screen_right - screen_left, screen_bottom - screen_top);
-    if (! true_color)
-       fprintf(stderr,"PNG: GRASS_TRUECOLOR status: FALSE\n");
+	p = getenv("GRASS_TRUECOLOR");
+	true_color = p && strcmp(p, "TRUE") == 0;
 
-    NCOLORS = true_color ? (1<<24) : gdMaxColors;
+	fprintf(stderr,"PNG: GRASS_TRUECOLOR status: %s\n",
+		true_color ? "TRUE" : "FALSE");
 
-    InitColorTableFixed();
+	width = screen_right - screen_left;
+	height = screen_bottom - screen_top;
 
-    p = getenv("GRASS_BACKGROUNDCOLOR");
-    if (p && *p && sscanf(p, "%x", &bgcol) == 1) {
-	int r = (bgcol >> 16) & 0xff;
-	int g = (bgcol >>  8) & 0xff;
-	int b = (bgcol >>  0) & 0xff;
-	int color = _get_lookup_for_color(r, g, b);
+	grid = G_malloc(width * height * sizeof(unsigned int));
 
-	gdImageFilledRectangle(im, screen_left, screen_top,
-			       screen_right - screen_left,
-			       screen_bottom - screen_top,
-			       color);
-    }
-    else
-    {
-	int color = _get_lookup_for_color(255, 255, 255);
-	if ( strcmp(DEFAULT_FG_COLOR, "white") )
-		gdImageFilledRectangle(im, screen_left, screen_top,
-			       screen_right - screen_left,
-			       screen_bottom - screen_top,
-			       color);
-	   
-    }
+	NCOLORS = true_color ? (1<<24) : 256;
 
-    p = getenv("GRASS_TRANSPARENT");
-    if (p && strcmp(p, "TRUE") == 0) {
-	int color;
-#ifdef HAVE_GDIMAGECREATETRUECOLOR
-	if (true_color)
-	    color = gdTrueColorAlpha(0, 0, 0, gdAlphaTransparent);
-	else 
-#endif
+	InitColorTableFixed();
+
+	p = getenv("GRASS_BACKGROUNDCOLOR");
+	if (p && *p && sscanf(p, "%x", &bgcol) == 1)
 	{
-	    color = 216; /* first unused colour */
-	    gdImageColorTransparent(im, color);
+		int r = (bgcol >> 16) & 0xff;
+		int g = (bgcol >>  8) & 0xff;
+		int b = (bgcol >>  0) & 0xff;
+		int color = _get_lookup_for_color(r, g, b);
+
+		clear(color);
+	}
+	else
+	{
+		int color = (strcmp(DEFAULT_FG_COLOR, "white") == 0)
+			? _get_lookup_for_color(255, 255, 255)
+			: _get_lookup_for_color(0, 0, 0);
+
+		clear(color);
 	}
 
-	gdImageFilledRectangle(im, screen_left, screen_top,
-			       screen_right - screen_left,
-			       screen_bottom - screen_top,
-			       color);
-    }
 
-    /*
-     * Init finished
-     */
-    
-    fprintf(stdout, "PNG: collecting to file: %s,\n     GRASS_WIDTH=%d, GRASS_HEIGHT=%d\n",
-	   file_name, screen_right - screen_left, screen_bottom - screen_top);
+	p = getenv("GRASS_TRANSPARENT");
+	if (p && strcmp(p, "TRUE") == 0)
+	{
+		int color = true_color
+			? 0xff000000
+			: transparent;
 
-    fflush(stdout);
-    return 0;
+		clear(color);
+	}
+
+	fprintf(stderr, "PNG: collecting to file: %s,\n     GRASS_WIDTH=%d, GRASS_HEIGHT=%d\n",
+		file_name, width, height);
+
+	return 0;
 }
 
