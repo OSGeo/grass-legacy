@@ -27,36 +27,30 @@ geoline *Gv_load_vect(char *grassname, int *nlines)
     struct line_pnts *points;
     char            *mapset;
     geoline *top, *gln, *prev;
-    int np, ret, i, n, nl=0, polygon, area;
+    int np, i, n, nareas, nl=0, area, type, is3d;
     struct Cell_head  wind;
+    float vect[2][3];
 
     /* TODO: handle error messages */
 
-    if (NULL == (mapset = G_find_vector2(grassname,"")))
-    {
+    if (NULL == (mapset = G_find_vector2(grassname,""))) {
 	fprintf(stderr,"Can't find vector file %s.\n",grassname);
-	
 	return(NULL);
     }
 
-    if (1 > Vect_open_old (&map, grassname, mapset))
-    {
+    if (1 > Vect_open_old (&map, grassname, mapset)) {
 	fprintf(stderr,"Can't open vector file %s.\n",grassname);
-	
 	return(NULL);
     }
     
-    if (NULL == (top=gln=(geoline *)malloc(sizeof(geoline))))
-    {
+    if (NULL == (top=gln=(geoline *)malloc(sizeof(geoline)))) {
 	fprintf(stderr,"Can't malloc.\n");
-	
 	return(NULL);
     }
+    prev = top;
     
     #ifdef TRAK_MEM
-    {
     	Tot_mem+=sizeof(geoline);
-    }
     #endif
 
     points = Vect_new_line_struct ();
@@ -65,180 +59,160 @@ geoline *Gv_load_vect(char *grassname, int *nlines)
     Vect_set_constraint_region(&map,wind.north,wind.south,wind.east,wind.west,
 	                       PORT_DOUBLE_MAX, -PORT_DOUBLE_MAX);
 
-    /* Decide if lines or polygons */
-    /* TODO: this is far from optimal */
-    ret = Vect_read_next_line(&map, points, NULL);
-    if ( ret == GV_BOUNDARY && Vect_level(&map) >= 2 && Vect_is_3d(&map) ) {
-       	polygon = 1;
-    } else { 
-	polygon = 0;
-    }
+    is3d = Vect_is_3d ( &map );
     
-    Vect_rewind ( &map );
-    
-    if ( !polygon ) {
-	if (map.head.with_z == WITHOUT_Z)
-	{
-	    G_debug(3, "Vector 2D non polygon layer");
-	    while (-2 != (ret = Vect_read_next_line(&map, points, NULL)))
-	    {
-		G_debug(3, "read line 2d : type = %d", ret);
+    /* Read areas */
+    n = Vect_get_num_areas (&map);
+    nareas = 0;
+    G_debug(3, "Reading vector areas (nareas = %d)", n);
+    for ( area = 1; area <= n ; area++ ) {
+	G_debug(3, " area %d", area);
 
-		if ( ret & ( GV_LINE | GV_BOUNDARY ) )
-		{ 
-		    nl++;
-		    
-		    gln->dims = 2;
-		    gln->npts = np = points->n_points;
-	    
-		    if (NULL == (gln->p2=(Point2 *)calloc(np, sizeof(Point2))))
-		    {
-			fprintf(stderr,"Can't calloc.\n"); /* CLEAN UP */
-		    
-			return(NULL);
-		    }
-	
-		    #ifdef TRAK_MEM
-		    {
-			Tot_mem+=(np*sizeof(Point2));
-		    }
-		    #endif
+	Vect_get_area_points ( &map, area, points ); 
+	if ( points->n_points < 3 ) continue;
+	gln->type = OGSF_POLYGON;
+	gln->npts = np = points->n_points;
+        G_debug(3, "  np = %d", np);
 		
-		    for (i=0; i < np; i++)
-		    {
-			gln->p2[i][X] = points->x[i];
-			gln->p2[i][Y] = points->y[i];
-		    }
-		
-		    if (NULL == (gln->next=(geoline *)malloc (sizeof(geoline))))
-		    {
-			fprintf(stderr,"Can't malloc.\n"); /* CLEAN UP */
-		    
-			return(NULL);
-		    }
-
-		    #ifdef TRAK_MEM
-		    {
-			Tot_mem+=sizeof(geoline);
-		    }
-		    #endif
-		
-		    prev = gln;
-		    gln = gln->next;
-		}
+	if ( is3d ) { 
+	    gln->dims = 3; 
+	    if (NULL == (gln->p3=(Point3 *)calloc(np, sizeof(Point3)))) {
+		fprintf(stderr,"Can't calloc.\n"); /* CLEAN UP */
+		return(NULL);
 	    }
-	} 
-	else  /* vector is 3D > read with z coors to Point3 */
-	{
-	    G_debug(3, "Vector 3D non polygon layer");
-	    while (-2 != (ret = Vect_read_next_line(&map, points, NULL)))
-	    {
-		    
-		G_debug(3, "read line 3d : type = %d", ret);
-		
-		if ( ret & ( GV_LINE | GV_BOUNDARY ) )
-		{ 
-		    nl++;
-		    gln->dims = 3;
-		    gln->npts = np = points->n_points;
-	    
-		    if (NULL == (gln->p3=(Point3 *)calloc(np, sizeof(Point3))))
-		    {
-			fprintf(stderr,"Can't calloc.\n"); /* CLEAN UP */
-		    
-			return(NULL);
-		    }
-	
-		    #ifdef TRAK_MEM
-		    {
-			Tot_mem+=(np*sizeof(Point3));
-		    }
-		    #endif
-		
-		    for (i=0; i < np; i++)
-		    {
-			gln->p3[i][X] = points->x[i];
-			gln->p3[i][Y] = points->y[i];
-			gln->p3[i][Z] = points->z[i];
-		    }
-		
-		    if (NULL == (gln->next=(geoline *)malloc (sizeof(geoline))))
-		    {
-			fprintf(stderr,"Can't malloc.\n"); /* CLEAN UP */
-		    
-			return(NULL);
-		    }
-
-		    #ifdef TRAK_MEM
-		    {
-			Tot_mem+=sizeof(geoline);
-		    }
-		    #endif
-		
-		    prev = gln;
-		    gln = gln->next;
-		}
+	    #ifdef TRAK_MEM
+		Tot_mem+=(np*sizeof(Point3));
+	    #endif
+	} else {
+	    gln->dims = 2;
+	    if (NULL == (gln->p2=(Point2 *)calloc(np, sizeof(Point2)))) {
+		fprintf(stderr,"Can't calloc.\n"); /* CLEAN UP */
+		return(NULL);
+	    }
+	    #ifdef TRAK_MEM
+		Tot_mem+=(np*sizeof(Point2));
+	    #endif
+	}
+    
+	for (i=0; i < np; i++) {
+	    if ( is3d ) {
+		gln->p3[i][X] = points->x[i];
+		gln->p3[i][Y] = points->y[i];
+		gln->p3[i][Z] = points->z[i];
+	    } else {
+		gln->p2[i][X] = points->x[i];
+		gln->p2[i][Y] = points->y[i];
 	    }
 	}
-    } else { /* read polygons */
-	G_debug(3, "Vector polygon layer.");
-	n = Vect_get_num_areas (&map);
-	G_debug(3, " nareas = %d", n);
-	for ( area = 1; area <= n ; area++ ) {
-	    G_debug(3, " area %d", area);
-
-	    Vect_get_area_points ( &map, area, points ); 
-	    if ( map.head.with_z ) {
-		gln->dims = -3;
-		gln->npts = np = points->n_points;
+	/* Calc normal (should be average) */
+	if ( is3d ) {
+	    vect[0][X] = (float) ( gln->p3[0][X] - gln->p3[1][X] );
+	    vect[0][Y] = (float) ( gln->p3[0][Y] - gln->p3[1][Y] ); 
+            vect[0][Z] = (float) ( gln->p3[0][Z] - gln->p3[1][Z] );
+	    vect[1][X] = (float) ( gln->p3[2][X] - gln->p3[1][X] );
+	    vect[1][Y] = (float) ( gln->p3[2][Y] - gln->p3[1][Y] );
+	    vect[1][Z] = (float) ( gln->p3[2][Z] - gln->p3[1][Z] );
+	    GS_v3cross( vect[1], vect[0], gln->norm );
 	    
-		if (NULL == (gln->p3=(Point3 *)calloc(np, sizeof(Point3))))
-		{
-		    fprintf(stderr,"Can't calloc.\n"); /* CLEAN UP */
+	}
+    
+	if (NULL == (gln->next=(geoline *)malloc (sizeof(geoline)))) {
+	    fprintf(stderr,"Can't malloc.\n"); /* CLEAN UP */
+	    return(NULL);
+	}
+
+	#ifdef TRAK_MEM
+	    Tot_mem+=sizeof(geoline);
+	#endif
+    
+	prev = gln;
+	gln = gln->next;
+	nareas++;
+    }
+    G_debug(3, "%d areas loaded", nareas);
+
+    /* Read all lines */
+    G_debug(3, "Reading vector lines ...");
+    while (-1 < (type = Vect_read_next_line(&map, points, NULL))) {
+	G_debug(3, "line type = %d", type);
+
+	if ( type & ( GV_LINE | GV_FACE ) ) { 
+	    if ( type & ( GV_LINE ) ) {
+		gln->type = OGSF_LINE;
+	    } else {
+		gln->type = OGSF_POLYGON;
+                /* Vect_append_point ( points, points->x[0], points->y[0], points->z[0] ); */
+	    }
+
+	    gln->npts = np = points->n_points;
+            G_debug(3, "  np = %d", np);
 		
+	    if ( is3d ) { 
+		gln->dims = 3; 
+		if (NULL == (gln->p3=(Point3 *)calloc(np, sizeof(Point3)))) {
+		    fprintf(stderr,"Can't calloc.\n"); /* CLEAN UP */
 		    return(NULL);
 		}
-    
 		#ifdef TRAK_MEM
-		{
 		    Tot_mem+=(np*sizeof(Point3));
-		}
 		#endif
-	    
-		for (i=0; i < np; i++)
-		{
+	    } else {
+		gln->dims = 2;
+		if (NULL == (gln->p2=(Point2 *)calloc(np, sizeof(Point2)))) {
+		    fprintf(stderr,"Can't calloc.\n"); /* CLEAN UP */
+		    return(NULL);
+		}
+		#ifdef TRAK_MEM
+		    Tot_mem+=(np*sizeof(Point2));
+		#endif
+	    }
+
+	
+	    for (i=0; i < np; i++) {
+		if ( is3d ) {
 		    gln->p3[i][X] = points->x[i];
 		    gln->p3[i][Y] = points->y[i];
 		    gln->p3[i][Z] = points->z[i];
+		} else {
+		    gln->p2[i][X] = points->x[i];
+		    gln->p2[i][Y] = points->y[i];
 		}
-	    
-		if (NULL == (gln->next=(geoline *)malloc (sizeof(geoline))))
-		{
-		    fprintf(stderr,"Can't malloc.\n"); /* CLEAN UP */
-		
-		    return(NULL);
-		}
-
-		#ifdef TRAK_MEM
-		{
-		    Tot_mem+=sizeof(geoline);
-		}
-		#endif
-	    
-		prev = gln;
-		gln = gln->next;
 	    }
+	    /* Calc normal (should be average) */
+	    if ( is3d && gln->type == OGSF_POLYGON ) {
+		vect[0][X] = (float) ( gln->p3[0][X] - gln->p3[1][X] );
+		vect[0][Y] = (float) ( gln->p3[0][Y] - gln->p3[1][Y] ); 
+		vect[0][Z] = (float) ( gln->p3[0][Z] - gln->p3[1][Z] );
+		vect[1][X] = (float) ( gln->p3[2][X] - gln->p3[1][X] );
+		vect[1][Y] = (float) ( gln->p3[2][Y] - gln->p3[1][Y] );
+		vect[1][Z] = (float) ( gln->p3[2][Z] - gln->p3[1][Z] );
+		GS_v3cross( vect[1], vect[0], gln->norm );
+                G_debug ( 3, "norm %f %f %f", gln->norm[0], gln->norm[1], gln->norm[2] );
+	    }
+	
+	    if (NULL == (gln->next=(geoline *)malloc (sizeof(geoline)))) {
+		fprintf(stderr,"Can't malloc.\n"); /* CLEAN UP */
+		return(NULL);
+	    }
+
+	    #ifdef TRAK_MEM
+		Tot_mem+=sizeof(geoline);
+	    #endif
+	
+	    prev = gln;
+	    gln = gln->next;
+	    nl++;
 	}
-	nl = n;
     }
+    G_debug(3, "%d lines loaded", nl);
+
+    nl += nareas;
     
     prev->next = NULL;
     free(gln);
     
     #ifdef TRAK_MEM
-    {
     	Tot_mem-=sizeof(geoline);
-    }
     #endif
     
     Vect_close (&map);
@@ -247,9 +221,7 @@ geoline *Gv_load_vect(char *grassname, int *nlines)
     *nlines = nl;
 
     #ifdef TRAK_MEM
-    {
     	fprintf(stderr,"Total vect memory = %d Kbytes\n", Tot_mem/1000);
-    }
     #endif
     
     return(top);

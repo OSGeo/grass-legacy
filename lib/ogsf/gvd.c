@@ -66,10 +66,10 @@ int gvd_vect(geovect *gv, geosurf *gs, int do_fast)
     float bgn[3], end[3], tx, ty, tz, konst;
     float zmin, zmax, fudge;
     Point3 *points;
-    float vect[2][3], norm[3];
     int npts, src, check; 
     geoline *gln;
     
+    G_debug(3, "Draw vector layer."); 
     if (GS_check_cancel())
     {
     	return(0);
@@ -126,6 +126,8 @@ int gvd_vect(geovect *gv, geosurf *gs, int do_fast)
 
     for (; gln; gln=gln->next)
     {
+        G_debug(3, "Draw vector layer object type = %d dims = %d", gln->type, gln->dims); 
+
 	if (!(++check % CHK_FREQ))
 	{
 	    if (GS_check_cancel())
@@ -137,60 +139,46 @@ int gvd_vect(geovect *gv, geosurf *gs, int do_fast)
 	    }
 	}
 
-	if ( gln->dims > 0 ) { /* line */
-	    if ( abs (gln->dims ) == 2 )
-	    {
-		for (k=0; k < gln->npts - 1; k++)
-		{
+	if ( gln->type == OGSF_LINE ) { /* line */
+	    if ( gln->dims  == 2 ) {    /* 2d line */
+                G_debug(3, "Draw 2D vector line."); 
+		for (k=0; k < gln->npts - 1; k++) {
 		    bgn[X] = gln->p2[k][X] + gv->x_trans - gs->ox;
 		    bgn[Y] = gln->p2[k][Y] + gv->y_trans - gs->oy;
 		    end[X] = gln->p2[k+1][X] + gv->x_trans - gs->ox;
 		    end[Y] = gln->p2[k+1][Y] + gv->y_trans -  gs->oy;
 
-		    if (src == MAP_ATT)
-		    {
+		    if (src == MAP_ATT) {
 			points = gsdrape_get_segments(gs, bgn, end, &npts);
 			gsd_bgnline();
 		    
-			for (i=0, j=0 ; i < npts; i++)
-			{ 
-			    if (gs_point_is_masked(gs, points[i]))
-			    {
-				if (j)
-				{
+			for (i=0, j=0 ; i < npts; i++) { 
+			    if (gs_point_is_masked(gs, points[i])) {
+				if (j) {
 				    gsd_endline();
 				    gsd_bgnline();
 				    j = 0;
 				}
 				continue;
 			    }
-			
 			    points[i][Z] += gv->z_trans;
 			    gsd_vert_func(points[i]);
 			    j++;
-			
-			    if (j > 250)
-			    {
+			    if (j > 250) {
 				gsd_endline();
 				gsd_bgnline();
 				gsd_vert_func(points[i]);
 				j = 1;
 			    }
 			}
-
 			gsd_endline();
 		    }
 		    /* need to handle MASK! */
-		    else if (src == CONST_ATT)
-		    {
+		    else if (src == CONST_ATT) {
 			/* for now - but later, do seg intersect maskedge */
-			if (gs_point_is_masked(gs,bgn) || gs_point_is_masked(gs,end))
-			{
-			    continue;
-			}
+			if (gs_point_is_masked(gs,bgn) || gs_point_is_masked(gs,end)) continue;
 		    
-			if (gs_clip_segment(gs, bgn, end, NULL))
-			{
+			if (gs_clip_segment(gs, bgn, end, NULL)) {
 			    gsd_bgnline();
 			    gsd_vert_func(bgn);
 			    gsd_vert_func(end);
@@ -199,13 +187,14 @@ int gvd_vect(geovect *gv, geosurf *gs, int do_fast)
 		    }
 		}
 	    }
-	    else /* vector is 3D */
+	    else /* 3D line */
 	    {
+                G_debug(3, "Draw 3D vector line."); 
 		points = (Point3 *) malloc ( sizeof(Point3) );
 		
+                gsd_color_func(gv->color);
 		gsd_bgnline();
-		for (k=0; k < gln->npts; k++)
-		{
+		for (k=0; k < gln->npts; k++) {
 		    points[0][X] = (float) ( gln->p3[k][X] + gv->x_trans - gs->ox);
 		    points[0][Y] = (float) (gln->p3[k][Y] + gv->y_trans - gs->oy);
 		    points[0][Z] = (float) (gln->p3[k][Z] + gv->z_trans);
@@ -215,43 +204,42 @@ int gvd_vect(geovect *gv, geosurf *gs, int do_fast)
 		gsd_endline();
 		free ( points );
 	    }
-	} else { /* polygon */
-	    G_debug(3, "Draw polygon."); 
+	} else if ( gln->type == OGSF_POLYGON ) { /* polygon */
+	    if ( gln->dims  == 3 ) {    /* 3D polygon */
+		G_debug(3, "Draw 3D polygon."); 
 
-	    /* We want at least 3 points */
-	    if ( gln->npts >= 3 ) { 
-		points = (Point3 *) malloc ( 2 * sizeof(Point3) );
-		
-		glEnable(GL_NORMALIZE);
-		/* gsd_shademodel(DM_GOURAUD); */
-		gsd_shademodel(0);
-		gsd_colormode(CM_DIFFUSE);
-		gsd_pushmatrix();
-     
-		/* Calculate normal */
-		/* TODO: sometimes would be useful to calculate normal for each vertex but slow? */
-		vect[0][X] = (float) ( gln->p3[0][X] - gln->p3[1][X] );
-		vect[0][Y] = (float) ( gln->p3[0][Y] - gln->p3[1][Y] );
-		vect[0][Z] = (float) ( gln->p3[0][Z] - gln->p3[1][Z] );
-		vect[1][X] = (float) ( gln->p3[2][X] - gln->p3[1][X] );
-		vect[1][Y] = (float) ( gln->p3[2][Y] - gln->p3[1][Y] );
-		vect[1][Z] = (float) ( gln->p3[2][Z] - gln->p3[1][Z] );
-		GS_v3cross( vect[0], vect[1], norm ); 
-		
-		gsd_bgnpolygon();
-		for (k=0; k < gln->npts; k++)
-		{
-		    points[0][X] = (float) ( gln->p3[k][X] + gv->x_trans - gs->ox);
-		    points[0][Y] = (float) (gln->p3[k][Y] + gv->y_trans - gs->oy);
-		    points[0][Z] = (float) (gln->p3[k][Z] + gv->z_trans);
+		/* We want at least 3 points */
+		if ( gln->npts >= 3 ) { 
+		    points = (Point3 *) malloc ( 2 * sizeof(Point3) );
+		    glEnable (GL_NORMALIZE); 
+
+		    glEnable(GL_COLOR_MATERIAL);
+		    glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
 		    
-		    gsd_litvert_func( norm, gv->color, points[0]);
-		}
-		gsd_endpolygon();
+		    glEnable(GL_LIGHTING);
+		    glLightModeli ( GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE );
 
-		free ( points );
-	    } 
-	    /* TODO: 2D polygons */
+		    glShadeModel(GL_FLAT);
+
+		    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+
+                    glBegin(GL_POLYGON);
+		    glColor3f (1.0,0,0);
+                    gsd_color_func(gv->color);
+		    glNormal3fv(gln->norm);
+		    
+		    for (k=0; k < gln->npts; k++) {
+			points[0][X] = (float) (gln->p3[k][X] + gv->x_trans - gs->ox);
+			points[0][Y] = (float) (gln->p3[k][Y] + gv->y_trans - gs->oy);
+			points[0][Z] = (float) (gln->p3[k][Z] + gv->z_trans);
+			glVertex3fv(points[0]);
+		    }
+		    glEnd();
+		    free ( points );
+		} 
+	    } else { /* 2D polygons */
+                /* TODO */
+	    }
 	}
     }
 
