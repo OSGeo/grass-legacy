@@ -1,0 +1,3 @@
+Greport allows the user to set up a series of report parameters which can
+then be applied to one or more map layers, creating a report providing
+the requested statistics for each grid cell map layer.
