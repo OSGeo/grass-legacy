@@ -1,0 +1,129 @@
+##################################################################
+#  SPECFEAT.code                   $GISBASE/etc
+#  Labels and codes for conventional and special features
+#  This file consists of a label, major code, minor code, and
+#  description.  The purpose is to provide major/minor code
+#  pairs when exporting data as a DLG-3.  The category labels
+#  are related to those in the GRASS cats file.  Records with
+#  XXXX labels are user defined like the ad hoc symbols.
+#  June 3, 1994                    f. minzenmayer 
+##################################################################
+
+ESB	900	0204	Escarpment, bedrock
+ESO	900	0206	Escarpment, other than bedrock
+GUL	900	0202	Gully
+SLP	900	0203	Short, steep slope
+DEP	900	0300	Depression, closed
+SNK	905	0303	Sinkhole
+BLO	900	0307	Blowout
+CLA	900	0309	Clay spot
+GRA	900	0310	Gravelly spot
+LAV	908	0104	Lava flow
+MAR	905	0111	Marsh or swamp
+ROC	900	0311	Rock outcrop
+SAL	900	0312	Saline spot
+SAN	900	0313	Sandy spot
+ERO	900	0314	Severely eroded spot
+SLI	900	0315	Slide or slip
+SOD	900	0316	Sodic spot
+SPO	900	0304	Spoil area
+STN	900	0317	Stony spot
+STV	900	0318	Very stony spot
+WET	905	0330	Wet spot
+BPI	920	0612	Borrow pit
+GPI	920	0302	Gravel pit
+MPI	920	0325	Mine or quarry
+LDF	920	0304	Landfill
+WAT	905	0331	Perennial water (symbol only)
+MIL	905	0332	Miscellaneous water (symbol only)
+HILL	900	0303	Prominent hill or peak
+SPRN	905	0300	Spring
+AWEL	905	0302	Artesian well
+IWEL	905	0329	Irrigation well
+PDDR	905	0222	Perennial double line stream
+PSDR	905	0223	Perennial single line stream
+INDR	905	0224	Intermittent stream
+DEND	905	0328	Drainage end (symbol only)
+DCAN	905	0225	Double line canal (label)
+DDIT	905	0226	Perennial drainage and/or irrigation ditch
+IDIT	905	0227	Intermittent drainage and/or irrigation ditch
+FPOOL	909	0222	Flood pool line
+CANB	909	0197	Canada boundary
+MEXB	909	0198	Mexico boundary
+WATB	909	0199	Open water boundary
+XXXX	951	(fips)	State boundary; label = SB{fips}
+XXXX	952	(fips)	County or parish boundary; label = CB{fips}
+INCB	909	0101	Inc. city, village, town, burrough, or hamlet boundary
+CIVB	909	0100	Civil township, district, precinct, or barrio boundary
+NFOR	909	0104	National forest boundary
+NPAR	909	0103	National park boundary
+NSCE	909	0106	National scenic waterway, riverway, wild & scenic river or wilderness boundary
+NWIL	909	0105	National wildlife refuge, game reserve, or fish hatchery boundary
+SFOR	909	0132	State forest boundary
+SPAR	909	0130	State park boundary
+SWIL	909	0131	State wildlife refuge, game reserve, or fish hatchery boundary
+CPAR	909	0102	City, county, or private park boundary
+TICK	930	0301	State coordinate tick
+FARM	909	0218	Land grant, experiment station, or farm boundary
+LCT	930	0001	Land grant land division corner, center
+LSE	930	0002	Land grant land division corner, SE
+LNW	930	0003	Land grant land division corner, NW
+LNE	930	0004	Land grant land division corner, NE
+LSW	930	0005	Land grant land division corner, SW
+LSESW	930	0006	Land grant land division corner, SESW
+LSWNW	930	0007	Land grant land division corner, SWNW
+LSENE	930	0008	Land grant land division corner, SENE
+LNENW	930	0009	Land grant land division corner, NENW
+SCT	930	0010	Section land division corner, center
+SSE	930	0011	Section land division corner, SE
+SNW	930	0012	Section land division corner, NW
+SNE	930	0013	Section land division corner, NE
+SSW	930	0014	Section land division corner, SW
+SSESW	930	0015	Section land division corner, SESW
+SSWNW	930	0016	Section land division corner, SWNW
+SSENE	930	0017	Section land division corner, SENE
+SNENW	930	0018	Section land division corner, NENW
+SLABXX	930	0019	Section Labels, XX = 1-36, SLAB1 to SLAB36
+LIMT	909	0219	Limit of soil survey
+NEAT	909	0220	Field sheet matchline & neatline
+PPUB	909	0221	Previously published survey boundary
+AIRP	909	0403	Airport or airfield boundary
+AIRS	920	0311	Small airport or airfield (symbol only)
+CEME	909	0420	Cemetery boundary
+CEMS	900	0320	Small cemetery (symbol only)
+CROS	900	0321	Cemetery cross (symbol only)
+OILF	920	0421	Oilfield boundary
+FENC	920	0206	Fence
+PIPE	919	0201	Pipeline
+LINE	919	0202	Power transmission line
+DVRD	917	0214	Divided road
+UDRD	917	0215	Undivided road
+FRRD	917	0216	Farm or ranch road
+ROUT	917	0217	Reservation, park, or military route
+XXXX	972	(No.)	Interstate road emblem and designation; label = I{No.}
+XXXX	973	(No.)	Federal road emblem and designation; label = F{No.}
+XXXX	974	(No.)	State road emblem and designation; label = S{No.}
+XXXX	976	(No.)	County, farm, or ranch road emblem and designation; label = C{No.}
+XXXX	975	(No.)	Reservation, park, or military route number emblem and designation; label = M{No.}
+VTRL	970	0212	Vehicle trail
+PTRL	970	0211	Pedestrian trail
+RAIL	918	0201	Railroad
+LVWR	920	0205	Levee with road
+LVXR	920	0204	Levee without road
+LVRR	920	0207	Levee with railroad
+LVSS	920	0208	Levee with single side slope (show actual feature location)
+MDAM	905	0406	Medium or small dam
+CHUR	920	0402	Church
+OREL	920	0404	Other religious structures
+HOUS	920	0305	Farmstead, house
+SCHL	920	0403	School
+LTHS	920	0306	Lighthouse
+HIST	920	0301	Historical marker
+LOOK	920	0614	Lookout tower
+PTANK	920	0308	Petroleum storage tank
+WTANK	920	0310	Water storage tank
+GWEL	920	0606	Gas and oil well
+WIND	905	0305	Windmill
+LOCO	920	0312	Located object
+SOIS	900	0319	Soil sample site
+
