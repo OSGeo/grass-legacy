@@ -1,0 +1,42 @@
+.TH d.site.db
+.SH NAME
+\fId.site.db\fR \- ENTER ONE LINE DESCRIPTION HERE
+.br
+.I "(GRASS Display Program)"
+.SH SYNOPSIS
+\fBd.site.db\fR
+.br
+\fBd.site.db help\fR
+.br
+\fBd.site.db\fR \fBtab=\fIname\fR \fBcoords=\fIX-column,Y-column\fR \fBwhere=\fIname\fR \fB[map=\fIname]\fR
+   \fB[plot=\fIColor,icon,size]\fR \fB[join=\fItab,tabkey,pkey]\fR
+.SH DESCRIPTION
+enter short description of d.site.db here
+
+.SH "COMMAND LINE OPTIONS"
+.LP
+Parameters
+.IP \fItab\fR
+Table containing X, Y coordinate values.
+.IP \fIcoords\fR
+Column containing coordinate values.
+.IP \fIwhere\fR
+Where clause for query (eg. where col='paved',  col=56). 
+.IP \fImap\fR
+Name of sites list to output.
+.IP \fIplot\fR
+Colors:red, orange, yellow, green, blue, indigo, violet, magenta, brown, gray, white, black; Icon: diamond,  box,  plus,  x; Size: 1-9. 
+.br
+default: gray, x, 3
+.IP \fIjoin\fR
+JOIN rules (eg. table, key, primekey). 
+
+.SH BUGS
+Describe known bugs here
+
+.SH "SEE ALSO"
+Refer reader to related programs here
+
+.SH AUTHOR
+Provide the programmers name and institution
+
