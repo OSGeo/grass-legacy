@@ -1,6 +1,6 @@
 #############################################################################
 #
-# $Id: Gmakefile,v 1.24 2001-03-02 11:31:07 markus Exp $
+# $Id: Gmakefile,v 1.25 2001-03-05 05:11:32 justin Exp $
 #
 # MODULE:   	Grass Documentation
 # AUTHOR(S):	Original author unknown - probably CERL
@@ -30,7 +30,7 @@ GRASS_HTMLDIR=$(GISBASE)/documents
 GRASS_PSDIR=$(GISBASE)/documents/postscript
 GRASS_PDFDIR=$(GISBASE)/documents/pdf
 HTML_DIR = html
-HTML2MAN = sh $(SRC)/scripts/contrib/g.html2man/g.html2man
+HTML2MAN = GRASS_PERL=${PERL} sh $(SRC)/scripts/contrib/g.html2man/g.html2man
 HTML2PS  = html2ps -n
 HTML2PDF = htmldoc
 
@@ -60,7 +60,7 @@ g.help-manpages:
 	@test -d $(GRASS_MANDIR) || mkdir -p $(GRASS_MANDIR)
 	@echo Creating man pages
 	@chown man $(GRASS_MANDIR) 2> /dev/null || echo "You should be root if gmake5 fails. Otherwise it may be OK."
-	@(cd $(HTML_DIR); \
+	(cd $(HTML_DIR); \
 	  for h in *.html; \
 	  do \
 		m=`echo $$h | sed 's@\.html@@'`; \
