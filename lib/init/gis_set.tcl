@@ -260,7 +260,7 @@ proc gisSetWindow {} {
     # Window manager configurations
 
     wm geometry . +100+100
-    wm title . "Grass 5.0 Data Selection"
+    wm title . "Grass 5.7 Data Selection"
 
     global database
     global location
@@ -286,7 +286,7 @@ proc gisSetWindow {} {
     pack .frame0.intro.msg -side top
 
     .frame0.intro.msg tag configure all -justify center
-    .frame0.intro.msg insert end [G_msg "Welcome to GRASS GIS Version 5.0\n\n"]
+    .frame0.intro.msg insert end [G_msg "Welcome to GRASS GIS Version 5.7\n\n"]
     .frame0.intro.msg insert end [G_msg "Please select location and mapset\n"]
     .frame0.intro.msg insert end [G_msg "or define a new location\n"]
     .frame0.intro.msg tag add all 1.0 end
