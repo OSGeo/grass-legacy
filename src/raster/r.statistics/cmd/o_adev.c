@@ -7,31 +7,26 @@
 
 #define MEM  1024
 
-
-int 
+int
 o_adev (char *basemap, char *covermap, char *outputmap, int usecats, struct Categories *cats)
 {
-  char command[1024];
-  FILE *popen(), *stats, *reclass;
-  int first, mem, i, count;
-  long basecat, covercat, catb, catc;
-  double value, adev, x;
-  double *tab;
-      
-    
-             
+    char command[1024];
+    FILE *stats, *reclass;
+    int first, mem, i, count;
+    long basecat, covercat, catb, catc;
+    double value, adev, x;
+    double *tab;
+
     mem = MEM * sizeof(double);
     tab = (double *) G_malloc(mem);
-    
-/*    sprintf(command, "r.stats -cz input='%s,%s' fs=space", basemap, covermap);*/
+
     sprintf(command, "r.stats -cn input='%s,%s' fs=space", basemap, covermap);
 
-    stats = popen(command,"r");  
+    stats = popen(command,"r");
 
     sprintf (command, "r.reclass i='%s' o='%s'", basemap, outputmap);
     reclass = popen (command, "w");
 
-                                            
     first = 1;
     while (read_stats(stats, &basecat, &covercat, &value))
     {
@@ -46,18 +41,18 @@ o_adev (char *basemap, char *covermap, char *outputmap, int usecats, struct Cate
 
 	if (basecat != catb)
 	{
-           a_dev(tab, count, &adev); 
+           a_dev(tab, count, &adev);
            fprintf (reclass, "%ld = %ld %f\n", catb, catb, adev);
 	   catb = basecat;
 	   catc = covercat;
 	   count = 0;
         }
-        
+
         if(usecats)
            sscanf (G_get_cat((CELL)covercat, cats), "%lf", &x);
         else
            x = covercat;
-        
+
         for(i = 0; i < value; i++)
         {
            if(count * sizeof(double) >= mem )
@@ -68,7 +63,7 @@ o_adev (char *basemap, char *covermap, char *outputmap, int usecats, struct Cate
            }
            tab[count++] = x;
         }
-        
+
     }
     if (first)
     {
@@ -76,28 +71,26 @@ o_adev (char *basemap, char *covermap, char *outputmap, int usecats, struct Cate
     }
     else
     {
-    	a_dev(tab, count, &adev); 
+    	a_dev(tab, count, &adev);
     	fprintf (reclass, "%ld = %ld %f\n", catb, catb, adev);
     }
-    
+
     pclose(stats);
     pclose(reclass); /**/
-    
+
     return(0);
 }
 
-
-
 /***********************************************************************
 *
-*  Given an array of data[1...n], this routine returns its average 
+*  Given an array of data[1...n], this routine returns its average
 *  deviation adev.
 *
 ************************************************************************/
 
-int 
+int
 a_dev (double *data, int n, double *adev)
-{      
+{
  double ave, s;
  int i;
 
@@ -109,13 +102,13 @@ a_dev (double *data, int n, double *adev)
 
    *adev = 0.0;
    s     = 0.0;
-   
+
    for(i = 0; i < n; i++)              /* First pass to get the mean     */
       s += data[i];
    ave = s / n;
 
-   for (i = 0; i < n; i++)             
-   {                     
+   for (i = 0; i < n; i++)
+   {
       *adev += fabs(data[i] - ave);     /* deviation from the mean             */
    }
 
