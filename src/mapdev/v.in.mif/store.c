@@ -143,7 +143,7 @@ G_process_scale_value(int flag, int *scale_val) {
 
   static int scale_ = 200;
 
-  if(!scale_val || *scale_val <= 0) {
+  if(!scale_val) {
     fprintf( stderr, "Could not set scale value\n");
     return -1;
   }
