@@ -1,0 +1,10 @@
+#this script allows to cut out matrix fields
+# written by Markus Neteler 21.July 1998
+#            neteler@geog.uni-hannover.de
+
+if test "$1" = ""; then
+     echo "This tool displays a field out of a ASCII Matrix."
+     echo "Usage: file xpos ypos"
+     exit
+fi
+cat $1 | tail -7| cut -f $2 -d ' ' |head -$3 |tail -1
