@@ -63,8 +63,8 @@ old_GRASSH=`eval g.gisenv get=GRASS_HEIGHT`
 old_TRUECOLOR=`eval g.gisenv get=GRASS_TRUECOLOR`
 curr_mon=`d.mon -p | awk '{printf "%s", $4}'`
 
-#setting variables
-output="$GIS_OPT_output"
+#setting variables (get rid of extra png)
+output="`basename $GIS_OPT_output .png`"
 res="$GIS_OPT_res"
 
 #get GRASS version for display monitor name
@@ -109,6 +109,6 @@ export GRASS_TRUECOLOR=$old_TRUECOLOR
 export GRASS_PNGFILE=map.png
 
 
-echo "Done"
+echo "Done (writing the file may take a small amount of time)"
 exit 0
 
