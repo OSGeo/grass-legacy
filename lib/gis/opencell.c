@@ -366,7 +366,7 @@ int G__open_cell_old (
     FCB.null_file_exists = -1;
 
     if(FCB.map_type != CELL_TYPE)
-        	xdrmem_create (&FCB.xdrstream, FCB.data, 
+        	xdrmem_create (&FCB.xdrstream, (caddr_t) FCB.data, 
             (u_int) (FCB.nbytes * FCB.cellhd.cols), XDR_DECODE);
 
     return fd;

@@ -70,7 +70,7 @@ int R_raster_char(
 	int num ,
 	int nrows ,
 	int withzero ,
-	char  *ras )
+	unsigned char  *ras )
 {
 	int z ;
 	_send_ident(RASTER_CHAR) ;

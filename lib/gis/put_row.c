@@ -719,7 +719,7 @@ static int put_fp_data (int fd, void *rast, int row, int col, int n, RASTER_MAP_
   } else 
     if (compressed) set_file_pointer (fd, row);
   
-  xdrmem_create (&FCB.xdrstream, G__.work_buf,
+  xdrmem_create (&FCB.xdrstream, (caddr_t) G__.work_buf,
                  (u_int) (FCB.nbytes * FCB.cellhd.cols), XDR_ENCODE);
   xdrs = &FCB.xdrstream; /* xdr stream is initialized to write into */
   xdr_setpos (xdrs, 0);  /* G__.work_buf in 'opencell.c' */
