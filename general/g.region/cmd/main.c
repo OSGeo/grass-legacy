@@ -50,6 +50,7 @@ int main (int argc, char *argv[])
 		*print,
 		*gprint,
 		*lprint,
+		*eprint,
 		*center,
 		*res_set,
 		*dist_res,
@@ -88,6 +89,10 @@ int main (int argc, char *argv[])
 	flag.lprint = G_define_flag();
 	flag.lprint->key         = 'l';
 	flag.lprint->description = "Print the current region in lat/long";
+
+	flag.eprint = G_define_flag();
+	flag.eprint->key         = 'e';
+	flag.eprint->description = "Print the current region extent";
 
 	flag.center = G_define_flag();
 	flag.center->key         = 'c';
@@ -242,7 +247,9 @@ int main (int argc, char *argv[])
 	projection = window.proj;
 
 	set_flag = ! flag.update->answer;
-	if (flag.center->answer)
+	if (flag.eprint->answer)
+		print_flag = 5;
+	else if (flag.center->answer)
 		print_flag = 4;
 	else if (flag.lprint->answer)
 		print_flag = 3;
