@@ -1,11 +1,13 @@
 #!/bin/sh
 
 # d.rast Command with Legend
-# Version 1 - Written by Lane Price, CGIS
-# July 20, 1989
-# Revised February 13, 1990
-# Revised April 23, 1991, RL Glenn, grass4.0
+
+# $Id$
 # Revised Feb. 2000, M. Neteler, grass5
+# Revised April 23, 1991, RL Glenn, grass4.0
+# Revised February 13, 1990
+# July 20, 1989
+# Version 1 - Written by Lane Price, CGIS
 
 # This command allows the user to display a rast file and its
 # legend in a properly sized box.
@@ -36,7 +38,8 @@ SEE ALSO
 	  exit
 fi
 
-for i in `cat $LOCATION/SEARCH_PATH`
+#for i in `cat $LOCATION/SEARCH_PATH`
+for i in `ls $LOCATION/..`
 	do
 	  if test -f $GISDBASE/$LOCATION_NAME/$i/cats/$1
 	    then file=$GISDBASE/$LOCATION_NAME/$i/cats/$1
@@ -50,9 +53,9 @@ if test "$file" = ""
 fi
 
 hlegend=`awk 'NR==1 {if ($1 == "#") {
-			print ($2 + 3) * 2.5}
+			printf "%.0f" ,($2 + 3) * 2.5}
 			else {
-			print ($1 + 3) * 2.5}
+			printf "%.0f" ,($1 + 3) * 2.5}
 		    }' < $file`
 
 if test $hlegend -gt 100
