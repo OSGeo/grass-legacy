@@ -1,0 +1,29 @@
+.F gulim
+.S 10
+line 1
+.F batang
+line 2-1
+.L 0
+line 2-2
+.L 1
+.C 0xff00ff
+line 3
+.Y 0
+line 1 again
+.X +3
+.F /usr/X11R6/lib/X11/fonts/TrueType/gulim.ttf:EUC-KR
+.S 20p
+.R 10
+line 2 again
+line 3 again
+line 4
+line 5-1
+.L 0
+line 5-2
+.A cc
+.X 200p
+.Y 200p
+.C red
+.R 3.14r
+(200,200)
+
