@@ -1,0 +1,7 @@
+PGM = Xpoints
+OFILES =  main.o  \
+	draw_point.o \
+	command.o
+
+$(BIN)/$(PGM): $(OFILES) $(GISLIB) 
+	cc -g $(LDFLAGS) -o $@ $(OFILES) $(XDISPLAYLIB) $(GISLIB) -lX11
