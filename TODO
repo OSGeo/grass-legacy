@@ -1,4 +1,4 @@
-$Id: TODO,v 1.24 2000-10-12 08:29:28 markus Exp $
+$Id: TODO,v 1.25 2000-10-13 17:13:21 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -110,6 +110,16 @@ Modules:
   in mapset.
   v.in.shape/v.out.shape and m.in.e00 already meet this convention.
 
+- d.legend:
+  * there is no facility to place the legend     
+    exactly on the screen and also control the size of the text and boxes           
+    d.frames is not adequate..finer control is needed
+  * For categorical maps with more than 10 classes, where user                   
+    discrimination among colors becomes difficult, there should be a flash 
+    utility. Based on d.legend ... we should be able to click on any legend 
+    box and have the corresponding class flash on the map (on-off sequence
+    with user defined color).
+
 - g.list, g.remove should accept wildcards (*, ?)
   for convenience
 
@@ -124,6 +134,11 @@ Modules:
 
 - r.buffer: should save info about used buffers into map history
   (Being worked on by )
+
+- r.info 
+   should also report statistics (min, max, mean, stddev, 1st            
+   quartile, median, 3rd quartile and sum)
+   (merge function of r.univar into r.info)
 
 - etc/monitorcap: use relative paths based on $GISBASE
   (Being worked on by Justin)
@@ -161,4 +176,65 @@ Modules:
   raster files appear automatically when we call the d.rast
   module from the menu (edit gui.tcl)
   (Being worked on by )
+
+---------------------------------------------------------------------
+From ddgray@armadce.demon.co.uk Tue Sep 26 22:31:31 2000
+
+The following references to Numerical Recipes was found.
+
+Shortlist.
+
+*r.proj
+*r.surf.fractal
+*r.surf.gauss
+*r.surf.random
+*i.cca
+*i.pca
+*i.zc
+*i.fft
+i.shape
+*r.param.scale
+*d.param.scale
+
+* currently in `main' !!
+
+
+Details.
+
+r.proj:  Makes reference to algorithm in cmd/bilinear.c, I will have to
+check that it is not the same code. I think the author just used the
+maths from the book.
+
+r.surf.fractal: Uses NR algorithm for fft in fft.c.  As above.
+
+r.surf.gauss: Uses NR algorithm for Gaussian random generator. As above
+
+r.surf.random: As for r.surf.gauss but uses linear random generator.
+
+i.cca :  *PROBLEM*. Although `based on' Numerical Recipes routines, the
+authors considered it covered by NR's copyright. See comments in
+i.cca/cmd/jacobi.c. This is an eigenvector routine so can be replaced.
+
+Similar considerations apply to i.pca, i.zc, i.fft and i.shape (in
+src.contrib/CERL). These use either eigsrt (a simple routine for sorting
+eigensystems), or fourn (for fast fourier transforms). These are easy to
+replace.
+
+r.param.scale, d.param.scale: These contain considerable tracts of NR
+stuff, including the NR data types. They will require more work to
+replace. 
+
+It's difficult to know how much more NR stuff there is around, as the
+last two in particular don't acknowledge the NR dependency.
+
+
+Can I suggest moving the last two at least to src.nonGPL, so that we can
+retain a working copy of the functions till the offending routines can
+be replaced, as they would be in the slot held by the existing modules.
+The other routines require only minor modifications, so we can patch
+them all sometime during the freeze.
+
+Regards
+
+David
 
