@@ -45,7 +45,6 @@
 else if((A)<(-M_PI)){(A)+=2*M_PI;}}
 
 static double phi_old = 0.0;
-static int check_paranoid = 0;
 
 static int polygon_init_alloc_blocksize(int ix);
 static int polygon_next_alloc_blocksize(int ix, int jx);
@@ -77,7 +76,6 @@ polygon_ctrl *polygon_ctrl_init(void) {
 
 void polygon_ctrl_destroy(polygon_ctrl * pgc0) {
 
-  struct line_pnts *lp1;
   int ja; /* loop */
 
   if(pgc0->alloc_hulls > 0) {
@@ -653,17 +651,14 @@ void polygon_ctrl_dump(FILE *lf0, polygon_ctrl *pgc0, const int label0) {
   if(pgc0->struct_status & POLY_WITH_CATS)
     fprintf(lf0, "  Polygon has attributes provided.\n");
   if(pgc0->struct_status & POLY_WITH_CENTROID)
-    fprintf(lf0, "  An area point is supplied at %16.6lf | %16.6lf.\n",
+    fprintf(lf0, "  An area point is supplied at %16.6f | %16.6f.\n",
 	    pgc0->centroid_x, pgc0->centroid_y);
   else 
-    fprintf(lf0, "  Area point is not provided.\n",
-	    pgc0->centroid_x, pgc0->centroid_y);
+    fprintf(lf0, "  Area point is not provided.\n");
   if(pgc0->struct_status & POLY_WITH_Z)
-    fprintf(lf0, "  Height co-ordinates are supplied for the vertices.\n",
-	    pgc0->centroid_x, pgc0->centroid_y);
+    fprintf(lf0, "  Height co-ordinates are supplied for the vertices.\n");
   else 
-    fprintf(lf0, "  No height co-ordinates are supplied for the vertices.\n",
-	    pgc0->centroid_x, pgc0->centroid_y);
+    fprintf(lf0, "  No height co-ordinates are supplied for the vertices.\n");
 
   for(ia = 0; ia < pgc0->n_hulls; ia++) {
     fprintf(lf0, "\n    Main ring %d has %d holes ", ia + 1, pgc0->holes_per_hull[ia]);
@@ -711,6 +706,8 @@ ringset *ringset_init(int nr0) {
     rs1->alloc_rings = rs1->n_rings = nr0;
     return rs1;
   }
+
+  return (NULL);
 }
 
 void ringset_destroy(ringset *rs0) {
