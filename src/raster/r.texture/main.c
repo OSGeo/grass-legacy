@@ -158,12 +158,12 @@ main(int argc, char *argv[])
 
 	flag13 = G_define_flag();
 	flag13->key         = 'm';
-	flag13->description = "Meas of Correlation-1" ;
+	flag13->description = "Measure of Correlation-1" ;
 
 
 	flag14 = G_define_flag();
 	flag14->key         = 'n';
-	flag14->description = "Meas of Correlation-2" ;
+	flag14->description = "Measure of Correlation-2" ;
 
 	flag15 = G_define_flag();
 	flag15->key         = 'o';
