@@ -1,22 +1,25 @@
 CC                  = cc
+FC                  = f77
+LEX                 = lex
+YACC                = yacc
 ARCH                = sun4
 
-GISBASE             = /export/data/softail/loechl/grass_up4/grass.bin/sun4
-UNIX_BIN            = /data/softail/loechl/grass_up4/grass.bin
+GISBASE             = /usr/local/grass43
+UNIX_BIN            = /usr/local/bin
 
-DEFAULT_DATABASE    = /data/softail/loechl/grass_up4/grass.data
-DEFAULT_LOCATION    = spearfish
+DEFAULT_DATABASE    = 
+DEFAULT_LOCATION    = 
 
 COMPILE_FLAGS       = -O
 LDFLAGS             = -s
 
 XCFLAGS             = -D_NO_PROTO
 XLDFLAGS            =
-XINCPATH            = -I/data/diego/X11R5/include
-XMINCPATH           = -I/data/diego/X11R5/include
-XLIBPATH            = -L/data/diego/X11R5/lib
-XTLIBPATH           = -L/data/diego/X11R5/lib
-XMLIBPATH           = -L/data/diego/X11R5/lib
+XINCPATH            = -I/usr/X11R5/include
+XMINCPATH           = -I/usr/X11R5/include
+XLIBPATH            = -L/usr/X11R5/lib
+XTLIBPATH           = -L/usr/X11R5/lib
+XMLIBPATH           = -L/usr/X11R5/lib
 XLIB                = -lX11
 XTLIB               = -lXt
 XMLIB               = -lXm
