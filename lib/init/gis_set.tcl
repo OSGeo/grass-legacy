@@ -27,6 +27,20 @@ source $env(GISBASE)/etc/gtcltk/gmsg.tcl
 #############################################################################
 source $env(GISBASE)/etc/epsg_option.tcl
 
+#HTML help
+source $env(GISBASE)/docs/nviz/help.tcl
+proc make_help_window { w } {
+
+        frame $w
+        frame $w.f2
+        frame $w.f1
+
+        pack $w -side top -expand 1 -fill both
+        pack $w.f1 -side top -expand 1 -fill both
+        pack $w.f2 -side bottom -expand 0 -fill both
+
+}
+
 proc searchGISRC { filename } {
  
   global database
@@ -485,7 +499,7 @@ proc gisSetWindow {} {
             puts stdout "OLD_DB='$oldDb';"
             puts stdout "OLD_LOC='$oldLoc';"
             puts stdout "OLD_MAP='$oldMap';"
-	        puts stdout "GISDBASE='$database';"
+	    puts stdout "GISDBASE='$database';"
     	    puts stdout "LOCATION_NAME='##NONE##';"
             puts stdout "MAPSET='';"
             set location ""
@@ -494,8 +508,24 @@ proc gisSetWindow {} {
             destroy . 
             }
 
+    button .frame0.frameBUTTONS.help \
+    	-text [G_msg "Help"] \
+    	-relief raised \
+    	-padx 10 \
+	-command {
+		if { [winfo exists .help] } {
+                     puts "Help already opened"
+                     wm deiconify .help
+                     raise .help
+                     return
+                }
+                set help [toplevel .help]
+		help::init $env(GISBASE)/docs/start/helptext.html "" $help 500 400
+		wm title $help "GRASS Help"
+        }
+	
     button .frame0.frameBUTTONS.cancel \
-    	-text [G_msg "Cancel"] \
+    	-text [G_msg "Exit"] \
     	-relief raised \
     	-padx 10 \
     	-command { 
@@ -514,6 +544,7 @@ proc gisSetWindow {} {
     	.frame0.frameBUTTONS.ok { left expand } \
     	.frame0.frameBUTTONS.newLoc {left expand } \
     	.frame0.frameBUTTONS.newLocEpsg {left expand } \
+    	.frame0.frameBUTTONS.help { left expand } \
     	.frame0.frameBUTTONS.cancel { right expand }
 
 

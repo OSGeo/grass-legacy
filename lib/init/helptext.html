@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<HTML>
+<HEAD>
+  <META name="Author" content="Markus Neteler/GRASS Development Team">
+  <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <TITLE>GRASS Quickstart</TITLE>
+</HEAD>
+<BODY bgcolor="#ffffff">
+
+<H1>GRASS Quickstart</H1>
+
+<h2>Geographic Resources Analysis Support System</h2>
+
+Commonly referred to as GRASS, this is a Geographic Information System
+(GIS) used for geospatial data management and analysis, image
+processing, graphics/maps production, spatial modeling, and
+visualization. GRASS is currently used in academic and commercial
+settings around the world, as well as by many governmental agencies
+and environmental consulting companies.
+
+<h2>Introduction</h2>
+GRASS data are stored in a directory referred to as DATABASE
+(also called ``GISDBASE'').  This directory has to be created
+with <tt>mkdir</tt> or a filemanager, before starting to work
+with GRASS.  Within this DATABASE, the projects are organized
+by project areas stored in subdirectories called LOCATIONs.
+<P>
+A LOCATION is defined by its coordinate system, map projection and
+geographical boundaries. The subdirectories and files defining a
+LOCATION are created automatically when GRASS is started the first
+time with a new LOCATION.
+<P>
+Each LOCATION can have several MAPSETs. One motivation to maintain
+different mapsets is to store maps related to project issues or
+subregions. Another motivation is to support simultaneous access of
+several users to the map layers stored within the same LOCATION,
+i.e. teams working on the same project. For teams a centralized GRASS
+DATABASE would be defined in a network file system (e.g.
+NFS). Besides access to his/her own MAPSET, each user can also read
+map layers in other users' MAPSETs, but s/he can modify or remove only
+the map layers in his/her own MAPSET.
+<P>
+When creating a new LOCATION, GRASS automatically creates a special
+MAPSET called PERMANENT where the core data for the project can be
+stored. Data in the PERMANENT MAPSET can only be added, modified or
+removed by the owner of the PERMANENT MAPSET; however, they can be
+accessed, analyzed, and copied into their own MAPSET by the other
+users. The PERMANENT MAPSET is useful for providing general spatial
+data such as elevation model write-protected to other users who are
+working in the same LOCATION. To import data into PERMANENT, just
+start GRASS with the relevant LOCATION and the PERMANENT MAPSET.  This
+mapset also contains the DEFAULTWIND file which holds the default
+region boundary coordinate values. In all mapsets additionally a WIND
+file is kept for storing the current boundary coordinate values and
+the currently selected raster resolution.
+
+<h2>Creating a GRASS database</h2>
+
+To create the GRASS database:
+
+<OL>
+<LI> Find a place on your disk where you have write access and that
+    has enough diskspace to hold your decompresses data.</LI>
+<LI> Create a subdirectory that will hold the general GRASS database
+    (e.g. <tt>mkdir /data/GRASSDATA</tt> or 
+    <tt>mkdir /home/yourlogin/GRASSDATA</tt>).</LI>
+</OL>
+
+<P>
+Sample data such as the Spearfish sample dataset</A> may be downloaded from
+<A HREF="http://grass.itc.it/data.html">http://grass.itc.it/data.html</A>.
+<P>
+
+Click on the button "Create New Location" which will get to the above
+text screen on which you can enter a non-existing location name and
+continue with ``ESC''-``RETURN''.
+<P>
+Now, you need to attribute different parameters to the location, such
+as the coordinate system you want to use, including the ellipsoid, the
+coordinates of the boundaries of the project area and the default
+resolution for raster data:
+
+<UL>
+<LI> Start out by chosing between, x,y, Latitude-Longitude, UTM or
+   another coordinate system. This choice depends on your data and the
+   use will make of it.</LI>
+<LI> Now one line describing the project area, for example "Topo Map
+   of the Alps".</LI>
+</UL>
+
+<P>
+Now some more information about the projection follows. Note that the
+prompts vary from projection to projection:
+
+<UL>
+<LI> (if you chose "D - Other Projection") "specify projection name": 
+  "list" gives you the list of all available projections, examples are 
+  "tmerc" for Transverse Mercator, "lcc" for Lambert Conformal Conic,
+  "moll" for Mollweide, etc.
+<LI> specify ellipsoid name}: again use "list" to get a list of available 
+  ellipsoids, examples are "sphere", "clark80", "wgs84", etc.
+<LI> if you want, you can specify a datum, again use "list" for available
+  options
+<LI> Enter Central Parallel: 0 if you want the Equator as the
+  central parallel
+<LI> Enter Central Meridian: 0 if you want the Greenwich meridian as
+  central meridian
+<LI> Enter Scale Factor at the Central Meridian}
+<LI> Enter plural form of units: for example, meters
+</UL>
+
+<P>
+Next step is the description of the boundary coordinates of the project
+area and the definition of the default raster resolution:
+<P>
+The default raster resolution (GRID RESOLUTION) has to be chosen
+according to the needs. Generally, it is advisable to work in steps of
+0.25 (0.25, 0.5, 1.75, 2.00, 12.25 etc.). This resolution does not
+concern vector and site data since these are stored with their exact
+coordinate values. Note that every raster map may have its own
+resolution. You can leave this screen with ``ESC''-``RETURN'' and then
+accept the list of parameters that appears, if everything is correct.
+<P>
+You will get back to the startup screen again to enter the mapset's
+name (if not already entered). Another ``ESC''-``RETURN'' will finally
+let you leave this screen. This mapset is created within the new
+location by answering ``yes'' to the next question. The mapset will
+use the parameters of the location (such as the region and resolution
+definitions) as its default parameters.
+<P>
+Now the project area, i.e. the location including a mapset has been
+created. You have "arrived" in the GRASS system and can start working
+within this new location.
+
+<H2>Further Reading</H2>
+
+Please have a look at the GRASS web site: 
+<A HREF="http://grass.itc.it/gdp/index.php">http://grass.itc.it/gdp/index.php</A>.
+
+</BODY>
+</HTML>

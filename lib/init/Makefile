@@ -45,6 +45,8 @@ default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/grass-run.sh
 	$(MKDIR) $(GISBASE)/docs/html
 	$(INSTALL) -m 644 variables.html $(GISBASE)/docs/html/variables.html
+	$(MKDIR) $(GISBASE)/docs/start
+	$(INSTALL) -m 644 helptext.html $(GISBASE)/docs/start
 
 
 $(ARCH_BINDIR)/$(START_UP): init.sh 
@@ -130,4 +132,3 @@ $(ETC)/grass-run.sh: grass-run.src
 	-e \"s#LD_LIBRARY_PATH_VAR#$(LD_LIBRARY_PATH_VAR)#g\" \
 	grass-run.src > $@"
 	chmod +x $@
-
