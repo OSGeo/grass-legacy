@@ -1,10 +1,8 @@
 #!/bin/sh
-#
-# $Id: r.blend,v 2 2004/04/11 
-#
+
 ############################################################################
 #
-# MODULE:		r.blend for GRASS 5.7; based on blend.sh for GRASS 5
+# MODULE:	r.blend for GRASS 5.7; based on blend.sh for GRASS 5
 # AUTHOR(S):	CERL?; updated to GRASS 5.7 by Michael Barton
 # PURPOSE:	To redraw current displayed maps to 24 bit PNG output
 # COPYRIGHT:	(C) 2004 by the GRASS Development Team
@@ -58,9 +56,15 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
 fi
 
+echo "Calculating three components..."
 r.mapcalc "$GIS_OPT_out.r = r#$GIS_OPT_first * .$GIS_OPT_perc + (1.0 - .$GIS_OPT_perc) * r#$GIS_OPT_second"
 r.mapcalc "$GIS_OPT_out.g = g#$GIS_OPT_first * .$GIS_OPT_perc + (1.0 - .$GIS_OPT_perc) * g#$GIS_OPT_second"
 r.mapcalc "$GIS_OPT_out.b = b#$GIS_OPT_first * .$GIS_OPT_perc + (1.0 - .$GIS_OPT_perc) * b#$GIS_OPT_second"
+
+echo "Setting color tables to grey..."
+r.colors m=$GIS_OPT_out.r col=grey
+r.colors m=$GIS_OPT_out.g col=grey
+r.colors m=$GIS_OPT_out.b col=grey
 
 echo "Now use following command to visualize the result:"
 echo "d.rgb b=$GIS_OPT_out.b g=$GIS_OPT_out.g r=$GIS_OPT_out.r"
