@@ -207,6 +207,11 @@ VECTDEP     =  $(GRASS_INCDIR)/Vect.h $(GRASS_INCDIR)/V_.h \
                $(GRASS_INCDIR)/vect/dig_externs.h $(GRASS_INCDIR)/vect/dig_globs.h \
                $(VECTRLIB) $(DIG2LIB) $(SHAPELIB) $(BTREELIB) $(RTREELIB)
 
+GISDEP      =  $(GRASS_INCDIR)/gis.h $(GRASS_INCDIR)/gisdefs.h \
+               $(GRASS_INCDIR)/colors.h $(GRASS_INCDIR)/glocale.h \
+               $(GRASS_INCDIR)/Rast.h \
+               $(GRASS_INCDIR)/version.h $(GISLIB)
+
 FORMDEP     =  $(GRASS_INCDIR)/form.h $(FORMLIB)
 ##################### driver names #####################################
 
