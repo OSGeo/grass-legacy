@@ -24,8 +24,14 @@ int attributes (char *in, struct Map_info *Out )
     db_init_string (&sql);
     db_init_string (&lab);
 
+    /* Find vector mapset */
+    if ( NULL == (mapset = G_find_file ("dig", in, "") )) {
+        G_warning ("Input vector was not found.") ; /* Should not happen */
+	return 0;
+    }
+
     /* Find dig_cats if exists */
-    if ( NULL == (mapset = G_find_file ("dig_cats", in, "") )) {
+    if ( NULL == G_find_file ("dig_cats", in, mapset) ) {
         fprintf(stderr,"No category labels (dig_cats) found, no table created.\n") ;
 	return 0;
     }
