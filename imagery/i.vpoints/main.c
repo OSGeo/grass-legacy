@@ -120,6 +120,7 @@ setup_digitizer();
 */
  
 /*go do the work */
+    cellmap_present=0;
     driver();
 
     quit(0);

@@ -79,6 +79,7 @@ int drawcell (View *view, int initflag)
 	repeat = G_row_repeat_nomask (fd, row);
 	D_d_raster (dcell, ncols, repeat, colors);
     }
+    cellmap_present=1; /* for drawcell */
     G_close_cell (fd);
     G_free (dcell);
 
