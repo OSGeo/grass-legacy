@@ -1,20 +1,17 @@
-GEN2SHP=gen2shp-0.2.3
-SHAPELIB=$(SRC)/libes/vect32_64/shapelib-1.2.8
-
-PGM = v.out.shape
 EXTRA_CFLAGS = $(VECT_INCLUDE)
 
-OBJ =	Vexport_arc.o\
-	write_areas.o\
-	write_lines.o\
-	write.o\
-	writ_a_lines.o
+PGM =	v.out.shape2
+
+OBJ =	extract.o\
+	database.o\
+	private.o\
+	shpopen.o\
+	dbfopen.o\
+	main.o
 
 
 $(BIN_ALPHA_CMD)/$(PGM): $(OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
-	$(GMAKE) $(GEN2SHP)
-	$(GMAKE) $(SHAPELIB)
-	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB) $(XDRLIB)
+	$(CC) -o $@  $(LDFLAGS) $(OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB): #
 $(DIG_ATTLIB): #
