@@ -147,24 +147,29 @@ main(int argc, char **argv)
 		RASTER_MAP tmp;
 		double	dval;
 
-		fprintf(stderr, "\n*** Testing functions ***\n");
+		fprintf(stderr, "\n*** Test ***\n");
 
 		tmp.type   = buf.type;
 		tmp.data.v = G_allocate_raster_buf(buf.type);
 
-		r_str_value(str, 15, 5, tmp, 2);
-		fprintf(stderr, " tmp[2] = %s,", str);
+		dval = 123.322;
+		fprintf(stderr, " buf[10] = (%s) %lf\n",
+				r_type_name[buf.type], dval);
 
-		r_str_value(str, 15, 5, buf, 10);
-		fprintf(stderr, " buf[10] = %s\n", str);
+		r_set_value(buf, 10, dval);
+		r_str_value(str, 10, 5, buf, 10);
+		fprintf(stderr, " buf[10] = %s,", str);
+
+		r_str_value(str, 10, 5, tmp, 2);
+		fprintf(stderr, " tmp[2] = %s\n", str);
 
 		fprintf(stderr, "\n copy buf[10] to tmp[2]\n");
 		r_copy_value(buf, 10, tmp, 2);
-		r_str_value(str, 15, 5, tmp, 2);
-		fprintf(stderr, " tmp[2] = %s\n", str);
+		r_str_value(str, 0, 5, tmp, 2);
+		fprintf(stderr, " tmp[2] = %s,", str);
 
 		r_set_value(tmp, 2, 10*r_get_value(tmp, 2));
-		r_str_value(str, 15, 5, tmp, 2);
+		r_str_value(str, 0, 5, tmp, 2);
 		fprintf(stderr, " tmp[2]*10 = %s\n", str);
 	}
 
