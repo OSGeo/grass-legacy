@@ -1,5 +1,8 @@
 # $Log: makefile,v $
-# Revision 1.1  2000-03-22 20:02:28  markus
+# Revision 1.2  2000-03-22 20:05:34  markus
+# updated oon shapelib path
+#
+# Revision 1.1  2000/03/22 20:02:28  markus
 # contribution by Jan Wagner
 #
 # Revision 1.4  1999/11/05  08:02:48  jwagner
@@ -15,7 +18,7 @@
 # Initial revision
 #
 
-SHAPELIBPATH=/home/jwagner/tmp/shapelib-1.2.6
+SHAPELIBPATH=../shapelib-1.2.7
 
 CC=gcc
 # add -DWITH_STRICMP if you are compiling i.e. with MS VC
