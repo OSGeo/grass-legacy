@@ -1,0 +1,210 @@
+#!/bin/sh
+
+############################################################################
+#
+# MODULE:       v.in.e00
+#
+# AUTHOR(S):    Markus Neteler, Otto Dassau
+#
+# PURPOSE:      Import E00 data into a GRASS vector map
+#		Imports single and split E00 files (.e00, .e01, .e02 ...)
+#
+# COPYRIGHT:    (c) 2004 GDF Hannover bR, http://www.gdf-hannover.de
+#
+#               This program is free software under the GNU General Public
+#               License (>=v2). Read the file COPYING that comes with GRASS
+#               for details.
+#
+#############################################################################
+#
+# REQUIREMENTS:
+#      -  avcimport: http://avce00.maptools.org
+
+#%Module
+#%  description: Import of E00 file into a vector map.
+#%End
+#%flag
+#%  key: v
+#%  description: verbose mode
+#%end
+#%option
+#% key: file
+#% type: string
+#% description: E00 file
+#% gisprompt: file,file,file
+#% required : yes
+#%end
+#%option
+#% key: type
+#% type: string
+#% options: point,line,area
+#% description: Input type point, line or area
+#% required : yes
+#%end
+#%option
+#% key: vect
+#% type: string
+#% gisprompt: new,dig,vector
+#% description: name for new binary vector file
+#% required : no
+#%end
+
+
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec g.parser "$0" "$@"
+fi
+
+
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi
+
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION="$GISDBASE"/"$LOCATION_NAME"/"$MAPSET"
+
+PROG=`basename $0`
+E00TMP=$$
+
+#### check for avcimport 
+AVCIMPORT=`which avcimport`
+if [ "$AVCIMPORT" = "" ] ; then
+    echo "$PROG: 'avcimport' program not found, install it first" 2>&1
+    echo "       http://avce00.maptools.org" 2>&1
+    exit 1
+fi
+
+#### check for e00conv
+E00CONV=`which e00conv`
+if [ "$E00CONV" = "" ] ; then
+    echo "$PROG: 'e00conv' program not found, install it first" 2>&1
+    echo "       http://avce00.maptools.org" 2>&1
+    exit 1
+fi
+
+#### check if we have awk
+AWK=`which awk`
+if [ "$AWK" = "" ] ; then
+    echo "$PROG: awk required, please install awk/gawk first" 2>&1
+    exit 1
+fi
+
+
+#### trap ctrl-c so that we can clean up tmp
+trap 'rm -f ${TMP}*' 2 3 15
+
+if [ "$GIS_OPT_file" != "(null)" ] ; then
+    E00NAME=`basename $GIS_OPT_file .e00`
+    # to avoid CAPs problem:
+    E00NAME=`basename $E00NAME .E00`
+fi
+
+#check if this is a split E00 file (.e01, .e02 ...):
+MERGING=0
+if test -f $E00NAME.e01 ; then
+  echo "Found that E00 file is split into pieces (.e01, ...). Merging..."
+  MERGING=1
+  EXTENSION="NOCAPS" # .e00 .e01 ...
+fi
+if test -f $E00NAME.E01 ; then
+  echo "Found that E00 file is split into pieces (.e01, ...). Merging..."
+  MERGING=1
+  EXTENSION="CAPS" # .E00 .E01 ...
+fi
+
+
+if [ "$GIS_OPT_type" == "(null)" ] ; then
+    echo "Input type is missing - choose point, line or area"
+    exit 1
+fi
+
+if [ "$GIS_OPT_vect" != "(null)" ] ; then
+    NAME="$GIS_OPT_vect"
+else
+    NAME=$E00NAME
+fi
+
+if [ ! -z `g.findfile elem=vector file="$NAME" | grep ^file | cut -f2 -d=` ] ; then
+	echo "GRASS vector map <$NAME> already exists! Aborting."
+	exit 1
+fi
+
+### do import
+
+#check for binay E00 file (we can just check if import fails):
+#avcimport doesn't set exist status :-(
+
+if [ $MERGING -eq 1 ] ; then
+  if  [ "$EXTENSION" = "CAPS" ] ; then
+     cat `ls -1 $E00NAME.E* | sort` > $E00NAME.cat.$E00TMP.e00
+     GIS_OPT_file=$E00NAME.cat.$E00TMP.e00
+  fi
+  if  [ "$EXTENSION" = "NOCAPS" ] ; then
+     cat `ls -1 $E00NAME.e* | sort` > $E00NAME.cat.$E00TMP.e00
+     GIS_OPT_file=$E00NAME.cat.$E00TMP.e00
+  fi
+fi
+
+avcimport $GIS_OPT_file $E00NAME 2>&1 | grep 'Error parsing'
+if [ $? -eq 1 ] ; then
+   echo "E00 ASCII found and converted to Arc Coverage in current directory"
+else
+   echo "E00 Compressed ASCII found. Will uncompress first..."
+   rm -rf $E00NAME info
+   e00conv $GIS_OPT_file $E00TMP.e00
+   echo "...converted to Arc Coverage in current directory"
+   avcimport $E00TMP.e00 $E00NAME 2>/dev/null
+fi
+
+## let's import...
+## point
+
+
+if [ "$GIS_OPT_type" == "point" ] ; then
+        echo "Importing..."
+        v.in.ogr -o dsn=$E00NAME layer=LAB type=point output=$NAME
+	if [ $? -eq 1 ] ; then
+   	echo "An error occurred. Stop."
+   	rm -rf $E00TMP.e00 $E00NAME info 2>&1 > /dev/null
+   	exit 1
+	fi
+fi
+
+## line
+
+if [ "$GIS_OPT_type" == "line" ] ; then
+        echo "Importing..."
+        v.in.ogr -o dsn=$E00NAME layer=ARC type=line output=$NAME
+	if [ $? -eq 1 ] ; then
+   	echo "An error occurred. Stop."
+   	rm -rf $E00TMP.e00 $E00NAME info 2>&1 > /dev/null
+   	exit 1
+	fi
+fi
+
+## area
+
+
+if [ "$GIS_OPT_type" == "area" ] ; then
+        echo "Importing..."
+        v.in.ogr -o dsn=$E00NAME layer=LAB,ARC type=centroid,boundary output=$NAME
+	if [ $? -eq 1 ] ; then
+   	echo "An error occurred. Stop."
+   	rm -rf $E00TMP.e00 $E00NAME info 2>&1 > /dev/null
+   	exit 1
+	fi
+fi
+
+echo ""
+echo "Imported $GIS_OPT_type vector map <$NAME>."
+
+#### clean up the mess
+rm -rf $E00TMP.e00 $E00NAME info $E00NAME.cat.$E00TMP.e00 2>&1 > /dev/null
+
+#### end
+echo 2>&1
+echo "Done." 2>&1
+
+exit 0
