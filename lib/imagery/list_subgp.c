@@ -1,3 +1,4 @@
+#include <string.h>
 #include "imagery.h"
 
 int I_list_subgroup (
@@ -15,7 +16,7 @@ int I_list_subgroup (
     {
 	fprintf (fd, "subgroup [%s] of group [%s] is empty\n",
 	    subgroup, group);
-	return;
+	return 0;
     }
     max = 0;
     for (i=0; i < ref->nfiles; i++)
@@ -41,4 +42,6 @@ int I_list_subgroup (
     if (tot_len)
 	fprintf (fd, "\n");
     fprintf (fd, "-------------\n");
+
+    return 0;
 }
