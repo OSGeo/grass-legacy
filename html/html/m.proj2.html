@@ -116,7 +116,10 @@ coordinate list to the target projection.
 
 
 <p>Datum conversions are automatically handled by the PROJ.4 library, if 'datum='
-is specified in *both* the input *and* output projections.</p>
+is specified in <em>both</em> the input <em>and</em> output projections on the
+command line. (N.B. When using the command interactively, the user will
+not be asked for a datum, and datum transformation will <em>not</em> take
+place.)</p>
 
 <p>If a datum is specified there is no need for the 'ellps=' or underlying
 parameters, 'a=', 'es=' etc.</p>

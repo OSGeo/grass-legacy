@@ -53,7 +53,7 @@ int process(int in, char *parms, char *proj_name, char *proj_title,
 		G_fatal_error(buff);
 	}
 	parms[0] = '\0';
-	if ((strncmp(proj_name, "stp", 3) != 0) && (strncmp(proj_name, "ll", 2) != 0)) {
+	if (strncmp(proj_name, "stp", 3) != 0) {
 		if ((proj_index == ALSK) || (proj_index == GS48) || (proj_index == GS50)) {
 			sprintf(ellps_name, "%s", "clark66");
 			sph = 1;
@@ -112,10 +112,6 @@ int process(int in, char *parms, char *proj_name, char *proj_title,
 		fprintf(stderr, "\n%sProjection:\n ", io);
 		get_stp_proj(parms);
 		proj_changed = 1;
-		break;
-
-	case LL:
-		sprintf(parms, "+proj=%s", proj_name);
 		break;
 
 	default:
