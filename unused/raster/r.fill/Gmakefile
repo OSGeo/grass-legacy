@@ -1,5 +1,4 @@
 PGM    = r.fill
-SRCS   = main.c
 OBJS   = main.o
 URASTER= $(UNUSED)/raster
 LIBR   = $(URASTER)/libr
