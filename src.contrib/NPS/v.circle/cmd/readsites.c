@@ -4,14 +4,10 @@ int readsites (FILE *fdsite, int all, int verbose, int field, circlesite **xyz)
 
 /* Reads a sites list into {\tt xyz}, returning the number of sites found.  */
 {
-  char *dum;
   int i, n,c,d,allocated=1000;
-  double east, north, ndesc;
-  char desc[80];
   Site *s;
-  
-  /*a window can be used to define a area for circling, it's not implemented
-    yet */
+
+  /* a window can be used to define an area for circling, it's not implemented yet */
   struct Cell_head window;
 
 
@@ -27,23 +23,14 @@ int readsites (FILE *fdsite, int all, int verbose, int field, circlesite **xyz)
     G_fatal_error("failed to guess format");
   s = G_site_new_struct (c, 2, 0, d);
 
-  if(field >= d){
-      G_fatal_error("decimal field not present in sites file");
-  }
-
-  if (d==0)
-  {
-    fprintf(stderr,"\n");
-    G_warning("I'm finding records that do not have a floating point attributes (fields prefixed with '%').");
-  }
 
   /* allocate chunk of memory */
   (*xyz) = (circlesite *) G_malloc (allocated * sizeof (circlesite ));
   if ((*xyz)==NULL) G_fatal_error("cannot allocate memory");
 
   i = 0;
-  /* while (G_get_site (fdsite, &east, &north, &dum) > 0) */
-  while (G_site_get (fdsite, s) == 0) 
+
+  while (G_site_get(fdsite, s) >= 0) 
   {
     if (i == allocated)
     {
@@ -54,9 +41,12 @@ int readsites (FILE *fdsite, int all, int verbose, int field, circlesite **xyz)
     if (all || (s->east >= window.west && s->east <= window.east &&
 		s->north <= window.north && s->north >= window.south))
     {
-      (*xyz)[i].z=s->dbl_att[field];
-      (*xyz)[i].x=s->east;
-      (*xyz)[i++].y=s->north;
+	if(d > 0)
+	   (*xyz)[i].z=s->dbl_att[field];
+	else
+	   (*xyz)[i].z=(double)c;
+	(*xyz)[i].x=s->east;
+	(*xyz)[i++].y=s->north;
     }
   }
   G_sleep_on_error (1);
