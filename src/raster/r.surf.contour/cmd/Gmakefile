@@ -14,10 +14,10 @@ LIST = 	main.c add_in.c addpts.c find_con.c \
 	flag_clr_all.c flag_create.c flag_destroy.c \
 	flag_get.c flag_set.c flag_unset.c 
 
-$(BIN_MAIN_CMD)/r.surf.contour: $(OBJS) $(GISLIB)  $(DISPLAYLIB)
-	cc $(LDFLAGS) -o $@ $(OBJS) $(GISLIB) $(SEGMENTLIB) $(DISPLAYLIB)
+$(BIN_MAIN_CMD)/r.surf.contour: $(OBJS) $(GISLIB) $(SEGMENTLIB) $(DISPLAYLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(GISLIB) $(SEGMENTLIB) $(DISPLAYLIB)
 
-$(DISPLAYLIB) $(GISLIB): #
+$(DISPLAYLIB) $(GISLIB) $(SEGMENTLIB): #
 
 saber_src:
 	#load $(CFLAGS) $(LIST) $(GISLIB) $(SEGMENTLIB)
