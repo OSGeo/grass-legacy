@@ -87,16 +87,16 @@ typedef unsigned int HeapIndex;
 
 template <class T>
 class BasicMinMaxHeap {
+
 protected:  
   HeapIndex maxsize;
   HeapIndex lastindex;			// last used position (0 unused) (?)
   T *A;
-
-protected:
   /* couple of memory mgt functions to keep things consistent */
   static T *allocateHeap(HeapIndex n);
   static void freeHeap(T *);
-
+  virtual void grow()=0;
+  
 public:
   BasicMinMaxHeap(HeapIndex size) : maxsize(size) { 
     char str[100];
@@ -115,10 +115,7 @@ public:
   };
 
   bool empty(void) const { return size() == 0; };
-  HeapIndex size() const { 
-	assert(A ||  !lastindex);
-    return lastindex; 
-  };
+  HeapIndex size() const;
 
   T get(HeapIndex i) const { assert(i <= size()); return A[i]; }
    
@@ -152,8 +149,6 @@ public:
     return s;
   }
 
-protected:
-  virtual void grow()=0;
 
 private:
   long log2(long n) const;
@@ -188,6 +183,14 @@ private:
 
 // index 0 is invalid
 // index <= size
+
+
+// ----------------------------------------------------------------------
+template <class T>
+HeapIndex BasicMinMaxHeap<T>::size() const { 
+	assert(A || !lastindex);
+  return lastindex; 
+}
 
 // ----------------------------------------------------------------------
 
@@ -731,11 +734,16 @@ BasicMinMaxHeap<T>::verify() {
 
 template <class T>
 class MinMaxHeap : public BasicMinMaxHeap<T> {
+
+//using BasicMinMaxHeap<T>::maxsize;
+//using BasicMinMaxHeap<T>::lastindex;
+//using BasicMinMaxHeap<T>::size;
+
 public:
   MinMaxHeap(HeapIndex size) : BasicMinMaxHeap<T>(size) {};
   virtual ~MinMaxHeap() {};
-  bool full(void) const { return size() >= maxsize; };
-  HeapIndex get_maxsize() const { return maxsize; };
+  bool full(void) const { return this->size() >= this->maxsize; };
+  HeapIndex get_maxsize() const { return this->maxsize; };
   HeapIndex fill(T* arr, HeapIndex n);
   
 protected:
@@ -750,12 +758,12 @@ template <class T>
 HeapIndex MinMaxHeap<T>::fill(T* arr, HeapIndex n) {
   HeapIndex i;
   //heap must be empty
-  assert(size()==0);
+  assert(get_maxsize()==0);
   for (i = 0; !full() && i<n; i++) {
     insert(arr[i]);
   }
   if (i < n) {
-    assert(i == maxsize);
+    assert(i == get_maxsize());
     return n - i;
   } else {
     return 0;
@@ -768,6 +776,11 @@ HeapIndex MinMaxHeap<T>::fill(T* arr, HeapIndex n) {
 
 template <class T>
 class UnboundedMinMaxHeap : public BasicMinMaxHeap<T> {
+
+using BasicMinMaxHeap<T>::A;
+using BasicMinMaxHeap<T>::maxsize;
+using BasicMinMaxHeap<T>::size;
+
 public:
   UnboundedMinMaxHeap() : BasicMinMaxHeap<T>(MMHEAP_INITIAL_SIZE) {};
   virtual ~UnboundedMinMaxHeap() {};
