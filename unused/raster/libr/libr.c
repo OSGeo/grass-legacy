@@ -1,4 +1,22 @@
 /*
+ * $Id$
+ *
+ ****************************************************************************
+ *
+ * MODULE:	GRASS type-independent raster library (libr library)
+ * FILENAME:	libr.c
+ * AUTHOR(S):	Huidae Cho - Korea - hdcho@geni.cemtlo.com
+ * PURPOSE:	This library functions help you program a type-independent
+ * 		raster modules.
+ * DATE CREATED: Apr 30 2001
+ * COPYRIGHT:	(C) 2001 by the GRASS Development Team
+ *
+ *		This program is free software under the GNU General Public
+ *		License (>=v2). Read the file COPYING that comes with GRASS
+ *		for details.
+ *
+ *****************************************************************************/
+/*
  * char	*
  * r_type_name[] = { "CELL", "FCELL", "DCELL" };
  *
