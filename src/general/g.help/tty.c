@@ -18,20 +18,20 @@ static struct sgttyb old, new;
 
 Get_old_tty()
 {
-    get (&old);
+    /*get (&old);*/
 }
 
 Get_new_tty()
 {
-    get (&new);
+    /*get (&new);*/
 }
 
 Old_tty()
 {
-    set (&old);
+    /*set (&old);*/
 }
 
 New_tty()
 {
-    set (&new);
+    /*set (&new);*/
 }
