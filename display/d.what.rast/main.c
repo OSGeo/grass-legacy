@@ -122,13 +122,9 @@ int main (int argc, char **argv)
 				sprintf(msg, "Raster file [%s] not available", rast[i]);
 				G_fatal_error(msg);
 			}
+			if (G_read_cats (name[i], mapset[i], &cats[i]) < 0)
+				cats[i].ncats = -1;
 		}
-	}
-
-	for (i = 0; i < nrasts; i++)
-	{
-		if (G_read_cats (name[i], mapset[i], &cats[i]) < 0)
-			cats[i].ncats = -1;
 	}
 
 	what (once->answer, terse->answer, colrow->answer, fs->answer) ;
