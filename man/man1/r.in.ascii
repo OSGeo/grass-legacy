@@ -8,7 +8,7 @@
 .br
 \fBr.in.ascii help\fR
 .br
-\fBr.in.ascii input\fR\*=\fIname \fBoutput\fR\*=\fIname\fR [\fBtitle\fR\*=\fI"phrase"\fR]
+\fBr.in.ascii input\fR\*=\fIname \fBoutput\fR\*=\fIname\fR [\fBtitle\fR\*=\fI"phrase"\fR] [\fBmult\fR\*=\fImultiplier\fR]
 .SH DESCRIPTION
 \fIr.in.ascii\fR allows a user to create a (binary) GRASS raster map layer
 from an ASCII raster input file with (optional) title.
@@ -21,6 +21,9 @@ Name of an existing ASCII raster file to be imported.
 Name to be assigned to resultant binary raster map layer.
 .IP \fBtitle\*="\fIphrase\fR" 20
 Title to be assigned to resultant raster map layer.
+.IP \fBmult\*=\fImultiplier\fR 20
+Multiply all raster cell values by \fImultiplier\fR.  \fImultiplier\fR is a
+floating point value, and has a default value of 1.0.
 .LP
 The \fIinput\fR file has a header section which describes the location
 and size of the data, followed by the data itself.
@@ -79,8 +82,14 @@ They run along the edges of the cells
 at the edge of the geographic region
 and NOT through the center of the cells at the edges.
 
-The data (which follows the header section) must contain r x c integers,
+The data (which follows the header section) must contain r x c values,
 but it is not necessary that all the data for a row be on one line.
 A row may be split over many lines.
+
+\fIr.in.ascii\fR handles floating point cell values, but truncates them into
+integer values.  The \fBmult\fR option allows the number of significant
+figures of a floating point cell to be increased before truncation to an
+integer.  Multiples of ten are the most functional multipliers.
+
 .SH "AUTHOR"
 Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
