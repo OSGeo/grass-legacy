@@ -12,6 +12,7 @@ extern int db_d_drop_index();
 extern int db_d_drop_table();
 extern int db_d_execute_immediate();
 extern int db_d_fetch();
+extern int db_d_get_num_rows();
 extern int db_d_find_database();
 extern int db_d_insert();
 extern int db_d_delete();
@@ -32,6 +33,7 @@ static struct
 } procedure[] =
 {
   DB_PROC_FETCH,		db_d_fetch,
+  DB_PROC_ROWS,		        db_d_get_num_rows,
   DB_PROC_UPDATE,		db_d_update,
   DB_PROC_INSERT,		db_d_insert,
   DB_PROC_DELETE,		db_d_delete,

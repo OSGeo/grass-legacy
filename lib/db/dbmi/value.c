@@ -224,6 +224,7 @@ db_set_value_double(value, d)
  \return 
  \param 
 */
+int
 db_set_value_string(value, s)
     dbValue *value;
     char *s;
@@ -388,3 +389,34 @@ db_copy_value ( dst, src )
     dst->t.minute = src->t.minute;
     dst->t.seconds = src->t.seconds;
 }
+
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
+void
+db_CatValArray_init( dbCatValArray *arr )
+{
+    arr->n_values = 0;
+    arr->alloc = 0;
+    arr->value = NULL;
+}
+
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
+int
+db_CatValArray_alloc( dbCatValArray *arr, int n )
+{
+    arr->value = (dbCatVal *) G_malloc ( n * sizeof(dbCatVal) );
+
+    arr->alloc = n;
+
+    return DB_OK;
+}
+
