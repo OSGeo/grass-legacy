@@ -6,19 +6,25 @@
 
 #include <gd.h>
 #include "png.h"
+#include "gis.h"
 
-Polygon_abs(xarray, yarray, number)
-	int *xarray, *yarray ;
-	int number ;
+Polygon_abs(int *xarray, int *yarray, int number)
 {
-	gdPointPtr points;
+	static gdPointPtr points;
+	static int size;
 	int i;
-	int red;
 
-	points = (gdPointPtr)G_malloc(sizeof(gdPoint)*number);
-	for(i=0;i<number;i++) {
-		(*(points+i)).x = xarray[i];
-		(*(points+i)).y = yarray[i];
+	if (size < number)
+	{
+		size = number;
+		points = G_realloc(points, sizeof(gdPoint) * size);
 	}
+
+	for (i = 0; i < number; i++)
+	{
+		points[i].x = xarray[i];
+		points[i].y = yarray[i];
+	}
+
 	gdImageFilledPolygon(im, points, number, currentColor);
 }
