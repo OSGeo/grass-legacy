@@ -16,20 +16,30 @@ REQUIRED SOURCE CODE CHANGES (programming required)
 Generally, to support i18N multiple languages,
 message strings in GRASS must be modified from
 
- fprintf ( ..., "...", ...);
+ fprintf ( ..., "...\n", ...);
 to
  G_message ( _("..."), ...);
 
-See for example ./vector/v.what.rast/main.c
+a) to replace:
+- fprintf (stdout,    with G_message (
+- fprintf (stderr,    with G_message (
 
-These strings will be then extracted automatically into the
-POT file. 
+b) to add:
+- the macro _( ) 
+
+c) to remove:
+- \n at the end of single message strings
 
 Also needed to be added:
 #include "glocale.h"
 
 This line has to be added to each C file which contains
 user messages, preferably as last #include statement.
+
+Such strings will be then extracted automatically into
+the POT file(s).
+
+See for example ./vector/v.what.rast/main.c
 
 ------------------------------------------------------
 
