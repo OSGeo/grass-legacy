@@ -15,7 +15,7 @@ g.remove MASK >>tmpoutfile
 
 # Run the first excecutable
 
-agnps_input_1
+$GISBASE/etc/agnps50/agnps_input_1
 # agnps_input_1 exits with a status of 1 if
 # the flow map was not present and had to be created.
 # The user is warned that the flow map needs to be
@@ -33,7 +33,7 @@ then
   echo "Check for more than one outlet cell! If present, use d.rast.edit"
   echo "on aspect map to fix this."
 else
-  agnps_input_2a
+  $GISBASE/etc/agnps50/agnps_input_2a
 fi
 
 ##
