@@ -85,7 +85,7 @@ main (int argc, char *argv[])
     parm.date->key_desc = "timestamp";
     parm.date->required = NO;
     parm.date->type = TYPE_STRING;
-    parm.date->description = "datetime, datetime1/datetime2, or none";
+    parm.date->description = "datetime or datetime1/datetime2";
 
     if (G_parser(argc,argv))
 	exit(-1);
