@@ -19,8 +19,8 @@ dither (col, c, y, m)
     else
     {
 	pat= pattern[ras_row&1];    /* odd/even */
-	CYAN[byte]    | = pat[c] & bit;
-	YELLOW[byte]  | = pat[y] & bit;
-	MAGENTA[byte] | = pat[m] & bit;
+	CYAN[byte]    |= pat[c] & bit;
+	YELLOW[byte]  |= pat[y] & bit;
+	MAGENTA[byte] |= pat[m] & bit;
     }
 }
