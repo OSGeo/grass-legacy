@@ -18,6 +18,11 @@
  * if lon2-lon1=180 then the geodesic is either meridian lon1 or lon2
  */
 
+/* TODO:
+ *
+ * integrate code from raster/r.surf.idw/ll.c
+ */
+
 #include "pi.h"
 
 extern double sin(), cos(), tan(), atan();
