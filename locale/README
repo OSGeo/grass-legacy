@@ -33,6 +33,14 @@ Three steps:
 
    This line has to be added to each C file which contains
    user messages, preferably as last #include statement.
+   Only, if missing, also add
+     #include "gis.h"
+
+NOTE: Also G_warning() and G_fatal_error() need the message
+      encapsulation with macro _() but no further changes.
+
+NOTE2: Also the parameters/flags of each module needs the
+       macro _().
 
 All these messages strings will be then automatically 
 extracted into the message files.
