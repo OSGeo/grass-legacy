@@ -1,4 +1,3 @@
-/* %W% %G% */
 
 /*  
 *  Functions in this file:
