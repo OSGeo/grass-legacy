@@ -15,6 +15,8 @@ and 32 Mb RAM. The source code package needs around 100 MB uncompressed.
 The resulting binaries may need between 80 MB and 180 MB depending on your
 platform. During a full compilation you need temporarily 550MB including the
 source code.
+<p>
+To disable features please read the INSTALL file.
 
 <br>&nbsp;
 
@@ -57,8 +59,8 @@ to install some of them.)
 <br><a href="ftp://ftp.gnu.org/pub/gnu/ncurses/">ftp://ftp.gnu.org/pub/gnu/ncurses/</a>
 <br><br>
 
-<li>gdbm (dbm.h): GNU dbm is a set of database routines that use extendible hashing
-and works similar to the standard UNIX dbm routines.</li>
+<li>dgm/gdbm (dbm.h): GNU dbm is a set of database routines that use extendible hashing
+and works similar to the standard UNIX dbm routines. Currently not required.</li>
 <br><a href="http://www.gnu.org/software/gdbm/gdbm.html">http://www.gnu.org/software/gdbm/gdbm.html</a>
 <br><br>
 
@@ -75,7 +77,7 @@ Optional requirements:</h3>
 
 <ul>
 <li>Tcl/Tk 8.x libraries (they include 'wish') to use TclTkGRASS Interface and to compile src.contrib/GMSL/NVIZ2.2/<br>
-see <a href="http://grass.itc.it/main_tclgrass.html">http://grass.itc.it/main_tclgrass.html</a>
+see <a href="http://tcl.sourceforge.net/">http://tcl.sourceforge.net/</a>
 <br></li>
 
 <li>Mesa-3.x (openGL clone) required for NVIZ2.2<br>
@@ -107,6 +109,10 @@ Note: the support is intended for future module implementations
 
 <li>libtiff (for r.in.tiff, r.out.tiff), usually already installed.<br>
 <a href="http://www.libtiff.org">http://www.libtiff.org</a>
+<br></li>
+
+<li>libgd (for PNG driver), preferably GD 2.x.<br>
+<a href="http://www.boutell.com/gd/">http://www.boutell.com/gd/</a>
 <br></li>
 
 <li>netpbm-tools/libraries (for r.in.png/r.out.png), usually already installed.<br>
