@@ -135,6 +135,9 @@ else
 fi
 
 export GRASS_GUI
+
+# Save the user interface variable in the grassrc file - choose a temporary
+# file name that should not match another file
 if [ -f $GISRC ] ; then
     awk '$1 !~ /GRASS_GUI/ {print}' $GISRC > $GISRC.$$
     echo "GRASS_GUI: $GRASS_GUI" >> $GISRC.$$
