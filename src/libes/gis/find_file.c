@@ -50,8 +50,8 @@ static char *G__find_file (
  */
     if (G__name_is_fully_qualified(name, xname, xmapset))
     {
-	name = xname;
-	mapset = xmapset;
+	strcpy(name, xname);
+	strcpy(mapset, xmapset);
     }
 
 /*
