@@ -14,7 +14,8 @@ struct list
 static int nareas ;
 static int compare(const void *, const void *);
 
-int do_areas ( struct Map_info *Map,struct line_pnts *Points, dbCatValArray *Cvarr, int ctype, int field)
+int do_areas ( struct Map_info *Map,struct line_pnts *Points, dbCatValArray *Cvarr, int ctype, int field,
+	       int use, double value, int value_type)
 {
     int i,index, ret;
     CELL  cval, cat;
@@ -28,27 +29,37 @@ int do_areas ( struct Map_info *Map,struct line_pnts *Points, dbCatValArray *Cva
 	index = list[i].index;
 	cat   = list[i].cat;
 	G_debug ( 3, "Area cat = %d", cat );
+
 	if ( ISNULL ( &cat ) ) { /* No centroid or no category */
 	    set_cat (cat);
 	} else {
-	    if ( ctype == DB_C_TYPE_INT ) {
-		ret = db_CatValArray_get_value_int ( Cvarr, cat, &cval );
-		if ( ret != DB_OK ) {
-		    G_warning ("No record for area (cat = %d)", cat );
-	            SETNULL( &cval );
+	    if ( use == USE_ATTR ) {
+		if ( ctype == DB_C_TYPE_INT ) {
+		    ret = db_CatValArray_get_value_int ( Cvarr, cat, &cval );
+		    if ( ret != DB_OK ) {
+			G_warning ("No record for area (cat = %d)", cat );
+			SETNULL( &cval );
+		    }
+		    set_cat (cval);
+		} else if ( ctype == DB_C_TYPE_DOUBLE ) {
+		    ret = db_CatValArray_get_value_double ( Cvarr, cat, &dval );
+		    if ( ret != DB_OK ) {
+			G_warning ("No record for area (cat = %d)", cat );
+			SETDNULL( &dval );
+		    }
+		    set_dcat ( dval);
+		} else {
+		    G_fatal_error ("Column type  not supported" );
 		}
-		set_cat (cval);
-	    } else if ( ctype == DB_C_TYPE_DOUBLE ) {
-		ret = db_CatValArray_get_value_double ( Cvarr, cat, &dval );
-		if ( ret != DB_OK ) {
-		    G_warning ("No record for area (cat = %d)", cat );
-	            SETDNULL( &dval );
-		}
-		set_dcat ( dval);
-	    } else {
-		G_fatal_error ("Column type  not supported" );
+	    } else if  ( use == USE_CAT ) {
+		set_cat (cat);
+	    } else { 
+		if ( value_type == USE_CELL )
+		    set_cat ( (int) value);
+		else
+		    set_dcat ( value );
 	    }
-	}
+         }
 
 	if(Vect_get_area_points (Map, index, Points) <= 0) {
 	    fprintf (stderr, "*** Get area [%d] failed ***\n", index);
