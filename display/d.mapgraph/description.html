@@ -151,10 +151,14 @@ message.
 
 <H2>EXAMPLE</H2>
 
+Draw some text in the center of the display:
 <pre>
+   EAST=`g.region -c | grep east | cut -f2 -d:`
+   NORTH=`g.region -c | grep north | cut -f2 -d:`
+
    d.mapgraph << EOF
-   move 16844 26838
-   text Z
+     move $EAST $NORTH
+     text GRASS
    EOF
 </pre>
 
@@ -165,9 +169,10 @@ message.
 <EM><A HREF="d.rast.html">d.rast</A></EM><BR>
 <EM><A HREF="d.zoom.html">d.zoom</A></EM><BR>
 <EM><A HREF="g.region.html">g.region</A></EM><BR>
+<!--
 <EM><A HREF="grass.logo.sh.html">grass.logo.sh</A></EM><BR>
-
 <EM><A HREF="parser.html">parser</A></EM>
+-->
 
 <H2>AUTHOR</H2>
 
