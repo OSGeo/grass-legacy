@@ -1,0 +1,9 @@
+
+
+r.grow - 
+
+r.grow adds one \cell\ around the perimeters of all areas in a
+user-specified \raster\ map layer and stores the output in a new raster
+map layer.
+
+Manual entry for \r.grow\
