@@ -2,7 +2,7 @@
  *    returns 0 if color is not known.
  */
 
-#include "../colors.h"
+#include "colors.h"
 
 D_translate_color(str)
 	char *str ;
