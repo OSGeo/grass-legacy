@@ -143,7 +143,7 @@ int main (int argc, char **argv)
 	    snprintf (buf,1023, " and %s", par.where->answer);	
 	    db_append_string (&stmt, buf);
 	}    
-	printf ("%s\n",stmt.string); 
+	fprintf (stderr, "%s\n", db_get_string(&stmt));
 	if (db_open_select_cursor(driver, &stmt, &cursor, DB_SEQUENTIAL) != DB_OK)
     	    return (-1);
 	table = db_get_cursor_table (&cursor); 
@@ -187,6 +187,6 @@ int main (int argc, char **argv)
 	D_add_to_list(G_recreate_command()) ;
 	R_close_driver();
 	
-	printf ("%d sites plotted.\n", nplot); 
+	fprintf (stderr, "%d sites plotted.\n", nplot); 
 	exit(0);
 }
