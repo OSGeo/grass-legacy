@@ -1,7 +1,11 @@
 #!/usr/bin/wish -f
 
+set env(GISDBASE) [exec g.gisenv get=GISDBASE]
+set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
+set env(MAPSET) [exec g.gisenv get=MAPSET]
 
-set nam "$env(LOCATION)/colr/"
+
+set nam "$env(GISDBASE)/$env(LOCATION_NAME)/$env(MAPSET)/colr/"
 
 if [info exists env(FILTER_PATH)] {
 	set FILTER_PATH $env(FILTER_PATH)
@@ -169,7 +173,7 @@ button .edit -text "Modify" -command {
 	}
 button .load -text "Load" -command {
 	global env nam
-	set nam "$env(LOCATION)/colr/"
+	set nam "$env(GISDBASE)/$env(LOCATION_NAME)/$env(MAPSET)/colr/"
 	set nam [filereqrd $nam ""]
 	if {![file isfile $nam]} return
 	loadfile $nam
@@ -179,7 +183,7 @@ button .save -text "Save" -command {
 	if [regexp {^(.+)/colr/(.+)$} $nam dumy pre post] {
 		set nam "$pre/cell/$post"
 	} {
-		set nam "$env(LOCATION)/cell/"
+		set nam "$env(GISDBASE)/$env(LOCATION_NAME)/$env(MAPSET)/cell/"
 		}
 	set nam [filereqrd $nam ""]
 	if [regexp {^(.+)/cell/(.+)$} $nam dumy pre post] {
