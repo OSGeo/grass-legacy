@@ -423,12 +423,6 @@ hitreturn()
     if (strcmp (buf, "exit") == 0) exit(0);
 }
 
-static
-max(a,b)
-{
-    return a>b?a:b;
-}
-
 /* the following is copied from wind_scan.c */
 static
 scan_double (buf, value)
