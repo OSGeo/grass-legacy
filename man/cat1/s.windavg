@@ -1,0 +1,132 @@
+
+
+
+s.windavg <main>     GRASS Reference Manual	 <main>	s.windavg
+
+
+
+NAME
+     s.windavg - Window	average	filter for sites.
+     (GRASS Sites Program)
+
+SYNOPSIS
+     s.windavg
+     s.windavg help
+     s.windavg [-glqz] input=name [output=name]
+
+DESCRIPTION
+     s.windavg averages	sites. The non-overlapping window for
+     each average is defined by	the cell size for current
+     geographic	region;	sites within a rectangular window with
+     the same boundaries as raster cells are averaged.	Output
+     locations are at window centers.
+
+     Flags:
+
+     -l		       If site is in the E|N|#n	desc format
+		       (instead	of the E|N|desc	format), use the
+		       numeric desc as the site	value.
+
+     -z		       Suppress	printing locations with	a zero
+		       average.
+
+     -g		       Output in g.gnuplot format. This	overrides
+		       the -z flag and the output option is set
+		       to standard output (which may be
+		       redirected to a file; see below).
+
+     -q		       Quiet. Cut out the chatter.
+
+     Parameters:
+
+     input=name	       Name of sites list to be	averaged.
+
+     output=name       Optional	name of	sites list in which
+		       output will be stored. Standard output is
+		       used if this is missing.
+
+NOTES
+     It	is very	important, with	or without the -cdl flag, that
+     site descriptions be numeric.  No error checking is done.
+
+     Output files are silently overwritten.
+
+     The -g option to produce output suitable for use with
+     g.gnuplot,	a scientific plotting program capable of plotting
+     surfaces.
+
+     Example	 s.windavg -qz input=name > plottingdata
+		 g.gnuplot
+
+
+
+GRASS 4.3		Baylor University			1
+
+
+
+
+
+
+s.windavg <main>     GRASS Reference Manual	 <main>	s.windavg
+
+
+
+		 gnuplot> set parametric
+		 gnuplot> splot	'plottingdata' with linespoints
+
+     This will give a quick look at spatial trends in your input
+     sites list.
+
+SEE ALSO
+     s.univar, g.region, and GNUPLOT- An Interactive Plotting
+     Program (kept in src*/g.gnuplot/docs)
+
+BUGS
+     No	special	data structure is used to store	sites, so for a
+     very large	site file, run time could increase substantially
+     (if you don't run out of memory first)
+
+     Please send all bug fixes and comments to the author.
+
+AUTHOR
+     James Darrell McCauley, Purdue University
+     (mccauley@ecn.purdue.edu)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.3		Baylor University			2
+
+
+
