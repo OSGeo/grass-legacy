@@ -10,6 +10,7 @@ int main (int argc, char *argv[])
     struct Option **parm, *p;
     struct Flag *overwr;
     char *from, *to;
+    char buf1[256], *location_path;
 
     init (argv[0]);
 
@@ -53,6 +54,9 @@ int main (int argc, char *argv[])
             exit(1);
         }
     }
+
+    location_path = G__location_path();
+
     for (n = 0; n < nlist; n++)
     {
         if (parm[n]->answers == NULL)
@@ -85,6 +89,9 @@ int main (int argc, char *argv[])
                 continue;
             }
             do_copy (n, from, mapset, to);
+	    sprintf (buf1, "rm -f %s/%s/cell_misc/%s/reclassed_by",
+			    location_path, mapset, to);
+	    system(buf1);
         }
     }
     exit(0);
