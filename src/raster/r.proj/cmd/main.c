@@ -1,7 +1,3 @@
-#ifndef lint
-static char *SCCSid = "@(#)main.c	v1.8 - 06 Aug 1995 	-emes-";
-#endif
-
 /*
 * Name
 * 	r.proj -- convert a map to a new geographic projection.
@@ -40,9 +36,23 @@ static char *SCCSid = "@(#)main.c	v1.8 - 06 Aug 1995 	-emes-";
 *		  particular v.proj) 
 *
 * Changes
-*
+*		 Morten Hulden <morten@ngb.se>, Aug 2000:
+*		 - aborts if input map is outside current location.
+*		 - can handle projections (conic, azimuthal etc) where 
+*		 part of the map may fall into areas where south is 
+*		 upward and east is leftward.
+*		 - avoids passing location edge coordinates to PROJ
+*		 (they may be invalid in some projections).
+*		 - output map will be clipped to borders of the current region.
+*		 - output map cell edges and centers will coinside with those 
+*		 of the current region.
+*		 - output map resolution (unless changed explicitly) will
+*		 match (exactly) the resolution of the current region.
+*		 - if the input map is smaller than the current region, the 
+*		 output map will only cover the overlapping area.
+*                - if the input map is larger than the current region, only the
+*		 needed amount of memory will be allocated for the projection
 */
-
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -64,7 +74,9 @@ int main (int argc, char **argv)
 	          permissions,		 /* mapset permissions		 */
 	          cell_type,		 /* output celltype		 */
 	          cell_size,		 /* size of a cell in bytes	 */
-	          row, col, i;		 /* counters			 */
+	          row, col, i,		 /* counters			 */
+		  irows, icols,		 /* original rows, cols		 */
+		  orows, ocols;
 
 	void     *obuffer,		 /* buffer that holds one output row	 */
 	         *obufptr;		 /* column ptr in output buffer	 */
@@ -75,8 +87,10 @@ int main (int argc, char **argv)
 	          ycoord1, ycoord2,	 /* temporary y coordinates	 */
 	          col_idx,		 /* column index in input matrix */
 	          row_idx,		 /* row index in input matrix	 */
-	          n, s, e, w,		 /* output coordinates		 */
-	          hn, hs, he, hw;	 /* input coordinates		 */
+		  onorth, osouth,	 /* save original border coords  */
+		  oeast, owest,
+		  inorth, isouth,
+		  ieast, iwest;
 
 	struct pj_info iproj,		 /* input map proj parameters	 */
 	          oproj;		 /* output map proj parameters	 */
@@ -231,14 +245,9 @@ int main (int argc, char **argv)
 
 		G_set_window(&incellhd);
 		cell_type = G_raster_map_type(inmap->answer, setname);
-		fdi = G_open_cell_old(inmap->answer, setname);
 
 		if (!G_projection())	/* XY data 		 */
 			G_fatal_error("Can't work with xy data");
-
-   /* read the entire input map and close it */
-		ibuffer = (FCELL **) readcell(fdi);
-		G_close_cell(fdi);
 
 	} else {		/* can't access mapset 	 */
 
@@ -251,117 +260,83 @@ int main (int argc, char **argv)
 		G_fatal_error(errbuf);
 	}
 
+    /* Save default borders so we can show them later */
+
+	inorth = incellhd.north;
+	isouth = incellhd.south;
+	ieast = incellhd.east;
+	iwest = incellhd.west;
+	irows = incellhd.rows;
+	icols = incellhd.cols;
+
+	onorth = outcellhd.north;
+	osouth = outcellhd.south;
+	oeast = outcellhd.east;
+	owest = outcellhd.west;
+	orows = outcellhd.rows;
+	ocols = outcellhd.cols;
+
+    /* Cut non-overlapping parts of input map */
+
+	if (bordwalk(&outcellhd, &incellhd, &oproj, &iproj, errbuf) < 0)
+	    G_fatal_error(errbuf);
+
+    /* Add 2 cells on each side for bilinear/cubic & future interpolation methods */
+    /* (should probably be a factor based on input and output resolution) */
+        
+	    incellhd.north+=2*incellhd.ns_res;
+	    incellhd.east+=2*incellhd.ew_res;
+	    incellhd.south-=2*incellhd.ns_res;
+	    incellhd.west-=2*incellhd.ew_res;
+	    if (incellhd.north > inorth) incellhd.north=inorth;  
+	    if (incellhd.east > ieast) incellhd.east=ieast;  
+	    if (incellhd.south < isouth) incellhd.south=isouth;  
+	    if (incellhd.west < iwest) incellhd.west=iwest;  
+
+	G_set_window(&incellhd);
+
    /* And switch back to original location */
+
 	G__switch_env();
 
+    /* Adjust borders of output map */
 
-   /****** Get min/max of boundaries *******/
-	he = incellhd.east;
-	hw = incellhd.west;
-	hn = incellhd.north;
-	hs = incellhd.south;
+	if (bordwalk(&incellhd, &outcellhd, &iproj, &oproj, errbuf) < 0)
+	    G_fatal_error(errbuf);
 
-   /* South east corner		 */
-	if (pj_do_proj(&he, &hs, &iproj, &oproj) < 0)
-		G_fatal_error("Error in pj_do_proj\n");
-
-	e = he;
-	s = hs;
-	he = incellhd.east;
-	hs = incellhd.south;
-
-   /* North east corner		 */
-	if (pj_do_proj(&he, &hn, &iproj, &oproj) < 0)
-		G_fatal_error("Error in pj_do_proj\n");
-
-	n = hn;
-	hn = incellhd.north;
-	outcellhd.east = (he < e) ? e : he;
-
-   /* South west corner	 */
-	if (pj_do_proj(&hw, &hs, &iproj, &oproj) < 0)
-		G_fatal_error("Error in pj_do_proj\n");
-
-	w = hw;
-	outcellhd.south = (s < hs) ? s : hs;
-
-	hn = incellhd.north;
-	hw = incellhd.west;
-
-   /* North west corner	 */
-	if (pj_do_proj(&hw, &hn, &iproj, &oproj) < 0)
-		G_fatal_error("Error in pj_do_proj\n");
-
-	outcellhd.north = (hn < n) ? n : hn;
-	outcellhd.west  = (hw > w) ? w : hw;
-
-   /* north/south mid - west corner*/
-	hn = (incellhd.north - incellhd.south)/2 + incellhd.south;
-
-	n = hn;
-	hw = incellhd.west;
-	if (pj_do_proj(&hw, &hn, &iproj, &oproj) < 0)
-		G_fatal_error("Error in pj_do_proj\n");
-   	
-	outcellhd.west  = (hw < outcellhd.west) ? hw : outcellhd.west;
-
-   /* north/south mid - east corner*/
-	hn = n;
-	he = incellhd.east;
-	if (pj_do_proj(&he, &hn, &iproj, &oproj) < 0)
-		G_fatal_error("Error in pj_do_proj\n");
-	
-	outcellhd.east = (he > outcellhd.east ) ? he : outcellhd.east;
-	
-   /* east/west mid - north corner */
-   	he = (incellhd.east - incellhd.west)/2 + incellhd.west;
-   	e = he;
-   	hn = incellhd.north;
-   	if (pj_do_proj(&he, &hn, &iproj, &oproj) < 0)
-		G_fatal_error("Error in pj_do_proj\n");
-
-	outcellhd.north = (hn > outcellhd.north) ? hn : outcellhd.north;
-	
-   /* east/west mid - south corner */
-   	he = e;
-   	hs = incellhd.south;
-   	if (pj_do_proj(&he, &hs, &iproj, &oproj) < 0)
-		G_fatal_error("Error in pj_do_proj\n");
-	
-	outcellhd.south = (hs < outcellhd.south) ? hs : outcellhd.south;
-   /* done */	
-	
-
-	outcellhd.cols = incellhd.cols;
-   
-	if (res->answer != NULL){   /* set user defined resolution		*/
+	if (res->answer != NULL)   /* set user defined resolution		*/
 		outcellhd.ns_res = outcellhd.ew_res = atof(res->answer);
-		G_adjust_Cell_head(&outcellhd, 0, 0);
-	} else {		    /* determine res from number of cols	*/
-		G_adjust_Cell_head(&outcellhd, 0, 1);
-		outcellhd.ns_res = outcellhd.ew_res;
-		G_adjust_Cell_head(&outcellhd, 0, 0);
-	}
+
+	G_adjust_Cell_head(&outcellhd, 0, 0);
 	G_set_window(&outcellhd);
 
-
 	fprintf(stderr, "Input:\n");
-	fprintf(stderr, "Cols:	%d\nRows:	%d\n", incellhd.cols, incellhd.rows);
-	fprintf(stderr, "North: %f\n", incellhd.north);
-	fprintf(stderr, "South: %f\n", incellhd.south);
-	fprintf(stderr, "West:  %f\n", incellhd.west);
-	fprintf(stderr, "East:  %f\n", incellhd.east);
+	fprintf(stderr, "Cols:	%d (%d)\nRows:	%d (%d)\n", incellhd.cols, icols, incellhd.rows, irows);
+	fprintf(stderr, "North: %f (%f)\n", incellhd.north, inorth);
+	fprintf(stderr, "South: %f (%f)\n", incellhd.south, isouth);
+	fprintf(stderr, "West:  %f (%f)\n", incellhd.west, iwest);
+	fprintf(stderr, "East:  %f (%f)\n", incellhd.east, ieast);
 	fprintf(stderr, "ew-res:	%f\nns-res	%f\n\n", incellhd.ew_res, incellhd.ns_res);
 
 	fprintf(stderr, "Output:\n");
-	fprintf(stderr, "Cols:	%d\nRows:	%d\n", outcellhd.cols, outcellhd.rows);
-	fprintf(stderr, "North: %f\n", outcellhd.north);
-	fprintf(stderr, "South: %f\n", outcellhd.south);
-	fprintf(stderr, "West:  %f\n", outcellhd.west);
-	fprintf(stderr, "East:  %f\n", outcellhd.east);
+	fprintf(stderr, "Cols:	%d (%d)\nRows:	%d (%d)\n", outcellhd.cols, ocols, outcellhd.rows, orows);
+	fprintf(stderr, "North: %f (%f)\n", outcellhd.north, onorth);
+	fprintf(stderr, "South: %f (%f)\n", outcellhd.south, osouth);
+	fprintf(stderr, "West:  %f (%f)\n", outcellhd.west, owest);
+	fprintf(stderr, "East:  %f (%f)\n", outcellhd.east, oeast);
 	fprintf(stderr, "ew-res:	%f\nns-res	%f\n", outcellhd.ew_res, outcellhd.ns_res);
 
-
+	G__switch_env();
+	
+   /* open and read the relevant parts of the input map and close it */
+	
+   	G_set_window(&incellhd);
+		fdi = G_open_cell_old(inmap->answer, setname);
+		ibuffer = (FCELL **) readcell(fdi);
+		G_close_cell(fdi);
+	G__switch_env();
+	G_set_window(&outcellhd);
+		
 	if (strcmp(interpol->answer, "nearest") == 0) {
 		fdo = G_open_raster_new(mapname, cell_type);
 		obuffer = (CELL *) G_allocate_raster_buf(cell_type);
