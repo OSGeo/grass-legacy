@@ -101,7 +101,7 @@ int main(int argc, char **argv)
 	if (D_do_conversions(&window, t, b, l, r))
 		G_fatal_error("Error in calculating conversions") ;
 	
-	if(open_sites(opt1->answers[0])){
+	if(open_sites(site[0])){
 	    load_sites(&window, !(shh->answer));
 	    what (once->answer, terse->answer) ;
 	}
