@@ -1,0 +1,26 @@
+MAN	  = doc/g.stats.db
+#PGM       = $(BIN_CONTRIB_CMD)/g.stats.db
+PGM	= g.stats.db
+LIBES     = $(GISLIB) $(VASKLIB) -ltermcap
+
+#EXTRA_CFLAGS	= -Dunlink=puts
+
+
+OBJS = \
+	main.o \
+	sqlStats.o \
+	ingresUtils.o \
+	chktype.o
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB)
+	#cp $(MAN)  $(GISBASE)/man/4
+
+$(LIBES): #
+#####################################
+#
+	ctags *.[ch]
+	sed 's/\?/\//g' tags > tags.tmp
+	mv tags.tmp tags
+	
