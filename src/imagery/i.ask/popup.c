@@ -229,6 +229,8 @@ popup (fd, x, y, msg)
 	default: /* file picked */
 		printf ("name=%s\n", list[which].name);
 		printf ("mapset=%s\n", list[which].mapset);
+		printf ("fullname=%s\n",
+		    G_fully_qualified_name(list[which].name, list[which].mapset));
 		/*FALLTHROUGH*/
 	case -2: /* cancel */
 		R_panel_restore (tempfile1);
