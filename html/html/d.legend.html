@@ -19,7 +19,7 @@ active frame on the graphics monitor.
 <BR>
 <B>d.legend help</B> 
 <BR>
-<B>d.legend</B> [<B>-vcsm</B>] <B>map=</B><EM>name</EM> [<B>color=</B><EM>name</EM>]
+<B>d.legend</B> [<B>-vcsom</B>] <B>map=</B><EM>name</EM> [<B>color=</B><EM>name</EM>]
 [<B>lines=</B><EM>value</EM>] [<B>thin=</B><EM>value</EM>] [<B>labelnum=</B><EM>value</EM>] 
 
 <H2>DESCRIPTION</H2>
@@ -61,6 +61,8 @@ using the standard GRASS <A HREF="parser.html">parser</A> interface.
 <DD>Do not show category numbers
 <DT><B>-s</B>
 <DD>Draw smooth gradient (for floating point rasters forced automatically)
+<DT><B>-o</B>
+<DD>Draw entries only for existing categories (ignored for floating point maps)
 <DT><B>-m</B>
 <DD>Use mouse to size &amp; place legend
 </DL>
@@ -105,6 +107,9 @@ make a horizontal box the values run from left to right and no category
 values are printed (you may want to use <EM>d.label</EM> for that). 
 If the user attempts to display a very long legend in a relatively short 
 display frame, the legend may appear in unreadably small text. 
+<p>
+The flag <EM>-o</EM> is useful for categorial maps, it suppresses the
+drawing of non-existing categories (otherwise the full range is shown).
 
 <H2>SEE ALSO</H2>
 

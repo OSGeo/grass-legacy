@@ -1,6 +1,5 @@
 /*
- * $Id$
- *
+ *  8/2002: added o flag MN
  * 11/2001: added c,v flags, fixed mouse for CELL maps MN
  * 10/2001: added labelnum MN
  *
@@ -35,7 +34,7 @@ int main( int argc, char **argv )
 	int cats_num ;
 	int color ;
 	int cur_dot_row ;
-	int do_cats ;
+	int do_cats = 0;
 	int dots_per_line ;
         int thin ;
         int i, j;
@@ -51,12 +50,14 @@ int main( int argc, char **argv )
 	struct Colors colors ;
 	struct GModule *module;
 	struct Option *opt1, *opt2, *opt4, *opt5, *opt6;
-	struct Flag *hidestr, *hidenum, *smooth, *mouse;
+	struct Flag *hidestr, *hidenum, *smooth, *catsonly, *mouse;
 	struct Range range ;
 	struct FPRange fprange ;
 	CELL min_ind, max_ind, null_cell;
 	DCELL dmin, dmax, val;
 	int x0, x1, y0, y1;
+	int plaincats_num;
+	struct Histogram histogram;
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
@@ -126,6 +127,10 @@ int main( int argc, char **argv )
 	smooth = G_define_flag ();
 	smooth->key = 's';
 	smooth->description = "Draw smooth gradient";
+
+	catsonly = G_define_flag ();
+	catsonly->key = 'o';
+	catsonly->description = "Draw entries only for existing categories";
 
 	mouse = G_define_flag ();
 	mouse->key = 'm';
@@ -235,7 +240,16 @@ int main( int argc, char **argv )
 	    min_ind = 1;
 	    max_ind = 0;
 	   } */
-	   cats_num = max_ind - min_ind + 1 ;
+	   do_cats = max_ind - min_ind + 1 ;
+           
+           if(catsonly->answer) /* print only existing categories in a thematic map */
+           {
+              if (G_read_histogram (map_name, mapset, &histogram) <= 0)
+                  G_fatal_error("Run r.support on file <%s> in mapset <%s>",map_name,mapset);
+
+	      plaincats_num= G_get_histogram_num (&histogram) - 1;
+	      do_cats = plaincats_num + 1;
+	    }
         }
 	else /* is fp */
 	{
@@ -246,7 +260,11 @@ int main( int argc, char **argv )
 	   }
            G_get_fp_range_min_max(&fprange, &dmin, &dmax);
         }
-	cats_num = max_ind - min_ind + 1 ;
+
+	if(!catsonly->answer && !fp) /* print only existing categories in a thematic map */
+	   cats_num = max_ind - min_ind + 1 ;
+	else
+	   cats_num = do_cats ;
 	
 	if (lines == 1) lines = cats_num + 1 ;
 	do_cats = cats_num > (lines - 1) ? lines - 1 : cats_num ;
@@ -274,10 +292,10 @@ int main( int argc, char **argv )
 	}
 
 	if(do_smooth){
-	int k, wleg, lleg, dx, dy, horiz;
-	int txsiz;
-	int ppl;
-	int tcell;
+	   int k, wleg, lleg, dx, dy, horiz;
+	   int txsiz;
+	   int ppl;
+	   int tcell;
 	    
 	    horiz = (x1-x0 > y1-y0);
 
@@ -315,6 +333,7 @@ int main( int argc, char **argv )
 		    /* Draw text */
 		    if (!fp){	
 		        tcell = min_ind + k * (double)(max_ind - min_ind)/(steps-1);
+
 		        cstr = G_get_cat(tcell, &cats);
 		        if(!cstr[0]) /* no cats found, disable str output */
 		          hide_catstr=1;
@@ -417,6 +436,10 @@ int main( int argc, char **argv )
 	    /* Draw away */
 	    cur_dot_row = t + dots_per_line/2;
 	    j = (do_cats == cats_num ? 1 : 2 );
+
+	    if(catsonly->answer && !fp) /* print only existing categories in a thematic map */
+	      min_ind = G_get_histogram_cat(0,&histogram);
+
 	    for(i=min_ind; j<=do_cats && i<=max_ind; j++, i+=thin)
 	    {
 		    /* White box */
@@ -462,6 +485,9 @@ int main( int argc, char **argv )
 
 		    R_move_abs((l+3+dots_per_line), (cur_dot_row));
 		    R_text(buff);
+		    if(catsonly->answer  && !fp) /* print only existing categories in a thematic map */
+		      i = G_get_histogram_cat(j,&histogram) - 1;
+
 	    }
 	    if (do_cats != cats_num)
 	    {
