@@ -16,6 +16,7 @@
 
 /* updated by Andreas Lange, andreas.lange@rhein-main.de 
  * for text color support.
+ * updated 2004 my MN for FP support
  */
 
 /*
@@ -43,7 +44,7 @@
 #include "colors.h"
 
 #define MAIN
-int draw_number(int);
+int draw_number(double, RASTER_MAP_TYPE);
 
 int D_x, D_y ;
 double D_ew, D_ns;
@@ -51,7 +52,7 @@ double D_ew, D_ns;
 int 
 main (int argc, char **argv)
 {
-	CELL *cell;
+	DCELL *cell;
 	char *mapset;
 	char full_name[128] ;
 	char window_name[64] ;
@@ -78,6 +79,7 @@ main (int argc, char **argv)
 	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3 ;
 	struct Flag *text_color; 
+	RASTER_MAP_TYPE map_type, inmap_type;
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
@@ -147,6 +149,10 @@ main (int argc, char **argv)
 		fprintf (stderr,"warning: unable to open [%s]\n", full_name);
 		exit(0);
 	}
+
+	/* determine the inputmap type (CELL/FCELL/DCELL) */
+	inmap_type = G_raster_map_type(full_name, mapset);
+	map_type = DCELL_TYPE;
 
 	/* Setup driver and check important information */
 
@@ -262,7 +268,7 @@ main (int argc, char **argv)
 
 	/* allocate the cell array */
 
-	cell  = G_allocate_cell_buf ();
+	cell  = G_allocate_raster_buf (map_type);
 
 	R_font("romans");
 
@@ -283,7 +289,7 @@ main (int argc, char **argv)
 
 	for(row = 0; row < nrows; row++)
 	{
-		G_get_c_raster_row (layer_fd, cell, row);
+		G_get_raster_row (layer_fd, cell, row, map_type);
 
 		/* determine screen y coordinate of top of current cell */
 
@@ -297,7 +303,7 @@ main (int argc, char **argv)
 			D_x = (int)(col * D_ew + D_west);
 
 			/* if(cell[col] > 0) { */
-				if ( fixed_color == 0 ) {
+			   if ( fixed_color == 0 ) {
 					G_get_color(cell[col],&R,&G,&B,&colors);
 
 				/*
@@ -315,8 +321,7 @@ main (int argc, char **argv)
 					if (new_color != cur_color)
 						R_standard_color(cur_color = new_color);
 				}		
-			
-			draw_number(cell[col]);
+			draw_number(cell[col], inmap_type);
 
 			/*}*/
 		}
@@ -331,7 +336,7 @@ main (int argc, char **argv)
 /* --- end of main --- */
 
 int 
-draw_number (int number)
+draw_number (double number, RASTER_MAP_TYPE map_type)
 {
 	extern double D_ew, D_ns;
 	extern int D_x, D_y;
@@ -339,13 +344,23 @@ draw_number (int number)
 	int tt,tb,tl,tr;
 	char	*itoa(), no[10];
 	double	dots_per_line, factor = 0.8;
-	CELL cell=number;
+	DCELL dcell=number;
+	CELL cell=(int)number;
 
 	R_set_window(D_y,D_y+(int)(D_ns*0.9),D_x,D_x+(int)(D_ew*0.9));
-	if(!G_is_c_null_value(&cell))
-	   sprintf(no,"%d",number);
-        else
+	
+	/* maybe ugly, but works */
+	if ( map_type == CELL_TYPE ){
+	  if(!G_is_c_null_value(&cell))
+	    sprintf(no,"%d",(int)number);
+	  else
+	    sprintf(no,"N");
+	}else{
+	  if(!G_is_d_null_value(&dcell))
+	    sprintf(no,"%.1f", number);
+	  else
 	   sprintf(no,"N");
+	}
 	len = strlen(no);
 
 	dots_per_line =   factor*D_ns;
