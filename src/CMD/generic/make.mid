@@ -36,7 +36,7 @@ INCLUDE_DIR = $(SRC)/include
 VASKLIB     = $(LIBDIR)/libvask.a
 VASK        = $(VASKLIB) $(CURSES)
 
-GISLIB      = $(LIBDIR)/libgis.a $(ZLIB)
+GISLIB      = $(LIBDIR)/libgis.a
 G3DLIB      = $(LIBDIR)/libg3d.a
 ICONLIB     = $(LIBDIR)/libicon.a
 LOCKLIB     = $(LIBDIR)/liblock.a
