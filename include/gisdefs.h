@@ -819,7 +819,6 @@ int G_set_cell_format(int);
 int G_cellvalue_format(CELL);
 int G_open_fp_cell_new(char *);
 int G_open_fp_cell_new_uncompressed(char *);
-int G__open_raster_new(char *, int);
 int G__reallocate_work_buf(int);
 int G__reallocate_null_buf(void);
 int G__reallocate_mask_buf(void);
