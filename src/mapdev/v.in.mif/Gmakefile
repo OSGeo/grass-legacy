@@ -10,10 +10,10 @@ LIST = 	lex.yy.o \
 	gbtree.o \
 	store.o
 
-LIBES=$(VECTLIB) $(GISLIB) $(LINKMLIB) $(DIG_ATTLIB) $(DATETIMELIB) $(VASKLIB)
+LIBES=$(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(DATETIMELIB) $(VASKLIB)
 
 $(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(LINKMLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 lex.yy.c : mif.l
 	$(LEX) mif.l
