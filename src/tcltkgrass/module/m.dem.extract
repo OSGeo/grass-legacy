@@ -1,0 +1,9 @@
+interface_build {
+    m.dem.extract 0
+    {Extracts USGS Digital Elevation Model (DEM) data from 1/2-inch magnetic tape.}
+    {entry input {Input device or file:} 0 file}
+    {entry output {Output raster map (examine only if none specified):} 0 raster}
+    {entry blocksize {Blocksize of tape data [10240]:} 0 ""}
+    {entry start {First file to look at [1]:} 0 ""}
+    {entry end {Last file to look at [999999]:} 0 ""}
+}
