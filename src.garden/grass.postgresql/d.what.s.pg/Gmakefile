@@ -9,11 +9,10 @@ EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS)
 OBJS = \
 	main.o  \
 	getArea.o \
-	returns.o \
         getAllOpts.o \
         getSopts.o \
-        buildInfxQry.o \
-        runInfxFile.o 
+        buildPg.o \
+        runPg.o 
 
 $(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(PQLIBPATH) $(PQLIB) $(MATHLIB) $(XDRLIB) $(INTLLIB)

@@ -9,113 +9,112 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "gis.h"
-#include "infx.h"
+#include "what.h"
 #include "glocale.h"
 
 
 int getAllOpts(argc, argv)
-        int argc;
-        char **argv;
+     int argc;
+     char **argv;
 
 {
 
     struct Option *keytable, *xcol, *ycol, *distance, *xpos, *ypos, *hv;
     struct Sql *pts;
     int stat = 0;
-    char  *SQL_stmt;
-    double  atof ();
-    char *print_out="";
+    char *SQL_stmt;
+    double atof();
+    char *print_out;
 
 
-	keytable = G_define_option() ;
-	keytable->key        = "tab" ;
-	keytable->type       = TYPE_STRING ;
-	keytable->required   = YES  ;
-	keytable->multiple   = NO ;
-	keytable->description= _("Name of the table with X,Y coord.:") ;
+    keytable = G_define_option();
+    keytable->key = "tab";
+    keytable->type = TYPE_STRING;
+    keytable->required = YES;
+    keytable->multiple = NO;
+    keytable->description = _("Name of the table with X,Y coord.:");
 
-	xcol = G_define_option() ;
-	xcol->key        = "xcol" ;
-	xcol->type       = TYPE_STRING ;
-	xcol->required   = YES  ;
-	xcol->multiple   = NO ;
-	xcol->description= _("X coord. (E/W) column:") ;
+    xcol = G_define_option();
+    xcol->key = "xcol";
+    xcol->type = TYPE_STRING;
+    xcol->required = YES;
+    xcol->multiple = NO;
+    xcol->description = _("X coord. (E/W) column:");
 
-	ycol = G_define_option() ;
-	ycol->key        = "ycol" ;
-	ycol->type       = TYPE_STRING ;
-	ycol->required   = YES  ;
-	ycol->multiple   = NO ;
-	ycol->description= _("Y coord. (N/S) column:") ;
+    ycol = G_define_option();
+    ycol->key = "ycol";
+    ycol->type = TYPE_STRING;
+    ycol->required = YES;
+    ycol->multiple = NO;
+    ycol->description = _("Y coord. (N/S) column:");
 
-	xpos = G_define_option() ;
-	xpos->key        = "xpos" ;
-	xpos->type       = TYPE_STRING ;
-	xpos->required   = NO  ;
-	xpos->multiple   = NO ;
-	xpos->description= _("X coord. (E/W) of search:") ;
+    xpos = G_define_option();
+    xpos->key = "xpos";
+    xpos->type = TYPE_STRING;
+    xpos->required = NO;
+    xpos->multiple = NO;
+    xpos->description = _("X coord. (E/W) of search:");
 
-	ypos = G_define_option() ;
-	ypos->key        = "ypos" ;
-	ypos->type       = TYPE_STRING ;
-	ypos->required   = NO  ;
-	ypos->multiple   = NO ;
-	ypos->description= _("Y coord. (N/S) of search:") ;
-
-
-	distance = G_define_option() ;
-	distance->key        = "distance" ;
-	distance->type       = TYPE_STRING ;
-	distance->required   = YES  ;
-	distance->multiple   = NO ;
-	distance->description= _("Radius of cursor:") ;
-
-	hv = G_define_option() ;
-	hv->key        = "hv" ;
-	hv->type       = TYPE_STRING ;
-	hv->answer     = "v" ;
-	hv->description= _("DB output type - [v(ert)/h(oriz)]:");
+    ypos = G_define_option();
+    ypos->key = "ypos";
+    ypos->type = TYPE_STRING;
+    ypos->required = NO;
+    ypos->multiple = NO;
+    ypos->description = _("Y coord. (N/S) of search:");
 
 
+    distance = G_define_option();
+    distance->key = "distance";
+    distance->type = TYPE_STRING;
+    distance->required = YES;
+    distance->multiple = NO;
+    distance->description = _("Radius of cursor:");
 
-        /* Invoke parser */
-        if (G_parser(argc, argv)) {
-		system("d.what.s.pg help -s");
-            	exit(-1);
-	}
-
-	print_out = hv->answer;
-	
-        /* Initialize screen graphics and get mouse input */
+    hv = G_define_option();
+    hv->key = "hv";
+    hv->type = TYPE_STRING;
+    hv->answer = "v";
+    hv->description = _("DB output type - [v(ert)/h(oriz)]:");
 
 
-        SQL_stmt = (char*) buildInfxQry(keytable,ycol,xcol,distance);
 
-        if ( (xpos->answer == NULL) || (ypos->answer == NULL)) 
-           { stat = runInfxFile(SQL_stmt, distance->answer, print_out); }
-        else
-           {
-     /* I'm lazy this pts stuff should be handled in getArea. */
-           
-           /* Initialze SQL query structure 	*/
-             pts = (struct Sql *)G_malloc(sizeof(struct Sql)) ;
-             G_zero (pts, sizeof(struct Sql)) ;                         
+    /* Invoke parser */
+    if (G_parser(argc, argv)) {
+	system("d.what.s.pg help -s");
+	exit(-1);
+    }
 
- 	     pts->centX = atof (xpos->answer);
- 	     pts->centY = atof (ypos->answer);
-	     if (distance->answer)  /* otherwise get perimeter with mouse  */
-                pts->distance = atof(distance->answer);
-             /* make interactive later */   
+    print_out = hv->answer;
 
-             pts->minX = pts->centX - pts->distance;
-             pts->minY = pts->centY - pts->distance;
-             pts->maxX = pts->centX + pts->distance;             
-             pts->maxY = pts->centY + pts->distance;             
+    /* Initialize screen graphics and get mouse input */
 
-             stat = runqry (SQL_stmt,pts, print_out);
-            }
-       
-        return stat ;
+
+    SQL_stmt = (char *) buildPg(keytable, ycol, xcol);
+
+    if ((xpos->answer == NULL) || (ypos->answer == NULL)) {
+	stat = runPg(SQL_stmt, distance->answer, print_out);
+    }
+    else {
+	/* I'm lazy this pts stuff should be handled in getArea. */
+
+	/* Initialze SQL query structure     */
+	pts = (struct Sql *) G_malloc(sizeof(struct Sql));
+	G_zero(pts, sizeof(struct Sql));
+
+	pts->centX = atof(xpos->answer);
+	pts->centY = atof(ypos->answer);
+	if (distance->answer)	/* otherwise get perimeter with mouse  */
+	    pts->distance = atof(distance->answer);
+	/* make interactive later */
+
+	pts->minX = pts->centX - pts->distance;
+	pts->minY = pts->centY - pts->distance;
+	pts->maxX = pts->centX + pts->distance;
+	pts->maxY = pts->centY + pts->distance;
+
+	stat = runqry(SQL_stmt, pts, print_out);
+    }
+
+    return stat;
 
 }
