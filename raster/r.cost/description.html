@@ -259,6 +259,35 @@ used. The calculation is done with <em>r.cost</em> as follows (example for Spear
   d.rast dist_meters
 </pre>
 
+<H2>Algorithm notes</H2>
+
+The fundamental approach to calculating minimum travel cost is as
+follows: The user generates a raster map indicating the cost of
+traversing each cell in the north-south and east-west directions.
+This map, along with a set of starting points are submitted to
+<em>r.cost</em>. The starting points are put into a list cells from which
+costs to the adjacent cells are to be calculated. The cell on the
+list with the lowest cumulative cost is selected for computing costs to
+the neighboring cells. Costs are computed and those cells are put
+on the list and the originating cell is finalized. This process
+of selecting the lowest cumulative cost cell, computing costs to the
+neighbors, putting the neighbors on the list and removing the
+originating cell from the list continues until the list is empty.
+<P>
+The most time consuming aspect of this algorithm is the management of
+the list of cells for which cumulative costs have been at least
+initially computed. <em>r.cost</em> uses a binary tree with an linked list
+at each node in the tree for efficiently holding cells with identical
+cumulative costs.
+<P>
+<em>r.cost</em>, like most all GRASS raster programs, is also made to be run on
+maps larger that can fit in available computer memory. As the
+algorithm works through the dynamic list of cells it can move almost
+randomly around the entire area. <em>r.cost</em> divides the entire area
+into a number of pieces and swaps these pieces in and out of memory (to
+and from disk) as needed. This provides a virtual memory approach
+optimally designed for 2-D raster maps.
+
 <H2>SEE ALSO</H2>
 
 <EM><A HREF="g.copy.html">g.copy</A></EM><BR>
