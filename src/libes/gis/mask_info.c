@@ -59,7 +59,7 @@ G__mask_info (name, mapset)
     strcpy (name, "MASK");
     strcpy (mapset, G_mapset());
 
-    if(!G_find_file ("cell", name, mapset))
+    if(!G_find_cell (name, mapset))
 	return -1;
 
     if(G_is_reclass (name, mapset, rname, rmapset) > 0)
