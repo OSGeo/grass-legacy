@@ -1,4 +1,3 @@
-/* %W% %G% */
 Pcolorlevels (red, grn, blu)
     int *red, *grn, *blu;
 {
