@@ -1,0 +1,66 @@
+
+
+
+g.manual             GRASS Reference Manual              g.manual
+
+
+
+NAME
+     g.manual - Accesses GRASS User's Reference Manual entries.
+     (GRASS File Management Program)
+
+SYNOPSIS
+     g.manual
+
+DESCRIPTION
+     The g.manual command provides user access to the on-line
+     GRASS User's Reference Manual entries.  The user may request
+     a list of available manual entries, and may get a manual
+     entry printed to the terminal screen and/or to the line
+     printer.
+
+     These entries may also be accessed through the g.help
+     command.
+
+SEE ALSO
+     GRASS User's Reference Manual
+
+     g.help
+
+AUTHOR
+     James Westervelt, U.S. Army Construction Engineering
+     Research Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.0                U.S. Army CERL                         1
+
+
+
