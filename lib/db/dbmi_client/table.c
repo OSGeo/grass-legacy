@@ -19,7 +19,7 @@ db_table_exists ( char *drvname, char *dbname, char *tabname)
     char buf[1000];
     char *bufp, *c;
 
-    if ( strchr ( dbname, '.' ) ) 
+    if ( strchr ( tabname, '.' ) ) 
 	full = 1;
     
     driver = db_start_driver_open_database ( drvname, dbname );
