@@ -29,6 +29,7 @@
 #include <string.h>
 #include <math.h>
 #include <ctype.h>
+#include <float.h>
 #include "gis.h"
 #include "Vect.h"
 #include "local_proto.h"
