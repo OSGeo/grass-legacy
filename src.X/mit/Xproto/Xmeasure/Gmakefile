@@ -1,0 +1,5 @@
+OFILES = \
+	main.o
+
+$(BIN)/Xmeasure: $(OFILES) $(XDISPLAYLIB) $(GISLIB)
+	cc $(LDFLAGS) -o $@ $(OFILES) $(XDISPLAYLIB) $(GISLIB) $(MATHLIB) $(TERMLIB) -lX11
