@@ -1,0 +1,72 @@
+/*! \mainpage GRASS GIS Library
+<!-- doxygenized from "GRASS 5 Programmer's Manual"
+     by M. Neteler 2/2004
+  -->
+
+<h2>GRASS 6.0 Programmer's Manual</h2>
+
+GRASS GIS (Geographic Resources Analysis Support System) is an open source,
+Free Software Geographical Information System (GIS) with raster, topological
+vector, image processing, and graphics production functionality that
+operates on various platforms through a graphical user interface and shell
+in X-Window. It is released under GNU General Public License (GPL).
+
+This manual introduces the reader to the <i>Geographic Resources Analysis 
+Support System</i> from the programming perspective. Design theory, system
+support libraries, system maintenance, and system enhancement are all 
+presented. Standard GRASS 4.x conventions are still used in much of the
+code. This work is part of ongoing research being performed by the 
+GRASS Development Team coordinated at ITC-irst, Trento, Italy), 
+an international team of programmers,
+GRASS module authors are cited within their module's source code and the 
+contributed manual pages.
+
+&copy; 2000-2005 Markus Neteler / GRASS Development Team 
+Published under GNU Free Documentation License (GFDL)
+http://www.fsf.org/copyleft/fdl.html
+
+This manual comes with ABSOLUTELY NO WARRANTY. The development of GRASS 
+software and this manual is kindly supported by Intevation GmbH, 
+Osnabr&uuml;ck, Germany, who provide the GRASS CVS repository.
+
+Main web site: http://grass.itc.it
+<P>
+<I>Missing entries here are either not yet uploaded to CVS or simply undocumented</i>
+<ul>
+<li>D <!-- a href="d_displaylib.html" -->display library</a>
+<li>bitmap <!-- a href="bitmaplib.html" -->bitmap library for X Window Bitmaps</a>
+<li>btree <!-- a href="btreelib.html" -->binary tree library</a>
+<li>bwidget <!-- a href="bwidgetlib.html" -->Tcl/Tk extra library</a>
+<li>coorcnv <!-- a href="coorcnvlib.html" -->coordinate conversion and datum support library</a> (unused)
+<li>datetime <!-- a href="datetimelib.html" -->DateTime library</a>
+<li>dbmi <!-- a href="dbmilib.html" -->database management interface database drivers</a>
+<li>dig_atts <!-- a href="dig_attslib.html" -->library to read and write from attribute files</a>
+<li>digitizer <!-- a href="digitizerlib.html" -->raw library for general digitizer support</a>
+<li>display <!-- a href="displaylib.html" -->library for CELL driver</a>
+<li>dlg <!-- a href="dlglib.html" -->library to manage DLG files</a>
+<li>dspf <!-- a href="dspflib.html" -->G3D display files library</a>
+<li>curses <!-- a href="editlib.html" -->curses (in gis/ directory)</a>
+<li>g3d <a href="g3dlib.html">G3D raster volume library</a>
+<li>gis <a href="gislib.html">GRASS GIS library</a>, with following subsection:
+<ul>
+ <li> <a href="gisrasterlib.html">Raster File Processing</a>
+</ul>
+<li>gmath <!-- a href="gmathlib.html" -->generic mathematical functions (matrix, fft etc., to be extended, BLAS/LAPACK library)</a>
+<li>ibtree <!-- a href="ibtreelib.html" -->integer clone of binary tree library (btree)</a>
+<li>icon <!-- a href="iconlib.html" -->icon library (required for PS/Paint icons, read, write, manipulate icons)</a>
+<li>imagery <a href="imagerylib.html">imagery library</a>
+<li>image3 <!-- a href="image3lib.html" -->extra imagery library</a>
+<li>libimage <!-- a href="libimage.html" -->image library required for SG3d/Iris, saving images in SGIs rgb-format</a>
+<li>linkm <!-- a href="linkmlib.html" -->linked list memory manager</a>
+<li>lock <!-- a href="locklib.html" -->locking mechanism for GRASS monitors and files</a>
+<li>ogsf <a href="ogsflib.html">openGL (R) ported gsurf library (required for NVIZ)</a>
+<li>proj <!-- a href="projlib.html" -->wrapper to PROJ4 projection library</a>
+<li>raster <!-- a href="rastergraphicslib.html" -->Raster Graphics Library</a>
+<li>rowio <!-- a href="rowiolib.html" -->row in/out library</a>
+<li>rst <!-- a href="rst_gmsllib.html" -->library for interpolation with regularized splines with tension </a>
+<li>segment <!-- a href="segmentlib.html" -->segment library for segmented raster reading</a>
+<li>vask <!-- a href="vasklib.html" -->Cursor management library</a>
+<li>vect <a href="vector_arch.html">GRASS vector library</a>
+</ul>
+
+*/
