@@ -1,0 +1,2767 @@
+site (257) at -121.584999 36.978401
+site (258) at -121.527000 36.996799
+line(0) 1x+0.317219y=-109.823, bisecting 257 258
+site (256) at -121.596001 37.027401
+line(1) -0.224523x+1y=64.3028, bisecting 257 256
+site (252) at -121.696999 37.039600
+line(2) 1x+-0.546424y=-141.864, bisecting 257 252
+circle through left=256 right=258 bottom=257
+vertex(0) at -121.562828 37.009109
+line(3) 1x+-0.443498y=-137.976, bisecting 258 256
+circle through left=252 right=256 bottom=257
+vertex(1) at -121.651848 36.989120
+e 1 1 0
+line(4) 1x+-0.120789y=-126.12, bisecting 256 252
+site (255) at -121.584000 37.088100
+line(5) 0.197712x+1y=13.0179, bisecting 256 255
+circle through left=255 right=258 bottom=256
+vertex(2) at -121.545181 37.048889
+e 3 0 2
+line(6) -0.6243x+1y=112.93, bisecting 258 255
+site (253) at -121.686996 37.107201
+line(7) 0.14796x+1y=19.0678, bisecting 252 253
+circle through left=253 right=256 bottom=252
+vertex(3) at -121.642570 37.066086
+e 4 1 3
+line(8) 1x+-0.87696y=-154.148, bisecting 256 253
+circle through left=253 right=255 bottom=256
+vertex(4) at -121.641037 37.067841
+e 8 3 4
+e 5 4 2
+line(9) 1x+-0.185444y=-128.515, bisecting 255 253
+site (254) at -121.616997 37.137901
+line(10) -0.662581x+1y=117.683, bisecting 255 254
+circle through left=253 right=254 bottom=255
+vertex(5) at -121.637154 37.088715
+e 9 4 5
+line(11) 1x+0.438583y=-105.371, bisecting 253 254
+site (230) at -121.930000 37.157501
+line(12) 1x+-0.506009y=-140.586, bisecting 252 230
+site (251) at -121.707001 37.188999
+line(13) -0.244555x+1y=66.9098, bisecting 253 251
+site (235) at -121.863998 37.193600
+line(14) 1x+0.546931y=-101.565, bisecting 230 235
+site (237) at -121.814003 37.193901
+line(15) -0.758288x+1y=129.443, bisecting 252 237
+circle through left=230 right=237 bottom=252
+vertex(6) at -121.834656 37.056713
+line(16) 1x+0.313799y=-110.206, bisecting 230 237
+circle through left=237 right=253 bottom=252
+vertex(7) at -121.792953 37.088341
+e 15 6 7
+e 7 7 3
+line(17) 1x+-0.682645y=-147.111, bisecting 253 237
+circle through left=235 right=237 bottom=230
+vertex(8) at -121.838242 37.068142
+e 16 8 6
+line(18) 1x+0.00602777y=-121.615, bisecting 235 237
+circle through left=251 right=254 bottom=253
+vertex(9) at -121.666489 37.155563
+e 11 9 5
+line(19) 1x+-0.567729y=-142.761, bisecting 254 251
+circle through left=237 right=251 bottom=253
+vertex(10) at -121.763214 37.131912
+e 17 7 10
+e 13 10 9
+line(20) 1x+-0.0458111y=-123.464, bisecting 251 237
+site (145) at -121.952003 37.213699
+line(21) -0.391529x+1y=84.929, bisecting 230 145
+site (234) at -121.855003 37.214802
+line(22) 0.424253x+1y=-14.4951, bisecting 235 234
+circle through left=234 right=237 bottom=235
+vertex(11) at -121.839020 37.195511
+e 18 11 8
+line(23) 1x+-0.509769y=-140.8, bisecting 237 234
+site (236) at -121.855003 37.220798
+line(24) 0x+1y=37.2178, bisecting 234 236
+site (147) at -122.003998 37.221802
+line(25) 1x+-0.868956y=-154.283, bisecting 230 147
+circle through left=147 right=145 bottom=230
+vertex(12) at -121.985748 37.168083
+line(26) 1x+-0.155833y=-127.778, bisecting 145 147
+site (246) at -121.764000 37.226501
+line(27) 1x+0.651968y=-97.5291, bisecting 237 246
+circle through left=246 right=251 bottom=237
+vertex(13) at -121.761559 37.168106
+e 20 10 13
+line(28) 1x+-0.657944y=-146.216, bisecting 251 246
+site (144) at -121.932999 37.226700
+line(29) 1x+0.684063y=-96.4816, bisecting 145 144
+circle through left=144 right=230 bottom=145
+vertex(14) at -121.923515 37.192444
+e 21 12 14
+line(30) -0.0433297x+1y=42.4754, bisecting 230 144
+site (232) at -121.891998 37.229500
+line(31) -0.779938x+1y=132.269, bisecting 235 232
+site (244) at -121.816002 37.230400
+line(32) -0.0547659x+1y=43.8835, bisecting 237 244
+circle through left=230 right=232 bottom=235
+vertex(15) at -121.905113 37.190411
+e 14 15 8
+line(33) 0.527816x+1y=-27.1531, bisecting 230 232
+site (233) at -121.873001 37.231998
+line(34) 1x+-0.95549y=-157.431, bisecting 234 233
+circle through left=235 right=233 bottom=234
+vertex(16) at -121.875748 37.211090
+e 22 16 11
+line(35) -0.234453x+1y=65.7852, bisecting 235 233
+circle through left=233 right=236 bottom=234
+vertex(17) at -121.869339 37.217800
+e 34 16 17
+line(36) 1x+-0.622298y=-145.03, bisecting 236 233
+site (146) at -121.980003 37.232899
+line(37) 1x+-0.685695y=-147.49, bisecting 145 146
+circle through left=147 right=146 bottom=145
+vertex(18) at -121.980392 37.202316
+e 26 12 18
+line(38) 1x+0.46248y=-104.775, bisecting 147 146
+circle through left=232 right=233 bottom=235
+vertex(19) at -121.879807 37.210140
+e 31 15 19
+e 35 19 16
+line(39) 1x+0.131526y=-116.986, bisecting 232 233
+circle through left=144 right=232 bottom=230
+vertex(20) at -121.910103 37.193031
+e 30 14 20
+e 33 20 15
+line(40) 1x+0.0682918y=-119.37, bisecting 144 232
+circle through left=234 right=244 bottom=237
+vertex(21) at -121.830978 37.211277
+e 23 11 21
+line(41) 1x+0.399941y=-106.949, bisecting 234 244
+site (151) at -122.028000 37.237499
+line(42) 1x+-0.654005y=-146.364, bisecting 147 151
+site (245) at -121.785004 37.237900
+line(43) 1x+-0.542681y=-141.98, bisecting 246 245
+circle through left=237 right=245 bottom=246
+vertex(22) at -121.787605 37.208057
+e 27 22 13
+line(44) 0.659095x+1y=-43.0615, bisecting 237 245
+site (231) at -121.888000 37.238499
+line(45) 0.444256x+1y=-16.9164, bisecting 232 231
+site (248) at -121.834999 37.238899
+line(46) 1x+0.904844y=-88.1578, bisecting 236 248
+circle through left=248 right=234 bottom=236
+vertex(23) at -121.834091 37.217800
+e 24 17 23
+line(47) 0.830141x+1y=-63.9217, bisecting 234 248
+circle through left=248 right=244 bottom=234
+vertex(24) at -121.833321 37.217155
+e 47 23 24
+e 41 24 21
+line(48) 1x+-0.44739y=-138.484, bisecting 244 248
+site (143) at -121.932999 37.239899
+line(49) 0x+1y=37.2333, bisecting 144 143
+circle through left=244 right=245 bottom=237
+vertex(25) at -121.795433 37.213223
+e 32 21 25
+e 44 25 22
+line(50) 1x+0.241939y=-112.792, bisecting 244 245
+circle through left=231 right=233 bottom=232
+vertex(26) at -121.882484 37.230663
+e 39 26 19
+line(51) 1x+-0.433367y=-138.017, bisecting 233 231
+site (249) at -121.844002 37.241001
+line(52) 0.544562x+1y=-29.1237, bisecting 236 249
+circle through left=249 right=248 bottom=236
+vertex(27) at -121.842484 37.227074
+e 46 27 23
+line(53) 1x+-0.233475y=-130.534, bisecting 248 249
+site (250) at -121.860001 37.243198
+line(54) -0.223093x+1y=64.4175, bisecting 236 250
+circle through left=233 right=250 bottom=236
+vertex(28) at -121.861000 37.231209
+e 36 17 28
+line(55) 1x+0.861502y=-89.7862, bisecting 233 250
+site (142) at -121.912003 37.243599
+line(56) 1x+-0.704805y=-148.147, bisecting 232 142
+circle through left=144 right=142 bottom=232
+vertex(29) at -121.912094 37.222229
+e 40 29 20
+line(57) 1x+0.804869y=-91.9531, bisecting 144 142
+site (140) at -121.956001 37.243999
+line(58) -0.13194x+1y=53.3195, bisecting 145 140
+site (243) at -121.816002 37.244301
+line(59) 0x+1y=37.2374, bisecting 244 243
+circle through left=250 right=249 bottom=236
+vertex(30) at -121.853256 37.232941
+e 54 28 30
+e 52 30 27
+line(60) 1x+-0.137339y=-126.967, bisecting 249 250
+circle through left=146 right=140 bottom=145
+vertex(31) at -121.963028 37.227661
+e 37 18 31
+line(61) 1x+0.462492y=-104.746, bisecting 146 140
+circle through left=140 right=144 bottom=145
+vertex(32) at -121.948883 37.229530
+e 58 31 32
+e 29 32 14
+line(62) 1x+-0.752073y=-149.948, bisecting 144 140
+circle through left=143 right=142 bottom=144
+vertex(33) at -121.921013 37.233299
+e 57 33 29
+line(63) 1x+0.176235y=-115.359, bisecting 143 142
+site (141) at -121.935997 37.247101
+line(64) -0.416314x+1y=88.0065, bisecting 143 141
+site (35) at -121.901001 37.247601
+line(65) -0.497366x+1y=97.8657, bisecting 232 35
+circle through left=142 right=35 bottom=232
+vertex(34) at -121.902794 37.235409
+e 56 29 34
+line(66) 1x+0.363731y=-108.359, bisecting 142 35
+circle through left=140 right=143 bottom=144
+vertex(35) at -121.946037 37.233299
+e 62 32 35
+e 49 35 33
+line(67) 1x+-0.178275y=-128.584, bisecting 143 140
+circle through left=35 right=231 bottom=232
+vertex(36) at -121.898270 37.237675
+e 65 34 36
+e 45 36 26
+line(68) 1x+-0.700117y=-147.969, bisecting 231 35
+circle through left=248 right=243 bottom=244
+vertex(37) at -121.824280 37.237350
+e 48 24 37
+line(69) 1x+0.284337y=-111.236, bisecting 248 243
+site (148) at -121.966003 37.249001
+line(70) 1x+-0.5y=-140.584, bisecting 140 148
+circle through left=146 right=148 bottom=140
+vertex(38) at -121.966568 37.235352
+e 61 38 31
+line(71) 0.869462x+1y=-68.81, bisecting 146 148
+site (149) at -121.983002 37.250198
+line(72) -0.173319x+1y=58.3832, bisecting 146 149
+circle through left=140 right=141 bottom=143
+vertex(39) at -121.944992 37.239128
+e 67 35 39
+line(73) 1x+0.155034y=-116.172, bisecting 140 141
+circle through left=243 right=245 bottom=244
+vertex(40) at -121.801277 37.237350
+e 59 37 40
+e 50 40 25
+line(74) 1x+-0.206498y=-129.491, bisecting 245 243
+circle through left=149 right=148 bottom=146
+vertex(41) at -121.974991 37.242680
+e 71 41 38
+line(75) 1x+-0.0704668y=-124.599, bisecting 148 149
+site (34) at -121.886002 37.254398
+line(76) 0.12572x+1y=21.9228, bisecting 231 34
+site (247) at -121.764000 37.255901
+line(77) 0x+1y=37.2412, bisecting 246 247
+site (30) at -121.920998 37.256199
+line(78) -0.713896x+1y=124.286, bisecting 142 30
+circle through left=35 right=34 bottom=231
+vertex(42) at -121.891708 37.247040
+e 68 36 42
+line(79) 1x+0.453204y=-105.011, bisecting 35 34
+circle through left=143 right=30 bottom=142
+vertex(43) at -121.923111 37.245186
+e 63 43 33
+line(80) 0.736251x+1y=-52.5208, bisecting 143 30
+circle through left=245 right=247 bottom=246
+vertex(44) at -121.769623 37.241199
+e 43 22 44
+line(81) 1x+0.857065y=-89.8515, bisecting 245 247
+circle through left=147 right=149 bottom=146
+vertex(45) at -121.997284 37.238815
+e 38 45 18
+e 72 45 41
+line(82) 0.739387x+1y=-52.9645, bisecting 147 149
+circle through left=141 right=30 bottom=143
+vertex(46) at -121.925766 37.247139
+e 64 39 46
+e 80 46 43
+line(83) 1x+0.606562y=-99.3331, bisecting 141 30
+site (242) at -121.852997 37.258499
+line(84) 0.457741x+1y=-18.5279, bisecting 250 242
+circle through left=34 right=233 bottom=231
+vertex(47) at -121.876228 37.245094
+e 76 42 47
+e 51 26 47
+line(85) -0.580381x+1y=107.98, bisecting 233 34
+circle through left=242 right=249 bottom=250
+vertex(48) at -121.851135 37.248394
+e 60 30 48
+line(86) -0.514061x+1y=99.8874, bisecting 249 242
+site (150) at -122.010002 37.259102
+line(87) 0.833127x+1y=-64.4091, bisecting 151 150
+circle through left=150 right=147 bottom=151
+vertex(49) at -122.009171 37.240097
+line(88) -0.160974x+1y=56.8804, bisecting 147 150
+site (37) at -121.907997 37.259499
+line(89) -0.588009x+1y=108.934, bisecting 35 37
+circle through left=142 right=37 bottom=35
+vertex(50) at -121.908524 37.251175
+e 66 50 34
+line(90) 0.251919x+1y=6.54006, bisecting 142 37
+site (29) at -121.943001 37.260300
+line(91) -0.530636x+1y=101.959, bisecting 141 29
+circle through left=34 right=250 bottom=233
+vertex(51) at -121.874054 37.246372
+e 85 47 51
+e 55 51 28
+line(92) 1x+-0.430751y=-137.918, bisecting 250 34
+circle through left=140 right=29 bottom=141
+vertex(52) at -121.946671 37.249882
+e 73 52 39
+line(93) 0.797566x+1y=-60.0106, bisecting 140 29
+circle through left=30 right=37 bottom=142
+vertex(53) at -121.913094 37.252335
+e 78 43 53
+e 90 53 50
+line(94) 1x+0.253815y=-112.458, bisecting 30 37
+circle through left=150 right=149 bottom=147
+vertex(54) at -122.000854 37.241440
+e 88 49 54
+e 82 54 45
+line(95) 1x+-0.329754y=-134.281, bisecting 149 150
+site (241) at -121.816002 37.261902
+line(96) 0x+1y=37.2531, bisecting 243 241
+site (36) at -121.897003 37.263100
+line(97) 0.257937x+1y=5.81303, bisecting 35 36
+circle through left=36 right=34 bottom=35
+vertex(55) at -121.895020 37.254322
+e 79 55 42
+line(98) 1x+-0.790915y=-151.36, bisecting 34 36
+site (139) at -121.968002 37.263901
+line(99) -0.134153x+1y=53.6186, bisecting 148 139
+circle through left=37 right=36 bottom=35
+vertex(56) at -121.900688 37.255783
+e 89 50 56
+e 97 56 55
+line(100) 1x+0.32755y=-109.698, bisecting 37 36
+site (238) at -121.815002 37.265499
+line(101) 0.277837x+1y=3.41888, bisecting 241 238
+circle through left=149 right=139 bottom=148
+vertex(57) at -121.974083 37.255501
+e 75 41 57
+line(102) 1x+0.91353y=-87.9401, bisecting 149 139
+site (229) at -122.110001 37.265999
+line(103) 1x+-0.347553y=-135.016, bisecting 151 229
+site (40) at -121.884003 37.267700
+line(104) 0.150272x+1y=18.9451, bisecting 34 40
+circle through left=248 right=241 bottom=243
+vertex(58) at -121.828766 37.253101
+e 69 58 37
+line(105) 0.825871x+1y=-63.3617, bisecting 248 241
+circle through left=147 right=229 bottom=151
+vertex(59) at -122.145500 37.031628
+e 42 59 49
+line(106) 1x+-0.416943y=-137.586, bisecting 147 229
+circle through left=29 right=30 bottom=141
+vertex(60) at -121.932114 37.257610
+e 91 52 60
+e 83 60 46
+line(107) 1x+-0.186373y=-128.876, bisecting 30 29
+circle through left=36 right=40 bottom=34
+vertex(61) at -121.889191 37.261677
+e 98 55 61
+line(108) 1x+0.353873y=-108.703, bisecting 36 40
+site (239) at -121.863998 37.269699
+line(109) -0.982289x+1y=156.964, bisecting 242 239
+circle through left=250 right=239 bottom=242
+vertex(62) at -121.867058 37.255680
+e 84 62 48
+line(110) -0.150856x+1y=55.6401, bisecting 250 239
+circle through left=148 right=29 bottom=140
+vertex(63) at -121.955696 37.257092
+e 70 38 63
+e 93 63 52
+line(111) 1x+0.491211y=-103.655, bisecting 148 29
+site (28) at -121.938004 37.270901
+line(112) 0.471393x+1y=-20.2162, bisecting 29 28
+circle through left=34 right=239 bottom=250
+vertex(64) at -121.870224 37.255211
+e 92 51 64
+e 110 64 62
+line(113) 1x+0.695388y=-95.9634, bisecting 34 239
+site (137) at -121.980003 37.271198
+line(114) 0.142779x+1y=19.8443, bisecting 149 137
+circle through left=139 right=29 bottom=148
+vertex(65) at -121.956108 37.257912
+e 99 57 65
+e 111 65 63
+line(115) 1x+-0.144034y=-127.323, bisecting 29 139
+circle through left=137 right=139 bottom=149
+vertex(66) at -121.978424 37.260262
+e 102 66 57
+line(116) 1x+-0.608074y=-144.635, bisecting 139 137
+site (31) at -121.926003 37.271999
+line(117) -0.316755x+1y=75.884, bisecting 30 31
+site (155) at -122.056999 37.272202
+line(118) -0.83566x+1y=139.241, bisecting 151 155
+site (240) at -121.839996 37.272900
+line(119) 0.902781x+1y=-72.7351, bisecting 242 240
+circle through left=28 right=30 bottom=29
+vertex(67) at -121.931435 37.261330
+e 107 60 67
+line(120) 1x+-0.864513y=-154.144, bisecting 30 28
+circle through left=40 right=239 bottom=34
+vertex(68) at -121.873062 37.259258
+e 104 61 68
+e 113 68 64
+line(121) 1x+0.0999237y=-118.15, bisecting 40 239
+circle through left=241 right=245 bottom=243
+vertex(69) at -121.798027 37.253101
+e 96 58 69
+e 74 40 69
+line(122) 1x+-0.774305y=-150.643, bisecting 245 241
+circle through left=28 right=31 bottom=30
+vertex(70) at -121.931122 37.261681
+e 120 67 70
+line(123) 1x+0.0915448y=-118.52, bisecting 28 31
+circle through left=240 right=249 bottom=242
+vertex(71) at -121.835976 37.256199
+e 86 48 71
+line(124) 0.125568x+1y=21.9575, bisecting 249 240
+circle through left=240 right=248 bottom=249
+vertex(72) at -121.835709 37.256161
+e 124 71 72
+e 53 27 72
+line(125) -0.146976x+1y=55.1631, bisecting 248 240
+site (154) at -122.018997 37.273701
+line(126) -0.616148x+1y=112.445, bisecting 150 154
+site (32) at -121.913002 37.273998
+line(127) -0.345172x+1y=79.3469, bisecting 37 32
+circle through left=230 right=229 bottom=147
+vertex(73) at -122.183472 36.940533
+e 25 73 12
+e 106 73 59
+line(128) 1x+-0.602764y=-144.45, bisecting 230 229
+circle through left=240 right=241 bottom=248
+vertex(74) at -121.832954 37.256561
+e 125 72 74
+e 105 74 58
+line(129) 1x+-0.458347y=-138.909, bisecting 241 240
+circle through left=30 right=32 bottom=37
+vertex(75) at -121.916237 37.264774
+e 94 75 53
+line(130) 0.449207x+1y=-17.5009, bisecting 30 32
+site (130) at -121.948997 37.274601
+line(131) -0.419312x+1y=88.4008, bisecting 29 130
+circle through left=31 right=32 bottom=30
+vertex(76) at -121.918373 37.265713
+e 117 70 76
+e 130 76 75
+line(132) 1x+0.153756y=-116.189, bisecting 31 32
+circle through left=130 right=28 bottom=29
+vertex(77) at -121.945168 37.267803
+e 112 77 67
+line(133) 1x+-0.336572y=-134.488, bisecting 28 130
+circle through left=139 right=130 bottom=29
+vertex(78) at -121.955299 37.263550
+e 115 65 78
+e 131 78 77
+line(134) 1x+0.563027y=-100.975, bisecting 139 130
+site (138) at -121.960999 37.276600
+line(135) 0.551517x+1y=-29.9952, bisecting 139 138
+circle through left=229 right=155 bottom=151
+vertex(79) at -122.078323 37.224915
+e 103 59 79
+line(136) 1x+0.117029y=-117.722, bisecting 229 155
+circle through left=151 right=154 bottom=150
+vertex(80) at -122.029587 37.257111
+e 87 80 49
+line(137) 0.248683x+1y=6.91045, bisecting 151 154
+site (39) at -121.887001 37.276901
+line(138) -0.325871x+1y=76.9912, bisecting 40 39
+circle through left=138 right=130 bottom=139
+vertex(81) at -121.956604 37.265896
+e 134 81 78
+line(139) 1x+-0.166561y=-128.164, bisecting 130 138
+circle through left=32 right=36 bottom=37
+vertex(82) at -121.904922 37.268684
+e 127 75 82
+e 100 82 56
+line(140) 1x+-0.681211y=-147.293, bisecting 36 32
+site (33) at -121.903000 37.278400
+line(141) -0.391922x+1y=85.0461, bisecting 36 33
+circle through left=32 right=33 bottom=36
+vertex(83) at -121.904785 37.268879
+e 140 82 83
+line(142) 1x+0.440122y=-105.502, bisecting 32 33
+circle through left=36 right=39 bottom=40
+vertex(84) at -121.892174 37.270142
+e 108 84 61
+line(143) 0.72471x+1y=-51.0663, bisecting 36 39
+circle through left=150 right=137 bottom=149
+vertex(85) at -121.993912 37.262474
+e 95 54 85
+e 114 85 66
+line(144) 1x+0.40323y=-106.969, bisecting 150 137
+circle through left=238 right=245 bottom=241
+vertex(86) at -121.794373 37.257828
+e 122 69 86
+line(145) 1x+-0.920015y=-156.072, bisecting 245 238
+circle through left=240 right=238 bottom=241
+vertex(87) at -121.828094 37.267197
+e 129 74 87
+e 101 87 86
+line(146) 1x+-0.296093y=-132.863, bisecting 238 240
+site (134) at -121.986000 37.280602
+line(147) -0.637728x+1y=115.068, bisecting 137 134
+site (50) at -121.814003 37.280800
+line(148) 0.0653204x+1y=29.3162, bisecting 238 50
+site (56) at -121.771004 37.281101
+line(149) -0.277929x+1y=71.1112, bisecting 247 56
+site (153) at -122.000999 37.281700
+line(150) 0.398379x+1y=-11.3341, bisecting 150 153
+site (133) at -121.968002 37.281898
+line(151) 1x+-0.756536y=-150.168, bisecting 138 133
+circle through left=139 right=133 bottom=138
+vertex(88) at -121.969299 37.272896
+e 135 88 81
+line(152) 0x+1y=37.2729, bisecting 139 133
+circle through left=33 right=39 bottom=36
+vertex(89) at -121.895485 37.272522
+e 141 83 89
+e 143 89 84
+line(153) 1x+-0.0937053y=-125.388, bisecting 39 33
+circle through left=137 right=133 bottom=139
+vertex(90) at -121.970749 37.272896
+e 116 66 90
+e 152 90 88
+line(154) 1x+0.891608y=-88.7379, bisecting 137 133
+circle through left=155 right=154 bottom=151
+vertex(91) at -122.037460 37.259071
+e 118 79 91
+e 137 91 80
+line(155) 1x+0.0394499y=-120.568, bisecting 155 154
+circle through left=153 right=137 bottom=150
+vertex(92) at -121.995514 37.266426
+e 144 92 85
+line(156) 1x+-0.500182y=-140.635, bisecting 137 153
+circle through left=239 right=240 bottom=242
+vertex(93) at -121.851898 37.270576
+e 109 62 93
+e 119 93 71
+line(157) 1x+0.133344y=-116.882, bisecting 239 240
+circle through left=153 right=134 bottom=137
+vertex(94) at -121.994423 37.268620
+e 156 92 94
+line(158) 1x+-0.0732452y=-124.724, bisecting 134 153
+circle through left=154 right=153 bottom=150
+vertex(95) at -122.007019 37.271008
+e 126 80 95
+e 150 95 92
+line(159) 1x+0.444468y=-105.441, bisecting 154 153
+site (27) at -121.933998 37.283501
+line(160) 0.317893x+1y=-1.48538, bisecting 28 27
+circle through left=27 right=31 bottom=28
+vertex(96) at -121.932426 37.276058
+e 123 96 70
+line(161) -0.695191x+1y=122.042, bisecting 31 27
+site (131) at -121.954002 37.284199
+line(162) -0.521463x+1y=100.873, bisecting 130 131
+circle through left=138 right=131 bottom=130
+vertex(97) at -121.954636 37.277760
+e 139 81 97
+line(163) 0.920683x+1y=-75.0038, bisecting 138 131
+site (38) at -121.891998 37.284401
+line(164) -0.666328x+1y=118.499, bisecting 39 38
+circle through left=33 right=38 bottom=39
+vertex(98) at -121.895088 37.276932
+e 153 89 98
+line(165) 1x+0.545423y=-101.563, bisecting 33 38
+site (152) at -122.019997 37.285999
+line(166) -0.0812655x+1y=47.1958, bisecting 154 152
+circle through left=130 right=27 bottom=28
+vertex(99) at -121.941414 37.278915
+e 133 77 99
+e 160 99 96
+line(167) 1x+0.593337y=-99.8225, bisecting 130 27
+circle through left=240 right=50 bottom=238
+vertex(100) at -121.826103 37.273911
+e 146 87 100
+line(168) 1x+0.303933y=-110.497, bisecting 240 50
+circle through left=245 right=56 bottom=247
+vertex(101) at -121.788094 37.262772
+e 81 101 44
+line(169) 0.324062x+1y=-2.2041, bisecting 245 56
+circle through left=39 right=239 bottom=40
+vertex(102) at -121.874710 37.275829
+e 138 84 102
+e 121 102 68
+line(170) 1x+-0.313101y=-133.546, bisecting 239 39
+site (48) at -121.823997 37.288399
+line(171) 1x+-0.760305y=-150.167, bisecting 50 48
+circle through left=240 right=48 bottom=50
+vertex(103) at -121.826393 37.274864
+e 168 103 100
+line(172) 1x+0.968765y=-85.7158, bisecting 240 48
+site (26) at -121.912003 37.288799
+line(173) 0.0675258x+1y=29.0492, bisecting 32 26
+site (46) at -121.839996 37.288799
+line(174) 0x+1y=37.2809, bisecting 240 46
+circle through left=238 right=56 bottom=245
+vertex(104) at -121.789413 37.263195
+e 145 86 104
+e 169 104 101
+line(175) 1x+0.354604y=-108.576, bisecting 238 56
+site (44) at -121.859001 37.288898
+line(176) 0.260282x+1y=5.56093, bisecting 239 44
+circle through left=134 right=133 bottom=137
+vertex(105) at -121.976898 37.279793
+e 147 94 105
+e 154 105 90
+line(177) 1x+0.0720644y=-119.29, bisecting 134 133
+circle through left=26 right=33 bottom=32
+vertex(106) at -121.910233 37.281246
+e 142 106 83
+line(178) -0.865737x+1y=142.823, bisecting 33 26
+site (136) at -121.967003 37.290100
+line(179) 0.12186x+1y=22.423, bisecting 133 136
+circle through left=44 right=240 bottom=239
+vertex(107) at -121.852760 37.277023
+e 157 107 93
+line(180) 1x+-0.841831y=-153.234, bisecting 240 44
+circle through left=152 right=153 bottom=154
+vertex(108) at -122.011253 37.280521
+e 159 108 95
+line(181) 1x+-0.226305y=-130.448, bisecting 153 152
+circle through left=133 right=131 bottom=138
+vertex(109) at -121.961105 37.283722
+e 151 88 109
+e 163 109 97
+line(182) 1x+0.164305y=-115.835, bisecting 133 131
+circle through left=46 right=48 bottom=240
+vertex(110) at -121.832184 37.280853
+e 172 110 103
+line(183) 1x+-0.0250358y=-122.766, bisecting 48 46
+circle through left=136 right=131 bottom=133
+vertex(111) at -121.961357 37.285248
+e 182 111 109
+line(184) 1x+-0.453932y=-138.886, bisecting 131 136
+site (25) at -121.892998 37.292900
+line(185) -0.117594x+1y=51.6225, bisecting 38 25
+circle through left=31 right=26 bottom=32
+vertex(112) at -121.920868 37.281960
+e 132 112 76
+e 173 112 106
+line(186) 0.833333x+1y=-64.3188, bisecting 31 26
+circle through left=44 right=46 bottom=240
+vertex(113) at -121.849541 37.280853
+e 180 107 113
+e 174 113 110
+line(187) 1x+-0.00521879y=-122.044, bisecting 46 44
+site (132) at -121.984001 37.293301
+line(188) 0.157405x+1y=18.0859, bisecting 134 132
+circle through left=131 right=27 bottom=130
+vertex(114) at -121.944008 37.283298
+e 162 97 114
+e 167 114 99
+line(189) 1x+-0.034897y=-123.245, bisecting 27 131
+circle through left=247 right=251 bottom=246
+vertex(115) at -121.713501 37.241199
+e 77 44 115
+e 28 13 115
+line(190) -0.851979x+1y=140.938, bisecting 251 247
+site (49) at -121.816002 37.293800
+line(191) -0.153756x+1y=56.0171, bisecting 50 49
+circle through left=48 right=49 bottom=50
+vertex(116) at -121.817200 37.286961
+e 171 103 116
+line(192) 1x+0.675573y=-96.6272, bisecting 48 49
+circle through left=27 right=26 bottom=31
+vertex(117) at -121.922279 37.283123
+e 161 96 117
+e 186 117 112
+line(193) 1x+0.240895y=-112.941, bisecting 27 26
+circle through left=50 right=56 bottom=238
+vertex(118) at -121.792442 37.271709
+e 148 100 118
+e 175 118 104
+line(194) 1x+0.00700852y=-121.531, bisecting 50 56
+circle through left=132 right=133 bottom=134
+vertex(119) at -121.977333 37.285744
+e 177 119 105
+line(195) 1x+-0.712685y=-148.55, bisecting 133 132
+circle through left=132 right=136 bottom=133
+vertex(120) at -121.976357 37.287079
+e 195 119 120
+e 179 120 111
+line(196) 1x+-0.188285y=-128.997, bisecting 136 132
+circle through left=33 right=25 bottom=38
+vertex(121) at -121.900894 37.287663
+e 165 121 98
+line(197) 0.689818x+1y=-46.8018, bisecting 33 25
+site (135) at -121.968002 37.297401
+line(198) -0.136886x+1y=53.9894, bisecting 136 135
+circle through left=39 right=44 bottom=239
+vertex(122) at -121.872696 37.282207
+e 170 102 122
+e 176 122 107
+line(199) 1x+0.428474y=-105.898, bisecting 39 44
+site (129) at -121.956001 37.297901
+line(200) -0.14588x+1y=55.0818, bisecting 131 129
+circle through left=155 right=152 bottom=154
+vertex(123) at -122.038208 37.278332
+e 155 123 91
+e 166 123 108
+line(201) 1x+0.372887y=-108.138, bisecting 155 152
+circle through left=26 right=25 bottom=33
+vertex(124) at -121.901962 37.288387
+e 178 106 124
+e 197 124 121
+line(202) 1x+0.215777y=-113.856, bisecting 26 25
+circle through left=136 right=129 bottom=131
+vertex(125) at -121.959000 37.290466
+e 184 111 125
+line(203) 1x+0.709085y=-95.5169, bisecting 136 129
+circle through left=153 right=132 bottom=134
+vertex(126) at -121.992981 37.288212
+e 158 94 126
+e 188 126 119
+line(204) 1x+0.682451y=-96.5456, bisecting 153 132
+site (157) at -122.059998 37.300400
+line(205) -0.106331x+1y=50.2649, bisecting 155 157
+site (45) at -121.841003 37.300499
+line(206) -0.0860776x+1y=47.7824, bisecting 46 45
+site (120) at -121.989998 37.300598
+line(207) -0.821746x+1y=137.539, bisecting 132 120
+circle through left=135 right=129 bottom=136
+vertex(127) at -121.961876 37.294525
+e 203 127 125
+line(208) 1x+0.0416402y=-120.409, bisecting 135 129
+circle through left=132 right=135 bottom=136
+vertex(128) at -121.975288 37.292683
+e 196 120 128
+e 198 128 127
+line(209) 1x+0.256319y=-112.417, bisecting 132 135
+site (164) at -122.000999 37.301601
+line(210) 0x+1y=37.2916, bisecting 153 164
+circle through left=153 right=120 bottom=132
+vertex(129) at -121.994659 37.290665
+e 204 129 126
+line(211) 0.582156x+1y=-33.7292, bisecting 153 120
+site (57) at -121.750000 37.301800
+line(212) 1x+0.98547y=-85.0109, bisecting 56 57
+site (163) at -122.008003 37.301998
+line(213) -0.345048x+1y=79.3892, bisecting 153 163
+site (128) at -121.943001 37.301998
+line(214) -0.486698x+1y=96.64, bisecting 27 128
+circle through left=131 right=128 bottom=27
+vertex(130) at -121.943771 37.290184
+e 189 114 130
+line(215) 0.618088x+1y=-38.0818, bisecting 131 128
+circle through left=152 right=163 bottom=153
+vertex(131) at -122.009056 37.290272
+e 181 108 131
+line(216) 0.749642x+1y=-54.1729, bisecting 152 163
+circle through left=163 right=164 bottom=153
+vertex(132) at -122.005066 37.291649
+e 213 131 132
+line(217) 1x+-0.0566449y=-124.117, bisecting 164 163
+circle through left=57 right=247 bottom=56
+vertex(133) at -121.744247 37.274960
+e 149 101 133
+line(218) 0.30502x+1y=0.140537, bisecting 247 57
+circle through left=164 right=120 bottom=153
+vertex(134) at -121.996353 37.291649
+e 210 132 134
+e 211 134 129
+line(219) 1x+-0.0911928y=-125.397, bisecting 120 164
+circle through left=129 right=128 bottom=131
+vertex(135) at -121.947060 37.292210
+e 200 125 135
+e 215 135 130
+line(220) 1x+0.315141y=-110.195, bisecting 129 128
+site (162) at -122.022003 37.303001
+line(221) -0.118017x+1y=51.695, bisecting 152 162
+site (23) at -121.904999 37.303398
+line(222) 0.479749x+1y=-21.1894, bisecting 26 23
+circle through left=23 right=25 bottom=26
+vertex(136) at -121.903084 37.293499
+e 202 136 124
+line(223) 1x+-0.874762y=-154.526, bisecting 25 23
+site (22) at -121.921997 37.304100
+line(224) -0.653204x+1y=116.933, bisecting 26 22
+circle through left=27 right=22 bottom=26
+vertex(137) at -121.924332 37.291668
+e 193 137 117
+line(225) 0.582593x+1y=-33.7405, bisecting 27 22
+site (161) at -122.040001 37.304600
+line(226) 1x+-0.929825y=-156.708, bisecting 152 161
+circle through left=155 right=161 bottom=152
+vertex(138) at -122.040375 37.284130
+e 201 138 123
+line(227) 0.524667x+1y=-26.7465, bisecting 155 161
+circle through left=44 right=45 bottom=46
+vertex(139) at -121.849472 37.293880
+e 187 113 139
+line(228) 1x+0.644553y=-97.8116, bisecting 44 45
+site (126) at -121.972000 37.304699
+line(229) -0.547831x+1y=104.12, bisecting 135 126
+site (24) at -121.891998 37.304798
+line(230) 0.0840013x+1y=27.0597, bisecting 25 24
+circle through left=162 right=163 bottom=152
+vertex(140) at -122.015533 37.295155
+e 216 140 131
+line(231) 1x+-0.0716621y=-124.688, bisecting 163 162
+site (20) at -121.934998 37.305801
+line(232) 1x+0.475214y=-104.212, bisecting 128 20
+circle through left=20 right=27 bottom=128
+vertex(141) at -121.934608 37.294643
+e 214 130 141
+line(233) -0.044817x+1y=42.7594, bisecting 27 20
+circle through left=45 right=48 bottom=46
+vertex(142) at -121.831825 37.295399
+e 206 139 142
+e 183 110 142
+line(234) 1x+-0.71153y=-148.369, bisecting 48 45
+circle through left=157 right=161 bottom=155
+vertex(143) at -122.046860 37.287540
+e 227 143 138
+line(235) 1x+0.210034y=-114.215, bisecting 157 161
+circle through left=132 right=126 bottom=135
+vertex(144) at -121.976562 37.297466
+e 209 144 128
+line(236) 1x+0.949777y=-86.5522, bisecting 132 126
+circle through left=38 right=44 bottom=39
+vertex(145) at -121.875923 37.289703
+e 164 98 145
+e 199 145 122
+line(237) 1x+0.136301y=-116.793, bisecting 38 44
+circle through left=20 right=22 bottom=27
+vertex(146) at -121.929802 37.294857
+e 233 141 146
+e 225 146 137
+line(238) 1x+-0.130869y=-126.811, bisecting 22 20
+circle through left=161 right=162 bottom=152
+vertex(147) at -122.031929 37.293213
+e 226 138 147
+e 221 147 140
+line(239) 1x+-0.0888088y=-125.344, bisecting 162 161
+site (43) at -121.862000 37.307301
+line(240) -0.162935x+1y=57.1535, bisecting 44 43
+circle through left=23 right=24 bottom=25
+vertex(148) at -121.897980 37.299313
+e 223 136 148
+line(241) 1x+0.107688y=-117.881, bisecting 23 24
+site (21) at -121.921997 37.307499
+line(242) 0x+1y=37.3058, bisecting 22 21
+circle through left=25 right=44 bottom=38
+vertex(149) at -121.876030 37.290588
+e 185 121 149
+e 237 149 145
+line(243) 1x+-0.117706y=-126.265, bisecting 44 25
+circle through left=22 right=23 bottom=26
+vertex(150) at -121.913712 37.298599
+e 224 137 150
+e 222 150 136
+line(244) 1x+-0.0412926y=-123.454, bisecting 23 22
+site (47) at -121.829002 37.308601
+line(245) -0.247734x+1y=67.4791, bisecting 48 47
+circle through left=45 right=47 bottom=48
+vertex(151) at -121.830299 37.297554
+e 234 142 151
+line(246) 1x+0.675143y=-96.6491, bisecting 45 47
+site (124) at -121.956001 37.308998
+line(247) 0x+1y=37.3034, bisecting 129 124
+circle through left=47 right=49 bottom=48
+vertex(152) at -121.825218 37.298820
+e 245 151 152
+e 192 152 116
+line(248) -0.87835x+1y=144.304, bisecting 49 47
+circle through left=124 right=128 bottom=129
+vertex(153) at -121.950607 37.303448
+e 220 153 135
+line(249) 1x+-0.538439y=-142.036, bisecting 128 124
+circle through left=120 right=126 bottom=132
+vertex(154) at -121.980850 37.302006
+e 207 129 154
+e 236 154 144
+line(250) 1x+0.227851y=-113.482, bisecting 120 126
+circle through left=43 right=45 bottom=44
+vertex(155) at -121.852974 37.299324
+e 228 155 139
+line(251) 1x+-0.323946y=-133.936, bisecting 45 43
+circle through left=135 right=124 bottom=129
+vertex(156) at -121.962242 37.303448
+e 208 156 127
+e 247 156 153
+line(252) 1x+0.966306y=-85.9157, bisecting 135 124
+circle through left=20 right=21 bottom=22
+vertex(157) at -121.928383 37.305801
+e 238 146 157
+line(253) 1x+0.130575y=-117.057, bisecting 20 21
+site (125) at -121.970001 37.312599
+line(254) 0.253018x+1y=6.44781, bisecting 126 125
+site (51) at -121.820000 37.313000
+line(255) -0.208226x+1y=62.669, bisecting 49 51
+circle through left=47 right=51 bottom=49
+vertex(158) at -121.820633 37.302856
+e 248 152 158
+line(256) 1x+0.488559y=-103.596, bisecting 47 51
+circle through left=126 right=124 bottom=135
+vertex(159) at -121.963417 37.304661
+e 229 144 159
+e 252 159 156
+line(257) 1x+0.268717y=-111.939, bisecting 126 124
+circle through left=25 right=43 bottom=44
+vertex(160) at -121.875427 37.295666
+e 243 149 160
+e 240 160 155
+line(258) 1x+0.464558y=-104.549, bisecting 25 43
+circle through left=229 right=157 bottom=155
+vertex(161) at -122.085190 37.283466
+e 136 161 79
+e 205 161 143
+line(259) 1x+0.687977y=-96.435, bisecting 229 157
+circle through left=49 right=56 bottom=50
+vertex(162) at -121.792572 37.290745
+e 191 116 162
+e 194 162 118
+line(260) 1x+-0.282214y=-132.317, bisecting 56 49
+site (158) at -122.077003 37.314499
+line(261) 1x+-0.829071y=-152.999, bisecting 157 158
+site (122) at -121.985001 37.314499
+line(262) 0.359495x+1y=-6.54635, bisecting 120 122
+circle through left=21 right=23 bottom=22
+vertex(163) at -121.913406 37.305801
+e 242 157 163
+e 244 150 163
+line(263) 1x+-0.241248y=-130.913, bisecting 23 21
+circle through left=24 right=43 bottom=25
+vertex(164) at -121.876282 37.297489
+e 230 148 164
+e 258 164 160
+line(264) 1x+0.0834181y=-118.765, bisecting 24 43
+circle through left=122 right=126 bottom=120
+vertex(165) at -121.981628 37.305439
+e 250 165 154
+line(265) 1x+-0.753815y=-150.103, bisecting 126 122
+circle through left=125 right=124 bottom=126
+vertex(166) at -121.963997 37.306877
+e 257 166 159
+line(266) 1x+-0.257221y=-131.56, bisecting 124 125
+site (165) at -122.022003 37.316002
+line(267) 0x+1y=37.3095, bisecting 162 165
+circle through left=229 right=158 bottom=157
+vertex(167) at -122.086639 37.285580
+e 259 167 161
+line(268) 0.680352x+1y=-45.7764, bisecting 229 158
+site (127) at -121.944000 37.316200
+line(269) -0.0703734x+1y=45.8907, bisecting 128 127
+site (166) at -122.003998 37.316299
+line(270) -0.203997x+1y=62.1971, bisecting 164 166
+circle through left=163 right=166 bottom=164
+vertex(168) at -122.004112 37.308617
+e 217 132 168
+line(271) 0.280075x+1y=3.13835, bisecting 163 166
+site (17) at -121.894997 37.316399
+line(272) -0.258468x+1y=68.8161, bisecting 24 17
+circle through left=127 right=20 bottom=128
+vertex(169) at -121.941536 37.309231
+e 232 169 141
+line(273) -0.865737x+1y=142.879, bisecting 20 127
+circle through left=124 right=127 bottom=128
+vertex(170) at -121.947708 37.308800
+e 249 153 170
+e 269 170 169
+line(274) 1x+0.600127y=-99.5577, bisecting 124 127
+circle through left=23 right=17 bottom=24
+vertex(171) at -121.899048 37.309162
+e 241 171 148
+line(275) 0.769366x+1y=-56.4758, bisecting 23 17
+circle through left=122 right=125 bottom=126
+vertex(172) at -121.977913 37.310398
+e 265 165 172
+e 254 172 166
+line(276) 1x+-0.126653y=-126.703, bisecting 125 122
+site (18) at -121.906998 37.318699
+line(277) -0.130641x+1y=53.2369, bisecting 23 18
+site (160) at -122.042000 37.319199
+line(278) -0.136922x+1y=54.022, bisecting 161 160
+circle through left=165 right=163 bottom=162
+vertex(173) at -122.014503 37.309502
+e 231 140 173
+line(279) -0.999728x+1y=159.291, bisecting 163 165
+site (41) at -121.874001 37.319698
+line(280) -0.968x+1y=155.282, bisecting 43 41
+site (123) at -121.961998 37.319801
+line(281) -0.555085x+1y=105.012, bisecting 124 123
+circle through left=125 right=123 bottom=124
+vertex(174) at -121.962585 37.312401
+e 266 166 174
+line(282) 1x+0.899905y=-88.385, bisecting 125 123
+circle through left=24 right=41 bottom=43
+vertex(175) at -121.876907 37.304878
+e 264 175 164
+line(283) 1x+0.827893y=-90.9924, bisecting 24 41
+circle through left=18 right=17 bottom=23
+vertex(176) at -121.902145 37.311554
+e 275 176 171
+line(284) 1x+-0.191672y=-129.054, bisecting 17 18
+circle through left=161 right=165 bottom=162
+vertex(177) at -122.030495 37.309502
+e 239 147 177
+e 267 177 173
+line(285) 1x+0.633531y=-98.3938, bisecting 161 165
+site (121) at -121.982002 37.320202
+line(286) 0.525752x+1y=-26.8158, bisecting 122 121
+site (52) at -121.815002 37.320202
+line(287) 0.693856x+1y=-47.2072, bisecting 51 52
+circle through left=21 right=18 bottom=23
+vertex(178) at -121.912338 37.310223
+e 263 163 178
+e 277 178 176
+line(288) 1x+0.746694y=-94.053, bisecting 21 18
+circle through left=164 right=122 bottom=120
+vertex(179) at -121.994675 37.310131
+e 219 134 179
+e 262 179 165
+line(289) 1x+0.806152y=-91.9171, bisecting 164 122
+site (19) at -121.926003 37.321098
+line(290) -0.29453x+1y=73.2246, bisecting 21 19
+circle through left=166 right=122 bottom=164
+vertex(180) at -121.994957 37.310490
+e 270 168 180
+e 289 180 179
+line(291) 1x+-0.0947791y=-125.531, bisecting 122 166
+circle through left=165 right=166 bottom=163
+vertex(181) at -122.012909 37.311081
+e 279 173 181
+e 271 181 168
+line(292) 1x+0.0165254y=-121.396, bisecting 165 166
+circle through left=20 right=19 bottom=21
+vertex(182) at -121.929283 37.312740
+e 253 182 157
+line(293) 0.58803x+1y=-34.3853, bisecting 20 19
+circle through left=121 right=125 bottom=122
+vertex(183) at -121.977432 37.314156
+e 276 172 183
+line(294) 1x+-0.633503y=-145.616, bisecting 125 121
+site (16) at -121.884003 37.322701
+line(295) 0.446623x+1y=-17.1242, bisecting 24 16
+circle through left=17 right=16 bottom=24
+vertex(184) at -121.885536 37.312649
+e 272 171 184
+line(296) 1x+0.573213y=-100.497, bisecting 17 16
+circle through left=16 right=41 bottom=24
+vertex(185) at -121.882050 37.311089
+e 295 184 185
+e 283 185 175
+line(297) 1x+-0.300153y=-133.081, bisecting 41 16
+circle through left=157 right=160 bottom=161
+vertex(186) at -122.051666 37.310436
+e 235 186 143
+line(298) 0.957386x+1y=-79.5402, bisecting 157 160
+site (156) at -122.056000 37.323799
+line(299) 0.170851x+1y=16.4584, bisecting 157 156
+site (55) at -121.774002 37.324100
+line(300) -0.0697303x+1y=45.7938, bisecting 56 55
+circle through left=160 right=165 bottom=161
+vertex(187) at -122.032730 37.313023
+e 278 186 187
+e 285 187 177
+line(301) 1x+-0.159863y=-127.998, bisecting 165 160
+circle through left=55 right=57 bottom=56
+vertex(188) at -121.771553 37.302670
+e 212 188 133
+line(302) 1x+-0.929116y=-156.43, bisecting 57 55
+circle through left=156 right=160 bottom=157
+vertex(189) at -122.052406 37.311142
+e 298 189 186
+line(303) 1x+-0.32861y=-134.313, bisecting 160 156
+circle through left=52 right=49 bottom=51
+vertex(190) at -121.802979 37.306526
+e 255 158 190
+line(304) 0.0378558x+1y=32.6956, bisecting 49 52
+site (42) at -121.848999 37.325298
+line(305) -0.322412x+1y=76.5972, bisecting 45 42
+circle through left=43 right=42 bottom=45
+vertex(191) at -121.849022 37.311607
+e 251 155 191
+line(306) 0.72234x+1y=-50.7048, bisecting 43 42
+circle through left=127 right=19 bottom=20
+vertex(192) at -121.934166 37.315609
+e 273 169 192
+e 293 192 182
+line(307) 1x+0.272149y=-111.779, bisecting 127 19
+circle through left=158 right=156 bottom=157
+vertex(193) at -122.063820 37.313095
+e 261 167 193
+e 299 193 189
+line(308) 1x+0.44279y=-105.542, bisecting 158 156
+circle through left=19 right=18 bottom=21
+vertex(194) at -121.916939 37.316380
+e 290 182 194
+e 288 194 178
+line(309) 1x+-0.126255y=-126.628, bisecting 18 19
+circle through left=123 right=127 bottom=124
+vertex(195) at -121.953056 37.317692
+e 281 174 195
+e 274 195 170
+line(310) 1x+-0.200085y=-129.42, bisecting 127 123
+site (119) at -121.985001 37.327202
+line(311) -0.428338x+1y=89.5739, bisecting 121 119
+circle through left=42 right=47 bottom=45
+vertex(196) at -121.841431 37.314056
+e 305 191 196
+e 246 196 151
+line(312) 1x+-0.834987y=-152.998, bisecting 47 42
+circle through left=49 right=55 bottom=56
+vertex(197) at -121.789551 37.301411
+e 260 162 197
+e 300 197 188
+line(313) 1x+0.721435y=-94.879, bisecting 49 55
+circle through left=122 right=119 bottom=121
+vertex(198) at -121.990158 37.320847
+e 286 198 183
+line(314) 0x+1y=37.3209, bisecting 122 119
+site (6) at -121.904999 37.329102
+line(315) 0.192153x+1y=13.8994, bisecting 18 6
+site (58) at -121.835999 37.329399
+line(316) -0.33639x+1y=78.3023, bisecting 47 58
+circle through left=42 right=58 bottom=47
+vertex(199) at -121.839149 37.316765
+e 312 196 199
+line(317) 1x+0.315434y=-110.068, bisecting 42 58
+site (7) at -121.893997 37.329800
+line(318) 0.0745801x+1y=28.2322, bisecting 17 7
+site (15) at -121.875000 37.330002
+line(319) -0.0970011x+1y=49.1468, bisecting 41 15
+site (167) at -122.023003 37.330200
+line(320) -0.0703923x+1y=45.9125, bisecting 165 167
+circle through left=7 right=16 bottom=17
+vertex(200) at -121.891396 37.322868
+e 296 200 184
+line(321) 1x+-0.710305y=-148.402, bisecting 16 7
+site (159) at -122.050003 37.330299
+line(322) 0.922535x+1y=-75.2711, bisecting 156 159
+site (168) at -122.003998 37.330399
+line(323) 0x+1y=37.3234, bisecting 166 168
+circle through left=159 right=160 bottom=156
+vertex(201) at -122.048515 37.322910
+e 303 189 201
+line(324) -0.720962x+1y=125.315, bisecting 160 159
+site (114) at -121.941002 37.330700
+line(325) 0.206788x+1y=12.1072, bisecting 127 114
+circle through left=16 right=15 bottom=41
+vertex(202) at -121.877991 37.324516
+e 297 185 202
+line(326) 1x+0.811017y=-91.6072, bisecting 16 15
+circle through left=57 right=251 bottom=247
+vertex(203) at -121.692429 37.259155
+e 218 133 203
+e 190 115 203
+line(327) -0.381197x+1y=83.648, bisecting 251 57
+circle through left=6 right=17 bottom=18
+vertex(204) at -121.899994 37.322750
+e 284 176 204
+line(328) -0.787387x+1y=133.305, bisecting 17 6
+site (4) at -121.926003 37.331299
+line(329) 0x+1y=37.3262, bisecting 19 4
+circle through left=6 right=7 bottom=17
+vertex(205) at -121.899117 37.323444
+e 328 204 205
+e 318 205 200
+line(330) 1x+0.0634535y=-119.531, bisecting 6 7
+circle through left=58 right=51 bottom=47
+vertex(206) at -121.829071 37.320152
+e 316 199 206
+e 256 206 158
+line(331) -0.975576x+1y=156.174, bisecting 51 58
+site (118) at -121.971001 37.331799
+line(332) -0.750397x+1y=128.849, bisecting 123 118
+circle through left=125 right=118 bottom=123
+vertex(207) at -121.971359 37.322155
+e 282 207 174
+line(333) -0.0520564x+1y=43.6716, bisecting 125 118
+circle through left=166 right=119 bottom=122
+vertex(208) at -121.993988 37.320850
+e 291 180 208
+e 314 208 198
+line(334) 1x+0.573896y=-100.576, bisecting 166 119
+circle through left=121 right=118 bottom=125
+vertex(209) at -121.972382 37.322105
+e 294 183 209
+e 333 209 207
+line(335) 0.948684x+1y=-78.3912, bisecting 121 118
+site (53) at -121.820999 37.332001
+line(336) -0.508244x+1y=99.2394, bisecting 52 53
+circle through left=114 right=19 bottom=127
+vertex(210) at -121.935936 37.322094
+e 307 210 192
+line(337) 1x+-0.640132y=-145.827, bisecting 19 114
+circle through left=52 right=55 bottom=49
+vertex(211) at -121.792976 37.306149
+e 304 190 211
+e 313 211 197
+line(338) 1x+0.0950875y=-118.246, bisecting 52 55
+site (115) at -121.959000 37.332401
+line(339) 0.237965x+1y=8.30371, bisecting 123 115
+circle through left=51 right=53 bottom=52
+vertex(212) at -121.825615 37.322231
+e 287 212 190
+line(340) -0.0525999x+1y=43.7302, bisecting 51 53
+site (5) at -121.913002 37.333199
+line(341) -0.414102x+1y=87.8091, bisecting 18 5
+circle through left=5 right=6 bottom=18
+vertex(213) at -121.912117 37.325077
+e 315 213 204
+line(342) 1x+-0.511916y=-141.019, bisecting 6 5
+circle through left=41 right=42 bottom=43
+vertex(214) at -121.860992 37.320278
+e 280 175 214
+e 306 214 191
+line(343) 1x+0.223985y=-113.502, bisecting 41 42
+circle through left=19 right=5 bottom=18
+vertex(215) at -121.916061 37.323448
+e 309 194 215
+e 341 215 213
+line(344) 1x+0.930751y=-87.1772, bisecting 19 5
+circle through left=58 right=53 bottom=51
+vertex(216) at -121.827042 37.322159
+e 331 206 216
+e 340 216 212
+line(345) 1x+0.173449y=-115.354, bisecting 58 53
+circle through left=160 right=167 bottom=165
+vertex(217) at -122.031219 37.322487
+e 301 187 217
+line(346) 1x+0.579116y=-100.417, bisecting 160 167
+site (117) at -121.984001 37.334099
+line(347) 0.144911x+1y=19.6537, bisecting 119 117
+circle through left=168 right=119 bottom=166
+vertex(218) at -121.995422 37.323353
+e 334 218 208
+line(348) 1x+-0.168273y=-128.276, bisecting 119 168
+circle through left=119 right=118 bottom=121
+vertex(219) at -121.977005 37.326485
+e 311 198 219
+e 335 219 209
+line(349) 1x+0.328338y=-109.721, bisecting 119 118
+site (8) at -121.882004 37.334702
+line(350) 0.166561x+1y=17.0278, bisecting 16 8
+circle through left=8 right=15 bottom=16
+vertex(220) at -121.881157 37.328396
+e 326 220 202
+line(351) 1x+-0.671024y=-146.929, bisecting 15 8
+circle through left=165 right=168 bottom=166
+vertex(221) at -122.013130 37.323353
+e 292 221 181
+e 323 221 218
+line(352) 1x+0.799576y=-92.1703, bisecting 165 168
+circle through left=118 right=115 bottom=123
+vertex(222) at -121.964752 37.327114
+e 332 207 222
+line(353) 1x+0.0502225y=-120.09, bisecting 118 115
+circle through left=115 right=127 bottom=123
+vertex(223) at -121.951797 37.324032
+e 339 222 223
+e 310 195 223
+line(354) -0.92583x+1y=150.231, bisecting 127 115
+circle through left=114 right=4 bottom=19
+vertex(224) at -121.933304 37.326199
+e 337 210 224
+line(355) 1x+0.0399288y=-120.443, bisecting 114 4
+circle through left=4 right=5 bottom=19
+vertex(225) at -121.918610 37.326199
+e 329 224 225
+e 344 225 215
+line(356) 1x+0.146127y=-116.464, bisecting 4 5
+circle through left=167 right=168 bottom=165
+vertex(226) at -122.013428 37.323742
+e 320 217 226
+e 352 226 221
+line(357) 1x+0.0104376y=-121.624, bisecting 167 168
+site (116) at -121.959999 37.336102
+line(358) -0.270103x+1y=70.2759, bisecting 115 116
+site (61) at -121.832001 37.336201
+line(359) 0.587773x+1y=-34.278, bisecting 58 61
+circle through left=115 right=114 bottom=127
+vertex(227) at -121.950615 37.325127
+e 354 223 227
+e 325 227 210
+line(360) 1x+-0.0945316y=-125.479, bisecting 114 115
+circle through left=7 right=8 bottom=16
+vertex(228) at -121.886795 37.329330
+e 321 200 228
+e 350 228 220
+line(361) 1x+0.408715y=-106.63, bisecting 7 8
+circle through left=117 right=118 bottom=119
+vertex(229) at -121.978065 37.329716
+e 349 229 219
+line(362) 1x+-0.176937y=-128.583, bisecting 118 117
+circle through left=61 right=53 bottom=58
+vertex(230) at -121.828278 37.329445
+e 345 230 216
+line(363) 1x+-0.381761y=-136.079, bisecting 53 61
+site (14) at -121.861000 37.338699
+line(364) -0.895531x+1y=146.457, bisecting 42 14
+circle through left=41 right=14 bottom=42
+vertex(231) at -121.862175 37.325546
+e 343 231 214
+line(365) 0.6842x+1y=-46.0525, bisecting 41 14
+circle through left=118 right=116 bottom=115
+vertex(232) at -121.965027 37.332748
+e 353 232 222
+line(366) 1x+0.391123y=-107.363, bisecting 118 116
+site (12) at -121.874001 37.338799
+line(367) 0.113617x+1y=23.4874, bisecting 15 12
+circle through left=15 right=14 bottom=41
+vertex(233) at -121.862801 37.325989
+e 319 202 233
+e 365 233 231
+line(368) 1x+0.621253y=-98.6739, bisecting 15 14
+circle through left=8 right=12 bottom=15
+vertex(234) at -121.876945 37.334679
+e 351 220 234
+line(369) 1x+0.511916y=-102.765, bisecting 8 12
+site (3) at -121.920998 37.340099
+line(370) 0.568704x+1y=-32.0027, bisecting 4 3
+circle through left=3 right=5 bottom=4
+vertex(235) at -121.919685 37.333527
+e 356 235 225
+line(371) 1x+-0.863073y=-154.141, bisecting 5 3
+site (9) at -121.887001 37.341801
+line(372) -0.703923x+1y=123.136, bisecting 8 9
+circle through left=12 right=14 bottom=15
+vertex(236) at -121.867538 37.333607
+e 367 234 236
+e 368 236 233
+line(373) 1x+-0.00762911y=-122.152, bisecting 14 12
+site (110) at -121.985001 37.342098
+line(374) -0.12494x+1y=52.5789, bisecting 117 110
+circle through left=7 right=9 bottom=8
+vertex(237) at -121.889130 37.334999
+e 361 237 228
+line(375) 0.582963x+1y=-33.7218, bisecting 7 9
+circle through left=168 right=117 bottom=119
+vertex(238) at -121.993942 37.332016
+e 348 218 238
+e 347 238 229
+line(376) 1x+0.185044y=-115.086, bisecting 168 117
+site (206) at -122.079002 37.342201
+line(377) -0.0721564x+1y=46.1371, bisecting 158 206
+site (2) at -121.908997 37.342800
+line(378) 0.417163x+1y=-13.5188, bisecting 5 2
+circle through left=2 right=6 bottom=5
+vertex(239) at -121.906456 37.336109
+e 342 213 239
+line(379) -0.291841x+1y=72.9134, bisecting 6 2
+site (62) at -121.828003 37.343399
+line(380) 0.555379x+1y=-30.322, bisecting 61 62
+circle through left=62 right=53 bottom=61
+vertex(240) at -121.825317 37.337200
+e 363 230 240
+line(381) -0.614458x+1y=112.194, bisecting 53 62
+circle through left=206 right=156 bottom=158
+vertex(241) at -122.070808 37.328873
+e 308 241 193
+line(382) 1x+-0.8y=-151.934, bisecting 156 206
+site (173) at -122.036003 37.344601
+line(383) -0.902781x+1y=147.503, bisecting 167 173
+site (64) at -121.851997 37.344601
+line(384) 1x+0.655508y=-97.3787, bisecting 14 64
+circle through left=64 right=42 bottom=14
+vertex(242) at -121.851952 37.334713
+e 364 231 242
+line(385) -0.155336x+1y=56.2627, bisecting 42 64
+circle through left=160 right=173 bottom=167
+vertex(243) at -122.036285 37.331242
+e 346 243 217
+line(386) 0.236071x+1y=8.52197, bisecting 160 173
+circle through left=159 right=173 bottom=160
+vertex(244) at -122.036797 37.331379
+e 324 201 244
+e 386 244 243
+line(387) 0.978928x+1y=-82.1338, bisecting 159 173
+site (205) at -122.073997 37.344700
+line(388) 1x+0.499238y=-103.433, bisecting 206 205
+site (171) at -122.056999 37.344700
+line(389) -0.485828x+1y=96.6345, bisecting 159 171
+site (172) at -122.044998 37.344700
+line(390) 0.34755x+1y=-5.08007, bisecting 159 172
+site (113) at -121.944000 37.344700
+line(391) -0.214169x+1y=63.454, bisecting 114 113
+site (169) at -122.023003 37.344799
+line(392) 0x+1y=37.3375, bisecting 167 169
+site (170) at -122.003998 37.344898
+line(393) 0x+1y=37.3377, bisecting 168 170
+site (109) at -121.972000 37.345200
+line(394) -0.0745801x+1y=46.4352, bisecting 118 109
+circle through left=205 right=156 bottom=206
+vertex(245) at -122.069832 37.330078
+e 382 241 245
+line(395) -0.861106x+1y=142.445, bisecting 156 205
+circle through left=156 right=171 bottom=159
+vertex(246) at -122.060585 37.334049
+e 322 246 201
+line(396) -0.0478189x+1y=43.1709, bisecting 156 171
+circle through left=172 right=173 bottom=159
+vertex(247) at -122.040588 37.335094
+e 387 247 244
+line(397) 1x+-0.0110263y=-122.452, bisecting 173 172
+circle through left=3 right=2 bottom=5
+vertex(248) at -121.914558 37.339485
+e 371 235 248
+e 378 248 239
+line(398) 1x+0.225048y=-113.511, bisecting 3 2
+site (111) at -121.960999 37.346298
+line(399) -0.0980172x+1y=49.2954, bisecting 116 111
+circle through left=115 right=113 bottom=114
+vertex(249) at -121.949554 37.336189
+e 360 227 249
+line(400) 1x+0.819939y=-91.3362, bisecting 115 113
+circle through left=117 right=109 bottom=118
+vertex(250) at -121.976570 37.338120
+e 362 229 250
+line(401) 1x+0.924984y=-87.4394, bisecting 117 109
+circle through left=109 right=116 bottom=118
+vertex(251) at -121.967400 37.338802
+e 394 250 251
+e 366 251 232
+line(402) 1x+-0.758106y=-150.274, bisecting 116 109
+circle through left=116 right=113 bottom=115
+vertex(252) at -121.950050 37.336796
+e 358 232 252
+e 400 252 249
+line(403) 1x+0.537434y=-101.884, bisecting 116 113
+site (11) at -121.878998 37.346802
+line(404) -0.624404x+1y=113.443, bisecting 12 11
+site (66) at -121.838997 37.346802
+line(405) -0.65995x+1y=117.747, bisecting 61 66
+circle through left=8 right=11 bottom=12
+vertex(253) at -121.879982 37.340622
+e 369 253 234
+line(406) 0.248424x+1y=7.06275, bisecting 8 11
+site (102) at -121.931999 37.346901
+line(407) -0.384352x+1y=84.2028, bisecting 4 102
+circle through left=64 right=58 bottom=42
+vertex(254) at -121.845161 37.335777
+e 385 242 254
+e 317 254 199
+line(408) 1x+-0.950167y=-157.32, bisecting 58 64
+circle through left=114 right=102 bottom=4
+vertex(255) at -121.933746 37.337273
+e 355 255 224
+line(409) 0.555686x+1y=-30.4196, bisecting 114 102
+circle through left=9 right=11 bottom=8
+vertex(256) at -121.880836 37.340836
+e 372 237 256
+e 406 256 253
+line(410) 1x+0.624881y=-98.5473, bisecting 9 11
+circle through left=171 right=172 bottom=159
+vertex(257) at -122.050987 37.338711
+e 389 246 257
+e 390 257 247
+line(411) 1x+0y=-122.051, bisecting 171 172
+circle through left=173 right=169 bottom=167
+vertex(258) at -122.029381 37.337502
+e 383 243 258
+line(412) 1x+0.0152582y=-121.46, bisecting 173 169
+circle through left=58 right=66 bottom=61
+vertex(259) at -121.841759 37.337372
+e 359 259 230
+line(413) -0.172293x+1y=58.3298, bisecting 58 66
+site (59) at -121.816002 37.347198
+line(414) 0.328815x+1y=-2.71619, bisecting 53 59
+circle through left=110 right=109 bottom=117
+vertex(260) at -121.977379 37.338982
+e 401 260 250
+line(415) 1x+0.238556y=-113.07, bisecting 110 109
+circle through left=102 right=3 bottom=4
+vertex(261) at -121.929291 37.338985
+e 407 255 261
+e 370 261 235
+line(416) 1x+-0.618239y=-145.014, bisecting 3 102
+circle through left=205 right=171 bottom=156
+vertex(262) at -122.065475 37.333820
+e 395 245 262
+e 396 262 246
+line(417) 1x+0y=-122.065, bisecting 205 171
+circle through left=168 right=110 bottom=117
+vertex(263) at -121.994843 37.336803
+e 376 263 238
+e 374 263 260
+line(418) 1x+0.615863y=-99.0005, bisecting 168 110
+circle through left=64 right=66 bottom=58
+vertex(264) at -121.844032 37.336975
+e 408 254 264
+e 413 264 259
+line(419) 1x+0.169308y=-115.523, bisecting 64 66
+circle through left=2 right=7 bottom=6
+vertex(265) at -121.900040 37.337982
+e 379 239 265
+e 330 265 205
+line(420) 1x+-0.866735y=-154.262, bisecting 7 2
+circle through left=109 right=111 bottom=116
+vertex(266) at -121.965988 37.340668
+e 402 251 266
+line(421) 1x+0.0998613y=-118.237, bisecting 109 111
+circle through left=113 right=102 bottom=114
+vertex(267) at -121.936745 37.338936
+e 391 249 267
+e 409 267 255
+line(422) 1x+0.183408y=-115.088, bisecting 113 102
+circle through left=62 right=59 bottom=53
+vertex(268) at -121.820412 37.340221
+e 381 240 268
+line(423) 1x+0.316592y=-109.999, bisecting 62 59
+site (108) at -121.986000 37.348499
+line(424) -0.156138x+1y=56.3919, bisecting 110 108
+circle through left=66 right=62 bottom=61
+vertex(269) at -121.834389 37.342239
+e 405 259 269
+e 380 269 240
+line(425) 1x+-0.309507y=-133.392, bisecting 62 66
+circle through left=170 right=110 bottom=168
+vertex(270) at -121.995369 37.337650
+e 418 270 263
+line(426) 1x+-0.14739y=-127.499, bisecting 110 170
+site (1) at -121.902000 37.348999
+line(427) 1x+0.886041y=-88.8155, bisecting 2 1
+circle through left=1 right=7 bottom=2
+vertex(271) at -121.899277 37.338863
+e 420 265 271
+line(428) -0.416849x+1y=88.1524, bisecting 7 1
+circle through left=169 right=168 bottom=167
+vertex(272) at -122.013565 37.337498
+e 392 258 272
+e 357 272 226
+line(429) 1x+-0.757728y=-150.305, bisecting 168 169
+circle through left=169 right=170 bottom=168
+vertex(273) at -122.013458 37.337650
+e 429 272 273
+e 393 273 270
+line(430) 1x+0.00521879y=-121.819, bisecting 169 170
+circle through left=1 right=9 bottom=7
+vertex(274) at -121.897224 37.339722
+e 428 271 274
+e 375 274 237
+line(431) 1x+-0.479908y=-139.817, bisecting 9 1
+site (112) at -121.945999 37.350300
+line(432) -0.356948x+1y=80.8755, bisecting 113 112
+site (13) at -121.865997 37.350300
+line(433) -0.430779x+1y=89.8408, bisecting 14 13
+circle through left=12 right=13 bottom=14
+vertex(275) at -121.867470 37.342781
+e 373 236 275
+line(434) 0.695854x+1y=-47.4592, bisecting 12 13
+circle through left=111 right=113 bottom=116
+vertex(276) at -121.952827 37.341953
+e 399 266 276
+e 403 276 252
+line(435) 1x+-0.0940305y=-125.464, bisecting 113 111
+site (10) at -121.885002 37.351700
+line(436) 0.201927x+1y=12.7347, bisecting 9 10
+circle through left=10 right=11 bottom=9
+vertex(277) at -121.884315 37.346409
+e 410 277 256
+line(437) 1x+-0.815756y=-152.35, bisecting 11 10
+site (65) at -121.846001 37.351799
+line(438) 0.833068x+1y=-64.1603, bisecting 64 65
+circle through left=65 right=66 bottom=64
+vertex(278) at -121.845406 37.345211
+e 419 278 264
+line(439) 1x+-0.713508y=-148.491, bisecting 66 65
+site (60) at -121.804001 37.352200
+line(440) 1x+0.41672y=-106.246, bisecting 59 60
+circle through left=60 right=53 bottom=59
+vertex(279) at -121.803780 37.334755
+e 414 268 279
+line(441) 0.841549x+1y=-65.169, bisecting 53 60
+circle through left=60 right=52 bottom=53
+vertex(280) at -121.802727 37.333866
+e 441 279 280
+e 336 212 280
+line(442) 0.343825x+1y=-4.54489, bisecting 52 60
+site (54) at -121.774002 37.352299
+line(443) 0x+1y=37.3382, bisecting 55 54
+circle through left=11 right=13 bottom=12
+vertex(281) at -121.871742 37.345764
+e 404 253 281
+e 434 281 275
+line(444) 1x+0.269073y=-111.823, bisecting 11 13
+circle through left=111 right=112 bottom=113
+vertex(282) at -121.952553 37.344799
+e 435 276 282
+line(445) 1x+0.266785y=-111.99, bisecting 111 112
+circle through left=108 right=109 bottom=110
+vertex(283) at -121.979134 37.346291
+e 415 283 260
+line(446) 1x+-0.235695y=-130.781, bisecting 109 108
+circle through left=170 right=108 bottom=110
+vertex(284) at -121.994446 37.343899
+e 426 270 284
+e 424 284 283
+line(447) 1x+0.200085y=-114.522, bisecting 170 108
+circle through left=13 right=64 bottom=14
+vertex(285) at -121.859489 37.346214
+e 433 275 285
+e 384 285 242
+line(448) 1x+-0.407084y=-137.063, bisecting 64 13
+circle through left=60 right=55 bottom=52
+vertex(286) at -121.795372 37.331345
+e 442 280 286
+e 338 286 211
+line(449) 1x+-0.936673y=-156.763, bisecting 55 60
+site (227) at -122.098999 37.355099
+line(450) 1x+-0.644983y=-146.178, bisecting 206 227
+circle through left=158 right=227 bottom=206
+vertex(287) at -122.103271 37.326530
+e 377 287 241
+line(451) -0.541765x+1y=103.478, bisecting 158 227
+site (228) at -122.134003 37.356098
+line(452) -0.266396x+1y=69.8438, bisecting 229 228
+circle through left=112 right=102 bottom=113
+vertex(288) at -121.938713 37.349739
+e 432 282 288
+e 422 288 267
+line(453) 1x+-0.242779y=-131.006, bisecting 102 112
+circle through left=1 right=10 bottom=9
+vertex(289) at -121.893143 37.348194
+e 431 274 289
+e 436 289 277
+line(454) 1x+0.158887y=-115.959, bisecting 1 10
+circle through left=228 right=158 bottom=229
+vertex(290) at -122.123497 37.310650
+e 268 290 167
+line(455) 1x+-0.729822y=-149.354, bisecting 158 228
+site (0) at -121.889999 37.357399
+line(456) -0.876841x+1y=144.23, bisecting 10 0
+site (101) at -121.949997 37.357800
+line(457) -0.533062x+1y=102.36, bisecting 112 101
+circle through left=1 right=0 bottom=10
+vertex(291) at -121.893356 37.349422
+e 454 291 289
+line(458) 1x+0.699936y=-95.7511, bisecting 1 0
+site (72) at -121.830002 37.358101
+line(459) -0.135963x+1y=53.9149, bisecting 62 72
+circle through left=66 right=72 bottom=62
+vertex(292) at -121.831886 37.350357
+e 425 269 292
+line(460) 0.796084x+1y=-59.638, bisecting 66 72
+site (63) at -121.865997 37.358398
+line(461) 0x+1y=37.3543, bisecting 13 63
+circle through left=60 right=54 bottom=55
+vertex(293) at -121.788948 37.338200
+e 449 286 293
+line(462) 1x+0.00330621y=-121.666, bisecting 60 54
+circle through left=111 right=101 bottom=112
+vertex(294) at -121.954155 37.350773
+e 445 294 282
+line(463) 0.956551x+1y=-79.3046, bisecting 111 101
+site (178) at -122.009003 37.359200
+line(464) -0.34996x+1y=80.0494, bisecting 170 178
+site (105) at -121.962997 37.359200
+line(465) -0.154938x+1y=56.2493, bisecting 111 105
+site (204) at -122.078003 37.359299
+line(466) -0.274366x+1y=70.8455, bisecting 205 204
+site (179) at -122.001999 37.359299
+line(467) 0.138808x+1y=20.4171, bisecting 170 179
+site (107) at -121.988998 37.359501
+line(468) -0.272538x+1y=70.6002, bisecting 108 107
+site (106) at -121.981003 37.359501
+line(469) 0.45423x+1y=-18.0546, bisecting 108 106
+circle through left=228 right=227 bottom=158
+vertex(295) at -122.117569 37.318787
+e 455 290 295
+e 451 295 287
+line(470) 1x+-0.0285527y=-123.183, bisecting 227 228
+circle through left=206 right=204 bottom=205
+vertex(296) at -122.080208 37.350845
+e 388 296 245
+line(471) 0.058456x+1y=30.2145, bisecting 206 204
+site (176) at -122.022003 37.359699
+line(472) 0.0670763x+1y=29.1674, bisecting 169 176
+circle through left=106 right=109 bottom=108
+vertex(297) at -121.977913 37.351467
+e 446 283 297
+line(473) -0.629501x+1y=114.137, bisecting 109 106
+circle through left=178 right=179 bottom=170
+vertex(298) at -122.005409 37.352432
+line(474) 1x+0.0141612y=-121.476, bisecting 178 179
+circle through left=169 right=178 bottom=170
+vertex(299) at -122.013535 37.349586
+e 430 299 273
+e 464 299 298
+line(475) 0.972185x+1y=-81.2702, bisecting 169 178
+circle through left=109 right=105 bottom=111
+vertex(300) at -121.967125 37.351959
+e 421 300 266
+line(476) 0.643052x+1y=-41.0792, bisecting 109 105
+site (177) at -122.022003 37.360401
+line(477) 0x+1y=37.3601, bisecting 176 177
+circle through left=72 right=59 bottom=62
+vertex(301) at -121.823936 37.351437
+e 459 292 301
+e 423 301 268
+line(478) 1x+-0.778747y=-150.911, bisecting 59 72
+circle through left=107 right=106 bottom=108
+vertex(302) at -121.985001 37.354683
+e 469 302 297
+line(479) 1x+0y=-121.985, bisecting 107 106
+site (104) at -121.971001 37.361099
+line(480) 0.0628599x+1y=29.686, bisecting 109 104
+circle through left=179 right=108 bottom=170
+vertex(303) at -121.995880 37.351109
+e 467 298 303
+e 447 303 284
+line(481) 1x+-0.675012y=-147.208, bisecting 108 179
+site (68) at -121.836998 37.361401
+line(482) 0.136922x+1y=20.6718, bisecting 66 68
+circle through left=104 right=105 bottom=109
+vertex(304) at -121.968712 37.352974
+e 476 304 300
+line(483) 1x+-0.237369y=-130.835, bisecting 105 104
+circle through left=68 right=72 bottom=66
+vertex(305) at -121.836266 37.353863
+e 460 305 292
+line(484) 1x+-0.471647y=-139.454, bisecting 72 68
+circle through left=65 right=68 bottom=66
+vertex(306) at -121.838959 37.354237
+e 439 278 306
+e 482 306 305
+line(485) 0.937624x+1y=-76.8849, bisecting 65 68
+circle through left=105 right=101 bottom=111
+vertex(307) at -121.957047 37.353523
+e 465 300 307
+e 463 307 294
+line(486) 1x+-0.107688y=-125.98, bisecting 101 105
+site (175) at -122.041000 37.361801
+line(487) 0.233772x+1y=8.82301, bisecting 172 175
+circle through left=179 right=107 bottom=108
+vertex(308) at -121.995369 37.351852
+e 481 303 308
+e 468 308 302
+line(488) 1x+0.0155516y=-121.415, bisecting 179 107
+circle through left=175 right=173 bottom=172
+vertex(309) at -122.040421 37.352646
+e 397 247 309
+line(489) -0.29053x+1y=72.8091, bisecting 173 175
+circle through left=176 right=178 bottom=169
+vertex(310) at -122.015785 37.351795
+e 475 310 299
+line(490) 1x+-0.038439y=-123.452, bisecting 178 176
+site (99) at -121.924004 37.362000
+line(491) 0.52956x+1y=-27.2138, bisecting 102 99
+circle through left=106 right=104 bottom=109
+vertex(311) at -121.974884 37.353359
+e 473 297 311
+e 480 311 304
+line(492) 1x+0.159802y=-116.006, bisecting 106 104
+circle through left=99 right=3 bottom=102
+vertex(312) at -121.921776 37.351151
+e 416 261 312
+line(493) -0.137258x+1y=54.0859, bisecting 3 99
+circle through left=173 right=176 bottom=169
+vertex(313) at -122.029633 37.352730
+e 412 313 258
+e 472 313 310
+line(494) 0.927236x+1y=-75.7975, bisecting 173 176
+site (174) at -122.055000 37.363098
+line(495) 0.108646x+1y=24.093, bisecting 171 174
+circle through left=11 right=63 bottom=13
+vertex(314) at -121.874069 37.354347
+e 444 314 281
+line(496) 1x+0.892019y=-88.5533, bisecting 11 63
+circle through left=227 right=204 bottom=206
+vertex(315) at -122.087311 37.351269
+e 450 287 315
+e 471 315 296
+line(497) 1x+0.200036y=-114.616, bisecting 227 204
+circle through left=174 right=172 bottom=171
+vertex(316) at -122.050995 37.353355
+e 411 316 257
+line(498) -0.543645x+1y=103.706, bisecting 172 174
+circle through left=99 right=2 bottom=3
+vertex(317) at -121.917320 37.351765
+e 493 312 317
+e 398 317 248
+line(499) -0.781641x+1y=132.647, bisecting 2 99
+circle through left=13 right=65 bottom=64
+vertex(318) at -121.856232 37.354229
+e 448 285 318
+e 438 318 278
+line(500) 1x+0.0749714y=-119.056, bisecting 13 65
+circle through left=63 right=65 bottom=13
+vertex(319) at -121.856247 37.354347
+e 461 314 319
+e 500 319 318
+line(501) 1x+-0.330027y=-134.184, bisecting 65 63
+circle through left=174 right=175 bottom=172
+vertex(320) at -122.048729 37.354591
+e 498 316 320
+e 487 320 309
+line(502) 1x+-0.0926431y=-125.509, bisecting 175 174
+site (73) at -121.816002 37.366100
+line(503) 0x+1y=37.3567, bisecting 59 73
+circle through left=175 right=176 bottom=173
+vertex(321) at -122.032143 37.355053
+e 489 309 321
+e 494 321 313
+line(504) 1x+-0.110643y=-126.165, bisecting 176 175
+circle through left=177 right=178 bottom=176
+vertex(322) at -122.015488 37.360050
+e 490 310 322
+line(505) 1x+-0.0924296y=-125.469, bisecting 178 177
+circle through left=73 right=60 bottom=59
+vertex(323) at -121.812904 37.356651
+e 440 323 279
+line(506) -0.863337x+1y=142.522, bisecting 60 73
+site (103) at -121.980003 37.366699
+line(507) 0.138845x+1y=20.4267, bisecting 106 103
+circle through left=10 right=63 bottom=11
+vertex(324) at -121.876030 37.356567
+e 437 277 324
+e 496 324 314
+line(508) 1x+0.352469y=-108.709, bisecting 10 63
+circle through left=72 right=73 bottom=59
+vertex(325) at -121.819870 37.356651
+e 478 301 325
+e 503 325 323
+line(509) 1x+0.57139y=-100.475, bisecting 72 73
+site (67) at -121.857002 37.367500
+line(510) 0.988265x+1y=-83.0685, bisecting 63 67
+circle through left=67 right=65 bottom=63
+vertex(326) at -121.855415 37.356922
+e 501 319 326
+line(511) -0.70068x+1y=122.739, bisecting 65 67
+circle through left=99 right=1 bottom=2
+vertex(327) at -121.913399 37.354820
+e 499 317 327
+e 427 327 271
+line(512) 1x+-0.590846y=-143.984, bisecting 1 99
+circle through left=103 right=104 bottom=106
+vertex(328) at -121.976357 37.362522
+e 492 328 311
+line(513) 1x+-0.622034y=-145.217, bisecting 104 103
+circle through left=204 right=171 bottom=205
+vertex(329) at -122.065498 37.354877
+e 466 296 329
+e 417 329 262
+line(514) 1x+-0.69506y=-148.029, bisecting 171 204
+circle through left=204 right=174 bottom=171
+vertex(330) at -122.065460 37.354927
+e 514 329 330
+e 495 330 316
+line(515) 1x+0.165174y=-115.895, bisecting 204 174
+site (202) at -122.085999 37.369099
+line(516) -0.815882x+1y=136.969, bisecting 204 202
+circle through left=227 right=202 bottom=204
+vertex(331) at -122.088799 37.358643
+e 497 331 315
+line(517) 0.92861x+1y=-76.0143, bisecting 227 202
+circle through left=107 right=103 bottom=106
+vertex(332) at -121.985001 37.363724
+e 479 332 302
+e 507 332 328
+line(518) 1x+0.800254y=-92.0845, bisecting 107 103
+circle through left=175 right=177 bottom=176
+vertex(333) at -122.031570 37.360050
+e 504 321 333
+e 477 333 322
+line(519) 1x+-0.0736948y=-124.785, bisecting 177 175
+site (183) at -122.009003 37.370899
+line(520) 0x+1y=37.3651, bisecting 178 183
+site (100) at -121.962997 37.370998
+line(521) 0x+1y=37.3651, bisecting 105 100
+site (71) at -121.831001 37.371399
+line(522) -0.0751578x+1y=46.5213, bisecting 72 71
+circle through left=68 right=71 bottom=72
+vertex(334) at -121.831161 37.364700
+e 484 305 334
+line(523) 0.599771x+1y=-35.7061, bisecting 68 71
+circle through left=104 right=100 bottom=105
+vertex(335) at -121.965828 37.365101
+e 483 304 335
+line(524) 0.808478x+1y=-61.2416, bisecting 104 100
+circle through left=112 right=99 bottom=102
+vertex(336) at -121.936501 37.358948
+e 453 288 336
+e 491 336 312
+line(525) 1x+0.531911y=-102.065, bisecting 112 99
+circle through left=183 right=179 bottom=178
+vertex(337) at -122.005577 37.365051
+e 474 337 298
+line(526) -0.603749x+1y=111.026, bisecting 179 183
+site (203) at -122.070000 37.372002
+line(527) 0.63003x+1y=-39.5446, bisecting 204 203
+circle through left=203 right=174 bottom=204
+vertex(338) at -122.066452 37.360897
+e 515 338 330
+line(528) 1x+-0.593591y=-144.244, bisecting 174 203
+site (207) at -122.099998 37.372601
+line(529) -0.0571055x+1y=44.3364, bisecting 227 207
+circle through left=67 right=68 bottom=65
+vertex(339) at -121.847641 37.362354
+e 511 326 339
+e 485 339 306
+line(530) 1x+-0.30492y=-133.24, bisecting 68 67
+circle through left=101 right=99 bottom=112
+vertex(340) at -121.936996 37.359913
+e 457 294 340
+e 525 340 336
+line(531) 1x+0.161579y=-115.9, bisecting 101 99
+circle through left=177 right=183 bottom=178
+vertex(341) at -122.015022 37.365051
+e 505 322 341
+e 520 341 337
+line(532) 1x+0.807512y=-91.8423, bisecting 177 183
+circle through left=71 right=73 bottom=72
+vertex(342) at -121.824760 37.365181
+e 522 334 342
+e 509 342 325
+line(533) 1x+-0.353255y=-135.024, bisecting 73 71
+circle through left=207 right=202 bottom=227
+vertex(343) at -122.094673 37.364124
+e 517 343 331
+line(534) 1x+-0.250136y=-131.441, bisecting 202 207
+circle through left=100 right=101 bottom=105
+vertex(344) at -121.955788 37.365101
+e 521 335 344
+e 486 307 344
+line(535) -0.984971x+1y=157.488, bisecting 101 100
+site (208) at -122.110001 37.374901
+line(536) -0.555577x+1y=105.203, bisecting 227 208
+circle through left=208 right=207 bottom=227
+vertex(345) at -122.107361 37.363396
+e 529 345 343
+line(537) 1x+-0.229977y=-130.7, bisecting 207 208
+site (180) at -122.033997 37.375198
+line(538) 0.522779x+1y=-26.4302, bisecting 175 180
+circle through left=180 right=177 bottom=175
+vertex(346) at -122.031197 37.365200
+e 519 333 346
+line(539) -0.810518x+1y=136.274, bisecting 177 180
+circle through left=0 right=63 bottom=10
+vertex(347) at -121.878189 37.362713
+e 456 291 347
+e 508 347 324
+line(540) 1x+0.0416402y=-120.322, bisecting 0 63
+circle through left=228 right=208 bottom=227
+vertex(348) at -122.116417 37.358372
+e 470 295 348
+e 536 348 345
+line(541) 1x+0.783376y=-92.8508, bisecting 228 208
+circle through left=54 right=57 bottom=55
+vertex(349) at -121.738541 37.338200
+e 443 293 349
+e 302 188 349
+line(542) -0.475298x+1y=95.2003, bisecting 57 54
+circle through left=202 right=203 bottom=204
+vertex(350) at -122.077507 37.367863
+e 516 331 350
+e 527 350 338
+line(543) 1x+0.18145y=-115.297, bisecting 202 203
+site (226) at -122.126999 37.376900
+line(544) 0.336695x+1y=-3.75428, bisecting 228 226
+site (190) at -122.058998 37.376999
+line(545) -0.287596x+1y=72.4732, bisecting 174 190
+circle through left=203 right=190 bottom=174
+vertex(351) at -122.061852 37.368652
+e 528 338 351
+line(546) 1x+0.45423y=-105.088, bisecting 203 190
+site (74) at -121.801003 37.378502
+line(547) 0.113996x+1y=23.4804, bisecting 60 74
+circle through left=226 right=208 bottom=228
+vertex(352) at -122.120018 37.362965
+e 541 352 348
+line(548) 1x+-0.117594y=-126.514, bisecting 208 226
+circle through left=73 right=74 bottom=60
+vertex(353) at -121.802788 37.365383
+e 506 323 353
+line(549) 1x+0.826806y=-90.9089, bisecting 73 74
+site (188) at -122.052002 37.378700
+line(550) 0.192176x+1y=13.9151, bisecting 174 188
+circle through left=103 right=100 bottom=104
+vertex(354) at -121.971764 37.369900
+e 513 328 354
+e 524 354 335
+line(551) 1x+0.252804y=-112.525, bisecting 103 100
+site (181) at -122.023003 37.378899
+line(552) -0.0540318x+1y=43.9627, bisecting 177 181
+circle through left=190 right=188 bottom=174
+vertex(355) at -122.053818 37.370960
+e 545 351 355
+line(553) 1x+0.243184y=-112.966, bisecting 190 188
+site (69) at -121.848000 37.379299
+line(554) 0.763013x+1y=-55.6017, bisecting 67 69
+circle through left=180 right=181 bottom=177
+vertex(356) at -122.025948 37.369461
+e 539 346 356
+line(555) 1x+0.336572y=-109.448, bisecting 180 181
+circle through left=69 right=68 bottom=67
+vertex(357) at -121.845818 37.368301
+e 530 339 357
+line(556) -0.614663x+1y=112.262, bisecting 68 69
+site (201) at -122.082001 37.379601
+line(557) 0.380676x+1y=-9.10005, bisecting 202 201
+site (182) at -122.007004 37.379601
+line(558) 0.229724x+1y=9.34711, bisecting 183 182
+circle through left=181 right=183 bottom=177
+vertex(358) at -122.018898 37.369843
+e 552 356 358
+e 532 358 341
+line(559) 1x+-0.57139y=-143.372, bisecting 183 181
+circle through left=188 right=175 bottom=174
+vertex(359) at -122.047325 37.369717
+e 550 355 359
+e 502 320 359
+line(560) -0.651016x+1y=116.824, bisecting 175 188
+circle through left=201 right=203 bottom=202
+vertex(360) at -122.078300 37.372177
+e 543 360 350
+line(561) 1x+-0.633185y=-145.742, bisecting 203 201
+circle through left=69 right=71 bottom=68
+vertex(361) at -121.841560 37.370930
+e 556 357 361
+e 523 361 334
+line(562) 1x+-0.464767y=-139.21, bisecting 71 69
+circle through left=188 right=180 bottom=175
+vertex(362) at -122.043976 37.371887
+e 560 359 362
+e 538 362 346
+line(563) 1x+-0.194492y=-129.312, bisecting 180 188
+circle through left=74 right=54 bottom=60
+vertex(363) at -121.789040 37.363815
+e 547 353 363
+e 462 363 293
+line(564) 1x+-0.970472y=-158.05, bisecting 54 74
+site (70) at -121.834000 37.383999
+line(565) -0.237965x+1y=66.3696, bisecting 71 70
+site (75) at -121.862000 37.384102
+line(566) -0.301011x+1y=74.0569, bisecting 67 75
+site (200) at -122.085999 37.384300
+line(567) -0.850649x+1y=141.233, bisecting 201 200
+circle through left=183 right=107 bottom=179
+vertex(364) at -121.995682 37.371029
+e 526 337 364
+e 488 364 308
+line(568) 1x+-0.569794y=-143.289, bisecting 107 183
+site (76) at -121.873001 37.384800
+line(569) -0.26528x+1y=69.7011, bisecting 63 76
+site (199) at -122.072998 37.385101
+line(570) -0.228888x+1y=65.3192, bisecting 203 199
+site (184) at -122.024002 37.385101
+line(571) -0.161132x+1y=57.0438, bisecting 181 184
+circle through left=76 right=67 bottom=63
+vertex(365) at -121.870094 37.371437
+e 510 365 326
+line(572) -0.924807x+1y=150.078, bisecting 67 76
+circle through left=181 right=182 bottom=183
+vertex(366) at -122.014893 37.376831
+e 559 358 366
+line(573) 1x+0.0438722y=-120.375, bisecting 181 182
+circle through left=201 right=199 bottom=203
+vertex(367) at -122.074730 37.377811
+e 561 360 367
+line(574) 1x+0.611017y=-99.2363, bisecting 201 199
+circle through left=202 right=200 bottom=201
+vertex(368) at -122.090172 37.376698
+e 557 368 360
+line(575) 0x+1y=37.3767, bisecting 202 200
+circle through left=69 right=70 bottom=71
+vertex(369) at -121.839157 37.376118
+e 562 361 369
+line(576) 1x+0.335695y=-109.292, bisecting 69 70
+circle through left=0 right=76 bottom=63
+vertex(370) at -121.878471 37.369213
+e 540 370 347
+e 569 370 365
+line(577) 0.620354x+1y=-38.2385, bisecting 0 76
+circle through left=76 right=75 bottom=67
+vertex(371) at -121.868202 37.373184
+e 572 365 371
+line(578) 1x+-0.0634535y=-124.24, bisecting 75 76
+circle through left=75 right=69 bottom=67
+vertex(372) at -121.856743 37.376637
+e 566 371 372
+e 554 372 357
+line(579) 1x+-0.343052y=-134.679, bisecting 69 75
+circle through left=207 right=200 bottom=202
+vertex(373) at -122.091545 37.376701
+e 534 343 373
+e 575 373 368
+line(580) 1x+0.835695y=-90.856, bisecting 207 200
+circle through left=99 right=0 bottom=1
+vertex(374) at -121.905968 37.367435
+e 512 327 374
+e 458 374 291
+line(581) 1x+-0.135293y=-126.962, bisecting 0 99
+circle through left=182 right=107 bottom=183
+vertex(375) at -121.994980 37.372257
+e 558 366 375
+e 568 364 375
+line(582) -0.895806x+1y=146.656, bisecting 107 182
+circle through left=199 right=190 bottom=203
+vertex(376) at -122.066826 37.379616
+e 570 367 376
+e 546 376 351
+line(583) 1x+-0.578747y=-143.7, bisecting 190 199
+circle through left=180 right=184 bottom=181
+vertex(377) at -122.029831 37.380981
+e 555 377 356
+line(584) 1x+0.99084y=-84.9913, bisecting 180 184
+circle through left=182 right=103 bottom=107
+vertex(378) at -121.993134 37.373894
+e 582 375 378
+e 518 378 332
+line(585) 1x+-0.477819y=-139.851, bisecting 103 182
+site (198) at -122.077003 37.390800
+line(586) -0.702811x+1y=123.184, bisecting 199 198
+circle through left=201 right=198 bottom=199
+vertex(379) at -122.079147 37.385036
+e 574 379 367
+line(587) 0.446185x+1y=-17.0849, bisecting 201 198
+site (187) at -122.039001 37.391399
+line(588) -0.308924x+1y=75.0833, bisecting 180 187
+circle through left=200 right=198 bottom=201
+vertex(380) at -122.079941 37.385399
+e 567 368 380
+e 587 380 379
+line(589) 1x+0.722646y=-95.0635, bisecting 200 198
+circle through left=188 right=187 bottom=180
+vertex(381) at -122.042099 37.381565
+e 563 362 381
+line(590) 1x+0.976819y=-85.5271, bisecting 188 187
+site (79) at -121.850998 37.391998
+line(591) -0.236107x+1y=66.1552, bisecting 69 79
+site (186) at -122.021004 37.392101
+line(592) 0.428338x+1y=-14.8783, bisecting 184 186
+site (185) at -122.021004 37.392101
+line(593) 0.428338x+1y=-14.8783, bisecting 184 185
+circle through left=184 right=182 bottom=181
+vertex(382) at -122.015175 37.383339
+e 571 377 382
+e 573 382 366
+line(594) 1x+-0.323609y=-134.113, bisecting 182 184
+circle through left=75 right=79 bottom=69
+vertex(383) at -121.854019 37.384579
+e 579 372 383
+line(595) 1x+0.717753y=-95.0211, bisecting 75 79
+site (209) at -122.103996 37.393101
+line(596) 0.32991x+1y=-2.9003, bisecting 208 209
+circle through left=209 right=207 bottom=208
+vertex(384) at -122.102951 37.382664
+e 537 345 384
+line(597) -0.195013x+1y=61.1943, bisecting 207 209
+circle through left=187 right=184 bottom=180
+vertex(385) at -122.033142 37.384335
+e 588 381 385
+e 584 385 377
+line(598) 1x+-0.419888y=-137.73, bisecting 184 187
+site (210) at -122.121002 37.393600
+line(599) 0.359068x+1y=-6.46558, bisecting 226 210
+circle through left=210 right=208 bottom=226
+vertex(386) at -122.117668 37.382977
+e 548 352 386
+line(600) -0.588331x+1y=109.229, bisecting 208 210
+site (197) at -122.087997 37.394299
+line(601) -0.199924x+1y=61.7974, bisecting 200 197
+circle through left=186 right=182 bottom=184
+vertex(387) at -122.014572 37.385204
+e 594 382 387
+line(602) 1x+-0.892916y=-155.396, bisecting 182 186
+site (98) at -121.932999 37.395000
+line(603) -0.27257x+1y=70.6125, bisecting 99 98
+circle through left=209 right=200 bottom=207
+vertex(388) at -122.097435 37.383743
+e 597 384 388
+e 580 388 373
+line(604) 1x+-0.488978y=-140.377, bisecting 200 209
+circle through left=70 right=73 bottom=71
+vertex(389) at -121.819244 37.380852
+e 565 369 389
+e 533 342 389
+line(605) 1x+-0.994489y=-158.994, bisecting 73 70
+circle through left=101 right=98 bottom=99
+vertex(390) at -121.939522 37.375511
+e 531 390 340
+line(606) 0.456932x+1y=-18.3426, bisecting 101 98
+site (96) at -121.950996 37.396099
+line(607) 0.478115x+1y=-20.926, bisecting 100 96
+circle through left=197 right=198 bottom=200
+vertex(391) at -122.083298 37.390038
+e 589 391 380
+line(608) 1x+-0.318182y=-133.98, bisecting 198 197
+circle through left=79 right=70 bottom=69
+vertex(392) at -121.842873 37.387211
+e 591 383 392
+e 576 392 369
+line(609) 1x+-0.470601y=-139.437, bisecting 70 79
+site (189) at -122.056000 37.396702
+line(610) -0.222081x+1y=64.4936, bisecting 188 189
+circle through left=190 right=189 bottom=188
+vertex(393) at -122.057709 37.386879
+e 553 393 355
+line(611) 0.152178x+1y=18.8124, bisecting 190 189
+site (77) at -121.865997 37.396999
+line(612) -0.309967x+1y=75.1644, bisecting 75 77
+circle through left=76 right=77 bottom=75
+vertex(394) at -121.867180 37.389568
+e 578 371 394
+line(613) 0.574109x+1y=-32.5755, bisecting 76 77
+circle through left=210 right=209 bottom=208
+vertex(395) at -122.112709 37.385891
+e 600 386 395
+e 596 395 384
+line(614) 1x+-0.0293854y=-123.211, bisecting 209 210
+circle through left=96 right=101 bottom=100
+vertex(396) at -121.943565 37.377129
+e 535 344 396
+line(615) -0.0260956x+1y=40.5593, bisecting 101 96
+circle through left=96 right=98 bottom=101
+vertex(397) at -121.943130 37.377144
+e 615 396 397
+e 606 397 390
+line(616) 1x+-0.0610428y=-124.225, bisecting 98 96
+circle through left=209 right=197 bottom=200
+vertex(398) at -122.095535 37.387592
+e 604 388 398
+e 601 398 391
+line(617) 1x+0.0748689y=-119.296, bisecting 209 197
+site (97) at -121.960999 37.398499
+line(618) 0.0726869x+1y=28.5197, bisecting 100 97
+circle through left=199 right=189 bottom=190
+vertex(399) at -122.062233 37.387569
+e 583 376 399
+e 611 399 393
+line(619) 1x+0.682451y=-96.5471, bisecting 199 189
+circle through left=97 right=96 bottom=100
+vertex(400) at -121.959061 37.384537
+e 607 400 396
+line(620) 1x+-0.239893y=-130.927, bisecting 96 97
+circle through left=189 right=187 bottom=188
+vertex(401) at -122.049149 37.388775
+e 610 393 401
+e 590 401 381
+line(621) 1x+-0.311939y=-133.712, bisecting 187 189
+circle through left=70 right=74 bottom=73
+vertex(402) at -121.817238 37.382854
+e 605 389 402
+e 549 402 353
+line(622) 1x+-0.16659y=-128.045, bisecting 74 70
+circle through left=77 right=79 bottom=75
+vertex(403) at -121.859337 37.392002
+e 612 394 403
+e 595 403 383
+line(623) 1x+-0.333418y=-134.327, bisecting 79 77
+site (95) at -122.002998 37.400398
+line(624) 0.19259x+1y=13.8931, bisecting 182 95
+site (93) at -121.989998 37.400398
+line(625) 0.817682x+1y=-62.3659, bisecting 182 93
+circle through left=93 right=103 bottom=182
+vertex(404) at -121.989128 37.382324
+e 585 378 404
+line(626) -0.296581x+1y=73.562, bisecting 103 93
+site (196) at -122.101997 37.400700
+line(627) 0.263052x+1y=5.27744, bisecting 209 196
+circle through left=187 right=185 bottom=184
+vertex(405) at -122.030022 37.391819
+e 598 385 405
+line(628) 1x+0.0389996y=-120.572, bisecting 187 185
+site (94) at -122.022003 37.401199
+line(629) -0.109853x+1y=50.8011, bisecting 186 94
+site (191) at -122.074997 37.401699
+line(630) 0.184109x+1y=14.9209, bisecting 198 191
+circle through left=95 right=93 bottom=182
+vertex(406) at -121.996513 37.388363
+e 625 406 404
+line(631) 1x+0y=-121.996, bisecting 95 93
+circle through left=186 right=95 bottom=182
+vertex(407) at -122.009529 37.390873
+e 602 387 407
+e 624 407 406
+line(632) 1x+0.460805y=-104.78, bisecting 186 95
+circle through left=196 right=197 bottom=209
+vertex(408) at -122.096107 37.395084
+e 617 408 398
+line(633) 1x+-0.457221y=-139.194, bisecting 197 196
+circle through left=197 right=191 bottom=198
+vertex(409) at -122.081032 37.397182
+e 608 391 409
+line(634) 1x+0.569249y=-100.793, bisecting 197 191
+circle through left=198 right=189 bottom=199
+vertex(410) at -122.066536 37.393894
+e 586 379 410
+e 619 410 399
+line(635) 1x+0.280966y=-111.56, bisecting 198 189
+circle through left=103 right=97 bottom=100
+vertex(411) at -121.975769 37.385750
+e 551 411 354
+e 618 411 400
+line(636) 0.597649x+1y=-35.5129, bisecting 103 97
+circle through left=191 right=189 bottom=198
+vertex(412) at -122.066734 37.394547
+e 630 409 412
+e 635 412 410
+line(637) 1x+-0.263052y=-131.903, bisecting 189 191
+site (78) at -121.858002 37.405602
+line(638) 0.92949x+1y=-75.8682, bisecting 77 78
+circle through left=78 right=79 bottom=77
+vertex(413) at -121.857597 37.397213
+e 623 403 413
+line(639) -0.514863x+1y=100.137, bisecting 79 78
+circle through left=93 right=97 bottom=103
+vertex(414) at -121.976372 37.386105
+e 626 404 414
+e 636 414 411
+line(640) 1x+-0.0655091y=-124.425, bisecting 97 93
+site (195) at -122.112999 37.406898
+line(641) 0.601836x+1y=-36.0941, bisecting 210 195
+circle through left=195 right=209 bottom=210
+vertex(415) at -122.112381 37.397465
+e 614 395 415
+line(642) -0.652474x+1y=117.073, bisecting 209 195
+site (192) at -122.084000 37.407001
+line(643) 0.314715x+1y=-1.02161, bisecting 197 192
+circle through left=192 right=191 bottom=197
+vertex(416) at -122.082359 37.399506
+e 634 416 409
+line(644) 1x+-0.588983y=-144.11, bisecting 191 192
+circle through left=195 right=196 bottom=209
+vertex(417) at -122.110306 37.398823
+e 642 415 417
+e 627 417 408
+line(645) 1x+-0.563454y=-143.183, bisecting 196 195
+circle through left=94 right=95 bottom=186
+vertex(418) at -122.012650 37.397625
+e 632 418 407
+line(646) 1x+-0.0421517y=-123.589, bisecting 95 94
+site (194) at -122.098999 37.409698
+line(647) 0.333192x+1y=-3.27771, bisecting 196 194
+site (86) at -121.878998 37.409698
+line(648) 1x+-0.976819y=-158.409, bisecting 77 86
+circle through left=76 right=86 bottom=77
+vertex(419) at -121.879211 37.396481
+e 613 419 394
+line(649) -0.240846x+1y=66.7506, bisecting 76 86
+site (211) at -122.130997 37.410000
+line(650) -0.609444x+1y=111.831, bisecting 210 211
+circle through left=184 right=94 bottom=186
+vertex(420) at -122.037254 37.394920
+e 592 420 387
+e 629 420 418
+line(651) 0.124171x+1y=22.2415, bisecting 184 94
+circle through left=194 right=197 bottom=196
+vertex(421) at -122.092667 37.402588
+e 633 408 421
+line(652) -0.714392x+1y=124.625, bisecting 197 194
+circle through left=194 right=192 bottom=197
+vertex(422) at -122.092499 37.402699
+e 652 421 422
+e 643 422 416
+line(653) 1x+-0.179807y=-128.818, bisecting 192 194
+site (80) at -121.818001 37.413101
+line(654) 0.549744x+1y=-29.5746, bisecting 70 80
+circle through left=226 right=211 bottom=210
+vertex(423) at -122.142334 37.391834
+e 599 423 386
+line(655) -0.120779x+1y=52.1441, bisecting 226 211
+circle through left=80 right=74 bottom=70
+vertex(424) at -121.815559 37.392811
+e 622 402 424
+line(656) -0.49129x+1y=97.2396, bisecting 74 80
+circle through left=211 right=195 bottom=210
+vertex(425) at -122.122803 37.403744
+e 650 423 425
+e 641 425 415
+line(657) 1x+-0.172319y=-128.568, bisecting 195 211
+site (214) at -122.110001 37.414101
+line(658) 0.416314x+1y=-13.4262, bisecting 195 214
+site (92) at -122.049004 37.414101
+line(659) 0.402105x+1y=-11.6725, bisecting 189 92
+circle through left=195 right=194 bottom=196
+vertex(426) at -122.105736 37.406940
+e 645 417 426
+e 647 426 421
+line(660) 1x+0.2y=-114.624, bisecting 195 194
+site (223) at -122.143997 37.414299
+line(661) 1x+-0.330692y=-134.509, bisecting 211 223
+circle through left=226 right=223 bottom=211
+vertex(427) at -122.144295 37.391598
+e 655 427 423
+line(662) -0.454508x+1y=92.9072, bisecting 226 223
+site (193) at -122.094002 37.414398
+line(663) 1x+0.940458y=-86.912, bisecting 194 193
+site (225) at -122.161003 37.414700
+line(664) -0.899586x+1y=147.275, bisecting 226 225
+circle through left=193 right=192 bottom=194
+vertex(428) at -122.091736 37.406990
+e 653 422 428
+line(665) 1x+-0.739512y=-149.755, bisecting 192 193
+circle through left=92 right=187 bottom=189
+vertex(429) at -122.044930 37.402355
+e 621 401 429
+line(666) -0.440598x+1y=91.1751, bisecting 187 92
+circle through left=228 right=225 bottom=226
+vertex(430) at -122.164032 37.377781
+e 544 430 352
+line(667) -0.460747x+1y=93.6645, bisecting 228 225
+circle through left=214 right=194 bottom=195
+vertex(431) at -122.105980 37.408203
+e 660 431 426
+line(668) 1x+-0.400139y=-137.074, bisecting 194 214
+circle through left=99 right=76 bottom=0
+vertex(432) at -121.903603 37.384815
+e 581 374 432
+e 577 432 370
+line(669) 1x+0.447046y=-105.191, bisecting 99 76
+circle through left=225 right=223 bottom=226
+vertex(433) at -122.153122 37.387589
+e 664 430 433
+e 662 433 427
+line(670) 1x+-0.0235532y=-123.034, bisecting 223 225
+site (87) at -121.863998 37.415901
+line(671) -0.582222x+1y=108.361, bisecting 78 87
+circle through left=98 right=76 bottom=99
+vertex(434) at -121.903793 37.385242
+e 603 390 434
+e 669 434 432
+line(672) 1x+-0.170015y=-128.26, bisecting 76 98
+circle through left=77 right=87 bottom=78
+vertex(435) at -121.867867 37.406757
+e 638 435 413
+line(673) 0.105752x+1y=24.519, bisecting 77 87
+site (212) at -122.127998 37.417198
+line(674) 0.416534x+1y=-13.4575, bisecting 211 212
+circle through left=86 right=87 bottom=77
+vertex(436) at -121.869064 37.406879
+e 648 419 436
+e 673 436 435
+line(675) 1x+0.41353y=-106.4, bisecting 86 87
+site (89) at -121.897003 37.418201
+line(676) 1x+-0.472246y=-139.557, bisecting 86 89
+circle through left=76 right=89 bottom=86
+vertex(437) at -121.898460 37.391830
+e 649 437 419
+line(677) -0.718593x+1y=124.987, bisecting 76 89
+circle through left=98 right=89 bottom=76
+vertex(438) at -121.903259 37.388386
+e 672 434 438
+e 677 438 437
+line(678) 1x+0.644553y=-97.8045, bisecting 98 89
+circle through left=212 right=195 bottom=211
+vertex(439) at -122.121681 37.410343
+e 657 425 439
+line(679) 1x+-0.686673y=-147.81, bisecting 195 212
+site (215) at -122.116997 37.420502
+line(680) 1x+-0.91494y=-156.348, bisecting 214 215
+circle through left=195 right=215 bottom=214
+vertex(440) at -122.117455 37.412979
+e 658 440 431
+line(681) -0.293887x+1y=73.3017, bisecting 195 215
+circle through left=212 right=215 bottom=195
+vertex(441) at -122.120461 37.412094
+e 679 439 441
+e 681 441 440
+line(682) 1x+0.300277y=-110.886, bisecting 212 215
+site (85) at -121.871002 37.422798
+line(683) 1x+-0.984749y=-158.716, bisecting 87 85
+circle through left=86 right=85 bottom=87
+vertex(442) at -121.872231 37.414555
+e 675 442 436
+line(684) 0.610367x+1y=-36.9722, bisecting 86 85
+circle through left=79 right=80 bottom=70
+vertex(443) at -121.835159 37.403591
+e 609 392 443
+e 654 443 424
+line(685) 1x+0.639538y=-97.9142, bisecting 79 80
+circle through left=191 right=92 bottom=189
+vertex(444) at -122.062790 37.409534
+e 637 412 444
+e 659 444 429
+line(686) 1x+0.477106y=-104.214, bisecting 191 92
+circle through left=223 right=212 bottom=211
+vertex(445) at -122.136116 37.416359
+e 661 427 445
+e 674 445 439
+line(687) 1x+0.181211y=-115.356, bisecting 223 212
+site (224) at -122.153999 37.424599
+line(688) 0.707514x+1y=-49.0085, bisecting 225 224
+circle through left=224 right=223 bottom=225
+vertex(446) at -122.152466 37.416084
+e 670 433 446
+line(689) -0.971111x+1y=156.04, bisecting 223 224
+site (213) at -122.111000 37.426601
+line(690) 0.983114x+1y=-82.6285, bisecting 215 213
+circle through left=213 right=214 bottom=215
+vertex(447) at -122.110718 37.420334
+e 680 440 447
+line(691) -0.0799512x+1y=47.1832, bisecting 214 213
+circle through left=214 right=193 bottom=194
+vertex(448) at -122.102074 37.417976
+e 668 431 448
+e 663 448 428
+line(692) 1x+0.018598y=-121.406, bisecting 214 193
+site (222) at -122.143997 37.427200
+line(693) 0x+1y=37.4207, bisecting 223 222
+site (216) at -122.127998 37.427700
+line(694) 0x+1y=37.4224, bisecting 212 216
+circle through left=92 right=185 bottom=187
+vertex(449) at -122.030663 37.408630
+e 666 429 449
+e 628 449 405
+line(695) 1x+-0.785695y=-151.422, bisecting 185 92
+circle through left=78 right=80 bottom=79
+vertex(450) at -121.837662 37.407482
+e 639 413 450
+e 685 450 443
+line(696) 1x+0.187488y=-114.824, bisecting 78 80
+circle through left=224 right=222 bottom=223
+vertex(451) at -122.147667 37.420746
+e 689 446 451
+line(697) 1x+0.260107y=-112.414, bisecting 224 222
+circle through left=216 right=215 bottom=212
+vertex(452) at -122.123589 37.422447
+e 682 452 441
+line(698) 1x+-0.6543y=-146.609, bisecting 215 216
+circle through left=222 right=212 bottom=223
+vertex(453) at -122.136902 37.420746
+e 693 451 453
+e 687 453 445
+line(699) 1x+-0.625179y=-145.532, bisecting 212 222
+circle through left=213 right=193 bottom=214
+vertex(454) at -122.102119 37.421021
+e 691 447 454
+e 692 454 448
+line(700) 1x+-0.717908y=-148.967, bisecting 193 213
+circle through left=222 right=216 bottom=212
+vertex(455) at -122.135849 37.422447
+e 699 453 455
+e 694 455 452
+line(701) 1x+0.0312351y=-120.967, bisecting 222 216
+site (84) at -121.852997 37.433601
+line(702) 0.621552x+1y=-38.3166, bisecting 87 84
+circle through left=84 right=78 bottom=87
+vertex(456) at -121.848083 37.418274
+e 671 435 456
+line(703) 0.178747x+1y=15.6383, bisecting 78 84
+site (221) at -122.143997 37.435001
+line(704) 0x+1y=37.4311, bisecting 222 221
+site (91) at -121.987000 37.435200
+line(705) 0.0861559x+1y=26.9078, bisecting 93 91
+circle through left=89 right=85 bottom=86
+vertex(457) at -121.884262 37.421906
+e 676 437 457
+e 684 457 442
+line(706) 1x+0.17679y=-115.268, bisecting 89 85
+circle through left=85 right=84 bottom=87
+vertex(458) at -121.860794 37.426170
+e 683 442 458
+e 702 458 456
+line(707) 1x+0.6y=-99.4051, bisecting 85 84
+circle through left=216 right=213 bottom=215
+vertex(459) at -122.119377 37.428837
+e 698 452 459
+e 690 459 447
+line(708) 1x+-0.064632y=-124.538, bisecting 213 216
+circle through left=95 right=91 bottom=93
+vertex(460) at -121.996498 37.418488
+e 631 460 406
+line(709) 0.459717x+1y=-18.6654, bisecting 95 91
+site (217) at -122.121002 37.438000
+line(710) 0.679259x+1y=-45.5213, bisecting 216 217
+circle through left=217 right=213 bottom=216
+vertex(461) at -122.119362 37.429356
+e 708 459 461
+line(711) -0.87751x+1y=144.59, bisecting 213 217
+circle through left=84 right=80 bottom=78
+vertex(462) at -121.839386 37.416721
+e 703 456 462
+e 696 462 450
+line(712) 1x+-0.585786y=-143.758, bisecting 80 84
+circle through left=224 right=221 bottom=222
+vertex(463) at -122.150352 37.431103
+e 697 463 451
+line(713) 0.961496x+1y=-80.016, bisecting 224 221
+circle through left=91 right=97 bottom=93
+vertex(464) at -121.974380 37.416584
+e 705 460 464
+e 640 414 464
+line(714) -0.70845x+1y=123.829, bisecting 97 91
+site (83) at -121.898003 37.439301
+line(715) -0.0473694x+1y=43.203, bisecting 89 83
+circle through left=221 right=216 bottom=222
+vertex(465) at -122.136116 37.431103
+e 704 463 465
+e 701 465 455
+line(716) 1x+-0.456366y=-139.218, bisecting 216 221
+site (90) at -122.092003 37.442600
+line(717) 0.0708779x+1y=28.7748, bisecting 193 90
+circle through left=213 right=90 bottom=193
+vertex(466) at -122.096565 37.428757
+e 700 454 466
+line(718) 1x+0.842169y=-90.5752, bisecting 213 90
+site (88) at -121.914001 37.443501
+line(719) -0.671894x+1y=119.338, bisecting 89 88
+circle through left=192 right=92 bottom=191
+vertex(467) at -122.068893 37.422356
+e 644 416 467
+e 686 467 444
+line(720) 1x+0.202856y=-114.478, bisecting 192 92
+circle through left=88 right=83 bottom=89
+vertex(468) at -121.909477 37.428185
+line(721) 1x+-0.262518y=-131.735, bisecting 83 88
+site (218) at -122.130997 37.445099
+line(722) -0.172331x+1y=58.483, bisecting 216 218
+circle through left=98 right=88 bottom=89
+vertex(469) at -121.923035 37.419067
+e 678 469 438
+e 719 469 468
+line(723) 0.391694x+1y=-10.3375, bisecting 98 88
+circle through left=218 right=217 bottom=216
+vertex(470) at -122.129677 37.436363
+e 710 470 461
+line(724) 1x+-0.710305y=-148.721, bisecting 217 218
+circle through left=83 right=85 bottom=89
+vertex(471) at -121.885567 37.429317
+e 715 468 471
+e 706 471 457
+line(725) 1x+-0.61119y=-144.762, bisecting 85 83
+circle through left=221 right=218 bottom=216
+vertex(472) at -122.134064 37.435604
+e 716 465 472
+e 722 472 470
+line(726) 1x+0.776702y=-93.0577, bisecting 221 218
+site (220) at -122.155998 37.446098
+line(727) -0.0929737x+1y=48.7926, bisecting 224 220
+circle through left=220 right=221 bottom=224
+vertex(473) at -122.154785 37.435371
+e 713 473 463
+line(728) 1x+-0.924666y=-156.77, bisecting 221 220
+circle through left=90 right=192 bottom=193
+vertex(474) at -122.076691 37.427345
+e 717 466 474
+e 665 428 474
+line(729) -0.224818x+1y=64.8724, bisecting 192 90
+site (219) at -122.149002 37.450199
+line(730) 1x+0.58615y=-100.202, bisecting 220 219
+circle through left=219 right=221 bottom=220
+vertex(475) at -122.148804 37.441856
+e 728 473 475
+line(731) -0.329317x+1y=77.6676, bisecting 221 219
+circle through left=94 right=91 bottom=95
+vertex(476) at -122.011467 37.425369
+e 646 418 476
+e 709 476 460
+line(732) 1x+0.971338y=-85.6588, bisecting 94 91
+circle through left=219 right=218 bottom=221
+vertex(477) at -122.140907 37.444443
+e 731 475 477
+e 726 477 472
+line(733) 1x+-0.283263y=-132.748, bisecting 218 219
+circle through left=90 right=92 bottom=192
+vertex(478) at -122.070213 37.428799
+e 729 474 478
+e 720 478 467
+line(734) 1x+-0.662793y=-146.878, bisecting 92 90
+circle through left=217 right=90 bottom=213
+vertex(479) at -122.106537 37.440601
+e 711 461 479
+e 718 479 466
+line(735) 1x+0.158642y=-116.167, bisecting 217 90
+site (82) at -121.900002 37.455399
+line(736) -0.124171x+1y=52.5836, bisecting 83 82
+circle through left=88 right=82 bottom=83
+vertex(480) at -121.904617 37.446651
+e 721 468 480
+line(737) 1x+0.849864y=-90.0801, bisecting 88 82
+circle through left=96 right=88 bottom=98
+vertex(481) at -121.940140 37.425774
+e 616 397 481
+e 723 481 469
+line(738) 0.78046x+1y=-57.7437, bisecting 96 88
+circle through left=225 right=220 bottom=224
+vertex(482) at -122.176811 37.433319
+e 688 482 446
+e 727 482 473
+line(739) 0.159397x+1y=17.9587, bisecting 225 220
+site (81) at -121.870003 37.459702
+line(740) 0.0270829x+1y=34.1406, bisecting 85 81
+circle through left=81 right=84 bottom=85
+vertex(483) at -121.869804 37.441227
+e 707 483 458
+line(741) -0.651564x+1y=116.847, bisecting 84 81
+circle through left=83 right=81 bottom=85
+vertex(484) at -121.878151 37.441452
+e 725 471 484
+e 740 484 483
+line(742) 1x+0.72861y=-94.5979, bisecting 83 81
+circle through left=57 right=254 bottom=251
+vertex(485) at -121.584259 37.300381
+e 327 203 485
+e 19 9 485
+line(743) -0.811498x+1y=135.966, bisecting 254 57
+circle through left=82 right=81 bottom=83
+vertex(486) at -121.883804 37.449234
+e 736 480 486
+e 742 486 484
+line(744) 1x+0.143438y=-116.512, bisecting 82 81
+circle through left=97 right=88 bottom=96
+vertex(487) at -121.947739 37.431694
+e 620 400 487
+e 738 487 481
+line(745) 1x+0.957549y=-86.1051, bisecting 97 88
+circle through left=91 right=88 bottom=97
+vertex(488) at -121.949883 37.433937
+e 714 464 488
+e 745 488 487
+line(746) 1x+0.113712y=-117.693, bisecting 91 88
+circle through left=218 right=90 bottom=217
+vertex(489) at -122.110222 37.463764
+e 724 470 489
+e 735 489 479
+line(747) 1x+-0.0640775y=-124.511, bisecting 90 218
+circle through left=80 right=54 bottom=74
+vertex(490) at -121.711075 37.444157
+e 656 424 490
+e 564 363 490
+line(748) -0.723634x+1y=125.518, bisecting 54 80
+circle through left=81 right=80 bottom=84
+vertex(491) at -121.797363 37.488441
+e 741 483 491
+e 712 462 491
+line(749) 1x+-0.896127y=-155.392, bisecting 80 81
+circle through left=91 right=82 bottom=88
+vertex(492) at -121.958542 37.510113
+e 746 492 488
+e 737 492 480
+line(750) 1x+0.232176y=-113.25, bisecting 91 82
+circle through left=229 right=225 bottom=228
+vertex(493) at -122.564980 37.193047
+e 452 493 290
+e 667 493 430
+line(751) -0.342988x+1y=79.2313, bisecting 229 225
+circle through left=219 right=90 bottom=218
+vertex(494) at -122.102859 37.578800
+e 733 477 494
+e 747 489 494
+line(752) 1x+-0.133315y=-127.113, bisecting 90 219
+circle through left=257 right=230 bottom=252
+vertex(495) at -124.585999 31.619476
+e 2 495 1
+e 12 495 6
+line(753) 1x+-0.519129y=-141.001, bisecting 257 230
+circle through left=54 right=254 bottom=57
+vertex(496) at -121.253632 37.568665
+e 542 349 496
+e 743 485 496
+line(754) -0.73231x+1y=126.364, bisecting 254 54
+circle through left=80 right=254 bottom=54
+vertex(497) at -97.451866 54.999477
+e 748 490 497
+e 754 496 497
+line(755) -0.730393x+1y=126.177, bisecting 254 80
+e 753 -1 495
+e 128 -1 73
+e 751 -1 493
+e 739 -1 482
+e 730 -1 475
+e 752 494 -1
+e 734 478 -1
+e 695 449 -1
+e 593 405 -1
+e 651 -1 420
+e 732 -1 476
+e 750 -1 492
+e 744 -1 486
+e 749 491 -1
+e 755 497 -1
+e 10 5 -1
+e 6 2 -1
+e 0 0 -1
