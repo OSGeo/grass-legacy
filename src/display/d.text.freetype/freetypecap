@@ -9,18 +9,18 @@
 #	description is never used.
 #	DO NOT ADD A DEFAULT FONT IN THE CVS VERSION. :-)
 #
-luximr:/usr/X11R6/lib/X11/fonts/TTF/luximr.ttf:iso-8859-1:white:30:
-luxirr:/usr/X11R6/lib/X11/fonts/TTF/luxirr.ttf:iso-8859-1:white:30:
-luxisr:/usr/X11R6/lib/X11/fonts/TTF/luxisr.ttf:iso-8859-1:white:30:
-luximb:/usr/X11R6/lib/X11/fonts/TTF/luximb.ttf:iso-8859-1:white:30:
-luxirb:/usr/X11R6/lib/X11/fonts/TTF/luxirb.ttf:iso-8859-1:white:30:
-luxisb:/usr/X11R6/lib/X11/fonts/TTF/luxisb.ttf:iso-8859-1:white:30:
-luximri:/usr/X11R6/lib/X11/fonts/TTF/luximri.ttf:iso-8859-1:white:30:
-luxirri:/usr/X11R6/lib/X11/fonts/TTF/luxirri.ttf:iso-8859-1:white:30:
-luxisri:/usr/X11R6/lib/X11/fonts/TTF/luxisri.ttf:iso-8859-1:white:30:
-luximbi:/usr/X11R6/lib/X11/fonts/TTF/luximbi.ttf:iso-8859-1:white:30:
-luxirbi:/usr/X11R6/lib/X11/fonts/TTF/luxirbi.ttf:iso-8859-1:white:30:
-luxisbi:/usr/X11R6/lib/X11/fonts/TTF/luxisbi.ttf:iso-8859-1:white:30:
-batang:/usr/X11R6/lib/X11/fonts/TrueType/batang.ttf:EUC-KR:gray:30:
-dotum:/usr/X11R6/lib/X11/fonts/TrueType/dotum.ttf:EUC-KR:gray:30:
-gulim:/usr/X11R6/lib/X11/fonts/TrueType/gulim.ttf:EUC-KR:gray:30:
+luximr:/usr/X11R6/lib/X11/fonts/TTF/luximr.ttf:iso-8859-1:gray:10:
+luxirr:/usr/X11R6/lib/X11/fonts/TTF/luxirr.ttf:iso-8859-1:gray:10:
+luxisr:/usr/X11R6/lib/X11/fonts/TTF/luxisr.ttf:iso-8859-1:gray:10:
+luximb:/usr/X11R6/lib/X11/fonts/TTF/luximb.ttf:iso-8859-1:gray:10:
+luxirb:/usr/X11R6/lib/X11/fonts/TTF/luxirb.ttf:iso-8859-1:gray:10:
+luxisb:/usr/X11R6/lib/X11/fonts/TTF/luxisb.ttf:iso-8859-1:gray:10:
+luximri:/usr/X11R6/lib/X11/fonts/TTF/luximri.ttf:iso-8859-1:gray:10:
+luxirri:/usr/X11R6/lib/X11/fonts/TTF/luxirri.ttf:iso-8859-1:gray:10:
+luxisri:/usr/X11R6/lib/X11/fonts/TTF/luxisri.ttf:iso-8859-1:gray:10:
+luximbi:/usr/X11R6/lib/X11/fonts/TTF/luximbi.ttf:iso-8859-1:gray:10:
+luxirbi:/usr/X11R6/lib/X11/fonts/TTF/luxirbi.ttf:iso-8859-1:gray:10:
+luxisbi:/usr/X11R6/lib/X11/fonts/TTF/luxisbi.ttf:iso-8859-1:gray:10:
+batang:/usr/X11R6/lib/X11/fonts/TrueType/batang.ttf:EUC-KR:gray:10:
+dotum:/usr/X11R6/lib/X11/fonts/TrueType/dotum.ttf:EUC-KR:gray:10:
+gulim:/usr/X11R6/lib/X11/fonts/TrueType/gulim.ttf:EUC-KR:gray:10:
