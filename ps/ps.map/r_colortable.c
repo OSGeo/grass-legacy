@@ -127,6 +127,16 @@ read_colortable (void)
     ct.y = y;
     if (fontsize) ct.fontsize = fontsize;
 
+    /* Check for Raster */
+    if (!ct.name) {
+	    if ( !PS.cell_name ) {
+		    error(key, data, "No raster selected for colortable !");
+	    } else {
+		    ct.name = PS.cell_name;
+		    ct.mapset = PS.cell_mapset;
+	    }
+    }
+
     if ( w > 0 ) { 
         ct.width = w;
     } else {
