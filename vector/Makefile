@@ -8,6 +8,7 @@ SUBDIRS = \
 	v.category \
 	v.clean \
 	v.convert \
+	v.db.connect \
 	v.digit \
 	v.extract \
 	v.info \
