@@ -26,9 +26,9 @@
 int 
 main (int argc, char **argv)
 {
-	unsigned char *hue_r, *hue_g, *hue_b;
-	unsigned char *int_r;
-	unsigned char *sat_r;
+	unsigned char *hue_n, *hue_r, *hue_g, *hue_b;
+	unsigned char *int_n, *int_r;
+	unsigned char *sat_n, *sat_r;
 	unsigned char *dummy;
 	CELL *r_array, *g_array, *b_array;
 	char *mapset ;
@@ -135,6 +135,7 @@ main (int argc, char **argv)
 	hue_r = G_malloc(window.cols);
 	hue_g = G_malloc(window.cols);
 	hue_b = G_malloc(window.cols);
+	hue_n = G_malloc(window.cols);
 
 	dummy = G_malloc(window.cols);
 
@@ -159,6 +160,7 @@ main (int argc, char **argv)
 					      name_i) ;
 
 			int_r = G_malloc(window.cols);
+			int_n = G_malloc(window.cols);
 
 			/* Reading color lookup table */
 			if (G_read_colors(name_i, mapset, &int_colors) == -1)
@@ -166,10 +168,7 @@ main (int argc, char **argv)
 					      name_i) ;
 		}
 		else
-		{
-		    G_fatal_error("Not able to find cellfile [%s]",
-					      name_i) ;
-		}
+			G_fatal_error("Not able to find cellfile [%s]", name_i) ;
 
 	}
 
@@ -190,6 +189,7 @@ main (int argc, char **argv)
 					      name_s) ;
 
 			sat_r = G_malloc(window.cols);
+			sat_n = G_malloc(window.cols);
 
 			/* Reading color lookup table */
 			if (G_read_colors(name_s, mapset, &sat_colors) == -1)
@@ -197,10 +197,7 @@ main (int argc, char **argv)
 					      name_s) ;
 		}
 		else
-		{
-		    G_fatal_error("Not able to find cellfile [%s]",
-					      name_s) ;
-		}
+			G_fatal_error("Not able to find cellfile [%s]", name_s) ;
 
 	}
 
@@ -283,15 +280,25 @@ main (int argc, char **argv)
 	{
 		G_percent (atrow, window.rows, 2);
 
-		if (G_get_raster_row_colors(hue_file, atrow, &hue_colors, hue_r, hue_g, hue_b) < 0)
+		if (G_get_raster_row_colors(hue_file, atrow, &hue_colors, hue_r, hue_g, hue_b, hue_n) < 0)
 			G_fatal_error("Error reading 'hue' map");
-		if (int_used && (G_get_raster_row_colors(int_file, atrow, &int_colors, int_r, dummy, dummy) < 0))
+		if (int_used && (G_get_raster_row_colors(int_file, atrow, &int_colors, int_r, dummy, dummy, int_n) < 0))
 			G_fatal_error("Error reading 'intensity' map");
-		if (sat_used && (G_get_raster_row_colors(sat_file, atrow, &sat_colors, sat_r, dummy, dummy) < 0))
+		if (sat_used && (G_get_raster_row_colors(sat_file, atrow, &sat_colors, sat_r, dummy, dummy, sat_n) < 0))
 			G_fatal_error("Error reading 'saturation' map");
 
 		for (atcol=0; atcol<window.cols; atcol++)
 		{
+			if (hue_n[atcol]
+			    || (int_used && int_n[atcol])
+			    || (sat_used && sat_n[atcol]))
+			{
+				G_set_c_null_value(&r_array[atcol], 1);
+				G_set_c_null_value(&g_array[atcol], 1);
+				G_set_c_null_value(&b_array[atcol], 1);
+				continue;
+			}
+
 			if (int_used)
 				intensity = int_r[atcol];
 
