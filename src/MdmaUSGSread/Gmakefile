@@ -1,0 +1,10 @@
+# %W% %G%
+
+LIST = main.o
+
+PGM      = MdmaUSGSread
+
+$(BIN)/$(PGM): $(LIST)
+		$(CC) $(LDFLAGS) $(LIST) -o $@
+
+$(GISLIB):      # in case library changes
