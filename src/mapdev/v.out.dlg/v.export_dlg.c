@@ -27,11 +27,17 @@ int main (int argc, char **argv)
     char *dig_name, *dlg_name;
     char *mapset;
     char errmsg[200];
+	struct GModule *module;
     struct Option *old, *new;
 
 
 /* Show advertising */
     G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Converts binary GRASS vector data to "
+		"DLG-3 Optional vector data format.";
 
     old = G_define_option();
     old->key			= "input";

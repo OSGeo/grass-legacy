@@ -56,12 +56,18 @@ int main (int argc, char **argv)
         char buffr[80], file_name[80], text[80];
         char *input, *output, *mapset;
         struct Categories cats, temp_cats;
+		struct GModule *module;
         struct Option *inopt, *outopt, *fileopt, *newopt, *typopt, *listopt;
         struct Flag *d_flag, *n_flag;
         FILE *in, *catf;
 
 
             /* set up the options and flags for the command line parser */
+
+	module = G_define_module();
+	module->description =
+		"Selects vectors from an existing vector map and "
+		"creates a new map containing only the selected vectors.";
 
     d_flag = G_define_flag();
     d_flag->key              = 'd';

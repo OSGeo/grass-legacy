@@ -64,6 +64,7 @@ int main( int argc, char *argv[])
     struct Univ *pu, *current, *segment;
     int npts, np_old;
     
+	struct GModule *module;
     struct {
 	struct Option *input, *output;
     } parm;
@@ -71,6 +72,10 @@ int main( int argc, char *argv[])
     /* Are we running in Grass environment ? */
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Write an Arc-Info line/polygon coverage in e00 format.";
 
     /* define the different options */
 

@@ -39,9 +39,15 @@ int main(int argc, char *argv[])
 	
 /* Interfaz de commandos de GRASS  */
 		
+	struct GModule *module;
 	struct Option *dxf_opt, *line_opt;
 	G_gisinit(argv[0]);
 	
+	module = G_define_module();
+	module->description =
+		"Converts the Z values of DXF files to attribute "
+		"GRASS vector file format.";
+
 	dxf_opt = G_define_option();
     	dxf_opt->key                        = "dxf";
         dxf_opt->type                       = TYPE_STRING;

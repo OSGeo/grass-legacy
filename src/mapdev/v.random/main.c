@@ -37,11 +37,17 @@ main (int argc, char *argv[])
     int names=1, talk=0;
     char buffr[100], dotfile[100], *mapset;
     char input[128], output[128] ;
+	struct GModule *module;
     struct Option *siteopt, *mapopt, *dotopt;
     struct Flag *n_flag, *s_flag, *v_flag;
 
     G_gisinit (argv[0]);
      
+	module = G_define_module();
+	module->description =
+		"Creates a GRASS site_lists file of randomly placed "
+		"symbols (sites) within a GRASS vector area.";
+
 		 /* set up the options and flags for the command line parser */
 
     mapopt = G_define_option();

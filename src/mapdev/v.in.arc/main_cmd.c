@@ -76,6 +76,7 @@ main (int argc, char **argv)
 	/*
    struct Flag *p_flag, *n_flag, *l_flag;
    */
+	struct GModule *module;
 	struct Flag *n_flag;
 	struct Option *covertype, *linesname, *ptsname ;
 	struct Option *txtname, *digname ;
@@ -87,6 +88,11 @@ main (int argc, char **argv)
 
 	G_gisinit(argv[0]);
 	progname = G_program_name();
+
+	module = G_define_module();
+	module->description =
+		"Converts data in ARC/INFO format to GRASS's vector format, "
+		"and stores output in the user's current GRASS mapset.";
 
 	/*
 	p_flag = G_define_flag();

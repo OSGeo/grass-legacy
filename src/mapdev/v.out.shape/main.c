@@ -44,6 +44,7 @@ int main( int argc, char *argv[] ) {
 
 
   /* Main structures */
+  struct GModule *module;
   struct Option *out, *set, *altname, *logfile, *shapetype, *category;
   struct Flag *chatflag;
   struct Map_info vmap;
@@ -75,6 +76,10 @@ int main( int argc, char *argv[] ) {
 
   /* Initialise module */
   G_gisinit( argv[0] );
+
+  module = G_define_module();
+  module->description =
+	"Export GRASS vector files to SHAPE";
 
   out = G_define_option();
   out->key = "map";

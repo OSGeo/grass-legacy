@@ -38,6 +38,7 @@ int main (int argc, char *argv[])
 	char opath[1024];
 	char att_file[100], cat_file[100], date[40], mon[4];
 	FILE *wnd;
+		struct GModule *module;
         struct Option *omapopt, *mapopt, *isetopt, *ilocopt, *ibaseopt;
         struct Key_Value *in_proj_keys, *in_unit_keys;
         struct Key_Value *out_proj_keys, *out_unit_keys;
@@ -53,6 +54,10 @@ int main (int argc, char *argv[])
 
         G_gisinit (argv[0]);
      
+		module = G_define_module();
+		module->description =
+			"Allows projection conversion of vector files.";
+
 		 /* set up the options and flags for the command line parser */
 
         mapopt = G_define_option();
