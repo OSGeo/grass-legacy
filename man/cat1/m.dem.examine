@@ -6,8 +6,8 @@ m.dem.examine <main> GRASS Reference Manual  <main> m.dem.examine
 
 
 NAME
-     m.dem.examine - Provides a terse description of USGS Digital
-     Elevation Model (DEM) data files stored on 1/2-inch magnetic
+     m.dem.examine - Provides a	terse description of USGS Digital
+     Elevation Model (DEM) data	files stored on	1/2-inch magnetic
      tape.
      (GRASS Data Import/Processing Program)
 
@@ -17,13 +17,13 @@ SYNOPSIS
 DESCRIPTION
      m.dem.examine reads Digital Elevation Model (DEM) terrain
      elevation data produced and supplied by the USGS from the
-     input file specified by name, in the block size specified by
-     value.  If no input file is named on the command line, the
-     program assumes that /dev/rmt0 is the input file.  The
+     input file	specified by name, in the block	size specified by
+     value.  If	no input file is named on the command line, the
+     program assumes that /dev/rmt0 is the input file.	The
      information provided to the user comes from each file
-     included on tape.  Included are the maximum and minimum
+     included on tape.	Included are the maximum and minimum
      elevation values and the approximate UTM boundaries of each
-     file.  The program assumes unlabeled tapes in ASCII format
+     file.  The	program	assumes	unlabeled tapes	in ASCII format
      with no header or trailer files.
 
 SEE ALSO
@@ -60,7 +60,7 @@ AUTHOR
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
