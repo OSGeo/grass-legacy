@@ -239,7 +239,7 @@ write_outputs(void)
 	fprintf(fp, "# %-15s Peak simulated Q\n"
 		    "# %77s\n",
 			"Qt_peak_:",	"[m^3/timestep]");
-	fprintf(fp, "# %-15s Peak time for sumulated Q\n"
+	fprintf(fp, "# %-15s Peak time for simulated Q\n"
 		    "# %77s\n",
 			"tt_peak_:",	"[timestep]");
 	fprintf(fp, "# %-15s Mean simulated Q\n"
