@@ -1,0 +1,22 @@
+CAPTURE	gather.c	/^#define CAPTURE(X) strncpy (X, value, sizeof(X)); /
+FIELD	gather.c	/^#define FIELD(X) strcmp(X,field)==0$/
+Mmain	main.c	/^main()$/
+check_responses	check_resp.c	/^check_responses()$/
+do_label	do_label.c	/^int do_label(infile)$/
+gather	gather.c	/^gather (in)$/
+get_location	get_loc.c	/^get_location(east,north)$/
+initialize_options	do_label.c	/^initialize_options()$/
+modify	modify.c	/^modify()$/
+output	output.c	/^output (out, label, value)$/
+process_new	proc_new.c	/^process_new (out, file)$/
+process_old	proc_old.c	/^process_old (in, out, file)$/
+scan_ref	do_label.c	/^scan_ref (buf)$/
+setup	setup.c	/^setup (file, new)$/
+show_a_label	show_label.c	/^int show_a_label(tmp_fname)$/
+show_it	do_label.c	/^show_it()$/
+show_mouse	show.c	/^show_mouse ()$/
+show_utm	show.c	/^show_utm (north, east)$/
+update	update.c	/^update (out)$/
+where	where.c	/^where (easting,northing)$/
+xmatch	do_label.c	/^xmatch (word)$/
+ymatch	do_label.c	/^ymatch (word)$/
