@@ -1,0 +1,15 @@
+***************
+*** 89,100
+- 
+- /**********/
+- typedef struct _PWRequestRec {
+-   char       *name;
+-   int         status_size;
+-   void      (*engage)();
+-   XPointer     engage_client_data;
+-   void      (*terminate)();
+-   XPointer     terminate_client_data;
+-   void      (*remove)();
+-   XPointer     remove_client_data;
+- };
+--- 0 -----
