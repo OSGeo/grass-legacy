@@ -1,0 +1,13 @@
+interface_build {
+    {i.in.erdas} 0
+    {Imports an ERDAS (4, 8, 16bit) LAN file as GRASS raster files.}
+    {entry input {ERDAS LAN file (input):} 0 file}
+    {entry output {GRASS raster file prefix (output):} 0 raster}
+    {entry trailer {ERDAS trailer file (input):} 0 file}
+    {entry bands {Selected bands to extract (1,2,...):} 0 ""}
+    {entry srow {Starting row. (defaults to first row in file):} 0 ""}  
+    {entry scol {Starting column. (defaults to first column in file):} 0 ""}  
+    {entry rows {Number of rows to extract. (defaults to all rows):} 0 ""}  
+    {entry cols {Number of columns to extract. (defaults to all cols):} 0 ""}  
+    {checkbox -l {List the ERDAS header only.} "" -l}
+}
