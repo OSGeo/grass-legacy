@@ -198,14 +198,10 @@ typedef enum {
 #define CLR_2_NODE	RED
 #endif
 
-#ifdef GV_FORMAT_51
 #define GV_NCATS_MAX PORT_INT_MAX  /* maximum number of categories for one element */
 #define GV_FIELD_MAX PORT_INT_MAX /* maximum field */
-#else
 #define GV_NCATS_MAX PORT_CHAR_MAX  /* maximum number of categories for one element */
 #define GV_FIELD_MAX PORT_SHORT_MAX /* maximum field */
-
-#endif
 #define GV_CAT_MAX   PORT_INT_MAX   /* maximum category value */
 
 #define BUILD_PROG "v.build"
