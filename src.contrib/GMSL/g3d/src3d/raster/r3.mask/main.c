@@ -1,4 +1,6 @@
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "G3d.h"
 
@@ -122,6 +124,7 @@ makeMask (name, maskRules)
 
 /*--------------------------------------------------------------------------*/
 
+int
 main (argc, argv) 
 
      int argc;
@@ -130,8 +133,14 @@ main (argc, argv)
 {
   char *name;
   void *maskRules;
+  struct GModule *module;
 
   G_gisinit (argv[0]);
+  
+  module = G_define_module();
+  module->description =
+   "Establishes or removes the current working 3D raster mask.";
+
 
   if (G3d_maskFileExists ()) {
     printf ("\n\n   Cannot create mask file: 3d-mask already exists!\n");

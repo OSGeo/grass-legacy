@@ -9,6 +9,9 @@
  *
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 
 int main (int argc, char *argv[])
@@ -18,8 +21,13 @@ int main (int argc, char *argv[])
     char *name;
     char *mapset;
     int modify;
+    struct GModule *module;
 
     G_gisinit (argv[0]);
+
+    module = G_define_module();
+    module->description =
+     "print/add/remove a timestamp for a 3D raster map";
 
     map = G_define_option();
     map->key = "grid3";
