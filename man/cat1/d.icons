@@ -1,7 +1,7 @@
 
 
 
-d.icons              GRASS Reference Manual               d.icons
+d.icons <main>       GRASS Reference Manual        <main> d.icons
 
 
 
@@ -60,14 +60,14 @@ OPTIONS
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-d.icons              GRASS Reference Manual               d.icons
+d.icons <main>       GRASS Reference Manual        <main> d.icons
 
 
 
@@ -126,14 +126,14 @@ EXAMPLE
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
 
 
 
-d.icons              GRASS Reference Manual               d.icons
+d.icons <main>       GRASS Reference Manual        <main> d.icons
 
 
 
@@ -175,8 +175,8 @@ d.icons              GRASS Reference Manual               d.icons
      of an icon.
 
 SEE ALSO
-     d.points, d.sites, d.where, p.icons, s.db, s.out.ascii,
-     v.db, and parser
+     d.points, d.sites, d.where, p.icons, s.db.rim, s.out.ascii,
+     v.db.rim, and parser
 
 AUTHOR
      Contributed by:
@@ -192,14 +192,14 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
 
 
 
-d.icons              GRASS Reference Manual               d.icons
+d.icons <main>       GRASS Reference Manual        <main> d.icons
 
 
 
@@ -258,7 +258,7 @@ d.icons              GRASS Reference Manual               d.icons
 
 
 
-GRASS 4.0                U.S. Army CERL                         4
+GRASS 4.1                U.S. Army CERL                         4
 
 
 
