@@ -11,6 +11,7 @@ char *query_postgr(name, keytable, col, x, y)
 
      char *name, *keytable, *col;
      float x, y;
+#if defined(HAVE_LIBPQ_FE_H)
 
 {
 
@@ -68,12 +69,26 @@ char *query_postgr(name, keytable, col, x, y)
     return long_str;
 
 }
+#else
+{
 
+
+
+static char long_str[128]="Postgres support had not been enabled during pre-compile.\nYou should recompile NVIZ with Postgres support.\n";
+
+    
+
+	return long_str;
+
+}
+
+#endif
 char *query_pg_site(name, xcol, ycol, dist, x, y)
 
      char *name, *xcol, *ycol;
      int dist;
      float x, y;
+#if defined(HAVE_LIBPQ_FE_H)
 
 {
 
@@ -110,3 +125,14 @@ char *query_pg_site(name, xcol, ycol, dist, x, y)
     }
     return long_str;
 }
+#else
+{
+
+static char long_str[128]="Postgres support had not been enabled during pre-compile.\nYou should recompile NVIZ with Postgres support.\n";
+
+    
+
+	return long_str;
+}
+
+#endif
