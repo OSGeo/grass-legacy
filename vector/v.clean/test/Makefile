@@ -5,7 +5,7 @@ PGM = v.topo.check
 RPOLY = $(GISBASE)/scripts/v.rand.poly
 CTEST = $(GISBASE)/scripts/v.clean.test
 
-LIBES = $(VECTLIB) $(GISLIB) $(VASKLIB)
+LIBES = $(VECTLIB) $(DBMILIB) $(GISLIB) $(VASKLIB)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
