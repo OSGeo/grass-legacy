@@ -1,4 +1,3 @@
-/* %W% %G% */
 
 #include "imagery.h"
 
@@ -99,7 +98,7 @@ main(argc,argv) char *argv[];
 	    printf ("contains no files\n");
 	else
 	{
-	    printf ("references the following cell file%s\n", ref2.nfiles==1?"":"s");
+	    printf ("references the following raster file%s\n", ref2.nfiles==1?"":"s");
 	    printf ("-----------------------\n");
 	    for (n = 0; n < ref2.nfiles; n++)
 		printf ("\t%s in %s\n", ref2.file[n].name, ref2.file[n].mapset);
