@@ -640,7 +640,7 @@ Vect_open_topo (struct Map_info *Map, int head_only)
     Plus = &(Map->plus);
     
     sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
-    G__file_name ( file_path, buf, GV_TOPO_ELEMENT, G_mapset ());
+    G__file_name ( file_path, buf, GV_TOPO_ELEMENT, Map->mapset);
 
     if (stat (file_path, &info) != 0) /* does not exist */
 	return 1;
