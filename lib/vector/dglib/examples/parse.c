@@ -404,7 +404,7 @@ regc_ok:
 #endif
 					}
 				}
-				nret = gnGrpAddLink(
+				nret = gnGrpAddLinkX(
 								& graphOut,
 								nNodeFrom,
 								nNodeTo,
@@ -412,7 +412,8 @@ regc_ok:
 								nUser,
 								pbNodeAttr,
 								pbToNodeAttr,
-								pbLinkAttr );
+								pbLinkAttr,
+								0 );
 
 				if ( nret < 0 ) {
 					fprintf( stderr, "gnGrpAddLink error %s\n", gnGrpStrerror( & graphOut ) );

@@ -121,10 +121,7 @@ reread_first_line:
 								from ,
 								to ,
 								cost ,
-								user ,
-								NULL , /* from-node attributes */
-								NULL , /*   to-node attributes */
-								NULL   /*      link attributes */
+								user
 								);
 
 
@@ -134,14 +131,15 @@ reread_first_line:
 				return 1;
 			}
 		}
+#if 1
 		else if ( sz[0] == 'N' ) /* set attributes for a (already inserted) node */
 		{
 			sscanf( sz , "%c %ld %ld %ld %ld" , &c , &nodeid , &xyz[0] , &xyz[1] , &xyz[2] );
 
-			nret = gnGrpSetNodeAttr	(
+			nret = gnGrpSetNode_Attr(
 									& graph ,
-									xyz ,
-									nodeid
+									gnGrpGetNode( & graph, nodeid ),
+									xyz
 									);
 
 			if ( nret < 0 )
@@ -150,6 +148,7 @@ reread_first_line:
 				return 1;
 			}
 		}
+#endif
 	}
 	fclose( fp );
 
