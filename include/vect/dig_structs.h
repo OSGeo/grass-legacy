@@ -486,5 +486,10 @@ typedef struct {
     int *c;      /* array where 'class' or new category or something like that is stored */
 } VARRAY;
 
+/* Spatial index for use in modules. */
+typedef struct {
+    struct Node *root;
+} SPATIAL_INDEX;
+
 #endif /* DIG___STRUCTS___ */
 
