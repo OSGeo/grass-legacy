@@ -59,6 +59,9 @@ int bin_to_asc(
 		case GV_POINT:
 			ctype = 'P';
 			break;
+		case GV_FACE:
+			ctype = 'F';
+			break;
 		default:
 			ctype = 'X';
 			fprintf (stderr, "got type %d\n", (int) type);
