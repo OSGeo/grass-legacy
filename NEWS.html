@@ -48,13 +48,18 @@ each module (Jan Wagner and others)
 <li> d.site.labels: updated, includes d.sites.label now (Eric G . Miller)
 <li> d.what.rast: added support for multiple raster maps on current window
      (Huidae Cho)
+<li> d.what.sites: -1 flag and -t flag for terse output added (Andreas Lange)
+<li> d.what.vect: fixed output to stdout and stderr on redirection (Andreas Lange)
 <li> d.zoom: auto-redraw for raster, vector, sites maps (Huidae Cho, Markus
      Neteler)
 <li> g.html2man: prepared to build MAN pages from HTML (Michel Wurtz)
 <li> g.manual: bug fixed, optionally supports HTML browsers now (Huidae Cho)
-<li> g.region sites= bugfixed (Huidae Cho)
+<li> g.region sites= bugfixed (Huidae Cho), added output of ellipsoid and map datum in interactive and comandline version (Andreas Lange)
+<li> g.setproj: prelimnary map datum support added (Andreas Lange)
+<li> i.grey.scale: new parser command line version instead of interactive version (Andreas Lange)
 <li> i.ortho.photo: updated to support FP elevation maps (Huidae Cho)
 <li> i.smap: fixed to write correct file and on NULL (Roger Miller)
+<li> m.datum.shift: adapted to new datum library support (Andreas Lange)
 <li> ps.map: bugfix due to wrong module call (Markus Neteler)
 <li> r.binfer: bugfixed (David D. Gray)
 <li> r.random: bugfix and improved (Eric G. Miller)
@@ -68,11 +73,12 @@ each module (Jan Wagner and others)
 <li> r.in.tiff/r.out.tiff: bugfix, added .tfw support (Eric G. Miller)
 <li> r.in.utm: bugfix (Andreas Lange)
 <li> r.hydro.CASC2D: added new flags (Huidae Cho)
-<li> r.mapcalc: bugfix for map=-129 results in NULL (Huidae Cho)
+<li> r.mapcalc: bugfix for map=-129 results in NULL (Huidae Cho), changed return value in case of wrong statement (Andreas Lange)
 <li> r3.mapcalc: bugfix on region error (Jaro Hofierka)
 <li> r.out.bin: added to export <a href=http://www.soest.hawaii.edu/gmt/>GMT</a>/BIL/...
      formats (Bob Covill)
 <li> r.out.gridatb: added, exports GRIDATB map file (Huidae Cho/Keith Beven)
+<li> r.out.png: fixed for compression of png images created (Andreas Lange)
 <li> r.patch: -z flag allows additionally to use 0 for transparency
 	instead of NULL (Markus Neteler/Huidae Cho/Alex Shevlakov)
 <li> r.proj: heavily improved, transforms map portions now (Morten Hulden)
@@ -108,7 +114,9 @@ each module (Jan Wagner and others)
 <li> v.surf.rst: fixed incorrect elevations calculation (Helena Mitasova)
 <p>
 <li> tcltkgrass: independent of installed tcl/tk version (Markus Neteler)
+<li> tcltkgrass: reads configuration for fonts, projections, ellipsoids, datums, digitizers etc. on startup from GRASS etc directory, new GRASS about window in tcl/tk (Andreas Lange)
 <li> Graphical startup of GRASS for existing locations (Justin Hickey)
+<li> XDRIVER: new icon with GRASS logo (Andreas Lange)
 <p>
 <li> NVIZ:
 <menu>
