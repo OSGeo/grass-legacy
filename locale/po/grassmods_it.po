@@ -1,0 +1,1308 @@
+# translation of grassmods_it.po to 
+# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: grassmods_it\n"
+"POT-Creation-Date: 2005-01-10 17:05+0100\n"
+"PO-Revision-Date: 2005-01-12 10:34+0100\n"
+"Last-Translator: Maurizio Napolitano <napo@itc.it>\n"
+"Language-Team:  <translations@grass.itc.it>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-15\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.9.1\n"
+
+#: ../db/base/columns.c:33 ../db/base/createdb.c:24 ../db/base/describe.c:34
+#: ../db/base/dropdb.c:24 ../db/base/droptable.c:25 ../db/base/execute.c:52
+#: ../db/base/select.c:63 ../db/base/tables.c:34
+#, c-format
+msgid "No db connection for driver <%s> defined. Run db.connect"
+msgstr ""
+"Non è stata definita nessuna connessione per il driver <%s>. "
+"Esegui db.connect"
+
+#: ../db/base/columns.c:69 ../db/base/describe.c:87
+msgid "table name"
+msgstr "nome tabella"
+
+#: ../db/base/columns.c:76 ../db/base/databases.c:62 ../db/base/describe.c:94
+#: ../db/base/select.c:195 ../db/base/tables.c:69
+msgid "driver name"
+msgstr "nome driver"
+
+#: ../db/base/columns.c:84 ../db/base/describe.c:102 ../db/base/select.c:186
+#: ../db/base/tables.c:77
+msgid "database name"
+msgstr "nome database"
+
+#: ../db/base/columns.c:90
+msgid "list all columns for a given table."
+msgstr "mostra tutte le colonne di una data tabella"
+
+#: ../db/base/connect.c:27
+msgid "print current connection parameters and exit"
+msgstr "mostra i parmetri della connessione in uso ed esce"
+
+#: ../db/base/connect.c:35
+msgid "driver name:"
+msgstr "nome del driver:"
+
+#: ../db/base/connect.c:43
+msgid "Database name:"
+msgstr "Nome del database:"
+
+#: ../db/base/connect.c:52
+msgid ""
+"Database schema. Don't use this option if schemas are not supported by "
+"driver/database server."
+msgstr "Schema del database. Non utilizzare questa opzione se lo schema non supportato dal driver/database server"
+
+#: ../db/base/connect.c:61
+msgid "Default group of database users to which select privilege is granted."
+msgstr "Gruppo utenti predefinito del database per il quale i privilegi sono garantiti"
+
+#: ../db/base/connect.c:81
+msgid "Connect to the database through DBMI."
+msgstr "Connessione al database tramite DBMI"
+
+#: ../db/base/connect.c:117
+msgid "No db connection settings defined. Set with db.connect"
+msgstr "Nessuna impostazione definita per il database. Fallo usando db.connect"
+
+#: ../db/base/copy.c:27
+msgid ""
+"Copy a table. Either 'from_table' (optionaly with 'where') can be used or "
+"'select' option, but not 'from_table' and 'select' at the same time."
+msgstr "Copia una tabella. Sia le clausole 'from table' (in opzione con 'where') che 'select' posso non essere utilizzate, ma non contemporaneamente."
+
+#: ../db/base/copy.c:35
+msgid "Input driver name"
+msgstr "Nome del driver in input"
+
+#: ../db/base/copy.c:43
+msgid "Input database name"
+msgstr "Nome del database in input"
+
+#: ../db/base/copy.c:51
+msgid "Input table name (only if select is not specified)"
+msgstr "Nome della tabella in input (solo se non la select non è stata definita)"
+
+#: ../db/base/copy.c:58
+msgid "Output driver name"
+msgstr "Nome del driver in output"
+
+#: ../db/base/copy.c:66
+msgid "Output database name"
+msgstr "Nome del database in output"
+
+#: ../db/base/copy.c:74
+msgid "Output table name"
+msgstr "Nome della tabella in output"
+
+#: ../db/base/copy.c:80
+msgid ""
+"Optional where condition (without WHERE key word), e.g.:\n"
+"\t\tobec = 'Liptakov'"
+msgstr ""
+"Condizione opzionale where (senza la parola chiave WHERE), e.s.:\n"
+"\t\tobec = 'Liptakov'"
+
+#: ../db/base/copy.c:87
+msgid ""
+"Full select statement (only if from_table and where is not used), e.g.:\n"
+"\t\tSELECT dedek FROM starobince WHERE obec = 'Frimburg'"
+msgstr ""
+"Selezione completa della tabella (solo se from_table a where non sono utilizzati), es.:\n"
+"\t\tSELECT dedek FROM starobince WHERE obec = 'Frimburg'"
+
+#: ../db/base/copy.c:95
+msgid "Cannot combine 'from_table' and 'select' options"
+msgstr "Non riesco ad unire le opzioni 'from_table' e 'select'"
+
+#: ../db/base/copy.c:107
+msgid "Either 'from_table' or 'select' option must be given."
+msgstr "Devono essere fornite sia l'opzione 'from_table' che 'select' "
+
+#: ../db/base/copy.c:110
+msgid "Cannot combine 'select' and 'where' options"
+msgstr "Non riesco ad unire le opzioni 'select' e 'where'"
+
+#: ../db/base/copy.c:118
+msgid "Copy table failed"
+msgstr "Non riesco a copiare la tabella"
+
+#: ../db/base/databases.c:34
+#, c-format
+msgid "Cannot start driver '%s'."
+msgstr "Non riesco ad eseguire il driver '%s'"
+
+#: ../db/base/databases.c:37
+msgid "Cannot list databases."
+msgstr "Non riesco a mostrare i database"
+
+#: ../db/base/databases.c:69
+msgid "database location"
+msgstr "locazione del database"
+
+#: ../db/base/databases.c:74
+msgid "List all databases for a given driver and location."
+msgstr "Mostra tutti i database di un dato driver e locazione"
+
+#: ../db/base/describe.c:45
+msgid "Cannot describe table"
+msgstr "Non riesco a descrivere la tabella"
+
+#: ../db/base/describe.c:81
+msgid "print column names only instead of full column descriptions"
+msgstr "mostra soltanto i nomi delle colonne invece che la completa descrizione"
+
+#: ../db/base/describe.c:108
+msgid "Describe a table (in detail)."
+msgstr "Descrive una tabella (nei particolari)"
+
+#: ../db/base/drivers.c:24
+msgid "Error trying to read dbmscap file\n"
+msgstr "Errore nella lettura del file dbmscap\n"
+
+#: ../db/base/drivers.c:47
+msgid "Full output"
+msgstr "Output completo"
+
+#: ../db/base/drivers.c:51 ../db/base/tables.c:83
+msgid "print tables and exit"
+msgstr "mostra le tabelle ed esce"
+
+#: ../db/base/drivers.c:55
+msgid "List all database drivers."
+msgstr "Mostra tutti i database driver"
+
+#: ../db/base/execute.c:66 ../db/base/execute.c:70
+#, c-format
+msgid "Error while executing: \"%s\"\n"
+msgstr "Errore durante l'esecuzione: \"%s\"\n"
+
+#: ../db/base/execute.c:119
+msgid "ignore SQL errors and continue"
+msgstr "ignora gli errori SQL e continua"
+
+#: ../db/base/select.c:180
+msgid "Table name, select all from this table"
+msgstr "Nome tabella, seleziona tutto da questa tabella"
+
+#: ../db/base/select.c:203
+msgid ""
+"SQL select statement, for example: 'select * from rybniky where kapri = "
+"'hodne'"
+msgstr ""
+"istruzione SQL select, ad esempio: 'select * from rybniky where kapri = "
+"'hodne'"
+
+#: ../db/base/select.c:209
+msgid "output field separator"
+msgstr "campo separatore in output"
+
+#: ../db/base/select.c:216
+msgid "output vertical record separator"
+msgstr ""
+
+#: ../db/base/select.c:222
+msgid "null value indicator"
+msgstr "indicatore di valore nullo"
+
+#: ../db/base/select.c:229
+msgid "filename with sql statement"
+msgstr "nome del file con istruzione sql"
+
+#: ../db/base/select.c:234
+msgid "do not include column names in output"
+msgstr "non includere i nomi delle colonne nell'output"
+
+#: ../db/base/select.c:238
+msgid "describe query only (don't run it)"
+msgstr "descrive solo la query (non la esegue)"
+
+#: ../db/base/select.c:242
+msgid "vertical output (instead of horizontal)"
+msgstr "output verticale (invece che orizzontale)"
+
+#: ../db/base/select.c:246
+msgid "Select data from database."
+msgstr "Estrae dati dal database."
+
+#: ../db/base/tables.c:87
+msgid "system tables instead of user tables"
+msgstr "tabelle di sistema invece che tabelle utente"
+
+#: ../db/base/tables.c:91
+msgid "List all tables for a given database."
+msgstr "Mostra tutte le tabelle di un determinato database."
+
+#: ../db/drivers/mysql/db.c:69 ../db/drivers/postgres/parse.c:53
+msgid "'user' in database definition is not supported, use db.login"
+msgstr "'user' nella definizione del database non è supportata, usa db.login"
+
+#: ../db/drivers/mysql/db.c:72 ../db/drivers/postgres/parse.c:57
+msgid "'password' in database definition is not supported, use db.login"
+msgstr "'password' non è supportata nella definizione del database, usa db.login"
+
+#: ../db/drivers/mysql/db.c:75
+#, c-format
+msgid "Unknown option in database definition for mysql: '%s'"
+msgstr "Opzione sconosciuta nel database mysql: '%s'"
+
+#: ../db/drivers/ogr/describe.c:87
+#, c-format
+msgid "OGR driver: column '%s', OGR type %d  is not supported"
+msgstr "driver OGR: colonna '%s', il tipo %d non è supportato"
+
+#: ../db/drivers/ogr/describe.c:143
+#, c-format
+msgid ""
+"column '%s', type 'string': unknown width -> stored as varchar(250) some "
+"data may be lost"
+msgstr "colonna '%s', tipo 'string': dimensione sconosciuta -> archiviata come varchar(250) alcuni dati possono essere persi"
+
+#: ../db/drivers/ogr/describe.c:151 ../db/drivers/ogr/fetch.c:124
+msgid "Unknown type"
+msgstr "Tipo sconosciuto"
+
+#: ../db/drivers/postgres/describe.c:102
+#, c-format
+msgid "pg driver: column '%s', type %d  is not supported"
+msgstr "driver pg: colonna '%s', di tipo %d non supportata"
+
+#: ../db/drivers/postgres/describe.c:107
+#, c-format
+msgid ""
+"column '%s' : type int8 (bigint) is stored as integer (4 bytes) some data "
+"may be damaged"
+msgstr "colonna '%s' : type int8 (bigint) è archiviata come integer (4 bytes) alcuni dati possono essere corrotti"
+
+#: ../db/drivers/postgres/describe.c:111
+#, c-format
+msgid "column '%s' : type text is stored as varchar(250) some data may be lost"
+msgstr "la colonna '%s0 : tipo text è archiviata come varchar(250) alcuni dati possono andare persi"
+
+#: ../db/drivers/postgres/describe.c:117
+#, c-format
+msgid ""
+"column '%s' : type character varying is stored as varchar(250) some data may "
+"be lost"
+msgstr "colonna '%s' : tipo character varying è archiviata come varchar(250) alcuni dati possono essere persi"
+
+#: ../db/drivers/postgres/describe.c:123
+#, c-format
+msgid ""
+"column '%s' : type bool (boolean) is stored as char(1), values: 0 (false), 1 "
+"(true)"
+msgstr ""
+"colonna '%s' : tipo bool (boolean) è archiviata come char(1), valori: 0 (false), 1 "
+"(true)"
+
+#: ../db/drivers/postgres/fetch.c:163
+msgid "Cannot recognize boolean value"
+msgstr "Non riesco ad individuare il valore booleano"
+
+#: ../db/drivers/postgres/parse.c:61
+msgid "Unknown option in database definition for PostgreSQL: "
+msgstr "Opzione sconosciuta nella definizione del database PostgreSQL: "
+
+#: ../db/db.login/main.c:56
+msgid "Cannot set user/password"
+msgstr "Non riesco ad impostare user/password"
+
+#: ../db/db.login/main.c:60
+msgid "The password was stored in file."
+msgstr "La password è stata archiviata nel file."
+
+#: ../display/d.font.freetype/main.c:52
+msgid ""
+"Selects the font in which text will be displayed on the user's graphics "
+"monitor."
+msgstr "Seleziona il tipo di carattere con cui il testo deve essere rappresentato nel monitor grafico dell'utente."
+
+#: ../display/d.font.freetype/main.c:60
+msgid ""
+"Font name (not supported interactively, see also -l flag) or path to "
+"TrueType font (including file name)"
+msgstr "Nome del tipo carattere (non supportato in maniera interattiva, in tal caso vedi il flag -l) oppure percorso del font TrueType (completo del nome del file)"
+
+#: ../display/d.font.freetype/main.c:62
+msgid "Path to TrueType font (including file name)"
+msgstr "Percorso del carattere TrueType (nome del file incluso)"
+
+#: ../display/d.font.freetype/main.c:71
+msgid "Character encoding"
+msgstr "Codifica carattere"
+
+#: ../display/d.font.freetype/main.c:102
+msgid "No graphics device selected"
+msgstr "Nessun device grafico selezionato"
+
+#: ../display/d.font.freetype/main.c:170
+msgid ""
+"\n"
+"Setting release of FreeType\n"
+msgstr ""
+"\n"
+"Imposta la versione di FreeType\n"
+
+#: ../display/d.paint.labels/do_labels.c:143
+#, c-format
+msgid "Error: %s\n"
+msgstr "Errore: %s\n"
+
+#: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:295
+msgid "Region size is lower than minreg, nothing displayed.\n"
+msgstr "La dimensione della regione è inferiore rispetto al valore di minreg, non verrà visualizzato nulla.\n"
+
+#: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:304
+msgid "Region size is greater than maxreg, nothing displayed.\n"
+msgstr "La dimensione della regione è superiore rispetto al valore di maxreg, non verrà visualizzato nulla.\n"
+
+#: ../display/d.path/select.c:32
+msgid "L: from  M: to R: quit\n"
+msgstr "L: da  M: a R: esci\n"
+
+#: ../display/d.path/select.c:57
+#, c-format
+msgid "Node %d: %f %f\n"
+msgstr "Nodo %d: %f %f\n"
+
+#: ../display/d.path/select.c:133
+msgid "Destination unreachable\n"
+msgstr "Destinazione non raggiungibile\n"
+
+#: ../display/d.path/select.c:136
+#, c-format
+msgid "Costs on the network = %f\n"
+msgstr "Costi sulla rete = %f\n"
+
+#: ../display/d.path/select.c:137
+#, c-format
+msgid "  Distance to the network = %f, distance from the network = %f\n"
+msgstr " Distanza dalla rete = %f, distanza dalla rete = %f\n"
+
+#: ../display/d.vect/attr.c:54 ../display/d.vect/dir.c:34
+#: ../display/d.vect/label.c:32 ../display/d.vect/plot1.c:51
+#: ../display/d.vect/topo.c:38
+msgid ""
+"\n"
+"ERROR: vector file - can't read\n"
+msgstr ""
+"\n"
+"ERRORE: il file vettoriale non è leggibile\n"
+
+#: ../display/d.vect/main.c:501
+msgid "Plotting ... "
+msgstr "Sto disegnando ..."
+
+#: ../display/d.vect/main.c:510
+msgid "The bounding box of the map outside current region, nothing displayed.\n"
+msgstr "Il box di confine della mappa è al di fuori della regione in uso, non verrà visualizzato nulla.\n"
+
+#: ../display/d.vect/main.c:567
+msgid "Done\n"
+msgstr "Fatto\n"
+
+#: ../display/d.what.vect/main.c:139
+msgid "Building spatial index ..."
+msgstr "Creazione dell'indice spaziale ..."
+
+#: ../display/d.what.vect/main.c:157
+msgid "Done.\n"
+msgstr "Fatto.\n"
+
+#: ../display/d.what.vect/openvect.c:12
+#, c-format
+msgid "warning: %s - vector file not found\n"
+msgstr "attenzione: %s - file vettoriale non trovato\n"
+
+#: ../display/d.what.vect/what.c:154 ../display/d.what.vect/what.c:155
+msgid "Nothing Found.\n"
+msgstr "Non ho trovato nulla.\n"
+
+#: ../display/d.what.vect/what.c:203
+#, c-format
+msgid "Line: %d  Type: %s  Left: %d  Right: %d  "
+msgstr "Linea: %d  Tipo: %s Sinistra: %d  Destra: %d  "
+
+#: ../display/d.what.vect/what.c:206
+#, c-format
+msgid "Length: %f\n"
+msgstr "Lunghezza: %f\n"
+
+#: ../display/d.what.vect/what.c:216
+#, c-format
+msgid "  Node[%d]: %d  Number of lines: %d\n"
+msgstr "  Nodo[%d]: %d Numero di linee: %d\n"
+
+#: ../display/d.what.vect/what.c:221
+#, c-format
+msgid "    Line: %5d  Angle: %.8f\n"
+msgstr "    Linea: %5d  Angolo: %.8f\n"
+
+#: ../display/d.what.vect/what.c:227
+#, c-format
+msgid "length %f\n"
+msgstr "lunghezza %f\n"
+
+#: ../display/d.what.vect/what.c:245
+#, c-format
+msgid "Point height: %f\n"
+msgstr "Altezza punto: %f\n"
+
+#: ../display/d.what.vect/what.c:257
+#, c-format
+msgid "Line height: %f\n"
+msgstr "Altezza linea: %f\n"
+
+#: ../display/d.what.vect/what.c:263
+#, c-format
+msgid "Line height min: %f max: %f\n"
+msgstr "Altezza linea min: %f max: %f\n"
+
+#: ../display/d.what.vect/what.c:280
+#, c-format
+msgid "Area height: %f\n"
+msgstr "Altezza area: %f\n"
+
+#: ../display/d.what.vect/what.c:287
+msgid "Area\n"
+msgstr "Area\n"
+
+#: ../display/d.what.vect/what.c:300
+#, c-format
+msgid "Area: %d  Number of isles: %d\n"
+msgstr "Area: %d  Numero di isole: %d\n"
+
+#: ../display/d.what.vect/what.c:304
+#, c-format
+msgid "  Isle[%d]: %d\n"
+msgstr "  Isola[%d]: %d\n"
+
+#: ../display/d.what.vect/what.c:311
+#, c-format
+msgid "Island: %d  In area: %d\n"
+msgstr "Isola: %d nella area: %d\n"
+
+#: ../display/d.what.vect/what.c:315 ../display/d.what.vect/what.c:323
+#, c-format
+msgid "Size - Sq Meters: %.3f\t\tHectares: %.3f\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:318 ../display/d.what.vect/what.c:327
+#, c-format
+msgid "           Acres: %.3f\t\tSq Miles: %.4f\n"
+msgstr "           Acri: %.3f\t\tMiglia quadrate: %.4f\n"
+
+#: ../display/d.what.vect/what.c:353
+#, c-format
+msgid ""
+"Layer: %d\n"
+"category: %d\n"
+msgstr ""
+"Layer: %d\n"
+"categoria: %d\n"
+
+#: ../display/d.what.vect/what.c:362
+msgid "Database connection not defined\n"
+msgstr "Connessione al database non definita\n"
+
+#: ../display/d.what.vect/what.c:370
+#, c-format
+msgid ""
+"driver: %s\n"
+"database: %s\n"
+"table: %s\n"
+"key column: %s\n"
+msgstr ""
+"driver: %s\n"
+"database: %s\n"
+"tabella: %s\n"
+"colonna chiave primaria: %s\n"
+
+#: ../display/d.what.vect/what.c:421
+msgid ""
+"\n"
+"Click mouse button on desired location\n"
+"\n"
+msgstr ""
+"\n"
+"Premi il bottone del mouse nella posizione desiderata\n"
+"\n"
+
+#: ../display/d.what.vect/what.c:426
+msgid "Buttons\n"
+msgstr "Bottoni\n"
+
+#: ../display/d.what.vect/what.c:427
+msgid " Left:  what's here\n"
+msgstr " Sinistro:  mostra cosa c'è\n"
+
+#: ../display/d.what.vect/what.c:429
+msgid " Middle: toggle flash color\n"
+msgstr " Centrale: abilita colore flash\n"
+
+#: ../display/d.what.vect/what.c:434
+msgid " Right: quit\n"
+msgstr " Destro: esce\n"
+
+#: ../display/d.zoom/main.c:161
+msgid "ERROR: can not get \"list\" items\n"
+msgstr "ERRORE: non riesco ad ottenere la \"lista\" degli oggetti\n"
+
+#: ../display/d.zoom/main.c:162
+msgid "-j flag forced\n"
+msgstr "-j flag forzato\n"
+
+#: ../display/d.zoom/main.c:200
+msgid "ERROR: No map is displayed in GRASS monitor\n"
+msgstr "ERRORE: Non è presente nessuna mappa nel monitor GRASS\n"
+
+#: ../display/d.zoom/main.c:324
+#, c-format
+msgid "%d raster%s, %d vector%s\n"
+msgstr "%d raster%s, %d vettoriale%s\n"
+
+#: ../display/d.zoom/main.c:334
+msgid "this is the first d.zoom run; no previous zoom availible\n"
+msgstr "questo è il primo d.zoom eseguito; non sono presenti altri zoom precedenti\n"
+
+#: ../display/d.zoom/main.c:380
+msgid "Zooming finished.\n"
+msgstr "Operazione di zoom completata.\n"
+
+#: ../display/d.zoom/pan.c:20 ../display/d.zoom/zoom.c:15
+msgid ""
+"\n"
+"\n"
+"Buttons:\n"
+msgstr ""
+"\n"
+"\n"
+"Bottoni:\n"
+
+#: ../display/d.zoom/pan.c:21 ../display/d.zoom/zoom.c:17
+#, c-format
+msgid "%s Pan\n"
+msgstr "%s Sposta\n"
+
+#: ../display/d.zoom/pan.c:22
+#, c-format
+msgid "%s Quit\n"
+msgstr "%s Esce\n"
+
+#: ../display/d.zoom/zoom.c:16
+#, c-format
+msgid "%s Zoom menu\n"
+msgstr "%s Zoom menu\n"
+
+#: ../display/d.zoom/zoom.c:18
+#, c-format
+msgid "%s Quit menu\n"
+msgstr "%s Esce dal menu\n"
+
+#: ../display/d.zoom/zoom.c:41
+msgid ""
+"This region now saved as current region.\n"
+"\n"
+msgstr ""
+"Questa regione verrà salvata ora come corrente\n"
+"\n"
+
+#: ../display/d.zoom/zoom.c:42
+msgid "Note: run 'd.erase' for the new region to affect the graphics.\n"
+msgstr "Nota: esegue 'd.erase. affinchè la nuova regione abbia effetto sul monitor grafico\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_box.c:40
+#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_line.c:39
+#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_pnt.c:23
+msgid "Monitor: interactive command in redraw\n"
+msgstr "Monitore: comandi interattivi per il ridisegnamento\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:116
+#, c-format
+msgid "found %d visuals of type TrueColor\n"
+msgstr "trovate %d viste per il tipo TrueColor\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:118
+msgid "searching for highest bit depth\n"
+msgstr "ricerca del valore massimo di bit depth\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:135
+#, c-format
+msgid "selected %d bit depth\n"
+msgstr "bit depth %d selezionata\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:197
+#, c-format
+msgid "using default visual which is %s\n"
+msgstr "la vista predefinita utilizzata è %s\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:127
+#, c-format
+msgid "Monitor: waitpid: expected %d but got %d\n"
+msgstr "Monitor: waitpid: atteso %d ma ricevuto %d\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:338
+msgid "Monitor: XGetWMName failed\n"
+msgstr "Monitor: XGetWMName fallito\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:344
+msgid "Monitor: XGetWMName: bad result\n"
+msgstr "Monitor: XGetWMName: risultato sbagliato\n"
+
+#: ../imagery/i.group/main.c:86
+msgid "No input map(s) specified."
+msgstr "Nessuna mappa in input specificata"
+
+#: ../raster/r.colors/rules.c:45
+msgid "Enter rules, \"end\" when done, \"help\" if you need it.\n"
+msgstr "Inserisci regola, \"end\" quando finito, \"help\" se ne hai bisogno.\n"
+
+#: ../raster/r.colors/rules.c:47
+#, c-format
+msgid "fp: Data range is %.25f to %.25f\n"
+msgstr "fp: l'intervallo di dati è da %.25f a %.25f\n"
+
+#: ../raster/r.colors/rules.c:49
+#, c-format
+msgid "Data range is %ld to %ld\n"
+msgstr "L'intervallo dati è da %ld a %ld\n"
+
+#: ../raster/r.colors/rules.c:110 ../raster/r.colors/rules.c:114
+msgid "Your color rules do not cover the whole range of data!"
+msgstr "Le tue regole color non ricoprono l'intero intervallo di dati!"
+
+#: ../raster/r.colors/rules.c:188
+msgid "Enter a rule in one of these formats:\n"
+msgstr "Inserisci una regola secondo questi formati:\n"
+
+#: ../raster/r.colors/rules.c:190
+msgid " val color\n"
+msgstr " val colore\n"
+
+#: ../raster/r.colors/rules.c:191
+#, c-format
+msgid " n%% color\n"
+msgstr " n%% colore\n"
+
+#: ../raster/r.colors/rules.c:192
+msgid " nv color\n"
+msgstr " nv colore\n"
+
+#: ../raster/r.colors/rules.c:193
+msgid " default color\n"
+msgstr " colore predefinito\n"
+
+#: ../raster/r.colors/rules.c:194
+msgid "color can be one of:\n"
+msgstr "il colore può essere uno di:\n"
+
+#: ../raster/r.colors/rules.c:196
+msgid "or an R:G:B triplet, e.g.: 0:127:255\n"
+msgstr "oppure una tripletta R:G:B , es: 0:127:255\n"
+
+#: ../raster/r.colors/rules.c:237
+#, c-format
+msgid "** warning: R:G:B value(s) out of range [0..255]: %d:%d:%d **\n"
+msgstr "** attenzione: valore(i) R:G:B al di fuori dell'intervallo [0..255]: %d:%d:%d **\n"
+
+#: ../raster/r.colors/rules.c:238 ../raster/r.colors/rules.c:254
+#: ../raster/r.colors/rules.c:267 ../raster/r.colors/rules.c:279
+#: ../raster/r.colors/rules.c:289 ../raster/r.colors/rules.c:301
+#: ../raster/r.colors/rules.c:376 ../raster/r.colors/rules.c:404
+msgid "** rule is not added **\n"
+msgstr "** regola non aggiunta **\n"
+
+#: ../raster/r.colors/rules.c:253
+#, c-format
+msgid "** warning: R G B value(s) out of range [0..255]: %d %d %d **\n"
+msgstr "** attenzione: valore(i) R G B al di fuori dell'intervallo [0..255]: %d %d %d **\n"
+
+#: ../raster/r.colors/rules.c:266 ../raster/r.colors/rules.c:288
+msgid "** warning: no such value **\n"
+msgstr "** attenzione: non trovo il valore **\n"
+
+#: ../raster/r.colors/rules.c:402
+#, c-format
+msgid "%s:line %d:%s\n"
+msgstr "%s:linea %d:%s\n"
+
+#: ../raster/r.colors/rules.c:403
+msgid "** bad color specification **\n"
+msgstr "** definizione errata del colore **\n"
+
+#: ../raster/r.colors/rules.c:424
+#, c-format
+msgid "%s - unknown color\n"
+msgstr "%s - colore sconosciuto\n"
+
+#: ../raster/r.colors/rules.c:425
+msgid "Valid colors are:\n"
+msgstr "I colori validi sono:\n"
+
+#: ../raster/r.sunmask/main.c:225
+msgid "Using map center coordinates\n"
+msgstr "Utilizzando le coordinate del centro della mappa\n"
+
+#: ../raster/r.sunmask/main.c:234
+msgid "Empty east coordinate specified!"
+msgstr "Sono state specificate delle coordinate ovest vuote."
+
+#: ../raster/r.sunmask/main.c:236
+msgid "Empty north coordinate specified!"
+msgstr "Sono state specificate delle coordinate nord vuote."
+
+#: ../raster/r.sunmask/main.c:255
+msgid "Either define sun position or location/date/time parameters."
+msgstr "Definisci la posizione del sole oppure i parametri di luogo/data/tempo"
+
+#: ../raster/r.sunmask/main.c:258
+msgid ""
+"Neither sun position nor east/north, date/time/timezone definition are "
+"complete."
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:263
+#, c-format
+msgid "Calculating sun position... (using solpos (V. %s) from NREL)\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:268
+msgid ""
+"Using user defined sun azimuth, altitude settings (ignoring eventual other "
+"values)\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:338
+#, c-format
+msgid " %d.%02d.%02d, daynum %d, time: %02i:%02i:%02i (decimal time: %f)\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:342
+#, c-format
+msgid " long: %f, lat: %f, timezone: %f\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:343
+#, c-format
+msgid ""
+" Solar position: sun azimuth: %f,\n"
+"   sun angle above horz.(refraction corrected): %f\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:347
+#, c-format
+msgid " Sunrise time (without refraction): %02d:%02d:%02d\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:348
+#, c-format
+msgid " Sunset time  (without refraction): %02d:%02d:%02d\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:357
+msgid "Please correct settings."
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:374
+#, c-format
+msgid "Time (%02i:%02i:%02i) is before sunrise (%02d:%02d:%02d)!\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:377
+#, c-format
+msgid "Time (%02i:%02i:%02i) is before sunrise!\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:379 ../raster/r.sunmask/main.c:388
+msgid "Nothing to calculate. Please verify settings."
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:384
+#, c-format
+msgid "Time (%02i:%02i:%02i) is after sunset (%02d:%02d:%02d)!\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:387
+#, c-format
+msgid "Time (%02i:%02i:%02i) is after sunset!\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:394
+msgid "No map calculation requested. Finished.\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:401
+msgid "You already know the sun position.\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:409 ../raster/r.sunmask/main.c:411
+#, c-format
+msgid "can't open %s"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:421
+#, c-format
+msgid "can't open range file for %s"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:438
+msgid "Calculating shadows from DEM..."
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:446
+msgid "can't read row in input elevation map"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:511
+msgid "Finished.\n"
+msgstr ""
+
+#: ../vector/v.category/main.c:173
+msgid "Too many layers for this operation"
+msgstr ""
+
+#: ../vector/v.category/main.c:176
+msgid "2 layers must be specified"
+msgstr ""
+
+#: ../vector/v.category/main.c:180
+msgid "Output vector wasn't entered."
+msgstr ""
+
+#: ../vector/v.convert/att.c:30 ../vector/v.convert/old2new.c:27
+msgid "Input vector was not found."
+msgstr ""
+
+#: ../vector/v.convert/att.c:36
+msgid "No category labels (dig_cats) found, no table created.\n"
+msgstr ""
+
+#: ../vector/v.convert/att.c:41
+msgid "Cannot open dig_cats file."
+msgstr ""
+
+#: ../vector/v.convert/att.c:68
+#, c-format
+msgid "Cannot open database %s"
+msgstr ""
+
+#: ../vector/v.convert/att.c:74 ../vector/v.to.points/main.c:246
+#, c-format
+msgid "Cannot create table: %s"
+msgstr ""
+
+#: ../vector/v.convert/att.c:99
+#, c-format
+msgid "Cannot insert into table: %s"
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:32
+msgid "Failed opening input dig file."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:47
+msgid "dig_att file doesn't exist."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:50
+msgid "Failed opening input dig_att file."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:71
+msgid "Attaching categories...\n"
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:89
+#, c-format
+msgid "Failed to attach an attribute (category %d) to a line."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:92
+#, c-format
+msgid "WARNING: line %d label: %d matched another label: %d."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:100
+msgid "Writing new file...\n"
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:121
+#, c-format
+msgid "%-5d points and lines written to output file.\n"
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:135
+#, c-format
+msgid "%-5d centroids written to output file.\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:41
+msgid "Reading dig file...\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:75
+msgid "Input file is version 3.\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:78
+msgid "Input file is version 4.\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:87
+msgid "Input file is portable.\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:89
+msgid ""
+"WARNING: Input file is not portable.We will attempt to convert anyway but "
+"conversion may fail.Please read manual for detail information."
+msgstr ""
+
+#: ../vector/v.convert/read.c:161
+#, c-format
+msgid "%-5d points read to memory\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:162
+#, c-format
+msgid "%-5d lines read to memory\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:164
+#, c-format
+msgid "%-5d points read and written to output\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:165
+#, c-format
+msgid "%-5d lines read and written to output\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:167
+#, c-format
+msgid "%-5d area boundaries read and written to output\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:168
+#, c-format
+msgid "%-5d dead points skipped\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:169
+#, c-format
+msgid "%-5d dead lines skipped\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:170
+#, c-format
+msgid "%-5d dead area boundaries skipped\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:171
+#, c-format
+msgid "%-5d elements of unknown type skipped\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:173
+#, c-format
+msgid "%-5d elements read to memory.\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:212
+msgid "Reading dig_att file...\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:220
+#, c-format
+msgid "Error: %s"
+msgstr ""
+
+#: ../vector/v.convert/read.c:241
+#, c-format
+msgid "Unknown type: %c"
+msgstr ""
+
+#: ../vector/v.convert/read.c:260
+#, c-format
+msgid "%-5d point categories read\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:261
+#, c-format
+msgid "%-5d line categories read\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:262
+#, c-format
+msgid "%-5d centroids read\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:263
+#, c-format
+msgid "%-5d dead point categories skipped\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:264
+#, c-format
+msgid "%-5d dead line categories skipped\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:265
+#, c-format
+msgid "%-5d dead centroids skipped\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:266
+#, c-format
+msgid "%-5d categories of unknown type skipped\n"
+msgstr ""
+
+#: ../vector/v.convert/read.c:268
+#, c-format
+msgid "%-5d categories read into memory.\n"
+msgstr ""
+
+#: ../vector/v.convert/type.c:29
+#, c-format
+msgid "SYSTEM_ERROR: OLD_T_NEW Got a bad type code %x"
+msgstr ""
+
+#: ../vector/v.convert/type.c:50
+#, c-format
+msgid "SYSTEM_ERROR: NEW_T_OLD Got a bad type code %x"
+msgstr ""
+
+#: ../vector/v.in.region/main.c:46
+msgid "Select type: line or area"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:34
+msgid "Cannot read field info"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:38 ../vector/v.to.points/main.c:239
+#, c-format
+msgid "Cannot open database %s by driver %s"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:45
+msgid "Column type not supported"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:48
+msgid "Cannot select data from table"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:50
+#, c-format
+msgid "%d records selected from table"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:80
+#, c-format
+msgid "No record for line (cat = %d)"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:92
+#, c-format
+msgid "%d points loaded\n"
+msgstr ""
+
+#: ../vector/v.to.points/main.c:54
+#, c-format
+msgid "Cannot insert new row: %s"
+msgstr ""
+
+#: ../vector/v.to.points/main.c:152
+msgid "Create points along input lines."
+msgstr ""
+
+#: ../vector/v.to.points/main.c:155
+msgid "Input map containing lines"
+msgstr ""
+
+#: ../vector/v.to.points/main.c:161
+msgid "Output map where points will be written"
+msgstr ""
+
+#: ../vector/v.to.points/main.c:170
+msgid "Write line vertices."
+msgstr ""
+
+#: ../vector/v.to.points/main.c:174
+msgid "Interpolate points between line vertices."
+msgstr ""
+
+#: ../vector/v.to.points/main.c:181
+msgid "Maximum distance between points in map units."
+msgstr ""
+
+#: ../vector/v.to.points/main.c:185
+msgid "Do not create attribute table."
+msgstr ""
+
+#: ../vector/v.to.points/main.c:203
+#, c-format
+msgid "Could not find input %s\n"
+msgstr ""
+
+#: ../vector/v.to.points/main.c:229 ../vector/v.voronoi/vo_main.c:298
+msgid "Cannot copy table"
+msgstr ""
+
+#: ../vector/v.to.points/main.c:250
+msgid "Cannot create index"
+msgstr ""
+
+#: ../vector/v.to.points/main.c:253
+#, c-format
+msgid "Cannot grant privileges on table %s"
+msgstr ""
+
+#: ../vector/v.to.points/main.c:321
+#, c-format
+msgid "%d points written to output map\n"
+msgstr ""
+
+#: ../vector/v.transform/ask_trans.c:83
+msgid "ask_transform_coor():  Leaving session.. \n"
+msgstr ""
+
+#: ../vector/v.transform/creat_trans.c:69
+#, c-format
+msgid " Number of points that have been entered: %d\n"
+msgstr ""
+
+#: ../vector/v.transform/creat_trans.c:90
+#, c-format
+msgid "%s"
+msgstr ""
+
+#: ../vector/v.transform/creat_trans.c:100
+msgid "Please answer yes or no"
+msgstr ""
+
+#: ../vector/v.transform/creat_trans.c:123
+#, c-format
+msgid "Number of points that have been entered: %d\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:166
+#, c-format
+msgid "Could not open file with coordinates : %s\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:172
+#, c-format
+msgid "Could not find input map <%s>\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:206
+msgid ""
+"\n"
+"Now transforming the vectors ...\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:224
+#, c-format
+msgid "New vector map <%s> boundary coordinates:\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:225
+#, c-format
+msgid " N: %-10.3f    S: %-10.3f\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:226
+#, c-format
+msgid " E: %-10.3f    W: %-10.3f\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:227
+#, c-format
+msgid " B: %6.3f    T: %6.3f\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:232
+#, c-format
+msgid "'%s' has finished the transformation of the vectors.\n"
+msgstr ""
+
+#: ../vector/v.transform/print_trans.c:29
+msgid ""
+"                          CHECK MAP RESIDUALS\n"
+"\n"
+msgstr ""
+
+#: ../vector/v.transform/print_trans.c:30
+msgid "                Current Map                  New Map\n"
+msgstr ""
+
+#: ../vector/v.transform/print_trans.c:31
+msgid ""
+" POINT      X coord    Y coord  |        X coord   Y coord    |      "
+"residuals\n"
+msgstr ""
+
+#: ../vector/v.transform/print_trans.c:43
+#, c-format
+msgid ""
+"\n"
+"\n"
+"  Number of points: %d\n"
+msgstr ""
+
+#: ../vector/v.transform/print_trans.c:44
+#, c-format
+msgid "  Residual mean average   : %f\n"
+msgstr ""
+
+#: ../vector/v.transform/setup_trans.c:88
+msgid "The points weren't spread out enough."
+msgstr ""
+
+#: ../vector/v.transform/setup_trans.c:91
+#, c-format
+msgid "You need to enter at least %d points."
+msgstr ""
+
+#: ../vector/v.voronoi/dt_main.c:119
+msgid "Cannot calculate area centroid"
+msgstr ""
+
+#: ../vector/v.what.rast/main.c:330
+#, c-format
+msgid "%d categories loaded from table\n"
+msgstr ""
+
+#: ../vector/v.what.rast/main.c:331
+#, c-format
+msgid "%d categories loaded from vector\n"
+msgstr ""
+
+#: ../vector/v.what.rast/main.c:332
+#, c-format
+msgid "%d categories from vector missing in table\n"
+msgstr ""
+
+#: ../vector/v.what.rast/main.c:333
+#, c-format
+msgid "%d duplicate categories in vector\n"
+msgstr ""
+
+#: ../vector/v.what.rast/main.c:334
+#, c-format
+msgid "%d records updated\n"
+msgstr ""
+
+#: ../vector/v.what.rast/main.c:335
+#, c-format
+msgid "%d update errors\n"
+msgstr ""
+
