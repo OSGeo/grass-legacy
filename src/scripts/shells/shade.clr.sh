@@ -1,5 +1,6 @@
 :
-#updated $ewres to ewres() and $nsres to nsres() 11/99
+# fix for dashes in raster map name 4/01
+# updated $ewres to ewres() and $nsres to nsres() 11/99
 # updated number to FP in r.mapcalc statement
 
 # set nsres and ewres
@@ -73,6 +74,15 @@ then
     exit 0
 fi
 elev="${fullname}"
+
+elev2=`echo $elev | sed -e "s/-//g"`
+
+if [ "$elev" != "$elev2" ] ; then
+    echo "Name of raster map contains one or more \"-\" (dash(es)), "
+    echo "which is not allowed! Please rename raster map."
+    echo "Exiting."
+    exit 1
+fi
 
 echo "$elev"
 

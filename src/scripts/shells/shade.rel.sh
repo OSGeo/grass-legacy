@@ -1,4 +1,6 @@
 :
+# 4/2001 fix for testing for dashes in raster file name 
+#        by Andreas Lange <andreas.lange@rhein-main.de>
 # 1/2001 fix for NULL by David Finlayson <david_finlayson@yahoo.com>
 # 11/99 updated $ewres to ewres() and $nsres to nsres()
 #       updated number to FP in r.mapcalc statement Markus Neteler
@@ -48,6 +50,15 @@ then
 fi
 elev="${fullname}"
 
+elev2=`echo $elev | sed -e "s/-//g"`
+
+if [ "$elev" != "$elev2" ] ; then
+    echo "Name of raster map contains one or more \"-\" (dash(es)), "
+    echo "which is not allowed! Please rename raster map."
+    echo "Exiting."
+    exit 1
+fi
+
 echo "$elev"
 
 az=`expr $az - 90`
@@ -64,7 +75,7 @@ shade = eval( \\
  x=($elev[-1,-1] + 2*$elev[0,-1] + $elev[1,-1] \\
    -$elev[-1,1] - 2*$elev[0,1] - $elev[1,1])/(8.*ewres()) , \\
  y=($elev[-1,-1] + 2*$elev[-1,0] + $elev[-1,1] \\
-   -$elev[1,-1] - 2*$elev[1,0] - $elev[1,1])/(8.*nsres()) , \\
+   -$elev[1,-1] - 2*$elev[1,0] - "$elev"[1,1])/(8.*nsres()) , \\
  slope=90.-atan(sqrt(x*x + y*y)), \\
  a=round(atan(x,y)), \\
  a=if(isnull(a),1,a), \\
