@@ -1,27 +1,37 @@
 
             WELCOME TO THE GRASS COMPILATION DIRECTORY
 
-This directory contains scripts and files used to compile GRASS.  By running
-scripts and changing lists of programs you generate GRASS binaries for your
-system.  WE SUGGEST YOU PRINT THIS OUT AND READ IT THROUGH ONCE TO START.
+WARNING: These instructions pertain to the 4.0 release  of  GRASS
+and  are not entirely in sync with the current release. This file
+is retained for reference  only.  The  user  is  refered  to  the
+installation  guide that accompanies this release. If no guide is
+available contact your distributor.
 
-You may mount a disk containing GRASS source on different types of
-machines and compile without making source code copies.  You simply
+-----------------------------------------------------------------
+
+This directory contains scripts and files used to compile  GRASS.
+By  running  scripts  and changing lists of programs you generate
+GRASS binaries for your system.
+
+You may mount a disk containing GRASS source on  different  types
+of  machines  and compile without making source code copies.  You
 follow the following instructions for each machine.
 
-WARNING:  These instructions presume that you have familiarity with
+
+WARNING: These instructions presume that you have familiarity with
 UNIX, C, make, and shell scripting.  Murphy's law visits GRASS regularly
 and your expertise in these matters will be the best defense against Murphy.
 
 WARNING:  These instructions and scripts have been used to compile GRASS
-on the following machines.  Please mail results of using this information
-for compiling GRASS on other platforms or operating systems to:
-   shapiro@cerl.cecer.army.mil     (cerl!zorro)
+on the various machines.  Please mail results of using this information
+for compiling GRASS on your platforms and operating system to:
+
+   grassbug@zorro.cecer.army.mil
 
 DIRECTORY CONTENTS
 
     GISGEN      script which will compile GRASS
-    MAKE.LINKS  script used after GISGEN to establish the user executable
+    MAKELINKS  script used after GISGEN to establish the user executable
                 commands 
     VERSION     current version number and date of the GRASS release
 
@@ -94,7 +104,7 @@ COMPILATION STEPS (DETAILS)
   ARCH            = Key name identifying the architecture of the machine
                   on which you are compiling GRASS.
   GISBASE         = Directory into which compiled GRASS will be contained
-  UNIX_BIN        = Local directory where the GRASS entry program and gmake4.0
+  UNIX_BIN        = Local directory where the GRASS entry program and gmake
                   will be contained
   
   DEFAULT_DATABASE= Directory where local GRASS data bases are contained
@@ -178,7 +188,7 @@ COMPILATION STEPS (DETAILS)
   are actually links to a single program called "front.end".  Links to this
   program must be made for every actual GRASS program.  This is done AFTER
   GISGEN is finished.  To make (or re-make) links for all user programs
-  run the script MAKE_LINKS.
+  run the script MAKELINKS.
 
 (5) Edit device driver configuratin files
   
