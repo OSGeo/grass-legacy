@@ -29,7 +29,8 @@ FURTHER_FILES="config.guess \
 
 #list of extra directories not in compile list:
 FURTHER_DIRECTORIES="documents ALPHA64 testsuite tools unused \
-	src/include src/CMD src/fonts src/gui\
+	src/include src/CMD src/fonts src/gui \
+	src/libes/vect32_64/shapelib-1.2.8 \
 	src/libes/dbmi/drivers/odbc src.garden/grass.postgresql"
 
 
