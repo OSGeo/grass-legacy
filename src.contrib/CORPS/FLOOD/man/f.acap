@@ -1,0 +1,26 @@
+f.acap
+
+This tool calculates area-capacity for select areas of interest.  The area-capacity shows
+relationships between water surface elevation, water surface area, and volume of water.
+
+Areas of interest (AOI) are mapped in a raster map with each area having a unique if
+(attribute value).  AOI's to be analyzed are selected by the user interactively.  The
+user also provides the desired starting water surface elevation, ending water surface
+elevation, and increment elevation for the area-capacity curve.  With the water surface
+elevation values, the raster AOI map, and raster terrain elevation map, f.acap calculates
+area and volume.
+
+The user may choose to terminate the area-capacity curve by specifying a maximum volume
+instead of a maximum water surface elevation.  This can be done by typing "v" or "V" when
+f.acap requests the ending elevation.  The user will then be promoted for maximum volume.
+
+f.acap is designed to produce a elevation-area-volume curve not a head-area-volume curve. 
+Thus, the user must water surface elevations not water surface head.
+
+The algorithm for f.acap does not examine the terrain elevation outside the area of
+interest.  The perimeter of the AOI acts as a vertical wall in the area and volume
+calculations.
+
+This is a fully interactive tool, i.e., no control file is processed and areas of
+interest are identified by mouse selection.  Area-capacity curves are printed to the
+screen.
