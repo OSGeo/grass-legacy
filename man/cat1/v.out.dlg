@@ -1,13 +1,13 @@
 
 
 
-v.out.dlg            GRASS Reference Manual             v.out.dlg
+v.out.dlg <main>     GRASS Reference Manual      <main> v.out.dlg
 
 
 
 NAME
-     v.out.dlg - Converts binary GRASS vector data to binary
-     DLG-3 Optional vector data format.
+     v.out.dlg - Converts binary GRASS vector data to DLG-3
+     Optional vector data format.
      (GRASS Vector Data Export Program)
 
 SYNOPSIS
@@ -60,7 +60,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
