@@ -1,0 +1,13 @@
+
+These tools were originally created using a set of data from
+Ft. Worth, TX which made up the SECO database.  Because this
+data is not being released with the GRASS system, this directory
+has been cleaned out significantly, but may have some leftover
+files relating to the old SECO data.  There is a set of data
+being released with the GRASS spearfish location as part of the
+general release.
+
+The user should beware that these tools are linked to the Informix
+DBMS, which is proprietary code.  These programs are not compiled
+automatically as part of the default installation process for
+GRASS, but must be compiled locally.  
