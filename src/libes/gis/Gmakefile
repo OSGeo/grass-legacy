@@ -106,7 +106,6 @@ OBJ = \
     ll_scan.o\
     location.o\
     lu.o\
-    lzw.o\
     mach_name.o\
     make_colr.o\
     mapcase.o\
