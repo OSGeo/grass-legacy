@@ -214,12 +214,9 @@ int main (int argc, char *argv[])
 	     /* if requested, list the vector files in source location - MN 5/2001*/
 		if (flag.list->answer)
 		{
-		 if(isatty(0))  /* check if on command line */
-		  {
 		   fprintf(stderr, "Checking location %s, mapset %s:\n", iloc_name, iset_name);
 		   G_list_element ("dig", "vector", iset_name, 0);
 		   exit(0); /* leave v.proj after listing*/
-		  }
 		}
 
         	G__setenv ("MAPSET", iset_name);
