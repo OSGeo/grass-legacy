@@ -67,17 +67,17 @@ int main (int argc, char *argv[])
         ilocopt->required        =  YES;
         ilocopt->description     =  "location containing input vector map";
 
-        ibaseopt = G_define_option();
-        ibaseopt->key             =  "dbase";
-        ibaseopt->type            =  TYPE_STRING;
-        ibaseopt->required        =  NO;
-        ibaseopt->description     =  "path to GRASS database of input location";
-
         isetopt = G_define_option();
         isetopt->key             =  "mapset";
         isetopt->type            =  TYPE_STRING;
         isetopt->required        =  NO;
         isetopt->description     =  "mapset containing input vector map";
+
+        ibaseopt = G_define_option();
+        ibaseopt->key             =  "dbase";
+        ibaseopt->type            =  TYPE_STRING;
+        ibaseopt->required        =  NO;
+        ibaseopt->description     =  "path to GRASS database of input location";
 
         omapopt = G_define_option();
         omapopt->key             = "output";
