@@ -17,7 +17,6 @@ typedef struct _pad_ {
 
 int delete_pad(PAD *);
 PAD *find_pad(char *);
-ITEM *find_item(PAD *, char *);
 int append_item(PAD *, char *, char *);
 int delete_item(PAD *, char *);
 /* Serve_Xevent.c */
