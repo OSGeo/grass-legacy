@@ -34,7 +34,7 @@ main (int argc, char **argv)
 
 	    if ( yyparse() != 0 )
 	    {
-		fprintf (stdout, "Error: statement was not parsed\n");
+		fprintf (stdout, "Error: statement was not parsed successfully.\n");
 		sqpFreeStmt(st); 
 		return (1);
 	    } 
