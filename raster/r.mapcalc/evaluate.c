@@ -2,7 +2,14 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "gis.h"
 #include "mapcalc.h"
+#include "globals.h"
+
+/****************************************************************************/
+
+int current_depth, current_row;
+int depths, rows, columns;
 
 /****************************************************************************/
 
@@ -113,11 +120,13 @@ static void evaluate_variable(expression *e)
 
 static void evaluate_map(expression *e)
 {
-	get_map_row(e->data.map.idx,
-		    e->data.map.mod,
-		    current_row + e->data.map.row,
-		    e->data.map.col,
-		    e->buf, e->res_type);
+	get_map_row(
+		e->data.map.idx,
+		e->data.map.mod,
+		current_depth + e->data.map.depth,
+		current_row + e->data.map.row,
+		e->data.map.col,
+		e->buf, e->res_type);
 }
 
 static void evaluate_function(expression *e)
@@ -184,6 +193,8 @@ static void evaluate(expression *e)
 
 static expr_list *exprs;
 
+/****************************************************************************/
+
 static int error_handler(char *msg, int fatal)
 {
 	expr_list *l;
@@ -193,22 +204,20 @@ static int error_handler(char *msg, int fatal)
 		expression *e = l->exp;
 		int fd = e->data.bind.fd;
 		if (fd >= 0)
-			G_unopen_cell(fd);
+			unopen_output_map(fd);
 	}
 
 	G_unset_error_routine();
 	G_fatal_error("%s", msg);
 }
 
-/****************************************************************************/
-
 void execute(expr_list *ee)
 {
 	int verbose = isatty(2);
 	expr_list *l;
+	int count, n;
 
-	rows = G_window_rows();
-	columns = G_window_cols();
+	setup_region();
 
 	setup_maps();
 
@@ -234,10 +243,14 @@ void execute(expr_list *ee)
 		e->data.bind.fd = open_output_map(var, val->res_type);
 	}
 
+	count = rows * depths;
+	n = 0;
+
+	for (current_depth = 0; current_depth < depths; current_depth++)
 	for (current_row = 0; current_row < rows; current_row++)
 	{
 		if (verbose)
-			G_percent(current_row, rows, 2);
+			G_percent(n, count, 2);
 
 		for (l = ee; l; l = l->next)
 		{
@@ -247,10 +260,12 @@ void execute(expr_list *ee)
 			evaluate(e);
 			put_map_row(fd, e->buf, e->res_type);
 		}
+
+		n++;
 	}
 
 	if (verbose)
-		G_percent(current_row, rows, 2);
+		G_percent(n, count, 2);
 
 	for (l = ee; l; l = l->next)
 	{

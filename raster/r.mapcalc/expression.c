@@ -198,7 +198,7 @@ expression *variable(const char *name)
 	return e;
 }
 
-expression *mapname(const char *name, int mod, int row, int col)
+expression *mapname(const char *name, int mod, int row, int col, int depth)
 {
 	int res_type = map_type(name, mod);
 	expression *e = allocate(expr_type_map,
@@ -211,6 +211,7 @@ expression *mapname(const char *name, int mod, int row, int col)
 	e->data.map.mod = mod;
 	e->data.map.row = row;
 	e->data.map.col = col;
+	e->data.map.depth = depth;
 	return e;
 }
 
@@ -338,7 +339,11 @@ static char *format_map(const expression *e)
 		break;
 	}
 
-	if (e->data.map.row || e->data.map.col)
+	if (e->data.map.depth)
+		sprintf(buff, "%s%s[%d,%d,%d]",
+			mod, e->data.map.name,
+			e->data.map.row, e->data.map.col, e->data.map.depth);
+	else if (e->data.map.row || e->data.map.col)
 		sprintf(buff, "%s%s[%d,%d]",
 			mod, e->data.map.name,
 			e->data.map.row, e->data.map.col);

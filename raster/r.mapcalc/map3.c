@@ -5,24 +5,24 @@
 #include <unistd.h>
 
 #include "gis.h"
+#include "G3d.h"
 #include "btree.h"
-#include "rowio.h"
 
 #include "mapcalc.h"
 #include "globals.h"
-#include "globals2.h"
+#include "globals3.h"
 
 /****************************************************************************/
 
-struct Cell_head current_region2;
+G3D_Region current_region3;
 
 void setup_region(void)
 {
-	G_get_window(&current_region2);
+	G3d_getWindow(&current_region3);
 
-	rows = G_window_rows();
-	columns = G_window_cols();
-	depths = 1;
+	rows = current_region3.rows;
+	columns = current_region3.cols;
+	depths = current_region3.depths;
 }
 
 /****************************************************************************/
@@ -33,13 +33,12 @@ typedef struct map
 	const char *mapset;
 	int have_cats;
 	int have_colors;
-	int use_rowio;
 	int min_row, max_row;
+	void *handle;
 	int fd;
 	struct Categories cats;
 	struct Colors colors;
 	BTREE btree;
-	ROWIO rowio;
 } map;
 
 /****************************************************************************/
@@ -56,9 +55,116 @@ static int max_row = -INT_MAX;
 static int min_col = INT_MAX;
 static int max_col = -INT_MAX;
 
-static int max_rows_in_memory = 3;
+/****************************************************************************/
 
-static int read_row_type;
+static int handle_to_fd(void *handle)
+{
+	return (int) handle;
+}
+
+static void *fd_to_handle(int fd)
+{
+	return (void *) fd;
+}
+
+static void read_row(void *handle, char *buf, int type, int depth, int row)
+{
+	int i;
+
+	switch (type)
+	{
+	case CELL_TYPE:
+		for (i = 0; i < columns; i++)
+		{
+			double x;
+
+			G3d_getValueRegion(
+				handle, i, row, depth, (char *) &x, G3D_DOUBLE);
+			if (G3d_isNullValueNum(&x, G3D_DOUBLE))
+				SET_NULL_C(&((CELL*)buf)[i]);
+			else
+				((CELL*)buf)[i] = (CELL) x;
+		}
+		break;
+	case FCELL_TYPE:
+		for (i = 0; i < columns; i++)
+		{
+			float x;
+
+			G3d_getValueRegion(
+				handle, i, row, depth, (char *) &x, G3D_FLOAT);
+			if (G3d_isNullValueNum(&x, G3D_FLOAT))
+				SET_NULL_F(&((FCELL*)buf)[i]);
+			else
+				((FCELL*)buf)[i] = x;
+		}
+		break;
+	case DCELL_TYPE:
+		for (i = 0; i < columns; i++)
+		{
+			double x;
+
+			G3d_getValueRegion(
+				handle, i, row, depth, (char *) &x, G3D_DOUBLE);
+			if (G3d_isNullValueNum(&x, G3D_DOUBLE))
+				SET_NULL_D(&((DCELL*)buf)[i]);
+			else
+				((DCELL*)buf)[i] = x;
+		}
+		break;
+	}
+}
+
+static void write_row(void *handle, const char *buf, int type, int depth, int row)
+{
+	int i;
+
+	switch (type)
+	{
+	case CELL_TYPE:
+		for (i = 0; i < columns; i++)
+		{
+			double x;
+
+			if (IS_NULL_C(&((CELL*)buf)[i]))
+				G3d_setNullValue(&x, 1, G3D_DOUBLE);
+			else
+				x = ((CELL*)buf)[i];
+
+			if (G3d_putValue(handle, i, row, depth, (char *) &x, G3D_DOUBLE) < 0)
+				G_fatal_error("error writing data");
+		}
+		break;
+	case FCELL_TYPE:
+		for (i = 0; i < columns; i++)
+		{
+			float x;
+
+			if (IS_NULL_F(&((FCELL*)buf)[i]))
+				G3d_setNullValue(&x, 1, G3D_FLOAT);
+			else
+				x = ((FCELL*)buf)[i];
+
+			if (G3d_putValue(handle, i, row, depth, (char *) &x, G3D_FLOAT) < 0)
+				G_fatal_error("error writing data");
+		}
+		break;
+	case DCELL_TYPE:
+		for (i = 0; i < columns; i++)
+		{
+			double x;
+
+			if (IS_NULL_D(&((DCELL*)buf)[i]))
+				G3d_setNullValue(&x, 1, G3D_DOUBLE);
+			else
+				x = ((DCELL*)buf)[i];
+
+			if (G3d_putValue(handle, i, row, depth, (char *) &x, G3D_DOUBLE) < 0)
+				G_fatal_error("error writing data");
+		}
+		break;
+	}
+}
 
 /****************************************************************************/
 
@@ -74,7 +180,7 @@ static void init_colors(map *m)
 	if (!blu) blu = G_malloc(columns);
 	if (!set) set = G_malloc(columns);
 
-	if (G_read_colors((char *) m->name, (char *) m->mapset, &m->colors) < 0)
+	if (G3d_readColors((char *) m->name, (char *) m->mapset, &m->colors) < 0)
 		G_fatal_error("error reading color file for [%s in %s]\n",
 			      m->name, m->mapset);
 
@@ -83,7 +189,7 @@ static void init_colors(map *m)
 
 static void init_cats(map *m)
 {
-	if (G_read_cats((char *) m->name, (char *) m->mapset, &m->cats) < 0)
+	if (G3d_readCats((char *) m->name, (char *) m->mapset, &m->cats) < 0)
 		G_fatal_error("error reading category file for [%s in %s]\n",
 			      m->name, m->mapset);
 
@@ -310,45 +416,18 @@ static void column_shift(void *buf, int res_type, int col)
 	}
 }
 
-static void set_read_row_type(int res_type)
-{
-	read_row_type = res_type;
-}
-
-static int read_row(int fd, char *buf, int row, int dummy)
-{
-	if (G_get_raster_row(fd, (DCELL *) buf, row, read_row_type) < 0)
-		G_fatal_error("read_row: error reading data");
-
-	return 0;
-}
-
 static void setup_map(map *m)
 {
-	int nrows = m->max_row - m->min_row + 1;
-	int size = (sizeof(CELL) > sizeof(double))
-		? sizeof(CELL)
-		: sizeof(double);
-
-	if (nrows > 1 && nrows <= max_rows_in_memory)
-	{
-		if (rowio_setup(&m->rowio, m->fd, nrows,
-				columns * size, read_row, NULL) < 0)
-			G_fatal_error("setup_map: rowio_setup failed");
-		m->use_rowio = 1;
-	}
-	else
-		m->use_rowio = 0;
 }
 
-static void read_map(map *m, void *buf, int res_type, int row, int col)
+static void read_map(
+	map *m, void *buf, int res_type, int depth, int row, int col)
 {
 	CELL *ibuf = buf;
 	FCELL *fbuf = buf;
 	DCELL *dbuf = buf;
-	void *bp;
 
-	if (row < 0 || row >= rows)
+	if (row < 0 || row >= rows || depth < 0 || depth >= depths)
 	{
 		int i;
 
@@ -374,18 +453,7 @@ static void read_map(map *m, void *buf, int res_type, int row, int col)
 		return;
 	}
 
-	set_read_row_type(res_type);
-
-	if (m->use_rowio)
-	{
-		bp = rowio_get(&m->rowio, row);
-		if (!bp)
-			G_fatal_error("read_map: rowio_get failed");
-
-		G_copy(buf, bp, columns * G_raster_size(res_type));
-	}
-	else
-		read_row(m->fd, buf, row, 0);
+	read_row(m->handle, buf, res_type, depth, row);
 
 	if (col)
 		column_shift(buf, res_type, col);
@@ -393,10 +461,10 @@ static void read_map(map *m, void *buf, int res_type, int row, int col)
 
 static void close_map(map *m)
 {
-	if (m->fd < 0)
+	if (!m->handle)
 		return;
 
-	if (G_close_cell(m->fd) < 0)
+	if (!G3d_closeCell(m->handle))
 		G_fatal_error("unable to close map [%s in %s]",
 			      m->name, m->mapset);
 
@@ -412,12 +480,6 @@ static void close_map(map *m)
 		G_free_colors(&m->colors);
 		m->have_colors = 0;
 	}
-
-	if (m->use_rowio)
-	{
-		rowio_release(&m->rowio);
-		m->use_rowio = 0;
-	}
 }
 
 /****************************************************************************/
@@ -431,8 +493,19 @@ int map_type(const char *name, int mod)
 	{
 	case 'M':
 		tmpname = G_store((char *) name);
-		mapset = G_find_cell2(tmpname, "");
-		result = mapset ? G_raster_map_type(tmpname, mapset) : -1;
+		mapset = G_find_grid3(tmpname, "");
+		if (mapset)
+		{
+			void *handle = G3d_openCellOld(
+				tmpname, mapset, &current_region3,
+				G3D_TILE_SAME_AS_FILE, G3D_NO_CACHE);
+			result = (G3d_fileTypeMap == G3D_FLOAT)
+				? FCELL_TYPE
+				: DCELL_TYPE;
+			G3d_closeCell(handle);
+		}
+		else
+			result = -1;
 		G_free(tmpname);
 		return result;
 	case '@':
@@ -453,7 +526,7 @@ int map_type(const char *name, int mod)
 int open_map(const char *name, int mod, int row, int col)
 {
 	int i;
-	char *mapset;
+	char *mapset, *tmpname;
 	int use_cats = 0;
 	int use_colors = 0;
 	map *m;
@@ -463,7 +536,10 @@ int open_map(const char *name, int mod, int row, int col)
 	if (col < min_col) min_col = col;
 	if (col > max_col) max_col = col;
 
-	mapset = G_find_cell2((char *) name, "");
+	tmpname = G_store((char *) name);
+	mapset = G_find_grid3(tmpname, "");
+	G_free(tmpname);
+
 	if (!mapset)
 		G_fatal_error("open_map: map [%s] not found", name);
 
@@ -520,7 +596,6 @@ int open_map(const char *name, int mod, int row, int col)
 	m->mapset = mapset;
 	m->have_cats = 0;
 	m->have_colors = 0;
-	m->use_rowio = 0;
 	m->min_row = row;
 	m->max_row = row;
 
@@ -529,9 +604,11 @@ int open_map(const char *name, int mod, int row, int col)
 	if (use_colors)
 		init_colors(m);
 
-	m->fd = G_open_cell_old((char *) name, mapset);
+	m->handle = G3d_openCellOld(
+		(char *) name, (char *) mapset, &current_region3,
+		G3D_DOUBLE, G3D_USE_CACHE_DEFAULT);
 
-	if (m->fd < 0)
+	if (!m->handle)
 		G_fatal_error("unable to open map [%s in %s]", name, mapset);
 
 	return num_maps++;
@@ -545,8 +622,7 @@ void setup_maps(void)
 		setup_map(&maps[i]);
 }
 
-void get_map_row(
-	int idx, int mod, int depth, int row, int col, void *buf, int res_type)
+void get_map_row(int idx, int mod, int depth, int row, int col, void *buf, int res_type)
 {
 	static CELL *ibuf;
 	static DCELL *fbuf;
@@ -555,12 +631,12 @@ void get_map_row(
 	switch (mod)
 	{
 	case 'M':
-		read_map(m, buf, res_type, row, col);
+		read_map(m, buf, res_type, depth, row, col);
 		break;
 	case '@':
 		if (!ibuf)
 			ibuf = G_malloc(columns * sizeof(CELL));
-		read_map(m, ibuf, CELL_TYPE, row, col);
+		read_map(m, ibuf, CELL_TYPE, depth, row, col);
 		translate_from_cats(m, ibuf, buf, columns);
 		break;
 	case 'r':
@@ -571,7 +647,7 @@ void get_map_row(
 	case 'i':
 		if (!fbuf)
 			fbuf = G_malloc(columns * sizeof(DCELL));
-		read_map(m, fbuf, DCELL_TYPE, row, col);
+		read_map(m, fbuf, DCELL_TYPE, depth, row, col);
 		translate_from_colors(m, fbuf, buf, columns, mod);
 		break;
 	default:
@@ -594,30 +670,41 @@ void close_maps(void)
 
 int open_output_map(const char *name, int res_type)
 {
+	void *handle;
 	int fd;
 
-	fd = G_open_raster_new((char *) name, res_type);
-	if (fd < 0)
+	handle = G3d_openCellNew(
+		(char *) name,
+		res_type == FCELL_TYPE ? G3D_FLOAT : G3D_DOUBLE,
+		G3D_USE_CACHE_DEFAULT,
+		&current_region3);
+
+	if (!handle)
 		G_fatal_error("cannot create output map [%s]", name);
+
+	fd = handle_to_fd(handle);
 
 	return fd;
 }
 
 void put_map_row(int fd, void *buf, int res_type)
 {
-	if (G_put_raster_row(fd, buf, res_type) < 0)
-		G_fatal_error("error writing data");
+	void *handle = fd_to_handle(fd);
+
+	write_row(handle, buf, res_type, current_depth, current_row);
 }
 
 void close_output_map(int fd)
 {
-	if (G_close_cell(fd) < 0)
+	void *handle = fd_to_handle(fd);
+
+	if (!G3d_closeCell(handle))
 		G_fatal_error("unable to close output map");
 }
 
 void unopen_output_map(int fd)
 {
-	G_unopen_cell(fd);
+	close_output_map(fd);
 }
 
 /****************************************************************************/
@@ -627,10 +714,10 @@ void copy_cats(const char *dst, int idx)
 	const map *m = &maps[idx];
 	struct Categories cats;
 
-	if (G_read_cats((char *) m->name, (char *) m->mapset, &cats) < 0)
+	if (G3d_readCats((char *) m->name, (char *) m->mapset, &cats) < 0)
 		return;
 
-	G_write_cats((char *) dst, &cats);
+	G3d_writeCats((char *) dst, &cats);
 	G_free_cats(&cats);
 }
 
@@ -639,67 +726,19 @@ void copy_colors(const char *dst, int idx)
 	const map *m = &maps[idx];
 	struct Colors colr;
 
-	if (G_read_colors((char *) m->name, (char *) m->mapset, &colr) <= 0)
+	if (G3d_readColors((char *) m->name, (char *) m->mapset, &colr) <= 0)
 		return;
 
-	G_write_colors((char *) dst, G_mapset(), &colr);
+	G3d_writeColors((char *) dst, G_mapset(), &colr);
 	G_free_colors(&colr);
 }
 
 void copy_history(const char *dst, int idx)
 {
-	const map *m = &maps[idx];
-	struct History hist;
-
-	if (G_read_history ((char *) m->name, (char *) m->mapset, &hist) < 0)
-		return;
-
-	G_write_history((char *) dst, &hist);
 }
 
 void create_history(const char *dst, expression *e)
 {
-	static int WIDTH = RECORD_LEN - 12;
-	struct History hist;
-	char *expr = format_expression(e);
-	char *p = expr;
-	int len = strlen(expr);
-	int i;
-
-	G_short_history((char *) dst, "cell", &hist);
-
-	for (i = 0; i < MAXEDLINES; i++)
-	{
-		int n;
-
-		if (!len)
-			break;
-
-		if (len > WIDTH)
-		{
-			for (n = WIDTH; n > 0 && p[n] != ' '; n--)
-				;
-
-			if (n <= 0)
-				n = WIDTH;
-			else
-				n++;
-		}
-		else
-			n = len;
-
-		memcpy(hist.edhist[i], p, n);
-		hist.edhist[i][n] = '\0';
-
-		p += n;
-		len -= n;
-	}
-
-	hist.edlinecnt = i;
-
-	G_write_history((char *) dst, &hist);
-
-	free(expr);
 }
 
 /****************************************************************************/
