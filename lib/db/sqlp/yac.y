@@ -201,6 +201,8 @@ y_name:
 	|	y_name '+' y_cnam		{$$ = makeArithmExpr(SQLP_ADD, $1, $3);}
 	|	y_name '*' y_cnam		{$$ = makeArithmExpr(SQLP_MLTP, $1, $3);}
 	|	y_name '/' y_cnam		{$$ = makeArithmExpr(SQLP_DIV, $1, $3);}
+	|	y_name INTNUM			{$$ = makeArithmExpr(SQLP_ADD, $1, makeArithmValue(NULL,$2,0,SQLP_I,1));}
+	|	y_name FLOATNUM			{$$ = makeArithmExpr(SQLP_ADD, $1, makeArithmValue(NULL,0,$2,SQLP_D,1));}
 	;
 y_cnam:
 		NAME				{$$ = makeArithmValue($1,0,0,SQLP_COL,1);}
@@ -208,8 +210,6 @@ y_cnam:
 	|	INTNUM				{$$ = makeArithmValue(NULL,$1,0,SQLP_I,1);}
 	|	FLOATNUM			{$$ = makeArithmValue(NULL,0,$1,SQLP_D,1);}
 	|	'(' y_name ')'			{$$ = $2;}
-	|	'-' INTNUM 			{$$ = makeArithmValue(NULL,$2,0,SQLP_I,-1);}
-	|	'-' FLOATNUM			{$$ = makeArithmValue(NULL,0,$2,SQLP_D,-1);}
 	;
 %%
 
