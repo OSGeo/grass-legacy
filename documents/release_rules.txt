@@ -7,7 +7,9 @@ How to release GRASS 5 binaries:
    for distribution
 
  o check, if libgdal is in place ($GISBASE/lib/)
-
+   ftp://gdal.velocet.ca/pub/outgoing/libgdal-linux-grass.tar.gz
+   (ldd libgdal.1.1.so:
+    ftp://gdal.velocet.ca/pub/outgoing/libstdc++-libc6.2-2.so.3)
 
 2. Package it with
 
