@@ -108,3 +108,6 @@ however, access to these mapsets will remain restricted.
 .I g.list
 .SH "AUTHOR"
 Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
+.br
+
+Greg Koerper, ManTech Environmental Technology, Inc.
