@@ -1,3 +1,19 @@
+/***************************************************************
+ *
+ * MODULE:       v.database
+ * 
+ * AUTHOR(S):    Radim Blazek
+ *               
+ * PURPOSE:      Set default settings for vector map attribute storage
+ *               
+ * COPYRIGHT:    (C) 2003 by the GRASS Development Team
+ *
+ *               This program is free software under the 
+ *               GNU General Public License (>=v2). 
+ *               Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ **************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -36,7 +52,7 @@ main(int argc, char *argv[])
 
     /* Set description */
     module              = G_define_module();
-    module->description = "Set default driver / database for new vectors.";
+    module->description = "Set default driver / database for new vector attributes.";
 
     if(G_parser(argc, argv)) exit(1);
 
@@ -55,4 +71,3 @@ main(int argc, char *argv[])
 
     exit(0);
 }
-
