@@ -1,0 +1,24 @@
+GRASS GIS programming style standards
+
+$Id: STYLE_PROGRAMMING,v 1.1 2000-07-10 13:45:51 markus Exp $
+
+Please improve this list!
+
+-----------------------------------------------------------
+1. Use the directory structure to place your module
+
+2. documents go to
+    ./html and
+    ./man
+   See local examples about documentation style. To convert
+   to MAN format, the g.html2man can be used.
+
+3. When writing Gmakefiles, use the current standard
+   [insert module example here]
+
+4. Insert return statements for functions
+
+5. Use fprintf instead of printf
+
+6. Put a new line at end-of-file
+
