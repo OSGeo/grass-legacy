@@ -1,0 +1,26 @@
+all:	$(ETC)/paint/setup \
+	$(BIN)/Pmap \
+	$(BIN)/Pscreen \
+	$(BIN)/Pselect \
+	$(BIN)/paint
+
+$(ETC)/paint/setup: setup
+	rm -f $@
+	cp $? $@
+	chmod 0644 $@
+$(BIN)/Pmap: Pmap
+	rm -f $@
+	cp $? $@
+	chmod 0755 $@
+$(BIN)/Pscreen: Pscreen
+	rm -f $@
+	cp $? $@
+	chmod 0755 $@
+$(BIN)/Pselect: Pselect
+	rm -f $@
+	cp $? $@
+	chmod 0755 $@
+$(BIN)/paint: paint
+	rm -f $@
+	cp $? $@
+	chmod 0755 $@
