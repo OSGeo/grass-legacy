@@ -6,9 +6,10 @@ Contents:
  1. How to debug GRASS modules and libraries with GNU gdb and DDD
  2. Debugging tools
  3. Shell debugging 
- 4. Library browsing
- 5. Library dependencies with shared libraries
- 6. Debugging with 'core' file
+ 4. PERL debugging
+ 5. Library browsing
+ 6. Library dependencies with shared libraries
+ 7. Debugging with 'core' file
 
 
 ------------------------------------------------------------------------
@@ -114,10 +115,29 @@ alternatively, run
 
 sh -x scriptname
 
+------------------------------------------------------------------------
+
+4. PERL debugging
+
+To debug a PERL script, run:
+
+perl -d /path/to/perlscript.pl
+use Data::Dumper
+
+Then 's' let's you proceed line-wise through the file.
+
+To run through the file without interruption, enter
+'t'   - trace through file
+'c'   - continue
+
+Finally:
+
+'q' quits.
+
 
 -------------------------------------------------------------------------
 
-4. Library browsing
+5. Library browsing
 
 If you are searching for a specific function within a library, you
 may use the "nm" tool to list the supported functions.
@@ -138,7 +158,7 @@ nm /usr/local/lib/libgdal.1.1.so
 
 -------------------------------------------------------------------------
 
-5. Library dependencies with shared libraries
+6. Library dependencies with shared libraries
 
 Why are GRASS shared libraries useful for GRASS development? First, if
 you're modifying library code, you only need to rebuild the library; you
@@ -158,7 +178,7 @@ ldd /usr/local/grass5/etc/bin/cmd/r.out.tiff
 	/lib/ld-linux.so.2 => /lib/ld-linux.so.2 (0x40000000)
 
 -------------------------------------------------------------------------
-6. Debugging with 'core' file
+7. Debugging with 'core' file
 
 How to debug allocation, from Roberto Micarelli:
 
