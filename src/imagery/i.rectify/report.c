@@ -14,7 +14,7 @@ report (mailfile, name, mapset, result, rectify, compress, ok)
 
     select_current_env();
     fprintf (fd, "***********************************************\n");
-    fprintf (fd, "Rectify [%s in %s] (LOCATION %s)\n",
+    fprintf (fd, "Rectify [%s@%s] (LOCATION %s)\n",
 	name, mapset, G_location());
     fprintf (fd, " into  [%s in ", result);
     select_target_env();
