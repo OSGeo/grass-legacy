@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "imagery.h"
 
 #define BIL 1
