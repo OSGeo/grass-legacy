@@ -22,7 +22,7 @@ int del_cat (int line, int field, int cat )
     static struct line_cats *Cats = NULL;
     char buf[1000];
     
-    G_debug (2, "del_cat() line = %d, field = %d, cat = %d", line, field, cat);
+    G_debug (3, "del_cat() line = %d, field = %d, cat = %d", line, field, cat);
 
     if ( Points == NULL ) Points = Vect_new_line_struct ();
     if ( Cats == NULL ) Cats = Vect_new_cats_struct ();
@@ -31,6 +31,8 @@ int del_cat (int line, int field, int cat )
     Vect_field_cat_del ( Cats, field, cat);
 
     last_cat_line = Vect_rewrite_line (&Map, line, type, Points, Cats);
+	
+    check_record ( field, cat );
 
     Tcl_Eval ( Toolbox, "clear_cats" );	
     
@@ -367,3 +369,77 @@ int display_attributes (void)
 
     return 1;
 }
+
+/* 
+ * Check if deleted category exists in category index, ask user if not and delete it if requested
+ * 
+ * returns: 
+ */
+int check_record ( int field, int cat ) 
+{
+    int ret, field_index, type, id;
+    struct field_info *Fi;
+    dbDriver *driver;
+    dbValue value;
+    dbString sql;
+    char buf[1000];
+    
+    db_init_string (&sql);
+
+    G_debug (3, "check_record() field = %d cat = %d", field, cat );
+
+    Fi = Vect_get_field( &Map, field );
+    if ( Fi == NULL ) {  /* no table */
+	return 0;
+    }
+
+    /* Are there still elemets with this category */
+    field_index = Vect_cidx_get_field_index ( &Map, field );
+    G_debug (3, "field_index = %d", field_index );
+    if ( field_index >= 0 ) {
+        ret = Vect_cidx_find_next ( &Map, field_index, cat, GV_POINTS|GV_LINES, 0, &type, &id );
+	G_debug (3, "ret = %d", ret );
+
+	if ( ret >= 0 ) return 0; /* Category exists in map */
+    }
+
+    /* Does record exist ? */
+    driver = db_start_driver_open_database ( Fi->driver, Fi->database );
+    if ( driver == NULL ) {
+	sprintf (buf, "Cannot open database %s by driver %s", Fi->database, Fi->driver );
+	i_message ( MSG_OK, MSGI_ERROR, buf );
+	return -1;
+    }
+    ret = db_select_value ( driver, Fi->table, Fi->key, cat, Fi->key, &value );
+    G_debug (3, "n records = %d", ret );
+    if ( ret == -1 ) {
+	db_close_database_shutdown_driver ( driver );
+	sprintf (buf, "Cannot select record from table %s", Fi->table );
+	i_message ( MSG_OK, MSGI_ERROR, buf );
+	return -1;
+    }
+    
+    if ( ret == 0 ) return 0;
+
+    sprintf (buf, "There are no more features with category %d (field %d) in the map, but there is "
+	          "record in the table. Delete this record?", cat, field );
+    ret = i_message ( MSG_YESNO, MSGI_QUESTION, buf );
+    
+    if ( ret == 1 ) return 0;  /* No, do not delete */
+
+    sprintf ( buf, "delete from %s where %s = %d", Fi->table, Fi->key, cat );
+    db_set_string ( &sql, buf);
+    G_debug ( 2, db_get_string ( &sql ) );
+    ret = db_execute_immediate (driver, &sql);
+    if ( ret != DB_OK ) {	
+	db_close_database_shutdown_driver ( driver );
+	sprintf (buf, "Cannot delete record: %s", db_get_string(&sql) );
+	i_message ( MSG_OK, MSGI_ERROR, buf );
+	return -1;
+    }
+    
+    db_close_database_shutdown_driver ( driver );
+
+    return 0;
+}
+

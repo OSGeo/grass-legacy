@@ -153,6 +153,7 @@ int Vect_get_map_box (struct Map_info *, BOUND_BOX *);
 int V__map_overlap (struct Map_info *, double, double, double, double);
 
 void Vect_set_release_support ( struct Map_info * );
+void Vect_set_category_index_update ( struct Map_info * );
 
     /* Set/get fatal error behaviour */
 int Vect_set_fatal_error (int);
@@ -293,7 +294,7 @@ int Vect_net_shortest_path_coor ( struct Map_info *, double, double, double, dou
 				  double *, double * );
 
     /* Miscellaneous */
-int Vect_topo_dump ( struct Plus_head *, FILE *);
+int Vect_topo_dump ( struct Map_info *, FILE *);
 double Vect_points_distance ( double, double, double, double, double, double, int);
 int Vect_option_to_types (struct Option *);
 int Vect_copy_map_lines ( struct Map_info *, struct Map_info * );
@@ -325,7 +326,7 @@ int Vect_open_topo (struct Map_info *, int);
 int Vect_save_topo ( struct Map_info *);
 int Vect_open_spatial_index (struct Map_info *);
 int Vect_save_spatial_index ( struct Map_info *);
-int Vect_spatial_index_dump ( struct Plus_head *, FILE * ); 
+int Vect_spatial_index_dump ( struct Map_info *, FILE * ); 
 int Vect_build_sidx_from_topo ( struct Map_info *, FILE * );
 int Vect_build_spatial_index ( struct Map_info *, FILE * );
 

@@ -84,10 +84,10 @@ main (int argc, char *argv[])
 	    Vect_open_old (&Map, map_opt->answer, G_mapset()); 
         }
         if (dump)
-	    Vect_topo_dump ( &(Map.plus), stdout );
+	    Vect_topo_dump ( &Map, stdout );
 
         if (sdump)
-	    Vect_spatial_index_dump ( &(Map.plus), stdout );
+	    Vect_spatial_index_dump ( &Map, stdout );
 
         if (cdump)
 	    Vect_cidx_dump ( &Map, stdout );

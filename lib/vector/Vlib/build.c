@@ -115,7 +115,7 @@ Vect_build_partial ( struct Map_info *Map, int build, FILE *msgout )
     struct Plus_head *plus ;
     int    ret;
     
-    G_debug (1, "Vect_build()"); 
+    G_debug (3, "Vect_build(): build = %d", build); 
     Msgout = msgout;
 
     /* If topology is already build (map on level2), set level to 1 so that lines will
@@ -132,6 +132,7 @@ Vect_build_partial ( struct Map_info *Map, int build, FILE *msgout )
 
     if ( build == GV_BUILD_ALL ) {
 	dig_cidx_free(plus); /* free old (if any) category index) */
+	dig_cidx_init(plus);
     }
     
     ret = ( (*Build_array[Map->format]) (Map, build, msgout) );
@@ -266,7 +267,7 @@ Vect_save_topo ( struct Map_info *Map )
  \param Map_info structure, file for output (stdout/stderr for example)
 */
 int
-Vect_topo_dump ( struct Plus_head *plus, FILE *out )
+Vect_topo_dump ( struct Map_info *Map, FILE *out )
 {
     int i, j, line, isle;
     P_NODE *Node;
@@ -274,6 +275,9 @@ Vect_topo_dump ( struct Plus_head *plus, FILE *out )
     P_AREA *Area;
     P_ISLE *Isle;
     BOUND_BOX box;
+    struct Plus_head *plus;
+
+    plus = &(Map->plus);
 
     fprintf (out, "---------- TOPOLOGY DUMP ----------\n" ); 
     
@@ -402,12 +406,16 @@ Vect_save_spatial_index ( struct Map_info *Map )
  \param Map_info structure, file for output (stdout/stderr for example)
 */
 int
-Vect_spatial_index_dump ( struct Plus_head *plus, FILE *out ) 
+Vect_spatial_index_dump ( struct Map_info *Map, FILE *out ) 
 {
+    if ( !(Map->plus.Spidx_built) ) {
+	Vect_build_sidx_from_topo ( Map, NULL );
+    }
 
     fprintf (out, "---------- SPATIAL INDEX DUMP ----------\n" ); 
     
-    dig_dump_spidx ( out, plus); 
+    dig_dump_spidx ( out, &(Map->plus) ); 
 
     return 1;
 }
+

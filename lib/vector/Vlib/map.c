@@ -517,3 +517,17 @@ Vect_set_release_support ( struct Map_info * Map )
 {
     Map->plus.release_support = 1;
 }
+
+/*!
+  \brief By default, category index is not updated if vector is changed, 
+         this function sets category index update.
+	 WARNING: currently only category for elements is updated 
+	 not for areas
+  \param Map pointer to map
+*/
+void
+Vect_set_category_index_update ( struct Map_info * Map )
+{
+    Map->plus.update_cidx = 1;
+}
+

@@ -64,9 +64,11 @@ typedef struct {
 
 /* Message type */
 #define MSG_OK 0
+#define MSG_YESNO 1
 
 /* Message icon */
 #define MSGI_ERROR 0
+#define MSGI_QUESTION 1
 
 /* Snapping modes */
 #define SNAP_SCREEN 0 /* Snap in screen pixels */
@@ -106,6 +108,8 @@ typedef struct {
 #define VARN_SNAP_MAP    "snap_map" /* Snapping threshold in map units */ 
 #define VAR_ZOOM_REGION  9        
 #define VARN_ZOOM_REGION "zoom_region" /* Name of region to zoom in */ 
+#define VAR_ANSWER      10        
+#define VARN_ANSWER      "answer" /* Answer from dialog */ 
 
 #ifdef MAIN
 VAR Variable[] = {
@@ -119,6 +123,7 @@ VAR Variable[] = {
     { VAR_SNAP_SCREEN, VARN_SNAP_SCREEN, VART_INT, 0, 0, NULL },
     { VAR_SNAP_MAP, VARN_SNAP_MAP, VART_DOUBLE, 0, 0, NULL },
     { VAR_ZOOM_REGION, VARN_ZOOM_REGION, VART_CHAR, 0, 0, NULL },
+    { VAR_ANSWER, VARN_ANSWER, VART_INT, 0, 0, NULL },
     { 0, NULL, 0, 0, 0, NULL }
 };
 #else

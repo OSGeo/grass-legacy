@@ -274,7 +274,11 @@ int delete_line (void)
                 display_node ( node1, SYMB_BACKGROUND, 1);
                 display_node ( node2, SYMB_BACKGROUND, 1);
 		
+		Vect_read_line ( &Map, NULL, Cats, last_line );
 		Vect_delete_line ( &Map, last_line ); 
+		for ( i = 0 ; i < Cats->n_cats; i++ ) {
+		    check_record ( Cats->field[i], Cats->cat[i] );
+		}
 
 		for ( i = 0; i < Vect_get_num_updated_lines(&Map); i++ )
 		    G_debug (2, "Updated line: %d", Vect_get_updated_line( &Map, i ) );
@@ -394,7 +398,9 @@ int move_line (void)
                     Points->x[i] = Points->x[i] + x - xo;
                     Points->y[i] = Points->y[i] + y - yo;
 		}
+
 		Vect_rewrite_line(&Map, last_line, type, Points, Cats);
+
 		updated_lines_and_nodes_erase_refresh_display();
 		last_line = 0;
 	    }

@@ -47,6 +47,7 @@ Vect__init_head (struct Map_info *Map)
 
     Map->plus.Spidx_built = 0;
     Map->plus.release_support = 0;
+    Map->plus.update_cidx = 0;
 
     return 0;
 }

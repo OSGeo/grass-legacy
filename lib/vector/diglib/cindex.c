@@ -28,7 +28,7 @@
 int 
 dig_cidx_init ( struct Plus_head *Plus) 
 {
-    G_debug(2, "dig_cidx_init()");
+    G_debug(3, "dig_cidx_init()");
     
     Plus->n_cidx = 0;
     Plus->a_cidx = 5;
@@ -69,7 +69,7 @@ dig_cidx_add_cat ( struct Plus_head *Plus, int field, int cat, int line, int typ
     int i, si, found;
     struct Cat_index *ci;
     
-    G_debug(4, "dig_cidx_add_cat(): field = %d cat = %d line = %d type = %d", field, cat, line, type);
+    G_debug(3, "dig_cidx_add_cat(): field = %d cat = %d line = %d type = %d", field, cat, line, type);
 
     /* Find field or add new */ 
     si = -1;
@@ -146,6 +146,155 @@ static int cmp_field ( const void *pa, const void *pb )
 }
 
 /* 
+*  dig_cidx_add_cat_sorted ()
+*  add new field - cat - line record to sorted category index, space is allocated if necessary 
+*  
+*  returns 1 OK
+*          0 on error      
+*/
+int 
+dig_cidx_add_cat_sorted ( struct Plus_head *Plus, int field, int cat, int line, int type) 
+{
+    int i, si, found, *catp, position;
+    struct Cat_index *ci;
+    
+    G_debug(3, "dig_cidx_add_cat_sorted(): field = %d cat = %d line = %d type = %d", field, cat, line, type);
+
+    /* Find field or add new */ 
+    si = -1;
+    for ( i = 0; i < Plus->n_cidx; i++ ) {
+	if ( Plus->cidx[i].field == field ) {
+	    si = i;
+	}
+    }
+    if ( si == -1 ) { /* not found add new */
+	if ( Plus->n_cidx == Plus->a_cidx ) {
+	    Plus->a_cidx += 10;
+	    Plus->cidx = (struct Cat_index*) G_realloc ( Plus->cidx, Plus->a_cidx * sizeof( struct Cat_index ) );
+	    if (!Plus->cidx) return 0;
+	}
+	si = Plus->n_cidx;
+	ci = &(Plus->cidx[si]);
+       	ci->field = field;
+       	ci->n_cats = ci->a_cats = 0;
+       	ci->cat = NULL;
+       	ci->n_types = 0;
+       	ci->offset = 0;
+	Plus->n_cidx++;
+    }
+
+    /* Add new cat - line record */
+    ci = &(Plus->cidx[si]);
+    if ( ci->n_cats == ci->a_cats ) {
+	ci->a_cats += 5000;
+	ci->cat = (int *) G_realloc ( ci->cat, ci->a_cats * 3 * sizeof(int) );
+    }
+    
+    /* Find position */
+    for ( position = 0; position < ci->n_cats; position++ ) {
+	if ( ci->cat[position][0] >= cat ) {
+	    break;
+	}
+    }
+    
+    G_debug (4, "position = %d", position );
+
+    /* Move */
+    for ( i = ci->n_cats; i > position; i-- ) {
+	ci->cat[i][0] = ci->cat[i-1][0];
+	ci->cat[i][1] = ci->cat[i-1][1];
+	ci->cat[i][2] = ci->cat[i-1][2];
+    }
+
+    ci->cat[position][0] = cat;
+    ci->cat[position][1] = type;
+    ci->cat[position][2] = line;
+    ci->n_cats++;
+
+    /* Add type */
+    found = 0;
+    for ( i = 0; i < ci->n_types; i++ ) {
+	if ( ci->type[i][0] == type ) {
+	    ci->type[i][1]++;
+	    found = 1;
+	}
+    }
+    if ( ! found ) {
+	ci->type[ci->n_types][0] = type;
+	ci->type[ci->n_types][1] = 1;
+	ci->n_types++;
+    }
+    
+    /* Sort by field */
+    qsort ( Plus->cidx, Plus->n_cidx, sizeof(struct Cat_index), cmp_field );
+    
+    G_debug (3, "Added new category to index" );
+
+    return 1;
+}
+
+/* 
+*  dig_cidx_del_cat ()
+*  delete old field - cat - line record from _sorted_ category index
+*
+*  returns 1 OK
+*          0 on error      
+*/
+int 
+dig_cidx_del_cat ( struct Plus_head *Plus, int field, int cat, int line, int type ) 
+{
+    int    i, position;
+    struct Cat_index *ci;
+
+    G_debug(3, "dig_cidx_del_cat(): field = %d cat = %d line = %d", field, cat, line);
+
+    /* Find field or add new */ 
+    ci = NULL;
+    for ( i = 0; i < Plus->n_cidx; i++ ) {
+	if ( Plus->cidx[i].field == field ) {
+	    ci = &(Plus->cidx[i]);
+	}
+    }
+    if ( ci == NULL ) { /* should not happen */
+	G_warning ( "BUG: Category index not found for field %d.", field );
+	return 0;
+    }
+
+    /* Find position */
+    G_debug(3, "n_cats = %d", ci->n_cats );
+    for ( position = 0; position < ci->n_cats; position++ ) {
+	if ( ci->cat[position][0] == cat && ci->cat[position][1] == type && ci->cat[position][2] == line ) {
+	    break;
+	}
+    }
+    
+    G_debug (4, "position = %d" );
+
+    if ( position == ci->n_cats ) {
+	G_warning ( "BUG: Category not found in category index." );
+	return 0;
+    }
+
+    /* Delete */
+    for ( i = position; i < ci->n_cats-1; i++ ) {
+	ci->cat[i][0] = ci->cat[i+1][0];
+	ci->cat[i][1] = ci->cat[i+1][1];
+	ci->cat[i][2] = ci->cat[i+1][2];
+    }
+
+    ci->n_cats--;
+    
+    for ( i = 0; i < ci->n_types; i++ ) {
+	if ( ci->type[i][0] == type ) {
+	    ci->type[i][1]--;
+	}
+    }
+
+    G_debug (3, "Deleted from category index" );
+    return 1;
+}
+
+/* 
 *  dig_cidx_sort ()
 *  sort all records in cat index  
 *
@@ -162,7 +311,7 @@ dig_cidx_sort ( struct Plus_head *Plus )
 	int c, nucats = 0;
 	
 	ci = &(Plus->cidx[f]);
-
+    
 	/* Sort by category */
 	qsort ( ci->cat, ci->n_cats, 3*sizeof(int), cmp_cat );
 

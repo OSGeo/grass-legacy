@@ -144,6 +144,7 @@ Vect_build_sidx_from_topo ( struct Map_info *Map, FILE *msgout )
 	G_percent2 ( i, total, 1, msgout );
 	
 	Node = plus->Node[i];
+	if ( !Node ) G_fatal_error ("BUG (Vect_build_sidx_from_topo): node does not exist");
 
 	dig_spidx_add_node ( plus, i, Node->x, Node->y, Node->z );
     }
@@ -154,6 +155,7 @@ Vect_build_sidx_from_topo ( struct Map_info *Map, FILE *msgout )
 	G_percent2 ( done+i, total, 1, msgout );
 
 	Line = plus->Line[i];
+	if ( !Line ) G_fatal_error ("BUG (Vect_build_sidx_from_topo): line does not exist");
 
 	box.N = Line->N;
 	box.S = Line->S;
@@ -171,6 +173,7 @@ Vect_build_sidx_from_topo ( struct Map_info *Map, FILE *msgout )
 	G_percent2 ( done+i, total, 1, msgout );
 	
 	Area = plus->Area[i];
+	if ( !Area ) G_fatal_error ("BUG (Vect_build_sidx_from_topo): area does not exist");
 
 	box.N = Area->N;
 	box.S = Area->S;
@@ -188,6 +191,7 @@ Vect_build_sidx_from_topo ( struct Map_info *Map, FILE *msgout )
 	G_percent2 ( done+i, total, 1, msgout );
 
 	Isle = plus->Isle[i];
+	if ( !Isle ) G_fatal_error ("BUG (Vect_build_sidx_from_topo): isle does not exist");
 
 	box.N = Isle->N;
 	box.S = Isle->S;
@@ -196,7 +200,7 @@ Vect_build_sidx_from_topo ( struct Map_info *Map, FILE *msgout )
 	box.T = Isle->T;
 	box.B = Isle->B;
 
-	dig_spidx_add_area ( plus, i, &box );
+	dig_spidx_add_isle ( plus, i, &box );
     }
 
     Map->plus.Spidx_built = 1;

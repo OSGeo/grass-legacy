@@ -43,6 +43,7 @@ int del_cat (int, int, int);
 int add_cat (int, int, int);
 int display_attributes (void);
 int new_record (int, int);
+int check_record (int, int);
 
 /* Display */
 void display_points ( struct line_pnts *, int );

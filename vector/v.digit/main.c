@@ -158,6 +158,7 @@ main (int argc, char *argv[])
     } else {
         Vect_set_open_level(2);
         Vect_open_update (&Map, map_opt->answer, mapset);
+	Vect_set_category_index_update ( &Map );
     }
     Vect_hist_command ( &Map );
 
