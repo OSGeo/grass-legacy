@@ -413,7 +413,7 @@ AC_SUBST(TCLTKLIBPATH)
 
 if test "$tcltk_ver"; then
     ac_save_ldflags="$LDFLAGS"
-    LDFLAGS="$LDFLAGS $TCLTKLIBPATH $X_LIBS -Xt -ltcl$tcltk_ver"
+    LDFLAGS="$LDFLAGS $TCLTKLIBPATH $X_LIBS -lXt -ltcl$tcltk_ver"
     AC_CHECK_LIB("tk$tcltk_ver", Tk_MainWindow, has_tk_lib="1")
     if test "$has_tk_lib"; then
         TCLTKLIBS="$TCLTKLIBS -ltk$tcltk_ver -ltcl$tcltk_ver"
