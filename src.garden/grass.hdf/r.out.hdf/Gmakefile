@@ -1,0 +1,41 @@
+
+HDFBASE = $(SRC)/../src.garden/grass.hdf/HDF.lib
+HDFINCL = $(HDFBASE)/include
+HDFLIBDIR = $(HDFBASE)/lib
+HDFLIB   = $(HDFLIBDIR)/libdf.a
+
+LIBRARIES = $(GISLIB) $(HDFLIB)
+
+# for hdf library
+# ==> Uncomment the line with your system type on it.
+MACH_TYPE = SUN
+#MACH_TYPE = IRIS4
+#MACH_TYPE = UNICOS
+#MACH_TYPE = APOLLO
+#MACH_TYPE = IBM6000
+#MACH_TYPE = CONVEX
+#MACH_TYPE = VMS
+#MACH_TYPE = MIPSEL
+#MACH_TYPE = MAC
+#MACH_TYPE = PC
+#MACH_TYPE = HP9000
+
+EXTRA_CFLAGS	=  -I$(HDFINCL) $(VECT_INCLUDE) -D$(MACH_TYPE)
+
+#PGM = $(BIN_CONTRIB_CMD)/r.out.hdf
+PGM = $(GARDEN_BIN)/r.out.hdf
+
+OFILES = r.out.hdf.o
+
+
+$(PGM): $(OFILES) $(LIBRARIES) $(BIN)
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBRARIES)
+	@rm -f a.out
+	cp doc/catman $(MAN1)/r.out.hdf
+
+saber_src:
+	#load $(CFLAGS) $(SRC) $(DSPLIB)
+
+saber_obj:
+	#load $(OBJ)
+
