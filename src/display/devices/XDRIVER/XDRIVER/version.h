@@ -1,1 +1,1 @@
-#define WIN_NAME "GRASS 4.1"
+#define WIN_NAME "GRASS 4.2"
