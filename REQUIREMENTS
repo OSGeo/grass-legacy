@@ -75,7 +75,15 @@ Optional requirements:
  - r.in.gdal requires GDAL - Geospatial Data Abstraction Library
      [http://www.remotesensing.org/gdal/]
 
-GRASS Development Team 2000
+SUN users may go here to download precompiled libraries etc.:
+  http://www.sunfreeware.com/
+  
+SGI users may go here to download precompiled libraries etc.:
+  http://freeware.sgi.com/
+
+
+
+GRASS Development Team 2001
 grass@baylor.edu
 
-$Id: REQUIREMENTS,v 1.8 2001-01-19 14:28:06 markus Exp $
+$Id: REQUIREMENTS,v 1.9 2001-02-14 15:42:10 markus Exp $
