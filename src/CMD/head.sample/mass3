@@ -1,0 +1,22 @@
+# MASSCOMP with lighting floating point accelerator
+# set these definitions according to your system requirements
+
+ARCH                = mass3
+
+GISBASE             = /usr/grass3
+UNIX_BIN            = /usr/local/bin
+
+DEFAULT_LOCATION    = spearfish
+DEFAUL_DATABASE     = /usr/grass3/data
+
+COMPILE_FLAGS       = -O -flight
+LDFLAGS             = -s
+TERMLIB             = -ltermlib
+CURSES              = -lcurses $(TERMLIB)
+MATHLIB             = -lm
+LIBRULE             = ar ruv $@ $?; ranlib $@
+
+USE_TERMIO          = -DUSE_TERMIO
+USE_MTIO            = -DUSE_MTIO
+CAN_CLEAR           = -DCAN_CLEAR
+DIGITFLAGS          = -DMASSCOMP
