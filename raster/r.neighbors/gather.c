@@ -22,11 +22,12 @@ int gather (DCELL *values,int offset)
     {
 	c = ncb.buf[row] + offset; 
 	for (col = 0; col < ncb.nsize; col++, c++)
-	    if (!G_is_d_null_value(c))
-	    {
-		*values++ = *c;
-		n++;
-	    }
+	{
+	    if (G_is_d_null_value(c))
+		return -1;
+	    *values++ = *c;
+	    n++;
+	}
     }
     if (n == 0) n = 1;
 
