@@ -4,8 +4,8 @@
 # Markus Neteler, 2003, 2004
 
 #exclude following list of modules from help index:
-# does not yet work for several modules:
-EXCLUDEHTML="v.topo.check"
+# escape it properly:
+EXCLUDEHTML="v\.topo\.check\|i\.ask\|i\.find\|photo\.elev\|photo\.target"
 
 ############# nothing to configure below ############
 
@@ -98,7 +98,7 @@ VARIABLES="variables"
 cd $HTMLDIR
 
 #get list of available GRASS modules:
-CMDLIST=`ls -1 *.*.html | grep -v "$FULLINDEX" | grep -v index.html | grep -v '$EXCLUDEHTML' | cut -d'.' -f1 | sort -u`
+CMDLIST=`ls -1 *.*.html | grep -v "$FULLINDEX" | grep -v index.html | grep -v "\($EXCLUDEHTML\)" | cut -d'.' -f1 | sort -u`
 CMDLISTNO=`echo $CMDLIST | wc -w | awk '{print $1}'`
 
 #write main index:
@@ -130,7 +130,7 @@ do
   echo "<ul>" >> $FULLINDEX
 
   #for all modules:  
-  for i in `ls -1 $i.*.html | grep -v $EXCLUDEHTML`
+  for i in `ls -1 $i.*.html | grep -v "\($EXCLUDEHTML\)"`
   do
     BASENAME=`basename $i .html`
     SHORTDESC="`cat $i | awk '/NAME/,/SYNOPSIS/' | grep '<em>' | cut -d'-' -f2- | sed 's+^ ++g' | grep -vi 'SYNOPSIS' | head -1`"
@@ -154,7 +154,7 @@ do
   echo "<b>$MODCLASS commands:</b>" >> $FILENAME
   echo "<ul>" >> $FILENAME
   #for all modules:
-  for k in `ls -1 $k.*.html | grep -v $EXCLUDEHTML`
+  for k in `ls -1 $k.*.html | grep -v "\($EXCLUDEHTML\)"`
   do
     BASENAME=`basename $k .html`
     SHORTDESC="`cat $k | awk '/NAME/,/SYNOPSIS/' | grep '<em>' | cut -d'-' -f2- | sed 's+^ ++g' | grep -vi 'SYNOPSIS' | head -1`"
