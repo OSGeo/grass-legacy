@@ -31,8 +31,8 @@ clean:
 	rm -rf $(EXTRA_CLEAN_DIRS)
 	rm -f $(EXTRA_CLEAN_FILES)
 
-# default html rules
-html:
+# html rules for cmd commands
+htmlcmd:
 	GRASS_FAKE_START=1 GISBASE=$(GISBASE) $(ETC)/bin/cmd/$(PGM) --html-description | grep -v '</body>' > $(PGM).html ; true
 	@test ! -f description.html || ( cat description.html >> $(PGM).html )
 	echo "<HR>" >> $(PGM).html
@@ -52,7 +52,7 @@ htmlscript:
 	mv $(PGM).html $(GISBASE)/docs/html
 
 # html rules for inter commands
-#(fakestart doesn't work here)
+# note that fakestart doesn't work here
 htmlinter:
 	@test ! -f description.html || ( cat description.html >> $(PGM).html )
 	echo "<HR>" >> $(PGM).html
