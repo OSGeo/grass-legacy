@@ -20,20 +20,14 @@
 
 #include <stdio.h>
 #include "gis.h"
-#include "dbsite.h"
 #define MAIN
 
 main(argc, argv)
 int argc ;
 char **argv ;
 {
-    FILE *fp;
+
     char *dbname;
-    char *colname;  
-    char *mapset ;
-    char buf[1024];
-    struct Cell_head window;
-    char window_name[64];
 
     int i;
     int selPassed;      /* User specified select inputfile [-s] */

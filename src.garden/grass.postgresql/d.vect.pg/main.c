@@ -17,6 +17,7 @@
      Carl Anderson
 */
 
+#include <stdio.h>
 #include "gis.h"
 #define MAIN
 
@@ -25,20 +26,17 @@ main(argc, argv)
 int argc ;
 char **argv ;
 {
-    FILE *fp;
+
     char *dbname;
-    char *colname;  
-    char *mapset ;
-    char buf[1024];
 
     int i;
-    int retval;
+
     int selPassed;	/* User specified select inputfile */
 
-	setbuf (stdout, NULL);
+/*	setbuf (stdout, NULL);*/
 
 	selPassed = 0;
-	retval = 0;
+
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;

@@ -15,8 +15,8 @@ getAllOpts(argc, argv)
 {
 
     int retval ;
-    struct Join *joinargs;
-    struct Option  *tab, *coordx, *coordy, *cats,*where, *plot, *join, *map ;
+
+    struct Option  *tab, *coordx, *coordy, *cats,*where, *plot, *map ;
 
 	retval = 0; 
 
@@ -52,7 +52,7 @@ getAllOpts(argc, argv)
 	cats->required   = NO  ;
 	cats->multiple   = NO ;
 	cats->key_desc   = "category-column" ;
-//-- A.Sh	cats->answer	  = "cat";
+/*	cats->answer	  = "cat"; -a.sh.*/
 	cats->description= "Column with categories:" ;
 
 	where = G_define_option() ;
@@ -81,14 +81,6 @@ getAllOpts(argc, argv)
 plot->description="Colors:red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,black;Icon:diamond, box, plus, x; Size: 1-9. ";
 
 
-	join = G_define_option() ;
-	join->key        = "join" ;
-	join->type       = TYPE_STRING ;
-	join->required   = NO  ;
-	join->multiple   = NO ;
-	join->key_desc	 = "tab,tabkey,pkey" ;
-	join->description= "**obsolete.** JOIN rules (напр. table,key,primekey).\n\tNot used in this interface.";
-
 
         /* Invoke parser */
         if (G_parser(argc, argv)) {
@@ -99,7 +91,7 @@ plot->description="Colors:red,orange,yellow,green,blue,indigo,violet,magenta,bro
 /*************** INFX driver code begins ***************/
         retval = buildInfxQry(tab->answer,coordx->answer,coordy->answer,
                 cats->answer,where->answer,
-                map->answer, join->answers, plot->answers);
+                map->answer, plot->answers);
 
 
 	return(retval) ;

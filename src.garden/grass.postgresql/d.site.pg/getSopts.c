@@ -29,18 +29,17 @@ getSelectOpts (argc, argv)
 
 
 
-        select = G_define_flag();
-        select->key     = 's';
-        select->description     = "Use [-s] flag to select db records using an in put file." ;
-
+	select = G_define_flag();
+	select->key	= 's';
+	select->description	= "Use [s] flag to select db records using an input file." ;
 
         sql = G_define_option() ;
         sql->key        = "sql" ;
-	sql->key_desc	= "file" ;
+        sql->key_desc  = "file" ;
         sql->type       = TYPE_STRING ;
         sql->required   = YES  ;
         sql->multiple   = NO ;
-        sql->description= "postQUEL statements specifying selection criteria. ";
+        sql->description= "SQL statements specifying selection criteria. ";
 
         map = G_define_option() ;
         map->key        = "map" ;

@@ -1,4 +1,4 @@
-//-----------changed to Site API, Dec.99. A.Sh.
+/*-----------changed to Site API, Dec.99. A.Sh.*/
 
 #include <stdlib.h>
 #include "gis.h"
@@ -86,7 +86,7 @@ runInfxFile(SQL_stmt, map,  plotargs )
       	exit (-1);
       }
       if (map) {
-//-A.Sh
+
       	site = G_site_new_struct (-1, 2, 1, 0);
 	site->east = x;
 	site->north = y;

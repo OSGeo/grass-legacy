@@ -77,7 +77,8 @@ the values which the data in the column will be evaluated against.</dd>
 If the database column used as the selection criteria is a character field
 then the associated value must be placed in quotes. To determine the data
 types associated with columns in the currently selected database use the
-<i>g.column.pg</i> command with the <i>-v</i> flag.
+<i>g.column.pg</i>
+command with the <i>-v</i> flag.
 <p>Queries which are more complex are best implemented using the <i>-s</i>
 flag and a prepared SQL file.
 <dl>
@@ -98,13 +99,10 @@ Color to draw vectors in</dd>
 Colors: red, orange, yellow, green, blue, indigo, violet, magenta, brown,
 gray, white, black</dd>
 
-<dd>
-</dd>
-
 <br><b>EXAMPLE:</b>
 <p><b>1.</b><i> d.vect.pg -f key=rec_id map=kuruma_id tab=info_kuruma where='type_id
 >32 and type_id &lt; 38'&nbsp; color=red</i>
-<br><i></i>&nbsp;
+<br>&nbsp;
 <p><b>Result:</b> only polygons with type in 33-37 range would be displayed
 in red color..
 <p><b>2.</b> <i>d.vect.pg -f -s sql=oak.sql map=kuruma_id</i>
@@ -115,16 +113,13 @@ in red color..
 <h2>
 ALTERNATE COMMAND LINE USAGE</h2>
 The alternate command line usage is provided to simplify the process of
-retrieving.pgormation from more than one table in the query criteria. The
-alternate command line structure is selected using the the <i>[-s]</i>
+retrieving information from more than one table in the query criteria.
+The alternate command line structure is selected using the the <i>[-s]</i>
 flag on the command line. When using this flag the user must include the
 name of a text file on the command line as well. This file must include
 a complete, well formed SQL SELECT statement specifying the query criteria
 to retrieve values which correspond to category values in a GRASS data
 layer.
-<dd>
-</dd>
-
 <h3>
 Flag:</h3>
 
@@ -171,18 +166,27 @@ gray, white, black</dd>
 
 <h2>
 BUGS</h2>
-None known.
+<font size=+0>1. As of now, d.vect.pg and d.what.v.pg both use R_polygon_abs()
+for</font>
+<br>filling polys, which seems to ignore islands. So you'd rather say to
+no fill the
+<br>areas.
 <h2>
 NOTE</h2>
 This program requires the Postgres database software.
 <h2>
 SEE ALSO</h2>
 <i><a href="g.column.pg.html">g.column.pg</a>, <a href="g.select.pg.html">g.select.pg</a>,
-<a href="g.stats.pg.html">g.stats.pg</a>, <a href="g.table.pg.html">g.table.pg</a>,
-<a href="d.rast.pg.html">d.rast.pg</a>, <a href="d.site.pg.html">d.site.pg</a>,
-<a href="d.what.r.pg.html">d.what.r.pg</a>, <a href="d.what.s.pg.html">d.what.s.pg</a>,
-<a href="d.what.v.pg.html">d.what.v.pg</a>, <a href="r.reclass.pg.html">r.reclass.pg</a>,
-<a href="r.rescale.pg.html">r.rescale.pg</a>, <a href="v.reclass.pg.html">v.reclass.pg</a></i>
+<a href="g.stats.pg.html">g.stats.pg</a>,
+<a href="g.table.pg.html">g.table.pg</a>,
+<a href="d.rast.pg.html">d.rast.pg</a>,
+<a href="d.site.pg.html">d.site.pg</a>,
+<a href="d.what.r.pg.html">d.what.r.pg</a>,
+<a href="d.what.s.pg.html">d.what.s.pg</a>,
+<a href="d.what.v.pg.html">d.what.v.pg</a>,
+<a href="r.reclass.pg.html">r.reclass.pg</a>,
+<a href="r.rescale.pg.html">r.rescale.pg</a>,
+<a href="v.reclass.pg.html">v.reclass.pg</a></i>
 <h2>
 AUTHOR</h2>
 Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick
