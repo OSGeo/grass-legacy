@@ -1,0 +1,47 @@
+:
+
+# a2g = atlas to grass 
+# a2g input-files(no extensions) &(background)
+# No extensions in command line, input files must have .bna extension.
+# To do a bunch of files, list them in a file with no extensions
+# and enter the following:  a2g `cat filename` &
+# All messages appear in the log
+# For Vimport.atlas UTM=1, Albers=2
+# run.support does support.vect on a bunch of files.
+# Written by John Asselin
+
+rm log
+for n
+do
+	$GISBASE/etc/isle $n.bna tmpi$$
+	case $? in
+		255) continue;;
+		  2) $GISBASE/etc/Vimport.atlas1 $n.bna $n 2 NW
+			 if [ $? -eq 0 ]
+			 then
+				$GISBASE/etc/Vimport.atlas2 $n.bna $n 2 NW
+			fi
+			rm tmpi$$
+		 	continue;;
+		  1) cp $n.bna tmpi$$;;
+	esac
+	$GISBASE/etc/Vimport.atlas1 tmpi$$ $n 2 NW
+	if [ $? -eq 0 ]
+	then
+		$GISBASE/etc/grfix tmpi$$ $n.out tmp$$
+		if [ $? -eq 0 ]
+		then
+			rm tmp$$
+			rm tmpi$$
+			$GISBASE/etc/Vimport.atlas2 $n.out $n 2 NW
+			if [ $? -eq 0 ]
+			then
+				rm $n.out
+	 		fi
+		fi
+	fi
+done
+#run.support <<END
+#n
+#y
+#END
