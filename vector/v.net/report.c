@@ -48,7 +48,7 @@ int report ( char *in, int afield, int nfield)
 	
 	cat_line = 0;
 	if ( !Vect_cat_get(Cats, afield, &cat_line) )
-	    G_warning ("Line has not category");
+	    G_warning ("Line has no category");
 	
 	cat_node[0] = cat_node[1] = 0;
         for (j=0; j<2; j++) {

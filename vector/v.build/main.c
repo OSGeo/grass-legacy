@@ -46,7 +46,7 @@ main (int argc, char *argv[])
     opt->answer = "build";
     opt->description  = "Build topology or dump topology or spatial index to stdout\n"
 	"\t\tbuild - build topology\n"
-	"\t\tdupm  - write topology to stdout\n"
+	"\t\tdump  - write topology to stdout\n"
 	"\t\tsdump - write spatial index to stdout\n"
 	"\t\tcdump - write category index to stdout\n";
    
