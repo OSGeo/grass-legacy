@@ -119,7 +119,7 @@ dbString *name;
         return DB_FAILED;
     }
 
-    // Get number of rows
+    /* Get number of rows */
     ret = SQLRowCount(c->stmt, &nrow);
     if ( ret != SQL_SUCCESS && ret != SQL_SUCCESS_WITH_INFO)
     {
