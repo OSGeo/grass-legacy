@@ -220,7 +220,8 @@ proc map_create { type } {
     pack configure $f.$m -anchor w
     set map($s,$m,_type) $type
     set map($s,$m,_widget) $f.$m    
-    button $f.$m._sel -text $type -command "map_sel $m" -height 1 -width 2 -relief "raised"
+    Button $f.$m._sel -text $type -command "map_sel $m" -height 1 -width 2 -relief "raised" \
+                      -helptext "Select this entry to be moved/deleted in/from set."
     checkbutton $f.$m._disp -text "" -variable map($s,$m,_disp)
     $f.$m._disp select 
     pack $f.$m._sel $f.$m._disp -side left
@@ -600,16 +601,12 @@ proc dm_read { } {
 proc element_list { element } {
     global env
     set pwd [pwd]
-    set inpath 1
     set list ""
     cd $env(GISDBASE)/$env(LOCATION_NAME)
-    foreach dir [concat [exec g.mapsets -p] . [glob *]] {
-        if {[string compare $dir .] == 0} {
-	    set inpath 0
-    	    continue
-	}  
+    foreach dir [ exec g.mapsets -p ] {
 	if [info exists dirstat($dir)] continue
         set dirstat($dir) 1
+
 	if {[catch {eval eval cd $env(GISDBASE)/$env(LOCATION_NAME)/$dir/$element}]} {
 	    if {0 && $dir == $env(MAPSET)} {
     		tk_messageBox -message "$typ directory\n'[subst [subst $element]]'\nnon-existent or unusable" \
