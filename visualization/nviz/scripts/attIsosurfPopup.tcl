@@ -15,7 +15,7 @@ set DEBUG 0
 proc mkIsosurfAttPopup {w id att {mode 0}} {
 
     global attIsoPopup_InvertMask attIsoPopup_Status attIsoPopup_Type \
-    attIsoPopup_Color attIsoPopup_UseColor
+    attIsoPopup_Color attIsoPopup_UseColor DEBUG
 
     # set current volume
     set curr [Nget_current vol]
