@@ -1,0 +1,66 @@
+
+
+
+d.what.r.db()     MISC. REFERENCE MANUAL PAGES      d.what.r.db()
+
+
+
+NAME
+     _d._w_h_a_t._r._d_b - ENTER ONE LINE DESCRIPTION HERE
+     (_G_R_A_S_S _D_i_s_p_l_a_y _P_r_o_g_r_a_m)
+
+SYNOPSIS
+     d.what.r.db
+     d.what.r.db help
+     d.what.r.db      map=_n_a_m_e       keytable=_n_a_m_e       col=_n_a_m_e
+     [join=_t_a_b,_k_e_y,_p_k_e_y]
+
+DESCRIPTION
+     enter short description of d.what.r.db here
+
+
+COMMAND LINE OPTIONS
+     Parameters
+
+     _m_a_p  Name of raster map associated with database.
+
+     _k_e_y_t_a_b_l_e
+          Table containing  column  associated  with  raster  cat
+          values.
+
+     _c_o_l  Column associated with raster category values.
+
+     _j_o_i_n JOIN rules (eg. table, key, primekey).
+
+
+BUGS
+     Describe known bugs here
+
+
+SEE ALSO
+     Refer reader to related programs here
+
+
+AUTHOR
+     Provide the programmers name and institution
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sun Release 4.1           Last change:                          1
+
+
+
