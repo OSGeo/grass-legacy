@@ -11,11 +11,11 @@ $Id$
 General ideas
 
 New concepts:
- - the I/O routines should be removed from src/libes/gis
-   and replaced by Frank Warmerdams libgrass[io]
-   This I/O routines should be treated as plugin and released under
-   LGPL for optional commerical use to allow commercial packages
-   to read/write GRASS data
+ - the I/O routines (GRASS data import/export library routines) should be
+   removed from src/libes/gis and replaced by Frank Warmerdams libgrass[io]
+   These "extracted" routines should be treated as plugin and released 
+   under LGPL to allow optional commerical use in commercial packages
+   which want to read/write into GRASS database directly
  - The raster data storage structure should be changed to the G3D
    structure: all files related to a raster map should go into one
    directory. Currently many files are spreaded in many directories.
