@@ -245,7 +245,7 @@ int main (int argc, char *argv[])
     } 
     else if( loc_wind.proj != cellhd.proj
                || (projcomp_error=G_compare_projections( loc_proj_info, loc_proj_units, 
-                                          proj_info, proj_units )) != 0 )
+                                          proj_info, proj_units )) < 0 )
     {
         int     i_value;
 
