@@ -1,4 +1,4 @@
-#define NFILES 14
+#define NFILES 150
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -322,7 +322,7 @@ int main(int argc,char *argv[])
 #ifdef DEBUG
     fprintf (stderr, "%s|%s at col %d, row %d\n",
       cache[point].east_buf, cache[point].north_buf, cache[point].col, cache[point].row);
-#endif DEBUG
+#endif
 
 
       fprintf (stdout,"%s|%s|%s", cache[point].east_buf, cache[point].north_buf, 
