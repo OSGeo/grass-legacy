@@ -49,6 +49,7 @@ int sqpInitParser(SQLPSTMT *st)
     sqlpStmt->nCol = 0;
     sqlpStmt->nVal = 0;
     sqlpStmt->upperNodeptr = NULL;
+    sqlpStmt->orderCol = NULL;
 
     return (1);
 }
@@ -147,6 +148,14 @@ void sqpAssignment( char *col, char *strval, int intval, double dblval, int type
     sqlpStmt->nVal++;
     return;
 }
+
+void sqpOrderColumn( char *col )
+{
+    sqlpStmt->orderCol = (char *) realloc (sqlpStmt->orderCol, strlen(col)+1);
+    strcpy ( sqlpStmt->orderCol, col );
+    return;
+}
+
 
 Node *
 makeA_Expr(int oper, int opname, Node *lexpr, Node *rexpr)

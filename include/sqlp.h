@@ -115,6 +115,7 @@ typedef struct
     int	      aVal; 	
     int	      nVal;
     Node      *upperNodeptr;
+    char      *orderCol;  // column name which should be used for sorting (ORDER BY) or NULL (no sorting)
 } SQLPSTMT;
 
 int	my_yyinput(char *buf, int max_size);
@@ -138,6 +139,7 @@ void sqpColumn( char *column );
 void sqpColumnDef( char *column, int type, int width, int decimals );
 void sqpValue( char *strval, int intval, double dblval, int type );
 void sqpAssignment( char *column, char *strval, int intval, double dblval, int type );
+void sqpOrderColumn( char *col );
 int translate_Operator( char *oper);
 
 Node *makeA_Expr(int oper, int opname, Node *lexpr, Node *rexpr);

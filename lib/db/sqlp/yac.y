@@ -70,6 +70,7 @@
 %token DOUBLE
 %token PRECISION
 %token DATE
+%token ORDER BY
 
 %{
  
@@ -99,6 +100,8 @@ y_drop:
 y_select:
 		SELECT y_columns FROM y_table			{ sqpCommand(SQLP_SELECT); }
 	|	SELECT y_columns FROM y_table WHERE y_condition	{ sqpCommand(SQLP_SELECT); }
+	|	SELECT y_columns FROM y_table ORDER BY y_order	{ sqpCommand(SQLP_SELECT); }
+	|	SELECT y_columns FROM y_table WHERE y_condition ORDER BY y_order { sqpCommand(SQLP_SELECT); }
 /*	|	SELECT DISTINCT y_columns FROM y_table		{ sqpCommand(SQLP_SELECT); }
  *	|	SELECT DISTINCT y_columns FROM y_table WHERE y_condition	{ sqpCommand(SQLP_SELECT); }
  */
@@ -222,6 +225,10 @@ y_cnam:
 	|	INTNUM				{$$ = makeArithmValue(NULL,$1,0,SQLP_I,1);}
 	|	FLOATNUM			{$$ = makeArithmValue(NULL,0,$1,SQLP_D,1);}
 	|	'(' y_name ')'			{$$ = $2;}
+	;
+
+y_order:
+		NAME 				{ sqpOrderColumn( $1 ); }
 	;
 %%
 
