@@ -383,9 +383,6 @@ int main (int argc, char **argv)
 	xcoord1 = xcoord2 = outcellhd.west + (outcellhd.ew_res / 2);	/**/
 	ycoord1 = ycoord2 = outcellhd.north - (outcellhd.ns_res / 2);	/**/
 
-	/* now invert the sense of the projection */
-	INVERSE_FLAG = !INVERSE_FLAG;
-
 	fprintf(stderr, "Projecting... ");
 	G_percent(0, outcellhd.rows, 2);
 
