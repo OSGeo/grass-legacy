@@ -325,7 +325,8 @@ main ( int argc, char *argv[] )
 		child_html, strlen(child_html), 0, NULL,
 		buf, strlen(child_html) * 2, NULL, NULL,
 			NULL);
-			
+
+		G_debug(3,"Current GRASS_DB_ENCODING: %s", encoding_val);	
 	        if ( Tcl_SetSystemEncoding(interp, encoding_val) == TCL_ERROR ) {
 	 		fprintf(stderr, 
 			"Could not set Tcl system encoding to %s\n", encoding_val);
