@@ -341,6 +341,11 @@ main ( int argc, char *argv[] )
 		Tcl_Eval(interp, "clear_nb");          
 		fprintf ( child_send, "O" ); /* OK */
 		fflush ( child_send );
+	    } else if ( buf[0] == 'D' ) { /* done! */
+		Tcl_Eval(interp, "clear_nb");          
+		fprintf ( child_send, "O" ); /* OK */
+		fflush ( child_send );
+		break;
 	    }
 	}
 	
