@@ -27,6 +27,7 @@
 *****************************************************************************/
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 #include "gis.h"
 #include "G3d.h"
@@ -38,11 +39,6 @@
 #include "userglobs.h"
 #include "user.h"
 #include "bitmap.h"
-
-extern  char *calloc(); /* removed <malloc.h> alpha930100 parghi 1993-03-30 */
-extern  int  free();
-extern  char *malloc();
-extern  char *realloc();
 
 extern G3D_Region current_region;
 
