@@ -12292,9 +12292,6 @@ STRIPFLAG=
 GRASS_HOME=${DSTDIR}
 
 
-INST_DIR="${prefix}/grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}"
-
-
 #remove first to avoid link tool problems (5.0 links):
 
 \rm -f include/version.h include/winname.h
@@ -12525,7 +12522,6 @@ s%@USE_OPENDWG@%$USE_OPENDWG%g
 s%@USE_TERMIO@%$USE_TERMIO%g
 s%@STRIPFLAG@%$STRIPFLAG%g
 s%@GRASS_HOME@%$GRASS_HOME%g
-s%@INST_DIR@%$INST_DIR%g
 
 CEOF
 EOF
@@ -12773,7 +12769,7 @@ echo " Source directory:            ${SRCDIR}"
 echo " Build directory:             ${DSTDIR}"
 
 
-echo " Installation directory:      ${INST_DIR}"
+echo " Installation directory:      ${prefix}/grass-${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_RELEASE}"
 
 
 echo " Startup script in directory: ${bindir}"
