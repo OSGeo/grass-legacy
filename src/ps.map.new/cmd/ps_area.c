@@ -10,7 +10,7 @@
 #include "local_proto.h"
 
 /* constuct subpath with moveto and repeated lineto from Points */
-int construct_path (struct line_pnts *Points, double shift)  
+int construct_path (struct line_pnts *Points, double shift, int t)  
 {
     int i, np, k = 1;
     double *xarray, *yarray, x, y;
@@ -18,15 +18,20 @@ int construct_path (struct line_pnts *Points, double shift)
     np = Points->n_points;
     xarray = Points->x;
     yarray = Points->y;
-    x = XCONV(xarray[0]+shift);   
-    y = YCONV(yarray[0]);
-    fprintf(PS.fp, "%.1f %.1f M ", x, y);	          
 
-    for (i = 0; i < np - 1; i++)
+    for (i = 0; i < np ; i++)
     {
-        x = XCONV(xarray[1]+shift);   
-        y = YCONV(yarray[1]);
-        fprintf(PS.fp, "%.1f %.1f LN ", x, y);	          
+        x = XCONV(xarray[0]+shift);   
+        y = YCONV(yarray[0]);
+        fprintf(PS.fp, "%.1f %.1f ", x, y);
+	if ( i==0 && ( t == START_PATH || t == WHOLE_PATH) )
+        {
+	    fprintf(PS.fp, "M ");
+	}
+	else
+	{
+	    fprintf(PS.fp, "LN ");    
+	}
         if (k == 2)
         {
 	    fprintf(PS.fp, "\n");
@@ -40,7 +45,10 @@ int construct_path (struct line_pnts *Points, double shift)
 	xarray++;
 	yarray++;
     }
-    fprintf(PS.fp, "closepath\n");
+    if ( t == CLOSE_PATH || t == WHOLE_PATH )
+    {
+	fprintf(PS.fp, "CP\n");
+    }
     return 1;
 }
 
@@ -59,7 +67,7 @@ static int plot_area (struct Map_info *P_map, int area, double shift)
 	if (ret == -1) G_warning("Read error in vector file\n");
 	return 0;
     }
-    construct_path (Points, shift);
+    construct_path (Points, shift, WHOLE_PATH);
 
     /* plot islands */
     if (P_map->Area[area].n_isles)
@@ -72,7 +80,7 @@ static int plot_area (struct Map_info *P_map, int area, double shift)
 		if (ret == -1) G_warning("Read error in vector file\n");
 		return;
 	    }
-		construct_path (Points, shift);
+		construct_path (Points, shift, WHOLE_PATH);
         }
     }
     return 1; 
@@ -81,7 +89,7 @@ static int plot_area (struct Map_info *P_map, int area, double shift)
 /* plot areas */
 int PS_area_plot (struct Map_info *P_map, int vec)
 {
-    int  na, area, line_cat;
+    int  na, area, line_cat, ret;
     double e, w, n, s, aw, shift; 
 
     line_cat = vector.line_cat[vec];
@@ -104,13 +112,14 @@ int PS_area_plot (struct Map_info *P_map, int vec)
 	    if ( n < PS.w.south || s > PS.w.north || e < PS.w.west || w > PS.w.east )
 		continue;
 		
-	    fprintf(PS.fp, "newpath\n");
+	    fprintf(PS.fp, "NP\n");
 	    if (PS.w.proj == PROJECTION_LL)
 	    {	
 	        /* plot area while in window */
 	        while ( e > PS.w.west ) 
 	        {
-		    if ( plot_area (P_map, area, shift) != 1) 
+		    ret = plot_area (P_map, area, shift);
+		    if ( ret != 1) 
 			return 0;
 		    shift -= 360.0;
 		    e -= 360.0; 
@@ -118,7 +127,8 @@ int PS_area_plot (struct Map_info *P_map, int vec)
 	    }
 	    else
 	    {
-	    	if ( plot_area (P_map, area, 0) != 1) 
+		ret = plot_area (P_map, area, shift);
+	    	if ( ret != 1) 
 		    return 0;
 	    }
 	    fprintf(PS.fp, "%.2f %.2f %.2f C\n", (double) vector.acolor[vec].r/255., vector.acolor[vec].g/255., vector.acolor[vec].b/255.);  
