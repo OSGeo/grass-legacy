@@ -416,8 +416,8 @@ struct TimeStamp
 
 /*============================== Prototypes ================================*/
 
-/* Since there are so many prototypes for the gis library they are stored in */
+/* Since there are so many prototypes for the gis library they are stored */
 /* in the file gisdefs.h */
 #include "gisdefs.h"
 
-#endif /*GRASS_GIS_H*/
+#endif /* GRASS_GIS_H */
