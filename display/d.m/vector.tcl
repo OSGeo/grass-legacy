@@ -100,6 +100,7 @@ proc DmVector::create { tree parent } {
     set opt($count,where) "" 
 
     set opt($count,attribute) "" 
+    set opt($count,lsize) 8
 
     set opt($count,minreg) "" 
     set opt($count,maxreg) "" 
@@ -211,8 +212,11 @@ proc DmVector::options { id frm } {
 
     # attribute column
     set row [ frame $frm.attribute ]
-    LabelEntry $row.a -label "Attribute col" -textvariable DmVector::opt($id,attribute) -width 40
-    pack $row.a -side left
+    LabelEntry $row.a -label "Attribute col" -textvariable DmVector::opt($id,attribute) -width 30
+    Label $row.b -text "Label size:" 
+    SpinBox $row.c -range {1 50 1} -textvariable DmVector::opt($id,lsize) \
+                   -width 2 -helptext "Label size" -modifycmd "DmVector::legend $id"
+    pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 
     # category
@@ -252,7 +256,7 @@ proc DmVector::save { tree depth node } {
 
     foreach key { _check map display_shape display_cat display_topo display_dir display_attr
                   type_point type_line type_boundary type_centroid type_area type_face
-                  color fcolor lcolor icon size field lfield attribute cat where 
+                  color fcolor lcolor icon size field lfield attribute lsize cat where 
                   _query_text minreg maxreg } {
         Dm::rc_write $depth "$key $opt($id,$key)"
 
@@ -320,7 +324,7 @@ proc DmVector::display { node } {
         append cmd " field=$opt($id,field)" 
     } 
     if { $opt($id,attribute) != "" } { 
-        append cmd " att=$opt($id,attribute)" 
+        append cmd " att=$opt($id,attribute) lsize=$opt($id,lsize)" 
     } 
     if { $opt($id,lfield) != "" } { 
         append cmd " lfield=$opt($id,lfield)" 
