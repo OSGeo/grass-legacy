@@ -1,0 +1,5 @@
+
+\r.line\ - Creates a new GRASS vector (\digit\) file by
+extracting linear features from a thinned raster file.
+
+(GRASS Raster Program)
