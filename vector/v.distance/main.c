@@ -439,7 +439,7 @@ int main (int argc, char *argv[])
 		    for ( j = 0; j < nisles; j++ ) {
 			double tmp2_dist, tmp2_tx, tmp2_ty; 
 
-			isle = Vect_get_area_isle ( &To, area, isle );
+			isle = Vect_get_area_isle ( &To, area, j );
 			Vect_get_isle_points ( &To, isle, TPoints);
 			Vect_line_distance ( TPoints, FPoints->x[0], FPoints->y[0], 0, 0, 
 				   &tmp2_tx, &tmp2_ty, NULL, &tmp2_dist, NULL, NULL);
