@@ -108,6 +108,7 @@ int V1_open_new_post (struct Map_info *, char *, int);
 /*int V1__open_update_1 (struct Map_info *, char *); */
 int V2_open_old_nat (struct Map_info *);
 int V2_open_old_shp (struct Map_info *);
+int V2_open_old_post (struct Map_info *);
 /*
 int V2__open_new_1 (struct Map_info *, char *, int);
 int V2_open_update (struct Map_info *, char *);
