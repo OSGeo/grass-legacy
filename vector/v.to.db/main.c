@@ -19,6 +19,7 @@
 int 
 main (int argc, char *argv[])
 {
+    int n;
     struct Map_info Map;
     struct GModule *module;
 
@@ -38,8 +39,10 @@ main (int argc, char *argv[])
     Vect_set_open_level (2);
     Vect_open_old(&Map,options.name,options.mapset);
 
-    /* allocate array for values (number of cats may not be greater than number of lines ) */
+    /* allocate array for values */
     /* (+ 1 is for cat -1 (no category) reported at the end ) */
+    n = Vect_cidx_get_num_unique_cats_by_index ( &Map, Vect_cidx_get_field_index(&Map, options.field ) );
+    G_debug ( 2, "%d unique cats", n );
     Values = (VALUE *) G_calloc ( Vect_get_num_lines( &Map ) + 1, sizeof ( VALUE ) );
     vstat.rcat = 0;
 
