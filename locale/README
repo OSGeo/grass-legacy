@@ -1,0 +1,145 @@
+HOWTO translate GRASS messages
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+$Id$
+
+Updating the message catalogs currently only works on 
+unix-like systems and requires xgettext.
+
+REQUIRED SOURCE CODE CHANGES
+
+Generally, to support i18N multiple languages,
+message strings in GRASS must be modified from
+
+ fprintf ( ..., "...");
+to
+ fprintf ( ..., _("..."));
+
+These strings will be then extracted automatically into the
+POT file. 
+Also needed:
+ #include "glocale.h"
+This line has to be added to each file with messages.
+
+------------------------------------------------------
+
+GENERAL PROCEDURE
+
+ POT files ----> PO files      ----> MO files
+ (original       (translated        (final message file
+  messages)       messages)          used by binaries)
+
+Local Makefile usage:
+   make pot        create grass.pot (containing original messages)
+   make update-po  merge new messages into existing *.po files
+   make mo         create the mo files
+
+
+A convenient software package to translate messages is 'kbabel'.
+It permits to enhance it's message database by loading existing
+.po files to semi-automate the translation.
+
+------------------------------------------------------
+DETAILED PROCEDURE:
+
+1. CREATE POT FILES
+   run
+    make pot
+    
+   This will create
+    ./templates/grasslibs.pot
+    ./templates/grassmods.pot
+    
+    
+    
+2. CREATE LANGUAGE FILES
+
+   Two cases have to be distinguished:
+    a) Messages have not yet been translated to your language.
+    b) Some messages have already been translated to your language,
+       so you want to merge your efforts into the existing translation.
+       
+2.a) First CASE: Messages have not yet been translated to your language.
+     No .po file is present for your language in the ./po/ directory.
+      
+   Run:
+    make pot
+    make update-po
+ 
+   Rename the generated file in the ./po/ directory:
+   
+   For example (German):
+    mv ./po/grasslibs.pot ./po/grasslibs_de.po
+    mv ./po/grassmods.pot ./po/grassmods_de.po
+
+
+2.b) Second CASE: Some messages have already been translated to 
+      your language (files present in ./po/ directory), and
+      you want to continue with translating new and still
+      untranslated messages.
+
+    First we have to merge new messages into existing .po files 
+    (which contain already translated messages) as new messages
+    might have been added into the GRASS system. 
+    To do so, run:
+    
+    make pot
+    make update-po
+    
+    This will update all existing files in the .po directory.
+    
+
+
+3. TRANSLATE MESSAGES
+   Run 'kbabel' or equivalent program
+    kbabel ./po/grasslibs_$LANG.po
+    kbabel ./po/grassmods_$LANG.po
+
+   For example (German):
+    kbabel ./po/grasslibs_de.po
+    kbabel ./po/grassmods_de.po
+
+   KBABEL: You may load .po files from other projects [1]
+   
+   Pay attention to keep '%s', '\n' and other stuff also 
+   in the translated messages!
+   
+   After finishing the translation, save the files.
+
+
+     
+4. CREATE MO FILES
+
+   run
+    make mo
+
+   READY.
+
+
+5. Now run GRASS (maybe recompile first).
+   To test the language, check
+     echo $LANG
+
+   It should be sufficient to modify this variable (example):
+     export LANG=de_DE
+
+   to enable (German) language support if present in the system.
+   
+PLEASE HELP TO TRANSLATE GRASS MESSAGES!
+
+----------------------------------------------
+
+NOTES
+
+[1] TS files -> PO files converter:
+    To translate the .ts files e.g. from QGIS to .po files, 
+    use
+      http://oss.erdfunkstelle.de/ts2msg/index.shtml
+
+    cd qgis/i18n
+    ts2msg utf8 qgis_de.ts
+    -> qgis_de.po
+
+    To load such existing .po files, use 
+    KBABEL -> SETTINGS -> CONFIGURE DIRECTORY -> PO AUXILIARY
+
