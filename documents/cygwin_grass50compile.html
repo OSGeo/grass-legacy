@@ -165,6 +165,17 @@ this file:</font>
 <font face="Arial,Helvetica">Create a softlink from less to more:</font>
 <pre><tt>ln -s /bin/less /bin/more</tt></pre>
 <font face="Arial,Helvetica">Otherwise the grass shell will not run correctly.</font>
+<p>
+<font face="Arial,Helvetica">Move the ash and shell binary out of the way and create a softlink from
+bash to sh:</font>  
+
+<pre><tt>cd /bin</tt></pre>
+<pre><tt>mv ash.exe ash.old</tt></pre>
+<pre><tt>mv sh.exe ash.exe</tt></pre>
+<pre><tt>ln -s bash.exe sh.exe</tt></pre>
+
+<font face="Arial,Helvetica">This fixes a problem with g.manual.</font> 
+
 <p><font face="Arial,Helvetica">Sometimes </font><tt>'libz.dll'</tt><font face="Arial,Helvetica">
 is not found. Copy it over from </font><tt>/usr/X11R6/lib/libz.dll</tt><font face="Arial,Helvetica">
 to </font><tt>/lib/libz.dll</tt><font face="Arial,Helvetica">.</font>
