@@ -129,7 +129,7 @@ int main (int argc, char *argv[])
 	parm.region->gisprompt   = "old,windows,region";
 
 	parm.raster = G_define_option();
-	parm.raster->key         = "raster";
+	parm.raster->key         = "rast";
 	parm.raster->key_desc    = "name";
 	parm.raster->required    = NO;
 	parm.raster->multiple    = YES;
@@ -138,7 +138,7 @@ int main (int argc, char *argv[])
 	parm.raster->gisprompt   = "old,cell,raster";
 
 	parm.raster3d = G_define_option();
-	parm.raster3d->key         = "raster3d";
+	parm.raster3d->key         = "rast3d";
 	parm.raster3d->key_desc    = "name";
 	parm.raster3d->required    = NO;
 	parm.raster3d->multiple    = NO;
@@ -147,7 +147,7 @@ int main (int argc, char *argv[])
 	parm.raster3d->gisprompt   = "old,grid3,raster 3D";
 
 	parm.vect = G_define_option();
-	parm.vect->key         = "vector";
+	parm.vect->key         = "vect";
 	parm.vect->key_desc    = "name";
 	parm.vect->required    = NO;
 	parm.vect->multiple    = NO;
