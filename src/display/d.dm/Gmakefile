@@ -1,0 +1,5 @@
+PROG =  $(GISBASE)/scripts/d.dm
+
+$(GISBASE)/d.dm: d.dm
+	if [ ! -d $(GISBASE)/scripts ]; then mkdir $(GISBASE)/scripts; fi
+	cp d.dm $(GISBASE)/scripts
