@@ -1,5 +1,6 @@
-#!/usr/bin/perl
-
+#!/bin/sh  -- #perl, to stop looping
+eval 'exec $GRASS_PERL -S $0 ${1+"$@"}'
+    if 0;
 
 # Note: the GRASS_PERL variables must be set!
 # Usage:
