@@ -23,7 +23,7 @@
 #
 #############################################################################
 
-trap "echo 'User break!' ; exit" 2 3 9 15
+trap "echo 'User break!' ; exit" 2 3 15
 
 # Set the GRASS_PERL variable
 GRASS_PERL=PERL_COMMAND
@@ -125,7 +125,7 @@ fi
 PATH=$GISBASE/bin:$GISBASE/scripts:$PATH:$GRASS_ADDON_PATH
 export PATH
 
-# Set LD_LIBRARY_PATH.  For GRASS 5.7 we don't depend on this much, though
+# Set LD_LIBRARY_PATH.  For GRASS we don't depend on this much, though
 # r.in.gdal may use it to find some things.  Over time we intend to put
 # more GRASS related shared libraries in $GISBASE/lib.
 # first search local libs, then in GRASS lib/
@@ -225,7 +225,7 @@ if [ ! -f "$GISRC" ] ; then
     echo "GISDBASE: `pwd`" > "$GISRC"
     echo 'LOCATION_NAME: <UNKNOWN>' >> "$GISRC"
     echo 'MAPSET: <UNKNOWN>' >> "$GISRC"
-    
+
     # This is a hack for not having a good initial gui - should be removed
     # with next version of initialization gui
     GRASS_GUI="text"
@@ -235,9 +235,6 @@ else
     ("$ETC/clean_temp" > /dev/null &)
 fi
 
-
-# Force text startup: Until GUI is updated to GRASS 5.7
-GRASS_GUI="text"
 
 echo "Starting GRASS ..."
 
@@ -265,7 +262,7 @@ if [ "$DISPLAY" ] ; then
 	if [ "$WISH" ] ; then
 
 	    # Set the tcltkgrass base directory
-	    TCLTKGRASSBASE=$GISBASE/tcltkgrass
+	    TCLTKGRASSBASE="$ETC"
 	    export TCLTKGRASSBASE
 	else
 
@@ -408,7 +405,7 @@ if [ ! "$LOCATION" ] ; then
 	
 	# Check for tcltk interface
 	tcltk)
-	    eval `"$WISH" -file "$TCLTKGRASSBASE/script/gis_set.tcl"`
+	    eval `"$WISH" -file "$TCLTKGRASSBASE/gis_set.tcl"`
 	    
 	    case $? in
      	    	1)
@@ -485,7 +482,7 @@ fi
 eval `g.gisenv`
 LOCATION=${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}
 
-trap "" 2 3
+trap "" 2 3 15
 CYGWIN=`uname | grep CYGWIN`
 
 # cygwin has many problems with the shell setup
@@ -512,7 +509,7 @@ case "$GRASS_GUI" in
     
     # Check for tcltk interface
     tcltk)
-        "$GISBASE/bin/tcltkgrass" &
+        "$GISBASE/scripts/d.m" >/dev/null &
 	;;
     
     # Ignore others
@@ -648,7 +645,7 @@ GRASS-GRID > "
     ;;
 esac
 
-trap 2 3
+trap 2 3 15
 
 # Grass session finished
 tput clear
