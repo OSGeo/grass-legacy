@@ -2,23 +2,50 @@
 #include "config.h"
 #include "glocale.h"
 
-#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <locale.h>
 
-void G_init_locale(const char *package)
+static char *
+locale_dir(void)
 {
-#ifdef HAVE_LIBINTL_H
-	char localedir[4096];
-	char *gisbase;
+	static char localedir[4096];
+
+	const char *gisbase;
+
+	if (*localedir)
+		return localedir;
 
 	gisbase = getenv("GISBASE");
 	if (!gisbase || !*gisbase)
-		return;
+		return "";
 
-	sprintf(localedir, "%s/locale", gisbase);
+	strcpy(localedir, gisbase);
+	strcat(localedir, "/locale");
 
-	setlocale(LC_MESSAGES, "");
-	bindtextdomain(package, localedir);
-	textdomain(package);
+	return localedir;
+}
+
+char *
+G_gettext(const char *package, const char *msgid)
+{
+#ifdef HAVE_LIBINTL_H
+	static char now_bound[4096];
+	static int initialized;
+
+	if (!initialized)
+	{
+		setlocale(LC_MESSAGES, "");
+		initialized = 1;
+	}
+
+	if (strcmp(now_bound, package) != 0)
+	{
+		strcpy(now_bound, package);
+		bindtextdomain(package, locale_dir());
+	}
+
+	return dgettext(package, msgid);
 #endif
 }
+
