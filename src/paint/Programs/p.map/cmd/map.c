@@ -122,12 +122,11 @@ map(window)
  * the lines will drawn at the same width as in the map (plus lines of white
  * before and after)
  */
-    extra_lines = 0;
+    extra_lines = 2;
     if (prows == 0)
     {
 	for (i=0; i < vector.count; i++)
 	    extra_lines += vector_info_lines(i);
-	extra_lines += 2;
     }
 
 /* initialize the stats */
