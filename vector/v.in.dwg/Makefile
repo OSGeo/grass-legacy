@@ -5,14 +5,14 @@ PGM=v.in.dwg
 ADINIT = $(GISBASE)/etc/adinit.dat
 
 DEPENDENCIES = $(VECTDEP) $(DBMIDEP) $(GISDEP)
-LIBES     = $(VECTLIB) $(DBMILIB) $(GISLIB) $(OPENDWGLIB)
-EXTRA_INC = $(VECT_INC) $(OPENDWGINC)
+LIBES     = $(VECTLIB) $(DBMILIB) $(GISLIB) $(OPENDWGLIBPATH) $(OPENDWGLIB)
+EXTRA_INC = $(VECT_INC) $(OPENDWGINCPATH)
 EXTRA_CFLAGS = $(VECT_CFLAGS)
  
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default: cmd $(ADINIT)
 
-$(ADINIT): adinit.dat
-	cp adinit.dat $(ADINIT)
-
+#a bit ugly:
+$(ADINIT):
+	cp `echo $(OPENDWGINCPATH) | cut -b3-`/adinit/adinit.dat $(ADINIT)

@@ -30,7 +30,7 @@
 #include "dbmi.h"
 #include "Vect.h"
 #include "ad2.h"
-#include "odio.h"
+#include "io/odio.h"
 #include "global.h"
 
 int 
