@@ -66,6 +66,7 @@
  *
  ***********************************************************
  *
+ * 
  * int G_raster_map_is_fp(name, set)
  * returns 1 if map is float or double, 0 otherwise
  *
@@ -111,6 +112,45 @@
 #define DATA_NROWS  FCB.cellhd.rows
 #define DATA_NCOLS  FCB.cellhd.cols
 static int allocate_compress_buf(int);
+
+/*!
+ * \brief open an existing
+ *       raster file
+ *
+ *  This routine opens the raster file <b>name</b> in
+ * <b>mapset</b> for reading. A nonnegative file descriptor is returned if the
+ * open is successful. Otherwise a diagnostic message is printed and a negative
+ * value is returned. This routine does quite a bit of work. Since GRASS users
+ * expect that all raster files will be resampled into the current region, the
+ * resampling index for the raster file is prepared by this routine after the
+ * file is opened. The resampling is based on the active module
+ * region.\remarks{See also The_Region.} Preparation required for
+ * reading the various raster file formats\remarks{See
+ * Raster_File_Format for an explanation of the various raster file
+ * formats.} is also done.
+ *
+ *  \param name
+ *  \param mapset
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief 
+ *
+ * Arrange for the NULL-value bitmap to be
+ * read as well as the raster map.  If no NULL-value bitmap exists, arrange for
+ * the production of NULL-values based on zeros in the raster map.
+ * If the map is floating-point, arrange for quantization to integer for 
+ * <tt>G_get_c_raster_row()</tt>, et. al., by reading the quantization rules for
+ * the map using <tt>G_read_quant()</tt>.
+ * If the programmer wants to read the floating point map using uing quant rules
+ * other than the ones stored in map's quant file, he/she should call
+ * G_set_quant_rules() after the call to G_open_cell_old().
+ *
+ *  \return int
+ */
+
 
 static int G__open_raster_new(char *name, int open_mode);
 
@@ -835,7 +875,20 @@ int G__reallocate_temp_buf (void)
     return 0;
 }
 
-int G_set_fp_type (RASTER_MAP_TYPE map_type)
+
+/*!
+ * \brief 
+ *
+ * This controls the
+ * storage type for floating-point maps. It affects subsequent calls to <tt>G_open_fp_map_new()</tt>. The <em>type</em> must be one of <tt>FCELL_TYPE</tt>
+ * (float) or <tt>DCELL_TYPE</tt> (double). The use of this routine by
+ * applications is discouraged since its use would override user preferences.
+ *
+ *  \param type
+ *  \return int
+ */
+
+ int G_set_fp_type (RASTER_MAP_TYPE map_type)
 {
     FP_TYPE_SET = 1;
     if (map_type!=FCELL_TYPE && map_type != DCELL_TYPE) 
@@ -855,7 +908,20 @@ int G_set_fp_type (RASTER_MAP_TYPE map_type)
 
 #define FORMAT_FILE "f_format"
 
-int G_raster_map_is_fp (char *name, char *mapset)
+
+/*!
+ * \brief 
+ *
+ * Returns true(1)
+ * if raster map <em>name</em> in <em>mapset</em> is a floating-point dataset;
+ * false(0) otherwise.
+ *
+ *  \param name
+ *  \param mapset
+ *  \return int
+ */
+
+ int G_raster_map_is_fp (char *name, char *mapset)
 {
    char path[1024];
 
@@ -984,7 +1050,23 @@ int G_open_raster_new_uncompressed (char *name, RASTER_MAP_TYPE wr_type)
     return fd;
 }
 
-int G_set_quant_rules (int fd, struct Quant *q)
+
+/*!
+ * \brief 
+ *
+ * Sets quant
+ * translation rules for raster map opened for reading. fd is a file descriptor
+ * returned by G_open_cell_old(). After calling this function,
+ * G_get_c_raster_row() and G_get_map_row() will use rules defined by q
+ * (instead of using rules defined in map's quant file) to convert floats to
+ * ints.
+ *
+ *  \param fd
+ *  \param q
+ *  \return int
+ */
+
+ int G_set_quant_rules (int fd, struct Quant *q)
 {
    CELL cell;
    DCELL dcell;
