@@ -78,7 +78,7 @@ main(int argc, char **argv)
 
 	if(code == 1){
 		if(!(sfile = fopen(difile, "r+"))){
-			fprintf("%s: No such file or open failed\n", difile);
+			fprintf(stderr, "%s: No such file or open failed\n", difile);
 			exit(1);
 		}
 	}else{
