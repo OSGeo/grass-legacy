@@ -1,0 +1,12 @@
+grid -m map.def -o ovm/grid << EOF
+-f -
+-b 1
+-c 1
+-d .125
+-s .125
+-pi 2'30 -mi 2'30
+-pj 1 -mj 1
+-pu .2 -mu .2
+-pv .2 -mv .2
+-a tblr
+EOF
