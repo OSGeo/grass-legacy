@@ -144,8 +144,8 @@ int main( int   argc, char *argv[])
     parm.snapd->key        = "snapdist";
     parm.snapd->type       = TYPE_STRING;
     parm.snapd->required   = NO;
-    parm.snapd->description= "Snap distance in ground units (Default = 0.1)";
-    parm.snapd->answer     = "0.1";
+    parm.snapd->description= "Snap distance in ground units (Default = 0.000001)";
+    parm.snapd->answer     = "0.000001";
 
     parm.minangle = G_define_option() ;
     parm.minangle->key        = "sliver";
@@ -240,7 +240,7 @@ int main( int   argc, char *argv[])
     strncpy( sdc, parm.snapd->answer, 19 );
     sd0 = (float)atof(sdc);
     if( sd0 < 0 ) sd0 = -sd0;
-    if( fabs( (double)sd0 ) < 0.001 ) sd0 = 0.1;
+    if( fabs( (double)sd0 ) < 0.000001 ) sd0 = 0.000001;
 
     free(sdc);
 
