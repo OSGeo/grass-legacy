@@ -53,7 +53,7 @@ g.help-manpages:
 		tmpf="$${tmp}_.$(SECT)"; \
 		tmpm="$${m}_"; \
 		f="$$tmp.$(SECT)"; \
-		if [ ! -f $$f -o $$f -ot $$h ]; then $(HTML2MAN) $$h $$tmpf $(SECT); man -M $(GISBASE)/man 1 $$tmpm > $$f; rm $$tmpf; echo "        $$tmpm.$(SECT) => $$m.$(SECT)"; fi; \
+		if [ ! -f $$f -o $$f -ot $$h ]; then $(HTML2MAN) $$h $$tmpf $(SECT); man -M $(GISBASE)/man 1 $$tmpm > $$f; rm $$tmpf; echo "            $$tmpm.$(SECT) => $$m.$(SECT)"; fi; \
 	  done)
 
 # generate the man pages
