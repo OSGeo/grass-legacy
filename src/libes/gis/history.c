@@ -101,7 +101,7 @@ error:
     if (fd != NULL)
 	fclose(fd) ;
     sprintf (msg,
-	"can't get history information for cell [%s] in mapset [%s]",
+	"can't get history information for [%s] in mapset [%s]",
 	    name, mapset);
     G_warning (msg);
     return -1;
@@ -137,7 +137,7 @@ G_write_history (name, hist)
 error:
     if (fd)
 	    fclose(fd) ;
-    sprintf(msg, "can't write history information for cell [%s]", name);
+    sprintf(msg, "can't write history information for [%s]", name);
     G_warning (msg);
     return -1;
 }
