@@ -28,6 +28,7 @@ SUBDIRS = \
 	front.end \
 	rst \
 	g3d \
+	dspf \
 	symbol \
 	init
 
