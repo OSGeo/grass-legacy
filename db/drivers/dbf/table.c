@@ -114,7 +114,7 @@ load_table_head( int t)
     for( i = 0; i < ncol; i++ )
       {
          dtype = DBFGetFieldInfo( dbf, i, fname, &width, &decimals );
-         G_debug ( 2, "  DBFFieldType %s", dtype);
+         G_debug ( 2, "  DBFFieldType %d", dtype);
 	 
 	 switch ( dtype )
 	   {
@@ -220,6 +220,8 @@ save_table ( int t)
     ROW  *rows;
     VALUE *val;
     int  dbftype, width, decimals;
+
+    G_debug (2, "save_table %d", t);
 
     /* Note: because if driver is killed during the time the table is written, the process
     *        is not completed and DATA ARE LOST. To minimize this, data are first written

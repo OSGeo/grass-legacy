@@ -60,6 +60,8 @@ int execute(char *sql, cursor * c)
     }
     free ( tmpsql) ;
 
+    G_debug (3, "SQL statement parsed successfully" );
+
 /* sqpPrintStmt(st); *//* debug output only */
 
     /* find table */

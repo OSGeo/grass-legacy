@@ -27,6 +27,9 @@ int add_column (int tab, int type, char *name, int width, int decimals)
 {
     int c;
 
+    G_debug (3, "add_column(): tab = %d, type = %d, name = %s, width = %d, decimals = %d",
+	                       tab, type, name, width, decimals);
+	    
     c = db.tables[tab].ncols; 
     
     if ( db.tables[tab].ncols == db.tables[tab].acols )
@@ -35,7 +38,8 @@ int add_column (int tab, int type, char *name, int width, int decimals)
 	db.tables[tab].cols = (COLUMN *) realloc ( db.tables[tab].cols, db.tables[tab].acols * sizeof (TABLE) ); 
       }
     
-    strcpy ( db.tables[tab].cols[c].name, name );
+    strncpy ( db.tables[tab].cols[c].name, name, DBF_COL_NAME-1 );
+    db.tables[tab].cols[c].name[DBF_COL_NAME-1] = '\0';
     
     db.tables[tab].cols[c].type = type; 
     db.tables[tab].cols[c].width = width; 
