@@ -1,5 +1,3 @@
-/*-----------changed to Site API, Dec.99. A.Sh.*/
-
 #include <stdlib.h>
 #include <string.h>
 #include "gis.h"
@@ -9,6 +7,7 @@
 #include <stdio.h>
 #include <libpq-fe.h>
 #include "dbsite.h"
+#include "glocale.h"
 
 int runInfxFile(SQL_stmt, map,  plotargs )
   char *SQL_stmt, *map, *plotargs[];
@@ -49,7 +48,7 @@ int runInfxFile(SQL_stmt, map,  plotargs )
      if ((fpout = G_fopen_sites_new (map)) == NULL)
     	
 	{
-      		sprintf (buf1, "Cannot open %s", map);
+      		sprintf (buf1, _("Cannot open %s"), map);
       		G_fatal_error (buf1);
     	}
 
@@ -64,14 +63,14 @@ int runInfxFile(SQL_stmt, map,  plotargs )
         
     pg_conn = PQsetdb(pghost,NULL, NULL,NULL,G_getenv("PG_DBASE"));
     if (PQstatus (pg_conn) == CONNECTION_BAD) {
-      printf ("Error: Selecting from Postgres:%s\n",PQerrorMessage(pg_conn));
+      printf (_("Error: Selecting from Postgres:%s\n"),PQerrorMessage(pg_conn));
       PQfinish(pg_conn);
       exit (-1); 
     }
   	   
     res = PQexec (pg_conn, SQL_stmt);
     if ( PQresultStatus (res) != PGRES_TUPLES_OK ) {
-      printf ("Error: Connecting to Postgres:%s\n",PQerrorMessage(pg_conn)); 
+      printf (_("Error: Connecting to Postgres:%s\n"),PQerrorMessage(pg_conn)); 
       PQfinish(pg_conn);
       exit (-1);      
     }
@@ -92,7 +91,7 @@ int runInfxFile(SQL_stmt, map,  plotargs )
       }
       retval = plotsite (x,y,icon,size);
       if (retval != 0) {
-      	printf("Display error(exiting..)\n");
+      	printf(_("Display error(exiting..)\n"));
       	exit (-1);
       }
       if (map) {

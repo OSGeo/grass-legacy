@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include "gis.h"
 #include "dbsite.h"
+#include "glocale.h"
 
 int getAllOpts(argc, argv)
         int argc;
@@ -28,7 +29,7 @@ int getAllOpts(argc, argv)
 	tab->type       = TYPE_STRING ;
 	tab->required   = YES  ;
 	tab->multiple   = NO ;
-	tab->description= "Table with X,Y coors:" ;
+	tab->description= _("Table with X,Y coors:") ;
 
 
 	coordx = G_define_option() ;
@@ -38,7 +39,7 @@ int getAllOpts(argc, argv)
 	coordx->multiple   = NO ;
 	coordx->key_desc   = "column of X coordinates" ;
 	coordx->answer	   = "X";
-	coordx->description= "Column with X-coor:" ;
+	coordx->description= _("Column with X-coor:") ;
 
 	coordy = G_define_option() ;
 	coordy->key        = "coordy" ;
@@ -47,7 +48,7 @@ int getAllOpts(argc, argv)
 	coordy->multiple   = NO ;
 	coordy->key_desc   = "column of Y coordinates" ;
 	coordy->answer	   = "Y";
-	coordy->description= "Column with Y-coor:" ;
+	coordy->description= _("Column with Y-coor:") ;
 
 	cats = G_define_option() ;
 	cats->key        = "cats" ;
@@ -56,21 +57,21 @@ int getAllOpts(argc, argv)
 	cats->multiple   = NO ;
 	cats->key_desc   = "category-column" ;
 /*	cats->answer	  = "cat"; -a.sh.*/
-	cats->description= "Column with categories:" ;
+	cats->description= _("Column with categories:") ;
 
 	where = G_define_option() ;
 	where->key        = "where" ;
 	where->type       = TYPE_STRING ;
 	where->required   = NO  ;
 	where->multiple   = NO ;
-	where->description= "Clause for SQL query (e.g. obj='huts', num > 56, etc.):" ;
+	where->description= _("Clause for SQL query (e.g. obj='huts', num > 56, etc.):") ;
 
 	map = G_define_option() ;
 	map->key        = "map" ;
 	map->type       = TYPE_STRING ;
 	map->required   = NO  ;
 	map->multiple   = NO ;
-	map->description= "New site map name:";
+	map->description= _("New site map name:");
 
 
 	plot = G_define_option() ;
@@ -81,7 +82,7 @@ int getAllOpts(argc, argv)
 	plot->key_desc	  ="Color,icon,size" ;
 	plot->answer	  ="gray,x,3" ;
 
-plot->description="Colors:red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,black;Icon:diamond, box, plus, x; Size: 1-9. ";
+plot->description=_("Colors:red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,black;Icon:diamond, box, plus, x; Size: 1-9. ");
 
 
 

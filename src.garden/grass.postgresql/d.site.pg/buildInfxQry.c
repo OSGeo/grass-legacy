@@ -1,7 +1,3 @@
-/* d.site.pg   */
-/* buildInfxQry.c  */
-/*-----------  A.Sh. */
-
 #include <stdlib.h>
 #include "gis.h"
 #include <stdio.h>

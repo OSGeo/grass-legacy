@@ -1,8 +1,9 @@
 PGM       = $(BIN_CMD)/d.site.pg
 LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) \
 		$(DATETIMELIB)
-EXTRA_CFLAGS    = $(PQINCPATH)
-# EXTRA_CFLAGS = -Dunlink=puts
+PACKAGE = "d.site.pg"
+DEFS = -Wall -DPACKAGE=\"$(PACKAGE)\"
+EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS)
 
 OBJS = \
 	main.o   \
