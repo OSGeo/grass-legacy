@@ -3,4 +3,5 @@ interface_build {
     {Converts an ASCII GRASS vector file into a binary GRASS vector map.}
     {entry input {ASCII vector file (input):} 0 vector_ascii}
     {entry output {Name of resulting binary map:} 0 vector}
+    {checkbox -s {Automatically build support files} "" -s}
 }
