@@ -62,7 +62,8 @@ geoline *Gv_load_vect(char *grassname, int *nlines)
     points = Vect_new_line_struct ();
 
     G_get_set_window (&wind) ;
-    Vect_set_constraint_region(&map,wind.north,wind.south,wind.east,wind.west);
+    Vect_set_constraint_region(&map,wind.north,wind.south,wind.east,wind.west,
+	                       PORT_DOUBLE_MAX, -PORT_DOUBLE_MAX);
 
     if (map.head.with_z == WITHOUT_Z)
     {
