@@ -92,12 +92,22 @@ double G_database_units_to_meters_factor()
  
 char *G_database_datum_name()
 {
-  static char name[256];
-  
-  if(!lookup (PROJECTION_FILE, "datum", name, sizeof(name)))
+  static char name[256], params[256];
+  struct Key_Value *projinfo;
+  int datumstatus;
+   
+  if(lookup (PROJECTION_FILE, "datum", name, sizeof(name)))
+    return name;
+  else if( (projinfo = G_get_projinfo()) == NULL )
     return NULL;
-  /* strcpy (name, "Unknown datum"); */
-  return name;	
+  else
+    datumstatus = G_get_datumparams_from_projinfo(projinfo, name, params);
+   
+  G_free_key_value( projinfo );
+  if( datumstatus == 2)
+    return params;
+  else  
+    return NULL;
 }
 
 /***********************************************************************
@@ -114,9 +124,14 @@ char *G_database_ellipse_name()
   static char name[256];
   
   if(!lookup (PROJECTION_FILE, "ellps", name, sizeof(name)))
-    return NULL;
+  {
+    double a, es;     
+    G_get_ellipsoid_parameters(&a, &es);
+    sprintf(name, "a=%.16g es=%.16g", a, es);
+  }
+
   /* strcpy (name, "Unknown ellipsoid"); */
-  return name;	
+  return name;
 }
 
 static int lookup(char *file, char *key, char *value, int len)
