@@ -474,6 +474,8 @@ void gsd_pushmatrix(void);
 void gsd_scale(float, float, float);
 void gsd_translate(float, float, float);
 void gsd_rot(float, char);
+void gsd_checkwindow(int *, int *, double *, double *);
+int gsd_checkpoint(float *, int *, int *, double *, double *);
 void gsd_litvert_func(float *, unsigned long, float *);
 void gsd_litvert_func2(float *, unsigned long, float *);
 void gsd_vert_func(float *);
