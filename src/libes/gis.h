@@ -1,3 +1,4 @@
+static char *GRASS_copyright = "GRASS (TM) Public Domain Software" ;
 #define MAXEDLINES  25
 #define RECORD_LEN  80
 #define NEWLINE     '\n'
@@ -10,12 +11,13 @@
 #define DEGREES   3
 
 typedef int CELL;
-typedef unsigned char uchar;
+extern CELL CELL_NODATA;
 
 #define PROJECTION_XY  0
 #define PROJECTION_UTM 1
 #define PROJECTION_SP  2
 #define PROJECTION_LL  3
+#define PROJECTION_OTHER  99
 
 struct Cell_head
 {
@@ -46,18 +48,45 @@ struct Categories
 	CELL num          ;   /* category number */
 	char *label       ;   /* category label */
     } *list               ;
-    int count             ;   /* number of labels allocated               */
+    int count             ;   /* number of labels lots used */
+    int nalloc            ;   /* number of labels lots allocated */
 } ;
+
+struct _Color_Rule_
+{
+    struct
+    {
+	CELL cat;
+	unsigned char red,grn,blu;
+    } low, high;
+    struct _Color_Rule_ *next;
+    struct _Color_Rule_ *prev;
+};
+
+struct _Color_Info_
+{
+    struct _Color_Rule_ *rules;
+    struct
+    {
+	unsigned char *red;
+	unsigned char *grn;
+	unsigned char *blu;
+	unsigned char *set;
+	unsigned char r0,g0,b0,s0;
+	int nalloc;
+	int active;
+    } lookup;
+    CELL min, max;
+};
 
 struct Colors
 {
-    CELL min,max    ;   /* min,max color numbers               */
-    uchar *red      ;   /* red, green, blu (0-255)             */
-    uchar *grn      ;   /* allocated as needed                 */
-    uchar *blu      ;
-    uchar r0,g0,b0  ;   /* red, green, blue for cat 0          */
-    int nalloc;
-} ;
+    int version;	/* set by read_colors: -1=old,1=new */
+    int shift;
+    int invert;
+    struct _Color_Info_ fixed, modular;
+    CELL cmin, cmax;
+};
 
 struct Reclass
 {
@@ -120,13 +149,47 @@ struct Range
  */
 };
 
-#define USAGE_LONG	1
-#define USAGE_SHORT	0
-struct Command_keys	/* used with G_parse_command() */
+struct Key_Value
 {
-    char *alias;
-    int position;
+    int nitems;
+    int nalloc;
+    char **key;
+    char **value;
 };
+
+
+struct Option                /* Structure that stores option info */
+{
+    char *key ;                     /* Key word used on command line    */
+    int type ;                      /* Option type                      */
+    int required ;                  /* REQUIRED or OPTIONAL             */
+    int multiple ;                  /* Multiple entries OK              */
+    char *options ;                 /* Approved values or range or NULL */
+    char *key_desc;                 /* one word describing the key      */
+    char *description ;             /* String describing option         */
+    char *answer ;                  /* Option answer                    */
+    char *def ;                     /* Where original answer gets saved */
+    char **answers ;                /* Option answers (for multiple=YES)*/
+    struct Option *next_opt ;       /* Pointer to next option struct    */
+    char *gisprompt ;               /* Interactive prompt guidance      */
+    int (*checker)() ;              /* Routine to check answer or NULL  */
+    int count;
+} ;
+
+struct Flag                 /* Structure that stores flag info  */
+{
+    char key ;                      /* Key char used on command line    */
+    char answer ;                   /* Stores flag state: 0/1           */
+    char *description ;             /* String describing flag meaning   */
+    struct Flag *next_flag ;        /* Pointer to next flag struct      */
+} ;
+
+/* for G_parser() */
+#define TYPE_INTEGER  1
+#define TYPE_DOUBLE   2
+#define TYPE_STRING   3
+#define YES           1
+#define NO            0
 
 #ifndef FILE
 #include <stdio.h>
