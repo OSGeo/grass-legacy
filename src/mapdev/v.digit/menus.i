@@ -119,7 +119,7 @@ struct Menu_item Custom_items[] = {
     { "w - Toggle Windowing device",		'w', 1 },
     { "p - Toggle Point device",		'p', 1 },
     { "z - Toggle Digitizing device",		'z', 1 },
-    { "O - Select An Overlay Map",		'O', 1 },
+    { "O - Select An Overlay vector Map",	'O', 1 },
     { "B - Select A Backdrop CELL Map",		'B', 1 },
 /*  { "L - Select A Label Map",			'L', 0 }, */
 /*  { "",					 0,  0 }, */
