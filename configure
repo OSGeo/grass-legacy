@@ -4,7 +4,7 @@
 # Generated automatically using autoconf version 2.13 
 # Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
 #
-# $Id: configure,v 1.35 2000-10-15 09:31:49 markus Exp $
+# $Id: configure,v 1.36 2000-10-20 12:11:40 markus Exp $
 # This configure script is free software; the Free Software Foundation
 # gives unlimited permission to copy, distribute and modify it.
 #
@@ -3410,8 +3410,8 @@ if test "$WANT_TCLTK" = "yes"; then
 EOF
 
     WANT_TCLTK="1"
-    echo $ac_n "checking for Tk/Tcl libraries""... $ac_c" 1>&6
-echo "configure:2632: checking for Tk/Tcl libraries" >&5
+    echo $ac_n "checking for Tcl/Tk libraries""... $ac_c" 1>&6
+echo "configure:2632: checking for Tcl/Tk libraries" >&5
 
     #
     # Check for matching libtk*.a and libtcl*.a
