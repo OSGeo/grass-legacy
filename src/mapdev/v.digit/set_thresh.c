@@ -98,8 +98,8 @@ reset_snap_thresh (struct Map_info *map)
      {
     
         cur_digit = map->snap_thresh / (map->head.orig_scale * conversion);
-
-        Write_info ( 1, _("  Current SNAPPING threshold:"));
+        sprintf ( buf, _("   Current SNAPPING threshold (map scale is 1:%-ld):"), map->head.orig_scale);
+        Write_info ( 1, buf);
 
 	sprintf ( buf, _("         Map : %f  %s. "), map->snap_thresh, 
 	    G_database_unit_name (1));
@@ -303,15 +303,12 @@ calc_thresh (double new_thresh)
 
 int map_to_dig_thresh (double map_thresh)
 {
-    float dig_units;
-
     CMap->head.digit_thresh = _map_to_dig_thresh (map_thresh);
     return 0;
 }
 
 double _map_to_dig_thresh (double map_thresh)
 {
-    float dig_units;
     /* double X1, Y1, X2, Y2; */
     double dig_thresh;
 
