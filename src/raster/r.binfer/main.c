@@ -78,7 +78,7 @@ char **argv;
 	outfile->key              = "output" ;
 	outfile->description      = "file to capture output information" ;
 	outfile->type             = TYPE_STRING ;
-	outfile->answer           = "binfer.out" ;
+	outfile->answer           = "r.binfer.out" ;
 	outfile->required         = NO ;
 
 	if (G_parser(argc, argv))
