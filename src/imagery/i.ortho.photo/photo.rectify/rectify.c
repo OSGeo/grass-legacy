@@ -20,10 +20,10 @@ int rectify (char *name, char *mapset, char *result)
     int tie_row, tie_col;
     int i;
     double n2,e2,z2;
-    DCELL zz2, aver_z;
     double nx,ex,zx;
     int r2, c2;
     double row2, col2;
+    double aver_z;
     char buf[64]="";
     RASTER_MAP_TYPE data_type;
 
@@ -116,10 +116,11 @@ int rectify (char *name, char *mapset, char *result)
            fprintf (Bugsr,"\t\t   r2 = %d \t   c2 =  %d \n",r2,c2);
            fprintf (Bugsr,"\t\t elevbuf[c2] = %f        \n",(DCELL) elevbuf[c2]);
 #endif
-           zz2 = (DCELL) elevbuf[c2];
            /* if target TIE point has no elevation, set to aver_z */
-           if ( G_is_d_null_value(&zz2) ) zz2 =  aver_z; 
-           z2 = zz2;
+           if ( G_is_d_null_value( &elevbuf[c2] ) )
+                 z2 = aver_z;
+           else
+                 z2 = (double) elevbuf[c2];
 
 #ifdef DEBUG3
            fprintf (Bugsr,"\t\t e2 = %f \t n2 =  %f \t z2 = %f \n",e2,n2,z2);
