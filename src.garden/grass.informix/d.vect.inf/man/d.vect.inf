@@ -1,0 +1,134 @@
+.TH d.vect.inf
+.SH NAME
+\fId.vect.inf\fR \- Display select vectors from an existing vector map.
+.br
+.I "(GRASS-RDBMS Interface Display Program)"
+.SH SYNOPSIS
+\fBd.vect.inf\fR
+.br
+\fBd.vect.inf help\fR
+.br
+\fBd.vect.inf\fR \fBkey=\fIname\fR \fBtab=\fIname\fR \fBwhere=\fIname\fR \fBmap=\fIname\fR \fB[color=\fIname]\fR \fB[join=\fItab,tabkey,pkey]\fR
+.br
+.SH ALTERNATE
+\fBd.vect.inf -s help\fR
+.br
+\fBd.vect.inf\fR \fB-s\fR \fBsql=\fIfilename\fR \fBinput=\fIname\fR \fB[color=\fIname]\fR
+.SH DESCRIPTION
+d.vect.inf displays select vectors from an existing vector map based on the unique values in a database column. Each row returned by a user constructed database query will be associated with a vector feature which is subsequently drawn on the graphics display in the active frame. The user can control the color of the vector draw by specifying a color on the command line.
+.SH "COMMAND LINE OPTIONS"
+.LP
+Parameters
+.IP \fIkey=database_column_name\fR
+Column in table "tab" of the currently selected database containing values corresponding to the vector maps category values. Table is designated on the command line by tab=tablename and vector is designated on the command line by map=mapname.
+.IP \fItab=database_table_name\fR
+Table in the currently selected database containing a column which has values corresponding to vector category values in the map designated by map=map.
+.IP \fIwhere=SQL_where_clause\fR
+SQL "WHERE" clause which specifies the query criteria to be used in subsetting the database. The information specified in the WHERE option must indicate the column(s) to be used, the operators to be used in the evaluation and the values which the data in the column will be evaluated against.
+
+For example, if you want to select only those records where the value for cfcc code is either A21 or A31 the 
+following could be entered:
+
+.br
+cfcc_lookup.code = "A21" or cfcc_lookup.code = "A31"
+
+To select all cfcc_lookup.codes the value for cfcc_lookup.code is of cfcc type A (ie. roads):
+
+.br
+cfcc_lookup.code > matches "A*"
+
+To select all cfcc_lookup.codes except those for roads:
+
+.br
+cfcc_lookup.code NOT MATCHES "A*"
+
+If the database column used as the selection criteria is a character field then the associated value must be 
+placed in double quotes. To determine the data types associated with columns in the currently selected database 
+use the g.column.inf command with the -v flag.
+
+In addition to the operators presented in the examples above a range of relational operators including OR and 
+BETWEEN etc. are supported. There may be some differences in the relational operators which are supprted with 
+different database drivers.
+
+The examples presented above were created using the command line parser.  If d.vect.inf is being called from a 
+shell script remember to escape quoted strings. The follwing example presents a component of a shell script 
+used to join two tables and display vector features where the database column cfcc_lookup.class_name is 
+set to "Divided*" (eg. all tiger feratures identified as divided highways).
+
+.br
+d.vect.inf key=record_num tab=feature 
+.br
+	where=cfcc_lookup.class_name MATCHES '"Divided*"' 
+.br
+	map=$1 color=green join=cfcc_lookup,cfcc_lookup.cfcc,feature.cat
+
+Queries which are more complex than these are best implemented using the
+-s flag and a prepared SQL file.
+.IP \fImap=map\fR
+Name of an existing vector map with category values which correspond to values in a specified column in the currently selected database.
+.IP \fIcolor=name\fR
+Color to draw vectors in.
+.br
+Colors:red, orange, yellow, green, blue, indigo, violet, magenta, brown, gray, white, black
+.IP \fIjoin=tab,tabkey,pkey\fR
+Tab is the table used to develop the current SQL query. Tabkey is the database column used to relate information in this table with data in the table linked to the GRASS category file. Pkey is the associated column in the table linked to the GRASS category file which is related to tabkey in the current table.
+
+For instance, assume that feature is a table containing column values (record_num), associated with category 
+values in a GRASS vector file.  In addition, assume that cfcc_lookup.cfcc_codes is a table containing attribute 
+data on the transportation network in the same area. In this example record_num is the column linking feature to 
+the GRASS category file and cfcc_lookup.cfcc is the column linking cfcc_lookup with the feature. To specify a 
+query based on attribute values in the table cfcc_lookup.cfcc_codes the join statement would be:
+
+	join=cfcc_lookup,cfcc_lookup.cfcc,feature.cfcc
+
+Specifying these conditions would insure that all rows from table cfcc_lookup which satisfy the query criteria 
+would be matched with the corresponding rows in table feature, which are then related to the spatial features 
+in the GRASS data layer via the database column feature.record_num which is related to the GRASS category values.
+
+This syntax is adequate to accomplish 2 table joins. However, if the query demands joins between more than 2 tables it is advisable to use the -s option [see Alternate Command Line Usage] to read a user prepared query, complete with join requirements, from a file.
+.LP
+.SH "ALTERNATE COMMAND LINE USAGE"
+The alternate command line usage is provided to simplify the process of retrieving information from more than one table in the query criteria. The alternate command line structure is selected using the the [-s] flag on the command line. When using this flag the user must include the name of a text file on the command line as well. This file must include a complete, well formed SQL SELECT statement specifying the query criteria and all relevant JOINS needed to retrieve values which correspond to category values in a GRASS data layer. 
+
+The user must also specify the name of the GRASS data layer containing these category values on the command line. The following example illustrates the syntax which must be used in constructing a SELECT statement for use with the -s flag.
+
+.br
+	SELECT UNIQUE record_num FROM feature, cfcc_lookup 
+.br
+	WHERE cfcc_lookup.class_name MATCHES "Divided*" 
+.br
+	      AND cfcc_lookup.cfcc.= feature.cfcc
+.br
+	      AND feature.record_num IS NOT NULL
+.br
+	ORDER BY feature.record_num
+
+
+
+.LP
+Flags
+.IP \fI-s\fR
+SQL select statements are input from a prepared file.
+.LP
+Parameters
+.IP \fIsql=filename\fR
+SQL statements specifying well formed selection criteria.
+.IP \fIinput=map\fR
+Name of an existing vector map.
+.IP \fIcolor=name\fR
+Color to draw vectors in.
+.br
+Colors:red, orange, yellow, green, blue, indigo, violet, magenta, brown, gray, white, black
+.SH BUGS
+None known.
+
+.SH "NOTE"
+This program requires the Informix database software.
+
+.SH "SEE ALSO"
+g.column.inf, g.select.inf, g.stats.inf, g.table.inf, d.rast.inf, d.site.inf, d.what.r.inf, d.what.s.inf, d.what.v.inf, r.reclass.inf, r.rescale.inf, v.reclass.inf
+
+.SH AUTHOR
+
+James A. Farley, Wang Song and W. Fredrick Limp
+University of Arkansas, CAST
