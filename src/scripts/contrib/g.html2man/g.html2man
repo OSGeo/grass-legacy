@@ -4,8 +4,12 @@ eval 'exec $GRASS_PERL -S $0 ${1+"$@"}'
 
 #
 # $Id$
+# Note: the GRASS_PERL variables must be set!
 # Usage:
+#       GRASS_PERL=/usr/bin/perl
 #       sh g.html2man <html file> <man file> <section>
+#
+# See html/Gmakefile for example usage.
  
 sub basename {
   $slash = rindex($_[0], "/");
