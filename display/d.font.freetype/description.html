@@ -18,7 +18,7 @@ texts from vector labels, legends, etc.
 <ol>
 <li> To enable displaying of a TrueType font on the GRASS monitor, run:
 <pre>
-       d.mon start x0
+       d.mon x0
        d.font.freetype [font=TrueTypefontname] [charset=encoding]
        
        #with:
@@ -27,6 +27,9 @@ texts from vector labels, legends, etc.
 
        # Example on Redhat Linux 9.x:
        d.font.freetype font=/usr/share/fonts/ja/TrueType/kochi-gothic.ttf charset=EUC-JP
+
+       # Example on Mandrake 10:
+       d.font.freetype font=/usr/X11R6/lib/X11/fonts/TTF/ipag.ttf
 </pre>
 <li> To disable to display a TrueType font on the monitor, run:
 <pre>
