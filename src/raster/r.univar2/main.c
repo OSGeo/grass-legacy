@@ -182,7 +182,7 @@ int main(int argc, char *argv[]) {
 
     /* all these calculations get promoted to doubles, so any DIV0 becomes nan */
     mean = sum/n;
-    variance = (sumsq - sum*sum/n)/n);
+    variance = (sumsq - sum*sum/n)/n;
     stdev = sqrt(variance);
     var_coef = (stdev/mean)*100;  /* perhaps stdev/fabs(mean) ? */
 
