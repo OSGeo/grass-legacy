@@ -9,7 +9,7 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default: $(PROG1) $(PROG2) htmlscript
 
-TCL = cmd.tcl grassabout.tcl group.tcl print.tcl raster.tcl tksys.tcl tool.tcl tree.tcl vector.tcl labels.tcl
+TCL = cmd.tcl grassabout.tcl group.tcl labels.tcl menu.tcl print.tcl raster.tcl tksys.tcl tool.tcl tree.tcl vector.tcl 
 
 $(PROG1): $(PGM)
 	if [ ! -d $(GISBASE)/scripts ]; then $(MKDIR) $(GISBASE)/scripts; fi
@@ -23,3 +23,6 @@ $(PROG2): *.gif *.tcl
 	done
 	$(CHMOD) 755 $(ETC)/dm/tksys.tcl
 	$(INSTALL) -m 755 $(PGM2) $(PROG2)
+	
+$(MKDIR) $(GISBASE)/etc/dm/script
+$(INSTALL) -m 755 script/*.* $(GISBASE)/etc/dm/script
