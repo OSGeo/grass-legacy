@@ -1,3 +1,8 @@
+/* Added TIFF World file support, 
+ * Fixed one segfault bug (tif_pos = ftell(...)
+ * Eric G. Miller 4-Nov-2000
+ */
+
 /* removed LZW support 5/2000*/
 
 /* Updated to FP map writing functions 11/99 Markus Neteler */
@@ -30,10 +35,6 @@
  *   This program takes a MicroSoft/Aldus "Tagged Image File Format" image or
  * "TIFF" file as input and writes a GRASS cell file.
  */
-/*typedef unsigned short u_short;
-typedef unsigned long u_long;
-typedef unsigned char u_char;
-	*/
 
 #include <stdio.h>
 #include <string.h>
@@ -49,10 +50,13 @@ typedef unsigned char u_char;
 
 int quantize(int, int *);
 int get_tif_colors2(int, int *);
-int get_tif_colors( TIFF *, int ,int , u_char *);
+int get_tif_colors( TIFF *, u_long , u_long , u_char *);
 CELL lookup_color2(int, int, int, int, int *);
 CELL lookup_color(int, int, int, int);
 int count_colors( TIFF *, int,int, u_char *);
+void
+set_cellhd(char *fname, struct Cell_head *head, 
+    u_long height, u_long width, int verbose);
 
 typedef struct {
   int	type;
@@ -117,7 +121,6 @@ int main (int argc, char *argv[])
   u_long	width,
     height;
   int ncolors;
-  long tif_pos;
   int nlev;
   int Bands = 0;
   int maxcolors;
@@ -169,7 +172,7 @@ int main (int argc, char *argv[])
 
   nlev=atoi(nlevopt->answer);
   maxcolors=nlev*nlev*nlev;
-	
+
   inf = inopt->answer;
   tif = TIFFOpen(inf, "r");
   if (tif == NULL)
@@ -202,14 +205,10 @@ int main (int argc, char *argv[])
   TIFFGetField(tif, TIFFTAG_IMAGEWIDTH,&width);
   TIFFGetField(tif, TIFFTAG_IMAGELENGTH,&height);
 
-  cellhd.zone = G_zone();
-  cellhd.proj = G_projection();
-  cellnrows = cellhd.rows = cellhd.north = height;
-  cellncols = cellhd.cols = cellhd.east = width;
-  cellhd.south = cellhd.west = 0.0;
-  cellhd.ns_res = cellhd.ew_res = 1;
-  cellhd.format = 0;
-  cellhd.compressed = 0;
+  cellnrows  = height;
+  cellncols  = width;
+  
+  set_cellhd(inf, &cellhd, height, width, Verbose);
   if(G_set_window(&cellhd) < 0)
     G_fatal_error("couldn't set cellhd.");
   cell = G_allocate_cell_buf();
@@ -284,7 +283,6 @@ int main (int argc, char *argv[])
       }
       break;
     case PHOTOMETRIC_RGB:
-/*      tif_pos = ftell((FILE *)tif); */ /* commented 5/2000 */
       ncolors=count_colors(tif,height,width,buf);
       if (Verbose)fprintf (stdout,"Total colors = %d\n",ncolors);
       if(ncolors > maxcolors){
@@ -295,10 +293,8 @@ int main (int argc, char *argv[])
 	if (Verbose)fprintf (stdout,"Total used colors = %d\n", num_colors);
       }
       else{
-	tif_pos = ftell((FILE *)tif);
 	num_colors=get_tif_colors(tif,height,width,buf)	;
 	if (Verbose)fprintf (stdout,"Total used colors = %d\n", num_colors);
-/*	fseek((FILE *)tif, tif_pos, 0);*/ /* commented 5/2000 */
       }
       break;
     case PHOTOMETRIC_PALETTE:
@@ -594,14 +590,13 @@ CELL lookup_color (int r, int g, int b, int num)
   return((CELL)x);
 }
 
-int get_tif_colors( TIFF *tif, int height,int width, u_char *buf)
+int get_tif_colors( TIFF *tif, u_long height, u_long width, u_char *buf)
 {
   int x,maxcolor,match;
   int red, grn, blu;
-  int i,j;
+  u_long i,j;
   u_char *inp;
 	
-
   match = maxcolor = 0;
   for (i=0; i < height; i++){
     if (TIFFReadScanline(tif, buf, i, 0) < 0){
@@ -637,3 +632,125 @@ int get_tif_colors( TIFF *tif, int height,int width, u_char *buf)
   return(maxcolor);
 	
 }
+
+void
+set_cellhd(char *fname, struct Cell_head *head, 
+    u_long height, u_long width, int verbose)
+{
+  int i, len, has_tfw = 0;
+  char *tfw, *dir, *ptr, atiff[4][5] = {".tif", ".tiff", ".TIFF", ".TIF"},
+                  atifw[4][5] = {".tfw", ".tifw", ".TIFW", ".TFW"},
+                  buf[1024];
+  double rotx, roty, dtmp;
+  FILE *ftfw;
+
+  if (fname == NULL || head == NULL)
+    G_fatal_error("Got NULL filename or Cell_head structure");
+  
+  if(verbose)
+    fprintf(stderr, "  Looking for TIFF World file ...   ");
+
+  len = strlen(fname) + 6;
+  if (NULL == (tfw = G_malloc(len)))
+    G_fatal_error("Out of Memory");
+  strncpy(tfw, fname, len - 6);
+
+  /* Make sure our file name search doesn't get a directory */
+  dir = strrchr(tfw, '/');  /* TODO: Make this OS independent */
+  if (dir == NULL)
+    dir = tfw;
+  else
+    dir++;
+
+  /* Find the extension (if exists) */
+  for (i = 0; i < 4; i++)
+  {
+    ptr = strstr(dir, atiff[i]);
+    if (ptr != NULL)
+      break;
+  }
+
+  /* If it wasn't found, move ptr to the end of the string */
+  if(i == 4)
+    ptr = strchr(tfw,'\0');
+
+  /* Find the world file if exists */
+
+  for (i = 0; i < 4; i++)
+  {
+    strncpy(ptr, atifw[i], 5);
+    ftfw = fopen(tfw, "r");
+    if (ftfw != NULL) {
+      has_tfw = 1;
+      break;
+    }
+  }
+  
+  if (has_tfw) {
+    if (fgets(buf, 1024, ftfw) == NULL)
+      G_fatal_error("Error Reading TIFF World file");
+    dtmp = strtod(buf, &ptr);
+    if (ptr == &(buf[0]))
+      G_fatal_error("Error Reading TIFF World file");
+    head->ew_res = dtmp;
+    if (fgets(buf, 1024, ftfw) == NULL)
+      G_fatal_error("Error Reading TIFF World file");
+    dtmp = strtod(buf, &ptr);
+    if (ptr == &(buf[0]))
+      G_fatal_error("Error Reading TIFF World file");
+    if (dtmp != 0.0)
+      G_warning("Rotation of rows not supported");
+    if (fgets(buf, 1024, ftfw) == NULL)
+      G_fatal_error("Error Reading TIFF World file");
+    dtmp = strtod(buf, &ptr);
+    if (ptr == &(buf[0]))
+      G_fatal_error("Error Reading TIFF World file");
+    if (dtmp != 0.0)
+      G_warning("Rotation of colums not supported");
+    if (fgets(buf, 1024, ftfw) == NULL)
+      G_fatal_error("Error Reading TIFF World file");
+    dtmp = strtod(buf, &ptr);
+    if (ptr == &(buf[0]))
+      G_fatal_error("Error Reading TIFF World file");
+    head->ns_res = -1.0 * dtmp;
+    if (fgets(buf, 1024, ftfw) == NULL)
+      G_fatal_error("Error Reading TIFF World file");
+    dtmp = strtod(buf, &ptr);
+    if (ptr == &(buf[0]))
+      G_fatal_error("Error Reading TIFF World file");   
+    head->west = dtmp - head->ew_res / 2.0;
+    head->east = head->west + head->ew_res * width;
+    if (fgets(buf, 1024, ftfw) == NULL)
+      G_fatal_error("Error Reading TIFF World file");
+    dtmp = strtod(buf, &ptr);
+    if (ptr == &(buf[0]))
+      G_fatal_error("Error Reading TIFF World file");     
+    head->north = dtmp + head->ns_res / 2.0;
+    head->south = head->north - head->ns_res * height;
+    fclose(ftfw);
+    if (verbose)
+      fprintf(stderr, "Found it!\n");
+  }
+  else
+  {
+    head->north = (double) height;
+    head->east  = (double) width;
+    head->south = head->west = 0.0;
+    head->ns_res = head->ew_res = 1;
+    if (verbose)
+      fprintf(stderr, "Not Found!\n");
+  }
+  head->zone = G_zone();
+  head->proj = G_projection();
+  head->rows = height;
+  head->cols = width;
+  head->format = 0;
+  head->compressed = 0; /* Is this necessary? */
+
+  free(tfw);
+
+
+}
+  
+    
+/* vim: set softtabstop=2 shiftwidth=2 expandtab: */
