@@ -30,7 +30,7 @@ parse_command (
 )
 {
   struct Option *elev, *colr, *tricolr, *vct, *site, *view;
-  struct Option *panel_path, *script;
+  struct Option *panel_path, *script, *state;
   struct Flag *no_args, *script_kill, *demo;
   struct GModule *module;
   char *arglist[3], *autoload;
@@ -112,6 +112,11 @@ module = G_define_module();
   script->required         = NO;
   script->description      = "Execute script file at startup";
 
+  state= G_define_option();
+  state->key              = "state";
+  state->type             = TYPE_STRING;
+  state->required         = NO;
+  state->description      = "Load previosly saved state file";
 
   if (G_parser (argc, argv))
     exit (0);
@@ -182,6 +187,13 @@ module = G_define_module();
      */
     if (Tcl_VarEval(interp,"set NvizAltPath ", panel_path->answer,
 		    NULL) != TCL_OK)
+      G_fatal_error("%s", interp->result);
+  }
+
+ /* Get State file from command line */
+  if (state->answer) {
+    if (Tcl_VarEval(interp,"set NvizLoadState ", state->answer,
+                    NULL) != TCL_OK)
       G_fatal_error("%s", interp->result);
   }
   
