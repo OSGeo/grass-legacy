@@ -243,7 +243,7 @@ BINARIES
 
 4. Upload 
      grass5x_y_bin.tar.gz AND grass5install.sh
-   to ftp site in Germany (ftp 130.75.72.36 - store in incoming directory,
+   to ftp site in Italy (ftp grass.itc.it - store in incoming directory,
    anonymous login). Tell Markus about it after uploading.
    
    Note that when the binaries are created, the size of the resulting
