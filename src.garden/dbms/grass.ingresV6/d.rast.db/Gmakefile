@@ -1,0 +1,31 @@
+MAN	  = doc/d.rast.db
+#PGM       = $(BIN_CONTRIB_CMD)/d.rast.db
+PGM       = d.rast.db
+LIBES     = $(GISLIB) $(VASKLIB) -ltermcap
+# EXTRA_CFLAGS = -Dunlink=puts
+
+
+
+
+OBJS = \
+	displayUtils.o \
+	ingresUtils.o \
+	main.o \
+        getAllOpts.o \
+        getSopts.o \
+	buildSQL.o \
+	runSQL.o \
+	readSQLout.o \
+	row_or_col.o 
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB)
+	#cp $(MAN)  $(GISBASE)/man/4
+
+$(LIBES): #
+###########################################
+#
+	ctags *.[ch]
+	sed 's/\?/\//g' tags > tags.tmp
+	mv tags.tmp tags
