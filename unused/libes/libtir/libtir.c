@@ -23,224 +23,200 @@
 
 
 double
-r_get_c(RASTER_MAP_ROW data, int col)
+G_get_c(RASTER_MAP_ROW buf, int col)
 {
-	if(col < 0){
-		G_warning("r_get_c(): col < 0");
-		return 0.0;
-	}
-
-	return (double) data.c[col];
+	return (double) buf.c[col];
 }
 
 
 double
-r_get_f(RASTER_MAP_ROW data, int col)
+G_get_f(RASTER_MAP_ROW buf, int col)
 {
-	if(col < 0){
-		G_warning("r_get_f(): col < 0");
-		return 0.0;
-	}
-
-	return (double) data.f[col];
+	return (double) buf.f[col];
 }
 
 
 double
-r_get_d(RASTER_MAP_ROW data, int col)
+G_get_d(RASTER_MAP_ROW buf, int col)
 {
-	if(col < 0){
-		G_warning("r_get_d(): col < 0");
-		return 0.0;
-	}
-
-	return (double) data.d[col];
+	return (double) buf.d[col];
 }
 
 
 double *
-r_get_cs(RASTER_MAP_ROW data, int col, int num, double *val, int idx)
+G_get_cs(RASTER_MAP_ROW buf, int col, int num, double *val, int idx)
 {
 	int	i;
 
-	if(col < 0 || num <= 0 || val == NULL){
-		G_warning("r_get_cs(): col < 0 || num <= 0 || val == NULL");
+	if(num <= 0 || val == NULL){
+		G_warning("G_get_cs(): num <= 0 || val == NULL");
 		return NULL;
 	}
 
 	for(i=0; i<num; i++)
-		val[idx+i] = (double) data.c[col+i];
+		val[idx+i] = (double) buf.c[col+i];
 
 	return val;
 }
 
 
 double *
-r_get_fs(RASTER_MAP_ROW data, int col, int num, double *val, int idx)
+G_get_fs(RASTER_MAP_ROW buf, int col, int num, double *val, int idx)
 {
 	int	i;
 
-	if(col < 0 || num <= 0 || val == NULL){
-		G_warning("r_get_fs(): col < 0 || num <= 0 || val == NULL");
+	if(num <= 0 || val == NULL){
+		G_warning("G_get_fs(): num <= 0 || val == NULL");
 		return NULL;
 	}
 
 	for(i=0; i<num; i++)
-		val[idx+i] = (double) data.f[col+i];
+		val[idx+i] = (double) buf.f[col+i];
 
 	return val;
 }
 
 
 double *
-r_get_ds(RASTER_MAP_ROW data, int col, int num, double *val, int idx)
+G_get_ds(RASTER_MAP_ROW buf, int col, int num, double *val, int idx)
 {
 	int	i;
 
-	if(col < 0 || num <= 0 || val == NULL){
-		G_warning("r_get_ds(): col < 0 || num <= 0 || val == NULL");
+	if(num <= 0 || val == NULL){
+		G_warning("G_get_ds(): num <= 0 || val == NULL");
 		return NULL;
 	}
 
 	for(i=0; i<num; i++)
-		val[idx+i] = (double) data.d[col+i];
+		val[idx+i] = (double) buf.d[col+i];
 
 	return val;
 }
 
 
 void
-r_set_c(RASTER_MAP_ROW data, int col, double val, int num)
+G_set_c(RASTER_MAP_ROW buf, int col, double val, int num)
 {
 	int	i;
 
-	if(col < 0 || num <= 0){
-		G_warning("r_set_c(): col < 0 || num <= 0");
+	if(num <= 0){
+		G_warning("G_set_c(): num <= 0");
 		return;
 	}
 
 	for(i=0; i<num; i++)
-		data.c[col+i] = (CELL) val;
+		buf.c[col+i] = (CELL) val;
 
 	return;
 }
 
 
 void
-r_set_f(RASTER_MAP_ROW data, int col, double val, int num)
+G_set_f(RASTER_MAP_ROW buf, int col, double val, int num)
 {
 	int	i;
 
-	if(col < 0 || num <= 0){
-		G_warning("r_set_f(): col < 0 || num <= 0");
+	if(num <= 0){
+		G_warning("G_set_f(): num <= 0");
 		return;
 	}
 
 	for(i=0; i<num; i++)
-		data.f[col+i] = (FCELL) val;
+		buf.f[col+i] = (FCELL) val;
 
 	return;
 }
 
 
 void
-r_set_d(RASTER_MAP_ROW data, int col, double val, int num)
+G_set_d(RASTER_MAP_ROW buf, int col, double val, int num)
 {
 	int	i;
 
-	if(col < 0 || num <= 0){
-		G_warning("r_set_d(): col < 0 || num <= 0");
+	if(num <= 0){
+		G_warning("G_set_d(): num <= 0");
 		return;
 	}
 
 	for(i=0; i<num; i++)
-		data.d[col+i] = (DCELL) val;
+		buf.d[col+i] = (DCELL) val;
 
 	return;
 }
 
 
 void
-r_set_null_c(RASTER_MAP_ROW data, int col, int num)
+G_set_null_c(RASTER_MAP_ROW buf, int col, int num)
 {
-	if(col < 0 || num <= 0){
-		G_warning("r_set_null_c(): col < 0 || num <= 0");
+	if(num <= 0){
+		G_warning("G_set_null_c(): num <= 0");
 		return;
 	}
 
-	return G_set_c_null_value(&data.c[col], num);
+	G_set_c_null_value(&buf.c[col], num);
+
+	return;
 }
 
 
 void
-r_set_null_f(RASTER_MAP_ROW data, int col, int num)
+G_set_null_f(RASTER_MAP_ROW buf, int col, int num)
 {
-	if(col < 0 || num <= 0){
-		G_warning("r_set_null_f(): col < 0 || num <= 0");
+	if(num <= 0){
+		G_warning("G_set_null_f(): num <= 0");
 		return;
 	}
 
-	return G_set_f_null_value(&data.f[col], num);
+	G_set_f_null_value(&buf.f[col], num);
+
+	return;
 }
 
 
 void
-r_set_null_d(RASTER_MAP_ROW data, int col, int num)
+G_set_null_d(RASTER_MAP_ROW buf, int col, int num)
 {
-	if(col < 0 || num <= 0){
-		G_warning("r_set_null_d(): col < 0 || num <= 0");
+	if(num <= 0){
+		G_warning("G_set_null_d(): num <= 0");
 		return;
 	}
 
-	return G_set_d_null_value(&data.d[col], num);
+	G_set_d_null_value(&buf.d[col], num);
+
+	return;
 }
 
 
 int
-r_is_null_c(RASTER_MAP_ROW data, int col)
+G_is_null_c(RASTER_MAP_ROW buf, int col)
 {
-	if(col < 0){
-		G_warning("r_is_null_c(): col < 0");
-		return 0;
-	}
-
-	return G_is_c_null_value(&data.c[col]);
+	return G_is_c_null_value(&buf.c[col]);
 }
 
 
 int
-r_is_null_f(RASTER_MAP_ROW data, int col)
+G_is_null_f(RASTER_MAP_ROW buf, int col)
 {
-	if(col < 0){
-		G_warning("r_is_null_f(): col < 0");
-		return 0;
-	}
-
-	return G_is_f_null_value(&data.f[col]);
+	return G_is_f_null_value(&buf.f[col]);
 }
 
 
 int
-r_is_null_d(RASTER_MAP_ROW data, int col)
+G_is_null_d(RASTER_MAP_ROW buf, int col)
 {
-	if(col < 0){
-		G_warning("r_is_null_d(): col < 0");
-		return 0;
-	}
-
-	return G_is_d_null_value(&data.d[col]);
+	return G_is_d_null_value(&buf.d[col]);
 }
 
 
 int
-r_str_c(char *str, int width, int prec, RASTER_MAP_ROW data, int col)
+G_str_c(RASTER_MAP_ROW buf, int col, char *str, int width, int prec)
 {
-	if(str == NULL || col < 0){
-		G_warning("r_str_c(): str == NULL || col < 0");
+	if(str == NULL){
+		G_warning("G_str_c(): str == NULL");
 		return 0;
 	}
 
-	sprintf(str, "%*d", width, data.c[col]);
+	sprintf(str, "%*d", width, buf.c[col]);
 
 	if(width <= 0){
 		int	i, j, l;
@@ -256,14 +232,14 @@ r_str_c(char *str, int width, int prec, RASTER_MAP_ROW data, int col)
 
 
 int
-r_str_f(char *str, int width, int prec, RASTER_MAP_ROW data, int col)
+G_str_f(RASTER_MAP_ROW buf, int col, char *str, int width, int prec)
 {
-	if(str == NULL || col < 0){
-		G_warning("r_str_f(): str == NULL || col < 0");
+	if(str == NULL){
+		G_warning("G_str_f(): str == NULL");
 		return 0;
 	}
 
-	sprintf(str, "%*.*f", width, prec, data.f[col]);
+	sprintf(str, "%*.*f", width, prec, buf.f[col]);
 
 	if(width <= 0){
 		int	i, j, l;
@@ -279,14 +255,14 @@ r_str_f(char *str, int width, int prec, RASTER_MAP_ROW data, int col)
 
 
 int
-r_str_d(char *str, int width, int prec, RASTER_MAP_ROW data, int col)
+G_str_d(RASTER_MAP_ROW buf, int col, char *str, int width, int prec)
 {
-	if(str == NULL || col < 0){
-		G_warning("r_str_d(): str == NULL || col < 0");
+	if(str == NULL){
+		G_warning("G_str_d(): str == NULL");
 		return 0;
 	}
 
-	sprintf(str, "%*.*lf", width, prec, data.d[col]);
+	sprintf(str, "%*.*lf", width, prec, buf.d[col]);
 
 	if(width <= 0){
 		int	i, j, l;
@@ -301,433 +277,494 @@ r_str_d(char *str, int width, int prec, RASTER_MAP_ROW data, int col)
 }
 
 
+#if METHOD == 1
+/*****************************************************************************
+ * METHOD 1
+ *****************************************************************************/
+
+double
+G_get_r(RASTER_ROW row1, int col)
+{
+	double	ret;
+
+	switch(row1.type)
+	{
+		case CELL_TYPE:
+			ret = (double) row1.row.c[col];
+			break;
+		case FCELL_TYPE:
+			ret = (double) row1.row.f[col];
+			break;
+		case DCELL_TYPE:
+			ret = (double) row1.row.d[col];
+			break;
+		default:
+			G_warning("Illegal raster type\n");
+			return 0.0;
+			break;
+	}
+
+	return ret;
+}
+
+
+void
+G_set_r(RASTER_ROW row1, int col, double val)
+{
+	switch(row1.type)
+	{
+		case CELL_TYPE:
+			row1.row.c[col] = (CELL) val;
+			break;
+		case FCELL_TYPE:
+			row1.row.f[col] = (FCELL) val;
+			break;
+		case DCELL_TYPE:
+			row1.row.d[col] = (DCELL) val;
+			break;
+		default:
+			G_warning("Illegal raster type\n");
+			return;
+			break;
+	}
+
+	return;
+}
+
+
+void
+G_set_null_r(RASTER_ROW row1, int col)
+{
+	switch(row1.type)
+	{
+		case CELL_TYPE:
+			G_set_c_null_value(&row1.row.c[col], 1);
+			break;
+		case FCELL_TYPE:
+			G_set_f_null_value(&row1.row.f[col], 1);
+			break;
+		case DCELL_TYPE:
+			G_set_d_null_value(&row1.row.d[col], 1);
+			break;
+		default:
+			G_warning("Illegal raster type\n");
+			return;
+			break;
+	}
+
+	return;
+}
+
+
+int
+G_is_null_r(RASTER_ROW row1, int col)
+{
+	int	ret;
+
+	switch(row1.type)
+	{
+		case CELL_TYPE:
+			ret = G_is_c_null_value(&row1.row.c[col]);
+			break;
+		case FCELL_TYPE:
+			ret = G_is_f_null_value(&row1.row.f[col]);
+			break;
+		case DCELL_TYPE:
+			ret = G_is_d_null_value(&row1.row.d[col]);
+			break;
+		default:
+			G_warning("Illegal raster type\n");
+			return 0;
+			break;
+	}
+
+	return ret;
+}
+
+
+int
+G_str_r(RASTER_ROW row1, int col, char *str, int width, int prec)
+{
+	if(str == NULL){
+		G_warning("G_str_r(): str == NULL");
+		return 0;
+	}
+
+	switch(row1.type)
+	{
+		case CELL_TYPE:
+			sprintf(str, "%*d", width, row1.row.c[col]);
+			break;
+		case FCELL_TYPE:
+			sprintf(str, "%*.*f", width, prec, row1.row.f[col]);
+			break;
+		case DCELL_TYPE:
+			sprintf(str, "%*.*lf", width, prec, row1.row.d[col]);
+			break;
+		default:
+			G_warning("Illegal raster type\n");
+			return 0;
+			break;
+	}
+
+	if(width <= 0){
+		int	i, j, l;
+
+		l = strlen(str);
+		for(i=0; i<l && str[i]==' '; i++);
+		for(j=i; j<=l; j++)
+			str[j-i] = str[j];
+	}
+
+	return strlen(str);
+}
+
+/**/
+
+double
+G_get_r2(RASTER_ROW2 row2, int row, int col)
+{
+	double	ret;
+
+	switch(row2.type)
+	{
+		case CELL_TYPE:
+			ret = (double) row2.row[row].c[col];
+			break;
+		case FCELL_TYPE:
+			ret = (double) row2.row[row].f[col];
+			break;
+		case DCELL_TYPE:
+			ret = (double) row2.row[row].d[col];
+			break;
+		default:
+			G_warning("Illegal raster type\n");
+			return 0.0;
+			break;
+	}
+
+	return ret;
+}
+
+
+void
+G_set_r2(RASTER_ROW2 row2, int row, int col, double val)
+{
+	switch(row2.type)
+	{
+		case CELL_TYPE:
+			row2.row[row].c[col] = (CELL) val;
+			break;
+		case FCELL_TYPE:
+			row2.row[row].f[col] = (FCELL) val;
+			break;
+		case DCELL_TYPE:
+			row2.row[row].d[col] = (DCELL) val;
+			break;
+		default:
+			G_warning("Illegal raster type\n");
+			return;
+			break;
+	}
+
+	return;
+}
+
+
+void
+G_set_null_r2(RASTER_ROW2 row2, int row, int col)
+{
+	switch(row2.type)
+	{
+		case CELL_TYPE:
+			G_set_c_null_value(&row2.row[row].c[col], 1);
+			break;
+		case FCELL_TYPE:
+			G_set_f_null_value(&row2.row[row].f[col], 1);
+			break;
+		case DCELL_TYPE:
+			G_set_d_null_value(&row2.row[row].d[col], 1);
+			break;
+		default:
+			G_warning("Illegal raster type\n");
+			return;
+			break;
+	}
+
+	return;
+}
+
+
+int
+G_is_null_r2(RASTER_ROW2 row2, int row, int col)
+{
+	int	ret;
+
+	switch(row2.type)
+	{
+		case CELL_TYPE:
+			ret = G_is_c_null_value(&row2.row[row].c[col]);
+			break;
+		case FCELL_TYPE:
+			ret = G_is_f_null_value(&row2.row[row].f[col]);
+			break;
+		case DCELL_TYPE:
+			ret = G_is_d_null_value(&row2.row[row].d[col]);
+			break;
+		default:
+			G_warning("Illegal raster type\n");
+			return 0;
+			break;
+	}
+
+	return ret;
+}
+
+
+int
+G_str_r2(RASTER_ROW2 row2, int row, int col, char *str, int width, int prec)
+{
+	if(str == NULL){
+		G_warning("G_str_r2(): str == NULL");
+		return 0;
+	}
+
+	switch(row2.type)
+	{
+		case CELL_TYPE:
+			sprintf(str, "%*d", width,
+					row2.row[row].c[col]);
+			break;
+		case FCELL_TYPE:
+			sprintf(str, "%*.*f", width, prec,
+					row2.row[row].f[col]);
+			break;
+		case DCELL_TYPE:
+			sprintf(str, "%*.*lf", width, prec,
+					row2.row[row].d[col]);
+			break;
+		default:
+			G_warning("Illegal raster type\n");
+			return 0;
+			break;
+	}
+
+	if(width <= 0){
+		int	i, j, l;
+
+		l = strlen(str);
+		for(i=0; i<l && str[i]==' '; i++);
+		for(j=i; j<=l; j++)
+			str[j-i] = str[j];
+	}
+
+	return strlen(str);
+}
+
+/**/
+
+double *
+G_get_rs(RASTER_ROW row1, int col, int num, double *val, int idx)
+{
+	int	i;
+
+	if(num <= 0 || val == NULL){
+		G_warning("G_get_rs(): num <= 0 || val == NULL");
+		return NULL;
+	}
+
+	switch(row1.type)
+	{
+		case CELL_TYPE:
+			for(i=0; i<num; i++)
+				val[idx+i] = (double) row1.row.c[col+i];
+			break;
+		case FCELL_TYPE:
+			for(i=0; i<num; i++)
+				val[idx+i] = (double) row1.row.f[col+i];
+			break;
+		case DCELL_TYPE:
+			for(i=0; i<num; i++)
+				val[idx+i] = (double) row1.row.d[col+i];
+			break;
+		default:
+			G_warning("Illegal raster type\n");
+			return;
+			break;
+	}
+
+	return val;
+}
+
+
+void
+G_set_rs(RASTER_ROW row1, int col, double val, int num)
+{
+	int	i;
+
+	if(num <= 0){
+		G_warning("G_set_rs(): num <= 0");
+		return;
+	}
+
+	switch(row1.type)
+	{
+		case CELL_TYPE:
+			for(i=0; i<num; i++)
+				row1.row.c[col+i] = (CELL) val;
+			break;
+		case FCELL_TYPE:
+			for(i=0; i<num; i++)
+				row1.row.f[col+i] = (FCELL) val;
+			break;
+		case DCELL_TYPE:
+			for(i=0; i<num; i++)
+				row1.row.d[col+i] = (DCELL) val;
+			break;
+		default:
+			G_warning("Illegal raster type\n");
+			return;
+			break;
+	}
+
+	return;
+}
+
+
+void
+G_set_null_rs(RASTER_ROW row1, int col, int num)
+{
+	if(num <= 0){
+		G_warning("G_set_null_rs(): num <= 0");
+		return;
+	}
+
+	switch(row1.type)
+	{
+		case CELL_TYPE:
+			G_set_c_null_value(&row1.row.c[col], num);
+			break;
+		case FCELL_TYPE:
+			G_set_f_null_value(&row1.row.f[col], num);
+			break;
+		case DCELL_TYPE:
+			G_set_d_null_value(&row1.row.d[col], num);
+			break;
+		default:
+			G_warning("Illegal raster type\n");
+			return;
+			break;
+	}
+
+	return;
+}
+
+/**/
+
+double *
+G_get_rs2(RASTER_ROW2 row2, int row, int col, int num, double *val, int idx)
+{
+	int	i;
+
+	if(num <= 0 || val == NULL){
+		G_warning("G_get_rs2(): num <= 0 || val == NULL");
+		return NULL;
+	}
+
+	switch(row2.type)
+	{
+		case CELL_TYPE:
+			for(i=0; i<num; i++)
+				val[idx+i] = (double) row2.row[row].c[col+i];
+			break;
+		case FCELL_TYPE:
+			for(i=0; i<num; i++)
+				val[idx+i] = (double) row2.row[row].f[col+i];
+			break;
+		case DCELL_TYPE:
+			for(i=0; i<num; i++)
+				val[idx+i] = (double) row2.row[row].d[col+i];
+			break;
+		default:
+			G_warning("Illegal raster type\n");
+			return;
+			break;
+	}
+
+	return val;
+}
+
+
+void
+G_set_rs2(RASTER_ROW2 row2, int row, int col, double val, int num)
+{
+	int	i;
+
+	if(num <= 0){
+		G_warning("G_set_rs2(): num <= 0");
+		return;
+	}
+
+	switch(row2.type)
+	{
+		case CELL_TYPE:
+			for(i=0; i<num; i++)
+				row2.row[row].c[col+i] = (CELL) val;
+			break;
+		case FCELL_TYPE:
+			for(i=0; i<num; i++)
+				row2.row[row].f[col+i] = (FCELL) val;
+			break;
+		case DCELL_TYPE:
+			for(i=0; i<num; i++)
+				row2.row[row].d[col+i] = (DCELL) val;
+			break;
+		default:
+			G_warning("Illegal raster type\n");
+			return;
+			break;
+	}
+
+	return;
+}
+
+
+void
+G_set_null_rs2(RASTER_ROW2 row2, int row, int col, int num)
+{
+	if(num <= 0){
+		G_warning("G_set_null_rs2(): num <= 0");
+		return;
+	}
+
+	switch(row2.type)
+	{
+		case CELL_TYPE:
+			G_set_c_null_value(&row2.row[row].c[col], num);
+			break;
+		case FCELL_TYPE:
+			G_set_f_null_value(&row2.row[row].f[col], num);
+			break;
+		case DCELL_TYPE:
+			G_set_d_null_value(&row2.row[row].d[col], num);
+			break;
+		default:
+			G_warning("Illegal raster type\n");
+			return;
+			break;
+	}
+
+	return;
+}
+
+
+#elif METHOD == 2	/* End of method 1 */
 
 /*****************************************************************************
- * Old method
+ * METHOD 2
  *****************************************************************************/
-/*
- * char	*
- * r_type_name[] = { "CELL", "FCELL", "DCELL" };
- *
- *		r_type_name[CELL_TYPE]  or r_type_name[0]:	"CELL"
- *		r_type_name[FCELL_TYPE] or r_type_name[1]:	"FCELL"
- *		r_type_name[DCELL_TYPE] or r_type_name[2]:	"DCELL"
- *
- * char	*
- * r_type_spec[] = { "%%d",  "%%f",   "%%lf"  };
- *
- * 		r_type_spec[CELL_TYPE]  or r_type_spec[0]:	"%%d"
- * 		r_type_spec[FCELL_TYPE] or r_type_spec[1]:	"%%f"
- * 		r_type_spec[DCELL_TYPE] or r_type_spec[2]:	"%%lf"
- *
- *		it's not flexible for precision control.
- *		use r_str_value() instead.
- *
- * double
- * r_get_value(RASTER_ROW buf, int col);
- *
- *		returns double value from any types
- *
- * void
- * r_set_value(RASTER_ROW buf, int col, double val)
- *
- * 		sets buf[col] to val
- *
- * int
- * r_is_null_value(RASTER_ROW buf, int col);
- *
- * 		returns 1		if buf[col] is NULL
- * 			0		if buf[col] is not NULL or unknown type
- *
- * int
- * r_str_value(char *str, int width, int prec, RASTER_ROW buf, int col);
- *
- * 		fill str buffer with given value.
- *		for CELL type, prec is meaningless.
- *		if width <= 0, no space is included in str.
- *
- *		returns str length	if successful
- *			0		if given type is unknown
- *
- * void
- * r_copy_value(RASTER_ROW sbuf, int scol, RASTER_ROW dbuf, int dcol);
- *
- *		copies sbuf[scol] value to dbuf[dcol]
- */
 
+/* All macros are defined in libtir.h. */
 
-double
-r_get_value(RASTER_ROW buf, int col)
-{
-	double	ret;
-
-	switch(buf.type)
-	{
-		case CELL_TYPE:
-			ret = (double) buf.row.c[col];
-			break;
-		case FCELL_TYPE:
-			ret = (double) buf.row.f[col];
-			break;
-		case DCELL_TYPE:
-			ret = (double) buf.row.d[col];
-			break;
-		default:
-			G_warning("Illegal raster type\n");
-			return 0.0;
-			break;
-	}
-
-	return ret;
-}
-
-
-void
-r_set_value(RASTER_ROW buf, int col, double val)
-{
-	switch(buf.type)
-	{
-		case CELL_TYPE:
-			buf.row.c[col] = (CELL) val;
-			break;
-		case FCELL_TYPE:
-			buf.row.f[col] = (FCELL) val;
-			break;
-		case DCELL_TYPE:
-			buf.row.d[col] = (DCELL) val;
-			break;
-		default:
-			G_warning("Illegal raster type\n");
-			return;
-			break;
-	}
-
-	return;
-}
-
-
-int
-r_is_null_value(RASTER_ROW buf, int col)
-{
-	int	ret;
-
-	switch(buf.type)
-	{
-		case CELL_TYPE:
-			ret = G_is_c_null_value(&buf.row.c[col]);
-			break;
-		case FCELL_TYPE:
-			ret = G_is_f_null_value(&buf.row.f[col]);
-			break;
-		case DCELL_TYPE:
-			ret = G_is_d_null_value(&buf.row.d[col]);
-			break;
-		default:
-			G_warning("Illegal raster type\n");
-			return 0;
-			break;
-	}
-
-	return ret;
-}
-
-
-int
-r_str_value(char *str, int width, int prec, RASTER_ROW buf, int col)
-{
-	switch(buf.type)
-	{
-		case CELL_TYPE:
-			sprintf(str, "%*d", width, buf.row.c[col]);
-			break;
-		case FCELL_TYPE:
-			sprintf(str, "%*.*f", width, prec, buf.row.f[col]);
-			break;
-		case DCELL_TYPE:
-			sprintf(str, "%*.*lf", width, prec, buf.row.d[col]);
-			break;
-		default:
-			G_warning("Illegal raster type\n");
-			return 0;
-			break;
-	}
-
-	if(width <= 0){
-		int	i, j, l;
-
-		l = strlen(str);
-		for(i=0; i<l && str[i]==' '; i++);
-		for(j=i; j<=l; j++)
-			str[j-i] = str[j];
-	}
-
-	return strlen(str);
-}
-
-
-void
-r_copy_value(RASTER_ROW sbuf, int scol, RASTER_ROW dbuf, int dcol)
-{
-	switch(dbuf.type)
-	{
-		case CELL_TYPE:
-			switch(sbuf.type)
-			{
-				case CELL_TYPE:
-					dbuf.row.c[dcol] =
-						(CELL) sbuf.row.c[scol];
-					break;
-				case FCELL_TYPE:
-					dbuf.row.c[dcol] =
-						(CELL) sbuf.row.f[scol];
-					break;
-				case DCELL_TYPE:
-					dbuf.row.c[dcol] =
-						(CELL) sbuf.row.d[scol];
-					break;
-				default:
-					G_warning("Illegal raster type\n");
-					return;
-					break;
-			}
-			break;
-		case FCELL_TYPE:
-			switch(sbuf.type)
-			{
-				case CELL_TYPE:
-					dbuf.row.f[dcol] =
-						(FCELL) sbuf.row.c[scol];
-					break;
-				case FCELL_TYPE:
-					dbuf.row.f[dcol] =
-						(FCELL) sbuf.row.f[scol];
-					break;
-				case DCELL_TYPE:
-					dbuf.row.f[dcol] =
-						(FCELL) sbuf.row.d[scol];
-					break;
-				default:
-					G_warning("Illegal raster type\n");
-					return;
-					break;
-			}
-			break;
-		case DCELL_TYPE:
-			switch(sbuf.type)
-			{
-				case CELL_TYPE:
-					dbuf.row.d[dcol] =
-						(DCELL) sbuf.row.c[scol];
-					break;
-				case FCELL_TYPE:
-					dbuf.row.d[dcol] =
-						(DCELL) sbuf.row.f[scol];
-					break;
-				case DCELL_TYPE:
-					dbuf.row.d[dcol] =
-						(DCELL) sbuf.row.d[scol];
-					break;
-				default:
-					G_warning("Illegal raster type\n");
-					return;
-					break;
-			}
-			break;
-		default:
-			G_warning("Illegal raster type\n");
-			return;
-			break;
-	}
-
-	return;
-}
-
-
-double
-r_get_value2(RASTER_MAP_TYPE type, RASTER_MAP_ROW data, int col)
-{
-	double	ret;
-
-	switch(type)
-	{
-		case CELL_TYPE:
-			ret = (double) data.c[col];
-			break;
-		case FCELL_TYPE:
-			ret = (double) data.f[col];
-			break;
-		case DCELL_TYPE:
-			ret = (double) data.d[col];
-			break;
-		default:
-			G_warning("Illegal raster type\n");
-			return 0.0;
-			break;
-	}
-
-	return ret;
-}
-
-
-void
-r_set_value2(RASTER_MAP_TYPE type, RASTER_MAP_ROW data, int col, double val)
-{
-	switch(type)
-	{
-		case CELL_TYPE:
-			data.c[col] = (CELL) val;
-			break;
-		case FCELL_TYPE:
-			data.f[col] = (FCELL) val;
-			break;
-		case DCELL_TYPE:
-			data.d[col] = (DCELL) val;
-			break;
-		default:
-			G_warning("Illegal raster type\n");
-			return;
-			break;
-	}
-
-	return;
-}
-
-
-int
-r_is_null_value2(RASTER_MAP_TYPE type, RASTER_MAP_ROW data, int col)
-{
-	int	ret;
-
-	switch(type)
-	{
-		case CELL_TYPE:
-			ret = G_is_c_null_value(&data.c[col]);
-			break;
-		case FCELL_TYPE:
-			ret = G_is_f_null_value(&data.f[col]);
-			break;
-		case DCELL_TYPE:
-			ret = G_is_d_null_value(&data.d[col]);
-			break;
-		default:
-			G_warning("Illegal raster type\n");
-			return 0;
-			break;
-	}
-
-	return ret;
-}
-
-
-int
-r_str_value2(char *str, int width, int prec,
-		RASTER_MAP_TYPE type, RASTER_MAP_ROW data, int col)
-{
-	switch(type)
-	{
-		case CELL_TYPE:
-			sprintf(str, "%*d", width, data.c[col]);
-			break;
-		case FCELL_TYPE:
-			sprintf(str, "%*.*f", width, prec, data.f[col]);
-			break;
-		case DCELL_TYPE:
-			sprintf(str, "%*.*lf", width, prec, data.d[col]);
-			break;
-		default:
-			G_warning("Illegal raster type\n");
-			return 0;
-			break;
-	}
-
-	if(width <= 0){
-		int	i, j, l;
-
-		l = strlen(str);
-		for(i=0; i<l && str[i]==' '; i++);
-		for(j=i; j<=l; j++)
-			str[j-i] = str[j];
-	}
-
-	return strlen(str);
-}
-
-
-void
-r_copy_value2(RASTER_MAP_TYPE stype, RASTER_MAP_ROW sdata, int scol,
-		RASTER_MAP_TYPE dtype, RASTER_MAP_ROW ddata, int dcol)
-{
-	switch(dtype)
-	{
-		case CELL_TYPE:
-			switch(stype)
-			{
-				case CELL_TYPE:
-					ddata.c[dcol] =
-						(CELL) sdata.c[scol];
-					break;
-				case FCELL_TYPE:
-					ddata.c[dcol] =
-						(CELL) sdata.f[scol];
-					break;
-				case DCELL_TYPE:
-					ddata.c[dcol] =
-						(CELL) sdata.d[scol];
-					break;
-				default:
-					G_warning("Illegal raster type\n");
-					return;
-					break;
-			}
-			break;
-		case FCELL_TYPE:
-			switch(stype)
-			{
-				case CELL_TYPE:
-					ddata.f[dcol] =
-						(FCELL) sdata.c[scol];
-					break;
-				case FCELL_TYPE:
-					ddata.f[dcol] =
-						(FCELL) sdata.f[scol];
-					break;
-				case DCELL_TYPE:
-					ddata.f[dcol] =
-						(FCELL) sdata.d[scol];
-					break;
-				default:
-					G_warning("Illegal raster type\n");
-					return;
-					break;
-			}
-			break;
-		case DCELL_TYPE:
-			switch(stype)
-			{
-				case CELL_TYPE:
-					ddata.d[dcol] =
-						(DCELL) sdata.c[scol];
-					break;
-				case FCELL_TYPE:
-					ddata.d[dcol] =
-						(DCELL) sdata.f[scol];
-					break;
-				case DCELL_TYPE:
-					ddata.d[dcol] =
-						(DCELL) sdata.d[scol];
-					break;
-				default:
-					G_warning("Illegal raster type\n");
-					return;
-					break;
-			}
-			break;
-		default:
-			G_warning("Illegal raster type\n");
-			return;
-			break;
-	}
-
-	return;
-}
+#endif			/* End of method 2 */
 

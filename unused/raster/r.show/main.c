@@ -54,7 +54,7 @@ main(int argc, char **argv)
 	buf.type  = G_raster_map_type(name, mapset);
 	buf.row.v = G_allocate_raster_buf(buf.type);
 
-	fprintf(stderr, "%s\n", r_type_name[buf.type]);
+	fprintf(stderr, "%s\n", G_type_name[buf.type]);
 
 	if((fd = G_open_cell_old(name, mapset)) < 0){
 		fprintf(stderr, "\n** %s - could not read **\n", name);
@@ -69,10 +69,10 @@ main(int argc, char **argv)
 		}
 
 		for(col=0; col<cols; col++){
-			if(r_is_null_value(buf, col)){
+			if(G_is_null_r(buf, col)){
 				printf("NULL ");
 			}else{
-				r_str_value(str, 15, 5, buf, col);
+				G_str_r(buf, col, str, 15, 5);
 				printf("%s ", str);
 			}
 		}
@@ -93,22 +93,22 @@ main(int argc, char **argv)
 
 		dval = 123.322;
 		fprintf(stderr, " buf[10] = (%s) %lf\n",
-				r_type_name[buf.type], dval);
+				G_type_name[buf.type], dval);
 
-		r_set_value(buf, 10, dval);
-		r_str_value(str, 10, 5, buf, 10);
+		G_set_r(buf, 10, dval);
+		G_str_r(buf, 10, str, 10, 5);
 		fprintf(stderr, " buf[10] = %s,", str);
 
-		r_str_value(str, 10, 5, tmp, 2);
+		G_str_r(tmp, 2, str, 10, 5);
 		fprintf(stderr, " tmp[2] = %s\n", str);
 
 		fprintf(stderr, "\n copy buf[10] to tmp[2]\n");
-		r_copy_value(buf, 10, tmp, 2);
-		r_str_value(str, 0, 5, tmp, 2);
+		G_set_r(tmp, 2, G_get_r(buf, 10));
+		G_str_r(tmp, 2, str, 0, 5);
 		fprintf(stderr, " tmp[2] = %s,", str);
 
-		r_set_value(tmp, 2, 10*r_get_value(tmp, 2));
-		r_str_value(str, 0, 5, tmp, 2);
+		G_set_r(tmp, 2, 10*G_get_r(tmp, 2));
+		G_str_r(tmp, 2, str, 0, 5);
 		fprintf(stderr, " tmp[2]*10 = %s\n", str);
 	}
 
