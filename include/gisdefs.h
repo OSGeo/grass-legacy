@@ -1038,6 +1038,7 @@ int G_strcasecmp(char *, char *);
 char *G_strstr(char *, char *);
 char *G_strdup(char *);
 char *G_strchg(char *, char, char);
+char *G_str_replace(char*, char*, char*);
 
 /* strip.c */
 int G_strip(register char *);
