@@ -39,7 +39,7 @@ ARCH_BINDIR     = $(GRASS_HOME)/bin.$(ARCH)
 
 # include dirs
 GRASS_INCDIR    = $(GRASS_HOME)/include
-ARCH_INCDIR     = $(ARCH_DISTDIR)/include
+ARCH_INCDIR     = $(ARCH_DISTDIR)/include/grass
 
 GRASS_INC	= -I$(GRASS_INCDIR)
 ARCH_INC	= -I$(ARCH_INCDIR)

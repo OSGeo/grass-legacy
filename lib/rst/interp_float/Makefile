@@ -18,4 +18,5 @@ default: $(ARCH_INCDIR)/interpf.h lib
 
 $(ARCH_INCDIR)/interpf.h: interpf.h
 	$(INSTALL) -m 644 interpf.h $(ARCH_INCDIR)/interpf.h
+	$(INSTALL) -m 644 interpf.h $(ARCH_DISTDIR)/include/interpf.h
 
