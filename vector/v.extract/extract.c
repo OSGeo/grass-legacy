@@ -17,30 +17,29 @@ int
 xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_info *Out,
              int cat_new, int select_type, int dissolve, int field)
 {
-	int line_cat_old, left_cat_old, right_cat_old;
-	int line_cat_new, left_cat_new, right_cat_new;
+	int left_cat_old, right_cat_old;
+	int left_cat_new, right_cat_new;
 	int areal, arear, centroid, line;
 	int type;
 	int i, j;
 	struct line_pnts *Points, *CPoints;
-	struct line_cats *Cats, *CCats;
+	struct line_cats *Cats, *Line_Cats_Old, *Line_Cats_New, *CCats;
 
         /* Initialize the Point structure, ONCE */
         Points = Vect_new_line_struct();
         CPoints = Vect_new_line_struct();
-	Cats = Vect_new_cats_struct ();
+	Line_Cats_Old = Vect_new_cats_struct ();
+	Line_Cats_New = Vect_new_cats_struct ();
 	CCats = Vect_new_cats_struct ();
 	
-	/* TODO: more categories of one field */
+	/* TODO: more categories of one field for dissolve boundaries */
 
         /* Cycle through all lines */
         for ( line = 1; line <= Vect_get_num_lines ( In ); line++) {
 	     G_debug ( 2, "Line = %d", line );
-	     type = Vect_read_line ( In, Points, Cats, line);
+	     type = Vect_read_line ( In, Points, Line_Cats_Old, line);
 	     
-	     line_cat_old = left_cat_old = right_cat_old = -1;
-	     /* get the line category */
-	     Vect_cat_get ( Cats, field, &line_cat_old );
+	     left_cat_old = right_cat_old = -1;
 	     
 	    /* skip anything other than the selected line type and get the category */
 	    if ( type == GV_BOUNDARY ) {
@@ -72,15 +71,18 @@ xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_inf
 	        if ( !(type & select_type) )   continue;
 	    }
 
-	    line_cat_new = left_cat_new = right_cat_new = -1;
+	    left_cat_new = right_cat_new = -1;
+	    Vect_reset_cats ( Line_Cats_New );
 
 	    /* check against the user category list */
 	    for ( i = 0 ; i < num_index ; i++) {
-                if ( line_cat_old == num_array[i] ) {
-		    if ( cat_new >= 0 )
-		        line_cat_new = cat_new;
-		    else 
-			line_cat_new = line_cat_old;
+		for ( j = 0; j < Line_Cats_Old->n_cats; j++ ) {
+		    if ( Line_Cats_Old->field[j] == field && Line_Cats_Old->cat[j] == num_array[i] ) {
+			if ( cat_new >= 0 )
+			    Vect_cat_set ( Line_Cats_New, field, cat_new );
+			else 
+			    Vect_cat_set ( Line_Cats_New, field, Line_Cats_Old->cat[j] );
+		    }
 		}
 
 
@@ -98,22 +100,11 @@ xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_inf
 			else 
 			    right_cat_new = right_cat_old;
 		    }
-
-		    if ( line_cat_old >= 0 && left_cat_new >= 0 && right_cat_new >= 0 ) {
-			/* all found */
-			break;
-		    }
-		} else { 
-		    if ( line_cat_new >= 0 ) {
-			/* found */
-			break;
-		    }
 		}
 	    }
-
 		
 	     /*  Note: type was previously checked, no need to recheck here again. */
-	    if ( line_cat_new >= 0 
+	    if (  Line_Cats_New->n_cats > 0 
 		 || 
 		 ( type == GV_BOUNDARY && (select_type & GV_AREA) 
 		   && ( left_cat_new >= 0 || right_cat_new >= 0) 
@@ -121,14 +112,15 @@ xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_inf
 		 )
 	       ) 
 	    {
-		Vect_field_cat_del ( Cats, field, -1 ); /* delete all cats of given field */
-
-		/* Set new category */
-		if ( line_cat_new >= 0 )
-		     Vect_cat_set (Cats, field, line_cat_new); 
+		/* Copy remaining cats */
+		for ( j = 0; j < Line_Cats_Old->n_cats; j++ ) {
+		    if ( Line_Cats_Old->field[j] != field ) {
+			Vect_cat_set ( Line_Cats_New, Line_Cats_Old->field[j], Line_Cats_Old->cat[j] );
+		    }
+		}
 		
 		/* write line */
-		Vect_write_line (Out, type, Points, Cats);
+		Vect_write_line (Out, type, Points, Line_Cats_New);
 		      
              } /* end for num_index */
         }  /* end lines section */
