@@ -1,0 +1,12 @@
+
+
+r.random - 
+
+r.random allows the user to create a \raster\ map layer and a \sites\
+list file containing geographic coordinates of points whose locations
+have been randomly determined.  The program locates these
+randomly-generated sites within the current \geographic region\ and
+\mask\, if any, on non-zero \category value\ data areas within a
+user-specified raster map layer.
+
+Manual entry for \r.random\
