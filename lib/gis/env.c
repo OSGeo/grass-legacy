@@ -293,7 +293,7 @@ char *G__getenv ( char *name)
     
     /* fake session for HTML generation with parser */
     fakestart = getenv( "GRASS_FAKE_START" );
-    if ( fakestart != NULL )
+    if ( fakestart == NULL )
     {
       if (strcmp (name, "GISBASE") == 0)
 	return getenv (name);
