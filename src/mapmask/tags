@@ -1,0 +1,29 @@
+Mmain	main.c	?^main()$?
+UTMtoARAY	UTMtoARAY.c	?^UTMtoARAY(n)$?
+arcdef	arcdef.c	?^arcdef(radius,row,col,number)$?
+center_fill	circlefill.c	?^center_fill(begin,pts,array,x_center,y_center)$?
+centroid	centroid.c	?^centroid(radius,sides,x_center,y_center)$?
+check_limits	write_recd.c	?^check_limits(row, first_cell, last_cell)$?
+circle	circle.c	?^circle(radius,x_center,y_center)$?
+find_area	find_area.c	?^find_area(num_verticies)$?
+flip_flop	flipflop.c	?^flip_flop(start,end,axis)$?
+front_end	front_end.c	?^front_end(sides,incr)$?
+get_centroid	get_centrd.c	?^get_centroid(x_center,y_center,radius,sides)$?
+get_circle	get_circle.c	?^get_circle(x_center,y_center,radius)$?
+get_coords	get_coors.c	?^get_coords(sides)$?
+give_intro	give_intro.c	?^give_intro()$?
+gripsfill	gripsfill.c	?^gripsfill(num_verticies)$?
+method_text	method_txt.c	?^method_text()$?
+save_area	save_area.c	?^save_area()$?
+set_limits	write_recd.c	?^set_limits(numrows, numcols) $?
+topbtm_fill	circlefill.c	?^topbtm_fill(x,y,start,num,x_center,y_center,r)$?
+vask3	vask3.c	?^vask3()$?
+vask4	vask4.c	?^vask4()$?
+vask5	vask5.c	?^vask5()$?
+vask6	vask6.c	?^vask6()$?
+vask7	vask7.c	?^vask7()$?
+vask8	vask8.c	?^vask8()$?
+vask9_up	vask9_up.c	?^vask9_up(start,stop)$?
+write_record	write_recd.c	?^write_record(row, first_cell, last_cell, file) $?
+xy_verify	xy_verify.c	?^xy_verify(n,err_num)$?
+yadjust	yadjust.c	?^ yadjust(num_verticies)$?
