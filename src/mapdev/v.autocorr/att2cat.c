@@ -5,7 +5,8 @@
 
 double att2cat (struct Map_info *Map, int i)
 {
-  double tmp;
+  double atof (),tmp;
+  extern struct Categories cats;
 
   tmp = atof (G_get_cat (i, &cats));
   if (!tmp)
