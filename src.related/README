@@ -1,0 +1,70 @@
+This tree is updated!
+
+ Bruce Byars - 3.Nov. 1999
+
+ Markus Neteler - 22.Sept. 1998
+
+----------------------------------------------------------------------
+Added:
+   wwwinterface - perl scripts for on-line map serving
+   global-shorelines
+
+Libraries:
+ r.stage3-libs/
+  The netcdf-libraries are required for r.stage3
+ 
+ tcltkgrass/
+  Here tcl/tk 8.0 libraries...
+  These libraries are required to create the TclTKGRASS buttons etc.
+  => stored in a separate package due to minimize the main package size.
+      (http://www.geog.uni-hannover.de/grass/main_source.html)
+
+ xgrass/
+  Here are lesstif - libraries (a MOTIF clone) stored (new 1998),
+  also platform indepentent. You may use lesstiff instead of the commercial
+  MOTIF libraries.
+  => stored in a separate package due to minimize the main package size.
+      (http://www.geog.uni-hannover.de/grass/main_source.html)
+
+Programs in this directory are NOT GRASS commands, but are public domain
+capabilities that may be useful to those advanced GRASS sites.
+
+ LTPlus_4.13/  (new August 1998)
+  This program allows automated raster to vector conversion.
+  -> can be compiled, running
+  => stored in a separate package due to minimize the main package size.
+      (http://www.geog.uni-hannover.de/grass/main_source.html)
+      (http://www.geog.uni-hannover.de/grass/main_linuxbin.html)
+
+ gctp/
+  General Cartographic Transformation Package.  Product of USGS.
+  (MIT modified for State Plane in north-west hemisphere projections.)
+  -> can be compiled, running
+
+
+ mapgen_6.25/   (new April 1998)
+  * mapgen - product of USGS.  Generates cartographic quality output
+             for numerous plotters from geometric or latitude-longitude
+             coordinates.
+  * nrcs/MAPGEN - product of SCS.  Seamlessly marries mapgen to GRASS
+  -> can be compiled now with gmake4.2 !
+  => stored in a separate package due to minimize the main package size.
+      (http://www.geog.uni-hannover.de/grass/main_source.html)
+      (http://www.geog.uni-hannover.de/grass/main_linuxbin.html)
+
+ mpeg_encoder/
+  This code was moved here from r.out.mpeg.
+
+ pbmplus/
+  *removed* - take netpbm_march94 from internet instead.
+
+ rim/ (new August 1998)
+  updated - thanks to Mario Valagussa!
+  marriage to GRASS with src.garden/grass.rim/s.db.rim
+                                              v.db.rim
+
+ xgen/
+  Product of CERL, Purdue, and MIT.  Provides shell script writers
+  with the ability to generate graphical user interfaces via X-windows.
+  Requires X and MOTIF (or lesstiff) to compile.  
+  -> untested
