@@ -21,8 +21,9 @@
  *
  * modified by McCauley in August 1995
  * modified by Mitasova in August 1995
- * modified by Mitasova in November 1999 (dmax, timestamp update, 
+ * modified by Mitasova in November 1999 (dmax, timestamp update) 
  * dnorm independent tension - -t flag
+ * cross-validation -v flag by Jaro Hofierka 2004
  */
 
 #include <stdio.h>
@@ -30,6 +31,7 @@
 #include <unistd.h>
 #include <math.h>
 #include "Vect.h"
+#include "dbmi.h"
 
 #include "gis.h"
 #include "site.h"
@@ -48,9 +50,9 @@
 
 double /* pargr */ ns_res, ew_res;
 double dmin, dmax, ertre;
-int KMAX2, KMIN, KMAX, totsegm, deriv, dtens;
+int KMAX2, KMIN, KMAX, totsegm, deriv, dtens, cv;
 struct Map_info Map;
-struct Map_info TreeMap, OverMap, DeviMap, *fddevi = NULL;
+struct Map_info TreeMap, OverMap;
 struct Categories cats;
 
 struct interp_params params;
@@ -77,7 +79,7 @@ char *treefile = NULL;
 char *overfile = NULL;
 
 FILE *fdinp, *fdredinp, *fdzout, *fddxout, *fddyout, *fdxxout, *fdyyout,
-    *fd4, *fxyout;
+    *fd4, *fxyout, *fddevi = NULL, *fdcvdev = NULL;
 
 FCELL *zero_array_cell;
 
@@ -96,6 +98,7 @@ char *mcurv = NULL;
 char *maskmap = NULL;
 char *redinp = NULL;
 char *devi = NULL;
+char *cvdev = NULL;
 int sdisk, disk, ddisk, sddisk;
 FILE *Tmp_fd_z = NULL;
 char *Tmp_file_z = NULL;
@@ -132,17 +135,19 @@ int main(int argc, char *argv[])
     struct multfunc *functions;
     struct multtree *tree;
     int open_check;
+    char   buf[1024];
 
     struct GModule *module;
     struct
     {
 	struct Option *input, *field, *zcol, *scol, *elev, *slope, *aspect,
 	    *pcurv, *tcurv, *mcurv, *treefile, *overfile, *maskmap, *dmin,
-	    *dmax, *zmult, *fi, *rsm, *segmax, *npmin, *devi, *theta, *scalex;
+	    *dmax, *zmult, *fi, *rsm, *segmax, *npmin, *cvdev, *devi, 
+	    *theta, *scalex;
     } parm;
     struct
     {
-	struct Flag *deriv, *cat, *iselev, *cprght;
+	struct Flag *deriv, *cat, *iselev, *cprght, *cv;
     } flag;
 
 
@@ -151,7 +156,7 @@ int main(int argc, char *argv[])
     module = G_define_module();
     module->description =
 	"Interpolation and topographic analysis from given "
-	"contour data in vector format to GRASS floating point "
+	"point or contour data in vector format to GRASS floating point "
 	"raster format using regularized spline with tension.";
 
     if (G_get_set_window(&cellhd) == -1)
@@ -174,47 +179,11 @@ int main(int argc, char *argv[])
     sprintf(dminchar, "%f", dmin);
 
     fprintf(stdout, "\n");
-    fprintf(stdout, "\n");
-/*  fprintf (stdout, "Version: GRASS5.0 beta,  update: Novemebr 1999\n"); 
-    fprintf (stdout, "\n"); */
-    fprintf(stdout, "Authors: original version -  H.Mitasova, L.Mitas\n");
+    fprintf(stdout, "Authors: original version -  H.Mitasova, L.Mitas, I. Kosinovsky, D.P. Gerdes\n");
     fprintf(stdout,
-	    "         GRASS implementation and segmentation: I.Kosinovsky, D.P. Gerdes\n");
-    fprintf(stdout, "\n");
-    fprintf(stdout,
-	    "Methods used in this program are described in the following papers:\n");
-    fprintf(stdout, "Mitasova, H., and  Mitas, L., 1993,\n");
-    fprintf(stdout, "Interpolation by Regularized Spline with Tension:\n");
-    fprintf(stdout,
-	    "I. Theory  and  implementation.  Mathematical Geology, 25, 641-655.\n");
-    fprintf(stdout, "\n");
-    fprintf(stdout, "Mitasova, H., and Hofierka, L., 1993\n");
-    fprintf(stdout, "Interpolation by Regularized Spline with Tension:\n");
-    fprintf(stdout,
-	    "II. Application to terrain modeling and surface   geometry  analysis.\n");
-    fprintf(stdout, "Mathematical Geology, 25, 657-669.\n");
-    fprintf(stdout, "\n");
-    fprintf(stdout,
-	    "Mitasova, H., Mitas, L., Brown, W.M., Gerdes, D.P., Kosinovsky, I.,\n");
-    fprintf(stdout, "Baker, T., 1995, Modeling spatially and temporally\n");
-    fprintf(stdout,
-	    "distributed phenomena: New methods and tools for GRASS GIS.\n");
-    fprintf(stdout,
-	    "International Journal of Geographic Information Systems,V(9), No(4).\n");
-    fprintf(stdout,
-	    "(special issue on Integration of GIS and Environmental Modeling)\n");
-    fprintf(stdout, "\n");
-    fprintf(stdout,
-	    "The postscript versions of these papers are available via Internet at\n");
-    fprintf(stdout,
-	    "http://www2.gis.uiuc.edu:2280/modviz/papers/listsj.html\n");
-    fprintf(stdout, "\n");
-    fprintf(stdout,
-	    "Please cite these references in publications where the results of this\n");
-    fprintf(stdout, "program were used.\n");
+	    "See manual pages for reference and publications\n");
     fprintf(stdout, "\n");
     fprintf(stdout, "\n");
-
 
     parm.input = G_define_option();
     parm.input->key = "input";
@@ -233,6 +202,7 @@ int main(int argc, char *argv[])
     parm.zcol->type = TYPE_STRING;
     parm.zcol->required = NO;
     parm.zcol->description = "Name of the column containing z values";
+    parm.zcol->answer = "flt1";
 
     parm.scol = G_define_option();
     parm.scol->key = "scol";
@@ -269,8 +239,15 @@ int main(int argc, char *argv[])
     parm.devi->key = "devi";
     parm.devi->type = TYPE_STRING;
     parm.devi->required = NO;
-    parm.devi->gisprompt = "new,site_lists,sites";
-    parm.devi->description = "Name of the output deviations site file";
+    parm.devi->gisprompt = "new,dig,vector";
+    parm.devi->description = "Name of the output deviations vector file";
+
+    parm.cvdev = G_define_option ();
+    parm.cvdev->key = "cvdev";
+    parm.cvdev->type = TYPE_STRING;
+    parm.cvdev->required = NO;
+    parm.cvdev->gisprompt = "new,dig,vector";
+    parm.cvdev->description = ("Name of the output cross-validation vector file");
 
     parm.elev = G_define_option();
     parm.elev->key = "elev";
@@ -393,6 +370,10 @@ int main(int argc, char *argv[])
     flag.cprght->key = 't';
     flag.cprght->description = "Use dnorm independent tension";
 
+    flag.cv = G_define_flag ();
+    flag.cv->key = 'v';
+    flag.cv->description = ("Perform a cross-validation procedure");
+
     if (G_parser(argc, argv))
 	exit(1);
 
@@ -404,6 +385,7 @@ int main(int argc, char *argv[])
     maskmap = parm.maskmap->answer;
     elev = parm.elev->answer;
     devi = parm.devi->answer;
+    cvdev = parm.cvdev->answer;
     slope = parm.slope->answer;
     aspect = parm.aspect->answer;
     pcurv = parm.pcurv->answer;
@@ -412,22 +394,30 @@ int main(int argc, char *argv[])
     treefile = parm.treefile->answer;
     overfile = parm.overfile->answer;
 
-    if (treefile)
+/*    if (treefile)
 	Vect_check_input_output_name(input, treefile, GV_FATAL_EXIT);
 
     if (overfile)
 	Vect_check_input_output_name(input, overfile, GV_FATAL_EXIT);
-
+*/
     if ((elev == NULL) && (pcurv == NULL) && (tcurv == NULL)
 	&& (mcurv == NULL)
-	&& (slope == NULL) && (aspect == NULL) && (devi == NULL))
+	&& (slope == NULL) && (aspect == NULL) && (devi == NULL)
+	&& (cvdev == NULL))
 	fprintf(stderr,
-		"Warning -- you are not outputing any raster or site files\n");
+		"Warning -- you are not outputing any raster or vector files\n");
 
     cond2 = ((pcurv != NULL) || (tcurv != NULL) || (mcurv != NULL));
     cond1 = ((slope != NULL) || (aspect != NULL) || cond2);
     deriv = flag.deriv->answer;
     dtens = flag.cprght->answer;
+    cv = flag.cv->answer;
+
+    if ((cv && cvdev == NULL) || (!(cv) && cvdev != NULL))
+	    G_fatal_error(("Both crossvalidation options (-v flag and cvdev vector output) must be specified"));
+
+    if((elev != NULL || cond1 || cond2 || devi != NULL) && cv )
+	    G_fatal_error("The crossvalidation cannot be computed simultanuously with output grids or devi file");
 
     ertre = 0.1;
     sscanf(parm.dmax->answer, "%lf", &dmax);
@@ -526,21 +516,68 @@ int main(int argc, char *argv[])
     inhead.stime = NULL;
 
     if (devi != NULL) {
-	fprintf(stderr, "Attempting to open deviation file ..\n");
-	Vect_open_new (&DeviMap, devi, 1);
-	/*
-	    devihead.name = devi;
-	    devihead.desc = G_strdup("deviations at sample points");
-	    devihead.desc = (char *) G_malloc(128 * sizeof(char));
-	    sprintf(devihead.desc, "deviations of %s [raster] at %s [sites]",
-		    elev, input);
-	    devihead.time = inhead.time;
-	    devihead.stime = inhead.stime;
-	    devihead.labels = NULL;
-	    devihead.form = NULL;
-        */
-	fddevi = &DeviMap;
+          Pnts = Vect_new_line_struct();
+          Cats2 = Vect_new_cats_struct ();
+          db_init_string (&sql2);
+
+          Vect_open_new (&Map2, devi, 0);
+          Vect_hist_command ( &Map2 );
+          ff = Vect_default_field_info ( &Map2, 1, NULL, GV_1TABLE );
+          Vect_map_add_dblink ( &Map2, 1, NULL, ff->table, "cat", ff->database, ff->driver);
+
+          /* Create new table */
+          db_zero_string (&sql2);
+          sprintf ( buf, "create table %s ( ", ff->table );
+          db_append_string ( &sql2, buf);
+          db_append_string ( &sql2, "cat integer" );
+          db_append_string ( &sql2, ", flt1 double precision" );
+          db_append_string ( &sql2, ")" );
+          G_debug ( 1, db_get_string ( &sql2 ) );
+          driver2 = db_start_driver_open_database ( ff->driver, ff->database );
+          if ( driver2 == NULL )
+             G_fatal_error ( "Cannot open database %s by driver %s", ff->database,ff->driver );
+
+          if (db_execute_immediate (driver2, &sql2) != DB_OK ) {
+                  db_close_database(driver2);
+                  db_shutdown_driver(driver2);
+                  G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql2 )  );
+          }
+          count = 1;
+
     }
+    
+      if (cvdev != NULL)
+   {
+        Pnts = Vect_new_line_struct();
+        Cats2 = Vect_new_cats_struct ();
+        db_init_string (&sql2);
+
+      Vect_open_new (&Map2, cvdev, 0);
+      Vect_hist_command ( &Map2 );
+      ff = Vect_default_field_info ( &Map2, 1, NULL, GV_1TABLE );
+      Vect_map_add_dblink ( &Map2, 1, NULL, ff->table, "cat", ff->database, ff->driver);
+
+      /* Create new table */
+      db_zero_string (&sql2);
+      sprintf ( buf, "create table %s ( ", ff->table );
+      db_append_string ( &sql2, buf);
+      db_append_string ( &sql2, "cat integer" );
+      db_append_string ( &sql2, ", flt1 double precision" );
+      db_append_string ( &sql2, ")" );
+      G_debug ( 1, db_get_string ( &sql2 ) );
+
+      driver2 = db_start_driver_open_database ( ff->driver, ff->database );
+     if ( driver2 == NULL )
+      G_fatal_error ( "Cannot open database %s by driver %s", ff->database,ff->driver );
+
+      if (db_execute_immediate (driver2, &sql2) != DB_OK ) {
+              db_close_database(driver2);
+              db_shutdown_driver(driver2);
+              G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql2 )  );
+
+      }
+        count = 1;
+  }
 
     ertot = 0.;
     if (per)
@@ -621,7 +658,7 @@ int main(int argc, char *argv[])
 		      SCIK1, SCIK2, SCIK3, rsm, elev, slope, aspect, pcurv,
 		      tcurv, mcurv, dmin, x_orig, y_orig, deriv, theta,
 		      scalex, Tmp_fd_z, Tmp_fd_dx, Tmp_fd_dy, Tmp_fd_xx,
-		      Tmp_fd_yy, Tmp_fd_xy, fddevi, inhead.time);
+		      Tmp_fd_yy, Tmp_fd_xy, devi, inhead.time, cv);
 
     IL_init_func_2d(&params, IL_grid_calc_2d, IL_matrix_create,
 		    IL_check_at_points_2d, IL_secpar_loop_2d, IL_crst,
@@ -634,7 +671,7 @@ int main(int argc, char *argv[])
     if (totsegm <= 0)
 	clean_fatal_error("Input failed");
 
-    Vect_set_release_support(&Map);
+    /*Vect_set_release_support(&Map);*/
     Vect_close(&Map);
 
     if (treefile != NULL) {
@@ -761,9 +798,11 @@ int main(int argc, char *argv[])
     if (mcurv != NULL)
 	unlink(Tmp_file_xy);
 
-    if (fddevi != NULL) {
-	Vect_build (fddevi, stderr);
-	Vect_close ( fddevi );
+    if (cvdev != NULL || devi != NULL) {
+	    /*  db_close_database_shutdown_driver ( driver2 );*/
+	    db_close_database (driver2);
+	    Vect_build (&Map2, stderr);
+	    Vect_close (&Map2);
     }
 
     exit(0);
