@@ -76,7 +76,7 @@ sub DoLine {
   if (! $preformat) {
     if (m/^$/) {return 0};
     s#^[ \t]*##;    
-    s#<.*>##g;    
+    s#<[^>]*>##g;    
   }
   return 1;
 }
@@ -92,8 +92,8 @@ sub DoSection {
   s#<A NAME=".*">##i;
   s#^.*<H2>#.SH #i;
   s#^.*<H3>#.SS #i;
-  if (m#^</.*>$#i) {return 0};
-  s#</.*>##ig;
+  if (m#^</[^>]*>$#i) {return 0};
+  s#</[^>]*>##ig;
   s#^<BR>$#.br#i;
   s#<BR>#\n.br\n#i;
   return 1;
