@@ -868,6 +868,8 @@ int G_usage_html (void)
 		}
 		fprintf(stdout, "</b>] ");
 	}
+	else
+	  fprintf(stdout, " ");
 
 	/* print short version first */
 	if(n_opts)
