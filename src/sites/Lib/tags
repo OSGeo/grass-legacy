@@ -1,0 +1,58 @@
+add_site	site.c	/^add_site (site_list, north, east, desc)$/
+announce	announce.c	/^announce (msg)$/
+ascending	sort_int.c	/^static ascending (a ,b)$/
+ask_quad	ask_quad.c	/^ask_quad (quadsize)$/
+center	center.c	/^center (msg,len)	char *msg;$/
+chain	chain.c	/^chain (s)$/
+cmp_sites	eq_sites.c	/^cmp_sites (a, b)$/
+copy_sites	copy_sites.c	/^copy_sites (a, b, clipped)$/
+copyfile	copyfile.c	/^copyfile (filea, fileb)$/
+count_sites	count_site.c	/^count_sites (site_list, clipped)$/
+counter	counter.c	/^counter(n)$/
+counter_reset	counter.c	/^counter_reset (msg, before)$/
+ctof	report.c	/^static double ctof (buf)$/
+descending	sort_int.c	/^static descending (a ,b)$/
+die	die.c	/^die (msg)	char *msg;$/
+easting_to_col	ut_to_cell.c	/^easting_to_col (east, window)$/
+equal_sites	eq_sites.c	/^equal_sites (a, b)$/
+execute	execute.c	/^execute (s)$/
+free_site_list	site.c	/^free_site_list(site_list)$/
+get_site_list	read_sites.c	/^get_site_list (site_list, file)$/
+hitreturn	hitreturn.c	/^hitreturn()$/
+index	index.c	/^index (string, c)$/
+initialize_site_list	site.c	/^initialize_site_list (site_list)$/
+maximum	maximum.c	/^maximum (array, size)$/
+memcopy	memcopy.c	/^memcopy (des, src, n)$/
+menu_handler	menu_hndlr.c	/^menu_handler (menu, buf)$/
+meta_report	meta_reprt.c	/^meta_report (report_file, site_file, layer_file, q/
+new_report_screen	rpt_screen.c	/^new_report_screen()$/
+next_site	site.c	/^next_site (site_list, north, east, desc)$/
+northing_to_row	ut_to_cell.c	/^northing_to_row (north, window)$/
+parse	parse.c	/^parse (buf, items, n, delim)$/
+put_site_list	write_site.c	/^put_site_list (site_list, file, clipped, with_wind/
+read_site_list	read_sites.c	/^read_site_list (site_list, fd)$/
+report_close	report.c	/^report_close (report)$/
+report_find_cat	rprt_finds.c	/^report_find_cat (report, layer_num, cat)$/
+report_find_data	rprt_finds.c	/^report_find_data (report, layer_num, point_num)$/
+report_find_layer	rprt_finds.c	/^report_find_layer (report, layer_num)$/
+report_find_point	rprt_finds.c	/^report_find_point (report, point_num)$/
+report_matrix	report.c	/^report_matrix (report)$/
+report_open	report.c	/^report_open (report_file)$/
+report_open_ref	report.c	/^report_open_ref (report_file, ref)$/
+report_read	report.c	/^report_read (report)$/
+report_read_record	report.c	/^report_read_record (report, type)$/
+report_record	report.c	/^report_record (report, type)$/
+report_scan	report.c	/^report_scan (report)$/
+report_seek_cats	rprt_seeks.c	/^report_seek_cats (report)$/
+report_seek_data	rprt_seeks.c	/^report_seek_data (report)$/
+report_seek_layers	rprt_seeks.c	/^report_seek_layers (report)$/
+report_seek_points	rprt_seeks.c	/^report_seek_points (report)$/
+rewind_site_list	site.c	/^rewind_site_list(site_list)$/
+scan_double	scn_double.c	/^scan_double(buf,n)$/
+scan_int	scan_int.c	/^scan_int(buf,n)$/
+scopy	scopy.c	/^scopy (a, b ,n)$/
+sort_int	sort_int.c	/^sort_int (array, n, order)$/
+trace	trace.c	/^trace (msg)$/
+within_window	within_wnd.c	/^within_window (north, east, window)$/
+write_site_list	write_site.c	/^write_site_list (site_list, fd, clipped, with_wind/
+yes	yes.c	/^yes (question)$/
