@@ -4,8 +4,9 @@ MODULE_TOPDIR = ../..
 SUBDIRS = \
 	lib \
 	monitorcap \
-	XDRIVER \
-	HTMLMAP
+	XDRIVER 
+#commented unless HTMLMAP accepts G_plot_area():
+#	HTMLMAP
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
