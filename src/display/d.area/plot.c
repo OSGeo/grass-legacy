@@ -1,7 +1,4 @@
 /* plot1() - Level One vector reading */
-/* 12-30-1999 Bill Hughes
-     Changed to dynamic allocation of x_screen, y_screen to remove the
-     4096 vector line limit. */
 
 #include "gis.h"
 #include "raster.h"
@@ -21,7 +18,7 @@ int plot1 (char *name, char *mapset, struct line_pnts *Points)
     double N, S, E, W;
     int line;
     int nlines;
-    int *x_screen, *y_screen;
+    int x_screen[4096], y_screen[4096];
 
     /*fd = open_vect (name, mapset);*/
     i = Vect_open_old (&Map, name, mapset);
@@ -56,10 +53,6 @@ int plot1 (char *name, char *mapset, struct line_pnts *Points)
 	     W > window.east || E < window.west)
 		continue;
 
-	if(NULL == (x_screen = (int *)G_malloc(sizeof(int) * Points->n_points))
- 		G_fatal_error("Cannot allocate %d integers",Points->n_points);
-	if(NULL == (y_screen = (int *)G_malloc(sizeof(int) * Points->n_points))
- 		G_fatal_error("Cannot allocate %d integers",Points->n_points);
 	for(i=0; i < Points->n_points; i++)
 	{
 		    x_screen[i] = (int) (D_u_to_d_col( (*(Points->x+i))));
@@ -72,8 +65,6 @@ int plot1 (char *name, char *mapset, struct line_pnts *Points)
 		R_standard_color(linecolor);
 		R_polyline_abs(x_screen,y_screen,Points->n_points);
 	}
-	G_free(x_screen);
-	G_free(y_screen);
     }
     return 0;
 }
