@@ -325,7 +325,6 @@ src/raster/r.patch
 src/raster/r.poly
 src/raster/r.profile
 src/raster/r.proj
-src/raster/r.proj.new
 src/raster/r.quant
 src/raster/r.random
 src/raster/r.random.cells
