@@ -1,0 +1,58 @@
+#!/bin/sh
+Dclear.screen
+Dfont romans
+
+Dnew text 60 99 1 60
+Dnew explain 1 59 1 60
+
+Dchoose text
+Dtext << EOF
+.F romant
+.S 10
+.C green
+           MAP ANALYSIS
+.C white
+.F romats
+.B 0
+.S 9
+   Boolean (and/or) overlays
+   Weighted overlays
+   Mathematical combination
+   Reports
+   Line of sight
+   Corridor selection
+   Ballistic trajectory
+EOF
+
+MAXVAL=5
+
+until
+i=`Dmenu << 'EOF'
+# set the text size in % of entire screen height
+.S 3
+# set the top edge
+.T 10
+# set the LEFT edge
+.L 10
+GIS: choose item of interest 
+  Boolean (and/or) overlays
+  Weighted overlays
+  Mathematical combination
+  Reports
+  Line of sight
+  Corridor selection
+  Ballistic trajectory
+  Return
+EOF
+`
+
+if [ $i -ge $MAXVAL ] 
+	then
+	exit 1
+fi
+
+$0.$i
+
+do
+echo -n
+done
