@@ -5,7 +5,7 @@
 
  * @Copyright David D.Gray <ddgray@armadce.demon.co.uk>
  * 3rd. Feb. 2000
- * Last updated 5th. Jan. 2001
+ * Last updated 17th. Jan. 2001
  *
 
 * This file is part of GRASS GIS. It is free software. You can 
@@ -42,8 +42,7 @@ static int dr_incr = 3000;
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
 
 void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
-		   fieldDescript *cat1, BTREE *hBank, int *fcount,
-		   duff_recs_t *duff_recs) {                        
+		   BTREE *hBank, int *fcount, duff_recs_t *duff_recs) {                        
 
   /* Local */
   int numFields, numPolygons, numRecs0;
@@ -51,6 +50,7 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
   int f_type_recorded = 0;
   int ltype;
   int dbf_q;
+  int no_add;
   int msh;
   DBFHandle hd1;
   char *f_str;
@@ -69,6 +69,8 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
   int dfield; /* Is a particular field defined - loop-check variable */
 
   int nolinks; /* Count how many vertex links we fail to register */
+  int parts_registered = 0;   /* keep a record of how many parts are linked */
+  int shapes_registered = 0;  /* ... and for whole shapes */
   int badring; /* Record if current shape part is to be rejected */
 
   int pnts_diff; /* Flag points that differ in comparing two lines */
@@ -136,6 +138,8 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
   l1->lines = (lineDescript *)malloc( l1->numLines * sizeof( lineDescript ));
   for( i0 = 0; i0 < l1->numLines; ++i0 ) {
 
+    no_add = 0;
+
     if( msh > 0 && i0 >= msh )
       break;
 
@@ -154,11 +158,14 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
 	  if( strncmp(val_f, f_str, wide_f) != 0 ) {
 	    if(add_rec_spec(duff_recs, i0, 1) < 0)
 	      G_fatal_error("Error allocating dynamic memory\n");
-	    continue;
+	    no_add = 1;
 	  }
 	  
-	  else if(add_rec_spec(duff_recs, i0, 0) < 0)
-	    G_fatal_error("Error allocating dynamic memory\n");
+	  else {
+	    shapes_registered++;
+	    if(add_rec_spec(duff_recs, i0, 0) < 0)
+	      G_fatal_error("Error allocating dynamic memory\n");
+	  }
 	    
 	  break;
 	}
@@ -169,11 +176,14 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
 	  if( DBFReadIntegerAttribute(hd1, i0, num_f) != atoi(f_str) ) {
 	    if(add_rec_spec(duff_recs, i0, 1) < 0)
 	      G_fatal_error("Error allocating dynamic memory\n");
-	    continue;
+	    no_add = 1;
 	  }
 
-	  else if(add_rec_spec(duff_recs, i0, 0) < 0)
-	    G_fatal_error("Error allocating dynamic memory\n");
+	  else {
+	    shapes_registered++;
+	    if(add_rec_spec(duff_recs, i0, 0) < 0)
+	      G_fatal_error("Error allocating dynamic memory\n");
+	  }
 
 	  break;
 	}
@@ -181,14 +191,17 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
       case 2:
 	{
 	  /* Double - not wise to use this: but just in case ... */
-	  if( DBFReadDoubleAttribute(hd1, i0, num_f) - atof(f_str) < 1.0e-6 ) {
+	  if( fabs(DBFReadDoubleAttribute(hd1, i0, num_f) - atof(f_str)) > 1.0e-6 ) {
 	    if(add_rec_spec(duff_recs, i0, 1) < 0)
 	      G_fatal_error("Error allocating dynamic memory\n");
-	    continue;
+	    no_add = 1;
 	  }
 
-	  else if(add_rec_spec(duff_recs, i0, 0) < 0)
-	    G_fatal_error("Error allocating dynamic memory\n");
+	  else {
+	    shapes_registered++;
+	    if(add_rec_spec(duff_recs, i0, 0) < 0)
+	      G_fatal_error("Error allocating dynamic memory\n");
+	  }
 
 	  break;
 	}
@@ -223,6 +236,9 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
     j1 = 0;
     for( j0 = 0; j0 < l1->lines[i0].numParts; ++j0 ) {
       int partStart, partEnd, currVertex;
+
+      if(no_add == 0) 
+	parts_registered++;
 
       badring = 0; /* Assume ring is good */
 
@@ -279,9 +295,10 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
 	 
 	*/
 	
-	
-	if( !vertRegister( hBank, &l1->lines[i0].parts[j0], currVertex ) )
-	  nolinks++;
+	if(no_add == 0) {
+	  if( !vertRegister( hBank, &l1->lines[i0].parts[j0], currVertex ) )
+	    nolinks++;
+	}
 
 	/* Increment block's internal counter */
 	currVertex++;
@@ -311,11 +328,6 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
 	   determine circulation
 	*/
 	for( i2 = 0; i2 <= i0; ++i2 ) {
-
-	  if(dbf_q) {
-	    if(duff_recs->duff_rec_list[i2].is_duff == 1)
-	      continue;
-	  }
 
 	  for( j2 = 0; j2 < l1->lines[i2].numParts; ++j2 ) {
 
@@ -405,11 +417,6 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
 
       /* Skip if this is invalid */
 
-      if(dbf_q) {
-	if( duff_recs->duff_rec_list[i0].is_duff )
-	  continue;
-      }
-
       for( j0 = 0; j0 < l1->lines[i0].numParts; ++j0 ) {
 
 	if( l1->lines[i0].parts[j0].duff )
@@ -444,228 +451,7 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
       }
     }
 
-  }
-
-
-  /* Now process the database records and add an entry for each valid
-       ring
-    */
-  
-    /* How many fields? records (initially)? */
-  numFields = DBFGetFieldCount( d1 );
-  *fcount = numFields;
-  numRecs0 = DBFGetRecordCount( d1 );
-
-  /* Now this should be the same as the record count from the shape file */
-  assert( numRecs0 == l1->numLines );
-
-  cat1[0].fldSize = 10;
-  cat1[0].fldDec = 0;
-  cat1[0].nRec = l1->totalValidParts;
-  cat1[0].fldType = FTInteger;
-  strcpy( cat1[0].fldName, "XT__ID" );
-
-  cat1[1].fldSize = 10;
-  cat1[1].fldDec = 0;
-  cat1[1].nRec = l1->totalValidParts;
-  cat1[1].fldType = FTInteger;
-  strcpy( cat1[1].fldName, "XT__ORIG_ID" );
-
-  cat1[2].fldSize = 18;
-  cat1[2].fldDec = 6;
-  cat1[2].nRec = l1->totalValidParts;
-  cat1[2].fldType = FTDouble;
-  strcpy( cat1[2].fldName, "XT__X_LOCN" );
-  
-  cat1[3].fldSize = 18;
-  cat1[3].fldDec = 6;
-  cat1[3].nRec = l1->totalValidParts;
-  cat1[3].fldType = FTDouble;
-  strcpy( cat1[3].fldName, "XT__Y_LOCN" );
-
-  for( i0 = 0; i0 < numFields; ++i0 ) {
-    ftype = DBFGetFieldInfo( d1, i0, fname, &fsize, &fdec );
-    cat1[i0+4].fldSize = fsize;
-    cat1[i0+4].fldDec = fdec;
-    cat1[i0+4].nRec = l1->totalValidParts;
-    cat1[i0+4].fldType = ftype;
-    strcpy( cat1[i0+4].fldName, fname );
-  }
-
-  /* Add records to field descriptors */
-
-  for( i0 = 0; i0 < numFields; ++i0 ) {
-    reclist = ( dbfRecElement * )malloc( l1->totalValidParts * sizeof( dbfRecElement ));
-    recCount = 0;
-    switch( cat1[i0+4].fldType ) {
-    case 0: 
-      for(  j0 = 0; j0 < numRecs0; ++j0 ) {
-
-	if(msh > 0 && j0 >= msh)
-	  break;
-	
-	if(dbf_q) {
-	  if(duff_recs->duff_rec_list[j0].is_duff)
-	    continue;
-	}
-
-	for( k0 = 0; k0 < l1->lines[j0].validParts; ++k0 ) {
-	  reclist[recCount].stringField = (char *)malloc( cat1[i0+4].fldSize + 1 );
-	  strcpy( reclist[recCount++].stringField, DBFReadStringAttribute( d1, j0, i0 ) );
-	}
-      }
-      cat1[i0+4].fldRecs = reclist;
-      break;
-    case 1: 
-      for(  j0 = 0; j0 < numRecs0; ++j0 ) {
-
-	if(msh > 0 && j0 >= msh)
-	  break;
-	
-	if(dbf_q) {
-	  if(duff_recs->duff_rec_list[j0].is_duff)
-	    continue;
-	}
-
-	for( k0 = 0; k0 < l1->lines[j0].validParts; ++k0 ) {
-	  reclist[recCount++].intField = DBFReadIntegerAttribute( d1, j0, i0 );
-	}
-      }
-      cat1[i0+4].fldRecs = reclist;
-      break;
-    case 2: 
-      for(  j0 = 0; j0 < numRecs0; ++j0 ) {
-
-	if(msh > 0 && j0 >= msh)
-	  break;
-	
-	if(dbf_q) {
-	  if(duff_recs->duff_rec_list[j0].is_duff)
-	    continue;
-	}
-
-	for( k0 = 0; k0 < l1->lines[j0].validParts; ++k0 ) {
-	  reclist[recCount++].doubleField = DBFReadDoubleAttribute( d1, j0, i0 );
-	}
-      }
-      cat1[i0+4].fldRecs = reclist;
-      break;
-    default: 
-      for(  j0 = 0; j0 < numRecs0; ++j0 ) {
-
-	if(msh > 0 && j0 >= msh)
-	  break;
-	
-	if(dbf_q) {
-	  if(duff_recs->duff_rec_list[j0].is_duff)
-	    continue;
-	}
-
-	for( k0 = 0; k0 < l1->lines[j0].validParts; ++k0 ) {
-	  reclist[recCount++].intField = 0;
-	}
-      }
-      cat1[i0+4].fldRecs = reclist;
-      break;
-
-    } /* switch */
-  }
-  
-  /* Field 0 is to maintain an index of the entries, starting
-       at 1. Field 1 maintains a record of the original entry
-       in the input, ie. shapeID.
-    */
-  reclist = ( dbfRecElement * )malloc( l1->totalValidParts * sizeof( dbfRecElement ));
-  recCount = 0;
-  for( j0 = 0; j0 < numRecs0; ++j0 ) {
-
-    if(msh > 0 && j0 >= msh)
-      break;
-	
-    if(dbf_q) {
-      if(duff_recs->duff_rec_list[j0].is_duff)
-	continue;
-    }
-
-    for( k0 = 0; k0 < l1->lines[j0].validParts; ++k0 ) {
-      reclist[recCount].intField = recCount + 1;
-      recCount++;
-    }
-  }
-  cat1[0].fldRecs = reclist;
-
-  reclist = ( dbfRecElement * )malloc( l1->totalValidParts * sizeof( dbfRecElement ));
-  recCount = 0;
-  for( j0 = 0; j0 < numRecs0; ++j0 ) {
-
-    if(msh > 0 && j0 >= msh)
-      break;
-	
-    if(dbf_q) {
-      if(duff_recs->duff_rec_list[j0].is_duff)
-	continue;
-    }
-
-    for( k0 = 0; k0 < l1->lines[j0].validParts; ++k0 ) {
-      reclist[recCount++].intField = j0 + 1;
-    }
-  }
-  cat1[1].fldRecs = reclist;
-
-  /* Field 3 is the x-co-ordinate of the record point.
-       Field 4 is the y-co-ordinate of the record point.
-    */
-
-  reclist = ( dbfRecElement * )malloc( l1->totalValidParts * sizeof( dbfRecElement ));
-  recCount = 0;
-  for( j0 = 0; j0 < numRecs0; ++j0 ) {
-
-    if(msh > 0 && j0 >= msh)
-      break;
-	
-    if(dbf_q) {
-      if(duff_recs->duff_rec_list[j0].is_duff)
-	continue;
-    }
-
-    k1 = 0;
-    for( k0 = 0; k0 < l1->lines[j0].validParts; ++k0 ) {
-
-      /* Find the precise valid rings */
-      dfield = 0;
-      while( !dfield ) {
-	dfield = !l1->lines[j0].parts[k1++].duff;
-      }
-      reclist[recCount++].doubleField = l1->lines[j0].parts[k1-1].centroid->xcentroid;
-    }
-  }
-  cat1[2].fldRecs = reclist;
-  
-  reclist = ( dbfRecElement * )malloc( l1->totalValidParts * sizeof( dbfRecElement ));
-  recCount = 0;
-  for( j0 = 0; j0 < numRecs0; ++j0 ) {
-
-    if(msh > 0 && j0 >= msh)
-      break;
-	
-    if(dbf_q) {
-      if(duff_recs->duff_rec_list[j0].is_duff)
-	continue;
-    }
-
-    k1 = 0;
-    for( k0 = 0; k0 < l1->lines[j0].validParts; ++k0 ) {
-
-      /* Find the precise valid rings */
-      dfield = 0;
-      while( !dfield ) {
-	dfield = !l1->lines[j0].parts[k1++].duff;
-      }
-      reclist[recCount++].doubleField = l1->lines[j0].parts[k1-1].centroid->ycentroid;
-    }
-  }
-  cat1[3].fldRecs = reclist;
-  
+  }  
 
   /* Free up buffers and arrays no longer required */
 
@@ -673,6 +459,8 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
   if(field_f) free(field_f);
   if(f_str) free(f_str);
 
+  fprintf(stderr, "Number of shapes registered is %d\n", shapes_registered);
+  fprintf(stderr, "Number of parts registered is %d\n", parts_registered);
 
 }  /* end linedCreate */
 
@@ -1171,10 +959,11 @@ void getTotalParts( lineList *L1, duff_recs_t *dr ) {
     if( msh > 0 && i0 >= msh )
       break; 
 
-    if(dr->alloc_recs > 0) {
+    /* if(dr->alloc_recs > 0) {
       if(dr->duff_rec_list[i0].is_duff)
 	continue;
     }
+    */
 
     allTotal += L1->lines[i0].numParts;
     validTotal += L1->lines[i0].validParts;

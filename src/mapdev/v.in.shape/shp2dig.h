@@ -84,7 +84,6 @@ struct _segmentDescript;
 struct _nodeDescript;
 struct _areaDescript;
 struct _fieldDescript;
-struct duff_rec_;
 struct duff_recs_t_;
 
 
@@ -99,7 +98,6 @@ typedef struct _segmentDescript segmentDescript;
 typedef struct _nodeDescript nodeDescript;
 typedef struct _areaDescript areaDescript;
 typedef struct _fieldDescript fieldDescript;
-typedef struct duff_rec_ duff_rec;
 typedef struct duff_recs_t_ duff_recs_t;
 
 
@@ -245,12 +243,6 @@ struct _fieldDescript {
 
 /* Structures for handling selective extraction */
 
-struct duff_rec_ {
-
-  int rec_no;
-  int is_duff;
-
-};
 
 
 struct duff_recs_t_ {
@@ -258,7 +250,7 @@ struct duff_recs_t_ {
   int n_recs;
   int alloc_recs;
   
-  duff_rec *duff_rec_list;
+  int *duff_rec_list;
 
 };
 
@@ -277,8 +269,7 @@ struct duff_recs_t_ {
 */
 
 void linedCreate( lineList *l1, SHPHandle s1, DBFHandle d1,
-		  fieldDescript *cat1, BTREE *hBank, int *fcount,
-		  duff_recs_t *duff_recs );
+		  BTREE *hBank, int *fcount, duff_recs_t *duff_recs );
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
 /* This function disposes of all the structures built              */
