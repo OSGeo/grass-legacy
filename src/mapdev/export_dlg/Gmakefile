@@ -1,0 +1,43 @@
+EXTRA_CFLAGS	= -I../lib
+
+
+OFILES = \
+	area_one.o\
+	shuffle_dots.o\
+	struct_swap.o\
+	write_lines.o\
+	write_areas.o\
+	write_nodes.o\
+	write_head.o\
+	write.o
+
+CFILES = \
+	area_one.c\
+	shuffle_dots.c\
+	struct_swap.c\
+	write_lines.c\
+	write_areas.c\
+	write_nodes.c\
+	write_head.c\
+	write.c
+
+
+all:  $(BIN)/export.dlg $(BIN)/Vexport.dlg
+	
+
+$(BIN)/export.dlg: export_dlg.o
+	$(CC) $(LDFLAGS) -o $@ export_dlg.o $(GISLIB) $(DIGLIB) $(MATHLIB)
+
+$(BIN)/Vexport.dlg: $(OFILES) Vexport_dlg.o
+	$(CC) $(LDFLAGS) -o $@ Vexport_dlg.o $(OFILES) $(GISLIB) $(DIGLIB) $(MATHLIB)
+
+
+
+saber_src:
+	#load Vexport_dlg.c $(CFLAGS) $(CFILES) $(DIGLIB) $(LIBTRANS) $(LIBATTS) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB) /usr/lib/libc.a
+															 
+
+
+export_dlg.o: export_dlg.h
+Vexport_dlg.o: export_dlg.h
+$(OFILES): export_dlg.h
