@@ -106,7 +106,7 @@ int main ( int argc, char *argv[])
     cut->type       = TYPE_INTEGER;
     cut->required   = NO;
     cut->answer = "0";
-    cut->description= "Minum number of points for a contour line (0 -> no limit)" ;
+    cut->description= "Minimum number of points for a contour line (0 -> no limit)" ;
 
     vect=G_define_option () ;
     vect->key        = "output";
