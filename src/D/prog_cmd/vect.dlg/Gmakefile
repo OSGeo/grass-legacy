@@ -1,0 +1,17 @@
+#  %W%  %G%
+
+OFILES = \
+	command.o \
+	main.o \
+	p_coors.o \
+	p_lines.o
+
+$(BIN)/Dvect.dlg: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(DLGLIB) $(GISLIB)
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
+
+command.o:	options.h
+main.o:	options.h
