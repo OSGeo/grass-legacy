@@ -49,8 +49,8 @@ add_login ( LOGIN *login, char *dr, char *db, char *usr, char *pwd )
     }
     login->data[login->n].driver = G_store ( dr );
     login->data[login->n].database = G_store ( db );
-    login->data[login->n].user = G_store ( usr );
-    login->data[login->n].password = G_store ( pwd );
+    login->data[login->n].user = G_store ( usr?usr:"" );
+    login->data[login->n].password = G_store ( pwd?pwd:"" );
 
     login->n++;
 }
