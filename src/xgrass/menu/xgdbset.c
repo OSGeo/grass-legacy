@@ -69,8 +69,8 @@ static void WriteDatabaseList(void);
 #endif
 
 Boolean         make_location();
-void            UpdateAllLists();
-Boolean         DoCheckMapset();
+static	void            UpdateAllLists();
+static	Boolean         DoCheckMapset();
 
 static void
 ChangeDatabase(s)
@@ -127,15 +127,15 @@ DoCreateSession(w, data, cbs)
         XgWarningDialog(w, "You must enter a session name");
         return;
     }
-    if ( *theDatabase == NULL ) {
+    if ( *theDatabase == '\0' ) {
         XgWarningDialog(w, "Database not set! Please set it and try again.");
         return;
     }
-    if ( *theLocation == NULL ) {
+    if ( *theLocation == '\0' ) {
         XgWarningDialog(w, "Location not set! Please set it and try again.");
         return;
     }
-    if ( *theMapset == NULL ) {
+    if ( *theMapset == '\0' ) {
         XgWarningDialog(w, "Mapset not set! Please set it and try again.");
         return;
     }
@@ -148,7 +148,7 @@ DoCreateSession(w, data, cbs)
         fprintf(fp, "LOCATION_NAME: %s\n", theLocation);
         fprintf(fp, "MAPSET: %s\n", theMapset);
         fclose(fp);
-        if (s != NULL && *s != NULL) {
+        if (s != NULL && *s != '\0') {
             if (access(file, F_OK) == -1) {
                 fprintf(stderr, "No such session:%s", s);
                 exit(1);
@@ -1035,7 +1035,7 @@ SessionListCallback(Widget w, XtPointer data, XmListCallbackStruct *cbs)
     if (count) {
         XmStringGetLtoR(cbs->item, XmSTRING_DEFAULT_CHARSET, &text);
         strcpy(theSession, text);
-        if (text != NULL && *text != NULL) {
+        if (text != NULL && *text != '\0') {
             sprintf(buf, "%s/.xgrass/session/%s", home, text);
             if (access(buf, F_OK) == -1) {
                 fprintf(stderr, "No such session:%s", text);
@@ -1197,7 +1197,7 @@ ReadCurrentValues(void)
         return;
     }
     stat = fgets(line, 255, grassrc);
-    if ( line == NULL || *line == NULL ) {
+    if ( line == NULL || *line == '\0' ) {
 	char file[1024];
         char *text = G_rindex(gisrc,'/');
         int pos;
@@ -1224,26 +1224,26 @@ ReadCurrentValues(void)
 	    strcpy(theDatabase, sdb);
 	    XtFree(sdb);
         } else {
-            *theDatabase = NULL;
+            *theDatabase = '\0';
         }
         if ( sloc ) {
 	    strcpy(theLocation, sloc);
 	    XtFree(sloc);
         } else {
-            *theLocation = NULL;
+            *theLocation = '\0';
         }
         if ( smap ) {
 	    strcpy(theMapset, smap);
 	    XtFree(smap);
         } else {
-            *theMapset = NULL;
+            *theMapset = '\0';
         }
 	fclose(grassrc);
         return;
     }
 
     stat = fgets(line, 255, grassrc);
-    if ( line == NULL || *line == NULL ) {
+    if ( line == NULL || *line == '\0' ) {
 	char file[1024];
         char *text = G_rindex(gisrc,'/');
         int pos;
@@ -1270,26 +1270,26 @@ ReadCurrentValues(void)
 	    strcpy(theDatabase, sdb);
 	    XtFree(sdb);
         } else {
-            *theDatabase = NULL;
+            *theDatabase = '\0';
         }
         if ( sloc ) {
 	    strcpy(theLocation, sloc);
 	    XtFree(sloc);
         } else {
-            *theLocation = NULL;
+            *theLocation = '\0';
         }
         if ( smap ) {
 	    strcpy(theMapset, smap);
 	    XtFree(smap);
         } else {
-            *theMapset = NULL;
+            *theMapset = '\0';
         }
 	fclose(grassrc);
         return;
     }
 
     stat = fgets(line, 255, grassrc);
-    if ( line == NULL || *line == NULL ) {
+    if ( line == NULL || *line == '\0' ) {
 	char file[1024];
         char *text = G_rindex(gisrc,'/');
         int pos;
@@ -1316,19 +1316,19 @@ ReadCurrentValues(void)
 	    strcpy(theDatabase, sdb);
 	    XtFree(sdb);
         } else {
-            *theDatabase = NULL;
+            *theDatabase = '\0';
         }
         if ( sloc ) {
 	    strcpy(theLocation, sloc);
 	    XtFree(sloc);
         } else {
-            *theLocation = NULL;
+            *theLocation = '\0';
         }
         if ( smap ) {
 	    strcpy(theMapset, smap);
 	    XtFree(smap);
         } else {
-            *theMapset = NULL;
+            *theMapset = '\0';
         }
 	fclose(grassrc);
         return;
@@ -1441,13 +1441,13 @@ XgdbsetOk(Widget w, XtPointer data)
     char            buf[256];
     Widget          shell = (Widget) data;
 
-    if (*theDatabase == NULL) {
+    if (*theDatabase == '\0') {
         XgWarningDialog(shell, "Database not set!!");
         return;
-    } else if (*theLocation == NULL) {
+    } else if (*theLocation == '\0') {
         XgWarningDialog(shell, "Location not set!!");
         return;
-    } else if (*theMapset == NULL) {
+    } else if (*theMapset == '\0') {
         XgWarningDialog(shell, "Mapset not set!!");
         return;
     }
@@ -1866,7 +1866,7 @@ StartSession(char *text)
     char            buf[1024];
     char           *home = (char *) getenv("HOME");
 
-    if (text != NULL && *text != NULL) {
+    if (text != NULL && *text != '\0') {
         sprintf(buf, "%s/.xgrass/session/%s", home, text);
         if (access(buf, F_OK) == -1) {
             fprintf(stderr, "No such session:%s", text);
