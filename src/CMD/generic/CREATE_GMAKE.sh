@@ -1,6 +1,10 @@
 :
+ARCH=$1
+HEAD_FILE=`dirname $0`"/../head/head.$ARCH"
 
-HEAD_FILE=`dirname $0`"/../head/head"
+# Save head for this architecture.
+#ARCH="`sed 's/=/ /' $HEAD_FILE | awk '$1 ~ /^ARCH$/ {if(NF>1)print $2}'`"
+#mv $HEAD_FILE $HEAD_FILE.$ARCH
 
 # set (and create) UNIX_BIN
 eval `cat ${HEAD_FILE} | grep UNIX_BIN | sed "s/ //g"`
@@ -14,7 +18,7 @@ fi
 echo ":"                                   > $UNIX_BIN/gmake$NAME_VER
 echo "SRC=$SRC/src"                       >> $UNIX_BIN/gmake$NAME_VER
 echo "CMD=$SRC/src/CMD"                   >> $UNIX_BIN/gmake$NAME_VER
-echo "HEADER=head"                        >> $UNIX_BIN/gmake$NAME_VER
+echo "HEADER=head.$ARCH"                  >> $UNIX_BIN/gmake$NAME_VER
 echo "HASX=yes"                           >> $UNIX_BIN/gmake$NAME_VER
 echo "HASMotif=no"                        >> $UNIX_BIN/gmake$NAME_VER
 echo "MAKE=$MAKE"                         >> $UNIX_BIN/gmake$NAME_VER

@@ -13,11 +13,12 @@
 # Invoked in $SRCDIR/Makefile during pre_install.
 ###################################################
 
-HEAD_FILE=`dirname $0`"/../head/head"
+ARCH=$1
+HEAD_FILE=`dirname $0`"/../head/head.$ARCH"
 GRASSLIST="src/CMD/lists/GRASS"
 
 ####################### Set ARCH and CC variables
-eval `cat ${HEAD_FILE} | grep ARCH | sed "s/ //g"`
+#eval `cat ${HEAD_FILE} | grep ARCH | sed "s/ //g"`
 eval `cat ${HEAD_FILE} | grep CC | sed "s/ //g"`
 
 ####################### Test for the 64bit pipe
