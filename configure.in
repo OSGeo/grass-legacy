@@ -237,6 +237,10 @@ fi
 AC_MSG_RESULT($ZLIBINCPATH)
 AC_SUBST(ZLIBINCPATH)
 
+ac_save_cppflags="$CPPFLAGS"
+CPPFLAGS="$CPPFLAGS $ZLIBINCPATH"
+AC_CHECK_HEADERS(zlib.h)
+
 # With zlib library directory:
 AC_MSG_CHECKING(for location of zlib lib)
 AC_ARG_WITH(zlib-libs,
