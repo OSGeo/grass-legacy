@@ -5,6 +5,7 @@
 main(argc, argv)  char *argv[] ;
 {
 	char *mapset         ;
+	char *D_color_list();
 	char buffer[256]      ;
 	char nbuf[128], ebuf[128] ;
 	extern int stash_away() ;
@@ -93,7 +94,7 @@ main(argc, argv)  char *argv[] ;
     opt10->key        = "color" ;
     opt10->type       = TYPE_STRING ;
     opt10->required   = NO ;
-    opt10->options = "color,white,red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,black";
+    opt10->options    = D_color_list();
     opt10->answer     = "gray" ;
     opt10->description= "Color of vector lines" ;
 
@@ -101,7 +102,8 @@ main(argc, argv)  char *argv[] ;
     opt11->key        = "box" ;
     opt11->type       = TYPE_STRING ;
     opt11->required   = NO ;
-    opt11->options = "white,red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,black,none";
+    opt11->options    = G_malloc(strlen(D_color_list()) + 6);
+    sprintf (opt11->options, "%s,none", D_color_list());
     opt11->answer     = "none" ;
     opt11->description= "Color of bounding box" ;
 
@@ -147,7 +149,7 @@ main(argc, argv)  char *argv[] ;
 	if (! strcmp("none", opt11->answer))
 		box_color = -1 ;
 	else
-		box_color = D_translate_color (opt10->answer) ;
+		box_color = D_translate_color (opt11->answer) ;
 
 /*
 	printf("\n3-d view request:\n") ;
@@ -186,6 +188,21 @@ main(argc, argv)  char *argv[] ;
 	if (0 > G_set_window(&window) )
 		G_fatal_error("Inappropriate window resolution request") ;
 	G_get_set_window(&window) ;
+
+	if(PROJECTION_LL == window.proj){
+	    if(360. < (window.east - window.west + 2.*window.ew_res)){
+		window.east  -= window.ew_res ;
+		window.west  += window.ew_res ;
+		window.cols -= 2 ;
+	    }	
+	    if(180. < (window.north-window.south + 2.*window.ns_res)){
+		window.north -= window.ns_res ;
+		window.south += window.ns_res ;
+		window.rows -= 2 ;
+	    }
+	    if (0 > G_set_window(&window) )
+		G_fatal_error("Inappropriate resolution request");
+	}
 
 	/* adjust window one extra row n, s, e, w */
 	window.rows += 2 ;
