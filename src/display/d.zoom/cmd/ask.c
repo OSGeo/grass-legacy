@@ -6,7 +6,8 @@
 #define NEW_YES
 */
 
-int yes (char *prompt)
+int
+yes (char *prompt)
 {
 #ifdef NEW_YES
     int x, y, b;
@@ -31,7 +32,8 @@ int yes (char *prompt)
 #endif
 }
 
-int just_click (char *msg)
+int
+just_click (char *msg)
 {
     char *text[3];
 
@@ -66,3 +68,4 @@ ask_rotate (void)
 
     return (2==ask(text));
 }
+
