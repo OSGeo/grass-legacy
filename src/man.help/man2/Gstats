@@ -1,0 +1,136 @@
+.\" %W% %G%
+.TH Gstats 2G G-language
+.SH NAME
+Gstats \- Prints area statistics for cell 
+.CT files maps
+.br	
+.I (G Language Tool)
+.SH SYNOPSIS
+\fBGstats\fR [-crvz] \fIlayer1\fR [\fIlayer2\fR] ...
+.SH DESCRIPTION
+.I Gstats 
+prints area statistics for user-specified
+.CT "grid cell data layers." "cell maps."
+The 
+.CT layer "cell map"
+name(s) MUST be supplied on the command line. The output can be saved
+by redirecting it into a file.
+
+If a single 
+.CT layer "cell map"
+is specified, a list of areas in square meters (assuming the
+.CT "coordinate system" "map coordinate system"
+is in meters) for each category in the 
+.CT layer "cell map"
+will be printed.
+(If the -c option is choosen, areas will be stated in number of cells.)
+If multiple 
+.CT layers "cell maps"
+are specified, a cross tabulation table of areas
+for each combination of categories in the 
+.CT "data layers" "cell maps"
+will be printed.
+
+For example, if one 
+.CT "data layer" "cell map"
+is specified, the output would look like:
+
+.nf
+.in +.5i
+1:1350000.00
+2:4940000.00
+3:8870000.00
+.fi
+.in
+
+If 3 
+.CT "data layers," "cell map,"
+a, b, and c, are specified, the output would look like:
+
+.nf
+.in +.5i
+0:0:0:8027500.00
+1:0:0:164227500.00
+2:0:0:31277500.00
+3:0:0:17140000.00
+1:0:1:2177500.00
+2:0:1:2490000.00
+0:1:0:1152500.00
+1:1:0:140092500.00
+2:1:0:24207500.00
+3:1:0:11270000.00
+1:1:1:3355000.00
+2:1:1:1752500.00
+3:1:1:2500.00
+.fi
+.in
+
+Within each grouping, the first field is the category 
+.CT number value
+of
+.CT layer "cell map"
+a, the second is for 
+.CT layer "cell map"
+b, the third is for 
+.CT layer "cell map"
+c,
+and the last is the area in square meters for the particular combination.
+For example, the combination 3,1,1 covered 2500 square meters.
+Fields are separated by colons.
+.SH NOTES
+.I Gstats
+works in the current 
+.CT window "geographic window"
+with the current mask.
+
+If a nicely formatted output is desired, pipe the output into
+a command which can create columnar output. For example, the command:
+
+    \fBGstats a b c | pr -3 | cat -s\fR
+
+will create a 3-column output
+
+.ne 5
+.NF
+1:4:4:10000.00          2:1:5:290000.00         2:4:5:2090000.00
+1:4:5:1340000.00        2:2:5:350000.00         3:1:2:450000.00
+2:1:1:1090000.00        2:4:1:700000.00         3:1:3:5280000.00
+2:1:3:410000.00         2:4:3:10000.00          3:1:5:3140000.00
+.FI
+
+Also,
+the output in the examples given happens to be in sorted order,
+but the output from
+.I Gstats
+on more than one 
+.CT layer "cell map"
+is not guaranteed to be in any particular order.
+If the user desires sorted output, use the unix sort(1) command.
+For example:
+
+    \fBGstats a b c | sort -t: -0n\fR
+
+.SH OPTIONS
+.IP -c
+Prints total cell counts instead of area measurements.
+.IP -r
+Raw data. The data for each cell in the current 
+.CT window "geographic window"
+will be output,
+one cell per line, rather than totals for each distinct combination. If -R is 
+specified, the row:col will be prepended to each output line.
+.IP -v
+Non-verbose. Supresses percent complete messages.
+.IP -z
+Non-zero only.
+Zero data will not be output. For multiple 
+.CT layers "cell maps"
+this means zero in every
+.CT layer "cell map"
+will not be outpout. Non-zero in any 
+.CT layer "cell map"
+will be output.
+.SH SEE ALSO
+\fIGdescribe[2]\fR
+.SH "AUTHOR"
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
