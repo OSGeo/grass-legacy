@@ -71,7 +71,7 @@ int main (int argc, char **argv)
 		  in_ellipse[64],	 /* conversion */
 		  out_datum[64],
 		  out_ellipse[64],
-		  hold;
+		  *hold;
 
 	int       fdi,			 /* input map file descriptor	 */
 	          fdo,			 /* output map file descriptor	 */
