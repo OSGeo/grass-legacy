@@ -1,0 +1,19 @@
+How to debug GRASS modules and libraries with GNU gdb and DDD:
+
+Re-compile the modules and libraries you want to debug with the -g switch to
+the gcc compiler and without the -s switch to the linker: Edit
+src/CMD/head/head and head.in for the above configuration. Remove the file
+in src/CMD/next_step/. Then remove the OBJ.* and LIB.* directories and
+recompile (with gmake5 or with make install).
+
+Now you can start a grass5 session, start up the DDD debugger (ddd&) and
+select the module to debug. The binary in $GISBASE/bin/ is not what you want
+to look at, as this only switches between the interactive version and the
+command line version of the module in many cases. The command line version
+of the module is in $GISBASE/etc/bin/main/cmd, the interactive version in
+$GISBASE/etc/bin/main/inter. For the "contributed" modules, the executable
+is found in $GISBASE/etc/bin/contrib/inter or $GISBASE/etc/bin/contrib/cmd
+respectively.
+
+-- 
+Andreas Lange, andreas.lange@rhein-main.de
