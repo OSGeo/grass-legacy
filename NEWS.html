@@ -1,12 +1,10 @@
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-   <TITLE>GRASS GIS 5.x - new features</TITLE>
-<!-- Created by: (c) 1999-2002 Markus Neteler, ITC-irst, Italy -->
-<!-- email: neteler@itc.it -->
+   <meta name="Author" content="Created by: (c) 1999-2002 Markus Neteler, ITC-irst, Italy">
+   <TITLE>GRASS GIS 5.0.x - new features</TITLE>
 </HEAD>
-<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000EE" VLINK="#551A8B"
-ALINK="#FF0000">
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
 
 <h2>New features in GRASS 5.x - Developers notes</h2>
 [$Date$]
@@ -17,14 +15,62 @@ Many thanks to all contributors!
 <p>
 [Notes:<br>
 <ul>
-<li> The current development version is available at: <a href=http://www.geog.uni-hannover.de/grass/grasscvs.html>GRASS CVS server</a>
-<li> The bug report form is at: <a href=http://www.geog.uni-hannover.de/grass/bugtracking/bugreport.html>bug report form</a>
+<li> The current development version is available at: <a href=http://grass.itc.it/grasscvs.html>GRASS CVS server</a>
+<li> The bug report form is at: <a href=http://grass.itc.it/bugtracking/bugreport.html>bug report form</a>
 <li> The bug-tracking system (known bugs list) find at: <a href=http://intevation.de/rt/webrt>GRASS bug-tracking system</a>
 <li> and here is the <a href=http://intevation.de/rt/webrt?q_status=resolved&q_queue=grass&q_subject=&q_owner=&q_user=&q_user_other=&refresh=0&display=Queue>list of fixed bugs</a>]
 </ul>
 
 <hr>
-<h3><font color="#00FE00">What's new in GRASS 5.0.0/CVS comparing to 5.0.0.pre4</font></h3>
+<h3><font color="#00A000">What's new in GRASS 5.0.1 comparing to 5.0.0</font></h3>
+[GRASS 5.0.1 released 28 January 2003]<p>
+
+<b>Modules fixed/updated</b> (major changes only)
+<ul>
+<li>d.legend: partial rewrite, now in usable condition (Hamish Bowman)
+<li>r.param.scale: fixed c_tol default settings to 0.0001 (Markus Neteler)
+<li>v.report: fixed line length calculation (Radim Blazek)
+<li>v.out.shape: fixed type=area output, island problem, -A flag (Eric Miller)
+</ul>
+
+<b>Source Code:</b><br>
+<ul>
+<li>MacOS X portability fixes (Glynn Clements)
+</ul>
+
+
+<hr>
+<h3><font color="#00A000">What's new in GRASS 5.0.0 comparing to 5.0.0.pre5</font></h3>
+[GRASS 5.0.0 released 5 September 2002]<p>
+
+<b>Modules fixed/updated</b> (major changes only)
+<ul>
+<li>d.dm: added PNG snapshot functionality (Moritz Lennert)
+<li>d.vect: fixed that small areas on level1 were not plotted (Radim Blazek)
+<li>m.in.e00: Added the list= parameter and corrected a format that was 
+    invalid for large INFO tables (Roger Miller)
+<li>NVIZ: fix for z scale range: bug #1202, fix for bug #1196 (remove mask)
+   (Bob Covill)
+<li>ps.map: pattern support for vector maps added (Radim Blazek)
+<li>r.info: -r flag added to only print the range (Markus Neteler)
+<li>r.proj: bordwalk() calls now controlled by -n switch (Glynn Clements)
+<li>r.to.pg: cats/ID support added (Otto Dassau)
+<P>
+<li>CELL driver: fixed crash bug (Glynn Clements)
+<li>deprecated v.in.shape.pg: use v.in.shape + pg.in.dbf instead
+</ul>
+ 
+<b>Source Code:</b><br>
+<ul>
+<li>bugfix for src/libes/edit/ (compile error on some platforms, Eric
+    Miller, Glynn Clements)
+<li>gcc3.x compliance improved (Pavol Cvengros)
+<li>Don't round coordinates for X-Y locations [bug #1228] (Glynn Clements)
+</ul>
+
+<hr>
+<h3><font color="#00A000">What's new in GRASS 5.0.0pre5 comparing to 5.0.0.pre4</font></h3>
+[GRASS 5.0.0pre5 released 25 June 2002]<p>
 
 <b>Modules fixed/updated</b> (major changes only)
 <ul>
@@ -44,14 +90,15 @@ Many thanks to all contributors!
 <b>Source Code:</b><br>
 <ul>
 <li>i18n: internationalization started for grass (Alex Shevlakov)
-<li>configure: fixes for MaxOSX (Jeshua Lacock, Glynn Clements)
+<li>configure: fixes for MaxOSX, fixed 'locale' installation bug (Jeshua Lacock, Glynn Clements)
 <li>projection software: "Krovakgis" projection implemented for Czech and
    Slovak users (Jaro Hofierka, Markus Neteler)
 </ul>
 
 
+
 <hr>
-<h3><font color="#00FE00">What's new in GRASS 5.0.0pre4 comparing to 5.0.0.pre3</font></h3>
+<h3><font color="#00A000">What's new in GRASS 5.0.0pre4 comparing to 5.0.0.pre3</font></h3>
 [GRASS 5.0.0pre4 released 13 May 2002]<p>
 
 <b>Modules fixed/updated</b> (major changes only)
@@ -160,7 +207,7 @@ however, more work on this is required to enable this feature (Glynn Clements)
 </ul>
 
 <hr>
-<h3><font color="#00FE00">What's new in GRASS 5.0.0.pre3 comparing to 5.0.0.pre2</font></h3>
+<h3><font color="#00A000">What's new in GRASS 5.0.0.pre3 comparing to 5.0.0.pre2</font></h3>
 [GRASS 5.0.0pre3 released 16 January 2002]<p>
 
 <b>Modules fixed/updated</b> (major changes only)
@@ -244,7 +291,7 @@ builds (Glynn Clements)
 </menu>
 
 <hr>
-<h3><font color="#00FE00">What's new in GRASS 5.0.0.pre2 comparing to 5.0.0.pre1</font></h3>
+<h3><font color="#00A000">What's new in GRASS 5.0.0.pre2 comparing to 5.0.0.pre1</font></h3>
 
 [GRASS 5.0.0pre2 released 13 September 2001]<p>
 
@@ -314,7 +361,7 @@ code from "NR" (Glynn Clements)
 </menu>
 
 <hr>
-<h3><font color="#00FE00">What's new in GRASS 5.0.0pre1 comparing to beta11</font></h3>
+<h3><font color="#00A000">What's new in GRASS 5.0.0pre1 comparing to beta11</font></h3>
 
 [GRASS 5.0.0pre1 released 20 May 2001]<p>
 
@@ -428,14 +475,14 @@ routines, added GRASS parser routines (Bob Covill)
 
 
 <hr>
-<h3><font color="#00FE00">What's new in GRASS 5 beta11 comparing to beta10</font></h3>
+<h3><font color="#00A000">What's new in GRASS 5 beta11 comparing to beta10</font></h3>
 
 [GRASS 5.0 beta11 released 4 Feb 2001]<p>
 
 <font color="#FF0000">Floating point raster maps and G3D raster volume maps<br>
 in zlib/FLATE compression now due to patent restrictions</font><br>
 (all floating point raster maps and G3D volumes have to be converted - <br>
-see <a href=http://www.geog.uni-hannover.de/grass/announces/announce_lzw_removal.html>announcement</a>)
+see <a href=http://grass.itc.it/announces/announce_lzw_removal.html>announcement</a>)
 <p>
 <b>Modules fixed/updated</b> (major changes only)
 <menu>
@@ -497,7 +544,7 @@ each module (Jan Wagner, not yet finished)
 </menu>
 
 <hr>
-<h3><font color="#00FE00">What's new in GRASS 5 beta10 comparing to beta9</font></h3>
+<h3><font color="#00A000">What's new in GRASS 5 beta10 comparing to beta9</font></h3>
 
 [GRASS 5.0 beta10 released 7 December 2000]
 <p>
@@ -506,7 +553,7 @@ now using "make", later "make install" copies them to their final
 destination (Justin Hickey).
 
 <hr>
-<h3><font color="#00FE00">What's new in GRASS 5 beta9 comparing to beta8</font></h3>
+<h3><font color="#00A000">What's new in GRASS 5 beta9 comparing to beta8</font></h3>
 
 [GRASS 5.0 beta9 released 6 December 2000]
 <p>
@@ -674,7 +721,7 @@ each module (Jan Wagner and others, not yet finished)
 
 <hr>
 <p>
-<h3><font color="#00FE00">What's new in GRASS 5 beta8 comparing to beta7</font></h3>
+<h3><font color="#00A000">What's new in GRASS 5 beta8 comparing to beta7</font></h3>
 
 [GRASS 5 beta8 released 26 July 2000]
 <p>
@@ -791,7 +838,7 @@ each module (Jan Wagner and others, not yet finished)
 
 <hr>
 <p>
-<h3><font color="#00FE00">What's new in GRASS 5 beta7/CVS comparing to beta6</font></h3>
+<h3><font color="#00A000">What's new in GRASS 5 beta7 comparing to beta6</font></h3>
 
 [GRASS 5 beta7 released 20 Apr 2000]
 <p>
@@ -891,7 +938,7 @@ each module (Jan Wagner and others, not yet finished)
 
 <p>
 <hr>
-<h3><font color="#00FE00">What's new in GRASS 5 beta6 comparing to beta5?</font></h3>
+<h3><font color="#00A000">What's new in GRASS 5 beta6 comparing to beta5?</font></h3>
 
 [GRASS 5 beta6 released 16. Feb. 2000]
 <pre>
@@ -955,7 +1002,7 @@ Many thanks to all contributors!
 <hr>
 
 <p>
-<h3><font color="#00FE00">What's new in GRASS 5 beta5 against former beta4?</font></h3>
+<h3><font color="#00A000">What's new in GRASS 5 beta5 against former beta4?</font></h3>
 [GRASS 5 beta5 released 8. Dec. 1999]
 
 <pre>
@@ -1039,13 +1086,13 @@ From now onwards a bug report formula is provided. If you
 find a bug in this GRASS 5 release (beta5), please let us
 know. We try to fix the bugs quickly. Go here for bug report:
 <p>
-<a href=http://www.geog.uni-hannover.de/grass/bugtracking/bugreport.html>
-http://www.geog.uni-hannover.de/grass/bugtracking/bugreport.html</a>
+<a href=http://grass.itc.it/bugtracking/bugreport.html>
+http://grass.itc.it/bugtracking/bugreport.html</a>
 
 <hr>
 
 <p>
-<h3><font color="#00FE00">What's new in GRASS 5.0 beta4 comparing to beta3?</font></h3>
+<h3><font color="#00A000">What's new in GRASS 5.0 beta4 comparing to beta3?</font></h3>
 
 [GRASS 5 beta4 released Oct. 1999]
 
@@ -1085,8 +1132,8 @@ GRASS 5.x represents the first major change in GRASS GIS functionality in
 several years.
 <p>
 Please read <a
-href=http://www.geog.uni-hannover.de/grass/grass5/source/ChangeLog>ChangeLog</a> and <a
-href=http://www.geog.uni-hannover.de/grass/grasscredits.html>CREDITS</a> for authorship.
+href=http://grass.itc.it/grass5/source/ChangeLog>ChangeLog</a> and <a
+href=http://grass.itc.it/grasscredits.html>CREDITS</a> for authorship.
 <p>
 1. New formats:
 <menu>
@@ -1219,14 +1266,16 @@ Werenskiold I, Winkel I, Winkel II, Winkel Tripel
   </pre>
 </menu>
 </menu>
-<a
-href=http://www.geog.uni-hannover.de/grass/grass5/source/snapshot/oldhistory/HISTORY_beta2to4.txt>HISTORY
+<a href=http://grass.itc.it/grass5/source/snapshot/oldhistory/HISTORY_beta2to4.txt>HISTORY
 GRASS 5 beta 2..4</a>
 <hr>
-GRASS Development Team
+<a href=mailto:weblist@grass.itc.it>GRASS Development Team</a>
 <p>
-PhyGeo at University of Hannover, Germany, CAGSR at Baylor University, GMSlabs at University of Illinois
+ITC-irst (Trento, Italy), PhyGeo at University of Hannover, Germany, CAGSR at Baylor University, GMSlabs at University of Illinois
 and worldwide contributors.<br>
-&copy; 1999-2000
+&copy; 1999-2002<p>
+<DIV ALIGN=right><i>Last change:
+$Date$
+</i></DIV>
 </body>
 </html>
