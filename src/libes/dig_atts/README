@@ -1,0 +1,29 @@
+
+                  Attribute File Format
+
+
+
+ The libatts.a is used to read and write from attribute files.
+
+ To use the library:
+ Include atts.h.
+ Call atts_init() to gather index information about the attribute file.
+ Then use the read_line_att()  or read_area_att() to get a specific att.
+
+ There are three functions in the library that can write to the attribute file.
+ There is a write_att_struct() for writing atts to a file by passing an
+ attribute structure.  Write_att() which is passed the information as
+ arguments.  write_att_line() is also passed the line coordinates which are used
+ to calculate the category location point.
+
+  This is an example of an attribute file.
+
+A     619393.63    3730948.07     3     1
+L     619723.63    3730323.07     1     2
+L     619393.63    3730948.07     2     3
+A     610000.63    3730000.07     1     4
+
+  There is also a short paper that contains every little detail of the
+  attribute file format.  There is also a program 't_atts.c' to test the
+  library.
+
