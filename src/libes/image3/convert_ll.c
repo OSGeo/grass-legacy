@@ -38,7 +38,7 @@ int convert_to_ll (Control_Points_LL *cpll, Control_Points_2D *cptemp)
   struct Key_Value  *ll_proj_keys,   *ll_unit_keys;
   double a, es;    /* target ellps paramet */
   char buf[50];
-  char *tmp_bob;
+  char *tmp_ll;
 
    
   /* initialize */
@@ -71,11 +71,9 @@ int convert_to_ll (Control_Points_LL *cpll, Control_Points_2D *cptemp)
 	exit (0);
   }
 
-tmp_bob = G_find_key_value("proj", targ_proj_keys);
+tmp_ll  = G_find_key_value("proj", targ_proj_keys);
 
-fprintf(stderr, "BOBBY %s\n", tmp_bob);
-
-if (!strcmp(tmp_bob, "ll")) return 0;
+if (!strcmp(tmp_ll, "ll")) return 0;
 
 
   /* save the target ellps parameter */
@@ -111,12 +109,8 @@ if (!strcmp(tmp_bob, "ll")) return 0;
   /* loop through all the temp points */
   for (i = 0; i < cptemp->count; i++) {
 
-fprintf(stderr, "BOB -- 3\n");
-
     /* allocate an empty control point */
     I_new_con_point_ll (cpll, 0.0, 0.0, 0.0, 0.0,  0);
-
-fprintf(stderr, "BOB -- 4\n");
 
     /* e1, n1, and status remaing the same */
     cpll->status[i] = cptemp->status[i];
@@ -126,8 +120,6 @@ fprintf(stderr, "BOB -- 4\n");
     east  = cptemp->e2[i];
     north = cptemp->n2[i];
 
-fprintf(stderr, "BOB -- 5\n");
-
     /* There is no pj_do_proj() function in libproj.a Sep-15-1999 */
     if (pj_do_proj (&east, &north, &targ_proj_info, &ll_proj_info) <0) {
        G_fatal_error ("Error in pj_do_proj\n");
@@ -135,8 +127,6 @@ fprintf(stderr, "BOB -- 5\n");
 
     lon = east ;
     lat = north;
-
-fprintf(stderr, "BOB1 -- %f %f\n", lon, lat);
 
     /** set the converted postions into the temp points **/
     cpll->lon2[i] = lon;
@@ -250,8 +240,6 @@ convert_from_ll (Control_Points_LL *cpll, Control_Points_2D *cptemp)
     east  = lon;
     north = lat;
 
-
-fprintf(stderr, "BOB2 -- %f %f\n", east, north);
 
     /** set the converted postions into teh temp points **/
     cptemp->e2[i] = east;
