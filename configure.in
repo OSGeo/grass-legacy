@@ -126,7 +126,7 @@ AC_ARG_ENABLE(another-button,
 
 AC_ARG_ENABLE(socket,
 [  --enable-socket         use socket XDriver (default)],,
-[enable_socket=yes])
+[enable_socket=no])
 
 AC_ARG_ENABLE(fifo,
 [  --enable-fifo           use FIFO XDriver instead of sockets],,
