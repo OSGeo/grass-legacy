@@ -1,0 +1,72 @@
+#!/usr/bin/perl
+
+$newdir="..";
+$map="./link.conf";
+for $arg (@ARGV) {
+    if ( $arg  =~ /-h|help|-help/ )
+    { 
+        print "Usage: link [options]\n";
+        print "Options\n";	 
+        print "-old=DIR   grass 5.0 source directory (required)\n"; 
+        print "-new=DIR   grass 5.1 source directory (default is ..)\n";
+        print "-map=FILE  file mapping old directory structure to new\n";
+        print "           (default is ./link.conf)\n";		 
+	exit;
+    }
+    if ( $arg  =~ s/-old=// ){ $olddir=$arg; }    
+    if ( $arg  =~ s/-new=// ){ $newdir=$arg; }
+    if ( $arg  =~ s/-map=// ){ $map=$arg; }
+}
+
+#Test if dirs exist
+if ( length ($olddir) == 0 ) { die "-old= was not specified\n"; }
+if ( !-d $olddir ) { die "directory: $olddir doesn't exist\n"; }
+if ( !-d $newdir ) { die "directory: $newdir doesn't exist\n"; }
+if ( !-e $map ) { die "file: $map doesn't exist\n"; }
+
+open (MAP, "<$map") or die "Cannot open $map file\n"; 
+while ($r=<MAP>)
+{
+    chomp $r; 
+    $r =~ s/\s+/ /g;
+    $r =~ s/^ +//g;
+    $r =~ s/#.*//;
+    if ( length ($r) > 0 ) 
+    {    
+        ($old, $new)  = split / +/, $r;
+	if ( length ($old) == 0 or length ($new) == 0 ) { next; }
+	if ( -d "$olddir/$old" or -f "$olddir/$old" ) 
+	{ 
+	    lnk ( "$olddir/$old", "$newdir/$new" );
+	    next;
+	}
+	else
+	{
+	    $oldlist = `ls -d $olddir/$old`;
+	    $oldlist =~ s/\s+/ /g;
+	    foreach $o ( split / /, $oldlist )
+	    {
+		$n = $o;
+		$n =~ s/.+\///; 
+		lnk ( "$o", "$newdir/$new/$n" );
+	    }
+	}    
+    }	
+}
+close MAP;  
+
+sub lnk {
+    $oldbase = $oldpath = @_[0];
+    $newpath = @_[1];     
+    $oldbase = ~ s/.+\///;
+    
+    if ( $oldbase =~ /OBJ/  ) { return; }    
+    if ( -e $newpath ) { return; } 
+    
+    $cmd = "ln -s $oldpath $newpath";
+    print "$cmd\n";
+    system $cmd;
+    return;
+}
+
+exit
