@@ -10,7 +10,7 @@ typedef struct _cursor {
     int nrows;             /* number of rows selected by SELECT statement */
 } cursor;  
 
-#ifndef MAIN
+#ifdef MAIN
     SQLHENV	ODenvi;  /* Handle ODBC environment */
     SQLHDBC    	ODconn;      /* Handle connection  */
 #else
