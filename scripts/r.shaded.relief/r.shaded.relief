@@ -1,0 +1,154 @@
+#!/bin/sh
+
+############################################################################
+#
+# MODULE:       r.shaded.relief
+# AUTHOR(S):	CERL
+#               updates: Michael Barton, 2004
+#               updates: Gordon Keith, 2003
+#               updates: Andreas Lange, 2001
+#               updates: David Finlayson, 2001
+#               updates: Markus Neteler, 2001, 1999
+# PURPOSE:	Creates shaded relief map from raster elevation map (DEM)
+# COPYRIGHT:	(C) 1999 - 2004 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+#############################################################################
+#
+#   5 April 2004 - updated for GRASS 5.7 by Michael Barton 
+#
+#   6/2003 fixes for Lat/Long Gordon Keith <gordon.keith@csiro.au>
+#   If n is a number then the ewres and nsres are mulitplied by that scale
+#    to calculate the shading.
+#   If n is the letter M (either case) the number of metres is degree of
+#    latitude is used as the scale.
+#   If n is the letter f then the number of feet in a degree is used.
+#   It scales latitude and longitude equally, so it's only approximately
+#   right, but for shading its close enough. It makes the difference
+#   between an unusable and usable shade.
+#
+#   10/2001 fix for testing for dashes in raster file name
+#        by Andreas Lange <andreas.lange@rhein-main.de>
+#   10/2001 added parser support - Markus Neteler
+#   9/2001 fix to keep NULLs as is (was value 22 before) - Markus Neteler
+#   1/2001 fix for NULL by David Finlayson <david_finlayson@yahoo.com>
+#   11/99 updated $ewres to ewres() and $nsres to nsres()
+#       updated number to FP in r.mapcalc statement Markus Neteler
+
+#% Module
+#%  description: Creates shaded relief map from an elevation map (DEM).
+#% End
+#% option
+#%  key: map
+#%  type: string
+#%  gisprompt: old,cell,raster
+#%  description: Elevation map (Name CANNOT contain dashes '-' or dots '.').
+#%  required : yes
+#% end
+#% option
+#%  key: altitude
+#%  type: integer
+#%  description: Altitude of the sun in degrees above the horizon (must be 1-89).
+#%  required : yes
+#%  answer: 30
+#% end
+#% option
+#%  key: azimuth
+#%  type: integer
+#%  description: Azimuth of the sun in degrees to the east of north (must be 0-360).
+#%  required : yes
+#%  answer: 270
+#% end
+#% option
+#%  key: units
+#%  type: string
+#%  description: Elevation map units.
+#%  required : no
+#%  options: meters,feet
+#%  answer: meters
+#% end
+
+if  [ -z "$GISBASE" ]
+then
+	echo ""
+	echo "You must be in GRASS GIS to run this program"
+	echo ""
+	exit 1
+fi
+
+if   [ "$1" != "@ARGS_PARSED@" ]
+then
+	exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+fi
+
+#default units in meters
+set scale=111120
+
+# set nsres and ewres
+#eval `g.region -g`
+PROG=`basename $0`
+
+alt=$GIS_OPT_altitude
+az=$GIS_OPT_azimuth
+elev=$GIS_OPT_map
+
+eval `g.findfile element=cell file=$elev`
+elev="${name}"
+ELEVSHADE="${name}_relshade" 
+
+if test $alt -lt 0 -o $alt -gt 90
+then
+	echo "Sorry, altitude must be greater than 0 and less than 90"
+	exit 1
+fi
+
+if test $az -lt 0 -o $alt -gt 360
+then
+	echo "Sorry, azimuth must be between 0 and 360"
+	exit 1
+fi
+		
+		
+if [ "$GIS_OPT_units" = "meters" ]
+then
+	scale=111120
+fi
+		
+if [ "$GIS_OPT_units" = "feet" ]
+then
+	scale=370400
+fi
+
+#correct azimuth to East (GRASS convention):
+az=`expr $az - 90`
+
+echo ""
+echo "Running r.mapcalc, please stand by."
+echo "Your new map will be named $ELEVSHADE.  Please consider renaming."
+echo ""
+
+echo "elev = $elev and ELEV = $ELEVSHADE"
+
+# Note: no space allowed after \\:
+r.mapcalc << EOF
+$ELEVSHADE = eval( \\
+ x=($elev[-1,-1] + 2*$elev[0,-1] + $elev[1,-1] \\
+   -$elev[-1,1] - 2*$elev[0,1] - $elev[1,1])/(8.*ewres()*$scale) , \\
+ y=($elev[-1,-1] + 2*$elev[-1,0] + $elev[-1,1] \\
+   -$elev[1,-1] - 2*$elev[1,0] - $elev[1,1])/(8.*nsres()*$scale) , \\
+ slope=90.-atan(sqrt(x*x + y*y)), \\
+ a=round(atan(x,y)), \\
+ a=if(isnull(a),1,a), \\
+ aspect=if(x!=0||y!=0,if(a,a,360.)), \\
+ cang = sin($alt)*sin(slope) + cos($alt)*cos(slope) * cos($az-aspect), \\
+ if(cang < 0.,0.,100.*cang), \\
+ if(isnull(cang), null(), 100.*cang))
+EOF
+
+r.colors $ELEVSHADE color=grey
+
+echo ""
+echo "Shaded relief map created and named $ELEVSHADE. Consider renaming."

@@ -1,0 +1,87 @@
+<H2>DESCRIPTION</H2>
+
+
+<EM>r.shaded.relief</EM> is a Bourne shell (sh(1)) script that
+creates a raster shaded relief map based on current
+resolution settings and on sun altitude and azimuth values
+entered by the user.  The new shaded relief map is
+named <EM>&lt;elevation&gt;.shade</EM> and stored in the user's current
+mapset.  The map is assigned a grey-scale color table.
+
+
+<P>
+
+If no parameters are provided on startup, this program is interactive;
+thus if the user enters the command:
+
+<DL>
+<DD>
+<B>r.shaded.relief</B>
+</DL>
+
+The program then prompts the user to enter values for:
+<OL>
+<LI>The <B>altitude</B> of the sun in degrees above the horizon
+(a value between 0 and 90 degrees), and
+
+<LI>The <B>azimuth</B> of the sun in degrees to the east of north
+(a value between 0 and 360 degrees).
+
+<LI>The name of a raster map layer whose cell category values are to
+provide <B>elevation</B> values for the shaded relief map.  Typically, this
+would be a map layer of elevation;  however, any raster map layer
+can be named.
+
+<LI>The scaling parameter, which compensates for a different horizontal
+<B>scale</B> than vertical scale.
+For example, when a latitude-longitude projection is used with an elevation
+map measured in meters.
+If 'scale' is a number then the ewres and nsres are multiplied by that
+scale to calculate the shading. If 'scale' is 'meters' the number of 
+meters in a degree of latitude is used as the scale.
+If 'scale' is 'feet' then the number of feet in a degree is used.
+The script scales latitude and longitude equally, so
+it's only approximately right, but for shading its close enough. It makes
+the difference between a usable and unusable shade.
+
+</OL>
+
+Specifically, <EM>r.shaded.relief</EM> executes a  
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>
+statement. Refer to the manual entry for 
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM> for an explanation
+of the filtering syntax shown in the above expression.
+See, for example, the section on "The Neighborhood Modifier".
+
+
+<P>
+
+<EM>r.shaded.relief</EM> then runs <EM><a href="r.colors.html">r.colors</A></EM>
+to assign a grey-scale color table to the new shaded relief map.
+
+<H2>FILES</H2>
+
+This program is simply a shell script.  Users are encouraged to make their
+own shell scripts using similar techniques.
+See <KBD>$GISBASE/scripts/r.shaded.relief</KBD>.
+
+<H2>SEE ALSO</H2>
+
+<i>An Algebra for GIS and Image Processing</i>, by Michael Shapiro and Jim
+Westervelt, U.S. Army Construction Engineering Research Laboratory
+(March/1991) (get from GRASS web site).
+
+<P>
+<EM><A HREF="shade.clr.sh.html">shade.clr.sh</A></EM><BR>
+<EM><A HREF="blend.sh.html">blend.sh</A></EM><br>
+<EM><A HREF="g.ask.html">g.ask</A></EM><br>
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+<EM><A HREF="r.colors.html">r.colors</A></EM><br>
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>
+
+<H2>AUTHOR</H2>
+
+Jim Westervelt, U.S. Army Construction Engineering 
+Research Laboratory
+
+<p><i>Last changed: $Date$</i>
