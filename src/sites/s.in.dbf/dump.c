@@ -106,7 +106,7 @@ int DumpFromDBF (char *infile, char *outfile, struct TimeStamp timestamp, int th
 	struct my_string fldstrng;
 
 	static char name[128]="";
-	char headerD[255]="";
+	char headerD[2000]="";
 	char  fname[15];
 	int k, dimension;
 
