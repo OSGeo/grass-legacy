@@ -1,0 +1,1 @@
+cc tdrive.c -o tdrive -ltools_s -lm
