@@ -14,10 +14,10 @@
  * The user must specify the data file name and the thresholds and lighting
  * model desired.  
  *
- * Based on a program outline written by Mike Krogh, NCSA, Feb.,l990
+ * Based on a program outline written by Mike Krogh, NCSA, Feb.,1990
  *
  * written by Jan Moorman for D. Lawrance, Mednet NCSA.
- * rewritten for CERL, August l990
+ * rewritten for CERL, August 1990
  *
  * rewritten by Bill Brown
  *     for UI Geographic Modeling Systems Laboratory February 1996
@@ -33,9 +33,7 @@
 char *check_get_any_dspname();
 
 
-main(argc,argv)
-int argc;
-char *argv[];
+int main(int argc, char *argv[])
 {
     char	*dspout, buff[160], element[160];
     int i; /* counter */
@@ -58,7 +56,7 @@ char *argv[];
     G_gisinit (argv[0]);
 
     name=G_define_option () ;
-    name->key        = "input";
+    name->key        = "grid3";
     name->type       = TYPE_STRING;
     name->required   = YES;
     name->gisprompt  = "old,grid3,3dcell";  
@@ -66,7 +64,7 @@ char *argv[];
     name->description= "Name of an existing 3dcell map" ;
 
     out=G_define_option () ;
-    out->key        = "out";
+    out->key        = "dspf";
     out->type       = TYPE_STRING;
     out->required   = YES;
     out->description= "Name of output display file" ;
