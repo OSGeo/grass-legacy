@@ -37,7 +37,9 @@ main (int argc, char *argv[])
 	if ( strcmp(list[n].alias, "oldvect") == 0 ) p->gisprompt   = "old,dig,vector" ;
 	if ( strcmp(list[n].alias, "labels") == 0 ) p->gisprompt   = "old,paint/labels,paint labels" ;
 	if ( strcmp(list[n].alias, "sites") == 0 ) p->gisprompt   = "old,site_lists,sites" ;
-	/* ?? icon, region, group, 3dview ?*/
+	if ( strcmp(list[n].alias, "region") == 0 ) p->gisprompt   = "old,windows,region" ;
+	if ( strcmp(list[n].alias, "icon") == 0 ) p->gisprompt   = "old,icons,icon" ;
+	/* ?? group, 3dview ?*/
 	p->description = G_malloc (64);
 	sprintf (p->description, "%s file(s) to be removed", list[n].alias);
     }

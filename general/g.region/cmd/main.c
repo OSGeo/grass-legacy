@@ -118,6 +118,7 @@ int main (int argc, char *argv[])
 	parm.region->multiple    = NO;
 	parm.region->type        = TYPE_STRING;
 	parm.region->description = "Set current region from named region";
+	parm.region->gisprompt   = "old,windows,region";
 
 	parm.raster = G_define_option();
 	parm.raster->key         = "raster";
@@ -126,6 +127,7 @@ int main (int argc, char *argv[])
 	parm.raster->multiple    = NO;
 	parm.raster->type        = TYPE_STRING;
 	parm.raster->description = "Set region to match this raster map";
+	parm.raster->gisprompt   = "old,cell,raster";
 
 	parm.vect = G_define_option();
 	parm.vect->key         = "vector";
@@ -134,6 +136,7 @@ int main (int argc, char *argv[])
 	parm.vect->multiple    = NO;
 	parm.vect->type        = TYPE_STRING;
 	parm.vect->description = "Set region to match this vector map";
+	parm.vect->gisprompt   = "old,vector,vector";
 
 	parm.view = G_define_option();
 	parm.view->key         = "3dview";
@@ -206,6 +209,7 @@ int main (int argc, char *argv[])
 	parm.zoom->multiple    = NO;
 	parm.zoom->type        = TYPE_STRING;
 	parm.zoom->description = "Raster map to zoom into";
+	parm.zoom->gisprompt   = "old,cell,raster";
 
 	parm.align = G_define_option();
 	parm.align->key         = "align";
@@ -214,6 +218,7 @@ int main (int argc, char *argv[])
 	parm.align->multiple    = NO;
 	parm.align->type        = TYPE_STRING;
 	parm.align->description = "Raster map to align to";
+	parm.align->gisprompt   = "old,cell,raster";
 
 	parm.save = G_define_option();
 	parm.save->key         = "save";
@@ -221,7 +226,8 @@ int main (int argc, char *argv[])
 	parm.save->required    = NO;
 	parm.save->multiple    = NO;
 	parm.save->type        = TYPE_STRING;
-	parm.save->description = "Name the current region";
+	parm.save->description = "Save the current region to region definition file";
+	parm.save->gisprompt   = "new,windows,region";
 
 	if (G_parser(argc,argv))
 		exit(1);
