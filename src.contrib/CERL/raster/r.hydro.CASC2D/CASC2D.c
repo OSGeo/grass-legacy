@@ -452,7 +452,7 @@ int main (int argc, char *argv[])
 
      parm.outlet=G_define_option();
      /* removed & in parameter definition, Andreas Lange, 11/2000 */
-     parm.outlet-> key       ="outlet_eastnnorthnslope";
+     parm.outlet-> key       ="outlet_eastNnorthNslope";
      parm.outlet-> type      = TYPE_DOUBLE;
      parm.outlet-> required  = YES;
      parm.outlet-> key_desc  ="east,north,bedslope";  
