@@ -11,8 +11,8 @@
 #define UPPER 1
 #define CENTER 2
 
-int multi_text_box_path (int x, int y,
-    int xref, int yref, char *text, int fontsize)
+int multi_text_box_path (double x, double y,
+    int xref, int yref, char *text, int fontsize, float rotate)
 {
     int numlines;
     char *ptr;
@@ -82,18 +82,26 @@ int multi_text_box_path (int x, int y,
     fprintf(PS.fp, "MTBX\n");
 
     /* set box x coordinate */
-    fprintf(PS.fp, "%d ", x);
+    fprintf(PS.fp, "%.2f ", x);
+
+    /* set box y coordinate */
+    fprintf(PS.fp, " %.2f ", y);
+
+    fprintf(PS.fp, "translate %.2f rotate ", rotate);
+
+    fprintf(PS.fp, " 0 "); 
+
     switch (xref)
     {
    	case LEFT: fprintf(PS.fp, "LMX");  break;
-	case RIGHT: fprintf(PS.fp, "CMX"); break;
+	case RIGHT: fprintf(PS.fp, "RMX"); break;
 	case CENTER:
 	default:
 		fprintf(PS.fp, "CMX"); break;
     }
 
-    /* set box y coordinate */
-    fprintf(PS.fp, " %d ", y);
+    fprintf(PS.fp, " 0 "); 
+
     switch (yref)
     {
 	case UPPER: fprintf(PS.fp, "UMY");  break;

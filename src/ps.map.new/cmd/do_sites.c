@@ -133,10 +133,10 @@ int do_sites (void)
 		    iy = (int)y;
 		    if (multi_text)
 		        multi_text_box_path(ix, iy, LEFT, CENTER, desc, 
-				(int)(s + 0.5));
+				(int)(s + 0.5), 0);
 		    else
 		        text_box_path(ix, iy, LEFT, CENTER, desc, 
-				(int)(s + 0.5));
+				(int)(s + 0.5), 0);
 		    set_rgb_color(WHITE);
 		    fprintf(PS.fp, "F ");
 		    set_rgb_color(BLACK);
