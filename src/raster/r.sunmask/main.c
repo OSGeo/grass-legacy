@@ -4,7 +4,7 @@
 
 /*
  * r.sunmask:
- *   Calculates the real shadows from a DEM form
+ *   Calculates the cast shadow areas from a DEM
  *
  * input: DEM (int, float, double)
  * output: binary shadow map
@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-            "Calculates total shadow areas from sun position and DEM.";
+            "Calculates cast shadow areas from sun position and DEM.";
 
     opt1 = G_define_option();
     opt1->key        = "elev" ;
