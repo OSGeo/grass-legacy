@@ -137,7 +137,7 @@ due to limitations of color graphics monitors.
 <P>
 
 Category values that fall beyond the input range will
-become zero.  This allows the user to select a subset of
+become NULL.  This allows the user to select a subset of
 the full category value range for rescaling if desired.
 This also means that the user should know the category
 value range for the input raster map layer.  The user can
@@ -147,7 +147,7 @@ this range, or can obtain it using the
 
 command.  If the category value range is determined using
 <EM>r.rescale</EM>, the input raster map layer is examined,
-and the minimum and maximum non-zero category values are
+and the minimum and maximum non-NULL category values are
 selected as the input range.
 
 <H2>SEE ALSO</H2>
