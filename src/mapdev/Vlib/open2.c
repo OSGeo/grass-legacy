@@ -24,7 +24,7 @@ static char *RW_str = "r";
 			
 
 
-static char name_buf[200];
+static char name_buf[1024];
 
 int
 V2_open_old (Map, name, mapset)
