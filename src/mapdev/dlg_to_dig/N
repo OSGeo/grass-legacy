@@ -1,0 +1,14 @@
+head_conv.c:	G_strncpy (dig->organization, dlg->head.banner, 29);
+head_conv.c:	G_strncpy (dig->date, dlg->head.source_date, 19);
+head_conv.c:	G_strncpy (dig->your_name, "Import from DLG", 19);
+head_conv.c:	G_strncpy (dig->map_name, dlg->head.cart_unit, 40);
+head_conv.c:	G_strncpy (dig->source_date, dlg->head.source_date, 10);
+head_conv.c:	dig->orig_scale = atol (dlg->head.orig_scale);
+head_conv.c:	G_strncpy (dig->line_3, dlg->head.line_3, 72);
+head_conv.c:	dig->plani_zone = dlg->head.plani_zone;
+head_conv.c:	dig->N = greater (dlg->coors.utm_n[NW], dlg->coors.utm_n[NE]);
+head_conv.c:	dig->E = greater (dlg->coors.utm_e[SE], dlg->coors.utm_e[NE]);
+head_conv.c:	dig->W = lesser  (dlg->coors.utm_e[NW], dlg->coors.utm_e[SW]);
+head_conv.c:	dig->S = lesser  (dlg->coors.utm_n[SE], dlg->coors.utm_n[SW]);
+head_conv.c:	dig->digit_thresh = 0.001;	/* hard coding... */
+head_conv.c:	dig->map_thresh = 0.001 * atol (dlg->head.orig_scale);
