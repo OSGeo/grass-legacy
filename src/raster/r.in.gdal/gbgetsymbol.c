@@ -30,7 +30,10 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.3  2002-04-26 15:02:23  glynn
+ * Revision 1.4  2002-04-26 15:05:32  glynn
+ * Improve previous fix; check for either __unix or __unix__
+ *
+ * Revision 1.3  2002/04/26 15:02:23  glynn
  * Various fixes (from Paul Kelly)
  *
  * Revision 1.2  2002/01/22 04:51:23  glynn
@@ -53,7 +56,7 @@
 /* ==================================================================== */
 /*                  Unix Implementation                                 */
 /* ==================================================================== */
-#if defined(__unix)
+#if defined(__unix) || defined(__unix__)
 
 #include <dlfcn.h>
 
