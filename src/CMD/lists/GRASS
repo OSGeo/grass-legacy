@@ -515,5 +515,5 @@ src.contrib/SDTS
 #src.contrib/eurogis/r.to.SVF
 #src.garden/grass.hdf/hdf3
 src.garden/answers/src.answers/raster/r.fill.dir
-src.nonGPL/raster/r.param.scale
-src.nonGPL/display/d.param.scale
+#src.nonGPL/raster/r.param.scale
+#src.nonGPL/display/d.param.scale
