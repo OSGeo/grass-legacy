@@ -207,12 +207,33 @@ int main(argc, argv)
   for (lev = 0; lev < Nl; lev++)
   {
     fprintf (stderr, "\n  Calculating level no. %-10d ", Nl-lev);
-    
+
     z -=lev_res;/* daj input*/
 
-    north = current_region.north + current_region.ns_res/2.0; 
+/*AV*/
+/* BEGIN OF ORIGINAL CODE */
+/*
+    north = current_region.north + current_region.ns_res/2.0;
+*/
+/* END OF ORIGINAL CODE */
 
+/*AV*/
+/* BEGIN OF MY CODE */
+		north = current_region.south - current_region.ns_res/2.0;
+/* END OF MY CODE */
+
+/*AV*/
+/* BEGIN OF ORIGINL CODE */
+/*
     for (row = 0; row < Nr; row++)
+*/
+/* END OF ORIGINAL CODE */
+
+/*AV*/
+/* BEGIN OF MY CODE */
+    for (row = Nr-1; row >= 0; row--)
+/* END OF MY CODE */
+
     {
         /*fprintf (stderr, "%-10d\b\b\b\b\b\b\b\b\b\b", Nl-lev);*/
         G_percent (row, Nr, 2);
@@ -221,9 +242,20 @@ int main(argc, argv)
 	    if(G_get_map_row(maskfd, mask, row) < 0)
 		exit(1);
 	}
-	north -= current_region.ns_res;
-	east = current_region.west - current_region.ew_res/2.0;
 
+/*AV*/
+/* BEGIN OF ORIGINAL CODE */
+/*
+	north -= current_region.ns_res;
+*/
+/* END OF ORIGINAL CODE */
+
+/*AV*/
+/* BEGIN OF MY CODE */
+	north += current_region.ns_res;
+/* END OF MY CODE */
+
+	east = current_region.west - current_region.ew_res/2.0;
 	for (col = 0; col < Nc; col++)
 	{
 	    east += current_region.ew_res;

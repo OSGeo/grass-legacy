@@ -44,7 +44,20 @@ x_y (argc, argv, cell, ncols)
 {
     double y;
 
+/*AV*/
+/* BEGIN OF ORIGINAL CODE */
+/*
     y=current_region.north-(current_row+0.5)*current_region.ns_res;
+*/
+/* END OF ORIGINAL CODE */
+
+/*AV*/
+/* BEGIN OF MY CODE */
+		double tmp_row;
+		tmp_row=(current_region.north-current_region.south)/current_region.ns_res-current_row;
+		y=current_region.north-(tmp_row-0.5)*current_region.ns_res;
+/* END OF MY CODE */
+
     while (ncols-- > 0)
     {
 	*cell++ = y;
