@@ -1,7 +1,7 @@
 
 
 
-g.findfile           GRASS Reference Manual            g.findfile
+g.findfile <main>    GRASS Reference Manual     <main> g.findfile
 
 
 
@@ -42,7 +42,7 @@ DESCRIPTION
                        stated element type) for which to search.
 
 OUTPUT
-     g.findfile writes three lines to standard output:
+     g.findfile writes four lines to standard output:
 
           name='file_name'
           mapset='mapset_name'
@@ -60,14 +60,14 @@ OUTPUT
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-g.findfile           GRASS Reference Manual            g.findfile
+g.findfile <main>    GRASS Reference Manual     <main> g.findfile
 
 
 
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
