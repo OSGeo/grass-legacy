@@ -1,0 +1,132 @@
+
+
+
+
+
+
+_g_e_o_d - _d_i_r_e_c_t _g_e_o_d_e_s_i_c _c_o_m_p_u_t_a_t_i_o_n_s
+_i_n_v_g_e_o_d - _i_n_v_e_r_s_e _g_e_o_d_e_s_i_c _c_o_m_p_u_t_a_t_i_o_n_s
+
+_g_e_o_d [ -_a_c_f_F_p_t_T_w_W [ _a_r_g_s ] ] [ +_a_r_g_s ] file[s]
+_i_n_v_g_e_o_d [ -_a_c_f_F_p_t_T_w_W [ _a_r_g_s ] ] [ +_a_r_g_s ] file[s]
+
+_G_e_o_d (direct) and _i_n_v_g_e_o_d  (inverse)  perform  geodesic
+(Great  Circle)  computations for determining latitude,
+longitude and back azimuth of a terminus point given  a
+initial point latitude, longitude, azimuth and distance
+(direct) or the forward and back azimuths and  distance
+between  an  initial  and  terminus point latitudes and
+longitudes (inverse).
+
+     The  following  runline  control  parameters   can
+appear  in any order: -_a Latitude and longitudes of the
+initial and terminal points, forward and back  azimuths
+and  distance  are  output.   _A  specifies  a character
+employed as the first character  to  denote  a  control
+line  to be passed through without processing.  _F_i_l_e is
+the source file name of  additional  +  option  control
+data for the projection procedures.  _F_o_r_m_a_t is a _p_r_i_n_t_f
+format string to control the output form  of  the  geo-
+graphic  coordinate  values  (f) or distance value (F).
+The default mode is DMS for geographic coordinates  and
+"%.3f"  for  distance.   _N is the number of significant
+fractional digits to employ for  seconds  output  (when
+the  option is not specified, -_w_3 is assumed).  When -_W
+is employed the fields  will  be  constant  width  with
+leading  zeroes.   -_p  This option causes the azimuthal
+values to be output as unsigned numbers between  0  and
+360.
+
+     The +_a_r_g_s run-line arguments are  associated  with
+geodetic  parameters  -_c  option  where the + prefix is
+optional.  The options are processed in left  to  right
+order  from  the  run  line  followed by processing the
+entries in the  -_c  file.   Reentry  of  an  option  is
+ignored  with  the  first  occurance  assumed to be the
+desired value.
+
+     One or more _f_i_l_e_s  (processed  in  left  to  right
+order) specify the source of data to be transformed.  A
+- will specify  the  location  of  processing  standard
+input.  If no files are specified, the input is assumed
+to be from _s_t_d_i_n.
+
+     For direct determinations input data  must  be  in
+latitude,  longitude,  azimuth  and  distance order and
+output will be latitude, longitude and back azimuth  of
+the terminus point.  Latitude, longitude of the initial
+and terminus point are input for the inverse  mode  and
+respective  forward  and  back azimuth from the initial
+and terminus points are output along with the  distance
+
+
+
+                     June 4, 1991
+
+
+
+
+
+                         - 2 -
+
+
+between the points.
+
+     Input geographic coordinates (latitude and  longi-
+tude)  and  azimuthal  data  must  be in DMS format and
+input distance data must be in  units  consistent  with
+the  ellipsoid major axis or sphere radius units.  Out-
+put geographic coordinates will be in DMS  (if  the  -_f
+switch  is not employed) to 0.001" with trailing, zero-
+valued minute-second fields deleted.   Output  distance
+data  will  be  in  the  same units as the ellipsoid or
+sphere radius.
+
+     The Earth's ellipsoidal figure may be selected  in
+the  same manner as program _p_r_o_j by using +_e_l_l_p_s=, +_a=,
++_e_s=, etc.  _G_e_o_d can be used in  the  inverse  mode  by
+specifying +_i_n_v.
+
+     _G_e_o_d may also be used  to  determine  intermediate
+points  along either a geodesic line between two points
+or along an arc of specified distance from a geographic
+point.   In  both cases an initial point must be speci-
+fied with and parameters and either  a  terminus  point
+and  or  a  distance and azimuth from the initial point
+with and must be specified.
+
+     If points along a geodesic are  to  be  determined
+then  either  specifying  the  number  of  intermediate
+points  and/or  specifying  the  incremental   distance
+between points must be specified.
+
+     To determine points along an arc equidistant  from
+the  initial  point  both  and  must be specified which
+determine the respective angular increments and  number
+of points to be determined.
+
+_T_h_o_m_a_s, _P._D.,  _1_9_7_0,  _S_p_h_e_r_o_i_d_a_l  _G_e_o_d_e_s_i_c_s,  _R_e_f_e_r_e_n_c_e
+_S_y_s_t_e_m_s  &  _L_o_c_a_l  _G_e_o_m_e_t_r_y:  U.S.  Naval Oceanographic
+Office, S-138.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                     June 4, 1991
+
+
