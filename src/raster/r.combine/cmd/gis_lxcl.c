@@ -26,6 +26,10 @@ struct yysvf {
 struct yysvf *yyestate;
 extern struct yysvf yysvec[], *yybgin;
 #include "gis_pars.h"
+#ifdef getc
+#undef getc
+#endif
+#define getc mygetc
 
 extern FILE *e_sav_fil ;
 FILE *newinput ;
