@@ -1,6 +1,6 @@
-Ma_b_front	a_b_front.c	/^main()$/
+Ma_b_front	a_b_front.c	/^main(argc,argv)$/
 Ma_b_main	a_b_main.c	/^main(argc, argv)$/
-Mb_a_front	b_a_front.c	/^main()$/
+Mb_a_front	b_a_front.c	/^main(argc,argv)$/
 Mb_a_main	b_a_main.c	/^main(argc, argv)$/
 _get_dtype	r_dlg_head.c	/^_get_dtype(buf, doub)$/
 _put_dtype	read_write.c	/^_put_dtype(buff, value, width, deci)$/
