@@ -1,4 +1,6 @@
 
+#include <unistd.h>
+
 #include "driverlib.h"
 #include "includes.h"
 
@@ -31,6 +33,7 @@ set_size(int minmax)
 		szhints->flags |= PMinSize | PMaxSize;
 
 	XSetWMNormalHints(dpy, grwin, szhints);
+	XFlush(dpy);
 }
 
 void
@@ -43,5 +46,8 @@ void
 Client_Close(void)
 {
 	set_size(0);
+	if (redraw_pid)
+		usleep(50000);
+	Service_Xevent(0);
 }
 

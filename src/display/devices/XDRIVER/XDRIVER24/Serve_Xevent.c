@@ -15,6 +15,7 @@ static void spawnRedrawProcess(void);
 static void checkRedrawProcess(void);
 static void handleResizeEvent(void);
 static void checkFlush(void);
+static void setBusy(int);
 static void setTitleBusy(int);
 
 pid_t redraw_pid;
@@ -127,7 +128,7 @@ static void checkRedrawProcess(void)
 	return;
     }
 
-    setTitleBusy(0);
+    setBusy(0);
     redraw_pid = 0;
 }
 
@@ -212,7 +213,7 @@ static void spawnRedrawProcess(void)
 
     if (pid != 0)	/* parent */
     {
-	setTitleBusy(1);
+	setBusy(1);
 	redraw_pid = pid;
 	list_free(commands);
 	return;
@@ -298,67 +299,78 @@ static void handleResizeEvent(void)
 
 static void checkFlush(void)
 {
-	static struct timeval last_flush;
-	struct timeval now;
-	long delta;
+    static struct timeval last_flush;
+    struct timeval now;
+    long delta;
 
-	if (!needs_flush)
-		return;
+    if (!needs_flush)
+	return;
 
-	if (gettimeofday(&now, NULL) < 0)
-	{
-		perror("Monitor: gettimeofday");
-		return;
-	}
+    if (gettimeofday(&now, NULL) < 0)
+    {
+	perror("Monitor: gettimeofday");
+	return;
+    }
 
-	delta = (now.tv_sec - last_flush.tv_sec) * 1000000 +
-		(now.tv_usec - last_flush.tv_usec);
-	if (last_flush.tv_sec && delta < 250000)
-		return;
+    delta = (now.tv_sec - last_flush.tv_sec) * 1000000 +
+	(now.tv_usec - last_flush.tv_usec);
+    if (last_flush.tv_sec && delta < 250000)
+	return;
 
-	XClearWindow(dpy, grwin);
+    XClearWindow(dpy, grwin);
 
-	last_flush = now;
-	needs_flush = 0;
+    last_flush = now;
+    needs_flush = 0;
 }
 
 static void setTitleBusy(int busy)
 {
 #ifndef X11R3
-	static const char text[] = " [redraw]";
-	XTextProperty prop;
-	char title[1024], *p;
+    static const char text[] = " [redraw]";
+    XTextProperty prop;
+    char title[1024], *p;
 
-	if (!XGetWMName(dpy, grwin, &prop))
-	{
-		fprintf(stderr, "Monitor: XGetWMName failed\n");
-		return;
-	}
+    if (external_window)
+	return;
 
-	if (!prop.value || !prop.nitems || prop.format != 8)
-	{
-		fprintf(stderr, "Monitor: XGetWMName: bad result\n");
-		return;
-	}
+    if (!XGetWMName(dpy, grwin, &prop))
+    {
+	fprintf(stderr, "Monitor: XGetWMName failed\n");
+	return;
+    }
 
-	strcpy(title, prop.value);
-	XFree(prop.value);
+    if (!prop.value || !prop.nitems || prop.format != 8)
+    {
+	fprintf(stderr, "Monitor: XGetWMName: bad result\n");
+	return;
+    }
 
-	p = strstr(title, text);
-	if (p)
-		*p = '\0';
-	if (busy)
-		strcat(title, text);
+    strcpy(title, prop.value);
+    XFree(prop.value);
 
-	prop.value = title;
-	prop.nitems = strlen(title);
+    p = strstr(title, text);
+    if (p)
+	*p = '\0';
+    if (busy)
+	strcat(title, text);
 
-	XSetWMName(dpy, grwin, &prop);
+    prop.value = title;
+    prop.nitems = strlen(title);
+
+    XSetWMName(dpy, grwin, &prop);
 #endif
-	if (busy)
-		XDefineCursor(dpy, grwin, cur_clock);
-	else
-		XUndefineCursor(dpy, grwin);
+}
+
+static void setBusy(int busy)
+{
+    setTitleBusy(busy);
+
+    if (busy)
+	XDefineCursor(dpy, grwin, cur_clock);
+    else
+	XUndefineCursor(dpy, grwin);
+
+    XFlush(dpy);
 }
 
 /*** end Serve_Xevent.c ***/
