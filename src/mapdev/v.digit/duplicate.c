@@ -13,7 +13,7 @@ display_duplicate_lines (Map)
     static int first = 1;
     int start, dir;
     char buf[20];
-    int ret;
+    int ret = 0;
     
 
     if (first)
@@ -113,7 +113,7 @@ bottom:
 leave:
     unset_keyboard ();
 
-    R_flush ();
+    V_flush ();
 
     return ret;
 }
