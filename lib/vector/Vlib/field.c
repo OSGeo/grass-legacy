@@ -21,9 +21,8 @@
 #include "Vect.h"
 #include "gis.h"
 
-
 /*!
- \fn struct dblinks *Vect_dblinks_struct ( void )
+ \fn struct dblinks *Vect_new_dblinks_struct ( void )
  \brief create and init new dblinks ctructure
  \return pointer to new dblinks structure
  \param 
@@ -43,9 +42,8 @@ Vect_new_dblinks_struct ( void )
   return p;
 }
 
-
 /*!
- \fn void Vect_dblinks_struct ( struct dblinks )
+ \fn void Vect_reset_dblinks ( struct dblinks *p )
  \brief reset dblinks structure
  \return 
  \param pointer to existing dblinks structure
@@ -57,7 +55,8 @@ Vect_reset_dblinks ( struct dblinks *p )
 }
 
 /*!
- \fn int Vect_map_add_dblink ( struct dblinks, ... )
+ \fn int Vect_map_add_dblink ( struct Map_info *Map, int number, char *name, char *table, char *key,
+                      char *db, char *driver )
  \brief add new db connection to Map_info structure
  \return 0 OK; -1 error
  \param pointer to existing dblinks structure
@@ -70,7 +69,8 @@ Vect_map_add_dblink ( struct Map_info *Map, int number, char *name, char *table,
 }
     
 /*!
- \fn int Vect_add_dblink ( struct dblinks, ... )
+ \fn int Vect_add_dblink ( struct dblinks *p, int number, char *name, char *table, char *key, 
+                            char *db, char *driver ) 
  \brief add new db connection to dblinks structure
  \return 0 OK; -1 error
  \param pointer to existing dblinks structure
@@ -107,7 +107,7 @@ Vect_add_dblink ( struct dblinks *p, int number, char *name, char *table, char *
 }
 
 /*!
- \fn struct field_info *Vect_get_field_info ( char *m,  int  field, char field_name)
+ \fn struct field_info *Vect_default_field_info ( char *map, int  field, char *field_name, int  type)
  \brief get default information about link to database for new dblink
  \return pointer to new field_info structure
  \param pointer to map name, category field
@@ -120,9 +120,30 @@ struct field_info
     int  type ) /* how many tables are linked to map: GV_1TABLE / GV_MTABLE */
 {
     struct field_info *fi;
-    char buf[500];
+    char buf[1000];
+    char *drv, *db;
     
     G_debug (1, "Vect_default_field_info(): map = %s field = %d", map, field);
+    
+    drv = G__getenv2 ( "GV_DRIVER", G_VAR_MAPSET );
+    db = G__getenv2 ( "GV_DATABASE", G_VAR_MAPSET );
+
+    G_debug (2, "drv = %s db = %s", drv, db );
+
+    if ( drv == NULL && db == NULL ) { /* Set default values and create dbf db dir */
+	G_warning ( "Default driver / database set to:\n"
+		    "driver: dbf\ndatabase: $LOCATION/$MAPSET/dbf/" );
+	G_setenv2 ( "GV_DRIVER", "dbf", G_VAR_MAPSET );
+	G_setenv2 ( "GV_DATABASE", "$LOCATION/$MAPSET/dbf/", G_VAR_MAPSET );
+	sprintf ( buf, "%s/%s/dbf", G_location_path(), G_mapset() );
+	G__make_mapset_element ( "dbf" );
+	drv = G_store ( "dbf" );
+	db = G_store ( "$LOCATION/$MAPSET/dbf" );
+    } else if ( drv == NULL ) {
+       G_fatal_error ( "Default driver is not set" ); 
+    } else if ( db == NULL ) {
+       G_fatal_error ( "Default database is not set" ); 
+    }
     
     fi = (struct field_info *) G_malloc( sizeof(struct field_info) );
     
@@ -142,14 +163,14 @@ struct field_info
     }
     
     fi->key = G_store ( "cat" ); /* Should be: id/fid/gfid/... ? */
-    fi->database = G_store( "$GISDBASE/$LOCATION_NAME/$MAPSET/dbf" );
-    fi->driver = G_store("dbf");
+    fi->database = G_store( db );
+    fi->driver = G_store( drv );
 
     return (fi);
 }
 
 /*!
- \fn struct field_info *Vect_get_dblink (  struct Map_info *Map, int info)
+ \fn struct field_info *Vect_get_dblink (  struct Map_info *Map, int link)
  \brief get information about link to database, variables are substituted by values 
  \return pointer to new field_info structure
  \param pointer Map_info structure, link number
@@ -168,7 +189,12 @@ struct field_info
 
     fi = (struct field_info *) malloc( sizeof(struct field_info) );
     fi->number = Map->dblnk->field[link].number;
-    fi->name = G_store ( Map->dblnk->field[link].name );
+    
+    if ( Map->dblnk->field[link].name != NULL ) 
+        fi->name = G_store ( Map->dblnk->field[link].name );
+    else
+	fi->name = NULL;
+    
     fi->table = G_store ( Map->dblnk->field[link].table );
     fi->key = G_store ( Map->dblnk->field[link].key );
     fi->database = Vect_subst_var ( Map->dblnk->field[link].database, Map->name, Map->mapset );
@@ -369,7 +395,7 @@ Vect_write_dblinks (
 }
 
 /*!
- \fn chart *Vect_subst_var ( char in, char *map, char *mapset, in field)
+ \fn chart *Vect_subst_var ( char *in, char *map, char *mapset ) 
  \brief substitute variable in string
  \return pointer to new string
  \param pointer to map name, pointer to mapset name, pointer to dblinks structure
