@@ -6,7 +6,7 @@
 
 int print_window(struct Cell_head *window,int print_flag, int dist_flag)
 {
-	char *prj, *datum, *ellps;
+	char *prj, *datum, *ellps, *ellps2;
 	int x;
 	char north[30], south[30], east[30], west[30], nsres[30], ewres[30];
 	/* BOB */
@@ -94,10 +94,9 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag)
 	    
             G_set_key_value("proj", "ll", out_proj_info);
 
-	    G_free(ellps);
-            ellps = G_find_key_value("ellps", in_proj_info);
-            if( ellps != NULL )
-                G_set_key_value("ellps", ellps, out_proj_info);
+            ellps2 = G_find_key_value("ellps", in_proj_info);
+            if( ellps2 != NULL )
+                G_set_key_value("ellps", ellps2, out_proj_info);
             else
                 G_set_key_value("ellps", "wgs84", out_proj_info);
 	    
