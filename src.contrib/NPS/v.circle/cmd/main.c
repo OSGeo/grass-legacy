@@ -50,7 +50,10 @@ int main( int argc, char **argv )
   circlesite *bsite;
   int nsites; /*number of sites*/
   int i1,i2,i3;
-
+  struct Categories cats;
+  char catbuffer[80];
+  FILE *f_att = NULL;
+      
 /* Initialize the GIS calls */
   G_gisinit(argv[0]) ;
 
@@ -436,6 +439,16 @@ Area = %f square meters\n",pow((area/(double)M_PI),(double)0.5),area );
        fprintf(stderr, "%i sites found\n",nsites);
    }
 
+   /* write atts file */
+      f_att = G_fopen_new( "dig_att", output);
+      if (f_att == NULL)
+          G_fatal_error("Unable to create attribute file.");
+         
+   /*     Create empty dig_cats file            */
+   G_init_cats( (CELL)0,"",&cats);
+   if (G_write_vector_cats(output, &cats) != 1)
+       G_fatal_error("Writing dig_cats file");
+
   for (i1=0;i1<nsites;i1++)
    {
     for (deg=0; deg <= 360; deg++)
@@ -444,6 +457,9 @@ Area = %f square meters\n",pow((area/(double)M_PI),(double)0.5),area );
       n =  radius * sin( (double)(deg) * theta ); 
       x[deg] = bsite[i1].x + e;
       y[deg] = bsite[i1].y + n;
+      
+
+
       if (once==0)
        {
         max_x = x[deg];
@@ -461,6 +477,25 @@ Area = %f square meters\n",pow((area/(double)M_PI),(double)0.5),area );
     Vect_write_line(&map,AREA,pnts);
     count += 1;
    }
+ 
+  /* cycle again through the sites list */
+  for (i1=0;i1<nsites;i1++)
+   {
+      sprintf(catbuffer, "%g", bsite[i1].z);
+      fprintf( stderr, "%s\n", catbuffer);
+      /* write att */
+      fprintf( f_att, "A  %-12f  %-12f  %s \n",
+      		   bsite[i1].x, bsite[i1].y, catbuffer);
+      		   
+      /* copy z value from sites as vector cat */
+      if (G_set_cat(i1+1, catbuffer, &cats) != 1)
+         G_fatal_error("Error setting category in dig_cats");
+         
+      count += 1;
+   }
+   
+  /* update cats file with new values */
+  G_write_vector_cats(output, &cats) != 0;                                
 
   /* Initialize "dig_head" structure "local_head" with vector info. */
   local_head = (struct dig_head *) G_malloc (sizeof(struct dig_head)); 

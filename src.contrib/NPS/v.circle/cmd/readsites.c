@@ -66,10 +66,6 @@ int readsites (FILE *fdsite, int all, int verbose, int field, circlesite **xyz)
 }
 
 
-
-
-
-
 /* Function "Date" provides today's date. */
 int Date (char *today)
  {
