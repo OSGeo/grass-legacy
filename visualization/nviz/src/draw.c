@@ -426,7 +426,7 @@ int Ndraw_all_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
 	    Nvol_draw_all_cmd(data, interp, argc, argv);
 
 	/* draw legend if defined */
-	/* GS_draw_all_list(); TODO */
+	GS_draw_all_list();
 
     }
 
