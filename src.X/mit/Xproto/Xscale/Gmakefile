@@ -1,0 +1,6 @@
+OFILES = \
+	command.o \
+	main.o
+
+$(BIN)/Xscale: $(OFILES) $(XDISPLAYLIB) $(GISLIB) 
+	cc $(LDFLAGS) -o $@ $(OFILES) $(XDISPLAYLIB) $(GISLIB) -lX11
