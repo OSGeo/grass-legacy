@@ -843,6 +843,7 @@ proc animRunAnimation { BASE } {
 proc animRunAndSave { BASE } {
     global animNumFrames animKeyList animRunState
     global animWaitPress animBaseName animSaveRenderStyle
+    global env
     
     if {[llength $animKeyList] < 2} then { return }
     
@@ -858,7 +859,14 @@ proc animRunAndSave { BASE } {
     pack .ras_fname.title .ras_fname.enter .ras_fname.norm \
 	.ras_fname.fancy .ras_fname.ok -fill both
     tkwait variable animWaitPress
-    set animBaseName [.ras_fname.enter get]
+
+    set basedir $env(GISDBASE)/$env(LOCATION_NAME)/$env(MAPSET)/rgb
+
+    if {![file isdirectory $basedir]} {
+        set basedir "."
+    }
+
+    set animBaseName $basedir/[.ras_fname.enter get]
     destroy .ras_fname
     
     # If we are already at the end then restart from the beginning

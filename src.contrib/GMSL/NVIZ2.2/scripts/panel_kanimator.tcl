@@ -1610,6 +1610,7 @@ proc keyanimRunAndSave { BASE } {
     global keyanimKeyList keyanimPlayState keyanimFrameRate
     global keyanimWaitPress keyanimBaseName keyanimSaveRenderStyle
     global keyanimFrameNum
+    global env
     
     if {[llength $keyanimKeyList] < 2} then { return }
     
@@ -1627,7 +1628,14 @@ proc keyanimRunAndSave { BASE } {
     pack .ras_fname.title .ras_fname.enter .ras_fname.norm \
 	.ras_fname.fancy .ras_fname.ok -fill both
     tkwait variable keyanimWaitPress
-    set keyanimBaseName [.ras_fname.enter get]
+
+    set basedir $env(GISDBASE)/$env(LOCATION_NAME)/$env(MAPSET)/rgb
+
+    if {![file isdirectory $basedir]} {
+        set basedir "."
+    }
+
+    set keyanimBaseName $basedir/[.ras_fname.enter get]
     destroy .ras_fname
     
     # Automatically start from the beginning
