@@ -141,9 +141,6 @@ r.reclass
  - segm. fault on Pentium CPU (same problem as r.binfer,...)
  - does not accept "*" to reclass NULL values
 
-r.support:
- - does not support FP maps yet!
-
 r.surf.contour
   fixed by Pierre de Mouveaux <pmx@audiovu.com>
   (but supports currently CELL type only)
@@ -290,7 +287,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log: BUGS,v $
- Revision 1.7  2000-07-26 12:48:56  markus
+ Revision 1.8  2000-07-26 13:10:44  markus
+ r.support bug fixed by Huidae Cho
+
+ Revision 1.7  2000/07/26 12:48:56  markus
  added r.in.tiff seg.fault
 
  Revision 1.6  2000/07/26 12:35:52  markus
