@@ -70,3 +70,4 @@ proc HMsubmit_form {win param query} {
     create_submit_msg $formid   
 }
 
+bind . <Destroy> { if { "%W" == "."} { close_form } }
