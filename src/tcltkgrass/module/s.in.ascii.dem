@@ -1,7 +1,0 @@
-interface_build {
-    {s.in.ascii.dem} 0
-    {Converts an ASCII spot heights (sites) file into a GRASS sites file - for conversion to raster with s.to.rast.}
-    {entry input {ASCII sites file (input):} 0 file}
-    {entry sites {GRASS sites file (output):} 0 sites}
-    {entry fs {Input field separator (1 character) [space]:} 0 ""}
-}
