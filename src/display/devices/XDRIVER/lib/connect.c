@@ -57,7 +57,7 @@ int check_connection (char *me, char *link)
         fprintf(stderr, "Sorry, <%s> not available\n", in_fifo);
         goto error;
     }
-#ifdef FIFO
+#ifdef S_IFIFO
     if (!(buf.st_mode & S_IFIFO)) {
         fprintf(stderr, "Sorry, <%s> is not a fifo file\n", in_fifo);
         goto error;
@@ -72,7 +72,7 @@ int check_connection (char *me, char *link)
         fprintf(stderr, "Sorry, <%s> not available\n", out_fifo);
         goto error;
     }
-#ifdef FIFO
+#ifdef S_IFIFO
     /* Check existence and access of out_fifo */
     if (!(buf.st_mode & S_IFIFO)) {
         fprintf(stderr, "Sorry, <%s> is not a fifo file\n", out_fifo);
