@@ -11,9 +11,7 @@
  * coordinate is returned in (*nx, *ny) and the button pressed is
  * returned in button. */
 
-#include <X11/Xos.h>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
+#include "includes.h"
 #include <X11/cursorfont.h>
 #include "../lib/colors.h"
 
@@ -28,16 +26,14 @@ static int drawn = 0;
 static u_long event_mask;
 static unsigned width, height, oldwidth, oldheight;
 static int oldx, oldy;
-static GC xor_gc;
+GC xor_gc;
 
 /* Erases the current RubberBox */
 static EraseRubberBox(x1, y1, x2, y2)
 int x1, y1;
 unsigned x2, y2;
 {
-    if (drawn)
-        XDrawRectangle(dpy, grwin, xor_gc, x1, y1, x2, y2);
-    drawn = 1;
+    XDrawRectangle(dpy, grwin, xor_gc, x1, y1, x2, y2);
 }
 
 
@@ -57,10 +53,11 @@ int *button;
     XSelectInput(dpy, grwin, event_mask);
 
     /* XOR, so double drawing returns pixels to original state */
-    gcMask = GCFunction | GCPlaneMask | GCForeground ;
+    gcMask = GCFunction | GCPlaneMask | GCForeground | GCLineWidth;
    gcValues.function = GXxor;
-   gcValues.plane_mask = AllPlanes;
-   gcValues.foreground = _get_color_index(WHITE);
+   gcValues.line_width = 0;
+   gcValues.plane_mask = BlackPixel(dpy,scrn)^WhitePixel(dpy,scrn);
+   gcValues.foreground = 0xffffffff;
    xor_gc = XCreateGC(dpy,grwin,gcMask,&gcValues);
 
 
@@ -75,7 +72,8 @@ int *button;
             *button = event.xbutton.button;
             *nx = event.xbutton.x;
             *ny = event.xbutton.y;
-            EraseRubberBox(oldx, oldy, oldwidth, oldheight);
+            if ( drawn ) 
+				EraseRubberBox(oldx, oldy, oldwidth, oldheight);
             XDefineCursor(dpy, grwin, grcurse); /* reset cursor */
             drawn = 0;
             XSelectInput(dpy, grwin, gemask);   /* restore normal events */
