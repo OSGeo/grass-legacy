@@ -1,4 +1,4 @@
-#include "viz.h"
+#include "Viz.h"
 
 
 g3read_header (Headfax)
