@@ -5,8 +5,8 @@ PGM = i.smap
 
 EXTRA_CFLAGS = -I../bouman/
 
-LIBES = ../bouman/lib.a $(GISLIB) $(IMAGERYLIB)
-DEPLIBS= ../bouman/lib.a $(DEPGISLIB) $(DEPIMAGERYLIB)
+LIBES = ../bouman/lib.a $(GISLIB) $(IMAGERYLIB) $(GMATHLIB)
+DEPLIBS= ../bouman/lib.a $(DEPGISLIB) $(DEPIMAGERYLIB) $(DEPGMATHLIB)
 
 $(BIN_CMD)/$(PGM): $(LIST) $(DEPGISLIB) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)

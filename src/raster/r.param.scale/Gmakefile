@@ -14,8 +14,8 @@ PROG = $(BIN_CMD)/r.param.scale
 #	   directory that can be passed to dbx(tool).
 
 
-LIBES = $(GISLIB)
-DEPLIBS= $(DEPGISLIB)
+LIBES = $(GISLIB) $(GMATHLIB)
+DEPLIBS= $(DEPGISLIB) $(DEPGMATHLIB)
 
 
 INCLUDES =\
