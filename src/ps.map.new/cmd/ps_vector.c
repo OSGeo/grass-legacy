@@ -48,6 +48,9 @@ int PS_vector_plot (struct Map_info *P_map, int vec, int type)
 	{
 		if(vector.cwidth[vec])
 		{
+		    if(cat == 0 ) /* don't draw zero width line */     
+			continue;
+		
 		    if(type == LINE_DRAW_HIGHLITE ) 
 			width = cat * vector.cwidth[vec] + 2. * vector.hwidth[vec];   
 
