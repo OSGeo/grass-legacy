@@ -156,7 +156,7 @@ int main (int argc, char *argv[])
 	    G_make_byg_fp_colors (&colors, min, max);
 	else if (strcmp (type, "rules") == 0)
 	{
-	    if (!read_color_rules(&colors, min, max, fp))
+	    if (!read_color_rules(&colors, flag2->answer, min, max, fp))
 	      exit(-1); 
 	}
 	else
