@@ -76,9 +76,10 @@ int main (int argc, char *argv[])
 	long n_processed = 0;
 	long total_cells ;
 	struct Flag *flag1, *flag2, *flag3;
-	struct Option *opt1, *opt2, *opt3, *opt4, *opt5, *opt6 ;
+	struct Option *opt1, *opt2, *opt3, *opt4, *opt5, *opt6, *opt7, *opt8;
 	struct cost *pres_cell, *new_cell;
-	struct start_pt *pres_start_pt ;
+	struct start_pt *pres_start_pt = NULL ;
+	struct start_pt *pres_stop_pt = NULL;
 
 	void* ptr2;
 	RASTER_MAP_TYPE data_type, data_type2;
@@ -98,6 +99,20 @@ int main (int argc, char *argv[])
 	opt1->required   = YES ;
 	opt1->gisprompt  = "any,cell,raster" ;
 	opt1->description= "Name of raster map to contain results" ;
+
+	opt7 = G_define_option() ;
+	opt7->key        = "start_sites" ;
+	opt7->type       = TYPE_STRING;
+	opt7->gisprompt  = "old,site_lists,sites";
+	opt7->required   = NO;
+	opt7->description= "Starting points site file";
+
+	opt8 = G_define_option() ;
+	opt8->key        = "stop_sites" ;
+	opt8->type       = TYPE_STRING;
+	opt8->gisprompt  = "old,site_lists,sites";
+	opt8->required   = NO;
+	opt8->description= "Stop points site file";
 
 	opt3 = G_define_option() ;
 	opt3->key        = "coordinate" ;
@@ -187,9 +202,9 @@ int main (int argc, char *argv[])
 	keep_nulls = flag3->answer;
 
 
-	have_start_points = process_answers(opt3->answers, &head_start_pt) ;
+	have_start_points = process_answers(opt3->answers, &head_start_pt, &pres_start_pt) ;
 
-	have_stop_points  = process_answers(opt4->answers, &head_end_pt) ;
+	have_stop_points  = process_answers(opt4->answers, &head_end_pt, &pres_stop_pt) ;
 
 	if (sscanf(opt5->answer, "%d", &maxcost) != 1 || maxcost < 0)
 	{
@@ -433,6 +448,98 @@ int main (int argc, char *argv[])
 /*   Scan the existing cum_cost_layer searching for starting points.
  *   Create a btree of starting points ordered by increasing costs.
  */
+	if (opt7->answer) 
+	{  
+#if 1
+		FILE* fp;
+		struct start_pt  *new_start_pt;
+		Site *site = NULL;               /* pointer to Site */
+		search_mapset = "";
+ 
+		search_mapset = G_find_file ("site_lists", opt7->answer, "");
+
+		fp = G_fopen_sites_old ( opt7->answer, search_mapset);
+
+		site = G_site_new_struct (-1, 2, 0, 0);
+
+	    for (; (G_site_get(fp,site) != EOF);) {
+			if (!G_site_in_region (site, &window))
+				continue;
+			have_start_points = 1;
+
+			col = (int)G_easting_to_col(site->east, &window);
+			row = (int)G_northing_to_row(site->north, &window );
+
+			new_start_pt = (struct start_pt *)(G_malloc(sizeof(struct start_pt)));
+
+			new_start_pt->row = row;
+			new_start_pt->col = col;
+			new_start_pt->next = NULL;
+
+			if(head_start_pt == NULL)
+			{
+				head_start_pt = new_start_pt;
+				pres_start_pt = new_start_pt;
+				new_start_pt->next = NULL;
+			}
+			else
+			{
+				pres_start_pt->next = new_start_pt ;
+				pres_start_pt = new_start_pt ;
+			}
+		}
+
+		G_site_free_struct(site);	
+		fclose(fp);
+#endif
+	}
+
+	if (opt8->answer) 
+	{  
+#if 1
+		FILE* fp;
+		struct start_pt  *new_start_pt;
+		Site *site = NULL;               /* pointer to Site */
+		search_mapset = "";
+ 
+		search_mapset = G_find_file ("site_lists", opt8->answer, "");
+
+		fp = G_fopen_sites_old ( opt8->answer, search_mapset);
+
+		site = G_site_new_struct (-1, 2, 0, 0);
+
+	    for (; (G_site_get(fp,site) != EOF);) {
+			if (!G_site_in_region (site, &window))
+				continue;
+			have_stop_points = 1;
+
+			col = (int)G_easting_to_col(site->east, &window);
+			row = (int)G_northing_to_row(site->north, &window );
+
+			new_start_pt = (struct start_pt *)(G_malloc(sizeof(struct start_pt)));
+
+			new_start_pt->row = row;
+			new_start_pt->col = col;
+			new_start_pt->next = NULL;
+
+			if(head_end_pt == NULL)
+			{
+				head_end_pt = new_start_pt;
+				pres_stop_pt = new_start_pt;
+				new_start_pt->next = NULL;
+			}
+			else
+			{
+				pres_stop_pt->next = new_start_pt ;
+				pres_stop_pt = new_start_pt ;
+			}
+		}
+
+		G_site_free_struct(site);	
+		fclose(fp);
+#endif
+	}
+
 	if (! have_start_points)
 	{
 		int dsize2;
@@ -489,21 +596,22 @@ int main (int argc, char *argv[])
  */
 	else
 	{
-		pres_start_pt = head_start_pt;
-		while(pres_start_pt != NULL)
+		struct start_pt *top_start_pt = NULL ;
+		top_start_pt = head_start_pt;
+		while(top_start_pt != NULL)
 		{
 			value= &zero;
-			if (pres_start_pt->row <0 || pres_start_pt->row >= nrows
-				|| pres_start_pt->col <0 || pres_start_pt-> col >= ncols)
+			if (top_start_pt->row <0 || top_start_pt->row >= nrows
+				|| top_start_pt->col <0 || top_start_pt-> col >= ncols)
 			{
 				sprintf(buf,
 						"specified starting location outside database window");
 				G_fatal_error (buf);
 				exit(1);
 			}
-			new_cell = insert(zero, pres_start_pt->row, pres_start_pt->col);
-			segment_put(&out_seg,value,pres_start_pt->row,pres_start_pt->col);
-			pres_start_pt = pres_start_pt->next;
+			new_cell = insert(zero, top_start_pt->row, top_start_pt->col);
+			segment_put(&out_seg,value,top_start_pt->row,top_start_pt->col);
+			top_start_pt = top_start_pt->next;
 		}
 /*  		printf("--------+++++----------\n"); */
 	}
@@ -938,12 +1046,12 @@ OUT:
 }
 
 int 
-process_answers (char **answers, struct start_pt **points)
+process_answers (char **answers, struct start_pt **points, struct start_pt **top_start_pt)
 {
 	int col, row, n ;
 	double east, north;
 
-	struct start_pt *pres_start_pt, *new_start_pt;
+	struct start_pt *new_start_pt;
 	int got_one = 0 ;
 
 	*points = NULL ;
@@ -992,13 +1100,13 @@ process_answers (char **answers, struct start_pt **points)
 		if(*points == NULL)
 		{
 			*points = new_start_pt;
-			pres_start_pt = new_start_pt;
+			*top_start_pt = new_start_pt;
 			new_start_pt->next = NULL;
 		}
 		else
 		{
-			pres_start_pt->next = new_start_pt ;
-			pres_start_pt = new_start_pt ;
+			(*top_start_pt)->next = new_start_pt ;
+			*top_start_pt = new_start_pt ;
 		}
 	}
 	return(got_one) ;

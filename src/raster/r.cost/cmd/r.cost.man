@@ -18,6 +18,7 @@ an input raster map layer whose cell category values represent cost.
 .br
 \*Lr.cost help\*O \*Lr.cost\*O [\*L-vkn\*O]
 \*Linput=\*Oname
+[\*Lstart_sites=\*Oname]
 [\*Lcoordinate=\*Ox,...]]
 [\*Lstop_coordinate=\*Ox,...]]
 [\*Lmax_cost=\*O\*Wcost\*O]
@@ -44,6 +45,7 @@ specifies the names of raster map layers and any desired options on
 the command line, using the form: 
 .PP
 \*Lr.cost\*O [\*L-vkn\*O] \*Linput=\*Oname
+[\*Lstart_sites=\*Oname]
 [\*Lcoordinate=\*Ox,...]]
 [\*Lstop_coordinate=\*Ox,...]]
 [\*Lmax_cost=\*O\*Wmaxcost\*O]
@@ -57,11 +59,15 @@ where the input name is the name of a raster map layer
 representing the cost surface map, the output name is the
 name of a raster map layer of cumulative cost, and each x
 coordinate pair gives the geographic location of a point from which
-the transportation cost should be figured. \*Wr.cost\*O will stop
-cummulating costs when \*Wmaxcost\*O is reached. The null cells in
-the input map can be assigned a (positive floating point) cost with
-the \*Wnull_value\*O
-option.
+the transportation cost should be figured. These starting points could be read
+from a sites file through the \*Lstart_sites= option.
+\*Wr.cost\*O will stop cummulating costs when either \*Wmaxcost\*O is reached,
+or one of the stop points given with the \*Lstop_coordinates=\*Ox,y is reached.
+Alternatelly, the stop points can be read from a site file through the
+\*Lstop_sites= option. Both points read from a site file and those
+given o the command line will be processd. The null cells in the input map can be assigned a
+(positive floating point) cost with the
+null_value
 .PP
 Alternately, the user can simply type \*Lr.cost\*O on the command
 line, without program arguments. In this case, the user will be
@@ -70,14 +76,13 @@ interface.
 .PP
 r.cost can be run with two different methods of
 identifying the starting point(s). One or more points (geographic
-coordinate pairs) can be provided on the command line. In lieu of
-command line coordinates, the output map (e.g., \*Loutput\*O) is
+coordinate pairs) can be provided on the command line or site file.
+In lieu of these coordinates, the output map (e.g., \*Loutput\*O) is
 presumed to contain starting points. All non-zero cells are
 considered to be starting points. \*LBeware:\*O doing this will
 overwrite \*Loutput\*O with the results of the calculations. If
 \*Loutput\*O does exist and points are also given on the command
-line, the \*Loutput\*O is ignored and the coordinates given on the
-command line are used instead. 
+line or through a site file, the \*Loutput\*O file is ignored.
 .SH Flags:
 .PP
 \*L-v\*O 
@@ -126,13 +131,26 @@ surface cost.
 .PP
 Name of raster map layer to contain output. Also can be used as
 the map layer of the input starting points. If so used, the input
-starting point map will be overwritten by the output.
-\*Lcoordinate=\*Ox,...] 
+starting point map will be overwritten by the output.   
+.PP
+\*Lstart_sites=\*Oname
+.PP
+ name is the name of a site file that holds the coordinates of
+starting points from wich the transportation cost should be figured.
+.PP
+\*Lstop_sites=\*Oname
+.PP
+ name is the name of a site file that hold the coordinates of
+stopping points. During execution, once the cumulative cost to all stopping
+points has been determined, processing stops.
+.PP
+\*Lcoordinate=\*Ox,...]
 .PP
 Each x,y coordinate pair gives the easting and northing
 (respectively) geographic coordinates of a starting point from which
 to figure cumulative transportation costs for each cell. As many
 points as desired can be entered by the user.
+.PP
 \*Lstop_coordinate=\*Ox,...]
 .PP
 Each x,y coordinate pair gives the easting and northing
@@ -225,7 +243,7 @@ or \*Lg.rename\*O) the map of starting
 points to another name before submitting it to r.cost;
 otherwise, its contents will be overwritten. 
 .PP
-Sometimes, when the differences among cell category values in the
+Sometimes, when the differences among \*Linteger\*O cell category values the
 r.cost cumulative cost surface output are small, this
 cumulative cost output cannot accurately be used as input to \*Lr.drain\*O
 (\*Lr.drain\*O will output bad
@@ -237,6 +255,7 @@ multiply the input cost surface map to r.cost by the value
 of the map's cell resolution, before running r.cost. This
 can be done using \*Lr.mapcalc\*O or
 other programs. The map resolution can be found using \*Lg.region\*O.
+This problem doesn't arise with floating point maps.
 .SH SEE ALSO
 .PP
 \*Lparser\*O
