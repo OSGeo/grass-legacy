@@ -28,14 +28,15 @@ int init_map (char	*coor_file)
         char    temp[25];
         double  X[MAX_COOR],Y[MAX_COOR];
 	char	buff[85] ;
-	char	parms_latlong[512];
 #ifdef LATLON
         struct  Key_Value *proj_keys, *unit_keys;
+        struct  Key_Value *ll_proj_keys, *ll_unit_keys;
+        char *ellps; 
         static struct pj_info   info_ll, info_coord;    /* Conversion info */
         int ask_again;
 #endif
 
-	FILE	*fp,	*fopen () ;
+	FILE	*fp;
         
 	/*  initiliaze use[],  no points valid  */
 	for (i=0 ;  i<MAX_COOR ;  ++i)
@@ -82,20 +83,32 @@ int init_map (char	*coor_file)
               fprintf(stderr,_("units file not found -- run g.setproj\n"));
               last_words(CMap,-1);
             }
-            if( G_find_key_value("ellps", proj_keys) != NULL )
-                sprintf(parms_latlong, "+proj=ll +ellps=%s", 
-			G_find_key_value("ellps", proj_keys) );
+            ll_proj_keys = G_create_key_value();
+            ll_unit_keys = G_create_key_value();
+	    
+            G_set_key_value("proj", "ll", ll_proj_keys);
+
+            ellps = G_find_key_value("ellps", proj_keys);
+            if( ellps != NULL )
+                G_set_key_value("ellps", ellps, ll_proj_keys);
             else
-                sprintf(parms_latlong, "+proj=ll +ellps=wgs84");
-            if (pj_get_string(&info_ll, parms_latlong) <0) {
+                G_set_key_value("ellps", "wgs84", ll_proj_keys);
+	    
+            G_set_key_value("unit", "degree", ll_unit_keys);
+            G_set_key_value("units", "degrees", ll_unit_keys);
+            G_set_key_value("meters", "1.0", ll_unit_keys);
+	    
+	    if (pj_get_kv(&info_ll, ll_proj_keys, ll_unit_keys) < 0) {
               fprintf(stderr,_("Could not initialize proj_ll\n"));
               last_words(CMap,-1);
             } 
+
             if (pj_get_kv(&info_coord,proj_keys,unit_keys) <0)  {
             /* projection file had to be corrupted after last registration */   
               fprintf(stderr,_("Could not initialize proj_coord\n"));
               last_words(CMap,-1);
             }
+	     
             ll_ask = 2;  /* user can enter only lat/lon strings */
           }
           else ll_ask = 0;

@@ -82,8 +82,6 @@ int main(int argc, char *argv[])
     double drow, dcol;
     int elev_fd, output_fd, zeros;
     char buf[1024];
-    double G_northing_to_row();
-    double G_easting_to_col();
     struct
     {
       struct Option *opt1, *opt2, *opt3, *opt4, *north, *east, *year, 

@@ -259,7 +259,7 @@ char *str;
          * implying latlong projection; just need to set proj 
          * parameter and call pj_init PK */
         sprintf(info->proj, "ll");
-        sprintf(buffa, "proj=latlong");
+        sprintf(buffa, "proj=latlong ellps=WGS84");
         nsize = strlen(buffa);
         if (!(opt_in[nopt] = (char *) malloc(nsize + 1)))
             G_fatal_error("Option input memory failure");

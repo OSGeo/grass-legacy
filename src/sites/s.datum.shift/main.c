@@ -38,7 +38,7 @@ main(int argc, char **argv)
   struct GModule *module;
 
   char errbuf[256];          /* buffer for error messages */
-  char parms_latlong[512];
+  char *ellps;
 
   char *datumlist, *mapset, 
     *name, *outdatum;
@@ -52,7 +52,8 @@ main(int argc, char **argv)
     pjll;                    /* projection structure for map and lat/lon*/
 
   struct Key_Value 
-    *proj_info_map, *unit_info_map; 
+    *proj_info_ll, *unit_info_ll,
+    *proj_info_map, *unit_info_map;
                              /* proj and unit information */
   
   Site *si;                  /* site structure */
@@ -61,10 +62,10 @@ main(int argc, char **argv)
   double xcoord, ycoord, dummy;
 
 
-  int (*funcp)();             /* define a pointer to a function 
+  int (*funcp)                /* define a pointer to a function 
 			       * (which returns an integer) 
 			       * for choosing formula */
-  /* (int, double, double, double, double, int, double*, double*, double*); */
+     (int, double, double, double, int, double*, double*, double*);
   /* pheew, that would the correct type be */
 
   G_gisinit(me = argv[0]);
@@ -167,12 +168,24 @@ main(int argc, char **argv)
 	G_fatal_error("Can't get projection key values of output map");
 
       /* set up projection for lat/long reprojection */
-      if( G_find_key_value("ellps", proj_info_map) != NULL )
-          sprintf(parms_latlong, "proj=ll ellps=%s", 
-		  G_find_key_value("ellps", proj_info_map) );
+      proj_info_ll = G_create_key_value();
+      unit_info_ll = G_create_key_value();
+	    
+      G_set_key_value("proj", "ll", proj_info_ll);
+
+      ellps = G_find_key_value("ellps", proj_info_map);
+      if( ellps != NULL )
+          G_set_key_value("ellps", ellps, proj_info_ll);
       else
-          sprintf(parms_latlong, "proj=ll ellps=wgs84");
-      (void) pj_get_string(&pjll, parms_latlong);
+          G_set_key_value("ellps", "wgs84", proj_info_ll);
+	    
+      G_set_key_value("unit", "degree", unit_info_ll);
+      G_set_key_value("units", "degrees", unit_info_ll);
+      G_set_key_value("meters", "1.0", unit_info_ll);
+	    
+      if (pj_get_kv(&pjll, proj_info_ll, unit_info_ll) < 0)
+          G_fatal_error("Unable to set up lat/long projection parameters");            
+
     }
   
   if (molod->answer) {

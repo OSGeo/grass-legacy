@@ -45,8 +45,9 @@ int main (int argc, char **argv)
         struct GSHHS h;
 	struct pj_info info_in;
 	struct pj_info info_out;
-	char parms_in[512];
+	struct Key_Value *in_proj_keys, *in_unit_keys;
 	struct Key_Value *out_proj_keys, *out_unit_keys;
+        char *ellps;
 	int    day, yr;
 	char  date[25], mon[4];
 	int type, zone;
@@ -157,12 +158,24 @@ exit (0);
  * caused by projecting using the 'wrong' ellipsoid.
  * Anyone who understands this better than me feel free to change it.
  * PK March 2003 */
-if( G_find_key_value("ellps", out_proj_keys) != NULL )
-    sprintf(parms_in, "proj=ll ellps=%s", 
-	    G_find_key_value("ellps", out_proj_keys) );
+/* set input projection to lat/long w/ same ellipsoid as output */
+in_proj_keys = G_create_key_value();
+in_unit_keys = G_create_key_value();
+	    
+G_set_key_value("proj", "ll", in_proj_keys);
+
+ellps = G_find_key_value("ellps", out_proj_keys);
+if( ellps != NULL )
+    G_set_key_value("ellps", ellps, in_proj_keys);
 else
-    sprintf(parms_in, "proj=ll ellps=wgs84");
-pj_get_string(&info_in, parms_in);
+    G_set_key_value("ellps", "wgs84", in_proj_keys);
+	    
+G_set_key_value("unit", "degree", in_unit_keys);
+G_set_key_value("units", "degrees", in_unit_keys);
+G_set_key_value("meters", "1.0", in_unit_keys);
+	    
+if (pj_get_kv(&info_in, in_proj_keys, in_unit_keys) < 0)
+    G_fatal_error("Unable to set up lat/long projection parameters");
 
 if (flag.g->answer) {
 /* Get Coordinates from Current Region */
