@@ -1,0 +1,43 @@
+This is University of Washington Rim in UNIX format.
+As of 10/12/89 by Jim Fox <foxjcac.washington.edu>
+
+Updates 1998 from Marco Valagussa <marco@duffy.crcc.it>.
+ 
+Generic sources are in:                src
+UNIX BSD4.3 specific sources are in:   BSD
+UNIX AIX specific sources are in:      AIX
+Some test data is in:                  test
+TeX format documentation is in:        doc
+Some VAX/VMS specific sources are in:  VMS
+UNIX SUN specific sources are in:      SUN
+UNIX LINUX specific sources are in:    LINUX-DGUX
+ 
+Contents:
+   rim       - the main program
+   librim.a  - the program interface library
+   rime      - an editor for the database
+   help      - builds the help database (may require librim.a to be installed)
+   install   - moves everything to installed positions
+   lxtest    - a test program for the text i/o routines
+   clean     - removes 'rimh' and the objects from 'src'
+   
+How to compile?
+
+ Just say:
+     gmake4.2
+
+ in src.related/rim (that´s here).
+
+------------------------------------------------------------
+
+What's it good for?
+
+Experience has convinced me that Rim is best for databases
+that will be updated by programs.  It provides a convenient
+program interface and much support for loading and unloading
+and maintaining databases.  It does not, however, present
+a very convenient user interface for adding or changing data.
+It has no screens.  It does allow applications to be very 
+portable---as long as you keep them clean of system dependencies.
+
+------------------------------------------------------------
