@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.29 2000-10-14 16:45:50 markus Exp $
+$Id: BUGS,v 1.30 2000-10-15 13:39:20 markus Exp $
 
 Maintained by
    Markus Neteler
@@ -24,24 +24,20 @@ CELL-Driver: colors are not correct
   look at D_set_colors ().
 
 ----------- libraries ---------------------------------------------
-From: Jaro Hofierka <hofierka@geomodel.sk>
-
-Markus Neteler wrote:
-
-> Sidenote: If I have more than around 60.000 cubes (tiles)
-> (when setting high resolution in WIND3) I regularly get this
-> error message:
-> r3.out.v5d map=3dvol out=3d.v5d
->   FATAL ERROR: G3d_getDoubleRegion: error in G3d_getTilePtr
->
-> r3.out.ascii map=3dvol > 3d.asc
->   FATAL ERROR: G3d_getDoubleRegion: error in G3d_getTilePtr
+G3D libraries bug:
+ Markus Neteler wrote:
+ > Sidenote: If I have more than around 60.000 cubes (tiles)
+ > (when setting high resolution in WIND3) I regularly get this
+ > error message:
+ > r3.out.v5d map=3dvol out=3d.v5d
+ >   FATAL ERROR: G3d_getDoubleRegion: error in G3d_getTilePtr
+ >
+ > r3.out.ascii map=3dvol > 3d.asc
+ >   FATAL ERROR: G3d_getDoubleRegion: error in G3d_getTilePtr
 
 Markus,
-
 briefly, the problem might be in cache modes. The functions G3d_getValue () should be 
 used in a cache mode, however, we open maps using non-cache mode:
-
  map = G3d_openCellOld(input, G_find_grid3(input, ""), G3D_DEFAULT_WINDOW,
    G3D_TILE_SAME_AS_FILE,
    G3D_NO_CACHE);
@@ -51,7 +47,7 @@ re-compile main.c for r3.out.ascii with G3d_getWindow() and G3d_getValue()
 commands or previous version of r3.out.v5d. Currently I have not enough 
 time to try it.
  Jaro
-
+-> needs to be fixed
 
 ----------- modules ---------------------------------------------
 d.his: 
@@ -136,7 +132,7 @@ ps.map: -fwritable-strings is required on Linux
 r3.in.v5d/r3.out.v5d:
  src.contrib/GMSL/g3d/src3d/raster/r3.in.v5d/binio.c
  src.contrib/GMSL/g3d/src3d/raster/r3.out.v5d/binio.c
- -> does not yet contain little/big endian sensivity (currently only by
+ -> does not yet contain little/big endian sensivity (currently set only by
    compiler flag)
   solution:  code could be taken from src/libes/ogsf/gsd_img_ppm.c
 
@@ -148,9 +144,11 @@ r3.showdspf.openGL:  (src.contrib/GMSL/g3d/src3d/raster/r3.showdspf.openGL)
    are missing. Generally you need to have the Mesa source and compile 
    the libGLw yourself (which is described in the README.mesa31 in the
    source for grass.) [Bernhard]
+   -> partly done by global configure
 
 r.binfer
-  bug in table.c causing segfault
+ - bug in table.c causing segfault
+ - probability "1" not accepted
 
 r.contour: (reported by D D Gray <ddgray@armadce.demon.co.uk>)
  Though it is not a stability problem, I've found that if this module is
@@ -194,8 +192,8 @@ r.in.tiff/r.out.tiff
 
 r.mapcalc
  - Values -129 in GRASS raster files are treated as Null
-  (already fixed for FreeBSD/Linux. Check for other platforms, 
-   corrections go here:
+   (already fixed for FreeBSD/Linux. Check for other platforms, 
+   futher corrections go here:
    src/libes/gis/null_val.c)
  -  r.mapcalc does not like it if the cellvalues are very high for eg.,            
     initially I put the col=fips which ranges from 1001 to 55141 - it 
@@ -246,8 +244,7 @@ r.rescale:
   (reported by timcera@earthlink.net)
 
 r.surf.contour
-  fixed by Pierre de Mouveaux <pmx@audiovu.com>
-  (but supports currently CELL type only)
+  (supports currently CELL type only)
 
 r.stats: some inconsistent results comparing to r.average
  *First, I compute the per-class averages:
@@ -271,13 +268,7 @@ r.stats: some inconsistent results comparing to r.average
 s.in.ascii: 
      - errors with more than 2 dimensions (some numbers are read as
             attribute)
-     - parameter needed to tell module if more than 2 geometric dimensions
-       are there (required for volume data)
-
-s.to.rast, s.to.vect:
- should accept sites_list even if #cats field is missing and
- only a %dbls field is there (like the output from r.to.sites)
- - > maybe fixed in s.to.rast?
+       -> fixed?
 
 s.rand
  should write #cats rather than %cats (site numbering)
@@ -372,4 +363,4 @@ else within Grass, though.
 
 ---------------------------------------------------------------------
 
- $Id: BUGS,v 1.29 2000-10-14 16:45:50 markus Exp $
+ $Id: BUGS,v 1.30 2000-10-15 13:39:20 markus Exp $
