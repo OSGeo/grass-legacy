@@ -26,28 +26,28 @@ proc mksdiffPanel { BASE } {
     Nv_mkPanelname $BASE "Scaled Difference Panel"
 
     frame $BASE.top 
-    frame $BASE.bottom
-    frame $BASE.top.right
-    frame $BASE.top.left 
-    pack $BASE.top $BASE.bottom $BASE.top.right $BASE.top.left 
+    frame $BASE.bottom -bd 2 -relief groove
+    frame $BASE.top2 
+    
     set maplist [Nget_map_list surf]
 
-    Nv_mkScale $BASE.top.left.sdscale h Exag 2500 0 100 set_sdexag 2 
-    pack $BASE.top.left.sdscale -side top -fill x -expand 1
+    label $BASE.top.label -text "Reference surface:"
+    Nv_mksdiffSurfacelist $BASE.top.list 
+    pack $BASE.top.label $BASE.top.list -side left -fill y -pady 4
+    
+    Nv_mkScale $BASE.top2.sdscale h Exag 2500 0 100 set_sdexag 2 
+    pack $BASE.top2.sdscale -side left -fill y -pady 4
+    
 
-    set tmp [frame $BASE.right]
-    label $tmp.label -text "Reference surface:"
-    Nv_mksdiffSurfacelist $tmp.list
-    pack $tmp.label $tmp.list -side left -expand 1
-    pack $tmp -side right -fill y -expand 1
-
-    set tmp [frame $BASE.left]
-    button $tmp.none -text None -command "unset_sdsurf"
-    pack $tmp.none -side top 
-    pack $tmp -side top 
-
-    button $BASE.close -text Close -command "Nv_closePanel $BASE" -anchor se
-    pack $BASE.close
+    button $BASE.bottom.none -text None -command "unset_sdsurf"
+    pack $BASE.bottom.none -side left
+    
+    button $BASE.bottom.close -text Close -command "Nv_closePanel $BASE" 
+    pack $BASE.bottom.close -side right
+    
+    pack $BASE.top $BASE.top2 $BASE.bottom \
+    -expand 1 -fill both -side top
+    
     return $panel
 }
 
