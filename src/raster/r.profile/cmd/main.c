@@ -67,9 +67,10 @@ int main(int argc, char *argv[])
     parm.output = G_define_option();
     parm.output->key = "output";
     parm.output->type = TYPE_STRING;
-    parm.output->required = YES;
+    parm.output->required = NO;
+    parm.output->answer     = "-";
     parm.output->gisprompt = "old,cell,raster";
-    parm.output->description = "Name of file for output (use out=- for stdout)";
+    parm.output->description = "Name of file for output (use output=- for stdout)";
 
     parm.profile = G_define_option();
     parm.profile->key = "profile";
