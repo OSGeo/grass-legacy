@@ -6,7 +6,7 @@
 
 static int max (int a, int b) {return a>b?a:b;}
 
-int make_window_center (struct Cell_head *window, double mag, double east, double north)
+int make_window_center (struct Cell_head *window, double magnify, double east, double north)
 {
     char buffer[64] ;
     double east_west, north_south;
@@ -23,7 +23,7 @@ int make_window_center (struct Cell_head *window, double mag, double east, doubl
       north = (window->north + window->south)/2.;
     }
 
-    east_west = (window->east - window->west)/mag;
+    east_west = (window->east - window->west)/magnify;
     window->east =  east + east_west/2;
     window->west =  east - east_west/2;
     if (window->proj == PROJECTION_LL){
@@ -34,7 +34,7 @@ int make_window_center (struct Cell_head *window, double mag, double east, doubl
 	window->east = G_adjust_easting (window->east, window);
     }
 
-    north_south = (window->north - window->south)/mag;
+    north_south = (window->north - window->south)/magnify;
     window->north =  north + north_south/2;
     window->south =  north - north_south/2;
     G_limit_south (&window->south, window->proj);
