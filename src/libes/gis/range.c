@@ -63,7 +63,7 @@ G_read_range (name, mapset, range)
     fd = NULL;
 
     sprintf (buf,"cell_misc/%s", name);
-    if (G_find_file (buf, "range", mapset))
+    if (G_find_file2 (buf, "range", mapset))
     {
 	fd = G_fopen_old (buf, "range", mapset);
 	if (!fd)
@@ -102,6 +102,7 @@ G_read_range (name, mapset, range)
 	if (ncats < 0)
 	    return -1;
 	range->pmax = ncats;
+	if(range->pmax > 0) range->pmin = 1;
 	return 0;
     }
 
