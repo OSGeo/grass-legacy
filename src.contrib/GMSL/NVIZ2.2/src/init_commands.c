@@ -80,6 +80,7 @@ extern int
   Nmove_key_cmd(),
   Nwrite_rgb_cmd(),
   Nwrite_ppm_cmd(),
+  Nwrite_tif_cmd(),
   Ncutplane_obj_cmd(),
   Nnew_cutplane_obj_cmd(),
   Nnum_cutplane_obj_cmd(),
@@ -273,6 +274,8 @@ init_commands (Tcl_Interp *interp, Nv_data *data)
 		    data, NULL);
   Tcl_CreateCommand(interp, "Nwrite_ppm", Nwrite_ppm_cmd,
 			data, NULL);
+  Tcl_CreateCommand(interp, "Nwrite_tif", Nwrite_tif_cmd,
+                        data, NULL);
 
   /* Cutplane Junk */
   Tcl_CreateCommand(interp, "Ncutplane_obj", Ncutplane_obj_cmd,

@@ -736,3 +736,39 @@ Nwrite_ppm_cmd (
 
 }
 
+/* ********************************************************
+   Nwrite_tif -
+
+   Save current GL screen to a TIFF file.
+
+   Arguments:
+       String - name of file to save to.
+
+   Returns:
+       None.
+
+   Side Effects:
+       Saves the current GL screen to the given file.
+******************************************************** */
+int
+Nwrite_tif_cmd (
+    Nv_data *data,         /* Local data */
+    Tcl_Interp *interp,    /* Current interpreter */
+    int argc,              /* Number of arguments */
+    char **argv           /* Argument strings */
+)
+{
+  /* Parse arguments */
+  if (argc != 2) {
+    interp->result="Error: should be Nwrite_ppm file_name";
+    return (TCL_ERROR);
+  }
+
+  /* Call the function */
+  GS_write_tif(argv[1]);
+
+  return (TCL_OK);
+
+}
+
+
