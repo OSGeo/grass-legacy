@@ -59,7 +59,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "gis.h"
-#include "projects.h"
+#include "gprojects.h"
 #include "r.proj.h"
 
 /* modify this table to add new methods */
