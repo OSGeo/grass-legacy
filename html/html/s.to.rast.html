@@ -64,9 +64,22 @@ already exists, the program exits gracefully.
 
 </DL>
 
+<H2>NOTES</H2>
+
+When converting from a sites layer to a raster layer
+with size=0, the site is converted into a single cell
+representing the location of the site, which can be hard 
+to see (depending on the raster resolution).<BR>
+size=2 (or higher) makes the sites show up as fatter in the raster
+layer. 
+
 <H2>SEE ALSO</H2>
 
-<EM><A HREF="s.menu.html">s.menu</A></EM>
+<EM><A HREF="s.menu.html">s.menu</A></EM>,
+<EM><A HREF="g.region.html">g.region</A></EM>,
+<EM><A HREF="v.bubble.html">v.bubble</A></EM>,
+<EM><A HREF="v.circle.html">v.circle</A></EM>,
+
 
 <H2>AUTHOR</H2>
 
