@@ -24,6 +24,8 @@ $(GISBASE)/driver/MASS: MASS
 MASS: $(OFILES) ../lib/driverlib.a
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) ../lib/driverlib.a $(GRAPH)
 
+../lib/driverlib.a: #
+
 Draw_mode.o: graphics.h
 Get_w_box.o: graphics.h
 Get_w_line.o: graphics.h
