@@ -25,7 +25,7 @@
 
 int sqpPrintStmt(SQLPSTMT *st)
 {
-    int i, c_group = 0;
+    int i;
 
     fprintf( stderr, "********** SQL PARSER RESULT **********\n" );
     fprintf( stderr, "INPUT: %s\n", sqlpStmt->stmt );
@@ -106,59 +106,7 @@ int sqpPrintStmt(SQLPSTMT *st)
           }
       }
     
-    /* comparisons */
-    for (i=0; i < st->nCom; i++)
-      {	    
-        if (c_group < sqlpStmt->ComGrp[i])
-	    fprintf( stderr, "OR-clause group number: %d\n", sqlpStmt->ComGrp[i]);
-	c_group = sqlpStmt->ComGrp[i];
-
-	fprintf( stderr, "COMPARISON %2d: ", i+1);
-        fprintf( stderr, "column:%s ", sqlpStmt->ComCol[i].s);
-    
-        fprintf( stderr, "operator:");
-        switch ( sqlpStmt->ComOpe[i] )
-          {
-	    case (SQLP_EQ):
-                fprintf( stderr, "=");
-	        break;			
-	    case (SQLP_LT):
-                fprintf( stderr, "<");
-	        break;			
-	    case (SQLP_LE):
-                fprintf( stderr, "<=");
-	        break;			
-	    case (SQLP_GT):
-                fprintf( stderr, ">");
-	        break;			
-	    case (SQLP_GE):
-                fprintf( stderr, ">=");
-	        break;			
-	    case (SQLP_NE):
-                fprintf( stderr, "<>");
-	        break;			
-            default:
-                fprintf( stderr, "unknown" );
-	        break;			
-          }
-        fprintf( stderr, " value");
-        switch ( sqlpStmt->ComVal[i].type )
-          {
-	    case (SQLP_S):
-                fprintf( stderr, "(string):%s\n", sqlpStmt->ComVal[i].s );
-	        break;			
-	    case (SQLP_I):
-                fprintf( stderr, "(integer):%d\n", sqlpStmt->ComVal[i].i );
-	        break;			
-	    case (SQLP_D):
-                fprintf( stderr, "(float):%f\n", sqlpStmt->ComVal[i].d );
-	        break;			
-            default:
-                fprintf( stderr, ":unknown\n" );
-	        break;			
-          }
-      }
-    fprintf( stderr, "***************************************\n" );
+   fprintf( stderr, "***************************************\n" );
 
     return (1);
 }

@@ -23,12 +23,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <assert.h>
 #include "sqlp.h"
 
 /* save string to value */
 int sqpSaveStr(SQLPVALUE *val, char *c )
 {
-    int len;
+    int len = 0;
 
     len = strlen ( c ) + 1;
     val->s = (char *) realloc (val->s, len);
@@ -47,22 +48,9 @@ int sqpInitParser(SQLPSTMT *st)
     sqlpStmt->table[0] = '\0';
     sqlpStmt->nCol = 0;
     sqlpStmt->nVal = 0;
-    sqlpStmt->nCom = 0;
-    sqlpStmt->numGroupCom = 0;
+    sqlpStmt->upperNodeptr = NULL;
 
     return (1);
-}
-
-void sqpGroupIncrement( void )
-{
-    sqlpStmt->numGroupCom += 1;          
-
-
-/*
- *    fprintf (stderr, "sqpGroupIncrement(): number of groups is %d\n", sqlpStmt->numGroupCom);
- */
-
-    return;
 }
 
 void sqpCommand( int command )
@@ -160,51 +148,90 @@ void sqpAssignment( char *col, char *strval, int intval, double dblval, int type
     return;
 }
 
-void sqpComparison( char *col, char *oper, char *strval, int intval, double dblval, int type)
+Node *
+parseComparison( char *col, char *oper, char *strval, int intval, double dblval, int type)
 {
-    int i;
+    int ComparisonOperator;
+    static SQLPVALUE ComparisonLeftValue, ComparisonRightValue;
+    Node *nptr;
     
-    i = sqlpStmt->nCom;
-    sqpAllocCom(sqlpStmt, i + 1 );
-    
-    sqpSaveStr ( &(sqlpStmt->ComCol[i]), col );
+    memset(&ComparisonLeftValue, '\0', sizeof(ComparisonLeftValue));
+    memset(&ComparisonRightValue, '\0', sizeof(ComparisonRightValue));
+        
+    sqpSaveStr ( &ComparisonLeftValue, col );
 
     if ( strcmp ( oper, "=") == 0 )
-	sqlpStmt->ComOpe[i] = SQLP_EQ;
+	ComparisonOperator = SQLP_EQ;
     else if ( strcmp ( oper, "<") == 0 )
-	sqlpStmt->ComOpe[i] = SQLP_LT;
+	ComparisonOperator = SQLP_LT;
     else if ( strcmp ( oper, "<=") == 0 )
-	sqlpStmt->ComOpe[i] = SQLP_LE;
+	ComparisonOperator = SQLP_LE;
     else if ( strcmp ( oper, ">") == 0 )
-	sqlpStmt->ComOpe[i] = SQLP_GT;
+	ComparisonOperator = SQLP_GT;
     else if ( strcmp ( oper, ">=") == 0 )
-	sqlpStmt->ComOpe[i] = SQLP_GE;
+	ComparisonOperator = SQLP_GE;
     else if ( strcmp ( oper, "<>") == 0 )
-	sqlpStmt->ComOpe[i] = SQLP_NE;
+	ComparisonOperator = SQLP_NE;
     
-/*
- *     fprintf (stderr, "sqpComparison(): number of groups is %d\n", sqlpStmt->numGroupCom);
- */
-
-    sqlpStmt->ComVal[i].type = type;
-    sqlpStmt->ComGrp[i] = sqlpStmt->numGroupCom;
+    ComparisonRightValue.type = type;
     
     switch ( type  )
       {
         case (SQLP_S):
-            sqpSaveStr ( &(sqlpStmt->ComVal[i]), strval );
+            sqpSaveStr ( &ComparisonRightValue, strval );
             break;	
         case (SQLP_I):
-            sqlpStmt->ComVal[i].i = intval;
+            ComparisonRightValue.i = intval;
             break;	
         case (SQLP_D):
-            sqlpStmt->ComVal[i].d = dblval;
+            ComparisonRightValue.d = dblval;
             break;	
       }
 
-    sqlpStmt->nCom++;
-    return;
+	nptr = makeComparison(OP, ComparisonOperator, &ComparisonLeftValue, &ComparisonRightValue);
+	if (sqlpStmt->upperNodeptr == NULL) 
+	    sqlpStmt->upperNodeptr = nptr;
+
+	return nptr;
 }
 
+Node *
+makeA_Expr(int oper, int opname, Node *lexpr, Node *rexpr)
+{
+	A_Expr *a = makeNode(A_Expr);
+	a->oper = oper;
+	a->opname = opname;
+	a->lexpr = lexpr;
+	a->rexpr = rexpr;
+	return (Node *)a;
+}
 
+static Node *
+newNode(int size, NodeTag tag)
+{
+	Node	   *newNode;
 
+	assert(size >= sizeof(Node));		/* need the tag, at least */
+
+	newNode = (Node *) malloc(size);
+	memset(newNode, '\0', size);
+	newNode->type = tag;
+	return newNode;
+}
+
+static Node *
+makeComparison(int oper, int opname, SQLPVALUE *lexpr, SQLPVALUE *rexpr)
+{
+    SQLPVALUE * ComparisonField, * ComparisonValue;
+    Comparison * a;
+    
+    ComparisonField  = ( SQLPVALUE *) malloc(sizeof(*lexpr));
+    ComparisonValue  = ( SQLPVALUE *) malloc(sizeof(*rexpr));
+    
+	a = makeNode(Comparison);
+	a->oper = oper;
+	a->opname = opname;
+	a->lexpr = memcpy(ComparisonField, lexpr, sizeof(*lexpr));
+	a->rexpr = memcpy(ComparisonValue, rexpr, sizeof(*rexpr));
+	return (Node *)a;
+}
