@@ -217,14 +217,15 @@ saber_src:
 $(HELP_FILES)/Main:
 	if [ ! -d $(TXT) ]; then mkdir $(TXT); fi
 	if [ ! -d $(TXT)/DIGIT ]; then mkdir $(TXT)/DIGIT; fi
-	cp help/* $(TXT)/DIGIT/.
-
+#	cp help/* $(TXT)/DIGIT/.
+	tar --exclude=CVS -cvf - help/* | tar -C $(TXT)/DIGIT/ -xvf - 2>/dev/null ; true
 
 
 # Copy over digitizer definition files.
 $(DIGITIZERS)/cc95f5_16:
 	if [ ! -d $(DIGITIZERS) ]; then mkdir $(DIGITIZERS); fi
-	cp -R digitizers/* $(DIGITIZERS)
+#	cp -R digitizers/* $(DIGITIZERS)
+	tar --exclude=CVS -cvf - digitizers/* | tar -C $(DIGITIZERS) -xvf - 2>/dev/null ; true
 
 
 
