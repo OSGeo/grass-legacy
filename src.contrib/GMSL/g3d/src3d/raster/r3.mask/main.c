@@ -9,6 +9,7 @@ typedef struct {
 } paramType;
 
 static paramType params;
+extern void * G3d_openNewParam ();
 
 static void
 setParams ()
