@@ -12,6 +12,9 @@ main(int argc, char *argv[])
     struct Flag *print;
     struct Option *driver, *database, *location, *user, *password, *keycol;
     struct GModule *module;
+
+    /* Initialize the GIS calls */
+    G_gisinit(argv[0]) ;
     
     print = G_define_flag();
     print->key               = 'p';
@@ -64,8 +67,6 @@ main(int argc, char *argv[])
     module->description = ""\
     "Connect to the database through DBMI.";
 
-    /* Initialize the GIS calls */
-    G_gisinit(argv[0]) ;
 
     if(G_parser(argc, argv))
 	exit(ERROR);

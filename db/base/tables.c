@@ -56,6 +56,9 @@ parse_command_line(int argc, char *argv[])
     struct Flag *p, *s;
     struct GModule *module;
 
+    /* Initialize the GIS calls */
+    G_gisinit(argv[0]) ;
+
     driver 		= G_define_option();
     driver->key 	= "driver";
     driver->type 	= TYPE_STRING;
@@ -88,8 +91,6 @@ parse_command_line(int argc, char *argv[])
     module->description = ""\
     "List all tables for a given database.";
 
-    /* Initialize the GIS calls */
-    G_gisinit(argv[0]) ;
 
     if(G_parser(argc, argv))
 	exit(ERROR);
