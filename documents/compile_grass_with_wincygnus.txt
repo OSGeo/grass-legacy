@@ -89,15 +89,35 @@ Install it, too.
 
 6. Get the unixODBC source, build and install it.
    Current version is 1.8.8 as of August, 2000
+
+7. Add the values.h file to the /grass/src/include
+   directory.  Put values in it for MAXDOUBLE and 
+   MINDOUBLE.  For example, my file has the following:
+
+#define MAXDOUBLE   1.79769313486231470e+308
+#define MINDOUBLE   4.94065645841246544e-324
+
+8. You'll need to read the REQUIREMENTS files, download
+   the public domain libraries, such as png, and build
+   and install them.  You will need the pnm include and
+   lib files.  
+
+
 -----------------------------------------------------------------------------
 
-7. To start GRASS compilation proceed like this:
+9. To start GRASS compilation proceed like this:
 
     ./configure
     make
     make install
 
-8.  The current build was made using Cygwin 1.1.3
+   If you have problems, go into the src/libes directory
+   and build that first.  e.g.
+
+   cd /grass/src/libes
+   gmake5
+
+10.  The current build was made using Cygwin 1.1.3
 
 </pre>
 
