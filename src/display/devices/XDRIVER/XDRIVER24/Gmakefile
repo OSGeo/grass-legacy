@@ -52,15 +52,15 @@ OFILES =  \
 	command_pend.o\
 	Raster.o
 
-all: version.h $(GISBASE)/driver/$(PGM)
+all: winname.h $(GISBASE)/driver/$(PGM)
 
 $(GISBASE)/driver/$(PGM): $(OFILES) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(XLDFLAGS) $(OFILES) $(LIBES) $(XLIBPATH) $(XLIB) $(XEXTRALIBS) $(MATHLIB)
 
-Graph_Set.o: version.h
+Graph_Set.o: winname.h
 
-version.h: $(VERSION_FILE)
-	rm -f version.h
+winname.h: $(VERSION_FILE)
+	rm -f winname.h
 	echo '#define WIN_NAME "GRASS $(VERSION_NUMBER)"' > $@
 
 
