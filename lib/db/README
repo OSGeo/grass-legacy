@@ -3,3 +3,6 @@ Directory contents:
 dbmi: DataBase Management Interface (db_*() functions)
 sqlp: SQL parser library
 stubs: stubs for unimplemented DB functions
+
+The DBMI drivers are stored in 
+../../db/drivers/
