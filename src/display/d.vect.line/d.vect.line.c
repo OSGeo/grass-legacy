@@ -67,9 +67,6 @@ static int rgb_parse(const char *clr_spec,
 		unsigned char *red, unsigned char *green, unsigned char *blue);
 static int use_const_color(const char *line_clr, char **catlist);
 static int write_legend(const char *filename);
-static void adjust_point(double *x, double *y, 
-		double dx, double dy, unsigned char code);
-static int clip_segment(double *x0, double *y0, double *x1, double *y1);
 static void plot_line(struct line_pnts *points);
 
 
@@ -427,88 +424,14 @@ static int write_legend (const char *filename)
 /* end of cat_color management */
 
 
-static void
-adjust_point (double *x, double *y, double dx, double dy, unsigned char code)
-{
-    /* supports the clip_segment() routine below */
-    if (code & 8) /* to the left */
-    {
-        *y += (window.west - *x) * dy / dx;
-        *x  = window.west;
-    }
-    else if (code & 2) /* to the right */
-    {
-        *y += (window.east - *x) * dy / dx;
-        *x  = window.east;
-    }
-    else if (code & 1) /* to the south */
-    {
-        *x += (window.south - *y) * dx / dy;
-        *y  = window.south;
-    }
-    else if (code & 4) /* to the north */
-    {
-        *x += (window.north - *y) * dx / dy;
-        *y  = window.north;
-    }
-    else /* shouldn't happen, but makes compiler happy */
-        return;
-}
-
-
-static int
-clip_segment (double *x0, double *y0, double *x1, double *y1)
-{
-    /* Using Cohen-Sutherland'ish algorithm */
-    unsigned char code1, code2;
-    double dx, dy;
-    
-    /* loop will iterate at most four times */
-    do {
-        
-        code1 = code2 = 0;  /* always initialize code word */
-        
-        if (*x0 < window.west)  code1 |= 8;  /* left */
-        if (*y0 > window.north) code1 |= 4;  /* above */
-        if (*x0 > window.east)  code1 |= 2;  /* right */
-        if (*y0 < window.south) code1 |= 1;  /* below */
-
-        if (*x1 < window.west)  code2 |= 8;
-        if (*y1 > window.north) code2 |= 4;
-        if (*x1 > window.east)  code2 |= 2;
-        if (*y1 < window.south) code2 |= 1;
-
-        dx = *x1 - *x0;     /* always recompute deltas */
-        dy = *y1 - *y0;
-
-        /* Eventually one of these two conditions will be true */
-        if ((code1 | code2) == 0) /* trivial accept */
-            return 1;
-        if ((code1 & code2) > 0)  /* trivial reject */
-            return 0;
-
-        if (code1) /* point one is outside */
-            adjust_point (x0, y0, dx, dy, code1);
-        else /* point two is outside */
-            adjust_point (x1, y1, dx, dy, code2);
-    
-    } while (1);
-}
-
 static void plot_line (struct line_pnts *points)
 {
 	int i;
-	double x[2], y[2];
 	
-	for (i = 0; i < points->n_points - 1; i++) {
-		x[0] = points->x[i];
-		y[0] = points->y[i];
-		x[1] = points->x[i+1];
-		y[1] = points->y[i+1];
-
-		if (clip_segment (&x[0], &y[0], &x[1], &y[1])) {
-			G_plot_line (x[0], y[0], x[1], y[1]);
-		}
+	for (i = 0; i < points->n_points - 1; i++) 
+        {
+            G_plot_line (points->x[i],   points->y[i],
+                         points->x[i+1], points->y[i+1]);
 	}
 }
 
@@ -611,6 +534,9 @@ int main (int argc, char **argv)
 	if (2 > Vect_open_old (&Map, map->answer, mapset))
 		G_fatal_error ("opening vector file. Please run v.support!");
 
+        Vect_set_constraint_region (&Map, window.north, window.south,
+                                    window.east, window.west);
+
 	nlines = V2_num_lines (&Map);
 
 	/* Do fill */
@@ -619,6 +545,7 @@ int main (int argc, char **argv)
 	G_percent (0, nlines, 5);
 	for (i = 1; i <= nlines; i++) {
 		
+		G_percent (i-1, nlines, 5);
 		if ((dig_att = V2_line_att(&Map, i)) == 0)
 			continue;
 		
@@ -634,10 +561,8 @@ int main (int argc, char **argv)
 
 		plot_line (points);
 	
-		G_percent (i, nlines, 5);
 	}
-
-	putchar('\n');
+        G_percent (nlines, nlines, 5);
 
 	if (leg_opt->answer && !strcmp(leg_opt->answer, "-")) {
 		/* use temporary legend file for future redraws */
