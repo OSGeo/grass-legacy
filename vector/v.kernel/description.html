@@ -1,14 +1,18 @@
-<H2>DESCRIPTION</H2>
-<EM>s.kernel</EM>
-generates a raster density map from point data using a moving 2D isotropic Gaussian kernel.
-
-
 <H2>NOTES</H2>
 
-<EM>s.kernel</EM> uses moving 2D isotropic Gaussian kernel.
+The <em>mult</em> option is needed to overcome the limitation that
+the resulting densiry in case of a vector map output is stored as category
+(Integer). The density result stored as category may be multiplied by this number.
+<P>
+With <em>-o</em> flag (experimental) the command tries to calculate an 
+optimal standard deviation. The value of <em>stddeviation</em> is taken 
+as maximum value. Standard deviation is calculated using ALL points, 
+not only those in the current region.
+
 
 <H2>LIMITATIONS</H2>
-The modules only considers the presence of point, but not (yet) any attribute values.
+The modules only considers the presence of point, but not 
+(yet) any attribute values.
 
 <H2>SEE ALSO</H2>
 <A HREF="v.surf.rst.html">v.surf.rst</A>
@@ -19,4 +23,4 @@ Stefano Menegon, <a href=http://mpa.itc.it>ITC-irst</a>, Trento, Italy
 <BR>
 Radim Blazek (network part)
 
-<p><i>Last changed: $</i>
+<p><i>Last changed: $Date$</i>
