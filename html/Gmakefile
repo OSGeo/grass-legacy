@@ -1,6 +1,6 @@
 #############################################################################
 #
-# $Id: Gmakefile,v 1.25 2001-03-05 05:11:32 justin Exp $
+# $Id: Gmakefile,v 1.26 2001-03-05 05:16:49 justin Exp $
 #
 # MODULE:   	Grass Documentation
 # AUTHOR(S):	Original author unknown - probably CERL
@@ -60,7 +60,7 @@ g.help-manpages:
 	@test -d $(GRASS_MANDIR) || mkdir -p $(GRASS_MANDIR)
 	@echo Creating man pages
 	@chown man $(GRASS_MANDIR) 2> /dev/null || echo "You should be root if gmake5 fails. Otherwise it may be OK."
-	(cd $(HTML_DIR); \
+	@(cd $(HTML_DIR); \
 	  for h in *.html; \
 	  do \
 		m=`echo $$h | sed 's@\.html@@'`; \
