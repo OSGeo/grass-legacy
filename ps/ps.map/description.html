@@ -138,10 +138,12 @@ do this, you could write a script to add dummy labels to the cats file<br>
 <P>
 
 This example would print a color table immediately below any other map legend
-information, starting at the left margin.
+information, starting at the left margin, with 4 columns:
 <PRE>
 EXAMPLE:	
 	<B>colortable</B> y
+        <B>cols</B> 4
+        <B>width</B> 4
         <B>end</B>
 </PRE>
 <P>
@@ -1330,11 +1332,14 @@ two columns.  This script file can be entered at the command line:
    <B>color</B> black
    <B>width</B> 1
    <B>end</B>
-<B>colortable</B> y
+<B>comments</B> soil.cmt
+   <B>where</B> 1 6
    <B>font</B> Helvetica
    <B>end</B>
-<B>comments</B> soil.cmt
-   <B>where</B> 4.5 1
+<B>colortable</B> y
+   <B>where</B> 1 6.5
+   <B>cols</B> 4
+   <B>width</B> 4
    <B>font</B> Helvetica
    <B>end</B>
 <B>setcolor</B> 6,8,9 white
@@ -1367,7 +1372,7 @@ two columns.  This script file can be entered at the command line:
 <B>point</B> 40% 60%
    <B>color</B> purple
    <B>symbol</B> basic/diamond
-   <B>size</B> 5
+   <B>size</B> 25
    <B>masked</B> n
    <B>end</B>
 <B>scale</B> 1:125000
