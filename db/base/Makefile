@@ -68,7 +68,8 @@ $(HOME)/db.connect: $(OBJDIR)/connect.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/connect.o $(LIBES) $(XDRLIB) $(MATHLIB)
 	@test -x $(BIN)/db.connect || ln $(ETC)/front.end $(BIN)/db.connect
 
-PROGRAMS = db.columns db.copy db.createdb db.dropdb db.droptable db.databases db.describe db.drivers db.execute db.select db.tables db.connect
+#not used: db.createdb db.dropdb db.databases
+PROGRAMS = db.columns db.copy db.droptable db.describe db.drivers db.execute db.select db.tables db.connect
 
 htmlcmd:
 	for prog in $(PROGRAMS) ; do \
