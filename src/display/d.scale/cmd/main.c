@@ -3,7 +3,7 @@
  *********************************************************************
  *
  * MODULE:     d.scale
- * AUTHOR(S):  original author unknown (CERL?)
+ * AUTHOR(S):  original author: James Westervelt (CERL)
  *             added -i scale flag: Markus Neteler 3/2001
  *
  * PURPOSE:    display the map scale
@@ -75,7 +75,7 @@ int main (int argc, char **argv)
 
 	screenscale = G_define_flag() ;
 	screenscale->key        = 'i';
-	screenscale->description= "Display map scale in GRASS monitor and exit." ;
+	screenscale->description= "Display map scale in GRASS monitor and exit" ;
 
 	coord_inp = 0;
 
