@@ -199,7 +199,13 @@ int main (int argc, char **argv)
 	}
 	fclose(in);
     } else if ( whereopt->answer != NULL ) { 
+	if ( field < 1 ) {
+	    G_fatal_error ( "'layer' must be > 0 for 'where'." );
+	}
         Fi = Vect_get_field( &In, field);
+	if ( !Fi ) {
+	    G_fatal_error ( "No layer database connection." );
+	}
 	fprintf(stderr,"Load cats from the database (table = %s, db = %s).\n",  Fi->table, Fi->database);
 	
         driver = db_start_driver(Fi->driver);
