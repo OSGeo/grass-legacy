@@ -1,0 +1,153 @@
+#!/bin/sh
+tput clear
+CHECK.MAP
+if test $? = 1
+	then
+	exit
+fi
+tmpf=`date +%H%M%S`
+echo
+echo "Warning!!"
+echo "This procedure uses your current window for determining the
+extent of the map."
+sleep 1
+echo
+while test "$mdef" = ""
+do
+echo -n "Enter the name of the map definition file [map.def]: "
+read mdef
+if test "$mdef" = ""
+	then
+	mdef=map.def
+fi
+if test -f $mdef; then
+	echo -n "File $mdef exists do you want to recreate it [y]es or (n)o: "
+	read tst
+	tst=${tst:-y}
+	if test $tst = "n"; then
+		mdef=""
+	fi
+fi
+done
+echo
+
+while test "$scale" = ""
+do
+echo -n "Enter the denominator for the scale of the map [24000]: "
+read scale
+scale=${scale:-24000}
+done
+
+cat $LOCATION/WIND | awk '/zone:/ {print "ZONE="$2}
+/proj:/ {print "PROJ="$2}
+/east:/ {printf "EAST=`expr %.0f + 100`\n",$2}
+/west:/ {printf "WEST=`expr %.0f - 100`\n",$2}
+/north:/ {printf "NORTH=`expr %.0f + 100`\n",$2}
+/south:/ {printf "SOUTH=`expr %.0f - 100`\n",$2}' > mapwin
+
+#set window and change projection
+echo export PROJ ZONE EAST WEST NORTH SOUTH >> mapwin
+. mapwin
+
+if test $EAST -lt 0 -o $WEST -lt 0; then
+	REV=1;
+else
+	REV=0;
+fi
+
+if test $PROJ = 1
+	then
+	PROJ=utm
+	PARMS=+zone=$ZONE
+	echo +proj=$PROJ $PARMS > .PARMS
+	proj +proj=$PROJ $PARMS +inv - << EOF > mapwin
+$WEST $SOUTH
+$EAST $NORTH
+$EAST $SOUTH
+$WEST $NORTH
+EOF
+elif test $PROJ = 4; then
+	PROJ=aea
+	echo
+	echo "Your current window indicates an Alberts Equal-Area Projection."
+	echo -n "Enter the latitude and longitude for the central meridian [23 -96]: "
+	read LAT LON
+	LAT=${LAT:-23}; LON=${LON:--96}
+	echo
+	echo -n "Enter the standard parallels [29.5 45.5]: "
+	read LAT1 LAT2
+	LAT1=${LAT1:-29.5}; LAT2=${LAT2:-45.5}
+	echo "+proj=$PROJ +lon_0=$LON +lat_0=$LAT +lat_1=$LAT1 +lat_2=$LAT2" > .PARMS
+	proj +proj=$PROJ +inv +lon_0=$LON +lat_0=$LAT +lat_1=$LAT1 +lat_2=$LAT2 -  << EOF > mapwin
+$WEST $SOUTH
+$EAST $NORTH
+$EAST $SOUTH
+$WEST $NORTH
+EOF
+	echo
+	echo -n "Enter the MAPGEN projection abreviation for the output map [aea]: "
+	read PROJ
+	PROJ=${PROJ:-aea}
+	echo
+	echo "Enter any additional parameters needed by the MAPGEN program proj"
+	echo -n "for this projection [none]: "
+	read PARMS
+	PARMS=${PARMS:-""}
+else 
+	echo "Current window is not UTM or AEA assuming LAT/LON"
+	cat $LOCATION/WIND | awk '/zone:/ {print "ZONE="$2}
+	/proj:/ {print "PROJ="$2}
+	/east:/ {printf "EAST=%.4f\n",$2}
+	/west:/ {printf "WEST=%.4f\n",$2}
+	/north:/ {printf "NORTH=%.4f\n",$2}
+	/south:/ {printf "SOUTH=%.4f\n",$2}' > mapwin
+	. mapwin
+	echo ${WEST}d ${NORTH}d > mapwin
+	echo ${EAST}d ${SOUTH}d >> mapwin
+	echo
+	echo -n "Enter the projection abreviation for the output map: "
+	read PROJ
+	echo
+	echo "Enter the appropriate parameters for this projection"
+	echo -n ": "
+	read PARMS
+	echo > .PARMS
+fi
+
+
+echo
+echo -n "Enter the left and right margins in centimeters [0 0]: "
+read left right
+echo
+echo -n "Enter the top and bottom margins in centimeters [0 0]: "
+read top bottom
+
+if test $REV -eq 0; then
+   cat mapwin |  awk '	{x[NR] = $1; y[NR] = $2;}\
+   END	{printf "%s %s %s %s\n",x[1],x[2],y[3],y[4]}' > make.def
+else
+   cat mapwin |  awk '	{x[NR] = $1; y[NR] = $2;}\
+   END	{printf "%s %s %s %s\n",x[4],x[3],y[1],y[2]}' > make.def
+fi
+if test "$PROJ" = "utm"; then
+	MID=`cat make.def | get_center | awk '{print $1}'`
+	ANGLE=`get_angle $MID`
+else
+	ANGLE=
+fi
+echo +proj=$PROJ $PARMS >> make.def
+echo $scale >> make.def
+echo $ANGLE >> make.def
+echo ${left:-.004} ${bottom:-.004} >> make.def
+echo ${right:-.004} ${top:-.004} >> make.def
+rm mapwin
+mv make.def $mdef.par
+mapdef -csm $mdef < $mdef.par 
+sleep 2
+echo " make.mapdef complete
+	Map definition file	$mdef
+	Parameter file		$mdef.par
+"
+echo
+mapdef -v $mdef
+echo
