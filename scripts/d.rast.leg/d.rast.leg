@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ##############################################################################
-#	d.rast.leg	(GRASS Shell Script)
+# d.rast.leg	(GRASS Shell Script)
 #
 # displays a raster map and its legend on a graphics window. 
 #
@@ -82,12 +82,10 @@ d.frame -e
 if [ -z "$GIS_OPT_num_of_lines" ]
 then
 	d.frame -s at=0,100,0,65 frame=left
-        d.erase col=white
-    	d.rast map=$GIS_OPT_map b=white
+    	d.rast map=$GIS_OPT_map
 
        #draw title
         d.frame -s at=90,100,65,100  frame=title
-        d.erase col=white
 #	if test -f $GISBASE/bin/d.text.freetype ; then
 #          d.text.freetype -sp text=$GIS_OPT_map col=black size=18 \
 #	         east_north=20,20 path=/usr/X11R6/lib/X11/fonts/TTF/luximb.ttf
@@ -99,21 +97,17 @@ then
     	d.frame -s at=0,90,65,100 frame=right
         if test -f $HISTFILEDIR/$GIS_OPT_map/histogram
           then
-             d.erase col=white
-    	     d.legend -n map=$GIS_OPT_map col=black
+    	     d.legend -n map=$GIS_OPT_map
           else
-             d.erase col=white
-             d.legend $OMIT map=$GIS_OPT_map col=black
+             d.legend $OMIT map=$GIS_OPT_map
           fi
     	d.frame -s frame=left
 else
 	d.frame -s at=0,100,0,65 frame=left
-        d.erase col=white
-    	d.rast map=$GIS_OPT_map b=white
+    	d.rast map=$GIS_OPT_map
 
        #draw title
         d.frame -s at=90,100,65,100 frame=title
-        d.erase col=white
 #	if test -f $GISBASE/bin/d.text.freetype ; then
 #          d.text.freetype -sp text=$GIS_OPT_map col=black size=18 \
 #	         east_north=20,20 path=/usr/X11R6/lib/X11/fonts/TTF/luximb.ttf
@@ -125,11 +119,9 @@ else
     	d.frame -s at=0,90,65,100 frame=right
         if test -f $HISTFILEDIR/$GIS_OPT_map/histogram
           then
-             d.erase col=white
-             d.legend -n map=$GIS_OPT_map col=black lines=$GIS_OPT_num_of_lines
+             d.legend -n map=$GIS_OPT_map lines=$GIS_OPT_num_of_lines
           else
-             d.erase col=white
-             d.legend $OMIT map=$GIS_OPT_map col=black
+             d.legend $OMIT map=$GIS_OPT_map
           fi
     	d.frame -s frame=left
 fi
