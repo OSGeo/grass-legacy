@@ -194,9 +194,17 @@ if [ $? -eq 1 ] ; then
     	UNPACK=gunzip
     	
 	# Is gunzip there?
-    	which gunzip | grep -v no > /dev/null
-    	
-	if [ $? -eq 1 ] ; then
+	IFSSAVE="$IFS"
+	IFS=":"
+	GUNZIP=""
+	for TEST in $PATH ; do
+	    if [ -x $TEST/gunzip ] ; then
+	        GUNZIP="$TEST/gunzip"
+	    fi
+	done
+    	# which gunzip | grep -v no > /dev/null
+    	IFS="$IFSSAVE"
+	if [ ! "$GUNZIP" ] ; then
             echo "No gunzip installed. Please get from:"
             echo "   http://www.gnu.org/software/gzip/gzip.html"
             exit
@@ -206,9 +214,18 @@ else
     UNPACK=bunzip2
     
     # Is bunzip2 there?
-    which bunzip2 | grep -v no > /dev/null
-    
-    if [ $? -eq 1 ] ; then
+
+    IFSSAVE="$IFS"
+    IFS=":"
+    BUNZIP2=""
+    for TEST in $PATH ; do
+        if [ -x $TEST/bunzip2 ] ; then
+	    BUNZIP2="$TEST/bunzip2"
+	fi
+    done
+    IFS="$IFSSAVE"
+    # which bunzip2 | grep -v no > /dev/null
+    if [ ! "$BUNZIP2" ] ; then
     	echo "No bunzip2 installed. Please get from:"
     	echo "   http://sources.redhat.com/bzip2/index.html"
     	exit
@@ -292,15 +309,25 @@ NEWPATH=$DESTDIR
 sed 's#'$ORIG_BASE_DIR'#'$NEWPATH'#g' $DESTDIR/etc/monitorcap.orig > $DESTDIR/etc/monitorcap
 
 echo""
-echo "Creating the monitor fifos..."
-rm -f $DESTDIR/dev/fifo.*
 
-# Create the fifos
-sh $DESTDIR/dev/create_fifos.sh $DESTDIR
+CYGWIN=$(uname|grep CYGWIN)
 
-if [ $? -eq 1 ] ; then
-    echo "An error occured or user break while installing binaries! Exiting."
-    exit
+if [ ! "$CYGWIN" ] ; then
+   # no need to create the fifos for sockets setup
+   echo "Creating the monitor fifos..."
+   rm -f $DESTDIR/dev/fifo.*
+
+   # Create the fifos
+   sh $DESTDIR/dev/create_fifos.sh $DESTDIR
+
+   if [ $? -eq 1 ] ; then
+      echo "An error occured or user break while installing binaries! Exiting."
+      exit
+   fi
+else 
+   if [ ! -x /bin/less ] ; then
+      ln -s /bin/less /bin/more
+   fi
 fi
 
 # Create the binary uninstall script
