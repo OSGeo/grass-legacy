@@ -1,0 +1,20 @@
+                     ARCH = mass1
+
+                  GISBASE = /usr/grass3.2
+                 UNIX_BIN = /usr/local/bin
+
+         DEFAULT_DATABASE = /usr/grass3/data2
+         DEFAULT_LOCATION = drum
+
+            COMPILE_FLAGS = -O -flight
+                  LDFLAGS = -s
+
+                  TERMLIB = -ltermlib
+                   CURSES = -lcurses $(TERMLIB)
+                  MATHLIB = -lm
+                  LIBRULE = ar ruv $@ $?; ranlib $@
+
+               USE_TERMIO = -DUSE_TERMIO
+                 USE_MTIO = -DUSE_MTIO
+               DIGITFLAGS = -DMASSCOMP -DUSE_SETREUID -DUSE_SETEUID -DUSE_SETPRIORITY
+                CAN_CLEAR = -DCAN_CLEAR
