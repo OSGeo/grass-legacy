@@ -1,0 +1,66 @@
+
+
+
+Dstatus(2D)          GRASS Reference Manual           Dstatus(2D)
+
+
+
+NAME
+     Dstatus - Prints the status of monitor windows
+     (D Language Tool)
+
+SYNOPSIS
+     Dstatus
+
+DESCRIPTION
+     Dstatus prints to standard output information about the
+     windows on the monitor.  This information includes:
+          The time (number) of creation of the current window
+          (time)
+          Current window name (cur_w)
+          Monitor window names (WINDOW)
+          Map window coordinates associated with monitor windows
+          (m_win)
+          Display window coordinates associated with monitor
+          windows (d_win) (display window coordinates assume
+          (0,0) is located in the upper left corner of the
+          monitor)
+          The list of commands used to create the contents of
+          monitor windows (i.e., Dcell: soils in PERMANENT, Dgrid
+          100, etc.)
+          The times (numbers) of creation of all monitor windows
+          (from most recently created, to earliest created)
+          (time)
+
+NOTES
+     This command is generally used for program debugging, and is
+     not needed by the casual user.  Dstatus will complain if no
+     graphics monitor has been selected for output.
+     If the user performs an action in a window that overwrites
+     information already there (i.e., the user runs Dcell after
+     having run Dgrid), the overwritten information will be lost
+     in the Dstatus file as well.
+
+SEE ALSO
+     DINTRO[2D]   Introduction to the GRASS D tools
+
+AUTHOR
+     James Westervelt, U.S. Army Construction Engineering
+     Research Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
