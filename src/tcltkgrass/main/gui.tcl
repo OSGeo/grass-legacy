@@ -2,6 +2,8 @@
 # Name:		gui.tcl
 # Author:	Jacques Bouchard (bouchard@onera.fr)
 #    additions:	Markus Neteler (neteler@geog.uni-hannover.de)
+#    scripting: added by Andreas Lange (andreas.lange@rhein-main.de)
+#    netscape:  added by Andreas Lange (andreas.lange@rhein-main.de)
 # $Id$
 # Description:	Simple interface builder for TCLTKGRASS
 #
@@ -293,6 +295,7 @@ proc interface_build {description} {
 }
 
 ###############################################################################
+# modified by Andreas Lange (andreas.lange@rhein-main.de) for netscape/html-manpage
 
 proc create_entry {path num variable description scroll button} {
     upvar $num n
@@ -316,9 +319,11 @@ proc create_entry {path num variable description scroll button} {
                 "execute $button $path.button$n 2 $terminal_input"
             bind $path.button$n <ButtonPress-3> \
                 "execute $button $path.button$n 3 $terminal_input"
+	    bind $path.button$n <Control-ButtonPress-2> \
+		"execute $button $path.button$n 4 0"
             bindtags $path.button$n [list $path.button$n Button balloon . all]
             set balloonHelp($path.button$n) \
-                "Left button:\trun command\nMiddle button:\tprint man page\nRight button:\tprint usage"
+                "Left button:\trun command\nMiddle button:\tprint man page\nCtrl-Mid button:\tshow html page\nRight button:\tprint usage"
         } else {
             regexp {[^()]+} $variable array
             if {$button == "group"} {
@@ -692,13 +697,18 @@ proc command_set {array element op} {
 }
 
 ###############################################################################
+# modified by Andreas Lange (andreas.lange@rhein-main.de) for scripting: script_add
 
 proc run {args} {
     global env
+    
+    # interactive commands are added as comments to the script
+    script_add $args "inter"
     eval exec xterm -title [lindex $args 0] -e $env(TCLTKGRASSBASE)/main/pause $args
 }
 
 ###############################################################################
+# modified by Andreas Lange (andreas.lange@rhein-main.de) for scripting: script_add
 
 proc execute {command path button terminal} {
     upvar $command cmd
@@ -714,6 +724,10 @@ proc execute {command path button terminal} {
             } elseif {$button == 2} {
                 set name "g.manual [lindex $root 0]"
                 set see 0
+	    } elseif {$button == 4} {
+		set name ""
+		netscape [lindex $root 0] 
+		set see 0
             } else {
                 set name "[lindex $root 0] help"
                 set see 0
@@ -729,6 +743,8 @@ proc execute {command path button terminal} {
             if [catch {open $name r} message] {
                 tk_messageBox -type ok -message $message
             } else {
+		# only add command if its opening was succesful
+		script_add $name "cmd"
                 set pipe($root) $message
                 set nbackspace 0
                 set command_state($path) "Running ..."
@@ -789,7 +805,7 @@ proc reader {stream path cmd see} {
         catch {close $stream}
         $path configure -text Run -fg blue -activeforeground blue
         set balloonHelp($path) \
-            "Left button:\trun command\nMiddle button:\tprint man page\nRight button:\tprint usage"
+            "Left button:\trun command\nMiddle button:\tprint man page\nCtrl-Mid button:\tshow html page\nRight button:\tprint usage"
         hideBalloonHelp $path
         if [string length $command_state($path)] {
             set command_state($path) "Finished."
@@ -887,10 +903,13 @@ proc reader {stream path cmd see} {
 }
 
 ###############################################################################
+# changed by Andreas Lange (andreas.lange@rhein-main.de)
 
 proc help {title textopts tagopts message} {
     toplevel .help
     wm title .help $title
+
+    bind .help <Return> {destroy .help}
 
     button .help.ok -text OK -command "destroy .help"
     pack .help.ok -side bottom
@@ -899,6 +918,9 @@ proc help {title textopts tagopts message} {
     pack .help.frame -side top -fill both -expand yes
     .help.frame.text insert end $message texttag
     eval .help.frame.text tag configure texttag $tagopts
+
+    .help.frame.text configure -state disabled
+    focus .help.frame.text
 
     grab .help
     tkwait window .help
@@ -1053,12 +1075,13 @@ proc lfirst {list element} {
 }
 
 ###############################################################################
+# modified by Andreas Lange (andreas.lange@rhein-main.de) for netscape/html-manpage
 
 proc tcltkgrass_save {path} {
     global env module_list module_font result_font dialog_font main_menu
     global xdriver_defaults quit_window
     global xdriver active_xdrivers window_management
-    global group subgroup
+    global group subgroup html
 
     if [catch {open ~/.tcltkgrass w} stream] return
 
@@ -1098,6 +1121,10 @@ proc tcltkgrass_save {path} {
                 writeparam $stream ${module}($element)
             }
         }
+    }
+
+    foreach element [lsort [array names html]] {
+	writeparam $stream html($element)
     }
 
     close $stream
@@ -1147,6 +1174,7 @@ proc writeparam {stream args} {
 }
 
 ###############################################################################
+# modified by Andreas Lange (andreas.lange@rhein-main.de) for scripting: script_add
 
 proc start_monitor {monitor} {
     global env xdriver xdriver_defaults window_management
@@ -1166,10 +1194,12 @@ proc start_monitor {monitor} {
     set env(XDRIVER_LEFT)   $left
     set env(XDRIVER_TOP)    $top
 
+    script_add "d.mon start=$monitor" "cmd"
     exec xterm -geometry 40x5 -e d.mon start=$monitor
 }
 
 ###############################################################################
+# modified by Andreas Lange (andreas.lange@rhein-main.de) for scripting: script_add
 
 proc start_monitors {} {
     global active_xdrivers xdriver
@@ -1177,24 +1207,31 @@ proc start_monitors {} {
     foreach name [lsort -decreasing $active_xdrivers] {
         start_monitor $name
     }
+    catch {script_add "d.mon select=$xdriver(selected)" "cmd"}
     catch {exec d.mon select=$xdriver(selected)}
 }
 
 ###############################################################################
+# modified by Andreas Lange (andreas.lange@rhein-main.de) for scripting: script_add
 
 proc stop_monitor {monitor} {
     if {[lsearch -exact [search_xdrivers] $monitor] >= 0} {
         exec d.mon start=$monitor >& /dev/null
         exec d.mon stop=$monitor >& /dev/null
+	script_add "d.mon start=$monitor >& /dev/null" "cmd"
+	script_add "d.mon stop=$monitor >& /dev/null" "cmd"
     }
 }
 
 ###############################################################################
+# modified by Andreas Lange (andreas.lange@rhein-main.de) for scripting: script_add
 
 proc stop_monitors {} {
     foreach monitor [search_xdrivers] {
         exec d.mon start=$monitor >& /dev/null
         exec d.mon stop=$monitor >& /dev/null
+	script_add "d.mon start=$monitor >& /dev/null" "cmd"
+	script_add "d.mon stop=$monitor >& /dev/null" "cmd"
     }
 }
 
@@ -1319,9 +1356,14 @@ proc resize {modules} {
 }
 
 ###############################################################################
+# modified by Andreas Lange (andreas.lange@rhein-main.de) for scripting support
 
 proc quit {} {
-    global dialog_font
+    global dialog_font script
+
+    if {$script(running) == 1} {
+	script_stop
+    }
     toplevel .quit_window 
     grab set .quit_window
     frame .quit_window.radio
@@ -1341,6 +1383,225 @@ proc quit {} {
     button .quit_window.answer.b2 -text CANCEL -command {destroy .quit_window}
     pack .quit_window.answer.b1 .quit_window.answer.b2 -side left -expand yes
     setfont .quit_window $dialog_font
+}
+
+###############################################################################
+# added by Andreas Lange (andreas.lange@rhein-main.de) for scripting support
+
+proc script_start {} {
+    global script env
+
+    if {$script(running) == 1} {
+	tk_messageBox -icon info -type ok -message "Scripting already running, stop first"
+    } else {
+	source $env(TCLTKGRASSBASE)/main/help-scripting.tcl
+	set answer [tk_messageBox -icon question -type yesnocancel -message "Do you want to start a script session?"]
+	if {$answer == "yes"} {
+	    set script(running) 1
+	    set script(cmds) ""
+	} else {
+	    return
+	}
+    }
+}
+
+###############################################################################
+# added by Andreas Lange (andreas.lange@rhein-main.de) for scripting support
+
+proc script_stop {} {
+    global script env
+
+    if {$script(running) == 0 }  {
+	tk_messageBox -icon info -type ok -message "Scripting not running, start first"
+    } else {
+	set answer [tk_messageBox -icon info -type okcancel -message "select or enter a filename to save the generated script"]
+	if {$answer == "cancel"} {
+	    return
+	}
+	set script(file) [tk_getSaveFile -initialdir . -defaultextension ".sh" -title "Enter filename to save script"]
+	if {[string length $script(file)] == 0} {
+	    set answer [tk_messageBox -type yesno -icon question -message "No filename given, discard recorded script?"]
+	    if {$answer == "yes" } {
+		set script(running) 0
+		set script(cmds) ""
+	    }
+	    return
+	}
+	if [catch {open $script(file) w} out] {
+	    tk_messageBox -type ok -icon warning -message $out
+	} else {
+	    puts $out $script(head)
+	    foreach cmd $script(cmds) {
+		puts $out $cmd
+	    }
+	    puts $out $script(tail)
+	    close $out
+	    # caveat: not portable to win32 or mac
+	    exec chmod u+x $script(file)
+	}
+    }
+    set script(running) 0
+    set script(cmds) ""
+}
+
+
+###############################################################################
+# added by Andreas Lange (andreas.lange@rhein-main.de) for scripting support
+
+proc script_play {} {
+    global script
+
+    if {$script(running) == 1} {
+	tk_messageBox -icon info -type ok -message "Script recording in progress, stop first"
+    } else {
+	set script(file) [tk_getOpenFile -initialdir . -title "Open recorded script file for replay"]
+	if {[string length $script(file)] == 0} {
+	    set answer [tk_messageBox -type ok -icon warning -message "No filename, quitting"]
+	    return
+	}
+	set message ""
+	if [catch {open $script(file) r} in] {
+	    set message $in
+	} else {
+	    if {[gets $in test] <= 0} {
+		set message "$script(file) is empty file"
+	    } else {
+		if {[gets $in test] > 0} {
+		    if { [string match *tcltkgrass* $test] != 1 } {
+			set message "$script(file) is not a valid tcltkgrass script: $test"
+		    }
+		} else {
+		    set message "invalid script file: $script(file)"
+		}
+	    }
+	}
+	if {$message != ""} {
+	    tk_messageBox -type ok -icon warning -message $message
+	    return
+	}
+	set message [run $script(file)]
+	if {$message != ""} {
+	    tk_messageBox -type ok -icon warning -message "Error executing script $script(file): $message"
+	} else {
+	    tk_messageBox -type ok -icon info -message "Script $script(file) executed"
+	}
+	close $in
+    }
+}
+
+###############################################################################
+# added by Andreas Lange (andreas.lange@rhein-main.de) for scripting support
+
+proc script_add {cmd type} {
+    global script
+
+    if {$script(running) == 1} {
+	set command ""
+	if {$type == "inter"} {
+	    append command "\# " $cmd 
+	} else {
+	    regsub -- {^\| } $cmd {} temp
+	    regsub -all {\{([^\}]+)\}} $temp {"\1"} cmd 
+	    regsub -- {2>@ stdout} $cmd {2>\&1} command 
+	}
+	lappend script(cmds) $command
+    }
+}
+
+###############################################################################
+# added by Andreas Lange (andreas.lange@rhein-main.de) for netscape/html-manpages
+
+proc netscape {modulename} {
+    global html
+
+    append htmlfile "$html(path)" "/" "$modulename" "$html(post)"
+    append url "$html(pre)" "$htmlfile"
+    
+    if { [string match file* $url] } {
+	if { ! [file readable $htmlfile] } {
+	    if { ! [file isdirectory $html(path)]} {
+		tk_messageBox -icon warning -type ok \
+		    -message "path not found: $html(path)"
+		return
+	    } else {
+		tk_messageBox -icon warning -type ok \
+		    -message "no html page found in $html(path) for $modulename"
+		return
+	    }
+	}
+    } else {
+	# how to check a remote URL?
+	# nerdscrap will tell if the URL is invalid!
+	# in theory it is possible to check with sockets etc, but this is 
+	# too much overhead. 
+    }
+    if { $html(newwin) == "yes" } {
+	set cmd [list exec $html(netscape) -remote openURL\($url,new-window,$html(raise)\)]
+    } else {
+	set cmd [list exec $html(netscape) -remote openURL\($url,$html(raise)\)]
+    }
+    set err [catch {eval $cmd}]
+    if $err {
+	tk_messageBox -icon warning -type ok \
+	    -message "$html(netscape) ist not running or not in your path or an other error occurred. Please try starting $html(netscape) first."
+	return
+    }
+}
+
+###############################################################################
+# added by Andreas Lange (andreas.lange@rhein-main.de) for netscape/html-manpages
+
+proc config_netscape {} {
+    global env html dialog_font
+
+    set path .config_netscape
+    toplevel $path
+    wm title $path {Configure html-browser}
+
+    label $path.label1 -anchor w -text "html browser (netscape)"
+    entry $path.entry1 -textvariable html(netscape)
+
+    label $path.label2 -anchor w -text "path or url for html manual pages"
+    entry $path.entry2 -textvariable html(path)
+
+    label $path.label3 -anchor w -text "prefix for html path or url (file:)"
+    entry $path.entry3 -textvariable html(pre)
+
+    label $path.label4 -anchor w -text "postfix for html files (.html)"
+    entry $path.entry4 -textvariable html(post)
+
+    label $path.label5 -anchor w -text "auto raise window of browser"
+
+    frame $path.radio1 -relief sunken -borderwidth 1
+    radiobutton $path.radio1.entry50 -variable html(raise) -text "auto raise   " -value "raise"
+    radiobutton $path.radio1.entry51 -variable html(raise) -text "no auto raise" -value "noraise"
+
+    label $path.label6 -anchor w -text "open in new window instance of browser"
+
+    frame $path.radio2 -relief sunken -borderwidth 1
+    radiobutton $path.radio2.entry60 -variable html(newwin) -text "new window  " -value "yes"
+    radiobutton $path.radio2.entry61 -variable html(newwin) -text "reuse window" -value "no"
+
+    pack $path.label1 $path.entry1 \
+         $path.label2 $path.entry2 \
+         $path.label3 $path.entry3 \
+         $path.label4 $path.entry4 \
+         $path.label5 $path.radio1  -side top -expand yes -fill x
+
+    pack $path.radio1.entry50 -side left -expand yes -fill x
+    pack $path.radio1.entry51 -side right -expand yes -fill x
+
+    pack $path.label6 $path.radio2 -side top -expand yes -fill x
+    pack $path.radio2.entry60 -side left -expand yes -fill x
+    pack $path.radio2.entry61 -side right -expand yes -fill x 
+
+    button $path.quit -text OK -command "destroy $path"
+    pack $path.quit -side bottom -expand yes -pady 1m
+
+    setfont $path $dialog_font
+
+    grab set $path
+    tkwait window $path
 }
 
 ###############################################################################
@@ -1511,6 +1772,23 @@ set dialog_font ""
 set module_list ""
 set active_xdrivers ""
 
+# modified by Andreas Lange (andreas.lange@rhein-main.de) for scripting support
+set script(running) 0
+set script(cmds) ""
+set script(head) "\#!/bin/sh\n\# GRASS shell script created with tcltkgrass\n\# do not remove the above line!\n\#\n\#\n\nif \[ \"\$GISRC\" = \"\" \];\nthen\n\techo \"\$0: run this script from GRASS command shell\" >&2\n\texit 1\nfi\n\neval `g.gisenv`\n\n"
+set script(tail) "\#\n\# end of script session created with tcltkgrass\n"
+
+# modified by Andreas Lange (andreas.lange@rhein-main.de) for netscape/html-manpages
+# note that i modified save/load procedures so that this is stored to 
+# .tcltkgrass. This should be up- and downward compatible. 
+set html(netscape) "netscape"
+set html(path)     "$env(GISBASE)/documents/html"
+set html(post)     ".html"
+set html(pre)      "file:"
+set html(raise)    "raise"
+set html(newwin)   "no"
+
+
 if ![catch {open ~/.tcltkgrass r} stream] {
     while {[gets $stream line] >= 0} {
         if {[llength $line] != 2 || \
@@ -1534,6 +1812,7 @@ if ![catch {open ~/.tcltkgrass r} stream] {
             } elseif {$array == "main_menu"} {
             } elseif {$array == "group"} {
             } elseif {$array == "subgroup"} {
+	    } elseif {$array == "html"} {
             } else {
                 llast module_list $array
             }
