@@ -1,0 +1,27 @@
+PGM = r.traj
+LIST =  main.o \
+	make_point.o \
+	delete.o \
+	mark_pts.o \
+	calc_angles.o \
+	pts_elim.o \
+	sort_list.o \
+	make_list.o
+
+all: $(BIN_CONTRIB_CMD)/r.traj.data $(BIN_CONTRIB_CMD)/$(PGM) $(GISBASE)/etc/weapon_data
+
+#$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(GISLIB) $(DISPLAYLIB)
+EXTRA_CFLAGS=-g
+LDFLAGS=-g
+$(PGM): $(LIST) $(GISLIB) $(DISPLAYLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(DISPLAYLIB) $(GISLIB) $(LIBDIR)/libsegment.a $(MATHLIB)
+
+$(BIN_CONTRIB_CMD)/r.traj.data: list_main.o
+	$(CC) $(LDFLAGS) -o $@ $? $(GISLIB) 
+
+$(GISBASE)/etc/weapon_data: weapon_data
+	tar cf - weapon_data | (cd $(GISBASE)/etc ; tar xf -)
+
+$(LIST): cmd_line.h constants.h radians.h point.h
+
+$(GISLIB): # in case library changes
