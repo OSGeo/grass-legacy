@@ -17,8 +17,8 @@ char *getCat(struct Map_info *Map, float x, float y, int *i)
 
     memset(buf, '\0', sizeof(buf));
     dbCat = -1;
-    east = (double) x;
-    north = (double) y;
+    east = (double)x;
+    north = (double)y;
 
 
 
@@ -72,11 +72,11 @@ int fillSQLstruct(struct Sql *tp, float x, float y, int dist)
     int ret = 0;
 
 
-    east = (double) x;
-    north = (double) y;
+    east = (double)x;
+    north = (double)y;
     tp->centX = east;
     tp->centY = north;
-    tp->distance = (double) dist;
+    tp->distance = (double)dist;
     tp->permX = east + tp->distance;
     tp->permY = north + tp->distance;
     tp->maxX = east + tp->distance;
