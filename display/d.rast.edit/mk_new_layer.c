@@ -9,8 +9,6 @@
 
 */
 
-
-#define GLOBAL
 #include "edit.h"
 
 int 
