@@ -112,6 +112,10 @@ fi
 
 #make a temporary directory
 TMPDIR="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TMPDIR" ] ; then
+    echo "ERROR: unable to create temporary files" 1>&2
+    exit 1
+fi
 rm -f "$TMPDIR"
 mkdir "$TMPDIR"
 
@@ -172,13 +176,13 @@ echo "GEOGCS["wgs84",DATUM["WGS_1984",SPHEROID["wgs84",6378137,298.257223563],TO
 
 r.in.gdal in=$TILE.bil out=$TILEOUT
 
-rm $TILE.bil $TILE.hdr $TILE.prj
-rm "$TMPDIR"/$FILE.hgt.zip
+rm $TILE.bil $TILE.hdr $TILE.prj $TILE.hgt.zip
+cd ..
 rmdir "$TMPDIR"
 
-#nice color table and zoom to tile
+#nice color table #and zoom to tile
 r.colors rul=srtm map=$TILEOUT
-g.region rast=$TILEOUT
+#g.region rast=$TILEOUT
 
 echo "Done: generated map $TILEOUT"
 echo "(Note: Holes in the data can be closed with 'r.fillnulls' using splines)"
