@@ -117,7 +117,7 @@ char *find_man_page (char *entry, int *sec)
     int section = 0;
 
     for ( section = 1; section <= MAX_SECTIONS; section++) {
-        sprintf (buf, "%s/man/%d/%s", G_gisbase(), section, entry);
+        sprintf (buf, "%s/man/man%d/%s.1", G_gisbase(), section, entry);
         if ( access(buf,0) == 0 ) {
             *sec = section;
             return buf;
@@ -159,7 +159,7 @@ char *section_name (int section)
     char filename[128];
     FILE *fp;
 
-    sprintf(filename, "%s/man/%d/.class-title", G_gisbase(), section);
+    sprintf(filename, "%s/man/man%d/.class-title", G_gisbase(), section);
 
     if ((fp = fopen(filename, "r")) == NULL) {		/* couldn't open */
 	sprintf(value, "Section %d\n", section);	/* default */
@@ -221,7 +221,7 @@ int list_all_tty (int pretty, int fflag, int eflag)
             fprintf(line,"------------------------------------------------------------------------------\n");
 	    fflush(line);
 	    fclose(line);
-            sprintf(buf,"ls -C %s/man/%d > %s", G_gisbase(), section, temp);
+            sprintf(buf,"ls -C %s/man/man%d > %s", G_gisbase(), section, temp);
             G_system(buf);
 	    sprintf(buf,"cat %s %s %s %s > %s", temp2, temp1, temp, temp1,
 		     last);
@@ -231,7 +231,7 @@ int list_all_tty (int pretty, int fflag, int eflag)
         } 
 	else 
 	{
-            sprintf(buf,"ls %s/man/%d > %s", G_gisbase(), section, last);
+            sprintf(buf,"ls %s/man/man%d > %s", G_gisbase(), section, last);
             G_system(buf);
         }
 
@@ -305,9 +305,9 @@ list_all_not_tty (int pretty, int fflag, int eflag)
     for ( section = 1; section <= MAX_SECTIONS; section++ ) {
         tempfile = G_tempfile();
         if ( pretty ) {
-            sprintf(buf,"ls -C %s/man/%d > %s", G_gisbase(), section, tempfile);
+            sprintf(buf,"ls -C %s/man/man%d > %s", G_gisbase(), section, tempfile);
         } else {
-            sprintf(buf,"ls %s/man/%d > %s", G_gisbase(), section, tempfile);
+            sprintf(buf,"ls %s/man/man%d > %s", G_gisbase(), section, tempfile);
         }
         G_system(buf);
         /* eflag ? check to see if tempfile is empty */
