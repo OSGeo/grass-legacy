@@ -1,0 +1,14 @@
+# %W% %G%
+
+PGM = Gdrain
+LIST =  main.o \
+        stash.o 
+ 
+LIBES = $(DISPLAYLIB) $(GISLIB) $(SEGMENTLIB)
+$(BIN)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB)
+ 
+$(LIST): stash.h point.h
+ 
+$(LIBES): #
+
