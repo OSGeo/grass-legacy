@@ -141,7 +141,7 @@ fi
 
 #check if map contains only NULL's in current region
 LINES=`wc -l $TMP | awk '{print $1}'`
-if [ $LINES == 0 ]
+if [ "$LINES" = 0 ]
 then
  echo ""
  echo "ERROR: Map $COVER contains only NULL data in current region."
