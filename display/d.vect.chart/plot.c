@@ -55,7 +55,7 @@ plot ( int ctype, struct Map_info *Map, int type, int field,
         if ( !(ltype & type) ) continue;
 
 	Vect_cat_get ( Cats, field, &cat );
-	if ( cat == 0 ) continue;
+	if ( cat < 0 ) continue;
 
 	/* Select values from DB */
 	if ( ctype == CTYPE_PIE && sizecol != NULL ) {

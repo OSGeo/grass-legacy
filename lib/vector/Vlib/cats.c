@@ -103,7 +103,7 @@ Vect_cat_set (struct line_cats *Cats, int field, int cat)
    * but remember that limit is set to portable data type length
    * and machine native size may be longer */
   /*
-  if (field < 1 || field > GV_FIELD_MAX || cat < 1 || cat > GV_CAT_MAX)
+  if (field < 1 || field > GV_FIELD_MAX || cat < 0 || cat > GV_CAT_MAX)
     return (-2);
    */
     
@@ -134,6 +134,7 @@ Vect_cat_set (struct line_cats *Cats, int field, int cat)
 /*!
  \fn int Vect_cat_get (struct line_cats *Cats, int field, int *cat)
  \brief get first found category of given field
+       'cat' is set to first category found or -1 if field was not found
  \return 1 found, 0 field does not exist
  \param Cats
  \param field
@@ -150,7 +151,7 @@ Vect_cat_get (struct line_cats *Cats, int field, int *cat)
     return (0);
   */
 
-  *cat = 0;
+  *cat = -1;
     
   /* go through cats and find if field exist */
   for (n = 0; n < Cats->n_cats; n++)

@@ -377,6 +377,7 @@ main (int argc, char *argv[])
 	        while ( (type = Vect_read_next_line (&In, Points, Cats)) > 0) {
 	            if ( !(type & otype) ) continue;
 		    
+		    /* TODO more cats of the same field */
 		    for (i=0; i < nfields; i++) {
 		        Vect_cat_get ( Cats, fields[i], &cat );
 		        if ( i > 0 ) fprintf (stdout, "|" );

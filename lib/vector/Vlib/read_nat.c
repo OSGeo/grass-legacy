@@ -85,17 +85,15 @@ V1_read_next_line_nat (
       if (itype < 0)
 	return (itype);
 
+      if (itype == 0)	/* is it DEAD? */
+	continue;
+
       /* Constraint on Type of line 
        * Default is all of  Point, Line, Area and whatever else comes along
        */
       if (Map->Constraint_type_flag)
 	{
 	  if (!(itype & Map->Constraint_type))
-	    continue;
-	}
-      else
-	{
-	  if (itype == 0)	/* is it DEAD? */
 	    continue;
 	}
 

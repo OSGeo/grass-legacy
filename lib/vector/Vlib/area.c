@@ -412,30 +412,58 @@ Vect_get_area_area (
 }
 
 /*!
-\brief fetches category number for given vector area and field
+\brief Get area categories
 \param vmap: Map input
 \param varea: area number
-\param vfield: field number
-\return -1: no centroid, 0: no category, >0: category number
+\return 0 OK centroid found (but may be without categories)
+\return 1 no centroid found
 */
 int
-Vect_get_area_cat ( struct Map_info *Map, int area, int field ) {
+Vect_get_area_cats ( struct Map_info *Map, int area, struct line_cats *Cats ) 
+{
+    int centroid;
 
-    static struct line_cats *cats = NULL;
-    int centroid, cat;
-
-    if ( cats == NULL ) 
-	cats = Vect_new_cats_struct ();
+    Vect_reset_cats ( Cats );
     
     centroid = Vect_get_area_centroid ( Map, area );
     if( centroid > 0 ) {
-	Vect_read_line (Map, NULL, cats, centroid );
-	Vect_cat_get(cats, field, &cat);
-	G_debug (3, "Vect_get_area_cat: display area %d, centroid %d, cat %d", area, centroid, cat);
+	Vect_read_line (Map, NULL, Cats, centroid );
+    } else {
+	return 1; /* no centroid */
     }
-    else
-	cat=-1; /* no centroid */
     
      
-    return cat;
+    return 0;
 }
+
+/*!
+\brief Find FIRST category of given field and area
+\param vmap: Map input
+\param varea: area number
+\return first found category of given field
+\return -1 no centroid or no category found
+*/
+int
+Vect_get_area_cat ( struct Map_info *Map, int area, int field ) 
+{
+    int i;
+    static struct line_cats *Cats = NULL;
+
+    if ( !Cats ) 
+	Cats = Vect_new_cats_struct();
+    else
+	Vect_reset_cats ( Cats );
+
+    if ( Vect_get_area_cats ( Map, area, Cats ) == 1 ) {
+	return -1;
+    }
+    
+    for ( i = 0; i < Cats->n_cats; i++ ) {
+	if ( Cats->field[i] == field ) {
+	    return Cats->cat[i];
+	}
+    }
+     
+    return 1;
+}
+

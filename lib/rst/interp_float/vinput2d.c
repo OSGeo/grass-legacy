@@ -113,7 +113,7 @@ int IL_vector_input_data_2d (
       if ( field > 0 ) { /* use cat or attribute */
         Vect_cat_get( Cats, field, &cat);
         if ( zcol == NULL  ){ /* use categories */
-	    if ( cat == 0 && !iselev ) continue;
+	    if ( cat < 0 && !iselev ) continue;
 	    z = (double) cat;
 	} else { /* read att from db */
 	    if ( cat == 0 ) continue;
@@ -180,7 +180,7 @@ int IL_vector_input_data_2d (
 	ltype = Vect_read_line ( Map, NULL, Cats, line );
         Vect_cat_get( Cats, field, &cat);
         if ( zcol == NULL  ){ /* use categories */
-	    if ( cat == 0 && !iselev ) continue;
+	    if ( cat < 0 && !iselev ) continue;
 	    z = (double) cat;
 	} else { /* read att from db */
 	    if ( cat == 0 ) continue;

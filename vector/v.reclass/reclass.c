@@ -44,7 +44,7 @@ int reclass ( struct Map_info *In, struct Map_info *Out, int type, int field, db
 	if ( (ltype & type) ) { /* GV_POINTS or GV_LINES */
 	    Vect_cat_get ( Cats, field, &old_cat );
 
-	    if ( old_cat <= 0 ) continue;
+	    if ( old_cat < 0 ) continue;
 	    
 	    G_debug (3, "  old_cat = %d", old_cat ); 
 
@@ -78,10 +78,10 @@ int reclass ( struct Map_info *In, struct Map_info *Out, int type, int field, db
 	    
 	    G_debug (3, "  lcat = %d rcat = %d", lcat, rcat ); 
 
-	    if ( lcat <= 0 || db_CatValArray_get_value_int ( cvarr, lcat, &new_lcat ) != DB_OK )
+	    if ( lcat < 0 || db_CatValArray_get_value_int ( cvarr, lcat, &new_lcat ) != DB_OK )
 		new_lcat = 0;
 
-	    if ( rcat <= 0 || db_CatValArray_get_value_int ( cvarr, rcat, &new_rcat ) != DB_OK )
+	    if ( rcat < 0 || db_CatValArray_get_value_int ( cvarr, rcat, &new_rcat ) != DB_OK )
 		new_rcat = 0;
 	
 	    /* if area not labeled */
@@ -118,7 +118,7 @@ int reclass ( struct Map_info *In, struct Map_info *Out, int type, int field, db
 
 	    Vect_cat_get ( Cats, field, &old_cat );
 	    G_debug (3, "  old_cat = %d", old_cat ); 
-	    if ( old_cat <= 0 ) continue;
+	    if ( old_cat < 0 ) continue;
 
 	    if ( db_CatValArray_get_value_int ( cvarr, old_cat, &new_cat ) != DB_OK ) {
 		nocat++;
