@@ -29,7 +29,7 @@ basin_maps (input, output)
 	printf ("data from the basin, and all basins upstream of it.\n");
 	do {
 		printf ("\nWould you like the data organized:\n");
-		printf ("1) Basin only\n2) Basin and upstream\n3) Both\nOR 0) to cancell program\n");
+		printf ("1) Basin only\n2) Basin and upstream\n3) Both\nOR 0) to cancel program\n");
 		printf ("\nYour choice: ");
 		G_gets (map_layer);
 		sscanf (map_layer, "%d", &i);
