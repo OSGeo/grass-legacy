@@ -190,7 +190,7 @@ int GV_get_vectname(int id, char *filename)
 }
    
 /***********************************************************************/
-int GV_set_vectmode(int id, int mem, int color, int width)
+int GV_set_vectmode(int id, int mem, int color, int width, int flat)
 {
     geovect *gv;
 
@@ -202,12 +202,13 @@ int GV_set_vectmode(int id, int mem, int color, int width)
     gv->use_mem = mem;
     gv->color = color;
     gv->width = width;
+    gv->flat_val = flat;
 
     return(1);
 }
 
 /***********************************************************************/
-int GV_get_vectmode(int id, int *mem, int *color, int *width)
+int GV_get_vectmode(int id, int *mem, int *color, int *width, int *flat)
 {
     geovect *gv;
 
@@ -219,6 +220,7 @@ int GV_get_vectmode(int id, int *mem, int *color, int *width)
     *mem = gv->use_mem;
     *color = gv->color;
     *width = gv->width;
+    *flat = gv->flat_val;
 
     return(1);
 }
