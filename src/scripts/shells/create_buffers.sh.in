@@ -1,0 +1,23 @@
+# create_buffers.sh.in
+
+DEV=@prefix@/dev
+
+test -d ${DEV} || mkdir ${DEV}
+
+rm -f ${DEV}/fifo*
+
+i=0
+while [ $i -le 20 ]
+do
+	if [ ! -p ${DEV}/fifo.${i}a ]; then
+		rm -f ${DEV}/fifo.${i}a
+		touch ${DEV}/fifo.${i}a
+	fi
+	if [ ! -p ${DEV}/fifo.${i}b ]; then
+		rm -f ${DEV}/fifo.${i}b
+		touch ${DEV}/fifo.${i}b
+	fi
+	i=`expr $i + 1`
+done
+
+chmod 0666 ${DEV}/fifo.*
