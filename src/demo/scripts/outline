@@ -1,0 +1,71 @@
+Executive Overview
+	GRASS
+		GIS
+	Hardware
+		micro/mini/workstation
+		printer
+		solid-color plotter
+		digitizer
+	People requirements
+		multi-user computer management
+		experts in land analysis/management
+		expert in GIS
+		GRASS is a powerful programming language for manipulating maps
+		note isolation in Europe
+What is GIS
+	Vector GIS
+		GRASS basically is not though does have some
+			digitizing
+			simple map display
+		Objects are outlined, data stored as lines
+		Higher resolution / less data for simple items
+		Does not handle elevation well
+		Can not handle images
+		For engineering and architecture
+		Army Intergraph contract
+	Raster GIS
+		Checkerboard landscape
+		Maps stored as images
+		Analyses similsr to RDBMS analyses
+		Handles satellite and air-photo images
+		For natural (few edges) land management
+GRASS Capabilities
+	Map analysis
+		boolean (and/or) overlays
+		weighted overlays
+		inference (rules)
+		mathematical combination
+		coincidence tabulation
+		statistics
+		reports
+	Image analysis
+		geo-referencing
+		classification
+		change detection
+	Map display
+		video
+			2-dimension
+			3-dimension
+		hard-copy
+			2-dimension
+GRASS Data
+	stored in checkerboard format
+		values generally category numbers
+		values can be real integers (elevation, slope)
+		files supported with statistics, history info, cat names
+	stored in vector format
+		digitized into this format
+		used to produce cell maps
+		provides vector overlays
+
+GRASS Future (GARDEN)
+	Mix GRASS tools with
+		RDBMS
+		IFS
+		Report writers
+		Expert systems
+		Graphics
+	Provide packaged models
+Future (GRASS)
+	time-series capabilities
+	enhanced graphics
