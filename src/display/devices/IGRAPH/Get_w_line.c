@@ -63,6 +63,7 @@ Get_location_with_line(cx, cy, wx, wy, button)
 	base_x = cx ;
 	base_y = cy ;
 
+        not_finished = 1;
 	while (not_finished)
 	{
 		Wait_for_next( CURRENT_EVENTS, &cur_events) ;
@@ -71,8 +72,10 @@ Get_location_with_line(cx, cy, wx, wy, button)
 			Get_motion_data( &m_wno, &mouse_x, &mouse_y,
 				&work_status, &flag) ;
 
+			Hide_cursor();
 			Restore_band_line() ;
 			Show_band_line( base_x, base_y, mouse_x, mouse_y) ;
+			Show_cursor();
 		}
 		if ( cur_events & BUTTON_EVENT)
 		{
@@ -80,7 +83,9 @@ Get_location_with_line(cx, cy, wx, wy, button)
 				&raw_button, &tmp, &tmp) ;
 			*button = ++raw_button ;
 			not_finished = 0 ;
+			Hide_cursor();
 			Restore_band_line() ;
+			Show_cursor();
 		}
 	}
 
