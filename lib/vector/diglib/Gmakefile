@@ -27,6 +27,7 @@ OBJ = \
     prune.o  \
     rw_ascii.o  \
     struct_alloc.o  \
+    struct_io.o  \
     struct_copy.o \
     unit_conv.o \
     write_file.o \
