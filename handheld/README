@@ -1,0 +1,11 @@
+This directory contains two scripts:
+
+babyGRASS_packagingsrc.sh
+	to package a minimum GRASS version from a full source code
+	repository
+
+babyGRASS_compile.sh
+	compile the minimum with shared libraries.
+
+Current results: 1.8MB binary size on iPAQ
+
