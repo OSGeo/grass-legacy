@@ -14,10 +14,15 @@
 *   	    	for details.
 *
 *****************************************************************************/
+#include <stdlib.h>
 #include <stdio.h>
 #include <dirent.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include "glocale.h"
+#include "gis.h"
 #include "Vect.h"
 #include "dbmi.h"
 
@@ -81,6 +86,7 @@ Vect_copy_map_lines ( struct Map_info *In, struct Map_info *Out )
 /*!
  \fn int Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
  \brief copy a map including attribute tables
+        Old vector is deleted
  \return -1 error, 0 success
  \param in input vector
  \param out output vector
@@ -92,26 +98,46 @@ Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
     int i, n, ret, type;
     struct Map_info In, Out;
     struct field_info *Fi, *Fin;
+    char   old_path[1000], new_path[1000], cmd[2000]; 
+    struct stat info;
 
     G_debug (3, "Copy vector '%s' in '%s' to '%s'", in, mapset, out );
 
+    /* Delete old vector if it exists */
+    if ( G_find_vector2(out, G_mapset()) ) {
+	G_warning (_("The vector '%s' already exists and will be overwritten."), out);
+	ret = Vect_delete ( out );
+	if ( ret != 0 ) {
+	    G_warning ( "Cannot copy vector" );
+            return -1;
+	}
+    }
+
+    /* Copy the directory */
+    G__file_name (old_path, GRASS_VECT_DIRECTORY, in, mapset );
+    G__file_name (new_path, GRASS_VECT_DIRECTORY, out, G_mapset() );
+    sprintf ( cmd, "cp -r '%s' '%s'", old_path, new_path );
+    G_debug (2, "system: %s", cmd );
+    ret = system ( cmd );
+
+    if  (ret != 0 ) {
+	G_warning ( "Cannot copy vector" );
+        return -1;
+    }
+
+    /* remove dbln */
+    sprintf (old_path, "%s/%s", GRASS_VECT_DIRECTORY, out);
+    G__file_name ( new_path, old_path, GRASS_VECT_DBLN_ELEMENT, G_mapset ());
+
+    if (stat (new_path, &info) == 0)      /* file exists? */
+	unlink (new_path);
+
     /* Open input */
-    Vect_set_open_level (2);
-    Vect_open_old (&In, in, mapset);
+    Vect_set_open_level (1);
+    Vect_open_old_head (&In, in, mapset);
     
     /* Open output */
-    Vect_open_new (&Out, out, Vect_is_3d(&In) );
-
-    /* Copy history */
-    Vect_hist_copy (&In, &Out);
-    Vect_hist_command ( &Out );
-    
-    /* Copy lines */
-    ret = Vect_copy_map_lines ( &In, &Out );
-    if ( ret == 1 ) {
-	G_warning ( "Cannot copy vector lines" );
-	return -1;
-    }
+    Vect_open_update_head ( &Out, out, G_mapset() );
 
     /* Copy tables */
     n = Vect_get_num_dblinks ( &In );
@@ -140,13 +166,116 @@ Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
 	}
     }
     
-    Vect_build ( &Out, msgout );
     Vect_close ( &In );
     Vect_close ( &Out );
 
     return 0;
 }
 
+/*!
+ \fn int Vect_rename ( char *in, char *out, FILE *msgout )
+ \brief rename a map, attribute tables are created in the same database where input tables were stored.
+        The original format (native/OGR) is used.
+	Old map ('out') is deleted!!!
+ \return -1 error, 0 success
+ \param in input vector
+ \param out output vector
+ \param msgout output file for messages or NULL 
+*/
+int 
+Vect_rename ( char *in, char *out, FILE *msgout )
+{
+    int i, n, ret, type;
+    struct Map_info Map;
+    struct field_info *Fin, *Fout;
+    int *fields;
+
+    G_debug (2, "Rename vector '%s' to '%s'", in, out );
+
+    /* Delete old vector if it exists */
+    if ( G_find_vector2(out, G_mapset()) ) {
+	G_warning (_("The vector '%s' already exists and will be overwritten."), out);
+	Vect_delete ( out );
+    }
+
+    /* Move the directory */
+    ret = G_rename ( GRASS_VECT_DIRECTORY, in, out );
+
+    if ( ret == 0 ) {
+	G_warning (_("Input vector '%s' not found"), in );
+	return -1;
+    } else if ( ret == -1 ) {
+	G_warning (_("Cannot copy vector '%s' to '%s'"), in, out );
+	return -1;
+    }
+
+    /* Rename all tables if the format is native */
+    Vect_set_open_level (1);
+    Vect_open_update_head ( &Map, out, G_mapset() );
+
+    if ( Map.format != GV_FORMAT_NATIVE ) { /* Done */
+	Vect_close ( &Map );
+	return 0;
+    }
+
+    /* Copy tables */
+    n = Vect_get_num_dblinks ( &Map );
+    type = GV_1TABLE;
+    if ( n > 1 ) type = GV_MTABLE;
+
+    /* Make the list of fields */
+    fields = (int *) G_malloc ( n * sizeof(int) );
+
+    for ( i = 0; i < n; i++ ) {
+	Fin = Vect_get_dblink ( &Map, i );
+
+	fields[i] = Fin->number;
+    }
+    
+    for ( i = 0; i < n; i++ ) {
+	G_debug (3, "field[%d] = %d", i, fields[i] );
+	
+	Fin = Vect_get_field ( &Map, fields[i] );
+	if ( Fin == NULL ) {
+	    G_warning ( "Cannot get db link info" );
+	    Vect_close ( &Map );
+	    return -1;
+	}
+
+	Fout = Vect_default_field_info ( &Map, Fin->number, Fin->name, type );
+        G_debug (3, "Copy drv:db:table '%s:%s:%s' to '%s:%s:%s'", 
+	              Fin->driver, Fin->database, Fin->table, Fout->driver, Fout->database, Fout->table );
+
+	/* TODO: db_rename_table instead of db_copy_table */
+	ret = db_copy_table ( Fin->driver, Fin->database, Fin->table, 
+		    Fout->driver, Vect_subst_var(Fout->database,&Map), Fout->table );
+
+	if ( ret == DB_FAILED ) {
+	    G_warning ( "Cannot copy table" );
+	    Vect_close ( &Map );
+	    return -1;
+	}
+
+	/* Change the link */
+	Vect_map_del_dblink ( &Map, Fin->number );
+	
+	Vect_map_add_dblink ( &Map, Fout->number, Fout->name, Fout->table, Fout->key, 
+		                    Fout->database, Fout->driver);
+
+	/* Delete old table */
+	ret = db_delete_table ( Fin->driver, Fin->database, Fin->table );
+	if ( ret == DB_FAILED ) {
+	    G_warning ( "Cannot delete table" );
+	    Vect_close ( &Map );
+	    return -1;
+	}
+    }
+    
+    Vect_close ( &Map );
+    free ( fields );
+
+    return 0;
+}
 
 /*!
  \fn int Vect_delete ( char *map )

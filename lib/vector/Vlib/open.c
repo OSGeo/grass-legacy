@@ -323,8 +323,8 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
       Vect_rewind ( Map );
   }
 
-  /* Delete support files if native format was opened for update */
-  if ( update ) {
+  /* Delete support files if native format was opened for update (not head_only) */
+  if ( update && !head_only ) {
       char file_path[2000];
       struct stat info;
       
@@ -414,6 +414,36 @@ int
 Vect_open_old_head (struct Map_info *Map, char *name, char *mapset)
 {
     return ( Vect__open_old (Map, name, mapset, 0, 1) );
+}
+
+/*!
+ \fn int Vect_open_update_head ( struct Map_info *Map, char *name, char *mapset)
+ \brief Open old vector head for updating (mostly for database link updates)
+ \return level of openness.  [ 1, 2, (3) ], -1 for error. In case of
+   error, the functions respect fatal error settings.
+ \param Map
+ \param name
+ \param mapset
+*/
+int
+Vect_open_update_head ( struct Map_info *Map, char *name, char *mapset)
+{
+    int ret;
+
+    ret = Vect__open_old (Map, name, mapset, 1, 1);
+
+    if ( ret > 0 ) { /* Probably not important */
+	Map->plus.do_uplist = 1;
+
+	Map->plus.uplines = NULL;
+	Map->plus.n_uplines = 0;
+	Map->plus.alloc_uplines = 0;
+	Map->plus.upnodes = NULL;
+	Map->plus.n_upnodes = 0;
+	Map->plus.alloc_upnodes = 0;
+    }
+	
+    return ret;
 }
 
 /*!
