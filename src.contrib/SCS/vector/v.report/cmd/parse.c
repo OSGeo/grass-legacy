@@ -212,7 +212,8 @@ char *s;
 	layers = (LAYER *)G_realloc(layers, nlayers * sizeof(LAYER));
 	layers[n].name = G_store (name);
 	layers[n].mapset = mapset;
-	G_read_vector_cats (name, mapset, &layers[n].labels);
+	if(G_read_vector_cats (name, mapset, &layers[n].labels))
+	      G_init_cats(0," ", &layers[n].labels);
 }
 
 match (s, key, min)
