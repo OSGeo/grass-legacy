@@ -1,0 +1,23 @@
+
+OVER
+
+The OVER operator performs a "transparent" overlay operation.  It 
+overlays the result of the EXPR onto the map "mapname".  If 
+"mapname doesnt exist, it is created.  Up to 4 overlays can be done
+on each saved map where overlay 1 is represented with red, 2 yellow,
+3 blue, and 4 grey.  To preserve the overlay information, the overlays
+are assigned the following values: overlay 1 takes the value 1, 2 2,
+3 4, and 4 8.  The actual value assigned to a cell is the sum of these
+values representing overlays.  Hence, map category 5 represents overlay
+1 (value 1) and overlay 3 (value 4).  The color purple would represent 
+5 and would visually show the transparent overlay of 1 (red) and 3
+(blue).
+
+syntax:   (OVER mapname # EXPR)  where # is one of these: 1 2 3 4
+
+operation:  To overlay soils type 3 thru 5 with geology types 6 and 9:
+  (NAME demo1 (OVER RED (GROUP 3-5 (soils) )) )
+  (NAME demo2 (OVER demo1 YELLOW (GROUP 6 9 (geology) ))) 
+
+aliases:
+    OVER     over     overlay
