@@ -1,0 +1,94 @@
+# Imakefile for pnm tools.
+#
+# Copyright (C) 1989, 1991 by Jef Poskanzer.
+#
+# Permission to use, copy, modify, and distribute this software and its
+# documentation for any purpose and without fee is hereby granted, provided
+# that the above copyright notice appear in all copies and that both that
+# copyright notice and this permission notice appear in supporting
+# documentation.  This software is provided "as is" without express or
+# implied warranty.
+
+# CONFIGURE: You can compile PNM without PPM.  If you don't want PPM,
+# comment out the next five lines.  This will make the PNM programs use
+# less memory.
+PPMOPT =	-DPPM
+PPMDIR =	../ppm
+INCLUDEPPM =	-I$(PPMDIR)
+LIBPPM =	$(PPMDIR)/libppm.a
+DEFPPM =	$(PPMDIR)/ppm.h ../pbmplus.h
+DEFLIBPPM =	$(PPMDIR)/libppm.h
+
+# CONFIGURE: Likewise here: if you don't have PGM, comment these lines out.
+PGMOPT =	-DPGM
+PGMDIR =	../pgm
+INCLUDEPGM =	-I$(PGMDIR)
+LIBPGM =	$(PGMDIR)/libpgm.a
+DEFPGM =	$(PGMDIR)/pgm.h
+DEFLIBPGM =	$(PGMDIR)/libpgm.h
+
+# PBM is required, don't comment these lines out.
+PBMOPT =	-DPBM
+PBMDIR =	../pbm
+INCLUDEPBM =	-I$(PBMDIR)
+LIBPBM =	$(PBMDIR)/libpbm.a
+DEFPBM =	$(PBMDIR)/pbm.h
+DEFLIBPBM =	$(PBMDIR)/libpbm.h
+
+INCLUDE =	$(INCLUDEPPM) $(INCLUDEPGM) $(INCLUDEPBM)
+ALLCFLAGS =	$(CFLAGS) $(PPMOPT) $(PGMOPT) $(PBMOPT) $(INCLUDE)
+LIBPNM =	libpnm.a
+
+PORTBINARIES =	pnmarith pnmcat pnmconvol pnmcrop pnmcut \
+		pnmdepth pnmenlarge pnmfile pnmflip pnminvert \
+		pnmnoraw pnmpaste pnmscale pnmtile pnmtorast \
+		pnmtotiff pnmtoxwd rasttopnm tifftopnm xwdtopnm
+MATHBINARIES =	pnmgamma pnmrotate pnmshear
+BINARIES =	$(PORTBINARIES) $(MATHBINARIES)
+SCRIPTS =	anytopnm pnmindex pnmmargin pnmsmooth
+
+MANUALS1 =	pnmarith.1 pnmcat.1 pnmconvol.1 pnmcrop.1 pnmcut.1 \
+		pnmdepth.1 pnmenlarge.1 pnmfile.1 pnmflip.1 pnminvert.1 \
+		pnmnoraw.1 pnmpaste.1 pnmscale.1 pnmtile.1 pnmtorast.1 \
+		pnmtotiff.1 pnmtoxwd.1 rasttopnm.1 tifftopnm.1 xwdtopnm.1 \
+		pnmgamma.1 pnmrotate.1 pnmshear.1 \
+		anytopnm.1 pnmindex.1 pnmmargin.1 pnmsmooth.1
+MANUALS3 =	libpnm.3
+MANUALS5 =	pnm.5
+
+all:		$(BINARIES)
+
+install::	all
+	cp $(BINARIES) $(BINDIR)
+	cp $(SCRIPTS) $(BINDIR)
+	cd $(BINDIR) ; chmod +x $(SCRIPTS)
+
+install.man::
+	cp $(MANUALS1) $(MANUALS3) $(MANUALS5) $(MANDIR)
+
+# Rule for plain programs.
+$(PORTBINARIES):	pnm.h $(DEFPPM) $(DEFPGM) $(DEFPBM) $(LIBPNM) \
+			$(LIBPPM) $(LIBPGM) $(LIBPBM)
+	$(CC) $(ALLCFLAGS) $(LDFLAGS) -o $@ $@.c $(LIBPNM) $(LIBPPM) $(LIBPGM) $(LIBPBM)
+
+# Rule for math-dependent programs.
+$(MATHBINARIES):	pnm.h $(DEFPPM) $(DEFPGM) $(DEFPBM) $(LIBPNM) \
+			$(LIBPPM) $(LIBPGM) $(LIBPBM)
+	$(CC) $(ALLCFLAGS) $(LDFLAGS) -o $@ $@.c -lm $(LIBPNM) $(LIBPPM) $(LIBPGM) $(LIBPBM)
+
+# And library.
+$(LIBPNM):	libpnm1.o libpnm2.o libpnm3.o libpnm4.o
+	-rm $(LIBPNM)
+	$(AR) $(LIBPNM) libpnm1.o libpnm2.o libpnm3.o libpnm4.o
+	-$(RANLIB) $(LIBPNM)
+
+libpnm1.o:	pnm.h $(DEFPPM) $(DEFPGM) $(DEFPBM) libpnm1.c
+	$(CC) $(ALLCFLAGS) -c libpnm1.c
+libpnm2.o:	pnm.h $(DEFPPM) $(DEFPGM) $(DEFPBM) libpnm2.c $(DEFLIBPPM) \
+		$(DEFLIBPGM) $(DEFLIBPBM)
+	$(CC) $(ALLCFLAGS) -c libpnm2.c
+libpnm3.o:	pnm.h $(DEFPPM) $(DEFPGM) $(DEFPBM) libpnm3.c $(DEFLIBPPM) \
+		$(DEFLIBPGM) $(DEFLIBPBM)
+	$(CC) $(ALLCFLAGS) -c libpnm3.c
+libpnm4.o:	pnm.h $(DEFPPM) $(DEFPGM) $(DEFPBM) rast.h libpnm4.c
+	$(CC) $(ALLCFLAGS) -c libpnm4.c
