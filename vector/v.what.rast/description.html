@@ -1,0 +1,19 @@
+<H2>DESCRIPTION</H2>
+
+<em>v.what.rast</em> reads raster value for each point in the vector and updates <b>col</b> 
+column in vector attribute table by this value. The column should be type
+number (integer, float, double, ... ).
+<br>
+If more points have the same category, attribute value is set to NULL.
+If raster values is NULL, attribute value is set to NULL.
+
+<H2>EXAMPLE</H2>
+
+<p>
+<tt>v.what.rast vect=pnt rast=demf col=valf</tt> 
+
+
+<H2>AUTHOR</H2>
+<A HREF=mailto:blazek@itc.it>Radim Blazek</A>
+
+<p><i>Last changed: $Date$</i>

@@ -28,7 +28,8 @@ SUBDIRS1 = \
 	v.surf.rst \
 	v.transform \
 	v.to.db \
-	v.to.rast
+	v.to.rast \
+	v.what.rast
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
