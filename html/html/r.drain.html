@@ -22,6 +22,7 @@ Traces a flow through an elevation model on a raster map layer.
 <B>r.drain</B>
 [<B>-c</B>]
 [<B>-a</B>]
+[<B>-n</B>]
 <B>input=</B><EM>name</EM>
 <B>output=</B><EM>name</EM>
 [<B>site=</B><EM>name</EM>]
@@ -39,13 +40,18 @@ least-cost paths between each user-provided location(s) and the low spot
 (low category values) in the input model. By default, the output will be an
 integer cell map with <EM>1</EM> along the least cost path, and null cells
 elsewhere.
-<P> With the <B>-c</B> (<EM>copy</EM>) flag, the input map cells
-values are copied verbatim along the path. With the <B>-a</B> (<EM>accumulate</EM>)
-flag, the accumulated cells value from the starting point up to the current cell
-is written on output. With the <B>-c</B> and the <B>-a</B> flags, the output map is
-created withe the same cell type than the input map (integer, float or double).
-The <B>-c</B> and <B>-a</B> flags are mutually incompatible. If both are specified,
-the <B>-a</B> flag will superceed the <B>-c</B> flag, and a warning message will be issued.
+
+<P> With the <B>-c</B> (<EM>copy</EM>) flag, the input map cells values are
+copied verbatim along the path. With the <B>-a</B> (<EM>accumulate</EM>)
+flag, the accumulated cells value from the starting point up to the current
+cell is written on output. With the <B>-c</B> and the <B>-a</B> flags, the
+output map is created withe the same cell type than the input map (integer,
+float or double). The <B>-c</B> and <B>-a</B> flags are mutually
+incompatible. If both are specified, the <B>-a</B> flag will superceed the
+<B>-c</B> flag, and a warning message will be issued.  With the <B>-n</B>
+(<EM>number</EM>) flag, the cells are numbered from the starting point to
+the final point.
+
 <P>
 The path is calculated by choosing the stepper "slope" beetwen adjacent cells.
 The slope calculation accurately acounts for the variable scale in lat-lon projections.
@@ -93,7 +99,7 @@ Program parameters are as follows.
 <DD> Accumulated input map cells values along the least cost path are
 written on output.
 <DT><B>-n</B>
-<DD> Accumulate cell numbers along the path
+<DD> Count cell numbers along the path
 </DL>
 
 <H3>Parameters:</H3>
