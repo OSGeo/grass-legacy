@@ -4,7 +4,7 @@
 # Generated automatically using autoconf version 2.13 
 # Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
 #
-# $Id: configure,v 1.26 2000-10-06 12:19:27 markus Exp $
+# $Id: configure,v 1.27 2000-10-09 08:55:40 markus Exp $
 # This configure script is free software; the Free Software Foundation
 # gives unlimited permission to copy, distribute and modify it.
 #
@@ -48,6 +48,8 @@ ac_help="$ac_help
   --with-tkdir=DIR        Change default top-level Tk directory"
 ac_help="$ac_help
   --with-opengl=DIR       Path to OpenGL directory"
+ac_help="$ac_help
+  --with-postgresql=DIR   Path to PostgreSQL directory"
 
 # Initialize some variables set by options.
 # The variables have the same names as the options, with
@@ -3177,12 +3179,20 @@ else
   echo "$ac_t""no" 1>&6
 fi
 
-#PostgreSQL
+
+# Check whether --with-postgresql or --without-postgresql was given.
+if test "${with_postgresql+set}" = set; then
+  withval="$with_postgresql"
+  POSTGRESQL=$withval
+  if test "$POSTGRESQL" = "no"; then
+  	POSTGRESQL=NO
+  else
 echo "configure: checking for libpq-fe.h" >&5
-echo $ac_n "checking for libpq-fe.h ... $ac_c" 1>&6
-for i in /usr /usr/local /usr/local/pgsql /usr/lib/pgsql; do
-  if test -r $i/include/libpq-fe.h; then PGSQL_DIR=$i; PGSQL_INCDIR=$i/include
-  elif test -r $i/include/pgsql/libpq-fe.h; then PGSQL_DIR=$i; PGSQL_INCDIR=$i/include/pgsql
+echo $ac_n "checking for libpq-fe.h  in $POSTGRESQL... $ac_c" 1>&6
+for i in /usr /usr/include /usr/local/include /usr/local/pgsql /usr/lib/pgsql $POSTGRESQL; do
+  if test -r $i/libpq-fe.h; then PGSQL_DIR=$i; PGSQL_INCDIR=$i
+  elif test -r $i/include/libpq-fe.h; then PGSQL_DIR=$i; PGSQL_INCDIR=$i/include
+  elif test -r $i/pgsql/libpq-fe.h; then PGSQL_DIR=$i; PGSQL_INCDIR=$i/pgsql
   elif test -r $i/include/postgresql/libpq-fe.h; then PGSQL_DIR=$i; PGSQL_INCDIR=$i/include/postgresql
   fi
 done
@@ -3248,6 +3258,8 @@ else
  PQLIB="$PQLIB -L$PQLIBPATH -lpq -lcrypt"
 fi
 
+  fi
+fi #PostgreSQL
 
 #DLLIB=
 # taken from: http://hpdrc.cs.fiu.edu/~sdbtools/ip_tools/PIPT-2.1/configure
