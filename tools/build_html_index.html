@@ -24,14 +24,33 @@ This reference manual details the use of modules distributed with
 Geographic Resources Analysis Support System (GRASS), an open source (GNU
 GPL'ed), image processing and geographic information system (GIS).
 <p>
-<ul>" > index.html
+" > index.html
 
-for i in `ls -1 *.html | grep -v index.html| cut -d'.' -f1 | sort -u`
+CMDLIST=`ls -1 *.html | grep -v index.html| cut -d'.' -f1 | sort -u`
+CMDLISTNO=`echo $CMDLIST | wc -w | awk '{print $1}'`
+
+echo "[ " >> index.html
+k=0
+for i in $CMDLIST
+do
+  k=$(( $k + 1 ))
+  echo -n "<b><a href="#$i">$i.*</a></b>" >> index.html
+  if [ $k -lt $CMDLISTNO ] ; then
+     echo -n " | " >> index.html
+  fi
+done
+
+echo " ]
+<p>
+<ul>" >> index.html
+
+for i in $CMDLIST
 do 
+  echo "<a name="$i"></a>" >> index.html
   echo "<b>$i.* commands:</b>" >> index.html
   echo "<ul>" >> index.html
   
-  for i in `ls -1 $i*.html`
+  for i in `ls -1 $i.*.html`
   do
     BASENAME=`basename $i .html`
     echo "<li><a href=\"$i\">$BASENAME</a>" >> index.html
