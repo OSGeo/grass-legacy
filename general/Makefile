@@ -4,6 +4,7 @@ MODULE_TOPDIR = ..
 SUBDIRS = \
 	g.gisenv \
 	g.mapsets \
+	g.parser \
 	g.region \
 	manage
 
