@@ -1,0 +1,28 @@
+                     WHAT ABOUT SCANNED DATA?
+
+Map data that are \scanned\ electronically are usually scanned as raster
+data at a very fine \resolution\ (around 100 Microns).  The raster data
+are then converted to GRASS vector file format.  When done properly,
+the degree to which the digital data are different from the original
+lines is indiscernible.  Such files must be checked carefully, however,
+for errors introduced because of mislabeled \polygons\, unsnapped
+\nodes\ or some misunderstanding on the part of the persons doing the
+scanning as to what exactly was required.
+
+Once made digital, vector data must be run through the GRASS program
+\v.to.rast\ in order to be converted to raster format.  Any vector to
+raster conversion will result in the zigzag lines characteristic of
+raster data.
+
+See the sections entitled "Raster, Vector, and Sites Data File Formats"
+and "Resolution" under the Main Menu selection, "Setting Up a GRASS
+Database".
+
+Also: 
+\"Cartographic Issues in the Development of a Digital GRASS Database"\,
+ a USACERL Special Report N-09/16 (Marilyn Ruiz and Jean Messersmith,
+ Sept/1990), from which this information was taken.
+
+
+
+
