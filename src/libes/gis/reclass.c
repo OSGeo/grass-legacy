@@ -56,7 +56,7 @@ G_get_reclass (name, mapset, reclass)
 	    sprintf(msg, "Too many reclass categories for [%s in %s]",
 		    name, mapset);
 	else
-	    sprintf(msg, "Illegal reclass format in cell header for [%s in %s]",
+	    sprintf(msg, "Illegal reclass format in header file for [%s in %s]",
 		    name, mapset);
 	G_warning (msg);
 	stat = -1;
@@ -151,7 +151,7 @@ G_put_reclass (name, reclass)
     fd = fopen_cellhd_new (name);
     if (fd == NULL)
     {
-	sprintf (msg, "Unable to create cell header for [%s in %s]",
+	sprintf (msg, "Unable to create header file for [%s in %s]",
 		name, G_mapset());
 	G_warning (msg);
 	return -1;
