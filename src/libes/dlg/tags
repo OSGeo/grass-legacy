@@ -1,0 +1,22 @@
+GET	dlg_init.c	?^#define GET(x,y,z) fread(x,y,z,fd)$?
+PUT	dlg_w_area.c	?^#define        PUT(x,y)       fwrite(x,y,1,fd)$?
+_dlg_read_area	dlg_read.c	?^_dlg_read_area(area, fd)$?
+_dlg_read_line	dlg_read.c	?^_dlg_read_line(line, fd)$?
+_dlg_read_node	dlg_read.c	?^_dlg_read_node(node, fd)$?
+_dlg_write_area	dlg_w_area.c	?^_dlg_write_area(area, fd)$?
+_dlg_write_line	dlg_w_line.c	?^_dlg_write_line(line, fd)$?
+_dlg_write_node	dlg_w_node.c	?^_dlg_write_node (node, fd)$?
+check_alloc	dlg_read.c	?^check_alloc(num, n_alloc, arr, size)$?
+dlg_init	dlg_init.c	?^dlg_init (fd,dlg)$?
+dlg_read	dlg_read.c	?^dlg_read(fd,dlg)$?
+dlg_read_area	read_area2.c	?^dlg_read_area (fd,dlg,area)$?
+dlg_read_int	read_write.c	?^dlg_read_int(file, num, buf)$?
+dlg_read_line	read_line.c	?^dlg_read_line (fd,dlg,line)$?
+dlg_read_node	read_node.c	?^dlg_read_node (fd,dlg,node)$?
+dlg_read_whole_area	read_area.c	?^dlg_read_whole_area (fd,dlg,area,xarray,yarray,n_p?
+dlg_write_area	write_area.c	?^dlg_write_area (fd,dlg,area)$?
+dlg_write_double	read_write.c	?^dlg_write_double(file, num, buf)$?
+dlg_write_header	dlg_w_hdr.c	?^dlg_write_header (fd,dlg)$?
+dlg_write_int	read_write.c	?^dlg_write_int (file, num, buf)$?
+dlg_write_line	write_line.c	?^dlg_write_line (fd,dlg,line)$?
+dlg_write_node	write_node.c	?^dlg_write_node (fd,dlg,node)$?
