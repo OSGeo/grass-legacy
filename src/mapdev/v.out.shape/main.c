@@ -393,8 +393,9 @@ int main( int argc, char *argv[] ) {
       }
 
     }
-
-    free(Cat1);
+    
+    if( docats )
+      free(Cat1);
   }
 
   /* Now the lines */
@@ -509,7 +510,8 @@ int main( int argc, char *argv[] ) {
 
     }
     
-    free(Cat1);
+    if( docats )
+      free(Cat1);
   }
 
   /* Add field descriptor contents to DBF Files */
