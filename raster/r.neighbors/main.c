@@ -242,9 +242,8 @@ int main (int argc, char *argv[])
 	null_cats () ;
 	if (cat_names = menu[method].cat_names)
 		cat_names();
-	G_set_cat ((CELL)0, "no data", &ncb.cats);
-	G_write_cats (ncb.newcell.name, &ncb.cats);
 
+	G_write_cats (ncb.newcell.name, &ncb.cats);
 
 	if(copycolr)
 		G_write_colors (ncb.newcell.name, ncb.newcell.mapset, &colr);
