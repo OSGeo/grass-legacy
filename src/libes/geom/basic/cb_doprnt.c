@@ -122,7 +122,7 @@
  *  or don't have ecvt(), fcvt(), and gcvt().
  */
 
-#ifndef freebsd
+#ifndef __FreeBSD__
 #define FLOATING
 #endif
 
