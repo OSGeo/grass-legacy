@@ -36,7 +36,9 @@ int yynerrs = 0;
 
 #endif   DEBUG
 
+#ifndef sparc
 int yylineno = 1;
+#endif
 
 #define   END(v)   (v-1 + sizeof v / sizeof v[0])
 static int screen();
