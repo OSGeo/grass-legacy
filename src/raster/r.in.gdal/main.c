@@ -87,6 +87,7 @@ int main (int argc, char *argv[])
     parm.input->type = TYPE_STRING;
     parm.input->required = YES;
     parm.input->description = "Raster file to be imported";
+    parm.input->gisprompt = "file,file,file";
 
     parm.band = G_define_option();
     parm.band->key = "band";
