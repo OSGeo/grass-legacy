@@ -24,7 +24,7 @@
  \fn struct dblinks *Vect_new_dblinks_struct ( void )
  \brief create and init new dblinks ctructure
  \return pointer to new dblinks structure
- \param 
+ \param void
 */
 struct dblinks *
 Vect_new_dblinks_struct ( void )
@@ -44,7 +44,7 @@ Vect_new_dblinks_struct ( void )
 /*!
  \fn void Vect_reset_dblinks ( struct dblinks *p )
  \brief reset dblinks structure
- \return 
+ \return void
  \param pointer to existing dblinks structure
 */
 void
@@ -58,7 +58,7 @@ Vect_reset_dblinks ( struct dblinks *p )
                       char *db, char *driver )
  \brief add new db connection to Map_info structure
  \return 0 OK; -1 error
- \param pointer to existing dblinks structure
+ \param pointer to existing Map structure
 */
 int
 Vect_map_add_dblink ( struct Map_info *Map, int number, char *name, char *table, char *key, 
@@ -66,6 +66,11 @@ Vect_map_add_dblink ( struct Map_info *Map, int number, char *name, char *table,
 {
     int ret;
 
+    if (number == 0) {
+        G_warning ("Field number must be 1 or greater.");
+	return -1;
+    }
+    
     if (Map->mode != GV_MODE_WRITE && Map->mode != GV_MODE_RW) {
         G_warning ("Cannot add database link, map is not opened in WRITE mode.");
 	return -1;
@@ -84,6 +89,71 @@ Vect_map_add_dblink ( struct Map_info *Map, int number, char *name, char *table,
     }
     return 0;
 }
+
+/*!
+ \fn int Vect_map_check_dblink ( struct Map_info *Map, int number, char *name, char *table, char *key, 
+	             char *db, char *driver )
+ \brief check if db connection exists in dblinks structure
+ \return 0 dblink for field exists; -1 dblink does not exist for field
+ \param pointer to Map structure
+*/
+int
+Vect_map_check_dblink ( struct Map_info *Map, int number, char *name, char *table, char *key, 
+	             char *db, char *driver )
+{
+    return Vect_check_dblink ( Map->dblnk, number, name, table, key, db, driver );
+}
+
+
+/*!
+ \fn int Vect_map_replace_dblink ( struct Map_info *Map, int number, char *name, char *table, char *key,
+                      char *db, char *driver )
+ \brief replace existing db connection to Map_info structure
+ \return 0 OK; -1 error
+ \param pointer to existing Map structure
+*/
+int
+Vect_map_replace_dblink ( struct Map_info *Map, int number, char *name, char *table, char *key, 
+	             char *db, char *driver )
+{
+    return Vect_replace_dblink ( Map->dblnk, number, name, table, key, db, driver );
+}
+
+
+/*!
+ \fn int Vect_check_dblink ( struct dblinks *p, int number, char *name, char *table, char *key, 
+                            char *db, char *driver ) 
+ \brief check if db connection exists in dblinks structure
+ \return 0 dblink for field exists; -1 dblink does not exist for field
+ \param pointer to existing dblinks structure
+*/
+int
+Vect_check_dblink ( struct dblinks *p, int number, char *name, char *table, char *key, char *db, char *driver )
+{
+    int i, exists=-1;
+    
+    G_debug(3,"Vect_check_dblink: field %d, nf: %d",number, p->n_fields);
+    
+    if (p->n_fields == 0) /* dbln empty */
+       return -1;
+    else
+    {   /* search in existing dbln file */
+	/* Check if field already exists */
+	for (i = 0; i < p->n_fields; i++) {
+	   if ( p->field[i].number == number || 
+		( name != NULL && strlen(name) > 0 && strcmp(name, p->field[i].name) == 0  ) )
+		exists = 0;  /* dblink exists for given field */
+	   else
+	   {
+	    if (exists != 0)
+		exists = -1; /* dblink does not exist for given field */
+	   }
+	}
+	G_debug(3,"Vect_check_dblink: exists: ret %d", exists);
+	return exists;
+    }
+}
+
     
 /*!
  \fn int Vect_add_dblink ( struct dblinks *p, int number, char *name, char *table, char *key, 
@@ -95,18 +165,14 @@ Vect_map_add_dblink ( struct Map_info *Map, int number, char *name, char *table,
 int
 Vect_add_dblink ( struct dblinks *p, int number, char *name, char *table, char *key, char *db, char *driver )
 {
-    int i;
+    int ret;
     
-    /* Check if field already exists */
-    for (i = 0; i < p->n_fields; i++) {
-        if ( p->field[i].number == number || 
-	     ( name != NULL && strlen(name) > 0 && strcmp(name, p->field[i].name) == 0  ) )
-	{
-            G_warning ("Field number or name already exists");
-	    return -1;
-	}
+    ret = Vect_check_dblink ( p, number, name, table, key, db, driver );
+    if ( ret == 0 ) {
+         G_warning ("Field number <%d> or name <%s> already exists", number, name);
+         return -1;
     }
-    
+
     if ( p->n_fields == p->alloc_fields ) {
        p->alloc_fields += 10;
        p->field = ( struct field_info *) G_realloc ( (void *) p->field, 
@@ -131,6 +197,46 @@ Vect_add_dblink ( struct dblinks *p, int number, char *name, char *table, char *
     else p->field[p->n_fields].driver = NULL;
     
     p->n_fields++;
+
+    return 0;
+}
+
+
+/*!
+ \fn int Vect_replace_dblink ( struct dblinks *p, int number, char *name, char *table, char *key, 
+                            char *db, char *driver ) 
+ \brief replace existing db connection in dblinks structure
+ \return 0 dblink for field replaced; -1 error
+ \param pointer to existing dblinks structure
+*/
+int
+Vect_replace_dblink ( struct dblinks *p, int number, char *name, char *table, char *key, char *db, char *driver )
+{
+    int i;
+    struct dblinks *p_save;
+  
+  /* TODO */
+  G_warning("Vect_replace_dblink not functional yet (field.c)");
+
+  /* TODO this is probably complete nonsense: please rewrite/fix it 
+     BUG: only new field is written, all other old fields are lost*/
+
+    /* save old dbln file contents */
+    p_save = p; /* ?? */
+
+    /* reset dbln file */
+    Vect_reset_dblinks(p); /* Problem: here we loose all old values */
+
+    /* write new file */
+    for (i = 1; i <= p_save->n_fields; i++)
+    {
+      /* only write other entries than field to be replaced */
+      if (i != number)
+        Vect_add_dblink ( p_save, i, name, table, key, db, driver );
+    }
+
+    /* now add the changed field */
+    Vect_add_dblink ( p_save, number, name, table, key, db, driver );
 
     return 0;
 }
@@ -246,7 +352,7 @@ struct field_info
     int i;
     struct field_info *fi = NULL;
 
-    G_debug (1, "Vect_get_field(): field = %d", field);
+    G_debug (1, "Vect_get_field(): field = %d, nfields: %d", field);
 
     for ( i = 0; i < Map->dblnk->n_fields; i++ ) {
         if ( Map->dblnk->field[i].number == field ) {
