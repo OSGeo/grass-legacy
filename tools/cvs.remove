@@ -3,9 +3,9 @@
 # cvs remove directory
 #
 # written by Markus Neteler 3/2000
-# Mon, 29 May 2000
+# $Id$
 
-if [ "$#" -lt 2 ] || [ $1 = "" ] || [ $1 = "help" ] || [ $1 = "-h" ] || [ $1 = "-help" ]
+if [ "$#" -lt 2 -o "$1" = "" -o "$1" = "help" -o "$1" = "-h" -o "$1" = "-help" ]
     then
      echo "USAGE: cvs.remove comment directory"
      echo ""

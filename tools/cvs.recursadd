@@ -3,12 +3,12 @@
 # recursive CVS add/commit with comment
 #
 # written by Markus Neteler 3/2000
-#   Thu Mar  9 16:16:14 MET 2000
+#   $Id$
 #
 # from useful hints by Bernhard Reiter
 
 # add files recursivly to CVS
-if [ $# = 0 ] || [ $1 = "" ] || [ $1 = "help" ] || [ $1 = "-h" ] || [ $1 = "-help" ]
+if [ $# = 0 -o "$1" = "" -o "$1" = "help" -o "$1" = "-h" -o "$1" = "-help" ]
     then
      echo "USAGE: cvs.r.add comment"
      echo "  This command runs recursively within a directory tree"
