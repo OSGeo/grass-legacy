@@ -11,6 +11,7 @@ char *fp_nam1, *fp_nam2;
 	FILE	*fp1,  *fp2;
 	int	i, items=0;
 	char    txtbuf[512];
+	char    tmpbuf[512];
 	char    inbuf[512];
 	char    name[20];
 	char    col[5];
@@ -33,7 +34,9 @@ char *fp_nam1, *fp_nam2;
 	if (!fgets(txtbuf,512,fp1)) return (-1);
 		/* record 2 contains # of items */
 	if (!fgets(txtbuf,512,fp1)) return (-1);
-	if (sscanf(txtbuf,"%d",&items) != 1) return (-1);
+	sscanf(txtbuf, "%s%*s", tmpbuf);
+	process_inp(tmpbuf);
+	if (sscanf(tmpbuf,"%d",&items) != 1) return (-1);
 		/* skip record 3, contains INFO TABLE DEFINITIONS */
 	if (!fgets(txtbuf,512,fp1)) return (-1);
 	inbuf[0] = '\0';
