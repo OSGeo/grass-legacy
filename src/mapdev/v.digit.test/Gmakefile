@@ -1,7 +1,5 @@
-PROG = $(BIN_MAIN_INTER)/v.digit.test
-
-LIBTRANS        = $(SRC)/libes/vect32/libes/libtrans.a
-INCTRANS        = -I$(SRC)/libes/vect32/libes
+LIBTRANS	= $(SRC)/libes/vect32/libes/libtrans.a
+INCTRANS	= -I$(SRC)/libes/vect32/libes
 
 EXTRA_CFLAGS	=  $(DIGITFLAGS)  $(USE_FTIME) $(VECT_INCLUDE) $(INCTRANS)
 
@@ -201,6 +199,7 @@ DIGITIZERS = $(ETC)/digitizers
 HELP_FILES = $(TXT)/DIGIT
 
 
+PROG = $(BIN_MAIN_INTER)/v.digit.test
 
 all:  $(PROG) $(HELP_FILES)/Main $(DIGITIZERS)/cc95f5_16 $(ETC)/digcap.sample
 
@@ -218,14 +217,15 @@ saber_src:
 $(HELP_FILES)/Main:
 	if [ ! -d $(TXT) ]; then mkdir $(TXT); fi
 	if [ ! -d $(TXT)/DIGIT ]; then mkdir $(TXT)/DIGIT; fi
-	cp help/* $(TXT)/DIGIT/.
-
+#	cp help/* $(TXT)/DIGIT/.
+	tar --exclude=CVS -cvf - help/* | tar -C $(TXT)/DIGIT/ -xvf - 2>/dev/null ; true
 
 
 # Copy over digitizer definition files.
 $(DIGITIZERS)/cc95f5_16:
 	if [ ! -d $(DIGITIZERS) ]; then mkdir $(DIGITIZERS); fi
-	cp -R digitizers/* $(DIGITIZERS)
+#	cp -R digitizers/* $(DIGITIZERS)
+	tar --exclude=CVS -cvf - digitizers/* | tar -C $(DIGITIZERS) -xvf - 2>/dev/null ; true
 
 
 
