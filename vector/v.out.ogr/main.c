@@ -38,7 +38,7 @@ char OGRdrivers[2000];
 int 
 main (int argc, char *argv[])
 {
-    int    i, k, centroid, otype, wkbtype=wkbUnknown, donocat;
+    int    i, j, k, centroid, otype, wkbtype=wkbUnknown, donocat;
     char   *mapset;
     int    field;
     struct GModule *module;
@@ -300,7 +300,6 @@ main (int argc, char *argv[])
     if ( (otype & GV_POINTS) || (otype & GV_LINES) ) {
 	fprintf(stderr,"Exporting %i points/lines...\n", Vect_get_num_lines(&In) );
 	for ( i = 1; i <= Vect_get_num_lines(&In) ; i++ ) {
-	    int j;
 
 	    G_percent(i,Vect_get_num_lines(&In),2);
 	    type = Vect_read_line (&In, Points, Cats, i);
