@@ -59,7 +59,7 @@ struct Info {
 void igntbl(struct Info);
 void gdbtbl(char *, struct Info, int, int);
 void getbnd(struct Info, int);
-void getpataat(char *, struct Info, int, int);
+void get_info_att(char *, struct Info, int, int);
 
 #ifdef DEBUG
 
@@ -157,7 +157,7 @@ void gdbtbl( char *name, struct Info info, int ncatmin, int flag_write)
     if (ncatmin == 0)
 	igntbl( info);		/* still to do !!! */
     else
-	getpataat( name, info, ncatmin, flag_write);
+	get_info_att( name, info, ncatmin, flag_write);
 }
 
 /* get boundaries and create a new region for import */
@@ -209,7 +209,7 @@ void getbnd( struct Info info, int flag_write)
 
 /* get Arc or Poly/Points attribute table => create dig_cats + dig_att files */
 
-void getpataat( char *name, struct Info info, int ncatmin, int flag_write)
+void get_info_att( char *name, struct Info info, int ncatmin, int flag_write)
 {
     char *infoline;
     char filename[80];
@@ -224,7 +224,7 @@ void getpataat( char *name, struct Info info, int ncatmin, int flag_write)
 
     infoline = G_malloc( info.length + 3);
     for (i = ncatmin; i < info.uitems; i++) {
-	if (info.uitems-ncatmin == 1)
+	if (info.uitems-ncatmin == 1 && ncatmin != 1)
 	    strcpy( info.item[i].filename, name);
 	else
 	    sprintf( info.item[i].filename, "%s.%s", name, info.item[i].fname);
@@ -240,21 +240,31 @@ void getpataat( char *name, struct Info info, int ncatmin, int flag_write)
 		 info.item[ncatmin-1-usecovnum].fsize);
 	label[info.item[ncatmin-1-usecovnum].fsize] = 0;
 	sscanf( label, "%d", &id);
+	if (debug > 6)
+	    fprintf( fdlog, "%d", id);
 	if (debug > 2 && (l*100/(info.ndr-1))%2 == 0)
 	    fprintf( stderr, "%4ld%%\b\b\b\b\b", l*100/(info.ndr-1));
 	for (i = ncatmin; i < info.uitems; i++) {
 	    strncpy( label, &infoline[info.item[i].fpos], info.item[i].fsize);
 	    label[info.item[i].fsize] = 0;
 	    G_set_cat( (CELL)id, label, &info.item[i].cats);
+	    if (debug > 6)
+		fprintf( fdlog, "\t%s", label);
 	}
+	if (debug > 6)
+	    fprintf( fdlog, "\n");
     }
     if (debug > 2)
 	fprintf( stderr, "\n");
     for (i = ncatmin; i < info.uitems; i++) {
 	if (debug)
 	    fprintf( fdlog, "Writing cats file \"%s\"\n", info.item[i].filename);
-	if (flag_write != 0)
-	    G_write_vector_cats( info.item[i].filename, &info.item[i].cats);
+	if (flag_write != 0) {
+	    if (ncatmin == 1)
+		G_write_raster_cats( info.item[i].filename, &info.item[i].cats);
+	    else
+		G_write_vector_cats( info.item[i].filename, &info.item[i].cats);
+	}
 	G_free_cats( &info.item[i].cats);
     }
     G_free( infoline);
@@ -322,32 +332,34 @@ int getinfo( char *name, int cat_management, int flag_write)
 	    if (cat_management == 3)
 		gdbtbl( name, info, 7, flag_write);
 	    else
-		getpataat( name, info, 7, flag_write);
+		get_info_att( name, info, 7, flag_write);
 	    cover_type += 1;
 	}
 	else if (strcmp( p, "pat") == 0) {
 	    if (cat_management == 3)
 		gdbtbl( name, info, 4, flag_write);
 	    else
-		getpataat( name, info, 4, flag_write);
+		get_info_att( name, info, 4, flag_write);
 	    cover_type += 2;
 	}
-	else if (strcmp( p ,"bnd") == 0)
+	else if (strcmp( p ,"bnd") == 0)	/* coverage boundaries */
 	    getbnd( info, flag_write);
-	else if (strcmp( p ,"tic") == 0)
+	else if (strcmp( p ,"tic") == 0)	/* tick marks */
 	    igntbl( info);
-	else if (strcmp( p ,"sta") == 0)
+	else if (strcmp( p ,"sta") == 0)	/* stats on grid */
 	    igntbl( info);
-	else if (strcmp( p ,"vat") == 0)
+	else if (strcmp( p ,"vat") == 0) {	/* value table (grid) */
+	    usecovnum = 0;			/* first field = index */
+	    get_info_att( name, info, 1, flag_write);
+	}
+	else if (strcmp( p ,"lut") == 0)	/* look-up table */
 	    igntbl( info);
-	else if (strcmp( p ,"lut") == 0)
+	else if (strcmp( p ,"acode") == 0)	/* arc attributes */
 	    igntbl( info);
-	else if (strcmp( p ,"acode") == 0)
-	    igntbl( info);
-	else if (strcmp( p ,"pcode") == 0)
+	else if (strcmp( p ,"pcode") == 0)	/* polygon attributes */
 	    igntbl( info);
 	else
-	    gdbtbl( name, info, 0, flag_write);
+	    gdbtbl( name, info, 0, flag_write);	/* non graphic tables */
 
 	read_e00_line( line);
 
