@@ -10,6 +10,50 @@
 #include <libpq-fe.h>
 #include "dbsite.h"
 #include "glocale.h"
+/*taken from 7.1.3 pg_type.h*/
+#define BOOLOID                 16
+#define BYTEAOID                17
+#define CHAROID                 18
+#define NAMEOID                 19
+#define INT8OID                 20
+#define INT2OID                 21
+#define INT2VECTOROID   22
+#define INT4OID                 23
+#define REGPROCOID              24
+#define TEXTOID                 25
+#define OIDOID                  26
+#define TIDOID          27
+#define XIDOID 28
+#define CIDOID 29
+#define OIDVECTOROID    30
+#define POINTOID                600
+#define LSEGOID                 601
+#define PATHOID                 602
+#define BOXOID                  603
+#define POLYGONOID              604
+#define LINEOID                 628
+#define FLOAT4OID 700
+#define FLOAT8OID 701
+#define ABSTIMEOID              702
+#define RELTIMEOID              703
+#define TINTERVALOID    704
+#define UNKNOWNOID              705
+#define CIRCLEOID               718
+#define CASHOID 790
+#define INETOID 869
+#define CIDROID 650
+#define ACLITEMSIZE 8
+#define BPCHAROID               1042
+#define VARCHAROID              1043
+#define DATEOID                 1082
+#define TIMEOID                 1083
+#define TIMESTAMPOID    1184
+#define INTERVALOID             1186
+#define TIMETZOID               1266
+#define ZPBITOID         1560
+#define VARBITOID         1562
+#define NUMERICOID              1700
+
 
 int runInfxFile(SQL_stmt, map,  plotargs )
   char *SQL_stmt, *map, *plotargs[];
@@ -84,34 +128,16 @@ int runInfxFile(SQL_stmt, map,  plotargs )
       ftype = PQftype(res,2);
       switch (ftype) {
 			
-			case 1042:
+			case BPCHAROID:
+			case VARCHAROID:
+			case CHAROID:		
+			case TEXTOID:
+			case INT8OID:
+			case INT2OID:
+			case INT4OID:
+			case FLOAT4OID:
+			case FLOAT8OID:
 			break;
-			
-			case 1043:
-			break;
-			
-			case 18:
-			break;
-						
-			case 25:
-			break;
-
-
-			case 20:
-			break;
-
-			case 21:
-			break;
-
-			case 23:
-			break;
-			
-			case 700:
-			break;
-			
-			case 701:
-			break;
-			
 			default:
 			printf("Can not use the field type id %d for category\n",ftype);
 		}
@@ -138,45 +164,24 @@ int runInfxFile(SQL_stmt, map,  plotargs )
 		switch (ftype) {
 
 /*char, bpchar,varchar,text*/
-			case 18:
-			site = G_site_new_struct (-1, 2, 1, 0);
-			if (strlen(buf3) == 0) strcpy(buf3,"no data");
-			G_strncpy (site->str_att[0], buf3, strlen(buf3));
-			break;
-			case 1042:
-			site = G_site_new_struct (-1, 2, 1, 0);
-			if (strlen(buf3) == 0) strcpy(buf3,"no data");
-			G_strncpy (site->str_att[0], buf3, strlen(buf3));
-			break;
-			case 1043:
-			site = G_site_new_struct (-1, 2, 1, 0);
-			if (strlen(buf3) == 0) strcpy(buf3,"no data");
-			G_strncpy (site->str_att[0], buf3, strlen(buf3));
-			break;
-			case 25:
+			case CHAROID:
+			case BPCHAROID:
+			case VARCHAROID:
+			case TEXTOID:
 			site = G_site_new_struct (-1, 2, 1, 0);
 			if (strlen(buf3) == 0) strcpy(buf3,"no data");
 			G_strncpy (site->str_att[0], buf3, strlen(buf3));
 			break;
 /*int4, int2, int8*/
-			case 20:
-			site = G_site_new_struct (CELL_TYPE, 2, 0, 0);
-			sscanf(buf3,"%d",&site->ccat);
-			break;
-			case 21:
-			site = G_site_new_struct (CELL_TYPE, 2, 0, 0);
-			sscanf(buf3,"%d",&site->ccat);
-			break;
-			case 23:
+			case INT8OID:
+			case INT2OID:
+			case INT4OID:
 			site = G_site_new_struct (CELL_TYPE, 2, 0, 0);
 			sscanf(buf3,"%d",&site->ccat);
 			break;
 /*float4, float8*/
-			case 700:
-			site = G_site_new_struct (FCELL_TYPE, 2, 0, 0);
-			sscanf(buf3,"%f", &site->fcat);
-			break;
-			case 701:
+			case FLOAT4OID:
+			case FLOAT8OID:
 			site = G_site_new_struct (FCELL_TYPE, 2, 0, 0);
 			sscanf(buf3,"%f", &site->fcat);
 			break;
