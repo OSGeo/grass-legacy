@@ -1,0 +1,21 @@
+4.0 conversion note -- 12-90 dks
+
+v.prune:
+
+cmd version source   = v.prune.c
+inter version source = prune.c
+
+
+misc. changes fr0m 3.2:
+
+1. changed struct head in v.prune.c to dig_head
+
+2. ***type_double doesn't complain about non-double answer??
+
+3. changed call to find_file2 to find_vector2
+
+4. added a check to see if *in_name or *out_name was empty (since
+	 the new parser will accept empty arguments
+
+5. fixed bug in fatal_error message when dig src file isn't found
+
