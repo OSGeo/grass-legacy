@@ -32,7 +32,7 @@ USAGE
          d.area map=someareamap fillcolor=green linecolor=black
          d.vect map=somevectormap color=red
     3. Stop the driver when all polygon have been displayed. This will
-       cause a file named 'htmlmap' to be created in your current
+       cause a file named 'map.png' to be created in your current
        directory.
          d.mon stop=PNG
        
@@ -42,6 +42,7 @@ NOTES
    The Gd library in turn relies on libpng (see the libpng home page)
    and zlib (see the info-zip home page), all which needs to be
    installed for the PNG driver to work (it's worth it).
+   http://www.boutell.com/gd/
    
 AUTHOR
 
