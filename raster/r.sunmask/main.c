@@ -203,7 +203,7 @@ int main(int argc, char *argv[])
 
     flag2 = G_define_flag();
     flag2->key         = 'v' ;
-    flag2->description = "verbose output" ;
+    flag2->description = "verbose output (also print out sun position etc.)" ;
 
     flag3 = G_define_flag();
     flag3->key         = 's' ;
@@ -310,9 +310,10 @@ int main(int argc, char *argv[])
       {
        if( flag2->answer || (flag3->answer && !flag2->answer))
        {
-        fprintf (stderr, " %d.%02d.%02d, daynum %d, time: %02i:%02i:%02i\n",
+        fprintf (stderr, " %d.%02d.%02d, daynum %d, time: %02i:%02i:%02i (decimal time: %f)\n",
          pdat->year, pdat->month, pdat->day, pdat->daynum,  
-         pdat->hour, pdat->minute, pdat->second);
+         pdat->hour, pdat->minute, pdat->second, 
+         pdat->hour + (pdat->minute * 100.0 / 60.0 + pdat->second * 100.0/3600.0)/100. );
         fprintf(stderr, " long: %f, lat: %f, timezone: %f\n", pdat->longitude, pdat->latitude, pdat->timezone);
         fprintf (stderr, " Solar position: sun azimuth %f,\n   sun angle above horz.(refraction corrected) %f\n",
          pdat->azim, pdat->elevref );
