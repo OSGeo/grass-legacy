@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.39 2000-10-18 18:18:22 markus Exp $
+$Id: BUGS,v 1.40 2000-10-19 15:45:56 andreas Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -68,7 +68,7 @@ d.mon: hangs with "-L" option
   everything is ok. I read the code and experimented with it, but i
   couldn't find the problem. This is something for the signal
   specialists/system programmers from BSD and SYSV.
-    (being worked on by ?)
+    (being worked on by Andreas Lange, help wanted!)
 
 d.param.scale
  - lower axis description not readable
@@ -94,23 +94,10 @@ d.rast.num: some numbers are displayed in wrong (unreadable) color
 [RC]d.rgb: Is there a difference between d.rgb and i.composite?
   (being worked on by ?)  
 
-[RC]d.siter: try to make it indpendent from wish8.x version (like tcltkgrass)
- but startup error occurs now.
-  (being worked on by ?)  
-
 [RC]d.sites.qual: not all the sites are used/displayed
   d.sites.qual doesn't work properly: not all the sites 
   are used/displayed if the number of fields of the input site file is 
   not constant. Compare with d.sites.
-  (being worked on by ?)  
-
-[RC]d.what.rast 
-  displays its output twice to the tcltkgrass screen and           
-  prints it twice to file when in single selection mode. In command line          
-  mode d.what.rast works fine. I program in c and tcl, so I looked around         
-  a bit at the sources - but don't have the familiarity with the code base        
-  to find an obvious solution.
-  (reported by Tom Strang  tstrang@trytel.com)
   (being worked on by ?)  
 
 i.in.gtc/i.in.pri
@@ -249,7 +236,7 @@ r.in.hdf/r.out.hdf (src.garden/grass.hdf)
     core dumped ... I guess the limit in r.mapcalc is 32xxx which 
     is a "huge" limitation
     (reported by Anantha Prasad  aprasad@fs.fed.us)
-  (being worked on by ?)
+  (being worked on by Andreas Lange)
  - r.mapcalc/polish: (when compiling)
   make[2]: Entering directory
   /home/neteler/src5/grass5.0beta/src/raster/r.mapcalc/polish'
@@ -425,13 +412,4 @@ src/libes/geom: optri  -> used by s.geom, v.geom
    should be passed as the final parameter.  I have put in 0 for the
    moment to get the compile to work.
    (being worked on by Andreas Lange)
-
-src/libes/geom/:
-  [from Brook] The powerof2 warnings are the result of an unfortunate 
-  collision of names (with different semantics) between NetBSD headers 
-  and Grass.  As long as the Grass headers are always included _after_ the 
-  system headers it is ok; it would be safer to rename it to something 
-  else within Grass, though.
-  -> same warning on Linux/Intel
-  (being worked on by ?)
 
