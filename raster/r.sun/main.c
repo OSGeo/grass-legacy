@@ -56,7 +56,6 @@ email: hofierka@geomodel.sk,marcel.suri@jrc.it,suri@geomodel.sk
 
 FILE *felevin, *faspin, *fslopein, *flinkein, *falbedo, *flatin;
 FILE *fincidout, *fbeam_rad, *finsol_time, *fdiff_rad, *frefl_rad;
-FILE *fw;
 
 char *elevin;
 char *aspin;
@@ -79,6 +78,7 @@ char mapname[1024];
 struct Cell_head cellhd;
 struct pj_info iproj;
 struct pj_info oproj;
+struct History hist;
 
 
 int INPUT(void);
@@ -104,7 +104,6 @@ double com_sol_const(int);
 double com_declin(int);
 double brad(double);
 double drad(double);
-
 
 int shd, typ, n, m, ip, jp;
 float **z, **o, **s, **li, **a, **la, **cbhr, **cdhr;
@@ -717,7 +716,6 @@ int OUTGR(void)
 	}
     }
 
-
     if (diff_rad != NULL) {
 	cell9 = G_allocate_f_raster_buf();
 	fd9 = G_open_fp_cell_new(diff_rad);
@@ -809,23 +807,31 @@ int OUTGR(void)
 
     }
 
-    if (incidout != NULL)
+    if (incidout != NULL) {
 	G_close_cell(fd7);
-    if (beam_rad != NULL)
+        G_write_history(incidout, &hist);
+    }
+    if (beam_rad != NULL) {
 	G_close_cell(fd8);
-    if (diff_rad != NULL)
+        G_write_history(beam_rad, &hist);
+    }
+    if (diff_rad != NULL) {
 	G_close_cell(fd9);
-    if (refl_rad != NULL)
+        G_write_history(diff_rad, &hist);
+    }
+    if (refl_rad != NULL) {
 	G_close_cell(fd10);
-    if (insol_time != NULL)
+        G_write_history(refl_rad, &hist);
+    }
+    if (insol_time != NULL) {
 	G_close_cell(fd11);
+        G_write_history(insol_time, &hist);
+    }
 
     return 1;
 }
 
-
-
-
+/*  min(), max() are unused
 int min(arg1, arg2)
     int arg1;
     int arg2;
@@ -853,6 +859,7 @@ int max(arg1, arg2)
     }
     return res;
 }
+*/
 
 void com_par_const(void)
 {
@@ -1548,56 +1555,55 @@ void calculate(void)
     }
     fprintf(stderr, "\n");
 
-    fw = fopen("r.sun_out.txt", "w");
+    G_short_history (beam_rad, "raster", &hist);
 
-    fprintf(fw,
-	    "\n\n ----------------------------------------------------------------");
-    fprintf(fw, "\n Day [1-365]:                                %d", day);
-    fprintf(fw, "\n Solar constant (W/m^2):                   1367");
-    fprintf(fw, "\n Extraterrestrial irradiance (W/m^2):      %f", c);
-    fprintf(fw, "\n Declination (rad):                        %f",
-	    -declination);
+    sprintf (hist.edhist[0], " ----------------------------------------------------------------");
+    sprintf (hist.edhist[1], " Day [1-365]:                              %d", day);
+    sprintf (hist.edhist[2], " Solar constant (W/m^2):                   1367");
+    sprintf (hist.edhist[3], " Extraterrestrial irradiance (W/m^2):      %f", c);
+    sprintf (hist.edhist[4], " Declination (rad):                        %f", -declination);
+    hist.edlinecnt = 5;
+
     if (lt != NULL)
-	fprintf(fw, "\n Latitude (deg):                           %.4f",
-		-latitude * RAD);
+	sprintf (hist.edhist[5], " Latitude (deg):                           %.4f", -latitude * RAD);
     else
-	fprintf(fw, "\n Latitude min-max(deg):                    %.4f-%.4f",
-		la_min, la_max);
+	sprintf (hist.edhist[5], " Latitude min-max(deg):                    %.4f - %.4f", la_min, la_max);
+    hist.edlinecnt++;
+
     if (tt != NULL) {
-	fprintf(fw, "\n Sunrise time (hr.):                       %.2f",
-		sunrise_time);
-	fprintf(fw, "\n Sunset time (hr.):                        %.2f",
-		sunset_time);
-	fprintf(fw, "\n Daylight time (hr.):                      %.2f",
-		sunset_time - sunrise_time);
+	sprintf (hist.edhist[6], " Sunrise time (hr.):                       %.2f", sunrise_time);
+	sprintf (hist.edhist[7], " Sunset time (hr.):                        %.2f", sunset_time);
+	sprintf (hist.edhist[8], " Daylight time (hr.):                      %.2f", sunset_time - sunrise_time);
     }
     else {
-	fprintf(fw, "\n Sunrise time min-max (hr.):               %.2f-%.2f",
-		sr_min, sr_max);
-	fprintf(fw, "\n Sunset time min-max (hr.):                %.2f-%.2f",
-		ss_min, ss_max);
-	fprintf(fw, "\n Time step (hr.): 	                   %f", step);
+	sprintf (hist.edhist[6], " Sunrise time min-max (hr.):               %.2f - %.2f", sr_min, sr_max);
+	sprintf (hist.edhist[7], " Sunset time min-max (hr.):                %.2f - %.2f", ss_min, ss_max);
+	sprintf (hist.edhist[8], " Time step (hr.):                          %.4f", step);
     }
-    if (incidout != NULL || tt != NULL)
-	fprintf(fw, "\n Solar altitude (deg):                     %.4f",
-		h0 * RAD);
-    if (incidout != NULL || tt != NULL)
-	fprintf(fw, "\n Solar azimuth (deg):                      %.4f",
-		A0 * RAD);
-    if (linkein == NULL)
-	fprintf(fw, "\n Linke turbidity factor:                   %.1f", linke);
-    else
-	fprintf(fw, "\n Linke turbidity factor min-max:           %.1f-%.1f",
-		li_min, li_max);
-    if (albedo == NULL)
-	fprintf(fw, "\n Ground albedo:                            %.3f", alb);
-    else
-	fprintf(fw, "\n Ground albedo min-max:                    %.3f-%.3f",
-		al_min, al_max);
-    fprintf(fw,
-	    "\n -----------------------------------------------------------------\n\n");
-    fclose(fw);
+    hist.edlinecnt += 3;
 
+    if (incidout != NULL || tt != NULL) {
+	sprintf (hist.edhist[hist.edlinecnt], " Solar altitude (deg):                     %.4f", h0 * RAD);
+	sprintf (hist.edhist[hist.edlinecnt+1], " Solar azimuth (deg):                      %.4f", A0 * RAD);
+	hist.edlinecnt+=2;
+    }
+
+    if (linkein == NULL)
+	sprintf (hist.edhist[hist.edlinecnt], " Linke turbidity factor:                   %.1f", linke);
+    else
+	sprintf (hist.edhist[hist.edlinecnt], " Linke turbidity factor min-max:           %.1f-%.1f", li_min, li_max);
+    hist.edlinecnt++;
+
+    if (albedo == NULL)
+	sprintf (hist.edhist[hist.edlinecnt], " Ground albedo:                            %.3f", alb);
+    else
+        sprintf (hist.edhist[hist.edlinecnt], " Ground albedo min-max:                    %.3f-%.3f", al_min, al_max);
+    hist.edlinecnt++;
+
+    sprintf (hist.edhist[hist.edlinecnt], " -----------------------------------------------------------------");
+    hist.edlinecnt++;
+
+    /* don't call G_write_history() until after G_close_cell() or it just gets overwritten */
 
 }
 
