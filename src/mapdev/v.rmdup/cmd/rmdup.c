@@ -51,7 +51,7 @@ int main (argc, argv)
   map->type = TYPE_STRING;
   map->required = YES;
   map->multiple = NO;
-  map->description = "Vector file to be cleaned";
+  map->description = "Vector file to be cleaned from duplicate arcs";
 
   if (G_parser (argc, argv))
     exit (-1);
@@ -181,7 +181,16 @@ killdups (Closet, Suitcase)
     line++;
     old_offset = new_offset = ftell (Closet->dig_fp);
     j=match = 0;			/* Assume we have no match */
-    while (match == 0 && Closet->dig_fp->_cnt)
+
+/* commented following "while line" 5/2000:
+ *   dig_fp->_cnt was once defined in _IO_FILE_ /usr/include/libio.h 
+ *   int _cnt;    "number of characters in the buffer"
+ *
+ * -> but today?
+ */
+ /*     while (match == 0 && Closet->dig_fp->_cnt) */
+
+    while (match == 0 && Closet->dig_fp->_shortbuf[1])  /* try to upgrade in 5/2000 */
     {
       if (0 < (type = V1_read_line (Closet, Points_b, new_offset)))
       {
@@ -288,4 +297,10 @@ int make_dead (type)
   }
 
   return newtype;
+}
+
+/* added 5/2000 */
+int iszero(int x)
+{ 
+ return x != x; 
 }
