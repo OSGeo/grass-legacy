@@ -31,7 +31,7 @@ SUBDIRS = \
 	r.reclass.area \
 	r.regression.line \
 	r.shaded.relief \
-	r.univar \
+	r.univar.sh \
 	v.build.all
 
 default: subdirs
