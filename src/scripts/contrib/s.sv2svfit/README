@@ -1,0 +1,7 @@
+s.sv2svfit creates a sample variogram from a GRASS sites list
+	and fits it to a semivariogram model
+
+Written by Michael Barton to support Tcltkgrass 4.0
+
+Added by Scott Mitchell May 2004
+
