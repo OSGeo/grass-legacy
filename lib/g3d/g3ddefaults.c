@@ -638,4 +638,5 @@ G3d_initDefaults ()
   if (! G3d_readWindow (&window, windowName))
     G3d_fatalError ("G3d_initDefaults: Error reading window");
   G3d_setWindow (&window);
+
 }
