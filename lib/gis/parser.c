@@ -151,6 +151,7 @@ static int gis_prompt( struct Option *, char *);
 
 int G_gui (void);
 int G_usage_xml (void);
+int G_usage_html (void);
     
 int 
 G_disable_interactive (void)
@@ -445,6 +446,14 @@ int G_parser (int argc, char **argv)
 		if (strcmp(argv[1],"--interface-description") == 0)
 		{
 			G_usage_xml();
+			return -1;
+		}
+
+		/* If first arg is "--html-description" then print out
+		 * a xml description of the task */
+		if (strcmp(argv[1],"--html-description") == 0)
+		{
+			G_usage_html();
 			return -1;
 		}
 
@@ -804,6 +813,161 @@ int G_usage_xml (void)
 	 *****/
 
 	fprintf(stdout, "</task>\n");
+    return 0;
+}
+
+int G_usage_html (void)
+{
+	struct Option *opt ;
+	struct Flag *flag ;
+	char *type;
+	char *s, *top;
+	int i;
+	
+	if (!pgm_name)		/* v.dave && r.michael */
+	    pgm_name = G_program_name ();
+	if (!pgm_name)
+	    pgm_name = "??";
+
+	fprintf(stdout, "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n");
+	fprintf(stdout, "<html><head>\n"),
+	fprintf(stdout, "<title>%s</title>", pgm_name);
+	fprintf(stdout, "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\n"),
+	fprintf(stdout, "</head>\n"),
+	fprintf(stdout, "<body>\n");
+
+	fprintf(stdout, "<h2>NAME</h2>\n");
+	fprintf(stdout, "<em><b>%s</b></em> ", pgm_name);
+
+	if (module_info.description) {
+		fprintf(stdout, " - ");
+		fprintf(stdout, "%s", module_info.description);
+		fprintf(stdout, "\n");
+	}
+	fprintf(stdout, "<h2>SYNOPSIS</h2>\n");
+	fprintf(stdout, "<b>%s</b><br>\n", pgm_name);
+	fprintf(stdout, "<b>%s help</b><br>\n", pgm_name);
+
+	fprintf(stdout, "<b>%s</b>", pgm_name);
+
+	/* print short version first */
+	if(n_flags)
+	{
+		flag= &first_flag;
+		fprintf(stdout, " [-<b>");
+		while(flag != NULL)
+		{
+			fprintf (stdout, "%c", flag->key);
+			flag = flag->next_flag ;
+		}
+		fprintf(stdout, "</b>] ");
+	}
+
+	if(n_opts)
+	{
+		opt= &first_option;
+
+		while(opt != NULL)
+		{
+			switch (opt->type) {
+				case TYPE_INTEGER:
+					type = "integer";
+					break ;
+				case TYPE_DOUBLE:
+					type = "float";
+					break ;
+				case TYPE_STRING:
+					type = "string";
+					break ;
+				default:
+					type = "string";
+					break;
+			}
+			if( !opt->required )
+			     fprintf(stdout,"[");
+			fprintf(stdout,
+				"<b>%s</b>=<em>%s</em>", opt->key, type);
+			if( !opt->required )
+			     fprintf(stdout,"] ");
+
+
+			opt = opt->next_opt ;
+		}
+		fprintf(stdout, "\n");
+	}
+
+	/* now long version */
+	fprintf(stdout, "\n");
+	if(n_flags)
+	{
+		flag= &first_flag;
+		fprintf(stdout, "<h3>Flags:</h3>\n");
+		fprintf(stdout, "<DL>\n");
+		while(flag != NULL)
+		{
+			fprintf (stdout, "<DT><b>-%c</b>\n", flag->key);
+
+			if (flag->description) {
+				fprintf(stdout, "<DD>");
+				fprintf(stdout, "%s", flag->description);
+				fprintf(stdout, "</DD>\n");
+			}
+			flag = flag->next_flag ;
+			fprintf (stdout, "\n");
+		}
+		fprintf(stdout, "</DL>\n");
+	}
+
+	fprintf(stdout, "\n");
+	if(n_opts)
+	{
+		opt= &first_option;
+		fprintf(stdout, "<h3>Parameters:</h3>\n");
+		fprintf(stdout, "<DL>\n");
+		
+		while(opt != NULL)
+		{
+			/* TODO: make this a enumeration type? */
+			switch (opt->type) {
+				case TYPE_INTEGER:
+					type = "integer";
+					break ;
+				case TYPE_DOUBLE:
+					type = "float";
+					break ;
+				case TYPE_STRING:
+					type = "string";
+					break ;
+				default:
+					type = "string";
+					break;
+			}
+			fprintf(stdout,
+				"<DT><b>%s</b>=<em>%s</em>\n", opt->key, type);
+			if (opt->description) {
+				fprintf(stdout, "<DD>");
+				fprintf(stdout, "%s", opt->description);
+				fprintf(stdout, "</DD>\n");
+			}
+
+			if(opt->options) {
+				fprintf(stdout, "<DD>Options: <em>");
+				fprintf(stdout, "%s", opt->options);
+				fprintf(stdout, "</em></DD>\n");
+			}
+
+			if(opt->def) {
+				fprintf(stdout, "<DD>Default: <em>");
+				fprintf(stdout, "%s", opt->def);
+				fprintf(stdout, "</em></DD>\n");
+			}
+			opt = opt->next_opt ;
+			fprintf (stdout, "\n");
+		}
+		fprintf(stdout, "</DL>\n");
+	}
+	
+    fprintf(stdout, "</body></html>\n");
     return 0;
 }
 
