@@ -1,0 +1,84 @@
+Base_string	curses.c	/^Base_string (y, x, message)$/
+Clear_base	curses.c	/^Clear_base()$/
+Clear_info	curses.c	/^Clear_info()$/
+Close_curses	curses.c	/^Close_curses()$/
+Curses_state	curses.c	/^Curses_state()$/
+Get_curses_char	curses.c	/^Get_curses_char(answer)$/
+Get_curses_text	curses.c	/^Get_curses_text(answer)$/
+Get_new_tty	tty.c	/^Get_new_tty()$/
+Get_old_tty	tty.c	/^Get_old_tty()$/
+Init_curses	curses.c	/^Init_curses()$/
+Mbin_point	bin_point.c	/^main( argc, argv)$/
+Mbin_reg	bin_reg.c	/^main( argc, argv)$/
+Mgeo_quest	geo_quest.c	/^main( argc, argv)$/
+Mgeo_unlock	geo_unlock.c	/^main ( argc, argv)$/
+New_tty	tty.c	/^New_tty()$/
+Old_tty	tty.c	/^Old_tty()$/
+Replot_screen	curses.c	/^Replot_screen() $/
+Write_base	curses.c	/^Write_base(line, message)$/
+Write_info	curses.c	/^Write_info(line, message)$/
+_Base_refresh	curses.c	/^_Base_refresh()$/
+_Base_string	curses.c	/^_Base_string (y, x, message)$/
+_Clear_base	curses.c	/^_Clear_base()$/
+_Clear_info	curses.c	/^_Clear_info()$/
+_Curses_off	curses.c	/^_Curses_off()$/
+_Curses_on	curses.c	/^_Curses_on()$/
+_Info_refresh	curses.c	/^_Info_refresh()$/
+_Write_base	curses.c	/^_Write_base(line, message)$/
+_Write_info	curses.c	/^_Write_info(line, message)$/
+_coll_a_pnt	ask_driver.c	/^_coll_a_pnt ( x, y)$/
+ask_driver	ask_driver.c	/^ask_driver()$/
+ask_driver_raw	ask_driver.c	/^ask_driver_raw( X, Y) $/
+ask_driver_yes_no	ask_driver.c	/^ask_driver_yes_no(quest)$/
+ask_map_coor	map_ask.c	/^ask_map_coor (n_points)$/
+ask_yes_no	ask_driver.c	/^ask_yes_no(quest)$/
+calculate_map_scale	map_scale.c	/^calculate_map_scale ()$/
+check_map_buttons	reset_map.c	/^check_map_buttons ()$/
+check_map_explain	reset_map.c	/^check_map_explain() $/
+check_map_ft_swtch	reset_map.c	/^check_map_ft_swtch()$/
+check_map_generic	reset_map.c	/^check_map_generic()$/
+close_down	curses.c	/^close_down(ret)$/
+coll_a_pnt	ask_driver.c	/^coll_a_pnt ( x, y)$/
+curses_yes_no	curses.c	/^curses_yes_no(n, s)$/
+flush_keyboard	flush_input.c	/^flush_keyboard ()$/
+geo_get_point	geo_get_pt.c	/^geo_get_point( X, Y)$/
+geo_point_main	geo_point.c	/^geo_point_main(  control_file, point_file)$/
+geo_read_control	geo_file.c	/^geo_read_control (fp, digitizer_name, tty, lock_na/
+geo_reg_main	geo_reg.c	/^geo_reg_main( driver_name, tty, control_file, lock/
+geo_reset_transform	geo_reset.c	/^geo_reset_transform ()$/
+geo_save_control	geo_file.c	/^geo_save_control (fp, digitizer_name, tty, lock_na/
+get_digitizer_button_xy	ask_driver.c	/^get_digitizer_button_xy (X, Y)$/
+get_driver	rd_cap.c	/^get_driver( fp, which_driver, Driver)$/
+get_driver_name	rd_cap.c	/^get_driver_name( fp, selected_name, Driver)$/
+get_map_scale	map_scale.c	/^get_map_scale()$/
+get_point_buttons	geo_get_pt.c	/^get_point_buttons ( X, Y)$/
+get_point_explain	geo_get_pt.c	/^get_point_explain() $/
+get_point_generic	geo_get_pt.c	/^get_point_generic( X, Y)$/
+get_reg_response	map_reg.c	/^get_reg_response( x, y)$/
+init_priority	set_prior.c	/^init_priority ()$/
+key_hit	set_key.c	/^key_hit(buf)$/
+leave	leave.c	/^leave()$/
+load_coor_from_file	map_coor.c	/^load_coor_from_file (fp)$/
+pr_instructions	pr_instruct.c	/^pr_instructions()$/
+read_cap_line	rd_cap.c	/^read_cap_line( fp, Driver)$/
+register_map_coor	map_reg.c	/^register_map_coor ( n_points)$/
+reset_map	reset_map.c	/^reset_map()$/
+respend	curses.c	/^respend ()$/
+rindex	rindex.c	/^rindex(s, c)$/
+save_coor_to_file	map_coor.c	/^save_coor_to_file (fp) $/
+select_digitizer	select_digit.c	/^select_digitizer( fp, selected_digitizer, Driver)$/
+set_gis_uid	set_prior.c	/^set_gis_uid (on)$/
+set_keyboard	set_key.c	/^set_keyboard ()$/
+set_priority	set_prior.c	/^set_priority ()$/
+set_priority_3b2	set_prior.c	/^set_priority_3b2 ()$/
+set_uid_to_user	set_prior.c	/^set_uid_to_user ()$/
+setup_map_reg	map_setup.c	/^setup_map_reg()$/
+show_coor_only	map_resid.c	/^show_coor_only ( n_points, active_point, status)$/
+show_driver_names	rd_cap.c	/^show_driver_names( fp, Driver)$/
+show_reg_menu	map_reg.c	/^show_reg_menu()$/
+show_residual_results	map_resid.c	/^show_residual_results ( n_points, active_point)$/
+shrink_map_coor	map_ask.c	/^shrink_map_coor()$/
+suspend	curses.c	/^suspend ()$/
+swap_re_uids	set_prior.c	/^swap_re_uids ()$/
+unset_keyboard	set_key.c	/^unset_keyboard ()$/
+unset_priority	set_prior.c	/^unset_priority ()$/
