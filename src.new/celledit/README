@@ -1,0 +1,41 @@
+4 May 1990
+
+The code is stable, but I'm still just shy of editing. I recently finished
+the brush section of the property sheet, but I'm sending this out without
+the editing functionality finished. You should be able to play with the
+property sheet, and query the cells values displayed by clicking the mouse
+on the map.
+
+I'm interested in any and all bugs that you discover. I would also be
+interested in comments and suggestions.
+
+The celleditor should be run from within the grass shell, so that all those
+grass environment variables are set.
+
+Notes on compilation:
+   I've been using imake to handle the makefiles because I'm more worried
+   about the problems of X dependencies, and search paths than potential
+   GRASS problems. You should edit the DEFBRUSHDIR symbol in the Imakefile so 
+   that it points to where the brushes will be installed. If you have an MIT
+   distributution of X11R4 installed correctly on your system, you should be 
+   able to simply.
+
+   % xmkmf
+   % make Makefiles
+   % make depend
+   % make
+   % make install
+   
+I haven't done much testing (any) on potential compilations problems as I
+don't have another system to try this out on. If you have any trouble
+compiling, or other problems/suggestions just drop me a note. 
+I'll be arounf all next week (via e-mail) to help you with probelms, if need
+be I can call you at a mutually agreeded upon time.
+
+Frank.
+----------------------------------------------------------------------------
+Frank  Goodman				arpa:  spanki@CED.Berkeley.EDU
+University of California, Berkeley	  or:  spanki%CED@jade.Berkeley.EDU
+College of Environmental Design		uucp:  ...hplabs!ucbvax!ced!spanki
+S.I.S Research Laboratory	 	phone: (415) 849-1166 (Leave Message)
+----------------------------------------------------------------------------
