@@ -63,8 +63,8 @@ grass_sites="grass.sites.main grass.sites.mirror"
 # must be one map color for each map file (see coastline labels & colors below)
 #red,orange,yellow,green,blue,indigo,white,black,brown,magenta,gray,grey
 #     bug: aqua, indigo don't seem to work
-#first two colors and ble are reserved:
-map_mirror_colors="green orange white yellow magenta red white yellow magenta red white yellow magenta red"
+#first two colors and blue are reserved:
+map_mirror_colors="green orange white yellow white magenta red white yellow magenta red white yellow magenta red"
 
 #write this variable to array:
 set $map_mirror_colors
