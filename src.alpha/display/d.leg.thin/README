@@ -1,0 +1,49 @@
+
+This is an improved version of d.legend that allows:
+
+    Thinning the categories to be represented in the legend
+    Displaying a continuous gradient of all categories in the legend
+    Interactive mouse placement of the smooth gradient box
+
+I have not tested this version very well, so can not claim that it
+will work for all maps & situations.  I also have not had the chance to
+write an updated man page, but "d.leg.thin help" produces:
+
+***************************************************************************
+Usage:
+ d.leg.thin [-nsm] map=name [color=name] [lines=value] [thin=value]
+
+Flags:
+  -n   Do not show category values
+  -s   Draw smooth gradient
+  -m   Use mouse to size & place legend (only when -s is specified)
+
+Parameters:
+    map   Name of raster map
+  color   Sets the legend's text color
+          options: red,orange,yellow,green,blue,indigo,white,black,brown,
+                   magenta,aqua,gray,grey
+          default: white
+  lines   Number of text lines (useful for truncating long legends)
+          options: 0-1000
+          default: 0
+   thin   Thinning factor (thin=10 gives cats 0,10,20...)
+          options: 0-1000
+          default: 1
+***************************************************************************
+
+
+Also note that when using the mouse to size & place the smooth legend,
+if you make a horizontal box the values run from left to right and no
+category values are printed (you may want to use d.label for that).
+
+This program is not a part of any official release of GRASS. 
+
+***************************************************************************
+Bill Brown				e-mail: brown@zorro.cecer.army.mil
+USACERL - ECS				phone:  (217) 352-6511 ext 676
+PO Box 9005
+Champaign, IL  61826-9005
+***************************************************************************
+
+
