@@ -30,16 +30,19 @@ Many thanks to all contributors!
 <menu>
 <li>grass5 startup: fixes on tcl/tk problems (Justin Hickey)
 <li>d.colors: fixed "u" jump bug (Markus Neteler)
+<li>i.tape.tm.fast: segfault fixed (Eric G. Miller)
 <li>pg.in.dbf: fixed for inserting fields longer than 128 bytes (Federico Ponchio)
 <li>ps.map: Add some standard US paper configs (Eric G. Miller)
 <li>r.drain: fixed for floating-point elevations (Markus Neteler)
-<li>r.out.tiff: file extensions fix (tif, tfw), color bugfix (Eric G. Miller)
+<li>r.out.tiff: file extensions fix (tif, tfw), NULL data color bugfix (Eric
+    G. Miller)
+<li>r3.out.v5d: added region settings sensivity (Markus Neteler)
 <li>r.support: added cmd line support (Markus Neteler)
 <li>s.to.vect: several new flags, fixed "find mapset" problem, fixed 'dim'
-index error, fix for FP cats, category selection parameter (Eric G. Miller)
+  index error, fix for FP cats, category selection parameter (Eric G. Miller)
 <li>v.digit: fixed core dump on SGI (Justin Hickey, Roger S. Miller)
 <li>v.in.shape: bunch of bugfixes, selective import supported now (David D.
-Gray)
+   Gray)
 <p>
 <li> Added one line description for "-help" parameter to describe purpose of
 each module (Jan Wagner, not yet finished)
@@ -50,9 +53,9 @@ each module (Jan Wagner, not yet finished)
 <li>Makefile: bug fixed which removed /usr/local/bin when invoking "make
 clean" (Justin Hickey)
 <li>configure: tcl/tk libs detection fixed (John Huddleston, Eric G. Miller)
-<li>Gmakefiles: major cleanup (Markus Neteler, Justin Hickey)
-<li>LZW removal ready to switch on: will come for GRASS 5.0 stable. Using
-DEFLATE/zlib now (Eric G. Miller)
+<li>Gmakefiles/front.end: major cleanup (Markus Neteler, Justin Hickey)
+<li>LZW removal ready to switch on: will come for GRASS 5.0 stable. GRASS 
+    will be using DEFLATE/zlib then (Eric G. Miller)
 </menu>
 
 <hr>
@@ -60,7 +63,9 @@ DEFLATE/zlib now (Eric G. Miller)
 
 [GRASS 5.0 beta10 released 7 December 2000]
 <p>
-Fixed severe installation bug.
+Fixed severe installation bug: The binaries are build within the sources
+now using "make", later "make install" copies them to their final
+destination (Justin Hickey).
 
 <hr>
 <h3><font color="#00FE00">What's new in GRASS 5 beta9 comparing to beta8</font></h3>
@@ -105,6 +110,7 @@ each module (Jan Wagner and others, not yet finished)
 <li> g.manual: bug fixed, optionally supports HTML browsers now (Huidae Cho)
 <li> g.region sites= bugfixed (Huidae Cho), added output of ellipsoid and
  map datum in interactive and comandline version (Andreas Lange)
+<li> g.select.pg: hostname problem fixed (Eric G. Miller)
 <li> g.setproj: preliminary map datum support added (Andreas Lange)
 <li> i.grey.scale: new parser command line version instead of interactive
  version (Andreas Lange)
