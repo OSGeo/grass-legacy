@@ -16,3 +16,4 @@ int F_generate ( char *driver, char *database, char *table, char *key, int keyva
 	     char **form );
 int F_open ( char *title, char *html );
 void F_clear ( void );
+void F_close ( void );
