@@ -16,9 +16,90 @@ proc set_on { code on } {
     c_set_on $code $on
 }
 
+set tabrow 1
+
+proc set_col_type { rnum } {
+    global columns
+
+    if { $columns(type,$rnum) == "varchar" } {
+        $columns(frm,$rnum).c configure -state normal
+    } else {
+        $columns(frm,$rnum).c configure -state disabled
+    }
+}
+
+proc add_tab_col { name type width namedit typedit widthedit } {
+    global tabrow columns table_frame
+
+    set row [ frame $table_frame.row$tabrow ]
+    set columns(frm,$tabrow) $row
+
+    set columns(name,$tabrow) $name
+    set columns(type,$tabrow) $type
+    set columns(width,$tabrow) $width
+   
+    Entry $row.a -width 20 -textvariable columns(name,$tabrow) 
+    if { $namedit == 0 } { $row.a configure -state disabled }
+    ComboBox $row.b -textvariable columns(type,$tabrow) -values {"integer" "double precision" "varchar"} \
+                    -modifycmd "set_col_type $tabrow"
+    if { $typedit == 0 } { $row.b configure -state disabled }
+    Entry $row.c -width 10 -textvariable columns(width,$tabrow) 
+    if { $widthedit == 0 } { $row.c configure -state disabled }
+    set_col_type $tabrow 
+   
+    pack $row.a $row.b $row.c -side left; 
+    pack $row -side top -fill x -expand no -anchor n 
+
+    incr tabrow
+}
+
+proc table_buttons { } {
+    global table_page
+    set addcol [Button $table_page.addcol -text "Add new column"  \
+                       -command { add_tab_col "" "integer" 50 1 1 0 }]
+    set cretab [Button $table_page.cretab -text "Create table"  -command { make_table } ]
+    pack $addcol $cretab  -side left -anchor s
+}
+
+proc clear_table { } {
+    global table_page table_frame
+    if { [winfo exists $table_page.addcol] } { destroy $table_page.addcol }
+    if { [winfo exists $table_page.cretab] } { destroy $table_page.cretab }
+    foreach f [ winfo children $table_frame] {
+        destroy $f
+    }
+}
+
+proc make_table { } {
+    global tabrow columns create_table_err create_table_msg
+
+    set coldef ""
+    for {set i 1} {$i < $tabrow} {incr i} { 
+        if { $i > 1 } { append coldef ", " }
+        append coldef "$columns(name,$i) $columns(type,$i) "
+        if { $columns(type,$i) == "varchar" } {
+            append coldef "( $columns(width,$i) )"
+        }
+    }
+    puts $coldef
+
+    set field 1
+    set field_name ""
+    set create_table_msg ""
+    c_create_table $field $field_name $columns(name,1) $coldef
+    
+    if { $create_table_err == 1 } {
+        MessageDlg .msg -type ok -message $create_table_msg
+    } else {
+        MessageDlg .msg -type ok -message "Table successfully created"
+        clear_table
+        c_table_definition
+    }
+}
+
 # create settings window
 proc settings {} {
-    global symb, snap_mode, snap_screen, snap_map
+    global symb GVariable  table_page table_frame tabrow
     set clw 30
 
     if { [winfo exists .settings] } {
@@ -140,27 +221,37 @@ proc settings {} {
     set row [ frame $setf.row1 ]
 
     Label $row.a -anchor w -text "Snapping threshold in screen pixels"  
-    radiobutton $row.b -variable snap_mode -value 0 -height 1 -padx 0 -width 0 \
-                -command { c_set_snap snap_mode $snap_mode }
-    Entry $row.c -width 10 -text "" -textvariable snap_screen -command { c_set_snap snap_screen $snap_screen } 
+    radiobutton $row.b -variable GVariable(snap_mode) -value 0 -height 1 -padx 0 -width 0 \
+                -command { c_var_set snap_mode $GVariable(snap_mode) }
+    Entry $row.c -width 10 -textvariable GVariable(snap_screen) \
+                           -command { c_var_set snap_screen $GVariable(snap_screen) } 
     pack $row.a -side left; pack $row.c $row.b -side right; 
     pack $row -side top -fill x -expand no -anchor n 
     
     set row [ frame $setf.row2 ]
     Label $row.a -anchor w -text "Snapping threshold in map units"  
-    radiobutton $row.b -variable snap_mode -value 1 -height 1 -padx 0 -width 0 \
-                -command { c_set_snap snap_mode $snap_mode }
-    Entry $row.c -width 10 -text "" -textvariable snap_map -command { c_set_snap snap_map $snap_map }
+    radiobutton $row.b -variable GVariable(snap_mode) -value 1 -height 1 -padx 0 -width 0 \
+                -command { c_var_set snap_mode $GVariable(snap_mode) }
+    Entry $row.c -width 10 -textvariable GVariable(snap_map) \
+                           -command { c_var_set snap_map $GVariable(snap_map) }
     pack $row.a -side left; pack $row.c $row.b -side right; 
     pack $row -side top -fill x -expand no -anchor n 
+
+    # --- Table (define new attribute table) ---
+    set tabrow 1
+    set table_page [$nb insert end table -text "Table"]
+
+    set tabsw [ScrolledWindow $table_page.sw -relief sunken -borderwidth 2]
+    set tabsf [ScrollableFrame $table_page.sf -width 400]
+    $tabsw setwidget $tabsf
+    pack $tabsw $tabsf -fill both -expand yes
+    set table_frame [$tabsf getframe]
+
+    c_table_definition
 
     # -- pack notebook --
     pack $nb -fill both -expand yes -padx 1 -pady 1
     $nb raise [$nb page 0]
-
-    # --- Bar ---
-    #Button $stt.exit -text "Test"  -command { puts "bg color = $symb(background,color)" }
-    #pack $stt.exit -side left -anchor w
 
     tkwait visibility $stt
 }

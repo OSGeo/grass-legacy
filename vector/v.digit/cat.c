@@ -35,11 +35,6 @@ cat_init ( void )
     G_debug (2, "cat_init()" );
     Cats = Vect_new_cats_struct (); 
     
-    /* Current cats */
-    nFieldCat = 0;
-    aFieldCat = 10; /* allocated space */
-    FieldCat = (void *) G_malloc ( (aFieldCat) * sizeof(int) * 2 ); /* for field and cat */
-    
     /* Max cats */
     nMaxFieldCat = 0;
     aMaxFieldCat = 10; /* allocated space */
@@ -55,10 +50,6 @@ cat_init ( void )
 	    }
 	}
     }
-    FieldCat[0][0] = 1;
-    FieldCat[0][1] = 1;
-
-    CatMode = CAT_MODE_NO;
 }
 
 /* get maximum cat for field */

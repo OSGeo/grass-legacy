@@ -11,9 +11,9 @@
 /* Zoom - select new window interactively in the monitor */
 int zoom_window (void)
 {
-    int sxo, syo, sxn, syn;
+    int sxo = 0, syo = 0, sxn, syn;
     int button;
-    int mode, next_mode; /* 1 - first corner; 2 - first or second corner */
+    int mode, next_mode = 1; /* 1 - first corner; 2 - first or second corner */
     double x1, y1, x2, y2;
     
     G_debug (2, "zoom()");
