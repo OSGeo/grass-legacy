@@ -152,25 +152,25 @@ R_flush();
 
 double _get_cat(UCAT *theCat, int min)
 {
-	switch (theCat->type)
-	{
-		case CELL_TYPE:
-			if (theCat->val.c >= min)
-				return (double) (theCat->val.c - min);
-			else
-				return (double) 0.0;
-		case FCELL_TYPE:
-			if (theCat->val.f >= min)
-				return (double) (theCat->val.f - min);
-			else
-				return (double) 0.0;
-		case DCELL_TYPE:
-			if (theCat->val.d >= min)
-				return (theCat->val.d - min);
-			else
-				return (double) 0.0;
-		default: /* Shouldn't happen */
-			return (double) 0.0;
-	}
+    switch (theCat->type)
+    {
+        case CELL_TYPE:
+            if (theCat->val.c >= min)
+                return (double) (theCat->val.c - (double) min);
+            else
+                return (double) 0.0;
+        case FCELL_TYPE:
+            if (theCat->val.f >= min)
+                return (double) (theCat->val.f - (double) min);
+            else
+                return (double) 0.0;
+        case DCELL_TYPE:
+            if (theCat->val.d >= min)
+                return (theCat->val.d - (double) min);
+            else
+                return (double) 0.0;
+        default: /* Shouldn't happen */
+            return (double) 0.0;
+    }
 }
-
+/* vim: set softtabstop=4 shiftwidth=4 expandtab: */
