@@ -24,7 +24,7 @@ then
 		cp scripts/panel_query_pg.tcl scripts/panel_query.tcl
 	fi
 
-	PQ_OBJS="openvect.o getCat.o buildInfxQry.o runInfxQry.o"
+	PQ_OBJS="openvect.o getCat.o buildPg.o runPg.o"
 ##################################################
 else
 ####### POSTGRESQL UNSUPPORTED ###################
