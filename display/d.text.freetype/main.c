@@ -114,24 +114,18 @@ main(int argc, char **argv)
 	opt5->key        = "charset";
 	opt5->type       = TYPE_STRING;
 	opt5->required   = NO;
-	if (cur_font < 0)
-	opt5->answer     = DEFAULT_CHARSET;
 	opt5->description= "Character encoding";
 
 	opt6 = G_define_option();
 	opt6->key        = "color";
 	opt6->type       = TYPE_STRING;
 	opt6->required   = NO;
-	if (cur_font < 0)
-	opt6->answer     = DEFAULT_COLOR;
 	opt6->description= "Color";
 
 	opt7 = G_define_option();
 	opt7->key        = "size";
 	opt7->type       = TYPE_INTEGER;
 	opt7->required   = NO;
-	if (cur_font < 0)
-	opt7->answer     = DEFAULT_SIZE;
 	opt7->description= "Size";
 
 	if(G_parser(argc, argv))
@@ -173,6 +167,8 @@ main(int argc, char **argv)
 		tcolor = DEFAULT_COLOR;
 	if (!size)
 		size = atoi(DEFAULT_SIZE);
+
+	fprintf(stdout, "Font=<%s:%s:%s:%d>\n\n", path, charset, tcolor, size);
 
 	if(R_open_driver() != 0)
 		error("No graphics device selected");
