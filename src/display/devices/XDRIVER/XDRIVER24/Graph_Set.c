@@ -23,8 +23,6 @@
 #include "icon.bit"
 #include "winname.h"
 
-#define BORDER  3
-
 /* This program is a rewrite of the original Grah_Set from the GRASS
  * 3.0 version. All suncore and sunview related stuff (which was the
  * bulk of the original code) has been replaced by X11 library calls.
@@ -44,12 +42,15 @@ Visual *use_visual;
 int use_bit_depth;
 
 int scrn;
+Screen *use_screen;
 GC gc;
 Colormap floatcmap, fixedcmap;
 Cursor cur_xh, cur_clock;
 u_long gemask = StructureNotifyMask;
 Pixmap bkupmap;
 int truecolor;
+
+int external_window;
 
 unsigned long *xpixels;	/* lookup table for FIXED color mode */
 
@@ -105,7 +106,7 @@ get_user(char *name, int *n, int value)
 {
     char *p;
 
-    if ((p=getenv(name)) && sscanf (p, "%d", n) == 1)
+    if ((p=getenv(name)) && sscanf (p, "%i", n) == 1)
 	return 1;
 
     *n = value;
@@ -150,8 +151,29 @@ find_truecolor_visual(void)
 	fprintf(stderr, "selected %d bit depth\n", use_bit_depth);
 }
 
-int
-Graph_Set(int argc, char **argv, int nlev)
+static void
+use_window(int win_id)
+{
+    XWindowAttributes xwa;
+
+    external_window = 1;
+
+    grwin = (Window) win_id;
+    XSelectInput(dpy, grwin, gemask);
+
+    if (!XGetWindowAttributes(dpy, grwin, &xwa))
+        G_fatal_error("Graph_Set: cannot get window attributes\n");
+
+    use_screen = xwa.screen;
+    scrn = XScreenNumberOfScreen(xwa.screen);
+
+    use_visual = xwa.visual;
+
+    use_bit_depth = xwa.depth;
+}
+
+static void
+create_window(int argc, char **argv, int nlev)
 {
     static const char * const classname[6] = {
 	"StaticGray",	"GrayScale",
@@ -159,7 +181,6 @@ Graph_Set(int argc, char **argv, int nlev)
 	"TrueColor",	"DirectColor"
     };
     XSetWindowAttributes xswa;  /* Set Window Attribute struct */
-    XWindowAttributes xwa;      /* Get Window Attribute struct */
     Atom closedownAtom;
 #ifndef X11R3
     XTextProperty windowName, iconName;
@@ -168,16 +189,8 @@ Graph_Set(int argc, char **argv, int nlev)
     XClassHint *clshints;
     XWMHints *wmhints;
     char title[1024];
-    Screen *use_screen = NULL;
-    const char *privcmap;
-    int i;
 
-    monitor_name = argv[1];
-
-    /* Open the display using the $DISPLAY environment variable to
-     * locate the X server. Return 0 if cannot open. */
-    if (!(dpy = XOpenDisplay(NULL)))
-        G_fatal_error("Graph_Set: can't open Display %s\n", XDisplayName(NULL));
+    external_window = 0;
 
     /* scrn is the screen number */
     scrn = DefaultScreen(dpy);
@@ -199,39 +212,6 @@ Graph_Set(int argc, char **argv, int nlev)
 		classname[use_visual->class]);
     }
 
-    /* this next bit forces the use of a private colormap                */
-    /* a must have for read only visuals                                 */
-    /* since we could allow any type to be selected above assume that    */
-    /* if this is not the default visual we must use a private colormap  */
-    privcmap = getenv("XDRIVER_PRIVATE_CMAP");
-
-    if (use_visual != DefaultVisual(dpy,scrn) || (privcmap && privcmap[0]))
-        fixedcmap = XCreateColormap(dpy, DefaultRootWindow(dpy), 
-                                    use_visual, AllocNone);
-    else
-	fixedcmap = DefaultColormap(dpy, scrn);
-
-    fixedcmap = InitColorTableFixed(fixedcmap);
-
-    fprintf(stderr,"ncolors: %d\n", NCOLORS);
-
-    if (can_do_float())
-    {
-	/* Allocate floating colormap */
-	XColor *xcolors = (XColor *) G_malloc(NCOLORS * sizeof(XColor));
-
-	floatcmap = XCreateColormap(dpy, use_screen->root,
-				    use_visual, AllocAll);
-
-	for (i = 0; i < NCOLORS; i++)
-	    xcolors[i].pixel = i;
-
-	XQueryColors(dpy, fixedcmap, xcolors, NCOLORS);
-	XStoreColors(dpy, floatcmap, xcolors, NCOLORS);
-
-	G_free(xcolors);
-    }
-
     /* Deal with providing the window with an initial size.
      * Window is resizable */
     szhints = XAllocSizeHints();
@@ -242,20 +222,21 @@ Graph_Set(int argc, char **argv, int nlev)
     get_user ("XDRIVER_LEFT",   &szhints->x,      10);
     get_user ("XDRIVER_TOP",    &szhints->y,      10);
 
-    /* Create the Window with the information in the XSizeHints, the
-     * border width and the border pixel. */
+    /* Create the Window with the information in the XSizeHints */
 
     xswa.event_mask    = gemask;
     xswa.backing_store = NotUseful;
-    xswa.colormap      = fixedcmap;
-    xswa.border_pixel  = WhitePixel(dpy, scrn);
 
     grwin = XCreateWindow(dpy, RootWindow(dpy, scrn),
-			  szhints->x, szhints->y,
-			  (unsigned)szhints->width, (unsigned)szhints->height,
-			  BORDER, use_bit_depth,
-			  InputOutput, use_visual,
-			  (CWEventMask | CWBackingStore | CWColormap | CWBorderPixel),
+			  szhints->x,
+			  szhints->y,
+			  (unsigned)szhints->width,
+			  (unsigned)szhints->height,
+			  0,
+			  use_bit_depth,
+			  InputOutput,
+			  use_visual,
+			  (CWEventMask | CWBackingStore),
 			  &xswa);
 
     /* properties for window manager */
@@ -288,16 +269,73 @@ Graph_Set(int argc, char **argv, int nlev)
     closedownAtom = XInternAtom(dpy, "WM_DELETE_WINDOW", False);
     XSetWMProtocols(dpy, grwin, &closedownAtom, 1);
 
+    /* Map the window to make it visible. This causes an expose event */
+    XMapWindow(dpy, grwin);
+}
+
+int
+Graph_Set(int argc, char **argv, int nlev)
+{
+    XWindowAttributes xwa;      /* Get Window Attribute struct */
+    const char *privcmap;
+    int win_id;
+    int i;
+
+    monitor_name = argv[1];
+
+    /* Open the display using the $DISPLAY environment variable to
+     * locate the X server. Return 0 if cannot open. */
+    if (!(dpy = XOpenDisplay(NULL)))
+        G_fatal_error("Graph_Set: can't open Display %s\n", XDisplayName(NULL));
+
+    privcmap = getenv("XDRIVER_PRIVATE_CMAP");
+
+    get_user ("XDRIVER_WINDOW", &win_id, 0);
+    if (win_id)
+	use_window(win_id);
+    else
+	create_window(argc, argv, nlev);
+
+    /* this next bit forces the use of a private colormap                */
+    /* a must have for read only visuals                                 */
+    /* since we could allow any type to be selected above assume that    */
+    /* if this is not the default visual we must use a private colormap  */
+
+    if (use_visual != DefaultVisual(dpy,scrn) || (privcmap && privcmap[0]))
+        fixedcmap = XCreateColormap(dpy, DefaultRootWindow(dpy), 
+                                    use_visual, AllocNone);
+    else
+	fixedcmap = DefaultColormap(dpy, scrn);
+
+    fixedcmap = InitColorTableFixed(fixedcmap);
+
+    fprintf(stderr,"ncolors: %d\n", NCOLORS);
+
+    XSetWindowColormap(dpy, grwin, fixedcmap);
+
+    if (can_do_float())
+    {
+	/* Allocate floating colormap */
+	XColor *xcolors = (XColor *) G_malloc(NCOLORS * sizeof(XColor));
+
+	floatcmap = XCreateColormap(dpy, use_screen->root,
+				    use_visual, AllocAll);
+
+	for (i = 0; i < NCOLORS; i++)
+	    xcolors[i].pixel = i;
+
+	XQueryColors(dpy, fixedcmap, xcolors, NCOLORS);
+	XStoreColors(dpy, floatcmap, xcolors, NCOLORS);
+
+	G_free(xcolors);
+    }
+
     /* Create the cursors to be used later */
     cur_xh = XCreateFontCursor(dpy, XC_crosshair);
     cur_clock = XCreateFontCursor(dpy, XC_watch);
 
     /* Create the GC. */
     gc = XCreateGC(dpy, grwin, 0UL, NULL);
-
-    /* Map the window to make it visible. This causes an expose event */
-    XMapWindow(dpy, grwin);
-    XFlush(dpy);
 
     /* Find out how big the window really is (in case window manager
      * overrides our request) and set the SCREEN values. */
