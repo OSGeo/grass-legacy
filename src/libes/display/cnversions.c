@@ -114,7 +114,7 @@ D_do_conversions(window, t, b, l, r)
 	}
 	else
 	{
-		D_south = WIND_BOT ;
+	    D_south = WIND_BOT ;
 	}
 	Dadj = ((WIND_RITE - WIND_LEFT ) - D_hori) / 2 ;
 	if (Dadj > 0.0)
@@ -124,7 +124,7 @@ D_do_conversions(window, t, b, l, r)
 	}
 	else
 	{
-		D_east = WIND_RITE ;
+	    D_east = WIND_RITE ;
 	}
 
 	U_to_D_xconv = (D_east  - D_west ) / (U_east  - U_west ) ;
