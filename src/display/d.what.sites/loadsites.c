@@ -12,9 +12,12 @@ char *site_map;
 int ndim, nstr, ndec;
 RASTER_MAP_TYPE rtype;
 int s_alloc=0, snum=0, outside=0, tot_mem=0;
+char *str;
 
     /* open sites */
-    if (NULL == (site_map = G_find_file2 ("site_lists", site[n], ""))){
+    str = strchr(site[n], '@');
+    if (NULL == (site_map = G_find_file2 ("site_lists", site[n],
+				    (str ? str+1 : "")))){
 	    fprintf (stderr,  "Could not find file '%s'\n", site[n]);
 	    return(1);
     }
