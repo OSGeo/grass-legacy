@@ -1,13 +1,17 @@
+/* Hacked for new sites API by Eric G. Miller <egm2@jps.net> 2000-10-01 */
+/* $Id$ */
+
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
 #include "local_proto.h"
+
 #define NL	012
 #define TAB	011
 #define BACK	0134
-#define MTEXT	1024
 
 #define TOP	0
 #define CENT	1
@@ -24,12 +28,11 @@ static int xref ;
 static int yref ;
 static int color ;
 static double size ;
-static int width ;
 static int background ;
 static int border ;
 static int opaque ;
 static char font[256];
-static char text[MTEXT];
+static char text[MAX_SITE_STRING];
 #define STANDARD_FONT "romans"
 
 static int xmatch (char *);
@@ -45,7 +48,6 @@ int initialize_options (void)
 	yref = BOT ;
 	color = D_translate_color("black") ;
 	size = 1000. ;
-	width = 1 ;
 	background = D_translate_color("white") ;
 	border = D_translate_color("black") ;
 	opaque = YES ;
@@ -54,19 +56,87 @@ int initialize_options (void)
 	return 0;
 }
 
+void my_attr_copy(char *theText, Site *theSite, int attr, int index) {
+        char *ptr = theText;
+        switch (attr) {
+                case SITE_ATTR_CAT:
+                        if (theSite->cattype == CELL_TYPE)
+                                snprintf(theText, MAX_SITE_STRING,
+                                                "%d", theSite->ccat);
+                        else if (theSite->cattype == FCELL_TYPE)
+                                snprintf(theText, MAX_SITE_STRING,
+                                                "%f", theSite->fcat);
+                        else if (theSite->cattype == DCELL_TYPE)
+                                snprintf(theText, MAX_SITE_STRING,
+                                                "%lf", theSite->dcat);
+                        else
+                                G_fatal_error("No categories in site file!\n");
+                        break;
+                case SITE_ATTR_STR:
+                        if (theSite->str_att == NULL)
+                                G_fatal_error("No string attributes!\n");
+                        if (theSite->str_alloc <= index)
+                                G_fatal_error("String index out of range!\n");
+                        G_strncpy(theText, theSite->str_att[index], 
+                                        MAX_SITE_STRING);
+                        break;
+                case SITE_ATTR_DBL:
+                        if (theSite->dbl_att == NULL)
+                                G_fatal_error("No double attributes!\n");
+                        if (theSite->dbl_alloc <= index)
+                                G_fatal_error("Double index out of range!\n");
+                        snprintf(theText, MAX_SITE_STRING,
+                                "%lf", theSite->dbl_att[index]);
+                        break;
+                case SITE_ATTR_COORD:
+                        *ptr = '(';
+                        ptr++;
+                        G_format_easting(theSite->east, ptr, G_projection());
+                        ptr = strchr(ptr, '\0');
+                        *ptr = ',';
+                        ptr++;
+                        G_format_northing(theSite->north, ptr, G_projection());
+                        ptr = strchr(ptr, '\0');
+                        *ptr = ')';
+                        ptr++;
+                        *ptr = '\0';
+                        break;
+                case SITE_ATTR_DIM:
+                        if (theSite->dim == NULL)
+                                G_fatal_error("No dimensions in site file!\n");
+                        if (theSite->dim_alloc <= index)
+                                G_fatal_error("Dimension index out of range!\n");
+                        snprintf(theText, MAX_SITE_STRING,
+                                "%lf", theSite->dim[index]);
+                        break;
+                default:
+                        G_fatal_error("Wrong or unknown attribute type!\n");
+        }
+}
+
+
+
 int do_labels (FILE *infile, struct Cell_head window,
-	char *buff2, char *buff3, char *buff4, char *buff5,
+	char *buff2, char *buff3, char *buff4, 
 	char *buff6, char *buff7, char *buff8, char *buff9,
-	int mouse)
+	int column, int index, int mouse)
 {
 	char *buff, *tbuff;
-	int screenx, screeny, button;
+	int screenx, screeny, button, nDims, nDbls, nStrs;
+	RASTER_MAP_TYPE maptype;
 	double pnorth, peast, dist, tdist, teast, tnorth;
+	Site *theSite;
+
+	if ( 0 != G_site_describe(infile, &nDims, &maptype, &nStrs, &nDbls)) {
+        	G_fatal_error("Unable to get format of site file!\n");
+  	}
+  	if (NULL == (theSite = G_site_new_struct(maptype, nDims, nStrs, nDbls))) {
+          	G_fatal_error("Unable to allocate site structure!\n");
+  	}
 
 	initialize_options() ;
 	color = D_translate_color(buff3) ;
 	sscanf(buff4,"%lf",&size) ;
-	sscanf(buff5,"%d",&width) ;
 	background = D_translate_color(buff6) ;
 	border = D_translate_color(buff7) ;
 	if (! strncmp(buff8, "yes", 3)) opaque = YES ;
@@ -93,8 +163,10 @@ int do_labels (FILE *infile, struct Cell_head window,
 			dist = 999999.0 * 999999.0;
 			teast = 0.0; tnorth = 0.0;
 			rewind(infile);
-			while (G_get_site(infile, &teast, &tnorth, &tbuff) > 0) 
+			while (G_site_get(infile, theSite) == 0) 
 			{
+				teast = theSite->east;
+				tnorth = theSite->north;
 				tdist = ((teast - peast) * (teast - peast) +
 					(tnorth - pnorth) * (tnorth - pnorth));
 				if (tdist < dist)
@@ -102,7 +174,7 @@ int do_labels (FILE *infile, struct Cell_head window,
 					north = tnorth;
 					east = teast;
 					dist = tdist;
-					sprintf(text,"%s",tbuff);
+					my_attr_copy(text, theSite, column, index);
 				}
 			}
 			show_it(mouse); 
@@ -111,20 +183,24 @@ int do_labels (FILE *infile, struct Cell_head window,
 					
 	else
 	{
-		while (G_get_site(infile, &east, &north,&buff) > 0) 
+		while (G_site_get(infile, theSite) == 0) 
 		{	
+			east = theSite->east;
+			north = theSite->north;
                		 if (east >= window.west && 
 		    	 	east <= window.east && 
                     		north >= window.south && 
                     		north <= window.north)
 			{
-				sprintf(text,"%s",buff); show_it(mouse); 
+				my_attr_copy(text, theSite, column, index); 
+				show_it(mouse); 
 				fprintf(stdout,"%6.0f %6.0f %s\n",
-						east,north,buff);
+						east,north,text);
 			}
 		}
 	}
 
+	G_site_free_struct(theSite);
 	return 0;
 }
 	
@@ -269,7 +345,7 @@ int scan_ref (char *buf)
 	if (buf[i] >= 'A' && buf[i] <= 'Z')
 		buf[i] += 'a' - 'A';
     xref = yref = CENT;
-    switch (sscanf (buf, "%s%s", word1, word2))
+    switch (sscanf (buf, "%s %s", word1, word2))
     {
     case 2:
 	if (!(xmatch (word2) || ymatch (word2)))
