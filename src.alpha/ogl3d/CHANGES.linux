@@ -1,0 +1,18 @@
+
+/*#include <gl/glws.h>*/
+commented in
+   GLx.c
+   primary_controls.c
+
+----------------------------
+#include <GL/GLwDrawA.h>
+added to primary_controls.c
+
+
+----------------------------
+#GLXLIB = -lGLw   #commented for Linux in Gmakefile
+
+----------------------------
+MESA headers must be available in /usr/include/GL
+
+17. March 1999  neteler@geog.uni-hannover.de
