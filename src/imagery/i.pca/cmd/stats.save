@@ -1,0 +1,50 @@
+#include "globals.h"
+#include <stdio.h>
+#include <math.h>
+
+/******************************************************************************/
+
+means(DATA,NN,bands,mu)
+double *DATA[MX];
+long  NN;
+long  bands;
+double mu[MX];
+{
+  int i,j;
+  double sum;
+  for (i=0 ; i<bands ; i++)
+    {
+      sum = 0;
+      for (j=0 ; j<NN ; j++)
+       {
+         sum += *(DATA[i]+j);
+       }
+      mu[i] = sum / (double) NN;
+    }
+}
+
+/******************************************************************************/
+
+covariance(DATA,NN,bands,mu,covar)
+double *DATA[MX];
+long   NN,bands;
+double mu[MX];
+double covar[MX][MX];
+{
+  int i,j,k,l;
+  for (i=0 ; i<NN ; i++)
+    for (j=1 ; j<=bands ; j++)
+      for (k=j ; k<=bands; k++)
+      {
+          covar[j][k] += (*(DATA[j-1]+i)-mu[j-1]) * (*(DATA[k-1]+i)-mu[k-1]);
+          covar[k][j] = covar[j][k];
+      }
+  for (i=1 ; i<=bands ; i++)
+    for (j=1 ; j<=bands ; j++)
+      {
+      covar[i][j]=covar[i][j]/((double) (NN-1));
+      fprintf(stdout, "Covar[%d][%d] = %f\n",i,j,covar[i][j]);
+#ifdef DEBUG
+#endif
+      }
+}
