@@ -1,0 +1,88 @@
+.TH s.in.ascii
+.SH NAME
+\fIs.in.ascii.dem\fR \- Converts an ASCII listing of spot heights 
+into a GRASS site list file.
+.br
+.I (GRASS Sites Program)
+.SH SYNOPSIS
+\fBs.in.ascii.dem\fR
+.br
+\fBs.in.ascii.dem help\fR
+.br
+\fBs.in.ascii.dem sites\*=\fIname \fR[\fBinput\*=\fIname\fR] [\fBfs\*=\fRcharacter|space|tab]
+.SH DESCRIPTION
+.I s.in.ascii.dem
+converts an ASCII listing of spot heights
+into a file in GRASS site list file format.
+.LP
+Input can be entered via standard input or from the file
+input\*=\fIname\fR.  Each line of input should contain the
+easting, northing and the z-value.
+The fs\*=\fIname\fR option (where \fIname\fR is either a character,
+a space, or a tab) can be used to specify the use of a particular
+field separator between these three input fields.  This is useful
+when input is obtained from other programs (see NOTES, below).
+Output is stored in the file sites\*=\fIname\fR and placed in
+the site_lists directory under the user's current mapset.
+.LP
+The GRASS program \fIs.out.ascii\fR can be used to perform the reverse
+function, converting a file in GRASS site list format into
+an ASCII listing of eastings, northings and spot heights.
+
+\fBParameters:\fR
+.IP \fBsites\*=\fIname\fR 18
+Name of the new GRASS site list file to be output.
+.IP \fBinput\*=\fIname\fR 18
+Name of an existing ASCII file containing site locations and labels.
+.IP "\fBfs\*=\fRcharacter|space|tab" 18
+The field separator separating the easting, northing and spot height
+in each line of the \fIinput\fR file.
+The field separator can be a character, a space, or a tab.
+.br
+Default:  space
+.LP
+.LP
+\fIs.in.ascii.dem\fR can be run either non-interactively or interactively.
+The program will be run non-interactively if the user specifies
+a name to be assigned to the \fIsites\fR file output,
+the name of an existing ASCII file containing \fIinput\fR, and
+(optionally) a field separator \fIfs\fR appearing in the \fIinput\fR file,
+using the form:
+.LP
+.RS
+\fBs.in.ascii.dem sites\*=\fIname \fR[\fBinput\*=\fIname\fR] [\fBfs\*=\fRcharacter|space|tab]
+.RE
+.LP
+Alternately, the user can simply type \fBs.in.ascii.dem\fR on the command line,
+without program arguments.  In this case, the user will be prompted for
+parameter values using the standard GRASS parser interface
+described in the manual entry for \fIparser\fR.  If the user does not
+specify the name of an \fIinput\fR file containing z-values, these 
+should be entered to the program via standard input.
+.SH NOTES
+Other GRASS programs can be used to produce output in a format suitable
+for input to \fIs.in.ascii.dem\fR.  For example, the user might pipe output
+produced by \fId.where\fR into \fIs.in.ascii.dem\fR to create a site list file
+called \fImy.sites\fR containing site locations pointed to with the mouse,
+as illustrated below.  In this example it was unnecessary to specify the
+field separator used in the input,
+since \fId.where\fR output separates the easting and northing values
+with spaces,
+and spaces are the default field separator assumed by \fIs.in.ascii.dem\fR.
+.LP
+.RS
+\fBd.where | s.in.ascii.dem sites\*=my.sites \fR
+.RE
+.SH SEE ALSO
+.I d.points,
+.I d.sites,
+.I d.what.rast,
+.I d.where,
+.I s.out.ascii,
+.I s.in.ascii,
+and
+.I parser
+.SH AUTHOR
+Michael Shapiro, U.S. Construction Engineering Research Laboratory
+Converted from s.in.ascii by Markus Neteler, Hannover
+(neteler@geog.uni-hannover.de
