@@ -35,7 +35,12 @@ MAKE_GMAKE_ENV=		UNIX_BIN=${BINDIR} SRC=${SRCDIR} MAKE=${MAKE} NAME_VER=${NAME_V
 
 MAKE_POST_ENV=		GISBASE=${PREFIX} MACHINENAME=${SERVERNAME}
 
-#our targets:
+# the cutline we need to find out to shorten the ChangeLog:
+CUTLINE=		`grep -n '1999-12-29 16:12' ChangeLog |cut -d':' -f1 | head -1`
+
+#######################
+#make targets:
+
 all: pre-install
 
 install: pre-install do-install
@@ -122,7 +127,6 @@ srcdist: veryclean
 # http://www.red-bean.com/~kfogel/cvs2cl.shtml
 	cvs2cl.pl
 	echo "reduce Changelog file... Dont want the initial upload included."
-	CUTLINE=`grep -n '1999-12-29 16:12' ChangeLog |cut -d':' -f1`
 	head -${CUTLINE} ChangeLog   > ChangeLog.cut
 	echo "   initial CVS import" >> ChangeLog.cut
 	mv ChangeLog.cut ChangeLog
@@ -134,6 +138,5 @@ srcdist: veryclean
 #  Bug: VER is not expanded properly (wrong directory):
 bindist:
 	cp GPL.TXT ${PREFIX}/COPYRIGHT
-	VER=${VERSION}
-	(cd ${PREFIX};  tar cvfz grass${VER}_${SYSTEM}_bin.tar.gz * )
-	echo "Distribution binary package: grass${VER}_${SYSTEM}_bin.tar.gz ready."
+	(cd ${PREFIX};  tar cvfz grass${VERSION}_${SYSTEM}_bin.tar.gz * )
+	echo "Distribution binary package: grass${VERSION}_${SYSTEM}_bin.tar.gz ready."
