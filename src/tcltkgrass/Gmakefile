@@ -5,12 +5,21 @@
 #
 # If you are updating your TclTkGRASS, use the "make" command.
 #
-all:
+all: copyfiles $(GISBASE)/tcltkgrass/main/gis_set.tcl
+
+copyfiles:
 	if [ ! -d $(GISBASE)/tcltkgrass ]; then mkdir $(GISBASE)/tcltkgrass; fi
 	rm -f $(GISBASE)/bin/tcltkgrass
 	tar cf - docs/Pro* docs/HIS* main/* module/* script/* | (cd $(GISBASE)/tcltkgrass; tar xf -)
-	cp main/gis_set.tcl $(GISBASE)/tcltkgrass/script
 	cp tcltkgrass $(GISBASE)/bin/tcltkgrass
 	chmod ugo+x $(GISBASE)/tcltkgrass/main/tksys.tcl
 	chmod ugo+x $(GISBASE)/bin/tcltkgrass
 	chmod -R u+w $(GISBASE)/tcltkgrass
+
+$(GISBASE)/tcltkgrass/main/gis_set.tcl: gis_set.tcl.src $(SRC)/CMD/VERSION
+	rm -f $@
+	$(SHELL) -c "sed \
+	-e \"s#VERSION_NUMBER#$(VERSION_NUMBER)#\" \
+	-e \"s#VERSION_DATE#$(VERSION_DATE)#\" \
+	gis_set.tcl.src > $@ 2>/dev/null ; true"
+	cp $@ $(GISBASE)/tcltkgrass/script
