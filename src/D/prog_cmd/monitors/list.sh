@@ -1,0 +1,1 @@
+${GISBASE?}/etc/list.mon $*
