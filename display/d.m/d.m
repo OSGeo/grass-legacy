@@ -2,22 +2,20 @@
 #% Module
 #%  description: Display manager for GRASS
 #% End
+#%option
+#% key: dmrc
+#% type: string
+#% description: Name of .dmrc settings file
+#% required : no
+#%End
 
-if [ $# -eq 0 ]
-then
- sh $GISBASE/etc/dm/d.m.tcl
- exit
-fi
-
-if [ $# -eq 1 ]
-then
- flags=`echo $1 | awk '/^-/ { print $1 }'`
- if [ "$flags" != "" ] ; then
-   exec $GISBASE/etc/bin/cmd/g.parser "$0" "$1"
- fi
- if [ -f `pwd`/$1 ] || [ -f $1 ]; then 
-   sh $GISBASE/etc/dm/d.m.tcl $1; else
-   echo 'File "'$1'" not found - starting blank'
+if [ $# -eq 0 ] ; then
    sh $GISBASE/etc/dm/d.m.tcl
- fi
+   exit 0
 fi
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+fi
+
+sh $GISBASE/etc/dm/d.m.tcl "$GIS_OPT_dmrc"
