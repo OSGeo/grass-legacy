@@ -33,7 +33,7 @@
 #% key: format
 #% type: string
 #% description: GIS format to write (see also -l flag)
-#% options: VRT,GTiff,NITF,HFA,ELAS,AAIGrid,DTED,PNG,JPEG,MEM,GIF,BSB,XPM,BMP,PNM,ENVI,PAux,MFF,MFF2,FIT
+#% options: AAIGrid,BMP,BSB,DTED,ELAS,ENVI,FIT,GIF,GTiff,HFA,JPEG,MEM,MFF,MFF2,NITF,PAux,PNG,PNM,VRT,XPM
 #% required : no
 #%END
 #%option
