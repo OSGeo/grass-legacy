@@ -1,10 +1,10 @@
 PGM = datafea
 RFEA=$(GISBASE)/etc/r.fea
-LIBES = $(GISLIB) $(XDRLIB)
+LIBES = $(GISLIB)
 LDFLAGS = $(MATHLIB)
 LIST = data.o
 
 $(RFEA)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB)
 
 $LIBES: #
