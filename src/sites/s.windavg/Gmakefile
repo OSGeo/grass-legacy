@@ -1,0 +1,19 @@
+SOURCE  = \
+	main.c
+
+LIST  = \
+	main.o 
+
+PROGRAM = $(BIN_MAIN_CMD)/s.windavg
+
+all: $(PROGRAM) 
+
+$(PROGRAM): $(LIST) $(GISLIB) $(DATETIMELIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(DATETIMELIB) $(MATHLIB) 
+
+
+$(LIST): version.h $(GISLIB) $(DATETIMELIB)
+
+$(GISLIB): #
+
+$(DATETIMELIB): #
