@@ -39,7 +39,7 @@ struct interp_params
    struct TimeStamp *ts;                      /* timestamp for raster files */
    FILE   *Tmp_fd_z,*Tmp_fd_dx,*Tmp_fd_dy,  /* temp files for writing interp.*/
           *Tmp_fd_xx,*Tmp_fd_yy,*Tmp_fd_xy; /* values */
-   FILE   *fddevi;     /* pointer to deviations file */
+   struct Map_info *fddevi;     	    /* pointer to deviations vector */
 
    int    (*grid_calc) ();                  /*calculates grid for given segm*/
    int    (*matrix_create) ();              /*creates matrix for a given segm*/
@@ -62,7 +62,7 @@ void IL_init_params_2d(struct interp_params *, FILE *, int, int, double,
    double, int, int, int, int, double,
    char *, char *, char *, char *, char *, char *,
    double, double, double, int, double, double,
-   FILE *, FILE *, FILE *, FILE *, FILE *, FILE *, FILE *, struct TimeStamp *);
+   FILE *, FILE *, FILE *, FILE *, FILE *, FILE *, struct Map_info *, struct TimeStamp *);
 
 void IL_init_func_2d(struct interp_params *, int (*)(), int (*)(), int (*)(), int (*)(), double (*)(), int (*)(), int (*)());
 /* input2d.c */

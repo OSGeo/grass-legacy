@@ -13,6 +13,7 @@
 #include <math.h>
 #include <unistd.h>
 #include "gis.h"
+#include "Vect.h"
 #include "interpf.h"
 
 void IL_init_params_2d (
@@ -61,7 +62,7 @@ void IL_init_params_2d (
     FILE *t5,
     FILE *t6,	/* temp files for writing interp.
 					 * values */
-    FILE *dev,			/* pointer to deviations file */
+    struct Map_info *dev,	/* pointer to deviations file */
     struct TimeStamp *ts
 )
 
