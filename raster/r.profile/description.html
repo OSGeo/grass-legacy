@@ -1,0 +1,64 @@
+<H2>DESCRIPTION</H2>
+
+This program outputs a two or four column (with -g) ASCII file (or stdout).
+The default two column output consists of cumulative profile length in
+meters and raster value. The optional four column output consists of an
+easting, northing, cumlative profile length (m), and raster value.  Profile
+end or "turning" points can be set manually with the <EM>profile</EM>
+argument or selected interactively from the GRASS monitor by setting the
+<EM>-i</EM> flag. The profile resolution, or distance between profile
+points, is obatined from the current region resolution, or can be manually
+set with the <EM>res</EM> argument.
+<P>
+The <B>-i</B> flag allows the user for selecting the profile from the GRASS
+monitor by clicking the left mouse button along the profile, clicking the
+right mouse button ends the profile.
+<P>
+The <B>profile</B> parameter can be set to comma separated geographic
+coordinates for profile line endpoints The interactive flag (<EM>-i</EM>)
+overrides this option.
+
+The <B>res</B> parameter sets the distance between each profile point
+(resolution). The resolution must be provided in GRASS database units (i.e.
+decimal degrees for Lat Long database and meters for UTM). By default
+<EM>r.profile</EM> uses the resolution of the current GRASS region,
+
+
+<H2>OUTPUT FORMAT</H2>
+
+The 2 or 4 column output from <EM>r.profile</EM> is intened for easy use in
+other programs.  The output can be piped (|) directly into other programs or
+saved to file for later use. The 4 column output is compatible with
+<EM>v.in.ascii</EM> and can be piped direcly into this program for later
+plotting.
+
+<PRE>
+r.profile -ig input=elev.rast output=- | v.in.ascii output=elev.profile
+</PRE>
+
+The 2 column output is compatible with most plotting programs.
+
+<H2>NOTES</H2>
+
+The profile resolution is measured exactly from the supplied end or
+"turning" point along the profile. The end of a profile segment will be an
+exact multiple of the profile resolution and will therefore not always match
+the end point coordinates entered for the segmanet.
+
+<p>
+To extract the numbers in scripts, following parameters can be used:
+<pre>
+           r.profile dgm12.5 prof=3570631,5763556 out=- 2>/dev/null
+</pre>
+This filters out the everything except the numbers.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.profile.html">d.profile</A></EM>,
+<EM><A HREF="r.what.html">r.what</A></EM>,
+<EM><A HREF="r.transect.html">r.transect</A></EM>
+
+<H2>AUTHOR</H2>
+<A HREF=mailto:bcovill@tekmap.ns.ca>Bob Covill</A>
+
+<p><i>Last changed: $Date$</i>

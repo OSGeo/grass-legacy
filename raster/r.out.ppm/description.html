@@ -1,0 +1,42 @@
+<H2>DESCRIPTION</H2>
+
+<b>r.out.ppm</b> converts a GRASS raster file to a PPM image file
+at the pixel resolution of the CURRENTLY DEFINED REGION. 
+To get the resolution and regions settings of the raster map, run:<p>
+
+&nbsp;&nbsp;	g.region rast=[mapname]<p>
+
+before running r.out.ppm.<p>
+
+The PPM file created is 24bit color, rawbits storage by default.
+Using -G, you may force r.out.ppm to use 8bit greyscale instead.
+The greyscale conversion uses the NTSC conversion:<p>
+
+&nbsp;&nbsp;Y = .30*Red + .59*Green + .11*Blue
+
+<p>
+One pixel is written for each cell value, so if ew_res and ns_res
+differ, the aspect ratio of the resulting image will be off.
+
+
+<H2>NOTE</H2>
+A few ppm file comments are written - the name of the GRASS
+raster file, resolution, etc.  Although these are perfectly legal,
+I've found one PD image utility that chokes on them, so if you need 
+a commentless ppm file, use out=- &gt; outfile.ppm. (When sending 
+output to stdout, no comments are written.)
+
+<H2>TODO</H2>
+Allow combination of 3 grass files to represent R, G, B components of ppm file?
+
+<H2>SEE ALSO</H2>
+ 
+<EM><A HREF="r.out.ascii.html">r.out.ascii</A>,</EM>
+<EM><A HREF="r.out.ppm3.html">r.out.ppm3</A>,</EM>
+<EM><A HREF="r.out.tiff.html">r.out.tiff</A></EM>
+ 
+<H2>AUTHOR</H2>
+
+Bill Brown, UIUC
+
+<p><i>Last changed: $Date$</i>

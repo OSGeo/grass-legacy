@@ -1,0 +1,46 @@
+<H2>DESCRIPTION</H2>
+
+
+<EM>r.out.arc</EM> converts a user-specified raster map layer
+(<B>input=</B><EM>name</EM>) into an ESRI ARC-GRID ascii file
+(<B>output=</B><EM>name</EM>) suitable for export to other computer systems. 
+The dp=<EM>value</EM> option (where <EM>value</EM> is a number of the user's
+choice) can be used to request that numbers after decimal points are
+limited.  However, to use this, the user should know the maximum number of
+digits that will occur in the output file.  The user can find the maximum
+number of digits occurring in the output file by running <EM>r.out.arc</EM>
+without the <B>dp=</B><EM>value</EM> option.
+
+
+<P>
+
+The GRASS program <EM><A HREF="r.in.arc.html">r.in.arc</A></EM> can be used
+to perform the reverse function, converting an ESRI ARC-GRID ascii file in
+suitable format to GRASS raster file format. The order of cell values in
+file is from lower left to upper right (reverse to GRASS).
+
+<H2>NOTES</H2>
+
+The output from <EM>r.out.arc</EM> may be placed into a file
+by using the UNIX redirection mechanism;  e.g.:
+
+<DL>
+<DD>
+<B>r.out.arc input=</B>soils <B>output=-</B> &gt; out.grd
+</DL>
+
+The output file <EM>out.grd</EM> can then be copied
+onto a CDROM or floppy disk for export purposes.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="r.in.arc.html">r.in.arc</A></EM>
+
+<H2>AUTHOR</H2>
+
+Markus Neteler, University of Hannover, Germany, <br>
+based on r.out.ascii written by <br>
+Michael Shapiro,
+U.S.Army Construction Engineering Research Laboratory
+
+<p><i>Last changed: $Date$</i>
