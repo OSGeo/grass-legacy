@@ -2,13 +2,16 @@
 
 Please read all text below.
 
+
 CURRENT STATUS
 
 The GRASS 5.1 code repository currently contains only the new 3D/DBMS vector
-library and a few rewritten vector modules.  To compile the 5.1 code, source
-code from 5.0 is needed (the CVS HEAD version), which is automatically
-linked into the 5.1 directory structure.
-In future we will migrate further code into the 5.1 directory
+library and a few rewritten vector modules as well as a subset of merged
+5.0 modules.
+
+To compile the 5.1 code, source code from 5.0 is needed (the CVS HEAD version),
+which is automatically linked then into the 5.1 directory structure.
+In future we continue to migrate further code into the 5.1 directory
 structure.
 
 Because of that the source code of GRASS 5.0 is needed. When
@@ -37,7 +40,8 @@ make clean         - delete all files created by 'make'
 make distclean     - 'make clean' + delete all files created by './configure'
 make mixclean      - delete all symbolic links created by make mix
 
-INSTALLATION
+
+INSTALLATION (first time)
 
 After compilation, the resulting code is in the directory
 ./dist.$ARCH
@@ -53,6 +57,30 @@ Or, new directories with new Makefiles must be added and the
 directory defined in ./tools/link.conf.
 
 
+UPDATE OF 5.1
+
+Assuming that you want to update your current installation from
+CVS, you have to perform a couple of steps. In general:
+
+- clean the links to 5.0
+- update from 5.0 CVS HEAD (the 5.0 code)
+- update from 5.1 CVS (the 5.1 code)
+- recreate the links to 5.0
+- configure, compile
+
+In detail:
+
+make mixclean
+cd /where/your/grass50/lives/
+cvs update -dP
+
+cd /where/your/grass51/lives/
+cvs update -dP
+make mix
+configure ...
+make
+
+
 SUPPORT
 
 Note that this code is extremely experimental. Without announcement the
@@ -66,8 +94,8 @@ http://grass.itc.it/grassdevel.html
 
 PROGRAMMER'S MANUAL
 
-Please see the README file.
-
+Please see the README file and
+http://grass.itc.it/grass51/index.html#docs
 
 Draft TUTORIAL
 
@@ -75,3 +103,4 @@ http://grass.itc.it/grass51/tutorial/index.html
 
 ------------------
 GRASS Development Team
+$Date$
