@@ -697,7 +697,7 @@ proc command_set {array element op} {
                 -*      {append cmd " $j"}
                 <       {append cmd " < $j"}
                 >       {append cmd " > $j"}
-                default {append cmd " $i=$j"}
+                default {lappend cmd "$i=$j"}
             }
         }
     }
@@ -727,7 +727,7 @@ proc execute {command path button terminal} {
     switch [$path cget -text] {
         Run {
             if {$button == 1} {
-                set name [eval concat $cmd]
+                set name [concat $cmd]
                 set see [expr {[lindex $cmd 0] == "g.manual"} ? 0 : -1]
             } elseif {$button == 2} {
                 set name "g.manual [lindex $root 0]"
