@@ -82,6 +82,7 @@ int Vect_get_constraint_box ( struct Map_info *, BOUND_BOX *);
     /* Get map level 2 informations */
 int Vect_level (struct Map_info *);
 int Vect_get_num_nodes (struct Map_info *);
+int Vect_get_num_centroids (struct Map_info *);
 int Vect_get_num_lines (struct Map_info *);
 int Vect_get_num_areas (struct Map_info *);
 int Vect_get_num_islands (struct Map_info *);

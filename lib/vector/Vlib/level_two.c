@@ -35,6 +35,18 @@ Vect_get_num_nodes (struct Map_info *map)
   return (map->plus.n_nodes);
 }
 
+/*!
+ \fn int Vect_get_num_centroids (struct Map_info *map)
+ \brief get number of centroids
+ \return number of centroids
+ \param Map_info structure
+ */
+int 
+Vect_get_num_centroids (struct Map_info *map)
+{
+  return (map->plus.n_clines);
+}
+
 
 /*!
  \fn int Vect_get_num_lines (struct Map_info *map)
