@@ -1,3 +1,28 @@
+#############################################################################
+#
+# $Id$
+#
+# MODULE:   	Grass Compilation
+# AUTHOR(S):	Original author unknown - probably CERL
+#		Markus Neteler - Germany - neteler@geog.uni-hannover.de
+#   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
+#   	    	Huidae Cho - Korea - hdcho@geni.knu.ac.kr
+#   	    	Eric G. Miller - egm2@jps.net
+# PURPOSE:  	The source file for this Makefile is in src/CMD/head/head.in.
+#		It is the top part of a file called make.rules which is used
+#		for compiling all GRASS modules. This part of the file provides
+#		make variables that are dependent on the results of the
+#		configure script.
+# COPYRIGHT:    (C) 2000 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#   	    	License (>=v2). Read the file COPYING that comes with GRASS
+#   	    	for details.
+#
+#############################################################################
+
+############################## Make Variables ###############################
+
 CC                  = @CC@
 FC                  = @F77@
 LEX                 = @LEX@
@@ -6,9 +31,10 @@ ARCH                = @host@
 MAKE                = make
 prefix              = @prefix@
 exec_prefix         = @exec_prefix@
-
-GISBASE             = @prefix@/grass@NAME_VER@
 UNIX_BIN            = @BINDIR@
+
+GISBASE             = @GISBASE@
+GRASS_BIN           = @GRASS_BIN@
 #VERSION             = @VERSION@
 NAME_VER            = @NAME_VER@
 

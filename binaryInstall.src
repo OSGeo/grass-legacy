@@ -244,6 +244,9 @@ if [ $? -eq 1 ] ; then
     exit
 fi
 
+# Remove the source version of the grass executable
+rm -f $DESTDIR/grass$NAME_VER
+
 #echo "GISBASE=$DESTDIR"           >>$BINDIR/grass$NAME_VER
 #echo "export GISBASE"             >>$BINDIR/grass$NAME_VER
 #echo "exec \$GISBASE/etc/Init.sh" >>$BINDIR/grass$NAME_VER
