@@ -1,0 +1,62 @@
+/* 1998-OCT-06 change from Benjamin Horner-Johnson <ben@earth.nwu.edu> */
+	Changed dxf_line[80] to dxf_line[256] when I found 250 char label in
+one of my DXF files <dxf2vect.h>.
+	Changed label[80] to label[256], and buf[100] to buf[256] <label_box.c>.
+	Changed layername[80] to layername[256] <add_polyline.c>
+	Changed "80" to "256" in the dxf_fgets calls.
+
+	modified: dxf2vect.h, add_arc.c, add_circle.c, add_line.c,
+		  add_polyline.c, entities.c, find_lines.c, header.c,
+		  label_box.c
+
+/* 1998-OCT-01 change from Benjamin Horner-Johnson <ben@earth.nwu.edu> */
+	Changed label from int to char (my character labels weren't coming
+through from my DXF files), changed other things to support single digit/char
+labels (char_cnt).
+	modified: label_box.c
+
+/* 1998-SEP-30 change from Benjamin Horner-Johnson <ben@earth.nwu.edu> */
+	Added flag "-n" to allow suppression of text boxes
+	modified: dxf2vect.h, main.c, label_box.c
+
+/* 1/28/98 change from Jacques Bouchard <bouchard@onera.fr> */
+Problem:
+In file included from add_bounds.c:5:
+dxf2vect.h:53: 'basename' redeclared as different kind of symbol
+/usr/include/string.h:245: previous declaration of Basename'
+make: *** [OBJ.linux/add_bounds.o] Error 1
+
+My Solution':
+
+I changed 'basename' into 'base_name' in:
+        add_bounds.c
+        add_extents.c
+        dxf2vect.h
+        main.c
+        open_layer.c
+        reopen_layer.c
+
+
+-------------------------------------------------------------------------
+I fextension names are long, keep in mind the GRASS limit of 14 characters
+for filenames.  To minimize the possibility of creating two output files
+of the same name use the prefix option to abreviate the dxf file name
+leaving the majority of characters available for differentiating between
+layer names.
+
+
+1/23/91
+
+Making the dxf output directly to a vector binary file with the 
+optional flag -a to output to an ascii file available on the commandline.
+
+The v.in.dxf is now set to be tested.  To select a dxf file: (map=dxf_file)
+1.  give full or relative pathname for the dxf_file
+2.  be in the directory where dxf file is
+
+1/28/91
+JMoorman
+
+
+Making corrections to the percent countdown and tothe extents....
+map coordinates.
