@@ -219,7 +219,7 @@ main (int argc, char **argv)
     fprintf (stderr, "Computing sample semivariogram ...  ");
   for (i = 0, k = 0; i < nsites; ++i)
   {
-    /* for (j = i + 1; j < nsites; ++j) /* 0<=angle<=180 */
+    /* for (j = i + 1; j < nsites; ++j) */ /* 0<=angle<=180 */
     for (j = 0; j < nsites; ++j)/* 0<=angle<=360 */
     {
       if (i != j)		/* 0<=angle<=360 */
