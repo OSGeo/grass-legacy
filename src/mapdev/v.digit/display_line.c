@@ -12,7 +12,7 @@ display_line (type, points, line, map)
     struct Map_info *map;
 {
     _display_line (type, points, line, map);
-    R_flush ();
+    V_flush ();
 }
 erase_line(type, points, line, map)
     char type;
@@ -21,7 +21,7 @@ erase_line(type, points, line, map)
     struct Map_info *map;
 {
     _erase_line(type, points, line, map);
-    R_flush ();
+    V_flush ();
 }
 highlight_line(type, points, line, map)
     char type;
@@ -33,7 +33,7 @@ highlight_line(type, points, line, map)
     display_line(type, points, line, map);
 
     _highlight_line(type, points, line, map);
-    R_flush ();
+    V_flush ();
 }
 color_line(type, points, line, map, color)
     char type;
@@ -43,7 +43,7 @@ color_line(type, points, line, map, color)
     int color;
 {
     _color_line(type, points, line, map, color);
-    R_flush ();
+    V_flush ();
 }
 
 _display_line (type, points, line, map)
@@ -59,7 +59,7 @@ _display_line (type, points, line, map)
     if (type == DOT)
 	return (_display_site (type, points, line, map));
 
-    line = ABS (line);
+    line = abs (line);
 
     /* determine how many lines come into each node. 
     ** as that is how we decide what color they should be
@@ -148,7 +148,7 @@ _erase_line(type, points, line, map)
     if (type == DOT)
 	return (_erase_site (type, points, line, map));
 
-    line = ABS (line);
+    line = abs (line);
     if (!line)
 	N1 = N2 = CLR_ERASE;
     else
@@ -203,7 +203,7 @@ _highlight_line(type, points, line, map)
     if (type == DOT)
 	return (_highlight_site (type, points, line, map));
 
-    line = ABS (line);
+    line = abs (line);
 
     if (!line || map == NULL)
 	N1 = N2 = CLR_HIGHLIGHT;
@@ -253,9 +253,9 @@ _color_line(type, points, line, map, color)
     int line_color, point_color;
 
     if (type == DOT)
-	return (_color_site (type, points, line, map));
+	return (_color_site (type, points, line, map, color));
 
-    line = ABS (line);
+    line = abs (line);
 /*
     if (!line || !Disp_nodes)
 	N1 = N2 = color;
