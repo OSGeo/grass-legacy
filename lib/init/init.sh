@@ -6,7 +6,7 @@
 # MODULE:   	GRASS Initialization
 # AUTHOR(S):	Original author unknown - probably CERL
 #               Andreas Lange - Germany - andreas.lange@rhein-main.de
-#   	    	Huidae Cho - Korea - hdcho@geni.knu.ac.kr
+#   	    	Huidae Cho - Korea - grass4u@gmail.com
 #   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
 #   	    	Markus Neteler - Germany/Italy - neteler@itc.it
 # PURPOSE:  	The source file for this shell script is in
