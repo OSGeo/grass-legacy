@@ -1,0 +1,42 @@
+.TH v.zoom
+.SH NAME
+\fIv.zoom\fR \- Allows the user to change the current geographic region
+settings by selecting area(s) in a vector file.
+.br
+.I "(GRASS VECTOR Programs)"
+.SH SYNOPSIS
+.B v.zoom
+.br
+\fBv.zoom help\fR
+.br
+\fBv.zoom\fR [\fBinput\*=\fIname\fR] [\fBmargin\*=\fIfloat\fR]
+.br
+.SH DESCRIPTION
+\fIv.zoom\fR allows the user to adjust the settings
+of the current geographic region by specifying an area or areas
+in a vector file.
+Like \fIg.region\fR, \fIv.zoom\fR re-defines the settings of the
+geographic region.
+However, \fIv.zoom\fR allows the user to change the current region
+settings using a vector layer.
+The user should run \fId.erase\fR after \fIv.zoom\fR is run for the
+new region settings to affect the graphics display.
+.LP
+\fBParameter:\fR
+.IP \fBinput\*=\fIname\fR 18
+Name is the name of a GRASS vector file. \fIv.zoom\fR reads a list
+of category numbers from standard input to identify selected 
+categories. It then searches all areas in the selected vector file
+to determine the areas selected. \fIv.zoom\fR then determines the
+smallest rectangular region that completely encloses the selected
+areas. \fIv.zoom\fR then sets the current graphic region.
+.IP \fBmargin\*=\fIfloat\fR 18
+Float specifies an additional margin to allow around the determined
+region. The number float is a fraction of the determined window.
+For example margin=.1 allows for a margin on the East and West that
+is one tenth the East/West distance and a margin for North and South
+that is one tenth the North/South distance.
+.SH "SEE ALSO"
+.I g.region
+.SH "AUTHOR"
+Marty Holko, Soil Conservation Service, Washingto DC
