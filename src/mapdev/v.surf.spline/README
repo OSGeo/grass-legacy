@@ -1,0 +1,44 @@
+v.surf.spline -	Interpolates vector contour data by fitting a cubic spline 
+		function to profiles in four directions. It has two advantages
+		over other interpolation techniques: (1) The RMS Error can be 
+		calculated for EACH CELL in the DEM as well as an overall RMSE.
+		Spatial variation in error can examined; (2) A cubic spline has
+		the property of 2nd derivative being continuous therefore having
+		implications for slope measurements. Terracing effects should be
+		minimised.
+
+		Method suggested by Yoeli(1986) and discussed in Wood and Fisher
+		(1993).
+
+Jo Wood, 29th November, 1991
+
+
+References:
+
+Yoeli, P. (1986) Computer executed production of regular grid of height points 
+	from digital contours, The American Cartographer, 13(3), pp.219-229.
+
+Wood, J and Fisher, P (1993) Assessing interpolation accuracy in Elevation 
+	Models, IEEE Computer Graphics and Applications, 13(2), pp.48-56.
+
+
+-------
+
+Modified 23rd July to conform to standard GRASS module layout
+(main.c, interface.c, process.c etc.)
+
+-------
+
+Usage:
+ v.surf.spline [-rs] in=name out=name [interval=value]
+
+Flags:
+  -r   Rasterise contours using rooks case adjacency
+  -s   Constrain interpolation using simple truncation
+
+Parameters:
+        in   vector contour map to be interpolated
+       out   Resultant Digital Elevation Model
+  interval   Contour interval (or 0 for no interval constraint)
+             default: 0
+
