@@ -45,11 +45,14 @@ char *GPJ_grass_to_wkt(struct Key_Value *proj_info,
 		       struct Key_Value *proj_units,
 		       int esri_style, int prettify)
 {
-    OGRSpatialReferenceH *hSRS;
+    OGRSpatialReferenceH *hSRS = NULL;
     char *wkt;
 
     hSRS = GPJ_grass_to_osr(proj_info, proj_units);
-
+  
+    if (hSRS == NULL)
+        return NULL;
+   
     if (esri_style)
 	OSRMorphToESRI(hSRS);
 
