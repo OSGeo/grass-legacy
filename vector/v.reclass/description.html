@@ -12,7 +12,8 @@ Keyword <I>where</I> specifies SQL where condition.
 
 <H2>EXAMPLE</H2>
 
-<B>v.reclass input=</B><EM>land</EM> <B>output=</B><EM>land_u</EM> <B>type=</B><EM>area</EM>
+<B>v.reclass input=</B><EM>land</EM> <B>output=</B><EM>land_u</EM>
+<B>type=</B><EM>boundary</EM>
                  <B>rules=</B><EM>land.rcl</EM>
 
 <P>
@@ -24,12 +25,12 @@ where use = 'E13' and owner = 'Jara Cimrman'
 cat 2
 where use = 'E14'
 </PRE>
-Produces a new vector area file <EM>land_u</EM> containing 'area'
-boundaries from <EM>land</EM> with area category values selected 
-from database by SQL select statement: <I>select id from tland where
-use = 'E13' and owner = 'Jara Cimrman' </I> changed to category 1;  
-values selected from database by SQL select statement: <I>select id from tland where
-use = 'E14' </I> changed to category 2.
+Produces a new vector area map <EM>land_u</EM> containing boundaries from <EM>land</EM> with area category values selected 
+from database by SQL select statement: <br>
+<I>select id from tland where use = 'E13' and owner = 'Jara Cimrman' </I> changed to category 1;
+<br>
+values selected from database by SQL select statement: <br>
+<I>select id from tland where use = 'E14' </I> changed to category 2.
 
 <BR>
 
