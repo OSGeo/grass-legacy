@@ -1,0 +1,29 @@
+###########################################################
+#  %W%  %G%
+UNIX_BIN = $(GRAPH)/macros
+
+LIBDIG		= $(SRC)/mapdev/lib/libdig.a
+
+EXTRA_CFLAGS	= -I$(SRC)/mapdev/lib   -I$(SRC)/mapdev/libes
+
+
+
+
+all:  $(UNIX_BIN)/make.mapdef $(UNIX_BIN)/redo.mapdef $(UNIX_BIN)/trim.data
+
+
+$(UNIX_BIN)/make.mapdef: make.mapdef $(UNIX_BIN)/get_center
+	cp make.mapdef $(UNIX_BIN)/make.mapdef
+
+$(UNIX_BIN)/redo.mapdef: redo.mapdef
+	cp redo.mapdef $(UNIX_BIN)/redo.mapdef
+
+$(UNIX_BIN)/trim.data: trim.data
+	cp trim.data $(UNIX_BIN)/trim.data
+
+$(UNIX_BIN)/get_center: get_center.o
+	$(CC) -o $@ get_center.c
+
+make.mapdef:#
+redo.mapdef:#
+trim.map:#
