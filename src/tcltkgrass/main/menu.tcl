@@ -436,7 +436,7 @@ menu_build 1 .main_menu {
             "Query with mouse" "" {
                 "source $env(TCLTKGRASSBASE)/module/d.what.rast"
             }
-            "Query with definition file" "" {
+            "Query by coordinate(s)" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.what"
             }
             "Display profile" "" {
@@ -631,7 +631,7 @@ menu_build 1 .main_menu {
                 "Query with mouse" "" {
                        "source $env(TCLTKGRASSBASE)/module/d.what.vect"
                 }
-                "Query with definition file" "" {
+                "Query by coordinate(s)" "" {
                        "source $env(TCLTKGRASSBASE)/module/v.what"
                 }
                 "Measure lengths and areas" "" {
