@@ -1,6 +1,4 @@
 /*
-* $Id$
-*
 ****************************************************************************
 *
 * MODULE:       Vector library 
@@ -137,7 +135,7 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout ) {
 	}
 	SHPDestroyObject(pShape);
 
-        /* Go through parts again attache isles and register */
+        /* Go through parts again attach isles and register */
 	for ( part = 0; part < nParts; part++ ) {
             G_debug ( 3, "  part = %d ptype = %d", part, ptype[part] );
 	    if ( ptype[part] == 1 ) { /* area */
