@@ -7,6 +7,7 @@ SUBDIRS = \
 	v.category \
 	v.clean \
 	v.convert \
+	v.digit \
 	v.mapcalc \
 	v.surf.rst
 
