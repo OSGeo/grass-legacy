@@ -185,6 +185,7 @@ int main (int argc, char *argv[])
     to_field = atoi ( to_field_opt->answer); 
     
     max = atof (max_opt->answer);
+    G_debug (0, "max = %f", max );
 
     /* Read upload and column options */
     /* count */
@@ -346,7 +347,7 @@ int main (int argc, char *argv[])
 		tseg = Vect_line_distance ( TPoints, FPoints->x[0], FPoints->y[0], 0, 0, 
 				   &tmp_tx, &tmp_ty, NULL, &tmp_dist, NULL, &tmp_talong);
 
-		if ( dist > max ) continue; /* not in threshold */
+		if ( tmp_dist > max ) continue; /* not in threshold */
 		Vect_cat_get(TCats, to_field, &tmp_tcat);
 	        G_debug (4, "  tmp_dist = %f tmp_tcat = %d", tmp_dist, tmp_tcat);
 
@@ -354,7 +355,6 @@ int main (int argc, char *argv[])
 		    /* find near by cat */ 
 		    near = &(Near[count]); 
 
-		    G_debug (4, "from_cat = %d near.count = %d", near->from_cat, near->count);
 		    /* store info about relation */
 		    near->from_cat = fcat;
 		    near->to_cat = tmp_tcat;  /* 0 is OK */
@@ -378,11 +378,12 @@ int main (int argc, char *argv[])
 		}
 	    }
 
+	    G_debug (4, "  dist = %f", dist );
 	    if ( !all && tline > 0 ) {
 		/* find near by cat */ 
 		near = (NEAR *) bsearch((void *) &fcat, Near, nfcats, sizeof(NEAR), cmp_near); 
 
-		G_debug (4, "near.from_cat = %d near.count = %d", near->from_cat, near->count);
+		G_debug (4, "  near.from_cat = %d near.count = %d", near->from_cat, near->count);
 		/* store info about relation */
 		if ( near->count == 0 || near->dist > dist ) {
 		    near->to_cat = tcat;  /* 0 is OK */
