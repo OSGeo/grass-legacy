@@ -1,0 +1,8 @@
+
+
+vector data (vector format) - A data format in which area, linear,
+and point features are represented and stored as the series of \arcs\
+(a.k.a., vectors) forming their perimeters.  In GRASS, map data can 
+be converted between vector and \raster\ data formats.  Typically,
+data are \digitized\ in vector format and analyzed in their raster
+format.  Data can be displayed and output in either format.
