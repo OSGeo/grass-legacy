@@ -1,4 +1,4 @@
-#include "gis/pi.h"
+#include "pi.h"
 
 /* distance from point to point along a geodesic 
  * code from
