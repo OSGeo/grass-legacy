@@ -38,6 +38,7 @@
 #include <varargs.h>
 
 #include <unistd.h>
+#include <string.h>
 #include <errno.h>
 #include <stdio.h>
 
@@ -85,7 +86,6 @@ __XgSaveToFile( Widget text, char *file)
     char *string;
     int length = 0;
     char errorbuf[1024];
-    extern char *sys_errlist[];
 
     string = XmTextGetString(text);
     length = XmTextGetLastPosition(text);
@@ -95,7 +95,7 @@ __XgSaveToFile( Widget text, char *file)
 
     fp = fopen(file, "w");
     if ( fp == NULL ) {
-	sprintf(errorbuf,"\"%s\": %s", file, sys_errlist[errno]);
+	sprintf(errorbuf,"\"%s\": %s", file, strerror(errno));
 	XgWarningDialog(text,errorbuf);
 	return;
     }
@@ -116,7 +116,6 @@ __XgSaveAsFile(Widget w, XtPointer cld, XtPointer cad)
         (InteractorCallbackStruct *)cad;
     char *ptr, *file, *directory, *path;
     char errorbuf[1024];
-    extern char *sys_errlist[];
     struct stat sbuf;
 
     XmStringGetLtoR(xgb->value,XmSTRING_DEFAULT_CHARSET,&path);
@@ -132,7 +131,7 @@ __XgSaveAsFile(Widget w, XtPointer cld, XtPointer cad)
 
     /* is the directory path writeable? */
     if ( access(directory, W_OK) == -1 ) {
-	sprintf(errorbuf,"\"%s\": %s", directory, sys_errlist[errno]);
+	sprintf(errorbuf,"\"%s\": %s", directory, strerror(errno));
 	XgWarningDialog(w,errorbuf);
 	return;
     }
@@ -145,7 +144,7 @@ __XgSaveAsFile(Widget w, XtPointer cld, XtPointer cad)
 		__XgSaveToFile((Widget) cld, file);
 	    }
 	} else {
-	    sprintf(errorbuf,"\"%s\": %s",file, sys_errlist[errno]);
+	    sprintf(errorbuf,"\"%s\": %s",file, strerror(errno));
 	    XgWarningDialog(w,errorbuf);
 	}
     } else {
