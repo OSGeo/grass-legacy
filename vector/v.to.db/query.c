@@ -22,8 +22,10 @@ query (struct Map_info *Map )
     Cats = Vect_new_cats_struct ();
 
     /* Cycle through all lines and make a list of categories of 'qfield' for each category given by 'field' */
+    fprintf ( stderr, "Reading data trom the map ... " );
     nlines = Vect_get_num_lines ( Map );
     for (line_num = 1 ; line_num <= nlines; line_num++) {
+	G_percent( line_num, nlines, 1 );
 	
 	type = Vect_read_line ( Map, Points, Cats, line_num);
 	if ( !(type & options.type ) ) continue;
@@ -70,6 +72,7 @@ query (struct Map_info *Map )
 	G_fatal_error ( "Cannot open database %s by driver %s", Fi->database, Fi->driver );
     
     /* Query the database for each category */
+    fprintf ( stderr, "Querying database ... " );
     for ( i = 0; i < vstat.rcat; i++ ) {
 	int  j, ctype, nrows, more;
         char buf[2000];
@@ -79,6 +82,7 @@ query (struct Map_info *Map )
 	dbValue *value;
 
 	G_debug (3, "cat %d", Values[i].cat );
+	G_percent( i+1, vstat.rcat, 1 );
 
 	/* Skip if cat is zero and large number of query categories (many features without category).
 	 * It would cause problems on server side and take long time. Postgres limit is 10000 */
