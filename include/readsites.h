@@ -15,4 +15,4 @@ struct zstruct
 typedef struct zstruct Z;
   
 /*--------------------functions */
-int G_readsites(FILE *,int,int,int, Z**);
+int G_readsites(FILE *,int,int,int,struct Cell_head *,Z**);

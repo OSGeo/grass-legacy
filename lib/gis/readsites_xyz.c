@@ -149,7 +149,7 @@ int G_readsites_xyz(
 			case SITE_COL_NUL: /* No z-dim requested */
 				break;
 			default: /* Programming error, die miserably */
-				G_fatal_error("G_readsites(): fatal programmer error!\n");
+				G_fatal_error("G_readsites_xyz(): fatal programmer error!\n");
 		}
 	      	xyz[i].x = s->east;
 	      	xyz[i].y = s->north;
