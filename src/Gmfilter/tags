@@ -1,0 +1,14 @@
+ERROR	getfilt.c	/^#define ERROR(x) err=x;goto BAILOUT$/
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+apply_filter	apply.c	/^apply_filter (filter, input)$/
+check_window	check.c	/^check_window (name, mapset)$/
+execute_filter	execute.c	/^execute_filter (r, out, filter, cell)$/
+for	perform.c	/^    for (pass=0; pass < repeat; pass++ )$/
+get_filter	getfilt.c	/^get_filter (name, nfilters, title)$/
+getmaprow	getrow.c	/^getmaprow (fd, buf, row, len)$/
+getrow	getrow.c	/^getrow (fd, buf, row, len)$/
+if	perform.c	/^	    if (count==0)$/
+percent	percent.c	/^percent (n,d,s)$/
+perform_filter	perform.c	/^perform_filter (in_name, in_mapset, out_name, filt/
+uppercase	uppercase.c	/^uppercase (s) char *s;$/
+usage	usage.c	/^usage (me)$/
