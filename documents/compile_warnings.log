@@ -1,3 +1,8 @@
+
+ $Id$
+------------------------
+
+
 src/libes/gis:
 CC-167 cc: WARNING File = cats.c, Line = 1194
   Argument of type "int (*)(int *, int *)" is incompatible with parameter of
@@ -231,30 +236,4 @@ CC-180 cc: WARNING File = open.c, Line = 255
                 ^
 
 Total warnings detected in open.c: 1
-
-*** This seems to have been superseded by src/raster/r.out.mpeg
-
-src.contrib/CERL/raster/r.out.mpeg/
-CC-167 cc: WARNING File = main.c, Line = 230
-  Argument of type "unsigned char *" is incompatible with parameter of type
-          "char *".
-
-  	write_ppm(pr, pg, pb, nrows, ncols, &y_rows, &y_cols, yfiles[cnt]);
-  	          ^
-
-src.contrib/CERL/raster/r.out.mpeg/
-CC-167 cc: WARNING File = main.c, Line = 230
-  Argument of type "unsigned char *" is incompatible with parameter of type
-          "char *".
-
-  	write_ppm(pr, pg, pb, nrows, ncols, &y_rows, &y_cols, yfiles[cnt]);
-  	              ^
-
-src.contrib/CERL/raster/r.out.mpeg/
-CC-167 cc: WARNING File = main.c, Line = 230
-  Argument of type "unsigned char *" is incompatible with parameter of type
-          "char *".
-
-  	write_ppm(pr, pg, pb, nrows, ncols, &y_rows, &y_cols, yfiles[cnt]);
-  	                  ^
 
