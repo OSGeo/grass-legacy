@@ -2,9 +2,8 @@ SURF_LIBDIR = ../gsf
 
 EXTRA_CFLAGS= -O2 -I${SURF_LIBDIR} -DUSE_OGL -DUSE_GLX $(XCFLAGS)
 
-#GLXLIB = -lXirisw 
-GLXLIB = -lGLw 
-OGLLIB = -lMesaGLU -lMesaGL 
+GLXLIB = $(LGLWM)
+OGLLIB = $(OPENGLULIB) -lMesaGL 
 #IMGLIB= -limage 
 #IMGLIB= $(SRC)/../src.contrib/CERL/SGI/libimage/lib/libimage.\a
 
@@ -64,11 +63,9 @@ OFILES =    \
 	    vector_panel.o \
 	    whats_here.o 
 
-PROGNAME = ogl3d
-PROG = $(BIN_CONTRIB_CMD)/$(PROGNAME)
+PGM = ogl3d
 
-$(PROG): $(OFILES) $(VECTLIB) $(BITMAPLIB) $(LINKMLIB) $(SURFLIB)
+$(BIN_CONTRIB_CMD)/$(PROG): $(OFILES) $(VECTLIB) $(BITMAPLIB) $(LINKMLIB) $(SURFLIB)
 	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(SURFLIB) $(BITMAPLIB) $(LINKMLIB) $(VECTLIB) $(XGILIB) $(GISLIB) $(GLXLIB) $(OGLLIB) $(IMGLIB) $(MATHLIB)  $(XLIBPATH) -lXm  -lXmu -lXt -lX11 -lXext $(XEXTRALIBS) $(DATETIMELIB) $(XDRLIB)
-	@rm -f a.out
 	if [ ! -d $(GISBASE)/etc/app-defaults ]; then mkdir $(GISBASE)/etc/app-defaults; fi
 	cp app.defaults $(GISBASE)/etc/app-defaults/$(PROGNAME)

@@ -1,16 +1,8 @@
-#  %W%  %G%
-
-
-
-
-PROG  = $(BIN_CONTRIB_CMD)/ISMcont2dig
-
-all:  $(PROG)
-	
+PGM  = ISMcont2dig
 
 OBJS =  \
 	cont2dig.o \
 	line_cent.o
 
-$(PROG): $(OBJS)
+$(BIN_CONTRIB_CMD)/$(PROG): $(OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(VECTLIB) $(GISLIB) $(MATHLIB) 

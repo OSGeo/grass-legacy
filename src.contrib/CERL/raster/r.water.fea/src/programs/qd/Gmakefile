@@ -1,12 +1,9 @@
-# $Id: Gmakefile,v 1.3 2000-09-11 09:48:06 justin Exp $
-
 PGM= querydata
 RFEA= $(GISBASE)/etc/r.fea
-LIBES = $(GISLIB) $(VASKLIB) $(VASK)
+LIBES = $(GISLIB) $(VASK)
 LIST =  querydata.o confirm_map.o count.o vask.o
 
 $(RFEA)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #
-

@@ -1,14 +1,10 @@
-# $Id: Gmakefile,v 1.5 2000-09-11 09:48:07 justin Exp $
-
 PGM = select_basins
 RFEA = $(GISBASE)/etc/r.fea
 LIBES = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 LIST = main.o selectbasin.o basinlink.o unique.o 
 
 $(RFEA)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-saber:
-	$(CC) -o $@ *.c 
 $LIBES: #
 

@@ -1,12 +1,9 @@
-# $Id: Gmakefile,v 1.4 2000-09-11 09:48:03 justin Exp $
-
 PGM = r.rvi.prediction
-HOME = $(BIN_CONTRIB_CMD)
 LIST = main.o\
 	model.o\
 	closefiles.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB) globals.h
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(GISLIB) globals.h
 	 $(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

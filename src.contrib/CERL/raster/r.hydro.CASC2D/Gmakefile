@@ -1,3 +1,5 @@
+PGM=r.hydro.CASC2D
+
 OBJ=CASC2D.o read_gage_file.o write_files.o ch_flow.o rain_thiessen.o \
      rain_sq_dis.o inf_redist.o inf_nodist.o ov_flow.o ov_lake.o \
      ch_depth.o intercep.o crash.o im_read_input.o im_read_table.o \
@@ -13,11 +15,7 @@ SOURCES=CASC2D.c read_gage_file.c write_files.c ch_flow.c rain_thiessen.c \
 
 HEADERS=all.h
 
-
-DIR=$(BIN_CONTRIB_CMD)
-PGM=$(DIR)/r.hydro.CASC2D
-
-$(PGM): $(OBJ) $(GISLIB) 
+$(BIN_CONTRIB_CMD)/$(PGM): $(OBJ) $(GISLIB) 
 	$(CC) -g $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 
