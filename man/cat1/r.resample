@@ -1,7 +1,7 @@
 
 
 
-r.resample           GRASS Reference Manual            r.resample
+r.resample <main>    GRASS Reference Manual     <main> r.resample
 
 
 
@@ -53,23 +53,25 @@ NOTES
 
      The resulting raster map layer may be identical to the
      original raster map layer.  The r.resample program will copy
-     the color table, category file, and history file associated
-     with the original raster map layer for the resulting raster
-     map layer.
+     the color table and history file associated with the
+     original raster map layer for the resulting raster map layer
+     and will create a modified category file which contains
+     description of only those categories which appear in
+
+
+
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+
+
+r.resample <main>    GRASS Reference Manual     <main> r.resample
 
 
 
-
-
-
-r.resample           GRASS Reference Manual            r.resample
-
-
+     resampled file.
 
      When the user resamples a GRASS reclass file, a true raster
      file is created by r.resample.
@@ -124,9 +126,7 @@ AUTHOR
 
 
 
-
-
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
