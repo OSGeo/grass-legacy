@@ -1,0 +1,4 @@
+${ETC}/paint/driver.shell: driver.shell
+	rm -f $@
+	cp $? $@
+	chmod 755 $@
