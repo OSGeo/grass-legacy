@@ -3,8 +3,12 @@
 # GRASS 5 test suite
 # $Id$
 #
-# improvement wanted! Please update in CVS.
-#
+# The script creates itself a GRASS database/location/mapset 
+# with random name and UTM projection and runs tests in this
+# environment.
+
+# improvement wanted! Please update directly in CVS.
+# Please add further tests.
 # Markus Neteler <neteler@geog.uni-hannover.de>
 #
 # based on "batch-grass.sh" by
@@ -27,6 +31,10 @@ if test "$1" = "-h"
 then
  echo ""
  echo "GRASS test suite"
+ echo " The script creates itself a GRASS database/location/mapset"
+ echo " with random name and UTM projection and runs tests in this"
+ echo " environment."
+
  echo ""
  echo "Usage:"
  echo "testgrass.sh  [path_to_grassbinaries]"
