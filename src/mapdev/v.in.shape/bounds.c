@@ -5,19 +5,19 @@
 
  * @Copyright David D.Gray <ddgray@armadce.demon.co.uk>`
  * 26th. Oct. 2000
- * Last updated 26th. Oct. 2000
+ * Last updated 4th. Jan. 2001
  *
 
-* This file is part of GRASS GIS. It is free software. You can 
-* redistribute it and/or modify it under the terms of 
-* the GNU General Public License as published by the Free Software
-* Foundation; either version 2 of the License, or (at your option)
-* any later version.
-
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
+ * This file is part of GRASS GIS. It is free software. You can 
+ * redistribute it and/or modify it under the terms of 
+ * the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option)
+ * any later version.
+ 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
 
  ******************************************************************************/
 
@@ -40,7 +40,8 @@ int set_bounds(SHPHandle hs) {
   double minx, maxx, miny, maxy;
   char renderbuf[128];
 
-  int ilbx, ilby, ilen, ilen0;
+  long ilbx, ilby;
+  int ilen, ilen0;
   double flbx, flby;
   
   dummy1 = (int *)G_malloc( sizeof(int) );
@@ -61,24 +62,24 @@ int set_bounds(SHPHandle hs) {
   G_free(dummy2);
 
   if( minx < 0.0 )
-    ilbx = (int)minx - 1;
+    ilbx = (long)minx - 1;
   else
-    ilbx = (int)minx;
+    ilbx = (long)minx;
 
-  flbx = - (double)ilbx;
+  flbx = - (double)ilbx - 2.0;  /* Make some space for matrix windows */
 
 
   if( miny < 0.0 )
-    ilby = (int)miny - 1;
+    ilby = (long)miny - 1;
   else
-    ilby = (int)miny;
+    ilby = (long)miny;
 
-  flby = - (double)ilby;
+  flby = - (double)ilby - 2.0; /* Make some space for matrix windows */
 
-  sprintf(renderbuf, "%.0lf", maxx + flbx);
+  sprintf(renderbuf, "%.0lf", maxx + flbx + 2.0);
   ilen = strlen(renderbuf);
 
-  sprintf(renderbuf, "%.0lf", maxy + flby);
+  sprintf(renderbuf, "%.0lf", maxy + flby + 2.0);
   ilen0 = strlen(renderbuf);
   if(ilen0 > ilen) ilen = ilen0;
 

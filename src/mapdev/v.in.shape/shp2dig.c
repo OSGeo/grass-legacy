@@ -1097,7 +1097,7 @@ int locateNewCentroid( double *xpos1, double *xpos2,
 	if( xIsects[i0] > xcentre ) {
 	  /* Quick check that the west/east intersect populations are
 	     even-numbered */
-	  assert( i0 % 2 == 0 );
+	  /* assert( i0 % 2 == 0 ); */
 	  if( i0 % 2 == 0 ) {  /* Oops! We've moved outside the ring. Skip it! */
 	    rej_val = 1;
 	    proc_reject_centroid( SET_VAL, &rej_val );
