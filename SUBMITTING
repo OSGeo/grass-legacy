@@ -1,4 +1,4 @@
-$Id: SUBMITTING,v 1.20 2002-01-22 04:50:47 glynn Exp $
+$Id: SUBMITTING,v 1.21 2002-03-06 16:24:49 markus Exp $
 
 NOTE: Please improve this list!
 
@@ -32,8 +32,6 @@ care of following rules:
     Example (ficticious header for a file called color.c) :
 
 /*
-* $Id flag - see note 4 below for syntax specification
-*
 ****************************************************************************
 *
 * MODULE:       d.rast (or new higher level module name (eg GRASS core) 
@@ -57,20 +55,8 @@ care of following rules:
     The copyright protects your rights according to GNU General Public
     License (www.gnu.org).
 
-4. When you add the CVS Id flag (<$>Id<$>) (without angle brackets)
-    to a file for CVS-versioning, note that this is not allowed in the
-    *first* line of a comment. Some compilers will get confused. NOTE when 
-    following the examples below do NOT include the angle brackets <>, they
-    are needed to prevent CVS from interpreting the flag for this example.
-
-    Forbidden:
-
-    /* <$>Id<$> */
- 
-    Allowed:
-    /*
-     * <$>Id<$>
-     */
+4.  - deleted. We don't want the $ ID $ in source code any more as it
+    causes problems for the CVS branches.
 
 5.  To ensure that the software system continues to work, please include
 
