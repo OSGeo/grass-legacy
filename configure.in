@@ -534,7 +534,11 @@ fi
 
 ac_save_ldflags=${LDFLAGS}
 LDFLAGS="$LDFLAGS $PQLIBPATH"
-AC_CHECK_LIB(pq,PQcmdTuples, PQLIB=-lpq)
+AC_CHECK_LIB(pq,PQcmdTuples, 
+	[
+          AC_DEFINE(HAVE_PQCMDTUPLES)
+	  PQLIB=-lpq
+	])
 LDFLAGS=${ac_save_ldflags}
 
 # Done with PostgreSQL
@@ -636,4 +640,40 @@ AC_SUBST(OPENGLULIB)
 AC_SUBST(LGLWM)
 #End of OpenGL tests
 
+# ODBC include paths..
+ODBCINC=
+AC_ARG_WITH(odbc-includes,
+  [  --with-odbc-includes=DIR  
+                           Specify path for ODBC header files],
+  [   
+   	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+	    AC_MSG_ERROR([*** You must supply a directory to --with-odbc-includes.])
+	;;
+	esac
+	odbc_includes="$withval"
+   ])
+
+if test -z "$odbc_includes"; then
+	for dir in $odbc_includes; do
+		if test -d "$dir" && test -f "$dir/sql.h"; then
+			ODBCINC="$ODBCINCPATH -I$dir"
+		fi
+	done
+else
+	for dir in "/usr/include /usr/include/odbc /usr/local/include \
+              /usr/local/include/odbc /usr/X11R6/include /opt/include"; do
+	    	if test -d "$dir" && test -f "$dir/sql.h"; then
+			ODBCINC="$ODBCINCPATH -I$dir"
+		fi
+	done
+fi
+
+ac_save_cppflags="$CPPFLAGS"
+CPPFLAGS="$CPPFLAGS $ODBCINC"
+AC_CHECK_HEADER(sql.h,HAVE_SQL_H=1 ,ODBCINC="")
+CPPFLAGS=${ac_save_cppflags}
+
+AC_SUBST(ODBCINC)
+		
 AC_OUTPUT(Makefile src/CMD/head/head src/scripts/shells/create_fifos.sh)
