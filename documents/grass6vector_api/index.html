@@ -1,0 +1,73 @@
+<http>
+
+<head>
+    <title>  
+	GRASS 6.0 Vector API
+    </title>
+</head>
+
+<body>
+
+Development notes on:
+
+<h1>  
+    <a href=vector/api.html>GRASS 6.0 Vector API</a>
+</h1>
+
+[<a href=http://www.roadkill.com/~dpgerdes/vector/>source of HTML pages</a>]
+<hr>
+
+
+David Gerdes no longer works for CERL, so all correspondence should be
+directed to Olga Waupotitsch at CERL. 
+<hr>
+
+
+This document describes the GRASS 6.0 Vector Data Applications Programming
+Interface (API). This work was funded by the USDA Soil
+Conservation Service and the US Army Construction Enginering Research
+Laboratories.
+<p>
+The goal of this api is to be a complete high level object oriented
+interface for accessing, creating, and modifying vector data. Previous
+releases of the vector library were never designed from an end user point of
+view but were a collection of functions which provided a
+mechanism to access the data. This API has been completely redesigned from
+the ground up and should solve most of the problems inherent
+in the previous releases.
+<p>
+The API attempts to hide much of the complexity of working with vector data
+and instead provides an interface to higher level objects. For
+example, all file management is handled by the API and the client needs only
+deal with map objects. The details of managing arc data are
+hidden in an arc object, and modifications to maps are managed through
+simple methods such as add and delete.
+
+<p>
+<i>
+Note that the hierarchy of this document tree is very simple. The top is the
+page <b>Vector API</b>. From that page there are a number of
+    leaves which are single files organized by conceptual sub-groups within
+the API. There is also a small number of leave pages
+    which describe more general topics which aid in understanding the
+sub-groups. There is also a link to the <b>dpg library</b> top page.
+    That page is set up similar to the <b>Vector API</b> page, in that below it are
+several leaf pages which represent the sub-groups of that
+    library. Each sub-group page has an intro and then an index of each of
+the functions in that group. Those functions then follow
+    along with a short description. 
+
+
+</i>
+<img src=picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.roadkill.com/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@roadkill.com&gt; <p>	Dec 1994
+</address>
+
+</body>
+
+</http>
