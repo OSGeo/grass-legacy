@@ -105,13 +105,13 @@ NULL};
 static void format_value(int (*func)(double, char *, int), 
                          double x, char *buf, int projection)
 {
-    int i, k;
-    double y;
-
-    k = (projection == PROJECTION_LL) ? 3600 : 1;
-    i = (int) (x * k + (x < 0 ? -0.5 : 0.5));
-    y = (double) i / k;
-    func (y, buf, projection);
+    if (projection != PROJECTION_XY)
+    {
+	int k = (projection == PROJECTION_LL) ? 3600 : 1;
+	int i = (int) (x * k + (x < 0 ? -0.5 : 0.5));
+	x = (double) i / k;
+    }
+    func (x, buf, projection);
     buf[10] = '\0';
 }
 
