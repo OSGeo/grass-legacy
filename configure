@@ -2622,7 +2622,7 @@ if test "${enable_load+set}" = set; then
 else
   shared_ok=yes
 fi
-echo "XXX $DL_OBJS"
+
     if test "$shared_ok" = "no"; then
 	DL_OBJS=""
     fi
