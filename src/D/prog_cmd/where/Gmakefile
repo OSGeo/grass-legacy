@@ -1,0 +1,19 @@
+COORCNVLIB=$(LIBDIR)/libcoorcnv.a
+LIBES = $(DISPLAYLIB) $(RASTERLIB) $(COORCNVLIB) $(GISLIB)
+
+LIST = \
+	b_w_line.o \
+	main.o \
+	command.o\
+	list_sph.o \
+	where_am_i.o
+
+
+$(BIN)/Dwhere: $(LIST) $(LIBES)
+	$(CC) -o $@ $(LDFLAGS) $(LIST) $(LIBES) $(MATHLIB)
+
+command.o: options.h
+main.o: options.h
+where_am_i.o: options.h
+
+$(LIBES): #
