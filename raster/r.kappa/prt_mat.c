@@ -1,10 +1,11 @@
 #include "kappa.h"
 
-static long
-longcomp(i,j)
-int *i, *j;
+static int
+longcomp(const void *aa, const void *bb)
 {
-     return(*i - *j);
+    const long *a = aa;
+    const long *b = bb;
+    return (*a - *b);
 }
 
 prn_error_mat(out_cols, hdr)
