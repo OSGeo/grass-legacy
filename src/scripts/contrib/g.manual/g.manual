@@ -8,8 +8,7 @@ fi
 
 HELP="
 Usage:
- `basename $0` [-1admsq] [browser=name] [entries=name[,name,...]]
-   name name ...
+ `basename $0` [-1admsq] [browser=name] [entries=name[,name,...]] name name ...
 
 Flags:
   -1   List all manual entries, one per line.
@@ -42,7 +41,7 @@ fi
 for i
 do
   case $i in
-    help|-help)
+    help|-h|-help|--help)
       echo "$HELP"
       exit 1 ;;
   esac
