@@ -12,7 +12,7 @@ LIST	= main.o\
 
 LIBES= $(IMAGERYLIB) $(GISLIB)
 
-$(BIN)/i.tape.other: $(LIST) $(LIBES) $(VASKLIB)
+$(BIN_MAIN_INTER)/i.tape.other: $(LIST) $(LIBES) $(VASKLIB)
 	$(CC) $(LDFLAGS) $(LIST) $(LIBES) $(VASK) -o $@
 
 $(LIBES):	# in case library changes
