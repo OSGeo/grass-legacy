@@ -3422,7 +3422,7 @@ if test -z "$TIFF_LIBRARY_DIRS"; then
     echo $ac_n "checking TIFF library dirs""... $ac_c" 1>&6
 echo "configure:3424: checking TIFF library dirs" >&5
     for dir in $my_lib_dirs; do
-        if test -z "$TIFF_LIBRARY_DIRS" && test -d "$dir" && test -f "$dir/libtiff.a"; then
+        if test -z "$TIFF_LIBRARY_DIRS" && test -d "$dir" && (test -f "$dir/libtiff.a" || test -f "$dir/libtiff.so"); then
             TIFF_LIBRARY_DIRS="-L$dir"
 	    break
         fi

@@ -355,7 +355,7 @@ fi
 if test -z "$TIFF_LIBRARY_DIRS"; then
     AC_MSG_CHECKING(TIFF library dirs)
     for dir in $my_lib_dirs; do
-        if test -z "$TIFF_LIBRARY_DIRS" && test -d "$dir" && test -f "$dir/libtiff.a"; then
+        if test -z "$TIFF_LIBRARY_DIRS" && test -d "$dir" && (test -f "$dir/libtiff.a" || test -f "$dir/libtiff.so"); then
             TIFF_LIBRARY_DIRS="-L$dir"
 	    break
         fi
