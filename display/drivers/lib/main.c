@@ -159,7 +159,7 @@ main(int argc, char *argv[])
 	for (;;)
 	{
 #ifdef USE_G_SOCKS
-	    if (get_connection_sock(listenfd, &_rfd, &_wfd, Has_work()) >= 0)
+	    if (get_connection_sock(listenfd, &_rfd, &_wfd, Work_stream()) >= 0)
 		break;
 #else
 	    if (get_connection_fifo(connpath, &_rfd, &_wfd, Has_work()) >= 0)
