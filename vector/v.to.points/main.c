@@ -39,7 +39,8 @@ void write_point ( struct Map_info *Out, double x, double y, double z, int line_
     
     /* Write point */
     Vect_append_point ( PPoints, x, y, z );
-    Vect_cat_set (PCats, 1, point_cat);
+    Vect_cat_set (PCats, 1, line_cat);
+    Vect_cat_set (PCats, 2, point_cat);
     Vect_write_line ( Out, GV_POINT, PPoints, PCats );
 
     /* Attributes */
@@ -207,8 +208,26 @@ int main(int argc, char **argv)
 
     /* Table */
     if ( !table_flag->answer ) {
-	Fi = Vect_default_field_info ( &Out, 1, NULL, GV_1TABLE );
-	Vect_map_add_dblink ( &Out, 1, NULL, Fi->table, "cat", Fi->database, Fi->driver);
+         struct field_info *Fin;
+
+	/* copy input table */
+	Fin = Vect_get_field ( &In, field );
+	if ( Fin ) { /* table defined */
+	    int ret;
+	    
+	    Fi = Vect_default_field_info ( &Out, 1, NULL, GV_MTABLE );
+	    Vect_map_add_dblink ( &Out, 1, NULL, Fi->table, Fin->key, Fi->database, Fi->driver);
+
+	    ret = db_copy_table ( Fin->driver, Fin->database, Fin->table,
+	                          Fi->driver, Vect_subst_var(Fi->database,&Out), Fi->table );
+
+            if ( ret == DB_FAILED ) {
+	        G_fatal_error ( "Cannot copy table" );
+	    }
+	}
+
+	Fi = Vect_default_field_info ( &Out, 2, NULL, GV_MTABLE );
+	Vect_map_add_dblink ( &Out, 2, NULL, Fi->table, "cat", Fi->database, Fi->driver);
 
 	/* Open driver */
 	driver = db_start_driver_open_database ( Fi->driver, Fi->database );
@@ -279,8 +298,9 @@ int main(int argc, char **argv)
 	}
     }	
 
-    if ( !table_flag->answer )
+    if ( !table_flag->answer ) {
         db_close_database_shutdown_driver ( driver );
+    }
 
     Vect_build (&Out, stderr);
 
