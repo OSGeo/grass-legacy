@@ -587,6 +587,7 @@ int G_set_quant_rules(int, struct Quant *);
 /* openvect.c */
 /* parser.c */
 int G_disable_interactive(void);
+struct GModule *G_define_module(void);
 struct Flag *G_define_flag(void);
 struct Option *G_define_option(void);
 int G_parser(int, char **);
