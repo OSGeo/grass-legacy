@@ -1,2 +1,8 @@
 all:
-	$(MAKEALL)
+	$(GMAKE) v.extract
+	$(GMAKE) v.make.subj
+	$(GMAKE) v.merge
+	$(GMAKE) v.proj
+	$(GMAKE) v.reclass
+	$(GMAKE) v.report
+	$(GMAKE) v.rmedge
