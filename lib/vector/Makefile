@@ -1,7 +1,8 @@
 
 MODULE_TOPDIR = ../..
 
-SUBDIRS = dglib \
+SUBDIRS = rtree \
+	dglib \
 	diglib \
 	Vlib
 
