@@ -296,7 +296,7 @@ src/raster/r.grow
 src/raster/r.in.arc
 src/raster/r.in.ascii
 src/raster/r.in.bin
-src/raster/r.in.dem
+#src/raster/r.in.dem # FORTRAN double prec. bug, to be fixed.
 src/raster/r.in.doq
 src/raster/r.in.dted/r.in.dted
 src/raster/r.in.gdal
