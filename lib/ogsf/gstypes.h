@@ -169,6 +169,7 @@ typedef struct g_vect{
     int gvect_id;
     int use_mem, n_lines;
     int drape_surf_id[MAX_SURFS]; /* if you want 'em flat, define the surface */
+    int flat_val;
     int n_surfs;
     int color, width;
     char filename[NAME_SIZ];
