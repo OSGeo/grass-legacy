@@ -213,6 +213,7 @@ int main ( int argc, char *argv[])
   parm.input->description = "Name of the vector file with input data";
 
   parm.field = G_define_standard_option(G_OPT_V_FIELD);
+  parm.field->description = "Field value. If set to 0, z coordinates are used.";
   parm.field->answer = "1";
      
   parm.zcol = G_define_option ();
