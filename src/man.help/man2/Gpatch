@@ -1,0 +1,89 @@
+.\" %W% %G%
+.TH Gpatch 2G G-language
+.SH NAME
+Gpatch \- Update a 
+.CT map "cell map"
+with contents of other 
+.CT maps "cell maps"
+.br
+.I (G Language Tool)
+.SH SYNOPSIS
+.B Gpatch
+.I patched patching composite
+.SH DESCRIPTION
+.I Gpatch
+allow the user to fill "no data" areas (
+.CT category "category value"
+0) of one cell map with
+information from other cell map(s).  The user must provide:
+(1) the name of the 
+.CT map "cell map"
+with "holes" 
+.I (patched
+.CT "map)," "cell map),"
+.br
+(2) the name of up to nine
+.I patching
+.CT "map(s)," "cell map(s),"
+and
+.br
+(3) the name of the new
+.I composite 
+.CT "map." "cell map."
+.br
+\fIGpatch\fR is useful for creating a composite of two or more 
+.CT "map layers," "cell maps"
+or updating an older 
+.CT map "cell map"
+with recent data.
+.SH EXAMPLE
+The 
+.CT map "cell map"
+on the far left is 
+.I patched
+with the middle 
+.CT "map," "cell map,"
+to produce the \fIcomposite\fR 
+.CT map "cell map"
+on the right.
+
+.nf
+1 1 1 0 2 2 0 0    0 0 1 1 0 0 0 0    1 1 1 1 2 2 0 0 
+1 1 0 2 2 2 0 0    0 0 1 1 0 0 0 0    1 1 1 2 2 2 0 0 
+3 3 3 3 2 2 0 0    0 0 0 0 0 0 0 0    3 3 3 3 2 2 0 0 
+3 3 3 3 0 0 0 0    4 4 4 4 4 4 4 4    3 3 3 3 4 4 4 4 
+3 3 3 0 0 0 0 0    4 4 4 4 4 4 4 4    3 3 3 4 4 4 4 4 
+0 0 0 0 0 0 0 0    4 4 4 4 4 4 4 4    4 4 4 4 4 4 4 4 
+.fi
+
+Switching the \fIpatched\fR and the \fIpatching\fR 
+.CT maps "cell maps"
+produces the following results:
+
+.nf
+0 0 1 1 0 0 0 0    1 1 1 0 2 2 0 0    1 1 1 1 2 2 0 0 
+0 0 1 1 0 0 0 0    1 1 0 2 2 2 0 0    1 1 1 1 2 2 0 0 
+0 0 0 0 0 0 0 0    3 3 3 3 2 2 0 0    3 3 3 3 2 2 0 0 
+4 4 4 4 4 4 4 4    3 3 3 3 0 0 0 0    4 4 4 4 4 4 4 4 
+4 4 4 4 4 4 4 4    3 3 3 0 0 0 0 0    4 4 4 4 4 4 4 4 
+4 4 4 4 4 4 4 4    0 0 0 0 0 0 0 0    4 4 4 4 4 4 4 4 
+.fi
+.SH NOTE
+.I Gpatch
+is usually followed by a
+.I remove
+of the original 
+.CT "map," "cell map,"
+and a 
+.I rename
+of the new composite 
+.CT map "cell map"
+with the original 
+.CT map "cell map"
+name.
+
+.XT ".I Gpatch may be used on maps which utilize supercell files."
+.SH "SEE ALSO"
+\fIpatch[1], remove[1], rename[1]\fR
+.SH "AUTHOR"
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
