@@ -31,6 +31,20 @@ static double METERS_in = 1.0, METERS_out = 1.0;
 /* Improved version of pj_do_proj uses the pj_transform function instead
  * of pj_fwd and pj_inv, to take advantage of datum conversions          */
 
+
+/*!
+ * \brief Project x,y
+ *
+ * Project the given coordinate pair (x, y)
+ * from a projection defined in info_in to projection defined in info_out.
+ *
+ *  \param x
+ *  \param y
+ *  \param info_in
+ *  \param info_out
+ *  \return int
+ */
+
 int pj_do_proj(x,y,info_in,info_out)
   double *x,*y;
   struct pj_info *info_in,*info_out;
@@ -87,6 +101,24 @@ int pj_do_proj(x,y,info_in,info_out)
  * transformations of multiple co-ordinates stored in arrays (as afforded by
  * PROJ.4 function pj_transform().
  * Not used yet (1/2003). */
+
+
+/*!
+ * \brief Project x,y,h
+ *
+ * Project the given coordinate triple (x, y, h)
+ * from a projection defined in info_in to projection defined in info_out.
+ * x, y and h should be three arrays of equal length; count is the number of
+ * points to be transformed.
+ *
+ *  \param count
+ *  \param x
+ *  \param y
+ *  \param h
+ *  \param info_in
+ *  \param info_out
+ *  \return int
+ */
 
 int pj_do_transform (int count, double *x, double *y, double *h, 
 		    struct pj_info *info_in, struct pj_info *info_out)

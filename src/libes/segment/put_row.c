@@ -1,7 +1,3 @@
-/*
- * $Id$
- */
-
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
@@ -10,7 +6,25 @@
 #include "gis.h"
 
 /*	buf is CELL *   WRAT code	*/
-/*  int segment_put_row (SEGMENT *SEG, CELL *buf,int row) */
+/*  
+ * int segment_put_row (SEGMENT *SEG, CELL *buf,int row) */
+
+/*!
+ * \brief write row to segment file
+ *
+ * Transfers nonsegmented matrix data, row by row, into a segment
+ * file.  <b>Seg</b> is the segment structure that was configured from a call
+ * to <i>segment_init.</i> <b>Buf</b> should contain <i>ncols*len</i>
+ * bytes of data to be transferred to the segment file. <b>Row</b> specifies
+ * the row from the data matrix being transferred.
+ * Return codes are: 1 if ok;   else -1 could not seek or write segment file.
+ *
+ *  \param seg
+ *  \param buf
+ *  \param row
+ *  \return int
+ */
+
 int segment_put_row (SEGMENT *SEG, void *buf,int row)
 {
     int size;

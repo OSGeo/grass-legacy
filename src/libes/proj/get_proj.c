@@ -19,6 +19,19 @@ static void alloc_options(char *);
 static char *opt_in[MAX_PARGS];
 static int  nopt1;
 
+
+/*!
+ * \brief Get projection key values
+ *
+ * Get projection key values from current location settings (PERMANENT/PROJ_INFO
+ * and PERMANENT/PROJ_UNITS files).
+ *
+ *  \param info
+ *  \param in_proj_keys
+ *  \param in_units_keys
+ *  \return int
+ */
+
 int pj_get_kv(info, in_proj_keys, in_units_keys)
 struct pj_info *info;
 struct Key_Value *in_proj_keys, *in_units_keys;
@@ -223,6 +236,17 @@ static void alloc_options(char * buffa)
     return;
 }
    
+
+/*!
+ * \brief Read in projection settings
+ *
+ * Reads in projection settings.
+ *
+ *  \param info
+ *  \param str
+ *  \return int
+ */
+
 int pj_get_string(info, str)
 struct pj_info *info;
 char *str;
@@ -305,6 +329,20 @@ char *str;
 }
 
 /* This function is a bit useless now */
+
+
+/*!
+ * \brief Initialize pj_info
+ *
+ * This function is deprecated and it may be removed in the future.
+ * Initialization of PROJ info structure to "no data". Use of this
+ * function is not necessary since its contents are duplicated inside both
+ * pj_get_kv and pj_get_string, one or other of which must be called to
+ * set up the projection parameters.
+ *
+ *  \param info
+ *  \return int
+ */
 
 int pj_zero_proj(info)
 struct pj_info *info;

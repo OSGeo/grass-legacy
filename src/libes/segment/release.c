@@ -1,6 +1,18 @@
 #include <stdlib.h>
 #include "segment.h"
 
+/*!
+ * \brief free allocated memory
+ *
+ * Releases the
+ * allocated memory associated with the segment file <b>seg.</b> Does not close
+ * the file. Does not flush the data which may be pending from previous
+ * <i>segment_put</i> calls.
+ *
+ *  \param seg
+ *  \return int
+ */
+
 int segment_release ( SEGMENT *SEG)
 {
     int i;
