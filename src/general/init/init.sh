@@ -32,6 +32,7 @@ export GIS_LOCK
 
 # Set PATH to GRASS bin, ETC to GRASS etc
 ETC=$GISBASE/etc
+LCL=`echo $LANG | sed 's/\(..\)\(.*\)/\1/'`
 PATH=$GISBASE/bin:$GISBASE/scripts:$PATH:$GRASS_ADDON_PATH
 export PATH
 
@@ -92,7 +93,14 @@ fi
 
 # First time user - GISRC is defined in the grass script
 if [ ! -f $GISRC ] ; then
+
+if [ ! -f $GISBASE/locale/$LCL/etc/grass_intro ] ; then
     cat $ETC/grass_intro
+else
+	cat $GISBASE/locale/$LCL/etc/grass_intro
+fi
+
+
     echo
     echo "Hit RETURN to continue"
     read ans
@@ -381,21 +389,11 @@ esac
 # Display the version and license info
 tput clear
 
-echo "Welcome to GRASS VERSION_NUMBER (VERSION_DATE) VERSION_UPDATE_PKG"
-echo
-echo "Geographic Resources Analysis Support System (GRASS) is Copyright,"
-echo "1999-2002 by the GRASS Development Team, and licensed under terms of the"
-echo "GNU General Public License (GPL)."
-echo 
-echo "This GRASS VERSION_NUMBER release is coordinated and produced by the"
-echo "GRASS Development Team headquartered at ITC-irst (Trento, Italy) with"
-echo "worldwide support and further development sites located at Baylor"
-echo "University and the University of Illinois (U.S.A.)."
-echo 
-echo "This program is distributed in the hope that it will be useful, but"
-echo "WITHOUT ANY WARRANTY; without even the implied warranty of"
-echo "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU"
-echo "General Public License for more details."
+if [ ! -f $GISBASE/locale/$LCL/etc/license ] ; then
+	cat $ETC/license
+else
+	cat $GISBASE/locale/$LCL/etc/license
+fi
 echo 
 echo "This version running thru the $shellname ($SHELL)"
 echo "Help is available with the command:      g.help"
