@@ -1,21 +1,26 @@
 
 #!/bin/sh
+#
+# $Id: d.sites.icons,v 1.0 2004/03/12 
+#
+############################################################################
+#
+# MODULE:		d.siter
+# AUTHOR(S):	Michael Barton; 
+# PURPOSE:	Displays sites as user-defined icons
+# COPYRIGHT:	(C) 2004 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+#############################################################################
 
-# what to do in case of user break:
-function exitprocedure()
-{
- echo "User break!"
- #cleanup
+if  [ -z $GISBASE ] ; then
+ echo "You must be in GRASS GIS to run this program."
  exit 1
-}
+fi   
 
-# shell check for user break (signal list: trap -l)
-trap "exitprocedure" 2 3 9 15
-
-if test "$GISBASE" = ""; then
-echo "You must be in GRASS to run this program."
-exit
-fi
 
 if [ $# -eq 0 -o "$1" = "--help" -o "$1" = "help" -o "$1" = "-h" ]
 then
