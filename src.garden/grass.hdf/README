@@ -1,6 +1,8 @@
+The new HDF 5 is here:
+http://hdf.ncsa.uiuc.edu/HDF5/
+ftp://ftp.ncsa.uiuc.edu/HDF/HDF5/hdf5-1.2.2/src/
+
+What's here:
 in ./hdf3 is HDF3.2 - working
 
 in ./hdf4 is HDF4.x - not yet working
-
-Markus Neteler
-11/1999
