@@ -2,6 +2,7 @@
 MODULE_TOPDIR = ..
 
 SUBDIRS1 = \
+	r.bilinear \
 	r.buffer \
 	r.clump \
 	r.colors \
