@@ -53,11 +53,9 @@ int main (int argc, char *argv[])
     flag1->description = "Quiet" ;
 
 /* Not yet fully implemented in do_patch.c */
-/*
     zeroflag = G_define_flag() ;
     zeroflag->key         = 'z' ;
     zeroflag->description = "Use zero (0) for transparency instead of NULL" ;
-*/
 
     verbose = 1;
     ZEROFLAG = 0; /* default: use NULL for transparency */
