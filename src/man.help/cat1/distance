@@ -1,0 +1,132 @@
+
+
+
+distance(1)          GRASS Reference Manual           distance(1)
+
+
+
+NAME
+     distance - Create cell based on distances from
+     (Available through grass3 menu)
+
+SYNOPSIS
+     distance
+
+DESCRIPTION
+     Distance creates a new showing distance (or proximity) zones
+     around selected Both the and the zones are user-chosen.
+     Suppose, for example, that you want to place proximity zones
+     around roads.  This tool could create the shown below on the
+     right based on road information contained in the shown on
+     the left.
+
+     000000000000000000000000   111122222222222222333333
+     111000000000000000000000   000111111111112222222222
+     000111111111100000000000   111000000000011112222222
+     000000001000011100000000   221111110111100011111111
+     000000001000000011111111   222222210122111100000000
+     000000001000000000000000   322222210122222111111111
+     000000001000000000000000   333332210122222222222222
+     000000001000000000000000   333332210122332222222222
+     000000001000000000000000   333332210122333333333333
+     Category 0: No roads       Category 0: Road location
+     Category 1: Roads          Category 1: Zone 1 around roads
+                                Category 2: Zone 2 around roads
+                                Category 3: Zone 3 around roads
+
+
+USER PROMPTS
+1) You are requested to identify the existing from which
+     distance-from calculations shall be based, and a name (of
+     your choice) for the new which will contain the results.
+2) Next, identify the in the existing from which distances shall
+     be calculated.  Here you will be given a list of the names
+     of the existing categories.  You identify those from which
+     distances shall be calculated by placing a one "1" beside
+     them.  A zero "0" (the default value used, if the user
+     specified no value beside a category) will indicate those
+     categories which should be ignored.
+3) Then, identify the proximity zones desired.  You have the
+     option of identifying up to 60 continuous zones.
+     (Continuous is used in the sense that each category zone's
+     lower value is the previous zone's upper value.  The first
+     zone always has distance 0 as its lower bound.)  All
+     distances are entered in cell units; the value of the units
+     is the edge length of the cells, and is stated at the top of
+     the user prompt page.
+4) Last, determine which of two methods the distance program
+     should use to calculate distances.  These two methods are
+     very different in their execution, but produce identical
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+distance(1)          GRASS Reference Manual           distance(1)
+
+
+
+     results.  The user's decision to run one, rather than the
+     other, should be based in part on an evaluation of the
+     patterns in which the of relevance occur in the specific
+     under examination.
+
+     TOCELL:  The "tocell" method searches around each cell in
+     the looking for cells from which distances are to be
+     calculated.  This technique is very fast when there are many
+     cells containing the category of interest scattered
+     throughout the area. It works very slowly when there are few
+     cells from which to calculate distances, because it takes so
+     long to find them.
+
+     FROMCELL: The "fromcell" method goes to each cell that
+     contains a category from which distances are to be
+     calculated, and draws the requested distance rings around
+     them.  This method works very fast when there are few cells
+     containing the of interest, but works slowly when there are
+     numerous cells containing the of interest spread throughout
+     the area.
+
+
+     00010000100001100001010   Fast for TOCELL        00000000000000000000000
+     01000101110000101101100   Slow for FROMCELL      00000000000000000100000
+     10000011001111000010000   <-----------           00000100000000000000000
+     11110000101000100100001                          00000000000000000000000
+     00110000110000001000110      ------------>       00000000000000000000000
+     00010011000000010001010      Fast for FROMCELL   00000000000000000000000
+     00011100000000100000111      Slow for TOCELL     00000000000000100000000
+     00000011111111000011000                          00000000000000000000000
+
+     The distance program now determines which of its possible
+     methods to run to get your requested results.  It starts
+     that process running in "background" and returns keyboard
+     control to you.  These processes can occasionally take up to
+     an hour or more to finish; however, because they run in the
+     background, you are free to do other things with the
+     computer in the meantime.
+
+NOTES
+     Note that distance only works on square cells.
+
+SEE ALSO
+     Gdistance[2G]
+
+AUTHORS
+     James Westervelt, U.S. Army Construction Engineering
+     Research Laboratory
+     Chuck O'Neil, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
