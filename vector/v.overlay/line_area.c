@@ -60,6 +60,10 @@ int line_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
     OCats = Vect_new_cats_struct();
     db_init_string (&stmt);
 
+    fprintf (stderr, SEP );
+    fprintf ( stderr, "Breaking lines ...\n" );
+    Vect_break_lines ( Out, GV_LINE|GV_BOUNDARY, NULL, stderr );
+
     /* Basic topology needed only */
     Vect_build_partial ( Out, GV_BUILD_BASE, NULL );
 

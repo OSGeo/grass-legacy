@@ -194,11 +194,6 @@ main (int argc, char *argv[])
     /* do not print output, because befor cleaning it is nonsense */
     Vect_build_partial ( &Out, GV_BUILD_BASE, NULL ); 
 
-    fprintf (stderr, SEP );
-    fprintf ( stderr, "Breaking lines ...\n" );
-    Vect_break_lines ( &Out, GV_LINE|GV_BOUNDARY, NULL, stderr );
-    
-
     /* AREA x AREA */
     if ( type[0] == GV_AREA ) { 
 	area_area ( In, field, &Out, Fi, driver, operator, ofield );
