@@ -52,7 +52,7 @@ INSTALL=    	    	cp
 ENV=			@ENV@
 USE_OPENGL=             @USE_OPENGL@
 # The cutline command is needed to shorten the ChangeLog:
-CUTLINE=		`grep -n '1999-12-29 16:12' ChangeLog |cut -d':' -f1 | head -1`
+CUTLINE=		`grep -n '1999-12-29 16:13' ChangeLog |cut -d':' -f1 | head -1`
 
 # These variables will be passed to the scripts below:
 MAKE_ENV=		GRASSSRC=${SRCDIR}/src GMAKE=${SRCDIR}/src/CMD/gmake5.0 HEADER=head.${ARCH} MAKE=${MAKE}
