@@ -145,6 +145,16 @@ proc set_display_png { } {
 
     set f $set($s,frame)
 
+    set cmon [eval exec d.mon -p]
+    set cm ""
+    regexp -- {Currently selected monitor: (.+)$} $cmon r cm 
+
+    if { $cm == "PNG" } {
+        puts stdout "WARNING: PNG monitor is already running and will be restarted."
+	set cmd "d.mon stop=PNG"
+	execute $cmd
+    } 
+ 
     set cmd "d.mon PNG"
     execute $cmd
 
