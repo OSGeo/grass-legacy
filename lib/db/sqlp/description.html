@@ -1,0 +1,44 @@
+<H2>DESCRIPTION</H2>
+
+SQL support for GRASS.
+<P>
+Supported is a limited set of SQL functions and operators.
+<P>
+<H2>FUNCTIONS</H2>
+<PRE>
+  CREATE TABLE table ( columndefs )
+  DROP TABLE table
+  SELECT columns FROM table
+  SELECT columns FROM table WHERE condition
+  DELETE FROM table
+  DELETE FROM table WHERE condition
+  INSERT INTO table values
+  INSERT INTO table ( columns ) values
+  UPDATE table SET assignments
+  UPDATE table SET assignments WHERE condition
+</PRE>
+
+<H2>OPERATORS</H2>
+<PRE>
+  "="  : equal
+  "<"  : smaller than
+  "<=" : smaller/equal than
+  ">"  : larger than
+  ">=" : larger/equal than
+  "<>" : not equal
+  "~"  : Substring matching
+</PRE>
+
+<H2>NOTES</H2>
+
+<ul>
+<li>SQL does not support '.' (dots) in table names.
+<li>Supported table name characters are only:<br>
+    [A-Za-z][A-Za-z0-9_]*
+<li> A table name must start with a character, not a number.
+</ul>
+
+<p><i>Last changed: $Date$</i>
+<HR>
+<P><a href=index.html>Help Index</a>
+</body></html>
