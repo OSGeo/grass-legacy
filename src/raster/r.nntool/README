@@ -1,0 +1,45 @@
+I haven't written a decent user manual yet since r.nntool is still
+under development (and therefore, use this software at your own risk).  
+However, a few things need to be mentioned:
+
+* The training site I/O data is stored in a file called o_train (o_ for
+"old" training file).  This is the default file used for training the
+neural network.
+
+* If you use the random option to rearrange the training data,
+the network training data is stored in a file called TRAIN.
+
+* The classes option can only be used right now for visualization of 
+two input vectors.  The color scheme isn't all that exciting and I'm working
+on using a better color scheme to represent the training data in each 
+class.  
+
+[You may wish to also ftp xgobi.tar.gz, located in the same place
+as r.nntool, and use that tool to visualize your training samples located
+in the o_train/TRAIN file].
+
+* The Bayes' classifier right now can only be used if you have access
+to IMSL (otherwise, you'll have to wait till I write the routines
+for diagonalizing a covariant matrix etc).
+
+* You will have to a priori determine the attribute value for each class in 
+the output map:
+
+	Ex., Say there are 5 classes.  I usually like to extend the
+	attribute values for the classes from 0 to 100.  So that,
+
+	0 - class 1
+	25 - class 2
+	50 - class 3
+	75 - class 4
+	100 - class 5.
+
+	This is just a limitation (a major one I might add vis a vis ARC/INFO) 
+	of GRASS since the color intensities of a map is determined by the 
+	attribute values.
+
+* The input values to the network are scaled by the highest attribute of
+each input.  You may wish to try other schemese such as sgn(x)(1 + ln|x|)
+[this was pointed by someone on the internet neural network newsgroup],
+or transform the data using a squasing function such as tahn(x).  You'll
+have to look at the source code to do this (see nntool.c).
