@@ -1,4 +1,5 @@
 /* #include "gis.h" */
+#include <stdlib.h>
 #include <string.h>
 #include "vask.h"
 #include "global.h"
@@ -13,7 +14,6 @@ int ask_elev_data (void)
     char *tl;         /* Target Location */
     char *elev_data;  /* Tempoary elevation data layer */
     short ok ;
-    int pid, status;
     int no_data_value = ZERO_DATA;
  
     tl = (char *) G_calloc (40, sizeof (char));
