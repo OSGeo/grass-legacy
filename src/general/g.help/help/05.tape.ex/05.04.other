@@ -1,0 +1,28 @@
+                  EXTRACTING OTHER DIGITAL DATA 
+
+Increasingly, geographically-referenced spatial data are being made
+available in digital format.  In order to use these data within GRASS,
+the user must be able to extract data from their magnetic storage media,
+import them to GRASS data format, and spatially reference them with
+other existing digital data.  The section, "Sources of Digital Data"
+lists some available digital data sources for GRASS data sets.
+
+Other sections (see "Extracting Digital Elevation Data" and
+"Extracting Digital Imagery Data") discuss the extraction of elevation
+and imagery data from magnetic tape.  Specific procedures for extracting
+these data from tape and importing them into a GRASS data base are
+described in the papers \"DTED and DEM Elevation Data Extraction"\
+and the \"GRASS Imagery Tutorial"\.
+
+GRASS commands also exist to perform generic tape data extraction and
+manipulation.  Those commands are listed below.
+
+        \-  i.tape.other \            \-  m.examine.tape \
+                                     \-  m.rot90 \
+
+For more information on a specific command, select a command and press
+ESC.
+
+Also, see the section, "UNIX: dd, tar" for information on ways in which
+UNIX programs can be used to extract data from tape.
+
