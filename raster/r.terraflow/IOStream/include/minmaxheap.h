@@ -151,8 +151,8 @@ public:
 
 
 private:
-  // just in case log2() macro was already defined in math.h.
-  // e.g., log2() is defined in CYGWIN GCC by default.
+  // Changed log2() to log2_() just in case log2() macro was already
+  // defined in math.h: e.g., log2() is defined in Cygwin gcc by default.
   long log2_(long n) const;
   int isOnMaxLevel(HeapIndex i) const { return (log2_(i) % 2); };
   int isOnMinLevel(HeapIndex i) const { return !isOnMaxLevel(i); };
