@@ -311,7 +311,9 @@ int main (int argc, char *argv[])
                     "    Current label found:  %s\n", s->str_att[dec_field]);
                 }
 	        G_set_raster_cat (rast, rast, s->str_att[dec_field], &cats, map_type);
-		fprintf (stdout,"setting raster cats %f %s", *((FCELL *) rast), *s->str_att);
+		/*
+		fprintf (stdout,"setting raster cats %f %s\n", *((FCELL *) rast), *s->str_att);
+		*/
             }
         }
         else /* zero_one */
