@@ -1,7 +1,7 @@
 
 
 
-d.grid               GRASS Reference Manual                d.grid
+d.grid <main>        GRASS Reference Manual         <main> d.grid
 
 
 
@@ -60,14 +60,14 @@ NOTES
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-d.grid               GRASS Reference Manual                d.grid
+d.grid <main>        GRASS Reference Manual         <main> d.grid
 
 
 
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
