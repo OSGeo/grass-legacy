@@ -80,6 +80,7 @@ src/display/d.grid
 src/display/d.his
 src/display/d.histogram
 src/display/d.icons
+src/display/d.info
 src/display/d.label
 src/display/d.labels
 ##from Pierre: for new layered XDRIVER2, currently in src.todo/:
@@ -310,6 +311,7 @@ src/raster/r.in.dted/r.in.dted
 src/raster/r.in.gdal
 src/raster/r.in.gridatb
 src/raster/r.in.ll
+src/raster/r.in.mat
 src/raster/r.in.pbm
 src/raster/r.in.pgm
 src/raster/r.in.png
@@ -335,6 +337,7 @@ src/raster/r.out.arc
 src/raster/r.out.ascii
 src/raster/r.out.bin
 src/raster/r.out.gridatb
+src/raster/r.out.mat
 src/raster/r.out.mpeg
 src/raster/r.out.png
 src/raster/r.out.pov
@@ -384,6 +387,7 @@ src/raster/r.to.sites
 src/raster/r.topidx
 src/raster/r.topmodel
 src/raster/r.transect
+src/raster/r.univar2
 src/raster/r.volume
 src/raster/r.water.outlet
 src/raster/r.watershed
@@ -400,6 +404,7 @@ src/sites/s.in.dbf
 src/sites/s.in.shape
 src/sites/s.info
 #src/sites/s.kcv  # needs update to 5.0 API
+src/sites/s.kernel
 src/sites/s.mask
 src/sites/s.normal
 src/sites/s.o2n.tps
@@ -433,6 +438,8 @@ src.contrib/CERL/raster/r.hydro.CASC2D
 #
 # requires OpenGL and Tcl/Tk
 #src.contrib/GMSL/NVIZ2.2
+# independent of nviz:
+src.contrib/GMSL/d.nviz
 #
 # only on SGI:
 #src.contrib/GMSL/SG3d
