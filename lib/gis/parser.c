@@ -1115,7 +1115,10 @@ int G_gui (void)
 	   "    fileevent $msg readable [ list prnout $msg  ]\n"
 	   "    update idletasks\n"
 	   "}\n");
-    append(cmd, "pack .run -side top -padx 20 -pady 5\n");
+
+    /* Close button */
+    append(cmd, "button .close -text \"Close\" -command { exit }\n");
+    append(cmd, "pack .run .close -side left -expand yes -padx 20 -pady 5\n");
 
     G_debug (1, "cmd:\n%s", cmd);  
     
