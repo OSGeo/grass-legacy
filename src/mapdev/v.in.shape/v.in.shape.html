@@ -1,121 +1,227 @@
-<TITLE>v.in.shape</TITLE>
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Content-Style" content="text/css">
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (X11; U; Linux 2.2.14 i686) [Netscape]">
+</head>
+<body>
+<a href="#NAME">NAME</a>
+<br><a href="#SYNOPSIS">SYNOPSIS</a>
+<br><a href="#DESCRIPTION">DESCRIPTION</a>
+<br><a href="#FEATURES">FEATURES</a>
+<br><a href="#OPTIONS">OPTIONS</a>
+<br><a href="#BUGS AND CAVEAT">BUGS AND CAVEAT</a>
+<br><a href="#SEE ALSO">SEE ALSO</a>
+<br><a href="#AUTHORS">AUTHORS</a>
+<br><!-- Creator     : groff version 1.15  --><!-- CreationDate: Fri May 12 18:34:06 2000
+ --><!-- Total number of pages: 2 --><!-- Page: 1 --><!-- left  margin: 100 --><!-- right margin: 750 --><a NAME="NAME"></a>
+<h2>
+NAME</h2>
+<font size=+0><i>v.in.shape</i> - Read an ArcView Shapefile</font>
+<br><a NAME="SYNOPSIS"></a>
+<h2>
+<font size=+0>SYNOPSIS</font></h2>
 
-<body bgcolor="white">
+<table COLS=2 WIDTH="100%" rules="none" frame="none" >
+<tr ALIGN=LEFT VALIGN=TOP>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="60%"><font size=+0><b>v.in.shape input=</b><i>name</i>
+[<b>mapset=</b><i>name</i>]</font>
+<br><font size=+0>[<b>verbose=</b><i>debug level</i>] [<b>logfile=</b><i>name</i>]
+[<b>snapdist=</b><i>snap distance</i>]</font>
+<br><font size=+0>[<b>sliver=</b><i>min. angle</i>] [<b>scale=</b><i>orig.
+scale</i>] [<b>attribute=</b><i>attribute category</i>]</font>
+<br><font size=+0>[<b>label=</b><i>category label</i>]</font></td>
 
-<img src="grass.smlogo.gif">
+<td ALIGN=LEFT VALIGN=TOP WIDTH="39%"></td>
+</tr>
+</table>
 
-<hr width=100% align=center size=6 no shade>
+<p><a NAME="DESCRIPTION"></a>
+<h2>
+<font size=+0>DESCRIPTION</font></h2>
+<font size=+0>The <i>v.in.shape</i> program is designed to import ArcView
+Shapefiles.</font>
+<p><font size=+0><i>v.in.shape</i> will be run non-interactively if the
+user specifies program arguments on the command line, using the form:</font>
+<br>&nbsp;
+<table COLS=2 WIDTH="100%" rules="none" frame="none" >
+<tr ALIGN=LEFT VALIGN=TOP>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="60%"><font size=+0><b>v.in.shape input=</b><i>name</i>
+[<b>mapset=</b><i>name</i>]</font>
+<br><font size=+0>[<b>verbose=</b><i>debug level</i>] [<b>logfile=</b><i>name</i>]
+[<b>snapdist=</b><i>snap distance</i>]</font>
+<br><font size=+0>[<b>sliver=</b><i>min. angle</i>] [<b>scale=</b><i>orig.
+scale</i>] [<b>attribute=</b><i>attribute category</i>]</font>
+<br><font size=+0>[<b>label=</b><i>category label</i>]</font>
+<p><font size=+0>Alternately, the user can simply type:</font></td>
 
-<H2>NAME</H2>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="39%"></td>
+</tr>
+</table>
 
-<EM><b>v.in.shape</b></EM>  - Read an ESRI ArcView file
-<BR>
-<EM>(GRASS Raster Data Import Program)</EM>
+<p><b><font size=+0>v.in.shape</font></b>
+<p><font size=+0>on the command line without program arguments. In this
+case, the user will be prompted for parameter values using the standard
+GRASS user interface described in the manual entry for <i>parser</i>.</font>
+<br><a NAME="FEATURES"></a>
+<h2>
+<font size=+0>FEATURES</font></h2>
+<font size=+0>Grass files created have the name extracted from the basename
+of the shapefile.</font>
+<p><font size=+0>The import filter attempts to correct some common errors
+that are frequently met with in shapefiles.</font>
+<br><a NAME="OPTIONS"></a>
+<h2>
+<font size=+0>OPTIONS</font></h2>
 
-<H2>SYNOPSIS</H2>
+<table COLS=3 WIDTH="100%" rules="none" frame="none" >
+<tr ALIGN=LEFT VALIGN=TOP>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="18%"><font size=+0><b>input=</b><i>name</i></font></td>
 
-<B>v.in.shape</B> 
-<BR>
-<B>v.in.shape help</B> 
-<BR>
-<B>v.in.shape</B> [<B>-s</B>] 
-<B>input=</B><EM>name</EM> 
-[<B>mapset=</B><EM>name</EM>] 
-[<B>verbose=</B><EM>debug level</EM>] 
-[<B>logfile=</B><EM>name</EM>] 
-[<B>attribute=</B><EM>a_name</EM>] 
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"></td>
 
-<H2>DESCRIPTION</H2>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="80%"><font size=+0>Name of input shape
+file. Provide a full path name or the name of a file in the current directory.
+The <i>.shp</i> extension is required.</font></td>
+</tr>
 
-The v.in.shape program is designed to import ESRI ArcView Shapefiles
-<p>
+<tr ALIGN=LEFT VALIGN=TOP>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="18%"><font size=+0><b>mapset=</b><i>name</i></font></td>
 
-     v.in.shape will be run non-interactively if the user specifies
-     program arguments on the command line, using the form:<p>
-<B>v.in.shape</B> [<B>-s</B>] 
-<B>input=</B><EM>name</EM> 
-[<B>mapset=</B><EM>name</EM>] 
-[<B>verbose=</B><EM>debug level</EM>] 
-[<B>logfile=</B><EM>name</EM>] <p>
-[<B>attribute=</B><EM>a_name</EM>] 
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"></td>
 
-     Alternately, the user can simply type:
-<p>
-<b>	  v.in.shape</b>
-<p>
-     on the command line without program arguments.  In this
-     case, the user will be prompted for parameter values using
-     the standard GRASS user interface described in the manual
-     entry for parser.
+<td ALIGN=LEFT VALIGN=TOP WIDTH="80%"><font size=+0>For creating a new
+mapset for the data imported. This may be usefull, since we cannot create
+a projection info file and a default window in an existing mapset. When
+a file is imported in the current mapset, you should take care that they
+are in the same projection.</font>
+<p><font size=+0>Unfortunately, you may run in trouble after that when
+using g.region (Cf BUGS).</font></td>
+</tr>
 
-<H2>FEATURES</H2>
+<tr ALIGN=LEFT VALIGN=TOP>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="18%"><font size=+0><b>verbose=</b><i>debug
+level</i></font>
+<p><font size=+0><b>logfile=</b><i>name</i></font></td>
 
-   Grass files created have the name extracted from the
-     basename of the shapefile.
- 
-<H2>OPTIONS</H2>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"></td>
 
-<EM>v.in.shape</EM> requires the user to enter the following information: 
+<td ALIGN=LEFT VALIGN=TOP WIDTH="80%"><font size=+0>Number between 0 (no
+trace of what's happening) and 9 (very verbose log).</font>
+<p><font size=+0>Name of file where log info will be written. By default
+log info are directed to <i>stderr</i>.</font></td>
+</tr>
+</table>
 
-<H3>Parameters:</H3>
+<p><font size=+0><b>snapdist=</b><i>snap distance</i></font>
+<br>&nbsp;
+<table COLS=3 WIDTH="100%" rules="none" frame="none" >
+<tr ALIGN=LEFT VALIGN=TOP>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="19%"></td>
 
-<DL>
-<DT><B>mapset=</B><EM>name</EM>
-<DD>For creating a new mapset for the data
-		       imported.  This may be usefull, since we
-		       cannot create a projection info file and a
-		       default window in an existing mapset.
-		       When a file is imported in the current
-		       mapset, you should take care that they are
-		       in the same projection.
-		       Unfortunately, you may run in trouble
-		       after that when using g.region (Cf BUGS).
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"></td>
 
-<DT><B>verbose=</B><EM>debug level</EM>
-<DD> Number between 0 (no trace of what's
-		       happening) and 9 (very verbose log).
+<td ALIGN=LEFT VALIGN=TOP WIDTH="80%"><font size=+0>A grid resolution can
+be defined within which adjacent vertices will snap.</font>
+<p><font size=+0><b>Note:</b>The vertices do not snap to the grid. All
+the vertices inside a grid cell snap to one of their number (usually the
+first).</font>
+<p><font size=+0>This value defaults to 0.001 ground units. In fact, it
+will never allow a value that is less.</font></td>
+</tr>
 
-<DT><B>logfile=</B><EM>name</EM>
-<DD> Name of file where log info will be
-		       written. By default log info are directed
-		       to stderr.
+<tr ALIGN=LEFT VALIGN=TOP>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="19%"><font size=+0><b>sliver=</b><i>minimum
+angle</i></font></td>
 
-<DT><B>attribute=</B><EM>a_name</EM>
-<DD> Name of the attribute to use as the
-		       category number in dig_att.  Give a value
-		       of list to see a list of available
-		       attributes.
-</DL>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"></td>
 
-<H2>BUGS AND CAVEAT</H2>
-       Polygons with internal holes are not treated properly.  The
-     holes are just treated as a continuation of the polygon.
-<p>
-     There is no support for projection.
-<p>
-     Label for polygons are located on the edge, rather than
-     interior to the polygon.  This is ambiguous in cases of
-     polygons that share boundaries with other polygons and will
-     cause conflicts when running v.support.
-<p>
-     New mapset are allways created with proj=0 zone=99.  If the
-     default proj and zone are not the same, g.region complaints
-     and d.vect or d.rast refuse to display your data.	The only
-     thing to do is to import in the current mapset.
+<td ALIGN=LEFT VALIGN=TOP WIDTH="80%"></td>
+</tr>
 
-<H2>SEE ALSO</H2>
+<tr ALIGN=LEFT VALIGN=TOP>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="19%"></td>
 
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"></td>
 
-<EM><A HREF="m.in.e00.html">m.in.e00</A></EM>,
-<EM><A HREF="g.mapsets.html">g.mapsets</A></EM>,
-<EM><A HREF="g.region.html">g.region</A></EM>,
-<EM><A HREF="g.setproj.html">g.setproj</A></EM>,
-<EM><A HREF="v.support.html">v.support</A></EM>
-<EM><A HREF="v.to.rast.html">v.to.rast</A></EM>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="80%"><font size=+0>A minimum angle can
+be defined for one link to subtend others at a given node. If the angle
+between two lines is less than this, they will be treated as colinear.
+This can be useful as the module now has features which attempt to correct
+some common topological errors that occur in the immediate vicinity of
+nodes. If you can be confident that true angles between adjacent arcs radiating
+from the same node cannot be less than a certain value, you can specify
+that value here, and some errors may be automatically corrected. This defaults
+to .01 degrees (specified in radians). In fact it will never allow a value
+that is less</font></td>
+</tr>
 
-<H2>AUTHOR</H2>
-   Frank Warmerdam (warmerda@home.com)<p>
-     Based on Shapelib<p>
-     (http://gdal.velocet.ca/projects/shapelib/)
-</BODY>
-</HTML>
+<tr ALIGN=LEFT VALIGN=TOP>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="19%"><font size=+0><b>scale=</b><i>original
+scale</i></font></td>
+
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"></td>
+
+<td ALIGN=LEFT VALIGN=TOP WIDTH="80%"><font size=+0>This sets an original
+scale that will be specified in the header of the vector map file pro-
+duced. It can be edited later with <b>v.digit</b>.</font>
+<p><font size=+0>The value defaults to 1:2400</font></td>
+</tr>
+
+<tr ALIGN=LEFT VALIGN=TOP>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="19%"><font size=+0><b>attribute=</b><i>a_name</i></font></td>
+
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"></td>
+
+<td ALIGN=LEFT VALIGN=TOP WIDTH="80%"><font size=+0>Name of the attribute
+to use as the category number in dig_att. Give a value of <b>list</b> to
+see a list of available attributes.</font></td>
+</tr>
+
+<tr ALIGN=LEFT VALIGN=TOP>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="19%"><font size=+0><b>label=</b><i>a_label</i></font></td>
+
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"></td>
+
+<td ALIGN=LEFT VALIGN=TOP WIDTH="80%"><font size=+0>Name of the attribute
+to use as the category label in dig_cats. Give a value of <b>list</b> to
+see a</font>
+<br><font size=+0>list of available attributes.</font></td>
+</tr>
+
+<tr ALIGN=LEFT VALIGN=TOP>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="19%"></td>
+
+<td ALIGN=LEFT VALIGN=TOP WIDTH="1%"></td>
+
+<td ALIGN=LEFT VALIGN=TOP WIDTH="80%"></td>
+</tr>
+</table>
+
+<p><a NAME="BUGS AND CAVEAT"></a>
+<h2>
+<font size=+0>BUGS AND CAVEAT</font></h2>
+<font size=+0>There is no support for projection.</font>
+<p><font size=+0>Multipatch data is not yet supported. Point data (sites)
+also is not handled by this module. New module <i>s.in.shape</i></font>
+<br><!-- Page: 2  --><!-- left  margin: 100 --><!-- right margin: 750 -->
+<p><font size=+0>imports site data.</font>
+<br><a NAME="SEE ALSO"></a>
+<h2>
+<font size=+0>SEE ALSO</font></h2>
+<i><font size=+0>m.in.e00, g.mapset, g.region, g.proj, s.in.shape, v.support,
+v.to.rast.</font></i>
+<br><a NAME="AUTHORS"></a>
+<h2>
+<font size=+0>AUTHORS</font></h2>
+<font size=+0>Frank Warmerdam (warmerda@home.com)</font>
+<br><font size=+0>Based on Shapelib (http://gdal.velocet.ca/projects/shapelib/).</font>
+<p><font size=+0>Markus Neteler</font>
+<br><font size=+0>added category support</font>
+<p><font size=+0>David Gray</font>
+<br><font size=+0>preprocessing to provide correct handling of polygon
+edges, labels and correction of some topological errors. Also some new
+options q.v.</font>
+</body>
+</html>

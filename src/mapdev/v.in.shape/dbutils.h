@@ -29,6 +29,9 @@
 #define SET_SD 1
 #define GET_SD 0
 
+#define GET_VAL 0
+#define SET_VAL 1
+
 /* Functions */
 int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx );
 char *calcKeyValue( pntDescript *pnt1, float sr );
@@ -37,5 +40,6 @@ char *calcKeyValue( pntDescript *pnt1, float sr );
 
 int btree_compare( char *key1, char *key2 );
 int procSnapDistance( int iswitch, float *sd );
+int procMinSubtend( int iswitch, float *sd );
 
 #endif /* _DB_UTILS_TOPO_H */
