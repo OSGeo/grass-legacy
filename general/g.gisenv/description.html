@@ -157,20 +157,35 @@ The output from
 <em>g.gisenv</em>
 when invoked without arguments is directly usable by /bin/sh.
 The following command will cast each variable into the UNIX environment:
-
-
 <p>
-
 <dl>
 <dd>
 <b>eval `g.gisenv`</b>
 </dl>
-
-
 <p>
-
 This works only for <em>/bin/sh</em>. The format of the
 output is not compatible with other UNIX shells.
+
+<h3>GRASS Debugging:</h3>
+
+To print debugging messages, the variable DEBUG must be set to level equal or 
+greater than 0:
+<P>
+<TT>g.gisenv set="DEBUG=3"</TT>
+<P>
+
+Levels: (recommended levels)
+<ul>
+<li> 0 - silence
+<li>  1 - message is printed once or few times per module
+<li>  3 - each row (raster) or line (vector)
+<li>  5 - each cell (raster) or point (vector)
+</ul>
+
+To disable debugging messages, DEBUG must be set back to 0:
+<P>
+<TT>g.gisenv set="DEBUG=0"</TT>
+<P>
 
 
 <h2>SEE ALSO</h2>
@@ -186,4 +201,4 @@ output is not compatible with other UNIX shells.
 Michael Shapiro,
 U.S.Army Construction Engineering Research Laboratory
 
-<p><i>Last changed: $</i>
+<p><i>Last changed: $Date$</i>
