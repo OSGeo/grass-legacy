@@ -1,0 +1,66 @@
+
+
+
+help(1)              GRASS Reference Manual               help(1)
+
+
+
+NAME
+     help - GRASS help facility
+     (Available through grass3 menu)
+
+SYNOPSIS
+     help
+
+DESCRIPTION
+     Help provides a user with quick information about the GRASS
+     tools.  A user may choose to (1) see a list of tools, (2)
+     have a list printed on paper, or (3) request information
+     about a particular tool.  For reference manual entries refer
+     to the GRASS manual[1] command.
+
+SEE ALSO
+     GRASS Reference Manual
+     manual[1]
+
+AUTHOR
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
