@@ -98,6 +98,8 @@ write_report_stats (Site *theSite, UNIV *stats,
             case STAT_SUM:
                 theSite->dbl_att[i] = stats->sum; break;
             case STAT_N:
+                /* TODO: n is INT and not dbl. But then it must go into the 
+                         first position due to the site_list column/type order */
                 theSite->dbl_att[i] = stats->n; break;
             default:
                 G_fatal_error ("%s:%s:%d: programmer error in output ordering",
