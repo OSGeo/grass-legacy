@@ -18,13 +18,13 @@ cat << EOF
 Welcome to GRASS VERSION_NUMBER (VERSION_DATE) VERSION_UPDATE_PKG
 
 Geographic Resources Analysis Support System (GRASS) is Copyright,
-1999-2000 by the GRASS Development Team, and licensed under terms of
-the GNU General Public License (GPL).
+1999-2000 by the GRASS Development Team, and licensed under terms of the 
+GNU General Public License (GPL).
 
-This GRASS 5 release is coordinated and produced by the GRASS
-Development Team headquartered at University of Hannover with
-worldwide support and further development sites located at 
-Baylor University and the University of Illinois.
+This GRASS 5 release is coordinated and produced by the GRASS Development 
+Team headquartered at University of Hannover with worldwide support and 
+further development sites located at Baylor University and the University 
+of Illinois.
 
 This program is distributed in the hope that it will be useful, but WITHOUT
 ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
