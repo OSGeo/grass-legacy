@@ -1,3 +1,0 @@
-Questi sorgenti sono ottenuti dalla versione per SUN (che poi sonoo
-uguali alla versione BSD ad eccezione del modulo toktyp.f che non c'e` 
-sotto BSD) con l'aggiunta del modulo time_date.c.
