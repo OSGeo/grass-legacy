@@ -184,7 +184,7 @@ void G3dToascii(FILE *fp, G3D_Region *region, int decim) {
 /* Main function: open the input and output files, then call
  * G3dtoascii.
  */
-void main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
   char *input, *output;
   int convertNull, decim;
   double nullValue;
