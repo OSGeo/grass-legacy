@@ -1,0 +1,132 @@
+
+
+
+Greport(2G)          GRASS Reference Manual           Greport(2G)
+
+
+
+NAME
+     Greport - Reports statistics for
+     (G Language Tool)
+
+SYNOPSIS
+     Greport [layer] [units]
+     Greport [layer=option] [units=option]
+
+DESCRIPTION
+     Greport allows the user to set up a series of report
+     parameters to be applied to a and creates a report.  The
+     report will print out to the screen only.  However, output
+     may be redirected to a file or another program using the
+     UNIX redirection mechanism.
+
+     The user must specify which layer and what units of
+     measurement the user wants to be reported (multiple units
+     can be reported).  The user can choose from among seven
+     units:
+
+          number       = # cells in area of interest
+          percent      = % cover (including no data areas)
+          percent-0    = % cover (excluding no data areas)
+          acres        = cover measured in acres
+          hectares     = cover measured in hectares
+          kilometers   = cover measured in square kilometers
+          miles        = cover measured in square miles
+
+     These units are based on the number of cells in the user's
+     area of interest which is the combination of the current
+     geographic window and the current mask (if any).  These are
+     established with the programs window and mask respectively.
+
+     The report itself consists of two parts, a header section
+     and the main body of the report.
+
+     The header section of the report identifies the (by name and
+     title), location, mapset, report date and the area of
+     interest.  The area of interest is described in two parts:
+     the user's current is presented, and the mask is presented
+     (if any is used).
+
+     The main body of the report consists of from one to three
+     tables which present the statistics for each category and
+     the totals for each unit column.
+
+     Following is the result of a Greport run on the cell
+     "geology" with the units expressed in square miles and
+     acres, located in the Spearfish sample Here, Greport output
+     is directed into the file "report.file".
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+Greport(2G)          GRASS Reference Manual           Greport(2G)
+
+
+
+EXAMPLE:
+     Greport geology miles acres > report.file
+     ____________________________________________________________
+    |                 MAP LAYER CATEGORY REPORT                 |
+    |___________________________________________________________|
+    | Layer:    [geology] in mapset [PERMANENT]                 |
+    | Title:    Geology                                         |
+    | Mask:     none                                            |
+    | Date:     Fri Sep 2 09:20:09                              |
+    |___________________________________________________________|
+    |           north:   4928000.00   east:   609000.00         |
+    | Window:   south:   4914000.00   west:   590000.00         |
+    |           res:         100.00   res:       100.00         |
+    |___________________________________________________________|
+    |     Category                                Acres    Sq.mi|
+    |___________________________________________________________|
+    |    0      no data                          415.13     0.65|
+    |    1      metamorphic                     2597.02     4.06|
+    |    2      transition                        32.12     0.05|
+    |    3      igneous                         8117.24    12.68|
+    |    4      sandstone                      16691.60    26.08|
+    |    5      limestone                      13681.93    21.38|
+    |    6      shale                          10304.07    16.10|
+    |    7      sandy shale                     2517.95     3.93|
+    |    8      claysand                        3229.60     5.05|
+    |    9      sand                            8141.95    12.72|
+    |                                         _________   ______|
+    |      total                               65728.60   102.70|
+    |___________________________________________________________|
+
+SEE ALSO
+     mask[1], report[1], window[1]
+
+AUTHOR
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
