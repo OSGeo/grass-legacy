@@ -90,7 +90,7 @@ int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx ) {
   strncpy(keyHolder, pkey, 33 );
   dataHolder = pntPtrPtr;
 
-  res = btree_find( hDB, keyHolder, &dataHolder );
+  res = btree_find( hDB, keyHolder, (void **)&dataHolder );
   if( res == 0 ) btree_update( hDB, keyHolder, 33, dataHolder, 4 );
 
   if ( res == 1 ) {
