@@ -1,0 +1,109 @@
+#!/bin/sh
+# 
+# XDriver sockets: replacement of XDriver fifos (needed to improve speed and
+#                  to run GRASS Monitors on Windows)
+# 
+# The source code from Ronald Wiemer (MessQ.tar.Z) is merged into
+# the current driver code by Huidae Cho.
+# 
+# The updated files including the sockets are here:
+#  src/display/devices/XDRIVER/XDRIVER24/socket.new/
+#  src/display/devices/XDRIVER/lib/socket.new/
+#  src/libes/raster/socket.new/
+#
+# TODO: 
+#  The updated driver has to be tested and finally made to be standard
+#  driver.
+#
+#############################################################################
+#
+# Please test new XDRIVER and report bug to developers list.
+#
+#	./README.sockets new
+#	
+# Then you can revert to original XDRIVER.
+#
+#	./README.sockets orig
+#
+#############################################################################
+
+which gmake5 > /dev/null 2>&1
+if [ $? -ne 0 ]
+then
+	echo "gmake5 is not under \$PATH."
+	exit
+fi
+
+if [ ! -f NEWS.html ]
+then
+	echo "This should be run under grass root directory."
+	exit
+fi
+
+if [ $# -ne 1 -o "$1" = "help" ]
+then
+	echo
+	echo "Please read README.sockets first."
+	echo
+	echo "Usage:"
+	echo " ./README.sockets [new|orig]"
+	echo
+	exit
+fi
+
+if [ "$1" != "new" -a "$1" != "orig" ]
+then
+	echo "$1: Invalid argument."
+	exit
+fi
+
+go=0
+
+if [ "$1" = "new" ]
+then
+	for i in src/display/devices/XDRIVER/XDRIVER24/SOCKET_NEW/SWITCHER.c \
+		 src/display/devices/XDRIVER/lib/SOCKET_NEW/connect.c \
+		 src/libes/raster/SOCKET_NEW/io.c
+	do
+		orig=`echo $i | sed 's/SOCKET_NEW\///'`
+		new=`echo $i | sed 's/SOCKET_NEW\//socket.new\//'`
+		diff $orig $new > /dev/null 2>&1
+		if [ $? -eq 0 ]
+		then
+			continue
+		fi
+		go=1
+		echo cp $orig $orig.orig
+		cp $orig $orig.orig
+		echo cp $new $orig
+		cp $new $orig
+	done
+else
+	for i in src/display/devices/XDRIVER/XDRIVER24/SWITCHER.c \
+		 src/display/devices/XDRIVER/lib/connect.c \
+		 src/libes/raster/io.c
+	do
+		if [ ! -f $i.orig ]
+		then
+			continue
+		fi
+		go=1
+		echo mv $i.orig $i
+		mv $i.orig $i
+	done
+fi
+
+if [ $go -eq 0 ]
+then
+	exit
+fi
+
+(cd src/display/devices/XDRIVER && gmake5)
+(cd src/libes/raster && gmake5)
+(cd src/display && gmake5)
+(cd src/paint/Drivers/preview && gmake5)
+(cd src/paint/Drivers/preview2 && gmake5)
+
+echo
+echo Thanks for your time.
+echo
