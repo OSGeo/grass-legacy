@@ -43,8 +43,13 @@ int pj_do_proj(x,y,info_in,info_out)
     METERS_out = info_out->meters;
 
     if (strncmp(info_in->proj,"ll",2) == 0 ) {
-        if (strncmp(info_out->proj,"ll",2) == 0 )
-            ok = pj_transform (info_in->pj, info_out->pj, 1, 0, x, y, &h);
+        if (strncmp(info_out->proj,"ll",2) == 0 ) {
+            u = (*x) / RAD_TO_DEG;
+            v = (*y) / RAD_TO_DEG;
+            ok = pj_transform (info_in->pj, info_out->pj, 1, 0, &u, &v, &h);
+            *x = u * RAD_TO_DEG;
+            *y = v * RAD_TO_DEG;
+        }
         else  {
             u = (*x) / RAD_TO_DEG;
             v = (*y) / RAD_TO_DEG;
@@ -101,8 +106,11 @@ int pj_do_transform (int count, double *x, double *y, double *h,
         has_h = 0;
     }
     if (strncmp(info_in->proj,"ll",2) == 0 ) {
-        if (strncmp(info_out->proj,"ll",2) == 0 )
+        if (strncmp(info_out->proj,"ll",2) == 0 ) {
+            DIVIDE_LOOP(x,y,count,RAD_TO_DEG);
             ok = pj_transform (info_in->pj, info_out->pj, count, 1, x, y, h);
+            MULTIPLY_LOOP(x,y,count,RAD_TO_DEG);
+        }
         else  {
             DIVIDE_LOOP(x,y,count,RAD_TO_DEG);
             ok = pj_transform(info_in->pj,info_out->pj, count, 1, x, y, h);
