@@ -156,7 +156,7 @@ void convert(char *fileout) {
   d1p = &d1; f1p = (float *) &d1;
 	cnt=0;
   for (z = 0; z < depths; z++) {
-    G_percent(z, depths, 2);
+    G_percent(z, depths, 1);
     for (y = 0; y < rows; y++) {  
       for (x = 0; x < cols; x++) {
         G3d_getValueRegion (map, x, y, z, d1p, typeIntern);
