@@ -1,3 +1,4 @@
+/* 1/28/98 change from Jacques Bouchard <bouchard@onera.fr> */
  
 /*
 **  Original written by Chuck Ehlshlaeger  6/89
@@ -149,12 +150,12 @@ char *argv[];
 	percent = 2;
     big_percent(0,file_size,percent);/* initializing variables inside big_percent */
 
-    /* make basename from name of dxf file.  This will be used as
+    /* make base_name from name of dxf file.  This will be used as
     ** the prefix for all layers that are created to avoid layer name
     ** conflicts between dxf files
     */
     if (out_name != NULL)
-	strcpy (basename, out_name);
+	strcpy (base_name, out_name);
     else
     {
 	p = G_rindex (dxf_file, '/');
@@ -162,9 +163,9 @@ char *argv[];
 	    p = dxf_file;
 	else
 	    p++;
-	strcpy (basename, p);
-	if (NULL != (p = G_rindex (basename, '.')))
-	    if (p != basename)
+	strcpy (base_name, p);
+	if (NULL != (p = G_rindex (base_name, '.')))
+	    if (p != base_name)
 		*p = '\0';  /* knock off any suffix */
     }
 
