@@ -73,3 +73,7 @@ echo "</body>" >> index.html
 echo "</html>" >> index.html
 
 echo "Generated $HTMLDIR/index.html"
+echo "----------------------------------------------------------------------"
+echo "Following modules are missing the 'description.html' file in src code:"
+find . -name "*.html" | xargs fgrep --files-without-match 'DESCRIPTION' | grep -v './index.html'
+echo "----------------------------------------------------------------------"
