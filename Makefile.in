@@ -163,7 +163,7 @@ install:
 	${MAKE} real-install
 	
 real-install:
-	@ test -d ${DIST_DIR} || ${MAKE_DIR_CMD} ${DIST_DIR} || echo "Maybe you must be root to access ${DIST_DIR}?"; exit 1
+	@ test -d ${DIST_DIR} || ( ${MAKE_DIR_CMD} ${DIST_DIR} || echo "Maybe you must be root to access ${DIST_DIR}?"; exit 1 )
 	test -d ${BINDIR} || ${MAKE_DIR_CMD} ${BINDIR}
 	${SHELL} -c "sed -e \"s#^GISBASE.*#GISBASE=${DIST_DIR}#\" ${GRASS_BIN}/grass${NAME_VER} > ${BINDIR}/grass${NAME_VER} ; true"
 	${SHELL} -c "chmod a+x ${BINDIR}/grass${NAME_VER} ; true"
