@@ -37,6 +37,7 @@ default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/grass_intro \
 	$(ETC)/license \
 	$(ETC)/welcome \
+	$(ETC)/VERSIONNUMBER \
 	$(ETC)/msgs \
 	$(ETC)/gis_set.tcl \
 	$(ETC)/epsg_option.tcl \
@@ -85,6 +86,11 @@ $(ETC)/lock: $(OBJDIR)/lock.o
 $(BIN)/exit:
 	touch $@
 	chmod 600 $@
+
+$(ETC)/VERSIONNUMBER:
+	rm -f $@
+	echo "$(GRASS_VERSION_NUMBER)" > $@
+	chmod +r $@
 
 $(ETC)/grass_intro: grass_intro.txt version.sed 
 	rm -f $@
