@@ -1,0 +1,66 @@
+
+
+
+describe(1)          GRASS Reference Manual           describe(1)
+
+
+
+NAME
+     describe - Prints terse list of found in cell
+     (Available through grass3 menu)
+
+SYNOPSIS
+     describe
+
+DESCRIPTION
+     The GRASS tool describe examines a user-specified describe
+     prompts the user for a name.  The user can select one of the
+     following two output reports:
+
+     (1) RANGE.  A range of found in the will be printed.  The
+     range is divided into three groups: negative, positive, and
+     zero.  If negative values occur, the minimum and maximum
+     negative values will be printed.  If positive values occur,
+     the minimum and maximum positive values will be printed.  If
+     zero occurs, this will be indicated.
+
+     (2) FULL LIST.  A list of all that were found in the will be
+     printed.
+
+     The following sample output from describe:
+
+          0 2-4 10-13
+
+     means that category values 0, 2 through 4, and 10 through 13
+     occurred in the named
+
+     The user must choose to read the in one of two ways:
+
+     (1) DIRECTLY.  The current and mask are ignored and the full
+     is read.  This method is useful if the user intends to
+     reclassify or rescale the data, since these functions
+     (reclass[1] and rescale[1]) also ignore the current
+      and mask.
+
+     (2) WINDOWED and MASKED.  The is read in the current masked
+     by the current mask.
+
+NOTES
+     The range report will generally run faster than the full
+     list.
+
+SEE ALSO
+     Gdescribe[2G], mask[1], reclass[1], rescale[1], window[1]
+
+AUTHOR
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
