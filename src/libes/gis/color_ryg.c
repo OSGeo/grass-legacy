@@ -43,8 +43,6 @@ static int add_ryg_colors (struct Colors *colors, DCELL min, DCELL max)
 
     G_add_d_raster_color_rule (&min, 255, 0, 0, &mid, 255, 255, 0, colors);
     G_add_d_raster_color_rule (&mid, 255, 255, 0, &max, 0, 255, 0, colors);
-    mid = 0.;
-    G_add_d_raster_color_rule (&mid, 255,255,255, &mid, 255,255,255, colors);
 
     return 1;
 }
