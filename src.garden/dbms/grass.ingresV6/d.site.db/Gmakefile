@@ -1,0 +1,29 @@
+MAN	  = doc/d.site.db
+#PGM       = $(BIN_CONTRIB_CMD)/d.site.db
+PGM       = d.site.db
+LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) -ltermcap
+
+# EXTRA_CFLAGS = -Dunlink=puts
+
+OBJS = \
+	main.o   \
+	ingresUtils.o \
+        getAllOpts.o \
+        getSopts.o \
+        buildSQL.o \
+        runSQL.o \
+	plotsite.o
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB)
+	#cp $(MAN)  $(GISBASE)/man/4
+
+
+$(LIBES): #
+###########################################
+#
+	ctags *.[ch]
+	sed 's/\?/\//g' tags > tags.tmp
+	mv tags.tmp tags
+
+
