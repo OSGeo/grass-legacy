@@ -6,4 +6,6 @@ OBJ = main.o
 $(HOME)/$(PGM): $(OBJ) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB)
 
+$(OBJ): rast.h
+
 $(GISLIB): #
