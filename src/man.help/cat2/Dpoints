@@ -1,0 +1,132 @@
+
+
+
+Dpoints(2D)          GRASS Reference Manual           Dpoints(2D)
+
+
+
+NAME
+     Dpoints - Tool for graphically creating points in the
+     current window
+     (D Language Tool)
+
+SYNOPSIS
+     Dpoints [color [size [type [file]]]]
+     Dpoints [option=value] [option=value] ...
+
+DESCRIPTION
+     Dpoints graphically creates point locations in the current
+     map window.  Coordinates are read either from standard input
+     or from a file stated by the file option.  Options can be
+     stated either positionally or explicitly on the command line
+     (see DINTRO[2D]).  Dashes (-) can also be inserted
+     positionally on the command line to indicate use of default
+     values for specific options.  Options are:
+
+     color=color
+          Sets the current color to that stated.  Options are
+          red, orange, green, blue, indigo, violet, black, white,
+          gray, yellow, brown, and magenta.  The default used
+          when no color is specified is white.
+     size=number
+          Size, in pixels, in which the the icon is to be drawn.
+          Default size is 1 pixel.
+     type=name
+          Icon types available are: "x", "+", "box", and
+          "diamond".  If no icon type is specified, an "x" is
+          used.
+     file=input
+          Input is a UNIX file name.  Default, if unspecified, is
+          standard input.  The file contents should consist of a
+          series of grid coordinates that fit within the current
+          map window (refer to Dstatus for map window
+          coordinates).  These coordinates should be in the form
+          of eastings and northings (in that order), separated by
+          a single blank space.
+
+NOTES
+     Dpoints will locate a point at the location specified, even
+     if it is outside the current window.
+     Note that output from the GRASS Gsites command can be
+     redirected directly into Dpoints.
+
+SEE ALSO
+     DINTRO[2D]    Introduction to the GRASS D tools
+     Dstatus[2D]   Prints the status of the monitor windows
+     Gsites[2G]    To list the coordinates of a GRASS sites file
+     d.sites[1]    Displays point sites
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+Dpoints(2D)          GRASS Reference Manual           Dpoints(2D)
+
+
+
+AUTHOR
+     James Westervelt, U.S. Army Construction Engineering
+     Research Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
