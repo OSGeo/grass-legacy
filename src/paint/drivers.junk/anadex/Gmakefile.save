@@ -1,4 +1,3 @@
-# %W% %G%
 NAME=anadex
 INTERFACE = ../interface.o
 PAINT = $(ETC)/paint
