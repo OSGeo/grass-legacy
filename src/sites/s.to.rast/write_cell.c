@@ -147,4 +147,4 @@ break_out:
         }
     } /* if (!said_it) */
 } /* check_overwrite() */
-/* vim: softtabstop=4 shiftwidth=4 expandtab */
+/* vim: set softtabstop=4 shiftwidth=4 expandtab: */

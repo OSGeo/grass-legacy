@@ -266,10 +266,17 @@ int main (int argc, char *argv[])
     
     s = G_site_new_struct (real_map_type, dims, strs, dbls); 
     temp_name = G_tempfile();
-    temp_fd = creat(temp_name,0660);
-    rast = G_allocate_raster_buf(map_type);	
+    temp_fd = open (temp_name, O_CREAT | O_TRUNC | O_RDWR, 0660);
+    if (temp_fd == -1)
+        G_fatal_error ("Unable to create temporary file.");
+    rast = G_allocate_raster_buf(map_type);
+    if (rast == NULL)
+        G_fatal_error ("Failed to allocate raster buffer.");
     rows = window.rows;
     cols = window.cols;
+
+    if (rows < 1 || cols < 1)
+        G_fatal_error ("Region setting has no cells");
 
     /*  zero out the entire file that will receive data   */
     if (!quiet)
@@ -404,4 +411,4 @@ int main (int argc, char *argv[])
         fprintf(stdout, "\n<%s> raster file complete. Bye.\n\n", layer);
     exit(0);
 }
-/* vim: softtabstop=4 shiftwidth=4 expandtab */
+/* vim: set softtabstop=4 shiftwidth=4 expandtab: */
