@@ -1,4 +1,5 @@
 #include "gis.h"
+#include "site.h"
 
 read_sites (name)
     char *name;
