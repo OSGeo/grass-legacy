@@ -1,4 +1,4 @@
-$Id: TODO,v 1.18 2000-09-08 14:00:30 markus Exp $
+$Id: TODO,v 1.19 2000-09-20 13:53:26 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -104,6 +104,11 @@ So two ways from there to improve the situation:
 
 ---------------------------------------------------------------------
 Modules:
+- g.manual: change list of manual pages in g.manual
+  organized according to objects (vector files, raster files, ...)
+  not to "status" of module (which is even confused at time)
+  (Being worked on by )
+
 - r.buffer: should save info about used buffers into map history
   (Being worked on by )
 
