@@ -1228,10 +1228,8 @@ proc start_monitors {} {
 # modified by Andreas Lange (andreas.lange@rhein-main.de) for scripting: script_add
 
 proc stop_monitor {monitor} {
-    if {[lsearch -exact [search_xdrivers] $monitor] >= 0} {
-        exec d.mon start=$monitor >& /dev/null
+    foreach monitor [search_xdrivers] {
         exec d.mon stop=$monitor >& /dev/null
-	script_add "d.mon start=$monitor >& /dev/null" "cmd"
 	script_add "d.mon stop=$monitor >& /dev/null" "cmd"
     }
 }
@@ -1241,9 +1239,7 @@ proc stop_monitor {monitor} {
 
 proc stop_monitors {} {
     foreach monitor [search_xdrivers] {
-        exec d.mon start=$monitor >& /dev/null
         exec d.mon stop=$monitor >& /dev/null
-	script_add "d.mon start=$monitor >& /dev/null" "cmd"
 	script_add "d.mon stop=$monitor >& /dev/null" "cmd"
     }
 }
