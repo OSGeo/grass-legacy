@@ -1,0 +1,12 @@
+# %W%  %G%
+
+OFILES = \
+	main.o 
+
+Dfont: $(BIN)/Dfont
+
+$(BIN)/Dfont: $(OFILES) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(RASTERLIB) $(GISLIB)
+
+$(RASTERLIB): #
+$(GISLIB): #
