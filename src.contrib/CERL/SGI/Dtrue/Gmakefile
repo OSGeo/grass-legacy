@@ -1,14 +1,16 @@
 # %W%  %G%
 
 DLIB  = $(SRC)/D/libes/Dlib.a
-
+GLlib= /usr/local/lib/libGL.so
 OFILES = main.o Dcell.o
 
 Dtrue: $(BIN_CONTRIB_CMD)/Dtrue
 
 $(BIN_CONTRIB_CMD)/Dtrue: $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 	rm -f a.out $@
-	$(CC) $(LDFLAGS) $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) -lgl_s
+#	$(CC) $(LDFLAGS) $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) -lgl_s
+#	$(CC) $(LDFLAGS) $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) -lGL
+	$(CC) $(LDFLAGS) $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(GLlib)
 	mv a.out $@
 
 $(RASTERLIB): #
