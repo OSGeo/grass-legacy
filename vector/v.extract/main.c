@@ -56,7 +56,7 @@ int main (int argc, char **argv)
     struct Option *inopt, *outopt, *fileopt, *newopt, *typopt, *listopt, *fieldopt;
     struct Option *whereopt;
     struct Flag *t_flag;
-/*    struct Flag *d_flag;*/
+    struct Flag *d_flag;
     struct Map_info In;
     struct Map_info Out;
     struct field_info *Fi;
@@ -64,7 +64,7 @@ int main (int argc, char **argv)
     dbDriver *driver;
     dbHandle handle;
 
-    /* TODO: Dissolve common boundaries and output are centroids */
+    /* TODO: remove orphaned centroids after dissolving common boundaries */
     /* TODO: field number */
 
     /* set up the options and flags for the command line parser */
@@ -74,11 +74,9 @@ int main (int argc, char **argv)
 	"Selects vector objects from an existing vector map and "
 	"creates a new map containing only the selected objects.";
 
-    /*
     d_flag = G_define_flag();
     d_flag->key              = 'd';
     d_flag->description      = "Dissolve common boundaries (default is no) ";
-    */
     
     t_flag = G_define_flag();
     t_flag->key              = 't';
@@ -138,7 +136,7 @@ int main (int argc, char **argv)
     /* set output vector file name */
     output = outopt->answer;
 
-    /* if ( d_flag->answer ) dissolve = 1; */
+    if ( d_flag->answer ) dissolve = 1;
 
     field = atoi ( fieldopt->answer );
 

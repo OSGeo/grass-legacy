@@ -19,7 +19,7 @@ xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_inf
 {
 	int cat, areal, arear, catl, catr, centroid, line;
 	int type;
-	int i;
+	int i, j;
 	struct line_pnts *Points, *CPoints;
 	struct line_cats *Cats, *CCats;
 
@@ -30,7 +30,7 @@ xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_inf
 	CCats = Vect_new_cats_struct ();
 	
 	/* TODO: more categories of one field */
-	/* TODO: Dissolve common boundaries and output are centroids */ 
+
         /* Cycle through all lines */
         for ( line = 1; line <= Vect_get_num_lines ( In ); line++) {
 	     G_debug ( 2, "Line = %d", line );
@@ -45,9 +45,9 @@ xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_inf
 	         if ( !(select_type & GV_BOUNDARY) && !(select_type & GV_AREA) ) continue;
 		 if ( select_type & GV_AREA ) { /* get left right category */
 		     Vect_get_line_areas ( In, line, &areal, &arear );
+
 		     if ( areal < 0 ) 
 			areal = Vect_get_isle_area ( In, abs(areal) ); 
-
 		     if ( areal > 0 ) {
 			 centroid = Vect_get_area_centroid ( In, areal );
 			 if ( centroid > 0 ) {
@@ -73,8 +73,21 @@ xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_inf
 	     /* check against the user category list */
              for ( i = 0 ; i < num_index ; i++) {
                  if ( cat == num_array[i] || catr == num_array[i] || catl == num_array[i] ) {  
-	             if ( type == GV_BOUNDARY && dissolve ) {
-			 /* TODO */
+		    if ( type == GV_BOUNDARY && dissolve ) {
+			int have_left=FALSE, have_right=FALSE;
+
+			for (j=0; j < num_index; j++) {
+			    if(catl == num_array[j]) {
+				have_left=TRUE;
+				if(have_right) break;  /* we've got what we came for, no point looking any further */
+			    }
+			    if(catr == num_array[j]) {
+				have_right=TRUE;
+				if(have_left) break;
+			    }
+			}
+			/* TODO: remove orphaned centroids as well */
+			if(have_left && have_right)  continue;
 		     }
 		     /* write line */
 		     if ( cat_new > 0 && cat >= 0 ) { /* assign the new category value */
