@@ -1,4 +1,3 @@
-/* %W% %G% */
 /*  DLG_TO_DIG     convert BDLG format files into digit files for editing.
 **     This process will remove labels from the data.   The dlg_label
 **	program   can be used to save labels and restore them after editting.
@@ -32,10 +31,10 @@
 **  Written by Dave Gerdes and Mike Higgins 4/1988
 **  US Army Construction Engineering Research Lab
 */
-#include "digit.h"
+#include "Vect.h"
 #include "gis.h"
 #include "dlg.h"
-#include "bdig_head.h"
+#include "dig_head.h"
 
 #include <stdio.h>
 
@@ -53,7 +52,8 @@ main(argc, argv)
 	int argc ;
 	char **argv ;
 {
-	FILE *fopen(), *f_digit, *f_dlg, *f_att ;
+	/*FILE *fopen(), *f_digit, *f_dlg, *f_att ; */
+	FILE *fopen(),  *f_dlg, *f_att ;
 	register int i, n;
 	int step ;
 	int degenerate ;
@@ -64,13 +64,15 @@ main(argc, argv)
 	char type ;
 	char *linetypes ;
 	char message[128] ;
+	char errmsg[200];
 
 	double *xarray ;
 	double *yarray ;
-	double thresh ;
-	double atof() ;
 	struct dlg dlg;
-	struct bdig_head head;
+	struct dig_head head;
+	/*new, replaces *f_digit--and more!*/
+	struct Map_info Map;
+	struct line_pnts *Points;
 
 	setbuf(stderr, 0) ;
 	step = 0 ;
@@ -84,7 +86,7 @@ main(argc, argv)
 		exit(-1) ;
 	}
 
-	G_gisinit ("dlgtodig");
+	G_gisinit(argv[0]) ;
 
 /* open necessary files */
 	fprintf (stderr, "STEP %d: Open all necessary files\n", ++step) ;
@@ -95,11 +97,20 @@ main(argc, argv)
 		G_fatal_error (message) ;
 	}
 
+/*superceded by Vect_open_new()
 	if (! (f_digit = fopen(argv[2], "w")) )
 	{
 		fprintf (stderr, "  PROBLEM: Can't open digit for writing: %s", argv[2]) ;
 		G_fatal_error (message) ;
 	}
+*/
+
+    if (0 > Vect_open_new (&Map, argv[2]))
+    {
+        sprintf(errmsg, "Not able to open vector file <%s>\n", argv[2]) ;
+        G_fatal_error (errmsg);
+    }
+
 
 	if (! (f_att = fopen(argv[3], "w")) )
 	{
@@ -125,6 +136,8 @@ main(argc, argv)
 
     if (dlg_read (f_dlg, &dlg) != 0)
 	G_fatal_error ("dlg_read failed");
+
+    Points = Vect_new_line_struct();
 
     hd_dlg_to_dig (&dlg, &head);
 
@@ -188,7 +201,11 @@ main(argc, argv)
     }	/*  for()  */
 
 	fprintf (stderr,"STEP %d: Write digit header\n", ++step) ;
-	write_head_bdig (f_digit, &head);
+	/*obsolete with new Vect.lib
+     write_head_bdig (f_digit, &head);
+     */
+     /*replaces the above*/
+     Vect_copy_head_data (&head, &Map.head);
 
 
     /*  now we have line types (A or L) , just get each Line and dump it in
@@ -234,7 +251,7 @@ main(argc, argv)
 		}
 
 
-   		dig_write_line (f_digit, xarray, yarray,
+   		dig_write_line (&Map, Points, xarray, yarray,
 			dlg.line.n_coors, type == AREA ? AREA : LINE);
 
 		/*  valid non-zero attribute  */
@@ -261,11 +278,16 @@ main(argc, argv)
 		/*dpg*/
 		/* if have a Site, then write a degen line */
 		if (dlg.node.n_lines == 0 || dlg.node.n_atts > 0)
-		    dig_write_point (f_digit, &(dlg.node.x),
+		    dig_write_point (&Map, Points, &(dlg.node.x),
 			    &(dlg.node.y), DOT) ;
 
 		/*  have a valid attribute??  */
+
+		/*  Change by D. Satnik to allow negative atts
 		if (dlg.node.n_atts <= 0  ||  dlg.node.atts[1] <= 0)
+			continue ;
+		*/
+		if (dlg.node.n_atts <= 0  ||  dlg.node.atts[1] != 0)
 			continue ;
 
 		/*  save Node label as a dig Point  */
@@ -275,8 +297,9 @@ main(argc, argv)
 	}
 
 
+	Vect_destroy_line_struct (Points);
+    Vect_close (&Map);
 	fclose(f_dlg) ;
-	fclose(f_digit) ;
 	fclose(f_att) ;
 
 	exit(0) ;
