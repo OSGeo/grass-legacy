@@ -74,7 +74,7 @@ int main (int argc, char *argv[])
 
     flag.list = G_define_flag();
     flag.list->key = 'l';
-    flag.list->description = "List vector files in input location and exit"; 
+    flag.list->description = "List vector files in input location and exit (a dummy value must be given for input)";
 
     if (G_parser (argc, argv)) exit (-1);
 		 
