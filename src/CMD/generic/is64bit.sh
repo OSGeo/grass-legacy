@@ -33,7 +33,7 @@ $CC 64test.c -o a
 
 SIZEOFLONG=`./a`
 
-rm -f ./a.out a.exe 64test.c
+rm -f ./a a.exe 64test.c
 
 ######################## Is that an alpha ?
 ARCHIT=`echo $ARCH | grep -i "alpha"`
