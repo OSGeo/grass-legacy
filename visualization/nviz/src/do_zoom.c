@@ -28,10 +28,10 @@ int a, b, c, d;
 int maxx, maxy;
 int width, height;
 int img_width, img_height;
-int row, col, factor;
+int row, col, factor, i, j, k, m, n;
 int XX, YY, var_i;
 float aspect, varx, vary, var;
-char pref[64], filename[64];
+char pref[64], filename[64], cmd[1024], cmd2[1024];
 
 
 /* Parse arguments */
@@ -94,6 +94,40 @@ for (row = 1; row <= var_i; row++) {
 	YY -= d;
         }
 
+strcpy (cmd2, "pnmcat -tb ");
+k = var_i;
+for (i = 1; i <= var_i; i++) {
+strcpy (cmd, "pnmcat -lr ");
+	for (j = 1; j <= var_i; j++) {
+sprintf(filename, "%s_%d_%d.ppm ", pref, i, j);
+strcat (cmd, filename);
+	}
+sprintf(filename, "> tmp%d.ppm", i);
+strcat (cmd, filename);
+sprintf(filename, "tmp%d.ppm ", k);
+strcat (cmd2, filename);
+if (system(cmd) != 0) {
+fprintf(stderr, "pnmcat failed to create assembled image\n");
+fprintf(stderr, "Check that pnmcat is installed and path is set\n");
+} else {
+for (m = 1; m <= var_i; m++) {
+sprintf(filename, "%s_%d_%d.ppm", pref, i, m);
+remove (filename);
+} 
+}
+k--;
+}
+sprintf(filename, "> %s.ppm", pref);
+strcat (cmd2, filename);
+if (system(cmd2) != 0) { 
+fprintf(stderr, "pnmcat failed to create assembled images\n");
+fprintf(stderr, "Check that pnmcat is installed and path is set\n");
+} else {
+for (m = 1; m <= var_i; m++) {
+sprintf(filename, "tmp%d.ppm", m);
+remove (filename);
+}
+}
 /* Done */
 /* Reset viewport and draw orinanl view */
 GS_set_viewport(a, c, b, d);
