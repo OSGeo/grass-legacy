@@ -45,6 +45,12 @@ fi
 PATH=$GISBASE/bin:$GISBASE/scripts:$PATH:$GRASS_ADDON_PATH
 export PATH
 
+#read all parameters:
+ARGS="$1 $2 $3 $4 $5"
+#remove leading and trailing white space
+ARGS=`echo $ARGS | sed 's/^[ ]*//'`
+ARGS=`echo $ARGS | sed 's/$[ ]*//'`
+
 # Set LD_LIBRARY_PATH.  For GRASS 5.0 we don't depend on this much, though
 # r.in.gdal may use it to find some things.  Over time we intend to put
 # more GRASS related shared libraries in $GISBASE/lib.
@@ -184,13 +190,13 @@ fi
 # Save the user interface variable in the grassrc file - choose a temporary
 # file name that should not match another file
 if [ -f "$GISRC" ] ; then
-    awk '$1 !~ /GRASS_GUI/ {print}' "$GISRC" > "$GISRC.$$"
+    awk '$ARGS !~ /GRASS_GUI/ {print}' "$GISRC" > "$GISRC.$$"
     echo "GRASS_GUI: $GRASS_GUI" >> "$GISRC.$$"
     mv -f "$GISRC.$$" "$GISRC"
 fi
 
 # Parsing argument to get LOCATION
-if [ ! "$1" ] ; then
+if [ ! "$ARGS" ] ; then
 
     # Try interactive startup
     LOCATION=
@@ -199,16 +205,16 @@ else
     # Try non-interactive startup
     L=
     
-    if [ "$1" = "-" ] ; then
+    if [ "$ARGS" = "-" ] ; then
     
     	if [ "$LOCATION" ] ; then
-    	    L=$LOCATION
+    	    L="$LOCATION"
     	fi
     else
-    	L=$1
+    	L="$ARGS"
     
-    	if [ `echo $L | cut -c 1` != "/" ] ; then
-    	    L=`pwd`/$L
+    	if [ `echo "$L" | cut -c 1` != "/" ] ; then
+    	    L="`pwd`/$L"
     	fi
     fi
 
@@ -225,6 +231,10 @@ else
     	    fi
     	fi
     fi
+
+    #strip off white space from LOCATION_NAME and MAPSET: only supported for $GISDBASE
+    MAPSET=`echo $MAPSET | sed 's+ ++g'`
+    LOCATION_NAME=`echo $LOCATION_NAME | sed 's+ ++g'`
 
     if [ "$GISDBASE" -a "$LOCATION_NAME" -a "$MAPSET" ] ; then
     	LOCATION="$GISDBASE/$LOCATION_NAME/$MAPSET"
@@ -301,7 +311,7 @@ if [ ! "$LOCATION" ] ; then
 		    GRASS_GUI="text"
 
                     if [ -f "$GISRC" ] ; then
-                        awk '$1 !~ /GRASS_GUI/ {print}' "$GISRC" > "$GISRC.$$"
+                        awk '$ARGS !~ /GRASS_GUI/ {print}' "$GISRC" > "$GISRC.$$"
                         echo "GRASS_GUI: $GRASS_GUI" >> "$GISRC.$$"
                         mv -f "$GISRC.$$" "$GISRC"
                     fi
