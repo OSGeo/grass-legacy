@@ -565,7 +565,7 @@ G_fpcompress_rearrangeDecodeDoubles (src, size, precision, dst)
   }
 
   if (*src == (unsigned char) ALL_NULL_CODE) {
-printf ("all null\n");
+/*printf ("all null\n");*/
     d = (double *) dst;
     while (dstStop != (unsigned char *) d) G3d_setXdrNullDouble (d++);
 
