@@ -72,8 +72,8 @@ main(argc, argv)
     parm.output->key        = "output" ;
     parm.output->type       = TYPE_STRING ;
     parm.output->required   = YES;
-    parm.output->description= "Name of output 3D - G3D file" ;
-    parm.output->gisprompt  = "any,grid3,3d raster";
+    parm.output->description= "Name of G3D grid file" ;
+    parm.output->gisprompt  = "any,grid3,3d raster" ;
 
     G_gisinit(argv[0]);
 
@@ -149,9 +149,9 @@ main(argc, argv)
 /*printf("\nnpoints: %d",npoints);*/
 
 	for (i=0;i<npoints;i++) {
-	lev = (int) (fabs((points[i].z - current_region.tb_res/2.)/ current_region.tb_res));
-        row = (int) (fabs((points[i].north - current_region.ns_res/2.)/ current_region.ns_res));
-        col = (int) (fabs((points[i].east - current_region.ew_res/2.)/ current_region.ew_res));
+	lev = (int) (fabs((current_region.bottom - points[i].z - current_region.tb_res/2.)/ current_region.tb_res));
+        row = (int) (fabs((current_region.south - points[i].north - current_region.ns_res/2.)/ current_region.ns_res));
+        col = (int) (fabs((current_region.west - points[i].east - current_region.ew_res/2.)/ current_region.ew_res));
 	value = points[i].w;
 /*printf("\ncol,row,lev,val: %d %d %d %f",col,row,lev,value);*/
 	G3d_putFloat (map, col, row, lev, value);
