@@ -5,7 +5,7 @@
 </HEAD>
 <BODY bgColor=white>
 <IMG src="grass.smlogo.gif"> 
-<HR align=center width="100%" SIZE=6 shade no>
+<HR align=center width="100%" SIZE=6 no shade>
 
 <H2>NAME</H2>
 <EM><B> PNGdriver</B></EM>  - driver to create PNG images 
@@ -24,8 +24,9 @@ of the PNG driver.
   <LI><B>GRASS_PNGFILE=filename</B><BR>the filename to put the resulting image in, default is <b>map.png</b>.<br><br> 
   <LI><B>GRASS_BACKGROUNDCOLOR=RRGGBB</B><BR>specifies the background color to use in RGB
   notation (hex values). Default is <b>FFFFFF</b> (white).<br><br>
-  <LI><B>GRASS_TRANSPARENT=[TRUE|FALSE]</B><BR>sets transparent background on (TRUE) or off (FALSE, default).
-</ul>
+  <LI><B>GRASS_TRANSPARENT=[TRUE|FALSE]</B><BR>sets transparent background on (TRUE) or off (FALSE, 
+  default).</LI>        
+</UL>
 
 <H3>Example</H3>
 <OL>
@@ -38,11 +39,11 @@ of the PNG driver.
          d.area map=<i>someareamap</i> fillcolor=green linecolor=black
          d.vect map=<i>somevectormap</i> color=red
 </PRE>
-<LI>Stop the driver when all polygon have been displayed. This will cause a file 
-named 'htmlmap' to be created in your current directory.
+<LI> Stop the driver when all polygon have been displayed. This will cause a 
+file named <i>map.png</i> to be created in your current directory.
 <PRE>
          d.mon stop=PNG
-</PRE>
+</PRE></LI>
 
 </OL>
 
@@ -51,12 +52,12 @@ ThePNG driver uses the <a href="http://www.boutell.com/gd/">Gd library</a> devel
 Boutell.Com, Inc. The Gd library in turn relies on libpng (see the 
 <a href="http://www.libpng.org/pub/png/">libpng</a> home page) and zlib 
 (see the <a href="http://www.info-zip.org/pub/infozip/zlib/">info-zip</a> home page), all which needs to be installed for the PNG driver to work (it's
-worth it)...
+worth it).. 
 
 <h2>SEE ALSO</h2>
-<a href="http://www.geog.uni-hannover.de/grass/gdp/html_grass5/html/htmlmapdriver.html">HTMLMAP driver</A></EM>, 
+<a href="http://www.geog.uni-hannover.de/grass/gdp/html_grass5/html/htmlmapdriver.html">HTMLMAP driver</a></EM>, 
 <EM><A 
-<a href="http://www.geog.uni-hannover.de/grass/gdp/html_grass5/html/celldriver.html">celldriver</A></EM>, 
+href ="http://www.geog.uni-hannover.de/grass/gdp/html_grass5/html/celldriver.html"<a>celldriver</A></EM>, 
 <EM><A 
 href="http://www.geog.uni-hannover.de/grass/gdp/html_grass5/html/xdriver.html">XDRIVER</A></EM>, 
 <EM><A 
@@ -67,5 +68,6 @@ href="http://www.geog.uni-hannover.de/grass/gdp/html_grass5/html/d.area.html">d.
 <H2>AUTHOR</H2>
 Per Henrik Johansen<BR>
 <I>phj@norgit.no</I><BR> 
-<I><a href="http://www.norgit.no">NORGIT AS</A></i>
-</LI></BODY></HTML>
+<I><a href="http://www.norgit.no">NORGIT AS</a></I>
+</BODY></HTML>
+
