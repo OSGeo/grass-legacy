@@ -173,36 +173,36 @@ int main ( int argc, char *argv[])
   sprintf (dmaxchar, "%f", dmin * 5);
   sprintf (dminchar, "%f", dmin);
 
-    fprintf (stderr, "\n");
-    fprintf (stderr, "\n");
-/*    fprintf (stderr, "Version: GRASS5.0 beta,  update: Novemebr 1999\n"); 
-    fprintf (stderr, "\n"); */
-    fprintf (stderr, "Authors: original version -  H.Mitasova, L.Mitas\n");
-    fprintf (stderr, "         GRASS implementation and segmentation: I.Kosinovsky, D.P. Gerdes\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Methods used in this program are described in the following papers:\n");
-    fprintf (stderr, "Mitasova, H., and  Mitas, L., 1993,\n");
-    fprintf (stderr, "Interpolation by Regularized Spline with Tension:\n");
-    fprintf (stderr, "I. Theory  and  implementation.  Mathematical Geology, 25, 641-655.\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Mitasova, H., and Hofierka, L., 1993\n");
-    fprintf (stderr, "Interpolation by Regularized Spline with Tension:\n");
-    fprintf (stderr, "II. Application to terrain modeling and surface   geometry  analysis.\n");
-    fprintf (stderr, "Mathematical Geology, 25, 657-669.\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Mitasova, H., Mitas, L., Brown, W.M., Gerdes, D.P., Kosinovsky, I.,\n");
-    fprintf (stderr, "Baker, T., 1995, Modeling spatially and temporally\n");
-    fprintf (stderr, "distributed phenomena: New methods and tools for GRASS GIS.\n");
-    fprintf (stderr, "International Journal of Geographic Information Systems,V(9), No(4).\n");
-    fprintf (stderr, "(special issue on Integration of GIS and Environmental Modeling)\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "The postscript versions of these papers are available via Internet at\n");
-    fprintf (stderr, "http://www2.gis.uiuc.edu:2280/modviz/papers/listsj.html\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Please cite these references in publications where the results of this\n");
-    fprintf (stderr, "program were used.\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "\n");
+    fprintf (stdout, "\n");
+    fprintf (stdout, "\n");
+/*  fprintf (stdout, "Version: GRASS5.0 beta,  update: Novemebr 1999\n"); 
+    fprintf (stdout, "\n"); */
+    fprintf (stdout, "Authors: original version -  H.Mitasova, L.Mitas\n");
+    fprintf (stdout, "         GRASS implementation and segmentation: I.Kosinovsky, D.P. Gerdes\n");
+    fprintf (stdout, "\n");
+    fprintf (stdout, "Methods used in this program are described in the following papers:\n");
+    fprintf (stdout, "Mitasova, H., and  Mitas, L., 1993,\n");
+    fprintf (stdout, "Interpolation by Regularized Spline with Tension:\n");
+    fprintf (stdout, "I. Theory  and  implementation.  Mathematical Geology, 25, 641-655.\n");
+    fprintf (stdout, "\n");
+    fprintf (stdout, "Mitasova, H., and Hofierka, L., 1993\n");
+    fprintf (stdout, "Interpolation by Regularized Spline with Tension:\n");
+    fprintf (stdout, "II. Application to terrain modeling and surface   geometry  analysis.\n");
+    fprintf (stdout, "Mathematical Geology, 25, 657-669.\n");
+    fprintf (stdout, "\n");
+    fprintf (stdout, "Mitasova, H., Mitas, L., Brown, W.M., Gerdes, D.P., Kosinovsky, I.,\n");
+    fprintf (stdout, "Baker, T., 1995, Modeling spatially and temporally\n");
+    fprintf (stdout, "distributed phenomena: New methods and tools for GRASS GIS.\n");
+    fprintf (stdout, "International Journal of Geographic Information Systems,V(9), No(4).\n");
+    fprintf (stdout, "(special issue on Integration of GIS and Environmental Modeling)\n");
+    fprintf (stdout, "\n");
+    fprintf (stdout, "The postscript versions of these papers are available via Internet at\n");
+    fprintf (stdout, "http://www2.gis.uiuc.edu:2280/modviz/papers/listsj.html\n");
+    fprintf (stdout, "\n");
+    fprintf (stdout, "Please cite these references in publications where the results of this\n");
+    fprintf (stdout, "program were used.\n");
+    fprintf (stdout, "\n");
+    fprintf (stdout, "\n");
 
 
   parm.input = G_define_option ();
