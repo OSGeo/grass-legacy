@@ -214,6 +214,7 @@ int Vect__init_head (struct Map_info *);
 
     /* Open/close/rewind map */
 int Vect_coor_info ( struct Map_info *, struct Coor_info *);
+char *Vect_maptype_info ( struct Map_info *);
 int Vect_open_topo (struct Map_info *);
 int Vect_save_topo ( struct Map_info *);
 int Vect_open_spatial_index (struct Map_info *);

@@ -390,6 +390,35 @@ Vect_coor_info ( struct Map_info *Map, struct Coor_info *Info )
     return 1;
 }
 
+/*!
+ \fn char * Vect_maptype_info ( struct Map_info *Map )
+ \brief returns maptype (native, shape, postgis)
+ \return maptype string on success, error message on error
+ \param Map_info structure
+*/
+char * 
+Vect_maptype_info ( struct Map_info *Map )
+{
+    char *maptype;
+
+    maptype = G_malloc ( 200 );
+    switch (  Map->format ) {
+        case GV_FORMAT_NATIVE :
+            sprintf (maptype, "native");
+            break;
+        case GV_FORMAT_SHAPE :
+            sprintf (maptype, "shape");
+            break;
+        case GV_FORMAT_POSTGIS :
+            sprintf (maptype, "postgis");
+            break;
+	default :
+            sprintf (maptype, "unknown %d (update Vect_maptype_info)", Map->format);
+    }
+	
+    return maptype;
+}
+
 
 /*!
  \fn int Vect_open_topo (struct Map_info *Map)
