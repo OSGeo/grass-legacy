@@ -2,6 +2,9 @@ GRASS 5.1devel: Module parameters concept
 $Id$
 
 All GRASS modules should use a standardized scheme.                               
+For GRASS 5.1 a parameter harmonization has to be undertaken.
+
+Here a rough concept (to be updated):
 
 Import:
 *  file=name output=name for all raster, sites and vector modules
@@ -68,3 +71,6 @@ General modules:
 Database modules
  ?
 
+------------------------------------------------------------------
+Note: In case of parameter changes the related HTML page has to be
+updated in html/html!
