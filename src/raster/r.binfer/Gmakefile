@@ -1,12 +1,17 @@
 
 FILES = gram.c lex.c makefile symtab.h symtab.c table.c main.c \
-		flags.c engine.c misc.c reclass.c
+		flags.c engine.c misc.c reclass.c yywrap.c
 OBJS = gram.o lex.o symtab.o table.o main.o \
-		flags.o engine.o misc.o reclass.o
+		flags.o engine.o misc.o reclass.o yywrap.o
+
+all: clean $(BIN_MAIN_CMD)/r.binfer
+
+clean:
+	-rm -f lex.c gram.c
 
 $(BIN_MAIN_CMD)/r.binfer: $(OBJS) $(GISLIB)
-	$(CC) -o $@ $(LDFLAGS) $(OBJS) $(GISLIB) -ll $(MATHLIB)
-	
+	$(CC) -o $@ $(LDFLAGS) $(OBJS) $(GISLIB) $(MATHLIB)
+	rm -f lex.c gram.c y.tab.h
 
 count:
 	@echo "Current number of lines:"
@@ -15,11 +20,13 @@ count:
 $(OBJS): symtab.h
 $(GISLIB): #
 
-lex:
+lex.c: binfer.l
 	lex binfer.l
+	rm -f lex.c
 	mv lex.yy.c lex.c
 
-yacc:
+gram.c: binfer.y
 	yacc binfer.y
+	rm -f gram.c
 	mv y.tab.c gram.c
 
