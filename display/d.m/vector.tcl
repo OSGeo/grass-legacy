@@ -90,6 +90,7 @@ proc DmVector::create { tree parent } {
     set opt($count,color) \#000000
     set opt($count,fcolor) \#AAAAAA 
     set opt($count,lcolor) \#000000
+    set opt($count,_use_fcolor) 1
 
     set opt($count,icon) "basic/cross"
     set opt($count,size) 5 
@@ -184,11 +185,13 @@ proc DmVector::options { id frm } {
     Label $row.c -text " Fill color:" 
     SelectColor $row.d -type menubutton -variable DmVector::opt($id,fcolor) \
                 -command "DmVector::legend $id"
-    Label $row.e -text " Label color:" 
-    SelectColor $row.f -type menubutton -variable DmVector::opt($id,lcolor) \
+    checkbutton $row.e -text "fill areas" -variable DmVector::opt($id,_use_fcolor) \
+                -command "DmVector::legend $id"
+    Label $row.f -text " Label color:" 
+    SelectColor $row.g -type menubutton -variable DmVector::opt($id,lcolor) \
                 -command "DmVector::legend $id"
 
-    pack $row.a $row.b $row.c $row.d $row.e $row.f -side left
+    pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g -side left
     pack $row -side top -fill both -expand yes
 
     # point icon / size
@@ -256,7 +259,7 @@ proc DmVector::save { tree depth node } {
 
     foreach key { _check map display_shape display_cat display_topo display_dir display_attr
                   type_point type_line type_boundary type_centroid type_area type_face
-                  color fcolor lcolor icon size field lfield attribute lsize cat where 
+                  color fcolor _use_fcolor lcolor icon size field lfield attribute lsize cat where 
                   _query_text minreg maxreg } {
         Dm::rc_write $depth "$key $opt($id,$key)"
 
@@ -298,7 +301,8 @@ proc DmVector::display { node } {
     set color [DmVector::color $opt($id,color)]
     set fcolor [DmVector::color $opt($id,fcolor)]
     set lcolor [DmVector::color $opt($id,lcolor)]
-    append cmd " color=$color fcolor=$fcolor lcolor=$lcolor" 
+    append cmd " color=$color lcolor=$lcolor" 
+    if { $opt($id,_use_fcolor) } { append cmd " fcolor=$fcolor" } { append cmd " fcolor=none" }
 
     # display
     set dlist [list]
