@@ -42,6 +42,13 @@ int open_site_file (void)		/* open site list */
   FILE *fp1;
   Site_head info;
 
+  info.name = NULL;
+  info.desc = NULL;
+  info.form = NULL;
+  info.labels = NULL;
+  info.stime = NULL;
+  info.time = NULL;
+
   if (sitefile == NULL)
   {
     if ((sitefile = G_fopen_sites_new (site_name)) == NULL)
@@ -82,6 +89,8 @@ int save_site (char *buf)
   }
   else
     G_fatal_error ("No site file open to write to.");
+  
+  return 0;
 }
 
 int close_site_file (int n)
