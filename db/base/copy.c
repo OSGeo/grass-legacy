@@ -47,19 +47,19 @@ main(int argc, char *argv[])
     to_driver->type 	   = TYPE_STRING;
     to_driver->options     = db_list_drivers();
     to_driver->required    = YES;
-    to_driver->description = "Input driver name";
+    to_driver->description = "Output driver name";
 
     to_database 	     = G_define_option();
     to_database->key 	     = "to_database";
     to_database->type        = TYPE_STRING;
     to_database->required    = YES;
-    to_database->description = "Input database name";
+    to_database->description = "Output database name";
 
     to_table 		  = G_define_option();
     to_table->key 	  = "to_table";
     to_table->type 	  = TYPE_STRING;
     to_table->required    = YES;
-    to_table->description = "Input table name";
+    to_table->description = "Output table name";
 
     if(G_parser(argc, argv)) exit(ERROR);
 
