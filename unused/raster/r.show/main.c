@@ -42,7 +42,7 @@
  *			0		if given type is unknown
  *
  * void
- * r_copy_value(RASTER_MAP dst, int dcol, RASTER_MAP src, int scol);
+ * r_copy_value(RASTER_MAP src, int scol, RASTER_MAP dst, int dcol);
  *
  *		copies src[scol] value to dst[dcol]
  */
@@ -74,7 +74,7 @@ double	r_get_value(RASTER_MAP buf, int col);
 void	r_set_value(RASTER_MAP buf, int col, double val);
 int	r_is_null_value(RASTER_MAP buf, int col);
 int	r_str_value(char *str, int width, int prec, RASTER_MAP buf, int col);
-void	r_copy_value(RASTER_MAP dst, int dcol, RASTER_MAP src, int scol);
+void	r_copy_value(RASTER_MAP src, int scol, RASTER_MAP dst, int dcol);
 
 
 int
@@ -144,17 +144,27 @@ main(int argc, char **argv)
 
 	{
 		RASTER_MAP tmp;
+		double	dval;
+
+		printf("\n ** Testing functions **\n");
 
 		tmp.type   = buf.type;
 		tmp.data.v = G_allocate_raster_buf(buf.type);
 
 		r_str_value(str, 15, 5, tmp, 2);
-		printf("\n >> %s ", str);
+		printf(" tmp[2] = %s,", str);
 
-		r_copy_value(tmp, 2, buf, 10);
+		r_str_value(str, 15, 5, buf, 10);
+		printf(" buf[10] = %s\n", str);
 
+		printf("copy buf[10] to tmp[2]\n");
+		r_copy_value(buf, 10, tmp, 2);
 		r_str_value(str, 15, 5, tmp, 2);
-		printf("<< %s ", str);
+		printf(" tmp[2] = %s\n", str);
+
+		r_set_value(tmp, 2, 10*r_get_value(tmp, 2));
+		r_str_value(str, 15, 5, tmp, 2);
+		printf("tmp[2]*10 = %s\n", str);
 	}
 
 	exit(0);
@@ -262,7 +272,7 @@ r_str_value(char *str, int width, int prec, RASTER_MAP buf, int col)
 
 
 void
-r_copy_value(RASTER_MAP dst, int dcol, RASTER_MAP src, int scol)
+r_copy_value(RASTER_MAP src, int scol, RASTER_MAP dst, int dcol)
 {
 	switch(dst.type)
 	{
