@@ -56,7 +56,7 @@ int main (int argc, char *argv[])
   ext->type            =  TYPE_STRING;
   ext->required        =  YES;
   ext->multiple         = NO;
-  ext->description     = "Output file extension [inputfile(s) + extension]";
+  ext->description     = "Output file extension (inputfile(s) + extension)";
 
   val = G_define_option();
   val->key             = "order";
@@ -66,7 +66,7 @@ int main (int argc, char *argv[])
 
   c = G_define_flag();
   c->key              = 'c';
-  c->description      = "Use curr. region settings in target location [def.=calculate smallest area]";
+  c->description      = "Use curr. region settings in target location (def.=calculate smallest area)";
 
   a = G_define_flag();
   a->key              = 'a';
