@@ -38,9 +38,9 @@ int main (int argc, char **argv)
 	opt2 = G_define_option() ;
 	opt2->key        = "color" ;
 	opt2->type       = TYPE_STRING ;
-	opt2->answer     = "white" ;
+	opt2->answer     = DEFAULT_FG_COLOR ;
 	opt2->options    = D_color_list();
-	opt2->description= "Color selection graphics" ;
+	opt2->description= "Color selection for graphics" ;
 
 	hsize = vsize = 5. ;
 

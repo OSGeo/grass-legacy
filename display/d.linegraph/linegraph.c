@@ -131,7 +131,7 @@ main (int argc, char **argv)
     t_color_opt->description= "Color for axis, tics, numbers, and title";
     t_color_opt->type       = TYPE_STRING ;
     t_color_opt->required   = NO ;
-    t_color_opt->answer     = "white" ;
+    t_color_opt->answer     = DEFAULT_FG_COLOR ;
     t_color_opt->options    = D_COLOR_LIST;
 
     title[0]             = G_define_option() ;
