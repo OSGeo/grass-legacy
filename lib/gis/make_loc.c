@@ -133,6 +133,15 @@ G_compare_projections( struct Key_Value *proj_info1,
         return TRUE;
     
 /* -------------------------------------------------------------------- */
+/*      Are they both in the same projection?                           */
+/* -------------------------------------------------------------------- */
+    if( G_find_key_value( "proj", proj_info1 ) != NULL
+        && G_find_key_value( "meter", proj_units1 ) != NULL
+        && atof(G_find_key_value( "meter", proj_units1 ))
+           != atof(G_find_key_value( "meter", proj_units2 )) )
+        return -1;
+
+/* -------------------------------------------------------------------- */
 /*      Verify that the linear unit translation to meters is OK.        */
 /* -------------------------------------------------------------------- */
     if( proj_units1 != NULL && proj_units2 != NULL
@@ -140,16 +149,8 @@ G_compare_projections( struct Key_Value *proj_info1,
         && G_find_key_value( "meter", proj_units1 ) != NULL
         && atof(G_find_key_value( "meter", proj_units1 ))
            != atof(G_find_key_value( "meter", proj_units2 )) )
-        return FALSE;
+        return -2;
 
-/* -------------------------------------------------------------------- */
-/*      Are they both in the same projection?                           */
-/* -------------------------------------------------------------------- */
-    if( G_find_key_value( "proj", proj_info1 ) != NULL
-        && G_find_key_value( "meter", proj_units1 ) != NULL
-        && atof(G_find_key_value( "meter", proj_units1 ))
-           != atof(G_find_key_value( "meter", proj_units2 )) )
-        return FALSE;
 
 /* -------------------------------------------------------------------- */
 /*      Do they both have the same map datum?                           */
@@ -161,7 +162,7 @@ G_compare_projections( struct Key_Value *proj_info1,
     G_tolcase(buf2);
 
     if ( strcmp(buf1, buf2) != 0 )
-        return FALSE;
+        return -3;
 
 /* -------------------------------------------------------------------- */
 /*      Do they both have the same ellipsoid?                           */
@@ -173,7 +174,7 @@ G_compare_projections( struct Key_Value *proj_info1,
     G_tolcase(buf2);
 
     if ( strcmp(buf1, buf2) != 0 )
-        return FALSE;
+        return -4;
 
 /* -------------------------------------------------------------------- */
 /*      Do they both have the same zone?                           */
@@ -185,7 +186,7 @@ G_compare_projections( struct Key_Value *proj_info1,
     G_tolcase(buf2);
 
     if ( strcmp(buf1, buf2) != 0 )
-        return FALSE;
+        return -5;
 
 /* -------------------------------------------------------------------- */
 /*      Add more details in later.                                      */
