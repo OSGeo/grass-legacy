@@ -1,0 +1,11 @@
+PGM = s.in.dbf
+HOME = $(BIN_CMD)
+LIST = 	main.o \
+	dbfopen.o \
+	dump.o
+
+LIBES=$(GISLIB) $(VECTLIB) $(DATETIMELIB) $(XEXTRALIBS) $(VASKLIB)
+$(HOME)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB): # 
