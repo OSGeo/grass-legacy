@@ -1,5 +1,24 @@
+#############################################################################
+#
+# MODULE:   	GRASS Compilation
+# AUTHOR(S):	Original author unknown - probably CERL
+#   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
+#		Markus Neteler - Germany - neteler@itc.it
+#		Andreas Lange - Germany - Andreas.Lange@Rhein-Main.de
+#		Radim Blazek - Italy - blazek@itc.it
+# PURPOSE:  	It provides the commands necessary to compile, install,
+#		clean, and uninstall GRASS
+#		See INSTALL file for explanations.
+# COPYRIGHT:    (C) 2002 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#   	    	License (>=v2). Read the file COPYING that comes with GRASS
+#   	    	for details.
+#
+#############################################################################
 
 MODULE_TOPDIR = .
+
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 
@@ -80,6 +99,19 @@ clean:
 distclean: clean
 	${SHELL} -c "rm -f config.cache config.log config.status 2>/dev/null ; true"
 	${SHELL} -c "rm -f include/config.h include/version.h include/winname.h include/Make/Grass.make include/Make/Platform.make 2>/dev/null ; true"
+
+strip: FORCE
+	@ if [ ! -f ${GRASS_BIN}/grass${NAME_VER} ] ; then \
+		echo "ERROR: Grass has not been compiled. Try \"make\" first."; \
+		echo "  Strip aborted, exiting Make."; \
+		exit; \
+	fi; \
+	${SHELL} -c "cd ${GISBASE} ; find . -type f -perm +111 -exec strip {} \; ; true"	
+
+install-strip: FORCE
+	${MAKE} strip
+	${MAKE} install
+
 
 bindist:  
 	( date=`date '+%d_%m_%Y'`; cd ${ARCH_DISTDIR}; tar cBf - ${BIN_DIST_FILES} | gzip -fc > ../grass${VERSION_MAJOR}${VERSION_MINOR}-$$date-${ARCH}-bin.tar.gz)
