@@ -1,0 +1,220 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2004-10-29 16:43+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: ENCODING\n"
+
+#: ../db/base/connect.c:103
+#, c-format
+msgid "driver:%s\n"
+msgstr ""
+
+#: ../db/base/connect.c:104
+#, c-format
+msgid "database:%s\n"
+msgstr ""
+
+#: ../db/base/databases.c:42 ../db/base/drivers.c:29 ../db/base/printtab.c:45
+#: ../db/base/select.c:126
+#, c-format
+msgid "%s"
+msgstr ""
+
+#: ../db/base/databases.c:43 ../db/base/printtab.c:21 ../db/base/printtab.c:66
+msgid "\n"
+msgstr ""
+
+#: ../db/base/describe.c:53 ../db/base/printtab.c:17
+#, c-format
+msgid "ncols:%d\n"
+msgstr ""
+
+#: ../db/base/describe.c:57
+#, c-format
+msgid "Column %d: %s\n"
+msgstr ""
+
+#: ../db/base/drivers.c:24
+msgid "Error trying to read dbmscap file\n"
+msgstr ""
+
+#: ../db/base/drivers.c:30
+#, c-format
+msgid ":%s"
+msgstr ""
+
+#: ../db/base/printtab.c:11
+#, c-format
+msgid "table:%s\n"
+msgstr ""
+
+#: ../db/base/printtab.c:12 ../db/base/printtab.c:35
+#, c-format
+msgid "description:%s\n"
+msgstr ""
+
+#: ../db/base/printtab.c:34
+#, c-format
+msgid "column:%s\n"
+msgstr ""
+
+#: ../db/base/printtab.c:36
+#, c-format
+msgid "type:%s\n"
+msgstr ""
+
+#: ../db/base/printtab.c:37
+#, c-format
+msgid "len:%d\n"
+msgstr ""
+
+#: ../db/base/printtab.c:38
+#, c-format
+msgid "scale:%d\n"
+msgstr ""
+
+#: ../db/base/printtab.c:39
+#, c-format
+msgid "precision:%d\n"
+msgstr ""
+
+#: ../db/base/printtab.c:40
+msgid "default:"
+msgstr ""
+
+#: ../db/base/printtab.c:48
+#, c-format
+msgid "nullok:%s\n"
+msgstr ""
+
+#: ../db/base/printtab.c:62
+msgid "yes"
+msgstr ""
+
+#: ../db/base/printtab.c:63
+msgid "no"
+msgstr ""
+
+#: ../db/base/printtab.c:64
+msgid "?"
+msgstr ""
+
+#: ../db/base/select.c:307
+#, c-format
+msgid "column%s%s\n"
+msgstr ""
+
+#: ../db/base/select.c:308
+#, c-format
+msgid "type%s%s\n"
+msgstr ""
+
+#: ../db/base/select.c:309
+#, c-format
+msgid "len%s%d\n"
+msgstr ""
+
+#: ../db/base/select.c:310
+#, c-format
+msgid "scale%s%d\n"
+msgstr ""
+
+#: ../db/base/select.c:311
+#, c-format
+msgid "precision%s%d\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:45
+msgid "Enter rules, \"end\" when done, \"help\" if you need it.\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:47
+#, c-format
+msgid "fp: Data range is %.25f to %.25f\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:49
+#, c-format
+msgid "Data range is %ld to %ld\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:110 ../raster/r.colors/rules.c:114
+msgid "Your color rules do not cover the whole range of data!"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:188
+msgid "Enter a rule in one of these formats:\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:190
+msgid " val color\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:191
+msgid " n%% color\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:192
+msgid " nv color\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:193
+msgid " default color\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:194
+msgid "color can be one of:\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:196
+msgid "or an R:G:B triplet, e.g.: 0:127:255\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:237
+#, c-format
+msgid "** warning: R:G:B value(s) out of range [0..255]: %d:%d:%d **\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:238 ../raster/r.colors/rules.c:254
+#: ../raster/r.colors/rules.c:267 ../raster/r.colors/rules.c:279
+#: ../raster/r.colors/rules.c:289 ../raster/r.colors/rules.c:301
+#: ../raster/r.colors/rules.c:376 ../raster/r.colors/rules.c:404
+msgid "** rule is not added **\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:253
+#, c-format
+msgid "** warning: R G B value(s) out of range [0..255]: %d %d %d **\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:266 ../raster/r.colors/rules.c:288
+msgid "** warning: no such value **\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:402
+#, c-format
+msgid "%s:line %d:%s\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:403
+msgid "** bad color specification **\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:424
+#, c-format
+msgid "%s - unknown color\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:425
+msgid "Valid colors are:\n"
+msgstr ""

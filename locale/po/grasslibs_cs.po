@@ -1,0 +1,1885 @@
+# translation of grasslibs_cs.po to czech
+# Radim Blazek <blazek@itc.it>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: grasslibs_cs\n"
+"POT-Creation-Date: 2004-10-29 16:43+0200\n"
+"PO-Revision-Date: 2004-10-29 15:58+0200\n"
+"Last-Translator: Radim Blazek <blazek@itc.it>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.0.2\n"
+
+#: ../lib/gis/parser.c:306
+msgid ""
+"WHERE conditions of SQL statement without 'where' keyword. (example: income "
+"< 1000 and inhab >= 10000)"
+msgstr ""
+"WHERE podmínka SQL výrazu bez klíèového slova WHERE (pøíklad: prijem < 1000 "
+"and obyvatel >= 10000)"
+
+#: ../lib/gis/parser.c:314 ../lib/gis/parser.c:328
+msgid "Name of input raster"
+msgstr "Jméno vstupního rastru"
+
+#: ../lib/gis/parser.c:321
+msgid "Name of output raster"
+msgstr "Jméno výstupního rastru"
+
+#: ../lib/gis/parser.c:336 ../lib/gis/parser.c:350
+msgid "Name of input vector"
+msgstr "Jméno vstupního vektoru"
+
+#: ../lib/gis/parser.c:343
+msgid "Name of output vector"
+msgstr "Jméno výstupního vektoru"
+
+#: ../lib/gis/parser.c:359
+msgid "Select type: point, line, boundary, centroid or area"
+msgstr "Výbìr typu: point, line, boundary, centroid or area"
+
+#: ../lib/gis/parser.c:366
+msgid "Field value"
+msgstr ""
+
+#: ../lib/gis/parser.c:372
+msgid "Category value"
+msgstr "Kategorie"
+
+#: ../lib/gis/parser.c:378
+msgid "Category values (example: 1,3,7-9,13)"
+msgstr "Kategorie (napø.: 1,3,7-9,13)"
+
+#: ../lib/gis/parser.c:564
+#, c-format
+msgid "Sorry <%s> is not a valid option\n"
+msgstr "<%s> není platná volba\n"
+
+#: ../lib/gis/parser.c:628
+msgid ""
+"\n"
+"Description:\n"
+msgstr ""
+"\n"
+"Popis:\n"
+
+#: ../lib/gis/parser.c:632
+msgid ""
+"\n"
+"Usage:\n"
+" "
+msgstr ""
+"\n"
+"Pou¾ití:\n"
+" "
+
+#: ../lib/gis/parser.c:693
+msgid ""
+"\n"
+"Flags:\n"
+msgstr ""
+"\n"
+"Pøepínaèe:\n"
+
+#: ../lib/gis/parser.c:707
+msgid ""
+"\n"
+"Parameters:\n"
+msgstr ""
+"\n"
+"Parametry:\n"
+
+#: ../lib/gis/parser.c:720
+#, c-format
+msgid "  %*s   default: %s\n"
+msgstr "  %*s   defaultní: %s\n"
+
+#: ../lib/gis/parser.c:1186
+#, c-format
+msgid "  %*s   options: "
+msgstr "  %*s   volby:"
+
+#: ../lib/gis/parser.c:1233 ../lib/gis/parser.c:1250
+#, c-format
+msgid "Sorry, <%c> is not a valid flag\n"
+msgstr "<%c> není platný pøepínaè\n"
+
+#: ../lib/gis/parser.c:1305
+#, c-format
+msgid "Sorry, <%s=> is ambiguous\n"
+msgstr "<%s=> je dvojznaèný\n"
+
+#: ../lib/gis/parser.c:1312
+#, c-format
+msgid "Sorry, <%s> is not a valid parameter\n"
+msgstr "<%s> není platný parameter\n"
+
+#: ../lib/gis/parser.c:1397
+#, c-format
+msgid ""
+"\n"
+"Error: illegal range syntax for parameter <%s>\n"
+msgstr ""
+"\n"
+"Chyba: neplatná syntaxe rozsahu pro parameter <%s>\n"
+
+#: ../lib/gis/parser.c:1399
+#, c-format
+msgid "       Presented as: %s\n"
+msgstr "       Zadáno: %s\n"
+
+#: ../lib/gis/parser.c:1402
+#, c-format
+msgid ""
+"\n"
+"Error: value <%s> out of range for parameter <%s>\n"
+msgstr ""
+"\n"
+"Chyba: hodnota <%s> mimo rozsah pro parametr <%s>\n"
+
+#: ../lib/gis/parser.c:1404
+#, c-format
+msgid "       Legal range: %s\n"
+msgstr "       Povolený rozsah: %s\n"
+
+#: ../lib/gis/parser.c:1407
+#, c-format
+msgid ""
+"\n"
+"Error: Missing value for parameter <%s>\n"
+msgstr ""
+"\n"
+"Chyba: Chybející hodnota pro parametr <%s>\n"
+
+#: ../lib/gis/parser.c:1567
+#, c-format
+msgid ""
+"\n"
+"ERROR: Required parameter <%s> not set:\n"
+"    (%s).\n"
+msgstr ""
+"\n"
+"CHYBA: Povinný parametr <%s> nebyl zadán:\n"
+"    (%s).\n"
+
+#: ../lib/gis/parser.c:1670
+#, c-format
+msgid ""
+"\n"
+"Error: option <%s> must be provided in multiples of %d\n"
+msgstr ""
+"\n"
+"CHYBA: volba <%s> musí být zadána jako násobek %d\n"
+
+#: ../lib/gis/parser.c:1672
+#, c-format
+msgid "       You provided %d items:\n"
+msgstr "       Bylo zadáno %d polo¾ek:\n"
+
+#: ../lib/gis/parser.c:1715
+msgid ""
+"\n"
+"FLAG: Set the following flag?\n"
+msgstr ""
+"\n"
+"PØEPÍNAÈ: Nastavit nasledující pøepínaè?\n"
+
+#: ../lib/gis/parser.c:1728
+#, c-format
+msgid ""
+"\n"
+"OPTION:   %s\n"
+msgstr ""
+"\n"
+"VOLBY:   %s\n"
+
+#: ../lib/gis/parser.c:1729
+#, c-format
+msgid "     key: %s\n"
+msgstr "     klíè: %s\n"
+
+#: ../lib/gis/parser.c:1731
+#, c-format
+msgid "  format: %s\n"
+msgstr "  format: %s\n"
+
+#: ../lib/gis/parser.c:1733
+#, c-format
+msgid " default: %s\n"
+msgstr " defaultní: %s\n"
+
+#: ../lib/gis/parser.c:1734
+#, c-format
+msgid "required: %s\n"
+msgstr "povinný: %s\n"
+
+#: ../lib/gis/parser.c:1736
+#, c-format
+msgid "multiple: %s\n"
+msgstr "vícenásobný: %s\n"
+
+#: ../lib/gis/parser.c:1738
+#, c-format
+msgid " options: %s\n"
+msgstr " volby: %s\n"
+
+#: ../lib/gis/parser.c:1751
+msgid "enter option > "
+msgstr "zadat volbu > "
+
+#: ../lib/gis/parser.c:1765 ../lib/gis/parser.c:1776
+msgid "   Try again? "
+msgstr "   Zkusit znovu? "
+
+#: ../lib/gis/parser.c:1774
+#, c-format
+msgid "Sorry, %s is not accepted.\n"
+msgstr "%s není akceptován.\n"
+
+#: ../lib/gis/parser.c:1785
+#, c-format
+msgid ""
+"\n"
+"You have chosen:\n"
+"  %s\n"
+msgstr ""
+"\n"
+"Bylo vybráno:\n"
+"  %s\n"
+
+#: ../lib/gis/parser.c:1786
+msgid "Is this correct? "
+msgstr "Je to správnì? "
+
+#: ../lib/gis/parser.c:1844
+msgid "to accept the default"
+msgstr "pou¾ít defaultní"
+
+#: ../lib/gis/adj_cellhd.c:66
+msgid "Illegal n-s resolution value"
+msgstr "Neplatné n-s rozli¹ení"
+
+#: ../lib/gis/adj_cellhd.c:71
+msgid "Illegal row value"
+msgstr "Neplatný poèet øádek"
+
+#: ../lib/gis/adj_cellhd.c:76
+msgid "Illegal e-w resolution value"
+msgstr "Neplatné e-w rozli¹ení"
+
+#: ../lib/gis/adj_cellhd.c:81
+msgid "Illegal col value"
+msgstr "Neplatný poèet sloupcù"
+
+#: ../lib/gis/adj_cellhd.c:88
+msgid "Illegal latitude for North"
+msgstr "Neplatná ¹íøka pro sever"
+
+#: ../lib/gis/adj_cellhd.c:90
+msgid "Illegal latitude for South"
+msgstr "Neplatná ¹íøka pro jih"
+
+#: ../lib/gis/adj_cellhd.c:99
+msgid "North must be north of South"
+msgstr "Sever musí být severnì oproti jihu"
+
+#: ../lib/gis/adj_cellhd.c:101
+msgid "North must be larger than South"
+msgstr "Sever musí být vìt¹í ne¾ jih"
+
+#: ../lib/gis/adj_cellhd.c:104
+msgid "East must be larger than West"
+msgstr "Východ musí být vìt¹í ne¾ západ"
+
+#: ../lib/gis/adj_cellhd.c:124
+msgid "Invalid coordinates"
+msgstr "Neplatné souøadnice"
+
+#: ../lib/gis/gisinit.c:44
+#, c-format
+msgid "MAPSET %s - permission denied"
+msgstr "MAPSET %s - pøístup odepøen"
+
+#: ../lib/gis/gisinit.c:49 ../lib/gis/mapset.c:60
+#, c-format
+msgid "MAPSET %s not found"
+msgstr "MAPSET %s nebyla nalezena"
+
+#: ../lib/gis/gisinit.c:75
+msgid "ERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
+msgstr "CHYBA: System není inicializován. Programátor zapomìl volat G_gisinit()\n"
+
+#: ../lib/gis/ask.c:293
+msgid "to cancel request"
+msgstr "zru¹it po¾adavek"
+
+#: ../lib/gis/ask.c:348
+#, c-format
+msgid "Enter a new %s file name"
+msgstr ""
+
+#: ../lib/gis/ask.c:352
+#, c-format
+msgid "Enter the name of an existing %s file"
+msgstr "Zadat jméno existujícího %s souboru"
+
+#: ../lib/gis/ask.c:355
+#, c-format
+msgid "Enter %s file name"
+msgstr ""
+
+#: ../lib/gis/ask.c:372
+#, c-format
+msgid "Enter 'list' for a list of existing %s files\n"
+msgstr "Zadat 'list' pro výpis existujících %s souborù\n"
+
+#: ../lib/gis/ask.c:375
+msgid "Enter 'list -f' for "
+msgstr "Zadat 'list -f' pro"
+
+#: ../lib/gis/ask.c:377
+#, c-format
+msgid "a list %s"
+msgstr "výpis %s"
+
+#: ../lib/gis/ask.c:379
+msgid "an extended list"
+msgstr "roz¹íøený výpis"
+
+#: ../lib/gis/ask.c:383
+#, c-format
+msgid "Hit RETURN %s\n"
+msgstr "Stisknou RETURN %s\n"
+
+#: ../lib/gis/ask.c:437
+#, c-format
+msgid ""
+"\n"
+"**<%s> illegal name **\n"
+msgstr ""
+"\n"
+"**<%s> neplatné jméno **\n"
+
+#: ../lib/gis/ask.c:452
+#, c-format
+msgid ""
+"\n"
+"** %s - illegal request **\n"
+msgstr ""
+
+#: ../lib/gis/ask.c:467
+#, c-format
+msgid ""
+"\n"
+"** %s - exists, select another name **\n"
+msgstr ""
+
+#: ../lib/gis/ask.c:477
+#, c-format
+msgid ""
+"\n"
+"** %s exists. ok to overwrite? "
+msgstr ""
+
+#: ../lib/gis/ask.c:491 ../lib/gis/ask.c:513
+#, c-format
+msgid ""
+"\n"
+"** %s - not found **\n"
+msgstr ""
+
+#: ../lib/gis/ask.c:495
+msgid "ask: can't happen"
+msgstr ""
+
+#: ../lib/gis/ask_cell.c:58 ../lib/gis/ask_cell.c:79 ../lib/gis/ask_cell.c:100
+#: ../lib/gis/ask_cell.c:109
+msgid "with titles"
+msgstr ""
+
+#: ../lib/gis/ask_cell.c:121
+msgid "(no title)"
+msgstr ""
+
+#: ../lib/gis/auto_mask.c:53
+msgid "Unable to open automatic MASK file"
+msgstr ""
+
+#: ../lib/gis/cats.c:384
+#, c-format
+msgid "category support for [%s] in mapset [%s] %s"
+msgstr ""
+
+#: ../lib/gis/cats.c:423
+#, c-format
+msgid "category support for vector file [%s] in mapset [%s] %s"
+msgstr ""
+
+#: ../lib/gis/color_read.c:123
+#, c-format
+msgid "color support for [%s] in mapset [%s] %s"
+msgstr ""
+
+#: ../lib/gis/datum.c:163 ../lib/gis/get_datum_name.c:67
+#: ../lib/gis/get_ell_name.c:33 ../lib/gis/get_projname.c:48
+#: ../lib/proj/datum.c:221
+msgid "Cannot open temp file"
+msgstr ""
+
+#: ../lib/gis/datum.c:242 ../lib/gis/get_datum_name.c:56
+#: ../lib/gis/get_ell_name.c:46 ../lib/gis/get_projname.c:60
+#: ../lib/proj/datum.c:298
+msgid "Hit RETURN to cancel request\n"
+msgstr ""
+
+#: ../lib/gis/datum.c:353 ../lib/gis/datum.c:433 ../lib/proj/datum.c:344
+#: ../lib/proj/datum.c:418
+#, c-format
+msgid "unable to open datum table file: %s"
+msgstr ""
+
+#: ../lib/gis/datum.c:368 ../lib/gis/datum.c:458 ../lib/proj/datum.c:357
+#: ../lib/proj/datum.c:432
+#, c-format
+msgid "error in datum table file, line %d"
+msgstr ""
+
+#: ../lib/gis/env.c:268
+msgid "GISRC - variable not set"
+msgstr ""
+
+#: ../lib/gis/env.c:286 ../lib/gis/env.c:298
+#, c-format
+msgid "%s not set"
+msgstr ""
+
+#: ../lib/gis/done_msg.c:29
+#, c-format
+msgid "%s complete. %s\n"
+msgstr ""
+
+#: ../lib/gis/format.c:162
+#, c-format
+msgid "Fail of initial read of compressed file [%s in %s]"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:6
+#, c-format
+msgid "Size of cell in fp maps = %d\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:7
+#, c-format
+msgid "type for writing floating maps = %d\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:8
+#, c-format
+msgid "current window = %p\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:9
+#, c-format
+msgid "Flag: window set? %d\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:10
+#, c-format
+msgid "File descriptor for automatic mask %d\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:11
+#, c-format
+msgid "Flag denoting automatic masking %d\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:12
+#, c-format
+msgid "CELL mask buffer %p\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:13
+#, c-format
+msgid "buffer for reading null rows %p\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:14
+#, c-format
+msgid "Pre/post compressed data buffer %p\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:15
+#, c-format
+msgid "sizeof compressed_buf %d\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:16
+#, c-format
+msgid "work data buffer %p\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:17
+#, c-format
+msgid "sizeof work_buf %d\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:18
+#, c-format
+msgid "sizeof null_buf %d\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:19
+#, c-format
+msgid "sizeof mask_buf %d\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:20
+#, c-format
+msgid "Histogram request %d\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:22
+#, c-format
+msgid "G_dump: file #%d\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:23
+#, c-format
+msgid "open mode = %d\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:24
+#, c-format
+msgid "Cell header %p\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:25
+#, c-format
+msgid "Table reclass %p\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:26
+#, c-format
+msgid "Cell stats %p\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:27
+#, c-format
+msgid "Range structure %p\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:28
+#, c-format
+msgid "float Range structure %p\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:29
+#, c-format
+msgid "want histogram?  %d\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:30
+#, c-format
+msgid "Automatic reclass flag %d\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:31
+#, c-format
+msgid "File row addresses %p\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:32
+#, c-format
+msgid "Data to window col mapping %p\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:33
+#, c-format
+msgid "Data to window row constants %f,%f\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:34
+#, c-format
+msgid "Current data row in memory %d\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:35
+#, c-format
+msgid "Current null row in memory %d\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:36
+#, c-format
+msgid "nbytes per cell for current row %d\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:37
+#, c-format
+msgid "Decompressed data buffer %s\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:38
+#, c-format
+msgid "bytes per cell %d\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:39
+#, c-format
+msgid "type: int, float or double map %d\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:40
+#, c-format
+msgid "Temporary name for NEW files %s\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:41
+#, c-format
+msgid "Temporary name for NEW NULL files %s\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:42
+#, c-format
+msgid "for existing raster maps %d\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:43
+#, c-format
+msgid "Name of open file %s\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:44
+#, c-format
+msgid "Mapset of open file %s\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:45
+#, c-format
+msgid "io error warning given %d\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:46
+#, c-format
+msgid "xdr stream for reading fp %p\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:47
+#, c-format
+msgid "NULL_ROWS array[%d] = %p\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:48
+#, c-format
+msgid "data buffer for reading null rows %p\n"
+msgstr ""
+
+#: ../lib/gis/G_dump.c:49
+#, c-format
+msgid "Minimum row null row number in memory %d\n"
+msgstr ""
+
+#: ../lib/gis/get_cellhd.c:75 ../lib/gis/get_cellhd.c:104
+#, c-format
+msgid "Can't read header file for [%s in %s]\n"
+msgstr ""
+
+#: ../lib/gis/get_cellhd.c:77
+#, c-format
+msgid "It is a reclass of [%s in %s] "
+msgstr ""
+
+#: ../lib/gis/get_cellhd.c:80
+msgid "which is missing"
+msgstr ""
+
+#: ../lib/gis/get_cellhd.c:82
+msgid "whose header file can't be opened"
+msgstr ""
+
+#: ../lib/gis/get_cellhd.c:92
+#, c-format
+msgid "Can't open header file for [%s in %s]"
+msgstr ""
+
+#: ../lib/gis/get_cellhd.c:108
+#, c-format
+msgid "It is a reclass of [%s in %s] whose header file is invalid\n"
+msgstr ""
+
+#: ../lib/gis/get_cellhd.c:112
+msgid "Invalid format\n"
+msgstr ""
+
+#: ../lib/gis/get_datum.c:80 ../lib/gis/get_ellipse.c:81
+#, c-format
+msgid "Unable to open file %s in %s"
+msgstr ""
+
+#: ../lib/gis/get_datum.c:107
+#, c-format
+msgid "Error reading datum shift parameters for %s from table"
+msgstr ""
+
+#: ../lib/gis/get_datum.c:115
+#, c-format
+msgid "Error reading ellipsoid parameters for %s from table"
+msgstr ""
+
+#: ../lib/gis/get_datum.c:120
+#, c-format
+msgid "No ellipsoid field %s in file %s in %s"
+msgstr ""
+
+#: ../lib/gis/get_datum.c:174
+#, c-format
+msgid "invalid value: field %s in file %s in %s"
+msgstr ""
+
+#: ../lib/gis/get_datum_name.c:53
+msgid ""
+"\n"
+"Please specify datum name\n"
+msgstr ""
+
+#: ../lib/gis/get_datum_name.c:54
+msgid "Enter 'list' for the list of available datums\n"
+msgstr ""
+
+#: ../lib/gis/get_datum_name.c:91
+msgid ""
+"\n"
+"invalid datum\n"
+msgstr ""
+
+#: ../lib/gis/get_ellipse.c:89 ../lib/gis/get_ellipse.c:114
+#, c-format
+msgid "invalid a: field %s in file %s in %s"
+msgstr ""
+
+#: ../lib/gis/get_ellipse.c:102
+#, c-format
+msgid "invalid ellipsoid %s in file %s in %s"
+msgstr ""
+
+#: ../lib/gis/get_ellipse.c:119
+#, c-format
+msgid "invalid es: field %s in file %s in %s"
+msgstr ""
+
+#: ../lib/gis/get_ellipse.c:133
+#, c-format
+msgid "No ellipsoid info given in file %s in %s"
+msgstr ""
+
+#: ../lib/gis/get_ellipse.c:406 ../lib/proj/ellipse.c:228
+#, c-format
+msgid "unable to open ellipsoid table file: %s"
+msgstr ""
+
+#: ../lib/gis/get_ellipse.c:455
+#, c-format
+msgid "Lines%s of ellipsoid table file <%s> are invalid"
+msgstr ""
+
+#: ../lib/gis/get_ellipse.c:456
+#, c-format
+msgid "Line%s of ellipsoid table file <%s> is invalid"
+msgstr ""
+
+#: ../lib/gis/get_ell_name.c:44
+msgid ""
+"\n"
+"Please specify ellipsoid name\n"
+msgstr ""
+
+#: ../lib/gis/get_ell_name.c:45
+msgid "Enter 'list' for the list of available ellipsoids\n"
+msgstr ""
+
+#: ../lib/gis/get_ell_name.c:62
+msgid ""
+"\n"
+"invalid ellipsoid\n"
+msgstr ""
+
+#: ../lib/gis/get_projinfo.c:17 ../lib/gis/get_projinfo.c:45
+#, c-format
+msgid "%s file not found for location %s\n"
+msgstr ""
+
+#: ../lib/gis/get_projinfo.c:24 ../lib/gis/get_projinfo.c:52
+#, c-format
+msgid "ERROR in reading %s file for location %s\n"
+msgstr ""
+
+#: ../lib/gis/get_projname.c:36
+#, c-format
+msgid "%s not found"
+msgstr ""
+
+#: ../lib/gis/get_projname.c:42
+#, c-format
+msgid "ERROR in reading %s"
+msgstr ""
+
+#: ../lib/gis/get_projname.c:58
+msgid ""
+"\n"
+"\n"
+"Please specify projection name\n"
+msgstr ""
+
+#: ../lib/gis/get_projname.c:59
+msgid "Enter 'list' for the list of available projections\n"
+msgstr ""
+
+#: ../lib/gis/get_projname.c:78
+msgid ""
+"\n"
+"invalid projection\n"
+msgstr ""
+
+#: ../lib/gis/get_row.c:110
+#, c-format
+msgid "[%s in %s] - read request for row %d is outside region"
+msgstr ""
+
+#: ../lib/gis/get_row.c:426
+#, c-format
+msgid "cell_values_double: xdr_double failed for index %d."
+msgstr ""
+
+#: ../lib/gis/get_row.c:569
+#, c-format
+msgid "error reading %smap [%s] in mapset [%s], row %d"
+msgstr ""
+
+#: ../lib/gis/get_row.c:895
+msgid "Too many open raster files"
+msgstr ""
+
+#: ../lib/gis/get_row.c:923 ../lib/gis/get_row.c:929
+#, c-format
+msgid "error reading null row %d"
+msgstr ""
+
+#: ../lib/gis/get_row.c:1009
+msgid "Could not realloc buffer"
+msgstr ""
+
+#: ../lib/gis/get_window.c:57
+#, c-format
+msgid ""
+"region for current mapset %s\n"
+"run \"g.region\""
+msgstr ""
+
+#: ../lib/gis/get_window.c:93
+#, c-format
+msgid "default region %s"
+msgstr ""
+
+#: ../lib/gis/get_window.c:114
+msgid "is not set"
+msgstr ""
+
+#: ../lib/gis/get_window.c:124
+#, c-format
+msgid ""
+"is invalid\n"
+"%s"
+msgstr ""
+
+#: ../lib/gis/gishelp.c:49
+msgid "one moment...\n"
+msgstr ""
+
+#: ../lib/gis/gishelp.c:55
+#, c-format
+msgid "No help available for command [%s]\n"
+msgstr ""
+
+#: ../lib/gis/histogram.c:60
+#, c-format
+msgid "Histogram for [%s in %s] missing (run r.support)"
+msgstr ""
+
+#: ../lib/gis/histogram.c:67
+#, c-format
+msgid "Can't read histogram for [%s in %s]"
+msgstr ""
+
+#: ../lib/gis/histogram.c:78 ../lib/gis/histogram.c:87
+#, c-format
+msgid "Invalid histogram file for [%s in %s]"
+msgstr ""
+
+#: ../lib/gis/histogram.c:341
+#, c-format
+msgid "can't create histogram for [%s in %s]"
+msgstr ""
+
+#: ../lib/gis/history.c:120
+#, c-format
+msgid "can't get history information for [%s] in mapset [%s]"
+msgstr ""
+
+#: ../lib/gis/history.c:170
+#, c-format
+msgid "can't write history information for [%s]"
+msgstr ""
+
+#: ../lib/gis/home.c:51
+msgid "unable to determine user's home directory"
+msgstr ""
+
+#: ../lib/gis/legal_name.c:28
+msgid "Illegal filename.  Cannot be '.' or 'NULL'\n"
+msgstr ""
+
+#: ../lib/gis/legal_name.c:34
+#, c-format
+msgid "Illegal filename. character <%c> not allowed."
+msgstr ""
+
+#: ../lib/gis/list.c:110
+#, c-format
+msgid "no %s files available\n"
+msgstr ""
+
+#: ../lib/gis/list.c:123
+msgid "hit RETURN to continue -->"
+msgstr ""
+
+#: ../lib/gis/list.c:178
+#, c-format
+msgid "%s files available in mapset %s:\n"
+msgstr ""
+
+#: ../lib/gis/location.c:48
+#, c-format
+msgid "LOCATION  << %s >>  not available"
+msgstr ""
+
+#: ../lib/gis/make_colr.c:43
+#, c-format
+msgid " The raster map %s@%s is empty"
+msgstr ""
+
+#: ../lib/gis/make_colr.c:51
+#, c-format
+msgid ""
+"\n"
+"\n"
+"Color table needed for file [%s] in mapset [%s].\n"
+msgstr ""
+
+#: ../lib/gis/make_colr.c:54
+msgid ""
+"\n"
+"Please identify the type desired:\n"
+msgstr ""
+
+#: ../lib/gis/make_colr.c:55
+msgid "    1:  Random colors\n"
+msgstr ""
+
+#: ../lib/gis/make_colr.c:56
+msgid "    2:  Red, green, and blue color ramps\n"
+msgstr ""
+
+#: ../lib/gis/make_colr.c:57
+msgid "    3:  Color wave\n"
+msgstr ""
+
+#: ../lib/gis/make_colr.c:58
+msgid "    4:  Gray scale\n"
+msgstr ""
+
+#: ../lib/gis/make_colr.c:59
+msgid "    5:  Aspect\n"
+msgstr ""
+
+#: ../lib/gis/make_colr.c:60
+msgid "    6:  Rainbow colors\n"
+msgstr ""
+
+#: ../lib/gis/make_colr.c:61
+msgid "    7:  Red through yellow to green\n"
+msgstr ""
+
+#: ../lib/gis/make_colr.c:62
+msgid "    8:  Green through yellow to red\n"
+msgstr ""
+
+#: ../lib/gis/make_colr.c:63
+msgid "RETURN  quit\n"
+msgstr ""
+
+#: ../lib/gis/make_colr.c:84
+#, c-format
+msgid ""
+"\n"
+"%s invalid; Try again > "
+msgstr ""
+
+#: ../lib/gis/mapset_msc.c:69
+#, c-format
+msgid "can't make mapset element %s (%s)"
+msgstr ""
+
+#: ../lib/gis/mapset.c:41
+msgid "MAPSET is not set"
+msgstr ""
+
+#: ../lib/gis/mask_info.c:42
+#, c-format
+msgid "<%s> in mapset <%s>"
+msgstr ""
+
+#: ../lib/gis/mask_info.c:45
+msgid "none"
+msgstr ""
+
+#: ../lib/gis/mask_info.c:48
+msgid "not known"
+msgstr ""
+
+#: ../lib/gis/myname.c:48
+msgid "Unknown Location"
+msgstr ""
+
+#: ../lib/gis/null_val.c:94
+msgid "EmbedGivenNulls: wrong data type!"
+msgstr ""
+
+#: ../lib/gis/null_val.c:115
+msgid "Null values have not been initialized. "
+msgstr ""
+
+#: ../lib/gis/null_val.c:116
+msgid "G_gisinit() must be called first. "
+msgstr ""
+
+#: ../lib/gis/null_val.c:117
+msgid "Please advise GRASS developers of this error.\n"
+msgstr ""
+
+#: ../lib/gis/null_val.c:231
+msgid "G_set_null_value: wrong data type!"
+msgstr ""
+
+#: ../lib/gis/opencell.c:165
+#, c-format
+msgid "unable to open raster map [%s in %s]"
+msgstr ""
+
+#: ../lib/gis/opencell.c:248
+#, c-format
+msgid ""
+"unable to open [%s] in [%s] since it is a reclass of [%s] in [%s] which does "
+"not exist"
+msgstr ""
+
+#: ../lib/gis/opencell.c:271
+#, c-format
+msgid "[%s] in mapset [%s]-format field in header file invalid"
+msgstr ""
+
+#: ../lib/gis/opencell.c:280
+#, c-format
+msgid ""
+"[%s] in mapset [%s] - in different projection than current region:\n"
+" found map [%s] in: <%s>, should be <%s> "
+msgstr ""
+
+#: ../lib/gis/opencell.c:287
+#, c-format
+msgid "[%s] in mapset [%s] - in different zone [%d] than current region [%d]"
+msgstr ""
+
+#: ../lib/gis/opencell.c:295
+#, c-format
+msgid "[%s] in [%s] - bytes per cell (%d) too large"
+msgstr ""
+
+#: ../lib/gis/opencell.c:598
+#, c-format
+msgid "opencell: %s - illegal file name"
+msgstr ""
+
+#: ../lib/gis/opencell.c:699
+msgid "Can't write embedded null values for map open for random access"
+msgstr ""
+
+#: ../lib/gis/opencell.c:930 ../lib/gis/opencell.c:951
+#, c-format
+msgid "unable to find [%s] in [%s]"
+msgstr ""
+
+#: ../lib/gis/opencell.c:982
+#, c-format
+msgid "unable to find [%s]"
+msgstr ""
+
+#: ../lib/gis/opencell.c:988
+#, c-format
+msgid "Unable to open %s"
+msgstr ""
+
+#: ../lib/gis/opencell.c:997
+#, c-format
+msgid "invalid type: field %s in file %s "
+msgstr ""
+
+#: ../lib/gis/opencell.c:1042
+#, c-format
+msgid "%s - ** illegal name **"
+msgstr ""
+
+#: ../lib/gis/proj2.c:49
+msgid "Latitude-Longitude"
+msgstr ""
+
+#: ../lib/gis/proj2.c:51
+msgid "Other Projection"
+msgstr ""
+
+#: ../lib/gis/proj3.c:68
+msgid "Unknown projection"
+msgstr ""
+
+#: ../lib/gis/put_cellhd.c:26
+#, c-format
+msgid "Unable to create header file for [%s]"
+msgstr ""
+
+#: ../lib/gis/put_row.c:311
+#, c-format
+msgid "map [%s] - unable to write row %d"
+msgstr ""
+
+#: ../lib/gis/put_row.c:785 ../lib/gis/put_row.c:791
+#, c-format
+msgid "error writing null row %d"
+msgstr ""
+
+#: ../lib/gis/put_title.c:28
+#, c-format
+msgid "category information for [%s] in [%s] missing or invalid"
+msgstr ""
+
+#: ../lib/gis/put_title.c:38
+msgid "G_put_title - can't create a temp file"
+msgstr ""
+
+#: ../lib/gis/put_title.c:58
+#, c-format
+msgid "category information for [%s] in [%s] invalid"
+msgstr ""
+
+#: ../lib/gis/put_title.c:66
+msgid "G_put_title - can't reopen temp file"
+msgstr ""
+
+#: ../lib/gis/put_title.c:75
+#, c-format
+msgid "can't write category information for [%s] in [%s]"
+msgstr ""
+
+#: ../lib/gis/quant_io.c:91
+#, c-format
+msgid "The floating data range for %s@%s is empty"
+msgstr ""
+
+#: ../lib/gis/quant_io.c:100
+#, c-format
+msgid "The integer data range for %s@%s is empty"
+msgstr ""
+
+#: ../lib/gis/quant_io.c:171
+#, c-format
+msgid "quantization file [%s] in mapset [%s] %s"
+msgstr ""
+
+#: ../lib/gis/quant_rw.c:208
+#, c-format
+msgid "Cannot write quant rules: map %s is integer"
+msgstr ""
+
+#: ../lib/gis/quant_rw.c:218
+#, c-format
+msgid "Cannot write quant rules for map %s"
+msgstr ""
+
+#: ../lib/gis/range.c:182
+msgid "Too many open files"
+msgstr ""
+
+#: ../lib/gis/range.c:206
+#, c-format
+msgid "can't read f_range file for [%s in %s]"
+msgstr ""
+
+#: ../lib/gis/range.c:330
+#, c-format
+msgid "can't read range file for [%s in %s]"
+msgstr ""
+
+#: ../lib/gis/range.c:390 ../lib/gis/range.c:441
+#, c-format
+msgid "can't write range file for [%s in %s]"
+msgstr ""
+
+#: ../lib/gis/rd_cellhd.c:75
+msgid "duplicate projection field"
+msgstr ""
+
+#: ../lib/gis/rd_cellhd.c:86
+msgid "duplicate zone field"
+msgstr ""
+
+#: ../lib/gis/rd_cellhd.c:96
+msgid "projection field missing"
+msgstr ""
+
+#: ../lib/gis/rd_cellhd.c:98
+msgid "zone field missing"
+msgstr ""
+
+#: ../lib/gis/rd_cellhd.c:119
+msgid "duplicate north field"
+msgstr ""
+
+#: ../lib/gis/rd_cellhd.c:128
+msgid "duplicate south field"
+msgstr ""
+
+#: ../lib/gis/rd_cellhd.c:137
+msgid "duplicate east field"
+msgstr ""
+
+#: ../lib/gis/rd_cellhd.c:146
+msgid "duplicate west field"
+msgstr ""
+
+#: ../lib/gis/rd_cellhd.c:155
+msgid "duplicate e-w resolution field"
+msgstr ""
+
+#: ../lib/gis/rd_cellhd.c:166
+msgid "duplicate n-s resolution field"
+msgstr ""
+
+#: ../lib/gis/rd_cellhd.c:177
+msgid "duplicate rows field"
+msgstr ""
+
+#: ../lib/gis/rd_cellhd.c:188
+msgid "duplicate cols field"
+msgstr ""
+
+#: ../lib/gis/rd_cellhd.c:199
+msgid "duplicate format field"
+msgstr ""
+
+#: ../lib/gis/rd_cellhd.c:208
+msgid "duplicate compressed field"
+msgstr ""
+
+#: ../lib/gis/rd_cellhd.c:219
+msgid "north field missing"
+msgstr ""
+
+#: ../lib/gis/rd_cellhd.c:221
+msgid "south field missing"
+msgstr ""
+
+#: ../lib/gis/rd_cellhd.c:223
+msgid "west field missing"
+msgstr ""
+
+#: ../lib/gis/rd_cellhd.c:225
+msgid "east field missing"
+msgstr ""
+
+#: ../lib/gis/rd_cellhd.c:227
+msgid "cols field missing"
+msgstr ""
+
+#: ../lib/gis/rd_cellhd.c:229
+msgid "rows field missing"
+msgstr ""
+
+#: ../lib/gis/rd_cellhd.c:276
+#, c-format
+msgid "line %d: <%s>"
+msgstr ""
+
+#: ../lib/gis/readsites.c:41
+msgid "Reading sites list ...                  "
+msgstr ""
+
+#: ../lib/gis/readsites.c:45
+msgid "failed to guess format"
+msgstr ""
+
+#: ../lib/gis/readsites.c:49
+#, c-format
+msgid "decimal field %i not present in sites file"
+msgstr ""
+
+#: ../lib/gis/readsites.c:55
+msgid ""
+"I'm finding records that do not have a floating point attributes (fields "
+"prefixed with '%')."
+msgstr ""
+
+#: ../lib/gis/readsites.c:60 ../lib/gis/readsites.c:69
+msgid "cannot allocate memory"
+msgstr ""
+
+#: ../lib/gis/readsites_xyz.c:119
+msgid "Unable to guess site format!"
+msgstr ""
+
+#: ../lib/gis/readsites_xyz.c:133
+msgid "No n-dims in site_list"
+msgstr ""
+
+#: ../lib/gis/readsites_xyz.c:136
+msgid "Dimension index out of range"
+msgstr ""
+
+#: ../lib/gis/readsites_xyz.c:141
+msgid "No double attributes in site_list"
+msgstr ""
+
+#: ../lib/gis/readsites_xyz.c:144
+msgid "Double attribute index out of range"
+msgstr ""
+
+#: ../lib/gis/readsites_xyz.c:149
+msgid "No string attributes in site_list"
+msgstr ""
+
+#: ../lib/gis/readsites_xyz.c:152
+msgid "String attribute index out of range"
+msgstr ""
+
+#: ../lib/gis/readsites_xyz.c:159
+msgid "Unknown attribute type in call to G_readsites_xyz()!\n"
+msgstr ""
+
+#: ../lib/gis/readsites_xyz.c:191
+msgid "Failed to convert string attribute."
+msgstr ""
+
+#: ../lib/gis/reclass.c:156
+#, c-format
+msgid "Too many reclass categories for [%s in %s]"
+msgstr ""
+
+#: ../lib/gis/reclass.c:159
+#, c-format
+msgid "Illegal reclass format in header file for [%s in %s]"
+msgstr ""
+
+#: ../lib/gis/reclass.c:236
+msgid "Illegal reclass request"
+msgstr ""
+
+#: ../lib/gis/reclass.c:241
+msgid "Illegal reclass type"
+msgstr ""
+
+#: ../lib/gis/reclass.c:248
+#, c-format
+msgid "Unable to create header file for [%s in %s]"
+msgstr ""
+
+#: ../lib/gis/reclass.c:299
+#, c-format
+msgid "Unable to create dependency file in [%s in %s]"
+msgstr ""
+
+#: ../lib/gis/set_window.c:66
+msgid ""
+"G_set_window(): projection/zone differs from that of currently open raster "
+"files"
+msgstr ""
+
+#: ../lib/gis/spawn.c:56
+msgid "too many arguments"
+msgstr ""
+
+#: ../lib/gis/spawn.c:78 ../lib/gis/spawn.c:390
+msgid "unable to create a new process"
+msgstr ""
+
+#: ../lib/gis/spawn.c:88 ../lib/gis/spawn.c:413
+msgid "unable to execute command"
+msgstr ""
+
+#: ../lib/gis/spawn.c:164 ../lib/gis/spawn.c:172
+#, c-format
+msgid "G_spawn: unable to restore signal %d"
+msgstr ""
+
+#: ../lib/gis/spawn.c:205
+#, c-format
+msgid "G_spawn: unable to reset signal %d"
+msgstr ""
+
+#: ../lib/gis/spawn.c:215
+#, c-format
+msgid "G_spawn: unable to ignore signal %d"
+msgstr ""
+
+#: ../lib/gis/spawn.c:226
+#, c-format
+msgid "G_spawn: unable to block signal %d"
+msgstr ""
+
+#: ../lib/gis/spawn.c:235
+#, c-format
+msgid "G_spawn: unable to unblock signal %d"
+msgstr ""
+
+#: ../lib/gis/spawn.c:261
+#, c-format
+msgid "G_spawn: unable to open file %s"
+msgstr ""
+
+#: ../lib/gis/spawn.c:267 ../lib/gis/spawn.c:277
+#, c-format
+msgid "G_spawn: unable to duplicate descriptor %d to %d"
+msgstr ""
+
+#: ../lib/gis/spawn.c:405
+#, c-format
+msgid "unable to change directory to %s"
+msgstr ""
+
+#: ../lib/gis/system.c:83
+msgid "WARNING: can not create a new process\n"
+msgstr ""
+
+#: ../lib/gis/timestamp.c:257
+#, c-format
+msgid "Can't create timestamp file for %s map %s in mapset %s"
+msgstr ""
+
+#: ../lib/gis/timestamp.c:267
+#, c-format
+msgid "Invalid timestamp specified for %s map %s in mapset %s"
+msgstr ""
+
+#: ../lib/gis/timestamp.c:292
+#, c-format
+msgid "Can't open timestamp file for %s map %s in mapset %s"
+msgstr ""
+
+#: ../lib/gis/timestamp.c:302
+#, c-format
+msgid "Invalid timestamp file for %s map %s in mapset %s"
+msgstr ""
+
+#: ../lib/gis/view.c:164
+#, c-format
+msgid "Unable to open %s for writing"
+msgstr ""
+
+#: ../lib/gis/view.c:253 ../lib/gis/view.c:472
+#, c-format
+msgid "Unable to open %s for reading"
+msgstr ""
+
+#: ../lib/gis/view.c:458
+msgid "GRASS window when view was saved:\n"
+msgstr ""
+
+#: ../lib/gis/view.c:544
+#, c-format
+msgid " Window saved in \"%s\" is completely outside of current GRASS window."
+msgstr ""
+
+#: ../lib/gis/view.c:548
+msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgstr ""
+
+#: ../lib/proj/ellipse.c:85
+#, c-format
+msgid "invalid ellipsoid %s in file"
+msgstr ""
+
+#: ../lib/proj/ellipse.c:128
+msgid "No ellipsoid info given in file"
+msgstr ""
+
+#: ../lib/raster/io.c:190
+msgid "Unable to allocate memory\n"
+msgstr ""
+
+#: ../lib/raster/io.c:211
+#, c-format
+msgid "ERROR %s from graphics driver.\n"
+msgstr ""
+
+#: ../lib/raster/io.c:282
+msgid "No graphics monitor has been selected for output.\n"
+msgstr ""
+
+#: ../lib/raster/io.c:283
+msgid "Please run \"d.mon\" to select a graphics monitor.\n"
+msgstr ""
+
+#: ../lib/raster/io.c:293
+#, c-format
+msgid "No such graphics monitor as <%s>.\n"
+msgstr ""
+
+#: ../lib/raster/io.c:294
+msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
+msgstr ""
+
+#: ../lib/raster/io.c:306
+#, c-format
+msgid "Failed to get socket name for monitor <%s>.\n"
+msgstr ""
+
+#: ../lib/raster/io.c:319
+#, c-format
+msgid "No socket to connect to for monitor <%s>.\n"
+msgstr ""
+
+#: ../lib/raster/io.c:346
+msgid ""
+"Socket is already in use or not accepting connections.\n"
+"Use d.mon to select a monitor\n"
+msgstr ""
+
+#: ../lib/raster/io.c:354
+msgid ""
+"Trying to connect to something not a socket.\n"
+"Probably program error.\n"
+msgstr ""
+
+#: ../lib/raster/io.c:361
+msgid "Connect attempt timed out. Probably an error with the server.\n"
+msgstr ""
+
+#: ../lib/raster/io.c:368
+msgid "Not connected...\n"
+msgstr ""
+
+#: ../lib/raster/io.c:371
+msgid "Couldn't connect to monitor. Will try once more.\n"
+msgstr ""
+
+#: ../lib/raster/io.c:377
+msgid "Connection failed.\n"
+msgstr ""
+
+#: ../lib/raster/io.c:392
+#, c-format
+msgid "Can't stat %s\n"
+msgstr ""
+
+#: ../lib/raster/io.c:408
+#, c-format
+msgid "Error - Monitor <%s> is in use.\n"
+msgstr ""
+
+#: ../lib/raster/io.c:410
+#, c-format
+msgid "Error - Monitor <%s> is in use by %s.\n"
+msgstr ""
+
+#: ../lib/raster/io.c:420
+#, c-format
+msgid "Error - Could not complete locking process for monitor <%s>.\n"
+msgstr ""
+
+#: ../lib/raster/io.c:434
+msgid "Error - Can't set up pipe to graphics device.\n"
+msgstr ""
+
+#: ../lib/raster/io.c:440
+#, c-format
+msgid "Error - Graphics monitor <%s> not running!\n"
+msgstr ""
+
+#: ../lib/raster/io.c:444
+#, c-format
+msgid "Please start graphics monitor <%s>.\n"
+msgstr ""
+
+#: ../lib/raster/io.c:509
+msgid "ERROR - eof from graphics monitor.\n"
+msgstr ""
+
+#: ../lib/raster/io.c:526
+#, c-format
+msgid "Warning - no response from graphics monitor <%s>.\n"
+msgstr ""
+
+#: ../lib/raster/io.c:528
+msgid "Check to see if the mouse is still active.\n"
+msgstr ""
+
+#: ../lib/raster/io.c:531
+#, c-format
+msgid "ERROR - no response from graphics monitor <%s>.\n"
+msgstr ""
+
+#: ../lib/raster/parse_mon.c:29
+msgid "ERROR: GISBASE not set\n"
+msgstr ""
+
+#: ../lib/vector/Vlib/open.c:42
+msgid "Requested format is not compiled in this version"
+msgstr ""
+
+#: ../lib/vector/Vlib/open.c:95
+msgid "Warning, Programmer requested unknown open_level\n"
+msgstr ""
+
+#: ../lib/vector/Vlib/open.c:155
+#, c-format
+msgid "Cannot find vector %s"
+msgstr "Vektor %s nebyl nalezen"
+
+#: ../lib/vector/Vlib/open.c:165
+msgid "A map which is not in the current mapset cannot be opened for update."
+msgstr ""
+
+#: ../lib/vector/Vlib/open.c:183
+#, c-format
+msgid "Cannot open old vector %s"
+msgstr "Nelze otevøít vektor %s"
+
+#: ../lib/vector/Vlib/open.c:193 ../lib/vector/Vlib/open.c:243
+#: ../lib/vector/Vlib/open.c:259
+#, c-format
+msgid "Cannot open old vector %s on level %d"
+msgstr "Vektor %s nelze otevøít na level %d"
+
+#: ../lib/vector/Vlib/open.c:306 ../lib/vector/Vlib/open.c:490
+#, c-format
+msgid "Cannot open history file for vector '%s'"
+msgstr ""
+
+#: ../lib/vector/Vlib/open.c:444
+msgid "Map name is not SQL compliant."
+msgstr "Jméno vektoru nevyhovuje podmínkám SQL."
+
+#: ../lib/vector/Vlib/open.c:460
+#, c-format
+msgid "The vector '%s' already exists."
+msgstr "Vektor '%s' ji¾ existuje."
+
+#: ../lib/vector/Vlib/open.c:463
+#, c-format
+msgid "The vector '%s' already exists and will be overwritten."
+msgstr "Vektor '%s' ji¾ existuje a bude pøepsán."
+
+#: ../lib/vector/Vlib/open.c:467
+#, c-format
+msgid "Cannot delete existing vector %s"
+msgstr "Nelze smazat existující vektor %s."
+
+#: ../lib/vector/Vlib/open.c:481
+#, c-format
+msgid "Cannot open new vector %s"
+msgstr "Nelze otevøít nový vektor %s"
+
+#: ../lib/vector/Vlib/open.c:533
+#, c-format
+msgid "Could not stat file '%s'"
+msgstr ""
+
+#: ../lib/vector/Vlib/open.c:619
+msgid "Size of 'coor' file differs from value saved in topo file."
+msgstr "Velikost souboru 'coor' se li¹í od hodnot ulo¾ených v 'topo' souboru"
+
+#: ../lib/vector/Vlib/open.c:630
+#, c-format
+msgid "Please rebuild topology for vector '%s@%s'"
+msgstr ""
+
+#: ../lib/vector/Vlib/build.c:127
+msgid "Building topology ...\n"
+msgstr "Vytváøení topologie ...\n"
+
+#: ../lib/vector/Vlib/build.c:139
+msgid "Topology was built.\n"
+msgstr "Topologie byla vytvoøena.\n"
+
+#: ../lib/vector/Vlib/build.c:151
+#, c-format
+msgid "Number of nodes     :   %d\n"
+msgstr "Poèet uzlù          :   %d\n"
+
+#: ../lib/vector/Vlib/build.c:152
+#, c-format
+msgid "Number of primitives:   %d\n"
+msgstr "Poèet primitiv      :   %d\n"
+
+#: ../lib/vector/Vlib/build.c:153
+#, c-format
+msgid "Number of points    :   %d\n"
+msgstr "Poèet bodù          :   %d\n"
+
+#: ../lib/vector/Vlib/build.c:154
+#, c-format
+msgid "Number of lines     :   %d\n"
+msgstr "Poèet linií         :   %d\n"
+
+#: ../lib/vector/Vlib/build.c:155
+#, c-format
+msgid "Number of boundaries:   %d\n"
+msgstr "Poèet hranic        :   %d\n"
+
+#: ../lib/vector/Vlib/build.c:156
+#, c-format
+msgid "Number of centroids :   %d\n"
+msgstr "Poèet centroidù     :   %d\n"
+
+#: ../lib/vector/Vlib/build.c:159
+#, c-format
+msgid "Number of faces     :   %d\n"
+msgstr ""
+
+#: ../lib/vector/Vlib/build.c:162
+#, c-format
+msgid "Number of kernels   :   %d\n"
+msgstr ""
+
+#: ../lib/vector/Vlib/build.c:197
+#, c-format
+msgid "Number of areas     :   %d\n"
+msgstr "Poèet ploch         :   %d\n"
+
+#: ../lib/vector/Vlib/build.c:198
+#, c-format
+msgid "Number of isles     :   %d\n"
+msgstr "Poèet ostrovù       :   %d\n"
+
+#: ../lib/vector/Vlib/build.c:201
+#, c-format
+msgid "Number of incorrect boundaries   :   %d\n"
+msgstr "Poèet chybných hranic            :   %d\n"
+
+#: ../lib/vector/Vlib/build.c:204
+#, c-format
+msgid "Number of centroids outside area :   %d\n"
+msgstr "Poèet centroidù mimo plochu      :   %d\n"
+
+#: ../lib/vector/Vlib/build.c:207
+#, c-format
+msgid "Number of duplicate centroids    :   %d\n"
+msgstr "Poèet duplikátních centroidù     :   %d\n"
+
+#: ../lib/vector/Vlib/build.c:210
+#, c-format
+msgid "Number of areas without centroid :   %d\n"
+msgstr "Poèet ploch bez centroidu        :   %d\n"
+
+#: ../lib/vector/Vlib/build.c:213
+msgid "Number of areas     :   -\n"
+msgstr "Poèet ploch         :   -\n"
+
+#: ../lib/vector/Vlib/build.c:214
+msgid "Number of isles     :   -\n"
+msgstr "Poèet ostrovù       :   -\n"
+
+#: ../lib/vector/Vlib/build.c:243
+#, fuzzy, c-format
+msgid "Can't open topo file for write: %s\n"
+msgstr "Nelze otevøít vektor %s"
+
+#: ../lib/vector/Vlib/build.c:251
+msgid "Error writing out topo file.\n"
+msgstr ""
+
+#: ../lib/vector/Vlib/build.c:379
+#, c-format
+msgid "Can't open spatial index file for write: %s\n"
+msgstr ""
+
+#: ../lib/vector/Vlib/build.c:387
+msgid "Error writing out spatial index file.\n"
+msgstr ""
+
+#: ../lib/vector/Vlib/build_nat.c:87
+msgid "Cannot add area (map closed, topo saved)"
+msgstr ""
+
+#: ../lib/vector/Vlib/build_nat.c:95
+msgid "Cannot add isle (map closed, topo saved)"
+msgstr ""
+
+#: ../lib/vector/Vlib/build_nat.c:104
+msgid "Area of size = 0.0 ignored"
+msgstr ""
+
+#: ../lib/vector/Vlib/build_nat.c:466
+msgid "Registering lines: "
+msgstr "Registrace linií: "
+
+#: ../lib/vector/Vlib/build_nat.c:507
+#, c-format
+msgid "\r%d primitives registered      \n"
+msgstr "\r%d primitivy zaregistrovány       \n"
+
+#: ../lib/vector/Vlib/build_nat.c:540
+#, c-format
+msgid ""
+"\r%d areas built      \n"
+"%d isles built\n"
+msgstr ""
+"\r%d plochy vytvoøeny      \n"
+"%d ostrovy vytvoøeny\n"
+
+#: ../lib/vector/Vlib/build_nat.c:548
+msgid "Attaching islands: "
+msgstr "Pøipojování ostrovù: "
+
+#: ../lib/vector/Vlib/build_nat.c:570
+msgid "Attaching centroids: "
+msgstr "Pøipojování centroidù: "
+
+#: ../lib/vector/Vlib/legal_vname.c:23
+#, c-format
+msgid "Illegal vector map name <%s>. May not contain '.' or 'NULL'.\n"
+msgstr "Neplatné jméno vektorové mapy <%s>. Nesmí obsahovat '.' a 'NULL'.\n"
+
+#: ../lib/vector/Vlib/legal_vname.c:29
+#, c-format
+msgid "Illegal vector map name <%s>. Must start with a letter.\n"
+msgstr "Neplatné jméno vektorové mapy <%s>. Musí zaèínat písmenem.\n"
+
+#: ../lib/vector/Vlib/legal_vname.c:35
+#, c-format
+msgid "Illegal vector map name <%s>. Character <%c> not allowed.\n"
+msgstr "Neplatné jméno vektorové mapy <%s>. Znak <%c> není povolen.\n"
+
+#: ../lib/vector/Vlib/legal_vname.c:60 ../lib/vector/Vlib/legal_vname.c:62
+#, c-format
+msgid "Output name '%s' is not valid vector name."
+msgstr "Jméno výstupu '%s' není platné jméno pro vektor."
+
+#: ../lib/vector/Vlib/legal_vname.c:73 ../lib/vector/Vlib/legal_vname.c:75
+#, c-format
+msgid "Cannot find input map '%s'"
+msgstr "Vstupní mapa %s nebyla nalezena"
+
+#: ../lib/vector/Vlib/legal_vname.c:93 ../lib/vector/Vlib/legal_vname.c:95
+#, c-format
+msgid "Output map '%s' is used as input"
+msgstr "Výstupní mapa '%s' je pou¾ita jako vstup."
+
