@@ -1,0 +1,17 @@
+OBJ=CASC2D.o read_gage_file.o write_files.o ch_flow.o rain_thiessen.o rain_sq_dis.o inf_redist.o inf_nodist.o ov_flow.o ov_lake.o ch_depth.o intercep.o crash.o im_read_input.o im_read_table.o im_coeff.o im_dsyot.o im_flow_route.o im_section.o im_usqot.o im_weir_coeff.o im_spill.o im_reservoir.o im_dsqoy.o im_ddsqoy.o im_norm_calc.o 
+SOURCES=CASC2D.c read_gage_file.c write_files.c ch_flow.c rain_thiessen.c rain_sq_dis.c inf_redist.c inf_nodist.c ov_flow.c ov_lake.c ch_depth.c intercep.c crash.c im_read_input.c im_read_table.c im_coeff.c im_dsyot.c im_flow_route.c im_section.c im_usqot.c im_weir_coeff.c im_spill.c im_reservoir.c im_dsqoy.c im_ddsqoy.c im_norm_calc.c
+
+DIR=$(BIN_ALPHA_CMD)
+HEADERS=all.h
+
+##DIR=$(BIN_ALPHA_CMD)
+
+PGM=$(DIR)/r.hydro.CASC2D
+
+$(PGM): $(OBJ) $(GISLIB) 
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(MATHLIB)
+
+
+$(OBJ): $(HEADERS)
+
+$GISLIB:#
