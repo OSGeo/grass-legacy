@@ -61,9 +61,10 @@ int main (int argc, char *argv[])
 	int at_percent = 0;
 	int col, row, nrows, ncols ;
 	int maxcost ;
+	int maxmem ;
 	double cost ;
 	int cost_fd, cum_fd ;
-	int have_stop_points=0 ;
+	int have_stop_points = 0;
 	int in_fd, out_fd ;
 	double my_cost ;
 	double null_cost;
@@ -71,14 +72,15 @@ int main (int argc, char *argv[])
 	int total_reviewed ;
 	int verbose = 1 ;
 	int keep_nulls = 1 ;
+	int start_with_raster_vals = 1 ;
 	int neighbor ;
 	int segments_in_memory ;
 	long n_processed = 0;
 	long total_cells ;
 	struct GModule *module;
-	struct Flag *flag1, *flag2, *flag3;
+	struct Flag *flag1, *flag2, *flag3, *flag4;
 	struct Option *opt1, *opt2, *opt3, *opt4, *opt5, *opt6, *opt7, *opt8;
-	struct Option *opt9;
+	struct Option *opt9, *opt10;
 	struct cost *pres_cell, *new_cell;
 	struct start_pt *pres_start_pt = NULL ;
 	struct start_pt *pres_stop_pt = NULL;
@@ -112,14 +114,14 @@ int main (int argc, char *argv[])
 	opt1->description= "Name of raster map to contain results" ;
 
 	opt7 = G_define_option() ;
-	opt7->key        = "start_vectorpoints" ;
+	opt7->key        = "start_points" ;
 	opt7->type       = TYPE_STRING;
 	opt7->gisprompt  = "old,vector,vector";
 	opt7->required   = NO;
 	opt7->description= "Starting points vector map";
 
 	opt8 = G_define_option() ;
-	opt8->key        = "stop_vectorpoints" ;
+	opt8->key        = "stop_points" ;
 	opt8->type       = TYPE_STRING;
 	opt8->gisprompt  = "old,vector,vector";
 	opt8->required   = NO;
@@ -163,6 +165,15 @@ int main (int argc, char *argv[])
 	opt6->multiple   = NO;
 	opt6->description= "Cost assigned to null cells. By default, null cells are excluded";
 
+	opt10 = G_define_option() ;
+	opt10->key        = "percent_memory" ;
+	opt10->type       = TYPE_INTEGER;
+	opt10->key_desc   = "percent memory" ;
+	opt10->required   = NO;
+	opt10->multiple   = NO;
+	opt10->answer     = "25";
+	opt10->description= "percent of map to keep in memory";
+
 	flag1 = G_define_flag();
 	flag1->key = 'v';
 	flag1->description = "Run verbosely";
@@ -174,6 +185,10 @@ int main (int argc, char *argv[])
 	flag3 = G_define_flag();
 	flag3->key = 'n';
 	flag3->description = "Keep null values in output map";
+
+	flag4 = G_define_flag();
+	flag4->key = 'r';
+	flag4->description = "Start with values in raster map";
 
 	/*   Parse command line */
 	if (G_parser(argc, argv))
@@ -216,6 +231,8 @@ int main (int argc, char *argv[])
 
 	keep_nulls = flag3->answer;
 
+	start_with_raster_vals = flag4->answer;
+
 	{
 		int count = 0;
 
@@ -224,7 +241,7 @@ int main (int argc, char *argv[])
 		if (opt9->answers) count++;
 
 		if (count != 1)
-			G_fatal_error("Must specify exactly one of start_vectorpoints, start_rast or coordinate");
+		    G_fatal_error("Must specify exactly one of start_points, start_rast or coordinate");
 	}
 
 	if (opt3->answers)
@@ -241,6 +258,12 @@ int main (int argc, char *argv[])
 		exit(1) ;
 	}
 	
+	if (sscanf(opt10->answer, "%d", &maxmem) != 1 || maxmem < 0 || maxmem > 100)
+	{
+		sprintf(buf, "Inappropriate percent memory: %d", maxmem);
+		G_fatal_error (buf) ;
+		exit(1) ;
+	}
  
 	if ((opt6->answer == NULL) ||(sscanf(opt6->answer, "%lf", &null_cost) != 1))
 	{
@@ -314,7 +337,10 @@ int main (int argc, char *argv[])
 	}
 
 	srows = scols = SEGCOLSIZE ;
-	segments_in_memory = 4 * (nrows/SEGCOLSIZE + ncols/SEGCOLSIZE + 2) ;
+	if (maxmem > 0)
+		segments_in_memory = 2 + maxmem * (nrows/SEGCOLSIZE) * (ncols/SEGCOLSIZE) / 100;
+	else
+		segments_in_memory = 4 * (nrows/SEGCOLSIZE + ncols/SEGCOLSIZE + 2) ;
 
 	/*   Create segmented format files for cost layer and output layer  */
 
@@ -439,7 +465,7 @@ int main (int argc, char *argv[])
 		G_free(fbuff) ;
 	}
 
-/*   Scan the start_vectorsites layer searching for starting points.
+/*   Scan the start_points layer searching for starting points.
  *   Create a btree of starting points ordered by increasing costs.
  */
 	if (opt7->answer) 
@@ -581,9 +607,19 @@ int main (int argc, char *argv[])
 /* Did I understand that concept of cummulative cost map? - (pmx) 12 april 2000 */
 				if (!G_is_null_value(ptr2,data_type2))
 				{
+					double cellval ;
+					if (start_with_raster_vals == 1)
+					{
+					cellval = G_get_raster_value_d(ptr2,data_type2) ;
+					new_cell = insert(cellval, row, col);
+					segment_put(&out_seg, &cellval, row, col);
+					}
+					else
+					{
 					value= &zero;
 					new_cell = insert(zero, row, col);
 					segment_put(&out_seg, value, row, col);
+					}
 					got_one = 1;
 				}
 				ptr2 = G_incr_void_ptr(ptr2, dsize2);
@@ -632,7 +668,6 @@ int main (int argc, char *argv[])
  *   3) Free the memory allocated to the present cell.
  */
 
-
 	if (verbose) {
 			system("date");
 		fprintf (stderr, "Finding cost path\n");
@@ -654,10 +689,25 @@ int main (int argc, char *argv[])
 
 /*  fprintf(stderr,"P: %d,%d:%f\n",pres_cell->row,pres_cell->col,pres_cell->min_cost) ; */
 
-		if (verbose)
-			G_percent (++n_processed, total_cells, 1);
+		/* If I've already been updated, delete me */
+		segment_get(&out_seg,&old_min_cost,pres_cell->row,pres_cell->col);
+/*fprintf(stderr,"old=%f cell=%f\n", old_min_cost, pres_cell->min_cost) ; */
+		if (! G_is_d_null_value(&old_min_cost))
+		{
+/*fprintf(stderr,"not null\n") ;*/
+			if (pres_cell->min_cost > old_min_cost)
+			{
+/*fprintf(stderr,"deleting\n") ;*/
+				delete(pres_cell) ;
+				pres_cell = get_lowest();
+				continue ;
+			}
+		}
 
 		segment_get(&in_seg,&my_cost,pres_cell->row,pres_cell->col);
+
+		if (verbose)
+			G_percent (++n_processed, total_cells, 1);
 
 /*          9    10       Order in which neighbors 
  *       13 5  3  6 14    are visited.
@@ -854,15 +904,15 @@ int main (int argc, char *argv[])
 				if ( old_min_cost > min_cost )
 				{
 					segment_put(&out_seg, &min_cost,row,col);
+					/*
 					ct = find(old_min_cost, row, col) ;
 					if (ct)
 						delete(ct);
 					else {
 						printf ("Null...\n");
-/*  						printf("%.3lf %.3lf %d,%d\n",old_min_cost,min_cost,row,col);   */
-/*  						segment_put(&out_seg, &zero,row,col); */
 						goto OUT;
 					}
+					*/
 							 
 					new_cell = insert(min_cost, row, col);
 				}
