@@ -19,16 +19,14 @@
 
 void letter_position (double, struct line_pnts *, double *, double *, double *);
 
-main (argc, argv)
-int argc;
-char **argv;
-
+int
+main (int argc, char **argv)
 {
-    int    i, j, ret, level, cnt, row, line, txtlength;
+    int    i, level, cnt, row, line, txtlength;
     int    type, ltype;
     int    cat, direction;
-    double x, y, dx, dy, linlength, lablength, len, space, ldist, dist, ddist;
-    double k, rotate, rot;
+    double x, y, linlength, lablength, space, ldist;
+    double rotate, rot;
     char   *mapset;
     char   errmsg[1000], buf[2000];
     char   *txt, text[2000];
