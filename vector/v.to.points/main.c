@@ -55,10 +55,81 @@ void write_point ( struct Map_info *Out, double x, double y, double z, int line_
     point_cat++;
 }
 
+void write_line ( struct Map_info *Out, struct line_pnts *LPoints, int cat, 
+	          int vertex, int interpolate, double dmax, int table )
+{ 
+    if ( vertex ) { /* use line vertices */
+	double along;
+	int vert;
+
+	along = 0;
+	for ( vert = 0; vert < LPoints->n_points; vert++ ) {
+	    G_debug ( 3, "vert = %d", vert );
+
+	    write_point ( Out, LPoints->x[vert], LPoints->y[vert], LPoints->z[vert], cat, along, 
+			  table );
+
+	    if ( vert < LPoints->n_points - 1) {  
+		double dx, dy, dz, len;
+
+		dx = LPoints->x[vert+1] - LPoints->x[vert];
+		dy = LPoints->y[vert+1] - LPoints->y[vert];
+		dz = LPoints->z[vert+1] - LPoints->z[vert];
+		len = hypot ( hypot (dx, dy), dz );
+	    
+		/* interpolate segment */
+		if ( interpolate && vert < ( LPoints->n_points - 1) ) {
+		    int i, n;
+		    double x, y, z, dlen;
+		    
+		    if ( len < dmax ) continue;
+
+		    n = len / dmax + 1; /* number of segments */
+		    dx /= n; dy /= n; dz /= n; dlen = len / n;
+		    
+		    for ( i = 1; i < n; i++ ) {
+			x = LPoints->x[vert] + i * dx;
+			y = LPoints->y[vert] + i * dy;
+			z = LPoints->z[vert] + i * dz;
+
+			write_point ( Out, x, y, z, cat, along + i * dlen, table);
+		    }
+		}
+		along += len;
+	    }
+	}
+    } else { /* do not use vertices */
+	int i, n;
+	double len, dlen, along, x, y, z;
+
+	len = Vect_line_length ( LPoints );
+	n = len / dmax + 1; /* number of segments */
+	dlen = len / n; /* length of segment */
+	
+	G_debug ( 3, "n = %d len = %f dlen = %f", n, len, dlen );
+	    
+	for ( i = 0; i <= n; i++ ) { 
+	    if ( i > 0 && i < n ) {
+		along = i * dlen;
+		Vect_point_on_line ( LPoints, along, &x, &y, &z, NULL, NULL );
+	    } else { /* first and last vertex */
+		x = LPoints->x[LPoints->n_points-1];
+		y = LPoints->y[LPoints->n_points-1];
+		z = LPoints->z[LPoints->n_points-1];
+		if ( i == 0 )
+		    along = 0;
+		else /* last */
+		    along = len;
+	    }
+	    G_debug ( 3, "  i = %d along = %f", i, along );
+	    write_point ( Out, x, y, z, cat, along, table );
+	}
+    }
+}
+
 int main(int argc, char **argv)
 {
     int    field, type;
-    int    line, nlines;
     double dmax;
     struct Option *in_opt, *out_opt, *type_opt, *dmax_opt, *lfield_opt;
     struct Flag *inter_flag, *vertex_flag, *table_flag;
@@ -94,7 +165,7 @@ int main(int argc, char **argv)
 
     inter_flag = G_define_flag ();
     inter_flag->key = 'i';
-    inter_flag->description = "Interpolate points along lines (for -i).";
+    inter_flag->description = "Interpolate points between line vertices.";
 
     dmax_opt = G_define_option ();
     dmax_opt->key = "dmax";
@@ -148,89 +219,59 @@ int main(int argc, char **argv)
     }
     
     point_cat = 1;
-    nlines = Vect_get_num_lines (&In);
-    for ( line = 1; line <= nlines; line++ ) {
-	int ltype, line_cat;
-	
-	G_debug ( 3, "line = %d", line );
-	ltype = Vect_read_line (&In, LPoints, LCats, line);
-	if ( !(ltype & type ) ) continue;
 
-	Vect_cat_get ( LCats, field, &line_cat );
-	
-	if (  LPoints->n_points <= 1 ) {
-            write_point ( &Out, LPoints->x[0], LPoints->y[0], LPoints->z[0], line_cat, 0, table_flag->answer);
-	} else { /* lines */
-	    if ( vertex_flag->answer ) { /* use line vertices */
-	        double along;
-		int vert;
+    if ( type & (GV_POINTS | GV_LINES) ) {
+    	int    line, nlines;
 
-		along = 0;
-		for ( vert = 0; vert < LPoints->n_points; vert++ ) {
-		    G_debug ( 3, "vert = %d", vert );
+	nlines = Vect_get_num_lines (&In);
+	for ( line = 1; line <= nlines; line++ ) {
+	    int ltype, cat;
+	    
+	    G_debug ( 3, "line = %d", line );
+	    ltype = Vect_read_line (&In, LPoints, LCats, line);
+	    if ( !(ltype & type ) ) continue;
 
-		    write_point ( &Out, LPoints->x[vert], LPoints->y[vert], LPoints->z[vert], line_cat, along, 
-				  table_flag->answer );
-
-		    if ( vert < LPoints->n_points - 1) {  
-			double dx, dy, dz, len;
-
-			dx = LPoints->x[vert+1] - LPoints->x[vert];
-			dy = LPoints->y[vert+1] - LPoints->y[vert];
-			dz = LPoints->z[vert+1] - LPoints->z[vert];
-			len = hypot ( hypot (dx, dy), dz );
-		    
-			/* interpolate segment */
-			if ( inter_flag->answer && vert < ( LPoints->n_points - 1) ) {
-			    int i, n;
-			    double x, y, z, dlen;
-			    
-			    if ( len < dmax ) continue;
-
-			    n = len / dmax + 1; /* number of segments */
-			    dx /= n; dy /= n; dz /= n; dlen = len / n;
-			    
-			    for ( i = 1; i < n; i++ ) {
-				x = LPoints->x[vert] + i * dx;
-				y = LPoints->y[vert] + i * dy;
-				z = LPoints->z[vert] + i * dz;
-
-				write_point ( &Out, x, y, z, line_cat, along + i * dlen, table_flag->answer );
-			    }
-			}
-			along += len;
-		    }
-		}
-	    } else { /* do not use vertices */
-		int i, n;
-		double len, dlen, along, x, y, z;
-
-		len = Vect_line_length ( LPoints );
-	        n = len / dmax + 1; /* number of segments */
-		dlen = len / n; /* length of segment */
-		
-		G_debug ( 3, "n = %d len = %f dlen = %f", n, len, dlen );
-		    
-		for ( i = 0; i <= n; i++ ) { 
-		    if ( i > 0 && i < n ) {
-			along = i * dlen;
-		        Vect_point_on_line ( LPoints, along, &x, &y, &z, NULL, NULL );
-		    } else { /* first and last vertex */
-			x = LPoints->x[LPoints->n_points-1];
-			y = LPoints->y[LPoints->n_points-1];
-			z = LPoints->z[LPoints->n_points-1];
-			if ( i == 0 )
-			    along = 0;
-			else /* last */
-			    along = len;
-		    }
-		    G_debug ( 3, "  i = %d along = %f", i, along );
-		    write_point ( &Out, x, y, z, line_cat, along, table_flag->answer );
-		}
-
+	    Vect_cat_get ( LCats, field, &cat );
+	    
+	    if (  LPoints->n_points <= 1 ) {
+		write_point ( &Out, LPoints->x[0], LPoints->y[0], LPoints->z[0], cat, 0.0, table_flag->answer);
+	    } else { /* lines */
+                write_line ( &Out, LPoints, cat, vertex_flag->answer, inter_flag->answer, 
+			     dmax, table_flag->answer );
 	    }
 	}
     }
+
+    if ( type == GV_AREA ) {
+	int area, nareas, centroid, cat;
+	
+	nareas = Vect_get_num_areas (&In);
+	for ( area = 1; area <= nareas; area++ ) {
+	    int i, isle, nisles;
+	    
+	    centroid = Vect_get_area_centroid ( &In, area );
+	    cat = 0;
+	    if ( centroid > 0 ) {
+		Vect_read_line (&In, NULL, LCats, centroid );
+		Vect_cat_get (LCats, field, &cat);
+	    }
+	    
+	    Vect_get_area_points ( &In, area, LPoints );
+
+	    write_line ( &Out, LPoints, cat, vertex_flag->answer, inter_flag->answer, 
+			 dmax, table_flag->answer );
+
+	    nisles = Vect_get_area_num_isles (&In, area);
+
+	    for ( i = 0; i < nisles; i++ ) {
+		isle = Vect_get_area_isle (&In, area, i);
+		Vect_get_isle_points ( &In, isle, LPoints );
+
+		write_line ( &Out, LPoints, cat, vertex_flag->answer, inter_flag->answer, 
+			     dmax, table_flag->answer );
+	    }
+	}
+    }	
 
     if ( !table_flag->answer )
         db_close_database_shutdown_driver ( driver );
