@@ -77,9 +77,18 @@ number=`echo $number_rows $number_cols $layer_number | awk '{print ($1 * $2 * $3
 echo "WIND3 file created."
 echo "You have defined a volume of $number tiles (cubes)."
 
-# this needs to be better!!:
+# check bottom_height > top_height:
+if [ $1 -gt $2 ]
+then
+ echo "----- WARNING: bottom_height should be less than top_height."
+fi
+
+# this needs to be improved!!:
 cp $LOCATION/WIND3 $LOCATION/../PERMANENT/DEFAULT_WIND3
 
 echo ""
-echo "Please check the file: $LOCATION/WIND3"
-echo "Also check: $LOCATION/../PERMANENT/DEFAULT_WIND3"
+echo "Please check the file:"
+echo "$LOCATION/WIND3"
+echo "Additionally check:"
+echo "$LOCATION/../PERMANENT/DEFAULT_WIND3"
+echo "Now try g3.region."
