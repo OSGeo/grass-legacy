@@ -17,6 +17,7 @@
 
 int main (int argc, char *argv[])
 {
+	struct GModule *module;
     struct Option *map, *date;
     struct Map_info Map;
     struct TimeStamp ts;
@@ -27,6 +28,10 @@ int main (int argc, char *argv[])
     char err_msg[1000];
     
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Print/add/remove a timestamp for a vector map.";
 
     map = G_define_option();
     map->key = "vect";

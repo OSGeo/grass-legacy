@@ -10,6 +10,7 @@
 int 
 main (int argc, char **argv)
 {
+  struct GModule *module;
   struct Flag *once, *interactive;
   struct Option *opt1;
   char *name, *mapset;
@@ -20,6 +21,11 @@ main (int argc, char **argv)
   /* Initialize the GIS calls */
   G_gisinit (argv[0]);
 
+  module = G_define_module();
+  module->description =
+	"Query the category contents of a (binary) vector map layer "
+	"at user-selected locations.";
+  
   once = G_define_flag ();
   once->key = '1';
   once->description = "Identify just one location";
