@@ -1,8 +1,9 @@
 #COMPILE_FLAGS = -g -DDEBUGIO
-COMPILE_FLAGS =
-LDFLAGS = -Bstatic
-FFLAGS =
+#COMPILE_FLAGS =
+#LDFLAGS = -Bstatic
 #FFLAGS =
+#FFLAGS =
+
 MYLIBS = $(SRC).related/rim/librim.a
 
 EXTRA_CFLAGS = -I$(SRC)/mapdev/lib $(VECT_INCLUDE)
@@ -32,7 +33,7 @@ SRCFILES = dbio.c parser.c toplevel.c misc.c make_init.c \
 all: $(BIN_MAIN_CMD)/v.db.rim $(ETC)/rim/v.db.rim.cmd
 
 $(ETC)/rim/v.db.rim.cmd: $(OBJFILES)
-	-mkdir $(ETC)/rim
+	-if [ ! -d $(ETC)/rim ]; then mkdir $(ETC)/rim; fi
 	f77 $(LDFLAGS) -o $@ $(FFLAGS) $(OBJFILES) $(MYLIBS) $(DIG_ATTLIB) $(VECTLIB) $(GISLIB)
 
 $(BIN_MAIN_CMD)/v.db.rim: highlevel.o
