@@ -1,6 +1,12 @@
 #include <stdlib.h>
 #include "dbmi.h"
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_test_value_isnull(value)
     dbValue *value;
@@ -8,6 +14,12 @@ db_test_value_isnull(value)
     return (value->isNull != 0);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_get_value_int(value)
     dbValue *value;
@@ -15,12 +27,25 @@ db_get_value_int(value)
     return (value->i);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 double
 db_get_value_double(value)
     dbValue *value;
 {
     return (value->d);
 }
+
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 /* for given value and C type of value returns double representation */
 double
 db_get_value_as_double(value, ctype)
@@ -46,6 +71,12 @@ db_get_value_as_double(value, ctype)
     return val;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 char *
 db_get_value_string(value)
     dbValue *value;
@@ -53,6 +84,12 @@ db_get_value_string(value)
     return (db_get_string(&value->s));
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_get_value_year(value)
     dbValue *value;
@@ -60,6 +97,12 @@ db_get_value_year(value)
     return (value->t.year);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_get_value_month(value)
     dbValue *value;
@@ -67,6 +110,12 @@ db_get_value_month(value)
     return (value->t.month);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_get_value_day(value)
     dbValue *value;
@@ -74,6 +123,12 @@ db_get_value_day(value)
     return (value->t.day);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_get_value_hour(value)
     dbValue *value;
@@ -81,6 +136,12 @@ db_get_value_hour(value)
     return (value->t.hour);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_get_value_minute(value)
     dbValue *value;
@@ -88,6 +149,12 @@ db_get_value_minute(value)
     return (value->t.minute);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 double
 db_get_value_seconds(value)
     dbValue *value;
@@ -95,6 +162,12 @@ db_get_value_seconds(value)
     return (value->t.seconds);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_value_null(value)
     dbValue *value;
@@ -102,6 +175,12 @@ db_set_value_null(value)
     value->isNull = 1;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_value_not_null(value)
     dbValue *value;
@@ -109,6 +188,12 @@ db_set_value_not_null(value)
     value->isNull = 0;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_value_int(value, i)
     dbValue *value;
@@ -118,6 +203,12 @@ db_set_value_int(value, i)
     db_set_value_not_null(value);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_value_double(value, d)
     dbValue *value;
@@ -127,6 +218,12 @@ db_set_value_double(value, d)
     db_set_value_not_null(value);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 db_set_value_string(value, s)
     dbValue *value;
     char *s;
@@ -135,6 +232,12 @@ db_set_value_string(value, s)
     return db_set_string(&value->s, s);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_value_year(value, year)
     dbValue *value;
@@ -144,6 +247,12 @@ db_set_value_year(value, year)
     db_set_value_datetime_not_current(value);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_value_month(value, month)
     dbValue *value;
@@ -153,6 +262,12 @@ db_set_value_month(value, month)
     db_set_value_datetime_not_current(value);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_value_day(value, day)
     dbValue *value;
@@ -162,6 +277,12 @@ db_set_value_day(value, day)
     db_set_value_datetime_not_current(value);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_value_hour(value, hour)
     dbValue *value;
@@ -171,6 +292,12 @@ db_set_value_hour(value, hour)
     db_set_value_datetime_not_current(value);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_value_minute(value, minute)
     dbValue *value;
@@ -180,6 +307,12 @@ db_set_value_minute(value, minute)
     db_set_value_datetime_not_current(value);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_value_seconds(value, seconds)
     dbValue *value;
@@ -189,6 +322,12 @@ db_set_value_seconds(value, seconds)
     db_set_value_datetime_not_current (value);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_test_value_datetime_current (value)
     dbValue *value;
@@ -196,6 +335,12 @@ db_test_value_datetime_current (value)
     return (value->t.current != 0);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_value_datetime_current (value)
     dbValue *value;
@@ -204,6 +349,12 @@ db_set_value_datetime_current (value)
     db_set_value_not_null(value);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_value_datetime_not_current (value)
     dbValue *value;
@@ -212,6 +363,12 @@ db_set_value_datetime_not_current (value)
     db_set_value_not_null(value);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 /* copy value from src to destination */
 void
 db_copy_value ( dst, src )

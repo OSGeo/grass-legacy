@@ -1,8 +1,14 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_bind_update (cursor)
-    dbCursor *cursor;
+/*!
+ \fn int db_bind_update (dbCursor *cursor)
+ \brief 
+ \return 
+ \param 
+*/
+int
+db_bind_update (dbCursor *cursor)
 {
     int ret_code;
 

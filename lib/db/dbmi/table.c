@@ -1,5 +1,11 @@
 #include "dbmi.h"
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 dbTable *
 db_alloc_table (ncols)
     int ncols;
@@ -26,6 +32,12 @@ db_alloc_table (ncols)
     return table;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_init_table (table)
     dbTable *table;
@@ -35,6 +47,12 @@ db_init_table (table)
     db_init_string (&table->description);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_free_table (table)
     dbTable *table;
@@ -49,6 +67,12 @@ db_free_table (table)
     free (table);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_set_table_name (table, name)
     dbTable *table;
@@ -57,6 +81,12 @@ db_set_table_name (table, name)
     return db_set_string (&table->tableName, name);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 char *
 db_get_table_name (table)
     dbTable *table;
@@ -64,6 +94,12 @@ db_get_table_name (table)
     return db_get_string (&table->tableName);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_set_table_description (table, description)
     dbTable *table;
@@ -72,6 +108,12 @@ db_set_table_description (table, description)
     return db_set_string (&table->description, description);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 char *
 db_get_table_description (table)
     dbTable *table;
@@ -85,6 +127,12 @@ db_get_table_number_of_columns(table)
     return table->numColumns;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 static void
 set_all_column_privs (table, set_column_priv)
     dbTable *table;
@@ -101,6 +149,12 @@ set_all_column_privs (table, set_column_priv)
     }
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 static int
 get_all_column_privs (table, get_column_priv)
     dbTable *table;
@@ -120,6 +174,12 @@ get_all_column_privs (table, get_column_priv)
     return DB_GRANTED;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_table_select_priv_granted (table)
     dbTable *table;
@@ -127,6 +187,12 @@ db_set_table_select_priv_granted (table)
     set_all_column_privs (table, db_set_column_select_priv_granted);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_table_select_priv_not_granted (table)
     dbTable *table;
@@ -134,12 +200,24 @@ db_set_table_select_priv_not_granted (table)
     set_all_column_privs (table, db_set_column_select_priv_not_granted);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 db_get_table_select_priv (table)
     dbTable *table;
 {
     return get_all_column_privs (table, db_get_column_select_priv);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_table_update_priv_granted (table)
     dbTable *table;
@@ -147,6 +225,12 @@ db_set_table_update_priv_granted (table)
     set_all_column_privs (table, db_set_column_update_priv_granted);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_table_update_priv_not_granted (table)
     dbTable *table;
@@ -154,12 +238,24 @@ db_set_table_update_priv_not_granted (table)
     set_all_column_privs (table, db_set_column_update_priv_not_granted);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 db_get_table_update_priv (table)
     dbTable *table;
 {
     return get_all_column_privs (table, db_get_column_update_priv);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_table_insert_priv_granted (table)
     dbTable *table;
@@ -167,6 +263,12 @@ db_set_table_insert_priv_granted (table)
     table->insert = DB_GRANTED;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_table_insert_priv_not_granted (table)
     dbTable *table;
@@ -174,12 +276,24 @@ db_set_table_insert_priv_not_granted (table)
     table->insert = DB_NOT_GRANTED;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 db_get_table_insert_priv (table)
     dbTable *table;
 {
     return table->insert;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_table_delete_priv_granted (table)
     dbTable *table;
@@ -187,6 +301,12 @@ db_set_table_delete_priv_granted (table)
     table->delete = DB_GRANTED;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_table_delete_priv_not_granted (table)
     dbTable *table;

@@ -1,10 +1,14 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_describe_table (driver, name, table)
-    dbDriver *driver;
-    dbString *name;
-    dbTable **table;
+/*!
+ \fn int db_describe_table (dbDriver *driver, dbString *name, dbTable **table)
+ \brief 
+ \return 
+ \param 
+*/
+int
+db_describe_table (dbDriver *driver, dbString *name, dbTable **table)
 {
     int ret_code;
 

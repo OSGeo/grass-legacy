@@ -1,5 +1,11 @@
 #include "dbmi.h"
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 /* closedown the driver, and free the driver structure */
 /* NOTE: the management of the memory for the driver structure
  * probably should be handled differently.

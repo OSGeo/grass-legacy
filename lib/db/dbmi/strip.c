@@ -1,10 +1,16 @@
-/*******************************************************************
- *  db_strip(buf)
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
+/*  db_strip(buf)
  *     char *buf         buffer to be worked on
  *
  *  'buf' is rewritten in place with leading and trailing white
  *  space removed.
- ******************************************************************/
+ */
+
 
 void
 db_strip (buf)

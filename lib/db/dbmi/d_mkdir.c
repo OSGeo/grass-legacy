@@ -4,6 +4,12 @@ static char *rfind();
 static int make_parent_dir();
 static int make_dir();
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 db_driver_mkdir (path, mode, parentdirs)
     char *path;
     int mode;

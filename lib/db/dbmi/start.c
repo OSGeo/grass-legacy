@@ -5,6 +5,12 @@
 
 extern char *getenv();
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 dbDriver *
 db_start_driver(name)
     char *name;

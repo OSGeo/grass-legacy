@@ -6,6 +6,12 @@
 static dbAddress *list = NONE;
 static dbToken count = 0;
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 dbAddress 
 db_find_token (token)
     dbToken token;
@@ -15,6 +21,12 @@ db_find_token (token)
     return (NONE);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_drop_token (token)
     dbToken token;
@@ -23,6 +35,12 @@ db_drop_token (token)
 	list[token] = NONE;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 dbToken
 db_new_token (address)
     dbAddress address;

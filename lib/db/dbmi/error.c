@@ -15,6 +15,12 @@ static void (*user_print_function)();
 
 static char *who = NULL;
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_on_error(f)
     void (*f)();
@@ -22,6 +28,12 @@ db_on_error(f)
     user_print_function = f;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_set_error_who(me)
     char *me;
@@ -30,12 +42,24 @@ db_set_error_who(me)
     who = db_store(me);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 char *
 db_get_error_who()
 {
     return who?who:"";
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_error(s)
     char *s;
@@ -51,6 +75,12 @@ db_error(s)
     err_code = DB_FAILED;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_protocol_error()
 {
@@ -63,6 +93,12 @@ db_protocol_error()
     err_code = DB_PROTOCOL_ERR;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_syserror(s)
     char *s;
@@ -91,12 +127,24 @@ db_syserror(s)
     db_error (msg);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_get_error_code()
 {
     return err_flag ? err_code : DB_OK;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_memory_error()
 {
@@ -104,6 +152,12 @@ db_memory_error()
     err_code = DB_MEMORY_ERR;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_procedure_not_implemented(name)
     char *name;
@@ -115,6 +169,12 @@ db_procedure_not_implemented(name)
     err_code = DB_NOPROC;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_noproc_error(procnum)
 {
@@ -125,6 +185,12 @@ db_noproc_error(procnum)
     err_code = DB_NOPROC;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_clear_error()
 {
@@ -133,6 +199,12 @@ db_clear_error()
     errno    = 0;	/* clearn system errno as well */
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_print_error()
 {
@@ -152,20 +224,40 @@ db_print_error()
     else
         fprintf (stderr, "%s%s\n", lead, err_msg);
 }
+
+
 static int debug_on = 0;
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_debug_on()
 {
     debug_on = 1;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_debug_off()
 {
     debug_on = 0;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_debug(s)
     char *s;
@@ -174,12 +266,24 @@ db_debug(s)
 	fprintf (stderr, "debug(%s): %s\n", who?who:"", s?s:"<NULL>");
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 char *
 db_get_error_msg()
 {
     return err_flag ? err_msg : (char *)NULL;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_auto_print_errors (flag)
 {
@@ -187,6 +291,12 @@ db_auto_print_errors (flag)
     auto_print_protocol_errors = flag;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_auto_print_protocol_errors (flag)
 {

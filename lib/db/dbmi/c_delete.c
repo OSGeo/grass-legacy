@@ -1,8 +1,14 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_delete (cursor)
-    dbCursor *cursor;
+/*!
+ \fn int db_delete (dbCursor *cursor)
+ \brief 
+ \return 
+ \param 
+*/
+int
+db_delete (dbCursor *cursor)
 {
     int ret_code;
 

@@ -1,6 +1,12 @@
 #include "dbmi.h"
 #include "macros.h"
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 db_version(driver, client_version, driver_version)
     dbDriver *driver;
     dbString *client_version;

@@ -1,6 +1,12 @@
 #include "dbmi.h"
 #include "macros.h"
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 db_open_database (driver, handle)
     dbDriver *driver;
     dbHandle *handle;

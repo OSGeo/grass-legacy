@@ -1,11 +1,14 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_list_indexes (driver, table_name, list, count)
-    dbDriver *driver;
-    dbString *table_name;
-    dbIndex **list;
-    int *count;
+/*!
+ \fn int db_list_indexes (dbDriver *driver, dbString *table_name, dbIndex **list, int *count)
+ \brief 
+ \return 
+ \param 
+*/
+int
+db_list_indexes (dbDriver *driver, dbString *table_name, dbIndex **list, int *count)
 {
     int ret_code;
 

@@ -19,9 +19,15 @@ extern dir_entry *readdir();
 static int get_perm();
 static void sort_dirent();
 
+
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 /* read directory and build an array of dbDirent's */
 /* append one entry with name = NULL to mark end of array */
-
 dbDirent *
 db_dirent (dirname, n)
     char *dirname;
@@ -89,6 +95,12 @@ db_dirent (dirname, n)
     return dirent;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_free_dirent_array (dirent, count)
     dbDirent *dirent;
@@ -136,6 +148,12 @@ sort_dirent (a, n)
     qsort (a, n, sizeof(dbDirent), cmp_dirent);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 dbDirent *
 db_alloc_dirent_array (count)
     int count;

@@ -2,6 +2,12 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_isdir (path)
     char *path;

@@ -1,6 +1,12 @@
 #include "gis.h"
 #include "dbmi.h"
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_set_connection( connection )
     dbConnection   *connection;
@@ -29,6 +35,12 @@ db_set_connection( connection )
     return DB_OK;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_get_connection( connection )
     dbConnection   *connection;

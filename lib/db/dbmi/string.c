@@ -1,5 +1,11 @@
 #include "dbmi.h"
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_init_string (x)
     dbString *x;
@@ -7,6 +13,15 @@ db_init_string (x)
     x->string = "";
     x->nalloc = 0;
 }
+
+
+
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 /* db_set_string(dbString *x, char *s, int copy)
  *  inserts 's' into 'x'
  *   if 'copy' is true, then memory is allocated to copy into
@@ -22,6 +37,12 @@ db_set_string (x, s)
     return set_string (x, s, 1);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 db_set_string_no_copy (x, s)
     dbString *x;
     char *s;
@@ -29,6 +50,12 @@ db_set_string_no_copy (x, s)
     return set_string (x, s, 0);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 unsigned int
 db_sizeof_string (x)
     dbString *x;
@@ -37,12 +64,24 @@ db_sizeof_string (x)
     return (unsigned int) x->nalloc;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 db_zero_string (x)
     dbString *x;
 {
     db_zero ((void *)db_get_string(x), db_sizeof_string(x));
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 static int
 set_string (x, s, copy)
     dbString *x;
@@ -75,6 +114,12 @@ set_string (x, s, copy)
     return DB_OK;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 db_enlarge_string (x, len)
     dbString *x;
     int len;
@@ -98,6 +143,12 @@ db_get_string(x)
     return x->string;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_free_string(x)
     dbString *x;
@@ -107,6 +158,12 @@ db_free_string(x)
     db_init_string (x);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_free_string_array (a, n)
     dbString *a;
@@ -121,6 +178,12 @@ db_free_string_array (a, n)
     }
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 dbString *
 db_alloc_string_array (count)
     int count;
@@ -138,6 +201,12 @@ db_alloc_string_array (count)
     return a;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_append_string (x, s)
     dbString *x;
@@ -154,6 +223,12 @@ db_append_string (x, s)
     return DB_OK;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 db_copy_string (dst, src)
     dbString *dst, *src;
 {

@@ -1,6 +1,12 @@
 #include "dbmi.h"
 #include "macros.h"
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_d_create_database()
 {

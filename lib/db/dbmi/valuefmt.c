@@ -1,5 +1,11 @@
 #include "dbmi.h"
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 db_convert_Cstring_to_value (Cstring, sqltype, value)
     char *Cstring;
     int sqltype;
@@ -31,6 +37,12 @@ db_convert_Cstring_to_value (Cstring, sqltype, value)
     return DB_OK;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_convert_value_to_string(value, sqltype, string)
     dbValue *value;

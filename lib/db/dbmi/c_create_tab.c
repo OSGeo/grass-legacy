@@ -1,9 +1,14 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_create_table (driver, table)
-    dbDriver *driver;
-    dbTable *table;
+/*!
+ \fn int db_create_table (dbDriver *driver, dbTable *table)
+ \brief 
+ \return 
+ \param 
+*/
+int
+db_create_table (dbDriver *driver, dbTable *table)
 {
     int ret_code;
 

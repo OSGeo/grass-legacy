@@ -1,5 +1,11 @@
 #include "dbmi.h"
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_init_handle (handle)
     dbHandle *handle;
@@ -8,6 +14,12 @@ db_init_handle (handle)
     db_init_string (&handle->dbPath);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 db_set_handle (handle, dbName, dbPath)
     dbHandle *handle;
     char *dbName;
@@ -22,6 +34,12 @@ db_set_handle (handle, dbName, dbPath)
     return stat;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 char *
 db_get_handle_dbname(handle)
     dbHandle *handle;
@@ -29,6 +47,12 @@ db_get_handle_dbname(handle)
     return db_get_string (&handle->dbName);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 char *
 db_get_handle_dbpath(handle)
     dbHandle *handle;
@@ -36,6 +60,12 @@ db_get_handle_dbpath(handle)
     return db_get_string (&handle->dbPath);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_free_handle(handle)
     dbHandle *handle;
@@ -44,6 +74,12 @@ db_free_handle(handle)
     db_free_string (&handle->dbPath);
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 void
 db_free_handle_array (handle, count)
     dbHandle *handle;
@@ -59,6 +95,12 @@ db_free_handle_array (handle, count)
     }
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 dbHandle *
 db_alloc_handle_array (count)
     int count;

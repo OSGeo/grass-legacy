@@ -1,5 +1,11 @@
 #include "dbmi.h"
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 db_sqltype_to_Ctype(sqltype)
     int sqltype;
 {	

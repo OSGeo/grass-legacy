@@ -1,10 +1,14 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_add_column (driver, tableName, column)
-    dbDriver *driver;
-    dbString *tableName;
-    dbColumn *column;
+/*!
+ \fn int db_add_column (dbDriver *driver, dbString *tableName, dbColumn *column)
+ \brief 
+ \return 
+ \param 
+*/
+int
+db_add_column (dbDriver *driver, dbString *tableName, dbColumn *column)
 {
     int ret_code;
 

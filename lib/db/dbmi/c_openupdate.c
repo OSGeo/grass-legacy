@@ -1,6 +1,12 @@
 #include "dbmi.h"
 #include "macros.h"
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 db_open_update_cursor (driver, table_name, select, cursor, mode)
     dbDriver *driver;
     dbString *table_name;
