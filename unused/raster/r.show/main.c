@@ -15,7 +15,7 @@
 				(t == FCELL_TYPE ?  "%f" : \
 				(t == DCELL_TYPE ? "%lf" : "")))
 
-union RASTER_PTR
+union	RASTER_PTR
 {
 	void	*v;
 	CELL	*c;
@@ -23,22 +23,25 @@ union RASTER_PTR
 	DCELL	*d;
 };
 
-struct RASTER_MAP_PTR
+struct	RASTER_MAP_PTR
 {
 	RASTER_MAP_TYPE		type;
 	union RASTER_PTR	data;
 };
 
-int is_null_value(struct RASTER_MAP_PTR buf, int col);
-int value2str(char *str, int width, int prec,
+
+double	raster_value(struct RASTER_MAP_PTR buf, int col);
+int	is_null_value(struct RASTER_MAP_PTR buf, int col);
+int	value2str(char *str, int width, int prec,
 		struct RASTER_MAP_PTR buf, int col);
 #ifndef	OLD_CPVALUE
-int cpvalue(struct RASTER_MAP_PTR dest, int dcol,
+int	cpvalue(struct RASTER_MAP_PTR dest, int dcol,
 		struct RASTER_MAP_PTR src, int scol);
 #else
-int cpvalue(struct RASTER_MAP_PTR dest, int dcol,
+int	cpvalue(struct RASTER_MAP_PTR dest, int dcol,
 		struct RASTER_MAP_PTR src, int scol, int mode);
 #endif
+
 
 int
 main(argc, argv)
@@ -128,6 +131,30 @@ main(argc, argv)
 	}
 
 	exit(0);
+}
+
+
+double
+raster_value(buf, col)
+	struct	RASTER_MAP_PTR buf;
+	int	col;
+{
+	double	retval;
+
+	switch(buf.type)
+	{
+		case CELL_TYPE:
+			retval = (double) buf.c[col];
+			break;
+		case FCELL_TYPE:
+			retval = (double) buf.f[col];
+			break;
+		case DCELL_TYPE:
+			retval = (double) buf.d[col];
+			break;
+	}
+
+	return retval;
 }
 
 
