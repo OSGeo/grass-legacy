@@ -1,0 +1,8 @@
+# %W%  %G%
+
+OBJS = main.o  sort_list.o stash.o
+
+$(BIN)/Gsurface: $(OBJS) $(GISLIB)  $(DISPLAYLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(GISLIB) $(DISPLAYLIB) $(MATHLIB)
+
+$(DISPLAYLIB) $(GISLIB): #
