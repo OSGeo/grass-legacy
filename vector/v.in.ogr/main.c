@@ -39,9 +39,10 @@ main (int argc, char *argv[])
     int    ncols, type;
     struct GModule *module;
     double min_area, snap;
-    struct Option *dsn_opt, *out_opt, *layer_opt, *spat_opt, *min_area_opt, *snap_opt, *type_opt, *outloc_opt;
-    struct Option *cnames_opt;
-    struct Flag *list_flag, *no_clean_flag, *z_flag, *notab_flag, *over_flag, *extend_flag;
+    struct Option *dsn_opt, *out_opt, *layer_opt, *spat_opt, *min_area_opt;
+    struct Option *snap_opt, *type_opt, *outloc_opt, *cnames_opt;
+    struct Flag *list_flag, *no_clean_flag, *z_flag, *notab_flag;
+    struct Flag *over_flag, *extend_flag, *formats_flag;
     char   buf[2000], namebuf[2000];
     char   *separator;
     struct Key_Value *loc_proj_info, *loc_proj_units;
@@ -163,7 +164,11 @@ main (int argc, char *argv[])
     list_flag = G_define_flag ();
     list_flag->key             = 'l';
     list_flag->description     = "List available layers in data source and exit.";
-    
+
+    formats_flag = G_define_flag ();
+    formats_flag->key  	      = 'f';
+    formats_flag->description = "List available formats and exit.";
+
     no_clean_flag = G_define_flag ();
     no_clean_flag->key             = 'c';
     no_clean_flag->description     = "Do not clean polygons.";
@@ -178,7 +183,7 @@ main (int argc, char *argv[])
 
     over_flag = G_define_flag();
     over_flag->key = 'o';
-    over_flag->description = "Override projection (use locations projection)";
+    over_flag->description = "Override projection (use location's projection).";
 
     extend_flag = G_define_flag();
     extend_flag->key = 'e';
@@ -197,7 +202,27 @@ main (int argc, char *argv[])
 	    ncnames++;
 	}
     }
-    
+
+    if(formats_flag->answer) {
+	int iDriver;
+	fprintf(stdout, "Available OGR Drivers:\n" );
+
+	for(iDriver = 0; iDriver < OGRGetDriverCount(); iDriver++) {
+	    OGRSFDriverH *poDriver = OGRGetDriver(iDriver);
+	    fprintf(stdout, "  %s\n", OGR_Dr_GetName(poDriver));
+
+/* TODO: read/write check:
+	    if( OGR_Dr_TestCapability(poDriver, "??") )
+		fprintf(stdout, " %s (read/write)\n",
+		    OGR_Dr_GetName(poDriver) );
+	    else
+		fprintf(stdout, "  %s (read only)\n",
+		    OGR_Dr_GetName(poDriver) );
+*/
+	}
+	exit(0);
+    }
+
     /* Open OGR DSN */
     Ogr_ds = OGROpen( dsn_opt->answer, FALSE, NULL );
     if( Ogr_ds == NULL ) G_fatal_error ("Cannot open data source");
@@ -564,7 +589,7 @@ main (int argc, char *argv[])
 
 	    if (db_grant_on_table (driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
 		G_fatal_error ( "Cannot grant privileges on table %s", Fi->table );
-	    
+
 	    db_begin_transaction ( driver );
 	}
 
