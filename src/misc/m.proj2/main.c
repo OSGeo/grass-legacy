@@ -38,8 +38,6 @@ int main(int argc, char *argv[])
 	char ebuf[256]="", nbuf[256]="";
 	char b1[100]="", b2[100]="", label[512]="";
 	char buf[1024]="";
-	char *proj_name = NULL; /* There's a bug with this, egm2 */
-	/* int proj_index = 0; */
 
 	G_gisinit (argv[0]);
 
@@ -91,42 +89,26 @@ int main(int argc, char *argv[])
         /* Get input projection parms */
         if (p_in->answers) {
         int i;
-	double a, es;
-	char ellps[80]="";
-        char ibuf[1024]="", ibuf_tmp[120]="";
-
-        parms_in[0] = '\0';
+        char ibuf[1024];
+        struct Key_Value *in_proj_info, *in_proj_units;
+	char *paramkey, *paramvalue;
+	   
+	in_proj_info = G_create_key_value();
+	in_proj_units = G_create_key_value();
+	   
         for (i=0; p_in->answers[i]; i++) {
-	  if (strstr(p_in->answers[i], "ellps") != NULL) {
-	    sscanf(p_in->answers[i], "ellps=%s", ellps);
-	    G_get_ellipsoid_by_name(ellps, &a, &es);
-	    sprintf(ibuf_tmp, "+a=%.10f +es=%.10f ", a, es);
-	    strcat(ibuf, ibuf_tmp);
-	  } else {
-            if (strstr(p_in->answers[i], "proj") != NULL) {
-               sscanf(p_in->answers[i], "proj=%s", proj_name_in);
-               strcat(ibuf, "+");
-               strcat(ibuf, p_in->answers[i]);
-               strcat(ibuf, " ");
-            }
-            else {
-               if (strstr(p_in->answers[i], "name") != NULL) {
-                  sscanf(p_in->answers[i], "name=%s", proj_name); /*TODO: Bug!!*/
-               /* test if name is o.k. */
-               /* proj_index = G_geo_get_proj_index(proj_name);
-                  if (proj_index < 0)
-                     G_fatal_error("projection %s is not specified in the table", proj_name);
-                     */
-               }
-            } /* name */
-            strcat(ibuf, "+");
-            strcat(ibuf, p_in->answers[i]);
-            strcat(ibuf, " ");
-          }
+	  sscanf(p_in->answers[i], "%1023s", ibuf);
+	  paramkey = strtok(ibuf, "=");
+	  paramvalue = ibuf + strlen(paramkey) + 1;
+	  if( strcmp(paramkey, "unfact") == 0 )
+	    G_set_key_value("meters", paramvalue, in_proj_units);
+	  else
+	    G_set_key_value(paramkey, paramvalue, in_proj_info);
 	}
-        fprintf(stderr, "Using in proj: %s\n", ibuf);
-        if (pj_get_string(&info_in, ibuf) < 0)
+        if (pj_get_kv(&info_in, in_proj_info, in_proj_units) < 0)
                 G_fatal_error("Cannot initialize proj_info_in");
+	G_free_key_value( in_proj_info );
+	G_free_key_value( in_proj_units );
         } else {
 		/* Get intercatively */
 		parms_in[0] = '\0';
@@ -139,42 +121,26 @@ int main(int argc, char *argv[])
 	/* Get output projections parms */
 	if (p_out->answers) {
 		int i;
-		char obuf[1024]="", obuf_tmp[120]="";
-		double a, es;
-		char ellps[80]="";
-
-		parms_out[0] = '\0';
-		for (i=0; p_out->answers[i]; i++) {
-		   if (strstr(p_out->answers[i], "ellps") != NULL) {
-			sscanf(p_out->answers[i], "ellps=%s", ellps);
-			G_get_ellipsoid_by_name(ellps, &a, &es);
-			sprintf(obuf_tmp, "+a=%.10f +es=%.10f ", a, es);
-			strcat(obuf, obuf_tmp);
-		   } else {
-			if (strstr(p_out->answers[i], "proj") != NULL) {
-				sscanf(p_out->answers[i], "proj=%s", proj_name_out);
-		        strcat(obuf, "+");
-		        strcat(obuf, p_out->answers[i]);
-		       	strcat(obuf, " ");
-		       	}
-		        else {
-		         if (strstr(p_out->answers[i], "name") != NULL) {
-                    		sscanf(p_out->answers[i], "name=%s", proj_name);
-	               /* test if name is o.k. */
-        	       /* proj_index = G_geo_get_proj_index(proj_name);
-                	  if (proj_index < 0)
-	                     G_fatal_error("projection %s is not specified in the table", proj_name);
-        	           */
-	                }
-        	    } /* name */
-	            strcat(obuf, "+");
-        	    strcat(obuf, p_out->answers[i]);
-	            strcat(obuf, " ");
-        	  }
-        	}
-		fprintf(stderr, "Using out proj: %s\n", obuf);
-		if (pj_get_string(&info_out, obuf) < 0)
+		char obuf[1024];
+	        struct Key_Value *out_proj_info, *out_proj_units;
+		char *paramkey, *paramvalue;
+	   
+		out_proj_info = G_create_key_value();
+		out_proj_units = G_create_key_value();
+	   
+	        for (i=0; p_out->answers[i]; i++) {
+		  sscanf(p_out->answers[i], "%1023s", obuf);
+		  paramkey = strtok(obuf, "=");
+		  paramvalue = obuf + strlen(paramkey) + 1;
+		  if( strcmp(paramkey, "unfact") == 0 )
+		    G_set_key_value("meters", paramvalue, out_proj_units);
+		  else
+		    G_set_key_value(paramkey, paramvalue, out_proj_info);
+		}
+		if (pj_get_kv(&info_out, out_proj_info, out_proj_units) < 0)
         	        G_fatal_error("Cannot initialize proj_info_out");
+	        G_free_key_value( out_proj_info );
+	        G_free_key_value( out_proj_units );
 		} else {
 			/* Get interactively */
 			parms_out[0] = '\0';
@@ -184,6 +150,7 @@ int main(int argc, char *argv[])
 		}
 		proj_index_in = G_geo_get_proj_index(proj_name_in);
 		proj_index_out = G_geo_get_proj_index(proj_name_out);
+                pj_print_proj_params(&info_in, &info_out);
 
 /* BOB start here */
 
