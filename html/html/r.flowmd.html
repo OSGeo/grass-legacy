@@ -36,16 +36,6 @@ values in an input raster map <I>barierin </I>. Make sure that the
 resolution of your current region is set to the resolution of the elevation
 raster file.
 
-<P>r.flowmd uses an original vector-grid algorithm which uses an infinite
-number of directions between 0.0000... and 360.0000...  and traces the flow
-as a line (vector) in the direction of gradient (rather than from cell to
-cell in one of the 8 directions = Dinf algorithm) The value in the outlet is
-very similar for both r.flowmd and <a href=r.flow.html>r.flow</a> algorithms
-(because it is essentially the watershed area), however the spatial
-distribution of flow, especially on hillslopes is quite different. It is
-still a 1D flow routing so the dispersal flow is not accurately described,
-but still better than D8.
-
 <P> There are three possible output maps which can be produced in any
 combination simultaneously: a vector file <I>flout </I> of flowlines, a
 raster map <I>lgout </I> of flowpath lengths, and a raster map <I>dsout </I>
@@ -131,6 +121,32 @@ to raster file named  <I>name </I>. </DD>
 to raster file named  <I>name </I>. </DD>
 </DL>
 <P>
+
+<H2>Algorithm background</H2> 
+
+<P>1. Construction of flow-lines (slope-lines): r.flow uses an original
+vector-grid algorithm which uses an infinite number of directions between
+0.0000... and 360.0000...  and traces the flow as a line (vector) in the
+direction of gradient (rather than from cell to cell in one of the 8
+directions = D-infinity algorithm). They are traced in any direction using
+aspect (so there is no limitation to 8 directions here). The D8 algorithm
+produces zig-zag lines. The value in the outlet is very similar for both
+r.flowmd and <a href=r.flow.html>r.flow</a> algorithms (because it is
+essentially the watershed area), however the spatial distribution of flow,
+especially on hillslopes is quite different. It is still a 1D flow routing
+so the dispersal flow is not accurately described, but still better than D8.
+
+<P>2. Computation of contributing areas: r.flowmd divides this flow
+proportionally to two downslope adjacent cells using the distance between
+the intersection node (flowline node) and these adjacent cell centres. (All
+these three points are always on one connection line).  Therefore r.flowmd
+uses a multiple flow algorithm but using a flux decomposition different from
+Desmet & Govers (1996). D. & G. split the flux vector to two ordinal
+components (cells) using sin, cos of the aspect value. The flux is then
+divided to 2 from 4 neighboring cardinal cells.  The algorithm used in
+r.flowmd divides the flux to two adjacent downslope cells (always one
+cardinal and one diagonal cell) using a procedure as described above.
+
   
 <H2>NOTES</H2>
 <P>
