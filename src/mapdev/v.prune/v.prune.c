@@ -7,15 +7,17 @@
 #include    <stdio.h>
 #include    "gis.h"
 #include    "Vect.h"
+#include "dig_atts.h"
 /*#include    "dig_head.h" */
 
 
 #define MAIN
-#define  USAGE  "Vprune dig=input dig_out=output thresh=value[i]\n"
+#define  USAGE  "v.prune [-i] input=name output=name thresh=value\n"
 
 long ftell ();
 double atof ();
 double threshold;
+int *pruned;
 int inches;
 
 
@@ -48,7 +50,7 @@ main (argc, argv)
 int argc;
 char **argv;
 {
-	int   ret ;
+	int   ret;
 	char *mapset;
 	char errmsg[100];
 
@@ -198,6 +200,7 @@ int a, b, c, d, e, f, g, h, i, j, k, l;
 }
 #endif
 
+FILE *Out;
 
 struct Map_info Map;
 /*ORIGINAL struct head Head; */
@@ -206,9 +209,11 @@ struct dig_head d_head;
 export(dig_name, mapset, out_name)
 char *dig_name, *mapset, *out_name;
 {
-	FILE *Out;
 	FILE *In;
 	char buf[1024];
+	double x,y;
+	int type, cat;
+	long offset;
 	char errmsg[200];
 	struct Map_info InMap, OutMap;
 
@@ -216,21 +221,6 @@ char *dig_name, *mapset, *out_name;
 	{
 		G_fatal_error ("No mapset specified.\n");
 	}
-
-	/****if (NULL == (In = G_fopen_vector_old (dig_name, mapset)))
-	{
-	    fprintf (stderr, "Cannot open input file.\n");
-	    exit (-1);
-	}
-	if (dig_init (In) < 0)
-	{
-	    fprintf (stderr, "Cannot initialize input vector file.\n");
-	    exit (-1);
-	}
-	****/
-	/*Out = G_fopen_vector_new (out_name); */
-	/*dig_read_head_binary (In, &d_head);*/
-	/*dig_write_head_binary (Out, &d_head); */
 
 	if (0 > Vect_open_old (&InMap, dig_name, mapset))
 	{
@@ -254,32 +244,34 @@ char *dig_name, *mapset, *out_name;
 	/* in either case, take this resultant map value and div by 2 */
 	threshold = threshold / 2.;
 
-	doit (&InMap, &OutMap);
-
-	/**
-	fclose (Out);
-	dig_fini (In);
-	fclose (In);
-	**/
-	Vect_close (&OutMap);
-	Vect_close (&InMap);
-
-	fprintf (stderr, "\n\nCopying Attribute file\n");
-
+	/* first process points attributes */
 	if (NULL == (In = G_fopen_old ("dig_att", dig_name, mapset)))
 	{
 		fprintf (stderr, "Cannot find attribute file.\n");
 		exit (1);
 	}
-	Out = G_fopen_new ("dig_att", out_name);
+	if(NULL == (Out = G_fopen_new ("dig_att", out_name)))
+	{
+		fprintf (stderr, "Cannot write into new attribute file.\n");
+		exit (1);
+	}
 
-	while (NULL != fgets (buf, sizeof (buf), In))
-		fputs (buf, Out);
+
+	while (read_att(In, &type, &x, &y, &cat, &offset)!=1)
+	{
+	   if (type == FILE_DOT) /* point attribute */
+	        write_att (Out, FILE_DOT, x, y, cat);
+        }
+
+	doit (&InMap, &OutMap);
+
+	Vect_close (&OutMap);
+	Vect_close (&InMap);
 
 	fclose (Out);
 	fclose (In);
 
-	fprintf (stderr, "Done.\n");
+	fprintf (stderr, "\nDone.\n");
 
 
 	return(0) ;
@@ -288,30 +280,36 @@ char *dig_name, *mapset, *out_name;
 doit (InMap, OutMap)
 struct Map_info *InMap, *OutMap;
 {
-	struct line_pnts *Points;
-	register int line, type;
-	int binary;
+	struct line_pnts *Points, *AreaPoints, **IslesPoints;
+	register int old_n_points, area, line, type;
+	int att_ind, i, j;
+	double l, delta, att_x, att_y, x1, y1, x2, y2;
+	int point_found, binary;
 	long offset;
-	int diff;
+	int diff, max_n_isles=0;
 	int left;
-	int old, new;
+	extern double sqrt();
 
 	/*Points.alloc_points = 0; */
 
 	/* Must always use this to create an initialized  line_pnts structure */
 	Points = Vect_new_line_struct ();
+	AreaPoints = Vect_new_line_struct ();
+	IslesPoints = NULL;
 
 	/*DEBUG*/ fprintf (stderr, "Resultant threshold = %lf\n", threshold);
 	left = diff = 0;
-	line = 0;
-	while (1)
+	pruned = (int *) G_malloc(sizeof( int) * (InMap->n_lines + 1));
+	/* flags for each line indicating if the line was pruned or not */
+	for(line=1;line<= InMap->n_lines; line++)
+	    pruned[line] = 0;
+	for(line=1;line<= InMap->n_lines; line++)
 	{
-		line++;
 		if (line % 10 == 0)
-			fprintf (stderr, "Pruning line %5d  pruned: %d  left; %d\r", line, diff, left);
+			fprintf (stderr, "Pruning line %5d  pruned: %d  left: %d\r", line, diff, left);
 		/*offset = ftell (in);*/
 
-		if (0 > (type = Vect_read_next_line (InMap, Points)))
+		if (0 > (type = V2_read_line (InMap, Points, line)))
 		{
 			if (type == -1)
 			{
@@ -321,14 +319,307 @@ struct Map_info *InMap, *OutMap;
 			else /* EOF */
 			{
 				Vect_destroy_line_struct (Points);
-				return (0);
+				break;
 			}
 		}
-		old = Points->n_points;
+		old_n_points = Points->n_points;
 		Points->n_points = dig_prune (Points, threshold);
-		diff += old - Points->n_points;
+		if(old_n_points > Points->n_points) pruned[line] = 1;
+		diff += old_n_points - Points->n_points;
+		att_ind = InMap->Line[line].att;
+
+		if(Points->n_points != old_n_points)
+		/* line has been pruned, need to reattach attribute */
+		{
+		   if(att_ind != 0)
+		   {
+		       get_line_center(&att_x, &att_y, Points);
+		       write_att(Out, FILE_LINE, att_x, att_y, InMap->Att[att_ind].cat);
+		   }
+		}
+		else
+		{
+		   if(att_ind != 0)
+		       write_att(Out, FILE_LINE, 
+			       InMap->Att[att_ind].x, InMap->Att[att_ind].y, 
+			       InMap->Att[att_ind].cat);
+		}
 		left += Points->n_points;
 		Vect_write_line (OutMap, type, Points);
 	}
+
+	/* now reattach the area attributes when needed */
+	if (InMap->n_areas > 0)
+	      fprintf(stdout, "\nReattaching area attributes...\n");
+	for(area = 1; area<= InMap->n_areas; area++)
+	{
+	   fprintf(stderr, "Processing area %5d of: %5d\r", area, InMap->n_areas);
+	   att_ind = InMap->Area[area].att;
+           if(0>(AreaPoints->n_points=get_pruned_area_points (InMap, area, AreaPoints)))
+	   { 
+	      printf("Warning ! Can't read area %d");
+	      continue;
+           }
+	   if((x1=dig_point_in_poly(InMap->Att[att_ind].x, InMap->Att[att_ind].y, AreaPoints)) == 0.0)
+	   /* the attribute is outside the area */
+	   {
+	      /* find some point inside the area */
+	      /* allocate enought space for island points */
+              if(InMap->Area[area].n_isles > max_n_isles)
+	      {
+	         IslesPoints = (struct line_pnts **)
+		   G_realloc(IslesPoints, (1+InMap->Area[area].n_isles) * sizeof(struct line_pnts *));
+                 for(i=max_n_isles; i< InMap->Area[area].n_isles; i++)
+		    IslesPoints[i] = Vect_new_line_struct();
+                 max_n_isles = InMap->Area[area].n_isles;
+              }
+	      for(i=0;i<InMap->Area[area].n_isles;i++)
+	      {
+	         IslesPoints[i]->alloc_points = 0; 
+		 IslesPoints[i]->n_points = get_pruned_isle_points(InMap, InMap->Area[area].isles[i], IslesPoints[i]);
+		 if(IslesPoints[i]->n_points==0) printf ("WARNING ");
+              } /* isles loop */
+
+              if(InMap->Area[area].n_isles)
+	           point_found = Vect_get_point_in_poly_isl(
+				     AreaPoints, IslesPoints,
+			 	     InMap->Area[area].n_isles, &att_x, &att_y);
+              else
+	           point_found = Vect_get_point_in_poly_isl(AreaPoints, NULL, 0, 
+					        &att_x, &att_y);
+          		   
+              /* end of looking for new point inside area */
+	      if(point_found>=0)
+	      {
+		       write_att(Out, FILE_AREA, att_x, att_y, InMap->Att[att_ind].cat);
+	      }
+	      else  printf("WARNING: the area is empty!\n");
+	   } /* if not inside area */
+	   else
+	   {
+	       if(x1<0.0) printf("couldn't read the line!\n");
+		   write_att(Out, FILE_AREA, 
+		       InMap->Att[att_ind].x, InMap->Att[att_ind].y, 
+		       InMap->Att[att_ind].cat);
+
+           }
+
+	} /* done processing areas */
+	Vect_destroy_line_struct(AreaPoints);
+	for (i=0;i<max_n_isles;i++)
+	   Vect_destroy_line_struct(IslesPoints[i]);
+}
+
+/* 
+** find a fast approximate point on a chain to place a label
+**  uses a city block distance approximation to choose the point
+**  In other words use distance x+y to approximate len of hypot
+*/
+
+/*
+**  return found point in *x and *y
+** return 0 on success ,-1 on error
+*/
+
+get_line_center (x, y, Points)
+    double *x, *y;
+    struct line_pnts *Points;
+{
+    register int i;
+    register int n_points;
+    register double *ux, *uy;
+    double dist;		/* running total of line length */
+    double half_dist;		/* half total line length */
+    double len;			/* tmp length of current line seg */
+    double frac;		/* overshoot / line length */
+    double fabs ();
+
+    n_points = Points->n_points;
+    ux = Points->x;
+    uy = Points->y;
+
+    if (n_points <= 0)
+	return -1;
+    if (n_points == 1)
+    {
+	*x = Points->x[0];
+	*y = Points->y[0];
+	return (0);
+    }
+	
+    dist = 0.0;
+    /* get total dist */
+    for (i = 1 ; i < n_points ; i++)
+	dist += (fabs(ux[i]-ux[i-1]) + fabs(uy[i]-uy[i-1]));
+    if (dist == 0.0)
+    {
+	*x = Points->x[0];
+	*y = Points->y[0];
+	return (0);
+    }
+
+    half_dist = dist / 2.0;
+
+    dist = 0.0;
+    for (i = 1 ; i < n_points ; i++)
+    {
+	len = (fabs(ux[i]-ux[i-1]) + fabs(uy[i]-uy[i-1]));
+	dist += len;
+	if (dist >= half_dist)  /* we're there */
+	{
+	    frac = 1 - (dist - half_dist) / len;
+	    *x = frac * (ux[i]-ux[i-1]) + ux[i-1];
+	    *y = frac * (uy[i]-uy[i-1]) + uy[i-1];
+	    return (0);
+	}
+    }
+
+    fprintf (stderr, "Get_line_center failed.\n");
+    *x = Points->x[0];
+    *y = Points->y[0];
+    return (-1);
+}
+
+
+/*
+**  Written by:  Mike Higgins 5 1988
+** 		 Dave Gerdes
+**  US Army Construction Engineering Research Lab
+
+**
+**  Modified for Vectlib 3/1991  dpg
+**  Added Vect_get_isle_points ()  5/1992 dpg
+*/
+
+/*
+**  returns the polygon array of points  in BPoints
+**   returns  number of points or -1 on error
+*/
+
+static int first_time = 1;	/* zero at startup */
+static struct line_pnts TPoints;
+
+int
+get_pruned_area_points (Map, area, BPoints)
+    struct Map_info *Map;
+    int area;
+    struct line_pnts *BPoints;
+{
+	register int i, line;
+	int start, end, to, from, inc;
+	P_AREA *Area;
+	int done_yet;
+
+
+	BPoints->n_points = 0;
+	Area =  &(Map->Area[area]) ;
+
+	if (first_time == 1)
+	{
+		TPoints.alloc_points = 0;	/* executed only once */
+		first_time = 0; 
+	}
+
+
+	for (i = 0 ; i < Area->n_lines ; i++)
+	{
+		line = abs(Area->lines[i]);
+
+		if (0 > V2_read_line (Map, &TPoints, line))
+			return (-1);
+                if(pruned[line]) 
+		     TPoints.n_points = dig_prune(&TPoints, threshold);
+
+		if (0 > dig_alloc_points (BPoints, TPoints.n_points + BPoints->n_points + 1))
+			return(-1) ;
+
+		if (Area->lines[i] < 0)
+		{
+			start = TPoints.n_points - 1;
+			inc = -1 ;
+			end = 0;
+		}
+		else
+		{
+			end = TPoints.n_points - 1;
+			inc = 1 ;
+			start = 0;
+		}
+
+		done_yet = 0;
+		for(from = start, to = BPoints->n_points ; !done_yet ; from+=inc, to++)
+		{
+			if (from == end)
+				done_yet = 1;
+			BPoints->x[to] = TPoints.x[from];
+			BPoints->y[to] = TPoints.y[from];
+		}
+		BPoints->n_points = TPoints.n_points + BPoints->n_points ;
+
+	}
+
+	return (BPoints->n_points);
+}
+
+int
+get_pruned_isle_points (Map, isle, BPoints)
+    struct Map_info *Map;
+    int isle;
+    struct line_pnts *BPoints;
+{
+	register int i, line;
+	int start, end, to, from, inc;
+	P_ISLE *Isle;
+	int done_yet;
+
+
+
+	BPoints->n_points = 0;
+	Isle =  &(Map->Isle[isle]) ;
+
+	if (first_time == 1)
+	{
+		TPoints.alloc_points = 0;	/* executed only once */
+		first_time = 0; 
+	}
+
+
+	for (i = 0 ; i < Isle->n_lines ; i++)
+	{
+		line = abs(Isle->lines[i]);
+
+		if (0 > V2_read_line (Map, &TPoints, line))
+			return (-1);
+                if(pruned[line]) TPoints.n_points = dig_prune(&TPoints, threshold);
+
+		if (0 > dig_alloc_points (BPoints, TPoints.n_points + BPoints->n_points + 1))
+			return(-1) ;
+
+		if (Isle->lines[i] < 0)
+		{
+			start = TPoints.n_points - 1;
+			inc = -1 ;
+			end = 0;
+		}
+		else
+		{
+			end = TPoints.n_points - 1;
+			inc = 1 ;
+			start = 0;
+		}
+
+		done_yet = 0;
+		for(from = start, to = BPoints->n_points ; !done_yet ; from+=inc, to++)
+		{
+			if (from == end)
+				done_yet = 1;
+			BPoints->x[to] = TPoints.x[from];
+			BPoints->y[to] = TPoints.y[from];
+		}
+		BPoints->n_points = TPoints.n_points + BPoints->n_points ;
+
+	}
+
+	return (BPoints->n_points);
 }
 
