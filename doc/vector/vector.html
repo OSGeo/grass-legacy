@@ -1,0 +1,238 @@
+<HEAD>
+<TITLE>GRASS 5.0 Vector Format and API</TITLE>
+</HEAD>
+<BODY>
+<P>
+<H1>GRASS 5.0 Vector Format and API</H1>
+
+This document describes new format for <B>GRASS vector files</B> with 
+<B>multicategory</B> and optional <B>3D</B> support.
+<P>
+You can send any comments to <A href=mailto:radim.blazek@dhv.cz>
+radim.blazek@dhv.cz</A>
+
+
+<HR>
+
+<H4><A HREF="#intro">Introduction</A></H4>
+<H4><A HREF="#dir">Directory structure</A></H4>
+<H4><A HREF="#coor">coor Format Specification</A></H4>
+<H4><A HREF="#head">head Format Specification</A></H4>
+<H4><A HREF="#structures">New or Modified Constants, Structures, Functions</A></H4>
+<H4><A HREF="#other">Other informations</A></H4>
+<H4><A HREF="v.example.c">Example vector module</A></H4>
+<H4><A HREF="v.modules.html">Vector Modules Status</A></H4>
+<H4><A HREF="#ascii">Vector ascii Format Specification</A></H4>
+<HR>
+
+<H2><A NAME="intro">Introduction</A></H2>
+<P>
+New format is very similar to old GRASS vector format.
+<P>
+Each element may have none, one or more categories (cats).
+More cats are distinguished by field number (field).
+Only one cat with cat_num=1 will be used in first stage
+and multi-category support on modules level will be added in
+future.
+<P>
+Z-coordinate will be optional and both 2d and 3d files may
+be written.
+
+
+<HR>
+
+<H2><A NAME="dir">Directory structure</A></H2>
+
+Directory structure and file names are bit chanded.
+All vector files for one vector map are stored in one
+directory:<BR>
+<B>$MAPSET/vector/vector_name/</B> <BR>
+This directory contains these files:<BR><BR>
+<B>coor</B> - binary file, coordinates, former dig/ file<BR>
+<B>head</B> - text file, header information, former part of dig/<BR>
+<B>topo</B> - binary file, topology, former dig_plus/<BR>
+<B>cats</B> - text file, category descriptions, former dig_cats/<BR>
+<B>misc</B> - miscellaneous - whats that?<BR>
+<B>regi</B> - registration points <BR>
+
+<HR>
+
+<H2><A NAME="coor">coor Format Specification</A></H2>
+
+<H3>Head</H3>
+<TABLE border=2>
+<TR><TD>Name</TD><TD>Type</TD><TD>Number</TD><TD>Description</TD></TR>
+
+<TR><TD>Version_Major </TD><TD>C</TD><TD>1</TD><TD>&nbsp</TD></TR>
+<TR><TD>Version_Minor </TD><TD>C</TD><TD>1</TD><TD>&nbsp</TD></TR>
+<TR><TD>Earliest_Major</TD><TD>C</TD><TD>1</TD><TD>&nbsp</TD></TR>
+<TR><TD>Earliest_Minor</TD><TD>C</TD><TD>1</TD><TD>&nbsp</TD></TR>
+
+<TR><TD>byte_order</TD><TD>C</TD><TD>1</TD><TD>&nbsp</TD></TR>
+<TR><TD>with_z</TD><TD>C</TD><TD>1</TD><TD>&nbsp</TD></TR>
+<TR><TD>reserved</TD><TD>C</TD><TD>58</TD><TD>&nbsp</TD></TR>
+
+</TABLE>
+
+<H3>Body</H3>
+
+The body consists of line records:
+<BR>
+
+<TABLE border=2>
+<TR><TD>Name</TD><TD>Type</TD><TD>Number</TD><TD>Description</TD></TR>
+<TR><TD>type</TD><TD>I</TD><TD>1</TD><TD>One of: DOT, LINE, BOUNDARY, 
+    CENTROID, DEAD_DOT, DEAD_LINE, DEAD_BOUNDARY, DEAD_CENTROID</TD></TR>
+<TR><TD>ncats</TD><TD>C</TD><TD>1</TD><TD>&nbsp</TD></TR>
+<TR><TD>field</TD><TD>S</TD><TD>ncats</TD><TD>Category identifier, 
+    distinguishes between more categories append to one line</TD></TR>
+<TR><TD>cat</TD><TD>I</TD><TD>ncats</TD><TD>&nbsp</TD></TR>
+<TR><TD>ncoor</TD><TD>I</TD><TD>1</TD><TD>1 for points and centroids</TD></TR>
+<TR><TD>x</TD><TD>D</TD><TD>ncoor</TD><TD>&nbsp</TD></TR>
+<TR><TD>y</TD><TD>D</TD><TD>ncoor</TD><TD>&nbsp</TD></TR>
+<TR><TD>z</TD><TD>D</TD><TD>ncoor</TD><TD>present if with_z in head 
+    is set to WITH_Z</TD></TR>
+</TABLE>
+
+
+<BR>
+<B>Types used in coor file</B>
+<TABLE border=2>
+<TR><TD>Type</TD><TD>Name</TD><TD>Size in Bytes</TD></TR>
+<TR><TD>D</TD><TD>Double</TD><TD>8</TD></TR>
+<TR><TD>I</TD><TD>Int   </TD><TD>4</TD></TR>
+<TR><TD>S</TD><TD>Short </TD><TD>2</TD></TR>
+<TR><TD>C</TD><TD>Char  </TD><TD>1</TD></TR>
+</TABLE>
+
+<HR>
+
+<H2><A NAME="head">head file format</A></H2>
+
+The file is unordered list of key/value entries. The <I>key</I>
+is a string separated from <I>value</I> by a colon and optional
+whitespace. Key words are:<BR>
+<PRE>
+ORGANIZATION
+DIGIT DATE
+DIGIT NAME
+MAP NAME
+MAP DATE
+MAP SCALE
+OTHER INFO
+ZONE
+MAP THRESH
+</PRE>
+<HR>
+
+<H2><A NAME="structures">New or Modified Constants, Structures, Functions</A></H2>
+<PRE>
+#define DOT		0x01
+#define DEAD_DOT	0x02
+#define LINE		0x04
+#define DEAD_LINE	0x08
+#define BOUNDARY	0x10
+#define DEAD_BOUNDARY	0x20
+#define CENTROID	0x40
+#define DEAD_CENTROID	0x80
+
+typedef char GRASS_V_NCATS;	/* number of vector categories on one element */
+typedef short GRASS_V_FIELD;	/* field number i.e. identifier for one category */
+typedef int GRASS_V_CAT;	/* vector category */
+
+struct line_cats
+  {
+      GRASS_V_FIELD *field;		/* pointer to array of fields */
+      GRASS_V_CAT *cat;			/* pointer to array of categories */
+      GRASS_V_NCATS n_cats;		/* number of vector categories attached to element */
+      int alloc_cats;		/* allocated space */
+  };
+
+int Vect_open_new (struct Map_info *, char name *, int with_z);
+long Vect_write_line (struct Map_info *, int type, struct line_pnts *, struct line_cats *);
+int Vect_read_next_line (struct Map_info *, struct line_pnts *, struct line_cats *);
+struct line_cats *Vect_new_cats_struct (void); 
+int Vect_reset_cats (struct line_cats *);
+int Vect_destroy_cats_struct (struct line_cats *); 
+int Vect_cat_set (struct line_cats *, GRASS_V_FIELD, GRASS_V_CAT);
+int Vect_cat_get (struct line_cats *, GRASS_V_FIELD, GRASS_V_CAT *);
+int Vect_cat_del (struct line_cats *, GRASS_V_FIELD);
+int Vect_reset_cats (struct line_cats *);
+
+</PRE>
+
+<HR>
+
+<H2><A NAME="other">Other Informations</A></H2>
+<P>
+Bounding box information was moved from coor file to topo file.
+
+<HR>
+
+<H2><A NAME="ascii">Vector ascii Format Specification</A></H2>
+<P>
+Ascii format in new version contains categories, new type
+centroid and z-coordinates. Points and centroids are saved 
+as one coordinates pair instead of two. File is saved
+in old dig_ascii directory but the name will be probably changed.
+
+<H3>Head</H3>
+The head of the file is similar as the head file of vector binary
+format but contains bounding box also. Key words are:<BR>
+<PRE>
+ORGANIZATION
+DIGIT DATE
+DIGIT NAME
+MAP NAME
+MAP DATE
+MAP SCALE
+OTHER INFO
+ZONE
+WEST EDGE
+EAST EDGE
+SOUTH EDGE
+NORTH EDGE
+MAP THRESH
+</PRE>
+
+<H3>Body</H3>
+The body begins by row:
+<PRE>
+VERTI:
+</PRE>
+followed by records of lines:
+<PRE>
+TYPE NUMBER_OF_COORDINATES [NUMBER_OF_CATEGORIES]
+ Y X [Z]
+....
+ Y X [Z]
+[ FIELD CATEGORY]
+....
+[ FIELD CATEGORY]
+</PRE>
+Everything in <B>[]</B> is optional. 
+TYPE may be:<BR><BR>
+<B>P</B> point (dot) <BR> 
+<B>p</B> dead point (dead dot) <BR> 
+<B>L</B> line  <BR>
+<B>l</B> dead line <BR> 
+<B>B(A)</B> boundary  <BR>
+<B>b(a)</B> dead boundary  <BR>
+<B>C</B> centroid  <BR>
+<B>c</B> dead centroid  <BR>
+
+<BR>
+Example of records:
+<PRE>
+P 1 1
+ 1234 3435
+ 1 354
+L 3 1
+ 4132 4534
+ 1453 1454
+ 1453 4543
+ 1 355
+</PRE>
+</BODY>
+</HTML>
+
