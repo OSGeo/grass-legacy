@@ -134,6 +134,8 @@ else
     fi
 fi
 
+export GRASS_GUI
+
 # Parsing argument to get LOCATION
 if [ ! "$1" ] ; then
 
@@ -233,6 +235,7 @@ if [ ! "$LOCATION" ] ; then
 		    read ans
 		    
 		    GRASS_GUI="text"
+		    export GRASS_GUI
 		    $ETC/set_data
 
 		    case $? in
