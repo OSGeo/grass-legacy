@@ -1,7 +1,5 @@
 #include "gis.h"
 
-#define UNIT_FILE "PROJ_UNITS"
-#define PROJECTION_FILE "PROJ_INFO"
 
 char *
 G_database_unit_name(plural)
@@ -9,7 +7,6 @@ G_database_unit_name(plural)
     int n;
     static char name[256];
     char *G__unit_name();
-    char *G__projection_units();
 
     switch(n=G_projection())
     {
@@ -87,9 +84,11 @@ lookup (file, key, value, len)
 {
     char path[1024];
 
+/*
     G__file_name (path, "", file, G_mapset());
     if (access(path,0) == 0)
 	return G_lookup_key_value_from_file(path, key, value, len) == 1;
+*/
     G__file_name (path, "", file, "PERMANENT");
     return G_lookup_key_value_from_file(path, key, value, len) == 1;
 }
