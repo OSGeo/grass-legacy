@@ -1,5 +1,5 @@
 PGM      = g3.region
-HOME     = $(BIN_MAIN_CMD)
+HOME     = $(BIN_MAIN_INTER)
 
 
 LIST     = main.o\
