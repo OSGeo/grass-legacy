@@ -652,14 +652,18 @@ the command line, the program will not warn the user not to overwrite
 existing map layers.  Users should therefore take care to assign program
 outputs raster file names that do not yet exist in their current mapsets.
 
+<P>
+NULL support: Please note that any math performed with NULL cells always
+results in a NULL value for these cells. If you want to replace a NULL cell
+on-the-fly, use the isnull() test function in a if-statement.
+
 <H2>BUGS</H2>
 
-Continuation lines must end with a \ and have NO trailing
-white space (blanks or tabs).  If the user does leave white space
-at the end of continuation lines,
-the error messages produced by <EM>r.mapcalc</EM> will be meaningless
-and the equation will not work as the user intended.
-
+Continuation lines must end with a \ and have NO trailing white space
+(blanks or tabs).  If the user does leave white space at the end of
+continuation lines, the error messages produced by <EM>r.mapcalc</EM> will
+be meaningless and the equation will not work as the user intended.
+This is important for the eval() function.
 
 <P>
 
@@ -688,17 +692,16 @@ The function should require the user to type "end" or "exit" instead
 of simply a blank line.  This would make separation of multiple scripts
 separable by white space.
 
+<P>
+r.mapcalc does not print a warning in case of operations on NULL cells.
+It is left to the user to utilize the isnull() function.
+
+
 <H2>SEE ALSO</H2>
 
-<B><A HREF="../Postscript/">r.mapcalc:   
-An Algebra for GIS and Image Processing</A></B>,
-by
-Michael Shapiro
-and
-Jim Westervelt,
-U.S. Army Construction Engineering
-Research Laboratory 
-(March/1991).
+<B><A HREF="../Postscript/">r.mapcalc: An Algebra for GIS and Image
+Processing</A></B>, by Michael Shapiro and Jim Westervelt, U.S. Army
+Construction Engineering Research Laboratory (March/1991).
 
 <P>
 
