@@ -84,6 +84,8 @@ struct _segmentDescript;
 struct _nodeDescript;
 struct _areaDescript;
 struct _fieldDescript;
+struct duff_rec_;
+struct duff_recs_t_;
 
 
 /* Declare typedefs on incomplete types */
@@ -97,6 +99,8 @@ typedef struct _segmentDescript segmentDescript;
 typedef struct _nodeDescript nodeDescript;
 typedef struct _areaDescript areaDescript;
 typedef struct _fieldDescript fieldDescript;
+typedef struct duff_rec_ duff_rec;
+typedef struct duff_recs_t_ duff_recs_t;
 
 
 
@@ -239,6 +243,27 @@ struct _fieldDescript {
 };
 
 
+/* Structures for handling selective extraction */
+
+struct duff_rec_ {
+
+  int rec_no;
+  int is_duff;
+
+};
+
+
+struct duff_recs_t_ {
+
+  int n_recs;
+  int alloc_recs;
+  
+  duff_rec *duff_rec_list;
+
+};
+
+
+
 
 /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 /*                                                           */
@@ -252,7 +277,8 @@ struct _fieldDescript {
 */
 
 void linedCreate( lineList *l1, SHPHandle s1, DBFHandle d1,
-		  fieldDescript *cat1, BTREE *hBank, int *fcount );
+		  fieldDescript *cat1, BTREE *hBank, int *fcount,
+		  duff_recs_t *duff_recs );
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
 /* This function disposes of all the structures built              */
@@ -323,7 +349,7 @@ void partCalcFieldsPolygon( partDescript *partd );
    perimeters with negative circulation?
 */
 
-void getTotalParts( lineList *L1 );
+void getTotalParts( lineList *L1, duff_recs_t *dr );
 
 
 /* How many of the parts in a shape are valid in the current context? */

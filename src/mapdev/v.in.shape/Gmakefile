@@ -11,7 +11,8 @@ LIST = 	main.o \
 	writelin.o \
 	gbtree.o \
 	cleanup.o \
-	bounds.o
+	bounds.o \
+	flagopts.o
 
 # LINK_LIST = ../../libes/vect32_64/shapelib-1.2.8/shpopen.o \
 # 	../../libes/vect32_64/shapelib-1.2.8/dbfopen.o

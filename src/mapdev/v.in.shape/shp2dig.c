@@ -5,7 +5,7 @@
 
  * @Copyright David D.Gray <ddgray@armadce.demon.co.uk>
  * 3rd. Feb. 2000
- * Last updated 11th. May. 2000
+ * Last updated 5th. Jan. 2001
  *
 
 * This file is part of GRASS GIS. It is free software. You can 
@@ -26,7 +26,10 @@
 #include <math.h>
 #include <string.h>
 #include <assert.h>
+#include "dbutils.h"
 #include "shp2dig.h"
+
+static int dr_incr = 3000;
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
 /* This function carries out the transfer of data from the         */
@@ -39,12 +42,18 @@
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */
 
 void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
-		   fieldDescript *cat1, BTREE *hBank, int *fcount ) {                        
+		   fieldDescript *cat1, BTREE *hBank, int *fcount,
+		   duff_recs_t *duff_recs) {                        
 
   /* Local */
   int numFields, numPolygons, numRecs0;
   int nums0, newRecsCount;
+  int f_type_recorded = 0;
   int ltype;
+  int dbf_q;
+  int msh;
+  DBFHandle hd1;
+  char *f_str;
 
   int i0, j0, j1, k0, k1;
   int i2, j2, k2;
@@ -74,6 +83,51 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
   char fname[12];
   int fsize, fdec;
 
+
+  /* For hd1 */
+  DBFFieldType type_f;
+  int decs_f, wide_f, num_f;
+  char *val_f, *field_f;
+  int w_bad_type = 1;
+
+  /* Determine if extraction is to be selective */
+
+  if( (f_str = (char *)malloc(512)) == NULL ) {
+
+    G_fatal_error("Error allocating dynamic memory.");
+  }
+
+  if( (val_f = (char *)malloc(512)) == NULL ) {
+
+    G_fatal_error("Error allocating dynamic memory.");
+  }
+
+  if( (field_f = (char *)malloc(512)) == NULL ) {
+
+    G_fatal_error("Error allocating dynamic memory.");
+  }
+
+
+  /* Get details of selection parameters */
+
+  if(proc_test_dbf(GET_VAL, &dbf_q, &hd1, f_str, &num_f) < 0) {
+
+    /* Could not retrieve values. Setting defaults */
+    dbf_q = 0; /* No selective extraction */
+  }
+
+  /* Find if a maximum number of shapes has been set */
+
+  if(proc_max_shapes(GET_VAL, &msh) < 0) {
+
+    /* Could not retrieve values. Setting defaults */
+    msh = 0; /* No limit on number of shapes extracted */
+  }
+
+  if(dbf_q) {
+    type_f = DBFGetFieldInfo(hd1, num_f, field_f, &wide_f, &decs_f);
+  }
+
   /* Begin the process of assembling the line descriptor from shape
      file
   */
@@ -82,14 +136,84 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
   l1->lines = (lineDescript *)malloc( l1->numLines * sizeof( lineDescript ));
   for( i0 = 0; i0 < l1->numLines; ++i0 ) {
 
+    if( msh > 0 && i0 >= msh )
+      break;
+
     fprintf(stderr, "   Processing shape %7d of %7d.\n", i0 + 1, l1->numLines);
+
+    /* Check if this record is to be extracted */
+
+    if(dbf_q) {
+
+      switch(type_f) {
+
+      case 0:
+	{
+	  /* String */
+	  strncpy(val_f , DBFReadStringAttribute(hd1, i0, num_f), 511);
+	  if( strncmp(val_f, f_str, wide_f) != 0 ) {
+	    if(add_rec_spec(duff_recs, i0, 1) < 0)
+	      G_fatal_error("Error allocating dynamic memory\n");
+	    continue;
+	  }
+	  
+	  else if(add_rec_spec(duff_recs, i0, 0) < 0)
+	    G_fatal_error("Error allocating dynamic memory\n");
+	    
+	  break;
+	}
+
+      case 1:
+	{
+	  /* Integer */
+	  if( DBFReadIntegerAttribute(hd1, i0, num_f) != atoi(f_str) ) {
+	    if(add_rec_spec(duff_recs, i0, 1) < 0)
+	      G_fatal_error("Error allocating dynamic memory\n");
+	    continue;
+	  }
+
+	  else if(add_rec_spec(duff_recs, i0, 0) < 0)
+	    G_fatal_error("Error allocating dynamic memory\n");
+
+	  break;
+	}
+
+      case 2:
+	{
+	  /* Double - not wise to use this: but just in case ... */
+	  if( DBFReadDoubleAttribute(hd1, i0, num_f) - atof(f_str) < 1.0e-6 ) {
+	    if(add_rec_spec(duff_recs, i0, 1) < 0)
+	      G_fatal_error("Error allocating dynamic memory\n");
+	    continue;
+	  }
+
+	  else if(add_rec_spec(duff_recs, i0, 0) < 0)
+	    G_fatal_error("Error allocating dynamic memory\n");
+
+	  break;
+	}
+      default:
+	{
+	  /* Unknown type: print warning and go on */
+	  if(w_bad_type) {
+	    w_bad_type = 0;
+	    dbf_q = 0;
+	    G_warning("Selector field is of unknown type:\n   all lines will be extracted./n");
+	  }
+	  break;
+	}
+	
+      }
+
+    }
     
     tmpShp = SHPReadObject( s1, i0 );
-    if( i0 == 0 ) {  
+    if( !f_type_recorded ) {  
+      f_type_recorded = 1;
       l1->typeofLine = tmpShp->nSHPType;
       ltype = l1->typeofLine;                        /* Just record this once. Assume the file */
     }					             /* has only one type of shape entry.      */
-                                                     /* At this point                          */
+    /* At this point                          */
     
     l1->lines[i0].shapeID = i0 + 1;
     l1->lines[i0].numParts = tmpShp->nParts;
@@ -151,9 +275,9 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
 
 	/* Do the addition to internal database ( point bank ) here */
 	/* This is an integral part of the process of dissecting lines
-	 to obtain arc segments from shape polygon arcs.
+	   to obtain arc segments from shape polygon arcs.
 	 
-        */
+	*/
 	
 	
 	if( !vertRegister( hBank, &l1->lines[i0].parts[j0], currVertex ) )
@@ -166,7 +290,7 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
 
       /* Fill in the calculated fields of the part descriptor */
       /* This gets everything except the area point, which requires
-         information on all the rings of a shape before this (these)
+	 information on all the rings of a shape before this (these)
 	 can be assessed. However a provisional centroid is
 	 created to account for this.
       */
@@ -180,13 +304,19 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
 	 moreover is an exterior ring
       */
       if( nolinks == l1->lines[i0].parts[j0].numPoints && 
-	l1->lines[i0].parts[j0].indic < 0  ) {
+	  l1->lines[i0].parts[j0].indic < 0  ) {
 	
 	/* Run thru previous listings if this is the case to
 	   find the already recorded rings or lines, and
 	   determine circulation
 	*/
 	for( i2 = 0; i2 <= i0; ++i2 ) {
+
+	  if(dbf_q) {
+	    if(duff_recs->duff_rec_list[i2].is_duff == 1)
+	      continue;
+	  }
+
 	  for( j2 = 0; j2 < l1->lines[i2].numParts; ++j2 ) {
 
 	    /* Finish  if this is not registered yet */
@@ -245,28 +375,41 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
     SHPDestroyObject( tmpShp );
 
     /* Calculate total area of the shape, if appropriate - set to 0.0
-       if arc file
-    */
-    /* getLineArea( &l1->lines[i0] ); */ /* Maybe eventually */
+	 if arc file
+      */
+      /* getLineArea( &l1->lines[i0] ); */ /* Maybe eventually */
 
-    /* How many of the parts of the line descriptor are valid exterior
-       rings?
-    */
+      /* How many of the parts of the line descriptor are valid exterior
+	 rings?
+      */
 
     getValidParts( &l1->lines[i0] );
   }
 
-  getTotalParts( l1 );
+  getTotalParts( l1, duff_recs );
 
-  /* In the case of polygon files . . . */
+    /* In the case of polygon files . . . */
 
   if( ltype == SHPT_POLYGON || ltype == SHPT_POLYGONZ || ltype == SHPT_POLYGONM ) {
 
     /* . . . Now all rings are processed, determine the final area point, ie.
-     make sure that it is not in an island
+       make sure that it is not in an island
     */
 
     for( i0 = 0; i0 < l1->numLines; ++i0 ) {
+
+      /* Break if shape limit has been reached */
+
+      if( msh > 0 && i0 >= msh )
+	break;
+
+      /* Skip if this is invalid */
+
+      if(dbf_q) {
+	if( duff_recs->duff_rec_list[i0].is_duff )
+	  continue;
+      }
+
       for( j0 = 0; j0 < l1->lines[i0].numParts; ++j0 ) {
 
 	if( l1->lines[i0].parts[j0].duff )
@@ -305,10 +448,10 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
 
 
   /* Now process the database records and add an entry for each valid
-     ring
-  */
+       ring
+    */
   
-  /* How many fields? records (initially)? */
+    /* How many fields? records (initially)? */
   numFields = DBFGetFieldCount( d1 );
   *fcount = numFields;
   numRecs0 = DBFGetRecordCount( d1 );
@@ -357,77 +500,133 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
     switch( cat1[i0+4].fldType ) {
     case 0: 
       for(  j0 = 0; j0 < numRecs0; ++j0 ) {
+
+	if(msh > 0 && j0 >= msh)
+	  break;
+	
+	if(dbf_q) {
+	  if(duff_recs->duff_rec_list[j0].is_duff)
+	    continue;
+	}
+
 	for( k0 = 0; k0 < l1->lines[j0].validParts; ++k0 ) {
 	  reclist[recCount].stringField = (char *)malloc( cat1[i0+4].fldSize + 1 );
 	  strcpy( reclist[recCount++].stringField, DBFReadStringAttribute( d1, j0, i0 ) );
 	}
       }
       cat1[i0+4].fldRecs = reclist;
-      assert( recCount == l1->totalValidParts );
       break;
     case 1: 
       for(  j0 = 0; j0 < numRecs0; ++j0 ) {
+
+	if(msh > 0 && j0 >= msh)
+	  break;
+	
+	if(dbf_q) {
+	  if(duff_recs->duff_rec_list[j0].is_duff)
+	    continue;
+	}
+
 	for( k0 = 0; k0 < l1->lines[j0].validParts; ++k0 ) {
 	  reclist[recCount++].intField = DBFReadIntegerAttribute( d1, j0, i0 );
 	}
       }
       cat1[i0+4].fldRecs = reclist;
-      assert( recCount == l1->totalValidParts );
       break;
     case 2: 
       for(  j0 = 0; j0 < numRecs0; ++j0 ) {
+
+	if(msh > 0 && j0 >= msh)
+	  break;
+	
+	if(dbf_q) {
+	  if(duff_recs->duff_rec_list[j0].is_duff)
+	    continue;
+	}
+
 	for( k0 = 0; k0 < l1->lines[j0].validParts; ++k0 ) {
 	  reclist[recCount++].doubleField = DBFReadDoubleAttribute( d1, j0, i0 );
 	}
       }
       cat1[i0+4].fldRecs = reclist;
-      assert( recCount == l1->totalValidParts );
       break;
     default: 
       for(  j0 = 0; j0 < numRecs0; ++j0 ) {
+
+	if(msh > 0 && j0 >= msh)
+	  break;
+	
+	if(dbf_q) {
+	  if(duff_recs->duff_rec_list[j0].is_duff)
+	    continue;
+	}
+
 	for( k0 = 0; k0 < l1->lines[j0].validParts; ++k0 ) {
 	  reclist[recCount++].intField = 0;
 	}
       }
       cat1[i0+4].fldRecs = reclist;
-      assert( recCount == l1->totalValidParts );
       break;
 
     } /* switch */
   }
   
   /* Field 0 is to maintain an index of the entries, starting
-     at 1. Field 1 maintains a record of the original entry
-     in the input, ie. shapeID.
-  */
+       at 1. Field 1 maintains a record of the original entry
+       in the input, ie. shapeID.
+    */
   reclist = ( dbfRecElement * )malloc( l1->totalValidParts * sizeof( dbfRecElement ));
   recCount = 0;
   for( j0 = 0; j0 < numRecs0; ++j0 ) {
-      for( k0 = 0; k0 < l1->lines[j0].validParts; ++k0 ) {
-	reclist[recCount].intField = recCount + 1;
-	recCount++;
-      }
+
+    if(msh > 0 && j0 >= msh)
+      break;
+	
+    if(dbf_q) {
+      if(duff_recs->duff_rec_list[j0].is_duff)
+	continue;
+    }
+
+    for( k0 = 0; k0 < l1->lines[j0].validParts; ++k0 ) {
+      reclist[recCount].intField = recCount + 1;
+      recCount++;
+    }
   }
   cat1[0].fldRecs = reclist;
-  assert( recCount == l1->totalValidParts );
 
   reclist = ( dbfRecElement * )malloc( l1->totalValidParts * sizeof( dbfRecElement ));
   recCount = 0;
   for( j0 = 0; j0 < numRecs0; ++j0 ) {
-      for( k0 = 0; k0 < l1->lines[j0].validParts; ++k0 ) {
-	reclist[recCount++].intField = j0 + 1;
-      }
+
+    if(msh > 0 && j0 >= msh)
+      break;
+	
+    if(dbf_q) {
+      if(duff_recs->duff_rec_list[j0].is_duff)
+	continue;
+    }
+
+    for( k0 = 0; k0 < l1->lines[j0].validParts; ++k0 ) {
+      reclist[recCount++].intField = j0 + 1;
+    }
   }
   cat1[1].fldRecs = reclist;
-  assert( recCount == l1->totalValidParts );
 
   /* Field 3 is the x-co-ordinate of the record point.
-     Field 4 is the y-co-ordinate of the record point.
-  */
+       Field 4 is the y-co-ordinate of the record point.
+    */
 
   reclist = ( dbfRecElement * )malloc( l1->totalValidParts * sizeof( dbfRecElement ));
   recCount = 0;
   for( j0 = 0; j0 < numRecs0; ++j0 ) {
+
+    if(msh > 0 && j0 >= msh)
+      break;
+	
+    if(dbf_q) {
+      if(duff_recs->duff_rec_list[j0].is_duff)
+	continue;
+    }
 
     k1 = 0;
     for( k0 = 0; k0 < l1->lines[j0].validParts; ++k0 ) {
@@ -441,11 +640,18 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
     }
   }
   cat1[2].fldRecs = reclist;
-  assert( recCount == l1->totalValidParts );
   
   reclist = ( dbfRecElement * )malloc( l1->totalValidParts * sizeof( dbfRecElement ));
   recCount = 0;
   for( j0 = 0; j0 < numRecs0; ++j0 ) {
+
+    if(msh > 0 && j0 >= msh)
+      break;
+	
+    if(dbf_q) {
+      if(duff_recs->duff_rec_list[j0].is_duff)
+	continue;
+    }
 
     k1 = 0;
     for( k0 = 0; k0 < l1->lines[j0].validParts; ++k0 ) {
@@ -459,11 +665,16 @@ void linedCreate(  lineList *l1, SHPHandle s1, DBFHandle d1,
     }
   }
   cat1[3].fldRecs = reclist;
-  assert( recCount == l1->totalValidParts );
   
 
-}  /* end linedCreate */
+  /* Free up buffers and arrays no longer required */
 
+  if(val_f) free(val_f);
+  if(field_f) free(field_f);
+  if(f_str) free(f_str);
+
+
+}  /* end linedCreate */
 
 
 
@@ -943,15 +1154,28 @@ void getValidParts( lineDescript *line1 ) {
    perimeters with negative circulation?
 */
 
-void getTotalParts( lineList *L1 ) {
+void getTotalParts( lineList *L1, duff_recs_t *dr ) {
   
   /* Local variables */
   int i0;
 
   int allTotal = 0;
   int validTotal = 0;
+  int msh;
+
+  if(proc_max_shapes(GET_VAL, &msh) < 0)
+    msh = 0;
 
   for( i0 = 0; i0 < L1->numLines; ++i0 ) {
+
+    if( msh > 0 && i0 >= msh )
+      break; 
+
+    if(dr->alloc_recs > 0) {
+      if(dr->duff_rec_list[i0].is_duff)
+	continue;
+    }
+
     allTotal += L1->lines[i0].numParts;
     validTotal += L1->lines[i0].validParts;
   }
@@ -1355,3 +1579,7 @@ int proc_reject_centroid( int procflag, int *rejflag ) {
   else return 1;  /* Unknown operation requested */
 
 }
+
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+ 
