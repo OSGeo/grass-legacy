@@ -88,4 +88,15 @@ V1_open_new_post (
    return ( V1_open_old_post (Map) );
 }
 
+/* Open old file on level 2.
+*  Map->name and Map->mapset must be set before
+*
+*  Return: 0 success
+*         -1 error */
+int
+V2_open_old_post (struct Map_info *Map)
+{
+    return -1;
+}
+
 #endif
