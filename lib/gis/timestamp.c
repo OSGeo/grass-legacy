@@ -32,6 +32,7 @@
 
 #include <string.h>
 #include "gis.h"
+#include "glocale.h"
 
 void G_init_timestamp (struct TimeStamp *ts)
 {
@@ -169,7 +170,7 @@ static int write_timestamp (
     if (fd == NULL)
     {
 	G_warning (
-		"Can't create timestamp file for %s map %s in mapset %s",
+		_("Can't create timestamp file for %s map %s in mapset %s"),
 		maptype, mapname, G_mapset());
 	return -1;
     }
@@ -179,7 +180,7 @@ static int write_timestamp (
     if (stat == 0)
 	return 1;
     G_warning (
-	    "Invalid timestamp specified for %s map %s in mapset %s",
+	    _("Invalid timestamp specified for %s map %s in mapset %s"),
 	    maptype, mapname, G_mapset());
     return -2;
 }
@@ -204,7 +205,7 @@ static int read_timestamp (
     if (fd == NULL)
     {
 	G_warning (
-		"Can't open timestamp file for %s map %s in mapset %s",
+		_("Can't open timestamp file for %s map %s in mapset %s"),
 		maptype, mapname, mapset);
 	return -1;
     }
@@ -214,7 +215,7 @@ static int read_timestamp (
     if (stat == 0)
 	return 1;
     G_warning (
-	    "Invalid timestamp file for %s map %s in mapset %s",
+	    _("Invalid timestamp file for %s map %s in mapset %s"),
 	    maptype, mapname, mapset);
     return -2;
 }

@@ -22,6 +22,7 @@
 
 #include <stdlib.h>
 #include "gis.h"
+#include "glocale.h"
 #include "readsites.h"
 
 int G_readsites (FILE *fdsite, int all, int verbose, int field,
@@ -37,26 +38,26 @@ int G_readsites (FILE *fdsite, int all, int verbose, int field,
   field -= 1;  /* field number -> array index */
 
   if (verbose)
-    fprintf (stderr, "Reading sites list ...                  ");
+    fprintf (stderr, _("Reading sites list ...                  "));
 
   /* check structure from first row in sites list */
   if (G_site_describe (fdsite, &dims, &map_type, &strs, &dbls)!=0)
-    G_fatal_error("failed to guess format");
+    G_fatal_error(_("failed to guess format"));
   s = G_site_new_struct (map_type, dims, strs, dbls);
 
   if(field >= dbls){
-      G_fatal_error("decimal field %i not present in sites file", field + 1);
+      G_fatal_error(_("decimal field %i not present in sites file"), field + 1);
   }
 
   if (dbls==0)
   {
     fprintf(stderr,"\n");
-    G_warning("I'm finding records that do not have a floating point attributes (fields prefixed with '%').");
+    G_warning(_("I'm finding records that do not have a floating point attributes (fields prefixed with '%')."));
   }
 
   /* allocate chunk of memory */
   (*xyz) = (Z *) G_malloc (allocated * sizeof (Z));
-  if ((*xyz)==NULL) G_fatal_error("cannot allocate memory");
+  if ((*xyz)==NULL) G_fatal_error(_("cannot allocate memory"));
 
   i = 0;
   while (G_site_get (fdsite, s) == 0) 
@@ -65,7 +66,7 @@ int G_readsites (FILE *fdsite, int all, int verbose, int field,
     {
       allocated+=1000;
       (*xyz) = (Z *) G_realloc ((*xyz), allocated * sizeof (Z));
-      if ((*xyz)==NULL) G_fatal_error("cannot allocate memory");
+      if ((*xyz)==NULL) G_fatal_error(_("cannot allocate memory"));
     }
     if (all || (s->east >= window->west && s->east <= window->east &&
 		s->north <= window->north && s->north >= window->south))

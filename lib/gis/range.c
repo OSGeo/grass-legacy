@@ -80,6 +80,7 @@
 #include <rpc/types.h> /* need this for sgi */
 #include <rpc/xdr.h>
 #include "G.h"
+#include "glocale.h"
 #define DEFAULT_CELL_MIN 1
 #define DEFAULT_CELL_MAX 255
 
@@ -149,7 +150,7 @@ int G_read_fp_range (
         if (fd >= MAXFILES)
         {
            close (fd);
-           G_warning("Too many open files");
+           G_warning(_("Too many open files"));
            return -1;
         }
 
@@ -173,7 +174,7 @@ int G_read_fp_range (
 error:
     if (fd > 0)
 	close(fd) ;
-    sprintf (buf, "can't read f_range file for [%s in %s]", name, mapset);
+    sprintf (buf, _("can't read f_range file for [%s in %s]"), name, mapset);
     G_warning (buf);
     return -1;
 }
@@ -264,7 +265,7 @@ int G_read_range (
 error:
     if (fd)
 	fclose(fd) ;
-    sprintf (buf, "can't read range file for [%s in %s]", name, mapset);
+    sprintf (buf, _("can't read range file for [%s in %s]"), name, mapset);
     G_warning (buf);
     return -1;
 }
@@ -299,7 +300,7 @@ int G_write_range ( char *name, struct Range *range)
 
 error:
     G_remove(buf, "range"); /* remove the old file with this name */
-    sprintf (buf, "can't write range file for [%s in %s]",
+    sprintf (buf, _("can't write range file for [%s in %s]"),
 	name, G_mapset());
     G_warning (buf);
     return -1;
@@ -337,7 +338,7 @@ int G_write_fp_range ( char *name, struct FPRange *range)
 
 error:
     G_remove(buf, "f_range"); /* remove the old file with this name */
-    sprintf (buf, "can't write range file for [%s in %s]",
+    sprintf (buf, _("can't write range file for [%s in %s]"),
 	name, G_mapset());
     G_warning (buf);
     return -1;
