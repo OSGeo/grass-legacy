@@ -7,8 +7,8 @@ PGR  	= i.rectify3
 HOME 	= $(BIN_MAIN_CMD)
 
 ####    required - suplimental imagery libary
-IMAGERY_SUBINC = ../../image3
-IMAGERYLIB_SUP  = ../../image3/libimage_sup.a
+IMAGERY_SUBINC = $(SRC)/libes/image3
+IMAGERYLIB_SUP = $(SRC)/libes/image3/libimage_sup.a
 
 all:	$(HOME)/$(PGR)
 
