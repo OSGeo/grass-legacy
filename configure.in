@@ -1,6 +1,5 @@
 AC_INIT(README)
 AC_PREFIX_DEFAULT(/usr/local/grass-5.0b)
-AC_BINDIR_DEFAULT(/usr/local/bin)
 AC_CONFIG_HEADER(src/include/config.h)
 AC_CANONICAL_HOST
 AC_PROG_CC
@@ -20,7 +19,7 @@ AC_CHECK_PROGS(ENV, env)
 AC_CHECK_PROGS(F77, f77 g77)
 AC_PATH_XTRA
 AC_HEADER_STDC
-AC_CHECK_HEADERS(curses.h limits.h termio.h termios.h unistd.h values.h)
+AC_CHECK_HEADERS(curses.h limits.h termio.h termios.h unistd.h values.h zlib.h)
 AC_CHECK_HEADERS(sys/ioctl.h sys/mtio.h sys/resource.h sys/time.h)
 AC_CHECK_HEADERS(sys/timeb.h sys/types.h sys/utsname.h)
 AC_HEADER_TIME
@@ -75,9 +74,27 @@ fi
 if test -z "${XDRLIB}"; then
 AC_CHECK_LIB(nsl, xdr_int, XDRLIB=-lnsl)
 fi
+if test -z "${XDRLIB}"; then
+AC_CHECK_LIB(rpclib, xdr_int, XDRLIB=-lrpclib)
+fi
 AC_SUBST(XDRLIB)
 
-BINDIR=/usr/local/bin
+ZLIB=
+if test -z "${ZLIB}"; then
+AC_CHECK_LIB(z, deflate, ZLIB=-lz)
+fi
+AC_SUBST(ZLIB)
+
+# BINDIR=/usr/local/bin
+
+BINDIR=
+if test -z "${bindir}"; then
+BINDIR="/usr/local/bin"
+else
+BINDIR="${bindir}"
+fi
+
+
 AC_ARG_WITH(bindir,
     [  --with-bindir=DIR       user executables installed in DIR [/usr/local/bin] ],
     [
@@ -238,5 +255,20 @@ AC_ARG_WITH(USE_TERMIO,
 	esac
     ])
 AC_SUBST(USE_TERMIO)
+
+if test -z "${top_srcdir}"; then
+SRCDIR=$(pwd)
+else
+SRCDIR=$top_srcdir
+fi
+AC_SUBST(SRCDIR)
+
+ARCH=
+if test -z "${host}"; then
+ARCH="unknown"
+else
+ARCH="${host}"
+fi
+AC_SUBST(ARCH)
 
 AC_OUTPUT(Makefile src/CMD/head/head src/scripts/shells/create_fifos.sh)
