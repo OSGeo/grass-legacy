@@ -175,8 +175,8 @@ int main ( int argc, char *argv[])
 
     fprintf (stderr, "\n");
     fprintf (stderr, "\n");
-    fprintf (stderr, "Version: GRASS5.0 beta,  update: Novemebr 1999\n");
-    fprintf (stderr, "\n");
+/*    fprintf (stderr, "Version: GRASS5.0 beta,  update: Novemebr 1999\n"); 
+    fprintf (stderr, "\n"); */
     fprintf (stderr, "Authors: original version -  H.Mitasova, L.Mitas\n");
     fprintf (stderr, "         GRASS implementation and segmentation: I.Kosinovsky, D.P. Gerdes\n");
     fprintf (stderr, "\n");
@@ -507,8 +507,18 @@ int main ( int argc, char *argv[])
     }
   }
 
+  /* we can't read the input file's timestamp as they don't exist in   */
+  /*   the new vector format. Even so, a TimeStamp structure is needed */
+  /*   for IL_init_params_2d(), so we set it to NULL.                  */
+  /* If anyone is ever motivated to add it, the Plus_head struct has   */
+  /*  'long coor_mtime' and dig_head has 'char *date; char *source_date;' */
+  /*   which could be read in.                                         */
+  inhead.time = (struct TimeStamp*)NULL;
+  inhead.stime = NULL;
+
   if (devi != NULL)
   {
+    fprintf(stderr, "Attempting to open deviation file in old sites format ..\n");
     if ((fddevi = G_fopen_sites_new (devi)) == NULL)
     {
       sprintf (msg, "Cannot open %s", devi);
@@ -521,7 +531,7 @@ int main ( int argc, char *argv[])
       devihead.desc = (char *) G_malloc (128 * sizeof (char));
       sprintf (devihead.desc, "deviations of %s [raster] at %s [sites]",
 	       elev, input);
-      devihead.time = inhead.time; /*(DateTime *) G_malloc (sizeof (DateTime));*/
+      devihead.time = inhead.time;   /*(DateTime *) G_malloc (sizeof (DateTime));*/
       devihead.stime = inhead.stime; /*(char *) G_malloc (80 * sizeof (char));*/
       devihead.labels = NULL;
       devihead.form = NULL;
