@@ -3,6 +3,9 @@
 #define PNT_HEAD_NAMES 1 /* only names */
 #define PNT_HEAD_TYPES 2 /* names + types (sql stype) */
 
+#define FORMAT_POINT 0
+#define FORMAT_ALL   1
+
 int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs, int head_type,
                      int *rowlength, int *ncolumns, int *minncolumns,
                      int **column_type, int **column_length );

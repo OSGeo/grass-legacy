@@ -1,17 +1,17 @@
 <h2>DESCRIPTION</h2>
 
 <em>v.in.ascii</em> converts a vector map in ASCII format to a vector map in 
-binary format. The module may be run in 2 modes:
+binary format. The module may import 2 formats:
 <UL>
-<LI><B>standard</B>: if the <B>'input'</B> option is used the module reads a
-    GRASS ASCII vector file from the <B>$MAPSET/dig_ascii/</B> directory.
-<LI><B>points</B>: if <B>'input'</B> is not used the module reads points from 
-    standard input. Each point must be defined on one row, values separated by 
-    a user definable deliminator. If the 'columns' option is not defined, 
+<LI><B>standard</B> contains all data types, each coordinate on one row
+<LI><B>point</B> reads only points, each point defined on one row.
+    Values are separated by a user definable deliminator. If the 'columns' option is not defined, 
     default names are used. It is possible to specify the column order for the 
     x,y,z coordinates and category values.
 </UL>
 
+<P> 
+The input is read from a file specified by <B>input</B> option or from standard input.
 
 <h2>NOTES</h2>
 
@@ -40,11 +40,9 @@ The primitive codes are as follows:
 
 The coordinates are listed following the initial line containing the
 primitive code and the total number of vertices in the series. 
-For historical reasons <i>the GRASS ASCII vector format lists northings 
-before eastings.</i>
-When importing data from stdin in <B>points</B> mode however, 
-eastings are listed before northings as per the usual convention.
-Sorry about the confusion.
+The order of coordinates is <BR><BR>
+  X Y [Z]
+<BR><BR>
 
 <P>
 <b>Importing from a spreadsheet</b><br>
@@ -92,26 +90,6 @@ entering vertex coordinates:<p>
         5959096.7459483 3401370.54047235
         5959091.38259917 3401450.99070932
         5959010.9323622 3401338.36037757
-</pre>
-
-The associated dig_att file needs following format (stored in $MAPSET/dig_att/):<p>
-
-<pre>
-       A 3401180.463379 5959003.209139          1
-       A 3401516.741397 5958966.635071          2
-</pre>
-
-<p>
-
-The associated dig_cats file needs following format:<p>
-
-<pre>
-      # 2 categories
-      Vector map: test
- 
-      0.00 0.00 0.00 0.00
-      1:forest
-      2:water
 </pre>
 
 <p><BR>
@@ -194,10 +172,6 @@ other software, and for transferring data between
 machines.
 
 <p>
-
-The input from <em>v.in.ascii</em> has to be placed into
-<kbd>$LOCATION/$MAPSET/dig_ascii</kbd> (this directory must be created if it does not exist)
-or piped into the module.
 
 
 <h2>SEE ALSO</h2>
