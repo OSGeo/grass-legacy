@@ -1,0 +1,132 @@
+
+
+
+V.mkquads(2)         GRASS Reference Manual          V.mkquads(2)
+
+
+
+NAME
+     V.mkquads - Creates a quads map and/or and/or
+     (Map Development Tool)
+
+SYNOPSIS
+     V.mkquads {vector map name} -[evsw]
+
+DESCRIPTION
+     There are three types of output available from the GRASS
+     program V.mkquads :
+
+     (1)  a vector map of all the full quads that will fit within
+          the current
+
+     (2)  a GRASS containing the corner coordinates of each of
+          these quads.
+
+     (3)  GRASS associated with each of the quads created.
+
+     A quad is defined as the area covered by a U.S.G.S. 7.5
+     minute (1:24,000) map.  This program is useful for managing
+     a GRASS LOCATION which contains a number of quads which are
+     to be patched together.
+
+GENERAL INFORMATION
+     All output options can be used on the command line at the
+     same time.  A listing of all the quad points in lat/lon and
+     UTM's will be displayed every time the program is executed.
+     The spheroid being used for the lat/lon to UTM conversions
+     is  clark66.
+
+OUTPUT OPTIONS
+     The first type of output (-v) is a vector map of all the
+     quads that will fit in the current Only full quads will be
+     created. The vector map is placed in the dig directory and
+     can be used like any vector map.  Run support.vect  to build
+     the topology of the vector map before using it in the digit
+     program.  Since the quads are computer-generated, the corner
+     coordinates will be exact.  This simplifies digitizing if
+     one or more quad sheets will have to be brought together for
+     a because all of the quad corner points to be joined will be
+     guaranteed to match.  If no arguments are given on the
+     command line, the program will assume that a vector map is
+     to be created and ask the user for a new vector map name.
+
+     The second type of output (-s)  is a GRASS The will contain
+     all the corner coordinates of all the full quads that can be
+     built in the current The can then be displayed using the
+     d.sites program.
+
+     The third type of output (-w)  is Each quad will have a
+     associated with it; each of the created will have the prefix
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+V.mkquads(2)         GRASS Reference Manual          V.mkquads(2)
+
+
+
+     quad.  with some number attached to it.  For example, if
+     only one quad was created, the quad.1 would also be created
+     in the window To make the program generated quad.1  your
+     current use the GRASS window command.
+
+     By specifing the  -e option the program will completely
+     encompass the current with quads,  instead of only creating
+     the quads inside the Using this option will affect all the
+     output options.
+
+BUGS
+     Currently this program only works for in the UTM (meters)
+     coordinate system.  There are no guarantees that  V.mkquads
+     will function properly if a quadrangle crosses UTM zones.
+     Has not been tested outside the north/west quadrant.
+
+SEE ALSO
+     support.vect[1], d.sites[1], window[1], digit[1], Gwindow[2]
+
+AUTHOR
+     Michael Higgins, U.S. Army Construction Engineering Research
+     Laboratory
+     Marilyn Ruiz, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
