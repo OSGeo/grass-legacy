@@ -1,0 +1,10 @@
+all:
+	$(GMAKE) agrun           
+	$(GMAKE) input           
+	$(GMAKE) output
+
+clean :
+	$(GMAKE) agrun  clean
+	$(GMAKE) input  clean
+	$(GMAKE) output	clean
+	-rm -rf OBJ*
