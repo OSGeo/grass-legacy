@@ -38,7 +38,7 @@ ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 default: $(DRIVER)
 
 $(DRIVER): $(ARCH_OBJS)
-	$(CC) -g $(LDFLAGS) -o $@ $(ARCH_OBJS) $(LIBES) $(CRYPTLIB)  $(TCLTKLIBPATH) $(TCLTKLIBS) \
+	$(CC) -g $(LDFLAGS) -o $@ $(ARCH_OBJS) $(PQLIBPATH) $(LIBES) $(CRYPTLIB)  $(TCLTKLIBPATH) $(TCLTKLIBS) \
 		$(MATHLIB) $(XDRLIB)
 
 
