@@ -1,7 +1,7 @@
 
 
 
-r.mask               GRASS Reference Manual                r.mask
+r.mask <main>        GRASS Reference Manual         <main> r.mask
 
 
 
@@ -60,14 +60,14 @@ NOTES
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-r.mask               GRASS Reference Manual                r.mask
+r.mask <main>        GRASS Reference Manual         <main> r.mask
 
 
 
@@ -81,9 +81,14 @@ r.mask               GRASS Reference Manual                r.mask
 
      This program can only be run interactively.
 
+     Note that some programs, like r.stats, have options that
+     allow the user to see the effects of the current mask
+     without removing the current mask.  See, for example, use of
+     the -m option for r.stats.
+
 SEE ALSO
      g.copy, g.region, g.remove, g.rename, r.combine, r.infer,
-     r.mapcalc, r.mapmask, r.reclass, r.weight
+     r.mapcalc, r.reclass, r.stats, r.weight
 
 AUTHOR
      Michael Shapiro, U.S. Army Construction Engineering Research
@@ -121,12 +126,7 @@ AUTHOR
 
 
 
-
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
