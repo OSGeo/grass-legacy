@@ -22,6 +22,7 @@ OBJ = \
 	parse.o\
 	read_sites.o\
 	report.o\
+	region.o\
 	rprt_finds.o\
 	rprt_seeks.o\
 	rpt_screen.o\
