@@ -45,7 +45,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <math.h>
-#include <strstream.h>
+#include <strstream>
 
 
 #include "mm_utils.h"
