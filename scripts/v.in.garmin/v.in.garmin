@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id$
+#
 ############################################################################
 #
 # MODULE:       v.in.garmin
@@ -36,15 +36,15 @@
 #%end
 #%flag
 #%  key: w
-#%  description: upload Waypoints
+#%  description: upload Waypoints from GPS
 #%end
 #%flag
 #%  key: r
-#%  description: upload Routes
+#%  description: upload Routes from GPS
 #%end
 #%flag
 #%  key: t
-#%  description: upload Track
+#%  description: upload Track from GPS
 #%end
 #%flag
 #%  key: p
@@ -69,14 +69,13 @@
 #% required : no
 #%end
 
-if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec g.parser "$0" "$@"
-fi
-
-
 if test "$GISBASE" = ""; then
  echo "You must be in GRASS GIS to run this program." >&2
  exit 1
+fi
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec g.parser "$0" "$@"
 fi
 
 eval `g.gisenv`
@@ -99,7 +98,7 @@ fi
 CS2CS=`which cs2cs`
 if [ "$CS2CS" = "" ] ; then
     echo "$PROG: cs2cs program not found, install it first" 1>&2
-    echo "       http://www.remotesensing.org/proj" 1>&2
+    echo "       http://proj.maptools.org" 1>&2
     exit 1
 fi
 
@@ -192,7 +191,7 @@ IN_PROJ="+proj=longlat +towgs84=0.000,0.000,0.000"
 OUT_PROJ="`g.proj -jf`"
 PROJ_TYPE=`g.region -p | grep projection | cut -f2 -d" "`
 if [ $PROJ_TYPE -eq 0 ] && [ $KEEP_WGS84 -ne 1 ] ; then
-    echo "Connot project to a XY location." 1>&2
+    echo "Cannot project to a XY location." 1>&2
     rm -f ${TMP}*
     exit 1
 fi
@@ -225,6 +224,7 @@ if [ $VERBOSE -eq 1 ] ; then
     echo Coordinate format: ${PROJ} 1>&2
 fi
 if [ "$PROJ" != "DDD" ] ; then
+    # Why??
     echo "Only DDD coordinates currently supported. [$PROJ]"
     rm -f ${TMP}*
     exit 1
