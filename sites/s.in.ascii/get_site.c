@@ -1,6 +1,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "gis.h"
+#include "site.h"
 #include "local_proto.h"
 #include <ctype.h>
 
