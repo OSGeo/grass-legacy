@@ -1,0 +1,12 @@
+v.in.dwg requires OpenDWG toolkit. To get this toolkit you must become at least
+"Associate Member" of OpenDWG Alliance (http://www.opendwg.org), it is free
+and it is not too painful (fill one form).
+
+Download OpenDWG toolkit libraries. 2/2003 were available for:
+DEC Alpha NT, DEC Alpha Unix, HP 700 Series, HP/UX, IBM RS/6000 AIX, Linux,
+Macintosh, Silicon Graphics, Sun Solaris 2, Sun Solaris X86, Microsoft Windows.
+
+Unpack library and copy to this directory: 'ad2.a ad2.h odio.h adinit.dat'
+and run 'make' in this directory.
+
+Not all entity types are supported (warning printed).
