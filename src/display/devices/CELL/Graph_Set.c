@@ -20,21 +20,18 @@
 
 #include <string.h>
 #include <stdlib.h>
+
 #include "gis.h"
 #include "driverlib.h"
-
-
-#define MAIN
 #include "cell.h"
 
-int screen_left;
-int screen_top;
-int screen_right;
-int screen_bottom;
-int NCOLORS       = 256 ;
+#define BUFSIZE 50000
 
-#define BUFSIZE 10*BUFSIZ
-
+unsigned char Cur_color;
+char *Filename;
+FILE *Temp_fp;
+unsigned char Color_table[256][3];
+unsigned char *Row_buf;
 
 int Graph_Set (int argc, char **argv, int nlev) 
 {
@@ -45,17 +42,7 @@ int Graph_Set (int argc, char **argv, int nlev)
 
     G_gisinit("CELL driver") ;
 
-    if (NULL != (p = getenv ("GRASS_WIDTH")))
-	screen_right = atoi (p);
-    else
-	screen_right = DEF_WIDTH;
-
-    Cur_color = 0;
-
-    if (NULL != (p = getenv ("GRASS_HEIGHT")))
-	screen_bottom = atoi (p);
-    else
-	screen_bottom = DEF_HEIGHT;
+    NCOLORS = 256;
 
     /* clear out color table */
     for (i = 0 ; i < 256 ; i++)
@@ -68,7 +55,6 @@ int Graph_Set (int argc, char **argv, int nlev)
 
     /* alloc tmp buffer for num_cols */
     Row_buf = (unsigned char *) G_malloc (screen_right - screen_left);
-
 
     file_size = (screen_right - screen_left) * (screen_bottom - screen_top);
 

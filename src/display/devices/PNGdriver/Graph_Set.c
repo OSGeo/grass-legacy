@@ -19,23 +19,17 @@
 #include <string.h>
 #include <stdlib.h>
 #include <gd.h>
+
 #include "gis.h"
 #include "driverlib.h"
-
 #include "png.h"
 
 char *file_name;
 FILE *output;
 gdImagePtr im;
-int NCOLORS = gdMaxColors;
 int currentColor;
 unsigned long *xpixels;
 int true_color;
-
-int screen_left;
-int screen_top;
-int screen_right;
-int screen_bottom;
 
 int Graph_Set (int argc, char **argv, int nlev) 
 {
@@ -43,29 +37,6 @@ int Graph_Set (int argc, char **argv, int nlev)
     char *p;
 
     G_gisinit("PNG driver") ;
-
-    /*
-     * set the 'screen' resolution of the driver
-     */
-
-    if (NULL != (p = getenv ("GRASS_WIDTH"))) {
-	screen_right = atoi (p);
-        if (screen_right <= 0) {
-	    screen_right = DEF_WIDTH;
-        }
-    } else {
-	screen_right = DEF_WIDTH;
-    }
-
-    if (NULL != (p = getenv ("GRASS_HEIGHT"))) {
-	screen_bottom = atoi (p);
-        if (screen_bottom <= 0) {
-            screen_bottom = DEF_HEIGHT;
-        }
-    } else {
-	screen_bottom = DEF_HEIGHT;
-    }
-
 
     /*
      * open the output file
@@ -99,6 +70,8 @@ int Graph_Set (int argc, char **argv, int nlev)
     else
 #endif
     im = gdImageCreate(screen_right - screen_left, screen_bottom - screen_top);
+
+    NCOLORS = true_color ? (1<<24) : gdMaxColors;
 
     InitColorTableFixed();
 

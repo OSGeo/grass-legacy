@@ -35,9 +35,6 @@ const char *monitor_name;
 Display *dpy;
 Window grwin;
 
-int screen_left, screen_right, screen_bottom, screen_top;
-unsigned SC_WID, SC_HITE;
-int NCOLORS;
 Visual *use_visual;
 int use_bit_depth;
 
@@ -216,11 +213,9 @@ create_window(int argc, char **argv, int nlev)
      * Window is resizable */
     szhints = XAllocSizeHints();
 
-    szhints->flags = USSize | USPosition;
-    get_user ("XDRIVER_HEIGHT", &szhints->height, 400);
-    get_user ("XDRIVER_WIDTH",  &szhints->width,  450);
-    get_user ("XDRIVER_LEFT",   &szhints->x,      10);
-    get_user ("XDRIVER_TOP",    &szhints->y,      10);
+    szhints->flags = USSize;
+    szhints->height = screen_bottom - screen_top;
+    szhints->width  = screen_right - screen_left;
 
     /* Create the Window with the information in the XSizeHints */
 
@@ -228,8 +223,7 @@ create_window(int argc, char **argv, int nlev)
     xswa.backing_store = NotUseful;
 
     grwin = XCreateWindow(dpy, RootWindow(dpy, scrn),
-			  szhints->x,
-			  szhints->y,
+			  0, 0,
 			  (unsigned)szhints->width,
 			  (unsigned)szhints->height,
 			  0,
@@ -345,15 +339,13 @@ Graph_Set(int argc, char **argv, int nlev)
 
     screen_right = xwa.width;
     screen_bottom = xwa.height;
-    SC_WID = xwa.width;
-    SC_HITE = xwa.height;
 
     /* Now create a pixmap that will contain same contents as the
      * window. It will be used to redraw from after expose events */
-    bkupmap = XCreatePixmap(dpy, grwin, SC_WID, SC_HITE, xwa.depth);
+    bkupmap = XCreatePixmap(dpy, grwin, xwa.width, xwa.height, xwa.depth);
     XSetWindowBackgroundPixmap(dpy, grwin, bkupmap);
     XSetForeground(dpy, gc, BlackPixel(dpy, scrn));
-    XFillRectangle(dpy, bkupmap, gc, 0, 0, SC_WID, SC_HITE);
+    XFillRectangle(dpy, bkupmap, gc, 0, 0, xwa.width, xwa.height);
 
     XSetBackground(dpy, gc, BlackPixel(dpy, scrn));
     XSetForeground(dpy, gc, WhitePixel(dpy, scrn));

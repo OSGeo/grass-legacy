@@ -1,25 +1,15 @@
-#ifndef BUFSIZ
 #include <stdio.h>
-#endif
 
+#include "driver.h"
 #include "driverlib.h"
 
-#ifdef MAIN
-#define GLOBAL
-#else
-#define GLOBAL extern
-#endif
-
-#define DEF_WIDTH  640
-#define DEF_HEIGHT 480
 #define FILE_NAME "D_cell"
 
-
-GLOBAL unsigned char Cur_color;
-GLOBAL char *Filename;
-GLOBAL FILE *Temp_fp;
-GLOBAL unsigned char Color_table[256][3];
-GLOBAL unsigned char *Row_buf;
+extern unsigned char Cur_color;
+extern char *Filename;
+extern FILE *Temp_fp;
+extern unsigned char Color_table[256][3];
+extern unsigned char *Row_buf;
 
 /* bresline.c */
 int bres_line(int, int, int, int);

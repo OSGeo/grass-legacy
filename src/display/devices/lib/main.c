@@ -7,12 +7,26 @@
 #include <setjmp.h>
 #include <unistd.h>
 #include <errno.h>
-#define SWITCHER
+
 #include "gis.h"
 #include "graph.h"
 #include "driverlib.h"
 #include "driver.h"
 #include "pad.h"
+
+int NCOLORS;
+
+int screen_left;
+int screen_right;
+int screen_bottom;
+int screen_top;
+
+int cur_x;
+int cur_y;
+
+double text_size_x;
+double text_size_y;
+double text_rotation;
 
 static jmp_buf save;
 
@@ -31,6 +45,7 @@ handle_sigterm(int sig)
 int 
 main(int argc, char *argv[])
 {
+    const char *p;
     char *me;
     char *connpath;
     int _wfd;
@@ -98,8 +113,17 @@ main(int argc, char *argv[])
 	fprintf(stderr,"Nlev is too big ( > 256), resetting to 32\n");
 	nlev=32;
     }
+
+    p = getenv ("GRASS_WIDTH");
+    screen_left = 0;
+    screen_right = p ? atoi(p) : DEF_WIDTH;
+
+    p = getenv ("GRASS_HEIGHT");
+    screen_top = 0;
+    screen_bottom = p ? atoi(p) : DEF_HEIGHT;
+
     if (Graph_Set(argc, argv, nlev) < 0)
-        exit(-1);
+        exit(1);
 
     /* Initialize color stuff */
     Color_table_fixed();
