@@ -35,7 +35,7 @@ int getAllOpts(argc, argv)
     key = G_define_option();
     key->key = "key";
     key->type = TYPE_STRING;
-    key->required = YES;
+    key->required = NO;
     key->multiple = NO;
     key->description = _("Column with category IDs from the table:");
 
@@ -43,7 +43,7 @@ int getAllOpts(argc, argv)
     tab = G_define_option();
     tab->key = "tab";
     tab->type = TYPE_STRING;
-    tab->required = YES;
+    tab->required = NO;
     tab->multiple = NO;
     tab->description = _("Table containing this column:");
 
