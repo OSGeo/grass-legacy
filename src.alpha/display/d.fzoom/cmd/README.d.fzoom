@@ -1,0 +1,6 @@
+d.fzoom
+	- modified from d.myzoom
+	- command syntax is exactly the same as d.myzoom
+	- modification
+		- use any button to delineate a region
+		- automatically select the frame based on the first click
