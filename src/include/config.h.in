@@ -63,6 +63,9 @@
 /* define uid_t type */
 #undef uid_t
 
+/* Define the return type of signal handlers */
+#define RETSIGTYPE int
+
 /* define curses.h WINDOW structure component */
 #define CURSES_MAXY @CURSES_MAXY@
 

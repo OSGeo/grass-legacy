@@ -342,6 +342,7 @@ int main (int argc, char *argv[])
 		    G_set_raster_value_d(rast, s->dim[num_index], map_type);
 		    break;
 		default: /* Should never happen */
+		    break;
 	    }
 
             if(s->str_att)

@@ -54,35 +54,6 @@ CC-167 cc: WARNING File = put_row.c, Line = 722
     xdrmem_create (&FCB.xdrstream, G__.work_buf,
                                    ^
 
-src/libes/vask:
-CC-167 cc: WARNING File = V_tty.c, Line = 41
-  Argument of type "int (*)(int)" is incompatible with parameter of type
-          "void (*)(int)".
-
-      get_tstp (tstp_old);
-      ^
-
-CC-167 cc: WARNING File = V_tty.c, Line = 49
-  Argument of type "int (*)(int)" is incompatible with parameter of type
-          "void (*)(int)".
-
-      get_tstp (tstp_new);
-      ^
-
-CC-167 cc: WARNING File = V_tty.c, Line = 57
-  Argument of type "int (*)(int)" is incompatible with parameter of type
-          "void (*)(int)".
-
-      set_tstp (tstp_old);
-      ^
-
-CC-167 cc: WARNING File = V_tty.c, Line = 65
-  Argument of type "int (*)(int)" is incompatible with parameter of type
-          "void (*)(int)".
-
-      set_tstp (tstp_new);
-      ^
-
 src/libes/raster:
 CC-167 cc: WARNING File = Raster.c, Line = 64
   Argument of type "unsigned char *" is incompatible with parameter of type
@@ -136,14 +107,6 @@ CC-167 cc: WARNING File = x_rw_binary.c, Line = 151
       if (0 >= dig__fread_port_C(buf, VERS_4_DATA_SIZE, digit)) return -1;
                                  ^
 
-
-src/display/devices/lib/socket.new/
-CC-167 cc: WARNING File = SWITCHER.c, Line = 569
-  Argument of type "unsigned int *" is incompatible with parameter of type
-          "int *".
-
-                  Raster_int(x, y, (unsigned int *) xarray, index, 1) ;
-                                   ^
 
 src/display/devices/CELL/:
 CC-167 cc: WARNING File = polyfill.c, Line = 85
@@ -555,20 +518,6 @@ CC-167 cc: WARNING File = uhl.c, Line = 39
       if(sscanf(tapebuf,"%*24c%4d",&res) != 1)
                 ^
 
-src/misc/m.kappa/cmd/
-CC-513 cc: WARNING File = readin_data.c, Line = 19
-  A value of type "int **" cannot be assigned to an entity of type "long **".
-
-    if ((mat = (int **) G_malloc (ncat * sizeof (int *))) == NULL)
-             ^
-
-src/misc/m.kappa/cmd/
-CC-513 cc: WARNING File = readin_data.c, Line = 23
-  A value of type "int *" cannot be assigned to an entity of type "long *".
-
-        if ((mat[i] = (int *) G_malloc (ncat * sizeof (int))) == NULL)
-                    ^
-
 src/paint/Interface/applib/
 CC-167 cc: WARNING File = colortable.c, Line = 17
   Argument of type "unsigned char *" is incompatible with parameter of type
@@ -693,13 +642,6 @@ CC-167 cc: WARNING File = interface.c, Line = 282
 Total warnings detected in interface.c: 9
 
 
-src/ps.map/ps.map/cmd/
-CC-39 cc: WARNING File = vect.c, Line = 23
-  A division by zero appears in an expression.
-
-      *x  = 5 / 0;
-              ^
-
 src/raster/r.in.arc/cmd/
 CC-167 cc: WARNING File = gethead.c, Line = 39
   Argument of type "int (*)(char *, int *, int)" is incompatible with parameter
@@ -795,38 +737,6 @@ CC-167 cc: WARNING File = dump.c, Line = 463
 
       strncpy( pszStringField, pabyRec+psDBF->panFieldOffset[iField],
                                ^
-
-
-src/raster/r.infer/cmd/
-CC-47 cc: WARNING File = infer.h, Line = 60
-  Macro "TRUE" (declared at line 39 of
-          "/home/t3e/fsn/nhdc/nhdcmark/grass/src/include/gis.h") has an
-          incompatible redefinition.
-
-  # define TRUE       (-1)        /* all binary ones (most places) */
-           ^
-
-src/raster/r.infer/cmd/
-CC-47 cc: WARNING File = infer.h, Line = 60
-  Macro "TRUE" (declared at line 39 of
-          "/home/t3e/fsn/nhdc/nhdcmark/grass/src/include/gis.h") has an
-          incompatible redefinition.
-
-  # define TRUE       (-1)        /* all binary ones (most places) */
-           ^
-
-src/raster/r.infer/cmd/
-CC-47 cc: WARNING File = infer.h, Line = 60
-  Macro "TRUE" (declared at line 39 of
-          "/home/t3e/fsn/nhdc/nhdcmark/grass/src/include/gis.h") has an
-          incompatible redefinition.
-
-  # define TRUE       (-1)        /* all binary ones (most places) */
-           ^
-
-src/raster/r.infer/cmd/
-Total warnings detected in run_maps.c: 1
-
 
 
 src/raster/r.out.mpeg
@@ -990,14 +900,11 @@ CC-167 cc: WARNING File = modhead.c, Line = 301
   	G_fatal_error(buffer) ;
   	              ^
 
-./r.surf.idw/cmd/
-CC-9 cc: WARNING File = main.c, Line = 229
-  A "/*" appears inside a comment.
-
-      nbr_head->searchptr = &(nbr_head->Mptr);      /* see replace_neighbor */
-
-HOW TO FIX ABOVE???  
-                                                  ^
+*** The next three warnings suggest real errors, but they could be errors
+*** in the definition of wgp() rather than in its implementation. These
+*** functions don't have ANSI prototypes, and I have no idea where (or even
+*** if) they are used. Someone who knows what wgp() is for should check this.
+*** Glynn Clements  <glynn.clements@virgin.net>
 
 src/sites/cdhc/
 CC-180 cc: WARNING File = as181.c, Line = 293
@@ -1020,12 +927,12 @@ CC-180 cc: WARNING File = as181.c, Line = 293
     wext (x, n, ssq, a, n2, eps, w, p, ifault);
                                     ^
 
-src/sites/s.to.rast/
-CC-127 cc: WARNING File = main.c, Line = 345
-  Expected a statement.
-
-  	    }
-  	    ^
+*** The following file is in dire need of a MAJOR clean-up.
+*** It is a file loader, and a large part of it deals with handling
+*** byte-sex issues. It will fail miserably if sizeof(long) != 4, though.
+*** Also suffers from gratuitous use of "register", e.g. arrays and function
+*** parameters being declared "register".
+*** Glynn Clements  <glynn.clements@virgin.net>
 
 src/libes/libimage
 CC-180 cc: WARNING File = open.c, Line = 255
@@ -1084,13 +991,6 @@ CC-513 cc: WARNING File = proces.c, Line = 175
   	       ptr = G_calloc(cols,rows);
   	           ^
 
-src.contrib/SDTS/mapdev/v.out.sdts
-CC-231 cc: WARNING File = spatial_ref.c, Line = 12
-  The indicated declaration is not visible outside of the function.
-
-     struct Map_info *Map;
-            ^
-
 src.contrib/SDTS/mapdev/v.out.sdts/
 CC-167 cc: WARNING File = write_coords.c, Line = 65
   Argument of type "unsigned char *" is incompatible with parameter of type
@@ -1112,11 +1012,3 @@ CC-167 cc: WARNING File = write_coords.c, Line = 162
 
   	if (!wr123sfld (fpout, tag, lead_id, bit_y, 4, option2))
   	                                     ^
-
-src.contrib/SDTS/mapdev/v.in.sdts/
-CC-47 cc: WARNING File = /home/t3e/fsn/nhdc/nhdcmark/grass/src.contrib/SDTS/mapdev/v.in.sdts/../../libes/fips123/f123inc/stc123.h, Line = 398
-  Macro "MAXINT" (declared at line 49 of "/usr/include/values.h") has an
-          incompatible redefinition.
-
-  #define MAXINT 32767L
-          ^

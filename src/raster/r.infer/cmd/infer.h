@@ -57,8 +57,6 @@ typedef struct {            /* Rule */
 */
 
 # define UNKNOWN    42          /* the answer to Life, the Universe, etc */
-# define TRUE       (-1)        /* all binary ones (most places) */
-# define FALSE      0           /* all zeros (most places) */
 
 /*
 **      External stuff
