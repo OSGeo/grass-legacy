@@ -1,88 +1,88 @@
 
 
 
-v.digit2 <main>      GRASS Reference Manual       <main> v.digit2
+v.digit2 <main>	     GRASS Reference Manual	  <main> v.digit2
 
 
 
 NAME
-     v.digit2 - A menu-driven, highly interactive map development
+     v.digit2 -	A menu-driven, highly interactive map development
      program used for vector digitizing, editing, labeling and
-     converting vector data to raster format.
+     converting	vector data to raster format.
      (GRASS Vector Program)
 
 SYNOPSIS
      v.digit2
 
 DESCRIPTION
-     The GRASS program v.digit2 is a menu-driven, highly
+     The GRASS program v.digit2	is a menu-driven, highly
      interactive map development program used for inputting
-     analog map data into a GRASS vector format.  v.digit2
+     analog map	data into a GRASS vector format.  v.digit2
      contains programs for vector digitizing, editing, labeling,
-     windowing, and converting vector data to GRASS raster
+     windowing,	and converting vector data to GRASS raster
      format.
 
      v.digit2 consists of two parts:  an initialization
-     procedure, and a multiple menu-driven environment.
-     1) The initialization procedure involves choosing a
-     digitizer, choosing the name of a vector map layer to
+     procedure,	and a multiple menu-driven environment.
+     1)	The initialization procedure involves choosing a
+     digitizer,	choosing the name of a vector map layer	to
      digitize, and, if needed, registering a map to the
-     digitizing surface.
-     2) The second part of v.digit2 is a multiple-menu
+     digitizing	surface.
+     2)	The second part	of v.digit2 is a multiple-menu
      environment in which digitizing, editing, labeling, and
-     other options are available.  It is within this second
-     portion of v.digit2 that all vector creation occurs.
+     other options are available.  It is within	this second
+     portion of	v.digit2 that all vector creation occurs.
 
 NOTES
      v.digit2 was written to optimize digitizing speed and
      performance.  It has a convenient graphic display format and
      very convenient windowing capabilities.  Features are
-     color-coded for ease of identification and verification.
-     Different color schemes may be user-chosen to customize a
-     digitizing session.
+     color-coded for ease of identification and	verification.
+     Different color schemes may be user-chosen	to customize a
+     digitizing	session.
 
-     Area, line, and point features may be digitized in both
+     Area, line, and point features may	be digitized in	both
      "stream" and "point" modes.  Both a mouse and a digitizer
      may be used to perform windowing functions.  Labeling and
-     editing are done from within v.digit2, rather than through a
+     editing are done from within v.digit2, rather than	through	a
      separate set of programs.
 
-     v.digit2 has capabilities that allow users to convert vector
-     map layers to GRASS raster format, to overlay already
-     existing vector map layers onto the feature being digitized,
+     v.digit2 has capabilities that allow users	to convert vector
+     map layers	to GRASS raster	format,	to overlay already
+     existing vector map layers	onto the feature being digitized,
      and set a multitude of parameters to customize a digitizing
      session.
 
-     v.digit2 may be used with or without a digitizer.  Many
+     v.digit2 may be used with or without a digitizer.	Many
      options are available if no digitizer is used.
 
      All options available within v.digit2 are contained within
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
 
 
 
-v.digit2 <main>      GRASS Reference Manual       <main> v.digit2
+v.digit2 <main>	     GRASS Reference Manual	  <main> v.digit2
 
 
 
-     ten menus.  Movement from menu to menu is done by chosing
+     ten menus.	 Movement from menu to menu is done by chosing
      the movement options specified at the bottom of each menu.
 
 SEE ALSO
      GRASS Tutorial - digit: Its Use and Its Features
 
-     v.import, v.in.ascii, v.out.ascii, v.out.rast, v.support
+     v.import, v.in.ascii, v.out.ascii,	v.out.rast, v.support
 
 AUTHORS
-     David Gerdes, U.S. Army Construction Engineering Research
+     David Gerdes, U.S.	Army Construction Engineering Research
      Laboratory
-     Mike Higgins, U.S. Army Construction Engineering Research
+     Mike Higgins, U.S.	Army Construction Engineering Research
      Laboratory
 
 
@@ -126,7 +126,7 @@ AUTHORS
 
 
 
-GRASS 4.1                U.S. Army CERL                         2
+GRASS 4.2		Baylor University			2
 
 
 
