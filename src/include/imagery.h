@@ -3,6 +3,8 @@
 
 #include "gis.h"
 
+#define NAME_LEN 30
+
 struct Ref
 {
     int nfiles;
