@@ -128,6 +128,9 @@ int main(int argc, char **argv)
     G_fatal_error ("No graphics device selected");
   D_setup(0);
 
+  if (Vect_get_num_dblinks(Map) < 1)
+     G_fatal_error("No database connection found (dbln empty)");
+
   what(once->answer, txt->answer, terse->answer, width, mwidth); 
 
   for(i=0; i<nvects; i++)
