@@ -73,13 +73,11 @@ r.in.hdf/r.out.hdf (src.garden/grass.hdf)
 
 r.in.ppm
   seg. fault on Pentium CPU (compare r.binfer)
+  Memory bug fixed by Alex Shevlakov
 
 r.in.tiff/r.out.tiff
  - LZW code must be removed due to patent problems
  - segm. fault on Pentium CPU (same thing with r.binfer)
-
-r.in.png/r.out.png
- - should be developed from existing code (part of module already there)
 
 r.info
  - suggestion: raster type should be printed: CELL, FCELL, DCELL
@@ -246,7 +244,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log$
- Revision 1.1  2000-04-05 08:25:15  markus
+ Revision 1.2  2000-04-06 16:51:39  markus
+ r.in.png/r.out.png removed, as they are written by Alex Shevlakov
+
+ Revision 1.1  2000/04/05 08:25:15  markus
  was stored in docs/ before
 
  Revision 1.12  2000/02/22 17:33:12  markus
