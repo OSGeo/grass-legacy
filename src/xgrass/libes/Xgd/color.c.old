@@ -1,0 +1,161 @@
+#include "xgrass_dlib.h"
+
+#define MONO(rd,gn,bl) (((rd)*11 + (gn)*16 + (bl)*5) >> 5)
+
+Boolean
+#ifdef _NO_PROTO
+_XgdGetFirstAvailableLutIndex(index)
+    int *index;
+#else
+_XgdGetFirstAvailableLutIndex(int *index)
+#endif
+{
+    int i;
+
+
+    for ( i = 0; i < __XGDPrivateCells; i++) {
+        if ( __XGDLut[i].mode == XG_LUT_MODE_RW &&
+             __XGDLut[i].status == XG_LUT_STATUS_AVAILABLE ) {
+            *index = i;
+            return True;
+        }
+    }
+    return False;
+}
+
+void
+#ifdef _NO_PROTO
+XgdAllocRastColors(obj, theDpy, theScrn, name, mapset, mode)
+     XgdObject *obj;
+     Display        *theDpy;
+     int             theScrn;
+     char           *name;
+     char           *mapset;
+     int             mode;
+#else
+XgdAllocRastColors(XgdObject *obj,
+                   Display * theDpy,
+		   int theScrn,
+		   char *name,
+		   char *mapset,
+	           int mode)
+#endif
+{
+  int borrowed = 0;
+  int currentLutIndex, index;
+  XColor colr;
+  int ncolors, ncols, i, unique;
+  CELL cmin, cmax, cat;
+  unsigned char r, g, b, junk;
+
+  if ( !_XgdGetFirstAvailableLutIndex(&currentLutIndex) ) {
+      XgdError("Sorry, no available colors");
+  }
+  colr.flags = DoRed | DoGreen | DoBlue;
+  if ( mode == XGD_DITHER_COLORS ) {
+    /* XXX */;
+  } else {
+    if (!obj->Obj.GeoFrame.colorsExist)
+      if (G_read_colors(name, mapset, &obj->Obj.GeoFrame.colors) < 0) {
+	XgdError("Color file not available");
+      }
+    obj->Obj.GeoFrame.colorsExist = True;
+    
+    /* the number of colors = max - min + 1 + no data color */
+    G_get_color_range (&cmin, &cmax, obj->Obj.GeoFrame.colors);
+    ncolors = cmax - cmin + 2;
+
+    /* get the no data color 
+    cat = 0;
+    G_lookup_colors (&cat, &r, &g, &b, &junk, 1, obj->Obj.GeoFrame.colors);
+    if (__XGDMonochrome ) {
+      int intens = MONO(r, g, b);
+      colr.red = colr.green = colr.blue = intens << 8;
+    } else {
+      colr.red = r << 8;
+      colr.green = g << 8;
+      colr.blue = b << 8;
+    }
+*/
+    /* if we have a read-write cell left 
+    if ( __XGDLut[currentLutIndex].mode == XG_LUT_MODE_RW ) {
+*/
+      /* store the no data color in it 
+      colr.pixel = __XGDLut[currentLutIndex].pixel;
+      obj->Obj.GeoFrame.lookup_tbl[0] = colr.pixel;
+      XStoreColor(theDpy, __XGDColormap, &colr);
+      __XGDLut[currentLutIndex].status == XG_LUT_STATUS_IN_USE;
+    } else {
+*/
+      /* borrow the no data color 
+      _XgdBorrowColor(&colr);
+      obj->Obj.GeoFrame.lookup_tbl[0] = colr.pixel;
+      obj->Obj.GeoFrame.borrowed[0] = colr.pixel;
+      borrowed++;
+    }
+*/
+  }
+  
+  /* numcols tells us the number of colors less the no data color 
+   * which is always lookup_tbl[0] 
+   */
+  obj->Obj.GeoFrame.numcols = ncolors - 1;
+  ncols = ncolors - 1;
+
+  /* 
+   * If in fixed mode, just lookup the closest ones and borrow them
+   */
+  if ( __XGDFixedColors ) {
+    for ( i = 0, cat = cmin; cat <= cmax; cat++, i++ ) {
+        G_lookup_colors (&cat, &r, &g, &b, &junk, 1, obj->Obj.GeoFrame.colors);
+        colr.red = r << 8;
+        colr.green = g << 8;
+        colr.blue = b << 8;
+        _XgdBorrowColor(&colr);
+        obj->Obj.GeoFrame.lookup_tbl[i] = colr.pixel;
+	obj->Obj.GeoFrame.borrowed[borrowed++] = colr.pixel;
+    }
+    obj->Obj.GeoFrame.numborrowed = borrowed;
+    return;
+  }
+  
+  /*
+   * Can we use ALL unique colors ?
+   * If we can, use them, else we need to get make a pass at matching close
+   * colors for purposes of borrowing them...and then use the available ones.
+   */
+
+  
+  if ( obj->Obj.GeoFrame.numcols <= __XGDPrivateCellsLeft - index ) {
+    for ( i = 0, cat = cmin; cat <= cmax; cat++, i++) {
+        G_lookup_colors (&cat, &r, &g, &b, &junk, 1, obj->Obj.GeoFrame.colors);
+        colr.red = r << 8;
+        colr.green = g << 8;
+        colr.blue = b << 8;
+	if ( !_XgdGetFirstAvailableLutIndex(&index) ) {
+	    XgdError("Sorry, no available colors");
+	}
+        colr.pixel = __XGDLut[index].pixel;
+        __XGDLut[index].status = XG_LUT_STATUS_IN_USE;
+        obj->Obj.GeoFrame.lookup_tbl[i] = colr.pixel;
+        XStoreColor(theDpy, __XGDColormap, &colr);
+        __XGDPrivateCellsLeft--;
+    }
+    obj->Obj.GeoFrame.numborrowed = borrowed;
+    return;
+  } else {
+    /* we can't use all unique colors, go to fixed mode */
+    _XgdBuildFixedColorLut(theDpy, __XGDColormap);
+    for ( i = 0, cat = cmin; cat <= cmax; cat++, i++) {
+        G_lookup_colors (&cat, &r, &g, &b, &junk, 1, obj->Obj.GeoFrame.colors);
+        colr.red = r << 8;
+        colr.green = g << 8;
+        colr.blue = b << 8;
+        _XgdBorrowColor(&colr);
+        obj->Obj.GeoFrame.lookup_tbl[i] = colr.pixel;
+	obj->Obj.GeoFrame.borrowed[borrowed++] = colr.pixel;
+    }
+    obj->Obj.GeoFrame.numborrowed = borrowed;
+    return;
+  }
+}
