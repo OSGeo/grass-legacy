@@ -22,7 +22,6 @@
 
 #define MAIN
 
-#define _GNU_SOURCE
 #define SEGCOLSIZE 	256
 
 
@@ -67,7 +66,7 @@ int main (int argc, char *argv[])
 	int have_stop_points ;
 	int in_fd, out_fd ;
 	double my_cost ;
-	double null_cost = INFINITY;
+	double null_cost;
 	int srows, scols ;
 	int total_reviewed ;
 	int verbose = 1 ;
@@ -173,6 +172,7 @@ int main (int argc, char *argv[])
 	V_DIAG_fac = (double)sqrt((double)(4*NS_fac*NS_fac + EW_fac*EW_fac)); 
 	H_DIAG_fac = (double)sqrt((double)(NS_fac*NS_fac + 4*EW_fac*EW_fac)); 
 
+	G_set_d_null_value(&null_cost,1);
 	/*   Parse command line */
 
 	if (G_parser(argc, argv))
@@ -203,16 +203,16 @@ int main (int argc, char *argv[])
 	{
 		if (verbose)
 			fprintf(stderr,"Null cells excluded from cost evaluation.\n");
-		null_cost = INFINITY;
+		G_set_d_null_value(&null_cost,1);
 	} 
 	else if (verbose && keep_nulls)
 			fprintf(stderr,"Input null cell will be retained into output map\n");
 
 
-	if(isfinite(null_cost)) {
+	if(!G_is_d_null_value(&null_cost)) {
 		if (null_cost <0.0) {
 			printf("Warning: assigning negative cost to null cell. Null cells excluded.\n"); 
-			null_cost = INFINITY;
+			G_set_d_null_value(&null_cost,1);
 		}
 	} else {
 		keep_nulls = 0; /* handled automagically... */
@@ -714,7 +714,7 @@ int main (int argc, char *argv[])
 					break ;
 			}
 
-			if (!isfinite(min_cost))
+			if (G_is_d_null_value(&min_cost))
 				continue;
 
 			segment_get(&out_seg,&old_min_cost,row,col);
@@ -864,7 +864,7 @@ OUT:
 					}
 				}
 				segment_get(&out_seg,&min_cost ,row,col);
-				if (G_is_d_null_value(&min_cost) || !isfinite(min_cost)) {
+				if (G_is_d_null_value(&min_cost)) {
 					G_set_null_value((p+col),1,data_type);
 				} else {
 					if (min_cost > peak) peak = min_cost;
