@@ -1,8 +1,6 @@
 #! /bin/sh
 #############################################################################
 #
-# $Id$
-#
 # MODULE:   	Grass Initialization
 # AUTHOR(S):	Original author unknown - probably CERL
 #               Andreas Lange - Germany - andreas.lange@rhein-main.de
@@ -51,7 +49,7 @@ $ETC/lock $lockfile $$
 case $? in
     0) ;;
     1)
-    	echo `whoami` is currently running GRASS. Concurrent use not allowed.
+    	echo `whoami` is currently running GRASS VERSION_NUMBER. Concurrent use not allowed.
     	exit ;;
     *)
     	echo Unable to properly access $lockfile
