@@ -142,8 +142,6 @@ static LIST *list_push(char *s, LIST *tail)
 
 static LIST *list_copy(LIST *list, LIST *tail)
 {
-    LIST *l;
-
     if (!list)
 	return tail;
 
@@ -289,7 +287,10 @@ static void handleResizeEvent(void)
     XFreePixmap(dpy, bkupmap);
     bkupmap = XCreatePixmap(dpy, grwin, xwa.width, xwa.height, xwa.depth);
     XGetGCValues(dpy, gc, GCForeground, &gc_values);
-    XSetForeground(dpy, gc, BlackPixel(dpy, scrn));
+    if (strcmp(DEFAULT_FG_COLOR, "black"))
+	XSetForeground(dpy, gc, BlackPixel(dpy, scrn));
+    else
+	XSetForeground(dpy, gc, WhitePixel(dpy, scrn));
     XFillRectangle(dpy, bkupmap, gc, 0, 0, xwa.width, xwa.height);
     XSetForeground(dpy, gc, gc_values.foreground);
     XSetWindowBackgroundPixmap(dpy, grwin, bkupmap);
