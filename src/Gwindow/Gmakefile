@@ -1,0 +1,12 @@
+LIBES  = $(GISLIB)
+
+PGM    = Gwindow
+LIST   = main.o\
+	 adjust.o\
+	 usage.o\
+	 zoom.o
+
+$(BIN)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB)
+
+$(LIBES): #
