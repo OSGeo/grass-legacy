@@ -150,6 +150,10 @@ proc set_query { } {
 
     if { $s < 0 || $m < 0 } { puts stdout "Set or map not selected."; return }
 
+    # Redisplay because after g.region must be run d.erase otherwise
+    # query doesn't work properly. Fix better later. 
+    set_display d
+
     if {[lsearch -exact [mon_get] $smon] < 0} {
 	puts stdout "Monitor $smon is not opened"
 	return    
