@@ -57,6 +57,10 @@ static char *icon_files(void)
 		for (;;) { /*loop over each directory in etc/symbols*/
 		
 		  struct dirent *di = readdir(dir_i);
+                  int ni = 0;
+                  char *buf = NULL;
+                  char *buf2 = NULL;
+                  char *buf3 = NULL;
 
 		  if (!di)
 			break;
@@ -64,10 +68,6 @@ static char *icon_files(void)
 		  if (di->d_name[0] == '.')
 		    continue;
       
-		  int ni = 0;
-		  char *buf = NULL;
-		  char *buf2 = NULL;
-		  char *buf3 = NULL;
 		  ni = strlen(di->d_name);
 		  buf = G_realloc(buf,(strlen(d->d_name) + ni + 1));
 		  buf2 = G_realloc(buf2,strlen(d->d_name));
