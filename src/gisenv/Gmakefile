@@ -1,0 +1,9 @@
+# %W% %G%
+PGM      = gisenv
+
+LIST = main.o
+
+$(BIN)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) -o $@
+
+$(GISLIB):      # in case library changes
