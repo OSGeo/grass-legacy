@@ -1,0 +1,250 @@
+/* %W% %G% */
+/*
+**  Vpatch  file1 file2 .... composite
+**
+**   patch 2 or more vector files together creating composite
+**
+**  the program is very straight forward.  expand header, copy info from
+**  each map one at a time into the new map.  then go back and write the new
+**  header out.  last thing to do is to 'cat' all the dig_att files together
+**
+**  no checking is done for overlapping lines.
+**  header information will have to be editted afterwards.
+*/
+
+/*
+**  Written by Dave Gerdes  8/1988
+**  US Army Construction Engineering Research Lab
+*/
+#include <stdio.h>
+#include "gis.h"
+#include "digit.h"
+#include "dig_head.h"
+
+static struct line_pnts Points;
+
+main (argc, argv)
+    int argc;
+    char *argv[];
+{
+    register int i, ret, error;
+    char path[1024],filename[1024];
+    char *in_name, *out_name, *mapset;
+    char errmsg[200];
+    FILE *Out, *In, *fopen ();
+    struct dig_head d_head;
+    struct Option *old, *new;
+
+    setbuf (stdout, NULL);
+    G_gisinit (argv[0]);
+
+    old = G_define_option();
+    old->key			= "input";
+    old->type			= TYPE_STRING;
+    old->required		= YES;
+    old->multiple		= YES;
+    old->gisprompt		= "old,dig,vector";
+    old->description		= "vector map--source for composite";
+
+    new = G_define_option();
+    new->key			= "output";
+    new->type			= TYPE_STRING;
+    new->required		= YES;
+    new->multiple		= NO;
+    new->gisprompt		= "new, dig, vector";
+    new->description		= "new vector composite";
+
+    if (G_parser (argc, argv))
+	exit(-1);
+
+    out_name = new->answer;
+    if ((Out = G_fopen_vector_new (out_name)) == NULL)
+    {
+	fprintf (stderr, "Cannot write '%s'\n", out_name);
+	exit(-1);
+    }
+
+#ifdef OLD_PARSER
+    if (argc < 4)
+	fprintf (stderr, "Usage: %s file1 file2 [fileN ...] dest\n", argv[0]),
+	exit (-1);
+     */
+    G__file_name (path, "", "", G_mapset());
+
+    error = 0;
+    for (i = 1 ; i < argc-1 ; i++)
+    {
+	sprintf (filename, "%s/dig/%s", path, argv[i]);
+	if (0 > access (filename, 0))
+	{
+	    fprintf (stderr, "Cannot read '%s'\n", filename);
+	    error++;
+	}
+    }
+    
+    sprintf (filename, "%s/dig/%s", path, argv[argc-1]);
+    if (0 <= access (filename, 2))
+    {
+	fprintf (stderr, "Vector file '%s' already exists\n", argv[argc-1]);
+	exit (-1);
+    }
+    if (error)
+	exit (-1);
+#endif /*OLD*/
+
+
+
+    Points.alloc_points = 0;
+    /* place holder */
+    dig_write_head_binary (Out, &d_head);
+
+    fprintf (stdout, "\n");
+    i = 0;
+    while (old->answers[i])
+    {
+	in_name = old->answers[i++];
+	fprintf (stdout, "    Patching file %s\n", in_name);
+	if ((mapset = G_find_vector2 (in_name, "")) == NULL)
+	{
+	    sprintf (errmsg, "Could not find Vector file <%s>\n", in_name);
+	    G_fatal_error (errmsg);
+	}
+
+	if ((In = G_fopen_vector_old (in_name, mapset)) == NULL)
+	{
+	    fprintf (stderr, "Cannot open Vector file <%s>\n", in_name);
+	    continue;
+	}
+	if (dig_init (In))
+	{
+	    sprintf (errmsg, "Cannot initialize Vector file <%s>\n", in_name);
+	    G_fatal_error (errmsg);
+
+	}
+	if (i == 0) /*first time around--initialize Head struct */
+	    dig_read_head_binary (In, &d_head);
+
+	ret = patch (In, Out, &d_head);
+	if (ret < 0)
+	    fprintf (stderr, "Error reading file '%s'.  Some data may not be correct\n");
+
+	dig_fini (In);
+	fclose (In);
+    }
+#ifdef OLD    
+    for (i = 1 ; i < argc-1 ; i++)
+    {
+	fprintf (stdout, "    Patching file %s\n", argv[i]);
+	sprintf (filename, "%s/dig/%s", path, argv[i]);
+	if ((In = fopen (filename, "r")) == NULL)
+	    continue;
+	if (i == 1)  /* first time round */
+	{
+	    /* initialize Head struct */
+	    dig_read_head_binary (In, &d_head);
+	}
+	ret = patch (In, Out, &d_head);
+	if (ret < 0)
+	    fprintf (stderr, "Error reading file '%s'.  Some data may not be correct\n");
+	fclose (In);
+    }
+#endif /*OLD*/
+    strcpy (d_head.map_name, "Output from Vpatch");
+    strcpy (d_head.your_name, G_whoami ());
+    dig_write_head_binary (Out, &d_head);
+    fclose (Out);
+
+
+    fprintf (stdout, "\n    Patching Attribute files\n");
+
+    if ((Out = G_fopen_new("dig_att", out_name)) == NULL)
+    {
+	fprintf (stderr, "Could not write to new attribute file\n");
+	goto end;
+    }
+
+    i = 0;
+    while (old->answers[i])
+    {
+	in_name = old->answers[i++];
+	fprintf (stdout, "    Processing attribute file %s\n", in_name);
+	if ((mapset = G_find_file2 ("dig_att", in_name, "")) == NULL)
+	{
+	    fprintf (stderr, "Cannot find attribute file for <%s>\n", in_name);
+	    continue;
+	}
+	if ((In = G_fopen_old ("dig_att", in_name, mapset)) == NULL)
+	{
+	    fprintf (stderr, "Cannot open attribute file for <%s>\n", in_name);
+	    continue;
+	}
+	docat (In, Out);
+	fclose (In);
+    }
+    fclose (Out);
+
+#ifdef OLD
+    for (i = 1 ; i < argc-1 ; i++)
+    {
+	sprintf (filename, "%s/dig_att/%s", path, argv[i]);
+	if ((In = fopen (filename, "r")) == NULL)
+	{
+	    fprintf (stderr, "Warning, no attribute file for '%s'\n", argv[i]);
+	    continue;
+	}
+	docat (In, Out);
+	fclose (In);
+    }
+    fclose (Out);
+#endif /*OLD*/
+
+end:
+    fprintf (stdout, "\n");
+    fprintf (stdout, "  Patch complete. You must now run v.support to build dig_plus file.\n\n");
+    fprintf (stdout, "  Intersections at borders will have to be snapped. Try having\n  v.support run with a very small snapping threshold.\n\n");
+    fprintf (stdout, "  Lines common between files will have to be edited.\n\n");
+    fprintf (stdout, "  The header information also may have to be edited.\n\n");
+
+    exit (0);
+}
+
+patch (In, Out, d_head)
+    FILE *In, *Out;
+    struct dig_head *d_head;
+{
+    register int itype;
+    struct dig_head local_head;
+    long offset, ftell ();
+
+    dig_read_head_binary (In, &local_head);
+    fseek (Out, 0l, 2);
+
+    d_head->orig_scale = GREATER (d_head->orig_scale, local_head.orig_scale);
+    /*  this is not in the file
+    d_head->digit_thresh = GREATER (d_head->digit_thresh, local_head.digit_thresh);
+    */
+    d_head->map_thresh = GREATER (d_head->map_thresh, local_head.map_thresh);
+    d_head->N = GREATER (d_head->N, local_head.N);
+    d_head->E = GREATER (d_head->E, local_head.E);
+    d_head->W = LESSER (d_head->W, local_head.W);
+    d_head->S = LESSER (d_head->S, local_head.S);
+
+    offset = ftell (In);
+    while ((itype = dig__Read_line (&Points, In, offset)) > 0)
+    {
+	dig__Write_line (Out, (char) itype, &Points);
+	offset = ftell (In);
+    }
+    if (itype != -2)
+	return (-1);
+    return (0);
+}
+
+docat (In, Out)
+    FILE *In, *Out;
+{
+    char buf[BUFSIZ];
+
+    while (fgets (buf, BUFSIZ, In) != NULL)
+	fputs (buf, Out);
+}
