@@ -107,32 +107,32 @@ rg=$GIS_OPT_region
 g=$GIS_OPT_group
 d=$GIS_OPT_dview
 
-if [ "$r" != "(null)" ] ; then
-			rast=`g.mlist type=rast sep=, mapset=$MAPSET pattern="$r"`
+if [ -n "$r" ] ; then
+    rast=`g.mlist type=rast sep=, mapset=$MAPSET pattern="$r"`
 fi
 
-if [ "$v" != "(null)" ] ; then
-			vect=`g.mlist type=vect sep=, mapset=$MAPSET pattern="$v"`
+if [ -n "$v" ] ; then
+    vect=`g.mlist type=vect sep=, mapset=$MAPSET pattern="$v"`
 fi
 
-if [ "$i" != "(null)" ] ; then
-			icon=`g.mlist type=icon sep=, mapset=$MAPSET pattern="$i"`
+if [ -n "$i" ] ; then
+    icon=`g.mlist type=icon sep=, mapset=$MAPSET pattern="$i"`
 fi
 
-if [ "$l" != "(null)" ] ; then
-			labels=`g.mlist type=labels sep=, mapset=$MAPSET pattern="$l"`
+if [ -n "$l" ] ; then
+    labels=`g.mlist type=labels sep=, mapset=$MAPSET pattern="$l"`
 fi
 
-if [ "$rg" != "(null)" ] ; then
-			region=`g.mlist type=region sep=, mapset=$MAPSET pattern="$rg"`
+if [ -n "$rg" ] ; then
+    region=`g.mlist type=region sep=, mapset=$MAPSET pattern="$rg"`
 fi
 
-if [ "$g" != "(null)" ] ; then
-			group=`g.mlist type=group sep=, mapset=$MAPSET pattern="$g"`
+if [ -n "$g" ] ; then
+    group=`g.mlist type=group sep=, mapset=$MAPSET pattern="$g"`
 fi
 
-if [ "$d" != "(null)" ] ; then
-			dview=`g.mlist type=3dview sep=, mapset=$MAPSET pattern="$d"`
+if [ -n "$d" ] ; then
+    dview=`g.mlist type=3dview sep=, mapset=$MAPSET pattern="$d"`
 fi
 
 found=
