@@ -63,6 +63,7 @@ int display(
 
     /* record the cell file */
     D_set_cell_name(G_fully_qualified_name(name, mapset));
+    D_add_to_cell_list(G_fully_qualified_name(name, mapset));
 
     /* If overlay add it to the list instead of setting the cell name */
     if (overlay) {
