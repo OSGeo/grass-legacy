@@ -121,10 +121,14 @@ DETAILED PROCEDURE :
         make pot
         make update-po
  
-       Copy the generated file from the ./template/ directory
+       Move the generated file from the ./template/ directory
        to the ./po/ directory (for example German language):
         mv ./template/grasslibs.pot ./po/grasslibs_de.po
         mv ./template/grassmods.pot ./po/grassmods_de.po
+
+       Get the two characters indicating the language from this
+       list: http://www.loc.gov/standards/iso639-2/englangn.html
+       The code to use is ISO 639-1 (two characters).
 
        Then continue with 4. below.
 
@@ -141,7 +145,8 @@ DETAILED PROCEDURE :
        make pot
        make update-po
     
-       This will update all existing files in the .po directory.
+       This will update the messages in all existing files in 
+       the .po/ directory.
     
 
 
