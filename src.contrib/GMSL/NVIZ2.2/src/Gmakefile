@@ -1,6 +1,6 @@
 # $Log: Gmakefile,v $
-# Revision 1.7  2000-09-25 12:08:04  markus
-# Bob Covill: patched to write PPM format
+# Revision 1.8  2000-10-02 16:00:02  markus
+# cosmetics
 #
 # Revision 1.9  2000/09/25 12:02:07  markus
 # added missing lib path
@@ -45,8 +45,8 @@
 TK_LIB_PATH=-L/lib -L/usr/lib -ltk8.0 -ltcl8.0
 TK_INCLUDE_PATH=-I/usr/include/GL -I/usr/include/X11 -I/usr/local/include
 NVWISH_VER=NVWISH2.2
-PQ_OBJS=openvect.o getCat.o buildInfxQry.o runInfxQry.o
-PQLIB=-lpq
+PQ_OBJS=
+PQLIB=
 DLLIB=-ldl
 
 OGL_LIBS = -lGLU -lGL $(XLIB) -lXmu -lXext $(MATHLIB) $(DLLIB) $(XDRLIB) $(XEXTRALIBS) $(XLIBPATH)
@@ -85,5 +85,5 @@ nvwish: $(OBJS) $(VECTLIB) $(BITMAPLIB) $(LINKMLIB)
 	$(CC) -g -o $@ $(OBJS) $(LDFLAGS) $(SURFLIB) $(IMGLIB) \
 	$(BITMAPLIB) $(LINKMLIB) $(VECTLIB) \
 	$(GISLIB) $(MATHLIB) $(XDRLIB) \
-	$(LIBDIR)/libdatetime.a $(XTRA_LDFLAGS)
+	$(LIBDIR)/libdatetime.a $(XTRA_LDFLAGS) -ltiff
 	mv nvwish $(BIN_CONTRIB_CMD)/$(NVWISH_VER)
