@@ -25,7 +25,7 @@ GRASS 5 Core Team (most have CVS access):
  Radim Blazek    <Radim.Blazek@dhv.cz>         (DBMS support, ps.map, d.dm)
  Malcolm Blue    <mblue@nb.sympatico.ca>       (Windows NT/Cygnus port)
  Bill Brown      <brown@gomez.gis.uiuc.edu>    (NVIZ, SG3D, grid3D and related)
- Huidae Cho      <grass@water.knu.ac.kr>       (FreeBSD,r.topmodel,r.topidx,...)
+ Huidae Cho      <grass@cemtlo1.seri.re.kr>    (FreeBSD,r.topmodel,r.topidx,...)
  Bob Covill      <bcovill@tekmap.ns.ca>        (NVIZ export formats, r.in|out.bin)
  David D. Gray   <ddgray@armadce.demon.co.uk>  (Vector, SQL support)
  Jaro Hofierka   <hofierka@geomodel.sk>        (NVIZ port, grid3D and related)
