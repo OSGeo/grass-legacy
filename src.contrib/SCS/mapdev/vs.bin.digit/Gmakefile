@@ -1,0 +1,22 @@
+EXTRA_CFLAGS	= -I../lib   -I../libes
+
+
+#PROG = $(BIN_CONTRIB_INTER)/vs.digit
+PROG = $(BIN_CONTRIB_CMD)/vs.digit
+
+#  filename bin_digit.c retained for consistency with 3.2
+
+OFILES = \
+	bin_digit.o 
+
+
+
+all:  $(PROG) 
+
+
+
+$(PROG): $(OFILES) $(GISLIB)
+	rm -f a.out
+	$(CC) $(LDFLAGS) $(OFILES) $(GISLIB) $(MATHLIB)
+	mv a.out $(PROG)
+
