@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.40 2000-10-19 15:45:56 andreas Exp $
+$Id: BUGS,v 1.41 2000-10-19 16:35:03 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -125,8 +125,23 @@ g3.region:
   (being worked on by ?)  
 
 [RC]nviz2.2:
-  tkUnixPort.h needs tcl8.3 sensivity (see togl.h)
+ - I have a surface with VERY small floating point values (ie 7.7e-011 etc). 
+   I've imported using r.in.ascii and all is OK in normal GRASS display.      
+   However, starting nviz you see the surface the right way up, then it flips 
+   as if all values become negative. Incr the zexagg just stretches the values
+   towards the bottom of the screen. Any suggestions?
+   (reported by Phil <P.Atkinson@cdsc.nthames.nhs.uk>)
+   (being worked on by ?)
+
+ - I am unable to view data from a Latitude-Longitude database. No matter
+   how much I adjust the lights I am unable to render a viewable surface.   
+   The wire-frame mode appears fine. I assume the problem is related to the
+   resolution calculation which it interprets as metres?? Should NVIZ work 
+   for a Lat.-Long. database? Does it prefer integer, floating point, or           
+   double elevation values?
+   (reported by Bob Covill" <bcovill@tekmap.ns.ca>)
   (being worked on by ?)  
+
 
 p.map.new:
  - p.map.new now works but only with the grass4.2 raster files
