@@ -1,0 +1,5 @@
+This directory contains drivers for the DBMI library.
+The driver functions are for internal usage.
+
+The DBMI API to be used for module programming is available in:
+grass51/lib/dbmi/
