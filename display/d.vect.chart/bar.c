@@ -45,8 +45,10 @@ bar ( double cx, double cy, int size, double scale, double *val, int ncols, COLO
 	Vect_append_point ( Points, x0 + i*bw, y0 + scale * val[i] * pixel, 0);
 	Vect_append_point ( Points, x0 + i*bw, y0, 0);
 
-	R_RGB_color ( colors[i].r, colors[i].g, colors[i].b );
-	G_plot_polygon ( Points->x, Points->y, Points->n_points);
+	if(!colors[i].none) {
+	    R_RGB_color ( colors[i].r, colors[i].g, colors[i].b );
+	    G_plot_polygon ( Points->x, Points->y, Points->n_points);
+	}
 
 	R_RGB_color ( ocolor->r, ocolor->g, ocolor->b );
 	for (j = 1; j < Points->n_points; j++ ) { 
