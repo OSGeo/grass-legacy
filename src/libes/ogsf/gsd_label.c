@@ -5,13 +5,17 @@
 * 	               -- GRASS Development Team --
 *
 * MODULE: 	GRASS ogsf library
-* FILENAME:	gsd_label.c
 * AUTHOR(S):	Original author - Bill Brown - USA CERL 1991 - 1992
 *   	    	<new author name here>
 * PURPOSE: 	This file needs to be re-written in OpenGL
-* DATE CREATED: Jan 00 0000
 * COPYRIGHT:  	Copyright USA CERL 1992. All rights reserved. (can probably
 *   	    	change this once the code is re-written)
+*
+*****************************************************************************
+*
+* $Log$
+* Revision 1.3  2000-11-10 02:56:56  justin
+* New header style
 *
 *****************************************************************************/
 
