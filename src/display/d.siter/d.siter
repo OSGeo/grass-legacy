@@ -88,8 +88,7 @@ then
     done
 fi
 
-tclsiter $name $str
+$GISBASE/etc/d.siter/tclsiter.start $name $str
 
 /bin/rm -f $TMP
 /bin/rm -f $TMP2
-
