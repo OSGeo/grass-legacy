@@ -111,7 +111,7 @@ int main(int argc, char **argv)
   
   G_set_window(&cellhd);
   
-  fprintf(stderr,"\n\nSTDDEV: %f\n\nRES: %f\tROWS: %d\tCOLS: %d\n\n",
+  fprintf(stderr,"STDDEV: %f\nRES: %f\tROWS: %d\tCOLS: %d\n",
 	  sigma, cellhd.ew_res,cellhd.rows, cellhd.cols);
   
   
@@ -133,6 +133,7 @@ int main(int argc, char **argv)
   term1=1./(sqrt(2.*PIG)*ray);
   term2=(2.*ray*ray);  
   for(r=0; r<cellhd.rows; r++){
+    G_percent(r,cellhd.rows,2);
     for(c=0; c<cellhd.cols; c++) {
       N = G_row_to_northing(r+0.5,&cellhd);
       E = G_col_to_easting(c+0.5,&cellhd);
@@ -146,8 +147,7 @@ int main(int argc, char **argv)
     }
 
     G_put_d_raster_row(fdout,output_cell);
-    G_percent(r,cellhd.rows,10);
-    
+  
   }
 
   G_close_cell(fdout);
