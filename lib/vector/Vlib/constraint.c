@@ -29,9 +29,8 @@
  */
 
 int 
-Vect_set_constraint_region (
-			     struct Map_info *Map,
-			     double n, double s, double e, double w)
+Vect_set_constraint_region ( struct Map_info *Map,
+			     double n, double s, double e, double w, double t, double b )
 {
   if (n <= s)
     return (-1);
@@ -43,13 +42,25 @@ Vect_set_constraint_region (
   Map->Constraint_S = s;
   Map->Constraint_E = e;
   Map->Constraint_W = w;
+  Map->Constraint_T = t;
+  Map->Constraint_B = b;
   Map->proj = G_projection ();
 
   return (0);
 }				/*  dig_init_box()  */
 
+int 
+Vect_get_constraint_box ( struct Map_info *Map,  BOUND_BOX *Box )
+{
+    Box->N = Map->Constraint_N;
+    Box->S = Map->Constraint_S;
+    Box->E = Map->Constraint_E;
+    Box->W = Map->Constraint_W;
+    Box->T = Map->Constraint_T;
+    Box->B = Map->Constraint_B;
 
-
+    return 0;
+}
 /*
    **  Normally, All 'Alive' lines will be returned unless overridden
    **  by this function.   You can specified all the types you are interested

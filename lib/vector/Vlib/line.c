@@ -305,6 +305,36 @@ Vect_line_length ( struct line_pnts *Points )
     return len;
 }
 
+/* Calculate line length. If projection is LL, the length is measured along the geodesic.
+* 
+*  Returns: line length
+*/
+double 
+Vect_line_geodesic_length ( struct line_pnts *Points )
+{
+    int j, dc;
+    double dx, dy, dz, dxy, len = 0;
+
+    dc = G_begin_distance_calculations();
+
+    if ( Points->n_points < 2 ) return 0;
+    
+    for ( j = 0; j < Points->n_points - 1; j++) {
+	if ( dc == 2 ) 
+	    dxy = G_geodesic_distance ( Points->x[j],  Points->y[j],  Points->x[j+1],  Points->y[j+1] );
+	else {
+	    dx = Points->x[j+1] - Points->x[j];
+	    dy = Points->y[j+1] - Points->y[j];
+            dxy = hypot (dx, dy);
+	} 
+	    
+        dz = Points->z[j+1] - Points->z[j];
+        len += hypot ( dxy, dz ); 
+    }
+
+    return len;
+}
+
 /* original dig__check_dist () in grass50 
 *  
 *  returns: nearest segment (first is 1)
@@ -428,3 +458,12 @@ Vect_points_distance (
         return hypot (dx, dy);
   
 }
+
+/* Line bounding box.  */
+int
+Vect_line_box ( struct line_pnts *Points, BOUND_BOX *Box )
+{
+    dig_line_box ( Points, Box );
+    return 0;
+}
+

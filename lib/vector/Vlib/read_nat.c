@@ -71,9 +71,12 @@ V1_read_next_line_nat (
 {
   int itype;
   long offset;
-
   double n, s;
   double e, w;
+  BOUND_BOX lbox, mbox;
+
+  if (Map->Constraint_region_flag)
+      Vect_get_constraint_box ( Map, &mbox );
 
   while (1)
     {
@@ -96,22 +99,13 @@ V1_read_next_line_nat (
 	    continue;
 	}
 
-/*  calculate the bounding box for the line  */
-      /* 4.0 dig_bound_box2() needs a scale to figure fudge factor
-         **   I am not concered about fudge here, so just take 
-         **   any number.  I picked 16000 cuz that is the default
-         **   in dig_bound_box2() and thus faster.
-       */
-      /*
-         **  Constraint on specified region
-       */
-      if (Map->Constraint_region_flag)
-	{
-	  //dig_bound_box2 (line_p, &n, &s, &e, &w, 16000L);	/*4.0 */
+      /* Constraint on specified region */
+      if (Map->Constraint_region_flag) {
+	  Vect_line_box ( line_p, &lbox );
 
-	  if (!V__map_overlap (Map, n, s, e, w))
+	  if ( !Vect_box_overlap (&lbox, &mbox) )
 	    continue;
-	}
+      }
        
       return (itype);
     }
@@ -151,6 +145,10 @@ V2_read_next_line_nat (
 {
   register int line;
   register P_LINE *Line;
+  BOUND_BOX lbox, mbox;
+
+  if (Map->Constraint_region_flag)
+      Vect_get_constraint_box ( Map, &mbox );
 
   while (1)
     {
@@ -169,12 +167,14 @@ V2_read_next_line_nat (
 	  continue;
 	}
 
-      if (Map->Constraint_region_flag)
-	if (!V__map_overlap (Map, Line->N, Line->S, Line->E, Line->W))
+      if (Map->Constraint_region_flag) {
+	Vect_get_line_box ( Map, line, &lbox );   
+	if ( !Vect_box_overlap (&lbox, &mbox) )
 	  {
 	    Map->next_line++;
 	    continue;
 	  }
+      }
 
       return V2_read_line_nat (Map, line_p, line_c, Map->next_line++);
     }
