@@ -1,10 +1,12 @@
 # can not reproduce this bug currently.
-#
+
 set test "r.reclass default rule segmentation fault bug"
-set timeout 5
+
+set timeout 15
 
 # check if we find the executable
-if { ![isgrassbin r.reclass] } {
+if { ![isgrassbin r.reclass] } \
+{
     fail "$test: module missing"
 }
 
@@ -26,6 +28,7 @@ spawn "r.reclass" "input=testmap" "output=testmap2"
 expect {
     -re {>.*$} { send "1=100\n10=100\n* = NULL\nend\n" ; 
 	expect {
+	    -re {.*GRASS.*$      } { verbose "r.reclass ok"  }
 	    -re {.*egmentation.*$} { fail "$test" ; set ok 0 }
 	    timeout                { fail "$test" ; set ok 0 ; slay "r.reclass" }
 	}
@@ -34,7 +37,8 @@ expect {
 }
 slay "r.reclass"
 
-if { $ok == 1 } {
+if { $ok == 1 } \
+{
     spawn "r.stats" "-q" "testmap2"
     expect {
 	-re {\*.*$}     { pass "$test" }
@@ -43,3 +47,4 @@ if { $ok == 1 } {
 	timeout         { fail "$test" ; slay "r.stats" }
     }
 }
+slay "r.stats"

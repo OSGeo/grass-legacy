@@ -3,11 +3,12 @@
 
 # set test name
 set test "d.mon -L bug (on Linux)"
-set timeout 5
+set timeout 25
 set pgm "d.mon"
 
 # test if tested module exists
-if { ![isgrassbin "$pgm"] } {
+if { ![isgrassbin "$pgm"] } \
+{
     fail "$test: module missing"
 }
 

@@ -1,16 +1,17 @@
 #
-#
 
 set test "r.neighbors negative floating point values test"
 set timeout 15
 
 # check if we find the executable
-if { ![isgrassbin "r.neighbors"] } {
+if { ![isgrassbin "r.neighbors"] } \
+{
     fail "$test: module missing"
 }
 
 # invoke mapcalc for creating raster map
 spawn "g.region" "-d" "-p"
+
 expect {
     -re {.*projection:.*$} { verbose "projection set to default" }
     timeout                { perror "g.region timeout" ; slay "g.region" }

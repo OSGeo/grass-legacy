@@ -71,13 +71,15 @@ proc grass_start { } {
     if { [getenv HOME] == "" } {
     	note "no \$HOME set, can not restore .grassrc5 later!"
     } else {
-    	set old [file join [getenv HOME] ".grassrc5"]
-    	set new [file join [getenv HOME] ".grassrc5-tmp-grasstestsuite"]
-    	if { [catch {file rename -force $old $new}] } {
-    	    note "problem saving .grassrc5!"
-    	} else {
-    	    note ".grassrc5 saved to .grassrc5-tmp-grasstestsuite\nIf the testsuite exits abnormally, please restore\nmanually!"
-    	}
+	if { [file exists [file join [getenv HOME] ".grassrc5"]] } {
+	    set old [file join [getenv HOME] ".grassrc5"]
+	    set new [file join [getenv HOME] ".grassrc5-tmp-grasstestsuite"]
+	    if { [catch {file rename -force $old $new}] } {
+		note "problem saving .grassrc5!"
+	    } else {
+		note ".grassrc5 saved to .grassrc5-tmp-grasstestsuite\nIf the testsuite exits abnormally, please restore\nmanually!"
+	    }
+	}
     }
     # GISBASE is set from Makefile!
     set path [file join [getenv GISBASE]]
