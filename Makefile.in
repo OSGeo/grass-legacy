@@ -79,45 +79,45 @@ do-install:
 # yacc, and any other file that is not listed in the options above.
 clean:
 	echo "Performing simple clean..."
-	find . -name 'OBJ*' -exec rm -rf {} \;	2>/dev/null ; true
-	rm -f src/CMD/next_step/*   	    	2>/dev/null ; true
+	${SHELL} -c "find . -name 'OBJ*' -exec rm -rf {} \; 2>/dev/null ; true"
+	${SHELL} -c "rm -f src/CMD/next_step/*   	    2>/dev/null ; true"
 	# Simple clean finished
 
 distclean: clean
 	echo "Performing compilation clean..."
-	find . -name 'LIB*' -exec rm -rf {} \;	2>/dev/null ; true
-	rm -f src.garden/grass.hdf/HDF4.1r3/hdf/src/libdf.a 2>/dev/null ; true
-	rm -f ${BINDIR}/gmake${NAME_VER}     	2>/dev/null ; true
-	rm -f ${BINDIR}/gmakelinks${NAME_VER}	2>/dev/null ; true
-	rm -f ${BINDIR}/grass${NAME_VER}     	2>/dev/null ; true
-	rm -rf ${PREFIX}/bin/*	    	    	2>/dev/null ; true
-	rm -rf ${PREFIX}/bwidget/    	    	2>/dev/null ; true
-	rm -rf ${PREFIX}/dev/        	    	2>/dev/null ; true
-	rm -rf ${PREFIX}/driver/     	    	2>/dev/null ; true
-	rm -rf ${PREFIX}/etc/        	    	2>/dev/null ; true
-	rm -rf ${PREFIX}/fonts/      	    	2>/dev/null ; true
-	rm -rf ${PREFIX}/include/      	    	2>/dev/null ; true
-	rm -rf ${PREFIX}/lib/      	    	2>/dev/null ; true
-	rm -rf ${PREFIX}/man/help/   	    	2>/dev/null ; true
-	rm -rf ${PREFIX}/man/1/      	    	2>/dev/null ; true
-	rm -rf ${PREFIX}/man/2/      	    	2>/dev/null ; true
-	rm -rf ${PREFIX}/man/3/      	    	2>/dev/null ; true
-	rm -rf ${PREFIX}/man/4/      	    	2>/dev/null ; true
-	rm -rf ${PREFIX}/man/5/      	    	2>/dev/null ; true
-	rm -rf ${PREFIX}/locks/      	    	2>/dev/null ; true
-	rm -rf ${PREFIX}/scripts/    	    	2>/dev/null ; true
-	rm -rf ${PREFIX}/tcltkgrass/ 	    	2>/dev/null ; true
-	rm -rf ${PREFIX}/txt/        	    	2>/dev/null ; true
-	rm -f error.log     	    	    	2>/dev/null ; true
+	${SHELL} -c "find . -name 'LIB*' -exec rm -rf {} \; 2>/dev/null ; true"
+	${SHELL} -c "rm -f src.garden/grass.hdf/HDF4.1r3/hdf/src/libdf.a 2>/dev/null ; true"
+	${SHELL} -c "rm -f ${BINDIR}/gmake${NAME_VER}	    2>/dev/null ; true"
+	${SHELL} -c "rm -f ${BINDIR}/gmakelinks${NAME_VER}  2>/dev/null ; true"
+	${SHELL} -c "rm -f ${BINDIR}/grass${NAME_VER}       2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/bin/*	    	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/bwidget/    	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/dev/        	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/driver/     	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/etc/        	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/fonts/      	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/include/      	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/lib/      	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/man/help/   	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/man/1/      	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/man/2/      	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/man/3/      	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/man/4/      	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/man/5/      	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/locks/      	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/scripts/    	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/tcltkgrass/ 	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/txt/        	    2>/dev/null ; true"
+	${SHELL} -c "rm -f error.log     	    	    2>/dev/null ; true"
 	# Compilation clean finished
 
 veryclean: distclean
 	echo "Performing complete installation clean..."
-	rm -f src/CMD/head/head                     2>/dev/null ; true
-	rm -f config.cache config.log config.status 2>/dev/null ; true
-	rm -f src/scripts/shells/create_fifos.sh    2>/dev/null ; true
-	rm -f src/include/config.h                  2>/dev/null ; true
-	rm -f Makefile                              2>/dev/null ; true
+	${SHELL} -c "rm -f src/CMD/head/head                     2>/dev/null ; true"
+	${SHELL} -c "rm -f config.cache config.log config.status 2>/dev/null ; true"
+	${SHELL} -c "rm -f src/scripts/shells/create_fifos.sh    2>/dev/null ; true"
+	${SHELL} -c "rm -f src/include/config.h                  2>/dev/null ; true"
+	${SHELL} -c "rm -f Makefile                              2>/dev/null ; true"
 	# Complete installation clean finished
 
 # make a source package for distribution:
