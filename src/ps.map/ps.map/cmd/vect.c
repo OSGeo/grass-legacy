@@ -4,23 +4,25 @@
 ** 
 **
 */
-#include "math.h"
+#include <math.h>
 #include "Vect.h"
 #include "gis.h"
 #include "vector.h"
 
 #define LENGTH(DX, DY)  (  sqrt( (DX*DX)+(DY*DY) )  )
 
-/* vector() calculates vector form two points */
+/* vector() calculates normalized vector form two points */
 static void vect(double x1, double y1, double x2, double y2, double *x, double *y )
 {
     double dx, dy, l;
     dx  = x2 - x1;
     dy  = y2 - y1;	
     l   = LENGTH ( dx, dy );
-    if ( l == 0){
+    if (l == 0) {
+	/* assume that dx == dy == 0, which should give (NaN,NaN) */
+	/* without this, very small dx or dy could result in Infinity */
+	dx = dy = 0;
     }
-    *x  = 5 / 0;
     *x  = dx/l;
     *y  = dy/l;
 }

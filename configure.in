@@ -121,6 +121,7 @@ AC_CHECK_HEADERS(sys/timeb.h sys/types.h sys/utsname.h)
 AC_HEADER_TIME
 AC_TYPE_OFF_T
 AC_TYPE_UID_T
+AC_TYPE_SIGNAL
 AC_CYGWIN
 AC_PATH_PROG(PERL, perl, no)  
 AC_SUBST(PERL)
@@ -820,19 +821,18 @@ OPENGLULIB=
 LGLWM=
 
 if test -z "$opengl_includes" && test -n "$USE_OPENGL"; then
-    opengl_includes="/usr/include/GL /usr/local/include/GL \
-    /usr/include/Mesa/GL /usr/local/include/Mesa/GL \
-    /usr/local/Mesa/include/GL /opt/include/GL /opt/Mesa/include/GL \
-    /usr/X11R6/include /usr/X11R6/include/GL /opt/Mesa/include \
-    /usr/X11r6/include"
+    opengl_includes="/usr/include /usr/local/include \
+    /usr/include/Mesa /usr/local/include/Mesa \
+    /usr/local/Mesa/include /opt/include /opt/Mesa/include \
+    /usr/X11R6/include /usr/X11r6/include"
 fi
 if test -n "$opengl_includes"; then
     AC_MSG_CHECKING(GL/gl.h and GL/GLwMDrawA.h)
     for dir in $opengl_includes; do
-        if test -d "$dir" && test -f "$dir/gl.h"; then
+        if test -d "$dir" && test -f "$dir/GL/gl.h"; then
             OPENGLINC="$OPENGLINC -I$dir"
         fi
-        if test -d "$dir" && test -f "$dir/GLwMDrawA.h"; then
+        if test -d "$dir" && test -f "$dir/GL/GLwMDrawA.h"; then
             OPENGLwINC="$OPENGLwINC -I$dir"
         fi
     done

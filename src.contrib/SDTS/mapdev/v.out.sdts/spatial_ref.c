@@ -9,7 +9,7 @@
 
 
 init_SDTS_proj_info (Map)
-   struct Map_info *Map;
+   char *Map;
 {
     int proj, in_stat;
 	char ipath[1024], *str;

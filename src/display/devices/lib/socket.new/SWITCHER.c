@@ -566,7 +566,7 @@ main (int argc, char *argv[])
                 xarray = (int *) xalloc (xarray, &n_xarray, x, sizeof (*xarray));
                 REC (xarray, x * sizeof (*xarray)) ;
                 if (index !=0) index = 1 ;
-                Raster_int(x, y, (unsigned int *) xarray, index, 1) ;
+                Raster_int(x, y, xarray, index, 1) ;
                 break ;
             case RGB_RASTER:
                 REC (&x, sizeof x) ;

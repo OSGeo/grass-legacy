@@ -25,7 +25,7 @@
 
    static int (*tstp_old)(int);
    static int (*tstp_new)(int);
-#  define get_tstp(x) x = (int (*)()) signal(SIGTSTP,SIG_IGN); signal(SIGTSTP,x)
+#  define get_tstp(x) x = (RETSIGTYPE (*)()) signal(SIGTSTP,SIG_IGN); signal(SIGTSTP,x)
 #  define set_tstp(x) signal(SIGTSTP,x)
 
 #else

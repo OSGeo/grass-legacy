@@ -34,7 +34,7 @@
 **  
 **    GLOBAL CONSTANTS:
 **    NAME          TYPE             DESCRIPTION
-**    MAXINT        INT              MAXIMUM VALUE OF TWO-BYTE INTEGER
+**    MAX_INT       INT              MAXIMUM VALUE OF TWO-BYTE INTEGER
 **    NC            CHAR             NULL CHARACTER
 **
 **    CHANGE HISTORY:
@@ -57,7 +57,7 @@
 **     INITIALIZE STRING TO EMPTY 
 **     SET TEMPORARY CHARACTER POINTER TO BUF_PTR 
 **     WHILE HAVE MORE READS DO 
-**        IF QUOTIENT IS GREATER THAN ZERO { STR_LEN > MAXINT } 
+**        IF QUOTIENT IS GREATER THAN ZERO { STR_LEN > MAX_INT } 
 **        THEN
 **           READ IN CHARACTER STRING 
 **           TERMINATE TMPCPTR WITH NULL CHARACTER
@@ -97,7 +97,7 @@ long  str_len;
    len = 0;
    
    /* COMPUTE NUMBER OF TIMES TO READ STRING */
-   div_result = ldiv(str_len,MAXINT);
+   div_result = ldiv(str_len,MAX_INT);
    
    /* INITIALIZE STRING TO EMPTY */
    *buf_str = NC;
@@ -108,17 +108,17 @@ long  str_len;
    /* WHILE HAVE MORE READS DO */
    while (div_result.quot >= 0) {
       
-      /* IF QUOTIENT IS GREATER THAN ZERO { STR_LEN > MAXINT } */
+      /* IF QUOTIENT IS GREATER THAN ZERO { STR_LEN > MAX_INT } */
       if (div_result.quot > 0) {
          
          /* READ IN CHARACTER STRING */
-         if ((len += fread(tmpcptr,sizeof(char),(size_t)(MAXINT),fp)) != MAXINT) return(0);
+         if ((len += fread(tmpcptr,sizeof(char),(size_t)(MAX_INT),fp)) != MAX_INT) return(0);
 
          /* TERMINATE TMPCPTR WITH NULL CHARACTER */
          tmpcptr[len] = NC;
          
          /* INCREMENT STRING POINTER */
-         for (i=1; i<= MAXINT; i++) tmpcptr++;
+         for (i=1; i<= MAX_INT; i++) tmpcptr++;
          
       }
       else {
