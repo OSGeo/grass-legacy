@@ -1,0 +1,64 @@
+
+    1	main [main.c]
+    2		G_gisinit
+    3		open_files [open_files.c]
+    4			G__make_mapset_element
+    5			G_ask_old
+    6			exit
+    7			G__file_name
+    8			G_ask_new
+    9			fopen
+   10			fprintf
+   11		read_head_ascii [rw_head.c]
+   12			fgets
+   13			strncmp
+   14			rindex
+   15			strlen
+   16			strcpy
+   17			sscanf
+   18		fprintf
+   19		exit
+   20		create_transform_conversion [creat_trans.c]
+   21			init_transform_arrays [setup_trans.c]
+   22			ask_transform_coor [ask_trans.c]
+   23				V_clear
+   24				V_line
+   25				V_const
+   26				V_ques
+   27				sprintf
+   28				V_intrpt_ok
+   29				V_call
+   30				V_exit
+   31				fprintf
+   32				sleep
+   33				shrink_map_coor [ask_trans.c]
+   34			exit
+   35			system
+   36			setup_transform [setup_trans.c]
+   37				compute_transformation_coef
+   38				residuals_a_predicts_b
+   39			printf
+   40			print_transform_error [setup_trans.c]
+   41				printf
+   42				gets
+   43				exit
+   44			print_transform_resids [print_trans.c]
+   45				printf
+   46			yes_no_quest [creat_trans.c]
+   47				printf
+   48				gets
+   49				exit
+   50		transform_head_info [rw_head.c]
+   51			_transform_head_info [rw_head.c]
+   52				transform_a_into_b
+   53		write_head_ascii [rw_head.c]
+   54			fprintf
+   55		printf
+   56		transform_digit_file [trans_digit.c]
+   57			fgets
+   58			sscanf
+   59			fprintf
+   60			printf
+   61			exit
+   62			transform_a_into_b
+   63		fclose
