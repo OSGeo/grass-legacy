@@ -72,6 +72,21 @@ static int (*Open_new_array[][2]) () =
 #endif
 };
 
+void 
+fatal_error ( int ferror, char *errmsg ) 
+{
+      switch ( ferror ) {
+          case GV_FATAL_EXIT:
+              G_fatal_error ( errmsg ); 
+	      break;
+          case GV_FATAL_PRINT:
+              G_warning ( errmsg ); 
+	      break;
+          case GV_FATAL_RETURN:
+	      break;
+      }
+} 
+
 
 /*!
  \fn int Vect_set_open_level (int level)
@@ -115,13 +130,16 @@ Vect__open_old (
 		char *mapset,
 		int update) /* open for update */
 {
-  char buf[200], buf2[200], xname[512], xmapset[512], name_buf[1024];
+  char buf[200], buf2[200], xname[512], xmapset[512], name_buf[1024], errmsg[2000];
   FILE *fp;
-  int level, level_request;
+  int level, level_request, ferror;
   int format;
 
   G_debug (1, "Vect_open_old(): name = %s mapset= %s update = %d", name, mapset, update);
       
+  ferror = Vect_get_fatal_error ();
+  Vect_set_fatal_error (GV_FATAL_EXIT);
+    
   level_request = Open_level;
   Open_level = 0;
   Vect__init_head (Map);
@@ -195,26 +213,38 @@ Vect__open_old (
 	  Map->Constraint_type_flag = 0;
 	  G_debug (1, "Vect_open_old(): vector opened on level %d", level);
   } else {
-      level = -1;
+      sprintf ( errmsg, "Cannot open old vector %s on level %d", Vect_get_full_name(Map), level_request ); 
       G_debug (1, "Vect_open_old(): vector was not opened");
-      switch ( Vect_get_fatal_error () ) {
-          case GV_FATAL_EXIT:
-              G_fatal_error ( "Cannot open old vector %s on level %d", Vect_get_full_name(Map), level_request ); 
-	      break;
-          case GV_FATAL_PRINT:
-              fprintf(stderr, "ERROR: Cannot open old vector %s on level %d\n", Vect_get_full_name(Map), level_request ); 
-	      break;
-          case GV_FATAL_RETURN:
-	      break;
-      }
-      Vect_set_fatal_error (GV_FATAL_EXIT);
+      fatal_error (ferror, errmsg);
+      return -1;
   }
 
   Map->plus.do_uplist = 0;
 
   Map->dblnk = Vect_new_dblinks_struct ( );
   Vect_read_dblinks ( Map->name, Map->mapset, Map->dblnk );
-      
+  
+  /* Open history file */  
+  sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
+
+  if ( update ) { /* native or postGIS only */
+      Map->hist_fp = G_fopen_modify (buf, GRASS_VECT_HIST_ELEMENT);
+      if ( Map->hist_fp == NULL ) {
+          sprintf ( errmsg, "Cannot open history file for vector '%s'", Vect_get_full_name(Map) ); 
+          fatal_error (ferror, errmsg);
+	  return (-1);
+      }
+      fseek ( Map->hist_fp, 0, SEEK_END);
+      Vect_hist_write ( Map, "---------------------------------------------------------------------------------\n");
+  } else {
+      if ( Map->format == GV_FORMAT_NATIVE || Map->format == GV_FORMAT_POSTGIS ) {
+          Map->hist_fp = G_fopen_old (buf, GRASS_VECT_HIST_ELEMENT, Map->mapset);
+          /* If NULL (does not exist) then Vect_hist_read() handle that */
+      } else { 
+	  Map->hist_fp = NULL;
+      }
+  }
+  
   return (level);
 }
 
@@ -284,7 +314,7 @@ Vect_open_new (
 		int with_z)
 {
     int format, ret, ferror;
-    char *frmt;
+    char *frmt, errmsg[2000], buf[200];
 
     G_debug ( 2, "Vect_open_new(): name = %s", name);
     
@@ -297,18 +327,9 @@ Vect_open_new (
        G_warning ("Vector '%s' already exists and will be overwritten.", name);
        ret = Vect_delete ( name );
        if ( ret == -1 ) {
-	  switch ( ferror ) {
-	      case GV_FATAL_EXIT:
-		  G_fatal_error ( "Cannot delete existing vector %s", name ); 
-		  break;
-	      case GV_FATAL_PRINT:
-		  fprintf(stderr, "ERROR: Cannot delete existing vector %s\n", name ); 
-		  return (-1);
-		  break;
-	      case GV_FATAL_RETURN:
-		  return (-1);
-		  break;
-	  }
+          sprintf ( errmsg, "Cannot delete existing vector %s", name ); 
+	  fatal_error (ferror , errmsg );
+	  return (-1);
        }
     }
     
@@ -330,18 +351,18 @@ Vect_open_new (
     G_debug ( 3, "  format = %d", format);
 
     if (0 > (*Open_new_array[format][1]) (Map, name, with_z)) {
-	  switch ( ferror ) {
-	      case GV_FATAL_EXIT:
-		  G_fatal_error ( "Cannot open new vector %s", Vect_get_full_name(Map) ); 
-		  break;
-	      case GV_FATAL_PRINT:
-		  fprintf(stderr, "ERROR: Cannot open new vector %s\n", Vect_get_full_name(Map) ); 
-		  return (-1);
-		  break;
-	      case GV_FATAL_RETURN:
-		  return (-1);
-		  break;
-	  }
+        sprintf ( errmsg, "Cannot open new vector %s", Vect_get_full_name(Map) ); 
+	fatal_error (ferror , errmsg );
+	return (-1);
+    }
+
+    /* Open history file */  
+    sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
+    Map->hist_fp = G_fopen_new (buf, GRASS_VECT_HIST_ELEMENT);
+    if ( Map->hist_fp == NULL ) {
+        sprintf ( errmsg, "Cannot open history file for vector '%s'", Vect_get_full_name(Map) ); 
+        fatal_error (ferror, errmsg);
+        return (-1);
     }
 
     Open_level = 0;

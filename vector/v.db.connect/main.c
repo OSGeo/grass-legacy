@@ -104,6 +104,7 @@ int main (int argc, char **argv)
     G_debug ( 3, "Mapset = %s", mapset);
 
     Vect_open_update ( &Map, inopt->answer, G_mapset());
+    Vect_hist_command ( &Map );
 
     if (print->answer)
     {

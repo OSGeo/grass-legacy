@@ -93,6 +93,7 @@ main (int argc, char *argv[])
     
     /* open output vector */
     Vect_open_new (&Map, out_opt->answer, 0 ); 
+    Vect_hist_command ( &Map );
 
     /* Add DB link */
     Fi = Vect_default_field_info ( Map.name, 1, NULL, GV_1TABLE );

@@ -10,6 +10,7 @@
 #define GRASS_VECT_COOR_ELEMENT "coor" /* coordinates */
 #define GRASS_VECT_HEAD_ELEMENT "head" /* header information */
 #define GRASS_VECT_DBLN_ELEMENT "dbln" /* link to database */
+#define GRASS_VECT_HIST_ELEMENT "hist" /* history file */
 #define GV_TOPO_ELEMENT "topo"   /* topology */
 #define GV_SIDX_ELEMENT "sidx"   /* spatial index */
 

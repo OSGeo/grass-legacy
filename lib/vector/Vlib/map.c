@@ -82,6 +82,10 @@ Vect_copy ( char *in, char *mapset, char *out )
     
     /* Open output */
     Vect_open_new (&Out, out, Vect_is_3d(&In) );
+
+    /* Copy history */
+    Vect_hist_copy (&In, &Out);
+    Vect_hist_command ( &Out );
     
     /* Copy lines */
     ret = Vect_copy_map_lines ( &In, &Out );

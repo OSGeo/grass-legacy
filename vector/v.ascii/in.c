@@ -77,6 +77,7 @@ main (int argc, char *argv[])
 	}
 
 	Vect_open_new (&Map, new->answer, zcoor);
+	Vect_hist_command ( &Map );
 
 	if ( !points_format ) {
     	    read_head(ascii, &Map);

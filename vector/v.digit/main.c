@@ -87,6 +87,8 @@ main (int argc, char *argv[])
     char   *mapset;
     char   **tokens; 
     
+    G_gisinit(argv[0]);
+
     map_opt = G_define_standard_option(G_OPT_V_MAP);
     
     bgcmd_opt = G_define_option();
@@ -101,7 +103,6 @@ main (int argc, char *argv[])
     new_f->key             = 'n';
     new_f->description     = "Create new file if it does not exist.";
     
-    G_gisinit(argv[0]);
     if (G_parser (argc, argv)) exit(-1); 
    
     module = G_define_module(); 
@@ -148,6 +149,7 @@ main (int argc, char *argv[])
         Vect_set_open_level(2);
         Vect_open_update (&Map, map_opt->answer, mapset);
     }
+    Vect_hist_command ( &Map );
 
     G_debug (1, "Map opened");
 
