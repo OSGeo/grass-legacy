@@ -265,7 +265,6 @@ int main ( int argc, char *argv[])
   /*
   parm.rsm->options = "0.00-1000.00";
   */
-  parm.rsm->answer = SMOOTH; /*THIS was MISSING, added by Helena nov 1999*/
   parm.rsm->required = NO;
   parm.rsm->description = "Smoothing parameter";
 
