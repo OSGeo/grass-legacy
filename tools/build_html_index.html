@@ -3,6 +3,13 @@
 #generates man page index.html
 # Markus Neteler, 2003
 
+#are we in the tools/ dir?
+ls build_html_index.html 2> /dev/null
+if [ $? -eq 1 ] ; then
+ echo "ERROR: this script must be run from the tools/ directory"
+ exit
+fi
+
 ARCH="`cat ../include/Make/Platform.make | grep ARCH | sed 's+ ++g' | cut -d'=' -f2`"
 HTMLDIR="../dist.$ARCH/docs/html"
 
@@ -27,7 +34,7 @@ do
   for i in `ls -1 $i*.html`
   do
     BASENAME=`basename $i .html`
-    echo -n "<li><a href=\"$i\">$BASENAME" >> index.html
+    echo "<li><a href=\"$i\">$BASENAME</a>" >> index.html
   done
   echo "</ul><br>" >> index.html
   echo "<p>" >> index.html
