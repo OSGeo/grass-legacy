@@ -67,6 +67,12 @@ int asc_to_bin(
 		case 'P':
 			type = GV_POINT ;
 			break ;
+		case 'F':
+			type = GV_FACE ;
+			break ;
+		case 'K':
+			type = GV_KERNEL ;
+			break ;
 		case 'a':
 		case 'b':
 		case 'c':
