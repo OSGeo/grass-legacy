@@ -10,7 +10,7 @@ char *argv[];
 	double lon1,lat1,lon2,lat2;
 	char msg[100];
 	char *deftcolor;
-	static char *color_list = "red,orange,yellow,green,blue,magenta,indigo,violet,brown,gray,white,black";
+	char *D_color_list();
 	struct
 	    {
 		struct Option *lcolor, *tcolor, *coor;
@@ -30,7 +30,7 @@ char *argv[];
 	parm.lcolor->type       = TYPE_STRING ;
 	parm.lcolor->required   = NO ;
 	parm.lcolor->description= "Line color" ;
-	parm.lcolor->options    = color_list;
+	parm.lcolor->options    = D_color_list();
 	parm.lcolor->answer     = "white";
 
 #ifdef CAN_DO_DISTANCES
@@ -39,7 +39,7 @@ char *argv[];
 	parm.tcolor->type       = TYPE_STRING ;
 	parm.tcolor->required   = NO ;
 	parm.tcolor->description= "Text color" ;
-	parm.tcolor->options    = color_list;
+	parm.tcolor->options    = D_color_list();
 #endif
 
 	if (argc > 1 && G_parser(argc, argv))
