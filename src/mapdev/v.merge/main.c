@@ -92,7 +92,9 @@ int main (int argc, char *argv[])
 	   }
         else
 	   { /* open category file for reading, if it exists*/
-	   sprintf(path,"SUBJ/%s",subj_file);
+            sprintf(path,"%s/%s/%s/SUBJ/%s",
+		G_gisdbase(), G_location(),G_mapset(),subj_file);
+	   /*sprintf(path,"SUBJ/%s",subj_file);*/
            Subj = fopen (path,"r");
 	   }
 	     /* create a temp file for att updates */
