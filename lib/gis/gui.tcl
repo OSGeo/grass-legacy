@@ -7,7 +7,7 @@ set env(GISDBASE) [exec g.gisenv get=GISDBASE]
 set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
 set env(MAPSET) [exec g.gisenv get=MAPSET]
 
-set pw [PanedWindow .pw -side right ]
+set pw [PanedWindow .pw -side right]
 set optpane [$pw add -minsize 50]
 set outpane [$pw add -minsize 30]
 
@@ -81,7 +81,7 @@ proc prnout {fh} {
 		close $fh
 	} else {
 		set str [ read $fh ]
-		while { [set idx [ string first {\b} $str ]] != -1  } {
+		while { [set idx [ string first {\b} $str ]] != -1 } {
 			set last [expr $idx - 1]
 			set str1 [ string range $str 1 $last]
 			set first [expr $idx + 1]
@@ -98,7 +98,6 @@ proc prnout {fh} {
 proc add_buttons {} {
 	global outtext
 
-	#Run button
 	button .run -text "Run" -command {
 		global outtext pipe
 		set cmd [ mkcmd ]
@@ -123,16 +122,74 @@ proc add_buttons {} {
 		update idletasks
 	}
 
-	# Help button
 	button .help -text Help -command {exec $env(GRASS_HTML_BROWSER) $env(GISBASE)/docs/html/$pgm_name.html &}
 	pack .run .help -side left -expand yes -padx 20 -pady 5
 
-	# Clear button
 	button .clear -text Clear -command { $outtext delete 1.0 end }
 	pack .run .clear -side left -expand yes -padx 20 -pady 5
 	
-	# Close button
 	button .close -text Close -command { exit }
 	pack .run .close -side left -expand yes -padx 20 -pady 5
+}
+
+proc do_flag {optn key desc} {
+	global opttype optname optval suf
+	set opttype($optn) flag
+	frame $suf.val$optn
+	checkbutton $suf.val$optn.chk -text $desc -variable optval($optn) -onvalue 1 -offvalue 0 -anchor w
+	pack $suf.val$optn.chk -side left
+	set optname($optn) $key
+	pack $suf.val$optn -side top -fill x
+}
+
+proc do_button_file {optn} {
+	global optval suf
+	button $suf.val$optn.sel -text {>} -command {
+		set filename [tk_getOpenFile -title {Load File}]
+		if { [string length $filename] > 0 } {
+			set optval($optn) $filename
+		}
+	}
+	pack $suf.val$optn.sel -side left -fill x
+}
+
+proc get_map {optn elem} {
+	global optval
+	set val [GSelect_::create $elem]
+	if { [string length $val] > 0 } {
+		set optval($optn) $val
+	}
+}
+
+proc do_button_old {optn elem} {
+	global optval suf
+	button $suf.val$optn.sel -text {>} -command "get_map $optn $elem"
+	pack $suf.val$optn.sel -side left -fill x
+}
+
+proc do_entry {optn} {
+	global optval suf
+	Entry $suf.val$optn.val -textvariable optval($optn)
+	pack $suf.val$optn.val -side left -fill x -expand yes
+}
+
+proc do_label {optn desc type reqd} {
+	global suf
+	set req [expr {$reqd ? "required" : "optional"}]
+	label $suf.lab$optn -text "$desc ($type, $req):" -anchor w -justify left
+	pack $suf.lab$optn -side top -fill x
+}
+
+proc do_check {optn i s} {
+	global suf optval optvalname
+	checkbutton $suf.val$optn.val$i -text $s -variable optval($optn,$i) -onvalue 1 -offvalue 0
+	pack $suf.val$optn.val$i -side left
+	set optvalname($optn,$i) $s
+}
+
+proc do_combo {optn vals} {
+	global suf optval
+	ComboBox $suf.val$optn.val -underline 0 -labelwidth 0 -width 25 -textvariable optval($optn) -values $vals
+	pack $suf.val$optn.val -side left
 }
 
