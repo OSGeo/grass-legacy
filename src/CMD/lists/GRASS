@@ -395,6 +395,7 @@ src/sites/s.in.dbf
 src/sites/s.in.shape
 src/sites/s.info
 #src/sites/s.kcv  # needs update to 5.0 API
+src/sites/s.mask
 src/sites/s.normal
 src/sites/s.o2n.tps
 src/sites/s.out.ascii
