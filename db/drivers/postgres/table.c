@@ -95,7 +95,7 @@ int load_table(int t, char *stmt)
     PGresult *res;
     Oid dtype;
     char *fname;
-    int fsize;
+    int fsize=0;
     int type;
     int nflds = 0;
     int nrws = 0;
@@ -105,6 +105,7 @@ int load_table(int t, char *stmt)
     VALUE *val;
     int i, j;
     int header_only = 0;
+    char **tokens;
 
     G_debug(3, "load_table()");
         
@@ -157,6 +158,14 @@ int load_table(int t, char *stmt)
 	    type = PG_DOUBLE;
 	    fsize = PQfsize(res, i);
 	    break;
+	case DATEOID:
+	    type = PG_DATE;
+	    fsize = 10; /* YYYY-MM-DD */
+	    break;
+	case TIMEOID:
+	    type = PG_TIME;
+	    fsize = 8; /* HH-MM-SS */
+	    break;
 	default:
 	    if(!header_only) {
 	    snprintf(errMsg, sizeof(errMsg),
@@ -198,6 +207,26 @@ int load_table(int t, char *stmt)
 		    break;
 		case PG_DOUBLE:
 		    val->d = atof(PQgetvalue(res, i, j));
+		    break;
+		case PG_DATE:
+		    buf = (char *) PQgetvalue(res, i, j);
+		    tokens = G_tokenize (buf, "-"); /* depends on LOCALE ? */
+		    val->t.year  = atoi(tokens[0]);
+		    val->t.month = atoi(tokens[1]);
+		    val->t.day   = atoi(tokens[2]);
+		    val->t.hour   = 0;
+		    val->t.minute = 0;
+		    val->t.seconds = 0;
+		    break;
+		case PG_TIME:
+		    buf = (char *) PQgetvalue(res, i, j);
+		    tokens = G_tokenize (buf, ":"); /* depends on LOCALE ? */
+		    val->t.year  = 0;
+		    val->t.month = 0;
+		    val->t.day   = 0;
+		    val->t.hour   = atoi(tokens[0]);
+		    val->t.minute = atoi(tokens[1]);
+		    val->t.seconds = atoi(tokens[2]);
 		    break;
 		}
 

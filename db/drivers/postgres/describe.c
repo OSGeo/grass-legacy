@@ -92,6 +92,20 @@ int describe_table(int tab, int *scols, int nscols, dbTable ** table)
  *                 scale = 0; 
  */
 	    break;
+	case PG_DATE:
+	    dbtype = DB_SQL_TYPE_DATE;
+/*
+ *                 precision = 0;
+ *                 scale = 0; 
+ */
+	    break;
+	case PG_TIME:
+	    dbtype = DB_SQL_TYPE_TIME;
+/*
+ *                 precision = 0;
+ *                 scale = 0; 
+ */
+	    break;
 
 	default:
 	    dbtype = DB_SQL_TYPE_UNKNOWN;

@@ -90,6 +90,9 @@ int db_driver_fetch(cn, position, more)
 	case DB_C_TYPE_DOUBLE:
 	    value->d = db.tables[c->table].rows[pg_row].values[pg_col].d;
 	    break;
+	case DB_C_TYPE_DATETIME:
+	    value->t = db.tables[c->table].rows[pg_row].values[pg_col].t;
+	    break;
 	}
     }
     return DB_OK;
