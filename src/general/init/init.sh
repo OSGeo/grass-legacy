@@ -29,21 +29,18 @@ trap "echo 'User break!' ; exit" 2 3 9 15
 GRASS_PERL=PERL_COMMAND
 export GRASS_PERL
 
-# Clear the variable that will hold the command line options
-CMD_LINE_ARGS=""
-
 # Get the command name
-CMD_NAME=`basename $0`
+CMD_NAME=`basename "$0"`
 
 # Go through the command line options
 for i in "$@" ; do
     
     # Use a case to check the command line options
-    case $i in
+    case "$i" in
     
     	# Check if the user asked for the version
 	-v|--version)
-	    cat $GISBASE/etc/license
+	    cat "$GISBASE/etc/license"
 	    exit
 	    ;;
 
@@ -74,22 +71,13 @@ for i in "$@" ; do
 	# Check if the -text flag was given
 	-text)
 	    GRASS_GUI="text"
+	    shift
 	    ;;
 	
 	# Check if the -tcltk flag was given
 	-tcltk)
 	    GRASS_GUI="tcltk"
-	    ;;
-	    
-	# Check for command line options with spaces
-	*' '*)
-	    i="'$i'"
-	    CMD_LINE_ARGS="$CMD_LINE_ARGS $i "
-	    ;;
-	    
-	# Keep any other command line options
-	*)
-	    CMD_LINE_ARGS="$CMD_LINE_ARGS $i "
+	    shift
 	    ;;
     esac
 done
@@ -117,13 +105,6 @@ fi
 # Export the user interface variable
 export GRASS_GUI
 
-#replace multiple white spaces with single white space if present:
-CMD_LINE_ARGS=`echo $CMD_LINE_ARGS | tr -s ' ' ' '`
-
-#remove leading and trailing white space
-CMD_LINE_ARGS=`echo $CMD_LINE_ARGS | sed 's/^[ ]*//'`
-CMD_LINE_ARGS=`echo $CMD_LINE_ARGS | sed 's/$[ ]*//'`
-
 # Set the GIS_LOCK variable to current process id
 lockfile="$HOME/.gislock5"
 GIS_LOCK=$$
@@ -132,13 +113,12 @@ export GIS_LOCK
 # Set PATH to GRASS bin, ETC to GRASS etc
 ETC=$GISBASE/etc
 
-if [ $LC_MESSAGES ] ; then
-LCL=`echo $LC_MESSAGES | sed 's/\(..\)\(.*\)/\1/'`
-else if [ $LC_ALL ] ; then
-	LCL=`echo $LC_ALL | sed 's/\(..\)\(.*\)/\1/'`
-	else
-	LCL=`echo $LANG | sed 's/\(..\)\(.*\)/\1/'`
-	fi
+if [ "$LC_ALL" ] ; then
+	LCL=`echo "$LC_ALL" | sed 's/\(..\)\(.*\)/\1/'`
+elif [ "$LC_MESSAGES" ] ; then
+	LCL=`echo "$LC_MESSAGES" | sed 's/\(..\)\(.*\)/\1/'`
+else
+	LCL=`echo "$LANG" | sed 's/\(..\)\(.*\)/\1/'`
 fi
 
 PATH=$GISBASE/bin:$GISBASE/scripts:$PATH:$GRASS_ADDON_PATH
@@ -156,14 +136,14 @@ else
 fi
 
 # Check for concurrent use
-$ETC/lock "$lockfile" $$
+"$ETC/lock" "$lockfile" $$
 case $? in
     0) ;;
     1)
     	echo `whoami` is currently running GRASS. Concurrent use not allowed.
     	exit ;;
     *)
-    	echo Unable to properly access $lockfile
+    	echo Unable to properly access "$lockfile"
     	echo Please notify system personel.
     	exit ;;
 esac
@@ -202,10 +182,10 @@ fi
 # First time user - GISRC is defined in the grass script
 if [ ! -f "$GISRC" ] ; then
 
-    if [ ! -f $GISBASE/locale/$LCL/etc/grass_intro ] ; then
-	cat $ETC/grass_intro
+    if [ ! -f "$GISBASE/locale/$LCL/etc/grass_intro" ] ; then
+	cat "$ETC/grass_intro"
     else
-	cat $GISBASE/locale/$LCL/etc/grass_intro
+	cat "$GISBASE/locale/$LCL/etc/grass_intro"
     fi
 
     echo
@@ -221,7 +201,7 @@ if [ ! -f "$GISRC" ] ; then
     
 else
     echo "Cleaning up temporary files....."
-    ($ETC/clean_temp > /dev/null &)
+    ("$ETC/clean_temp" > /dev/null &)
 fi
 
 
@@ -236,12 +216,12 @@ if [ "$DISPLAY" ] ; then
 	# Search for a wish program
 	WISH=
 
-	for i in `echo $PATH | sed 's/^:/.:/
+	for i in `echo "$PATH" | sed 's/^:/.:/
     	    	    		    s/::/:.:/g
 				    s/:$/:./
 				    s/:/ /g'`
 	do
-	    if [ -f $i/$GRASS_WISH ] ; then
+	    if [ -f "$i/$GRASS_WISH" ] ; then
     		WISH=$GRASS_WISH
 		break
 	    fi
@@ -288,13 +268,13 @@ fi
 # Save the user interface variable in the grassrc file - choose a temporary
 # file name that should not match another file
 if [ -f "$GISRC" ] ; then
-    awk '$CMD_LINE_ARGS !~ /GRASS_GUI/ {print}' "$GISRC" > "$GISRC.$$"
+    awk '$1 !~ /GRASS_GUI/ {print}' "$GISRC" > "$GISRC.$$"
     echo "GRASS_GUI: $GRASS_GUI" >> "$GISRC.$$"
     mv -f "$GISRC.$$" "$GISRC"
 fi
 
 # Parsing argument to get LOCATION
-if [ ! "$CMD_LINE_ARGS" ] ; then
+if [ ! "$1" ] ; then
 
     # Try interactive startup
     LOCATION=
@@ -373,7 +353,7 @@ if [ ! "$LOCATION" ] ; then
     	
 	# Check for text interface
 	text)
-	    $ETC/set_data
+	    "$ETC/set_data"
     	    
 	    case $? in
      	    	0) ;;
@@ -394,7 +374,7 @@ if [ ! "$LOCATION" ] ; then
 	
 	# Check for tcltk interface
 	tcltk)
-	    eval `$WISH -file $TCLTKGRASSBASE/script/gis_set.tcl`
+	    eval `"$WISH" -file "$TCLTKGRASSBASE/script/gis_set.tcl"`
 	    
 	    case $? in
      	    	1)
@@ -414,7 +394,7 @@ if [ ! "$LOCATION" ] ; then
                         mv -f "$GISRC.$$" "$GISRC"
                     fi
 
-		    $ETC/set_data
+		    "$ETC/set_data"
 
 		    case $? in
      	    		0) ;;
@@ -436,7 +416,7 @@ if [ ! "$LOCATION" ] ; then
      	    	0)
 		    # These checks should not be necessary with real init stuff
 		    if [ "$LOCATION_NAME" = "##NONE##" ] ; then
-    	    		$ETC/set_data
+    	    		"$ETC/set_data"
     	    		if [ $? != 0 ]; then
     	    		    echo "GISDBASE: $OLD_DB" > "$GISRC"
     	    		    echo "LOCATION_NAME: $OLD_LOC" >> "$GISRC"
@@ -481,7 +461,7 @@ if [ "$CYGWIN" ] ; then
     shellname="GNU Bash (Cygwin)"
     SHELL=/usr/bin/bash.exe
 else 
-    sh="`basename $SHELL`"
+    sh=`basename "$SHELL"`
     case "$sh" in
         ksh)  shellname="Korn Shell";;
         csh)  shellname="C Shell" ;;
@@ -497,7 +477,7 @@ case "$GRASS_GUI" in
     
     # Check for tcltk interface
     tcltk)
-        $GISBASE/bin/tcltkgrass &
+        "$GISBASE/bin/tcltkgrass" &
 	;;
     
     # Ignore others
@@ -508,10 +488,10 @@ esac
 # Display the version and license info
 tput clear
 
-if [ ! -f $GISBASE/locale/$LCL/etc/license ] ; then
-	cat $ETC/license
+if [ -f "$GISBASE/locale/$LCL/etc/license" ] ; then
+	cat "$GISBASE/locale/$LCL/etc/license"
 else
-	cat $GISBASE/locale/$LCL/etc/license
+	cat "$ETC/license"
 fi
 echo 
 echo "This version running thru the $shellname ($SHELL)"
@@ -534,39 +514,39 @@ csh|tcsh)
     export HOME
     cshrc="$HOME/.cshrc"
     tcshrc="$HOME/.tcshrc"
-    rm -f $cshrc $tcshrc
-    echo "set home = $USERHOME" > $cshrc
-    echo "set history = 500 savehist = 500  noclobber ignoreeof" >> $cshrc
+    rm -f "$cshrc" "$tcshrc"
+    echo "set home = $USERHOME" > "$cshrc"
+    echo "set history = 500 savehist = 500  noclobber ignoreeof" >> "$cshrc"
 
-    echo "set prompt = '\\" >> $cshrc
-    echo "Mapset <${MAPSET}> in Location <${LOCATION_NAME}> \\" >> $cshrc
-    echo "GRASS VERSION_NUMBER > '" >> $cshrc
-    echo 'set BOGUS=``;unset BOGUS' >> $cshrc
+    echo "set prompt = '\\" >> "$cshrc"
+    echo "Mapset <${MAPSET}> in Location <${LOCATION_NAME}> \\" >> "$cshrc"
+    echo "GRASS VERSION_NUMBER > '" >> "$cshrc"
+    echo 'set BOGUS=``;unset BOGUS' >> "$cshrc"
 
     if [ -r "$USERHOME/.grass.cshrc" ]
     then
-	cat "$USERHOME/.grass.cshrc" >> $cshrc
+	cat "$USERHOME/.grass.cshrc" >> "$cshrc"
     fi
 
     if [ -r "$USERHOME/.cshrc" ]
     then
-	grep '^ *set  *mail *= *' "$USERHOME/.cshrc" >> $cshrc
+	grep '^ *set  *mail *= *' "$USERHOME/.cshrc" >> "$cshrc"
     fi
 
     if [ -r "$USERHOME/.tcshrc" ]
     then
-	grep '^ *set  *mail *= *' "$USERHOME/.tcshrc" >> $cshrc
+	grep '^ *set  *mail *= *' "$USERHOME/.tcshrc" >> "$cshrc"
     fi
 
     if [ -r "$USERHOME/.login" ]
     then
-	grep '^ *set  *mail *= *' "$USERHOME/.login" >> $cshrc
+	grep '^ *set  *mail *= *' "$USERHOME/.login" >> "$cshrc"
     fi
 
-    echo "set path = ( $PATH ) " | sed 's/:/ /'g >> $cshrc
+    echo "set path = ( $PATH ) " | sed 's/:/ /g' >> "$cshrc"
 
-    cp $cshrc $tcshrc
-    $ETC/run $SHELL
+    cp "$cshrc" "$tcshrc"
+    "$ETC/run" "$SHELL"
 
     HOME="$USERHOME"
     export HOME
@@ -577,21 +557,21 @@ bash)
     HOME="$LOCATION"      # save .bashrc in $LOCATION
     export HOME
     bashrc="$HOME/.bashrc"
-    rm -f $bashrc
-    echo "test -z $PROFILEREAD && . /etc/profile" > $bashrc
-    echo "test -e ~/.alias && . ~/.alias" >> $bashrc
-    echo "umask 022" >> $bashrc
-    echo "PS1='GRASS:\w > '" >> $bashrc
+    rm -f "$bashrc"
+    echo "test -z $PROFILEREAD && . /etc/profile" > "$bashrc"
+    echo "test -e ~/.alias && . ~/.alias" >> "$bashrc"
+    echo "umask 022" >> "$bashrc"
+    echo "PS1='GRASS:\w > '" >> "$bashrc"
 
     if [ -r "$USERHOME/.grass.bashrc" ]
     then
-        cat "$USERHOME/.grass.bashrc" >> $bashrc
+        cat "$USERHOME/.grass.bashrc" >> "$bashrc"
     fi
 
-    echo "export PATH=\"$PATH\"" >> $bashrc
-    echo "export HOME=\"$USERHOME\"" >> $bashrc # restore user home path
+    echo "export PATH=\"$PATH\"" >> "$bashrc"
+    echo "export HOME=\"$USERHOME\"" >> "$bashrc" # restore user home path
 
-    $ETC/run $SHELL
+    "$ETC/run" "$SHELL"
     HOME="$USERHOME"
     export HOME
     ;;
@@ -601,22 +581,22 @@ cygwin)
     HOME="$LOCATION"      # save .bashrc in $LOCATION
     export HOME
     bashrc="$HOME/.bashrc"
-    rm -f $bashrc
+    rm -f "$bashrc"
     # this does not work on cygwin for unknown reasons
-    # echo "test -z $PROFILEREAD && . /etc/profile" > $bashrc
-    echo "test -e ~/.alias && . ~/.alias" >> $bashrc
-    echo "umask 022" >> $bashrc
-    echo "PS1='GRASS:\w > '" >> $bashrc
+    # echo "test -z $PROFILEREAD && . /etc/profile" > "$bashrc"
+    echo "test -e ~/.alias && . ~/.alias" >> "$bashrc"
+    echo "umask 022" >> "$bashrc"
+    echo "PS1='GRASS:\w > '" >> "$bashrc"
 
     if [ -r "$USERHOME/.grass.bashrc" ]
     then
-        cat "$USERHOME/.grass.bashrc" >> $bashrc
+        cat "$USERHOME/.grass.bashrc" >> "$bashrc"
     fi
 
-    echo "export PATH=\"$PATH\"" >> $bashrc
-    echo "export HOME=\"$USERHOME\"" >> $bashrc # restore user home path
+    echo "export PATH=\"$PATH\"" >> "$bashrc"
+    echo "export HOME=\"$USERHOME\"" >> "$bashrc" # restore user home path
 
-    $ETC/run $SHELL
+    "$ETC/run" "$SHELL"
     HOME="$USERHOME"
     export HOME
     ;;
@@ -629,7 +609,7 @@ GRASS-GRID > "
 
     export PS1
 
-    $ETC/run $SHELL
+    "$ETC/run" "$SHELL"
     ;;
 esac
 
@@ -639,7 +619,7 @@ trap 2 3
 tput clear
 echo "Cleaning up temporary files....."
 
-($ETC/clean_temp > /dev/null &)
+("$ETC/clean_temp" > /dev/null &)
 rm -f "$lockfile"
 
 echo "done"
