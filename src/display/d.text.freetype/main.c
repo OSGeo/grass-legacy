@@ -22,6 +22,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include <ctype.h>
 #ifdef HAVE_ICONV_H
 #include <iconv.h>
@@ -348,6 +349,9 @@ read_capfile(void)
 
 		if (sscanf(buf, "%[^:]:%[^:]:%[^:]:%[^:]:%[^:]",
 			  ifont, ipath, icharset, icolor, isize) != 5)
+			continue;
+
+		if (access(ipath, R_OK))
 			continue;
 
 		/* speed-sensitive?
