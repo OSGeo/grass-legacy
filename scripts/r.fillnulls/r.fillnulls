@@ -129,9 +129,7 @@ r.to.vect input=$GIS_OPT_input output=vecttmp_fillnulls_$$ feature=point
 
 
 #count number of points to control segmax parameter for interpolation:
-v.info map=vecttmp_fillnulls_$$ > TMP2
-
-POINTSNUMBER=`cat TMP2 | grep 'Number of points' | awk '{print $5}'`
+POINTSNUMBER="`v.info map=vecttmp_fillnulls_$$ | grep 'Number of points' | awk '{print $5}'`"
 
 echo ""
 echo "Interpolating $POINTSNUMBER points"
@@ -194,7 +192,6 @@ r.patch in=$GIS_OPT_input,rfillnulls_$TMP1 out=$GIS_OPT_output --o
 #cleanup
 g.remove rast=$TMP1,$TMP1.buf,rfillnulls_$TMP1 > /dev/null
 g.remove vect=vecttmp_fillnulls_$$ > /dev/null
-rm -f TMP2
 
 echo ""
 echo "Filled raster map is: $GIS_OPT_output"
