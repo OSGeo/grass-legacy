@@ -1,6 +1,7 @@
 ##CC	= gcc
 ##COMPILE_FLAGS = -ansi -O -I./f123inc 
 ##EXTRA_CFLAGS = -DFIPS_BSD
+EXTRA_CFLAGS = -I./f123inc                                                      
 
 OBJ =   a_toe.o \
 	bak_fld.o \
