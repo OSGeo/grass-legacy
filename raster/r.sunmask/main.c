@@ -13,7 +13,7 @@
  *
  * GPL >= 2
  *
- * MN 2/2002: attempt to update to FP
+ * MN 2/2001: attempt to update to FP
  *
  */
  
