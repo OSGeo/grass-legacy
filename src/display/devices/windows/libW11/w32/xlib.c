@@ -2230,6 +2230,25 @@ Screen *scr;
 
 /*****************************************************************\
 
+	Function: XScreenNumberOfScreen
+	Inputs:   screen
+	Returned: screen number
+
+\*****************************************************************/
+
+int
+XScreenNumberOfScreen(screen)
+Screen *screen;
+{
+	int i;
+	for (i = 0; i < screen->display->nscreens; i++)
+		if (screen == &screen->display->screens[i])
+			return i;
+	return 0;
+}
+
+/*****************************************************************\
+
 	Function: XTranslateCoordinates
 	Inputs:   display, source window, destination window, source x, y.
 	Returned: destination x, y, child window if any.
@@ -3046,6 +3065,18 @@ Display *display;
 unsigned int shape;
 {
 	NT_debug ("XCreateFontCursor\n");
+	return 0;
+}
+
+
+Cursor
+XCreatePixmapCursor(display,source,mask,fg,bg,x, y)
+Display *display;
+Pixmap source,mask;
+XColor *fg,*bg;
+unsigned int x,y;
+{
+	NT_debug ("XCreatePixmapCursor\n");
 	return 0;
 }
 
@@ -4008,8 +4039,8 @@ XConnectionNumber(Display* display)
 {
 	int fd;
 	NT_debug ("XConnectionNumber\n");
-	fd = open ("/tmp/windows", O_NONBLOCK, 0);
-	return 999;
+	fd = open ("/dev/windows", O_RDONLY, 0);
+	return fd;
 }
 
 XFreeFont(Display* display,XFontStruct* font_struct)
