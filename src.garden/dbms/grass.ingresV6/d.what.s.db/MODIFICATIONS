@@ -1,0 +1,37 @@
+****************************************
+d.what.s.db - Modifications for INGRES
+
+Katarina Johnsson, 930421
+****************************************
+
+INGRES version: 5 and 6
+
+INGRES version specific subroutines:
+	None
+
+Modified and/or renamed subroutines:
+	getAllOpts
+	getSelectOpts
+	buildSQL <=> buildInfxQry
+	runSQL <=> runInfxFile
+	ingsites <=> infxsites.c (NEVER USED)
+	getArea 
+
+New subroutines:
+	None
+
+Modified and/or renamed include files:
+	ingres.h <=> infx.h
+
+New include files:
+	None
+
+INGRES modifications:
+	'\g' added at end of SQL query (buildSQL, runSQL)
+	Syntax of execution of SQL command (buildSQL, runSQL)
+
+Improvements:
+	Explanatory messages added
+
+Bug Fixes:
+	None
