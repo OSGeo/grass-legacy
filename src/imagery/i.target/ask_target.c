@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "gis.h"
 ask_target (group, location, mapset)
     char *group;
