@@ -13971,8 +13971,6 @@ echo ""
 
 echo "  X11 support:                `if test -n "${USE_X11}" ; then echo yes ; else echo no ; fi`"
 
-echo "  DBM support:                `if test -n "${USE_DBM}" ; then echo yes ; else echo no ; fi`"
-
 echo "  JPEG support:               `if test -n "${USE_JPEG}" ; then echo yes ; else echo no ; fi`"
 
 echo "  TIFF support:               `if test -n "${USE_TIFF}" ; then echo yes ; else echo no ; fi`"
