@@ -1,29 +1,49 @@
-/*****************************************************************************
-*
-* MODULE:       DBF driver 
-*   	    	
-* AUTHOR(S):    Radim Blazek
-*
-* PURPOSE:      Simple driver for reading and writing dbf files     
-*
-* COPYRIGHT:    (C) 2000 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
-
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdarg.h>
+#include <gis.h>
 #include <dbmi.h>
 #include "globals.h"
 
+/* init error message */
 void
-report_error (err)
-    char *err;
+init_error ( void )
 {
-    char msg[DBF_MSG];
+    if ( !errMsg ) {
+	errMsg = (dbString *) G_malloc(sizeof(dbString));
+        db_init_string (errMsg);
+    }
 
-    sprintf (msg, "DBMI-DBF driver error: %s", err);
-    db_error (msg);
+    db_set_string ( errMsg, "DBMI-DBF driver error:\n");
+}
+
+/* append error message */
+void
+append_error ( const char *fmt, ...)
+{
+    FILE *fp = NULL;
+    char *work = NULL;
+    int count = 0;
+    va_list ap;
+
+    va_start (ap, fmt);
+    if ((fp = tmpfile())) {
+        count = vfprintf (fp, fmt, ap);
+        if (count >= 0 && (work = calloc(count+1,1)) ) {
+	    rewind (fp);
+	    fread (work, 1, count, fp);
+	    db_append_string ( errMsg, work);
+	    free (work);
+        }
+        fclose (fp);
+    }
+    va_end (ap);
+}
+
+void
+report_error ( void )
+{
+    db_append_string ( errMsg, "\n");
+    db_error ( db_get_string (errMsg) );
 }
 

@@ -100,7 +100,7 @@ load_table_head( int t)
     /* load */
     dbf = DBFOpen( db.tables[t].file, "r" );
     if( dbf == NULL ) {
-	sprintf(errMsg, "Cannot open dbf file.\n");
+	append_error("Cannot open dbf file.\n");
         return DB_FAILED;
     }
 
@@ -154,7 +154,7 @@ load_table ( int t)
     
     dbf = DBFOpen( db.tables[t].file, "r" );
     if( dbf == NULL ) {
-	sprintf(errMsg, "Cannot open dbf file.\n");
+	append_error("Cannot open dbf file.\n");
         return DB_FAILED;
     }
 

@@ -44,7 +44,7 @@ cursor * alloc_cursor()
     c = (cursor *) db_malloc(sizeof(cursor));
     if (c == NULL)
     {
-        report_error("allocate cursor");
+        append_error ("cannot alloc new cursor");
         return c; 
     } 
     
@@ -54,7 +54,7 @@ cursor * alloc_cursor()
     {
 	free_cursor (c);
 	c = NULL;
-        report_error("db_new_token()");
+	append_error ("cannot tokenize new cursor\n");
     }
 
     return c;

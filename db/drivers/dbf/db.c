@@ -25,7 +25,7 @@ int
 db_driver_open_database (handle)
     dbHandle *handle;
 {
-    char   *name, emsg[DBF_MSG];
+    char   *name;
     int    len; 
     dbConnection connection;
     char   buf[1024];
@@ -79,8 +79,8 @@ db_driver_open_database (handle)
     dir = opendir(db.name);
     if (dir == NULL)
       {
-	snprintf( emsg, sizeof(emsg), "Cannot open dbf database: %s\n", name );
-	report_error( emsg );
+	append_error ( "Cannot open dbf database: %s\n", name );
+	report_error( );
 	return DB_FAILED;
       }
     

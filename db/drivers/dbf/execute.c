@@ -30,8 +30,8 @@ db_driver_execute_immediate (sql)
     
     if ( ret == DB_FAILED )
       {
-         sprintf( errMsg, "%sError in db_execute_immediate()", errMsg );
-         report_error( errMsg );
+         append_error("Error in db_execute_immediate()");
+         report_error( );
          return DB_FAILED;
       }
     

@@ -32,8 +32,8 @@ db_driver_describe_table (table_name, table)
     
     tab = find_table ( name );
     if ( tab == -1 ) {
-	sprintf(errMsg, "Table '%s' doesn't exist", db_get_string(table_name)); 
-	report_error( errMsg );
+	append_error("Table '%s' doesn't exist", db_get_string(table_name)); 
+	report_error();
 	return DB_FAILED;
     }
     describe_table ( tab, NULL, 0, table );

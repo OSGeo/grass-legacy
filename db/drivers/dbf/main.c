@@ -25,6 +25,8 @@ main(int argc, char *argv[])
 {
     char *name;
 
+    init_error();
+
     /* Do not call G_getenv() nor other functions reading GISRC here! It may be that grass variables are
      * not available here, but will be set in db_driver() */
     

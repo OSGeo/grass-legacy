@@ -1,7 +1,5 @@
 #include <sqlp.h>
 
-#define DBF_MSG 2000  /* max length of message for report_error() */
-
 #define DBF_COL_NAME 20 /* maximum column name (in fact shouldn't be > 10) */
 
 #define DBF_CHAR   1
@@ -68,15 +66,16 @@ typedef struct {
     int ncols;
     dbToken token;
     int type;    /* type of cursor: SELECT, UPDATE, INSERT */
+    int *order;  /* array of row indexes (sorted by ORDER BY) */
 } cursor;
 
 #ifdef MAIN
     DATABASE db;
-    char     errMsg[DBF_MSG];
+    dbString *errMsg = NULL;
     int    drv_mode;
 #else
     extern DATABASE db;
-    extern char errMsg;
+    extern dbString *errMsg;
     extern int drv_mode;
 #endif 
 
