@@ -31,18 +31,21 @@ int main(int argc, char **argv)
   /* Initialize the GIS calls */
   G_gisinit (argv[0]) ;
 
-  /* have a look if vector maps are already drawn in monitor */
-  if (R_open_driver() != 0)
-    G_fatal_error ("No graphics device selected");
-  
-  if(D_get_dig_list (&vect, &nvects) < 0)
-	vect = NULL;
-  else
-    {
-	vect = (char **)G_realloc(vect, (nvects+1)*sizeof(char *));
-	vect[nvects] = NULL;
-    }
-  R_close_driver();
+  /* Conditionalize R_open_driver() so "help" works, open quiet as well */
+  R__open_quiet();
+  if (R_open_driver() == 0)
+  {
+        if(D_get_dig_list (&vect, &nvects) < 0)
+            vect = NULL;
+        else
+        {
+            vect = (char **)G_realloc(vect, (nvects+1)*sizeof(char *));
+            vect[nvects] = NULL;
+        }
+
+        R_close_driver();
+  }
+
 
   once = G_define_flag();
   once->key = '1';
