@@ -1,5 +1,4 @@
 MODULE_TOPDIR = ../..
-EXTRA_CFLAGS    = $(DANOTHER_BUTTON)
 
 PGM = r.digit
 

@@ -1,25 +1,6 @@
 #include "gis.h"
 #include "config.h"
 
-
-/* left button */
-#define	LEFTB	1
-/* left button string */
-#define	LEFTS	"Left:  "
-
-#ifndef	ANOTHER_BUTTON
-#	define	MIDDLEB	2
-#	define	RIGHTB	3
-#	define	MIDDLES	"Middle:"
-#	define	RIGHTS	"Right: "
-#else
-#	define	MIDDLEB	3
-#	define	RIGHTB	2
-#	define	MIDDLES	"Right: "
-#	define	RIGHTS	"Middle:"
-#endif
-
-
 /* ask.c */
 int yes(char *);
 int just_click(char *);
@@ -65,4 +46,6 @@ GLOBAL char *cmd;
 GLOBAL char **rast, **vect, **site, **list;
 GLOBAL int nrasts, nvects, nsites, nlists;
 GLOBAL double U_east, U_west, U_south, U_north;
+GLOBAL int leftb, middleb, rightb;
+GLOBAL char *lefts, *middles, *rights;
 

@@ -1,25 +1,6 @@
 #include "gis.h"
 #include "config.h"
 
-
-/* left button */
-#define	LEFTB	1
-/* left button string */
-#define	LEFTS	"Left:  "
-
-#ifndef	ANOTHER_BUTTON
-#	define	MIDDLEB	2
-#	define	RIGHTB	3
-#	define	MIDDLES	"Middle:"
-#	define	RIGHTS	"Right: "
-#else
-#	define	MIDDLEB	3
-#	define	RIGHTB	2
-#	define	MIDDLES	"Right: "
-#	define	RIGHTS	"Middle:"
-#endif
-
-
 typedef struct _ucat {
 	RASTER_MAP_TYPE type;
 	union {
@@ -83,9 +64,11 @@ struct windows profiles[] =
         {"pro3", 22,  43,  50, 100},
         {"pro4",  0,  22,  50, 100}
         } ;
+int another_button, leftb, middleb, rightb;
 #else
 extern struct windows windows[];
 extern struct windows profiles[];
+extern int another_button, leftb, middleb, rightb;
 #endif
 
 #define MOU     windows[0]

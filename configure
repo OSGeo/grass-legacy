@@ -23,8 +23,6 @@ ac_help="$ac_help
 ac_help="$ac_help
   --enable-sysv           define the compiler macro SYSV"
 ac_help="$ac_help
-  --enable-another-button use two-button mouse conveniently"
-ac_help="$ac_help
   --enable-socket         use socket XDriver (default)"
 ac_help="$ac_help
   --enable-fifo           use FIFO XDriver instead of sockets"
@@ -2602,15 +2600,6 @@ else
 fi
 
 
-# Check whether --enable-another-button or --disable-another-button was given.
-if test "${enable_another_button+set}" = set; then
-  enableval="$enable_another_button"
-  :
-else
-  enable_another_button=no
-fi
-
-
 # Check whether --enable-socket or --disable-socket was given.
 if test "${enable_socket+set}" = set; then
   enableval="$enable_socket"
@@ -3145,20 +3134,6 @@ case "$enable_sysv" in
 esac
 echo "$ac_t"""$enable_sysv"" 1>&6
 
-
-# Enable ANOTHER_BUTTON option
-
-echo $ac_n "checking for another button""... $ac_c" 1>&6
-echo "configure:3153: checking for another button" >&5
-case "$enable_another_button" in
-	yes)	cat >> confdefs.h <<\EOF
-#define ANOTHER_BUTTON 1
-EOF
-	;;
-	no)					;;
-	*)	{ echo "configure: error: *** You must answer yes or no." 1>&2; exit 1; }	;;
-esac
-echo "$ac_t"""$enable_another_button"" 1>&6
 
 # XDRIVER connection type
 
