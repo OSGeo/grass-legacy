@@ -40,16 +40,16 @@ conv_units ()
 
     switch (options.option) {
 	case O_LENGTH:
-	    for ( i = 0; i < stat.rcat; i++ ) 
+	    for ( i = 0; i < vstat.rcat; i++ ) 
 		list_cd[i].d1 *= f; 
 	    break;
 	case O_AREA:
-	    for ( i = 0; i < stat.rcat; i++ ) 
+	    for ( i = 0; i < vstat.rcat; i++ ) 
 		list_cd[i].d1 *= sq_f; 
 	    break;
 	
 	case O_COOR: 
-	    for ( i = 0; i < stat.rcat; i++ ) {
+	    for ( i = 0; i < vstat.rcat; i++ ) {
 		list_ci2d[i].d1 *= f;
 		list_ci2d[i].d2 *= f;
 	    }

@@ -39,27 +39,27 @@ int read_points(struct Map_info *Map, struct Categories *Labels)
 	    }
 
 	    if ( idx < 0) {
-		if ( stat.rcat < stat.alloc )
+		if ( vstat.rcat < vstat.alloc )
 		    switch (options.option) {
 			case O_CAT: 
 			case O_COUNT:
-			    list_ci[stat.rcat].cat = cat_no;
-			    list_ci[stat.rcat].i1 = 1;
-			    stat.rcat++;
+			    list_ci[vstat.rcat].cat = cat_no;
+			    list_ci[vstat.rcat].i1 = 1;
+			    vstat.rcat++;
 			    break;
 			case O_COOR:			    
-			    list_ci2d[stat.rcat].cat = cat_no;
-			    list_ci2d[stat.rcat].i1 = 1;
-			    list_ci2d[stat.rcat].d1 = Points->x[0];
-			    list_ci2d[stat.rcat].d2 = Points->y[0];
-			    stat.rcat++;
+			    list_ci2d[vstat.rcat].cat = cat_no;
+			    list_ci2d[vstat.rcat].i1 = 1;
+			    list_ci2d[vstat.rcat].d1 = Points->x[0];
+			    list_ci2d[vstat.rcat].d2 = Points->y[0];
+			    vstat.rcat++;
 			    break;
 			case O_LABEL:
-			    list_cc[stat.rcat].cat = cat_no;
+			    list_cc[vstat.rcat].cat = cat_no;
 			    lab = G_get_cat(cat_no, Labels);
-			    list_cc[stat.rcat].c1 = (char *) G_malloc ( strlen(lab)+1 );
-			    strcpy ( list_cc[stat.rcat].c1, G_get_cat(cat_no, Labels) );
-			    stat.rcat++;
+			    list_cc[vstat.rcat].c1 = (char *) G_malloc ( strlen(lab)+1 );
+			    strcpy ( list_cc[vstat.rcat].c1, G_get_cat(cat_no, Labels) );
+			    vstat.rcat++;
 			    break;			
 		    }	    
 	    } else {
