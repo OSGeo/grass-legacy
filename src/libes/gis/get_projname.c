@@ -83,7 +83,11 @@ int G_ask_proj_name(proj_id, proj_name)
 
         sprintf(proj_id,"%s",answer);
         sprintf(proj_name,"%s",a);
+#ifdef __MINGW32__
+        remove ( Tmp_file );
+#else        
         unlink(Tmp_file);
+#endif        
         return 1;
       }
 

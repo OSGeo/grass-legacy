@@ -201,10 +201,12 @@ int R_open_driver()
                     else
 		      {
                         fprintf(stderr,_("Error - Monitor <%s> is in use by %s.\n"),name,user);
+#ifndef __MINGW32__
 			pw = getpwuid(getuid());
 			if(strcmp(pw->pw_name, user)==0)
 			/* in use by me (on another session of grass) */
 			    return -9;
+#endif
                       }
                     exit(-1);
                 }

@@ -38,8 +38,13 @@ int G_remove ( char *element, char *name)
     if (access (G__file_name (path, element, name, mapset),0) != 0)
 	    return 0;
 
+#ifdef __MINGW32__
+    if ( remove ( path ) == 0)
+	    return 1;
+#else
     if (unlink(path) == 0)
 	    return 1;
+#endif
 
     if (strchr(path, '\''))
 	    return -1;

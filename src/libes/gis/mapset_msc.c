@@ -94,10 +94,12 @@ int G__mapset_permissions (char *mapset)
     if (stat (path, &info) != 0)
 	    return -1;
 
+#ifndef __MINGW32__    
     if (info.st_uid != getuid())
 	    return 0;
     if (info.st_uid != geteuid())
 	    return 0;
-
+#endif
+    
     return 1;
 }
