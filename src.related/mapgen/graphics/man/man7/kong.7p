@@ -1,0 +1,57 @@
+.\" @(#)kong.7p - 1.2
+.nr LL 5.5i
+.TH KONG 7P 11/8/90 "USGS"
+.ad b
+.hy 1
+.SH NAME
+kong - Kongsberg photo-head plotter
+.SH SYNOPSIS
+.LP
+.B plotter \-d kong ...
+.br
+.B plotter \-d skong ...
+.SH DESCRIPTION
+The Kongberg is a high resolution photohead plotter designed
+to produce negatives for publication processes.
+Output should always be to a 9-track, 1600bpi magnetic
+tape drive.
+Dependent upon magnetic tape drive,
+.B skong
+may be required to swab or interchange output byte but this
+is becoming rare.
+
+There are no
+.B \-Dx
+options for this device.
+.SH SIZE AND RESOLUTION
+Maximum x and y axis sizes are respectively
+24000 and 32000
+(120\(mu160cm) with a resolution of 200 counts/cm.
+.SH SPECIAL STRING OPERATIONS
+None.
+.SH MECHANICAL PENS
+.RS 6
+  Spot size   Mechanical
+  in microns   pen no.
+      2          0
+      3          1
+      4          2
+      5          3
+      6          4
+      7          5
+      9          6
+     10          7
+     14          8
+     15          9
+     21         10
+     30         11
+     45         12
+     60         13
+     90         14
+    135         15
+.RE
+.SH SEE ALSO
+ Device Independent Vector Graphics manual.
+ plotter(1)
+.SH AUTHOR/MAINTENANCE
+Gerald I. Evenden, USGS, Woods Hole, MA 02543
