@@ -1,0 +1,12 @@
+all: /bin/csh $(BIN)/Dcorr $(MAN2)/Dcorr
+
+$(BIN)/Dcorr: corr.csh
+	rm -f $@
+	cp $? $@
+	chmod +x $@
+
+$(MAN2)/Dcorr: MAN
+	$(MANROFF)
+
+/bin/csh:
+	@echo /bin/csh not found. Can not install Dcorr; exit 1
