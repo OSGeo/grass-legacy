@@ -156,7 +156,7 @@ int main (int argc, char **argv)
   lines_visited = (int*) G_calloc ( Vect_get_num_lines(&map) + 1, sizeof (int));
   if (lines_visited == NULL) G_fatal_error ("Error allocating memory for `lines_visited' ");
 
-  fprintf (stderr, "\n\nThe number of lines in the binary map is %d", Vect_get_num_lines(&map) );
+  fprintf (stderr, "\nThe number of lines in the binary map is %d", Vect_get_num_lines(&map) );
 
   /* Set up points structure and coordinate arrays */
   points = Vect_new_line_struct ();
@@ -167,7 +167,7 @@ int main (int argc, char **argv)
 
   if (!gQuietly) fprintf (stderr, "\n");
 
-  for ( line = 1; line < Vect_get_num_lines(&map); line++ ) {
+  for ( line = 1; line <= Vect_get_num_lines(&map); line++ ) {
       /* Skip line if already visited from another */
       if (lines_visited [line]) continue;
      
@@ -190,7 +190,7 @@ int main (int argc, char **argv)
       polyline++;
   }
 
-  fprintf (stderr, "\n\nThe number of polylines in the output map is %d \n", polyline);
+  fprintf (stderr, "\nThe number of polylines in the output map is %d \n", polyline);
 
 
   /* Tidy up */
