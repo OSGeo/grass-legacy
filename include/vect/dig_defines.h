@@ -156,7 +156,7 @@
 
 typedef enum { 
     GV_O_AND,
-    GV_O_OVERLAP,
+    GV_O_OVERLAP
 } OVERLAY_OPERATOR;
 
 
