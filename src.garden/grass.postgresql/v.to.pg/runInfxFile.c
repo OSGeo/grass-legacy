@@ -65,12 +65,21 @@ int runInfxFile(SQL_stmt, map, mapset, color, fillcolor )
 	    		
 	    if (!strncmp(vtype_string,"area",4)) {
 
-	    snprintf (buf1,128,"CREATE TABLE %s_bnd (%s int4, num int2, ex bool, boundary polygon)",table_string, key_string);	    
-
+	    	if (!to_postgis) {
+			 snprintf (buf1,128,"CREATE TABLE %s_bnd (%s int4, num int2, ex bool, boundary polygon)",
+				table_string, key_string);
+		} else {
+			 snprintf (buf1,128,"CREATE TABLE %s_mpoly (%s int4, num int2)",
+				table_string, key_string);    
+		}
 	    } else {
-
-	    snprintf (buf1,128,"CREATE TABLE %s_arc (%s int4, num int2, segment path)",table_string, key_string);
-
+		if (!to_postgis) {
+	    		snprintf (buf1,128,"CREATE TABLE %s_arc (%s int4, num int2, segment path)",
+	    			table_string, key_string);
+		} else {
+			snprintf (buf1,128,"CREATE TABLE %s_mstring (%s int4, num int2)",
+	    			table_string, key_string);
+		}
 	    }
 		
 	    if (verbose) printf ("Executing\n%s;\n\n",buf1);
@@ -83,8 +92,34 @@ int runInfxFile(SQL_stmt, map, mapset, color, fillcolor )
     		}
 
     	    PQclear(res);
+	    
+	if (to_postgis) {
+		    if (!strncmp(vtype_string,"area",4)) {
 
 
+			snprintf (buf1,128,"SELECT AddGeometryColumn ('%s', '%s_mpoly', 'grass_poly', -1,'POLYGON',2)", 
+			G_getenv("PG_DBASE"), table_string);
+
+	    	    } else {
+			snprintf (buf1,128,"SELECT AddGeometryColumn ('%s', '%s_mstring', 'grass_line', -1, 'LINESTRING',2)",
+			G_getenv("PG_DBASE"), table_string);
+
+	     	    }
+	
+
+	    if (verbose) printf ("Executing\n%s;\n\n",buf1);
+	    
+	    res = PQexec (pg_conn, buf1);
+	    	if ( strlen(PQerrorMessage(pg_conn)) ) {
+      			printf (_("Could not add geometry column:%sExiting.\n"),PQerrorMessage(pg_conn)); 
+      			PQfinish(pg_conn);
+      			exit (-1);      
+    		}
+
+    	    PQclear(res);
+	
+	}
+	
 if (!total_import){  
     
     if (verbose) printf ("Executing\n%s;\n\n",SQL_stmt);
@@ -109,11 +144,8 @@ if (!total_import){
         exit (-1);
       } 
 
-
     }
  
-    PQclear(res);
-    /* explicitly close select result to avoid memory leaks  */
 
 } else {
       stat = plotCat(map,mapset,Points,line_cat, &P_map, fillcolor, pg_conn);
@@ -122,6 +154,10 @@ if (!total_import){
         exit (-1);
       } 
 } /*end if !total_import*/
+    
+    PQclear(res);
+    /* explicitly close select result to avoid memory leaks  */
+
     PQfinish(pg_conn);
     /* close connection to database */
 

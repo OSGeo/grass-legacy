@@ -42,6 +42,8 @@ int plotCat (name, mapset, points, vect_cat, Map, fillcolr, pg_conn)
     
     char u_str[128]="";
     char *tmp_string;
+    char *tmp_string_i;
+
     
     PGresult*	res1;
 
@@ -92,59 +94,10 @@ int plotCat (name, mapset, points, vect_cat, Map, fillcolr, pg_conn)
             ys[0] = (double *) G_malloc (sizeof(double) * rpnts[0]);
             Vect_copy_pnts_to_xy (points, xs[0], ys[0], &rpnts[0]);
 	    
-	    
-	    points_i = Vect_new_line_struct();
-	    
-	    for (j = 0; j < pa->n_isles; j++) {
-                Vect_get_isle_points (Map, pa->isles[j], points_i);
-                rpnts[j+1] = points_i->n_points;
-                xs[j+1] = (double *) G_malloc (sizeof(double) * rpnts[j+1]);
-                ys[j+1] = (double *) G_malloc (sizeof(double) * rpnts[j+1]);
-                Vect_copy_pnts_to_xy (points_i, xs[j+1], ys[j+1], &rpnts[j+1]);
-		
-		tmp_string = (char*) G_malloc(points_i->n_points*(2*MAXFLSIZE+4) 
-		+ MAXFLDNAMESZ);
-		snprintf(tmp_string,MAXFLDNAMESZ, "INSERT into %s_bnd (%s, num, ex, boundary) values ('%d','%d','f','(",table_string, key_string, v_att,i+1);
-			   
-           	for (jk = 0; jk < points_i->n_points - 1; jk++) {
-#ifndef X_DISPLAY_MISSING
-                	G_plot_line (points_i->x[jk],   points_i->y[jk],
-                        	points_i->x[jk+1], points_i->y[jk+1]);
-#endif
-/* Here we may need remove the last point, which doubles the first; 
-not clear until v.out.pg -alex*/
-			if (jk != points_i->n_points - 2) 
-		snprintf (u_str,128,"(%f,%f),",points_i->x[jk],points_i->y[jk]);
-			else 
-		snprintf (u_str,128,"(%f,%f)",points_i->x[jk+1],points_i->y[jk+1]);
-			strcat (tmp_string,u_str);
-			
-			if (verbose) total_vertices++;
-
-		}
-	   	snprintf(u_str,4,")')");
-	   
-	   	strcat (tmp_string,u_str);
-		
-		if (verbose) {
-			printf("n_points_i is %d, v_att is %d, count is %d\n", points_i->n_points,
-			v_att, count);
-			printf ("Executing\n%s;\n\n",tmp_string);
-		
-			total_vects++;
- 		}
- 		res1 = PQexec (pg_conn, tmp_string);
-    		PQclear(res1);
-    
-
-		G_free (tmp_string);
-
-            }
-#ifndef X_DISPLAY_MISSING
-           if (fillcolr) G_plot_area (xs, ys, rpnts, rings);
-#endif		
 	tmp_string = (char*) G_malloc(points->n_points*(2*MAXFLSIZE+4) 
 		+ MAXFLDNAMESZ);
+
+if (!to_postgis) {
 		
 	snprintf(tmp_string,MAXFLDNAMESZ, "INSERT into %s_bnd (%s, num, ex, boundary) values ('%d','%d','t','(",table_string, key_string, v_att,i+1);
 			
@@ -178,6 +131,151 @@ not clear until v.out.pg -alex*/
     	PQclear(res1);
 
 	   G_free (tmp_string);
+	    
+	    points_i = Vect_new_line_struct();
+	    
+	    for (j = 0; j < pa->n_isles; j++) {
+                Vect_get_isle_points (Map, pa->isles[j], points_i);
+                rpnts[j+1] = points_i->n_points;
+                xs[j+1] = (double *) G_malloc (sizeof(double) * rpnts[j+1]);
+                ys[j+1] = (double *) G_malloc (sizeof(double) * rpnts[j+1]);
+                Vect_copy_pnts_to_xy (points_i, xs[j+1], ys[j+1], &rpnts[j+1]);
+		
+		tmp_string = (char*) G_malloc(points_i->n_points*(2*MAXFLSIZE+4) 
+		+ MAXFLDNAMESZ);
+		snprintf(tmp_string,MAXFLDNAMESZ, "INSERT into %s_bnd (%s, num, ex, boundary) values ('%d','%d','f','(",table_string, key_string, v_att,i+1);
+			   
+           	for (jk = 0; jk < points_i->n_points - 1; jk++) {
+#ifndef X_DISPLAY_MISSING
+                	G_plot_line (points_i->x[jk],   points_i->y[jk],
+                        	points_i->x[jk+1], points_i->y[jk+1]);
+#endif
+
+			if (jk != points_i->n_points - 2) 
+		snprintf (u_str,128,"(%f,%f),",points_i->x[jk],points_i->y[jk]);
+			else 
+		snprintf (u_str,128,"(%f,%f)",points_i->x[jk+1],points_i->y[jk+1]);
+			strcat (tmp_string,u_str);
+			
+			if (verbose) total_vertices++;
+
+		}
+	   	snprintf(u_str,4,")')");
+	   
+	   	strcat (tmp_string,u_str);
+		
+		if (verbose) {
+			printf("n_points_i is %d, v_att is %d, count is %d\n", points_i->n_points,
+			v_att, count);
+			printf ("Executing\n%s;\n\n",tmp_string);
+		
+			total_vects++;
+ 		}
+ 		res1 = PQexec (pg_conn, tmp_string);
+    		PQclear(res1);
+    
+
+		G_free (tmp_string);
+
+            }
+} else { /*if to_postgis*/
+
+	snprintf(tmp_string,MAXFLDNAMESZ, "INSERT into %s_mpoly (%s, num, grass_poly) values
+	('%d','%d',GeometryFromText('POLYGON((",table_string, key_string, v_att,i+1);
+			
+	   for (j = 0; j < points->n_points - 1; j++){
+#ifndef X_DISPLAY_MISSING
+                G_plot_line (points->x[j],   points->y[j],
+                        points->x[j+1], points->y[j+1]);
+#endif
+
+		if (j != points->n_points - 2) 
+			snprintf (u_str,128,"%f %f,",points->x[j],points->y[j]);
+		else 
+			snprintf (u_str,128,"%f %f",points->x[j+1],points->y[j+1]);
+		strcat (tmp_string,u_str);
+		if (verbose) total_vertices++;
+
+	   }
+
+if (!pa->n_isles) {
+	snprintf(u_str,9,"))',-1))");
+} else {
+	snprintf(u_str,4,"),(");
+}
+	   
+	   strcat (tmp_string,u_str);
+		
+	if (verbose) {
+		printf("n_points is %d, v_att is %d, count is %d\n", points->n_points,
+		v_att, count);
+
+		total_vects++;
+	}
+
+	    points_i = Vect_new_line_struct();
+	    
+	    for (j = 0; j < pa->n_isles; j++) {
+
+                Vect_get_isle_points (Map, pa->isles[j], points_i);
+                rpnts[j+1] = points_i->n_points;
+                xs[j+1] = (double *) G_malloc (sizeof(double) * rpnts[j+1]);
+                ys[j+1] = (double *) G_malloc (sizeof(double) * rpnts[j+1]);
+                Vect_copy_pnts_to_xy (points_i, xs[j+1], ys[j+1], &rpnts[j+1]);
+		
+		tmp_string_i = (char*) G_malloc(points_i->n_points*(2*MAXFLSIZE+4) 
+		+ MAXFLDNAMESZ);
+		snprintf(tmp_string_i,MAXFLDNAMESZ, "(");
+			   
+           	for (jk = 0; jk < points_i->n_points - 1; jk++) {
+#ifndef X_DISPLAY_MISSING
+                	G_plot_line (points_i->x[jk],   points_i->y[jk],
+                        	points_i->x[jk+1], points_i->y[jk+1]);
+#endif
+
+			if (jk != points_i->n_points - 2) 
+		snprintf (u_str,128,"%f %f,",points_i->x[jk],points_i->y[jk]);
+			else 
+		snprintf (u_str,128,"%f %f",points_i->x[jk+1],points_i->y[jk+1]);
+			strcat (tmp_string_i,u_str);
+			
+			if (verbose) total_vertices++;
+
+		}
+		
+if (j == pa->n_isles - 1){
+	snprintf(u_str,9,"))',-1))");
+} else {
+	snprintf(u_str,4,"),(");
+}	   
+	   	strcat (tmp_string_i,u_str);
+		
+		if (verbose) {
+			printf("n_points_i is %d, v_att is %d, count is %d\n", points_i->n_points,
+			v_att, count);
+
+		
+			total_vects++;
+ 		} 
+		  
+tmp_string = (char*) G_realloc(tmp_string, strlen(tmp_string) + strlen(tmp_string_i));
+strcat (tmp_string,tmp_string_i);
+
+		G_free (tmp_string_i);
+
+            }
+if (verbose) printf ("Executing\n%s;\n\n",tmp_string);    
+	
+	res1 = PQexec (pg_conn, tmp_string);
+    	PQclear(res1);
+
+	   G_free (tmp_string);
+	    
+
+}/*end if !to_postgis*/
+#ifndef X_DISPLAY_MISSING
+           if (fillcolr) G_plot_area (xs, ys, rpnts, rings);
+#endif		
 	   
 	    Vect_destroy_line_struct (points_i);
 	    
