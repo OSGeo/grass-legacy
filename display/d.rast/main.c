@@ -94,12 +94,12 @@ int main(
     fp = G_raster_map_is_fp(name, mapset);
     if(catlist->answer)
     {
-       if(fp) G_warning("Ignoring catlist: map is floating point");
+       if(fp) G_warning("Ignoring catlist: map is floating point (please use 'val=')");
        else parse_catlist (catlist->answers, &mask);
     }
     if(vallist->answer)
     {
-       if(!fp) G_warning("Ignoring vallist: map is integer");
+       if(!fp) G_warning("Ignoring vallist: map is integer (please use 'cat=')");
        else parse_vallist (vallist->answers, &d_mask);
     }
 
