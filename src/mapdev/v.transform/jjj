@@ -1,0 +1,29 @@
+        old = G_define_option();
+        old->key			= "input";
+        old->type			= TYPE_STRING;
+        old->required			= YES;
+        old->multiple			= NO;
+        old->gisprompt			= "old,dig_ascii,ascii";
+        old->description		= "ascii vector map to be transformed";
+        
+        new = G_define_option();
+        new->key			= "output";
+        new->type			= TYPE_STRING;
+        new->required			= YES;
+        new->multiple			= NO;
+        new->gisprompt			= "new,dig_ascii,ascii";
+        new->description		= "resultant ascii vector map";
+
+        xyfile = G_define_option();
+        xyfile->key			= "input";
+        xyfile->type			= TYPE_STRING;
+        xyfile->required		= NO;
+        xyfile->multiple		= NO;
+        xyfile->description		= "file holding transform coordinates";
+        
+        verbose = G_define_option();
+        verbose->key			= "output";
+        verbose->type			= TYPE_STRING;
+        verbose->required		= NO;
+	verbose->options		= "y,yes,n,no";
+        verbose->description		= "print residuals and other info?";
