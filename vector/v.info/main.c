@@ -93,7 +93,7 @@ main (int argc, char *argv[])
 
   if ( Vect_level (&Map) > 1)
   {
-    sprintf (line, "                                         Number of points:     %-9ld", (long)Vect_get_num_nodes(&Map));
+    sprintf (line, "                                         Number of points:     %-9ld", (long)Vect_get_num_points(&Map));
     printline (line);
     sprintf (line, "                                         Number of lines:      %-9ld", (long)Vect_get_num_lines(&Map));
     printline (line);
