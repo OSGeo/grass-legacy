@@ -33,7 +33,7 @@ CONFIG_DIR  = $(DSTDIR)/src/include
 
 # libraries
 DEPGISLIB      = $(LIBDIR)/libgis.a
-GISLIB         = -lgis
+GISLIB         = -lgis $(SOCKLIB) $(INTLLIB)
 
 DEPVASKLIB     = $(LIBDIR)/libvask.a
 VASKLIB        = -lvask
