@@ -286,8 +286,16 @@ G3d_flushTilesInCube (map, xMin, yMin, zMin, xMax, yMax, zMax)
 
   if (! map->useCache) 
     G3d_fatalError ("G3d_flushTilesInCube: function invalid in non-cache mode");
+/*AV*/
+/*BEGIN OF ORIGINAL CODE */
+/*
+//  G3d_getCoordsMap (map, &regionMaxX, &regionMaxY, &regionMaxZ);
+*/
 
-  G3d_getCoordsMap (map, &regionMaxX, &regionMaxY, &regionMaxZ);
+/*AV*/
+/* BEGIN OF MY CODE */
+  G3d_getCoordsMap (map, &regionMaxY, &regionMaxX, &regionMaxZ);
+/* END OF MY CODE */
 
   if ((xMin < 0) && (xMax < 0))
     G3d_fatalError ("G3d_flushTilesInCube: coordinate out of Range");

@@ -231,7 +231,15 @@ G3d_maskTile (map, tileIndex, tile, type)
   G3d_tileIndexOrigin (map, tileIndex, &x, &y, &z);
 
   if (nofNum == map->tileSize) {
-    G3d_getTileDimensionsMap (map, &rows, &cols, &depths);
+/*AV*/
+/* BEGIN OF ORIGINAL CODE */
+/*
+//    G3d_getTileDimensionsMap (map, &rows, &cols, &depths);
+*/
+/*AV*/
+/* BEGIN OF MY CODE*/
+    G3d_getTileDimensionsMap (map, &cols, &rows, &depths);
+/* END OF MY CODE */
     xRedundant = yRedundant = 0;
   }
 
