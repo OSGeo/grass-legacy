@@ -41,8 +41,6 @@ ncols = window.cols;
 row = (window.north - north) / window.ns_res ;
 col = (east - window.west) / window.ew_res ;
 
-
-
         if (data_type == CELL_TYPE) {
          cell = G_allocate_c_raster_buf();
          if (G_get_c_raster_row(fd, cell, row) < 0)
@@ -51,7 +49,7 @@ col = (east - window.west) / window.ew_res ;
          if(G_is_c_null_value(&cell[col]) )
            sprintf(buf, "Null");
          else
-           sprintf(buf, "%i", cell[col]);
+           sprintf(buf, "%d", cell[col]);
          
          if (coords ==1)
           fprintf(fp, "%f %f %f %s\n", east, north, dist, buf);
@@ -79,11 +77,10 @@ col = (east - window.west) / window.ew_res ;
          dcell = G_allocate_d_raster_buf();
          if (G_get_d_raster_row(fd, dcell, row) < 0)
            exit(1);
-         
          if(G_is_d_null_value(&dcell[col]) )
            sprintf(buf, "Null");
          else
-           sprintf(buf, "%d", dcell[col]);
+           sprintf(buf, "%f", dcell[col]);
          
          if (coords ==1)
            fprintf(fp, "%f %f %f %s\n", east, north, dist, buf);
