@@ -1,0 +1,132 @@
+
+
+
+d.rast.db()       MISC. REFERENCE MANUAL PAGES        d.rast.db()
+
+
+
+NAME
+     _d._r_a_s_t._d_b - Generate and display a reclass map based on  the
+     unique values in a database column.
+     (_G_R_A_S_S _D_i_s_p_l_a_y _P_r_o_g_r_a_m)
+
+SYNOPSIS
+     d.rast.db
+     d.rast.db help
+     d.rast.db -s help
+     d.rast.db    key=_n_a_m_e    tab=_n_a_m_e    col=_n_a_m_e     input=_n_a_m_e
+     [output=_n_a_m_e] [join=_t_a_b,_t_a_b_k_e_y,_p_k_e_y]
+
+DESCRIPTION
+     enter short description of d.rast.db here
+
+
+COMMAND LINE OPTIONS
+     Parameters
+
+     _k_e_y  Column corresponding to category values in  raster  map
+          [input]
+
+     _t_a_b  Table containing [col].
+
+     _c_o_l  Column to base reclass on.
+
+     _i_n_p_u_t
+          Name of existing raster file.
+
+     _o_u_t_p_u_t
+          Name of for new reclass file.
+
+     _j_o_i_n JOIN rules (eg. table, key, primekey).
+
+OPTIONAL COMMAND LINE USAGE
+     Flags
+
+     -_s   Use s to input SQL select statements  from  a  prepared
+          file.
+
+     Parameters
+
+     _s_q_l  SQL statements specifying selection criteria.
+
+     _i_n_p_u_t
+          Name of an existing raster file.
+
+     _i_n_p_u_t
+          Name of a new reclass file.
+
+
+
+
+
+
+Sun Release 4.1           Last change:                          1
+
+
+
+
+
+
+d.rast.db()       MISC. REFERENCE MANUAL PAGES        d.rast.db()
+
+
+
+BUGS
+     None
+
+
+SEE ALSO
+     g.column.db, g.select.db, g.stats.db, g.table.db, d.site.db,
+     d.vect.db,     d.what.r.db,     d.what.s.db,    d.what.v.db,
+     r.reclass.db, r.rescale.db, v.reclass.db
+
+
+AUTHOR
+     James A. Farley, Wang Song and W. Fredrick  Limp  University
+     of Arkansas, CAST
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sun Release 4.1           Last change:                          2
+
+
+
