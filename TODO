@@ -4,30 +4,12 @@
 
 < 6.0.0
 -------
-- v.mkgrid (radim)
-- s.medp, s.normal, s.perturb, s.probplt, s.qcount, s.sample (radim)
-- delete vector support files when vector is opened for update (radim)
-- remove db/drivers/dialog (radim)
-- man format for manuals (?)
-- possibility to compile a module in binary distribution (is it possible?) (?)
-- i18n in basic libraries (gis, vector) (?)
-- create automaticaly index for vector attribute tables (postgres) (radim)
-- v.in.asci: input without header, optional location of input file (not dig_ascii)?,
-             option for input format (points x traditional)? (radim)
-- write Vect_map_exists() and implement in g.remove and v.digit -n (radim)
-- fix the problem with FID for external vectors, probably disable attributes for RDBMS data sources (radim)
-- check if history is written in all vector modules (radim)
-- check names of all options and flags (cannot be changed after 6.0.0 in 6.x line) (all)
-- v.db.connect support schemas (radim)
-- fix fixable bugs from bugtracker (all)
-
 
 
 NOT TODO < 6.0.0 (can be done, but cannot not stop 6.0.0 release)
 -----------------------------------------------------------------
 - Cygwin/Windows and other (Non-Linux) platform specific problems
 - i18n translations
-
 
 
 > 6.0.0 
@@ -38,8 +20,10 @@ NOT TODO < 6.0.0 (can be done, but cannot not stop 6.0.0 release)
   - .dmrc: icons entries
 
 Missing modules:
-- g.access: update code from INTER to CMD
 - r. support: update code from INTER to CMD
+
+- possibility to compile a module in binary distribution (is it possible?) (?)
+- write Vect_map_exists() and implement in g.remove and v.digit -n (radim)
 
 - change default color white to black:
    (better define DEFAULT_FG_COLOR, DEFAULT_BG_COLOR in gis.h, update in 5.0 and 5.7)
