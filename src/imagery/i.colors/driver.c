@@ -28,6 +28,7 @@ static
 replot()
 {
     draw_image (VIEW_IMAGE, 0);
+    return 0;
 }
 
 static
@@ -45,6 +46,7 @@ newsize()
     else
 	Erase_view (VIEW_IMAGE2);
     replot();
+    return 0;
 }
 
 static
@@ -60,6 +62,7 @@ determine_size()
 	shrink = 0;
 	enlarge = 1;
     }
+    return 0;
 }
 
 static
