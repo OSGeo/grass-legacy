@@ -134,9 +134,8 @@ main (int argc, char **argv)
     Hwidth = G_define_option();
     Hwidth->key = "hwidth";
     Hwidth->description = "Line width of highlight color (only for p.map output)";
-    Hwidth->type = TYPE_INTEGER;
+    Hwidth->type = TYPE_DOUBLE;
     Hwidth->answer = "0";
-    Hwidth->options = "0-100";
 
     Bcolor = G_define_option();
     Bcolor->key = "background";
