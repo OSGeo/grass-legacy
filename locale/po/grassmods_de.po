@@ -40,7 +40,7 @@ msgstr "Datenbankname"
 
 #: ../db/base/columns.c:90
 msgid "list all columns for a given table."
-msgstr "Listet alle Spalten einer angegebenen Tabelle."
+msgstr "Listet alle Spalten einer angegebenen Tabelle auf."
 
 #: ../db/base/connect.c:27
 msgid "print current connection parameters and exit"
@@ -60,7 +60,7 @@ msgid ""
 "driver/database server."
 msgstr ""
 "Datenbankschema. Bitte benutzen Sie diese Option nicht, wenn Schemas nicht "
-"durch die Datenbank / Server unterstützt werden."
+"durch ihre Datenbank / Server unterstützt werden."
 
 #: ../db/base/connect.c:61
 msgid "Default group of database users to which select privilege is granted."
@@ -68,7 +68,7 @@ msgstr "Standardgruppe der Datenbankbenutzer mit 'SELECT'-Privilegien."
 
 #: ../db/base/connect.c:81
 msgid "Connect to the database through DBMI."
-msgstr "Verbinde zur Datenbank mit DBMI."
+msgstr "Verbindet zur Datenbank mit DBMI."
 
 #: ../db/base/connect.c:117
 msgid "No db connection settings defined. Set with db.connect"
@@ -132,11 +132,11 @@ msgstr "Kann 'from_table' und 'select' nicht miteinander kombinieren."
 
 #: ../db/base/copy.c:107
 msgid "Either 'from_table' or 'select' option must be given."
-msgstr "Entweder 'from_table' oder 'select'-Option muss angegeben werden. "
+msgstr "Entweder muss die Option 'from_table' oder 'select' angegeben werden. "
 
 #: ../db/base/copy.c:110
 msgid "Cannot combine 'select' and 'where' options"
-msgstr "Kann 'select' und 'where'-Optionen nicht kombinieren."
+msgstr "Kann 'select' und 'where'-Optionen nicht miteinander kombinieren."
 
 #: ../db/base/copy.c:118
 msgid "Copy table failed"
@@ -157,7 +157,7 @@ msgstr "Datenbanklocation"
 
 #: ../db/base/databases.c:74
 msgid "List all databases for a given driver and location."
-msgstr "Listet alle Datenbanken für den angegebenen Treiber und Location."
+msgstr "Listet alle Datenbanken für den angegebenen Treiber und Location auf."
 
 #: ../db/base/describe.c:45
 msgid "Cannot describe table"
@@ -165,7 +165,7 @@ msgstr "Kann die Tabelle nicht beschreiben."
 
 #: ../db/base/describe.c:81
 msgid "print column names only instead of full column descriptions"
-msgstr "Gebe nur kurze Spaltennamen anstatt der vollen Spaltenbeschreibung aus."
+msgstr "Gib nur kurze Spaltennamen anstatt der vollen Spaltenbeschreibung aus."
 
 #: ../db/base/describe.c:108
 msgid "Describe a table (in detail)."
@@ -185,7 +185,7 @@ msgstr "Gebe Tabelle aus und beende das Modul."
 
 #: ../db/base/drivers.c:55
 msgid "List all database drivers."
-msgstr "Liste alle verfügbaren Datenbanktreiber auf."
+msgstr "Listet alle verfügbaren Datenbanktreiber auf."
 
 #: ../db/base/execute.c:66 ../db/base/execute.c:70
 #, c-format
@@ -212,7 +212,7 @@ msgstr "Ausgabe Feld-Trennzeichen"
 
 #: ../db/base/select.c:216
 msgid "output vertical record separator"
-msgstr "Vertikales Trennzeichen für die Ausgabe"
+msgstr "Vertikales Trennzeichen für die Ausgabe."
 
 #: ../db/base/select.c:222
 msgid "null value indicator"
@@ -220,27 +220,27 @@ msgstr "Nullwert-Indikator"
 
 #: ../db/base/select.c:229
 msgid "filename with sql statement"
-msgstr "Dateiname mit SQL-Statement"
+msgstr "Dateiname mit SQL-Statement."
 
 #: ../db/base/select.c:234
 msgid "do not include column names in output"
-msgstr "in der Ausgabe kein Spaltennamen ausgeben"
+msgstr "In der Ausgabe kein Spaltennamen ausgeben."
 
 #: ../db/base/select.c:238
 msgid "describe query only (don't run it)"
-msgstr "Beschreibe nur die Abfrage (führe sie nicht aus!)"
+msgstr "Beschreibt die Abfrage nur (führt sie nicht aus!)."
 
 #: ../db/base/select.c:242
 msgid "vertical output (instead of horizontal)"
-msgstr "Vertikale Ausgabe (anstatt horizontal)"
+msgstr "Vertikale Ausgabe (anstatt horizontal)."
 
 #: ../db/base/select.c:246
 msgid "Select data from database."
-msgstr "Slektiere Daten aus der Datenbank."
+msgstr "Selektiere Daten aus der Datenbank."
 
 #: ../db/base/tables.c:87
 msgid "system tables instead of user tables"
-msgstr "Systemtabellen anstatt Benutzertabellen"
+msgstr "Systemtabellen anstatt Benutzertabellen."
 
 #: ../db/base/tables.c:91
 msgid "List all tables for a given database."
@@ -275,7 +275,7 @@ msgid ""
 "data may be lost"
 msgstr ""
 "Spalte '%s' mit Typ 'string': unbekannte Breite -> als Datentyp varchar(250) "
-"abgespeichert; eine Daten können u.U verloren sein."
+"abgespeichert. Einige Daten können u.U verloren sein."
 
 #: ../db/drivers/ogr/describe.c:151 ../db/drivers/ogr/fetch.c:124
 msgid "Unknown type"
@@ -349,7 +349,7 @@ msgid ""
 "Font name (not supported interactively, see also -l flag) or path to "
 "TrueType font (including file name)"
 msgstr ""
-"Schriftname oder Pfad zu den TrueType-Schriften inkiusive Dateiname. Ein "
+"Schriftname oder Pfad zu den TrueType-Schriften inkiusive Dateiname. Eine "
 "interaktive Auwahl ist nicht möglich. Siehe auch Flag -l."
 
 #: ../display/d.font.freetype/main.c:62
@@ -391,7 +391,7 @@ msgstr "Region-Größe ist größer als die Maximal-Region; es wird nichts angezeigt
 #: ../display/d.path/select.c:32
 #, c-format
 msgid "L: from  M: to R: quit\n"
-msgstr "L: Startpunkt M: Zielpunkt R: Abbrechen\n"
+msgstr "L: Startpunkt M: Zielpunkt R: Beenden\n"
 
 #: ../display/d.path/select.c:57
 #, c-format
@@ -568,7 +568,7 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"Bitte klicken Sie mit der Maus an die gewünschte Stelle\n"
+"Bitte klicken Sie mit der Maus an die gewünschte Stelle.\n"
 "\n"
 
 #: ../display/d.what.vect/what.c:426
@@ -606,7 +606,7 @@ msgstr "Benutzung des -j Flags erzwungen.\n"
 #: ../display/d.zoom/main.c:200
 #, c-format
 msgid "ERROR: No map is displayed in GRASS monitor\n"
-msgstr "FEHLER: Keine Karte ist im GRASS-Monitor angezeigt\n"
+msgstr "FEHLER: Keine Karte ist im GRASS-Monitor angezeigt.\n"
 
 #: ../display/d.zoom/main.c:324
 #, c-format
@@ -721,7 +721,7 @@ msgstr "Keine Eingabekarte(n) angegeben."
 msgid "Enter rules, \"end\" when done, \"help\" if you need it.\n"
 msgstr ""
 "Eingabe der Regeln. Bitte am Ende \"end\" eingeben. \"help\" liefert eine "
-"Hilfe.\n"
+"Hilfe bei Bedarf.\n"
 
 #: ../raster/r.colors/rules.c:47
 #, c-format
@@ -757,7 +757,7 @@ msgstr "n%% Farbe\n"
 #: ../raster/r.colors/rules.c:192
 #, c-format
 msgid " nv color\n"
-msgstr "nv color\n"
+msgstr "nv Farbe\n"
 
 #: ../raster/r.colors/rules.c:193
 #, c-format
@@ -772,7 +772,7 @@ msgstr "Farben können sich wie folgt zusammensetzen:\n"
 #: ../raster/r.colors/rules.c:196
 #, c-format
 msgid "or an R:G:B triplet, e.g.: 0:127:255\n"
-msgstr "oder eine R:G:B Tripel, zum Beispiel 0:127:255\n"
+msgstr "oder ein R:G:B Tripel, zum Beispiel 0:127:255\n"
 
 #: ../raster/r.colors/rules.c:237
 #, c-format
@@ -841,7 +841,7 @@ msgid ""
 "complete."
 msgstr ""
 "Weder Sonnenposition noch Ost/Nord, Datum/Uhrzeit/Zeitzone sind komplett "
-"angeben."
+"angegeben."
 
 #: ../raster/r.sunmask/main.c:263
 #, c-format
@@ -1182,7 +1182,7 @@ msgstr "Kann Datenbank '%s' mit Treiber '%s' nicht öffnen."
 
 #: ../vector/v.surf.idw/read_sites.c:45
 msgid "Column type not supported"
-msgstr "Spaltentype nicht unterstützt."
+msgstr "Spaltentyp nicht unterstützt."
 
 #: ../vector/v.surf.idw/read_sites.c:48
 msgid "Cannot select data from table"
@@ -1214,7 +1214,7 @@ msgstr "Erzeuge Punkte entlang der Eingabelinie."
 
 #: ../vector/v.to.points/main.c:155
 msgid "Input map containing lines"
-msgstr "Eingabekarte entält Linien."
+msgstr "Eingabekarte enthält Linien."
 
 #: ../vector/v.to.points/main.c:161
 msgid "Output map where points will be written"
@@ -1327,12 +1327,12 @@ msgid "'%s' has finished the transformation of the vectors.\n"
 msgstr "Die Transformation der Vektoren ist für '%s' beendet.\n"
 
 #: ../vector/v.transform/print_trans.c:29
-#, fuzzy
+#, c-format
 msgid ""
 "                          CHECK MAP RESIDUALS\n"
 "\n"
 msgstr ""
-"                          ÜBERPRÜFE KARTEN RESIDUALE\n"
+"                          ÜBERPRÜFE KARTEN RESIDUEN\n"
 "\n"
 
 #: ../vector/v.transform/print_trans.c:30
@@ -1359,9 +1359,9 @@ msgstr ""
 "  Anzahl der Punkte: %d\n"
 
 #: ../vector/v.transform/print_trans.c:44
-#, fuzzy, c-format
+#, c-format
 msgid "  Residual mean average   : %f\n"
-msgstr "Mittlerer Residual Durchschnitt: %f\n"
+msgstr "Mittlerer Residuen Durchschnitt: %f\n"
 
 #: ../vector/v.transform/setup_trans.c:88
 msgid "The points weren't spread out enough."
