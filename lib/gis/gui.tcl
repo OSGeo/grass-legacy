@@ -1,28 +1,32 @@
 
 lappend auto_path $env(GISBASE)/bwidget
 package require -exact BWidget 1.2.1
-wm title . $pgm_name
 source $env(GISBASE)/etc/gtcltk/select.tcl
+
 set env(GISDBASE) [exec g.gisenv get=GISDBASE]
 set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
 set env(MAPSET) [exec g.gisenv get=MAPSET]
 
-set pw [PanedWindow .pw -side right]
-set optpane [$pw add -minsize 50]
-set outpane [$pw add -minsize 30]
+proc make_dialog {path} {
+	global suf outtext
 
-set optwin [ScrolledWindow $optpane.optwin -relief sunken -borderwidth 2]
-set optfra [ScrollableFrame $optwin.fra -height 200 ]
-$optwin setwidget $optfra
-set suf [$optfra getframe]
-pack $optwin -fill both -expand yes
-pack $optpane $outpane -fill both -expand yes
-pack $pw -fill both -expand yes
+	set pw [PanedWindow $path.pw -side right]
+	set optpane [$pw add -minsize 50]
+	set outpane [$pw add -minsize 30]
 
-set outwin [ScrolledWindow $outpane.win -relief sunken -borderwidth 2]
-set outtext [text $outwin.text -height 5 -width 30] 
-$outwin setwidget $outtext
-pack $outwin $outtext -expand yes -fill both
+	set optwin [ScrolledWindow $optpane.optwin -relief sunken -borderwidth 2]
+	set optfra [ScrollableFrame $optwin.fra -height 200 ]
+	$optwin setwidget $optfra
+	set suf [$optfra getframe]
+	pack $optwin -fill both -expand yes
+	pack $optpane $outpane -fill both -expand yes
+	pack $pw -fill both -expand yes
+
+	set outwin [ScrolledWindow $outpane.win -relief sunken -borderwidth 2]
+	set outtext [text $outwin.text -height 5 -width 30] 
+	$outwin setwidget $outtext
+	pack $outwin $outtext -expand yes -fill both
+}
 
 proc module_description {desc} {
 	global suf
@@ -31,43 +35,57 @@ proc module_description {desc} {
 	pack $suf.labdesc1 $suf.labdesc2 -side top -fill x
 }
 
+proc begin_dialog {pgm desc} {
+	global pgm_name
+	set pgm_name $pgm
+	wm title . $pgm
+	make_dialog {}
+	module_description $desc
+}
+
+proc end_dialog {n} {
+	global nopt
+
+	set nopt $n
+	add_buttons
+}
+
 proc mkcmd {} {
-	global pgm_name nopt
-	global optname optval opttype nmulti optvalname
+	global pgm_name opt nopt
 	set cmd [list $pgm_name]
 	for {set i 1} {$i <= $nopt } {incr i} {
-		switch -- $opttype($i) {
+		switch -- $opt($i,class) {
 			multi {
 				set domulti 0
-				for {set j 1} {$j <= $nmulti($i) } {incr j} {
-					if { $optval($i,$j) == 1 } {
+				for {set j 1} {$j <= $opt($i,nmulti) } {incr j} {
+					if { $opt($i,val,$j) == 1 } {
 						set domulti 1
 					}
 				}
 				if { $domulti == 1 } {
-					set opt "$optname($i)="
+					set opt "$opt($i,name)="
 					set first 1
-					for {set j 1} {$j <= $nmulti($i) } {incr j} {
-						if { $optval($i,$j) == 1 } {
+					for {set j 1} {$j <= $opt($i,nmulti) } {incr j} {
+						if { $opt($i,val,$j) == 1 } {
 							if { $first == 1 } {
 								set first 0
 							} else {
 								append opt ","
 							}
-							append opt "$optvalname($i,$j)"
+							append opt "$opt($i,valname,$j)"
 						}
 					}
 					lappend cmd $opt
 				}
 			}
 			opt {
-				if {[string length $optval($i)] > 0} {
-					lappend cmd "$optname($i)=$optval($i)"
+				if {[string length $opt($i,val)] > 0} {
+					lappend cmd "$opt($i,name)=$opt($i,val)"
 				}
 			}
 			flag {
-				if { $optval($i) == 1 } {
-					lappend cmd "-$optname($i)"
+				if { $opt($i,val) == 1 } {
+					lappend cmd "-$opt($i,name)"
 				}
 			}
 		}
@@ -132,25 +150,15 @@ proc add_buttons {} {
 	pack .run .close -side left -expand yes -padx 20 -pady 5
 }
 
-proc do_flag {optn key desc} {
-	global opttype optname optval suf
-	set opttype($optn) flag
-	frame $suf.val$optn
-	checkbutton $suf.val$optn.chk -text $desc -variable optval($optn) -onvalue 1 -offvalue 0 -anchor w
-	pack $suf.val$optn.chk -side left
-	set optname($optn) $key
-	pack $suf.val$optn -side top -fill x
-}
-
 proc do_button_file {optn} {
-	global optval optmulti suf
+	global opt suf
 	button $suf.val$optn.sel -text {>} -command {
 		set filename [tk_getOpenFile -title {Load File}]
 		if {$filename != ""} {
-			if {$optmulti($optn) && $optval($optn) != ""} {
-				append optval($optn) "," $filename
+			if {$opt($optn,multi) && $opt($optn,val) != ""} {
+				append opt($optn,val) "," $filename
 			} {
-				set optval($optn) $filename
+				set opt($optn,val) $filename
 			}
 		}
 	}
@@ -158,26 +166,26 @@ proc do_button_file {optn} {
 }
 
 proc get_map {optn elem} {
-	global optval optmulti
+	global opt
 	set val [GSelect_::create $elem]
 	if {$val != ""} {
-		if {$optmulti($optn) && $optval($optn) != ""} {
-			append optval($optn) "," $val
+		if {$opt($optn,multi) && $opt($optn,val) != ""} {
+			append opt($optn,val) "," $val
 		} {
-			set optval($optn) $val
+			set opt($optn,val) $val
 		}
 	}
 }
 
 proc do_button_old {optn elem} {
-	global optval suf
-	button $suf.val$optn.sel -text {>} -command "get_map $optn $elem"
+	global opt suf
+	button $suf.val$optn.sel -text {>} -command [list get_map $optn $elem]
 	pack $suf.val$optn.sel -side left -fill x
 }
 
 proc do_entry {optn} {
-	global optval suf
-	Entry $suf.val$optn.val -textvariable optval($optn)
+	global opt suf
+	Entry $suf.val$optn.val -textvariable opt($optn,val)
 	pack $suf.val$optn.val -side left -fill x -expand yes
 }
 
@@ -189,15 +197,72 @@ proc do_label {optn desc type reqd} {
 }
 
 proc do_check {optn i s} {
-	global suf optval optvalname
-	checkbutton $suf.val$optn.val$i -text $s -variable optval($optn,$i) -onvalue 1 -offvalue 0
+	global suf
+	checkbutton $suf.val$optn.val$i -text $s -variable opt($optn,val,$i) -onvalue 1 -offvalue 0
 	pack $suf.val$optn.val$i -side left
-	set optvalname($optn,$i) $s
+	set opt($optn,valname,$i) $s
 }
 
 proc do_combo {optn vals} {
-	global suf optval
-	ComboBox $suf.val$optn.val -underline 0 -labelwidth 0 -width 25 -textvariable optval($optn) -values $vals
+	global suf opt
+	ComboBox $suf.val$optn.val -underline 0 -labelwidth 0 -width 25 -textvariable opt($optn,val) -values $vals
 	pack $suf.val$optn.val -side left
+}
+
+proc add_option {optn optlist} {
+	global suf opt
+
+	array set opts $optlist
+
+	set opts(class) [expr {$opts(multi) && $opts(options) != {} ? "multi" : "opt"}]
+
+	foreach key {class name type multi desc required options answer prompt} {
+		set opt($optn,$key) $opts($key)
+	}
+
+	do_label $optn $opts(desc) $opts(type) $opts(required)
+	frame $suf.val$optn
+
+	if {$opts(options) != {}} {
+		set vals [split $opts(options) ,]
+		set opt($optn,nmulti) [llength $vals]
+		if {$opts(multi)} {
+			set i 1
+			foreach x $vals {
+				do_check $optn $i $x
+				incr i
+			}
+		} else {
+			do_combo $optn $vals
+		}
+	} else {
+		set prompt $opts(prompt)
+		if {$prompt != {}} {
+			if {[string match file* $prompt]} {
+				do_button_file $optn
+			}
+			if {[string match old* $prompt]} {
+				set p [split $prompt ,]
+				do_button_old $optn [lindex $p 1]
+			}
+		}
+		do_entry $optn
+		if {$opts(answer) != {}} {
+			set opt($optn,val) $opts(answer)
+		}
+	}
+
+	pack $suf.val$optn -side top -fill x
+}
+
+proc add_flag {optn key desc} {
+	global opt suf
+
+	set opt($optn,class) flag
+	frame $suf.val$optn
+	checkbutton $suf.val$optn.chk -text $desc -variable opt($optn,val) -onvalue 1 -offvalue 0 -anchor w
+	pack $suf.val$optn.chk -side left
+	set opt($optn,name) $key
+	pack $suf.val$optn -side top -fill x
 }
 
