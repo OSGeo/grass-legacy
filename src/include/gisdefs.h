@@ -790,6 +790,7 @@ struct Flag *G_define_flag(void);
 struct Option *G_define_option(void);
 int G_parser(int, char **);
 int G_usage(void);
+int G_usage_xml (void);
 char *G_recreate_command(void);
 
 /* percent.c */
