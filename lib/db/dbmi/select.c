@@ -226,11 +226,20 @@ int db_select_CatValArray ( dbDriver *driver, char *tab, char *key, char *col, c
     db_CatValArray_alloc( cvarr, nrows );
 
     table = db_get_cursor_table (&cursor);
-    column = db_get_table_column(table, 1); /* first column */
-    type = db_get_column_sqltype(column);
-    type = db_sqltype_to_Ctype(type);
 
-    G_debug (3, "  type = %d", type );
+    /* Check if key column is integer */
+    column = db_get_table_column(table, 0); 
+    type = db_sqltype_to_Ctype( db_get_column_sqltype(column) );
+    G_debug (3, "  key type = %d", type );
+
+    if ( type != DB_C_TYPE_INT ) {
+	G_fatal_error ( "Key column type is not integer" );
+    }	
+
+    column = db_get_table_column(table, 1); 
+    type = db_sqltype_to_Ctype( db_get_column_sqltype(column) );
+    G_debug (3, "  col type = %d", type );
+
     if ( type != DB_C_TYPE_INT && type != DB_C_TYPE_DOUBLE ) {
 	G_fatal_error ( "Column type not supported by db_select_to_array()" );
     }	
