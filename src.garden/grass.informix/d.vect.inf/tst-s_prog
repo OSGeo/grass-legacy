@@ -1,0 +1,5 @@
+:
+# test for d.vect.db using prebuilt SQL command file
+# DB=tiger, GISdb=SECO
+#
+d.vect.db -s sql=vect.sql map=seco_tgr_hys color=red
