@@ -1,0 +1,9 @@
+
+
+d.points - 
+
+d.points displays points whose coordinate locations are specified by
+the user and located within the current \geographic region\ in the
+active display \frame\ on the graphics monitor.
+ 
+ Manual entry for \d.points\
