@@ -404,13 +404,13 @@ main (int argc, char **argv)
 
     /* Do the zoom */
     G_get_window(&window);
-    if ( full->answer == 1 )
+    if ( full->answer )
 	    stat = zoomwindow(&window, 1, magnify);
     else {
-	if ( hand->answer == 0 )
-	    make_window_box (&window, magnify, 0, 0); 
-        else 
+	if ( hand->answer )
 	    make_window_box (&window, magnify, 0, 1); 
+        else 
+	    make_window_box (&window, magnify, 0, 0); 
     }
 
     R_close_driver();
