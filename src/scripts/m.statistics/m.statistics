@@ -1,0 +1,61 @@
+#!/bin/sh
+# Statistical analysis of GRASS raster maps
+# written by Markus Neteler 23. July 1998
+#            neteler@geog.uni-hannover.de
+
+# usage: m.statistics [basemap] covermap
+
+if test "$GISBASE" = ""; then
+echo "You must be in GRASS to run this program."
+exit
+fi
+
+if test "$1" = ""
+then
+ echo ""
+ echo "This module calculates univariate statistics from a GRASS raster map"
+ echo ""
+ echo "Usage: m.statistics [basemap] covermap"
+ echo ""
+ echo "Parameter basemap is an optional masking map (containing areas)"
+ echo ""
+ exit
+fi
+
+# test: only one parameter specified?
+echo ""
+if test "$2" = ""
+then
+   echo "Calculation for full image $1..."
+   r.stats input=$1 > /tmp/r.statistics.txt
+else
+   echo "Calculation for images $2 masked through $1..."
+   r.stats input=$1,$2 |grep '1 ' |cut -d' ' -f2 > /tmp/r.statistics.txt
+fi
+
+# calculate statistics
+cat /tmp/r.statistics.txt | awk 'BEGIN {sum = 0.0 ; sum2 = 0.0} 
+NR == 1{min = $1 ; max = $1}
+       {sum += $1 ; sum2 += $1 * $1 ; N++}
+       {
+        if ($1 > max) {max = $1}
+        if ($1 < min) {min = $1}
+       }
+END{
+print "Minimum:",min
+print min >> "statistics.txt"
+print "Maximum:",max
+print max >> "statistics.txt"
+print "Arithm. Mean: ",sum/N
+print sum/N >> "statistics.txt"
+print "Variance: ",(sum2 - sum*sum/N)/N
+print (sum2 - sum*sum/N)/N >> "statistics.txt"
+print "Standarddeviation:",sqrt((sum2 - sum*sum/N)/N)
+print sqrt((sum2 - sum*sum/N)/N) >> "statistics.txt"
+print "Variation coefficient:",100*(sqrt((sum2 - sum*sum/N)/N))/(sum/N),"%"
+print 100*(sqrt((sum2 - sum*sum/N)/N))/(sum/N) >> "statistics.txt"
+}'
+echo "The results are stored in statictics.txt." 
+echo "---------------------------------------------------"
+rm /tmp/r.statistics.txt
+
