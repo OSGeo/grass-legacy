@@ -2,7 +2,7 @@
 ############################################################################
 #
 # MODULE:	d.redraw
-# AUTHOR(S):	Huidae Cho - grass@geni.cemtlo.com
+# AUTHOR(S):	Huidae Cho - grass4u@gmail.com
 # PURPOSE:	To redraw current displayed maps without saving d.save info
 #		before d.erase.
 # COPYRIGHT:	(C) 2000 by the GRASS Development Team

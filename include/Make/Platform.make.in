@@ -4,7 +4,7 @@
 # AUTHOR(S):	Original author unknown - probably CERL
 #		Markus Neteler - Germany - neteler@geog.uni-hannover.de
 #   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
-#   	    	Huidae Cho - Korea - hdcho@geni.knu.ac.kr
+#   	    	Huidae Cho - Korea - grass4u@gmail.com
 #   	    	Eric G. Miller - egm2@jps.net
 # PURPOSE:  	The source file for this Makefile is in src/CMD/head/head.in.
 #		It is the top part of a file called make.rules which is used
