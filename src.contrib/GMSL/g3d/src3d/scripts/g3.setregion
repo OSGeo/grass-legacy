@@ -20,9 +20,12 @@ function usage()
  echo ""
  echo "g3.setregion creates a WIND3 from current 2D region"
  echo ""
- echo "Usage: g3.setregion  [n=] [s=] [w=] [e=] [t=] [b=] [res=] [dres=]"
+ echo "Usage:"
+ echo "   g3.setregion  [n=] [s=] [w=] [e=] [t=] [b=] [res=] [dres=] [reg=] [save=]"
  echo ""
- echo "dres is depth resolution, t/b/dres: only int numbers allowed"
+ echo "dres= is depth resolution, t/b/dres: only int numbers allowed"
+ echo "save= save 3Dregion to extra file"
+ echo "reg= read from saved 3dregion"
  echo ""
 }
 
@@ -30,6 +33,17 @@ if [ "$1" = "" -o "$1" = "help" -o "$1" = "-help" -o "$1" = "-h" ]
 then
  usage
  exit
+fi
+
+#is G3D already defined?
+if test ! -f $LOCATION/WIND3
+then
+  echo "ERROR: No 3d region definition found!"
+  echo ""
+  echo "Either use g3.createwind to define 3dregion or restore from"
+  echo "saved 3dregion with:"
+  echo "    g3.setregion reg=<3dregion_file>"
+  exit 1
 fi
 
 north=`cat $LOCATION/WIND | awk ' /north:/ { print $2 }'`
@@ -44,9 +58,9 @@ dres=`cat $LOCATION/WIND3 | awk ' /t-b resol:/ { printf "%.0f", $3 }'`
 
 # add crash check here, then previoulsy run g3.createwind
 
-
-echo "Previous settings:"
-echo "n:$north s:$south w:$west e:$east t:$top b:$bottom r:$res dres:$dres"
+currsettings=`echo "n:$north s:$south w:$west e:$east t:$top b:$bottom r:$res dres:$dres"`
+echo "Current/old settings:"
+echo "$currsettings"
 
 for i
 do
@@ -59,6 +73,28 @@ do
             b=*) bottom=`echo $i | awk -F '=' '{print $2}'` ;;
             res=*) res=`echo $i | awk -F '=' '{print $2}'` ;;
             dres=*) dres=`echo $i | awk -F '=' '{print $2}'` ;;
+            save=*) WINDsavename=`echo $i | cut -d'=' -f2`
+                    cp $LOCATION/WIND3 $LOCATION/WIND3.$WINDsavename
+                    echo "Saved currend WIND3 region to WIND3.$WINDsavename"
+                    echo "Current settings remain unchanged."
+                    exit 1 ;;
+            reg=*) WINDreadname=`echo $i | cut -d'=' -f2`
+                   if test ! -f $LOCATION/WIND3.$WINDreadname
+                   then
+                     echo "ERROR: WIND3 settings file $WINDreadname doesn't exist!"
+                     exit 1
+                   else 
+                     cp $LOCATION/WIND3.$WINDreadname $LOCATION/WIND3
+                     cp $LOCATION/WIND3.$WINDreadname $LOCATION/../PERMANENT/DEFAULT_WIND3
+                     echo " read WIND3 settings from $WINDreadname"
+                     #reset 2D region not possible
+                     g3.setregion -p
+                     exit
+                   fi ;;
+            -p) exit ;; # in case we want to print settings
+                *) error=`echo $i | cut -d'=' -f1`
+                   echo "ERROR: unknown parameter $error. Exit"
+                   exit 1 ;;
         esac
 done
 
