@@ -4,7 +4,7 @@
 # Generated automatically using autoconf version 2.13 
 # Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
 #
-# $Id: configure,v 1.38 2000-10-20 15:38:53 cho Exp $
+# $Id: configure,v 1.39 2000-10-28 09:13:01 markus Exp $
 # This configure script is free software; the Free Software Foundation
 # gives unlimited permission to copy, distribute and modify it.
 #
@@ -3695,8 +3695,8 @@ echo $OPENGLWMLIB
 
 # Check for ODBC driver include
 echo $ac_n "Checking for sql.h... $ac_c"
-ODBCINCPATHs="/usr/include /usr/local/include \
-              /usr/X11R6/include /opt/include"
+ODBCINCPATHs="/usr/include /usr/include/odbc /usr/local/include \
+              /usr/local/include/odbc /usr/X11R6/include /opt/include"
 
 if [ -z "$ODBCINC" ]; then
    ODBCINC=NO
