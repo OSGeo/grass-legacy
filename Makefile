@@ -33,12 +33,6 @@ MAKE=			make
 INSTALL=    	    	cp
 
 
-OPENGLBASED = visualization
-#compile if OPENGLBASED present:
-ifneq ($(strip $(OPENGLLIB)),)
-    SUBDIRS += $(OPENGLBASED)
-endif
-
 SUBDIRS = \
 	lib \
 	db \
@@ -52,8 +46,13 @@ SUBDIRS = \
 	tools \
 	vector
 
-FILES = COPYING README 
+OPENGLBASED = visualization
+#compile if OPENGLBASED present:
+ifneq ($(strip $(OPENGLLIB)),)
+    SUBDIRS += $(OPENGLBASED)
+endif
 
+FILES = COPYING README 
 
 BIN_DIST_FILES = $(FILES) \
 	grass${VERSION_MAJOR}${VERSION_MINOR}.tmp \
