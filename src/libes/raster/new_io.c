@@ -8,6 +8,8 @@
 #include "gis.h"
 #include <errno.h>
 
+#include "glocale.h"
+
 extern int errno;
 
 #define BUFFERSIZ   2048
@@ -115,7 +117,7 @@ int _get ( char *buf,int n)
         x = read (_rfd, buf, n);
         if (x <= 0)
         {
-            fprintf (stderr, "ERROR %s from graphics driver.\n", x?"reading":"eof");
+            fprintf (stderr, _("ERROR %s from graphics driver.\n"), x?"reading":"eof");
             exit(1);
         }
         n -= x;
@@ -160,8 +162,8 @@ int R_open_driver()
     {
         if (verbose)           /* #31 Aug 87 - want error stuff */
         {
-            fprintf(stderr,"No graphics monitor has been selected for output.\n");
-            fprintf(stderr,"Please run \"d.mon\" to select a graphics monitor.\n");
+            fprintf(stderr,_("No graphics monitor has been selected for output.\n"));
+            fprintf(stderr,_("Please run \"d.mon\" to select a graphics monitor.\n"));
             exit(-1);
         }
         else
@@ -175,8 +177,8 @@ int R_open_driver()
         {
             if (verbose)
             {
-                fprintf(stderr,"No such graphics monitor as <%s>.\n",name);
-                fprintf(stderr,"Please run \"d.mon\" to select a valid graphics monitor.\n");
+                fprintf(stderr,_("No such graphics monitor as <%s>.\n"),name);
+                fprintf(stderr,_("Please run \"d.mon\" to select a valid graphics monitor.\n"));
                 exit(-1);
             }
             else
@@ -195,10 +197,10 @@ int R_open_driver()
                 if (verbose)
                 {
                     if ((user = who_locked_driver()) == NULL)
-                        fprintf(stderr,"Error - Monitor <%s> is in use.\n",name);
+                        fprintf(stderr,_("Error - Monitor <%s> is in use.\n"),name);
                     else
 		      {
-                        fprintf(stderr,"Error - Monitor <%s> is in use by %s.\n",name,user);
+                        fprintf(stderr,_("Error - Monitor <%s> is in use by %s.\n"),name,user);
 			pw = getpwuid(getuid());
 			if(strcmp(pw->pw_name, user)==0)
 			/* in use by me (on another session of grass) */
@@ -216,7 +218,7 @@ int R_open_driver()
                 if (verbose)
                 {
 		    char file[512];
-                    fprintf(stderr,"Error - Could not complete locking process for monitor <%s>.\n",name);
+                    fprintf(stderr,_("Error - Could not complete locking process for monitor <%s>.\n"),name);
 		    lockfile(file);
 		    fprintf (stderr, "Lock file is %s\n", file);
                     exit(-1);
@@ -234,17 +236,17 @@ int R_open_driver()
                     switch (fifoto (our_input_file,our_output_file,try?15:3))
                     {
                     case -1:
-                        fprintf(stderr, "\07Error - Can't set up pipe to graphics device.\n");
+                        fprintf(stderr, _("\07Error - Can't set up pipe to graphics device.\n"));
                         unlock_driver(1);
                         exit(-1);
                     case 0:
                         if (try)
                         {
-                            fprintf (stderr, "Error - Graphics monitor <%s> not running!\n",name);
+                            fprintf (stderr, _("Error - Graphics monitor <%s> not running!\n"),name);
                             unlock_driver(1);
                             exit(1);
                         }
-                        fprintf (stderr, "\07Please start graphics monitor <%s>.\n",name);
+                        fprintf (stderr, _("\07Please start graphics monitor <%s>.\n"),name);
                         break;
                     default:
                         sync_driver(name); /* syncronize driver */
@@ -360,12 +362,12 @@ static int sync_driver(char *name)
         if (try)
             break;
 
-        fprintf (stderr, "\7Warning - no response from graphics monitor <%s>.\n",
+        fprintf (stderr, _("\7Warning - no response from graphics monitor <%s>.\n"),
             name);
-        fprintf (stderr, "Check to see if the mouse is still active.\n");
+        fprintf (stderr, _("Check to see if the mouse is still active.\n"));
         signal(SIGALRM, dead);
     }
-    fprintf (stderr, "ERROR - no response from graphics monitor <%s>.\n",
+    fprintf (stderr, _("ERROR - no response from graphics monitor <%s>.\n"),
         name);
     exit(-1);
 }
