@@ -339,3 +339,76 @@ db_get_table_delete_priv (table)
     return table->priv_delete;
 }
 
+/*!
+ \brief Create SQL CREATE sring from table definition
+ \return 
+ \param 
+*/
+int
+db_table_to_sql ( dbTable *table, dbString *sql)
+{
+    int col, ncols;
+    dbColumn   *column;
+    char *colname;
+    int sqltype, ctype;
+    char buf[500];
+    
+    db_set_string ( sql, "create table ");
+    db_append_string ( sql, db_get_table_name ( table ) );
+    db_append_string ( sql, " ( ");
+
+    ncols = db_get_table_number_of_columns(table);
+
+    for ( col = 0; col < ncols; col++ ) {
+        column = db_get_table_column (table, col);
+	colname = db_get_column_name (column);
+	sqltype = db_get_column_sqltype (column);
+	
+	ctype = db_sqltype_to_Ctype(sqltype);
+	G_debug ( 3, "%s (%s)", colname, db_sqltype_name(sqltype) );
+
+	if ( col > 0 ) db_append_string ( sql, ", " );
+	db_append_string ( sql, colname );
+	db_append_string ( sql, " " );
+	/* Note: I found on Web:
+	*  These are the ANSI data types: BIT, CHARACTER, DATE, DECIMAL, DOUBLE PRECISION, FLOAT, 
+	*  INTEGER, INTERVAL, NUMERIC, REAL, SMALLINT, TIMESTAMP, TIME, VARBIT, VARCHAR, CHAR
+	*  ...
+	*  Thus, the only data types you can use with the assurance that they will 
+	*  work everywhere are as follows:
+	*  DOUBLE PRECISION, FLOAT, INTEGER, NUMERIC, REAL, SMALLINT, VARCHAR, CHAR */
+	switch ( sqltype ) {
+	    case DB_SQL_TYPE_CHARACTER:
+		sprintf (buf, "varchar(%d)", db_get_column_length (column) );
+		db_append_string ( sql, buf);
+                break;
+	    case DB_SQL_TYPE_SMALLINT:
+	    case DB_SQL_TYPE_INTEGER:
+		db_append_string ( sql, "integer");
+		break;
+	    case DB_SQL_TYPE_REAL:
+	    case DB_SQL_TYPE_DOUBLE_PRECISION:
+	    case DB_SQL_TYPE_DECIMAL:
+	    case DB_SQL_TYPE_NUMERIC:
+	    case DB_SQL_TYPE_INTERVAL:
+		db_append_string ( sql, "double precision");
+		break;
+	    case DB_SQL_TYPE_DATE:
+		db_append_string ( sql, "date");
+		break;
+	    case DB_SQL_TYPE_TIME:
+		db_append_string ( sql, "time");
+		break;
+	    case DB_SQL_TYPE_TIMESTAMP:
+		db_append_string ( sql, "datetime");
+		break;
+ 	    default:
+                G_warning ( "Unknown column type (%s)", colname);
+		return DB_FAILED;
+	}
+    }
+    db_append_string ( sql, " )" );
+    G_debug ( 3, db_get_string(sql) );
+    
+    return DB_OK;
+}

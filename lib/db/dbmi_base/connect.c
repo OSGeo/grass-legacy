@@ -20,6 +20,9 @@ db_set_connection( connection )
     if ( connection->schemaName )
 	G_setenv2("DB_SCHEMA", connection->schemaName, G_VAR_MAPSET);
 
+    if ( connection->group )
+	G_setenv2("DB_GROUP", connection->group, G_VAR_MAPSET);
+
   /* below commented due to new mechanism:
     if ( connection->hostName )
 	G_setenv("DB_HOST", connection->hostName);
@@ -50,6 +53,7 @@ db_get_connection( connection )
     connection->driverName = G__getenv2("DB_DRIVER", G_VAR_MAPSET);
     connection->databaseName = G__getenv2("DB_DATABASE", G_VAR_MAPSET);    
     connection->schemaName = G__getenv2("DB_SCHEMA", G_VAR_MAPSET);    
+    connection->group = G__getenv2("DB_GROUP", G_VAR_MAPSET);    
 
   /* below commented due to new mechanism:
     connection->hostName = G__getenv("DB_HOST");

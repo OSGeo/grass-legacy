@@ -59,3 +59,20 @@ db_get_default_schema_name ( void )
 
     return NULL;
 }
+
+/*!
+ \fn char * db_get_default_group_name ( void )
+ \brief returns pointer to default group name
+ \return returns pointer to default group name or NULL if not set
+*/
+char *
+db_get_default_group_name ( void )
+{
+    char *gr;
+    
+    if ( (  gr = G__getenv2("DB_GROUP", G_VAR_MAPSET) )  )
+	  return G_store(gr);
+
+    return NULL;
+}
+
