@@ -80,7 +80,7 @@ G__open (element, name, mapset, mode)
     char *mapset;
 {
     char path[1024];
-    char temp[256], maps[256];
+    char xname[512], xmapset[512];
 
 
     G__check_gisinit();
@@ -88,11 +88,11 @@ G__open (element, name, mapset, mode)
 /* READ */
     if (mode == 0)
     {
-	if (G__name_in_mapset (name, temp, maps))
+	if (G__name_is_fully_qualified (name, xname, xmapset))
 	{
-	    if (strcmp (maps, mapset) != 0)
+	    if (strcmp (xmapset, mapset) != 0)
 		    return -1;
-	    name = temp;
+	    name = xname;
 	}
 	if (! G_find_file (element, name, mapset))
 	    return -1;
@@ -102,11 +102,11 @@ G__open (element, name, mapset, mode)
 /* WRITE */
     if (mode == 1 || mode == 2)
     {
-	if (G__name_in_mapset (name, temp, maps))
+	if (G__name_is_fully_qualified (name, xname, xmapset))
 	{
-	    if (strcmp (maps, G_mapset()) != 0)
+	    if (strcmp (xmapset, G_mapset()) != 0)
 		return -1;
-	    name = temp;
+	    name = xname;
 	}
 
 	if (G_legal_filename(name) == -1)
@@ -183,4 +183,18 @@ G_fopen_append (element, name)
     lseek (fd, 0L, 2);
 
     return fdopen (fd, "a");
+}
+
+FILE *
+G_fopen_modify (element, name)
+    char *element, *name;
+{
+    int fd;
+
+    fd = G__open (element, name, G_mapset(), 2);
+    if (fd < 0)
+	return (FILE *) 0;
+    lseek (fd, 0L, 0);
+
+    return fdopen (fd, "r+");
 }
