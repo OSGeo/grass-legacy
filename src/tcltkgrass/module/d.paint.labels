@@ -1,0 +1,5 @@
+interface_build {
+    {d.paint.labels} 0
+    {Displays text labels formatted for use with GRASS paint (p.labels, p.map) output.}
+    {entry file {File containing paint labels:} 0 label}
+}
