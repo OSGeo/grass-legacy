@@ -65,8 +65,8 @@ In similar principle the Linke turbidity factor (<i>linkein</i>, <i>lin</i>
 <p>Besides clear-sky radiations, user can compute a real-sky radiation (beam,
 diffuse) using <i>coefbh</i> and <i>coefdh </i>input raster maps defining
 the fraction of the respective clear-sky radiations reduced by atmospheric
-factors (e.g. cloudiness). Usually these coefficients can be obtained from
-a long-terms meteorological measurements. </p>
+factors (e.g. cloudiness). The value is between 0-1. Usually these
+coefficients can be obtained from a long-terms meteorological measurements.</p>
 <p>The solar irradiation or irradiance raster maps <i>beam_rad</i>, <i>diff_rad</i>
 , <i>refl_rad</i> are computed for a given day <i>day,</i> latitude <i>lat
 (latin), </i>elevation <i>elevin</i>, slope <i>slopein</i> and aspect <i>
@@ -128,87 +128,6 @@ reclassified into coarser categories. This could lead to incorrect results.
 In the first mode it calculates solar incidence angle and solar irradiance
 raster maps using the set local time. In the second mode daily sums of solar
 irradiation [kWh.m-2.day-1] are computed for a specified day. </p>
-
-<h3> Parameters:</h3>
-<dl>
-<dt> <b>elevin</b>=name</dt>
-<dd> Use the existing raster file with elevationsname
-as input [metres].</dd>
-<dt> <b>aspin</b>=name</dt>
-<dd> Use the existing raster file with aspectname
-as input (aspect or azimuth of the solar panel) [decimal degrees].</dd>
-<dt> <b>slopein</b>=name</dt>
-<dd> Use the existing raster file with
-slopename as input (slope angle or solar panel inclination raster file) [decimal
-degrees].</dd>
-<dt> <b>linkein</b>=name</dt>
-<dd> Use the existing raster file
-with Linke atmospheric turbidity factor [-].</dd>
-<dt> <b>lin</b>=val</dt>
-<dd> Set the single value of
-the Linke atmospheric turbidity factor (default: 3.0).</dd>
-<dt> <b>albedo</b>=name</dt>
-<dd> Use the existing raster file with ground albedo raster file [-].</dd>
-<dt> <b>alb</b>=val</dt>
-<dd> Set the single value
-of the ground albedo (default: 0.2).</dd>
-<dt> <b>latin</b>=name</dt>
-<dd> Use the existing
-raster file with.latitude raster file [decimal degrees].</dd>
-<dt> <b>lat</b>=name</dt>
-<dd> Set the
-single value of latitude [decimal degrees] to val.</dd>
-<dt> <b>coefbh</b>=name</dt>
-<dd> The real-sky beam radiation coefficient file.</dd>
-<dt> <b>coefdh</b>=name</dt>
-<dd> The real-sky diffuse radiation coefficient file.</dd>
-<dt> <b>incidout</b>=name</dt>
-<dd>
- Output solar incidence angle raster file [decimal degrees] (mode 1 only).</dd>
-<dt> <b>insol_time</b>=name</dt>
-<dd>
- Output time duration of the beam irradiation raster file [min.] (mode 2 only).</dd>
-<dt> <b>
-beam_rad</b>=name</dt>
-<dd>
- Output beam irradiance [W.m-2] (mode 1) or irradiation raster file [Wh.m-2.day-1] 
-(mode 2).</dd>
-<dt> <b>
-diff_rad</b>=name</dt>
-<dd>
- Output diffuse irradiance [W.m-2] (mode 1) or irradiation raster file [Wh.m-2.day-1] 
-(mode 2).</dd>
-<dt> <b>
-refl_rad</b>=name</dt>
-<dd>
- Output ground reflected irradiance [W.m-2] (mode 1) or irradiation raster 
-file [Wh.m-2.day-1] (mode 2).</dd>
-<dt> <b>
-day</b>=val</dt>
-<dd>
- Set the number of day of the year [1-365] to val.</dd>
-<dt>
- <b>step</b>=val</dt>
-<dd>
- Set the time step when computing radiation daily sums [decimal hours] (default 
-0.5 hour) to val.</dd>
-<dt>
- <b>declin</b>=val</dt>
-<dd>
- Set the declination value (overriding the internally computed value) [radians] 
-to val.</dd>
-<dt>
- <b>time</b>=val</dt>
-<dd>
- Set the decimal value of local (solar) time [decimal hours] (to be set for
-mode 1 only) to val.</dd>
-<dt>
- <b>dist</b>=val</dt>
-<dd>
- Set the step coefficient defining the sampling distance
-(0.2-1.5) in relative values of a cell size to val 
- (default: 1.0).</dd>
-<br>
 
 <h2>
 NOTES</h2>
