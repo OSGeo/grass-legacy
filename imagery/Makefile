@@ -12,6 +12,7 @@ SUBDIRS1 = \
 	i.group \
 	i.his.rgb \
 	i.maxlik \
+	i.ortho.photo \
 	i.points \
 	i.rectify \
 	i.rgb.his \
