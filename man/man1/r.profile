@@ -20,6 +20,10 @@ The lines are described by their starting and ending coordinates.
 The profiles may be single-cell wide lines, or multiple-cell wide lines.
 The output, for each profile, may be the category values assigned to each
 of the cells, or a single aggregate value (e.g., average or median value).
+
+\fIr.profile\fR automatically orders the coordinates.  The user cannot
+specify the order for a specific profile; the direction is always
+northwest to southeast.
 .SH "COMMAND LINE OPTIONS"
 \fBParameters:\fR
 .IP \fBmap\*=\fIname\fR 18
