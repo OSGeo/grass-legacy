@@ -1,4 +1,3 @@
-# %W% %G%
 
 LIST = main.o\
 	ask_files1.o\
