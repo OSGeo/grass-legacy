@@ -1,0 +1,43 @@
+
+
+                                   APPENDIX I                    1
+                              GRASS-MAPGEN User's Guide
+            redo                                            redo
+
+
+            
+            
+            NAME 
+            redo - Creates new graphic files for the ovm directory after
+            definition parameters for the map element have been changed.
+            
+            SYNOPSIS 
+            redo [all] [fills] [labels] [legend] [lines] [mapdef] [misc] 
+                 [symbols]
+            
+            DESCRIPTION  
+            redo executes all of the parameter files, for one or more
+            element directories, to create new graphic files for the ovm  
+            directory.  Redo executes the appropriate redo.[element] 
+            command for every overlay in the element directory.
+            
+            EXAMPLE 
+            If the user created four extensive area fill layers for the
+            map composition, and later wished to revise the plotting
+            color on two layers, three steps would be required to make
+            the change: 1 & 2) edit the parameter files to change the
+            pen number, and save the changes; and 3) create new graphic
+            files for the ovm directory to reflect the new pen colors. 
+            
+                 redo fills
+            
+            NOTE 
+            The delete key will abort the redo command. 
+            
+            SEE ALSO 
+                 redo.[element] GRASS-MAPGEN User's Guide, APPENDIX I, 
+                                USDA-SCS.
+            
+            AUTHOR
+            Marty Holko, Computer Systems Analyst, Cartography and
+            Geographic Information Systems Division, USDA, Soil
