@@ -139,16 +139,59 @@ write_ppm(void)
 	fclose(output);
 }
 
+static void
+write_pgm(void)
+{
+	char *mask_name = G_store(file_name);
+	FILE *output;
+	int x, y;
+	unsigned int *p;
+
+	mask_name[strlen(mask_name) - 2] = 'g';
+
+	output = fopen(mask_name, "wb");
+	if (!output)
+		G_fatal_error("PNG: couldn't open mask file %s", mask_name);
+
+	G_free(mask_name);
+
+	fprintf(output, "P5\n%d %d\n255\n", width, height);
+
+	for (y = 0, p = grid; y < height; y++)
+	{
+		for (x = 0; x < width; x++, p++)
+		{
+			unsigned int c = *p;
+
+			if (true_color)
+				fputc(255 - (unsigned char) (c >> 24), output);
+			else
+				fputc(255 - palette[c][3], output);
+		}
+	}
+
+	fclose(output);
+}
+
 void
 write_image(void)
 {
 	char *p = file_name + strlen(file_name) - 4;
 
+	if (!modified)
+		return;
+
 	if (G_strcasecmp(p, ".png") == 0)
 		write_png();
 	else if (G_strcasecmp(p, ".ppm") == 0)
+	{
 		write_ppm();
+		if (has_alpha)
+			write_pgm();
+	}
 	else
 		G_fatal_error("Graph_Close: unknown file type: %s", p);
+
+	modified = 0;
 }
 

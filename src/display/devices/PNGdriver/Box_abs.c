@@ -39,6 +39,8 @@ Box_abs(int x1, int y1, int x2, int y2)
 			*p++ = currentColor;
 	}
 
+	modified = 1;
+
 	return 0;
 }
 

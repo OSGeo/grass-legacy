@@ -15,6 +15,7 @@ OFILES =  \
 	Panel.o\
 	Polygn_abs.o\
 	Raster_int.o\
+	Respond.o\
 	write.o
 
 LIBES = $(DRIVERLIB) $(GISLIB)
