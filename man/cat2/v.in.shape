@@ -1,0 +1,198 @@
+
+
+
+v.in.shape <alpha>    GRASS Reference Manual   <alpha> v.in.shape
+
+
+
+NAME
+     v.in.shape - Read an ArcView Shapefile
+
+
+     SYNOPSIS v.in.shape input=name [mapset=name]
+
+     [verbose=debug level] [logfile=name] [snapdist=snap
+     distance]
+
+     [sliver=min. angle] [scale=orig.  scale]
+     [attribute=attribute category]
+
+     [label=category label]
+
+
+     DESCRIPTION The v.in.shape program is designed to import
+     ArcView Shapefiles.  v.in.shape will be run non-
+     interactively if the user specifies program arguments on the
+     command line, using the form:
+
+
+     v.in.shape input=name [mapset=name]
+
+     [verbose=debug level] [logfile=name] [snapdist=snap
+     distance]
+
+     [sliver=min. angle] [scale=orig.  scale]
+     [attribute=attribute category]
+
+     [label=category label] Alternately, the user can simply
+     type: v.in.shape on the command line without program
+     arguments. In this case, the user will be prompted for
+     parameter values using the standard GRASS user interface
+     described in the manual entry for parser.
+
+
+     FEATURES Grass files created have the name extracted from
+     the basename of the shapefile.  The import filter attempts
+     to correct some common errors that are frequently met with
+     in shapefiles.
+
+
+     OPTIONS input=name Name of input shape file. Provide a full
+     path name or the name of a file in the current directory.
+     The .shp extension is required.  mapset=name For creating a
+     new mapset for the data imported. This may be usefull, since
+     we cannot create a projection info file and a default window
+     in an existing mapset. When a file is imported in the
+     current mapset, you should take care that they are in the
+     same projection.  Unfortunately, you may run in trouble
+     after that when using g.region (Cf BUGS).	verbose=debug
+     level logfile=name Number between 0 (no trace of what's
+
+
+
+GRASS 5.0beta8	      GRASS Development Team			1
+
+
+
+
+
+
+v.in.shape <alpha>    GRASS Reference Manual   <alpha> v.in.shape
+
+
+
+     happening) and 9 (very verbose log).  Name of file where log
+     info will be written. By default log info are directed to
+     stderr.  snapdist=snap distance
+
+
+     A grid resolution can be defined within which adjacent
+     vertices will snap.  Note:The vertices do not snap to the
+     grid. All the vertices inside a grid cell snap to one of
+     their number (usually the first).	This value defaults to
+     0.001 ground units. In fact, it will never allow a value
+     that is less.  sliver=minimum angle A minimum angle can be
+     defined for one link to subtend others at a given node. If
+     the angle between two lines is less than this, they will be
+     treated as colinear.  This can be useful as the module now
+     has features which attempt to correct some common
+     topological errors that occur in the immediate vicinity of
+     nodes. If you can be confident that true angles between
+     adjacent arcs radiating from the same node cannot be less
+     than a certain value, you can specify that value here, and
+     some errors may be automatically corrected. This defaults to
+     .01 degrees (specified in radians). In fact it will never
+     allow a value that is less scale=original scale This sets an
+     original scale that will be specified in the header of the
+     vector map file pro- duced. It can be edited later with
+     v.digit.  The value defaults to 1:2400 attribute=a_name Name
+     of the attribute to use as the category number in dig_att.
+     Give a value of list to see a list of available attributes.
+     label=a_label Name of the attribute to use as the category
+     label in dig_cats. Give a value of list to see a
+
+     list of available attributes.
+
+
+     BUGS AND CAVEAT There is no support for projection.
+     Multipatch data is not yet supported. Point data (sites)
+     also is not handled by this module. New module s.in.shape
+
+     imports site data.
+
+
+     SEE ALSO
+
+     m.in.e00, g.mapset, g.region, v.digit, v.proj, s.in.shape,
+     v.support, v.to.rast.
+
+
+
+     AUTHORS Frank Warmerdam (warmerda@home.com)
+
+     Based on Shapelib
+     (http://gdal.velocet.ca/projects/shapelib/).  Markus Neteler
+
+
+
+
+2		      GRASS Development Team	   GRASS 5.0beta8
+
+
+
+
+
+
+v.in.shape <alpha>    GRASS Reference Manual   <alpha> v.in.shape
+
+
+
+     added category support David Gray
+
+     preprocessing to provide correct handling of polygon edges,
+     labels and correction of some topological errors. Also some
+     new options q.v.
+
+NOTICE
+     This program is part of the alpha section of the GRASS
+     distribution.  Unlike the code in the main section of GRASS,
+     the alpha code has not yet been fully tested for one release
+     cycle.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 5.0beta8	      GRASS Development Team			3
+
+
+
