@@ -801,7 +801,7 @@ main (int argc, char *argv[])
 	fprintf ( stderr, separator );
 
 	if ( n_overlaps > 0 ) {
-	    G_warning ("%d areas represet more (overlapping) features, because polygons overlap "
+	    G_warning ("%d areas represent more (overlapping) features, because polygons overlap "
 		    "in input layer(s). Such areas are linked to more than 1 row in attribute table. "
 		    "The number of features for those areas is stored as category in field %d.",
 		    n_overlaps, nlayers+1 );
