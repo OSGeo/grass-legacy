@@ -4,7 +4,7 @@
 #
 # MODULE:	v.shape.register
 # AUTHOR(S):	Markus Neteler. neteler@itc.it
-# PURPOSE:	registers a SHAPE file into GRASS 5.1 (without importing it)
+# PURPOSE:	registers a SHAPE file into GRASS 5.7 (without importing it)
 # COPYRIGHT:	(C) 2002 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
@@ -69,7 +69,7 @@ fi
 #due to DBMI-SQLP limitation:
 echo $SHAPE.shp | cut -b1 | grep '[0123456789]' > /dev/null
 if [ "$?" -eq "0" ]; then
- echo "ERROR: GRASS 5.1 vector map names must start with a letter."
+ echo "ERROR: GRASS 5.7 vector map names must start with a letter."
  echo "       The map name starts with with a number, please rename."
  echo "       Cannot import $DIRNAME/$SHAPE.shp"
  exit 

@@ -2,7 +2,7 @@
  *
  * MODULE:       v.info
  * 
- * AUTHOR(S):    CERL, updated to 5.1 by Markus Neteler
+ * AUTHOR(S):    CERL, updated to 5.7 by Markus Neteler
  *               
  * PURPOSE:      print vector map info
  *               

@@ -3,7 +3,7 @@
  * MODULE:     v.extract
  * 
  * AUTHOR(S):  R.L.Glenn , Soil Conservation Service, USDA
- *             update to 5.1:  Radim Blazek
+ *             update to 5.7:  Radim Blazek
  *               
  * PURPOSE:    Provides a means of generating vector (digit) files
  *             from an existing vector maplayer. Selects all vector

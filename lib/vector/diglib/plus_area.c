@@ -6,7 +6,7 @@
 * MODULE:       Vector library 
 *   	    	
 * AUTHOR(S):    Dave Gerdes, CERL.
-*               Update to GRASS 5.1 Radim Blazek.
+*               Update to GRASS 5.7 Radim Blazek.
 *
 * PURPOSE:      Lower level functions for reading/writing/manipulating vectors.
 *

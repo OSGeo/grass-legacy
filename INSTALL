@@ -1,41 +1,46 @@
-                   INSTALL GRASS 5.1 source code
+                   INSTALL GRASS 5.7.x source code
 
-Please read all text below.
+Please read *all* text below.
 
+Note: We use synonymical:
+      grass50 == grass50x == grass53x
 
 CURRENT STATUS
 
-The GRASS 5.1 code repository currently contains only the new 3D/DBMS vector
-library and a few rewritten vector modules as well as a subset of merged
-5.0 modules.
+The GRASS 5.7.x code repository currently contains only the new 3D/DBMS
+vector library and a few rewritten vector modules as well as a subset of
+merged 5.3.x modules.
 
-To compile the 5.1 code, source code from 5.0 is needed (the CVS HEAD version),
-which is automatically linked then into the 5.1 directory structure.
-In future we continue to migrate further code into the 5.1 directory
-structure.
+To compile the 5.7.x code, source code from 5.3.x is needed (the CVS HEAD
+version), which is automatically linked then into the 5.7.x directory
+structure. In future we continue to migrate further code into the 5.7.x
+directory structure.
 
-Because of that the source code of GRASS 5.0 is needed. When
+Because of that the source code of GRASS 5.3.x is needed. When
 running "configure" the  full path to grass50/ has to be specified.
 
 
 COMPILATION
 
-CFLAGS="-g -Wall" ./configure --with-grass50=/full/path/to/grass50(MAIN)/source
+CFLAGS="-g -Wall" ./configure \
+   --with-grass50=/full/path/to/grass50(MAIN)/source
 make mix   
 make       
 
-Optionaly it is possible to copy binary modules from compiled 5.0 by:
+Optionaly it is possible to copy binary modules from compiled 5.3.x by:
 make binmix
 
 Explanation of options:
 --with-grass50    must be full path to MAIN (=experimental) branch (not 
-                  release) of GRASS 5.0. Make it an *absolute* path, not a
+                  release) of GRASS 5.3.x. Make it an *absolute* path, not a
                   relative path.
 
 Explanation of all targets:
-make mix           - create symbolic links to grass50 for not yet uploaded files
+make mix           - create symbolic links to grass50 for file not yet 
+                      uploaded into the 5.7.x CVS repository
 make copymix       - copy files from grass50
-make binmix        - Copy binary modules not yet updated to 5.1 from compiled 5.0
+make binmix        - Copy binary modules not yet updated to 5.7.x 
+                      from compiled 5.3.x
 make clean         - delete all files created by 'make' 
 make distclean     - 'make clean' + delete all files created by './configure'
 make mixclean      - delete all symbolic links created by make mix
@@ -45,27 +50,27 @@ INSTALLATION (first time)
 
 After compilation, the resulting code is in the directory
 ./dist.$ARCH
-and the scripts (grass51, ...) in
+and the scripts (grass57, ...) in
 ./bin.$ARCH
 
-To run GRASS 5.1, simply start
-./bin.$ARCH/grass51
+To run GRASS 5.7.x, simply start
+./bin.$ARCH/grass57
 
-Note that most modules from GRASS 5.0 are missing. However, they
+Note that most modules from GRASS 5.3.x are missing. However, they
 can be easily linked into the ./dist.$ARCH structure if needed.
 Or, new directories with new Makefiles must be added and the
 directory defined in ./tools/link.conf.
 
 
-UPDATE OF 5.1
+UPDATE OF 5.7.x
 
 Assuming that you want to update your current installation from
 CVS, you have to perform a couple of steps. In general:
 
-- clean the links to 5.0
-- update from 5.0 CVS HEAD (the 5.0 code)
-- update from 5.1 CVS (the 5.1 code)
-- recreate the links to 5.0
+- clean the links to 5.3.x
+- update from 5.3.x CVS HEAD (the 5.3.x code)
+- update from 5.7.x CVS (the 5.7.x code)
+- recreate the links to 5.3.x
 - configure, compile
 
 In detail:
@@ -74,7 +79,7 @@ make mixclean
 cd /where/your/grass50/lives/
 cvs update -dP
 
-cd /where/your/grass51/lives/
+cd /where/your/grass57/lives/
 cvs update -dP
 make mix
 configure ...
@@ -87,8 +92,8 @@ Note that this code is extremely experimental. Without announcement the
 vector structure can change. But usually it will be possible to upgrade
 the data set. DO NOT USE THIS VERSION FOR PRODUCTION.
 
-If interested to develop GRASS 5.1, please join the GRASS developers mailing
-list:
+If interested to develop GRASS 5.7.x, please join the GRASS developers 
+mailing list:
 http://grass.itc.it/grassdevel.html
 
 

@@ -4,7 +4,7 @@
 * MODULE:       Vector library 
 *   	    	
 * AUTHOR(S):    Original author CERL, probably Dave Gerdes or Mike Higgins.
-*               Update to GRASS 5.1 Radim Blazek and David D. Gray.
+*               Update to GRASS 5.7 Radim Blazek and David D. Gray.
 *
 * PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
 *

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# unregisters a registered SHAPE file from GRASS 5.1
+# unregisters a registered SHAPE file from GRASS 5.7
 # Markus Neteler 3/2002
 #
 
@@ -11,7 +11,7 @@ fi
 
 if [ $# -eq 0  -o "$1" = "-h" -o "$1" = "-help" -o "$1" = "--help" -o "--html-description" ]
 then
- echo "Unregisters a registered SHAPE file from GRASS 5.1 DATABASE"
+ echo "Unregisters a registered SHAPE file from GRASS 5.7 DATABASE"
  echo " "
  echo "v.shape.unregister map.shp"
  exit
@@ -46,4 +46,4 @@ else
  rm -fr $VECTTARGET/$SHAPE.shp
 fi
 
-echo "$SHAPE.shp was deleted inside GRASS 5.1 database."
+echo "$SHAPE.shp was deleted inside GRASS 5.7 database."

@@ -5,7 +5,7 @@
  *                  - USDA, Soil Conservation Service
  *               Changes (1995) -- PWC (??) from NRCS
  *               Modified (2000-1) Eric G. Miller <egm2@jps.net>
- *               Update to GRASS 5.1               
+ *               Update to GRASS 5.7               
  *               
  * PURPOSE:      A general module to convert site_lists to vector point layers.
  * 	    

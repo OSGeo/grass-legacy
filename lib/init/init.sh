@@ -84,7 +84,7 @@ for i in "$@" ; do
 done
 
 # Set the GRASSRC file
-GISRC="$HOME/.grassrc51"
+GISRC="$HOME/.grassrc57"
 export GISRC
 
 # At this point the grass user interface variable has been set from the
@@ -107,7 +107,7 @@ fi
 export GRASS_GUI
 
 # Set the GIS_LOCK variable to current process id
-lockfile="$HOME/.gislock51"
+lockfile="$HOME/.gislock57"
 GIS_LOCK=$$
 export GIS_LOCK
 
@@ -125,7 +125,7 @@ fi
 PATH=$GISBASE/bin:$GISBASE/scripts:$PATH:$GRASS_ADDON_PATH
 export PATH
 
-# Set LD_LIBRARY_PATH.  For GRASS 5.1 we don't depend on this much, though
+# Set LD_LIBRARY_PATH.  For GRASS 5.7 we don't depend on this much, though
 # r.in.gdal may use it to find some things.  Over time we intend to put
 # more GRASS related shared libraries in $GISBASE/lib.
 # first search local libs, then in GRASS lib/
@@ -236,7 +236,7 @@ else
 fi
 
 
-# Force text startup: Until GUI is updated to GRASS 5.1
+# Force text startup: Until GUI is updated to GRASS 5.7
 GRASS_GUI="text"
 
 echo "Starting GRASS ..."

@@ -9,7 +9,7 @@ SHELL           = /bin/sh
 # xxxLIBPATH cc option for library directory (example: -L/usr/lib)
 # xxx_LIBNAME library name (example: gis)
 # xxxLIB full static library path 
-#        (example: /home/abc/grass51/dist.i686-pc-linux-gnu/lib/libgis.a)
+#        (example: /home/abc/grass57/dist.i686-pc-linux-gnu/lib/libgis.a)
 # xxxDEP dependency
 # 
 # GRASS_xxx GRASS specific (without ARCH_xxx)
