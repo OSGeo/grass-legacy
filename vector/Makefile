@@ -45,6 +45,7 @@ SUBDIRS = \
 	v.to.rast \
 	v.type \
 	v.univar \
+	v.voronoi \
 	v.what.rast\
 	v.vol.rst
 
