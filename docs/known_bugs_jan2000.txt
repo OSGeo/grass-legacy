@@ -9,7 +9,10 @@ Maintained by
 [In sync with GRASS 5 beta 6f]
 
  $Log$
- Revision 1.2  2000-01-11 09:52:35  markus
+ Revision 1.3  2000-01-12 11:47:32  markus
+ added entries: r.info, r.in.tiff/r.out.tiff, r.in.png/r.out.png, r.timestamp, s.rand
+
+ Revision 1.2  2000/01/11 09:52:35  markus
  added i.rectify/2 problem
 
  Revision 1.1  2000/01/10 19:14:53  markus
@@ -51,7 +54,16 @@ r.in.hdf/r.out.hdf (src.garden/grass.hdf)
 
 r.in.ppm
   core dump on some CPUs
-  
+
+r.in.tiff/r.out.tiff
+ - LZW code must be removed due to patent problems
+
+r.in.png/r.out.png
+ - should be developed from existing code (part of module already there)
+
+r.info
+ - suggestion: raster type should be printed: CELL, FCELL, DCELL
+
 src/raster/r.mapcalc/polish: (when compiling)
 make[2]: Entering directory
 /home/neteler/src5/grass5.0beta/src/raster/r.mapcalc/polish'
@@ -96,6 +108,8 @@ r.stats: some inconsistent results comparing to r.average
  *While d.what.rast was giving 110.794075. Is this a bug?
      Dr. Agustin Lobo, alobo@ija.csic.es
 
+r.timestamp
+ - does not write time field properly
 
 s.in.ascii: 
      - errors with more than 2 dimensions (some numbers are read as
@@ -104,6 +118,9 @@ s.in.ascii:
 s.to.rast, s.to.vect:
  should accept sites_list even if #cats field is missing and
  only a %dbls field is there (like the output from r.to.sites)
+
+s.rand
+ should write #cats rather than %cats (site numbering)
 
 --------------------------------------------------
 
