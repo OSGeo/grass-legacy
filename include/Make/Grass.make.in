@@ -320,7 +320,7 @@ endif
 
 ##################### rules #############################################
 # first found target
-first: pre default
+first: pre default inst_now
 
 # create platform dirs 
 pre: $(ARCH_BINDIR) $(ARCH_INCDIR) $(ARCH_LIBDIR) \

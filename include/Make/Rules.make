@@ -24,6 +24,21 @@ $(OBJDIR)/%.o : %.c $(DEPENDENCIES) $(LOCAL_HEADERS)
 %.tab.h %.tab.c: %.y
 	$(YACC) -b$* -p$* $(YACCFLAGS) $<
 
+# This helps compile and install modules directly into $(INST_DIR)
+# without having to install whole distribution even after modifying only
+# one module. It will update both $(GRASS_HOME)/dist.$(ARCH) and $(INST_DIR).
+# Usage:
+#	INST_NOW=y make
+# alias gmake='INST_NOW=y make' will be useful.
+ifdef INST_NOW
+ARCH_DISTDIR = $(INST_DIR)
+ARCH_BINDIR = $(UNIX_BIN)
+endif
+
+inst_now:
+	@if test -n "$(INST_NOW)" ; then \
+		INST_NOW= $(MAKE) ; \
+	fi
 
 # default clean rules
 clean:
