@@ -40,6 +40,36 @@ Enter a rule in one of these formats:
  old_val:*:new_val         (interval [old_val, inf])
 </PRE>
 
+<em>r.recode> is loosely based on r.reclass and uses the GRASS reclass
+library to convert the rasters. It has routines for converting to every
+possible combination of raster (eg. int to double, double to float, etc).
+There are four basic routines that it accepts:
+
+<ol>
+<li>old-low to old-high is reclassed to new-low to new high , where the
+user provides all four values. The program figures on the fly what type of
+raster should be created.
+                                                                                
+<li>old-low to old-high is reclassed to a single new value. Anything outside
+the range is null.
+
+<li> * to old-high will reclass everything less than old-high to a single
+new value.
+
+<li> old-low to * will reclass everything greater than old-low to a singloe
+new value.
+</ol>
+
+These four sets of arguments can be given on the command line, or piped via
+stdin or a file. More than one set of arguments is accepted.
+
+<h2>EXAMPLE</H2>
+
+To simply convert a raster between formats (eg. int to float) the user would
+use the first argument. For example 10:1500:0.1:15.0 would convert an old
+raster with range between 10 and 1500 to a float raster with range bewteen
+0.1 and 15.0.
+
 <H2>AUTHOR</H2>
 CERL
 
