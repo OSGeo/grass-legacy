@@ -1,0 +1,7 @@
+OFILES = \
+	command.o\
+	label.o\
+	main.o
+
+$(BIN)/Xlabel: $(OFILES) $(GISLIB) $X
+	cc $(LDFLAGS) -o $@ $(OFILES) $(XDISPLAYLIB) $(GISLIB) $(TERMLIB) -lX11
