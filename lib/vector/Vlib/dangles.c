@@ -104,7 +104,6 @@ remove_dangles ( struct Map_info *Map, int type, int chtype, double maxlength, s
 	type = GV_BOUNDARY; /* process boundaries only */
 	lmsg = "changed lines";
     } else {
-	type = GV_LINE | GV_BOUNDARY;
 	lmsg = "removed lines";
     }
     
