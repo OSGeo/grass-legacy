@@ -155,7 +155,7 @@ eval `$WISH -file $TCLTKGRASSBASE/script/gis_set.tcl`
 #eval `g.gisenv`
 
 if [ $LOCATION_NAME == "##NONE##" ] ; then
-  rm -f ~/.grassrc5
+#  rm -f ~/.grassrc5
   $GISBASE/etc/set_data
   if [ $? != 0 ]; then
     echo "GISDBASE: $OLD_DB" > $GISRC
