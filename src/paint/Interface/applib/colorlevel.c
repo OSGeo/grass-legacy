@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "interface.h"
 
 Pcolorlevels (red, grn, blu)
