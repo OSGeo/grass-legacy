@@ -61,13 +61,13 @@ main( int argc , char **argv )
 #else
     opt1->description= _("Path to TrueType font (including file name)");
 #endif
-    opt1->gisprompt  = "old_file,,TrueType font";
+    /* opt1->gisprompt  = "old_file,,TrueType font"; */
 
     opt2 = G_define_option() ;
     opt2->key        = "charset" ;
     opt2->type       = TYPE_STRING ;
     opt2->required   = NO;
-    opt2->answer     = "EUC-JP";
+    opt2->answer     = "UTF-8";
     opt2->description= _("Character encoding");
 
 #ifdef	USE_FREETYPECAP
@@ -249,7 +249,8 @@ read_capfile(char *capfile, capinfo **fonts, int *fonts_count, int *cur_font,
 	font_names_size = 0;
 	for(i = 0; i < *fonts_count; i++)
 		font_names_size += strlen((*fonts)[i].font) + 1;
-
+	
+	G_debug(3,"font_names_size: %d", font_names_size);
 	*font_names = (char *) G_malloc(font_names_size);
 	(*font_names)[0] = '\0';
 	for(i = 0; i < *fonts_count; i++)

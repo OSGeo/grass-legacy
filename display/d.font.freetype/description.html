@@ -25,13 +25,16 @@ texts from vector labels, legends, etc.
        # [font]:    TrueType font path (full path including font file name)
        # [charset]: character encoding (EUC-JP, UTF-8, SJIS)
 
-       # Example on Redhat Linux 9.x:
+       # Examples on Redhat Linux 9.x:
        d.font.freetype font=/usr/share/fonts/ja/TrueType/kochi-gothic.ttf charset=EUC-JP
+
+       d.font.freetype font=/usr/X11R6/lib/X11/fonts/TTF/luximb.ttf
 
        # Example on Mandrake 10:
        d.font.freetype font=/usr/X11R6/lib/X11/fonts/TTF/ipag.ttf
 
        # Example using the freetypecap file:
+       d.font.freetype -l
        d.font.freetype font=batang
 </pre>
 <li> To disable to display a TrueType font on the monitor, run:
