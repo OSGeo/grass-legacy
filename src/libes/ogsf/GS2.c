@@ -405,6 +405,130 @@ void GS_get_modelposition(float *siz, float *pos)
     return;
 }
 
+
+/***********************************************************************/
+/* TODO -- scale used to calculate len of arrow still needs work
+ * needs go function that returns center / eye distance
+ * gsd_get_los function is not working correctly ??
+*/
+void GS_draw_Narrow(int *pt, int id)
+{
+   geosurf *gs;
+   GLint fontbase;
+   char *txt;
+   float x, y, z;
+   float near_h;
+   float length, width, ht;
+   float dir[3];
+   float len;
+   float len2;
+   float v[4][3];
+   float base [2][3];
+   float los[2][3];
+   Point3 pos2, dir2;
+   float Ntop[] = { 0.0, 0.0, 1.0 };
+
+
+if (GS_get_selected_point_on_surface(pt[X], pt[Y], &id, 
+			   &x, &y, &z))
+    {
+	gs = gs_get_surf(id);
+	if (gs)
+	{
+	    z = gs->zmax;
+	    pos2[X] = x - gs->ox + gs->x_trans;
+	    pos2[Y] = y - gs->oy + gs->y_trans;
+	    pos2[Z] = z + gs->z_trans;
+	    len2 = GS_distance(Gv.from_to[FROM], pos2);
+	    near_h = 0.001 * tan(4.0 * atan(1.) * Gv.fov/3600.) * len2;
+	    len = near_h * 500.;
+	}
+} else {
+	gs = gs_get_surf(id);
+	if (gs)
+	{
+		z = gs->zmax;
+           /* returns surface-world coords */
+	   /* gsd_get_los does not seem to be working correctly, should check?? */
+	      gsd_get_los(los, (short)pt[X], (short)pt[Y]);
+              len2 = GS_distance(los[FROM], los[TO]);
+	      GS_v3dir(los[FROM], los[TO], dir2);
+	      GS_v3mult(dir2, len2);
+              near_h = 0.001 * tan(4.0 * atan(1.) * Gv.fov/3600.) * len2;
+	      len = near_h * 500.;
+
+              pos2[X] = los[FROM][X] + dir2[X];
+              pos2[Y] = los[FROM][Y] + dir2[Y];
+              pos2[Z] = los[FROM][Z] + dir2[Z];
+              
+	}
+
+}
+    
+    base[0][Z] = base[1][Z] = v[0][Z] = v[1][Z] = v[2][Z] = v[3][Z] = pos2[Z];
+    base[0][X] = pos2[X] - len/16.;
+    base[1][X] = pos2[X] + len/16.;
+    base[0][Y] = base[1][Y] =  pos2[Y] - len/2.;
+    v[0][X] = v[2][X] = pos2[X];
+    v[1][X] = pos2[X] + len/8.;
+    v[3][X] = pos2[X] - len/8.;
+    v[0][Y] = pos2[Y] + .2*len;
+    v[1][Y] = v[3][Y] = pos2[Y] + .1*len;
+    v[2][Y] = pos2[Y] + .5*len;
+
+    /* make sure we are drawing in front buffer */
+    GS_set_draw(GSD_FRONT);
+
+    gsd_pushmatrix();
+    gsd_do_scale(1);
+
+    glNormal3fv(Ntop);
+    gsd_color_func(0x000000);
+
+    gsd_bgnpolygon();
+    glVertex3fv(base[0]);
+    glVertex3fv(base[1]);
+    glVertex3fv(v[0]);
+    gsd_endpolygon();
+
+    gsd_bgnpolygon();
+    glVertex3fv(v[0]);
+    glVertex3fv(v[1]);
+    glVertex3fv(v[2]);
+    glVertex3fv(v[0]);
+    gsd_endpolygon();
+
+    gsd_bgnpolygon();
+    glVertex3fv(v[0]);
+    glVertex3fv(v[2]);
+    glVertex3fv(v[3]);
+    glVertex3fv(v[0]);
+    gsd_endpolygon();
+
+/* draw N for North */
+/* Need to pick a nice generic font */
+    fontbase = gsd_set_font("-adobe-helvetica-bold-o-normal--18-180-75-75-p-104-iso8859-2");
+    if (fontbase ==0 ) {
+		fprintf(stderr, "Unable to Load font...\n");
+		fprintf(stderr, "Check xlsfonts for available fonts\n");
+		return;
+    }
+    txt = "N";
+    /* adjust position of N text */
+    base[0][X] -= gsd_get_txtwidth(txt)- 5.0;
+    base[0][Y] -= gsd_get_txtheight(txt) - 5.0;
+    glRasterPos3fv(base[0]);
+    glListBase(fontbase);
+    glCallLists(strlen(txt), GL_BYTE, (GLubyte *)txt);
+
+    gsd_unset_font(fontbase);
+    gsd_popmatrix();
+    gsd_flush();
+    
+    return;
+
+}
+
 /***********************************************************************/
 /* pt only has to have an X & Y value in true world coordinates */
 void GS_draw_X(int id, float *pt)
@@ -579,6 +703,17 @@ void GS_draw_flowline_at_xy(int id, float x, float y)
     }
 
     return;
+}
+
+/***********************************************************************/
+void GS_draw_legend(char *name, char *font, int *flags, float *range, int *pt)
+{
+/* TODO - add legend from list option */
+/* make font loading more flexible */
+
+	    gsd_put_legend(name, font, flags, range, pt);
+
+   return;
 }
 
 /***********************************************************************/

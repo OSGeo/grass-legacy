@@ -233,6 +233,30 @@ Ndraw_X_cmd (
   return (TCL_OK);
 }
 
+
+int
+Ndraw_Narrow_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
+
+{
+  int id;
+  int pt[2];
+
+  if (argc != 4)
+    return (TCL_ERROR);
+  pt[0] = (int)atoi(argv[1]);
+  pt[1] = (int)atoi(argv[2]);
+  id = (int)atoi(argv[3]);
+
+  GS_draw_Narrow(pt, id);
+
+  return (TCL_OK);
+}
+
 int 
 Ndraw_line_on_surf_cmd (
     Nv_data *data,
@@ -681,8 +705,43 @@ int check_blank(Tcl_Interp *interp , int map_id)
   
 }
 
+int 
+Ndraw_legend_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
+
+{
+  int id;
+  int pt[4];
+  int flags[5];
+  float range[2];
+  char name[100];
+  char font[100];
+    
+  if (argc != 14)
+    return (TCL_ERROR);
+
+ sprintf(name, "%s", argv[1]);
+ sprintf(font, "%s", argv[2]);
+
+  flags[0] = (int)atoi(argv[3]); /* vals */
+  flags[1] = (int)atoi(argv[4]); /* labels */
+  flags[2] = (int)atoi(argv[5]); /* invert */
+  flags[3] = (int)atoi(argv[6]); /* discrete */
+  flags[4] = (int)atoi(argv[7]); /* range */
+  range[0] = (float)atof(argv[8]); /* low range */
+  range[1] = (float)atof(argv[9]); /* high range */
+
+  pt[0] = (int)atoi(argv[10]);
+  pt[1] = (int)atoi(argv[11]);
+  pt[2] = (int)atoi(argv[12]);
+  pt[3] = (int)atoi(argv[13]);
 
 
+  GS_draw_legend(name, font, flags, range, pt);
 
-
-
+  return (TCL_OK);
+}
