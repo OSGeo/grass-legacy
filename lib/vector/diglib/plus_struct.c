@@ -531,12 +531,16 @@ dig_Rd_Plus_head (   GVFILE * fp,
 
   /* check version numbers */
   if ( ptr->Version_Major > GV_TOPO_VER_MAJOR || ptr->Version_Minor > GV_TOPO_VER_MINOR ) {
-      if ( ptr->Back_Major > GV_TOPO_EARLIEST_MAJOR || ptr->Back_Minor > GV_TOPO_EARLIEST_MINOR ) {
+      /* The file was created by GRASS library with higher version than this one */
+      
+      if ( ptr->Back_Major > GV_TOPO_VER_MAJOR || ptr->Back_Minor > GV_TOPO_VER_MINOR ) {
+	  /* This version of GRASS lib is lower than the oldest which can read this format */
 	  G_fatal_error ( "Topology format version %d.%d is not supported by this release."
 		          " Try to rebuild topology or upgrade GRASS.", 
 			   ptr->Version_Major, ptr->Version_Minor);
 	  return (-1);
       }
+
       G_warning ( "Your GRASS version does not fully support topology format %d.%d of the vector."
 	          " Consider to rebuild topology or upgrade GRASS.",
 	              ptr->Version_Major, ptr->Version_Minor );

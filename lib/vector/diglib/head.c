@@ -81,12 +81,15 @@ dig__read_head ( struct Map_info *Map )
     
     /* check version numbers */
     if ( Map->head.Version_Major > GV_COOR_VER_MAJOR || Map->head.Version_Minor > GV_COOR_VER_MINOR ) {
-      if ( Map->head.Back_Major > GV_COOR_EARLIEST_MAJOR 
-	      || Map->head.Back_Minor > GV_COOR_EARLIEST_MINOR ) {
+      /* The file was created by GRASS library with higher version than this one */
+	
+      if ( Map->head.Back_Major > GV_COOR_VER_MAJOR || Map->head.Back_Minor > GV_COOR_VER_MINOR ) {
+	  /* This version of GRASS lib is lower than the oldest which can read this format */
 	  G_fatal_error ( "Vector 'coor' format version %d.%d is not supported by this version of GRASS. "
 		  	  "Update your GRASS.", Map->head.Version_Major, Map->head.Version_Minor);
 	  return (-1);
       }
+
       G_warning ( "Your GRASS version does not fully support vector format %d.%d."
 		  " Consider to upgrade GRASS.",
 		      Map->head.Version_Major, Map->head.Version_Minor );
