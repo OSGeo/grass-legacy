@@ -38,6 +38,9 @@ main(int argc, char *argv[])
     print->key               = 'p';
     print->description       = "print current values";
     
+    /* fake session for HTML generation with parser */
+    fakestart = getenv( "GRASS_FAKE_START" );
+
     driver = G_define_option() ;
     driver->key        = "driver" ;
     driver->type       = TYPE_STRING ;
@@ -45,7 +48,6 @@ main(int argc, char *argv[])
     driver->multiple   = NO ;
     driver->description = "Driver name." ;
     driver->options    = db_list_drivers();
-    fakestart = getenv( "GRASS_FAKE_START" );
     if ( fakestart == NULL && (drv=G__getenv2("GV_DRIVER",G_VAR_MAPSET)) )
 	driver->answer = G_store ( drv );
 
