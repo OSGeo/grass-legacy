@@ -1,0 +1,29 @@
+
+EXTRA_CFLAGS	= $(VECT_INCLUDE)
+TRANSLIB	= $(SRC)/mapdev/libes/libtrans.a
+
+PROG	= $(BIN_MAIN_CMD)/v.transform
+
+
+O_FILES = \
+	ask_trans.o \
+	main.o \
+	creat_trans.o \
+	get_coor.o \
+	open_files.o \
+	print_trans.o \
+	setup_trans.o \
+	trans_digit.o \
+	trans_head.o \
+	trans_att.o
+
+all:    $(PROG)
+
+
+$(PROG): $(O_FILES) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(TRANSLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) $(O_FILES) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(TRANSLIB)  $(VASK) $(MATHLIB)
+	mv a.out $@
+
+$(O_FILES):	trans.h
+trans_digit.o:	$(LIBDIR)/dig_atts.h
