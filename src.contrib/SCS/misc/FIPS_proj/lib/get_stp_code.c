@@ -210,3 +210,33 @@ if (*c == 0 && *s > 0) {
 	}
 return;
 }
+
+int get_st_fips(s,fp)
+int *s;
+FILE *fp;
+{
+int i, FIPS = 0, NUM_ZON, SFIPS, sfips, cfips;
+char STabbr[50], COname[50], answer[50], buff[81], k;
+
+/*  get FIPS code arguements */
+	while (FIPS == 0) {
+		{
+   	     fprintf(stderr,"Enter Two-Letter State or Territory Abbreviation :");
+   	     gets(answer);
+		if (strlen(answer) == 2) {
+			while (fgets(buff,80,fp) != NULL) {
+				sscanf (buff,"%d%d%s%s%d",&sfips,&cfips,STabbr,COname,&NUM_ZON);
+				for (i=0;i<2;i++)
+					{if (islower(answer[i])) answer[i] = toupper(answer[i]);
+					if (islower(STabbr[i])) STabbr[i] = toupper(STabbr[i]);
+					}
+				if (strncmp(answer,STabbr,2) == 0) {FIPS = sfips;break;}
+				}
+			}
+		}
+		rewind(fp);
+		}
+	*s = FIPS;
+	FIPS = 0;
+return;
+}
