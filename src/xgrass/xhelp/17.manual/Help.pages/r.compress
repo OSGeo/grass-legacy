@@ -1,0 +1,4 @@
+
+@man("r.compress") - Compresses and decompresses raster files.
+
+(GRASS Raster Program)
