@@ -1,4 +1,3 @@
-/* %W% %G% */
 /* act II ink-jet printer definitions */
 
 #include <stdio.h>
