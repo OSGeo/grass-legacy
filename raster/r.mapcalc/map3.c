@@ -18,6 +18,7 @@ G3D_Region current_region3;
 
 void setup_region(void)
 {
+    	G3d_initDefaults();
 	G3d_getWindow(&current_region3);
 
 	rows = current_region3.rows;
