@@ -1,0 +1,22 @@
+PROG = $(BIN_ALPHA_CMD)/r.cn2
+
+LIBES  = $(GISLIB) $(MATHLIB)
+
+OBJ = \
+	Gcn.o\
+	usage.o\
+	cell_open.o\
+	hy_soil_group.o\
+	cell_open_new.o\
+	rules.o\
+	data.o\
+	amc_conversion.c
+
+
+COMPILE_FLAGS = -O
+#-----------------^ For optimising the code.
+
+$(PROG): ${OBJ} ${LIBES}
+	 ${CC} $(COMPILER_FLAGS) -o $@ ${OBJ} ${LIBES} ${LIBES}
+
+$(LIBES): #
