@@ -91,13 +91,13 @@ entered incorrectly an error will be generated suggesting a closer bytes
 value. 
 <p>
 <EM>r.in.bin</EM> can be used to import numerous binary arrays including:
-etopo30, etopo-5, Globe DEM, BIL, and GMT binary arrays (ID 1 &amp; 2)
+etopo30, etopo-5, Globe DEM, BIL, AVHRR and GMT binary arrays (ID 1 &amp; 2)
 <p>
 
 <H2>EXAMPLE</H2>
 
-The following is a sample call of <EM>r.in.bin</B> to import GTOPO30 DEM
-data:</EM> 
+The following is a sample call of <EM>r.in.bin</EM> to import GTOPO30 DEM
+data:
 <P>
 <TT>
 r.in.bin -s input=E020N90.DEM output=gtopo30 bytes=2 north=90 south=40
@@ -107,14 +107,21 @@ east=60 west=20 r=6000 c=4800
 (you can add "subst=-9999" if you want sea level to have a NULL value)
 
 <P>
-The following is a sample call of <EM>r.in.bin</B> to import a GMT 
-type 1 (float) binary array:</EM>
+The following is a sample call of <EM>r.in.bin</EM> to import a GMT 
+type 1 (float) binary array:
 <P>
 <TT>
 r.in.bin -hf input=sample.grd output=sample.grass bytes=4
 </TT>
 <P>
 (-b could be used to swap bytes if required)
+
+<P>
+The following is a sample call of <EM>r.in.bin</B> to import an AVHRR image:
+<P> 
+<TT>
+r.in.bin in=p07_b6.dat out=avhrr c=128 r=128
+</TT>
 
 
 <H2>NOTES</H2>
