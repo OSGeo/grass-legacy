@@ -334,7 +334,7 @@ main (int argc, char *argv[])
 		len2 = len;
 		data_type2 = data_type;
 	} else {
-		data_type2 = CELL_TYPE;
+		data_type2 = DCELL_TYPE; /* always DCELL: fixed 12/2000 MN */
 		len2 =G_raster_size(data_type2);
 	}
 
@@ -526,8 +526,8 @@ int drain_path_finder ( POINT *PRES_PT)
 
 	{ /* start a new block to minimize variable use in recursion */
 		int data,row,col, val,val2;
-		double p_elev, fdata;
-		float f;
+		double p_elev, dval, fdata, fdummy;
+		float f, fval;
 /*		value = &data; */
 
 		/* if the pt has already been traversed, return			*/
@@ -604,8 +604,8 @@ fprintf(stderr, "p_elev: %g\n", p_elev);
 				}	/* end of "row" loop */
 				break;
 			case (FCELL_TYPE):
-				segment_get(&out_seg, &f, PRES_PT_ROW, PRES_PT_COL);
-				if(!G_is_f_null_value(&f) ) 
+				segment_get(&out_seg, &fval, PRES_PT_ROW, PRES_PT_COL);
+				if(!G_is_f_null_value(&fval) ) 
 					return 0;		/* already traversed	*/
 				segment_get(&in_seg, &f, PRES_PT_ROW, PRES_PT_COL);
 				p_elev = f;
@@ -615,8 +615,8 @@ fprintf(stderr, "p_elev: %g\n", p_elev);
 
 				switch (mode){
 					case 0:
-						val2 = 1;
-						segment_put(&out_seg, &val2, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
+						fval = 1;
+						segment_put(&out_seg, &fval, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
 						break;
 					case 1:
 						segment_put(&out_seg, &f, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
@@ -663,8 +663,8 @@ fprintf(stderr, "p_elev: %g\n", p_elev);
 				}	/* end of "row" loop */
 				break;
 			case (DCELL_TYPE):
-				segment_get(&out_seg, &fdata, PRES_PT_ROW, PRES_PT_COL);
-				if(!G_is_d_null_value(&fdata) ) 
+				segment_get(&out_seg, &dval, PRES_PT_ROW, PRES_PT_COL);
+				if(!G_is_d_null_value(&dval) ) 
 					return 0;		/* already traversed	*/
 				segment_get(&in_seg, &fdata, PRES_PT_ROW, PRES_PT_COL);
 				p_elev = fdata;
@@ -676,14 +676,14 @@ fprintf(stderr, "fdata: %g\n", fdata);
 				/* next pt(s) for the drop to flow				*/
 				switch (mode){
 					case 0:
-						val2 = 1;
-						segment_put(&out_seg, &val2, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
+						dval = 1;
+						segment_put(&out_seg, &dval, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
 						break;
 					case 1:
-						segment_put(&out_seg, &p_elev, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
+						segment_put(&out_seg, &fdata, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
 						break;
 					case 2:
-						dcum+=p_elev;
+						dcum+=fdata;
 						segment_put(&out_seg, &dcum, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
 						break;
 				}						
@@ -703,15 +703,17 @@ fprintf(stderr, "fdata: %g\n", fdata);
 							if (exclude_nulls) {
 								continue;
 							} else {
-								fdata = null_value;
+								fdummy = null_value;
 							} 
+						}  else {
+							 fdummy = fdata;
 						}
 							/* elev of neighbor is higher. i.e. no chance of flow	*/
-							if(fdata > p_elev) continue;
+							if(fdummy > p_elev) continue;
 
 						/* if elev of neighbor is equal or lower consider for	*/
 						/* addition to the list of pts where water will flow	*/
-						head = make_neighbors_list(head, row, col, fdata,
+						head = make_neighbors_list(head, row, col, fdummy,
 												   PRES_PT_ROW, PRES_PT_COL, p_elev);
 
 					}	/* end of "col" loop */
