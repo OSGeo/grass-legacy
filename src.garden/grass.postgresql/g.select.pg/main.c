@@ -37,10 +37,11 @@ char **argv ;
         struct Option* pghost;
         struct Flag *list ;
 
-  setlocale (LC_ALL, "");
+#ifdef HAVE_LIBINTL_H
+  setlocale (LC_MESSAGES, "");
   bindtextdomain (PACKAGE, LOCALEDIR);
   textdomain (PACKAGE);
-
+#endif
 
         list = G_define_flag();
         list->key               = 'l';

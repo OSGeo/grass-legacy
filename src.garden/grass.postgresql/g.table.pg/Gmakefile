@@ -3,7 +3,7 @@ EXTRA_CFLAGS = $(PQINCPATH) $(DEFS)
 LIBES     = $(GISLIB) 
 PACKAGE=g.table.pg
 
-DEFS = -Wall -DLOCALEDIR=\"$(LOCALEDIR)\" -DPACKAGE=\"$(PACKAGE)\"
+DEFS = -Wall -DPACKAGE=\"$(PACKAGE)\"
 
 OBJS = \
 	main.o \

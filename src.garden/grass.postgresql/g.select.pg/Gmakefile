@@ -1,7 +1,7 @@
 PGM       = $(BIN_CMD)/g.select.pg
 LIBES     = $(GISLIB)
 PACKAGE = "g.select.pg"
-DEFS = -Wall -DLOCALEDIR=\"$(LOCALEDIR)\" -DPACKAGE=\"$(PACKAGE)\"
+DEFS = -Wall -DPACKAGE=\"$(PACKAGE)\"
 EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS)
 
 OBJS = \
