@@ -188,7 +188,8 @@ int main(int argc, char *argv[]) {
 
 
     if( ! (quiet->answer || shell_style->answer) ) {
-	fprintf(stdout, "\ntotal null and non-null cells: %d\n\n", rows * cols);
+	fprintf(stdout, "\ntotal null and non-null cells: %d\n", rows * cols);
+	fprintf(stdout, "total null cells: %d\n\n", rows * cols - n);
 	fprintf(stdout, "Of the non-null cells:\n----------------------\n");
     }
 
