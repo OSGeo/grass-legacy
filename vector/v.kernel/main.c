@@ -298,12 +298,12 @@ int main(int argc, char **argv)
 
 
   if ( net ) {
-      fprintf (stderr, "\nWriting output vector file using smooth parameter=%f\n",sigma);
-      fprintf (stderr, "\nNormalising factor=%f\n",1./gaussianFunction(sigma/4.,sigma,dimension));
-
       int line, nlines;
       struct line_pnts *Points, *SPoints;
       struct line_cats *SCats;
+
+      fprintf (stderr, "\nWriting output vector file using smooth parameter=%f\n",sigma);
+      fprintf (stderr, "\nNormalising factor=%f\n",1./gaussianFunction(sigma/4.,sigma,dimension));
 
       /* Divide lines to segments and calculate gaussian for center of each segment */
       
@@ -348,11 +348,11 @@ int main(int argc, char **argv)
 	          if ( offset2 > llength ) offset2 = llength;
 		  Vect_line_segment ( Points, offset1, offset2, SPoints ); 
 		
-                  /* TODO!!! remove later */
-                  //if ( SPoints->n_points > 0 ) 
- 		  //    Vect_append_point( SPoints, SPoints->x[SPoints->n_points-1], 
-                  //                       SPoints->y[SPoints->n_points-1], 0 );
-
+                  /* TODO!!! remove later
+                  if ( SPoints->n_points > 0 ) 
+ 		      Vect_append_point( SPoints, SPoints->x[SPoints->n_points-1], 
+                                         SPoints->y[SPoints->n_points-1], 0 );
+                  */
 		  Vect_reset_cats ( SCats );
 		  Vect_cat_set ( SCats, 1, (int) gaussian );
 
