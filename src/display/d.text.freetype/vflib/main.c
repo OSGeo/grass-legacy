@@ -3,12 +3,13 @@
 *
 ****************************************************************************
 *
-* MODULE:       d.text.freetype
+* MODULE:       d.text.freetype/d.text.vflib
 *
 * AUTHOR(S):    Huidae Cho <hdcho@geni.cemtlo.com>
 *
-* PURPOSE:      d.text with FreeType2 support
+* PURPOSE:      d.text with FreeType2/VFlib3.6 support
 *               http://www.freetype.org
+*               http://typehack.aial.hiroshima-u.ac.jp/VFlib
 *
 * COPYRIGHT:    (C) 2001 by the GRASS Development Team
 *
