@@ -569,8 +569,8 @@ logf [Ll]ogical
 			}
 		
 <*>{whitespace} |
-	{blank} |
-	  {end}		;
+<*>{blank}      |
+<*>{end}		;
 
 
 %%

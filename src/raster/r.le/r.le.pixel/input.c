@@ -79,8 +79,8 @@ char **argv;
    sampling_method = G_define_option();
    sampling_method->answer	 = "w";
    sampling_method->key          = "sam";
-   sampling_method->description  = "Sampling method (choose only 1 method):
-   \tw = whole map      u = units        m = moving window   r = regions";
+   sampling_method->description  = "Sampling method (choose only 1 method):\n"
+   "\tw = whole map      u = units        m = moving window   r = regions";
    sampling_method->type         = TYPE_STRING;
    sampling_method->multiple	 = NO;
    sampling_method->required     = NO;
@@ -94,8 +94,8 @@ char **argv;
 
    att			= G_define_option();
    att->key		= "att";
-   att->description	= "b1 = mn. pixel att.                 b2 = s.d. pixel att. 
-   \tb3 = min. pixel att.                b4 = max. pixel att.";
+   att->description	= "b1 = mn. pixel att.                 b2 = s.d. pixel att.\n"
+   "\tb3 = min. pixel att.                b4 = max. pixel att.";
    att->options		= "b1,b2,b3,b4";
    att->type		= TYPE_STRING;
    att->multiple	= YES;
@@ -111,9 +111,9 @@ char **argv;
 
    method_code = G_define_option();
    method_code->key     	= "te1";
-   method_code->description  	= "Texture method (choose only 1 method): 
-   \tm1 = 2N-H          m2 = 2N-45       m3 = 2N-V          m4 = 2N-135
-   \tm5 = 4N-HV         m6 = 4N-DIAG     m7 = 8N";
+   method_code->description  	= "Texture method (choose only 1 method):\n"
+   "\tm1 = 2N-H          m2 = 2N-45       m3 = 2N-V          m4 = 2N-135\n"
+   "\tm5 = 4N-HV         m6 = 4N-DIAG     m7 = 8N";
    method_code->options         = "m1,m2,m3,m4,m5,m6,m7";
    method_code->type         	= TYPE_STRING;
    method_code->multiple	= NO;
@@ -121,9 +121,9 @@ char **argv;
 
    measure_code = G_define_option();
    measure_code->key     	= "te2";
-   measure_code->description  	= "Texture measures (required if te1 was specified):
-   \tt1 = contagion           t2 = ang. sec. mom.     t3 = inv. diff. mom.
-   \tt4 = entropy             t5 = contrast";
+   measure_code->description  	= "Texture measures (required if te1 was specified):\n"
+   "\tt1 = contagion           t2 = ang. sec. mom.     t3 = inv. diff. mom.\n"
+   "\tt4 = entropy             t5 = contrast";
    measure_code->options  	= "t1,t2,t3,t4,t5";
    measure_code->type         	= TYPE_STRING;
    measure_code->multiple	= YES;
@@ -131,8 +131,8 @@ char **argv;
 
    juxtaposition = G_define_option();
    juxtaposition->key          	= "jux";
-   juxtaposition->description  	= "Juxtaposition measures (weight file in r.le.para needed):
-   \tj1 = mn. juxtaposition              j2 = s.d. juxtaposition";
+   juxtaposition->description  	= "Juxtaposition measures (weight file in r.le.para needed):\n"
+   "\tj1 = mn. juxtaposition              j2 = s.d. juxtaposition";
    juxtaposition->options      	= "j1,j2";
    juxtaposition->type         	= TYPE_STRING;
    juxtaposition->multiple	= YES;
