@@ -127,7 +127,7 @@ main(argc,argv)
     G_init_cats ((CELL) 0, buf, &pcats);
 
 /* first step is cross product, but un-ordered */
-    result = cross (fd, verbose, non_zero, primary, outfd, &pcats);
+    result = cross (fd, verbose, non_zero, primary, outfd);
 
 /* print message STEP mesage */
     if (verbose)
@@ -148,12 +148,20 @@ main(argc,argv)
 /* build the renumbering/reclass and the new cats file */
     qsort (reclass, result+1, sizeof(RECLASS), cmp);
     table = (CELL *) G_calloc (result+1, sizeof(CELL));
+    for (i =0; i < nfiles; i++)
+    {
+	mapset = G_find_cell (names[i], "");
+	G_read_cats (names[i], mapset, &labels[i]);
+    }
 
     for (ncats = 0; ncats <= result; ncats++)
     {
 	table[reclass[ncats].result] = ncats;
 	set_cat (ncats, reclass[ncats].cat, &pcats);
     }
+
+    for (i = 0; i < nfiles; i++)
+	G_free_cats (&labels[i]);
 
     if (verbose)
 	fprintf (stderr, "\n");
