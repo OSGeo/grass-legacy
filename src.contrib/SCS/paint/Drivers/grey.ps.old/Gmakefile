@@ -1,0 +1,26 @@
+NAME=grey.ps
+LIBS = $(SRC)/paint/Interface/driverlib/lib.a $(LOCKLIB) $(MATHLIB)
+PAINT = $(ETC)/paint
+LIST =\
+    main.o \
+    alpha.o \
+    data.o \
+    color.o\
+	colors.o\
+    finish.o \
+    init.o \
+    npixels.o \
+    pictsize.o \
+    raster.o \
+    rle.o \
+    text.o
+
+all: $(PAINT)/driver.sh/$(NAME) $(PAINT)/driver/$(NAME)
+
+$(PAINT)/driver/$(NAME): $(LIST) $(LIBS)
+	$(CC) $(LDFLAGS) $(LIST) $(LIBS) -o $@
+$(PAINT)/driver.sh/$(NAME): DRIVER.sh
+	cp $? $@
+	chmod +x $@
+
+$(LIBS): #
