@@ -13,7 +13,7 @@ DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 
 #path to GRASS 5.3 source code 
-GRASS53SRC=../grass-5.3.0
+GRASS53SRC=/usr/src/grass/grass-5.3.0
 
 CFLAGS=-Wall -g
 
