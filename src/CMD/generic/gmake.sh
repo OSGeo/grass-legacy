@@ -289,18 +289,16 @@ sed -e 's/=/ /' -e 's/\\//' Gmakefile |\
 	if test -f $file.f
 	then
 	    echo '$(OBJARCH)/'${file}.o: ${file}.f
-#	    echo '	rm -f $@'
-#	    echo '	$(FC) $(FFLAGS) -c' ${file}.f
-#	    echo '	mv' ${file}.o '$@'
-# new version MN:
 	    echo '	$(FC) $(FFLAGS) -c' ${file}.f -o '$@'
 	else
+	   if test -f $file.c
+	   then
 	    echo '$(OBJARCH)/'${file}.o: ${file}.c
-#	    echo '	rm -f $@'
-#	    echo '	$(CC) $(CFLAGS) -c' ${file}.c
-#	    echo '	mv' ${file}.o '$@'
-# new version MN:
 	    echo '	$(CC) $(CFLAGS) -c' ${file}.c -o '$@'
+	   else
+	    echo '$(OBJARCH)/'${file}.o: ${file}.cc
+	    echo '	$(CC) $(CFLAGS) -c' ${file}.cc -o '$@'
+	   fi
 	fi
     done
  )
