@@ -361,16 +361,20 @@ if test "$tcltk_lib_dirs"; then
 	AC_MSG_RESULT($TCLTKLIBPATH)
 fi
 
-ac_save_ldflags="$LDFLAGS"
-LDFLAGS="$LDFLAGS $TCLTKLIBPATH $X_LIBS -Xt"
-AC_CHECK_LIB("tk$tcltk_ver", Tk_MainWindow, has_tk_lib="1")
-if test "$has_tk_lib"; then
-	TCLTKLIBS="$TCLTKLIBS -ltk$tcltk_ver -ltcl$tcltk_ver"
+if test "$tcltk_ver"; then
+	ac_save_ldflags="$LDFLAGS"
+	LDFLAGS="$LDFLAGS $TCLTKLIBPATH $X_LIBS -Xt -ltcl$tcltk_ver"
+	AC_CHECK_LIB("tk$tcltk_ver", Tk_MainWindow, has_tk_lib="1")
+	if test "$has_tk_lib"; then
+		TCLTKLIBS="$TCLTKLIBS -ltk$tcltk_ver -ltcl$tcltk_ver"
+	else
+		AC_MSG_WARN([*** Failed to find TCL/TK libraries])
+	fi
+	LDFLAGS=${ac_save_ldflags}
+	AC_SUBST(TCLTKLIBS)
 else
-	AC_MSG_WARN([*** Failed to find TCL/TK libraries])
+	AC_MSG_WARN([*** Unable to find TCL/TK libraries and headers])
 fi
-LDFLAGS=${ac_save_ldflags}
-AC_SUBST(TCLTKLIBS)
 AC_SUBST(TCLTKLIBPATH)
 
 SYSV=
@@ -416,7 +420,7 @@ AC_SUBST(USE_TERMIO)
 if test -z "${top_srcdir}"; then
 SRCDIR=$(pwd)
 else
-SRCDIR=$top_srcdir
+SRCDIR="${top_srcdir}"
 fi
 AC_SUBST(SRCDIR)
 
@@ -429,9 +433,24 @@ fi
 AC_SUBST(ARCH)
 
 # Enable PostgreSQL always ...
+USE_POSTGRES=
 AC_ARG_ENABLE(postgres,
-  [  --enable-postgres       Support PostgreSQL functionality],
-  enable_POSTGRES="1",enable_POSTGRES="1")
+  [  --enable-postgres=yes/no
+                          Support PostgreSQL functionality (default: yes)],
+  [
+  	case "$enableval" in
+	"n" | "no")
+		USE_POSTGRES=
+	;;
+	*)
+		USE_POSTGRES="1"
+	;;
+	esac
+  ],
+  [
+  USE_POSTGRES="1"
+  ]
+)
 
 # With/Without PostgreSQL root:
 AC_ARG_WITH(postgres-root,
@@ -474,7 +493,7 @@ AC_ARG_WITH(postgres-libs,
 
 # If a --with-postgres option was given, turn on enable-postgres
 if test "$pg_root" -o "$pg_includes" -o "$pg_libs"; then
-	enable_POSTGRES="1"
+	USE_POSTGRES="1"
 fi
 
 # Process PostgreSQL --with directives
@@ -512,7 +531,7 @@ if test "$pg_libs"; then
 fi
 
 # If enabled but no paths given, look in our search paths
-if test "$enable_POSTGRES"; then
+if test -n "$USE_POSTGRES"; then
 	if test -z "$PQINCPATH"; then
 		my_pginc_path="/usr/include /usr/include/pgsql /usr/include/postgresql /usr/local/include /usr/local/pgsql/include /opt/pgsql/include"
 		AC_MSG_CHECKING(libpq-fe.h)
@@ -538,21 +557,42 @@ if test "$enable_POSTGRES"; then
 	fi
 fi
 
-ac_save_ldflags=${LDFLAGS}
-LDFLAGS="$LDFLAGS $PQLIBPATH"
-AC_CHECK_LIB(pq,PQcmdTuples, 
-	[
-          AC_DEFINE(HAVE_PQCMDTUPLES)
-	  PQLIB=-lpq
-	])
-LDFLAGS=${ac_save_ldflags}
-
+if test -n "$USE_POSTRES"; then
+	ac_save_ldflags=${LDFLAGS}
+	LDFLAGS="$LDFLAGS $PQLIBPATH"
+	AC_CHECK_LIB(pq,PQcmdTuples, 
+		[
+		  AC_DEFINE(HAVE_PQCMDTUPLES)
+		  PQLIB=-lpq
+		])
+	LDFLAGS=${ac_save_ldflags}
+fi
 # Done with PostgreSQL
 AC_SUBST(PQINCPATH)
 AC_SUBST(PQLIBPATH)
 AC_SUBST(PQLIB)
 
 # OpenGL
+# Allow OpenGL to be disabled
+USE_OPENGL=
+AC_ARG_ENABLE(opengl,
+  [  --enable-opengl=yes/no
+                          Enable or disable OpenGL programs (default: yes)],
+  [
+  	case "$enableval" in
+	"n" | "no")
+		USE_OPENGL=
+	;;
+	*)
+		USE_OPENGL="1"
+	;;
+	esac
+  ],
+  [
+  USE_OPENGL="1"
+  ]
+)
+
 AC_ARG_WITH(opengl-includes,
   [  --with-opengl-includes=DIR
                           Specify the directory for OpenGL (or Mesa) headers],
@@ -577,19 +617,25 @@ AC_ARG_WITH(opengl-libs,
 	opengl_libs="$withval"
    ])
 
+if test -n "$opengl_libs" || test -n "opengl_includes" ; then
+	if test -z "$USE_OPENGL"; then
+		USE_OPENGL="1"
+	fi
+fi
+
 OPENGLINC=
 OPENGLwINC=
 OPENGLLIB=
 OPENGLULIB=
 LGLWM=
 
-if test -z "$opengl_includes"; then
+if test -z "$opengl_includes" && test -n "$USE_OPENGL"; then
 	opengl_includes="/usr/include/GL /usr/local/include/GL \
 	/usr/include/Mesa/GL /usr/local/include/Mesa/GL \
 	/usr/local/Mesa/include/GL /opt/include/GL /opt/Mesa/include/GL \
 	/usr/X11R6/include /usr/X11R6/include/GL /opt/Mesa/include"
 fi
-if test "$opengl_includes"; then
+if test -n "$opengl_includes"; then
 	AC_MSG_CHECKING(GL/gl.h and GL/GLwMDrawA.h)
 	for dir in $opengl_includes; do
 		if test -d "$dir" && test -f "$dir/gl.h"; then
@@ -608,14 +654,14 @@ if test "$opengl_includes"; then
 	AC_MSG_RESULT($OPENGLINC and $OPENGLwINC)
 fi
 
-if test -z "$opengl_libs"; then
+if test -z "$opengl_libs" && test -n "$USE_OPENGL"; then
 	opengl_libs="/usr/lib /usr/local/lib /usr/lib/X11 \
 	/usr/local/Mesa/lib /usr/X11R6/lib /usr/local/X11/lib \
 	/usr/local/X11R6/lib /usr/lib/Mesa /opt/lib /opt/Mesa \
 	/opt/Mesa/lib"
 fi
 
-if test "$opengl_libs"; then
+if test -n "$opengl_libs"; then
 	for dir in $opengl_libs; do
 		if test -d "$dir"; then
 			OPENGLLIB="$OPENGLLIB -L$dir"
@@ -623,27 +669,30 @@ if test "$opengl_libs"; then
 	done
 fi
 
-ac_save_ldflags="$LDFLAGS"
-LDFLAGS="$OPENGLLIB"
-AC_CHECK_LIB(GL,glBegin,OPENGLLIB="$OPENGLLIB -lGL")
-LDFLAGS=${ac_save_ldflags}
+if test -n "$USE_OPENGL"; then
+	ac_save_ldflags="$LDFLAGS"
+	LDFLAGS="$OPENGLLIB"
+	AC_CHECK_LIB(GL,glBegin,OPENGLLIB="$OPENGLLIB -lGL")
+	LDFLAGS=${ac_save_ldflags}
 
-ac_save_ldflags="$LDFLAGS"
-LDFLAGS="$LDFLAGS $OPENGLLIB"
-AC_CHECK_LIB(GLU,gluBeginCurve, OPENGLULIB="-lGLU")
-LDFLAGS=${ac_save_ldflags}
+	ac_save_ldflags="$LDFLAGS"
+	LDFLAGS="$LDFLAGS $OPENGLLIB"
+	AC_CHECK_LIB(GLU,gluBeginCurve, OPENGLULIB="-lGLU")
+	LDFLAGS=${ac_save_ldflags}
 
-ac_save_ldflags="$LDFLAGS"
-LDFLAGS="$LDFLAGS $OPENGLLIB $OPENGLULIB $X_LIBS -lXt -lXm"
-AC_CHECK_LIB(GLw,GLwDrawingAreaMakeCurrent,LGLWM=-lGLw)
-AC_CHECK_LIB(GLwM,GLwCreateMDrawingArea,LGLWM="$LGLWM -lGLwM")
-LDFLAGS=${ac_save_ldflags}
+	ac_save_ldflags="$LDFLAGS"
+	LDFLAGS="$LDFLAGS $OPENGLLIB $OPENGLULIB $X_LIBS -lXt -lXm"
+	AC_CHECK_LIB(GLw,GLwDrawingAreaMakeCurrent,LGLWM=-lGLw)
+	AC_CHECK_LIB(GLwM,GLwCreateMDrawingArea,LGLWM="$LGLWM -lGLwM")
+	LDFLAGS=${ac_save_ldflags}
+fi
 
 AC_SUBST(OPENGLINC)
 AC_SUBST(OPENGLwINC)
 AC_SUBST(OPENGLLIB)
 AC_SUBST(OPENGLULIB)
 AC_SUBST(LGLWM)
+AC_SUBST(USE_OPENGL)
 #End of OpenGL tests
 
 # ODBC include paths..

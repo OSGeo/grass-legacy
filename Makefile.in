@@ -11,6 +11,8 @@ exec_prefix=            @exec_prefix@
 
 BINDIR=			@BINDIR@
 
+USE_OPENGL=             @USE_OPENGL@
+
 SRCDIR=			@SRCDIR@
 SERVERNAME=		`uname -n`
 SYSTEM=			`uname -s`
