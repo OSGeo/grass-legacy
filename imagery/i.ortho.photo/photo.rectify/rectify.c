@@ -4,7 +4,6 @@
    CELL/FP elevation - Markus Neteler
  */
 
-#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include "global.h"
@@ -28,6 +27,12 @@ int rectify (char *name, char *mapset, char *result)
     char buf[64]="";
     RASTER_MAP_TYPE data_type;
 
+
+    /* 1/2002: for some reason we have to suppress the warnings to avoid
+       tons of email concerning G_set_null_value() error (map_type undefined).
+       Where is this bug??? But - the module works fine.
+     */
+    G_suppress_warnings(1);
 
 #ifdef DEBUG3
     fprintf (Bugsr,"Open temp elevation file: \n");
@@ -257,11 +262,10 @@ int rectify (char *name, char *mapset, char *result)
 	ncols -= win.cols;
 	col += win.cols;
 	win.west += (win.ew_res * win.cols);
-	G_percent(col,col+ncols,1);
     }
 
     select_target_env();
-
+    G_suppress_warnings(0);
     if (cellhd.proj == 0) { /* x,y imagery */
 			cellhd.proj = target_window.proj;
 			cellhd.zone = target_window.zone;
@@ -279,10 +283,13 @@ int rectify (char *name, char *mapset, char *result)
 			G_warning(buf);
 	}  
 
+    G_suppress_warnings(1);
     target_window.compressed=cellhd.compressed;
     G_close_cell (infd);
     write_map(result);
     select_current_env();
+
+    G_suppress_warnings(0);
 
     return 1;
 }
