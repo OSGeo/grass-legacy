@@ -410,6 +410,18 @@ db_CatValArray_init( dbCatValArray *arr )
  \return 
  \param 
 */
+void
+db_CatValArray_free( dbCatValArray *arr )
+{
+    free ( arr->value );
+}
+
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
 int
 db_CatValArray_alloc( dbCatValArray *arr, int n )
 {
