@@ -147,7 +147,7 @@ main (int argc, char *argv[])
 	    Vect_close (&Out);
 	    G_fatal_error ( "Cannot open database %s by driver %s", Fi->database, Fi->driver );
 	}
-	
+	db_begin_transaction ( driver );
     } else {
 	driver = NULL;
     }
@@ -418,6 +418,7 @@ main (int argc, char *argv[])
 
     if ( driver ) {
         /* Close table */
+	db_commit_transaction ( driver );
 	db_close_database_shutdown_driver ( driver );
     }
     
