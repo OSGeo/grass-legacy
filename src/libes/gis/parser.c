@@ -101,6 +101,7 @@
 #include <ctype.h>
 #include <unistd.h>
 #include "gis.h"
+#include "glocale.h"
 
 #define BAD_SYNTAX  1
 #define OUT_OF_RANGE    2
@@ -379,7 +380,7 @@ int G_parser (int argc, char **argv)
   	        /* If we see the non valid argument (no "=", just argument) */
 			else if (contains(ptr, '=') == 0)
 			{
-				fprintf(stderr, "Sorry <%s> is not a valid option\n", ptr);
+				fprintf(stderr, _("Sorry <%s> is not a valid option\n"), ptr);
 				error = 1;
 			}
 
@@ -422,7 +423,7 @@ int G_usage (void)
 	    pgm_name = "??";
 
 	if (module_info.description) {
-		fprintf (stderr, "\nDescription:\n");
+		fprintf (stderr, _("\nDescription:\n"));
 		fprintf (stderr, " %s\n", module_info.description);
 	}
 
@@ -514,7 +515,7 @@ int G_usage (void)
 					opt->options) ;
 				*/
 			if(opt->def)
-				fprintf (stderr, "  %*s   default: %s\n", maxlen, " ",
+				fprintf (stderr, _("  %*s   default: %s\n"), maxlen, " ",
 					opt->def) ;
 			opt = opt->next_opt ;
 		}
@@ -722,7 +723,7 @@ static int show_options(int maxlen,char *str)
 	int totlen, len ;
 
 	strcpy(buff, str) ;
-	fprintf (stderr, "  %*s   options: ", maxlen, " ") ;
+	fprintf (stderr, _("  %*s   options: "), maxlen, " ") ;
 	totlen = maxlen + 13 ;
 	p1 = buff ;
 	while((p2 = G_index(p1, ',')))
@@ -769,7 +770,7 @@ static int set_flag (int f)
 
 	if(!n_flags)
 	{
-		fprintf(stderr,"Sorry, <%c> is not a valid flag\n", f) ;
+		fprintf(stderr,_("Sorry, <%c> is not a valid flag\n"), f) ;
 		return(1) ;
 	}
 
@@ -841,14 +842,14 @@ static int set_option (char *string)
 
 	if (got_one > 1)
 	{
-		fprintf(stderr,"Sorry, <%s=> is ambiguous\n", the_key) ;
+		fprintf(stderr,_("Sorry, <%s=> is ambiguous\n"), the_key) ;
 		return(1) ;
 	}
 
 	/* If there is no match, complain */
 	if(got_one == 0)
 	{
-		fprintf(stderr,"Sorry, <%s> is not a valid parameter\n",
+		fprintf(stderr,_("Sorry, <%s> is not a valid parameter\n"),
 			the_key) ;
 		return(1) ;
 	}
@@ -933,17 +934,17 @@ static int check_an_opt (char *key, int type, char *options, char *answer)
 	case 0:
 		break ;
 	case BAD_SYNTAX:
-		fprintf(stderr,"\nError: illegal range syntax for parameter <%s>\n",
+		fprintf(stderr,_("\nError: illegal range syntax for parameter <%s>\n"),
 		    key) ;
-		fprintf(stderr,"       Presented as: %s\n", options) ;
+		fprintf(stderr,_("       Presented as: %s\n"), options) ;
 		break ;
 	case OUT_OF_RANGE:
-		fprintf(stderr,"\nError: value <%s> out of range for parameter <%s>\n",
+		fprintf(stderr,_("\nError: value <%s> out of range for parameter <%s>\n"),
 		    answer, key) ;
-		fprintf(stderr,"       Legal range: %s\n", options) ;
+		fprintf(stderr,_("       Legal range: %s\n"), options) ;
 		break ;
 	case MISSING_VALUE:
-		fprintf(stderr,"\nError: Missing value for parameter <%s>\n",
+		fprintf(stderr,_("\nError: Missing value for parameter <%s>\n"),
 		    key) ;
 	}
 	return(error) ;
@@ -1103,7 +1104,7 @@ static int check_required (void)
 	{
 		if(opt->required && opt->answer == NULL)
 		{
-			fprintf(stderr,"\nERROR: Required parameter <%s> not set:\n    (%s).\n",
+			fprintf(stderr,_("\nERROR: Required parameter <%s> not set:\n (%s).\n"),
 			    opt->key, opt->description) ;
 			err++ ;
 		}
@@ -1201,9 +1202,9 @@ static int check_multiple_opts (void)
 			/* if not correct multiple of items */
 			if(n % n_commas)
 			{
-				fprintf(stderr,"\nError: option <%s> must be provided in multiples of %d\n",
+				fprintf(stderr,_("\nError: option <%s> must be provided in multiples of %d\n"),
 					opt->key, n_commas) ;
-				fprintf(stderr,"       You provided %d items:\n", n) ;
+				fprintf(stderr,_("       You provided %d items:\n"), n) ;
 				fprintf(stderr,"       %s\n", opt->answer) ;
 				error++ ;
 			}
@@ -1246,7 +1247,7 @@ static int interactive( char *command)
 static int interactive_flag( struct Flag *flag )
 {
 	char buff[1024] ;
-	fprintf(stderr, "\nFLAG: Set the following flag?\n") ;
+	fprintf(stderr, _("\nFLAG: Set the following flag?\n")) ;
 	sprintf(buff,"    %s?", flag->description) ;
 	flag->answer = G_yes(buff, 0) ;
 
@@ -1259,17 +1260,17 @@ static int interactive_option(struct Option *opt )
 	char buff2[1024] ;
 	int set_one ;
 
-	fprintf(stderr,"\nOPTION:   %s\n", opt->description) ;
-	fprintf(stderr,"     key: %s\n", opt->key) ;
+	fprintf(stderr,_("\nOPTION:   %s\n"), opt->description) ;
+	fprintf(stderr,_("     key: %s\n"), opt->key) ;
 	if (opt->key_desc)
-	fprintf(stderr,"  format: %s\n", opt->key_desc) ;
+	fprintf(stderr,_("  format: %s\n"), opt->key_desc) ;
 	if (opt->def)
-	fprintf(stderr," default: %s\n", opt->def) ;
-	fprintf(stderr,"required: %s\n", opt->required ? "YES" : "NO") ;
+	fprintf(stderr,_(" default: %s\n"), opt->def) ;
+	fprintf(stderr,_("required: %s\n"), opt->required ? "YES" : "NO") ;
 	if (opt->multiple)
-	fprintf(stderr,"multiple: %s\n", opt->multiple ? "YES" : "NO") ;
+	fprintf(stderr,_("multiple: %s\n"), opt->multiple ? "YES" : "NO") ;
 	if (opt->options)
-	fprintf(stderr," options: %s\n", opt->options) ;
+	fprintf(stderr,_(" options: %s\n"), opt->options) ;
 	/*
 	show_options(0, opt->options) ;
 	*/
@@ -1282,7 +1283,7 @@ static int interactive_option(struct Option *opt )
 		gis_prompt(opt, buff) ;
 	   else
 	   {
-		fprintf(stderr,"enter option > ") ;
+		fprintf(stderr,_("enter option > ")) ;
 		if(fgets(buff,1024,stdin) == 0) exit(1); ;
                 bptr = buff;  /* strip newline  */
                 while(*bptr) {if(*bptr=='\n') *bptr='\0'; bptr++;}
@@ -1296,7 +1297,7 @@ static int interactive_option(struct Option *opt )
 	        {
 		    if (check_an_opt(opt->key, opt->type, opt->options, buff))
 	            {
-		        if (G_yes("   Try again? ", 1))
+		        if (G_yes(_("   Try again? "), 1))
 		    		continue ;
 	    	        else
 				exit(-1) ;
@@ -1305,9 +1306,9 @@ static int interactive_option(struct Option *opt )
 		if (opt->checker)
 	 	    if (opt->checker(buff))
 		    {
-		    	    fprintf(stderr,"Sorry, %s is not accepted.\n", buff) ;
+		    	    fprintf(stderr,_("Sorry, %s is not accepted.\n"), buff) ;
 			    *buff = '\0' ;
-			    if (G_yes("   Try again? ", 1))
+			    if (G_yes(_("   Try again? "), 1))
 			    	continue ;
 			    else
 				exit(-1) ;
@@ -1316,8 +1317,8 @@ static int interactive_option(struct Option *opt )
 		sprintf(buff2,"%s=%s", opt->key, buff) ;
 		if(! opt->gisprompt)
 		{
-			fprintf(stderr,"\nYou have chosen:\n  %s\n", buff2) ;
-			if (G_yes("Is this correct? ", 1))
+			fprintf(stderr,_("\nYou have chosen:\n  %s\n"), buff2) ;
+			if (G_yes(_("Is this correct? "), 1))
 			{
 				set_option(buff2) ;
 				set_one++ ;
@@ -1375,7 +1376,7 @@ static int gis_prompt (struct Option *opt, char *buff)
 	/*********ptr1 points to current mapset description***********/
 
 	if (opt->answer)
-		G_set_ask_return_msg ("to accept the default");
+		G_set_ask_return_msg (_("to accept the default"));
 	if (! strcmp("old",age))
 	{
 		ptr1 = G_ask_old("", buff, element, desc) ;

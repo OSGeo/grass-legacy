@@ -13,6 +13,8 @@
  ***********************************************************************/
 
 #include "gis.h"
+#include "glocale.h"
+
 int G_put_cellhd (char *name, struct Cell_head *cellhd)
 {
     FILE *fd ;
@@ -21,7 +23,7 @@ int G_put_cellhd (char *name, struct Cell_head *cellhd)
     {
 	char buf[1024];
 
-	sprintf (buf, "Unable to create header file for [%s]", name);
+	sprintf (buf, _("Unable to create header file for [%s]"), name);
 	G_warning (buf);
 	return -1;
     }
