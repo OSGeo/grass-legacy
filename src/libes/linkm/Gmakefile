@@ -1,0 +1,26 @@
+
+OBJ = \
+	init.o\
+	new.o\
+	next.o\
+	oom.o\
+	dispose.o
+
+#all: $(LINKMLIB) $(LIBDIR)/linkm.h
+all: $(LINKMLIB)
+
+$(LINKMLIB): $(OBJ)
+	$(AR)
+
+#$(LIBDIR)/linkm.h: linkm.h
+#	rm -f $@
+#	cp $? $@
+#	chmod +r $@
+
+$(OBJ): #linkm.h
+
+try: try.o $(LINKMLIB)
+	$(CC) $(LDFLAGS) try.o $(LINKMLIB) -o try
+
+try2: try2.o $(LINKMLIB)
+	$(CC) $(LDFLAGS) try2.o $(LINKMLIB) -o try2
