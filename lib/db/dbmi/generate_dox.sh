@@ -21,7 +21,7 @@ echo "/*!
 
 # extract function names starting with $SEARCHSTRING_*():
 cat $i.c | grep '\\fn '| sed '/^ *\\fn .*\($SEARCHSTRING[a-zA-Z0-9_]*\).*$/s//\1/p' |sort -u | sed 's/$/\
-/g' >> $i.dox
+/g' | sed 's/\\fn//g' >> $i.dox
 
 #write footer:
 echo "@}
