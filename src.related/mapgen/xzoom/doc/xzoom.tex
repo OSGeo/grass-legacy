@@ -1,0 +1,394 @@
+\documentstyle{article}
+\title{Description of Program {\bf xzoom}, v1.03}
+\author{Gerald I. Evenden}
+%\def\baselinestretch{1.5}
+\begin{document}
+\maketitle
+\vspace{1.25in}
+\special{psfile='`zcat icon.ps' hoffset=138}
+\section{Introduction}
+Program {\bf xzoom} is an interactive means for viewing the
+vector graphic {\sc mapgen} and {\sc plotgen} overlay files
+in the {\bf X11} environment.
+In addition to displaying overlays, cursor position and
+text data can be digitized and placed into a program {\bf legend}
+compatible format to be used for the creation of new overlays.
+
+Use of the program is by mouse selection from a
+menu of command buttons on the user's screen.
+Some commands will pop up additional screens for entering
+information such as file names, working directory path, or
+editing a file of a list of overlays to be displayed.
+Other commands are related to either display control or digitizing
+operations.
+
+Effort has been made to make {\bf xzoom} reasonably ``user friendly''
+and requiring as little learning time as possible for basic usage.
+But the new user should read at least the section on {\bf xzoom}
+execution or receive about 30 minutes of verbal instruction provided that
+reasonable preconfiguration and initialization procedures
+have been performed.
+If the reader is learning to use this program from this manual
+it is recommended that it be in conjunction with concurrently
+executing {\bf xzoom}.
+
+Installation and configuration of {\bf xzoom} requires some
+familiarity with the {\bf X11} system.
+Details of the resources file and recommended or suggested
+parameters are discussed in later sections of this manual.
+
+\subsection{History}
+{\bf Xzoom}'s predecessors date back to the original {\bf zoom}
+program designed for older Tektronix 4010 style graphic devices and which
+originally performed only basic display operations.
+Later revisions added digitizing which was very tedious
+because of the frequent lack of a mouse and the difficulty
+of menu displays on these types of devices.
+Installation of {\sc mapgen} on Sun Microsystems workstations
+resulted in program {\bf szoom} that was a trend setter in
+terms of features and mechanisms used in {\bf xzoom}.
+
+\section{xzoom Execution}
+Execution of {\bf xzoom} depends a great deal upon the user's
+particular {\bf X11} environment.
+For example, if the user is at server which is not also a client
+then {\bf xzoom} will have to be executed via a remote login to
+the client machine or possibly a remote shell command.
+When the server and client are the same machine execution
+will be dependent upon the user's {\bf X11} environment.
+Readers is in doubt should consult local personnel familiar
+with this system.
+\begin{figure*}[h]
+\vspace{1.5in}
+\special{psfile="`zcat init.ps"}
+\caption{Initial screen appearance of {\bf xzoom}.}
+\label{init}
+\end{figure*}
+
+For descriptive purposes, however, is is assumed that the
+user is employing a {\bf csh} window such as {\bf xterm}
+and a window manager such as {\bf twm} and the system will act as
+both a client and server.
+Prior to executing {\bf xzoom} the user should make sure
+that appropriate {\bf xzoom} resources are set by executing:
+\begin{verbatim}
+xrdb -merge ${HOME}/XZoom
+\end{verbatim}
+In this case, the resources file {\tt XZoom} is considered
+to be in the user's root directory.
+This operation will usually become part of an active {\bf xzoom} user's
+start up scripts or {\tt .Xresouces} file.
+The next operation is simply:
+\begin{verbatim}
+xzoom
+\end{verbatim}
+What happens next is dependent upon the window manager---{\bf twm}
+will place a blinking grid on the screen and expect the user
+to position it with the mouse and click button 1.
+At this point, {\bf xzoom} should be displayed and ready for operation
+as seen in Figure~\ref{init}.
+
+The first thing to note is that {\bf xzoom}'s
+display is divided into five vertical levels which are, starting from
+the top:
+\begin{enumerate}
+\item command buttons which control basic operations,
+\item instruction or executional reminders for certain operations
+and error messages,
+\item text editing area for labels and {\bf legend} commands,
+\item background, and pen color definitions, and
+\item graphic display area.
+\end{enumerate}
+Most of the following description will be related to the
+command button in the first level.
+
+When first executed only a few of the command buttons are enabled
+such as {\tt quit} (as shown by their highlighting),
+and as the user proceeds through
+the proper sequence, appropriate command buttons are enabled.
+For example, the graphic display operations {\tt (re)plot},
+{\tt zoom}, etc.
+are only enable when a {\sc mapgen} or {\sc plotgen} definition
+file has been specified with the {\tt def} button and its
+associated popup request for a file name has been satisfied.
+Selecting any one of the commands is performed by moving the
+cursor with the mouse into the command box (which causes its border to expand)
+and clicking mouse button 1.
+Note that the first button with a number displays {\bf xzoom}'s
+version number and is not a command.
+
+The following is a discussion of each of the general command buttons.
+\begin{description}
+\item[\fbox{\tt RESET}]
+This command button is only activated by error conditions or messages
+which are displayed in the comments window below.
+Once the message has been read, toggle the button to enable
+the other commands.
+\item[\fbox{\tt quit}]
+Terminate the execution of {\bf xzoom}.
+\item[\fbox{\tt cwd}]
+The user may change working directory with this command button.
+A popup window will appear with the current working directory
+which may be edited to a new directory.
+A ``\verb@~@'' prefix may be employed to denote the use of
+the user's {\tt HOME} environment variable as a prefix.
+Selecting the {\tt ENTER} button returns to the main
+{\bf xzoom} command window.
+\item[\fbox{\tt def}]
+This command pops up a request for the name of a {\sc mapgen}
+or {\sc plotgen} definition file.
+The definition file may be changed at any time but a valid
+file must be specified by this command
+before graphic or digitizing operations are allowed.
+Initially, a default name of {\tt def} is specified.
+The command button {\tt ENTER} attempts to execute the
+directory change and returns to the main commands if successful.
+If the directory change is unsucessful, an error message
+is issued.
+{\tt ABORT} will return to the main commands without further
+action.
+\item[\fbox{\tt digit}]
+Before digitizing operations are permited the {\tt digit}
+command must be used and an appropriate file name
+entered in the pop up window.
+A default name of {\tt digit} is initially specified.
+If the selection of a digitizing file is made prior to
+the selection of the {\tt def} file the digitizing commands
+remain suspended until the later is specified.
+
+Press {\tt ENTER} when the file name is edited to the
+appropriate path.
+If the file already exists the {\tt OVERWRITE} and
+{\tt APPEND} buttons are enabled and the user must select
+the appropriate action.
+In all cases, the operation can be suspended without opening
+a file with the {\tt ABORT} command.
+
+{\bf Xzoom} always closes the current digitizing output file before
+popping up the file name request, so that if an {\tt ABORT}
+is issued the file remains closed and digitizing operations
+are suspended.
+\item[\fbox{\tt plotter}]
+This command allows the user to specify a file containing
+a list of overlay files to be included in graphic operations.
+The file may previously exist, being created by non-{\bf xzoom} procedures.
+It should contain only file names (and may have shell wild card characters)
+or program {\bf plotter} pen mappings ({\tt -p}n{\tt :}m).
+Newlines may be employed and a ``\verb@#@''
+character will cause the character and the remainder of a line to be ignored.
+The later feature allows the use of comments to describe overlay contents.
+
+Again, the popup file selection window is used to enter the file name.
+\item[\fbox{\tt edit pl}]
+The file defined by the {\tt plotter} command may be edited or browsed
+with a pop up window.
+When finished the user executes the {\tt DONE} which will save
+editing operations or if the user does not want not to
+save the editing operations he or she may execute {\tt ABORT}.
+If protections on the file does not allow user changes, the {\tt ABORT}
+command is disabled and editing operations on the file are ignored
+with the server's bell being sounded.
+\end{description}
+The next set of command buttons are associated with the graphic
+display in the area at the bottom of the main {\bf xzoom} window
+(a definition file must have been specified for these commands
+to be activated):
+\begin{description}
+\item[\fbox{\tt (re)plot}]
+This command causes plotting of the overlay files and is necessary
+whenever the {\tt def}, {\tt plotter} or {\tt edit pl} commands have
+been executed.
+It may also be desirable to employ during digitizing operations
+so that a true view of digitized events may be displayed.
+
+Note that {\bf xzoom} performs graphics into a pixel map and
+not directly onto the viewable screen.
+After so many operations the viewable screen is updated and
+thus causes a periodic burst of graphics on the visible screen.
+The method is a compromise of inefficiently updating the screen
+with every vector and delaying the display until the pixel map
+is completed which may take a sufficient period of time to cause
+concern to the user that the program is properly functioning.
+\item[\fbox{\tt zoom}]
+After selecting this command position the cursor at one corner
+of the area to be expanded in the graphics region and click
+mouse button 1.
+Moving the cursor will show a box with one corner
+anchored at the initial position.
+Adjust the box to enclose the zoom region and press button
+1 a second time and
+{\bf xzoom} will automatically replot the graphics based on the
+defined window.
+Pressing either mouse button 2 or 3 will cancel the command.
+The user may repeatatively increase zoom magnification several times.
+\item[\fbox{\tt dezoom}]
+If the graphic has been zoomed the previous zoom level may
+be restored by this command.
+The graphic is automatically replotted.
+\item[\fbox{\tt pan}]
+If the graphic has been zoomed the zoom window may be shifted
+with this command.
+First position the cursor on a point that is to be moved within
+the limits of the current display and press button 1 on the mouse.
+Move the cursor to where this point should be plotted on the
+new display and press button 1 again.
+Again, the graphic is automatically replotted.
+To cancel the operation, press mouse button 2 or 3.
+\item[\fbox{\tt home}]
+This command is used
+to return to the original full view, non-zoomed graphic which
+will automatically be replotted.
+\end{description}
+The following commands allow digitizing operations provided
+a {\tt digit} file has been specified:
+\begin{description}
+\item[\fbox{\tt line}]
+After selecting this command position the cursor at line
+node points in the graphic and press mouse button 1.
+To cause the start of a new line segment press mouse button 2.
+Mouse button 3 terminates the operation and reactivates
+the basic command buttons.
+\item[\fbox{\tt poly}]
+This command is similar to {\tt line} except that the last
+digitized point is connected to the first point of the line
+segment.
+\item[\fbox{\tt label}]
+The contents of the text window above the graphics area along
+with the coordinates determined when press mouse button 1 are
+output.
+By moving the cursor into the text window the text can be
+edited at anytime during the {\tt label} operation.
+Either mouse button 2 or 3 stops this operation.
+\item[\fbox{\tt < label}]
+Similar to the {\tt label} operation except that after selecting
+the base point the user moves the mouse around to determine
+the angle at which the label is to be printed and presses
+mouse button 1 a second time.
+Either mouse button 2 or 3 stops this operation.
+\item[\fbox{\tt mark}]
+This command only outputs the coordinates at the current
+cursor positon when mouse button 1 is pressed.
+No graphic operations are associated with this command.
+Either mouse button 2 or 3 stops this operation.
+\item[\fbox{\tt text out}]
+The current contents of the text window are output
+to the {\tt digit} file and thus
+allows {\bf legend} control information to be entered
+such as fonts and character sizes for label commands.
+\end{description}
+
+Commands which need file names
+({\tt def}, {\tt cwd}, {\tt digit} and {\tt plotter})
+cause a popup window for
+entering the name required.
+File names may use the {\bf csh} convention of prefixing
+a tilde character to the path to indicate the user's or
+other registered user's path to be prefixed to the
+remaining name text.
+Within this window other commands are enabled:
+\begin{description}
+\item[\fbox{\tt ENTER}]
+Once the file name in the dialog window has been edited
+to user's requirements entering the name is performed
+by this command button.
+\item[\fbox{\tt OVERWRITE}]
+If the file is to be used for output and it
+already exists when the {\tt ENTER}
+command is pressed then this and the following commands
+are enabled.
+Selection of this command will cause the new data to
+overwrite the existing file.
+\item[\fbox{\tt APPEND}]
+Selection of this command will
+cause new digitized data to be appended to selected file.
+\item[\fbox{\tt ABORT}]
+If the user does not want to make any changes this command
+terminates the process.
+\end{description}
+
+In the screen area just above the graphics the numbered
+label buttons are commands which allow the user to select
+the mechanical (or color) pen number to be output with
+line, polynomial and label digitizing.
+These can be selected at anytime and the
+annotation box in the same section has the same foreground
+and background color of the currently selected value.
+\begin{figure*}[t]
+\vspace{4.8in}
+\special{psfile="`zcat full.ps"}
+\caption{{\bf Xzoom} display of example overlay set.}
+\label{full}
+\end{figure*}
+
+Figure~\ref{full} shows a plot of the example data set
+distributed with {\bf xzoom} which was performed with a
+{\tt cwd} to the example directory, {\tt def} command
+using the default file name followed by {\tt (re)plot}.
+This example also shows reference information in the
+comment area giving plot {\tt size} (in centimeters) in terms of
+the size intended for final hard copy, {\tt off}set of the lower
+left hand corner of the screen display from the orgin of
+the basic plot corner.
+On the second line the depth of zoom level {\tt Zm lev:} and
+approximate scale fraction of the intended
+hard copy size to the actual display screen size.
+
+\section{Digit file}
+When performing digitizing operations with {\bf xzoom}
+the file specified by the {\tt digit} command is
+used for containing the {\bf legend} program control data
+generated by the digitizing operations.
+Anytime a {\tt (re)plot} command is issued this file
+is processed by {\bf legend} creating a temporary overlay
+file which is passed to program {\bf plotter}.
+
+When performing either of the labeling commands the
+a {\tt (re)plot} operation will not show either symbols
+or characters without speccification of font and character size.
+When a new digit file is openned or an old file is overwritten
+{\bf xzoom} will prepend the following {\bf legend} control data
+to the file:
+\begin{verbatim}
+-f -   # default font
+-s .3  # size
+-l .5  # spacing for multi-line text
+\end{verbatim}
+For other initializations, files containing commands
+could be created and input to the text screen with
+the Meta-{\tt i} editor command.
+
+The resultant file created by the digitizing operations is often
+post edited with finishing, cosmetic control information added.
+Counterclockwise {\tt poly} operations are also often converted to {\bf vector}
+masking control.
+\section{Plotter file}
+The {\tt plotter} file is used to create the program {\bf plotter}
+execution script by appending its contents to the other
+control information generated by {\bf xzoom}.
+Except when being edited by the {\tt edit pl} command it
+always resides on disk and can be edited from another window
+with the user's favorite text editor.
+
+Since the {\tt plotter} file is going to be processed by
+a shell program usage of wild card characters for file
+names is allowed.
+But usage of other shell control characters should be done
+with care and utmost understanding of the consequences.
+
+For complex graphic operations which use a large number of
+overlay files, users may find it useful to create several
+of these {\tt plotter} files which select subsets suitable
+for particular digiting or graphic operations.
+They can of course be readily created and edited outside of {\bf xzoom}
+with various {\sc Unix} utilities.
+
+To overcome the case where the file is write protected
+the user may execute the {\tt plotter} command
+and create a personal plotter file and then initialize it
+with {\tt edit pl} by using the Meta{\tt -i} editor command
+to read the contents of the write protected plotter file.
+If the current directory is also write protected the user must
+locate the personal file in a writable directory.
+\input keys
+\input XZoom
+\end{document}
