@@ -1,3 +1,4 @@
+#define MAIN
 #include	<stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -8,6 +9,8 @@
 #include	"bin_digit.h"
 #include        "ginput.h"
 #include "local_proto.h"
+#include "digit.h"
+
 #define		BIN    "bin"
 /*  Sun needs a null string, not just a null  */
 #define		NULL_STRING	""
@@ -16,7 +19,6 @@ static int lock_file (char *,int);
 static int find_process (int);
 static int get_pid (char *,int *);
 
-double pan_threshold;
 
 int main (int argc, char *argv[])
 {
@@ -197,6 +199,7 @@ askagain:
 	pan_threshold = (pan_threshold >= 0.0 && pan_threshold <= 0.25 ?
 				pan_threshold : 0.05);
 
+	Cat_name = NULL;
 	
 /*  NOW execute the digit program  */
 
@@ -340,4 +343,5 @@ int unlock_file (char *file)
 	return 1;
     return -1;
 }
+#undef MAIN
 

@@ -73,6 +73,11 @@ int Label (void)
 
 		    if (!cat) break;
 		    label_area (CMap, cat);
+
+		    if(Cat_name){
+			    G_free(Cat_name);
+			    Cat_name = NULL;
+		    }
 		}
 		break;
 	    case MLC_LLINE:
@@ -96,6 +101,11 @@ int Label (void)
 
 		    if (!cat) break;
 		    label_lines (CMap, cat);
+
+		    if(Cat_name){
+			    G_free(Cat_name);
+			    Cat_name = NULL;
+		    }
 		}
 		break;
 	    case MLC_LSITE:
@@ -119,6 +129,11 @@ int Label (void)
 
 		    if (!cat) break;
 		    label_sites (CMap, cat);
+
+		    if(Cat_name){
+			    G_free(Cat_name);
+			    Cat_name = NULL;
+		    }
 		}
 		break;
 	    case MLC_LLINES:
@@ -166,6 +181,11 @@ int Label (void)
 
 		    if (!cat) break;
 		    label_mlines (CMap, cat);
+
+		    if(Cat_name){
+			    G_free(Cat_name);
+			    Cat_name = NULL;
+		    }
 		}
 		break;
 	    case MLC_UMLINES:	/* unlabel multiple lines */
@@ -970,6 +990,12 @@ int ask_name (int cat_number, struct Categories *pcats)
     char buffr[128], area_name[40], cat_name[40];
     char *nptr, *cptr ;
 
+    if(Cat_name)
+    {
+	 G_free(Cat_name);
+	 Cat_name = NULL;
+    }
+
     while (1)
       {
       Clear_info();
@@ -1001,6 +1027,7 @@ int ask_name (int cat_number, struct Categories *pcats)
 	if (strcmp(nptr,cptr) == 0)     /* compare for match */
 	   {                           /* match, assigned already */
 	   icode = pcats->list[i].num; /* set icode to category code */
+	   Cat_name = G_store(nptr);
 	   return(icode);
 	   }
 	} 
@@ -1037,6 +1064,7 @@ int ask_name (int cat_number, struct Categories *pcats)
 #endif
             Write_info(2,buffr); sleep(2);
             }
+	 Cat_name = G_store(nptr);
 	 return(icode);
 	 }
       }   /* end of while */
