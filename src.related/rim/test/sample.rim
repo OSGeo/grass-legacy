@@ -1,0 +1,4 @@
+*( setup file for sample database)
+echo
+*( loading sample.rim ); echo off
+macro person = 'id@i4 m_t:name@a25'
