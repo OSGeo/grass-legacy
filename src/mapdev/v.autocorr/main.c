@@ -116,7 +116,7 @@ int main (int argc, char **argv)
   else
     out = stdout;
 
-  if( strcmp(parm.mapset->answer, ""))
+  if( strcmp(parm.mapset->answer, "") == 0)
     mapset = G_mapset();
   else
     mapset = parm.mapset->answer;
@@ -125,6 +125,9 @@ int main (int argc, char **argv)
   /* init_plus_struct (&Plus);
   init_map_struct (&Map);
   */
+
+  Map = (struct Map_info *)malloc( sizeof(struct Map_info));
+  memset( Map, 0, sizeof(struct Map_info));
 
   if (!quiet)
     fprintf(stdout, "Opening files...\n");
