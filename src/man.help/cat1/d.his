@@ -1,0 +1,132 @@
+
+
+
+d.his(1)             GRASS Reference Manual              d.his(1)
+
+
+
+NAME
+     d.his - Multiple overlay graphics
+     (Available through grass3 menu)
+
+SYNOPSIS
+     d.his
+
+DESCRIPTION
+     His stands for Hue, Intensity and Saturation.  This program
+     provides for a visually pleasing combination of full
+     information from two or three The human brain automatically
+     interprets the vast amount of visual information available
+     according to basic rules.  Color, or hue, is used to
+     categorize objects.  Shading, or intensity, is interpreted
+     as three-dimensional texturing.  Finally, the degree of
+     haziness, or saturation, is associated with distance or
+     depth.  This program allows for the combination of up to
+     three to produce one new which retains the original
+     information in terms of hue, intensity, and saturation.
+     While any can be used to represent the hue information, with
+     a few very distinct colors work best.  Only representing
+     continuously varying data like elevation, aspect, weights,
+     intensities, or amounts can suitably be used to provide
+     intensity and saturation information.
+
+     For example, a visually pleasing can be made by combining
+     watersheds as the hue factor, aspect as the intensity
+     factor, and elevation for saturation. (The user may wish to
+     leave out the elevation information for a first try.)  The
+     resulting image ideally looks like the a view from an
+     aircraft looking at a terrain on a sunny day with a bit of
+     haze in the valleys.
+
+THE PROCESS
+     Each cell is processed individually.  First, the working
+     color is set to the color of the corresponding cell in the
+     HUE Second, this color is multiplied by the red intensity of
+     that cell in the INTENSITY This should have an appropriate
+     grey-scale color look-up table associated with it.  You can
+     ensure this by using the color manipulation capabilities of
+     display(1) or d.colors(1). Finally, the color is made
+     somewhat grey based on the red intensity of that cell in the
+     SATURATION Again, this should have a grey-scale color table
+     associated with it.
+
+NOTES
+     It produces an image and (optionally) a cell with 1000
+     colors (10 intensities each of red, green and blue). The
+     image and cell will not display properly if the graphics
+     does not have at least 1000 colors while the user is running
+     in float colormode. Thus, unless the display device has 1000
+     colors, it is necessary to run the GRASS program Dcolormode
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+d.his(1)             GRASS Reference Manual              d.his(1)
+
+
+
+     fixed before running d.his.  Otherwise, the colors will be
+     incorrect.
+
+     The intensity or the saturation may be left out. This means
+     that it is possible to have his, hi, or hs images.
+
+SEE ALSO
+     Dcolormode[2D]
+
+AUTHOR
+     James Westervelt, U.S. Army Construction Engineering
+     Research Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
