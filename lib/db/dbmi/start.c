@@ -1,3 +1,6 @@
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include "dbmi.h"
 
 #define READ  0
