@@ -1,0 +1,10 @@
+*    Input arguments:
+*             v.random map=  vector file to read
+*                      site= output site_list file
+*                      dot=  label to dot count file
+*
+*    flags:
+*         -n      : use category numbers, NOT names
+*         -s      : determine optimum dot size, no dot processing
+*         -v      : verbose mode
+*
