@@ -20,6 +20,10 @@
 #%  key: r
 #%  description: use regular expression instead of wildcard
 #%end
+#%flag
+#%  key: m
+#%  description: print mapset name
+#%end
 #%option
 #% key: type
 #% type: string
@@ -31,7 +35,8 @@
 #%option
 #% key: mapset
 #% type: string
-#% description: mapset to list (default: current mapset search path)
+#% multiple : yes
+#% description: mapset(s) to list (default: current mapset search path)
 #% required : no
 #%end
 #%option
@@ -48,6 +53,44 @@
 #% required : no
 #%end
 
+do_list() {
+    list=""
+    for i in `g.list type=$type mapset=$mapset | grep -v '^-\+$' | grep -v "files available" | grep -vi "mapset"`
+    do
+        if [ ! "$search" ] ; then
+    	list="$list $i"
+        else
+    	list="$list `echo $i | grep \"$search\"`"
+        fi
+    done
+
+    if [ ! "$list" ] ; then
+	return
+    fi
+
+    sorted_list=`echo "$list" | tr ' ' '\n' | sort | tr '\n' ' '`
+
+    if [ $GIS_FLAG_m -eq 1 ] ; then
+	MAPSET="@$mapset"
+    else
+	MAPSET=""
+    fi
+    i=""
+    for i in $sorted_list
+    do
+        if [ "$start" ] ; then
+    	if [ ! "$sep" ] ; then
+    	    printf "\n"
+    	else
+    	    printf "%s" "$sep"
+    	fi
+        fi
+        start=1
+        printf "%s" "$i$MAPSET"
+    done
+}
+
+
 if test "$GISBASE" = ""; then
     echo "You must be in GRASS GIS to run this program." >&2
     exit 1
@@ -56,10 +99,6 @@ fi
 if [ "$1" != "@ARGS_PARSED@" ] ; then
     exec g.parser "$0" "$@"
 fi
-
-eval `g.gisenv`
-: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
-LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 #echo "Note:"
 #echo "  Do not forget to enclose expression with '...' to avoid being expanded"
@@ -70,10 +109,6 @@ mapset="$GIS_OPT_mapset"
 sep="$GIS_OPT_sep"
 search="$GIS_OPT_pattern"
 
-if [ -z "$mapset" ] ; then
-#    echo using current mapset
-    mapset="$MAPSET"
-fi
 if [ -z "$sep" ] ; then
 #    echo using "\n" as separator
     sep=""
@@ -87,38 +122,20 @@ if [ $GIS_FLAG_r -ne 1 ] ; then
 #    echo regex, as is
 fi
 
-for i in `g.list type=$type mapset=$mapset | grep -v '^-\+$' | grep -v "files available" | grep -vi "mapset"`
-do
-    if [ ! "$search" ] ; then
-	list="$list $i"
-    else
-	list="$list `echo $i | grep \"$search\"`"
-    fi
-done
-
-if [ ! "$list" ] ; then
-    exit 1
+start=""
+if [ -z "$mapset" ] ; then
+#    echo using current mapset
+    mapsets=`g.mapsets -p`
+else
+    mapsets=`echo $mapset | sed 's/,/ /g'`
 fi
 
-sorted_list=`echo "$list" | tr ' ' '\n' | sort | tr '\n' ' '`
-
-start=
-i=""
-for i in $sorted_list
+for mapset in $mapsets
 do
-    if [ "$start" ] ; then
-	if [ ! "$sep" ] ; then
-	    printf "\n"
-	else
-	    printf "%s" "$sep"
-	fi
-    fi
-    start=1
-    printf "%s" "$i"
+    do_list
 done
 
-if test $i
-then
+if [ "$start" ] ; then
     echo ""
 fi
 

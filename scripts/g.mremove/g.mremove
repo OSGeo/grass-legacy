@@ -21,6 +21,11 @@
 #%End
 
 #%flag
+#%  key: r
+#%  description: use regular expression instead of wildcard
+#%end
+
+#%flag
 #%  key: f
 #%  description: Force removal (use only if you know what you are doing)
 #%end
@@ -93,6 +98,12 @@ program=`basename $0`
 
 echo "Collecting map names for current mapset <$MAPSET>..."
 
+if [ $GIS_FLAG_r -eq 1 ] ; then
+   regex="-r"
+else
+   regex=""
+fi
+
 force=$GIS_FLAG_f
 
 if [ $force -eq 1 ] ; then
@@ -108,31 +119,31 @@ g=$GIS_OPT_group
 d=$GIS_OPT_dview
 
 if [ -n "$r" ] ; then
-    rast=`g.mlist type=rast sep=, mapset=$MAPSET pattern="$r"`
+    rast=`g.mlist $regex type=rast sep=, mapset=$MAPSET pattern="$r"`
 fi
 
 if [ -n "$v" ] ; then
-    vect=`g.mlist type=vect sep=, mapset=$MAPSET pattern="$v"`
+    vect=`g.mlist $regex type=vect sep=, mapset=$MAPSET pattern="$v"`
 fi
 
 if [ -n "$i" ] ; then
-    icon=`g.mlist type=icon sep=, mapset=$MAPSET pattern="$i"`
+    icon=`g.mlist $regex type=icon sep=, mapset=$MAPSET pattern="$i"`
 fi
 
 if [ -n "$l" ] ; then
-    labels=`g.mlist type=labels sep=, mapset=$MAPSET pattern="$l"`
+    labels=`g.mlist $regex type=labels sep=, mapset=$MAPSET pattern="$l"`
 fi
 
 if [ -n "$rg" ] ; then
-    region=`g.mlist type=region sep=, mapset=$MAPSET pattern="$rg"`
+    region=`g.mlist $regex type=region sep=, mapset=$MAPSET pattern="$rg"`
 fi
 
 if [ -n "$g" ] ; then
-    group=`g.mlist type=group sep=, mapset=$MAPSET pattern="$g"`
+    group=`g.mlist $regex type=group sep=, mapset=$MAPSET pattern="$g"`
 fi
 
 if [ -n "$d" ] ; then
-    dview=`g.mlist type=3dview sep=, mapset=$MAPSET pattern="$d"`
+    dview=`g.mlist $regex type=3dview sep=, mapset=$MAPSET pattern="$d"`
 fi
 
 found=
