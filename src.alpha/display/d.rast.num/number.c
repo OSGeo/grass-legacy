@@ -247,26 +247,26 @@ char **argv ;
 
 			D_x = (int)(col * D_ew + D_west);
 
-			if(cell[col] > 0){
+	/*		if(cell[col] > 0){ */
 
-				G_get_color(cell[col],&R,&G,&B,&colors);
-				/*
-				if(B>200 && R < 205 && G < 150)
-					R_standard_color(D_translate_color("white"));
-				else if(B>200 && G < 150 && R < 100)
-					R_standard_color(D_translate_color("white"));
-				else if(B<160 && G < 160 && R < 160)
-					R_standard_color(D_translate_color("white"));
-				else 
-					R_standard_color(D_translate_color("black"));
-				*/
-				new_color = ((B + R + G) > 300) ? BLACK : WHITE ;
-				if (new_color != cur_color)
-					R_standard_color(cur_color = new_color) ;
+			G_get_color(cell[col],&R,&G,&B,&colors);
+			/*
+			if(B>200 && R < 205 && G < 150)
+				R_standard_color(D_translate_color("white"));
+			else if(B>200 && G < 150 && R < 100)
+				R_standard_color(D_translate_color("white"));
+			else if(B<160 && G < 160 && R < 160)
+				R_standard_color(D_translate_color("white"));
+			else 
+				R_standard_color(D_translate_color("black"));
+			*/
+			new_color = ((B + R + G) > 300) ? BLACK : WHITE ;
+			if (new_color != cur_color)
+				R_standard_color(cur_color = new_color) ;
 
-				draw_number(cell[col]);
+			draw_number(cell[col]);
 
-			}
+			/*}*/
 		}
 	}
 
