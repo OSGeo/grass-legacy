@@ -36,7 +36,9 @@ void ppupdate(int fe, int fb, int nl, int nbasins, struct band3 *elev, struct ba
    void *this_elev;
    void *that_elev;
 
-   struct links list[nbasins];
+   struct links *list;
+
+   list = G_malloc(nbasins * sizeof(struct links));
 
    for(i=1;i<=nbasins;i+=1)
    {
@@ -226,6 +228,6 @@ void ppupdate(int fe, int fb, int nl, int nbasins, struct band3 *elev, struct ba
       write(fe,elev->b[1],elev->sz);
    }
 
-   return;
+   G_free(list);
 }
 
