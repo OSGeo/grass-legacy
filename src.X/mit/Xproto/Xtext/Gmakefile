@@ -1,0 +1,5 @@
+PGM = Xtext
+OFILES =  main.o  command.o
+
+$(BIN)/$(PGM): $(OFILES) $(GISLIB) 
+	cc $(LDFLAGS) -o $@ $(OFILES) $(XDISPLAYLIB) $(GISLIB) -lX11
