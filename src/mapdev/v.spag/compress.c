@@ -60,7 +60,7 @@ compress (map, tell)
 		for (line = 0 ; line < num_lines ; line++)
 		{
 		    if (Node[to].lines[line] < 0)
-			Line[ABS(Node[to].lines[line])].N2 = to;
+			Line[abs(Node[to].lines[line])].N2 = to;
 		    else
 			Line[Node[to].lines[line]].N1 = to;
 		}
@@ -95,10 +95,10 @@ compress (map, tell)
 		node1 = Line[to].N1;
 		node2 = Line[to].N2;
 		for (line = 0 ; line < Node[node1].n_lines ; line++)
-		    if (ABS (Node[node1].lines[line]) == from)
+		    if (abs (Node[node1].lines[line]) == from)
 			Node[node1].lines[line] = Node[node1].lines[line] < 0 ? -to : to;
 		for (line = 0 ; line < Node[node2].n_lines ; line++)
-		    if (ABS (Node[node2].lines[line]) == from)
+		    if (abs (Node[node2].lines[line]) == from)
 			Node[node2].lines[line] = Node[node2].lines[line] < 0 ? -to : to;
 
 		/* FIXUP atts */
@@ -117,7 +117,7 @@ compress (map, tell)
 		    area = Line[to].right;
 		    for (i = 0 ; i < Area[area].n_lines ; i++)
 		    {
-			if (from == ABS(Area[area].lines[i]))
+			if (from == abs(Area[area].lines[i]))
 			{
 			    Area[area].lines[i] = Area[area].lines[i] < 0 ? -to : to;
 			    break;
@@ -131,7 +131,7 @@ compress (map, tell)
 		    area = Line[to].left;
 		    for (i = 0 ; i < Area[area].n_lines ; i++)
 		    {
-			if (from == ABS(Area[area].lines[i]))
+			if (from == abs(Area[area].lines[i]))
 			{
 			    Area[area].lines[i] = Area[area].lines[i] < 0 ? -to : to;
 			    break;
@@ -144,10 +144,10 @@ compress (map, tell)
 		/* FIXUP ISLES */
 		if (Line[to].right < 0)
 		{
-		    isle = ABS (Line[to].right);
+		    isle = abs (Line[to].right);
 		    for (i = 0 ; i < Isle[isle].n_lines ; i++)
 		    {
-			if (from == ABS(Isle[isle].lines[i]))
+			if (from == abs(Isle[isle].lines[i]))
 			{
 			    Isle[isle].lines[i] = Isle[isle].lines[i] < 0 ? -to : to;
 			    break;
@@ -158,10 +158,10 @@ compress (map, tell)
 		}
 		if (Line[to].left < 0)
 		{
-		    isle = ABS (Line[to].left);
+		    isle = abs (Line[to].left);
 		    for (i = 0 ; i < Isle[isle].n_lines ; i++)
 		    {
-			if (from == ABS(Isle[isle].lines[i]))
+			if (from == abs(Isle[isle].lines[i]))
 			{
 			    Isle[isle].lines[i] = Isle[isle].lines[i] < 0 ? -to : to;
 			    break;
@@ -208,12 +208,12 @@ compress (map, tell)
 		/* FIXUP lines */
 		for (i = 0 ; i < Area[to].n_lines ; i++)
 		{
-		    if (LINE_ALIVE (&(Line[ABS(Area[to].lines[i])])))
+		    if (LINE_ALIVE (&(Line[abs(Area[to].lines[i])])))
 		    {
-			if (Line[ABS(Area[to].lines[i])].right == from)
-			    Line[ABS(Area[to].lines[i])].right = to;
-			if (Line[ABS(Area[to].lines[i])].left == from)
-			    Line[ABS(Area[to].lines[i])].left = to;
+			if (Line[abs(Area[to].lines[i])].right == from)
+			    Line[abs(Area[to].lines[i])].right = to;
+			if (Line[abs(Area[to].lines[i])].left == from)
+			    Line[abs(Area[to].lines[i])].left = to;
 		    }
 		}
 
@@ -251,12 +251,12 @@ compress (map, tell)
 		/* FIXUP lines */
 		for (i = 0 ; i < Isle[to].n_lines ; i++)
 		{
-		    if (LINE_ALIVE (&(Line[ABS(Isle[to].lines[i])])))
+		    if (LINE_ALIVE (&(Line[abs(Isle[to].lines[i])])))
 		    {
-			if (Line[ABS(Isle[to].lines[i])].right == -from)
-			    Line[ABS(Isle[to].lines[i])].right = -to;
-			if (Line[ABS(Isle[to].lines[i])].left == -from)
-			    Line[ABS(Isle[to].lines[i])].left = -to;
+			if (Line[abs(Isle[to].lines[i])].right == -from)
+			    Line[abs(Isle[to].lines[i])].right = -to;
+			if (Line[abs(Isle[to].lines[i])].left == -from)
+			    Line[abs(Isle[to].lines[i])].left = -to;
 		    }
 		}
 
