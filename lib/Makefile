@@ -3,6 +3,7 @@ MODULE_TOPDIR = ..
 
 SUBDIRS = \
 	bitmap \
+	btree \
 	D \
 	datetime \
 	db \
