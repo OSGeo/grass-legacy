@@ -1,0 +1,67 @@
+<HTML>
+<HEAD>
+<TITLE>v.split</TITLE>
+</HEAD>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.split</b></EM>  - Split lines to line segments.
+<BR>
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.split</B> 
+<BR>
+<B>v.split help</B> 
+<BR>
+<B>v.split input=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM> [<B>type=</B><EM>type</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>v.split</EM> splits lines to line segments. Attributes 
+are not written for each new segment (dig_att file is only copy 
+of the input dig_att file).
+
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+<DD>Name of an existing vector map.
+
+<DT><B>output=</B><EM>name</EM>
+<DD>Name of a new vector file.
+
+<DT><B>type=</B><EM>type</EM>
+<DD>Select line or area boundary.
+<BR>
+Options:  line, boundary (multiple allowed)
+<BR>
+Default: line 
+
+</DL>
+
+<H2>NOTES</H2>
+
+
+<EM><A HREF="v.support.html">v.support</A></EM> must
+also be run on the resultant vector <B>output</B> file to
+build the needed topology information stored under the
+user's <EM>dig_plus</EM> directory.
+
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.support.html">v.support</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+Radim Blazek 
+
+</BODY>
+</HTML>
