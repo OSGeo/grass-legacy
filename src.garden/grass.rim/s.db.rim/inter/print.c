@@ -11,6 +11,7 @@ extern FILE *print_file;
 
 #define LIST_OPTION 'l'
 #define ADD_OPTION 'a'
+#define SPLUS_OPTION 's' /* added DBS@CWU 6/92 for Splus */
 
 print(inp_buf)
 char *inp_buf;
@@ -18,6 +19,7 @@ char *inp_buf;
    int count, list, add_list, status;
    struct query_site *curr_site;
    char buffer[100];
+   int splus; /* added DBS@CWU 6/92 for Splus */
 
    G_squeeze(inp_buf);
    count = strcspn(inp_buf, " \t");
@@ -29,6 +31,14 @@ char *inp_buf;
    if (inp_buf[count]==ADD_OPTION) {
       list = TRUE;
       add_list = TRUE;
+   }
+/* added next if statement DBS@CWU 6/92 for Splus */
+   if (inp_buf[count]==SPLUS_OPTION) {
+      splus = TRUE;
+      if (list == TRUE || add_list == TRUE) {
+	G_warning("You cannot use add or list formats with the Splus format.");
+        return;
+      }
    }
 
    if (Last_site!=NULL) {
@@ -47,6 +57,7 @@ char *inp_buf;
             crimdm_w_err(DATA_TABLE, GET, Rim_buffer);
             fill_values();
             if (list==TRUE) print_list(add_list);
+            else if (splus == TRUE) print_splus(); /* added DBS@CWU 6/92 for Splus */
             else print_form();
             fprintf(Outfile, "\n");
          }
@@ -121,3 +132,67 @@ print_form()
 
 }
 
+
+/* this routine sends the current record to Outfile in Splus format */
+print_splus()
+{
+   int count, split, tempint;
+   char buffer[100], line[4000];
+
+   for (count=0; count<Field_num; count++) {
+      if (Field_info[count].column_type==T_FIELD_CHAR &&
+          Field_info[count].next_field[0]!=MAX_FIELDS) {
+         tempint = Field_info[count].next_field[0];  /*get first split field*/
+         split = 1;
+         while (tempint!=count) {
+            split++;
+            tempint = Field_info[tempint].next_field[1];
+         }
+      }
+      else split = 0;
+
+      if (split==0) {
+         strcat(line, "\t");
+         fprintf(Outfile, "%-19s ", Field_info[count].column_name);
+      }
+      else {
+         sprintf(buffer, "%s.%d", Field_info[count].column_name, split);
+         fprintf(Outfile, "%-19s ",buffer);
+      }
+
+      val_to_str(buffer, count);
+      fprintf(Outfile, "%s\n", buffer);
+   }
+}
+
+/* this routine prints the Splus command necessary to read the
+   data file created above in the print_splus function */
+print_splus_cmd()
+{
+   int count, split, tempint;
+   char buffer[5000];
+
+   for (count=0; count<Field_num; count++) {
+      if (Field_info[count].column_type==T_FIELD_CHAR &&
+          Field_info[count].next_field[0]!=MAX_FIELDS) {
+         tempint = Field_info[count].next_field[0];  /*get first split field*/
+         split = 1;
+         while (tempint!=count) {
+            split++;
+            tempint = Field_info[tempint].next_field[1];
+         }
+      }
+      else split = 0;
+
+      if (split==0)
+         fprintf(Outfile, "%-19s ", Field_info[count].column_name);
+      else {
+         sprintf(buffer, "%s.%d", Field_info[count].column_name, split);
+         fprintf(Outfile, "%-19s ",buffer);
+      }
+
+      val_to_str(buffer, count);
+      fprintf(Outfile, "%s\n", buffer);
+   }
+
+}
