@@ -862,9 +862,6 @@ menu_build 1 .main_menu {
                "Set colors to predefined color tables" "" {
                     "source $env(TCLTKGRASSBASE)/module/r.colors"
                }
-               "Set colors using color rules" "" {
-                    "source $env(TCLTKGRASSBASE)/module/r.colorsrules"
-               }
 			-separator
             	"Blend 2 color maps to produce 3 RGB files" "" {
                 	"source $env(TCLTKGRASSBASE)/module/r.blend"
@@ -1179,8 +1176,8 @@ menu_build 1 .main_menu {
                 	"run v.digit &"
             	}
 			-separator
-            	"Create/rebuild topology" "" {
-                	"source $env(TCLTKGRASSBASE)/module/v.support_option_build"
+            	"Create/rebuild topology or edit vector categories" "" {
+                	"source $env(TCLTKGRASSBASE)/module/v.support"
             	}
             	-separator
             	"Add intermediate points between nodes" "" {
@@ -1277,9 +1274,6 @@ menu_build 1 .main_menu {
             	}
         	}
 		"Change category values and labels" "" {
-            	"Edit category labels" "" {
-                	"source $env(TCLTKGRASSBASE)/module/v.support_option_edit"
-            	}
             	"Reclassify features using rules" "" {
                 	"source $env(TCLTKGRASSBASE)/module/v.reclass"
             	}
