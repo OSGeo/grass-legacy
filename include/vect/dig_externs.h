@@ -114,6 +114,7 @@ int dig_by_line_bbox (P_LINE *, double, double, double, double);
 int dig_prune (struct line_pnts *, double);
 int dig_write_head_ascii (FILE *, struct dig_head *);
 int dig_read_head_ascii (FILE *, struct dig_head *);
+int dig_read_frmt_ascii (FILE *, struct Format_info *);
 int dig_node_alloc_line (P_NODE *, int add);
 int dig_alloc_node (struct Map_info *, int);
 int dig_alloc_line (struct Map_info *, int);
