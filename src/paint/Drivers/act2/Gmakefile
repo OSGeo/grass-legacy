@@ -16,7 +16,7 @@ LIST =\
 all: $(PAINT)/driver.sh/$(NAME) $(PAINT)/driver/$(NAME)
 
 $(PAINT)/driver/$(NAME): $(LIST) $(LIBS)
-	$(CC) $(LDFLAGS) $(LIBS) $(LIST) -o $@
+	$(CC) $(LDFLAGS) $(LIST) $(LIBS) -o $@
 $(PAINT)/driver.sh/$(NAME): DRIVER.sh
 	cp $? $@
 	chmod +x $@
