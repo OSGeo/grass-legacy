@@ -1,0 +1,12 @@
+LIST = main.o\
+	annotation.o\
+	header.o\
+	read_tape.o\
+	rec_type.o\
+	tape_dir.o\
+	tape_vol.o
+
+$(BIN)/i.tape.mss.h: $(LIST)
+	$(CC) $(LDFLAGS) -o $@ $(LIST)
+
+$(LIST) : tape.h
