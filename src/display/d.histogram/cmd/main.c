@@ -45,9 +45,10 @@ main(argc, argv)
 	char buff[256] ;
 	char window_name[64] ;
 	char *mapset ;
+	char *D_color_list();
 	struct Categories cats ;
 	struct Range range ;
-	struct Colors colors ;
+	struct Colors pcolors ;
 	char title[512];
 	int tt,tb,tl,tr;
 	int t,b,l,r;
@@ -75,7 +76,7 @@ main(argc, argv)
 	opt2->type       = TYPE_STRING ;
 	opt2->required   = NO ;
 	opt2->answer     = "white" ;
-	opt2->options = "white,red,orange,yellow,green,blue,indigo,magenta,violet,brown,gray,black";
+	opt2->options    = D_color_list();
 
 #ifdef CAN_DO_AREAS
 	opt3             = G_define_option() ;
@@ -133,7 +134,7 @@ main(argc, argv)
 		G_fatal_error(buff) ;
 	}
 
-	if (G_read_colors(map_name, mapset, &colors) == -1)
+	if (G_read_colors(map_name, mapset, &pcolors) == -1)
 	{
 		sprintf(buff,"color file for [%s] not available", map_name) ;
 		G_fatal_error(buff) ;
@@ -160,15 +161,8 @@ main(argc, argv)
 	R_open_driver();
 
 	D_setup(0);
-	/*
-	if (D_get_cur_wind(window_name))
-		G_fatal_error("No current graphics frame");
 
-	if (D_set_cur_wind(window_name))
-		G_fatal_error("Current graphics frame not available");
-	*/
-
-	D_set_colors(&colors);
+	D_set_colors(&pcolors);
 
 	/* draw a title for */
 
@@ -185,9 +179,9 @@ main(argc, argv)
 	/* plot the distributrion statistics */
 
 	if (style == PIE)
-		pie(dist_stats);
+		pie(&dist_stats, &pcolors);
 	else
-		bar(dist_stats);
+		bar(&dist_stats, &pcolors);
 
 	R_flush();
 	D_add_to_list(G_recreate_command()) ;
