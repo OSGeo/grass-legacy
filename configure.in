@@ -139,7 +139,6 @@ AC_ARG_ENABLE(w11,
 # With options
 
 LOC_ARG_WITH(cxx, C++, no)
-LOC_ARG_WITH(dbm, DBM, no)
 LOC_ARG_WITH(jpeg, JPEG)
 LOC_ARG_WITH(tiff, TIFF)
 LOC_ARG_WITH(png, PNG)
@@ -173,9 +172,6 @@ AC_ARG_WITH(libs,
 
 LOC_ARG_WITH_INC(zlib, zlib)
 LOC_ARG_WITH_LIB(zlib, zlib)
-
-LOC_ARG_WITH_INC(dbm, DBM)
-LOC_ARG_WITH_LIB(dbm, DBM)
 
 LOC_ARG_WITH_INC(readline, Readline)
 LOC_ARG_WITH_LIB(readline, Readline)
@@ -497,40 +493,6 @@ AC_SUBST(ZLIBLIBPATH)
 AC_SUBST(ZLIB)
 
 # Done checking zlib
-
-# Enable DBM option
-
-LOC_CHECK_USE(dbm,DBM,USE_DBM)
-
-DBMINCPATH=
-DBMLIBPATH=
-DBMLIB=
-
-if test -n "$USE_DBM"; then
-
-# With DBM includes directory
-
-LOC_CHECK_INC_PATH(dbm,DBM,DBMINCPATH)
-
-LOC_CHECK_INCLUDES(dbm.h,DBM,$DBMINCPATH)
-
-# With DBM library directory
-
-LOC_CHECK_LIB_PATH(dbm,DBM,DBMLIBPATH)
-
-LOC_CHECK_LIBS(dbm, dbminit,DBM,$DBMLIBPATH,DBMLIB,,,[
-LOC_CHECK_LIBS(gdbm,dbminit,DBM,$DBMLIBPATH,DBMLIB,,,[
-LOC_CHECK_LIBS(ndbm,dbminit,DBM,$DBMLIBPATH,DBMLIB,,,)
-])
-])
-
-fi # $USE_DBM
-
-AC_SUBST(DBMINCPATH)
-AC_SUBST(DBMLIBPATH)
-AC_SUBST(DBMLIB)
-
-# Done checking DBM
 
 # Enable Readline option
 
@@ -1244,7 +1206,6 @@ LOC_MSG()
 LOC_MSG_USE(NVIZ,USE_TOGL)
 LOC_MSG()
 LOC_MSG_USE(X11 support,USE_X11)
-LOC_MSG_USE(DBM support,USE_DBM)
 LOC_MSG_USE(JPEG support,USE_JPEG)
 LOC_MSG_USE(TIFF support,USE_TIFF)
 LOC_MSG_USE(PNG support,USE_PNG)
