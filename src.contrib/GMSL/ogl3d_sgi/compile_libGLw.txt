@@ -1,0 +1,13 @@
+Create dynamically linked libGLw.so* libraries for ogl3D
+
+- Get Mesa-3.0: http://www.mesa3d.org
+- unpack
+- cd widgets-sgi
+    - edit Makefile: change libGLw.a to libGLw.so (check note)
+    - make linux-elf
+    - cp *.h /usr/include/GL/
+    - cd ../lib
+    - cp -d libGLw.so* /usr/local/lib/
+    - ldconfig
+- use ogl3d
+
