@@ -317,6 +317,10 @@ else # CREATE_LINES
 	cat "${TMP}.gpst" | sed -e '1d' | tac | awk 'BEGIN { FS="\t" ; R=0 } \
 	    $1=="W" { printf(" %.7f %.7f\n", $6, $5) ; ++R } ; \
 	    $1=="R" { printf("L %d 1\n", R) ; R=0 } END {;}' | tac > "${TMP}.base"
+
+	# create attr table: cat(int), id number(int 0-19), name varchar(16+)
+	cat "${TMP}.gpst" | grep ^R | cut -f2,3 | grep -n ^ | \
+	    sed -e 's/:/\t/' > "${TMP}.route_atts"
     fi
 
     if [ $TRK -eq 1 ] ; then
@@ -324,6 +328,13 @@ else # CREATE_LINES
 	cat "${TMP}.gpst" | sed -e '1d' | tac | awk 'BEGIN { FS="\t" ; R=0 } \
 	    $1=="T" { printf(" %.7f %.7f\n", $4, $3) ; ++R } ; \
 	    $1=="" { printf("L %d 1\n", R) ; R=0 } END {;}' | tac > "${TMP}.base"
+
+	# create attr table: cat(int), start_time varchar(40), end_time varchar(40)
+	cat "${TMP}.gpst" | sed -e '1d' | grep ^$ -B 1 | grep T | cut -f2 > "${TMP}.end_time"
+	cat "${TMP}.gpst" | grep ^T | tail -1 | cut -f2 >> "${TMP}.end_time"
+	cat "${TMP}.gpst" | sed -e '1d' | grep ^$ -A 1 | grep T | cut -f2 | \
+	    grep -n ^ | sed -e 's/:/\t/'  > "${TMP}.start_time"
+	paste "${TMP}.start_time" "${TMP}.end_time" > "${TMP}.track_atts"
     fi
 
 
