@@ -330,7 +330,9 @@ int G_parser (int argc, char **argv)
 	{
 
 		/* If first arg is "help" give a usage/syntax message */
-		if (strcmp(argv[1],"help") == 0 || strcmp(argv[1], "-help") == 0)
+		if (strcmp(argv[1],"help") == 0 ||
+			strcmp(argv[1], "-help") == 0 ||
+			strcmp(argv[1], "--help") == 0)
 		{
 			G_usage();
 			return -1;
