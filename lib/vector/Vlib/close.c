@@ -23,12 +23,21 @@ clo_dummy () {
     return -1;
 }
 
+static int format () { G_fatal_error ("Requested format is not compiled in this version"); return 0; }
+
 static int (*Close_array[][3]) () =
 {
      { clo_dummy, V1_close_nat, V2_close_nat }
    , { clo_dummy, V1_close_shp, V2_close_shp } 
 #ifdef HAVE_POSTGRES
    , { clo_dummy, V1_close_post, V2_close_post }
+#else
+   ,{ clo_dummy, format, format }
+#endif
+#ifdef HAVE_OGR
+   , { clo_dummy, V1_close_ogr, V2_close_ogr }
+#else
+   ,{ clo_dummy, format, format }
 #endif
 };
 
@@ -42,10 +51,9 @@ static int (*Close_array[][3]) () =
 int 
 Vect_close (struct Map_info *Map)
 {
-#ifdef GDEBUG    
     G_debug (1, "Vect_close(): name = %s, mapset = %s, format = %d, level = %d",
 	         Map->name, Map->mapset, Map->format, Map->level);
-#endif
+
     return (*Close_array[Map->format][Map->level]) (Map); 
 }
 

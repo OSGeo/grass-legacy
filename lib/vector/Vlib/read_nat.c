@@ -73,6 +73,8 @@ V1_read_next_line_nat (
   long offset;
   BOUND_BOX lbox, mbox;
 
+  G_debug (3, "V1_read_next_line_nat()" );
+
   if (Map->Constraint_region_flag)
       Vect_get_constraint_box ( Map, &mbox );
 

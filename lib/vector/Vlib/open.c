@@ -37,6 +37,7 @@
 
 static int open_old_dummy () { return 0; }
 static int open_new_dummy () { return 0; }
+static int format () { G_fatal_error ("Requested format is not compiled in this version"); return 0; }
 
 static int Open_level = 0;
 
@@ -46,6 +47,13 @@ static int (*Open_old_array[][3]) () =
    ,{ open_old_dummy, V1_open_old_shp, V2_open_old_shp }
 #ifdef HAVE_POSTGRES
    ,{ open_old_dummy, V1_open_old_post, V2_open_old_post }
+#else   
+   ,{ open_old_dummy, format, format }
+#endif
+#ifdef HAVE_OGR
+   ,{ open_old_dummy, V1_open_old_ogr, V2_open_old_ogr }
+#else   
+   ,{ open_old_dummy, format, format }
 #endif
 };
 
@@ -55,6 +63,13 @@ static int (*Open_new_array[][2]) () =
    ,{ open_new_dummy, V1_open_new_shp }
 #ifdef HAVE_POSTGRES
    ,{ open_new_dummy, V1_open_new_post }
+#else   
+   ,{ open_old_dummy, format }
+#endif
+#ifdef HAVE_OGR
+   ,{ open_new_dummy, V1_open_new_ogr }
+#else   
+   ,{ open_old_dummy, format }
 #endif
 };
 

@@ -35,6 +35,10 @@ Vect_type_to_store (int type)
 	   return GV_STORE_BOUNDARY;
 	case GV_CENTROID:
 	   return GV_STORE_CENTROID;
+	case GV_FACE:
+	   return GV_STORE_FACE;
+	case GV_KERNEL:
+	   return GV_STORE_KERNEL;
         default:
 	   return 0;
     }
@@ -58,6 +62,10 @@ Vect_type_from_store (int stype)
 	   return GV_BOUNDARY;
 	case GV_STORE_CENTROID:
 	   return GV_CENTROID;
+	case GV_STORE_FACE:
+	   return GV_FACE;
+	case GV_STORE_KERNEL:
+	   return GV_KERNEL;
         default:
 	   return 0;
     }
@@ -89,8 +97,17 @@ Vect_option_to_types (struct Option *type_opt )
             case 'c':
                 type |= GV_CENTROID;
                 break;
+            case 'f':
+                type |= GV_FACE;
+                break;
+            case 'k':
+                type |= GV_KERNEL;
+                break;
             case 'a':
                 type |= GV_AREA;
+                break;
+            case 'v':
+                type |= GV_VOLUME;
                 break;
         }
         i++;
