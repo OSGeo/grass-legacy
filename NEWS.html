@@ -22,7 +22,45 @@ Many thanks to all contributors!
 </ul>
 
 <hr>
-<h3><font color="#00A000">What's new in GRASS 5.0.2 comparing to 5.0.1</font></h3>
+<h3><font color="#00A000">What's new in GRASS 5.0.3 comparing to 5.0.2</font></h3>
+[GRASS 5.0.3 released 22 August 2003]<p>
+
+<b>Modules fixed/updated</b> (major changes only)
+<ul>
+<li>d.barscale: added -t flag to optionally draw text
+	on top rather than to the right (Markus Neteler)
+<li>d.histogram: bugfix (Eric Miller)
+<li>d.sites: fix to handle a window spanning the date line (Eric Miller)
+<li>d.what.sites: fixed wrong distance bug (Paul Kelly)
+<li>g.parser: made usable (Glynn Clements)
+<li>r.in.gdal: color names written as names now instead of numbers (Markus Neteler)
+<li>r.los: updated to floating point (Markus Neteler)
+<li>r.mapcalc3: fix bug in #colour modifiers (Glynn Clements)
+<li>r.spread: several fixes (Eric Miller)
+<li>r.sun: NULL data support, much faster (Jaro Hofierka, Marcel Suri)
+<li>r.timestamp: timestamp writing fix (Hamish Bowman)
+<li>s.in.ascii: timestamp writing fix (Hamish Bowman)
+<li>s.in.dbf: timestamp writing fix (Hamish Bowman)
+<li>shade.rel.sh: fixes for Lat/Long (Gordon Keith)
+<li>s.surf.idw: improved efficiency with sites index (Paul Kelly)
+<li>s.vol.rst: added deviation sites map (Jaro Hofierka)
+<li>v.digit: print map scale in snapping threshold menu (Markus Neteler)
+<li>v.label: added to compile list
+<li>v.out.e00: fix vector/mapset lookup (Eric Miller)
+<li>tcltkgrass: various menu entries fixed (Hamish Bowman)
+</ul>
+
+<b>Source Code:</b><br>
+<ul>
+<li>HTML pages: various bugfixes (Hamish Bowman)
+<li>gislib: fixed bug #1502 (Glynn Clements)
+<li>grass.src, init.sh: script cleanup (Markus Neteler, Glynn Clements)
+<li>added white space support for GRASS startup, basically for MS-Windows (Markus Neteler)
+</ul>
+
+
+<hr>
+<h3><font color="#00A000">What's new in GRASS 5.0.2/CVS comparing to 5.0.1</font></h3>
 [GRASS 5.0.2 released 10 April 2003]<p>
 
 <b>Modules fixed/updated</b> (major changes only)
@@ -36,9 +74,10 @@ Many thanks to all contributors!
 <li>NVIZ: various fixes for off-screen rendering (Bob Covill), tcl/tk 8.4 fixes
 <li>SG3d: various fixes, not compiled per default (Paul Kelly)
 <li>r.colors: added blue through yellow to green colors (Markus Neteler)
-<li>r.mapcalc3 (i.e new: r.mapcalc): errors fixed (Glynn Clements)
+<li>r.mapcalc (i.e new r.mapcalc): errors fixed (Glynn Clements)
 <li>r.neighbors: added sum method (Markus Neteler)
-<li>r.series: added for time series analysis (Glynn Clements)
+<li>r.resamp.rst: fixed bug in segmentation of maps containing null values, not compiled per default (Paul Kelly)
+<li>r.series: added for time series analysis, not compiled per default (Glynn Clements)
 <li>r.simwe: added hydrologic and sediment transport simulation (Helena Mitasova, Jaro Hofierka, Lubos Mitas)
 <li>r.terraflow: added flow computation for massive grids (Laura I. Toma)
 <li>scripts: removed the word 'function' everywhere (to make scripts cygwin
@@ -48,6 +87,7 @@ Many thanks to all contributors!
 <li>v.cutregion.sh: OTHER INFO bugs #1389 fixed (Markus Neteler)
 <li>v.in.dgn: added to read DNG files (Radim Blazek)
 <li>v.to.db: few fixes (Radim Blazek)
+<li>DEPRECATED: m.proj, v.in.arc.pg, v.in.shape.pg (use pg.in.dbf instead)
 </ul>
 
 <b>Source Code:</b><br>
@@ -56,6 +96,8 @@ Many thanks to all contributors!
 <li>winGRASS: started support for native WIN MinGW32 changes (Mike Thomas)
 <li>various IRIX compatibility changes (Paul Kelly)
 <li>G3D: various fixes, most bugs are fixed now (Alfonso Vitti)
+<li>proj: datum transformation cleaned and general support added  (Paul
+    Kelly, Eric Miller)
 <li>Fix North Carolina false easting (Eric Miller)
 <li>i18n: internationalization (Russia) continued (Alex Shevlakov)
 <li>PostgreSQL support: various fixes (Alex Shevlakov)
@@ -65,7 +107,6 @@ Many thanks to all contributors!
 <li>tools/sql.sh: Script to import dependency information into a PostgreSQL database
     (Glynn Clements)
 <li>Changed G_get_map_row() to honour the mask (Glynn Clements)
-<li>DEPRECATED: m.proj, v.in.arc.pg, v.in.shape.pg (use pg.in.dbf instead)
 </ul>
 
 <hr>
@@ -244,6 +285,9 @@ however, more work on this is required to enable this feature (Glynn Clements)
 
 <b>Source Code:</b><br>
 <ul>
+<li>etc/Init.sh: $LOCATION does not exist any more, instead it is
+    constructed in every script with g.gisenv locally now (enables location
+    switching)
 <li>portability: improved for SGI (Paul Kelly, Eric Miller, Glynn Clements)
 <li>XDriver: FreeBSD resize bug fixed (B&auml;ckstr&ouml;m)
 <li>DBMI support: dbmscap file is not required anymore (Radim Blazek)

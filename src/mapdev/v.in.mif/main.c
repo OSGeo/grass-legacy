@@ -393,10 +393,10 @@ int main(int argc, char *argv[] )
     false_northing = - ((long long)(uni_bb.s / snap) - 2) * snap;
   }
 
-  snprintf(digits_buf, 16, "%ld", (long)(uni_bb.e + false_easting) + 2 );
+  sprintf(digits_buf, "%ld", (long)(uni_bb.e + false_easting) + 2 );
   idigits = strlen(digits_buf);
 
-  snprintf(digits_buf, 16, "%ld", (long)(uni_bb.n + false_northing) + 2 );
+  sprintf(digits_buf, "%ld", (long)(uni_bb.n + false_northing) + 2 );
   if(strlen(digits_buf) > idigits) idigits = strlen(digits_buf);
 
   if(idigits > 16)

@@ -8,14 +8,14 @@
  *        restore a heap order.
  *
  ************************************************************/
-
+#include <stdio.h>
+#include <stdlib.h>
 #include "costHa.h"
+#include "local_proto.h"
 
-replaceHa(new_min_cost, angle, row, col, heap, heap_len)
-	struct costHa  *heap;
-	float           new_min_cost, angle;
-	int             row, col;
-	long           *heap_len;
+void
+replaceHa(float new_min_cost, float angle, int row, int col,
+          struct costHa *heap, long *heap_len)
 {
 	long            i, smaller_child;
 

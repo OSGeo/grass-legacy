@@ -292,7 +292,7 @@ install-strip: FORCE
 srcdist: FORCE distclean
 	@ echo "create ChangeLog file without initial messages..."
 	@ # cvs2cl.pl creates a GNU style ChangeLog file:
-	@ # http://www.red-bean.com/~kfogel/cvs2cl.shtml
+	@ # http://www.red-bean.com/cvs2cl/
 	cvs2cl.pl
 	@ echo "reduce Changelog file... Dont want the initial upload included."
 	head -${CUTLINE} ChangeLog    > ChangeLog.cut

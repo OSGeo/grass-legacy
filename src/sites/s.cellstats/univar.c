@@ -20,7 +20,7 @@ UNIV univariate (const Cell_Site *z, int nsites)
   UNIV stats;
 
   stats.n = nsites;
-  stats.m = stats.s = stats.skw = stats.kur = stats.mse = stats.mav = 0;
+  stats.m = stats.s = stats.skw = stats.kur = stats.mse = stats.mav = stats.sum = 0;
 
   for (i = 0; i < stats.n; ++i)
   {
@@ -28,6 +28,7 @@ UNIV univariate (const Cell_Site *z, int nsites)
     stats.mse += z[i].datum*z[i].datum;
     stats.mav += fabs(z[i].datum);
   }
+  stats.sum = stats.m;
   stats.m   /= stats.n;
   stats.mse /= stats.n;
   stats.mav /= stats.n;

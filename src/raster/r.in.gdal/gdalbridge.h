@@ -30,8 +30,8 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.4.2.1  2003-02-09 12:07:28  glynn
- * Changed files sync'd from HEAD
+ * Revision 1.4.2.2  2003-08-20 09:35:41  markus
+ * Sync to release branch
  *
  * Revision 1.5  2002/10/07 20:13:05  glynn
  * Add declarations for GDALGetDriver{Short,Long}Name, GDALGetDatasetDriver

@@ -18,7 +18,7 @@ ACROSS=4
 CWD=`pwd`
 
 # in case of problems or user break:
-trap 'cd $CWD ; d.frame -s full_screen ; exit 1' 2 3 9 15
+trap 'cd $CWD ; d.frame -s full_screen ; exit 1' 2 3 15
 
 
 SHOW_VECT=0

@@ -10,7 +10,7 @@ prn_header()
     if ((fd = fopen(output, "w")) == NULL) {
       fprintf (stderr,
 	"ERROR: can't open <%s> to write header information\n", output);
-      exit();
+      exit(1);
     }
 
   fprintf (fd, "\n\t\t%s\n", title);

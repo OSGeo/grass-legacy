@@ -1,17 +1,18 @@
 PGM=v.in.dgn
 
+EXTRA_CFLAGS = $(VECT_INCLUDE) $(GDAL_CFLAGS)
+
 OBJ = main.o
 
-DGNLIB=$(LIBDIR)/libdgn.a
-CPLLIB=$(LIBDIR)/libcpl.a
+#this may be configured to DGNlib:
+DGNLIB=$(GDAL_LIBS)
 
-LIBES=$(VECTLIB) $(GISLIB) $(DGNLIB) $(CPLLIB) $(MATHLIB) $(GDAL_LIBS) -lz
-DEPLIBS=$(DEPVECTLIB) $(DEPGISLIB) $(DGNLIB) $(CPLLIB) $(MATHLIB) $(GDAL_LIBS) -lz
-
+####
+LIBES=$(VECTLIB) $(GISLIB)
+DEPLIBS=$(DEPVECTLIB) $(DEPGISLIB)
 
 $(BIN_CMD)/$(PGM):  $(OBJ) $(DEPLIBS) 
-	$(CC) -o $@ $(OBJ) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(DGNLIB) $(MATHLIB) $(XDRLIB)
 
 $(DEPVECTLIB): #
 $(DEPGISLIB): #
-

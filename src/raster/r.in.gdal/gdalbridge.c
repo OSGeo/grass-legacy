@@ -30,8 +30,8 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.4.2.1  2003-02-09 12:07:28  glynn
- * Changed files sync'd from HEAD
+ * Revision 1.4.2.2  2003-08-20 09:35:41  markus
+ * Sync to release branch
  *
  * Revision 1.5  2002/11/24 21:08:29  glynn
  * Conditionalise entire bridge code upon "#ifndef USE_GDAL_H"

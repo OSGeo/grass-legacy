@@ -5,6 +5,7 @@
 */
 
 #include	<stdio.h>
+#include	<stdlib.h>
 #include	"gis.h"
 #include	"quad_structs.h"
 

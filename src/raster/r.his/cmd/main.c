@@ -91,21 +91,21 @@ main (int argc, char **argv)
 	opt_r->key        = "r_map" ;
 	opt_r->type       = TYPE_STRING ;
 	opt_r->required   = YES ;
-	opt_r->gisprompt  = "old,cell,raster" ;
+	opt_r->gisprompt  = "new,cell,raster" ;
 	opt_r->description= "Name of output layer to be used for RED" ;
 
 	opt_g = G_define_option() ;
 	opt_g->key        = "g_map" ;
 	opt_g->type       = TYPE_STRING ;
 	opt_g->required   = YES ;
-	opt_g->gisprompt  = "old,cell,raster" ;
+	opt_g->gisprompt  = "new,cell,raster" ;
 	opt_g->description= "Name of output layer to be used for GREEN" ;
 
 	opt_b = G_define_option() ;
 	opt_b->key        = "b_map" ;
 	opt_b->type       = TYPE_STRING ;
 	opt_b->required   = YES ;
-	opt_b->gisprompt  = "old,cell,raster" ;
+	opt_b->gisprompt  = "new,cell,raster" ;
 	opt_b->description= "Name of output layer to be used for BLUE" ;
 
 	flg1 = G_define_flag() ;

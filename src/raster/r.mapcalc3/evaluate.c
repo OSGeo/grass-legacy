@@ -1,5 +1,6 @@
 
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "mapcalc.h"
 
@@ -200,6 +201,7 @@ static int error_handler(char *msg, int fatal)
 
 void execute(expr_list *ee)
 {
+	int verbose = isatty(2);
 	expr_list *l;
 
 	rows = G_window_rows();
@@ -231,7 +233,8 @@ void execute(expr_list *ee)
 
 	for (current_row = 0; current_row < rows; current_row++)
 	{
-		G_percent (current_row, rows, 2);
+		if (verbose)
+			G_percent(current_row, rows, 2);
 
 		for (l = ee; l; l = l->next)
 		{
@@ -243,7 +246,8 @@ void execute(expr_list *ee)
 		}
 	}
 
-	G_percent(current_row, rows, 2);
+	if (verbose)
+		G_percent(current_row, rows, 2);
 
 	for (l = ee; l; l = l->next)
 	{

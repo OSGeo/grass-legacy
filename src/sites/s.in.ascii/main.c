@@ -85,7 +85,7 @@ main (int argc, char *argv[])
     parm.date->key_desc = "timestamp";
     parm.date->required = NO;
     parm.date->type = TYPE_STRING;
-    parm.date->description = "datetime, datetime1/datetime2, or none";
+    parm.date->description = "datetime or datetime1/datetime2";
 
     if (G_parser(argc,argv))
 	exit(-1);
@@ -111,8 +111,10 @@ main (int argc, char *argv[])
     /* add here time parameter */
     if (parm.date->answer)
     {
-      G_scan_timestamp (&ts, parm.date->answer);
-      shead.time = &ts;
+	if(1 == G_scan_timestamp (&ts, parm.date->answer))
+	    shead.time = &ts;
+	else
+	    G_fatal_error("Invalid timestamp");
     }
     else 
       shead.time = (struct TimeStamp*)NULL; 
@@ -126,9 +128,11 @@ main (int argc, char *argv[])
     if (dims<2)
       G_fatal_error ("number of dimensions must be greater than 1");
 
-    fs = parm.fs->answer;
-    if (fs != NULL)
-    {
+    if ( strlen(parm.fs->answer) < 1 )
+      G_fatal_error ("field separator cannot be empty");
+    else
+    {   
+        fs = parm.fs->answer;
 	if(strcmp (fs, "space") == 0)
 	    fs = NULL;
 	else if(strcmp (fs, "tab") == 0)
@@ -137,11 +141,8 @@ main (int argc, char *argv[])
 
     out_fd = G_fopen_sites_new (output);
     if (out_fd == NULL)
-    {
-	fprintf (stderr, " %s - can't create sites file [%s]",
-		me, output);
-	exit(1);
-    }
+        G_fatal_error ("can't create sites file [%s].", output);
+
 
     G_site_put_head (out_fd, &shead);
 /*    G_free(shead.name);

@@ -16,9 +16,9 @@
  ******************************************************************************/
 #include <limits.h>
 #include <math.h>
+#include "local_proto.h"
 
-pick_dist (u)
-int u;
+int pick_dist (int u)
 {
 	int v;
 

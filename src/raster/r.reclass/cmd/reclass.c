@@ -55,13 +55,13 @@ static void compose(struct Reclass *new, const struct Reclass *mid, const struct
 	j = old->table[i - old->min];
 	if (G_is_c_null_value(&j) || j < mid->min || j > mid->max)
 	{
-	    G_set_c_null_value(&new->table[i], 1);
+	    G_set_c_null_value(&new->table[i - new->min], 1);
 	    continue;
 	}
 
 	k = mid->table[j - mid->min];
 
-	new->table[i] = k;
+	new->table[i - new->min] = k;
     }
 }
 

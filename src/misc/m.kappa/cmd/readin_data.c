@@ -10,7 +10,7 @@ readin_data()
   else
     if ((fd = fopen (input, "r")) == NULL) {
       fprintf (stderr, "ERROR: can't open <%s> to read in data\n", input);
-      exit();
+      exit(1);
     }
 
 /* read in data from the input file or stdin */

@@ -114,7 +114,11 @@ int main(int argc, char *argv[])
               fprintf (stdout,"\n");
             }
             else
-	      fprintf (stdout,"%s\n", G_site_format (site, fs, strip));
+	    {
+	      char *str = G_site_format (site, fs, strip);
+	      fprintf (stdout,"%s\n", str);
+	      G_free(str);
+	    }
 	}
     }
     fclose (fd);

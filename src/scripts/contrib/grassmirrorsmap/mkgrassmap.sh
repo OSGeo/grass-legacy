@@ -48,10 +48,10 @@ out2=/dev/stdout # needed for HTMLMAP, seems to be a bug?!
 # format:
 #  country[|country[|country  ...]]=url
 #  e.g.
-#  GERMANY|FRANCE|SPAIN=http://www.geog/uni-hannover.de/grass/index2.html
-#  UNITED STATES=http://www.baylor.edu/~grass/index2.html
+#  GERMANY|FRANCE|SPAIN=http://www.geog.uni-hannover.de/grass/index.html
+#  UNITED STATES=http://www.baylor.edu/~grass/index.html
 #
-#  (the country list is just an agrument to 'egrep', so you can
+#  (the country list is just an argument to 'egrep', so you can
 #   use regular expressions)
 
 # grass web site files
@@ -61,7 +61,7 @@ grass_sites="grass.sites.main grass.sites.mirror"
 #red,orange,yellow,green,blue,indigo,white,black,brown,magenta,gray,grey
 #     bug: aqua, indigo don't seem to work
 #first two colors and blue are reserved:
-map_mirror_colors="green orange white yellow brown red white magenta yellow white magenta red yellow white yellow magenta red white yellow magenta red white magenta red white yellow"
+map_mirror_colors="green orange white yellow brown red white magenta yellow brown red white magenta red yellow white yellow magenta red white yellow magenta red yellow brown white magenta red white yellow"
 
 #write this variable to array:
 set $map_mirror_colors

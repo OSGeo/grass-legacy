@@ -1310,8 +1310,8 @@ char *calcKeyValue( pntDescript *pnt1, double sr, int decs, double efalse,
 
   retbuf = (char *)malloc( 33 );
   
-  snprintf( xbuf, 127, "%065.20f", xtmp );
-  snprintf( ybuf, 127, "%065.20f", ytmp );
+  sprintf( xbuf, "%065.20f", xtmp );
+  sprintf( ybuf, "%065.20f", ytmp );
 
   indx_ptr = strchr( xbuf, '.' );
   strncpy( retbuf, indx_ptr - idigits, idigits );

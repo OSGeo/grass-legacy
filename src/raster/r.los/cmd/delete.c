@@ -23,8 +23,8 @@ struct point *
 delete (struct point *PT_TO_DELETE, struct point *head, SEGMENT *seg_out_p, int row_viewpt, int col_viewpt)
 
 {
-        CELL data;
-        CELL *value;
+        FCELL data;
+        FCELL *value;
 
 /*	mark deleted points by light brownish color	*/
         data = 1;
