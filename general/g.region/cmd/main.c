@@ -11,7 +11,9 @@
  *
  *   	    	This program is free software under the GPL (>=v2)
  *   	    	Read the file COPYING that comes with GRASS for details.
- ****************************************************************************/
+ ****************************************************************************
+ *
+ */
 
 #include <string.h>
 #include <stdlib.h>
@@ -68,7 +70,6 @@ int main (int argc, char *argv[])
 	module->description =
 		"Program to manage the boundary definitions for the "
 		"geographic region.";
-
 
 	/* flags */
 
@@ -269,15 +270,9 @@ int main (int argc, char *argv[])
 	{
 		mapset = G_find_file ("windows", name, "");
 		if (!mapset)
-		{
-			sprintf (msg, "region <%s> not found", name);
-			G_fatal_error (msg);
-		}
+			G_fatal_error ("region <%s> not found", name);
 		if (G__get_window (&window, "windows", name, mapset) != NULL)
-		{
-			sprintf (msg, "can't read region <%s> in <%s>", name, mapset);
-			G_fatal_error (msg);
-		}
+			G_fatal_error ("can't read region <%s> in <%s>", name, mapset);
 	}
 
 	/* 3dview= */
@@ -289,28 +284,19 @@ int main (int argc, char *argv[])
 		
 		mapset = G_find_file2 ("3d.view", name, "");
 		if (!mapset)
-		{
-			sprintf (msg, "3dview file <%s> not found", name);
-			G_fatal_error (msg);
-		}
+			G_fatal_error ("3dview file <%s> not found", name);
 
 		G_3dview_warning(0); /* suppress boundary mismatch warning */
 
-		if(NULL == (fp = G_fopen_old("3d.view",name,mapset))){
-		    sprintf (msg, "can't open 3dview file <%s> in <%s>", name, mapset);
-		    G_fatal_error (msg);
-		}
+		if(NULL == (fp = G_fopen_old("3d.view",name,mapset)))
+		    G_fatal_error ("can't open 3dview file <%s> in <%s>", name, mapset);
 
 		G_copy (&temp_window, &window, sizeof(window));
 
-		if(0 > (ret = G_get_3dview(name, mapset, &v))){
-		    sprintf (msg, "can't read 3dview file <%s> in <%s>", name, mapset);
-		    G_fatal_error (msg);
-		}
-		if (ret == 0){
-		    sprintf (msg, "Old 3dview file. Region not found in <%s> in <%s>", name, mapset);
-		    G_fatal_error (msg);
-		}
+		if(0 > (ret = G_get_3dview(name, mapset, &v)))
+		    G_fatal_error ("can't read 3dview file <%s> in <%s>", name, mapset);
+		if (ret == 0)
+		    G_fatal_error ("Old 3dview file. Region not found in <%s> in <%s>", name, mapset);
 
                  
 		window.north = v.vwin.north;
@@ -349,7 +335,7 @@ int main (int argc, char *argv[])
 	{
 		struct Map_info Map;
 		BOUND_BOX box;
-
+		
 		mapset = G_find_vector2 (name, "");
 		if (!mapset)
 		{
@@ -361,10 +347,7 @@ int main (int argc, char *argv[])
 
 		Vect_set_open_level (2);
 		if (2 != Vect_open_old (&Map, name, mapset))
-		{
-			sprintf (msg, "can't open vector file <%s> in <%s>", name, mapset);
-			G_fatal_error (msg);
-		}
+			G_fatal_error ("can't open vector file <%s> in <%s>", name, mapset);
 
 		Vect_get_map_box (&Map, &box );
 		window.north = box.N;
@@ -397,15 +380,9 @@ int main (int argc, char *argv[])
 
 		mapset = G_find_sites2 (name, "");
 		if (!mapset)
-		{
-			sprintf (msg, "sites map <%s> not found", name);
-			G_fatal_error (msg);
-		}
+			G_fatal_error ("sites map <%s> not found", name);
 		if (NULL == (fp = G_fopen_sites_old (name, mapset)))
-		{
-			sprintf (msg, "Could not open sites map <%s>", name);
-			G_fatal_error (msg);
-		}
+			G_fatal_error ("Could not open sites map <%s>", name);
 
 		rtype = -1;
 		G_site_describe(fp, &ndim, &rtype, &nstr, &ndec);
@@ -667,11 +644,10 @@ int main (int argc, char *argv[])
 
 static void die(struct Option *parm)
 {
-	fprintf(stderr,"<%s=%s> ** illegal value **\n\n", parm->key, parm->answer);
-	/*
+    /*
     G_usage();
     */
-	exit(1);
+    G_fatal_error("<%s=%s> ** invalid input **", parm->key, parm->answer);
 }
 
 static int nsew(char *value,char *a,char *b,char *c)
