@@ -33,7 +33,8 @@ NULLs) is passed to the aggregate function. Individual aggregates can
 handle data as they choose. Mostly, they just compute the aggregate
 over the non-NULL values, producing a NULL result only if all inputs
 are NULL.
-
+<p>
+The <EM> min_raster </EM> and <EM> max_raster </EM> methods generate a map with the name of the raster that holds the minimum/maximum value of the time-series. The numbering starts at <EM> 0 </EM> up to <EM> n </EM> for the first and the last raster listed in <EM> input = </EM>, respectively. 
 
 
 
