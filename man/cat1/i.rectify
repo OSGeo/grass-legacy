@@ -1,7 +1,7 @@
 
 
 
-i.rectify            GRASS Reference Manual             i.rectify
+i.rectify <main>     GRASS Reference Manual      <main> i.rectify
 
 
 
@@ -60,31 +60,50 @@ DESCRIPTION
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-i.rectify            GRASS Reference Manual             i.rectify
+i.rectify <main>     GRASS Reference Manual      <main> i.rectify
 
 
 
-Please select one of the following options
-1.   Use the current geographic region definition (window) in the target location
-2.   Determine the smallest geographic region definition (window) which covers the image
->
+      Please select one of the following options
+      1.   Use the current region in the target location
+      2.   Determine the smallest region which covers the image
 
 
      i.rectify will only rectify that portion of the image that
      occurs within the chosen geographic region setting.  Only
-     that portion will be relocated in the target data base.  It
+     that portion will be relocated in the target database.  It
      is therefore important to check the current geographic
      region settings in the target location if choice number one
      is selected.
 
 NOTES
+     i.rectify uses nearest neighbor resampling during the
+     transformation.
+
+     i.rectify uses a linear affine transformation:
+       x' = ax + by +c
+       y' = Ax + Bt +C
+
+     The a,b,c,A,B,C are determined by least squares regression
+     based on the control points entered.  This transformation
+     applies scaling, translation and rotation.  It is NOT a
+     general purpose rubber-sheeting, nor is it ortho-photo
+     rectification using a DEM, not second order polynomial, etc.
+     It can be used if (1) you have geometrically correct images,
+     and (2) the terrain or camera distortion effect can be
+     ignored.
+
+     Use i.ortho.photo for photos for which you have camera
+     information and a DEM, or i.rectify2 if you want a 2nd or
+     3rd order polynomial transformation.
+
      i.rectify will run in the background and notify the user by
      mail when it is finished.  The process may take an hour or
      more depending on the size of the image, the number of
@@ -104,6 +123,20 @@ SEE ALSO
 
 AUTHOR
      Michael Shapiro, U.S. Army Construction Engineering Research
+
+
+
+GRASS 4.1                U.S. Army CERL                         2
+
+
+
+
+
+
+i.rectify <main>     GRASS Reference Manual      <main> i.rectify
+
+
+
      Laboratory
 
 
@@ -126,7 +159,40 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
