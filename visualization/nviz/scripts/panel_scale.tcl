@@ -40,17 +40,23 @@ proc mkscalePanel { BASE } {
 
     button $rbase.place -text "Place Scale Object"
     frame $rbase.types
+    pack $rbase.place $rbase.types
     frame $rbase.types.left
     frame $rbase.types.right
-    checkbutton $rbase.types.left.solid  -text "Solid" -anchor w
-    checkbutton $rbase.types.left.wire   -text "Wire"  -anchor w
-    checkbutton $rbase.types.right.cube  -text "Cube"  -anchor w
-    checkbutton $rbase.types.right.plane -text "Plane" -anchor w
+    radiobutton $rbase.types.left.solid  -text "Solid" -anchor w
+    radiobutton $rbase.types.left.wire   -text "Wire"  -anchor w
+    radiobutton $rbase.types.right.cube  -text "Cube"  -anchor w
+    radiobutton $rbase.types.right.plane -text "Plane" -anchor w
     pack $rbase.types.left.solid $rbase.types.left.wire   -anchor w
     pack $rbase.types.right.cube $rbase.types.right.plane -anchor w
     pack $rbase.types.left $rbase.types.right -side left
-    checkbutton $rbase.narrow -text "North Arrow" -anchor w
-    pack $rbase.place $rbase.types $rbase.narrow -expand no
+    frame $rbase.bottom
+    pack $rbase.bottom -side bottom
+    button $rbase.bottom.place2 -text "Place Arrow" \
+	-command "bind $Nv_(TOP).canvas <Button> {place_narrow %W %x %y }"
+    checkbutton $rbase.bottom.narrow -text "North Arrow" -anchor w \
+	-variable n_arrow -onvalue 1 -offvalue 0
+    pack $rbase.bottom.place2 $rbase.bottom.narrow -expand no -side left
 
     ##########################################################################
     # Separator
@@ -110,6 +116,24 @@ proc mkscalePanel { BASE } {
     pack $BASE.draw_ruler -fill x
 
     return $panel
+}
+
+
+proc place_narrow {W x y} {
+global Nv_ n_arrow
+
+set y [expr $Nv_(height) - $y]
+
+#Draw North Arrow at selected point
+if {$n_arrow == 1} {
+    set curr [Nget_current surf]
+    if {$curr} {
+    Ndraw_Narrow $x $y $curr
+    }
+#remove canvas binding
+    bind $W <Button> {}
+}
+
 }
 
 
