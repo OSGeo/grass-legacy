@@ -9,7 +9,6 @@
  ***********************************************************************/
 
 #include "gis.h"
-#include "CC.h" /* for CC_datum_shift etc. */
 #include <unistd.h>
 #include <ctype.h>
 #include <string.h>
@@ -79,7 +78,7 @@ G_get_datum_parameters (double *a, double *e2, double *f,
     get_parms += getvalue(str, dz);
   
     if (get_parms) {
-      if (CC_datum_shift(dat, dx, dy, dz) == 0) {
+      if (G_datum_shift(G_get_datum_by_name(dat), dx, dy, dz) == 0) {
 	sprintf(err, "Error reading datum shift parameters for %s from table", dat);
 	G_fatal_error(err);
 	return -1;

@@ -18,7 +18,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "gis.h"
-#include "CC.h"
 
 /***********************************************************************
  * G_ask_datum_name(char *datum)
@@ -41,7 +40,7 @@ G_ask_datum_name(char *datum)
 	    G_fatal_error("Cannot open temp file") ;
         }
         fprintf(Tmp_fd,"datum\n");
-        for (i=0; (dat = CC_datum_name(i)); i++) {
+        for (i=0; (dat = G_datum_name(i)); i++) {
           fprintf(Tmp_fd,"%s\n",dat);
         }
 
@@ -66,7 +65,7 @@ G_ask_datum_name(char *datum)
           }
           else {
             if (strcmp(answer,"datum") == 0) break; 
-            if (CC_get_datum_by_name(answer) < 0) {
+            if (G_get_datum_by_name(answer) < 0) {
 	      fprintf(stderr,"\ninvalid datum\n");
             }
             else break;
