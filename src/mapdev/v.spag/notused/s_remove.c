@@ -67,11 +67,11 @@ _remove_line (map, line)
 	if (map->Line[line].right > 0)
 	    Del_area (map, map->Line[line].right);
 	if (map->Line[line].right < 0)			/* ISLE */
-	    Del_isle (map, ABS(map->Line[line].right));
+	    Del_isle (map, abs(map->Line[line].right));
 	if (map->Line[line].left > 0)
 	    Del_area (map, map->Line[line].left);
 	if (map->Line[line].left < 0)   		/* ISLE */
-	    Del_isle (map, ABS (map->Line[line].left));
+	    Del_isle (map, abs (map->Line[line].left));
     }
     if (0 > dig__Read_line (&Gpoints, map->digit, map->Line[line].offset))
 	return (-1);
