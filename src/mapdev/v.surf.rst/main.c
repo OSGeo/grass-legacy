@@ -598,6 +598,7 @@ int main ( int argc, char *argv[])
   IL_init_params_2d (&params, NULL, 1, 1, zmult, KMIN, KMAX, maskmap, n_rows, n_cols,
 	  az, adx, ady, adxx, adyy, adxy, fi, KMAX2, SCIK1, SCIK2, SCIK3,
 		     rsm, elev, slope, aspect, pcurv, tcurv, mcurv, dmin, x_orig, y_orig, deriv,
+		     0.0, 0.0,
 		     Tmp_fd_z, Tmp_fd_dx, Tmp_fd_dy, Tmp_fd_xx, Tmp_fd_yy, Tmp_fd_xy, fddevi, inhead.time);
 
   IL_init_func_2d (&params, IL_grid_calc_2d, IL_matrix_create, IL_check_at_points_2d,
