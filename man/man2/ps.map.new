@@ -1,0 +1,1074 @@
+.TH ps.map.new 1 "" "" "" ""
+.SH NAME
+\fI\fBps.map.new\fR\fR  -
+Hardcopy PostScript map output utility.
+.br
+\fI(GRASS Hardcopy PostScript Output Program)\fR
+.SH SYNOPSIS
+\fBps.map.new\fR
+.br
+\fBps.map.new help\fR
+.br
+\fBps.map.new\fR [\fB\-r\fR] [\fBinput=\fR\fIname\fR] [\fBscale=\fR\fImapscale\fR] [\fBcopies=\fR\fIn\fR] \fBoutput=\fR\fIname\fR
+.SH DESCRIPTION
+\fIps.map.new\fR
+produces an output file containing a PostScript program to
+produce hardcopy map products on your system's PostScript output
+device.  Output can include a raster map, any number of vector overlays,
+site data, text labels, and other spatial data.
+.PP
+This program has 2 distincts modes of operation.  The command-line
+mode requires the user to prepare a file of mapping instructions describing
+the various spatial and textual information to be printed prior to running
+\fIps.map.new\fR.
+The interactive mode (i.e., no command-line arguments) will prompt the
+user for items to be mapped and does not require the user
+to prepare a file of instructions (some options are not used
+in interactive mode).
+.PP
+The command line flag is:
+.LI "\fB-r\fR 
+Rotate plot 90 degrees.
+.PP
+.PP
+The command-line parameters are:
+.LI "\fBinput=\fR\fIname\fR 
+File containing mapping instructions.
+(or enter \fBinput=-\fR to enter from keyboard).
+These instructions are described in detail below.
+.LI "\fBscale=\fR\fImapscale\fR 
+Scale of the output map,  e.g. 1:25000
+.br
+Default:  1 panel
+.PP
+This parameter is provided as a convenience.  It is identical to the 
+\fIscale\fR
+mapping instruction described below.
+.LI "\fBoutput=\fR\fIname\fR 
+Name of output the file to contain the PostScript program.
+.PP
+.PP
+Note: the user must select a PostScript output device using
+\fI
+\*Lps.select\*O
+\fR
+before running \fIps.map.new\fR.
+.PP
+.SH MAPPING INSTRUCTIONS
+The mapping instructions allow the user to specify various spatial data
+to be plotted. These instructions are normally prepared in a regular
+text file using a system editor.
+Some instructions are single line instructions while
+others are multiple line. Multiple line instructions consist of
+the main instruction followed by a subsection of one or more additional
+instructions.
+.PP
+Instructions that may be included in the subsection under several
+different main instructions are:
+.LI "\fBwhere\ \fR\fIx\ y\fR 
+The top left corner of the bounding box of the item to be plotted
+is located \fIx\fR inches from the left edge of the paper and
+\fIy\fR inches from the top edge of the paper. If \fIx\fR is less than
+or equal to zero, the default horizontal location is used.  If \fIy\fR
+is less than or equal to zero, the default vertical location is used.
+.LI "\fBfont\ \fR\fIfont\ name\fR 
+The name of the PostScript font.  The default is \fIHelvetica\fR.
+.LI "\fBfontsize\ \fR\fIfont\ size\fR 
+The size of the PostScript font in 1/72 inch.  The default is 10.
+.PP
+.SH colortable
+Prints the color table for the raster map layer anywhere on the page.
+\*C
+.TS
+ll.
+USAGE:	\fBcolortable\fR [y|n]
+	\fBwhere\fR x y
+	\fBwidth\fR table width
+	\fBcols\fR table columns
+	\fBfont\fR font name
+	\fBfontsize\fR font size
+	\fBcolor\fR text color
+	\fBend\fR
+.TE
+\*O
+The color table will display the colors for each raster map layer
+category value and the category label.
+To get a color table, you must have previously requested a raster
+map layer.
+The default location for the colortable is immediately below any other
+map legend information, starting at the left margin.
+The default text color is black.
+Omitting the \fBcolortable\fR instruction would result in
+no color table.  \fBNote\fR:  Be careful about asking for color tables for
+raster map layers which have many categories, such as elevation.
+This could result in the printing of an extremely long color table!!!!!
+.PP
+This example would print a color table immediately below any other map legend
+information, starting at the left margin.
+\*C
+.TS
+ll.
+EXAMPLE:	
+	\fBcolortable\fR y
+.TE
+\*O
+.PP
+.SH comments
+Prints comments anywhere on the page.
+\*C
+.TS
+ll.
+USAGE:	\fBcomments\fR commentfile
+	\fBwhere\fR x y
+	\fBfont\fR font name
+	\fBfontsize\fR font size
+	\fBcolor\fR text color
+	\fBend\fR
+.TE
+\*O
+The default location is immediately below the last item item printed,
+starting at the left margin.
+The default text color is black.
+.PP
+This example prints in blue
+whatever is in the file \fIveg.comments\fR starting at
+1.5 inches from the left edge of the page and 7.25 inches from the top of
+the page, using a 15/72 inch Helvetica Bold font.
+\*C
+.TS
+ll.
+EXAMPLE:	
+	\fBraster\fR vegetation
+	\fBcomments\fR veg.comments
+	\fBwhere\fR 1.5 7.25
+	\fBfont\fR Helvetica Bold
+	\fBfontsize\fR 15
+	\fBcolor\fR blue
+	\fBend\fR
+.TE
+\*O
+Presumably, the file
+\fIveg.comments\fR
+contain comments
+pertaining to the raster map layer \fIvegetation\fR,
+such as "This map was created by classifying a LANDSAT TM image".
+.PP
+.SH copies
+Specifies the number of copies to be printed.
+\*C
+.TS
+ll.
+USAGE:	\fBcopies\fR n
+.TE
+\*O
+Each page will be printed n times.
+.PP
+.SH greyrast
+Selects a raster map layer for output in shades of grey.
+\*C
+.TS
+ll.
+USAGE:	\fBgreyrast\fR mapname|\fIlist\fR
+.TE
+\*O
+For each 
+\fIps.map.new\fR
+run, only one raster map layer can be requested (using either the
+\fIgreyrast\fR or the \fIraster\fR instruction).
+.PP
+.SH grid
+Overlays a coordinate grid onto the output map.
+\*C
+.TS
+ll.
+USAGE:	\fBgrid\fR spacing
+	\fBcolor\fR color
+	\fBnumbers\fR # [color]
+	\fBfont\fR font name
+	\fBfontsize\fR font size
+	\fBend\fR
+.TE
+\*O
+The \fBspacing\fR of the grid is given (in the geographic coordinate
+system units) on the main instruction line.  The subsection instructions
+allow the user to specify
+the \fBcolor\fR of the grid lines,
+whether coordinate \fBnumbers\fR should appear
+on the grid lines, and
+if they
+should appear every grid line (1), every other grid line 
+(2), etc., and what color the numbers should be.  The defaults are
+black grid lines, unnumbered.
+.PP
+This example would overlay a green grid with a spacing of 10000 meters
+(for a metered database, like UTM) onto the output map.  Alternate grid
+lines would be numbered with red numbers.
+\*C
+.TS
+ll.
+EXAMPLE:
+	\fBgrid\fR 10000   
+	\fBcolor\fR green
+	\fBnumbers\fR 2 red
+	\fBend\fR
+.TE
+\*O
+.PP
+.SH header
+Prints the map header above the map.
+\*C
+.TS
+ll.
+USAGE:	\fBheader\fR
+	\fBfile\fR header file
+	\fBfont\fR font name
+	\fBfontsize\fR font size
+	\fBcolor\fR text color
+	\fBend\fR
+.TE
+\*O
+If the \fIheader\fR instruction or the \fIfile\fR sub-instruction is absent,
+the header will consist of the map title and location, each centered on
+the page above the map.
+The default text color is black.
+.PP
+This example prints (in red) whatever is in the file \fIsoils.hdr\fR above
+the map, using a 20/72 inch Courier font.
+\*C
+.TS
+ll.
+EXAMPLE:	
+	\fBheader\fR
+	\fBfile\fR soils.hdr
+	\fBfont\fR Courier
+	\fBfontsize\fR 20
+	\fBcolor\fR red
+	\fBend\fR
+.TE
+\*O
+.PP
+.SH labels
+Selects a labels file for output (see manual entry for
+\fI
+\*Lp.labels\*O
+).\fR
+\*C
+.TS
+ll.
+USAGE:	\fBlabels\fR  labelfile|\fIlist\fR
+	\fBfont\fR font name
+	\fBend\fR
+.TE
+\*O
+.PP
+NOTE: ps.map.new can read new option 'ROTATE:' from labels file, which
+specifies counter clockwise rotation in degrees. 
+.PP
+This example would paint labels from the labels file called
+\fItown.names\fR.  Presumably, these labels would indicate the names of
+towns on the map.
+\*C
+.TS
+ll.
+EXAMPLE:	
+	\fBlabels\fR town.names
+.TE
+\*O
+.PP
+.SH line
+Draws lines on the output map.
+\*C
+.TS
+ll.
+USAGE:	\fBline\fR east north east north
+	\fBline\fR x% y% x% y%
+	\fBcolor\fR color
+	\fBwidth\fR #
+	\fBmasked\fR [y|n]
+	\fBend\fR
+.TE
+\*O
+The beginning and ending points of the line are entered on the main
+instruction.  These points can be defined either by map coordinates or
+by using percentages of the geographic region.
+The user may also specify line
+\fBcolor\fR,
+\fBwidth\fR
+in pixels (accepts decimal points [floating points] as well as integers),
+and if the line is to be
+\fBmasked\fR
+by the current mask. (See manual entry for \fI
+\*Lr.mask\*O
+\fR for more
+information on the mask.)
+.PP
+This example would draw a yellow line from the point x=10% y=80%
+to the point x=30% y=70%. This line
+would be 2 pixels wide and would appear even if there is a mask.
+\*C
+.TS
+ll.
+EXAMPLE:
+	\fBline\fR 10% 80% 30% 70%
+	\fBcolor\fR yellow
+	\fBwidth\fR 2
+	\fBmasked\fR n
+	\fBend\fR
+.TE
+\*O
+Of course, multiple lines may be drawn with multiple
+\fIline\fR
+instructions.
+.PP
+.SH mapinfo
+Prints the portion of the map legend containing the scale, grid and
+region information, on or below the map.
+\*C
+.TS
+ll.
+USAGE:	\fBmapinfo\fR
+	\fBwhere\fR x y
+	\fBfont\fR font name
+	\fBfontsize\fR font size
+	\fBcolor\fR text color
+	\fBend\fR
+.TE
+\*O
+The default location is immediately below the map,
+starting at the left edge of the map.
+The default text color is black.
+.PP
+This example prints (in brown) the scale, grid and region information
+immediately below the map and starting 1.5 inches from the left edge
+of the page, using a 12/72 inch Courier font.
+\*C
+.TS
+ll.
+EXAMPLE:
+	\fBmapinfo\fR
+	\fBwhere\fR 1.5 0
+	\fBfont\fR Courier
+	\fBfontsize\fR 12
+	\fBcolor\fR brown
+	\fBend\fR
+.TE
+\*O
+.PP
+.SH maploc
+Positions the map on the page.
+\*C
+.TS
+ll.
+USAGE:	\fBmaploc\fR  x y [width height]
+.TE
+\*O
+The upper left corner of the map will be positioned \fIx\fR inches from
+the left edge of the page and \fIy\fR inches from the top of the page.
+If \fIwidth\fR and \fIheight\fR (in inches) are present, the map will be
+rescaled, if necessary, to fit.
+.PP
+This example positions the upper left corner of the map 2.0 inches from
+the left edge and 3.5 inches from the top edge of the map.
+\*C
+.TS
+ll.
+EXAMPLE:
+	\fBmaploc\fR 2.0 3.5
+.TE
+\*O
+.PP
+.SH outline
+Outlines the areas of a raster map layer with a specified color.
+\*C
+.TS
+ll.
+USAGE:	\fBoutline\fR
+	\fBcolor\fR  color
+	\fBwidth\fR  width of line in pixels
+	\fBend\fR
+.TE
+\*O
+Distinct areas of the raster map will be separated from each other visually
+by drawing a border (or outline) in the specified
+\fBcolor\fR
+(default: black). For 
+\fBwidth\fR
+the program accepts decimal points [floating points] as well as integers.
+Note: it is
+important the user enter the instruction \fBend\fR even if a color is not
+chosen.
+(It is hoped that in the future the outline of a different raster map
+layer other than the one currently being painted may be placed on the map.)
+.PP
+This example would outline the category areas of the
+\fIsoils\fR
+raster map layer
+in grey.
+\*C
+.TS
+ll.
+EXAMPLE:	
+	\fBraster\fR soils
+	\fBoutline\fR   
+	\fBcolor\fR grey
+	\fBwidth\fR 2
+	\fBend\fR
+.TE
+\*O
+.PP
+.SH point
+Places additional points or icons on the output map.
+\*C
+.TS
+ll.
+USAGE:	\fBpoint\fR east north
+	\fBpoint\fR x% y%
+	\fBcolor\fR color
+	\fBicon\fR iconfile|\fIlist\fR
+	\fBsize\fR #
+	\fBmasked\fR [y|n]
+	\fBend\fR	
+.TE
+\*O
+The point location is entered in the main instruction line by giving either the map 
+coordinates or by using percentages of the geographic region.
+The user may also specify the point
+\fBcolor\fR,
+the \fBicon\fR file to be used to represent the point location
+(see the the manual entry for
+\fI
+\*Lps.icon\*O
+s)\fR,
+the \fBsize\fR of the icon as a multiple of the size of the
+pattern in the icon file (default is 1.0, aprroximately equivalent to a
+10 point character),
+and whether the point is to be \fBmasked\fR
+by the current mask. (See manual entry for \fI
+\*Lr.mask\*O
+\fR for more
+information on the mask.)
+.PP
+This example would place a purple diamond (from icon file
+\fIdiamond\fR) at the point (E456000 N7890000).  This diamond would be the 
+approximately the size of a 15 point character
+and would not be masked by the current mask.
+\*C
+.TS
+ll.
+EXAMPLE:
+	\fBpoint\fR 456000 7890000
+	\fBcolor\fR purple     
+	\fBicon\fR diamond
+	\fBsize\fR 1.5
+	\fBmasked\fR n
+	\fBend\fR	
+.TE
+\*O
+Of course, multiple points may be drawn with multiple
+\fIpoint\fR
+instructions.
+.PP
+.SH psfile
+Copies a file containing PostScript commands into the output file.
+.PP
+\fBNote:\fR
+\fIps.map.new\fR
+will not search for this file.  The user must be in the
+correct directory or specify the full path on the \fBpsfile\fR instruction.
+(Note to /bin/csh users: ~ won't work with this instruction).
+\*C
+.TS
+ll.
+USAGE:	\fBpsfile\fR filename
+.TE
+\*O
+This example copies the file "logo.ps" into the output file.
+\*C
+.TS
+ll.
+EXAMPLE:	
+	\fBpsfile\fR logo.ps
+.TE
+\*O
+.PP
+.SH raster
+Selects a raster map layer for output.
+\*C
+.TS
+ll.
+USAGE:	\fBraster\fR mapname|\fIlist\fR
+.TE
+\*O
+For each 
+\fIps.map.new\fR
+run, only one raster map layer can be requested.  If no raster map layer
+is requested, a completely white map will be produced.
+It can be useful to select no raster map layer in order to
+provide a white background for vector images.
+.PP
+This example would paint a map of the raster map layer \fIsoils\fR.
+\*C
+.TS
+ll.
+EXAMPLE:	
+	\fBraster\fR soils
+.TE
+\*O
+.PP
+.SH read
+Provides \fIps.map.new\fR with a previously prepared input stream.
+\*C
+.TS
+ll.
+USAGE:	\fBread\fR previously prepared UNIX file
+.TE
+\*O
+Mapping instructions can be placed into a file and read into
+\fIps.map.new.\fR
+.PP
+\fBNote:\fR
+\fIps.map.new\fR
+will not search for this file.  The user must be in the
+correct directory or specify the full path on the \fBread\fR instruction.
+(Note to /bin/csh users: ~ won't work with this instruction).
+.PP
+This example reads the UNIX file \fIpmap.roads\fR into \fIps.map.new\fR.
+This file may contain all the \fIps.map.new\fR instructions for placing
+the vector map layer \fIroads\fR onto the output map.
+\*C
+.TS
+ll.
+EXAMPLE: 
+	\fBread\fR pmap.roads
+.TE
+\*O
+The user may have created this file because this vector map layer
+is particularly useful for many \fIps.map.new\fR
+outputs.  By using the \fBread\fR option, the user need not enter all the input
+for the \fBvector\fR instruction, but simply \fBread\fR the previously prepared
+file with the correct instructions.
+.PP
+.SH region
+Places the outline of a smaller geographic region
+on the output.
+\*C
+.TS
+ll.
+USAGE:	\fBregion\fR regionfile|\fIlist\fR
+	\fBcolor\fR color
+	\fBwidth\fR #
+	\fBend\fR
+.TE
+\*O
+Geographic region settings are created and saved using \fI
+\*Lg.region\*O
+\fR.
+The \fIps.map.new region\fR option can be used to show an outline of
+a smaller region which was printed on a separate run of \fIps.map.new\fR
+on other user-created maps.
+.PP
+The user can specify the \fBcolor\fR
+and the \fBwidth\fR in pixel units (accepts decimal points
+[floating points] as well as integers) of the outline.
+The default is a black border of one pixel width.
+.PP
+This example would place a white outline, 2 pixels wide, of the
+geographic region
+called \fIfire.zones\fR onto the output map.  This geographic region
+would have been created and saved using \fI
+\*Lg.region\*O
+\fR.
+\*C
+.TS
+ll.
+EXAMPLE:
+	\fBregion\fR fire.zones
+	\fBcolor\fR white
+	\fBwidth\fR 2
+	\fBend\fR
+.TE
+\*O
+.PP
+.SH scale
+Selects a scale for the output map.
+\*C
+.TS
+ll.
+USAGE:	\fBscale\fR \fIscale\fR
+.TE
+\*O
+The scale can be selected either as:
+.LI " a relative ratio, e.g. 1:25000;
+.LI " an absolute width of the printed map, e.g. 10 inches;
+.LI " the number of printed paper panels, e.g. 3 panels
+\fI.I\fR
+(at the present time, only 1 panel is supported);
+.LI " the number of miles per inch, e.g. 1 inch equals 4 miles.
+.PP
+This example would set the scale of the map to 1 unit = 25000
+units.
+\*C
+.TS
+ll.
+EXAMPLE:	
+	\fBscale\fR 1:25000
+.TE
+\*O
+.PP
+.SH setcolor
+Overrides the color assigned to one or more categories
+of the raster map layer.
+\*C
+.TS
+ll.
+USAGE:	\fBsetcolor\fR cat(s) color
+.TE
+\*O
+This example would set the color for categories 2,5 and 8 of the raster
+map layer \fIwatersheds\fR to white and category 10 to green.
+(\fBNOTE\fR: no spaces are inserted between the category values.)
+\*C
+.TS
+ll.
+EXAMPLE:	
+	\fBraster\fR watersheds
+	\fBsetcolor\fR 2,5,8 white
+	\fBsetcolor\fR 10 green
+.TE
+\*O
+Of course,
+\fIsetcolor\fR
+can be requested more than once to override the default color for additional
+categories.  More than one category can be changed for each request by listing
+all the category values separated by commas (but with no spaces).
+.PP
+.SH sites
+Selects sites data to be placed on the output map
+(see manual entry for \fI
+\*Ls.menu\*O
+\fR).
+\*C
+.TS
+ll.
+USAGE:	\fBsites\fR sitemap|\fIlist\fR
+	\fBcolor\fR color
+	\fBicon\fR iconfile|\fIlist\fR
+	\fBsize\fR #
+	\fBdesc\fR [y|n]
+	\fBfont\fR font name
+	\fBend\fR
+.TE
+\*O
+The user may specify the
+the \fBcolor\fR of the sites (see section on NAMED COLORS below);
+the \fBicon\fR to be used to represent the presence of a site
+(see the manual entry for \fI
+\*Lp.icons\*O
+\fR);
+the \fBsize\fR of the icon (number of times larger than the size it is in
+the icon file);
+and
+whether or not the \fBdesc\fRription associated with each site is also to be
+printed.
+If the \fBdesc\fRription is to be printed, the \fBfont\fR name may be
+specified.  The size of the font is proportional to the icon \fBsize\fR.
+This example would paint a sites map with blue windmills (from an icon file created
+by the user using the
+\fI
+\*Lp.icons\*O
+\fR
+GRASS command) placed at all windmill locations (from a sites list).  These
+windmills would be two times larger than the size of the icon in the
+icon file and have descriptions from the sites list file printed beside them.
+\*C
+.TS
+ll.
+EXAMPLE:
+	\fBsites\fR windmills
+	\fBcolor\fR blue
+	\fBicon\fR windmill
+	\fBsize\fR 2
+	\fBdesc\fR y
+	\fBend\fR
+.TE
+\*O
+.PP
+.SH text
+Places text on the map.
+\*C
+.TS
+ll.
+USAGE:	\fBtext\fR  east north text
+	\fBtext\fR  x% y% text
+	\fBfont\fR fontname
+	\fBcolor\fR color|none
+	\fBwidth\fR #
+	\fBhcolor\fR color|none
+	\fBhwidth\fR #
+	\fBbackground\fR color|none
+	\fBborder\fR color|none
+	\fBsize\fR #
+	\fBref\fR reference point
+	\fBxoffset\fR #
+	\fByoffset\fR #
+	\fBopaque\fR [y|n]
+	\fBend\fR
+.TE
+\*O
+The user specifies where the text will be placed by
+providing map coordinates or percentages of the geographic region map.
+The text follows these coordinates
+on the same instruction line.
+More than one line of text can be
+specified by notating the end of a line with
+\fB\en\fR
+(e.g. USA\|\enCERL).
+.PP
+The user can then specify various text features:
+.PP
+\fBfont:\fR
+cyrilc gothgbt gothgrt gothitt greekc greekcs greekp greeks italicc
+italiccs italict romanc romancs romand romans romant scriptc scripts
+(The default font is romans);
+.PP
+\fBcolor\fR
+(see NAMED COLORS);
+.PP
+\fBwidth\fR
+of the lines used to draw the text to make thicker letters
+(accepts decimal points [floating points] as well as integers);
+.PP
+\fBsize\fR
+as the vertical height of the letters in meters on the
+ground (text size will grow or shrink depending on the scale at which
+the map is painted);
+.PP
+the highlight color (\fBhcolor\fR) and
+the width of the highlight color (\fBhwidth\fR);
+.PP
+the text-enclosing-box \fBbackground\fR color;
+the text box \fBborder\fR color;
+.PP
+\fBref.\fR
+This reference point specifies the text handle - what
+part of the text should be placed on the location specified by the map
+coordinates.  Reference points can refer to:
+[lower|upper|center] [left|right|center] of the text to be printed;
+.PP
+\fByoffset\fR,
+which provides finer placement of text by shifting the
+text a vertical distance in pixels from the specified north.  The vertical 
+offset will shift the location to the south if positive, north if negative;
+.PP
+\fBxoffset\fR,
+which shifts the text a horizontal distance in pixels from
+the specified east The horizontal offset will shift the location east if 
+positive, west if negative;
+.PP
+whether or not the text should be \fBopaque\fR to vectors.  Entering \fBno\fR
+to the opaque option will allow the user to see any vectors which go
+through the text's background box.  Otherwise, they will end at the box's edge.
+.PP
+.PP
+This example would place the text
+\fISPEARFISH LAND COVER\fR
+at the coordinates E650000 N7365000. The text would be a total of
+3 pixels wide (2 pixels of red text and 1 pixel black highlight), have a white
+background enclosed in a red box, and be 500 meters in size.  The lower right
+corner of the text would be centered over the coordinates provided.  All
+vectors on the map would stop at the border of this text.
+\*C
+.TS
+ll.
+EXAMPLE:	
+	\fBtext\fR 650000 7365000 SPEARFISH LAND COVER
+	\fBfont\fR romand
+	\fBcolor\fR red
+	\fBwidth\fR 2
+	\fBhcolor\fR black
+	\fBhwidth\fR 1
+	\fBbackground\fR white
+	\fBborder\fR red
+	\fBsize\fR 500
+	\fBref\fR lower left 
+	\fBopaque\fR y
+	\fBend\fR
+.TE
+\*O
+.PP
+.SH vector
+Selects a vector map layer for output.
+\*C
+.TS
+ll.
+USAGE:	\fBvector\fR vectormap|\fIlist\fR
+	\fBcolor\fR color
+	\fBacolor\fR r g b	
+	\fBwidth\fR #
+	\fBcwidth\fR #
+	\fBhcolor\fR color
+	\fBhwidth\fR #
+	\fBoffset\fR #
+	\fBcoffset\fR #
+	\fBref\fR left|right
+	\fBmasked\fR [y|n]
+	\fBstyle\fR  0-9
+	\fBline_cat\fR #	
+	\fBlabel\fR label
+	\fBlpos\fR 0|1-20
+	\fBend\fR
+.TE
+\*O
+The user can specify:
+.PP
+\fBcolor\fR - color of the vector lines or area boundaries;
+.PP
+\fBacolor\fR - the area color. If acolor is used areas are plotted
+instead of lines (accepts 3 integers from 0 to 255 for red, green
+and blue separated by spaces);
+.PP
+\fBwidth\fR - width of the vectors lines or area boundaries in pixels
+(accepts decimal points [floating points] as well as integers);
+.PP
+\fBcwidth\fR - width of the vectors lines. If cwidth is used then 
+width of line is equal to cwidth * category value and width is 
+used in legend;
+.PP
+\fBhcolor\fR - the highlight color for the vector lines;
+.PP
+\fBhwidth\fR - the width of the highlight color in pixels;
+.PP
+\fBoffset\fR (experimental) - offset for the vectors lines in pixels for plotting
+parallel lines in distance equal to offset (accepts positive or 
+negative decimal points);
+.PP
+\fBcoffset\fR (experimental) - offset for the vectors lines. If coffset is used then 
+offset of line is equal to coffset * category value and offset is 
+used in legend;
+.PP
+\fBref\fR (experimental) - line justification. 
+.PP
+\fBmasked\fR - whether or not the raster map layer is to be masked
+by the current mask 
+(see manual entry \fI
+\*Lr.mask\*O
+\fR for more information on the mask);
+.PP
+\fBstyle\fR - the line style allows the vectors
+to be dashed in different patterns.  This is done by typing a
+series of numbers (0's and 1's) in a desired sequence or pattern.
+Blanks and
+non-digit characters are recognized as 0's. Using 0 would allow the
+colors of the raster map layer (or the background color
+if no raster map layer was selected) to show through;
+.PP
+\fBline_cat\fR - which category should be plotted (default is all);
+.PP
+\fBlabel\fR - for description in vlegend. Default is: 
+map(mapset);
+.PP
+\fBlpos\fR - position vector is plotted in legend. If lpos is
+0 then this vector is omitted in legend. If more vectors used the 
+same lpos then their symbols in legend are merged and label for
+first vector is used.
+.PP
+.PP
+This example would paint a map of the vector map layer
+named \fIstreams\fR.
+These streams would be a total of 3 pixels wide (the inner two pixels blue and
+the outer highlight pixel white).  The map would not show streams outside of the
+current mask. Only streams of category 2 will be plotted.
+In legend appeares label 'Streams - category 2'.
+\*C
+.TS
+ll.
+EXAMPLE:	
+	\fBvector\fR streams
+	\fBcolor\fR blue
+	\fBwidth\fR 2
+	\fBhcolor\fR white
+	\fBhwidth\fR 1
+	\fBmasked\fR y
+	\fBline_cat\fR 2	
+	\fBlabel\fR Streams - category 2
+	\fBend\fR
+.TE
+\*O
+.PP
+.SH verbose
+Changes the amount of talking \fIps.map.new\fR will do.
+\*C
+.TS
+ll.
+USAGE: \fBverbose\fR [0|1|2]
+.TE
+\*O
+A higher value implies more chatter.  The default is 2.
+This example sets the amount of chatter to a
+minimum.
+\*C
+.TS
+ll.
+EXAMPLE:	
+	\fBverbose\fR 0
+.TE
+\*O
+.PP
+.SH vlegend
+Prints the portion of the map legend containing the 
+vector information, on or below the map.
+\*C
+.TS
+ll.
+USAGE:	\fBvlegend\fR
+	\fBwhere\fR x y
+	\fBfont\fR font name
+	\fBfontsize\fR font size
+	\fBend\fR
+.TE
+\*O
+The default location is immediately below the legend containing the
+scale, grid and region information,
+starting at the left edge of the map.
+If the \fIwhere\fR instruction is present and \fIy\fR is less than or
+equal to zero, the vector legend will be positioned immediately below
+the map, starting \fIx\fR inches from the left edge of the page.
+.PP
+This example prints the vector legend
+immediately below the map and starting 4.5 inches from the left edge
+of the page, using a 12/72 inch Helvetica font.
+\*C
+.TS
+ll.
+EXAMPLE:	
+	\fBvlegend\fR
+	\fBwhere\fR 4.5 0
+	\fBfont\fR Courier
+	\fBfontsize\fR 12
+	\fBend\fR
+.TE
+\*O
+.PP
+.SH end
+Terminates input and begin painting the map.
+\*C
+.TS
+ll.
+USAGE:	\fBend\fR
+.TE
+\*O
+.PP
+.SH NAMED COLORS
+The following are the colors that are accepted by \fIps.map.new\fR:
+\*C
+.TS
+ll.
+
+aqua
+black
+blue
+brown
+cyan
+gray
+green
+grey
+indigo
+magenta
+orange
+purple
+red
+violet
+white
+yellow
+.TE
+\*O
+.SH EXAMPLE ps.map.new INPUT FILE
+The following is an example of a \fIps.map.new\fR script file. The file has been
+named
+\fIspear.soils\fR.  For the purposes of illustration, the file is in
+two columns.  This script file can be entered at the command line:
+\*C
+.TS
+ll.
+  \fBps.map.new input=\fR\fIspear.soils\fR \fBoutput=\fR\fIsoils.ps\fR
+.TE
+\*O
+\*C
+.TS
+ll.
+
+\fBraster\fR soils
+\fBvector\fR roads
+   \fBwidth\fR 2
+   \fBstyle\fR 0011
+   \fBcolor\fR 1 black  
+   \fBcolor\fR 2 red  
+   \fBmasked\fR n
+   \fBend\fR   
+\fBlabels\fR town.names
+\fBregion\fR subregion	  
+   \fBcolor\fR white	
+   \fBwidth\fR 2	
+   \fBend\fR	        
+\fBgrid\fR 10000	
+   \fBcolor\fR green	
+   \fBnumbers\fR 2 red	
+   \fBend\fR	  	
+\fBoutline\fR	   	
+   \fBcolor\fR black	
+   \fBend\fR		
+\fBcolortable\fR y	
+\fBcomments\fR soil.cmt
+   \fBfont\fR Helvetica	
+   \fBend\fR	   	
+\fBscale\fR 1:25000    	
+\fBsetcolor\fR 6,8,9 white	
+\fBsetcolor\fR 10 green
+\fBvlegend\fR
+    \fBwhere\fR 4.5 0
+    \fBend\fR
+\fBtext\fR 608000.00 3476004.73 SPEARFISH SOILS MAP
+    \fBcolor\fR red  
+    \fBwidth\fR 2  
+    \fBhcolor\fR black
+    \fBhwidth\fR 1  
+    \fBbackground\fR white
+    \fBborder\fR red  
+    \fBsize\fR 500
+    \fBref\fR lower left
+    \fBopaque\fR y
+    \fBend\fR
+\fBline\fR 606969.73 3423092.91 616969.73 3423092.91
+    \fBcolor\fR yellow
+    \fBwidth\fR 2
+    \fBopaque\fR yes
+    \fBend\fR
+\fBpoint\fR 40% 60%
+    \fBcolor\fR purple
+    \fBicon\fR diamond
+    \fBsize\fR 2	
+    \fBmasked\fR n
+    \fBend\fR	
+\fBend\fR	
+
+.TE
+\*O
+.SH INTERACTIVE MODE
+If the user simply enters
+\fIps.map.new\fR
+without arguments, then a simple prompting session occurs.
+Some, but not all of the non-interactive requests are available
+at this level.
+.SH SEE ALSO
+\fI
+\*Lps.icon\*O
+\fR
+.br
+
+\fI
+\*Lps.select\*O
+\fR
+.SH AUTHOR
+Paul Carlson, USDA, SCS, NHQ-CGIS
+.br
+Modifications: Radim Blazek
