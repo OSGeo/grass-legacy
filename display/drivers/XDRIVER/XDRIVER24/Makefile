@@ -15,9 +15,7 @@ LIBES = $(DRIVERLIB) $(D_LIB) $(GISLIB)
 R3DEFINE=
 
 # For those compiling on Intergraph machines, uncomment the following 2 lines:
-#XINCPATH=-I/usr/ip32/xwinprog
 #XCFLAGS=-DINTERGRAPH -DX11R3
-#XLDFLAGS=-L/usr/ip32/xwinprog/lib
 
 # these are for the CDC mips machine
 #XCFLAGS=-systype bsd43
@@ -34,13 +32,14 @@ R3DEFINE=
 # library resolves this problem
 #XEXTRALIBS=-lsun
 
-EXTRA_CFLAGS=$(XCFLAGS) $(R3DEFINE) $(XINCPATH) 
+EXTRA_CFLAGS=$(XCFLAGS) $(R3DEFINE) -I../../lib
 
 OBJS =  \
 	Box_abs.o\
 	Can_do.o\
-	Color.o\
+	Client.o\
 	Clr_table.o\
+	Color.o\
 	Draw_line.o\
 	Get_w_box.o\
 	Get_w_line.o\
@@ -50,20 +49,20 @@ OBJS =  \
 	Panel.o\
 	Plylne_abs.o\
 	Polygn_abs.o\
+	Raster.o\
+	Raster_RGB.o\
+	Respond.o\
 	Serve_Xevent.o\
-	alloc.o\
-	Raster.o
+	Work.o\
+	alloc.o
 
 ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 
 default: $(ARCH_INCDIR)/winname.h $(DRIVERDIR)/$(PGM)
 
-$(DRIVERDIR)/$(PGM): $(ARCH_OBJS) 
+$(DRIVERDIR)/$(PGM): $(ARCH_OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(XLDFLAGS) $(LIBPATH) $(ARCH_OBJS) $(LIBES) $(XLIBPATH) $(XLIB) $(XEXTRALIBS) $(MATHLIB)
 
-#Graph_Set.o: winname.h
-
-$(ARCH_INCDIR)/winname.h: 
+$(ARCH_INCDIR)/winname.h:
 	echo '#define WIN_NAME "GRASS $(VERSION_NUMBER)"' > $@
-
 
