@@ -28,11 +28,17 @@ SUBDIRS = \
 	sites \
 	front.end \
 	rst \
-	ogsf \
 	symbol \
 	init
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
+
+OPENGLBASED = ogsf
+
+#compile if OPENGLBASED present:
+ifneq ($(strip $(OPENGLLIB)),)
+    SUBDIRS += $(OPENGLBASED)
+endif
 
 default: headers subdirs
 
