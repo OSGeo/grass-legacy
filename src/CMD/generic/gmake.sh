@@ -220,6 +220,10 @@ then
     echo "  mkdir $OBJARCH"
     mkdir $OBJARCH || exit 1
 fi
+if test -e $makefile
+then
+    rm -f $makefile
+fi
 
 (
 # build the make.rules file
