@@ -54,6 +54,8 @@ dig_read_frmt_ascii ( FILE *dascii, struct Format_info *finfo)
 	      frmt = GV_FORMAT_SHAPE; 
 	  } else if (strcmp (ptr, "postgis") == 0) {
 	      frmt = GV_FORMAT_POSTGIS; 
+	  } else if (strcmp (ptr, "ogr") == 0) {
+	      frmt = GV_FORMAT_OGR; 
 	  }	  
       }
   }    
@@ -84,6 +86,11 @@ dig_read_frmt_ascii ( FILE *dascii, struct Format_info *finfo)
 	  finfo->post.cat_field  = G_store ("field");
 	  finfo->post.cat_cat    = G_store ("cat");
           break;
+#endif
+#ifdef HAVE_OGR	  
+      case GV_FORMAT_OGR :
+	  finfo->ogr.dsn        = NULL;
+	  finfo->ogr.layer_name = NULL;
 #endif
   }
 	  
@@ -168,6 +175,13 @@ dig_read_frmt_ascii ( FILE *dascii, struct Format_info *finfo)
 	          G_warning ("unknown keyword '%s' in vector format file\n", buff);
 
 	      break;
+#endif
+#ifdef HAVE_OGR	  
+	  case GV_FORMAT_OGR :
+	      if (strcmp (buf1, "DSN") == 0)
+	          finfo->ogr.dsn    = G_store (ptr);
+	      if (strcmp (buf1, "LAYER") == 0)
+	          finfo->ogr.layer_name = G_store (ptr);
 #endif
       }
     }

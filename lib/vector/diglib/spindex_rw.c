@@ -26,33 +26,43 @@ int
 dig_Wr_spindx_head ( FILE * fp,
 		     struct Plus_head *ptr)
 {
-  unsigned char buf[6];
+  unsigned char buf[5];
+  long length = 42;
     
   rewind (fp);
+  dig_set_cur_port (&(ptr->spidx_port));
 
-  memset ( buf, 0, 6 );
-  buf[0] = GRASS_V_VERSION_MAJOR;
-  buf[1] = GRASS_V_VERSION_MINOR;
-  buf[2] = GRASS_V_EARLIEST_MAJOR;
-  buf[3] = GRASS_V_EARLIEST_MINOR;
-  buf[4] = ptr->port.byte_order;
-  buf[5] = ptr->with_z; 
-  if (0 >= dig__fwrite_port_C (buf, 6, fp))
-    return (-1);
+  /* bytes 1 - 5 */
+  buf[0] = GV_SIDX_VER_MAJOR;
+  buf[1] = GV_SIDX_VER_MINOR;
+  buf[2] = GV_SIDX_EARLIEST_MAJOR;
+  buf[3] = GV_SIDX_EARLIEST_MINOR;
+  buf[4] = ptr->spidx_port.byte_order;
+  if (0 >= dig__fwrite_port_C (buf, 5, fp)) return (-1);
+
+  /* bytes 6 - 9 : header size */
+  if (0 >= dig__fwrite_port_L ( &length, 1, fp)) return (0);
+  
+  /* byte 10 : dimension 2D or 3D */
+  buf[0] = ptr->spidx_with_z; 
+  if (0 >= dig__fwrite_port_C (buf, 1, fp)) return (-1);
  
-  if (0 >= dig__fwrite_port_L (&(ptr->Node_spidx_offset), 1, fp))
-    return (-1);
-  if (0 >= dig__fwrite_port_L (&(ptr->Line_spidx_offset), 1, fp))
-    return (-1);
-  if (0 >= dig__fwrite_port_L (&(ptr->Area_spidx_offset), 1, fp))
-    return (-1);
-  if (0 >= dig__fwrite_port_L (&(ptr->Isle_spidx_offset), 1, fp))
-    return (-1);
+  /* bytes 11 - 38 : Offsets */
+  if (0 >= dig__fwrite_port_L (&(ptr->Node_spidx_offset), 1, fp)) return (-1);
+  if (0 >= dig__fwrite_port_L (&(ptr->Edge_spidx_offset), 1, fp)) return (-1);
+  if (0 >= dig__fwrite_port_L (&(ptr->Line_spidx_offset), 1, fp)) return (-1);
+  if (0 >= dig__fwrite_port_L (&(ptr->Area_spidx_offset), 1, fp)) return (-1);
+  if (0 >= dig__fwrite_port_L (&(ptr->Isle_spidx_offset), 1, fp)) return (-1);
+  if (0 >= dig__fwrite_port_L (&(ptr->Volume_spidx_offset), 1, fp)) return (-1);
+  if (0 >= dig__fwrite_port_L (&(ptr->Hole_spidx_offset), 1, fp)) return (-1);
 
-  if (0 >= dig__fwrite_port_L (&(ptr->coor_size), 1, fp))
-    return (-1);
-  if (0 >= dig__fwrite_port_L (&(ptr->coor_mtime), 1, fp))
-    return (-1);
+  G_debug (3, "spidx offset node = %d line = %d, area = %d isle = %d", ptr->Node_spidx_offset,
+	       ptr->Line_spidx_offset, ptr->Area_spidx_offset, ptr->Isle_spidx_offset);
+
+  /* bytes 39 - 42 : Offsets */
+  if (0 >= dig__fwrite_port_L (&(ptr->coor_size), 1, fp)) return (-1);
+
+  G_debug (2, "spidx body offset %d", ftell( fp) );
 
   return (0);
 }
@@ -62,57 +72,66 @@ int
 dig_Rd_spindx_head (   FILE * fp,
 		     struct Plus_head *ptr)
 {
-  unsigned char buf[6];
+  unsigned char buf[5];
   int byte_order;
+  long coor_size;
 
   rewind (fp);
-  if (0 >= dig__fread_port_C (buf, 6, fp))
-    return (-1);
+  
+  /* bytes 1 - 5 */
+  if (0 >= dig__fread_port_C (buf, 5, fp))  return (-1);
+  ptr->spidx_Version_Major = buf[0];
+  ptr->spidx_Version_Minor = buf[1];
+  ptr->spidx_Back_Major    = buf[2];
+  ptr->spidx_Back_Minor    = buf[3];
+  byte_order               = buf[4];
 
-  /* TODO: separate header info for sidx from topo better and do more checks */
-  /*
-  ptr->Version_Major = buf[0];
-  ptr->Version_Minor = buf[1];
-  ptr->Back_Major    = buf[2];
-  ptr->Back_Minor    = buf[3];
-  */
-  byte_order         = buf[4];
-  ptr->with_z        = buf[5];
-
+  G_debug (2, "Sidx header: file version %d.%d , supported from GRASS version %d.%d", 
+	        ptr->spidx_Version_Major, ptr->spidx_Version_Minor,
+		ptr->spidx_Back_Major, ptr->spidx_Back_Minor );
+  
+  G_debug (2, "  byte order %d", byte_order );
+  
   /* check version numbers */
-  /*
-  if (ptr->Version_Major != GRASS_V_VERSION_MAJOR ||
-      (ptr->Version_Major == GRASS_V_VERSION_MAJOR && ptr->Version_Minor > GRASS_V_VERSION_MAJOR + 5))
-    {
-      if (GRASS_V_VERSION_MAJOR < ptr->Back_Major ||
-      (GRASS_V_VERSION_MAJOR == ptr->Back_Major && GRASS_V_VERSION_MINOR < ptr->Back_Minor))
-	{
-	  fprintf (stderr, "Vector format version (%d.%d) is not known by this release.  EXITING\n",
-		   ptr->Version_Major, ptr->Version_Minor);
-	  fprintf (stderr, "Try running %s to reformat the dig_plus file\n", SUPPORT_PROG);
-	  exit (-1);
-	}
-    }
-  */
+  if ( ptr->spidx_Version_Major > GV_SIDX_VER_MAJOR || ptr->spidx_Version_Minor > GV_SIDX_VER_MINOR ) {
+      if ( ptr->spidx_Back_Major > GV_SIDX_EARLIEST_MAJOR 
+	      || ptr->spidx_Back_Minor > GV_SIDX_EARLIEST_MINOR ) {
+	  G_fatal_error ( "Spatial index format version %d.%d is not supported by this release."
+		          " Try to rebuild topology or upgrade GRASS.", 
+			   ptr->spidx_Version_Major, ptr->spidx_Version_Minor);
+	  return (-1);
+      }
+      G_warning ( "Your GRASS version does not fully support spatial index format %d.%d of the vector."
+	          " Consider to rebuild topology or upgrade GRASS.",
+	              ptr->spidx_Version_Major, ptr->spidx_Version_Minor );
+  }
 
-  dig_init_portable ( &(ptr->port), byte_order); 
-  dig_set_cur_port ( &(ptr->port) );
+  dig_init_portable ( &(ptr->spidx_port), byte_order);
+  dig_set_cur_port ( &(ptr->spidx_port) );
+  
+  /* bytes 6 - 9 : header size */
+  if (0 >= dig__fread_port_L (&(ptr->spidx_head_size), 1, fp)) return (-1);
+  G_debug (2, "  header size %d", ptr->spidx_head_size );
 
-  if (0 >= dig__fread_port_L (&(ptr->Node_spidx_offset), 1, fp))
-    return (-1);
-  if (0 >= dig__fread_port_L (&(ptr->Line_spidx_offset), 1, fp))
-    return (-1);
-  if (0 >= dig__fread_port_L (&(ptr->Area_spidx_offset), 1, fp))
-    return (-1);
-  if (0 >= dig__fread_port_L (&(ptr->Isle_spidx_offset), 1, fp))
-    return (-1);
+  /* byte 10 : dimension 2D or 3D */ 
+  if (0 >= dig__fread_port_C (buf, 1, fp)) return (-1);
+  ptr->spidx_with_z  = buf[0];
+  G_debug (2, "  with_z %d", ptr->spidx_with_z );
 
-  /*
-  if (0 >= dig__fread_port_L (&(ptr->coor_size), 1, fp))
-    return (-1);
-  if (0 >= dig__fread_port_L (&(ptr->coor_mtime), 1, fp))
-    return (-1);
-  */
+  /* bytes 11 - 38 : Offsets */
+  if (0 >= dig__fread_port_L (&(ptr->Node_spidx_offset), 1, fp)) return (-1);
+  if (0 >= dig__fread_port_L (&(ptr->Edge_spidx_offset), 1, fp)) return (-1);
+  if (0 >= dig__fread_port_L (&(ptr->Line_spidx_offset), 1, fp)) return (-1);
+  if (0 >= dig__fread_port_L (&(ptr->Area_spidx_offset), 1, fp)) return (-1);
+  if (0 >= dig__fread_port_L (&(ptr->Isle_spidx_offset), 1, fp)) return (-1);
+  if (0 >= dig__fread_port_L (&(ptr->Volume_spidx_offset), 1, fp)) return (-1);
+  if (0 >= dig__fread_port_L (&(ptr->Hole_spidx_offset), 1, fp)) return (-1);
+
+  /* bytes 39 - 42 : Offsets */
+  if (0 >= dig__fread_port_L (&coor_size, 1, fp)) return (-1);
+  G_debug (2, "  coor size %d", coor_size );
+
+  fseek ( fp, ptr->spidx_head_size, SEEK_SET );
 
   return (0);
 }
@@ -263,7 +282,7 @@ int rtree_read_node( FILE *fp, struct Node *n, int with_z)
 int
 dig_write_spidx ( FILE * fp, struct Plus_head *Plus)
 {
-    dig_set_cur_port(&(Plus->port));
+    dig_set_cur_port(&(Plus->spidx_port));
     rewind (fp);
 
     dig_Wr_spindx_head ( fp, Plus );
@@ -297,7 +316,7 @@ dig_read_spidx ( FILE * fp, struct Plus_head *Plus)
 
     rewind (fp);
     dig_Rd_spindx_head ( fp, Plus);
-    dig_set_cur_port(&(Plus->port));
+    dig_set_cur_port(&(Plus->spidx_port));
     
     fseek ( fp, Plus->Node_spidx_offset, 0);
     rtree_read_node( fp, Plus->Node_spidx, Plus->with_z);
