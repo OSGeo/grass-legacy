@@ -52,7 +52,9 @@
 */
 static int swap_re_uids (void);
 
-#define    PRIO_PROCESS    0
+#ifndef
+  #define    PRIO_PROCESS    0
+#endif
 
 /*  WARNING  -18 gets the most CPU time, priority > -18 gets less CPU time  */
 /*  If the graphics don't come out except after digitizing a line then your

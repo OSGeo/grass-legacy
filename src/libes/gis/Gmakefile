@@ -166,6 +166,7 @@ OBJ = \
     wind_2_box.o\
     trim_dec.o\
     unctrl.o\
+    unix_socks.o\
     view.o\
     whoami.o\
     wind_format.o\
