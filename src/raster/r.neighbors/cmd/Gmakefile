@@ -1,0 +1,34 @@
+PGM = r.neighbors
+HOME = $(BIN_MAIN_CMD)
+
+METHODS =\
+	c_ave.o\
+	c_max.o\
+	c_min.o\
+	c_mode.o\
+	c_median.o\
+	c_divr.o\
+	c_intr.o
+
+CAT_NAMES =\
+	null_cats.o\
+	divr_cats.o\
+	intr_cats.o
+
+
+OTHERS = main.o \
+	bufs.o\
+	gather.o\
+	readcell.o\
+	sort_cell.o
+
+LIST = $(OTHERS) $(METHODS) $(CAT_NAMES)
+
+$(HOME)/$(PGM):  $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(MATHLIB) -o $@
+
+$(LIST):        ncb.h
+main.o:         method.h
+
+
+$(GISLIB):      # in case this changes
