@@ -1,8 +1,15 @@
+/*
+* $Id$
+*/
+
 /*  gstypes.h
     Bill Brown, USACERL  
     January 1993
 */
 	
+#ifndef _GSTYPES_H
+#define _GSTYPES_H
+
 #include "gsurf.h"
 #include "bitmap.h"
 #include <GL/gl.h>
@@ -241,17 +248,15 @@ typedef struct{        /* need to add elements here for off_screen drawing */
     int bgcol;
 } geodisplay;
 
-#ifdef ID_MATRIX
-const GLfloat ID_matrix[4][4] = 
+/* A static const creates copies in each file that includes this. Since it */
+/* is a constant variable, copies don't matter - none of them should change */
+static const GLfloat ID_matrix[4][4] = 
 {
     {1.0, 0.0, 0.0, 0.0},
     {0.0, 1.0, 0.0, 0.0},
     {0.0, 0.0, 1.0, 0.0},
     {0.0, 0.0, 0.0, 1.0}
 }; 
-#else
-extern GLfloat ID_matrix[4][4];
-#endif
 
 void (*Cxl_func)();
 void (*Swap_func)();
@@ -301,3 +306,4 @@ extern int gsds_get_type();
 extern geosurf *gsdiff_get_SDref();
 Point3 *gsdrape_get_allsegments();
 
+#endif /* _GSTYPES_H */
