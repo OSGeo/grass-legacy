@@ -6,6 +6,6 @@ all:  $(BIN_CONTRIB_INTER)/v.import
 
 #  interactive version
 
-$(BIN_CONTRIB_INTER)/v.import: import_vect.o
-	$(CC) $(LDFLAGS) -o $@ import_vect.o $(GISLIB)
+$(BIN_CONTRIB_INTER)/v.import: imp_vect.o
+	$(CC) $(LDFLAGS) -o $@ imp_vect.o $(GISLIB)
 	rm -f $@ ; cp $? $@ ; chmod +r $@
