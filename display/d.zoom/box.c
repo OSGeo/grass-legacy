@@ -6,7 +6,7 @@
 
 static int max(int,int);
 
-int make_window_box ( struct Cell_head *window )
+int make_window_box ( struct Cell_head *window, double magnify)
 {
     char buffer[64] ;
     int screen_x, screen_y ;
@@ -17,15 +17,18 @@ int make_window_box ( struct Cell_head *window )
     int t;
     int button ;
     int cur_screen_x, cur_screen_y ;
-
+    int quitonly;  /* required if user just wants to quit d.zoom */
+    int prebutton; /* which previous button was pressed? */
+    
     screen_y = get_map_top() ;
     screen_x = get_map_left() ;
-
+    quitonly=0;
+    
     fprintf(stderr, "\n\n");
     fprintf(stderr, "Buttons:\n") ;
-    fprintf(stderr, "Left:   Establish a corner\n") ;
-    fprintf(stderr, "Middle: Check coordinates\n") ;
-    fprintf(stderr, "Right:  Accept region\n\n") ;
+    fprintf(stderr, "Left:   Establish a corner to zoom in\n") ;
+    fprintf(stderr, "Middle: Unzoom stepwise\n") ;
+    fprintf(stderr, "Right:  Accept region/Quit\n\n") ;
 
     ux1 = D_get_u_west() ;
     uy1 = D_get_u_south() ;
@@ -41,13 +44,13 @@ int make_window_box ( struct Cell_head *window )
     screen_x = cur_screen_x + 10 ;
     screen_y = cur_screen_y + 10 ;
 
-
+    prebutton=2;
     len_n = len_s = len_e = len_w = 0;
     do
     {
 	R_get_location_with_box(cur_screen_x, cur_screen_y, &screen_x, &screen_y, &button) ;
 	button &= 0xf;
-	fprintf (stdout,"\nscreen_x: %d screen_y: %d\n",screen_x,screen_y);
+/*	fprintf (stdout,"\nscreen_x: %d screen_y: %d\n",screen_x,screen_y);*/
 
 	ux2 = D_d_to_u_col((double)screen_x)  ;
 	uy2 = D_d_to_u_row((double)screen_y)  ;
@@ -67,11 +70,21 @@ int make_window_box ( struct Cell_head *window )
 		cur_screen_y = screen_y ;
 		ux1 = ux2 ;
 		uy1 = uy2 ;
+		quitonly=0;
+		prebutton=button;
 		break ;
-	case 2:
-	case 3: break;
+	case 2: make_window_center(window, magnify);
+		prebutton=2;
+	        button=3;
+	        quitonly=1;   /* leave after unzoom */
+	        break;
+	case 3: button=3;
+		if (prebutton == 1)
+		  quitonly=0; /* box opening */
+		else
+		  quitonly=1; /* quit only, no action*/
+		break;
 	}
-
 
 	north = uy1>uy2?uy1:uy2 ;
 	south = uy1<uy2?uy1:uy2 ;
@@ -117,7 +130,6 @@ int make_window_box ( struct Cell_head *window )
 
 	fprintf (stderr,"\r");
 	fflush (stderr);
-
     } while (button != 3) ;
 
     fprintf (stderr, "\n\n");
@@ -127,7 +139,7 @@ int make_window_box ( struct Cell_head *window )
     window->east  = east ;
     window->west  = west ;
 
-    return 0;
+    return quitonly;
 }
 
 static int max(int a,int b)
