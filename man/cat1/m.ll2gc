@@ -1,7 +1,7 @@
 
 
 
-m.ll2gc              GRASS Reference Manual               m.ll2gc
+m.ll2gc <main>       GRASS Reference Manual        <main> m.ll2gc
 
 
 
@@ -60,14 +60,14 @@ EXAMPLE
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-m.ll2gc              GRASS Reference Manual               m.ll2gc
+m.ll2gc <main>       GRASS Reference Manual        <main> m.ll2gc
 
 
 
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
