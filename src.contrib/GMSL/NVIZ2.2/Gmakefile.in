@@ -71,6 +71,6 @@ install:
 	'cp' scripts/*.tcl $(INSTALL_DIR)/scripts
 	'cp' scripts/*Index $(INSTALL_DIR)/scripts
 #	'cp' bitmaps/* $(INSTALL_DIR)/bitmaps
-	tar --exclude=CVS -cvf - bitmaps/*  | tar -C $(INSTALL_DIR)/bitmaps/ -xvf - 2>/dev/null ; true
+	tar --exclude=CVS -cvf - bitmaps/*  | tar -C $(INSTALL_DIR) -xvf - 2>/dev/null ; true
 	'cp' nviz.man.1 $(GISBASE)/man/1/$(NV_VER).man.1
 	gmakelinks5
