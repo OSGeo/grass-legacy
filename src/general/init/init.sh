@@ -198,7 +198,7 @@ if [ ! "$LOCATION" ] ; then
 	    eval `$WISH -file $TCLTKGRASSBASE/script/gis_set.tcl`
 	    
 	    # These checks should not be necessary with real init stuff
-	    if [ $LOCATION_NAME = "##NONE##" ] ; then
+	    if [ "$LOCATION_NAME" = "##NONE##" ] ; then
     	    	$ETC/set_data
     	    	if [ $? != 0 ]; then
     	    	    echo "GISDBASE: $OLD_DB" > $GISRC
@@ -209,7 +209,7 @@ if [ ! "$LOCATION" ] ; then
     	    	eval `g.gisenv`
     	    fi
 
-	    if [ $LOCATION_NAME = "##ERROR##" ] ; then
+	    if [ "$LOCATION_NAME" = "##ERROR##" ] ; then
     	    	echo "The selected location is not a valid GRASS location"
     	    	exit
 	    fi
