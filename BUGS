@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.61 2000-11-04 08:54:27 markus Exp $
+$Id: BUGS,v 1.62 2000-11-04 09:30:17 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -323,8 +323,6 @@ r.random.surface
 
 [RC]r.reclass:
  - segm. fault on Pentium CPU (same problem as r.binfer,...)
- - does not accept "*" to reclass NULL values
-   Andreas Lange: if "*" is used, segmentation fault (signal 11) occurs.
 
 r.resamp.rst:
   When processing quite a big DEM file with r.resamp.rst I got the  
