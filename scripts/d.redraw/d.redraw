@@ -19,7 +19,7 @@
 
 #GUI is not very useful here, commented:
 #if [ "$1" != "@ARGS_PARSED@" ] ; then
-#  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+#  exec g.parser "$0" "$@"
 #fi
 
 dsave=`d.save -o`
