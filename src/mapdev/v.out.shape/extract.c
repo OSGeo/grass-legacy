@@ -40,12 +40,8 @@ int extract_lines( SHPObject **hObj, struct Map_info *Map, int *indx_list, int *
   char buf[128] = "";
   int cindx;
 
-  /* Loop */
-  int i, j;
-
   /* Fields for shape object */
   int partoffset = 0, tvertices = 0;
-  double *listX, *listY;
 
   cindx = curr_indx + 1;
 
@@ -96,11 +92,7 @@ int extract_points( SHPObject **hObj, struct Map_info *Map, int *indx_list, int 
   char buf[128] = "";
   int cindx;
 
-  /* Loop */
-  int i, j;
-
   /* Fields for shape object */
-  double *listX, *listY;
 
   cindx = curr_indx + 1;
 
