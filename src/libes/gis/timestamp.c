@@ -1,5 +1,33 @@
 /*
  * $Id$
+ *
+ * provides DateTime functions for timestamp management:
+ *
+ * Authors: Michael Shapiro & Bill Brown, CERL
+ *          grid3 functions by Michael Pelizzari, LMCO
+ *            
+ * G_init_timestamp()
+ * G_set_timestamp()
+ * G_set_timestamp_range()
+ * G_format_timestamp()
+ * G_scan_timestamp()
+ * G_get_timestamps()
+ * G_read_raster_timestamp()
+ * G_remove_raster_timestamp()
+ * G_read_vector_timestamp()
+ * G_remove_vector_timestamp()
+ * G_read_grid3_timestamp()
+ * G_remove_grid3_timestamp()
+ * G_write_raster_timestamp()
+ * G_write_vector_timestamp()
+ * G_write_grid3_timestamp()
+ *
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
+ *
  */
 
 #include <string.h>
@@ -193,6 +221,7 @@ static int read_timestamp (
 
 #define RAST_MISC "cell_misc"
 #define VECT_MISC "dig_misc"
+#define GRID3	  "grid3"
 
 int G_read_raster_timestamp (
     char *name,char *mapset,
@@ -230,6 +259,24 @@ int G_remove_vector_timestamp (char *name)
     return G_remove(element, "timestamp");
 }
 
+int G_read_grid3_timestamp (
+    char *name,char *mapset,
+    struct TimeStamp *ts)
+{
+    char element[128];
+
+    sprintf (element, "%s/%s", GRID3, name);
+    return read_timestamp ("grid3", name, mapset, element, "timestamp", ts);
+}
+
+int G_remove_grid3_timestamp (char *name)
+{
+    char element[128];
+
+    sprintf (element, "%s/%s", GRID3, name);
+    return G_remove(element, "timestamp");
+}
+
 int G_write_raster_timestamp (
     char *name,
     struct TimeStamp *ts)
@@ -248,4 +295,14 @@ int G_write_vector_timestamp (
 
     sprintf (element, "%s/%s", VECT_MISC, name);
     return write_timestamp ("vector", name, element, "timestamp", ts);
+}
+
+int G_write_grid3_timestamp (
+    char *name,
+    struct TimeStamp *ts)
+{
+    char element[128];
+
+    sprintf (element, "%s/%s", GRID3, name);
+    return write_timestamp ("grid3", name, element, "timestamp", ts);
 }
