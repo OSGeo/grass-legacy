@@ -1,38 +1,25 @@
 #include "pv.h"
 
-
-typedef int FILEDESC;
-
 /*
  * Use centers of GRASS CELLS as vertexes for grid. 
  * Currently, grid space is "unitized" so that the 
  * largest dimension of the current region in GRASS == 1.0 
 */
 
-double G_row_to_northing();
-double G_col_to_easting();
-
-
-vrml_put_grid(vout, w, elevfd, colorfd, colr, color_ok, rows, cols, shh)
-FILE *vout;
-struct Cell_head *w;
-FILEDESC elevfd, colorfd;
-struct Colors *colr;
-int rows, cols, color_ok;
+void vrml_put_grid(
+	FILE *vout,
+	struct Cell_head *w,
+	FILEDESC elevfd, FILEDESC colorfd,
+	struct Colors *colr,
+	int color_ok, int rows, int cols, int shh)
 {
 char str[512];
 
-#ifdef FP_GRASS
 FCELL *tf;
 FCELL *dbuf;
     dbuf = (FCELL *)G_malloc (cols * sizeof (FCELL));  
-#else
-CELL *tf;
-CELL *dbuf;
-    dbuf = (CELL *)G_malloc (cols * sizeof (CELL));  
-#endif
 
-#ifdef V2.0
+#ifdef VRML2
     fprintf(vout,"grid\n");
     vrml_putline(0,vout,"grid");
 #else
@@ -60,11 +47,7 @@ CELL *dbuf;
 	    if(!shh)
 		G_percent(row, rows - 1, 10);
 
-#ifdef FP_GRASS
 	    G_get_f_raster_row(elevfd, tf, row);
-#else
-	    G_get_map_row (elevfd, tf, row);
-#endif
 	    coordz = G_row_to_northing((double)row, w);
 	    do_coordcnv(&coordz, 'z');
 
@@ -72,10 +55,9 @@ CELL *dbuf;
 	    for(col=0; col < cols; col++){
 		coordx = G_col_to_easting((double)col, w);
 		do_coordcnv(&coordx, 'x');
-#ifdef FP_GRASS
+
 		/* HACK: no nulls in vrml grid */
 		if (G_is_f_null_value (tf)) *tf = 0.0;
-#endif
 		coordy = *tf;
 		do_coordcnv(&coordy, 'y');
 		sprintf(str,"%f %f %f,", coordx, coordy, coordz);
@@ -115,13 +97,8 @@ CELL *dbuf;
 	    if(!shh)
 		G_percent(row, rows - 1, 5);
 
-#ifdef FP_GRASS
 	    G_get_f_raster_row(colorfd, tf, row);
 	    G_lookup_f_raster_colors (tf, red, green, blue, set, cols, colr);
-#else
-	    G_get_map_row (colorfd, tf, row);
-	    G_lookup_colors (tf, red, green, blue, set, cols, colr);
-#endif
 
 	    for(col=0; col < cols; col++){
 		sprintf(str,"%.3f %.3f %.3f,", 

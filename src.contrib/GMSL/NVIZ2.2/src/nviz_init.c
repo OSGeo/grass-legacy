@@ -132,10 +132,9 @@ module = G_define_module();
   /* Put in the "please wait..." message unless we are in demo mode */
   if ((strstr(argv[0],"nviz") != NULL) &&
       (!demo->answer)) {
-    if (Tcl_Eval(interp, startup_script) != TCL_OK) {
-      fprintf(stderr,"ERROR: %s\n", interp->result);
-      exit(-1);
-    }
+    if (Tcl_Eval(interp, startup_script) != TCL_OK)
+      G_fatal_error("%s", interp->result);
+
   }
 
     fprintf (stderr, "\n");
@@ -173,10 +172,8 @@ module = G_define_module();
 
   /* Look for scriptkill flag */
   if (script_kill->answer) {
-    if (Tcl_VarEval(interp,"set NvizScriptKill 1 ", NULL) != TCL_OK) {
-      fprintf(stderr,"ERROR: %s\n", interp->result);
-      exit(-1);
-    }
+    if (Tcl_VarEval(interp,"set NvizScriptKill 1 ", NULL) != TCL_OK)
+      G_fatal_error("%s", interp->result);
   }
   
   /* See if an alternative panel path is specified */
@@ -184,20 +181,16 @@ module = G_define_module();
     /* If so then set the variable NvizAltPath to the alternative path
      */
     if (Tcl_VarEval(interp,"set NvizAltPath ", panel_path->answer,
-		    NULL) != TCL_OK) {
-      fprintf(stderr,"ERROR: %s\n", interp->result);
-      exit(-1);
-    }
+		    NULL) != TCL_OK)
+      G_fatal_error("%s", interp->result);
   }
   
   /* See if a script file was specified */
   if (script->answer) {
     /* If so then set the variable NvizPlayScript to the file */
     if (Tcl_VarEval(interp,"set NvizPlayScript ", script->answer,
-		    NULL) != TCL_OK) {
-      fprintf(stderr,"ERROR: %s\n", interp->result);
-      exit(-1);
-    }
+		    NULL) != TCL_OK)
+      G_fatal_error("%s", interp->result);
   }
 
 #ifdef XSCRIPT
@@ -228,11 +221,8 @@ module = G_define_module();
 		for (i = 0; colr->answers[i] ; i++){
 		cc = i;
 		}
-	if ( ee != cc) {
-		fprintf(stderr, "ERROR: Number of elevation files does
-		not match number of colors files\n");
-		exit(-1);
-		}
+	if ( ee != cc)
+		G_fatal_error("Number of elevation files does not match number of colors files");
 	}
 
   if(elev->answers){
@@ -248,16 +238,12 @@ module = G_define_module();
 	strncpy(tmp, interp->result, 29);
 	if (colr->answers) {
 	if (Tcl_VarEval(interp, tmp, " set_att color ",
-		colr->answers[i], NULL) != TCL_OK) {
-		fprintf(stderr, "ERROR: %s\n", interp->result);
-		exit(-1);
-		}
+		colr->answers[i], NULL) != TCL_OK)
+		G_fatal_error("%s", interp->result);
 	} else {
 	if (Tcl_VarEval(interp, tmp, " set_att color ",
-			elev->answers[i], NULL) != TCL_OK) {
-	  fprintf(stderr, "ERROR: %s\n", interp->result);
-	  exit(-1);
-		}
+			elev->answers[i], NULL) != TCL_OK)
+		G_fatal_error("%s", interp->result);
 	}
       }
     }
