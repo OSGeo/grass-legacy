@@ -171,20 +171,25 @@ double
 do_limits()
 {
 	double west, east, south, north, textsize;
-	char onechar, oneline[90];
+	char oneline[90];
+	int onechar;
 
 	while(getc(fpvect) != 'W')
 		fgets(oneline, 90,fpvect);
-	fscanf(fpvect,"EST EDGE: %lf",&west);
+	if(fscanf(fpvect,"EST EDGE: %lf",&west)!=1) 
+			  G_fatal_error("can't read west limit");
 	west *= MULTIPLY;
 	while(getc(fpvect) !=':');
-	fscanf(fpvect,"%lf",&east);
+	if(fscanf(fpvect,"%lf",&east)!=1) 
+			  G_fatal_error("can't read east limit");
 	east *= MULTIPLY;
 	while(getc(fpvect) != ':');
-	fscanf(fpvect,"%lf",&south);
+	if(fscanf(fpvect,"%lf",&south)!=1) 
+			  G_fatal_error("can't read south limit");
 	south *= MULTIPLY;
 	while(getc(fpvect) != ':');
-	fscanf(fpvect,"%lf",&north);
+	if(fscanf(fpvect,"%lf",&north)!=1) 
+			  G_fatal_error("can't read north limit");
 	north *= MULTIPLY;
 	fgets(oneline, 90, fpvect);
 	fgets(oneline, 90, fpvect);
@@ -246,7 +251,7 @@ char filename[];
 
 add_plines()
 {
-	char onechar;
+	int onechar;
 	int numlines;
 	double y, x, firsty, firstx;
 
@@ -254,12 +259,14 @@ add_plines()
 		while(onechar != 'A' && onechar != 'L')
 			if((onechar = getc(fpvect)) == EOF)
 				return(1);
-		fscanf(fpvect,"%d",&numlines);
+		if(fscanf(fpvect,"%d",&numlines)!=1)
+			G_fatal_error("error reading number of lines");
 		if(onechar == 'A') 
 			dxf_polyline(av_layer);
 		else	dxf_polyline(lv_layer);
 		while(numlines-- > 0)    {
-			fscanf(fpvect,"%lf %lf", &y, &x);
+			if(fscanf(fpvect,"%lf %lf", &y, &x)!=2)
+			       G_fatal_error("error reading polyline coors");
 			y *= MULTIPLY;
 			x *= MULTIPLY;
 			if(onechar == 'A')
@@ -277,7 +284,7 @@ add_plines()
 add_text(textsize)
 double textsize;
 {
-	char onechar;
+	int onechar;
 	char cat_num[32];
 	double x, y;
 
@@ -285,7 +292,8 @@ double textsize;
 		while(onechar != 'A' && onechar != 'L')
 			if((onechar = getc(fpcatt)) == EOF)
 				return(1);
-		fscanf(fpcatt,"%lf  %lf  %s",&x,&y,cat_num);
+		if(fscanf(fpcatt,"%lf  %lf  %s",&x,&y,cat_num)!=3)
+			G_fatal_error("reading atts");
 		x *= MULTIPLY;
 		y *= MULTIPLY;
 		if(onechar == 'A')
