@@ -1,0 +1,21 @@
+# %W% %G%
+
+all: $(BIN_CONTRIB_CMD)/r.in.ppm\
+     $(BIN_CONTRIB_CMD)/r.out.ppm\
+     $(BIN_CONTRIB_CMD)/r.out.ppm3
+
+
+PGM1=r.out.ppm.o
+PGM2=r.in.ppm.o
+PGM3=r.out.ppm3.o
+
+$(BIN_CONTRIB_CMD)/r.out.ppm: $(PGM1) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(PGM1) $(GISLIB) $(EXTRALIB)
+
+$(BIN_CONTRIB_CMD)/r.in.ppm: $(PGM2) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(PGM2) $(GISLIB) $(EXTRALIB)
+
+$(BIN_CONTRIB_CMD)/r.out.ppm3: $(PGM3) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(PGM3) $(GISLIB) $(EXTRALIB)
+
+$(GISLIB): #
