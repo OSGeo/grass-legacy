@@ -76,6 +76,7 @@ int         db_d_open_database        P((void ));
 int         db_d_open_insert_cursor   P((void ));
 int         db_d_open_select_cursor   P((void ));
 int         db_d_open_update_cursor   P((void ));
+void        db_double_quoute_string    ( dbString *src );
 int         db_driver                 P((int argc , char *argv []));
 
 int         db_driver_mkdir           P((char *path , int mode , int parentdirs ));
@@ -332,7 +333,7 @@ int         db_update                 P((dbCursor *cursor ));
 int         db_version                P((dbDriver *driver , dbString *client_version , dbString *driver_version ));
 char *      db_whoami                 P((void ));
 void        db_zero                   P((void *s , int n ));
-int         db_zero_string            P((dbString *x ));
+void         db_zero_string            P((dbString *x ));
 unsigned    int                       db_sizeof_string P((dbString *x ));
 
 #undef P
