@@ -1,36 +1,34 @@
 GRASS 5.0 Author List
 
-Please check additionally the new list at:
-   http://www.baylor.edu/~grass/grasscredits.html
+Please check additionally the GRASS 1.x-5.x list at:
+ http://www.geog.uni-hannover.de/grass/grasscredits.html
+
 
 While it is impossible for us to give credit to everyone (past 
 and present) who has contributed to GRASS, the following is the 
 incomplete official list for GRASS 5.0:
 
-University of Hannover
- Markus Neteler      <neteler@geog.uni-hannover.de> (GRASS 5 coordination)
- Jacques Bouchard    <bouchard@onera.fr>            (tcltkgrass, bugfixes)
+Institutions:
+ University of Hannover
+   Markus Neteler      <neteler@geog.uni-hannover.de> (GRASS 5 coordination)
+
+ University of Illinois at Urbana-Champaign
+   Helena Mitasova <helena@gis.uiuc.edu> (interpolation modules, NVIZ, G3D)
+   William Brown   <brown@gis.uiuc.edu>  (libraries, interpolation modules, NVIZ, G3D)
+
+ National Center for Supercomputing Applications
+   Lubos Mitas (G3D)
+
+ Center for Applied Geographic and Spatial Research
+   Bruce Byars <Bruce_Byars@baylor.edu> (GRASS 4 coordination)
+   (others see below)
+
+ GRASS 4 development (up to 1995):
+   U.S. Army Construction Engineering Research Laboratories  (CERL)
+   Jim Westervelt, Michael Shapiro, Chris Rewerts, Robert Lozar, ...
 
 
-University of Illinois at Urbana-Champaign
- Helena Mitasova <helena@gis.uiuc.edu> (interpolation modules, NVIZ, G3D)
- William Brown   <brown@gis.uiuc.edu>  (libraries, interpolation modules, NVIZ, G3D)
-
-
-National Center for Supercomputing Applications
-Lubos Mitas (G3D)
-
-Center for Applied Geographic and Spatial Research
- Bruce Byars <Bruce_Byars@baylor.edu> (GRASS 4 coordination)
- (others see below)
-
-
-GRASS 4 development (up to 1995):
- U.S. Army Construction Engineering Laboratories
- Jim Westervelt, Michael Shapiro, Chris Rewerts, Robert Lozar
-
-
-Core Programmer Team (mostly with CVS access):
+GRASS 5 Core Team (most have CVS access):
  Carl Anderson   <candrsn@mindspring.com>     (XDRIVER support)
  Roger Bivand    <Roger.Bivand@nhh.no>        ("R" statistical language support)
  Radim Blazek    <Radim.Blazek@dhv.cz>        (DBMS support, ps.map, d.dm)
@@ -41,7 +39,7 @@ Core Programmer Team (mostly with CVS access):
  Justin Hickey   <jhickey@impact1.hpcc.nectec.or.th>   (GRASS initialization, new env var handling, SGI)
  John Huddleston <John.Huddleston@usda.gov>   (Windows/Cygnus port)
  Bill Hughes     <bhughes@grasshoppernet.com> (64bit compliance)
- Andreas Lange   <Andreas.Lange@Rhein-Main.de> (SGI/Irix compliance)
+ Andreas Lange   <Andreas.Lange@Rhein-Main.de> (SGI/Irix compliance, Proj/Datum support)
  Pierre de Mouveaux <pmx@audiovu.com>         (NVIZ)
  Lubos Mitas     <lmitas@ncsa.uiuc.edu>       (grid3D and related)
  Helena Mitasova <helena@gomez.gis.uiuc.edu>  (grid3D and related, spline interpolation)
@@ -52,7 +50,7 @@ Core Programmer Team (mostly with CVS access):
  Frank Warmerdam <warmerda@home.com>          (GDAL, SHAPE implementation, new GRASS I/O library)
  Michel Wurtz    <mw@engees.u-strasbg.fr>     (ESRI E00 support)
 
-Significant contributions:
+Significant contributions (very incomplete, please add):
  Angus Carr      <apcarr@flash.lakeheadu.ca> (ERDAS LAN)
  Job Spijker     <spijker@geo.uu.nl>         (v.bubble)
  Philip Warner   <pjw@rhyme.com.au>          (NVIZ cleanup)
@@ -63,29 +61,28 @@ User support:
 
 
 Former programmers:
- Brook Milligan  <brook@trillium.NMSU.Edu>   (autoconf)
- Phisan Santitamnont <fsvpss@eng.chula.ac.th>       (bugfixes)
+ Jacques Bouchard    <bouchard@onera.fr>        (tcltkgrass, bugfixes)
+ Brook Milligan      <brook@trillium.NMSU.Edu>  (initial autoconf implementation)
+ Phisan Santitamnont <fsvpss@eng.chula.ac.th>   (bugfixes)
 
 
 The Official home of GRASS is:
 
 European Headquarters 
-GRASS Development Team
-Institute of Physical Geography-Landscape Ecology
-University of Hannover 
-Schneiderberg 50 
-30167 Hannover 
-Germany 
-email: neteler@geog.uni-hannover.de
+ GRASS Development Team
+ Institute of Physical Geography-Landscape Ecology
+ University of Hannover 
+ Schneiderberg 50 
+ 30167 Hannover, Germany 
+ email: neteler@geog.uni-hannover.de
 
 United States Headquarters 
-GRASS Development Team
-Center for Applied Geographic and Spatial Research
-Baylor University
-P.O. Box 97351
-Waco, Texas  76798-7351
-
-Email:     grass@baylor.edu
+ GRASS Development Team
+ Center for Applied Geographic and Spatial Research
+ Baylor University
+ P.O. Box 97351
+ Waco, Texas  76798-7351
+ Email:     grass@baylor.edu
 
 Internet:  http://www.baylor.edu/~grass
            http://www.geog.uni-hannover.de/grass
