@@ -350,6 +350,14 @@ int G_free_fmatrix(float **);
 /* date.c */
 char *G_date(void);
 
+/* datum.c */
+int G_get_datum_by_name(const char *);
+int G_datum_shift(int, double *, double *, double *);
+int G_datum_parameters(int, char *, double *, double *, double *);
+char *G_datum_name(int);
+char *G_datum_description(int);
+char *G_datum_ellipsoid(int);
+
 /* def_window.c */
 int G_def_window(struct Cell_head *);
 

@@ -50,6 +50,7 @@ OBJ = \
     copy.o\
     dalloc.o\
     date.o\
+    datum.o\
     def_window.o\
     dig_title.o\
     distance.o\
@@ -188,6 +189,7 @@ OBJ = \
 all: \
 	$(GISLIB) \
 	$(ETC)/ellipse.table \
+	$(ETC)/datum.table \
 	$(ETC)/projections \
 	$(ETC)/FIPS.code \
 	$(ETC)/state27 \
@@ -201,6 +203,11 @@ $(GISLIB): $(OBJ)
 	$(AR)
 
 $(ETC)/ellipse.table: ellipse.table
+	rm -f $@
+	cp $? $@
+	chmod +r $@
+
+$(ETC)/datum.table: datum.table
 	rm -f $@
 	cp $? $@
 	chmod +r $@
