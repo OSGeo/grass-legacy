@@ -1,5 +1,3 @@
-/* %W% %G% */
-
 /* January, 1991 Agricultural Engineering, Purdue University
    Raghavan Srinivasan (srin@ecn.purdue.edu)
 
@@ -11,11 +9,15 @@
    This program follows the SCS CN table.
 */
 
-/* Extensions by Markus Neteler, see history.txt for details
+/* 
+   $Id$
+   
+   Extensions by Markus Neteler, see history.txt for details
    19.12.1996
 */ 
 
 #include "CN.h"
+#include <string.h>
 
 
 main(argc,argv)
@@ -27,21 +29,89 @@ char	*argv[];
 	int     i, j; 
 	int	row_id, col_id;
 	int 	G_get_map_row_nomask();
-	int	cell_open(), cell_open_new();
+/*	int	cell_open(), cell_open_new();*/ /*6/2000 MN */
 	int	rules(), hy_soil_group(),amc_conversion();
 	CELL    *hy_soil_group_rbuf, *veg_cover_rbuf, *hy_cond_rbuf;
 	CELL    *land_use_rbuf, *cn_rbuf;
 	int     hy_soil_group_id, veg_cover_id,cn_id;
 	int     hy_cond_id,land_use_id;
 	int amc;
+	struct Flag *flag1, *flag2, *flag3, *flag4;
+	struct Option *parm1, *parm2, *parm3, *parm4, *parm5, *parm6;
+        
+/* 6/2000: is it correct that we need *all* parameters? 
+   Compare old approach. I have no idea.*/
+
+        parm1 = G_define_option() ;
+        parm1->key        = "sg" ;
+        parm1->type       = TYPE_STRING ;
+        parm1->required   = YES ;
+        parm1->gisprompt  = "old,cell,raster" ;
+        parm1->description= "hydrological_soil_group_map" ;
+
+        parm2  = G_define_option() ;
+        parm2->key        = "lu" ;
+        parm2->type       = TYPE_STRING ;
+        parm2->required   = YES ;
+        parm2->gisprompt  = "old,cell,raster" ;
+        parm2->description= "land_use_map" ;
+
+        parm3 = G_define_option() ;
+        parm3->key        = "pr" ;
+        parm3->type       = TYPE_STRING ;
+        parm3->required   = YES ;
+        parm3->gisprompt  = "old,cell,raster" ;
+        parm3->description= "treatment_or_practice_map" ;
+
+        parm4 = G_define_option() ;
+        parm4->key        = "hc" ;
+        parm4->type       = TYPE_STRING ;
+        parm4->required   = YES ;
+        parm4->gisprompt  = "old,cell,raster" ;
+        parm4->description= "hydrologic_condition_map" ;
+
+        parm5 = G_define_option() ;
+        parm5->key        = "amc" ;
+        parm5->type       = TYPE_STRING ;
+        parm5->required   = YES ;
+        parm5->gisprompt  = "old,cell,raster" ;
+        parm5->description= "AMC_condition_number(1,2 or 3)" ;
+              
+        parm6 = G_define_option() ;
+        parm6->key        = "cn" ;
+        parm6->type       = TYPE_STRING ;
+        parm6->required   = NO;
+        parm6->gisprompt  = "any,cell,raster" ;
+        parm6->description= "curve_number_map (output)" ;
+
+        flag1 = G_define_flag();
+        flag1->key = 'v';
+        flag1->description = "veg_cover_flag";
+              
+        flag2 = G_define_flag();
+        flag2->key = 'l';
+        flag2->description = "land_use_flag";
+              
+        flag3 = G_define_flag();
+        flag3->key = 'h';
+        flag3->description = "hy_soil_group_flag";
+                      
+        flag4 = G_define_flag();
+        flag4->key = 'c';
+        flag4->description = "cn_flag";
 
 /*  Initialize the GRASS environment variables */
 	G_gisinit (argv[0]);
 
+        if (G_parser(argc, argv))
+                        exit(-1);
+
 	hy_soil_group_flag = land_use_flag = veg_cover_flag = cn_flag = 0;
 
 /* Check for any error at the command line key words */
-	for (i = 1; i < argc; i++)
+/* Commented 6/2000 MN, replaced by parm stuff */
+
+/*	for (i = 1; i < argc; i++)
 	{
 	    if  (sscanf(argv[i], "sg=%[^\n]", hy_soil_group_name) == 1) hy_soil_group_flag = 1;
 	    else if (sscanf(argv[i], "lu=%[^\n]", land_use_name) == 1) land_use_flag = 1;
@@ -51,13 +121,18 @@ char	*argv[];
 	    else if (sscanf(argv[i], "amc=%[^\n]", amc_name) == 1) amc_flag = 1;
 	    else usage(argv[0]);
 	}
+*/
 
 
-	if((hy_soil_group_flag != 1) && (land_use_flag != 1) && (veg_cover_flag != 1) && (hy_cond_flag != 1) && (cn_flag != 1))
+/* Commented 6/2000 MN */
+/*	if((hy_soil_group_flag != 1) && (land_use_flag != 1) && (veg_cover_flag != 1) && (hy_cond_flag != 1) && (cn_flag != 1))
 	 {  
 	    usage(argv[0]);
 	 }
+*/
 
+/* Here we go....*/
+         strcpy (amc_name, parm5->answer);
 	 if(strcmp(amc_name,"1") == 0) amc = 1;
 	 else if(strcmp(amc_name,"3") == 0) amc = 3;
 	 else amc = 2;
@@ -66,6 +141,8 @@ char	*argv[];
 	 this_mapset = G_mapset();
 
 /*	check for the legal file names for all the map layer required */
+
+	 strcpy (hy_soil_group_name, parm1->answer);
 	 if(G_legal_filename(hy_soil_group_name) == -1)
 	 {
 	      sprintf(buf, "hydrological soil group map layer name [%s] not legal for GRASS\n",hy_soil_group_name);
@@ -73,6 +150,7 @@ char	*argv[];
 	      exit(1);
 	 }
 
+	 strcpy (land_use_name, parm2->answer);
 	 if(G_legal_filename(land_use_name) == -1)
 	 {
 	      sprintf(buf, "landuse map layer name [%s] not legal for GRASS\n",land_use_name);
@@ -80,6 +158,7 @@ char	*argv[];
 	      exit(1);
 	 }
 
+	 strcpy (veg_cover_name, parm3->answer);
 	 if(G_legal_filename(veg_cover_name) == -1)
 	 {
 	      sprintf(buf, "vegetation cover map layer name [%s] not legal for GRASS\n",veg_cover_name);
@@ -87,6 +166,7 @@ char	*argv[];
 	      exit(1);
 	 }
 
+	 strcpy (hy_cond_name, parm4->answer);
 	 if(G_legal_filename(hy_cond_name) == -1)
 	 {
 	      sprintf(buf, "hydrological condition map layer name [%s] not legal for GRASS\n",hy_cond_name);
@@ -94,13 +174,14 @@ char	*argv[];
 	      exit(1);
 	 }
 
+	 strcpy (cn_name, parm6->answer);
 	 if(G_legal_filename(cn_name) == -1)
 	 {
 	      sprintf(buf, "curver number map layer name [%s] not legal for GRASS\n",cn_name);
 	      G_fatal_error(buf);
 	      exit(1);
 	 }
-
+         
 /*	if curver number output map exists in the mapset then
 	print error message and quit */
 
@@ -152,22 +233,58 @@ char	*argv[];
 	 ncols = G_window_cols();
 
 /*	open the map and get their file id  */
+	hy_soil_group_id = G_open_cell_old(hy_soil_group_name,hy_soil_group_mapset);
+        if (hy_soil_group_id < 0)
+        {
+          sprintf (buf, "%s - can't open raster file", hy_soil_group_name);
+          G_fatal_error (buf);
+          exit(1);
+        }
+                                                                
+	veg_cover_id = G_open_cell_old(veg_cover_name,veg_cover_mapset);
+        if ( veg_cover_id < 0)
+        {
+          sprintf (buf, "%s - can't open raster file", veg_cover_name);
+          G_fatal_error (buf);
+          exit(1);
+        }
 
-	hy_soil_group_id = cell_open(hy_soil_group_name,hy_soil_group_mapset);
-	veg_cover_id = cell_open(veg_cover_name,veg_cover_mapset);
-	hy_cond_id = cell_open(hy_cond_name,hy_cond_mapset);
-	cn_id = cell_open_new(cn_name);
-	land_use_id = cell_open(land_use_name,land_use_mapset);
+	hy_cond_id = G_open_cell_old(hy_cond_name,hy_cond_mapset);
+        if (hy_cond_id < 0)
+        {
+          sprintf (buf, "%s - can't open raster file", hy_cond_name);
+          G_fatal_error (buf);
+          exit(1);
+        }
+
+	cn_id = G_open_cell_new(cn_name);
+        if (cn_id < 0)
+        {
+          sprintf (buf, "%s - can't open new raster file", cn_name);
+          G_fatal_error (buf);
+          exit(1);
+        }
+
+	land_use_id = G_open_cell_old(land_use_name,land_use_mapset);
+        if (land_use_id < 0)
+        {
+          sprintf (buf, "%s - can't open raster file", land_use_name);
+          G_fatal_error (buf);
+          exit(1);
+        }
 
 
 /* get the category names and cell title */
-
+fprintf(stderr,"%s\n",hy_soil_group_name);
 	if (G_read_cats (hy_soil_group_name, hy_soil_group_mapset, &hy_soil_group_cats) < 0)
 	    exit(-1);
+fprintf(stderr,"%s\n",land_use_name);
 	if (G_read_cats (land_use_name, land_use_mapset, &land_use_cats) < 0)
 	    exit(-1);
+fprintf(stderr,"%s\n",veg_cover_name);
 	if (G_read_cats (veg_cover_name, veg_cover_mapset, &veg_cover_cats) < 0)
 	    exit(-1);
+fprintf(stderr,"%s\n",hy_cond_name);
 	if (G_read_cats (hy_cond_name, hy_cond_mapset, &hy_cond_cats) < 0)
 	    exit(-1);
 

@@ -1,6 +1,6 @@
 PROG = $(BIN_ALPHA_CMD)/r.cn2
 
-LIBES  = $(GISLIB) $(MATHLIB)
+LIBES  = $(GISLIB) $(MATHLIB) $(DATETIMELIB)
 
 OBJ = \
 	Gcn.o\
@@ -13,10 +13,7 @@ OBJ = \
 	amc_conversion.c
 
 
-COMPILE_FLAGS = -O
-#-----------------^ For optimising the code.
-
-$(PROG): ${OBJ} ${LIBES}
-	 ${CC} $(COMPILER_FLAGS) -o $@ ${OBJ} ${LIBES} ${LIBES}
+$(PROG): $(OBJ) $(LIBES)
+	 $(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #
