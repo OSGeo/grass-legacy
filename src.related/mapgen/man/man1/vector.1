@@ -1,0 +1,272 @@
+.\" @(#)vector.1 - 1.1
+.nr LL 5.5i
+.TH VECTOR 1 6/21/89 "USGS/OEMG Systems"
+.ad b
+.hy 1
+.SH NAME
+vector \- create line data overlay
+.SH SYNOPSIS
+.LP
+.B vector
+[ \-oaci [args]]
+[ \-m ] def_file
+[ files ]
+.SH DESCRIPTION
+.B Vector
+is a graphic function in the MAPGEN/PLOTGEN
+graphic series which provides for creating vector or line
+metagraphic overlays from geographic or cartesian coordinate data file[s].
+.PP
+Most of the following options can appear in any order:
+.TP
+.BI "[ \-m ]" " def_file"
+This option specifies the required plot scaling file which
+may be either a map or cartesian definition file.
+If the
+.B \-m
+is omitted,
+.I def_file
+must be the first file listed.
+.TP
+.BI \-o " file"
+This option specifies a new overlay metagraphic file.
+If the file already exists, it will be overwritten.
+.TP
+.BI \-a " file"
+This option specifies appending the overlay metagraphic
+to an existing overlay file.
+If
+.I file
+does not exist, it will be created.
+.TP
+.BI \-i
+If this option is specified, a plot of the graphic file is
+output to the controlling terminal.
+If the
+.B \-o
+or
+.B \-a
+options are omitted, then
+.B \-i
+is implied.
+.TP
+.BI \-c " string"
+This options provides for run-line inclusion of graphic options
+listed below.
+If there is more than one option or imbedded blanks,
+the field must be enclosed in quotes or apostrophies.
+The contents of this option is processed before the data files.
+.PP
+One or more data
+.I files
+that contain geographic or x\-y data (depending upon
+.I def_file
+type), and control data.
+If no files are specified,
+or if a \- argument is encountered,
+.B vector
+reads from the standard input.
+Files are processed in left to right order.
+.PP
+The following options provide for graphic control and may only appear
+in the
+.B \-c
+run-line field or the data file[s].
+Control data in the data files must be on lines with a # character
+in column one.
+A second # character on these lines causes the remainder of the
+line to be ignored and, consequently, may be used for comments.
+.PP
+Vector or line drafting has three methods of display: solid lines,
+dashed lines and symbol lines.
+Symbol lines are similar to dashed lines except that the graphic
+employed in lieu of the dash segment may be any character(s) from
+the font selected.
+The symbol line form may be combined with either the solid or
+dashed line option.
+The font selected by the
+.B \-f
+determines the character set used by the the symbol line generator.
+.TP
+.BI \-[L] " pen[,mask,size[,dist,ssize,str]]"
+This option provides for controlling the method and character of lines.
+Argument
+.I pen
+designates the mechanical pen to be employed in drafting and must
+be specified with each usage.
+The remaining arguments may be optionally specified but when omitted
+the position must be indicated with appropriate comma (,) delimiters
+(ie. \(CW# -B 0,,,1,.2,\e010 #\fR\(em \fImask\fR and \fIsize\fR unaltered).
+.IP
+.I Mask
+and
+.I size
+control dash line drafting where
+.I mask
+is specification of the 16 bit dash pattern to be employed and
+.I size
+is the size of the bit element of the mask pattern in centimeters.
+Note that the total length of the dash pattern is 16\(mu\fIsize\fR
+centimeters.
+If
+.I mask
+is \-1 then a solid line is drafted and
+.I size
+is ignored and
+when
+.I mask
+is 0 line drafting is suspended
+(0 is usually only employed with symbol line drafting).
+.I Mask
+is usually specified as a hexadecimal value
+(ie. 0xCCCC for a small dash bit pattern of 1010101010101010)
+.IP
+Lines with symbol patterns may be created by using
+the
+.I dist, ssize
+and
+.I str
+options where
+.I dist
+is the inter-symbol distance in centimeters,
+.I ssize
+is the size of the symbol in centimeters.
+.IP
+.I Str
+is any string of one to 128 symbols selected from the selected character
+font to be employed in a repeated manner when drafting symbol lines.
+A special symbol (\e177) may be employed to denote an empty
+point in the symbol sequence.
+Any symbol (including the empty point symbol)
+with the most significant bit (sign) set will cause 180\(de
+rotation of the current and following
+.I str
+(if any) symbols.
+At the start of each cycle through
+.I str
+the character rotation is set to 0\(de so that if a line is progressing
+from left to right the symbol would appear right side up.
+If a single symbol is to appear in a reverse manner then
+\e200 should be added (i.e. a reverse rotation letter A would be \e301).
+To create a sequence of symbols with
+alternating rotation then two or more
+symbols must be used with the sign set on some symbol other than
+the first.
+For example, \f(CW\-a A\e301\fR will cause the letter A to be
+plotted with alternating rotation.
+.IP
+The cyclic operation though
+.I str
+can be inhibited by terminating
+.I str
+with the \e377 special character.
+This permits this option to be employed for drafting curved annotation
+based on the following line data.
+With this feature the
+drafting of the line is normally turned off
+(ie. \f(CW# -L ,0,,.01,.3,Example\e Line\e377\fR).
+.TP
+.BI \-R n
+This option (geographic coordinates only)
+provides for the generation of rhumb lines
+(lines of constant azimuth) when
+.I n
+is a positive value.
+The larger the value of
+.B n
+the coarser the rhumb fit will be and the greater likelyhood of
+visible straight line segments.
+Generally a selection of
+.B \-R 3
+is considered and optimal value for publication work.
+When
+.I n
+zero or absent normal lines directly connecting coordinates are employed.
+When employed with non-rhumb lines in a single control-data file a
+.B \-b
+should separate line segments.
+.TP
+.BI \-b
+This option specifies a break in the line.
+Line drafting will be discontinued at the last point and restarted
+at the next data point.
+.TP
+.BI \-d " x-coord,y-coord"
+.I X-coord
+and
+.I y-coord
+are the respective field control words of either the longitude and
+latitude data fields (data must be in DMS format) or
+the x\-y cartesian coordinates.
+Both field control words are of the form
+.B [f][.[o][.l]]
+where
+.B f
+is the field number,
+.B o
+is the number of characters to skip from the beginning of the
+field, and
+.B l
+is the length of the field.
+If 
+.B l
+is not specified or 0, then the remainder of the field is employed.
+If
+.B f
+or
+.B o
+are omitted then 1 and 0 are respective assumptions.
+If this option is omitted then a default value of "\-d 2,1" is
+assumed for geographic coordinates and "\-d 1,2" for x\-y data.
+.TP
+.BI \-f " name"
+.I Name
+is the name of a graphic system font to be employed for the
+symbol line characters.
+Names of fonts in the standard font library are preceeded by a \-.
+If omitted, the graphic system default character font
+is selected (\f(CW # -f -\fR).
+.TP
+.BI \-t "c"
+The character
+.I c,
+immediately following
+.B \-t,
+delimits data fields on data records (default: "t\et" (tab)).
+Use of special characters may require " or ' mark enclosure on the runline.
+.TP
+.BI \-z "c"
+The character
+.I c
+immediately following
+.B \-z
+will replace the normal # character that indicate control line
+and comment.
+.TP
+.BI \-x
+The
+.B \-x
+option specifies that the following lines contain x\-y data in
+centimeter board units which outline, in a counter-clockwise
+manner, an area where vector plotting
+is to be suppressed.
+For less than two input coordinate values the operation is ignored
+with a warning.
+If two lines of data follow then this pair of coordinates
+represents diagonally opposite corners of a rectangular region.
+For more than two lines of coordinate pairs the region is considered
+to be a polygonal outline.
+If the last coordinate of a polygon set is not identical to the
+first point, closure is forced by appending a copy of the first line.
+The list of coordinates is terminated by any control line.
+.IP
+All of the data must be inside the maximum board size of the plot and
+the region must have a non-zero area.
+The maximum number of points defining a polygon region is currently
+limited to 100.
+.SH FILES
+ Map definition file.
+.SH SEE ALSO
+ MAPGEN and PLOTGEN system documentation.
+.SH AUTHOR/MAINTENANCE
+Gerald I. Evenden, USGS, Woods Hole, MA.
