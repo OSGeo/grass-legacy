@@ -1,0 +1,8 @@
+1 ---- FIX CLIP PLANES:
+Process died at pc 0x4fac68 of signal : Segmentation fault
+[using memory image in core]
+(dbx) where
+>  0 __glexpim_ClipPlane(0x3000, 0x3f800000, 0x7fff24ac, 0x101c1ce0, 0x103351d0) ["../EXPRESS/gr2_xform.c":264, 0x4fac64]
+
+2 ---- FIX shininess & emission (transparency OK?)
+
