@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 #include <math.h>
 #include <time.h>
 #include "gis.h"
@@ -81,7 +84,7 @@ GLOBAL	struct
 	int	ntimestep;
 	double	dt;
 	/* input.ntimestep's */
-	double	*R_, *Ep_;
+	double	*R, *Ep;
 } input;
 
 /* Map names */
@@ -105,31 +108,30 @@ GLOBAL	struct
 	int	nidxclass;
 	/* Model efficiency */
 	double	Em;
-	/* '_' suffix means time units in time step */
-	int	ndelay_, nreach_;
-	double	lnTe_, vch_, vr_;
+	int	ndelay, nreach;
+	double	lnTe, vch, vr;
 	double	lambda;
-	double	_qs_, qs0_;
-	double	Qobs_peak_, Qt_peak_, Qobs_bar_, Qt_bar_;
-	int	tobs_peak_, tt_peak_;
+	double	qss, qs0;
+	double	Qobs_peak, Qt_peak, Qobs_mean, Qt_mean;
+	int	tobs_peak, tt_peak;
 	/* params.nch's */
-	double	*tch_;
-	/* misc.nreach_'s */
-	double	*Add;
+	double	*tch;
+	/* misc.nreach's */
+	double	*Ad;
 	/* input.ntimestep's */
-	double	*Qobs_;
-	double	*Qt_;
-	double	*qs_;	/* spatially constant? */
-	double	*Sbar_;
-	double	*f_;
-	double	*fex_;
+	double	*Qobs;
+	double	*Qt;
+	double	*qs;	/* spatially constant? */
+	double	*S_mean;
+	double	*f;
+	double	*fex;
 	/* input.ntimestep * (misc.nidxclass + 1)'s */
-	double	**qt_, **qo_, **qv_;
+	double	**qt, **qo, **qv;
 	/* input.ntimestep * misc.nidxclass's */
-	double	**Srz_, **Suz_;
-	double	**S_;
-	double	**Ea_;
-	double	**ex_;
+	double	**Srz, **Suz;
+	double	**S;
+	double	**Ea;
+	double	**ex;
 	/* Miscellaneous variables */
 	int	timestep, idxclass;
 } misc;
@@ -143,8 +145,6 @@ GLOBAL	struct
 	char	overwr;
 	/* Overwrite list */
 	int	overwrlist;
-	/* Wide flag */
-	char	wide;
 } flg;
 
 

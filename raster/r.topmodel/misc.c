@@ -17,7 +17,7 @@ run(cmd)
 	}
 
 
-	return(retval);
+	return retval;
 }
 
 

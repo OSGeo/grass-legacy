@@ -52,15 +52,14 @@ main(argc, argv)
 	{
 		struct	Flag	*input;
 		struct	Flag	*overwr;
-		struct	Flag	*wide;
 	} flag;
 
 	/* Initialize GRASS and parse command line */
 	G_gisinit(argv[0]);
 
-    module = G_define_module();
-    module->description =
-		_("Simulates TOPMODEL which is physically based hydrologic model.");
+	module = G_define_module();
+	module->description =
+	_("Simulates TOPMODEL which is a physically based hydrologic model.");
 
 	/* Parameter definitions */
 	param.elev			= G_define_option();
@@ -98,7 +97,7 @@ main(argc, argv)
 	param.belev			= G_define_option();
 	param.belev->key		= "belevation";
 	param.belev->description	=
-		_("(i/o) Basin elevation map (extracted)");
+		_("(o/i) Basin elevation map (extracted)");
 	param.belev->type		= TYPE_STRING;
 	param.belev->required		= NO;
 	param.belev->gisprompt		= "new,cell,raster";
@@ -106,7 +105,7 @@ main(argc, argv)
 	param.topidx			= G_define_option();
 	param.topidx->key		= "topidx";
 	param.topidx->description	=
-		_("(i/o) Topographic index ln(a/tanB) map (extracted)");
+		_("(o/i) Topographic index ln(a/tanB) map (extracted)");
 	param.topidx->type		= TYPE_STRING;
 	param.topidx->required		= NO;
 	param.topidx->gisprompt		= "new,cell,raster";
@@ -122,7 +121,7 @@ main(argc, argv)
 	param.idxstats			= G_define_option();
 	param.idxstats->key		= "idxstats";
 	param.idxstats->description	=
-		_("(i/o) Topographic index statistics file");
+		_("(o/i) Topographic index statistics file");
 	param.idxstats->type		= TYPE_STRING;
 	param.idxstats->required	= YES;
 
@@ -173,17 +172,12 @@ main(argc, argv)
 	flag.input			= G_define_flag();
 	flag.input->key			= 'i';
 	flag.input->description		=
-		_("Input data given for (i/o)");
+		_("Input data given for (o/i)");
 
 	flag.overwr			= G_define_flag();
 	flag.overwr->key		= 'o';
 	flag.overwr->description	=
 		_("Overwrite outputs");
-
-	flag.wide			= G_define_flag();
-	flag.wide->key			= 'w';
-	flag.wide->description		=
-		_("Wide output");
 
 	if(G_parser(argc, argv)){
 	        exit(-1);
@@ -214,7 +208,6 @@ main(argc, argv)
 
 	flg.input	= flag.input->answer;
 	flg.overwr	= flag.overwr->answer;
-	flg.wide	= flag.wide->answer;
 
 
 	gisbase = G_gisbase();
