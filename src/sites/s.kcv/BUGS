@@ -1,0 +1,10 @@
+BUGS:
+
+* not fully updated to 5.0 sites API
+  -> fixed MN 2/2001
+
+* the modules crashes in
+   if (!z[m].partition)
+  as this is not set properly
+
+

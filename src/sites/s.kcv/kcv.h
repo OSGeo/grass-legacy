@@ -37,8 +37,6 @@ typedef struct deestruct D;
 void d_reset(D **, int);
 /* histo.c */
 int make_histo(int **, int, int);
-/* readsite.c */
-int readsites(FILE *, int, Z **, struct Cell_head);
 /* utils.c */
 double myrand(void);
 FILE *opensites(char *, int, char *);
