@@ -1,0 +1,25 @@
+TODO list for next release of mpeg_play
+---------------------------------------
+
+Compile for quality instead of speed    [x] Eugene
+     Do Half-pixel Bi-block B-frame averages  [x] 
+     Floating point (IEEE) IDCT               [x]
+-seek system layer bug                  [X] Steve
+-dither color                           [X] Steve
+-loop memory bug                        [X] Steve
+intraquant reversed? YES                [X] Eugene
+Merge -gamma into Y table                   [X]
+change mpegvga.patch to work with new files [ ]
+Add UI for X as ifdefs                      [ ]
+
+WISH LIST
+---------
+Add AC-prediction decoding              [ ]
+Get dithers to work in VGA mode         [ ] 
+IDCT compliance                         [ ] 
+Implement frame-dropping to meet rates  [ ]
+
+x = done
+y = done but not yet incorporated, working
+? = status unknown
+
