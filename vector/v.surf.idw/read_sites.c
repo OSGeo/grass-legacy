@@ -86,6 +86,7 @@ void read_sites ( char *name, int field, char *col)
 
     db_CatValArray_free( &cvarr ) ;
 
+    Vect_set_release_support ( &Map );
     Vect_close ( &Map );
 
     G_message ( _("%d points loaded\n"), npoints);
