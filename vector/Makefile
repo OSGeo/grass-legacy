@@ -5,6 +5,7 @@ SUBDIRS = \
 	v.ascii \
 	v.build \
 	v.category \
+	v.clean \
 	v.convert \
 	v.mapcalc
 
