@@ -147,7 +147,7 @@ proc DmPrint::window { } {
     }
 
     set PW [toplevel .printwin]
-    wm title $PW "Print / Plot (Display Manager - GRASS 5.7)"
+    wm title $PW [G_msg "Print / Plot (Display Manager - GRASS 5.7)"]
 
     # Left part paper + output
     set PWid(left) [ frame $PW.left ]  
@@ -161,7 +161,7 @@ proc DmPrint::window { } {
     set row [ frame $PWid(paper).row1 ]
     radiobutton $row.a -variable PVar(paper_mode) -value $PVar(paper_mode_default) \
                        -height 1 -padx 0 -width 0 -command DmPrint::paper
-    Label $row.b -anchor w -text "Paper format"
+    Label $row.b -anchor w -text [G_msg "Paper format"]
     ComboBox $row.c -label "" \
                     -width 20  -textvariable PVar(paper) \
                     -values $PVar(papers) -modifycmd DmPrint::paper
@@ -172,24 +172,24 @@ proc DmPrint::window { } {
     set row [ frame $PWid(paper).row2 ]
     radiobutton $row.a -variable PVar(paper_mode) -value $PVar(paper_mode_custom) \
                        -height 1 -padx 0 -width 0 -command DmPrint::paper
-    Label $row.b -anchor w -text "Custom"
-    Label $row.c -anchor w -text "width:"
+    Label $row.b -anchor w -text [G_msg "Custom"]
+    Label $row.c -anchor w -text [G_msg "width:"]
     Entry $row.d -width 10 -textvariable PVar(paper_width) \
                  -command DmPrint::paper
-    Label $row.e -anchor w -text "height:"
+    Label $row.e -anchor w -text [G_msg "height:"]
     Entry $row.f -width 10 -textvariable PVar(paper_height) \
                  -command DmPrint::paper
     pack $row.a $row.b $row.c $row.d $row.e $row.f -side left;
     pack $row -side top -fill x -expand no -anchor n
 
     set row [ frame $PWid(paper).row3 ]
-    Label $row.a -anchor w -text "left:"
+    Label $row.a -anchor w -text [G_msg "left:"]
     Entry $row.b -width 10 -textvariable PVar(paper_left) -command DmPrint::paper
-    Label $row.c -anchor w -text "right:"
+    Label $row.c -anchor w -text [G_msg "right:"]
     Entry $row.d -width 10 -textvariable PVar(paper_right) -command DmPrint::paper
-    Label $row.e -anchor w -text "top:"
+    Label $row.e -anchor w -text [G_msg "top:"]
     Entry $row.f -width 10 -textvariable PVar(paper_top) -command DmPrint::paper
-    Label $row.g -anchor w -text "bottom:"
+    Label $row.g -anchor w -text [G_msg "bottom:"]
     Entry $row.h -width 10 -textvariable PVar(paper_bottom) -command DmPrint::paper
 
     pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g $row.h -side left;
@@ -202,9 +202,9 @@ proc DmPrint::window { } {
     # PS file
     set row [ frame $PWid(output).psfile ]
     checkbutton $row.a -variable PVar(do_psfile)
-    Label $row.b -anchor w -text "PS file:"
+    Label $row.b -anchor w -text [G_msg "PS file:"]
     Entry $row.c -width 50 -textvariable PVar(psfile) 
-    Button $row.d -text "Browse" \
+    Button $row.d -text [G_msg "Browse"] \
            -command { set PVar(psfile) [ tk_getSaveFile -title "Output postscript file" ] }
 
     pack $row.a $row.b $row.c $row.d -side left;
@@ -213,9 +213,9 @@ proc DmPrint::window { } {
     # PDF file
     set row [ frame $PWid(output).pdffile ]
     checkbutton $row.a -variable PVar(do_pdffile)
-    Label $row.b -anchor w -text "PDF file:"
+    Label $row.b -anchor w -text [G_msg "PDF file:"]
     Entry $row.c -width 50 -textvariable PVar(pdffile) 
-    Button $row.d -text "Browse" \
+    Button $row.d -text [G_msg "Browse"] \
            -command { set PVar(pdffile) [ tk_getSaveFile -title "Output PDF file" ] }
 
     pack $row.a $row.b $row.c $row.d -side left;
@@ -224,16 +224,16 @@ proc DmPrint::window { } {
     # PNG file
     set row [ frame $PWid(output).pngfile ]
     checkbutton $row.a -variable PVar(do_pngfile)
-    Label $row.b -anchor w -text "PNG file:"
+    Label $row.b -anchor w -text [G_msg "PNG file:"]
     Entry $row.c -width 50 -textvariable PVar(pngfile) 
-    Button $row.d -text "Browse" \
+    Button $row.d -text [G_msg "Browse"] \
            -command { set PVar(pngfile) [ tk_getSaveFile -title "Output PNG file" ] }
 
     pack $row.a $row.b $row.c $row.d -side left;
     pack $row -side top -fill x -expand no -anchor n
 
     set row [ frame $PWid(output).pngres ]
-    Label $row.a -anchor w -text "PNG file resolution (points/inch):"
+    Label $row.a -anchor w -text [G_msg "PNG file resolution (points/inch):"]
     Entry $row.b -width 15 -textvariable PVar(pngresolution) 
 
     pack $row.a $row.b -side left;
@@ -242,7 +242,7 @@ proc DmPrint::window { } {
     # Printer
     set row [ frame $PWid(output).printer ]
     checkbutton $row.a -variable PVar(do_printer)
-    Label $row.b -anchor w -text "Printer:"
+    Label $row.b -anchor w -text [G_msg "Printer:"]
     Entry $row.c -width 50 -textvariable PVar(printer) 
 
     pack $row.a $row.b $row.c -side left;
@@ -251,9 +251,9 @@ proc DmPrint::window { } {
     # Script file
     set row [ frame $PWid(output).scriptfile ]
     checkbutton $row.a -variable PVar(do_scriptfile)
-    Label $row.b -anchor w -text "Script file:"
+    Label $row.b -anchor w -text [G_msg "Script file:"]
     Entry $row.c -width 50 -textvariable PVar(scriptfile) 
-    Button $row.d -text "Browse" \
+    Button $row.d -text [G_msg "Browse"] \
            -command { set PVar(scriptfile) [ tk_getSaveFile -title "Output script file" ] }
 
     pack $row.a $row.b $row.c $row.d -side left;
@@ -271,8 +271,8 @@ proc DmPrint::window { } {
     set but [ frame $PWid(left).buttons ]  
     pack $but -side top
 
-    Button $but.print -text "Print" -command { DmPrint::print "print" }
-    Button $but.preview -text "Preview" -command { DmPrint::print "preview" }
+    Button $but.print -text [G_msg "Print"] -command { DmPrint::print "print" }
+    Button $but.preview -text [G_msg "Preview"] -command { DmPrint::print "preview" }
     pack $but.print $but.preview -side left 
 
     tkwait visibility $PW

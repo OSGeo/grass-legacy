@@ -15,31 +15,31 @@ proc DmToolBar::create { tb  } {
     $bbox1 add -image [image create photo -file "$dmpath/display.gif"] \
         -command "Dm::display" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Display selected layers (current region)"
+        -helptext [G_msg "Display selected layers (current region)"]
 
     # display all
     $bbox1 add -image [image create photo -file "$dmpath/display.all.gif"] \
         -command "Dm::displayall" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Display selected layers (default region)"
+        -helptext [G_msg "Display selected layers (default region)"]
 
     # zoom
     $bbox1 add -image [image create photo -file "$dmpath/zoom.gif"] \
         -command "Dm::zoom" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Zoom"
+        -helptext [G_msg "Zoom"]
 
     # display region
     $bbox1 add -image [image create photo -file "$dmpath/display.region.gif"] \
         -command "Dm::display_region" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Display from saved region settings"
+        -helptext [G_msg "Display from saved region settings"]
 
     # query
     $bbox1 add -image [image create photo -file "$dmpath/query.gif"] \
         -command "Dm::query" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Query map (select map first)"
+        -helptext [G_msg "Query map (select map first)"]
 
     pack $bbox1 -side left -anchor w
 
@@ -53,36 +53,36 @@ proc DmToolBar::create { tb  } {
     $bbox2 add -image [image create photo -file "$dmpath/add.group.gif"] \
         -command "Dm::add group" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Add group"
+        -helptext [G_msg "Add group"]
 
     $bbox2 add -image [image create photo -file "$dmpath/add.raster.gif"] \
         -command "Dm::add raster" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Add raster"
+        -helptext [G_msg "Add raster"]
 
     $bbox2 add -image [image create photo -file "$dmpath/add.vector.gif"] \
         -command "Dm::add vector" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Add vector"
+        -helptext [G_msg "Add vector"]
 
     $bbox2 add -image [image create photo -file "$dmpath/add.labels.gif"] \
         -command "Dm::add labels" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Add paint labels (from directory paint/labels)"
+        -helptext [G_msg "Add paint labels (from directory paint/labels)"]
 
     $bbox2 add -image [image create photo -file "$dmpath/add.cmd.gif"] \
         -command "Dm::add cmd" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Create new command"
+        -helptext [G_msg "Create new command"]
 
     $bbox2 add -image [image create photo -file "$dmpath/dig.gif"] \
         -command "Dm::edit" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Digitize vector map"
+        -helptext [G_msg "Digitize vector map"]
 
     $bbox2 add -image [Bitmap::get cut] -command "Dm::delete" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Cut selection"
+        -helptext [G_msg "Cut selection"]
     # $bbox2 add -image [Bitmap::get copy] \
     #    -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
     #    -helptext "Copy selection"
@@ -100,17 +100,17 @@ proc DmToolBar::create { tb  } {
 
      $bbox3 add -image [Bitmap::get new] -command "Dm::new" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Create a new d.m settings file (erase current settings first)"
+        -helptext [G_msg "Create a new d.m settings file (erase current settings first)"]
     $bbox3 add -image [Bitmap::get open] -command "Dm::OpenFileBox $toolbar"\
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Open an existing file"
+        -helptext [G_msg "Open an existing file"]
     $bbox3 add -image [Bitmap::get save]  -command "Dm::SaveFileBox $toolbar"\
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Save d.m settings file"
+        -helptext [G_msg "Save d.m settings file"]
 
     $bbox3 add -image [Bitmap::get print]  -command "Dm::print" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Print map"
+        -helptext [G_msg "Print map"]
 
     pack $bbox3 -side left -anchor w
 }

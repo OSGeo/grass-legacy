@@ -16,6 +16,8 @@ set form_mode [exec g.gisenv get=GRASS_FORM_MODE]
 
 set dmpath $env(GISBASE)/etc/dm/
 
+source $env(GISBASE)/etc/gtcltk/gmsg.tcl
+
 source $env(GISBASE)/etc/gtcltk/select.tcl
 
 source $dmpath/cmd.tcl
@@ -47,14 +49,13 @@ proc Dm::create { } {
     variable prgtext
     variable prgindic
 
-    set prgtext "Loading Dm"
+    set prgtext [G_msg "Loading Dm"]
     set prgindic -1
     _create_intro
     update
     
     # eval "exec sleep 20"
 
-    # Menu description
     set descmenu {
         "&File" all file 0 {
 	    {command "New" {} "Create new file" {} -accelerator Ctrl-N -command { Dm::new}}
@@ -79,7 +80,7 @@ proc Dm::create { } {
 
     set prgtext   "Creating MainFrame..."
     set mainframe [MainFrame .mainframe \
-                       -menu         $descmenu \
+                       -menu $descmenu \
                        -textvariable Dm::status \
                        -progressvar  Dm::prgindic ]
 
@@ -108,9 +109,9 @@ proc Dm::create { } {
     pack $options_pane -expand yes -fill both 
     pack $options_sw $options_sf -fill both -expand yes
  
-    set prgtext   "Done"
+    set prgtext   [G_msg "Done"]
 
-    set Dm::status "Welcome to Display manager"
+    set Dm::status [G_msg "Welcome to Display manager"]
     $mainframe showstatusbar status 
 
     pack $mainframe -fill both -expand yes
@@ -744,7 +745,7 @@ proc main {argc argv} {
     global auto_path
 
     wm withdraw .
-    wm title . "GRASS 5.7 Display Manager"
+    wm title . [G_msg "GRASS 5.7 Display Manager"]
 
     bind . <Control-Key-o> {
 	Dm::OpenFileBox {}

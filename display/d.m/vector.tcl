@@ -139,7 +139,7 @@ proc DmVector::options { id frm } {
 
     # vector name
     set row [ frame $frm.name ]
-    Button $row.a -text "Vector name:" \
+    Button $row.a -text [G_msg "Vector name:"] \
            -command "DmVector::select_map $id"
     Entry $row.b -width 40 -text "$opt($id,map)" \
           -textvariable DmVector::opt($id,map)
@@ -148,49 +148,49 @@ proc DmVector::options { id frm } {
 
     # display
     set row [ frame $frm.disp ]
-    Label $row.a -text "Display:"
-    checkbutton $row.b -text "shape" -variable DmVector::opt($id,display_shape) \
+    Label $row.a -text [G_msg "Display:"]
+    checkbutton $row.b -text [G_msg "shape"] -variable DmVector::opt($id,display_shape) \
                 -command "DmVector::legend $id"
-    checkbutton $row.c -text "category" -variable DmVector::opt($id,display_cat) \
+    checkbutton $row.c -text [G_msg "category"] -variable DmVector::opt($id,display_cat) \
                 -command "DmVector::legend $id"
-    checkbutton $row.d -text "topology" -variable DmVector::opt($id,display_topo) \
+    checkbutton $row.d -text [G_msg "topology"] -variable DmVector::opt($id,display_topo) \
                 -command "DmVector::legend $id"
-    checkbutton $row.e -text "direction" -variable DmVector::opt($id,display_dir) \
+    checkbutton $row.e -text [G_msg "direction"] -variable DmVector::opt($id,display_dir) \
                 -command "DmVector::legend $id"
-    checkbutton $row.f -text "attribute" -variable DmVector::opt($id,display_attr) \
+    checkbutton $row.f -text [G_msg "attribute"] -variable DmVector::opt($id,display_attr) \
                 -command "DmVector::legend $id"
     pack $row.a $row.b $row.c $row.d $row.e $row.f -side left
     pack $row -side top -fill both -expand yes
 
     # type
     set row [ frame $frm.type ]
-    Label $row.a -text "Type:"
-    checkbutton $row.b -text "point" -variable DmVector::opt($id,type_point) \
+    Label $row.a -text [G_msg "Type:"]
+    checkbutton $row.b -text [G_msg "point"] -variable DmVector::opt($id,type_point) \
                 -command "DmVector::legend $id"
-    checkbutton $row.c -text "line" -variable DmVector::opt($id,type_line) \
+    checkbutton $row.c -text [G_msg "line"] -variable DmVector::opt($id,type_line) \
                 -command "DmVector::legend $id"
-    checkbutton $row.d -text "boundary" -variable DmVector::opt($id,type_boundary) \
+    checkbutton $row.d -text [G_msg "boundary"] -variable DmVector::opt($id,type_boundary) \
                 -command "DmVector::legend $id"
-    checkbutton $row.e -text "centroid" -variable DmVector::opt($id,type_centroid)\
+    checkbutton $row.e -text [G_msg "centroid"] -variable DmVector::opt($id,type_centroid)\
                 -command "DmVector::legend $id"
-    checkbutton $row.f -text "area" -variable DmVector::opt($id,type_area) \
+    checkbutton $row.f -text [G_msg "area"] -variable DmVector::opt($id,type_area) \
                 -command "DmVector::legend $id"
-    checkbutton $row.g -text "face" -variable DmVector::opt($id,type_face) \
+    checkbutton $row.g -text [G_msg "face"] -variable DmVector::opt($id,type_face) \
                 -command "DmVector::legend $id"
     pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g -side left
     pack $row -side top -fill both -expand yes
 
     # color
     set row [ frame $frm.color ]
-    Label $row.a -text "Line color:" 
+    Label $row.a -text [G_msg "Line color:"] 
     SelectColor $row.b -type menubutton -variable DmVector::opt($id,color) \
                 -command "DmVector::legend $id"
-    Label $row.c -text " Fill color:" 
+    Label $row.c -text [G_msg " Fill color:"] 
     SelectColor $row.d -type menubutton -variable DmVector::opt($id,fcolor) \
                 -command "DmVector::legend $id"
-    checkbutton $row.e -text "fill areas" -variable DmVector::opt($id,_use_fcolor) \
+    checkbutton $row.e -text [G_msg "fill areas"] -variable DmVector::opt($id,_use_fcolor) \
                 -command "DmVector::legend $id"
-    Label $row.f -text " Label color:" 
+    Label $row.f -text [G_msg " Label color:"] 
     SelectColor $row.g -type menubutton -variable DmVector::opt($id,lcolor) \
                 -command "DmVector::legend $id"
 
@@ -199,7 +199,7 @@ proc DmVector::options { id frm } {
 
     # point icon / size
     set row [ frame $frm.icon ]
-    ComboBox $row.a -label "Symbol:" \
+    ComboBox $row.a -label [G_msg "Symbol:"] \
                     -width 20  -textvariable DmVector::opt($id,icon) \
                     -values {"basic/cross" "basic/circle" "basic/box" "basic/diamond"} \
                     -modifycmd "DmVector::legend $id"
@@ -211,13 +211,13 @@ proc DmVector::options { id frm } {
 
     # field
     set row [ frame $frm.field ]
-    LabelEntry $row.a -label "Field" -textvariable DmVector::opt($id,field) -width 5
-    LabelEntry $row.b -label "Label Field" -textvariable DmVector::opt($id,lfield) -width 5
-    ComboBox $row.c -label "Label xpos" \
+    LabelEntry $row.a -label [G_msg "Field"] -textvariable DmVector::opt($id,field) -width 5
+    LabelEntry $row.b -label [G_msg "Label Field"] -textvariable DmVector::opt($id,lfield) -width 5
+    ComboBox $row.c -label [G_msg "Label xpos"] \
                     -width 6  -textvariable DmVector::opt($id,xref) \
                     -values {"left" "center" "right"} \
                     -modifycmd "DmVector::legend $id"
-    ComboBox $row.d -label "Label ypos" \
+    ComboBox $row.d -label [G_msg "Label ypos"] \
                     -width 6  -textvariable DmVector::opt($id,yref) \
                     -values {"top" "center" "bottom"} \
                     -modifycmd "DmVector::legend $id"
@@ -226,42 +226,42 @@ proc DmVector::options { id frm } {
 
     # attribute column
     set row [ frame $frm.attribute ]
-    LabelEntry $row.a -label "Attribute col" -textvariable DmVector::opt($id,attribute) -width 30
-    Label $row.b -text "Label size:" 
+    LabelEntry $row.a -label [G_msg "Attribute col"] -textvariable DmVector::opt($id,attribute) -width 30
+    Label $row.b -text [G_msg "Label size:"] 
     SpinBox $row.c -range {1 50 1} -textvariable DmVector::opt($id,lsize) \
-                   -width 2 -helptext "Label size" -modifycmd "DmVector::legend $id"
+                   -width 2 -helptext [G_msg "Label size"] -modifycmd "DmVector::legend $id"
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 
     # category
     set row [ frame $frm.cat ]
-    LabelEntry $row.a -label "Category" -textvariable DmVector::opt($id,cat) \
+    LabelEntry $row.a -label [G_msg "Category"] -textvariable DmVector::opt($id,cat) \
                -width 40
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
     # where
     set row [ frame $frm.where ]
-    LabelEntry $row.a -label "SQL query" -textvariable DmVector::opt($id,where) \
+    LabelEntry $row.a -label [G_msg "SQL query"] -textvariable DmVector::opt($id,where) \
                -width 40
-    checkbutton $row.b -text "use query" -variable DmVector::opt($id,_use_query_text) \
+    checkbutton $row.b -text [G_msg "use query"] -variable DmVector::opt($id,_use_query_text) \
                 -command "DmVector::legend $id"
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
     # query
     set row [ frame $frm.query ]
-    checkbutton $row.a -text "Print query output as text in terminal" \
+    checkbutton $row.a -text [G_msg "Print query output as text in terminal"] \
                 -variable DmVector::opt($id,_query_text) 
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
     # display only in limited region size range
     set row [ frame $frm.region ]
-    Label $row.a -text "Display constraints:"
+    Label $row.a -text [G_msg "Display constraints:"]
     LabelEntry $row.b -label "Min" -textvariable DmVector::opt($id,minreg) -width 8
     LabelEntry $row.c -label "Max" -textvariable DmVector::opt($id,maxreg) -width 8
-    Label $row.d -text "region size"
+    Label $row.d -text [G_msg "region size"]
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 }

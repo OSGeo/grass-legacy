@@ -49,7 +49,7 @@ proc DmCmd::options { id frm } {
 
     # cmd name
     set row [ frame $frm.name ]
-    Label $row.a -text "Command:" 
+    Label $row.a -text [G_msg "Command:"] 
     Entry $row.b -width 40 -text "$opt($id,cmd)" \
           -textvariable DmCmd::opt($id,cmd)
     pack $row.a $row.b -side left
