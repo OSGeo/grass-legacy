@@ -17,7 +17,7 @@ display_node (node, map)
 	R_standard_color( dcolors[dig_node_color (Node->n_lines)]);
 	_Blot (&(Node->x), &(Node->y));
     }
-    R_flush ();
+    V_flush ();
 }
 
 highlight_node (node, map)
@@ -32,7 +32,7 @@ highlight_node (node, map)
 	R_standard_color( dcolors[CLR_HIGHLIGHT]);
 	_Blot (&(Node->x), &(Node->y));
     }
-    R_flush ();
+    V_flush ();
 }
 
 color_node (node, map, color)
@@ -48,7 +48,7 @@ color_node (node, map, color)
 	R_standard_color( dcolors[color]);
 	_Blot (&(Node->x), &(Node->y));
     }
-    R_flush ();
+    V_flush ();
 }
 
 erase_node (node, map)
@@ -63,5 +63,5 @@ erase_node (node, map)
 	R_standard_color( dcolors[CLR_ERASE]);
 	_Blot (&(Node->x), &(Node->y));
     }
-    R_flush ();
+    V_flush ();
 }
