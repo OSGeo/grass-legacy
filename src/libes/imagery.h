@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "gis.h"
 #include "imagedefs.h"
 
@@ -65,8 +64,8 @@ struct Cluster
     double *band_sum     ; /* sum over each band */
     double *band_sum2    ; /* sum of squares over each band */
 
-    int   *class         ; /* class of each point */
-    int   *reclass       ; /* for removing empty classes  */
+    int    *class        ; /* class of each point */
+    int    *reclass      ; /* for removing empty classes  */
     int    *count        ; /* number of points in each class */
     int    *countdiff    ; /* change in count */
     double **sum         ; /* sum over band per class */
