@@ -77,10 +77,10 @@ static void	get_dimension(FT_Face face, unsigned char *out, int l,
 static void	get_ll_coordinates(FT_Face face, unsigned char *out, int l,
 			char *align, double rotation, FT_Vector *pen);
 static void	set_matrix(FT_Matrix *matrix, double rotation);
-static int	draw_glyph(rectinfo win, FT_Face face, FT_Matrix *matrix,
+static int	draw_character(rectinfo win, FT_Face face, FT_Matrix *matrix,
 			FT_Vector *pen, int ch, int color);
 static void	draw_text(rectinfo win, FT_Face face, FT_Vector *pen,
-			unsigned char *out, int ol, int color, double rotation);
+			unsigned char *out, int l, int color, double rotation);
 
 
 int
@@ -938,7 +938,7 @@ set_matrix(FT_Matrix *matrix, double rotation)
 }
 
 static int
-draw_glyph(rectinfo win, FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
+draw_character(rectinfo win, FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
 		int ch, int color)
 {
 	int	i, j, l, start_row, start_col, rows, width, w, index;
@@ -954,7 +954,7 @@ draw_glyph(rectinfo win, FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
 	if(FT_Render_Glyph(face->glyph, ft_render_mode_mono))
 		return -3;
 
-	rows = face->glyph->bitmap.rows;
+	rows  = face->glyph->bitmap.rows;
 	width = face->glyph->bitmap.width;
 
 	rect.t = - face->glyph->bitmap_top;
@@ -1017,17 +1017,17 @@ draw_glyph(rectinfo win, FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
 
 static void
 draw_text(rectinfo win, FT_Face face, FT_Vector *pen,
-		unsigned char *out, int ol, int color, double rotation)
+		unsigned char *out, int l, int color, double rotation)
 {
 	int	i, ch;
 	FT_Matrix	matrix;
 
 	set_matrix(&matrix, rotation);
 
-	for(i = 0; i < ol; i += 4)
+	for(i = 0; i < l; i += 4)
 	{
 		ch = (out[i+2] << 8) | out[i+3];
-		draw_glyph(win, face, &matrix, pen, ch, color);
+		draw_character(win, face, &matrix, pen, ch, color);
 	}
 
 #ifndef	FLUSH_EACH_CHAR
