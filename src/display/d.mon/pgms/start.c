@@ -20,16 +20,35 @@
 
 main(argc,argv) char *argv[];
 {
+#ifdef ORIG
 	if (argc != 2)
 	{
 		fprintf(stderr,"Usage:  %s monitor_name\n", argv[0]);
 		exit(-1);
 	}
+#else /* ORIG */
+	if (argc < 2)
+	{
+		fprintf(stderr,"Usage:  %s monitor_name [par]\n", argv[0]);
+		exit(-1);
+	}
+#endif /* ORIG */
+#ifdef ORIG
 	start_mon(argv[1]);
+#else /* ORIG */
+	if ( argc == 3 ) 
+	 start_mon(argv[1],argv[2]);
+	else
+	 start_mon(argv[1],"");
+#endif /* ORIG */
 }
 
-start_mon(name)
+start_mon(name,par)
+#ifdef  ORIG
 char *name;
+#else /* ORIG */
+char *name,*par;
+#endif /* ORIG */
 {
 	struct MON_CAP *mon;
 	struct MON_CAP *R_parse_monitorcap();
@@ -44,9 +63,28 @@ char *name;
 	if (*mon->tty == '\0' || !strcmp(mon->tty,ttyname(0)))
 	{
 		if (*mon->tty == '\0')
+#ifdef ORIG
 			execl(mon->path,name,mon->link,(char *) 0);
+#else /* ORIG */
+		{
+			if ( par[0] == '\0')
+			 execl(mon->path,name,mon->link,(char *) 0);
+			else
+			 execl(mon->path,name,mon->link,par,(char *) 0);
+		}
+#endif /* ORIG */
 		else
+#ifdef ORIG
 			execl(mon->path,name,"-",mon->link,(char *) 0);
+#else /* ORIG */
+		{
+			fprintf(stderr,"Stderr running start\n");
+			if ( par[0] == '\0')
+			 execl(mon->path,name,"-",mon->link,(char *) 0);
+			else 
+			 execl(mon->path,name,"-",mon->link,par,(char *) 0);
+		}
+#endif /* ORIG */
 		fprintf(stderr,"Error:  could not execute '%s'\n",mon->path);
 	}
 	else
