@@ -67,11 +67,12 @@ static int	read_capfile(char *capfile, capinfo **fonts, char **font_names,
 			int *fonts_count, int *cur_font);
 static int	find_font(capinfo *fonts, int fonts_count, char *name);
 static char	*transform_string(char *str, int (*func)(int));
-static int	set_font(FT_Library library, FT_Face *face, char *path);
 static int	convert_text(char *charset, char *text, unsigned char **out);
 static int	get_coordinates(rectinfo win, char **ans, char p,
 			double *east, double *north, int *x, int *y);
 static void	get_color(char *tcolor, int *color);
+
+static int	set_font(FT_Library library, FT_Face *face, char *path);
 static void	get_dimension(FT_Face face, unsigned char *out, int l,
 			FT_Vector *dim);
 static void	get_ll_coordinates(FT_Face face, unsigned char *out, int l,
@@ -336,18 +337,17 @@ main(int argc, char **argv)
 			exit(0);
 		}
 
-		pen.x = x;
-		pen.y = y;
-
 		ol = convert_text(charset, text, &out);
 		if(ol == -1)
 			error("Unable to create text conversion context");
 		if(ol == -2)
 			error("Text conversion error");
 
+		pen.x = x;
+		pen.y = y;
+
 		get_ll_coordinates(face, out, ol,
 				param.align->answer, rotation, &pen);
-
 		draw_text(win, face, &pen, out, ol, color, rotation);
 
 		if(param.east_north->answer)
@@ -702,17 +702,6 @@ transform_string(char *str, int (*func)(int))
 }
 
 static int
-set_font(FT_Library library, FT_Face *face, char *path)
-{
-	if(*face)
-		FT_Done_Face(*face);
-	if(FT_New_Face(library, path, 0, face))
-		return -1;
-
-	return 0;
-}
-
-static int
 convert_text(char *charset, char *text, unsigned char **out)
 {
 	int	i, l, ol;
@@ -820,6 +809,17 @@ get_color(char *tcolor, int *color)
 	}
 
 	return;
+}
+
+static int
+set_font(FT_Library library, FT_Face *face, char *path)
+{
+	if(*face)
+		FT_Done_Face(*face);
+	if(FT_New_Face(library, path, 0, face))
+		return -1;
+
+	return 0;
 }
 
 static void
