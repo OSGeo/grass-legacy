@@ -71,7 +71,7 @@ int main (argc, argv)
   G_gisinit (argv[0]);
 
   parm.input = G_define_option ();
-  parm.input->key = "sites";
+  parm.input->key = "input";
   parm.input->type = TYPE_STRING;
   parm.input->required = YES;
   parm.input->description = "sites list defining sample points";
