@@ -1,0 +1,132 @@
+
+
+
+corridor()        UNKNOWN SECTION OF THE MANUAL        corridor()
+
+
+
+NAME
+     corridor - find a least-cost path
+
+SYNOPSIS
+     corridor
+
+DESCRIPTION
+     Corridor evaluates an existing cost surface map in search of
+     a least cost path between a user provided starting point and
+     one or more ending points.  The user is asked to provide the
+     name  of  an existing cost map, the starting coordinates and
+     the ending coordinate(s).
+
+     The cost surface is a grid-cell map containing  values  (not
+     category  numbers)  reflecting  the  cost of traversing that
+     grid cell.  This is constructed ahead of  time  using  other
+     GRASS programs.
+
+     The starting coordinates are input at the keyboard.   Ending
+     points  can  be  entered at the keyboard or through a second
+     input map.  You are prompted for 0 or more points input from
+     the keyboard and are then asked to name a map which contains
+     more ending points.  Points can be input in either  or  both
+     modes.   Any  non-zero location in a map is considered to be
+     an ending location.
+
+     Finally, you are asked to give the name of  an  output  map.
+     The  output  result  will  contain  the lowest total cost of
+     traversing the space between each of the grid-cells and  any
+     of the starting locations.   Consider the following example:
+
+     Input:                            Output:
+        COST SURFACE                      LEAST COST PATH
+      . . _____ . . . . . . . . . .     . . . . . . . . . . . . . . .
+      . 2 | 2 | 1 . 1 . 5 . 5 . 5 .     . 0 . 1 . 1 . 1 . 0 . 0 . 0 .
+      . . |___| . . . . . . . . . .     . . . . . . . . . . . . . . .
+      . 2 . 2 . 8 . 8 . 5 . 2 . 1 .     . 0 . 0 . 0 . 0 . 1 . 0 . 0 .
+      . . . . . . . . . . . . . . .     . . . . . . . . . . . . . . .
+      . 7 . 1 . 1 . 8 . 2 . 2 . 2 .     . 0 . 0 . 0 . 0 . 1 . 1 . 0 .
+      . . . . . . . . . . . . . . .     . . . . . . . . . . . . . . .
+      . 8 . 7 . 8 . 8 . 7 . 5 . 5 .     . 0 . 0 . 0 . 0 . 0 . 1 . 0 .
+      . . . . . . . . . . _____ . .     . . . . . . . . . . . . . . .
+      . 8 . 8 . 1 . 1 . 5 | 3 | 9 .     . 0 . 0 . 0 . 0 . 0 . 1 . 0 .
+      . . . . . . . . . . |___| . .     . . . . . . . . . . . . . . .
+      . 8 . 1 . 1 . 2 . 5 . 3 . 9 .     . 0 . 0 . 0 . 0 . 0 . 0 . 0 .
+      . . . . . . . . . . . . . . .     . . . . . . . . . . . . . . .
+
+     The user-provided starting location in the above example  is
+     the  boxed  3  in the left-hand map.  The ending location is
+     the boxed 2 in the upper left.  The path in the output shows
+     the lowest cost corridor for moving from the starting box to
+     the lowest possible point.  This  is  the  path  a  raindrop
+
+
+
+Sun Release 3.2B          Last change:                          1
+
+
+
+
+
+
+corridor()        UNKNOWN SECTION OF THE MANUAL        corridor()
+
+
+
+     would take in this landscape.
+
+CAVEATS
+     This program does not abide by the nice map data  resampling
+     and masking conventions of GRASS.  In particular:
+
+     No mask -
+          The input and output files are not masked.
+
+     No resampling -
+          The input map are not resampled to the current  window.
+          The  output map will cover exactly the same area as the
+          input map.
+
+     Square cells -
+          The grid-cells of the input map must be square.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sun Release 3.2B          Last change:                          2
+
+
+
