@@ -1,3 +1,4 @@
+# %W%  %G%
 PGM      = m.bsplit
 
 LIST =  main.o
