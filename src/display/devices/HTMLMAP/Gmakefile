@@ -29,3 +29,5 @@ $(GISBASE)/driver/HTMLMAP: $(OFILES) $(DEPDRIVERLIB) $(DEPGISLIB)
 
 $(DEPDRIVERLIB): #
 $(DEPGISLIB): #
+
+Graph_Clse.o Graph_Set.o Polygn_abs.o Reset_clr.o Text.o: htmlmap.h
