@@ -24,7 +24,7 @@ main (int argc, char *argv[])
     struct GModule *module;
     struct Option *map_opt, *opt, *err_opt;
     struct Map_info Map;
-    int    i, build = 0, dump = 0, sdump = 0;
+    int    i, build = 0, dump = 0, sdump = 0, cdump = 0;
     
     map_opt = G_define_standard_option(G_OPT_V_MAP);
     
@@ -36,11 +36,15 @@ main (int argc, char *argv[])
     opt = G_define_option();
     opt->key = "option";
     opt->type =  TYPE_STRING;
-    opt->options = "build,dump,sdump";
+    opt->options = "build,dump,sdump,cdump";
     opt->required = NO;
     opt->multiple = YES;
     opt->answer = "build";
-    opt->description  = "Build topology or dump topology or spatial index to stdout";
+    opt->description  = "Build topology or dump topology or spatial index to stdout\n"
+	"\t\tbuild - build topology\n"
+	"\t\tdupm  - write topology to stdout\n"
+	"\t\tsdump - write spatial index to stdout\n"
+	"\t\tcdump - write category index to stdout\n";
     
     G_gisinit(argv[0]);
     if (G_parser (argc, argv))
@@ -54,6 +58,7 @@ main (int argc, char *argv[])
 	if ( *opt->answers[i] == 'b')  build = 1;
         else if ( *opt->answers[i] == 'd')  dump = 1;
         else if ( *opt->answers[i] == 's')  sdump = 1;
+        else if ( *opt->answers[i] == 'c')  cdump = 1;
 
 	i++;
     }
@@ -68,10 +73,9 @@ main (int argc, char *argv[])
 	Vect_open_old (&Map, map_opt->answer, G_mapset()); 
 
 	Vect_build ( &Map, stdout );
-        
     }
     /* dump topology */
-    if (dump || sdump) {
+    if (dump || sdump || cdump) {
         if ( !build ) { 
 	    Vect_set_open_level (2);
 	    Vect_open_old (&Map, map_opt->answer, G_mapset()); 
@@ -81,6 +85,9 @@ main (int argc, char *argv[])
 
         if (sdump)
 	    Vect_spatial_index_dump ( &(Map.plus), stdout );
+
+        if (cdump)
+	    Vect_cidx_dump ( &Map, stdout );
     }
 
     if ( err_opt->answer ) {
