@@ -14,7 +14,7 @@ extern int matherr();
 /*int *tclDummyMathPtr = (int *) matherr;*/
 
 
-extern int NVIZ_AppInit(Tcl_Interp*);
+extern int NVIZ_AppInit(Tcl_Interp *);
 
 
 /*
@@ -34,11 +34,9 @@ extern int NVIZ_AppInit(Tcl_Interp*);
  *----------------------------------------------------------------------
  */
 
-int 
-main (
-    int argc,			/* Number of command-line arguments. */
-    char **argv		/* Values of command-line arguments. */
-)
+int main(int argc,		/* Number of command-line arguments. */
+	 char **argv		/* Values of command-line arguments. */
+    )
 {
     Tk_Main(argc, argv, NVIZ_AppInit);
     return 0;			/* Needed only to prevent compiler warning. */

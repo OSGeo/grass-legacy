@@ -8,41 +8,48 @@
 extern int get_idnum();
 extern void free();
 
-int 
-Nplace_label_cmd (
-    Nv_data *data,
-    Tcl_Interp *interp,                 /* Current interpreter. */
-    int argc,                           /* Number of arguments. */
-    char **argv                        /* Argument strings. */
-)
+int Nplace_label_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
+		     int argc,	/* Number of arguments. */
+		     char **argv	/* Argument strings. */
+    )
 {
-  int id;
-  int pt[2];
-  int color;
-  char text[120];
-  char font[100];
- 
-  if (argc != 6) {
-    Tcl_SetResult(interp, "Error: should be Nplace_label text font color xpos ypos", TCL_STATIC);
-    return (TCL_ERROR);
-  }
+    int pt[2];
+    int color;
+    int size;
+    char text[120];
+    char font[100];
 
- sprintf(text, "%s", argv[1]);
- sprintf(font, "%s", argv[2]);
- 
- color = (int)tcl_color_to_int (argv[3]);
+    if (argc != 7) {
+	Tcl_SetResult(interp,
+		      "Error: should be Nplace_label text font font_size color xpos ypos",
+		      TCL_STATIC);
+	return (TCL_ERROR);
+    }
 
-  pt[0] = (int)atoi(argv[4]);
-  pt[1] = (int)atoi(argv[5]); 
+    sprintf(text, "%s", argv[1]);
+    sprintf(font, "%s", argv[2]);
 
-  /* Print the label */
-  gs_put_label(text, font, color, pt);
-  
-   
-  return (TCL_OK);
+    size = (int) atoi(argv[3]);
+    color = (int) tcl_color_to_int(argv[4]);
+    pt[0] = (int) atoi(argv[5]);
+    pt[1] = (int) atoi(argv[6]);
+
+    /* Print the label */
+    FontBase = load_font(font);
+
+    if (FontBase) {
+	gs_put_label(text, FontBase, size, color, pt);
+    }
+    else {
+	Tcl_SetResult(interp, "Error: Unable to load font", TCL_STATIC);
+	return (TCL_ERROR);
+    }
+
+    return (TCL_OK);
 }
 
 
 /* Just a stub */
-void G_site_destroy_struct(void *foo) {
+void G_site_destroy_struct(void *foo)
+{
 }

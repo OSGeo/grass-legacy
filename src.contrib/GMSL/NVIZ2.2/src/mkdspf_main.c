@@ -37,9 +37,9 @@
 /* Nvision includes */
 #include "interface.h"
 
-char	*rindex();
+char *rindex();
 
-static struct_copy ();
+static struct_copy();
 
 /*
    Main routine has been modified to be a tcl/tk command.
@@ -54,79 +54,79 @@ static struct_copy ();
      if i then {list of values}
 
 */
-int
-mkdspf_main(data, interp, argc, argv)
-     Nv_data *data;          /* Local data */
-     Tcl_Interp *interp;     /* Current interpreter */
-     int argc;               /* Number of arguments */
-     char **argv;            /* Argument strings */
+int mkdspf_main(data, interp, argc, argv)
+     Nv_data *data;		/* Local data */
+     Tcl_Interp *interp;	/* Current interpreter */
+     int argc;			/* Number of arguments */
+     char **argv;		/* Argument strings */
 {
-    char	ofile[200];/*name of output file */
-    char	*p;
-    int ret; /* check return value of subroutines */
-    int i; /* counter */
+    char ofile[200];		/*name of output file */
+    char *p;
+    int ret;			/* check return value of subroutines */
+    int i;			/* counter */
     int process_status;
 
     /* Commandline must contain exactly 5 args */
     if (argc != 6) {
-      pr_commandline(interp);
-      return (TCL_ERROR);
+	pr_commandline(interp);
+	return (TCL_ERROR);
     }
 
     /* open grid3 file for reading and writing */
-    if((Headfax.datainfp = fopen(argv[1],"r")) == NULL)
-    {
-      sprintf(interp->result,"ERROR:  unable to open %s for reading\n",argv[1]);
-      return (TCL_ERROR);
+    if ((Headfax.datainfp = fopen(argv[1], "r")) == NULL) {
+	sprintf(interp->result, "ERROR:  unable to open %s for reading\n",
+		argv[1]);
+	return (TCL_ERROR);
     }
 
     /* reads info from data file headers and places in file_info struct */
-    if (viz_init_file(argv, interp) != TCL_OK) 
-      return (TCL_ERROR);
+    if (viz_init_file(argv, interp) != TCL_OK)
+	return (TCL_ERROR);
 
     /* only reading in files that are in grid3 format */
     if (Headfax.token == 1)
 	ret = g3read_header(&Headfax);
 
-    if (ret<1) /*problem in reading grid3 file*/
-    {
-      fclose(Headfax.datainfp);
-      sprintf (interp->result,"Error in reading %s. Cannot create display file.\n", argv[1]);
-      return (TCL_ERROR);
+    if (ret < 1) {		/*problem in reading grid3 file */
+	fclose(Headfax.datainfp);
+	sprintf(interp->result,
+		"Error in reading %s. Cannot create display file.\n",
+		argv[1]);
+	return (TCL_ERROR);
     }
 
-    if (viz_calc_linefax(&Headfax.linefax,argv,argc,interp) != TCL_OK)
-      return (TCL_ERROR);
+    if (viz_calc_linefax(&Headfax.linefax, argv, argc, interp) != TCL_OK)
+	return (TCL_ERROR);
 
 
     /*create output file name 
-    **will place dspf file in same directory as raw data 
-    **DO WE WANT TO CHANGE THIS ?
-    */
+       **will place dspf file in same directory as raw data 
+       **DO WE WANT TO CHANGE THIS ?
+     */
 
     /* Here we perform the fork since we are done parsing arguments */
     /* We do this to allow background creation for large files (Mark 9/8/94) */
     process_status = fork();
-    if (process_status) return (TCL_OK);
+    if (process_status)
+	return (TCL_OK);
 
     /* Output file now taken from command line (Mark 9/7/94) */
     p = argv[2];
-    strcpy (ofile, p);
-    if (NULL != (p = rindex (ofile, '.')))
-    {
-	    if (p != ofile)
-		*p = '\0';  /* knock off any suffix */
+    strcpy(ofile, p);
+    if (NULL != (p = rindex(ofile, '.'))) {
+	if (p != ofile)
+	    *p = '\0';		/* knock off any suffix */
     }
-    strcat(ofile,".dspf");
+    strcat(ofile, ".dspf");
 
     /* open display file for writing */
-    if((Headfax.dspfoutfp = fopen(ofile,"w")) == NULL)
-    {
-      sprintf(interp->result,"ERROR:  unable to open %s for writing\n",ofile);
-      if (process_status) 
-	return (TCL_ERROR);
-      else
-	exit(0);
+    if ((Headfax.dspfoutfp = fopen(ofile, "w")) == NULL) {
+	sprintf(interp->result, "ERROR:  unable to open %s for writing\n",
+		ofile);
+	if (process_status)
+	    return (TCL_ERROR);
+	else
+	    exit(0);
     }
 /* write display file header info */
 /* have to adjust dimensions  -dpg */
@@ -134,14 +134,13 @@ mkdspf_main(data, interp, argc, argv)
 	Headfax.xdim -= 1;
 	Headfax.ydim -= 1;
 	Headfax.zdim -= 1;
-	if(dfwrite_header(&Headfax) < 0)
-	{
-	   fclose(Headfax.dspfoutfp);
-	   Tcl_AppendResult(interp, "Error writing output file\n",NULL);
-	   if (process_status) 
-	     return (TCL_ERROR);
-	   else
-	     exit(0);
+	if (dfwrite_header(&Headfax) < 0) {
+	    fclose(Headfax.dspfoutfp);
+	    Tcl_AppendResult(interp, "Error writing output file\n", NULL);
+	    if (process_status)
+		return (TCL_ERROR);
+	    else
+		exit(0);
 	}
 	Headfax.xdim += 1;
 	Headfax.ydim += 1;
@@ -149,18 +148,18 @@ mkdspf_main(data, interp, argc, argv)
     }
 
     if (viz_iso_surface(&Headfax.linefax, interp) != TCL_OK)
-      if (process_status) 
-	return (TCL_ERROR);
-      else
-	exit(0);
-   
+	if (process_status)
+	    return (TCL_ERROR);
+	else
+	    exit(0);
+
     fclose(Headfax.datainfp);
     fclose(Headfax.dspfoutfp);
 
     if (process_status)
-      return (TCL_OK);
+	return (TCL_OK);
     else
-      exit(0);
+	exit(0);
 }
 
 /**************************** pr_commandline *********************************/
@@ -168,21 +167,25 @@ mkdspf_main(data, interp, argc, argv)
 /**************************** pr_commandline *********************************/
 
 pr_commandline(interp)
-Tcl_Interp *interp;
+     Tcl_Interp *interp;
 {
-  Tcl_AppendResult(interp,"Usage: mkdspf in_file out_file [c | r | i] thresh_args [f | g]\n", NULL);
-  Tcl_AppendResult(interp,"\tif c then thresh_args = interval size\n", NULL);
-  Tcl_AppendResult(interp,"\tif r then thresh_args = {list min_value max_value thresh_interval_size}\n", NULL);
-  Tcl_AppendResult(interp,"\tif i then thresh_args = {list of values}\n", NULL);
+    Tcl_AppendResult(interp,
+		     "Usage: mkdspf in_file out_file [c | r | i] thresh_args [f | g]\n",
+		     NULL);
+    Tcl_AppendResult(interp, "\tif c then thresh_args = interval size\n",
+		     NULL);
+    Tcl_AppendResult(interp,
+		     "\tif r then thresh_args = {list min_value max_value thresh_interval_size}\n",
+		     NULL);
+    Tcl_AppendResult(interp, "\tif i then thresh_args = {list of values}\n",
+		     NULL);
 }
 
 
-static
-struct_copy (To, From, size)
-    char *To, *From;
-    int size;
+static struct_copy(To, From, size)
+     char *To, *From;
+     int size;
 {
-    for ( ; size ; size--)
+    for (; size; size--)
 	*To++ = *From++;
 }
-

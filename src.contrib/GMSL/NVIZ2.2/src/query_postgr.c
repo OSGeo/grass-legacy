@@ -74,11 +74,12 @@ char *query_postgr(name, keytable, col, x, y)
 
 
 
-static char long_str[128]="Postgres support had not been enabled during pre-compile.\nYou should recompile NVIZ with Postgres support.\n";
+    static char long_str[128] =
+	"Postgres support had not been enabled during pre-compile.\nYou should recompile NVIZ with Postgres support.\n";
 
-    
 
-	return long_str;
+
+    return long_str;
 
 }
 
@@ -128,11 +129,12 @@ char *query_pg_site(name, xcol, ycol, dist, x, y)
 #else
 {
 
-static char long_str[128]="Postgres support had not been enabled during pre-compile.\nYou should recompile NVIZ with Postgres support.\n";
+    static char long_str[128] =
+	"Postgres support had not been enabled during pre-compile.\nYou should recompile NVIZ with Postgres support.\n";
 
-    
 
-	return long_str;
+
+    return long_str;
 }
 
 #endif

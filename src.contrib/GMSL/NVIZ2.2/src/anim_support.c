@@ -28,35 +28,34 @@
   Side Effects:
       Sets the interpolation mode for the current keyframe animation.
 ******************************************************** */
-int 
-Nset_interp_mode_cmd (
-    Nv_data *data,         /* Local data */
-    Tcl_Interp *interp,    /* Current interpreter */
-    int argc,              /* Number of arguments */
-    char **argv           /* Argument strings */
-)
+int Nset_interp_mode_cmd(Nv_data * data,	/* Local data */
+			 Tcl_Interp * interp,	/* Current interpreter */
+			 int argc,	/* Number of arguments */
+			 char **argv	/* Argument strings */
+    )
 {
-  /* Parse arguments */
-  int mode;
+    /* Parse arguments */
+    int mode;
 
-  if (argc != 2) {
-    interp->result="Error: should be Nset_interp_mode linear | spline";
-    return (TCL_ERROR);
-  }
+    if (argc != 2) {
+	interp->result = "Error: should be Nset_interp_mode linear | spline";
+	return (TCL_ERROR);
+    }
 
-  if (!strncmp(argv[1], "linear", 6))
-    mode = KF_LINEAR;
-  else if (!strncmp(argv[1], "spline", 6))
-    mode = KF_SPLINE;
-  else {
-    interp->result="Error: interpoloation type must be either linear or spline";
-    return (TCL_ERROR);
-  }
+    if (!strncmp(argv[1], "linear", 6))
+	mode = KF_LINEAR;
+    else if (!strncmp(argv[1], "spline", 6))
+	mode = KF_SPLINE;
+    else {
+	interp->result =
+	    "Error: interpoloation type must be either linear or spline";
+	return (TCL_ERROR);
+    }
 
-  /* Set the interpolation type in the library */
-  GK_set_interpmode(mode);
+    /* Set the interpolation type in the library */
+    GK_set_interpmode(mode);
 
-  return (TCL_OK);
+    return (TCL_OK);
 }
 
 /* ********************************************************
@@ -73,34 +72,33 @@ Nset_interp_mode_cmd (
    Side Effects:
        Sets tension for interpolating splines
 ******************************************************** */
-int 
-Nset_tension_cmd (
-    Nv_data *data,         /* Local data */
-    Tcl_Interp *interp,    /* Current interpreter */
-    int argc,              /* Number of arguments */
-    char **argv           /* Argument strings */
-)
+int Nset_tension_cmd(Nv_data * data,	/* Local data */
+		     Tcl_Interp * interp,	/* Current interpreter */
+		     int argc,	/* Number of arguments */
+		     char **argv	/* Argument strings */
+    )
 {
-  /* Parse arguments */
-  double tension;
+    /* Parse arguments */
+    double tension;
 
-  if (argc != 2) {
-    interp->result="Error: should be Nset_tension float_value";
-    return (TCL_ERROR);
-  }
+    if (argc != 2) {
+	interp->result = "Error: should be Nset_tension float_value";
+	return (TCL_ERROR);
+    }
 
-  if (Tcl_GetDouble(interp, argv[1], &tension) != TCL_OK)
-    return (TCL_ERROR);
+    if (Tcl_GetDouble(interp, argv[1], &tension) != TCL_OK)
+	return (TCL_ERROR);
 
-  if ((tension < 0) || (tension > 1)) {
-    interp->result="Error: float_value should be between 0 and 1 inclusive";
-    return (TCL_ERROR);
-  }
+    if ((tension < 0) || (tension > 1)) {
+	interp->result =
+	    "Error: float_value should be between 0 and 1 inclusive";
+	return (TCL_ERROR);
+    }
 
-  /* Now set the tension value */
-  GK_set_tension((float)tension);
+    /* Now set the tension value */
+    GK_set_tension((float) tension);
 
-  return (TCL_OK);
+    return (TCL_OK);
 }
 
 /* ********************************************************
@@ -121,67 +119,61 @@ Nset_tension_cmd (
    Side Effects:
        None.
 ******************************************************** */
-int 
-Nshowtension_start_cmd (
-    Nv_data *data,         /* Local data */
-    Tcl_Interp *interp,    /* Current interpreter */
-    int argc,              /* Number of arguments */
-    char **argv           /* Argument strings */
-)
+int Nshowtension_start_cmd(Nv_data * data,	/* Local data */
+			   Tcl_Interp * interp,	/* Current interpreter */
+			   int argc,	/* Number of arguments */
+			   char **argv	/* Argument strings */
+    )
 {
-  /* Parse arguments */
+    /* Parse arguments */
 
-  if (argc != 1) {
-    interp->result="Error: should be Nshowtension_start";
-    return (TCL_ERROR);
-  }
+    if (argc != 1) {
+	interp->result = "Error: should be Nshowtension_start";
+	return (TCL_ERROR);
+    }
 
-  /* Call the function */
-  GK_showtension_start();
+    /* Call the function */
+    GK_showtension_start();
 
-  return (TCL_OK);
+    return (TCL_OK);
 }
 
-int 
-Nupdate_tension_cmd (
-    Nv_data *data,         /* Local data */
-    Tcl_Interp *interp,    /* Current interpreter */
-    int argc,              /* Number of arguments */
-    char **argv           /* Argument strings */
-)
+int Nupdate_tension_cmd(Nv_data * data,	/* Local data */
+			Tcl_Interp * interp,	/* Current interpreter */
+			int argc,	/* Number of arguments */
+			char **argv	/* Argument strings */
+    )
 {
-  /* Parse arguments */
+    /* Parse arguments */
 
-  if (argc != 1) {
-    interp->result="Error: should be Nupdate_tension";
-    return (TCL_ERROR);
-  }
+    if (argc != 1) {
+	interp->result = "Error: should be Nupdate_tension";
+	return (TCL_ERROR);
+    }
 
-  /* Call the function */
-  GK_update_tension();
+    /* Call the function */
+    GK_update_tension();
 
-  return (TCL_OK);
+    return (TCL_OK);
 }
 
-int 
-Nshowtension_stop_cmd (
-    Nv_data *data,         /* Local data */
-    Tcl_Interp *interp,    /* Current interpreter */
-    int argc,              /* Number of arguments */
-    char **argv           /* Argument strings */
-)
+int Nshowtension_stop_cmd(Nv_data * data,	/* Local data */
+			  Tcl_Interp * interp,	/* Current interpreter */
+			  int argc,	/* Number of arguments */
+			  char **argv	/* Argument strings */
+    )
 {
-  /* Parse arguments */
+    /* Parse arguments */
 
-  if (argc != 1) {
-    interp->result="Error: should be Nshowtension_stop";
-    return (TCL_ERROR);
-  }
+    if (argc != 1) {
+	interp->result = "Error: should be Nshowtension_stop";
+	return (TCL_ERROR);
+    }
 
-  /* Call the function */
-  GK_showtension_stop();
+    /* Call the function */
+    GK_showtension_stop();
 
-  return (TCL_OK);
+    return (TCL_OK);
 }
 
 /* ********************************************************
@@ -201,25 +193,23 @@ Nshowtension_stop_cmd (
    Side Effects:
        None.
 ******************************************************** */
-int 
-Nupdate_frames_cmd (
-    Nv_data *data,         /* Local data */
-    Tcl_Interp *interp,    /* Current interpreter */
-    int argc,              /* Number of arguments */
-    char **argv           /* Argument strings */
-)
+int Nupdate_frames_cmd(Nv_data * data,	/* Local data */
+		       Tcl_Interp * interp,	/* Current interpreter */
+		       int argc,	/* Number of arguments */
+		       char **argv	/* Argument strings */
+    )
 {
-  /* Parse arguments */
+    /* Parse arguments */
 
-  if (argc != 1) {
-    interp->result="Error: should be Nupdate_frames";
-    return (TCL_ERROR);
-  }
+    if (argc != 1) {
+	interp->result = "Error: should be Nupdate_frames";
+	return (TCL_ERROR);
+    }
 
-  /* Call the function */
-  GK_update_frames();
+    /* Call the function */
+    GK_update_frames();
 
-  return (TCL_OK);
+    return (TCL_OK);
 
 }
 
@@ -238,29 +228,27 @@ Nupdate_frames_cmd (
    Side Effects:
        Sets the current number of frames.
 ******************************************************** */
-int 
-Nset_numsteps_cmd (
-    Nv_data *data,         /* Local data */
-    Tcl_Interp *interp,    /* Current interpreter */
-    int argc,              /* Number of arguments */
-    char **argv           /* Argument strings */
-)
+int Nset_numsteps_cmd(Nv_data * data,	/* Local data */
+		      Tcl_Interp * interp,	/* Current interpreter */
+		      int argc,	/* Number of arguments */
+		      char **argv	/* Argument strings */
+    )
 {
-  /* Parse arguments */
-  long num_frames;
+    /* Parse arguments */
+    long num_frames;
 
-  if (argc != 2) {
-    interp->result="Error: should be Nset_numsteps #_frames";
-    return (TCL_ERROR);
-  }
+    if (argc != 2) {
+	interp->result = "Error: should be Nset_numsteps #_frames";
+	return (TCL_ERROR);
+    }
 
-  if (Tcl_GetInt(interp, argv[1], (int *)&num_frames) != TCL_OK)
-    return (TCL_ERROR);
+    if (Tcl_GetInt(interp, argv[1], (int *) &num_frames) != TCL_OK)
+	return (TCL_ERROR);
 
-  /* Now set the number of frames */
-  GK_set_numsteps((int)num_frames);
+    /* Now set the number of frames */
+    GK_set_numsteps((int) num_frames);
 
-  return (TCL_OK);
+    return (TCL_OK);
 
 }
 
@@ -278,25 +266,23 @@ Nset_numsteps_cmd (
    Side Effects:
        Nukes all keyframes.
 ******************************************************** */
-int 
-Nclear_keys_cmd (
-    Nv_data *data,         /* Local data */
-    Tcl_Interp *interp,    /* Current interpreter */
-    int argc,              /* Number of arguments */
-    char **argv           /* Argument strings */
-)
+int Nclear_keys_cmd(Nv_data * data,	/* Local data */
+		    Tcl_Interp * interp,	/* Current interpreter */
+		    int argc,	/* Number of arguments */
+		    char **argv	/* Argument strings */
+    )
 {
-  /* Parse arguments */
+    /* Parse arguments */
 
-  if (argc != 1) {
-    interp->result="Error: should be Nclear_keys";
-    return (TCL_ERROR);
-  }
+    if (argc != 1) {
+	interp->result = "Error: should be Nclear_keys";
+	return (TCL_ERROR);
+    }
 
-  /* Call the function */
-  GK_clear_keys();
+    /* Call the function */
+    GK_clear_keys();
 
-  return (TCL_OK);
+    return (TCL_OK);
 
 }
 
@@ -350,72 +336,83 @@ Here's the function def from Bill:
        Adds or replaces the given key with the given values.
 
 ******************************************************** */
-int 
-Nadd_key_cmd (
-    Nv_data *data,         /* Local data */
-    Tcl_Interp *interp,    /* Current interpreter */
-    int argc,              /* Number of arguments */
-    char **argv           /* Argument strings */
-)
+int Nadd_key_cmd(Nv_data * data,	/* Local data */
+		 Tcl_Interp * interp,	/* Current interpreter */
+		 int argc,	/* Number of arguments */
+		 char **argv	/* Argument strings */
+    )
 {
-  /* Parse arguments */
-  double pos, precis;
-  unsigned long fmask;
-  int force_replace;
-  char **listels;
-  int numels, i;
+    /* Parse arguments */
+    double pos, precis;
+    unsigned long fmask;
+    int force_replace;
+    char **listels;
+    int numels, i;
 
-  if (argc != 5) {
-    interp->result="Error: should be Nadd_key pos fmask_list force_replace precis";
-    return (TCL_ERROR);
-  }
-
-  if (Tcl_GetDouble(interp, argv[1], &pos) != TCL_OK) 
-    return TCL_ERROR;
-  if (Tcl_GetDouble(interp, argv[4], &precis) != TCL_OK)
-    return TCL_ERROR;
-  if (Tcl_GetBoolean(interp, argv[3], &force_replace) != TCL_OK)
-    return TCL_ERROR;
-  if (Tcl_SplitList(interp, argv[2], &numels, &listels) != TCL_OK)
-    return TCL_ERROR;
-
-  fmask=0;
-  for (i=0; i<numels; i++) {
-    if (!strncmp(listels[i], "KF_FROMX_MASK", 13)) {
-      fmask |= KF_FROMX_MASK;
-    } else if (!strncmp(listels[i], "KF_FROMY_MASK", 13)) {
-      fmask |= KF_FROMY_MASK;
-    } else if (!strncmp(listels[i], "KF_FROMZ_MASK", 13)) {
-      fmask |= KF_FROMZ_MASK;
-    } else if (!strncmp(listels[i], "KF_FROM_MASK", 12)) {
-      fmask |= KF_FROM_MASK;
-    } else if (!strncmp(listels[i], "KF_DIRX_MASK", 12)) {
-      fmask |= KF_DIRX_MASK;
-    } else if (!strncmp(listels[i], "KF_DIRY_MASK", 12)) {
-      fmask |= KF_DIRY_MASK;
-    } else if (!strncmp(listels[i], "KF_DIRZ_MASK", 12)) {
-      fmask |= KF_DIRZ_MASK;
-    } else if (!strncmp(listels[i], "KF_DIR_MASK", 11)) {
-      fmask |= KF_DIR_MASK;
-    } else if (!strncmp(listels[i], "KF_FOV_MASK", 11)) {
-      fmask |= KF_FOV_MASK;
-    } else if (!strncmp(listels[i], "KF_TWIST_MASK", 13)) {
-      fmask |= KF_TWIST_MASK;
-    } else if (!strncmp(listels[i], "KF_ALL_MASK", 11)) {
-      fmask |= KF_ALL_MASK;
-    } else {
-      sprintf(interp->result, "Error: mask constant %s not understood", listels[i]);
-      free(listels);
-      return (TCL_ERROR);
+    if (argc != 5) {
+	interp->result =
+	    "Error: should be Nadd_key pos fmask_list force_replace precis";
+	return (TCL_ERROR);
     }
-  }
 
-  free(listels);
+    if (Tcl_GetDouble(interp, argv[1], &pos) != TCL_OK)
+	return TCL_ERROR;
+    if (Tcl_GetDouble(interp, argv[4], &precis) != TCL_OK)
+	return TCL_ERROR;
+    if (Tcl_GetBoolean(interp, argv[3], &force_replace) != TCL_OK)
+	return TCL_ERROR;
+    if (Tcl_SplitList(interp, argv[2], &numels, &listels) != TCL_OK)
+	return TCL_ERROR;
 
-  /* Call the function */
-  GK_add_key((float)pos, fmask, force_replace, (float)precis);
+    fmask = 0;
+    for (i = 0; i < numels; i++) {
+	if (!strncmp(listels[i], "KF_FROMX_MASK", 13)) {
+	    fmask |= KF_FROMX_MASK;
+	}
+	else if (!strncmp(listels[i], "KF_FROMY_MASK", 13)) {
+	    fmask |= KF_FROMY_MASK;
+	}
+	else if (!strncmp(listels[i], "KF_FROMZ_MASK", 13)) {
+	    fmask |= KF_FROMZ_MASK;
+	}
+	else if (!strncmp(listels[i], "KF_FROM_MASK", 12)) {
+	    fmask |= KF_FROM_MASK;
+	}
+	else if (!strncmp(listels[i], "KF_DIRX_MASK", 12)) {
+	    fmask |= KF_DIRX_MASK;
+	}
+	else if (!strncmp(listels[i], "KF_DIRY_MASK", 12)) {
+	    fmask |= KF_DIRY_MASK;
+	}
+	else if (!strncmp(listels[i], "KF_DIRZ_MASK", 12)) {
+	    fmask |= KF_DIRZ_MASK;
+	}
+	else if (!strncmp(listels[i], "KF_DIR_MASK", 11)) {
+	    fmask |= KF_DIR_MASK;
+	}
+	else if (!strncmp(listels[i], "KF_FOV_MASK", 11)) {
+	    fmask |= KF_FOV_MASK;
+	}
+	else if (!strncmp(listels[i], "KF_TWIST_MASK", 13)) {
+	    fmask |= KF_TWIST_MASK;
+	}
+	else if (!strncmp(listels[i], "KF_ALL_MASK", 11)) {
+	    fmask |= KF_ALL_MASK;
+	}
+	else {
+	    sprintf(interp->result, "Error: mask constant %s not understood",
+		    listels[i]);
+	    free(listels);
+	    return (TCL_ERROR);
+	}
+    }
 
-  return (TCL_OK);
+    free(listels);
+
+    /* Call the function */
+    GK_add_key((float) pos, fmask, force_replace, (float) precis);
+
+    return (TCL_OK);
 
 }
 
@@ -438,36 +435,34 @@ Nadd_key_cmd (
        first (lowest pos) keyframe within precision of position.
 
 ******************************************************** */
-int 
-Ndelete_key_cmd (
-    Nv_data *data,         /* Local data */
-    Tcl_Interp *interp,    /* Current interpreter */
-    int argc,              /* Number of arguments */
-    char **argv           /* Argument strings */
-)
+int Ndelete_key_cmd(Nv_data * data,	/* Local data */
+		    Tcl_Interp * interp,	/* Current interpreter */
+		    int argc,	/* Number of arguments */
+		    char **argv	/* Argument strings */
+    )
 {
-  /* Parse arguments */
-  double pos, precis;
-  int justone;
-  int num_deleted;
+    /* Parse arguments */
+    double pos, precis;
+    int justone;
+    int num_deleted;
 
-  if (argc != 4) {
-    interp->result="Error: should be Ndelete_key pos precis justone";
-    return (TCL_ERROR);
-  }
+    if (argc != 4) {
+	interp->result = "Error: should be Ndelete_key pos precis justone";
+	return (TCL_ERROR);
+    }
 
-  if (Tcl_GetDouble(interp, argv[1], &pos) != TCL_OK) 
-    return TCL_ERROR;
-  if (Tcl_GetDouble(interp, argv[2], &precis) != TCL_OK)
-    return TCL_ERROR;
-  if (Tcl_GetBoolean(interp, argv[3], &justone) != TCL_OK)
-    return TCL_ERROR;
+    if (Tcl_GetDouble(interp, argv[1], &pos) != TCL_OK)
+	return TCL_ERROR;
+    if (Tcl_GetDouble(interp, argv[2], &precis) != TCL_OK)
+	return TCL_ERROR;
+    if (Tcl_GetBoolean(interp, argv[3], &justone) != TCL_OK)
+	return TCL_ERROR;
 
-  /* Call the function */
-  num_deleted=GK_delete_key((float)pos, (float)precis, justone);
+    /* Call the function */
+    num_deleted = GK_delete_key((float) pos, (float) precis, justone);
 
-  sprintf(interp->result,"%d",num_deleted);
-  return (TCL_OK);
+    sprintf(interp->result, "%d", num_deleted);
+    return (TCL_OK);
 
 }
 
@@ -489,39 +484,38 @@ Ndelete_key_cmd (
        to new_position +- precision
 
 ******************************************************** */
-int 
-Nmove_key_cmd (
-    Nv_data *data,         /* Local data */
-    Tcl_Interp *interp,    /* Current interpreter */
-    int argc,              /* Number of arguments */
-    char **argv           /* Argument strings */
-)
+int Nmove_key_cmd(Nv_data * data,	/* Local data */
+		  Tcl_Interp * interp,	/* Current interpreter */
+		  int argc,	/* Number of arguments */
+		  char **argv	/* Argument strings */
+    )
 {
-  /* Parse arguments */
-  double new_pos, old_pos, precis;
-  int num_moved;
+    /* Parse arguments */
+    double new_pos, old_pos, precis;
+    int num_moved;
 
-  if (argc != 4) {
-    interp->result="Error: should be Nmove_key oldpos precis newpos";
-    return (TCL_ERROR);
-  }
+    if (argc != 4) {
+	interp->result = "Error: should be Nmove_key oldpos precis newpos";
+	return (TCL_ERROR);
+    }
 
-  if (Tcl_GetDouble(interp, argv[1], &old_pos) != TCL_OK) 
-    return TCL_ERROR;
-  if (Tcl_GetDouble(interp, argv[2], &precis) != TCL_OK)
-    return TCL_ERROR;
-  if (Tcl_GetDouble(interp, argv[3], &new_pos) != TCL_OK)
-    return TCL_ERROR;
+    if (Tcl_GetDouble(interp, argv[1], &old_pos) != TCL_OK)
+	return TCL_ERROR;
+    if (Tcl_GetDouble(interp, argv[2], &precis) != TCL_OK)
+	return TCL_ERROR;
+    if (Tcl_GetDouble(interp, argv[3], &new_pos) != TCL_OK)
+	return TCL_ERROR;
 
-  /* Call the function */
-  num_moved=GK_move_key((float)old_pos, (float)precis, (float)new_pos);
+    /* Call the function */
+    num_moved = GK_move_key((float) old_pos, (float) precis, (float) new_pos);
 
 #ifdef DEBUG_MSG
-  fprintf(stderr,"Arguments to move_key %f %f %f\n",(float)old_pos, (float)precis, (float)new_pos);
-  fprintf(stderr,"Frames moved = %d\n",num_moved);
+    fprintf(stderr, "Arguments to move_key %f %f %f\n", (float) old_pos,
+	    (float) precis, (float) new_pos);
+    fprintf(stderr, "Frames moved = %d\n", num_moved);
 #endif
-  sprintf(interp->result,"%d",num_moved);
-  return (TCL_OK);
+    sprintf(interp->result, "%d", num_moved);
+    return (TCL_OK);
 
 }
 
@@ -541,33 +535,32 @@ Nmove_key_cmd (
    Side Effects:
        Moves the animation to the given frame.
 ******************************************************** */
-int 
-Ndo_framestep_cmd (
-    Nv_data *data,         /* Local data */
-    Tcl_Interp *interp,    /* Current interpreter */
-    int argc,              /* Number of arguments */
-    char **argv           /* Argument strings */
-)
+int Ndo_framestep_cmd(Nv_data * data,	/* Local data */
+		      Tcl_Interp * interp,	/* Current interpreter */
+		      int argc,	/* Number of arguments */
+		      char **argv	/* Argument strings */
+    )
 {
-  /* Parse arguments */
-  long step;
-  int render_type;
+    /* Parse arguments */
+    long step;
+    int render_type;
 
-  if (argc != 3) {
-    interp->result="Error: should be Ndo_framestep frame_# [TRUE | FALSE]";
-    return (TCL_ERROR);
-  }
+    if (argc != 3) {
+	interp->result =
+	    "Error: should be Ndo_framestep frame_# [TRUE | FALSE]";
+	return (TCL_ERROR);
+    }
 
-  if (Tcl_GetInt(interp, argv[1], (int *)&step) != TCL_OK)
-    return (TCL_ERROR);
+    if (Tcl_GetInt(interp, argv[1], (int *) &step) != TCL_OK)
+	return (TCL_ERROR);
 
-  if (Tcl_GetBoolean(interp, argv[2], &render_type) != TCL_OK)
-    return (TCL_ERROR);
+    if (Tcl_GetBoolean(interp, argv[2], &render_type) != TCL_OK)
+	return (TCL_ERROR);
 
-  /* Call the function */
-  GK_do_framestep((int)step, render_type);
+    /* Call the function */
+    GK_do_framestep((int) step, render_type);
 
-  return (TCL_OK);
+    return (TCL_OK);
 
 }
 
@@ -585,105 +578,97 @@ Ndo_framestep_cmd (
    Side Effects:
        Draws the current path on the screen.
 ******************************************************** */
-int 
-Nshow_site_cmd (
-    Nv_data *data,         /* Local data */
-    Tcl_Interp *interp,    /* Current interpreter */
-    int argc,              /* Number of arguments */
-    char **argv           /* Argument strings */
-)
+int Nshow_site_cmd(Nv_data * data,	/* Local data */
+		   Tcl_Interp * interp,	/* Current interpreter */
+		   int argc,	/* Number of arguments */
+		   char **argv	/* Argument strings */
+    )
 {
-  int arg1;
+    int arg1;
 
-  /* Parse arguments */
-  if (argc != 2) {
-    interp->result="Error: should be Nshow_site [ TRUE | FALSE] ";
-    return (TCL_ERROR);
-  }
+    /* Parse arguments */
+    if (argc != 2) {
+	interp->result = "Error: should be Nshow_site [ TRUE | FALSE] ";
+	return (TCL_ERROR);
+    }
 
-  /* Parse out the boolean value */
-  if (Tcl_GetBoolean(interp, argv[1], &arg1) != TCL_OK) 
-    return (TCL_ERROR);
+    /* Parse out the boolean value */
+    if (Tcl_GetBoolean(interp, argv[1], &arg1) != TCL_OK)
+	return (TCL_ERROR);
 
-  /* Call the function */
-  GK_show_site(arg1);
+    /* Call the function */
+    GK_show_site(arg1);
 
-  return (TCL_OK);
+    return (TCL_OK);
 
 }
 
-int
-Nprint_keys_cmd (
-	Nv_data *data,         /* Local data */
-	Tcl_Interp *interp,    /* Current interpreter */
-	int argc,              /* Number of arguments */
-	char **argv           /* Argument strings */
-	)
+int Nprint_keys_cmd(Nv_data * data,	/* Local data */
+		    Tcl_Interp * interp,	/* Current interpreter */
+		    int argc,	/* Number of arguments */
+		    char **argv	/* Argument strings */
+    )
 {
-	  /* Parse arguments */
-	  if (argc != 2) {
-		interp->result="Error: should be Nprint_keys filename" ;
-		return (TCL_ERROR);
-		}
+    /* Parse arguments */
+    if (argc != 2) {
+	interp->result = "Error: should be Nprint_keys filename";
+	return (TCL_ERROR);
+    }
 
-	  /* Call function */
-	GK_print_keys(argv[1]);
+    /* Call function */
+    GK_print_keys(argv[1]);
 
-	return (TCL_OK);
+    return (TCL_OK);
 
 }
 
-int 
-Nshow_vect_cmd (
-    Nv_data *data,         /* Local data */
-    Tcl_Interp *interp,    /* Current interpreter */
-    int argc,              /* Number of arguments */
-    char **argv           /* Argument strings */
-)
+int Nshow_vect_cmd(Nv_data * data,	/* Local data */
+		   Tcl_Interp * interp,	/* Current interpreter */
+		   int argc,	/* Number of arguments */
+		   char **argv	/* Argument strings */
+    )
 {
-  int arg1;
+    int arg1;
 
-  /* Parse arguments */
-  if (argc != 2) {
-    interp->result="Error: should be Nshow_vect [ TRUE | FALSE] ";
-    return (TCL_ERROR);
-  }
+    /* Parse arguments */
+    if (argc != 2) {
+	interp->result = "Error: should be Nshow_vect [ TRUE | FALSE] ";
+	return (TCL_ERROR);
+    }
 
-  /* Parse out the boolean value */
-  if (Tcl_GetBoolean(interp, argv[1], &arg1) != TCL_OK)
-    return (TCL_ERROR);
+    /* Parse out the boolean value */
+    if (Tcl_GetBoolean(interp, argv[1], &arg1) != TCL_OK)
+	return (TCL_ERROR);
 
-  /* Call the function */
-  GK_show_vect(arg1);
+    /* Call the function */
+    GK_show_vect(arg1);
 
-  return (TCL_OK);
+    return (TCL_OK);
 
 }
 
-int 
-Nshow_path_cmd (
-    Nv_data *data,         /* Local data */
-    Tcl_Interp *interp,    /* Current interpreter */
-    int argc,              /* Number of arguments */
-    char **argv           /* Argument strings */
-)
+int Nshow_path_cmd(Nv_data * data,	/* Local data */
+		   Tcl_Interp * interp,	/* Current interpreter */
+		   int argc,	/* Number of arguments */
+		   char **argv	/* Argument strings */
+    )
 {
-  int arg1;
+    int arg1;
 
-  /* Parse arguments */
-  if (argc != 2) {
-    interp->result="Error: should be Nshow_path [ TRUE | FALSE] ";
-    return (TCL_ERROR);
-  }
+    /* Parse arguments */
+    if (argc != 2) {
+	interp->result = "Error: should be Nshow_path [ TRUE | FALSE] ";
+	return (TCL_ERROR);
+    }
 
-  /* Parse out the boolean value */
-  if (Tcl_GetBoolean(interp, argv[1], &arg1) != TCL_OK)
-    return (TCL_ERROR);
+    /* Parse out the boolean value */
+    if (Tcl_GetBoolean(interp, argv[1], &arg1) != TCL_OK)
+	return (TCL_ERROR);
 
-  /* Call the function */
-  GK_show_path(arg1);
+    /* Call the function */
+    GK_show_path(arg1);
 
-  return (TCL_OK);
+    return (TCL_OK);
 
 }
 
@@ -701,24 +686,22 @@ Nshow_path_cmd (
    Side Effects:
        Saves the current GL screen to the given file.
 ******************************************************** */
-int 
-Nwrite_rgb_cmd (
-    Nv_data *data,         /* Local data */
-    Tcl_Interp *interp,    /* Current interpreter */
-    int argc,              /* Number of arguments */
-    char **argv           /* Argument strings */
-)
+int Nwrite_rgb_cmd(Nv_data * data,	/* Local data */
+		   Tcl_Interp * interp,	/* Current interpreter */
+		   int argc,	/* Number of arguments */
+		   char **argv	/* Argument strings */
+    )
 {
-  /* Parse arguments */
-  if (argc != 2) {
-    interp->result="Error: should be Nwrite_rgb file_name";
-    return (TCL_ERROR);
-  }
+    /* Parse arguments */
+    if (argc != 2) {
+	interp->result = "Error: should be Nwrite_rgb file_name";
+	return (TCL_ERROR);
+    }
 
-  /* Call the function */
-  GS_write_rgb(argv[1]);
+    /* Call the function */
+    GS_write_rgb(argv[1]);
 
-  return (TCL_OK);
+    return (TCL_OK);
 
 }
 
@@ -736,24 +719,22 @@ Nwrite_rgb_cmd (
    Side Effects:
        Saves the current GL screen to the given file.
 ******************************************************** */
-int
-Nwrite_ppm_cmd (
-    Nv_data *data,         /* Local data */
-    Tcl_Interp *interp,    /* Current interpreter */
-    int argc,              /* Number of arguments */
-    char **argv           /* Argument strings */
-)
+int Nwrite_ppm_cmd(Nv_data * data,	/* Local data */
+		   Tcl_Interp * interp,	/* Current interpreter */
+		   int argc,	/* Number of arguments */
+		   char **argv	/* Argument strings */
+    )
 {
-  /* Parse arguments */
-  if (argc != 2) {
-    interp->result="Error: should be Nwrite_ppm file_name";
-    return (TCL_ERROR);
-  }
+    /* Parse arguments */
+    if (argc != 2) {
+	interp->result = "Error: should be Nwrite_ppm file_name";
+	return (TCL_ERROR);
+    }
 
-  /* Call the function */
-  GS_write_ppm(argv[1]);
+    /* Call the function */
+    GS_write_ppm(argv[1]);
 
-  return (TCL_OK);
+    return (TCL_OK);
 
 }
 
@@ -771,55 +752,60 @@ Nwrite_ppm_cmd (
    Side Effects:
        Saves the current GL screen to the given file.
 ******************************************************** */
-int
-Nwrite_tif_cmd (
-    Nv_data *data,         /* Local data */
-    Tcl_Interp *interp,    /* Current interpreter */
-    int argc,              /* Number of arguments */
-    char **argv           /* Argument strings */
-)
+int Nwrite_tif_cmd(Nv_data * data,	/* Local data */
+		   Tcl_Interp * interp,	/* Current interpreter */
+		   int argc,	/* Number of arguments */
+		   char **argv	/* Argument strings */
+    )
 {
-  /* Parse arguments */
-  if (argc != 2) {
-    interp->result="Error: should be Nwrite_ppm file_name";
-    return (TCL_ERROR);
-  }
+    /* Parse arguments */
+    if (argc != 2) {
+	interp->result = "Error: should be Nwrite_ppm file_name";
+	return (TCL_ERROR);
+    }
 
-  /* Call the function */
-  GS_write_tif(argv[1]);
+    /* Call the function */
+    GS_write_tif(argv[1]);
 
-  return (TCL_OK);
+    return (TCL_OK);
 
 }
 
 /********************************************************* */
-#ifdef OS_RENDER
-int
-Noff_screen_cmd(
-    Nv_data *data,         /* Local data */
-    Tcl_Interp *interp,    /* Current interpreter */
-    int argc,              /* Number of arguments */
-    char **argv           /* Argument strings */
-)
+int Noff_screen_cmd(Nv_data * data,	/* Local data */
+		    Tcl_Interp * interp,	/* Current interpreter */
+		    int argc,	/* Number of arguments */
+		    char **argv	/* Argument strings */
+    )
 {
 
- int flag;
+    int flag;
+    int x, y;
+    int width, height, maxx, maxy;
 
-  /* Parse arguments */
-  if (argc != 2) {
-    interp->result="Error: should be Noff_screen flag";
-    return (TCL_ERROR);
-  }
+    /* Parse arguments */
+    if (argc != 2) {
+	interp->result = "Error: should be Noff_screen flag";
+	return (TCL_ERROR);
+    }
 
-  flag = atoi(argv[1]);
+    flag = atoi(argv[1]);
+    GS_zoom_setup(&x, &y, &width, &height, &maxx, &maxy);
 
-  /* Call the function */
-  GS_oscontext(flag);
+    if (flag == 1) {
+	if (Create_OS_Ctx(width, height) == -1) {
+	    interp->result = "Error: Off screen context returned error";
+	    return (TCL_ERROR);
+	}
 
-  return (TCL_OK);
+    }
+    else {
+	if (Destroy_OS_Ctx() == -1) {
+	    interp->result = "Error: Destroy context returned error";
+	    return (TCL_ERROR);
+	}
+    }
+
+    return (TCL_OK);
 
 }
-#endif
-
-
-

@@ -1,14 +1,13 @@
 #include "gis.h"
 
-char *
-openvect (name)
-    char *name;
+char *openvect(name)
+     char *name;
 {
     char *mapset;
 
-    mapset = G_find_vector2 (name, "");
+    mapset = G_find_vector2(name, "");
 
     if (mapset == NULL)
-	fprintf (stderr, "warning: %s - vector file not found\n", name);
+	fprintf(stderr, "warning: %s - vector file not found\n", name);
     return mapset;
 }
