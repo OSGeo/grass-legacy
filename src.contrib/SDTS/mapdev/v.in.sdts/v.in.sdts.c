@@ -85,7 +85,7 @@ main (int argc, char *argv[])
     new->required        = NO;
     new->multiple        = NO;
     new->gisprompt        = "new,dig,vector";
-    new->description        = "vector output file";
+    new->description        = "vector output file (if not given: -i mode and no output written)";
 
     dbpath = G_define_option();
     dbpath->key            = "dbpath";
