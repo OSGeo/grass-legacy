@@ -1,4 +1,4 @@
-$Id: TODO,v 1.4 2000-07-06 07:39:23 justin Exp $
+$Id: TODO,v 1.5 2000-07-06 19:51:03 michel Exp $
 
 TODO for GRASS GIS:
 
@@ -54,11 +54,11 @@ Modules:
     - high resolution output (definable extent like CELL driver)
       (Being worked on by )
 
-- v.out.e00: write it
-  (Being worked on by )
+- v.out.e00: make it working
+  (Being worked on by Michel Wurtz)
 
-- r.out.e00: as well or m.out.e00
-  (Being worked on by )
+- r.out.e00: write it
+  (Being worked on by Michel Wurtz)
 
 - Reorganize initialization routines and write a Tcl/Tk interface
   for initialization
