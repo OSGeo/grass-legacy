@@ -1,0 +1,163 @@
+.\" @(#)geod.1 - 1.1
+.nr LL 5.5i
+.ad b
+.hy 1
+.TH GEOD 1 "90/09/25 Rel. 1, Ver. 1" "USGS"
+.SH NAME
+geod \- direct geodesic computations
+.br
+invgeod \- inverse geodesic computations
+.SH SYNOPSIS
+.B geod
+[
+.B \-acfFptTwW
+[
+.I args
+] ] [
+.B +args
+]
+file[s]
+.br
+.B invgeod
+[
+.B \-acfFptTwW
+[
+.I args
+] ] [
+.B +args
+]
+file[s]
+.SH DESCRIPTION
+.I Geod
+(direct) and
+.I invgeod
+(inverse)
+perform geodesic (\(``Great Circle\('') computations for determining
+latitude, longitude and back azimuth of a terminus point
+given a initial point latitude, longitude, azimuth and distance (direct) or
+the forward and back azimuths and distance between an initial and
+terminus point latitudes and longitudes (inverse).
+.PP
+The following runline control parameters can appear in any order:
+.TP
+.B \-a
+Latitude and longitudes of the initial and terminal points,
+forward and back azimuths and distance are output.
+.TP
+.BI \-t "a"
+.I A
+specifies a character employed as the first character to denote
+a control line to be passed through without processing.
+.TP
+.BI \-c " file"
+.I File
+is the source file name of additional + option control data for the projection
+procedures.
+.TP
+.BI \-[f|F] " format"
+.I Format
+is a
+.I printf
+format string to control the output form of the geographic coordinate values
+(\fBf\fR) or distance value (\fBF\fR).
+The default mode is DMS for geographic coordinates and "%.3f" for distance.
+.TP
+.BI \-[w|W] n
+.I N
+is the number of significant fractional digits to employ for
+seconds output (when the option is not specified,
+.B \-w3
+is assumed).
+When
+.B \-W
+is employed the fields will be constant width with leading zeroes.
+.TP
+.B \-p
+This option causes the azimuthal values to be output as unsigned
+numbers between 0 and 360\(de.
+.PP
+The
+.B +args
+run-line arguments are associated with geodetic parameters
+.B \-c
+option where the + prefix is optional.
+The options are processed in left to right order
+from the run line followed by processing the entries in the
+.B\-c
+file.
+Reentry of an option is ignored with the first occurance assumed to
+be the desired value.
+.PP
+One or more
+.I files
+(processed in left to right order)
+specify the source of data to be transformed.
+A \- will specify the location of processing standard input.
+If no files are specified, the input is assumed to be from
+.I stdin.
+.PP
+For direct determinations input data must be in latitude,
+longitude, azimuth and distance order and output will be
+latitude, longitude and back azimuth of the terminus point.
+Latitude, longitude of the initial and terminus point are
+input for the inverse mode and respective forward and back
+azimuth from the initial and terminus points are output along
+with the distance between the points.
+.PP
+Input geographic coordinates
+(latitude and longitude) and azimuthal data must be in DMS format and input
+distance data must be in units consistent with the ellipsoid
+major axis or sphere radius units.
+Output geographic coordinates will be in DMS
+(if the
+.B \-f
+switch is not employed) to 0.001"
+with trailing, zero-valued minute-second fields deleted.
+Output distance data will be in the same units as the ellipsoid or
+sphere radius.
+.PP
+The Earth's ellipsoidal figure may be selected in the same
+manner as program
+.B proj
+by using
+.B "+ellps=, +a=, +es=,"
+etc.
+.B Geod
+can be used in the inverse mode by specifying
+.B +inv.
+.PP
+.I Geod
+may also be used to determine intermediate points along either
+a geodesic line between two points or along an arc of specified distance
+from a geographic point.
+In both cases an initial point must be specified with
+.BI +lat_1= lat
+and
+.BI +lon_1= lon
+parameters and either a terminus point
+.BI +lat_2= lat
+and
+.BI +lon_2= lon
+or a distance and azimuth from the initial point with
+.BI +S= distance
+and
+.BI +A= azimuth
+must be specified.
+.PP
+If points along a geodesic are to be determined then either
+.BI +n_S= integer
+specifying the number of intermediate points and/or
+.BI +del_S= distance
+specifying the incremental distance between points must be specified.
+.PP
+To determine points along an arc equidistant from the initial point both
+.BI +del_A= angle
+and
+.BI +n_A= integer
+must be specified which determine the respective angular increments
+and number of points to be determined.
+.RE
+.SH SEE ALSO
+Thomas, P.D., 1970,
+.I "Spheroidal Geodesics, Reference Systems & Local Geometry:"
+U.S. Naval Oceanographic  Office, S-138.
