@@ -127,11 +127,11 @@ elev=$GIS_OPT_map
 if [ "$GIS_OPT_map" = "$GIS_OPT_shadedmap" ]; then
 	echo ""
 	echo "Input elevation map and output relief map must have different names"
-	return
+	exit 1
 fi
 
-if [ "$GIS_OPT_shadedmap" = "" ]; then
-	ELEVSHADE="$GIS_OPT_map_relshade" 
+if [ "$GIS_OPT_shadedmap" = "(null)" ]; then
+    ELEVSHADE=$elev"_shade"
 else
 	ELEVSHADE=$GIS_OPT_shadedmap
 fi
