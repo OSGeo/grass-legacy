@@ -10,3 +10,6 @@ DEPENDENCIES= $(IMAGERYDEP) $(IORTHODEP) $(GISDEP) $(VASKDEP)
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default: etc
+
+htmletc:
+	@echo no docs needed for $(PGM)
