@@ -39,7 +39,7 @@ int main(int argc, char **argv)
 	shh->key = 'q';
 	shh->description = "Load quietly";
 	
-	if(!!site)
+	if(!site)
 		opt1->required = YES;
 
 	if (G_parser(argc, argv))
