@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.23 2000-10-11 14:44:58 markus Exp $
+$Id: BUGS,v 1.24 2000-10-11 16:51:17 markus Exp $
 
 Maintained by
    Markus Neteler
@@ -228,6 +228,8 @@ r.stats: some inconsistent results comparing to r.average
 s.in.ascii: 
      - errors with more than 2 dimensions (some numbers are read as
             attribute)
+     - parameter needed to tell module if more than 2 geometric dimensions
+       are there (required for volume data)
 
 s.to.rast, s.to.vect:
  should accept sites_list even if #cats field is missing and
@@ -311,7 +313,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log: BUGS,v $
- Revision 1.23  2000-10-11 14:44:58  markus
+ Revision 1.24  2000-10-11 16:51:17  markus
+ added s.in.ascii dimension bug
+
+ Revision 1.23  2000/10/11 14:44:58  markus
  added r3.info bug
 
  Revision 1.22  2000/10/11 14:09:41  markus
