@@ -49,17 +49,18 @@ int main(int argc, char **argv)
 
     /* Conditionalize R_open_driver() so "help" works, open quiet as well */
     R__open_quiet();
-    if (R_open_driver() != 0) {
-       G_fatal_error ("No graphics device selected");
-    }
-    if (D_get_dig_list (&vect, &nvects) < 0)
-       G_fatal_error ("No vector map shown in monitor, use d.vect first");
-    else
+    if (R_open_driver() == 0)
     {
-       vect = (char **)G_realloc(vect, (nvects+1)*sizeof(char *));
-       vect[nvects] = NULL;
+        if(D_get_dig_list (&vect, &nvects) < 0)
+            vect = NULL;
+        else
+        {
+            vect = (char **)G_realloc(vect, (nvects+1)*sizeof(char *));
+            vect[nvects] = NULL;
+        }
+
+        R_close_driver();
     }
-    R_close_driver();
 
     map = G_define_standard_option(G_OPT_V_MAP);
 
@@ -163,9 +164,13 @@ int main(int argc, char **argv)
     Vect_open_old (&Map, map->answer, mapset); 
 
     if (R_open_driver() != 0) {
-    G_fatal_error ("No graphics device selected");
-    Vect_close(&Map);
+       Vect_close(&Map);
+       G_fatal_error ("No graphics device selected");
     }
+
+    if (D_get_dig_list (&vect, &nvects) < 0)
+        G_fatal_error ("No vector map shown in monitor, use d.vect first");
+
     D_setup(0);
 
     G_setup_plot (D_get_d_north(), D_get_d_south(),
