@@ -68,7 +68,7 @@ old2new (char *in, char *out, int endian)
      * If cat is already attached but new one is nearer
      * set cat to new one.  */
      
-     G_message ( _("Attaching categories..."));
+     G_message ( _("Attaching categories...\n"));
      
      for (i=0; i < ncats; i++){
 	 G_percent ( i, ncats - 1, 1 ); 
@@ -97,7 +97,7 @@ old2new (char *in, char *out, int endian)
     }
      
     /* Write to new file */
-    G_message ( _("Writing new file..."));
+    G_message ( _("Writing new file...\n"));
     pnt_out = Vect_new_line_struct ();
     cat_out = Vect_new_cats_struct();
     
@@ -118,7 +118,7 @@ old2new (char *in, char *out, int endian)
 	    j++;
             Vect_reset_cats (cat_out);
         }
-        G_message ( _("%-5d points and lines written to output file."),j);
+        G_message ( _("%-5d points and lines written to output file.\n"),j);
     }
     /* Write centroids */    
     j = 0;
@@ -132,7 +132,7 @@ old2new (char *in, char *out, int endian)
             Vect_reset_cats (cat_out);
 	}
     } 
-    G_message ( _("%-5d centroids written to output file."),j);
+    G_message ( _("%-5d centroids written to output file.\n"),j);
 
     /* Convert dig_cats to table */
     attributes ( in, &Mapout );
