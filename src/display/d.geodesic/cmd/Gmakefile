@@ -1,5 +1,5 @@
 PGM=d.geodesic
-LIBES=$(GISLIB) $(DISPLAYLIB) $(RASTERLIB) $(MATHLIB)
+LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB)
 
 LIST = main.o mouse.o plot.o
 

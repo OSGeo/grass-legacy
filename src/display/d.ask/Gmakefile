@@ -1,7 +1,7 @@
 PGM=d.ask
 
 LIST = main.o
-LIBES = $(GISLIB) $(RASTERLIB)
+LIBES = $(RASTERLIB) $(GISLIB) 
 $(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 $(LIBES): #

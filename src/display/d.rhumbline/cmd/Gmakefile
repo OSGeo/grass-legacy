@@ -1,5 +1,5 @@
 PGM=d.rhumbline
-LIBES=$(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
+LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB) 
 
 LIST = main.o mouse.o plot.o
 
