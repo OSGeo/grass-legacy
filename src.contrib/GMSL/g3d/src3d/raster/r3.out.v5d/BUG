@@ -3,8 +3,6 @@ BUGS:
   the volume coordinates (region settings which where used when
   the volume was generated).
 
- * Probably the output is flipped north/south??
-
  * if 100 rows/cols/depth are there, only 99 rows/cols/depth will
    be exported to Vis5D: problem of center cell and corner cell
 
