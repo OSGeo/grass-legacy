@@ -30,6 +30,8 @@
 
 Actuator *filetypein;
 
+extern int Write_script;
+
 void
 my_beginscript()
 {
@@ -154,7 +156,7 @@ my_initscriptpanel()
     a->x=x;
     a->y=(y-=dy);
     a->downfunc=my_beginscript;
-    if (!ptr)	/* Write disabled */
+    if (!ptr && !Write_script)	/* Write disabled */
 	a->visible = 0;
     pnl_addact(a, p);
 
@@ -163,7 +165,7 @@ my_initscriptpanel()
     a->x=x;
     a->y=(y-=dy);
     a->downfunc=my_appendscript;
-    if (!ptr)	/* Write disabled */
+    if (!ptr && !Write_script)	/* Write disabled */
 	a->visible = 0;
     pnl_addact(a, p);
 
@@ -172,7 +174,7 @@ my_initscriptpanel()
     a->x=x;
     a->y=(y-=dy);
     a->downfunc=my_endscript;
-    if (!ptr)	/* Write disabled */
+    if (!ptr && !Write_script)	/* Write disabled */
 	a->visible = 0;
     pnl_addact(a, p);
 
@@ -227,7 +229,7 @@ my_initscriptpanel()
     a->newvalfunc=NULL;
     a->activefunc=my_setwritebutton;
     a->automatic=TRUE;
-    if (!ptr)	/* Write disabled */
+    if (!ptr && !Write_script)	/* Write disabled */
 	a->visible = 0;
     pnl_addact(a, p);
     }
