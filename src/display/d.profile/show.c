@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include "profile.h"
+
 static int nlines = 100;
 
 int show_cat (int width, char *name, int cat, char *label)
@@ -24,7 +26,11 @@ int show_mouse (void)
 	fprintf (stderr, "\n");
 	fprintf (stderr, "Buttons\n");
 	fprintf (stderr, " Left:  what's here\n");
+#ifdef ANOTHER_BUTTON
+	fprintf (stderr, " Moddle: quit\n");
+#else
 	fprintf (stderr, " Right: quit\n");
+#endif
 	nlines = 4;
     }
 }
