@@ -1,0 +1,16 @@
+LIST=main.o ask.o gen.o
+all: $(BIN)/cat2paint $(MAN1)/cats2paint $(HELP)/cats2paint
+
+$(BIN)/cats2paint: $(LIST) $(GISLIB) $(VASKLIB)
+	cc $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VASK)
+
+$(MAN1)/cats2paint: MAN
+	$(MANROFF)
+$(HELP)/cats2paint: HELP
+	rm -f $@
+	cp $? $@
+	chmod 444 $@
+
+$(LIST): parms.h
+$(GISLIB): #
+$(VASKLIB): #
