@@ -1,18 +1,61 @@
                    INSTALL GRASS 5.1 source code
 
-Compilation:
+Please read all text below.
+
+CURRENT STATUS
+
+The GRASS 5.1 code repository currently contains only the new
+3D/DBMS vector library and a few rewritten vector modules. 
+To compile the 5.1 code, source code from 5.0 is needed, which
+is automatically linked into the 5.1 directory structure. 
+In future we will migrate further code into the 5.1 directory
+structure.
+Because of that the source code of GRASS 5.0 is needed. When
+running "configure" the  full path to grass50/ has to be specified.
+
+
+COMPILATION
 
 CFLAGS="-g -Wall" ./configure --with-grass50=/full/path/to/grass50(MAIN)/source
 make mix   
 make       
 
+Explanation of options:
 --with-grass50    must be full path to MAIN (=experimental) branch (not 
                   release) of GRASS 5.0
 
-All targets:
+Explanation of all targets:
 make mix           - create symbolic links to grass50 for not yet uploaded files
 make copymix       - copy files from grass50
 make clean         - delete all files created by 'make' 
 make distclean     - 'make clean' + delete all files created by './configure'
 
 
+INSTALLATION
+
+After compilation, the resulting code is in the directory
+./dist.$ARCH
+and the scripts (grass51, ...) in
+./bin.$ARCH
+
+To run GRASS 5.1, simply start
+./bin.$ARCH/grass51
+
+Note that most modules from GRASS 5.0 are missing. However, they
+can be easily linked into the ./dist.$ARCH structure if needed.
+Or, new directories with new Makefiles must be added and the
+directory defined in ./tools/link.conf.
+
+
+SUPPORT
+
+Note that this code is extremely experimental. Without announcement the
+vector structure can change. But usually it will be possible to upgrade
+the data set. DO NOT USE THIS VERSION FOR PRODUCTION.
+
+If interested to develop GRASS 5.1, please join the GRASS developers mailing
+list:
+http://grass.itc.it/grassdevel.html
+
+------------------
+GRASS Development Team
