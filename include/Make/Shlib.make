@@ -1,7 +1,8 @@
 # common dependencies and rules for building shared libraries
 include $(MODULE_TOPDIR)/include/Make/Platform.make
+include $(MODULE_TOPDIR)/include/Make/Grass.make
 
-SHLIB = $(ARCH_LIBDIR)/$(SHLIB_PREFIX)$(SHLIB_NAME)$(SHLIB_SUFFIX)
+SHLIB = $(ARCH_LIBDIR)/$(SHLIB_PREFIX)$(SHLIB_NAME).$(VERSION_NUMBER)$(SHLIB_SUFFIX)
 
 #for i18N support
 PACKAGE ="grasslibs"
@@ -12,7 +13,7 @@ CFLAGS += $(SHLIB_CFLAGS) $(NLS_CFLAGS)
 LDFLAGS += $(SHLIB_LDFLAGS)
 
 $(SHLIB): $(SHLIB_OBJS)
-	$(SHLIB_LD) -o $@ $(LDFLAGS) $^ $(EXTRA_LIBS)
+	$(SHLIB_LD) -o $@ $(LDFLAGS) $^ $(EXTRA_LIBS) && ln -sf $(notdir $@) $(patsubst %.$(VERSION_NUMBER).so,%.so,$@)
 
 shlib: $(SHLIB)
 
