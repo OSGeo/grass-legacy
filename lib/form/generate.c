@@ -25,6 +25,19 @@ F_generate (char *drvname, char *dbname, char *tblname, char *key, int keyval,
     dbTable  *table;
     dbColumn *column;
     dbValue  *value;
+
+    int i = 0;
+    static char *encoding_list[] = {
+	"utf",
+	"ascii",
+	"iso8859-1",
+	"koi8-r",
+	NULL
+    };
+    char *enc_env;
+
+    G__read_env();
+    enc_env = G__getenv("GRASS_DB_ENCODING");
     
     /* TODO: support 'format' (txt, html), currently html only */
 
@@ -152,6 +165,25 @@ F_generate (char *drvname, char *dbname, char *tblname, char *key, int keyval,
 	        db_append_string (&html, buf);	
 	    }
 	} 
+	sprintf(buf, "Change data view encoding:<BR><SELECT NAME=%s SIZE=4>",
+		F_ENCODING);
+	db_append_string(&html, buf);
+
+	i = 0;
+	while (encoding_list[i] != NULL) {
+
+	    if (G_strcasecmp(encoding_list[i], enc_env) == 0)
+		sprintf(buf, "<OPTION VALUE=\"%s\" SELECTED>%s",
+			encoding_list[i], encoding_list[i]);
+	    else
+		sprintf(buf, "<OPTION VALUE=\"%s\">%s", encoding_list[i],
+			encoding_list[i]);
+	    ++i;
+	    db_append_string(&html, buf);
+	}
+
+	sprintf(buf, "</SELECT>");
+	db_append_string(&html, buf);
 	
 	/* Close form */
 	if ( edit_mode == F_EDIT ) {
