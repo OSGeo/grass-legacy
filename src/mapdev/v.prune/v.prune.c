@@ -55,10 +55,15 @@ int main (int argc, char **argv)
 	char *mapset;
 	char errmsg[100];
 
+	struct GModule *module;
 	struct Option *old, *new, *thresh;
 	struct Flag *inch_flag;
 
 	G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Prunes points from binary GRASS vector data files.";
 
 	inch_flag = G_define_flag();
 	inch_flag->key			= 'i';

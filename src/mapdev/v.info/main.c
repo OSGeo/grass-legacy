@@ -15,6 +15,7 @@ int main (
 int argc,
 char *argv[])
 {
+  struct GModule *module;
   struct Option *input;
   struct Map_info map;
   struct Categories cats;
@@ -23,6 +24,10 @@ char *argv[])
   int cats_ok, i;
 
   G_gisinit (argv[0]);
+
+  module = G_define_module();
+  module->description =
+	"Outputs basic information about a user-specified vector map layer.";
 
   input = G_define_option();
   input->key = "input";

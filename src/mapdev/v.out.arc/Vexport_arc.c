@@ -62,10 +62,15 @@ main (int argc, char **argv)
 			*lab_file,
 			*txt_file;
 
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4;
 
 	G_gisinit(argv[0]);
 	progname = G_program_name();
+
+	module = G_define_module();
+	module->description =
+		"Converts GRASS vector files to ARC/INFO's \"Generate\" file format.";
 
 	/* Define the different options */
 

@@ -33,12 +33,17 @@ int main (int argc, char *argv[])
         char code;
         double x, y;
 	FILE *Out, *Subj, *cat, *att, *tmp_file;
+	struct GModule *module;
 	struct Option *map, *new, *subj;
 	struct Flag *m_flag, *v_flag;
         struct Categories cats;
 
 	setbuf (stdout, NULL);
 	G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Merges vector map files.";
 
 	map = G_define_option();
 	map->key			= "map";

@@ -19,6 +19,7 @@ main (int argc, char *argv[])
 {
 	FILE *ascii;
 	struct dig_head d_head;
+	struct GModule *module;
 	struct Option *old, *new;
 	char *mapset;
 	char errmsg[200];
@@ -26,6 +27,11 @@ main (int argc, char *argv[])
 	struct Map_info Map;
 
 	G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Converts ASCII vector map layers "
+		"into binary vector map layers.";
 
 /************************** Command Parser ************************************/
 	old = G_define_option();

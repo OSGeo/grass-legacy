@@ -43,9 +43,14 @@ int main (argc, argv)
   char *dig_name;
   char buf[200];
 
+	struct GModule *module;
 
   /* check args and set flags  */
   struct Option *map;
+
+  module = G_define_module();
+  module->description =
+	"Remove duplicate items GRASS vector file.";
 
   map = G_define_option ();
   map->key = "map";

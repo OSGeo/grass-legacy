@@ -111,6 +111,7 @@ int main( int   argc, char *argv[])
     int (*btrkeycmp)(char *, char *);
     char buf[256];
 
+	struct GModule *module;
     struct {
 	struct Option *input, *logfile, *verbose, *attribute, *snapd, *minangle;
 	struct Option *scale, *pgdump, *dumpmode, *catlabel;
@@ -121,6 +122,10 @@ int main( int   argc, char *argv[])
     /* Are we running in Grass environment ? */
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Read an ArcView Shapefile.";
 
     /* define the different options */
 

@@ -60,12 +60,17 @@ char *argv[];
 	struct Map_info map;
 	struct line_pnts points;
 
+	struct GModule *module;
 	struct Flag *version_3;
 	struct Option *type;
 	struct Option *in;
 	struct Option *out;
 
 	G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Export routine from GRASS to IDRISI.";
 
 	version_3 = G_define_flag();
 	version_3->key = 'o';
