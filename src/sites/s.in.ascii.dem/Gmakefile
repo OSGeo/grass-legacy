@@ -1,0 +1,8 @@
+PGM=s.in.ascii.dem
+
+LIST=main.o get_site.o
+
+$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB)
+
+$(GISLIB): #
