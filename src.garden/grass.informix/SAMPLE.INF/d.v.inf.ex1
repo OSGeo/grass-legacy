@@ -1,0 +1,11 @@
+#!/bin/sh
+# test for d.vect.inf 
+# all required command line args are provided
+# DB=tiger, GISdb=spearfish
+# Output: vector display of primary and secondary
+#	  roads from TIGER type1 data. 
+#
+#
+$INF/d.vect.inf key=tlid map=t.roads \
+tab=type1 where='cfcc matches "A1*" OR cfcc matches "A2*"' 
+
