@@ -1,0 +1,308 @@
+.ce 2
+Porting GRASS3 to the OKIstation7300
+-----------------------------------
+
+.ce 2
+Dave Johnson
+June 17, 1991
+
+.ce 2
+INTRODUCTION
+------------
+
+There were a large number of problems encountered porting GRASS3 to
+the OKIstation7300.  Some of the problems stemmed from fact that there
+are two C-Compilers on the OKIstation and two corresponding sets of
+C libaries.  Many more problems stemmed from the fact that the OKI
+has 16 graphics bit-planes and under X-Windows the OKI uses a
+technique called "DirectColor" to map pixel values into color 
+look-up tables. 
+
+If you want to try OKI-GRASS out, log in as user grass.  User grass's
+account is set up to automatically start X-Windows, Open Look, the
+GRASS X-Windows graphics driver and GRASS (this is done in the 
+.profile and .olinitrc files). 
+
+.ce 2
+COMPILING GRASS: THE makehead FILE
+-----------------------------------
+
+Installing GRASS on the OKIstation was accomplished by following the
+instructions in the GRASS 3.0 Installation Guide.  The only difference
+between installing GRASS on a SUN and installing GRASS on an OKI are
+the values that are placed in the makehead file (see the Installation
+Guide, page 6).  The makehead that was used on the OKI was as follows:
+
+.nf
+     #
+     # GRASS3 makehead file for the OKIstation7300
+     #
+     GIS                 = /grass/grass3
+     GISDBASE            = /grass/grass3/data
+     UNIX_BIN            = /grass/grass3/bin
+     DEFAULT_LOCATION    = spearfish
+     OS                  = SYSV
+     LD_FLAGS            = 
+     COMPILE_FLAGS       = -O
+     DIGIT_FLAGS         = -DATT
+     TERMLIB             = -ltermlib -ltermcap
+     CURSES              = -lcurses $(TERMLIB)
+     MATHLIB             = -lm
+     CLEAR               = no
+     AR                  = ar rc $@ `lorder $(OBJ) | tsort`
+     CC                  = /usr/ucb/cc 
+.fi
+
+Note that the C-Compiler to be used is specified by the CC variable.
+It was determined that the UCB C-Compiler (/usr/ucb/cc) was the best
+choice for compiling the GRASS source code.  
+
+.ce 2
+MAPDEV DIGIT LIBRARY PROBLEMS
+-----------------------------
+
+GISGEN failed in the $GIS/src/mapdev directory.  Following
+are the changes I made to make the code work on the OKI: 
+
+.nf
+1. Define the variable N_name as follows in the beginning of 
+$GIS/src/mapdev/digit/toolbox.c :
+
+    extern char *N_name;
+
+2. Define the compiler flag ATT as follows in the beginning of 
+$GIS/src/mapdev/digit/set_prior.c :
+
+    #define ATT 
+
+3. Change the "#ifdef SYSV" lines in the beginning of swap_re_uids()
+to "#ifndef ATT" in $GIS/src/mapdev/digit/set_prior.c
+
+4. Define the compiler flag ATT as follows in the beginning of 
+$GIS/src/mapdev/georef/set_prior.c :
+
+    #define ATT 
+
+5. Change the "#ifdef SYSV" lines in the beginning of swap_re_uids()
+to "#ifndef ATT" in $GIS/src/mapdev/georef/set_prior.c
+.fi
+
+.ce 2
+MAPDEV ALTEK DIGITIZER PROBLEMS
+-------------------------------
+
+GISGEN failed again in the $GIS/src/mapdev/digitizers/altek
+and $GIS/mapdev/digitizers/none directories.  I added the following
+line to the Gmakefiles of these programs to solved the problem: 
+ 
+LD_FLAGS = /usr/ucblib/libucb.a
+
+.ce 2
+XDRIVER GRAPHICS DRIVER PROBLEMS
+--------------------------------
+
+I installed the GRASS 4.0 (Beta) version of the XDRIVER in the 
+directory /grass/grass3/src/D/devices/XDRIVER.OKI on the oki1
+workstation.  The driver required substantial modification
+before it would run on the OKIstation.  The following is an
+outline of the changes that were made:
+
+1. The Gmakefile was modified so that the UCB C-Compiler (/usr/ucb/cc)
+is used to compile the XDRIVER, the ANSI C-Library (/usr/ccs/lib/libc.a)
+is linked in before the UCB C-Libary (/usr/ucblib/libucb.a) and the 
+LD_FLAGS includes the string "-L/usr/lib/X11".  This was done because
+the UCB library has bugs in two functions that are crucial to the
+XDRIVER setjmp and longjmp.  For a demonstration of this problem
+see the appendix.
+ 
+2. The Graph_Set.c, Raster.c and Panel.c routines were modified to take
+into account the fact that the OKI has 16 graphics bit-planes instead of 8.
+
+3. The Graph_Set.c, Color.c and Clr_table.c routines were modified so that
+color mode float uses the X-Windows XAllocColor function to store colors 
+instead of the XStoreColor function.  
+
+I have attempted to mark all of my changes with the initials "DMJ" in the
+source code and with a couple sentences describing what was done and why.
+When GRASS4 is finally released in July/August of 1991 it may have 
+a new and improved version of the XDRIVER.  If so, you can modify it
+to work on the OKI by looking at my comments in the XDRIVER.OKI code.  
+
+.ce 2
+REMAINING PROBLEMS
+------------------
+
+The xterm program which provides terminal emulation under Open Look 
+currently does not work properly.  GRASS programs that do alot of 
+terminal screen control (Visual-ASK or VASK displays) will not 
+work properly.  This programs will work properly if you run them
+on an ASCII terminal attached to one of the OKI's serial ports.
+So, this is not a serious problem unless you need to do digitizing:
+the OKI only has two serial ports and one is taken by the mouse.
+
+OKIDATA's technical support people should be able to tell you how
+to make the xterm program work properly.  In describing the problem
+to OKIDATA you might mention that GRASS uses the TERMLIB and CURSES
+capabilties and the these capabilties do not work properly under xterm.
+
+The GRASS d.colors program will not work properly on the OKIstation.
+This is because of the "DirectColor" method that the OKI uses to map
+pixels to colors.  To make the d.colors program work would require
+changes to the XDRIVER code and possibly the d.colors program itself.
+Such a fix could take a good C programmer up to a week of work. 
+ 
+.ce 2
+EVALUATION
+----------
+
+Bugs were found in the OKIstation's C-Library, the C-Shell crashed
+and dumped core several times, and the documentation is very poor
+(straight from Intel).  Other than that, the OKIstation performed
+pretty well for a free workstation.  I certainly would not 
+recommend the OKIstation to any of my customers.  If you want
+a reliable and fully supported GRASS workstation, you should 
+stick with Sun (or maybe Hewlett Packard, although I know of
+no GRASS distributor that supports the HP).
+
+The OKIstation performs the standard GRASS benchmarks as follows:
+
+.nf
+   Raster Plotting - raster graphics performance 
+   Dcell is used to plot the elevation map from spearfish using the
+   default window.  The XDRIVER graphics driver is resized so that
+   it fills the entire screen.  Results: 
+
+       real      23.3     
+       user      1.0
+       sys       0.9
+
+   Vector Plotting - vector  graphics performance 
+   Dvect is use to plot the roads map from spearfish using the
+   default window.  The XDRIVER graphics driver is resized so that
+   it fills the entire screen.  Results:
+
+       real      31.3 
+       user      0.2 
+       sys       0.9 
+            
+   Slope/Aspect Calculation - floating point and I/O performance
+   Gslope.aspect is used to produce slope and aspect maps from 
+   spearfish using the default window.  Results: 
+
+       real      17.5 
+       user      6.0 
+       sys       2.6 
+.fi
+            
+Here are the results listed along side some other GRASS benchmarks (from 
+the latest GRASSCLIPPINGS (results are in seconds):
+
+.nf
+                       Gslope     Dcell     Dvect
+                       ------     -----     -----
+   OKIstation7300        17.5      23.2      31.3
+   SunSPARC 1+           19.0       4.0       1.0
+   Silicon Graphics      35.0      28.0       2.0
+   Apple Mac II         188.0      57.0        - 
+   IBM 6000/520          18.0       5.0       1.0 
+.fi
+
+As you can see, the graphics on the OKIstation are slow, but the 
+floating point calculations and I/O are not too shabby.  
+
+.ce 2
+FUTURE VERSIONS OF GRASS
+------------------------
+
+GRASS 4.0 should run on the OKI, with some modifications.  However,
+XGRASS 4.0, which is tenatively due for release in December 1991
+will rely on the Motif window manager.  If OKI does not add support
+for the Motif window manager, XGRASS 4.0 will probably not run 
+on the OKI without MAJOR modification.  
+
+XGRASS 4.0 is a Graphical User-Interface (GUI) for the GRASS 4.0 
+capabilties.  It will work under the X-Windows system and the Motif
+window manager.  The OKI currently uses the X-Windows system, but
+it runs X with the Open Look window manager. 
+
+Sun also uses the Open Look window manager
+so you will have to buy copies of Motif for the Suns if you want
+to run XGRASS 4.0 on them.  Motif is available for the Sun workstations
+from Integrated Computer Solutions (ICS) in Cambridge, Mass.
+
+.ce 2 
+APPENDIX
+--------
+
+Bugs were found in the OKIstation's UCB C-Libary (/usr/ucblib/libucb.a).
+The setjmp and longjmp functions do not work properly in programs that
+are compiled and linked to this library.  This section describes a 
+program that was written to verify the setjmp and longjmp bugs.
+
+testy.c is a small program that uses the setjmp and longjmp functions.
+The testy.c program will work just fine if you compile it using the ANSI-C 
+compiler but it will crash if you compile it with the UCB-C compiler.  
+Apparently this is because the setjmp/longjmp routines in the UCB-C
+compiler's library (/usr/ucblib/libucb.a) are buggy.
+
+The following is the testy.c program:
+
+.nf
+     #include <sys/types.h>
+     #include <sys/stat.h>
+     #include <stdio.h>
+     #include <fcntl.h>
+     #include <setjmp.h>
+     #include <signal.h>
+
+     static jmp_buf my_environment;
+
+     main()
+     {
+     static void timeout();
+     int in_file, out_file;
+     int time=5;
+
+     if (setjmp(my_environment)) 
+        {
+        printf("Return from 2nd call to setenv, the longjmp was successful\n");
+        signal(SIGALRM,SIG_DFL); 
+        exit(0);
+        }
+     printf("Returned from 1st call to setjmp\n");
+     
+     signal(SIGALRM, timeout);
+     alarm(time);                  
+     printf("Alarm is now set, now I'm going to open the fifos\n");
+     
+     in_file = open("/grass/grass3/dev/fifo.1a", O_RDONLY);   
+     out_file = open("/grass/grass3/dev/fifo.1b", O_WRONLY);  
+     
+     alarm(0);
+     signal(SIGALRM,SIG_DFL);  
+     
+     printf("Hummm... must have had an error opening the fifos, bye\n");
+     
+     close(out_file);
+     close(in_file);
+
+     exit(0);
+     }
+
+     static void timeout(sig,code,scp,addr)
+     int sig, code;
+     struct sigcontext *scp;
+     char *addr;
+     {
+     printf("Alarm went off, I'm about to do the longjmp\n");
+     longjmp(my_environment,1);
+     }
+.fi
+
+To compile the above testy.c program under ANSI-C one would type:
+
+   /usr/bin/cc testy.c -o testy.c
+
+To compile the above testy.c program under UCB-C one would type:
+   
+   /usr/ucb/cc testy.c -o testy.c
