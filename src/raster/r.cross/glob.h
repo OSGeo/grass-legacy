@@ -20,6 +20,7 @@ GLOBAL int nrows;
 GLOBAL int ncols;
 GLOBAL int NCATS INIT(1<<SHIFT);
 GLOBAL char *names[NFILES];
+GLOBAL struct Categories labels[NFILES];
 
 typedef struct
 {
