@@ -88,6 +88,7 @@ proc DmVector::create { tree parent } {
     set opt($count,type_face) 0 
 
     set opt($count,color) \#000000
+    set opt($count,sqlcolor) 0
     set opt($count,fcolor) \#AAAAAA 
     set opt($count,lcolor) \#000000
     set opt($count,_use_fcolor) 1
@@ -196,8 +197,10 @@ proc DmVector::options { id frm } {
     Label $row.f -text [G_msg " Label color:"] 
     SelectColor $row.g -type menubutton -variable DmVector::opt($id,lcolor) \
                 -command "DmVector::legend $id"
-
-    pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g -side left
+    checkbutton $row.h -text [G_msg "SQL color"] -variable DmVector::opt($id,sqlcolor) \
+                -command "DmVector::legend $id"
+ 
+    pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g $row.h -side left
     pack $row -side top -fill both -expand yes
 
     # point icon / size
@@ -326,11 +329,13 @@ proc DmVector::display { node } {
     set cmd "d.vect map=$opt($id,map)"
 
     # color
+    if { $opt($id,sqlcolor) } { append cmd " -a" }
     set color [DmVector::color $opt($id,color)]
     set fcolor [DmVector::color $opt($id,fcolor)]
     set lcolor [DmVector::color $opt($id,lcolor)]
     append cmd " color=$color"
     append cmd " lcolor=$lcolor" 
+
     if { $opt($id,_use_fcolor) } { append cmd " fcolor=$fcolor" } { append cmd " fcolor=none" }
 
     # display
