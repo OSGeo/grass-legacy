@@ -1,0 +1,66 @@
+
+
+
+
+
+
+_n_a_d_2_7, _f_o_r_2_7, _i_n_v_2_7 - _N_A_D_2_7 _S_t_a_t_e _P_l_a_n_e _C_o_o_r_d_i_n_a_t_e _S_y_s_-
+_t_e_m_s
+_n_a_d_8_3, _f_o_r_8_3, _i_n_v_8_3 - _N_A_D_8_3 _S_t_a_t_e _P_l_a_n_e _C_o_o_r_d_i_n_a_t_e _S_y_s_-
+_t_e_m_s
+
+_n_a_d_2_7 | _n_a_d_8_3 [ _s_t_a_t_e ]
+[ -_M ] [ ] [ _f_i_l_e ... ]
+[ -_M ] [ ] [ _f_i_l_e ... ]
+
+_F_o_r_2_7, _i_n_v_2_7, _f_o_r_8_3, and  _i_n_v_8_3  provide  a  convenient
+method  for  specifications  of  respective forward and
+inverse projection of geographic and State Plane  Coor-
+dinates  for both North American Datums 27 and 83.  The
+parameter _s_t_a_t_e__z_o_n_e refers to one of  the  State  zone
+numbers  established  by  the National Geodetic Survey.
+Execution of _n_a_d_2_7 or _n_a_d_8_3  will  produce  a  complete
+annotated  listing  of  State  zone numbers.  Execution
+with a state as an argument  will  limit  the  list  to
+zones  in  that  state.   The  parameter  -_M allows the
+specification of _m_e_t_e_r_s as the unit  of  the  cartesian
+system.   Otherwise  the  U.S.  Surveyor's foot is used
+(exact relation of 39.37 inches  equals  1  m).   Other
+control  parameters for program _p_r_o_j may follow includ-
+ing input file names.
+
+_A_l_t_h_o_u_g_h _s_o_m_e _c_h_e_c_k_i_n_g _o_f _t_h_e _i_n_f_o_r_m_a_t_i_o_n _c_o_n_t_a_i_n_e_d  _i_n
+_t_h_i_s  _p_r_o_c_e_d_u_r_e _h_a_s _b_e_e_n _m_a_d_e, _t_h_e _u_s_e_r _i_s _c_a_u_t_i_o_n_e_d _t_o
+_p_e_r_f_o_r_m _h_i_s _o_w_n _t_e_s_t_s _a_g_a_i_n_s_t _c_o_n_v_e_r_s_i_o_n_s _a_u_t_h_o_r_i_z_e_d _a_s
+_a_c_c_u_r_a_t_e  _b_y  _a_p_p_r_o_p_r_i_a_t_e  _S_t_a_t_e  _o_r _l_o_c_a_l _a_u_t_h_o_r_i_t_i_e_s.
+_A_n_y _d_i_s_c_r_e_p_e_n_c_i_e_s _s_h_o_u_l_d _b_e _r_e_p_o_r_t_e_d _t_o _t_h_e _a_u_t_h_o_r.
+
+_T_h_e _t_a_b_l_e_s _w_e_r_e _c_o_m_p_i_l_e_d _f_r_o_m  _i_n_f_o_r_m_a_t_i_o_n  _d_i_s_t_r_i_b_u_t_e_d
+_a_s _p_a_r_t _o_f
+
+/_u_s_r/_l_o_c_a_l/_l_i_b/_s_t_a_t_e_2_7
+/_u_s_r/_l_o_c_a_l/_l_i_b/_s_t_a_t_e_8_3
+
+_C_a_r_t_o_g_r_a_p_h_i_c  _P_r_o_j_e_c_t_i_o_n  _P_r_o_c_e_d_u_r_e_s   _f_o_r   _t_h_e   _U_N_I_X
+_E_n_v_i_r_o_n_m_e_n_t-_A _U_s_e_r'_s _M_a_n_u_a_l (_G._I. _E_v_e_n_d_e_n, _1_9_9_0, _a_d_m_i_n.
+_r_p_t.).
+_p_r_o_j(_1)
+
+_G_e_r_a_l_d _I. _E_v_e_n_d_e_n, _U_S_G_S, _W_o_o_d_s _H_o_l_e, _M_A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                     June 4, 1991
+
+
