@@ -33,7 +33,7 @@ clean:
 
 # default html rules
 html:
-	GRASS_FAKE_START=1 $(ETC)/bin/cmd/$(PGM) --html-description | grep -v '</body>' > $(PGM).html ; true
+	GRASS_FAKE_START=1 GISBASE=$(GISBASE) $(ETC)/bin/cmd/$(PGM) --html-description | grep -v '</body>' > $(PGM).html ; true
 	@test ! -f description.html || ( cat description.html >> $(PGM).html )
 	echo "</body></html>" >> $(PGM).html
 	mkdir -p $(GISBASE)/docs/html
