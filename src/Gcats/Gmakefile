@@ -1,0 +1,7 @@
+LIST=main.o
+PGM=Gcats
+
+$(BIN)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB)
+
+$(GISLIB): #
