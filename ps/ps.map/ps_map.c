@@ -10,6 +10,7 @@
 #include "ps_info.h"
 #include "vector.h"
 #include "group.h"
+#include "colortable.h"
 #include "local_proto.h"
 
 extern int verbose;
@@ -80,13 +81,21 @@ int ps_map (void)
         do_masking();
 
     /* do the grid, if any */
-    do_grid();
+    if (PS.grid_cross)
+	    do_grid_cross();
+    else
+	    do_grid();
+
+    /* do geo-grid, if any */
+    do_geogrid();
+
 
     /* do the unmasked vector plots, if any */
     if (vector.count) do_vectors(1);
 
     /* do the grid numbers, if any */
     if (PS.grid_numbers > 0) do_grid_numbers();
+    if (PS.geogrid_numbers > 0) do_geogrid_numbers();
 
     /* do the labels from paint/labels, if any */
     do_labels(0);
@@ -105,6 +114,9 @@ int ps_map (void)
 
     /* show the vector legend */
     if (do_vlegend && vector.count) PS_vlegend();
+   
+   /* Make scalebar */ 
+    if (PS.do_scalebar) do_scalebar();
 
     /* put border around map */
     fprintf(PS.fp, "BW\n");
@@ -113,7 +125,7 @@ int ps_map (void)
 
     /* do the colortable, if requested */
     if (PS.do_colortable) {
-	if ( G_raster_map_is_fp(PS.cell_name, PS.cell_mapset) )
+	if ( G_raster_map_is_fp(ct.name, ct.mapset) ) 
        	    PS_fcolortable();
 	else
             PS_colortable();

@@ -15,6 +15,7 @@
 #include "header.h"
 #include "comment.h"
 #include "colortable.h"
+#include "decorate.h"
 #include "ps_info.h"
 #include "group.h"
 #include "local_proto.h"
@@ -34,6 +35,7 @@ static char *help[]=
     "labels     labelfile             text       east north text",
     "region     regionfile            line       east north east north",
     "grid       spacing               point      east north",
+    "geogrid	spacing               point      east north",
     "outline                          mapinfo",
     "colortable [y|n]                 vlegend",
     "comments   [unix-file]           psfile     PostScript include file",
@@ -177,6 +179,7 @@ int main(int argc,char *argv[])
     PS.cell_fd = -1;
     PS.do_outline = 0;
     PS.do_colortable = 0;
+    PS.do_scalebar = 0;
     PS.grid = 0;
     PS.scaletext[0] = 0;
     PS.celltitle[0] = 0;
@@ -381,13 +384,29 @@ int main(int argc,char *argv[])
 	if (KEY("colortable"))
 	{
 	    PS.do_colortable = 0;
+	    /*
 	    if (PS.cell_fd < 0)
 		error(key, data, "no raster file selected yet");
 	    else
+	    */
 		PS.do_colortable = yesno(key, data);
 	    if (PS.do_colortable) read_colortable();
 	    continue;
 	}
+	
+	if (KEY("scalebar"))
+	{
+	   PS.do_scalebar = 1;
+	   if (sscanf(data, "%s", sb.type) != 1)
+	   	strcpy (sb.type, "f"); /* default to fancy scalebar */
+	   read_scalebar();
+	   if (sb.length <= 0.) {
+		   error(key, data, "Bad scalebar length");
+		   gobble_input();
+	   }
+	   continue;
+	}
+	
 	if (KEY("text"))
 	{
 	    double e, n;
@@ -613,6 +632,25 @@ int main(int argc,char *argv[])
 	    else getgrid();
 	    continue;
 	}
+
+        if (KEY("geogrid"))
+        {
+	if (G_projection() == PROJECTION_LL || G_projection() == PROJECTION_XY) {
+		error(key, data, "geogrid is not available for this projection");
+		gobble_input();
+	}
+            PS.geogrid = -1.;
+            PS.geogrid_numbers = 0;
+            sscanf(data, "%d %s", &PS.geogrid, PS.geogridunit);
+            if (PS.geogrid < 0)
+            {
+                PS.geogrid = 0;
+                error(key, data, "illegal geo-grid spacing");
+                gobble_input();
+            }
+            else getgeogrid();
+            continue;
+        }
 
 	if (KEY("psfile"))
 	{
