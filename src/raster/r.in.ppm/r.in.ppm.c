@@ -1,448 +1,262 @@
-/* Updated 8/99 to true 24bit support.
- * The old version was limited to 32767 colors.
- * 
- *  Incorporated color quantization to speed up GRASS.
- *   (GRASS is getting extremely slow with more than
- *     a few thousand categories/colors)
- *    
- *    Stefano Merler
- *    merler@irst.itc.it
-*/
 
-#include <stdlib.h>
 #include <stdio.h>
-#include <ctype.h>
+#include <stdlib.h>
+#include <stdarg.h>
 #include "gis.h"
 
-#define MAXCOLOR 16777216
+static int
+read_line(char *buf, int size, FILE *fp)
+{
+	for (;;)
+	{
+		if (!fgets(buf, size, fp))
+			G_fatal_error("Error reading PPM file.");
 
-struct mycolor {
-	int red;
-	int grn;
-	int blu;
-} ppm_color[MAXCOLOR];
+		if (buf[0] != '#')
+			return 0;
+	}
+}
 
-int get_ppm_colors(FILE *, int, int, struct Colors *);
-int get_ppm_colors2(struct Colors *, int, int *);
-CELL lookup_color(int, int, int, int);
-CELL lookup_color2(int, int, int, int, int *);
-int quantize(int, int *);
-int count_colors(FILE *, int, int);
+static int
+do_command(char *fmt, ...)
+{
+	char buff[1024];
+	va_list va;
+
+	va_start(va, fmt);
+	vsprintf(buff, fmt, va);
+	va_end(va);
+
+	return system(buff);
+}
 
 int 
-main (int argc, char *argv[])
+main(int argc, char *argv[])
 {
-	FILE *infp;
-	CELL *cell,*cellptr;
-	char *name;
-	int outfp;
-	int row,col;
-	int nrows, ncols;
-	int x, c,c1;
-	struct Colors colors, *pcolr;
-	struct Colors bwcolors, *pbwcolr;
-	int red,grn,blu,num_colors;
-	struct Option *inopt, *outopt, *nlevopt;
-	int *levels;
-	struct Flag *vflag, *bflag;
-	int Verbose = 0;
-	int nlev;
-	int ppm_height, ppm_width, ppm_maxval, ppm_magic, ppm_head;
-	struct Cell_head cellhd;
-	long ppm_pos;
-	int ncolors;
-	int maxcolors;
-	int Bands = 0;
-	int outred, outgrn, outblu;
-	char mapred[300], mapgrn[300], mapblu[300];
-	CELL *cellr, *cellg, *cellb;
-	
-	pcolr = &colors;
-	pbwcolr=&bwcolors;
-	
-	G_gisinit (argv[0]);
-	inopt = G_define_option();
-	outopt = G_define_option();
-	nlevopt = G_define_option();
+	static const char color_codes[] = {'r', 'g', 'b'};
+	static CELL i0 = 0, i1 = 255;
+	static FCELL f0 = 0.0f, f1 = 1.0f;
 
+	struct GModule *module;
+	struct Option *inopt, *outopt;
+	struct Flag *vflag, *fflag, *bflag, *cflag;
+	int verbose, isfp, bands, composite;
+	char *outname;
+	struct Colors colors;
+	FILE *infp;
+	char buf[80];
+	unsigned char magic;
+	int maxval;
+	int nrows, ncols;
+	struct Cell_head cellhd, save;
+	struct band {
+		char outname[100];
+		int outfd;
+		void *xcell;
+	} B[3];
+	unsigned char *line;
+	int row, col;
+	int i;
+
+	G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Converts a PPM image file to GRASS raster map(s).";
+
+	inopt = G_define_option();
 	inopt->key              = "input";
 	inopt->type             = TYPE_STRING;
 	inopt->required 	= YES;
 	inopt->description      = "Name of existing PPM file.";
 
+	outopt = G_define_option();
 	outopt->key             = "output";
 	outopt->type   		= TYPE_STRING;
 	outopt->required        = YES;
 	outopt->gisprompt	= "new,cell,raster";
-	outopt->description     = "Name of new raster file(s).";
+	outopt->description     = "Name of new raster map(s).";
 
-	nlevopt->key             = "nlev";
-	nlevopt->type   	 = TYPE_INTEGER;
-	nlevopt->required        = NO;
-	nlevopt->description     = "Max number of levels for R/G/B.";
-	nlevopt->answer          = "20 (= 8000 colors)";
-	nlevopt->options         = "1-256";
-	
 	vflag = G_define_flag();
 	vflag->key              = 'v';
-	vflag->description      = "Verbose mode on.";
+	vflag->description      = "Verbose.";
+
+	fflag = G_define_flag();
+	fflag->key              = 'f';
+	fflag->description      = "Create floating-point maps (0.0 - 1.0).";
 
 	bflag = G_define_flag();
 	bflag->key              = 'b';
-	bflag->description      = "Create 3 separate raster maps of the (true) R/G/B levels.";
+	bflag->description      = "Create separate red/green/blue maps.";
+
+	cflag = G_define_flag();
+	cflag->key              = 'c';
+	cflag->description      = "Create composite color map.";
 
 	if(G_parser(argc, argv))
-		exit(-1);
+		return 1;
 
-	Verbose = vflag->answer;
-	Bands = bflag->answer;
+	verbose   = vflag->answer;
+	isfp      = fflag->answer;
+	bands     = bflag->answer;
+	composite = cflag->answer;
 
-	if((infp = fopen(inopt->answer, "r")) == NULL)
-		G_fatal_error("Can't open PPM file for read.");
-	name = outopt->answer;
+	if (!bands && !composite)
+		G_fatal_error("Either -b or -c must be specified");
 
-	nlev=atoi(nlevopt->answer);
-	
-	maxcolors=nlev*nlev*nlev;
-	G_init_colors(pcolr);
-	
-	ppm_height = ppm_width = ppm_maxval = ppm_magic = ppm_head = 0;
+	infp = fopen(inopt->answer, "r");
+	if (!infp)
+		G_fatal_error("Unable to open PPM file.");
 
-	while((c = fgetc(infp)) != EOF && !ppm_head){
-		switch (c){
-		case 'P':
-			ppm_magic = fgetc(infp);
-			if (Verbose)
-				fprintf(stderr, "Magic = P%c\n", (char)ppm_magic);
-			break;
-		case '#':
-			if (Verbose) fprintf(stderr, "Comment = #");
-			while((c1 = fgetc(infp)) != EOF && c1 != '\n')
-				if (Verbose)
-					putchar(c1);
-			putchar('\n');
-			break;
-		case '1':
-		case '2':
-		case '3':
-		case '4':
-		case '5':
-		case '6':
-		case '7':
-		case '8':
-		case '9':
-		case '0':
-			if (!ppm_width || !ppm_height || !ppm_maxval)
-				ungetc(c, infp);
-			if (!ppm_width){
-				fscanf(infp, "%d", &ppm_width);
-				if (Verbose)
-					fprintf(stderr, "Width = %d\n", ppm_width);
-				break;
-			}
-			if (!ppm_height){
-				fscanf(infp, "%d", &ppm_height);
-				if (Verbose)
-					fprintf(stderr, "Height = %d\n", ppm_height);
-				break;
-			}
-			if (!ppm_maxval){
-				fscanf(infp, "%d", &ppm_maxval);
-				if (Verbose)
-					fprintf(stderr, "Maxval = %d\n", ppm_maxval);
-				ppm_head = 1;
-				break;
-			}
-			break;
-		default:
-			break;
-		}
+	outname = outopt->answer;
+
+	for (i = 0; i < 3; i++)
+	{
+		sprintf(B[i].outname, "%s.%c", outname, color_codes[i]);
+		if (!bands && G_find_file("cell", B[i].outname, ""))
+			G_fatal_error("Refusing to overwrite <%s.[rgb]> maps\n"
+				      "Delete or rename them, or use '-b'",
+				      outname);
 	}
 
-	ppm_pos = ftell(infp);
-	ncolors=count_colors(infp,ppm_height*ppm_width, ppm_magic);
-	if (Verbose)fprintf(stderr, "Total colors = %d\n",ncolors);
-	fseek(infp, ppm_pos, 0); /* get back where we were */
-	
-	ppm_pos = ftell(infp);
-	if(ncolors > maxcolors){
-	  G_warning("Color levels quantization...\n");
-	  levels=(int*)G_calloc(nlev,sizeof(int));
-	  quantize(nlev,levels);
-	  num_colors=get_ppm_colors2(pcolr,nlev,levels);
-	  if (Verbose)fprintf(stderr, "Total used colors = %d\n", num_colors);
+	G_init_colors(&colors);
+	if (isfp)
+		G_add_f_raster_color_rule(&f0,   0,   0,   0,
+					  &f1, 255, 255, 255,
+					  &colors);
+	else
+		G_add_c_raster_color_rule(&i0,   0,   0,   0,
+					  &i1, 255, 255, 255,
+					  &colors);
+
+	read_line(buf, sizeof(buf), infp);
+
+	if (sscanf(buf, "P%c", &magic) != 1)
+		G_fatal_error("Invalid PPM file.");
+
+	read_line(buf, sizeof(buf), infp);
+
+	if (sscanf(buf, "%d %d", &ncols, &nrows) != 2)
+		G_fatal_error("Invalid PPM file.");
+
+	read_line(buf, sizeof(buf), infp);
+
+	if (sscanf(buf, "%d", &maxval) != 1)
+		G_fatal_error("Invalid PPM file.");
+
+	switch (magic)
+	{
+	case '3':
+	case '6':
+		break;
+	default:
+		G_fatal_error("Invalid magic number: 'P%c'.", magic);
+		break;
 	}
-	else{
-	  num_colors=get_ppm_colors(infp, ppm_height*ppm_width, 
-				    ppm_magic, pcolr);
-	  if (Verbose)fprintf(stderr, "Total used colors = %d\n", num_colors);
-	}
-	fseek(infp, ppm_pos, 0); /* get back where we were */
-	
-	nrows = cellhd.rows = ppm_height;
-	ncols = cellhd.cols = ppm_width;
+
+	cellhd.rows = nrows;
+	cellhd.cols = ncols;
 	cellhd.proj = G_projection();
 	cellhd.zone = G_zone();
-	cellhd.ew_res = cellhd.ns_res = 1.0;
-	cellhd.north = (double) ppm_height;
-	cellhd.east = (double) ppm_width;
-	cellhd.west = cellhd.south = 0.0;
+	cellhd.ew_res = 1.0;
+	cellhd.ns_res = 1.0;
+	cellhd.south = 0.0;
+	cellhd.north = (double) nrows;
+	cellhd.west = 0.0;
+	cellhd.east = (double) ncols;
+
+	G_get_window(&save);
+
 	G_set_window(&cellhd);
 	G_set_cell_format(0);
-	if((outfp = G_open_cell_new (name)) < 0)
-	  G_fatal_error("Can't open new raster file.");
-	cell = G_allocate_cell_buf();
-	if(Bands){
-	  sprintf(mapred,"%s.r",name);
-	  if((outred = G_open_cell_new (mapred)) < 0)
-	    G_fatal_error("Can't open new raster file.");
-	  cellr = G_allocate_cell_buf();
-	  sprintf(mapgrn,"%s.g",name);
-	  if((outgrn = G_open_cell_new (mapgrn)) < 0)
-	    G_fatal_error("Can't open new raster file.");
-	  cellg = G_allocate_cell_buf();
-	  sprintf(mapblu,"%s.b",name);
-	  if((outblu = G_open_cell_new (mapblu)) < 0)
-	    G_fatal_error("Can't open new raster file.");
-	  cellb = G_allocate_cell_buf();
+
+	line = G_malloc(ncols * 3);
+
+	for (i = 0; i < 3; i++)
+	{
+		struct band *b = &B[i];
+
+		b->outfd = isfp
+			? G_open_fp_cell_new(b->outname)
+			: G_open_cell_new(b->outname);
+		if(b->outfd < 0)
+			G_fatal_error("Unable to open output map.");
+
+		b->xcell = isfp
+			? (void *) G_allocate_f_raster_buf()
+			: (void *) G_allocate_c_raster_buf();
 	}
-	if (Verbose) fprintf(stderr, "Percent Complete: ");
+
 	for (row = 0; row < nrows; row++)
 	{
-		cellptr = cell;
-		if(Verbose) G_percent(row, nrows, 5);
-		for (col = 0; col < ncols; col++){
-			switch (ppm_magic){
-			case '6':
-				red = fgetc(infp);
-				grn = fgetc(infp);
-				blu = fgetc(infp);
-
-				break;
-			case '3':
-				fscanf(infp, "%d %d %d", &red, &grn, &blu);
-				break;
-			}
-			if(ncolors>maxcolors)
-			  *cellptr++ = lookup_color2(red,grn,blu,nlev,levels);
-			else
-			  *cellptr++ = lookup_color(red,grn,blu,num_colors);
-			if(Bands){
-			  cellr[col] = (CELL)red;
-			  cellg[col] = (CELL)grn;
-			  cellb[col] = (CELL)blu;
-			}
-		}
-		if (G_put_map_row(outfp, cell) < 0 )
-			G_fatal_error("Can't write new raster row!!");
-		if(Bands){
-		  if (G_put_map_row(outred, cellr) < 0 )
-		    G_fatal_error("Can't write new raster row!!");
-		  if (G_put_map_row(outgrn, cellg) < 0 )
-		    G_fatal_error("Can't write new raster row!!");
-		  if (G_put_map_row(outblu, cellb) < 0 )
-		    G_fatal_error("Can't write new raster row!!");
-		}
-	}
-	if(Verbose) G_percent(nrows,nrows, 5);
-	G_close_cell(outfp);
-	if(Bands){
-	  G_close_cell(outred);
-	  G_close_cell(outgrn);
-	  G_close_cell(outblu);
-	}
-	  
-	/*G_put_cellhd(outopt->answer, &cellhd);*/
-	if (Verbose) fprintf(stderr, "Writing color table for %d values\n", num_colors);
-	for(x=0;x<num_colors;x++){
-		G_set_color((CELL)x, ppm_color[x].red, ppm_color[x].grn,
-			ppm_color[x].blu, pcolr);
-	}
-	if(G_write_colors(outopt->answer, G_mapset(), pcolr) < 0)
-		G_fatal_error("Can't write color table!!");
-	if(Bands){
-	  G_init_colors(pbwcolr);
-	  for(x=0;x<256;x++){
-	    G_set_color((CELL)x, x, x,x, pbwcolr);
-	  }
-	  if(G_write_colors(mapred, G_mapset(), pbwcolr) < 0)
-	    G_fatal_error("Can't write color table!!");
-	  if(G_write_colors(mapgrn, G_mapset(), pbwcolr) < 0)
-	    G_fatal_error("Can't write color table!!");
-	  if(G_write_colors(mapblu, G_mapset(), pbwcolr) < 0)
-	    G_fatal_error("Can't write color table!!");
-	}
-	
-	exit(0);
-}
-
-int get_ppm_colors (FILE *infp, int pixels,
-	int ppm_magic, struct Colors *pcolr)
-{
-	int count,x,maxcolor,match;
-	int red, grn, blu;
-
-	match = maxcolor = 0;
-	for (count=0; count < pixels; count++){
-		match = 0;
-		switch (ppm_magic){
-		case '6':
-			red = fgetc(infp);
-			grn = fgetc(infp);
-			blu = fgetc(infp);
-			break;
+		switch (magic)
+		{
 		case '3':
-			fscanf(infp, "%d %d %d", &red, &grn, &blu);
-			break;
-		default:
-			G_fatal_error("Unknown ppm magic number!!");
-			break;
-		}
-		for (x=0;x<maxcolor;x++){
-			if (ppm_color[x].red == red && 
-			    ppm_color[x].grn == grn &&
-			    ppm_color[x].blu == blu){
-				match = 1;
-				break;
+			for (col = 0; col < ncols; col++)
+			{
+				int r, g, b;
+				if (fscanf(infp, "%d %d %d", &r, &g, &b) != 3)
+					G_fatal_error("Invalid PPM file.");
+				line[col*3+0] = (unsigned char) r;
+				line[col*3+1] = (unsigned char) g;
+				line[col*3+2] = (unsigned char) b;
 			}
-		}
-		if (match == 0){
-			ppm_color[maxcolor].red = red;
-			ppm_color[maxcolor].grn = grn;
-			ppm_color[maxcolor].blu = blu;
-			maxcolor++;
-			if (maxcolor == MAXCOLOR)
-				G_fatal_error("Exceeded maximum colors!!");
-		}
-	}
-	return(maxcolor);
-}
-
-int 
-get_ppm_colors2 (struct Colors *pcolr, int colors_for_chanell, int *levels)
-{
-  int i,j,k;
-  int actual;
-  
-  
-  actual = 0;
-  for(i=0;i<colors_for_chanell;i++)
-    for(j=0;j<colors_for_chanell;j++)
-      for(k=0;k<colors_for_chanell;k++){
-	ppm_color[actual].red = levels[i];
-	ppm_color[actual].grn = levels[j];
-	ppm_color[actual].blu = levels[k];
-	actual ++;
-      }
-  return(actual);
-}
-
-
-CELL 
-lookup_color (int r, int g, int b, int num)
-{
-	int x;
-
-	for (x=0;x<num;x++){
-		if (ppm_color[x].red == r && 
-		    ppm_color[x].grn == g &&
-		    ppm_color[x].blu == b){
+			break;
+		case '6':
+			if (fread(line, 3, ncols, infp) != ncols)
+				G_fatal_error("Invalid PPM file.");
 			break;
 		}
+
+		if (isfp)
+			for (col = 0; col < ncols; col++)
+				for (i = 0; i < 3; i++)
+					((FCELL *) B[i].xcell)[col] =
+						(FCELL) line[col*3+i] / maxval;
+		else
+			for (col = 0; col < ncols; col++)
+				for (i = 0; i < 3; i++)
+					((CELL *) B[i].xcell)[col] =
+						line[col*3+i] * 255 / maxval;
+
+		for (i = 0; i < 3; i++)
+			if (G_put_raster_row(B[i].outfd, B[i].xcell,
+					     isfp ? FCELL_TYPE : CELL_TYPE) < 0)
+				G_fatal_error("Error writing output map.");
+
+		if (verbose)
+			G_percent(row, nrows, 2);
 	}
-	return((CELL)x);
+
+	for (i = 0; i < 3; i++)
+		G_close_cell(B[i].outfd);
+
+	fclose(infp);
+
+	if (verbose)
+		fprintf(stderr, "Writing color tables\n");
+
+	for (i = 0; i < 3; i++)
+		if (G_write_colors(B[i].outname, G_mapset(), &colors) < 0)
+			G_fatal_error("Unable to write color table.");
+
+	if (!composite)
+		return 0;
+
+	if (verbose)
+		fprintf(stderr, "Generating composite layer\n");
+
+	G_put_window(&cellhd);
+	do_command("r.composite -o 'r=%s' 'g=%s' 'b=%s' 'out=%s'",
+		   B[0].outname, B[1].outname, B[2].outname, outname);
+	G_put_window(&save);
+
+	if (bands)
+		return 0;
+
+	do_command("g.remove 'rast=%s,%s,%s' >/dev/null",
+		   B[0].outname, B[1].outname, B[2].outname);
+
+	return 0;
 }
 
-CELL 
-lookup_color2 (int r, int g, int b, int nlev, int *levels)
-{
-	int x;
-	double mindist, tmpdist;
-	int bestlevR;
-	int bestlevG;
-	int bestlevB;
-	int index;
-	
-
-	mindist=255.;
-	for (x=0;x<nlev;x++){
-	  tmpdist=abs((double)(r - levels[x]));
-	    if(tmpdist < mindist){
-	      mindist = tmpdist;
-	      bestlevR = x;
-	    }
-	}
-	
-	mindist=255.;
-	for (x=0;x<nlev;x++){
-	  tmpdist=abs((double)(g - levels[x]));
-	  if(tmpdist < mindist){
-	    mindist = tmpdist;
-	    bestlevG = x;
-	  }
-	}
-	
-	mindist=255.;
-	for (x=0;x<nlev;x++){
-	  tmpdist=abs((double)(b - levels[x]));
-	  if(tmpdist < mindist){
-	    mindist = tmpdist;
-	    bestlevB = x;
-	  }
-	}
-	index = bestlevR*nlev*nlev + bestlevG*nlev + bestlevB;
-	return((CELL)index);
-	
-}
-
-int 
-quantize (int colors_for_chanell, int *levels)
-     
-{
-  int i;
-  int step;
-  
-  levels[0] = 0;
-  for(i=1;i<colors_for_chanell-1;i++){
-    step = (int)((255.-levels[i-1]) / (double)(colors_for_chanell-i));
-    levels[i] = levels[i-1] + step;
-  }
-  levels[colors_for_chanell-1] = 255;
-
-  return 0;
-}
-
-
-int 
-count_colors (FILE *infp, int pixels, int ppm_magic)
-{
-  int i;
-  int ncolors;
-  int red, grn, blu;
-  int *total_color;
-  
-  total_color=(int*)G_calloc(MAXCOLOR,sizeof(int));
-
-  for (i=0; i < pixels; i++){
-    switch (ppm_magic){
-    case '6':
-      red = fgetc(infp);
-      grn = fgetc(infp);
-      blu = fgetc(infp);
-      break;
-    case '3':
-      fscanf(infp, "%d %d %d", &red, &grn, &blu);
-      break;
-    default:
-      G_fatal_error("Unknown ppm magic number!!");
-      break;
-    }
-    total_color[red*256*256+grn*256+blu]=1;
-		
-  }
-  ncolors = 0;
-  for(i=0;i<MAXCOLOR;i++)
-    ncolors += total_color[i];
-  free(total_color);
-  return(ncolors);
-}

@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <rpc/types.h>
 #include <rpc/xdr.h>
+#include "G3d.h"
 #include "G3d_intern.h"
 #include "g3dkeys.h"
 

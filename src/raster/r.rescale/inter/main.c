@@ -32,7 +32,7 @@ int main (int argc, char *argv[])
 
 	/* ask user for data range to be rescaled, and title */
 	*title = 0;
-	new_min = 1;
+	new_min = 0;
 	new_max = 255;
 
 	ask (&old_min, &old_max, &new_min, &new_max, title);

@@ -1,8 +1,6 @@
-EXTRA_CFLAGS	=   $(VECT_INCLUDE) 
-
-#EXTRA_CFLAGS	=   -I../lib   -I../libes 
-
+PGM=v.patch
 LIBES = $(VECTLIB) $(DIG_ATTLIB) $(GISLIB)
+DEPLIBS= $(DEPVECTLIB) $(DEPDIG_ATTLIB) $(DEPGISLIB)
 
 SOURCES = \
 	patch.c
@@ -10,16 +8,7 @@ SOURCES = \
 OBJ = \
 	patch.o
 
-
-
-PROG =   $(BIN_MAIN_CMD)/v.patch 
-
-all:  $(PROG)
-
-$(PROG): $(OBJ) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJ) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-saber_src:
-	#load $(CFLAGS) patch.c $(CFILES)  $(LIBES) 
-
-$(LIBES): #
+$(DEPLIBS): #

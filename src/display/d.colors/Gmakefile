@@ -1,20 +1,19 @@
 PGM=d.colors
-HOME=$(BIN_MAIN_CMD)
 LIST =  \
     curses.o \
     sigint.o set_sigs.o\
     get_info.o \
     interact.o \
     tbl_toggle.o \
-    tty.o \
     main.o
 
 LIBES = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB)
 
-$(HOME)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #
 interact.o: ./graphics.h
 set_sigs.o: ./externs.h
 sigint.o: ./externs.h

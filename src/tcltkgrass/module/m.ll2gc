@@ -1,8 +1,8 @@
 interface_build {
     m.ll2gc 0
     {Converts geocentric to geographic coordinates.}
-    {entry lat {Latitude (dd:mm:ss{N|S):} 0 ""}
-    {entry lon {Longitude (dd:mm:ss{N|S):} 0 ""}
+    {entry lat {Latitude (dd:mm:ss{N|S}:} 0 ""}
+    {entry lon {Longitude (dd:mm:ss{N|S}:} 0 ""}
     {entry s {Spheroid:} 0 spheroid}
     {entry h {Height above earth in meters [0.0]:} 0 ""}
 }

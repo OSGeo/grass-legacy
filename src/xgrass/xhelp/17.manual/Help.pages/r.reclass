@@ -1,6 +1,0 @@
-
-@man("r.reclass") - Creates a new map layer whose category values are based
-upon the user's reclassification of categories in an existing raster
-map layer.
-
-(GRASS Raster Program)

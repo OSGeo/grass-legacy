@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 char PC;
 char *BC;
@@ -14,7 +15,6 @@ out (c)
 main()
 {
 	int out();
-	char *getenv();
 	char *term;
 	char buf[1024];
 	static char clear[100];

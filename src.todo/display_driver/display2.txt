@@ -1,0 +1,69 @@
+Grass display modules converted to have a "device=" option. Use the 
+R_open_driver2(driver_name) library function. With no option, the
+current device is used, i.e. modules behave as usually.
+
+------------------------------------------------------------------------------
+MODULE			| Problems (bugs are unrelated to the "device" modif)
+------------------------------------------------------------------------------
+d.3d			: interractive program -> problems
+d.area			:
+d.ask 			: unfinished ($GISBASE/etc/i.ask ???)
+d.barscale		: untested (I use lat-lon, d.bascale not...)
+d.colormode		:
+d.colortable		:
+d.display		: no, interractive program -> problems (d3d...)
+d.erase			:
+d.font			:
+d.frame			:
+d.geodesic		:
+d.graph			:
+d.his			: needs update to 5.0 cell files
+d.histogram		:
+d.icons			: no icons, so no tests...
+d.label			:
+d.labels		: interractive program -> problems (d3d...)
+d.leg.thin		: does it work wirg Grass 5.0?
+d.legend		: idem d.leg.thin
+d.mapgraph		:
+d.measure		:
+d.menu			:
+d.paint.labels		: no label file, so no tests...
+d.pan			:
+d.param.scale		: some floating point exceptions!!!!
+d.points		:
+d.rast			:
+d.profile		:
+d.rast.arrow		: not tested
+d.rast.edit		: some segfaults
+d.rast.num		:
+d.rast.zoom		: interractive program -> problems (d3d...)
+d.rgb			: added some bugfixes...
+d.rhumbline		:
+d.save			: no
+d.scale			: but doen't seem to work?
+d.site.labels		: not tested
+d.siter			: Is a tcl script: left untouched.
+d.sites			:
+d.sites.label		: untested
+d.sites.qual		:
+d.text			: changed the prompt EOF remplaced wuth [CTRL-D]
+d.title			:
+d.title			: WHY do we need to copy the output into d.text???
+d.vect			:
+d.vect.cats		:
+d.vect.zoom		:
+d.what.rast		:
+d.what.sites		:
+d.what.vect		:
+d.zoom			:
+------------------------------------------------------------------------------
+
+These represent the whole content of the "display" directory, as found in 
+Grass5.0beta7. Modules are successfully updated unless specified. Reported 
+bugs ar not related to the update. The "device=.." option has the same syntax 
+for every module, for instance: d.rast map=country device=x1.
+
+
+Pierre de Mouveaux - 24 april 2000.
+pmx@audiovu.com
+

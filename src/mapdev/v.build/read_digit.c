@@ -2,10 +2,8 @@
 /*  notice that all LINES, NODES, and AREA   indexes start at 1  */
 
 #include <math.h>
-#include "digit.h"
 #include "gis.h"
 #include "Vect.h"
-#include "dig_head.h"
 #include "vbuildlib.h"
 
 #define    ALLOC_AMT    512
@@ -117,7 +115,7 @@ read_digit (struct Map_info *Map, struct Plus_head *Plus)
 	/* if (-9.0 == dig_calc_begin_angle (&Gpoints, head.map_thresh)) 4.0 */
 	if (-9.0 == dig_calc_begin_angle (&Gpoints, Map->head.map_thresh))
 	{
-/*DEBUG*/ fprintf (stderr, "Degenerate line (%d), skipping.  offset %ld (%f,%f) (%f,%f)\n", Map->n_lines+1, offset, Gpoints.x[0], Gpoints.y[0], Gpoints.x[Gpoints.n_points-1], Gpoints.y[Gpoints.n_points-1]);
+/*DEBUG*/ fprintf (stderr, " Degenerate line (%d), skipping.  offset %ld (%f,%f) (%f,%f)\n", Map->n_lines+1, offset, Gpoints.x[0], Gpoints.y[0], Gpoints.x[Gpoints.n_points-1], Gpoints.y[Gpoints.n_points-1]);
 	    continue;
 	}
 

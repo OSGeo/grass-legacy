@@ -25,8 +25,11 @@
 $Header$
 
 $Log$
-Revision 1.1  1999-12-29 15:12:34  markus
-Initial revision
+Revision 1.2  2000-02-04 08:23:06  markus
+updated
+
+Revision 1.1.1.1  1999/12/29 15:12:37  markus
+initial CVS import
 
  * Revision 1.4  1992/10/23  19:51:58  koziol
  * Added _HUGE keyword for MS-Windows and MS-DOS compatibility.  On

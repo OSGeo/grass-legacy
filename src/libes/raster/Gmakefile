@@ -1,5 +1,7 @@
+SLIBDEPS = $(GISLIB)
+
 INCLUDE = $(SRC)/display/devices/lib
-EXTRA_CFLAGS = -I$(INCLUDE)
+EXTRA_CFLAGS = -I$(INCLUDE) $(PICFLAGS)
 
 OBJ = \
 	Box.o\
@@ -50,12 +52,8 @@ OBJ = \
 	parse_mon.o\
 	perror.o
 
-$(RASTERLIB): $(OBJ)
-	${AR}
+$(DEPRASTERLIB): $(OBJ)
+	$(SLIBRULE)
 
 $(OBJ): $(INCLUDE)/graph.h
 io.o: open.h
-Cont_abs.o: pos.h
-Cont_rel.o: pos.h
-Move_abs.o: pos.h
-Move_rel.o: pos.h

@@ -15,7 +15,8 @@ main (void)
     int n ;
     int stat ;
 
-    R_open_driver();
+    if (R_open_driver() != 0)
+	    G_fatal_error ("No graphics device selected");
 
     R_pad_list (&pads, &npads);
     for (p = -1; p < npads; p++)

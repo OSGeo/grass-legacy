@@ -15,7 +15,7 @@ OBJ =   main.o\
 PROGRAM = digtest
 
 
-./$(PROGRAM) : $(OBJ) $(GISLIB)
+./$(PROGRAM) : $(OBJ) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) 
 #./$(PROGRAM) : $(OBJ)
 #	cc -o $(PROGRAM) $(OBJ)

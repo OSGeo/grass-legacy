@@ -1,0 +1,19 @@
+Date: Thu, 20 Apr 2000 03:31:16 +0100                                           
+From: David D Gray <ddgray@armadce.demon.co.uk>  
+
+Hi Markus                                                                       
+                                                                                
+Here is an update for the v.extract module. The category support and            
+segfault problem are hopefully now fixed.                                       
+                                                                                
+This module is not likely to work for vector files that are not                 
+in 'arc-node' format, because its identification of lines to                    
+extract depends on having a unique area on the left and right -                 
+which closed loops do not have, and therefore the process gets                  
+confused.                                                                       
+                                                                                
+We could develop a separate module for working on such files,
+but I think it's better to concentrate on converting existing                   
+files to native GRASS format.
+
+David

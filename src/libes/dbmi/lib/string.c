@@ -1,4 +1,6 @@
 #include "dbmi.h"
+#include <string.h>
+#include <stdlib.h>
 
 void
 db_init_string (x)
@@ -15,6 +17,7 @@ db_init_string (x)
  */
 static int set_string();
 
+int
 db_set_string (x, s)
     dbString *x;
     char *s;
@@ -22,6 +25,7 @@ db_set_string (x, s)
     return set_string (x, s, 1);
 }
 
+int
 db_set_string_no_copy (x, s)
     dbString *x;
     char *s;
@@ -37,10 +41,11 @@ db_sizeof_string (x)
     return (unsigned int) x->nalloc;
 }
 
+
 db_zero_string (x)
     dbString *x;
 {
-    db_zero (db_get_string(x), db_sizeof_string(x));
+    db_zero ((void *)db_get_string(x), db_sizeof_string(x));
 }
 
 static int
@@ -75,6 +80,7 @@ set_string (x, s, copy)
     return DB_OK;
 }
 
+int
 db_enlarge_string (x, len)
     dbString *x;
     int len;
@@ -83,7 +89,7 @@ db_enlarge_string (x, len)
     {
 	if (x->nalloc <= 0)
 	    x->string = db_store("");
-	x->string = db_realloc (x->string, len);
+	x->string = db_realloc ((void *)x->string, len);
 	if (x->string == NULL)
 	    return DB_MEMORY_ERR;
 	x->nalloc = len;
@@ -154,6 +160,7 @@ db_append_string (x, s)
     return DB_OK;
 }
 
+int
 db_copy_string (dst, src)
     dbString *dst, *src;
 {

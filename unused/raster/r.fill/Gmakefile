@@ -1,0 +1,11 @@
+PGM    = r.fill1
+OBJS   = main.o
+LIB    = $(UNUSED)/libes
+LIBTIR = $(LIB)/libtir
+CFLAGS+= -I$(LIBTIR)
+LIBES  = $(GISLIB) $(LIB)/libtir.a
+DEPLIBS= $(DEPGISLIB) $(LIB)/libtir.a
+
+$(BIN_CMD)/$(PGM): $(OBJS) $(DEPLIBS)
+	$(CC) -o $@ $(OBJS) $(LDFLAGS) $(LIBES) $(MATHLIB) $(XDRLIB)
+

@@ -20,3 +20,15 @@ int scan_color (char *color)
 
     return 0;
 }
+
+int scan_acolor (char *color)
+{
+    int r,g,b;
+
+    r = g = b = -1;
+    if (sscanf(color,"%d %d %d",&r,&g,&b) == 3
+    && r >= 0 && r <= 255 && g >= 0 && g <= 255 && b >= 0 && b <= 255)
+	return 1;
+
+    return 0;
+}

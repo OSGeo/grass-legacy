@@ -53,7 +53,7 @@ int uhl (int first)
     n = 8 + n * 2 ;
     if (tapebuflen < n)
     {
-	tapebuf = (unsigned char *) realloc (tapebuf, tapebuflen = n);
+	tapebuf = realloc (tapebuf, tapebuflen = n);
 	if (tapebuf == NULL)
 	{
 	    error ("Not Enough Memory",0);

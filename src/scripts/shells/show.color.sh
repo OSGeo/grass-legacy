@@ -18,7 +18,7 @@ d.frame -e
 #  set arguments for 'for' loop
 #  Note this was really done this way so I could count them w/ '$#'
 
-set red orange yellow green blue indigo violet white black gray brown magenta aqua
+set red orange yellow green blue indigo white black gray brown magenta aqua
 
 # Determine vertical size based on number of colors
 i=0

@@ -1,0 +1,297 @@
+
+
+proc put_command { } {
+
+
+  global f
+  global datatype
+  global name
+
+
+  set cmd ""
+
+  if {  $f != "" } {
+         set cmd "$cmd -$f"
+  }
+
+  if {  $datatype != "" } {
+         set cmd "$cmd type=$datatype"
+  }
+
+  if {  $name != "" } {
+         set cmd "$cmd mapset=$name"
+  }
+
+  if { $cmd != "" } {
+     set cmd "g.list $cmd"
+  }
+}
+
+
+
+
+proc set_command_entry { } {
+
+  .cmd.frame0.entry configure -state normal
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 [put_command]
+  .cmd.frame0.entry configure -state disabled
+
+}
+
+
+proc proc_g.list { } {
+
+
+  global f
+  global datatype
+  global name
+
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "List GRASS Files"
+
+
+  frame .cmd.frame0 \
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry xview} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -xscrollcommand {.cmd.frame0.hscrollbar set}
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {g.list}
+
+  .cmd.frame0.entry configure -state disabled
+
+
+
+  frame .cmd.frame1 \
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry xview} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -xscrollcommand {.cmd.frame1.hscrollbar set}
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {g.list lists available GRASS data base files of the user-specified data type to standard output.}
+
+  .cmd.frame1.entry configure -state disabled
+
+
+
+  frame .cmd.frame2 \
+    -relief {flat}
+
+  checkbutton .cmd.frame2.checkbutton \
+     -text "Return a verbose file listing that includes map titles" \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "f" \
+     -offvalue "" \
+     -command { set_command_entry } \
+     -variable f
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.checkbutton { left }
+
+
+  frame .cmd.frame3 \
+    -relief {flat}
+
+  label .cmd.frame3.label \
+     -anchor {w} \
+     -text {Type of data to be listed:} \
+     -padx {2}
+
+  listbox .cmd.frame3.listbox \
+     -relief sunken \
+     -yscrollcommand {.cmd.frame3.vscrollbar set}
+
+  scrollbar .cmd.frame3.vscrollbar \
+     -command {.cmd.frame3.listbox yview}
+
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.label { top fillx } \
+    .cmd.frame3.listbox { left expand fill } \
+    .cmd.frame3.vscrollbar { right fill }
+
+  bind .cmd.frame3.listbox <Button-1> {
+       %W select set [%W nearest %y]
+       %W select set [%W nearest %y]
+       set datatype [%W get [%W nearest %y]]
+  }
+
+  bind .cmd.frame3.listbox <ButtonRelease-1> {
+       %W select set [%W nearest %y]
+       %W select set [%W nearest %y]
+       set datatype [%W get [%W nearest %y]]
+  }
+
+  bind .cmd.frame3.listbox <Double-ButtonPress-1> {
+       %W select set [%W nearest %y]
+       %W select set [%W nearest %y]
+       set datatype [%W get [%W nearest %y]]
+  }
+
+  .cmd.frame3.listbox delete 0 end
+  foreach i {rast vect icon labels sites region group} {
+      .cmd.frame3.listbox insert 0 $i
+  }
+
+
+  frame .cmd.frame4 \
+    -relief {flat}
+
+  label .cmd.frame4.label \
+    -anchor {w} \
+    -text {Name of the mapset to be searched:} \
+    -padx {2}
+
+  scrollbar .cmd.frame4.hscrollbar \
+    -command {.cmd.frame4.entry xview} \
+    -orient {horizontal}
+
+  entry .cmd.frame4.entry \
+    -relief {sunken} \
+    -width 50 \
+    -xscrollcommand {.cmd.frame4.hscrollbar set}
+
+  pack append .cmd.frame4 \
+    .cmd.frame4.label { top fillx } \
+    .cmd.frame4.entry { top fillx } \
+    .cmd.frame4.hscrollbar { bottom fillx }
+
+  .cmd.frame4.entry configure -state normal
+
+  bind .cmd.frame4.entry <Return> {
+       set name [%W get] }
+
+
+
+  frame .cmd.frame5 \
+     -borderwidth {2}
+
+  button .cmd.frame5.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 
+		if {  $datatype != "" } {
+ 		set cmd [put_command]
+ 		if { $cmd != "" } {
+ 		   editor [eval "exec $cmd"]
+ 		   destroy .cmd
+ 		}
+ 	}
+ }
+
+  button .cmd.frame5.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { destroy .cmd }
+
+  pack append .cmd.frame5 \
+    .cmd.frame5.ok { left expand } \
+    .cmd.frame5.cancel { right expand }
+
+
+  pack append .cmd \
+    .cmd.frame1 { top expand fill } \
+    .cmd.frame2 { top expand fill } \
+    .cmd.frame3 { top expand fill } \
+    .cmd.frame4 { top expand fill } \
+    .cmd.frame0 { top expand fill } \
+    .cmd.frame5 { bottom expand fill }
+
+
+bind .cmd.frame3.listbox <ButtonPress-1> {
+ %W select set [%W nearest %y]
+ %W select set [%W nearest %y]
+		set datatype [%W get [%W nearest %y]]
+		set_command_entry
+}
+
+bind .cmd.frame3.listbox <ButtonRelease-1> {
+ %W select set [%W nearest %y]
+ %W select set [%W nearest %y]
+		set datatype [%W get [%W nearest %y]]
+		set_command_entry
+}
+
+bind .cmd.frame4.entry <KeyRelease> {
+		set name [.cmd.frame4.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame4.entry <Return> {
+		set name [.cmd.frame4.entry get]
+		set_command_entry
+}
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global f
+set f ""
+
+global datatype
+set datatype ""
+
+global name
+set name ""
+
+
+global database
+global location
+global mapset
+global feature
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_g.list

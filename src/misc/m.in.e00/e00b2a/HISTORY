@@ -1,7 +1,0 @@
-11/11/1998 
-
-Version 1.0 designed as only a filter : no arguments, use < and >
-            most frequent float and decimal coding gessed
-	    no test for garbage input except first line...
-            key recognized  ~ - <space> ! } N " O P T ^ 0 1 @ E ] B b
-

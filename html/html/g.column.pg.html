@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+   <meta name="GENERATOR" content="Mozilla/4.77 [ru] (X11; U; Linux 2.2.19-3.asp i686) [Netscape]">
+   <title>g.column.pg</title>
+</head>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+<a NAME="g.column.pg"></a><img SRC="grass.smlogo.gif" >
+<hr width="100%" align=center size=6 noshade>
+<h2>
+NAME</h2>
+<b><i>g.column.pg</i></b> - Generate a list of database columns for a specified
+table in the currently selected database. (GRASS-RDBMS General Interface
+Program)
+<h2>
+SYNOPSIS</h2>
+<b>g.column.pg</b>
+<br><b>g.column.pg help</b>
+<br><b>g.column.pg [-v] table</b><i>=name</i>
+<h2>
+DESCRIPTION</h2>
+<i>g.column.pg</i> is used to generate a list of the columns in the specified
+table [table] of the currenty selected database. If the <i>[-v]</i> option
+is used the data type and length of the column are reported as well. The
+currently selected database is identified by the GRASS environment variable
+$PG_DBASE which is set using the <i>g.select.pg</i> GRASS-RDBMS interface
+tool. If this environment variable is not set the program terminates with
+a message to the user. To generate a list of the available tables in the
+currently selected database use the command <i>g.table.pg</i>. The information
+provided by <i>g.column.pg</i> will be used in subsequent GRASS-RDBMS applications
+to formulate and construct well formed database queries.
+<h2>
+COMMAND LINE OPTIONS</h2>
+
+<h3>
+Flag:</h3>
+
+<dl>
+<dt>
+<b>-v</b></dt>
+
+<dd>
+Use v for a verbose listing of columns</dd>
+</dl>
+
+<h3>
+Parameter:</h3>
+
+<dl>
+<dt>
+<b>table=databasetablename</b></dt>
+
+<dd>
+Name of table in the currently selected database.</dd>
+</dl>
+<b>EXAMPLE OUTPUT (terse)</b>
+<p><i>g.column.pg table=nri</i>
+<p>The following columns are defined in table: utm
+<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fips&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flood&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hydunit
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; landcl82&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; landcl87&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mlra
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nriptr&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; other&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; point
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; psu&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; refname&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; slope
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; soil5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; textmod&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; texture
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tfact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ukfact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; utme
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; utmn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xfact</pre>
+<b>EXAMPLE OUTPUT (verbose)</b>
+<p><i>g.column.pg table=nri -v</i>
+<p>The following columns are defined in table: utm
+<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flood&nbsp; char16
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hydunit&nbsp; char16
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; landcl82&nbsp; char
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; landcl87&nbsp; char
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mlra&nbsp; char16
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nriptr&nbsp; int4
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; other&nbsp; text</pre>
+
+<h2>
+BUGS</h2>
+None known.
+<h2>
+NOTE</h2>
+This program requires the Postgres database software.
+<h2>
+SEE ALSO</h2>
+<i><a href="g.select.pg.html">g.select.pg</a>, <a href="g.stats.pg.html">g.stats.pg</a>,
+<a href="g.table.pg.html">g.table.pg</a>, <a href="d.rast.pg.html">d.rast.pg</a>,
+<a href="d.site.pg.html">d.site.pg</a>, <a href="d.vect.pg.html">d.vect.pg</a>,
+<a href="d.what.r.pg.html">d.what.r.pg</a>, <a href="d.what.s.pg.html">d.what.s.pg</a>,
+<a href="d.what.v.pg.html">d.what.v.pg</a>, <a href="r.reclass.pg.html">r.reclass.pg</a>,
+<a href="r.rescale.pg.html">r.rescale.pg</a>, <a href="v.reclass.pg.html">v.reclass.pg</a></i>
+<h2>
+AUTHOR</h2>
+Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick
+Limp University of Arkansas, CAST
+<p>Postgres modifications: Janne Soimasuo, Faculty of Forestry, University
+of Joensuu, Finland.
+<p>Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
+</body>
+</html>

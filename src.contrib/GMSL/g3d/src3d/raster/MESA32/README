@@ -1,0 +1,18 @@
+Date: Wed, 10 May 2000 12:50:21 +0200                                           
+From: Andreas Lange <Andreas.Lange@Rhein-Main.de> 
+
+MESA3.2 does not have a workig Makefile for the required
+SGI widgets. Here you find the Makefile to compile
+Mesa-3.2/widgets-sgi properly.
+
+Store the file
+  Makefile.X11
+in
+  Mesa-3.2/widgets-sgi
+and compile.
+
+Please read ../README.mesa31
+
+Then you should be able to compile r3.showdspf.openGL.
+
+Have fun.

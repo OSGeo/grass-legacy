@@ -1,0 +1,4 @@
+Creates
+  MIF/MID files
+
+wmifheader() in plot.c has a hardcoded header !! Oops.

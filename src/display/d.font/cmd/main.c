@@ -9,8 +9,16 @@ int main( int argc , char **argv )
         char fonts[2048];
         char buf[1024];
         FILE *fd;
+		struct GModule *module;
         struct Option *opt1;
         int i;
+
+	G_gisinit(argv[0]);
+
+		module = G_define_module();
+		module->description =
+			"Selects the font in which text will be displayed "
+			"on the user's graphics monitor.";
 
         /* find out what fonts we have */
         *fonts = 0;
@@ -47,7 +55,8 @@ int main( int argc , char **argv )
                 exit(-1);
 
         /* load the font */
-        R_open_driver();
+        if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
         R_font(opt1->answer) ;
 
         /* add this command to the list */

@@ -1,11 +1,19 @@
 #include "kappa.h"
 
+static int
+longcomp(const void *aa, const void *bb)
+{
+    const long *a = aa;
+    const long *b = bb;
+    return (*a - *b);
+}
+
 prn_error_mat(out_cols, hdr)
 {
   int i,j,k;
   int ncat1,ncat2;
   long x;
-  long *clst, longcomp();
+  long *clst;
 
   int num_panels, at_panel;
   int cndx, rndx;
@@ -101,7 +109,7 @@ prn_error_mat(out_cols, hdr)
 /* body of the matrix */
      mapone = "MAP2";
      for (rndx=0; rndx < ncat; rndx++) {
-       if (*(mapone) != NULL)
+       if (*(mapone) != '\0')
          fprintf (fd," %c %5ld\t",*(mapone)++, rlst[rndx]);
        else
   	 fprintf (fd,"   %5ld\t", rlst[rndx]);
@@ -145,7 +153,7 @@ prn_error_mat(out_cols, hdr)
      t_rowcount = 0;
      grand_count = 0;
      for (rndx=0; rndx<ncat; rndx++) {
-       if (*(mapone) != NULL)
+       if (*(mapone) != '\0')
 	fprintf (fd, "%c %5ld", *(mapone)++, rlst[rndx]);
        else
  	fprintf (fd, "   %5ld", rlst[rndx]);
@@ -184,10 +192,4 @@ collapse (l,n)
     l++;
   }
   return m;
-}
-
-static long longcomp(i,j)
-int *i, *j;
-{
-     return(*i - *j);
 }

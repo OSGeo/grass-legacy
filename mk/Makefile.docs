@@ -1,0 +1,62 @@
+
+include vars.mk
+
+HTMLSRC		= ${SRCDIR}/html
+HTMLSRC1	= ${HTMLSRC}
+HTMLSRC2	= ${HTMLSRC}/html
+
+HTMLDIR		= ${GISBASE}/documents
+HTMLDIR1	= ${HTMLDIR}
+HTMLDIR2	= ${HTMLDIR}/html
+
+MANSECT		= 1
+MANDIR		= ${GISBASE}/man/man${MANSECT}
+CATDIR		= ${GISBASE}/man/cat${MANSECT}
+
+MAN2CAT		= man
+HTML2MAN	= GRASS_PERL=${PERL} sh ${SRCDIR}/src/scripts/contrib/g.html2man/g.html2man
+
+documents:	htmlpages images manpages catpages
+
+htmlpages1	= $(patsubst ${HTMLSRC1}/%.html,${HTMLDIR1}/%.html,$(wildcard ${HTMLSRC1}/*.html))
+htmlpages2	= $(patsubst ${HTMLSRC2}/%.html,${HTMLDIR2}/%.html,$(wildcard ${HTMLSRC2}/*.html))
+
+htmlpages:	${htmlpages1} ${htmlpages2}
+
+images1		= $(patsubst ${HTMLSRC1}/%.gif,${HTMLDIR1}/%.gif,$(wildcard ${HTMLSRC1}/*.gif))
+images2		= $(patsubst ${HTMLSRC2}/%.gif,${HTMLDIR2}/%.gif,$(wildcard ${HTMLSRC2}/*.gif))
+
+images:		${images1} ${images2}
+
+manpages1	= $(patsubst ${HTMLSRC1}/%.html,${MANDIR}/%.${MANSECT},$(wildcard ${HTMLSRC1}/*.html))
+manpages2	= $(patsubst ${HTMLSRC2}/%.html,${MANDIR}/%.${MANSECT},$(filter-out ${HTMLSRC2}/imagery.html ${HTMLSRC2}/paint.html,$(wildcard ${HTMLSRC2}/*.html)))
+manpages	= ${manpages1} ${manpages2}
+
+manpages:	${MANDIR} ${manpages}
+
+${MANDIR}:
+		-mkdir -p ${MANDIR}
+
+catpages1	= $(patsubst ${HTMLSRC1}/%.html,${CATDIR}/%.${MANSECT},$(wildcard ${HTMLSRC1}/*.html))
+catpages2	= $(patsubst ${HTMLSRC2}/%.html,${CATDIR}/%.${MANSECT},$(filter-out ${HTMLSRC2}/imagery.html ${HTMLSRC2}/paint.html,$(wildcard ${HTMLSRC2}/*.html)))
+catpages	= ${catpages1} ${catpages2}
+
+catpages:	${CATDIR} ${catpages}
+
+${CATDIR}:
+		-mkdir -p ${CATDIR}
+
+${HTMLDIR}/%.html:	${HTMLSRC}/%.html
+	cp -f $< $@
+
+${HTMLDIR}/%.gif:	${HTMLSRC}/%.gif
+	cp -f $< $@
+
+${manpages1}:	${MANDIR}/%.${MANSECT}:	${HTMLSRC1}/%.html
+	${HTML2MAN} $< $@ $(MANSECT)
+
+${manpages2}:	${MANDIR}/%.${MANSECT}:	${HTMLSRC2}/%.html
+	${HTML2MAN} $< $@ $(MANSECT)
+
+${catpages}:	${CATDIR}/%.${MANSECT}:	${MANDIR}/%.${MANSECT}
+	${MAN2CAT} $< > $@

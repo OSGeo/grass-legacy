@@ -1,15 +1,10 @@
+LIBES = $(GISLIB)
+DEPLIBS = $(DEPGISLIB)
 
-
-LIBRARIES = $(GISLIB) 
-
-
-
-PGM = $(BIN_CONTRIB_CMD)/r.bilinear
+PGM = r.bilinear
 
 OFILES = main.o
 
 
-$(PGM): $(OFILES) $(LIBRARIES) 
-	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBRARIES) $(MATHLIB) $(XDRLIB)
-
-
+$(BIN_CMD)/$(PGM): $(OFILES) $(DEPLIBS)
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)

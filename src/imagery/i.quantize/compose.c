@@ -99,7 +99,7 @@ int readrgbline (CELL *red, CELL *green, CELL *blue)
 
 int writemappedline (CELL *scanline)
 {
-    G_put_map_row (out_fd, scanline);
+    G_put_raster_row (out_fd, scanline, CELL_TYPE);
 #ifdef FOO
     { /*DEBUG*/ 
 	int i;

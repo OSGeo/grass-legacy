@@ -1,6 +1,5 @@
 PGM=p.mapinter2
 INTERFACE = $(SRC)/paint/Interface/applib/lib.a
-ICONLIB = $(LIBDIR)/libicon.a
 LIST = main.o\
 	Pmap.o\
 	ask_bg.o \
@@ -23,9 +22,9 @@ LIST = main.o\
 	scan_scale.o\
 	yes.o
 
-$(PGM): $(LIST) $(GISLIB) $(INTERFACE) $(ICONLIB)
+$(PGM): $(LIST) $(DEPGISLIB) $(INTERFACE) $(DEPICONLIB)
 	$(CC) $(LDFLAGS) $(LIST) $(ICONLIB) $(GISLIB) $(TERMLIB) $(INTERFACE) -o $@
 
 $(INTERFACE): #
-$(ICONLIB): #
-$(GISLIB): #
+$(DEPICONLIB): #
+$(DEPGISLIB): #

@@ -1,0 +1,29 @@
+
+VORO =vo_main.o init_head.o vo_polygons.o vo_cats_att.o vo_inregion.o \
+      vo_extend.o vo_boundary.o
+
+DTRI =dt_main.o init_head.o dt_triangles.o 
+
+LIBES= $(VECTLIB) $(GISLIB) $(LINKMLIB) $(DIG_ATTLIB) $(DISPLAYLIB) $(DATETIMELIB)
+DEPLIBS= $(DEPVECTLIB) $(DEPGISLIB) $(DEPLINKMLIB) $(DEPDIG_ATTLIB) $(DEPDISPLAYLIB) $(DEPDATETIMELIB)
+
+XSWC=sw_edgelist.c sw_geometry.c sw_heap.c sw_main.c sw_memory.c sw_output.c \
+     sw_voronoi.c
+
+XSWO=sw_edgelist.o sw_geometry.o sw_heap.o sw_main.o sw_memory.o sw_output.o \
+     sw_voronoi.o
+
+all: $(ETC)/s.sweep $(BIN_CMD)/s.voronoi $(BIN_CMD)/s.delaunay
+#all: s.sweep s.voronoi s.delaunay
+
+$(BIN_CMD)/s.delaunay: $(DTRI) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(DTRI) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(BIN_CMD)/s.voronoi: $(VORO) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(VORO) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(ETC)/s.sweep: $(XSWO) sw_defs.h
+	$(CC) $(LDFLAGS) -o $@ $(XSWO) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(DEPLIBS): #
+

@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+   <DEFANGED_meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <DEFANGED_meta name="GENERATOR" content="Mozilla/4.76 [de] (X11; U; Linux 2.2.16 i686) [Netscape]">
+   <title>GRASS 5 Terminology</title>
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EF" vlink="#59188E" alink="#FF0000">
+
+<h1>
+GRASS 5 Terminology</h1>
+
+<P>
+LOCATION: This is the name of an available geographic location. 
+
+<P>
+MAPSET:   Every GRASS session runs under the name of a MAPSET. A MAPSET may
+          be a geographical subset or as large as the parent LOCATION. 
+          Technically they are subdirectories under any location. In a
+          networked environment with several users working within the same
+          location, mapsets play a special role. Users may only select (and
+          thus modify) a mapset that they own (i.e., have created). However,
+          data in all mapsets for a given location can be read by anyone
+          (unless prevented by UNIX file permissions). The "PERMANENT"
+          mapset usually contains the read-only base maps like the elevation
+          model, while the other locations are readable and writable by
+          their owners. The "PERMANENT" mapset also contains some
+          information about the location itself that is not found in other
+          mapsets (projection info etc.), thus it must exist in every
+          location.
+
+<P>
+DATABASE: This is the unix directory containing the geographic LOCATTONS
+          (also called GISDBASE)
+
+<P> 
+REGION: The REGION may be the entire area or subset of the chosen
+        LOCATION.
+
+<P>
+WINDOW: see REGION
+
+<hr>
+<P>
+CELL DATA TYPE: a raster map from INTEGER type (whole numbers only)
+
+<P>
+FCELL DATA TYPE: a raster map from FLOAT type (4 bytes, 6 digits precision)
+
+<P>
+DCELL DATA TYPE: a raster map from DOUBLE type (8 bytes, 10 digits precision)
+
+<P>
+NULL: represents "no data" in raster maps, to be distinguished from 0 (zero)
+      data value
+
+<P>
+INTEGER MAP: see CELL DATA TYPE
+
+<P>
+FLOAT MAP: see FCELL DATA TYPE
+
+<P>
+DOUBLE MAP: see DCELL DATA TYPE
+
+<hr>
+<P>
+CATEGORY NUMBER: A numerical value for a map feature (e.g. road number).
+    Also sometimes called CATEGORY VALUE.
+
+<P>
+CATEGORY LABEL: A text attribute for a map feature (e.g. road name).
+<P>
+Both CATEGORY NUMBER and CATEGORY LABEL are related to the dig_cats/ file.
+The internal vector ID is different from this.
+
+<p><pre>
+Inofficial proposal for 5.1 (to be discussed):
+
+   Since there is some confusion about the therm "category numbers" and 
+   "category labels", there is the suggestion to change these two terms 
+   to common GIS vocabulary for GRASS 5.1: 
+
+         5.0              5.1 
+    category number  ->  index           # numeric
+    category label   ->  attribute       # text
+</pre>
+
+<h3>
+<font face="Arial, Helvetica">Other Commands</font></h3>
+<font face="Arial, Helvetica">
+<a href="index.html">help home</a>,
+<a href="database.html">database</a>,
+<a href="display.html">display</a>,
+<a href="drivers.html">drivers</a>,
+<a href="general.html">general</a>,
+<a href="grid3d.html">grid3d</a>,
+<a href="imagery.html">imagery</a>,
+<a href="import.html">import</a>, <a href="misc.html">misc</a>,
+<a href="models.html">models</a>,
+<a href="paint.html">paint</a>,
+<a href="photo.html">photo</a>,
+<a href="ps.html">postscript</a>,
+<a href="raster.html">raster</a>,
+<a href="scripts.html">scripts</a>,
+<a href="sites.html">sites</a>,
+<a href="vector.html">vector</a></font>
+
+<hr>
+<br><i>Please send comments to:</i> <a href=mailto:neteler@itc.it>Markus Neteler</a>
+<br><i>$Date$</i>
+</body>
+</html>

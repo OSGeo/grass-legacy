@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<TITLE>m.proj2</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width="100%" align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>m.proj2</b></EM>  - Calculates conversion coordinates for geographic
+positions.
+
+<BR>
+
+<EM>(GRASS Map Development Program)</EM>
+
+
+<H2>SYNOPSIS</H2>
+
+<b> m.proj2  [inproj=name[,name,...]] [outproj=name[,name,...]] [input=name]
+   [output=name]</b>
+<p>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>inproj</B>
+<DD>Comma separated input projection parameters
+<DT><B>outproj</B>
+<DD>Comma separated output projection parameters
+<DT><B>input</B>
+<DD>Input coordinate file
+<DT><B>output</B>
+<DD>Output coordinate file
+</DL>
+
+
+<H2>DESCRIPTION</H2> 
+
+This program allows a user to (optionally interactively) convert coordinates
+from one projection to another. It allows a user to convert coordinates from
+a file, writing to a file. 
+<P>
+
+Note:  The program does not transform GRASS files, it is designed to
+determine coordinate values on an individual position.
+<P>
+
+The map projections currently supported are listed in etc/projections file.
+<BR>
+
+<P> Each of the above projections (with the exception of State Plane) can be
+computed with the spheroids listed in etc/ellipse.table file.
+<P>
+
+<H2>INPUT FILE FORMAT</H2>
+<DL>
+<DT>When reading from a file of LATITUDE/LONGITUDE data the
+file will contain three (2) columns of information:
+
+<DD>the first column - latitude   - in degrees minutes seconds,
+<DD>the second column - longitude - in degrees minutes seconds,
+</DL>
+
+<P>
+For example:
+<PRE>
+	+40 36 31.4563	-87 2 7.8193	
+	40n 36 31.4563	87w 2 7.8193
+</PRE>
+
+<P>
+<DL>
+<DT>When reading from a file of PROJECTION COORDINATES data the
+file will contain three (2) columns of information:
+<DD>the first column - easting - ground coordinates
+<DD>the second column - northing - ground coordinates
+</DL>
+<P>
+For example:
+<PRE>
+ 	 500000.00	4496918.64	
+	-424489.11	1908736.13
+
+</PRE>
+<P>
+
+<H2>USAGE EXAMPLE</H2>
+
+For example, if desired to transform points from UTM projection to the
+Gauss-Kr&uuml;ger Grid System it can be done by running:
+<PRE>
+         m.proj2 inproj="proj=utm,name=utm,a=6378137.0,es=0.006694380,\
+         zone=32,unfact=1.0" outproj="proj=tmerc,name=tmerc,\
+         a=6377397.155,es=0.0066743720,lat_0=0.0,lon_0=9.0,k=1.0,\
+         x_0=3500000.0" input=utm.coord output=new.gk.coord
+</PRE>
+<P>
+
+Projection parameters have to be provided, in above case: "proj"
+ (projection type), "name" (projection name), "a" (ellipsoid: equatorial
+ radius), "es" (ellipsoid: eccentricity squared), "zone" (zone for the
+area), "unfact" (conversion factor from meters to other units, e.g. feet),
+"lat_0" (standard parallel), "lon_0" (central meridian), "k" (scale
+factor) and "x_0" (false easting). Sometimes false northing is needed which
+is coded as "y_0". Internally, the underlying <a href=http://www.remotesensing.org/proj/>PROJ 4 projection library</a>
+performs an inverse projection to latitude-longitude and then projects the 
+coordinate list to the target projection.
+
+
+
+<P>
+<B>Note:</B> NO column headings are required, just the numbers.
+
+
+
+<h2>BUGS</h2> 
+
+Datum transformations are not yet supported.
+<p>
+
+<h2>References:</h2>
+[1]Evenden, G.I.  (1990) Cartographic projection procedures for
+the UNIX environment - a user's manual.  USGS Open-File Report 90-284
+(Also see Interim Report and 2nd Interim Report on Release 4, Evenden 1994).  
+
+<H2>SEE ALSO</H2>
+
+<EM>
+<A HREF="m.proj.html">m.proj</A>,
+<A HREF="s.proj.html">s.proj</A>,
+<A HREF="v.proj.html">v.proj</A>,
+<A HREF="g.setproj.html">g.setproj</A>,
+<A HREF="i.rectify.html">i.rectify</A>,
+<A HREF="i.rectify3.html">i.rectify3</A>,
+<A HREF="r.support.html">r.support</A>, 
+<A HREF="r.stats.html">r.stats</A>, 
+<A HREF="s.sample.html">s.sample</A>,
+<A HREF="s.surf.idw.html">s.surf.idw</A>, 
+<A HREF="s.surf.rst.html">s.surf.rst</A>
+</EM>
+
+<H2>AUTHOR</H2>
+
+Bob Covill, code based on m.proj
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

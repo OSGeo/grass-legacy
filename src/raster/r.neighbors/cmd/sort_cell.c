@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include "gis.h"
 
-static int ascending (DCELL *,DCELL *);
-static int descending (DCELL *,DCELL *);
+static int ascending (const void *, const void *);
+static int descending (const void *, const void *);
 
 int sort_cell (DCELL array[],int n, int order)
 {
@@ -14,15 +14,17 @@ int sort_cell (DCELL array[],int n, int order)
 
     return 0;
 }
-static int ascending (DCELL *a,DCELL *b)
+static int ascending (const void *aa, const void *bb)
 {
-    if(G_is_d_null_value(a)) return 1;
-    if(G_is_d_null_value(b)) return -1;
-    return (*a - *b) ;
+    const DCELL *a = aa, *b = bb;
+    if(G_is_d_null_value((DCELL *) a)) return 1;
+    if(G_is_d_null_value((DCELL *) b)) return -1;
+    return (*a < *b) ? -1 : (*a > *b) ? 1 : 0;
 }
-static int descending (DCELL *a,DCELL *b)
+static int descending (const void *aa, const void *bb)
 {
-    if(G_is_d_null_value(a)) return -1;
-    if(G_is_d_null_value(b)) return 1;
-    return (*b - *a) ;
+    const DCELL *a = aa, *b = bb;
+    if(G_is_d_null_value((DCELL *) a)) return -1;
+    if(G_is_d_null_value((DCELL *) b)) return 1;
+    return (*b < *a) ? -1 : (*b > *a) ? 1 : 0;
 }

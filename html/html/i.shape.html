@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+
+<TITLE>i.shape</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width="100%" align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>i.shape</b></EM>  - Performs spatial shape identification and classification on a raster map
+
+<BR>
+
+<EM>(GRASS Image Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>i.shape</B>
+
+<BR>
+
+<B>i.shape help</B>
+
+<BR>
+
+<B>i.shape input=</B><EM>name 
+</EM><B>output=</B><EM>name </EM>
+[<B>width=</B><EM>value</EM>] 
+[<B>threshold=</B><EM>value</EM>] 
+[<B>orientations=</B><EM>value</EM>]
+
+
+<H2>DESCRIPTION</H2>
+
+Reads a GRASS raster map as input.  Calculates spatial shape identification 
+and classification on a raster map. Be sure to carefully set your
+resolution (using
+
+<EM><A HREF="g.region.html">g.region</A></EM>) 
+
+before running this program, or else your computer could
+run out of memory.
+
+
+<H2>OPTIONS</H2>
+<H3>Parameter:</H3>
+
+<DL>
+
+<DT><B>input=</B><EM>name</EM> 
+<DD>Name of input raster map layer.
+<DT><B>output=</B><EM>name</EM> 
+<DD>Fourier transformation output file
+<DT><B>width=</B><EM>value</EM> 
+<DD>This parameter determines the x-y extent of the
+Gaussian filter.  The default value is 9;  higher and lower
+values can be tested by the user.  Increasing the width
+will result in finding "edges" representing more gradual
+changes in cell values.
+<BR>
+Default:  9
+<DT><B>threshold=</B><EM>value</EM> 
+<DD>This parameter determines the "sensitivity" of the
+Gaussian filter.  The default value is 10;  higher and
+lower values can be tested by the user.  Increasing the
+threshold value will result in fewer edges being found.
+<BR>
+Default:  10
+<DT><B>orientations=</B><EM>value</EM> 
+<DD>This value is the number of azimuth directions the
+cells on the output raster map layer are categorized into
+(similar to the aspect raster map layer produced by the
+<EM><A HREF="r.slope.aspect.html">r.slope.aspect</A></EM>
+program).  For example, a value of 16 would result in
+detected edges being categorized into one of 16 bins
+depending on the direction of the edge at that point.
+<BR>
+Default:  1
+</DL>
+
+The current region definition and mask settings are respected
+when reading the input map.
+
+<H2>NOTES</H2>
+
+[..]
+
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="i.fft.html">i.fft</A></EM><BR>
+<EM><A HREF="i.ifft.html">i.ifft</A></EM><BR>
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM><BR>
+<EM><A HREF="g.region.html">g.region</A></EM><BR>
+<EM><A HREF="i.texture.html">i.texture</A></EM><BR>
+<EM><A HREF="i.zc.html">i.zc</A></EM>
+
+<H2>AUTHOR</H2>
+Hong Chun Zhuang<br>
+Sep.21,1992 at EC, CERL
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

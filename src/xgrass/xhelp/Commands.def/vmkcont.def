@@ -1,9 +1,0 @@
-
-
-v.mkcontour - 
-
-v.mkcontour creates a @glossary("vector",16.glossary/vector.def) map layer containing unlabelled contour
-lines at user-specified intervals, based on @glossary("category values",16.glossary/catval.def) present in
-a @glossary("raster",16.glossary/rastdata.def) map layer.
-
-Manual entry for @man("v.mkcontour")

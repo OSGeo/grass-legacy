@@ -18,8 +18,17 @@ int main(
 int argc,
 char **argv)
 {
+	struct GModule *module;
 	struct Option *option;
 	int mode, stat ;
+
+	G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Allows the user to establish whether a map will be "
+		"displayed using its own color table or the fixed color table "
+		"of the graphics monitor.";
 
 	option = G_define_option() ;
 	option->key        = "mode" ;
@@ -44,7 +53,8 @@ char **argv)
 		exit(-1) ;
 	}
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	stat = 1;
 	switch (mode)

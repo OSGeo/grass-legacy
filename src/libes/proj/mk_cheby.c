@@ -1,13 +1,12 @@
 #ifndef lint
 static const char SCCSID[]="@(#)mk_cheby.c	4.5	94/03/22	GIE	REL";
 #endif
-#include <projects.h>
-
-static void /* sum coefficients less than res */
-eval(UV **w, int nu, int nv, double res, UV *resid) {
+#include "projects.h"
+	static void /* sum coefficients less than res */
+eval(projUV **w, int nu, int nv, double res, projUV *resid) {
 	int i, j;
 	double ab;
-	UV *s;
+	projUV *s;
 
 	resid->u = resid->v = 0.;
 	for (i = 0; i < nu; ++i)
@@ -33,24 +32,23 @@ makeT(int nru, int nrv) {
 		for (i = 0; i < nrv; ++i)
 			T->cv[i].c = 0;
 		return T;
-	}
-
-	return 0;
+	} else
+		return 0;
 }
 	Tseries *
-mk_cheby(UV a, UV b, double res, UV *resid, UV (*func)(UV), 
+mk_cheby(projUV a, projUV b, double res, projUV *resid, projUV (*func)(projUV), 
 	int nu, int nv, int power) {
 	int j, i, nru, nrv, *ncu, *ncv;
 	Tseries *T;
-	UV **w;
+	projUV **w;
 	double cutres;
 
-	if (!(w = (UV **)vector2(nu, nv, sizeof(UV))) ||
+	if (!(w = (projUV **)vector2(nu, nv, sizeof(projUV))) ||
 		!(ncu = (int *)vector1(nu + nv, sizeof(int))))
 		return 0;
 	ncv = ncu + nu;
 	if (!bchgen(a, b, nu, nv, w, func)) {
-		UV *s;
+		projUV *s;
 		double ab, *p;
 
 		/* analyse coefficients and adjust until residual OK */
@@ -160,7 +158,7 @@ error:
 	}
 	T = 0;
 gohome:
-	freev2(w, nu);
+	freev2((void **) w, nu);
 	pj_dalloc(ncu);
 	return T;
 }

@@ -1,4 +1,4 @@
-:
+#! /bin/sh
 
 #  Usage:
 #
@@ -61,19 +61,20 @@
 
 ############################################################################
 # Determine if GRASS is being used
- 
- if [ ! "$GISBASE" ]
-   then
-   echo ""
-   echo "ERROR:  must be in GRASS to use `basename $0`"
-   echo ""
-   exit
- fi
+
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+     
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 ############################################################################
 # Check for file name argument
 
- if [ $# != 1 ]
+ if [ $# != 1  -o "$1" = "-help" -o "$1" = "help" ]
    then
    echo
    echo -n "Enter name of PostScript file that needs to be edited:  "

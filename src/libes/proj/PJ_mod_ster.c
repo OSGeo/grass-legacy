@@ -7,7 +7,7 @@ static const char SCCSID[]="@(#)PJ_mod_ster.c	4.1	94/02/15	GIE	REL";
 	double	cchio, schio; \
 	int		n;
 #define PJ_LIB__
-#include	<projects.h>
+#include	"projects.h"
 PROJ_HEAD(mil_os, "Miller Oblated Stereographic") "\n\tAzi(mod)";
 PROJ_HEAD(lee_os, "Lee Oblated Stereographic") "\n\tAzi(mod)";
 PROJ_HEAD(gs48, "Mod. Stererographics of 48 U.S.") "\n\tAzi(mod)";
@@ -117,7 +117,7 @@ ENTRY0(lee_os)
 AB[] = {
 	{0.721316,	0.},
 	{0.,			0.},
-	{-0.0088162,	 -0.00617325}
+        {-0.0088162,	 -0.00617325}
 };
 
 	P->n = 2;
@@ -130,10 +130,10 @@ ENTRY0(gs48)
 	static COMPLEX /* 48 United States */
 AB[] = {
 	{0.98879,	0.},
-	{0.,			0.},
+	{0.,		0.},
 	{-0.050909,	0.},
-	{0.,			0.},
-	{0.075528,	0.}
+	{0.,		0.},
+        {0.075528,	0.}
 };
 
 	P->n = 4;
@@ -158,7 +158,7 @@ ABs[] = { /* Alaska sphere */
 	{.0074606,	.0048125},
 	{-.0153783,	-.1968253},
 	{.0636871,	-.1408027},
-	{.3660976,	-.2937382}
+        {.3660976,	-.2937382}
 };
 
 	P->n = 5;
@@ -185,7 +185,7 @@ ABe[] = { /* GS50 ellipsoid */
 	{-.0012315,	-.1416121},
 	{.0072202,	-.1317091},
 	{-.0194029,	.0759677},
-	{-.0210072,	.0834037}
+        {-.0210072,	.0834037}
 },
 ABs[] = { /* GS50 sphere */
 	{.9842990,	0.},
@@ -197,7 +197,7 @@ ABs[] = { /* GS50 sphere */
 	{.0007388,	-.1435792},
 	{.0075848,	-.1334108},
 	{-.0216473,	.0776645},
-	{-.0225161,	.0853673}
+        {-.0225161,	.0853673}
 };
 
 	P->n = 9;

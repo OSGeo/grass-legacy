@@ -44,9 +44,14 @@ int main ( int argc, char **argv)
     struct Option *input, *dfield;
   } parm;
   extern struct Cell_head window;
-
+  struct GModule *module;
+  
   G_gisinit (argv[0]);
 
+  module = G_define_module();
+  module->description =        
+                  "Univariate statistics for a GRASS sites list.";
+                  
   parm.input = G_define_option ();
   parm.input->key = "sites";
   parm.input->type = TYPE_STRING;
@@ -91,6 +96,12 @@ int main ( int argc, char **argv)
     G_fatal_error (errmsg);
   }
 
+  if (field < 1)
+  {
+    sprintf (errmsg, "Decimal attribute field 0 doesn't exist.");
+    G_fatal_error (errmsg);
+  }
+  
   if (!all)
     G_get_window (&window);
   else
@@ -102,9 +113,12 @@ int main ( int argc, char **argv)
     G_fatal_error (errmsg);
   }
 
-  nsites = readsites (fdsite, all, verbose, field, &z);
+  nsites = G_readsites (fdsite, all, verbose, field, &window, &z);
 
-  stats = univariate (z, nsites, verbose);
+  if (nsites == 0)
+    G_fatal_error ("No sites found in sites file [%s]", sitefile);
+
+  stats = univariate (z, nsites, verbose, field);
 
   if (scriptstyle)
   {

@@ -1,0 +1,4 @@
+interface_build {
+    g.table.pg 0
+    {Lists tables in currently selected database.}
+}

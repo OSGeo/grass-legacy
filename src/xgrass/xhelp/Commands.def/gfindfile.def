@@ -1,9 +1,0 @@
-
-
-g.findfile - 
-
-g.findfile is designed for Bourne shell scripts that need to search the
-@glossary("raster",16.glossary/rastdata.def) @glossary("map layer",16.glossary/maplayer.def) files, @glossary("vector",16.glossary/vector.def) files, @glossary("site",16.glossary/site.def) list files, imagery
-group files, and @glossary("geographic region",16.glossary/georeg.def) files in the GRASS database.
-
-Manual entry for @man("g.findfile")

@@ -1,0 +1,349 @@
+
+
+proc put_command { } {
+
+
+  global gname
+  global subname
+  global signame
+  global oname
+
+
+  set cmd ""
+
+  if {  $gname != "" } {
+         set cmd "$cmd group=$gname"
+  }
+
+  if {  $subname != "" } {
+         set cmd "$cmd subgroup=$subname"
+  }
+
+  if {  $signame != "" } {
+         set cmd "$cmd signature=$signame"
+  }
+
+  if {  $oname != "" } {
+         set cmd "$cmd output=$oname"
+  }
+
+  if { $cmd != "" } {
+     set cmd "i.cca $cmd"
+  }
+}
+
+
+
+
+proc set_command_entry { } {
+
+  .cmd.frame0.entry configure -state normal
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 [put_command]
+  .cmd.frame0.entry configure -state disabled
+
+}
+
+
+proc proc_i.cca { } {
+
+
+  global gname
+  global subname
+  global signame
+  global oname
+
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "Perform Canonical Components Analysis"
+
+
+  frame .cmd.frame0 \
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame0.hscrollbar set}
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {i.cca}
+
+  .cmd.frame0.entry configure -state disabled
+
+
+
+  frame .cmd.frame1 \
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame1.hscrollbar set}
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {i.cca analyzes canonical components for image processing.}
+
+  .cmd.frame1.entry configure -state disabled
+
+
+
+  frame .cmd.frame2 \
+    -relief {flat}
+
+  label .cmd.frame2.label \
+    -anchor {w} \
+    -text {Imagery group to which the 2 to 8 band files belong:} \
+    -padx {2}
+
+  scrollbar .cmd.frame2.hscrollbar \
+    -command {.cmd.frame2.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame2.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame2.hscrollbar set}
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.label { top fillx } \
+    .cmd.frame2.entry { top fillx } \
+    .cmd.frame2.hscrollbar { bottom fillx }
+
+  .cmd.frame2.entry configure -state normal
+
+  bind .cmd.frame2.entry <Return> {
+       set gname [%W get] }
+
+
+
+  frame .cmd.frame3 \
+    -relief {flat}
+
+  label .cmd.frame3.label \
+    -anchor {w} \
+    -text {Imagery subgroup to which the 2 to 8 band files belong:} \
+    -padx {2}
+
+  scrollbar .cmd.frame3.hscrollbar \
+    -command {.cmd.frame3.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame3.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame3.hscrollbar set}
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.label { top fillx } \
+    .cmd.frame3.entry { top fillx } \
+    .cmd.frame3.hscrollbar { bottom fillx }
+
+  .cmd.frame3.entry configure -state normal
+
+  bind .cmd.frame3.entry <Return> {
+       set subname [%W get] }
+
+
+
+  frame .cmd.frame4 \
+    -relief {flat}
+
+  label .cmd.frame4.label \
+    -anchor {w} \
+    -text {ASCII file containg spectral signatures:} \
+    -padx {2}
+
+  scrollbar .cmd.frame4.hscrollbar \
+    -command {.cmd.frame4.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame4.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame4.hscrollbar set}
+
+  pack append .cmd.frame4 \
+    .cmd.frame4.label { top fillx } \
+    .cmd.frame4.entry { top fillx } \
+    .cmd.frame4.hscrollbar { bottom fillx }
+
+  .cmd.frame4.entry configure -state normal
+
+  bind .cmd.frame4.entry <Return> {
+       set signame [%W get] }
+
+
+
+  frame .cmd.frame5 \
+    -relief {flat}
+
+  label .cmd.frame5.label \
+    -anchor {w} \
+    -text {Output raster file:} \
+    -padx {2}
+
+  scrollbar .cmd.frame5.hscrollbar \
+    -command {.cmd.frame5.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame5.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame5.hscrollbar set}
+
+  pack append .cmd.frame5 \
+    .cmd.frame5.label { top fillx } \
+    .cmd.frame5.entry { top fillx } \
+    .cmd.frame5.hscrollbar { bottom fillx }
+
+  .cmd.frame5.entry configure -state normal
+
+  bind .cmd.frame5.entry <Return> {
+       set oname [%W get] }
+
+
+
+  frame .cmd.frame6 \
+     -borderwidth {2}
+
+  button .cmd.frame6.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 
+		if {  $gname != "" && $subname != "" && $signame != "" && $oname != "" } {
+ 		set cmd [put_command]
+ 		if { $cmd != "" } {
+ 		   eval " exec xterm -title i.cca -geometry 50x5 -exec $cmd " 
+ 		   destroy .cmd
+ 		}
+ 	}
+ }
+
+  button .cmd.frame6.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { destroy .cmd }
+
+  pack append .cmd.frame6 \
+    .cmd.frame6.ok { left expand } \
+    .cmd.frame6.cancel { right expand }
+
+
+  pack append .cmd \
+    .cmd.frame1 { top expand fill } \
+    .cmd.frame2 { top expand fill } \
+    .cmd.frame3 { top expand fill } \
+    .cmd.frame4 { top expand fill } \
+    .cmd.frame5 { top expand fill } \
+    .cmd.frame0 { top expand fill } \
+    .cmd.frame6 { bottom expand fill }
+
+
+bind .cmd.frame2.entry <KeyRelease> {
+		set gname [.cmd.frame2.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame2.entry <Return> {
+		set gname [.cmd.frame2.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame3.entry <KeyRelease> {
+		set subname [.cmd.frame3.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame3.entry <Return> {
+		set subname [.cmd.frame3.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame4.entry <KeyRelease> {
+		set signame [.cmd.frame4.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame4.entry <Return> {
+		set signame [.cmd.frame4.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame5.entry <KeyRelease> {
+		set oname [.cmd.frame5.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame5.entry <Return> {
+		set oname [.cmd.frame5.entry get]
+		set_command_entry
+}
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global gname
+set gname ""
+
+global subname
+set subname ""
+
+global signame
+set signame ""
+
+global oname
+set oname ""
+
+
+global database
+global location
+global mapset
+global feature
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_i.cca

@@ -15,8 +15,6 @@
 **  US Army Construction Engineering Research Lab
 */
 
-
-
 WINDOW *BASE_WIN;
 WINDOW *INFO_WIN;
 WINDOW *HELP_WIN;
@@ -428,14 +426,14 @@ int Replot_screen (void)
 
 int Get_curses_char (char *answer)
 {
-    *answer = wgetch(INFO_WIN) & 0177;
+    *answer = wgetch(INFO_WIN);
 
     return 0;
 }
 
 int Get_curses_text (char answer[])
 {
-    char newchar;
+    int newchar;
     char *pointer;
     int curx, cury;
     int size;
@@ -445,16 +443,16 @@ int Get_curses_text (char answer[])
     *answer = 0;
     for(;;)
     {
-	newchar = wgetch(INFO_WIN) & 0177;
+	newchar = wgetch(INFO_WIN);
 
-	if ((newchar > 037) && (newchar < 0177))
+	if (newchar >= 040 && newchar <= 0377 && newchar != 0177)
 	{
 	    *(pointer++) = newchar;
 	    *pointer = 000;
 	    waddch(INFO_WIN,newchar);
 	    wrefresh(INFO_WIN);
 	}
-	else if (newchar == 010 || pointer >= answer + 70)
+	else if (newchar == '\n' || pointer >= answer + 70)
 	{
 	    if (pointer > answer)
 	    {
@@ -495,6 +493,20 @@ int _show_mode (int mode, int type, int label)
     }
     else
     {
+#ifndef SCS_MODS
+	if(Cat_name)
+	{
+	    char *p;
+
+	    p = G_store(Cat_name);
+	    if(strlen(p) > 15)
+	        *(p+14) = 0;
+
+	    sprintf (buffer, " Category: %s%c", p,
+			    (strlen(Cat_name) > 15 ? '~' : ' '));
+	    wmove (BASE_WIN, 16, 51); waddstr (BASE_WIN,  buffer);
+	}
+#endif
 	sprintf (buffer, "%4d      ", label);
 	wmove (BASE_WIN, 17, 64); waddstr (BASE_WIN,  buffer);
     }
@@ -598,9 +610,7 @@ int curses_yes_no_default (int n, char *str, int def)
     return 0;
 }
 
-/*
-*/
-int suspend (void)
+int mysuspend (void)
 {
     move (LINES-1, 0);
     refresh ();
@@ -609,7 +619,7 @@ int suspend (void)
     return 0;
 }
 
-int respend (void)
+int myrespend (void)
 {
     crmode ();
     noecho();
@@ -642,7 +652,7 @@ int vask_suspend (void)
 
 int vask_respend (void)
 {
-    respend ();
+    myrespend ();
 
     return 0;
 }
@@ -775,9 +785,7 @@ int Curses_state (void)
 
 int curses_getchar (void)
 {
-    /* TESTING 1/91  dpg */
-    /* return ((getch ()) & 0177); */
-    return ((wgetch (BASE_WIN)) & 0177);
+    return (wgetch (BASE_WIN));
 }
 
 int _Write_covr (int line, char *message)

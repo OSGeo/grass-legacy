@@ -10,8 +10,6 @@
 #include <unistd.h>
 #include    "gis.h"
 #include    "Vect.h"
-#include    "digit.h"
-#include    "dig_head.h"
 
 
 #define MAIN
@@ -34,15 +32,12 @@ main (int argc, char **argv)
     char *dig_name;
     int noplus;
 
+    G_gisinit(argv[0]);
 
 /*  check args and set flags  */
 	
     parse_command_line (argc, argv, &dig_name, &noplus);
      
-/* Show advertising */
-    G_gisinit(argv[0]);
-    /* fprintf (stdout,"\n\n   v.3_to_4:\n\n"); */
-
     if ((mapset = G_find_file2 ("dig", dig_name, "")) == NULL)
     {
 	char buf[200];

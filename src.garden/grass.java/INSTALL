@@ -1,0 +1,151 @@
+
+	  How to install and use GRASS-JNI in your programs
+
+   Copyright (C) 1998 The Information-technology Promotion Agency,
+			      Japan(IPA)
+
+1. Hardware/Software Requirements
+
+   Library was built and tested on the following software and
+   hardware.  Perhaps it will work with slightly different versions of
+   software tools.
+
+   OS (result of 'uname -a'):
+     SunOS 5.5.1 Generic_103640-14 sun4u sparc SUNW,Ultra-30
+
+   Java Development Kit  (result of 'java -fullversion'):
+     java full version "JDK1.1.6N"
+
+   gcc:
+     2.8.1 and 2.7.2.3
+     
+   make:
+     GNU Make version 3.76.1
+
+   GRASS:
+     GRASS 4.2 original distribution from Baylor University and GRASS
+     4.2.1v18 from Markus Neteler.  It must be unpacked in some
+     directory, successfully compiled and installed.
+
+   If you do not have one of above products download it from the
+   following sites or their mirrors:
+
+     JDK 1.1.6:       http://www.sun.com/solaris/jdk/
+     gcc 2.8.1:       ftp://prep.ai.mit.edu/pub/gnu/gcc-2.8.1.tar.gz 
+     gcc 2.7.2.3:     ftp://prep.ai.mit.edu/pub/gnu/gcc-2.7.2.3.tar.gz 
+     GNU make 3.76.1: ftp://prep.ai.mit.edu/pub/gnu/make-3.76.1.tar.gz 
+     GRASS 4.2:       ftp://keck.baylor.edu/pub/grass/grass4.2/
+     GRASS 4.2.1v18:  http://www.geog.uni-hannover.de/grass/
+   
+   Some people have succeeded to compile grass-jni on Linux but I do
+   not have details.
+   Linux users may visit: http://www.blackdown.org/java-linux.html
+
+2. Compiling
+
+   GRASS-JNI is distributed in 2 forms: archive with source files and
+   archive of source files and compiled binaries for Solaris 2.5.1.
+   If you have downloaded distribution with binary files then proceed
+   to step 3.  If you are compiling GRASS-JNI yourself, ensure that .a
+   files (libraries) in GRASS source tree are in place and not
+   deleted.
+
+   Firstly edit sections of GNUmakefile to match your system (the file
+   contains instructions on how to do it).  Then run
+
+   make jar
+
+   This should compile Java and C source files and create four shared
+   libraries in GRASS-JNI directory (libgis.so, libgis_g.so,
+   libvect.so and libvect_g.so) and an archive of java classes
+   GRASS.jar.
+
+3. Testing
+
+   There are 2 test programs in GRASS-JNI; check1.java and
+   check2.java.  The first one performs several dozens of tests of
+   various methods in package GRASS.  The second (check2.java) is
+   intended mainly to demonstrate the use of package GRASS in
+   interactive Java applications.  To run tests, edit GNUmakefile
+   properly to set variables to the appropriate values.  Sample
+   programs access GRASS layers in the spearfish dataset that has to
+   be installed somewhere on your system and you must have read/write
+   access to the mapset specified in GNUmakefile.  Spearfish datset
+   usually comes with GRASS or it can be downloaded from
+   ftp://keck.baylor.edu/pub/grass/gisdata/spearfish
+
+   make check1
+
+   will run non-interactively and should finish without any error
+   codes or failed tests.
+
+   make check2
+
+   will bring a window on desktop.  Chose File->Open from the menu,
+   pick a GRASS raster from the list, press 'Show' and the layer
+   should appear in window.  There is a screen-shot of this program on
+   the WWW: http://www.vtt.co.jp/staff/sorokin/jni/check2scr01.gif
+
+4. Compiling Documentation and other targets in GNUmakefile
+
+   To compile documentation issue the following command:
+
+   make docs
+
+   It will run javadoc over the sources and create documentation in
+   htmls directory.
+
+   Notice: There is a problem with javadoc in JDK 1.1.x that prevents
+   it from correctly compiling documentation for inner classes.  To
+   avoid it you can download precompiled version of the documentation
+   from
+   http://www.vtt.co.jp/staff/sorokin/jni/grass-jni-0.7.4.doc.tar.gz
+   or compile it with javadoc from JDK 1.2 if one installed on your
+   system with the command:
+
+   make JDK_HOME=<path to JDK1.2> docs2
+   
+   To remove intermediate compilation files use
+   
+   make clean
+ 
+5. Installing
+
+   There is no special procedure to install GRASS-JNI on your system.
+   
+6. Using in your programs
+
+   a) Add GRASS.jar to your CLASSPATH environmental variable.  E.g.:
+
+      CLASSPATH=/home/user/grass-jni-0.7.4/GRASS.jar:$CLASSPATH
+
+   b) Make shared libraries (*.so) accessible by the dynamic loader.
+      It can be achieved by several ways, E.g. changing the setting of
+      LD_LIBRARY_PATH environmental variable: 
+
+      LD_LIBRARY_PATH=/home/user/grass-jni-0.7.4/:$LD_LIBRARY_PATH
+
+   c) in your Java program:
+
+       import GRASS.*; // to import classes end methods
+
+       String gisbase, gisdbase, location, mapset; // and assign some 
+                                                   // values
+       
+       libgis lg = new libgis( gisbase, gisdbase, // to initialize GIS 
+                               location, mapset); // library
+
+       libvect lv = new libvect( lg ); // to initialize Vect library 
+                                       // if needed
+
+       // this will load all necessary shared libraries
+
+   d) consult the documentation in htmls directory and follow the examples 
+      in check1.java and check2.java on how to access different GRASS
+      functions from your Java program
+
+7. Tell me (sorokin@vtt.co.jp) what do you think of this stuff.
+
+======================================================================
+$Id: INSTALL,v 2.0 2000-04-22 10:58:18 markus Exp $
+

@@ -102,7 +102,7 @@ char *ebuf;
 		    cell[col] = val;
 	    }
 
-	    if (G_put_map_row(grassfd, cell) < 0 ){
+	    if (G_put_raster_row(grassfd, cell, CELL_TYPE) < 0 ){
 		sprintf(ebuf, "Can't write new raster row!!");
 		free(write_block);
 		free(dbuf);

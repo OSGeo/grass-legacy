@@ -1,0 +1,207 @@
+#!/usr/bin/wish -f
+
+
+set nam "$env(LOCATION)/colr/"
+
+if [info exists env(FILTER_PATH)] {
+	set FILTER_PATH $env(FILTER_PATH)
+	} {
+	set FILTER_PATH "$env(GISBASE)/etc/r.colortool"
+	}
+source "$FILTER_PATH/utilprocs.tcl"
+source "$FILTER_PATH/filereqs.tcl"
+
+#tk_listbox Listbox
+bind Entry <Any-Key> {if [regexp {^[ -~]$} "%A"] {%W insert insert %A; tk_entrySeeCaret %W}}
+bind Entry <Left> {mytk_entryLeft %W; tk_entrySeeCaret %W}
+bind Entry <Right> {mytk_entryRight %W; tk_entrySeeCaret %W}
+bind Entry <Shift-Left> {%W icursor 0; tk_entrySeeCaret %W}
+bind Entry <Shift-Right> {%W icursor end; tk_entrySeeCaret %W}
+bind Entry <Delete> {mytk_entryDelete %W; tk_entrySeeCaret %W}
+bind Entry <Return> {;}
+bind Entry <Tab> {;}
+bind Entry <Shift-Return> {;}
+bind Entry <Shift-Tab> {;}
+
+proc BindEntry {wd keypress addme} {
+	foreach i [bind Entry] {bind $wd $i [bind Entry $i]}
+	bind $wd <Any-Key> "$keypress $wd %A $addme"
+	}
+
+set blue 216
+set green 236
+set red 170
+set cattr 1
+set cred(1) 0
+set cgreen(1) 1
+set cblue(1) 2
+
+proc make.scale {name var to title} {
+    frame $name
+    scale $name.scale -command "update.color $var" -to $to
+    global $var
+    $name.scale set [set $var]
+    label $name.label -text $title
+    pack append $name $name.label {} $name.scale {}
+}
+
+set flag 0
+proc update.color {var value} {
+    global flag
+    if {$flag == 1} {return}
+    set flag 1
+    global $var red green blue 
+    if {[lsearch {red green blue} $var] != -1} {
+    	set value [min $value 255]
+	set value [max $value 0]
+	}
+    set $var $value
+    set color [format "#%02x%02x%02x" $red $green $blue]
+    catch {.patch configure -background $color}
+    .value delete @0 end
+    .value insert 0 $color
+    set flag 0
+}
+
+proc min args {
+	set x [lindex $args 0]
+	foreach y $args {
+		if {$y < $x} {set x $y}
+	}
+	return $x
+}
+
+proc max args {
+	set x [lindex $args 0]
+	foreach y $args {
+		if {$y > $x} {set x $y}
+	}
+	return $x
+}
+
+proc floor {x} {
+	if {$x < 0} {set t [expr {0-$x}]} {set t $x}
+	set s [format %.0f $t]
+	if {$t != $x} {return "-$s"} {return $s}
+}
+
+#frame .patch -xgeometry 200x100 -relief sunken
+frame .patch -relief sunken
+entry .value -width 12
+bind .value <1> {%W select from @0; %W select to end; }
+
+frame .scales
+set flag 1
+make.scale .scales.red red 255 "Red"
+make.scale .scales.green green 255 "Green"
+make.scale .scales.blue blue 255 "Blue"
+pack append .scales .scales.red {left} .scales.green {left} .scales.blue {left}
+set flag 0
+
+button .quit -command {exit} -text "Quit"
+
+pack append . .scales {} .value {fill} .patch {expand} .quit {fill expand}
+update
+
+#.patch configure -geometry [ format "%dx100" [ winfo width . ] ]
+
+update.color red $red
+
+proc changenew {} {
+	global cattr cred cgreen cblue
+	if [info exists cred($cattr)] {
+		set color [format "#%02x%02x%02x" $cred($cattr) $cgreen($cattr) $cblue($cattr)]
+		catch {.mypatch configure -background $color}
+	} {
+		catch {.mypatch configure -background black}
+		}
+	}
+
+proc loadfile {name} {
+	global cred cgreen cblue cattr
+	set fh [open $name "r"]
+	gets $fh range
+	if {"[gets $fh]" != "%"} {
+		Information "Not a color <-> value file: can't read"
+		return
+	}
+	while {![eof $fh]} {
+		gets $fh al
+		if {[regexp {([0-9]+):([0-9]+):([0-9]+):([0-9]+)} $al dumy attr r g b]} {
+			set cred($attr) $r
+			set cgreen($attr) $g
+			set cblue($attr) $b
+			}
+		}
+		close $fh
+		catch changenew
+	}
+
+proc savefile {name} {
+	global cred cgreen cblue
+	set fh [open $name "w"]
+	set nms [lsort -integer [array names cred]]
+	set l [eval min $nms]
+	set u [eval max $nms]
+	puts $fh "% $l $u"
+	puts $fh "%%"
+	foreach i $nms {
+		catch {puts $fh "$i:$cred($i):$cgreen($i):$cblue($i)"}
+		}
+	close $fh
+	}
+
+#frame .mypatch -geometry [ format "%dx100" [ winfo width . ] ] -relief sunken
+#pack .mypatch -side top -expand yes
+
+changenew
+
+button .set -text "Set" -command {
+	set cred($cattr) $red
+	set cgreen($cattr) $green
+	set cblue($cattr) $blue
+	changenew
+	}
+button .edit -text "Modify" -command {
+	update.color red $cred($cattr)
+	update.color green $cgreen($cattr)
+	update.color blue $cblue($cattr)
+	}
+button .load -text "Load" -command {
+	global env nam
+	set nam "$env(LOCATION)/colr/"
+	set nam [filereqrd $nam ""]
+	if {![file isfile $nam]} return
+	loadfile $nam
+	}
+button .save -text "Save" -command {
+	global env nam
+	if [regexp {^(.+)/colr/(.+)$} $nam dumy pre post] {
+		set nam "$pre/cell/$post"
+	} {
+		set nam "$env(LOCATION)/cell/"
+		}
+	set nam [filereqrd $nam ""]
+	if [regexp {^(.+)/cell/(.+)$} $nam dumy pre post] {
+		set nam "$pre/colr/$post"
+	} 
+	if {[file isdirectory $nam]} return
+	savefile $nam
+	}
+pack .set .edit .load .save -side top -fill x -expand yes
+frame .cattr
+button .cattr.up -text "Up" -width 5 -command {
+	incr cattr
+	changenew
+	}
+button .cattr.down -text "Down" -width 5 -command {
+	if {$cattr > 1} {incr cattr -1}
+	changenew
+	}
+entry .cattr.txt -textvariable cattr -relief sunken -bd 2 -width 4
+BindEntry .cattr.txt mytk_entryPInt 4
+foreach i [bind .cattr.txt] {bind .cattr.txt $i [concat [bind .cattr.txt $i] "; changenew"]}
+pack .cattr.up .cattr.txt .cattr.down -side left -fill y
+pack .cattr.txt -fill x -expand yes
+pack .cattr -fill x -expand yes
+

@@ -32,6 +32,7 @@ int main (int argc, char *argv[])
 	struct Colors colr;
 	struct Cell_head cellhd;
 	struct Cell_head window;
+	struct GModule *module;
 	struct
 	    {
 		struct Option *input, *output;
@@ -46,6 +47,13 @@ int main (int argc, char *argv[])
 	DCELL *values;   /* list of neighborhood values */
 
 	G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Makes each cell category value a "
+		"function of the category values assigned to the cells "
+		"around it, and stores new cell values in an output raster "
+		"map layer.";
 
 	parm.input = G_define_option() ;
 	parm.input->key        = "input" ;
@@ -212,7 +220,13 @@ int main (int argc, char *argv[])
 		for (col = 0; col < ncols; col++)
 		{
 			n = gather (values, col);
-		        G_set_raster_value_d(rp, newvalue (values, n, map_type), map_type);
+			if (n < 0)
+			    G_set_null_value(rp, 1, map_type);
+			else
+			{
+			    DCELL out_val = newvalue (values, n, map_type);
+			    G_set_raster_value_d(rp, out_val, map_type);
+			}
 			rp = G_incr_void_ptr(rp, G_raster_size(map_type));
 			ncb.center++;
 		}
@@ -228,9 +242,8 @@ int main (int argc, char *argv[])
 	null_cats () ;
 	if (cat_names = menu[method].cat_names)
 		cat_names();
-	G_set_cat ((CELL)0, "no data", &ncb.cats);
-	G_write_cats (ncb.newcell.name, &ncb.cats);
 
+	G_write_cats (ncb.newcell.name, &ncb.cats);
 
 	if(copycolr)
 		G_write_colors (ncb.newcell.name, ncb.newcell.mapset, &colr);

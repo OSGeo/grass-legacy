@@ -17,6 +17,7 @@ int setup_plot(void);
 
 int main (int argc, char *argv[])
 {
+	struct GModule *module;
     struct
     {
 	struct Option *color, *icon, *size, *points;
@@ -31,6 +32,14 @@ int main (int argc, char *argv[])
     char *name, *mapset;
     char *D_color_list();
     ICON icon1, icon2;
+
+    /* Initialize the GIS calls */
+    G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Displays points, as icons, at user-defined locations "
+		"in the active display frame on the graphics monitor.";
 
     /* Define the different options */
 
@@ -66,9 +75,6 @@ int main (int argc, char *argv[])
     flag.reversed = G_define_flag();
     flag.reversed->key = 'r';
     flag.reversed->description = "Input coordinates reversed (north east)";
-
-    /* Initialize the GIS calls */
-    G_gisinit(argv[0]) ;
 
     /* Check command line */
 
@@ -108,7 +114,8 @@ int main (int argc, char *argv[])
 
 
     /* Setup driver and check important information */
-    R_open_driver();
+    if (R_open_driver() != 0)
+	    G_fatal_error ("No graphics device selected");
     R_standard_color (color) ;
     setup_plot();
 

@@ -1,6 +1,6 @@
 #include "global.h"
 
-int cell_stats (int fd[], int verbose, int with_counts,
+int cell_stats (int fd[], int verbose, int with_percents, int with_counts,
     int with_areas, int with_labels, char *fmt)
 {
     CELL **cell;
@@ -62,11 +62,12 @@ int cell_stats (int fd[], int verbose, int with_counts,
 
 	update_cell_stats (cell, ncols, unit_area);
     }
+
     if (verbose)
-	G_percent (nrows, nrows, 2);
+	G_percent (row, nrows, 2);
 
     sort_cell_stats();
-    print_cell_stats (fmt, with_counts, with_areas, with_labels, fs);
+    print_cell_stats (fmt, with_percents, with_counts, with_areas, with_labels, fs);
 
     return 0;
 }

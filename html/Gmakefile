@@ -1,0 +1,155 @@
+#############################################################################
+#
+# $Id: Gmakefile,v 1.31 2002-04-09 23:31:56 glynn Exp $
+#
+# MODULE:   	Grass Documentation
+# AUTHOR(S):	Original author unknown - probably CERL
+# PURPOSE:  	o Creates all manpages in $(GISBASE)/man/man1
+#   	    	  (Think to add grass programmer's manual pages in
+#   	    	  $(GISBASE)/man/man3 and file format in $(GISBASE)/man/man5
+#   	    	  later...) 
+#		o Copies html tree (without the other files) in
+#   	    	  $(GISBASE)/documents The manual in html format will be in
+#   	    	  $(GISBASE)/documents/html (default in tcltkgrass) 
+#		o The manual in postscript will be in
+#		  $(GISBASE)/documents/postscript
+#		o The manual in pdf will be in $(GISBASE)/documents/pdf
+#
+#		Usage:
+#		default: html
+#		ps:      gmake5 . postscript-docs
+#		pdf:     gmake5 . pdf-docs
+#                               ^-- current directory
+#
+# COPYRIGHT:    (C) 2000-2001 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#   	    	License (>=v2). Read the file COPYING that comes with GRASS
+#   	    	for details.
+#
+#############################################################################
+
+# default manual section number is 1
+# SECT should be "1" not "man1". Otherwise $(HTML2MAN) and g.manual won't work.
+# "man1" is used only in GRASS_MANDIR.
+# TAKE CARE !!
+SECT = 1
+GRASS_MANDIR=$(GISBASE)/man/man$(SECT)
+GRASS_HTMLDIR=$(GISBASE)/documents
+GRASS_PSDIR=$(GISBASE)/documents/postscript
+GRASS_PDFDIR=$(GISBASE)/documents/pdf
+HTML_DIR = html
+HTML2MAN = GRASS_PERL=${PERL} sh $(SRC)/scripts/contrib/g.html2man/g.html2man
+HTML2PS  = html2ps -n
+HTML2PDF = htmldoc --footer d.1
+
+all: htmlpages g.help-manpages
+
+# copy the HTML pages only and related images
+htmlpages:
+	@test -d $(GRASS_HTMLDIR) || mkdir $(GRASS_HTMLDIR)
+	@test -d $(GRASS_HTMLDIR)/html || mkdir $(GRASS_HTMLDIR)/html
+	@echo Copying html module pages
+	@(for h in `find $(HTML_DIR) *.html *.gif | grep -v /CVS`; \
+	  do \
+	  	test -d $$h && continue; \
+		f=`echo $$h | sed 's@^@$(GRASS_HTMLDIR)/@;'`; \
+	    	F_MOD_TIME=`${GISBASE}/etc/getModTime $$f`; \
+	    	H_MOD_TIME=`${GISBASE}/etc/getModTime $$h`; \
+		if [ ! -f $$f -o $$H_MOD_TIME -gt $$F_MOD_TIME ]; then echo Generating: $$f; cp -p $$h $$f; fi; \
+	  done)
+	@echo Copying overview pages
+	@(for h in `ls -1 *.html`; \
+	  do \
+	  	test -d $$h && continue; \
+		f=$(GRASS_HTMLDIR)/html/$$h; \
+	    	F_MOD_TIME=`${GISBASE}/etc/getModTime $$f`; \
+	    	H_MOD_TIME=`${GISBASE}/etc/getModTime $$h`; \
+		if [ ! -f $$f -o $$H_MOD_TIME -gt $$F_MOD_TIME ]; then echo Generating: $$f; cat $$h|sed 's@html/@@' > $$f; fi; \
+	  done)
+	@(cp grassbutton.gif bullet_blue.gif $(GRASS_HTMLDIR)/html)
+
+# generate the g.help compatible man pages
+g.help-manpages:
+	@test -d $(GRASS_MANDIR) || mkdir -p $(GRASS_MANDIR)
+	@echo Creating man pages
+	@chown man $(GRASS_MANDIR) 2> /dev/null || echo "You should be root if gmake5 fails. Otherwise it may be OK."
+	@(cd $(HTML_DIR); \
+	  for h in *.html; \
+	  do \
+		m=`echo $$h | sed 's@\.html@@'`; \
+		tmp=`echo $$m | sed 's@^@$(GRASS_MANDIR)/@'`; \
+		tmpf="$${tmp}_.$(SECT)"; \
+		tmpm="$${m}_"; \
+		f="$$tmp.$(SECT)"; \
+	    	F_MOD_TIME=`${GISBASE}/etc/getModTime $$f`; \
+	    	H_MOD_TIME=`${GISBASE}/etc/getModTime $$h`; \
+		if [ ! -f $$f -o $$H_MOD_TIME -gt $$F_MOD_TIME ]; then $(HTML2MAN) $$h $$tmpf $(SECT); man -M $(GISBASE)/man 1 $$tmpm > $$f; rm $$tmpf; echo "            $$tmpm.$(SECT) => $$m.$(SECT)"; fi; \
+	  done)
+	@(for h in *.html; \
+	  do \
+		m=`echo $$h | sed 's@\.html@@'`; \
+		tmp=`echo $$m | sed 's@^@$(GRASS_MANDIR)/@'`; \
+		tmpf="$${tmp}_.$(SECT)"; \
+		tmpm="$${m}_"; \
+		f="$$tmp.$(SECT)"; \
+	    	F_MOD_TIME=`${GISBASE}/etc/getModTime $$f`; \
+	    	H_MOD_TIME=`${GISBASE}/etc/getModTime $$h`; \
+		if [ ! -f $$f -o $$H_MOD_TIME -gt $$F_MOD_TIME ]; then $(HTML2MAN) $$h $$tmpf $(SECT); man -M $(GISBASE)/man 1 $$tmpm > $$f; rm $$tmpf; echo "            $$tmpm.$(SECT) => $$m.$(SECT)"; fi; \
+	  done)
+
+# generate the man pages
+manpages:
+	@test -d $(GRASS_MANDIR) || mkdir -p $(GRASS_MANDIR)
+	@echo Creating man pages
+	@(cd $(HTML_DIR); \
+	  for h in *.html; \
+	  do \
+		f=`echo $$h | sed 's@^@$(GRASS_MANDIR)/@; s@\.html@\.$(SECT)@'`; \
+	    	F_MOD_TIME=`${GISBASE}/etc/getModTime $$f`; \
+	    	H_MOD_TIME=`${GISBASE}/etc/getModTime $$h`; \
+		if [ ! -f $$f -o $$H_MOD_TIME -gt $$F_MOD_TIME ]; then $(HTML2MAN) $$h $$f $(SECT); fi; \
+	  done)
+	@(for h in *.html; \
+	  do \
+		f=`echo $$h | sed 's@^@$(GRASS_MANDIR)/@; s@\.html@\.$(SECT)@'`; \
+	    	F_MOD_TIME=`${GISBASE}/etc/getModTime $$f`; \
+	    	H_MOD_TIME=`${GISBASE}/etc/getModTime $$h`; \
+		if [ ! -f $$f -o $$H_MOD_TIME -gt $$F_MOD_TIME ]; then $(HTML2MAN) $$h $$f $(SECT); fi; \
+	  done)
+
+#Postscript-docs:
+#http://www.tdb.uu.se/~jan/html2ps.html
+postscript-docs:
+	if [ ! -d $(GRASS_PSDIR) ]; then mkdir $(GRASS_PSDIR); fi
+	$(HTML2PS) html/d*.html > $(GRASS_PSDIR)/grass5display.ps
+	$(HTML2PS) html/g*.html > $(GRASS_PSDIR)/grass5general.ps
+	$(HTML2PS) html/i*.html > $(GRASS_PSDIR)/grass5imagery.ps
+	$(HTML2PS) html/m*.html > $(GRASS_PSDIR)/grass5misc.ps
+	$(HTML2PS) html/r*.html > $(GRASS_PSDIR)/grass5raster.ps
+	$(HTML2PS) html/s*.html > $(GRASS_PSDIR)/grass5sites.ps
+	$(HTML2PS) html/v*.html > $(GRASS_PSDIR)/grass5vector.ps
+	$(HTML2PS) html/?3*.html html/*.vol.*.html > $(GRASS_PSDIR)/grass5grid3d.ps
+	$(HTML2PS) html/db*.html html/*pg.html > $(GRASS_PSDIR)/grass5database.ps
+	$(HTML2PS) html/*sh.html > $(GRASS_PSDIR)/grass5scripts.ps
+
+#PDF-docs:
+# GPL2 software: htmldoc needed
+#ftp://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/htmldoc/
+pdf-docs:
+	if [ ! -d $(GRASS_PDFDIR) ]; then mkdir $(GRASS_PDFDIR); fi
+	$(HTML2PDF) --webpage database.html html/db*.html html/*pg.html -f $(GRASS_PDFDIR)/grass5database.pdf
+	$(HTML2PDF) --webpage display.html html/d*.html -f $(GRASS_PDFDIR)/grass5display.pdf
+	$(HTML2PDF) --webpage drivers.html html/celldriver.html html/htmlmapdriver.html html/xdriver.html html/*pg.html -f $(GRASS_PDFDIR)/grass5drivers.pdf
+	$(HTML2PDF) --webpage general.html html/g*.html -f $(GRASS_PDFDIR)/grass5general.pdf
+	$(HTML2PDF) --webpage imagery.html html/i*.html -f $(GRASS_PDFDIR)/grass5imagery.pdf
+	$(HTML2PDF) --webpage misc.html html/m*.html -f $(GRASS_PDFDIR)/grass5misc.pdf
+	$(HTML2PDF) --webpage paint.html html/p.*.html -f $(GRASS_PDFDIR)/grass5paint.pdf
+	$(HTML2PDF) --webpage photo.html html/i.ortho*.html html/photo*.html -f $(GRASS_PDFDIR)/grass5photo.pdf
+	$(HTML2PDF) --webpage ps.html html/ps.*.html -f $(GRASS_PDFDIR)/grass5ps.pdf
+	$(HTML2PDF) --webpage raster.html html/r*.html -f $(GRASS_PDFDIR)/grass5raster.pdf
+#	$(HTML2PDF) --webpage sites.html html/s*.html -f $(GRASS_PDFDIR)/grass5sites.pdf
+	$(HTML2PDF) --webpage  html/s*.html -f $(GRASS_PDFDIR)/grass5sites.pdf
+	$(HTML2PDF) --webpage vector.html html/v*.html -f $(GRASS_PDFDIR)/grass5vector.pdf
+	$(HTML2PDF) --webpage grid3d.html html/?3*.html html/*.vol.*.html -f $(GRASS_PDFDIR)/grass5grid3d.pdf
+	$(HTML2PDF) --webpage scripts.html html/*sh.html -f $(GRASS_PDFDIR)/grass5scripts.pdf

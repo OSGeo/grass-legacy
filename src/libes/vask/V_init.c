@@ -51,6 +51,7 @@ int V_init()
 
     clear()  ;
     refresh();
+    keypad(stdscr, 1);
 
     return(0) ;
 }

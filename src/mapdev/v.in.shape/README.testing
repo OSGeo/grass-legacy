@@ -1,0 +1,83 @@
+This is a complete re-write of the code for v.in.shape. While most of the 
+core functionality is in place there are still a few things left to do.
+
+The behaviour with respect to options is much the same as the old version,
+though there are a few new flags which tidy up the established features.
+
+New flag (-u): this causes the import to assign a unique attribute value
+to each separate part of each shape on import, ie. it breaks up compound
+components. You might think this would be identical to the import without
+-u in the cases where the source file has only non-compound entries (eg.
+polygons). However there is a subtle difference. If -u is used the imported
+features will be ordered in strict sequence (so NULL records will be ignored).
+Without -u, the attribute value will be precisely the value it has in the 
+shapefile, and so numbers may skip a value if NULL records are present.
+
+New flag (-f): A polygon theme is imported, without attributes, as a line
+theme, purely to display the structure of the original linework. This is
+to help the user track down structural errors in the input, if the imported
+file does not build correctly. The lines so produced are not properly
+deconstructed and so can not be used properly as an area coverage in GRASS.
+
+Some autocleaning features have been developed but are not yet ready to
+be activated. Also the `extract'  option to preselect themes based on 
+chosen key/value entries or ranges is not yet implemented here.
+
+Dot or point features are enabled. They can now be imported (for what it's
+worth - which isn't yet much).
+
+One major difference from the old version is that Line features are now just
+imported `as is'. The old behaviour was to try to elliminate colinear sections
+and insert nodes at junctions. But lines may represent a network, whose
+properties allow lines to be aligned any way spatially, so really the old
+behaviour is incorrect.
+
+During the stabilisation period of GRASS5 it may be possible to develop
+a feature that can further re-construct an imported file if that is what is
+required.
+
+A further problem is with the labelling of line features. Where colinear tracts
+are allowed, the labelling of a line during the build process can be ambiguous
+if the lines co-incide at the labelling point, resulting in the same line
+being labelled twice or more, and the other possibly not at all. This is not
+a problem in GRASS 5.1, as there lines have inline categories which are in a 
+sense physically linked to the actual line, but it is still a problem for 
+GRASS 5.0 pre-release.
+
+The import does not yet perform a build automatically. The imported file
+must be built afterwards with `v.support option=build' if Level 2 functionality
+is required, eg. opening with v.digit.
+
+TESTING
+
+This module is considered a candidate for production release - the old version
+was always just experimental. However it must be thouroughly tested, and is 
+at this stage to be considered alpha phase.
+
+Testers will find that small files take longer to import than with the old
+version currently (by a factor of 4 or 5). However optimistaions can be
+made later that cuts down drastically on the number of writes to the database
+that have to be made, and then the speed should be about the same. It is likely
+always to be a few percent slower, as the database is stored on disk rather
+than in memory.
+
+The limit on file size is essentially removed now, and large files will also
+be imported faster than with the old version, as there should be less
+reliance on swap files. With large files also, the import speed should improve
+with further development and stabilization.
+
+
+RE_USABILITY
+
+A final feature worth mentioning is that this module is largely agnostic
+to the import format. It is intended to import any polygon/line/point
+features that are in the same general form as shapefile polygon or line
+coverages. Only the top import function needs some minor alteration for 
+each case. Most of the subsidiary functions have clear entry points which 
+are isolated from the original formats. Of course you still have to develop
+a parsing engine for the MIF or DXF file or whatever.
+
+
+
+DD. Gray  <ddgray@armadce.demon.co.uk>
+27 March 2002

@@ -1,9 +1,0 @@
-
-
-v.prune - 
-
-This program allows the user to remove extra @glossary("points",16.glossary/point.def) from a @glossary("vector",16.glossary/vector.def)
-file.  This, in turn, allows users to reduce disk space required by a
-vector file and still have data accuracy within a given tolerance.
-
-Manual entry for @man("v.prune")

@@ -1,3 +1,7 @@
+SLIBDEPS = $(GISLIB)
+
+EXTRA_CFLAGS = $(PICFLAGS)
+
 OBJ = \
 	dlg_init.o \
 	dlg_w_hdr.o\
@@ -15,13 +19,12 @@ OBJ = \
         dlg_w_area.o
 
 
-LIB = $(LIBDIR)/libdlg.a
 #DLG = $(LIBDIR)/dlg.h
 #all: $(DLG) $(LIB)
-all: $(LIB)
+all: $(DEPDLGLIB)
 
-$(LIB): $(OBJ)
-	$(AR)
+$(DEPDLGLIB): $(OBJ)
+	$(SLIBRULE)
 
 #$(DLG): dlg.h
 #	rm -f $@

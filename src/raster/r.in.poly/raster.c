@@ -159,26 +159,40 @@ int output_raster (int fd)
 
 	case USE_CHAR:
 	    for (j = 0; j < page.cols; j++)
+	    {
 		cell[j] = (CELL) raster.c[i][j];
+		if (cell[j] == 0)
+			G_set_null_value(&cell[j],1,CELL_TYPE);
+	    }
 	    break;
 
 	case USE_UCHAR:
 	    for (j = 0; j < page.cols; j++)
+	    {
 		cell[j] = (CELL) raster.u[i][j];
+		if (cell[j] == 0)
+			G_set_null_value(&cell[j],1,CELL_TYPE);
+	    }
 	    break;
 
 	case USE_SHORT:
 	    for (j = 0; j < page.cols; j++)
+	    {
 		cell[j] = (CELL) raster.s[i][j];
+		if (cell[j] == 0)
+			G_set_null_value(&cell[j],1,CELL_TYPE);
+	    }
 	    break;
 
 	case USE_CELL:
 	    cell = raster.cell[i];
+	    if (cell == 0)
+			G_set_null_value(&cell,1,CELL_TYPE);
 	    break;
 	}
 
 	G_percent (i, page.rows, 2);
-	if (G_put_map_row (fd, cell) < 0)
+	if (G_put_raster_row (fd, cell, CELL_TYPE) < 0)
 	    return ERROR;
     }
     G_percent (i, page.rows, 2);

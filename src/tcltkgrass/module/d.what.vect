@@ -3,4 +3,5 @@ interface_build {
     {Query GRASS vector files.}
     {entry map {Name of the GRASS vector file to be queried:} 0 vector}
     {checkbox -1 {Identify just one location.} "" -1}
+    {checkbox -t {Terse output.} "" -t}
 }

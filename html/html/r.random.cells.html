@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<A NAME="r.random.cells">
+<TITLE>r.random.cells</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width="100%" align=center size=6 noshade>
+
+<P><KBD>r.random.cells</KBD> - generates random sampling of cells. 
+<P>(GRASS Raster Program) 
+
+<H3>SYNOPSIS</H3>
+<DD><KBD><B>r.random.cells</KBD></B> 
+<DD><KBD><B>r.random.cells help</KBD></B> 
+<DD><KBD><B>r.random.cells [-q] output</KBD><VAR></B>=name</VAR><KBD> <B>[distance</KBD><VAR></B>=value</VAR><KBD><B>] [seed</KBD><VAR></B>=value</VAR><KBD><B>]</KBD> </B>
+<H3>DESCRIPTION</H3>
+<P><KBD>r.random.cells</KBD> generates a random sets of cells that are at least <VAR>distance</VAR> apart. The cells are numbered from 1 to the numbers of cells generated. Random cells will not be generated in areas masked off. 
+<H3>OPTIONS</H3>
+<P><VAR>-q </VAR>This flag prevents the program from sending a verbose description to standard output of what the program is doing. 
+<P><VAR>output </VAR>Output map: Random cells. Each random cell has a unique non-zero cell value ranging from 1 to the number of cells generated. The heuristic for this algorithm is to randomly pick cells until there are no cells outside of the chosen cell's buffer of radius <VAR>distance</VAR>. 
+<P><VAR>distance</VAR> Input value(s) [default 0.0]: <VAR>distance</VAR> determines the minimum distance the centers of the random cells will be apart. 
+<P><VAR>seed</VAR> Input value [default: random]: Specifies the random seed that <KBD>r.random.cells</KBD> will use to generate the cells. If the random seed is not given,<KBD> r.random.cells</KBD> will get a seed from the process ID number. 
+
+<H3>NOTES</H3>
+<P>The original purpose for this program was to generate independent random samples of cells in a study area. The <VAR>distance</VAR> value is the amount of spatial autocorrelation for the map being studied. The amount of spatial autocorrelation can be determined by using <KBD>r.2Dcorrelogram</KBD> with <KBD>r.2Dto1D</KBD>, or <KBD>r.1Dcorrelogram</KBD>. With <VAR>distance</VAR> set to zero, the <VAR>output</VAR> map will number each non-masked cell from 1 to the number of non-masked cells in the study region. 
+
+<h2>REFERENCES</h2>
+Random Field Software for GRASS by Chuck Ehlschlaeger<p>
+
+<P>As part of my dissertation, I put together several programs that help
+GRASS (4.1 and beyond) develop uncertainty models of spatial data. I hope
+you find it useful and dependable. The following papers might clarify their
+use: </P>
+
+<P>&quot;<A HREF="../../CGFinal/paper.htm">Visualizing Spatial Data
+Uncertainty Using Animation (final draft)</A>,&quot; by Charles R.
+Ehlschlaeger, Ashton M. Shortridge, and Michael F. Goodchild. Submitted to
+Computers in GeoSciences in September, 1996, accepted October, 1996 for
+publication in June, 1997. </P>
+
+<P>&quot;<A HREF="../paper.html">Modeling Uncertainty in Elevation Data for
+Geographical Analysis</A>&quot;, by Charles R. Ehlschlaeger, and Ashton M.
+Shortridge. Proceedings of the 7th International Symposium on Spatial Data
+Handling, Delft, Netherlands, August 1996. </P>
+
+<P>&quot;<A HREF="../../acm/paper.html">Dealing with Uncertainty in
+Categorical Coverage Maps: Defining, Visualizing, and Managing Data
+Errors</A>&quot;, by Charles Ehlschlaeger and Michael Goodchild.
+Proceedings, Workshop on Geographic Information Systems at the Conference on
+Information and Knowledge Management, Gaithersburg MD, 1994. </P>
+
+<P>&quot;<A HREF="../../gislis/gislis.html">Uncertainty in Spatial Data:
+Defining, Visualizing, and Managing Data Errors</A>&quot;, by Charles
+Ehlschlaeger and Michael Goodchild. Proceedings, GIS/LIS'94, pp. 246-253,
+Phoenix AZ, 1994. </P>
+
+
+<H3>SEE ALSO</H3>
+<P><KBD><A HREF="r.mask.html">r.mask</A>,
+r.1Dcorrelogram, 
+r.2Dcorrelogram, 
+r.2Dto1D, 
+<A HREF="r.random.surface.html">r.random.surface</A>,
+r.random.model, 
+<A HREF="r.random.html">r.random</A>
+</KBD> 
+
+<H3>AUTHOR</H3>
+<P>Charles Ehlschlaeger; National Center for Geographic Information and Analysis, University of California, Santa Barbara. 
+<p><i>Last changed: $Date$</i>
+</BODY>
+</HTML>

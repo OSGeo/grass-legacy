@@ -1,5 +1,0 @@
-
-@man("d.zoom") - Allows the user to change the current geographic region
-settings interactively, with a mouse.
-
-(GRASS Display Program)

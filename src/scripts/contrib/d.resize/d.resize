@@ -1,0 +1,37 @@
+#!/bin/sh
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+
+width=$1
+height=$2
+if [ -z "$width" -o -z "$height" ] ; then
+  echo 'Usage: d.resize <width> <height>' >&2
+  exit 1
+fi
+
+if [ -z "$HOSTNAME" ] ; then
+  HOSTNAME=`uname -n`
+fi
+
+tmpfile=`g.tempfile pid=$$`
+mon=`d.mon -L | fgrep selected | awk '{print $1}'`
+if [ -z "$mon" ]
+then
+  echo "ERROR: No monitor selected"
+  exit
+fi
+
+d.save -a > $tmpfile
+
+d.mon stop=$mon
+
+GRASS_WIDTH=$width
+GRASS_HEIGHT=$height
+export GRASS_WIDTH GRASS_HEIGHT
+d.mon start=$mon
+
+sh $tmpfile 
+
+rm -f $tmpfile

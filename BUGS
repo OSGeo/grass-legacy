@@ -1,0 +1,113 @@
+                 $Id: BUGS,v 1.131 2002-01-22 04:50:47 glynn Exp $
+
+Known bugs in current GRASS GIS version 5.0 CVS
+[In sync with GRASS 5.0 beta CVS version]
+
+Maintained by
+   Markus Neteler  <neteler@itc.it>
+
+Please send a note if detecting an unknown bug:
+http://grass.itc.it/bugtracking/bugreport.html
+
+Bugs being release-critical with regard to GRASS 5.0stable release 
+are indicated [RC].
+
+------------------------------------------------------------------------
+RC-Bug list:
+
+ GRASS bugtracking system:
+ http://intevation.de/rt/webrt?q_queue=grass
+
+
+[RC] CELL-Driver: 
+  -colors are not correct
+   Comment from Carl Anderson <candrsn@mindspring.com>
+    Tracking of the "bug" will have to start in
+    src/display/d.rast/cmd/display.c
+    Since GRASS4 did the colors right, using both GRASS4 and GRASS5
+    drivers, I suspect one of the Libraries and not the XDRIVER.
+    look at D_set_colors ().
+    (being worked on by ?)
+  - When plotting to D_CELL, the color black is changed to white. this
+    concerns vector maps, fonts (in d.legend), grid an d.erase. I think this
+    problem did not exist in version 5b10.
+    reported by: Reinhard Brunzema <r.brunzema@web.de>)
+
+----------- libraries ---------------------------------------------
+
+- GRASS raster colors bug:
+  GRASS becomes extremely slow in case more than 8000 colors are within
+  a raster map (therefore color quantization in r.in.tiff etc).
+   (being worked on by ?)
+
+----------- modules ---------------------------------------------
+
+d.param.scale (at src.nonGPL/display/d.param.scale/)
+ - replace numerical recipes functions with src/libes/gmath/ functions
+ - lower axis description not readable
+ - sometimes "floating point exeption", especially in par=geary
+   (being worked on by ?)
+
+-----------------------------------------------------------------------
+Modules with interface problems (parser etc): 
+-----------------------------------------------------------------------
+(collected by Andreas Lange, not release critical, bu should be fixed
+ sometimes for consistency)
+
+--------------- script used --------------------                                
+cd $GISBASE/bin                                                                 
+for f in ?.*; do echo '---> '$f; $f -help; done 2>&1 | more                     
+------------------------------------------------- 
+
+d.vect.pg, d.what.r.pg, d.what.s.pg, d.what.v.pg,        
+g.column.pg, g.stats.pg, g.table.pg, v.reclass.pg print :                
+ Please run g.select.pg to identify a current database.      
+
+g3.region:
+  no parser
+
+i.tape.tm.fast:
+  ERROR (only for xy-locations), no "Usage: " Info
+
+m.in.stf1.tape:
+ must be run in command mode only (USAGE:) ... no parser interface
+
+v.in.arc.pg -help prints :
+ Coverage type:
+Enter "polygon(area)" or "line"
+Hit RETURN to cancel.
+
+v.in.dlg: 
+  ????
+
+m.lulc.USGS -help prints :
+Cannot open USGS CTG file
+
+tcltkgrass launch itself, ignoring the -help option...
+
+All interactive functions print only:
+Usage : <name of the command>
+  (This command must be run interactively)
+
+On the other hand, some help messages are huge (75 lines...)
+
+Sometimes, a blank line is printed before the "Usage:" string 
+this is also not consistent...
+
+-----------------------------------------------------------------------
+Further discussion/hints:
+-----------------------------------------------------------------------
+
+ - Comments on updating 4.x vector modules to 5.x vector:
+   There is a slightly modified category support:
+
+  Comment on vector cats from Bill Hughes:
+  The Categories structure was changed between 4.x and 5.0beta.
+  The change seems to have moved the *labels element out of the list
+  structure and replace list.num with the index to **labels.  The fix
+  is to change the SCS/* code to use 'cats->labels[i]' instead of
+  'cats->list[i].labels'  There will be breakage around 'list[i].num'
+  as well, and probably these can be deleted, or use 'cats->num' instead.
+  The cats.count is cats.ncats now (see src/include/gis.h).
+
+  ->Note:  All vector modules should be updated

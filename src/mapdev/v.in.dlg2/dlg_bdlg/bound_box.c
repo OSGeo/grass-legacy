@@ -1,6 +1,8 @@
 /*  @(#)bound_box.c	2.1  6/26/87  */
 
 #include	<stdio.h>
+#include	<stdlib.h>
+#include	<math.h>
 #include	"dlghead.h"
 
 #define		SCALE	16000.0		
@@ -21,8 +23,6 @@ bound_box(coor_buff, n_coors, N, S, E, W)
 	double		half_dist ;
 
 	double	scale ;
-	double	atof() ;
-	double	fabs() ;
 
 	static	int  box_min = -1 ;	
 

@@ -332,7 +332,7 @@ static char *ask (
 	    continue;
 	}
 
-	if(name_is_qualified = G__name_is_fully_qualified (input, xname, xmapset))
+	if((name_is_qualified = G__name_is_fully_qualified (input, xname, xmapset)))
 	    ok = G_legal_filename (xname) >= 0;
 	else
 	    ok = G_legal_filename (input) >= 0;
@@ -418,7 +418,7 @@ static char *ask (
 	}
     }
 
-    return '\0';
+    return NULL;
 }
 
 static int parselist ( char *input, int option, char *mapset)

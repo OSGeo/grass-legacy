@@ -92,7 +92,6 @@ make_primary_controls (data_cell *dc, int argc, char *argv[])
     Widget tmp_rc, tmp;
     int width, height;
     char *p;
-    char *getenv();
     XVisualInfo *visinfo;
 
     PulldownData[0].sub_menu = MenuData;

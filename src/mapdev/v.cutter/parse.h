@@ -11,6 +11,7 @@ struct ARGS {
     char *MapA;
     char *MapB;
     char *Out;
+    char *Type;
 };
 
 extern int output_open;

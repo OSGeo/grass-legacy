@@ -1,7 +1,10 @@
+/*
+ * $Id$
+ */
+
 #include "xdr.h"
 
-db__send_float(d)
-    float d;
+int db__send_float(float d)
 {
     XDR xdrs;
     int stat;
@@ -18,8 +21,7 @@ db__send_float(d)
     return stat;
 }
 
-db__recv_float (d)
-    float *d;
+int db__recv_float (float *d)
 {
     XDR xdrs;
     int stat;
@@ -35,9 +37,7 @@ db__recv_float (d)
     return stat;
 }
 
-db__send_float_array (x, n)
-    float *x;
-    int n;
+int db__send_float_array (float *x, int n)
 {
     XDR xdrs;
     int i;
@@ -66,9 +66,7 @@ db__send_float_array (x, n)
 /* returns an allocated array of floats */
 /* caller is responsible for free() */
 
-db__recv_float_array (x, n)
-    float **x;
-    int *n;
+int db__recv_float_array (float **x, int *n)
 {
     XDR xdrs;
     int i, count, stat;

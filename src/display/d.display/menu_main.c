@@ -1,13 +1,33 @@
+/*
+* $Id$
+*
+****************************************************************************
+*
+* MODULE:       d.display
+*
+* AUTHOR(S):    
+*
+* PURPOSE:      d.display
+*
+* COPYRIGHT:    (C) 2001 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
+
 #define MAIN
 #include "windows.h"
 #include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include "lproto.h"
 #include "raster.h"
 #include "gis.h"
 #include "display.h"
 #include "popup.h"
 #include "variables.h"
-#include <stdio.h>
 
 int main(int argc, char **argv)
 {
@@ -29,23 +49,26 @@ int main(int argc, char **argv)
 		" QUIT DISPLAY",
 		NULL } ;
 
+	G_gisinit(argv[0]) ;
+
 	background_color = D_translate_color(BC_MAIN) ;
 	text_color       = D_translate_color(TC_MAIN) ;
 	div_color        = D_translate_color(DC_MAIN) ;
-
-	G_gisinit(argv[0]) ;
 
 	setup() ;
 	mapset = NULL;
 
 /* Set the font to quick and simple */
-	R_open_driver();
+	if (R_open_driver() != 0)
+	    G_fatal_error ("No graphics device selected");
 	R_font("romans") ;
+
 	R_close_driver();
 
 	for(;;)
 	{
-		R_open_driver();
+		if (R_open_driver() != 0)
+			G_fatal_error ("No graphics device selected");
 		tell_em_to_use_mouse() ;
 		answer = D_popup(
 			background_color,

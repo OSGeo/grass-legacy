@@ -1,5 +1,6 @@
 #include "dbmi.h"
 
+int
 db_driver_open_insert_cursor (cursor)
     dbCursor *cursor;
 {

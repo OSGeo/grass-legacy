@@ -3,7 +3,7 @@
 **  US Army Construction Engineering Research Lab
 */
 
-#include "digit.h"
+#include "Vect.h"
 
 /*  These routines all eventually call calloc() to allocate and zero
 **  the new space.  BUT It is not neccessarily safe to assume that

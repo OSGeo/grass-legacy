@@ -1,4 +1,8 @@
-/* Changes line 59 for Linux - Markus Neteler Jan 1998 */
+/*
+ * - Stefano Menegon/Lorenzo Potrich: curvatures fixed Jan 2002 
+ * - FP update Lorenzo Potrich/Markus Neteler Jan 2002
+ * - Changes line 59 for Linux - Markus Neteler Jan 1998 
+ */
 /*****************************************************************************/
 /***                                                                       ***/
 /***                                param()                                ***/
@@ -12,10 +16,8 @@
 #include <math.h>
 
 
-CELL param(ptype,coeff)
-    int ptype;			/* Type of terrain parameter to calculate */
-    float *coeff;		/* Set of six quadratic coefficents.	  */
-
+DCELL param(int ptype,		/* Type of terrain parameter to calculate */
+	   double *coeff)	/* Set of six quadratic coefficents.	  */
 {
 
     /* Quadratic function in the form of
@@ -33,52 +35,51 @@ CELL param(ptype,coeff)
     switch(ptype)
     {
 	case ELEV:
-		return((CELL)rint(f));
+		return(f);
 		break;
 
 	case SLOPE:
-		return((CELL)rint(atan(sqrt(d*d + e*e))*RAD2DEG));
+		return(atan(sqrt(d*d + e*e))*RAD2DEG);
 		break;
 
 	case ASPECT:
-		return((CELL)rint(atan2(e,d)*RAD2DEG));
+		return(atan2(e,d)*RAD2DEG);
 		break;
 
 	case PROFC:
 		if ((d == 0) && (e == 0))
-		    return((CELL)0);
+		    return(0.0);
 		else
-		    return((CELL)rint(-200.0*resoln*wsize*(a*d*d + b*e*e + c*e*d) /
-			   	      ((e*e + d*d) * pow(1.0 + d*d + e*e,1.5)) ));
+  		    return(-2.0*(a*d*d + b*e*e + c*e*d) / 
+  			   	      ((e*e + d*d) * pow(1.0 + d*d + e*e,1.5))); 
 		break;
 
 	case PLANC:
 		if ((d == 0) && (e == 0))
-		    return((CELL)0);
+		    return(0.0);
 		else
-		    return((CELL)rint(200.0*resoln*wsize*(b*d*d + a*e*e - c*d*e) /
-		 		/*      powf(e*e + d*d,1.5) )); */
-		 		        pow(e*e + d*d,1.5) ));
+		    return(2.0*(b*d*d + a*e*e - c*d*e) /
+		 		        pow(e*e + d*d,1.5));
 		break;
 
 	case LONGC:
 		if ((d == 0) && (e ==0))
-		    return((CELL) 0);
+		    return(0.0);
 		else	
-		    return((CELL)rint(-20.0*resoln*wsize*(a*d*d + b*e*e + c*d*e)/(d*d + e*e)));
+		    return(-2.0*(a*d*d + b*e*e + c*d*e)/(d*d + e*e));
 	case CROSC:
 		if ((d == 0) && (e ==0))
-		    return((CELL) 0);
+		    return(0.0);
 		else	
-		    return((CELL)rint(-20.0*resoln*wsize*(b*d*d + a*e*e - c*d*e)/(d*d + e*e)));
+		    return(-2.0*(b*d*d + a*e*e - c*d*e)/(d*d + e*e));
 
 	case MINIC:
-		return((CELL)rint(20.0*resoln*wsize*(-a-b-sqrt((a-b)*(a-b) + c*c))));
+		return(-a-b-sqrt((a-b)*(a-b) + c*c));
 
 	case MAXIC:
-		return((CELL)rint(20.0*resoln*wsize*(-a-b+sqrt((a-b)*(a-b) + c*c))));
+		return(-a-b+sqrt((a-b)*(a-b) + c*c));
 
 	default:
-		return((CELL)0);
+		return(0.0);
     }
 }

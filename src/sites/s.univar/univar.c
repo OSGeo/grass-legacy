@@ -3,9 +3,7 @@
 #include "gis.h"
 #include "univar.h"
 
-/* UNIV univariate (Z *z, int nsites, int verbose) */
-
-UNIV univariate (Z *z, int nsites, int verbose)
+UNIV univariate (Z *z, int nsites, int verbose, int field)
 
 /*
  * Calculates the mean, standard deviation, quartiles, median, and
@@ -18,7 +16,7 @@ UNIV univariate (Z *z, int nsites, int verbose)
   UNIV stats;
 
   if (verbose)
-    fprintf (stderr, "Calculating statistics ...          ");
+    fprintf (stderr, "Calculating statistics (decfield: %i) ...", field);
 
   zee = (double *) G_malloc (nsites * sizeof (double));
   if (zee == NULL)

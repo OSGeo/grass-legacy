@@ -81,7 +81,7 @@ int display_one_point (View *view, double east,double north)
 
     if (view->cell.configured) {
 /**      row = northing_to_row (&view->cell.head, north) + .5;
-/**      col = easting_to_col  (&view->cell.head, east) + .5;
+**      col = easting_to_col  (&view->cell.head, east) + .5;
 **/
       row = northing_to_row (&view->cell.head, north);
       col = easting_to_col  (&view->cell.head, east);
@@ -89,7 +89,7 @@ int display_one_point (View *view, double east,double north)
     }
     else if (view->vect.configured) {
 /**      row = northing_to_row (&view->vect.head, north) + .5;
-/**      col = easting_to_col  (&view->vect.head, east) + .5;
+**      col = easting_to_col  (&view->vect.head, east) + .5;
 **/
       row = northing_to_row (&view->vect.head, north);
       col = easting_to_col  (&view->vect.head, east);

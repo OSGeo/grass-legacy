@@ -1,5 +1,4 @@
 /*  Written by Dave Gerdes CERL   11/90 */
-/*  
 
 /*
  * Start up graphics processing.  Anything that needs to be assigned, set up,
@@ -9,8 +8,8 @@
  * The external variables define the pixle limits of the graphics surface.  The
  * coordinate system used by the applications programs has the (0,0) origin
  * in the upper left-hand corner.  Hence,
- *    SCREEN_LEFT < SCREEN_RIGHT
- *    SCREEN_TOP  < SCREEN_BOTTOM 
+ *    screen_left < screen_right
+ *    screen_top  < screen_bottom 
  *
  * NCOLORS is set to the total number of colors available on the device.  This
  * most certainly needs to be more than 100 (or so).  If you are writing a
@@ -21,22 +20,20 @@
 
 #include <string.h>
 #include <stdlib.h>
+
 #include "gis.h"
-
-
-#define MAIN
+#include "driverlib.h"
 #include "cell.h"
 
-int SCREEN_LEFT	  = 1;
-int SCREEN_TOP    = 1;
-int SCREEN_RIGHT  ;
-int SCREEN_BOTTOM;
-int NCOLORS       = 256 ;
+#define BUFSIZE 50000
 
-#define BUFSIZE 10*BUFSIZ
+unsigned char Cur_color;
+char *Filename;
+FILE *Temp_fp;
+unsigned char Color_table[256][3];
+unsigned char *Row_buf;
 
-
-int Graph_Set (void) 
+int Graph_Set (int argc, char **argv) 
 {
     char *p;
     char buf[1024];
@@ -45,20 +42,7 @@ int Graph_Set (void)
 
     G_gisinit("CELL driver") ;
 
-    if (NULL != (p = getenv ("GRASS_WIDTH")))
-	SCREEN_RIGHT = atoi (p);
-    else
-	SCREEN_RIGHT = DEF_WIDTH;
-
-    Cur_color = 0;
-
-    if (NULL != (p = getenv ("GRASS_HEIGHT")))
-	SCREEN_BOTTOM = atoi (p);
-    else
-	SCREEN_BOTTOM = DEF_HEIGHT;
-
-    if (NULL == (p = getenv ("LOCATION")))
-	fprintf (stderr, "You must start this driver from within GRASS\n"), exit (1);
+    NCOLORS = 256;
 
     /* clear out color table */
     for (i = 0 ; i < 256 ; i++)
@@ -70,10 +54,9 @@ int Graph_Set (void)
     Filename = G_store (buf);
 
     /* alloc tmp buffer for num_cols */
-    Row_buf = (unsigned char *) G_malloc (SCREEN_RIGHT);	
+    Row_buf = (unsigned char *) G_malloc (screen_right - screen_left);
 
-
-    file_size = SCREEN_RIGHT * SCREEN_BOTTOM;
+    file_size = (screen_right - screen_left) * (screen_bottom - screen_top);
 
     Filename = G_tempfile();
     if ((Temp_fp = fopen (Filename, "w+")) == NULL)

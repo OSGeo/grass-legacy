@@ -1,0 +1,61 @@
+#!/bin/sh
+#
+# Remove any temp files from previous runs
+if [ "$#" -lt 1 ]; then
+      echo "r.agnps50.input is an interactive module"
+      echo "Usage:"
+      echo "      r.agnps50.input"
+      exit   
+fi
+if [ "$1" = "help" ]; then
+      echo "r.agnps50.input is an interactive module"
+      echo "Usage:"
+      echo "      r.agnps50.input"
+      exit   
+fi
+
+@unalias rm
+
+rm -f tmpoutfile 
+$GISBASE/etc/agnps50/remove_old_tmp_files.sh >tmpoutfile
+
+# Eliminate the MASK from the previous execution so that
+# the program can start a new MASK (with correct resolution,
+# etc.)
+
+g.remove MASK >>tmpoutfile
+
+# Run the first excecutable
+
+$GISBASE/etc/agnps50/agnps_input_1
+# agnps_input_1 exits with a status of 1 if
+# the flow map was not present and had to be created.
+# The user is warned that the flow map needs to be
+# manually checked, so it this is the case, the
+# script exits before agnps_input_2, the main
+# portion of the program (and the second executable)
+# is executed.
+
+# Changed agnps_input_2 to agnps_input_2a to use new r.cn2 and other
+# changes                       19.12.96 Markus Neteler
+# check error status:
+
+if [ $? -ne 0 ]
+then
+  echo "Check for more than one outlet cell! If present, use d.rast.edit"
+  echo "on aspect map to fix this."
+else
+  $GISBASE/etc/agnps50/agnps_input_2a
+fi
+
+##
+## ADDED BY MIKE FOSTER 3-24-96
+## MAKE SURE YOU HAVE A COPY OF temp_cell_num called cell_num.map.res
+## FOR THE OUTPUT VIEWER
+#  WHERE res is the cell size (100, 150, 200, etc.)
+#
+#  Retrieve the current mapset resolution from temp_file for use in the
+#  cell_num.map.* name
+# 
+
+$GISBASE/etc/agnps50/copy_cell_num.sh

@@ -1,5 +1,4 @@
 PROGRAM	     = photo.2target
-#HOME         = ../bin
 HOME        = $(ETC)/imagery
 
 
@@ -31,22 +30,22 @@ LIST=main.o\
 	points.o\
 	target.o\
 	title.o\
-	tty.o\
 	view.o\
 	where.o\
 	zoom.o\
 	zoom_box.o\
 	zoom_pnt.o
 
-LIBES = $(IMAGERYLIB2) $(IMAGERYLIB) $(D_LIB) $(DISPLAYLIB) $(GISLIB) $(RASTERLIB) $(SEGMENTLIB) $(VASK)
+LIBES = $(IMAGERYLIB2) $(IMAGERYLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(SEGMENTLIB) $(VASKLIB)
+DEPLIBS= $(IMAGERYLIB2) $(DEPIMAGERYLIB) $(DEPD_LIB) $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB) $(DEPSEGMENTLIB) $(DEPVASKLIB)
 
 
-$(HOME)/$(PROGRAM): $(LIST) $(LIBES)
+$(HOME)/$(PROGRAM): $(LIST) $(DEPLIBS)
 	$(CC) $(EXTRA_CFLAGS) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): globals.h defs.h
 
-$(LIBES): #
+$(DEPLIBS): #
 
 try: try.o
 	$(CC) try.o $(GISLIB) -o try

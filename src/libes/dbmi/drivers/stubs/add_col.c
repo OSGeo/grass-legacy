@@ -1,5 +1,6 @@
 #include "dbmi.h"
 
+int
 db_driver_add_column (tableName, column)
     dbString *tableName;
     dbColumn *column;

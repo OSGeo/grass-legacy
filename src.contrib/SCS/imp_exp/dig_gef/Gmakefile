@@ -2,7 +2,6 @@
 LIBPROJ         = $(SRC)/../src.related/mapgen/lib/libproj.a
 LIBSUPP         = $(SRC)/../src.related/mapgen/lib/libsupp.a
 
-EXTRA_CFLAGS	= $(VECT_INCLUDE)
 
 
 OFILES = \
@@ -22,11 +21,11 @@ CFILES = \
 	SetProj.c
 
 
-all:  START $(BIN_CONTRIB_CMD)/v.out.gef
+all:  START $(BIN_CMD)/v.out.gef
 	
 
-$(BIN_CONTRIB_CMD)/v.out.gef: $(OFILES) v.exp_gef.o
-	$(CC) $(LDFLAGS) -o $@ v.exp_gef.o $(OFILES) $(GISLIB) $(VECTLIB) $(LIBPROJ) $(LIBSUPP) $(GISLIB) $(VASK) $(MATHLIB)
+$(BIN_CMD)/v.out.gef: $(OFILES) v.exp_gef.o
+	$(CC) $(LDFLAGS) -o $@ v.exp_gef.o $(OFILES) $(GISLIB) $(VECTLIB) $(LIBPROJ) $(LIBSUPP) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB)
 
 
 START:

@@ -1,0 +1,10 @@
+PGM=i.group
+LIST = main.o\
+	menu.o\
+	run.o
+LIBES=$(GISLIB) $(IMAGERYLIB) $(VASKLIB)
+DEPLIBS=$(DEPGISLIB) $(DEPIMAGERYLIB) $(DEPVASKLIB)
+$(BIN_INTER)/$(PGM): $(LIST) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
+
+$(DEPLIBS): #

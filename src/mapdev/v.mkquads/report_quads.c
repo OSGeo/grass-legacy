@@ -9,7 +9,6 @@
 #include	<string.h>
 #include	"CC.h"
 #include	"quad_structs.h"
-#include	"dig_defines.h"
 #include	"local_proto.h"
 
 static int write_report_line(FILE  *,int,double ,double ,double ,double);

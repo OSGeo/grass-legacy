@@ -14,7 +14,7 @@
 #include "symtab.h"
 #include "local_proto.h"
 
-extern int yylineno;
+/* extern int yylineno; */
 extern char yytext[];
 extern FILE *yyin;
 int verbose;
@@ -27,15 +27,21 @@ extern struct symtab table;
 int main (int argc, char **argv)
 {
     struct symtab *ptr;
+	struct GModule *module;
 
     probabilitymaps = 1;
     combinedmap = 1;
     colortable = Ramp;
 
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Bayesian expert system development program.";
+
     parse_arglist(argc,argv);
     if(-1 == yyparse()) {
-        ptr = &yyparse_return;
+        ptr = &table;
         fclose(yyin);
         fprintf(stderr,"Creating intermediate maps\n");
         do_reclass(ptr);
@@ -51,7 +57,7 @@ int main (int argc, char **argv)
 
 int yyerror (char *s)
 {
-    fprintf(stderr,"\n%s: line number %d at or near \"%s\"\n",s,yylineno,yytext);
+    fprintf(stderr,"\n%s: line number ? at or near \"%s\"\n",s,yytext);
     exit(0);
 }
 

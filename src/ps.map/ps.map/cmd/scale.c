@@ -5,6 +5,7 @@
 **
 ** Author: Paul W. Carlson	April 1992
 */
+#include <stdlib.h>
 #include <string.h>
 #include "local_proto.h"
 #include "ps_info.h"
@@ -13,8 +14,12 @@
 #define MILES_TO_INCHES  ((double)5280*12)
 #define PWIDTH	(PS.page_width-PS.left_marg-PS.right_marg)
 static double do_scale(char *);
-static int OOPS() __attribute__ ((__noreturn__));
 
+#ifdef __GNUC_MINOR__
+static int OOPS (void) __attribute__ ((__noreturn__));
+#else
+static int OOPS();
+#endif
 
 double scale(char *text)
 {

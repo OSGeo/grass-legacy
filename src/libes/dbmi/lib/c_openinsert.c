@@ -1,7 +1,7 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db_open_insert_cursor (driver, cursor)
+int db_open_insert_cursor (driver, cursor)
     dbDriver *driver;
     dbCursor *cursor;
 {

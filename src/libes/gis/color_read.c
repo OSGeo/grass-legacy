@@ -22,6 +22,7 @@
  *********************************************************************/
 
 #include "gis.h"
+#include <string.h>
 
 static int read_colors(char *,char *,char *,struct Colors *);
 static int read_new_colors(FILE *,struct Colors *);

@@ -1,0 +1,61 @@
++++++++++++++++++++++++++++++++++
+
+Shape to Dig converter
+
++++++++++++++++++++++++++++++++++
+
+Copyright(C)
+David D. Gray <ddgray@armadce.demon.co.uk>
+
+This is free software.
+It is released under the terms of the GNU
+General Public License.
+
+For more details see the GNU General Public License
+and the source files.
+
+This is an interim test package for testing
+procedures and structures for converting
+an ESRI Shapefile to various topological
+structures, mainly binary vector formats
+for the GRASS database.
+
+
+REQUIREMENTS:
+
+This test package links to Frank Warmerdam's shapefile
+library. For details see 
+
+http://gdal.velocet.ca/projects/shapelib/index.html
+
+
+INSTALL:
+
+This should be untarred in the top-level directory
+of a current v.in.shape module, or v.in.shape.pg.
+Then enter `make'. Edit the makefile if need be
+to suit your system. As these files do not depend on
+the GRASS environment, they can also be installed in
+a separate scratch directory, as long as the shapefile
+source files dbfopen.c shpopen.c and shapefil.h are
+present in the top level directory.
+
+
+TEST:
+
+The binary arctest1 is a crude shape-to-generate
+converter for checking the function of the shape
+import engine. It craetes a pol, lab and txt file
+which can be read by the v.in.arc module. A set
+of shapefiles ( .shp, .shx and .dbf ) should be 
+copied to the test directory, then run arctest1
+
+./arctest1 myfile.shp
+
+The generate files created should be copied to
+GRASS mapset's arc/ directory before import.
+Import with v.in.arc.
+
+
+DD Gray
+

@@ -1,5 +1,4 @@
 PROGRAM      = photo.init
-#HOME         = ../bin
 HOME        = $(ETC)/imagery
 
 EXTRA_CFLAGS = -I../libes
@@ -8,15 +7,16 @@ IMAGERYLIB2  = ../libes/libortho.a
 
 LIST = main.o mod_info.o
 
-LIBES = $(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(VASK)
+LIBES = $(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB)
+DEPLIBS= $(IMAGERYLIB2) $(DEPIMAGERYLIB) $(DEPGISLIB) $(DEPD_LIB) $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPVASKLIB)
 
-$(HOME)/$(PROGRAM): $(LIST) $(LIBES)
+$(HOME)/$(PROGRAM): $(LIST) $(DEPLIBS)
 	$(CC) $(EXTRA_CFLAGS) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): ../libes/orthophoto.h globals.h
 
 
-$(LIBES): #
+$(DEPLIBS): #
    
 
 

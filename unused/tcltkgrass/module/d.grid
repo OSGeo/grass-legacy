@@ -1,0 +1,472 @@
+
+
+proc colors { } {
+
+
+  toplevel .colors
+
+  wm geometry .colors +100+20
+  wm title .colors "colors"
+
+
+  global name
+
+
+  frame .colors.frame0 \
+    -relief {flat}
+
+  label .colors.frame0.label \
+     -anchor {w} \
+     -text {Grid color:} \
+     -padx {2}
+
+  listbox .colors.frame0.listbox \
+     -relief sunken \
+     -yscrollcommand {.colors.frame0.vscrollbar set}
+
+  scrollbar .colors.frame0.vscrollbar \
+     -command {.colors.frame0.listbox yview}
+
+
+  pack append .colors.frame0 \
+    .colors.frame0.label { top fillx } \
+    .colors.frame0.listbox { left expand fill } \
+    .colors.frame0.vscrollbar { right fill }
+
+  bind .colors.frame0.listbox <Button-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set name [%W get [%W nearest %y]]
+  }
+
+  bind .colors.frame0.listbox <ButtonRelease-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set name [%W get [%W nearest %y]]
+  }
+
+  bind .colors.frame0.listbox <Double-ButtonPress-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set name [%W get [%W nearest %y]]
+  }
+
+  .colors.frame0.listbox delete 0 end
+  foreach i {red orange yellow green blue indigo violet magenta brown gray white black} {
+      .colors.frame0.listbox insert 0 $i
+  }
+
+
+  frame .colors.frame1 \
+     -borderwidth {2}
+
+  button .colors.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .colors }
+
+  button .colors.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .colors }
+
+  pack append .colors.frame1 \
+    .colors.frame1.ok { left expand } \
+    .colors.frame1.cancel { right expand }
+
+
+
+  pack append .colors \
+    .colors.frame0 { top expand fill } \
+    .colors.frame1 { bottom expand fill }
+
+
+
+  grab set .colors
+  tkwait window .colors
+
+}
+
+
+
+
+proc origin { } {
+
+
+  toplevel .origin
+
+  wm geometry .origin +100+20
+  wm title .origin "origin"
+
+
+  global easting
+
+
+  frame .origin.frame0 \
+    -relief {flat}
+
+  label .origin.frame0.label \
+    -anchor {w} \
+    -text {Easting:} \
+    -padx {2}
+
+  scrollbar .origin.frame0.hscrollbar \
+    -command {.origin.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .origin.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.origin.frame0.hscrollbar set}
+
+  pack append .origin.frame0 \
+    .origin.frame0.label { top fillx } \
+    .origin.frame0.entry { top fillx } \
+    .origin.frame0.hscrollbar { bottom fillx }
+
+  .origin.frame0.entry configure -state normal
+
+  bind .origin.frame0.entry <Return> {
+       set easting [%W get] }
+
+
+  global northing
+
+
+  frame .origin.frame1 \
+    -relief {flat}
+
+  label .origin.frame1.label \
+    -anchor {w} \
+    -text {Northing:} \
+    -padx {2}
+
+  scrollbar .origin.frame1.hscrollbar \
+    -command {.origin.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .origin.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.origin.frame1.hscrollbar set}
+
+  pack append .origin.frame1 \
+    .origin.frame1.label { top fillx } \
+    .origin.frame1.entry { top fillx } \
+    .origin.frame1.hscrollbar { bottom fillx }
+
+  .origin.frame1.entry configure -state normal
+
+  bind .origin.frame1.entry <Return> {
+       set northing [%W get] }
+
+
+
+  frame .origin.frame2 \
+     -borderwidth {2}
+
+  button .origin.frame2.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set easting [.origin.frame0.entry get]
+                  set northing [.origin.frame1.entry get]
+                 destroy .origin }
+
+  button .origin.frame2.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set easting ""
+                  set northing ""
+                 destroy .origin }
+
+  pack append .origin.frame2 \
+    .origin.frame2.ok { left expand } \
+    .origin.frame2.cancel { right expand }
+
+
+bind .origin.frame0.entry <Return> {
+     focus .origin.frame1.entry
+}
+
+bind .origin.frame1.entry <Return> {
+     focus .origin.frame0.entry
+}
+
+
+  pack append .origin \
+    .origin.frame0 { top expand fill } \
+    .origin.frame1 { top expand fill } \
+    .origin.frame2 { bottom expand fill }
+
+
+
+  grab set .origin
+  tkwait window .origin
+
+}
+
+
+
+
+proc put_command { } {
+
+
+  global value
+  global name
+  global easting
+  global northing
+
+
+  set cmd ""
+
+  if {  $value != "" } {
+         set cmd "$cmd size=$value"
+  }
+
+  if {  $name != "" } {
+         set cmd "$cmd color=$name"
+  }
+
+  if {  $easting != "" || $northing != "" } {
+         set cmd "$cmd origin=$easting,$northing"
+  }
+
+  if { $cmd != "" } {
+     set cmd "d.grid $cmd"
+  }
+}
+
+
+
+
+proc set_command_entry { } {
+
+  .cmd.frame0.entry configure -state normal
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 [put_command]
+  .cmd.frame0.entry configure -state disabled
+
+}
+
+
+proc proc_d.grid { } {
+
+
+  global value
+  global name
+  global easting
+  global northing
+
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "Overlay Grid"
+
+
+  frame .cmd.frame0 \
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame0.hscrollbar set}
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {d.grid}
+
+  .cmd.frame0.entry configure -state disabled
+
+
+
+  frame .cmd.frame1 \
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame1.hscrollbar set}
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {d.grid overlays a user-specified grid in the active display frame on the graphics monitor.}
+
+  .cmd.frame1.entry configure -state disabled
+
+
+
+  frame .cmd.frame2 \
+    -relief {flat}
+
+  label .cmd.frame2.label \
+    -anchor {w} \
+    -text {Size of grid:} \
+    -padx {2}
+
+  scrollbar .cmd.frame2.hscrollbar \
+    -command {.cmd.frame2.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame2.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame2.hscrollbar set}
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.label { top fillx } \
+    .cmd.frame2.entry { top fillx } \
+    .cmd.frame2.hscrollbar { bottom fillx }
+
+  .cmd.frame2.entry configure -state normal
+
+  bind .cmd.frame2.entry <Return> {
+       set value [%W get] }
+
+
+
+  frame .cmd.frame3 \
+    -relief {flat}
+
+  label .cmd.frame3.label \
+    -anchor {w} \
+    -text {Other options available:} \
+    -padx {2}
+
+  button .cmd.frame3.button0 \
+     -text "colors ..." \
+     -relief raised \
+     -padx 10 \
+     -command "colors
+                set_command_entry"
+
+
+  button .cmd.frame3.button1 \
+     -text "origin ..." \
+     -relief raised \
+     -padx 10 \
+     -command "origin
+                set_command_entry"
+
+
+  frame .cmd.frame4 \
+     -borderwidth {2}
+
+  button .cmd.frame4.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 
+		if {  $value != "" } {
+ 		set cmd [put_command]
+ 		if { $cmd != "" } {
+ 		   catch { eval " exec $cmd " } 
+ 		   destroy .cmd
+ 		}
+ 	}
+ }
+
+  button .cmd.frame4.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { destroy .cmd }
+
+  pack append .cmd.frame4 \
+    .cmd.frame4.ok { left expand } \
+    .cmd.frame4.cancel { right expand }
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.label { top fillx } \
+    .cmd.frame3.button0 { left } \
+    .cmd.frame3.button1  { left }
+
+
+
+  pack append .cmd \
+    .cmd.frame1 { top expand fill } \
+    .cmd.frame2 { top expand fill } \
+    .cmd.frame3 { top expand fill } \
+    .cmd.frame0 { top expand fill } \
+    .cmd.frame4 { bottom expand fill }
+
+
+bind .cmd.frame2.entry <KeyRelease> {
+		set value [.cmd.frame2.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame2.entry <Return> {
+		set value [.cmd.frame2.entry get]
+		set_command_entry
+}
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global value
+set value ""
+
+global name
+set name ""
+
+global easting
+set easting ""
+
+global northing
+set northing ""
+
+
+global database
+global location
+global mapset
+global feature
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_d.grid

@@ -1,3 +1,22 @@
+/*
+* $Id$
+*
+****************************************************************************
+*
+* MODULE:       d.title
+*
+* AUTHOR(S):    James Westervelt, US Army CERL
+*
+* PURPOSE:      print out title for raster on stdout
+*
+* COPYRIGHT:    (C) 2001 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
+
 #include <string.h>
 #include "display.h"
 #include "raster.h"
@@ -12,8 +31,17 @@ int main (int argc, char **argv)
 	char *mapset ;
 	struct Cell_head window ;
 	struct Categories cats ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3 ;
 	struct Flag *flag ;
+
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Outputs a TITLE for a raster map layer in a form suitable "
+		"for display by d.text.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "map" ;
@@ -40,9 +68,6 @@ int main (int argc, char **argv)
 	flag = G_define_flag() ;
 	flag->key        = 'f' ;
 	flag->description= "Do a fancier title" ;
-
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
 
 	/* Check command line */
 	if (G_parser(argc, argv))
@@ -84,10 +109,6 @@ int main (int argc, char **argv)
 		normal(mapset, &window, &cats) ;
 	else
 		fancy(mapset, &window, &cats) ;
-
-	R_open_driver();
-	D_add_to_list(G_recreate_command()) ;
-	R_close_driver();
 
 	exit(0);
 }

@@ -1,7 +1,5 @@
 /* togl_cb.c */
 
-
-
 #include <stdlib.h>
 #include <string.h>
 #include "togl.h"
@@ -78,7 +76,8 @@ void display_cb( struct Togl *togl )
 }
 
 
-void swap_togl()
+void 
+swap_togl (void)
 {
 
     if(!Togl_cur){

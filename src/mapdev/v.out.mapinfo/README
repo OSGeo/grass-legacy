@@ -1,0 +1,15 @@
+
+
+     v.out.mapinfo  -	Converts GRASS site, line, or area data
+     into MAPINFO import format.
+     (Data Export Tool)
+
+
+  This program was written by Ron Glenn, NRCS, USDA. at the request of a
+  NRCS Field Office, servicing a private individual. 
+  
+  The programs is based on the work of Chris Emmerich, Autometric Inc. for
+  MOSS output.
+
+  The file mapinfow.prj, included here, is from the Mapinfo software, 
+  current for Version 3.0

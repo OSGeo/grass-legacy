@@ -12,7 +12,16 @@ int
 main (int argc, char **argv)
 {
 	int color ;
+	struct GModule *module;
 	struct Option *opt1, *opt2/*, *opt3, *opt4*/ ;
+
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Generates and displays simple graphics on map "
+		"layers drawn in the active graphics monitor display frame.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "input" ;
@@ -42,9 +51,6 @@ main (int argc, char **argv)
 	opt4->options    = "0-100" ;
 	opt4->description= "Horizontal text width as % of display frame width" ;
 */
-
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
 
 	/* Check command line */
 	if (G_parser(argc, argv))
@@ -94,7 +100,8 @@ main (int argc, char **argv)
 
 	vsize = hsize = 5.0 ;
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	D_setup(0);
 

@@ -9,6 +9,7 @@
 #define KURTOSI 8       /* Kurtosis              */
 #define MIN	9	/* Minimum		 */
 #define MAX	10	/* Maximum		 */
+#define SUM	11	/* Sum  		 */
 
 struct stats
 {
@@ -42,6 +43,7 @@ struct menu
     {"kurtosis",     KURTOSI, "Kurtosis of values in specified objects"},
     {"min",	    MIN,     "Minimum of values in specified objects"},
     {"max",	    MAX,     "Maximum of values in specified objects"},
+    {"sum",	    SUM,     "Sum of values in specified objects"},    
     {0,0,0} };
 
 #else

@@ -18,6 +18,7 @@
 
 
 #include	<stdio.h>
+#include	<stdlib.h>
 #include	<signal.h>
 #include	"gis.h"
 
@@ -67,7 +68,7 @@ main (argc, argv)
 	char  command[256] ;
 	int ier, got_cats, info, format, got_univ;
 	char *p, attr_file[60], *attset, dlg_name[60]; 
-	char location[60], *LOCATION, *getenv();              
+	char location[60], *LOCATION;
 	char tmp_name[60], cat_name[60], *catset, cats_file[60];  
         char gef_name[60], dig_cat_name[60], dig_name[60], *mapset;
 	char arc_name[60], dxf_name[60], tig_name[60];

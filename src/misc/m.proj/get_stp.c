@@ -157,7 +157,7 @@ int ask_fips(FILE * fp, int *s, int *c, int *sc)
 		}
 		if (strncmp(answer, "list", 4) == 0) {
 			if (isatty(1))
-				sprintf(buff, "more %s", Tmp_file1);
+				sprintf(buff, "$GRASS_PAGER %s", Tmp_file1);
 			else
 				sprintf(buff, "cat %s", Tmp_file1);
 			system(buff);
@@ -232,9 +232,10 @@ int ask_fips(FILE * fp, int *s, int *c, int *sc)
 
 	while (fgets(buff, 80, fp) != NULL) {
 		sscanf(buff, "%d%d%s%s%d", &sfips, &cfips, STabbr, COname, &NUM_ZON);
-		if (sfips == *s)
+		if (sfips == *s) {
 			fprintf(Tmp_fd1, "%s -- %d\n", COname, cfips);
-		fprintf(Tmp_fd2, "%d:%s\n", cfips, COname);
+			fprintf(Tmp_fd2, "%d:%s\n", cfips, COname);
+		} /* ADDED THESE BRACKETS - BB 5/2000 */
 	}
 	fclose(Tmp_fd1);
 	fclose(Tmp_fd2);
@@ -258,7 +259,7 @@ int ask_fips(FILE * fp, int *s, int *c, int *sc)
 		}
 		if (strncmp(answer, "list", 4) == 0) {
 			if (isatty(1))
-				sprintf(buff, "more %s", Tmp_file1);
+				sprintf(buff, "$GRASS_PAGER %s", Tmp_file1);
 			else
 				sprintf(buff, "cat %s", Tmp_file1);
 			system(buff);

@@ -7,12 +7,18 @@
 int 
 main (int argc, char *argv[])
 {
+	struct GModule *module;
     int		i,t_min_elev,t_max_elev, first, last;
     struct {
 	struct Option *input, *blocksize, *first, *last;
     } parm;
 
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Provides a terse description of USGS Digital Elevation Model "
+		"(DEM) data files stored on 1/2-inch magnetic tape.";
 
     parm.input = G_define_option() ;
     parm.input->key        = "input" ;

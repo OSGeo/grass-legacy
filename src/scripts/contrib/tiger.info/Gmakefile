@@ -20,4 +20,4 @@ $(SUPPORT_DIR):
 	mkdir $@
 
 $(LIB): # in case LIB changes
-$(GISLIB): #
+$(DEPGISLIB): #
