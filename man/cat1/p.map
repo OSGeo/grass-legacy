@@ -1,21 +1,21 @@
 
 
 
-p.map                GRASS Reference Manual                 p.map
+p.map <main>         GRASS Reference Manual          <main> p.map
 
 
 
 NAME
-     p.map - Hardcopy color map output utility.
-     (GRASS Hardcopy Output Program)
+     _p._m_a_p - Hardcopy color map output utility.
+     (_G_R_A_S_S _H_a_r_d_c_o_p_y _O_u_t_p_u_t _P_r_o_g_r_a_m)
 
 SYNOPSIS
      p.map
      p.map help
-     p.map [input=name] [scale=mapscale]
+     p.map [input=_n_a_m_e] [scale=_m_a_p_s_c_a_l_e]
 
 DESCRIPTION
-     p.map produces hardcopy color map products on your system's
+     _p._m_a_p produces hardcopy color map products on your system's
      color output device.  Output can include a raster map, any
      number of vector overlays, site data, text labels, and other
      spatial data.
@@ -23,29 +23,29 @@ DESCRIPTION
      This program has 2 distincts modes of operation.  The
      command-line mode requires the user to prepare a file of
      mapping instructions describing the various spatial and
-     textual information to be printed prior to running p.map.
+     textual information to be printed prior to running _p._m_a_p.
      The interactive mode (i.e., no command-line arguments) will
      prompt the user for items to be mapped and does not require
      the user to prepare a file of instructions.
 
      The command-line parameters are:
 
-     input=name        File containing mapping instructions.  (or
+     input=_n_a_m_e        File containing mapping instructions.  (or
                        enter input=- to enter from keyboard).
                        These instructions are described in detail
                        below.
 
-     scale=mapscale    Scale of the output map,  e.g. 1:25000
+     scale=_m_a_p_s_c_a_l_e    Scale of the output map,  e.g. 1:25000
                        Default:  1panel
 
                        This parameter is provided as a
-                       convenience.  It is identical to the scale
+                       convenience.  It is identical to the _s_c_a_l_e
                        mapping instruction described below.
 
 
-     Note: the user must select an output device using p.select
-     before running p.map.  Also, the preview device can be
-     selected to view the output from p.map on the graphics
+     Note: the user must select an output device using _p._s_e_l_e_c_t
+     before running _p._m_a_p.  Also, the _p_r_e_v_i_e_w device can be
+     selected to view the output from _p._m_a_p on the graphics
      monitor instead of sending it to a paper printer.
 
 
@@ -60,14 +60,14 @@ MAPPING INSTRUCTIONS
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-p.map                GRASS Reference Manual                 p.map
+p.map <main>         GRASS Reference Manual          <main> p.map
 
 
 
@@ -77,18 +77,18 @@ colormode
 
      USAGE:   colormode approx|best
 
-     There are two methods: approximate and best. From a user
-     perspective, approximate can be used for raster map layers
-     with few categories, such as soils, and best should be used
+     There are two methods: _a_p_p_r_o_x_i_m_a_t_e and _b_e_s_t. From a user
+     perspective, _a_p_p_r_o_x_i_m_a_t_e can be used for raster map layers
+     with few categories, such as soils, and _b_e_s_t should be used
      for images like LANDSAT images or NHAP photos, or maps with
-     many categories.  The approximate mode treats each pixel
+     many categories.  The _a_p_p_r_o_x_i_m_a_t_e mode treats each pixel
      independently, giving it the printer color that best
-     approximates the true color.  The best mode "blends" colors
+     approximates the true color.  The _b_e_s_t mode "blends" colors
      from pixel to pixel using a dithering technique to simulate
      more colors than the printer can actually print.  The
-     default, if unspecified, is best.
+     default, if unspecified, is _b_e_s_t.
 
-     This example would select the approximate colormode.  The
+     This example would select the _a_p_p_r_o_x_i_m_a_t_e colormode.  The
      assumption is that the raster map layer being printed is has
      few colors or that the colors would not look good dithered.
 
@@ -118,7 +118,7 @@ colortable
 
 comments
      Prints comments beneath the map .  You may submit comment
-     text line by line during p.map execution or a via a prepared
+     text line by line during _p._m_a_p execution or a via a prepared
      comments file.
 
      USAGE:   comments [commentfile]
@@ -126,14 +126,14 @@ comments
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+2                        U.S. Army CERL                 GRASS 4.1
 
 
 
 
 
 
-p.map                GRASS Reference Manual                 p.map
+p.map <main>         GRASS Reference Manual          <main> p.map
 
 
 
@@ -145,20 +145,20 @@ p.map                GRASS Reference Manual                 p.map
                   This is a comment.
                   end
 
-     This example prints whatever is in the file veg.comments in
+     This example prints whatever is in the file _v_e_g._c_o_m_m_e_n_t_s in
      the legend below the map.
      EXAMPLE:   raster vegetation
                 comments veg.comments
                   end
 
-     Presumably, the file veg.comments contain comments
-     pertaining to the raster map layer vegetation, such as "This
+     Presumably, the file _v_e_g._c_o_m_m_e_n_t_s contain comments
+     pertaining to the raster map layer _v_e_g_e_t_a_t_i_o_n, such as "This
      map was created by classifying a LANDSAT TM image".
 
 
 
 defpat
-     Defines area fill patterns to be used in the setpat
+     Defines area fill patterns to be used in the _s_e_t_p_a_t
      instruction.
 
      USAGE:   defpat name
@@ -167,20 +167,20 @@ defpat
               end
 
 
-     The pattern is given a name on the defpat instruction line.
+     The pattern is given a name on the _d_e_f_p_a_t instruction line.
      The pattern which follows is composed of a sequence of
      numbers 0-9 (and blanks, which are equivalent to 0).  The
      blanks or zeros indicate holes in the pattern where the
      normal category color would show thru. The other number 1-9
      indicate pattern pixels and can be assigned any color.  The
      default color for all the digits will be black unless
-     specified with the color instruction.  The color option will
-     begin by entering the word color followed by one of the
+     specified with the _c_o_l_o_r instruction.  The color option will
+     begin by entering the word _c_o_l_o_r followed by one of the
      digits (1-9) in the pattern, followed by one of the NAMED
      COLORS.  This should be repeated for each of the digits
-     specified to avoid using black.  The instruction end
+     specified to avoid using black.  The instruction _e_n_d
      terminates the pattern definition.  Of course, the user can
-     define more patterns by entering more defpat instructions.
+     define more patterns by entering more _d_e_f_p_a_t instructions.
 
      NOTE: Do NOT indent the pattern.  Leading blank spaces will
      be interpreted as 0's.
@@ -192,14 +192,14 @@ defpat
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
 
 
 
-p.map                GRASS Reference Manual                 p.map
+p.map <main>         GRASS Reference Manual          <main> p.map
 
 
 
@@ -243,9 +243,31 @@ p.map                GRASS Reference Manual                 p.map
                 end
 
 
+endpanel
+     Specifies which panel number to end printing.  The default
+     is 0, and will print all panels from the startpanel to the
+     last panel.
+
+     EXAMPLE:   endpanel 4
+
+     This example would end output at panel 4.
+
 
 grid
      Overlays a coordinate grid onto the output map.
+
+
+
+4                        U.S. Army CERL                 GRASS 4.1
+
+
+
+
+
+
+p.map <main>         GRASS Reference Manual          <main> p.map
+
+
 
      USAGE:   grid spacing
                 color color
@@ -255,20 +277,6 @@ grid
      The spacing of the grid is given (in the geographic
      coordinate system units) on the main instruction line.  The
      subsection instructions allow the user to specify the color
-
-
-
-GRASS 4.0                U.S. Army CERL                         4
-
-
-
-
-
-
-p.map                GRASS Reference Manual                 p.map
-
-
-
      of the grid lines, whether coordinate numbers should appear
      on the grid lines, and if they should appear every grid line
      (1), every other grid line (2), etc., and what color the
@@ -289,12 +297,12 @@ p.map                GRASS Reference Manual                 p.map
 
 labels
      Selects a labels file for output (see manual entry for
-     p.labels).
+     _p._l_a_b_e_l_s).
 
-     USAGE:   labels  labelfile|list
+     USAGE:   labels  labelfile|_l_i_s_t
 
      This example would paint labels from the labels file called
-     town.names.  Presumably, these labels would indicate the
+     _t_o_w_n._n_a_m_e_s.  Presumably, these labels would indicate the
      names of towns on the map.
 
      EXAMPLE:   labels town.names
@@ -313,27 +321,28 @@ line
      The beginning and ending points of the line are entered on
      the main instruction.  These points can be defined either by
      map coordinates or by using percentages of the geographic
+
+
+
+GRASS 4.1                U.S. Army CERL                         5
+
+
+
+
+
+
+p.map <main>         GRASS Reference Manual          <main> p.map
+
+
+
      region.  The user may also specify line color, width in
      pixels, and if the line is to be masked by the current mask.
-     (See manual entry for r.mask for more information on the
+     (See manual entry for _r._m_a_s_k for more information on the
      mask.)
 
      This example would draw a yellow line from the point x=10%
      y=80% to the point x=30% y=70%. This line would be 2 pixels
      wide and would appear even if there is a mask.
-
-
-
-GRASS 4.0                U.S. Army CERL                         5
-
-
-
-
-
-
-p.map                GRASS Reference Manual                 p.map
-
-
 
      EXAMPLE:   line 10% 80% 30% 70%
                   color yellow
@@ -341,7 +350,7 @@ p.map                GRASS Reference Manual                 p.map
                   masked n
                   end
 
-     Of course, multiple lines may be drawn with multiple line
+     Of course, multiple lines may be drawn with multiple _l_i_n_e
      instructions.
 
 
@@ -362,7 +371,7 @@ outline
      different raster map layer other than the one currently
      being painted may be placed on the map.)
 
-     This example would outline the category areas of the soils
+     This example would outline the category areas of the _s_o_i_l_s
      raster map layer in grey.
      EXAMPLE:   raster soils
                 outline
@@ -376,8 +385,22 @@ point
      USAGE:   point east north
               point x% y%
                 color color
-                icon iconfile|list
+                icon iconfile|_l_i_s_t
                 size #
+
+
+
+6                        U.S. Army CERL                 GRASS 4.1
+
+
+
+
+
+
+p.map <main>         GRASS Reference Manual          <main> p.map
+
+
+
                 masked [y|n]
                 end
 
@@ -385,28 +408,14 @@ point
      by giving either the map coordinates or by using percentages
      of the geographic region.  The user may also specify the
      point color, the icon file to be used to represent the point
-     location (see the the manual entry for p.icons), the size of
+     location (see the the manual entry for _p._i_c_o_n_s), the size of
      the icon in integer multiples of the pattern in the icon
-
-
-
-GRASS 4.0                U.S. Army CERL                         6
-
-
-
-
-
-
-p.map                GRASS Reference Manual                 p.map
-
-
-
      file, and whether the point is to be masked by the current
-     mask. (See manual entry for r.mask for more information on
+     mask. (See manual entry for _r._m_a_s_k for more information on
      the mask.)
 
      This example would place a purple diamond (from icon file
-     diamond) at the point (E456000 N7890000).  This diamond
+     _d_i_a_m_o_n_d) at the point (E456000 N7890000).  This diamond
      would be the same size it is in the diamond icon file and
      would not be masked by the current mask.
 
@@ -418,62 +427,62 @@ p.map                GRASS Reference Manual                 p.map
                   end
 
 
-     Of course, multiple points may be drawn with multiple point
+     Of course, multiple points may be drawn with multiple _p_o_i_n_t
      instructions.
 
 
 raster
      Selects a raster map layer for output.
 
-     USAGE:   raster mapname|list
+     USAGE:   raster mapname|_l_i_s_t
 
-     For each p.map run, only one raster map layer can be
+     For each _p._m_a_p run, only one raster map layer can be
      requested.  If no raster map layer is requested, a
      completely white map will be produced.  It can be useful to
      select no raster map layer in order to provide a white
      background for vector images.
 
      This example would paint a map of the raster map layer
-     soils.
+     _s_o_i_l_s.
      EXAMPLE:   raster soils
 
 
 
 read
-     Provides p.map with a previously prepared input stream.
+     Provides _p._m_a_p with a previously prepared input stream.
 
      USAGE:   read previously prepared UNIX file
 
-     Mapping instructions can be placed into a file and read into
-     p.map.
 
-     Note: p.map will not search for this file.  The user must be
+
+
+GRASS 4.1                U.S. Army CERL                         7
+
+
+
+
+
+
+p.map <main>         GRASS Reference Manual          <main> p.map
+
+
+
+     Mapping instructions can be placed into a file and read into
+     _p._m_a_p.
+
+     Note: _p._m_a_p will not search for this file.  The user must be
      in the correct directory or specify the full path on the
      read instruction.  (Note to /bin/csh users: ~ won't work
      with this instruction).
 
-     This example reads the UNIX file pmap.roads into p.map.
-
-
-
-GRASS 4.0                U.S. Army CERL                         7
-
-
-
-
-
-
-p.map                GRASS Reference Manual                 p.map
-
-
-
-     This file may contain all the p.map instructions for placing
-     the vector map layer roads onto the output map.
+     This example reads the UNIX file _p_m_a_p._r_o_a_d_s into _p._m_a_p.
+     This file may contain all the _p._m_a_p instructions for placing
+     the vector map layer _r_o_a_d_s onto the output map.
 
      EXAMPLE: read pmap.roads
 
      The user may have created this file because this vector map
-     layer is particularly useful for many p.map outputs.  By
+     layer is particularly useful for many _p._m_a_p outputs.  By
      using the read option, the user need not enter all the input
      for the vector instruction, but simply read the previously
      prepared file with the correct instructions.
@@ -483,24 +492,24 @@ region
      Places the outline of a smaller geographic region on the
      output.
 
-     USAGE:   region regionfile|list
+     USAGE:   region regionfile|_l_i_s_t
                 color color
                 width #
                 end
 
      Geographic region settings are created and saved using
-     g.region.  The p.map region option can be used to show an
+     _g._r_e_g_i_o_n.  The _p._m_a_p _r_e_g_i_o_n option can be used to show an
      outline of a smaller region which was printed on a separate
-     run of p.map on other user-created maps.
+     run of _p._m_a_p on other user-created maps.
 
      The user can specify the color and the width (in pixel
      units) of the outline.  The default is a black border of one
      pixel width.
 
      This example would place a white outline, 2 pixels wide, of
-     the geographic region called fire.zones onto the output map.
+     the geographic region called _f_i_r_e._z_o_n_e_s onto the output map.
      This geographic region would have been created and saved
-     using g.region.
+     using _g._r_e_g_i_o_n.
 
      EXAMPLE:   region fire.zones
                   color white
@@ -511,27 +520,26 @@ region
 scale
      Selects a scale for the output map.
 
-     USAGE:   scale scale
+
+
+8                        U.S. Army CERL                 GRASS 4.1
+
+
+
+
+
+
+p.map <main>         GRASS Reference Manual          <main> p.map
+
+
+
+     USAGE:   scale _s_c_a_l_e
 
      The scale can be selected either as:
 
           a relative ratio, e.g. 1:25000;
 
           an absolute width of the printed map, e.g. 10 inches;
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         8
-
-
-
-
-
-
-p.map                GRASS Reference Manual                 p.map
-
-
 
           the number of printed paper panels, e.g. 3 panels;
 
@@ -551,7 +559,7 @@ setcolor
 
 
      This example would set the color for categories 2,5 and 8 of
-     the raster map layer watersheds to white and category 10 to
+     the raster map layer _w_a_t_e_r_s_h_e_d_s to white and category 10 to
      green.  (NOTE: no spaces are inserted between the category
      values.)
 
@@ -559,7 +567,7 @@ setcolor
                 setcolor 2,5,8 white
                 setcolor 10 green
 
-     Of course, setcolor can be requested more than once to
+     Of course, _s_e_t_c_o_l_o_r can be requested more than once to
      override the default color for additional categories.  More
      than one category can be changed for each request by listing
      all the category values separated by commas (but with no
@@ -571,38 +579,39 @@ setpat
      category.
 
      USAGE:   setpat cat name
-       or     setpat builtin
-       or     setpat all
+       or     setpat _b_u_i_l_t_i_n
+       or     setpat _a_l_l
 
      The user can choose to use: the name of a specific pattern
      created using defpat (see above); the patterns built into
-     p.map; or all the patterns the user may have created.
+     _p._m_a_p; or all the patterns the user may have created.
+
+
+
+GRASS 4.1                U.S. Army CERL                         9
+
+
+
+
+
+
+p.map <main>         GRASS Reference Manual          <main> p.map
+
+
 
      This example assigns the vertical pattern created using
      defpat (see example in defpat above) to category 3 of the
-     raster map layer vegetation and the tree pattern (see
+     raster map layer _v_e_g_e_t_a_t_i_o_n and the tree pattern (see
      example in defpat above) to category 10.
      EXAMPLE:   raster veg
                 setpat 3 vert
                 setpat 10 tree
 
 
-
-GRASS 4.0                U.S. Army CERL                         9
-
-
-
-
-
-
-p.map                GRASS Reference Manual                 p.map
-
-
-
-     This example reads a previously prepared UNIX file horiz.pat
+     This example reads a previously prepared UNIX file _h_o_r_i_z._p_a_t
      with the correct defpat instructions for creating a black
      horizontal pattern (see example in defpat above) and assigns
-     that pattern to category 5 of the raster map layer soils via
+     that pattern to category 5 of the raster map layer _s_o_i_l_s via
      the setpat instruction.
      EXAMPLE:   raster soils
                 read horiz.pat
@@ -617,26 +626,50 @@ p.map                GRASS Reference Manual                 p.map
                 setpat 5 #1
                 setpat 10 #2
 
+
+startpanel
+     Specifies at which panel number to begin printing.  Default
+     is 0 and would start printing from the first panel.
+
+     EXAMPLE:   startpanel 2
+
+     This example would begin printing at panel 2.
+
+
 sites
      Selects sites data to be placed on the output map (see
-     manual entry for s.menu).
+     manual entry for _s._m_e_n_u).
 
-     USAGE:   sites sitemap|list
+     USAGE:   sites sitemap|_l_i_s_t
                 color color
-                icon iconfile|list
+                icon iconfile|_l_i_s_t
                 size #
                 desc [y|n]
                 end
 
      The user may specify the the color of the sites (see section
      on NAMED COLORS below); the icon to be used to represent the
-     presence of a site (see the manual entry for p.icons); the
+     presence of a site (see the manual entry for _p._i_c_o_n_s); the
      size of the icon (number of times larger than the size it is
+
+
+
+10                       U.S. Army CERL                 GRASS 4.1
+
+
+
+
+
+
+p.map <main>         GRASS Reference Manual          <main> p.map
+
+
+
      in the icon file); and whether or not the description
      associated with each site is also to be printed.
 
      This example would paint a sites map with blue windmills
-     (from an icon file created by the user using the p.icons
+     (from an icon file created by the user using the _p._i_c_o_n_s
      GRASS command) placed at all windmill locations (from a
      sites list).  These windmills would be two times larger than
      the size of the icon in the icon file and have descriptions
@@ -651,19 +684,6 @@ sites
 
 text
      Places text on the map.
-
-
-
-GRASS 4.0                U.S. Army CERL                        10
-
-
-
-
-
-
-p.map                GRASS Reference Manual                 p.map
-
-
 
      USAGE:   text  east north text
               text  x% y% text
@@ -698,6 +718,19 @@ p.map                GRASS Reference Manual                 p.map
 
      color (see NAMED COLORS);
 
+
+
+GRASS 4.1                U.S. Army CERL                        11
+
+
+
+
+
+
+p.map <main>         GRASS Reference Manual          <main> p.map
+
+
+
      width of the lines used to draw the text (to make thicker
      letters);
 
@@ -717,20 +750,6 @@ p.map                GRASS Reference Manual                 p.map
      [lower|upper|center] [left|right|center] of the text to be
      printed;
 
-
-
-
-GRASS 4.0                U.S. Army CERL                        11
-
-
-
-
-
-
-p.map                GRASS Reference Manual                 p.map
-
-
-
      yoffset, which provides finer placement of text by shifting
      the text a vertical distance in pixels from the specified
      north.  The vertical offset will shift the location to the
@@ -745,7 +764,7 @@ p.map                GRASS Reference Manual                 p.map
      any vectors which go through the text's background box.
      Otherwise, they will end at the box's edge.
 
-     This example would place the text SPEARFISH LAND COVER at
+     This example would place the text _S_P_E_A_R_F_I_S_H _L_A_N_D _C_O_V_E_R at
      the coordinates E650000 N7365000. The text would be a total
      of 3 pixels wide (2 pixels of red text and 1 pixel black
      highlight), have a white background enclosed in a red box,
@@ -767,10 +786,21 @@ p.map                GRASS Reference Manual                 p.map
 
 
 
+12                       U.S. Army CERL                 GRASS 4.1
+
+
+
+
+
+
+p.map <main>         GRASS Reference Manual          <main> p.map
+
+
+
 vector
      Selects a vector map layer for output.
 
-     USAGE:   vector vectormap|list
+     USAGE:   vector vectormap|_l_i_s_t
                 color [#] color
                 width #
                 hcolor color
@@ -783,21 +813,7 @@ vector
      the vectors lines in pixels; the highlight color (hcolor)
      for the vector lines; the width of the highlight color
      (hwidth) in pixels; whether or not the raster map layer is
-
-
-
-GRASS 4.0                U.S. Army CERL                        12
-
-
-
-
-
-
-p.map                GRASS Reference Manual                 p.map
-
-
-
-     to be masked by the current mask (see manual entry r.mask
+     to be masked by the current mask (see manual entry _r._m_a_s_k
      for more information on the mask); and the line style.  The
      line style allows the vectors to be dashed in different
      patterns and colors.  This is done by typing a series of
@@ -809,7 +825,7 @@ p.map                GRASS Reference Manual                 p.map
      selected) to show through.
 
      This example would paint a map of the vector map layer named
-     streams.  These streams would be a total of 3 pixels wide
+     _s_t_r_e_a_m_s.  These streams would be a total of 3 pixels wide
      (the inner two pixels blue and the outer highlight pixel
      white).  The map would not show streams outside of the
      current mask.
@@ -822,7 +838,7 @@ p.map                GRASS Reference Manual                 p.map
                   end
 
      This example would paint a map of the vector map layer
-     roads.  These roads would be 2 pixels wide and would be
+     _r_o_a_d_s.  These roads would be 2 pixels wide and would be
      dashed blank-black-red (the blank areas would show what lies
      under the roads). This map would show roads inside and
      outside of the current mask.
@@ -836,9 +852,19 @@ p.map                GRASS Reference Manual                 p.map
 
 
 
+GRASS 4.1                U.S. Army CERL                        13
+
+
+
+
+
+
+p.map <main>         GRASS Reference Manual          <main> p.map
+
+
 
 verbose
-     Changes the amount of talking p.map will do.
+     Changes the amount of talking _p._m_a_p will do.
 
      USAGE: verbose [0|1|2]
 
@@ -848,21 +874,6 @@ verbose
      EXAMPLE:   verbose 0
 
 
-
-
-
-
-GRASS 4.0                U.S. Army CERL                        13
-
-
-
-
-
-
-p.map                GRASS Reference Manual                 p.map
-
-
-
 end
      Terminates input and begin painting the map.
 
@@ -870,27 +881,27 @@ end
 
 
 NAMED COLORS
-     The following are the colors that are accepted by p.map:
+     The following are the colors that are accepted by _p._m_a_p:
 
      aqua black blue brown cyan gray green grey indigo magenta
      orange purple red violet white yellow
 
 
 ICONS VS. PATTERNS
-     Icons and patterns as used in p.map are not the same thing.
+     Icons and patterns as used in _p._m_a_p are not the same thing.
      Patterns are defined and are normally used to cover those
      extended areas covered by a raster map layer category.  A
      pattern will repeat above, below and adjacent to itself.
      Icons are used to represent a single point.
 
-     Patterns are supported directly within p.map using the
-     defpat instruction, while icons must be created using the
-     p.icons program.
+     Patterns are supported directly within _p._m_a_p using the
+     _d_e_f_p_a_t instruction, while icons must be created using the
+     _p._i_c_o_n_s program.
 
 
 EXAMPLE p.map INPUT FILE
-     The following is an example of a p.map script file. The file
-     has been name spear.soils.  For the purposes of
+     The following is an example of a _p._m_a_p script file. The file
+     has been name _s_p_e_a_r._s_o_i_l_s.  For the purposes of
      illustration, the file is in two columns.  This script file
      can be entered at the command line:
           p.map input=spear.soils
@@ -904,6 +915,20 @@ EXAMPLE p.map INPUT FILE
         hwidth 1            01
         masked y            1
         end                    color 1 red
+
+
+
+14                       U.S. Army CERL                 GRASS 4.1
+
+
+
+
+
+
+p.map <main>         GRASS Reference Manual          <main> p.map
+
+
+
      vector roads              end
         width 2             setpat 4 diag
         style 001122        text 608000.00 3476004.73 SPEARFISH SOILS MAP
@@ -915,20 +940,6 @@ EXAMPLE p.map INPUT FILE
      region subregion          border red
         color white            size 500
         width 2                ref lower left
-
-
-
-GRASS 4.0                U.S. Army CERL                        14
-
-
-
-
-
-
-p.map                GRASS Reference Manual                 p.map
-
-
-
         end                    opaque y
      grid 10000                end
         color green         line 606969.73 3423092.91 616969.73 3423092.91
@@ -946,12 +957,12 @@ p.map                GRASS Reference Manual                 p.map
      setcolor 10 green
 
 INTERACTIVE MODE
-     If the user simply enter p.map without arguments, then a
+     If the user simply enter _p._m_a_p without arguments, then a
      simple prompting session occurs.  Some, but not all of the
      non-interactive requests are available at this level.
 
 SEE ALSO
-     p.chart, p.icons, p.labels, p.select
+     _p._c_h_a_r_t, _p._i_c_o_n_s, _p._l_a_b_e_l_s, _p._s_e_l_e_c_t
 
 AUTHOR
      Michael Shapiro, U.S. Army Construction Engineering Research
@@ -973,18 +984,7 @@ AUTHOR
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-GRASS 4.0                U.S. Army CERL                        15
+GRASS 4.1                U.S. Army CERL                        15
 
 
 
