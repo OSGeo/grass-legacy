@@ -114,6 +114,7 @@ struct Port_info
 struct recycle
   {
      /* TODO */
+     char dummy;
   };
 
 struct dig_head
