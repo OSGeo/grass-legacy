@@ -129,8 +129,8 @@ int D_set_cur_wind( char *name )
 			return(stat) ;
 		
 	/* Outline new window in highlight color */
-		D_show_window(DEFAULT_FG_COLOR) ;
-	
+		D_show_window(D_translate_color(DEFAULT_FG_COLOR)) ;
+
 	/* Tell driver of current window */
 		D_get_screen_window(&t, &b, &l, &r) ;
 		R_set_window(t, b, l, r) ;
@@ -256,14 +256,14 @@ int D_reset_screen_window(int t,int b,int l,int r)
 	int stat;
 	char buff[256];
 
-	D_show_window(DEFAULT_BG_COLOR) ;
+	D_show_window(D_translate_color(DEFAULT_BG_COLOR)) ;
 
 	sprintf (buff, "%d %d %d %d", t, b, l, r) ;
 	R_pad_delete_item("d_win") ;
 	if(stat = R_pad_set_item ("d_win", buff))
 		return(stat) ;
 
-	D_show_window(DEFAULT_FG_COLOR) ;
+	D_show_window(D_translate_color(DEFAULT_FG_COLOR)) ;
 
 	return(0) ;
 }
