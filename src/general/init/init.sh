@@ -37,8 +37,7 @@ export PATH
 # Set LD_LIBRARY_PATH.  For GRASS 5.0 we don't depend on this much, though
 # r.in.gdal may use it to find some things.  Over time we intend to put
 # more GRASS related shared libraries in $GISBASE/lib.
-
-if [ ${#LD_LIBRARY_PATH} = 0 ] ; then
+if [ ! "$LD_LIBRARY_PATH" ] ; then
   LD_LIBRARY_PATH=$GISBASE/lib
   export LD_LIBRARY_PATH
 else
