@@ -33,6 +33,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#define MAIN
+
+#include "dbmi.h"
+
 #include "gis.h"
 #include "linkm.h"
 #include "bitmap.h"
@@ -541,7 +545,7 @@ int main (int argc, char *argv[])
 		     smc, elev, slope, aspect, pcurv, tcurv, mcurv, dmin, 
                      inp_x_orig, inp_y_orig, deriv, theta, scalex,
                      Tmp_fd_z, Tmp_fd_dx, Tmp_fd_dy, Tmp_fd_xx, 
-                     Tmp_fd_yy, Tmp_fd_xy,NULL,NULL);
+                     Tmp_fd_yy, Tmp_fd_xy,NULL,NULL,NULL);
 /*  In the above line, the penultimate argument is supposed to be a 
      deviations file pointer.  None is obvious, so I used NULL. */
 /*  The 3rd and 4th argument are int-s, elatt and smatt (from the function
