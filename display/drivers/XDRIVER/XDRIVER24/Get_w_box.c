@@ -18,7 +18,7 @@
 *            0
 *            1 for cmd = continue : button pressed
 */
-int Get_location_with_line2 (
+int Get_location_with_box2 (
     int cx, int cy,                     /* current x and y */
     int *nx, int *ny,                   /* new x and y */
     int *button,
@@ -27,7 +27,8 @@ int Get_location_with_line2 (
 {
     static int drawn = 0;
     static long event_mask;
-    static int oldx, oldy;
+    static int oldx, oldy, oldwidth, oldheight;
+    int    width, height, leftx, topy;
     XEvent event;
     static GC xor_gc;
     XGCValues gcValues;
@@ -75,11 +76,34 @@ int Get_location_with_line2 (
 		    *ny = event.xbutton.y;
 		    /* do a double draw to 'erase' previous rectangle */
 		    if (drawn)
-			XDrawLine(dpy, grwin, xor_gc, cx, cy, oldx, oldy);
-		    XDrawLine(dpy, grwin, xor_gc, cx, cy, *nx, *ny);
-		    oldx = *nx;
-		    oldy = *ny;
-		    drawn = 1;
+			XDrawRectangle(dpy, grwin, xor_gc, oldx, oldy, oldwidth, oldheight);
+
+                    /* need to draw a rectangle with (cx,cy) as one corner and
+                     * (*nx,*ny) as opposite corner. Figure the top left coords
+                     * of such a rectangle */
+                    if (cx < *nx) {
+	                leftx = cx;
+	                width = *nx - cx;
+	            } else {
+	                leftx = *nx;
+                        width = cx - *nx;
+  	            }
+	            if (cy < *ny) {
+		        topy = cy;
+			height = *ny - cy;
+                    } else {
+                        topy = *ny;
+                        height = cy - *ny;
+                    }
+		    
+		    if (width && height) {
+		        XDrawRectangle(dpy, grwin, xor_gc, leftx, topy, width, height);
+		        oldwidth = width;
+			oldheight = height;
+			oldx = leftx;
+			oldy = topy;
+		        drawn = 1;
+		    }
 		    return 0;
 		    break;
 	    }
@@ -92,7 +116,7 @@ int Get_location_with_line2 (
 
     /* delete old line if any */
     if (drawn) 
-	XDrawLine(dpy, grwin, xor_gc, cx, cy, oldx, oldy);
+	XDrawRectangle(dpy, grwin, xor_gc, oldx, oldy, oldwidth, oldheight);
 
     XUndefineCursor(dpy, grwin);        /* reset cursor */
     XSelectInput(dpy, grwin, gemask);   /* restore normal events */

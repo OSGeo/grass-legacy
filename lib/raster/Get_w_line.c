@@ -28,7 +28,7 @@ int R_get_location_with_line(
 	    _get_int(wy) ;
 	    _get_int(button) ;
 	    
-            G_debug (4, "button = %d wx = %d  wy = %d", *button, *wx, *wy); 
+            G_debug (5, "button = %d wx = %d  wy = %d", *button, *wx, *wy); 
 
 	    if ( *button > 0 ) break;
 

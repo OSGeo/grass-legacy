@@ -23,7 +23,7 @@ int Get_location_with_pointer2 (int *wx, int *wy, int *button, int cmd)
 	return -1;
     }
 
-    G_debug (4, "Get_location_with_pointer2(): cmd = %d", cmd ); 
+    G_debug (5, "Get_location_with_pointer2(): cmd = %d", cmd ); 
     
     /* wait for a button-push event in the grass window, and return the
      * x,y coord and button number */
@@ -49,23 +49,29 @@ int Get_location_with_pointer2 (int *wx, int *wy, int *button, int cmd)
     }else{
         if ( cmd == 1 ) { 
 	    XDefineCursor(dpy, grwin, cur_xh);
-	    XSelectInput(dpy, grwin, ButtonPressMask);
+	    XSelectInput(dpy, grwin, ButtonPressMask | PointerMotionMask );
 	    return 0;
 	}
 
 	if ( cmd == 2 ) {
-	    if ( XCheckWindowEvent(dpy, grwin, ButtonPressMask, &event) ) {
-		*button = event.xbutton.button;
+	    if ( XCheckWindowEvent(dpy, grwin, ButtonPressMask | PointerMotionMask, &event) ) {
 		*wx = event.xbutton.x;
 		*wy = event.xbutton.y;
+		if ( event.type == ButtonPress ) {
+		    *button = event.xbutton.button;
+		} else { /* Motion */
+		    return 0;
+		}
 	    } else {  /* no event -> do nothing */ 
 		return 0;
 	    }
 	}
 
-	if ( ( cmd == 2 && button > 0) || cmd == 3 ) 
+	if ( ( cmd == 2 && button > 0) || cmd == 3 ) {
             XUndefineCursor(dpy, grwin);
-
+	    XSelectInput(dpy, grwin, gemask);
+        }
+	    
 	return 1;
     }
 
