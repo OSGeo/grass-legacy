@@ -23,7 +23,7 @@ main(argc, argv)
 		exit(-1) ;
 	}
 
-	G_gisinit ("digtodlg");
+	G_gisinit(argv[0]) ;
 	Init_curses() ;
 
 /* open necessary files */
