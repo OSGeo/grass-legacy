@@ -10,11 +10,14 @@ variables were found by searching all *.c *.h files for the words
 found in the source code. These are indicated along with the date they
 were last checked (dd/mm/yy).
 
+The second part list GRASS related files.
+
 ========================================================================
 
 ANGLE
 
-ANOTHER_BUTTON:
+ANOTHER_BUTTON:  
+[v.digit]
   define to click conveniently for two button mouse.
   It's hard to click two buttons simultaneously with two button mouse,
   #ifndef ANOTHER_BUTTON
@@ -27,7 +30,8 @@ ANOTHER_BUTTON:
 
 
 ASIAN_CHARS:
- define to input asian characters
+[v.digit]
+  define to input asian characters
 
 GRASS_BACKGROUNDCOLOR
 BAUD
@@ -71,13 +75,26 @@ G3D_TILE_DIM_Y_ENV_VAR
 G3D_TILE_DIM_Z_ENV_VAR
 GDAL_HOME
 GISBASE
+
 GISDBASE
+  initial database
+
 GISRC
+  name of .grassrc5 file
+
 GIS_LOCK
 GMPEG_SIZE
 GRAPH
 HEIGHT
+
 GRASS_HEIGHT
+[d.mon]
+  defines the height of CELL driver output
+
+GRASS_WIDTH
+[d.mon]
+  defines the width  of CELL driver output
+
 GTUNE_VSUP_RAM
 GTUNE_VTOC_RAM
 HOME
@@ -87,9 +104,16 @@ GRASS_HTMLMINBBOX
 GRASS_HTMLMINDIST
 GRASS_HTMLTYPE
 LOCATION
+
 LOCATION_NAME
+ initial location
+
 MAPLP
+[ppm driver]
+
 MAPSET
+  initial mapset
+
 MONITOR
 NODUMP
 NO_DRAW
@@ -126,15 +150,44 @@ SQLBASE_DRIVER_STDERR
 SQLBASE_SERVER
 STARTPANEL
 GRASS_STDERR
+
+GRASS_TCLSH
+[tcltkgrass, nviz]
+  set tclsh shell name to override 'tclsh'
+
 TERM
 GRASS_TEXT_BROWSER - not found in source 20/02/01
 TRANSPARENT
 GRASS_TRANSPARENT
 USER
 WIDTH
-GRASS_WIDTH
+
+GRASS_WISH
+[tcltkgrass, nviz]
+  set wish shell name to override 'wish'
+
 WRITE
 X3D_HEIGHT
 X3D_WIDTH
+
+XDRIVER_HEIGHT
+[d.mon]
+  defines the height of GRASS monitor
+
+XDRIVER_WIDTH
+[d.mon]
+  defines the width of GRASS monitor
+
 XGANIM_SIZE
 _XPG
+
+========================================================================
+GRASS-related Files:
+
+.grassrc5
+
+.tcltkgrass
+
+GIS_ERROR_LOG
+  If existing, all GRASS error messages are stored here instead
+  of sending a mail to the GIS user.
