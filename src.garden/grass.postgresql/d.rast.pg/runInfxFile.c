@@ -9,8 +9,9 @@
 #define TRUE 1
 #define FALSE 0
 
-runInfxFile(SQL_stmt, input,output )
+runInfxFile(SQL_stmt, input,output, withlabel)
   char *SQL_stmt, *input, *output;
+  int withlabel;
   {
     FILE *fpout;
     int i,TMP;
@@ -20,6 +21,7 @@ runInfxFile(SQL_stmt, input,output )
     char sysbuf[1024];
     char buf1[1024] = "";
     char buf2[1024] = "";
+    char buf3[1024] = "";
 
     PGconn *pg_conn;
     PGresult *res;
@@ -56,11 +58,14 @@ runInfxFile(SQL_stmt, input,output )
     for ( i=0; i < PQntuples(res); i++)  {
       strcpy (buf1, PQgetvalue (res, i, 0));
       strcpy (buf2, PQgetvalue (res, i, 1));
-       
-       fprintf(fpout,"%s = %s\n", buf1, buf2);
-
+      	if (withlabel) {
+      		strcpy (buf3, PQgetvalue (res, i, 2));
+        	fprintf(fpout,"%s = %s %s\n", buf1, buf2, buf3);
+      	} else {
+		fprintf(fpout,"%s = %s\n", buf1, buf2);
+	}
    
-      }
+    }
 	fprintf(fpout,"end");
 	fclose(fpout);
 	if (!output) {

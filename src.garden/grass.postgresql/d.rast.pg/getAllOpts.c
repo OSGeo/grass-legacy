@@ -6,7 +6,7 @@
 
                   jaf 2/19/92
 */
-//------------------------A.Sh 22.12.99
+//------------------------A.Sh 13.09.2000
 #include "gis.h"
 getAllOpts(argc, argv)
         int argc;
@@ -14,9 +14,9 @@ getAllOpts(argc, argv)
 
 {
 
-        struct Option *key, *col, *where, *tab, *input, *output;
+        struct Option *key, *col, *lab, *where, *tab, *input, *output;
         int retval;
-//        char *mapset, *buildSQL(), *tmpfile_out;
+
 
 	retval = 0 ;
 
@@ -41,7 +41,13 @@ getAllOpts(argc, argv)
         col->required   = YES  ;
         col->multiple   = NO ;
         col->description= "Column to base reclass on." ;
-
+	
+	lab = G_define_option() ;
+        lab->key        = "lab" ;
+        lab->type       = TYPE_STRING ;
+        lab->required   = NO  ;
+        lab->multiple   = NO ;
+        lab->description= "Column to use as labels (optional)." ;
 
         where = G_define_option() ;
         where->key        = "where" ;
@@ -49,8 +55,6 @@ getAllOpts(argc, argv)
         where->required   = NO  ;
         where->multiple   = NO ;
         where->description= "Where clause for query (ie. where col='paved'). " ;
-
-//	Would need to add an additional option [ORDERBY] to work with this module!
 
  
         input = G_define_option() ;
@@ -68,15 +72,6 @@ getAllOpts(argc, argv)
         output->required   = NO  ;
         output->multiple   = NO ;
         output->description= "Name of for new reclass file.";
-/*
-        join = G_define_option() ;
-        join->key        = "join" ;
-        join->type       = TYPE_STRING ;
-        join->required   = NO  ;
-        join->multiple   = NO ;
-        join->key_desc   = "tab,tabkey,pkey" ;
-        join->description= "JOIN rules (eg. table,key,primekey). ";
-*/
 
         /* Invoke parser */
         if (G_parser(argc, argv)) {
@@ -89,26 +84,8 @@ getAllOpts(argc, argv)
              exit(-1);
         }
 
-/*************** INFX driver code begins ***************/
 
-/*
-        buildInfxQry(key->answer,col->answer,tab->answer,
-                input->answer, output->answer, join->answers, 1);
-*/
-//--------->>A.Sh
-
-/*        tmpfile_out=buildSQL(key->answer,col->answer,tab->answer,
-                input->answer, output->answer, join->answers);
-	if (*tmpfile_out > 0)
-        	stat = runSQL( tmpfile_out, input->answer, output->answer, key->answer, col->answer,1);
-	  else	{
-		fprintf(stderr, "SQL error.\n"); exit(-1);
-		}
-
-*/
-//-----------<<A.Sh
-
-		retval = buildInfxQry(key->answer,col->answer,
+		retval = buildInfxQry(key->answer,col->answer,lab->answer,
 		tab->answer,where->answer,
                 input->answer, output->answer);
 
