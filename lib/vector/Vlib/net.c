@@ -27,11 +27,11 @@ static int clipper ( dglGraph_s    *pgraph ,
 {
     double cost;
     
-    G_debug ( 2, "Net: clipper()" );
+    G_debug ( 5, "Net: clipper()" );
 
     if ( dglGet_NodeAttrSize(pgraph) > 0 ) {
 	memcpy( &cost, dglNodeGet_Attr(pgraph, pargIn->pnNodeFrom), sizeof(cost) );
-	G_debug ( 2, "  node = %d pcost = %d + %f (arc + node)", 
+	G_debug ( 5, "  node = %d pcost = %d + %f (arc + node)", 
 		           dglNodeGet_Id(pgraph, pargIn->pnNodeFrom), pargOut->nEdgeCost, cost );
 	pargOut->nEdgeCost += (dglInt32_t) cost;
     }
@@ -86,6 +86,8 @@ Vect_net_build_graph (  struct Map_info *Map,
     G_debug (1, "Vect_build_graph(): ltype = %d, afield = %d, nfield = %d", ltype, afield, nfield); 
     G_debug (1, "    afcol = %s, abcol = %s, ncol = %s", afcol, abcol, ncol); 
 
+    fprintf ( stderr, "Building graph:\n");
+
     Points = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
 
@@ -94,7 +96,7 @@ Vect_net_build_graph (  struct Map_info *Map,
         ll = 1;
 	
     gr = &(Map->graph);
-    if ( nfield > 0 )
+    if ( ncol != NULL )
         dglInitialize ( gr, 1, sizeof(double), 0, opaqueset ); 
     else
         dglInitialize ( gr, 1, 0, 0, opaqueset ); 
@@ -107,10 +109,10 @@ Vect_net_build_graph (  struct Map_info *Map,
     
     /* --- Add arcs --- */
     /* Open db connection */
-    if ( afield > 0 ) {
+    if ( afcol != NULL ) {
+	if ( afield < 1 ) G_fatal_error ("Arc field < 1");
         Fi = Vect_get_field( Map, afield);
-	if ( Fi == NULL ) 
-	    G_fatal_error ("Cannot get field info");
+	if ( Fi == NULL ) G_fatal_error ("Cannot get field info");
 	
 	driver = db_start_driver(Fi->driver);
 	db_set_handle (&handle, Fi->database, NULL);
@@ -121,8 +123,7 @@ Vect_net_build_graph (  struct Map_info *Map,
 	
     skipped = 0;
     nlines = Vect_get_num_lines ( Map );
-    G_debug ( 2, "Register arcs");
-    fprintf ( stderr, "Registering arcs: ");
+    fprintf ( stderr, "Registering arcs ... ");
     for ( i = 1; i <= nlines; i++ ) {
 	G_percent ( i, nlines, 1 ); /* must be befor any continue */
 	dofw = dobw = 1;
@@ -130,7 +131,7 @@ Vect_net_build_graph (  struct Map_info *Map,
 	type = Vect_read_line ( Map, Points, Cats, i );
         if ( !(type & (GV_LINE | GV_BOUNDARY) ) ) continue;
 	
-	if ( afield > 0 ) {
+	if ( afcol != NULL ) {
 	    if ( !(Vect_cat_get(Cats, afield, &cat) ) ) {
 		G_debug ( 2, "Category of field %d not attached to the line %d -> line skipped", afield, i);
 		skipped += 2; /* Both directions */ 
@@ -190,24 +191,26 @@ Vect_net_build_graph (  struct Map_info *Map,
             if ( ret < 0 )
                 G_fatal_error ("Cannot add network arc");
         }
-	    
     }
-    G_debug ( 2, "Arcs registered");
     
-    if ( afield > 0 && skipped > 0 ) 
+    if ( afcol != NULL && skipped > 0 ) 
         G_debug ( 2, "%d lines missing category of field %d skipped", skipped, afield);
     
-    if ( afield > 0 ) {
+    if ( afcol != NULL  ) {
         db_close_database(driver);
 	db_shutdown_driver(driver);
     }
 
     /* Set node attributes */
-    if ( nfield > 0 ) {
+    G_debug ( 2, "Register nodes");
+    if ( ncol != NULL ) {
         G_debug ( 2, "Set nodes' costs");
+	if ( nfield < 1 ) G_fatal_error ("Node field < 1");
+
+        fprintf ( stderr, "Setting node costs ... ");
+
         Fi = Vect_get_field( Map, nfield);
-	if ( Fi == NULL ) 
-	    G_fatal_error ("Cannot get field info");
+	if ( Fi == NULL ) G_fatal_error ("Cannot get field info");
 	
 	driver = db_start_driver(Fi->driver);
 	db_set_handle (&handle, Fi->database, NULL);
@@ -253,23 +256,20 @@ Vect_net_build_graph (  struct Map_info *Map,
 	    dcost = cost;
 	    dglNodeSet_Attr(gr, dglGetNode(gr,i), (dglInt32_t*)&dcost); 
 	}
-        G_debug ( 2, "Nodes' costs were set");
-    }
-    
-    if ( nfield > 0 ) {
         db_close_database(driver);
 	db_shutdown_driver(driver);
+        fprintf ( stderr, "done.\n");
     }
-
-    G_debug (1, "Flattening the graph ..."); 
+    
+    fprintf ( stderr, "Flattening the graph ... "); 
     ret = dglFlatten ( gr );
-    if ( ret < 0 )  
-        G_fatal_error ("GngFlatten error");
+    if ( ret < 0 ) G_fatal_error ("GngFlatten error");
+    fprintf ( stderr, "done.\n");
     
     /* init SP cache */
     dglInitializeSPCache( gr, &(Map->spCache) );
 
-    G_debug (1, "Graph was build."); 
+    fprintf ( stderr, "Graph was built.\n");
 
     return 0;
 }
@@ -291,9 +291,19 @@ Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *L
     dglSPReport_s * pSPReport;
     dglInt32_t nDistance;
 
+    G_debug (3, "Vect_net_shortest_path(): from = %d, to = %d", from, to ); 
+    
+    /* Note/TODO : it seems that if from == to dgl goes to nearest node and returns back => 
+    *              check here for from == to */
+    
     if ( List != NULL )
         Vect_reset_list ( List);
-    
+
+    /* Check if from and to are identical, otherwise dglib returns path to neares node and back! */
+    if ( from == to ) {
+	if ( cost != NULL ) *cost = 0;
+        return 0;
+    }
 
     pclip = NULL;
     if ( List != NULL ) 
@@ -311,11 +321,11 @@ Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *L
         fprintf( stderr , "dglShortestPath error: %s\n", dglStrerror( &(Map->graph) ) );
 	return -1;
     }
-
+    
     if ( List != NULL ) {
 	for( i = 0 ; i < pSPReport->cArc ; i ++ ) {
 	    line = dglEdgeGet_Id(&(Map->graph), pSPReport->pArc[i].pnEdge);
-	    G_debug( 2, "From %ld to %ld - cost %ld user %d distance %ld\n" ,
+	    G_debug( 2, "From %ld to %ld - cost %ld user %d distance %ld" ,
 			  pSPReport->pArc[i].nFrom,
 			  pSPReport->pArc[i].nTo,
 			  dglEdgeGet_Cost(&(Map->graph), 
@@ -326,7 +336,6 @@ Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *L
 	}
     }
 
-	
     if ( cost != NULL ) {
         if ( List != NULL ) 
 	    *cost = (double) pSPReport->nDistance;
