@@ -293,7 +293,7 @@ main (int argc, char **argv)
 	}
 	/* do we need points ?? */
 
-	fprintf(stdout, "$GISBASE/etc/v.out.shape/gen2shp %s %s < $LOCATION/arc/%s.%s\n", arc_prefix, shape_type, arc_prefix, extension);
+	fprintf(stdout, "Converting $LOCATION/arc/%s.%s to SHAPE file...\n", arc_prefix, extension);
 	sprintf(buf, "$GISBASE/etc/v.out.shape/gen2shp %s %s < $LOCATION/arc/%s.%s", arc_prefix, shape_type, arc_prefix, extension);
 	G_system(buf);
 
