@@ -41,19 +41,7 @@ With very small numbers or values stretching over several magnitudes
 you have to adjust the height of view by typing in the numbers to get
 it right - this is not a bug though.
 
-1.3 nviz2.2 -q 
-is looking for a -q map, 
-
-WARNING: unable to find [-q] in [(null)]
-WARNING: unable to open raster map [-q in (null)]
-Not able to open cellfile for [-q]
-
-but then it opens as if it had -q map
-it should not be doing this, this flag is
-for running it without any input - it is needed for running scripts
-and when using load state.
-
-it does the same with -help
+[1.3 - fixed by Bob Covill.]
 
 1.4 when mask is removed it still draws a hole there
 but otherwise the mask seems to be working OK.
