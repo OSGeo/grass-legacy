@@ -27,7 +27,9 @@ int mouse (int line_color, int text_color)
     {
 	R_standard_color (line_color);
 	R_get_location_with_line (x1, y1, &x2, &y2, &button) ;
+#ifdef DEBUG
 	fprintf (stdout,"button=%d  x1,y1=%d,%d  x2,y2=%d,%d\n", button, x1,y1,x2,y2);
+#endif
 	if (button == 3) return -1;
 	if (x2 < left || x2 > right)  continue;
 	if (y2 < top  || y2 > bottom) continue;
