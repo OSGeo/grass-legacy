@@ -149,6 +149,8 @@ int bar (
 	ptr = dist_stats->ptr;
 	for (i=dist_stats->mincat; i<=dist_stats->maxcat; i++)
 	{
+		if (!ptr)
+			break;
 		draw=NO;
 		/* figure bar color and height 
     *
