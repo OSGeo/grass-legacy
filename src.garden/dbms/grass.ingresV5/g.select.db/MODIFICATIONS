@@ -1,0 +1,37 @@
+****************************************
+g.select.db - Modifications for INGRES
+
+Katarina Johnsson, 930421
+****************************************
+
+INGRES version: 5
+
+INGRES version specific subroutines:
+	d.select.db is based on a query to the INGRES system tables.
+	The system tables are entirely different for INGRES ver 5 and
+ 	INGRES ver 6, and so is d.column.db.
+
+Modified and/or renamed subroutines:
+	main
+
+New subroutines:
+	None
+
+Modified and/or renamed include files:
+	None
+
+New include files:
+	None
+
+INGRES modifications:
+	Database names are extracted from a system database table in the
+	system data base, with an SQL query. Both the table name and the
+	database names are hard coded.
+	
+	A net-prefix is automatically added to the database name. It is
+	required by INGRES NET, to run multiple users. 
+Improvements:
+	Explanatory messages added.
+
+Bug Fixes:
+	None
