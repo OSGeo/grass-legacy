@@ -31,7 +31,8 @@
 #include <math.h>
 #include "gis.h"
 #include "G3d.h"
-#include "site.h"
+#include "dbmi.h"
+#include "Vect.h"
 #include "oct.h"
 #include "surf.h"
 #include "dataoct.h"
@@ -58,7 +59,7 @@
      (mca 2/12/96)    
  */
 
-INPUT (int field)
+INPUT ( struct Map_info *In, char *column)
 {
   struct quadruple   *point;
   double          x, y, z, w, nz = 0.;
@@ -71,42 +72,77 @@ INPUT (int field)
   char            *mapsetm;
   char            buf[500];
   char            *desc;
-  Site            *site_mgt;
-  Site_head       site_info;
-    int dims, cat, strs, dbls;
+  int             cat;
+  struct field_info *Fi;
+  dbDriver        *Driver;
+  dbCatValArray   cvarr;
+  int             nrec, ctype;
+  struct line_pnts *Points;
+  struct line_cats *Cats;
   
   OUTRANGE=0;
   NPOINT=0;
   dmin = dmin * dmin;
 
-  /* Figure out how this site file is formatted */
-   
-    /* Read site header */
-    G_site_get_head(fdinp,&site_info);
- 
-    if (G_site_describe(fdinp, &dims, &cat, &strs, &dbls) != 0) {
-      sprintf(buf, "failed to guess format");
-      clean_fatal_error(buf);
+  /* Read attributes */
+  db_CatValArray_init ( &cvarr );
+  Fi = Vect_get_field( In, 1);
+
+  if ( Fi == NULL ) G_fatal_error ("Cannot read field info");
+
+  Driver = db_start_driver_open_database ( Fi->driver, Fi->database );
+  if (Driver == NULL) 
+      G_fatal_error("Cannot open database %s by driver %s", Fi->database, Fi->driver);
+
+  nrec = db_select_CatValArray ( Driver, Fi->table, Fi->key, column, NULL, &cvarr );
+  G_debug (3, "nrec = %d", nrec );
+
+  ctype = cvarr.ctype;
+  if ( ctype != DB_C_TYPE_INT && ctype != DB_C_TYPE_DOUBLE )
+      G_fatal_error ( "Column type not supported" );
+
+  if ( nrec < 0 ) G_fatal_error ("Cannot select data from table");
+  G_message ( "%d records selected from table", nrec);
+
+  Points = Vect_new_line_struct ();
+  Cats = Vect_new_cats_struct ();
+
+  Vect_rewind ( In );
+  
+  while(1) {
+    int ival, type, ret;
+    
+    if (-1 == (type = Vect_read_next_line (In, Points, Cats)))
+      G_fatal_error ( "Cannot read vector" );
+
+    if (type == -2) break; /* EOF */
+
+    if ( !(type & GV_POINTS) ) continue;
+
+    Vect_cat_get ( Cats, 1, &cat );
+    if ( cat < 0 ) {
+	G_warning ("Point without category" );
+	continue;
     }
 
-        if (field > dbls)
-            {
-               fprintf (stderr, "Requested attribute field no. %d not found\n", field);
-               return(0);
-            }
-                                
-    /* Fix for case where no category given */
-    if (cat == -1)
-      cat=FCELL_TYPE;
+    x = Points->x[0];
+    y = Points->y[0];
+    z = Points->z[0];
 
-    /* Allocate space for site structure */
-    site_mgt = G_site_new_struct (cat, dims, strs, dbls);
+    if ( ctype == DB_C_TYPE_INT ) {
+	ret = db_CatValArray_get_value_int ( &cvarr, cat, &ival );
+	w = ival; 
+    } else { /* DB_C_TYPE_DOUBLE */
+	ret = db_CatValArray_get_value_double ( &cvarr, cat, &w );
+    }
 
-  while (G_site_get(fdinp, site_mgt) != -1) {
-    x=site_mgt->east;
-    y=site_mgt->north;
-    z=site_mgt->dim[0];
-    w=site_mgt->dbl_att[field-1]; /* first z field is no. 0 */
+    if ( ret != DB_OK ) {
+	G_warning ("No record for point (cat = %d)", cat );
+	continue;
+    }
+
+    G_debug ( 3, "%f %f %f %f", x, y, z, w );
+	
     k++;
     w=w*wmult;
     z=z*zmult;
@@ -163,6 +199,7 @@ INPUT (int field)
 	}
   } /* while */
 
+  db_CatValArray_free ( &cvarr );
   
   c1 = xmin - ((struct octdata *) (root->data))->x_orig;
   c2 = ((struct octdata *) (root->data))->x_orig + 
@@ -276,9 +313,6 @@ fprintf(stderr,"xmin=%lf,xmax=%lf,ymin=%lf,ymax=%lf,zmin=%lf,zmax=%lf,wmin=%lf,w
     }
     fprintf(stderr,"bitmap mask created\n");
   }
-
-  /* cleanup */
-  G_site_free_struct(site_mgt);
 
   return 1;
 }
