@@ -39,8 +39,8 @@ GISLIB         = -lgrass_gis
 DEPVASKLIB     = $(LIBDIR)/libgrass_vask.so.$(LIB_VER)
 VASKLIB        = -lgrass_vask
 
-DEPEDITLIB     = $(LIBDIR)/libgrass_edit.so.$(LIB_VER)
-EDITLIB        = -lgrass_edit
+DEPEDITLIB     = $(LIBDIR)/libgrass_gedit.so.$(LIB_VER)
+EDITLIB        = -lgrass_gedit
 
 DEPG3DLIB      = $(LIBDIR)/libgrass_g3d.so.$(LIB_VER)
 G3DLIB         = -lgrass_g3d
