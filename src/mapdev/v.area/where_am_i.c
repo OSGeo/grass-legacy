@@ -1,4 +1,4 @@
-
+#include "gis.h"
 #include <stdio.h>
 #include "dig_structs.h"
 #include "dig_defines.h"
@@ -27,6 +27,8 @@ where_am_i(name,mapset,color,fill,Dvect_color)
 
 /* initialize structure pointers */
     Points   =  Vect_new_line_struct ();
+    G_begin_distance_calculations();
+    G_begin_polygon_area_calculations();
 
     if (2 > Vect_open_old (&map, name,mapset))
 	G_fatal_error ("Must run v.support on vector file first");
