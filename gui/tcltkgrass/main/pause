@@ -1,4 +1,0 @@
-#!/bin/sh
-eval $*
-printf "\nFinished - press RETURN or ENTER to continue"
-read line
