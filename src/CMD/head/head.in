@@ -37,7 +37,7 @@ COMPATLIB           = @COMPATLIB@
 TERMLIB             = @TERMLIB@
 CURSES              = @CURSESLIB@ $(TERMLIB) $(COMPATLIB)
 MATHLIB             = @MATHLIB@ 
-XDRLIB              = @XDRLIB@
+XDRLIB              = @XDRLIB@ @ZLIB@
 ZLIB                = @ZLIB@
 
 #PostgreSQL:
