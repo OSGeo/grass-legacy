@@ -1,6 +1,6 @@
 Known bugs in current GRASS GIS version 5.0 CVS
 
-$Id: BUGS,v 1.107 2001-01-22 09:25:25 markus Exp $
+$Id: BUGS,v 1.108 2001-01-22 10:21:49 markus Exp $
 [In sync with GRASS 5.0 beta CVS version]
 
 Maintained by
@@ -27,10 +27,18 @@ being release-critical. They are indicated [RC].
     (being worked on by ?)
 
 ----------- libraries ---------------------------------------------
-Vector:
- R_polygon_abs() seems to ignore islands. Correct?
 
- Comment from Eric Miller:
+- sites lib: src/libes/gis/sites.c
+  BSLASH problem if \ is within a string. Example:
+  @"BB\DD" is not accepted, all sites modules go to sleep then.
+  @"BB\\DD" doesn't help.
+  If fixed, update s.in.dbf/dump.c
+ (being worked on by ?)
+
+- Vector:
+  R_polygon_abs() seems to ignore islands. Correct?
+
+  Comment from Eric Miller:
    While skimming through the BUG list, there's a report about
    R_Polygon_abs() ignoring islands.  A little investigation would show this
    to be correct.  However, each display driver must implement this
