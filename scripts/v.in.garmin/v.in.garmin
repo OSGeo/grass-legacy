@@ -55,7 +55,7 @@
 #%  description: do not attempt projection transform from WGS84
 #%end
 #%option
-#% key: vect
+#% key: output
 #% type: string
 #% gisprompt: new,dig,vector
 #% description: name for new binary vector file (omit for display to stdout)
@@ -115,11 +115,6 @@ fi
 #### set temporary files
 TMP="`g.tempfile pid=$$`"
 
-if [ ! -d "$LOCATION/dig_ascii" ] ; then 
-    mkdir $LOCATION/dig_ascii
-fi
-DIG="$LOCATION/dig_ascii/DIG_$$"
-
 
 #### trap ctrl-c so that we can clean up tmp
 trap 'rm -f ${TMP}*' 2 3 15
@@ -133,10 +128,10 @@ if [ $GIS_FLAG_v -eq 1 ] ; then
     VERBOSE=1
 fi
 
-if [ "$GIS_OPT_vect" != "(null)" ] ; then
-    NAME="$GIS_OPT_vect"
+if [ "$GIS_OPT_output" != "(null)" ] ; then
+    NAME="$GIS_OPT_output"
     if [ $VERBOSE -eq 1 ] ; then
-	echo "vect=$NAME" 1>&2
+	echo "output=$NAME" 1>&2
     fi
     if [ ! -z `g.findfile elem=vector file="$NAME" | grep ^file | cut -f2 -d=` ] ; then
 	echo "<$NAME> already exists! Aborting."
@@ -344,17 +339,17 @@ else # CREATE_LINES
     if [ -z "$IS_WGS84" ] || [ $KEEP_WGS84 -eq 1 ] ; then
     	echo "No projection transformation performed" 1>&2
 	cat "${TMP}.base" | awk 'BEGIN {;} $1=="L" { print } ; \
-	    $1!="L" { printf(" %.7f %.7f\n", $2, $1) } END {;}' > "${TMP}.P_base"
+	    $1!="L" { printf(" %.7f %.7f\n", $1, $2) } END {;}' > "${TMP}.P_base"
     else
     	echo "Attempting waypoint projection transform with cs2cs" 1>&2
     	cs2cs -tL -f %.7f $IN_PROJ +to $OUT_PROJ < "${TMP}.base" > "${TMP}.P_mid"
     	if [ $? -ne 0 ] ; then
     	    echo "Projection transform failed, retaining WGS84" 1>&2
 	    cat "${TMP}.base" | awk 'BEGIN {;} $1=="L" { print } ; \
-		$1!="L" { printf(" %.7f %.7f\n", $2, $1) } END {;}' > "${TMP}.P_base"
+		$1!="L" { printf(" %.7f %.7f\n", $1, $2) } END {;}' > "${TMP}.P_base"
     	else
 	    cat "${TMP}.P_mid" | awk 'BEGIN {;} $1=="L" { print } ; \
-		$1!="L" { printf(" %.7f %.7f\n", $2, $1) } END {;}' > "${TMP}.P_base"
+		$1!="L" { printf(" %.7f %.7f\n", $1, $2) } END {;}' > "${TMP}.P_base"
 	fi
     fi
 
@@ -365,7 +360,7 @@ else # CREATE_LINES
 
 
     #### create digit header
-    cat << EOF > "$DIG"
+    cat << EOF > "${TMP}.dig"
 ORGANIZATION: GRASSroots organization
 DIGIT DATE:   `date +%D`
 DIGIT NAME:   $PROG
@@ -379,16 +374,16 @@ VERTI:
 EOF
 
     #### merge in vertices
-    cat "${TMP}.P_baseC" >> "$DIG"
+    cat "${TMP}.P_baseC" >> "${TMP}.dig"
 
     #### if no name for vector file given, cat to stdout
     if [ "$NAME" = "" ] ; then
 	echo "ASCII file redirected to stdout" 1>&2
-	cat "$DIG" 2> /dev/null
+	cat "${TMP}.dig" 2> /dev/null
     else
 	#### import to binary vector file 
 	echo "Importing with v.in.ascii" 1>&2
-	v.in.ascii output="$NAME" input=DIG_$$   # input=`basename "$DIG"`
+	v.in.ascii format=standard output="$NAME" input="${TMP}.dig"
 
 	#### check success/failure
 	if [ $? -eq 0 ] ; then
@@ -435,7 +430,7 @@ fi  # if CREATE_POINTS or CREATE_LINES
 
 
 # list column names
-if [ $VERBOSE -eq 1 ] ; then
+if [ $VERBOSE -eq 1 ] && [ "$NAME" != "" ] ; then
     echo
     echo "<$NAME> columns:"
     db.columns "$NAME"
@@ -444,8 +439,6 @@ fi
 
 #### clean up the mess
 rm -f ${TMP}* 1>&2 > /dev/null
-rm -f "$DIG"  1>&2 > /dev/null
-
 
 #### end
 echo 1>&2
