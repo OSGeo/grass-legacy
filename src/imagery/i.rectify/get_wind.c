@@ -1,6 +1,11 @@
 #include <string.h>
 #include "global.h"
 
+/* Corrected  get_target_window (void) to correctly register
+   current window settings into the target_window structure 
+   Pierre de Mouveaux (pmx@audiovu.com) 05 april 2000       
+ */
+
 int get_target_window (void)
 {
     char name[30], mapset[30];
@@ -18,11 +23,8 @@ int get_target_window (void)
 	if (!G_gets(buf)) continue;
 	G_strip (buf);
 	if (strncmp (buf,"1",1) == 0) {
-/*	Pierre de Mouveaux - 05 april 2000*/
-    ask_file_from_list (name, mapset);
-    if (G_get_cellhd (name, mapset, &cellhd) < 0)
-	exit(-1);
- 	G_get_cellhd(name,mapset,&target_window);
+/*	Pierre de Mouveaux - 11 april 2000*/
+		G_get_window(&target_window);
 		return 1;
 	}
 	if (strncmp (buf,"2",1) == 0) break;
