@@ -1,6 +1,7 @@
 #include "gis.h"
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <signal.h>
 /**********************************************************
@@ -42,24 +43,24 @@ int G_gets (char *buf)
 	char *eof;
   
   	ctrlz = 0;
-  #ifdef SIGTSTP
+#ifdef SIGTSTP
   	if (tty = isatty(0))
   	{
 		sigtstp = signal (SIGTSTP, catch_ctrlz);
 		if (sigtstp != (void (*)()) SIG_DFL)
   		    signal (SIGTSTP, sigtstp);
   	}
-  #endif
+#endif
       eof = fgets(p,100,stdin);
       /* strip the EOL character      */
       p[strlen(p)-1]='\0';
       /*      buf could be any length.  Any overflow will occur here. */
       strcpy(buf,p);
 
-  #ifdef SIGTSTP
+#ifdef SIGTSTP
   	if (tty)
   		signal (SIGTSTP, sigtstp);
-  #endif
+#endif
 	if (eof)
   		return 1;
   	if (ctrlz)
