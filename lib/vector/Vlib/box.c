@@ -229,7 +229,7 @@ Vect_get_map_box (struct Map_info *Map, BOUND_BOX *Box )
 
 /*!
  \fn int Vect_region_box (struct Cell_head *Window, BOUND_BOX *Box )
- \brief falls current region into boundary box ?
+ \brief copy region Window to Box
  \return 1 on success, 0 on error
  \param region structure, boundary box
 */
