@@ -7,7 +7,6 @@
  *   This program is free software under the GPL (>=v2)
  *   Read the file COPYING coming with GRASS for details.
  *
- *   $Id$
  */
 
 #include <stdlib.h>
@@ -496,7 +495,7 @@ int main (int argc, char *argv[])
 					SwabLong(&x_i[col]);
 				cell[col] = (CELL) x_i[col] ;
 			}
-			if(nul_val) {
+			if(parm.anull->answer) {
 				if(flag.f->answer) {
 					if (fcell[col] == (float)nul_val)
 						G_set_f_null_value(&fcell[col], 1);
