@@ -2,7 +2,7 @@
 # Makefile for building nvwish
 # Requires Tk 8.x and Tcl 8.x
 
-# These should be set by the preconfigure script
+# These should be set by the doconfigure script
 NVWISH_VER=sed
 PQ_OBJS=sed
 
