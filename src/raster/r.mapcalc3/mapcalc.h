@@ -17,20 +17,22 @@
 
 /* mapcalc.l */
 
-extern void initialize_scanner(const char *s);
+extern void initialize_scanner_string(const char *);
+extern void initialize_scanner_stream(FILE *);
 
 /* mapcalc.y */
 
-extern expression *parse(const char *s);
+extern expr_list *parse_string(const char *);
+extern expr_list *parse_stream(FILE *);
 
 /* expression.c */
 
 extern int is_var(const char *);
-extern void print_expression(FILE *fp, const expression *e);
+extern void print_expression(FILE *, const expression *);
 
 /* evaluate.c */
 
-extern int execute(expression *e);
+extern int execute(expr_list *);
 
 /****************************************************************************/
 

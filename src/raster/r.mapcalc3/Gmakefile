@@ -1,14 +1,14 @@
-PGM = r.mapcalc2
+PGM = r.mapcalc3
 
-LIST =	expression.o\
+LIST =	y.tab.o\
+	lex.yy.o\
+	\
+	expression.o\
 	function.o\
 	check.o\
 	main.o\
 	evaluate.o\
 	map.o\
-	\
-	y.tab.o\
-	lex.yy.o\
 	\
 	xabs.o\
 	xadd.o\
