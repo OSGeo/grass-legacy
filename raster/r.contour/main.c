@@ -1,6 +1,4 @@
 /*
- * $Id$
- *
  * Originally written by: Terry Baker 3 1992
  * US Army Construction Engineering Research Lab
  *
@@ -36,7 +34,7 @@
 
 int main ( int argc, char *argv[])
 {
-	struct GModule *module;
+    struct GModule *module;
     struct Option *map;
     struct Option *levels;
     struct Option *vect;
@@ -49,26 +47,21 @@ int main ( int argc, char *argv[])
 
     struct Cell_head Wind;
     struct dig_head Head;
-    char   mapname[1024];
     char   *name;
     char   *mapset;
     struct Map_info Map;
     DCELL   **z_array;
     struct FPRange range; 
     int fd;
-    FILE *Att;
     double *lev; 
     int nlevels;
-    int i;
     int n_cut;
-    char buf[1024];
 
     G_gisinit (argv[0]);
 
-	module = G_define_module();
-	module->description =
-		"Produces a GRASS binary vector map of specified "
-		"contours from GRASS raster map layer.";
+    module = G_define_module();
+    module->description = "Produces a GRASS binary vector map of specified "
+		          "contours from GRASS raster map layer.";
 
     map=G_define_option () ;
     map->key        = "input";
@@ -124,7 +117,7 @@ int main ( int argc, char *argv[])
     noerr->description = "Suppress single crossing error messages" ;
 
     if (G_parser(argc, argv))
-    exit (-1);
+        exit (-1);
 
     name = map->answer;
     mapset = G_find_cell2 (name, "");
@@ -145,57 +138,29 @@ int main ( int argc, char *argv[])
     	G_fatal_error  (msg);
     }
 
- 	if (G_read_fp_range (name, mapset, &range) < 0)
-		G_fatal_error ("could not read range file");
+    if (G_read_fp_range (name, mapset, &range) < 0)
+	    G_fatal_error ("could not read range file");
 
-	/* get window info */
+    /* get window info */
     G_get_window  (&Wind);
 
-
-    if (0 > Vect_open_new (&Map, vect->answer))
-        G_fatal_error ("Could not create vector file");
+    Vect_open_new (&Map, vect->answer, 1);
+    Vect_hist_command (&Map);
     
-	Head.organization[0] = 0;
-	Head.date[0] = 0;
-    Head.your_name[0] = 0;
-	sprintf(mapname,"from raster map %s",name);
-    strncpy (Head.map_name, mapname, DIG_MAP_NAME_LEN);	/* uses GISLIB strncpy() */
-    mapname[DIG_MAP_NAME_LEN - 1] = '\0'; /* ensure that mapname is properly terminated */
-    Head.source_date[0] = 0;
-    Head.orig_scale = 0;
-    Head.line_3[0] = 0;
-    Head.plani_zone = Wind.zone;
-    Head.digit_thresh = 0;
-    Head.map_thresh = 0;
+    z_array = get_z_array (fd,Wind.rows,Wind.cols, quiet->answer);
+    lev = getlevels(levels, max, min, step, &range, &nlevels, quiet->answer);
+    displaceMatrix(z_array, Wind.rows, Wind.cols, lev, nlevels, quiet->answer);
+    n_cut = atoi(cut->answer);
+    contour(lev, nlevels,  Map, z_array, Wind, quiet->answer, noerr->answer, n_cut);
+    writeCategorySupport(lev, nlevels, vect->answer, Head.map_name);
+    
+    Vect_build (&Map, stderr);
+    Vect_close (&Map);
 
-    Head.W = Wind.west;
-    Head.E = Wind.east;
-    Head.S = Wind.south;
-    Head.N = Wind.north;
+    if (!quiet->answer)
+	    fprintf(stderr, "\nFinished.\n");
 
-    Vect_copy_head_data (&Head, &(Map.head));
-
-
-	Att = G_fopen_new ("dig_att", vect->answer);
-
-  	z_array = get_z_array (fd,Wind.rows,Wind.cols, quiet->answer);
-	lev = getlevels(levels, max, min, step, &range, &nlevels, quiet->answer);
-	displaceMatrix(z_array, Wind.rows, Wind.cols, lev, nlevels, quiet->answer);
-	n_cut = atoi(cut->answer);
-	contour(lev, nlevels,  Map, z_array, Wind, Att, quiet->answer, noerr->answer, n_cut);
-	writeCategorySupport(lev, nlevels, vect->answer, Head.map_name);
-	
-	Vect_close (&Map);
-	fclose(Att);
-
-	if (!quiet->answer) fprintf(stderr, "\nBuilding topology...");
-	sprintf(buf,"%s/bin/v.support map=%s", G_gisbase(), vect->answer);
-	G_system(buf);
-
-	if (!quiet->answer)
-		fprintf(stderr, "\nFinished.\n");
-
-	exit (0);
+    exit (0);
 }
 
 /*********************************************************************/

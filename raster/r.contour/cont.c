@@ -7,7 +7,6 @@
 #include <math.h>
 #include "gis.h"
 #include "Vect.h"
-#include "dig_atts.h"
 #include "local_proto.h"
 
 struct cell{
@@ -29,7 +28,6 @@ void contour (
     struct Map_info Map,
     DCELL  **z,
     struct Cell_head Cell,
-    FILE *Att,
     int quiet,int noerr,int n_cut)
 {
     int nrow, ncol;  	     /* number of rows and columns in current region */
@@ -39,13 +37,13 @@ void contour (
     char **hit;              /* array of flags--1 if Cell has been hit;  */
 			     /*  0 if Cell is still to be checked */
     struct  line_pnts *Points;
+    struct  line_cats *Cats;
     int outside;             /* 1 if line is exiting region; 0 otherwise */
     struct cell current;
     int p1, p2;	   	     /* indexes to end points of cell edges */
-    double x, y;             /* location of line center for labels */
 
     Points = Vect_new_line_struct();
-    Points->n_points = 0;
+    Cats = Vect_new_cats_struct();
 
     nrow = Cell.rows;
     ncol = Cell.cols;
@@ -104,12 +102,11 @@ void contour (
 			    outside = getnewcell(&current, nrow, ncol, z);
 			}
 			if((n_cut <= 0) || ((Points->n_points) > n_cut)) {
-				Vect_write_line (&Map, LINE, Points);
-				get_line_center (&x, &y, Points);
-				write_att (Att, 'L', x, y, (int)level);
+			    Vect_reset_cats ( Cats );
+			    Vect_cat_set ( Cats, 1, (int) level );
+			    Vect_write_line (&Map, GV_LINE, Points, Cats);
 			}
-			Vect_destroy_line_struct(Points);
-			Points = Vect_new_line_struct();
+			Vect_reset_line ( Points );
 		    } /* if checkedge */
 		} /* if ! hit */
 	    } /* for columns */
@@ -146,13 +143,11 @@ void contour (
 			    outside = getnewcell(&current, nrow, ncol, z);
 			}
 			if((n_cut <= 0) || ((Points->n_points) > n_cut)) {
-				Vect_write_line (&Map, LINE, Points);
-				get_line_center (&x, &y, Points);
-				write_att (Att, 'L', x, y, (int)level);
+			    Vect_reset_cats ( Cats );
+			    Vect_cat_set ( Cats, 1, (int) level );
+			    Vect_write_line (&Map, GV_LINE, Points, Cats);
 			}
-			Vect_destroy_line_struct(Points);
-			Points = Vect_new_line_struct();
-
+			Vect_reset_line ( Points );
 		    } /* if checkedge */
 		} /* if ! hit */
 	    } /* for rows */
@@ -188,13 +183,11 @@ void contour (
 			    outside = getnewcell(&current,nrow, ncol, z);
 			}
 			if((n_cut <= 0) || ((Points->n_points) > n_cut)) {
-				Vect_write_line (&Map, LINE, Points);
-				get_line_center (&x, &y, Points);
-				write_att (Att, 'L', x, y, (int)level);
+			    Vect_reset_cats ( Cats );
+			    Vect_cat_set ( Cats, 1, (int) level );
+			    Vect_write_line (&Map, GV_LINE, Points, Cats);
 			}
-			Vect_destroy_line_struct(Points);
-			Points = Vect_new_line_struct();
-
+			Vect_reset_line ( Points );
 		    } /* if checkedge */
 		} /* if ! hit */
 	    } /* for rows */
@@ -202,6 +195,7 @@ void contour (
     } /* for levels */
     fprintf (stdout, "       \n");
     Vect_destroy_line_struct(Points);
+    Vect_destroy_cats_struct(Cats);
 }
 
 /***************************************************************************
@@ -364,7 +358,7 @@ static void getpoint (struct cell *curr, double level,
 	y = Cell.north - ( y + .5 )*Cell.ns_res;
 	x = Cell.west + ( x + .5 )*Cell.ew_res;
 
-	Vect_append_point (Points, x, y);
+	Vect_append_point (Points, x, y, level);
 
 }
 /***********************************************************************
