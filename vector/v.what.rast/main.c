@@ -77,11 +77,11 @@ int main(int argc,char *argv[])
     module->description = "Upload raster values at positions of vector points to the table.";
 
     vect_opt = G_define_standard_option(G_OPT_V_INPUT);
-    vect_opt->key        = "vect" ;
+    vect_opt->key        = "vector" ;
     vect_opt->description= "Name of input vector points map";
 
     rast_opt = G_define_option() ;
-    rast_opt->key        = "rast" ;
+    rast_opt->key        = "raster" ;
     rast_opt->type       = TYPE_STRING ;
     rast_opt->required   = YES ;
     rast_opt->gisprompt  = "old,cell,raster" ;
