@@ -67,6 +67,23 @@
 #include "gis.h"
 
 char *
+G_find_sites (name, mapset)
+    char *name;
+    char *mapset;
+{
+    return G_find_file ("site_lists", name, mapset);
+}
+
+char *
+G_find_sites2 (name, mapset)
+    char *name;
+    char *mapset;
+{
+    return G_find_file2 ("site_lists", name, mapset);
+}
+
+
+char *
 G_ask_sites_new (prompt,name)
     char *prompt;
     char *name;
