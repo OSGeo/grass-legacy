@@ -17,13 +17,20 @@ Generally, to support i18N multiple languages,
 message strings in GRASS must be modified from
 
  fprintf ( ..., "...\n", ...);
-to
+to either
+ fprintf ( ..., _("...\n"), ...);
+or
  G_message ( _("...\n"), ...);
 
+Careful:
+  G_message should be used for messages - informations about
+  the process for user while fprintf(stdout...) for data output.
+  G_message output is not expected to be send to pipe or file.
+  fprintf(stdout...) output is usually send to pipe or file.
+
+
 Three steps:
-1) to replace (see example above:
-     a) fprintf (stdout,    with G_message (
-     b) fprintf (stderr,    with G_message (
+1) check if fprintf is to be replaced (see above)
 
 2) to add (see example above):
      the macro _( ) which encapulates the message
@@ -49,9 +56,8 @@ See for example ./vector/v.what.rast/main.c
 
 NOTE3: Such lines
         fprintf (stdout,"\n");
-  become simply:
- 	G_message ("\n");
-  as no translation is needed.
+  do not need a change as no translation is needed.
+
 
 ------------------------------------------------------
 
