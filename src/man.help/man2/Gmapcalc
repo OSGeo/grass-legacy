@@ -1,0 +1,388 @@
+.\" %W% %G%
+.TH Gmapcalc 2G G-language
+.SH NAME
+Gmapcalc \- 
+.CT "Grid cell" "Cell map"
+calculator
+.br
+.I (G Language Tool)
+.SH SYNOPSIS
+\fBGmapcalc\fR [result\*=\fIexpression\fR]
+.SH DESCRIPTION
+.I Gmapcalc 
+performs arithmetic on 
+.CT "map layers." "cell maps."
+New 
+.CT "map layers" "cell maps"
+can be created
+which are arithmetic expressions involving existing 
+.CT "map layers," "cell maps,"
+integer or floating point constants, and functions.
+.SH HOW TO USE
+If used without command line arguments, \fIGmapcalc\fR will read its
+input, one line at a time,
+from standard input (which is the keyboard, unless redirected from a file
+or across a pipe). Otherwise, the expression on the command line is
+evaluated. \fIGmapcalc\fR expects its input to have the form
+
+.ti +.5i
+\fBresult\*=expression\fR
+
+where
+.I result
+is the name of a 
+.CT "map layer" "cell map" 
+to contain the result of the calculation and
+.I expression
+is any legal arithmetic expression involving existing
+.CT "map layers," "cell maps,"
+integer or floating point constants,
+and functions known to the calculator.
+Parentheses are allowed in the
+expression and may be nested to any depth.
+.I Result
+will be created in the current mapset.
+.SH "OPERATORS AND ORDER OF PRECEDENCE"
+The following operators are supported:
+
+.TS
+c c c c
+l l l n.
+Operator	Meaning	Type	Precedence
+_
+% 	modulus (remainder upon division)	Arithmetic	4
+/ 	division	Arithmetic	4
+* 	multiplication	Arithmetic	4
++ 	addition	Arithmetic	3
+- 	subtraction	Arithmetic	3
+==	equal	Logical	2
+!=	not equal	Logical	2
+>	greater than	Logical	2
+>=	greater than or equal	Logical	2
+<	less than	Logical	2
+<=	less than or equal	Logical	2
+&&	and	Logical	1
+||	or	Logical	1
+.TE
+
+The operators are applied from left to right, with those of higher precedence
+applied before those with lower precedence.
+Division by 0 and modulus by 0
+are acceptable and give a 0 result.
+The logical operators give a 1 result if the comparison is true, 0 otherwise.
+.SH CELL MAP NAMES
+Anything in the expression which is not a number, operator, or function name
+is taken to be a 
+.CT map "cell map"
+name.  Examples:
+
+.RS
+elevation\ \ \ x3\ \ \ 3d.his
+.RE
+
+Most GRASS 
+.CT "data layers" "cell maps" 
+meet this naming convention.
+However, if a 
+.CT "data layer" "cell map"
+has a name which conflicts with the
+above rule, it should be quoted. For example, the expression
+
+.RS
+x = a-b
+.RE
+
+would be interpreted as: x equals a minus b, whereas
+
+.RS
+x = \*(lqa-b\*(rq
+.RE
+
+would be interpreted as: x equals the 
+.CT "map layer" "cell map"
+named \fIa-b\fR
+
+Also
+
+.RS
+x = 3107
+.RE
+
+would create x filled with the number 3107, while
+
+.RS
+x = \*(lq3107\*(rq
+.RE
+
+would copy 
+.CT "data layer" "cell map"
+3107 to 
+.CT layer "cell map"
+x.
+
+Quotes are not required unless the 
+.CT map "cell map"
+names
+look like numbers or contain operators.
+
+\fIGmapcalc\fR will look for the 
+.CT "data layers" "cell maps" 
+according to the current
+mapset search path.  It is possible to override the search path
+and specify the mapset
+from which to select the 
+.CT "map." "cell map."
+This is done by specifying the 
+.CT map "cell map"
+name
+in the form:
+
+.RS
+name in mapset
+.RE
+
+For example, the following is a legal expression:
+
+.RS
+result = x in PERMANENT / y in SOILS
+.RE
+
+The mapset specified does not have to be in the mapset search path.
+(This is method of overriding the mapset search path is common to all
+GRASS commands, not just Gmapcalc.)
+.SH "CELL MAP VALUES FROM THE CATEGORY FILE"
+Sometimes it is desirable to use a value associated with a category
+instead of the category 
+.CT number value
+itself. If a 
+.CT map "cell map"
+name is preceeded
+by the
+.B @
+operator, then the 
+.CT values labels
+in category file for the 
+.CT "map layer" "cell map"
+are used
+in the expression instead of the category 
+.CT "number." "value."
+
+For example, suppose that the 
+.CT "map layer" "cell map"
+soil.ph (representing PH of
+soils) has a category file with labels as follows:
+
+.RS
+.TS
+ll.
+cat	label
+_
+0	no data
+
+1	1.4
+2	2.4
+3	3.5
+4	5.8
+5	7.2
+6	8.8
+7	9.4
+.TE
+.RE
+
+Then the expression:
+
+.RS
+result = @soils.ph * 10
+.RE
+
+would produce a result with 
+.CT "cell values" "category values"
+0, 14, 24, 35, 58, 72, 88 and 94.
+
+Note that this operator may only be applied to 
+.CT "map layers" "cell maps"
+and produces
+a floating point value in the expression. Also the category label
+must start with a valid number. Missing labels, or labels that do not
+start with a number will (silently) produce a 0 value for that category.
+.SH FUNCTIONS
+The functions currently supported are listed in the table below.
+The type of the result is indicated in the last column.
+.I F
+means that the functions always results in a floating point value,
+.I I
+means that athe function gives an integer result, and
+.I *
+indicates
+that the result is float if any of the arguments to the function
+are floating point values
+and integer if all arguments are integer.
+
+.TS
+lcc
+llc.
+function	description	type
+_
+abs(x)	return absolute value of x	*
+atan(x)	inverse tangent of x (result is in degrees)	F
+cos(x)	cosine of x (x is in degrees)	F
+exp(x)	exponential function of x	F
+exp(x,y)	x to the power y	F
+float(x)	convert x to floating point	F
+if	decision options:	*
+.in +2
+if(x)	1 if x not zero, 0 otherwise
+if(x,a)	a if x not zero, 0 otherwise
+if(x,a,b)	a if x not zero, b otherwise
+if(x,a,b,c)	a if x > 0, b if x is zero, c if x < 0
+.in
+int(x)	convert x to integer [ truncates ]	I
+log(x)	natural log of x	F
+log(x,b)	log of x base b	F
+max(x,y[,z...])	largest value of those listed	*
+min(x,y[,z...])	smallest value of those listed	*
+round(x)	round x to nearest integer	I
+sin(x)	sine of x (x is in degrees)	F
+sqrt(x)	square root of x	F
+tan(x)	tangent of x (x is in degrees)	F
+.TE
+.SH "FLOATING POINT VALUES IN THE EXPRESSION"
+Floating point numbers are allowed in the expression. A floating point
+number is a number which contains a decimal point:
+
+.ti +.5i
+2.3\ \ \ 12.\ \ \ .81
+
+Floating point values in the expression are handled in a special way.
+With arithmetic and logical operators, if either operand is float, the other is converted to
+float and the result of the operation is float. This means, in particular
+that division of integers results in a (truncated) integer, while division
+of floats results in an accurate floating point value. With functions
+of type * (see table above), the result is float if any argument is float,
+integer otherwise.
+
+However, GRASS 
+.CT "data layers" "cell maps"
+can only store integer values. If the final
+value of the exression is a floating point value, this value is rounded to the
+nearest integer before storing it in the result 
+.CT "data layer." "cell map."
+
+Note that 
+.CT maps "cell maps"
+in the expression are considered to be integers.
+.SH EXAMPLES
+To compute the average of two 
+.CT "map layers" "cell maps"
+\fIa\fR and \fIb\fR:
+
+.ti +.5i
+ave = (a + b)/2
+
+To form a weighted average:
+
+.ti +.5i
+ave = (5*a + 3*b)/8.0
+
+To produce a binary representation of the 
+.CT "map layer" "cell map"
+\fIa\fR 
+so that category 0 remains 0 and all other categories become 1:
+
+.ti +.5i
+mask = a/a
+
+This could also be accomplished by:
+
+.ti +.5i
+mask = if(a)
+
+To mask 
+.CT layer "cell map"
+\fIb\fR by 
+.CT layer "cell map"
+\fIa\fR:
+
+.ti +.5i
+result = if(a,b)
+.SH WINDOW/MASK
+The user must be aware of the current 
+.CT window "geographic window"
+and current mask
+when using \fIGmapcalc\fR.
+All 
+.CT "map layers" "cell map"
+are read into the current 
+.CT window "geographic window"
+masked by the current
+mask.  If it is desired to modify an existing 
+.CT layer "cell map"
+without involving other
+.CT "map layers," "cell maps,"
+the 
+.CT window "geographic window"
+should be set to agree with the cell header
+for the 
+.CT "map layer." "cell map."
+For example, suppose it is determined that the elevation 
+.CT "data layer" "cell map"
+must have each 
+.CT value "category value"
+increased by 10 meters. The following expression
+is legal and will do the job:
+
+.ti +.5i
+new_elevation = elevation + 10
+
+Since a category value of 0 is used in GRASS 
+for locations which do not exist in the
+.CT "data layer," "cell map,"
+the new 
+.CT layer "cell map"
+will contain the 
+.CT value "category value"
+10 in the locations that
+did not exist in the original elevation. Therefore, in this example,
+it is essential that the 
+.CT window "geographic window"
+be set to agree with the cell header.
+
+However, if there is a current mask, then
+the resultant 
+.CT "data layer" "cell map"
+is masked when it is written, i.e., 0 
+.CT values "category values"
+in the mask force zero values in the output.
+.SH NOTES
+Extra care must be taken if the expression is given on the command line.
+Some characters have special meaning to the UNIX shell. These include,
+among others:
+
+.ti +.5i
+* ( ) > & |
+
+It is advisable to put single quotes around the expression, e.g.:
+
+.ti +.5i
+result = 'elevation * 2'
+
+Without the quotes, the *, which has special meaning to the UNIX shell,
+would be altered and \fIGmapcalc\fR would see something other than the *.
+
+If the input comes directly from the keyboard and the \fIresult\fR 
+.CT file "cell map"
+exists, the user will be asked if it can be overwritten.  Otherwise,
+the \fIresult\fR 
+.CT file "cell map"
+will automatically be overwritten if it exists.
+
+Quoting 
+.I result
+is not allowed.
+However, it is never necessary to quote
+.I result
+since it is always taken to be a 
+.CT "data layer" "cell map"
+name.
+.SH "AUTHOR"
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
