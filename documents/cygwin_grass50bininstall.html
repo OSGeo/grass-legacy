@@ -164,24 +164,35 @@ Open a Bash window on
 your PC. Change the directory to the root directory and untar the file:
 <pre>
 cd /
-tar xzf sunrpc-4.0.cygwin1.bin.tar.gz
+tar xzf /where/ever/you/saved/this/sunrpc-4.0.cygwin1.bin.tar.gz
 </pre>
 
 <h2>
 3b. Get the tcl/tk 8.x libraries
 </h2>
-<b>NOTE: not working for the winGRASS with
-generic display driver</b>
+
+The only GRASS features which require X are tcltkgrass and NVIZ.
+Hopefully, it will be possible to use tcltkgrass on Cygwin without X
+in the near future, although NVIZ will require X for the foreseeable
+future.
+
+<b>NOTE: If you want to use the winGRASS with generic display driver,
+you don't need to install the tcl/tk 8.x libraries.</b>
+<P>
+<b>NOTE: Also, you need to ensure that the "official" Cygwin Tcl/Tk package
+   *is not* installed.</b>
 <p>
-Download the actual precompiled x tcl/tk 8.x
-libraries and executables from
+Download the actual precompiled x tcl/tk 8.x libraries and executables from
 <br><a
 href="http://grass.itc.it/grass5/binary/windows_cygnus/wingrass_xserver/">http://grass.itc.it/grass5/binary/windows_cygnus/wingrass_xserver/</a>.
 
 <p>
 Go to the root directory (<tt>cd /</tt>) and unpack this file:
 
-<pre><tt>&nbsp; tar xzf /where/ever/you/saved/this/xtcltk-*.tar.gz</tt></pre>
+<pre>
+cd /
+tar xzf /where/ever/you/saved/this/xtcltk-*.tar.gz
+</pre>
 
 <h2>
 4. And now FINALLY to the GRASS installation</h2>
