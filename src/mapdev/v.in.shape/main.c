@@ -26,13 +26,13 @@
 #include <string.h>
 #include "gis.h"
 #include "import.h"
-
+#include "shapefil.h"
 
 int main(int argc, char *argv[]) {
 
   struct Option *iput, *oput, *lfile, *verbose;
   struct Option *snapd, *minangle, *mscale, *attribute, *catlabel;
-  struct Flag *oflag, *fleflag, *uflag;
+  struct Flag *oflag, *fleflag, *uflag, *listflag;
   struct GModule *module;
 
   param_import_ctrl *ctr1;
@@ -45,6 +45,7 @@ int main(int argc, char *argv[]) {
   int u_val = 0;
 
   FILE *lf, *sf;
+  DBFHandle   hDBF;
 
   int scale1;
   double snap1, sliver1;
@@ -131,6 +132,11 @@ int main(int argc, char *argv[]) {
   uflag->description = "Create unique value for parts of compound object";
   uflag->answer      = 0;
 
+  /* Set flag for listing fields of database */
+  listflag = G_define_flag();
+  listflag->key     = 'd';
+  listflag->description = "List fields of DBF file";
+
   if (G_parser(argc, argv))
     exit(-1);
     
@@ -143,7 +149,7 @@ int main(int argc, char *argv[]) {
 
 
   if(!strcmp(log_file, "")) {
-    G_warning("Log file not specified. Using standard error");
+    G_warning("Log file not specified. Sending messages to 'standard error'");
     print_to_error = 1;
   }
 
@@ -165,7 +171,7 @@ int main(int argc, char *argv[]) {
   }
 
   if(G_legal_filename(vmap) < 0 ) {
-    fprintf(stderr, "Can't find a suitable name for resulting vector map.\n");
+    fprintf(stderr, "\nCan't find a suitable name for resulting vector map (output parameter).\n");
     exit(1);
   }
 
@@ -182,24 +188,6 @@ int main(int argc, char *argv[]) {
   force_le = fleflag->answer;
   u_val = uflag->answer;
 
-  if(ms0 = G_find_file("dig", vmap, "")) {
-
-    /* Is this in the current mapset. If so we can only continue
-       if over-write is allowed
-    */
-
-    if(!strcmp(ms0, G_mapset())) {
-      /* Map with same name in same mapset */
-
-      if(!do_overwrite) {
-	fprintf(stderr, "Map already exists. Please select another name.\n");
-	fprintf(stderr, "Alternatively you can force over-writing using the `-o' flag.\n");
-	exit(1);
-      }
-    }
-  }
-      
-
   /* Open the log file for write ops */
 
   if(print_to_error) {
@@ -213,6 +201,68 @@ int main(int argc, char *argv[]) {
       exit(-1);
     }
   }
+
+  /* Examine the `-d' flag */
+  if(listflag->answer) {
+      int	i;
+        
+      hDBF = DBFOpen( src_file, "r" );
+      if( hDBF == NULL )
+        G_fatal_error("%s - DBF not found, or wrong format.\n", src_file);
+
+      fprintf (stdout , "Attribute fields available in %s:\n", src_file );
+      for( i = 0; i < DBFGetFieldCount(hDBF); i++ )
+        {
+	  char	field_name[15];
+	  int   field_width; 
+	  char  *fld=NULL; 
+          DBFFieldType ftype;
+
+          ftype=DBFGetFieldInfo( hDBF, i, field_name, &field_width, NULL );
+
+	  switch (ftype) {
+		case 0:
+			fld="text";
+		break;
+		case 1:
+			if (field_width<=7) fld="int4";
+				else fld="int8";
+		break;
+		case 2:
+			fld="float4";
+		break;
+		case 3:
+            		G_fatal_error ("Invalid field type - bailing out");
+		break;
+	  }
+
+	  DBFGetFieldInfo( hDBF, i, field_name, NULL, NULL );
+	  fprintf (stdout, "%i: %s [%s:%i]\n", (i+1), field_name, fld , field_width);
+        }
+        
+      DBFClose( hDBF );
+      exit (0);
+  } /* -d list */
+
+
+  if(ms0 = G_find_file("dig", vmap, "")) {
+
+    /* Is this in the current mapset. If so we can only continue
+       if over-write is allowed
+    */
+
+    if(!strcmp(ms0, G_mapset())) {
+      /* Map with same name in same mapset */
+
+      if(!do_overwrite) {
+	fprintf(stderr, "Map <%s> already exists. Please select another name.\n", vmap);
+	fprintf(stderr, "Alternatively you can force over-writing using the `-o' flag.\n");
+	exit(1);
+      }
+    }
+  }
+
+
 
 
   /* Build import controller struct. */
