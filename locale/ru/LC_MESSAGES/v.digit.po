@@ -1,0 +1,2466 @@
+# GRASS .po file.
+# Copyright (C) 2002 Free Software Foundation, Inc.
+# Alex Shevlakov<sixote@yahoo.com>, 2002.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 5.0\n"
+"POT-Creation-Date: 2002-11-06 08:21+0300\n"
+"PO-Revision-Date: 2002-11-06 08:21+0300\n"
+"Last-Translator: Alex Shevlakov<sixote@yahoo.com>, 2002\n"
+"Language-Team: ru <ru@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=8-bit\n"
+"Content-Transfer-Encoding: koi8\n"
+
+#: menu.h:7
+msgid " MAP INFORMATION                                | AMOUNT DIGITIZED"
+msgstr " ОБЩАЯ ИНФОРМАЦИЯ                               | ВСЕГО ОЦИФРОВАНО"
+
+#: menu.h:8
+msgid "   Name:                                        |   # Lines:"
+msgstr "   Карта:                                       |   # линий:"
+
+#: menu.h:9
+msgid "   Scale:                                       |   # Area edges:"
+msgstr "   Масштаб:                                     |   # границ:"
+
+#: menu.h:10
+msgid "   Person:                                      |   # Sites:"
+msgstr "   Автор:                                       |   # объектов:"
+
+#: menu.h:11
+msgid ""
+"   Dig. Thresh.:                                | - - - - - - - - - - - - - -"
+msgstr ""
+"   Порог дигит.:                                | - - - - - - - - - - - - - -"
+   
+#: menu.h:12
+msgid "   Map Thresh.:                                 |   Total points:"
+msgstr "   Порог карты:                                 |   Всего точек:"
+
+#: menu.h:15
+msgid " OPTIONS:                                       |"
+msgstr " ОПЦИИ:                                         |"
+
+#: menu.h:17
+msgid "     Digitizer:                                 |"
+msgstr "     Дигитайзер:                                |"
+
+#: ask_driver.c:47
+msgid "  USE DIGITIZER CURSOR OR KEYBOARD FOR INPUT"
+msgstr "  ИСПОЛЬЗУЙТЕ КУРСОР ДИГИТАЙЗЕРА ИЛИ КЛАВИАТУРУ"
+
+#: ask_driver.c:50
+msgid "  USE KEYBOARD FOR INPUT"
+msgstr "  ИСПОЛЬЗУЙТЕ КЛАВИАТУРУ"
+
+#: ask_driver.c:52
+msgid "  USE DIGITIZER CURSOR FOR INPUT"
+msgstr "  ИСПОЛЬЗУЙТЕ КУРСОР ДИГИТАЙЗЕРА"
+
+#: ask_driver.c:55
+#, c-format
+msgid "Key '%d' for YES   :   Key '%d' for NO"
+msgstr "Клав. '%d' YES   :   Клав. '%d' NO"
+
+#: backdrop.c:36 initialize.c:61 initialize.c:62 overlay.c:35 window_rout.c:10
+msgid "None"
+msgstr "Нет"
+
+#: backdrop.c:50
+msgid "Do you want to automatically redraw backdrop on re-window? "
+msgstr "Автоматически перерисовать фон при изменении окна? "
+
+#: bad_areas.c:32 duplicate.c:33 window.c:353 window.c:381
+msgid "                                  ...Press <ESC> key to stop redraw"
+msgstr "                                  ...Нажмите <ESC> для остановки."
+
+#: break.c:36 build_neat.c:128 digitize.c:410 move_line.c:112 spline.c:136
+msgid "Error creating new line."
+msgstr "Ошибка создания новой линии."
+
+#: break.c:68
+msgid "Line to Break:"
+msgstr "Выберите линию:"
+
+#: break.c:74
+msgid "Select break point on line:"
+msgstr "Выберите точку на линии:"
+
+#: break.c:126 break.c:229 duplicate.c:70 duplicate.c:78 spline.c:71
+#: spline.c:158
+msgid "Error reading line."
+msgstr "Ошибка чтения линии."
+
+#: build_neat.c:58
+msgid "You have selected to automatically build a neat line from"
+msgstr "Вы выбрали автоматически создавать линию рамки исходя из"
+
+#: build_neat.c:59
+msgid "the 1st four current registration points."
+msgstr "первых четырех точек текущей привязки"
+
+#: build_neat.c:60
+msgid "Do you wish to proceed? "
+msgstr "Продолжить?  "
+
+#: coll_pts.c:75 mouse_coll.c:60
+msgid " # Точки       X-коорд     Y-коорд"
+msgstr ""
+
+#: coll_pts.c:92 coll_pts.c:152
+msgid " режим STREAM "
+msgstr ""
+
+#: coll_pts.c:102 coll_pts.c:157 mouse_coll.c:65
+msgid " режим POINT "
+msgstr ""
+
+#: coll_pts.c:138 mouse_coll.c:102
+msgid " processing.."
+msgstr " работаю.."
+
+#: coll_pts.c:164
+msgid "    Updating  MONITOR"
+msgstr "    Обновляю  MONITOR"
+
+#: coll_pts.c:167
+msgid "    finished: continue  digitizing..."
+msgstr "    закончил: продолжайте дигитировать..."
+
+#: color.c:174 customize.c:203 window_setup.c:133
+msgid " Current:"
+msgstr " Текущий:"
+
+#: color.c:205 graph_input.c:1283 main.c:187
+msgid "none"
+msgstr "нет"
+
+#: compress.c:22
+#, c-format
+msgid "Cannot open '%s' for write\n"
+msgstr "Невозможно открыть '%s' для записи\n"
+
+#: compress.c:28
+msgid "Writing Plus File ..."
+msgstr "Запись в файл Plus..."
+
+#: compress.c:38
+msgid "Writing Plus File ... DONE."
+msgstr "Запись в файл Plus...готово"
+
+#: compress.c:61
+msgid "Compressing Data: "
+msgstr "Сжатие данных"
+
+#: compress.c:80
+msgid " Compressing NODES."
+msgstr " Сжатие УЗЛОВ."
+
+#: compress.c:120
+msgid " Compressing NODES.  LINES."
+msgstr " Сжатие УЗЛОВ.  ЛИНИЙ."
+
+#: compress.c:227
+msgid " Compressing NODES.  LINES.  AREAS."
+msgstr " Сжатие УЗЛОВ.  ЛИНИЙ.  ОБЛАСТЕЙ."
+
+#: compress.c:279
+msgid " Compressing NODES.  LINES.  AREAS.  ISLES."
+msgstr " Сжатие УЗЛОВ.  ЛИНИЙ.  ОБЛАСТЕЙ.  ОСТРОВОВ."
+
+#: compress.c:328
+msgid " Compressing NODES.  LINES.  AREAS.  ISLES. ATTS."
+msgstr " Сжатие УЗЛОВ.  ЛИНИЙ.  ОБЛАСТЕЙ.  ОСТРОВОВ. АТТРИБ."
+
+#: compress.c:359
+msgid "Compressing Data:   DONE. "
+msgstr "Сжатие данных:   ГОТОВО. "
+
+#: contour.c:81
+msgid "Select first line and point:"
+msgstr "Выберите первую линию или точку:"
+
+#: contour.c:94 contour.c:121
+msgid "Enter elevation for this line: "
+msgstr "Введите высоту для данной линии"
+
+#: contour.c:105
+msgid "Select ending line and point:"
+msgstr "Выберите конечную линию или точку:"
+
+#: contour.c:172
+msgid "ERROR: Crosses same line more than once"
+msgstr "ERROR: Пересечение той же линии более 1 раза"
+
+#: contour.c:213
+msgid "Not correct number of intervals"
+msgstr "Неправильное число интервалов"
+
+#: contour.c:248
+msgid "Labelled line does not agree"
+msgstr "Помеченные линии не согласуются"
+
+#: contour.c:307
+msgid "Ran into a line of different value"
+msgstr "Найдена линия другой величины"
+
+#: customize.c:190
+msgid "Save these changes in configuration file ?"
+msgstr "Сохранить эти изменения в файл конфигурации ?"
+
+#: customize.c:225 customize.c:226 customize.c:227
+msgid "     MOUSE"
+msgstr "         МЫШЬ"
+
+#: customize.c:225 customize.c:226 customize.c:227
+msgid " DIGITIZER"
+msgstr "   ДИГИТАЙЗЕР"
+
+#: customize.c:232
+msgid "    REMOVE"
+msgstr "      ВЫКЛ."
+
+#: customize.c:232
+msgid "    REDRAW"
+msgstr " ПЕРЕРИСОВАТЬ"
+
+#: debug.c:140
+msgid "Choose Line:"
+msgstr "Выберите линию:"
+
+#: debug.c:177
+msgid " Line is NOT labeled"
+msgstr "Линия не помечена"
+
+#: debug.c:194
+msgid "Choose a point in Area:"
+msgstr "Выберите точку в Области"
+
+#: debug.c:218 debug.c:306
+#, c-format
+msgid "Area# %d"
+msgstr "Область# %d"
+
+#: debug.c:223
+msgid "No Area Found"
+msgstr "Область не найдена"
+
+#: debug.c:250
+#, c-format
+msgid "Line# %d"
+msgstr "Линия# %d"
+
+#: debug.c:253
+msgid "Enter Line number to find (0 to end)[Default=Next]: "
+msgstr "Введите номер линии для поиска (0 - зак.)[Default=След.]: "
+
+#: debug.c:271
+msgid "Line does not exist"
+msgstr "Линия не существует"
+
+#: debug.c:278
+msgid "Line has been deleted"
+msgstr "Линия была удалена"
+
+#: debug.c:284 debug.c:533
+msgid "Error reading line information"
+msgstr "Ошибка чтения линии"
+
+#: debug.c:309
+msgid "Enter Area number to find (0 to end): "
+msgstr "Введите номер области для поиска (0 - зак.):"
+
+#: debug.c:319
+msgid "Area does not exist"
+msgstr "Область не существует"
+
+#: debug.c:325
+msgid "Area has been deleted"
+msgstr "Область была удалена"
+
+#: debug.c:352
+msgid "Enter Node number to find (0 to end): "
+msgstr "Введите номер узла для поиска (0 - зак.):"
+
+#: debug.c:365
+msgid "Node does not exist"
+msgstr "Узел не существует"
+
+#: debug.c:373
+msgid "Node has been deleted"
+msgstr "Узел был удален"
+
+#: debug.c:393
+#, c-format
+msgid "Total isles: %d"
+msgstr "Всего островов: %d"
+
+#: debug.c:447
+#, c-format
+msgid "Total areas: %d"
+msgstr "Всего областей: %d"
+
+#: debug.c:514
+#, c-format
+msgid "Total lines: %d"
+msgstr "Всего линий: %d"
+
+#: debug.c:551
+msgid "Enter <CR> for next line, # of desired line, 'q' quit: "
+msgstr "Введите <CR> для след. линии, # линии, 'q' закончить: "
+
+#: debug.c:580
+#, c-format
+msgid "Total nodes: %d"
+msgstr "Всего узлов: %d"
+
+#: debug.c:599
+msgid "Enter <CR> for next node, # of desired node, 'q' quit: "
+msgstr "Введите <CR> для след. узла, # узла, 'q' закончить: "
+
+#: dig_curses.c:156
+#, c-format
+msgid "%s Menu"
+msgstr "%s Меню"
+
+#: dig_curses.c:479
+msgid " MODE       TYPE        "
+msgstr "  РЕЖИМ      ТИП        "
+
+#: dig_curses.c:480
+msgid "   point      line      "
+msgstr "   точка      линия     "
+
+#: dig_curses.c:481
+msgid "   stream     area edge "
+msgstr "   поток      граница"
+
+#: dig_curses.c:482
+msgid "              site      "
+msgstr "              объект    "
+
+#: dig_curses.c:492
+msgid "DISABLED"
+msgstr "ОТКЛ."
+
+#: dig_curses.c:505
+#, c-format
+msgid " Category: %s%c"
+msgstr " Категория: %s%c"
+
+#: dig_curses.c:518
+msgid ">POINT<"
+msgstr ">ТОЧКА<"
+
+#: dig_curses.c:522
+msgid ">STREAM<"
+msgstr ">ПОТОК<"
+
+#: dig_curses.c:531
+msgid ">LINE<"
+msgstr ">ЛИНИЯ<"
+
+#: dig_curses.c:535
+msgid ">AREA EDGE<"
+msgstr ">ГРАНИЦА<"
+
+#: dig_curses.c:539
+msgid ">SITE<"
+msgstr ">ОБЪЕКТ<"
+
+#: dig_curses.c:544
+msgid ">PSU<"
+msgstr ">PSU<"
+
+#: dig_curses.c:583
+msgid "Please answer yes or no"
+msgstr "Ответьте yes или no"
+
+#: dig_curses.c:858
+#, c-format
+msgid "GRASS-DIGIT Modified %2d.%02d  "
+msgstr "GRASS-DIGIT Версия %2d.%02d  "
+
+#: dig_curses.c:870
+msgid "     Press <Return> to continue"
+msgstr "     Нажмите <Return> для продолжения"
+
+#: dig_curses.c:882
+#, c-format
+msgid ""
+" GRASS-DIGIT Version %2d.%02d                               Digitizing menu"
+msgstr ""
+" GRASS-DIGIT Версия %2d.%02d                                Меню дигитайзера"
+
+#: dig_curses.c:885
+msgid "----------------------------------------------------------------------------"
+msgstr ""
+
+#: dig_curses.c:887
+#, c-format
+msgid "  %20s digitizer                |  AMOUNT DIGITIZED"
+msgstr "  %20s дигитайзер               |  ВСЕГО ОЦИФРОВАНО"
+
+#: dig_curses.c:889
+msgid "                  Cursor keys:                  |   # Lines:"
+msgstr "                  Клавиши курсора:              |   # Линии:"
+
+#: dig_curses.c:891
+#, c-format
+msgid "                 <%d>  digitize point            |   # Area edges:"
+msgstr "                 <%d>  дигит. точки              |   # Гран. областей:"
+
+#: dig_curses.c:893
+#, c-format
+msgid "                 <%d>  quit digitizing           |   # Sites:"
+msgstr "                 <%d>  закончить дигит.          |   # Объекты:"
+
+#: dig_curses.c:895
+#, c-format
+msgid ""
+"                 <%d>  update monitor            | - - - - - - - - - - - - - "
+"-"
+msgstr ""
+"                 <%d>  обновить экран            | - - - - - - - - - - - - - "
+"-"
+
+#: dig_curses.c:897
+#, c-format
+msgid "                 <%d>  toggle point/stream mode  |   Total points:"
+msgstr "                 <%d>  перекл. точ./поток. режим |   Всего точек:"
+
+#: dig_curses.c:899
+msgid "-----------------------------------------------------------------------------"
+msgstr ""
+
+#: dig_curses.c:901
+msgid ""
+"                                                | CURRENT DIGITIZER PARAMS."
+msgstr ""
+"                                                | ТЕКУЩИЕ НАСТРОЙКИ"
+
+#: dig_curses.c:903 dig_curses.c:905 dig_curses.c:913
+msgid "                                                |"
+msgstr ""
+
+#: dig_curses.c:907
+msgid "                                                | MODE       TYPE"
+msgstr "                                                | РЕЖИМ      ТИП"
+
+#: dig_curses.c:909
+msgid "                                                |   point      line"
+msgstr "                                                |   точка      линия"
+
+#: dig_curses.c:911
+msgid ""
+"                                                |   stream     area edge"
+msgstr ""
+"                                                |   поток      граница"
+
+#: dig_dev.c:25
+msgid " Digitizer read error.  Do we continue(y,n)? "
+msgstr " Ошибка чтения дигитайзера.  Продолжить(y,n)? "
+
+#: digitize.c:108 label.c:85
+msgid "Do you wish to enter line labels?"
+msgstr "Ввести метки для линий? "
+
+#: digitize.c:110 label.c:58
+msgid "Do you wish to enter area edges labels?"
+msgstr "Ввести метки для границ областей? "
+
+#: digitize.c:112 label.c:113
+msgid "Do you wish to enter site labels?"
+msgstr "Ввести метки для объектов? "
+
+#: digitize.c:143
+msgid " PSU must be named, NOT numbered"
+msgstr "PSU должны быть поименованы, а не пронумерованы"
+
+#: digitize.c:246 digitize.c:255
+msgid "Begin digitizing? "
+msgstr "Начать дигитировать?"
+
+#: digitize.c:323
+#, c-format
+msgid "NOTE: Lines will not be snapped (%d new nodes needed)"
+msgstr "Замечание: Линии не будут смыкаться (нужно %d новых узлов)"
+
+#: digitize.c:338
+msgid "NOTE: Lines will be snapped"
+msgstr "Замечание: Линии будут смыкаться"
+
+#: digitize.c:357
+msgid "Do you accept this site? "
+msgstr "Принять этот объект?"
+
+#: digitize.c:361
+msgid "Do you accept this area? "
+msgstr "Принять эту область?"
+
+#: digitize.c:363
+msgid "Do you accept this area line? "
+msgstr "Принять эту границу?"
+
+#: digitize.c:367
+msgid "Do you accept this line? "
+msgstr "Принять эту линию?"
+
+#: digitize.c:394
+msgid "Only 1 point digitized, Ignoring..."
+msgstr "Введена только 1 точка, не учитываем..."
+
+#: digitize.c:479
+msgid "Digitize sites ? "
+msgstr "Дигитировать объекты ? "
+
+#: digitize.c:491
+#, c-format
+msgid "Digitize site # %d ? "
+msgstr "Дигитировать объект # %d ?"
+
+#: digmain.c:105
+msgid "Do you want to continue any way?"
+msgstr "Все равно продолжить?"
+
+#: digmain.c:198 digmain.c:222 digmain.c:237
+#, c-format
+msgid "Not able to open <%s>\n"
+msgstr "Невозможно открыть <%s>\n"
+
+#: digmain.c:203
+msgid ""
+"\n"
+"Creating a new vector file\n"
+msgstr ""
+"\n"
+"Создаем новый векторный файл\n"
+
+#: digmain.c:220
+msgid "No dig_plus file exists. You must run v.support.\n"
+msgstr "Файл dig_plus отсутствует. Выполните v.support. \n"
+
+#: digmain.c:263
+msgid "Could not open dig_plus file\n"
+msgstr "Невозможно открыть файл dig_plus\n"
+
+#: digmain.c:264
+msgid "You must first run v.support.\n"
+msgstr "Выполните сначала v.support.\n"
+
+#: digmain.c:383
+msgid ""
+"\r\n"
+" Original Scale is not set!\n"
+msgstr ""
+"\r\n"
+" Начальный масштаб не задан!\n"
+
+#: digmain.c:448
+msgid "  Changes Made: Do you want to save this session? "
+msgstr "  Внесены изменения: Сохранить сессию? "
+
+#: digmain.c:458
+msgid "   Changes will be lost!  Do you want to save the session? "
+msgstr "   Изменения будут потеряны!  Сохранить сессию? "
+
+#: digmain.c:488
+msgid "Do you want to compress the Atts file? "
+msgstr "Задать сжатие для файла Atts?"
+
+#: digmain.c:490
+msgid "Updating Att file..."
+msgstr "Записываем файл Att..."
+
+#: digmain.c:511
+msgid "Updating Att file... DONE."
+msgstr "Записываем файл Att... ГОТОВО."
+
+#: digmain.c:536
+msgid "Can't open Plus file for final write\n"
+msgstr "Невозможно открыть Plus file для окончательной записи\n"
+
+#: edit.c:68
+msgid "Point marker only valid with Digitizer Enabled"
+msgstr "Маркер работает только с включенным дигитайзером"
+
+#: eq.c:19
+#, c-format
+msgid "Reading %s ..."
+msgstr "Чтение %s ..."
+
+#: find_w_dig.c:25 find_w_dig.c:90 find_w_dig.c:175 find_w_dig.c:265
+#: find_w_dig.c:272
+msgid "    Select:"
+msgstr "    Выбрать:"
+
+#: find_w_dig.c:26
+msgid "   button 1:   Choose node"
+msgstr "   кнопка 1:   Узел"
+
+#: find_w_dig.c:27 find_w_dig.c:92 find_w_dig.c:177 find_w_dig.c:267
+#: find_w_dig.c:274
+msgid "   button 2:   Abort/Quit"
+msgstr "   кнопка 2:   закончить"
+
+#: find_w_dig.c:28
+msgid "   button 3:   Accept chosen node"
+msgstr "   кнопка 3:   Принять выбранный узел"
+
+#: find_w_dig.c:47 find_w_mouse.c:59 intersect.c:79
+msgid " no node found "
+msgstr " узел не найден "
+
+#: find_w_dig.c:50 find_w_mouse.c:62 intersect.c:82
+#, c-format
+msgid " node#: %d"
+msgstr " узел#: %d"
+
+#: find_w_dig.c:70 find_w_dig.c:154 find_w_dig.c:223 find_w_mouse.c:84
+#: find_w_mouse.c:177 find_w_mouse.c:255
+#, c-format
+msgid " EAST:  %10.2f"
+msgstr " X-коор:  %10.2f"
+
+#: find_w_dig.c:72 find_w_dig.c:156 find_w_dig.c:225 find_w_mouse.c:86
+#: find_w_mouse.c:179 find_w_mouse.c:257
+#, c-format
+msgid " NORTH: %10.2f"
+msgstr " Y-коор: %10.2f"
+
+#: find_w_dig.c:88
+#, c-format
+msgid " Number of points on line: %d"
+msgstr " Число точек на линии: %d"
+
+#: find_w_dig.c:91
+msgid "   button 1:   Choose point on line"
+msgstr "   кнопка 1:   Выбрать точку на линии"
+
+#: find_w_dig.c:93
+msgid "   button 3:   Accept chosen point"
+msgstr "   кнопка 3:   Принять выбранную точку"
+
+#: find_w_dig.c:119 find_w_mouse.c:141
+#, c-format
+msgid " point#: %d"
+msgstr " точка#: %d"
+
+#: find_w_dig.c:133 find_w_mouse.c:155
+msgid " no point found "
+msgstr " точка не найдена "
+
+#: find_w_dig.c:176
+msgid "   button 1:   Choose this position"
+msgstr "   кнопка 1:   Выберите местонахождение"
+
+#: find_w_dig.c:178
+msgid "   button 3:   Accept chosen point position"
+msgstr "   кнопка 3:   Принять местонахождение"
+
+#: find_w_dig.c:199 find_w_mouse.c:230
+msgid " Point location:"
+msgstr " Положение точки:"
+
+#: find_w_dig.c:266
+msgid "   button 1:   Choose site"
+msgstr "   кнопка 1:   Выберите объект"
+
+#: find_w_dig.c:268
+msgid "   button 3:   Accept chosen site"
+msgstr "   кнопка 3:   Принять выбранный объект"
+
+#: find_w_dig.c:273
+msgid "   button 1:   Choose line"
+msgstr "   кнопка 1:   Выберите линию"
+
+#: find_w_dig.c:275
+msgid "   button 3:   Accept chosen line"
+msgstr "   кнопка 3:   Принять выбранную линию"
+
+#: find_w_dig.c:308 find_w_mouse.c:377
+msgid " no line found "
+msgstr " линия не найдена "
+
+#: find_w_dig.c:317
+#, c-format
+msgid " line#: %d,  category#: %d"
+msgstr " линия#: %d,  категория#: %d"
+
+#: find_w_mouse.c:30 find_w_mouse.c:105 find_w_mouse.c:199 find_w_mouse.c:306
+#: find_w_mouse.c:318 mouse_coll.c:76 mouse_yn.c:17 mouse_yn.c:36
+#: mouse_yn.c:64
+msgid "    Buttons:"
+msgstr "    Кнопки:"
+
+#: find_w_mouse.c:31
+msgid "       Left:   Choose node"
+msgstr "       Левая:   Выбрать узел"
+
+#: find_w_mouse.c:33 find_w_mouse.c:108 find_w_mouse.c:202 find_w_mouse.c:309
+#: find_w_mouse.c:321 mouse_coll.c:79
+msgid "       Middle: Abort/Quit"
+msgstr "       Средняя: Закончить"
+
+#: find_w_mouse.c:34
+msgid "       Right:  Accept chosen node"
+msgstr "       Правая:  Принять выбранный узел"
+
+#: find_w_mouse.c:36
+msgid "       Middle: Accept chosen node"
+msgstr "       Средняя: Принять выбранный узел"
+
+#: find_w_mouse.c:37 find_w_mouse.c:112 find_w_mouse.c:206 find_w_mouse.c:313
+#: find_w_mouse.c:325 mouse_coll.c:83
+msgid "       Right:  Abort/Quit"
+msgstr "       Правая:  Закончить"
+
+#: find_w_mouse.c:103
+#, c-format
+msgid "Number of points on line: %d"
+msgstr "Число точек на линии: %d"
+
+#: find_w_mouse.c:106
+msgid "       Left:   Choose point on line"
+msgstr "       Левая:   Выбрать точку на линии"
+
+#: find_w_mouse.c:109
+msgid "       Right:  Accept chosen point"
+msgstr "       Правая:  Принять выбранную точку"
+
+#: find_w_mouse.c:111
+msgid "       Middle: Accept chosen point"
+msgstr "       Средняя: Принять выбранную точку"
+
+#: find_w_mouse.c:200
+msgid "       Left:   Choose this position"
+msgstr "       Левая:   Принять это положение"
+
+#: find_w_mouse.c:203
+msgid "       Right:  Accept chosen point position"
+msgstr "       Правая:  Принять положение выбранной точки"
+
+#: find_w_mouse.c:205
+msgid "       Middle: Accept chosen point position"
+msgstr "       Средняя: Принять положение выбранной точки"
+
+#: find_w_mouse.c:307
+msgid "       Left:   Choose site"
+msgstr "       Левая:   Выбрать объект"
+
+#: find_w_mouse.c:310
+msgid "       Right:  Accept chosen site"
+msgstr "       Правая:  Принять выбранный объект"
+
+#: find_w_mouse.c:312
+msgid "       Middle: Accept chosen site"
+msgstr "       Средняя: Принять выбранный объект"
+
+#: find_w_mouse.c:319
+msgid "       Left:   Choose line"
+msgstr "       Левая:   Выбрать линию"
+
+#: find_w_mouse.c:322
+msgid "       Right:  Accept chosen line"
+msgstr "       Правая:  Принять выбранную линию"
+
+#: find_w_mouse.c:324
+msgid "       Middle: Accept chosen line"
+msgstr "       Средняя: Принять выбранную линию"
+
+#: find_w_mouse.c:389
+#, c-format
+msgid " Line#: %d  Category: %d"
+msgstr " Линия#: %d  Категория: %d"
+
+#: find_w_mouse.c:391
+#, c-format
+msgid " Line#: %d  Category: (unlabeled)"
+msgstr " Линия#: %d  Категория: (без метки)"
+
+#: get_point.c:39
+#, c-format
+msgid "Press any key <%d> - <%d>:"
+msgstr "Нажмите любую клавишу <%d> - <%d>:"
+
+#: get_point.c:51
+msgid "Press ENTER to collect point:"
+msgstr "Нажмите Enter для захвата точки:"
+
+#: graph_input.c:543
+#, c-format
+msgid "Cannot open %s.  Check the device field in the digcap file."
+msgstr "Невозможно открыть %s.  Проверьте поле device в файле digcap."
+
+#: graph_input.c:546
+#, c-format
+msgid "Ensure %s has read write permissions (0666)."
+msgstr "Проверьте, что %s имеет права на запись (0666)."
+
+#: graph_input.c:737 graph_input.c:2133
+msgid "Unknown mode.\n"
+msgstr "Неизвестный режим.\n"
+
+#: graph_input.c:742
+msgid "Cannot do start actions on dig input device."
+msgstr "Невозможно выполнить start на устр. ввода."
+
+#: graph_input.c:824
+msgid "Cannot do query actions on dig input device."
+msgstr "Невозможно выполнить query на устр. ввода."
+
+#: graph_input.c:852
+msgid "Cannot do stop actions on dig input device."
+msgstr "Невозможно выполнить stop на устр. ввода."
+
+#: head_info.c:21 head_info.c:23
+msgid "GRASS_ORGANIZATION"
+msgstr ""
+
+#: head_info.c:27
+msgid "GRASS Development Team"
+msgstr ""
+
+#: head_info.c:31
+msgid "Provide the following information:"
+msgstr "Введите следующую информацию:"
+
+#: head_info.c:33
+msgid "Your organization"
+msgstr "Ваша организация"
+
+#: head_info.c:34
+msgid "Todays date (mon,yr)"
+msgstr "Текущая дата (м,г)"
+
+#: head_info.c:35
+msgid "Your name"
+msgstr "Ваше имя"
+
+#: head_info.c:36
+msgid "Map's name"
+msgstr "Название карты"
+
+#: head_info.c:37
+msgid "Map's date"
+msgstr "Дата карты"
+
+#: head_info.c:38
+msgid "Map's scale         1:"
+msgstr "Масштаб             1:"
+
+#: head_info.c:39
+msgid "Other info"
+msgstr "Другая информация"
+
+#: head_info.c:40
+msgid "Zone"
+msgstr "Зона"
+
+#: head_info.c:41
+msgid "West edge of area"
+msgstr "Западная граница"
+
+#: head_info.c:42
+msgid "South edge of area"
+msgstr "Южная граница"
+
+#: head_info.c:43
+msgid "East edge of area"
+msgstr "Восточная граница"
+
+#: head_info.c:44
+msgid "North edge of area"
+msgstr "Северная граница"
+
+#: help.c:31 help.c:90
+msgid " No help available\n"
+msgstr " Помощь недоступна\n"
+
+#: help.c:43
+msgid "  Press option for more help. <ESC> to end"
+msgstr "  Выберите опцию для помощи. <ESC> закончить"
+
+#: help.c:52
+msgid "Press one of: "
+msgstr "Выберите одно из: "
+
+#: help.c:64
+msgid "Only Global Menu options area available from this screen"
+msgstr "Доступны только опции глобального меню"
+
+#: help.c:68
+msgid "   for more information.  Press the <ESC> key to leave Help"
+msgstr "   для получения большей информации,  <ESC> закончить Help"
+
+#: interact.c:82
+msgid "Enabled  "
+msgstr "Вкл."
+
+#: interact.c:82
+msgid "Disabled "
+msgstr "Выкл."
+
+#: intersect.c:60
+msgid "Line to snap to:"
+msgstr "Линия, с которой нужно сомкнуть:"
+
+#: intersect.c:66
+msgid "Select snap intersection:"
+msgstr "Выберите точку смыкания:"
+
+#: intersect.c:84
+msgid " Line to be snapped:"
+msgstr " Линия, которую нужно сомкнуть:"
+
+#: label.c:142
+msgid "This function will label EVERY unlabeled line. Proceed?"
+msgstr "Эта функция пометит КАЖДУЮ из линий без метки. Продолжить?"
+
+#: label.c:165
+msgid "Do you wish to enter lines labels?"
+msgstr "Ввести метки для линий? "
+
+#: label.c:207
+msgid "   Enter New Contour Interval: "
+msgstr "   Введите новый интервал для контуров: "
+
+#: label.c:252
+msgid "   Enter Category Number (0 to quit):[0] "
+msgstr "   Введите номер категории (0 - конец):[0] "
+
+#: label.c:270 label.c:448 label.c:1075 label.c:1083
+msgid "Select point within area:"
+msgstr "Выберите точку внутри области:"
+
+#: label.c:281 label.c:458 label.c:1098 label.c:1109
+msgid "Select a Boundary line:"
+msgstr "Выберите границу:"
+
+#: label.c:289
+msgid "Accept this area? "
+msgstr "Принять эту область? "
+
+#: label.c:368 label_mult.c:48
+msgid "Choose line:"
+msgstr "Выберите линию:"
+
+#: label.c:386
+msgid "Choose site:"
+msgstr "Выберите объект:"
+
+#: label.c:510
+msgid "Choose labeled line:"
+msgstr "Выберите помеченную линию:"
+
+#: label.c:534
+msgid "Choose labeled Site:"
+msgstr "Выберите помеченный объект:"
+
+#: label.c:553
+#, c-format
+msgid "Line is Category %d"
+msgstr "Линия категории %d"
+
+#: label.c:557
+msgid "Line is Not labeled"
+msgstr "Линия не помечена"
+
+#: label.c:593
+#, c-format
+msgid "Area is Category %d"
+msgstr "Область категории %d"
+
+#: label.c:595 label.c:639 label.c:663
+msgid "Area is not labeled"
+msgstr "Область не помечена"
+
+#: label.c:607
+msgid "Could not create area."
+msgstr "Невозможно создать область."
+
+#: label.c:631 label.c:656
+#, c-format
+msgid "Area is labeled as category %d"
+msgstr "Область помечена как категория %d"
+
+#: label.c:859
+msgid "Processing ..."
+msgstr "Работаю ..."
+
+#: label.c:883
+msgid "Processing ...   DONE"
+msgstr "Работаю ...    ГОТОВО"
+
+#: label.c:911
+msgid " Enter the SUBJECT matter "
+msgstr " Введите SUBJECT "
+
+#: label.c:912
+msgid " Enter 'list' for available Subject files"
+msgstr " Введите 'list' для списка файлов Subject"
+
+#: label.c:913
+msgid " <CR> to Abort/Quit): "
+msgstr " <CR> закончить): "
+
+#: label.c:941
+#, c-format
+msgid " Do you want to create SUBJ/ file <%s>? "
+msgstr " Создать файл SUBJ/ <%s>? "
+
+#: label.c:992
+msgid "   Enter a label (<CR> to quit): "
+msgstr "   Введите метку (<CR> закончить): "
+
+#: label.c:1030
+#, c-format
+msgid " Add new category <%d>, labeled <%s> ? "
+msgstr " Добавить новую категорию <%d> с меткой <%s> ? "
+
+#: label.c:1049
+#, c-format
+msgid " Error in writting SUBJ file <%s>"
+msgstr " Ошибка записи файла SUBJ <%s>"
+
+#: label.c:1052
+#, c-format
+msgid " Error in writting dig_cats file <%s>"
+msgstr " Ошибка записи файла dig_cats <%s>"
+
+#: label.c:1121 label.c:1130
+msgid "Accept this area ? "
+msgstr "Принять эту область ?"
+
+#: label_mult.c:143
+msgid "Label these lines?"
+msgstr "Пометить эти линии?"
+
+#: label_mult.c:145
+msgid "Un-label these lines?"
+msgstr "Убрать метки с линий?"
+
+#: leave.c:13
+msgid "Shall we continue? "
+msgstr "Продолжить? "
+
+#: list.c:74
+msgid "   Hit <return> to continue "
+msgstr "   Нажмите <return> для продолжения "
+
+#: main.c:53
+msgid ""
+"A menu-driven, highly interactive map development program used for vector "
+"digitizing, editing, labeling and converting vector data to raster format."
+msgstr ""
+"Интерактивная программа, используемая для оцифровки, редактирования, проставления "
+"меток и преобразования векторных данных в растровый формат."
+
+#: main.c:60
+msgid "Digit is an interactive vector map digitizing and editing\n"
+msgstr "Digit - интерактивная программа для оцифровки и редактирования\n"
+
+#: main.c:61
+msgid "  tool designed to work with the GRASS vector 'dig' files.\n"
+msgstr "  векторных карт GRASS в формате dig\n"
+
+#: main.c:62
+msgid ""
+"\n"
+"There are NO arguments required.\n"
+"\n"
+msgstr ""
+"\n"
+"Не требуется дополнительных аргументов.\n"
+"\n"
+
+#: main.c:68
+msgid "Sorry, You are already running DIGIT\n"
+msgstr "Вы уже выполняете программу digit\n"
+
+#: main.c:85
+#, c-format
+msgid "Can't open file for read: %s\n"
+msgstr "Невозможно открыть для чтения файл: %s\n"
+
+#: main.c:93 main.c:102
+msgid "DIGITIZER"
+msgstr ""
+
+#: main.c:104
+#, c-format
+msgid ""
+"\n"
+" Selected digitizer is: %-20s \n"
+"\n"
+msgstr ""
+"\n"
+" Выбран дигитайзер: %-20s \n"
+"\n"
+
+#: main.c:130
+msgid ""
+"\n"
+"Enter the name of a map to work with.\n"
+msgstr ""
+"\n" 
+"Введите название карты\n"
+
+#: main.c:131
+msgid "    If name is entered that does not already exist, it\n"
+msgstr "    Если карта с таким именем не существует,\n"
+
+#: main.c:132
+msgid ""
+"    will be created at this time.\n"
+"\n"
+msgstr ""
+"    она будет создана.\n"
+"\n"
+
+#: main.c:148
+#, c-format
+msgid "You requested to create new file: '%s'. Is this correct? "
+msgstr "Вы хотите создать новый файл: '%s'. Продолжить? "
+
+#: main.c:155
+msgid "Mapset units are undefined. Continue? "
+msgstr "Единица длины для набора данных не установлена. Продолжить? "
+
+#: main.c:160
+#, c-format
+msgid ""
+"\n"
+"\n"
+"Current mapset is %s.\n"
+msgstr ""
+"\n"
+"\n"
+"Текущий набор данных %s.\n"
+
+#: main.c:161
+#, c-format
+msgid "  Is this map in %s %s? "
+msgstr "  Эта карта находится в %s %s? "
+
+#: main.c:165
+msgid "Sorry, GRASS does not currently support mixing map units\n"
+msgstr "GRASS не поддерживает смешанные единицы длины\n"
+
+#: main.c:169
+msgid "Thank You\n"
+msgstr "Спасибо\n"
+
+#: main.c:192
+msgid "Digitizer is already being used.\n"
+msgstr "Дигитайзер уже используется.\n"
+
+#: map_ask.c:32 map_ask_new.c:34
+#, c-format
+msgid "    Enter %d - %d points :  points registered %d"
+msgstr "    Введите %d - %d точки :  привязаны %d"
+
+#: map_ask.c:35
+msgid "    MAP REGISTRATION POINTS "
+msgstr "    ТОЧКИ ПРИВЯЗКИ КАРТЫ "
+
+#: map_ask.c:37
+msgid "    Point #       X coord       Y coord"
+msgstr "    Точка #       X коорд       Y коорд"
+
+#: map_ask.c:59
+msgid "      Enter 0.0 to delete a coordinate pair."
+msgstr "      Введите 0.0 для удаления пары координат."
+
+#: map_ask.c:60 map_ask_new.c:78
+msgid "      Those marked by '*' are registered."
+msgstr "      Помеченные '*' уже привязаны."
+
+#: map_ask_new.c:38
+msgid "          MAP REGISTRATION POINTS "
+msgstr "          ТОЧКИ ПРИВЯЗКИ КАРТЫ "
+
+#: map_ask_new.c:41
+msgid "Coordinates should be in Latitude/Longtitude"
+msgstr "Координаты должны быть в формате Широта/Долгота"
+
+#: map_ask_new.c:42
+msgid " Expected format for coordinates is dd:mm:ss.ffh"
+msgstr " Ожидаемый формат координат dd:mm:ss.ffh"
+
+#: map_ask_new.c:43
+msgid " where h is 'n' or 's' for Lat and 'e' or 'w' for Lon "
+msgstr " где h это 'n' или 's' для шир. и 'e' или 'w' для долг. "
+
+#: map_ask_new.c:44
+msgid " dd, mm, ss have to be >= 0; use h to define hemisphere"
+msgstr " dd, mm, ss должны быть >= 0; исп. h для опред. полушария"
+
+#: map_ask_new.c:46
+msgid "    Point #        Latitude               Longtitude"
+msgstr "    Точка #        Широта               Долгота"
+
+#: map_ask_new.c:49
+msgid " Enter 1 if points are in Lat/Lon and 0 otherwise:"
+msgstr " Введите 1 если коор. в шир/долг и 0 если нет:"
+
+#: map_ask_new.c:51
+msgid "Latitude/Longtitude points shouild be in dd:mm:ss.ffh format"
+msgstr "Координаты должны быть в формате Широта/Долгота dd:mm:ss.ffh"
+
+#: map_ask_new.c:52
+msgid "where h is 'n' or 's' for Lat and 'e' or 'w' for Lon "
+msgstr "где h это 'n' или 's' для шир. и 'e' или 'w' для долг. "
+
+#: map_ask_new.c:53
+msgid "dd, mm, ss have to be >= 0; use h to define hemisphere"
+msgstr "dd, mm, ss должны быть >= 0; исп. h для опред. полушария"
+
+#: map_ask_new.c:54
+msgid "    Point #     X coord (or Lat)         Y coord (or Lon)"
+msgstr "    Точка #     X коор (или Шир)         Y коор (или Долг)"
+
+#: map_coor_new.c:31 map_coor_new.c:40 map_coor_new.c:55
+msgid " ERROR:  Reading coordinates."
+msgstr " ОШИБКА:  Чтение координат."
+
+#: map_init_new.c:74
+msgid "projection file not found -- run g.setproj\n"
+msgstr "файл проекций не найден -- выполните g.setproj\n"
+
+#: map_init_new.c:80
+msgid "units file not found -- run g.setproj\n"
+msgstr "файл единиц не найден -- выполните g.setproj\n"
+
+#: map_init_new.c:141
+#, c-format
+msgid "Invalid longtitude: %s\n"
+msgstr "Неверная долгота: %s\n"
+
+#: map_init_new.c:148
+#, c-format
+msgid "Invalid latitude: %s\n"
+msgstr "Неверная широта: %s\n"
+
+#: map_init_new.c:156
+#, c-format
+msgid "Invalid Easting : %s\n"
+msgstr "Неверная X коорд.: %s\n"
+
+#: map_init_new.c:161
+#, c-format
+msgid "Invalid Northing : %s\n"
+msgstr "Неверная Y коорд.: %s\n"
+
+#: map_init_new.c:170
+msgid "Press <Return> to continue "
+msgstr "Нажмите <Return> для продолжения "
+
+#: map_reg.c:126
+msgid "  Points weren't spread out enough to setup the map."
+msgstr "  Точки недостаточно разбросаны для привязки карты. "
+
+#: map_reg.c:166
+msgid " USE DIGITIZER CURSOR OR KEYBOARD FOR INPUT"
+msgstr " ИСПОЛЬЗУЙТЕ ДИГИТАЙЗЕР ИЛИ КЛАВИАТУРУ ДЛЯ ВВОДА"
+
+#: map_reg.c:169
+msgid "USE KEYBOARD FOR INPUT"
+msgstr "ИСПОЛЬЗУЙТЕ КЛАВИАТУРУ ДЛЯ ВВОДА"
+
+#: map_reg.c:171
+msgid "USE DIGITIZER CURSOR FOR INPUT"
+msgstr "ИСПОЛЬЗУЙТЕ ДИГИТАЙЗЕР ДЛЯ ВВОДА"
+
+#: map_reg.c:174
+#, c-format
+msgid "  Key <%d> - register point,      Key<%d> - add more points"
+msgstr "  Клав. <%d> - привязать точку,   клав. <%d> - добавить точки"
+
+#: map_reg.c:177
+#, c-format
+msgid "  Key <%d> - skip point,          Key<%d> - accept residuals"
+msgstr "  Клав. <%d> - пропуск точки,      Key<%d> - принять погрешность"
+
+#: map_reg.c:180
+#, c-format
+msgid "  Key <%d> - unregister point"
+msgstr "  Клав. <%d> - отменить привязку"
+
+#: map_reg.c:191
+msgid "  r - register point,      A - accept residuals"
+msgstr "  r - привязать точку,      A - принять погрешность"
+
+#: map_reg.c:192
+msgid "  s - skip a point"
+msgstr "  s - пропуск точки"
+
+#: map_reg.c:193
+msgid "  u - unregister point"
+msgstr "  u - отменить привязку"
+
+#: map_reg.c:194
+msgid "  a - add more points"
+msgstr "  a - добавить точки"
+
+#: map_residnew.c:28 map_residnew.c:110
+msgid "                        POINTS TO REGISTER"
+msgstr "                            ПРИВЯЗКА ТОЧЕК"
+
+#: map_residnew.c:31
+msgid ""
+"     POINT                LATITUDE             LONGTITUDE     RESIDUALS    "
+msgstr ""
+"     ТОЧКА                ШИРОТА               ДОЛГОТА        ПОГРЕШНОСТЬ   "
+
+#: map_residnew.c:34
+msgid ""
+"     POINT               EASTING (X)           NORTHING (Y)    RESIDUALS    "
+msgstr ""
+"     ТОЧКА               КООРД (X)              КООРД (Y)      ПОГРЕШНОСТЬ   "
+
+#: map_residnew.c:60 map_residnew.c:142
+#, c-format
+msgid " Number of points: %d,   Points registered: %d"
+msgstr " Число точек: %d,       привязано: %d  "
+
+#: map_residnew.c:64
+#, c-format
+msgid " Residual mean average   : %f"
+msgstr " Средняя погрешность   : %f  "
+
+#: map_residnew.c:102
+msgid "  There are no points to register."
+msgstr "  Нет точек для привязки."
+
+#: map_residnew.c:103
+msgid "  You need to type in the coordinates of your points  before "
+msgstr "  Вам нужно ввести координаты ваших точек для того, "
+
+#: map_residnew.c:104
+msgid "  you can register the map."
+msgstr "  чтобы привязать карту."
+
+#: map_residnew.c:105
+msgid "  Use the 'add more points' option and enter the "
+msgstr "  Используйте опцию 'добавить точки' и введите "
+
+#: map_residnew.c:106
+msgid "  coordinates of the points."
+msgstr "  координаты точек."
+
+#: map_residnew.c:113
+msgid ""
+"     POINT              LATITUDE             LONGTITUDE                 "
+msgstr ""
+"     ТОЧКА              ШИРОТА               ДОЛГОТА                     "
+
+#: map_residnew.c:116
+msgid ""
+"     POINT             EASTING (X)           NORTHING (Y)                 "
+msgstr ""
+"     ТОЧКА             КООРД (X)             КООРД (Y)                     "
+
+#: map_residnew.c:151
+msgid " Points aren't spread out enough.                 "
+msgstr " Точки недостаточно разбросаны.                   "
+
+#: map_scale.c:48
+msgid " Map scales are not close to each other."
+msgstr "Масштабы карт недостаточно близки.      "
+
+#: map_scale.c:50
+#, c-format
+msgid " Current map scale: %d.   Calculated map scale: %12f"
+msgstr " Текущий масштаб: %d.    Расчетный масштаб: %12f"
+
+#: map_scale.c:53
+msgid " Enter new map scale or <RETURN> to use calculated scale: "
+msgstr " Введите новый масштаб или <RETURN> для расчетного масштаба: "
+
+#: menus.c:95
+msgid "Leave digit? "
+msgstr "Выйти из программы?"
+
+#: menus.c:127
+msgid "GLOBAL MENU: Press first letter of desired command. [Upper Case Only]"
+msgstr "ГЛОБАЛЬНОЕ МЕНЮ: Нажмите первую букву нужной команды. [Заглавн.]"
+
+#: menus.c:145
+#, c-format
+msgid " %s options:"
+msgstr " Опции %s:"
+
+#: mk_window.c:51
+msgid "   Buttons:"
+msgstr "   Кнопки:"
+
+#: mk_window.c:53
+msgid "   Left:   1. corner"
+msgstr "   Левая:   1. угол"
+
+#: mk_window.c:54
+msgid "   Middle: Unzoom"
+msgstr "   Средняя: Уменьшить"
+
+#: mk_window.c:55 mk_window.c:59
+msgid "   Right:  Main zoom menu"
+msgstr "   Правая:  Меню Zoom"
+
+#: mk_window.c:57
+msgid "   Left:   1. corner (reset)"
+msgstr "   Левая:   1. угол (заново)"
+
+#: mk_window.c:58
+msgid "   Middle: 2. corner"
+msgstr "   Средняя: 2. угол"
+
+#: mk_window.c:84
+msgid "Window is too small to display"
+msgstr "Окно слишком мало"
+
+#: mk_window.c:93
+msgid "Window is outside of default. Proceed? "
+msgstr "Окно за пределами региона. Продолжить? "
+
+#: mouse_coll.c:75
+msgid "Site digitizing"
+msgstr "Дигитировать объекты"
+
+#: mouse_coll.c:77
+msgid "       Left:   Digitize a site"
+msgstr "       Левая:   Дигит. объект "
+
+#: mouse_coll.c:80
+msgid "       Right:  Zoom"
+msgstr "       Правая:  Увеличить"
+
+#: mouse_coll.c:82
+msgid "       Middle: Zoom"
+msgstr "       Средняя: Увеличить"
+
+#: mouse_coll.c:233
+#, c-format
+msgid "Point number %d\n"
+msgstr "Точка номер %d\n"
+
+#: mouse_coll.c:237
+msgid "    Buttons:                                    "
+msgstr "    Кнопки:                                     "
+
+#: mouse_coll.c:238
+msgid "       Left:   Mark a point                     "
+msgstr "       Левая:   Отметить точку                  "
+
+#: mouse_coll.c:240
+msgid "       Middle: Quit digitizing                  "
+msgstr "       Средняя: Закончить                       "
+
+#: mouse_coll.c:242
+msgid "       Right:  Backup one point                 "
+msgstr "       Правая:  назад на одну точку             "
+
+#: mouse_coll.c:244
+msgid "       Right:  (Backup one point)               "
+msgstr "       Правая:  (назад на одну точку)           "
+
+#: mouse_coll.c:247
+msgid "       Middle: Backup one point                 "
+msgstr ""
+
+#: mouse_coll.c:249
+msgid "       Middle: (Backup one point)               "
+msgstr "       Средняя: (назад на одну точку)           "
+
+#: mouse_coll.c:250
+msgid "       Right:  Quit digitizing                  "
+msgstr "       Правая:  Закончить                       "
+
+#: mouse_yn.c:18 mouse_yn.c:65
+msgid "       Left:   Yes"
+msgstr "       Левая:   Yes"
+
+#: mouse_yn.c:19
+msgid "       Middle: No"
+msgstr "       Средняя: No"
+
+#: mouse_yn.c:20 mouse_yn.c:67
+msgid "       Right:  No"
+msgstr "       Правая:  No"
+
+#: mouse_yn.c:37
+msgid "       Left:   Previous line"
+msgstr "       Левая:   Пред. линия"
+
+#: mouse_yn.c:39
+msgid "       Middle: Quit"
+msgstr "      Средняя: Закончить"
+
+#: mouse_yn.c:40
+msgid "       Right:  Next line"
+msgstr "       Правая:  След. линия"
+
+#: mouse_yn.c:42
+msgid "       Middle: Next line"
+msgstr "       Средняя: След. линия"
+
+#: mouse_yn.c:43
+msgid "       Right:  Quit"
+msgstr "       Правая:  Закончить"
+
+#: mouse_yn.c:60
+#, c-format
+msgid "       Middle: Zoom%s"
+msgstr "       Средняя: Zoom%s"
+
+#: mouse_yn.c:61
+msgid "/Continue"
+msgstr "/Продолжить"
+
+#: move_line.c:46
+msgid "Choose line or site to move:"
+msgstr "Выберите линию или объект:"
+
+#: move_line.c:72
+msgid "  Place mouse on new position for this site:"
+msgstr "  Укажите мышью новое положение этого объекта:"
+
+#: move_line.c:75
+msgid "  Place mouse on new position for this point on line:"
+msgstr "  Укажите мышью новое положение этой точки на линии:"
+
+#: move_point.c:39
+msgid "Choose line to modify:"
+msgstr "Выберите линию:"
+
+#: move_point.c:58
+msgid "  Place mouse on new position for point:"
+msgstr "  Укажите мышью новое положение точки:"
+
+#: node_lines.c:42
+msgid "Select a Node:"
+msgstr "Выберите узел:"
+
+#: node_lines.c:54
+msgid "Node has NO lines attached to it."
+msgstr "Нет линий, сходящихся к узлу."
+
+#: node_lines.c:101
+#, c-format
+msgid "Node %d  Line %d   Type '%s' Angle  %7.5f (%7.5f)\n"
+msgstr "Узел %d  Линия %d   Тип '%s' Угол  %7.5f (%7.5f)\n"
+
+#: node_lines.c:106
+msgid "Select Next line:"
+msgstr "Выберите след. линию:"
+
+#: node_lines.c:119
+msgid "Line"
+msgstr "Линия"
+
+#: node_lines.c:122
+msgid "Area Border"
+msgstr "Граница"
+
+#: node_lines.c:125
+msgid "Site Marker"
+msgstr "Объект"
+
+#: node_lines.c:128
+msgid "Deleted Line"
+msgstr "Удаленная линию"
+
+#: node_lines.c:131
+msgid "Deleted Area Border"
+msgstr "Удаленная граница"
+
+#: node_lines.c:134
+msgid "Deleted Site Marker"
+msgstr "Удаленный объект"
+
+#: overlay.c:32
+msgid "vector"
+msgstr "вектор"
+
+#: overlay.c:55
+msgid "Do you want to automatically redraw overlay on re-window? "
+msgstr "Автоматически перерисовать наложение карт при изменении окон?"
+
+#: overlay.c:73
+msgid "Could Not open Overlay file for read\n"
+msgstr "Невозможно открыть файл для чтения\n"
+
+#: overlay.c:105
+msgid "Plotting Overlay Map"
+msgstr "Отображение"
+
+#: overlay.c:106
+msgid "                                  ...Press <ESC> key to stop"
+msgstr "                              ...Нажмите <ESC> для остановки"
+
+#: read_cap.c:35
+msgid ""
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"                 Available  Digitizers\n"
+"\n"
+msgstr ""
+"\n"
+"\n"
+"\n"
+"\n"
+"\n"
+"                  Доступны дигитайзеры:\n"
+"\n"
+
+#: read_cap.c:36
+msgid "           Name                   Description\n"
+msgstr "           Название                  Описание\n"
+
+#: read_cap.c:46
+msgid ""
+"\n"
+" Error in reading digitcap file.\n"
+msgstr ""
+"\n"
+" Ошибка чтения файла digitcap.\n"
+
+#: read_cap.c:133 read_cap.c:165
+msgid " Error in reading digitcap file.\n"
+msgstr "  Ошибка чтения файла digitcap.\n"
+
+#: remove_block.c:36 scal_window.c:34 slid_window.c:34 where_am_i.c:23
+#: window.c:660
+msgid "Buttons:"
+msgstr "Кнопки:"
+
+#: remove_block.c:37
+msgid "   Left:   Establish a corner"
+msgstr "   Левая:     Установить угол"
+
+#: remove_block.c:39
+msgid "   Middle: Abort"
+msgstr "   Средняя: Закончить"
+
+#: remove_block.c:40
+msgid "   Right:  Accept window"
+msgstr "   Правая:  Принять"
+
+#: remove_block.c:42
+msgid "   Middle: Accept window"
+msgstr "   Средняя: Принять"
+
+#: remove_block.c:43
+msgid "   Right:  Abort"
+msgstr "   Правая:  Закончить"
+
+#: remove_block.c:70
+msgid "Block is too small to use"
+msgstr "Блок слишком мал"
+
+#: remove_block.c:92
+msgid "You are about to remove a block of lines. OK (y/n)? "
+msgstr "Вы удаляете блок линий.  OK (y/n)? "
+
+#: remove_block.c:98
+msgid " Please wait while lines are deleted..."
+msgstr " Ждите, линии будут удалены..."
+
+#: remove_block.c:130
+#, c-format
+msgid " %d lines removed."
+msgstr " %d линий удалены."
+
+#: remove.c:26
+msgid " Remove a site:"
+msgstr " Удалить объект:"
+
+#: remove.c:26
+msgid " Remove a line:"
+msgstr " Удалить линию:"
+
+#: replot.c:19
+msgid "Wait. Replotting the Screen."
+msgstr "Ждите, перерисовка экрана."
+
+#: reset_map.c:56
+msgid "If satisfied with the registration, enter 'y', else 'n'"
+msgstr "Если удовлетворены привязкой, нажмите 'y', нет - 'n'"
+
+#: reset_map.c:68
+msgid "  This screen is used to verify that the map registration is correct."
+msgstr "  Этот экран используется для проверки правильности привязки карты."
+
+#: reset_map.c:69
+msgid "  Check known points on the map with the digitizer and compare them"
+msgstr "  Сравните координаты известных точек на карте с помощью дигитайзера"
+
+#: reset_map.c:70
+msgid "  with the coordinates at the bottom of this screen"
+msgstr "  и сравните их с координатами в нижней части экрана"
+
+#: reset_map.c:92
+#, c-format
+msgid "CHECK MAP:   Key '%d' to preserve point;  Any other Key to continue"
+msgstr "ПРОВЕРКА: Клавиша '%d' - сохранить точку; другие клав. - продолжить"
+
+#: reset_map.c:94 reset_map.c:150
+msgid ""
+"      Coordinates:                X - Current - Y         X -  Saved  - Y"
+msgstr ""
+"      Координаты:                 X - Текущие - Y       X - Сохраненные - Y"
+
+#: reset_map.c:95 reset_map.c:151
+msgid "         Place digitizer cursor on tablet"
+msgstr "         Поместите курсор дигитайзера на стол"
+
+#: reset_map.c:149 reset_map.c:197
+msgid "CHECK MAP:   Hit 's' to preserve point;  Any other key to continue"
+msgstr "ПРОВЕРКА: Нажмите 's' для сохранения точки; др. клав. - продолжить"
+
+#: reset_map.c:198
+msgid " Foot |                             Coordinates"
+msgstr " Foot |                             Координаты"
+
+#: reset_map.c:199
+msgid ""
+"Switch|                           X - Current - Y         X -  Saved  - Y"
+msgstr ""
+"Switch|                           X - Текущие - Y         X -  Сохран. - Y"
+
+#: reset_map.c:201 reset_map.c:213
+msgid "Up  "
+msgstr "Вверх"
+
+#: reset_map.c:211
+msgid "Down"
+msgstr "Вниз"
+
+#: retype_line.c:25
+msgid " Re-type a line:"
+msgstr " Заново введите линию:"
+
+#: scal_window.c:35
+msgid "   Left:   Zoom in"
+msgstr "   Левая:   Zoom in"
+
+#: scal_window.c:37 slid_window.c:37
+msgid "   Middle: Abort/Quit"
+msgstr "   Средняя: Abort/Quit"
+
+#: scal_window.c:38
+msgid "   Right:  Zoom out"
+msgstr "   Правая:  Zoom out"
+
+#: scal_window.c:40
+msgid "   Middle: Zoom out"
+msgstr "   Средняя: Zoom out"
+
+#: scal_window.c:41 slid_window.c:41
+msgid "   Right:  Abort/Quit"
+msgstr "   Правая:  Abort/Quit"
+
+#: select_digit.c:31
+msgid "There are no digitizers defined in the digitcap file\n"
+msgstr "В файле digitcap не определен ни один дигитайзер\n"
+
+#: select_digit.c:60
+msgid ""
+" Hit return to use digitizer in brackets\n"
+" or type in number or name of other digitizer.\n"
+"\n"
+msgstr ""
+" Нажмите <Return> для использования [дигитайзера]\n"
+" или введите номер/имя другого дигитайзера.\n"
+"\n"
+
+#: select_digit.c:61
+#, c-format
+msgid " Select digitizer [%s] :  "
+msgstr " Выберите дигитайзер [%s] :  "
+
+#: select_digit.c:64 select_digit.c:101
+msgid " Select digitizer by number or name :  "
+msgstr " Выберите дигитайзер по номеру или имени :  "
+
+#: select_digit.c:100
+#, c-format
+msgid ""
+" I don't know this digitizer:  [%s] . \n"
+"\n"
+msgstr ""
+" Неизвестный дигитайзер:  [%s] . \n"
+"\n"
+
+#: set_thresh.c:101
+msgid "  Current SNAPPING threshold:"
+msgstr "  Текущее значение порога смыкания узлов:"
+
+#: set_thresh.c:103 set_thresh.c:181
+#, c-format
+msgid "         Map : %f  %s. "
+msgstr "         Карта : %f  %s. "
+
+#: set_thresh.c:107 set_thresh.c:185
+#, c-format
+msgid "         Dig : %f  -  1 / %f of an inch. "
+msgstr "         Dig : %f  -  1 / %f дюйма."
+
+#: set_thresh.c:112 set_thresh.c:190
+msgid "   Enter new Dig threshold or <RETURN> when finished: "
+msgstr "   Введите нов. Dig порог или <RETURN> закончить: "
+
+#: set_thresh.c:128 set_thresh.c:206
+#, c-format
+msgid "    %f  is not a reasonable threshold."
+msgstr "    %f  неудовлетворительное значение."
+
+#: set_thresh.c:131 set_thresh.c:209
+#, c-format
+msgid " Threshold should be between   %f  and  %f."
+msgstr " Порог должен быть между   %f  и  %f."
+
+#: set_thresh.c:179
+msgid "  Current thresholds:"
+msgstr "  Текущие пороговые величины:"
+
+#: set_window.c:20
+msgid "Seting window to default\n"
+msgstr "Установка окна по умолчанию\n"
+
+#: set_window.c:45
+msgid "Identify corners of graphics window."
+msgstr "Обозначьте углы графического окна."
+
+#: set_window.c:46
+msgid "  Locate digitizer cursor on one corner of desired window."
+msgstr "  Поместите курсор дигитайзера в одном из углов нужного окна."
+
+#: set_window.c:53 set_window.c:73
+msgid "  Then hit any number <Key>"
+msgstr "  Нажмите любую цифру <Key>"
+
+#: set_window.c:59 set_window.c:79
+msgid "  Then hit <RETURN>"
+msgstr "  Нажмите  <RETURN>"
+
+#: set_window.c:68
+msgid "  Now place digitizer cursor on diagonal corner of desired window."
+msgstr "  Поместите курсор дигитайзера в противоположном углу нужного окна."
+
+#: slid_window.c:35
+msgid "   Left:   Specify new window CENTER"
+msgstr "   Левая:   Укажите новый ЦЕНТР окна"
+
+#: slid_window.c:38
+msgid "   Right:  Specify new window CENTER"
+msgstr "   Правая:   Укажите новый ЦЕНТР окна"
+
+#: slid_window.c:40
+msgid "   Middle: Specify new window CENTER"
+msgstr "   Средняя: Укажите новый ЦЕНТР окна"
+
+#: snap.c:36
+msgid " Line to snap  FROM:"
+msgstr " От линии:"
+
+#: snap.c:41
+msgid " Node to snap  TO:"
+msgstr " К узлу:"
+
+#: snap.c:53
+msgid "Attempting to snap line to itself. Proceed? "
+msgstr "Попытка замкнуть линию на себя. Продолжить? "
+
+#: spline.c:33
+msgid "Line to smooth:"
+msgstr "Сгладить линию:"
+
+#: spline.c:91
+msgid "Not enough points in line."
+msgstr "Недостаточно точек на линии."
+
+#: toolbox.c:71 toolbox.c:87
+msgid "Press enter to continue. "
+msgstr "Нажмите Enter для продолжения."
+
+#: toolbox.c:150
+msgid ""
+"\n"
+"Type 'exit' to return\n"
+msgstr ""
+"\n"
+"Наберите 'exit' для выхода\n"
+
+#: where_am_i.c:24
+msgid "   Left:   Where am i"
+msgstr "   Левая:   Where am i"
+
+#: where_am_i.c:25
+msgid "   Средняя: Quit"
+msgstr ""
+
+#: where_am_i.c:26
+msgid "   Right:  Quit"
+msgstr "   Правая:  Quit"
+
+#: where_am_i.c:39
+#, c-format
+msgid "EAST: %12.2f   NORTH: %12.2f"
+msgstr "X-коор: %12.2f   Y-коор: %12.2f"
+
+#: where_am_i.c:45
+msgid "Checking areas"
+msgstr "Проверка областей"
+
+#: where_am_i.c:48
+#, c-format
+msgid "AREA: %d"
+msgstr "ОБЛАСТЬ: %d"
+
+#: where_am_i.c:53
+msgid "No Area found"
+msgstr "Область не найдена"
+
+#: where_am_i.c:56
+msgid "Checking nodes"
+msgstr "Проверка узлов"
+
+#: where_am_i.c:64
+#, c-format
+msgid "NODE: %d"
+msgstr "УЗЕЛ: %d"
+
+#: where_am_i.c:70
+msgid "No Nodes found"
+msgstr "Узел не найден"
+
+#: where_am_i.c:76
+msgid "Checking lines"
+msgstr "Проверка линий"
+
+#: where_am_i.c:79
+#, c-format
+msgid "LINE: %d"
+msgstr "ЛИНИЯ: %d"
+
+#: where_am_i.c:84
+msgid "No Lines found"
+msgstr "Линия не найдена"
+
+#: window.c:661
+msgid "   Left:   Zoom menu "
+msgstr "   Левая: Меню Zoom"
+
+#: window.c:663
+msgid "   Middle: Abort/Quit "
+msgstr "   Средняя: Abort/Quit "
+
+#: window.c:664
+msgid "   Right:  Zoom/Pan MENU"
+msgstr "   Правая:  Меню Zoom/Pan"
+
+#: window.c:666
+msgid "   Middle: Pan"
+msgstr "   Средняя: Pan"
+
+#: window.c:667
+msgid "   Right:  Quit "
+msgstr "   Правая:  Quit"
+
+#: withinthresh.c:28
+#, c-format
+msgid " Current threshold: %8.2f .    Enter temp threshold:  "
+msgstr " Текущее значение: %8.2f .    Введите врем. значение:  "
+
+#: withinthresh.c:37
+msgid "  The threshold entered is less then the current threshold."
+msgstr "   Введенное значение меньше текущей величины порога."
+
+#: withinthresh.c:38
+msgid "  No action taken."
+msgstr "  Изменения не произведены."
+
+#: withinthresh.c:44
+msgid " .. processing ..                 ...Press <ESC> key to stop"
+msgstr " .. работаю ..                    ...Нажмите <Esc> для остановки"
+
+msgid " Customize Menu\n"
+msgstr " Меню Customize\n"
+
+msgid "   This menu allows you to change various \n"
+msgstr "   Это меню позволяет изменять разные \n"
+
+msgid " options that will affect the remainder of\n"
+msgstr " опции, которые влияют на все остальные\n"
+
+msgid " the digitizing session.\n"
+msgstr " функции программы.\n"
+
+msgid " There are two other menus available from\n"
+msgstr " Отсюда доступны два других меню, - \n"
+
+msgid " here.  Display and color.  These affect\n"
+msgstr " Display и Color.  Они определяют,\n"
+
+msgid " the way objects are displayed on the \n"
+msgstr " как объекты будут выглядеть на \n"
+
+msgid " screen.\n"
+msgstr " экране.\n"
+
+msgid " SELECT CELL BACKDROP MAP\n"
+msgstr " ВЫБРАТЬ РАСТРОВЫЙ ФОН\n"
+
+msgid "   This option will allow you to place a cell file behind the vector lines. \n"
+msgstr "   Эта опция позволяет поместить растровую карту как фон под векторной. \n"
+
+msgid " Useful for digitizing off of an image file.  Note that default color choices \n"
+msgstr " Полезна при оцифровке с растрового изображения. Цвета, заданные \n"
+
+msgid " may need to be changed, and line erases will leave black traces behind.\n"
+msgstr " по умолчанию, можно изменить, а удаление линии оставляет черную полосу.\n"
+
+msgid " COLOR OPTIONS MENU   Bring up the Color Options Menu\n"
+msgstr " МЕНЮ ОПЦИИ ЦВЕТА   Вызывает меню цветовых опций,\n"
+
+msgid "   This menu allows you to change the default colors for each type of object\n"
+msgstr "   которое позволяет изменять цвет по умолчанию для каждого из объектов,\n"
+
+msgid " that digit deals with.\n"
+msgstr " с которыми работает программа.\n"
+
+msgid " DISPLAY OPTIONS MENU   Bring up the display options menu\n"
+msgstr " МЕНЮ ОПЦИИ ДИСПЛЕЯ   Вызывает меню опций дисплея.\n"
+
+msgid "   This menu allows you to specify exactly what objects are shown each time\n"
+msgstr "   Это меню позволяет указать, какие именно объекты должны быть на дисплее,\n"
+
+msgid " the window is redrawn.\n"
+msgstr " каждый раз, когда окно перерисовано.\n"
+
+msgid " TOGGLE BEEP    \n"
+msgstr " Перекл. BEEP    \n"
+
+msgid "   This allows you to turn the bell on or off when digitizing.  In crowded\n"
+msgstr "   Позволяет включать и отключать звук -биип- во время оцифровки. В комнате\n"
+
+msgid " work areas, a constant beeping from a terminal can be disturbing to others,\n"
+msgstr " с большим числом работающих, постоянное -биип- может мешать другим,\n"
+
+msgid " thus the addition of this option.\n"
+msgstr " поэтому и добавлена эта опция.\n"
+
+msgid " SET DIGITIZING THRESHOLD\n"
+msgstr " УСТАНОВКА ПОРОГА ДИГИТИРОВАНИЯ\n"
+
+msgid "   Change the threshold with which lines are trimmed in stream digitizing \n" 
+msgstr "   Устанавливает пороговое значение, с которым сглаживаются линии\n" 
+
+msgid " mode.  After a line is digitized it is trimmed to reduce redundant \n"
+msgstr " при оцифровке в режиме потока. После оцифровки, излишние точки линии \n"
+
+msgid " information.  This threshold affects how much precision is preserved.\n"
+msgstr " удаляются. Порог дигитирования задает точность оцифровки.\n"
+
+msgid " SELECT OVERLAY MAP\n"
+msgstr " ВЫБРАТЬ КАРТУ НАЛОЖЕНИЯ\n"
+
+msgid "   This option will allow you to lay one map layer over the current one for\n"
+msgstr "   Эта опция позволяет накладывать поверх текущей карты другую векторную\n"
+
+msgid " visual inspection.  You may specify whether or not this map is displayed \n"
+msgstr " карту для визуального контроля. Вы можете также указать, должно ли наложение \n"
+
+msgid " every time the window is redrawn.\n"
+msgstr " перерисовываться каждый раз.\n"
+
+msgid " TOGGLE POINTING DEVICE\n"
+msgstr " ПЕРЕКЛ. УСТРОЙСТВО КУРСОРА\n"
+
+msgid "   This option allows you to select whether digit uses the mouse or the\n"
+msgstr "   Эта опция позволяет задать, какой из курсоров должен быть использован\n"
+
+msgid " digitizer for specifying locations in the Break-line function.   This\n"
+msgstr " для указания точки в процессе разбиения линии.  По умолчанию,\n"
+
+msgid " default to mouse.\n"
+msgstr " используется мышь.\n"
+
+msgid " QUIT   Return to the menu we just came from.\n"
+msgstr " QUIT   Вернуться в предыдущее меню.\n"
+
+msgid " TOGGLE BLOCK-REMOVE DISPLAY OPTION\n"
+msgstr " ПЕРЕКЛ. ОПЦИЙ ДИСПЛЕЯ УДАЛЕНИЯ БЛОКА\n"
+
+msgid "   This option allows you to select the mode that the screen is updated\n"
+msgstr "   Эта опция позволяет выбрать способ, которым обновляется экран\n"
+
+msgid " after a Block Remove operation. REMOVE  specifies to show each line being\n"
+msgstr " после выполнения операции удаления блока линий. REMOVE - показать каждую\n"
+
+msgid " removed.  REDRAW specifies to redraw the entire screen.\n"
+msgstr " из удаленных линий.  REDRAW - весь экран.\n"
+
+msgid " SET SNAPPING THRESHOLD\n"
+msgstr " УСТАНОВКА ПОРОГА СМЫКАНИЯ\n"
+
+msgid "   Change the threshold that determines how close two nodes must be to be\n"
+msgstr "   Установить пороговое значение расстояния, при котором два узла\n"
+
+msgid " considered one node and thus snapped.  This decision is made any time a new\n"
+msgstr " считаются одним, т.е. смыкаются.  Параметр используется всякий раз, когда\n"
+
+msgid " node is created.\n"
+msgstr " создается новый узел.\n"
+
+msgid " TOGGLE WINDOWING DEVICE\n"
+msgstr " ПЕРЕКЛ. УСТРОЙСТВО УКАЗАНИЯ ОКНА\n"
+
+msgid " digitizer for specifying new windows.  With the mouse chosen, you have the\n"
+msgstr " для указания новых окон. Если выбрана мышь, вы имеете возможность увеличить\n"
+
+msgid " option to widen the view outside of the digitizing window.\n"
+msgstr " размер окна за пределы области оцифровки.\n"
+
+msgid " TOGGLE DIGITIZING DEVICE\n"
+msgstr " ПЕРЕКЛ. УСТРОЙСТВО ОЦИФРОВКИ\n"
+
+msgid "    Select either the mouse or, if map is registered, the digitizer as the\n"
+msgstr "    Выбрать, мышь или (если карта уже привязана) дигитайзер используется\n"
+
+msgid " device to digitize with.  If using 'none' driver, the mouse is the only\n"
+msgstr " для оцифровки. При использовании драйвера 'none', мышь является единственно\n"
+
+msgid " valid digitizing device.\n"
+msgstr " возможным устройством.\n"
+
+msgid "   Digitize Menu\n"
+msgstr "   Меню Digitize\n"
+
+msgid " This menu allows you to digitize map data.  \n"
+msgstr " Это меню позволяет оцифровывать данные с карт.  \n"
+ 
+msgid " The top menu tells which digitizer is \n"
+msgstr " Верхнее меню показывает, какой дигитайзер  \n"
+
+msgid " currently active, and displays the commands \n"
+msgstr " задействован в данный момент, а также команды, \n"
+
+msgid " that are available only when digitizing.\n"
+msgstr " доступные во время оцифровки.\n"
+
+msgid " The bottom menu allows you to select various\n"
+msgstr " Нижнее меню позволяет выбрать различные опции\n"
+
+msgid " digitizion options.  \n"
+msgstr " оцифровки.  \n"
+
+msgid " The space bar is used to begin digitizing\n"
+msgstr " Нажмите пробел для начала дигитирования.\n"
+
+msgid "  Digitize\n"
+msgstr "  Дигитирование\n"
+
+msgid "    Begin digitizing with the current options.\n"
+msgstr "    Начать оцифровку с заданными текущими опциями.\n"
+
+msgid " Auto Label    		Automatically label lines and sites\n"
+msgstr " Auto Label    		Автомат. помечать линии и точечн. объекты\n"
+
+msgid "    This option allows you to choose an attribute before digitizing a \n"
+msgstr "    Эта опция позволяет выбрать аттрибут перед оцифровкой линии. \n"
+
+msgid " line.  All lines digitized afterwards, and before changing it again \n"
+msgstr " Все линии, которые после этого будут оцифрованы, и до присвоения \n"
+
+msgid " will automatically be labeled with the specified value.\n"
+msgstr " нового значения аттрибута, будут помечены указанной величиной.\n"
+
+msgid " Select Digitizing Mode\n"
+msgstr " Выбор режима оцифровки\n"
+
+msgid "    Allows you to specifiy either point or stream digitizing.  \n"
+msgstr "    Позволяет выбрать точечный или потоковый режим оцифровки.  \n"
+
+msgid " Point mode:  you press a button for each point on a line to be digitized.\n"
+msgstr " Точечный режим: нажатие кнопки для каждой точки на линии.\n"
+
+msgid " Stream mode: digitizer constantly feeds information to the computer.\n"
+msgstr " Потоковый режим: дигитайзер непрерывно передает информацию в компьютер.\n"
+
+msgid " Select Line Type\n"
+msgstr " Выбор типа линии\n"
+
+msgid "    Toggles between   Area edge, Line, and Site.  All lines digitized\n"
+msgstr "    Перекл. между типами 'граница', 'линия', и 'объект'.  Все линии, \n"
+
+msgid " thereafter will be of the specified type.\n"
+msgstr " оцифрованные после этого, будут иметь указанный тип.\n"
+
+msgid " Quit\n"
+msgstr " Закончить\n"
+
+msgid "    Return to Main menu\n"
+msgstr "    Вернуться в Главное меню\n"
+
+msgid "   Edit Menu\n"
+msgstr "   Меню Edit\n"
+ 
+msgid "   This menu has several tools for editing a\n"
+msgstr "   В этом меню есть несколько инструментов для\n"
+
+msgid " digitized map.  It is available by pressing \n"
+msgstr " редактирования оцифрованных карт. Для входа \n"
+
+msgid " 'E' (shift-E) any time Edit is shown in the\n"
+msgstr " нажать 'E' (shift-E), когда опция 'Edit' в\n"
+
+msgid " global menu.  Most options are available with\n"
+msgstr " главном меню.  Большинство опций работают\n"
+
+msgid " or without a digitizer enabled.\n"
+msgstr " при вкл. и при выкл. дигитайзере.\n"
+ 
+msgid " BREAK LINE     Break an existing line into two separate lines.\n"
+msgstr " BREAK LINE     Разбить существующую линию на две разных линии.\n"
+
+msgid "   Use this feature to create a new node to connect two lines together.\n"
+msgstr "   Используйте эту опцию для создания нового узла для соединения двух линий.\n"
+
+msgid " This is useful for snapping lines to a neat line.\n"
+msgstr " Это полезно для смыкания новых линий с 'чистой' линией.\n"
+
+msgid " DISPLAY NODES IN THRESHOLD   show nodes that are within a given threshold\n"
+msgstr " DISPLAY NODES IN THRESHOLD   показывает узлы, находящиеся внутри порога\n"
+
+msgid "   Use this to find nodes that may not have been snapped correctly.  Input\n"
+msgstr "   Используйте эту опцию, чтобы устранить те узлы, которые замкнулись \n"
+
+msgid " a threshold value to check and sit back while the whole map is checked.\n"
+msgstr " неправильно. Задайте значение и ждите, пока вся карта будет проверена .\n"
+
+msgid " REMOVE SITE   Selectively remove an existing Site\n"
+msgstr " REMOVE SITE   Выборочно удалить к.-л. точечный объект\n"
+
+msgid "   Use the mouse to select a Site to be removed.  Left button to select\n"
+msgstr "   Выберите объект курсором.  Левой кнопкой выбрать объект,\n"
+
+msgid " a site, Right button to accept chosen site, Middle button to abort or \n"
+msgstr " правой принять выбор, средней отказаться от выбора или \n"
+
+msgid " return when finished removing sites. \n"
+msgstr " закончить удалять объекты. \n"
+
+msgid " MOVE POINT   Move a single point within a line\n"
+msgstr " MOVE POINT   Сдвинуть одну точку на линии\n"
+
+msgid "   Select a line and a point on the line. Then give a new position.\n"
+msgstr "   Выберите линию и точку на линии. Затем задайте новое положение.\n"
+
+msgid " This is useful for fixing up overshoots.  When moving a node, it may be \n"
+msgstr " Полезно при исправлении выбросов.  Сдвигая узел, помните, \n"
+
+msgid " snapped if placed within snapping threshold of another node.\n"
+msgstr " что он может сомкнуться с другим узлом (пороговое значение).\n"
+
+msgid " QUIT   Return to main menu\n"
+msgstr " QUIT   Вернуться в главное меню\n"
+
+msgid " REMOVE LINE   Selectively remove an existing line\n"
+msgstr " REMOVE LINE   Выборочно удалить существующую линию\n"
+
+msgid "   Use the mouse to select a line to be removed.  Left button to select\n"
+msgstr "   Используйте мышь и выберите линию для удаления. Левой кнопкой выбрать\n"
+
+msgid " a line, Right button to accept chosen line, Middle button to abort or \n"
+msgstr " линию, правой принять выбор линии, средней отказаться или \n"
+
+msgid " return when finished removing lines.\n"
+msgstr " закончить удалять линии.\n"
+
+msgid " REMOVE BLOCK OF LINES   \n"
+msgstr " REMOVE BLOCK OF LINES   \n"
+
+msgid "   Allows you to remove several lines at once.  Use mouse to completely \n"
+msgstr "   Позволяет удалить сразу несколько линий.  С помощью мыши, полностью \n"
+
+msgid " outline all lines you wish to remove.  You will be prompted one last time\n"
+msgstr " укажите все линии, которые нужно удалить.  Нужно будет подтвердить\n"
+
+msgid " for affirmation before it removes lines.\n"
+msgstr " удаление линий еще раз.\n"
+
+msgid " SNAP NODES   Snap line to a node.\n"
+msgstr " SNAP NODES  Сомкнуть линию с узлом.\n"
+
+msgid "   Use to connect a line to an existing node.  Select line with mouse, then\n"
+msgstr "   Используйте для соединения линии с существующим узлом.  Мышью выберите\n"
+
+msgid " select node to snap to.\n"
+msgstr " линию и узел для смыкания.\n"
+
+msgid " RE-TYPE A LINE    Change the type of a line (AREA or LINE)\n"
+msgstr " RE-TYPE A LINE    Изменить тип линии ('граница' или 'линия')\n"
+
+msgid "   Select and accept a line to change.  Will alternate between line type\n"
+msgstr "   Выберите нужную линию.  Измените ее тип на нужный.\n"
+
+msgid " or area edge.  Area edges are displayed as grey while lines are blue.\n"
+msgstr " Границы показаны серым цветом, а линии синим.\n"
+
+msgid "   Top Level    Global Menu\n"
+msgstr "   Главное (Глобальное) меню\n"
+
+msgid " The Global menu is almost always available\n"
+msgstr " Глобальное меню почти всегда находится в \n"
+
+msgid " at the bottom of the screen.  To select an\n"
+msgstr " нижней части экрана. Чтобы выбрать пункт,\n"
+
+msgid " item, simply type the first letter of your \n"
+msgstr " напечатайте ПЕРВУЮ ЗАГЛАВНУЮ АНГЛИЙСКУЮ \n"
+
+msgid " choice.  Note that it must be in upper-case.\n"
+msgstr " букву выбранного пункта меню.\n"
+
+msgid " These commands will take you to other menus:\n"
+msgstr " Таким образом доступны другие меню:\n"
+
+msgid "     Digitize    Edit     Label\n"
+msgstr "     Digitize    Edit     Label\n"
+
+msgid "     Customize   Window   Toolbox\n"
+msgstr "     Customize   Window   Toolbox\n"
+
+msgid " While these will cause an immediate action:\n"
+msgstr " След. команды выполняются непосредственно:\n"
+
+msgid "     Help   Zoom   Quit  *  !  ^\n"
+msgstr "     Help   Zoom   Quit  *  !  ^\n"
+
+msgid " (^)  Temporarily release the graphics driver\n"
+msgstr " (^)  Освободить графический драйвер\n"
+
+msgid "    The SUNVIEW driver has a bug that causes the screen to stop being updated,\n"
+msgstr "    Драйвер SUNVIEW имеет свойство 'запирать' экран,\n"
+
+msgid " if it has been moved, covered, or uncovered; or the screen saver blanked the \n"
+msgstr " если его двигать, открывать и закрывать , или когда screen saver затирает \n"
+
+msgid " screen.  When this occurs, pressing this key should fix the lockup.\n"
+msgstr " экран. Если подобное случится, нажмите эту клавишу.\n"
+
+msgid " (!) Redisplay the Graphics screen\n"
+msgstr " (!) Перерисовать экран\n"
+
+msgid "    In the process of editting, the graphics screen can\n"
+msgstr "    В процессе редактирования графический рисунок\n"
+
+msgid " become cluttered for various reasons.  Press this key\n"
+msgstr " может по разным причинам быть испорчен.  Нажмите эту\n"
+
+msgid " to correctly replot the graphics.\n"
+msgstr " клавишу для перерисовки экрана.\n"
+
+msgid " (*) Redisplay the text screen\n"
+msgstr " (*) Обновить текст. поле\n"
+
+msgid "   If for any reason the text screen becomes garbled, you \n"
+msgstr "   Если по к.-л. причине текст на экране был искажен, \n"
+
+msgid " can redisplay it simply by pressing this key.\n"
+msgstr " нажатие этой клавиши восстановит его.\n"
+
+msgid "   Temporarily go to the Customize menu.   'q' from there\n"
+msgstr "   Открыть меню Customize.   'q' оттуда\n"
+
+msgid " will return you to where to came from.  This menu has \n"
+msgstr " вернет в меню, откуда вы пришли.  В данном меню \n"
+
+msgid " options that affect the current session.\n"
+msgstr " есть опции, влияющие на работу сессии.\n"
+
+msgid " Digitize Menu\n"
+msgstr " Меню Digitize\n"
+
+msgid "   Go to the Digitize menu.  This is one of the primary menus\n"
+msgstr "   Открыть меню Digitize.  Это одно из основных меню\n"
+
+msgid "   in Digit.\n"
+msgstr "   программы v.digit.\n"
+
+msgid " Edit Menu\n"
+msgstr " Меню Edit\n"
+
+msgid "   Go to the Edit menu.  This one of the primary menus\n"
+msgstr "   Открыть меню Edit.  Это одно из основных меню\n"
+
+msgid " Help           Digit context sensitive Help facility.  \n"
+msgstr " Help           Контекстная интерактивная помощь.  \n"
+
+msgid "    Help specific for the current menu will come up.  You \n"
+msgstr "    Открыть Help для текущего меню.  Затем \n"
+
+msgid " then can get more specific information by pressing any of \n"
+msgstr " можно получить больше специфической информации, \n"
+
+msgid " the keys listed along the bottom of the screen.\n"
+msgstr " нажав одну из клавиш, указанных внизу экрана.\n"
+
+msgid " Label Menu\n"
+msgstr " Меню Label\n"
+
+msgid "   Go to the Label menu.  This one of the primary menus\n"
+msgstr "   Открыть меню Label.  Это одно из основных меню\n"
+
+msgid " QUIT\n"
+msgstr " QUIT\n"
+
+msgid "    Exit the Digit program.   This is only available at the\n"
+msgstr "    Выйти из программы.   Этот пункт доступен только из\n"
+
+msgid " Main menu.  Press 'q' several times from any menu to get\n"
+msgstr " Главного меню.  Нажмите 'q' несколько раз из любого\n"
+
+msgid " to the Main menu.\n"
+msgstr " меню, чтобы вернуться в Главное меню.\n"
+
+msgid " Toolbox Menu\n"
+msgstr " Меню Toolbox\n"
+
+msgid "   Temporarily go to the Toolbox menu.   'q' from there\n"
+msgstr "   Открыть меню Toolbox (инструменты).   'q' оттуда\n"
+
+msgid " useful features that may have some use restrictions.\n"
+msgstr " есть полезные особенности, возможно, с ограничениями.\n"
+
+msgid " Window Menu\n"
+msgstr " Меню Window\n"
+
+msgid "   Temporarily go to the Window menu.  'q' from there\n"
+msgstr "   Открыть меню Window.  'q' оттуда\n"
+
+msgid " will return you to where to came from.  This menu allows \n"
+msgstr " вернет вас туда, откуда вы пришли.  Это меню \n"
+
+msgid " you to display any combination of map features.\n"
+msgstr " позв. составлять разн. комб. элементов карты.\n"
+
+msgid " Zoom           Zoom current window in or out\n"
+msgstr " Zoom         Увеличить или уменьшить масштаб\n"
+
+msgid "    Same as Re-Window command on Window menu, but better.\n"
+msgstr "    текущего окна. То же, что Re-Window в меню Window,\n"
+
+msgid " Controlled by which windowing-device you have selected\n"
+msgstr " но лучше. Использует курсор управления, который\n"
+
+msgid " on the Customize menu.\n"
+msgstr " был задан в меню Customize.\n"
