@@ -1,4 +1,4 @@
-The GRASS 5.0 internal sites format in "sites_list/" is:
+The GRASS 5.0 internal sites format in "site_lists/" is:
 
 easting|northing|[z|[d4|]...][#category_int] [ [@attr_text OR %flt] ... ]
 

@@ -7,7 +7,6 @@
 <img src="grass.smlogo.gif">
 <hr width="100%" align=center size=6 noshade>
 
-
 <H2>NAME</H2>
 <EM><B>d.barscale</B></EM> - displays a barscale on GRASS monitor<BR>
 <EM>(GRASS Display Program)</EM>
@@ -15,12 +14,21 @@
 <H2>SYNOPSIS</H2>
 <B>d.barscale</B> [<B>-m</B>] [<B>-f</B>] [<B>bcolor</B><EM>=name</EM>] [<B>tcolor</B><EM>=name</EM>] [<B>at</B><EM>=x,y</EM>]
 
+<H2>DESCRIPTION</H2>
+ 
+<EM>d.barscale</EM> displays a barscale on GRASS monitor either with mouse
+or with given screen coordinates.
+
+<H2>OPTIONS</H2>
+
 <H3>Flags:</H3>
 <DL>
 <DT><B>-m</B>
 <DD>Use mouse to interactively place scale
 <DT><B>-f</B>
 <DD>Use feet/miles instead of meters
+<DT><B>-t</B>
+<DD>Write text on top of the scale, not to the right
 </DL>
 
 <H3>Parameters:</H3>

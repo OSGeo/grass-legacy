@@ -25,7 +25,7 @@ and creates a new map containing only the selected objects.
 
 <BR>
 
-<B>v.extract[ -dn</B>] <B>type=</B><EM>name </EM><B>input=</B><EM>name</EM>
+<B>v.extract[ -d</B>] <B>type=</B><EM>name </EM><B>input=</B><EM>name</EM>
 <B>output=</B><EM>name </EM><B>new=</B><EM>value</EM>
    [<B>list=</B><EM>range</EM>] [<B>file=</B><EM>name</EM>]
 
@@ -33,7 +33,7 @@ and creates a new map containing only the selected objects.
 
 <EM>v.extract</EM> allows a user to create a new vector map layer
 from an existing vector map layer.
-User provides the program with category numbers or option (n) names,
+User provides the program with category numbers,
 input vector file name, an output vector file name, and the
 type of input object.  There is an option (d) to dissolve common boundaries
 between adjoining map areas in the same category list.  The user may
@@ -59,13 +59,7 @@ to the resultant map.
 
 <DT><B>-d</B> 
 
-<DD>Dissolve common boundaries (default is no) .
-
-<DT><B>-n</B> 
-
-<DD>Use category labels NOT category numbers.
-</DT>
-
+<DD>Dissolve common boundaries (default is no).
 
 <P>
 
@@ -128,6 +122,8 @@ boundaries from <EM>soils</EM> with area category numbers of 1 thru 4;  any
 common boundaries are dissolved, and all areas of the new map will be
 assigned category number 1.
 <P>
+
+<!-- -n doesn't exist any more (bug)
 <DT> 
 <DD><B>v.extract -dn list=</B>Abc,Def1,12A,WWd 
 <B>input=</B>soils <B>output=</B>soil_groupa <B>type=</B>area <B>new=</B>0  </B>
@@ -160,7 +156,33 @@ Def1
 12A
 <BR>
 WWd
+
+-->
+<DT> 
+<DD><B>v.extract input=</B>soils <B>output=</B>soil_groupa 
+<B>type=</B>area <B>new=</B>1 <B>file=</B>sample  
+<P>
+
+Produces a new vector area file <EM>soil_groupa</EM> containing 'area'
+boundaries from <EM>soils</EM>.  No common boundaries are dissolved, all areas
+of the new map will be assigned category number 1.  The numbers
+can be found in the file sample of the current directory.
+
+<DT> 
+
+<DD>The format for "sample" is:
+<P>
+1
+<BR>
+33
+<BR>
+45
+<BR>
+56
+
 </DL>
+
+
 
 <H2>AUTHOR</H2>
 

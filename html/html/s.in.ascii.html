@@ -23,8 +23,8 @@ their descriptions into a GRASS site list file.
 <B>sites=</B><EM>name</EM> 
 [<B>input=</B><EM>name</EM>] 
 [<B>d=</B><EM>value</EM>]
-[<B>fs=</B>character|space|tab] 
-[<B>date=</B><EM>timestamp</EM>[,<B><em>timestamp</em></B>]]
+[<B>fs=</B><EM>character|space|tab</EM>] 
+[<B>date=</B><EM>timestamp</EM>[/<EM>timestamp</EM>]]
 
 <H2>DESCRIPTION</H2>
 
@@ -36,20 +36,20 @@ list file format.
 
 Input can be entered via standard input or from the file
 <B>input=</B><EM>name</EM>. Each line of input should
-contain the easting, northing, and (optionally) the
-category label associated with a site.  The
+contain the easting, northing, and either the category value
+or category label associated with a site.  The
 <B>fs=</B><EM>name</EM> option (where <EM>name</EM> is
 either a character, a space, or a tab) can be used to
 specify the use of a particular field separator between
 these three input fields. This is useful when input is
 obtained from other programs (see NOTES, below).  Output is
 stored in the file <B>sites=</B><EM>name</EM> and placed in
-the site_lists directory under the user's current mapset.
+the site_lists/ directory under the user's current mapset.
 
 <P>
 
-The GRASS program <EM>s.out.ascii</EM> can be used to
-perform the reverse function, converting a file in GRASS
+The GRASS program <EM><a href="s.out.ascii.html">s.out.ascii</a></EM>
+can be used to perform the reverse function, converting a file in GRASS
 site list format into an ASCII listing of eastings,
 northings, and category labels associated with site
 locations.
@@ -70,8 +70,8 @@ locations.
     The field separator can be a character, a space, or a tab. 
 <BR>
     Default: space 
-<DT><b>date=</b><EM>timstamp[,timstamp]</EM>
-<DD>date/time stamp or date1,date2 range
+<DT><B>date=</B><EM>timestamp</EM>[/<EM>timestamp</EM>]
+<DD>String specifying timestamp or timestamp range.
 </DL>
 
 <P>
@@ -79,20 +79,9 @@ locations.
 <EM>s.in.ascii</EM> can be run either non-interactively or
 interactively.  The program will be run non-interactively
 if the user specifies a name to be assigned to the
-<EM>sites</EM> file output, the name of an existing ASCII
-file containing <EM>input</EM>, and (optionally) a field
-separator <EM>fs</EM> appearing in the <EM>input</EM> file,
-using the form:
-
-<P>
-<DL>
-<DD>
-<B>s.in.ascii</B> 
-<B>sites=</B><EM>name</EM> 
-[<B>input=</B><EM>name</EM>] 
-[<B>fs=</B>character|space|tab] 
-[<B>date=</B><EM>timestamp</EM>[,<B><em>timestamp</em></B>]]
-</DL>
+<B>sites</B> file output, the name of an existing ASCII
+file containing <B>input</B>, and (optionally) a field
+separator <B>fs</B> appearing in the <B>input</B> file.
 
 <P>
 
@@ -100,64 +89,30 @@ Alternately, the user can simply type <B>s.in.ascii</B> on
 the command line, without program arguments. In this case,
 the user will be prompted for parameter values using the
 standard GRASS parser interface described in the manual
-entry for <EM>parser</EM>. If the user does not specify the
-name of an <EM>input</EM> file containing site locations
-and (optionally) category labels, these should be entered
-to the program via standard input. The parameter <EM>d</EM> allows 
-to specify that more than 2 dimensions will be imported. Otherwise
-the third (or further) column in input file is treated as attribute.
+entry for <EM><a href="parser.html">parser</a></EM>. If 
+the user does not specify the name of an <B>input</B> 
+file containing site locations and category attributes,
+these should be entered to the program via standard input. 
+The <B>d</B> parameter allows the user to specify that more 
+than 2 dimensions will be imported. Otherwise the third (or 
+further) column in the <B>input</B> file will be treated as an attribute.
 
+<P>To define a <B>date</B> (timestamp), several date strings are accepted.
+Please see <EM><A HREF="r.timestamp.html">r.timestamp</A></EM> for details.
 
-<H2>GRASS 5.0 internal sites format in "sites_list/"</H2>
-
-If the user wants to directly generate site files, the following information
-can be used:<br>
-Header:<br>
-<pre>
-    #any comment, can be inserted anywhere
-    name|mysoils.site
-    desc|3D soils data for location A
-    time|15 Jan 1999
-    labels|east north elevation ID pH Corg color
-    form||||#%%@
-</pre>
 <p>
-Data:<br>
-Each line of the ascii input file should contain either two or three
-coordinates (x,y and optionally z) separated by a user-selectable
-field-delimiting character.  After the coordinates there are optional
-attribute fields separated from the coordinates and from each other with
-the same user-selectable field delimiter.
-<P>
-The attribute field may be a category number, a decimal value or a string.
-Category numbers must be preceded by the "#" character and string values
-must be preceded by the "@" character.  Floating point values may be
-preceded by the "%" character but if there is no "#" or "@" preceding the
-attribute then it is assumed to be a floating point value.  Also, string
-values that contain blanks must be quoted or the part of the string
-following the first blank will be parsed as a separate field, which may
-cause an error.
-<p>
-easting|northing|[z|[d4|]...][#category_int] [ [@attr_text OR %flt] ... ]
-<p>
-
-such as:
-<p>
-739865.8|4279785.5|#2965 %396685 %194919 %160392 %10941 %2.473222 @"St.Louis" @MO @city
-<p>
-There can be many dimensions between pipes (|), but no #%@. <p>
-There can be only one cat, preceded by #, then there may be 
-many FP or text attributes.
-
 <H2>NOTES</H2>
 
+<B>Importing from other GRASS programs</B>
+<p>
 Other GRASS programs can be used to produce output in a
 format suitable for input to <EM>s.in.ascii</EM>. For
 example, the user might pipe output produced by
-<EM>d.where</EM> into <EM>s.in.ascii</EM> to create a site
+<EM><a href="d.where.html">d.where</a></EM> into 
+<EM>s.in.ascii</EM> to create a site
 list file called <EM>my.sites</EM> containing site
 locations pointed to with the mouse, as illustrated below.
-In this example it was unnecessary to specify the field
+In this example it is unnecessary to specify the field
 separator used in the input, since <EM>d.where</EM> output
 separates the easting and northing values with spaces, and
 spaces are the default field separator assumed by
@@ -166,6 +121,14 @@ spaces are the default field separator assumed by
 <DL>
 <DD><B>d.where</B> | <B>s.in.ascii sites=</B>my.sites
 </DL>
+<p>
+<B>Importing from a spreadsheet</B>
+<p>
+Data may be imported from many spreadsheet programs by saving the spreadsheet
+as a comma separated variable (.csv) text file, and then using 
+the "<b>fs=</b><EM>,</EM>" command line parameter with <EM>s.in.ascii</EM>.
+Note <EM>s.in.ascii</EM> currently requires there to be at least three 
+columns of data for the import to work properly.
 <p>
 <b>Importing latitude/longitude data</b>
 <p>
@@ -198,8 +161,56 @@ In this example, we will work with the following site list:
 </pre>
 
 This data has three dimensions (assume easting, northing, and
-elevation),  five string attributes, and one decimal attributes.
+elevation),  five string attributes, and one decimal attribute.
 
+
+<H2>GRASS 5.0 internal sites format in "site_lists/"</H2>
+
+If the user wishes to generate site list files directly, the internal 
+format is described below.
+<p>
+<H3>Header:</H3>
+<pre>
+    #any comment, can be inserted anywhere
+    name|mysoils.site
+    desc|3D soils data for location A
+    time|15 Jan 1999
+    labels|east north elevation ID pH Corg color
+    form||||#%%@
+</pre>
+<p>
+<H3>Data:</H3>
+Each line of the ASCII file should contain either two or three
+coordinates (x,y and optionally z) separated by a pipe ("|") character.  
+After the coordinates there should be trailing pipe character, and optionally 
+attribute fields may follow separated from each other with blank spaces.
+<P>
+The attribute field may be a category number, a decimal value or a string.
+Category numbers must come first and be preceded by the "#" character, 
+while string values must be preceded by the "@" character.  
+Floating point values may be
+preceded by the "%" character but if there is no "#" or "@" preceding the
+attribute then it is assumed to be a floating point (FP) value.  Also, string
+values that contain blanks must be quoted or the part of the string
+following the first blank will be parsed as a separate field, which may
+cause an error.
+<p>
+<b>General form</b><br>
+easting|northing|[z|[d4|]...][#category_int] [ [@attr_text OR %FP] ... ]
+<p>
+<b>Example</b><br>
+<tt>
+739865.8|4279785.5|#2965 %396685 %194919 %2.473222 @"St.Louis" @MO @city
+</tt><p>
+There can be many dimensions between pipes (|), but no #%@. <p>
+There can be only one cat, preceded by #, after which there may be 
+many FP or text attributes.
+<p>
+For more information, see the 
+<EM><A HREF="../ascii_formats.html">GRASS ASCII formats</A></EM> page or
+the <EM><A HREF="http://grass.itc.it/grassdevel.html#prog">
+GRASS 5 Programmer's manual</A></EM>.
+<p>
 
 <H2>SEE ALSO</H2>
 

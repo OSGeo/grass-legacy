@@ -22,7 +22,7 @@ their descriptions into a GRASS site list file.
 <B>s.in.dbf</B> [-lz]
 <B>input=</B><EM>name</EM>
 [<B>sites=</B><EM>name</EM>]
-[<B>date=</B><EM>timestamp</EM>[,<B><em>timestamp</em></B>]]
+[<B>date=</B><EM>timestamp</EM>[/<EM>timestamp</EM>]]
 
 <H2>DESCRIPTION</H2>
 
@@ -37,7 +37,7 @@ Input can be entered from the file
 contain the easting, northing, and (optionally) the
 category label associated with a site. Output is
 stored in the file <B>sites=</B><EM>name</EM> and placed in
-the site_lists directory under the user's current mapset.
+the site_lists/ directory under the user's current mapset.
 
 <H3>Flags:</H3>
 
@@ -53,11 +53,11 @@ the site_lists directory under the user's current mapset.
 
 <DL>
 <DT><B>input=</B><EM>name</EM>
-<DD>Name of an existing ASCII file containing site locations and labels.
+<DD>Name of an existing dBase file containing the data to be imported.
 <DT><B>sites=</B><EM>name</EM>
 <DD>Name of the new GRASS site list file to be output. 
-<DT><b>date=</b><EM>timstamp[,timstamp]
-<DD>date/time stamp or date1,date2 range
+<DT><b>date=</b><EM>timstamp</EM>[/<EM>timestamp</EM>]
+<DD>String specifying timestamp or timestamp range.
 </DL>
 
 <P>
@@ -65,19 +65,22 @@ the site_lists directory under the user's current mapset.
 <EM>s.in.dbf</EM> can be run either non-interactively or
 interactively.  The program will be run non-interactively
 if the user specifies a name to be assigned to the
-<EM>sites</EM> file output, the name of an existing ASCII
-file containing <EM>input</EM>.
+<B>sites</B> file output, and the name of an existing DBF
+file containing <B>input</B>.
 <P>
 
 Alternately, the user can simply type <B>s.in.dbf</B> on
 the command line, without program arguments. In this case,
 the user will be prompted for parameter values using the
 standard GRASS parser interface described in the manual
-entry for <EM>parser</EM>. 
+entry for <EM><a href="parser.html">parser</a></EM>. 
 
-<H2>GRASS 5.0 internal sites format in "sites_list/"</H2>
+<P>To define a <B>date</B> (timestamp), several date strings are accepted.
+Please see <EM><A HREF="r.timestamp.html">r.timestamp</A></EM> for details.
 
-See <a href=s.in.ascii.html>s.in.ascii</a>
+<H2>GRASS 5.0 internal sites format in "site_lists/"</H2>
+
+See <EM><a href=s.in.ascii.html>s.in.ascii</a></EM>
 
 <H2>TODO</H2>
 
@@ -90,11 +93,12 @@ in the table.
 <EM><A HREF="s.in.ascii.html">s.in.ascii</A></EM><br>
 <EM><A HREF="s.in.shape.html">s.out.shape</A></EM><br>
 <EM><A HREF="s.out.ascii.html">s.out.ascii</A></EM><br>
+<EM><A HREF="r.timestamp.html">r.timestamp</A></EM><br>
 <EM><A HREF="parser.html">parser</A></EM>
 
 <H2>AUTHORS</H2>
 
-Markus Neteler, University of Hannover<br>
+Markus Neteler, University of Hannover, with code from:<br>
 Alex Shevlakov (pg.in.dbf)<br>
 Frank Warmerdam (DBF Routines in pg.in.dbf)<br>
 David D. Gray (-l flag in v.in.shape)

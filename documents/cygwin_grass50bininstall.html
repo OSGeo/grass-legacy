@@ -15,8 +15,7 @@
 GRASS 5.0 on Win32 with Cygwin</h1></center>
 
 <center>
-<h1>
-(arch i686-pc-cygwin)</h1>
+<h1>(arch i686-pc-cygwin)</h1>
 
 <tt>
 $Date$
@@ -24,14 +23,13 @@ $Date$
 </center>
 
 <hr SIZE=5 NOSHADE WIDTH="100%">
-<h2>
-Prerequisites:</h2>
+<h2>Prerequisites:</h2>
 
 <ul>
-<li>
-Windows NT 4.0 (SP3 or higher), Windows 2000 Professional
-or Windows XP,<br>
-(Windows 9x and Windows ME are unsupported)</li>
+
+<li>Windows NT 4.0 (SP3 or higher), Windows 2000 Professional or Windows
+XP,<br> (Windows 9x and Windows ME are unsupported)</li>
+
 <li>
 Cygwin, latest release,</li>
 
@@ -60,7 +58,7 @@ for proof-reading. All errors and mistakes are of course mine.
 1. Get the Cygwin tools</h2>
 The Cygwin tools are required to run UNIX
 compliant applications on Windows.
-<br>Get the latest version from <a href="http://sources.redhat.com/cygwin/download.html">http://sources.redhat.com/cygwin/download.html</a>.
+<br>Get the latest version from <a href="http://www.cygwin.com">http://www.cygwin.com</a>.
 <p>Download the file <tt>setup.exe</tt>
 to a local disk, run it and follow the instructions.
 <p>When installing the Cygwin tools, please
@@ -70,7 +68,7 @@ select all packages, or at least:
 <li> ash, bash, bzip2, clear, cygwin, file, fileutils, findutils,
 gawk, gettext, grep, groff, gzip, inetutils, jpeg, less, libpng,
 login, man, ncurses, opengl, perl, readline, regex, sed,
-sh-utils/shellutils, sunrpc, tar, tcltk, tcsh, termcap, texinfo, textutils,
+sh-utils/shellutils, sunrpc, tar, tcsh, termcap, texinfo, textutils,
 tiff, time, unzip, w32api, zip, zlib</li>
 
 <li>
@@ -96,73 +94,69 @@ generic display driver</b>
 <p>
 
 If you want to use the GRASS monitors (graphical output), you need the X
-Server and the X11 libraries. Get them from <a
-href="http://sources.redhat.com/cygwin/xfree/">http://sources.redhat.com/cygwin/xfree/</a>.
-Download at least the following packages: DLLs, fonts, Prog, twm, Xterm,
-Xwin. Please refer to the <a
-href="http://sources.redhat.com/cygwin/xfree/docs/ug/">XFree
-install guide</a> for further details.
+Server and the X11 libraries. Get them by selecting the XFree86 options in
+the Cygwin setup program checklist. <BR>
+Download at least the following XFree packages: base, bin, lib, etc, doc,
+fnts, f100, prog and xserv. Please refer to the XFree install guide for
+further details.
 
-<p>There are a lot of different free and commercial
-servers. 
-If you don't want to use the XFree Server (which is beta-quality and runs
-only in full screen mode), you can download the StarNet X Server from
+<P>
+<i>Alternative to XFree/Cygwin:</i><br>
+There are a lot of different free and commercial servers. 
+If you don't want to use the XFree Server, you can download the StarNet X Server from
 <a href="http://www.starnet.com/en/products/">http://www.starnet.com/en/products/</a>. This is a demo version that will time out
 after 2 hours. You can restart it again after it times out. 
 Currently only the XFree86 Server and the StarNet X Server have been tested with the GRASS distribution. 
 The Microimages X Server will not work reliable with the X11R6.4 libraries
 GRASS is linked with. 
-<ul>
-<li>
-WeirdX, an X Window System Server in pure
-Java under GNU GPL: <a href="http://www.jcraft.com/weirdx/index.html">http://www.jcraft.com/weirdx/index.html</a>.</li>
-</ul>
 
 <ul>
 <li>
-List of commercially available X servers:</li>
+WeirdX, an X Window System Server in pure Java under GNU GPL: <a
+href="http://www.jcraft.com/weirdx/index.html">http://www.jcraft.com/weirdx/index.html</a>.</li>
 
-<br><a href="http://www.rahul.net/kenton/xsites.html">http://www.rahul.net/kenton/xsites.html</a></ul>
+<li>
+List of commercially available X servers:
+<br><a href="http://www.rahul.net/kenton/xsites.html">http://www.rahul.net/kenton/xsites.html</a>
+</li>
 
-<ul>
 <li>
 Other, commercial servers are available:</li>
 
-<ul>
 <li>
 MicroImages MI/X: <a href="http://tnt.microimages.com/www/html/freestuf/mix/">http://tnt.microimages.com/www/html/freestuf/mix/</a></li>
 
 <li>
 StarNet Demo: <a href="http://www.starnet.com/product.htm">http://www.starnet.com/product.htm</a></li>
 </ul>
-</ul>
-<h2>
-3. Get the latest binary distribution for
-GRASS</h2>
-Get the file
-<br><a href="http://grass.itc.it/grass5/binary/windows_cygnus/">GRASS5.0.0_CYGWIN_NT-4.0_bin.tar.gz</a>
-or a newer package
-<br>from
-<br><a href="http://grass.itc.it/grass5/binary/windows_cygnus/">http://grass.itc.it/grass5/binary/windows_cygnus/</a>
-<p>And download the install script <a href="http://grass.itc.it/grass5/binary/windows_cygnus/">grass5install.sh</a>
-from the same directory.
+
 
 <h2>
-4. Get the tcl/tk 8.x libraries (requires X Server)
+3. Get the latest binary distribution for GRASS</h2>
+
+You can download either 
+<ul>
+<li><a
+href="http://grass.itc.it/grass5/binary/windows_cygnus/wingrass_generic/">winGRASS with generic display
+driver</a> including the install script &nbsp;<i>or</i>
+<li><a href="http://grass.itc.it/grass5/binary/windows_cygnus/wingrass_xserver/">winGRASS with X11 display display
+driver</a> (requires X Server, see above) including the install script.
+</ul>
+
+<h2>
+4. Only, when using winGRASS with X11 display: Get the tcl/tk 8.x libraries
 </h2>
 
-The only GRASS features which require X are tcltkgrass and NVIZ.
+<b>NOTE: you need to ensure that the "official" Cygwin Tcl/Tk package
+   *is not* installed.</b> (see Cygwin setup for this issue).
+<P>
+The only GRASS features which require an X Server are tcltkgrass and NVIZ.
 Hopefully, it will be possible to use tcltkgrass on Cygwin without X
 in the near future, although NVIZ will require X for the foreseeable
 future.
 
-<b>NOTE: If you want to use the winGRASS with generic display driver,
-you don't need to install the tcl/tk 8.x libraries.</b>
-<P>
-<b>NOTE: Also, you need to ensure that the "official" Cygwin Tcl/Tk package
-   *is not* installed.</b>
 <p>
-Download the actual precompiled x tcl/tk 8.x libraries and executables from
+Download the precompiled X tcl/tk 8.x libraries and executables from
 <br><a
 href="http://grass.itc.it/grass5/binary/windows_cygnus/wingrass_xserver/">http://grass.itc.it/grass5/binary/windows_cygnus/wingrass_xserver/</a>.
 
@@ -176,21 +170,20 @@ tar xzf /where/ever/you/saved/this/xtcltk-*.tar.gz
 
 <h2>
 5. And now FINALLY to the GRASS installation</h2>
+
 Log into the cygwin shell. Please check the
 required disk space and permissions first. The default installation path
 is <tt>/usr/local/grass5</tt>. Next:
 <pre><tt>&nbsp; cd /wherever/you/saved/package</tt></pre>
+<pre><tt>&nbsp; ./grass5install.sh grass5.0.2_i686-pc-cygwin_bin.tar.gz</tt></pre>
 
-<pre><tt>&nbsp; ./grass5install.sh GRASS5.0*_bin.tar.gz</tt></pre>
-This will install the GRASS package under
-<tt>/usr/local/grass5</tt> and store the start files under
-<tt>/usr/local/bin</tt>. Please
-note that the paths are all relative to the cygwin root (usually
-<tt>C:\CYGWIN</tt>
-or <tt>C:\PROGRAM FILES\CYGWIN</tt> or similar). Do not install the file
-from the root directory of cygwin (<tt>C:\CYGWIN</tt> from Windows or
-<tt>/</tt> from
-within cygwin), due to some bug of cygwin this will result in an error. 
+This will install the GRASS package under <tt>/usr/local/grass5</tt> and
+store the start files under <tt>/usr/local/bin</tt>. Please note that the
+paths are all relative to the cygwin root (usually <tt>C:\CYGWIN</tt> or
+<tt>C:\PROGRAM FILES\CYGWIN</tt> or similar). Do not install the file from
+the root directory of cygwin (<tt>C:\CYGWIN</tt> from Windows or <tt>/</tt>
+from within cygwin), due to some bug of cygwin this will result in an error.
+
 <p>Next you should install some data to test
 GRASS. You can get the <tt>global_grass5data.tar.gz</tt> sample data set from <a href="http://grass.itc.it/data.html">http://grass.itc.it/data.html</a>.
 Unpack the data with:
@@ -200,59 +193,89 @@ in an empty directory, e. g.
 Again remember to do this from within the cygwin shell.
 
 <h2>
-6.<a NAME="Start GRASS"></a>Starting GRASS 5</h2>
+6. <a NAME="Start GRASS"></a>Starting GRASS 5</h2>
 
 You can log into a GRASS session on the commandline
-(no graphics monitors) by issuing '<tt>grass5</tt>' in the cygwin shell. Follow the
+by issuing '<tt>grass5</tt>' in the cygwin shell. Follow the
 on-screen description and enter in the directories for your sample data.
-You can use GRASS from within the cygwin shell for scripting/programming,
-but without graphical output to screen.
+<P>
+
+Depending on the winGRASS version you use (generic winGRASS or winGRASS
+with X Server support), you continue like this:
+
+<h3>6.1 winGRASS with generic display driver</h3>
+
+To open a GRASS monitor, enter:
+<pre>
+d.mon x0
+d.mon sel=x0
+</pre>
+
+Then continue as usual. All GRASS modules <b>except</b> 'tcltkgrass' and 'nviz'
+are supported.
+
+<h3>6.2 winGRASS with X Server support under XFree86</h3>
+
+This version supports all GRASS modules including 'tcltkgrass' and 'nviz'.
+There are two options to use the XFree86 Server: With on desktop (stable)
+or in multiwindow mode (not yet stable).
+<P>
+
+<b>6.2.1 XFree86 desktop mode</b><P>
+
+In cygwin, launch the XFree86 server at Cygwin Bash prompt with:
+
+<pre>
+startxwin.bat
+</pre>
+
+Then start GRASS in a terminal within the X desctop.
+
+<P>
+<b>6.2.2 XFree86 multiwindow mode</b><P>
+
+In cygwin, launch the XFree86 server at Cygwin Bash prompt with:
+
+<pre>
+export DISPLAY=127.0.0.1:0
+XWin -multiwindow  -clipboard &
+</pre>
+Now the X Server is listening and will open X related windows in 
+individual windows. Then start GRASS as usual:
+
+<pre>
+grass5
+d.mon x0
+d.mon sel=x0
+
+tcltkgrass &
+nviz elevation.dem vect=roads &
+</pre>
+
+This runs GRASS similar to a common MS-Windows application.
+<P>
+Please also read the 
+<a href=http://cygwin.com/xfree/docs/ug/cygwin-xfree-ug.html>Cygwin/XFree86
+User's Guide</a>.
 
 
-For running GRASS with graphical output (X Window monitors) and the graphical 
-user interface (tcltkgrass) you have two choices: 
-Either with the XFree86 Server (not well tested) or with the StarNet demo 
-or full product (recommended, tested, faster, simpler setup etc.).
+<h3>6.3 winGRASS with X Server support and Star Net XWin-32</h3>
 
-<h3>XFree86</h3>
-<p>For running the graphics monitors start
-first the X Window Server by double-clicking on the <tt>startxwin.bat</tt> file
-in <tt>/usr/X11R6/bin</tt>. In the xterminal that starts up, re-create your
-login with <tt>bash --login -i</tt> and type in
-<tt>/usr/local/bin/grass5</tt>
-and you get the GRASS login screen. From there you can log into an GRASS
-session.
-
-<p>If you have problems starting up the X
-Window Server, please check the path in the <tt>startxwin.bat</tt> file under
-<tt>/usr/X11R6/bin</tt>.
-In my case the path was wrong, you need to specify an absolute path (e.
-g. <tt>C:\CYGWIN\USR\X11R6\BIN</tt>) for the Win32 console. If you have
-problems starting the tcltkgrass GUI (e. g. <tt>libX11.dll</tt> not found),
-check that you have <tt>/usr/X11R6/bin</tt> in your path. 
-
-<p>You can switch back to the Windows screen by
-pressing ALT-TAB (beware, this does not work on my system), you end the X Server with ALT-F4.
-
-<h3>Star Net XWin-32</h3>
-<p>On the server you can find a
-<tt>StartGrass.bat</tt> 
+<p>On the GRASS web site you can find a 
+<a href=http://grass.itc.it/grass5/binary/windows_cygnus/wingrass_xserver/old/><tt>StartGrass.bat</tt></a>
 script to put in your home directory. Please edit this file to adapt to your
-local paths. This sets the PATH and all needed
-environment variables and 
+local paths. This sets the PATH and all needed environment variables and 
 spawns an xterm window. From within that window run <tt>'grass5'</tt>.
 
 
 <p>Please report any problems, errors and
 solutions to the GRASS developers mailing list at 
-<a href="mailto:grass5@grass.itc.it">grass5@grass.itc.it</a>
+<a href="http://grass.itc.it/grassdevel.html#list">http://grass.itc.it/grassdevel.html#list</a>
 or the winGRASS mailing list at 
-<a href="mailto:winGRASS@grass.itc.it">winGRASS@grass.itc.it</a>. 
-(<a href="http://grass.itc.it/wingrass.html">See
-subscription information</a>).
+<a href="http://grass.itc.it/wingrass.html">http://grass.itc.it/wingrass.html</a>. 
 
-<h2>
-7. References</h2>
+<h2>7. References</h2>
+
 Read about Unix running under Windows here:
 <ul>
 <li>
@@ -260,7 +283,7 @@ Read about Unix running under Windows here:
 </ul>
 
 <hr SIZE=5 NOSHADE WIDTH="100%">
-Andreas Lange. 
+Andreas Lange, updated by Mike Thomas, Markus Neteler.
 
 $Date$
 

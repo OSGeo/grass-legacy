@@ -145,6 +145,10 @@ Create source and binary distributions:
 
      - Change back to directory of release branch:
         make changelog
+
+       (probably better use
+        cvs2cl.pl --follow releasebranch_26_april_2002_5_0_0
+       or appropriate release branch)
       
      - polish and add 'Changelog' file to src package 
 
