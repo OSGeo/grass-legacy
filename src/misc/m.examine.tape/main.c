@@ -129,6 +129,7 @@ main(argc,argv) char *argv[];
 	    if (screen)
 		counter (record) ;
 	    n = read (tapefd, buf, ibs) ;
+	    if (n < 0) {fprintf (stderr, "\n"); perror (tapename);}
 	}
 	if (out)
 	{
