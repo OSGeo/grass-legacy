@@ -15,6 +15,8 @@ static char                     rcsid[] = "@(#)XGRASS $Id: xc.create.c,v 0.0.0.1
  */
 
 #include <ctype.h>
+#include <string.h>
+#include <errno.h>
 #include "xc.xclip.h"
 #include "menu_item.h"
 #include "xgbitmaps.h"
@@ -1004,7 +1006,6 @@ __XcSaveToFile( Widget text, char *file)
     char *string;
     int length = 0;
     char errorbuf[1024];
-    extern char *sys_errlist[];
 
     string = XmTextGetString(text);
     length = XmTextGetLastPosition(text);
@@ -1014,7 +1015,7 @@ __XcSaveToFile( Widget text, char *file)
 
     fp = fopen(file, "w");
     if ( fp == NULL ) {
-	sprintf(errorbuf,"\"%s\": %s", file, sys_errlist[errno]);
+	sprintf(errorbuf,"\"%s\": %s", file, strerror(errno));
 	XgWarningDialog(text,errorbuf);
 	return;
     }
@@ -1036,7 +1037,6 @@ __XcSaveAsFile(Widget w, XtPointer cld, XtPointer cad)
         (InteractorCallbackStruct *)cad;
     char *ptr, *file, *directory, *path;
     char errorbuf[1024];
-    extern char *sys_errlist[];
     struct stat sbuf;
 
     XmStringGetLtoR(xgb->value,XmSTRING_DEFAULT_CHARSET,&path);
@@ -1052,7 +1052,7 @@ __XcSaveAsFile(Widget w, XtPointer cld, XtPointer cad)
 
     /* is the directory path writeable? */
     if ( access(directory, W_OK) == -1 ) {
-	sprintf(errorbuf,"\"%s\": %s", directory, sys_errlist[errno]);
+	sprintf(errorbuf,"\"%s\": %s", directory, strerror(errno));
 	XgWarningDialog(w,errorbuf);
 	return;
     }
@@ -1071,7 +1071,7 @@ __XcSaveAsFile(Widget w, XtPointer cld, XtPointer cad)
                     XmNtitle, curp->value.dbval.filename, NULL);
 	    }
 	} else {
-	    sprintf(errorbuf,"\"%s\": %s",file, sys_errlist[errno]);
+	    sprintf(errorbuf,"\"%s\": %s",file, strerror(errno));
 	    XgWarningDialog(w,errorbuf);
 	}
     } else {
