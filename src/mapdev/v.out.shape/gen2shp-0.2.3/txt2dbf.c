@@ -26,6 +26,13 @@
  *		-In	integer, with n digits
  *		-Rn.d	real, with n digits (including '.') and d decimals
  *
+ *	Special options for GRASS:
+ *		-F <string> 	use <string> as comma separated 
+ *				field name list. First line of
+ *				txt file is assumed to contain first 
+ *				data row. 
+ *				
+ *		-U		ARC ungen-format: skip last line (END)
  *	To handle with *dbf-files, this program uses the functions and
  *	datastructures of the shapelib by Frank Warmerdam, released under
  *	LGPL.
@@ -39,19 +46,21 @@
 #include <string.h>
 #include <assert.h>
 
-#include "../../../libes/vect32_64/shapelib-1.2.8/shapefil.h"
+#include "shapefil.h"
 #include "utils.h"
 
 /* program information -------------------------------------------------*/
 char *progname;
-char usage[] = "[{-Cn | -In | -Rn.d}] [-d delimiter] [-v] txt-file dbf-file";
-char version[] = "txt2dbf 1.1, GRASS-version 22.05.2000  by Frank Koormann";
+char usage[] = "[{-Cn | -In | -Rn.d}] [-d delim] [-U] [-F fieldstring] [-v] txt-file dbf-file";
+char version[] = "txt2dbf 1.2, GRASS-version 05.06.2000, by Frank Koormann";
 
 /* type definition -----------------------------------------------------*/
 /* content of record as list of char-vectors 				*/
 typedef char **tRecord;
 
 /* global variables ----------------------------------------------------*/
+int v=0;	/* verbose? 0: no, 1: yes  			*/ 
+int ungen=0;	/* data in ARC/Info ungenerate format? 0: no, 1: yes */
 
 /* Fielddescription: type, length, decimals
    The structure is described by a list of fielddescriptions 		*/
@@ -77,6 +86,10 @@ tFieldDescr *tabAddField(DBFFieldType type,
  * record description, delim should contain ONE delimiter !		*/
 int readRecord(FILE *fp, tRecord rec, int fields, char * delim );
 
+/* splitString ---------------------------------------------------------*/
+/* Split string into fields (still strings) accordiung to the record
+ * description								*/  
+void splitString(char * line, tRecord rec, int fields, char * delim );
 
 /* main ----------------------------------------------------------------*/
 int main( int argc, char *argv[] )
@@ -84,8 +97,8 @@ int main( int argc, char *argv[] )
 	/* common */
 	char *dummy;
 	char *delim = "\t";
+	char *fieldheader = NULL;
 	int i;
-	int v=0;	/* verbose? 0: no, 1: yes  			*/ 
 	int cnt;	/* Counter for written Records 			*/
 
 	/* getopt() - related */
@@ -107,8 +120,7 @@ int main( int argc, char *argv[] )
 
 	/* Get program name and eval commandline			*/
 	progname = *argv;	
-	while ((c = getopt(argc, argv, "+C:I:R:d:v")) != -1) {
-		fprintf(stderr,"Opt is -%c, Arg is: %s\n",c,optarg);
+	while ((c = getopt(argc, argv, "+C:I:R:d:F:vU")) != -1) {
 		switch (c) {
 			case 'C' : 
 				fType = FTString;
@@ -134,6 +146,12 @@ int main( int argc, char *argv[] )
 			case 'd' : 
 				delim = strdup(optarg);
 				break;
+			case 'F' : 
+				fieldheader=optarg;
+				break;
+			case 'U' : 
+				ungen=1;
+				break;
 			case 'v' :
 				fprintf(stderr,"%s\n",version);
 				v=1;
@@ -149,7 +167,6 @@ int main( int argc, char *argv[] )
 		dbfname = argv[optind+1];
 	   }
 		
-		fprintf(stderr," %s --> %s\n",txtname,dbfname);
 	if ( txtname==NULL || dbfname==NULL )
 	{	fprintf(stderr,"Usage: %s %s\n",progname, usage);
                 exit(1);
@@ -173,11 +190,14 @@ int main( int argc, char *argv[] )
 	if ( (strcmp(txtname, "-") != 0) && (!freopen(txtname, "r", stdin)) ) 
 		perror(progname), exit(1);
 
+	if ( fieldheader != NULL ) 
+		splitString(fieldheader, record, numFields, " ");
+	else
 	/* read the first line (contains fieldnames)			*/
-	if ( readRecord(stdin, record, numFields, delim) == EOF )
-	{	fprintf(stderr,"%s: %s: empty file\n",progname,txtname);
-		exit(1);
-	}
+		if ( readRecord(stdin, record, numFields, delim) == EOF )
+		{	fprintf(stderr,"%s: %s: empty file\n",progname,txtname);
+			exit(1);
+		}
 
 	/* cut of '#' out of first fieldname (the '#' declares the line for
  	 * some programs, i.e. gnuplot, as comment)			*/
@@ -212,15 +232,19 @@ int main( int argc, char *argv[] )
 	rec = 0;
 	while ( readRecord(stdin, record, numFields, delim ) != EOF )
 	{
-	    for (i=0; i< numFields; i++) {
-		if (strlen(record[i]) > tabDescr[i].n) {
-		    if (v){
-			fprintf(stderr, " ignoring %s (too long) ", record[i]);
-				strcpy(record[i], noData);
-		    } 
-		}
-		switch (tabDescr[i].type) {
-		case FTString  : 
+	    if ( (strcmp(record[0], "END") != 0) 
+			|| ((strcmp(record[0], "END") == 0) 
+				&& (strcmp(record[1], noData) != 0)))
+	    {
+	    	for (i=0; i< numFields; i++) {
+		    if (strlen(record[i]) > tabDescr[i].n) {
+		    	if (v){
+			    fprintf(stderr, " ignoring %s (too long) ", 
+				record[i]); strcpy(record[i], noData);
+		    	} 
+		    }
+		    switch (tabDescr[i].type) {
+		    case FTString  : 
 				if (!DBFWriteStringAttribute(
 						dbh, 
 						rec, 
@@ -232,7 +256,7 @@ int main( int argc, char *argv[] )
 				 }
 				 break;
 					 
-		case FTInteger	: 
+		    case FTInteger	: 
 				 if (!DBFWriteIntegerAttribute(
 						dbh, 
 						rec, 
@@ -244,8 +268,8 @@ int main( int argc, char *argv[] )
 				 }
 				 break;
 					 
-		case FTDouble : 
-				 if (!DBFWriteDoubleAttribute(
+		    case FTDouble : 
+		 		 if (!DBFWriteDoubleAttribute(
 						dbh, 
 						rec, 
 						i, 
@@ -255,15 +279,19 @@ int main( int argc, char *argv[] )
 				 	exit(2);
 				 }
 				 break;
-		case FTInvalid : break;	
-		}
+		    case FTInvalid : break;	
+		    }
+	        }
+	        rec++;
+
+	        if (v)
+		    fprintf(stderr," [%d]",++cnt);
+
 	    }
-	    rec++;
-
-	    if (v)
-		fprintf(stderr," [%d]",++cnt);
-
-	}
+	    else
+		if (v)
+		    fprintf(stderr," END skipped");
+	} /* while loop */
 
 	/* rewrite head (num of records known yet)			*/
 
@@ -303,6 +331,9 @@ tFieldDescr *tabAddField(
 				ptr[new].n    = atoi(strtok(format,".")); 
 				ptr[new].d    = atoi(strtok(NULL,"."));
 			   break;
+		case FTInvalid : /* Impossible, but otherwise the compiler
+				    gets nervous.	*/
+			   break;
 	} 
 	
 	return ptr;
@@ -313,22 +344,33 @@ tFieldDescr *tabAddField(
  * record description							*/
 int readRecord(FILE *fp, tRecord rec, int fields, char * delim )
 { 	char line[255];
-	char *dummy;
-	int ret,i;
+	int ret;
 
 	ret = getline(fp, line);
 
 	if ( ret != EOF )
-	{	strcpy(rec[0], dtok(line, delim[0] ));
-		for (i=1; i<fields; i++)	
-			if ((dummy = dtok(NULL, delim[0] )) != NULL)
-				strcpy(rec[i], dummy);
-			else
-			{	strcpy(rec[i], noData);
-				fprintf(stderr," Missing field %d:",i);
-			}
-	}
+		splitString(line, rec, fields, delim);
 
 	return ret;
 }
+
+/* splitString ---------------------------------------------------------*/
+/* Split string into fields (still strings) accordiung to the record
+ * description								*/  
+void splitString(char * line, tRecord rec, int fields, char * delim ) 
+{ 	
+	char *dummy;
+	int i;
+
+	strcpy(rec[0], dtok(line, delim[0] ));
+	for (i=1; i<fields; i++)	
+		if ((dummy = dtok(NULL, delim[0] )) != NULL)
+			strcpy(rec[i], dummy);
+		else
+		{	strcpy(rec[i], noData);
+			if ( v && !ungen )
+				fprintf(stderr," Missing field %d:",i);
+		}
+}
+
 
