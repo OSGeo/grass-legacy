@@ -1,6 +1,7 @@
 /*  @(#)b_a_main.c	2.1  6/26/87  */
 
 #include <stdio.h>
+#include "gis.h"
 #include "format.h"
 
 /*
@@ -17,7 +18,6 @@ main(argc, argv)
 	FILE *fopen() ;
 	char  *ascii ;
 	char  *binary ;
-	char  *rindex() ;
 
 	extern	int	new_format ;
 
@@ -60,12 +60,12 @@ main(argc, argv)
 		exit(-1) ;
 	}
 
-	if ( ! (binary = rindex(argv[1], '/')))
+	if ( ! (binary = G_rindex(argv[1], '/')))
 		binary = argv[1] ;
 	else
 		++binary ;
 
-	if ( ! (ascii = rindex(argv[2], '/')))
+	if ( ! (ascii = G_rindex(argv[2], '/')))
 		ascii = argv[2] ;
 	else
 		++ascii ;
