@@ -328,16 +328,16 @@ main (int argc, char **argv)
 
    if (last->answer)  /* restoring temporary region */
    {
-      map = G_find_file ("windows", "zoom_temp", "");
+      map = G_find_file ("windows", "previous_zoom", "");
       
       if (!map) {
 	fprintf(stderr,_("this is the first d.zoom run; no previous zoom availible\n"));
 	return(0);
       }
 
-      G__get_window (&tmpwin, "windows", "zoom_temp", map);
+      G__get_window (&tmpwin, "windows", "previous_zoom", map);
  
-      fprintf(stderr, "returning to last zoom\n") ;
+      fprintf(stderr, "returning to previous zoom\n") ;
  
       ux1 = tmpwin.east;
       ux2 = tmpwin.west;
@@ -351,7 +351,7 @@ main (int argc, char **argv)
 
     /* Do the zoom */
     G_get_window(&window);
-    G__put_window(&window, "windows", "zoom_temp"); /* Save current region before it is changed */
+    G__put_window(&window, "windows", "previous_zoom"); /* Save current region before it is changed */
     G_get_window(&currwin);
     G_get_default_window(&defwin);
     if ( full->answer == 1 )
