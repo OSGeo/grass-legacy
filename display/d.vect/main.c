@@ -113,7 +113,7 @@ main (int argc, char **argv)
 	lcolor_opt = G_define_option() ;
 	lcolor_opt->key        = "lcolor" ;
 	lcolor_opt->type       = TYPE_STRING ;
-	lcolor_opt->answer     = "white" ;
+	lcolor_opt->answer     = "red" ;
 	lcolor_opt->description= "Label color" ;
 	
 	bgcolor_opt = G_define_option() ;
