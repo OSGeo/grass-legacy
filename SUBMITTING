@@ -153,6 +153,12 @@ care of following rules:
        #endif
     This is safe comparing to nested /* comments */
 
+    Functions in the library must be documented in doxygen style to
+    get them into the programmer's manual (generate with 
+      make pdfdocs  or
+      make htmldocs
+    ). See lib/gis/*.c for examples.
+
 11. PLEASE take the time to add comments throughout your code explaining what
     the code is doing. It will save a HUGE amount of time and frustration for
     other programmers that may have to change your code in the future.
