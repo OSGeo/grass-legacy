@@ -1,5 +1,3 @@
-Welcome to GRASS GRASS_VERSION_NUMBER (GRASS_VERSION_DATE) GRASS_VERSION_UPDATE_PKG
-
 Geographic Resources Analysis Support System (GRASS) is Copyright,
 1999-2004 by the GRASS Development Team, and licensed under terms of the
 GNU General Public License (GPL) version 2.

@@ -36,6 +36,7 @@ default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/echo \
 	$(ETC)/grass_intro \
 	$(ETC)/license \
+	$(ETC)/welcome \
 	$(ETC)/msgs \
 	$(ETC)/gis_set.tcl \
 	$(ETC)/epsg_option.tcl \
@@ -93,6 +94,11 @@ $(ETC)/grass_intro: grass_intro.txt version.sed
 $(ETC)/license: license.txt version.sed
 	rm -f $@
 	sh ./version.sed "$(GRASS_VERSION_NUMBER)" "$(GRASS_VERSION_DATE)" "$(GRASS_VERSION_UPDATE_PKG)" license.txt > $@
+	chmod +r $@
+
+$(ETC)/welcome: welcome.txt version.sed
+	rm -f $@
+	sh ./version.sed "$(GRASS_VERSION_NUMBER)" "$(GRASS_VERSION_DATE)" "$(GRASS_VERSION_UPDATE_PKG)" welcome.txt > $@
 	chmod +r $@
 
 $(ETC)/msgs: msgs
