@@ -20,10 +20,11 @@ O_FILES = \
 all:    $(PROG)
 
 
-$(PROG): $(O_FILES) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(TRANSLIB)
+$(PROG): $(O_FILES) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(TRANSLIB) $(VASKILB)
 	rm -f a.out $@
 	$(CC) $(LDFLAGS) $(O_FILES) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(TRANSLIB)  $(VASK) $(MATHLIB)
 	mv a.out $@
 
 $(O_FILES):	trans.h
-trans_digit.o:	$(LIBDIR)/dig_atts.h
+
+$(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(TRANSLIB) $(VASKILB): #
