@@ -25,7 +25,7 @@ Hardcopy PostScript map output utility.
 
 <BR>
 
-<B>ps.map</B> [<B>\-r</B>] [<B>input=</B><EM>name</EM>] [<B>scale=</B><EM>mapscale</EM>] [<B>copies=</B><EM>n</EM>] <B>output=</B><EM>name</EM>
+<B>ps.map</B> [<B>-r</B>] [<B>input=</B><EM>name</EM>] [<B>scale=</B><EM>mapscale</EM>] [<B>copies=</B><EM>n</EM>] <B>output=</B><EM>name</EM>
 
 <H2>DESCRIPTION</H2>
 
@@ -717,6 +717,7 @@ USAGE:	<B>sites</B> sitemap|<EM>list</EM>
 	<B>color</B> color
 	<B>icon</B> iconfile|<EM>list</EM>
 	<B>size</B> #
+	<B>size_att</B> #	
 	<B>desc</B> [y|n]
 	<B>font</B> font name
 	<B>end</B>
@@ -729,6 +730,8 @@ the <B>icon</B> to be used to represent the presence of a site
 </EM>);
 the <B>size</B> of the icon (number of times larger than the size it is in
 the icon file);
+the <B>size_att</B> number of attribute used for size (if used size is equal
+to size * attribute_value); 
 and
 whether or not the <B>desc</B>ription associated with each site is also to be
 printed.
