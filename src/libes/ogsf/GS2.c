@@ -250,6 +250,27 @@ void GS_setlight_position(int num, float xpos, float ypos, float zpos,
     return;
 }
 
+
+/***********************************************************************/
+void GS_getlight_position(int num, float *xpos, float *ypos, float *zpos,
+    int *local)
+{
+    if(num)
+    {
+        num -= 1;
+        if(num < Numlights)
+        {
+            *xpos = Gv.lights[num].position[X];
+            *ypos = Gv.lights[num].position[Y];
+            *zpos = Gv.lights[num].position[Z];
+            *local = (int)Gv.lights[num].position[W];
+
+            }
+    }
+
+    return;
+}
+
 /***********************************************************************/
 void GS_setlight_color(int num, float red, float green, float blue)
 {
@@ -2787,7 +2808,7 @@ void GS_init_view(void)
     GS_v3eq(Gv.real_to, Gv.from_to[TO]);
     GS_v3normalize(Gv.from_to[FROM], Gv.from_to[TO]);
 
-    Gd.nearclip = .5;
+    Gd.nearclip = .05;
     Gd.farclip = 100000.;      /* deletes map at given height (?) */
     Gd.aspect = (float) GS_get_aspect(); 
 

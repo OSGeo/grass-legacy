@@ -236,10 +236,12 @@ int gvd_vect(geovect *gv, geosurf *gs, int do_fast)
 		
 		if (gs_clip_segment(gs, bgn, end, NULL))
 		{
-		    gsd_bgnline();
+		    gsd_bgnpolygon();
 		    gsd_vert_func(bgn);
 		    gsd_vert_func(end);
+/*
 		    gsd_endline();
+*/
 		}
 	    }
 
@@ -254,6 +256,7 @@ int gvd_vect(geovect *gv, geosurf *gs, int do_fast)
     	    }
 	    #endif
 	}
+	gsd_endline();
     }
 
     gsd_linewidth(1);

@@ -16,6 +16,7 @@
 #include "gsget.h"
 /* for update_attrange - might be able to move this func now */
 
+
 /* The following macros are only used in the function Gs_update_attrange() */
 #define INIT_MINMAX(p, nm, size, min, max, found) \
 	found = 0; \
@@ -951,19 +952,19 @@ int Gs_save_3dview(char *vname, geoview *gv, geodisplay *gd,
 int Gs_load_3dview(char *vname, geoview *gv, geodisplay *gd,
     struct Cell_head *w, geosurf *defsurf)
 {
-    #ifdef LOAD_3D
     char *mapset;
     float tempf;
     struct G_3dview v;
     int tempi, ret = -1;
+    float pt[3];
 
     mapset = G_find_file2 ("3d.view", vname, "");
 
     if (mapset != NULL)
     {
-	ret = G_get_3dview(name, mapset, &v);
+	ret = G_get_3dview(vname, mapset, &v);
     }
-    
+
     if (ret >= 0)
     {
 	if (strcmp((v.pgm_id), "Nvision-ALPHA!"))
@@ -972,11 +973,22 @@ int Gs_load_3dview(char *vname, geoview *gv, geodisplay *gd,
 	    fprintf(stderr,"         there may be some inconsistancies.\n");
 	}
 
-	if (!GS_NEAR_EQUAL(v.vwin.ns_res, w.ns_res, .01))
-	{
-	    v.mesh_freq = (int)(v.mesh_freq * v.vwin.ns_res/w.ns_res);
-	    v.poly_freq = (int)(v.poly_freq * v.vwin.ns_res/w.ns_res);
-	}
+	/* set poly and mesh resolutions */
+	    v.mesh_freq = (int)(v.mesh_freq * v.vwin.ns_res/w->ns_res);
+	    v.poly_freq = (int)(v.poly_freq * v.vwin.ns_res/w->ns_res);
+
+	/* Set To and FROM positions */
+	/* TO */
+	pt[0] = (v.from_to[TO][X] - w->west) - w->ew_res/2. ;
+	pt[1] = (v.from_to[TO][Y] - w->south) - w->ns_res/2.;
+	pt[2] = v.from_to[TO][Z];
+	GS_set_focus(pt);
+	
+	/* FROM */
+        pt[0] = (float)v.from_to[FROM][X];
+	pt[1] = (float)v.from_to[FROM][Y];
+	pt[2] = (float)v.from_to[FROM][Z];
+	GS_moveto_real(pt);
 
 	if (defsurf)
 	{
@@ -990,144 +1002,86 @@ int Gs_load_3dview(char *vname, geoview *gv, geodisplay *gd,
 	    	/* globe stuff not used */
 		v.display_type -= 10;
 	    }
-	    
+	   
+	/* set drawing modes */ 
 	    if (v.colorgrid)
 	    {
-		dmode &= DM_COL_WIRE;
+		dmode |= DM_COL_WIRE;
 	    }
 	    
 	    if (v.shading)
 	    {
-		dmode &= DM_GOURAUD;
+		dmode |= DM_GOURAUD;
 	    }
-	    
+	
 	    switch (v.display_type)
 	    {
 		case 1:
-		    GS_setall_drawmode(dmode & DM_WIRE);
+		    dmode |= DM_WIRE;
 		
 		    break;
 		case 2:
-		    GS_setall_drawmode(dmode & DM_POLY);
+		    dmode |= DM_POLY;
 		
 		    break;
 		case 3:
-		    GS_setall_drawmode(dmode & DM_WIRE_POLY);
+		    dmode |= DM_WIRE_POLY;
 		
 		    break;
 	    }
+	    GS_setall_drawmode(dmode);
 	    
 	    /* should also set nozeros here */
 	}
 
+	/* set exaggeration */
+	if (v.exag)
 	GS_set_global_exag(v.exag);
 
+	/* Set FOV */
 	if (v.fov)
 	{
-	    GS_set_fov(v.fov);
+	    GS_set_fov((int)(v.fov * 10.));
 	}
 	else
 	{
 	    /* TODO: do ortho */
 	}
 
-	GS_set_twist(v.twist);
+	/* Set twist */
+	if (v.twist)
+	GS_set_twist((int)(v.twist*10.));
+	
 
     	/* TODO:  OK to here - need to unravel/reverse lights stuff****/
-    	if (gv->lights[0].position[W] == 1)
-	{
-	    /* local */
-	    v.lightpos[X] = gv->lights[0].position[X];
-	    v.lightpos[Y] = gv->lights[0].position[Y];
-	    v.lightpos[Z] = gv->lights[0].position[Z];
-	    gsd_model2real(v.lightpos);
-	    v.lightpos[W] = 1.0;    /* local */
-    	}
-    	else
-    	{
-	    v.lightpos[X] = gv->lights[0].position[X];
-	    v.lightpos[Y] = gv->lights[0].position[Y];
-	    v.lightpos[Z] = gv->lights[0].position[Z];
-	    v.lightpos[W] = 0.0;    /* inf */
-    	}
-    	
-	v.lightcol[0] = gv->lights[0].color[0];
-    	v.lightcol[1] = gv->lights[0].color[1];
-    	v.lightcol[2] = gv->lights[0].color[2];
 
-    	v.ambient = (gv->lights[0].ambient[0] + gv->lights[0].ambient[1] +
-		gv->lights[0].ambient[2])/3.;
-    	v.shine = gv->lights[0].shine;
+	if (v.lightson) {
+	/* Lights are on */
 
-	/* light color: get max, use as brightness */
-	tempf = 0.0;
-	
-	for (tempi=0 ; tempi < 3 ; ++tempi)
-	{
-	    if (v.lightcol[tempi] > tempf)
-	    {
-	    	tempf = v.lightcol[tempi];
-	    }
-	}
-	
-	Abright->val = tempf;
-	pnl_fixact (Abright);
+	/* Light Position */
+	gv->lights[0].position[X] = v.lightpos[X];
+	gv->lights[0].position[Y] = v.lightpos[Y];
+	gv->lights[0].position[Z] = v.lightpos[Z];
 
-	Ared->val = v.lightcol[0] / tempf; 	
-	pnl_fixact (Ared);
-	Agrn->val = v.lightcol[1] / tempf; 	
-	pnl_fixact (Agrn);
-	Ablu->val = v.lightcol[2] / tempf; 	
-	pnl_fixact (Ablu);
+	/* Light Color */
+	gv->lights[0].color[0] = v.lightcol[0];
+	gv->lights[0].color[1] = v.lightcol[1];
+	gv->lights[0].color[2] = v.lightcol[2];
 
-	Aambient->val = v.ambient;
-	pnl_fixact (Aambient);
+	/* Light Shininess */
+	gv->lights[0].shine = v.shine;
 
-	Ashine->val = v.shine;
-	pnl_fixact (Ashine);
+	/* Light Ambient */
+	gv->lights[0].ambient[0] = gv->lights[0].ambient[1] = gv->lights[0].ambient[2] = v.ambient * 3.;
 
-	Asurface->val = v.surfonly;
-	pnl_fixact (Asurface);
 
-	Alight->val = v.lightson;
-	pnl_fixact (Alight);
+	} /* Done with lights */
 
-	Afocus->val = 0;
-	pnl_fixact (Afocus);
 
-	FROM_TO[TO][X] = (v.from_to[TO][X] - w.west) * XYscale;
-	FROM_TO[TO][Y] = (v.from_to[TO][Y] - w.south) * XYscale;
-	FROM_TO[TO][Z] = (v.from_to[TO][Z] - Z_Min_real) * Z_exag;
-	FROM_TO[FROM][X] = (v.from_to[FROM][X] - w.west) * XYscale;
-	FROM_TO[FROM][Y] = (v.from_to[FROM][Y] - w.south) * XYscale;
-	FROM_TO[FROM][Z] = (v.from_to[FROM][Z] - Z_Min_real) * Z_exag;
-	PNL_ACCESS (Point, Axy, x) = 
-		(FROM_TO[FROM][X] - XBase)/XRange;
-	PNL_ACCESS (Point, Axy, y) = 
-		(FROM_TO[FROM][Y] - YBase)/YRange;
-	pnl_fixact (Axy);
+GS_alldraw_wire();
 
-	Afollow->val = 0;
-	pnl_fixact (Afollow);
+} /* Done with file */
 
-	LightPos[X] = (v.lightpos[X] - w.west) * XYscale;
-	LightPos[Y] = (v.lightpos[Y] - w.south) * XYscale;
-	PNL_ACCESS(Point, Alightxy, x)=(LightPos[X]-XBase) / XRange;
-	PNL_ACCESS(Point, Alightxy, y)=(LightPos[Y]-YBase) / YRange;
-	pnl_fixact (Alightxy);
-	LightPos[Z] = (v.lightpos[Z] - Z_Min_real) * Z_exag;
-	LightPos[W] = v.lightpos[W];
-    }
-    else
-    {
-	fprintf(stderr,"...no settings loaded\n");
-    }
-
-    return(-1);
-    #else
-    return(-1);
-    #endif  
-    /* END LOAD_3D */
 }
 
 /***********************************************************************/
