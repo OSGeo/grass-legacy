@@ -73,7 +73,7 @@ int make_window_box ( struct Cell_head *window, double magnify)
 		quitonly=0;
 		prebutton=button;
 		break ;
-	case 2: make_window_center(window, magnify);
+	case 2: make_window_center(window, magnify, ux2, uy2);
 		prebutton=2;
 	        button=3;
 	        quitonly=2;   /* leave after unzoom */
