@@ -1,0 +1,17 @@
+README for libr library
+
+
+This library demonstrates a type-independent programming for raster maps.
+Many developers have tried to program type-independent modules since
+GRASS supported FP raster maps. However there is no standard method to
+support different map types. Also, its method was troublesome to easily
+program.
+
+So libr library is here. There are two examples so far: r.show and r.fill.
+
+I'll add some documentation as soon as possible.
+
+
+Any comments to <hdcho@geni.cemtlo.com>
+
+Huidae Cho, 04/2000
