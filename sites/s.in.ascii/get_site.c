@@ -122,7 +122,7 @@ Site *get_site (FILE *fd, int dims, char *fs, int *has_cat)
                             site->dbl_alloc * sizeof (double));
                 }
                 if ((err = sscanf (buf, "%%%lf", &(site->dbl_att[d++]))) < 1)
-                    G_warning ("error scanning floating point attribute");
+                    G_warning ("error scanning floating point attribute: %s", buf);
                 buf = my_next_att (buf);
                 break;
             case '@':			/* string attribute */
@@ -187,7 +187,7 @@ Site *get_site (FILE *fd, int dims, char *fs, int *has_cat)
                             site->dbl_alloc * sizeof (double));
                 }
                 if ((err = sscanf (buf, "%lf", &(site->dbl_att[d++]))) < 1)
-                    G_warning ("error scanning floating point attribute");
+                    G_warning ("error scanning floating point attribute: %s", buf);
                 buf = my_next_att (buf);
                 break;
 #else
@@ -198,7 +198,7 @@ Site *get_site (FILE *fd, int dims, char *fs, int *has_cat)
                                 site->dbl_alloc * sizeof (double));
                     }
                     if ((err = sscanf (buf, "%lf", &(site->dbl_att[d++]))) < 1)
-                        G_warning ("error scanning floating point attribute");
+                        G_warning ("error scanning floating point attribute: %s", buf);
                     buf = my_next_att (buf);
                 }
                 else { /* Convert as string */
