@@ -3,9 +3,9 @@
 #include "raster.h"
 #include "local_proto.h"
 
-int zoomwindow (int quiet, double magnify)
+int zoomwindow ( struct Cell_head *window, int quiet, double magnify)
 {
-    struct Cell_head window, oldwindow, defwin;
+    struct Cell_head oldwindow, defwin;
     char *err;
     int quitonly;
     int screen_x, screen_y, button;
@@ -13,9 +13,8 @@ int zoomwindow (int quiet, double magnify)
     double px, py, uxc, uyc, ux1, uy1, ux2, uy2;
     double north,south,east,west, ns, ew;
     int printmenu = 1;
-    int limit;
+    int t, limit;
 
-    G_get_set_window(&window);
     G_copy((char *) &oldwindow, (char *) &window, sizeof(window));
     G_get_default_window(&defwin);
 
@@ -33,7 +32,7 @@ int zoomwindow (int quiet, double magnify)
 	
 	switch(button) {
 	    case LEFTB: /* enter zoom menu */
-	        make_window_box (&window, magnify);
+	        make_window_box (window, magnify, 1, 0);
 	        printmenu = 1;
 		break ;
 	    case MIDDLEB: /* pan */
@@ -41,69 +40,41 @@ int zoomwindow (int quiet, double magnify)
 		px = D_d_to_u_col((double)screen_x)  ;
 		py = D_d_to_u_row((double)screen_y)  ;
 	        fprintf(stderr, "\n") ;
-		print_coor ( &window, py, px );
+		print_coor ( window, py, px );
 	        fprintf(stderr, "\n") ;
 		
 		uxc = D_d_to_u_col((double)screen_x);
 		uyc = D_d_to_u_row((double)screen_y);
-		ew = window.east - window.west;
-		ns = window.north - window.south;
+		t = uxc / window->ew_res;
+		uxc = t * window->ew_res;
+		t = uyc / window->ns_res;
+		uyc = t * window->ns_res;
+		
+		ew = window->east - window->west;
+		ns = window->north - window->south;
+
 		ux1 = uxc - ew/2;
                 ux2 = uxc + ew/2;
                 uy1 = uyc - ns/2;
-                uy2 = uyc + ns/2;
+                uy2 = uyc + ns/2;\
 
-		limit = 0;
-		if ( uy2 > defwin.north ) {
-		    north = defwin.north;
-		    south = defwin.north - ns;
-	            fprintf(stderr, "\nNorth limit of region reached") ;
-		    limit = 1;
-		} else if ( uy1 < defwin.south ) {
-		    /*
-		    south = defwin.south;
-		    north = defwin.south + ns;
-		    */
-	            fprintf(stderr, "\nSouth limit of region reached") ;
-		    limit = 1;
-		} else { 
-		    north = uy2;
-		    south = uy1;
-		}
-		north = uy2;
-		south = uy1;
-		if ( ux1 < defwin.west ) {
-		    west  = defwin.west;
-		    east  = defwin.west + ew;
-	            fprintf(stderr, "\nWest limit of region reached") ;
-		    limit = 1;
-		} else if ( ux2 > defwin.east ) {
-		    east  = defwin.east;
-		    west  = defwin.east - ew ;
-	            fprintf(stderr, "\nEast limit of region reached") ;
-		    limit = 1;
-		} else {
-		    west  = ux1;
-		    east  = ux2;
-		}
-                if ( limit ){
-		    printmenu = 1;
-	            fprintf(stderr, "\n\n") ;
-		}
-		west  = ux1;
-		east  = ux2;
-		
-		window.north = north;
-		window.south = south;
-		window.east  = east ;
-		window.west  = west ;
+		north = uy1>uy2?uy1:uy2 ;
+		south = uy1<uy2?uy1:uy2 ;
+		west  = ux1<ux2?ux1:ux2 ;
+		east  = ux1>ux2?ux1:ux2 ;
 
-                print_win ( &window, north, south, east, west );
-		printmenu = 1;
+		if (  window->proj == PROJECTION_LL ) {
+		    if ( north > 90 ) { 
+			north =  90;
+			south = 90 - ns;
+		    } else if ( south < -90 ) {
+			south =  -90;
+			north = -90 + ns;
+		    }
+		}
 		
-		G_put_window(&window);
-	        G_set_window(&window);
-		redraw();
+
+		set_win ( window, east, north, west, south, 0);
 		break ;
             case RIGHTB:
 	      	end = 1;
