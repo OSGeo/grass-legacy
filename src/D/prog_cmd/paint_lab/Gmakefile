@@ -1,0 +1,14 @@
+#  %W%  %G%
+
+OFILES = \
+	do_labels.o \
+	main.o
+
+Dpaint.labels: $(BIN)/Dpaint.labels
+
+$(BIN)/Dpaint.labels: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
