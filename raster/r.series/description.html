@@ -6,7 +6,17 @@ assigned to the corresponding cells in the input raster map layers.
 
 <H2>NOTES</H2>
 
-Without <EM>-n</EM> flag, NULL values are passed to aggregate functions.
+Linear regression is separated into two methods: slope and offset.
+<P>
+With <EM>-n</EM> flag, any cell for which any of the corresponding input cells are
+NULL is automatically set to NULL. The aggregate function is not
+called, so all methods behave this way with respect to the <EM>-n</EM> flag.
+<P>
+Without <EM>-n</EM> flag, the complete list of inputs for each cell (including
+NULLs) is passed to the aggregate function. Individual aggregates can
+handle data as they choose. Mostly, they just compute the aggregate
+over the non-NULL values, producing a NULL result only if all inputs
+are NULL.
 
 <H2>EXAMPLE</H2>
 
