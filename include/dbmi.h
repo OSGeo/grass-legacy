@@ -38,6 +38,7 @@
 #define DB_PROC_LIST_TABLES		404
 #define DB_PROC_ADD_COLUMN		405
 #define DB_PROC_DROP_COLUMN		406
+#define DB_PROC_GRANT_ON_TABLE		407
 
 #define DB_PROC_CREATE_INDEX		701
 #define DB_PROC_LIST_INDEXES		702
@@ -107,6 +108,12 @@
 /* privilege modes */
 #define DB_GRANTED		1
 #define DB_NOT_GRANTED		-1
+
+/* Privileges */
+#define DB_PRIV_SELECT       0x01
+
+#define DB_GROUP         0x01
+#define DB_PUBLIC        0x02
 
 /* default value modes */
 #define DB_DEFINED	1
@@ -254,7 +261,8 @@ typedef struct _db_connection
     char *location;
     char *user;
     char *password;
-    char *keycol;        /* name of default key column */
+    char *keycol;       /* name of default key column */
+    char *group;        /* deafault group to which select privilege is granted */
 }dbConnection;
 
 /* reclass rule */

@@ -16,6 +16,7 @@ extern int db_d_commit_transaction();
 extern int db_d_fetch();
 extern int db_d_get_num_rows();
 extern int db_d_find_database();
+extern int db_d_grant_on_table();
 extern int db_d_insert();
 extern int db_d_delete();
 extern int db_d_list_databases();
@@ -51,6 +52,7 @@ static struct
   DB_PROC_DESCRIBE_TABLE,	db_d_describe_table,
   DB_PROC_CREATE_TABLE,		db_d_create_table,
   DB_PROC_DROP_TABLE,		db_d_drop_table,
+  DB_PROC_GRANT_ON_TABLE,	db_d_grant_on_table,
   DB_PROC_OPEN_DATABASE,	db_d_open_database,
   DB_PROC_CLOSE_DATABASE,	db_d_close_database,
   DB_PROC_LIST_DATABASES,	db_d_list_databases,

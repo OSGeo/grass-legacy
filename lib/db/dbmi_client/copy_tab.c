@@ -38,7 +38,7 @@ db__copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
     dbHandle from_handle, to_handle;
     dbString tblname, sql;
     dbString value_string;
-    dbTable *table;
+    dbTable *table, *out_table;
     dbCursor cursor;
     dbColumn *column;
     dbValue *value;
@@ -117,15 +117,22 @@ db__copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
     table = db_get_cursor_table (&cursor);
     ncols = db_get_table_number_of_columns(table);
     G_debug ( 3, "ncols = %d", ncols );
-    sprintf ( buf, "create table %s ( ", to_tblname );
-    db_set_string ( &sql, buf);  
+
+    out_table = db_alloc_table ( ncols );
+    db_set_table_name ( out_table, to_tblname );
+
     selcol_found = 0;
     for ( col = 0; col < ncols; col++ ) {
+	dbColumn    *out_column;
+	
         column = db_get_table_column (table, col);
 	colname = db_get_column_name (column);
 	sqltype = db_get_column_sqltype (column);
-	ctype = db_sqltype_to_Ctype(sqltype);
+	ctype = db_sqltype_to_Ctype ( sqltype );
+	
 	G_debug ( 3, "%s (%s)", colname, db_sqltype_name(sqltype) );
+
+        out_column = db_get_table_column (out_table, col);
 
 	if ( selcol && G_strcasecmp ( colname, selcol) == 0 ) {
 	    if ( ctype != DB_C_TYPE_INT )
@@ -133,60 +140,24 @@ db__copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
 	    selcol_found = 1;
 	}
 
-	if ( col > 0 ) db_append_string ( &sql, ", " );
-	db_append_string ( &sql, colname );
-	db_append_string ( &sql, " " );
-	/* Note: I found on Web:
-	*  These are the ANSI data types: BIT, CHARACTER, DATE, DECIMAL, DOUBLE PRECISION, FLOAT, 
-	*  INTEGER, INTERVAL, NUMERIC, REAL, SMALLINT, TIMESTAMP, TIME, VARBIT, VARCHAR, CHAR
-	*  ...
-	*  Thus, the only data types you can use with the assurance that they will 
-	*  work everywhere are as follows:
-	*  DOUBLE PRECISION, FLOAT, INTEGER, NUMERIC, REAL, SMALLINT, VARCHAR, CHAR */
-	switch ( ctype ) {
-	    case DB_C_TYPE_STRING:
-		sprintf (buf, "varchar(%d)", db_get_column_length (column) );
-		db_append_string ( &sql, buf);
-                break;
-	    case DB_C_TYPE_INT:
-		db_append_string ( &sql, "integer");
-		break;
-	    case DB_C_TYPE_DOUBLE:
-		db_append_string ( &sql, "double precision");
-		break;
-	    case DB_C_TYPE_DATETIME:
-		switch ( sqltype ) {
-                    case DB_SQL_TYPE_DATE:
-		        db_append_string ( &sql, "date");
-			break;
-                    case DB_SQL_TYPE_TIME:
-		        db_append_string ( &sql, "time");
-			break;
-		    default:
-		        db_append_string ( &sql, "datetime");
-		}
-		break;
- 	    default:
-                G_warning ( "Unknown column type (%s)", colname);
-	        db_close_cursor(&cursor);
-		db_close_database_shutdown_driver(to_driver);
-		db_close_database_shutdown_driver(from_driver);
-		return DB_FAILED;
-	}
+	db_set_column_name ( out_column,  db_get_column_name ( column ) );
+	db_set_column_description ( out_column,  db_get_column_description ( column ) );
+	db_set_column_sqltype ( out_column,  db_get_column_sqltype ( column ) );
+	db_set_column_length ( out_column,  db_get_column_length ( column ) );
+	db_set_column_precision ( out_column,  db_get_column_precision ( column ) );
+	db_set_column_scale ( out_column,  db_get_column_scale ( column ) );
     }
-    db_append_string ( &sql, ")" );
-    G_debug ( 3, db_get_string(&sql) );
  
     if ( selcol && !selcol_found) 
 	G_fatal_error ("Column '%s' not found", selcol);
-    
-    if (db_execute_immediate (to_driver, &sql) != DB_OK ) {
-	G_warning ( "Cannot create new table: '%s'", db_get_string(&sql) );
+
+    if ( db_create_table ( to_driver, out_table ) != DB_OK ) {
+	G_warning ( "Cannot create new table" );
 	db_close_cursor(&cursor);
 	db_close_database_shutdown_driver(to_driver);
 	db_close_database_shutdown_driver(from_driver);
 	return DB_FAILED;
-    }
+    }	
 
     /* Copy all rows */
     while ( 1 ) {
