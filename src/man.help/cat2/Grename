@@ -1,0 +1,66 @@
+
+
+
+Grename(2G)          GRASS Reference Manual           Grename(2G)
+
+
+
+NAME
+     Grename - Rename data
+     (G Language Tool)
+
+SYNOPSIS
+     Grename element old_name new_name
+
+DESCRIPTION
+     Grename allows the user to rename data in the current
+     mapset.  The user first specifies the type of data to be
+     renamed from among those in the below list:
+
+
+          cell          (cell maps)
+
+          vect          (vector maps)
+
+          icon          (paint icon files)
+
+          labels        (paint labels)
+
+          sites         (site maps)
+
+          window        (window files)
+
+          group         (imagery group files)
+
+
+     In addition to choosing the element, the user specifies both
+     old_name (i.e., the to be renamed) and new_name (the name of
+     a new in the current mapset which will hold the renamed
+
+     The old old_name is then renamed to new_name.
+
+NOTE
+     If a data has support files (e.g., cell these support files
+     also are renamed.
+
+SEE ALSO
+     rename[1]
+
+AUTHOR
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
