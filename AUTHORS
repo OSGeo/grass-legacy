@@ -56,6 +56,7 @@ GRASS 5 Core Team (most have CVS access):
 
 
 Significant contributions (very incomplete, please add):
+ Andrea Aime     <aaime@comune.modena.it>    (r.contour, r.poly)
  Angus Carr      <apcarr@flash.lakeheadu.ca> (ERDAS LAN)
  Job Spijker     <spijker@geo.uu.nl>         (v.bubble)
  Philip Warner   <pjw@rhyme.com.au>          (NVIZ code cleanup)
