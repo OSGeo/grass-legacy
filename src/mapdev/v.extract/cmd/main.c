@@ -77,13 +77,6 @@ int main (int argc, char **argv)
     n_flag->key              = 'n';
     n_flag->description      = "Use category names NOT numbers ";
 
-    typopt = G_define_option();
-    typopt->key              = "type";
-    typopt->type             =  TYPE_STRING;
-    typopt->required         =  YES;
-    typopt->options          =  "area,line,site";
-    typopt->description      =  "Select area, line, or site "; 
-
     inopt = G_define_option();
     inopt->key             = "input";
     inopt->type            = TYPE_STRING;
@@ -97,6 +90,13 @@ int main (int argc, char **argv)
     outopt->required        =  YES;
     outopt->gisprompt       = "any,dig,vect";
     outopt->description     = "vector output map name ";
+
+    typopt = G_define_option();
+    typopt->key              = "type";
+    typopt->type             =  TYPE_STRING;
+    typopt->required         =  YES;
+    typopt->options          =  "area,line,site";
+    typopt->description      =  "Select area, line, or site "; 
 
     newopt = G_define_option();
     newopt->key              = "new";
