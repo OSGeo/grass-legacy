@@ -203,11 +203,12 @@ LINKS
 
 - KBabel: http://i18n.kde.org/tools/kbabel/
 - poEdit: http://poedit.sourceforge.net/
-
+- .po files for many languages:  KDE translator center, http://i18n.kde.org/teams/
 
 NOTES
 
-[1] To load existing .po files (eg from older GRASS versions) into
+[1] To load existing .po files (eg from older GRASS versions or
+    KDE translator center, http://i18n.kde.org/teams/) into
     Kbabel, use
     KBABEL -> SETTINGS -> CONFIGURE DIRECTORY -> PO AUXILIARY
 
