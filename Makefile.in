@@ -9,6 +9,8 @@ BINDIR=			@BINDIR@
 
 SRCDIR=			`pwd`
 SERVERNAME=		`uname -n`
+SYSTEM=			`uname -s`
+VERSION=		`cat src/CMD/VERSION | head -1`
 
 INSTALL=		@INSTALL@
 INSTALL_DATA=		@INSTALL_DATA@ -m 644
@@ -45,6 +47,7 @@ do-install:
 	${MAKE_ENV} ${SHELL} src/CMD/generic/MAKELINKS.sh
 	${MAKE_POST_ENV} ${SHELL} src/CMD/generic/POST_INSTALL.sh
 
+
 # GRASS source code cleaning options:
 #
 # There are three options for cleaning the GRASS source code. Each option
@@ -72,7 +75,7 @@ distclean: clean
 	echo "Performing compilation clean..."
 	find . -name 'LIB*' -exec rm -rf {} \; 2>/dev/null ; true
 	rm -f src.garden/grass.hdf/HDF4.1r3/hdf/src/libdf.a 2>/dev/null ; true
-	rm -rf ${BINDIR}/* 2>/dev/null ; true
+#	rm -rf ${BINDIR}/* 2>/dev/null ; true
 	rm -rf bwidget/    2>/dev/null ; true
 	rm -rf dev/        2>/dev/null ; true
 	rm -rf driver/     2>/dev/null ; true
@@ -99,3 +102,31 @@ veryclean: distclean
 	rm -f src/include/config.h                  2>/dev/null ; true
 	rm -f Makefile                              2>/dev/null ; true
 	# Complete installation clean finished
+
+# make a source package for distribution:
+srcdist: distclean
+	echo "Performing complete installation clean..."
+	rm -f src/CMD/head/head                     2>/dev/null ; true
+	rm -f config.cache config.log config.status 2>/dev/null ; true
+	rm -f src/scripts/shells/create_fifos.sh    2>/dev/null ; true
+	rm -f src/include/config.h                  2>/dev/null ; true
+	rm -f Makefile                              2>/dev/null ; true
+	echo "create Changelog file without initial messages..."
+# cvs2cl.pl creates a GNU style ChangeLog file:
+# http://www.red-bean.com/~kfogel/cvs2cl.shtml
+	cvs2cl.pl
+	echo "reduce Changelog file... Dont want the initial upload included."
+	CUTLINE=`grep -n '1999-12-29 16:12' ChangeLog |cut -d':' -f1`
+	head -${CUTLINE} ChangeLog   > ChangeLog.cut
+	echo "   initial CVS import" >> ChangeLog.cut
+	mv ChangeLog.cut ChangeLog
+	rm -f ChangeLog.bak
+	tar cvfz grass${VERSION}_src.tar.gz * --exclude=CVS
+	echo "Distribution source package: grass${VERSION}_src.tar.gz ready."
+
+# make a binary package for distribution:
+#  Bug: VER is not expaning properly (wrong directory):
+bindist:
+	VER=${VERSION}
+	(cd ${PREFIX};  tar cvfz grass${VER}_${SYSTEM}_bin.tar.gz * )
+	echo "Distribution binary package: grass${VER}__${SYSTEM}_bin.tar.gz ready."
