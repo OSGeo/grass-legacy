@@ -181,7 +181,8 @@ LOC_ARG_WITH(opendwg, openDWG, no)
 # With includes and libs options
 
 AC_ARG_WITH(gdal,
-[  --with-gdal[=path/gdal-config] GDAL/OGR support (gdal-config with path)])
+[  --with-gdal[=path/gdal-config] enable GDAL/OGR support (gdal-config with path, \
+e.g. '--with-gdal=/usr/local/bin/gdal-config')])
 
 AC_ARG_WITH(includes,
 [  --with-includes=DIRS    site include files are in DIRS])
@@ -1091,7 +1092,9 @@ if test -n "$USE_GLW"; then
 
 LOC_CHECK_INC_PATH(glw,GLw,OPENGLwINC)
 
-LOC_CHECK_INCLUDES(GL/GLwMDrawA.h,GLwM,$OPENGLwINC $XMINC $OPENGLINC)
+LOC_CHECK_INCLUDES(GL/GLwMDrawA.h,GLwM,$OPENGLwINC $XMINC $OPENGLINC,[
+LOC_CHECK_INCLUDES(X11/GLw/GLwMDrawA.h,GLwM,,)
+])
 
 # With GLw library directory
 

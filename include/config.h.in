@@ -179,6 +179,12 @@
 /* define if NLS requested */
 #undef USE_NLS
 
+/* define if <GL/GLwMDrawA.h> exists */
+#undef HAVE_GL_GLWMDRAWA_H
+
+/* define if <X11/GLw/GLwMDrawA.h> exists */
+#undef HAVE_X11_GLW_GLWMDRAWA_H
+
 /*
  * It's hard to click two buttons simultaneously with two button mouse.
  * Situation is worse, if it requires continuous clicking.
