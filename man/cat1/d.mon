@@ -1,12 +1,12 @@
 
 
 
-d.mon <main>         GRASS Reference Manual          <main> d.mon
+d.mon <main>	     GRASS Reference Manual	     <main> d.mon
 
 
 
 NAME
-     d.mon - To establish and control use of a graphics display
+     d.mon - To	establish and control use of a graphics	display
      monitor.
      (GRASS Display Program)
 
@@ -17,72 +17,72 @@ SYNOPSIS
      [unlock=name]
 
 DESCRIPTION
-     The GRASS program d.mon allows the user to start, select,
-     list, query the status of, release control of, stop, and
-     unlock control of, available graphics monitors.  The user
-     can run this program either interactively (through a series
-     of menus), or non-interactively by typing the name of the
-     monitor to start, stop, select, or unlock, and any desired
+     The GRASS program d.mon allows the	user to	start, select,
+     list, query the status of,	release	control	of, stop, and
+     unlock control of,	available graphics monitors.  The user
+     can run this program either interactively (through	a series
+     of	menus),	or non-interactively by	typing the name	of the
+     monitor to	start, stop, select, or	unlock,	and any	desired
      flags on the command line.
 
      Flags:
 
-     -l   List all monitors
+     -l	  List all monitors
 
-     -L   List all monitors (with current status)
+     -L	  List all monitors (with current status)
 
-     -p   Print name of currently selected monitor
+     -p	  Print	name of	currently selected monitor
 
-     -r   Release currently selected monitor
+     -r	  Release currently selected monitor
 
-     -s   Do not automatically select when starting
+     -s	  Do not automatically select when starting
 
 
      Parameters:
 
-     start=name    Name of graphics monitor to start
+     start=name	   Name	of graphics monitor to start
 
-     stop=name     Name of graphics monitor to stop
+     stop=name	   Name	of graphics monitor to stop
 
-     select=name   Name of graphics monitor to select
+     select=name   Name	of graphics monitor to select
 
-     unlock=name   Name of graphics monitor to unlock
+     unlock=name   Name	of graphics monitor to unlock
 
 parameter values,
      When the user enters the command d.mon without specifying
-          the below menu appears on the screen:
+	  the below menu appears on the	screen:
 
 
-                                  MONITOR MENU
-          Making sure that the graphics monitor is running:
+				  MONITOR MENU
+	  Making sure that the graphics	monitor	is running:
 
-            1      - Start a graphics monitor
+	    1	   - Start a graphics monitor
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
 
 
 
-d.mon <main>         GRASS Reference Manual          <main> d.mon
+d.mon <main>	     GRASS Reference Manual	     <main> d.mon
 
 
 
-                   (also automatically selects this monitor)
-            2      - Stop a graphics monitor
+		   (also automatically selects this monitor)
+	    2	   - Stop a graphics monitor
 
-          Choosing a graphics monitor for your graphics:
+	  Choosing a graphics monitor for your graphics:
 
-            3      - Select a graphics device for output
-                   (currently selected monitor:  name)
-            4      - Release control of the graphics driver
-                   (let someone else use it)
-                   (option 4 appears only after selection of a monitor)
+	    3	   - Select a graphics device for output
+		   (currently selected monitor:	 name)
+	    4	   - Release control of	the graphics driver
+		   (let	someone	else use it)
+		   (option 4 appears only after	selection of a monitor)
 
-          RETURN   quit
+	  RETURN   quit
 
 
 
@@ -126,104 +126,104 @@ d.mon <main>         GRASS Reference Manual          <main> d.mon
 
 
 
-GRASS 4.1                U.S. Army CERL                         2
+GRASS 4.2		Baylor University			2
 
 
 
 
 
 
-d.mon <main>         GRASS Reference Manual          <main> d.mon
+d.mon <main>	     GRASS Reference Manual	     <main> d.mon
 
 
 
      These parameters perform the following functions:
 
-     1   Start a Monitor.
-         In order to display on-screen GRASS graphics, the user
-         must start and select a graphics monitor.  By default,
-         the start command actually runs two commands, to both
-         start and select whatever monitor is named by the user.
-         (The user can get a list of available monitors by
-         setting the -l or -L flag on the command line.)
+     1	 Start a Monitor.
+	 In order to display on-screen GRASS graphics, the user
+	 must start and	select a graphics monitor.  By default,
+	 the start command actually runs two commands, to both
+	 start and select whatever monitor is named by the user.
+	 (The user can get a list of available monitors	by
+	 setting the -l	or -L flag on the command line.)
 
-         When a monitor is started, it is therefore also
-         (automatically) selected for output, unless the -s flag
-         is set by the user;  the user can also explictly select
-         a monitor that has been started (see (3) below).  After
-         a monitor is started, a blank graphics frame should
-         appear on whatever terminal the user is using to display
-         graphics.
+	 When a	monitor	is started, it is therefore also
+	 (automatically) selected for output, unless the -s flag
+	 is set	by the user;  the user can also	explictly select
+	 a monitor that	has been started (see (3) below).  After
+	 a monitor is started, a blank graphics	frame should
+	 appear	on whatever terminal the user is using to display
+	 graphics.
 
-         The desired monitor should be started once and need not
-         be restarted unless it is stopped (option 2) for some
-         reason.  A monitor may continue to run for any length of
-         time, even when no GRASS session is being run.  The
-         monitor program runs in the background.
+	 The desired monitor should be started once and	need not
+	 be restarted unless it	is stopped (option 2) for some
+	 reason.  A monitor may	continue to run	for any	length of
+	 time, even when no GRASS session is being run.	 The
+	 monitor program runs in the background.
 
-     2   Stop a Monitor.
-         Sometimes the monitor program needs to be stopped
-         (terminated).  Choosing option 2 will terminate a user-
-         specified monitor program.
+     2	 Stop a	Monitor.
+	 Sometimes the monitor program needs to	be stopped
+	 (terminated).	Choosing option	2 will terminate a user-
+	 specified monitor program.
 
-         A graphics monitor has two different types of status:
-         monitor program not running, and monitor running.  A
-         monitor that has been started and/or selected will be
-         listed as running;  a monitor that has been stopped (or
-         not started) will be listed as not running.  The -L
-         (list status) flag will list the status of each monitor
-         connected to the system.
-
-
-     3   Select a Monitor.
-         When the user starts a monitor, it is also
-         (automatically) selected for graphics output unless the
-         user sets the -s flag.  In order to use (direct graphics
-         output to) a monitor, the user must select that monitor
-         for use, either by simply starting the monitor without
-         the -s flag or by explictly selecting the monitor for
-         output using option 3.  Only running monitors can be
-         selected for graphics output.  Once the user has
-         selected a monitor for output, no other user can use
-         this monitor for graphics output until the monitor
-         driver is either released (by the user) or unlocked (by
-         any user on the system).
-         The user can run multiple graphics monitors by simply
+	 A graphics monitor has	two different types of status:
+	 monitor program not running, and monitor running.  A
+	 monitor that has been started and/or selected will be
+	 listed	as running;  a monitor that has	been stopped (or
+	 not started) will be listed as	not running.  The -L
+	 (list status) flag will list the status of each monitor
+	 connected to the system.
 
 
+     3	 Select	a Monitor.
+	 When the user starts a	monitor, it is also
+	 (automatically) selected for graphics output unless the
+	 user sets the -s flag.	 In order to use (direct graphics
+	 output	to) a monitor, the user	must select that monitor
+	 for use, either by simply starting the	monitor	without
+	 the -s	flag or	by explictly selecting the monitor for
+	 output	using option 3.	 Only running monitors can be
+	 selected for graphics output.	Once the user has
+	 selected a monitor for	output,	no other user can use
+	 this monitor for graphics output until	the monitor
+	 driver	is either released (by the user) or unlocked (by
+	 any user on the system).
+	 The user can run multiple graphics monitors by	simply
 
-GRASS 4.1                U.S. Army CERL                         3
 
 
+GRASS 4.2		Baylor University			3
 
 
 
 
-d.mon <main>         GRASS Reference Manual          <main> d.mon
+
+
+d.mon <main>	     GRASS Reference Manual	     <main> d.mon
 
 
 
-         starting each of the graphics monitors drivers he wishes
-         to direct output to.
+	 starting each of the graphics monitors	drivers	he wishes
+	 to direct output to.
 
-     4   Release a Monitor.
-         Once a user has selected a monitor for graphics output,
-         it is locked for use by that user until either:  (1) the
-         user voluntarily releases control of the monitor for use
-         by another (option 4), or (2) another GRASS user unlocks
-         the user's control of the monitor.  Menu option 4
-         appears only to the person who has selected the monitor
-         (since only that user can release control of his
-         selected graphics monitor.) If another user wishes to
-         unlock the user's control of the monitor, that user must
-         run d.mon from the command line and set the unlock=name
-         parameter.
+     4	 Release a Monitor.
+	 Once a	user has selected a monitor for	graphics output,
+	 it is locked for use by that user until either:  (1) the
+	 user voluntarily releases control of the monitor for use
+	 by another (option 4),	or (2) another GRASS user unlocks
+	 the user's control of the monitor.  Menu option 4
+	 appears only to the person who	has selected the monitor
+	 (since	only that user can release control of his
+	 selected graphics monitor.)  If another user wishes to
+	 unlock	the user's control of the monitor, that	user must
+	 run d.mon from	the command line and set the unlock=name
+	 parameter.
 
-     You may choose multiple options within the d.mon program.
-     To leave (exit) the d.mon menu, press the <RETURN> key.
+     You may choose multiple options within the	d.mon program.
+     To	leave (exit) the d.mon menu, press the <RETURN>	key.
 
 NOTES
-     The d.mon program can regulate control of graphics monitors
+     The d.mon program can regulate control of graphics	monitors
      both in systems using multiple monitors and in systems using
      a single graphics monitor.
 
@@ -231,7 +231,7 @@ SEE ALSO
      d.erase, d.frame, monitorcap
 
 AUTHOR
-     Michael Shapiro, U.S. Army Construction Engineering Research
+     Michael Shapiro, U.S. Army	Construction Engineering Research
      Laboratory
 
 
@@ -258,7 +258,7 @@ AUTHOR
 
 
 
-GRASS 4.1                U.S. Army CERL                         4
+GRASS 4.2		Baylor University			4
 
 
 
