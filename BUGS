@@ -1,4 +1,4 @@
-                 $Id: BUGS,v 1.118 2001-02-26 09:27:42 markus Exp $
+                 $Id: BUGS,v 1.119 2001-02-26 14:31:29 markus Exp $
 
 Known bugs in current GRASS GIS version 5.0 CVS
 [In sync with GRASS 5.0 beta CVS version]
@@ -19,7 +19,8 @@ RC-Bug list:
  http://intevation.de/rt/webrt?q_queue=grass
 
 
-[RC] CELL-Driver: colors are not correct
+[RC] CELL-Driver: 
+  -colors are not correct
    Comment from Carl Anderson <candrsn@mindspring.com>
     Tracking of the "bug" will have to start in
     src/display/d.rast/cmd/display.c
@@ -27,7 +28,10 @@ RC-Bug list:
     drivers, I suspect one of the Libraries and not the XDRIVER.
     look at D_set_colors ().
     (being worked on by ?)
-
+  - When plotting to D_CELL, the color black is changed to white. this
+    concerns vector maps, fonts (in d.legend), grid an d.erase. I think this
+    problem did not exist in version 5b10.
+    reported by: Reinhard Brunzema <r.brunzema@web.de>)
 
 [RC]r.neighbors 
   seems doesn't work with a float number                   
