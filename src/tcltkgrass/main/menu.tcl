@@ -748,6 +748,9 @@ menu_build 1 .main_menu {
     Image "Image processing" $image_processing
     Import "Import maps into GRASS" {
         "Raster map" "" {
+	    "GRASS ASCII GRID" "" {
+	        "source $env(TCLTKGRASSBASE)/module/r.in.ascii"
+	    }
             "ESRI ARC/INFO ASCII-GRID" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.in.arc"
             }
