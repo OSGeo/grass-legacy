@@ -2,8 +2,24 @@
 #include "display.h"
 #include "local_proto.h"
 
+/*
+#define NEW_YES
+*/
+
 int yes (char *prompt)
 {
+#ifdef NEW_YES
+    int x, y, b;
+
+    fprintf(stderr, "%s\n", prompt);
+    fprintf(stderr, "Left:   Yes\n");
+    fprintf(stderr, "Middle: No\n");
+    fprintf(stderr, "Right:  No\n\n");
+
+    R_get_location_with_pointer(&x, &y, &b);
+
+    return(1==b);
+#else
     char *text[4];
 
     text[0] = prompt;
@@ -12,6 +28,7 @@ int yes (char *prompt)
     text[3] = (char *)NULL;
 
     return (1==ask(text));
+#endif
 }
 
 int just_click (char *msg)
