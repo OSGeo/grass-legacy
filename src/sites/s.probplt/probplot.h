@@ -12,8 +12,7 @@
 
 #define NOTRIM -999
 
-int readsites (), atoi ();
-int readsites ();
+int atoi ();
 char **cdpath ();
 int dblcompare ();
 void save_plot ();
