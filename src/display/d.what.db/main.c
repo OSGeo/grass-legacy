@@ -102,7 +102,7 @@ int main(int argc ,char **argv )
         db_set_handle (&handle, NULL, NULL);
         if (db_open_database(driver, &handle) != DB_OK) exit(-1); 
 
-        snprintf (buf,1023, "select %s, %s, %s from %s where %s > %f and %s < %f and %s > %f and %s < %f order by %s", par.key->answer,
+        sprintf (buf, "select %s, %s, %s from %s where %s > %f and %s < %f and %s > %f and %s < %f order by %s", par.key->answer,
 		par.x->answer, par.y->answer, par.table->answer, par.x->answer, window.west, par.x->answer, window.east,
                 par.y->answer, window.south, par.y->answer, window.north, par.key->answer );
 

@@ -142,12 +142,12 @@ int main (int argc, char **argv)
 	db_set_handle (&handle, NULL, NULL);
 	if (db_open_database(driver, &handle) != DB_OK) exit(-1); 
 
-	snprintf (buf,1023, "select %s, %s from %s where %s > %f and %s < %f and %s > %f and %s < %f ", 
+	sprintf (buf, "select %s, %s from %s where %s > %f and %s < %f and %s > %f and %s < %f ", 
 	          par.x->answer, par.y->answer, par.table->answer, par.x->answer, window.west, par.x->answer, window.east,
     		  par.y->answer, window.south, par.y->answer, window.north );
 	db_set_string (&stmt, buf);
 	if ( par.where->answer ) {
-	    snprintf (buf,1023, " and %s", par.where->answer);	
+	    sprintf (buf, " and %s", par.where->answer);	
 	    db_append_string (&stmt, buf);
 	}    
 	fprintf (stderr, "%s\n", db_get_string(&stmt));

@@ -30,7 +30,7 @@ int disp_attr(char *tabname, char *key, int *keyval )
 	db_init_string (&sout1);
 	db_init_string (&sout2);	
 
-        snprintf (buf,5000, "select * from %s where %s = %d", tabname, key, keyval);
+        sprintf (buf, "select * from %s where %s = %d", tabname, key, keyval);
         db_set_string (&str, buf);  
         if (db_open_select_cursor(driver, &str, &cursor, DB_SEQUENTIAL) != DB_OK) return (-1);
         table = db_get_cursor_table (&cursor);
@@ -72,7 +72,7 @@ int disp_attr(char *tabname, char *key, int *keyval )
         } 
         db_close_cursor(&cursor);	 																						    				
 	db_append_string ( &sout1, db_get_string(&sout2));
-	snprintf ( buf, 5000, "echo '%s' | %s/etc/db.attr&", db_get_string(&sout1), G_gisbase());
+	sprintf ( buf, "echo '%s' | %s/etc/db.attr&", db_get_string(&sout1), G_gisbase());
 	system ( buf );
 	
 	db_free_string (&str);
