@@ -72,6 +72,7 @@ int G_readsites_xyz(
 		G_fatal_error("Unable to guess site format!");
 	}
 	s = G_site_new_struct (map_type, dims, strs, dbls);
+	dims = dims - 2;
 
 	/* Restore file position */
 	fseek(fdsite, fdsave, SEEK_SET);
@@ -81,10 +82,10 @@ int G_readsites_xyz(
 	
 	switch (type) {
 		case SITE_COL_DIM: /* Use n-dimensions */
-			if (dims < 3) {
+			if (dims == 0) {
 				G_fatal_error("No n-dims in site_list");
 			}
-			else if (index > dims - 2) {
+			else if (index >= dims) {
 				G_fatal_error("Dimension index out of range");
 			}
 			break;
