@@ -97,13 +97,13 @@ int show_dval (int width, int mwidth,
     return 0;
 }
 
-int show_utm (char *name, double north, double east,
+int show_utm (char *name, char *mapset, double north, double east,
 	struct Cell_head *window, int terse, int colrow, int button, char *fs)
 {
     char e[50], n[50];
     int e_col, n_row;
     static struct Cell_head cellhd;
-    static char *mapset = NULL;
+/*    static char *mapset = NULL; */
 
     if (window->proj == PROJECTION_LL && !isatty (fileno (stdout)))
     {
