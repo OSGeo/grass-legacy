@@ -156,7 +156,7 @@ else
 	LCL=`echo "$LANG" | sed 's/\(..\)\(.*\)/\1/'`
 fi
 
-PATH=$GISBASE/bin:$GISBASE/scripts:$PATH:$GRASS_ADDON_PATH
+PATH=$GISBASE/bin:$GISBASE/scripts:/usr/X11R6/bin:/usr/local/bin:/usr/local/grasslib/bin:$PATH:$GRASS_ADDON_PATH
 export PATH
 
 # Set LD_LIBRARY_PATH to find GRASS shared libraries
@@ -169,6 +169,14 @@ export LD_LIBRARY_PATH_VAR
 # Additional copy of variable to use with grass-run.sh
 GRASS_LD_LIBRARY_PATH=$LD_LIBRARY_PATH_VAR
 export GRASS_LD_LIBRARY_PATH
+
+# Set DLD_LIBRARY_PATH to find GRASS shared libraries
+if [ ! "$DYLD_LIBRARY_PATH" ] ; then
+  DYLD_LIBRARY_PATH=$GISBASE/lib
+else
+  DYLD_LIBRARY_PATH=$GISBASE/lib:$DYLD_LIBRARY_PATH
+fi
+export DYLD_LIBRARY_PATH
 
 # Once the new environment system is committed we can delete these lines
 # Export the PAGER environment variable for those who have it set
@@ -186,21 +194,47 @@ if [ ! "$GRASS_PAGER" ] ; then
     export GRASS_PAGER
 fi
 
+
+# Set up tcltk and wish environment 
+# with options for aqua tcltk with Mac OSX
+
+
 if [ ! "$GRASS_TCLSH" ] ; then
-    GRASS_TCLSH=tclsh
-    export GRASS_TCLSH
-fi
+   if [ "$HOSTTYPE == macintosh" ] ; then
+      if [ -d "/usr/local/grasslib" ]; then
+            GRASS_TCLSH=/usr/local/grasslib/bin/tclsh
+      else
+         GRASS_TCLSH=tclsh
+      fi
+   else
+      GRASS_TCLSH=tclsh
+   fi
+   export GRASS_TCLSH
+fi   
+
+
+#WISH_OS=`echo 'puts $tcl_platform(platform) ; exit 0' | wish`
 
 if [ ! "$GRASS_WISH" ] ; then
-   WISH_OS=`echo 'puts $tcl_platform(platform) ; exit 0' | wish`
-   if [ "$?" = 0 -a "$WISH_OS" = macintosh ] ; then
-     #force X11 tcl on Mac:
-     GRASS_WISH=/usr/bin/wish
-   else
-     GRASS_WISH=wish
-   fi
-   export GRASS_WISH
+   if [ "$HOSTTYPE == macintosh" ] ; then
+        if [ "$osxaqua" ] ; then
+        	if [ -d "/usr/local/grasslib/bin/Grass.app" ] ; then
+            	GRASS_WISH=/usr/local/grasslib/bin/Grass.app/Contents/MacOS/Grass
+            else
+            	GRASS_WISH=/usr/bin/wish
+            fi
+            export osxaqua
+        elif [ -d "/usr/local/grasslib" ] ; then
+            GRASS_WISH=/usr/local/grasslib/bin/wish
+		else
+			#force X11 tcl on Mac without grasslib directory:
+			GRASS_WISH=/usr/bin/wish
+        fi
+    fi   
+else
+    GRASS_WISH=wish
 fi
+export GRASS_WISH
 
 CYGWIN=`uname | grep CYGWIN`
 
@@ -237,14 +271,14 @@ if [ ! "$GRASS_HTML_BROWSER" ] ; then
         elif [ "$HOSTTYPE" = "arm" ] ; then
             GRASS_HTML_BROWSER=dillo2
             break
-	elif [ "$CYGWIN" ] ; then
-	    iexplore="$SYSTEMDRIVE/Program Files/Internet Explorer/iexplore.exe"
-	    if [ -f "$iexplore" ] ; then
-		GRASS_HTML_BROWSER=$iexplore
-	    else
-		GRASS_HTML_BROWSER="iexplore"
-	    fi
-	    break
+		elif [ "$CYGWIN" ] ; then
+		    iexplore="$SYSTEMDRIVE/Program Files/Internet Explorer/iexplore.exe"
+		    if [ -f "$iexplore" ] ; then
+			GRASS_HTML_BROWSER=$iexplore
+		    else
+			GRASS_HTML_BROWSER="iexplore"
+		    fi
+		    break
         fi
     done
 fi
@@ -587,7 +621,11 @@ case "$GRASS_GUI" in
     
     # Check for tcltk interface
     tcltk)
-        "$GISBASE/scripts/d.m" &
+	if [ "$osxaqua" ] ; then
+		"$GISBASE/scripts/d.m" | sh &
+	else
+		"$GISBASE/scripts/d.m" &
+	fi	
 	;;
     
     # Ignore others
