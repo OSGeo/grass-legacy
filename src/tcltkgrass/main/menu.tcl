@@ -724,6 +724,12 @@ menu_build 1 .main_menu {
             "Query with mouse" "" {
                 "source $env(TCLTKGRASSBASE)/module/d.what.sites"
             }
+	    "Filter with raster" "" {
+	    	"source $env(TCLTKGRASSBASE)/module/s.mask"
+	    }
+	    "Average site attribute over cells" "" {
+	    	"source $env(TCLTKGRASSBASE)/module/s.windavg"
+	    }
         }
         Interpolation "" {
             "Inverse distance weighted" "" {
