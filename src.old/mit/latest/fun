@@ -1,0 +1,1 @@
+cc -g old.c -I/usr/iesl/Xwindows/usr/include -L/usr/iesl/Xwindows/usr/lib -lXaw -lXmu -lXt -lX11 -o dog
