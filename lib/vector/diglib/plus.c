@@ -14,10 +14,10 @@ dig_init_plus (struct Plus_head *Plus)
     Plus->Back_Major = 0 ;
     Plus->Back_Minor = 0 ;
     
-    Plus->Node_2d = NULL ;
-    Plus->Line_2d = NULL ;
-    Plus->Area_2d = NULL ;
-    Plus->Isle_2d = NULL ;
+    Plus->Node = NULL ;
+    Plus->Line = NULL ;
+    Plus->Area = NULL ;
+    Plus->Isle = NULL ;
     
     Plus->n_nodes = 0 ;
     Plus->n_lines = 0 ;
@@ -57,14 +57,14 @@ int
 dig_free_plus (struct Plus_head *Plus)
 {
     int i;    
-    P_NODE_2D *Node;
-    P_LINE_2D *Line;
-    P_AREA_2D *Area;
-    P_ISLE_2D *Isle;
+    P_NODE *Node;
+    P_LINE *Line;
+    P_AREA *Area;
+    P_ISLE *Isle;
 
     /* Nodes */
     for (i = 1; i <= Plus->n_nodes; i++) {
-        Node = Plus->Node_2d[i]; 	
+        Node = Plus->Node[i]; 	
 	if ( Node == NULL ) continue;
 	
 	if ( Node->alloc_lines > 0 ) {
@@ -73,20 +73,20 @@ dig_free_plus (struct Plus_head *Plus)
 	}
         free (Node);
     }
-    free ( Plus->Node_2d );
+    free ( Plus->Node );
     
     /* Lines */
     for (i = 1; i <= Plus->n_lines; i++) {
-        Line = Plus->Line_2d[i]; 	
+        Line = Plus->Line[i]; 	
 	if ( Line == NULL ) continue;
 	
         free (Line);
     }
-    free ( Plus->Line_2d );
+    free ( Plus->Line );
 
     /* Areas */
     for (i = 1; i <= Plus->n_areas; i++) {
-        Area = Plus->Area_2d[i]; 	
+        Area = Plus->Area[i]; 	
 	if ( Area == NULL ) continue;
 	
 	if ( Area->alloc_lines > 0 ) 
@@ -100,11 +100,11 @@ dig_free_plus (struct Plus_head *Plus)
 	
         free (Area);
     }
-    free ( Plus->Area_2d );
+    free ( Plus->Area );
     
     /* Isles */
     for (i = 1; i <= Plus->n_isles; i++) {
-        Isle = Plus->Isle_2d[i]; 	
+        Isle = Plus->Isle[i]; 	
 	if ( Isle == NULL ) continue;
 	
 	if ( Isle->alloc_lines > 0 ) 
@@ -112,7 +112,7 @@ dig_free_plus (struct Plus_head *Plus)
 
         free (Isle);
     }
-    free ( Plus->Isle_2d );
+    free ( Plus->Isle );
     
     return 1;
 }
@@ -149,7 +149,7 @@ dig_load_plus (	struct Plus_head *Plus,
 
   /* Nodes */
   fseek (plus, Plus->Node_offset, 0);
-  dig_alloc_nodes_2d ( Plus, Plus->n_nodes );
+  dig_alloc_nodes ( Plus, Plus->n_nodes );
   for (i = 1; i <= Plus->n_nodes; i++)
     {
       if ( dig_Rd_P_node ( Plus, i, plus) == -1 )
@@ -158,7 +158,7 @@ dig_load_plus (	struct Plus_head *Plus,
   
   /* Lines */
   fseek (plus, Plus->Line_offset, 0);
-  dig_alloc_lines_2d ( Plus, Plus->n_lines );
+  dig_alloc_lines ( Plus, Plus->n_lines );
   for (i = 1; i <= Plus->n_lines; i++)
     {
       if ( dig_Rd_P_line ( Plus, i, plus) == -1 )
@@ -167,7 +167,7 @@ dig_load_plus (	struct Plus_head *Plus,
   
   /* Areas */
   fseek (plus, Plus->Area_offset, 0);
-  dig_alloc_areas_2d ( Plus, Plus->n_areas );
+  dig_alloc_areas ( Plus, Plus->n_areas );
   for (i = 1; i <= Plus->n_areas; i++)
     {
       if ( dig_Rd_P_area ( Plus, i, plus) == -1 ) 
@@ -176,7 +176,7 @@ dig_load_plus (	struct Plus_head *Plus,
   
   /* Isles */
   fseek (plus, Plus->Isle_offset, 0);
-  dig_alloc_isles_2d ( Plus, Plus->n_isles );
+  dig_alloc_isles ( Plus, Plus->n_isles );
   for (i = 1; i <= Plus->n_isles; i++)
     {
       if ( dig_Rd_P_isle ( Plus, i, plus) == -1 )
