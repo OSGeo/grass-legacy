@@ -32,7 +32,7 @@ found=0
 SEARCHPATHS=`echo $PATH | tr -s ':' ' '`
 for i in $SEARCHPATHS ; do
    k=`expr $k + 1`
-   cd $i
+   cd $i > /dev/null
    ls -1 |grep $SEARCHCOMMAND > /dev/null
    if [ $? = 0 ]
    then
