@@ -243,7 +243,7 @@ main (int argc, char *argv[])
 	Vect_reset_line ( Points );
         Vect_reset_cats ( Cats );
 
-	Vect_append_point ( Points, Centr[area].x, Centr[area].y, 0 );
+	Vect_append_point ( Points, Centr[area].x, Centr[area].y, 0.0 );
 	Vect_cat_set (Cats, 1, area);
 	
 	if ( Centr[area].cat[0] > 0 )
@@ -337,6 +337,22 @@ main (int argc, char *argv[])
 	Vect_map_add_dblink ( &Out, 1, NULL, Fi->table, "cat", Fi->database, Fi->driver);
 	
 	for ( area = 1; area <= nareas; area++ ) {
+	    switch (operator) {
+		case OP_AND:
+		    if ( !( Centr[area].cat[0] && Centr[area].cat[1] ) ) continue;
+		    break;
+		case OP_OR:
+		    if ( !( Centr[area].cat[0] || Centr[area].cat[1] ) ) continue;
+		    break;
+		case OP_NOT:
+		    if ( !( Centr[area].cat[0] && !(Centr[area].cat[1]) ) ) continue;
+		    break;
+		case OP_XOR:
+		    if ( (Centr[area].cat[0] && Centr[area].cat[1]) ||
+			 ( !(Centr[area].cat[0]) && !(Centr[area].cat[1]) ) ) continue;
+		    break;
+	    }
+
 	    sprintf ( buf, "insert into %s values ( %d", Fi->table, area ); 
 	    db_set_string ( &stmt, buf);
 
