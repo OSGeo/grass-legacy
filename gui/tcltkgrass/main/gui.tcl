@@ -29,8 +29,17 @@
 #
 ###############################################################################
 
+source $env(GISBASE)/etc/gui.tcl
+
+###############################################################################
 proc execute {cmd} {
-    exec -- $cmd &
+    global dlg path
+
+    set code [exec -- $cmd --tcltk]
+
+    set path .dialog$dlg
+    toplevel $path
+    eval $code
 }
 
 
