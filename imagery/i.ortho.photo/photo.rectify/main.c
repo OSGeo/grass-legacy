@@ -1,4 +1,5 @@
 #define GLOBAL
+#include <stdlib.h>
 #include <string.h>
 #include "imagery.h"
 #include "global.h"
