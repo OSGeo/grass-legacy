@@ -15,7 +15,7 @@ NAME</h2>
 <h2>
 SYNOPSIS</h2>
 <b>m.in.e00</b>
-<br><b>m.in.e00</b> [<b>-s</b>] <b>input=</b><i>name</i> [<b>mapset=</b><i>name</i>]
+<br><b>m.in.e00</b> [<b>-ids</b>] <b>input=</b><i>name</i> [<b>mapset=</b><i>name</i>]
 [<b>action=</b><i>what to do</i>] [<b>verbose=</b><i>debug level</i>] [<b>logfile=</b><i>name</i>]
 <h2>
 DESCRIPTION</h2>
@@ -26,7 +26,7 @@ recognize the format.
 try to create the objects described (geometry and attributes).
 <p>m.in.e00 will be run non-interactively if the user specifies program
 arguments on the command line, using the form:
-<p><b>m.in.e00</b> [<b>-s</b>] <b>input=</b><i>name</i> [<b>mapset=</b><i>name</i>]
+<p><b>m.in.e00</b> [<b>-ids</b>] <b>input=</b><i>name</i> [<b>mapset=</b><i>name</i>]
 [<b>action=</b><i>what to do</i>] [<b>verbose=</b><i>debug level</i>] [<b>logfile=</b><i>name</i>]
 <p>Alternately, the user can simply type:
 <p><b>m.in.e00</b>
@@ -63,7 +63,6 @@ Flags:</h3>
 <dl>
 <dt>
 <b>-i</b></dt>
-
 <dd>
 Use the "feature-ID" of the arc info objects to link geometry and attribute's
 tables. The default is to use the "feature-#" field (which is an internal
@@ -72,10 +71,15 @@ external database. (GRASS 5.0 option)</dd>
 
 <dt>
 <b>-d</b></dt>
-
 <dd>
 Use a database instead of as many dig_cats files as you have attributes
 in the INFO tables (not yet operational). (GRASS 5.0 option)</dd>
+
+<dt>
+<b>-s</b></dt>
+<dd>
+Automatically run "v.support" on newly created vector file.</dd>
+
 </dl>
 
 <h3>
@@ -137,9 +141,14 @@ NOTES</h2>
 
 <h2>
 SEE ALSO</h2>
-<a href="g.mapsets.html">g.mapsets</a>, <a href="g.region.html">g.region</a>,
-<a href="g.setproj.html">g.setproj</a>, <a href="v.support.html">v.support</a>,
-<a href="v.to.rast.html">v.to.rast</a>, <a href="v.in.shape.html">v.in.shape</a>
+<a href="g.mapsets.html">g.mapsets</a>, 
+<a href="g.region.html">g.region</a>,
+<a href="g.setproj.html">g.setproj</a>,
+<a href="r.in.arc.html">r.in.arc</a>, 
+<a href="v.support.html">v.support</a>,
+<a href="v.to.rast.html">v.to.rast</a>, 
+<a href="v.in.shape.html">v.in.shape</a>
+
 <h2>
 AUTHOR</h2>
 Michel J. Wurtz, DIG/cemagref
