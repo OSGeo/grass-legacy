@@ -27,10 +27,11 @@
 *****************************************************************************/
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 #include <unistd.h>
-#include "gis.h"
 #include <fcntl.h> 
+#include "gis.h"
 
 #include "oct.h"
 #include "surf.h"
@@ -38,12 +39,6 @@
 #include "userextern.h"
 #include "userglobs.h"
 #include "user.h"
-
- extern  char *calloc(); /* removed <malloc.h> alpha930100 parghi 1993-03-30 */
- extern  int  free();
- extern  char *malloc();
- extern  char *realloc();
-
 
 int secpar_loop(ngstc,nszc,i)
 	int    ngstc;
