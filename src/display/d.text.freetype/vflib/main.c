@@ -28,7 +28,13 @@
 #ifdef HAVE_ICONV_H
 #include <iconv.h>
 #endif
+
+#ifndef	VFlib
 #include <freetype/freetype.h>
+#else
+#include <VFlib-3_6.h>
+#endif
+
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
@@ -45,12 +51,19 @@
 #define	DEFAULT_ROTATION	"0"
 
 
+#ifndef	VFlib
 #define	deinit()		{if(face)				\
 					FT_Done_Face(face);		\
 				if(library)				\
 					FT_Done_FreeType(library);	\
 				if(driver)				\
 					R_close_driver();}
+#else
+#define	deinit()		{if(fid >= 0)				\
+					VF_CloseFont(fid);		\
+				if(driver)				\
+					R_close_driver();}
+#endif
 
 #define	error(msg)		{deinit(); G_fatal_error(msg);}
 
@@ -67,11 +80,15 @@ static int	read_capfile(char *capfile, capinfo **fonts, char **font_names,
 			int *fonts_count, int *cur_font);
 static int	find_font(capinfo *fonts, int fonts_count, char *name);
 static char	*transform_string(char *str, int (*func)(int));
-static int	set_font(FT_Library library, FT_Face *face, char *path);
+
 static int	convert_text(char *charset, char *text, unsigned char **out);
 static int	get_coordinates(rectinfo win, char **ans, char p,
 			double *east, double *north, int *x, int *y);
 static void	get_color(char *tcolor, int *color);
+
+#ifndef	VFlib
+
+static int	set_font(FT_Library library, FT_Face *face, char *path);
 static void	get_dimension(FT_Face face, unsigned char *out, int l,
 			FT_Vector *dim);
 static void	get_ll_coordinates(FT_Face face, unsigned char *out, int l,
@@ -82,6 +99,18 @@ static int	draw_character(rectinfo win, FT_Face face, FT_Matrix *matrix,
 static void	draw_text(rectinfo win, FT_Face face, FT_Vector *pen,
 			unsigned char *out, int l, int color, double rotation);
 
+#else
+
+static int	set_font(int *fid, char *font, int size);
+static void	get_dimension(int fid, unsigned char *out, int l,
+			int *width, int *height);
+static void	get_ll_coordinates(int fid, unsigned char *out, int l,
+			char *align, double rotation, int *x, int *y);
+static int	draw_character(rectinfo win, int fid, int *x, int *y,
+			int ch, int color, int rot);
+static void	draw_text(rectinfo win, int fid, int *x, int *y,
+			unsigned char *out, int l, int color, int rot);
+#endif
 
 int
 main(int argc, char **argv)
@@ -114,9 +143,13 @@ main(int argc, char **argv)
 	int	fonts_count;
 	int	cur_font;
 
+#ifndef	VFlib
 	FT_Library	library = NULL;
 	FT_Face		face = NULL;
 	FT_Vector	dim, pen;
+#else
+	int	fid = -1;
+#endif
 
 	int	driver = 0;
 	char	win_name[64];
@@ -124,6 +157,9 @@ main(int argc, char **argv)
 	char	*text, *path, *charset, *tcolor;
 	int	color, size;
 	double	east, north, rotation;
+#ifdef	VFlib
+	int	rot;
+#endif
 	int	i, l, ol, x, y;
 	unsigned char	*out;
 
@@ -211,17 +247,26 @@ main(int argc, char **argv)
 	param.align->options     = "ll,lc,lr,cl,cc,cr,ul,uc,ur";
 	param.align->description = "Text align";
 
+#ifdef	VFlib
 	param.rotation = G_define_option();
 	param.rotation->key         = "rotation";
+#ifndef	VFlib
 	param.rotation->type        = TYPE_DOUBLE;
+#else
+	param.rotation->type        = TYPE_INTEGER;
+	param.rotation->options     = "0,90,180,270";
+#endif
 	param.rotation->required    = NO;
 	param.rotation->answer      = DEFAULT_ROTATION;
 	param.rotation->description = "Rotation angle (counterclockwise)";
+#endif
 
 
+#ifndef	VFlib
 	flag.r = G_define_flag();
 	flag.r->key         = 'r';
 	flag.r->description = "Radian rotation";
+#endif
 
 	flag.p = G_define_flag();
 	flag.p->key         = 'p';
@@ -286,6 +331,7 @@ main(int argc, char **argv)
 		fprintf(stdout, "Font=<%s:%s:%s:%d>\n\n",
 				path, charset, tcolor, size);
 
+#ifndef	VFlib
 	rotation = atof(param.rotation->answer);
 	if(!flag.r->answer)
 		rotation *= M_PI / 180.0;
@@ -293,6 +339,10 @@ main(int argc, char **argv)
 	rotation = fmod(rotation, 2 * M_PI);
 	if(rotation < 0.0)
 		rotation += 2 * M_PI;
+#else
+	rot = atoi(param.rotation->answer);
+	rotation = rot * M_PI / 180.0;
+#endif
 
 	if(R_open_driver() != 0)
 		error("No graphics device selected");
@@ -311,16 +361,26 @@ main(int argc, char **argv)
 	if(!flag.s->answer)
 		size = (int)(size/100.0 * (double)(win.b-win.t));
 
+#ifndef	VFlib
 	if(FT_Init_FreeType(&library))
 		error("Unable to initialise FreeType");
+#else
+	if(VF_Init(NULL, NULL))
+		error("Unable to initialise VFlib");
+#endif
 
 	if(path)
 	{
+#ifndef	VFlib
 		if(set_font(library, &face, path))
 			error("Unable to create face");
 
 		if(FT_Set_Pixel_Sizes(face, size, 0))
 			error("Unable to set size");
+#else
+		if(set_font(&fid, path, size))
+			error("Unable to open font");
+#endif
 	}
 
 	R_color_table_fixed();
@@ -336,19 +396,24 @@ main(int argc, char **argv)
 			exit(0);
 		}
 
-		pen.x = x;
-		pen.y = y;
-
 		ol = convert_text(charset, text, &out);
 		if(ol == -1)
 			error("Unable to create text conversion context");
 		if(ol == -2)
 			error("Text conversion error");
 
+#ifndef	VFlib
+		pen.x = x;
+		pen.y = y;
+
 		get_ll_coordinates(face, out, ol,
 				param.align->answer, rotation, &pen);
-
 		draw_text(win, face, &pen, out, ol, color, rotation);
+#else
+		get_ll_coordinates(fid, out, ol,
+				param.align->answer, rotation, &x, &y);
+		draw_text(win, fid, &x, &y, out, ol, color, rot);
+#endif
 
 		if(param.east_north->answer)
 			D_add_to_list(G_recreate_command());
@@ -441,10 +506,16 @@ main(int argc, char **argv)
 						}
 						if(c)
 							charset = transform_string(c+1, toupper);
+#ifndef	VFlib
 						if(set_font(library, &face, path))
 							error("Unable to create face");
+
 						if(FT_Set_Pixel_Sizes(face, size, 0))
 							error("Unable to set size");
+#else
+						if(set_font(&fid, path, size))
+							error("Unable to open font");
+#endif
 						break;
 					case 'C':
 						tcolor = transform_string(p, tolower);
@@ -458,12 +529,18 @@ main(int argc, char **argv)
 						if(p[l-1] != 'p')
 							d = (int)(d/100.0 * (double)(win.b-win.t));
 						size = d + (i ? size : 0);
+#ifndef	VFlib
 						if(face && FT_Set_Pixel_Sizes(face, size, 0))
 							error("Unable to set size");
+#else
+						if(set_font(&fid, path, size))
+							error("Unable to open font");
+#endif
 						break;
 					case 'A':
 						strncpy(align, p, 2);
 						break;
+#ifdef	VFlib
 					case 'R':
 						i = 0;
 						if(strchr("+-", p[0]))
@@ -476,6 +553,7 @@ main(int argc, char **argv)
 						if(rotation < 0.0)
 							rotation += 2 * M_PI;
 						break;
+#endif
 					case 'X':
 						setx = 1;
 						i = 0;
@@ -543,7 +621,11 @@ main(int argc, char **argv)
 				}
 			}
 			else
+#ifndef	VFlib
 			if(face)
+#else
+			if(fid >= 0)
+#endif
 			{
 				i = 0;
 				if(buf[0] == '.' && buf[1] == '.')
@@ -565,6 +647,7 @@ main(int argc, char **argv)
 					py = y;
 				}
 
+#ifndef	VFlib
 				pen.x = x;
 				pen.y = y;
 
@@ -572,11 +655,22 @@ main(int argc, char **argv)
 						align, rotation, &pen);
 				draw_text(win, face, &pen, out, ol,
 						color, rotation);
+#else
+				get_ll_coordinates(fid, out, ol,
+						align, rotation, &x, &y);
+				draw_text(win, fid, &x, &y, out, ol,
+						color, rot);
+#endif
 
 				if(!linefeed)
 				{
+#ifndef	VFlib
 					x = pen.x / 64;
 					y = - pen.y / 64;
+#else
+					x = x / 64;
+					y = - y / 64;
+#endif
 				}
 
 				setx = sety = setl = 0;
@@ -702,17 +796,6 @@ transform_string(char *str, int (*func)(int))
 }
 
 static int
-set_font(FT_Library library, FT_Face *face, char *path)
-{
-	if(*face)
-		FT_Done_Face(*face);
-	if(FT_New_Face(library, path, 0, face))
-		return -1;
-
-	return 0;
-}
-
-static int
 convert_text(char *charset, char *text, unsigned char **out)
 {
 	int	i, l, ol;
@@ -820,6 +903,19 @@ get_color(char *tcolor, int *color)
 	}
 
 	return;
+}
+
+#ifndef	VFlib
+
+static int
+set_font(FT_Library library, FT_Face *face, char *path)
+{
+	if(*face)
+		FT_Done_Face(*face);
+	if(FT_New_Face(library, path, 0, face))
+		return -1;
+
+	return 0;
 }
 
 static void
@@ -1037,3 +1133,202 @@ draw_text(rectinfo win, FT_Face face, FT_Vector *pen,
 	return;
 }
 
+#else
+
+static int
+set_font(int *fid, char *font, int size)
+{
+	if(*fid >= 0)
+		VF_CloseFont(*fid);
+	if((*fid = VF_OpenFont2(font, size, 1, 1)) < 0)
+		return -1;
+
+	return 0;
+}
+
+static void
+get_dimension(int fid, unsigned char *out, int l, int *width, int *height)
+{
+	int	i, index, first = 1, minx, maxx, miny, maxy, ch, x, y;
+	VF_BITMAP	bm;
+
+	x = 0;
+	y = 0;
+
+	for(i = 0; i < l; i += 4)
+	{
+		ch = (out[i+2] << 8) | out[i+3];
+
+		if(!(bm = VF_GetBitmap2(fid, ch, 1, 1)))
+			continue;
+
+		if(first)
+		{
+			first = 0;
+			minx = x - bm->off_x;
+			maxx = minx + bm->bbx_width;
+			miny = y - bm->off_y;
+			maxy = miny + bm->bbx_height;
+		}
+		else
+		{
+			if(minx > x - bm->off_x)
+				minx = x - bm->off_x;
+			if(maxx < x - bm->off_x + bm->bbx_width)
+				maxx = x - bm->off_x + bm->bbx_width;
+			if(miny > y - bm->off_y)
+				miny = y - bm->off_y;
+			if(maxy < y - bm->off_y + bm->bbx_height)
+				maxy = y - bm->off_y + bm->bbx_height;
+		}
+
+		x += bm->mv_x;
+		y += bm->mv_y;
+
+		VF_FreeBitmap(bm);
+	}
+
+	*width  = maxx - minx;
+	*height = maxy - miny;
+
+	return;
+}
+
+static void
+get_ll_coordinates(int fid, unsigned char *out, int l,
+		char *align, double rotation, int *x, int *y)
+{
+	int	w, h;
+
+	if(strcmp(align, "ll"))
+	{
+		get_dimension(fid, out, l, &w, &h);
+
+		switch(align[0])
+		{
+			case 'l':
+				break;
+			case 'c':
+				*x += h / 2.0 * sin(rotation);
+				*y += h / 2.0 * cos(rotation);
+				break;
+			case 'u':
+				*x += h * sin(rotation);
+				*y += h * cos(rotation);
+				break;
+		}
+	
+		switch(align[1])
+		{
+			case 'l':
+				break;
+			case 'c':
+				*x -= w / 2.0 * cos(rotation);
+				*y += w / 2.0 * sin(rotation);
+				break;
+			case 'r':
+				*x -= w * cos(rotation);
+				*y += w * sin(rotation);
+				break;
+		}
+	}
+
+	return;
+}
+
+
+static int
+draw_character(rectinfo win, int fid, int *x, int *y,
+		int ch, int color, int rot)
+{
+	int	i, j, l, start_row, start_col, rows, width, w, index;
+	char	*buffer;
+	rectinfo	rect;
+	VF_BITMAP	bm;
+
+	if(!(bm = VF_RotatedBitmap(VF_GetBitmap2(fid, ch, 1, 1), rot)))
+		return -1;
+
+	rows  = bm->bbx_height;
+	width = bm->bbx_width;;
+
+	rect.t = *y - bm->off_y;
+	rect.b = rect.t + rows;
+	rect.l = *x - bm->off_x;
+	rect.r = rect.l + width;
+
+	if((l = rows * width) > 0 &&
+	   (rect.t <= win.b && rect.b >= win.t &&
+	    rect.l <= win.r && rect.r >= win.l))
+	{
+		buffer = (char *) G_malloc(l);
+		memset(buffer, 0, l);
+	
+		j = width / 8 + (width % 8 ? 1 : 0);
+	
+		for(i = 0; i < l; i++)
+		{
+			if(bm->bitmap[
+				(i / width) * j + (i % width) / 8
+			   ] & (1 << (7 - (i % width) % 8)))
+				buffer[i] = color;
+		}
+	
+		start_row = 0;
+		start_col = 0;
+		w = width;
+
+		if(rect.t < win.t)
+			start_row = win.t - rect.t;
+		if(rect.b > win.b)
+			rows -= rect.b - win.b;
+		if(rect.l < win.l)
+		{
+			start_col = win.l - rect.l;
+			w -= start_col;
+		}
+		if(rect.r > win.r)
+			w -= rect.r - win.r;
+
+		for(i = start_row; i < rows; i++)
+		{
+			R_move_abs(rect.l + start_col, rect.t + i);
+			R_raster_char(w, 1, 0, buffer + width * i + start_col);
+		}
+
+#ifdef	FLUSH_EACH_CHAR
+		/* less speedy */
+		R_flush();
+#endif
+
+		G_free(buffer);
+	}
+
+	*x += bm->mv_x;
+	*y += bm->mv_y;
+
+	VF_FreeBitmap(bm);
+
+	return 0;
+}
+
+static void
+draw_text(rectinfo win, int fid, int *x, int *y,
+		unsigned char *out, int l, int color, int rot)
+{
+	int	i, ch;
+
+	for(i = 0; i < l; i += 4)
+	{
+		ch = (out[i+2] << 8) | out[i+3];
+		draw_character(win, fid, x, y, ch, color, rot);
+	}
+
+#ifndef	FLUSH_EACH_CHAR
+	R_flush();
+#endif
+
+	return;
+}
+
+#endif
