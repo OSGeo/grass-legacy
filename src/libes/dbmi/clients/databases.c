@@ -46,7 +46,7 @@ void
 parse_command_line(argc, argv) char *argv[];
 {
     struct Option *driver, *location;
-    struct Flag *l, *c;
+    struct Flag *l;
 
     driver 		= G_define_option();
     driver->key 	= "driver";
@@ -65,14 +65,11 @@ parse_command_line(argc, argv) char *argv[];
     l->key 		= 'l';
     l->description	= "output database location also";
     
-    /* to avoid G_usage and run without any other parameters , RB 4/2000 */
-    c 			= G_define_flag();
-    c->key 		= 'c';
-    c->description	= "use parameters set by db.connect";    
-    
     G_disable_interactive();
-    if (G_parser(argc, argv))
-	exit(ERROR);
+
+    if (argc > 1) {
+	if (G_parser(argc, argv)) exit(ERROR);
+    }
 
     parms.driver     = driver->answer;
     parms.l          = l->answer;
