@@ -531,9 +531,9 @@ echo "Help is available with the command:      g.help"
 echo "See the licence terms with:              g.version -c"
 
 if [ "$GRASS_GUI" = "text" ] ; then
-    echo "Start the graphical user interface with: tcltkgrass&"
+    echo "Start the graphical user interface with: d.m &"
 else
-    echo "If required, restart the graphical user interface with: tcltkgrass&"
+    echo "If required, restart the graphical user interface with: d.m &"
 fi
 
 echo "When ready to quit enter:                exit"
