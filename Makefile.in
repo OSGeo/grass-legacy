@@ -83,16 +83,17 @@ do-install:
 
 # GRASS source code cleaning options:
 #
-# There are four options for cleaning the GRASS source code. These options are
-# based on the GNU guidlines at:
+# There are five options for cleaning the GRASS source code. The first four
+# options are based on the GNU guidlines at:
 #
 # http://www.gnu.org/manual/make-3.77/html_node/make_118.html
 #
-# Each option performs the following operations:
+# A fifth option is specific to the GRASS development project and does not
+# conform to the GNU standard. Each option performs the following operations:
 #
-# make mostlyclean  	- delete all object files and the next step file, keep
-#   	    	    	  the compiled GRASS libraries - good for saving disk
-#   	    	    	  space
+# make mostlyclean  	- delete all object files, the next step file, and the
+#   	    	    	  binary install script if it exists, keep the compiled
+#   	    	    	  GRASS libraries - good for saving disk space
 # make clean        	- delete object files, next step file, libraries, and
 # 		      	  generated directories like etc/ and dev/ - good for
 #                     	  recompiling on the same system (keep configure files)
@@ -105,6 +106,10 @@ do-install:
 #   	    	     	  yacc/bison files - good for recompiling on the same
 #   	    	    	  system and also generating the lex/flex and
 #   	    	    	  yacc/bison files again
+# make savebinclean    	- delete object files, next step file, the binary
+#   	    	    	  install script if it exists, libraries, head file,
+#   	    	    	  configure files, and Makefile - good for deleting
+#   	    	    	  everything but the binary files
 mostlyclean:
 	@ echo "Performing mostlyclean step..."
 	${SHELL} -c "find . -name 'OBJ*' -exec rm -rf {} \; 2>/dev/null ; true"
@@ -160,6 +165,16 @@ maintainer-clean: distclean
 	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.weight/inter/gis_pars.c   2>/dev/null ; true"
 	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.weight/inter/gis_pars.h   2>/dev/null ; true"
 	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.weight/inter/gis_pars.out 2>/dev/null ; true"
+
+savebinclean: mostlyclean
+	@ echo "Performing savebinclean step..."
+	${SHELL} -c "find . -name 'LIB*' -exec rm -rf {} \; 2>/dev/null ; true"
+	${SHELL} -c "rm -f src.garden/grass.hdf/HDF4.1r3/hdf/src/libdf.a 2>/dev/null ; true"
+	${SHELL} -c "rm -f src/CMD/head/head                     2>/dev/null ; true"
+	${SHELL} -c "rm -f config.cache config.log config.status 2>/dev/null ; true"
+	${SHELL} -c "rm -f src/scripts/shells/create_fifos.sh    2>/dev/null ; true"
+	${SHELL} -c "rm -f src/include/config.h                  2>/dev/null ; true"
+	${SHELL} -c "rm -f Makefile                              2>/dev/null ; true"
 
 # make a source package for distribution:
 srcdist: distclean
