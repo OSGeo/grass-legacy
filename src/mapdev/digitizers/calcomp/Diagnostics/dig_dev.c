@@ -94,6 +94,11 @@ D_readall (Xraw, Yraw)
 
 
 	/*  are we out of sync  */
+	    
+		{
+		    InBuffer[15] = 0;
+		    fprintf (stderr, "BUFFER: '%s'\n", InBuffer);
+		}
         	if (InBuffer[12] != 'A')
        		{
 			fprintf(stderr, "HOLD:  We are out of sync with the digitizer.\n") ;
@@ -247,11 +252,10 @@ int  D__read (alarm_time)
 		return (-1);
 
 
-/*  strip parity  
+/*  strip parity   */
 
 	for ( cp = InBuffer;  cp < InBuffer + N_read;  cp++)
 		*cp &= 0177;
-*/
 
 	return (N_read = CHARS_RD - len);
 
