@@ -1,135 +1,161 @@
-How to release GRASS 5 binaries
+--------------------------------------------------------------
 
-Note: This text contains some rules only applicable to development
-      coordinator (currently Markus Neteler).
-
-Generally the binaries shall be produced from a published
-source code tarball:
-http://www.geog.uni-hannover.de/grass/grass5/source/
-
-
-0. Check & docs:
-
- o Check version string:
-     src/CMD/VERSION
-
- o Markus:
-   Check if no M/C CVS conflicts have been there before tagging.
-
- o Markus:
-   Update the PDF-docs on server (needs "htmldoc" tool):
-      ftp://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/htmldoc/
-
-     gmake5 html/ pdf-docs
-
-   upload result from dist.$ARCH/documents/pdf to GRASS web server,
-   remove here (makes binaries too big).
-
-
-1. Build GRASS:
- 
- o wipe out binaries, (re-)compile everything, incl NVIZ without PG:
-     make distclean
-     rm -rf /usr/local/grass5/*
-     configure --enable-postgres=no
-     make
-     
- o compile G3D tools
-     gmake5 src.contrib/GMSL/g3d
-
- o compile PostgreSQL modules:
-     configure --enable-postgres=yes
-     make pre-compile
-     gmake5 src.garden/grass.postgresql
-
- o Markus:
-   compile s.vol.rst from extra directory (if you have..., it is not 
-   distributed with sources)
-
- o check, if libgdal is in place in $GISBASE/lib/
-   Get Linux version here:
-     ftp://gdal.velocet.ca/pub/outgoing/libgdal-linux-grass.tar.gz
-    (Note: check ldd libgdal.1.1.so dependency, get if required:
-     ftp://gdal.velocet.ca/pub/outgoing/libstdc++-libc6.2-2.so.3)
-   Get GDAL sources at:
-    http://www.remotesensing.org/gdal/
-
- o Run again
-    gmakelinks5
-   or 
-    gmakelinks5 |wc -l
-   
-   Should be > 400 modules.
-
- o Finally run
-    make install
-
-
-2. Package GRASS bins with
-
-    make bindist
+$Id$
 
 --------------------------------------------------------------
-Pre-phase: pre-testing
 
-1. Add displaimer to all mails:
+How to release GRASS binaries and source code
 
- GRASS 5 beta DISCLAIMER: WARNING
- This pre-release of GRASS 5 is in alpha-quality only. The
- pre-release is intended to find critical bugs which would
- cause problems in the later official release. All pre-testers
- may submit bug reports and comments immediately to allow
- the new official release to be published as soon as possible.
- Please read the BUGS file to see unresolved bugs.
- Use the bug report form to report bugs:
- http://www.geog.uni-hannover.de/grass/bugtracking/bugreport.html 
+Note: This text contains some rules only applicable to the development
+      coordinator (currently Markus Neteler).
 
- Unless the pre-testing phase isn't finished, no official release
- is possible.
+--------------------------------------------------------------
 
- List of pre-testers:
- See pretesting_grass.txt
- (find more!)
+General methodolgy: pre-testing - bug fixes - publish
+
+0. Create a branch using CVS for the release. All code for the 
+   stable release will come from this branch. The only changes
+   allowed to this branch are bug fixes for errors discovered by
+   pretesters. All such bug fixes should include "Release bug fix:"
+   at the start of each log message for easy monitoring of committed
+   code. That is, any code committed without this phrase at the start 
+   of the log message will be backed out. All developers who subscribe
+   to the commit list (who are we?) should take responsibility for
+   monitoring the code committed to the release branch. All other code
+   can be committed to the MAIN branch as usual, thus development
+   does not need to be halted.
+
+1. Add disclaimer to all mails:
+
+   GRASS 5 beta DISCLAIMER: WARNING
+   This pre-release of GRASS 5 is in alpha-quality only. The
+   pre-release is intended to find critical bugs which would
+   cause problems in the later official release. All pre-testers
+   may submit bug reports and comments immediately to allow
+   the new official release to be published as soon as possible.
+   Please read the BUGS file to see unresolved bugs.
+   Use the bug report form to report bugs:
+   http://www.geog.uni-hannover.de/grass/bugtracking/bugreport.html 
+
+   Unless the pre-testing phase isn't finished, no official release
+   is possible.
+
+   List of pre-testers:
+   See pretesters.txt
+   (find more!)
+   And send them the pretesting_grass.txt file (improvements?)
 
 
 2. while GRASS_PRE=unstable do
 
-    a) send (new) source/binary tarball to pre-testers
-    b) receive comments/bug reports
-    c) fix *only* these bugs, no other commits allowed
-    d) if no (more) complaints
+     a) send (new) source/binary tarball to pre-testers
+     b) receive comments/bug reports
+     c) fix *only* these bugs, no other commits allowed in release branch
+     d) if no (more) complaints
           GRASS_PRE=stable
    done
 
-3. Proceed to publishing.
+3. Proceed to publishing by publishing the code in the release branch.
+   See the sections below for details
+
+4. Merge the changes in the release branch back into the MAIN branch
+   using CVS.
 
 --------------------------------------------------------------
+
+Create source and binary distributions:
+
+0. Create the source code tarball: Markus
+
+   o Check version string:
+       src/CMD/VERSION
+
+   o Markus:
+     Check if no M/C CVS conflicts have been there before tagging.
+
+   o Markus:
+     Update the PDF-docs on server (needs "htmldoc" tool):
+       ftp://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/htmldoc/
+
+       gmake5 html/ pdf-docs
+
+     upload result from dist.$ARCH/documents/pdf to GRASS web server,
+     remove here (makes binaries too big).
+ 
+   o Create source tarball and store in
+     http://www.geog.uni-hannover.de/grass/grass5/source/
+
+1. Generally the binaries shall be produced from the published
+   source code tarball above. Get this tarball and unpack it in
+   a NEW directory.
+
+2. Build GRASS:
+ 
+   o compile everything, incl NVIZ without PG:
+       configure --enable-postgres=no
+       make
+     
+   o compile G3D tools
+       gmake5 src.contrib/GMSL/g3d
+
+   o compile PostgreSQL modules:
+       configure --enable-postgres=yes
+       make pre-compile
+       gmake5 src.garden/grass.postgresql
+
+   o Markus:
+     compile s.vol.rst from extra directory (if you have..., it is not 
+     distributed with sources)
+
+   o check, if libgdal is in place in $GISBASE/lib/
+     Get Linux version here:
+       ftp://gdal.velocet.ca/pub/outgoing/libgdal-linux-grass.tar.gz
+       (Note: check ldd libgdal.1.1.so dependency, get if required:
+       ftp://gdal.velocet.ca/pub/outgoing/libstdc++-libc6.2-2.so.3)
+     Get GDAL sources at:
+       http://www.remotesensing.org/gdal/
+
+   o Run again
+       gmakelinks5
+     or 
+       gmakelinks5 |wc -l
+   
+     Should be > 400 modules.
+
+   o Finally run
+     make install
+
+
+3. Package GRASS bins with
+
+    make bindist
+
+4. Upload grass5x_y_bin.tar.gz AND grass5install.sh to ftp site in
+   Germany (ftp 130.75.72.36 - store in incoming directory)
+
+--------------------------------------------------------------
+
 Publish the new official GRASS 5 release:
 
 1. Publish it on web site:
- - grass5x_y_bin.tar.gz
- - grass5install.sh
- - grass5uninstall.sh (if tested)
+   - grass5x_y_bin.tar.gz
+   - grass5install.sh
 
- - grass5x_y_src.tar.gz
+   - grass5x_y_src.tar.gz
 
 
 2. Tell others about it:
- - related announcement press release at:
+   - related announcement press release at:
 
- Our GRASS web site: /announces/
+   Our GRASS web site: /announces/
 
- news:comp.infosystems.gis
- http://spatialnews.geocomm.com/dailynews/
- http://spatialnews.geocomm.com/submitnews.html (Free News Posting Service)
- http://freshmeat.net/projects/grass/?highlight=GRASS
- http://www.remotesensing.org/submit/submit.php3
- http://www.newsforge.com/submit.pl
- http://osx.macnn.com/
- http://www.gis-news.de/
+   news:comp.infosystems.gis
+   http://spatialnews.geocomm.com/dailynews/
+   http://spatialnews.geocomm.com/submitnews.html (Free News Posting Service)
+   http://freshmeat.net/projects/grass/?highlight=GRASS
+   http://www.remotesensing.org/submit/submit.php3
+   http://www.newsforge.com/submit.pl
+   http://osx.macnn.com/
+   http://www.gis-news.de/
 
- ... where else?
-
-Cheers
-
- Markus
+   ... where else?
