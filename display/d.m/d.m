@@ -15,7 +15,7 @@ if [ $# -eq 0 ] ; then
 fi
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+  exec g.parser "$0" "$@"
 fi
 
 exec "$GRASS_WISH" "$GISBASE/etc/dm/d.m.tcl" "$GIS_OPT_dmrc"
