@@ -200,10 +200,10 @@ int main (int argc, char **argv)
 	    }
 
             /* valid list, put into cat value array */
+	 cat_index = 0;
          for (i = 0; listopt->answers[i]; i++)
             {
             scan_cats (listopt->answers[i], &x, &y);
-	    cat_index = 0;
             while (x <= y)
                {
                cat_array[cat_index] = x++; cat_index++; 
