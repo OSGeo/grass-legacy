@@ -64,7 +64,7 @@
 #% key: catcol
 #% type: integer
 #% description: Number of column to use as category (if catcol=0, unique number assigned to each case in new 'cat' column).
-#% answer: 3
+#% answer: 0
 ##% required : no
 #%end
 #%option
@@ -86,20 +86,25 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
 fi
 
-GIS_OPT_fs='"'$GIS_OPT_fs'"'
-GIS_OPT_columns="'"$GIS_OPT_columns"'"
+echo
 
-cmd="cat "$GIS_OPT_input" | v.in.ascii output="$GIS_OPT_output" xcol="$GIS_OPT_xcol" ycol="$GIS_OPT_ycol" zcol="$GIS_OPT_zcol" catcol="$GIS_OPT_catcol" fs="$GIS_OPT_fs
+cmd="cat '$GIS_OPT_input' | v.in.ascii output="$GIS_OPT_output" xcol="$GIS_OPT_xcol" ycol="$GIS_OPT_ycol" zcol="$GIS_OPT_zcol" catcol="$GIS_OPT_catcol" fs="\'$GIS_OPT_fs\'
 #" columns="$GIS_OPT_columns 
 
 if [ "$GIS_OPT_columns" != "" ] ; then
-    cmd=$cmd" columns="$GIS_OPT_columns
+    cmd=$cmd" columns="\'$GIS_OPT_columns\'
+#   echo $GIS_OPT_columns
 fi
 
-echo $GIS_OPT_columns
 echo $cmd
-
 eval $cmd
 
-echo ""
-echo "Done. GRASS vector points file $GIS_OPT_output created from ASCII points file $GIS_OPT_input"
+if [ $? -eq 0 ] ; then
+    echo
+    echo "GRASS vector points file $GIS_OPT_output created from ASCII points file $GIS_OPT_input"
+else
+    echo
+    echo "*** ERROR processing GRASS vector points file $GIS_OPT_output ***"
+fi
+
+echo Done.
