@@ -1,0 +1,11 @@
+# @(#)Gmakefile	2.1  7/14/87
+HOME = $(ETC)/paint
+INTERFACE = $(SRC)/paint/Interface/applib/lib.a
+
+LIST =	main.o
+
+$(HOME)/Chart:	$(LIST) $(INTERFACE)
+	$(CC) $(LDFLAGS) $(LIST) $(INTERFACE) -o $@
+
+
+$(INTERFACE):	# incase the library changes
