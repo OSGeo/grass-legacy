@@ -165,6 +165,9 @@ GRASS_PAN_THRESHOLD
   auto-pan moving speed. Auto panning can be set off by setting
   GRASS_PAN_THRESHOLD=0
 
+GRASS_PERL
+  set perl with path
+
 PGSQL - not found in source 20/02/01
 
 PG_HOST
