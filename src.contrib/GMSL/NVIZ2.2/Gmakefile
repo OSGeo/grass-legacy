@@ -1,4 +1,4 @@
-# $Id: Gmakefile,v 1.13 2000-10-25 13:30:50 markus Exp $
+# $Id: Gmakefile,v 1.14 2000-10-31 16:15:02 cho Exp $
 #
 # Toplevel makefile for building everything
 
@@ -38,7 +38,12 @@ install:
 	'cp' scripts/*Index $(INSTALL_DIR)/scripts
 	(cd bitmaps; tar -cf - *  | (cd $(INSTALL_DIR)/bitmaps; tar  -xf - 2>/dev/null ); true)
 	cp scripts/$(NV_VER)_script $(INSTALL_DIR)/scripts
-	cp scripts/$(NV_VER) $(GISBASE)/bin
+	if [ `uname -s` = FreeBSD ]; \
+	then \
+		./FreeBSD.specific $(GISBASE) $(NV_VER) \
+	else \
+		cp scripts/$(NV_VER) $(GISBASE)/bin; \
+	fi
 	chmod ugo+x $(INSTALL_DIR)/scripts/$(NV_VER)_script \
 		$(INSTALL_DIR)/scripts/script_file_tools \
 		$(INSTALL_DIR)/scripts/script_get_line \
