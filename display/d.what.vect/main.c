@@ -1,5 +1,4 @@
 /*
- * $Id$
  *
  * attempt to auto-select vector maps displayed in monitor (like d.zoom)
  *
@@ -64,11 +63,11 @@ int main(int argc, char **argv)
  
   txt = G_define_flag();
   txt->key = 'x';
-  txt->description = "Print informations as plain text to terminal window.";
+  txt->description = "Print information as plain text to terminal window.";
   
   topo_flag = G_define_flag();
   topo_flag->key = 'd';
-  topo_flag->description = "Print topological informations (debugging).";
+  topo_flag->description = "Print topological information (debugging).";
  
   flash = G_define_flag();
   flash->key = 'f';
