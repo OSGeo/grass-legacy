@@ -1,0 +1,11 @@
+# %Z%%M%	%Y% v.%I%
+# makefile to generate CalComp look-alike external drivers
+
+FLIB = -lccal -lcal -lF77 -lU77 -lI77 -lm
+
+calcomp: calcomp.o
+	cc -s -o $(C_NAME) calcomp.o -L$(CAL_LIB) $(FLIB)
+	mv $(C_NAME) $(BIN)/$(C_NAME)
+
+calcomp.o:	graphics.h
+
