@@ -25,7 +25,8 @@ LIST =\
 all: $(PAINT)/driver.sh/$(NAME) $(PAINT)/driver/$(NAME)
 
 $(PAINT)/driver/$(NAME): $(LIST) $(DEPLIBS)
-	$(CC) $(LDFLAGS) $(LIST) $(DEPLIBS) $(MATHLIB) $(XDRLIB) -o $@
+	$(CC) $(LDFLAGS) $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB) -o $@
+
 $(PAINT)/driver.sh/$(NAME): DRIVER.sh
 	cp $? $@
 	chmod +x $@
