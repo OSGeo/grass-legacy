@@ -115,11 +115,16 @@ TMPDIR="`g.tempfile pid=$$`"
 rm -f "$TMPDIR"
 mkdir "$TMPDIR"
 
+install -m 644 $FILE.hgt.zip "$TMPDIR"
+
+#change to temporary directory
+cd "$TMPDIR"
+
 #unzip & rename data file:
 echo "Extracting $FILE..."
 unzip $FILE.hgt.zip
 if [ $? -gt 0 ] ; then
- echo "ERROR - stop."
+ echo "An ERROR occurred."
  exit 1
 fi
 
@@ -146,8 +151,6 @@ ULXMAP=`echo $LL_LONGITUDE | awk '{printf "%.1f", $1}'`
 # SRTM90 tile size is 1 deg:
 ULYMAP=`echo $LL_LATITUDE  | awk '{printf "%.1f", $1 + 1.0}'`
 
-#change to temporary directory
-cd "$TMPDIR"
 
 echo "BYTEORDER M
 LAYOUT BIL
@@ -170,6 +173,7 @@ echo "GEOGCS["wgs84",DATUM["WGS_1984",SPHEROID["wgs84",6378137,298.257223563],TO
 r.in.gdal in=$TILE.bil out=$TILEOUT
 
 rm $TILE.bil $TILE.hdr $TILE.prj
+rm "$TMPDIR"/$FILE.hgt.zip
 rmdir "$TMPDIR"
 
 #nice color table and zoom to tile
@@ -177,4 +181,4 @@ r.colors rul=srtm map=$TILEOUT
 g.region rast=$TILEOUT
 
 echo "Done: generated map $TILEOUT"
-echo "Holes in the data can be closed with 'r.fillnulls' (using splines)."
+echo "(Note: Holes in the data can be closed with 'r.fillnulls' using splines)"
