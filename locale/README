@@ -125,6 +125,16 @@ DETAILED PROCEDURE:
 
    to enable (German) language support if present in the system.
    
+
+6. Send the updated .po files to a GRASS Development Team member.
+   If you already updated .c files with _(...) macro as explained
+   above, please send diffs against CVS:
+   
+   cvs diff -u file.c > file.diff
+   
+   In this case send both the C diff files and the .po files.
+
+   
 PLEASE HELP TO TRANSLATE GRASS MESSAGES!
 
 ----------------------------------------------
