@@ -1,6 +1,8 @@
+#include "geo.h"
 /* get_deg.c */
 int get_deg(char *, int);
 /* get_num.c */
+extern double LLSTUFF[NLLSTUFF];
 int get_KFACT(int);
 int get_MFACT(int);
 int get_MSFACT(int);
@@ -24,6 +26,11 @@ int get_stp_code(int, char[]);
 int get_stp_num(void);
 int ask_fips(FILE *, int *, int *, int *);
 /* main.c */
+/* some global variables */
+extern int ier, proj_index, zone, snum, spath;
+
+extern double radius, kfact, mfact, msfact, nfact, qfact,
+              wfact, unit_fact, x_false, y_false, heigh, azim, tilt;
 int min1(int, int);
 #ifdef __GNUC_MINOR__
 int leave(int) __attribute__ ((__noreturn__));
