@@ -1,0 +1,22 @@
+
+-----------------------------------------------------------------------
+WEIGHT:  general information
+
+Weight provides the researcher with a computer driven mathematical
+method for doing weighted map overlays.  Landscape characteristics are
+assigned weights, each location's characteristics then yield a total
+weight based on the sum of the weights assigned to its
+characteristics.
+
+Map layers are chosen, weights assigned and analyses initiated using 
+a special keyword language.  General syntax can be seen using the
+
+    command:   help syntax
+
+In addition more detailed keyword information is available by entering 
+the command:   help KEYWORD  where keyword is replaced with one of the
+following keywords:
+
+    list    choose    assign    save    recover    execute    quit
+------------------------------------------------------------------------
+
