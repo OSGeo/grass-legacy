@@ -21,9 +21,9 @@ include $(MODULE_TOPDIR)/include/Make/Lib.make
 default: lib inc
 
 inc:
-	cp -L gsurf.h $(ARCH_INCDIR)/gsurf.h
-	cp -L kftypes.h $(ARCH_INCDIR)/kftypes.h
-	cp -L keyframe.h $(ARCH_INCDIR)/keyframe.h
-	cp -L local_proto.h $(ARCH_INCDIR)/ogsf_proto.h
+	cp gsurf.h $(ARCH_INCDIR)/gsurf.h
+	cp kftypes.h $(ARCH_INCDIR)/kftypes.h
+	cp keyframe.h $(ARCH_INCDIR)/keyframe.h
+	cp local_proto.h $(ARCH_INCDIR)/ogsf_proto.h
 	cat gstypes.h | sed -e 's/local_proto.h/ogsf_proto.h/' > $(ARCH_INCDIR)/gstypes.h
 

@@ -37,12 +37,12 @@ install:
 	mkdir $(INSTALL_DIR)
 	mkdir $(INSTALL_DIR)/scripts
 	mkdir $(INSTALL_DIR)/bitmaps
-	(cd scripts; cp -L script_get_line script_play script_tools script_file_tools $(INSTALL_DIR)/scripts)
-	cp -L scripts/*.tcl $(INSTALL_DIR)/scripts
-	cp -L scripts/*Index $(INSTALL_DIR)/scripts
+	(cd scripts; cp script_get_line script_play script_tools script_file_tools $(INSTALL_DIR)/scripts)
+	cp scripts/*.tcl $(INSTALL_DIR)/scripts
+	cp scripts/*Index $(INSTALL_DIR)/scripts
 	(cd bitmaps; tar -cf - *  | (cd $(INSTALL_DIR)/bitmaps; tar  -xf - 2>/dev/null ); true)
-	cp -L scripts/$(NV_VER)_script $(INSTALL_DIR)/scripts
-	cp -L scripts/$(PROG) $(GISBASE)/bin
+	cp scripts/$(NV_VER)_script $(INSTALL_DIR)/scripts
+	cp scripts/$(PROG) $(GISBASE)/bin
 	chmod ugo+x $(INSTALL_DIR)/scripts/$(NV_VER)_script \
 		$(INSTALL_DIR)/scripts/script_file_tools \
 		$(INSTALL_DIR)/scripts/script_get_line \
