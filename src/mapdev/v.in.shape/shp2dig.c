@@ -832,8 +832,15 @@ void partCalcFieldsPolygon( partDescript *partd ) {
       totalCirc += delta;
     }
 
-    /* This should now be positive or negative (non-zero) in value. */
-    assert( totalCirc > 1.0 || totalCirc < -1.0 );
+    /* This should now be positive or negative (non-zero) in value. 
+       though some situations seem to arise where it can `escape'.
+       We will deal with this eventually for now - flag the parent
+       procedure to drop the label
+     */
+    /* assert( totalCirc > 1.0 || totalCirc < -1.0 ); */
+    if(totalCirc < 1.0 && totalCirc > -1.0 ) {
+      totalCirc = 0;
+
   }
 
   /* Next, dispose situation where circulation is positive ( ie. anti-clockwise, an island
@@ -848,12 +855,22 @@ void partCalcFieldsPolygon( partDescript *partd ) {
 
   /* Finally, if circulation is negative, we have an exterior ring
   */
-  if( totalCirc < -1.0 ) {
+  else if( totalCirc < -1.0 ) {
     partd->duff = 0;
     partd->indic = -1.0;
     partd->centroid->xcentroid = newx;
     partd->centroid->ycentroid = newy;
   }
+
+  /* Otherwise we have a dud ring for some reason. Blank it 
+   */
+  else {
+    partd->duff = 1;
+    partd->indic = 0.0;
+    partd->centroid->xcentroid = 0.0;
+    partd->centroid->ycentroid = 0.0;    
+  }
+
 
   /* THE END */
 } /* partCalcFieldsPolygon */
