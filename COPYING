@@ -1,8 +1,8 @@
 Copyright and License Statement
 
 The Geographic Resources Analysis and Support System (GRASS)
-Geographic Information System (GIS) is Copyright by the
-GRASS Development Team headquartered at ITC-irst, Trento, Italy.
+Geographic Information System (GIS) is Copyright by the 
+GRASS Development Team headquartered at ITC-irst, in Trento, Italy.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by the
@@ -29,24 +29,14 @@ along with this program; if not, write to the
 Questions regarding GRASS GIS should be directed to the
 GRASS Development Team at the following address:
 
-European Headquarters 
  GRASS Development Team
  ITC-Irst
+ c/o M. Neteler
  SSI/MPA
  Via Sommarive, 18
  38050 Trento (Povo)
  Italy
  neteler@itc.it
 
-United States Headquarters 
- GRASS Development Team
- Center for Applied Geographic and Spatial Research
- Baylor University
- P.O. Box 97351
- Waco, Texas  76798-7351
- Email:     grass@baylor.edu
-
 Internet:  http://grass.itc.it
-
-Mirrors:   http://grass.ibiblio.org
-           http://grass.baylor.edu
+           http://grass.ibiblio.org
