@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.75 2000-11-12 08:52:25 markus Exp $
+$Id: BUGS,v 1.76 2000-11-13 08:17:11 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -479,13 +479,13 @@ v.cutter:
    and David Finlayson <david_finlayson@yahoo.com>)
   (being worked on by David D Gray)
 
-[RC]v.to.rast:
+v.to.rast:
   Working with a vector file and a region of(11242 rows*13301 cols) the
   module is 'killed' at step 13/22.                                              
   Module works well with the same data and a smaller region.                      
   My pc conf:pentium3 600 & 128 RAM       
   (reported by marco  <scurra@infinito.it>)
-  (being worked on by ?)
+  -> this bug can't be reproduced
 
 [RC]v.trim 
  bugreport: If a polygon has island, v.trim removes such islands
