@@ -43,8 +43,10 @@ drawn, <EM>d.measure</EM> prints the area encompassed
 (<EM>d.measure</EM> will assume the area is closed even if
 the user has not joined the first and last vertices).  Line
 lengths are stated in the same units as those of the
-current LOCATION.  Areas are stated in hectares, square
-miles, and square meters.
+current LOCATION. In a XY-LOCATION, where no units are
+ available, <EM>d.measure</EM> prints a warning and gives results
+  without units.  Areas are stated in hectares, square
+miles, square meters and square kilometers.
 
 Lines and polygons drawn using <EM>d.measure</EM> will
 overlay (not overwrite) whatever display currently appears
@@ -70,7 +72,7 @@ of <EM>c1</EM> and <EM>c2</EM> on the command line.
 <DD>Suppesses clear screen and writes messages to stderr instead of stdout. Usefull for work with the TCLTKGRASS gui.
 
 <DT><B>-m</B>
-<DD>Use metric units (Meters, Kilometers) only
+<DD>Use metric units (meters, kilometers) only
 
 <DT><B>-k</B>
 <DD>Output results (additionally) in kilometers and square kilometers
