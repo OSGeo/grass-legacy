@@ -57,9 +57,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "gis.h"
 #include "projects.h"
 #include "r.proj.h"
+
+extern void set_datumshift(char *, char *, char *, char *);
+
+/* modify this table to add new methods */
+struct menu menu[] = {
+	{ p_nearest,	"nearest",	"nearest neighbor" },
+	{ p_bilinear,	"bilinear",	"bilinear" },
+	{ p_cubic,	"cubic",	"cubic convolution" },
+	{ NULL,		NULL,		NULL }
+};
+
+static char *make_ipol_list(void);
 
 int main (int argc, char **argv)
 {
@@ -67,11 +80,10 @@ int main (int argc, char **argv)
 	         *setname,		 /* ptr to name of input mapset	 */
 	         *ipolname,		 /* name of interpolation method */
 	          errbuf[256],		 /* buffer for error messages	 */
-		  in_datum[64],		 /* data and ellipses for datum  */
-		  in_ellipse[64],	 /* conversion */
-		  out_datum[64],
-		  out_ellipse[64],
-		  *hold;
+		 *in_datum,		 /* data and ellipses for datum  */
+		 *in_ellipse,		 /* conversion */
+		 *out_datum,
+		 *out_ellipse;
 
 	int       fdi,			 /* input map file descriptor	 */
 	          fdo,			 /* output map file descriptor	 */
@@ -79,7 +91,7 @@ int main (int argc, char **argv)
 	          permissions,		 /* mapset permissions		 */
 	          cell_type,		 /* output celltype		 */
 	          cell_size,		 /* size of a cell in bytes	 */
-	          row, col, i,		 /* counters			 */
+	          row, col,		 /* counters			 */
 		  irows, icols,		 /* original rows, cols		 */
 		  orows, ocols;
 
@@ -102,19 +114,20 @@ int main (int argc, char **argv)
 
 	struct Key_Value *in_proj_info,	 /* projection information of 	 */
 	         *in_unit_info,		 /* input and output mapsets	 */
-	         *out_proj_info, 
+	         *out_proj_info,
 	         *out_unit_info;
 
 	struct GModule *module;
 
-	struct Flag *list;		 /* list files in source location */
+	struct Flag *list,		 /* list files in source location */
+		 *nocrop;		 /* don't crop output map	 */
 
 	struct Option *imapset,		 /* name of input mapset	 */
 	         *inmap,		 /* name of input layer		 */
                  *inlocation,            /* name of input location       */
                  *outmap,		 /* name of output layer	 */
 	         *indbase,		 /* name of input database	 */
-	         *interpol,		 /* interpolation method:	 
+	         *interpol,		 /* interpolation method:
  					    nearest neighbor, bilinear, cubic */
 		 *res;			 /* resolution of target map     */
 		  struct Cell_head incellhd,	 /* cell header of input map	 */
@@ -158,20 +171,14 @@ int main (int argc, char **argv)
 	outmap->required = NO;
 	outmap->description = "output raster map";
 
+	ipolname = make_ipol_list();
+
 	interpol = G_define_option();
 	interpol->key = "method";
 	interpol->type = TYPE_STRING;
 	interpol->required = NO;
 	interpol->answer = "nearest";
-	interpol->options = ipolname = (char *) G_malloc(1024);
-	
-	for (i = 0; menu[i].name != 0; i++) {
-		if (i)
-			strcat(ipolname, ",");
-		else
-			*ipolname = 0;
-		strcat(ipolname, menu[i].name);
-	}
+	interpol->options = ipolname;
 	interpol->description = "interpolation method to use";
 
 	res = G_define_option();
@@ -184,15 +191,20 @@ int main (int argc, char **argv)
 	list->key = 'l';
 	list->description = "List raster files in input location and exit";
 
-	if (G_parser(argc, argv))
-		exit(-1);
+	nocrop = G_define_flag();
+	nocrop->key = 'n';
+	nocrop->description = "Don't attempt to crop output map";
 
-   /* get the method */
+	if (G_parser(argc, argv))
+		exit(1);
+
+	/* get the method */
 	for (method = 0; ipolname = menu[method].name; method++)
 		if (strcmp(ipolname, interpol->answer) == 0)
 			break;
 
-	if (!ipolname) {
+	if (!ipolname)
+	{
 		fprintf(stderr, "<%s=%s> unknown %s\n",
 			interpol->key, interpol->answer, interpol->key);
 		G_usage();
@@ -200,23 +212,15 @@ int main (int argc, char **argv)
 	}
 	interpolate = menu[method].method;
 
-	if (outmap->answer)
-		mapname = outmap->answer;
-	else
-		mapname = inmap->answer;
-
-	if (imapset->answer)
-		setname = imapset->answer;
-	else
-		setname = G_store(G_mapset());
+	mapname = outmap->answer ? outmap->answer : inmap->answer;
+	setname = imapset->answer ? imapset->answer : G_store(G_mapset());
 
 	if (strcmp(inlocation->answer, G_location()) == 0)
 		G_fatal_error("You have to use a different location for input than the current");
 
 	G_get_window(&outcellhd);
 
-
-   /* Get projection info for output mapset */
+	/* Get projection info for output mapset */
 	if ((out_proj_info = G_get_projinfo()) == NULL)
 		G_fatal_error("Can't get projection info of output map");
 
@@ -226,84 +230,70 @@ int main (int argc, char **argv)
 	if (pj_get_kv(&oproj, out_proj_info, out_unit_info) < 0)
 		G_fatal_error("Can't get projection key values of output map");
 
-	*out_datum='\0';
-	if((hold=G_database_datum_name()))
-	   strncpy(out_datum,hold,sizeof(out_datum));
-	*out_ellipse='\0';
-	if((hold=G_database_ellipse_name()))
-	   strncpy(out_ellipse,hold,sizeof(out_ellipse));
+	out_datum = G_database_datum_name();
+	out_datum = out_datum ? G_store(out_datum) : "";
 
+	out_ellipse = G_database_ellipse_name();
+	out_ellipse = out_ellipse ? G_store(out_ellipse) : "";
 
-   /* Change the location 		 */
+	/* Change the location 		 */
 	G__create_alt_env();
-	G__setenv("GISDBASE", indbase->answer == NULL
-		  ? G_gisdbase()
-		  : indbase->answer);
+	G__setenv("GISDBASE", indbase->answer ? indbase->answer : G_gisdbase());
 	G__setenv("LOCATION_NAME", inlocation->answer);
-	permissions = G__mapset_permissions(setname);
 
-	if (permissions >= 0) {
+	permissions = G__mapset_permissions(setname);
+	if (permissions < 0)	/* can't access mapset 	 */
+		G_fatal_error("Mapset [%s] in input location [%s] - %s\n",
+			      setname, inlocation->answer,
+			      permissions == 0
+			      ? "permission denied"
+			      : "not found");
 
 	/* if requested, list the raster files in source location - MN 5/2001*/
-		if (list->answer)
-		{
-		  if(isatty(0))  /* check if on command line */
-		  {
-		    fprintf(stderr, "Checking location %s, mapset %s:\n", inlocation->answer, setname);
-		    G_list_element ("cell", "raster", setname, 0);
-		    exit(0); /* leave r.proj after listing*/
-		  }
-		}
-
-		if (!G_find_cell(inmap->answer, setname)) {
-			sprintf(errbuf, "Input map [%s] in location [%s] in mapset [%s] not found.",
-				inmap->answer, inlocation->answer, setname);
-			G_fatal_error(errbuf);
-		}
-   /* Get projection info for input mapset */
-		if ((in_proj_info = G_get_projinfo()) == NULL)
-			G_fatal_error("Can't get projection info of input map");
-
-		if ((in_unit_info = G_get_projunits()) == NULL)
-			G_fatal_error("Can't get projection units of input map");
-
-		if (pj_get_kv(&iproj, in_proj_info, in_unit_info) < 0)
-			G_fatal_error("Can't get projection key values of input map");
-
-	/* this call causes r.proj to read the entire map into memeory */
-		G_get_cellhd(inmap->answer, setname, &incellhd);
-	/* this call causes r.proj to use the WIND file settings */
-		/*G_get_window(&incellhd);*/
-
-		G_set_window(&incellhd);
-		cell_type = G_raster_map_type(inmap->answer, setname);
-
-		if (!G_projection())	/* XY data 		 */
-			G_fatal_error("Can't work with xy data");
-
-		*in_datum='\0';
-		if((hold=G_database_datum_name()))
-		   strncpy(in_datum,hold,sizeof(in_datum));
-		*in_ellipse='\0';
-		if((hold=G_database_ellipse_name()))
-		   strncpy(in_ellipse,hold,sizeof(in_ellipse));
-
-	} else {		/* can't access mapset 	 */
-
-		sprintf(errbuf, "Mapset [%s] in input location [%s] - ",
-			setname, inlocation->answer);
-
-		strcat(errbuf, permissions == 0
-		       ? "permission denied\n"
-		       : "not found\n");
-		G_fatal_error(errbuf);
+	if (list->answer)
+	{
+		if (isatty(0))  /* check if on command line */
+			fprintf(stderr, "Checking location %s, mapset %s:\n",
+				inlocation->answer, setname);
+		G_list_element ("cell", "raster", setname, 0);
+		exit(0); /* leave r.proj after listing*/
 	}
 
-	/* determin which do_proj function to use */
-	set_datumshift(in_datum,in_ellipse,out_datum,out_ellipse);
+	if (!G_find_cell(inmap->answer, setname))
+		G_fatal_error("Input map [%s] in location [%s] in mapset [%s] not found.",
+			      inmap->answer, inlocation->answer, setname);
 
-    /* Save default borders so we can show them later */
+	/* Get projection info for input mapset */
+	if ((in_proj_info = G_get_projinfo()) == NULL)
+		G_fatal_error("Can't get projection info of input map");
 
+	if ((in_unit_info = G_get_projunits()) == NULL)
+		G_fatal_error("Can't get projection units of input map");
+
+	if (pj_get_kv(&iproj, in_proj_info, in_unit_info) < 0)
+		G_fatal_error("Can't get projection key values of input map");
+
+	/* this call causes r.proj to read the entire map into memeory */
+	G_get_cellhd(inmap->answer, setname, &incellhd);
+	/* this call causes r.proj to use the WIND file settings */
+	/*G_get_window(&incellhd);*/
+
+	G_set_window(&incellhd);
+	cell_type = G_raster_map_type(inmap->answer, setname);
+
+	if (G_projection() == PROJECTION_XY)
+		G_fatal_error("Can't work with xy data");
+
+	in_datum = G_database_datum_name();
+	in_datum = in_datum ? G_store(in_datum) : "";
+
+	in_ellipse = G_database_ellipse_name();
+	in_ellipse = in_ellipse ? G_store(in_ellipse) : "";
+
+	/* determine which do_proj function to use */
+	set_datumshift(in_datum, in_ellipse, out_datum, out_ellipse);
+
+	/* Save default borders so we can show them later */
 	inorth = incellhd.north;
 	isouth = incellhd.south;
 	ieast = incellhd.east;
@@ -318,35 +308,36 @@ int main (int argc, char **argv)
 	orows = outcellhd.rows;
 	ocols = outcellhd.cols;
 
-              
-    /* Cut non-overlapping parts of input map */
+#if 0
+	/* Cut non-overlapping parts of input map */
+	if (bordwalk(&outcellhd, &incellhd, &oproj, &iproj, errbuf) < 0)
+		G_fatal_error(errbuf);
+#endif
 
-	/*if (bordwalk(&outcellhd, &incellhd, &oproj, &iproj, errbuf) < 0)
-	    G_fatal_error(errbuf);*/
-
-    /* Add 2 cells on each side for bilinear/cubic & future interpolation methods */
-    /* (should probably be a factor based on input and output resolution) */
-        
-	    incellhd.north+=2*incellhd.ns_res;
-	    incellhd.east+=2*incellhd.ew_res;
-	    incellhd.south-=2*incellhd.ns_res;
-	    incellhd.west-=2*incellhd.ew_res;
-	    if (incellhd.north > inorth) incellhd.north=inorth;  
-	    if (incellhd.east > ieast) incellhd.east=ieast;  
-	    if (incellhd.south < isouth) incellhd.south=isouth;  
-	    if (incellhd.west < iwest) incellhd.west=iwest;  
+	/* Add 2 cells on each side for bilinear/cubic & future interpolation methods */
+	/* (should probably be a factor based on input and output resolution) */
+	incellhd.north += 2*incellhd.ns_res;
+	incellhd.east  += 2*incellhd.ew_res;
+	incellhd.south -= 2*incellhd.ns_res;
+	incellhd.west  -= 2*incellhd.ew_res;
+	if (incellhd.north > inorth) incellhd.north=inorth;
+	if (incellhd.east > ieast) incellhd.east=ieast;
+	if (incellhd.south < isouth) incellhd.south=isouth;
+	if (incellhd.west < iwest) incellhd.west=iwest;
 
 	G_set_window(&incellhd);
 
-   /* And switch back to original location */
+	/* And switch back to original location */
 
 	G__switch_env();
 
-    /* Adjust borders of output map */
+	/* Adjust borders of output map */
 
-	if (bordwalk(&incellhd, &outcellhd, &iproj, &oproj, errbuf) < 0)
-	    G_fatal_error(errbuf);
-/*  
+	if (!nocrop->answer)
+		if (bordwalk(&incellhd, &outcellhd, &iproj, &oproj, errbuf) < 0)
+			G_fatal_error("%s", errbuf);
+
+#if 0
 	outcellhd.west=outcellhd.south=HUGE_VAL;
 	outcellhd.east=outcellhd.north=-HUGE_VAL;
 	for(row=0;row<incellhd.rows;row++)
@@ -362,7 +353,8 @@ int main (int argc, char **argv)
 			if(ycoord1<outcellhd.south)outcellhd.south=ycoord1;
 		}
 	}
-*/  
+#endif
+
 	if (res->answer != NULL)   /* set user defined resolution */
 		outcellhd.ns_res = outcellhd.ew_res = atof(res->answer);
 
@@ -370,36 +362,43 @@ int main (int argc, char **argv)
 	G_set_window(&outcellhd);
 
 	fprintf(stderr, "Input:\n");
-	fprintf(stderr, "Cols:	%d (%d)\nRows:	%d (%d)\n", incellhd.cols, icols, incellhd.rows, irows);
+	fprintf(stderr, "Cols:	%d (%d)\n", incellhd.cols, icols);
+	fprintf(stderr, "Rows:	%d (%d)\n", incellhd.rows, irows);
 	fprintf(stderr, "North: %f (%f)\n", incellhd.north, inorth);
 	fprintf(stderr, "South: %f (%f)\n", incellhd.south, isouth);
 	fprintf(stderr, "West:  %f (%f)\n", incellhd.west, iwest);
 	fprintf(stderr, "East:  %f (%f)\n", incellhd.east, ieast);
-	fprintf(stderr, "ew-res:	%f\nns-res	%f\n\n", incellhd.ew_res, incellhd.ns_res);
+	fprintf(stderr, "ew-res:	%f\n", incellhd.ew_res);
+	fprintf(stderr, "ns-res:	%f\n", incellhd.ns_res);
+	fprintf(stderr, "\n");
 
 	fprintf(stderr, "Output:\n");
-	fprintf(stderr, "Cols:	%d (%d)\nRows:	%d (%d)\n", outcellhd.cols, ocols, outcellhd.rows, orows);
+	fprintf(stderr, "Cols:	%d (%d)\n", outcellhd.cols, ocols);
+	fprintf(stderr, "Rows:	%d (%d)\n", outcellhd.rows, orows);
 	fprintf(stderr, "North: %f (%f)\n", outcellhd.north, onorth);
 	fprintf(stderr, "South: %f (%f)\n", outcellhd.south, osouth);
 	fprintf(stderr, "West:  %f (%f)\n", outcellhd.west, owest);
 	fprintf(stderr, "East:  %f (%f)\n", outcellhd.east, oeast);
-	fprintf(stderr, "ew-res:	%f\nns-res	%f\n", outcellhd.ew_res, outcellhd.ns_res);
+	fprintf(stderr, "ew-res:	%f\n", outcellhd.ew_res);
+	fprintf(stderr, "ns-res:	%f\n", outcellhd.ns_res);
+
+	/* open and read the relevant parts of the input map and close it */
+	G__switch_env();
+	G_set_window(&incellhd);
+	fdi = G_open_cell_old(inmap->answer, setname);
+	ibuffer = (FCELL **) readcell(fdi);
+	G_close_cell(fdi);
 
 	G__switch_env();
-	
-   /* open and read the relevant parts of the input map and close it */
-	
-   	G_set_window(&incellhd);
-		fdi = G_open_cell_old(inmap->answer, setname);
-		ibuffer = (FCELL **) readcell(fdi);
-		G_close_cell(fdi);
-	G__switch_env();
 	G_set_window(&outcellhd);
-		
-	if (strcmp(interpol->answer, "nearest") == 0) {
+
+	if (strcmp(interpol->answer, "nearest") == 0)
+	{
 		fdo = G_open_raster_new(mapname, cell_type);
 		obuffer = (CELL *) G_allocate_raster_buf(cell_type);
-	} else {
+	}
+	else
+	{
 		fdo = G_open_fp_cell_new(mapname);
 		cell_type = FCELL_TYPE;
 		obuffer = (FCELL *) G_allocate_raster_buf(cell_type);
@@ -410,30 +409,31 @@ int main (int argc, char **argv)
 	xcoord1 = xcoord2 = outcellhd.west + (outcellhd.ew_res / 2);	/**/
 	ycoord1 = ycoord2 = outcellhd.north - (outcellhd.ns_res / 2);	/**/
 
-
 	/* now invert the sense of the projection */
-	INVERSE_FLAG = INVERSE_FLAG==1 ? 0 : 1;
+	INVERSE_FLAG = !INVERSE_FLAG;
 
 	fprintf(stderr, "Projecting... ");
 	G_percent(0, outcellhd.rows, 2);
-	for (row = 0; row < outcellhd.rows; row++) {
 
+	for (row = 0; row < outcellhd.rows; row++)
+	{
 		obufptr = obuffer;
 
-		for (col = 0; col < outcellhd.cols; col++) {
-   /* project coordinates in output matrix to		 */
-   /* coordinates in input matrix			 */
+		for (col = 0; col < outcellhd.cols; col++)
+		{
+			/* project coordinates in output matrix to	 */
+			/* coordinates in input matrix			 */
 			if (proj_f(&xcoord1, &ycoord1, &oproj, &iproj) < 0)
 				G_set_null_value(obufptr, 1, cell_type);
-			else {
-   /* convert to row/column indices of input matrix	 */
-			col_idx = (xcoord1 - incellhd.west) / incellhd.ew_res;
-			row_idx = (incellhd.north - ycoord1) / incellhd.ns_res;
+			else
+			{
+				/* convert to row/column indices of input matrix */
+				col_idx = (xcoord1 - incellhd.west) / incellhd.ew_res;
+				row_idx = (incellhd.north - ycoord1) / incellhd.ns_res;
 
-   /* and resample data point				 */
-
-			interpolate(ibuffer, obufptr, cell_type,
-				    &col_idx, &row_idx, &incellhd);
+				/* and resample data point		 */
+				interpolate(ibuffer, obufptr, cell_type,
+					    &col_idx, &row_idx, &incellhd);
 			}
 
 			obufptr = G_incr_void_ptr(obufptr, cell_size);
@@ -441,14 +441,39 @@ int main (int argc, char **argv)
 			xcoord1 = xcoord2;
 			ycoord1 = ycoord2;
 		}
+
 		if (G_put_raster_row(fdo, obuffer, cell_type) < 0)
-			exit(-1);
+			G_fatal_error("error writing output map");
 
 		xcoord1 = xcoord2 = outcellhd.west;
 		ycoord2 -= outcellhd.ns_res;
 		ycoord1 = ycoord2;
 		G_percent(row, outcellhd.rows - 1, 2);
 	}
+
 	G_close_cell(fdo);
-	return(0);		/* OK */
+
+	return 0;		/* OK */
 }
+
+static char *make_ipol_list(void)
+{
+	int size = 0;
+	int i;
+	char *buf;
+
+	for (i = 0; menu[i].name; i++)
+		size += strlen(menu[i].name) + 1;
+
+	buf = G_malloc(size);
+	*buf = '\0';
+
+	for (i = 0; menu[i].name; i++)
+	{
+		if (i) strcat(buf, ",");
+		strcat(buf, menu[i].name);
+	}
+
+	return buf;
+}
+
