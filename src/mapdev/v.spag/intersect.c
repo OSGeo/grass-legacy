@@ -111,7 +111,9 @@ cross_lines (Map, A, B)
     for (a = 1 ; a < APoints.n_points ; a++)
     {
 	/*for (b = (b == a ? a : 1) ; b < BPoints.n_points ; b++)*/
-	for (b = 1 ; b < BPoints.n_points ; b++)
+	/*for (b = 1 ; b < BPoints.n_points ; b++)*/
+/* changed Jan 19, 1999 Jacques Bouchard due to core dump*/
+	for (b = (A == B ? a + 2 : 1) ; b < BPoints.n_points ; b++)
 	{
 	    /* special cases */
 	    if (A == B)
