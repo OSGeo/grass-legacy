@@ -117,7 +117,7 @@ centroid(OGRGeometryH hGeom, CENTR *Centr, SPATIAL_INDEX *Sindex, int field, int
 		}
 		if ( !in ) continue;
 
-		G_debug ( 3, "Centroid %d : field %d cat %d", centr, field, cat );
+		G_debug ( 3, "Centroid %d : layer %d cat %d", centr, field, cat );
 		Vect_cat_set ( Centr[centr].cats, field, cat);
 	    }
 	} 
