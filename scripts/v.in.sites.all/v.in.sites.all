@@ -54,10 +54,10 @@ do
   CONVERTEDMAPS=`expr $CONVERTEDMAPS + 1`
 done
 
-if [ $CONVERTEDMAPS -gt 0 ] ; then
-  echo "Vector maps in current mapset converted. Please verify new vector map(s) before deleting old sites map(s)."
+if [ $CONVERTEDMAPS -lt 1 ] ; then
+  echo "No sites maps converted as no old sites maps present in current mapset <$MAPSET>."
 else
-  echo "No sites maps converted as no old sites maps present in current mapset."
+  echo "Vector maps in current mapset converted. Please verify new vector map(s) before deleting old sites map(s)."
 fi
 
 exit 0
