@@ -21,3 +21,5 @@ lex.yy.c : mif.l
 $(VECTLIB): #
 $(GISLIB): # 
 $(DIG_ATTLIB): #
+$(LINKMLIB): #
+$(VASKLIB): #
