@@ -19,6 +19,7 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag)
 	double lo1,la1,lo2,la2,lo3,la3,lo4,la4; /* for map center in lat/long */
 	double mid_n_lo,mid_n_la,mid_s_lo,mid_s_la,mid_w_lo,mid_w_la,mid_e_lo,mid_e_la;
 	char buf[50];
+	char parms_out[512];
 	
 	if (print_flag == 2)
 		x = -1;
@@ -88,8 +89,13 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag)
 	    if (pj_get_kv(&iproj, in_proj_info, in_unit_info) < 0)
 	       G_fatal_error("Can't get projection key values of current location");
 	
-	   /* set output projection to lat/long */
-	   pj_get_string(&oproj, NULL);
+	   /* set output projection to lat/long w/ same ellipsoid as input */
+	    if( G_find_key_value("ellps", in_proj_info) != NULL )
+	        sprintf(parms_out, "proj=ll ellps=%s", 
+		        G_find_key_value("ellps", in_proj_info) );
+	    else
+	        sprintf(parms_out, "proj=ll ellps=wgs84");
+	    pj_get_string(&oproj, parms_out);
 	
 	   /* do the transform
 	    * syntax: pj_do_proj(outx, outy, in_info, out_info) 
