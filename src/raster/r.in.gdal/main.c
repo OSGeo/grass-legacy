@@ -340,7 +340,7 @@ int main (int argc, char *argv[])
         struct Ref ref;
         char	szBandName[512];
         int     nBand;
-        char    colornamebuf[512];
+        char    colornamebuf[512], colornamebuf2[512];
 
         I_init_group_ref( &ref );
 
@@ -350,6 +350,13 @@ int main (int argc, char *argv[])
             hBand = GDALGetRasterBand( hDS, nBand );
             strcpy(colornamebuf,GDALGetColorInterpretationName(
                              GDALGetRasterColorInterpretation(hBand)));
+
+            /* check: two channels with identical name ? */
+            if ( strcmp(colornamebuf,colornamebuf2) == 0 )
+                 sprintf(colornamebuf,"%d",nBand);
+            else
+                 strcpy(colornamebuf2,colornamebuf);
+
             if ( strcmp(colornamebuf,"Undefined") == 0 )
                  sprintf( szBandName, "%s.%d", output, nBand);
             else
