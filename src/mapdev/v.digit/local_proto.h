@@ -176,7 +176,7 @@ int calc_thresh(double);
 int map_to_dig_thresh(double);
 /* set_window.c */
 int init_window(void);
-int set_window(void);
+int set_window_w(void);
 /* slid_window.c */
 int slid_window_w_mouse(void);
 /* snap.c */
