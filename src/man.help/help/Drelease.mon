@@ -1,0 +1,2 @@
+Forces control of the named graphics output device (monitor)
+to be relinquished, whether or not it is locked by another user.
