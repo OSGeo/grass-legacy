@@ -1,23 +1,13 @@
-#MYLIBDIR =	../../../libes/dspf
 MYLIBDIR =	$(SRC)/libes/dspf
 DSPLIB	=	$(SRC)/libes/dspf/libdsp3.a
-SGILIB	=	-lgl_s
 
-#CFLAGS = 	-g
-EXTRA_CFLAGS	=	-I$(MYLIBDIR)
-#LDFLAGS =	-L../libes
-
-MOTIFHOME = /usr/dt/share
-X11HOME = /usr/openwin/share
-OGLHOME = /usr/openwin/share
-OGLINCLUDES = -I$(MOTIFHOME)/include  -I$(X11HOME)/include -I$(OGLHOME)/include
-EXTRA_CFLAGS	=	-I$(MYLIBDIR) -I$(OGSF_DIR) $(OGLINCLUDES)
-SUNLDFLAGS = -L$(MOTIFHOME)/lib -L$(X11HOME)/lib -L$(OGLHOME)/lib -L/usr/X11R6/lib
-OGLLIB	=	-lGLw -lXm -lXt -lX11 -lGL -lGLU
-
+OGLHOME = /usr/lib
+OGLINCLUDES = $(XMINCPATH)  $(XINCPATH) -I$(OGLHOME)/include
+EXTRA_CFLAGS = -I$(MYLIBDIR) -I$(OGSF_DIR) $(OGLINCLUDES)
+SUNLDFLAGS = $(XMLIBPATH) $(XLIBPATH) -L$(OGLHOME)/lib
+OGLLIB	= 	-lGLU -lGL -lGLw -lXm -lX11 -lXt
 
 PGM	=	$(BIN_CONTRIB_CMD)/r3.showdspf
-#PGM	=	./r3.showdspf
 
 SOURCES	=	\
                 new_init_graphics.c \
@@ -62,9 +52,8 @@ OBJ	=	\
 
 
 
-#$(PGM): $(OBJ) $(DSPLIB) 
 $(PGM): $(OBJ) $(G3DLIB) $(GISLIB) $(DATETIMELIB)
-	$(CC) $(OBJ) $(LDFLAGS) -o $@ -lm $(SUNLDFLAGS) $(OGLLIB) $(DSPLIB) $(G3DLIB) $(GISLIB) $(DATETIMELIB)
+	$(CC) $(OBJ) $(LDFLAGS) $(EXTRA_CFLAGS) -lm $(OGLLIB) $(SUNLDFLAGS) $(DSPLIB) $(G3DLIB) $(DATETIMELIB) $(GISLIB)  -o $@
 
 
 cap_data.o: $(MYLIBDIR)/viz.h
