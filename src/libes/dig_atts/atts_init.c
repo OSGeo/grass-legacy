@@ -99,7 +99,6 @@ atts_init(fp, atts_ptr)
 		default:
 			fprintf(stderr, "ERROR: Undefined type in attribute file\n") ;
 			return(-1) ;
-			break ;
 		}
 
 		if (stat <0)
