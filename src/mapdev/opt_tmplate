@@ -1,0 +1,30 @@
+    old = G_define_option();
+    old->key			= "input";
+    old->type			= TYPE_STRING;
+    old->required		= YES;
+    old->multiple		= NO;
+    old->gisprompt		= "old,dig, vector";
+    old->description		= "vector input file";
+    
+    new = G_define_option();
+    new->key			= "output";
+    new->type			= TYPE_STRING;
+    new->required		= YES;
+    new->multiple		= NO;
+    new->gisprompt		= "new,dlg,dlg";
+    new->description		= "dlg output file";
+
+
+    if (G_parser (argc, argv))
+	exit (-1);
+
+    dig_name = old->answer;
+    dlg_name = new->answer;
+
+    if (!*dig_name  || !*dlg_name )
+    {
+        fprintf (stderr, "%s: Command line error: missing input or output name.\n\n", argv[0]);
+	G_usage();
+        exit (-1);
+    }
+
