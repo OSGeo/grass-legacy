@@ -2,6 +2,8 @@
 #
 /***********************************************************************
 
+$Id$
+
 Modified by Jacques Bouchard and Markus Neteler 6/99 to make cursor
 keys working. Exit now with ESC-CR.
 
@@ -86,6 +88,7 @@ CALLS:
 #include <stdlib.h>
 #include <string.h>
 #include "vask.h"
+#include "curses.h"
 
 static int centered(char *);
 static int fmt(char *,int,double);
