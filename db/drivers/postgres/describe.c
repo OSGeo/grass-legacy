@@ -106,9 +106,17 @@ int describe_table( PGresult *res, dbTable **table, cursor *c)
 	    G_warning ( "column '%s' : type int8 (bigint) is stored as integer (4 bytes) "
 		        "some data may be damaged", fname);
 	
-	if ( gpgtype == PG_TYPE_TEXT )
+	if ( gpgtype == PG_TYPE_TEXT ) {
 	    G_warning ( "column '%s' : type text is stored as varchar(250) "
 		        "some data may be lost", fname);
+	    fsize = 250;
+	}
+	
+	if ( gpgtype == PG_TYPE_VARCHAR && fsize < 0 ) {
+	    G_warning ( "column '%s' : type character varying is stored as varchar(250) "
+		        "some data may be lost", fname);
+	    fsize = 250;
+	}
 	
 	if ( gpgtype == PG_TYPE_BOOL )
 	    G_warning ( "column '%s' : type bool (boolean) is stored as char(1), values: 0 (false), "
