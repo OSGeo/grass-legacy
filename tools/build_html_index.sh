@@ -72,7 +72,7 @@ expand_module_class_name()
 }
 
 #are we in the tools/ dir?
-ls build_html_index.html 2> /dev/null
+ls build_html_index.sh 2> /dev/null
 if [ $? -eq 1 ] ; then
  echo "ERROR: this script must be run from the tools/ directory"
  exit
