@@ -1,0 +1,110 @@
+#include "gis.h"
+# this file contains ellipsoid parameters
+# format of the file is
+#  name  a=value   x=value     comments
+#
+# where name is a single word elliposid name, a is the equatorial radius
+# and x is one of
+#   b polar radius, f flattening, or e eccentricity squared
+#
+# x should be a defining parameter (as opposed to a derived parameter)
+# no spaces before or after the =
+#
+# IS THERE A STANDARD FOR THESE ACRONYMS? /MHuOct99 
+#
+
+# these are from [Snyder, Table 1, p.12]
+australian	a=6378160	f=1/298.25
+clark66		a=6378206.4	b=6356583.8
+grs80   	a=6378137	f=1/298.257
+hayford		a=6378388	f=1/297
+international	a=6378388	f=1/297
+krassovsky	a=6378245	f=1/298.3
+wgs72		a=6378135	f=1/298.26
+
+# this is from naval oceanographic lab
+wgs84		a=6378137	f=1/298.257223563
+
+# these are from [Seppelin, Table 9, p.35]
+bessel		a=6377397.155	e=.006674372
+airy		a=6377563.396	e=.006670540
+everest		a=6377276.345	e=.0066378466
+wgs66		a=6378145	f=1/298.25
+
+# Snyder.
+#      John P. Snyder, "Map Projections - A  Working  Manual,"
+#      U.S.  Government  Printing Office, Washington DC, 1989.
+#      U.S. Geological Survey Professional Paper 1395
+
+# Seppelin.
+#      Thomas O. Seppelin, "The  Department  of Defense World
+#      Geodetic System 1972," presented at the International
+#      Symposium  on Problems Related to the Redefinition if
+#      North American Geodetic Networks, Fredericton, New 
+#      Brunswick,Canada in May, 1974.
+
+
+#these were added for g.setproj capabilities
+MERIT		a=6378137	f=1/298.257
+IAU76		a=6378140.0	f=1/298.257
+GRS67		a=6378160.0	f=1/247.247167
+clark80		a=6378249.145	f=1/293.4663
+hough		a=6378270.0	b=6356794.343479
+mercury		a=6378166.0	b=6356784.283666
+modif_airy	a=6377341.89	b=6356036.143
+modif_everest	a=6377304.063	b=6356103.039
+modif_merc	a=6378150.0	b=6356768.337303
+new_internatnl	a=6378157.5	b=6356772.2
+SEasia		a=6378155.0	b=6356773.3205
+walbeck		a=6376896.0	b=6355834.8467
+
+# From PROJ4.3.3, things to check here
+# Soviet Geodetic System 85
+SGS85		a=6378136.0	f=1/298.257
+# This has higher precision than above "grs80"
+# "GRS80",	"a=6378137.0",		"rf=298.257222101",	"GRS 1980(IUGG, 1980)",
+# Appl. Physics. 1965
+APL4.9		a=6378137.0	f=1/298.25
+# This has same values as as WGS66
+# "NWL9D",	"a=6378145.0.",		"rf=298.25",		"Naval Weapons Lab., 1965",
+# Note discrepancy with above "modif_airy"
+# "mod_airy",	"a=6377340.189",	"b=6356034.446",	"Modified Airy",
+# Andrae 1876 (Den., Iclnd.)
+andrae		a=6377104.43	f=1/300.0
+# Bessel 1841 (Namibia)
+bess_nam	a=6377483.865	f=1/299.1528128
+# Comm. des Poids et Mesures 1799
+CPM		a=6375738.7	f=1/334.29
+# Delambre 1810 (Belgium)
+delmbr		a=6376428.0	f=1/311.5
+# Engelis 1985
+engelis		a=6378136.05	f=1/298.2566
+# Synonym of "everest"?
+# "evrst30",  	"a=6377276.345",	"rf=300.8017",		"Everest 1830",
+# Synonym of "modif_everest"?
+# "evrst48",  	"a=6377304.063",	"rf=300.8017",		"Everest 1948",
+# Everest 1956
+evrst56		a=6377301.243	f=1/300.8017
+# Everest 1969
+evrst69		a=6377295.664	f=1/300.8017
+# Everest (Sabah & Sarawak)
+evrstSS		a=6377298.556	f=1/300.8017
+# Synonym of "mercury"?
+# "fschr60",  	"a=6378166.",		"rf=298.3",		"Fischer (Mercury Datum) 1960",
+# "fschr60m", 	"a=6378155.",		"rf=298.3",		"Modified Fischer 1960",
+# Can the _real (^ or v) "modif_merc please stand up"?	
+# "fschr68",  	"a=6378150.",		"rf=298.3",		"Fischer 1968",
+# Helmert 1906
+helmert		a=6378200.0	f=1/298.3
+# Kaula 1961
+kaula		a=6378163.0	f=1/298.24
+# Lerch 1976
+lerch		a=6378139.0	f=1/298.257
+# Maupertius 1738
+mprts		a=6397300.0	f=1/191.0
+# Plessis 1817 (France)
+plessis		a=6376523.0	b=6355863.0
+wgs60    	a=6378165.0	f=1/298.3
+
+# sphere  	a=6370997.0     e=0.0
+
