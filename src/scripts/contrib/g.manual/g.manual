@@ -8,7 +8,7 @@ fi
 
 HELP="
 Usage:
- `basename $0` [-1] [-a] [-d] [-m] [-s] [-q] [browser=name] [entries=name,name,...]
+ `basename $0` [-1] [-a] [-d] [-m] [-s] [-q] [browser=name] [entries=name[,name,...]]
    name name ...
 
 Flags:
