@@ -60,6 +60,7 @@
 #define GV_FORMAT_NATIVE   0 /* grass native format */
 #define GV_FORMAT_SHAPE    1 /* shapefile format */
 #define GV_FORMAT_POSTGIS  2 /* postgis format */
+#define GV_FORMAT_OGR      3 /* OGR format */
 
 /* How may tables linked to map */
 #define GV_1TABLE  0   /* One table */
@@ -78,16 +79,23 @@
 
 #define VECT_OPEN(Map)   (Map->open == VECT_OPEN_CODE)
 
-/*                      VERSION    4.0                  */
+#define GV_COOR_HEAD_SIZE 14
+
 #define GRASS_V_VERSION       "5.0"
-#define GRASS_V_VERSION_MAJOR  5
-#define GRASS_V_VERSION_MINOR  0
+#define GV_COOR_VER_MAJOR  5
+#define GV_COOR_VER_MINOR  0
+#define GV_TOPO_VER_MAJOR  5
+#define GV_TOPO_VER_MINOR  0
+#define GV_SIDX_VER_MAJOR  5
+#define GV_SIDX_VER_MINOR  0
 
 /* the earliest version that can read this current format  */
-#define GRASS_V_EARLIEST_MAJOR  5
-#define GRASS_V_EARLIEST_MINOR	0
-
-#define GRASS_V_DIG_HEAD_LENGTH	20
+#define GV_COOR_EARLIEST_MAJOR  5
+#define GV_COOR_EARLIEST_MINOR	0
+#define GV_TOPO_EARLIEST_MAJOR  5
+#define GV_TOPO_EARLIEST_MINOR	0
+#define GV_SIDX_EARLIEST_MAJOR  5
+#define GV_SIDX_EARLIEST_MINOR	0
 
 #define WITHOUT_Z	0
 #define WITH_Z		1
@@ -116,11 +124,14 @@
 #define POINTS		3	/* this is thrown in for get_type_cnt() */
 
 /* types used in memory on run time - may change */
-#define GV_POINT		0x01
-#define GV_LINE			0x02
-#define GV_BOUNDARY		0x04
-#define GV_CENTROID	        0x08
-#define GV_AREA	                0x10
+#define GV_POINT      0x01
+#define GV_LINE	      0x02
+#define GV_BOUNDARY   0x04
+#define GV_CENTROID   0x08
+#define GV_FACE       0x10
+#define GV_KERNEL     0x20
+#define GV_AREA	      0x40
+#define GV_VOLUME     0x80
 
 #define GV_POINTS (GV_POINT | GV_CENTROID )
 #define GV_LINES (GV_LINE | GV_BOUNDARY )
@@ -130,6 +141,8 @@
 #define GV_STORE_LINE     2
 #define GV_STORE_BOUNDARY 3
 #define GV_STORE_CENTROID 4
+#define GV_STORE_FACE     5
+#define GV_STORE_KERNEL   6
 
 /* Overlay operators */
 #define GV_ON_AND     "AND"     /* intersect */
