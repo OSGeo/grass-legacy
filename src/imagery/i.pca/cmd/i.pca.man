@@ -1,0 +1,60 @@
+.TH i.pca
+.SH NAME
+\fIi.pca\fR \- Principal components analysis (pca) program for image processing.
+.br
+.I (GRASS Image Processing Program)
+.SH SYNOPSIS
+\fBi.pca\fR
+.br
+\fBi.pca help\fR
+.br
+.nf
+\fBi.pca input\*=\fIname,name...\fR \fBoutput\*=\fIname\fR
+.fi
+.SH DESCRIPTION
+\fIi.pca\fR is an image processing program based on the algorithm provided by
+Vali (1990), that processes n (2 <\*= n <\*= 8)
+input raster map layers and produces n output
+raster map layers containing the principal components of the input data
+in decreasing order of variance ("contrast").
+The output raster map layers are assigned names with .1, .2, ... .n suffixes.
+The current geographic region definition and mask settings are respected
+when reading the input raster map layers.
+
+.LP
+\fBParameters:\fR
+.IP \fBinput1\*=\fIname,name...\fR 18
+Name of input raster map layers (at least three must be provided).
+.IP \fBoutput\*=\fIname\fR 18
+The output raster map layer name to which suffixes are added.
+Each output raster map layer is assigned this user-specified \fIname\fR
+with a numerical (.1, .2, ... .n) suffix.
+
+.LP
+Richards (l986) gives a good example of the application of principal
+components analysis (pca) to a time series of LANDSAT images of a burned
+region in Australia.
+
+.SH NOTES
+If the warning about the "Jacobi routine" not converging appears,
+carefully examine the partial matrix that is output.  If the values
+that are above the diagonal are not close to zero (say, not between
+-1.0e-50 and +1.0e-50), this may indicate a problem with the Jacobi
+routine.  Also, see the bug listed below.
+.SH BUGS
+The \FIi.pca\fR transformation depends on calculating the
+eigen values and eigen vectors of a matrix based on the input
+signatures.  The function that calculates the eigen values and vectors
+depends on an under flow being set to zero to converge.  If this isn't
+true for a given architecture, spurious warnings about non-convergence
+may result.
+.SH SEE ALSO
+Richards, John A.,
+\fBRemote Sensing Digital Image Analysis\fR,
+Springer-Verlag, 1986.
+.LP
+Vali, Ali R.,
+Personal communication,
+Space Research Center, University of Texas, Austin, 1990.
+.SH AUTHOR
+David Satnik, GIS Laboratory, Central Washington University
