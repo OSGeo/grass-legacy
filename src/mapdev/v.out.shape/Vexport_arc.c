@@ -43,7 +43,6 @@ static	char  *cov_type = NULL ;
 static	char  *dig_name = NULL ;
 static	char  *arc_prefix = NULL ;
 static  char  *shape_type= NULL ;
-static  char  *buf= NULL ;
 
 #ifdef OLDPARSE
 static  int  load_args() ;
@@ -71,7 +70,8 @@ main (int argc, char **argv)
 	    lin_filepath[1000],
 	    lab_filepath[1000],
 	    txt_filepath[1000];
-
+	char buf[10000];
+  
 	FILE
 			*pol_file,
 			*lin_file,
@@ -285,8 +285,10 @@ main (int argc, char **argv)
 			shape_type = "lines";
 	}
 	/* do we need points ?? */
-	
-	system("$GISBASE/etc/v.out.shape/gen2shp %s %s < $LOCATION/arc/\"%s\"", arc_prefix, shape_type, dig_name);
+
+	fprintf(stdout, "$GISBASE/etc/v.out.shape/gen2shp %s %s < $LOCATION/arc/%s", arc_prefix, shape_type, arc_prefix);
+	sprintf(buf, "$GISBASE/etc/v.out.shape/gen2shp %s %s < $LOCATION/arc/%s", arc_prefix, shape_type, arc_prefix);
+	G_system(buf);
 
 	exit(0);
 }
