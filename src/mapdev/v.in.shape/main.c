@@ -1,19 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <math.h>
-#include <signal.h>
-#include <ctype.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#include "gis.h"
-#include "Vect.h"
-#include "shp2dig.h"
-#include "dbutils.h"
-#include "writelin.h"
-#include "cleanup.h"
 
 /******************************************************************/
 /*                                                                */
@@ -46,6 +30,26 @@
  *     
  ******************************************************************/
 
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <math.h>
+#include <signal.h>
+#include <ctype.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include "gis.h"
+#include "Vect.h"
+#include "shp2dig.h"
+#include "dbutils.h"
+#include "writelin.h"
+#include "cleanup.h"
+
+
+
 static char *extract_base_name( char *, const char * );
 
 enum {ANALYSE, RASTER, LINES, VECTOR, ALL} todo;
@@ -66,7 +70,7 @@ int main( int   argc, char *argv[])
     int		cat_field;
     int 	pgdmp, no_rattle;
 
-    char name[128], dbf_file[128], *p;	/* name of output files */
+    char name[128], *p;	/* name of output files */
 
     char infile[512], *newmapset;
     int cover_type;		/* type of coverage (line, point, area) */
@@ -197,7 +201,6 @@ int main( int   argc, char *argv[])
     strcpy(infile, parm.input->answer);
     newmapset = parm.mapset->answer;
     extract_base_name( name, infile );
-    strcat( strcpy(dbf_file, name), ".dbf" );
 
 
     /* Examine the flag `-l' first */
@@ -205,7 +208,7 @@ int main( int   argc, char *argv[])
     if(listflag->answer) {
       int	i;
         
-      hDBF = DBFOpen( dbf_file, "r" );
+      hDBF = DBFOpen( infile, "r" );
       if( hDBF == NULL )
         {
 	  sprintf (buf, "%s - DBF not found, or wrong format.\n", infile);
@@ -333,24 +336,6 @@ int main( int   argc, char *argv[])
       G_fatal_error( "Could not set map type. Aborting\n"  );
     
 
-
-
-/* -------------------------------------------------------------------- */
-/*      Extract basename of shapefile.                                  */
-/* -------------------------------------------------------------------- */
-    /*    for( p = infile+strlen(infile)-1;
-         p != infile-1 && (isalnum(*p) || *p == '_' || *p == '.' );
-         p-- ) {}
-    strcpy( name, p+1);
-    
-    p = strrchr( name, '.');
-    if (p != NULL)
-        *p = '\0';
-
-    if (debug > 4)
-	fprintf( fdlog, "Name of output file is \"%s\"\n", name);
-    */
-
 /* -------------------------------------------------------------------- */
 /*      Create the GRASS vector layer based on the basename of the      */
 /*      shapefile.							*/
@@ -369,7 +354,7 @@ int main( int   argc, char *argv[])
     else {
       int	i;
         
-      hDBF = DBFOpen( dbf_file, "r" );
+      hDBF = DBFOpen( infile, "r" );
       if( hDBF == NULL )
         {
 	  sprintf (buf, "%s - DBF not found, or wrong format.\n", infile);
@@ -436,7 +421,7 @@ int main( int   argc, char *argv[])
     else {
       int	i;
         
-      hDBF = DBFOpen( dbf_file, "r" );
+      hDBF = DBFOpen( infile, "r" );
       if( hDBF == NULL )
         {
 	  sprintf (buf, "%s - DBF not found, or wrong format.\n", infile);
@@ -478,7 +463,7 @@ int main( int   argc, char *argv[])
   /*           Also create line segments from vertex database.             */
   /* -------------------------------------------------------------------- */
 
-    hDBF = DBFOpen( dbf_file, "r" );
+    hDBF = DBFOpen( infile, "r" );
     if( hDBF == NULL )
       {
 	sprintf (buf, "%s - DBF not found, or wrong format.\n", infile);
