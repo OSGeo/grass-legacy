@@ -43,7 +43,7 @@ htmlgen:
 	echo "</body></html>" >> $(PGM).tmp.html
 	-$(MKDIR) $(GISBASE)/docs/html
 	-mv -f $(PGM).tmp.html $(GISBASE)/docs/html/$(PGM).html
-	-$(INSTALL) *.png *.jpg $(GISBASE)/docs/html 2> /dev/null
+	-$(INSTALL) *.png *.jpg $(GISBASE)/docs/html 2> /dev/null ; true
 
 htmldesc = \
 	GRASS_FAKE_START=1 \
