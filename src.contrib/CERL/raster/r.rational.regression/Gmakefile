@@ -1,5 +1,4 @@
-PGM = r.rational.regression
-HOME = $(BIN_CONTRIB_CMD)
+PGM = $(BIN_CONTRIB_CMD)/r.rational.regression
 LIST = 	main.o\
 	utils.o \
 	read_data.o\
@@ -22,7 +21,7 @@ LIST = 	main.o\
 	errfun.o\
 	xformation.o
 
-./$(PGM): $(LIST) $(GISLIB)
+$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB)
 
 $(GISLIB): # 
