@@ -1,0 +1,27 @@
+m.proj2 Usage Notes
+===================
+
+Datum conversions are automatically handled by the PROJ.4 library, if 'datum='
+is specified in *both* the input *and* output projections.
+
+If a datum is specified there is no need for the 'ellps=' or underlying
+parameters, 'a=', 'es=' etc.
+
+Usage example:
+m.proj2 inproj="proj=tmerc,datum=ire65,lat_0=53.5,lon_0=-8,x_0=200000,\
+y_0=250000,k=1.000035" outproj="proj=ll,datum=wgs84" input=test.txt
+
+or without datum transformation:
+m.proj2 inproj="proj=tmerc,ellps=modif_airy,lat_0=53.5,lon_0=-8,x_0=200000,\
+y_0=250000,k=1.000035" outproj="proj=ll,datum=wgs84" input=test.txt
+
+In this example no datum transformation will take place as a datum was not
+specified for the input projection. The datum specified for the output
+projection will thus be silently ignored and may be left out; all that is
+achieved a simple conversion from projected to geodetic co-ordinates,
+keeping the same datum (and thus also the same ellipsoid).
+
+For more usage examples, see documentation for the PROJ.4 'cs2cs' program.
+
+PK
+January 2003

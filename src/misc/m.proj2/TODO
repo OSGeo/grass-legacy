@@ -13,5 +13,3 @@ will not.
 I suspect that a good programmer could fix this. Also, you can just run
 m.proj2 by itself and enter coordinates individually.
 ---------------------------
-
-A datum is silently ignored.
