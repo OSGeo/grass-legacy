@@ -1101,7 +1101,7 @@ if test -n "$USE_FREETYPE"; then
 
 LOC_CHECK_INC_PATH(freetype,FreeType,FTINC)
 
-LOC_CHECK_INCLUDES(freetype/freetype.h,FreeType,$FTINC)
+LOC_CHECK_INCLUDES(ft2build.h,FreeType,$FTINC)
 
 # With FreeType library directory
 

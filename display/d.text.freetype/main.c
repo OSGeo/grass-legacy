@@ -30,6 +30,7 @@
 #include <iconv.h>
 #endif
 
+#include <ft2build.h>
 #include <freetype/freetype.h>
 #include "gis.h"
 #include "display.h"

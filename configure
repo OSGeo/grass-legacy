@@ -12878,7 +12878,7 @@ fi
 
 ac_save_cppflags="$CPPFLAGS"
 CPPFLAGS="$FTINC $CPPFLAGS"
-for ac_hdr in freetype/freetype.h
+for ac_hdr in ft2build.h
 do
 ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
 echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
