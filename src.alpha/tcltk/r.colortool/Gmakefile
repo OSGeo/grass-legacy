@@ -1,0 +1,5 @@
+all:
+	cp r.colortool $(GISBASE)/bin
+	chmod ugo+x $(GISBASE)/bin/r.colortool
+	if [ ! -d $(GISBASE)/etc/r.colortool ];	then mkdir $(GISBASE)/etc/r.colortool; fi
+	cp lib/utilprocs.tcl lib/filereqs.tcl $(GISBASE)/etc/r.colortool/
