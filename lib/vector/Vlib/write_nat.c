@@ -484,6 +484,7 @@ V2_delete_line_nat ( struct Map_info *Map, int  line )
   /* Delete reference from area */
   if (  plus->built >= GV_BUILD_CENTROIDS && type == GV_CENTROID ) {
       if ( Line->left > 0 ) {
+	  G_debug ( 3, "Remove centroid %d from area %d", line, Line->left );
           Area = Map->plus.Area[Line->left];
 	  Area->centroid = 0;
       }  

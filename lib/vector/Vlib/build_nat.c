@@ -313,13 +313,46 @@ Vect_attach_centroids ( struct Map_info *Map, BOUND_BOX *box )
         List = Vect_new_list (); 
 	first = 0;
     }
+
+    /* Warning: If map is updated on level2, it may happen that previously correct island 
+     * becomes incorrect. In that case, centroid of area forming the island is reattached 
+     * to outer area, because island polygon is not excluded. 
+     *
+     * +-----------+     +-----------+
+     * |   1       |     |   1       |
+     * | +---+---+ |     | +---+---+ |     
+     * | | 2 | 3 | |     | | 2 |     |   
+     * | | x |   | |  -> | | x |     |  
+     * | |   |   | |     | |   |     | 
+     * | +---+---+ |     | +---+---+ |
+     * |           |     |           |
+     * +-----------+     +-----------+
+     * centroid is       centroid is
+     * attached to 2     reattached to 1
+     *
+     * Because of this, when the centroid is reattached to another area, it is always necessary
+     * to check if original area exist, unregister centroid from previous area.
+     * To simplify code, this is implemented so that centroid is always firs unregistered 
+     * and if new area is found, it is registered again.
+     */
     
     Vect_select_lines_by_box ( Map, box, GV_CENTROID, List);
     G_debug ( 3, "  number of centroids to reattach = %d", List->n_values);
     for (i = 0; i < List->n_values; i++) { 
+	int orig_area;
 	centr = List->value[i];
 	Line = plus->Line[centr];
 	Node = plus->Node[Line->N1];
+
+	/* Unregister centroid */
+	orig_area = Line->left;
+	if ( orig_area > 0 ) {
+	    if ( plus->Area[orig_area] != NULL ) {
+		plus->Area[orig_area]->centroid = 0;
+	    }
+	}
+	Line->left = 0;
+	
 	sel_area = Vect_find_area ( Map, Node->x, Node->y );
 	G_debug ( 3, "  centroid %d is in area %d", centr, sel_area);
 	if ( sel_area > 0 ) {
@@ -327,19 +360,18 @@ Vect_attach_centroids ( struct Map_info *Map, BOUND_BOX *box )
 	    if ( Area->centroid == 0 ) { /* first centroid */
 		G_debug ( 3, "  first centroid -> attach to area");
 		Area->centroid = centr;
-	        if ( Line->left != sel_area &&  plus->do_uplist ) dig_line_add_updated ( plus, centr );
 		Line->left = sel_area;
-	    } else {  /* duplicate centroid */
+	    } else if ( Area->centroid != centr ) {  /* duplicate centroid */
+		/* Note: it cannot happen that Area->centroid == centr, because the centroid
+		 * was previously unregistered */
 		G_debug ( 3, "  duplicate centroid -> do not attach to area");
-	        if ( Line->left != -sel_area &&  plus->do_uplist ) dig_line_add_updated ( plus, centr );
 		Line->left = -sel_area;
 	    }
-	} else {
-	    if ( Line->left != 0 &&  plus->do_uplist ) dig_line_add_updated ( plus, centr );
-	    Line->left = 0;
 	}
+	    
+	if ( sel_area != orig_area ) dig_line_add_updated ( plus, centr );
     }
-    
+	
     return 0;
 }
     
