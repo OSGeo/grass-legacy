@@ -213,15 +213,15 @@ else
     fi
 
     if [ "$L" ] ; then
-    	MAPSET=`basename $L`
-    	L=`dirname $L`
+    	MAPSET=`basename "$L"`
+    	L=`dirname "$L"`
     
     	if [ "$L" != "." ] ; then
-    	    LOCATION_NAME=`basename $L`
-    	    L=`dirname $L`
+    	    LOCATION_NAME=`basename "$L"`
+    	    L=`dirname "$L"`
     
     	    if [ "$L" != "." ] ; then
-    	    	GISDBASE=$L
+    	    	GISDBASE="$L"
     	    fi
     	fi
     fi
