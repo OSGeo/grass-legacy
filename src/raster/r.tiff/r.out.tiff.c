@@ -98,7 +98,7 @@ main (int argc, char *argv[])
 	
 	pflag = G_define_flag();
 	pflag->key		= 'p';
-	pflag->description	= "TIFF Pallete output (8bit instead of 24bit).";
+	pflag->description	= "TIFF Palette output (8bit instead of 24bit).";
 
 	tflag = G_define_flag();
 	tflag->key		= 't';
