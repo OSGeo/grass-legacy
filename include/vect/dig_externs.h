@@ -105,7 +105,7 @@ int dig_spindex_init ( struct Plus_head *);
 
 //int dig_snap_line_to_node (struct Map_info *, int, int, struct line_pnts *);
 
-int dig_add_node (struct Plus_head *, double, double );
+int dig_add_node (struct Plus_head *, double, double, double );
 int dig_which_node (struct Plus_head *, double, double, double);
 int dig_add_line (struct Plus_head *plus, int type, struct line_pnts *points, long offset);
 //int dig_node_del_line (P_NODE *, int line);

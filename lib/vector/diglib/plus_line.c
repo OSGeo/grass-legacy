@@ -32,7 +32,7 @@ dig_add_line (struct Plus_head *plus, int type, struct line_pnts *Points, long o
     node = dig_find_node ( plus, Points->x[0], Points->y[0], Points->z[0]);
     G_debug ( 3, "node = %d", node);
     if ( node == 0 ) {
-	node = dig_add_node ( plus, Points->x[0], Points->y[0] );
+	node = dig_add_node ( plus, Points->x[0], Points->y[0], Points->z[0] );
 	G_debug ( 3, "Add new node: %d", node);
     } else {
 	G_debug ( 3, "Old node found: %d", node);
@@ -46,7 +46,7 @@ dig_add_line (struct Plus_head *plus, int type, struct line_pnts *Points, long o
 	node = dig_find_node ( plus, Points->x[lp], Points->y[lp], Points->z[lp]);
 	G_debug ( 3, "node = %d", node);
 	if ( node == 0 ) {
-	    node = dig_add_node ( plus, Points->x[lp], Points->y[lp] );
+	    node = dig_add_node ( plus, Points->x[lp], Points->y[lp], Points->z[lp]);
 	    G_debug ( 3, "Add new node: %d", node);
 	} else {
 	    G_debug ( 3, "Old node found: %d", node);
