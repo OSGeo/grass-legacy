@@ -179,7 +179,7 @@ set option = 0
 set colors = (red green blue black white )
 @ option = `color.select`
 
-if ($option <= 5) then
+if ($option &lt;= 5) then
      set color = $colors[$option]
      echo $color
 
@@ -191,7 +191,7 @@ exit
 
 <PRE>
 #! /bin/csh -f
-d.menu bcolor=red tcolor=green dcolor=yellow size=5 << EOF
+d.menu bcolor=red tcolor=green dcolor=yellow size=5 &lt;&lt; EOF
 .T 25
 .L 25
 Color Choices

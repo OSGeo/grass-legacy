@@ -38,7 +38,7 @@ currently only support VRML 1.0.
 </DL>
 
 <H2>WARNING:</H2>
-VRML is not well suited for large geometrys which can result from even a small geographic region.  Most viewers seem to bog down with more than 12,000 polygons, depending on your hardware & specific viewer.  Each grid cell results in two polygons, so a reasonable size region would be something less than about 75x75.  For improved performance and smaller file size, leave off a color map.  Since VRML is ascii text, gzip works very well to significantly compress file size.<p>
+VRML is not well suited for large geometrys which can result from even a small geographic region.  Most viewers seem to bog down with more than 12,000 polygons, depending on your hardware &amp; specific viewer.  Each grid cell results in two polygons, so a reasonable size region would be something less than about 75x75.  For improved performance and smaller file size, leave off a color map.  Since VRML is ascii text, gzip works very well to significantly compress file size.<p>
 
 <H2>BUGS:</H2>
 Currently the region is transformed to a unit size, so real geographic location is lost.  Side effects when working in a lat-lon location are that besides general distortion due to projection, a very small exaggeration factor (on order of .001) must be used to compensate for vertical units expected to be the same as map units.<p>

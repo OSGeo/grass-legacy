@@ -533,7 +533,7 @@ file.
      the center of view to the center  of  the  sphere  when
      using this mode.
 
-     <b>Scale... & Label...</b>  These  two  buttons  toggle  addi-
+     <b>Scale... &amp; Label...</b>  These  two  buttons  toggle  addi-
      tional pop up panels.
 
 </pre>
@@ -973,7 +973,7 @@ go back to step 1.  Now let's complete the circular path:
      release the mouse button, then click once on the slider
      in the empty part, past the last keyframe, and click on
      add a keyframe.  This essentially copies the first key-
-     frame to the fifth & last keyframe.
+     frame to the fifth &amp; last keyframe.
 
 </pre>
 Now click on run.  When  the  animation  stops,  adjust  the
@@ -1099,7 +1099,7 @@ terminate  when  EOF is received in standard input from your
 text file.
 <p>
 Finally, you would create the animation itself  by  starting
-the  program with: SG3d elev.file co=rast01.file < your.txt.
+the  program with: SG3d elev.file co=rast01.file &lt; your.txt.
 Adjust lighting and positioning (if you have a  3dview  file
 you want to use instead, load it at startup with 3dview=file
 because if you try to load it once  a  text  file  has  been
