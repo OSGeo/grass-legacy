@@ -1,0 +1,297 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Andreas C. Lange">
+   <meta name="GENERATOR" content="Mozilla/4.7 [de] (WinNT; I) [Netscape]">
+   <title>GRASS 5.0 Cygnus Compiling</title>
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<center>
+<h1>
+
+<hr SIZE=5 NOSHADE WIDTH="100%"><font face="Arial,Helvetica">Compiling
+GRASS 5.0 on Win32 with Cygwin 1.x</font></h1></center>
+
+<center>
+<h1>
+<font face="Arial,Helvetica">(arch i686-pc-cygwin)</font></h1></center>
+
+<hr SIZE=5 NOSHADE WIDTH="100%">
+<br><font face="Arial,Helvetica">I describe here what i did to compile
+the recent CVS tree of GRASS 5.0beta12 on Windows with the cygwin tools
+on a Windows 2000 machine and a Windows NT 4.0 machine.</font>
+<br><font face="Arial,Helvetica">Note that GRASS 5.0 on Win32 is still
+experimental, so expect some functionality missing or not working.</font>
+<p><font face="Arial,Helvetica">You need:</font>
+<ul>
+<li>
+<font face="Arial,Helvetica">Windows NT 4.0 or Windows 2000 Professional,</font></li>
+
+<br><font face="Arial,Helvetica">(Windows 9x and Windows ME currently unsupported),</font>
+<li>
+<font face="Arial,Helvetica">Cygwin, latest release,</font></li>
+
+<li>
+<font face="Arial,Helvetica">NTFS filesystem (FAT will not work!),</font></li>
+
+<li>
+<font face="Arial,Helvetica">libraries and additions see below.</font></li>
+</ul>
+<font face="Arial,Helvetica">This text was written by Andreas Lange &lt;andreas.lange@rhein-main.de>.
+Most of the text was taken out of the description from John Huddleston
+&lt;John.Huddleston@usda.gov>. All errors and mistakes are of course mine.</font>
+<br>
+<hr SIZE=5 NOSHADE WIDTH="100%">
+<h2>
+<font face="Arial,Helvetica">1. Get the Cygwin tools</font></h2>
+<font face="Arial,Helvetica">Get the latest version from <a href="http://sources.redhat.com/cygwin/download.html">http://sources.redhat.com/cygwin/download.html</a>.</font>
+<p><font face="Arial,Helvetica">Download the file </font><tt>setup.exe</tt><font face="Arial,Helvetica">
+to a local disk, run it and follow the instructions. The </font><tt>setup.exe</tt><font face="Arial,Helvetica">
+program will prompt you for one of three choices, if you never have loaded
+the Cygwin software, select download from internet. If you have a previous
+version you should know what to do. If you have never done this, it will
+prompt you for a directory to install the files.</font>
+<p><font face="Arial,Helvetica">If you are new to cygwin, you should look
+at some of the documentation available at this site.</font>
+<p><font face="Arial,Helvetica">When installing the Cygwin tools, please
+select all of the contrib section, or at least:</font>
+<ul>
+<li>
+<font face="Arial,Helvetica">ncurses</font></li>
+
+<li>
+<font face="Arial,Helvetica">perl</font></li>
+
+<li>
+<font face="Arial,Helvetica">libtiff</font></li>
+
+<li>
+<font face="Arial,Helvetica">libjpeg</font></li>
+
+<li>
+<font face="Arial,Helvetica">libpng</font></li>
+
+<li>
+<font face="Arial,Helvetica">libz</font></li>
+</ul>
+<font face="Arial,Helvetica">This will save you from much hassle later
+when you need these libraries for GRASS.</font>
+<p><font face="Arial,Helvetica">Please select for the install directory
+a local drive on your computer with enough space for the entire cygwin
+distribution (150 MB without X11R6.4), the X11R6.4 installation (additional
+65 MB), the grass source code (100 MB), the object files and libraries
+(around 100 MB) and the grass binaries (programs, 100 MB to 150 MB)). If
+you want to do real work, you need at least another 500 MB for GRASS data
+storage.</font>
+<p><font face="Arial,Helvetica">You need Perl for the manpage-generation
+with g.html2man. Perl 5.6 now is part of the contrib section, so install
+it from there. You can get the precompiled Perl distribution from <a href="http://cygutils.netpedia.net/V1.1/">http://cygutils.netpedia.net/V1.1/</a>,
+too.</font>
+<h2>
+<font face="Arial,Helvetica">2. Get the latest source code for GRASS</font></h2>
+<font face="Arial,Helvetica">Get the source code from: <a href="http://www.geog.uni-hannover.de/grass/grass5/source/">http://www.geog.uni-hannover.de/grass/grass5/source/</a>.</font>
+<br><font face="Arial,Helvetica">Checkout either from the <a href="http://www.geog.uni-hannover.de/grass/grasscvs.html">CVS
+repository</a> (if you have CVS installed already), download the <a href="ftp://hgeo02.geog.uni-hannover.de/pub/grass/grass5/source/snapshot/">weekly
+snapshot </a>or the <a href="ftp://hgeo02.geog.uni-hannover.de/pub/grass/grass5/source/">release
+source packet</a>.</font>
+<p><font face="Arial,Helvetica">Unpack the source code in any directory
+of your choice, e. g. in your home directory:</font>
+<pre><tt>cd $HOME</tt></pre>
+
+<pre><tt>mkdir grass.src</tt></pre>
+
+<pre><tt>cd grass.src</tt></pre>
+<tt>tar xzf /path/to/file/grass5.0beta12_src.tar.gz</tt>
+<h2>
+<font face="Arial,Helvetica">3. Install the X11 libraries and the X Server</font></h2>
+<font face="Arial,Helvetica">For compiling the GRASS XDRIVER (monitors
+for graphical output), you need the X11 libraries. Get them from <a href="http://sources.redhat.com/cygwin/xfree/">http://sources.redhat.com/cygwin/xfree/</a>.
+Download at least the following packages: devel, DLLs, fonts, Xterm, Xwin,
+Prog, rgb, twm, updates.</font>
+<br><font face="Arial,Helvetica">Please refer to the <a href="http://sources.redhat.com/cygwin/xfree/docs/howto/book1.htm">XFree
+install guide</a> for further details.</font>
+<p><font face="Arial,Helvetica">Please check out yourself the actual version
+and source as this changes frequently.</font>
+<p><font face="Arial,Helvetica">If you don't want to use the XFree Server
+(which is beta-quality and runs only in full screen mode), you can download
+the Starnet X Server from <a href="http://www.starnet.com/products/">http://www.starnet.com/products/</a>.
+This is a demo version that will time out after 2 hours. You can restart
+it again after it times out.</font>
+<h2>
+<font face="Arial,Helvetica">4. Install sunrpc/xdrlib</font></h2>
+<font face="Arial,Helvetica">You need the sun rpc (remote procedure call)
+library that contains the xdr (external data representation) library.</font>
+<br><font face="Arial,Helvetica">Download the binary file from:</font>
+<br><font face="Arial,Helvetica"><a href="ftp://ftp.franken.de/pub/win32/develop/gnuwin32/cygwin/porters/Vinschen_Corinna/B20">ftp://ftp.franken.de/pub/win32/develop/gnuwin32/cygwin/porters/Vinschen_Corinna/B20</a></font>
+<br><font face="Arial,Helvetica">file: </font><tt>sunrpc-4.0.cygwin1.bin.tar.gz</tt>
+<p><font face="Arial,Helvetica">For obscure reasons the binary for cygwin
+1.x is available under the B20 directory. Get the binary distribution,
+the source did not build on my machine.</font><font face="Arial,Helvetica"></font>
+<p><font face="Arial,Helvetica">Go to the root directory </font><font face="Verdana">(</font><tt>cd
+/</tt><font face="Verdana">)</font><font face="Arial,Helvetica"> and unpack
+this file:</font>
+<pre><tt>tar xzf /where/ever/you/saved/this/sunrpc-4.0.cygwin1.bin.tar.gz</tt></pre>
+
+<h2>
+<font face="Arial,Helvetica">5. Header file creation</font></h2>
+<font face="Arial,Helvetica">If you ran into compiling errors after configure'ing
+and make'ing (see paragraph 8), check the header file </font><tt>src/CMD/head/head</tt><font face="Arial,Helvetica">.
+From this file the header file </font><tt>head.$arch</tt><font face="Arial,Helvetica">
+is created with the make command. You can find a sample header file under
+</font><tt>src/CMD/head/<a href="head.i686-pc-cygwin">head.i686-pc-cygwin</a></tt><font face="Arial,Helvetica">.</font>
+<p><font face="Arial,Helvetica">Under some circumstances the X11 header
+files and libraries are not found. The X11 headers are in </font><tt>/usr/X11R6/include</tt><font face="Arial,Helvetica">,
+but some stray files are in </font><tt>/usr/include/X11</tt><font face="Arial,Helvetica">.
+You should rename or delete this directory, so that it is not found by
+configure. Please remember that you have to rename or delete this directory
+each time you update your cygwin installation. The lines in the GRASS header
+file should read:</font>
+<pre><tt>XLIBPATH = -L/usr/X11R6/lib</tt></pre>
+
+<pre><tt>XINCPATH = -I/usr/X11R6/include</tt></pre>
+
+<pre><tt>and/or</tt></pre>
+
+<pre><tt>XCFLAGS = -I/usr/X11R6/include</tt></pre>
+
+<h2>
+<font face="Arial,Helvetica">6. Some additional changes to do</font></h2>
+<font face="Arial,Helvetica">Create a softlink from less to more:</font>
+<pre><tt>ln -s /bin/less /bin/more</tt></pre>
+<font face="Arial,Helvetica">Otherwise the grass shell will not run correctly.</font>
+<p><font face="Arial,Helvetica">Sometimes </font><tt>'libz.dll'</tt><font face="Arial,Helvetica">
+is not found. Copy it over from </font><tt>/usr/X11R6/lib/libz.dll</tt><font face="Arial,Helvetica">
+to </font><tt>/lib/libz.dll</tt><font face="Arial,Helvetica">.</font>
+<p><font face="Arial,Helvetica">Do </font><tt>'export MAKE_MODE=unix'</tt><font face="Arial,Helvetica">
+from the command shell (sh, bash). This is usually the default, but it
+does not hurt to export it.</font>
+<p><font face="Arial,Helvetica">Add </font><tt>/usr/local/bin</tt><font face="Arial,Helvetica">
+and </font><tt>/bin</tt><font face="Arial,Helvetica"> to your path if they
+are not included (</font><tt>echo $PATH</tt><font face="Arial,Helvetica">
+to check, </font><tt>export PATH=/usr/local/bin:/usr/bin:$PATH</tt><font face="Arial,Helvetica">
+to add). Please start the compile (see 8.) from within the cygwin shell,
+not from a DOS/cmd shell under Windows.</font>
+<p><font face="Arial,Helvetica">For sure i have forgotten something. If
+a module doesn't compile, get back here and check.</font>
+<h2>
+<font face="Arial,Helvetica">7. check the REQUIREMENTS file</font></h2>
+<font face="Arial,Helvetica">Check the file </font><tt>REQUIREMENTS</tt><font face="Arial,Helvetica">
+in the GRASS distribution root directory for any missing libraries and
+get and compile them if needed.</font>
+<h2>
+<font face="Arial,Helvetica">8. And now FINALLY to the GRASS compilation</font></h2>
+<font face="Arial,Helvetica">Open a cygwin command window (cygwin shell,
+started with the desktop icon created by setup). From there change to the
+directory with the source code and start the configuration and compilation
+steps with the following commands:</font>
+<pre><tt>&nbsp; cd /to/source/code/of/grass</tt></pre>
+
+<pre><tt>&nbsp; ./configure --enable-postgres=no \</tt></pre>
+
+<pre><tt>&nbsp;&nbsp;&nbsp; --x-includes=/usr/X11R6/include \</tt></pre>
+
+<pre><tt>&nbsp;&nbsp;&nbsp; --x-libraries=/usr/X11R6/lib</tt></pre>
+
+<pre><tt>&nbsp; make</tt></pre>
+
+<pre><tt>&nbsp; make install</tt></pre>
+<font face="Arial,Helvetica">All libraries and modules that do not build
+correctly are listed in the file </font><tt>error.log</tt><font face="Arial,Helvetica">.
+Read this file and fix the errors in the source code. Re-run make from
+the top source directory or proceed from the according directory of the
+source code with:</font>
+<pre><tt>&nbsp; gmake5</tt></pre>
+<font face="Arial,Helvetica">if you already installed GRASS.</font>
+<p><font face="Arial,Helvetica">Please report any problems, errors and
+solutions to the GRASS developers mailing list at <a href="mailto:grass5@geog.uni-hannover.de">grass5@geog.uni-hannover.de</a>.</font>
+<h2>
+<font face="Arial,Helvetica">9. Running GRASS</font></h2>
+<font face="Arial,Helvetica">Please read the <a href="grass5_0bininstall-cygwin.html#Start GRASS">paragraph
+in the binary installation document</a>.</font>
+<p><font face="Arial,Helvetica">Start your X-Server. The Starnet X-Server
+is started from the start menu as:</font>
+<p><font face="Arial,Helvetica">Start->Programs->X-Win32->X-Win32</font>
+<p><font face="Arial,Helvetica">Start a DOS command window and type the
+following commands:</font>
+<pre><tt>&nbsp; SET DISPLAY=127.0.0.1:0.0</tt></pre>
+
+<pre><tt>&nbsp; SET PATH=\cygwin\bin;\cygwin\usr\X11R6\bin;\cygwin\usr\bin;\cygwin\usr\local\bin;%PATH%</tt></pre>
+
+<pre><tt>&nbsp; start /B \cygwin\usr\X11R6\bin\xterm -sl 1000 -sb -rightbar -ms red -fg yellow -bg black -e bash</tt></pre>
+<font face="Arial,Helvetica">These should be put into a DOS .bat file for
+easier use.</font>
+<p><font face="Arial,Helvetica">Now start GRASS. In the bash window type:</font>
+<pre><tt>&nbsp;&nbsp; grass5</tt></pre>
+<font face="Arial,Helvetica">then follow the normal GRASS startup procedure.</font>
+<p><font face="Arial,Helvetica">See the StartGrass shell script in both
+/bin and in /usr/local/grass5 for the above steps.</font>
+<br>&nbsp;
+<h2>
+<font face="Arial,Helvetica">10. This build was compiled with Cygwin 1.1.8</font></h2>
+<font face="Arial,Helvetica">Read about Unix running under Windows here:</font>
+<ul>
+<li>
+<font face="Arial,Helvetica"><a href="http://sources.redhat.com/cygwin/docs.html">http://sources.redhat.com/cygwin/docs.html</a></font></li>
+</ul>
+
+<hr SIZE=5 NOSHADE WIDTH="100%">
+<h2>
+<font face="Arial,Helvetica">Changes to the last build/cygwin version</font></h2>
+<font face="Arial,Helvetica">Perl is now part of the contrib section of
+cygwin. No need to create a link from </font><tt>/usr/local/bin/perl.exe</tt><font face="Arial,Helvetica">
+to </font><tt>/usr/bin/perl</tt><font face="Arial,Helvetica"> with </font><tt>ln
+-s /usr/local/bin/perl.exe /usr/bin/perl.</tt>
+<p><font face="Arial,Helvetica">No need to create a shell script /bin/yacc
+with the contents:</font>
+<br><tt>#!/bin/sh</tt>
+<br><tt>bison --yacc $@</tt>
+<br><font face="Arial,Helvetica">and do a </font><tt>chmod a+x /usr/bin/yacc</tt><font face="Arial,Helvetica">.</font>
+<br><font face="Arial,Helvetica">Configure now checks for bison too.</font>
+<p><font face="Arial,Helvetica">The ipc setup and the ipc-daemon are no
+longer needed, as sockets are now the default transport mechanism.</font>
+<p><font face="Arial,Helvetica">The netbpm header files are now part of
+the GRASS source, but netpbm-9.8 is very userful, so i recommend to install
+it.</font>
+<p><font face="Arial,Helvetica">The following libraries are now included
+in the contrib section for cygwin:</font>
+<ul>
+<li>
+<font face="Arial,Helvetica">libncurses: Version 5.2-1</font></li>
+
+<li>
+<font face="Arial,Helvetica">libgdbm: Version 1.8.0-3</font></li>
+
+<li>
+<font face="Arial,Helvetica">libpng: Version 1.0.8-2</font></li>
+
+<li>
+<font face="Arial,Helvetica">libtiff: Version 3.5.5-3</font></li>
+
+<li>
+<font face="Arial,Helvetica">libjpeg: Version 6b-3</font></li>
+
+<li>
+<font face="Arial,Helvetica">libz: Version 1.1.3-5</font></li>
+</ul>
+<font face="Arial,Helvetica">g77 is part of gcc now, so no need to install
+anything manually.</font>
+<p><font face="Arial,Helvetica">ncurses 5.0 is part of the cygwin distribution
+now (under contrib).</font>
+<p><font face="Arial,Helvetica">The check that the #define CURSORS_MAXY
+is not NONE and the definition of #define HAVE_CURSORS in the file src/include/config.h
+is already done with configure.</font>
+<p><font face="Arial,Helvetica">General problems with my build:</font>
+<br><font face="Arial,Helvetica">see sections PROBLEM in the above text,</font>
+<br><font face="Arial,Helvetica">g.html2man needs Perl, but Perl is not
+included in the standard Cygwin distribution (and i have only installed
+a Windows port of Perl).</font>
+<br><font face="Arial,Helvetica">src/fonts/for_grass: PROBLEM with the
+program that converts the fonts to the GRASS internal binary format (only
+with Win 9x, not with NT 4.0/2000).</font>
+<p>
+<hr SIZE=5 NOSHADE WIDTH="100%"><font face="Arial,Helvetica"><font size=-2>Andreas
+Lange, andreas.lange@rhein-main.de, 25.03.2001</font></font>
+</body>
+</html>
