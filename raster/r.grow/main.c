@@ -19,9 +19,15 @@ int main(int argc, char *argv[])
     int nrows, row;
     int ncols, col;
     CELL *c1, *c2, *c3, *c4;
+	struct GModule *module;
     struct Option *opt1, *opt2;
     struct Flag *flagq, *flagb ;
 
+
+	module = G_define_module();
+	module->description =
+		"Generates an output raster map layer "
+		"with contiguous areas grown by one cell (pixel).";
 
     opt1 = G_define_option() ;
     opt1->key        = "input" ;
