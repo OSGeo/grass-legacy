@@ -93,7 +93,7 @@ extern int
   Nload_3dview_cmd(),
   Nset_cancel_func_cmd(),
   Nunset_cancel_func_cmd(),
-  Tk_Tkspecial_waitCmd(),
+/*  Tk_Tkspecial_waitCmd(), */
   SetScriptFile_Cmd(),
   SetState_Cmd(),
   CloseScripting_Cmd(),
@@ -115,7 +115,7 @@ init_commands (Tcl_Interp *interp, Nv_data *data)
   /* Disabled security version of send */
 /*  Tcl_CreateCommand(interp, "send", Tk_SendCmd,
 		    (ClientData) mainWindow, (void (*)()) NULL); */
-  
+ 
   /* Scripting commands */
   Tcl_CreateCommand(interp, "Nv_set_script_file", SetScriptFile_Cmd,
 		    (ClientData) mainWindow, (void (*)()) NULL);
@@ -137,8 +137,11 @@ init_commands (Tcl_Interp *interp, Nv_data *data)
 		    (ClientData) mainWindow, (void (*)()) NULL);
   
   /* Add the special tkwait command */
-  Tcl_CreateCommand(interp, "tkspecial_wait", Tk_Tkspecial_waitCmd,
-		    (ClientData) mainWindow, (void (*)()) NULL);
+  /* REMOVED 26-Feb-2000 by Philip Warner. Replaced with an Idle handler */
+/*
+ *  Tcl_CreateCommand(interp, "tkspecial_wait", Tk_Tkspecial_waitCmd,
+ *		    (ClientData) mainWindow, (void (*)()) NULL);
+ */
 
   /* Commands for handling logical names */
   Tcl_CreateCommand(interp, "Nliteral_from_logical", Nliteral_from_logical_cmd,
