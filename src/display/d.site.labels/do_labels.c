@@ -199,7 +199,7 @@ int do_labels (FILE *infile, struct Cell_head window,
 			}
 		}
 	}
-
+	R_font(STANDARD_FONT);
 	G_site_free_struct(theSite);
 	return 0;
 }
