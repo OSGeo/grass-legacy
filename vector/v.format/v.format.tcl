@@ -220,6 +220,9 @@ pack $efbut -side top
 set efok [Button $efbut.ok -text "Create vector" -command create_vect ]
 pack $efok -side left
 
+set help [button $efbut.help -text "Help" -command { exec $env(GRASS_HTML_BROWSER) $env(GISBASE)/docs/html/v.format.html } ]
+pack $help -side left
+
 set close [button $efbut.close -text "Close" -command { exit } ]
 pack $close -side right
 

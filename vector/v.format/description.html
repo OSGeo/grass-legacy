@@ -6,17 +6,19 @@ define PostGRASS connection.
 
 <h2>FUNCTIONS</h2>
 
+<h2>1) External format (SHAPEfile)</h2>
+
 <h3>Vector name</h3>
 
 Name of GRASS vector output.
 
-<h3>Shapefile</h3>
+<h3>SHAPEfile</h3>
 
-Name of shapefile to register.
+Name of SHAPEfile to register (this does not import it).
 
 <h3>Header informations [optional]</h3> 
 
-Here you can store some basic meta data comming with the shapefile.
+Here you can store some basic meta data comming with the SHAPEfile.
 
 <p>
 
@@ -30,11 +32,27 @@ Here you can store some basic meta data comming with the shapefile.
 
 <h3>Create vector</h3>
 
-Creates GRASS vector file from shapefile.
+Creates GRASS vector file from SHAPEfile.
+
+<h2>2) Output format (Native or PostGIS)</h2>
+
+<h3>Output format</h3>
+
+Can be native (GRASS internal) or PostGIS.
+
+<h3>PostGIS database</h3>
+
+Connection string to connect to PostGIS Server: <P>
+
+Example: <tt>host=myserver.itc.it,dbname=mydb,user=name</tt>
+<P>
+If 'password' is not specified (warning: clear text!), then
+the user will be session-wise queried for the password upon
+data queries.
 
 <h3>Close</h3>
 
-close v.format GUI.
+Close v.format GUI.
 
 <h2>NOTES</h2>
 
