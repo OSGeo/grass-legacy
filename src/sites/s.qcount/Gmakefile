@@ -20,13 +20,13 @@ LIST = \
 	indices.o \
 	main.o
 
-LIBES= $(GISLIB) $(DATETIMELIB) $(MATHLIB) 
+LIBES= $(GISLIB) $(DATETIMELIB) 
 
 #all: $(PGM) man hello
 all: $(PGM)
 
 $(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB) $(MATHLIB)
  
 man:  
 	-cp $(NAME).man $(MDIR)/$(NAME)
