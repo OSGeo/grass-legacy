@@ -6,7 +6,7 @@
 # Author: Michael Barton (Arizona State University)
 # Based on Display Manager for GRASS 5.7 by Radim Blazek (ITC-IRST)
 # and tcltkgrass for GRASS 5.7 by Michael Barton (Arizona State University)
-# with contributions by Glynn Clements, Markus Neteler, Lorenzo, Moretti and others
+# with contributions by Glynn Clements, Markus Neteler, Lorenzo Moretti, and others
 #
 # COPYRIGHT:	(C) 1999 - 2005 by the GRASS Development Team
 #
