@@ -100,7 +100,7 @@ G3d_openCellOld (name, mapset, window, typeIntern, cache)
   int nofHeaderBytes, dataOffset, useXdr, hasIndex;
   char *ltmp, *unit;
   double north, south, east, west, top, bottom;
-
+  
   map = G3d_openCellOldNoHeader (name, mapset);
   if (map == NULL) {
     G3d_error ("G3d_openCellOld: error in G3d_openCellOldNoHeader");
