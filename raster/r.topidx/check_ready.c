@@ -13,6 +13,6 @@ check_ready(void)
 		retval=1;
 	}
 
-	return(retval);
+	return retval;
 }
 
