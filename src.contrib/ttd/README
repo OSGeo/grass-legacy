@@ -1,0 +1,5 @@
+
+Date: Fall, 1988
+raw.tape.data - .DAI files as read off tape (easier to work with on disk)
+                These have been removed for source distribution.
+src           - Source code for massaging TTD information.
