@@ -342,6 +342,32 @@ static void ImportBand( GDALRasterBandH hBand, const char *output )
 /* -------------------------------------------------------------------- */
     fprintf (stderr, "CREATING SUPPORT FILES FOR %s\n", output);
     G_close_cell (cf);
+
+/* -------------------------------------------------------------------- */
+/*      Transfer colormap, if there is one.                             */
+/* -------------------------------------------------------------------- */
+    if( GDALGetRasterColorTable( hBand ) != NULL )
+    {
+        GDALColorTableH  hCT;
+        struct Colors    colors;
+        int              iColor;
+
+        hCT = GDALGetRasterColorTable( hBand );
+        
+        G_init_colors (&colors);
+        for (iColor = 0; iColor < GDALGetColorEntryCount( hCT ); iColor++ )
+        {
+            GDALColorEntry  sEntry;
+
+            GDALGetColorEntryAsRGB( hCT, iColor, &sEntry );
+            if( sEntry.c4 == 0 )
+                continue;
+
+            G_set_color(iColor, sEntry.c1, sEntry.c2, sEntry.c3, &colors);
+        }
+
+        G_write_colors( (char *) output, G_mapset(), &colors);
+    }
 }
 
 /************************************************************************/
