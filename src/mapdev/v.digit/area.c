@@ -67,3 +67,31 @@ Del_area (map, area)
 /*DEBUG*/ debugf ("Calling del_area\n");
     dig_del_area (map, area);
 }
+
+/* same as Del_area(), but doesn't update the screen */
+
+_Del_area (map, area)
+    struct Map_info *map;
+    int area;
+{
+    P_ATT *Att;
+    P_AREA *Area;
+    char buf[100];
+
+
+    /* Instead of changing all the code out there, just have 
+    ** this routine call Del_isle if we get an isle
+    */
+    if (area == 0)
+	return (-1);
+
+    if (area <= 0)	/* ISLE */
+	return Del_isle (map, area);
+
+/* this needs to be modified to only happen IF Area label is on screen... */
+    Area = &(map->Area[area]);
+    if (!AREA_ALIVE (Area)) return (-1);
+
+/*DEBUG*/ debugf ("Calling del_area\n");
+    dig_del_area (map, area);
+}
