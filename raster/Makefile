@@ -9,7 +9,8 @@ SUBDIRS1 = \
 	r.cost \
 	r.gdal \
 	r.his \
-	r.mapcalc
+	r.mapcalc \
+	r.neighbors
 
 GDALBASED = r.gdal
 
