@@ -46,7 +46,7 @@
 #endif
 double myrand(void);
 
-#ifdef __CYGWIN__
+#if defined(__CYGWIN__) || defined(__MAC_OS_X__) 
 double drand48()
 {
 	return(rand()/32767.0);

@@ -9,7 +9,7 @@
  * g_randseed(): it does nothing at present
  */
 
-#ifdef __CYGWIN__
+#if defined(__CYGWIN__) || defined(__MAC_OS_X__)
 #define drand48() rand()/32767.0
 #else
 extern double drand48();

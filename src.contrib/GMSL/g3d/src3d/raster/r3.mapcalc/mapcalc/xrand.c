@@ -6,7 +6,8 @@
  * a hook is provided for seeding the random numbers by the main()
  * g_randseed(): it does nothing at present
  */
-#ifndef __CYGWIN__
+
+#if defined(__CYGWIN__) || defined(__MAC_OS_X__) 
 extern double drand48();
 #else
 double drand48()
