@@ -1,0 +1,23 @@
+LIBES = $(DISPLAYLIB) $(RASTERLIB) $(COORCNVLIB) $(GISLIB)
+LIBPROJ		= $(SRC)/../src.related/mapgen/lib/libproj.a 
+LIBSUPP		= $(SRC)/../src.related/mapgen/lib/libsupp.a
+
+LIST = \
+	b_w_line.o \
+	main.o \
+	where_am_i.o \
+	SetProj.o
+
+all:  LIBPROJ START $(BIN_MAIN_CMD)/d.where
+
+$(BIN_MAIN_CMD)/d.where: $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@  $(LIST) $(LIBES) $(LIBPROJ) $(LIBSUPP) $(MATHLIB)
+
+START:
+	cp $(SRC)/../src.related/mapgen/proj/SetProj.c SetProj.c
+	cp $(SRC)/../src.related/mapgen/proj/projects.h projects.h
+
+LIBPROJ:
+	gmake4.0 $(SRC)/../src.related/mapgen/proj;
+
+$(LIBES): #
