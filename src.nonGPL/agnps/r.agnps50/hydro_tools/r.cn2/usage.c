@@ -10,6 +10,7 @@
 #include <stdio.h>
 
 usage(me)
+char *me;
 {
     char buf[300];
 
