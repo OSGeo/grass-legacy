@@ -1,0 +1,5 @@
+all:
+	rm -rf $(GISBASE)/scripts
+	mkdir $(GISBASE)/scripts
+	cp shells/*.sh $(GISBASE)/scripts
+	chmod 0555 $(GISBASE)/scripts/*
