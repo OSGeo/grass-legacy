@@ -15,7 +15,7 @@ containing randomly located sites.
 The program \fIr.random\fR allows the user to create a raster map layer
 and a site list file containing geographic coordinates of points whose
 locations have been randomly determined.
-The program locates these randomly-generated sites within the
+The program locates these randomly generated sites within the
 current geographic region and mask (if any),
 on non-zero category value data areas within a user-specified raster map layer.
 If the user sets the -z flag, sites will be randomly generated across all cells
@@ -25,12 +25,12 @@ The \fIraster_output\fR raster map layer is created in the user's current mapset
 The category values and corresponding category names already associated with
 the random site locations in the \fIinput\fR map layer are assigned
 to these sites in the \fIraster_output\fR map layer.
-A color table, designed to contrast with that assigned
-to the \fIinput\fR, is generated for the \fIraster_output\fR.
+.\" A color table, designed to contrast with that assigned
+.\" to the \fIinput\fR, is generated for the \fIraster_output\fR.
 
 The \fIsite_lists\fR file created by \fIr.random\fR contains a listing of
 the sites' geographic coordinates;  these coordinates
-are the \fIcenter points\fR of the randomly-selected cells.
+are the \fIcenter points\fR of the randomly selected cells.
 .SH OPTIONS
 The user may specify the quantity of random locations to be generated
 either as a \fIpositive integer\fR (e.g., 10), or as a
