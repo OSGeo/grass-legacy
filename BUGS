@@ -1,11 +1,14 @@
 Known bugs in GRASS (have to be fixed)       
+$Id: BUGS,v 1.14 2000-09-08 21:52:16 markus Exp $
 
 Maintained by
    Markus Neteler
    neteler@geog.uni-hannover.de
+Please send a note if detecting an unknown bug.
+
 
 ----------------------------------------------------------------
-[In sync with GRASS 5 beta 8/CVS]
+[In sync with GRASS 5 beta 9/CVS]
 History at end of file.
 
 ----------- drivers ---------------------------------------------
@@ -17,9 +20,8 @@ CELL-Driver: colors are not correct
   drivers, I suspect one of the Libraries and not the XDRIVER.
   look at D_set_colors ().
 
+
 ----------- modules ---------------------------------------------
-
-
 d.his: 
  - color wrong if input value=0
  - added NULL randomly when using "out" for saving
@@ -129,9 +131,9 @@ r.los
 
 r.mapcalc
  - Values -129 in GRASS raster files are treated as Null
- - fixed for FreeBSD/Linux. Check for others, correction goes
-   here:
-   src/libes/gis/null_val.c
+  (already fixed for FreeBSD/Linux. Check for other platforms, 
+   corrections go here:
+   src/libes/gis/null_val.c)
 
  - r.mapcalc/polish: (when compiling)
 make[2]: Entering directory
@@ -202,27 +204,6 @@ v.surf.rst:
 
 Platform specific stuff:
 
-SUN - solaris 2.6
-
-src/raster/r.binfer:
-gcc -o /data3/grass5/etc/bin/main/cmd/r.binfer -s
-OBJ.sparc-sun-solaris2.6/gram.o OBJ.sparc-sun-solaris2.6/lex.o
-OBJ.sparc-sun-solaris2.6/symtab.o OBJ.sparc-sun-solaris2.6/table.o
-OBJ.sparc-sun-solaris2.6/main.o OBJ.sparc-sun-solaris2.6/flags.o
-OBJ.sparc-sun-solaris2.6/engine.o OBJ.sparc-sun-solaris2.6/misc.o
-OBJ.sparc-sun-solaris2.6/reclass.o OBJ.sparc-sun-solaris2.6/yywrap.o
-/data3/grass5/src5/src/libes/LIB.sparc-sun-solaris2.6/libgis.a -lnsl -lm 
-Undefiniertes                   erstmals referenziert
- Symbol                             in Datei
-yy_flex_alloc                       OBJ.sparc-sun-solaris2.6/lex.o
-yy_flex_realloc                     OBJ.sparc-sun-solaris2.6/lex.o
-yy_flex_free                        OBJ.sparc-sun-solaris2.6/lex.o
-ld: Schwerer Fehler: Symbolreferenzierungsfehler. Keine Ausgabe in
-/data3/grass5/etc/bin/main/cmd/r.binfer geschrieben
-make[1]: *** [/data3/grass5/etc/bin/main/cmd/r.binfer] Error 1
-make[1]: Leaving directory /data3/grass5/src5/src/raster/r.binfer'
-GISGEN failure at STEP: src/raster/r.binfer
-
 src/raster/r.combine:
 make[2]: Entering directory /data3/grass5/src5/src/raster/r.combine/cmd'
 rm -f gis_lxcl.c gis_pars.c gis_pars.h gis_pars.out
@@ -287,7 +268,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log: BUGS,v $
- Revision 1.13  2000-08-26 13:00:51  markus
+ Revision 1.14  2000-09-08 21:52:16  markus
+ cosmetics
+
+ Revision 1.13  2000/08/26 13:00:51  markus
  more wishes and bug reports...
 
  Revision 1.12  2000/08/21 17:34:08  bernhard
