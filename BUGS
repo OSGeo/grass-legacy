@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.46 2000-10-23 08:45:18 markus Exp $
+$Id: BUGS,v 1.47 2000-10-23 12:23:30 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -74,19 +74,6 @@ d.param.scale
  - lower axis description not readable
  - sometimes "floating point exeption", especially in par=geary
     (being worked on by ?)
-
-[RC]d.profile: the min/max printed at profile are wrong
-           sometimes the entire profile wrong
-           obviously problem with fp/int maps
-      * displays the correct location and elevation with the "where        
-  am I" selection, but generates a flat line profile for any transect             
-  across my raster elevation maps. The flat line has a consistent value on        
-  the y axes of 17519 and /3963632 at the origin. I recall this module            
-  worked ok for me in early 5b releases, but has failed in this manner in         
-  both 5b7 and 5b8. 
-  (reported by Tom Strang  tstrang@trytel.com)
-  (being worked on by ?)
-
 
 d.rast.num: some numbers are displayed in wrong (unreadable) color
   (being worked on by ?)
