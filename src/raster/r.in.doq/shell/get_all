@@ -1,0 +1,17 @@
+#!/bin/sh
+if test $# != 2;then
+	echo 'get_all n raster_file
+	n is the tape drive number 0 or 1
+	raster_file is the GRASS name files are called raster_file.n
+'
+fi
+
+tmpnm=`g.tempfile pid=$$`
+mt -f /dev/rst$1 rewind
+for i in 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6
+do
+dd if=/dev/nrst$1 ibs=52689 of=$tmpnm
+r.in.doq -s in=$tmpnm out=$2.$i
+rm $tmpnm
+done
+mt -f /dev/rst$1 rewind
