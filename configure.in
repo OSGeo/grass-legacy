@@ -88,8 +88,11 @@ AC_SUBST(ZLIB)
 # BINDIR=/usr/local/bin
 
 BINDIR=
+if test -z "${exec_prefix}"; then
+exec_prefix="/usr/local"
+fi
 if test -z "${bindir}"; then
-BINDIR="/usr/local/bin"
+BINDIR=$(exec_prefix)/bin
 else
 BINDIR="${bindir}"
 fi

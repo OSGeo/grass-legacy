@@ -2,12 +2,11 @@
 ARCH=$1
 HEAD_FILE=`dirname $0`"/../head/head.$ARCH"
 
-# set (and create) UNIX_BIN
-eval `cat ${HEAD_FILE} | grep UNIX_BIN | sed "s/ //g"`
+UNIX_BIN=$2
 if [ ! -d $UNIX_BIN ]; then mkdir -p $UNIX_BIN ; fi
 if [ $? != 0 ]; then
- echo "An error occured. Stop."
- exit 1
+echo "An error occurred. Stop."
+exit 1
 fi
 
 # create gmake5 script to be used for local compiling
