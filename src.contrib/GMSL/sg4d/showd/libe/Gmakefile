@@ -1,0 +1,26 @@
+
+LIB	= 	libdsp3.a
+
+SOURCES	=	\
+		cube_io.c \
+		dspf_header.c \
+		grid3_data.c \
+		struct_copy.c \
+		grid3_header.c
+
+OBJ	=	\
+		cube_io.o \
+		dspf_header.o \
+		grid3_data.o \
+		struct_copy.o \
+		grid3_header.o
+
+
+$(LIB): $(OBJ)
+	$(AR)
+
+grid3_header.o:	viz.h cell_table.h
+grid3_data.o: viz.h
+dspf_header.o: viz.h
+
+

@@ -1,0 +1,44 @@
+PANEL_INCDIR = $(SRC)/../src.contrib/CERL/SGI/panel/9.6/include
+PANEL_LIBDIR = $(SRC)/../src.contrib/CERL/SGI/panel/9.6/lib
+
+EXTRA_CFLAGS= -I${PANEL_INCDIR} $(VECT_INCLUDE)
+PANELLIB= ${PANEL_LIBDIR}/libpanel.\a
+DSPLIB= showd/libe/libdsp3.a
+VOLLIB= showd/libvol.a
+DTLIB= ${LIBDIR}/libdatetime.a
+
+OFILES = main.o \
+	Dcell.o \
+	trans.o \
+	panel.o \
+	panel2.o \
+	panel3.o \
+	display.o \
+	fringe.o \
+	vector.o \
+	newcell.o \
+	newelev.o \
+	lightdefs.o \
+	focus.o \
+	save.o \
+	show.o \
+	script.o \
+	writeimg.o \
+	path.o \
+	latlon.o \
+	sites.o \
+	siteobj.o \
+	dspf.o \
+	fonts.o
+
+
+PGM = sg4dnew
+
+$(BIN_CMD)/$(PGM): $(OFILES) $(VECTLIB) $(DSPLIB) $(VOLLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VOLLIB) $(DSPLIB) $(PANELLIB) $(VECTLIB) $(GISLIB) $(DTLIB) $(XDRLIB) -lsphere $(MATHLIB) -limage -lfm_s -lgl_s
+#	cp doc/catman $(MAN1)/SG3d
+
+main.o: externs.h 
+display.o: externs.h
+
+$(VECTLIB) :
