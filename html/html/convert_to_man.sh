@@ -7,7 +7,7 @@
 # neteler@geog.uni-hannover.de
 
 ######### nothing to change below (hope so) ##############
-if [ $# -lt 1 ]
+if [ $# -lt 2 ]
 then
  echo "Script can be called from ../Gmakefile only within GRASS 5 sources"
  exit 1
@@ -15,8 +15,13 @@ fi
 
 SRCDIR=$1
 GISBASE=$2
-
 TARGETDIR=$GISBASE/man/1
+
+if ! test -f $SRCDIR/scripts/contrib/g.html2man/g.html2man
+then
+ echo "g.html2man not found ($SRCDIR/scripts/contrib/g.html2man/)" 
+ exit 1
+fi
 
 #create target directory:
 if [ ! -d $TARGETDIR ]; then mkdir -p $TARGETDIR ; fi
