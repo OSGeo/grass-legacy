@@ -39,6 +39,7 @@ int main (int argc, char *argv[])
     int newlines = 0;
     int tmp;
     char *dmapset;
+    char buf[64];
 
 
     G_gisinit (argv[0]);
@@ -46,9 +47,6 @@ int main (int argc, char *argv[])
 	module = G_define_module();
 	module->description =
 		"Polygon Cookie Cutter  (Boolean AND Overlay).";
-
-    Do_lines = 1;
-    Do_areas = 1;
 
     parse_args (argc, argv, &Args);
     open_files (&Args, Maps, &Out);
@@ -93,11 +91,6 @@ int main (int argc, char *argv[])
 
     /* Lines */
     if(Do_lines)
-    {
-        if (Maps[B_CODE].n_llines+Maps[B_CODE].n_plines < Maps[B_CODE].n_lines)
-	   fprintf(stderr, "The data map is topologically incomplete. Most probably there are some open area edges. These edges will not appear in resulting map, even if they fall within  region of interest. If you want these lines preserved  please edit data map\nusing v.digit. Now run:\nv.spag -i %s\n", Args.Out);
-    }
-    if (Do_lines && (Maps[B_CODE].n_llines > 0 || Maps[B_CODE].n_plines > 0))
     {
 	if (!Quiet)
 	    fprintf (stderr,  "Building line intersect table: ");
@@ -157,8 +150,12 @@ int main (int argc, char *argv[])
       G_write_vector_cats( Args.Out, Cat1 );
     }
 
+    if(Do_lines && !Do_areas)
+    {
+        sprintf(buf,"v.support map=%s",Args.Out);
+        system(buf);
+    }
     
-
 
     exit (0);
 }
