@@ -1,4 +1,6 @@
+TODOs
 
-- implement new source code structure
-- ... (see grass5/documents/*)
+write Vect_map_exists() and implement in:
+ -> g.remove
+ -> v.digit -n flag
 
