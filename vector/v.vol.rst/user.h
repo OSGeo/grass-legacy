@@ -15,3 +15,4 @@ int COGRR1 ();
 int POINT ();
 int LINEQS ();
 void clean_fatal_error();
+int point_save ();
