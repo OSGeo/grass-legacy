@@ -124,7 +124,7 @@ keyboard (void)
 static int 
 _keyboard (void)
 {
-    char buf[100];
+    char buf[100], buf1[100], buf2[100];
 
     while(1)
     {
@@ -134,11 +134,18 @@ _keyboard (void)
 	{
 	    return 0;
 	}
-	if (sscanf (buf, "%lf %lf", &E, &N) != 2)
-	{
+	if (sscanf (buf, "%s %s", buf1, buf2) != 2) {
 	    Beep();
 	    continue;
 	}
+	/* scan for lat/lon string first as "123E 45S" passes the %lf test but is wrong */
+	if(! ( G_lon_scan(buf1, &E) && G_lat_scan(buf2, &N)) ) {
+	    if (sscanf (buf, "%lf %lf", &E, &N) != 2) {
+		Beep();
+		continue;
+	    }
+	}
+
 	Curses_clear_window (INFO_WINDOW);
 	sprintf (buf, "East:   %f\n", E);
 	Curses_write_window (INFO_WINDOW, 2, 2, buf);
