@@ -16,7 +16,12 @@ GRASS 5.0 on Win32 with Cygwin 1.x</font></h1></center>
 
 <center>
 <h1>
-<font face="Arial,Helvetica">(arch i686-pc-cygwin)</font></h1></center>
+<font face="Arial,Helvetica">(arch i686-pc-cygwin)</font></h1>
+
+<tt>
+$Date$
+</tt>
+</center>
 
 <hr SIZE=5 NOSHADE WIDTH="100%">
 <h2>
@@ -24,7 +29,7 @@ GRASS 5.0 on Win32 with Cygwin 1.x</font></h1></center>
 
 <ul>
 <li>
-<font face="Arial,Helvetica">Windows NT 4.0 or Windows 2000 Professional,</font></li>
+<font face="Arial,Helvetica">Windows NT 4.0 (SP3 or higher) or Windows 2000 Professional,</font></li>
 
 <br><font face="Arial,Helvetica">(Windows 9x and Windows ME are unsupported)</font>
 <li>
@@ -56,7 +61,7 @@ to a local disk, run it and follow the instructions.</font>
 select all packages, or at least:</font>
 <ul>
 <li>
-<font face="Arial,Helvetica">ash, bash, clear, cygwin, file, fileutils,
+<font face="Arial,Helvetica">ash, bash, bzip2, clear, cygwin, file, fileutils,
 findutils</font></li>
 
 <br><font face="Arial,Helvetica">gawk, gettext, grep, groff, gzip, jpeg,
@@ -69,8 +74,9 @@ tcsh, termcap</font>
 vim, w32api</font>
 <br><font face="Arial,Helvetica">zip, zlib</font>
 <li>
-<font face="Arial,Helvetica">update with list for binary user install from
-Malcolm Blue</font></li>
+<font face="Arial,Helvetica">Remark: This list contains some packages that
+are not strictly required, but are very useful or enhance the capabilities
+of the setup. </font></li>
 </ul>
 <font face="Arial,Helvetica">Please select for the install directory a
 local drive on your computer with enough space for the entire cygwin distribution
@@ -83,8 +89,8 @@ X Window (XFree86, X11R6.4) System. See next paragraph.</font>
 <font face="Arial,Helvetica">2. Install the X11 libraries and the X Server</font></h2>
 <font face="Arial,Helvetica">If you want to use the GRASS monitors (graphical
 output), you need the X Server and the X11 libraries. Get them from <a href="http://sources.redhat.com/cygwin/xfree/">http://sources.redhat.com/cygwin/xfree/</a>.
-Download at least the following the packages (you find them on <a href="ftp://mirrors.rcn.net/pub/sourceware/cygwin/xfree/xc-4-binaries/4.0.3/">ftp://mirrors.rcn.net/pub/sourceware/cygwin/xfree/xc-4-binaries/4.0.3/</a>):
-DLLs, fonts, Xterm, Xwin, Prog, rgb. Please refer to the <a href="http://sources.redhat.com/cygwin/xfree/docs/howto/book1.htm">XFree
+Download at least the following packages (you find them on <a href="ftp://mirrors.rcn.net/pub/sourceware/cygwin/xfree/xc-4-binaries/4.0.3/">ftp://mirrors.rcn.net/pub/sourceware/cygwin/xfree/xc-4-binaries/4.0.3/</a>):
+DLLs, fonts, Xterm, Xwin, Prog. Please refer to the <a href="http://sources.redhat.com/cygwin/xfree/docs/howto/book1.htm">XFree
 install guide</a> for further details.</font>
 <p><font face="Arial,Helvetica">There are a lot of different free and commercial
 servers. Currently only the XFree86 Server and the StarNet Server have
@@ -116,14 +122,13 @@ Java under GNU GPL: <a href="http://www.jcraft.com/weirdx/index.html">http://www
 <font face="Arial,Helvetica">StarNet Demo: <a href="http://www.starnet.com/product.htm">http://www.starnet.com/product.htm</a></font></li>
 </ul>
 </ul>
-<font face="Arial,Helvetica">The MI/X Server is of the stdin/stdout type
-and uses the X11R5 libraries, so no chance to get this working with the
-current GRASS binaries which are linked with X11R6.4.</font>
+<font face="Arial,Helvetica">The actual version of the Microimages X Server (MI/X) is known to work with
+the current GRASS binaries, but is currently unsupported. </font>
 <h2>
 <font face="Arial,Helvetica">3. Get the latest binary distribution for
 GRASS</font></h2>
 <font face="Arial,Helvetica">Get the file</font>
-<br><font face="Arial,Helvetica"><a href="http://www.geog.uni-hannover.de/grass/grass5/binary/windows_cygnus/">GRASS5.0beta12_CYGWIN_NT-5.0_bin.tar.gz</a>
+<br><font face="Arial,Helvetica"><a href="http://www.geog.uni-hannover.de/grass/grass5/binary/windows_cygnus/">GRASS5.0beta12_CYGWIN_NT-4.0_bin.tar.gz</a>
 or a newer package</font>
 <br><font face="Arial,Helvetica">from</font>
 <br><font face="Arial,Helvetica"><a href="http://www.geog.uni-hannover.de/grass/grass5/binary/windows_cygnus/">http://www.geog.uni-hannover.de/grass/grass5/binary/windows_cygnus/</a></font>
@@ -133,39 +138,43 @@ from the same directory.</font>
 <font face="Arial,Helvetica">4. And now FINALLY to the GRASS installation</font></h2>
 <font face="Arial,Helvetica">Log into the cygwin shell. Please check the
 required disk space and permissions first. The default installation path
-is /usr/local/grass5. Next:</font>
+is <tt>/usr/local/grass5</tt>. Next:</font>
 <pre><tt>&nbsp; cd /wherever/you/saved/package</tt></pre>
 
-<pre><tt>&nbsp; ./grass5install.sh GRASS5.0beta12_CYGWIN_NT-5.0_bin.tar.gz</tt></pre>
+<pre><tt>&nbsp; ./grass5install.sh GRASS5.0*_bin.tar.gz</tt></pre>
 <font face="Arial,Helvetica">This will install the GRASS package under
-/usr/local/grass5 and store the start files under /usr/local/bin. Please
-note that the paths are all relative to the cygwin root (usually c:\cygwin
-or c:\Program Files\cygwin or similar).</font>
+<tt>/usr/local/grass5</tt> and store the start files under
+<tt>/usr/local/bin</tt>. Please
+note that the paths are all relative to the cygwin root (usually
+<tt>c:\cygwin</tt>
+or <tt>c:\Program Files\cygwin</tt> or similar).</font>
 <p><font face="Arial,Helvetica">Next you should install some data to test
-GRASS. You can get the global_grass5data.tar.gz sample data set from <a href="http://www.geog.uni-hannover.de/grass/data.html">http://www.geog.uni-hannover.de/grass/data.html</a>.
+GRASS. You can get the <tt>global_grass5data.tar.gz</tt> sample data set from <a href="http://www.geog.uni-hannover.de/grass/data.html">http://www.geog.uni-hannover.de/grass/data.html</a>.
 Unpack the data with:</font>
 <pre><tt>tar xzf global_grass5data.tar.gz</tt></pre>
-<font face="Arial,Helvetica">in an empty directory, e. g. /home/andreas/data.
+<font face="Arial,Helvetica">in an empty directory, e. g.
+<tt>/home/andreas/data</tt>.
 Again remember to do this from within the cygwin shell.</font>
 <h2>
-<font face="Arial,Helvetica">5.&nbsp;<a NAME="Starting GRASS"></a>Starting
+<font face="Arial,Helvetica">5.&nbsp;<a NAME="Start GRASS"></a>Starting
 GRASS 5</font></h2>
 <font face="Arial,Helvetica">You can log into an GRASS session on the commandline
-(no graphics monitors) by issuing 'grass5' in the cygwin shell [BUG: /bin/bash
-is not used, issue simply 'bash' to work in the bash shell]. Follow the
+(no graphics monitors) by issuing '<tt>grass5</tt>' in the cygwin shell. Follow the
 on-screen description and enter in the directories for your sample data.</font>
 <p><font face="Arial,Helvetica">For running the graphics monitors start
-first the X Window Server by double-clicking on the startxwin.bat file
-in /usr/X11R6/bin. In the xterminal that starts up, type in /usr/local/bin/grass5
+first the X Window Server by double-clicking on the <tt>startxwin.bat</tt> file
+in <tt>/usr/X11R6/bin</tt>. In the xterminal that starts up, type in
+<tt>/usr/local/bin/grass5</tt>
 and you get the GRASS login screen. From there you can log into an GRASS
 session.</font>
 <p><font face="Arial,Helvetica">On the server you can find a StartGrass
-script to put in the /usr/local/grass5 directory. This sets the PATH and
-spawns an xterm window. From within that window run 'grass5'.</font>
+script to put in the <tt>/usr/local/grass5</tt> directory. This sets the PATH and
+spawns an xterm window. From within that window run <tt>'grass5'</tt>.</font>
 <p><font face="Arial,Helvetica">If you have problems starting up the X
-Window Server, please check the path in the startxwin.bat file under /usr/X11R6/bin.
+Window Server, please check the path in the <tt>startxwin.bat</tt> file under
+<tt>/usr/X11R6/bin</tt>.
 In my case the path was wrong, you need to specify an absolute path (e.
-g. C:\CYGWIN\USR\X11R6\BIN) for the Win32 console.</font>
+g. <tt>C:\CYGWIN\USR\X11R6\BIN</tt>) for the Win32 console.</font>
 <p><font face="Arial,Helvetica">Please report any problems, errors and
 solutions to the GRASS developers mailing list at <a href="mailto:grass5@geog.uni-hannover.de">grass5@geog.uni-hannover.de</a>.</font>
 <h2>
@@ -177,6 +186,10 @@ solutions to the GRASS developers mailing list at <a href="mailto:grass5@geog.un
 </ul>
 
 <hr SIZE=5 NOSHADE WIDTH="100%"><font face="Arial,Helvetica"><font size=-2>Andreas
-Lange, andreas.lange@rhein-main.de, 28.03.2001</font></font>
+Lange, andreas.lange@rhein-main.de, 
+
+$Date$
+
+</font></font>
 </body>
 </html>
