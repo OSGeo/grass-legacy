@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <signal.h>
 #include <errno.h>
-#include <error.h>
 #include "graph.h"
 #include "monitors.h"
 #include "gis.h"

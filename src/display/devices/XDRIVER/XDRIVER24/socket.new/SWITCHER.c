@@ -20,7 +20,6 @@
 #include <stdlib.h>
 #include <setjmp.h>
 #include <unistd.h>
-#include <error.h>
 #include <errno.h>
 #include <sys/types.h>
 #include <sys/time.h>
