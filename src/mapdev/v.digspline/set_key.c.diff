@@ -1,0 +1,21 @@
+*** set_key.c.421	Mon Apr 27 12:40:36 1998
+--- set_key.c	Fri Mar 20 17:57:43 1998
+***************
+*** 49,55 ****
+  	new_termio.c_lflag = 0 ;
+! /*	new_termio.c_cc[VEOF] = 0 ;*/
+! /*	new_termio.c_cc[VEOL] = 0 ;*/
+! /* change for Linux*/
+  	new_termio.c_cc[VTIME] = 0 ;
+  	new_termio.c_cc[VMIN] = 0 ;
+  
+--- 49,57 ----
+  	new_termio.c_lflag = 0 ;
+! #if defined(VMIN) && defined(VTIME)
+  	new_termio.c_cc[VTIME] = 0 ;
+  	new_termio.c_cc[VMIN] = 0 ;
++ #else
++ 	new_termio.c_cc[VEOF] = 0 ;
++ 	new_termio.c_cc[VEOL] = 0 ;
++ #endif
+  
