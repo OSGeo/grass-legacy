@@ -5,13 +5,17 @@ Maintained by
    neteler@geog.uni-hannover.de
 
 ----------------------------------------------------------------
-[In sync with GRASS 5 beta 7/CVS]
+[In sync with GRASS 5 beta 8/CVS]
 History at end of file.
 
 ----------- modules ---------------------------------------------
 d.his: 
  - color wrong if input value=0
  - added NULL randomly when using "out" for saving
+
+d.legend:
+ - option "-n" does not work. no data is colored with color of
+   highest category
 
 d.mon: hangs with "-L" option
    (would be nice to fix to improve "d.monsize" script
@@ -40,7 +44,10 @@ i.ortho.photo
    immediately in orange color (right window)
 
 i.tape.tm.fast: (Todd Shoemaker, jtshoe@datasync.com)
-* Attempting to change the default Title causes a segfault.
+- Attempting to change the default Title causes a segfault.
+
+g.version
+ - outputs GRASS VERSION_NUMBER (VERSION_DATE) VERSION_UPDATE_PKG
 
 r.binfer
   bug in table.c causing segfault
@@ -244,7 +251,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log$
- Revision 1.11  2000-05-04 13:45:45  markus
+ Revision 1.12  2000-05-09 13:37:26  markus
+ added d.legend and g.version bug
+
+ Revision 1.11  2000/05/04 13:45:45  markus
   fixed r.timestamp bug and v.extract bug
 
  Revision 1.10  2000/04/17 19:35:13  markus
