@@ -1,0 +1,10 @@
+
+Feb. 1998
+ - New structure in this module.
+ - added HDF.lib from src.garden/grass.hdf
+ - New Makefile in HDF.lib
+ - Corrected Gmakefile in r.in.hdf
+
+March 1998
+ - general r.hdf-Gmakefile corrected (r.out.hdf was missing)
+ - Corrected Gmakefile in r.out.hdf
