@@ -1,0 +1,6 @@
+interface_build {
+    {v.out.dxf} 0
+    {Export GRASS vector map to DXF file.}
+    {entry input {Input GRASS ASCII vector file} 0 vector}
+    {entry output {Output DXF file (*.dxf):} 0 file}
+}

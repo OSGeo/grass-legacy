@@ -1,0 +1,11 @@
+interface_build {
+    {i.oif} 0
+    {Compute optimum index factor (most informative combination of bands) for LandSat TM bands 1-5, &7}
+    {entry tm1 {Input LandSat TM Band1 image file:} 0 raster}
+    {entry tm2 {Input LandSat TM Band2 image file:} 0 raster}
+    {entry tm3 {Input LandSat TM Band3 image file:} 0 raster}
+    {entry tm4 {Input LandSat TM Band4 image file:} 0 raster}
+    {entry tm5 {Input LandSat TM Band5 image file:} 0 raster}
+    {entry tm7 {Input LandSat TM Band7 image file:} 0 raster}
+    {entry > {Output results to text file:} 0 file}
+}

@@ -1,0 +1,11 @@
+interface_build {
+    {v.autocorr} 0
+    {Calculates spatial autocorrelation statistics for GRASS vector map.}
+    {entry vect {Input labeled binary vector map to analyze (category values must be numeric):} 0 vector}
+    {entry output {Output results to text file (output to screen if no file indicated):} 0 file}
+    {checkbox -c {Print the connectivity matrix.} "" -c}
+    {checkbox -h {Print the weight matrix (re-expression of connectivity matrix).} "" -h}
+    {checkbox -n {Supress calculation of statistics.} "" -n}
+    {checkbox -w {Do calculations for hypothesis testing (Warning: this is  intensive!).} "" -w}
+    {checkbox -q {Run quietly.} "" -q}
+}

@@ -1,0 +1,7 @@
+interface_build {
+    {s.to.rast3} 0
+    {Converts GRASS sites list to 3D cells of a grid3D volume}
+    {entry input {Input sites list:} 0 sites}
+    {entry output {Output grid3D file:} 0 ""}
+    {entry field {Number of sites attribute field to use for Z value [default=1]:} 0 ""}
+}

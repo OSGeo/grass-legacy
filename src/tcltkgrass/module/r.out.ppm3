@@ -1,0 +1,11 @@
+interface_build {
+    {r.out.ppm3} 0
+    {Converts a 3 GRASS raster maps (red, green, blue) to a PPM file.}
+    {entry red {Input GRASS raster map to be used for red:} 0 raster}
+    {entry green {Input GRASS raster map to be used for green:} 0 raster}
+    {entry blue {Input GRASS raster map to be used for blue:} 0 raster}
+    {entry output {Output PPM file:} 0 file}
+    {scale qual {Quality factor [3]:} 1 5 1}
+    {checkbox -c {Add comments to describe region.} "" -c}
+    {checkbox -q {Run quietly.} "" -q}
+}

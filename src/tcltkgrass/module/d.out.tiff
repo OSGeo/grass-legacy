@@ -1,0 +1,11 @@
+interface_build {
+    {d.out.tiff} 0
+    {Saves active display to tiff file (8 bit color).}
+    {entry output {Name of tiff file to create:} 0 file}
+    {checkbox res {Save at current resolution.} "" 1}
+    {checkbox res {Save at double resolution [default].} "" 2}
+    {checkbox res {Save at quadruple resolution.} "" 4}
+    {checkbox compression {Uncompressed file [default].} "" none}
+    {checkbox compression {Packbits compression.} "" packbit}
+    {checkbox compression {Deflate compression.} "" deflate}
+}

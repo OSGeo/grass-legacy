@@ -1,0 +1,28 @@
+interface_build {
+    	{v.label} 0
+    	{Creates a text label file (for use by d.label) from vector map category and label information (*=required values).}
+    	{entry map {*Input vector map to use for label file:} 0 vector}
+    	{checkbox type {Line map [default].} 0 line}
+    	{checkbox type {Point map.} 0 point}
+    	{entry text {*Full path to text file containing labels:} 0 file}
+    	{entry label {*Paint-label file:} 0 label}
+	{separator blue 2}
+    	{entry xoffset {Offset label in x-direction [default=0]:} 0 ""}
+    	{entry yoffset {Offset label in y-direction [default=0]:} 0 ""}
+    	{checkbox reference {Label centered on features:} 0 center}
+    	{checkbox reference {Label left of features:} 0 left}
+    	{checkbox reference {Label right of features:} 0 right}
+    	{checkbox reference {Label above features:} 0 upper}
+    	{checkbox reference {Label below features:} 0 lower}
+    	{entry font {Font for labels:} 0 font}
+    	{entry size {Label size in map units (1-1000) [default=100]:} 0 ""}
+    	{entry color {Text color:} 0 color}
+    	{entry width {Line width of text (1-100; only for p.map output) [default=1]:} 0 ""}
+    	{entry hcolor {Highlight color (only for p.map output):} 0 color}
+    	{entry hwidth {Line width of highlight color (0-100; only for p.map output) [default=0]:} 0 ""}
+    	{entry background {Background color:} 0 color}
+    	{entry border {Border color:} 0 color}
+    	{checkbox opaque {Opaque to features (only relevant if background color selected) [default].} 0 yes}
+    	{checkbox opaque {Not opaque to features (only relevant if background color selected).} 0 no}
+    	{entry space {Space between letters in map units (1-100000) [default=100]:} 0 ""}
+}

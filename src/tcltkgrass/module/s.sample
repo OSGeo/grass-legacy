@@ -1,0 +1,18 @@
+interface_build {
+    {s.sample} 0
+    {Sample raster cells around site locations.}
+    {entry input {Input sites list to use for sampling:} 0 sites}
+    {entry rast {Input raster map to be sampled:} 0 raster}
+    {entry output {Output sites list of sample results [output to screen if not specified]:} 0 sites}
+    {entry field {Number of sites list attribute field to use for comparisons:} 0 ""}
+    {entry z {Scaling factor to multiply sample vales by [default=1.0]:} 0 ""}
+    {checkbox attr {Use sites list category for comparisons:} "" cat}
+    {checkbox attr {Use sites list dimension for comparisons:} "" dim}
+    {checkbox attr {Use sites list decimal attribute for comparisons:} "" decimal}
+    {checkbox attr {Do not compare raster values with field in sites list:} "" none}
+    {separator blue 1}
+    {checkbox -B {Use bilinear interpolation.} 0 -B}
+    {checkbox -C {Use cubic convolution.} 0 -C}
+    {checkbox -p {Plot semivariogram.} "" -p}
+    {checkbox -q {Run quietly.} "" -q}
+}

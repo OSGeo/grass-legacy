@@ -1,0 +1,8 @@
+interface_build {
+    {r.colors color=rules} 1
+    {Creates color table using rules}
+    {entry map {Raster map for color table:} 0 raster}
+    {separator grey 1}
+    {checkbox -w {Don't overwrite existing color table.} "" -w}
+    {checkbox -q {Run quietly.} "" -q}
+}

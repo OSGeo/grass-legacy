@@ -1,0 +1,7 @@
+interface_build {
+    {r.median} 0
+    {Finds the median of values in a cover map within areas assigned through a base map.}
+    {entry base {base raster map (input):} 0 raster}
+    {entry cover {cover map (input):} 0 raster}
+    {entry output {Resultant raster map:} 0 raster}
+}

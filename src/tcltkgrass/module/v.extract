@@ -1,0 +1,11 @@
+interface_build {
+    {v.extract} 0
+    {Creates new vector map from selected features.}
+    {entry input {Input vector map:} 0 vector}
+    {entry output {Output vector map [input name]:} 0 vector}
+    {entry type {Vector map type (area,edge,line,site):} 0 ""}
+    {entry new {Category for features in new map (0 keeps original cat.):} 0 ""}
+    {entry list {List categories of features to extract (1,2,3,...):} 0 ""}
+    {entry file {Use file of categories to extract features:} 0 file}
+    {checkbox -d {Dissolve common boundaries} "" -d}
+}

@@ -1,0 +1,11 @@
+interface_build {
+    {s.univar} 0
+    {Calculate univariate statistics for attribute in sites list.}
+    {entry sites {Input sites list:} 0 sites}
+    {entry field {Input number of attribute field to use as calculation [default=1]:} 0 ""}
+    {entry > {Output results to ASCII file:} 0 file}
+    {checkbox -a {Use all sites in list (do NOT limit to current region).} "" -a}
+    {checkbox -g {Print statistics in shell script style (similar to g.region).} "" -g}
+    {checkbox -l {Use site descriptions (category labels) for value to calculate statistics.} "" -l}
+    {checkbox -q {Run quietly.} "" -q}
+}

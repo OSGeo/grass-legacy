@@ -1,0 +1,8 @@
+interface_build {
+    {db.droptable} 0
+    {PERMANENTLY remove table from database (does not work with ODBC)}
+    {entry driver {Driver name:} 0 ""}
+    {entry database {Database for table:} 0 ""}
+    {entry location {Database location:} 0 ""}
+    {entry table {Name of table to remove:} 0 ""}
+}

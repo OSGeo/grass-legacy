@@ -1,0 +1,8 @@
+interface_build {
+    {r.in.shape} 0
+    {Convert an ArcView shapefile (polygon or line/arc) to ASCII file for import with r.in.poly.}
+    {entry in {Input shapefile:} 0 file}
+    {entry out {Output raster map:} 0 raster}
+    {entry cat {Name of integer attribute to use as category number (optional):} 0 ""}
+    {entry lab {Name of attribute to use as category label (optional):} 0 ""}
+}

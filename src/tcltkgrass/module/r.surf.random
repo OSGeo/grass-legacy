@@ -1,0 +1,7 @@
+interface_build {
+    {r.surf.random} 0
+    {Generate a raster surface map of uniform random deviates within specified maximum and minimum range.}
+    {entry out {Output random surface raster map:} 0 raster}
+    {entry min {Set minimum random value [default=0]:} 0 ""}
+    {entry max {Set maximum random value [default=100]:} 0 ""}
+}

@@ -1,0 +1,8 @@
+interface_build {
+    {blend.tcl} 0
+    {Combines color components of 2 raster maps/images by % of 1st raster file.}
+    {entry rast1   {1st raster file to combinne:} 0 raster}
+    {entry rast2 {2nd raster file to combine:} 0 raster}
+    {entry percent  {Percent influence of 1st raster file:} 0 ""}
+    {entry outbase  {Base name for 3 output RGB raster files:} 0 ""}
+}

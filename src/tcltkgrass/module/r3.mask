@@ -1,0 +1,6 @@
+interface_build {
+    {r3.mask} 0
+    {Creates 3D mask for grid3D operations (use g.remove to remove)}
+    {entry grid3d {Input grid3D file to serve as mask:} 0 ""}
+    {entry maskvalues {Input specific values to be masked out (#,#-#,...):} 0 ""}
+}

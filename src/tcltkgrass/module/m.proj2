@@ -1,0 +1,8 @@
+interface_build {
+    {m.proj2} 0
+    {Converts coordinates from one projection to another}
+    {entry inproj {Comma separated projection parameters for input projection:} 0 ""}
+    {entry outproj {Comma separated projection parameters for output projection:} 0 ""}
+    {entry input {Input coordinate file:} 0 file}
+    {entry output {Output coordinate file:} 0 file}
+}

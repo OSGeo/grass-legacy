@@ -1,0 +1,18 @@
+interface_build {
+    	{r.ros} 0
+    	{Wildfire simulation that calculates raster maps of rate of spread (ROS) parameters (*=required inputs).}
+	{entry model {*Raster map of standard fuel models defined by the USDA Forest Service:} 0 raster}
+	{entry moisture_1h {Raster map of the 1-hour (<.25") fuel moisture (% content*100):} 0 raster}
+	{entry moisture_10h {Raster map of the 10-hour (.25-1") fuel moisture (% content*100):} 0 raster}
+	{entry moisture_100h {Raster map of the 100-hour (1-3") fuel moisture (% content*100):} 0 raster}
+	{entry moisture_live {*Raster map of live (herbaceous) fuel fuel moisture (% content*100):} 0 raster}
+	{entry velocity {Raster map of wind velocities at half of the average flame height (feet/minute):} 0 raster}  
+	{entry direction {Raster map of wind direction, clockwise from north (degree):} 0 raster} 
+	{entry slope {Raster map of topographic slope (degrees):} 0 raster} 
+	{entry aspect {Raster map of topographic aspect, degrees counter-clockwise from east (GRASS convention):} 0 raster}  
+	{entry elevation {Raster map of elevation (meters):} 0 raster}
+	{entry output {*Prefix of output raster maps (base, max., & distance of max. ROS, and max. spotting dist.):} 0 ""}
+    	{checkbox -s {Calculate maximum potential spotting distance.} "" -s}
+    	{checkbox -v {Run verbosely.} "" -v}
+}
+

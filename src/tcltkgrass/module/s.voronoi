@@ -1,0 +1,12 @@
+interface_build {
+    {s.voronoi} 0
+    {Create Voronoi diagram (Thiessen polygons ) from sites list.}
+    {entry sites {Input sites list:} 0 sites}
+    {entry vect {Output Voronoi diagram vector map:} 0 vector}
+    {checkbox catnum {Use sites category for vector category} 0 keep}
+    {checkbox catnum {Generate sequential number for vector category} 0 gen}
+    {checkbox catnum {Do not generate vector category numbers} 0 no}
+    {entry labels {Attribute field to use for category labels ([no]; cat; str,#; dec,#):} 0 ""}
+    {checkbox -a {Use all sites in file (do NOT limit to current region).} "" -a}
+    {checkbox -q {Run quietly.} "" -q}
+}

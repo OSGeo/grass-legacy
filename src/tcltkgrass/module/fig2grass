@@ -1,0 +1,6 @@
+interface_build {
+    {fig2grass.tcl} 0
+    {Imports XFig FIG 3.2 file to GRASS ASCII vector file.}
+    {entry figfile {Input XFig FIG 3.2 file:} 0 file}
+    {entry vectascii {Output GRASS ASCII vector file:} 0 ""}
+}

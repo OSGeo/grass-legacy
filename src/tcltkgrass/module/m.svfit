@@ -1,0 +1,16 @@
+interface_build {
+    	{m.svfit} 0
+    	{Semivariogram model fitting}
+    	{entry sites {Input file of sample semivariogram (can use with s.sv):} 0 file}
+    	{checkbox model {Linear model:} 0 1}
+    	{checkbox model {Spherical model:} 0 2}
+    	{checkbox model {Exponential model:} 0 3}
+    	{checkbox model {Gaussian model:} 0 4}
+	{checkbox model {Quadratic model:} 0 5}
+    	{checkbox model {Wave or hole effect model:} 0 6}
+    	{entry range {Semivariogram range:} 0 ""}
+    	{entry graph {Output results to GNUPlot *.gp and *.dat format (implies -p; print to screen if blank):} 0 file}
+	{checkbox -p {Save output to GNUplot files.} "" -p}
+	{checkbox -w {Use weighted least squares [default is general least squares]} "" -w}
+	{checkbox -q {Run quietly} "" -q}
+}

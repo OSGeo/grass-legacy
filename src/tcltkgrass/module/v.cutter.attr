@@ -1,0 +1,6 @@
+interface_build {
+    {v.cutter.attr.tcl} 0
+    {Cuts/clips multiple vector maps stored in ASCII data file, adds categories in master dig_cats file to maps.}
+    {entry sourcedata {Input ASCII file listing vector maps (1st is cutter, rest are clipped):} 0 file}
+    {entry master {Input master dig_cats file to use for category values for all clipped maps:} 0 ""}
+}

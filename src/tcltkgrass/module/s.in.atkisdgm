@@ -1,0 +1,5 @@
+interface_build {
+    {s.in.atkisdgm.tcl} 0
+    {Import German ATKIS-DGM elevation data to sites list.}
+    {entry dgmfile {Input ATKIS-DGM file:} 0 file}
+}

@@ -1,0 +1,6 @@
+interface_build {
+    {d.rast.num} 0
+    {Overlays category values in cells on raster map}
+    {entry map {Input raster map} 0 raster}
+    {entry grid_color {Color of cell grid lines} 0 color}
+}

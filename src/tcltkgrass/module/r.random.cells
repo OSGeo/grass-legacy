@@ -1,0 +1,8 @@
+interface_build {
+    {r.random.cells} 0
+    {Creates a raster map of consecutively numbered random cells at least specified distance apart.}
+    {entry output {Output raster map of random cells:} 0 raster}
+    {entry distance {Minimum distance between cells:} 0 ""}
+    {entry seed {Seed value for random cell generator [default=process ID number]:} 0 ""}
+    {checkbox -q {Run quietly.} "" -q}
+}

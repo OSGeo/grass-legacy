@@ -1,0 +1,10 @@
+interface_build {
+    {r.colors} 0
+    {Assigns histogram grey scale to integer image or raster map.}
+    {entry map {Input image or raster map:} 0 raster}
+    {checkbox color {Histogram equalized grey scale.} "" grey.eq}
+    {checkbox color {Histogram log transformed grey scale.} "" grey.log}
+    {separator blue 1}
+    {checkbox -w {Don't overwrite existing color table.} "" -w}
+    {checkbox -q {Run quietly.} "" -q}
+}

@@ -1,0 +1,14 @@
+interface_build {
+    {d.vect.labels} 0
+    {Labels vector map features.}
+    {entry map {Vector map to be labeled:} 0 vector}
+    {entry attr {Attribute to be used for labels (string,cat,coords) [string]:} 0 ""}
+    {entry size {Label font size [10]:} 0 ""}
+    {entry color {Label font color [white]:} 0 color}
+    {entry backgr {Label background color [none]:} 0 color}
+    {entry border {Label border color [none]:} 0 color}
+    {entry font {Label font type [romans]:} 0 font}
+    {checkbox -m {Mark label position point):} "" -m}
+    {checkbox -s {Save sites file of label position point):} "" -s}
+    {checkbox -v {Verbose output):} "" -v}
+}

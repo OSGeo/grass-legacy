@@ -1,0 +1,9 @@
+interface_build {
+    {r.in.doq} 0
+    {Convert a digital orthophotograph to a raster map layer.}
+    {entry input {Input DOQ file:} 0 file}
+    {entry output {Output raster map:} 0 raster}
+    {checkbox -s {Use secondary datum:} 0 -s}
+    {checkbox -h {Keep header:} 0 -h}
+    
+}

@@ -1,0 +1,6 @@
+interface_build {
+    {v.rmedge} 0
+    {Removes all outer boundaries from binary vector map and creates a new map of remaining features.}
+    {entry input {Input vector map:} 0 vector}
+    {entry output {Output vector map:} 0 vector}
+}

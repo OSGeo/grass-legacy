@@ -1,0 +1,8 @@
+interface_build {
+    {r.in.gridatb} 0
+    {Convert GRIDATB.FOR file (TOPMODEL) to a raster map layer.}
+    {entry input {Input GRIDATB.FOR file:} 0 file}
+    {entry output {Output raster map:} 0 raster}
+    {checkbox -o {Overwrite existing map:} 0 -o}
+    
+}

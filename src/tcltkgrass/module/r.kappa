@@ -1,0 +1,13 @@
+interface_build {
+    {r.kappa} 0
+    {Tabulates error matrix of classification result with reference map, with kappa, variance, & conditional kappa.}
+    {entry classification {Input classified raster map:} 0 raster}
+    {entry reference {Output reference raster map:} 0 raster}
+    {entry output {Output ASCII report file:} 0 file}
+    {entry TITLE {Title of report file [default="ACCURACY ASSESSMENT"]:} 0 ""}
+    {checkbox -m {Report zero values due to mask.} "" -m}
+    {checkbox -z {Report non-zero values only.} "" -z}
+    {checkbox -w {Wide report (32 columns) [default 80].} "" -w}
+    {checkbox -h {Report without header.} "" -h}
+    {checkbox -q {Run quietly.} "" -q}
+}

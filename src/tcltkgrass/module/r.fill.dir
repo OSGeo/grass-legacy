@@ -1,0 +1,11 @@
+interface_build {
+    {r.fill.dir} 0
+    {Creates a depressionless elevation map and flow direction map.}
+    {entry input {Input elevation map:} 0 raster}
+    {entry elevation {Output depressionless elevation map:} 0 raster}
+    {entry direction {Output flow direction map:} 0 raster}
+    {checkbox type {Create GRASS format flow direction map} "" grass}
+    {checkbox type {Create AGNPS format flow direction map} "" agnps}
+    {checkbox type {Create ANSWERS format flow direction map} "" answers}
+    {checkbox -f {Fill only single grid cell sinks and exit.} "" -f}
+}

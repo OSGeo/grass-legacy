@@ -1,0 +1,9 @@
+interface_build {
+    {i.rvi.prediction} 0
+    {Creates raster map of features from 3 image bands using regression model.}
+    {entry band1 {Input image band 1:} 0 raster}
+    {entry band2 {Input image band 2:} 0 raster}
+    {entry band3 {Input image band 3:} 0 raster}
+    {entry model {Input RVI regression parameter file (can derive r.rational.regression):} 0 file}
+    {entry output {Output raster map of features:} 0 raster}
+}

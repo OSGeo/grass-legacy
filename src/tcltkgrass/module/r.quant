@@ -1,0 +1,10 @@
+interface_build {
+    	{r.quant} 0
+    	{Produce integer quantization file for floating-point map.}
+    	{entry input {Input map(s) for quantization:} 0 raster}
+    	{entry basemap {Input base raster map to use for setting quantization for all input maps:} 0 raster}
+    	{entry fprange {Floating-point range for quantization (min,max):} 0 ""}
+    	{entry range {Integer range for quantization (min,max):} 0 ""}
+    	{checkbox -t {Truncate floating-point data for quantization.} "" -t}
+    	{checkbox -r {Round floating-pint data for quantization.} "" -r}
+}

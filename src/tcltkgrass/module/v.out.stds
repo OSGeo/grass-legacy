@@ -1,0 +1,9 @@
+interface_build {
+    {v.out.stds} 0
+    {Export GRASS vector map to STDS file.}
+    {entry input {Input GRASS vector file} 0 vector}
+    {entry output {Output STDS file:} 0 file}
+    {entry path {Path to location to save STDS file (optional):} 0 ""}
+    {checkbox a {Output areas only (omit lines)} 0 -a}
+    {checkbox m {Incorporate metadata files created with v.stds.meta} 0 -m}
+}

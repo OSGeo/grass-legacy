@@ -1,0 +1,11 @@
+interface_build {
+    {r.composite} 0
+    {Create composite color map from red, green, and blue channels.}
+    {entry r_map {Input raster map representing RED channel:} 0 raster}
+    {entry lev_r {Number of color levels for red [default=32]:} 0 ""}
+    {entry g_map {Input raster map representing GREEN channel:} 0 raster}
+    {entry lev_g {Number of color levels for red [default=32]:} 0 ""}
+    {entry b_map {Input raster map representing BLUE channel:} 0 raster}
+    {entry lev_b {Number of color levels for red [default=32]} 0 ""}
+    {entry output {Output composite color raster map:} 0 raster}
+}

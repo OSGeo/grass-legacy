@@ -1,0 +1,6 @@
+interface_build {
+    {d.rast.rescale.tcl} 0
+    {Displays raster map with histogram equalized greyscale colors without changing color table (optionally output new map)}
+    {entry map {Input raster map to view as equalized greyscale image:} 0 raster}
+    {entry output {Output histogram rescaled map:} 0 raster}
+}

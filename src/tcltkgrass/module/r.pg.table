@@ -1,0 +1,6 @@
+interface_build {
+    {r.to.pg.tcl} 0
+    {Export GRASS raster map to PostgreSQL table.}
+    {entry map {Input raster map to export:} 0 raster}
+    {entry pgtable {PostgreSQL table to create:} 0 file}
+}

@@ -1,0 +1,20 @@
+interface_build {
+    {r3.in.v5d} 0
+    {Converts v5d format file to grid3D}
+    {entry input {Input v5d file:} 0 file}
+    {entry output {Output grid3D file:} 0 ""}
+    {separator blue 1}
+    {entry tiledimension {Tile dimension in output file (XxYxZ):} 0 ""}
+    {separator blue 1}
+    {checkbox type {Output grid3D file is default type.} "" default}
+    {checkbox type {Output grid3D file is double-precision.} "" double}
+    {checkbox type {Output grid3D file is floating-point.} "" float}
+    {separator blue 1}
+    {entry precision {Set precision (default|max|0-52|) [default=default]:} 0 ""}
+    {separator blue 1}
+    {checkbox compression {Default compression.} "" default}
+    {checkbox compression {rle compression.} "" rle}
+    {checkbox compression {No compression.} "" none}
+    {separator blue 1}
+    {entry nv {Set null value (none, #.#) [default=none].} 0 ""}
+}

@@ -1,0 +1,24 @@
+interface_build {
+    	{r.topmodel} 0
+    	{Simulates TOPMODEL physically-based hydrologic model (*=required parameters).}
+	{entry elevation {*Input rectangular elevation map (DEM):} 0 raster}
+	{entry idxstats {*Input topographic index statistics file (Compute r.avgstats for r.topidx output):} 0 file} 
+	{entry parameters {*Input TOPMODEL parameters file:} 0 file}  
+	{entry basin {Input basin map created by r.water.outlet:} 0 raster}  
+	{entry depressionless {Input depressionless elevation map (can be omitted if elevation map is depressionless):} 0 raster}
+	{entry nidxclass {Input number of topographic index classes [default=30]:} 0 "" } 
+	{entry input {Input rainfall and potential evapotranspiration data file:} 0 file }  
+	{entry Qobs {Input observed Q file (Compare Qt with Qobs and calculate model efficiency):} 0 file }  
+	{separator blue 2}
+	{entry belevation {Input or output basin elevation map:} 0 raster} 
+	{entry topidx {Input or output topographic index ln(a/tanB) map (See r.topidx):} 0 raster}
+	{separator blue 2}
+	{entry output {*Output file:} 0 raster}
+	{entry direction {Output direction map with depressionless elevation map:} 0 raster}  
+	{entry timestep {OPTIONAL output for given time step:} 0 raster}  
+	{entry idxclass {OPTIONAL output for given topographic index class:} 0 raster}
+    	{checkbox -i {Input specified basin elevation and topographic index maps [otherwise output].} "" -i}
+    	{checkbox -o {Overwrite existing map.} "" -o}
+    	{checkbox -w {Wide output [default=80 columns].} "" -w}
+}
+

@@ -1,0 +1,11 @@
+interface_build {
+    {g.mlist} 0
+    {List maps using regular expressions or wildcards.}
+    {entry mapset {Choose mapset for which to list files [default=current]:} 0 ""}
+    {checkbox type {List raster maps:} 0 rast}
+    {checkbox type {List vector maps:} 0 vect}
+    {checkbox type {List sites maps:} 0 sites}
+    {entry sep {Raster map to display:} 0 ""}
+    {entry pattern {Map search pattern [default=all or *]:} 0 ""}
+    {checkbox -r {Use regular expression instead of wildcards.} 0 -r}
+}

@@ -1,0 +1,17 @@
+interface_build {
+    {v.in.tig.lndmk} 0
+    {Creates GRASS vector file of census "landmark" features from TIGER files.}
+    {entry t1 {TIGER Type 1 file to import:} 0 file}
+    {entry t2 {TIGER Type 2 file to import:} 0 file}
+    {entry t7 {TIGER Type 7 file to import:} 0 file}
+    {entry t8 {TIGER Type 8 file to import:} 0 file}
+    {entry tl {TIGER Type L file to import:} 0 file}
+    {entry tP {TIGER Type P file to import:} 0 file}
+    {entry input {File with input commmands:} 0 file}
+    {entry vect {Output vector file:} 0 vector}
+    {entry site {Output sites file:} 0 sites}
+    {entry zone {UTM zone [current zone]:} 0 ""}
+    {entry spheroid {Spheroid [clark66]:} 0 spheroid}
+    {checkbox -i {Force interactive mode.} "" -i}
+    {checkbox -s {Enter commands from standard keyboard input.} "" -s}
+}

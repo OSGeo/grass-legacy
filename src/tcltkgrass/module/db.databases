@@ -1,0 +1,7 @@
+interface_build {
+    {db.dabatases} 0
+    {List all available databases for specified driver}
+    {entry driver {Driver name:} 0 ""}
+    {entry location {Location (location,location,...):} 0 ""}
+    {checkbox -l {Output database location also:} "" -l}
+}

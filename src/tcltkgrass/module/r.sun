@@ -1,0 +1,31 @@
+interface_build {
+    	{r.sun} 0
+    	{Compute raster maps of cumulative direct, diffuse, & ground reflected solar irradiation for a specified day and place (*=required inputs).}
+ 	{input elevin {*Input raster map of elevation in metres:} 0 raster}
+ 	{input aspin {*Input raster map of aspect in decimal degrees from north:} 0 raster}
+ 	{input slopein {*Input raster map of slope in decimal degrees:} 0 raster}
+ 	{input linkein {Input raster map of Linke atmospheric turbidity factor:} 0 raster}
+ 	{input lin {Set a single value for Linke atmospheric turbidity factor [default=3.0]:} 0 ""}
+ 	{input albedo {Input raster map of ground albedo:} 0 raster}
+ 	{input alb {Set a single value for the ground albedo [default=0.2]:} 0 ""}
+ 	{input latin {Input a raster map of latitudes in decimal degrees:} 0 raster}
+ 	{input lat {Set a single value for latitude in decimal degrees:} 0 ""}
+ 	{input coefbh {Input real-sky beam radiation coefficient file:} 0 raster}
+ 	{input coefdh {Input real-sky diffuse radiation coefficient file:} 0 raster}
+	{input day {Set number of day of the year (1-365):} 0 ""}
+ 	{input step {Set time step when computing radiation daily sums in decimal hours [default=0.5 hour]:} 0 ""}
+ 	{input declin {Set declination value in radians (overriding the internally computed value):} 0 ""}
+	{input dist {Set step coefficient defining sampling distance (0.2-1.5) in relative values of a cell size [default=1.0]:} 0 ""}
+	{separator grey 1}
+ 	{input insol_time {Output raster map of time duration of beam irradiation in minutes:} 0 raster}
+ 	{input beam_rad {Raster map of cumulative beam irradiation (kWh.m-2.day-1):} 0 raster}
+ 	{input diff_rad {Raster map of cumulative diffuse irradiation (kWh.m-2.day-1):} 0 raster}
+ 	{input refl_rad {Raster map of cumulative ground reflected irradiation (kWh.m-2.day-1):} 0 raster}
+	{separator grey 1}
+
+
+
+
+
+
+  

@@ -1,0 +1,9 @@
+interface_build {
+    {r.mask.points} 0
+    {Filters a point file using existing region & mask, and (optionally) an additional raster map.}
+    {entry input {Input point file in format east, north, (optional text):} 0 file}
+    {entry mask {Raster map for filtering in addition to existing mask and region (optional):} 0 raster}
+    {entry fs {Field separator in points file:} 0 ""}
+    {checkbox -r {Read point coordinates as north, east instead of east, north.} "" -r}
+    {entry > {Output filtered points to ASCII file:} 0 file}
+}

@@ -1,0 +1,18 @@
+interface_build {
+    {r.in.utm} 0
+    {Convert UTM raster file to a GRASS raster map layer.}
+    {entry input {Input UTM map:} 0 file}
+    {entry output {Output raster file:} 0 raster}
+    {entry spheroid {Reference spheroid:} 0 spheroid}
+    {entry zone {UTM zone (1-60):} 0 ""}
+    {entry rows {Number of rows in UTM file:} 0 ""}
+    {entry columns {Number of columns in UTM file:} 0 ""}
+    {entry bpc {Bytes per column in UTM file:} 0 ""}
+    {entry res_ns {North-south resolution:} 0 ""}
+    {entry res_ew {East-west resolution:} 0 ""}
+    {entry north {Northing of UTM file:} 0 ""}
+    {entry east {Easting of UTM file:} 0 ""}
+    {checkbox -s {Map is in southern hemisphere.} 0 -s}
+    {checkbox -w {Do not flag invalid east,north input lines as errors.} 0 -w}
+    {checkbox -o {Flag other input lines as errors.} 0 -o}
+}

@@ -1,0 +1,12 @@
+interface_build {
+    {r.cn} 0
+    {Outputs a Soil Conservation Service Curve Number raster map.}
+    {Note: entry maps require specific values (see documentation for r.cn).}
+    {entry cn {Output SCS curve number map:} 0 raster}
+    {entry sg {Input hydrologic soil group map:} 0 raster}
+    {entry lu {Input landuse map:} 0 raster}
+    {entry pr {Input practice or management map:} 0 raster}
+    {entry hc {Input hydrologic condition map:} 0 raster}
+    {entry amc {Output equivalent AMC condition number for CN map:} 0 raster}
+}
+

@@ -1,0 +1,8 @@
+interface_build {
+    {i.image.mosaic2} 0
+    {Mosaic (patch) up to 4 adjacent images with automatic color table extension (output to *_mosaic)}
+    {entry image1 {Input base image for mosaic:} 0 raster}
+    {entry image2 {Input 2nd image for mosaic:} 0 raster}
+    {entry image3 {Input 3rd image for mosaic:} 0 raster}
+    {entry image4 {Input 4th image for mosaic:} 0 raster}
+}

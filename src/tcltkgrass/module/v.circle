@@ -1,0 +1,19 @@
+interface_build {
+    {v.circle} 0
+    {Generates vector map of circles around each point in sites file.}
+    {entry sitefile {Input sites file:} 0 sites}
+    {entry output {Output vector file of circles:} 0 vector}
+    {separator blue 1}
+    {entry radius {Radius of circles generated around sites [default=0.0]:} 0 ""}
+    {checkbox radius_uom {Radius in meters [default].} "" m}
+    {checkbox radius_uom {Radius in feet.} "" ft}
+    {checkbox radius_uom {Radius in miles.} "" mi}
+    {separator blue 1}
+    {entry area {Area of circles generated around sites [default=0.0]:} 0 ""}
+    {checkbox area_uom {Area in square meters [default].} "" sqm}
+    {checkbox area_uom {Area in hectares.} "" hec}
+    {checkbox area_uom {Area in square miles.} "" sqmi}
+    {checkbox area_uom {Area in acres.} "" ac}
+    {separator blue 1}
+    {checkbox -s {Automatically run v.support.} "" -s}
+}

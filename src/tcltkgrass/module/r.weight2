@@ -1,0 +1,11 @@
+interface_build {
+    {r.weight2} 0
+    {Use a file of reclassification rules to weight and combine up to 6 raster maps.}
+    {entry output {Output raster map of weighting results:} 0 raster}
+    {checkbox action {Add weighted maps [default]).} 0 add}
+    {checkbox action {Multiply weighted maps.} 0 mult}
+    {checkbox color {Assign greyscale color table to resulting raster map [default].} 0 grey}
+    {checkbox color {Assign color wave to resulting raster map.} 0 wave}
+    {checkbox color {Assign color ramp to resulting raster map.} 0 ramp}
+    {entry < {Rules file for weighting and combining maps):} 0 file}
+}

@@ -1,0 +1,5 @@
+interface_build {
+    {d.extend} 0
+    {Set region to maximum extent of currently displayed maps.}
+    {checkbox -v {Run verbosely.} "" -v}
+}

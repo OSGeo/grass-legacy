@@ -5,16 +5,18 @@ interface_build {
     {checkbox color {Aspect oriented grey color.} "" aspect}
     {checkbox color {Linear grey scale.} "" grey}
     {checkbox color {Histogram equalized grey scale.} "" grey.eq}
-    {checkbox color {Histogram logarithmic transformed grey scale.} "" grey.log}
+    {checkbox color {Histogram log transformed grey scale.} "" grey.log}
+    {separator blue 1}
     {checkbox color {Blue through yellow to green colors.} "" byg}
     {checkbox color {Blue through yellow to red colors.} "" byr}
     {checkbox color {Green through yellow to red colors.} "" gyr}
-    {checkbox color {Rainbow color table.} "" rainbow}
-    {checkbox color {Color ramp.} "" ramp}
     {checkbox color {Red through yellow to green colors.} "" ryg}
-    {checkbox color {Random color table.} "" random}
+    {checkbox color {Rainbow colors.} "" rainbow}
+    {separator blue 1}
+    {checkbox color {Color ramp.} "" ramp}
     {checkbox color {Color wave.} "" wave}
-    {entry rast {Use table from existing raster map:} 0 raster}
+    {checkbox color {Random colors.} "" random}
+    {separator blue 1}
     {checkbox -w {Don't overwrite existing color table.} "" -w}
     {checkbox -q {Run quietly.} "" -q}
 }

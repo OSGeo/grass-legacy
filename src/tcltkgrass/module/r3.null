@@ -1,0 +1,7 @@
+interface_build {
+    {r3.null} 0
+    {Manage null values for grid3D volume}
+    {entry grid3d {Input grid3D file for nulls management:} 0 ""}
+    {entry setnull {Set values to null (#,#-#,...):} 0 ""}
+    {entry null {Set existing nulls to this value:} 0 ""}
+}

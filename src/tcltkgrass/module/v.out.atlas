@@ -1,0 +1,8 @@
+interface_build {
+    {v.out.atlas} 0
+    {Export GRASS vector map to Atlas Graphics map file.}
+    {entry dig_name {Input GRASS vector map:} 0 vector}
+    {entry atl_name {Output Atlas Graphics map file:} 0 file}
+    {checkbox type {Area coverage [default].} 0 a}
+    {checkbox type {Line coverage.} 0 l}
+}

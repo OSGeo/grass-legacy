@@ -1,0 +1,6 @@
+interface_build {
+	{r.linear.regression} 0
+    	{Calculates linear regression from image data stored in ASCII file.}
+    	{entry map {Input ASCII file of image to be analyzed:} 0 file}
+    	{entry out {Output file to store regression results:} 0 file}
+}

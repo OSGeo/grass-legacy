@@ -1,0 +1,10 @@
+interface_build {
+    	{r.spreadpath} 0
+    	{Creates raster map of least cost path(s) to origin from starting point(s) given backlink information (see r.spread).}
+	{entry x_input {Input raster map of UTM eastings for backlink information:} 0 raster}
+	{entry y_input {Input raster map of UTM northings for backlink information:} 0 raster}
+	{entry coordinate {Coordinates of point(s) for calculating least cost path(s) (x1,y1,x2,y2,...):} 0 ""}
+	{entry output {Output raster map of least cost path(s):} 0 raster}
+    	{checkbox -v {Run verbosely.} "" -v}
+}
+

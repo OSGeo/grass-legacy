@@ -1,0 +1,11 @@
+TCLTKGRASS 4.0: NEW SCRIPTS TO SUPPORT NEW MENU FUNCTIONS
+
+d.3d.views (only changed name due to problem in tcl with file beginning with numeral)
+d.monsize (fixed it to work correctly)
+d.siter (added attribute type names to sliders)
+d.out.png (save current display to *.png file)
+d.out.tiff (save current display to *.tif file)
+d.sites.icons (display sites as icons)
+s.sv2svfit (compute semivariogram from sites file and fit to model)
+
+

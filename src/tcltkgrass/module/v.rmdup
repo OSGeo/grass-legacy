@@ -1,0 +1,7 @@
+interface_build {
+    {v.rmdup} 0
+    {Removes duplicate areas, lines, and points from binary vector map.}
+    {entry input {Input vector map:} 0 vector}
+    {entry output {Output vector map:} 0 vector}
+    {entry threshold {Threshold distance to define duplicate items} 0 ""}
+}

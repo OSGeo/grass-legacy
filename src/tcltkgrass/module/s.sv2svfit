@@ -1,0 +1,21 @@
+interface_build {
+    {s.sv2svfit} 0
+    {Create sample semivariagram for sites list and fit it to model.}
+    {entry sites {Input sites list to use for semivariogram:} 0 sites}
+    {entry lag {Nominal lag distance:} 0 ""}
+    {entry lagtol {Tolerance on lag distance [default=1/2 normal distance):} 0 ""}
+    {entry direction {Direction of semivariogram [default=omnidirectional]:} 0 ""}
+    {entry angtol {Angular tolerance on direction:} 0 ""}
+    {entry field {Number of sites attribute field to use for calculation [default=1]:} 0 ""}
+    {checkbox model {Fit to linear model:} 0 1}
+    {checkbox model {Fit to spherical model:} 0 2}
+    {checkbox model {Fit to exponential model:} 0 3}
+    {checkbox model {Fit to gaussian model:} 0 4}
+    {checkbox model {Fit to quadratic model:} 0 5}
+    {checkbox model {Fit to wave or hole effect model:} 0 6}
+    {entry range {Semivariogram range:} 0 ""}
+    {entry graph {Output results to GNUPlot *.gp and *.dat format (implies -p; print to screen if blank):} 0 file}
+    {checkbox -p {Save output to GNUplot files} "" -p}
+    {checkbox -w {Use weighted least squares [default is general least squares]} "" -w}
+    {checkbox -q {Run quietly} "" -q}
+}

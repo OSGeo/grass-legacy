@@ -1,0 +1,15 @@
+interface_build {
+    	r.region 0
+    	{Manage boundary definitions for a raster map.}
+    	{entry map  {Input raster map whose boundaries are to be set:} 0 raster}
+    	{entry region {Obtain boundaries from specified region file:} 0 region}
+    	{entry vector {Obtain boundaries from specified vector map:} 0 vector}    
+    	{entry 3dview {Obtain boundaries from specified 3Dview file:} 0 ""}    
+    	{entry n  {Coordinates for northern boundary of map:} 0 ""}
+    	{entry s  {Coordinates for northern boundary of map:} 0 ""}
+    	{entry e  {Coordinates for northern boundary of map:} 0 ""}
+    	{entry w  {Coordinates for northern boundary of map:} 0 ""}
+    	{entry align  {Align boundaries with named raster map and match resolution with named map:} 0 raster}
+	{checkbox -c {Set boundaries to match current region} "" -c}
+	{checkbox -d {Set boundaries to match default region} "" -d}
+}

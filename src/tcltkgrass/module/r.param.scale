@@ -1,0 +1,23 @@
+interface_build {
+    	{r.param.scale} 0
+    	{Extract terrain parameters from a DEM.}
+	{entry in {Input elevation raster (DEM):} 0 raster}
+	{entry out {Output raster map representing the selected morphometric parameter:} 0 raster}
+	{entry s_tol {Slope tolerance that defines a 'flat' surface (degrees) [default=1.0]:} 0 ""} 
+	{entry c_tol {Curvature tolerance that defines 'planar' surface [default=0.0001]:} 0 ""} 
+	{entry size {Size of processing window (odd numbers only) [default=3]:} 0 ""}
+	{entry exp {Exponent for distance weighting (0.0-4.0) [default=0.0]:} 0 ""}
+	{entry zscale {Vertical scaling factor [default=1.0]:} 0 ""}
+	{checkbox -c {Constrain model through central window cell} "" -c}
+	{separator grey 1}
+	{checkbox param {Calculate generalized elevation [default]} "" elev}
+	{checkbox param {Calculate magnitude of maximum gradient} "" slope}
+	{checkbox param {Calculate direction of maximum gradient (west=0; east=+/-180)} "" aspect}
+	{checkbox param {Calculate profile curvature} "" profc}
+	{checkbox param {Calculate plan curvature} "" planc}
+	{checkbox param {Calculate longitudinal curature} "" longc}
+	{checkbox param {Calculate cross-sectional curvature} "" crosc}
+	{checkbox param {Calculate minimum curvature (in direction perpendicular to max. curvature)} "" minic}
+	{checkbox param {Calculate maximum curvature} "" maxic}
+	{checkbox param {Calculate morphometric features (peaks, ridges, passes, channels, pits, & planes } "" feature}
+}

@@ -1,0 +1,5 @@
+interface_build {
+    {d.siter.tcl} 0
+    {Interactive site query and display.}
+    {entry sites {Sites in current mapset to query and/or display:} 0 sites}
+}

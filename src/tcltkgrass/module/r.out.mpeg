@@ -1,0 +1,12 @@
+interface_build {
+    {r.out.mpeg} 0
+    {Converts a series of GRASS raster maps to MPEG-1 animation files (up to 4 simultaneous views).}
+    {entry view1 {Input a series of GRASS raster maps for animation view 1:} 0 +raster}
+    {entry view2 {Input a series of GRASS raster maps for animation view 2:} 0 +raster}
+    {entry view3 {Input a series of GRASS raster maps for animation view 3:} 0 +raster}
+    {entry view4 {Input a series of GRASS raster maps for animation view 4:} 0 +raster}
+    {entry output {Output MPEG-1 file:} 0 file}
+    {scale qual {Quality factor [3].} 1 5 1}
+    {checkbox -c {Convert "on the fly". Use only for single view files (see documentation).} "" -c}
+    {checkbox -q {Run quietly.} "" -q}
+}

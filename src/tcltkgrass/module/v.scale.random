@@ -1,0 +1,12 @@
+interface_build {
+    	{v.scale.random} 0
+	{Creates sites file of randomly placed symbols within vector areas (works in conjunction with v.random)}
+	{entry map {Input vector area map:} 0 vector:}
+	{entry dot {Input ASCII file with category labels (or values) and count of sites to place in each area:} 0 file}
+	{entry site {Output sites map of points within vector areas:} 0 sites}
+	{entry outdot {Output new ASCII file with category labels (or values) and scaled count of sites per area:} 0 file}
+	{entry scale {Denominator of the map scale (1-999999999999):} 0 ""}
+	{entry cover {Fraction of the most dense area to cover with dots (0.0-1.0):} 0 ""}
+	{entry size {Size of each dot, in centimeters (0-100):} 0 ""}
+	{checkbox -n {Use category values NOT labels} "" -n} 
+}

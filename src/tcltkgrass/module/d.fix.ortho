@@ -1,0 +1,5 @@
+interface_build {
+    {d.fix.ortho} 0
+    {Shifts raster map to position indicated by mouse click}
+    {entry map {Input raster map to shift} 0 raster}
+}

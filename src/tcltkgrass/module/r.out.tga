@@ -1,0 +1,6 @@
+interface_build {
+    {r.out.tga} 0
+    {Exports a GRASS raster file into a Targa TGA image (24bit).}
+    {entry input {GRASS raster file (input):} 0 raster}
+    {entry output {TGA file (output):} 0 File}
+}

@@ -1,0 +1,10 @@
+interface_build {
+    	{r.le.trace} 0
+    	{Displays boundaries of patches, show how boundaries are traced, & displays information about patches.}
+    	{entry map {Input raster map to be analyzed:} 0 raster}
+    	{entry out {Output file to store patch data:} 0 file}
+	{separator grey 1}
+    	{checkbox -n {Output map 'num' with patch numbers} "" -n} 
+    	{checkbox -p{Include sampling area boundary as perimeter} "" -p} 
+    	{checkbox -t {Use 4 neighbor tracing instead of 8 neighbor} "" -t}  
+}

@@ -1,0 +1,14 @@
+interface_build {
+    {r.in.elas} 0
+    {Convert an ELAS file to a raster map layer.}
+    {entry input {Input ELAS file:} 0 file}
+    {entry output {Output raster map:} 0 raster}
+    {entry channel {ELAS channel number [1]:} 0 ""}
+    {entry zone {UTM zone (1-60):} 0 ""}
+    {entry nbpe {Bytes per element (optional):} 0 ""}
+    {entry x-spot-size {ELAS X Spot size (optional):} 0 raster}
+    {entry y-spot-size {ELAS Y Spot size (optional:} 0 raster}
+    {checkbox proj {Map is in XY projection.} 0 0}
+    {checkbox proj {Map is in UTM projection.} 0 1}
+    {checkbox -h {Create GRASS histogram file:} 0 -h}
+}

@@ -1,0 +1,9 @@
+interface_build {
+    {v.in.atlas} 0
+    {Import Atlas map to GRASS vector format.}
+    {entry input {Atlas Graphics map file:} 0 file}
+    {checkbox type {Area coverage [default].} 0 a}
+    {checkbox type {Line coverage.} 0 l}
+    {checkbox type {Point coverage.} 0 p}
+    {checkbox -d {Areas or lines adjoin, creating duplicate arcs.} "" -d}
+}

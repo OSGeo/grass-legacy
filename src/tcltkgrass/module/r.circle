@@ -1,0 +1,18 @@
+interface_build {
+    {r.circle} 0
+    {Outputs a raster map layer of concentric rings around a point.}
+    {entry coordinate {x,y (easting,northing) coordinates for input point:} 0 ""}
+    {entry output {Output raster map:} 0 raster}
+    {entry min {minimum radius for ring/circle map:} 0 ""}
+    {entry max {maxium radius for ring/circle map:} 0 ""}
+   {entry max {Starting point coordinates (east,north[,east,north,...]):} 0 +xy}
+    {entry stop_sites {Site file holding stopping points:} 0 sites}
+    {entry stop_coordinate {Stoping point coordinates (east,north[,east,north,...]):} 0 +xy}
+    {entry stop_coordinate {Stoping point coordinates (east,north[,east,north,...]):} 0 +xy}
+    {entry max_cost {Maximum cumulative cost:} 0 ""}
+    {entry null_value {Positive floating point value assigned to null cells:} 0 ""}
+    {checkbox -v {Run verbosely.} "" -v}
+    {checkbox -k {Improved accuracy.} "" -k}
+    {checkbox -n {Retain null cells in output.} "" -n}
+}
+

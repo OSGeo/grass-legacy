@@ -1,9 +1,14 @@
 interface_build {
     {v.cutter} 0
     {Creates new polygon vector map based on an intersection of two existing maps. Run spaghetti tool afterwards.}
-    {entry out {New vector map to be created:} 0 vector}
-    {entry data {Data vector file which is to be cut:} 0 vector}
+    {entry output {New vector map to be created:} 0 vector}
+    {entry input {Data vector file which is to be cut:} 0 vector}
     {entry cutter {Cutter vector file:} 0 vector}
-    {checkbox -u {Output unlabled polygons also.} "" -u}
+    {checkbox type {Output vectors are lines [default].} 0 line}
+    {checkbox type {Output vectors are areas.} 0 area}
+    {checkbox type {Output vectors are lines and areas} 0 both}
+    {checkbox -o {Only cut labeled areas.} "" -o}
+    {checkbox -a {Only extract area-edge arcs (for type=line or type=both).} "" -a}
+    {checkbox -l {Only extract line arcs (for type=line or type=both).} "" -l}
     {checkbox -q {Run quietly.} "" -q}
 }

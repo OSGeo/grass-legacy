@@ -1,0 +1,18 @@
+interface_build {
+    {v.apply.census} 0
+    {Import demographic information from STF1 or PL94 Census file.}
+    {entry input_stf1 {Input STF1 or PL94 file:} 0 file}
+    {checkbox out {Output data to sites file:} 0 site}
+    {checkbox out {Output data to vector map attribute file:} 0 att}
+    {checkbox out {Output data to screen [default]:} 0 -}
+    {checkbox out {Output data to screen in table format:} 0 table}
+    {entry ef {Input text file with formula expression(s):} 0 file}
+    {entry formula {Output map (vector or sites) and query expression (format map=expression):} 0 ""}
+    {entry name_field {Field name for parsing stdin lines (-a to ignore) [default=-a]:} 0 ""}
+    {entry zone {UTM zone [default=current location]:} 0 ""}
+    {entry spheriod {Spheriod for LatLong to UTM conversion:} 0 spheroid}
+    {checkbox -d {Output IDENTIFICATION SECTION (20 pages).} "" -d}
+    {checkbox -p {Output STF1 MATRIX TABLE (30 pages).} "" -p}
+    {checkbox -l {Output PL94-171 MATRIX TABLE (1 page).} "" -l}
+    {checkbox -u {Output STF1 SUMLEV TABLE (4 pages).} "" -u}
+}

@@ -1,0 +1,8 @@
+interface_build {
+    {split.sh} 0
+    {Split active display and show maps in each}
+    {entry cmd {Enter GRASS command to display a map (d.rast mapname, d.vect mapname, or d.sites sitesname):} 0 ""}
+    {entry cmd2 {Enter GRASS command to display a map (d.rast mapname, d.vect mapname, or d.sites sitesname):} 0 ""}
+    {checkbox view {Split display to create side by side maps:} 0 vert}
+    {checkbox view {Split display to create upper and lower maps:} 0 horiz}
+}

@@ -1,0 +1,7 @@
+interface_build {
+    {r.out.elas} 0
+    {Convert a GRASS raster map to an ELAS raster file.}
+    {entry input {Input GRASS raster map:} 0 raster}
+    {entry output {ELAS output file:} 0 file}
+    {checkbox -f {Create floating-point ELAS file:} 0 -f}
+}

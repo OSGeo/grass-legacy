@@ -1,0 +1,6 @@
+interface_build {
+    {m.strip99s} 0
+    {Use after import of MIADS file (r.in.miads) to replace "99" (no data) with "  "}
+    {entry input {Input raster file of MIADS data:} 0 raster}
+    {entry output {Output raster file with 99's replaced:} 0 raster}
+}

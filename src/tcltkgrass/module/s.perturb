@@ -1,0 +1,10 @@
+interface_build {
+    {s.perturb} 0
+    {Randomly perturb eastings and northings of sites.}
+    {entry input {Input sites list:} 0 sites}
+    {entry output {Output perturbed sites list:} 0 sites}
+    {checkbox distribution {Uniform distribution of E/N perturbations.} "" uniform}
+    {checkbox distribution {Normal distribution of E/N perturbations.} "" normal}
+    {entry parameters {Input maximum (for uniform dist.) or mean and stand. dev. (for normal dist.):} 0 ""}
+    {checkbox -q {Run quietly.} "" -q}
+}

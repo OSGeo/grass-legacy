@@ -2,5 +2,8 @@ interface_build {
     {d.rast} 0
     {Displays or overlays raster map layers.}
     {entry map {Raster map to be displayed:} 0 raster}
+    {entry bg {Background color for null:} 0 color}
+    {entry catlist {List of categories to be displayed (integer maps):} 0 ""}
+    {entry vallist {List of values to be displayed (floating point maps):} 0 ""}
     {checkbox -o {Overlay (displays non-zero values only):} "" -o}
 }

@@ -1,0 +1,16 @@
+interface_build {
+    {r.terraflow.short} 0
+    {Flow computation for massive grids (integer version).}
+    {entry elev {Input raster elevation map (DEM):} 0 raster}
+    {entry filled {Output depressionless elevation map:} 0 raster}
+    {entry direction {Output flow direction map:} 0 raster}
+    {entry swatershed {Output map of watershed sinks:} 0 raster}
+    {entry accumulation {Output flow accumulation map:} 0 raster}
+    {entry tci {Output TCI map:} 0 raster}
+    {entry d8cut {If flow accumulation is larger than this value use SFD (D8) direction [default=infinity]:} 0 ""}
+    {entry memory {Main memory size in MB [default=300]:} 0 ""}
+    {entry STREAM_DIR {Location of temporary intermediate STREAMs files [default=/var/tmp]:} 0 ""}
+    {entry stats {Output stats file [default=stats.out]:} 0 file}
+    {checkbox -s {SFD (D8) flow [default=MFD].} "" -s}
+    {checkbox -q {Run quietly.} "" -q}
+}

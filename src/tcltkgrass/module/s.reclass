@@ -1,0 +1,7 @@
+interface_build {
+    {s.reclass} 0
+    {Creates a new sites list whose category values are based upon the user's reclassification of categories in an existing sites list.}
+    {entry input  {Sites list to be reclassified:} 0 sites}
+    {entry output {Name for the resulting sites list:} 0 sites}
+    {entry rules  {File of reclassification rules:} 0 files}
+}

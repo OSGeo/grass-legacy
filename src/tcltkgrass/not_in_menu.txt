@@ -1,0 +1,74 @@
+GENERAL
+g.ask (for scripting)
+g.filename (for scripting)
+g.findfile (for scripting)
+g.tempfile (for scripting)
+g.parser (for scripting)
+
+DISPLAY
+d.ask (for scripting)
+d.menu (for scripting)
+d.linegraph (for scripting)
+d.scale (alternative to d.barscale - discontinued)
+d.area (duplicates function of d.vect.area)
+d.colorlist (doesn't seem to work)
+
+RASTER
+r.median (duplicates function of r.statistics)
+r.mode (duplicates function of r.statistics)
+r.reclass.scs (duplicates function of r.reclass)
+
+VECTOR
+v.in.dlg.scs (requires redirected output)
+v.patch.scs (duplicates function of v.patch)
+v.mkstats (doesn't seem to work. Produces nothing or segmentation fault)
+
+SITES
+r.random (duplicates function of s.random better)
+
+IMAGE
+r.rvi.prediction (duplicates function of i.rvi.prediction)
+
+GRID3D
+r3.showdspf (discontinued)
+r3.mkdspf (discontinued?)
+
+DATABASE
+
+
+MISC
+m.kappa (duplicates function of r.kappa)
+m.lulc.read (requires script for redirected input)
+m.dmaUSGSread (requires script for redirected input)
+m.in.stf1.tape (duplicates function of other stf1 input?)
+
+SCRIPTS
+hsv.rgb.sh (duplicates function of i.hsv.rgb)
+rgb.hsv.sh (duplicates function of i.rgb.his)
+g3.remove (function included in g.remove?)
+g3.rename (function included in g.rename?)
+r.mpatch (duplicates function of r.patch?)
+d.resize (duplicates function of d.monsize)
+d.rast.leg2 (duplicates function of d.rast.leg)
+v.in.arc.poly (duplicates function of v.in.arc.poly binary command)
+
+bug.report.sh (still useful?)
+ps.add.pagesize (why update ps. commands any more?)
+ps.map.barscale (why update ps. commands any more?)
+shade.clr.sh (not very impressive output)
+r.edge.dig (gives strange results)
+s.in.grid (requires redirected output to s.in.ascii)
+intens.sh (specialized version of blend.sh - needs tcl script)
+g.html2man (not for normal GRASS use)
+g.man2html (not for normal GRASS use)
+grass.logo.sh (cool but old CERL logo)
+
+r.avgstats (can't tell what it does)
+create_fifos.sh (what is it??)
+
+demo.sh (doesn't need to be on menu)
+dcorrelate.sh (doesn't seem to work)
+i.tasscap.tm4 (doesn't seem to work)
+r.out.gdal (not supported - requires full gdal installation)
+d.out.jpeg (CMB additio - needs functioning r.out.gdal)
+

@@ -1,0 +1,7 @@
+interface_build {
+    {shade.rel.sh} 0
+    {Creates a shaded topography map from a raster map.}
+    {entry elevation {Raster map to use for shading:} 0 raster}
+    {entry altitude {Altitude of sun/light (in degrees above horizon):} 0 ""}
+    {entry azimuth {Azmuth of sun/light (in degrees east of north):} 0 ""}
+}

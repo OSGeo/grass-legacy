@@ -1,8 +1,8 @@
 interface_build {
     {v.area} 0
-    {Displays area and perimeter information for GRASS vector map.}
-    {entry map {Vector map:} 0 vector}
-    {entry color {Color [red]:} 0 color}
+    {Displays area and perimeter information for features in GRASS vector map.}
+    {entry map {Vector map to analyze:} 0 vector}
+    {entry color {Highlight color for selected features [red]:} 0 color}
     {checkbox -f {Fill selected area with color (not simply outline).} "" -f}
-    {checkbox -i {Exclude islands (holes) from polygon area.} "" -i}
+    {checkbox -i {Subtract areas of islands (holes) from polygon area.} "" -i}
 }

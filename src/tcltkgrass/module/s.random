@@ -1,0 +1,8 @@
+interface_build {
+    {s.random} 0
+    {Generate random sites.}
+    {entry sites {Output random sites list:} 0 sites}
+    {entry n {Input number of sites to generate:} 0 ""}
+    {entry r {Input radius of quadrats:} 0 ""}
+    {checkbox -d {Use drand48() [default=rand()].} "" -d}
+}

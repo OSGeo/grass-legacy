@@ -1,6 +1,6 @@
 interface_build {
     {r.report} 0
-    {Reports statistics for raster map layers.}
+    {Reports summary statistics for raster maps (nested by map and category).}
     {entry map {Raster map(s) to report on (name[,name,...]):} 0 +raster}
     {entry units {Units of measure (unit[,unit,...]):} 0 +area}
     {entry pl {Page length, in lines [0]:} 0 ""}

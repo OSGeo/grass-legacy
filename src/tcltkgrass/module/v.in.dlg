@@ -1,0 +1,9 @@
+interface_build {
+    {v.in.dlg} 0
+    {USGS ASCII DLG-3 optional format file to GRASS vector format (run v.support before using).}
+    {entry input {DLG file:} 0 file}
+    {entry output {Output GRASS vector file} 0 vector}
+    {entry matt {Create multiple attribute file} 0 file}
+    {entry base {Base value for multiple attribute file} 0 ""}
+    {checkbox -l {Give precedence to line information over [default] area.} "" -l}
+}

@@ -1,0 +1,13 @@
+interface_build {
+    {v.in.gshhs} 0
+    {Import Global Self-consistent Hierarchical High-resolution Shoreline (GSHHS) data to GRASS vector map.}
+    {entry input {Input GSHHS shoreline file:} 0 file}
+    {entry output {Output GRASS vector map:} 0 vector}
+    {entry n {North boundary of imported vector map:} 0 ""}
+    {entry s {South boundary of imported vector map:} 0 ""}
+    {entry e {East boundary of imported vector map:} 0 ""}
+    {entry w  {West boundary of imported vector map:} 0 ""}
+    {checkbox -g {Obtain north,south,east, & west bounding coordinates from current GRASS region.} "" -g}
+    {checkbox -s {Automatically run v.support.} "" -s}
+    {checkbox -a {Import vectors as area-line [default is line].} "" -a}
+}

@@ -1,0 +1,11 @@
+interface_build {
+    	{v.reclass} 1
+    	{Creates a new map by reclassifying category values of an existing vector map.}
+    	{entry input  {Vector map to be reclassified:} 0 vector}
+    	{entry output {Name for the resulting vector map:} 0 vector}
+    	{checkbox type  {Area map.} 0 area}
+    	{checkbox type  {Line map.} 0 line}
+    	{checkbox type  {Point map.} 0 site}
+    	{entry title  {Title for the resulting vector map (optional):} 0 ""}
+    	{checkbox -d {Dissolve common boundaries in resulting map} "" -d}
+}

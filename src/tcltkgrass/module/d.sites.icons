@@ -1,0 +1,8 @@
+interface_build {
+    {d.sites.icons} 0
+    {Displays sites list as icons.}
+    {entry sites {Sites list to display:} 0 sites}
+    {entry icon {Icon to use for display:} 0 icon}
+    {entry color {Icon color [default=white]:} 0 color}
+    {entry size {Icon scaling factor (1-1000) [default=1]:} 0 ""}
+}
