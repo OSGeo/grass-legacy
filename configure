@@ -12481,28 +12481,31 @@ fi
 echo ""
 
 
-echo "GRASS is now configured for ${host}"
+echo "GRASS is now configured for:  ${host}"
 
 
 echo ""
 
 
-echo "  Source directory:          ${SRCDIR}"
+echo "  Source directory:           ${SRCDIR}"
 
 
-echo "  Build directory:           ${DSTDIR}"
+echo "  Build directory:            ${DSTDIR}"
 
 
-echo "  Installation directory:    ${prefix}/grass${NAME_VER}"
+echo "  Installation directory:     ${prefix}/grass${NAME_VER}"
 
 
-echo "  C compiler:                ${CC} ${CFLAGS}"
+echo "  C compiler:                 ${CC} ${CFLAGS}"
 
 
-echo "  C++ compiler:              ${CXX} ${CXXFLAGS}"
+echo "  C++ compiler:               ${CXX} ${CXXFLAGS}"
 
 
-echo "  FORTRAN compiler:          ${F77}"
+echo "  FORTRAN compiler:           ${F77}"
+
+
+echo "  Building shared libraries:  ${shared_ok}"
 
 
 echo ""
