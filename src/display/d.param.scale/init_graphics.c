@@ -33,8 +33,7 @@ init_graphics (void)
     /*------------------------------------------------------------------*/
 
     system("d.frame -e; d.erase white");
-/*      R_open_driver(); */
-	R_open_driver2(driver);
+    R_open_driver();
 
     D_get_screen_window(&top,&bot,&lef,&rit);	/* Get window coords.	*/
 
