@@ -1,6 +1,5 @@
 #!/bin/sh
 
-# $Id$
 # 3/2004: added parsr support MN
 # 11/2001 added mapset support markus
 # 2/2001 fixes markus
@@ -8,7 +7,7 @@
 # 1998 from NRCS, slightly modified for GRASS 4.2.1
 
 #%Module
-#%  description: GRASS script to reclass a raster map greater or less than user specified area size (in hectares)
+#%  description: Reclasses a raster map greater or less than user specified area size (in hectares)
 #%End
 #%option
 #% key: input

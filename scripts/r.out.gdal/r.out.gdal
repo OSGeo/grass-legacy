@@ -3,7 +3,7 @@
 ############################################################################
 #
 # MODULE:	r.out.gdal
-# AUTHOR(S):	Markus Neteler. neteler@itc.it
+# AUTHOR(S):	Markus Neteler. neteler itc.it
 # PURPOSE:	r.out.gdal script hack unless a C version is written
 # COPYRIGHT:	(C) 2003 by the GRASS Development Team
 #
@@ -16,7 +16,7 @@
 #############################################################################
 
 #%Module
-#% description: export GRASS raster data into various formats (requires GDAL)
+#% description: Exports GRASS raster data into various formats (requires GDAL)
 #%End
 #%flag
 #%  key: l
