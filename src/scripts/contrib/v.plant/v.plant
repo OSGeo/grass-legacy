@@ -17,7 +17,7 @@ eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
-if [ "$1" = "-help" -o "$1" = "help" ]
+if [ "$1" = "-help" -o "$1" = "help" -o "$1" = "--help" ]
 then
  echo	""
  echo	"v.plant fills in intermediate points on arcs with a specified spacing"
