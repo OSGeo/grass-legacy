@@ -1,0 +1,19 @@
+PGM = occur_rpt
+I = ../Include
+EXTRA_CFLAGS  = -I$I
+SITELIB = ../lib.a
+SITE = $(ETC)/sites
+
+LIST =  main.o\
+	divider.o\
+	process.o\
+	mode.o\
+	title.o
+
+$(SITE)/$(PGM): $(LIST) $(SITELIB) $(GISLIB)
+		$(CC) ${LDFLAGS} -o $(SITE)/$(PGM) $(LIST) $(SITELIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(LIST):	$I/report.h
+
+$(SITELIB):	#
+$(GISLIB):	#

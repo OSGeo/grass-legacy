@@ -1,0 +1,20 @@
+PGM = site_reports
+I = ../Include
+EXTRA_CFLAGS  = -I$I
+SITELIB = ../lib.a
+SITE = $(ETC)/sites
+
+LIST =  main.o\
+	  ask_layers.o\
+	  meta.o\
+	  run_report.o\
+	  dump_reprt.o\
+	  unix_cmd.o
+
+$(SITE)/$(PGM): $(LIST) $(SITELIB) $(GISLIB)
+		$(CC) ${LDFLAGS} -o $(SITE)/$(PGM) $(LIST) $(SITELIB) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+
+main.o:		$I/local_menu.h
+
+$(SITELIB):	#
+$(GISLIB):	#
