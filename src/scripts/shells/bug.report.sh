@@ -1,6 +1,6 @@
 :
 
-BUG_PERSON=grass@baylor.edu
+BUG_PERSON=neteler@geog.uni-hannover.de
 
 if [ $# -lt 1 ]
 then
