@@ -1,0 +1,19 @@
+.TH DOS.show
+.SH NAME
+\fIDOS.show\fR \- reads screen images stored on the PC6300 MS_DOS hard disk by DOS.save.
+.br
+.I "(Available for PC6300 workstations, only)"
+.SH SYNOPSIS
+\fBDOS.show\fR
+.br
+\fBDOS.show help\fR
+.SH DESCRIPTION
+allows a user to interactively view PC6300 screen images produced by "d.display", "d.rast", etc. and saved to the PC6300 hard disk by DOS.save.
+
+.SH "INTERACTIVE MODE"
+.SH BUGS
+.SH "SEE ALSO"
+DOS.delete, DOS.save, DOS.list
+.SH AUTHOR
+P.W.Carlson, USDA, SCS, NHQ-CGIS
+
