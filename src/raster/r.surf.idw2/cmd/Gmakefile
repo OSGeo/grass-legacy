@@ -7,3 +7,5 @@ $(HOME)/$(PGM): $(LIST) $(GISLIB)
 	rm -f a.out
 	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(MATHLIB)
 	mv a.out $@
+
+$(GISLIB): #
