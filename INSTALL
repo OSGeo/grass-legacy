@@ -6,8 +6,8 @@ CFLAGS="-g -Wall" ./configure --with-grass50=/full/path/to/grass50(MAIN)/source
 make mix   
 make       
 
---with-grass50    must be full path to MAIN branch (not release) of
-                  grass 5.0
+--with-grass50    must be full path to MAIN (=experimental) branch (not 
+                  release) of GRASS 5.0
 
 All targets:
 make mix           - create symbolic links to grass50 for not yet uploaded files
