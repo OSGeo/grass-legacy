@@ -17,13 +17,13 @@
 <BR>
 <B>s.random help</B>
 <BR>
-<B>s.random</B> [<B>-r</B>|<B>d</B>] 
+<B>s.random</B> [<B>-d</B>] 
 <B>n=</B><EM>value</EM> <B>sites=</B><EM>name</EM> 
 
 <H2>DESCRIPTION</H2>
 
 <EM>s.random</EM>
-randomly generates sites using the selected random number
+randomly generates sites within the current region using the selected random number
 generator.
 
 <H2>OPTIONS</H2>
@@ -32,10 +32,8 @@ generator.
 <H3>Flags:</H3>
 
 <DL>
-<DT><B>-r</B> 
-<DD>Use <EM>rand()</EM> (the default).
-<DT><B>-l</B> 
-<DD>Use <EM>drand48().</EM>
+<DT><B>-d</B> 
+<DD>Use <EM>drand48()</EM>. [default is <EM>rand()</EM>]
 </DL>
 
 <H3>Parameters:</H3>
@@ -51,20 +49,18 @@ generator.
 <H2>SEE ALSO</H2>
 
 UNIX man pages for <EM>rand(3)</EM> and <EM>drand48(3)</EM>.
-
 <P>
-<EM><A HREF="s.perturb.html">s.perturb</A></EM>
+<EM><A HREF="g.region.html">g.region</a><BR>
+<A HREF="s.perturb.html">s.perturb</A></EM>
 
 <H2>BUGS</H2>
 
 The RNG used by 
 <EM><A HREF="s.perturb.html">s.perturb</A></EM>
 should probably be added to this program.
-
-<H2>BUGS</H2>
-Please send all bug fixes and comments to the author
-or the grass development team. <br>
-<a href="http://www.geog.uni-hannover.de/grass/"><tt>http://www.geog.uni-hannover.</tt></a>
+<BR><BR>
+Please send any bug fixes and comments to the grass development team.<br>
+<a href="http://grass.itc.it"><tt>http://grass.itc.it</tt></a>
 
 <H2>AUTHOR</H2>
 
