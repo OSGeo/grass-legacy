@@ -2,6 +2,11 @@
 all: port_test $(DEPDIG2LIB)
 
 ###########################################################
+
+SLIBDEPS = $(DIG_ATTLIB) $(VECTLIB_REAL) $(GISLIB)
+
+EXTRA_CFLAGS = $(PICFLAGS)
+
 #    set_head.o 
 
 OBJ = \
@@ -77,7 +82,7 @@ CFILES = \
 
 
 $(DEPDIG2LIB): $(OBJ)
-	$(AR)
+	$(SLIBRULE)
 
 
 read_head: read_head.o

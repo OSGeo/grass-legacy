@@ -1,3 +1,5 @@
+EXTRA_CFLAGS = $(PICFLAGS)
+
 OBJ = ask_old.o ask_new.o ask_any.o\
        release.o read.o write.o get.o put.o scale.o \
        get_def.o
@@ -11,6 +13,6 @@ all: $(DEPICONLIB)
 #	chmod +r $@
 
 $(DEPICONLIB): $(OBJ)
-	$(AR)
+	$(SLIBRULE)
 
 #$(OBJ): icon.h

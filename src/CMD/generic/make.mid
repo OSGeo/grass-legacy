@@ -21,9 +21,11 @@ SCRIPTS         = $(GISBASE)/scripts
 # other
 CFLAGS      = -I$(INCLUDE_DIR) $(COMPILE_FLAGS) $(EXTRA_CFLAGS) $(USE_TERMIO)
 LDFLAGS     = -L$(LIBDIR)/$(LIBARCH) $(LINK_FLAGS)
-AR          = $(GMAKE) -makeparentdir $@; $(LIBRULE)
 MANROFF     = # 
 MAKEALL     = $(GMAKE) -all
+LIBRULE_ST  = $(GMAKE) -makeparentdir $@; ar ruv $@ $?; $(RANLIB) $@
+LIBRULE     = $(LIBRULE_ST)
+SLIBRULE    = $(LIBRULE_ST)
 
 # various directories
 LIBDIR      = $(SRC)/libes

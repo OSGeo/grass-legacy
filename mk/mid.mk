@@ -18,9 +18,11 @@ SCRIPTS         = $(GISBASE)/scripts
 
 # other
 CFLAGS      = -I$(INCLUDE_DIR) -I$(CONFIG_DIR) $(COMPILE_FLAGS) $(EXTRA_CFLAGS) $(USE_TERMIO)
-LDFLAGS     = -L$(LIBDIR)/$(LIBARCH) $(LINK_FLAGS)
-AR          = $(LIBRULE)
+LDFLAGS     = -L$(LIBDIR) $(LINK_FLAGS)
 MANROFF     = # 
+LIBRULE_ST  = ar ruv $@ $?; $(RANLIB) $@
+LIBRULE     = $(LIBRULE_ST)
+SLIBRULE    = $(LIBRULE_ST)
 
 # various source directories and libraries
 LIBDIR      = $(DSTDIR)/src/libes

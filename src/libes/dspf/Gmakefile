@@ -20,7 +20,7 @@ OBJ	=	\
 
 
 $(LIB): $(OBJ)
-	$(AR)
+	$(LIBRULE)
 
 grid3_header.o:	viz.h cell_table.h
 grid3_data.o: viz.h

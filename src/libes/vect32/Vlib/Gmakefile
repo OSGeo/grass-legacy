@@ -1,5 +1,8 @@
 ###########################################################
 
+SLIBDEPS = $(DIG2LIB) $(LINKMLIB) $(GISLIB)
+
+EXTRA_CFLAGS = $(PICFLAGS)
 
 # get_area_xy2.o
 # dig_hd.o
@@ -39,7 +42,7 @@ CFILES =
 all:  $(DEPVECTLIB_REAL)
 
 $(DEPVECTLIB_REAL): $(OBJ)
-	$(AR)
+	$(SLIBRULE)
 
 
 iprint:

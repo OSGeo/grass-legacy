@@ -1,3 +1,6 @@
+EXTRA_CFLAGS = $(PICFLAGS)
+
+SLIBDEPS = $(LINKMLIB)
 
 OBJ = \
 	bitmap.o\
@@ -6,7 +9,7 @@ OBJ = \
 all: $(DEPBITMAPLIB)
 
 $(DEPBITMAPLIB): $(OBJ)
-	$(AR)
+	$(SLIBRULE)
 
 $(OBJ): #linkm.h
 

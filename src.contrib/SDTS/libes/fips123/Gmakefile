@@ -105,6 +105,6 @@ FIPSLIB =	$(LIBDIR)/libf123.a
 all: $(FIPSLIB)
 
 $(FIPSLIB): $(OBJ)
-	$(AR)
+	$(LIBRULE)
 
 $(OBJ): ./f123inc/gvd123.h ./f123inc/stc123.h ./f123inc/fips_bsd.h

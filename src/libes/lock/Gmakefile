@@ -1,8 +1,9 @@
+EXTRA_CFLAGS = $(PICFLAGS)
 
 OBJ = lock.o unlock.o
 
 $(DEPLOCKLIB): $(OBJ)
-	$(AR)
+	$(SLIBRULE)
 
 
 try: try.o $(DEPLOCKLIB)

@@ -1,4 +1,9 @@
 ###########################################################
+
+SLIBDEPS = $(DIG_ATTLIB) $(GISLIB)
+# VECTLIB_REAL is a cyclic dependency
+# SLIBDEPS = $(DIG_ATTLIB) $(VECTLIB_REAL) $(GISLIB)
+
 #    set_head.o 
 
 OBJ = \
@@ -75,9 +80,9 @@ CFILES = \
 
 
 $(DEPDIG2LIB): $(OBJ)
-	$(AR)
+	$(SLIBRULE)
 
-EXTRA_CFLAGS    = $(VECTLIBFLAGS)
+EXTRA_CFLAGS    = $(VECTLIBFLAGS) $(PICFLAGS)
 
 read_head: read_head.o
 	$(CC) -o $@ read_head.o $(DIGLIB) $(GISLIB)

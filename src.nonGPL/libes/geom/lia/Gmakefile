@@ -1,3 +1,5 @@
+EXTRA_CFLAGS = $(PICFLAGS)
+
 OBJ =  lia.o auxiliary.o chars.o stack.o pool.o \
          det.o sdet.o sdet_one.o \
          mint.o
@@ -6,7 +8,7 @@ OBJ =  lia.o auxiliary.o chars.o stack.o pool.o \
 all: $(DEPLIALIB)
 
 $(DEPLIALIB): $(OBJ)
-	$(AR)
+	$(SLIBRULE)
 
 
 

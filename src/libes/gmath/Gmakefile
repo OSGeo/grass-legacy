@@ -1,3 +1,5 @@
+SLIBDEPS = $(GISLIB) $(FFTWLIB) $(LAPACKLIB) $(BLASLIB)
+
 OBJ = fft.o \
 	del2g.o \
 	eigen.o \
@@ -12,11 +14,11 @@ OBJ = fft.o \
 LIBES = $(GISLIB)
 DEPLIBS= $(DEPGISLIB)
 
-EXTRA_CFLAGS = $(FFTWINC)
+EXTRA_CFLAGS = $(FFTWINC) $(PICFLAGS)
 
 all: $(DEPGMATHLIB)
 
 $(DEPGMATHLIB): $(OBJ)
-	$(AR) 
+	$(SLIBRULE) 
 
 $(OBJ): $(INCLUDE_DIR)/la.h

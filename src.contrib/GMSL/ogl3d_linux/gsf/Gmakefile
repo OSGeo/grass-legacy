@@ -40,5 +40,5 @@ all: libgsf.a
 
 
 libgsf.a: $(OBJ)
-	$(AR)
+	$(LIBRULE)
 

@@ -48,7 +48,7 @@ OBJ = \
 all:  libgeo.a  $(ETC)/geo.reg  $(ETC)/geo.point  $(ETC)/geo.quest   $(ETC)/geo.unlock 
 
 libgeo.a: $(OBJ)
-	$(AR)
+	$(LIBRULE)
 
 #  notice that bin_reg becomes geo.reg in the etc directory
 

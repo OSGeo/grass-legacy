@@ -1,3 +1,5 @@
+EXTRA_CFLAGS = $(PICFLAGS)
+
 OBJ =  \
 	between.o \
 	copy.o\
@@ -23,7 +25,7 @@ all: $(DEPDATETIMELIB)
 	cp $(DEPDATETIMELIB) $(GISBASE)/lib
 
 $(DEPDATETIMELIB): $(OBJ)
-	$(AR)
+	$(SLIBRULE)
 
 $(OBJ): $(INCLUDE_DIR)/datetime.h $(INCLUDE_DIR)/P_datetime.h
 

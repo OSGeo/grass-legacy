@@ -12,7 +12,7 @@ LIST   =  func2d.o input2d.o vinput2d.o interp2d.o output2d.o point2d.o secpar2d
 SRCS   =  func2d.c input2d.c vinput2d.c interp2d.c output2d.c point2d.c secpar2d.c segmen2d.c write2d.c matrix.c minmax.c init2d.c ressegm2d.c resout2d.c
 
 $(LIB): $(LIST)  
-	$(AR)
+	$(LIBRULE)
 #	$(CC) $(LDFLAGS) $(LIST)  $(BITMAPLIB) $(LINKMLIB) $(GISLIB) $(VECTLIB) $(MATHLIB) $(XDRLIB)
 
 
