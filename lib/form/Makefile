@@ -5,16 +5,22 @@ EXTRA_LIBS=$(GISLIB) $(DBMILIB)
 LIB_NAME = $(FORM_LIBNAME)
 DEPENDENCIES = $(GRASS_INCDIR)/form.h
 
-LIB_OBJS = generate.o open.o
-
 HTMLLIB=$(GISBASE)/etc/form/html_library.tcl
 FORM=$(GISBASE)/etc/form/form.tcl
 FORMPROG=$(GISBASE)/etc/form/form
 EXTRA_CFLAGS = $(XCFLAGS) $(TCLINCDIR) $(TKINCDIR)
 
+include $(MODULE_TOPDIR)/include/Make/Platform.make
+
+LIB_OBJS = generate.o
+ifneq ($(TCLTKLIBS),)
+    LIB_OBJS += open.o
+    GTCLTKFORM = $(HTMLLIB) $(FORM) $(FORMPROG) 
+endif
+
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
-default: lib $(HTMLLIB) $(FORM) $(FORMPROG) 
+default: lib $(GTCLTKFORM)
 
 $(HTMLLIB): html_library_grass.tcl
 	if [ ! -d $(GISBASE)/etc ]; then mkdir $(GISBASE)/etc; fi
