@@ -1,7 +1,7 @@
 #include "V_.h"
 
 /*
-**  Writes line info to current positioni(should be EOF) in output map
+**  Writes line info to current position (should be EOF) in output map
 **
 **  returns offset in file that (start of) line is written at.
 */
