@@ -12,7 +12,7 @@
 #define CORRECTED_NCOLS 4220
 #define UNCORRECTED_NCOLS 3500
 
-#define TAPE_BUF_SIZE 5000
+#define TAPE_BUF_SIZE 5121
 
 struct tape
 {
