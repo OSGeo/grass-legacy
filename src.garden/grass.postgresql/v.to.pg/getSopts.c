@@ -18,7 +18,7 @@ int getSelectOpts (argc, argv)
     	static char SQL_stmt[1024];
 
 	struct Option *map, *vtype, *color, *sql;
-	struct Flag *select, *flag1, *flag3;
+	struct Flag *select, *flag1, *flag3, *flag4;
 
 	retval = 0;
 
@@ -65,6 +65,10 @@ int getSelectOpts (argc, argv)
 	flag3->key         = 'v' ;
 	flag3->description = _("Verbose mode") ;
 
+	flag4 = G_define_flag() ;
+	flag4->key         = 'p' ;
+	flag4->description = _("Create and populate PostGIS table instead") ;
+
 
 
         /* Check for help flag */
@@ -89,7 +93,9 @@ int getSelectOpts (argc, argv)
 	map_string = map->answer;
 	vtype_string = vtype->answer;	
 	fillcolr = flag1->answer;
-	verbose = flag3->answer;	
+	verbose = flag3->answer;
+	to_postgis = flag4->answer;
+	
 
 
 	if ((mapset=G_find_file2("dig",map->answer,""))==NULL)  {
