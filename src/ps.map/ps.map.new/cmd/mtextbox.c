@@ -87,7 +87,7 @@ int multi_text_box_path (double x, double y,
     /* set box y coordinate */
     fprintf(PS.fp, " %.2f ", y);
 
-    fprintf(PS.fp, "translate %.2f rotate ", rotate);
+    fprintf(PS.fp, "gsave TR %.2f rotate ", rotate);
 
     fprintf(PS.fp, " 0 "); 
 
@@ -110,7 +110,7 @@ int multi_text_box_path (double x, double y,
 	default:
 		fprintf(PS.fp, "CMY"); break;
     }
-    fprintf(PS.fp, " gsave TR TBM\n");
+    fprintf(PS.fp, " TR TBM\n");
 
     return 0;
 }
