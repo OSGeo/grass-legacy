@@ -102,15 +102,17 @@ for (; ; )
       fprintf (stderr," 12=Summary of pesticide yields at outlet cell\n");
       fprintf (stderr,"  0=Quit\n\n");
       fprintf (stderr,"Please enter 0-12 for your choice of contaminant>");              
-      mapflag=atoi(fgets(mapflagstring,2,stdin)); 
-
+      fgets(mapflagstring,2,stdin);
+      mapflag=atoi(mapflagstring);
+      fgets(mapflagstring,2,stdin); /* put in to grab extra character */
       fprintf (stderr,"\nThe choice you entered was %d.\n",mapflag);
 
       if (mapflag >=0 && mapflag <= 12) break;
       else {
         fprintf (stderr,"Please review the choices and make a new selection\n");
-        fprintf (stderr,"Press any key to continue> "); 
-        mapflag=atoi(fgets(mapflagstring,2,stdin));
+        fprintf (stderr,"Press any key to continue> ");
+        fgets(mapflagstring,2,stdin);
+        mapflag=atoi(mapflagstring);
         system("clear");
       }
     }
@@ -124,14 +126,16 @@ for (; ; )
       for (; ; )
        { 
          fprintf (stderr,"\nPlease enter your cell size in meters (1-9999)>");
-         res=atoi(fgets(resstring,4,stdin));
+         fgets(resstring,4,stdin);
+         res=atoi(resstring);
          fprintf (stderr,"\nThe resolution you entered was %d.\n",res);
                  
          if (res >= 1 && res <= 9999) break;
 
          fprintf (stderr,"The number entered should be 1-9999\n");
          fprintf (stderr,"Press any key to continue> ");
-         res=atoi(fgets(resstring,4,stdin));
+         fgets(resstring,4,stdin);
+         res=atoi(resstring);
          system("clear");
        }
       strcpy(cellnummapname,"cell_num.map.");
@@ -166,7 +170,8 @@ for (; ; )
 
       /* open input file for reading */
       if ( (input_nps_file = fopen(input_nps_filename, "rb")) == NULL )
-        { fprintf (stderr,"Error opening file %s.\n", input_nps_filename);
+        { 
+          fprintf (stderr,"Error opening file %s.\n", input_nps_filename);
           exit(1);
         }
 
@@ -176,7 +181,8 @@ for (; ; )
             find_max_cell_num(input_nps_file, &max_cell_num)   ||
             get_cell_data(input_nps_file, outlet_cell_num, runoff, sediment,
                           n_sediment, n_soluble, p_sediment, p_soluble) )
-        { fprintf (stderr,"Error: file %s has unrecognized format.\n",
+        { 
+          fprintf (stderr,"Error: file %s has unrecognized format.\n",
                  input_nps_filename);
           fclose(input_nps_file);
           exit(1);
