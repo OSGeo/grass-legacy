@@ -67,7 +67,7 @@ main (int argc, char **argv)
 	display_opt->required   = NO ;
 	display_opt->multiple   = YES ;
 	display_opt->answer     = "shape" ;
-	display_opt->options    = "shape,cat,topo,dir,attr";
+	display_opt->options    = "shape,cat,topo,dir,attr,zcoor";
 	display_opt->description= "Display" ;
 	
 	attrcol_opt = G_define_option() ;
@@ -293,6 +293,9 @@ main (int argc, char **argv)
 	        case 'a':
 	            display |= DISP_ATTR;
 		    break;
+	        case 'z':
+	            display |= DISP_ZCOOR;
+		    break;
 	      }
 	    i++;
 	  }
@@ -389,7 +392,10 @@ main (int argc, char **argv)
 	
 	if ( display & DISP_ATTR )
 	    stat = attr ( &Map, type, attrcol_opt->answer, Clist, &lattr, chcat);
-	
+
+	if ( display & DISP_ZCOOR )
+	    stat = zcoor ( &Map, type, &lattr);
+
 	if ( display & DISP_TOPO ) {
 	    if (level >= 2 )
 	        stat = topo ( &Map, type, area, &lattr);
