@@ -10,5 +10,9 @@ put_row (fd, buf, row)
     c = tape.cellbuf;
     while(ncols-- > 0)
 	*c++ = *buf++;
+/* function call changed */
+/*
     G_put_map_row (fd, tape.cellbuf, row);
+*/
+    G_put_map_row (fd, tape.cellbuf);
 }
