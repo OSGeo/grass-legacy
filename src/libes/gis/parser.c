@@ -304,6 +304,14 @@ int G_parser (int argc, char **argv)
 			return -1;
 		}
 
+		/* If first arg is "--interface-description" then print out
+		 * a xml description of the task */
+		if (strcmp(argv[1],"--interface-description") == 0)
+		{
+			G_usage_xml();
+			return -1;
+		}
+
 		/* Loop thru all command line arguments */
 
 		while(--argc)
@@ -471,6 +479,103 @@ int G_usage (void)
 	}
 
         return 0;
+}
+
+int G_usage_xml (void)
+{
+	struct Option *opt ;
+	struct Flag *flag ;
+	char *type;
+	char * s;
+
+	if (!pgm_name)		/* v.dave && r.michael */
+	    pgm_name = G_program_name ();
+	if (!pgm_name)
+	    pgm_name = "??";
+
+	fprintf(stdout, "<task name=\"%s\">\n", pgm_name);  
+
+	fprintf(stdout, "\t<parameter-group>\n");
+	if(n_opts)
+	{
+		opt= &first_option;
+		while(opt != NULL)
+		{
+			/* TODO: make this a enumeration type? */
+			switch (opt->type) {
+				case TYPE_INTEGER:
+					type = "integer";
+					break ;
+				case TYPE_DOUBLE:
+					type = "float";
+					break ;
+				case TYPE_STRING:
+					type = "string";
+					break ;
+				default:
+					type = "unknown";
+					break;
+			}
+			fprintf (stdout, "\t\t<parameter "
+				"name=\"%s\" "
+				"type=\"%s\" "
+				"required=\"%s\">\n",
+				opt->key,
+				type,
+				opt->required == YES ? "yes" : "no");
+
+			if (opt->description)
+				fprintf(stdout, "\t\t\t<description>\n\t\t\t\t%s\n\t\t\t</description>\n",
+					opt->description);
+			if(opt->def)
+				fprintf(stdout, "\t\t\t<default>\n\t\t\t\t%s\n\t\t\t</default>\n", opt->def);
+
+			if(opt->options) {
+				fprintf(stdout, "\t\t\t<values>\n");
+				s = calloc(strlen(opt->options),1);
+				strcpy(s, opt->options);
+				s = strtok(s, ",");
+				while (s) {
+					fprintf(stdout, "\t\t\t\t<value>%s</value>\n", s);
+					s = strtok(NULL, ",");
+				}
+				fprintf(stdout, "\t\t\t</values>\n");
+			}
+
+			/* TODO:
+			 * add something like
+			 * 	 <range min="xxx" max="xxx"/>
+			 * to <values>
+			 * - multiple
+			 * - key_desc
+			 * - there surely are some more. which ones?
+			 */
+
+			opt = opt->next_opt ;
+			fprintf (stdout, "\t\t</parameter>\n");
+		}
+	}
+
+	
+	if(n_flags)
+	{
+		flag= &first_flag;
+		while(flag != NULL)
+		{
+			fprintf (stdout, "\t\t<parameter name=\"%c\" type=\"flag\">\n", flag->key);
+
+			if (flag->description)
+				fprintf(stdout, "\t\t\t<description>\n\t\t\t\t%s\n\t\t\t</description>\n",
+							flag->description);
+			flag = flag->next_flag ;
+			fprintf (stdout, "\t\t</parameter>\n");
+		}
+	}
+
+	fprintf(stdout, "\t</parameter-group>\n");
+
+	fprintf(stdout, "</task>\n");
+    return 0;
 }
 
 /**************************************************************************
