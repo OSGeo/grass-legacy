@@ -14,6 +14,18 @@
 # define GET TIOCGETC
 #endif
 #endif
+
+/*!
+ * \brief return interrupt char
+ *
+ * This routine returns the
+ * user's keyboard interrupt character. This is the character that generates the
+ * SIGINT signal from the keyboard.
+ *
+ *  \param ~
+ *  \return char 
+ */
+
 char G_intr_char()
 {
     char c = 0;

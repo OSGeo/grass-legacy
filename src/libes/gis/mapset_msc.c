@@ -22,7 +22,20 @@ int G__make_mapset_element (char *p_element)
     char command[1024];
     char *path;
     char *p;
-    char *G_mapset();
+    
+/*!
+ * \brief current mapset name
+ *
+ * Returns the name of the
+ * current mapset in the current location. This routine is often used when
+ * accessing files in the current mapset. See Mapsets for an
+ * explanation of mapsets.
+ *
+ *  \param void
+ *  \return char * 
+ */
+
+char *G_mapset();
     char *element;
 
     element = p_element;

@@ -1,5 +1,16 @@
 #include "gis.h"
 
+
+/*!
+ * \brief delimiter
+ *
+ * position of delimiter
+ *
+ *  \param str
+ *  \param delim
+ *  \return char * 
+ */
+
 char *
 G_index (str, delim)
     register char *str, delim;
@@ -10,6 +21,17 @@ G_index (str, delim)
 	return str;
     return (*str ? str : NULL);
 }
+
+
+/*!
+ * \brief ???
+ *
+ * ???
+ *
+ *  \param str
+ *  \param delim
+ *  \return char * 
+ */
 
 char *
 G_rindex (str, delim)

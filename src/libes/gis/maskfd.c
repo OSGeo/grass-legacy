@@ -14,6 +14,17 @@
 /*
  * open mask file and return file descriptor
  */
+
+/*!
+ * \brief test for current mask
+ *
+ * returns file descriptor
+ * number if MASK is in use and -1 if no MASK is in use.
+ *
+ *  \param void
+ *  \return int
+ */
+
 int G_maskfd ()
 {
 	G__check_for_auto_masking () ;

@@ -14,6 +14,19 @@
 #include "gis.h"
 #include "glocale.h"
 
+
+/*!
+ * \brief current mapset name
+ *
+ * Returns the name of the
+ * current mapset in the current location. This routine is often used when
+ * accessing files in the current mapset. See Mapsets for an
+ * explanation of mapsets.
+ *
+ *  \param void
+ *  \return char * 
+ */
+
 char *
 G_mapset()
 {

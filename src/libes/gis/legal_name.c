@@ -12,6 +12,16 @@
  *                  or if name contains a non-printing character.
  **********************************************************************/
 
+
+/*!
+ * \brief check for legal database file names
+ *
+ * Returns 1 if <b>name</b> is ok, -1 otherwise.
+ *
+ *  \param name
+ *  \return int
+ */
+
 int G_legal_filename (char *s)
 {
     if (*s == '.' || *s == 0) {
