@@ -1,11 +1,6 @@
-# %W%  %G%
-
-PGM      = v.export
+PGM      = v.export.scs
 
 LIST =  exp_vect.o
-
-all: $(BIN_INTER)/$(PGM)
-
 
 $(BIN_INTER)/$(PGM): $(LIST) $(GISLIB) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB)
