@@ -22,11 +22,10 @@ region settings interactively, with a mouse.
 <BR>
 <B>d.zoom help</B> 
 <BR>
-<B>d.zoom</B> [<B>-jp</B>] 
+<B>d.zoom</B> [<B>-fhj</B>] 
 [<B>rast=</B><EM>name</EM>[,<EM>name</EM>,...]] 
 [<B>vector=</B><EM>name</EM>[,<EM>name</EM>,...]]
 [<B>site=</B><EM>name</EM>[,<EM>name</EM>,...]]
-[<B>action=</B><EM>name</EM>]
 [<B>zoom=</B><EM>value</EM>] 
 <BR>
 
@@ -39,17 +38,21 @@ Like <EM><A HREF="g.region.html">g.region</A></EM>,
 <EM>d.zoom</EM> re-defines the settings of the geographic
 region.  However, <EM>d.zoom</EM> allows the user to change
 the current region settings interactively, by either
-outlining the new region perimeter with a mouse,
-"rotating" latitude-longitude data into the current region or unzoom
-the region.  The graphics display is updated by the module.
+outlining the new region perimeter with a mouse, unzoom
+or pan the region.  The graphics display is updated by the module.
 
 <H2>OPTIONS</H2>
 
 <H3>Flag:</H3> 
 
 <DL>
-<DT><B>-j</B>
+<DT><B>-f</B>
+<DD>Full menu with pan and zoom options.
 
+<DT><B>-h</B>
+<DD>Handheld mode, zoom by window with left button only.
+
+<DT><B>-j</B>
 <DD>Just redraw given maps using default colors.
 
 </DL>
@@ -63,19 +66,8 @@ the region.  The graphics display is updated by the module.
 <DD>Name of vector map(s)
 <DT><B>site=</B><EM>name</EM>[,<EM>name</EM>,...]  
 <DD>Name of site map(s)
-<DT><B>action=</B><EM>name</EM>
-<DD>Allows the user to change the geographic region
-settings by "rotating" the globe to move a different
-portion of the globe into the stationery boxed region
-outline (making this new portion of the globe the new
-current region), rather than by moving the boxed region
-outline.  This option can only be used with
-latitude-longitude data bases (although <EM>d.zoom</EM>
-will not complain if the user attempts to set this
-parameter while running on a non-latitude-longitude data
-base).
 <BR>
-Options: zoom, rotate 
+Options: zoom 
 
 <DT><B>zoom=</B><EM>value</EM>
 <DD>magnification: &gt;1.0 zooms in, &lt;1.0 zooms out<br>
@@ -83,27 +75,10 @@ Options: zoom, rotate
            default: 1.0
 </DL>
 
-After the user types the command <B>d.zoom</B> and type of zoom to be
-performed, a mouse-button menu will appear, directing the
-user to: establish the corners of the new geographic
-region, check its coordinates, and confirm any changes
-made.  When the user accepts new geographic boundaries,
-<EM>d.zoom</EM> asks,
+After the user types the command <B>d.zoom</B>  a mouse-button menu will appear
+directing the user.
 
-<DL>
-<DD>
-Accept new region? Y / N  &gt;
-</DL>
-
-If the user clicks the mouse over the "Y" (yes), 
-the mouse-drawn geographic region is saved as the user's 
-current geographic region.
-
-<P>
-To zoom-out to a larger area than was windowed-in on with <EM>d.zoom</EM> 
-(i.e., to enlarge the current geographic region), 
-the user may use the middle mouse button. The stepsize can be adjusted
-by <EM>zoom</EM> parameter. Additionally the region settings can be modified by
+Additionally the region settings can be modified by
 running <EM><A HREF="g.region.html">g.region</A></EM>.
 The user may also alter the current geographic region by running the "region" 
 option of the <EM><A HREF="d.display.html">d.display</A></EM> program. 
