@@ -1,0 +1,12 @@
+EXTRA_CFLAGS=$(CAN_CLEAR)
+
+
+OBJ = \
+    cats.o\
+    mapset_msc.o
+
+all: $(GISLIB)
+
+$(GISLIB):  $(OBJ)
+	$(AR)
+
