@@ -1,0 +1,15 @@
+# @(#)Gmakefile	2.1  7/14/87
+PGM = Pscreen
+
+LIST =	main.o\
+	idx.o
+
+HOME = $(ETC)/paint
+INTERFACE = $(SRC)/paint/Interface/applib/lib.a
+
+$(HOME)/$(PGM):	$(LIST) $(INTERFACE) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(INTERFACE) $(GISLIB) -o $@
+
+#############################################################
+$(GISLIB):	#
+$(INTERFACE):	#
