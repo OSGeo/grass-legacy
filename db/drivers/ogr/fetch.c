@@ -147,6 +147,6 @@ db_driver_get_num_rows (cn )
        return DB_FAILED;
     }
 
-    return ( OGR_L_GetFeatureCount ( c->hLayer, 0 ) );
+    return ( OGR_L_GetFeatureCount ( c->hLayer, 1 ) );
 }
 
