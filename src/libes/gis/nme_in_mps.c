@@ -62,8 +62,9 @@ G_fully_qualified_name (name, mapset)
     char *name;
     char *mapset;
 {
-    static char fullname[1024];
+    char fullname[1024];
+    char *G_store();
 
     sprintf (fullname, "%s@%s", name, mapset);
-    return fullname;
+    return G_store(fullname);
 }
