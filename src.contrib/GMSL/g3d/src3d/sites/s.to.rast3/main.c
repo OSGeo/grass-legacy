@@ -4,20 +4,21 @@
  * 1/2001: added field parameter Markus Neteler
  * s.to.r3 was developed 2000 from s.vol.idw written 
  * by Jaro Hofierka
+ *
+ * s.to rast3 reads a sites list and writes 3d raster (voxel) maps.
+ *
+ *			input: x|y|z|%w 
+ *			output: G3D file
+ ************************************************************************/
 
-   s.to rast3 reads a sites list and writes 3d raster (voxel) maps.
-
-			input: x|y|z|%w 
-			output: G3D file
-*/
-
-/*************************************************************************/ 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
 #include "gis.h"
 #include "G3d.h"
+
+/* #define DEBUG */
 
 FILE *finput, *foutput;
 
@@ -170,7 +171,9 @@ int main(int argc, char *argv[])
         row = (int) (fabs((current_region.south - points[i].north - current_region.ns_res/2.)/ current_region.ns_res));
         col = (int) (fabs((current_region.west - points[i].east - current_region.ew_res/2.)/ current_region.ew_res));
 	value = points[i].w;
-/*printf("\ncol,row,lev,val: %d %d %d %f",col,row,lev,value);*/
+#ifdef DEBUG
+ fprintf(stderr, "\ncol,row,lev,val: %d %d %d %f",col,row,lev,value);
+#endif
 	G3d_putFloat (map, col, row, lev, value);
 	}
 
