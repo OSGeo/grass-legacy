@@ -1,0 +1,8 @@
+###########################################################
+#  %W%  %G%
+
+MANM = $(GISBASE)/mapgen/man
+
+all:
+	cp MAPGEN $(MAN1)/MAPGEN
+	do_all $(MANM)
