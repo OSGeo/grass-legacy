@@ -1,3 +1,6 @@
+/*	Alex Shevlakov sixote@yahoo.com 02/2000
+*	function added to handle postgres queries
+*/
 #include <stdlib.h>
 #include "interface.h"
 
@@ -281,7 +284,116 @@ fprintf(stderr,"x= %d  :  y= %d\n", sx, sy);
   return (TCL_OK);
     
 }
+int
+Nget_point_on_surf_pg_grass (data, interp, argc, argv)
+     Nv_data *data;
+     Tcl_Interp *interp;                 /* Current interpreter. */
+     int argc;                           /* Number of arguments. */
+     char **argv;                        /* Argument strings. */
+{
+  float x, y, z;
+  int sx, sy,id;
+  char cx[32], cy[32], cz[32], idname[128];
+  char *list[6];
+  
+  char *name, *keytable, *col;
+  
+  if (argc != 6)
+    return (TCL_ERROR);
+  
+  sx = atoi(argv[1]);
+  sy = atoi(argv[2]);
+  name = argv[3];
+  keytable = argv[4];
+  col=argv[5];
 
+#ifdef DEBUG_MSG
+fprintf(stderr,"x= %d  :  y= %d\n", sx, sy);
+#endif
+  
+  if (!GS_get_selected_point_on_surface(sx, sy, &id, &x, &y, &z))
+    {
+      list[0] = NULL;
+      interp->result = Tcl_Merge (0, list);
+      interp->freeProc = (Tcl_FreeProc *)free;
+      
+      return (TCL_OK);
+    }
+  
+  sprintf (cx, "%f", x);
+  sprintf (cy, "%f", y);
+  sprintf (cz, "%f", z);
+  sprintf (idname, "Nsurf%d", id);
+  
+  list[0] = cx;
+  list[1] = cy;
+  list[2] = cz;
+  list[3] = idname;
+  list[4] = (char*) query_postgr(name,keytable,col,x,y);
+  list[5] = NULL;
+  
+  interp->result = Tcl_Merge (5, list);
+  interp->freeProc = (Tcl_FreeProc *)free;
+  
+  return (TCL_OK);
+    
+}
+int
+Nget_point_on_surf_pg_site (data, interp, argc, argv)
+     Nv_data *data;
+     Tcl_Interp *interp;                 /* Current interpreter. */
+     int argc;                           /* Number of arguments. */
+     char **argv;                        /* Argument strings. */
+{
+  float x, y, z;
+  int sx, sy,id;
+  char cx[32], cy[32], cz[32], idname[128];
+  char *list[6];
+  
+  char *name, *xcol, *ycol;
+  int dist;
+  
+  if (argc != 7)
+    return (TCL_ERROR);
+  
+  sx = atoi(argv[1]);
+  sy = atoi(argv[2]);
+  name = argv[3];
+  xcol = argv[4];
+  ycol=argv[5];
+  dist = atoi(argv[6]);
+
+#ifdef DEBUG_MSG
+fprintf(stderr,"x= %d  :  y= %d\n", sx, sy);
+#endif
+  
+  if (!GS_get_selected_point_on_surface(sx, sy, &id, &x, &y, &z))
+    {
+      list[0] = NULL;
+      interp->result = Tcl_Merge (0, list);
+      interp->freeProc = (Tcl_FreeProc *)free;
+      
+      return (TCL_OK);
+    }
+  
+  sprintf (cx, "%f", x);
+  sprintf (cy, "%f", y);
+  sprintf (cz, "%f", z);
+  sprintf (idname, "Nsurf%d", id);
+  
+  list[0] = cx;
+  list[1] = cy;
+  list[2] = cz;
+  list[3] = idname;
+  list[4] = (char*) query_pg_site(name,xcol,ycol,dist,x,y);
+  list[5] = NULL;
+  
+  interp->result = Tcl_Merge (5, list);
+  interp->freeProc = (Tcl_FreeProc *)free;
+  
+  return (TCL_OK);
+    
+}
 int 
 Nget_dist_along_surf_cmd (
     Nv_data *data,
