@@ -93,17 +93,17 @@ main (int argc, char *argv[])
 
   if ( Vect_level (&Map) > 1)
   {
-    sprintf (line, "                                         Number of points:     %-9ld", (long)Vect_get_num_points(&Map));
+    sprintf (line, "                                         Number of points:     %-9ld", (long)Vect_get_num_primitives(&Map, GV_POINT));
     printline (line);
-    sprintf (line, "                                         Number of lines:      %-9ld", (long)Vect_get_num_lines(&Map));
+    sprintf (line, "                                         Number of lines:      %-9ld", (long)Vect_get_num_primitives(&Map, GV_LINE));
     printline (line);
-    sprintf (line, "                                         Number of centroids:  %-9ld", (long)Vect_get_num_centroids(&Map));
+    sprintf (line, "                                         Number of centroids:  %-9ld", (long)Vect_get_num_primitives(&Map, GV_BOUNDARY));
     printline (line);
     sprintf (line, "                                         Number of areas:      %-9ld", (long)Vect_get_num_areas(&Map));
     printline (line);
-    sprintf (line, "                                         Number of faces:      %-9ld", (long)Vect_get_num_faces(&Map));
+    sprintf (line, "                                         Number of faces:      %-9ld", (long)Vect_get_num_primitives(&Map, GV_FACE));
     printline (line);
-    sprintf (line, "                                         Number of kernels:    %-9ld", (long)Vect_get_num_kernels(&Map));
+    sprintf (line, "                                         Number of kernels:    %-9ld", (long)Vect_get_num_primitives(&Map, GV_KERNEL));
     printline (line);
     sprintf (line, "                                         Number of islands:    %-9ld", (long)Vect_get_num_islands(&Map));
     printline (line);
