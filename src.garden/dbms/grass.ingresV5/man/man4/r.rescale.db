@@ -1,0 +1,42 @@
+.TH r.rescale.db
+.SH NAME
+\fIr.rescale.db\fR \- ENTER ONE LINE DESCRIPTION HERE
+.br
+.I "(GRASS Raster Program)"
+.SH SYNOPSIS
+\fBr.rescale.db\fR
+.br
+\fBr.rescale.db help\fR
+.br
+\fBr.rescale.db\fR \fBtab=\fIname\fR \fBkey=\fIname\fR \fBcol=\fIname\fR \fBcats=\fIname\fR \fBinput=\fIname\fR
+   \fBoutput=\fIname\fR \fB[join=\fItab,tabkey,pkey]\fR
+.SH DESCRIPTION
+enter short description of r.rescale.db here
+
+.SH "COMMAND LINE OPTIONS"
+.LP
+Parameters
+.IP \fItab\fR
+DB table containing linked to GIS.
+.IP \fIkey\fR
+Key column in db.
+.IP \fIcol\fR
+Column to rescale.
+.IP \fIcats\fR
+Column to rescale.
+.IP \fIinput\fR
+Name of existing raster file to be rescaled.
+.IP \fIoutput\fR
+Name of new raster (rescaled),  file.
+.IP \fIjoin\fR
+JOIN rules (eg. table, key, primekey). 
+
+.SH BUGS
+Describe known bugs here
+
+.SH "SEE ALSO"
+Refer reader to related programs here
+
+.SH AUTHOR
+Provide the programmers name and institution
+
