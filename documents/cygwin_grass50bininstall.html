@@ -211,7 +211,7 @@ d.mon x0
 d.mon sel=x0
 </pre>
 
-Then continue as usual. All GRASS modules except 'tcltkgrass' and 'nviz'
+Then continue as usual. All GRASS modules <b>except</b> 'tcltkgrass' and 'nviz'
 are supported.
 
 <h3>6.2 winGRASS with X Server support under XFree86</h3>
@@ -221,11 +221,24 @@ This version supports all GRASS modules including 'tcltkgrass' and 'nviz'.
 First start the X Server:
 
 <pre>
-startx
+export DISPLAY=127.0.0.1:0
+XWin -multiwindow  -clipboard &
+</pre>
+Now the X Server is listening and will open X related windows in 
+individual windows. Then start GRASS as usual:
+
+<pre>
+grass5
+d.mon x0
+d.mon sel=x0
+
+
+tcltkgrass &
+
+nviz elevation.dem vect=roads &
 </pre>
 
-Inside the new X window you have terminals where you can start GRASS and
-use it. To leave the X Server, use the logout button.
+This runs GRASS similar to a common MS-Windows application.
 
 <h3>6.3  with X Server support and Star Net XWin-32</h3>
 <p>On the GRASS web site you can find a 
