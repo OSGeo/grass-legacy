@@ -16,7 +16,10 @@
  *
  *
  * $Log$
- * Revision 1.5  2000-11-01 17:26:36  cho
+ * Revision 1.6  2000-11-22 09:34:41  jan
+ * added module description
+ *
+ * Revision 1.5  2000/11/01 17:26:36  cho
  * updated copyleft
  *
  * Revision 1.4  2000/09/05 08:58:10  cho
@@ -46,6 +49,7 @@ main(argc, argv)
 {
 	struct	Cell_head	cellhd;
 
+	struct GModule *module;
 	struct
 	{
 		struct	Option	*elev;
@@ -71,6 +75,9 @@ main(argc, argv)
 		struct	Flag	*wide;
 	} flag;
 
+    module = G_define_module();
+    module->description =
+		"Simulates TOPMODEL which is physically based hydrologic model.";
 
 	/* Parameter definitions */
 	param.elev			= G_define_option();

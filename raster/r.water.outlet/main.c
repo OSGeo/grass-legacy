@@ -19,8 +19,13 @@ int main (int argc, char *argv[])
 	int	row, col, basin_fd, drain_fd;
 	CELL	*cell_buf;
 	char	drain_name[80], *drain_mapset, E_f, dr_f, ba_f, N_f,  errr;
+	struct GModule *module;
         struct Option *opt1, *opt2, *opt3, *opt4;
 	char buf[400];
+
+	module = G_define_module();
+	module->description =
+		"Watershed basin creation program.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "drainage" ;

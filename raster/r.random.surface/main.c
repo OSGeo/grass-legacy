@@ -13,11 +13,17 @@ main (argc, argv)
 	int	argc;
 	char    *argv[];
 {
+	struct GModule *module;
 	int	DoMap, DoFilter, MapSeed;
 	double	ran1();
 	FUNCTION(main);
 
 	G_gisinit( argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Generates random surface(s) with spatial dependence.";
+
 	Init( argc, argv);
 	if( Uniform->answer)
 		GenNorm();

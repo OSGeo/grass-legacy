@@ -17,6 +17,7 @@ main (int argc, char *argv[])
     double 		gauss_mean,gauss_sigma;
 
 
+	struct GModule *module;
     struct Option 	*out;		/* Structures required for the G_parser()	*/
    					/* call. These can be filled with the		*/
     struct Option	*mean;		/* various defaults, mandatory paramters	*/
@@ -28,6 +29,14 @@ main (int argc, char *argv[])
 					database and mapset. As usual argv[0]
 					is the program name. This can be
 					recalled using G_program_name(). */
+
+	module = G_define_module();
+	module->description =
+		"GRASS module to produce a raster map layer of "
+		"gaussian deviates whose mean and standard deviation "
+		"can be expressed by the user. It uses a gaussian "
+		"random number generator from Press, Flannery, "
+		"Teukolsky and Vetterling (1988) - Numerical Recipes in C.";
 
     /****** SET PARSER OPTIONS ******/
 

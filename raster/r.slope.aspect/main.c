@@ -108,6 +108,7 @@ int main (int argc, char *argv[])
     int perc=0;
     char *slope_fmt;
     char *str;
+	struct GModule *module;
     struct
     {
 	struct Option *elevation, *slope_fmt, *slope, *aspect, *pcurv, *tcurv,
@@ -118,6 +119,12 @@ int main (int argc, char *argv[])
     {
 	struct Flag *a,*q;
     } flag;
+
+	module = G_define_module();
+    module->description =
+		"Generates raster map layers of slope, aspect, "
+		"curvatures and partial derivatives from a raster "
+		"map layer of true elevation values.";
 
     parm.elevation = G_define_option() ;
     parm.elevation->key        = "elevation" ;

@@ -9,6 +9,7 @@ main (int argc, char *argv[])
     char *title;
     char buf[1024];
     int i;
+	struct GModule *module;
     struct
     {
 	struct Option *input, *output, *title;
@@ -17,6 +18,10 @@ main (int argc, char *argv[])
 
     G_gisinit (argv[0]);
 
+    module = G_define_module();
+    module->description =
+		"Recode raster maps.";
+					        
     parm.input = G_define_option();
     parm.input->key = "input";
     parm.input->required = YES;
