@@ -1,29 +1,62 @@
-
+<html>
 <A NAME="r3.in.ascii">
-<H2>r3.in.ascii</H2>
-<H4>[type = default | double | float]
-[precision = default | max | 0 - 52]
-[compression = default | rle | lzw | rle+lzw | none]
-[tiledimension = XxYxZ]
-[nv = none | <EM>double</EM>]
-input = <EM>ascii</EM>-file
-output = <EM>g3d</EM>-map
-</H4>
+<TITLE>r3.in.ascii</TITLE>
 
-Imports files in <EM>3d</EM> <EM>ascii</EM> format into G3D.
-<P>
-The command line argument <EM>nv</EM> specifies which value to 
-converted to NULL-value. If the specified value is <EM>none</EM>, no
-conversion is performed. The default is <EM>none</EM>.
-<P>
-The arguments <EM>type</EM>, <EM>precision</EM>, <EM>compression</EM>, and
-<EM>tiledimension</EM> are the standard g3d arguments which allow the user
-to overwrite the default properties of the new file. Note that the 
-<EM>none</EM> value for <EM>compression</EM> only specifies that neither
-<EM>LZW</EM> nor <EM>RLE</EM> is used for compression. It does not turn
-off the compression all together. G3d does not support non-compressed files.
-<P>
-The format for the ascii file:
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r3.in.ascii</b></EM>  - Imports files in 3D ASCII format into G3D.
+
+<BR>
+
+<EM>(GRASS 3D Program)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>r3.in.ascii [type =</B><EM> default | double | float</EM><B>]
+[precision = </B><EM>default | max | 0 - 52</EM><B>]
+[compression = </B><EM>default | rle | lzw | rle+lzw | none</EM><B>]
+[tiledimension = </B><EM>XxYxZ</EM><B>]
+[nv = </B>none | <EM>double</EM><B>]
+input = </B><EM>ascii-file</EM><B>
+output = </B><EM>g3d-map</EM>
+
+<H2>DESCRIPTION</H2>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>type</B>
+<DD>Options: default, double, float
+
+<DT><B>precision</B>
+<DD>Options: default, max, 0-52
+
+<DT><B>compression</B>
+<DD>Note that the <EM>none</EM> option only specifies 
+that neither LZW nor RLE is used for compression.  It 
+does not turn off the compression all together.  G3D does
+not support non-compressed files.
+<DD>Options: default, rle, lzw, rle+lzw, none
+
+<DT><B>tiledimension</B>
+<DD>Format: XxYxZ
+
+<DT><B>nv</B>
+<DD>Specifies which value to convert to NULL-value.  If the specified value is 
+<em>none</em>, no conversion is performed.  Default is <em>none</em>.
+
+<DT><B>input</B>
+<DD>Path and name of ASCII file to be imported
+
+<DT><B>output</B>
+<DD>Name of the G3D output map
+</DL>
+
+<H2>NOTES</H2>
+The format for the ASCII file:
 <PRE>
 north: <EM>floating point</EM>
 south: <EM>floating point</EM>
@@ -45,4 +78,9 @@ compared with the original data. This feature is used to find bugs in the
 library at an early stage and will be turned off as soon as confidence has
 built up.
 
-<HR>
+<H2>AUTHORS</H2>
+Roman Waupotitsch, Michael Shapiro, 
+Helena Mitasova, Bill Brown, Lubos Mitas, Jaro Hofierka
+
+</body>
+</html>
