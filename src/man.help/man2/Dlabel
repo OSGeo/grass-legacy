@@ -1,0 +1,72 @@
+.\" %W% %G%
+.TH Dlabel 2D D-language
+.SH NAME
+Dlabel \- Tool for creating and placing labels within the current window
+.br
+.I (D Language Tool)
+.SH SYNOPSIS
+\fBDlabel\fR\ [\fItextcolor\fR]\ [\fIbackcolor\fR]\ [\fIsize\fR]\ [\fIfont\fR]
+.br
+\fBDlabel\fR\ [option\*=\fIvalue\fR]\ [option\*=\fIvalue\fR]\ ...
+.SH DESCRIPTION
+.I Dlabel
+allows the user to create and place text labels within the current window.
+It interactively requests that the user type in text, and uses the pointing
+device (mouse) to identify where this text is to be placed within the current
+window.  Options can be stated on the command line.  If \fIDlabel\fR is
+run without specified options, defaults are used.  Options are:
+.ns
+.TP 
+.RI textcolor\*= color
+Sets the color of the label text to that stated.  Options are red, orange,
+green, blue, indigo, violet, black, white, gray, brown, indigo, magenta,
+and yellow.  If the user states no color,
+.I Dlabel
+will default to the use of white lettering.
+.br
+.ns
+.TP 
+.RI backcolor\*= color
+Sets the color of the label background (a rectangle on which the text sits)
+to that stated.  Color options are the same as those for the \fItextcolor\fR.
+If the user states no color, \fIDlabel\fR will default to the use of a black
+background.
+.br
+.ns
+.TP 
+.RI size\*= number
+Sets the label text size to the specified number.  Sizes are stated in
+pixels.  Text size defaults to 3 pixels if unstated by the user.
+.br
+.ns
+.TP 
+.RI font\*= name
+Sets the font in which text will be drawn to that stated.  Options are
+stated by the GRASS tool \fIDshow.fonts\fR.
+Roman type is used by default if none is specified by the user.
+.PP
+Options may be stated on the command line either positionally or
+explicitly (see \fIDINTRO\fR).  If stated explicitly, they must
+be stated in the order specified above.
+.SH "NOTES"
+The user can attempt to place a label on a screen location outside of
+the current graphics window, but it will not appear when typed anywhere
+outside of the current graphics window.
+.SH "SEE ALSO"
+.TS
+ll.
+\fIDINTRO[2D]\fR	Introduction to the GRASS \fID\fR tools
+.br
+.sp
+\fIDfont[2D]\fR	Selects use of a font type
+.br
+\fIDpaint.labels[2D]\fR	Tool for viewing paint labels
+.br
+\fIDshow.fonts[2D]\fR	Shows available font types
+.br
+\fIDtext[2D]\fR	Draws text in the current graphics window
+.br
+\fIDtitle[2D]\fR	Creates a title for a grid cell map
+.TE
+.SH "AUTHOR"
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
