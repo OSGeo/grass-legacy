@@ -1,6 +1,4 @@
 /*
-* $Id$
-*
 ****************************************************************************
 *
 * MODULE:       Vector library 
@@ -25,15 +23,14 @@
 static int cmp();
 struct line_cats *Vect__new_cats_struct (void);
 
-/*
-   **
-   **  Creates and initializes a  struct line_cats  
-   **  This structure is used for reading and writing vector cats
-   **
-   **  The library routines handle all memory allocation.
-   **
-   **  returns  struct line_catss *  or NULL on error
- */
+/*!
+ \fn struct line_cats *Vect_new_cats_struct ()
+ \brief creates and initializes a struct line_cats. This structure is
+   used for reading and writing vector cats. The library routines handle
+   all memory allocation.
+ \return struct line_cats *  or NULL on error
+ \param -
+*/
 struct line_cats *
 Vect_new_cats_struct ()
 {
@@ -62,12 +59,12 @@ Vect__new_cats_struct ()
   return p;
 }
 
-/*
-   **  Frees all memory associated with a struct line_cats, including
-   **  the struct itself!!!
-   ** 
-   **  no return value;
- */
+/*!
+ \fn int Vect_destroy_cats_struct (struct line_cats *p)
+ \brief frees all memory associated with a struct line_cats, including the struct itself
+ \return 0
+ \param line_cats structure
+*/
 int 
 Vect_destroy_cats_struct (struct line_cats *p)
 {
@@ -84,19 +81,17 @@ Vect_destroy_cats_struct (struct line_cats *p)
   return 0;
 }
 
-/* 
-   **  Set category to value; if field already exist
-   **  old value is overwritten; if field does not exist 
-   **  new category is append to the end 
-   **
-   **  field  - field
-   **  cat - category 
-   **
-   **  returns:  new number of categories
-   **            0 if no space for new category in structure, n_cats would be > GV_NCATS_MAX
-   **           -1 on out of memory
-   **           -2 if field out of range: 1 - GV_FIELD_MAX or cat out of range:  1 - GV_CAT_MAX
- */
+/*!
+ \fn int Vect_cat_set (struct line_cats *Cats, int field, int cat)
+ \brief set category to value; if field already exist old value is
+     overwritten; if field does not exist new category is appended to
+     the end.  field = field, cat = category
+ \return new number of categories
+               0 if no space for new category in structure, n_cats would be > GV_NCATS_MAX
+              -1 on out of memory
+              -2 if field out of range: 1 - GV_FIELD_MAX or cat out of range:  1 - GV_CAT_MAX
+ \param line_cats structure, field number, category number
+*/
 int 
 Vect_cat_set (struct line_cats *Cats, int field, int cat)
 {
@@ -137,15 +132,12 @@ Vect_cat_set (struct line_cats *Cats, int field, int cat)
   return (1);
 }
 
-/* 
-   **  Get category 
-   **
-   **  field  - input field
-   **  cat - output category 
-   **
-   **  returns:  1 found
-   **            0 field does not exist
- */
+/*!
+ \fn int Vect_cat_get (struct line_cats *Cats, int field, int *cat)
+ \brief get category, field  - input field, cat - output category
+ \return 1 found, 0 field does not exist
+ \param line_cats structure, field number, category number
+*/
 int 
 Vect_cat_get (struct line_cats *Cats, int field, int *cat)
 {
@@ -173,14 +165,13 @@ Vect_cat_get (struct line_cats *Cats, int field, int *cat)
   return (0);
 }
 
-/* 
-   **  Delete category 
-   **
-   **  field  - input field
-   **
-   **  returns:  1 deleted
-   **            0 category number does not exist
- */
+
+/*!
+ \fn int Vect_cat_del (struct line_cats *Cats, int field)
+ \brief delete category, field  - input field
+ \return 1 deleted, 0 category number does not exist
+ \param line_cats structure, field number
+*/
 int 
 Vect_cat_del (struct line_cats *Cats, int field)
 {
@@ -211,14 +202,15 @@ Vect_cat_del (struct line_cats *Cats, int field)
   return (0);
 }
 
-/*
-   **  Make sure cats structure is clean to be re-used.
-   **  I.e. it has no cats associated with it
-   **
-   **  Cats must have previously been created with Vect_new_cats_struct ()
-   **
-   **  no return value
- */
+
+/*!
+ \fn int Vect_reset_cats (struct line_cats *Cats)
+ \brief reset category structure to make sure cats structure is clean
+   to be re-used. I.e. it has no cats associated with it. Cats must have
+   previously been created with Vect_new_cats_struct()
+ \return 0
+ \param line_cats structure
+*/
 int 
 Vect_reset_cats (struct line_cats *Cats)
 {
@@ -227,6 +219,12 @@ Vect_reset_cats (struct line_cats *Cats)
   return 0;
 }
 
+/*!
+ \fn struct cat_list *Vect_new_cat_list ()
+ \brief ADD TEXT
+ \return ADD
+ \param -
+*/
 struct cat_list *
 Vect_new_cat_list ()
 {
@@ -246,6 +244,13 @@ Vect_new_cat_list ()
   return p;
 }
 
+
+/*!
+ \fn int Vect_destroy_cat_list (struct cat_list *p)
+ \brief ADD TEXT
+ \return ADD
+ \param line_cats structure
+*/
 int 
 Vect_destroy_cat_list (struct cat_list *p)
 {
@@ -263,17 +268,14 @@ Vect_destroy_cat_list (struct cat_list *p)
 }
 
 
-/* 
-   **  Convert string of categories and cat ranges
-   **  separated by commas to cat_list
-   **
-   **  Examples of string: 2,3,5-9,20 
-   **
-   **  str  - input string
-   **
-   **  returns:  number of errors in ranges 
-   **            
- */
+/*!
+ \fn int Vect_str_to_cat_list (char *str, struct cat_list *list)
+ \brief Convert string of categories and cat ranges separated by
+   commas to cat_list. Examples of string: 2,3,5-9,20. str - input
+   string
+ \return number of errors in ranges
+ \param string, line_cats structure
+*/
 int 
 Vect_str_to_cat_list (char *str, struct cat_list *list)
 {
@@ -347,12 +349,12 @@ Vect_str_to_cat_list (char *str, struct cat_list *list)
   return (err);
 }
 
-/* 
-   **  Convert ordered array of integers to cat_list
-   **
-   **  returns:  number of ranges 
-   **            
- */
+/*!
+ \fn int Vect_array_to_cat_list (int *vals, int nvals, struct cat_list *list)
+ \brief Convert ordered array of integers to cat_list
+ \return number of ranges
+ \param array of integers ?, number of values ?, line_cats structure
+*/
 int
 Vect_array_to_cat_list (int *vals, int nvals, struct cat_list *list)
 {
@@ -387,13 +389,12 @@ Vect_array_to_cat_list (int *vals, int nvals, struct cat_list *list)
     return (list->n_ranges);
 }
 
-/* 
-   **  Find if category is in list
-   **
-   **
-   **  returns:  TRUE  if cat is in list 
-   **            FALSE if it is not
- */
+/*!
+ \fn int Vect_cat_in_cat_list (int cat, struct cat_list *list)
+ \brief check if category is in list
+ \return TRUE  if cat is in list, FALSE if it is not
+ \param category number, line_cats structure
+*/
 int 
 Vect_cat_in_cat_list (int cat, struct cat_list *list)
 {
@@ -406,13 +407,12 @@ Vect_cat_in_cat_list (int cat, struct cat_list *list)
   return (FALSE);
 }
 
-/* 
-   **  Find if category is in ordered array of integers
-   **
-   **
-   **  returns:  TRUE  if cat is in list 
-   **            FALSE if it is not
- */
+/*!
+ \fn int Vect_cat_in_array (int cat, int *array, int ncats)
+ \brief check if category is in ordered array of integers
+ \return TRUE  if cat is in list, FALSE if it is not
+ \param category number, ordered array of integers, line_cats structure
+*/
 int 
 Vect_cat_in_array (int cat, int *array, int ncats)
 {
@@ -425,6 +425,7 @@ Vect_cat_in_array (int cat, int *array, int ncats)
   
   return (FALSE);
 }
+
 
 int cmp ( const void *pa, const void *pb)
 {

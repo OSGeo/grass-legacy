@@ -1,6 +1,4 @@
 /*
-* $Id$
-*
 ****************************************************************************
 *
 * MODULE:       Vector library 
@@ -26,13 +24,15 @@
 extern FILE *Msgout;
 extern int prnmsg ( char *msg, ...) ;
 
-/* Build area on given side of line ( GV_LEFT or GV_RIGHT )
-*  Return: > 0 : number of  area
-*          < 0 : number of isle
-*            0 : not created (may also already exist)
+/*!
+ \fn int Vect_build_line_area ( struct Map_info *Map, int iline, int side )
+ \brief build area on given side of line ( GV_LEFT or GV_RIGHT )
+ \return > 0 : number of  area, < 0 : number of isle, 0 : not created (may also already exist)
+ \param Map_info structure, line number ?, side (left? right?)
 */
 int
-Vect_build_line_area ( struct Map_info *Map, int iline, int side ) {
+Vect_build_line_area ( struct Map_info *Map, int iline, int side )
+{
     int    j, area, isle, n_lines, line, type, direction;
     long   offset;
     struct Plus_head *plus ;

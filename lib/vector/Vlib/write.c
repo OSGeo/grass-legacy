@@ -1,6 +1,4 @@
 /*
-* $Id$
-*
 ****************************************************************************
 *
 * MODULE:       Vector library 
@@ -70,10 +68,15 @@ static int (*Vect_delete_line_array[][3]) () =
 #endif
 };
 
-/* Writes new line to the end of file (table)
-*
-*  Returns: offset into file where the line starts
-*           -1 on error 
+/*!
+ \fn long Vect_write_line (
+     struct Map_info *Map;
+     int type;
+     struct line_pnts *points;
+     struct line_cats *cats)
+ \brief writes new line to the end of file (table)
+ \return offset into file where the line starts, -1 on error
+ \param Map_info structure, vector type, line_pnts structure, line_cats structure
 */
 long
 Vect_write_line (Map, type, points, cats)
@@ -92,16 +95,22 @@ Vect_write_line (Map, type, points, cats)
     return (*Write_line_array[Map->format][Map->level]) (Map, type, points, cats);
 }
 
-/*
-*  Rewrites line info at the given offset
-*  the number of points or cats or type may change.
-*  If necessary, the old line is deleted and new is written.
-*  
-*  Returns: number of new line
-*           -1 on error 
+
+/*!
+ \fn int Vect_rewrite_line (
+     struct Map_info *Map;
+     int line;
+     int type;
+     struct line_pnts *points;
+     struct line_cats *cats)
+ \brief rewrites line info at the given offset. The number of points
+   or cats or type may change. If necessary, the old line is deleted and
+   new is written.
+ \return number of new line, -1 on error
+ \param Map_info structure, line number, vector type, line_pnts structure, line_cats structure
 */
 int
-Vect_rewrite_line (Map, line, type, points, cats )
+Vect_rewrite_line (Map,line,type,points,cats)
      struct Map_info *Map;
      int line;
      int type;
@@ -133,14 +142,16 @@ V1_delete_line (Map, offset )
 }
 */
 
-/*
-*  Deletes line of given number. Map must be opened on level 2.
-*  
-*  Returns: 0 ok
-*          -1 on error 
+/*!
+ \fn int Vect_delete_line (
+     struct Map_info *Map;
+     int line)
+ \brief deletes line of given number. Map must be opened on level 2.
+ \return 0 on success, -1 on error
+ \param Map_info structure, line number
 */
 int
-Vect_delete_line (Map, line )
+Vect_delete_line (Map, line)
      struct Map_info *Map;
      int line;
 {
