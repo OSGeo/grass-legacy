@@ -30,18 +30,22 @@ SUBDIRS1 = \
 	v.to.rast
 
 OGRBASED = v.out.ogr v.in.ogr
+OPENDWGBASED = v.in.dwg
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
 #compile if OGR present:
 ifneq ($(strip $(GDALLIBS)),)
-    SUBDIRS2 = $(SUBDIRS1) $(OGRBASED)
-else
-    SUBDIRS2 = $(SUBDIRS1)
+    SUBDIRS2 = $(OGRBASED)
 endif
 
+#compile if OPENDWG present:
+ifneq ($(strip $(OPENDWGINC)),)
+    SUBDIRS3 = $(OPENDWGBASED)
+endif
 
-SUBDIRS = $(SUBDIRS2)
+SUBDIRS = $(SUBDIRS1) $(SUBDIRS2) $(SUBDIRS3)
+
 default: subdirs
 
 clean: cleansubdirs
