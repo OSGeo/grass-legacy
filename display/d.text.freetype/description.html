@@ -6,33 +6,16 @@ draws text in the graphics monitor's active display frame using TrueType
 fonts already installed on the user's system.
 <BR>
 
-<H3>Flags:</H3>
+
+<H3>Parameter Notes:</H3>
 
 <DL>
-<DT><B>-r</B>
-<DD>Use radians instead of degrees for rotation
-<DT><B>-p</B>
-<DD>Use pixel coordinates ([0,0] is top left)
-<DT><B>-s</B>
-<DD>Font size is height in pixels
-<DT><B>-c</B>
-<DD>Command mode (Compatibility with <A HREF="d.text.html">d.text</a>)
-</DL>
-
-<H3>Parameters:</H3>
-
-<DL>
-<DT><B>text=</B><EM>string</EM>
-<DD>Text to be displayed. Enclose multiple words "in quotes".
 
 <DT><B>east_north=</B><EM>easting,northing</EM>
 <DD>Locates the text at these map coordinates. If this option is omitted, 
      the user will be prompted to use the mouse to specify the location.
 <DT><B>font=</B><EM>name</EM>
 <DD>Specifies a font listed in the GRASS 'freetypecap' definition file.
-
-<DT><B>path=</B><EM>/path/filename.ttf</EM>
-<DD>Specifies a TrueType font with full pathname.
 
 <DT><B>charset=</B><EM>name</EM>
 <DD>Sets character encoding for input <B>text</B>. (e.g. <TT>ISO-8859-1</TT>)
@@ -53,11 +36,8 @@ fonts already installed on the user's system.
     Options: ll, lc, lr, cl, cc, cr, ul, uc, ur<BR>
     l?: Lower, c?: Vertically Centered, u?: Upper,<BR>
     ?l: Left, ?c: Horizontally Centered, ?r: Right<BR>
-    Default: <EM>ll</EM>&nbsp; (Lower Left)<BR>
+    Default: <EM>ll</EM> (Lower Left)<BR>
 
-<DT><B>rotation=</B><EM>value</EM>
-<DD>Rotates text counterclockwise. The default unit is degrees.<BR>
-    Default: 0<BR>
 </DL>
 
 
@@ -112,8 +92,8 @@ To end input, press Ctrl-d on a blank line.
 <H4>Standard mode:</H4>
 
 <TT><B>d.text.freetype</B> text="GRASS GIS" east_north=2107055,5603133 \<BR>
-<DD>size=7 path=/usr/X11R6/lib/X11/fonts/TTF/luximb.ttf</TT>
-<BR><BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size=7 path=/usr/X11R6/lib/X11/fonts/TTF/luximb.ttf</TT>
+<P>
 
 <H4>Command mode:</H4>
 The following example prints three lines: "<TT><font color=gray>GRASS</font>
@@ -168,5 +148,7 @@ See the file for examples.
 
 Huidae Cho
 &lt;<a href=mailto:grass@geni.cemtlo.com>grass@geni.cemtlo.com</a>&gt;
+<P>
+Updates by Hamish Bowman, NZ
 
 <p><i>Last changed: $Date$</i>
