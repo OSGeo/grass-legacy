@@ -45,8 +45,7 @@ default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/grass-run.sh
 	$(MKDIR) $(GISBASE)/docs/html
 	$(INSTALL) -m 644 variables.html $(GISBASE)/docs/html/variables.html
-	$(MKDIR) $(GISBASE)/docs/start
-	$(INSTALL) -m 644 helptext.html $(GISBASE)/docs/start
+	$(INSTALL) -m 644 helptext.html $(GISBASE)/docs/html/helptext.html
 
 
 $(ARCH_BINDIR)/$(START_UP): init.sh 
