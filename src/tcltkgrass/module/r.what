@@ -1,7 +1,12 @@
 interface_build {
     {r.what} 0
-    {Queries raster map layers on their category values and category labels.}
-    {entry input {Raster maps to be queried (name[,name,...]):} 0 +raster}
+    {Query raster map layers' values and labels by coordinate(s).}
+    {entry input {Raster maps to be queried, required (name[,name,...]):} 0 +raster}
+    {entry east_north {Coordinates for query (east,north[,east,north,...]):} 0 ""}
     {entry < {Locations file (east north [label]):} 0 file}
+    {entry cache {Size of point cache [500]:} 0 ""}
+    {entry null {Char string to represent no data cell [*]:} 0 ""}
     {checkbox -f {Show the category label in the grid cell(s).} "" -f}
+    {checkbox -c {Turn on cache reporting.} "" -c}
+    {checkbox -i {Output integer category values, not cell values.} "" -i}
 }
