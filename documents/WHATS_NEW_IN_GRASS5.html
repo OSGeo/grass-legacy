@@ -25,9 +25,10 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <li> r.cost: accepts sites files as start and stop points (Pierre de Mouveaux)
 <li> r.drain: corrected lat-lon projection issues, 3 selectable output modes (Pierre de Mouveaux)
 <li> r.in.globedem added for importing GLOBE DEM data (Markus Neteler)
+<li> r.in.tiff: bugfix for seg. fault (Carl Anderson)
 <li> r.line working now with Grass5 (Pierre de Mouveaux)
-<li> r.timestamp: fixed library function (Bill Hughes)
-<li> v.autocorr: compile fix (David D. Gray)
+<li> r.timestamp: fixed library function (Bill Hughes, Bill Brown)
+<li> v.autocorr: compile and bug fix (David D. Gray)
 <li> v.extract: writes cats now (David D. Gray)
 <li> v.in.shape: Splitting of shapefile rings to arc-node segments,
       Correction (through options) of some common topological problems with imported
@@ -39,7 +40,7 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <b>G3D-support</b> (new 3D raster format "voxels")
 <menu>
 <li>new grid3D modules added: r3.in.v5d, r3.out.v5d to exchange
-    data with VIS5D (Jaro Hofierka)
+    data with VIS5D, s.to.rast3 to convert 3D sites to grid3D (Jaro Hofierka)
 <li>r3.out.ascii region sensitive now (Jaro Hofierka)
 </menu>
 
