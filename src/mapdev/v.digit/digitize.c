@@ -221,7 +221,9 @@ do_digitize(map, mode, type, sample_thresh, multi, close_area)
 		    return (0);
 	    }
 	    else
+#ifdef CURSORKEYS
 	    if (D_cursor_buttons())
+#endif
 	    {
 		if ( ! ask_driver_yes_no("Begin digitizing? ") )
 			return(0) ;
@@ -390,11 +392,12 @@ do_digitize(map, mode, type, sample_thresh, multi, close_area)
 	}
 d_done:
 	Clear_info();
+#ifdef CURSORKEYS
 	/*  if they don't have buttons force them to start over */
 	if (Digtiz_Device != MOUSE)
 	    if ( ! D_cursor_buttons())
 		return(0) ;
-
+#endif
     }	/*  while(1)  */
 
     /*NOTREACHED*/
