@@ -1,0 +1,49 @@
+Added -persist option (usable with gnuplot 3.6) to
+keep output window after exit of g.gnuplot.3d (close
+the window through typing "q" (quit))
+
+  Markus Neteler 8/98
+  neteler@geog.uni-hannover.de
+
+-------------------
+
+
+This is a program, which creates 3-d images of vector maps. 
+It's possible to plot also the elevation raster with or without vector maps.
+
+
+YOU WILL NEED g.gnuplot TO RUN THIS PROGRAM.
+
+Usage:
+ g.gnuplot.3d [-ce] elev=name [lines=value] [vect=name[,name,...]]
+   [term=name] [exaggeration=value]
+
+Flags:
+  -c   Elevation from the category label in the grid cell
+  -e   Show elevation surface
+
+Parameters:
+          elev   Name of elevation raster map
+         lines   Frequency of vector lines in output
+                 default: 1
+          vect   Name of vector map(s)
+          term   Name of output terminal
+  exaggeration   vertical exaggeration factor
+                 default: 2.0
+
+
+for example: 
+
+g.gnuplot.3d -e elev=dem lines=5 vect=roads,streams exaggeration=10
+
+You can make also hardcopies with this program:
+g.gnuplot.3d -e elev=dem lines=5 vect=roads,streams term=postscript | lpr
+
+3-d plot data is stored in $LOCATION/$MAPSET/gnuplot subdirectory.
+If you want to modify the output, go to $LOCATION/$MAPSET/gnuplot and
+edit gnu.3d script and then run g.gnuplot gnu.3d.
+
+
+Janne Soimasuo
+Faculty of Forestry, University of Joensuu, Finland
+jsoi@cc.joensuu.fi
