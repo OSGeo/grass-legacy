@@ -1,5 +1,3 @@
-#include "config.h"
-
 /* dummies for the driver functions */
 int Graph_Close(void);
 int Graph_Set(int, char **);
@@ -97,7 +95,6 @@ int _get_color_index(int);
 int _get_color_index_array(int *,int);
 
 /* freetype */
-#ifdef HAVE_FT2BUILD_H
 int Font_freetype_get(char*);
 int Font_freetype_release();
 int isFont_freetype();
@@ -108,7 +105,6 @@ char* getCharset();
 int soft_text_freetype(int ,int ,double ,double ,double ,char *);
 int soft_text_ext_freetype(int ,int ,double ,double ,double ,char *);
 int get_text_ext_freetype(int*,int*,int*,int*);
-#endif /* HAVE_FT2BUILD_H */
 
 /* connect_{sock,fifo}.c */
 #ifdef USE_G_SOCKS
