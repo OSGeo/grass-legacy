@@ -1,56 +1,48 @@
 ##############################################################
 
 trap "" 2 3
-shell=sh
-shellname="Bourne Shell"
 
-if test "$SHELL"
-then
-    if [ "$SHELL" = "/bin/csh" ]
-    then
-	shell=csh
-	shellname="C Shell"
-    fi
-fi
+sh="`basename $SHELL`"
+case "$sh" in
+    ksh)  shellname="Korn Shell";;
+    csh)  shellname="C Shell" ;;
+    tcsh) shellname="TC Shell" ;;
+    sh)   shellname="Bourne Shell";;
+    *)    shellname=shell;;
+esac
 
 # Display the advertising
 clear
 cat << EOF
-Welcome to GRASS VERSION_NUMBER (VERSION_DATE)
+Welcome to GRASS VERSION_NUMBER (VERSION_DATE) VERSION_UPDATE_PKG
 
-COPYRIGHT: GRASS Interagency Steering Committee
-  U.S. Army Construction Engineering Research Lab  Champaign IL.
-  USDA, Soil Conservation Service                  Washington DC.
-  National Park Service                            Denver CO.
-  Bureau of Census                                 Washington DC.
-  Bureau of Land Management                        Washington DC.
-  Department of Defense, Environmental Office      Alexandria VA.
-  Environmental Protection Agency, ERL-Corvallis   Corvallis OR.
-  NASA                                             Stennis Space Center MS.
-  NOAA                                             Boulder CO.
-  Navy, Naval Oceanographic Lab                    Stennis Space Center MS.
-  U.S. Army Corps of Engineers                     Washington DC.
-  U.S. Army Engineering and Housing Support Center Ft. Belvoir VA.
-  U.S. Army Engineering Topographic Lab            Ft. Belvoir VA.
-  U.S. Geological Survey                           Reston VA.
+Geographic Resources Analysis Support System (GRASS) is a Trademark
+of U.S. Army Construction Engineering Research Laboratories (USACERL)
 
-This version running thru the $shellname ($shell)
+New releases of GRASS are coordinated and produced by the Office of
+GRASS Integration (OGI) located at USACERL.
+
+
+This version running thru the $shellname ($SHELL)
 Help is available with the command: g.help
 When ready to quit enter:           exit
 EOF
 
-if [ $shell = csh ]
-then
+case "$sh" in
+
+csh|tcsh)
     HOME=$LOCATION
     export HOME
     cshrc=$HOME/.cshrc
-    rm -f $cshrc
+    tcshrc=$HOME/.tcshrc
+    rm -f $cshrc $tcshrc
     echo "set home = $home" > $cshrc
-    echo "set history=30 noclobber ignoreeof" >> $cshrc
+    echo "set history = 30 noclobber ignoreeof" >> $cshrc
 
-    echo "set prompt='\\" >> $cshrc
-    echo "Mapset <$MAPSET> in Location <$LOCATION_NAME>\\" >> $cshrc
+    echo "set prompt = '\\" >> $cshrc
+    echo "Mapset <${MAPSET}> in Location <${LOCATION_NAME}> \\" >> $cshrc
     echo "GRASS VERSION_NUMBER > '" >> $cshrc
+    echo 'set BOGUS=``;unset BOGUS' >> $cshrc
 
     if [ -r $home/.grass.cshrc ]
     then
@@ -62,17 +54,26 @@ then
 	grep '^ *set  *mail *= *' $home/.cshrc >> $cshrc
     fi
 
+    if [ -r $home/.tcshrc ]
+    then
+	grep '^ *set  *mail *= *' $home/.tcshrc >> $cshrc
+    fi
+
     if [ -r $home/.login ]
     then
 	grep '^ *set  *mail *= *' $home/.login >> $cshrc
     fi
 
-    $ETC/run csh
+    echo "set path = ( $PATH ) " | sed 's/:/ /'g >> $cshrc
+
+    cp $cshrc $tcshrc
+    $ETC/run $SHELL
 
     HOME=$home
     export HOME
+    ;;
 
-else
+*)
 
 PS1="
 Mapset <$MAPSET> in Location <$LOCATION_NAME>
@@ -80,8 +81,9 @@ GRASS-GRID > "
 
     export PS1
 
-    $ETC/run sh
-fi
+    $ETC/run $SHELL
+    ;;
+esac
 
 trap 2 3
 #############################################################
