@@ -1,0 +1,5 @@
+interface_build {
+    {d.font} 0
+    {Selects the font in which text will be displayed on the user's graphics monitor.}
+    {entry font {Name of a font type [romans]:} 0 font}
+}
