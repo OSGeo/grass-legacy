@@ -1,0 +1,76 @@
+
+GRAPH =  -ltools_s -lc_s  -lm
+DLIB =  ../lib
+
+EXTRA_CFLAGS	= -I$(DLIB)
+
+#  Note that the following files had to be copyed from ../lib and changed.
+#  Clr_table.c, Erase.c, Reset_clrs.o
+
+#  New files: 
+#  polyfill.c, Mouse.c, Band_lines.c
+
+OFILES =  \
+	Band_lines.o\
+	Can_do.o\
+	Clr_table.o\
+	Color.o\
+	Draw_line.o\
+	Erase.o\
+	Get_w_box.o\
+	Get_w_line.o\
+	Get_w_pnt.o\
+	Graph_Clse.o\
+	Graph_Set.o\
+	Mouse.o\
+	Panel.o\
+	polyfill.o\
+	Polygn_abs.o\
+	Put_env.o \
+	Raster_box.o\
+	Raster_chr.o\
+	Raster_def.o\
+	Raster_int.o\
+	Raster_over.o\
+	Reset_clr.o \
+	Reset_clrs.o \
+	Returns.o \
+	Set_env.o \
+	SWITCHER.o \
+	window_act.o
+
+$(GISBASE)/driver/IGRAPH: IGRAPH
+	mv IGRAPH $@
+	$(GMAKE) igraph_progs
+
+IGRAPH: $(OFILES) ../lib/driverlib.a
+	cc $(LDFLAGS) -o $@ $(OFILES) ../lib/driverlib.a $(GRAPH)  $(GISLIB)
+
+
+#Reset_clrs.o:
+#	cc Reset_clrs.c  $(LDFLAGS) -c ../lib/driverlib.a $(GRAPH) -I$(DLIB)
+#
+#Color.o:
+#	cc Color.c  $(LDFLAGS) -c ../lib/driverlib.a $(GRAPH) -I$(DLIB)
+#	
+#Clr_table.o:
+#	cc Clr_table.c  $(LDFLAGS) -c ../lib/driverlib.a $(GRAPH) -I$(DLIB)
+#	
+#Raster_def.o:
+#	cc Raster_def.c  $(LDFLAGS) -c ../lib/driverlib.a $(GRAPH) -I$(DLIB)
+#	
+#Raster_over.o:
+#	cc Raster_over.c  $(LDFLAGS) -c ../lib/driverlib.a $(GRAPH) -I$(DLIB)
+#	
+#SWITCHER.o:
+#	cc SWITCHER.c  $(LDFLAGS) -c ../lib/driverlib.a $(GRAPH) -I$(DLIB)
+#
+#window_act.o:
+#	cc window_act.c  $(LDFLAGS) -c ../lib/driverlib.a $(GRAPH) -I$(DLIB)
+#	
+#
+#Clr_table.o:	../lib/colors.h
+#Color.o:	../lib/colors.h
+#Graph_Set.o:	igraphics.h  ../lib/colors.h
+#Reset_clr.o:	igraphics.h
+#Reset_clrs.o:	igraphics.h  ../lib/colors.h
