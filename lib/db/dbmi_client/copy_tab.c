@@ -17,17 +17,19 @@ static int cmp ( const void *pa, const void *pb)
  
    Parameters: 
        where: WHERE SQL condition (without where key word) or NULL
+       select: full select statement
        selcol: name of column used to select records by values in ivals or NULL
        ivals: pointer to array of integer values or NULL
        nvals: number of values in ivals
 
-   Use either 'where' or 'selcol'+'ivals'+'nvals'
+   Use either 'where' or 'select' or 'selcol'+'ivals'+'nvals' but never more than one
+       
 */
 /* Warning, driver opened as second must be closed as first, otherwise it hangs, not sure why */
 int
 db__copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
                 char *to_drvname, char *to_dbname, char *to_tblname, 
-		char *where, 
+		char *where, char *select,
 		char *selcol, int *ivals, int nvals)
 {
     int col, ncols, sqltype, ctype, more, selcol_found;
@@ -44,8 +46,8 @@ db__copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
     dbDriver *from_driver, *to_driver;
 
     G_debug ( 3, "db_copy_table():\n  from driver = %s, db = %s, table = %s\n"
-	         "  to driver = %s, db = %s, table = %s, where = %s", 
-		 from_drvname, from_dbname, from_tblname, to_drvname, to_dbname, to_tblname, where);
+	         "  to driver = %s, db = %s, table = %s, where = %s, select = %s", 
+		 from_drvname, from_dbname, from_tblname, to_drvname, to_dbname, to_tblname, where, select);
 
     db_init_handle (&from_handle);
     db_init_handle (&to_handle);
@@ -92,11 +94,15 @@ db__copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
 
     /* Create new table */
     /* TODO test if the tables exist */
-    db_set_string ( &sql, "select * from ");
-    db_append_string ( &sql, from_tblname);
-    if ( where ) {
-        db_append_string ( &sql, " where ");
-        db_append_string ( &sql, where);
+    if ( select ) {
+        db_set_string ( &sql, select );
+    } else { 
+	db_set_string ( &sql, "select * from ");
+	db_append_string ( &sql, from_tblname);
+	if ( where ) {
+	    db_append_string ( &sql, " where ");
+	    db_append_string ( &sql, where);
+	}
     }
     
     G_debug ( 3, db_get_string(&sql) );
@@ -273,7 +279,7 @@ db_copy_table ( char *from_drvname, char *from_dbname, char *from_tblname,
 {
     return db__copy_table ( from_drvname, from_dbname, from_tblname, 
 	                    to_drvname, to_dbname, to_tblname,
-			    NULL,
+			    NULL, NULL,
 	     		    NULL, NULL, 0 );
 }
 
@@ -289,7 +295,23 @@ db_copy_table_where ( char *from_drvname, char *from_dbname, char *from_tblname,
 {
     return db__copy_table ( from_drvname, from_dbname, from_tblname, 
 	                    to_drvname, to_dbname, to_tblname,
-			    where,
+			    where, NULL,
+	     		    NULL, NULL, 0 );
+}
+
+/*!
+ \fn int db_copy_table_select ()
+ \brief Copy a table
+ \return 
+ \param select is full select statement or NULL
+*/
+int
+db_copy_table_select ( char *from_drvname, char *from_dbname, char *from_tblname,
+                char *to_drvname, char *to_dbname, char *to_tblname, char *select )
+{
+    return db__copy_table ( from_drvname, from_dbname, from_tblname, 
+	                    to_drvname, to_dbname, to_tblname,
+			    NULL, select,
 	     		    NULL, NULL, 0 );
 }
 
@@ -309,6 +331,6 @@ db_copy_table_by_ints ( char *from_drvname, char *from_dbname, char *from_tblnam
 {
     return db__copy_table ( from_drvname, from_dbname, from_tblname, 
 	                    to_drvname, to_dbname, to_tblname,
-			    NULL,
+			    NULL, NULL,
 	     		    selcol, ivals, nvals );
 }
