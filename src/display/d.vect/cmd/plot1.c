@@ -21,6 +21,7 @@ plot1 (name, mapset, Points)
     double *x, *y;
 
     /*fd = open_vect (name, mapset);*/
+    Vect_set_open_level (1);
     if (1 > Vect_open_old (&Map, name, mapset))
 	G_fatal_error ("Failed opening vector file");
 
