@@ -605,6 +605,7 @@ AC_MSG_CHECKING(if we should build directly against GDAL)
 if test "`basename xx/$with_gdal`" = "gdal-config" ; then
   GDAL_CONFIG="$with_gdal"
   AC_MSG_RESULT(yes)
+  AC_DEFINE(HAVE_OGR)
 fi
 
 if test "$with_gdal" = "yes" ; then
