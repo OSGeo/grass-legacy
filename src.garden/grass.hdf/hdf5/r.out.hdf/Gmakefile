@@ -1,0 +1,36 @@
+HDFBASE=/ssi0/ssi/neteler/soft/hdf_software
+
+HDFLIBDIR=4.1r5-linux
+HDFEOSDIR=hdfeos3.0
+EOSLIBARCH=linux
+
+# for hdf library  
+# ==> Uncomment the line with your system type on it.
+#MACH_TYPE = SUN
+MACH_TYPE = LINUX
+#MACH_TYPE = IRIS4
+#MACH_TYPE = UNICOS
+#MACH_TYPE = APOLLO
+#MACH_TYPE = IBM6000
+#MACH_TYPE = CONVEX
+#MACH_TYPE = VMS
+#MACH_TYPE = MIPSEL
+#MACH_TYPE = MAC
+#MACH_TYPE = PC
+#MACH_TYPE = HP9000
+
+############### nothing to change below  ########################
+HDFINCL = $(HDFBASE)/$(HDFLIBDIR)/include
+HDFLIB  = $(HDFBASE)/$(HDFLIBDIR)/lib/libdf.a
+HDFEOS_LIB = $(HDFBASE)/$(HDFEOSDIR)/lib/$(EOSLIBARCH)
+
+LIBES = $(GISLIB) $(HDFLIB) -ljpeg
+EXTRA_CFLAGS	=  -I$(HDFINCL) -D$(MACH_TYPE)
+
+PGM = $(BIN_CMD)/r.out.hdf
+
+LIST = r.out.hdf.o
+
+
+$(PGM): $(LIST) $(LIBES) 
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
