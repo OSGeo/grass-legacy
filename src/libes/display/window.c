@@ -175,11 +175,11 @@ int D_show_window( int color )
 		return(stat) ;
 
 	R_standard_color(color) ;
-	R_move_abs(l-1, b+1) ;
+	R_move_abs(l-1, b) ;
 	R_cont_abs(l-1, t-1) ;
-	R_cont_abs(r+1, t-1) ;
-	R_cont_abs(r+1, b+1) ;
-	R_cont_abs(l-1, b+1) ;
+	R_cont_abs(r, t-1) ;
+	R_cont_abs(r, b) ;
+	R_cont_abs(l-1, b) ;
 	R_flush() ;
 
 	return(0) ;
