@@ -1,0 +1,191 @@
+GIP: 1
+Title: Change of the raster file storage layout in GRASS 5.1
+Version: $Date$
+Author: neteler@itc.it (Markus Neteler)
+Status: Active
+Type: Informational
+Created: 20 Jan 2003
+
+INTRODUCTION
+
+  While the 5.1 vector architecture is sort of settled now, we may want to
+  have a look at a raster specific issue as well: The raster file structure.
+
+  The 5.0 raster file structure differs from the G3D and the 5.1 vector file
+  structure. G3D and 5.1 vector store maps according to following scheme:
+
+  /path/to/location/mapset/grid3/mapname/files
+  such as
+	grid3/mapname/cell
+	grid3/mapname/cellhd
+	grid3/mapname/range
+	grid3/mapname/cats
+
+  /path/to/location/mapset/vector/mapname/files
+  such as
+	vector/mapname/coor
+	vector/mapname/head
+	vector/mapname/sidx
+	vector/mapname/topo
+
+  while the 5.0 raster files are spreaded over various subdirectories and
+  organized by name.
+
+  The proposal is to change the 5.0 raster file structure for 5.1
+  to a raster file organization similar to above structure by:
+        maptype/mapname/files
+
+  This offers following advantages:
+
+  - clean and "intuitive" file organization, all files in one place
+    which simplifies map transfer from one location to another (if needed
+    without reprojection etc), e.g. when working on a cluster
+
+  - simplified GIS/Rast library functions as files are stored in one place.
+    Currently a rather complex mechanism is implemented to search the spreaded
+    raster files belonging to one map, often in various mapsets.
+
+  - implementing the change for 5.1 does have minimal (no?) conflicts to
+    the new vector modifications. And a delay to 5.3 is not recommended as the
+    users may not want to change their data structures again.
+
+  - updating of an existing database to the new raster file storage scheme
+    is simple as the maps are either linked into the new raster/ directory
+    or moved or copied. In contrast to the new vector format no format
+    changes are intended (just a new place for the files)
+
+  - raster/vector/G3D maps with same names are still possible
+
+  - during this change/cleanup the 'white space" issues could be fixed
+    (especially for MS-Windows users) as relevant functions are touched
+
+  Potential disadvantages:
+
+  - at least some raster modules have to be modified which directly access
+    file in the user's (current) mapset
+    Comment: with exceptions such modules *should* use library functions to
+             access files and should be cleaned anyway
+
+  - handling of 'colr2/' directory (user applies color table to map which
+    is stored in another mapset) [1] and 'reclassed_to' file handling must be
+    modified
+    Comment: at least the reclassed_to' file handling was discussed earlier to
+             have some disadvantages in the current implementation and might
+             be updated/modified anyway
+
+DISCUSSION
+
+Glynn Clements wrote:
+http://grass.itc.it/pipermail/grass5/2003-January/004579.html
+
+  The key issue is the programming interface. All access to files within the
+  GRASS database should ultimately go through a few core functions, e.g.
+  G__find_file(); in that situation, the actual directory layout should be
+  irrelevant to anything other than those core functions. AFAICT, the lowest
+  level function should probably look like:
+
+	G__file_name(gisdbase, location, mapset, type, name, element);
+
+  Any higher-level interfaces should ultimately go through here.
+
+  The most obvious higher-level interface would be one which accepts a
+  combined mapset/name; this would allow e.g. changing the syntax of
+  qualified names from "map@mapset" to "mapset/map", or eliminating
+  mapsets altogether. Certainly, the logic of handling qualified names
+  should be in one place rather than dotted around the code.
+
+  Closely related to this is the way that modules currently handle
+  qualified names. At present, modules use G_find_file() to split a
+  (possibly qualified) map name into separate mapset/name components,
+  then pass the components separately.
+
+  This should be changed, IMHO; a module should treat a map name as an
+  abstract identifier, and shouldn't have to even know about mapsets
+  (apart from the obvious exceptions, e.g. g.mapsets).
+
+  The main requirement here is for specific functions to generate map
+  names based upon an existing name, coupled with some context. At
+  present, individual modules basically perform string manipulation
+  operations (concatenation, parsing) upon the strings which represent
+  maps and mapsets.
+
+  To give some concrete examples:
+
+  1. If a module requires several output maps, it may wish to allow the
+     user to just specify a "base" name; e.g. d.rgb might want to allow the
+     user to enter:
+
+	d.rgb input=foo
+
+     instead of (at present);
+
+	d.rgb r=foo.r g=foo.g b=foo.b
+
+     However, for a qualified map name, entering:
+
+	d.rgb input=foo@bar
+
+     would need to be treated as:
+
+	d.rgb r=foo.r@bar g=foo.g@bar b=foo.g@bar
+
+     and *not* as:
+
+	d.rgb r=foo@bar.r g=foo@bar.g b=foo@bar.g
+
+     It would need to be able to do this without hard-coding the
+     "map@mapset" convention into the module itself.
+
+  2. Similarly, if a module generates multiple output maps from a single
+     input map, it may wish to (by default) derive the names of all of the
+     output maps from the name of the input map. In this case, the output
+     names would need to be unqualified even if the input name was
+     qualified. So, e.g. r.slope.aspect might wish to treat:
+
+	r.slope.aspect elevation=foo@bar
+
+     as equivalent to:
+
+	r.slope.aspect elevation=foo@bar slope=foo.sl aspect=foo.as
+
+     Again, one would wish to avoid hard-coding the "map@mapset" convention
+     into the module itself.
+
+     One problem with the general concept of channeling file access through
+     a few key functions is the issue of scripts. Typically, these end up
+     re-implementing the libgis logic; moreover, each individual script
+     ends up with its own clone of the code.
+
+     Witness the effort involved in replacing references to $LOCATION with
+     g.gisenv. A similar effort may be required to handle any changes to
+     the layout below the level of th mapset directory.
+
+     For this reason, we should also consider providing standard Bourne
+     shell and/or Tcl equivalents of the libgis functionality. This could
+     be a set of standard "include" scripts, which would be accessed by
+     e.g.
+
+	source "$GISBASE/scripts/library.sh"
+     or:
+	source $env(GISBASE)/scripts/library.tcl
+
+     possibly in combination with some standard utilities (e.g. 
+     g.file.name) which would "export" the core functions in a way that can
+     be used with scripts (although, for Tcl, it may be preferable to
+     provide either a customised tclsh or a loadable module).
+
+     [deleted rest of the message for now, not 100% related]
+
+Notes
+ 
+  [1] A 'colr2/' directory related suggestion from Glynn Clements:
+  > Rather than having a special-case mechanism which allows an alternate
+  > colour table to be "overlaid" onto an existing map (possibly in a
+  > different mapset), it would be preferable, IMHO, to create a
+  > "recolour" map. This would work like a reclass map; the "recolour" map
+  > would exist as an actual map as far as the user is concerned, but all
+  > of the data (except for the colour table) would be taken from the base
+  > map.
+  > 
+  > There would probably be other uses for such a mechanism (e.g. category
+  > labels, horizontally or vertically rescaled maps etc).
