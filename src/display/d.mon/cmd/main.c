@@ -3,6 +3,7 @@ main(argc,argv) char *argv[];
 {
     int error;
     int oops;
+    char *mon_name, *G__getenv();
 
     struct Option *start, *stop, *select, *unlock;
     struct Flag *list, *status, *print, *release, *no_auto_select;
@@ -62,6 +63,9 @@ main(argc,argv) char *argv[];
     if (!select->answer && !no_auto_select->answer)
 	select->answer = start->answer;
 
+    G__read_env();
+    mon_name = G__getenv("MONITOR"); /* remember old monitor name */
+
     error = 0;
     if (status->answer)
 	error += run("status","");
@@ -72,7 +76,19 @@ main(argc,argv) char *argv[];
     if (stop->answer)
 	error += run("stop",stop->answer);
     if (start->answer)
+    {
 	error += run("start",start->answer);
+        if(error) /* needed procedure failed */
+          {
+            if(mon_name != NULL)
+              {
+		 /* restore the previous environ. */
+                 G__setenv("MONITOR", mon_name); 
+                 /* write the name to the .gisrc file */
+                 G__write_env();
+	       }
+           }
+    }
     if (select->answer)
     {
 	oops = run("select", select->answer); /* couldn't select */
@@ -81,6 +97,16 @@ main(argc,argv) char *argv[];
 	    fprintf (stderr, "Problem selecting %s. Will try once more\n", select->answer);
 	    oops = run("select", select->answer); /* couldn't select */
 	}
+        if(oops) /* needed procedure failed */
+          {
+            if(mon_name != NULL)
+              {
+		 /* restore the previous environ. */
+                 G__setenv("MONITOR", mon_name); 
+                 /* write the name to the .gisrc file */
+                 G__write_env();
+	       }
+           }
 	error += oops;
     }
     if (print->answer)
