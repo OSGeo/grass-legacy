@@ -195,6 +195,13 @@ main (int argc, char **argv)
                                 R_font(cmd_ptr) ;
                                 break ;
                         case 'C':   /* color */
+				if(sscanf(cmd_ptr, "%d:%d:%d", &R, &G, &B) == 3) {
+					if (R>=0 && R<256 && G>=0 && G<256 && B>=0 && B<256) {
+						R_reset_color(R, G, B, customcolor);
+						R_color(customcolor);
+					}
+				}
+				else
                                 if (color = D_translate_color(cmd_ptr))
                                         R_standard_color(color) ;
                                 break ;
