@@ -1,0 +1,14 @@
+PGM = put_gis_sl
+I = ../Include
+EXTRA_CFLAGS  = -I$I
+SITELIB = ../lib.a
+SITE = $(ETC)/sites
+
+LIST =  main.o
+
+$(SITE)/$(PGM): $(LIST) $(SITELIB) $(GISLIB)
+		$(CC) ${LDFLAGS} -o $(SITE)/$(PGM) $(LIST) $(SITELIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+main.o: $I/site_dir.h
+
+$(SITELIB):	#
+$(GISLIB):	#

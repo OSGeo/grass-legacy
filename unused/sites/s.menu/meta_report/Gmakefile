@@ -1,0 +1,18 @@
+
+PGM = meta_report
+I = ../Include
+EXTRA_CFLAGS  = -I$I
+SITELIB = ../lib.a
+SITE = $(ETC)/sites
+
+LIST =  main.o\
+	  site_data.o\
+	  process.o\
+	  layer_stat.o
+
+$(SITE)/$(PGM): $(LIST) $(SITELIB) $(GISLIB)
+	$(CC) ${LDFLAGS} -o $(SITE)/$(PGM) $(LIST) $(SITELIB) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+
+$(LIST):	$I/site.h
+$(SITELIB):	#
+$(GISLIB):	#
