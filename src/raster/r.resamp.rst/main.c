@@ -552,21 +552,15 @@ int main (int argc, char *argv[])
                    IL_check_at_points_2d,
 		   IL_secpar_loop_2d, IL_crst, IL_crstg, IL_write_temp_2d);
 
-  if (maskmap != NULL)
-  {
     fprintf (stderr, "Temporarily changing the region to desired resolution...\n");
     if (G_set_window (&outhd) < 0)
       G_fatal_error ("Cannot set region to output region!");
 
-    bitmask = BM_create (outhd.cols, outhd.rows);
-
-    if (IL_create_bitmask (&params, bitmask) < 0)
-      clean_fatal_error ("Cannot create bitmask");
+    bitmask = IL_create_bitmask (&params);
     /* change region to initial region */
     fprintf (stderr, "Changing the region back to initial...\n");
     if (G_set_window (&winhd) < 0)
       G_fatal_error ("Cannot set region to back to initial region!");
-  }
 
   ertot = 0.;
   if (per)
