@@ -1,0 +1,244 @@
+<html>
+<body bgcolor=#FFFFE3>
+<pre>
+So, what is new in GRASS 4.3? 
+
+The major point is a lot of bugfixing.  For floating point 
+support in raster files, please use GRASS 5.0.
+
+In details:
+
+All src.alpha from 4.2.x moved to src  (see below)
+
+New TclTkGRASS in src
+
+Cursor keys working in text screens
+
+src-directory (CERL and Baylor):
+ some minor bugfixing.
+ display/devices/XDRIVER_24      # full 24 bit driver (truecolor now)
+ mapdev/v.mkquads                # same as other but you can make 
+                                   quarter quads, thirds, 1x3
+
+
+documents-directory (Markus Neteler):
+ modules                        # some module documents
+ instructions/welcome.html      # the compiling instructions
+ instructions/grass-doc-proj/welcome.html # Grass Documentation Project from Internet
+ tutorials                      # some more nice tutorials
+ html                           # Man-pages in HTML format
+
+
+src-directory (Baylor):
+ [new: some bugfixing]
+ r.nntool (corrected 1/1/98, 27.1.98)
+ r.casc2d
+ r.flow                         # computes flow lines
+ r.water.fea 
+ r.stage3
+ r.sun
+ fire                           # wildfire simulation (corrected 4. Feb. 98)
+ r.agnps50                      # obsolete (V.1.1) - V.5.0 is in src/r.agnps50
+ r.bilinear (corrected 1/1/98)
+ r.le       (version 2.2)
+ r.out.ppm
+ r.out.mpeg
+ r.in.hdf
+ r.out.hdf
+ xganim     (needs Motif-libs, commented out in lists/GRASS)
+ v.line2area.sh                 # script  (22.1.98)
+
+
+src-directory additions - 
+
+ display/d.area                     # display vector polygons colorized
+ display/d.barscale                 # displays a barscale (position with mouse)
+ display/d.myzoom                   # nice zoom module
+ display/d.pan                      # panning module
+ display/d.rast.leg                 # displays a raster map and its legend on GRASS mon.
+ display/d.rgbcolortbl              # displays color table
+ display/d.param.scale              # belongs to r.param.scale
+ display/d.site.labels              # displays site labels
+ display/d.vect.zoom                # vector zoom
+ display/d.what.sites               # query sites
+ misc/m.in.e00                      # imports ESRI .e00 files
+ paint/p.vrml                       # output of VRML 1.0 code
+ ps.map/scripts/ps.map.barscale     # create a barscale vector layer for ps.map
+ raster/r.affinity                  # analysis classifier based on affinity index of David W. Goodall 
+ raster/r.agnps50                   # successor of r.agnps (AGNPS 5.0 now)
+ raster/r.clump1
+ raster/r.distance                  # calculates distances between objects
+ raster/r.feat.thin                 # used for r.param.scale
+ raster/r.in.bin                    # import binary files into GRASS
+ raster/r.in.gif                    # 8 bit GIF import (GIF 87)
+ raster/r.in.ppm                    # 24bit PPM import
+ raster/r.kappa                     # Kappa statistics
+ raster/r.kineros                   # module for determaining stream networks
+ raster/r.lags                      # calc. spatial dependence measure (Moran's I or texture)
+ raster/r.moran                     # calculates Moran's I stats. for a raster surface
+ raster/r.out.pov                   # height model output for POVRAY (Persistence of Vision Raytracer)
+ raster/r.param.scale               # calculates elevation parameters
+ raster/r.statistics                # univariate statistics
+ raster/r.sunmask                   # calculates shadows in a DEM from sun
+ raster/r.surf.fractal              # creates a fractal surface of a given fractal dimension
+ raster/r.surf.gauss                # produces a raster map layer of gaussian deviation
+ raster/r.surf.random               # produces a raster map layer of uniform random deviates
+ raster/r.tiff                      # 8 bit import, 8/24bit export (corrected SCS version)
+ raster/r.to.sites                  # converts raster to sites
+ raster/r.tribs                     # belongs to r.kineros
+ raster/r.water.outlet.3.0          # calculate watersheds from given point
+ raster/r.xy                        # can be used to produce functions in the form: 
+                                        z = fn(x,y) for r.mapcalc
+ scripts/d.rast.leg                 # displays map and legend on raster window
+ scripts/d.rast.rescale             # displays on-the-fly-histogram stretched image on GRASS monitor
+ scripts/i.oif                      # calculate Optimum Index Factor for LANDSAT TM band combinations
+ scripts/i.spectral                 # displays with gnuplot satellite spectral response at user defined spot
+ scripts/i.tasscap                  # Tasseled cap (Kauth Thomas) transform
+ scripts/ps.add.pagesize            # add new pagesize on ps.map products
+ scripts/r.edge.dig                 # Digitize a vector line between two given raster values in a raster map
+ scripts/r.in.arctiff               # ARC/INFO TIFF import (with .tfw file)
+ scripts/r.out.arctiff              # ARC/INFO TIFF export (with .tfw file)
+ scripts/r.out.bil                  # BIL export (for ARC/INFO, ARC/View etc.)
+ scripts/r.reclass.area             # reclass a raster map by specified area size
+ scripts/r.regression.line          # calculate linear regression from two raster files
+ scripts/s.in.gps                   # read sites from GPS Text file
+ scripts/s.out.gps                  # write sites to GPS Text file
+ scripts/v.cutter.attr              # polygon cutter with vector attributes
+ scripts/v.out.gps                  # read vector sites from GPS Text file
+ sites/s.buffer                     # generates vector buffer around a site point
+ sites/s.geom and v.geom            # successor of s.delaunay, s.voronoy
+ sites/s.in.ascii.dem               # import of DEMs with x y z values for
+                                           conversion with s.to.rast
+ sites/s.label                      # makes a paint-label file from a site list
+ sites/s.nearest                    # calculates minimum distance from a site to another site
+ sites/s.surf.bissf                 # bilinear surface interpolation 
+ sites/s.surf.krig                  # Surface interpolation from site data via kriging
+ sites/s.sv                         # calculate semivariogram 
+ sites/s.windavg                    # Window average filter for sites
+ vector/v.digspline                 # modified v.digit with spline interpolation
+ vector/v.distance                  # Calculates a distance from a point to nearest line or point in vector layer
+ vector/v.in.shape                  # imports ESRI SHAPE files
+ vector/v.shape/*                   # ARCVIEW-SHAPE utilities
+ vector/v.plant                     # inserts nodes in equidistance into vector map
+ vector/v.what                      # Query the category contents of a (binary) vector at user-selected locations
+ vector/v.surf.spline               # interpolates surfaces from vectors with cubic splines
+ tcltkgrass/                        # graphical user interface using Tcl/Tk8.0
+
+
+src.contrib (CERL and others groups):
+ [new: some bugfixing]
+ NMSU/WRAT/wrat       # r.wrat - water resource assessment tool (terrain analysis, runoff and pollution calculation
+ NRCS/raster/r.in.doq # reads in an uncompressed USGS Digitial Orthophotography
+ NRCS/vector/v.report # this file works but it is picky
+                        about the dig_cats file.  It wants a line for 0:nodata
+                        and it appreciates it if the number of attributes are
+                        numberedbeginning with one.
+ NRCS/vector/v.in.atlas     # ATLAS GIS interface
+ NRCS/vector/v.in.dlg_atr 
+ NRCS/vector/v.out.atlas    # ATLAS GIS interface 
+ NRCS/vector/v.out.mapinfo  # MAPINFO GIS interface
+ NRCS/vector/v.zoom         # Zoom to user defined vector areas 
+ OTHERS/v.in.poly        # Create a vector file of polygons centered on given locations
+ OTHERS/v.reg            # computes the latitude and longitude of the 4 exterior corners 
+                             and 4 interior tic marks for a USGS 7.5' Quad Map.
+ CORPS/FLOOD             # Floodplain Analysis Tools (HEC)
+ CORPS/r.to.sites        # converts raster to sites
+ SCS/display/d.fix.ortho # allows coordinate moving of raster images through mouse
+
+src.garden
+  answers                           # erosion modelling
+     - raster/r.fill.dir            # Filters and generates a depressionless elevation map and a flow direction map from a given elevation layer
+     - raster/r.direct              # Generates a flow direction map from a given elevation layer
+  grass.informix                    # database interface
+  grass.rim                         # RIM/GRASS database interface
+  grass.rim.new                     # updated (untested) database interface
+
+src.related - external programs
+  LTPlus_4.13                       # digitizer and raster to vector conversion program
+  gctp                              # coordinate transformation program
+  mapgen_6.25                       # map creation program (contains xmapgen)
+  mpeg-encoder                      # for r.out.mpeg
+  netcdf-libs                       # for r.stage3
+  rim                               # the RIM database program
+  xgen                              # graphical user interface (req. MOTIF)
+  xgrass/lesstif0.83-libs           # clone for MOTIF (to compile XGRASS)
+
+  etc/paint/binfiles              # postscript printer devices definitions
+
+new src.alpha includes:
+
+  dbms/grass.gdbase                 # simple ASCII (vector/sites) database 
+  dbms/grass.ingresV5               # INGRES database interface
+  dbms/grass.ingresV6               # INGRES database interface
+  dbms/grass.oracle-interface       # ORACLE database interface
+  dbms/grass.postgres4_5-interface  # old POSTGRES database interface
+  dbms/grass.postgres6-interface    # current POSTGRAS 6 database interface
+  display/d.area.lu
+  display/d.fpan
+  display/d.fzoom
+  display/d.leg.thin
+  display/d.sites.label
+  display/d.sites.labels
+  display/d.sites.qual
+  display/d.vect.db           # d.vect.db allows editing of DBMS tables (project)
+  display/d.what.vect2
+  driver/hpd500c              # printer driver HP Deskjet
+  gnuplot/g.gnuplot.3d        
+  misc/m.clump
+  misc/m.ipf
+  misc/m.svfit
+  raster/r.aggreg
+  raster/r.colourtool   # needs Tcl/Tk
+  raster/r.in.arc       # import ARC/INFO ascii raster files
+  raster/r.in.dem       # import DEM data
+  raster/r.in.ll2       
+  raster/r.ppm
+  raster/r.out.arc
+  raster/r.in.milgeo     # reads in german MilGeo-DTM
+  raster/r.slope.aspect  # diffs to change aspect to North=0, clockwise
+  raster/r.to.gnuplot
+  raster/r.to.sites
+  sites/s.in.grid
+  sites/s.to.rast-CCRS
+  new-sites-api          # all the following modules base on the new API
+                         # when using them the old sites-modules have to be
+                         # corrected: You are welcome!
+  sites/s.info
+  sites/s.kcv
+  sites/s.label
+  sites/s.nearest
+  sites/s.normal
+  sites/s.perturb
+  sites/s.probplt
+  sites/s.qcount
+  sites/s.rand
+  sites/s.sample
+  sites/s.sv
+  sites/s.univar
+  sites/s.windavg
+  tcltk/monitor.tcl
+  tcltk/usle.tcl             # USLE erosion calculation with menu
+  vector/v.in.arc.poly       # corrected ARC/INFO polygons import when having identical starting points
+  vector/v.out.mif
+  vector/v.die.unlabelled
+  vector/v.llabel
+  vector/v.rmdup             # removes duplicate lines, areas, and points from a binary vector file
+  vector/v.rm.dangles        # Removes dangle lines from a vector map, asks the maximum length of removing lines.
+  vector/v.to.gnuplot
+  vector/v.to.sites2
+  wwwinterface/grasslinks2.5b         # WWW interface to GRASS
+
+
+
+GRASS Research Group at Baylor University, Texas
+U.S.A
+grass@baylor.edu
+
+
+Markus Neteler
+neteler@geog.uni-hannover.de
+University of Hannover
+Germany
+</pre>
+</body>
+</html>
