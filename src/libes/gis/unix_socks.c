@@ -3,8 +3,8 @@
 *
 ****************************************************************************
 *
-* LIBRARY:      gsocks.c  -- Routines related to using UNIX domain sockets
-*               for IPC mechanisms (such as XDRIVER).
+* LIBRARY:      unix_socks.c  -- Routines related to using UNIX domain 
+*               sockets for IPC mechanisms (such as XDRIVER).
 *
 * AUTHOR(S):    Eric G. Miller
 *
@@ -29,6 +29,7 @@
 #include "gis.h"
 #include <stddef.h>
 #include <stdlib.h>
+#include <errno.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -105,12 +106,16 @@ G_sock_bind (char *name)
     if (name == NULL)
         return -1;
 
-    /* Bind requires that the file does not exist. It will fail
-     * later and set errno to EADDRINUSE if unlink fails.
+    /* Bind requires that the file does not exist. Force the caller
+     * to make sure the socket is not in use.  The only way to test,
+     * is a call to connect().
      */
     if (G_sock_exists (name))
-        unlink (name);
-        
+    {
+        errno = EADDRINUSE;
+        return -1;
+    }
+
     /* must always zero socket structure */
     memset (&addr, 0, sizeof(addr));
 
