@@ -55,5 +55,6 @@ $(HOME)/db.connect: connect.o $(LIBES)
 $(GISBASE)/db.attr: db.attr
 	if [ ! -d $(GISBASE)/scripts ]; then mkdir $(GISBASE)/scripts; fi
 	cp db.attr $(GISBASE)/scripts
-	
+	chmod 0755 $(GISBASE)/scripts/db.attr
+
 $(LIBES): #
