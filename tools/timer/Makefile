@@ -8,7 +8,8 @@ PGM = current_time_s_ms
 default: $(PGM)
 
 $(PGM): main.c
-	$(CC) $(CFLAGS) -o $(ETC)/$(PGM) -c $< $(LDFLAGS)
+	$(CC) -c $<
+	$(CC) -o $(ETC)/$(PGM) $<
 
 clean:
-	\rm -f $(ETC)/$(PGM)
+	\rm -f $(ETC)/$(PGM) main.o
