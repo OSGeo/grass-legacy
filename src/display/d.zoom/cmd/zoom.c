@@ -1,7 +1,7 @@
 #include "gis.h"
 #include "local_proto.h"
 
-int zoomwindow (int quiet, int rotate, double magnify)
+int zoomwindow (int quiet, int rotate, double magnify, char pan)
 {
     struct Cell_head window, oldwindow ;
     char *err;
@@ -18,7 +18,7 @@ int zoomwindow (int quiet, int rotate, double magnify)
 	if (rotate)
 	    quitonly=make_window_center (&window, magnify, -1.0, -1.0);
 	else
-	    quitonly=make_window_box (&window, magnify);
+	    quitonly=make_window_box (&window, magnify, pan);
 
 	/* quitonly = 0: Zoom
 	 * quitonly = 1: Quit
