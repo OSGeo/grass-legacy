@@ -51,7 +51,7 @@ FILE *G_popen(
     fflush (stderr);
 
     if(pipe(p) < 0)
-	return NULL;
+        return NULL;
     me = tst(p[WRITE], p[READ]);
     you = tst(p[READ], p[WRITE]);
     if((pid = fork()) == 0)

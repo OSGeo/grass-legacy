@@ -20,6 +20,10 @@
  *
  **********************************************************************/
 
+#ifdef __MINGW32__
+#  include <windows.h>
+#endif
+
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -123,8 +127,11 @@ case OPEN_NEW_RANDOM: fprintf (stderr, "close %s random\n",FCB.name); break;
         sprintf(element,"cell_misc/%s",FCB.name);
         G__file_name(path, element, NULL_FILE, G_mapset());
         G__make_mapset_element(element);
+#ifdef __MINGW32__
+        remove ( path );
+#else
         unlink (path);    /* make sure null file with this name is gone */
-
+#endif
         if(FCB.null_cur_row > 0) {
         /* if temporary NULL file exists, write it into cell_misc/name/null */
             int null_fd;
@@ -151,7 +158,11 @@ case OPEN_NEW_RANDOM: fprintf (stderr, "close %s random\n",FCB.name); break;
             close (null_fd);
             
 
+#ifdef __MINGW32__
+	    if ( CopyFile ( FCB.null_temp_name, path, FALSE ) == 0 ) {
+#else
 	    if(link (FCB.null_temp_name, path) < 0) {
+#endif
 	        sprintf(command, "mv %s %s", FCB.null_temp_name, path);
 	        if(system(command)) {
 	            sprintf(buf,"closecell: can't move %s\nto null file %s",
@@ -160,11 +171,20 @@ case OPEN_NEW_RANDOM: fprintf (stderr, "close %s random\n",FCB.name); break;
 	            stat = -1;
 	        }
 	    } else {
-               unlink (FCB.null_temp_name);
+#ifdef __MINGW32__
+                remove ( FCB.null_temp_name );
+#else                
+                unlink (FCB.null_temp_name);
+#endif
             }
         } else {
+#ifdef __MINGW32__
+            remove ( FCB.null_temp_name );
+            remove ( path );
+#else                
             unlink (FCB.null_temp_name);
 	    unlink (path); /* make sure null file is gone */
+#endif            
         } /* null_cur_row > 0 */
 
         if (FCB.open_mode == OPEN_NEW_COMPRESSED) { /* auto compression */
@@ -189,11 +209,19 @@ case OPEN_NEW_RANDOM: fprintf (stderr, "close %s random\n",FCB.name); break;
        } else {
             /* remove fcell/name file */
    	    G__file_name (path, "fcell", FCB.name, FCB.mapset);
+#ifdef __MINGW32__
+            remove ( path );
+#else            
 	    unlink (path);	/* make sure fcell file is gone */
+#endif            
             /* remove cell_misc/name/f_format */
             sprintf(element,"cell_misc/%s",FCB.name);
    	    G__file_name (path, element, "f_format", FCB.mapset);
-            unlink(path);
+#ifdef __MINGW32__
+            remove ( path );
+#else            
+	    unlink (path);
+#endif            
             strcpy(CELL_DIR, "cell");
             close (fd);
        }
@@ -222,8 +250,16 @@ case OPEN_NEW_RANDOM: fprintf (stderr, "close %s random\n",FCB.name); break;
     stat = 1;
     if (ok && (FCB.temp_name != NULL)) {
 	G__file_name (path, CELL_DIR, FCB.name, FCB.mapset);
-	unlink (path);	/* make sure cell file is gone */
+#ifdef __MINGW32__
+        remove ( path );
+#else            
+        unlink (path);
+#endif            
+#ifdef __MINGW32__
+        if ( CopyFile ( FCB.temp_name, path, FALSE ) == 0 ) {
+#else
 	if(link (FCB.temp_name, path) < 0) {
+#endif
 	    sprintf(command, "mv %s %s", FCB.temp_name, path);
 	    if(system(command)) {
 	        sprintf(buf,"closecell: can't move %s\nto cell file %s",
@@ -232,7 +268,11 @@ case OPEN_NEW_RANDOM: fprintf (stderr, "close %s random\n",FCB.name); break;
 	        stat = -1;
 	    }
         } else {
+#ifdef __MINGW32__
+            remove ( FCB.temp_name );
+#else                
             unlink (FCB.temp_name);
+#endif
         }
     }
     if (FCB.temp_name != NULL) {
@@ -287,7 +327,11 @@ case OPEN_NEW_RANDOM: fprintf (stderr, "close %s random\n",FCB.name); break;
             /* remove cell_misc/name/f_quant */
             sprintf(element,"cell_misc/%s",FCB.name);
    	    G__file_name (path, element, "f_quant", FCB.mapset);
-            unlink(path);
+#ifdef __MINGW32__
+            remove ( path );
+#else            
+            unlink (path);
+#endif            
         }
 
 /* create empty cats file */
