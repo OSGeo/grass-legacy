@@ -1,0 +1,48 @@
+How to release GRASS binaries and source code
+
+$Date$
+
+Note: This text contains some rules only applicable to the
+      development coordinator (currently Markus Neteler).
+
+
+1. Local work (basically at ITC-irst)
+
+ o Store the source tarball in:
+     http://grass.itc.it/grass/grass6x/source/
+     along with associated files:
+          NEWS.html ChangeLog SUBMITTING REQUIREMENTS.html INSTALL
+
+ o update web site to new version (HTML in Web-CVS)
+      - main.inc
+      - download/software.inc
+      - grass6x/index.php
+      - devel/grasshist.html
+      - devel/grass_releases.html
+      - bugtracking/bugreport.html
+      
+     write announcement
+      - store in Web as announces/announce_grass6xx.html
+
+
+2. Tell others about it:
+   - related announcement press release at:
+
+   Our GRASS web site: /announces/
+
+   news:comp.infosystems.gis
+   http://spatialnews.geocomm.com/submitnews.html (not free any more)
+   http://freshmeat.net/projects/grass/?highlight=GRASS
+   http://www.linuxapps.com/?page=application&database=current&id=40
+   http://www.newsforge.com/submit.pl
+   http://osx.macnn.com/ (email to news tips)
+   http://www.gis-news.de/  (news@gismngt.de)
+   http://www.giscafe.com/   (link: submit material, needs registration)
+   http://www.geopoint.de/  (German GIS journal)
+   http://www.freegis.org
+   http://www.directionsmag.com/pressreleases.php (click on 'Contact Us')
+   http://www.gisdevelopment.net (click on 'Submit Press Release')
+   http://www.gnu.org/directory/science/geography/grass.html
+
+   ... anywhere else?
+
