@@ -7,7 +7,7 @@
 
 static int nlines = 50;
 
-#define WDTH 2
+#define WDTH 5
 
 int what(int once, int terse, int width, int mwidth,
 	 int dodbmi)
@@ -77,8 +77,9 @@ int what(int once, int terse, int width, int mwidth,
       x2 = D_d_to_u_col ((double)(screen_x+WDTH));
       y2 = D_d_to_u_row ((double)(screen_y+WDTH));
 
-      x1 = abs ( x2 - x1 );
-      y1 = abs ( y2 - y1 );
+      x1 = fabs ( x2 - x1 );
+      y1 = fabs ( y2 - y1 );
+      
       if ( x1 > y1 ) maxdist = x1;
       else maxdist = y1;
       G_debug (1, "Maximum distance in map units = %f\n", maxdist);
