@@ -67,7 +67,9 @@
 #  include "tkInt8.1.1.h"
 #elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==2
 #  include "tkInt8.2.3.h"
-#elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==3
+#elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==3 && TK_RELEASE_SERIAL==3
+#  include "tkInt8.3.3.h"
+#elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==3 && TK_RELEASE_SERIAL!=3
 #  include "tkInt8.3.h"
 #elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==4
 #  include "tkInt8.4.h"
