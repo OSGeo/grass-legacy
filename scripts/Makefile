@@ -7,6 +7,7 @@ SUBDIRS = \
 	d.redraw \
 	d.slide.show \
 	g.manual \
+	g.mlist \
 	i.spectral \
 	i.tasscap \
 	pg.postgisdb \
