@@ -11,11 +11,11 @@ photo.2image <alpha> GRASS Reference Manual  <alpha> photo.2image
 
 
 NAME
-     photo.2image - An imagery function that enables you to mark
+     photo.2image - An imagery function	that enables you to mark
      known reference points (fiducial marks, reseau marks, etc.)
-     on imagery group files, and compute the image-to-photo
-     coordinate transformation parameters.  The transformation
-     parameters are required for the GRASS Image Processing
+     on	imagery	group files, and compute the image-to-photo
+     coordinate	transformation parameters.  The	transformation
+     parameters	are required for the GRASS Image Processing
      Program i.ortho.photo.
      (GRASS Image Processing Program)
 
@@ -23,33 +23,33 @@ SYNOPSIS
      Selected from i.ortho.photo
 
 DESCRIPTION
-     photo.2image is an imagery function that enables you to mark
-     fiducial or reseau points on an image to be ortho-rectified
+     photo.2image is an	imagery	function that enables you to mark
+     fiducial or reseau	points on an image to be ortho-rectified
      and then computes the image-to-photo coordinate
-     transformation parameters. The coordinates of the fiducials
-     or reseau marks can be choosen for a camera reference file.
+     transformation parameters.	The coordinates	of the fiducials
+     or	reseau marks can be choosen for	a camera reference file.
 
-     During the process of marking reference points with known
-     photo coordinates, you may compute the RMS (root mean
+     During the	process	of marking reference points with known
+     photo coordinates,	you may	compute	the RMS	(root mean
      square) error for each reference point entered.
      photo.2image does this by calculating the transformation
-     equation (the same one that is calculated in the GRASS
-     program i.points), and then plugging these results into an
+     equation (the same	one that is calculated in the GRASS
+     program i.points),	and then plugging these	results	into an
      equation for RMS error.
 
-     photo.2image offers a zoom option to locate precisely the
-     fiducial or reseau point to be marked on an image.
+     photo.2image offers a zoom	option to locate precisely the
+     fiducial or reseau	point to be marked on an image.
 
-     To run photo.2image, a graphics monitor is required.
+     To	run photo.2image, a graphics monitor is	required.
 
-     The procedure for marking fiducial or reseau  points,
+     The procedure for marking fiducial	or reseau  points,
      entering known photo-coordinates, and analyzing the RMS
-     error is described below.
+     error is described	below.
 
 
      The terminal screen displays this message:
 
-                           use mouse now...
+			   use mouse now...
 
 
 
@@ -60,7 +60,7 @@ DESCRIPTION
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
@@ -74,59 +74,59 @@ photo.2image <alpha> GRASS Reference Manual  <alpha> photo.2image
      The graphics monitor displays the following screen:
 
     ______________________________________________________________
-   | imagery                   |                                 |
+   | imagery		       |				 |
    |___________________________|_________________________________|
-   |                           |                                 |
-   |                           |                                 |
-   |                           |                                 |
-   |                           |                                 |
-   |                           |                                 |
-   |                           |                                 |
-   |                           |                                 |
+   |			       |				 |
+   |			       |				 |
+   |			       |				 |
+   |			       |				 |
+   |			       |				 |
+   |			       |				 |
+   |			       |				 |
    |___________________________|_________________________________|
-   |                           |                                 |
-   |                           |                                 |
-   |                           |                                 |
-   |                           |                                 |
-   |                           |                                 |
-   |                           |                                 |
-   |                           |                                 |
+   |			       |				 |
+   |			       |				 |
+   |			       |				 |
+   |			       |				 |
+   |			       |				 |
+   |			       |				 |
+   |			       |				 |
    |___________________________|_________________________________|
-   |                           |                                 |
+   |			       |				 |
    |___________________________|_________________________________|
 
 
 
 
 
-     A pop-down menu like that shown below will be superimposed on the
+     A pop-down	menu like that shown below will	be superimposed	on the
      left half of the screen:
 
-              _________________________________________
-             | Double click on cell file to be plotted|
-             |       Double click here to cancel      |
-             |________________________________________|
+	      _________________________________________
+	     | Double click on cell file to be plotted|
+	     |	     Double click here to cancel      |
+	     |________________________________________|
 
-                          _________________
-                         | Mapset imagery |
-                         |________________|
-                         | gs13.1|  gs21.1|
-                         |_______|________|
-                         | gs14.1|  gs22.2|
-                         |_______|________|
+			  _________________
+			 | Mapset imagery |
+			 |________________|
+			 | gs13.1|  gs21.1|
+			 |_______|________|
+			 | gs14.1|  gs22.2|
+			 |_______|________|
 
 
-     Any single file in the imagery group may be used on which to
+     Any single	file in	the imagery group may be used on which to
      mark points, and you may mark points on more than one file
-     in the imagery group to accumulate the suggested minimum
+     in	the imagery group to accumulate	the suggested minimum
      number of 4-8 fiducial or ressue points.  The imagery file
-     selected is displayed in the upper left quadrant of the
+     selected is displayed in the upper	left quadrant of the
      screen.
 
 
 
 
-GRASS 4.1                U.S. Army CERL                         2
+GRASS 4.2		Baylor University			2
 
 
 
@@ -138,61 +138,61 @@ photo.2image <alpha> GRASS Reference Manual  <alpha> photo.2image
 
 
 CAMERA FILE
-     The camera reference file may be viewed by placing the mouse
-     cross hairs on the words CAMERA.  The camera reference file
+     The camera	reference file may be viewed by	placing	the mouse
+     cross hairs on the	words CAMERA.  The camera reference file
      will be displayed in the lower left quadrant of the display:
 
      ----------------------------------------------------------------|
-     |Camera Reference File                                          |
+     |Camera Reference File					     |
      ----------------------------------------------------------------|
-     |  CAMERA NAME :        camera name                             |
-     |  CAMERA ID   :        L1234                                   |
-     |  CAMERA CFL  :        153.021 mm.                             |
-     |  CAMERA XP   :        0.050 mm.                               |
-     |  CAMERA XP   :        0.056 mm.                               |
-     |  number of fid.       4                                       |
+     |	CAMERA NAME :	     camera name			     |
+     |	CAMERA ID   :	     L1234				     |
+     |	CAMERA CFL  :	     153.021 mm.			     |
+     |	CAMERA XP   :	     0.050 mm.				     |
+     |	CAMERA XP   :	     0.056 mm.				     |
+     |	number of fid.	     4					     |
      ----------------------------------------------------------------|
-     |                                                               |
-     |ID        (X PHOTO) mm.                 (Y PHOTO) mm.          |
+     |								     |
+     |ID	(X PHOTO) mm.		      (Y PHOTO)	mm.	     |
      ________________________________________________________________|
-     |1         -105.023                        110.123              |
-     |2          107.987                        109.834              |
-     |3          110.965                       -104.329              |
-     |4         -103.932                       -110.352              |
+     |1		-105.023			110.123		     |
+     |2		 107.987			109.834		     |
+     |3		 110.965		       -104.329		     |
+     |4		-103.932		       -110.352		     |
      |_______________________________________________________________|
 
 
-     The following menu is displayed at the bottom of the
+     The following menu	is displayed at	the bottom of the
      graphics display:
 
 
 ______________________________________________________________________________
-|Quit|  Zoom|  Plot Cell|  Camera|  Analyze|    Input->KEYBOARD|  CAMERA FILE|
+|Quit|	Zoom|  Plot Cell|  Camera|  Analyze|	Input->KEYBOARD|  CAMERA FILE|
 |____|______|___________|________|_________|___________________|_____________|
 
 
 
 ZOOM
-     To magnify the displayed file, you must place the mouse
-     cross hairs on the word ZOOM. The following menu will then
-     be displayed at the bottom of the screen:
+     To	magnify	the displayed file, you	must place the mouse
+     cross hairs on the	word ZOOM. The following menu will then
+     be	displayed at the bottom	of the screen:
 
 
-             ____________________________________________
-            | Cancel|  Box|  Point|  Select type of ZOOM|
-            |_______|_____|_______|_____________________|
+	     ____________________________________________
+	    | Cancel|  Box|  Point|  Select type of ZOOM|
+	    |_______|_____|_______|_____________________|
 
 
-     You have the option of identifying the zoom window either by
-     using the mouse to make a box, or by using the mouse to mark
-     the center of the desired window, and adjusting the
-     magnification factor.  The terminal screen will display a
-     mouse button menu to guide you in identifying the window.
-     The section of the image within the zoom window will be
+     You have the option of identifying	the zoom window	either by
+     using the mouse to	make a box, or by using	the mouse to mark
+     the center	of the desired window, and adjusting the
+     magnification factor.  The	terminal screen	will display a
+     mouse button menu to guide	you in identifying the window.
+     The section of the	image within the zoom window will be
 
 
 
-GRASS 4.1                U.S. Army CERL                         3
+GRASS 4.2		Baylor University			3
 
 
 
@@ -208,57 +208,57 @@ photo.2image <alpha> GRASS Reference Manual  <alpha> photo.2image
 
 
 
-MARKING REFERENCE POINTS
-     To mark the known reference points (fiducial marks, reseau
-     marks, etc.) on the image, you must place the mouse cross
-     hairs on the corresponding location on the image to be
-     marked and press the left hand button on the mouse.  A
-     diamond shaped symbol will be marked on the image.
+MARKING	REFERENCE POINTS
+     To	mark the known reference points	(fiducial marks, reseau
+     marks, etc.)  on the image, you must place	the mouse cross
+     hairs on the corresponding	location on the	image to be
+     marked and	press the left hand button on the mouse.  A
+     diamond shaped symbol will	be marked on the image.
 
-     If you wish to use the  camera reference file only as a
+     If	you wish to use	the  camera reference file only	as a
      comparative reference,  then the keyboard can be chosen as
-     the means to input photo coordinates corresponding to the
-     marked reference points on the image.  This is done by
-     placing the mouse cross hairs on the word KEYBOARD and
+     the means to input	photo coordinates corresponding	to the
+     marked reference points on	the image.  This is done by
+     placing the mouse cross hairs on the word KEYBOARD	and
      pressing the left button on the mouse.
 
-     The following menu is displayed on the graphics terminal:
+     The following menu	is displayed on	the graphics terminal:
 
    ________________________________________________________________
-  | Point 1 marked at IMAGE COORDINATES|                          |
-  | east:  1023.77                     |                          |
-  | north:  506.56                     |                          |
-  |                                    |                          |
-  |                                    |                          |
-  |                                    |                          |
-  |                                    |                          |
-  |                                    |                          |
+  | Point 1 marked at IMAGE COORDINATES|			  |
+  | east:  1023.77		       |			  |
+  | north:  506.56		       |			  |
+  |				       |			  |
+  |				       |			  |
+  |				       |			  |
+  |				       |			  |
+  |				       |			  |
   |_______________________________________________________________|
-  | Enter PHOTO COORDINATES as x and y:                           |
+  | Enter PHOTO	COORDINATES as x and y:				  |
   |_______________________________________________________________|
 
 
-     You then enter the known (x,y) photo coordinates, relative
-     to the perspective center, for the  reference point marked
-     on the image.  If you do not wish to enter a coordinate,
-     simply hit RETURN to continue; the marked reference point
+     You then enter the	known (x,y) photo coordinates, relative
+     to	the perspective	center,	for the	 reference point marked
+     on	the image.  If you do not wish to enter	a coordinate,
+     simply hit	RETURN to continue; the	marked reference point
      will disappear.
 
 
-     If you select the CAMERA FILE option, then reference points
+     If	you select the CAMERA FILE option, then	reference points
      marked on the image will be associated with selected photo
      coordinates from the displayed camera reference file.  In
-     this option, when you mark a point on the image, the
-     following menu is displayed on the graphics terminal:
+     this option, when you mark	a point	on the image, the
+     following menu is displayed on the	graphics terminal:
 
      -------------------------------------------------------------
-     CANCEL   Double click on the fiducial mark to be referenced
+     CANCEL   Double click on the fiducial mark	to be referenced
      -------------------------------------------------------------
 
 
 
 
-GRASS 4.1                U.S. Army CERL                         4
+GRASS 4.2		Baylor University			4
 
 
 
@@ -269,46 +269,46 @@ photo.2image <alpha> GRASS Reference Manual  <alpha> photo.2image
 
 
 
-     If you would like to select the photo coordinates of a
-     displayed reference mark, this can be accomplished by
+     If	you would like to select the photo coordinates of a
+     displayed reference mark, this can	be accomplished	by
      placing the mouse cross hairs on the reference point to be
-     selected and pressing the left button on the mouse twice.
-     After a reference point is selected from the display, you
+     selected and pressing the left button on the mouse	twice.
+     After a reference point is	selected from the display, you
      are prompted with "Look ok? (Y/N)".  If you respond with no,
      the reference point is ignored.  If you respond with yes,
-     the following is displayed on the terminal:
+     the following is displayed	on the terminal:
 
 
  ____________________________________________________________________
-| Point 1 marked at IMAGE COORDINATES    |                          |
-| east:  1023.77                         |                          |
-| north: 1065.41                         |                          |
-|                                        |                          |
-|                                        |                          |
-| Point 1 referenced at PHOTO COORDINATES|                          |
-| X: -105.023                            |                          |
-| Y:  110.122                            |                          |
-|                                        |                          |
-|                                        |                          |
-|                                        |                          |
-|                                        |                          |
-|                                        |                          |
+| Point	1 marked at IMAGE COORDINATES	 |			    |
+| east:	 1023.77			 |			    |
+| north: 1065.41			 |			    |
+|					 |			    |
+|					 |			    |
+| Point	1 referenced at	PHOTO COORDINATES|			    |
+| X: -105.023				 |			    |
+| Y:  110.122				 |			    |
+|					 |			    |
+|					 |			    |
+|					 |			    |
+|					 |			    |
+|					 |			    |
 |___________________________________________________________________|
-| use mouse now...                                                  |
+| use mouse now...						    |
 |___________________________________________________________________|
 
 
      The photo coordinates and the corresponding image
-     coordinates are automatically saved in the photo_points file
-     associated with the imagery group.
+     coordinates are automatically saved in the	photo_points file
+     associated	with the imagery group.
 
 
 ANALYZE
-     After a number of points have been marked (4 to 8), you can
-     check the RMS error of the points marked on the image.  This
-     is done by placing the mouse cross hairs on the word ANALYZE
-     at the bottom of the monitor.  An error report resembling
-     the one shown below is superimposed on the monitor:
+     After a number of points have been	marked (4 to 8), you can
+     check the RMS error of the	points marked on the image.  This
+     is	done by	placing	the mouse cross	hairs on the word ANALYZE
+     at	the bottom of the monitor.  An error report resembling
+     the one shown below is superimposed on the	monitor:
 
 
 
@@ -324,7 +324,7 @@ ANALYZE
 
 
 
-GRASS 4.1                U.S. Army CERL                         5
+GRASS 4.2		Baylor University			5
 
 
 
@@ -336,16 +336,16 @@ photo.2image <alpha> GRASS Reference Manual  <alpha> photo.2image
 
 
 _____________________________________________________________________
-|         error                 image                 photo         |
-|                                                                   |
-|#     row     col    photo     east    north       x          y    |
-|1     0.0     -0.9    1.0     1048.5   -144.8   -105.023    110.122|
-|2     0.4      1.0    1.3     2153.1   -567.2    107.987    109.834|
-|3    -1.2     -0.5     .6     1452.8   -476.5    110.965   -104.329|
-|4     1.1      0.5    1.3     1034.0   -109.2   -103.932   -110.352|
-|                                                                   |
+|	  error			image		      photo	    |
+|								    |
+|#     row     col    photo	east	north	    x	       y    |
+|1     0.0     -0.9    1.0     1048.5	-144.8	 -105.023    110.122|
+|2     0.4	1.0    1.3     2153.1	-567.2	  107.987    109.834|
+|3    -1.2     -0.5	.6     1452.8	-476.5	  110.965   -104.329|
+|4     1.1	0.5    1.3     1034.0	-109.2	 -103.932   -110.352|
+|								    |
 |___________________________________________________________________|
-|    overall   rms    error:   4.46                                 |
+|    overall   rms    error:   4.46				    |
 |___________________________________________________________________|
 
 
@@ -355,42 +355,42 @@ _____________________________________________________________________
 
 
 _____________________________________________________________________
-|DONE|  PRINT|  FILE|  Double click on point to be included/excluded|
+|DONE|	PRINT|	FILE|  Double click on point to	be included/excluded|
 |____|_______|______|_______________________________________________|
 
 
-     The RMS error for the image is given under the column titled
-     "error" and subtitled "row" and "col".  In the above report,
-     point number 1 is 0.0 rows and -0.9 columns from the
-     predicted location calculated from the transformation
+     The RMS error for the image is given under	the column titled
+     "error" and subtitled "row" and "col".  In	the above report,
+     point number 1 is 0.0 rows	and -0.9 columns from the
+     predicted location	calculated from	the transformation
      equation. The RMS error for the photo coordinates is listed
-     under the heading "photo".  This is the RMS error for the x
-     and y coordinates of the photo coordinates but it is
+     under the heading "photo".	 This is the RMS error for the x
+     and y coordinates of the photo coordinates	but it is
      presented in the table using one general value.  The overall
-     RMS error is displayed at the bottom of the screen in
-     milimeters.  Points that create high RMS error are displayed
-     in red on the monitor (represented here in italics).
+     RMS error is displayed at the bottom of the screen	in
+     milimeters.  Points that create high RMS error are	displayed
+     in	red on the monitor (represented	here in	italics).
 
      The location of the point marked on the imagery group file
-     is given under the heading "image" and the subheadings
-     "east" and "north".  The location of the point in the photo
-     coordinates is given under the heading "photo" and the
+     is	given under the	heading	"image"	and the	subheadings
+     "east" and	"north".  The location of the point in the photo
+     coordinates is given under	the heading "photo" and	the
      subheadings "x" and "y".  If you would like to exclude or
      include a point, this can be accomplished by placing the
      mouse cross hairs on the point number to be included (if the
-     point is absent) or excluded (if the point is displayed) and
-     pressing the left button on the mouse twice.  When a point
-     is excluded, it is not afterwards included in the
-     calculation of the RMS error, or included in the final
-     transformation matrix.  However, it can be retrieved within
-     photo.2image at any time by double clicking with the mouse
-     as described above.
+     point is absent) or excluded (if the point	is displayed) and
+     pressing the left button on the mouse twice.  When	a point
+     is	excluded, it is	not afterwards included	in the
+     calculation of the	RMS error, or included in the final
+     transformation matrix.  However, it can be	retrieved within
+     photo.2image at any time by double	clicking with the mouse
+     as	described above.
 
 
 
 
 
-GRASS 4.1                U.S. Army CERL                         6
+GRASS 4.2		Baylor University			6
 
 
 
@@ -402,35 +402,35 @@ photo.2image <alpha> GRASS Reference Manual  <alpha> photo.2image
 
 
 QUIT
-     To end the photo.2image program place the mouse cross hairs
-     on the word QUIT;  the marked reference points (including
+     To	end the	photo.2image program place the mouse cross hairs
+     on	the word QUIT;	the marked reference points (including
      coordinates) will be saved.
 
 
 NOTES
-     A good rule of thumb is to mark at least 4 to 8 points which
-     are evenly distributed over the perimeter of the imagery
-     group file in order to obtain an accurate transformation
+     A good rule of thumb is to	mark at	least 4	to 8 points which
+     are evenly	distributed over the perimeter of the imagery
+     group file	in order to obtain an accurate transformation
      equation for the rectification process.  The RMS error may
-     increase with more points added, but the transformation
+     increase with more	points added, but the transformation
      equation will be more accurate.
 
-     An RMS error of less than or equal to approximately one
-     resolution unit (pixel) for the image being rectified is
+     An	RMS error of less than or equal	to approximately one
+     resolution	unit (pixel) for the image being rectified is
      generally considered acceptable.
 
 SEE ALSO
-     i.ortho.photo[2], photo.camera[2], photo.2target[2],
+     i.ortho.photo[2], photo.camera[2],	photo.2target[2],
      photo.init[2], photo.rectify[2]
 
 
 AUTHOR
-     Mike Baba  DBA Systems, Inc.
+     Mike Baba	DBA Systems, Inc.
 
 NOTICE
      This program is part of the alpha section of the GRASS
-     distribution.  Unlike the code in the main section of GRASS,
-     the alpha code has not yet been fully tested for one release
+     distribution.  Unlike the code in the main	section	of GRASS,
+     the alpha code has	not yet	been fully tested for one release
      cycle.
 
 
@@ -456,7 +456,7 @@ NOTICE
 
 
 
-GRASS 4.1                U.S. Army CERL                         7
+GRASS 4.2		Baylor University			7
 
 
 
