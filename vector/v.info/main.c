@@ -155,13 +155,3 @@ main (int argc, char *argv[])
   return (0);
 }
 
-/* move to lib/vector/Vlib/level_two.c 
-int 
-Vect_get_num_islands (struct Map_info *map)
-{
-  return (map->plus.n_isles);
-}
-*/
-/* plus Vect.h */
-  
-  
