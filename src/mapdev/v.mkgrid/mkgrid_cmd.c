@@ -83,7 +83,7 @@ main (int argc, char *argv[])
 
   box = G_define_option ();
   box->key = "box";
-  box->key_desc = "width, height";
+  box->key_desc = "width,height";
   box->type = TYPE_DOUBLE;
   box->required = YES;
   box->multiple = NO;
