@@ -71,7 +71,7 @@ int main (int argc, char *argv[])
 	exit(1);
     }
 
-    if (G_is_reclass (old_name, G_mapset(), rname, rmapset) > 0)
+    if (G_is_reclass (old_name, old_mapset, rname, rmapset) > 0)
     {
       sprintf(buf, "%s is a reclass of another map. Exiting.\n Use r.mapcalc to generate a copy of input map %s to work with", old_name, old_name);
 	  G_fatal_error(buf);
