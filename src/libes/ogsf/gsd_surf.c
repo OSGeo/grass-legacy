@@ -80,7 +80,7 @@ int gsd_surf(geosurf * surf)
 	break;
 
     case MAP_ATT:
-	ret = (gsd_surf_map(surf));
+	ret = (gsd_surf_map(surf)); /* changed to use test draw routine */
 
 #ifdef DO_ARROW
 	gsd_norm_arrows(surf);
@@ -113,7 +113,7 @@ int gsd_surf(geosurf * surf)
 
 /************************************************************************/
 /* Using tmesh - not confident with qstrips portability */
-int gsd_surf_map(geosurf * surf)
+int gsd_surf_map_old(geosurf * surf)
 {
     int check_mask, check_color, check_transp;
     int check_material, check_emis, check_shin;
@@ -144,7 +144,7 @@ int gsd_surf_map(geosurf * surf)
 
 #ifdef TRACE_DFUNCS
     {
-	Gs_status("gsd_surf_map");
+	Gs_status("gsd_surf_map_old");
     }
 #endif
 
@@ -1969,3 +1969,324 @@ int gsd_norm_arrows(geosurf * surf)
 
     return (1);
 }
+
+
+/************************************************************************
+ * New (TEST) surface drawing routine using triangle fan instead of strip
+ * Optimized by getting rid of BM_get mask check - GET_MAPPATT does same
+ * and returns zero if masked 
+ * Only do in window check on Fan center(v0) to further optimize -- this runs 
+ * the risk of trimming points in view !!
+*************************************************************************/
+int gsd_surf_map(geosurf * surf)
+{
+    int check_mask, check_color, check_transp;
+    int check_material, check_emis, check_shin;
+    typbuff *buff, *cobuff, *trbuff, *embuff, *shbuff;
+    int xmod, ymod;
+    int row, col, cnt, xcnt, ycnt;
+    long y1off, y2off, y3off;
+    long offset2[10];
+    float pt2[10][2];
+    int ii;
+    float x1, x2, x3, y1, y2, y3, tx, ty, tz, ttr;
+    float n[3], pt[4], xres, yres, ymax, zexag;
+    int em_src, sh_src, trans_src, col_src, curcolor;
+    gsurf_att *ematt, *shatt, *tratt, *coloratt;
+
+
+    /* Viewport variables for accelerated drawing */
+    GLdouble modelMatrix[16], projMatrix[16];
+    GLint viewport[4];
+    GLint window[4];
+    int cnt1=0, cnt2=0;
+
+    int datarow1, datacol1, datarow2, datacol2, datarow3, datacol3;
+
+    float kem, ksh, pkem, pksh;
+    unsigned int ktrans;
+    
+    int step_val = 2; /* should always be factor of 2 for fan */
+    int start_val = 1;
+
+    /* avoid scaling by zero */
+    GS_get_scale(&tx, &ty, &tz, 1);
+
+    if (tz == 0.0) {
+	return (gsd_surf_const(surf, 0.0));
+    }
+    /* else if (surf->z_exag  == 0.0)
+       {
+       return(gsd_surf_const(surf, surf->z_min));
+       }
+       NOT YET IMPLEMENTED */
+
+    buff = gs_get_att_typbuff(surf, ATT_TOPO, 0);
+    cobuff = gs_get_att_typbuff(surf, ATT_COLOR, 0);
+
+    gs_update_curmask(surf);
+    check_mask = surf->curmask ? 1 : 0;
+
+    /*
+       checks ATT_TOPO & ATT_COLOR no_zero flags, make a mask from each,
+       combine it/them with any current mask, put in surf->curmask:
+     */
+    xmod = surf->x_mod;
+    ymod = surf->y_mod;
+    xres = xmod * surf->xres;
+    yres = ymod * surf->yres;
+    ymax = (surf->rows - 1) * surf->yres;
+
+    xcnt = VCOLS(surf);
+    ycnt = VROWS(surf);
+
+    /* Get viewport */
+    gsd_getwindow(&window, &viewport, &modelMatrix, &projMatrix);
+    
+
+    gsd_colormode(CM_DIFFUSE);
+    gsd_pushmatrix();
+    gsd_do_scale(1);
+    gsd_translate(surf->x_trans, surf->y_trans, surf->z_trans);
+    zexag = surf->z_exag;
+    
+    /* adjust window */
+    window[0] += (int) (yres * 4 * zexag);
+    window[1] -= (int) (yres * 4 * zexag);
+    window[2] -= (int) (xres * 4 * zexag);
+    window[3] += (int) (xres * 4 * zexag);
+
+    /* CURRENTLY ALWAYS 1.0 */
+#ifdef CALC_AREA
+    sz = GS_global_exag();
+#endif
+
+    /* TODO: get rid of (define) these magic numbers scaling the attribute vals */
+    check_transp = 0;
+    tratt = &(surf->att[ATT_TRANSP]);
+    ktrans = (255 << 24);
+    trans_src = surf->att[ATT_TRANSP].att_src;
+
+    if (CONST_ATT == trans_src && surf->att[ATT_TRANSP].constant != 0.0) {
+	ktrans = (255 - (int) surf->att[ATT_TRANSP].constant) << 24;
+	gsd_blend(1);
+	gsd_zwritemask(0x0);
+    }
+    else if (MAP_ATT == trans_src) {
+	trbuff = gs_get_att_typbuff(surf, ATT_TRANSP, 0);
+	check_transp = trbuff ? 1 : 0;
+	gsd_blend(1);
+	gsd_zwritemask(0x0);
+    }
+
+    check_emis = 0;
+    ematt = &(surf->att[ATT_EMIT]);
+    kem = 0.0;
+    pkem = 1.0;
+    em_src = surf->att[ATT_EMIT].att_src;
+
+    if (CONST_ATT == em_src) {
+	kem = surf->att[ATT_EMIT].constant / 255.;
+    }
+    else if (MAP_ATT == em_src) {
+	embuff = gs_get_att_typbuff(surf, ATT_EMIT, 0);
+	check_emis = embuff ? 1 : 0;
+    }
+
+    check_shin = 0;
+    shatt = &(surf->att[ATT_SHINE]);
+    ksh = 0.0;
+    pksh = 1.0;
+    sh_src = surf->att[ATT_SHINE].att_src;
+
+    if (CONST_ATT == sh_src) {
+	ksh = surf->att[ATT_SHINE].constant / 255.;
+	gsd_set_material(1, 0, ksh, kem, 0x0);
+    }
+    else if (MAP_ATT == sh_src) {
+	shbuff = gs_get_att_typbuff(surf, ATT_SHINE, 0);
+	check_shin = shbuff ? 1 : 0;
+    }
+
+    /* will need to check for color source of FUNC_ATT & NOTSET_ATT, 
+       or else use more general and inefficient gets */
+    check_color = 1;
+    coloratt = &(surf->att[ATT_COLOR]);
+    col_src = surf->att[ATT_COLOR].att_src;
+
+    if (col_src != MAP_ATT) {
+	if (col_src == CONST_ATT) {
+	    curcolor = (int) surf->att[ATT_COLOR].constant;
+	}
+	else {
+	    curcolor = surf->wire_color;
+	}
+
+	check_color = 0;
+    }
+
+    check_material = (check_shin || check_emis || (kem && check_color));
+
+    /* would also be good to check if colormap == surfmap, to increase speed */
+    /* will also need to set check_transp, check_shine, etc & fix material */
+    cnt = 0;
+                        
+    for (row = 1; row < ycnt; row+=step_val) {
+      	if (GS_check_cancel()) {
+	    gsd_popmatrix();
+	    gsd_blend(0); 
+	    gsd_zwritemask(0xffffffff); 
+
+	    return (-1);
+	}  
+	
+	/*
+	if (row == 201 && new_fan == 0) {
+		xmod *= 2;
+		ymod *= 2;
+		xres = xmod * surf->xres;
+    		yres = ymod * surf->yres;
+		step_val *= 2;
+		new_fan = 1;
+		row -= 1;
+		row /= 2;
+	}
+	*/
+		datarow1 = row * ymod; 
+		datarow2 = (row - (step_val/2)) * ymod;
+		datarow3 = (row + (step_val/2)) * ymod;
+	
+	
+	y1 = ymax - row*yres;
+	y2 = ymax - (row-(step_val/2))*yres;
+	y3 = ymax - (row+(step_val/2))*yres;
+	
+	y1off = row * ymod * surf->cols;
+	y2off =  (row - (step_val/2)) * ymod * surf->cols;
+	y3off =  (row + (step_val/2)) * ymod * surf->cols;
+	
+	
+	for (col = start_val; col < xcnt; col+=step_val) {
+
+	datacol1 = col * xmod;
+	datacol2 = (col - (step_val/2)) * xmod;
+	datacol3 = (col + (step_val/2)) * xmod;
+	
+	x1 = col*xres;
+	x2 = (col-(step_val/2))*xres;
+	x3 = (col+(step_val/2))*xres;
+	
+
+	/* 0 */
+	/*
+	if (check_mask) {
+		if (BM_get(surf->curmask, datacol1, datarow1))
+			continue;
+	}
+	*/
+	
+	cnt1++;
+	
+	/* Do not need BM_get because GET_MAPATT calls
+	 * same and returns zero if masked
+	*/
+	offset2[0] = y1off+datacol1; /* fan center */
+	pt2[0][X] = x1; pt2[0][Y] = y1; /* fan center */
+	pt[X]=pt2[0][X]; pt[Y] = pt2[0][Y];
+		if ( !GET_MAPATT(buff, offset2[0], pt[Z]) ) 
+			continue; /* masked */
+		else {
+	pt[Z] *= zexag;
+		if (gsd_checkpoint
+			(pt, window, viewport, modelMatrix, projMatrix)) 
+			 continue;
+		}
+		
+	
+	offset2[1] = y2off+datacol2;
+	offset2[2] = y2off+datacol1;
+	offset2[3] = y2off+datacol3;
+	offset2[4] = y1off+datacol3;
+	offset2[5] = y3off+datacol3;
+	offset2[6] = y3off+datacol1;
+	offset2[7] = y3off+datacol2;
+	offset2[8] = y1off+datacol2;
+	offset2[9] = y2off+datacol2; /* repeat 1st corner to close */
+	
+	pt2[1][X] = x2;	pt2[1][Y] = y2;
+	pt2[2][X] = x1;	pt2[2][Y] = y2;
+	pt2[3][X] = x3;	pt2[3][Y] = y2;
+	pt2[4][X] = x3;	pt2[4][Y] = y1;
+	pt2[5][X] = x3;	pt2[5][Y] = y3;
+	pt2[6][X] = x1;	pt2[6][Y] = y3;
+	pt2[7][X] = x2;	pt2[7][Y] = y3;
+	pt2[8][X] = x2;	pt2[8][Y] = y1;
+	pt2[9][X] = x2;	pt2[9][Y] = y2; /* repeat 1st corner to close */
+	
+	
+	/* Run through triangle fan */
+		gsd_bgntfan();
+		for (ii = 0; ii < 10; ii++) {
+		
+			if ( ii > 0) {
+			pt[X]=pt2[ii][X]; pt[Y] = pt2[ii][Y];
+				if (!GET_MAPATT(buff, offset2[ii], pt[Z]) )
+					continue;
+			pt[Z] *= zexag;
+			}
+			
+			FNORM(surf->norms[offset2[ii]], n);
+											
+			if (check_color)
+				curcolor = gs_mapcolor(cobuff, coloratt, offset2[ii]);
+
+		    if (check_transp) {
+			GET_MAPATT(trbuff, offset2[ii], ttr);
+			ktrans = (char) SCALE_ATT(tratt, ttr, 0, 255);
+			ktrans = (char) (255 - ktrans) << 24;
+		    }
+
+		    if (check_material) {
+			if (check_emis) {
+			    GET_MAPATT(embuff, offset2[ii], kem);
+			    kem = SCALE_ATT(ematt, kem, 0., 1.);
+			}
+
+			if (check_shin) {
+			    GET_MAPATT(shbuff, offset2[ii], ksh);
+			    ksh = SCALE_ATT(shatt, ksh, 0., 1.);
+			}
+
+			if (pksh != ksh || pkem != kem
+			    || (kem && check_color)) {
+			    pksh = ksh;
+			    pkem = kem;
+			    gsd_set_material(check_shin, check_emis,
+					     ksh, kem, curcolor);
+			}
+		    }
+
+		    gsd_litvert_func(n, ktrans | curcolor, pt);
+		    
+		    
+	} /* close ii loop */
+		gsd_endtfan();
+		cnt2++;
+	
+
+ 
+        } /* end col */
+        
+   } /* end row */
+
+
+    gsd_popmatrix();
+    gsd_blend(0);
+    gsd_zwritemask(0xffffffff);
+
+    return (0);
+}
+
+
+
+
