@@ -1,4 +1,3 @@
-/* %W%  %G% */
 #include "gis.h"
 /******************************************************
 * I_fopen_group_file_new()
@@ -8,6 +7,31 @@
 * fopen new group files in the current mapset
 * fopen old group files anywhere
 *******************************************************/
+
+static error (group,file,msga,msgb)
+    char *group;
+    char *file;
+    char *msga;
+    char *msgb;
+{
+    char buf[100];
+    sprintf (buf, "%sfile [%s] of group [%s in %s]%s",
+	msga, file, group, G_mapset(), msgb);
+    G_warning (buf);
+}
+
+static error2 (group,subgroup,file,msga,msgb)
+    char *group;
+    char *subgroup;
+    char *file;
+    char *msga;
+    char *msgb;
+{
+    char buf[200];
+    sprintf (buf, "%sfile [%s] for subgroup [%s] of group [%s in %s]%s",
+	msga, file, subgroup, group, G_mapset(), msgb);
+    G_warning (buf);
+}
 
 FILE *
 I_fopen_group_file_new (group, file)
@@ -65,18 +89,6 @@ I_fopen_group_file_old (group, file)
     if (!fd)
 	error (group, file, "can't open ", "");
     return fd;
-}
-
-static error (group,file,msga,msgb)
-    char *group;
-    char *file;
-    char *msga;
-    char *msgb;
-{
-    char buf[100];
-    sprintf (buf, "%sfile [%s] of group [%s in %s]%s",
-	msga, file, group, G_mapset(), msgb);
-    G_warning (buf);
 }
 
 FILE *
@@ -138,17 +150,4 @@ I_fopen_subgroup_file_old (group, subgroup, file)
     if (!fd)
 	error2 (group, subgroup, file, "can't open ", "");
     return fd;
-}
-
-static error2 (group,subgroup,file,msga,msgb)
-    char *group;
-    char *subgroup;
-    char *file;
-    char *msga;
-    char *msgb;
-{
-    char buf[200];
-    sprintf (buf, "%sfile [%s] for subgroup [%s] of group [%s in %s]%s",
-	msga, file, subgroup, group, G_mapset(), msgb);
-    G_warning (buf);
 }
