@@ -103,7 +103,7 @@
 .em }M
 '	#.if \\n(nl .bp 1
 .\" ds ]L \\$3
-.ds ]L U.S. Army CERL
+.ds ]L Baylor University
 .}E
 .DT
 .nr )I .5i
