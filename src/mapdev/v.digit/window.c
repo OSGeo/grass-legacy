@@ -15,6 +15,7 @@
 #include "keyboard.h"
 #include "Map_proto.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 /*
 **  Window menu 
@@ -350,7 +351,7 @@ int display_unlabeled_areas (struct Map_info *map)
     char buf[100];
 
 
-    Write_info (3, "                                  ...Press <ESC> key to stop redraw");
+    Write_info (3, _("                                  ...Press <ESC> key to stop redraw"));
     set_keyboard ();
     for (i = 1 ; i <= map->n_areas ; i++)
     {
@@ -378,7 +379,7 @@ int display_islands (struct Map_info *map)
     char buf[60];
 
     set_keyboard ();   
-    Write_info (3, "                                  ...Press <ESC> key to stop redraw");
+    Write_info (3, _("                                  ...Press <ESC> key to stop redraw"));
     for (i = 1 ; i <= map->n_lines ; i++)
     {
         if (key_hit (buf))
@@ -657,14 +658,14 @@ zoom_window (unsigned char type, struct line_pnts *Xpoints)
 	    {
 		Clear_info ();
 		_Clear_base ();
-		_Write_base (12, "Buttons:") ;
-		_Write_base (13, "   Left:   Zoom menu ") ; /* Select new window */
+		_Write_base (12, _("Buttons:")) ;
+		_Write_base (13, _("   Left:   Zoom menu ")) ; /* Select new window */
 #ifdef ANOTHER_BUTTON
-		_Write_base (14, "   Middle: Abort/Quit ") ;
-		 Write_base (15, "   Right:  Zoom/Pan MENU") ;
+		_Write_base (14, _("   Middle: Abort/Quit ")) ;
+		 Write_base (15, _("   Right:  Zoom/Pan MENU")) ;
 #else
-		_Write_base (14, "   Middle: Pan") ; /* was Zoom/Pan MENU */
-		 Write_base (15, "   Right:  Quit ") ;
+		_Write_base (14, _("   Middle: Pan")) ; /* was Zoom/Pan MENU */
+		 Write_base (15, _("   Right:  Quit ")) ;
 #endif
 
 		R_get_location_with_pointer ( &screen_x, &screen_y, &button) ;

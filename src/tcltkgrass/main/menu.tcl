@@ -360,6 +360,10 @@ menu_build 1 .main_menu {
     Display "Display maps" {
         Monitors "" $monitors_menu
         -separator
+         "Display Manager" "" {
+          "exec xterm -title {Display Manager Messages} -e d.dm"
+        }
+        -separator
         Raster "" $display_raster
         Vector "" $display_vector
         Sites  "" $display_sites
@@ -665,7 +669,7 @@ menu_build 1 .main_menu {
                 "source $env(TCLTKGRASSBASE)/module/v.build.polylines"
             }            
             -separator
-            "Change projection on ASCII vector" "" {
+            "Reproject vector from other location" "" {
                 "source $env(TCLTKGRASSBASE)/module/v.proj"
             }
             "Coordinate tranformation on ASCII vector" "" {
@@ -718,6 +722,9 @@ menu_build 1 .main_menu {
 	    "Average site attribute over cells" "" {
 	    	"source $env(TCLTKGRASSBASE)/module/s.windavg"
 	    }
+	    "Univariate stats over cells" "" {
+	        "source $env(TCLTKGRASSBASE)/module/s.cellstats"
+	    }
         }
         Interpolation "" {
             "Inverse distance weighted" "" {
@@ -744,6 +751,9 @@ menu_build 1 .main_menu {
     Image "Image processing" $image_processing
     Import "Import maps into GRASS" {
         "Raster map" "" {
+	    "GRASS ASCII GRID" "" {
+	        "source $env(TCLTKGRASSBASE)/module/r.in.ascii"
+	    }
             "ESRI ARC/INFO ASCII-GRID" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.in.arc"
             }

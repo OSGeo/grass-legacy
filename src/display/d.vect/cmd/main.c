@@ -120,26 +120,21 @@ int main( int argc , char **argv )
     if(opt3->answers)   /* Use opt#->answers for multiple */
     {
         stat = plotCat (map_name, mapset, Points, opt3->answers, fill);
-        if (stat == -2)
-            G_fatal_error ("bad category list");
     }
     else /* we want to see all vectors, no opt3 */
     {
-        /* Vlevel 2 plotting, area filling not supported (yet?) */
+        /* Vlevel 2 plotting, area filling not supported yet */
         if (fill)
             fprintf(stderr, "-f ignored as only supported for vector selections with 'catnum' parameter\n");
-        stat = plot2 (map_name, mapset, Points);
-    }
-
-    if (stat < 0 ) /* no topology found, try again */
-    {
-        /* Vlevel 1 plotting, area filling not supported (yet?) */
-        if (fill)
-            fprintf(stderr, "-f ignored as only supported for vector selections with 'catnum' parameter\n");
-        if (opt3->answer)
-            fprintf(stderr, "WARNING: Cannot select vectors as topology not present. Run v.support first\n");
-        if (use_plot1(map_name, mapset))
-            stat = plot1 (map_name, mapset, Points);
+	/* Depending on overlap plot on level 1 or 2 */
+        if ( use_plot1(map_name, mapset) ) {
+	    stat = plot1 (map_name, mapset, Points);
+	} else {
+            stat = plot2 (map_name, mapset, Points);
+            if (stat < 0 ) { /* no topology found, try again */
+	        stat = plot1 (map_name, mapset, Points);
+	    }
+	}
     }
 
     if (stat == 0) {

@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include "externs.h"
 
-static char Path[2048];
+static char Path[4096];
 
 int 
 main (int argc, char *argv[])
@@ -20,9 +20,10 @@ main (int argc, char *argv[])
     char *cur_mapset;
     char **ptr;
     char **tokens;
+    int no_tokens;
     FILE *fp;
 	struct GModule *module;
-    struct Option *opt1;
+    struct Option *opt1, *opt2;
     struct Flag *print;
     struct Flag *list;
 
@@ -39,7 +40,14 @@ main (int argc, char *argv[])
     opt1->type       = TYPE_STRING ;
     opt1->required   = NO ;
     opt1->multiple   = YES ;
-    opt1->description= "Name of existing mapset" ;
+    opt1->description= "Names(s) of existing mapset(s)" ;
+
+    opt2 = G_define_option() ;
+    opt2->key        = "addmapset" ;
+    opt2->type       = TYPE_STRING ;
+    opt2->required   = NO ;
+    opt2->multiple   = YES ;
+    opt2->description= "Name(s) of existing mapset(s) to add to search list" ;
 
     list = G_define_flag();
     list->key = 'l';
@@ -85,6 +93,44 @@ main (int argc, char *argv[])
 	}
     }
 
+    /* add to existing search path */
+    if (opt2->answer)
+    {
+	char *oldname;
+	Path[0] = '\0';
+	
+	/* read existing mapsets from SEARCH_PATH */
+        for (n = 0; (oldname = G__mapset_name(n)) ; n++)
+	{
+	  strcat (Path, oldname);
+	  strcat (Path, " "); 
+	}
+
+	/* fetch and add new mapsets from param list */
+	for (ptr=opt2->answers; *ptr != NULL; ptr++)
+	{
+	    char *mapset;
+
+	    mapset = *ptr;
+	    if (G__mapset_permissions (mapset) < 0)
+	    {
+		char command[1024];
+
+		fprintf (stderr, "\7ERROR: [%s] - no such mapset\n", mapset);
+		fprintf (stderr, "\nAvailable mapsets:\n\n");
+		sprintf (command, "ls -C %s/%s 1>&2", G_gisdbase(), G_location());
+		system (command);
+		sleep (3);
+		exit(1);
+	    }
+
+	    nchoices++;
+	    strcat (Path, mapset);
+	    strcat (Path, " ");
+	}
+    }
+
+
     /* stuffem sets nchoices*/
 
     if (nchoices == 0)
@@ -124,19 +170,23 @@ main (int argc, char *argv[])
 /*
 * output the list, removing duplicates
 */
-    for (n = 0; tokens[n] != NULL ; n++)
+
+    no_tokens=G_number_of_tokens(tokens);
+
+    for (n = 0; n < no_tokens ; n++)
     {
-        skip = 0;
-        for (i = 0; i < n; i++)
-            if (strcmp (tokens[i], tokens[n]) == 0)
-            {
-                skip = 1;
-                break;
-            }
-        if (!skip)
-        {
-            fprintf (fp,"%s\n", tokens[n]);
+	skip = 0;
+        for (i = n; i < no_tokens; i++)
+	{	
+	    if (i != n)	
+	    {
+            	if (strcmp (tokens[i], tokens[n]) == 0)
+                     skip = 1;
+	    } 
         }
+
+	if (!skip)
+        	fprintf (fp,"%s\n", tokens[n]);
     }
 
     fclose (fp);

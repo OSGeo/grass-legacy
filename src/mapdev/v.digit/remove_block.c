@@ -11,6 +11,7 @@
 #include "wind.h"
 #include "gis.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int 
 remove_block (struct Map_info *Map)
@@ -33,14 +34,14 @@ remove_block (struct Map_info *Map)
 
     Clear_info ();
     _Clear_base ();
-    _Write_base (12, "Buttons:") ;
-    _Write_base (13, "   Left:   Establish a corner") ;
+    _Write_base (12, _("Buttons:")) ;
+    _Write_base (13, _("   Left:   Establish a corner")) ;
 #ifdef ANOTHER_BUTTON
-    _Write_base (14, "   Middle: Abort") ;
-    Write_base  (15, "   Right:  Accept window") ;
+    _Write_base (14, _("   Middle: Abort")) ;
+    Write_base  (15, _("   Right:  Accept window")) ;
 #else
-    _Write_base (14, "   Middle: Accept window") ;
-    Write_base  (15, "   Right:  Abort") ;
+    _Write_base (14, _("   Middle: Accept window")) ;
+    Write_base  (15, _("   Right:  Abort")) ;
 #endif
 
     cur_screen_x = (int)D_west ;
@@ -67,7 +68,7 @@ top:
 	    case LEFTB:
 		if ( cur_screen_x == screen_x  &&  cur_screen_y == screen_y)
 		{
-		    Write_info(2, "Block is too small to use") ;
+		    Write_info(2, _("Block is too small to use")) ;
 		    continue ;
 		}
 		cur_screen_x = screen_x ;
@@ -89,13 +90,13 @@ top:
 
 foo:
     _Clear_info ();
-    Write_info (2, "You are about to remove a block of lines. OK (y/n)? ");
+    Write_info (2, _("You are about to remove a block of lines. OK (y/n)? "));
     Get_curses_text (buf);
     G_squeeze (buf);
     if (*buf != 'y' && *buf != 'Y')
 	return (0);
 
-    sprintf (buf, " Please wait while lines are deleted...");
+    sprintf (buf, _(" Please wait while lines are deleted..."));
     Write_info (2, buf);
 
     cnt = 0;
@@ -127,7 +128,7 @@ foo:
     }
 
 	
-    sprintf (buf, " %d lines removed.", cnt);
+    sprintf (buf, _(" %d lines removed."), cnt);
     Write_info (2, buf);
     sleep (3);
     return (cnt);

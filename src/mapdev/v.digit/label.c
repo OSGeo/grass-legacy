@@ -18,6 +18,7 @@
 #include "keyboard.h"
 #include "Map_proto.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 static double local_x;	/* filled by label_area  */
 static double local_y;	/* used by tell_area_label */
@@ -55,7 +56,7 @@ int Label (void)
 	    {
 	    case MLC_LAREA:
 		Clear_base ();
-                ans = ask_for_name("Do you wish to enter area edges labels?", &cats);
+                ans = ask_for_name(_("Do you wish to enter area edges labels?"), &cats);
 		while (1)
 		{
 		    Clear_base ();
@@ -82,7 +83,7 @@ int Label (void)
 		break;
 	    case MLC_LLINE:
                 Clear_base ();
-                ans = ask_for_name("Do you wish to enter line labels?", &cats);
+                ans = ask_for_name(_("Do you wish to enter line labels?"), &cats);
 
 		while (1)
 		{
@@ -110,7 +111,7 @@ int Label (void)
 		break;
 	    case MLC_LSITE:
                 Clear_base ();
-                ans = ask_for_name("Do you wish to enter site labels?", &cats);
+                ans = ask_for_name(_("Do you wish to enter site labels?"), &cats);
 
 		while (1)
 		{
@@ -139,7 +140,7 @@ int Label (void)
 	    case MLC_LLINES:
 		Clear_base ();
 		Clear_info ();
-		if (!curses_yes_no_default (2, "This function will label EVERY unlabeled line. Proceed?", 0))
+		if (!curses_yes_no_default (2, _("This function will label EVERY unlabeled line. Proceed?"), 0))
 		    break;
 		cat = ask_cat ();
 		if (!cat) break;
@@ -162,7 +163,7 @@ int Label (void)
 		break;
 	    case MLC_MLINES:	/* label multiple lines */
                 Clear_base ();
-                ans = ask_for_name("Do you wish to enter lines labels?", &cats);
+                ans = ask_for_name(_("Do you wish to enter lines labels?"), &cats);
 
 		while (1)
 		{
@@ -204,7 +205,7 @@ int Label (void)
 		    int val;
 
 		    _Clear_info ();
-		    Write_info (4, "   Enter New Contour Interval: ") ;
+		    Write_info (4, _("   Enter New Contour Interval: ")) ;
 		    Get_curses_text (buf) ;
 		    val = atoi (buf);
 		    if (!val)
@@ -249,7 +250,7 @@ int ask_cat (void)
 {
     char buf[100];
 
-    Write_info ( 4, "   Enter Category Number (0 to quit):[0] ") ;
+    Write_info ( 4, _("   Enter Category Number (0 to quit):[0] ")) ;
     Get_curses_text (buf) ;
     return (atoi (buf));
 }
@@ -267,7 +268,7 @@ int label_area (struct Map_info *map, int cat)
     {
 	Clear_info ();
 	/* find_line_with_mouse  fills Gpoints */
-	new_point_with_mouse (&x, &y, "Select point within area:");
+	new_point_with_mouse (&x, &y, _("Select point within area:"));
 	if (x == 0.0 && y == 0.0)
 	    return (-1);
 
@@ -278,7 +279,7 @@ int label_area (struct Map_info *map, int cat)
 
 	local_prev = 0;	/* reset static flag */
 	/* find_line loads global struct: Garea */
-	if (0>=(line = find_line_with_mouse (AREA, "Select a Boundary line:", tell_area_label)))
+	if (0>=(line = find_line_with_mouse (AREA, _("Select a Boundary line:"), tell_area_label)))
 	{
 	    unset_dot (x, y);
 	    continue;
@@ -286,7 +287,7 @@ int label_area (struct Map_info *map, int cat)
 	if (make_area_label (map, line) >= 0)	/* completed an area? */
 	{
 
-	  if (mouse_yes_no ("Accept this area? "))
+	  if (mouse_yes_no (_("Accept this area? ")))
 	  {
 	    /* if this far, then an area is selected, either old or new */
 	    /*  if local_area, then is old, else  Garea holds area info */
@@ -297,7 +298,7 @@ int label_area (struct Map_info *map, int cat)
 
 		if (!map->Area[local_area].att)
 		{
-/*DEBUG*/ debugf ("Label area: creating new attribute\n");
+/*DEBUG*/ debugf (_("Label area: creating new attribute\n"));
 		    map->Area[local_area].att = 
 			dig_new_att (map, local_x, local_y, AREA, local_area, cat);
 		}
@@ -365,7 +366,7 @@ int label_lines (struct Map_info *map, int cat)
     {
 	Clear_info ();
 	/* find_line_with_mouse  fills Gpoints */
-	if (0 >= (line = find_line_with_mouse (LINE | AREA, "Choose line:", tell_line_label)))
+	if (0 >= (line = find_line_with_mouse (LINE | AREA, _("Choose line:"), tell_line_label)))
 	{
 	    return (-1);
 	}
@@ -383,7 +384,7 @@ int label_sites (struct Map_info *map, int cat)
     {
 	Clear_info ();
 	/* find_line_with_mouse  fills Gpoints */
-	if (0 >= (line = find_line_with_mouse (DOT, "Choose site:", tell_line_label)))
+	if (0 >= (line = find_line_with_mouse (DOT, _("Choose site:"), tell_line_label)))
 	{
 	    return (-1);
 	}
@@ -445,7 +446,7 @@ int unlabel_area (struct Map_info *map)
     {
 	Clear_info ();
 	/* find_line_with_mouse  fills Gpoints */
-	new_point_with_mouse (&x, &y, "Select point within area:");
+	new_point_with_mouse (&x, &y, _("Select point within area:"));
 	if (x == 0.0 && y == 0.0)
 	{
 	    unset_dot (x, y);
@@ -455,7 +456,7 @@ int unlabel_area (struct Map_info *map)
 	Blot (&x, &y);
 	local_x = x; local_y = y;	/* store these for tell_area_label() */
 
-	if (0>=(line = find_line_with_mouse (AREA, "Select a Boundary line:", tell_area_unlabel)))
+	if (0>=(line = find_line_with_mouse (AREA, _("Select a Boundary line:"), tell_area_unlabel)))
 	{
 	    /* is a bug here.  if accept a line that does not make an area */
 	    /* this line will stay highlit */
@@ -507,7 +508,7 @@ int unlabel_lines (struct Map_info *map)
     {
 	Clear_info ();
 	/* find_line_with_mouse  fills Gpoints */
-	if (0 >= (line = find_line_with_mouse (LINE | AREA, "Choose labeled line:", tell_line_label)))
+	if (0 >= (line = find_line_with_mouse (LINE | AREA, _("Choose labeled line:"), tell_line_label)))
 	{
 	    return (-1);
 	}
@@ -531,7 +532,7 @@ int unlabel_sites (struct Map_info *map)
     {
 	Clear_info ();
 	/* find_line_with_mouse  fills Gpoints */
-	if (0 >= (line = find_line_with_mouse (DOT, "Choose labeled Site:", tell_line_label)))
+	if (0 >= (line = find_line_with_mouse (DOT, _("Choose labeled Site:"), tell_line_label)))
 	    return (-1);
 	if (map->Line[line].att)
 	{
@@ -550,11 +551,11 @@ int tell_line_label (struct Map_info *map, int line)
 
     if (map->Line[line].att)
     {
-	sprintf (buf, "Line is Category %d", map->Att[map->Line[line].att].cat);
+	sprintf (buf, _("Line is Category %d"), map->Att[map->Line[line].att].cat);
 	Write_info (2, buf);
     }
     else
-	Write_info(2, "Line is Not labeled");
+	Write_info(2, _("Line is Not labeled"));
     return (0);
 }
 
@@ -590,9 +591,9 @@ int make_area_label (struct Map_info *map, int line)
 
 	highlight_area (area, map);
 	if (map->Area[area].att)
-	    sprintf (buf, "Area is Category %d", map->Att[map->Area[area].att].cat);
+	    sprintf (buf, _("Area is Category %d"), map->Att[map->Area[area].att].cat);
 	else
-	    sprintf (buf, "Area is not labeled");
+	    sprintf (buf, _("Area is not labeled"));
 	Write_info(2, buf);
 	return (1);
     }
@@ -604,7 +605,7 @@ int make_area_label (struct Map_info *map, int line)
 	{
             /* Oops, can't create */
 	    BEEP;
-	    Write_info (2, "Could not create area.");
+	    Write_info (2, _("Could not create area."));
 	    sleep (2);
 	    local_prev = 0;
 	    display_line (AREA, &Gpoints, line, map);	/* undo highlight */
@@ -628,7 +629,7 @@ int tell_area_unlabel (struct Map_info *map, int line)
     if ((area = check_area (map, line, local_x, local_y)) > 0 &&
 	map->Area[area].att)
     {
-	sprintf (buf, "Area is labeled as category %d", 
+	sprintf (buf, _("Area is labeled as category %d"), 
 	    map->Att[map->Area[area].att].cat);
 	Write_info (1, buf);
 	local_area = area;
@@ -636,7 +637,7 @@ int tell_area_unlabel (struct Map_info *map, int line)
     }
     else
     {
-	Write_info (1, "Area is not labeled");
+	Write_info (1, _("Area is not labeled"));
 	local_area = 0;
 	return (-1);
     }
@@ -653,14 +654,14 @@ int tell_area_label (struct Map_info *map, int line)
     if ((area = check_area (map, line, local_x, local_y)) > 0 &&
 	map->Area[area].att)
     {
-	sprintf (buf, "Area is labeled as category %d", 
+	sprintf (buf, _("Area is labeled as category %d"), 
 	    map->Att[map->Area[area].att].cat);
 	Write_info (1, buf);
 	local_area = area;
     }
     else
     {
-	Write_info (1, "Area is not labeled");
+	Write_info (1, _("Area is not labeled"));
 	local_area = 0;
     }
     return (0);
@@ -880,7 +881,7 @@ int label_all_lines (struct Map_info *map, int cat)
 	    display_line (map->Line[line].type, &Gpoints, line, map);
 	}
     }
-    Write_info (2, "Processing ...   DONE");
+    Write_info (2, _("Processing ...   DONE"));
     return 0;
 }
 
@@ -908,9 +909,9 @@ int ask_for_name (char *prompt, struct Categories *pcats)
 		while(ans == -1)
 		{
 		    Clear_info ();
-		    Write_info (2, " Enter the SUBJECT matter ");
-		    Write_info (3, " Enter 'list' for available Subject files");
-		    Write_info (4, " <CR> to Abort/Quit): ");
+		    Write_info (2, _(" Enter the SUBJECT matter "));
+		    Write_info (3, _(" Enter 'list' for available Subject files"));
+		    Write_info (4, _(" <CR> to Abort/Quit): "));
 		    Get_curses_text(buffr,20);
 		    if (strlen(buffr) == 0) 
 			ans = 0;
@@ -938,7 +939,7 @@ int ask_for_name (char *prompt, struct Categories *pcats)
 			return -1;
 		    }
 		    Clear_info ();
-		    sprintf(buffr," Do you want to create SUBJ/ file <%s>? ",N_subj_file);
+		    sprintf(buffr,_(" Do you want to create SUBJ/ file <%s>? "),N_subj_file);
 		    ans2 = curses_yes_no_default (2, buffr, 1);
 		    if (ans2)
 		    {
@@ -989,7 +990,7 @@ int ask_name (int cat_number, struct Categories *pcats)
     while (1)
       {
       Clear_info();
-      Write_info( 4, "   Enter a label (<CR> to quit): ");
+      Write_info( 4, _("   Enter a label (<CR> to quit): "));
 #ifdef SCS_MODS
       Get_curses_text (buffr,40) ;
 #else
@@ -1027,7 +1028,7 @@ int ask_name (int cat_number, struct Categories *pcats)
 #endif
 
       Clear_info ();
-      sprintf(buffr," Add new category <%d>, labeled <%s> ? ",recd,nptr);
+      sprintf(buffr,_(" Add new category <%d>, labeled <%s> ? "),recd,nptr);
       if (curses_yes_no_default (2, buffr, 1)) 
 	 {                                      /* user said YES */
 #ifdef SCS_MODS
@@ -1046,10 +1047,10 @@ int ask_name (int cat_number, struct Categories *pcats)
          if (ier < 0)
             { 
 #ifdef SCS_MODS
-            sprintf(buffr," Error in writting SUBJ file <%s>",
+            sprintf(buffr,_(" Error in writting SUBJ file <%s>"),
 					     N_subj_file);
 #else
-            sprintf(buffr," Error in writting dig_cats file <%s>",
+            sprintf(buffr,_(" Error in writting dig_cats file <%s>"),
 					     N_name);
 #endif
             Write_info(2,buffr); sleep(2);
@@ -1072,7 +1073,7 @@ int label_psu (struct Map_info *map, int cat)
 	if (Digtiz_Device == MOUSE)
 	      {
 	         /* find_line_with_mouse  fills Gpoints */
-	      new_point_with_mouse (&x, &y, "Select point within area:");
+	      new_point_with_mouse (&x, &y, _("Select point within area:"));
 	      }
 	else
 #ifdef CURSORKEYS
@@ -1080,7 +1081,7 @@ int label_psu (struct Map_info *map, int cat)
 #endif
 	      {
 	         /* find_line_with_dig  fills Gpoints */
-	      new_point_with_dig (&x, &y, "Select point within area:");
+	      new_point_with_dig (&x, &y, _("Select point within area:"));
 	      }
 
 	if (x == 0.0 && y == 0.0)
@@ -1095,7 +1096,7 @@ int label_psu (struct Map_info *map, int cat)
 	/* find_line loads global struct: Garea */
 	if (Digtiz_Device == MOUSE)
 	      {
-	      if (0>=(line = find_line_with_mouse (AREA, "Select a Boundary line:", tell_area_label)))
+	      if (0>=(line = find_line_with_mouse (AREA, _("Select a Boundary line:"), tell_area_label)))
 	          {
 	          unset_dot (x, y);
 	          return (-1);
@@ -1106,7 +1107,7 @@ int label_psu (struct Map_info *map, int cat)
 	      if (D_cursor_buttons())
 #endif
 	      {
-	      if (0>=(line = find_line_with_dig (AREA, "Select a Boundary line:", tell_area_label)))
+	      if (0>=(line = find_line_with_dig (AREA, _("Select a Boundary line:"), tell_area_label)))
 	          {
 	          unset_dot (x, y);
 	          return (-1);
@@ -1118,7 +1119,7 @@ int label_psu (struct Map_info *map, int cat)
 
 	   if (Digtiz_Device == MOUSE)
 	      {
-	      if (2 == mouse_yes_no ("Accept this area ? "))
+	      if (2 == mouse_yes_no (_("Accept this area ? ")))
 		    return (0);
               ret = 1;
 	      }
@@ -1127,7 +1128,7 @@ int label_psu (struct Map_info *map, int cat)
 	      if (D_cursor_buttons())
 #endif
 	      {
-	      if ( ! ask_driver_yes_no("Accept this area ? ") )
+	      if ( ! ask_driver_yes_no(_("Accept this area ? ")) )
 			return(0) ;
               ret = 1;
 	      }

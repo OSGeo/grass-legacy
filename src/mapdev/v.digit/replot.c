@@ -11,12 +11,13 @@
 #include "keyboard.h"
 #include "Map_proto.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int replot (struct Map_info *map)
 {
     if (!do_graphics()) return (-1);
     Clear_info ();
-    Write_info (2, "Wait. Replotting the Screen.");
+    Write_info (2, _("Wait. Replotting the Screen."));
     
     flush_keyboard ();
 

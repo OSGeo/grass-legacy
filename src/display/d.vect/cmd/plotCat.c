@@ -1,4 +1,5 @@
 /* plotCat - uses level 2 access to vector data for reads */
+#include <stdlib.h>
 #include "gis.h"
 #include "display.h"
 #include "Vect.h"
@@ -127,13 +128,17 @@ int plotCat (
     
     fflush (stdout);
 
-    if (2 > Vect_open_old (&P_map, name, mapset))
+    Vect_set_open_level(2);
+    if ( 0 > Vect_open_old (&P_map, name, mapset))
     {
+	G_warning("Cannot open vector %s@%s on level 2. Run v.support on this vector.", name, mapset); 
 	return -1;
     }
 
-    if (!build_catlist (vect_cats))
+    if (!build_catlist (vect_cats)) {
+        G_warning("Bad category list");	
         return -2;
+    }
 
     Vect__get_window (&P_map, &N, &S, &E, &W);
     if(!quiet)

@@ -77,6 +77,7 @@
  **********************************************************************/
 
 #include "config.h"
+#include "glocale.h"
 #include <rpc/types.h> /* need this for sgi */
 #include <rpc/xdr.h>
 
@@ -129,7 +130,7 @@ compute_window_row (int fd, int row, int *cellRow)
 
   /* check for row in window */
   if (row < 0 || row >= WINDOW.rows) {
-    G_warning ("[%s in %s] - read request for row %d is outside region",
+    G_warning (_("[%s in %s] - read request for row %d is outside region"),
 	     FCB.name, FCB.mapset, row);
     
     return -1;
@@ -462,7 +463,7 @@ cell_values_double (int fd, register unsigned char *data, register COLUMN_MAPPIN
 	      "ERROR: cell_values_d: xdr_double failed for index %d.\n", n);
 	    exit (1); */
 	    /* Roger Bivand 17 June 2000 */
-	    sprintf(rsbbuf, "cell_values_d: xdr_double failed for index %d.", n);
+	    sprintf(rsbbuf, _("cell_values_d: xdr_double failed for index %d."), n);
 	    G_fatal_error(rsbbuf);
 	    return;
 	  } 
@@ -700,7 +701,7 @@ fprintf (stderr, "read row %d\n", r);
       G_zero_raster_buf (cell, cell_type);
 
       if (!FCB.io_error) {
-	G_warning ( "error reading %smap [%s] in mapset [%s], row %d",
+	G_warning ( _("error reading %smap [%s] in mapset [%s], row %d"),
 		 COMPRESSED ? "compressed " : "", FCB.name, FCB.mapset, r);
 	FCB.io_error = 1;
       }
@@ -1008,7 +1009,7 @@ G_get_null_value_row_nomask (int fd, char *flags, int row)
 	 zeros running on their own after flags convertions -A.Sh.*/
 	 FCB.NULL_ROWS[i] = (unsigned char *) realloc(FCB.NULL_ROWS[i],
 	 	sizeof(unsigned char)*G__null_bitstream_size(WINDOW.cols)+1);
-		if (FCB.NULL_ROWS[i] == NULL) G_fatal_error ("Could not realloc buffer");
+		if (FCB.NULL_ROWS[i] == NULL) G_fatal_error (_("Could not realloc buffer"));
 		
          G__convert_01_flags(flags, FCB.NULL_ROWS[i], WINDOW.cols);
 
@@ -1064,7 +1065,7 @@ G__open_null_read (int fd)
    if (null_fd >= MAXFILES)
    {
        close (null_fd);
-       G_warning("Too many open raster files");
+       G_warning(_("Too many open raster files"));
        return -1;
    }
    NULL_FILE_EXISTS = 1;
@@ -1091,12 +1092,12 @@ G__read_null_bits (int null_fd, unsigned char *flags, int row, int cols, int fd)
    offset = (long) (size * R * sizeof(unsigned char)) ;
    if (lseek (null_fd, offset, 0) < 0)
    {
-       G_warning("error reading null row %d\n",R);
+       G_warning(_("error reading null row %d\n"),R);
        return -1;
    }
    if (read (null_fd, flags, size) != size)
    {
-       G_warning("error reading null row %d\n",R);
+       G_warning(_("error reading null row %d\n"),R);
        return -1;
    }
    return 1;

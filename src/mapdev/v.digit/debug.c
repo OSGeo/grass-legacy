@@ -17,6 +17,7 @@
 #include "display_line.h"
 #include "display_node.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 static int d_line_info(struct Map_info *);
 static int m_line_info(struct Map_info *, int);
@@ -174,7 +175,7 @@ static int m_line_info (struct Map_info *map, int line)
 		Line->att, Att->index, Att->cat, Att->x, Att->y);
 	}
 	else
-	    sprintf (buf, " Line is NOT labeled");
+	    sprintf (buf, _(" Line is NOT labeled"));
 	Write_info (3, buf);
     }
 
@@ -191,7 +192,7 @@ static int d_area_info (struct Map_info *map)
     Clear_info ();
     while (1)
     {
-	new_point_with_mouse (&x, &y, "Choose a point in Area:"); 
+	new_point_with_mouse (&x, &y, _("Choose a point in Area:")); 
 	if (area)
 	{
 	    
@@ -220,7 +221,7 @@ static int d_area_info (struct Map_info *map)
 	}
 	else
 	{
-	    Write_info (1, "No Area Found");
+	    Write_info (1, _("No Area Found"));
 	}
     }
 }
@@ -250,7 +251,7 @@ static int d_find_line (struct Map_info *map)
 	    sprintf (buf, "Line# %d", num);
 	    Write_info (1, buf);
 	}
-	Write_info (2, "Enter Line number to find (0 to end)[Default=Next]: ");
+	Write_info (2, _("Enter Line number to find (0 to end)[Default=Next]: "));
 	Get_curses_text (buf);
 	if (num && LINE_ALIVE (&(map->Line[num])))
 	    display_line (map->Line[num].type, &Gpoints, num, map);
@@ -268,20 +269,20 @@ static int d_find_line (struct Map_info *map)
 
 	if (num > map->n_lines)
 	{
-	    Write_info (3 ,"Line does not exist");
+	    Write_info (3 ,_("Line does not exist"));
 	    num = 0;
 	    sleep (2);
 	    continue;
 	}
 	if (!LINE_ALIVE (&(map->Line[num])))
 	{
-	    Write_info (3, "Line has been deleted");
+	    Write_info (3, _("Line has been deleted"));
 	    sleep (2);
 	    continue;
 	}
 	if(0 > V1_read_line(map, &Gpoints, map->Line[num].offset))
 	{
-	    Write_info (3, "Error reading line information");
+	    Write_info (3, _("Error reading line information"));
 	    sleep (2);
 	    return (0);
 	}
@@ -303,10 +304,10 @@ static int d_find_area (struct Map_info *map)
 	Clear_info ();
 	if (num)
 	{
-	    sprintf (buf, "Area# %d", num);
+	    sprintf (buf, _("Area# %d"), num);
 	    Write_info (1, buf);
 	}
-	Write_info (2, "Enter Area number to find (0 to end): ");
+	Write_info (2, _("Enter Area number to find (0 to end): "));
 	Get_curses_text (buf);
 	if (num)
 	    reset_area (num, map);
@@ -316,13 +317,13 @@ static int d_find_area (struct Map_info *map)
 
 	if (num > map->n_areas)
 	{
-	    Write_info (3, "Area does not exist");
+	    Write_info (3, _("Area does not exist"));
 	    sleep (2);
 	    continue;
 	}
 	if (!AREA_ALIVE (&(map->Area[num])))
 	{
-	    Write_info (3, "Area has been deleted");
+	    Write_info (3, _("Area has been deleted"));
 	    sleep (2);
 	    continue;
 	}
@@ -349,7 +350,7 @@ static int d_find_node (struct Map_info *map)
                      Node->x, &Node->x, Node->y, &Node->y);
 	    Write_info (1, buf);
 	}
-	Write_info (2, "Enter Node number to find (0 to end): ");
+	Write_info (2, _("Enter Node number to find (0 to end): "));
 	Get_curses_text (buf);
 	if (num)
 	{
@@ -362,7 +363,7 @@ static int d_find_node (struct Map_info *map)
 
 	if (num > map->n_nodes)
 	{
-	    Write_info (3 ,"Node does not exist");
+	    Write_info (3 ,_("Node does not exist"));
 	    sleep (2);
 	    continue;
 	}
@@ -370,7 +371,7 @@ static int d_find_node (struct Map_info *map)
 	Node = &(map->Node[num]);
 	if (!NODE_ALIVE (Node))
 	{
-	    Write_info (3, "Node has been deleted");
+	    Write_info (3, _("Node has been deleted"));
 	    sleep (2);
 	    continue;
 	}
@@ -390,7 +391,7 @@ static int d_show_isles ( /*ISLE*/
     char text[2048];
 
     _Clear_info ();
-    sprintf (text, "Total isles: %d", map->n_isles);
+    sprintf (text, _("Total isles: %d"), map->n_isles);
     Write_info (4, text);
     prev = 0;
     for (i = 1 ; i <= map->n_isles ; i++)
@@ -444,7 +445,7 @@ static int d_show_areas (struct Map_info *map)
 
     unlabeled = 0;
     _Clear_info ();
-    sprintf (text, "Total areas: %d", map->n_areas);
+    sprintf (text, _("Total areas: %d"), map->n_areas);
     Write_info (4, text);
     prev = 0;
     for (i = 1 ; i <= map->n_areas ; i++)
@@ -511,7 +512,7 @@ static int d_show_lines (struct Map_info *map)
     char text[2048];
 
     _Clear_info ();
-    sprintf (text, "Total lines: %d", map->n_lines);
+    sprintf (text, _("Total lines: %d"), map->n_lines);
     Write_info (4, text);
     prev = 0;
     m_line_prev = 0;
@@ -530,7 +531,7 @@ static int d_show_lines (struct Map_info *map)
 	    prev = i;
 	    if(0 > V1_read_line (map, &Gpoints, map->Line[i].offset))
 	    {
-		Write_info (3, "Error reading line information");
+		Write_info (3, _("Error reading line information"));
 		sleep (2);
 		return (0);
 	    }
@@ -548,7 +549,7 @@ static int d_show_lines (struct Map_info *map)
 	else
 	    prev = 0;
 
-	sprintf(text,"Enter <CR> for next line, # of desired line, 'q' quit: ");
+	sprintf(text,_("Enter <CR> for next line, # of desired line, 'q' quit: "));
 	Write_info (1, text);
 
 
@@ -577,7 +578,7 @@ static int d_show_nodes (struct Map_info *map)
     char buf[1024];
     char text[2048];
 
-    sprintf (text, "Total nodes: %d", map->n_nodes);
+    sprintf (text, _("Total nodes: %d"), map->n_nodes);
     Write_info (4, text);
     prev = 0;
     for (i = 1 ; i <= map->n_nodes ; i++)
@@ -596,7 +597,7 @@ static int d_show_nodes (struct Map_info *map)
 	else
 	    prev = 0;
 
-	sprintf(text,"Enter <CR> for next node, # of desired node, 'q' quit: ");
+	sprintf(text,_("Enter <CR> for next node, # of desired node, 'q' quit: "));
 	Write_info (1, text);
 
 	Get_curses_text (buf);

@@ -34,9 +34,13 @@ if [ ! -d $GISBASE/locks/$SERVERNAME ]; then mkdir $GISBASE/locks/$SERVERNAME ; 
 chmod -R 1777 $GISBASE/locks
 
 echo ""
-echo "GRASS GIS source code compiled successfully."
+echo "GRASS GIS source code compiled."
 echo ""
-echo "* Check file error.log for modules not been compiled due to error."
-echo ""
+if grep 'Compilation error' error.log; then
+  echo ""
+  echo "* In case of errors please check following web page for hints:"
+  echo "    http://grass.itc.it/grass5/source/compilation_hints.html"
+  echo ""
+fi
 echo "* Install GRASS with (possibly as root)"
 echo "    make install"

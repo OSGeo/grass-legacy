@@ -46,6 +46,7 @@ static void SetupReprojector( const char *pszSrcWKT, const char *pszDstLoc,
                               struct pj_info *iproj, 
                               struct pj_info *oproj );
 
+static int l1bdriver;
 
 /************************************************************************/
 /*                                main()                                */
@@ -60,6 +61,7 @@ int main (int argc, char *argv[])
     struct Key_Value *proj_info=NULL, *proj_units=NULL;
     struct Key_Value *loc_proj_info, *loc_proj_units;
     GDALDatasetH  hDS;
+    GDALDriverH   hDriver;
     GDALRasterBandH hBand;
     double          adfGeoTransform[6];
     int         force_imagery = FALSE;
@@ -108,7 +110,6 @@ int main (int argc, char *argv[])
     parm.target->type = TYPE_STRING;
     parm.target->required = NO;
     parm.target->description = "Name of location to read projection from for GCPs transformation";
-    parm.target->gisprompt = "";
 
     parm.title = G_define_option();
     parm.title->key = "title";
@@ -165,7 +166,12 @@ int main (int argc, char *argv[])
     hDS = GDALOpen( input, GA_ReadOnly );
     if( hDS == NULL )
         return 1;
-    
+    hDriver = GDALGetDatasetDriver( hDS ); /* needed for AVHRR data */
+    if ( strcmp(GDALGetDriverShortName(hDriver),"L1B") !=0 )
+        l1bdriver=0;
+    else
+        l1bdriver=1; /* AVHRR found, needs north south flip */
+
 /* -------------------------------------------------------------------- */
 /*      Fetch the projection in GRASS form.                             */
 /* -------------------------------------------------------------------- */
@@ -191,13 +197,31 @@ int main (int argc, char *argv[])
     }
     else
     {
-        /* define negative xy coordinate system to avoid GCPs confusion */
-        cellhd.north  = 0.0;
-        cellhd.south  = (-1) * cellhd.rows;
-        cellhd.ns_res = 1.0;
-        cellhd.west   = (-1) * cellhd.cols;
-        cellhd.east   = 0.0;
-        cellhd.ew_res = 1.0;
+        /* use negative XY coordinates per default for unprojected data */
+        /* for hDriver names see gdal/frmts/gdalallregister.cpp */
+
+        if ( l1bdriver || ( strcmp(GDALGetDriverShortName(hDriver),"GTiff") == 0 ))
+        {
+          /* e.g. L1B - NOAA/AVHRR data must be treated differently */
+          /* define positive xy coordinate system to avoid GCPs confusion */
+          cellhd.north  = cellhd.rows;
+          cellhd.south  = 0.0;
+          cellhd.ns_res = 1.0;
+          cellhd.west   = 0.0;
+          cellhd.east   = cellhd.cols;
+          cellhd.ew_res = 1.0;
+        }
+        else
+        {
+          /* for all other unprojected data ... */
+          /* define negative xy coordinate system to avoid GCPs confusion */
+          cellhd.north  = 0.0;
+          cellhd.south  = (-1) * cellhd.rows;
+          cellhd.ns_res = 1.0;
+          cellhd.west   = (-1) * cellhd.cols;
+          cellhd.east   = 0.0;
+          cellhd.ew_res = 1.0;
+        }
     }
 
 /* -------------------------------------------------------------------- */
@@ -386,8 +410,17 @@ int main (int argc, char *argv[])
 
             for( iGCP = 0; iGCP < sPoints.count; iGCP++ )
             {
-                sPoints.e1[iGCP] = (-1) * pasGCPs[iGCP].dfGCPPixel; /* xy */
-                sPoints.n1[iGCP] = (-1) * pasGCPs[iGCP].dfGCPLine;
+                if ( !l1bdriver)
+                {
+                  sPoints.e1[iGCP] = (-1) * pasGCPs[iGCP].dfGCPPixel; /* neg. xy */
+                  sPoints.n1[iGCP] = (-1) * pasGCPs[iGCP].dfGCPLine;
+                }
+                else /* L1B - NOAA/AVHRR */
+                {
+                  sPoints.e1[iGCP] = pasGCPs[iGCP].dfGCPPixel;    /* pos. xy */
+                  sPoints.n1[iGCP] = pasGCPs[iGCP].dfGCPLine;
+                }
+                
                 sPoints.e2[iGCP] = pasGCPs[iGCP].dfGCPX;          /* target */
                 sPoints.n2[iGCP] = pasGCPs[iGCP].dfGCPY;
                 sPoints.status[iGCP] = 1;
@@ -610,10 +643,14 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
 
 /* -------------------------------------------------------------------- */
 /*      Write the raster one scanline at a time.                        */
+/*      We have to distinguish some cases due to the different          */
+/*      coordinate system orientation of GDAL and GRASS for xy data     */
 /* -------------------------------------------------------------------- */
+   if ( !l1bdriver )
+   { /* no AVHRR */
     for (row = 1; row <= nrows; row++)
     {
-        if( complex )  /* CEOS SAR et al.: import reverse to match GRASS conventions */
+        if( complex )  /* CEOS SAR et al.: import flipped to match GRASS coordinates */
         {
             GDALRasterIO( hBand, GF_Read, 0, row-1, ncols, 1, 
                           bufComplex, ncols, 1, eGDT, 0, 0 );
@@ -635,9 +672,51 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
             }
             G_put_raster_row (cfR, cellReal, data_type);
             G_put_raster_row (cfI, cellImg, data_type);
-        }
+        } /* end of complex */
         else
-        {
+        {   /* single band */
+            GDALRasterIO( hBand, GF_Read, 0, row-1, ncols, 1, 
+                          cell, ncols, 1, eGDT, 0, 0 );
+
+            if( nullFlags != NULL )
+            {
+                memset( nullFlags, 0, ncols );
+
+                if( eGDT == GDT_Int32 )
+                {
+                    for( indx=0; indx < ncols; indx++ ) 
+                    {
+                        if( ((GInt32 *) cell)[indx] == (GInt32) dfNoData )
+                        {
+                            nullFlags[indx] = 1;
+                        }
+                    }
+                }
+                else if( eGDT == GDT_Float32 )
+                {
+                    for( indx=0; indx < ncols; indx++ ) 
+                    {
+                        if( ((float *) cell)[indx] == (float) dfNoData )
+                        {
+                            nullFlags[indx] = 1;
+                        }
+                    }
+                }
+
+                G_insert_null_values( cell, nullFlags, ncols, data_type);
+            }
+            
+            G_put_raster_row (cf, cell, data_type);
+        } /* end of not complex */
+
+        G_percent(row, nrows, 2);
+    }	/* for loop */
+   } /* end of not AVHRR */
+   else
+   {
+    /* AVHRR - read from south to north to match GCPs*/
+    for (row = nrows; row > 0; row--)
+    {
             GDALRasterIO( hBand, GF_Read, 0, row-1, ncols, 1, 
                           cell, ncols, 1, eGDT, 0, 0 );
 
@@ -673,8 +752,7 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
         }
 
         G_percent(row, nrows, 2);
-    }	
-
+    } /* end AVHRR */
 /* -------------------------------------------------------------------- */
 /*      Cleanup                                                         */
 /* -------------------------------------------------------------------- */

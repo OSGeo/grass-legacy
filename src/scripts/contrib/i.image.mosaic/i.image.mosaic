@@ -3,10 +3,15 @@
 #            neteler@geog.uni-hannover.de
 # mosaic code from Felix Gershunov (Felix@spsl.nsc.ru)
 #
-# TODO: - implement g.findfile (currently only current mapset supported)
+# TODO: - implement g.findfile for 3 and 4 maps (currently only current mapset supported)
+#            [done for 2 maps]
 #       - fix isnull() in r.mapcalc for 3 and 4 maps composites
-
+#            [done for 2 maps]
+#       - fix color table length (currently only 256 cols supported, make
+#         flexible)
+#            [done for 2 maps]
 #--------------------------------------------------
+
 if test "$GISBASE" = ""; then
  echo "You must be in GRASS GIS to run this program." >&2
  exit 1
@@ -14,7 +19,7 @@ fi
      
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
-LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+CURRLOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 if [ "$#" -lt 2  -o "$1" = "-help" -o "$1" = "help" ]; then
       echo ""
@@ -26,6 +31,7 @@ if [ "$#" -lt 2  -o "$1" = "-help" -o "$1" = "help" ]; then
       echo "   i.image.mosaic image1 image2 [image3] [image4]"
       echo ""
       echo "The first image will be on top of image stack."
+      echo "The output file name contains all file names and .mosaic extension"
       exit
 fi
 
@@ -48,9 +54,16 @@ if [ "$#" -eq 2 ]; then
 					$2+256,\
 					$1)"
      #modify the color table:
-     echo '% 0 1024' > $LOCATION/colr/$1.$2.mosaic
-     tail -256 $LOCATION/colr/$1 >> $LOCATION/colr/$1.$2.mosaic
-     tail -256 $LOCATION/colr/$2 |awk -F':' '{print $1+256":"$2":"$3":"$4}'>>$LOCATION/colr/$1.$2.mosaic
+     echo '% 0 1024' > $CURRLOCATION/colr/$1.$2.mosaic
+
+     eval `g.findfile element=cell file=$1`
+     mapset1="${mapset}"
+     cat $LOCATION_NAME/$mapset1/colr/$1 | grep -v '%' | tr -s ' ' '\012' >> $CURRLOCATION/colr/$1.$2.mosaic
+
+     eval `g.findfile element=cell file=$2`
+     mapset2="${mapset}"
+     cat $LOCATION_NAME/$mapset2/colr/$2 | grep -v '%' | tr -s ' ' '\012' | awk -F':' '{print $1+256":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$1.$2.mosaic
+     
      echo "Ready. File $1.$2.mosaic created."
      exit
 fi
@@ -60,10 +73,10 @@ if [ "$#" -eq 3 ]; then
      echo "Mosaicing three images..."
      r.mapcalc "$1.$2.$3.mosaic = eval(t1=if($1,$1,$2+256), t2=if(t1 % 256,t1,$3+512), t2)"
      #modify the color table:
-     echo '% 0 1024' > $LOCATION/colr/$1.$2.$3.mosaic
-     tail -256 $LOCATION/colr/$1 >> $LOCATION/colr/$1.$2.$3.mosaic
-     tail -256 $LOCATION/colr/$2 |awk -F':' '{print $1+256":"$2":"$3":"$4}'>>$LOCATION/colr/$1.$2.$3.mosaic
-     tail -256 $LOCATION/colr/$3 |awk -F':' '{print $1+512":"$2":"$3":"$4}'>>$LOCATION/colr/$1.$2.$3.mosaic
+     echo '% 0 1024' > $CURRLOCATION/colr/$1.$2.$3.mosaic
+     tail -256 $CURRLOCATION/colr/$1 >> $CURRLOCATION/colr/$1.$2.$3.mosaic
+     tail -256 $CURRLOCATION/colr/$2 |awk -F':' '{print $1+256":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$1.$2.$3.mosaic
+     tail -256 $CURRLOCATION/colr/$3 |awk -F':' '{print $1+512":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$1.$2.$3.mosaic
      echo "Ready. File $1.$2.$3.mosaic created."
      exit
 fi
@@ -73,11 +86,11 @@ if [ "$#" -eq 4 ]; then
      echo "Mosaicing four images..."
      r.mapcalc "$1.$2.$3.$4.mosaic = eval(t1=if($1,$1,$2+256), t2=if(t1 % 256,t1,$3+512), t3=if(t2 % 256,t2,$4+768),t3)"
      #modify the color table:
-     echo '% 0 1024' > $LOCATION/colr/$1.$2.$3.$4.mosaic
-     tail -256 $LOCATION/colr/$1 >> $LOCATION/colr/$1.$2.$3.$4.mosaic
-     tail -256 $LOCATION/colr/$2 |awk -F':' '{print $1+256":"$2":"$3":"$4}'>>$LOCATION/colr/$1.$2.$3.$4.mosaic
-     tail -256 $LOCATION/colr/$3 |awk -F':' '{print $1+512":"$2":"$3":"$4}'>>$LOCATION/colr/$1.$2.$3.$4.mosaic
-     tail -256 $LOCATION/colr/$4 |awk -F':' '{print $1+768":"$2":"$3":"$4}'>>$LOCATION/colr/$1.$2.$3.$4.mosaic
+     echo '% 0 1024' > $CURRLOCATION/colr/$1.$2.$3.$4.mosaic
+     tail -256 $CURRLOCATION/colr/$1 >> $CURRLOCATION/colr/$1.$2.$3.$4.mosaic
+     tail -256 $CURRLOCATION/colr/$2 |awk -F':' '{print $1+256":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$1.$2.$3.$4.mosaic
+     tail -256 $CURRLOCATION/colr/$3 |awk -F':' '{print $1+512":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$1.$2.$3.$4.mosaic
+     tail -256 $CURRLOCATION/colr/$4 |awk -F':' '{print $1+768":"$2":"$3":"$4}'>>$CURRLOCATION/colr/$1.$2.$3.$4.mosaic
      echo "Ready. File $1.$2.$3.$4.mosaic created."
      exit
 fi

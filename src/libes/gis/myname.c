@@ -13,6 +13,7 @@
  **********************************************************************/
 #include <string.h>
 #include "gis.h"
+#include "glocale.h"
 
 char *
 G_myname()
@@ -31,7 +32,7 @@ G_myname()
 	fclose (fd);
     }
     if (!ok)
-	strcpy(name, "Unknown Location") ;
+	strcpy(name, _("Unknown Location")) ;
 
     return name;
 }

@@ -67,7 +67,7 @@ int I_list_groups (int full)
     fclose (temp);
     sprintf (buf, "$GRASS_PAGER %s", tempfile);
     G_system(buf);
-    unlink (tempfile);
+    remove ( tempfile );
     fprintf (stdout,"hit RETURN to continue -->");
     fflush(stdout);
     G_gets(buf);
@@ -126,7 +126,7 @@ int I_list_subgroups (char *group,int full)
     fclose (temp);
     sprintf (buf, "$GRASS_PAGER %s", tempfile);
     G_system(buf);
-    unlink (tempfile);
+    remove ( tempfile );
     fprintf (stdout,"hit RETURN to continue -->");
     fflush(stdout);
     G_gets(buf);

@@ -30,7 +30,14 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.4  2002-01-22 04:51:23  glynn
+ * Revision 1.4.2.1  2003-02-09 12:07:28  glynn
+ * Changed files sync'd from HEAD
+ *
+ * Revision 1.5  2002/10/07 20:13:05  glynn
+ * Add declarations for GDALGetDriver{Short,Long}Name, GDALGetDatasetDriver
+ *  [fix submitted by Paul Kelly]
+ *
+ * Revision 1.4  2002/01/22 04:51:23  glynn
  * Merge releasebranch_11_april_2001_5_0_0 with HEAD
  *
  * Revision 1.2.4.3  2001/09/06 14:06:11  frankw
@@ -265,12 +272,21 @@ GDAL_ENTRY GDALDatasetH (*pfnGDALOpen)( const char *, GDALAccess ) GDAL_NULL;
 GDAL_ENTRY GDALDriverH (*pfnGDALGetDriverByName)( const char * ) GDAL_NULL;
 #define GDALGetDriverByName pfnGDALGetDriverByName
 
+GDAL_ENTRY const char *(*pfnGDALGetDriverShortName)(GDALDriverH) GDAL_NULL;
+#define GDALGetDriverShortName pfnGDALGetDriverShortName
+
+GDAL_ENTRY const char *(*pfnGDALGetDriverLongName)(GDALDriverH) GDAL_NULL;
+#define GDALGetDriverLongName pfnGDALGetDriverLongName
+
 /* ==================================================================== */
 /*      GDALDataset class ... normally this represents one file.        */
 /* ==================================================================== */
 
 GDAL_ENTRY void (*pfnGDALClose)( GDALDatasetH ) GDAL_NULL;
 #define GDALClose pfnGDALClose
+
+GDAL_ENTRY GDALDriverH (*pfnGDALGetDatasetDriver)( GDALDatasetH ) GDAL_NULL;
+#define GDALGetDatasetDriver pfnGDALGetDatasetDriver
 
 GDAL_ENTRY int (*pfnGDALGetRasterXSize)( GDALDatasetH ) GDAL_NULL;
 #define GDALGetRasterXSize pfnGDALGetRasterXSize

@@ -3,6 +3,7 @@
 #include "dig_curses.h"
 #include	"map.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 #define	SPACES	"  "
 #define	POINTER	"->"
@@ -25,13 +26,13 @@ show_residual_results (int n_points, int active_point)
 	screen_no = 3 ;
 
 
-	Write_base (1, "                        POINTS TO REGISTER");
+	Write_base (1, _("                        POINTS TO REGISTER"));
 #ifdef LATLON
         if (ll_flag)
-	  Write_base (2, "     POINT                LATITUDE             LONGTITUDE     RESIDUALS    ");
+	  Write_base (2, _("     POINT                LATITUDE             LONGTITUDE     RESIDUALS   "));
         else
 #endif
-	  Write_base (2, "     POINT               EASTING (X)           NORTHING (Y)    RESIDUALS    ");
+	  Write_base (2, _("     POINT               EASTING (X)           NORTHING (Y)    RESIDUALS   "));
 
 	for (  i = 0 ;  i < n_points;  i++ )
  	{
@@ -57,11 +58,11 @@ show_residual_results (int n_points, int active_point)
  	}
 		
 	screen_no += 2 ;
-	sprintf ( ptr, " Number of points: %d,   Points registered: %d",
+	sprintf ( ptr, _(" Number of points: %d,   Points registered: %d"),
 		n_points, reg_cnt) ;
 	Write_base (screen_no++, ptr) ;
 
-	sprintf ( ptr, " Residual mean average   : %f", rms) ;
+	sprintf ( ptr, _(" Residual mean average   : %f"), rms) ;
 	Write_base (screen_no, ptr) ;
 
 	calculate_map_scale() ;
@@ -99,21 +100,21 @@ show_coor_only (int n_points, int active_point, int status)
 
 	if( n_points <= 0)
 	{
-		Write_base ( 5, "  There are no points to register.") ;
-		Write_base ( 6, "  You need to type in the coordinates of your points  before ") ;
-		Write_base ( 7, "  you can register the map.") ;
-		Write_base ( 9, "  Use the 'add more points' option and enter the ") ;
-		Write_base ( 10, "  coordinates of the points.") ;
+		Write_base ( 5, _("  There are no points to register.")) ;
+		Write_base ( 6, _("  You need to type in the coordinates of your points  before ")) ;
+		Write_base ( 7, _("  you can register the map.")) ;
+		Write_base ( 9, _("  Use the 'add more points' option and enter the ")) ;
+		Write_base ( 10, _("  coordinates of the points.")) ;
 		return(0) ;
 	}
 
-	Write_base (1, "                        POINTS TO REGISTER");
+	Write_base (1, _("                        POINTS TO REGISTER"));
 #ifdef LATLON
         if (ll_flag)
-	  Write_base (2, "     POINT              LATITUDE             LONGTITUDE                 ");
+	  Write_base (2, _("     POINT              LATITUDE             LONGTITUDE                 "));
         else
 #endif
-	  Write_base (2, "     POINT             EASTING (X)           NORTHING (Y)                 ");
+	  Write_base (2, _("     POINT             EASTING (X)           NORTHING (Y)                 "));
 
 	for (  i = 0 ;  i < n_points;  i++ )
  	{
@@ -139,7 +140,7 @@ show_coor_only (int n_points, int active_point, int status)
 		Write_base (screen_no++, ptr) ;
  	}
 	screen_no += 2 ;
-	sprintf ( ptr, " Number of points: %d,   Points registered: %d",
+	sprintf ( ptr, _(" Number of points: %d,   Points registered: %d"),
 		n_points, reg_cnt) ;
 	Write_base (screen_no++, ptr) ;
 
@@ -148,7 +149,7 @@ show_coor_only (int n_points, int active_point, int status)
     *  Else overwrite the line without redrawing the entire screen. 
     */
 	if( status == -1)
-		sprintf ( ptr, " Points aren't spread out enough.                 ") ;
+		sprintf ( ptr, _(" Points aren't spread out enough.                 ")) ;
 	else
 		sprintf ( ptr, "                                                  ") ;
 	Write_base (screen_no, ptr) ;

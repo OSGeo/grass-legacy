@@ -1,3 +1,52 @@
-3/2001:
+6/2002:
 
+GENERAL
+
+for this version of r.answers, the user must set NULL for values with no
+data (not 0's) for all the maps.
+
+SLOPE MAP
+
+To generate the slope map needed by answers  the creators of r.answers
+advised to use r.slope. But this program can generate some NULL values; 
+so it recommended to use r.slope.aspect, and r.mapcalc to generate the
+slope map as needed by answers:
+
+ mapcalc>slope.answers.format=10*slope.from.r.slope.aspect
+
+The map obtained in this way will be a floating values one. But I've checked
+that it's no problem for r.answers.
+
+ASPECT MAP
+
+Besides r.direct, it is also possible to generate an aspect map with
+r.slope.aspect, and use r.reclass, in the way:
+
+0 thru 21 = 360 east
+22 thru 66 = 45 east-north
+67 thru 111 = 90 north
+112 thru 156 = 135 north-west
+157 thru 201 = 180 west
+202 thru 246 = 225 west-south
+247 thru 291 = 270 south
+292 thru 336 = 315 south-east
+337 thru 360 = 360 east
+end
+
+and the aspect map, as needed by r.answers using r.mapcalc with:
+ mapcalc>aspect.answers=aspect.reclassed.from.r.slope.aspect
+
+After this, we must use, anyway, d.rast.edit as mentioned in the 'answers
+exercise'. The maps so obtained appear slightly different from those
+obtained through r.direct.
+
+---------------------
+Javier Garcia
+andresjavier.garcia@wanadoo.es
+CEBAS-CSIC
+
+
+
+3/2001:
 r.fill.dir is located now in src/raster/r.fill.dir
+

@@ -11,7 +11,7 @@ LIST =  main.o\
 	  layer_stat.o
 
 $(SITE)/$(PGM): $(LIST) $(SITELIB) $(DEPGISLIB)
-	$(CC) ${LDFLAGS} -o $(SITE)/$(PGM) $(LIST) $(SITELIB) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+	$(CC) ${LDFLAGS} -o $(SITE)/$(PGM) $(LIST) $(SITELIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST):	$I/site.h
 $(SITELIB):	#

@@ -10,6 +10,7 @@
 #include "display_line.h"
 #include "Map_proto.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 /* ask user to pick line w/ mouse   then delete it. 
 ** 
@@ -23,7 +24,7 @@ int remove_line (struct Map_info *map, int mtype)
     char *str;
     int line;
 
-    str = (mtype == DOT) ? " Remove a site:" : " Remove a line:";
+    str = (mtype == DOT) ? _(" Remove a site:") : _(" Remove a line:");
     while (1)
     {
 	Clear_info();

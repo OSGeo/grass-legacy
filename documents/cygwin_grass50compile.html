@@ -30,13 +30,13 @@ $Date$
 <hr size=5 noshade width="100%">
 <br>I describe here what i did to compile
 the recent CVS tree of GRASS 5.0.0 on Windows with the cygwin tools
-on a Windows 2000 machine and a Windows NT 4.0 machine.
+on a Windows 2000, Windows NT 4.0 or Windows XP machine.
 <p>Note that GRASS 5.0 on Win32 is still experimental,
 so expect some functionality missing or not working.
 <p>You need:
 <ul>
 <li>
-Windows NT 4.0 (SP3 or higher) or Windows 2000 Professional,
+Windows NT 4.0 (SP3 or higher) or Windows 2000 Professional or Windows XP,
 
 <br>(Windows 9x and Windows ME currently unsupported),</li>
 <li>
@@ -48,8 +48,7 @@ NTFS filesystem (FAT will not work!),</li>
 <li>
 libraries and additions see below.</li>
 </ul>
-This text was written by Andreas Lange<!--
-&lt;<i>andreas.lange@rhein-main.de</i>>-->.
+This text was written by Andreas Lange.
 Most of the text was taken out of the description from John Huddleston<!--&lt;<i>John.Huddleston@usda.gov</i>>-->. Thanks to Malcolm
 Blue<!-- &lt;<i>mblue@nb.sympatico.ca</i>>--> 
 for corrections and the cygwin lists. All errors and mistakes are of course
@@ -101,6 +100,10 @@ distribution (150 MB without X11R6.4), the X11R6.4 installation (additional
 (around 100 MB) and the grass binaries (programs, 100 MB to 150 MB)). If
 you want to do real work, you need at least another 500 MB for GRASS data
 storage.
+<p>
+<b>NOTE: When selecting the root install directory, make sure that
+the "Default Text File Type" is set to Unix.</b>
+
 <p>You need Perl for the manpage-generation
 with g.html2man. Perl 5.6 now is part of the contrib section, so install
 it with the main installation.
@@ -191,7 +194,7 @@ not from a DOS/cmd shell under Windows.
 <p>For sure i have forgotten something. If
 a module doesn't compile, get back here and check.
 
-<h2>6. check the REQUIREMENTS file</h2>
+<h2>6. Check the REQUIREMENTS file</h2>
 Check the file <tt>REQUIREMENTS</tt>
 in the GRASS distribution root directory for any missing libraries and
 get and compile them if needed.
@@ -298,8 +301,8 @@ program that converts the fonts to the GRASS internal binary format (only
 with Win 9x, not with NT 4.0/2000).
 <p>
 <hr size=5 noshade width="100%">
-<font size=-2>
-Andreas Lange, andreas.lange@rhein-main.de, 
+Andreas Lange
+
 $Date$
 </font>
 </body>

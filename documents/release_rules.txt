@@ -56,7 +56,9 @@ General methodolgy: call for release - pre-testing - bug fixes - publish
        monitoring the code committed to the release branch.
      
    o Once all claimed bugs are fixed, tag this branch as pre release 1
-     and start the pretest phase
+     and start the pretest phase.
+     For that run within the existing branch version:
+       cvs tag -c <tagname>
 
 1. Add disclaimer to all mails to be sent to the pre-testers:
 
@@ -129,26 +131,28 @@ Create source and binary distributions:
        (not to forget something)
      - mail to "grass5" to interrupt submitting
 
-     - Tag the stuff in a fresh directory:
-        - mkdir grass5.0.0preXXX ; cd grass5.0.0preXXX
+     - Tag the new version in the (cleaned) release_branch directory:
+         cvs tag -c <tagname>
+       e.g.
+         cvs tag -c release_DD_MM_20YY_grass5_0_X
+
+     - Check out into a fresh directory with anonymous CVS:
+        - mkdir grass5.0.X ; cd grass5.0.0X
         - export CVSROOT=:pserver:grass-guest@intevation.de:/home/grass/grassrepository
         - cvs login
-        - cvs -z3 co -r releasebranch_XXX grass
-          -> check for missing stuff, should be fine
+        - cvs -z3 co -r release_DD_MM_20YY_grass5_0_X grass
+        - rename 'grass' directory to 'grass5.0.X'
 
-        - cvs tag release_XX_YY_2002_grass5_0_0_preZ
-          
-     - Run inside other directory of release branch:
+     - Change back to directory of release branch:
         make changelog
       
-     - add 'Changelog' file to src package 
+     - polish and add 'Changelog' file to src package 
 
      - mail to "grass5" to re-allow submitting
 
-     - rename 'grass' directory to 'grass5.0.0XXX'
-
      - build source tarball (including the parent directory): 
-         grass5.0.0XXX_src.tar.gz
+       Note the file name convention:
+        tar cvfz grass-5.0.X_src.tar.gz grass5.0.X
 
    o Markus:
      Update the PDF-docs on server (needs "htmldoc" tool):
@@ -161,11 +165,14 @@ Create source and binary distributions:
 
    o Store the source tarball in:
      http://grass.itc.it/grass/grass5/source/
-     along with associated NEWS, ChangeLog etc.
+     along with associated files:
+          NEWS.html ChangeLog SUBMITTING REQUIREMENTS.html INSTALL
 
    o update web site to new version (HTML in /cvsweb )
-     index2.html, grass5/index.html, download.html,
-     bugtracking/bugreport.html
+      - index.html
+      - grass5/index.html
+      - download.html
+      - bugtracking/bugreport.html
 
 
 
@@ -268,19 +275,16 @@ Publish the new official GRASS 5 release:
    Our GRASS web site: /announces/
 
    news:comp.infosystems.gis
-   http://spatialnews.geocomm.com/dailynews/
-   http://spatialnews.geocomm.com/submitnews.html (Free News Posting Service)
+   http://spatialnews.geocomm.com/submitnews.html (not free any more)
    http://freshmeat.net/projects/grass/?highlight=GRASS
    http://www.linuxapps.com/?page=application&database=current&id=40
-   http://www.remotesensing.org/submit/submit.php3
    http://www.newsforge.com/submit.pl
-   http://osx.macnn.com/
-   http://www.gis-news.de/
-   http://www.giscafe.com/
+   http://osx.macnn.com/ (email to news tips)
+   http://www.gis-news.de/  (news@gismngt.de)
+   http://www.giscafe.com/   (link: submit material, needs registration)
    http://www.geopoint.de/  (German GIS journal)
    http://www.freegis.org
-   http://www.directions.org
-   http://www.opensourcegis.org
-   http://www.gisdevelopment.net
+   http://www.directionsmag.com/pressreleases.php (click on 'Contact Us')
+   http://www.gisdevelopment.net (click on 'Submit Press Release')
 
-   ... where else?
+   ... anywhere else?

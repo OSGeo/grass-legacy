@@ -28,6 +28,7 @@
 
 #include <string.h>
 #include "gis.h"
+#include "glocale.h"
 char *
 G_mask_info ()
 {
@@ -38,13 +39,13 @@ G_mask_info ()
     switch (G__mask_info (name, mapset))
     {
     case 1:
-	    sprintf (text, "<%s> in mapset <%s>", name, mapset);
+	    sprintf (text, _("<%s> in mapset <%s>"), name, mapset);
 	    break;
     case -1:
-	    strcpy (text, "none");
+	    strcpy (text, _("none"));
 	    break;
     default:
-	    strcpy (text, "not known");
+	    strcpy (text, _("not known"));
 	    break;
     }
 

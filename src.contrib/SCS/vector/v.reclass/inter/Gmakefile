@@ -1,4 +1,4 @@
 $(BIN_INTER)/v.reclass.scs: main.o $(DEPGISLIB)
-	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(TERMLIB) $(XDRLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(XDRLIB) $(MATHLIB)
 
 $(DEPGISLIB): #

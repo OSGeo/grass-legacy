@@ -1,7 +1,9 @@
 
 SLIBDEPS = $(DATETIMELIB) $(XDRLIB) $(MATHLIB)
+PACKAGE ="libgis"
+DEFS=-DPACKAGE=\"$(PACKAGE)\"
 
-EXTRA_CFLAGS=$(GETHOSTNAME) $(ZLIBINCPATH) $(PICFLAGS)
+EXTRA_CFLAGS=$(GETHOSTNAME) $(ZLIBINCPATH) $(PICFLAGS) $(DEFS)
 
 OBJ = \
     adj_cellhd.o\
@@ -28,6 +30,7 @@ OBJ = \
     clicker.o\
     closecell.o\
     color_asp.o \
+    color_byg.o \
     color_byr.o \
     color_free.o \
     color_get.o \
@@ -174,6 +177,7 @@ OBJ = \
     unix_socks.o\
     view.o\
     whoami.o\
+    win32_pipes.o\
     wind_format.o\
     wind_limits.o\
     wind_overlap.o\

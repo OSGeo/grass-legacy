@@ -8,6 +8,7 @@
 #include "ginput.h"
 #include "dig_curses.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 /*  @(#)curses.c    2.1  6/26/87  */
 /*
@@ -23,7 +24,7 @@ WINDOW *COVR_WIN;
 
 static int _curses_state = 0 ;
 
-#define G_CLEAR_WIN(WIN)    { werase(WIN);}
+#define G_CLEAR_WIN(WIN)    { werase(WIN); wrefresh(WIN);}
 /*
 #ifdef SYSV
 #define G_CLEAR_WIN(WIN)    { werase(WIN);}
@@ -86,7 +87,7 @@ int _Write_base_win (void)
     for(i=0; i<menu1_lines; i++)
     {
 	wmove(BASE_WIN,i+1,1);
-	waddstr(BASE_WIN, menu1[i]);
+	waddstr(BASE_WIN, _(menu1[i]));
     }
     _Show_version ();
     box (BASE_WIN, '|', '-');
@@ -153,7 +154,7 @@ int _write_generic_title (char *name)
 {
     char buf[200];
 
-    sprintf (buf, "%s Menu", name);
+    sprintf (buf, _("%s Menu"), name);
     _Base_string (1, 77 - strlen (buf), buf);
 
     return 0;
@@ -476,20 +477,20 @@ int _show_mode (int mode, int type, int label)
 {
     char buffer[128] ;
 
-    wmove(BASE_WIN,12,51) ; waddstr(BASE_WIN, " MODE       TYPE        ");
-    wmove(BASE_WIN,13,51) ; waddstr(BASE_WIN, "   point      line      ");
-    wmove(BASE_WIN,14,51) ; waddstr(BASE_WIN, "   stream     area edge ");
-    wmove(BASE_WIN,15,51) ; waddstr(BASE_WIN, "              site      ");
+    wmove(BASE_WIN,12,51) ; waddstr(BASE_WIN, _(" MODE       TYPE        "));
+    wmove(BASE_WIN,13,51) ; waddstr(BASE_WIN, _("   point      line      "));
+    wmove(BASE_WIN,14,51) ; waddstr(BASE_WIN, _("   stream     area edge "));
+    wmove(BASE_WIN,15,51) ; waddstr(BASE_WIN, _("              site      "));
 #ifndef SCS_MODS 
     wmove(BASE_WIN,16,51) ; waddstr(BASE_WIN, "                        ");
 #else
-    wmove(BASE_WIN,16,51) ; waddstr(BASE_WIN, "              psu       ");
+    wmove(BASE_WIN,16,51) ; waddstr(BASE_WIN, _("              psu       "));
 #endif
-    wmove(BASE_WIN,17,51) ; waddstr(BASE_WIN, " AutoLabel:             ");
+    wmove(BASE_WIN,17,51) ; waddstr(BASE_WIN, _(" AutoLabel:             "));
 
     if (!label)
     {
-	wmove (BASE_WIN, 17, 64); waddstr (BASE_WIN,  "DISABLED");
+	wmove (BASE_WIN, 17, 64); waddstr (BASE_WIN,  _("DISABLED"));
     }
     else
     {
@@ -502,7 +503,7 @@ int _show_mode (int mode, int type, int label)
 	    if(strlen(p) > 15)
 	        *(p+14) = 0;
 
-	    sprintf (buffer, " Category: %s%c", p,
+	    sprintf (buffer, _(" Category: %s%c"), p,
 			    (strlen(Cat_name) > 15 ? '~' : ' '));
 	    wmove (BASE_WIN, 16, 51); waddstr (BASE_WIN,  buffer);
 	}
@@ -515,11 +516,11 @@ int _show_mode (int mode, int type, int label)
     {
     case POINT:
 	wmove(BASE_WIN,13,53);
-	waddstr(BASE_WIN, ">POINT<");
+	waddstr(BASE_WIN, _(">POINT<"));
 	break;
     case STREAM:
 	wmove(BASE_WIN,14,53);
-	waddstr(BASE_WIN, ">STREAM<");
+	waddstr(BASE_WIN, _(">STREAM<"));
 	break;
     default:
 	break;
@@ -528,20 +529,20 @@ int _show_mode (int mode, int type, int label)
     {
     case LINE:
 	wmove(BASE_WIN,13,64);
-	waddstr(BASE_WIN, ">LINE<");
+	waddstr(BASE_WIN, _(">LINE<"));
 	break;
     case AREA:
 	wmove(BASE_WIN,14,64);
-	waddstr(BASE_WIN, ">AREA EDGE<");
+	waddstr(BASE_WIN, _(">AREA EDGE<"));
 	break;
     case DOT:
 	wmove(BASE_WIN,15,64);
-	waddstr(BASE_WIN, ">SITE<");
+	waddstr(BASE_WIN, _(">SITE<"));
 	break;
 #ifdef SCS_MODS
     case PSU:
 	wmove(BASE_WIN,16,64);
-	waddstr(BASE_WIN, ">PSU<");
+	waddstr(BASE_WIN, _(">PSU<"));
 	break;
 #endif /* SCS_MODS */
     default:
@@ -580,7 +581,7 @@ int curses_yes_no (int n, char *s)
 	    case 'N': case 'n':
 		return(0);
 	    default:
-		Write_info(n, "Please answer yes or no");
+		Write_info(n, _("Please answer yes or no"));
 		sleep(2);
 	}
     }
@@ -855,7 +856,7 @@ int _Show_version (void)
     char buf[100];
     /* write out title and version number */
     wmove (BASE_WIN, 1, 2);
-    sprintf(buf,"GRASS-DIGIT Modified %2d.%02d  ", VERSION_MAJOR, VERSION_MINOR);
+    sprintf(buf,_("GRASS-DIGIT Modified %2d.%02d  "), VERSION_MAJOR, VERSION_MINOR);
     waddstr (BASE_WIN, buf);
 
     return 0;
@@ -867,7 +868,7 @@ int Curses_error (char *str)
     _Clear_info ();
     BEEP;
     Write_info (2, str);
-    Write_info (4, "     Press <Return> to continue");
+    Write_info (4, _("     Press <Return> to continue"));
     Get_curses_text (buf);
 
     return (-1);
@@ -879,36 +880,36 @@ int make_dig_win (char buf[16][80])
     
     i = digdevice.buttonstart;
     sprintf (buf[0], 
-" GRASS-DIGIT Version %2d.%02d                               Digitizing menu", 
+_(" GRASS-DIGIT Version %2d.%02d                               Digitizing menu"), 
 	    VERSION_MAJOR, VERSION_MINOR);
     sprintf (buf[1],
 "----------------------------------------------------------------------------");
     sprintf (buf[2], 
-"  %20s digitizer                 | AMOUNT DIGITIZED",digdevice.digname);
+_("  %20s digitizer                |  AMOUNT DIGITIZED"),digdevice.digname);
     sprintf (buf[3],
-"                  Cursor keys:                  |   # Lines:");
+_("                  Cursor keys:                  |   # Lines:"));
     sprintf (buf[4],
-"                 <%d>  digitize point            |   # Area edges:", i++);
+_("                 <%d>  digitize point            |   # Area edges:"), i++);
     sprintf (buf[5],
-"                 <%d>  quit digitizing           |   # Sites:", i++);
+_("                 <%d>  quit digitizing           |   # Sites:"), i++);
     sprintf (buf[6],
-"                 <%d>  update monitor            | - - - - - - - - - - - - - -", i++);
+_("                 <%d>  update monitor            | - - - - - - - - - - - - - -"), i++);
     sprintf (buf[7],
-"                 <%d>  toggle point/stream mode  |   Total points:", i++);
+_("                 <%d>  toggle point/stream mode  |   Total points:"), i++);
     sprintf (buf[8],
 "-----------------------------------------------------------------------------");
     sprintf (buf[9],
-"                                                | CURRENT DIGITIZER PARAMS.");
+_("                                                | CURRENT DIGITIZER PARAMS."));
     sprintf (buf[10],
 "                                                |");
     sprintf (buf[11],
 "                                                |");
     sprintf (buf[12],
-"                                                | MODE       TYPE");
+_("                                                | MODE       TYPE"));
     sprintf (buf[13],
 "                                                |   point      line");
     sprintf (buf[14],
-"                                                |   stream     area edge");
+_("                                                |   stream     area edge"));
     sprintf (buf[15],
 "                                                |");
 

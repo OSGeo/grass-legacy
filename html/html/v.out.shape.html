@@ -11,35 +11,37 @@
 <hr width=100% align=center size=6 no shade>
 <h2>
 NAME</h2>
-<font size=+0><b><i>v.out.shape</i></b> - export GRASS vector files to
-SHAPE</font>
-<br>&nbsp;
+<b><i>v.out.shape</i></b> - export GRASS vector files to
+ESRI Shapefile
 <h2>
 SYNOPSIS</h2>
-<font size=+0><b>v.out.shape</b>&nbsp;&nbsp; map=<i>name</i>&nbsp;&nbsp;
-type=<i>area,line,point</i>&nbsp;&nbsp; mapset=<i>name&nbsp;&nbsp; </i>cats=<i>[string],integer,float</i>&nbsp;&nbsp;
-prefix=<i>name&nbsp;&nbsp; </i>
-log=<i>filename</i>&nbsp;&nbsp; 
-table=<i>name</i>&nbsp;&nbsp; 
-key=<i>name</i>&nbsp;&nbsp; 
-</font>
-<br>&nbsp;
+<b>v.out.shape</b>
+[-valA]
+map=<i>name</i>
+type=<i>area,line,point</i>
+[mapset=<i>name</i>]
+[cats=<i>[none],string,integer,float</i>]
+[prefix=<i>name</i>]
+[log=<i>filename</i>]
+[table=<i>name</i>]
+[key=<i>name</i>]
 <h2>
 DESCRIPTION</h2>
-<font size=+0><b>v.out.shape</b> will export GRASS vectors files to ESRI
-Shapefile format.</font>
-<br>&nbsp;
-<br>&nbsp;
+<b>v.out.shape</b> will export GRASS vectors files to ESRI
+Shapefile format.
 <h2>
 OPTIONS</h2>
-&nbsp;
-<BR>
+
+<h3>
+Flags:</h3>
 <P>
-Flags:<BR>
+<EM>-v</EM> Verbose messages
 <P>
-<EM>-a</EM> Restrict lines exported to arcs of type area-edge<BR>
+<EM>-a</EM> Restrict lines exported to arcs of type area-edge
 <P>
-<EM>-l</EM> Restrict lines exported to arcs of type line<BR>
+<EM>-l</EM> Restrict lines exported to arcs of type line
+<P>
+<EM>-A</EM> Output all area rings (include unlabelled areas)
 <P>
 
 <h3>
@@ -83,13 +85,14 @@ number. Otherwise ignored.
 
 </DL>
 
-<br>&nbsp;
 <h2>
 NOTES</h2>
-<font size=+0>The vector file export program, v.out.shape, will prompt
+<P>
+The vector file export program, v.out.shape, will prompt
 you to enter the name of a GRASS vector file to be exported to SHAPE and
-for various options, see above.</font>
-<p><font size=+0>A GRASS vector file to be exported to SHAPE may contain
+for various options, see above.
+<p>
+A GRASS vector file to be exported to SHAPE may contain
 POINT, LINE and POLYGON coverage. If you select more types for conversion,
 more layers will be produced with the appended suffixes <b>_line</b>,
 <b>_point</b> and <b>_area</b>. Lines used as area edges however are
@@ -102,7 +105,11 @@ as link between table rows and GRASS categories. Database connection
 must be established by db.connect first. Supported column types are
 numbers and strings (int, double, char, varchar,...). Time and other
 types are not supported.
-</font>
+<P>
+When exporting area features, the <em>-A</em> flag specifies that all areas,
+whether labelled or not, should be exported.  This may result in
+exporting area features that really represent "holes" in other area
+features.
 
 <h2>BUGS</h2>
 If data are read from table, problem with char and varchar column types
@@ -111,15 +118,19 @@ instead of column size. PostgreSQL tables are OK. Problem is in ODBC
 driver and database specific drivers.
 
 <h2>SEE ALSO</h2>
-<i><a href="v.in.shape.html">v.in.shape</a>, <a href="m.in.e00.html">m.in.e00</a>,
-v.out.e00, <a href="v.in.arc.html">v.in.arc</a>, <a href="v.out.arc.html">v.out.arc</a>,<a href="v.out.dlg.html">v.out.dlg</a>,
-<a href="db.connect.html">db.connect</a></i>
-<br>&nbsp;
+<i><a href="v.in.shape.html">v.in.shape</a>, 
+<a href="m.in.e00.html">m.in.e00</a>,
+v.out.e00, 
+<a href="v.in.arc.html">v.in.arc</a>, 
+<a href="v.out.arc.html">v.out.arc</a>,
+<a href="v.out.dlg.html">v.out.dlg</a>,
+<a href="db.connect.html">db.connect</a>
+</i>
 <h2>
 AUTHOR</h2>
-<font size=+0>David D. Gray</font>
-<br><i><font size=+0>&lt;ddgray@armadce.demon.co.uk&gt;</font></i>
-<p><font size=+0>Depends on shapelib-1.2.8 or later by Frank Warmerdam.</font>
+David D. Gray
+<br><i>&lt;ddgray@armadce.demon.co.uk&gt;</i>
+<p>Depends on shapelib-1.2.8 or later by Frank Warmerdam.
 <P>
 DBMI support by Radim Blazek
 </body>

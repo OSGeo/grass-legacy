@@ -10,6 +10,7 @@
 #include "vask.h"
 #include "Vect.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int get_head_info(int have_old, struct dig_head *dhead)
 {
@@ -28,20 +29,20 @@ int get_head_info(int have_old, struct dig_head *dhead)
     }
 
     V_clear() ;
-    V_line(1,"Provide the following information:") ;
+    V_line(1,_("Provide the following information:")) ;
 
-    V_line(3,"Your organization") ;
-    V_line(4,"Todays date (mon,yr)") ;
-    V_line(5,"Your name") ;
-    V_line(6,"Map's name") ;
-    V_line(7,"Map's date") ;
-    V_line(8,"Map's scale         1:") ;
-    V_line(9,"Other info") ;
-    V_line(10,"Zone") ;
-    V_line(11,"West edge of area") ;
-    V_line(12,"South edge of area") ;
-    V_line(13,"East edge of area") ;
-    V_line(14,"North edge of area") ;
+    V_line(3,_("Your organization")) ;
+    V_line(4,_("Todays date (mon,yr)")) ;
+    V_line(5,_("Your name")) ;
+    V_line(6,_("Map's name")) ;
+    V_line(7,_("Map's date")) ;
+    V_line(8,_("Map's scale         1:")) ;
+    V_line(9,_("Other info")) ;
+    V_line(10,_("Zone")) ;
+    V_line(11,_("West edge of area")) ;
+    V_line(12,_("South edge of area")) ;
+    V_line(13,_("East edge of area")) ;
+    V_line(14,_("North edge of area")) ;
 
     V_ques( dhead->organization, 's', 3,  20, 30-1) ;
     V_ques( dhead->date,         's', 4,  20, 20-1) ;

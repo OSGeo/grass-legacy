@@ -43,6 +43,71 @@ static expression *allocate(int type, int res_type)
 
 /****************************************************************************/
 
+static expression *to_int(expression *e1)
+{
+	expression *e = allocate(expr_type_function, CELL_TYPE);
+	expression **args = malloc(2 * sizeof(expression *));
+	int *argt = malloc(2 * sizeof(int));
+	void **argv = malloc(2 * sizeof(void *));
+
+	argt[0] = CELL_TYPE;
+
+	args[1] = e1;
+	argt[1] = e1->res_type;
+
+	e->data.func.name = "";
+	e->data.func.func = f_int;
+	e->data.func.argc = 1;
+	e->data.func.args = args;
+	e->data.func.argt = argt;
+	e->data.func.argv = argv;
+	return e;
+}
+
+static expression *to_float(expression *e1)
+{
+	expression *e = allocate(expr_type_function, FCELL_TYPE);
+	expression **args = malloc(2 * sizeof(expression *));
+	int *argt = malloc(2 * sizeof(int));
+	void **argv = malloc(2 * sizeof(void *));
+
+	argt[0] = FCELL_TYPE;
+
+	args[1] = e1;
+	argt[1] = e1->res_type;
+
+	e->data.func.name = "";
+	e->data.func.func = f_float;
+	e->data.func.argc = 1;
+	e->data.func.args = args;
+	e->data.func.argt = argt;
+	e->data.func.argv = argv;
+	return e;
+}
+
+static expression *to_double(expression *e1)
+{
+	expression *e = allocate(expr_type_function, DCELL_TYPE);
+	expression **args = malloc(2 * sizeof(expression *));
+	int *argt = malloc(2 * sizeof(int));
+	void **argv = malloc(2 * sizeof(void *));
+
+	argt[0] = DCELL_TYPE;
+
+	args[1] = e1;
+	argt[1] = e1->res_type;
+
+	e->data.func.name = "";
+	e->data.func.func = f_double;
+	e->data.func.argc = 1;
+	e->data.func.args = args;
+	e->data.func.argt = argt;
+	e->data.func.argv = argv;
+	return e;
+}
+
+/****************************************************************************/
+
 int is_var(const char *name)
 {
 	return find_variable(name) ? 1 : 0;
@@ -155,7 +220,7 @@ expression *binding(const char *var, expression *val)
 	return e;
 }
 
-expression *function(const char *name, expr_list *arglist)
+expression *operator(const char *name, const char *oper, int prec, expr_list *arglist)
 {
 	func_desc *d = find_func(name);
 	int argc = list_length(arglist);
@@ -212,6 +277,8 @@ expression *function(const char *name, expr_list *arglist)
 
 	e = allocate(expr_type_function, argt[0]);
 	e->data.func.name = name;
+	e->data.func.oper = oper;
+	e->data.func.prec = prec;
 	e->data.func.func = d ? d->func : NULL;
 	e->data.func.argc = argc;
 	e->data.func.args = args;
@@ -220,86 +287,37 @@ expression *function(const char *name, expr_list *arglist)
 	return e;
 }
 
-expression *to_int(expression *e1)
+expression *function(const char *name, expr_list *arglist)
 {
-	expression *e = allocate(expr_type_function, CELL_TYPE);
-	expression **args = malloc(2 * sizeof(expression *));
-	int *argt = malloc(2 * sizeof(int));
-	void **argv = malloc(2 * sizeof(void *));
-
-	argt[0] = CELL_TYPE;
-
-	args[1] = e1;
-	argt[1] = e1->res_type;
-
-	e->data.func.name = "int";
-	e->data.func.func = f_int;
-	e->data.func.argc = 1;
-	e->data.func.args = args;
-	e->data.func.argt = argt;
-	e->data.func.argv = argv;
-	return e;
-}
-
-expression *to_float(expression *e1)
-{
-	expression *e = allocate(expr_type_function, FCELL_TYPE);
-	expression **args = malloc(2 * sizeof(expression *));
-	int *argt = malloc(2 * sizeof(int));
-	void **argv = malloc(2 * sizeof(void *));
-
-	argt[0] = FCELL_TYPE;
-
-	args[1] = e1;
-	argt[1] = e1->res_type;
-
-	e->data.func.name = "float";
-	e->data.func.func = f_float;
-	e->data.func.argc = 1;
-	e->data.func.args = args;
-	e->data.func.argt = argt;
-	e->data.func.argv = argv;
-	return e;
-}
-
-expression *to_double(expression *e1)
-{
-	expression *e = allocate(expr_type_function, DCELL_TYPE);
-	expression **args = malloc(2 * sizeof(expression *));
-	int *argt = malloc(2 * sizeof(int));
-	void **argv = malloc(2 * sizeof(void *));
-
-	argt[0] = DCELL_TYPE;
-
-	args[1] = e1;
-	argt[1] = e1->res_type;
-
-	e->data.func.name = "double";
-	e->data.func.func = f_double;
-	e->data.func.argc = 1;
-	e->data.func.args = args;
-	e->data.func.argt = argt;
-	e->data.func.argv = argv;
-	return e;
+	return operator(name, NULL, 0, arglist);
 }
 
 /****************************************************************************/
 
-void print_constant(FILE *fp, const expression *e)
+static char *format_expression_prec(const expression *e, int prec);
+
+/****************************************************************************/
+
+static char *format_constant(const expression *e)
 {
+	char buff[64];
+
 	if (e->res_type == CELL_TYPE)
-		fprintf(fp, "%d", e->data.con.ival);
+		sprintf(buff, "%d", e->data.con.ival);
 	else
-		fprintf(fp, "%f", e->data.con.fval);
+		sprintf(buff, "%f", e->data.con.fval);
+
+	return strdup(buff);
 }
 
-void print_variable(FILE *fp, const expression *e)
+static char *format_variable(const expression *e)
 {
-	fprintf(fp, "%s", e->data.var.name);
+	return strdup(e->data.var.name);
 }
 
-void print_map(FILE *fp, const expression *e)
+static char *format_map(const expression *e)
 {
+	char buff[1024];
 	const char *mod;
 
 	switch (e->data.map.mod)
@@ -316,46 +334,146 @@ void print_map(FILE *fp, const expression *e)
 		mod = "?";
 		break;
 	}
-	fprintf(fp, "%s%s[%d,%d]",
-		mod, e->data.map.name,
-		e->data.map.row, e->data.map.col);
+
+	if (e->data.map.row || e->data.map.col)
+		sprintf(buff, "%s%s[%d,%d]",
+			mod, e->data.map.name,
+			e->data.map.row, e->data.map.col);
+	else
+		sprintf(buff, "%s%s", mod, e->data.map.name);
+
+	return strdup(buff);
 }
 
-void print_function(FILE *fp, const expression *e)
+static char *format_function(const expression *e, int prec)
 {
+	char *args[1024];
+	char *result;
+	int len;
 	int i;
 
-	fprintf(fp, "%s(", e->data.func.name);
+	if (e->data.func.argc == 1 && !*e->data.func.name)
+		return format_expression_prec(e->data.func.args[1], prec);
+
+	len = strlen(e->data.func.name) + 3;
+
+	for (i = 1; i <= e->data.func.argc; i++)
+	{
+		args[i] = format_expression_prec(e->data.func.args[i], 9);
+		if (i > 1)
+			len += 2;
+		len += strlen(args[i]);
+	}
+
+	result = malloc(len);
+
+	strcpy(result, e->data.func.name);
+	strcat(result, "(");
 	for (i = 1; i <= e->data.func.argc; i++)
 	{
 		if (i > 1)
-			fprintf(fp, ",");
-		print_expression(fp, e->data.func.args[i]);
+			strcat(result, ", ");
+		strcat(result, args[i]);
+		free(args[i]);
 	}
-	fprintf(fp, ")");
+	strcat(result, ")");
+
+	return result;
 }
 
-void print_binding(FILE *fp, const expression *e)
+static char *format_operator(const expression *e, int prec)
 {
-	fprintf(fp, "%s = (", e->data.bind.var);
-	print_expression(fp, e->data.bind.val);
-	fprintf(fp, ")");
+	int prec2 = e->data.func.prec;
+	char *arg1, *arg2, *arg3;
+	char *result;
+
+	switch (e->data.func.argc)
+	{
+	case 1:
+		arg1 = format_expression_prec(e->data.func.args[1], prec2);
+		result = malloc(strlen(e->data.func.oper) + strlen(arg1) + 3);
+		sprintf(result, "%s%s%s%s",
+			prec <= prec2 ? "(" : "",
+			e->data.func.oper, arg1,
+			prec <= prec2 ? ")" : "");
+		free(arg1);
+		return result;
+	case 2:
+		arg1 = format_expression_prec(e->data.func.args[1], (prec2 + 1));
+		arg2 = format_expression_prec(e->data.func.args[2], prec2);
+		result = malloc(strlen(e->data.func.oper) + strlen(arg1) + strlen(arg2) + 5);
+		sprintf(result, "%s%s %s %s%s",
+			prec <= prec2 ? "(" : "",
+			arg1, e->data.func.oper, arg2,
+			prec <= prec2 ? ")" : "");
+		free(arg1);
+		free(arg2);
+		return result;
+	case 3:
+		arg1 = format_expression_prec(e->data.func.args[1], prec2);
+		arg2 = format_expression_prec(e->data.func.args[2], prec2);
+		arg3 = format_expression_prec(e->data.func.args[3], (prec2 + 1));
+		result = malloc(strlen(arg1) + strlen(arg2) + strlen(arg3) + 9);
+		sprintf(result, "%s%s ? %s : %s%s",
+			prec <= prec2 ? "(" : "",
+			arg1, arg2, arg3,
+			prec <= prec2 ? ")" : "");
+		free(arg1);
+		free(arg2);
+		free(arg3);
+		return result;
+	default:
+		fprintf(stderr, "Illegal number of arguments (%d) for operator '%s'\n",
+			e->data.func.argc, e->data.func.oper);
+		return format_function(e, prec);
+	}
 }
 
-void print_expression(FILE *fp, const expression *e)
+static char *format_func_op(const expression *e, int prec)
+{
+	return (e->data.func.oper
+		? format_operator
+		: format_function)(e, prec);
+}
+
+static char *format_binding(const expression *e, int prec)
+{
+	char *result;
+	char *expr = format_expression_prec(e->data.bind.val, 8);
+
+	result = malloc(strlen(e->data.bind.var) + strlen(expr) + 6);
+
+	sprintf(result, "%s%s = %s%s",
+		prec < 8 ? "(" : "",
+		e->data.bind.var,
+		expr,
+		prec < 8 ? ")" : "");
+
+	free(expr);
+
+	return result;
+}
+
+static char *format_expression_prec(const expression *e, int prec)
 {
 	switch (e->type)
 	{
-	case expr_type_constant:	print_constant(fp, e);	break;
-	case expr_type_variable:	print_variable(fp, e);	break;
-	case expr_type_map:		print_map     (fp, e);	break;
-	case expr_type_function:	print_function(fp, e);	break;
-	case expr_type_binding:		print_binding (fp, e);	break;
+	case expr_type_constant:	return format_constant(e);
+	case expr_type_variable:	return format_variable(e);
+	case expr_type_map:		return format_map     (e);
+	case expr_type_function:	return format_func_op (e, prec);
+	case expr_type_binding:		return format_binding (e, prec);
 	default:
 		fprintf(stderr,
-			"print_expression: unknown type: %d\n",
+			"format_expression_prec: unknown type: %d\n",
 			e->type);
+		return strdup("??");
 	}
+}
+
+char *format_expression(const expression *e)
+{
+	return format_expression_prec(e, 9);
 }
 
 /****************************************************************************/

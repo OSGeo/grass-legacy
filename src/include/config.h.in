@@ -118,11 +118,8 @@
 /* define if PNG support exists */
 #undef HAVE_PNG
 
-/* define if postgres.h exists */
-#undef HAVE_POSTGRES_H
-
-/* define if postgres_fe.h exists */
-#undef HAVE_POSTGRES_FE_H
+/* define if postgres client header exists */
+#undef HAVE_LIBPQ_FE_H
 
 /* define if PQcmdTuples in lpq */
 #undef HAVE_PQCMDTUPLES

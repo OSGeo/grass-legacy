@@ -1,79 +1,51 @@
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+		GRASS/PostgreSQL interface modules
 
-		GRASS/Postgres interface modules (libpq update feb'00).
-		
-- -------------------------------------------------------------------------
-		
-Modules in this pack, in general, provide the following functions.
-
-1. g.select.pg - select a database to use with GRASS.
+1. g.select.pg - select a database to use in GRASS.
 
 2. g.table.pg - list tables in currently selected DB.
 
-3. g.columns.pg - list columns information in a table of the selected DB.
+3. g.columns.pg - list columns information in a table of selected DB.
 
-4. g.stats.pg - calculate means, min,max, frequencies for a specified numeric 
-column.
+4. g.stats.pg - calculate means, min, max, frequencies of specified 
+numeric column.
 
 5. d.site.pg - display and optionally copy/reclass sites selected 
-with a DB query. 
+by DB query. 
 
-6. d.vect.pg - display lines/areas selected with a DB query.
+6. d.vect.pg - display and optionally extract lines/areas selected 
+by DB query.
 
-7. d.rast.pg - display(optionally) and reclass raster maps with a DB query.
+7. d.rast.pg - display(optionally) and reclass raster maps through 
+DB query.
 
-8. d.what.s.pg - query sites on graphics monitor with mouse. Like d.what.sites,
-it gives coordinates, but lists all attributes. Gives option to geometry
-filter sites and dump the fields in comma-separated lists for other statistics 
-programs (like R or Gnumeric).
+8. d.what.s.pg - query with mouse sites on graphics monitor. 
+Option to dump the fields in comma-separated lists for other 
+programs.
 
-9. d.what.v.pg - query lines/areas with mouse. Like d.what.vect, lists 
-attributes.
-Optionally fills queried areas (like v.area). May be used for the UPDATE command
-in Postgres through the input SQL file. The idea is to prepare an arbitrary
-algorithm, code it in SQL, and then update DB with clicking on chosen 
-polys/lines. You may consider this as piping anything you grabbed on screen
-through various filters.
+9. d.what.v.pg - query with mouse lines/areas. May be used by  
+UPDATE command in PostgreSQL input through SQL command file. Consider 
+piping anything you grabbed on screen through various filters.
 
-10. d.what.r.pg - does the same as above on the raster maps.
+10. d.what.r.pg - the same as above on raster maps.
 
-11. v.reclass.pg - reclasses vector maps according to the 
+11. v.reclass.pg - reclass vector maps, rules based on any 
 SELECT filter.
 
-12. v.in.shape.pg - does the same as the v.in.shape module plus dumping the relevant dbf
-information directly to postgres table. 
-Admin/normal_user dump modes differ in the way the new records inserted. Admin takes 
-less time, while "normal user" dump is accompanied with HDD rattles. This is due to
-safety limitation of Postgres which allows direct copying of large files to its
-super-users only.
+12. v.in.shape.pg - DEPRECATED. Use v.in.shape + pg.in.dbf instead.
 
-13. v.in.arc.pg - works in interactive mode. A lot more straightforward than 
-the original "v.in.arc". Just UNGEN lines and points in arc/info, then copy
-the lines and labels files to your work directory (yes, no need to dig them into
-/db/your_database/your_name/arc), and also copy PAT.dbf (or AAT.dbf) there too,
-possibly renaming them to more reasonable names, as these would be taken by
-Postgres tables when they are created.
-Then run v.in.arc.pg and it would create area/line coverages 
-(with categories set to line/areas id's) plus dump the dbf to postgres. Then you
-would probably want to run v.reclass.pg to set proper cats.
+13. v.in.arc.pg - DEPRECATED. Use v.in.arc + pg.in.dbf instead.
 
-14. pg.in.dbf - just the hatcheted dumper from the two above modules. Takes DBF
-file name from user and dumps all columns to postgres.
+14. pg.in.dbf - program that inputs DBF file and dumps all 
+columns to PostgreSQL.
 
-Please see module manuals for more details.
+15. v.to.pg - this program is used to export GRASS vectors (lines or polys)
+to PostgreSQL native "line" or "polygon" formats.
 
-Notice1: Tcl-Tk modules may have input "where" clause restricted to one rule
-typed without "whitespaces",
-(unlike terminal input where number of subclause is not limited).
+Please see these modules manuals for explanations and examples.
+
+NB: Tcl-Tk modules may have input "where" clause restricted to one rule
+typed without "whitespace" while in terminal input the number of sub-clause 
+is not limited by this.
 
 Alex Shevlakov,
 sixote@yahoo.com
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.0.6 (GNU/Linux)
-Comment: For info see http://www.gnupg.org
-
-iD8DBQE8hhsJVtGWG6G2qfwRArIgAJ9nnM3mzYW850OJPuf74jn4ACdriACgsFq5
-XrJ74iesZpPqQU72ioazABs=
-=jH5I
------END PGP SIGNATURE-----

@@ -1,4 +1,9 @@
 #!/bin/sh
+
+#Moritz
+#This is based on Radim's d.dm with just one additional (quick and dirty) hack to create button allowing the export of the map to a "map.png" file.
+
+
 # the next line restarts using wish \
 exec $GRASS_WISH "$0" "$@"
 
@@ -7,7 +12,7 @@ set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
 set env(MAPSET) [exec g.gisenv get=MAPSET]
 
 lappend auto_path $env(GISBASE)/bwidget
-package require BWidget 
+package require -exact BWidget 1.2.1
 
 # ----- PROCS -----
 # ----- set procs
@@ -62,6 +67,7 @@ proc mon_open { mon } {
 	return    
     }
 }
+
 
 proc set_display { dtype } {
     global set sset smon map
@@ -130,6 +136,44 @@ proc set_display { dtype } {
     }
 }
 
+
+#Moritz' hack for creating png map
+proc set_display_png { } {
+    global set sset smon map
+    set s $sset
+    if { $s < 0 } { puts stdout "Set not selected."; return }
+
+    set f $set($s,frame)
+
+    set cmon [eval exec d.mon -p]
+    set cm ""
+    regexp -- {Currently selected monitor: (.+)$} $cmon r cm 
+
+    if { $cm == "PNG" } {
+        puts stdout "WARNING: PNG monitor is already running and will be restarted."
+	set cmd "d.mon stop=PNG"
+	execute $cmd
+    } 
+ 
+    set cmd "d.mon PNG"
+    execute $cmd
+
+    #set cmd "d.erase white"
+    #execute $cmd
+    foreach mw [pack slaves $f] {
+      regexp -- {.*\.([^.]*)$} $mw p m 
+          if { $map($s,$m,_disp) } {
+              map_display $s $m
+          }
+      }
+    
+
+    set cmd "d.mon stop=PNG"
+    execute $cmd
+}
+
+
+
 proc set_query { } {
     global set sset smon slb map
     set s $sset
@@ -176,7 +220,8 @@ proc map_create { type } {
     pack configure $f.$m -anchor w
     set map($s,$m,_type) $type
     set map($s,$m,_widget) $f.$m    
-    button $f.$m._sel -text $type -command "map_sel $m" -height 1 -width 2 -relief "raised"
+    Button $f.$m._sel -text $type -command "map_sel $m" -height 1 -width 2 -relief "raised" \
+                      -helptext "Select this entry to be moved/deleted in/from set."
     checkbutton $f.$m._disp -text "" -variable map($s,$m,_disp)
     $f.$m._disp select 
     pack $f.$m._sel $f.$m._disp -side left
@@ -419,7 +464,7 @@ proc dm_save { } {
     global env slb set map
     set slist [$slb items]
     set fpath "$env(GISDBASE)/$env(LOCATION_NAME)/$env(MAPSET)/.d.dmrc"
-    puts stdout "Writting to $fpath" 
+    puts stdout "Writing to $fpath" 
     set file [open $fpath w]
 
     foreach s $slist {
@@ -556,16 +601,12 @@ proc dm_read { } {
 proc element_list { element } {
     global env
     set pwd [pwd]
-    set inpath 1
     set list ""
     cd $env(GISDBASE)/$env(LOCATION_NAME)
-    foreach dir [concat [exec g.mapsets -p] . [glob *]] {
-        if {[string compare $dir .] == 0} {
-	    set inpath 0
-    	    continue
-	}  
+    foreach dir [ exec g.mapsets -p ] {
 	if [info exists dirstat($dir)] continue
         set dirstat($dir) 1
+
 	if {[catch {eval eval cd $env(GISDBASE)/$env(LOCATION_NAME)/$dir/$element}]} {
 	    if {0 && $dir == $env(MAPSET)} {
     		tk_messageBox -message "$typ directory\n'[subst [subst $element]]'\nnon-existent or unusable" \
@@ -777,3 +818,7 @@ pack $df.pan -side left -padx 2 -pady 5
 
 button $df.query -text "Query"  -command { set_query } 
 pack $df.query -side left -padx 2 -pady 5
+
+#Moritz' hack for creating png map
+button $df.png -text "PNG"  -command { set_display_png} 
+pack $df.png -side left -padx 2 -pady 5

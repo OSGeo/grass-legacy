@@ -15,6 +15,7 @@
  ***************************************************************/
 #include <stdlib.h>
 #include "gis.h"
+#include "glocale.h"
 
 char *
 G_home ()
@@ -25,7 +26,7 @@ G_home ()
     if ((home = G__home()))
 	return home;
     
-    G_fatal_error ("unable to determine user's home directory");
+    G_fatal_error (_("unable to determine user's home directory"));
     exit(-1);
 }
 

@@ -11,6 +11,7 @@ interface_build {
     {checkbox method {Minimum neighborhood operation.} "" minimum}
     {checkbox method {Maximum neighborhood operation.} "" maximum}
     {checkbox method {Stddev neighborhood operation.} "" stddev}
+    {checkbox method {Sum neighborhood operation.} "" sum}
     {checkbox method {Variance neighborhood operation.} "" variance}
     {checkbox method {Diversity neighborhood operation.} "" diversity}
     {checkbox method {Interspersion neighborhood operation.} "" interspersion}

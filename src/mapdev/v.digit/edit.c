@@ -9,6 +9,7 @@
 #include "Map_proto.h"
 #include "dig_curses.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 /*
 **  Edit menu 
@@ -65,7 +66,7 @@ int Edit (void)
 		    break;
 		}
 
-		Write_info (2,"Point marker only valid with Digitizer Enabled");
+		Write_info (2,_("Point marker only valid with Digitizer Enabled"));
 		sleep (2);
 
 		break;

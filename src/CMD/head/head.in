@@ -70,10 +70,9 @@ XMLIB               = @XMLIB@
 XEXTRALIBS          = @X_EXTRA_LIBS@
 
 COMPATLIB           = @COMPATLIB@
-TERMLIB             = @TERMLIB@
-CURSES              = @CURSESLIB@ $(TERMLIB) $(COMPATLIB)
+CURSES              = @CURSESLIB@ $(COMPATLIB)
 MATHLIB             = @MATHLIB@ 
-XDRLIB              = @XDRLIB@ @ZLIBINCPATH@ @ZLIBLIBPATH@ @ZLIB@ $(XEXTRALIBS)
+XDRLIB              = @XDRLIB@ @ZLIBINCPATH@ @ZLIBLIBPATH@ @ZLIB@
 ICONVLIB            = @ICONVLIB@
 INTLLIB             = @INTLLIB@
 

@@ -36,11 +36,22 @@ x_row (argc, argv, xcell, ncols)
 {
     int row;
 
+/*AV*/
+/* BEGIN OF ORIGINAL CODE */
+/*
     row = current_row+1;
+*/
+/* END OF ORIGINAL CODE */
+
+/*AV*/
+/* BEGIN OF MY CODE */
+	row=(current_region.north-current_region.south)/current_region.ns_res-current_row;
+/* END OF MY CODE */
+
     while (ncols-- > 0)
     {
 	*xcell++ = (double) row;
-    }
+		}
 }
 
 n_row(n,name) char *name;

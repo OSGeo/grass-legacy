@@ -221,9 +221,6 @@ void execute(expr_list *ee)
 				"internal error: execute: invalid type: %d",
 				e->type);
 
-		print_expression(stderr, e);
-		fprintf(stderr, "\n");
-
 		initialize(e);
 
 		var = e->data.bind.var;
@@ -239,7 +236,6 @@ void execute(expr_list *ee)
 		for (l = ee; l; l = l->next)
 		{
 			expression *e = l->exp;
-			const char *var = e->data.bind.var;
 			int fd = e->data.bind.fd;
 
 			evaluate(e);
@@ -269,6 +265,8 @@ void execute(expr_list *ee)
 
 			copy_history(var, val->data.map.idx);
 		}
+		else
+			create_history(var, val);
 	}
 
 	G_unset_error_routine();

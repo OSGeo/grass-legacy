@@ -1,4 +1,4 @@
-$Id: SUBMITTING,v 1.21.2.2 2002-08-29 09:53:06 glynn Exp $
+$Id: SUBMITTING,v 1.21.2.3 2003-02-09 12:07:20 glynn Exp $
 
 NOTE: Please improve this list!
 
@@ -7,11 +7,12 @@ Dear (new) GRASS Developer,
 When submitting to GRASS CVS repositiory, please take
 care of following rules:
 
-1.  Get the latest GRASS 5 Programmer's Manual here:
+1.  Get and read the GRASS 5 Programmer's Manual here:
     http://grass.itc.it/grassdevel.html#prog
 
-    or (better) grab it from GRASS CVS server (Latex):
+    or (better) grab the latest version from GRASS CVS server (Latex):
     	cvs -z3 co progmangrass50
+        cd progmangrass50 ; make pdf
 
 2.  Use the directory structure to place your module appropriately into
     the source tree
@@ -44,7 +45,7 @@ care of following rules:
 *   	    	be used. Note that most linked list functionality (add,
 *   	    	remove, get) is supported, but their is no sorting
 *   	    	functionality.
-* COPYRIGHT:    (C) 2001 by the GRASS Development Team
+* COPYRIGHT:    (C) 2002 by the GRASS Development Team
 *
 *               This program is free software under the GNU General Public
 *   	    	License (>=v2). Read the file COPYING that comes with GRASS
@@ -161,13 +162,15 @@ care of following rules:
 	OFILES = linegraph.o
 
 	LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(DATETIMELIB)
+	DEPLIB=$(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB) $(DEPDATETIMELIB)
 
-	$(BIN_MAIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(BIN_MAIN_CMD)/$(PGM): $(OFILES) $(DEPLIB)
 		$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-	$(RASTERLIB): #
-	$(DISPLAYLIB): #
-	$(GISLIB): #
+	$(DEPRASTERLIB): #
+	$(DEPDISPLAYLIB): #
+	$(DEPGISLIB): #
+
 	linegraph.o:    linegraph.h
     --- snap ----
 
@@ -187,12 +190,18 @@ care of following rules:
 15. To add the executable for your module to the GRASS system run the command
     gmakelinks5 after your module has been compiled successfully. Note that
     command only needs to be called once.
-    
+
 16. Add the module's directory name (pointing to the local Gmakefile)
     to the compile list at src/CMD/lists/GRASS once the developers approve 
     your module.
 
-17. Place the documentation in HTML format into html/html/ and add it to
+17. Have a function included in your module which writes to the history
+    file of the map (e.g. command line, paramters etc.). See eg
+    src/raster/r.slope.aspect/cmd/main.c
+
+    (the same applies to sites and vector modules!)
+
+18. Place the documentation in HTML format into html/html/ and add it to
     the module's list in html/...  The easiest way to do this is to copy
     an existing HTML page or the template page template.ht and modify it for
     your purposes (to get the page style). The shell script makemanpage.sh
@@ -201,10 +210,14 @@ care of following rules:
     
     The online WWW man pages will be updated over-night by CVS.
 
-18. If you write a shell script: as a general principle, shell variables
+19. Update, if required the related tcltkgrass menu:
+     src/tcltkgrass/module
+     src/tcltkgrass/main
+
+20. If you write a shell script: as a general principle, shell variables
     should almost always be quoted.
 
-19. If you write a shell script and search for a command in $PATH, do NOT
+21. If you write a shell script and search for a command in $PATH, do NOT
     use the "which" command or the "type -p" command. Both commands are not
     supported on all platforms, thus causing problems for some people. As an
     alternative, please use code similar to the following shell script snippet
@@ -227,7 +240,7 @@ care of following rules:
 	    fi
 	done
 
-20. Use "GRASS_TCLSH" and "GRASS_WISH" environment variables instead of
+22. Use "GRASS_TCLSH" and "GRASS_WISH" environment variables instead of
     "tclsh" and "wish" at the start of Tcl/Tk scripts. This allows users to
     override the default names, so that developers don't need worry about the
     shell names.
@@ -245,22 +258,34 @@ care of following rules:
 	# the next line restarts using wish \
 	exec $GRASS_WISH "$0" "$@"
 
-21. For consistency, use README rather than README.txt for any README files.
+23. For consistency, use README rather than README.txt for any README files.
 
-22. (GRASS) Environment variables:
+24. (GRASS) Environment variables:
     If you add a new variable, please follow the naming convention.
     All variables are described in
     html/env_vars.html
 
-23. Tell the other developers about the new code using the following e-mail:
+25. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
+    You can re-check before submission with 'cvs diff':
+
+    Either unified ("diff -u") or context ("diff -c") format. "Plain"
+    diffs (the default format) are risky, because they will apply without
+    warning to code which has been substantially changed; they are also
+    harder to read than unified or context diffs.
+
+    Such diffs should be made from the top-level directory, e.g.
+    "cvs diff src/display/d.leg.thin/main.c"; that way, the diff will
+    include the pathname rather than just "main.c".
+
+26. Tell the other developers about the new code using the following e-mail:
     grass5@grass.itc.it
  
     To subscribe to this mailing list, see
     http://grass.itc.it/grassdevel.html
 
-24. In case of questions feel free to contact the developers at the above
+27. In case of questions feel free to contact the developers at the above
     mailing list.
     http://grass.itc.it/grassdevel.html#submission
     
 ...
-[please add further hints]
+[please add further hints if required]

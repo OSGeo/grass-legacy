@@ -270,7 +270,8 @@ echo "Installing GRASS binaries into $DESTDIR"
 echo ""
 
 echo "Uncompressing the package and extracting to target directory..."
-PACK_FILE=$PACKAGE_DIR/$PACKAGE_NAME
+#for windows/cygwin we have to change // -> / when installing from root:
+PACK_FILE=`echo "$PACKAGE_DIR/$PACKAGE_NAME" | sed 's+//+/+g'`
 cd $DESTDIR; $UNPACK -c $PACK_FILE | tar -xf -
 if [ $? -eq 1 ] ; then
     echo "An error occured or user break while installing binaries! Exiting."

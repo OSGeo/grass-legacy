@@ -30,7 +30,13 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.4  2002-01-22 04:51:23  glynn
+ * Revision 1.4.2.1  2003-02-09 12:07:28  glynn
+ * Changed files sync'd from HEAD
+ *
+ * Revision 1.5  2002/11/24 21:08:29  glynn
+ * Conditionalise entire bridge code upon "#ifndef USE_GDAL_H"
+ *
+ * Revision 1.4  2002/01/22 04:51:23  glynn
  * Merge releasebranch_11_april_2001_5_0_0 with HEAD
  *
  * Revision 1.2.4.3  2001/09/06 14:06:11  frankw
@@ -67,6 +73,8 @@
  * Fixed copyright header.
  *
  */
+
+#ifndef USE_GDAL_H
 
 /* ==================================================================== */
 /*      We #define GDAL_ENTRY to nothing so that when the include 	*/
@@ -498,4 +506,5 @@ int GDALBridgeInitialize( const char * pszTargetDir, FILE *fpReportFailure )
     return apszFailed[0] == NULL;
 }
 
+#endif /* USE_GDAL_H */
 

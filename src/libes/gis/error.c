@@ -51,7 +51,7 @@
 #include <stdarg.h>
 #include <time.h>
 #include "gis.h"
-
+#include "glocale.h"
 
 /* static int (*error)() = 0; */
 static int (*ext_error)() = 0; /* Roger Bivand 17 June 2000 */
@@ -139,7 +139,7 @@ static int print_error(char *msg,int fatal)
 	    return -1;
 	}
 	else {
-	    fprintf(stderr,"%s: ",fatal?"ERROR":"WARNING");
+	    fprintf(stderr,"%s: ",fatal?_("ERROR"):_("WARNING"));
 	    fprintf (stderr, "%s\n", msg);
 	    return -1;
 	}
@@ -157,8 +157,8 @@ static int print_error(char *msg,int fatal)
 	char *w;
 	int len, lead;
 
-	fprintf(stderr,"%s:",fatal?"ERROR":"WARNING");
-	len = lead = strlen (fatal?"ERROR":"WARNING")+1;
+	fprintf(stderr,"%s:",fatal?_("ERROR"):_("WARNING"));
+	len = lead = strlen (fatal?_("ERROR"):_("WARNING"))+1;
 	w = msg;
 	while (print_word(stderr,&w,&len,lead))
 		;
@@ -232,11 +232,11 @@ static int write_error ( char *msg, int fatal, char *dir, time_t ticks, char *cw
 	return 1;
 
     fprintf(log,"-------------------------------------\n");
-    fprintf(log,"%-10s %s\n", "program:", G_program_name());
-    fprintf(log,"%-10s %s\n", "user:", G_whoami());
-    fprintf(log,"%-10s %s\n", "cwd:", cwd);
-    fprintf(log,"%-10s %s\n", "date:", ctime(&ticks));
-    fprintf(log,"%-10s %s\n", fatal?"error:":"warning:", msg);
+    fprintf(log,"%-10s %s\n", _("program:"), G_program_name());
+    fprintf(log,"%-10s %s\n", _("user:"), G_whoami());
+    fprintf(log,"%-10s %s\n", _("cwd:"), cwd);
+    fprintf(log,"%-10s %s\n", _("date:"), ctime(&ticks));
+    fprintf(log,"%-10s %s\n", fatal?_("error:"):_("warning:"), msg);
     fprintf(log,"-------------------------------------\n");
 
     fclose (log);
@@ -257,7 +257,7 @@ static int mail_msg ( char *msg,int fatal)
     sprintf (command, "mail '%s'", G_whoami());
     if (mail = G_popen (command, "w"))
     {
-	fprintf(mail,"GIS %s: %s\n",fatal?"ERROR":"WARNING",msg);
+	fprintf(mail,"GIS %s: %s\n",fatal?_("ERROR"):_("WARNING"),msg);
 	G_pclose (mail);
     }
 

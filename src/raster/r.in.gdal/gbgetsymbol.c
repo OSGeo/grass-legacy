@@ -30,7 +30,13 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.4  2002-04-26 15:05:32  glynn
+ * Revision 1.4.2.1  2003-02-09 12:07:28  glynn
+ * Changed files sync'd from HEAD
+ *
+ * Revision 1.5  2002/11/24 21:08:29  glynn
+ * Conditionalise entire bridge code upon "#ifndef USE_GDAL_H"
+ *
+ * Revision 1.4  2002/04/26 15:05:32  glynn
  * Improve previous fix; check for either __unix or __unix__
  *
  * Revision 1.3  2002/04/26 15:02:23  glynn
@@ -49,6 +55,8 @@
  * New
  *
  */
+
+#ifndef USE_GDAL_H
 
 #include <stdio.h>
 #include "gdalbridge.h"
@@ -144,4 +152,6 @@ void *GBGetSymbol( const char * pszLibrary, const char * pszSymbolName )
 }
 
 #endif /* def _WIN32 */
+
+#endif /* USE_GDAL_H */
 

@@ -1,4 +1,4 @@
-
+/*r3.null*/
 #include "gis.h"
 #include "G3d.h"
 
@@ -88,10 +88,10 @@ modifyNull (name, maskRules, changeNull, newNullVal)
   G3d_getCompressionMode (&doCompress, &doLzw, &doRle, &precision);
 
   mapOut = G3d_openNewParam (name, G3D_DOUBLE, G3D_USE_CACHE_XY,
-			     &region, G3d_fileTypeMap (map), 
+			     &region, G3d_fileTypeMap (map),
 			     doLzw, doRle, G3d_tilePrecisionMap (map),
 			     tileX, tileY, tileZ);
-  if (mapOut == NULL) 
+  if (mapOut == NULL)
     G3d_fatalError ("modifyNull: error opening tmp file");
 
   G3d_minUnlocked (map, G3D_USE_CACHE_X);
@@ -101,6 +101,9 @@ modifyNull (name, maskRules, changeNull, newNullVal)
   G3d_autolockOn (mapOut);
   G3d_unlockAll (mapOut);
 
+/*AV*/
+/* BEGIN OF ORIGINAL CODE */
+/*
   for (z = 0; z < region.depths; z++) {
     if ((z % tileZ) == 0) {
       G3d_unlockAll (map);
@@ -108,27 +111,42 @@ modifyNull (name, maskRules, changeNull, newNullVal)
     }
     for (y = 0; y < region.cols; y++)
       for (x = 0; x < region.rows; x++) {
+*/
+/* END OF ORIGINAL CODE */
 
-	value = G3d_getDoubleRegion (map, x, y, z);
+/*AV*/
+/* BEGIN OF MY CODE */
+	for (z = 0; z < region.depths; z++) {
+    if ((z % tileZ) == 0) {
+      G3d_unlockAll (map);
+      G3d_unlockAll (mapOut);
+    }
+    for (y = region.rows-1; y >= 0; y--)
+      for (x = 0; x < region.cols; x++) {
+/* END OF MY CODE */
 
-	if (G3d_isNullValueNum (&value, G3D_DOUBLE)) {
-	  if (modifyNull) {
-	    value = newNullVal;
-	  }
-	} else
-	  if (mask_d_select ((DCELL *) &value, maskRules)) {
-	    G3d_setNullValue (&value, 1, G3D_DOUBLE);
-	  }
 
-	G3d_putDouble (mapOut, x, y, z, value);
+				value = G3d_getDoubleRegion (map, x, y, z);
+
+				if (G3d_isNullValueNum (&value, G3D_DOUBLE)) {
+	  			if (modifyNull) {
+	    			value = newNullVal;
+	  			}
+				} else
+	  			if (mask_d_select ((DCELL *) &value, maskRules)) {
+	    			G3d_setNullValue (&value, 1, G3D_DOUBLE);
+	  			}
+
+					G3d_putDouble (mapOut, x, y, z, value);
       }
 
-    if (! G3d_flushTilesInCube (mapOut, 0, 0, MAX (0, z - tileZ), 
+    if (! G3d_flushTilesInCube (mapOut, 0, 0, MAX (0, z - tileZ),
 				region.rows - 1, region.cols - 1, z))
       G3d_fatalError ("modifyNull: error flushing tiles");
   }
 
-  if (! G3d_flushAllTiles (mapOut))  
+	
+  if (! G3d_flushAllTiles (mapOut))
     G3d_fatalError ("modifyNull: error flushing tiles");
 
   G3d_autolockOff (map);
@@ -136,15 +154,15 @@ modifyNull (name, maskRules, changeNull, newNullVal)
   G3d_autolockOff (mapOut);
   G3d_unlockAll (mapOut);
 
-  if (! G3d_closeCell (map)) 
+  if (! G3d_closeCell (map))
     G3d_fatalError ("modifyNull: error closing map");
-  if (! G3d_closeCell (mapOut)) 
+  if (! G3d_closeCell (mapOut))
     G3d_fatalError ("modifyNull: error closing tmp file");
 }
 
 /*--------------------------------------------------------------------------*/
 
-main (argc, argv) 
+main (argc, argv)
 
      int argc;
      char *argv[];

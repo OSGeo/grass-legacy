@@ -193,14 +193,6 @@ int main ( int argc, char *argv[])
   sdisk = n_rows * n_cols * sizeof (short int);
   sprintf (dminchar, "%f", dmin);
 
-  fprintf (stdout, "\n");
-  fprintf (stdout, _("Authors: original version L.Mitas, H.Mitasova\n"));
-  fprintf (stdout, _("         GRASS implementation I.Kosinovsky, D.P.Gerdes\n")); 
-  fprintf (stdout, _("see references in manual page or at:\n"));
-  fprintf (stdout, _("http://www2.gis.uiuc.edu:2280/modviz/papers/listsj.html\n"));
-  fprintf (stdout, "\n");
-  fflush(stdout);
-
   parm.input = G_define_option ();
   parm.input->key = "input";
   parm.input->type = TYPE_STRING;
@@ -344,13 +336,13 @@ int main ( int argc, char *argv[])
   parm.theta ->key = "theta";
   parm.theta ->type = TYPE_DOUBLE;
   parm.theta ->required = NO;
-  parm.theta ->description = _("Anisotropy angle (in degrees)");
+  parm.theta ->description = _("Anisotropy angle (in degrees measured from East counterclockwise)");
 
   parm.scalex = G_define_option ();
   parm.scalex ->key = "scalex";
   parm.scalex ->type = TYPE_DOUBLE;
   parm.scalex ->required = NO;
-  parm.scalex ->description = _("Anisotropy scaling factor");
+  parm.scalex ->description = _("Anisotropy scaling factor (values 0 and 1 give no anisotropy)");
 
   flag.deriv = G_define_flag ();
   flag.deriv->key = 'd';

@@ -1,7 +1,7 @@
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-   <meta name="Author" content="Created by: (c) 1999-2002 Markus Neteler, ITC-irst, Italy">
+   <meta name="Author" content="Created by: (c) 1999-2003 Markus Neteler, ITC-irst, Italy">
    <TITLE>GRASS GIS 5.0.x - new features</TITLE>
 </HEAD>
 <BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
@@ -19,6 +19,52 @@ Many thanks to all contributors!
 <li> The bug report form is at: <a href=http://grass.itc.it/bugtracking/bugreport.html>bug report form</a>
 <li> The bug-tracking system (known bugs list) find at: <a href=http://intevation.de/rt/webrt>GRASS bug-tracking system</a>
 <li> and here is the <a href=http://intevation.de/rt/webrt?q_status=resolved&q_queue=grass&q_subject=&q_owner=&q_user=&q_user_other=&refresh=0&display=Queue>list of fixed bugs</a>]
+</ul>
+
+<hr>
+<h3><font color="#00A000">What's new in GRASS 5.0.2/CVS comparing to 5.0.1</font></h3>
+
+<b>Modules fixed/updated</b> (major changes only)
+<ul>
+<li>r3.*: various fixes (Alfonso Vitti, John Harrop)
+<li>d.what.sites: added flash when clicking on vector (Alex Shevlakov)
+<li>d.what.vect: added flash when clicking on vector (Alex Shevlakov)
+<li>g.mapsets: added addmapset= parameter (Alexander Soraruf, Markus Neteler)
+<li>g.setproj: UPS projection query mode fixed (Morten Hulden, Eric Miller)
+<li>NVIZ: various fixes for off-screen rendering (Bob Covill), tcl/tk 8.4 fixes
+<li>r.colors: added blue through yellow to green colors (Markus Neteler)
+<li>r.mapcalc3 (i.e new: r.mapcalc): errors fixed (Glynn Clements)
+<li>r.neighbors: added sum method (Markus Neteler)
+<li>r.proj: datum transformation added (Paul Kelly)
+<li>r.series: added for time series analysis (Glynn Clements)
+<li>r.simwe: added hydrologic and sediment transport simulation (Helena Mitasova, Jaro Hofierka, Lubos Mitas)
+<li>r.terraflow: added flow computation for massive grids (Laura I. Toma)
+<li>scripts: removed the word 'function' everywhere (to make scripts cygwin
+    compliant) (Markus Neteler)
+<li>s.cellstats: added, calculates stats of sites on a per cell basis (Eric Miller)
+<li>s.kernel: added for kernel density maps (Stefano Menegon)
+<li>s.proj: datum transformation added (Paul Kelly)
+<li>v.cutregion.sh: OTHER INFO bugs #1389 fixed (Markus Neteler)
+<li>v.in.dgn: added to read DNG files (Radim Blazek)
+<li>v.proj: datum transformation added (Paul Kelly, Eric Miller)
+</ul>
+
+<b>Source Code:</b><br>
+<ul>
+<li>winGRASS: started support for native WIN MinGW32 changes (Mike Thomas)
+<li>various IRIX compatibility changes (Paul Kelly)
+<li>G3D: various fixes, most bugs are fixed now (Alfonso Vitti)
+<li>proj: datum transformation cleaned and general support added  (Paul
+    Kelly, Eric Miller)
+<li>Fix North Carolina false easting (Eric Miller)
+<li>i18n: internationalization (Russia) continued (Alex Shevlakov)
+<li>PostgreSQL support: various fixes (Alex Shevlakov)
+<li>unrequired TERMLIB refs removed (Glynn Clements)
+<li>configure, configure.in: Fix FreeType header check (Glynn Clements)
+<li>Gmakefiles: fixed TERMLIB dependencies (Glynn Clements)
+<li>tools/sql.sh: Script to import dependency information into a PostgreSQL database
+    (Glynn Clements)
+<li>Changed G_get_map_row() to honour the mask (Glynn Clements)
 </ul>
 
 <hr>

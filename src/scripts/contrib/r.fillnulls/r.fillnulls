@@ -27,7 +27,7 @@ eval `g.gisenv`
 LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 # what to do in case of user break:
-function exitprocedure()
+exitprocedure()
 {
  echo "User break!"
  #shall we delete any TMP files?
