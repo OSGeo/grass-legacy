@@ -19,8 +19,10 @@ HTML_DIR = html
 HTML2MAN = $(SRC)/scripts/contrib/g.html2man/g.html2man
 HTML2PS = html2ps -n
 
+#all: htmlpages g.help-manpages postscript-docs
 #all: htmlpages manpages postscript-docs
-all: htmlpages manpages
+#all: htmlpages manpages
+all: htmlpages g.help-manpages
 
 
 # copy the HTML pages only and related images
@@ -35,8 +37,23 @@ htmlpages:
 	@(for h in `find $(HTML_DIR) nviz *.html *.gif | grep -v /CVS`; \
 	  do \
 	  	test -d $$h && continue; \
-		d=`echo $$h | sed 's@^@$(GRASS_HTMLDIR)/@;'`; \
-		if [ ! -f $$d -o $$d -ot $$h ]; then echo Generating: $$d; cp -p $$h $$d; fi; \
+		f=`echo $$h | sed 's@^@$(GRASS_HTMLDIR)/@;'`; \
+		if [ ! -f $$f -o $$f -ot $$h ]; then echo Generating: $$f; cp -p $$h $$f; fi; \
+	  done)
+
+# generate the g.help compatible man pages
+g.help-manpages:
+	@test -d $(GRASS_MANDIR) || mkdir -p $(GRASS_MANDIR)
+	@echo Creating man pages
+	@(cd $(HTML_DIR); \
+	  for h in *.html; \
+	  do \
+		m=`echo $$h | sed 's@\.html@@'`; \
+		tmp=`echo $$m | sed 's@^@$(GRASS_MANDIR)/@'`; \
+		tmpf="$${tmp}_.$(SECT)"; \
+		tmpm="$${m}_"; \
+		f="$$tmp.$(SECT)"; \
+		if [ ! -f $$f -o $$f -ot $$h ]; then $(HTML2MAN) $$h $$tmpf $(SECT); man -M $(GISBASE)/man 1 $$tmpm > $$f; rm $$tmpf; echo "        $$tmpm.$(SECT) => $$m.$(SECT)"; fi; \
 	  done)
 
 # generate the man pages
@@ -46,8 +63,8 @@ manpages:
 	@(cd $(HTML_DIR); \
 	  for h in *.html; \
 	  do \
-		m=`echo $$h | sed 's@^@$(GRASS_MANDIR)/@; s@\.html@\.$(SECT)@'`; \
-		if [ ! -f $$m -o $$m -ot $$h ]; then $(HTML2MAN) $$h $$m $(SECT); fi; \
+		f=`echo $$h | sed 's@^@$(GRASS_MANDIR)/@; s@\.html@\.$(SECT)@'`; \
+		if [ ! -f $$f -o $$f -ot $$h ]; then $(HTML2MAN) $$h $$f $(SECT); fi; \
 	  done)
 
 #Postscript-docs:
