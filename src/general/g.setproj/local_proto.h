@@ -31,6 +31,7 @@ int leave(int) __attribute__ ((__noreturn__));
 int leave(int);
 #endif
 
+/* this is from gislib! */
 /* table.c */
 int init_table(void);
 int get_proj_index(char *);
