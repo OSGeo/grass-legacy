@@ -25,7 +25,6 @@ geoline *Gv_load_vect(char *grassname, int *nlines)
 {
     struct Map_info map;
     struct line_pnts *points;
-    char            *mapset;
     geoline *top, *gln, *prev;
     int np, i, n, nareas, nl=0, area, type, is3d;
     struct Cell_head  wind;
@@ -129,8 +128,8 @@ geoline *Gv_load_vect(char *grassname, int *nlines)
     while (-1 < (type = Vect_read_next_line(&map, points, NULL))) {
 	G_debug(3, "line type = %d", type);
 
-	if ( type & ( GV_LINE | GV_FACE ) ) { 
-	    if ( type & ( GV_LINE ) ) {
+	if ( type & ( GV_LINES | GV_FACE ) ) { 
+	    if ( type & ( GV_LINES ) ) {
 		gln->type = OGSF_LINE;
 	    } else {
 		gln->type = OGSF_POLYGON;
