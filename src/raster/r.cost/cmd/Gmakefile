@@ -1,0 +1,16 @@
+PGM = r.cost
+LIST =  main.o \
+	insert.o \
+	delete.o
+
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(GISLIB) $(DISPLAYLIB) $(SEGMENTLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(DISPLAYLIB) $(GISLIB) $(SEGMENTLIB) $(MATHLIB)
+
+$(GISLIB): #
+$(DISPLAYLIB): #
+$(SEGMENTLIB): #
+
+delete.o: cost.h
+insert.o: cost.h
+main.o: cost.h
+main.o: stash.h
