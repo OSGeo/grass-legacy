@@ -60,7 +60,7 @@ point
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
@@ -79,8 +79,8 @@ BUGS?
      software.  Other record types may be added in the future.
 
 SEE ALSO
-     s.db, s.in.ascii, s.menu, s.out.ascii, s.surf.idw, sites.S,
-     sites.occur, sites.report
+     s.db.rim, s.in.ascii, s.menu, s.out.ascii, s.surf.idw,
+     sites.S, sites.occur, sites.report
 
 
 
@@ -126,7 +126,7 @@ SEE ALSO
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
