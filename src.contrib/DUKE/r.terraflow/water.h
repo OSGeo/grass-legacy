@@ -60,13 +60,13 @@ class labelElevTypePrintLabel;
 /* ---------------------------------------------------------------------- */
 
 class labelElevType : public ijBaseType {
-  friend labelElevTypePrintLabel;
-protected:
+  friend class labelElevTypePrintLabel;
+ protected:
   elevation_type el;
   cclabel_type label;
-public:
+ public:
   labelElevType() : label(LABEL_UNDEF) {};
-
+  
   labelElevType(dimension_type gi,
 		dimension_type gj,
 		elevation_type gel,
@@ -117,9 +117,9 @@ class boundaryCmpBoundaryType;
 class ijCmpBoundaryType;
 
 class boundaryType : public labelElevType {
-  friend waterCmpBoundaryType;
-  friend elevCmpBoundaryType;
-  friend boundaryCmpBoundaryType;
+  friend class waterCmpBoundaryType;
+  friend class elevCmpBoundaryType;
+  friend class boundaryCmpBoundaryType;
 protected:
   cclabel_type label2;
 public:
