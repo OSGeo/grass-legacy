@@ -4,6 +4,7 @@ MODULE_TOPDIR = ..
 #order is relevant:
 SUBDIRS = \
 	datetime \
+	gmath \
 	gis \
 	linkm \
 	raster \
@@ -16,7 +17,6 @@ SUBDIRS = \
 	edit \
 	external \
 	fonts \
-	gmath \
 	gtcltk \
 	form \
 	image \
