@@ -145,6 +145,13 @@ Vect__open_old (
   Vect__init_head (Map);
   dig_init_plus ( &(Map->plus) );    
   
+  /* check for [A-Za-z][A-Za-z0-9_]* in name */
+  if (Vect_legal_filename(name) < 0 ) {
+      sprintf ( errmsg, "Map name not SQL compliant.");
+      fatal_error (ferror , errmsg );
+      return (-1);
+  }
+                             
   if (G__name_is_fully_qualified (name, xname, xmapset)) {
       sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, xname);
       sprintf (buf2, "%s@%s", GRASS_VECT_COOR_ELEMENT, xmapset); /* ==coor@mapset */
