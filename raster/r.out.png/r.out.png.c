@@ -1,3 +1,20 @@
+/*
+ * $Id$
+ *
+ ****************************************************************************
+ *
+ * MODULE:       r.out.png
+ * AUTHOR(S):    Bill Brown - USA-CERL
+ *               Alex Shevlakov - sixote@yahoo.com
+ * PURPOSE:      Export GRASS raster as non-georeferenced PNG image.
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
+
 /* 
  * based on r.out.ppm by
  * Written by Bill Brown, USA-CERL March 21, 1994
@@ -18,7 +35,7 @@
 #define _MYINCLUDE_H
 #include <png.h>
 #include "pngfunc.h"
-#include <pnm.h>
+/* #include <pnm.h> this is already included from pngfunc.h */
 #endif /* _MYINCLUDE_H */
 
 #include "version.h"	/* VERSION macro */
@@ -33,6 +50,7 @@ typedef int FILEDESC;
 
 int main( int argc, char *argv[])
 {
+    struct GModule      *module;
     struct Option       *rast, *png_file;
     struct Flag         *bequiet, *gscale;
     char                *cellmap, *map, *p, errbuf[100], ofile[1000];
@@ -123,6 +141,9 @@ int main( int argc, char *argv[])
     gscale->description = "Output greyscale instead of color";
 */	
 
+    module = G_define_module();
+    module->description =
+      "Export GRASS raster as non-georeferenced PNG image format.";
 	
     if (G_parser (argc, argv))
         exit (-1);
@@ -226,10 +247,10 @@ int main( int argc, char *argv[])
   }
 
   /* zlib compression-level (or none) required */
-  if ((compression >= 0) && (compression <= 9))
-  {
-    png_set_compression_level (png_ptr, compression);
-  }
+  /* ((compression >= -1) && (compression <= 9)) */
+  /* { */
+  png_set_compression_level (png_ptr, Z_DEFAULT_COMPRESSION);
+  /* } */
 
     if(!bequiet->answer)
         fprintf(stderr,"Converting %s...",rast->answer);
@@ -317,7 +338,8 @@ if(1){
 */
 
     
-    pm_message ("don't know yet how to write grey - yumm!!");
+  /* pm_message ("don't know yet how to write grey - yumm!!"); */
+  G_warning("don't know how to write grey scale!\n");
 }
 
     G_free_colors(&colors);
@@ -335,12 +357,14 @@ if(1){
         
 	
   png_write_end (png_ptr, info_ptr);
-  png_write_destroy (png_ptr);
+  /* png_write_destroy (png_ptr); this is no longer supported with libpng, al 11/2000 */
   /* flush first because free(png_ptr) can segfault due to jmpbuf problems
      in png_write_destroy */
   fflush (stdout);
-  free (png_ptr);
-  free (info_ptr);
+  /* free (png_ptr); */
+  /* free (info_ptr); */
+  png_destroy_write_struct(&png_ptr, &info_ptr); /* al 11/2000 */
+
   
   fclose(fp);
 
