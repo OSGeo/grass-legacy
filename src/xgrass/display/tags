@@ -1,0 +1,268 @@
+ABS	band.c	/^#define ABS(x) ((x) < 0 / -(x):(x))$/
+AddObjectToList	object.c	/^AddObjectToList(list, obj)$/
+BackgroundColorCallBack	toolbox.c	/^BackgroundColorCallBack(w, cld, cad)$/
+BandLine	band.c	/^BandLine(x, y, mode)$/
+BandRect	band.c	/^BandRect(x, y, mode, equal)$/
+BarForegroundColorCallBack	barbox.c	/^BarForegroundColorCallBack(w, cld, cad)$/
+BarIntervalDecrementCallBack	bartextgadg.c	/^BarIntervalDecrementCallBack(w, cld, cad)$/
+BarIntervalIncrementCallBack	bartextgadg.c	/^BarIntervalIncrementCallBack(w, cld, cad)$/
+BarIntervalTextCallBack	bartextgadg.c	/^BarIntervalTextCallBack(w, cld, cad)$/
+BarLengthDecrementCallBack	bartextgadg.c	/^BarLengthDecrementCallBack(w, cld, cad)$/
+BarLengthIncrementCallBack	bartextgadg.c	/^BarLengthIncrementCallBack(w, cld, cad)$/
+BarLengthTextCallBack	bartextgadg.c	/^BarLengthTextCallBack(w, cld, cad)$/
+BarLengthTextVerifyCallBack	bartextgadg.c	/^BarLengthTextVerifyCallBack(w, cld, cad)$/
+BarStyleToggleCallBack	barattr.c	/^BarStyleToggleCallBack(w, cld, cbs)$/
+BarTextColorCallBack	barbox.c	/^BarTextColorCallBack(w, cld, cad)$/
+BarThickDecrementCallBack	bartextgadg.c	/^BarThickDecrementCallBack(w, cld, cad)$/
+BarThickIncrementCallBack	bartextgadg.c	/^BarThickIncrementCallBack(w, cld, cad)$/
+BarThickTextCallBack	bartextgadg.c	/^BarThickTextCallBack(w, cld, cad)$/
+BarUnitToggleCallBack	barattr.c	/^BarUnitToggleCallBack(w, cld, cbs)$/
+BigInt	object.c	/^BigInt()$/
+BorderColorCB	legend.c	/^BorderColorCB(w, cld, cad)$/
+BroswerOkCallBack	menucb.c	/^BroswerOkCallBack(w, cld, cad)$/
+BrowserCancelCallBack	menucb.c	/^BrowserCancelCallBack(w, cld, cad)$/
+BrowserOkCallBack	menucb.c	/^BrowserOkCallBack(Widget w, int cld, XtPointer cad/
+ChangeLabelAttObject	labelbox.c	/^ChangeLabelAttObject(obj)$/
+ClearRulerPixmaps	ruler.c	/^ClearRulerPixmaps()$/
+ColumnSpacingDecrementCallBack	legend.c	/^ColumnSpacingDecrementCallBack(w, cld, cad)$/
+ColumnSpacingIncrementCallBack	legend.c	/^ColumnSpacingIncrementCallBack(w, cld, cad)$/
+CountObjects	object.c	/^CountObjects(list)$/
+CreateBarGadget	bartextgadg.c	/^CreateBarGadget(parent, string, type)$/
+CreateBarStyle	barattr.c	/^CreateBarStyle(parent, string)$/
+CreateBarToolBox	barbox.c	/^CreateBarToolBox()$/
+CreateBarUnit	barattr.c	/^CreateBarUnit(parent, string)$/
+CreateChPanel	chlist.c	/^void CreateChPanel(type)$/
+CreateColorOptionMenu	coloropt.c	/^CreateColorOptionMenu(parent, omenu, string, funct/
+CreateGridGadget	gridgadg.c	/^CreateGridGadget(parent, string, type)$/
+CreateGridToolBox	gridbox.c	/^CreateGridToolBox()$/
+CreateLabelDialog	labelbox.c	/^CreateLabelDialog(obj)$/
+CreateLayout	layout.c	/^CreateLayout(shell)$/
+CreateLegendBox	legend.c	/^CreateLegendBox(obj)$/
+CreateLegendBoxCB	legend.c	/^CreateLegendBoxCB(XgdObject *obj)$/
+CreateLineWidthGadget	linewgadg.c	/^CreateLineWidthGadget(parent, string)$/
+CreateMenuBar	menubar.c	/^CreateMenuBar(shell)$/
+CreateObjectButtonPad	objbutton.c	/^CreateObjectButtonPad(parent, string, columns, ori/
+CreatePopup	popup.c	/^CreatePopup()$/
+CreateQueryRasterPanel	qrastpl.c	/^CreateQueryRasterPanel()$/
+CreateRWhatGadget	qrasttext.c	/^CreateRWhatGadget(parent, string, type)$/
+CreateRWhereGadget	qrasttext.c	/^CreateRWhereGadget(parent, string, type)$/
+CreateRulers	ruler.c	/^CreateRulers()$/
+CreateSiteIcons	siteicon.c	/^CreateSiteIcons(parent, string)$/
+CreateStdSiteGadget	sitegadg.c	/^CreateStdSiteGadget(parent, string, type)$/
+CreateStdSitesPanel	stdsitepl.c	/^CreateStdSitesPanel()$/
+CreateToolBox	toolbox.c	/^CreateToolBox()$/
+CreateXorGc	band.c	/^CreateXorGc()$/
+DeleteMapCallBack	menucb.c	/^DeleteMapCallBack(w, cli, call)$/
+DeleteMapOKCallBack	menucb.c	/^DeleteMapOKCallBack(w, cli, call)$/
+DeleteObjectFromList	object.c	/^DeleteObjectFromList(list, obj)$/
+DeleteObjects	object.c	/^DeleteObjects(widget, cli, call)$/
+DeleteRasterCallBack	menucb.c	/^DeleteRasterCallBack(w, cli, call)$/
+DoBarBox	menucb.c	/^DoBarBox(w, cld, cad)$/
+DoGridBox	menucb.c	/^DoGridBox(w, cld, cad)$/
+DoGridLabel	gridlabel.c	/^DoGridLabel(obj, drawmode)$/
+DoToolBox	menucb.c	/^DoToolBox(w, cld, cad)$/
+DrawGrid	drawgrid.c	/^DrawGrid(mode)$/
+DrawObjectsInList	object.c	/^DrawObjectsInList(list, doHandles)$/
+DrawPolyPointHandles	handler.c	/^DrawPolyPointHandles(obj, gc)$/
+DrawRulerPixmaps	ruler.c	/^DrawRulerPixmaps()$/
+END	lex.c	/^#define   END(v)   (v-1 + sizeof v \/ sizeof v[0])$/
+EndFlash	highlight.c	/^EndFlash(data)$/
+FUNC	xpm.h	/^#define FUNC(f, t, p) extern t f p$/
+FillPatternCallBack	toolbox.c	/^FillPatternCallBack(w, cld, cad)$/
+ForegroundColorCallBack	toolbox.c	/^ForegroundColorCallBack(w, cld, cad)$/
+FreeObjectList	object.c	/^FreeObjectList(list)$/
+GEOFRAME_OBJECT_TYPE	grammar.c	/^#define GEOFRAME_OBJECT_TYPE(x) ((x)->type == XGD_/
+GetAffectedObjects	object.c	/^GetAffectedObjects(obj, addlist, exclude)$/
+GetBBoxOfSelectedObjects	object.c	/^GetBBoxOfSelectedObjects()$/
+GetBoxAffectedObjects	object.c	/^GetBoxAffectedObjects(obb, addlist, exclude)$/
+GetBoxSelectedObjects	object.c	/^GetBoxSelectedObjects(box, newList)$/
+GetPointSelectedObjects	object.c	/^GetPointSelectedObjects(list, x, y, newList)$/
+GetStringFromMode	mode.c	/^GetStringFromMode(mode)$/
+GridForegroundColorCallBack	gridbox.c	/^GridForegroundColorCallBack(w, cld, cad)$/
+GridGapDecrementCallBack	gridgadg.c	/^GridGapDecrementCallBack(w, cld, cad)$/
+GridGapIncrementCallBack	gridgadg.c	/^GridGapIncrementCallBack(w, cld, cad)$/
+GridGapTextCallback	gridgadg.c	/^GridGapTextCallback(w, cld, cad)$/
+GridGapTextVerifyCallback	gridgadg.c	/^GridGapTextVerifyCallback(w, cld, cad)$/
+GridLabelToggleCallBack	gridbox.c	/^GridLabelToggleCallBack(w, cld, cbs)$/
+GridLinePatternCallBack	gridbox.c	/^GridLinePatternCallBack(w, cld, cad)$/
+GridLineWidthDecrementCallBack	gridgadg.c	/^GridLineWidthDecrementCallBack(w, cld, cad)$/
+GridLineWidthIncrementCallBack	gridgadg.c	/^GridLineWidthIncrementCallBack(w, cld, cad)$/
+GridLineWidthTextCallback	gridgadg.c	/^GridLineWidthTextCallback(w, cld, cad)$/
+GridSpacingDecrementCallBack	gridgadg.c	/^GridSpacingDecrementCallBack(w, cld, cad)$/
+GridSpacingIncrementCallBack	gridgadg.c	/^GridSpacingIncrementCallBack(w, cld, cad)$/
+GridSpacingTextCallback	gridgadg.c	/^GridSpacingTextCallback(w, cld, cad)$/
+GridTextColorCallBack	gridbox.c	/^GridTextColorCallBack(w, cld, cad)$/
+GridToggleCallBack	gridbox.c	/^GridToggleCallBack(w, cld, cbs)$/
+HandleDrawModeButtonPress	handler.c	/^  HandleDrawModeButtonPress(x, y)$/
+HandleDrawModeButtonRelease	handler.c	/^  HandleDrawModeButtonRelease(x, y)$/
+HandleDrawModeMotion	handler.c	/^HandleDrawModeMotion(x, y)$/
+HandleExposeEvents	handler.c	/^HandleExposeEvents(w, cld, event, dispatch)$/
+HandleMouseEvents	handler.c	/^HandleMouseEvents(w, cld, event, dispatch)$/
+HandleMoveButtonPress	handler.c	/^  HandleMoveButtonPress(bbox)$/
+HandleMoveButtonRelease	handler.c	/^  HandleMoveButtonRelease(lxoff, lyoff, bbox)$/
+HandleMoveMotion	handler.c	/^  HandleMoveMotion(xoff, yoff, lxoff, lyoff, bbox)/
+HandleResizeButtonPress	handler.c	/^  HandleResizeButtonPress(x, y, bbox, which, equal/
+HandleResizeButtonRelease	handler.c	/^HandleResizeButtonRelease(x, y, bbox, which, equal/
+HandleResizeEvents	handler.c	/^HandleResizeEvents(w, cld, event, dispatch)$/
+HandleResizeMotion	handler.c	/^HandleResizeMotion(x, y, bbox, which, equal)$/
+HighlightFlash	highlight.c	/^HighlightFlash(cli, id)$/
+HorizontalSliderMoved	scroll.c	/^HorizontalSliderMoved(w, cld, cad)$/
+ISBARSCALE	handler.c	/^#define ISBARSCALE() (Global.drawType == XGD_BARSC/
+ISPOLYPOINT	handler.c	/^#define ISPOLYPOINT() (Global.drawType == XGD_POLY/
+ISSPLINE	handler.c	/^#define ISSPLINE() (Global.drawType == XGD_OPEN_IN/
+InPolyPointMoveHandle	handler.c	/^InPolyPointMoveHandle(obj, x, y)$/
+InPolyPointResizeHandle	handler.c	/^InPolyPointResizeHandle(XgdObject *obj, int x, int/
+InitBarscaleAttributes	barscale.c	/^InitBarscaleAttributes(dpy, scrn, gc)$/
+InitGridAttributes	grid.c	/^InitGridAttributes(dpy,scrn,gc)$/
+InitStdSiteAttributes	stdsite.c	/^InitStdSiteAttributes(dpy,scrn,gc)$/
+IsLabelAttUp	labelbox.c	/^IsLabelAttUp()$/
+LFUNC	xpm.h	/^#define LFUNC(f, t, p) static t f p$/
+LabelAttCB	labelbox.c	/^LabelAttCB(widget, obj, call)$/
+LabelAttDismissCB	labelbox.c	/^LabelAttDismissCB(widget, cli, call)$/
+LabelOkCB	labelbox.c	/^LabelOkCB(widget, obj, call)$/
+LegendBoxCB	legend.c	/^LegendBoxCB(w, cli, call)$/
+LegendDisplayToggleCallBack	legend.c	/^LegendDisplayToggleCallBack(w, cli, call)$/
+LegendListCallBack	legend.c	/^LegendListCallBack(w, cli, call)$/
+LegendToggleCallBack	legend.c	/^LegendToggleCallBack(w, cli, call)$/
+LinePatternCallBack	toolbox.c	/^LinePatternCallBack(w, cld, cad)$/
+LineWidthDecrementCallBack	linewgadg.c	/^LineWidthDecrementCallBack(w, cld, cad)$/
+LineWidthIncrementCallBack	linewgadg.c	/^LineWidthIncrementCallBack(w, cld, cad)$/
+LineWidthTextCallback	linewgadg.c	/^LineWidthTextCallback(w, cld, cad)$/
+LineWidthTextVerifyCallback	linewgadg.c	/^LineWidthTextVerifyCallback(w, cld, cad)$/
+MapDisplayCallBack	menucb.c	/^MapDisplayCallBack(w, cld, cad)$/
+Mlex	lex.c	/^main()$/
+Mmain	main.c	/^main(argc,argv)$/
+MovePolyPoint	handler.c	/^MovePolyPoint(obj, p, x, y)$/
+ObjectToBack	object.c	/^ObjectToBack(list, obj)$/
+ObjectToBackCallBack	popup.c	/^ObjectToBackCallBack(w, cld, cad)$/
+ObjectToFront	object.c	/^ObjectToFront(list, obj)$/
+ObjectToFrontCallBack	popup.c	/^ObjectToFrontCallBack(w, cld, cad)$/
+OpenFileCallBack	menucb.c	/^OpenFileCallBack(w, cld, cad)$/
+OpenFileOKCallBack	menucb.c	/^OpenFileOKCallBack(w, cld, cad)$/
+PBAct	menucb.c	/^PBAct(w, cld, cad)$/
+ParseString	args.c	/^ParseString(r, n, st)$/
+PixelCancelCallback	crtecolor.c	/^PixelCancelCallback(widget, cli, call)$/
+PixelOkCallback	crtecolor.c	/^PixelOkCallback(widget, cli, call)$/
+PrintObjectList	object.c	/^PrintObjectList(list, string)$/
+QRCancelCallBack	qrastpl.c	/^QRCancelCallBack(w, cld, cad)$/
+RedrawArea	redrwarea.c	/^RedrawArea(obj)$/
+RefreshCallBack	popup.c	/^RefreshCallBack(w, cld, cad)$/
+RegionCallBack	menucb.c	/^RegionCallBack(w, cld, cad)$/
+RegionOkCallback	menucb.c	/^RegionOkCallback(w, cld, cad)$/
+ReorderObjects	object.c	/^ReorderObjects(list)$/
+SaveObjects	menucb.c	/^SaveObjects(fp, list)$/
+SaveObjectsCallBack	menucb.c	/^SaveObjectsCallBack(w, cld, cad)$/
+SaveObjectsOKCallBack	menucb.c	/^SaveObjectsOKCallBack(w, cld, cad)$/
+SelectBestLabelColor	coloropt.c	/^SelectBestLabelColor(pixel)$/
+SelectedObjectCount	object.c	/^SelectedObjectCount()$/
+SetDrawMode	mode.c	/^SetDrawMode(w, cld, cad)$/
+SetFontCallBack	font.c	/^SetFontCallBack(w,cld,cad)$/
+SetFontOkCallBack	font.c	/^SetFontOkCallBack (w,cld,cad)$/
+SetHighlightColor	menucb.c	/^SetHighlightColor(w, cld, cad)$/
+SetLegendObject	legend.c	/^SetLegendObject(obj)$/
+SetMode	mode.c	/^SetMode(mode)$/
+SetOptMenuToItem	coloropt.c	/^SetOptMenuToItem(optMenu, item)$/
+SetOptMenuToPixel	coloropt.c	/^SetOptMenuToPixel(optMenu, item)$/
+SetScrollBars	scroll.c	/^SetScrollBars(w,h)$/
+SetSite	setsite.c	/^SetSite(w, cld, cad)$/
+SetUnits	units.c	/^SetUnits(w, cld, cad)$/
+SiteForegroundColorCallBack	stdsitepl.c	/^SiteForegroundColorCallBack(w, cld, cad)$/
+SiteLWDecrementCallBack	sitegadg.c	/^SiteLWDecrementCallBack(w, cld, cad)$/
+SiteLWIncrementCallBack	sitegadg.c	/^SiteLWIncrementCallBack(w, cld, cad)$/
+SiteLWTextCallBack	sitegadg.c	/^SiteLWTextCallBack(w, cld, cad)$/
+SiteSizeDecrementCallBack	sitegadg.c	/^SiteSizeDecrementCallBack(w, cld, cad)$/
+SiteSizeIncrementCallBack	sitegadg.c	/^SiteSizeIncrementCallBack(w, cld, cad)$/
+SiteSizeTextCallBack	sitegadg.c	/^SiteSizeTextCallBack(w, cld, cad)$/
+StartFlash	highlight.c	/^StartFlash()$/
+StdSiteIconToggleCallBack	siteicon.c	/^StdSiteIconToggleCallBack(w, cld, cbs)$/
+TAct	menucb.c	/^TAct(w, cld, cad)$/
+TYPE_WITH_SPECIFICS	grammar.c	/^#define TYPE_WITH_SPECIFICS(x) ((x)->type == XGD_P/
+TextColorCB	labelbox.c	/^TextColorCB(w, cld, cad)$/
+U	lex.c	/^# define U(x) x$/
+UnDrawObjectsInList	object.c	/^UnDrawObjectsInList(list, doHandles)$/
+UpdateBBox	handler.c	/^  UpdateBBox(x, y, bbox, which, equal)$/
+UpdateBarBox	upbarbox.c	/^UpdateBarBox()$/
+UpdateColorOptionMenu	coloropt.c	/^UpdateColorOptionMenu(w, cld, cad)$/
+UpdateGridBox	upgridbox.c	/^UpdateGridBox()$/
+UpdatePositionReadout	handler.c	/^UpdatePositionReadout(w, x, y)$/
+UpdateRasterPanel	uprastpl.c	/^UpdateRasterPanel()$/
+Usage	main.c	/^Usage(prog)$/
+VerticalSliderMoved	scroll.c	/^VerticalSliderMoved(w, cld, cad)$/
+WITHINSLOP	handler.c	/^#define WITHINSLOP(x1, x2, s) (((x1)>((x2) - (s)))/
+XCreateDataFromPixmap	xpm.h	/^#define XCreateDataFromPixmap(dpy, data, pix, mask/
+XCreatePixmapFromData	xpm.h	/^#define XCreatePixmapFromData(dpy, d, data, pix, m/
+XReadPixmapFile	xpm.h	/^#define XReadPixmapFile(dpy, d, file, pix, mask, a/
+XWritePixmapFile	xpm.h	/^#define XWritePixmapFile(dpy, file, pix, mask, att/
+XgCreateColormapEditor	crtecolor.c	/^XgCreateColormapEditor(obj, parent, name, args, nu/
+XgdDrawSite	drawsite.c	/^XgdDrawSite(obj, name, mapset, type)$/
+XgdDrawSitefile	todrawsitefh.c	/^XgdDrawSitefile(obj, name,mapset)$/
+XgdGetBarscaleLength	barattr.c	/^XgdGetBarscaleLength(obj)$/
+XgdSelectPixmap	selpixpl.c	/^XgdSelectPixmap()$/
+XgdSetStdSiteColor	upstdsite.c	/^XgdSetStdSiteColor(sinfo, color)$/
+XgdSetStdSiteIconType	upstdsite.c	/^XgdSetStdSiteIconType(sinfo, icontype)$/
+XgdSetStdSiteSize	upstdsite.c	/^XgdSetStdSiteSize(sinfo, size)$/
+XgdSetStdSiteWidth	upstdsite.c	/^XgdSetStdSiteWidth(sinfo, width)$/
+XgdSiteBox	drawsitestd.c	/^XgdSiteBox(obj,size)$/
+XgdSiteCross	drawsitestd.c	/^XgdSiteCross(obj,size)$/
+XgdSiteDiamond	drawsitestd.c	/^XgdSiteDiamond(obj,size)$/
+XgdSitePixmap	drawsitepix.c	/^XgdSitePixmap(obj,win,view,xhotspot,yhotspot)$/
+XgdSitePlus	drawsitestd.c	/^XgdSitePlus(obj,size)$/
+XgdUpdateSitePixmap	uppixsite.c	/^XgdUpdateSitePixmap(obj, sitefile, name, mapset)$/
+XgdUpdateSiteStd	upstdsite.c	/^XgdUpdateSiteStd(sinfo)$/
+XpmReadPixmapFile	xpm.h	/^#define XpmReadPixmapFile(dpy, d, file, pix, mask,/
+XpmWritePixmapFile	xpm.h	/^#define XpmWritePixmapFile(dpy, file, pix, mask, a/
+YYBACKUP	grammar.c	/^#define YYBACKUP( newtoken, newvalue )\\$/
+YYRECOVERING	grammar.c	/^#define YYRECOVERING()	(!!yyerrflag)$/
+YYU	lex.c	/^# define YYU(x) x$/
+_xgPButtonCB	crtecolor.c	/^_xgPButtonCB(widget, cli, call)$/
+_xg_digestString	lex.c	/^_xg_digestString()$/
+_xgdDrawSitePixmap	drawsitepix.c	/^_xgdDrawSitePixmap(obj,s,name,mapset,flag)$/
+_xgdDrawSiteStd	drawsitestd.c	/^_xgdDrawSiteStd(obj,sicontype,ssize,swidth,scolor,/
+_xgdDrawSitefile	todrawsitefh.c	/^_xgdDrawSitefile(XgdObject *obj, char *name,*mapse/
+_xgdDrawsitestd	drawsitestd.c	/^_xgdDrawsitestd(XgdObject *obj, int sicontype, ssi/
+_xgdReDrawSitePixmap	redrwsitepix.c	/^_xgdReDrawSitePixmap(obj,s,name,mapset)$/
+addBarCallbacks	upbarbox.c	/^addBarCallbacks()$/
+addCallbacks	upgridbox.c	/^addCallbacks()$/
+canceldialog	selpixpl.c	/^canceldialog(w, cld, cad)$/
+chlist	chlist.c	/^chlist(w,cld)$/
+dellistsite	chlist.c	/^dellistsite(w)$/
+dellistvect	chlist.c	/^dellistvect (w)$/
+drawoutpix	drawoutsitefh.c	/^drawoutpix(fdpix, list, lx, ty)$/
+format_easting	gridlabel.c	/^char *format_easting(window,e, round)$/
+format_northing	gridlabel.c	/^char *format_northing(window,n, round)$/
+getcatnum	getcat.c	/^int getcatnum(dithindic,x,y,lx,ty,rx,by,n,m)$/
+getdatafh	getdatafh.c	/^getdatafh (buf, k, d)$/
+getlt	todrawoutsitefh.c	/^getlt(list, l, t)$/
+getsitepixfile	selpixpl.c	/^getsitepixfile(w, cld, cbs)$/
+if	drawsitepix.c	/^if (D_do_conversions(&obj->Obj.GeoFrame.region,$/
+input	lex.c	/^# define input() (((yytchar=yysptr>yysbuf/U(*--yys/
+insert_chlistsite	chlist.c	/^insert_chlistsite( list, ptr)$/
+insert_chlistvect	chlist.c	/^insert_chlistvect( list, vect)$/
+output	lex.c	/^# define output(c) putc(c,yyout)$/
+queryraster	queryraster.c	/^queryraster(x, y, ret)$/
+quitchlistsite	chlist.c	/^quitchlistsite(w)$/
+quitchlistvect	chlist.c	/^quitchlistvect(w)$/
+redrawbarscale	bartextgadg.c	/^redrawbarscale(type)$/
+redrawgrid	gridgadg.c	/^redrawgrid(type)$/
+redrawstdsite	sitegadg.c	/^redrawstdsite(type)$/
+removeBarCallbacks	upbarbox.c	/^removeBarCallbacks()$/
+removeCallbacks	upgridbox.c	/^removeCallbacks()$/
+s_lookup	lex.c	/^s_lookup() {}$/
+screen	lex.c	/^static int screen()$/
+setlistitem	chlist.c	/^setlistitem(w,cld,cad)$/
+switch	drawsitestd.c	/^switch (sicontype)$/
+todrawbarscale	todrawbarscale.c	/^todrawbarscale(obj, x, y)$/
+todrawoutpix	todrawoutsitefh.c	/^void todrawoutpix()$/
+token	lex.c	/^#   define token(x)      (int) "x"$/
+unput	lex.c	/^# define unput(c) {yytchar= (c);if(yytchar=='\\n')y/
+while	redrwsitepix.c	/^while (XgdDrawSite(&obj->Obj.GeoFrame.region, &U_X/
+yyback	lex.c	/^yyback(p, m)$/
+yyerror	main.c	/^yyerror(s)$/
+yyinput	lex.c	/^yyinput(){$/
+yylex	lex.c	/^yylex(){$/
+yylook	lex.c	/^yylook(){$/
+yymore	lex.c	/^# define yymore() (yymorfg=1)$/
+yyoutput	lex.c	/^yyoutput(c)$/
+yyparse	grammar.c	/^yyparse()$/
+yyunput	lex.c	/^yyunput(c)$/
+yywarning	main.c	/^yywarning(s)$/
