@@ -1,7 +1,7 @@
 
 
 
-s.surf.idw           GRASS Reference Manual            s.surf.idw
+s.surf.idw <main>    GRASS Reference Manual     <main> s.surf.idw
 
 
 
@@ -60,14 +60,14 @@ DESCRIPTION
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-s.surf.idw           GRASS Reference Manual            s.surf.idw
+s.surf.idw <main>    GRASS Reference Manual     <main> s.surf.idw
 
 
 
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
