@@ -1,0 +1,6 @@
+OBJS = main.o centroids.o
+
+$(BIN_MAIN_CMD)/r.volume: $(OBJS) $(GISLIB)
+	$(CC) $(LDFLAGS) $(OBJS) $(GISLIB) -o $@
+
+$(GISLIB): #
