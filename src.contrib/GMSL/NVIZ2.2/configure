@@ -3,7 +3,10 @@
 
 # Revisions:
 #  $Log: configure,v $
-#  Revision 1.4  2000-03-06 17:16:18  markus
+#  Revision 1.5  2000-04-03 16:09:51  markus
+#  Alex Shevlakov: patch to manage PostgreSQL support in menus
+#
+#  Revision 1.4  2000/03/06 17:16:18  markus
 #  Alex Shevlakov: added new fields in WHATS HERE menu for GRASS/PostgreSQL interface
 #
 #  Revision 1.3  2000/03/06 09:02:53  markus
@@ -141,13 +144,16 @@ endif
 # Check for PostgreSQL
 set PQ_OBJS=(openvect.o getCat.o buildInfxQry.o runInfxQry.o)
 'cp' src/query_postgr_orig.c src/query_postgr.c
+'cp' scripts/panel_query_pg.tcl scripts/panel_query.tcl
 echo -n Do you want Postgres support \[y\/n\]:
 set found=$<
 if ("$found" != "y") then
   echo -n Postgres support disabled.
   set PQ_OBJS=''
   'rm' -rf src/query_postgr.c
+  'rm' -rf src/scripts/panel_query.tcl
   'cp' src/query_postgr_dummy.c src/query_postgr.c
+  'cp' scripts/panel_query_orig.tcl scripts/panel_query.tcl
 endif
 
 # Now create the makefile
