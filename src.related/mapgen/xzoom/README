@@ -1,0 +1,118 @@
+Material in this directory system is for X11R4 program XZOOM
+used to display [MAP|PLOT]GEN overlay files and provide elementary
+digitizing operations.
+
+For compilation include and library files from the mapgen
+distribution are required.
+
+For execution, programs legend and plotter are required
+to be in the user's search path and environment parameter
+GRAPHB appropriately set for font library path.
+
+	This Directory Contents:
+README		this file
+XZoom		resources file to color buttons,etc.
+
+	Directory src contents:
+Makefile	basic makefile
+xzoom.h		xzoom header
+xzoom.c		main +
+command.c	most of the callbacks
+gr.c		ignorant of X11 - does interface to plotter, etc.
+getline.c	modified routine for handling MAP/PLOT defs
+scalein.c		"
+words.c			"
+xzoom.icon	bitmap of xzoom icon (include file to xzoom.c)
+
+	Directory doc contents:
+xzoom.ps.Z	PostScript of xzoom manual
+xzoom.tex	main 'article' style LaTeX source
+keys.tex		input to above
+XZoom.tex		input to above
+icon.ps.Z	PS bitmap input to dvi2ps execution
+full.ps.Z		"
+init.ps.Z		"
+			(decompress last 3 files before dvi2ps)
+
+	Directory example contents:
+def		PLOTGEN definition file
+plot		Plot control file example
+dat??.ov	Data curve overlays
+grid.ov		Axis labelling overlay
+legend.ov	Axis anotation overlay
+legend2.ov	Title overlay
+
+Please refer problems, solutions and suggestions to:
+
+	Gerald I. Evenden
+	US Geological Survey
+	Woods Hole, MA 02543
+
+	(508)548-8700 Comm.
+	837-4335 FTS
+	128.128.19.24 charon.er.usgs.gov Internet
+
+Beta 2 version: 21 Sept. 1990 Corrections (additions):
+1.	Resizing of graphics area.  Pixmap fixed at 1024x780 maximum
+	which is sufficient for most current screens.
+2.	Popup file dialog window enhanced with append/overwrite
+	options as well as abort.  Better file checking.
+3.	"edit pl" command checks for the writability of the file.
+4.	Resource file has temporary fix for newline type operations
+	messing up the Dialog window.  This will eventually be
+	hard coded.  For now, this should be included as it and
+	the author would appreciate information on any other key
+	which will cause vertical expansion of Text box.
+5.	Graphics cursor modified with resource file.
+6.	Functionality with DEC3100 servers resolved.
+7.	Comments area problems solved.
+8.	Other minor fixes and enhancements.
+(9).	Pen colors and graphic background controllable with
+	resouces file.
+
+Version 1.0 26 Sept. 1990
+(10).	csh ~ useable with any file request except meta-i.
+11.	Manual expanded.
+(12).	Version number listed as label widget first in the
+	command pane.
+
+Version 1.01 28 Sept. 1990
+(13).	Pen numbers for digitizing output now controllable
+	from the pen color list.  Requires use of new resouces file.
+(14).	Write protected plotter file now browsable.  ABORT also
+	added for writable files.
+15.	More code cleanup.
+
+Version 1.02 9 Oct. 1990
+16.	Patch so that pens assume main foreground when the indicated
+	background matches window background.  Principly a problem
+	when resouces not loaded and black and white window appears.
+17.	Eliminated fixed max graphic work window.  Any size plot window
+	now available.
+18.	Other minor improvements.
+(19).	Added plot status comments.
+20.	Item 4 fixed with internal code so resource file need not
+	contain newline type overrides.
+21.	Figures put into documentation.
+
+Version 1.03 29 Nov. 1990
+22.	Cured problem with bad plotgen scaling, partly due to non-
+	reenterability of 'scalein'.
+23.	Placed routine previously loaded from other libraries localy.
+24.	Modified 'emess' so that messages from scalein would appear
+	on screen.
+25.	Added default legend character initialization when openning
+	new 'digit' file (or overwriting).
+26.	Put routines handling MAP/PLOT-GEN def files in src.
+	No need to use outside libraries.
+27.	Edit src/Makefile to select which version of device independent
+	vector graphics system being employed.
+
+Persistant problems and knonw deficiencies:
+1.	Current 386 servers run out of memory.  Hopefully will
+	be fixed with new releases.
+2.	CERL having problems with writing out edited plotter file.
+3.	Xzoom assumes a square aspect ratio for screen pixels.
+	Usually OK for modern workstations but may be a problem
+	for PCs used as servers.  Solvable, but not going to
+	worry about it until item 1 become available.
