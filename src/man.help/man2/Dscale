@@ -1,0 +1,48 @@
+.\" %W% %G%
+.TH Dscale 2D D-language
+.SH NAME
+Dscale \- Adds a map scale to a map displayed in the current window
+.br
+.I (D Language Tool)
+.SH SYNOPSIS
+.B Dscale
+[\fIcolor1\fR [\fIcolor2\fR]]
+.br
+.B Dscale
+[option\*=\fIvalue\fR] [option\*=\fIvalue\fR]
+.SH DESCRIPTION
+.I Dscale
+displays a scale and North arrow in the current window.  It is
+automatically proportioned to fit appropriately in the upper left corner
+of the current window.  It is drawn twice in two different colors; the default
+(if unspecified on the command line) is the use of a white scale on a
+black background.  Options are:
+.ns
+.TP 
+.RI color1\*= color
+Color used for the first drawing of the scale (background).  Default is black.
+.br
+.ns
+.TP 
+.RI color2\*= color
+Color used for second drawing of the scale (offset).  Default is white.
+.PP
+Available colors are red, orange, yellow, green, blue, indigo, violet,
+gray, brown, magenta, white, and black.  Background and offset colors
+can be stated either positionally or explicitly on the command line.
+.SH BUGS
+The user has no option to choose where the scale is drawn on the screen,
+and
+.I Dscale
+assumes that units are in meters.
+.br
+The scale that \fIDscale\fR generates is not suitable for very tiny maps.
+.SH "SEE ALSO"
+.TS
+ll.
+\fIDINTRO[2D]\fR	Introduction to the GRASS \fID\fR tools
+.br
+\fIDlegend[2D]\fR	Draws a map legend in the current window
+.TE
+.SH "AUTHOR"
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
