@@ -11,8 +11,7 @@ LIST =  main.o\
 	title.o
 
 $(SITE)/$(PGM): $(LIST) $(SITELIB) $(GISLIB)
-		$(CC) ${LDFLAGS} -o $(PGM) $(LIST) $(SITELIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
-		mv $(PGM) $(SITE)/$(PGM)
+		$(CC) ${LDFLAGS} -o $(SITE)/$(PGM) $(LIST) $(SITELIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST):	$I/report.h
 
