@@ -135,6 +135,8 @@ int V2_read_next_line_nat (struct Map_info *, struct line_pnts *, struct line_ca
 int V2_read_next_line_shp (struct Map_info *, struct line_pnts *, struct line_cats *);
 int V2_read_next_line_post (struct Map_info *, struct line_pnts *, struct line_cats *);
 
+int Vect_line_alive ( struct Map_info *, int);
+
 long Vect_next_line_offset (struct Map_info *);
 long Vect_next_line_offset_nat (struct Map_info *);
 long Vect_next_line_offset_shp (struct Map_info *);
@@ -172,7 +174,7 @@ int Vect_topo_dump ( struct Plus_head *plus, FILE *out );
 int Vect_point_on_line ( struct line_pnts *, double, 
 	             double *, double *, double *, double *, double *);
 double Vect_line_length ( struct line_pnts *);
-int Vect_line_distance ( struct line_pnts *, double, double, double *);
+int Vect_line_distance ( struct line_pnts *, double, double, double *, double *, double *, double *, double *);
 
 int Vect_point_in_box (double, double, double, BOUND_BOX *);
 int Vect_box_overlap (BOUND_BOX *, BOUND_BOX *);
