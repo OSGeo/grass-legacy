@@ -13,3 +13,4 @@ all:
 	$(GMAKE) v.in.shape.pg
 	$(GMAKE) v.in.arc.pg
 	$(GMAKE) pg.in.dbf
+	$(GMAKE) v.to.pg
