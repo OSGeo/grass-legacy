@@ -339,7 +339,7 @@ LOCATION=${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}
 export LOCATION
 
 trap "" 2 3
-CYGWIN=$(uname | grep CYGWIN)
+CYGWIN=`uname | grep CYGWIN`
 
 # cygwin has many problems with the shell setup
 # below, so i hardcoded everything here.
