@@ -1,0 +1,132 @@
+
+
+
+Gtraj(2)             GRASS Reference Manual              Gtraj(2)
+
+
+
+NAME
+     Gtraj - Trajectory analysis tool
+     (G Language Tool)
+
+SYNOPSIS
+     Gtraj t=terrain_map  e=easting_of_gun  n=northing_of_gun
+     d=direction  s=spread w=weapon_name  h=weapon_height
+     a=ammunition o=output_map
+
+DESCRIPTION
+     Gtraj generates a map showing cells that can be hit from a
+     firing point by shells from a user-specified weapon. Cells
+     are marked with integer values that represent the muzzle
+     firing angles required to hit them.
+
+     The input to the program is as follows:
+
+     terrain_map
+          Filename of a grid cell layer containing elevation
+          data.
+
+     easting_of_gun, northing_of_gun
+          Coordinates identifying the desired location of the
+          firing point.
+
+     direction, spread
+          The direction is the horizontal angle the gun is to be
+          fired from the firing point which the trajectory
+          analysis is to be performed.  The angle will be in the
+          form of [NS]0-90[EW].  For example, S60E indicates the
+          angle is 60 degrees East of True South.  The spread is
+          the angle in degrees to each side of the direction
+          angle which the trajectory analysis is to be performed.
+
+     weapon
+          Type of weapon used for firing.  A list of weapon types
+          and their associated attributes are kept in the file
+          "$GISBASE/weapon_data/weapons".
+
+     height_weapon
+          Height of the muzzle of the gun (in meters) above the
+          firing point's elevation.
+
+     ammunition
+          Type of ammunition used.  A list of ammunitiion types
+          and their associated attributes are kept in the file
+          "$GISBASE/weapon_data/ammunition".
+
+     output_map
+          Filename of cell map that will show results of Gtraj.
+          Values between -89 and 89 indicate the gun elevation
+          angle in degrees needed to hit that cell.  The value of
+
+
+
+Printed 10/16/89           G-language                           1
+
+
+
+
+
+
+Gtraj(2)             GRASS Reference Manual              Gtraj(2)
+
+
+
+          90 is the firing point of the gun.  The value -90 are
+          those points unhittable by the gun.
+
+EXAMPLE
+     Gtraj t=elevation e=600000.0 n=4920000.0 d=N34E s=15 w=M1 h=2.5a=M392 o=name
+
+SEE ALSO
+     range.place[1]
+
+AUTHORS
+     Chuck Ehlschlaeger, USA-CERL Kewan Q. Khawaja, Intelligent
+     Engineering Systems Laboratory, M.I.T.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Printed 10/16/89           G-language                           2
+
+
+
