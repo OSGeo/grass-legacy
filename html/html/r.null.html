@@ -8,8 +8,8 @@
 
 <H2>NAME</H2>
 
-<EM><b>r.null</b></EM>  - The function of r.null is to explicitly create the NULL-value 
-bitmap file. 
+<EM><b>r.null</b></EM>  - The function of r.null is to explicitly create the
+NULL-value bitmap file.
 
 <BR>
 
@@ -18,18 +18,24 @@ bitmap file.
 <H2>SYNOPSIS</H2>
 
 <B>r.null</B><br>
-<b>r.null -fincr map=</b><em>name</em>
-[<b>setnull=</b><em>val</em>[<em>-val</em>]</em>[,<em>val</em>[<em>-val</em></em>],...]] [<b>null=</b><em>value</em>]
+<b>r.null -fincr 
+map=</b><em>name</em>
+[<b>setnull=</b><em>val</em>
+[<em>-val</em>]</em>[,<em>val</em>[<em>-val</em></em>],...]] 
+[<b>null=</b><em>value</em>]
 
 
 <H2>DESCRIPTION</H2>
 
-The function of <EM>r.null</EM> is to explicitly create the NULL-value bitmap file. The intended usage is to fix "old"  maps that don't have a NULL-value bitmap file (i.e. to indicate if zero is valid value or is to be converted to  NULL).
+The function of <EM>r.null</EM> is to explicitly create the NULL-value
+bitmap file. The intended usage is to fix "old" maps that don't have a
+NULL-value bitmap file (i.e. to indicate if zero is valid value or is to be
+converted to NULL). The module does not work with reclassified maps.
 
 <P>
 
-The design is flexible. Ranges of values can be set to NULL and/or the NULL value can be 
-eliminated and replace with a specified value. 
+The design is flexible. Ranges of values can be set to NULL and/or the NULL
+value can be eliminated and replace with a specified value.
 
 <H3>Flags:</H3>
 <DL>
@@ -50,17 +56,26 @@ eliminated and replace with a specified value.
 <DT><b>map</b>
 <DD>raster map for which to edit null file
 <DT><b>setnull=</b><em>range[,range...]</em>
-<DD>The values specified in the ranges are to be set to NULL. 
-A range is either a single value (e.g., 5.3), or a pair of values (e.g., 4.76-34.56). 
+<DD>The values specified in the ranges are to be set to NULL.  A range is
+either a single value (e.g., 5.3), or a pair of values (e.g., 4.76-34.56). 
 Existing NULL-values are left NULL, unless the null argument is requested.
 <DT><b>null=</b><em>value </em>
 <DD>Eliminate the NULL value and replace it with value. 
-This argument is applied only to existing NULL values, and not to the NULLs created 
-by the setnull argument.
+This argument is applied only to existing NULL values, and not to the NULLs
+created by the setnull argument.
 </DL>
 
-<H2>NOTE</H2>
+<H2>NOTES</H2>
  Note that value is restricted to integer if the map is an integer map. 
+<p>
+r.null and reclassified maps:<br>
+The problem is, if r.null was run on the reclass raster it would alter the
+original and any other reclass rasters of the original.  Therefore r.null 
+doesn't allow to recode reclassified maps (products of r.reclass).
+So, the way to recode such a map is: The user makes a raster out of the reclass that isn't a reclass by copying
+it:<br>
+<tt>r.mapcalc newmap = reclass</tt><br>
+Then he/she recodes this copy.
 
 
 <H2>SEE ALSO</H2>
