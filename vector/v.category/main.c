@@ -14,7 +14,7 @@
  * *               for details.
  * *
  * **************************************************************/
-
+#include <stdlib.h> 
 #include "gis.h"
 #include "Vect.h"
 
@@ -45,7 +45,7 @@ main (int argc, char *argv[])
 	struct line_cats *Cats;
         int    i, j, ret, option, otype, type, oarea, with_z, step;
 	char   *mapset, errmsg[200];
-	int    cat, field;
+	int    cat, ocat, field;
 	struct GModule *module;
 	struct Option *in_opt, *out_opt, *option_opt, *type_opt;
 	struct Option *cat_opt, *field_opt, *step_opt;
@@ -171,7 +171,7 @@ main (int argc, char *argv[])
 	          {
 	            if ( type & otype )
 	               {
-                         if( (Vect_cat_get (Cats, field, &cat)) == 0)
+                         if( (Vect_cat_get (Cats, field, &ocat)) == 0)
 	                   {
                              Vect_cat_set (Cats, field, cat);
 	                     cat += step;
