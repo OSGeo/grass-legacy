@@ -1,5 +1,4 @@
 /*
-*$Id$
 ************************************************************
 * MODULE: r.le.patch/driver.c                              *
 *         Version 5.0                Nov. 1, 2001          *
@@ -989,7 +988,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE);
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(a1, tmp_buf2);
-           free(tmp_buf2);
+           G_free(tmp_buf2);
 	}
      }
 
@@ -1012,7 +1011,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE);
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(a2, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->att[3]) {
@@ -1034,7 +1033,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(a3, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->att[4]) {
@@ -1056,7 +1055,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(a4, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->att[5]) {
@@ -1078,7 +1077,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(a5, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->att[6]) {
@@ -1100,7 +1099,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(a6, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->att[7]) {
@@ -1122,7 +1121,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(a7, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->size[1]) {
@@ -1144,7 +1143,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(s1, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->size[2]) {
@@ -1166,7 +1165,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(s2, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->size[3]) {
@@ -1188,7 +1187,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(s3, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->size[4]) {
@@ -1210,7 +1209,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(s4, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->size[5]) {
@@ -1232,7 +1231,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(s5, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->size[6]) {
@@ -1254,7 +1253,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(s6, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->core[1]) {
@@ -1276,7 +1275,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(c1, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->core[2]) {
@@ -1298,7 +1297,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(c2, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->core[3]) {
@@ -1320,7 +1319,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(c3, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->core[4]) {
@@ -1342,7 +1341,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(c4, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->core[5]) {
@@ -1364,7 +1363,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(c5, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->core[6]) {
@@ -1386,7 +1385,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(c6, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->core[7]) {
@@ -1408,7 +1407,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(c7, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->core[8]) {
@@ -1430,7 +1429,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(c8, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->core[9]) {
@@ -1452,7 +1451,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(c9, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->core[10]) {
@@ -1474,7 +1473,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(c10, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->shape[1]) {
@@ -1496,7 +1495,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(h1, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->shape[2]) {
@@ -1518,7 +1517,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(h2, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->shape[3]) {
@@ -1540,7 +1539,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(h3, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->shape[4]) {
@@ -1562,7 +1561,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(h4, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->shape[5]) {
@@ -1584,7 +1583,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(h5, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->shape[6]) {
@@ -1606,7 +1605,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(h6, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->boundary[1]) {
@@ -1628,7 +1627,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE);
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(n1, tmp_buf2);
-           free(tmp_buf2);
+           G_free(tmp_buf2);
 	}
      }
      if (choice->perim[1]) {
@@ -1650,7 +1649,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(p1, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->perim[2]) {
@@ -1672,7 +1671,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(p2, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->perim[3]) {
@@ -1694,7 +1693,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(p3, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->perim[4]) {
@@ -1716,7 +1715,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(p4, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->perim[5]) {
@@ -1738,7 +1737,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(p5, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
      if (choice->perim[6]) {
@@ -1760,7 +1759,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(p6, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
 
@@ -1783,7 +1782,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(a8, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
 
@@ -1806,7 +1805,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(s7, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
 
@@ -1829,7 +1828,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE); 
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(s8, tmp_buf2);
-           free(tmp_buf2); 
+           G_free(tmp_buf2); 
 	} 
      }
 
@@ -1852,7 +1851,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE);
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(n2, tmp_buf2);
-           free(tmp_buf2);
+           G_free(tmp_buf2);
 	}
      }
 
@@ -1875,7 +1874,7 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE);
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(n3, tmp_buf2);
-           free(tmp_buf2);
+           G_free(tmp_buf2);
 	}
      }
 
@@ -1898,10 +1897,10 @@ void  mv_driver()
            G_set_null_value(tmp_buf2, x0 + nc + u_w, DCELL_TYPE);
 	   for (b = 0; b < u_l/2; b++)
               G_put_d_raster_row(n4, tmp_buf2);
-           free(tmp_buf2);
+           G_free(tmp_buf2);
 	}
      }
-     free(tmp_buf);
+     G_free(tmp_buf);
   }
 
   time(&finished_time);
@@ -1913,10 +1912,10 @@ void  mv_driver()
                             mask and other buffer */
 
   if (fmask > 0)
-     free(row_buf);
+     G_free(row_buf);
   for (p = 0; p < nc + 1; p++)
-     free(buff[p]);
-  free(buff);
+     G_free(buff[p]);
+  G_free(buff);
 
                          /* close the raster files, set the
                             color table for the new raster
@@ -2234,7 +2233,7 @@ float *radius;
   *nc = ww - *uw + 1; 
   *nr = wl - *ul + 1;
 
-  free(buf);
+  G_free(buf);
   fclose(fp);
   return;
 }
@@ -2337,7 +2336,7 @@ void  get_para()
         ntype = 1;
      else 
         ntype = i;
-     free(tmp);
+     G_free(tmp);
      if (!ntype) {
         fprintf(stderr, "\n");
         fprintf(stderr, "   ********************************************************\n");
@@ -2392,18 +2391,18 @@ void  free_para()
 
   if (para1) {
      for(i = 0; i < ntype; i++)
-        free(recl_tb[i]);
-     free(recl_tb);
-     free(recl_count);
+        G_free(recl_tb[i]);
+     G_free(recl_tb);
+     G_free(recl_count);
   }
   if (para2)
-     free(size_cl);
+     G_free(size_cl);
   if (para3)
-     free(shape_PA);
+     G_free(shape_PA);
   if (para4)
-     free(shape_CPA);
+     G_free(shape_CPA);
   if (para5)
-     free(shape_RCC);
+     G_free(shape_RCC);
   return;
 
 }
@@ -2486,7 +2485,7 @@ int    *count;
      }
   }
   *count = (float)cnt;
-  free(buf);
+  G_free(buf);
   return;
 }
 
@@ -2512,7 +2511,7 @@ float  *fvalue;
 
   for(i = 0; i < line - 1; i++)
      fgets(buf, 256, fp);
-  free(buf);
+  G_free(buf);
 
   if (n > 0)
      for(i = 0; i < n; i++)
@@ -2529,7 +2528,7 @@ float  *fvalue;
         buf = G_malloc(40);
         sprintf(buf, "\n No data in file\"%s\"; use r.le.setup to make file\n", path);
         G_fatal_error(buf);
-        free(buf);
+        G_free(buf);
      }
   }     
   fclose(fp);
@@ -2655,16 +2654,16 @@ void  unit_driver()
            G_put_raster_row(fd, unit_buf, CELL_TYPE);
         }
         G_close_cell(fd);
-        free(unit_buf);
+        G_free(unit_buf);
      }
   }
 
   if (choice->units) {
      for (m = 0; m < wind.rows + 3; m++)
-        free(units[m]);
-     free(units);
+        G_free(units[m]);
+     G_free(units);
   }
-  free(buf);
+  G_free(buf);
   fclose(fp);
   return;
 }
@@ -2803,7 +2802,7 @@ void  whole_reg_driver()
      }
      G_close_cell(fr);
      G_free (row_buf);
-     free(ptrnew);
+     G_free(ptrnew);
   }
 
   return;
