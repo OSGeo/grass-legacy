@@ -1,3 +1,6 @@
+- G_gui() - new, generates GUI for command, it is run by default if no
+            parameters were specified on command line; terminal interface
+            may be forced by setting variable GRASS_UI_TERM
 - GISLIB 
   - G_warning(), G_fatal_error() - send mail only if eviroment variable
                                    GRASS_ERROR_MAIL is set
