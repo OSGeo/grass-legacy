@@ -115,9 +115,9 @@ echo "Locating and isolating NULL areas..."
 r.mapcalc $TMP1="if(isnull($GIS_OPT_input),1,null())"
 
 #generate a ring:
-nsres=`g.region -gm | grep 'nsres=' | sed s/nsres=//`
-ewres=`g.region -gm | grep 'ewres=' | sed s/ewres=//`
-RES=`echo $nsres $ewres | awk '{printf "%.8f", ($1 + $2)}'`  # avg*2
+nsres_int="`g.region -gm | grep 'nsres=' | sed s/nsres=// | cut -f1 -d.`"
+ewres_int="`g.region -gm | grep 'ewres=' | sed s/ewres=// | cut -f1 -d.`"
+RES="`expr $nsres_int + $ewres_int`"  # avg*2
 #echo "RES = [$RES]"
 
 r.buffer input=$TMP1 dist=$RES out=$TMP1.buf
