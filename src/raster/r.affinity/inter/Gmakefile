@@ -1,0 +1,21 @@
+PGM=$(BIN_CONTRIB_CMD)/r.affinity
+LIST = main.o\
+        affinity.o\
+	open.o\
+	classify.o\
+	hist.o\
+        init_stats.o\
+	get_stats.o\
+	sort_stats.o\
+        chi.o
+
+$(PGM): $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
+	rm -f a.out
+	$(CC) $(LDFLAGS) $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASK) $(MATHLIB)
+	mv a.out $@
+
+$(LIST): global.h
+
+$(IMAGERYLIB): #
+$(GISLIB): #
+$(VASKLIB): #
