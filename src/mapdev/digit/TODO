@@ -1,0 +1,33 @@
+
+
+
+mail on support and import
+
+redo files so write session is useful and can have abort option
+* SCS: Lat/Long -> UTM in digit?
+fix vect.to.cell on mass2
+menus in TERSE mode
+display threshold
+add an intersection command, either 2 lines at a time or an area?
+add a double digitized line function
+-----
+DONE
+write program to do priority stuff
+change vect.to.cell to work with no data areas
+SCS: build neat line from reg points
+Fully clean up threshold stuff.  document and get terminology right
+fix break line to put new node ON line.
+add mouse/digitizer editting option
+
+fix bug in build.vect   snapping thresh == 15: core dump FPE
+
+modify digit to work with MASSCOMP again
+edit make file to copy help text to TXT/digit (txt/DIGIT?)
+make prompt for file name in vect.to.cell and digit look like other prompts
+fix Geographics digitizing options -mh
+>> fix CHAR problem
+NSEW  != 0
+build	-NORAM    make this default!
+compress file for vtoc
+* SCS: 3b2 bug
+mouse digitizing
