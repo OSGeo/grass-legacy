@@ -1,7 +1,7 @@
 #include "gis.h"
 #include "G3d.h"
 #include <stdio.h>
-#include "viz.h"
+#include "Viz.h"
 
 /*---------------------------------------------------------------------------*/
 
