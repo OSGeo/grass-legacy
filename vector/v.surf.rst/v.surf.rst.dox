@@ -3,7 +3,6 @@
 
 <h2>NAME</h2>
 
-bla
 <b><i>v.surf.rst</i></b>- interpolation and topographic analysis from
 given site data to GRASS floating point raster format using regularized
 spline with tension (this program replaces <i>s.surf.tps</i>)
