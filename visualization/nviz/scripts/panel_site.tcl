@@ -21,13 +21,13 @@ proc mksitePanel { BASE } {
     
     #  Initialize panel info
     if [catch {set Nv_($BASE)}] {
-	set panel [St_create {window name size priority} $BASE "Sites" 1 5]
+	set panel [St_create {window name size priority} $BASE "Vector Points" 1 5]
     } else {
 	set panel $Nv_($BASE)
     }
 
     frame $BASE  -relief groove -borderwidth 2
-    Nv_mkPanelname $BASE "Sites Panel"
+    Nv_mkPanelname $BASE "Vector Points Panel"
 
     set tmp [frame $BASE.top]
     label $tmp.current -text "Current:" -anchor nw
@@ -89,7 +89,7 @@ proc mksitePanel { BASE } {
     pack $BASE.f -side bottom -fill x -expand 1
     
     set tmp [frame $BASE.left]    
-    Nv_mkFloatScale $tmp.sitesize h "site size" $longdim \
+    Nv_mkFloatScale $tmp.sitesize h "Symbol Size" $longdim \
 	0 $size change_site_size 2
     Nv_mkArrows $tmp.linewidth "Line Width" [concat set_width site] $width 
     
@@ -113,7 +113,7 @@ proc mksitePanel { BASE } {
     set tmp [frame $BASE.right]
     
     frame $tmp.sitedisp
-    radiobutton  $tmp.sitedisp.threed -text "3D Sites" \
+    radiobutton  $tmp.sitedisp.threed -text "3D Points" \
 	-anchor nw -variable Nv_(sitedisplay) -value 3d \
 	-command change_site_mode
     radiobutton  $tmp.sitedisp.surfdisp -text "Display on surface(s):" \

@@ -35,12 +35,12 @@ proc mkvectPanel { BASE } {
     
     #  Initialize panel info
     if [catch {set Nv_($BASE)}] {
-	set panel [St_create {window name size priority} $BASE "Vector" 1 5]
+	set panel [St_create {window name size priority} $BASE "Vector Lines" 1 5]
     } else {
 	set panel $Nv_($BASE)
     }
     frame $BASE -relief groove -borderwidth 2
-    Nv_mkPanelname $BASE "Vector Panel"
+    Nv_mkPanelname $BASE "Vector Lines Panel"
     
     #top frame
     set tmp [frame $BASE.top]
