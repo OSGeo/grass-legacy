@@ -11,9 +11,18 @@ int main (int argc, char *argv[])
   char *tempfile;
   char name[40], mapset[40];
   struct Cell_head cellhd;
+  struct GModule *module;
 
   /* Initialize the gis library */
   G_gisinit(argv[0]);
+
+  module = G_define_module();
+  module->description =
+	"An imagery function that generates spectral signatures "
+	"for an image by allowing the user to outline regions of "
+	"interest. The resulting signature file can be used as "
+	"input for i.maxlik or as a seed signature file for "
+	"i.cluster.";			          
 
   /* must have a graphics terminal selected */
   R_open_driver();

@@ -13,7 +13,10 @@
  *   	    	Read the file COPYING that comes with GRASS for details.
  ****************************************************************************
  * $Log$
- * Revision 1.2  2000-11-06 19:44:54  andreas
+ * Revision 1.3  2000-11-22 14:46:22  jan
+ * added module description
+ *
+ * Revision 1.2  2000/11/06 19:44:54  andreas
  * made program command line (with G_parser) interface
  *
  */
@@ -25,9 +28,15 @@
 int main (int argc, char *argv[])
 {
     struct { struct Option *name; } parm;
+	struct GModule *module;
     
     char *name, *mapset;
     
+	module = G_define_module();
+	module->description =
+		"An imagery function that assigns a histogram contrast "
+		"stretch grey scale color table to a raster map layer.";
+
     parm.name = G_define_option();
     parm.name->key = "map";
 /*    parm.name->key_desc = "";*/

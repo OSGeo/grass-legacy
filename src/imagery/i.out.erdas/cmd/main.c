@@ -97,6 +97,7 @@ int main (int argc, char *argv[])
 {
 /*Define some variables*/
 	struct erdheader erdashd;
+	struct GModule *module;
 	struct Option *erdasopt, *inopt ;
 	struct Flag *headflag,*swapflag,*bit16flag;
 	struct Cell_head reg ;
@@ -112,6 +113,10 @@ int main (int argc, char *argv[])
 	
 	G_gisinit(argv[0]);
 
+    module = G_define_module();
+    module->description =
+		"Creates ERDAS files from raster files.";
+					        
 	headflag = G_define_flag();
 	headflag->key = 'l';
 	headflag->description = "List the ERDAS header only";

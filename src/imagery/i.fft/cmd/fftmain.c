@@ -42,11 +42,16 @@ int main (int argc, char *argv[])
         double *data[2]; /* Data structure containing real & complex values of FFT */
         double *dptr ;
         int save_args(); /* function to stash the command line arguments */
+		struct GModule *module;
         struct Option *op1, *op2, *op3, *op4;
         char *me;
 
         G_gisinit(argv[0]);
         me = G_program_name();
+
+	    module = G_define_module();
+	    module->description =
+			"Fast Fourier Transform (FFT) for image processing.";
 
         /* define options */
         op1=G_define_option();
