@@ -159,6 +159,8 @@ function ArgSplit(){
              tmp="${argvect[2]} $1" 
              argvect[2]=$tmp 
           ;; 
+
+
       esac    
     shift    
     done
@@ -240,6 +242,11 @@ echo -e "  \n \
 "
          echo "Sorry but it seems that it isn't implemented..yet!!! ;-)" 
          ;;
+
+       --html-description )
+            #nothing, needed for HTML generation/parser
+          ;; 
+
        -*)
          Error "Undefined or incomplete option '$1'"
         ;;
