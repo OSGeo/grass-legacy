@@ -30,6 +30,7 @@ static char rcsid[] = "@(#)XGRASS $Id: History.c,v 0.0 1992/05/05 14:56:01 sink 
 #include <Xm/PushBG.h>
 #include <Xm/PushB.h>
 #include <Xm/ScrolledW.h>
+#include "XmLinux.h"
 #include "gis.h"
 #include "string.h"
 
