@@ -1,8 +1,8 @@
-# $Id: Gmakefile,v 1.15 2000-10-11 06:54:06 cho Exp $
+# $Id: Gmakefile,v 1.16 2000-10-11 10:29:25 cho Exp $
 # Makefile for building nvwish
 # Requires Tk 8.x and Tcl 8.x
 
-# These should be set by the preconfig script
+# These should be set by the preconfigure script
 NVWISH_VER=NVWISH2.2
 PQ_OBJS=openvect.o getCat.o buildInfxQry.o runInfxQry.o
 
