@@ -1,0 +1,1261 @@
+<html>
+<body bgcolor=#FFFFE0>
+<pre>
+
+             HISTORY of GRASS 4.3/4.2.1 Development
+          ----------------------------------------
+
+GRASS GIS 4.3 (November 1999)
+--------------------------------------------------------------
+
+#251 Final tweeks (BB - 11/10/99)
+
+#250 Tested for Solaris 2.6, 7, and 7intel.
+
+#249 src/sites/s.geom/libes/basic/Makefile
+     - changed CC=cc to CC=$(CC) for gcc operatibility
+
+#248 src/sites/s.geom/libes/optri/pqe2qe.c
+     - added #include math.h
+
+#247 src/sites/s.geom/libes/basic/basic.c
+     - changed fprint -> fprintf on line 85
+
+#246 Minor change to /src/gis/gis.head for GPL (BB)
+
+#245 Tested tcltkgrass with tcl and tk 8.2 libes.  Note: make
+     softlink form 8.2 to 8.0 in /usr/local/bin.  Dependencies
+     are all ok between versions.  (BB)
+
+#244 moved files_for_binary_installation in src to 
+     src/ps.map/bin_files
+
+#249 Reordered the GRASS list.  All clean now. (EZ)
+
+#248 Checked and changed all head files to reflect 4.3 (BB)
+
+#247 Tested compile step in Sun Workshop (BB)
+
+#246 Edits to man pages to restructure fo man1 (GDT)
+
+#245 New Solaris 7 header verification.  Found a couple of 
+     dependencies for Solaris 7 Intel to watch.
+      - Intel Solaris 7 ... best to compile using the
+        openwindows X, not the dt X. (BB)
+      - obj-killer script to clean up with (thx Markus)(BB)
+
+--------------------------------------------------------------
+GRASS GIS 4.3 (25th October - 2nd November 1999)
+--------------------------------------------------------------
+#244 ok  here we go.  We're moving all of the src.alpha modules
+     to src as they have been out for one release and hopefully
+     all bugs are worked out.  Many many things too numerous to
+     detail.  All fine nothing major.  (grass dev team)
+
+--------------------------------------------------------------
+GRASS GIS 4.3 (25th October 1999)
+--------------------------------------------------------------
+ Published under Gnu Public Licence conditions
+
+#243 added grass4bininstall.sh script for installation of binary
+     package (MN)
+#242 src.alpha/raster/r.out.mpeg/main.c (MN)
+       commented definition of strchr (not required)
+#241 src/scripts/shells/sh slide.show.sh
+      - bugfix for MAPSET detection (Agus Carr)
+#240 src.alpha/raster/r.water.outlet.3.0/over_cells.c (Michel Wurtz) 
+      - On some files, r.water.outlet seemed to loop infinitely. Fixed.
+#239 changes to src/libes/vask/V_call.c (Jacques Bouchard)
+       - RETURN cycles through the input lines (as usual)
+       - cursor keys left and right are working (new)
+       - cursor keys up and down are working (new)
+       - ESC-RETURN  take you out of the screen (modified)
+#238 - updated to TclTkGRASS 2.9 (Jacques Bouchard, Markus Neteler)
+       - see local history file
+#237 - src/general/gis/gis.tail
+       removed question dialog "mapset removing" when leaving GRASS.
+       This is too dangerous for newcomers (Markus Neteler)
+#236 - src/general/gis/gis.shell
+       added GRASS-prompt support for bash shell (Markus Neteler)
+
+--------------------------------------------------------------
+Version 21 (9. March 1999)
+--------------------------------------------------------------
+#235 - added TclTKGRASS 2.7 into src.alpha/tcltkgrass (Jacques Bouchard)
+#234 - added src.alpha/vector/v.in.shape (Frank Warmerdam - warmerda@home.come)
+#233 - added r.out.geotiff (src.alpha/scripts/r.out.geotiff) (Jill Schuler)
+#232 - changed src/CMD/head/linux: use ncurses instead of curses now (M.N.)
+#231 - added XDRIVER and CELL driver to src/CMD/lists/GRASS (M.N.)
+#230 - added XFIG import/export scripts (src.alpha/scripts/v.xfig/) (Jacques Bouchard)
+#229 - bugfix for e00b2a from src.alpha/misc/m.in.e00 (Michel Wurtz)
+#228 - changed i.tasscap to i.tasscap.tm4 and i.tasscap.tm5 
+       with corrected TC-factors  (src.alpha/scripts/i.tasscap) (M.N.)
+#227 - updated gis.shell (src/general/gis) for bash support in etc/GIS.sh (M.N.)
+#226 - added i.image.mosaic (src.alpha/scripts/i.image.mosaic) (Felix Gershunov/M.N.)
+#225 - bugfix for v.clean (src/mapdev/v.clean) (Jacques Bouchard)
+#224 - bugfix for v.spag (src/mapdev/v.spag) (Jacques Bouchard)
+#223 - bugfix for s.voronoi (src.contrib/PURDUE/s.voronoi) (Andy)
+#222 - bugfix for r.out.bil (src.alpha/scripts) (Phisan Santitamnont)
+
+--------------------------------------------------------------
+Version 20 (7. December 98)
+--------------------------------------------------------------
+#221 - added full coordinate output to d.what.sites (src.alpha/display) (M.N.)
+#220 - Bugfix for r.tiff (src.alpha/raster)  (Jacques Bouchard)
+#219 - added m.in.e00 (src.alpha/misc) (Michel Wurtz)
+#218 - added m.statistics (src.alpha/scripts) (M.N.)
+#217 - small bugfix in i.spectral (src.alpha/scripts) (M.N.)
+#216 - v.surf.spline: fixed scripts and Gmakefile
+#215 - d.pan: bugfix for middle mouse button (Jacques Bouchard)
+
+--------------------------------------------------------------
+Version 19 (22. September 98)
+--------------------------------------------------------------
+#214 - s.sv (src.alpha/sites/) added (M.N./Jacques Bouchard)
+#213 - v.digspline (src.alpha/vector/) corrected (Jacques Bouchard)
+#212 - i.shape (src.contrib/CERL/imagery/) corrected (Jacques Bouchard)
+#211 - d.param.scale/r.param.scale (src.alpha/display/raster) corrected (Jacques Bouchard)
+       and added short man-pages (M.N.)
+#210 - more corrections for SGI (Jacques Bouchard)
+        - src.alpha/raster/r.nntool/common.h 
+        - src.contrib/SDTS/mapdev/v.in.sdts/Gmakefile
+        - src.garden/grass.rim/s.db.rim/cmd/Gmakefile 
+#209 - added d.what.sites (src.alpha/display/) (Jacques Bouchard)
+#209 - added r.to.sites (src.alpha/raster) (M.N.)
+#208 - corrected r.poly (src/raster/r.poly): (M.N.)
+         - take care of current location settings now (G_Get_region in io.c)
+         - outputs rows and cols in progress instead of debug messages
+#207 - gdbase ASCII-DBMS running now (code untested section corrected and moved 
+        to src.contrib/UCB) (Dr. B. Friedrich / M.N.)
+         -r.gdbase, -s.gdbase, -v.gdbase with TclTK interface
+#206 - Partly updated PostgreSQL-GRASS interface (untested/dbms/grass.postgres/)
+       BTW: You find Postgres 6.x at http://www.postgresql.org
+            and a NICE graphical user "PGACCESS" interface at ftp://ftp.flex.ro/pub/pgaccess/
+       Any voluneers to update the GRASS interface? (M.N.)
+#205 - corrected r.out.arctiff (src.alpha/scripts) - included missing n_s_res 
+          in exported .tfw file (M.N.)
+#204 - added r.in.arctiff (src.alpha/script) - import of ARCTIFF files (M.N.)
+        (thanks to Leslie Apollon <la@las.com> for his hints on tfw format)
+#203 - corrected src.contrib/SCS/display/d.fix.ortho: 
+         -  moving direction corrected and line draw activated (M.N.)
+#202 - added src.contrib/NPS/imagery.29nov93  (M.N.)
+         - i.points3  -> merges i.points and i.ortho.photo and has got new LANDSAT
+                           elevation correction
+         - i.tape.tm3 -> merges i.tape.tm and i.tape.tm.fast and has got new functions
+         - i.rectify3 -> merges i.rectify, i.rectify2 and i.ortho.photo 
+                          and has got new LANDSAT elevation correction
+       => this code needs some bugfixing...
+#201 - made r.out.tiff sensitive to regions settings (M.N.)
+        - src.alpha/raster/r.tiff/cmd/r.out.tiff.c
+        - src.alpha/raster/r.tiff.old/cmd/r.out.tiff.c
+#200 - corrected wrong color "violet" in src/scripts/shells/d.correlate.sh (M.N.)
+#199 - Changed src/imagery/i.grey.scale/Gmakefile:  stored in 
+        etc/bin/main/cmd now to make it also non-interactive usable (M.N.)
+#198 - SGI support improved: new head file (thanks to Jacques Bouchard)
+         - src/imagery/i.points/mark.c
+         - src/raster/r.mapcalc/polish/pol.y
+         - src.alpha/raster/r.le/r.le.dist/main.c
+         - src.alpha/misc/m.in.stf1.db3/m.in.stf1.db.c
+         - src.alpha/misc/m.in.pl94.db3/m.in.pl94.db.c
+         - src.alpha/imagery/i.ortho.photo/photo.2target/mark.c
+         - src.alpha/imagery/i.vpoints/mark.c
+         - src.alpha/raster/r.affinity/inter/classify.c
+         - src.alpha/raster/r.nntool/nntool.c
+         - src.alpha/sites/s.geom/libes/basic/basic.h
+         - src.alpha/sites/s.geom/libes/include/basic.h
+         - src.contrib/SDTS/mapdev/v.sdts.dq.cp/cmd/main.c
+         - src.contrib/SDTS/misc/m.sdts.read/Gmakefile
+         - src.contrib/SDTS/mapdev/v.out.sdts/Gmakefile
+         - src.contrib/SDTS/mapdev/v.out.sdts/control.c
+         - src.garden/answers/raster/r.fill.dir/cmd/mp.h
+         - src.garden/grass.rim/v.db.rim/cmd/misc.c
+         - src.garden/grass.rim/v.db.rim/cmd/vect_map.c
+         - src.garden/grass.rim/v.db.rim/cmd/site_list.c
+         - src.related/rim/run.setup
+#197 - updated Gmakefiles (compiler options corrected) (M.N.)
+         - src.garden/grass.rim/s.db.rim/cmd/Gmakefile
+         - src.garden/grass.rim/v.db.rim/cmd/Gmakefile
+         - src.garden/grass.rim/v.db.rim/inter/Gmakefile
+#196 - bugfix for CELL driver: PROJ and ZONE info defined to Zero (0) now.
+         - src/display/devices/CELL/Graph_Clse.c
+#195 - added src.alpha/raster/r.distance
+#194 - changed name of XDRIVER_24 to XDRIVER (simplifies installation,
+       XDRIVER_24 supports 8bit as well as 24bit) (M.N.)
+         - src/display/devices/XDRIVER_24/XDRIVER24/Gmakefile
+#193 - g.help: switched key's meaning of ESC and SPACEBAR 
+       (for more intuitive usage) (M.N.)
+#192 - added src.alpha/raster/r.out.pov (POVRAY export module)
+       (thanks to Klaus Meyer <GEUM.tec@geum.de>)
+
+--------------------------------------------------------------
+Version 18b (22. July 98)
+--------------------------------------------------------------
+# - removed src.related/tcltkgrass  (TCL/TK 8.0 library sources)
+    removed src.related/xgrass      (lesstif sources - MOTIF clone)
+    Stored separately on the WWW-server now.
+# - moved   src.related/LTPlus_4.13 (digitizing program)
+            src.related/mapgen_6.25 (Map creating program)
+                into separated packages on server. (M.N.)
+# - removed more than 1050 oldish backup files (these files are saved, email
+       me, if you need them!) (M.N.)
+# - removed src.alpha/tcltkgrass - get it in a separate package!
+    The reason is more flexibility in updating this package.
+
+#191 - corrected src421/src/CMD/lists/GRASS: removed double entries
+#190 - added src421/src/CMD/head/solaris2.5 and solaris2.6
+#189 - added i.oif (calculate Optimum index factor for LANDSAT TM) (M.N.)
+#188 - correction to src421/src.alpha/imagery/i.gensig/inter/Gmakefile (put binary 
+       code into alpha section instead of main)
+#187 - removed src421/src.contrib/CAST/r.colors.paint/ (already in src.alpha)
+#186 - corrected src421/src/CMD/lists/GRASS:
+         - disactivated src/v.mkgrid (src.contrib/PURDUE/v.mkgrid is improved)
+#185 - src.alpha/display/d.barscale: draw_scale.c added fflush(stdout) (M.N.)
+#184 - src/display/d.what.vect: what.c added fflush(stdout) for better
+       use in TclTKGRASS (thanks to Jacques Bouchard!)
+#183 - added  -DATT_386 flag in src421/src/CMD/head/linux for i.in.erdas
+#182 - src/raster/r.in.ll corrected, handles properly negative cell values now 
+        - src/raster/r.in.ll (thanks to Jacques Bouchard)
+#181 - src.alpha/raster/r.in.bin: new "-s" flag and "subst" option for GTOPO30 files
+#180 - src.garden/answers/raster/r.direct: corrections to direct_for.f (thanks to Jacques Bouchard!)
+#179 - d.3d changed to suppress the annoying empty result window that 
+       jumps at the end of the execution (thanks to Jacques Bouchard)
+        - src/display/d.3d/threeds.c
+#178 - src/mapdev/v.prune: added v.support-check for input files (M.N.)
+#177 - added src.alpha/raster/r.in.ppm (M.N.)
+#176 - bugfixes in ASCII database management system "GDBASE" (M.N.)
+          - new Gmakefile
+          - corrections for tcl-tk-query windows
+            src421/untested/dbms/grass.gdbase
+#175 - created Gmakefile for POSTGRES interface (M.N.)
+            src421/untested/dbms/grass.postgres
+#174 - Removed "chmod 0555 grass42/scripts/*" from (G. Chou - gchou@gpz.com)
+           src/scripts/Gmakefile
+           src.alpha/scripts/d.rast.leg/Gmakefile
+           src.alpha/scripts/Gmakefile
+           src.alpha/raster/r.agnps50/Gmakefile
+           src.alpha/ps.map/scripts/Gmakefile
+           src.garden/answers/scripts/Gmakefile
+       due to Solaris problems (writing into the scripts directory)
+       Inserted "chmod 755 $(GISBASE)/scripts/*" into
+           src.alpha/scripts/Gmakefile (last line)
+#173 - r.hdf: src.alpha/raster/r.hdf/r.in.hdf/Gmakefile (Jacques Bouchard)
+              src.alpha/raster/r.hdf/r.out.hdf/Gmakefile 
+          -> $(VASK) changed to $(VASKLIB) (was a Solaris/Redhat compiling problem)
+#172 - ps.map Segmentation Fault on Solaris 2.6
+       fix in libgis.a:  in src421/src/libes/gis/strip.c 
+        (thanks to Clifton Wood <cbwood@vt.edu>)
+#171 - src.alpha/raster/r.water.outlet.3.0: main.c - error message corrected
+#170 - src.alpha/raster/r.affinity: comment syntax corrected
+#169 - src.alpha/raster/r.agnps50 (thanks to George Chou - support@gpz.com)
+       correction in Gmakefile (thanks to George Chou)
+#168 - src/libes/gis/G.h:
+       change to fix the "Too many open files" problem (thanks to George Chou)
+
+--------------------------------------------------------------
+Version 17 (12. June 98)
+--------------------------------------------------------------
+#167 - RIM/GRASS interface:
+        - corrected src.garden/grass.rim: working (!?) now
+        - added src.garden/grass.rim.new from Marco Valagussa  
+#166 - RIM help system updated
+#165 - RIM-database updated! 
+       src.related/rim (was untested/dbms/rim)
+       (thanks to Marco Valagussa <marco@duffy.crcc.it>!)
+             -> should be compilable on Linux now
+#164 - src.alpha/raster/r.tiff (thanks to Marco Valagussa)
+       (old version stored in src.alpha/raster/r.tiff.old/).
+       Changes for TIFF - library management: 
+        now the libtiff of the system is used:
+         src.alpha/raster/r.tiff.new/cmd/Gmakefile
+         src.alpha/raster/r.tiff.new/cmd/r.in.tiff.c
+         src.alpha/raster/r.tiff.new/cmd/r.out.tiff.c
+         src.alpha/raster/r.tiff.new/Gmakefile
+#163 - changed #-lmalloc with $(LIB_MALLOC) (thanks to Marco Valagussa!)
+         src.alpha/sites/s.geom/s.geom/Gmakefile
+         src.alpha/sites/s.geom/s.out.minmaxer/Gmakefile
+         src.alpha/sites/s.geom/v.geom/Gmakefile
+         src.alpha/sites/s.geom/v.in.minmaxer/Gmakefile
+#162 - bugfix: src/mapdev/v.digit/digmain.c (thanks to Marco Valagussa!)
+               src.alpha/display/d.sites.label (from untested section)
+#161 - XGRASS: little fixes for compiling with MOTIF: 
+                   (thanks to Marco Valagussa!)
+        src/include/MatrixP.h 
+        src/include/ClipP.h
+        src/include/CaptionP.h
+        src/xgrass/libes/Xgi/Interact.c
+        src/xgrass/libes/Xgi/Help.c
+        src/xgrass/libes/Xpm/create.c
+
+#160 - d.3d (src/display): added missing color=color parameter for (M.N.)
+                           command line usage
+#159 - LTPlus (src.related): corrections in LIBRULE management. (M.N.)
+                            package should be compilable now...
+                            
+--------------------------------------------------------------
+Version 16a (29. May 98)
+--------------------------------------------------------------
+#158 - restored i.grey.scale (sorry for that!)
+#157 - slight corrections to src421/src.contrib/SDTS (M.N.)
+         -> added to compiling list src/CMD/lists/GRASS
+
+--------------------------------------------------------------
+Version 16 (23. May 98)
+--------------------------------------------------------------
+#156 - added  src.alpha/vector/v.distance (thanks to Janne Soimasuo)
+          Calculates a distance from a point to nearest line or point in vector layer
+     - added  src.alpha/vector/v.plant (thanks to S.J.D. Cox at AGCRC, CSIRO, Australia)
+          Inserts nodes in equidistance into vector map
+     - added src.alpha/scripts/s.out.gps (many thank to Johnny Duke at NRCS)
+     - added polygon cutter with vector attributes: src.alpha/scripts/v.cutter.attr 
+     - added ARC/INFO TIFF export (with .tfw file): src.alpha/scripts/r.out.arctiff
+#155 - added Tasseled cap (Kauth Thomas) transform: src.alpha/scripts/i.tasscap
+     - added linear regression calculation:  src.alpha/scripts/r.regression.line 
+     - added module to digitize a vector line between two given raster values 
+                  in a raster map: src.alpha/scripts/r.edge.dig
+     - added display raster module with automated visualization rescaling:
+                  src.alpha/scripts/d.rast.rescale
+          (many thanks to Dr. Agustin Lobo <alobo@ija.csic.es>)
+#154 - added (many thanks to Jill Schuler <jschuler@tulip.itc.nrcs.usda.gov>) 
+      -  src.contrib/NRCS/vector/v.export (replace old SCS code)
+      -  src.contrib/NRCS/vector/v.import (not yet activated, compare
+                                          src/mapdev/v.import)
+      -  src.contrib/NRCS/vector/v.in.atlas
+      -  src.contrib/NRCS/vector/v.in.dlg_atr
+      -  src.contrib/NRCS/vector/v.out.atlas
+      -  src.contrib/NRCS/vector/v.out.mapinfo
+      -  src.contrib/NRCS/vector/v.zoom
+#153 - added src.alpha/ps.map/scripts/ps.map.barscale
+       (thanks to Malcolm D. Williamson, University of Arkansas, Fayetteville AR)
+#152 - renamed src.contrib/SCS/vector/v.proj -> v.proj.scs to avoid
+       confusion with src.alpha/mapdev/v.proj
+#151 - totally rewritten TclTKGRASS V 2.0! Many, many thanks
+       to Jacques Bouchard (bouchard@onera.fr)
+         -> new module concept, new module windows etc. etc.
+#150 - XGRASS: applied all patches from Jacques Bouchard      
+         -> xdigit working now (avoid double clicks on filename etc.!)
+#149 - changed all src/CMD/head files: new compiler variables
+  inserted following lines:
+   FC                  = f77 
+   LEX                 = lex
+   YACC                = yacc
+
+ changed following Gmakefile: (see also patch #130)
+      src.contrib/CERL/m.eigensystem
+      
+--------------------------------------------------------------
+Version 15 (30. April 98)
+--------------------------------------------------------------
+#148 - added src.alpha/vector/v.digspline into src/CMD/lists/GRASS
+  (modified v.digit with spline interpolation)
+
+#147 - change in src/CMD/head/linux
+13c13
+< LDFLAGS             = -Wl -s
+---
+> LDFLAGS             = -Wl,-s
+
+#146 - correction for src/raster/r.binfer (Redhat Linux compiling problem fixed now)
+       added following line into binfer.l:
+         %option yylineno
+       See below also for LEX-problem!
+
+#145 - correction of src.alpha/mapdev/v.proj  (sorry, should have been 
+       already applied as patch #16, Dec. 1997), file main.c
+27c27
+<       char ctype[3];
+---
+>       char ctype[1];
+
+#144 - lots of patches from Marco Valagussa <marco@crcc.it>. Thanks!!
+       They are the following 18 patches:
+#143 - src/display/d.sites/cmd - Added exit status 0 if ok
+ file main.c:
+138d137
+<       exit(0)
+
+#142 - src/libes/gis - Added flush the stdout before get the ..
+file gets.c:
+39d38
+<       if ( isatty(1) ) (void)fflush(stdout);
+
+#141 - src/raster/r.mapcalc/polish - Compilation problems fixed
+ file pol.y:
+2,7d1
+< %{
+< static int nstored = 0;
+< static char **storage = 0;
+< extern char *malloc(), *realloc();
+< %}
+<
+85a80,83
+>
+> static int nstored = 0;
+> static char **storage = 0;
+> char *malloc(), *realloc();
+
+#140 - src/mapdev/v.clean - Correct loop on lines# & use of variables
+       file Vclean.c: - diffs see there (several)
+
+#139 - src/mapdev/v.digit - Conditional use of VMIN-VTIME/VEOL-EOF
+                       for use on old unix systems
+       file graph_input.c:
+       file set_key.c:  - diffs see there
+
+#138 - src.alpha/vector/v.circle/cmd - Correct some (unbelievable) bugs
+       file: main.c: - diffs see there (several)
+
+#137 - src.alpha/raster/r.agnps50 - Correct the installation
+       file: Gmakefile
+
+#136 - src.alpha/sites/s.label - Correct definition for argv & use G_gisinit()
+       file: s.label.c: - diffs see there
+
+#135 - src/CMD/utils - extended setup version 
+       file: setup: - diffs see there
+
+#134 - new file src/CMD/utils/testyacc.y - test yacc/bison
+#133 - new file src/CMD/utils/testlex.l  - test lex/flex & library
+
+#132 - src/CMD/generic - delete absolute pathname for mknod
+       file: GISGEN.sh
+
+#131 - src/CMD/generic - Inserted the include directory for ncurses.
+       file: make.mid: - diffs see there
+
+#130 - There were problems using YACC/BISON, LEX/FLEX, CURSES/NCURSES so 
+  script utils/setup was extended for these choice and the Gmakefiles
+  changed for the use of yacc/lex.
+  This are the Gmakefiles modified for $(YACC) / $(LEX) / $(LEXLIB):
+   - src/raster/r.mapcalc/polish/Gmakefile
+   - src/raster/r.combine/cmd/Gmakefile
+   - src/raster/r.weight/inter/Gmakefile
+   - src/raster/r.binfer/Gmakefile
+
+
+--------------------------------------------------------------
+Version 14 (19. April 98)
+--------------------------------------------------------------
+#129 - MAPGEN improved (gzip, gzcat added, xzoom corrected, better startscript) (M.N.)
+#128 - added ARCVIEW/SHAPE-utils in src.alpha/vector/v.shape   activated in            
+        src/CMD/lists/GRASS: (there are more)   (M.N.)
+     -> src.alpha/vector/v.shape/v.shp2gen  (convert SHAPE to ungenerate)
+     -> src.alpha/vector/v.shape/v.gen2shp (convert ungenerate to SHAPE)
+     -> src.alpha/vector/v.shape/v.shputils
+     -> src.alpha/vector/v.shape/v.dbfdump
+           (thanks to Janne Soimasuo for finding the package)
+#127 - added src.alpha/scripts/ps.add.pagesize (M.N.)
+#126 - added src.alpha/vector/v.digspline (M.N.)
+#125 - in src421/src/CMD/head :
+      diff linux.orig linux
+------------ cut here -------------------------------
+13c13
+< LDFLAGS             = -s
+---
+> LDFLAGS             = -Wl -s
+------------ cut here -------------------------------
+    The Redhad f77 doesn't understand "f77 -s" but "f77 -Wl,-s".
+    With gcc, you can use as well "-s" and "-Wl,-s".
+
+#124 - in src/display/devices/XDRIVER_24/XDRIVER24 (thanks to Jacques Bouchard)
+       corrected Gmakefile:
+------------ cut here -------------------------------
+12,13c12,13
+< XINCPATH=-I/usr/X11/include
+< XLIBPATH=-L/usr/X11/lib
+---
+> #XINCPATH=-I/usr/X11/include
+> #XLIBPATH=-L/usr/X11/lib
+------------- cut here ------------------------------
+
+#123 - in src.alpha/tcltkgrass/module :
+        Prevent to use Display/Manage/Control Display Monitor:
+   file d.mon
+------------- cut here ------------------------------
+182c182
+<     -yscrollcommand {.cmd.frame2.vscrollbar set}
+---
+>     -yscrollcommand {.cmd.frame2.vscrollbar set} \
+248c248
+<     -yscrollcommand {.cmd.frame3.vscrollbar set}
+---
+>     -yscrollcommand {.cmd.frame3.vscrollbar set} \
+------------- cut here ------------------------------
+
+  and file: d.rast  - thanks to Marco Valagussa
+------------ cut here -----------------------
+119c119
+<   menu .mapset.frame0.mapsets.pulldown -tearoff 0
+---
+>   menu .mapset.frame0.mapsets.pulldown
+------------ cut here -----------------------
+
+
+#122 -  src421/src.alpha/sites/s.geom/libes/optri:
+   Changed back to original and saved two files for bsd-linux:
+    mv heur.slope.c heur.slope.c.bsd
+    mv heur.slope.c.orig heur.slope.c
+    mv pqe2qe.c pqe2qe.c.bsd
+    mv pqe2qe.c.orig pqe2qe.c
+
+
+--------------------------------------------------------------
+Version 13 (15. April 98)
+--------------------------------------------------------------
+#121 - new LTPlus_4.13 added (Many thanks to Jill Schuler!) (M.N.)
+       several corrections were necessary:
+         src.related/LTPlus_4.13/HISTORY.txt
+#120 - new MAPGEN_6.25 added (upgrade in src.related/mapgen_6.25) (M.N.)
+       (Many thanks to Jill Schuler <jschuler@tulip.itc.nrcs.usda.gov>!)
+       several corrections were necessary:  
+         src.related/mapgen_6.25/HISTORY.txt  
+#119 - coming along with this package: proj 4.3 
+       (binary will be stored in grass42/tools/)
+#118 - tcltkgrass free of binary code now (platform independent)
+       -> new start script  src.alpha/tcltkgrass/script/tcltkgrass
+        unless "super view" is not implemented properly
+#117 - activated src.alpha/raster/r.in.bin in src/CMD/lists/GRASS
+#116 - src.alpha/ps.map changed: patch, which enables user to choose one vector
+                   category to print from a vector file (thanks to Janne
+                   Soimasuo, Finnland!)
+       in src421/src.alpha/ps.map/ps.map/cmd/
+                do_vectors.c, vectfile.c, ps_vector.c, vector.h
+#115 - src.alpha/ps.map/ps.map/cmd/read_cfg.c
+       added:     #include <stdlib.h> (correction of raster read error)
+       Thanks to Richard Nairn <ren@spans.gscc.nrcan.gc.ca>
+#114 - added src.alpha/raster/r.sunmask (thanks to Janne Soimasuo)
+#113 - added src.alpha/scripts/s.in.gps
+#112 - added src.alpha/scripts/v.in.gps
+#111 - src/general/g.help/menu.c
+       changes in menu.c  (Thanks to Jacques Bouchard <bouchard@onera.fr>!)
+#110 - renamed d.vect.cat -> d.vect.cats
+        in src.contrib/CAST/d.vect.cats/Gmakefile
+#109 - added fill polygon function to d.vect.cats (thanks to Janne Soimasuo, Finnland!)
+#108  - renamed r.out.sites -> r.to.sites
+        in src.contrib/CORPS/r.to.sites/Gmakefile
+#107 - renamed d.rast.leg.sh -> d.rast.leg
+       and moved src.alpha/display/d.rast.leg/ -> src.alpha/scripts
+
+--------------------------------------------------------------
+Version 12 (1. April 98)
+--------------------------------------------------------------
+#106- NEW STRUCTURE: all src.extra modules are now in src.alpha
+                to keep the CERL/BAYLOR structure
+#105- src.alpha/tcltkgrass: running now! Only super view is missing (many 
+      thanks to Jacques Bouchard !!)
+#104- src.alpha/scripts/r.out.bil added (thanks to T. D'Avello for grass2bil)
+
+--------------------------------------------------------------
+Version 11a (21. March 98)
+--------------------------------------------------------------
+#103- r.out.hdf is available now: corrected Gmakefile in  (M.N.)
+       src421/src.alpha/raster/r.hdf
+#102- moved programs from zzz_extra to src.related (to keep the structure)
+#101- XGRASS: added src/xgrass/xgrasteredit (M.N.)
+#100- TclTK-Grass: new version (cleaned source code) for Tcl/TK 8.0
+      in src.extra/tcltkgrass/
+#99- src.extra/sites/s.sample updated
+#98- src/raster/r.infer - corrected for Redhat Linux, Solaris and Slackware
+       Linux:
+        'sys_errlist[errno]' should be replaced with 'strerror(errno)',
+        which IS 'ANSI C', and which should be understood by EVERY
+        C compiler. 
+#97- removed src.extra/raster/r.flow (was already in src.alpha-section)
+#96- corrected SGI-head file (removed space characters in end of line)
+#95- GRASS-SDTS software added in src.contrib/SDTS/
+
+--------------------------------------------------------------
+Version 10 (11. March 98)
+--------------------------------------------------------------
+#94- added src.extra/tcltkgrass  -> Tcl/Tk-GRASS might be interesting 
+                                  instead of XGRASS 
+#93- updated man-pages as far as possible (for g.help, g.manual)
+
+#92- added src.extra/sites/s.in.ascii.dem 
+#91- added src.extra/scripts/d.rast.leg
+#90- new Gmakefile for AGNPS 5.0
+   in    src.extra/erosion/grass_agnps50
+
+#89- added untested/driver/hpd500c
+#88- added untested/gnuplot/g.gnuplot.3d
+#87- added untested/sites/s.normal/cdhc-lib
+#86- added untested/usle.tcl
+#85- added src.related/LTPlus/documents
+#84- corrected Gmakefiles in src.contrib/CERL/raster/r.linear.regression
+                                                   r.rational.regression
+ 
+#83- the correction for r.infer was removed. The original infer.h is
+   back again
+
+
+--------------------------------------------------------------
+Version 9  (3. March 98)
+--------------------------------------------------------------
+Major changes:
+#82- new library file: 
+    src/vector/mapdev/diglib/prune.c 
+    is replaced by a completely new source code. 
+    A minor bugfix was done in
+    src/vector/mapdev/v.prune/v.prune.c
+ 
+    Thanks to Michel Wurtz! - <mw@engees.u-strasbg.fr>
+    It should produce nice results now.
+
+#81- a lot of bugfixing in XGRASS-section (but it is still not yet
+     stable...)
+     Thanks to Jacques Bouchard who is programming all these XGRASS improvements!        
+
+#80- src.extra/raster/r.flow
+    diff -c calc.11a.c calc.11a.c.orig 
+       *** calc.11a.c  Fri Feb 27 12:13:41 1998
+       --- calc.11a.c.orig     Tue Jul 25 20:51:50 1995
+       ***************
+       *** 354,359 ****
+       --- 354,360 ----
+  
+             free(fls.px);
+             free(fls.py);
+       +     free(fls);
+             free(lg);
+
+#79- r.in.hdf/r.out.hdf available:
+    -corrected src.alpha/raster/r.hdf/HDF.lib/Makefile
+                                         HDF.lib/Gmakefile 
+    -corrected src.alpha/raster/r.hdf/r.in.hdf/Gmakefile 
+     
+    -corrected src.alpha/raster/r.hdf/r.out.hdf/Gmakefile
+    The module should work now for all platforms. Choose you platforms
+    in HDF.lib/Makefile, it is now installed for SUN and Linux. 
+    -src.garden/grass.hdf is obsolete -> deleted!
+    
+#78- corrected src.contrib/CERL/raster/r.rvi
+#77- correction for src.extra/r.tiff/r.in.tiff
+#76- new Gmakefile for AGNPS 5.0
+    in    src.extra/erosion/grass_agnps50
+    and new install-intructions there.
+
+Minor changes:
+#75- corrected all head-files in src/CMD/head : 
+     < DEFAULT_DATABASE    = $GISBASE/grass_data
+     ---
+     > DEFAULT_DATABASE    = $(GISBASE)/grass_data
+
+#74- renamed following modules in src.extra:
+      r.frac.surf  -> r.surf.fractal
+      r.gauss.surf -> r.surf.gauss 
+      r.rand.surf  -> r.surf.random
+
+   renamed src./display/d.p.labels -> d.paint.labels
+
+#73- included src.garden/answers erosion modelling
+#72- moved src.extra/raster/r.fill.dir
+                          r.direct
+   to src.garden/answers/raster where it belongs to.
+
+#71- included CELL-driver in src421/src/CMD/lists/GRASS
+   This CELL-driver outputs all results of the d. display-commands
+   into a raster file (resolution can be set with g.region)
+#70- included src.extra/paint/p.vrml from untested section
+#69- added src.extra/raster/r.in.bin (thanks to Jacques Bouchard)
+#68- included src.contrib/CORPS/r.to.sites
+#67- included src.contrib/CORPS/FLOOD
+
+--------------------------------------------------------------
+BETA 8  (5. Feb. 98)
+--------------------------------------------------------------
+#66- Added src421/zzz_extra
+      - moved mpeg-encoder from src.alpha/raster/r.out.mpeg to this place
+      - added netcdf-libs for r.stage3 (lib has to be compiled separately)
+      - added lesstiff (version 0.83, from 4. Feb. 98)
+        has to be compiled separately
+           - install package somewhere
+           - say: configure
+           - say: make
+           - say: make install
+           - say: make clean
+           - feel happy
+        (Successfully tested on Slackware Linux with gcc 2.7.x)
+
+#65-  Compilation of XGRASS:
+           - Change gmake4.2 to HASMOTIF=yes
+             (Thanks to Jacques Bouchard for the diffs)
+           
+         - Then you should be able to compile XGRASS without Motif
+        -> tell me your improvements.
+
+#64- Added src421/src.related (untested)
+         - LTPlus           (untested)
+         - mapgen/xmapgen   (untested)
+         - gctp             (successfully tested on Linux)
+         - xgen             (untested)
+
+--------------------------------------------------------------
+BETA 7  (4. Feb. 98)
+--------------------------------------------------------------
+Special thanks to Jacques Bouchard!
+
+#63- Redhat users: if you have problems to compile r.infer and r.binfer:
+        -> in the directories src/raster/r.binfer and
+                              src/raster/r.infer/cmd
+           you find new files (extension: .redhat) which help
+           to fix these problems. You have to exchange the
+           original files with these new files
+      
+#62- included src.contrib/NMSU/WRAT 
+      bugfixing.   
+      - ga/ga.c:  include definitions corrected (colons deleted)
+      - wrat/ta.c: include definitions corrected (colons deleted)
+      - wrat/runoff.c: the same
+      - wrat/qual.c: the same
+      - and so on.
+      - remove.c remove -> Remove
+
+      - wrat is called r.wrat now.
+
+#61- src.alpha/misc/m.in.pl94.db3/m.in.pl94.db.c  
+      Sucessfully patched - diff-file is there
+
+#60- src.alpha/misc/m.in.stf1.db3/m.in.stf1.db.c  
+      Sucessfully patched - diff-file is there
+
+#59- src421/src.alpha/raster/r.flow/ 
+      I have corrected the Gmakefile: $(DIR) was wrong.
+
+#58- included src.contrib/OTHER/v.in.poly
+  
+#57- included src.contrib/OTHER/v.reg (for registration of 7.5" maps)
+
+#56- removed src.contrib/OTHER/s.to.rast (obsolete, already in src.alpha)
+
+#55- src.contrib/CERL/imagery/
+    i.rvi.prediction2 -> i.rvi.prediction (renamed)
+    included in src/CMD/lists/GRASS
+
+#54- src.contrib/CERL/raster/r.ndvi.model
+    corrected Gmakefile (module was stored at ./ and not in binary tree)
+
+#53- src.contrib/CERL/raster/r.ndvi.model
+    corrected globals.h: NBANDS was undefined:
+        #define NBANDS 3
+    (taken from ../../imagery/i.rvi.prediction)
+
+    corrected main.c
+      line 44:
+           opt2->mutilple   = YES;
+      to
+           opt2->multiple   = YES;
+  
+    some error is still there.
+
+         
+#52- Corrections for the FIRE package (r.spreadpath etc.)
+    
+    There were several errors in Pi-definition:
+    float PI=3.14159
+
+    Errors like:
+     gcc -O -m486  -I/usr/local/grass42/src421/src/include -DUSE_TERMIO -c
+     spread.c
+     spread.c:48: parse error before 3.14159265358979323846
+     make: *** [OBJ.linux/spread.o] Error 1
+
+   After commenting these PI-definitions in
+   src/r.spread
+     main.c - line 51
+     spread.c - line 48
+     select_linksB.c - line 36
+     spot.c - l.61
+
+   it compiles fine on Slackware Linux gcc 2.7.1
+ 
+#51- some new comments in src/CMD/lists/GRASS 
+
+#50- restructured src.alpha/raster/r.in.hdf  (nearly running now)
+
+--------------------------------------------------------------
+BETA 6  (29.1.98)
+--------------------------------------------------------------
+#49- the package was splitted - documents are in an extra package
+    now (because of package size)
+#48- the instructions were improved to be more clearly
+#47- corrections src/mapdev/v.in.dxf
+    (thanks to Jacques Bouchard <bouchard@onera.fr> )
+
+    Problem:
+      In file included from add_bounds.c:5:
+      dxf2vect.h:53: >basename< redeclared as different kind of symbol
+      /usr/include/string.h:245: previous declaration of >basename<
+      make: *** [OBJ.linux/add_bounds.o] Error 1
+    solution:
+      Changed >basename< into >base_name< in:
+        add_bounds.c
+        add_extents.c
+        dxf2vect.h
+        main.c
+        open_layer.c
+        reopen_layer.c
+#46- added r.affinity classifier to src.extra/raster section
+
+--------------------------------------------------------------
+BETA 5  (27.1.98)
+--------------------------------------------------------------
+#45- XDRIVER24 restructured !!
+      find XDRIVER 8bit:  src421/src/display/devices/XDRIVER_8
+      find XDRIVER 24bit: src421/src/display/devices/XDRIVER_24
+    (moved XDRIVER24 from src.extra to src/display/devices and 
+     Gmakefile-bugfix)
+
+#44- included d.area, d.barscale, d.myzoom, d.pan
+#43- update for r.bilinear: irint defined (thanks to George Chou - gchou@gpz.com)
+#42- update for r.nntool (thanks to George Chou - gchou@gpz.com)
+#41- new: - src.contrib/NRCS/raster/r.in.doq - reads in an uncompressed USGS
+                                            Digitial Orthophotography  
+         - src.contrib/NRCS/vector/v.report - this file works but it is picky
+                      about the dig_cats file.  It wants a line for 0:nodata 
+                      and it appreciates it if the number of attributes are 
+                      numbered beginning with one.
+         - src/mapdev/v.mkquads - same as other but you can make quarter 
+                                quads, thirds, 1x3 
+    => Thanks to Anthony Burns 
+         (email: KY#c#KY.BLNKY01#c#agburns@KCC.FSA.USDA.GOV)
+#40- included v.line2area from moon.cecer.army.mil into src.alpha/scripts
+    (useful for v.in.dxf3d)
+#39- updated documents (included GRASS 4.2 docs) and history.
+#38- new section:
+       files_for_binary_installation/   -> postscript printer devicefiles
+    read README there for installation
+#37- renamed untested/raster/r.read -> r.in.milgeo (module for german MilGeo-Data)
+#36- restructured documentation
+
+--------------------------------------------------------------
+BETA 4  (19.1.98)
+--------------------------------------------------------------
+#35 - the corrections for v.build and v.clean are included.
+       Many thanks to Michel Wurtz - LTE <mw@engees.u-strasbg.fr>
+     
+#34 - one new module: v.what (query vector categories)
+
+--------------------------------------------------------------
+BETA 3 (11.1.98)
+--------------------------------------------------------------
+
+Changes:  
+#33 - cleared off some unused source code from src.contrib/SCS
+      to avoid confusion.
+#32 - g.help gives problems while compiling, commented out in
+       src/CMD/lists/GRASS
+      Who can help? But I think it is not serious to miss the module...
+#31 - bugfix for ps.select integrated
+#30 - bugfix for v.support (the old 4.1.5 bugfix from CERL) in level_two.c
+#29 - update r.param.scale (Version: Jo Wood, 23rd May, 1995)
+#28 - added several modules to src421/untested-area
+#27 - several new modules in src.extra-section (partly from untested-section) 
+         with small corrections (see <a href=Whats-new-in-421.html>Whats-new-in-421.html</a>)
+#26 - extended src421/documents/modules/ - documentation
+
+
+--------------------------------------------------------------
+BETA 2
+--------------------------------------------------------------
+7.1.98
+
+#25)  New modules:
+        r.tiff  (src.extra) - but 8bit version only!
+        r.le version 2.2 (src.alpha)
+
+8.1.98
+  
+#24)  Deleted some modules in untested/ area which are already
+      in src.alpha.
+
+
+
+-------------------------------------------------------------
+BETA 1 (7.1.98)
+-------------------------------------------------------------
+
+#23) Problem 2: The v.digit does not have contact to GRASS Monitor.
+
+Solution (thanks to Michel Wurtz): 
+
+v.digit compiles, but doesn't work
+because an old assumption on Termio : in System V.2, reading a
+serial line without the need of a LF is possible, but the driver
+wait at least VMIN char on input or VTIME ms before returning
+anything.  In older termio libs, VEOF=VTIME and VEOL=VMIN (or
+the opposite), but this is not true with Linux
+(See /usr/include/asm/termbits.h).
+
+If you want run v.digit you should edit line 50 and 51 of the
+file "set_key.c", replacing VEOL and VEOF by VTIME and VMIN.
+
+This is for keyboard entry. I have not yet tested the digitizers,
+but I'm sure that it will not work without editing "graph_input.c"
+at lines 598 and 599, doing the same change.
+
+Michel Wurtz    ENGEES - Laboratoire Territoires & Environnement
+                1, quai Koch - BP 1039, F-67070 STRASBOURG cedex
+
+                mw@engees.u-strasbg.fr
+
+
+Other solution:
+
+ Take the libcurses from Slackware 3.3 (to be installed in /usr/lib)
+
+
+#22) r.nntool: could not be compiled.
+
+Solution   (thanks to Michel Wurtz):
+
+ Obviously, the external declarations are often missing... and
+ some are redundant (and may be false, like FILE *fclose() !)
+ nint() is used as a function, and a cast to integer.  I have
+ replaced all occurences by (int) which is correct with gcc.
+
+
+==========================================================================
+Changes to basic GRASS 4.2 from Baylor University (Dec. 1997)
+--------------------------------------------------------------------------
+
+
+#1) The first problem appears here (with Linux, not with Solaris):
+
+  >grass4.2/src/front.end
+  >make -f OBJ.linux/make.rules
+  >gcc  -o /home/phisan/tmp/grass4.2/etc/front.end OBJ.linux/main.o
+  >  /home/phisan/tmp/grass4.2/src/libes/LIB.linux/libgis.a
+  > /home/phisan/tmp/grass4.2/src/libes/LIB.linux/libgis.a(gisinit.o): 
+  >In function G__gisinit':
+  >gisinit.o(.text+0xc): undefined reference to G__set_program_name'
+  >gisinit.o(.text+0x1b): undefined reference to G__location_path'
+
+ Solution:
+  cd ../src/libes/gis/
+  textedit Gmakefile
+
+  Remove the character '#'.
+     index.o\
+   #   intr_char.o\
+     key_value1.o\
+
+  Should look like this: (intr_char will be used in i.class)
+     index.o\
+     intr_char.o\
+     key_value1.o\
+
+  Comments are not allowed here (and unnecessary!).
+
+#2) You _might_ get a problem in d.3d:
+
+ Solution:  
+   textedit src42/src/CMD/head/linux.head
+   Change
+     CURSES              = -lncurses $(TERMLIB)
+   to
+     CURSES              = -lcurses $(TERMLIB)
+   
+
+#3) r.combine:
+
+    OBJ.linux/gis_lxcl.o: In function yylex':
+    OBJ.linux/gis_lxcl.o(.text+0x5a1): undefined reference to yyinput'
+    make[1]: *** [/usr/local/grass42/etc/r.combine] Error 1
+
+ Solution: yyinput() is for C++, use input() for linux flex 
+
+    modify src/raster/r.combine/cmd/gis_lxcl.l - line 176 
+        change from 
+           while ((achar=yyinput()) != 012) 
+        to 
+           while ((achar = input()) != 012) 
+
+  (idea from KANG from GRASS 4.1.5)
+
+#4) r.nntool (1)
+    > cc -O -m486 -I/usr/local/grass42/src42/src/mapdev/Vlib
+    > -I/usr/local/grass42/src42/src/mapdev/diglib
+    > -I/usr/local/grass42/src42/src/include -DUSE_TERMIO -c net.cnet.c:41:
+    > /usr2/grass4.0/src/libes/gis.h: No such file or directory
+    > make: *** [OBJ.linux/net.o] Error 1
+  
+ Solution:  
+   cd ../src.alpha/raster/r.nntool
+
+   Edit net.c
+    Change in line 41:
+       #include "/usr2/grass4.0/src/libes/gis.h"
+    to:
+       #include  "gis.h"
+
+  Also edit Gmakefile
+   Remove second line:
+     BIN_ALPHA_CMD = .
+   Then the binary file will be installed in the correct directory.
+
+#5) r.nntool (2) Several files had been corrected.
+    Thanks to 
+      Michel Wurtz    ENGEES - Laboratoire Territoires & Environnement
+      mw@engees.u-strasbg.fr
+
+#6) r.cn
+   
+    > cc -s -o /usr/local/grass42/etc/bin/alpha/cmd OBJ.linux/main.o
+    > OBJ.linux/cell_open.o OBJ.linux/hy_soil_group.o OBJ.linux/cell_open_new.o
+    > OBJ.linux/rules.o OBJ.linux/data.o OBJ.linux/amc_conversion.o
+    > /usr/local/grass42/src42/src/libes/LIB.linux/libgis.a -lm
+    > /usr/i486-linux/bin/ld: cannot open output file
+    > /usr/local/grass42/etc/bin/alpha/cmd: Is a directory
+    > make: *** [/usr/local/grass42/etc/bin/alpha/cmd] Error 1
+
+ Solution: 
+      
+     cd src.alpha/raster/r.cn
+     textedit Gmakefile
+
+     Delete lines:
+            # %W% %G%
+            BIN = $(BIN_ALPHA_CMD)
+
+     Change line:
+            $(BIN)/$(PGM): $(LIST) $(LIBES)
+     to:
+            $(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(LIBES)
+
+#7) r.agnps
+    
+    source code is obsolete: this code is oldish!
+
+ Solution: 
+    Use AGNPS 5.0 with GRASS-interface:
+        http://www.geog.uni-hannover.de/phygeo/grass/agnps.html
+    - also included in grass42/src.extra -section (src421-package)!
+
+#8) r.bilinear
+    
+   > OBJ.linux/bilinear.o: In function Bilinear':
+   > OBJ.linux/bilinear.o(.text+0xa17): undefined reference to 'irint'
+   > make: *** [/usr/local/grass42/etc/bin/alpha/cmd/r.bilinear] Error 1
+   > GISGEN failure at STEP: src.alpha/raster/r.bilinear
+ 
+   outcell[out++] = irint (ns_fract * tmp2 + (1 - ns_fract....)
+
+   Function "irint" does not exist in gcc!
+  
+   Solution:
+     correct the function in this line (delete character "i"):
+      old:
+        irint (ns_fract * tmp2 + (1 - ns_fract....)
+      new:
+        (int)rint (ns_fract * tmp2 + (1 - ns_fract....)
+
+    Thanks to Phisan Santitamnont  
+              phisan@ipi.uni-hannover.de
+
+#9) r.in.hdf
+
+   > cc -O -m486 -I/usr/local/grass42/src42/src/../src.contrib/grass.hdf/HDF.lib/include
+   > -I/usr/local/grass42/src42/src/mapdev/Vlib
+   > -I/usr/local/grass42/src42/src/mapdev/diglib -D
+   > -I/usr/local/grass42/src42/src/include -DUSE_TERMIO -c r.in.hdf.c
+   > r.in.hdf.c:0: malformed option -D -I/usr/local/grass42/src42/src/include'
+   > r.in.hdf.c:15: gis.h: No such file or directory
+   > r.in.hdf.c:16: df.h: No such file or directory
+   > r.in.hdf.c:17: hdf.h: No such file or directory
+   > make: *** [OBJ.linux/r.in.hdf.o] Error 1
+
+   r.in.hdf uses the NCSA Hierarchical Data Format (HDF) library: BEFORE
+   compiling this program, you must compile the library (see the README
+   file in src.garden/grass.hdf for instructions on compiling the HDF
+   library).
+
+   Solution: not today.... (who needs this module at all?)
+    kick it out of: src/CMD/lists/GRASS  (comment it out with #)
+    change entry in: src/CMD/next_step/linux
+ 
+
+#10) XGRASS
+
+   Only with MOTIF (commercial)!
+  
+   Solution: ---------- (maybe lesstif etc.?)
+
+   kick it out of: src/CMD/lists/GRASS   (comment it out with #)
+   change entry in: src/CMD/next_step/linux
+
+#11) r.rvi
+
+    > cc -O -m486  -I/usr/local/grass42/src42/src/include -DUSE_TERMIO -c main.c
+    > main.c: In function main':
+    > main.c:26: BANDS' undeclared (first use this function)
+    > main.c:26: (Each undeclared identifier is reported only once
+    > main.c:26: for each function it appears in.)
+    > main.c:44: structure has no member named utilple'
+    > main.c:58: ' undeclared (first use this function)
+    > main.c:64:       inputfiles' undeclared (first use this function)
+    > main.c:67: outputfiles' undeclared (first use this function)
+    > make: *** [OBJ.linux/main.o] Error 1
+    > GISGEN failure at STEP: src.contrib/CERL/raster/r.rvi
+
+ Solution: ---------- 
+                                         
+ kick it out of: src/CMD/lists/GRASS  (comment it out with #)
+ change entry in: src/CMD/next_step/linux
+
+#12) d.linegraph
+
+    > cc -O -m486  -I/usr/local/grass42/src42/src/include -DUSE_TERMIO -c
+    > linegraph.c
+    > linegraph.c: In function Main':
+    > linegraph.c:77: conflicting types for Fclose'
+    > /usr/include/stdio.h:113: previous declaration of Fclose'
+    > make[1]: *** [OBJ.linux/linegraph.o] Error 1
+    > make[1]: Leaving directory
+    > /usr/local/grass42/src42/src.contrib/PURDUE/d.linegraph/cmd'
+    > make: *** [all] Error 1
+
+ Solution: fclose and fopen were repeated defined 
+      
+   comment out line 77 in the 
+    src.contrib/PURDUE/d.linegraph/cmd/linegraph.c file 
+     /*   FILE *fclose(), *fopen(); */
+  
+  (idea from KANG from GRASS 4.1.5)
+
+
+#13) d.vect.cats
+
+ problem - compiled successfully but doesn't run correctly 
+
+ why -  pointer error 
+
+ Solution:  
+  modify the src.contrib/CAST/d.vect.cats/plotCat.c - line 91 
+        change from 
+           Vect_get_area_points(P_map,a_index,Points); 
+        to 
+           Vect_get_area_points(&P_map,a_index,Points); 
+
+  (idea from KANG from GRASS 4.1.5)
+
+#14) problems with the ps.map command (Linux)
+       1. the ps.map needs to be compiled with the -fwritable-strings flag
+       2. the way is to edit the src/CMD/head/linux header file
+             + add -fwritable-strings at the end of COMPILE_FLAGS line
+               COMPILE_FLAGS = -O -fwritable-strings
+             + cd to src.alpha/ps.map
+             + simple run gmake4.2
+
+
+
+#15) src/mapdev/v.build
+
+  problem - compiled successfully but doesn't run correctly 
+
+  why - GRASS codes were not cleaned up before release 
+
+  Solution:
+    comment out line 176 and 177 in src/mapdev/Vlib/level_two.c 
+        fclose(map->dig_fp);
+        map->dig_fp=NULL; 
+
+    (idea from KANG from GRASS 4.1.5)
+
+#16) src.alpha/mapdev/v.proj
+
+  problem - compiled successfully but doesn't run correctly 
+    produce lots of garbage output for files in the dig_att directory 
+
+  why -  ????? 
+
+  Solution:
+
+    modify src.alpha/mapdev/v.proj/main.c - line 27 
+        change from 
+           ctype[1] 
+        to 
+           ctype[3] 
+
+    (idea from KANG from GRASS 4.1.5)
+
+#17) s.surf.tps
+    src.alpha/sites/s.surf.tps
+
+    Problem: compiling is fine, but module does not work
+
+    Solution:
+      textedit user1.c
+      
+      insert definition of atof() at top:
+
+          double atof();
+
+    (mail from J. Hovierka)
+
+#18) src.contrib/SCS/vector/v.dump
+
+
+  Problem: does not compile, ABS definition missing.
+
+  Solution: Insert the ABS-definition: in isle_area.c
+
+   old:
+    isle_area (map, isle, totalarea)
+    struct Map_info *map;
+    int  isle;
+    double *totalarea;
+
+   to:
+    isle_area (map, isle, totalarea)
+    struct Map_info *map;
+    int  isle;
+    #define ABS(x)          (((x) < 0) ? -(x) : (x))
+    double *totalarea;
+
+#19) r.hydro.casc2d is obviously missing!
+
+    Problem: There is an error in the Gmakefile.
+    Solution:
+      cd src.alpha/raster/r.casc2d
+      textedit Gmakefile
+   
+      Insert linebreak in this line:
+       DIR=$(BIN_ALPHA_CMD)HEADERS=all.h
+      Like this:
+       DIR=$(BIN_ALPHA_CMD)
+       HEADERS=all.h
+
+      And remove line:
+       DIR=. 
+      
+#20) r.sun is obviously missing!
+
+    Problem: There is an error in the Gmakefile.
+    Solution:
+      cd src.alpha/raster/r.sun
+      textedit Gmakefile
+       
+     Uncomment (remove #):   
+       DIR=$(BIN_ALPHA_CMD)
+
+      And remove line:
+       DIR=. 
+
+#21) i.tape.spot is obviously missing!
+
+    Problem: There is an error in the Gmakefile.
+    Solution:
+      cd src.alpha/imagery/i.tape.spot
+      textedit Gmakefile
+
+     Insert at beginning:
+      PGM = i.tape.spot
+
+     Change line:
+       i.st: $(LIST) $(LIBES) $(VASKLIB)
+     to:
+       $(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(LIBES) $(VASKLIB)
+
+
+</pre>
+</body>
+</html>
