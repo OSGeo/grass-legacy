@@ -32,7 +32,16 @@ export GIS_LOCK
 
 # Set PATH to GRASS bin, ETC to GRASS etc
 ETC=$GISBASE/etc
-LCL=`echo $LANG | sed 's/\(..\)\(.*\)/\1/'`
+
+if [ $LC_MESSAGES ] ; then
+LCL=`echo $LC_MESSAGES | sed 's/\(..\)\(.*\)/\1/'`
+else if [ $LC_ALL ] ; then
+	LCL=`echo $LC_ALL | sed 's/\(..\)\(.*\)/\1/'`
+	else
+	LCL=`echo $LANG | sed 's/\(..\)\(.*\)/\1/'`
+	fi
+fi
+
 PATH=$GISBASE/bin:$GISBASE/scripts:$PATH:$GRASS_ADDON_PATH
 export PATH
 
