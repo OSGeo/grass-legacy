@@ -1,4 +1,5 @@
 #define MISC
+#include <strings.h>
 #include "gis.h"
 #include "globals.h"
 #include "rim.h"
