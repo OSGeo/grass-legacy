@@ -42,6 +42,8 @@ void	write_outputs(void);
 double	get_lambda(void);
 void	initialize(void);
 void	implement(void);
+double	get_Em(void);
+void	others(void);
 void	topmodel(void);
 /* infiltration.c */
 double	get_f(double t, double R);
@@ -91,7 +93,7 @@ GLOBAL	struct
 /* File names */ 
 GLOBAL	struct
 {
-	char	*idxstats, *params, *input, *output;
+	char	*idxstats, *params, *input, *output, *Qobs;
 } file;
 
 /* Miscellaneous TOPMODEL variables */
@@ -101,16 +103,21 @@ GLOBAL	struct
 	int	ncell;
 	/* Number of topographic index classes */
 	int	nidxclass;
+	/* Model efficiency */
+	double	Em;
 	/* '_' suffix means time units in time step */
 	int	ndelay_, nreach_;
 	double	lnTe_, vch_, vr_;
 	double	lambda;
 	double	_qs_, qs0_;
+	double	Qobs_peak_, Qt_peak_, Qobs_bar_, Qt_bar_;
+	int	tobs_peak_, tt_peak_;
 	/* params.nch's */
 	double	*tch_;
 	/* misc.nreach_'s */
 	double	*Add;
 	/* input.ntimestep's */
+	double	*Qobs_;
 	double	*Qt_;
 	double	*qs_;			/* qs_[timestep] * a[i] = spatial */
 	double	*Sbar_;
