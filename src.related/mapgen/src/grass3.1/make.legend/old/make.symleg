@@ -1,0 +1,25 @@
+#!/bin/sh
+CHECK.MAP
+if test $? = 1
+	then
+	exit
+fi
+if test ! -d misc
+	then
+	mkdir misc
+fi
+tput clear
+echo -n "Enter the name of the map definition file to use [map.def]: "
+read mapf
+mapf=${mapf:-map.def}
+
+echo -n "Enter the name of the overlay file to create [leg.symbol]: "
+read overf
+overf=${overf:-leg.symbol}
+
+echo "legend -m $mapf -o ovm/$overf << EOF" > misc/$overf
+make_symleg >> misc/$overf
+echo EOF >> misc/$overf
+
+chmod 755 misc/$overf
+misc/$overf
