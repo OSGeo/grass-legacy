@@ -20,8 +20,8 @@
 <B>d.text.freetype help</B> 
 <BR>
 <B>d.text.freetype</B> 
-[<B>-r</B>]
-<B>text=</B><EM>name</EM>
+[<B>-rpsc</B>]
+[<B>text=</B><EM>name</EM>]
 [<B>east_north=</B><EM>east,north</EM>] 
 [<B>font=</B><EM>name</EM>] 
 [<B>path=</B><EM>name</EM>] 
@@ -41,7 +41,13 @@ the graphics monitor using TrueType fonts.
 
 <DL>
 <DT><B>-r</B>
-<DD>Rotation angle in radian
+<DD>Radian rotation
+<DT><B>-p</B>
+<DD>Pixel coordinates
+<DT><B>-s</B>
+<DD>Pixel size
+<DT><B>-c</B>
+<DD>Command mode (Compatibility with d.text)
 </DL>
 
 
@@ -78,6 +84,84 @@ the graphics monitor using TrueType fonts.
 <DD>Rotates text counterclockwise.<BR>
     Default: 0<BR>
     The default unit is degree.
+</DL>
+
+
+<H3>Command mode:</H3>
+
+<H4>Note</H4>
+
+<DL>
+<DT>{REQUIRED}
+<DD>
+<DT>[OPTIONAL]
+<DD>
+<DT>THIS|orTHAT
+<DD>
+<DT>+, - 
+<DD>Relative value
+<DT>r, %, p
+<DD>Radian, Percentage, and Pixels respectively
+</DL>
+
+
+<H4>Commands</H4>
+
+<DL>
+
+<DT>.F {font|path}[:charset] <EM>font</EM>
+<DD>
+
+<DT>.C {color_name|0xRRGGBB} <EM>color</EM>
+<DD>
+
+<DT>.S [+|-]size[p] <EM>size</EM>
+<DD>
+
+<DT>.A {ll|lc|lr|cl|cc|cr|ul|uc|ur} <EM>align</EM>
+<DD>
+
+<DT>.R [+|-]rotation[r] <EM>rotation</EM>
+<DD>
+
+<DT>.X [+|-]x[%|p] <EM>x-coord</EM>
+<DD>
+
+<DT>.Y [+|-]y[%|p] <EM>y-coord</EM>
+<DD>
+
+<DT>.L {0|1} <EM>linefeed</EM>
+<DD>
+
+<DT>.E [+|-]east[%|p] <EM>x-origin</EM>
+<DD>
+
+<DT>.N [+|-]north[%|p] <EM>y-origin</EM>
+<DD>
+
+<DT>.. <EM>dot</EM>
+<DD>
+
+</DL>
+
+<H4>Example</H4>
+
+The following example prints three lines: "GRASS d.text.freetype output",
+"See test.input file" and "for more details".
+
+<DL>
+<DT><B>d.text.freetype -c</B>
+<DD>.F /usr/X11R6/lib/X11/fonts/TrueType/ttf1.ttf:ISO-8859-1
+<DD>.S 20p
+<DD>.L 0
+<DD>GRASS 
+<DD>.C red
+<DD>d.text.freetype 
+<DD>.C gray
+<DD>output
+<DD>.L 1
+<DD>See test.input file
+<DD>for more details.
 </DL>
 
 
