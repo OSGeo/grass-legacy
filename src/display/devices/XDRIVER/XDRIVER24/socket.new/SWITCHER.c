@@ -4,6 +4,8 @@
  * (SATNIKDB%cwu.bitnet) on 8/90 */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <signal.h>
 #include <setjmp.h>
 #include <sys/types.h>
@@ -62,10 +64,6 @@ static struct MESSOUT {
 	char buf[4096];
 } sb;
 
-char *malloc(), *strcpy();
-static char *xalloc(), *store();
-PAD *find_pad();
-
 static char *me;
 static int _wfd, _rfd;
 static int eof, broken_pipe;
@@ -75,6 +73,7 @@ static int cursiz = 0;
 static char current_command;
 PAD *padlist;            /* user created pads */
 PAD *curpad;             /* current selected pad */
+PAD *find_pad();
 static jmp_buf savenv;
 static int get_command(char *);
 static void timeout(int);
