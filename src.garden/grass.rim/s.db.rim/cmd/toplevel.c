@@ -92,6 +92,8 @@ int *numarg,fname_len,pname_len,*quiet; /* quiet is an unused flag */
   /* initialize GRASS libs */
   G_gisinit(progname);
   G_sleep_on_error(0);
+  Projection = G_projection();
+  G_begin_distance_calculations();
 
   /* initialize the input and output files */
   Outfile = stdout;
