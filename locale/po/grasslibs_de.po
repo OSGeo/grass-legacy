@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_de\n"
 "POT-Creation-Date: 2004-11-17 09:31+0100\n"
-"PO-Revision-Date: 2004-11-13 16:20+0100\n"
+"PO-Revision-Date: 2004-11-17 13:11+0100\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Report-Msgid-Bugs-To: \n"
-"X-Generator: KBabel 1.3\n"
+"X-Generator: KBabel 1.9.1\n"
 
 #: ../lib/gis/env.c:268
 msgid "GISRC - variable not set"
@@ -752,8 +752,7 @@ msgstr "Kann Datei %s in %s nicht öffnen"
 #: ../lib/gis/get_datum.c:107
 #, c-format
 msgid "Error reading datum shift parameters for %s from table"
-msgstr ""
-"Fehler beim Lesen der Datums-Transformationsparameter für %s aus der Tabelle"
+msgstr "Fehler beim Lesen der Datums-Transformationsparameter für %s aus der Tabelle"
 
 #: ../lib/gis/get_datum.c:115
 #, c-format
@@ -988,8 +987,7 @@ msgstr "Kann kein Histogramm für [%s in %s] erstellen."
 #: ../lib/gis/history.c:120
 #, c-format
 msgid "can't get history information for [%s] in mapset [%s]"
-msgstr ""
-"Kann die History-Informationen der Karte [%s] in Mapset [%s] nicht finden."
+msgstr "Kann die History-Informationen der Karte [%s] in Mapset [%s] nicht finden."
 
 #: ../lib/gis/history.c:170
 #, c-format
@@ -1172,8 +1170,7 @@ msgstr "opencell: %s - ungültiger Dateiname"
 
 #: ../lib/gis/opencell.c:699
 msgid "Can't write embedded null values for map open for random access"
-msgstr ""
-"Kann keine embedded NULL Werte für Karte mit random access Zugriff schreiben"
+msgstr "Kann keine embedded NULL Werte für Karte mit random access Zugriff schreiben"
 
 #: ../lib/gis/opencell.c:930 ../lib/gis/opencell.c:951
 #, c-format
@@ -1577,8 +1574,7 @@ msgstr ""
 
 #: ../lib/gis/view.c:548
 #, c-format
-msgid ""
-" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
 msgstr ""
 " Nur %d%% des in \"%s\" abgespeicherten Fensters überlappt mit dem "
 "derzeitigen GRASS-Fenster."
@@ -1658,8 +1654,7 @@ msgstr "Nicht verbunden...\n"
 
 #: ../lib/raster/io.c:371
 msgid "Couldn't connect to monitor. Will try once more.\n"
-msgstr ""
-"Kann nicht mit einem Monitor verbinden. Versuche es noch ein weiteres Mal.\n"
+msgstr "Kann nicht mit einem Monitor verbinden. Versuche es noch ein weiteres Mal.\n"
 
 #: ../lib/raster/io.c:377
 msgid "Connection failed.\n"
@@ -1869,24 +1864,24 @@ msgstr "Füge Zentroide hinzu:"
 
 #: ../lib/vector/Vlib/field.c:73
 msgid "Field number must be 1 or greater."
-msgstr ""
+msgstr "Feldnummer muss 1 oder größer sein."
 
 #: ../lib/vector/Vlib/field.c:78
 msgid "Cannot add database link, map is not opened in WRITE mode."
-msgstr ""
+msgstr "Kann keine Datenbankverknüpfung erstellen. Die Karte ist nicht schreibbar."
 
 #: ../lib/vector/Vlib/field.c:84
 msgid "Cannot add database link."
-msgstr ""
+msgstr "Kann keine Datenbankverknüpfung erstellen."
 
 #: ../lib/vector/Vlib/field.c:90 ../lib/vector/Vlib/field.c:133
 msgid "Cannot write database links."
-msgstr ""
+msgstr "Kann die Datenbankverknüpfung nicht schreiben."
 
 #: ../lib/vector/Vlib/field.c:188
-#, fuzzy, c-format
+#, c-format
 msgid "Field number <%d> or name <%s> already exists"
-msgstr "Die Vektorkarte '%s' existiert bereits."
+msgstr "Die Feldnummer <%d> oder der Name <%s> existiert bereits."
 
 #: ../lib/vector/Vlib/field.c:247
 msgid ""
@@ -1894,6 +1889,9 @@ msgid ""
 "driver: dbf\n"
 "database: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/"
 msgstr ""
+"Standard Datenbank und -treiber für Vektorkarten sind wie folgt gesetzt:\n"
+"Treiber: dbf\n"
+"Datenbank: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/"
 
 #: ../lib/vector/Vlib/field.c:255
 msgid ""
@@ -1901,35 +1899,36 @@ msgid ""
 "driver: dbf\n"
 "database: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/"
 msgstr ""
+"Datenbankverbindung (für alle db.*-Module) ist wie folgt gesetzt:\n"
+"Treiber: dbf\n"
+"Datenbank: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/"
 
 #: ../lib/vector/Vlib/field.c:267
-#, fuzzy
 msgid "Default driver is not set"
-msgstr "Standard Region %s"
+msgstr "Standard-Treiber ist nicht gesetzt."
 
 #: ../lib/vector/Vlib/field.c:269
 msgid "Default database is not set"
-msgstr ""
+msgstr "Standard-Datenbank ist nicht gesetzt."
 
 #: ../lib/vector/Vlib/field.c:319
 #, c-format
 msgid "Requested dblink %d, maximum link number %d"
-msgstr ""
+msgstr "Angeforderte Datenbank-Verknüpfung %d, maximale Verknüpfungsnummer %d"
 
 #: ../lib/vector/Vlib/field.c:398
-#, fuzzy
 msgid "Cannot open OGR DBMI driver."
-msgstr "Kann temporäre Datei nicht öffnen."
+msgstr "Kann den OGR DBMI-Treiber nicht öffnen."
 
 #: ../lib/vector/Vlib/field.c:418
 #, c-format
 msgid "Don't know how to read links for format %d"
-msgstr ""
+msgstr "Ich weiß nicht, wie ich den Link vom Format %d lesen soll."
 
 #: ../lib/vector/Vlib/field.c:446
-#, fuzzy, c-format
+#, c-format
 msgid "Error in rule on row %d in %s"
-msgstr "Fehler beim Lesen der null Zeile %d"
+msgstr "Fehler in Regel in Zeile %d in %s."
 
 #: ../lib/vector/Vlib/field.c:573
 msgid "Bug: attempt to update map which is not in current mapset."
@@ -1945,14 +1944,12 @@ msgstr ""
 #: ../lib/vector/Vlib/legal_vname.c:29
 #, c-format
 msgid "Illegal vector map name <%s>. Must start with a letter.\n"
-msgstr ""
-"Ungültiger Name der Vektorkarte <%s>. Muss mit einem Buchstaben beginnen.\n"
+msgstr "Ungültiger Name der Vektorkarte <%s>. Muss mit einem Buchstaben beginnen.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:35
 #, c-format
 msgid "Illegal vector map name <%s>. Character <%c> not allowed.\n"
-msgstr ""
-"Ungültiger Name der Vektorkarte <%s>. Zeichenfolge <%c> ist nicht erlaubt.\n"
+msgstr "Ungültiger Name der Vektorkarte <%s>. Zeichenfolge <%c> ist nicht erlaubt.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:60 ../lib/vector/Vlib/legal_vname.c:62
 #, c-format
@@ -2046,10 +2043,10 @@ msgstr ""
 
 #: ../lib/vector/Vlib/open.c:649
 msgid "Size of 'coor' file differs from value saved in topo file."
-msgstr ""
-"Größe der 'coor' Datei unterscheidet sich vom Werte in der 'topo' Datei."
+msgstr "Größe der 'coor' Datei unterscheidet sich vom Werte in der 'topo' Datei."
 
 #: ../lib/vector/Vlib/open.c:660
 #, c-format
 msgid "Please rebuild topology for vector '%s@%s'"
 msgstr "Bitte Topologie für Vektorkarte '%s@%s' neu erzeugen"
+
