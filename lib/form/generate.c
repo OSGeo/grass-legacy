@@ -35,9 +35,14 @@ F_generate (char *drvname, char *dbname, char *tblname, char *key, int keyval,
 	NULL
     };
     char *enc_env;
+    char *override_form_mode;
 
     G__read_env();
     enc_env = G__getenv("GRASS_DB_ENCODING");
+    
+    override_form_mode = G__getenv("GRASS_FORM_MODE");
+    if (strcmp( override_form_mode, "VIEW" ) == 0) edit_mode = F_VIEW;
+    if (strcmp( override_form_mode, "EDIT" ) == 0) edit_mode = F_EDIT;
     
     /* TODO: support 'format' (txt, html), currently html only */
 
@@ -167,7 +172,7 @@ F_generate (char *drvname, char *dbname, char *tblname, char *key, int keyval,
 	} 
 
 	if ( edit_mode == F_EDIT ) {
-	    sprintf(buf, "Change data view encoding:<BR><SELECT NAME=%s SIZE=4>",
+	    sprintf(buf, "<HR>   Assume data encoding as:<BR><BR><SELECT NAME=%s SIZE=4><HR><BR>",
 		    F_ENCODING);
 	    db_append_string(&html, buf);
 
