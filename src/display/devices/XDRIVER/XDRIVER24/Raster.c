@@ -82,7 +82,7 @@ first = 0;
         if (alloc == 0)
             grimage->data =  (XImage *) G_malloc((size_t) (num * bytes_per_pixel));
         else
-            grimage->data =  (XImage *) realloc((void *)grimage->data, (size_t) (num * bytes_per_pixel));
+            grimage->data =  (XImage *) G_realloc((void *)grimage->data, (size_t) (num * bytes_per_pixel));
         if (grimage->data == NULL)
             return (-1);        /* not enough space left */
     }

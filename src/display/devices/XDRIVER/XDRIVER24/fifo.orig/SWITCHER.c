@@ -1287,7 +1287,7 @@ static char *xalloc(char *buf,int *cur,int new,int len)
     if (*cur >= new)
         return buf;
     if (*cur)
-        buf = (char *)realloc((void *) buf, (size_t) (new * len));
+        buf = (char *)G_realloc((void *) buf, (size_t) (new * len));
     else
         buf = (char *)G_malloc((size_t) (new * len));
     *cur = new;

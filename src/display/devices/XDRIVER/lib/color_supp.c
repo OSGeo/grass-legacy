@@ -95,7 +95,7 @@ static int check_alloc_color(int n)
             to_alloc += 512;
 
         if (posLookAlloc)
-            pos_lookup = (int *) realloc((void *) pos_lookup,
+            pos_lookup = (int *)G_realloc((void *) pos_lookup,
                     (size_t) (to_alloc * sizeof(int)));
         else
             pos_lookup = (int *) G_malloc((size_t) (to_alloc * sizeof(int)));
@@ -114,7 +114,7 @@ static int check_alloc_color(int n)
             to_alloc += 512;
 
         if (negLookAlloc)
-            neg_lookup = (int *) realloc((void *) neg_lookup,
+            neg_lookup = (int *)G_realloc((void *) neg_lookup,
                     (size_t) (to_alloc * sizeof(int)));
         else
             neg_lookup = (int *) G_malloc((size_t) (to_alloc * sizeof(int)));

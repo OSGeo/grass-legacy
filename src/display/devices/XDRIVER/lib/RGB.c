@@ -76,7 +76,7 @@ register u_char *r,register u_char *g,register u_char *b, int withzeros)
         if (array == NULL)
             array = (unsigned *) G_malloc((size_t) (array_alloc * sizeof(unsigned)));
         else
-            array = (unsigned *) realloc((void *) array,
+            array = (unsigned *) G_realloc((void *) array,
                     (size_t) (array_alloc * sizeof(unsigned)));
         if (array == NULL) {
             fprintf(stderr, "ERROR: can't alloc RGB_raster\n");

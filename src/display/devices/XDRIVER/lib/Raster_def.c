@@ -21,7 +21,7 @@ int Raster_char (int num, int nrows,
 		if (num > array_alloc)
 		{
 			array_alloc = num ;
-			int_array = (int *)realloc((void *)int_array, (size_t)(num * sizeof(int))) ;
+			int_array = (int *)G_realloc((void *)int_array, (size_t)(num * sizeof(int))) ;
 		}
 	}
 
