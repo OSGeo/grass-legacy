@@ -10,6 +10,10 @@ echo "You must be in GRASS to run this program."
 exit
 fi
 
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+
 if [ "$1" = "help" ] ; then
  echo "g3.list parameter"
  echo "   where parameter="
