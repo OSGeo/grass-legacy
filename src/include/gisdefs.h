@@ -721,25 +721,25 @@ int G__name_is_fully_qualified(char *, char *, char *);
 char *G_fully_qualified_name(char *, char *);
 
 /* null_val.c */
-int G__check_null_bit(unsigned char *, int, int);
-int G__set_flags_from_01_random(char *, unsigned char *, int, int, int);
-int G__convert_01_flags(char *, unsigned char *, int);
-int G__convert_flags_01(char *, unsigned char *, int);
-int G__init_null_bits(unsigned char *, int);
-int G__init_null_patterns(void);
-int G__set_null_value(void *, int, int, RASTER_MAP_TYPE);
-int G_set_null_value(void *, int, RASTER_MAP_TYPE);
-int G_set_f_null_value(FCELL *, int);
-int G_set_d_null_value(DCELL *, int);
-int G_set_c_null_value(CELL *, int);
-int G_is_f_null_value(FCELL *);
-int G_is_d_null_value(DCELL *);
-int G_is_c_null_value(CELL *);
-int G_is_null_value(void *, RASTER_MAP_TYPE);
-int G_insert_f_null_values(FCELL *, char *, int);
-int G_insert_d_null_values(DCELL *, char *, int);
-int G_insert_c_null_values(CELL *, char *, int);
-int G_insert_null_values(void *, char *, int, RASTER_MAP_TYPE);
+void G__init_null_patterns (void);
+void G__set_null_value (void *, int, int, RASTER_MAP_TYPE);
+void G_set_null_value (void *, int, RASTER_MAP_TYPE);
+void G_set_c_null_value (CELL *, int);
+void G_set_f_null_value (FCELL *, int);
+void G_set_d_null_value (DCELL *, int);
+int G_is_null_value (void *, RASTER_MAP_TYPE);
+int G_is_c_null_value (CELL *);
+int G_is_f_null_value (FCELL *);
+int G_is_d_null_value (DCELL *);
+int G_insert_null_values (void *, char *, int, RASTER_MAP_TYPE);
+int G_insert_c_null_values (CELL *, char *, int);
+int G_insert_f_null_values (FCELL *, char *, int);
+int G_insert_d_null_values (DCELL *, char *, int);
+int G__check_null_bit (unsigned char *, int, int);
+int G__set_flags_from_01_random (char *, unsigned char *, int, int, int);
+int G__convert_01_flags (char *, unsigned char *, int);
+int G__convert_flags_01 (char *, unsigned char *, int);
+int G__init_null_bits (unsigned char *, int);
 
 /* open.c */
 int G__open(char *, char *, char *, int);
