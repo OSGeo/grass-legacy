@@ -126,7 +126,10 @@ int execute(char *sql, cursor * c)
 	}
 	sprintf ( name, "%s.dbf", st->table );
 	add_table(st->table, name );
+	
 	tab = find_table(st->table);
+	db.tables[tab].read = TRUE;
+	db.tables[tab].write = TRUE;
 
 	for (i = 0; i < ncols; i++) {
 	    switch (st->ColType[i]) {
