@@ -7,4 +7,4 @@ DEPENDENCIES= $(DISPLAYDEP) $(RASTERDEP) $(GISDEP) $(CURSESDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
-default: cmd
+default: inter
