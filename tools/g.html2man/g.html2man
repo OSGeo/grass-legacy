@@ -6,7 +6,50 @@ eval 'exec $GRASS_PERL -S $0 ${1+"$@"}'
 # Usage:
 #       perl g.html2man <html file> <man file> <section>
 #
- 
+
+sub CvtTable {
+#
+# converts <table> structures to tbl commands.
+#
+# limitations: malformed (sloppy html) tables won't convert
+# properly, eg no closing tags are bad. 
+# <th> headers are handled; nested <table>s are not
+#
+# since tables may be line-formatted randomly, this function
+# works on a full file; thus, the original line-oriented
+# unbuffered design had to be changed.
+#
+# modify $format if centered headings and left-aligned
+# contents don't suit you.
+#
+# also, groff recognizes the tbl commands and preprocesses
+# accordingly; for other roff formatters that is uncertain.
+# it might be advisable to put a '.\" t' line at the beginning
+# of the output file
+#
+# TODO: rewrite g.html2man using the HTML::Parser module
+#
+  my $i = shift;
+  return $i unless $i =~ m|<table.*?>(.+?)</table>|is;
+  my $header = ".TS\nexpand box;\n";
+  $_ = $1;
+  ($one_row,) = m|<tr.*?>(.+?)</tr>|is ;
+  $ncols = -1 + scalar split /<td/i, $one_row;
+  $has_header = m|<th|i ;
+  s|[\n\r]||g;
+  s|</tr.*?>|\n|gis;
+  s|</td.*?>|\t|gis;
+  foreach $tag ( qw(<td.*?> <th.*?> </th> <tr.*?>) ){
+    s/$tag//gi;
+  }
+  $format = $has_header
+          ? "cb"x$ncols . "\n"."-"x$ncols . "\n"
+	  : "";
+  $format .= "l"x$ncols . ".\n";
+  $i =~ s|<table.*?>.+?<table>|$header$format$_.TE\n|is;
+  return CvtTable($i);
+}
+
 sub basename {
   $slash = rindex($_[0], "/");
   $suffix = rindex($_[0], $_[1]);
@@ -215,12 +258,13 @@ while (<INP>) {
   if (&DoLine($_) == 1) {
     s#&lt#<#g;
     s#&gt#>#g; 
-    print OUT;
+    $out .= $_;
     if ($preformat == 1) {
-      print OUT ".br\n";
+      $out .= ".br\n";
     }
   }
 }
+print OUT CvtTable($out);
 close(INP);
 close(OUT);
 
