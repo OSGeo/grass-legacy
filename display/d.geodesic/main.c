@@ -99,10 +99,9 @@ int main (int argc, char *argv[])
 	deftcolor = "white";
 
     if (parm.tcolor->answer == NULL)
-	parm.tcolor->answer = deftcolor;
-    text_color = D_translate_color (parm.tcolor->answer);
-    if (!text_color)
 	text_color = D_translate_color (deftcolor);
+    else
+	text_color = D_translate_color (parm.tcolor->answer);
 
     setup_plot();
     if (use_mouse)
