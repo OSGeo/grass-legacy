@@ -383,14 +383,8 @@ if [ ! "$LOCATION" ] ; then
 	# Check for tcltk interface
 	tcltk)
 	    eval `"$WISH" -file "$TCLTKGRASSBASE/script/gis_set.tcl"`
-	    gis_set_tcl=$?
-
-	    # Work around the dos file format from Windows Tcl/Tk.
-	    gisrc=`sed 's/
-//g' "$GISRC"`
-	    echo "$gisrc" > "$GISRC"
-
-	    case $gis_set_tcl in
+	    
+	    case $? in
      	    	1)
 		    # The gis_set.tcl script printed an error message so wait
 		    # for user to read it
