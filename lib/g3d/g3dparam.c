@@ -49,7 +49,7 @@ G3d_setStandard3dInputParams ()
   param->compression->answer = "default";
   param->compression->description = 
     "The compression method used in the output file";
-  param->compression->options = "default,rle,lzw,rle+lzw,none";
+  param->compression->options = "default,rle,none";
 
   param->dimension = G_define_option();
   param->dimension->key = "tiledimension";
