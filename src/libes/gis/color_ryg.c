@@ -1,37 +1,34 @@
 #include "gis.h"
-G_make_red_yel_grn (pcolr, min, max)
-    struct Colors *pcolr ;
+G_make_ryg_colors (colors, min, max)
+    struct Colors *colors ;
     CELL min,max;
 {
-    int i, j ;
-    int num ;
-    int n;
-    int red, grn, blu;
+    G_init_colors (colors);
+    return G_add_ryg_colors (colors, min, max);
+}
 
-    G_init_colors (pcolr);
-    if (max < min)
-	return -1;
+G_make_red_yel_grn  (colors,min,max) /* for 3.0 compatibility */
+    struct Colors *colors ;
+    CELL min,max;
+{
+    return G_make_ryg_colors(colors,min,max);
+}
 
+G_add_ryg_colors (colors, min, max)
+    struct Colors *colors ;
+    CELL min,max;
+{
+    CELL mid;
+
+    if (max < min) return -1;
     if (min == 1) min = 0;
     if (max == -1) max = 0;
-    num = max - min + 1;
 
-    n = num / 2;
+    mid = ((double)min+(double)max)/2;
 
-    red = 256 ;  blu = 0 ;
-    for(i=1; i<=n; i++)
-    {
-	grn = ((float)i / (float)n) * 256 ;
-	G_set_color ((CELL)(i+min), red, grn, blu, pcolr);
-    }
+    G_add_color_rule (min, 255, 0, 0, mid, 255, 255, 0, colors);
+    G_add_color_rule (mid, 255, 255, 0, max, 0, 255, 0, colors);
+    G_add_color_rule ((CELL)0, 255,255,255, (CELL)0, 255,255,255, colors);
 
-    grn = 256 ;  blu = 0 ;
-    j=0 ;
-    for(; i<num; i++)
-    {
-	red = 256 - ((float)(j++) / (float)n) * 256 ;
-	G_set_color ((CELL)(i+min), red, grn, blu, pcolr);
-    }
-    G_set_color ((CELL)(0), 256, 256, 256, pcolr);
     return 1;
 }
