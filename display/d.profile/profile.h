@@ -1,7 +1,9 @@
 #include "gis.h"
 
-/* Define ANOTHER_BUTTON to click conveniently for two button mouse */
+/* Define ANOTHER_BUTTON to click conveniently for two button mouse.
+ * Read src/CMD/head/head and do not define here for consistency.
 #define ANOTHER_BUTTON
+*/
 
 #define	LEFT	1
 
