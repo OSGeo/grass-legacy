@@ -104,7 +104,7 @@ sub DoSection {
 # Paragraph breaks: <P>
 #
 sub DoPara {
-  s/^<P>/.PP\n/i;
+  s/^ *<P>/.PP\n/i;
   s/<P>/\n.PP\n/ig;
   return;
 }
@@ -173,10 +173,6 @@ sub DoFont {
   s#</EM> *<EM># #ig;
   s#<EM>#\\fI#ig;
   s#</EM>#\\fR#ig;
-  s/^ *<P>/<P>/i;
-  s/^<P>$/.PP/i;
-  s/<P>/.PP\n/ig;
-  s/<P>/.PP\n/ig;
   s/&NBSP;/ /ig;
   return;
 }
