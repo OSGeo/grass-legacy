@@ -222,7 +222,7 @@ int main (int argc, char **argv)
 	       else
 	       {
 		   if( db_table_exists ( dbdriver->answer, dbdatabase->answer, dbtable->answer) < 1 )
-		       G_fatal_error("Table <%s> does not exist in database <%s>",dbtable->answer, dbdatabase->answer);
+		       G_warning("Table <%s> does not exist in database <%s>",dbtable->answer, dbdatabase->answer);
 		   ret = Vect_map_del_dblink (  &Map, atoi(field_opt->answer) );
 		   if( Vect_map_add_dblink ( &Map, atoi(field_opt->answer), 
 					     fi->name, fi->table, fi->key, fi->database, fi->driver) == 0) 
@@ -235,7 +235,7 @@ int main (int argc, char **argv)
 	     else
 	     { /* field not yet defined, add new field */
 		if( db_table_exists ( dbdriver->answer, dbdatabase->answer, dbtable->answer) < 1 )
-		   G_fatal_error("Table <%s> does not exist in database <%s>",dbtable->answer, dbdatabase->answer);
+		   G_warning ("Table <%s> does not exist in database <%s>",dbtable->answer, dbdatabase->answer);
 
 		if( Vect_map_add_dblink ( &Map, atoi(field_opt->answer), 
 					  fi->name, fi->table, fi->key, fi->database, fi->driver) == 0) 
