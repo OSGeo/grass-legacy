@@ -412,7 +412,7 @@ ASK:
 }
 }
 
-static
+extern
 hitreturn()
 {
     char buf[100];
@@ -424,7 +424,7 @@ hitreturn()
 }
 
 /* the following is copied from wind_scan.c */
-static
+extern
 scan_double (buf, value)
     char *buf;
     double *value;
@@ -450,7 +450,7 @@ scan_double (buf, value)
 }
 
 /* the following is copied from wind_format.c */
-static
+extern 
 format_double (value, buf)
     double value;
     char *buf;
