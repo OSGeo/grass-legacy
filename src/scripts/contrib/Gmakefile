@@ -12,6 +12,7 @@ all:
 	cp i.image.mosaic/i.image.mosaic $(GISBASE)/scripts
 	cp i.tasscap/i.tasscap.tm4 $(GISBASE)/scripts
 	cp i.tasscap/i.tasscap.tm5 $(GISBASE)/scripts
+	cp i.tm.dehaze/i.tm.dehaze $(GISBASE)/scripts
 	cp ps.add.pagesize/ps.add.pagesize $(GISBASE)/scripts
 	cp r.edge.dig/r.edge.dig $(GISBASE)/scripts
 	cp r.in.globedem/r.in.globedem $(GISBASE)/scripts
