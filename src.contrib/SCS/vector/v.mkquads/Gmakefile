@@ -1,0 +1,25 @@
+EXTRA_CFLAGS	= $(VECT_INCLUDE)
+
+
+OFILES = \
+	mkquads_cm.o \
+	ask_for.o \
+	calc_quads.o \
+	convert.o \
+	init_head.o \
+	init_quad.o \
+	reg_quads.o \
+	report_quads.o \
+	sites_quads.o \
+	wind_quads.o \
+	write_quads.o
+
+PROG =   $(BIN_CONTRIB_CMD)/v.mkquads
+
+all:  $(PROG)
+
+
+$(PROG): $(OFILES) $(GISLIB) $(VECTLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) $(OFILES) $(GISLIB) $(VECTLIB) $(COORCNVLIB) $(MATHLIB) $(EXTRALIB)
+	mv a.out $@
