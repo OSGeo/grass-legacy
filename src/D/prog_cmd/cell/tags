@@ -1,0 +1,3 @@
+Mmain	main.c	/^main(argc, argv)$/
+set_default_options	command.c	/^set_default_options()$/
+stash_away	command.c	/^stash_away(pos, option)$/
