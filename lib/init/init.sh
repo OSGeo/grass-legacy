@@ -89,12 +89,12 @@ GIS_LOCK=$$
 export GIS_LOCK
 
 # Set the global grassrc file
-GISRCRC="$HOME/.grassrc57"
+GISRCRC="$HOME/.grassrc6"
 export GISRCRC
 # Set the session grassrc file
 USER=`whoami`
-mkdir -p /tmp/grass57-$USER-$GIS_LOCK
-GISRC="/tmp/grass57-$USER-$GIS_LOCK/gisrc"
+mkdir -p /tmp/grass6-$USER-$GIS_LOCK
+GISRC="/tmp/grass6-$USER-$GIS_LOCK/gisrc"
 export GISRC
 
 # remove invalid GISRC file to avoid disturbing error messages:
@@ -720,7 +720,7 @@ rm -f "$lockfile"
 
 # Save GISRC
 cp "$GISRC" "$GISRCRC"
-rm -rf /tmp/grass57-$USER-$GIS_LOCK
+rm -rf /tmp/grass6-$USER-$GIS_LOCK
 
 echo "done"
 echo 
