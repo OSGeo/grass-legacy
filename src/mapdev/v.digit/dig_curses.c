@@ -612,9 +612,7 @@ int curses_yes_no_default (int n, char *str, int def)
     return 0;
 }
 
-/*
-*/
-int suspend (void)
+int mysuspend (void)
 {
     move (LINES-1, 0);
     refresh ();
@@ -623,7 +621,7 @@ int suspend (void)
     return 0;
 }
 
-int respend (void)
+int myrespend (void)
 {
     crmode ();
     noecho();
@@ -656,7 +654,7 @@ int vask_suspend (void)
 
 int vask_respend (void)
 {
-    respend ();
+    myrespend ();
 
     return 0;
 }

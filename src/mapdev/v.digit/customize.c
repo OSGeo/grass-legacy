@@ -107,9 +107,9 @@ int Customize (void)
 		case MCC_BACKDROP:
 		    {
 			register int ret;
-			suspend ();
+			mysuspend ();
 			ret = ask_backdrop ();
-			respend ();
+			myrespend ();
 			/* this (and overlay) should be modified
 			** to replot on all changes, not just new map
 			*/
@@ -129,9 +129,9 @@ int Customize (void)
 		case MCC_OVERLAY:
 		    {
 			register int ret;
-			suspend ();
+			mysuspend ();
 			ret = ask_overlay ();
-			respend ();
+			myrespend ();
 			if (ret) display_overlay ();
 		    }
 		    break;
@@ -139,9 +139,9 @@ int Customize (void)
 		case MCC_LABEL:
 		    {
 			register int ret;
-			suspend ();
+			mysuspend ();
 			ret = ask_cust_label ();
-			respend ();
+			myrespend ();
 			if (ret) display_cust_labels ();
 		    }
 		    break;
