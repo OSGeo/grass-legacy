@@ -158,7 +158,7 @@ proc sys_wininfo { } \
     frame .frame0.heading -borderwidth 2
 
     set t [text .frame0.heading.text -relief ridge \
-	       -height 1 -width 40 \
+	       -height 1 -width 50 \
 	       -font {Helvetica -12 bold} ]
     $t tag configure all -justify center
     $t insert end "System Information\n"
@@ -180,7 +180,7 @@ proc sys_wininfo { } \
 	label .frame1.$index.string -anchor w \
 	    -width 20 -text "$string"
 	label .frame1.$index.name -relief sunken \
-	    -anchor w -width 20 -text "$sys($name)" \
+	    -anchor w -width 30 -text "$sys($name)" \
 	    -wraplength [font measure {Helvetica} "XXXXXXXXXXXXXX" ]
 	pack .frame1.$index.string -side left -fill x
 	pack .frame1.$index.name -side left
