@@ -312,7 +312,7 @@
 						{command "Interpolation from raster contours" {} "" {} -command { execute r.surf.contour }}
 			            {separator}
 						{command "Inverse distance weighted interpolation from vector points" {} "" {} -command { execute v.surf.idw }}
-						{command "Regularized spline tension interpolation from vector points or contours" {} "" {} -command { spawn v.surf.rst}}
+						{command "Regularized spline tension interpolation from vector points or contours" {} "" {} -command { run v.surf.rst}}
 			            {separator}
 			            {command "Fill NULL cells by interpolation using regularized spline tension" {} "" {} -command {execute  r.fillnulls }}
 			}}
