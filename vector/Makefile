@@ -26,6 +26,7 @@ SUBDIRS1 = \
 	v.net.salesman \
 	v.net.steiner \
 	v.out.ascii \
+	v.out.pov \
 	v.patch \
 	v.segment \
 	v.surf.rst \
