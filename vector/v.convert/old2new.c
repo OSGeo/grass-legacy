@@ -23,14 +23,12 @@ old2new (char *in, char *out, int endian)
     
     /* open in map */
     if ( NULL == (mapset = G_find_file ("dig", in, "") )) {
-	fprintf(stderr,"Input vector was not found.\n") ;
-	exit(-1);
+	G_fatal_error("Input vector was not found.") ;
     }
 
     /* open input dig file */
     if ((Digin  = G_fopen_old ("dig", in, mapset)) == NULL ) {
-        fprintf(stderr,"Failed openning input dig file.\n") ;
-        exit(-1);
+        G_fatal_error("Failed opening input dig file.") ;
     } 
 
     /* open new output file */
