@@ -1,0 +1,215 @@
+Checkout	portable.c	/^Checkout ()$/
+Init_Portable_structs	portable_io.c	/^Init_Portable_structs ()$/
+ZERO	line_dist.c	/^#define ZERO(x) ((x) < tolerance && (x) > -toleran/
+buf_alloc	portable.c	/^buf_alloc (needed)$/
+d_atan2	calc_angl.c	/^d_atan2 (y, x)$/
+debug_dump_port_info	x_rw_binary.c	/^debug_dump_port_info (fhead)$/
+debugf	debugf.c	/^debugf ()$/
+dig_Mem_load_file	memory_io.c	/^dig_Mem_load_file (fp, ptr)$/
+dig_Mem_release_file	memory_io.c	/^dig_Mem_release_file ()$/
+dig_P_area_att	level_two.c	/^dig_P_area_att (map, area)$/
+dig_P_fini	level_two.c	/^dig_P_fini (map)$/
+dig_P_get_area	level_two.c	/^dig_P_get_area (map, num, Area)$/
+dig_P_get_area_bbox	level_two.c	/^dig_P_get_area_bbox (map, area, N, S, E, W)$/
+dig_P_get_area_xy	get_area_xy.c	/^dig_P_get_area_xy (Map, area, n_points, x, y)$/
+dig_P_get_line_bbox	level_two.c	/^dig_P_get_line_bbox (map, line, N, S, E, W)$/
+dig_P_init	level_two.c	/^dig_P_init (name, mapset, map)$/
+dig_P_line_att	level_two.c	/^dig_P_line_att (map, line)$/
+dig_P_num_areas	level_two.c	/^dig_P_num_areas (map)$/
+dig_P_num_lines	level_two.c	/^dig_P_num_lines (map)$/
+dig_P_read_line	level_two.c	/^dig_P_read_line (map, line, points)$/
+dig_P_read_next_line	level_two.c	/^dig_P_read_next_line (map, points)$/
+dig_P_rewind	level_two.c	/^dig_P_rewind (map)$/
+dig_P_tmp_close	level_two.c	/^dig_P_tmp_close (map)$/
+dig_P_tmp_open	level_two.c	/^dig_P_tmp_open (map)$/
+dig_Rd_P_area	portable_io.c	/^dig_Rd_P_area (map, ptr, fp)$/
+dig_Rd_P_att	portable_io.c	/^dig_Rd_P_att (map, ptr, fp)$/
+dig_Rd_P_isle	portable_io.c	/^dig_Rd_P_isle (map, ptr, fp)$/
+dig_Rd_P_line	portable_io.c	/^dig_Rd_P_line (map, ptr, fp)$/
+dig_Rd_P_node	portable_io.c	/^dig_Rd_P_node (map, ptr, fp)$/
+dig_Rd_Plus_head	portable_io.c	/^dig_Rd_Plus_head (map, ptr, fp)$/
+dig_Read_line	point.c	/^dig_Read_line (fp, offset, xarray, yarray, n_point/
+dig_Rewrite_line	point.c	/^dig_Rewrite_line (digit, offset, type, xarray, yar/
+dig_Wr_P_area	portable_io.c	/^dig_Wr_P_area (map, ptr, fp)$/
+dig_Wr_P_att	portable_io.c	/^dig_Wr_P_att (map, ptr, fp)$/
+dig_Wr_P_isle	portable_io.c	/^dig_Wr_P_isle (map, ptr, fp)$/
+dig_Wr_P_line	portable_io.c	/^dig_Wr_P_line (map, ptr, fp)$/
+dig_Wr_P_node	portable_io.c	/^dig_Wr_P_node (map, ptr, fp)$/
+dig_Wr_Plus_head	portable_io.c	/^dig_Wr_Plus_head (map, ptr, fp)$/
+dig_Write_line	point.c	/^dig_Write_line(digit, type, xarray, yarray, n_poin/
+dig__Init_Portable_structs	portable_io.c	/^dig__Init_Portable_structs ()$/
+dig__Init_V	portable_io.c	/^dig__Init_V ()$/
+dig__Init_portable_code	portable.c	/^dig__Init_portable_code (portable)$/
+dig__Mem_Read_line	portable_io.c	/^dig__Mem_Read_line (p, offset)$/
+dig__P_get_area_xy	get_area_xy.c	/^dig__P_get_area_xy (Map, area)$/
+dig__P_init	level_two.c	/^dig__P_init (name, mapset, map)$/
+dig__P_writeable	level_two.c	/^dig__P_writeable (x)$/
+dig__Read_line	portable_io.c	/^dig__Read_line (p, fp, offset)$/
+dig__Rewrite_line	portable_io.c	/^dig__Rewrite_line (digit, offset, type, points) $/
+dig__Write_line	portable_io.c	/^dig__Write_line(digit, type, points) $/
+dig__alloc_space	allocation.c	/^dig__alloc_space(n_wanted, n_elements, chunk_size,/
+dig__check_dist	point_t_line.c	/^dig__check_dist (map, points, ux, uy, dist)$/
+dig__convert_buffer	portable.c	/^dig__convert_buffer (needed)$/
+dig__del_area	area.c	/^dig__del_area (map, area)$/
+dig__del_att	attribute.c	/^dig__del_att (map, att)$/
+dig__double_convert	portable.c	/^dig__double_convert (in, out, count, head)$/
+dig__falloc	allocation.c	/^dig__falloc(nelem, elsize)$/
+dig__fill_head_portable	portable.c	/^dig__fill_head_portable (head)$/
+dig__float_convert	portable.c	/^dig__float_convert (in, out, count, head)$/
+dig__fread_port_C	portable2.c	/^dig__fread_port_C (buf, cnt, fp)	\/* CHAR *\/$/
+dig__fread_port_D	portable2.c	/^dig__fread_port_D (buf, cnt, fp)	\/* DOUBLE *\/$/
+dig__fread_port_F	portable2.c	/^dig__fread_port_F (buf, cnt, fp)	\/* FLOAT *\/$/
+dig__fread_port_I	portable2.c	/^dig__fread_port_I (buf, cnt, fp)	\/* INT *\/$/
+dig__fread_port_L	portable2.c	/^dig__fread_port_L (buf, cnt, fp)	\/* LONG *\/$/
+dig__fread_port_P	portable2.c	/^dig__fread_port_P (buf, cnt, fp)	\/* PLUS_T *\/$/
+dig__fread_port_S	portable2.c	/^dig__fread_port_S (buf, cnt, fp)	\/* SHORT *\/$/
+dig__frealloc	allocation.c	/^dig__frealloc(oldptr, nelem, elsize, oldnelem)$/
+dig__fwrite_port_C	portable2.c	/^dig__fwrite_port_C (buf, cnt, fp)	\/* CHAR *\/$/
+dig__fwrite_port_D	portable2.c	/^dig__fwrite_port_D (buf, cnt, fp)	\/* DOUBLE *\/$/
+dig__fwrite_port_F	portable2.c	/^dig__fwrite_port_F (buf, cnt, fp)	\/* FLOAT *\/$/
+dig__fwrite_port_I	portable2.c	/^dig__fwrite_port_I (buf, cnt, fp)	\/* INT->LONG *\/$/
+dig__fwrite_port_L	portable2.c	/^dig__fwrite_port_L (buf, cnt, fp)	\/* LONG *\/$/
+dig__fwrite_port_P	portable2.c	/^dig__fwrite_port_P (buf, cnt, fp)	\/* PLUS_T->LONG /
+dig__fwrite_port_S	portable2.c	/^dig__fwrite_port_S (buf, cnt, fp)	\/* SHORT *\/$/
+dig__get_cur_in_head	portable2.c	/^struct dig_head *dig__get_cur_in_head () { return /
+dig__get_cur_out_head	portable2.c	/^struct dig_head *dig__get_cur_out_head () { return/
+dig__get_default_in_head	portable_io.c	/^dig__get_default_in_head ()$/
+dig__get_default_out_head	portable_io.c	/^dig__get_default_out_head ()$/
+dig__get_default_port_head	portable_io.c	/^dig__get_default_port_head ()$/
+dig__get_head	set_head.c	/^dig__get_head (fp)$/
+dig__get_head_num	set_head.c	/^dig__get_head_num (fp)$/
+dig__init_default_heads	portable_io.c	/^dig__init_default_heads (do_port)$/
+dig__initialize_VCB	set_head.c	/^dig__initialize_VCB ()$/
+dig__int_convert	portable.c	/^dig__int_convert (in, out, count, head)$/
+dig__long_convert	portable.c	/^dig__long_convert (in, out, count, head)$/
+dig__long_convert_to_int	portable.c	/^dig__long_convert_to_int (in, out, count, head)$/
+dig__long_convert_to_plus_t	portable.c	/^dig__long_convert_to_plus_t (in, out, count, head)/
+dig__new_att	attribute.c	/^dig__new_att (map, x, y, type, index, cat, offset)/
+dig__old_read_head_binary	x_rw_binary.c	/^dig__old_read_head_binary (digit, dhead)$/
+dig__plus_t_convert	portable.c	/^dig__plus_t_convert (in, out, count, head)$/
+dig__set_cur_in_head	portable2.c	/^dig__set_cur_in_head (head) struct dig_head *head;/
+dig__set_cur_out_head	portable2.c	/^dig__set_cur_out_head (head) struct dig_head *head/
+dig__set_head	set_head.c	/^dig__set_head (fp, dhead)$/
+dig__short_convert	portable.c	/^dig__short_convert (in, out, count, head)$/
+dig__window	level_one.c	/^dig__window (fp, n, s, e, w)$/
+dig_add_line_to_node	node_op.c	/^dig_add_line_to_node (num, line, type, map, points/
+dig_alloc_area	struct_alloc.c	/^dig_alloc_area (map, add)$/
+dig_alloc_att	struct_alloc.c	/^dig_alloc_att (map, add)$/
+dig_alloc_isle	struct_alloc.c	/^dig_alloc_isle (map, add)$/
+dig_alloc_line	struct_alloc.c	/^dig_alloc_line (map, add)$/
+dig_alloc_node	struct_alloc.c	/^dig_alloc_node (map, add)$/
+dig_alloc_points	struct_alloc.c	/^dig_alloc_points (points, num)$/
+dig_alloc_space	allocation.c	/^dig_alloc_space(n_wanted, n_elements, chunk_size, /
+dig_angle_next_line	area.c	/^dig_angle_next_line (map, current_line, direction)/
+dig_area_alloc_isle	struct_alloc.c	/^dig_area_alloc_isle (Area, num)$/
+dig_area_alloc_line	struct_alloc.c	/^dig_area_alloc_line (area, num)$/
+dig_area_bound_box	area.c	/^dig_area_bound_box (map, Area)$/
+dig_bound_box2	bound_box.c	/^dig_bound_box2 (points, N, S, E, W, orig_scale)$/
+dig_build_area_with_line	area.c	/^dig_build_area_with_line (map, first_line, Area)$/
+dig_by_line_bbox	point_t_line.c	/^dig_by_line_bbox (Line, x1, y1, x2, y2)$/
+dig_calc_begin_angle	calc_angl.c	/^dig_calc_begin_angle (points, thresh)$/
+dig_calc_end_angle	calc_angl.c	/^dig_calc_end_angle(points, thresh)$/
+dig_center_check	point_t_line.c	/^dig_center_check(line, a, b, ux, uy)$/
+dig_check_dist	point_t_line.c	/^dig_check_dist (map, line, ux, uy, dist)$/
+dig_check_nodes	check_node.c	/^dig_check_nodes (map, node, points)$/
+dig_del_area	area.c	/^dig_del_area (map, area)$/
+dig_del_att	attribute.c	/^dig_del_att (map, att)$/
+dig_del_isle	isle.c	/^dig_del_isle (map, isle)$/
+dig_distance2_point_to_line	line_dist.c	/^dig_distance2_point_to_line (x,y,x1,y1,x2,y2)$/
+dig_do_file_checks	file_checks.c	/^dig_do_file_checks (map, plus, dig, dig_att)$/
+dig_falloc	allocation.c	/^dig_falloc (nelem, elsize)$/
+dig_find_area	find_area.c	/^dig_find_area (map, Area, totalarea, cent_x, cent_/
+dig_find_area2	find_area.c	/^dig_find_area2 (map, Area, totalarea)$/
+dig_find_intersection	linecros.c	/^dig_find_intersection (ax1,ay1,ax2,ay2,bx1,by1,bx2/
+dig_fini	level_one.c	/^dig_fini (fp)$/
+dig_float_point	format.c	/^dig_float_point (buf, size, num)$/
+dig_frealloc	allocation.c	/^dig_frealloc(oldptr, nelem, elsize, oldnelem)$/
+dig_get_cont_lines	cont_lines.c	/^dig_get_cont_lines (map, line, angle, twoway)$/
+dig_get_head	set_head.c	/^dig_get_head (fp)$/
+dig_get_next_cont_line	cont_lines.c	/^dig_get_next_cont_line (map, prev_line, angle, two/
+dig_head_to_map	map_to_head.c	/^dig_head_to_map (head, map)$/
+dig_in_area_bbox	chk_inside.c	/^dig_in_area_bbox (Area, x, y)$/
+dig_in_line_bbox	point_t_line.c	/^dig_in_line_bbox(line, x, y)$/
+dig_init	level_one.c	/^dig_init (fp)$/
+dig_init_box	dig_box.c	/^dig_init_box (n, s, e, w)$/
+dig_is_line_degenerate	calc_angl.c	/^dig_is_line_degenerate (points, thresh)$/
+dig_isle_alloc_line	struct_alloc.c	/^dig_isle_alloc_line (isle, num)$/
+dig_load_plus	load_plus.c	/^dig_load_plus (map, digit, do_checks)$/
+dig_map_to_head	map_to_head.c	/^dig_map_to_head (map, phead)$/
+dig_mread	memory_io.c	/^dig_mread (buf, size, n_elem, mp)$/
+dig_mseek	memory_io.c	/^dig_mseek (mp, offset, code)$/
+dig_mwrite	memory_io.c	/^dig_mwrite (buf, size, n_elem, mp)$/
+dig_new_area	area.c	/^dig_new_area (map, Area, att)$/
+dig_new_att	attribute.c	/^dig_new_att (map, x, y, type, index, cat)	\/* creat/
+dig_new_isle	isle.c	/^dig_new_isle (map, Area, area)$/
+dig_new_to_old_type	old2new.c	/^dig_new_to_old_type (type)$/
+dig_node_add_line	node_op.c	/^dig_node_add_line (map, node, line, points, type)$/
+dig_node_alloc_line	struct_alloc.c	/^dig_node_alloc_line (node, add)$/
+dig_node_del_line	node_op.c	/^dig_node_del_line (node, line)$/
+dig_old_to_new_type	old2new.c	/^dig_old_to_new_type (type)$/
+dig_out_of_memory	struct_alloc.c	/^dig_out_of_memory ()$/
+dig_point_by_line	point_t_line.c	/^dig_point_by_line (map, ux1, uy1, ux2, uy2, type)$/
+dig_point_in_area	chk_inside.c	/^dig_point_in_area(map, X, Y, Area)$/
+dig_point_in_poly	chk_inside.c	/^dig_point_in_poly (X, Y, Points)$/
+dig_point_to_area	point_t_area.c	/^dig_point_to_area (map, ux, uy)$/
+dig_point_to_line	point_t_line.c	/^dig_point_to_line (map, ux, uy, type)$/
+dig_point_to_next_area	point_t_area.c	/^dig_point_to_next_area (map, ux, uy, min_dist)$/
+dig_print_header	level_one.c	/^dig_print_header()$/
+dig_prune	prune.c	/^dig_prune (points, thresh)$/
+dig_read_head_ascii	rw_ascii.c	/^dig_read_head_ascii(dascii, head)$/
+dig_read_head_binary	portable_io.c	/^dig_read_head_binary (digit, head)$/
+dig_read_line_in_box	dig_box.c	/^dig_read_line_in_box (fp, n_points, x, y)$/
+dig_read_line_struct_in_box	dig_box.c	/^dig_read_line_struct_in_box (fp, line_p)$/
+dig_read_next_line	level_one.c	/^dig_read_next_line (fp, n_points, x, y)$/
+dig_read_next_line_struct	level_one.c	/^dig_read_next_line_struct (fp, pnts)$/
+dig_read_next_line_type	level_one.c	/^dig_read_next_line_type (fp, n_points, x, y, utype/
+dig_rewind	level_one.c	/^dig_rewind (fp)$/
+dig_rmcr	struct_copy.c	/^dig_rmcr (str)$/
+dig_set_distance_to_line_tolerance	line_dist.c	/^dig_set_distance_to_line_tolerance (t)$/
+dig_snap_line_to_node	node_op.c	/^dig_snap_line_to_node (map, line, node, points)$/
+dig_start_clock	clock.c	/^dig_start_clock (save)$/
+dig_stop_clock	clock.c	/^dig_stop_clock (save)$/
+dig_struct_copy	struct_copy.c	/^dig_struct_copy (from, to, cnt)$/
+dig_test_for_intersection	linecros.c	/^dig_test_for_intersection (ax1,ay1,ax2,ay2,bx1,by1/
+dig_unit_conversion	unit_conv.c	/^dig_unit_conversion ()$/
+dig_update_att	attribute.c	/^dig_update_att (map, att)$/
+dig_v_Read_line	point.c	/^dig_v_Read_line (fp, offset, xarray, yarray, n_poi/
+dig_which_node	check_node.c	/^dig_which_node (map, x, y, thresh)$/
+dig_write_areas	write_file.c	/^dig_write_areas( plus, Map, Plus)$/
+dig_write_atts	write_file.c	/^dig_write_atts( plus, Map, Plus)$/
+dig_write_file_checks	file_checks.c	/^dig_write_file_checks (fp_plus, map, Plus)$/
+dig_write_head_ascii	rw_ascii.c	/^dig_write_head_ascii(dascii, head)$/
+dig_write_head_binary	portable_io.c	/^dig_write_head_binary (digit, head)$/
+dig_write_isles	write_file.c	/^dig_write_isles( plus, Map, Plus)$/
+dig_write_lines	write_file.c	/^dig_write_lines( plus, Map, Plus)$/
+dig_write_nodes	write_file.c	/^dig_write_nodes( plus, Map, Plus)$/
+dig_write_plus_file	write_file.c	/^dig_write_plus_file( fp_plus, Map, Plus)$/
+dig_x_Rd_P_area	x_struct_io.c	/^dig_x_Rd_P_area (map, ptr, fp)$/
+dig_x_Rd_P_att	x_struct_io.c	/^dig_x_Rd_P_att (map, ptr, fp)$/
+dig_x_Rd_P_isle	x_struct_io.c	/^dig_x_Rd_P_isle (map, ptr, fp)$/
+dig_x_Rd_P_line	x_struct_io.c	/^dig_x_Rd_P_line (map, ptr, fp)$/
+dig_x_Rd_P_node	x_struct_io.c	/^dig_x_Rd_P_node (map, ptr, fp)$/
+dig_x_Rd_Plus_head	x_struct_io.c	/^dig_x_Rd_Plus_head (map, ptr, fp)$/
+dig_x_Wr_P_area	x_struct_io.c	/^dig_x_Wr_P_area (map, ptr, fp)$/
+dig_x_Wr_P_att	x_struct_io.c	/^dig_x_Wr_P_att (map, ptr, fp)$/
+dig_x_Wr_P_isle	x_struct_io.c	/^dig_x_Wr_P_isle (map, ptr, fp)$/
+dig_x_Wr_P_line	x_struct_io.c	/^dig_x_Wr_P_line (map, ptr, fp)$/
+dig_x_Wr_P_node	x_struct_io.c	/^dig_x_Wr_P_node (map, ptr, fp)$/
+dig_x_Wr_Plus_head	x_struct_io.c	/^dig_x_Wr_Plus_head (map, ptr, fp)$/
+dig_x__Mem_Read_line	x_point_io.c	/^dig_x__Mem_Read_line (p, offset)$/
+dig_x__Read_line	x_point_io.c	/^dig_x__Read_line (p, fp, offset)$/
+dig_x__Rewrite_line	x_point_io.c	/^dig_x__Rewrite_line (digit, offset, type, points) /
+dig_x__Write_line	x_point_io.c	/^dig_x__Write_line(digit, type, points) $/
+dig_x_intersect	chk_inside.c	/^dig_x_intersect (beg_x, end_x, beg_y, end_y, Y) $/
+dig_x_read_head_binary	x_rw_binary.c	/^dig_x_read_head_binary (digit, dhead)$/
+dig_x_write_head_binary	x_rw_binary.c	/^dig_x_write_head_binary(digit, dhead)$/
+dig_xy_distance2_point_to_line	line_dist.c	/^dig_xy_distance2_point_to_line (px,py,x1,y1,x2,y2)/
+dig_xy_distance3_point_to_line	line_dist.c	/^dig_xy_distance3_point_to_line (px,py,x1,y1,x2,y2,/
+dist_squared	check_node.c	/^dist_squared (x1, y1, x2, y2)$/
+dumpflags	portable_io.c	/^dumpflags (fhead)$/
+find_offset	portable.c	/^find_offset (basis, search_value, size)$/
+get_line_center	line_cent.c	/^get_line_center (x, y, Points)$/
+n_index	format.c	/^n_index (str, chr)$/
+normalize_angle	cont_lines.c	/^normalize_angle (angle)$/
+tell_delta_size	file_checks.c	/^tell_delta_size (file)$/
+tell_delta_time	file_checks.c	/^tell_delta_time (file)$/
