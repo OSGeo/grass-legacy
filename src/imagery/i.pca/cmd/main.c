@@ -11,13 +11,25 @@
 
 */
 
-#define MAIN
-
 #include <string.h>
 #include <stdlib.h>
 #include "gis.h"
 #include "gmath.h"
 #include <math.h>
+
+static CELL round_c (double x)
+{
+  CELL n;
+
+   if (x >= 0.0)
+       n = x + .5;
+   else
+   {
+       n = -x + .5;
+       n = -n;
+   }
+   return n;
+}
 
 int main (int argc, char *argv[])
 {
@@ -290,7 +302,7 @@ int main (int argc, char *argv[])
 		       {
 		          if(pass==1)
 		          {
-		             rowbuf1[col] = round(d_buf[col] + .5);
+		             rowbuf1[col] = round_c(d_buf[col] + .5);
                              if((row==0)&&(col==0))min = max = d_buf[0];
                              if (rowbuf1[col]<min) min=d_buf[col];
                              if (rowbuf1[col]>max) max=d_buf[col];
@@ -303,7 +315,7 @@ int main (int argc, char *argv[])
 	                    /* first mapping data to 0,(new_range-1) 
 		                  and then adding new_min */
 	                       rowbuf1[col] = 
-	        	          round((new_range*(d_buf[col]-min)/old_range) + scale_min);
+	        	          round_c((new_range*(d_buf[col]-min)/old_range) + scale_min);
                           }
                        } /* writing the cell */
                    }  /* for col=0 to cols */
@@ -336,20 +348,5 @@ int main (int argc, char *argv[])
     for(i=0;i<bands;i++)
       G_unopen_cell(inp_file_descr[i]); 
   exit(0);
-}
-
-CELL 
-round (double x)
-{
-  CELL n;
-
-   if (x >= 0.0)
-       n = x + .5;
-   else
-   {
-       n = -x + .5;
-       n = -n;
-   }
-   return n;
 }
 
