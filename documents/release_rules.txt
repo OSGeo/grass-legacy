@@ -13,29 +13,33 @@ How to release GRASS 5 binaries:
 
 1. Build GRASS:
  
- o wipe out binaries, (re-)compile everything,
-
- o compile PostgreSQL modules:
-     gmake5 src.garden/grass.postgresql
-
+ o wipe out binaries, (re-)compile everything, incl NVIZ without PG:
+     make distclean
+     rm -rf /usr/local/grass5/*
+     configure --enable-postgres=no
+     make
+     
  o compile G3D tools
      gmake5 src.contrib/GMSL/g3d
 
- o compile NVIZ *without* PostgreSQL support
-   for distribution:
-     configure --enable-postgres=no
+ o compile PostgreSQL modules:
+     configure --enable-postgres=yes
      make pre-compile
-     gmake5 src.contrib/GMSL/NVIZ2.2
+     gmake5 src.garden/grass.postgresql
 
- o check, if libgdal is in place ($GISBASE/lib/)
-   ftp://gdal.velocet.ca/pub/outgoing/libgdal-linux-grass.tar.gz
-   (ldd libgdal.1.1.so:
-    ftp://gdal.velocet.ca/pub/outgoing/libstdc++-libc6.2-2.so.3)
+ o compile s.vol.rst from extra directory (if you have..., it is not 
+   distributed with sources)
 
- o compile s.vol.rst from extra directory (not distributed with sources)
+ o check, if libgdal is in place in $GISBASE/lib/
+   Get Linux version here:
+     ftp://gdal.velocet.ca/pub/outgoing/libgdal-linux-grass.tar.gz
+    (Note: check ldd libgdal.1.1.so:
+     ftp://gdal.velocet.ca/pub/outgoing/libstdc++-libc6.2-2.so.3)
+   Get GDAL sources at:
+    http://www.remotesensing.org/gdal/
 
 
-2. Package it with
+2. Package GRASS bins with
 
    make bindist
 
