@@ -67,7 +67,7 @@ void IL_init_params_2d(struct interp_params *, FILE *, int, int, double,
 void IL_init_func_2d(struct interp_params *, int (*)(), int (*)(), int (*)(), int (*)(), double (*)(), int (*)(), int (*)());
 /* input2d.c */
 int IL_input_data_2d(struct interp_params *, struct tree_info *, double *, double *, double *, double *, double *, double *, int *);
-int IL_create_bitmask(struct interp_params *, struct BM *);
+struct BM *IL_create_bitmask(struct interp_params *);
 int translate_quad(struct multtree *, double, double, double, int);
 /* interp2d.c */
 int IL_grid_calc_2d(struct interp_params *, struct quaddata *, struct BM *, double, double, double *, double *, double *, double *, double *, double *, double *, double *, double *, double *, int, double);

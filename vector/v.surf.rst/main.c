@@ -704,12 +704,7 @@ int main ( int argc, char *argv[])
   fprintf (stderr, "dnorm = %f, rescaled tension = %f\n", dnorm, params.fi);
   }
 
-
-  if (maskmap != NULL)
-    bitmask = BM_create (n_cols, n_rows);
-
-  if (IL_create_bitmask (&params, bitmask) < 0)
-    clean_fatal_error ("Cannot create bitmask");;
+  bitmask = IL_create_bitmask (&params);
   if (totsegm <= 0)
     clean_fatal_error ("Input failed");
 
