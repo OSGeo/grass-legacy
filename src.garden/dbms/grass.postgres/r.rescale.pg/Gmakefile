@@ -1,0 +1,19 @@
+PGM       = $(BIN_CONTRIB_CMD)/r.rescale.pg
+#PGM       = r.rescale.pg
+
+LIBES     = $(GISLIB)
+
+# EXTRA_CFLAGS	= -Dunlink=puts
+
+
+
+OBJS = \
+	main.o \
+	infxQry.o \
+	chkType.o
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+
+$(LIBES): #
