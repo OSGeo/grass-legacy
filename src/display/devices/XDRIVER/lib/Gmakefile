@@ -17,7 +17,7 @@ OBJ =\
 	connect.o\
 	Font2.o\
 	RGB.o\
-	text.o
+	Text2.o
 
 all: driverlib.a
 
@@ -30,5 +30,5 @@ Move_abs.o: driver.h
 Move_rel.o: driver.h
 Raster.o: driver.h
 Reset_clrs.o: colors.h
-Text.o: driver.h
+Text2.o: driver.h
 Text_size.o: driver.h
