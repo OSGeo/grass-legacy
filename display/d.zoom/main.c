@@ -260,7 +260,6 @@ main (int argc, char **argv)
 	for(i=0; vect[i]; i++);
 	nvects = i;
 
-        //Vect_set_open_level(2);
 	for(i=0; i<nvects; i++){
     		mapset = G_find_vector2 (vect[i], "");
     		if (mapset == NULL)
