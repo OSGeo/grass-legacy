@@ -53,7 +53,7 @@ static char *map_text=
 int main (int argc, char *argv[])
 {
     char version[80];
-    char gisdbase[51]   ;
+    char gisdbase[70];
     char location_name[41]   ;
     char location[1024]  ;
     char mapset[41]   ;
@@ -109,7 +109,7 @@ int main (int argc, char *argv[])
 
 	line++;
 	V_line (line, "DATABASE:");
-	V_ques (gisdbase, 's', line++, 12, sizeof(gisdbase) - 1);
+	V_ques (gisdbase, 's', line++, 10, sizeof(gisdbase) - 1);
 
 	V_intrpt_ok();
 	if (!V_call())
