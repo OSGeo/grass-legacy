@@ -30,7 +30,7 @@ main(int argc, char **argv)
 	char	*imap, *omap, *imapset, overwr, verbose;
 	int	fd, i, j, k, row, col, rows, cols, rbytes, nsinks;
 	double	min, max, lmin, val, val2, dh, maxdh;
-	RASTER_MAP	ibuf, obuf;
+	RASTER_ROW2	ibuf, obuf;
 
 	struct	GModule	*module;
 	struct
