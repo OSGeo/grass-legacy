@@ -98,6 +98,9 @@ int what(int once,
 
 	  fprintf(stdout, "%*s in %-*s  ", width, temp, mwidth,
 			  G_find_vector2(vect[i], ""));
+	  if (notty)
+	    fprintf(stderr, "%*s in %-*s  ", width, temp, mwidth,
+			  G_find_vector2(vect[i], ""));
 	  nlines++ ;
 
           if (line + area == 0)
