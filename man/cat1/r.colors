@@ -1,7 +1,7 @@
 
 
 
-r.colors             GRASS Reference Manual              r.colors
+r.colors <main>      GRASS Reference Manual       <main> r.colors
 
 
 
@@ -60,14 +60,14 @@ DESCRIPTION
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-r.colors             GRASS Reference Manual              r.colors
+r.colors <main>      GRASS Reference Manual       <main> r.colors
 
 
 
@@ -126,14 +126,14 @@ r.colors             GRASS Reference Manual              r.colors
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
 
 
 
-r.colors             GRASS Reference Manual              r.colors
+r.colors <main>      GRASS Reference Manual       <main> r.colors
 
 
 
@@ -192,14 +192,14 @@ EXAMPLES
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
 
 
 
-r.colors             GRASS Reference Manual              r.colors
+r.colors <main>      GRASS Reference Manual       <main> r.colors
 
 
 
@@ -258,7 +258,7 @@ AUTHORS
 
 
 
-GRASS 4.0                U.S. Army CERL                         4
+GRASS 4.1                U.S. Army CERL                         4
 
 
 
