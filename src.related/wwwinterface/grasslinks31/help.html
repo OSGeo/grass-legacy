@@ -1,0 +1,300 @@
+<html>
+<head>
+<TITLE> GRASSLinks Implementation 2.0 </TITLE>
+</head>
+<body bgcolor="#efefeg">
+
+<H1> GRASSLinks: Help Document </H1>
+
+<img src="green_line.gif" width=100%><p>
+<A NAME="display"> <H2>Display:</H2>
+This creates an image from available maps in the database. It takes on
+the order of 35 seconds to run.  Once the image is created you can zoom in,
+zoom out, pan across, spawn an external viewer, or query the base raster
+map. The image is available for one hour, after which you will have to
+recreate the image.<P>
+
+There are four possible resultant image size: 
+thumbnail (150x150 pixels), small (200x200), 
+medium (400x400), and large (400x400).  If you are
+using a modem, you might want to use coarse image size to decrease the
+image transfer rate.  Remember, these are not "canned images" but GIS
+datalayers that are translated to a mosaic-readable format upon
+request, run time is not instantaneous.<P>
+
+The options include 
+<UL>
+<LI> a single <a href="help.html#raster">raster map</a> 
+to serve as a filled in backdrop for the image,
+<P>
+<LI> one or more <a href="help.html#vector">vector maps</a> 
+drawn as lines over the base map,
+<P>
+<LI> one or more <a href="help.html#sites">sites map</a> drawn as points 
+(dots) over the base map,
+<P>
+<LI> a <a href="help.html#region">region</a> bounding box to start in,
+<P>
+<LI> the image size, which determines the maximum pixel matrix of the 
+resultant gif file, 
+<P>
+<li> whether or not you would like a legend displayed with the output image (legends
+can only be created for raster base maps that contain 36 or fewer categories).
+</UL>
+<p>
+<HR>
+<p>
+
+
+<A NAME="report"> <H2>Area Calculations:</H2>
+
+GRASSLinks can calculate the area of mapped information for selected raster maps.  
+You can find the total area of categories within a single map, or you can 
+find the areal extent of overlap of categories in two different maps.
+If two maps are chosen, GRASSLinks calculates the total area for each
+possible combination of categories in the first map and categories in
+the second map.  A report of areas in the <b>Counties</b> map, for instance,
+would give a total area for each county.  A report of <b>Counties</b> against
+<b>Wetlands to 16 Categories</b> would show how much of each wetland type
+occurs in each county.  
+<p>
+It is very important to understand the role of the current <b>Region</b> 
+setting when interpretting the results of an Area Calculation.
+This is for two reasons: 1) the larger the region setting, the longer the 
+process takes; and 2) the report analysis will be clipped to the selected 
+GRASS region. For example, if you were to do "Counties" against "Wetlands Categories" 
+with a region setting of "Marin County", your area totals would be restricted to the 
+selected Marin County region.  The region setting is simply a pre-defined
+bounding box around a named area and in the case of the "Marin County Region" it
+would include all of Marin County and some of the surrounding counties as well.
+The resultant Area Calculation Report would include Wetland Category totals for
+Marin County and also for small sections of the surrounding counties that happen
+to be in the Marin County Region bounding box.  Thus your report could include a
+value of "5 sq miles" for Napa County, when in fact the whole of Napa County has
+not been included in the report calculations. Thus, it is very easy to misinterpret
+these results if you don't understand the nature of the region settings!
+<p>
+The options include
+<UL>
+<LI> one or two <a href="help.html#raster">raster maps</a> to tabulate<P>
+<LI> a <a href="help.html#region">region</a> of the Bay and Delta area <P>
+<LI> a <a href="help.html#resolution">resolution</a> selection.  
+A coarse resolution will run faster than a fine resolution.<P>
+<LI> the units to report in: acres, square miles, square meters or square
+kilometers.<P>
+</UL>
+
+<P><hr><P>
+
+
+<A NAME="reclass"> <H2>Reclassification:</H2>
+
+This GIS tool allows you to create a new map from an existing one
+by combining categories from the chosen map into one new category.
+For example, one could create a map of East Bay counties by aggregating
+Contra Costa and Alameda from the Counties map.  
+Or a user could create a new At Risk map combining "low" "medium" and "high"
+together into "at risk", keeping "urban" as "urban", and keeping "secure
+greenbelt" as "secure greenbelt".<P>
+
+There are several pages of forms for creating reclassification maps.
+The first page selects the input base map to reclassify.
+Subsequent pages select input categories to aggregate and the output
+label for those categories.<P>
+
+<UL>
+<LI> page one: <P>
+<UL><LI>choose the <a href="help.html#raster">raster map</a> to use
+for the base</UL><P>
+
+<LI> page two:<P>
+	<UL>
+	<LI>choose one or more categories from the base map to aggregate
+	into one category in the output map.  To create more than one output
+	category, choose Add Categories before submitting the request.<P>
+
+	<LI>create a label for all of these categories in the output file.
+	If you choose to create more than one output category, each page
+	will need a different label.<P>
+
+    <LI>Enter a map name for you results.  Make the name simple, short
+    and likely unique, so that no one else creates the same map and
+    writes over yours.  Please restrict punctuation to "." and "_".
+    You may use this map in
+    other GRASSLinks menus for one hour.  You can use the Display
+    option to download the image.  <P>
+
+	<LI>When you have specified all of the input category -- output
+	categories you want, choose "Create the new map".  Otherwise, choose
+	"Add more categories".  <P>
+	</UL>
+</UL>
+
+
+<p><HR><p>
+
+<A NAME="combine"> <H2>Combine:</H2>
+This GIS tool allows you to create a new map that highlights the
+overlap of information in two existing maps.
+The output is a simple coincidence map showing one category where
+the requested information in the two input maps coexists.
+For example, one could create a map of tidal wetlands in Marin County
+by choosing Marin from the Counties map and all tidal wetlands from the
+Wetlands to 16 categories map.  In that map, all areas outside of
+Marin and all areas that are not tidal will be lumped together as a zero
+category, while all Marin tidal wetlands will be one category together.<P>
+
+<UL>
+<LI> page one:<P>
+<UL><LI>choose two different input <a href="help.html#raster">raster maps</a> to use
+</UL><P>
+
+<LI> page two:<P>
+    <UL>
+    <LI>choose one or more categories from each input map to aggregate
+	and overlay.<P>
+
+    <LI>Enter a map name for you results.  Make the name simple, short
+	and likely unique, so that no one else creates the same map and
+	writes over yours.  Please restrict punctuation to "." and "_".
+	You may use this map in
+    other GRASSLinks menus for one hour.  You can use the Display
+    option to download the image.  <P>
+
+    <LI> select the <a href="help.html#region">region</a> within with 
+    to create the map.  A smaller region will run faster, but if you 
+    choose to zoom out later, only the areas within the initial region
+    will have data.<P>
+     
+	<LI> a <a href="help.html#resolution">resolution</a> of coarse, medium or
+	fine.  A coarse resolution will run faster than a fine resolution.
+	If you choose to zoom in close later, however, a coarse resolution
+	will look blocky.<P>
+
+    <LI>When you have specified all of the input information, "Combine
+	the Maps"<P>
+    </UL>
+</UL>
+
+<p><HR><p>
+
+
+<A NAME="buffer"> <H2>Buffer:</H2>
+This GIS tool allows you to create a new map from an existing one
+by building concentric rings around categories in a map.
+The categories selected are aggregated together in the new map and 
+the concentric rings are built around those areas.  <P>
+Run time varies with the number of rings and the 
+<a href="help.html#resolution">resolution</a> of the map.<P>
+
+<UL>
+<LI> page one:<P>
+	<UL>
+	<LI>choose an input <a href="help.html#raster">raster map</a><P>
+	</UL>
+<LI> page two:<P>
+    <UL>
+    <LI>choose one or more categories from each input map to aggregate
+    and buffer.<P>
+ 
+	<LI>choose the distance units for your buffering distances<P>
+
+	<LI>choose the outer distances for your rings.  For example: 1,2,5
+	with units kilometers would create 3 rings - the first from 0-1
+	km, the second from 1-2 km, and the third from 2-5 km.<P>
+
+    <LI>Enter a map name for you results.  Make the name simple, short
+    and likely unique, so that no one else creates the same map and
+    writes over yours.  Please restrict punctuation to "." and "_".
+    You may use this map in
+    other GRASSLinks menus for one hour.  You can use the Display
+    option to download the image.  <P>
+ 
+	<LI> select the <a href="help.html#region">region</a> within with  
+	to create the map.  A smaller region will run faster, but if you 
+	choose to zoom out later, only the areas within the initial region
+	will have data.<P>
+
+    <LI> a <a href="help.html#resolution">resolution</a> of coarse,
+	medium or fine.  A coarse resolution will run faster than a
+	fine resolution.  If you choose to zoom in close later,
+    however, a coarse resolution will look blocky.<P>
+
+    <LI>When you have specified all of the input information, "Buffer
+    the Categories" <P>
+	</UL> 
+</UL>
+
+
+
+<P><HR><P>
+
+<A NAME="raster"> <H2>Raster Maps:</H2>
+Raster maps are GIS data layers that are actually matrices of
+information.  They resemble images on a tv screen or photographs.
+The map matrix has a <a href="help.html#resolution">resolution</a> 
+associated with it and each pixel, or cell, has a data value.  
+Raster maps make nice base maps for displaying.  They are also 
+very quickly read and manipulated by computer software because of 
+their matrix structure.
+<P><HR><P>
+
+<A NAME="vector"> <H2>Vector Maps:</H2>
+Vector maps use lines to denote features. 
+For one-dimensional features, such as stream centerlines, the vector
+maps consists of lines.   For two-dimensional features, such as lakes,
+the vectors are area edges outlining the feature.  
+Vector maps draw nicely over raster base maps, but raster maps are
+preferred by the GRASS software for complex data manipulation.
+<P><HR><P>
+
+<A NAME="sites"> <H2>Site Maps:</H2>
+Site maps are simply point locations.  Features such as springs or pipe
+outfalls can be described with site maps.  They display as a dot or an
+"x".
+
+<P><HR><P>
+
+<A NAME="region"> <H2>Region:</H2>
+The region is simply the geographic area under examination.
+For example, the whole Bay region or just one county. Region settings are usually
+predefined bounding boxes that encompass a particular area, such as Alameda County.
+A region can also be <b>set to area of selected map(s)</b>.  By selecting this setting,
+a region bounding box that would be the minimum required to enclose the selected
+<b>raster</b> map or maps (if more than one has been selected) is calculated on the fly.
+<P><HR><P>
+
+<A NAME="resolution"> <H2>Resolution:</H2>
+Just as the information in a photo or on the screen looks smooth and
+continuous, so does a raster map.  However, if you look at a resolution
+finer than the resolution that it was created, it will look blocky or
+grainy, just as a photo does under a magnifying glass.
+Since the REGIS geodatabase is for regional planning in the San
+Francisco Bay and Delta area, most of the raster maps are at a
+resolution of 50 or 100 meters.  That means that at its finest, a 
+single raster grid cell represents 50 (or 100) meters on the ground.
+<p>
+Processes using coarser resolutions run faster and the resulting maps
+take up less disk space.  However, if you need to analyze these maps
+at a finer resolution they will not support it. The metadata for a selected
+raster map, if available, should indicate the data's resolution.
+<p>
+<hr>
+<p>
+<center>
+<sub>
+[
+<a href="">GRASSLinks Home</a>
+] [     
+<a href="GL_matrix.html">GRASSLinks Data</a>
+] [     
+<a href="help.html">GRASSLinks Help</a>
+] [     
+<a href="">GRASSLinks Feedback</a>
+]
+</sub>
+</center>
+<p>
+
+</body>
+</html>
