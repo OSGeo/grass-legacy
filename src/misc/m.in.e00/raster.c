@@ -117,7 +117,7 @@ void getraster( char *name, int flag, int prec)
 		d = (double *) dbuf;
 		for (j = 0; j < cols; j += 3) {
 		    read_e00_line( line);
-		    if ((cols - j) < 5)
+		    if ((cols - j) < 3)
 			line[ 21 * (cols-j+1)] = 0;
 		    sscanf( line, "%lf%lf%lf", d, d+1, d+2);
 		    d += 3;
