@@ -268,6 +268,7 @@ int execute(char *sql, cursor * c)
 	break;
 
     }
+    sqpFreeStmt(st);
 
     return DB_OK;
 }
