@@ -9,6 +9,7 @@
 #include    <stdio.h>
 #include    <math.h>
 #include 	"dxf2vect.h"
+#include "gis.h"
 
 
 /* #define DEBUG */
@@ -22,12 +23,9 @@ int num_lines = 0 , num_labels = 0;
 
 /*  command line args */
 static	char  *out_name = NULL ;
-char *rindex ();
 
 int all_lines = 1;	/* dump ALL lines unless user override */
 int all_atts = 1;	/* dump ALL atts  unless user override */
-
-int from_table = 0;
 
 
 main(argc,argv)
@@ -159,13 +157,13 @@ char *argv[];
 	strcpy (basename, out_name);
     else
     {
-	p = rindex (dxf_file, '/');
+	p = G_rindex (dxf_file, '/');
 	if (p == NULL)
 	    p = dxf_file;
 	else
 	    p++;
 	strcpy (basename, p);
-	if (NULL != (p = rindex (basename, '.')))
+	if (NULL != (p = G_rindex (basename, '.')))
 	    if (p != basename)
 		*p = '\0';  /* knock off any suffix */
     }
@@ -217,7 +215,7 @@ add_layer (str, list, num)
 
     strcpy (buf, str);
     G_squeeze (buf);
-    p = index (buf, ':');
+    p = G_index (buf, ':');
     if (*buf == '!') 	/* not to be written out */
     {
 	p = NULL;
