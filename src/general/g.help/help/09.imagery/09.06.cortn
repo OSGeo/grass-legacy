@@ -1,0 +1,29 @@
+
+                       IMAGE CORRECTION
+
+Commonly, when analyzing multiple images, it is necessary to correct
+image distortions attributable to such sources as the earth's
+radiation.  Such distortions can result in different spectral
+reflectance values being collected for the same image pixel, based
+on the time of day, month, year, etc., at which the image was
+photographed.  GRASS programs exist which help the user to identify and
+eliminate such distortions from images, allowing valid comparisons to
+be made among images.  See the paper
+\"r.mapcalc: An Algebra for GIS and Image Processing"\ for an example
+of how radiometric corrections can be made to an image.
+
+GRASS commands that can be used for image correction are:         
+
+	\-  i.fft \
+	\-  i.ifft \
+	\-  i.zc \
+	\-  r.mapcalc \
+
+For more information on a specific command, select a command and press
+ESC.
+
+
+
+
+
+

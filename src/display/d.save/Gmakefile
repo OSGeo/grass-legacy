@@ -1,0 +1,8 @@
+$(BIN_MAIN_CMD)/d.save: main.o $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) main.o $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB) -o $@
+
+$(DISPLAYLIB): #
+$(RASTERLIB): #
+$(GISLIB): #
+
+

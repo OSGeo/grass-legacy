@@ -1,0 +1,84 @@
+.TH r.reclass.inf
+.SH NAME
+\fIr.reclass.inf\fR \- Generate a new raster reclass map based on the results of multiple queries to the
+currently selected database.
+.br
+.I "(GRASS-RDBMS Raster Interface Program)"
+.SH SYNOPSIS
+\fBr.reclass.inf\fR
+.br
+\fBr.reclass.inf help\fR
+.br
+\fBr.reclass.inf\fR \fBsql=\fIfile\fR \fBinput=\fIname\fR \fBkey=name\fR \fBoutput=\fIname\fR \fB[label=\fIname]\fR
+.SH DESCRIPTION
+r.reclass.inf generates reclass rules for a new raster map stf1_main based on the results of multiple queries 
+to the currently selected database. The user constructs a series of mutually exclusive SQL select
+statments designed to return groups of records from the database. Each group of records should be interanally
+consistent in terms of attribute characteristics specified by the user in the SELECT clause. These
+groups should also be mutually exclusive, thereby insuring that a row returned by one SELECT clause is not also 
+returned by a subsequent SELECT clause. Each group of records therefore forms the basis for a single category in 
+the resulting GRASS raster reclass map. r.reclass.inf processes each SELECT statement in order generating the
+GRASS reclass rules needed to create a new raster map. As each SELECT statment is processed the group of
+records returned receives a common category value. The category value is incremented by one for each
+subsequent SELECT statment which is processed. The resulting reclass map will have one category for each
+of the original SELECT statements and an additional category for no data areas. No data in this case
+includes actual no data areas and areas for which no rows were returned by the database queries.
+
+.SH "COMMAND LINE OPTIONS"
+.LP
+Parameters:
+.IP \fIsql=filename\fR
+Name of file containing SQL query statements.
+.IP \fIinput=map\fR
+Name of an existing raster map stf1_main.
+.IP \fIkey=database_column_name\fR
+Name of the database column linked to GRASS via the categories in the input map stf1_main.
+.IP \fIoutput=map\fR
+Name of new raster (reclass),  file.
+.IP \fIlabel=name\fR
+Label for new categories. 
+
+.SH "EXAMPLE:"
+.br
+r.reclass.inf sql=example.sql key=tract_blck 
+input=blkgrp.ids output=pop.recl label="Tfact="
+
+.br
+example.sql:
+
+.br
+	SELECT tract_blck,pop100 from stf1_main 
+.br
+	WHERE stf1_main.pop100 >0 AND stf1_main.pop100 <=100D;
+
+
+.br
+	SELECT tract_blck,pop100 from stf1_main 
+.br
+	WHERE stf1_main.pop100 >1000 AND stf1_main.pop100 <=1500;
+
+
+.br
+	SELECT tract_blck,pop100 from stf1_main 
+.br
+	WHERE stf1_main.pop100 >1500 AND stf1_main.pop100 <=2000;
+
+.br
+	SELECT tract_blck,pop100 from stf1_main 
+.br
+	WHERE stf1_main.pop100 >2000 
+.br
+.SH BUGS
+None known.
+
+.SH "NOTE"
+This program requires the Informix database software.
+
+.SH "SEE ALSO"
+g.column.inf, g.select.inf, g.stats.inf, g.table.inf, d.rast.inf, d.site.inf, d.vect.inf, d.what.r.inf, d.what.s.inf, d.what.v.inf, r.rescale.inf, v.reclass.inf
+
+.SH AUTHOR
+James A. Farley, Wang Song and W. Fredrick Limp
+University of Arkansas, CAST
+
+

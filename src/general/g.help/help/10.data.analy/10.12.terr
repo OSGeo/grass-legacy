@@ -1,0 +1,30 @@
+                          TERRAIN ANALYSIS
+
+Elevation data are crucial to any GIS.  A number of GRASS commands were
+designed specifically to address terrain analysis issues related to
+water movement, development of ballistic trajectories, and computation
+of slope and \aspect\.
+
+Although the GRASS commands listed below were designed to analyze
+terrain data, they can be used to analyze any data types.
+
+         \-  r.basins.fill \       \-  r.slope.aspect \
+         \-  r.cost \              \-  r.traj \ 
+         \-  r.drain \             \-  r.volume \
+         \-  r.los \               \-  r.watershed \
+         \-  r.surf.contour \      \-  r.surf.idw \
+         \-  r.surf.idw2 \         \-  d.rast.arrow \
+
+For more information on a specific command, select a command and press
+ESC.
+
+See also:  \d.3d\, \r.mapcalc\, \r.clump\ and the paper
+\"r.mapcalc: An Algebra for GIS and Image Processing"\.
+
+
+
+
+
+
+
+

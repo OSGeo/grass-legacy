@@ -1,0 +1,295 @@
+3.1	NCSA HDF Calling Interfaces and Utilities
+
+Storing Palettes	3.1
+
+National Center for Supercomputing Applications
+
+July 1990
+
+                                                                
+
+
+
+3.1	NCSA HDF Calling Interfaces and Utilities
+
+Storing Palettes	3.1
+
+National Center for Supercomputing Applications
+
+July 1990
+
+                                                                
+
+
+
+
+
+
+
+Chapter 3	Storing Palettes
+
+
+
+Chapter Overview
+HDF 8-Bit Palettes
+Writing Palettes to a File
+Reading Palettes from a File
+Other Palette Routines
+
+Chapter Overview
+
+This chapter describes the routines that are available for storing 
+and retrieving 8-bit palettes.
+
+
+HDF 8-Bit Palettes
+
+An 8-bit palette is a lookup table with 256 entries that tell the system 
+hardware which color to associate with each of the 256 possible pixel 
+values. Each entry in the palette is chosen from a master palette of 
+224 RGB colors.
+
+In HDF files, 8-bit palettes are assumed to be organized as follows. 
+Each palette entry consists of 3 bytes—one each for red, green, and 
+blue. The first three bytes represent the R, G, and B values of the 
+first color in the palette; the next three the R, G, and B values of the 
+second color; and so forth. The total size of a palette is 768 bytes. 
+
+The HDF library contains routines for storing and retrieving 
+palettes. These routines are callable from C and FORTRAN 
+programs that have access to the library. All of the callable palette 
+routines in the library begin with the letters DFP.
+
+The functions, DFPaddpal and DFPgetpal, are the primary 
+routines for palette I/O and should be sufficient for most palette I/O 
+operations. The other six palette functions—DFPputpal, 
+DFPnpals, DFPwriteref, DFPreadref, DFPrestart, and 
+DFPlastref—provide greater control of the I/O process and are 
+available to you if more control is needed.
+
+Table 2.1 lists the long and short names and the functions of the 
+palette routines currently contained in the HDF library. The 
+following sections provide descriptions and examples of these 
+calling routines.
+
+Table 3.1	Palette I/O Routines 
+in the HDF Library
+Long Name	Short Name	Function
+
+DFPaddpal	dpapal	appends a palette to a file.
+
+DFPgetpal	dpgpal	reads in the next palette in the file.
+
+DFPputpal	dpppal	writes a palette to a file.
+
+DFPnpals	dpnpals	indicates number of palettes in a 
+file.
+
+DFPwriteref	dpwref	sets the reference number of the 
+next palette to be written.
+
+DFPreadref	dprref	sets the reference number of the 
+next palette to be retrieved.
+
+DFPrestart	dprest	specifies that the next call to 
+DFPgetpal reads the first palette in 
+the file, rather than the next.
+
+DFPlastref	dplref	returns the value of the reference 
+number most recently read or 
+written.
+
+
+Writing Palettes to a File
+
+DFPaddpal
+FORTRAN:
+INTEGER FUNCTION DFPaddpal(filename, pal)
+CHARACTER*(*) filename	-	name of HDF file
+CHARACTER*(*) pal	-	768-byte space with palette
+
+C:
+int DFPaddpal(filename, palette)
+char *filename;	/* name of HDF file */
+unsigned char *palette;	/*768-byte space with palette */
+
+
+Purpose:  To append the palette stored in the array palette to an 
+HDF file.
+
+Returns:  0 on success; –1 on failure.
+
+If file does not exist, it is created and the palette written to it.
+
+DFPaddpal is often sufficient for adding the palette that you want to 
+an HDF file. Other palette routines, which provide more refined 
+access to palettes, are described next.
+
+
+Example: Writing a Palette to a File  with DFPaddpal
+Figure 3.1 shows a C code segment for writing a palette to an HDF 
+file.
+
+Figure 3.1	Writing a Palette to 
+a File
+C:
+int	DFPaddpal();
+char	pal[768];
+
+DFaddpal("myfile.hdf",pal);
+...
+
+
+DFPputpal
+FORTRAN:
+INTEGER FUNCTION DFPputpal(filename, pal, ow, filemode)
+CHARACTER*(*) filename	-	name of HDF file
+CHARACTER*(*) pal	-	768–byte space for palette
+INTEGER ow		-	if 1, overwrite last palette read 
+			or written 
+			if 0, write it as a fresh palette 
+INTEGER filemode	-	if "a", append palette to file 
+			if "w", create new file
+
+C:
+int DFPputpal(filename, palette, overwrite, filemode)
+char *filename;	/* name of HDF file */
+unsigned char *palette;	/* 768–byte space for palette */
+int overwrite;	/* if 1, overwrite last palette read or 
+		written */
+	/* if 0, write it as a fresh palette */
+char *filemode;	/* if "a", append palette to file */
+	/* if "w", create new file */
+
+
+Purpose:  To write a palette to file.
+
+Returns:  0 on success; –1 on failure.
+
+This routine provides more control than DFPaddpal. Note that the 
+combination filemode="w" and overwrite=1 has no meaning 
+and will generate an error.
+
+
+Reading Palettes from a File
+
+DFPgetpal
+FORTRAN:
+INTEGER FUNCTION DFPgetpal(filename, pal)
+CHARACTER*(*) filename	-	name of HDF file
+CHARACTER*(*) pal	-	768–byte space for palette
+
+C:
+int DFPgetpal(filename, palette)
+char *filename;		/* name of HDF file */
+unsigned char *palette;	/* 768–byte space for palette */
+
+
+Purpose:  To get the next palette from file and store it in the array 
+palette.
+
+Returns:  0 on success; –1 on failure.
+
+The array palette is assumed to be allocated at least 768 bytes. 
+Successive additional calls to DFPgetpal retrieve the palettes in 
+the file in the sequence in which they are stored.
+
+DFPgetpal is often sufficient for getting the palette that you want 
+from an HDF file. Other palette routines, which provide more 
+refined access to palettes are described below.
+
+
+Example: Reading the First Available Palette
+Figure 3.2 shows a C code segment that reads the first available 
+palette from an HDF file. 
+
+Figure 3.2	Reading the First 
+Available Palette
+C:
+int	DFPgetpal();
+char	pal[768];
+
+DFPgetpal("myfile.hdf",pal);
+...
+
+
+Other Palette Routines
+
+DFPnpals
+FORTRAN:
+INTEGER FUNCTION DFPnpals(filename)
+CHARACTER*(*) filename
+
+C:
+int DFPnpals(filename)
+char *filename;	/* name of HDF file */
+
+
+Purpose:  To tell how many palettes are present in a file.
+
+Returns:  Number of palettes on success; –1 on failure.
+
+DFPwriteref
+FORTRAN:
+INTEGER FUNCTION DFPwriteref(filename, ref)
+CHARACTER*(*) filename	-	name of HDF file
+INTEGER ref		-	ref number to be used in next
+			palette write
+
+C:
+int DFPwriteref(filename, ref)
+char *filename;	/* name of HDF file */
+uint16 ref;	/* ref number to be used in next palette write */
+
+
+Purpose:  To set the reference number of the next palette to be 
+written.
+
+Returns:  0 on success; –1 on failure.
+
+
+DFPreadref
+FORTRAN:
+INTEGER FUNCTION DFPreadref(filename, ref)
+CHARACTER*(*) filename	-	name of HDF file
+INTEGER ref		-	ref number to be used in next read
+
+C:
+int DFPreadref(filename, ref)
+char *filename;	/* name of HDF file */
+uint16 ref;	/* ref number to be used in next DFPgetpal */
+
+
+Purpose:  To set the reference number of the palette that DFPgetpal 
+will retrieve next.
+
+Returns:  0 on success; –1 if a palette with this reference number 
+does not exist or if an error occurs.
+
+
+DFPrestart
+FORTRAN:
+INTEGER FUNCTION DFPrestart()
+
+C:
+int DFPrestart()
+
+
+Purpose:  To cause the next call to DFPgetpal to read the first 
+palette in the file.
+
+Returns:  0 on success.
+
+
+DFPlastref
+FORTRAN:
+INTEGER FUNCTION DFPlastref()
+
+C:
+int DFPlastref()
+
+
+Purpose:  To determine the value of the reference number most 
+recently read or written by a palette function call.
+
+Returns:  The reference number on success; –1 on failure.

@@ -1,0 +1,52 @@
+I = ../Include
+LIB = ../lib.a
+EXTRA_CFLAGS = -I$I
+
+OBJ = \
+	announce.o\
+	ask_quad.o\
+	chain.o\
+	copy_sites.o\
+	copyfile.o\
+	count_site.o\
+	counter.o\
+	die.o\
+	eq_sites.o\
+	execute.o\
+	hitreturn.o\
+	index.o\
+	menu_hndlr.o\
+	meta_reprt.o\
+	maximum.o\
+	parse.o\
+	read_sites.o\
+	report.o\
+	region.o\
+	rprt_finds.o\
+	rprt_seeks.o\
+	rpt_screen.o\
+	scan_int.o\
+	scn_double.o\
+	scopy.o\
+	site.o\
+	sort_int.o\
+	ut_to_cell.o\
+	within_wnd.o\
+	write_site.o\
+	yes.o
+
+$(LIB):	$(OBJ)
+	$(AR)
+
+copy_sites.o:	$I/site.h
+count_site.o:	$I/site.h
+layer.o:	$I/layer.h
+menu_hndlr.o:	$I/local_menu.h
+read_layers.o:	$I/layer.h
+read_sites.o:	$I/site.h
+report.o:	$I/report.h
+rprt_finds.o:	$I/report.h
+rprt_seeks.o:	$I/report.h
+site.o:		$I/site.h
+write_layer.o:	$I/layer.h
+write_site.o:	$I/site.h

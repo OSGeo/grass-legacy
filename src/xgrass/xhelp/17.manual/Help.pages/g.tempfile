@@ -1,0 +1,4 @@
+
+@man("g.tempfile") - Creates a temporary file and prints the file name.
+
+(GRASS File Management Program)

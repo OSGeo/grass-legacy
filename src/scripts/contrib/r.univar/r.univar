@@ -1,0 +1,77 @@
+#!/bin/sh
+# Statistical analysis of GRASS raster maps
+# written by Markus Neteler 23. July 1998
+#            neteler@geog.uni-hannover.de
+#
+# updated 3. Dec.99 for GRASS 5
+# updated 20.Sept.99 for GRASS 5
+
+# usage: r.univar [basemap] covermap
+
+if test "$GISBASE" = ""; then
+echo "You must be in GRASS to run this program."
+exit
+fi
+
+if test "$1" = ""
+then
+ echo ""
+ echo "This module calculates univariate statistics from a GRASS raster map"
+ echo ""
+ echo "Usage: r.univar [basemap] covermap"
+ echo ""
+ echo "Parameter basemap is an optional masking map (containing areas)"
+ echo ""
+ exit
+fi
+
+if test "$1" = "help"
+then
+ echo ""
+ echo "This module calculates univariate statistics from a GRASS raster map"
+ echo ""
+ echo "Usage: r.univar [basemap] covermap"
+ echo ""
+ echo "Parameter basemap is an optional masking map (containing areas)"
+ echo ""
+ exit
+fi
+
+# test: only one parameter specified?
+echo ""
+echo ""
+echo "This module calculates univariate statistics from a GRASS raster map"
+echo ""
+
+if test "$2" = ""
+then
+   echo "Calculation for full image $1... (no mask set, ignoring NULL cells)"
+   echo "Collecting cell values..."
+   r.stats -1n input=$1 > /tmp/m.univar.tmp
+else
+   echo "Calculation for images $2 masked through $1... (ignoring NULL cells)"
+   echo "Collecting cell values..."
+   r.stats -1n input=$1,$2 |grep '1 ' |cut -d' ' -f2 > /tmp/m.univar.tmp
+fi
+
+# calculate statistics
+echo "Calculating statistics..."
+cat /tmp/m.univar.tmp | awk 'BEGIN {sum = 0.0 ; sum2 = 0.0} 
+NR == 1{min = $1 ; max = $1}
+       {sum += $1 ; sum2 += $1 * $1 ; N++}
+       {
+        if ($1 > max) {max = $1}
+        if ($1 < min) {min = $1}
+       }
+END{
+print ""
+print "Number of cells:",N
+print "Minimum:",min
+print "Maximum:",max
+print "Range: ", max-min
+print "Arithmetic Mean: ",sum/N
+print "Variance: ",(sum2 - sum*sum/N)/N
+print "Standarddeviation:",sqrt((sum2 - sum*sum/N)/N)
+print "Variation coefficient:",100*(sqrt((sum2 - sum*sum/N)/N))/(sum/N),"%"
+}'
+rm /tmp/m.univar.tmp

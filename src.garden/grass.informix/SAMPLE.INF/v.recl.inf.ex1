@@ -1,0 +1,11 @@
+#!/bin/sh
+# test for v.reclass.inf 
+# all required command line args are provided
+# DB=tiger, GISdb=spearfish
+# Output: vector display of blkgrps reclassed by
+#         total population.
+#
+#
+v.reclass.inf sql=area.sql key=tract_blk input=blkgrp.ids \
+output=pop.recl type=area -d
+

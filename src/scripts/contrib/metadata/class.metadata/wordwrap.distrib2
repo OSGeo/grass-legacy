@@ -1,0 +1,41 @@
+:
+metafile=$METAHOME/meta.system
+headlength=`echo $1 | wc -c `
+headlength=`expr $headlength + 1`
+linelength=`expr 80 - $headlength`
+linelength1=`expr $linelength + 1`
+linelength2=`expr $linelength + 2`
+heading="$1"": "
+headno=`echo $1 | wc -C | tr -d ' '`
+headno2=`expr $headno + 1`
+space2=`echo ' ' | awk '{ for ( i = headno2 ; i >= 1 ; i-- ) printf "%s"," " }' headno2=$headno2`
+input=`cat $2`
+input=`echo $input | tr -s ' ' ' ' | tr -s '    ' ' ' | tr -s '\15' ' ' | tr -s '\12' ' '`
+
+if [ -z "$input" ] ; then
+  break
+fi
+while [ -n "$input" ] ; do
+if [ `echo $input | wc -c` -gt $linelength1 ] ; then
+  endcheck="`echo $input | cut -c$linelength`"
+  frontcheck="`echo $input | cut -c$linelength1`"
+  if [ "$endcheck" = " " -o "$endcheck" = "," -o "$endcheck" = "." -o "$endcheck" = "-" -o "$frontcheck" = " " ] ; then
+    echo "$space2""`echo $input | cut -c0-$linelength `" >> $metafile
+      if [ "$frontcheck" = " " ] ; then
+        input="`echo $input | cut -c$linelength2-`"
+      else
+        input="`echo $input | cut -c$linelength1-`"
+      fi
+  else
+    wordcount=`echo $input | cut -c0-$linelength | wc -w | tr -d ' '`
+    wordminus=`expr $wordcount - 1`
+    lastbit=`echo $input | cut -c0-$linelength | cut -d' ' -f$wordcount`
+    echo "$space2""`echo $input | cut -c0-$linelength | cut -d' ' -f1-$wordminus`" >> $metafile
+    input="$lastbit""`echo $input | cut -c$linelength1-`"
+  fi
+else
+  echo "$space2""$input" >> $metafile
+  break
+fi
+heading="$space2"
+done

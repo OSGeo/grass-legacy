@@ -1,0 +1,6 @@
+Edit the DRIVER.sh file and set the TMPDIR1 and TMPDIR2 variables to
+directories where you have LOTS of disk space.  The first tells the
+paint driver where to write its temporary image file. For a 34x34 inch
+plot this will be about 11.6 Mbytes. The second tells the versatek
+sprint utility where to write its temporary files.  For a 34x34 inch
+plot, these will come to about 23.5 Mbytes.

@@ -1,0 +1,4 @@
+\v.in.dlg2\ - Converts an ASCII or binary USGS DLG-3 (bdlg)
+            file to a binary GRASS vector (dig) file.
+
+(GRASS Vector Data Import Program)

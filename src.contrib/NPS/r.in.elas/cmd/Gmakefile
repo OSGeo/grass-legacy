@@ -1,0 +1,8 @@
+PGM=r.in.elas
+HOME=$(BIN_MAIN_CMD)
+
+$(HOME)/$(PGM): main.o $(GISLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB): #
+$(MATHLIB): #

@@ -1,0 +1,42 @@
+#!/bin/csh -f
+# from Dr. Agustin Lobo - alobo@ija.csic.es
+
+echo ""
+echo "Calculate linear regression from two raster maps: y = a + b*x"
+if ($#argv < 2) then
+        echo "Usage: r.regression.line rasterfile (X) rasterfile(Y) [result file]"
+        echo ""
+        echo "The optional result file will be stored in your current directory."
+        exit
+endif
+r.stats -c input=$argv[1],$argv[2]  > /tmp/corr.del
+awk '{tot += $3;sumX +=$1 * $3; sumsqX +=$1*$1*$3;sumY +=$2 * $3; sumsqY +=$2*$2*$3;\
+ sumXY +=$1*$2*$3;\
+}\
+END {B=(sumXY - sumX*sumY/tot)/(sumsqX - sumX*sumX/tot);\
+R= (sumXY - sumX*sumY/tot)/((sumsqX - sumX^2/tot)*(sumsqY - sumY^2/tot))^0.5;\
+mediaX=sumX/tot;sumsqX=sumsqX/tot;varX=sumsqX-(mediaX^2);sdX=varX^0.5;\
+mediaY=sumY/tot;sumsqY=sumsqY/tot;varY=sumsqY-(mediaY^2);sdY=varY^0.5;\
+A=mediaY - B*mediaX; F= R^2/(1-R^2/tot-2);\
+print A, B, R, tot, F, mediaX, sdX, mediaY, sdY}' /tmp/corr.del > /tmp/corr.delb
+#cat /tmp/corr.delb
+if ($#argv == 2) then
+	set RESULTADO = (`cat /tmp/corr.delb`)
+        echo "y = a + b*x"
+        echo "           a, b: coefficients"
+        echo "a  b"
+	echo $RESULTADO[1]  $RESULTADO[2]
+else
+        echo "y = a + b*x"
+        echo "   a, b: coefficients"
+        echo "   R: sumXY - sumX*sumY/tot"
+        echo "   N: number of elements"
+        echo "   medX, medY: Medians"
+        echo "   sdX, sdY: Standard deviations"
+	echo "a  b  R  N  F medX  sdX  medY  sdY" > /tmp/corr.delc
+	cat /tmp/corr.delb >> /tmp/corr.delc
+	mv /tmp/corr.delc $argv[3]
+        cat $argv[3]
+endif
+\rm /tmp/corr.del*
+

@@ -1,0 +1,7 @@
+interface_build {
+    {v.patch} 0
+    {Creates a new vector map by combining input vector maps.}
+    {entry input {Input vector maps (name[,name,...]):} 0 +vector}
+    {entry output {New vector composite output:} 0 vector}
+    {entry title {New category table title (optional):} 0 ""}
+}

@@ -1,0 +1,7 @@
+interface_build {
+    r.reclass 1
+    {Creates a new map layer whose category values mare based upon the user's reclassification of categories in an existing raster map layer.}
+    {entry input  {Raster map to be reclassified:} 0 raster}
+    {entry output {Name for the resulting raster map:} 0 raster}
+    {entry title  {Title for the resulting raster map:} 0 ""}
+}

@@ -1,0 +1,14 @@
+src/raster/r.combine/cmd/local_proto.h
+24c24
+< int yywrap(void);
+---
+> /*int yywrap(void);*/
+src/raster/r.combine/cmd/gis_lxcl.l
+222c222
+< int yywrap(void)
+---
+> /*int yywrap(void)
+233c233
+< }
+---
+> }*/

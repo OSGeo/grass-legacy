@@ -1,0 +1,27 @@
+EXTRA_CFLAGS	= $(VECT_INCLUDE)
+
+
+SOURCE = v.cadlabel.c \
+	interval.c \
+	label_lines.c \
+	line_center.c
+
+OBJ = v.cadlabel.o \
+	interval.o \
+	label_lines.o \
+	line_center.o 
+
+PROG = $(BIN_MAIN_CMD)/v.cadlabel
+all:  $(PROG)
+	
+
+
+
+$(PROG): $(OBJ) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(VECTLIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(VECTLIB) $(DIG_ATTLIB) $(GISLIB): #
+
+saber_src:
+	#load $(SOURCE) $(CFLAGS) $(VECTLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB) /usr/lib/libc.a
+

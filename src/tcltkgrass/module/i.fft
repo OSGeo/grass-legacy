@@ -1,0 +1,8 @@
+interface_build {
+    {i.fft} 0
+    {Fast Fourier Transform (FFT) for image processing.}
+    {entry input_image {Input raster map on which the FFT is run:} 0 raster}
+    {entry real_image {Output real part arrays stored as raster map:} 0 raster}
+    {entry imaginary_image {Output imaginary part arrays stored as raster map:} 0 raster}
+    {entry range {Range of values used during FFT:} 0 ""}
+}

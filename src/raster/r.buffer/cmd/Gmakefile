@@ -1,0 +1,22 @@
+PGM = r.buffer
+HOME=$(BIN_MAIN_CMD)
+
+LIST = main.o		\
+       execute.o	\
+       find_dist.o	\
+       init.o		\
+       parse_dist.o	\
+       process_at.o	\
+       process_left.o	\
+       process_rite.o	\
+       process_row.o	\
+       read_map.o	\
+       support.o	\
+       write_map.o  
+
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(LIST): distance.h
+$(GISLIB): #

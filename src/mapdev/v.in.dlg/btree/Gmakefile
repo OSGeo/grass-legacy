@@ -1,0 +1,26 @@
+MYBTREELIB = libbtree.a
+
+MYLIBDIR = .
+
+OBJ = \
+	create.o\
+	find.o\
+	free.o\
+	next.o\
+	rewind.o\
+	update.o
+
+all: $(MYBTREELIB) $(MYLIBDIR)/btree.h
+
+$(MYBTREELIB): $(OBJ)
+	$(AR)
+
+#$(MYLIBDIR)/btree.h:
+#	rm -f $@
+#	cp $? $@
+#	chmod +r $@
+
+$(OBJ): btree.h
+
+try: try.o $(MYBTREELIB)
+	$(CC) $(LDFLAGS) try.o $(MYBTREELIB) -o try

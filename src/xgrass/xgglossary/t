@@ -1,0 +1,9 @@
+#!/bin/sh
+echo $XAPPLRESDIR
+if test "$XAPPLRESDIR" != ""; then
+    XAPPLRESDIR=$XAPPLRESDIR:/tmp/junk
+else
+    XAPPLRESDIR=/tmp/junk
+fi
+export XAPPLRESDIR
+echo $XAPPLRESDIR

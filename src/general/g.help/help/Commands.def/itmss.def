@@ -1,0 +1,10 @@
+
+i.tape.mss
+
+This program extract Multispectral Scanner \(MSS)\ imagery from
+half-inch tape.
+
+NOTE:  This program must be run in a \LOCATION\ with an x,y coordinate
+system.
+
+Manual entry for \i.tape.mss\

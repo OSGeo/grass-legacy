@@ -1,0 +1,10 @@
+interface_build {
+    m.gc2ll 0
+    {Converts geocentric to geographic coordinates.}
+    {entry x {X coordinate:} 0 ""}
+    {entry y {Y coordinate:} 0 ""}
+    {entry z {Z coordinate:} 0 ""}
+    {entry s {Spheroid:} 0 spheroid}
+    {entry thresh {Conversion threshold [1e-6]:} 0 ""}
+    {entry iterations {Max iterations [30].} 0 ""}
+}

@@ -1,0 +1,196 @@
+:
+# This script reads a GRASS cellhd file and creates a "world" file and "header" 
+# file for display in ArcView or ArcInfo as a "bil" file. 
+# files are stored under $LOCATION/BIL.
+# output files are named raster.hdr, raster.bilw, raster.bil
+# original script by T. D'Avello 12/18/97.  
+# Modifications by Jill Schuler  5/6/98
+# (Color schemes in GRASS won't replicate in AV)
+
+name=$1
+outname=$2
+
+if test "$name" = "help"; then
+echo "Usage: `basename $0` name outname
+where:
+name = GRASS raster file name
+outname = BIL raster file name
+
+Output files are stored under the \$LOCATION/BIL directory and named with the 
+original raster name using the following extensions (.bil .bilw .hdr )
+"
+exit
+fi
+
+# Make directory "BIL" to store resulting files
+if [ ! -d $LOCATION/BIL ]
+     then
+     mkdir $LOCATION/BIL
+fi
+
+if [ "${name}" = "" ]; then
+  echo "Collecting the GRASS raster name for conversion............  "
+  g.ask type=old element=cell desc="GRASS raster" unixfile=tmp
+  . tmp
+  if test "$name" = "";then exit;fi
+else
+  g.findfile element=cell file=$name >tmp
+  . tmp
+fi
+
+while test "$outname" = ""; do
+echo 
+echo -n "Enter the output ROOT name (the extension .bil will be appended)
+: "
+read outname
+if test -f $LOCATION/BIL/$outname.bil; then
+echo
+echo "File name $outname already exists under the BIL directory."
+echo -n "Overwrite? ([y]es or (n)o): "
+read ans
+ans=${ans:-y}
+  if [ "$ans" = "n" -o "$ans" = "N" ]; then
+  outname=""
+  fi
+fi
+done
+
+name_mapset=`grep "^mapset=" tmp |cut -d "=" -f 2 | sed -e "s/'//g"`
+
+if [ ! -s $LOCATION/../$name_mapset/cellhd/${name} ]
+   then
+	echo "ERROR:  File not found"
+	echo "ERROR:  Exiting................"
+	exit 5
+fi
+
+# Check for existing files under the BIL dir and delete
+for i in BIL/$outname.hdr BIL/$outname.bilw BIL/$outname.bil BIL/$outname.txt
+do
+if test -f $LOCATION/$i; then
+echo
+echo "Removing existing $i"
+rm $LOCATION/$i
+fi
+done
+
+#######set variables for conversion of raster
+cell=$LOCATION/../$name_mapset/cellhd
+
+#  Get info from cellhd for bilw and hdr
+#  collect information from the GRASS cellhd file
+#  GRASS cellhd format
+#  proj:       1
+#  zone:       11
+#  north:      5265300
+#  south:      5249500
+#  east:       717600
+#  west:       706600
+#  cols:       11000
+#  rows:       15800
+#  e-w resol:  1
+#  n-s resol:  1
+#  format:     0
+#  compressed: 1
+ 
+#test for reclass file format and resample
+reclass=`grep "^reclass$" $cell/$name | awk '{print $1}'`
+if test "$reclass" = "reclass"; then
+echo
+echo "This raster file is a Reclass file and must be saved as a real raster."
+echo "The current geographic region and resolution will be used.
+Additionally, if a MASK is set, the raster will be clipped to the mask."
+r.resample input=$name output=$name.tmp
+name=$name.tmp
+name_mapset=$MAPSET
+cell=$LOCATION/../$name_mapset/cellhd
+fi
+
+proj=`grep "proj:" $LOCATION/../PERMANENT/PROJ_INFO | awk '{print $2}'`
+ellps=`grep "ellps:" $LOCATION/../PERMANENT/PROJ_INFO | awk '{print $2}'`
+units=`grep "units:" $LOCATION/../PERMANENT/PROJ_UNITS | awk '{print $2}'`
+
+if test -f $LOCATION/../PERMANENT/DATUM_INFO; then
+nad=`grep "datum:" $LOCATION/../PERMANENT/DATUM_INFO | awk '{print $2}'`
+region=`grep "region:" $LOCATION/../PERMANENT/DATUM_INFO | awk '{print $2}'`
+else
+nad=nad27
+region=conus
+fi
+
+zone=`grep "zone:" $cell/$name | awk '{print $2}'`
+
+res=`grep "e-w resol:" $cell/$name | awk '{print $3}'`
+col=`grep "cols:" $cell/$name | awk '{print $2}'`
+row=`grep "rows:" $cell/$name | awk '{print $2}'`
+nrt=`grep "north:" $cell/$name | awk '{print $2}'`
+wst=`grep "west:" $cell/$name | awk '{print $2}'`
+compress=`grep "compressed:" $cell/$name | awk '{print $2}'`
+
+# check for compression status and uncompress if needed
+echo
+ if [ "$compress" -eq 1 ]
+   then
+     echo "Uncompressing GRASS file and copying raster............"
+   if test "$MAPSET" != "$name_mapset"; then
+     g.copy rast=$name,$name.tmp >/dev/null 2>&1
+     r.compress -u map=$name.tmp >/dev/null 2>&1
+     cp $LOCATION/cell/$name.tmp $LOCATION/BIL/$outname.bil
+     g.remove rast=$name.tmp >/dev/null 2>&1
+   else
+     r.compress -u map=$name >/dev/null 2>&1
+     cp $LOCATION/cell/$name $LOCATION/BIL/$outname.bil
+   fi
+ else
+  echo "Copying GRASS raster file............"
+  cp $LOCATION/../$name_mapset/cell/$name $LOCATION/BIL/$outname.bil
+ fi
+
+# Write text file
+echo
+echo "Writing .txt file with projection information............................"
+echo "projection $proj" >> $LOCATION/BIL/$outname.txt
+echo "datum $nad" >> $LOCATION/BIL/$outname.txt
+echo "region $region" >> $LOCATION/BIL/$outname.txt
+echo "zone $zone" >> $LOCATION/BIL/$outname.txt
+echo "ellpsoid $ellps" >> $LOCATION/BIL/$outname.txt
+echo "units $units" >> $LOCATION/BIL/$outname.txt
+
+
+# Write Header file
+echo
+echo "Writing .hdr file............................"
+echo "nrows $row" >> $LOCATION/BIL/$outname.hdr
+echo "ncols $col" >> $LOCATION/BIL/$outname.hdr
+echo "nbands 1" >> $LOCATION/BIL/$outname.hdr
+echo "nbits 8" >> $LOCATION/BIL/$outname.hdr
+echo "layout bil" >> $LOCATION/BIL/$outname.hdr
+echo "skipbytes 0" >> $LOCATION/BIL/$outname.hdr
+echo "bandrowbytes $col" >> $LOCATION/BIL/$outname.hdr
+echo "totalrowbytes $col" >> $LOCATION/BIL/$outname.hdr
+
+# Variables for world file
+# Write World file
+echo
+echo "Writing World file............................"
+
+ulx=`echo $wst $nrt $res | awk '{ printf("%f",$1+($3*0.5)) }'`
+uly=`echo $wst $nrt $res | awk '{ printf("%f",$2-($3*0.5)) }'`
+
+echo "$res" >> $LOCATION/BIL/$outname.bilw
+echo "0.0" >> $LOCATION/BIL/$outname.bilw
+echo "0.0" >> $LOCATION/BIL/$outname.bilw
+echo "-${res}" >> $LOCATION/BIL/$outname.bilw
+echo "$ulx" >> $LOCATION/BIL/$outname.bilw
+echo "$uly" >> $LOCATION/BIL/$outname.bilw
+
+if test "$reclass" = "reclass"; then
+echo 
+echo "Removing temporary raster file $name"
+g.remove rast=$name >/dev/null 2>&1
+fi
+
+echo
+echo "The following files were generated under your current Location:"
+
+ls $LOCATION/BIL/$outname.*

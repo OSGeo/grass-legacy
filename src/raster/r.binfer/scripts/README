@@ -1,0 +1,40 @@
+The files in this directory (avalanche.binf and bugs.binf) are 
+two somewhat accurate examples. 
+The author makes NO claims as to the theoretical accuracy of these scripts.
+  
+
+                    Some Notes on Script Construction.
+
+
+1. No Data ( or what to do with category zero).
+
+   If category zero is excluded from the ranges of any layer
+   attribute value, it is treated as "no data" and the
+   resulting probability and combined maps will reflect this.
+
+   Otherwise, category zero is treated just like any other cell value.
+
+2. Category ranges for layer attributes.
+
+   The category ranges are specified using Greclass rules.
+   For example, a value list for slope might look like this:
+
+     (flat [0 1 thru 3], gentle [4 thru 8], moderate [9 thru 15], 
+      other [16 thru 89]).
+
+3. Question Attachments.
+
+   Question attachments can be supplied for and context attribute or
+   attribute value. If names are chosen cleverly, the default menu
+   should be sufficient.
+
+4. Determinant List.
+
+   At this time the determinant list serves no real purpose.
+   Planned extensions to binfer will make use of this list, 
+   so just don't use it for now.
+
+5. Probabilities.
+ 
+   The conditional probability table is very important, try to
+   be sure of its accuracy.

@@ -1,0 +1,10 @@
+OFILES = \
+	label.o\
+	main.o
+
+$(BIN_MAIN_CMD)/d.label: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #

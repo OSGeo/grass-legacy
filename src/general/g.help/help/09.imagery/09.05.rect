@@ -1,0 +1,28 @@
+
+                   GEOMETRIC RECTIFICATION
+
+Rectification is the mapping of an \image\ from one coordinate
+system to another.  The geometry of an image extracted from tape 
+into a GRASS LOCATION having an x,y coordinate system is not
+planimetric.  To make an image planimetric, that is, to convert the
+x,y coordinate system into a standard map coordinate system (e.g.,
+the \UTM\ coordinate system or the \State Plane\ coordinate system),
+points from a map having the standard coordinates must be associated
+with the the same points on an image to be rectified.  This is done by
+marking points on an image and then inputting standard coordinates
+from a map.  A squares regression is then calculated using the two
+types of coordinates for each marked point.  A matrix containing
+transformation coefficients is the result.  The coefficients are then
+used to calculate a standard coordinate for each x,y pixel in the image.
+The rectified planimetric image can then be deposited in a \target\
+database.
+
+The GRASS programs that are used in image rectification are:
+
+	\-  i.points \             \-  i.rectify \
+	\-  i.build.blk \          \-  i.rectify.blk \
+
+For more information on a specific command, select a command and press
+ESC.
+
+

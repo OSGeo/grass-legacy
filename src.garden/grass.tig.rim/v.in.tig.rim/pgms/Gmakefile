@@ -1,0 +1,41 @@
+LIB = $(LIBDIR)/libcoorcnv.a
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+SUPPORT_FILES = db.layout tiger1.format
+SUPPORT_DIR = $(ETC)/tiger_support
+
+SCRIPTS = $(GISBASE)/scripts
+
+all:	$(ETC)/c12.to.v $(ETC)/v.in.tg.rm.sh  \
+	$(SCRIPTS)/tig.rim.sh \
+	$(ETC)/tig.linefeed files
+
+$(SCRIPTS)/tig.rim.sh: tig.rim.sh
+	rm -f $(SCRIPTS)/tig.rim.sh
+	cp tig.rim.sh $(SCRIPTS)/tig.rim.sh
+	chmod +x $(SCRIPTS)/tig.rim.sh
+
+$(ETC)/v.in.tg.rm.sh: v.in.tg.rm.sh
+	rm -f $(ETC)/v.in.tg.rm.sh
+	cp v.in.tg.rm.sh $(ETC)/v.in.tg.rm.sh
+	chmod +x $(ETC)/v.in.tg.rm.sh
+
+$(ETC)/c12.to.v: c12.to.v.o
+	$(CC) $(LDFLAGS) c12.to.v.o $(LIB) $(DIG_ATTLIB) $(VECTLIB) \
+		$(GISLIB) $(MATHLIB) -o $@
+
+$(ETC)/tig.linefeed: linefeeds.o
+	$(CC) $(LDFLAGS) linefeeds.o -o $@
+
+files: $(SUPPORT_DIR)
+	rm -f $(SUPPORT_DIR)/*
+	cp $(SUPPORT_FILES) $(SUPPORT_DIR)
+	chmod +r $(SUPPORT_DIR)/*
+
+$(SUPPORT_DIR):
+	-mkdir $@
+
+$(LIB): # in case LIB changes
+$(GISLIB): #
+$(VECTLIB): #
+$(DIG_ATTLIB): #

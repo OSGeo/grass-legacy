@@ -1,0 +1,31 @@
+OBJ = 		 	novisual.o \
+				queue.o \
+				heap.o \
+				randtree.o \
+				stack.o \
+				timer.o \
+				bitvector.o \
+				pqe2qe.o \
+				graph.o \
+				quadedge.o \
+				triangulation.o \
+				site.o \
+	 			sos.regular.o \
+				planesweep.o \
+				flips.o \
+				delaunay.o \
+				persquadedge.o \
+				hdag.o \
+				regular.o \
+				edgeinsert.o \
+				heur.angle.o \
+				angle.o \
+				heur.slope.o \
+				slope.o \
+				heur.height.o \
+				height.o
+
+
+$(OPTRILIB): $(OBJ)
+	$(AR)
+

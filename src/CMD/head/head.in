@@ -1,0 +1,40 @@
+CC                  = @CC@
+FC                  = @F77@
+LEX                 = @LEX@
+YACC                = yacc
+ARCH                = @host@
+
+GISBASE             = @prefix@
+UNIX_BIN            = @BINDIR@
+
+DEFAULT_DATABASE    =
+DEFAULT_LOCATION    =
+
+COMPILE_FLAGS       = @CFLAGS@ @INCLUDE_DIRS@
+LDFLAGS             = @STRIPFLAG@ @LIBRARY_DIRS@
+
+XCFLAGS             = @X_CFLAGS@
+# XXX - replace SYSV in code with configure results in config.h
+# XXX - need SYSV defined for hpux10
+XLDFLAGS            = @SYSV@
+XINCPATH            = 
+XMINCPATH           = 
+XLIBPATH            = @X_LIBS@
+XTLIBPATH           = 
+XMLIBPATH           = 
+XLIB                = @X_PRE_LIBS@ -lX11
+XTLIB               = -lXt
+XMLIB               = -lXm
+XEXTRALIBS          = @X_EXTRA_LIBS@
+
+COMPATLIB           = @COMPATLIB@
+TERMLIB             = @TERMLIB@
+CURSES              = @CURSESLIB@ $(TERMLIB) $(COMPATLIB)
+MATHLIB             = -lm
+XDRLIB              = @XDRLIB@
+
+TIFFINCPATH         = @TIFF_INCLUDE_DIRS@
+TIFFLIBPATH         = @TIFF_LIBRARY_DIRS@
+
+LIBRULE             = ar ruv $@ $?; @RANLIB@ $@
+USE_TERMIO          = @USE_TERMIO@

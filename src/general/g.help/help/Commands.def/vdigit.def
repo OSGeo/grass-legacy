@@ -1,0 +1,10 @@
+
+
+v.digit - 
+
+v.digit is a menu-driven, highly \interactive\ map development program
+used for inputting analog map data into a GRASS \vector\ format.
+v.digit contains programs for vector \digitizing\, editing, labeling,
+windowing and converting vector data to GRASS \raster\ format.
+
+Manual entry for \v.digit\

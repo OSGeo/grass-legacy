@@ -1,0 +1,11 @@
+#!/bin/sh
+# test for d.r.inf 
+# all required command line args are provided
+# DB=tiger, GISdb=spearfish
+# Output: raster display of tractids reclassed by
+#         total population.
+#
+#
+$INF/d.rast.inf key=tractbna input=tractids \
+tab=stf1_main col=pop100 
+

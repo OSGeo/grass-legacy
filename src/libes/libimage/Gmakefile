@@ -1,0 +1,15 @@
+OBJECTS	= \
+	close.o\
+	filbuf.o\
+	flsbuf.o\
+	name.o\
+	open.o\
+	pix.o\
+	rdwr.o\
+	rle.o\
+	row.o
+
+all: libimage.a
+
+libimage.a : $(OBJECTS)
+	$(AR)

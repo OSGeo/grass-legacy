@@ -1,0 +1,15 @@
+PGM       = $(GARDEN_BIN)/g.select.inf
+LIBES     = $(GISLIB) 
+
+
+
+OBJS = \
+	main.o \
+	getdbname.o \
+	listdb.o 
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+
+$(LIBES): #

@@ -1,0 +1,5 @@
+interactive program which performs all necessary processes needed to convert 
+ascii DLG files, SCS-GEF files, ARC/INFO ungenerated files, DXF files, or 
+ascii vector files into GRASS Vector Format; for transfer of data from 
+other systems to your system.
+

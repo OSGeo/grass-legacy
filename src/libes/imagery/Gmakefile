@@ -1,0 +1,61 @@
+EXTRA_CFLAGS=$(USE_MTIO)
+OBJ =\
+	add_cov.o\
+	advance.o\
+	alloc.o\
+	ask.o\
+	ask_bands.o\
+	ask_colors.o\
+	ask_group.o\
+	ask_subgrp.o\
+	band_io.o\
+	c_assign.o\
+	c_begin.o\
+	c_clear.o\
+	c_distinct.o\
+	c_exec.o\
+	c_execmem.o\
+	c_means.o\
+	c_merge.o\
+	c_nclasses.o\
+	c_point.o\
+	c_reassign.o\
+	c_reclass.o\
+	c_sep.o\
+	c_sig.o\
+	c_sum2.o\
+	colors.o\
+	eol.o\
+	find.o\
+	fopen.o\
+	georef.o\
+	grey.o\
+	group.o\
+	histo.o\
+	histo_eq.o\
+	image.o\
+	loc_info.o\
+	ls_groups.o\
+	nfiles.o\
+	points.o\
+	proj.o\
+	ref.o\
+	set_window.o\
+	sig.o\
+	sig2cats.o\
+	sigfile.o\
+	sigset.o\
+	sigsetfile.o\
+	tape_info.o\
+	target.o\
+	title.o\
+	v_exec.o\
+	var.o\
+	vask_group.o
+
+all: $(IMAGERYLIB) 
+
+$(IMAGERYLIB): ${OBJ}
+	${AR}
+
+$(OBJ): $(INCLUDE_DIR)/imagery.h $(INCLUDE_DIR)/imagedefs.h

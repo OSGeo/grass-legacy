@@ -1,0 +1,61 @@
+********************************************************************************
+
+                    Floodplain Analysis Toolkit
+               Mother Earth Systems, Boulder, Colorado
+
+
+This software was been developed for the U.S. Army Corps of Engineers,
+Ft. Worth District under contract #DACW63-91-M-1085 and for the Omaha District
+under contract #DACW45-92-P-1301.
+
+This code is in the public domain.  Permission to use, copy, modify, and
+distribute this software and its documentation for any purpose and without
+fee is granted.
+
+Mother Earth Systems disclaims all warranties with regard to this software,
+including all implied warranties of merchantability and fitness. In no event
+shall Mother Earth Systems be liable for any special, indirect or consequential
+damages or any damages whatsoever resulting from loss of use, data or profits,
+whether in an action of contract, negligence or other tortious action,
+arising out of or in connection with the use or performance of this software.
+
+********************************************************************************
+
+                         r.surf.voronoi
+
+CREDITS:
+Mother Earth Systems owes much credit to the following...
+
+C.M. Gold (1989) "Surface interpolation, spatial adjacency and GIS" in
+     _Three Dimensional Applications in Geographic Information Systems_
+     Edited by Jonathan Raper; Taylor & Francis.
+     (Gold's paper forms the basis for the r.surf.voronoi algorithm.)
+
+Steve J. Fortune (1987) "A Sweepline Algorithm for Voronoi Diagrams"
+     _Algorithmica_ 2, 153-174.
+     (An implementation of Fortune's sweep algorithm, available via Internet, 
+      lies at the heart of the r.surf.voronoi code ).
+
+James Darrell McCauley (mccauley@ecn.purdue.edu) 
+     (McCauley first integrated Fortune's sweep algorithm with GRASS to
+      produce "s.voronoi".  McCauley's implementation provided a valuable
+      example of the use of the sweep code for GRASS. )
+
+
+LIMITATIONS:
+1)  The sweep line code limits the number of voronoi sites to 4K.  
+    This means that the number of non-zero cells in the GRASS input map 
+    is also limited to 4K.
+
+2)  r.surf.voronoi does not handle longitude/latitude data.
+
+********************************************************************************
+
+AUTHOR INFORMATION:
+Questions and suggestions are welcome. Write or call:
+
+Terri L. Betancourt
+Mother Earth Systems
+891 Crescent Dr.
+Boulder, CO 80303-2759
+(303) 499-7883

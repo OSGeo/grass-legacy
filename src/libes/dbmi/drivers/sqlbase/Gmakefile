@@ -1,0 +1,72 @@
+# SQLBASE is where sqlbase C/API header files and libraries are installed
+SQLBASE=/SQLBASE
+
+# these are DBMI definitions
+INCLUDE = ../../include
+# STUBLIB = ../libstubs.a
+DBMILIB= ../../lib/libdbmi.a
+
+HOME = $(DBMIDIR)/driver
+
+LIBES = $(DBMILIB) $(STUBLIB) $(SQLBASE)/sqlroutr.\a
+EXTRA_CFLAGS = -I$(SQLBASE) -I$(INCLUDE)
+
+OBJ 	=  \
+	bind.o \
+	closecur.o \
+	closedb.o \
+	column.o \
+	compilecur.o \
+	createdb.o \
+	current_dt.o \
+	dbname.o \
+	defaults.o \
+	delete.o \
+	deletedb.o \
+	describe.o \
+	die.o \
+	error.o \
+	execute.o \
+	fetch.o \
+	finddb.o \
+	finish.o \
+	index.o \
+	init.o \
+	insert.o \
+	isnull.o \
+	listdb.o \
+	listidx.o \
+	listtab.o \
+	mycursor.o \
+	opendb.o \
+	passwd.o \
+	privs.o \
+	quotes.o \
+	remarks.o \
+	select.o \
+	server.o \
+	sqlbase.o \
+	table.o \
+	tbname.o \
+	update.o \
+	view.o\
+	whoami.o
+
+DRIVER = main.o $(OBJ)
+TRY = try.o $(OBJ)
+
+$(HOME)/sqlbase: $(HOME) $(DRIVER) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(DRIVER) $(LIBES) -lnsl
+
+try: $(TRY) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(TRY) $(LIBES) -lnsl
+
+$(HOME):
+	-mkdir -p $(HOME)
+
+$(DRIVER) $(TRY):  $(INCLUDE)/dbmi.h globals.h proto.h
+$(LIBES): #
+
+
+proto:
+	make.proto *.c > proto.h

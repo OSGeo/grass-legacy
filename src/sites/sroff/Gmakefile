@@ -1,0 +1,19 @@
+PGM = sroff
+
+LIST =  main.o\
+	block.o\
+	center.o\
+	column.o\
+	divider.o\
+	eject.o\
+	output.o\
+	parse.o\
+	text.o\
+	title.o\
+	top_page.o\
+	xalloc.o
+
+$(ETC)/$(PGM): $(LIST)
+	$(CC) $(LDFLAGS) -o $@ $(LIST)
+
+$(LIST):        glob.h text.h

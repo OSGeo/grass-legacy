@@ -1,0 +1,6 @@
+interface_build {
+    {d.where} 0
+    {Identifies the geographic coordinates associated with point locations in the active frame on the graphics monitor.}
+    {entry spheroid {Name of a spheroid for latitude/longitude coordinate conversion:} 0 spheroid}
+    {checkbox -1 {Identify just one location.} "" -1}
+}

@@ -1,0 +1,9 @@
+interface_build {
+    {r.basins.fill} 0
+    {Generates a raster map layer showing watershed subbasins.}
+    {entry number {Number of passes through the dataset:} 0 ""}
+    {entry c_map {Coded stream network file name (input):} 0 raster}
+    {entry t_map {Thinned ridge network file name (input):} 0 raster}
+    {entry result {Watershed partition file (output):} 0 raster}
+    {checkbox -v {Run verbosely.} "" -v}
+}

@@ -1,0 +1,91 @@
+s.territory
+
+INPUT:
+
+    sites file containing:
+    easting|northing|#cat %threshold [%incr [@ @ % %...]]
+
+	    threshold is target amount of resources that site wants to consume
+	    incr is radius increment for each iteration 
+		    - default incr is min distance between cells
+		    - not currently implemented for sequential, only simult.
+
+    raster file which contains incidence of resource values
+
+    optional name for site output file
+
+    optional name for (integer) claim map
+
+OUTPUT:
+
+    sites file conatining:
+    easting|northing|#cat %threshold %radius
+
+    where radius is the minimum radius of a circle which surrounds
+    enough cells in the incidence map to sum up to threshold.
+
+    If neither a sites output file nor a claim map is named, 
+    output is simply the radius followed by a newline for each site 
+    - for easier use in scripts.
+
+EXAMPLES:
+
+    1) you have sites for lion's lairs with food needs as the "threshold" 
+    2) you have an incidence map for 
+       frequency of prey or hunting success probability (Kg/week or something)
+    3) s.territory creates a circular range for each lair which
+       you might use to create vector or raster files and predict
+       areas of conflict in overlapping "territories"
+
+    1) you have sites for schools with school capacity as the "threshold"
+    2) you have population density maps for school-age children
+    3) s.territory creates ranges for each school that encompass an
+       area in which enough children live to fill the school
+       
+ALGORITHM:
+ 
+    radius increment set to lesser of ns_res and ew_res
+    ( or incr if given )
+
+    for each site 
+    {
+	for (radius = increment; cells remaining; incr+=incr) 
+	{
+	    sum incidence cell centers which fall within radius
+	    if >= threshold, break
+	}
+    }
+
+    implementation (fast, high memory):
+	read density map into buffer
+	use additional buffer to calculate distances(squared) 
+	    to current site (as needed)
+        if distance_squared > prev radius, add it in
+
+    implementation for simultaneous growth much much slower,
+	reads density map, then repeatedly traverses
+	output map looking for null cells, then checking to
+	see if it's in any of the sites current radius, etc.
+
+    alternatives:
+    1. let max increase until entire map is covered, 
+       using zero for outside incidence
+       >>> currently implemented
+
+    2. use a rectangular(square) territory rather than circle?
+
+    3. somehow "weight" expansion toward successful areas
+
+    4. save combined nearest distances map 
+
+ADDENDUM
+
+Think about:
+
+1.  Make already claimed territory uninhabitable - as each site is
+    processed, zero out resources within territory.
+    >>> This can be done in scripts, using masks. (slower though)
+
+2.  Instead of just going through in order, attack them all at the
+    same time, zeroing out resources as it goes and assigning a 
+    category value to a "claim" map.

@@ -1,0 +1,10 @@
+
+
+v.support - 
+
+v.support builds GRASS support files for (binary) GRASS \vector\ data
+files.  These support files supply \topology\ (dig_plus) and \category\
+(dig_att) information that are needed by other GRASS programs (e.g., by
+\v.digit\, \v.to.rast\, etc.)
+
+Manual entry for \v.support\

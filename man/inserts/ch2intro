@@ -1,0 +1,15 @@
+.IH "2	MAIN PROGRAMS and PROGRAMS in ALPHA-TESTING"
+.LP
+This chapter describes the
+syntax and use of GRASS 5.0 programs that have undergone (and survived)
+alpha- and beta-testing (i.e., initial testing by program developers,
+and subsequent testing by out-of-house users).  These programs constitute
+the bulk of GRASS and are respectively referred to in the
+documentation as "Main Programs" and "Alpha Programs."  Main programs,
+which receive both alpha- and beta-testing prior to their release and
+are located in the \fIsrc\fR directory.  
+Alpha programs receive only alpha-testing
+prior to release and are located in the \fIsrc.alpha\fR directory.  For the
+GRASS 5.0 release, both types of programs compile automatically during
+general GRASS compilation.  The GRASS \fIInstallation Guide\fR
+distributed with GRASS 5.0 software explains the compilation procedure.

@@ -1,0 +1,10 @@
+v.out.arc:
+
+  --original version written by Dave Johnson, DBA
+  --revised by Ron Glen, SCS
+  --command line and interactive versions written for Grass4.0, involving
+  further modification of Ron Glen's code, for Grass 4.0 by David Stigberg.
+
+NOTE: jiaufiles.Z in this directory are files from c. jiau's workspace. she
+had done some work on the code, which started out as dave Johnson's
+version. her changes were not used in final (dks) version.

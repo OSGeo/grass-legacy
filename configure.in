@@ -1,0 +1,242 @@
+AC_INIT(README)
+AC_PREFIX_DEFAULT(/usr/local/grass-5.0b)
+AC_BINDIR_DEFAULT(/usr/local/bin)
+AC_CONFIG_HEADER(src/include/config.h)
+AC_CANONICAL_HOST
+AC_PROG_CC
+
+AC_MSG_CHECKING(whether ld -s works)
+STRIPFLAG=
+ac_save_ldflags=${LDFLAGS}
+LDFLAGS=-s
+AC_TRY_LINK(,,STRIPFLAG=-s; AC_MSG_RESULT(yes),AC_MSG_RESULT(no))
+LDFLAGS=${ac_save_ldflags}
+AC_SUBST(STRIPFLAG)
+
+AC_PROG_INSTALL
+AC_PROG_LEX
+AC_PROG_RANLIB
+AC_CHECK_PROGS(ENV, env)
+AC_CHECK_PROGS(F77, f77 g77)
+AC_PATH_XTRA
+AC_HEADER_STDC
+AC_CHECK_HEADERS(curses.h limits.h termio.h termios.h unistd.h values.h)
+AC_CHECK_HEADERS(sys/ioctl.h sys/mtio.h sys/resource.h sys/time.h)
+AC_CHECK_HEADERS(sys/timeb.h sys/types.h sys/utsname.h)
+AC_HEADER_TIME
+AC_TYPE_OFF_T
+AC_TYPE_UID_T
+
+AC_MSG_CHECKING(curses.h WINDOW structure component)
+CURSES_MAXY=NONE
+AC_TRY_COMPILE([
+#include <curses.h>
+  WINDOW w;
+  ],[w.maxy = 0;],
+  CURSES_MAXY=maxy)
+AC_TRY_COMPILE([
+#include <curses.h>
+  WINDOW w;
+  ],[w._maxy = 0;],
+  CURSES_MAXY=_maxy)
+AC_DEFINE_UNQUOTED(CURSES_MAXY,$CURSES_MAXY)
+AC_SUBST(CURSES_MAXY)
+AC_MSG_RESULT($CURSES_MAXY)
+
+AC_CHECK_FUNCS(ftime gethostname gettimeofday lseek nice time uname)
+AC_CHECK_FUNCS(seteuid setpriority setreuid setruid)
+AC_FUNC_SETPGRP
+
+CURSESLIB=
+if test -z "${CURSESLIB}"; then
+AC_CHECK_LIB(ncurses, initscr, CURSESLIB=-lncurses)
+fi
+if test -z "${CURSESLIB}"; then
+AC_CHECK_LIB(curses, initscr, CURSESLIB=-lcurses)
+fi
+AC_SUBST(CURSESLIB)
+
+COMPATLIB=
+if test -z "${COMPATLIB}"; then
+AC_CHECK_LIB(compat, gtty, COMPATLIB=-lcompat)
+fi
+AC_SUBST(COMPATLIB)
+
+TERMLIB=
+if test -z "${TERMLIB}"; then
+AC_CHECK_LIB(termlib, tgetent, TERMLIB=-ltermlib)
+fi
+AC_SUBST(TERMLIB)
+
+XDRLIB=
+if test -z "${XDRLIB}"; then
+AC_CHECK_LIB(sun, xdr_int, XDRLIB=-lsun)
+fi
+if test -z "${XDRLIB}"; then
+AC_CHECK_LIB(nsl, xdr_int, XDRLIB=-lnsl)
+fi
+AC_SUBST(XDRLIB)
+
+BINDIR=/usr/local/bin
+AC_ARG_WITH(bindir,
+    [  --with-bindir=DIR       user executables installed in DIR [/usr/local/bin] ],
+    [
+	case "$withval" in
+	"" | y | ye | yes | n | no)
+	    AC_MSG_ERROR([*** You must supply an argument to the --with-bindir option.])
+	  ;;
+	esac
+	WITH_BINDIR="$withval"
+    ])
+
+if test "$WITH_BINDIR"; then
+	for dir in $WITH_BINDIR; do
+		if test -d "$dir"; then
+			BINDIR="$dir"
+		else
+			AC_MSG_WARN([*** installation directory $dir does not exist.])
+		fi
+	done
+	AC_MSG_CHECKING(user executable directory)
+	AC_MSG_RESULT($BINDIR)
+fi
+AC_SUBST(BINDIR)
+
+AC_ARG_WITH(includes,
+    [  --with-includes=DIR     site header files in DIR],
+    [
+	case "$withval" in
+	"" | y | ye | yes | n | no)
+	    AC_MSG_ERROR([*** You must supply an argument to the --with-includes option.])
+	  ;;
+	esac
+	INC_DIRS="$withval"
+    ])
+
+if test "$INC_DIRS"; then
+	for dir in $INC_DIRS; do
+		if test -d "$dir"; then
+			INCLUDE_DIRS="$INCLUDE_DIRS -I$dir"
+		else
+			AC_MSG_WARN([*** Include directory $dir does not exist.])
+		fi
+	done
+	AC_MSG_CHECKING(additional include dirs)
+	AC_MSG_RESULT($INCLUDE_DIRS)
+fi
+AC_SUBST(INCLUDE_DIRS)
+
+AC_ARG_WITH(libs,
+    [  --with-libs=DIR         also search for libraries in DIR],
+    [
+	case "$withval" in
+	"" | y | ye | yes | n | no)
+	    AC_MSG_ERROR([*** You must supply an argument to the --with-libs option.])
+	  ;;
+	esac
+	LIB_DIRS="$withval"
+    ])
+
+if test "$LIB_DIRS"; then
+	for dir in $LIB_DIRS; do
+		if test -d "$dir"; then
+			LIBRARY_DIRS="$LIBRARY_DIRS -L$dir"
+		else
+			AC_MSG_WARN([*** Library directory $dir does not exist.])
+		fi
+	done
+	AC_MSG_CHECKING(additional library dirs)
+	AC_MSG_RESULT($LIBRARY_DIRS)
+fi
+AC_SUBST(LIBRARY_DIRS)
+
+AC_ARG_WITH(tiff-includes,
+    [  --with-tiff-includes=DIR
+                          site header files for TIFF in DIR],
+    [
+	case "$withval" in
+	"" | y | ye | yes | n | no)
+	    AC_MSG_ERROR([*** You must supply an argument to the --with-tiff-includes option.])
+	  ;;
+	esac
+	TIFF_INC_DIRS="$withval"
+    ])
+
+if test "$TIFF_INC_DIRS"; then
+	for dir in $TIFF_INC_DIRS; do
+		if test -d "$dir"; then
+			TIFF_INCLUDE_DIRS="$TIFF_INCLUDE_DIRS -I$dir"
+		else
+			AC_MSG_WARN([*** TIFF include directory $dir does not exist.])
+		fi
+	done
+	AC_MSG_CHECKING(TIFF include dirs)
+	AC_MSG_RESULT($TIFF_INCLUDE_DIRS)
+fi
+AC_SUBST(TIFF_INCLUDE_DIRS)
+
+AC_ARG_WITH(tiff-libs,
+    [  --with-tiff-libs=DIR    also search for TIFF libraries in DIR],
+    [
+	case "$withval" in
+	"" | y | ye | yes | n | no)
+	    AC_MSG_ERROR([*** You must supply an argument to the --with-tiff-libs option.])
+	  ;;
+	esac
+	TIFF_LIB_DIRS="$withval"
+    ])
+
+if test "$TIFF_LIB_DIRS"; then
+	for dir in $TIFF_LIB_DIRS; do
+		if test -d "$dir"; then
+			TIFF_LIBRARY_DIRS="$TIFF_LIBRARY_DIRS -L$dir"
+		else
+			AC_MSG_WARN([*** TIFF library directory $dir does not exist.])
+		fi
+	done
+	AC_MSG_CHECKING(additional TIFF library dirs)
+	AC_MSG_RESULT($TIFF_LIBRARY_DIRS)
+fi
+AC_SUBST(TIFF_LIBRARY_DIRS)
+
+SYSV=
+AC_ARG_WITH(SYSV,
+    [  --with-SYSV             define the compiler macro SYSV],
+    [
+	case "$withval" in
+	"" | y | ye | yes)
+	    SYSV=-DSYSV
+	    AC_MSG_CHECKING(for SYSV)
+	    AC_MSG_RESULT($SYSV)
+	  ;;
+	n | no)
+	    SYSV=
+	  ;;
+	*)
+	    AC_MSG_ERROR([*** Invalid argument $withval supplied to the --with-SYSV option.])
+	  ;;
+	esac
+    ])
+AC_SUBST(SYSV)
+
+USE_TERMIO=
+AC_ARG_WITH(USE_TERMIO,
+    [  --with-USE_TERMIO       define the compiler macro USE_TERMIO],
+    [
+	case "$withval" in
+	"" | y | ye | yes)
+	    USE_TERMIO=-DUSE_TERMIO
+	    AC_MSG_CHECKING(for USE_TERMIO)
+	    AC_MSG_RESULT($USE_TERMIO)
+	  ;;
+	n | no)
+	    USE_TERMIO=
+	  ;;
+	*)
+	    AC_MSG_ERROR([*** Invalid argument $withval supplied to the --with-USE_TERMIO option.])
+	  ;;
+	esac
+    ])
+AC_SUBST(USE_TERMIO)
+
+AC_OUTPUT(Makefile src/CMD/head/head src/scripts/shells/create_fifos.sh)

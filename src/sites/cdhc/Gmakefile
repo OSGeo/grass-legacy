@@ -1,0 +1,27 @@
+LIB    = libcdhc.a 
+
+LIST= 	dcmp.o \
+	enormp.o normp.o xinormal.o \
+	omnibus.o geary.o extreme.o dagstndn.o kuiprsvn.o \
+	watsonun.o durbins.o andrsndn.o cvmw2n.o ksn.o \
+	dmax.o dmaxe.o chisqn.o shapiro1.o shapiro2.o shapiroe.o \
+	cvmw2e.o kse.o kuiprsve.o watsonue.o andrsnde.o \
+	chisqe.o kotz.o \
+	royston.o as181.o as177.o as241.o as66.o \
+	weisberg.o
+
+SRCS= 	dcmp.c \
+	enormp.c normp.c xinormal.c \
+	omnibus.c geary.c extreme.c dagstndn.c kuiprsvn.c \
+	watsonun.c durbins.c andrsndn.c cvmw2n.c ksn.c \
+	dmax.c dmaxe.c chisqn.c shapiro1.c shapiro2.c shapiroe.c \
+	cvmw2e.c kse.c kuiprsve.c watsonue.c andrsnde.c \
+	chisqe.c kotz.c \
+	royston.c as181.c as177.c as241.c as66.o \
+	weisberg.c
+
+$(LIB): $(LIST) 
+	$(AR)
+ 
+clean : 
+	-rm -rf OBJ* LIB*

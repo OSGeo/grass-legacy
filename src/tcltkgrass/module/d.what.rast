@@ -1,0 +1,8 @@
+interface_build {
+    {d.what.rast} 0
+    {Queries raster map layers on their category values and category labels.}
+    {entry map {Raster maps to be queried (name[,name,...]):} 0 +raster}
+    {entry fs {Field separator for terse mode [space]:} 0 ""}
+    {checkbox -1 {Identify just one location.} "" -1}
+    {checkbox -t {Terse output.} "" -t}
+}

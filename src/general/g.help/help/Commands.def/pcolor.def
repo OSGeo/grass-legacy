@@ -1,0 +1,11 @@
+
+
+p.colors - 
+
+This function allows the user to modify a color table for a \raster\
+\map layer\, assigning colors to the \categories\ in the map layer
+based on printer color numbers (instead of red, green and blue
+percentages).  The p.colors function allows the user to exercise
+perfect control over the colors which appear in the hardcopy image.
+
+Manual entry for \p.colors\

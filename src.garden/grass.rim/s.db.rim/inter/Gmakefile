@@ -1,0 +1,100 @@
+
+MYINCLUDE = ../cmd
+#EXTRA_CFLAGS = -g -DDEBUGIO
+EXTRA_CFLAGS =  -I$(MYINCLUDE) -DDBSITES
+#FFLAGS =
+
+#Uncomment the next line to use the static Fortran Libraries on the SUNs
+#LDFLAGS = -Bstatic
+
+MYLIBS = $(SRC).related/rim/librim.a
+
+OBJFILES = s.db.rim.o layout.o main_menu.o mgmt_menu.o fnd_qry.o add_chng_del.o \
+	view_show.o site_pgms.o toplvl.o mgmt_pgms.o parser.o do_open.o \
+	make_new.o \
+	clear_value.o fill_value.o fill_field.o add_change.o find_query.o \
+	retr_buf.o fill_buf.o dbio.o val_from_str.o backup.o misc.o \
+	field_info.o rim_text_len.o ret_s_table.o fil_s_table.o ret_f_table.o \
+	fil_f_table.o list.o field_val.o make_init.o make_add.o make_done.o \
+	rim_type.o save_finfo.o res_split_f.o field_offset.o delete.o \
+	print.o my_G_yes.o val_to_str.o site_list.o read_sites.o strip_fields.o
+
+all: $(BIN_MAIN_INTER)/s.db.rim
+
+$(BIN_MAIN_INTER)/s.db.rim: $(OBJFILES)
+	f77 $(LDFLAGS) -o $@ $(FFLAGS) $(OBJFILES) \
+	$(MYLIBS) $(GISLIB) $(VASK)
+
+clear_value.c: ../cmd/clear_value.c
+	ln $? $@
+fill_value.c: ../cmd/fill_value.c
+	ln $? $@
+fill_field.c: ../cmd/fill_field.c
+	ln $? $@
+add_change.c: ../cmd/add_change.c
+	ln $? $@
+find_query.c: ../cmd/find_query.c
+	ln $? $@
+retr_buf.c: ../cmd/retr_buf.c
+	ln $? $@
+fill_buf.c: ../cmd/fill_buf.c
+	ln $? $@
+dbio.c: ../cmd/dbio.c
+	ln $? $@
+val_from_str.c: ../cmd/val_from_str.c
+	ln $? $@
+backup.c: ../cmd/backup.c
+	ln $? $@
+misc.c: ../cmd/misc.c
+	ln $? $@
+field_info.c: ../cmd/field_info.c
+	ln $? $@
+rim_text_len.c: ../cmd/rim_text_len.c
+	ln $? $@
+ret_s_table.c: ../cmd/ret_s_table.c
+	ln $? $@
+fil_s_table.c: ../cmd/fil_s_table.c
+	ln $? $@
+ret_f_table.c: ../cmd/ret_f_table.c
+	ln $? $@
+fil_f_table.c: ../cmd/fil_f_table.c
+	ln $? $@
+list.c: ../cmd/list.c
+	ln $? $@
+field_val.c: ../cmd/field_val.c
+	ln $? $@
+make_init.c: ../cmd/make_init.c
+	ln $? $@
+make_add.c: ../cmd/make_add.c
+	ln $? $@
+make_done.c: ../cmd/make_done.c
+	ln $? $@
+rim_type.c: ../cmd/rim_type.c
+	ln $? $@
+save_finfo.c: ../cmd/save_finfo.c
+	ln $? $@
+res_split_f.c: ../cmd/res_split_f.c
+	ln $? $@
+field_offset.c: ../cmd/field_offset.c
+	ln $? $@
+delete.c: ../cmd/delete.c
+	ln $? $@
+print.c: ../cmd/print.c
+	ln $? $@
+my_G_yes.c: ../cmd/my_G_yes.c
+	ln $? $@
+val_to_str.c: ../cmd/val_to_str.c
+	ln $? $@
+site_list.c: ../cmd/site_list.c
+	ln $? $@
+read_sites.c: ../cmd/read_sites.c
+	ln $? $@
+strip_fields.c: ../cmd/strip_fields.c
+	ln $? $@
+
+
+
+
+
+
+

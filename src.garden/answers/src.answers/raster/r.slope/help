@@ -1,0 +1,4 @@
+r.slope
+    Generates slope (in percent * 10)  map from elevation data.
+    The elevation layer specified by the user must contain true
+    elevation values, not rescaled or categorized data.

@@ -1,0 +1,11 @@
+
+
+Digital Elevation Model (DEM) - A file with terrain elevations
+recorded at regular intervals on a fine-grained grid and 
+organized by USGS quadrangle; the \digital\ equivalent of the
+elevation data on a \topographic map\.  Currently available at
+two different \resolutions\; 1-degree DEM have a resolution of
+roughly 100 meters and are produced from \DMA\ \DTED-1\ elevation
+data, while 7.5 minute DEM have a resolution of roughly 30 meters
+and are produced from contour \overlays\ or NHAP quad-centered
+photographs.

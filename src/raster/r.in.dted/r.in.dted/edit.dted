@@ -1,0 +1,6 @@
+dd count=1 < n31.dt1 > n31.dt1.1b
+dd skip=1 < n31.dt1 > n31.dt1.r
+vi n31.dt1.1b
+# get rid of newline added by vi
+dd count=1 < n31.dt1.1b > n31.dt1.1bb
+cat n31.dt1.1bb n31.dt1.r > n31.dt1.180w

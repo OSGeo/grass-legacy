@@ -1,0 +1,6 @@
+f.detail
+
+This tool functions identically to f.econ, but provides two detailed reports as output. 
+The detailed reports provide economic damage and depth of flooding for each building in
+the study area.  Economic damages are reported as a sum of the structure and content
+damage.

@@ -1,0 +1,9 @@
+format
+1 1 id i3
+1 4 M_date 'dd:mm:yy'
+2 1 M_time 'hh.mm'
+end
+45 12:01:88
+15.04
+40 02:10:87
+09.09

@@ -1,0 +1,7 @@
+P=$(ETC)/paint/driver.rsh
+
+all:
+	rm -f $P
+	echo GISBASE=$(GISBASE) > $P
+	cat driver.rsh >> $P
+	chmod +x $P

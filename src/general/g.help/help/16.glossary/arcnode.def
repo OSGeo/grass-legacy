@@ -1,0 +1,6 @@
+
+
+arc-node - Graphic data (e.g., maps) can be stored digitally in either
+\raster\ or \vector format\.  In GRASS, vector data are stored in an
+arc-node representation, consisting of non-intersecting curves called
+\arcs\ or \vectors\ and the \nodes\ at their end-points.

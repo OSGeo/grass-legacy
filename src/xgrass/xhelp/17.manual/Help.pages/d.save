@@ -1,0 +1,6 @@
+
+@man("d.save") - Creates a shell script listing of commands needed to recreate
+GRASS screen graphics.
+
+(GRASS Display Program)
+

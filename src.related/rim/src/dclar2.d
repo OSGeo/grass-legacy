@@ -1,0 +1,10 @@
+C
+C   *** DCLAR2 ***
+C
+C  DATABASE NAME ---
+C
+      INTEGER NAMDB(Z)
+C
+C  DATABASE OWNER NAME ---
+C
+      INTEGER NAMOWN(Z)

@@ -1,0 +1,16 @@
+interface_build {
+    {r.stats} 0
+    {Generates area statistics for raster map layers.}
+    {entry input {Raster map(s) (name[,name,...]):} 0 +raster}
+    {entry fs {Field separator (1 character) [space]:} 0 ""}
+    {entry output {Ascii output file:} 0 File}
+    {checkbox -1 {Output 1 cell per line.} "" -1}
+    {checkbox -a {Print area totals in square meters.} "" -a}
+    {checkbox -c {Print total cell counts.} "" -c}
+    {checkbox -m {Report zero values due to mask.} "" -m}
+    {checkbox -l {Print the category labels.} "" -l}
+    {checkbox -q {Run quietly.} "" -q}
+    {checkbox -z {Report only non-zero data values.} "" -z}
+    {checkbox -g {Print grid coordinates (east and north), requires -1 flag.} "" -g}
+    {checkbox -x {Print x and y values (column and row), requires -1 flag.} "" -x}
+}

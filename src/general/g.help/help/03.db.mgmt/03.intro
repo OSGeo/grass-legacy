@@ -1,0 +1,28 @@
+                      GENERAL DATABASE MANAGEMENT TOOLS
+
+The GRASS commands listed below serve basic database management functions.
+In adherence to version 5.0 naming conventions, these commands typically
+have the prefix "g.", denoting their "general purpose" use.
+
+For more information on a specific command, select a command and press
+ESC.
+
+Basic Help:
+  \-  exit \       \-  g.manual \
+  \-  g.help \     \-  g.version \ 
+
+Accessing Data from Other Mapsets:
+  \-  g.access \   \-  g.mapsets \ 
+
+Setting Region Boundaries and Resolution:
+  \-  g.region \ 
+
+File Management:
+  \-  g.copy \      \-  g.remove \ 
+  \-  g.list \      \-  g.rename \ 
+
+Used by Shell Scripts:
+  \-  d.ask \       \-  g.findfile \
+  \-  g.ask \       \-  g.gisenv \
+  \-  g.filename \  \-  g.tempfile \
+

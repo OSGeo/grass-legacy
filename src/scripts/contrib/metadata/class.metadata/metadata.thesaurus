@@ -1,0 +1,1348 @@
+:
+# *** This is metadata.thesaurus ***
+
+finished="no"
+until [ "$finished" = "yes" ] ; do
+clear
+echo ''
+echo "Hello, this is the Theme Keyword Thesaurus; please select one entry for"
+echo "metadata collection. The following are the major divisions of the Thesaurus:"
+echo ''
+$ECHON '1 - ANTHROPOGENIC		'
+echo ' 9 - GEOLOGICAL PARAMETERS'
+$ECHON '2 - ATMOSPHERIC COMPOSITION 	'
+echo '10 - HEALTH CARE'
+$ECHON '3 - ATMOSPHERIC DYNAMICS	'
+echo '11 - HYDROLOGIC PARAMETERS'
+$ECHON '4 - BIOLOGICAL ENTITIES		'
+echo '12 - MAGNETIC & ELECTRIC FIELDS'
+$ECHON '5 - DISEASES			'
+echo '13 - OCEAN COMPOSITION'
+$ECHON '6 - EARTH RADIATIVE PROCESSES	'
+echo '14 - OCEAN DYNAMICS'
+$ECHON '7 - GEODYNAMIC FEATURES		'
+echo '15 - PUBLIC HEALTH'
+$ECHON '8 - GEOGRAPHY & LAND COVER	'
+echo '16 - VITAL STATISTICS'
+echo ''
+$ECHON 'Please select the appropriate major division: '
+read number
+case $number in
+	1) clear
+	   echo ''
+	   echo "Here are sub-divisions for ANTHROPOGENIC:"
+	   echo ''
+	   $ECHON 'a) Administrative Units	  '
+	   $ECHON 'b) Ownership 		'
+	   echo 'c) State Boundaries'
+	   $ECHON 'd) Cadastral 		  '
+	   $ECHON 'e) Pipelines 		'
+	   echo 'f) Structures'
+	   $ECHON 'g) Census Units		  '
+	   $ECHON 'h) Political Units	'
+	   echo 'i) Transmission Lines'
+	   $ECHON 'j) Communication Lines 	  '
+	   $ECHON 'k) Populated Places	'
+	   echo 'l) Transportation'
+	   $ECHON 'm) County Boundaries	  '
+	   $ECHON 'n) Population		'
+	   echo 'o) Waterways'
+	   $ECHON 'p) Geographic Grid	  '
+	   echo 'q) Public Land Survey System'
+	   $ECHON 'r) Zoning		  '
+	   $ECHON 's) Landuse		'
+	   echo 't) Railroads'
+	   $ECHON 'u) Named Places		  '
+	   echo 'v) Roads'
+	   echo ''
+	   echo ''
+      	   echo 'w) Other'
+	   echo ''
+	   echo ''
+	   echo 'Please select one of the above theme keywords. Nothing '
+	   $ECHON 'entered will repeat the browsing process. LETTER> '
+	   read letter
+	   if [ -z "$letter" ] ; then
+	     finished=no
+	   elif [ "$letter" = "a" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; Administrative Units" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "b" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; Ownership" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "c" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; State Boundaries" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "d" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; Cadastral" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "e" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; Pipelines" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "f" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; Structures" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "g" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; Census Units" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "h" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; Political Units" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "i" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; Transmission Lines" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "j" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; Communication Lines" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "k" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; Populated Places" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "l" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; Transportation" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "m" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; County Boundaries" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "n" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; Population" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "o" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; Waterways" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "p" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; Geographic Grid" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "q" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; Public Land Survey System" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "r" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; Zoning" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "s" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; Landuse" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "t" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; Railroads" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "u" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; Named Places" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "v" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; Roads" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "w" ] ; then
+	     echo ''
+   	     $ECHON '> '
+	     read other
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; $other" >> $metafile
+	     finished="yes"
+	   fi;;
+	2) clear
+	   echo ''
+	   echo "Here are sub-divisions for ATMOSPHERIC COMPOSITION:"
+	   echo ''
+	   $ECHON 'a) Aerosols	  	'
+	   $ECHON 'b) Contaminants		'
+	   echo 'c) Oxygen'
+	   $ECHON 'd) Air Quality		'
+	   $ECHON 'e) Humidity	  	'
+	   echo 'f) Ozone'
+	   $ECHON 'g) Ash	  		'
+	   $ECHON 'h) Methane	  	'
+	   echo 'i) Trace Elements'
+	   $ECHON 'j) Carbon Dioxide    	'
+	   $ECHON 'k) Nitric Acid	  	'
+	   echo 'l) Trace Gases'
+	   $ECHON 'm) Chlorofluorocarbons	'
+	   $ECHON 'n) Nitrogen	  	'
+	   echo 'o) Tracers			'
+	   $ECHON 'p) Clouds		'
+	   $ECHON 'q) Nitrogen Dioxide	'
+	   echo 'r) Water Vapor'
+	   echo ''
+	   echo ''
+	   echo 's) Other'
+	   echo ''
+	   echo ''
+	   echo 'Please select one of the above theme keywords. Nothing '
+	   $ECHON 'entered will repeat the browsing process. LETTER> '
+	   read letter
+	   if [ -z "$letter" ] ; then
+	     finished=no
+	   elif [ "$letter" = "a" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC COMPOSITION; Aerosols" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "b" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC COMPOSITION; Contaminants" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "c" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC COMPOSITION; Oxygen" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "d" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC COMPOSITION; Air Quality" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "e" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC COMPOSITION; Humidity" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "f" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC COMPOSITION; Ozone" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "g" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC COMPOSITION; Ash" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "h" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC COMPOSITION; Methane" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "i" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC COMPOSITION; Trace Elements" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "j" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC COMPOSITION; Carbon Dioxide" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "k" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC COMPOSITION; Nitric Acid" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "l" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC COMPOSITION; Trace Gases" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "m" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC COMPOSITION; Chlorofluorocarbons" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "n" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC COMPOSITION; Nitrogen" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "o" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC COMPOSITION; Tracers" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "p" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC COMPOSITION; Clouds" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "q" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC COMPOSITION; Nitrogen Dioxide" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "r" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC COMPOSITION; Water Vapor" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "s" ] ; then
+	     echo ''
+   	     $ECHON '> '
+	     read other
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; $other" >> $metafile
+	     finished="yes"
+	   fi;;
+	3) clear
+	   echo ''
+	   echo "Here are sub-divisions for ATMOSPHERIC DYNAMICS:"
+	   echo ''
+	   $ECHON 'a) Air Quality			'
+	   $ECHON 'b) Evapotranspiration 	    '
+	   echo 'c) Pressure'
+	   $ECHON 'd) Altitude 		 	'
+	   $ECHON 'e) Geopotential Height 	    '
+	   echo 'f) Solar Radiation'
+	   $ECHON 'g) Atmospheric Temperature	'
+	   $ECHON 'h) Heat Flux		    '
+	   echo 'i) Storms'
+	   $ECHON 'j) Climate			'
+	   $ECHON 'k) Humidity		    '
+	   echo 'l) Visibility'
+	   $ECHON 'm) Cloud Types			'
+	   $ECHON 'n) Paleoclimate Indices    '
+	   echo 'o) Winds'
+	   $ECHON 'p) Evaporation			'
+	   echo 'q) Precipitation'
+	   echo ''
+	   echo ''
+	   echo 'r) Other'
+	   echo ''
+	   echo ''
+	   echo 'Please select one of the above theme keywords. Nothing '
+	   $ECHON 'entered will repeat the browsing process. LETTER> '
+	   read letter
+	   if [ -z "$letter" ] ; then
+	     finished=no
+	   elif [ "$letter" = "a" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC DYNAMICS; Air Quality" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "b" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC DYNAMICS; Evapotranspiration" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "c" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC DYNAMICS; Pressure" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "d" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC DYNAMICS; Altitude" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "e" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC DYNAMICS; Geopotential Height" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "f" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC DYNAMICS; Solar Radiation" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "g" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC DYNAMICS; Atmospheric Temperature" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "h" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC DYNAMICS; Heat Flux" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "i" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC DYNAMICS; Storms" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "j" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC DYNAMICS; Climate" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "k" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC DYNAMICS; Humidity" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "l" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC DYNAMICS; Visibility" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "m" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC DYNAMICS; Cloud Types" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "n" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC DYNAMICS; Paleoclimate Indices" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "o" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC DYNAMICS; Winds" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "p" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC DYNAMICS; Evaporation" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "q" ] ; then
+	     echo "Theme_Keyword_Thesaurus: ATMOSPHERIC DYNAMICS; Precipitation" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "r" ] ; then
+	     echo ''
+   	     $ECHON '> '
+	     read other
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; $other" >> $metafile
+	     finished="yes"
+	   fi;;
+	4) clear
+	   echo ''
+	   echo "Here are sub-divisions for BIOLOGICAL ENTITIES:"
+	   echo ''
+	   $ECHON 'a) Birds	  		'
+	   $ECHON 'b) Habitat 		'
+	   echo 'c) Ocean Wildlife'
+	   $ECHON 'd) Domesticated Animals 	'
+	   $ECHON 'e) Land Wildlife	'
+	   echo 'f) Protected Areas'
+	   $ECHON 'g) Domesticated Plants		'
+	   $ECHON 'h) Microorganisms	'
+	   echo 'i) Surface Vegetation'
+	   $ECHON 'j) Ecoregions			'
+	   $ECHON 'k) Ecoregions		'
+	   echo 'l) Vertebrates'
+	   $ECHON 'm) Endangered Species		'
+	   echo 'n) Ocean Vegetation'
+	   echo ''
+	   echo ''
+	   echo 'o) Other'
+	   echo ''
+	   echo ''
+	   echo 'Please select one of the above theme keywords. Nothing '
+	   $ECHON 'entered will repeat the browsing process. LETTER> '
+	   read letter
+	   if [ -z "$letter" ] ; then
+	     finished=no
+	   elif [ "$letter" = "a" ] ; then
+	     echo "Theme_Keyword_Thesaurus: BIOLOGICAL ENTITIES; Birds" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "b" ] ; then
+	     echo "Theme_Keyword_Thesaurus: BIOLOGICAL ENTITIES; Habitat" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "c" ] ; then
+	     echo "Theme_Keyword_Thesaurus: BIOLOGICAL ENTITIES; Ocean Wildlife" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "d" ] ; then
+	     echo "Theme_Keyword_Thesaurus: BIOLOGICAL ENTITIES; Domesticated Animals" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "e" ] ; then
+	     echo "Theme_Keyword_Thesaurus: BIOLOGICAL ENTITIES; Land Wildlife" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "f" ] ; then
+	     echo "Theme_Keyword_Thesaurus: BIOLOGICAL ENTITIES; Protected Areas" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "g" ] ; then
+	     echo "Theme_Keyword_Thesaurus: BIOLOGICAL ENTITIES; Domesticated Plants" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "h" ] ; then
+	     echo "Theme_Keyword_Thesaurus: BIOLOGICAL ENTITIES; Microorganisms" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "i" ] ; then
+	     echo "Theme_Keyword_Thesaurus: BIOLOGICAL ENTITIES; Surface Vegetation" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "j" ] ; then
+	     echo "Theme_Keyword_Thesaurus: BIOLOGICAL ENTITIES; Ecoregions" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "k" ] ; then
+	     echo "Theme_Keyword_Thesaurus: BIOLOGICAL ENTITIES; Minor Species" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "l" ] ; then
+	     echo "Theme_Keyword_Thesaurus: BIOLOGICAL ENTITIES; Vertebrates" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "m" ] ; then
+	     echo "Theme_Keyword_Thesaurus: BIOLOGICAL ENTITIES; Endangered Species" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "n" ] ; then
+	     echo "Theme_Keyword_Thesaurus: BIOLOGICAL ENTITIES; Ocean Vegetation" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "o" ] ; then
+	     echo ''
+   	     $ECHON '> '
+	     read other
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; $other" >> $metafile
+	     finished="yes"
+	   fi;;
+	5) clear
+	   echo ''
+	   echo "Here are sub-divisions for DISEASES:"
+	   echo ''
+	   $ECHON ' a) Addiction	       '
+	   $ECHON ' b) Immunologic 		    '
+	   echo ' c) Otorhinolaryngologic'
+	   $ECHON ' d) Bacterial 	       '
+	   $ECHON ' e) Infection 	  	    '
+	   echo ' f) Parasitic'
+	   $ECHON ' g) Cardiovascular     '
+	   $ECHON ' h) Injury		    '
+	   echo ' i) Poisoning'
+	   $ECHON ' j) Chronic 	       '
+	   $ECHON ' k) Musculoskeletal	    '
+	   echo ' l) Pregnancy Complications'
+	   $ECHON ' m) Communicable       '
+	   $ECHON ' n) Neonatal		    '
+	   echo ' o) Respiratory'
+	   $ECHON ' p) Dermatologic       '
+	   $ECHON ' q) Neoplasms		    '
+	   echo ' r) Skin'
+	   $ECHON ' s) Digestive System   '
+	   $ECHON ' t) Nervous System	    '
+	   echo ' u) Stomatognatic'
+	   $ECHON ' v) Endocrine	       '
+	   $ECHON ' w) Nutritional & Metabolic  '
+	   echo ' x) Urologic'
+	   $ECHON ' y) Eye		       '
+	   $ECHON ' z) Occupational		    '
+	   echo 'aa) Virus'
+	   $ECHON 'bb) Fungal	       '
+	   echo 'cc) Ophthalmic'
+	   echo ''
+	   echo ''
+	   echo 'dd) Other'
+	   echo ''
+	   echo ''
+	   echo 'Please select one of the above theme keywords. Nothing '
+	   $ECHON 'entered will repeat the browsing process. LETTER> '
+	   read letter
+	   if [ -z "$letter" ] ; then
+	     finished=no
+	   elif [ "$letter" = "a" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Addiction" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "b" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Immunologic" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "c" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Otorhinolaryngologic" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "d" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Bacterial" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "e" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Infection" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "f" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Parasitic" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "g" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Cardiovascular" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "h" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Injury" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "i" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Poisoning" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "j" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Chronic" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "k" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Musculoskeletal" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "l" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Pregnancy Complications" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "m" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Communicable" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "n" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Neonatal" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "o" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Respiratory" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "p" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Dermatologic" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "q" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Neoplasms" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "r" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Skin" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "s" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Digestive System" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "t" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Nervous System" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "u" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Stomatognatic" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "v" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Endocrine" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "w" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Nutritional & Metabolic" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "x" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Urologic" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "y" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Eye" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "z" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Occupational" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "aa" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Virus" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "bb" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Fungal" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "cc" ] ; then
+	     echo "Theme_Keyword_Thesaurus: DISEASES; Ophthalmic" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "dd" ] ; then
+	     echo ''
+   	     $ECHON '> '
+	     read other
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; $other" >> $metafile
+	     finished="yes"
+	   fi;;
+	6) clear
+	   echo ''
+	   echo "Here are sub-divisions for EARTH RADIATIVE PROCESSES:"
+	   echo ''
+	   $ECHON 'a) Albedo	  		'
+	   $ECHON 'b) Insolation		'
+	   echo 'c) Solar Activity'
+	   $ECHON 'd) Brightness Temperature	'
+	   $ECHON 'e) Irradiance		'
+	   echo 'f) Temperature'
+	   $ECHON 'g) Heat Flux			'
+	   $ECHON 'h) Radiance		'
+	   echo 'i) Thermal Inertia'
+	   echo ''
+	   echo ''
+	   echo 'j) Other'
+	   echo ''
+	   echo ''
+	   echo 'Please select one of the above theme keywords. Nothing '
+	   $ECHON 'entered will repeat the browsing process. LETTER> '
+	   read letter
+	   if [ -z "$letter" ] ; then
+	     finished=no
+	   elif [ "$letter" = "a" ] ; then
+	     echo "Theme_Keyword_Thesaurus: EARTH RADIATIVE PROCESSES; Albedo" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "b" ] ; then
+	     echo "Theme_Keyword_Thesaurus: EARTH RADIATIVE PROCESSES; Insolation" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "c" ] ; then
+	     echo "Theme_Keyword_Thesaurus: EARTH RADIATIVE PROCESSES; Solar Activity" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "d" ] ; then
+	     echo "Theme_Keyword_Thesaurus: EARTH RADIATIVE PROCESSES; Brightness Temperature" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "e" ] ; then
+	     echo "Theme_Keyword_Thesaurus: EARTH RADIATIVE PROCESSES; Irradiance" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "f" ] ; then
+	     echo "Theme_Keyword_Thesaurus: EARTH RADIATIVE PROCESSES; Temperature" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "g" ] ; then
+	     echo "Theme_Keyword_Thesaurus: EARTH RADIATIVE PROCESSES; Heat Flux" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "h" ] ; then
+	     echo "Theme_Keyword_Thesaurus: EARTH RADIATIVE PROCESSES; Radiance" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "i" ] ; then
+	     echo "Theme_Keyword_Thesaurus: EARTH RADIATIVE PROCESSES; Thermal Inertia" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "j" ] ; then
+	     echo ''
+   	     $ECHON '> '
+	     read other
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; $other" >> $metafile
+	     finished="yes"
+	   fi;;
+	7) clear
+	   echo ''
+	   echo "Here are sub-divisions for GEODYNAMIC FEATURES:"
+	   echo ''
+	   $ECHON 'a) Earthquakes	  	'
+	   $ECHON 'b) Gravity Fields 	'
+	   echo 'c) Structures'
+	   $ECHON 'd) Erosion 		'
+	   $ECHON 'e) Magnetic Fields 	'
+	   echo 'f) Tectonophysics'
+	   $ECHON 'g) Geodesy		' 
+	   $ECHON 'h) Polar Motion		'
+	   echo 'i) Terrain Elevation'
+	   $ECHON 'j) Geothermal 		'
+	   $ECHON 'k) Seismic	  	'
+	   echo 'l) Volcanoes'
+	   echo ''
+	   echo ''
+	   echo 'm) Other'
+	   echo ''
+	   echo ''
+	   echo 'Please select one of the above theme keywords. Nothing '
+	   $ECHON 'entered will repeat the browsing process. LETTER> '
+	   read letter
+	   if [ -z "$letter" ] ; then
+	     finished=no
+	   elif [ "$letter" = "a" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEODYNAMIC FEATURES; Earthquakes" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "b" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEODYNAMIC FEATURES; Gravity Fields" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "c" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEODYNAMIC FEATURES; Structures" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "d" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEODYNAMIC FEATURES; Erosion" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "e" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEODYNAMIC FEATURES; Magnetic Fields" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "f" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEODYNAMIC FEATURES; Tectonophysics" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "g" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEODYNAMIC FEATURES; Geodesy" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "h" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEODYNAMIC FEATURES; Polar Motion" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "i" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEODYNAMIC FEATURES; Terrain Elevation" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "j" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEODYNAMIC FEATURES; Geothermal" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "k" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEODYNAMIC FEATURES; Seismic" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "l" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEODYNAMIC FEATURES; Volcanoes" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "m" ] ; then
+	     echo ''
+   	     $ECHON '> '
+	     read other
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; $other" >> $metafile
+	     finished="yes"
+	   fi;;
+	8) clear
+	   echo ''
+	   echo "Here are sub-divisions for GEOGRAPHY & LAND COVER:"
+	   echo ''
+	   $ECHON 'a) Albedo	  	  '
+	   $ECHON 'b) Ice 		'
+	   echo 'c) Soils'
+	   $ECHON 'd) Aspect 		  '
+	   $ECHON 'e) Lakes		'
+	   echo 'f) Surface Vegetation'
+	   $ECHON 'g) Cultural Features	  '
+	   $ECHON 'h) Landforms		'
+	   echo 'i) Surface Water'
+	   $ECHON 'j) Elevation	  	  '
+	   $ECHON 'k) Rivers	  	'
+	   echo 'l) Topographic Data'
+	   $ECHON 'm) Fires	 	  '
+	   $ECHON 'n) Slope		'
+	   echo 'o) Watersheds'
+	   $ECHON 'p) Glaciers	 	  '
+	   $ECHON 'q) Snow		'
+	   echo 'r) Wetlands'
+	   echo 's) Hydrology'
+	   echo ''
+	   echo ''
+	   echo 't) Other'
+	   echo ''
+	   echo ''
+	   echo 'Please select one of the above theme keywords. Nothing '
+	   $ECHON 'entered will repeat the browsing process. LETTER> '
+	   read letter
+	   if [ -z "$letter" ] ; then
+	     finished=no
+	   elif [ "$letter" = "a" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOGRAPHY & LAND COVER; Albedo" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "b" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOGRAPHY & LAND COVER; Ice" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "c" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOGRAPHY & LAND COVER; Soils" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "d" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOGRAPHY & LAND COVER; Aspect" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "e" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOGRAPHY & LAND COVER; Lakes" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "f" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOGRAPHY & LAND COVER; Surface Vegetation" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "g" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOGRAPHY & LAND COVER; Cultural Features" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "h" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOGRAPHY & LAND COVER; Landforms" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "i" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOGRAPHY & LAND COVER; Surface Water" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "j" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOGRAPHY & LAND COVER; Elevation" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "k" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOGRAPHY & LAND COVER; Rivers" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "l" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOGRAPHY & LAND COVER; Topographic Data" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "m" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOGRAPHY & LAND COVER; Fires" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "n" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOGRAPHY & LAND COVER; Slope" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "o" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOGRAPHY & LAND COVER; Watersheds" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "p" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOGRAPHY & LAND COVER; Glaciers" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "q" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOGRAPHY & LAND COVER; Snow" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "r" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOGRAPHY & LAND COVER; Wetlands" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "s" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOGRAPHY & LAND COVER; Hydrology" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "t" ] ; then
+	     echo ''
+   	     $ECHON '> '
+	     read other
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; $other" >> $metafile
+	     finished="yes"
+	   fi;;
+	9) clear
+	   echo ''
+	   echo "Here are sub-divisions for GEOLOGICAL PARAMETERS:"
+	   echo ''
+	   $ECHON 'a) Age Determinations   '
+	   $ECHON 'b) Igneous & Metamorphic Rocks  '
+	   echo 'c) Petrology'
+	   $ECHON 'd) Aquifer		'
+	   $ECHON 'e) Lithology 			'
+	   echo 'f) Sedimentary Rocks'
+	   $ECHON 'g) Coal		  	'
+	   $ECHON 'h) Mineralogy & Crystallography	'
+	   echo 'i) Soils'
+	   $ECHON 'j) Economic Minerals 	'
+	   $ECHON 'k) Paleontology	  		'
+	   echo 'l) Stratigraphy'
+	   $ECHON 'm) Geochemical Analysis	'
+	   $ECHON 'n) Petroleum		  	'
+	   echo 'o) Surficial Geology'
+	   echo ''
+	   echo ''
+	   echo 'p) Other'
+	   echo ''
+	   echo ''
+	   echo 'Please select one of the above theme keywords. Nothing '
+	   $ECHON 'entered will repeat the browsing process. LETTER> '
+	   read letter
+	   if [ -z "$letter" ] ; then
+	     finished=no
+	   elif [ "$letter" = "a" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOLOGICAL PARAMETERS; Age Determinations" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "b" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOLOGICAL PARAMETERS; Igneous & Metamorphic Rocks" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "c" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOLOGICAL PARAMETERS; Petrology" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "d" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOLOGICAL PARAMETERS; Aquifer" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "e" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOLOGICAL PARAMETERS; Lithology" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "f" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOLOGICAL PARAMETERS; Sedimentary Rocks" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "g" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOLOGICAL PARAMETERS; Coal" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "h" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOLOGICAL PARAMETERS; Mineralogy & Crystallography" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "i" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOLOGICAL PARAMETERS; Soils" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "j" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOLOGICAL PARAMETERS; Economic Minerals" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "k" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOLOGICAL PARAMETERS; Paleontology" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "l" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOLOGICAL PARAMETERS; Stratigraphy" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "m" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOLOGICAL PARAMETERS; Geochemical Analysis" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "n" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOLOGICAL PARAMETERS; Petroleum" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "o" ] ; then
+	     echo "Theme_Keyword_Thesaurus: GEOLOGICAL PARAMETERS; Surficial Geology" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "p" ] ; then
+	     echo ''
+   	     $ECHON '> '
+	     read other
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; $other" >> $metafile
+	     finished="yes"
+	   fi;;
+	10) clear
+	   echo ''
+	   echo "Here are sub-divisions for HEALTH CARE:"
+	   echo ''
+	   $ECHON 'a) Clinical Care	  '
+	   $ECHON 'b) Community Care 		'
+	   echo 'c) Institutional Care'
+	   echo ''
+	   echo ''
+	   echo 'd) Other'
+	   echo ''
+	   echo ''
+	   echo 'Please select one of the above theme keywords. Nothing '
+	   $ECHON 'entered will repeat the browsing process. LETTER> '
+	   read letter
+	   if [ -z "$letter" ] ; then
+	     finished=no
+	   elif [ "$letter" = "a" ] ; then
+	     echo "Theme_Keyword_Thesaurus: HEALTH CARE; Clinical Care" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "b" ] ; then
+	     echo "Theme_Keyword_Thesaurus: HEALTH CARE; Community Care" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "c" ] ; then
+	     echo "Theme_Keyword_Thesaurus: HEALTH CARE; Institutional Care" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "d" ] ; then
+	     echo ''
+   	     $ECHON '> '
+	     read other
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; $other" >> $metafile
+	     finished="yes"
+	   fi;;
+	11) clear
+	   echo ''
+	   echo "Here are sub-divisions for HYDROLOGIC PARAMETERS:"
+	   echo ''
+	   $ECHON 'a) Contamination	  '
+	   $ECHON 'b) Infiltration 		'
+	   echo 'c) Solids'
+	   $ECHON 'd) Deposition 		  '
+	   $ECHON 'e) Oxygen Demand 		'
+	   echo 'f) Surface Water'
+	   $ECHON 'g) Erosion		  '
+	   $ECHON 'h) Precipitation		'
+	   echo 'i) Temperature'
+	   $ECHON 'j) Evaporation 	  	  '
+	   $ECHON 'k) Rivers	  	  	'
+	   echo 'l) Turbidity'
+	   $ECHON 'm) Glaciers	 	  '
+	   $ECHON 'n) Runoff		  	'
+	   echo 'o) Water Vapor'
+	   $ECHON 'p) Ground Water		  '
+	   $ECHON 'q) Sedimentation		'
+	   echo 'r) Wetlands'
+	   echo ''
+	   echo ''
+	   echo 's) Other'
+	   echo ''
+	   echo ''
+	   echo 'Please select one of the above theme keywords. Nothing '
+	   $ECHON 'entered will repeat the browsing process. LETTER> '
+	   read letter
+	   if [ -z "$letter" ] ; then
+	     finished=no
+	   elif [ "$letter" = "a" ] ; then
+	     echo "Theme_Keyword_Thesaurus: HYDROLOGIC PARAMETERS; Contamination" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "b" ] ; then
+	     echo "Theme_Keyword_Thesaurus: HYDROLOGIC PARAMETERS; Infiltration" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "c" ] ; then
+	     echo "Theme_Keyword_Thesaurus: HYDROLOGIC PARAMETERS; Solids" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "d" ] ; then
+	     echo "Theme_Keyword_Thesaurus: HYDROLOGIC PARAMETERS; Deposition" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "e" ] ; then
+	     echo "Theme_Keyword_Thesaurus: HYDROLOGIC PARAMETERS; Oxygen Demand" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "f" ] ; then
+	     echo "Theme_Keyword_Thesaurus: HYDROLOGIC PARAMETERS; Surface Water" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "g" ] ; then
+	     echo "Theme_Keyword_Thesaurus: HYDROLOGIC PARAMETERS; Erosion" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "h" ] ; then
+	     echo "Theme_Keyword_Thesaurus: HYDROLOGIC PARAMETERS; Precipitation" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "i" ] ; then
+	     echo "Theme_Keyword_Thesaurus: HYDROLOGIC PARAMETERS; Temperature" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "j" ] ; then
+	     echo "Theme_Keyword_Thesaurus: HYDROLOGIC PARAMETERS; Evaporation" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "k" ] ; then
+	     echo "Theme_Keyword_Thesaurus: HYDROLOGIC PARAMETERS; Rivers" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "l" ] ; then
+	     echo "Theme_Keyword_Thesaurus: HYDROLOGIC PARAMETERS; Turbidity" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "m" ] ; then
+	     echo "Theme_Keyword_Thesaurus: HYDROLOGIC PARAMETERS; Glaciers" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "n" ] ; then
+	     echo "Theme_Keyword_Thesaurus: HYDROLOGIC PARAMETERS; Runoff" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "o" ] ; then
+	     echo "Theme_Keyword_Thesaurus: HYDROLOGIC PARAMETERS; Water Vapor" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "p" ] ; then
+	     echo "Theme_Keyword_Thesaurus: HYDROLOGIC PARAMETERS; Ground Water" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "q" ] ; then
+	     echo "Theme_Keyword_Thesaurus: HYDROLOGIC PARAMETERS; Sedimentation" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "r" ] ; then
+	     echo "Theme_Keyword_Thesaurus: HYDROLOGIC PARAMETERS; Wetlands" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "s" ] ; then
+	     echo ''
+   	     $ECHON '> '
+	     read other
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; $other" >> $metafile
+	     finished="yes"
+	   fi;;
+	12) clear
+	   echo ''
+	   echo "Here are sub-divisions for MAGNETIC & ELECTRIC FIELDS:"
+	   echo ''
+	   $ECHON 'a) Activity Indices		'
+	   echo 'b) Magnetic Wave Spectra (AC)'
+	   $ECHON 'c) Electric Fields (DC)		'
+	   echo 'd) Magnetic Fields (DC)'
+	   echo 'e) Electric Wave Spectra (AC)'
+	   echo ''
+	   echo ''
+	   echo 'f) Other'
+	   echo ''
+	   echo ''
+	   echo 'Please select one of the above theme keywords. Nothing '
+	   $ECHON 'entered will repeat the browsing process. LETTER> '
+	   read letter
+	   if [ -z "$letter" ] ; then
+	     finished=no
+	   elif [ "$letter" = "a" ] ; then
+	     echo "Theme_Keyword_Thesaurus: MAGNETIC & ELECTRIC FIELDS; Activity Indices" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "b" ] ; then
+	     echo "Theme_Keyword_Thesaurus: MAGNETIC & ELECTRIC FIELDS; Magnetic Wave Spectra (AC)" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "c" ] ; then
+	     echo "Theme_Keyword_Thesaurus: MAGNETIC & ELECTRIC FIELDS; Electric Fields (DC)" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "d" ] ; then
+	     echo "Theme_Keyword_Thesaurus: MAGNETIC & ELECTRIC FIELDS; Magnetic Fields (DC)" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "e" ] ; then
+	     echo "Theme_Keyword_Thesaurus: MAGNETIC & ELECTRIC FIELDS; Electric Wave Spectra (AC)" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "f" ] ; then
+	     echo ''
+   	     $ECHON '> '
+	     read other
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; $other" >> $metafile
+	     finished="yes"
+	   fi;;
+	13) clear
+	   echo ''
+	   echo "Here are sub-divisions for OCEAN COMPOSITION:"
+	   echo ''
+	   $ECHON ' a) Alkalinity	  	  '
+	   $ECHON ' b) Nitrate 		'
+	   echo ' c) Phytoplankton'
+	   $ECHON ' d) Aquatic Plants 	  '
+	   $ECHON ' e) Nitric Acid 	'
+	   echo ' f) Pigment Concentration'
+	   $ECHON ' g) Biomass		  '
+	   $ECHON ' h) Nitrite		'
+	   echo ' i) Pollutants'
+	   $ECHON ' j) Carbon Dioxide 	  '
+	   $ECHON ' k) Nitrogen	  	'
+	   echo ' l) Salinity'
+	   $ECHON ' m) Chemical Tracers	  '
+	   $ECHON ' n) Nitrogen Dioxide  '
+	   echo ' o) Sea Ice'
+	   $ECHON ' p) Chlorophyll		  '
+	   $ECHON ' q) Nutrients		'
+	   echo ' r) Sediments'
+	   $ECHON ' s) Conductivity	  '
+	   $ECHON ' t) Ocean Wildlife 	'
+	   echo ' u) Silicate'
+	   $ECHON ' v) Dissolved Solids	  '
+	   $ECHON ' w) Organic Matter	'
+	   echo ' x) Suspended Solids'
+	   $ECHON ' y) Light Transmission    '
+	   $ECHON ' z) Oxygen		'
+	   echo 'aa) Trace Elements'
+	   $ECHON 'bb) Major Elements	  '
+	   $ECHON 'cc) pH		'
+	   echo 'dd) Trace Elements'
+	   $ECHON 'ee) Minor Species	  '
+	   $ECHON 'ff) Phosphates	'
+	   echo 'gg) Zooplankton'
+	   echo ''
+	   echo ''
+	   echo 'hh) Other'
+	   echo ''
+	   echo ''
+	   echo 'Please select one of the above theme keywords. Nothing '
+	   $ECHON 'entered will repeat the browsing process. LETTER> '
+	   read letter
+	   if [ -z "$letter" ] ; then
+	     finished=no
+	   elif [ "$letter" = "a" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Alkalinity" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "b" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Nitrate" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "c" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Phytoplankton" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "d" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Aquatic Plants" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "e" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Nitric Acid" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "f" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Pigment Concentration" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "g" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Biomass" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "h" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Nitrite" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "i" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Pollutants" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "j" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Carbon Dioxide" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "k" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Nitrogen" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "l" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Salinity" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "m" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Chemical Tracers" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "n" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Nitrogen Dioxide" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "o" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Sea Ice" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "p" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Chlorophyll" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "q" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Nutrients" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "r" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Sediments" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "s" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Conductivity" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "t" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Ocean Wildlife" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "u" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Silicate" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "v" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Dissolved Solids" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "w" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Organic Matter" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "x" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Suspended Solids" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "y" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Light Transmission" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "z" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Oxygen" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "aa" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Trace Elements" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "bb" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Major Elements" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "cc" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; pH" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "dd" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Upwelling" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "ee" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Minor Species" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "ff" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Phosphates" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "gg" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN COMPOSITION; Zooplankton" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "hh" ] ; then
+	     echo ''
+   	     $ECHON '> '
+	     read other
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; $other" >> $metafile
+	     finished="yes"
+	   fi;;
+	14) clear
+	   echo ''
+	   echo "Here are sub-divisions for OCEAN DYNAMICS:"
+	   echo ''
+	   $ECHON 'a) Bathymetry	  	    '
+	   $ECHON 'b) Primary Production 	'
+	   echo 'c) Temperature'
+	   $ECHON 'd) Brightness Temperature   '
+	   $ECHON 'e) Sea Ice 			'
+	   echo 'f) Tides'
+	   $ECHON 'g) Currents		    '
+	   $ECHON 'h) Sea Level		'
+	   echo 'i) Turbidity'
+	   $ECHON 'j) Evaporation 	  	    '
+	   $ECHON 'k) Sea Surface Height	'
+	   echo 'l) Upwelling'
+	   $ECHON 'm) Geopotential Height	    '
+	   $ECHON 'n) Sedimentation		'
+	   echo 'o) Waves'
+	   $ECHON 'p) Heat Flux		    '
+	   $ECHON 'q) Swell		        '
+	   echo 'r) Winds'
+	   echo 's) Pressure'
+	   echo ''
+	   echo ''
+	   echo 't) Other'
+	   echo ''
+	   echo ''
+	   echo 'Please select one of the above theme keywords. Nothing '
+	   $ECHON 'entered will repeat the browsing process. LETTER> '
+	   read letter
+	   if [ -z "$letter" ] ; then
+	     finished=no
+	   elif [ "$letter" = "a" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN DYNAMICS; Bathymetry" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "b" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN DYNAMICS; Primary Production" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "c" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN DYNAMICS; Temperature" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "d" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN DYNAMICS; Brightness Temperature" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "e" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN DYNAMICS; Sea Ice" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "f" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN DYNAMICS; Tides" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "g" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN DYNAMICS; Currents" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "h" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN DYNAMICS; Sea Level" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "i" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN DYNAMICS; Turbidity" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "j" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN DYNAMICS; Evaporation" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "k" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN DYNAMICS; Sea Surface Height" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "l" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN DYNAMICS; Upwelling" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "m" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN DYNAMICS; Geopotential Height" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "n" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN DYNAMICS; Sedimentation" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "o" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN DYNAMICS; Waves" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "p" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN DYNAMICS; Heat Flux" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "q" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN DYNAMICS; Swell" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "r" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN DYNAMICS; Winds" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "s" ] ; then
+	     echo "Theme_Keyword_Thesaurus: OCEAN DYNAMICS; Pressure" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "t" ] ; then
+	     echo ''
+   	     $ECHON '> '
+	     read other
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; $other" >> $metafile
+	     finished="yes"
+	   fi;;
+	15) clear
+	   echo ''
+	   echo "Here are sub-divisions for PUBLIC HEALTH:"
+	   echo ''
+	   $ECHON 'a) Accidents	      '
+	   $ECHON 'b) Drug Contamination 	'
+	   echo 'c) Epidemiologic Measurements'
+	   $ECHON 'd) Behavior	      '
+	   $ECHON 'e) Environmental Health   '
+	   echo 'f) Food Poisoning'
+	   $ECHON 'g) Disease Outbreaks  '
+	   $ECHON 'h) Epidemics		'
+	   echo 'i) Nutrition'
+	   echo ''
+	   echo ''
+	   echo 'j) Other'
+	   echo ''
+	   echo ''
+	   echo 'Please select one of the above theme keywords. Nothing '
+	   $ECHON 'entered will repeat the browsing process. LETTER> '
+	   read letter
+	   if [ -z "$letter" ] ; then
+	     finished=no
+	   elif [ "$letter" = "a" ] ; then
+	     echo "Theme_Keyword_Thesaurus: PUBLIC HEALTH; Accidents" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "b" ] ; then
+	     echo "Theme_Keyword_Thesaurus: PUBLIC HEALTH; Drug Contamination" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "c" ] ; then
+	     echo "Theme_Keyword_Thesaurus: PUBLIC HEALTH; Epidemiologic Measurements" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "d" ] ; then
+	     echo "Theme_Keyword_Thesaurus: PUBLIC HEALTH; Behavior" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "e" ] ; then
+	     echo "Theme_Keyword_Thesaurus: PUBLIC HEALTH; Environmental Health" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "f" ] ; then
+	     echo "Theme_Keyword_Thesaurus: PUBLIC HEALTH; Food Poisoning" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "g" ] ; then
+	     echo "Theme_Keyword_Thesaurus: PUBLIC HEALTH; Disease Outbreaks" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "h" ] ; then
+	     echo "Theme_Keyword_Thesaurus: PUBLIC HEALTH; Epidemics" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "i" ] ; then
+	     echo "Theme_Keyword_Thesaurus: PUBLIC HEALTH; Nutrition" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "j" ] ; then
+	     echo ''
+   	     $ECHON '> '
+	     read other
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; $other" >> $metafile
+	     finished="yes"
+	   fi;;
+	16) clear
+	   echo ''
+	   echo "Here are sub-divisions for VITAL STATISTICS:"
+	   echo ''
+	   $ECHON 'a) Demography	  '
+	   $ECHON 'b) Morbidity 		'
+	   echo 'c) Mortality'
+	   echo ''
+	   echo ''
+	   echo 'd) Other'
+	   echo ''
+	   echo ''
+	   echo 'Please select one of the above theme keywords. Nothing '
+	   $ECHON 'entered will repeat the browsing process. LETTER> '
+	   read letter
+	   if [ -z "$letter" ] ; then
+	     finished=no
+	   elif [ "$letter" = "a" ] ; then
+	     echo "Theme_Keyword_Thesaurus: VITAL STATISTICS; Demography" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "b" ] ; then
+	     echo "Theme_Keyword_Thesaurus: VITAL STATISTICS; Morbidity" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "c" ] ; then
+	     echo "Theme_Keyword_Thesaurus: VITAL STATISTICS; Mortality" >> $metafile
+	     finished="yes"
+	   elif [ "$letter" = "d" ] ; then
+	     echo ''
+   	     $ECHON '> '
+	     read other
+	     echo "Theme_Keyword_Thesaurus: ANTHROPOGENIC; $other" >> $metafile
+	     finished="yes"
+	   fi;;
+esac
+done

@@ -1,0 +1,1 @@
+int find(FILE *, char *);

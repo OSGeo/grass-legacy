@@ -1,0 +1,54 @@
+                     SOURCES OF DIGITAL DATA 
+
+(Information for this section is extracted from the USACERL Technical
+Report "\Sources of Digital Spatial Data\," USACERL Technical Report
+N-88/01/ADA189788).
+
+As applications for GRASS have increased, the ability to develop useful,
+accurate, and up-to-date \digital\ \map layers\ has become very
+important.  Legal boundaries, roads, hydrography, soils, watersheds, and
+elevation data are among the map layers commonly developed for GRASS
+\databases\.
+
+In this section, major sources of national and/or global \digital\
+landscape data, and status, coverage and aquisition information about
+those sources, are identified.  Information is provided on data: format,
+scale/resolution, coverage, media, costs, and textural descriptions and
+comments.
+
+This information is needed to assess the cost and time requirements of
+building a digital database for any specific geographic region.  Use of
+existing digital data sources, rather than construction of new digital
+data, can result in tremendous savings in both time and money.  Also,
+use of standard sources insures minimum standards for accuracy and quality.
+
+Only national sources are covered.  More sources may be available at
+state agencies such as transportion, environmental, and natural resource
+management departments.  Local planning offices, university geography,
+urban planning, and civil engineering departments may also provide data.
+
+Further information about specific data sources can be accessed by
+selecting one of the topic areas listed below:
+
+     \Defense Mapping Agency data\  -- DMA data
+     \Earth Observation Satellite Co. data\ -- EOSAT data
+     \Environmental Protection Agency data\ -- EPA data
+     \National Climatic Data Center data\ -- NCDC data
+     \National Cartographic Information Center data\ -- NCIC data
+     \National Geophyiscal Data Center data\ -- NGDC data
+     \National Geodetic Information Center data\ -- NGIC data
+     \National Oceanographic Data Center data\ -- NODC data
+     \National Technical Information Service data\ -- NTIS data
+     \Oak Ridge National Laboratory data\ -- ORNL data
+     \Soil Conservation Service data\ -- SCS data
+     \Satellite pour l'Observation de la Terre data\ -- SPOT data
+     \EPA STORET (Water Quality) data\ -- STORET data
+     \U.S. Bureau of the Census data\ -- USBC data
+     \U.S. Geological Survey-1 data\ -- USGS data
+     \U.S. Geological Survey-2 data\ -- USGS data
+     \U.S. Geological Survey-3 data\ -- USGS data
+     \U.S. Geological Survey-4 data\ -- USGS data
+
+     \Digital Data Cross-Reference\
+     \Tabular Data Cross-Reference\
+

@@ -1,0 +1,30 @@
+          BRIEF HELP ENTRIES FOR RASTER ANALYSIS COMMANDS
+
+Below is a list of GRASS 5.0 raster analysis commands.
+Commands with the suffix ".sh" are shell commands.
+
+To access information on a command, highlight the command using the
+RETURN key, then press ESC.
+  
+  \r.average help\       \r.basins.fill help\     \r.binfer help\
+  \r.buffer help\        \r.cats help\            \r.clump help\
+  \r.coin help\          \r.contour help\         \r.colors help\
+  \r.combine help\       \r.compress help\        \r.cost help\
+  \r.covar help\         \r.cross help\           \r.describe help\
+  \r.digit help\         \r.drain help\           \r.grow help\
+  \r.in.ascii help\      \r.in.ll help\           \r.in.poly help\
+  \r.in.sunrast help\    \r.infer help\           \r.info help\
+  \r.line help\          \r.los help\             \r.mapcalc help\
+  \r.mask help\          \r.mask.points help\     \r.median help\
+  \r.mfilter help\       \r.neighbors help\       \r.out.ascii help\
+  \r.patch help\         \r.poly help\            \r.profile help\
+  \r.random help\        \r.reclass help\         \r.report help\
+  \r.resample help\      \r.rescale help\         \r.slope.aspect help\
+  \r.stats help\         \r.support help\         \r.surf.contour help\
+  \r.surf.idw help\      \r.surf.idw2 help\       \r.thin help\
+  \r.traj help\          \r.traj.data help\       \r.transect help\
+  \r.water.outlet help\  \r.watershed help\       \r.weight help\
+  \r.weight2 help\       \r.what help\
+
+  \blend.sh help\        \shade.rel.sh help\
+

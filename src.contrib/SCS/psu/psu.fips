@@ -1,0 +1,59 @@
+#!/bin/sh
+
+# v.psu.fips - by RL Glenn, CGIS Division, NHQ
+#
+# macro to add FIPS state and county codes to a dig_cats file
+
+if [ $# != 2 ]
+  then tput clear 
+       echo "\tUsage: v.psu.fips vector_file_name FIPS_St_CO_code
+
+NAME 
+     v.psu.fips - Tool for inserting the FIPS state and county
+		code into a psu quad of digit data.
+
+DESCRIPTION
+     Psu data number is not unique to an individual county, therefore
+     a method was established to merge the state and county FIPS
+     codes into the digit data dig_cats category file. The macro
+     v.psu.fips provides this method. Prior to executing this macro
+     the user must be in GRASS and in their \$LOCATION. The user
+     must also know the name of the digit data set and the 
+     FIPS code for the state and county where the digit data
+     resides. 
+     
+     FIPS codes by state and county may be found in FIPS publication 6-3"
+     
+	  exit
+fi
+
+subject=
+if [ -f $LOCATION/dig_cats/$1 ]       # If dig_cats file already exists
+  then continue
+  else echo "\n\tEnter the SUBJ file name : \c"
+       read subject
+       if [ -f $LOCATION/SUBJ/$subject ]
+       then if [ -d $LOCATION/dig_cats ]
+            then cp SUBJ/$subject $LOCATION/dig_cats/$1
+            else mkdir $LOCATION/dig_cats
+                 cp SUBJ/$subject $LOCATION/dig_cats/$1
+            fi
+       else echo "NO SUBJ file $subject for this mapset"
+       exit
+       fi
+fi
+
+echo $2 > tmp$$
+cat $LOCATION/dig_cats/$1 >> tmp$$
+cat tmp$$ | awk '{
+                 FS=":";
+                 if (NR == 1) fips=$1;
+                 if (NR > 1)
+                   { 
+                   if (NR < 7) { print $0; }
+                   if (NR > 6) { printf("%s:%s_%s:\n",$1,fips,$2); }
+                   }
+                 }' \
+          > tmp2$$
+cat tmp2$$ > $LOCATION/dig_cats/$1
+rm -f tmp$$ tmp2$$

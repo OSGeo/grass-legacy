@@ -1,0 +1,687 @@
+:
+ECHON="echo -n"
+wordwrap="$METAHOME/wordwrap"
+
+if [ -n "$latnw" -a test `echo "$latnw" | grep ':'` ] ; then
+  geogunits="Degrees, minutes, and decimal seconds"
+elif [ -n "$latnw" -a test `echo "$latnw" | grep '.'` ] ; then
+  geogunits="Decimal degrees"
+fi
+echo "Geographic_Coordinate_Units: $geogunits" >> $metafile
+
+if [ "$proj" = "aea" ] ; then
+  lat_1=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_1:" | cut -d':' -f2 | tr -d ' '`
+  lat_2=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_2:" | cut -d':' -f2 | tr -d ' '`
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d':' -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d':' -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d':' -f2 | tr -d ' '`
+  lat_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_0:" | cut -d':' -f2 | tr -d ' '`
+  if [ -z "$lat1" -a -z "$lat2" ] ; then
+    lat1="29.5 degrees N"
+    lat2="45.5 degrees N"
+  fi
+  echo "Map_Projection_Name: Albers Equal Area" >> $metafile
+  echo "Standard_Parallel: $lat1" >> $metafile
+  echo "Standard_Parallel: $lat2" >> $metafile
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "Latitude_of_Projection_Origin: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "aeqd" ] ; then
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d':' -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d':' -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d':' -f2 | tr -d ' '`
+  lat_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_0:" | cut -d':' -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Azimuth Equidistant" >> $metafile
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "Latitude_of_Projection_Origin: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "eqdc" ] ; then
+  lat_1=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_1:" | cut -d':' -f2 | tr -d ' '`
+  lat_2=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_2:" | cut -d':' -f2 | tr -d ' '`
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d':' -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d':' -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d':' -f2 | tr -d ' '`
+  lat_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_0:" | cut -d':' -f2 | tr -d ' '`
+  if [ -z "$lat_1" -a -z "$lat_2" ] ; then
+    lat_1="29.5 degrees N"
+    lat_2="45.5 degrees N"
+  fi
+  echo "Map_Projection_Name: Equidistant Conic" >> $metafile
+  echo "Standard_Parallel: $lat_1" >> $metafile
+  echo "Standard_Parallel: $lat_2" >> $metafile
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "Latitude_of_Projection_Origin: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "gnom" ] ; then
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d':' -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d':' -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d':' -f2 | tr -d ' '`
+  lat_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_0:" | cut -d':' -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Gnomonic" >> $metafile
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "Latitude_of_Projection_Origin: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "laea" ] ; then
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d':' -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d':' -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d':' -f2 | tr -d ' '`
+  lat_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_0:" | cut -d':' -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Lambert Azimuthal Equal Area" >> $metafile
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "Latitude_of_Projection_Origin: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "lcc" ] ; then
+  lat_1=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_1:" | cut -d':' -f2 | tr -d ' '`
+  lat_2=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_2:" | cut -d':' -f2 | tr -d ' '`
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d':' -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d':' -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d':' -f2 | tr -d ' '`
+  lat_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_0:" | cut -d':' -f2 | tr -d ' '`
+  if [ -z "$lat_1" -a -z "$lat_2" ] ; then
+    lat_1="33 degrees N"
+    lat_2="45 degrees N"
+  fi
+  echo "Map_Projection_Name: Lambert Conformal Conic" >> $metafile
+  echo "Standard_Parallel: $lat_1" >> $metafile
+  echo "Standard_Parallel: $lat_2" >> $metafile
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "Latitude_of_Projection_Origin: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "merc" ] ; then
+  k_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "k_0" | cut -d':' -f2 | tr -d ' '`
+  lat_ts=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_ts:" | cut -d':' -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0" | cut -d':' -f2 | tr -d ' '`
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0" | cut -d':' -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0" | cut -d':' -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Mercator" >> $metafile
+  if [ -n "$lat_ts" ] ; then
+    echo "Standard_Parallel: $lat_ts" >> $metafile
+  elif [ -z "$lat_ts" -a -n "$k_0" ] ; then
+    echo "Scale_Factor_at_Equator: $k_0" >> $metafile
+  fi
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "Latitude_of_Projection_Origin: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "alsk" ] ; then
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d':' -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d':' -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Alaska Modified Stereographic" >> $metafile
+  echo "Latitude_of_Projection_Origin: 64 degrees N" >> $metafile
+  echo "Longitude_of_Central_Meridian: 152 degrees W" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "mill" ] ; then
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d':' -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d':' -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d':' -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Miller Cylindrical" >> $metafile
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+
+if [ "$proj" = "nsper" ] ; then
+  h=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "h:" | cut -d':' -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0" | cut -d':' -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Near-Sided Perspective" >> $metafile
+  echo "Longitude_of_Projection_Center: $lon_0" >> $metafile
+  echo "Height_of_Perspective_Point_Above_Surface: $h $units" >> $metafile
+fi
+
+if [ "$proj" = "omerc" ] ; then
+  alpha=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "alpha:" | cut -d':' -f2 | tr -d ' '`
+  k_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "k_0" | cut -d':' -f2 | tr -d ' '`
+  lat_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_0:" | cut -d':' -f2 | tr -d ' '`
+  lat_1=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_1:" | cut -d':' -f2 | tr -d ' '`
+  lat_2=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_2:" | cut -d':' -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0" | cut -d':' -f2 | tr -d ' '`
+  lon_1=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_1" | cut -d':' -f2 | tr -d ' '`
+  lon_2=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_2" | cut -d':' -f2 | tr -d ' '`
+  lonc=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lonc:" | cut -d':' -f2 | tr -d ' '`
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0" | cut -d':' -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0" | cut -d':' -f2 | tr -d ' '`
+  if [ -z "$alpha" ] ; then
+    echo "Oblique_Line_Latitude: $lat1 ; $lat2" >> $metafile
+    echo "Oblique_Line_Longitude: $lon1 ; $lon2" >> $metafile
+  elif [ -n "$alpha" ] ; then
+    echo "Azimuthal_Angle: $alpha" >> $metafile
+    echo "Azimuth_Measure_Point_Longitude: $lonc" >> $metafile
+  fi
+  echo "Map_Projection_Name: Oblique Mercator" >> $metafile
+  echo "Scale_Factor_at_Center_Line: $k_0" >> $metafile
+  echo "Latitude_of_Projection_Origin: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "ortho" ] ; then
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d':' -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d':' -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d':' -f2 | tr -d ' '`
+  lat_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_0:" | cut -d':' -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Orthographic" >> $metafile
+  echo "Longitude_of_Projection_Center: $lon_0" >> $metafile
+  echo "Latitude_of_Projection_Center: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "poly" ] ; then
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d':' -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d':' -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d':' -f2 | tr -d ' '`
+  lat_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_0:" | cut -d':' -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Polyconic" >> $metafile
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "Latitude_of_Projection_Origin: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "robin" ] ; then
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d':' -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d':' -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d':' -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Robinson" >> $metafile
+  echo "Longitude_of_Projection_Center: $lon_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "sinu" ] ; then
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d':' -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d':' -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d':' -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Sinusoidal" >> $metafile
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "lsat" ] ; then
+  n=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "^n:" | cut -d':' -f2 | tr -d ' '`
+  p=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "^p:" | cut -d':' -f2 | tr -d ' '`
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d':' -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d':' -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Space Oblique Mercator" >> $metafile
+  echo "Landsat_Number: $n" >> $metafile
+  echo "Path_Number: $p" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "stere" ] ; then
+  k_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "k_0" | cut -d':' -f2 | tr -d ' '`
+  if [ -z "$k_0" ] ; then
+    k_0="1."
+  fi
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d':' -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d':' -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d':' -f2 | tr -d ' '`
+  lat_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_0:" | cut -d':' -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Stereographic" >> $metafile
+  echo "Longitude_of_Projection_Center: $lon_0" >> $metafile
+  echo "Latitude_of_Projection_Center: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+  echo "Scale_Factor_at_Tangency_Point: $k_0" >> $metafile
+fi
+
+if [ "$proj" = "tmerc" ] ; then
+  k_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "k_0" | cut -d':' -f2 | tr -d ' '`
+  if [ -z "$k_0" ] ; then
+    k_0="1." 
+  fi
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d':' -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d':' -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d':' -f2 | tr -d ' '`
+  lat_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_0:" | cut -d':' -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Transverse Mercator" >> $metafile
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "Latitude_of_Projection_Origin: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+  echo "Scale_Factor_at_Central_Meridian: $k_0" >> $metafile
+fi
+
+if [ "$proj" = "vandg" ] ; then
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d':' -f2 | tr -d ' '`
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d':' -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d':' -f2 | tr -d ' '`
+  echo "Map_Projection_Name: van der Grinten" >> $metafile
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "utm" ] ; then
+  echo "Grid_Coordinate_System: Universal Transverse Mercator" >> $metafile
+  echo "UTM_Zone_Number: $zone" >> $metafile
+fi
+
+if [ "$proj" = "ups" ] ; then
+  echo "Grid_Coordinate_System: Universal Polar Stereographic" >> $metafile
+  echo "UPS_Zone_Number: $zone" >> $metafile
+fi
+
+if [ "$proj" = "lcc" -o "$proj" = "tmerc" -o "$proj" = "omerc" -o "$proj" = "poly" -a -n "$zone" ] ; then 
+  echo "Grid_Coordinate_System: State Plane Coordinate System" >> $metafile
+  echo "SPCS_Zone_Number: $zone" >> $metafile
+fi
+
+clear
+echo ''
+planarcheck=''
+if [ "$proj" = "0" ] ; then
+  echo 'Is this a right-handed coordinate system of which the z-axis coincides'
+  echo 'with a plumb line through the origin that locally is aligned with'
+  $ECHON 'the surface of the Earth? (y/n) y '
+  read ans
+  if [ "$ans" = "n" -o "$ans" = "N" ] ; then
+    break
+  else
+    planarcheck="yes"
+    echo 'Describe the local planar system that you used (x,y).'
+    echo ''
+    $ECHON '> '
+    read input
+    tmpfile=''
+    tmpfile=`g.tempfile $$`
+    echo "$input" > $tmpfile
+    while [ -n "$input" ] ; do
+      $ECHON '> '
+      read input
+      if [ -z "$input" ] ; then
+        break
+      else
+        echo "$input" >> $tmpfile
+      fi
+    done
+    "$wordwrap" Local_Planar_Description $tmpfile
+    trap "rm $tmpfile ; exit 0" 2
+    rm $tmpfile
+    echo ''
+    echo 'Which of the following was used to register this local planar system'
+    echo 'to the Earth?'
+    echo ''
+    echo '1 - control points'
+    echo '2 - satellite ephemeral data'
+    echo '3 - inertial navigation data'
+    echo '4 - other'
+    echo ''
+    $ECHON 'Please choose one of the above: '
+    read no
+    case $no in
+	1) echo 'Local_Planar_Georeference_Information: control points' >> $metafile;;
+	2) echo 'Local_Planar_Georeference_Information: satellite ephemeral data' >> $metafile;;
+	3) echo 'Local_Planar_Georeference_Information: inertial navigation data' >> $metafile;;
+	4) echo ''
+	   $ECHON 'What method was used to register this system? '
+	   read input
+	   tmpfile=''
+	   tmpfile=`g.tempfile $$`
+	   echo "$input" > $tmpfile
+	   while [ -n "$input" ] ; do
+	     $ECHON '> '
+	     read input
+	     if [ -z "$input" ] ; then
+    	       break
+   	     else
+    	       echo "$input" >> $tmpfile
+       	     fi
+	   done
+	   "$wordwrap" Local_Planar_Georeference_Information $tmpfile
+	   trap "rm $tmpfile ; exit 0" 2
+	   rm $tmpfile;;
+    esac
+    clear
+    echo ''
+    echo 'What encoding method was used to represent horizontal positions?'
+    echo ''
+    echo '1 - coordinate pair'
+    echo '2 - distance and bearing'
+    echo '3 - row and column'
+    echo ''
+    $ECHON 'Please select the suitable number: '
+    read no
+    case $no in
+	1) echo 'Planar_Coordinate_Encoding_Method: coordinate pair' >> $metafile
+	   echo ''
+	   echo 'What is the (nominal) minimum distance between the "x" or'
+	   echo 'column values of two adjacent points, expressed in Planar'
+ 	   echo 'Distance Units of measure?'
+	   echo ''
+	   $ECHON '> '
+	   read input
+	   tmpfile=''
+	   tmpfile=`g.tempfile $$`
+	   echo "$input" > $tmpfile
+	   while [ -n "$input" ] ; do
+	     $ECHON '> '
+	     read input
+	     if [ -z "$input" ] ; then
+    	       break
+   	     else
+    	       echo "$input" >> $tmpfile
+       	     fi
+	   done
+	   "$wordwrap" Abscissa_Resolution $tmpfile
+	   trap "rm $tmpfile ; exit 0" 2
+	   rm $tmpfile
+	   echo ''
+	   echo 'What is the (nominal) minimum distance between the "y" or'
+	   echo 'row values of two adjacent points, expressed in Planar'
+ 	   echo 'Distance Units of measure?'
+	   echo ''
+	   $ECHON '> '
+	   read input
+	   tmpfile=''
+	   tmpfile=`g.tempfile $$`
+	   echo "$input" > $tmpfile
+	   while [ -n "$input" ] ; do
+	     $ECHON '> '
+	     read input
+	     if [ -z "$input" ] ; then
+    	       break
+   	     else
+    	       echo "$input" >> $tmpfile
+       	     fi
+	   done
+	   "$wordwrap" Ordinate_Resolution $tmpfile
+	   trap "rm $tmpfile ; exit 0" 2
+	   rm $tmpfile;;
+	2) echo 'Planar_Coordinate_Encoding_Method: distance and bearing' >> $metafile
+	   echo ''
+	   echo 'What is the minimum distance measurable between two points,'
+	   echo 'expressed in Planar Distance Units of measure?'
+	   echo ''
+	   $ECHON '> '
+	   read input
+	   tmpfile=''
+	   tmpfile=`g.tempfile $$`
+	   echo "$input" > $tmpfile
+	   while [ -n "$input" ] ; do
+	     $ECHON '> '
+	     read input
+	     if [ -z "$input" ] ; then
+    	       break
+   	     else
+    	       echo "$input" >> $tmpfile
+       	     fi
+	   done
+	   "$wordwrap" Distance_Resolution $tmpfile
+	   trap "rm $tmpfile ; exit 0" 2
+	   rm $tmpfile
+	   echo ''
+	   echo 'What is the minimum angle measurable between two points,'
+	   echo 'expressed in Bearing Distance Units of measure?'
+	   echo ''
+	   $ECHON '> '
+	   read input
+	   tmpfile=''
+	   tmpfile=`g.tempfile $$`
+	   echo "$input" > $tmpfile
+	   while [ -n "$input" ] ; do
+	     $ECHON '> '
+	     read input
+	     if [ -z "$input" ] ; then
+    	       break
+   	     else
+    	       echo "$input" >> $tmpfile
+       	     fi
+	   done
+	   "$wordwrap" Bearing_Resolution $tmpfile
+	   trap "rm $tmpfile ; exit 0" 2
+	   rm $tmpfile
+	   echo ''
+	   echo ''
+ 	   echo 'What units of measure are used for angles?'
+	   echo ''
+	   echo '1 - Decimal degrees'
+	   echo '2 - Decimal minutes'
+	   echo '3 - Decimal seconds'
+	   echo '4 - Degrees and decimal minutes'
+	   echo '5 - Degrees, minutes, and decimal seconds'
+	   echo '6 - Radians'
+	   echo '7 - Grads'
+	   echo ''
+	   $ECHON 'Please select one of the above: '
+	   read no
+	   case $no in
+		1) echo 'Bearing_Units: Decimal degrees' >> $metafile;;
+		2) echo 'Bearing_Units: Decimal minutes' >> $metafile;;
+		3) echo 'Bearing_Units: Decimal seconds' >> $metafile;;
+		4) echo 'Bearing_Units: Degrees and decimal minutes' >> $metafile;;
+		5) echo 'Bearing_Units: Degrees, minutes, and decimal seconds' >> $metafile;;
+		6) echo 'Bearing_Units: Radians' >> $metafile;;
+		7) echo 'Bearing_Units: Grads' >> $metafile;;
+           esac
+           clear
+           echo ''
+           echo 'From which direction is the bearing measured?'
+           echo ''
+           echo '1 - North'
+           echo '2 - South'
+           echo ''
+           $ECHON 'Please select one of the above: '
+           read no
+           case $no in
+		1) echo 'Bearing_Reference_Direction: North' >> $metafile;;
+		2) echo 'Bearing_Reference_Direction: South' >> $metafile;;
+           esac
+           echo ''
+           echo ''
+           echo 'What is the axis from which the bearing is measured?'
+           echo ''
+           echo '1 - Assumed'
+           echo '2 - Grid'
+           echo '3 - Magnetic'
+           echo '4 - Astronomic'
+           echo '5 - Geodetic'
+           echo ''
+           $ECHON 'Please select one of the above: '
+           read no
+           case $no in
+		1) echo 'Bearing_Reference_Meridian: Assumed' >> $metafile;;
+		2) echo 'Bearing_Reference_Meridian: Grid' >> $metafile;;
+		3) echo 'Bearing_Reference_Meridian: Magnetic' >> $metafile;;
+		4) echo 'Bearing_Reference_Meridian: Astronomic' >> $metafile;;
+		5) echo 'Bearing_Reference_Meridian: Geodetic' >> $metafile;;
+           esac;;
+ 	3) echo 'Planar_Coordinate_Encoding_Method: row and column' >> $metafile
+	   echo ''
+	   echo 'What is the (nominal) minimum distance between the x or'
+	   echo 'column values of two adjacent points, expressed in Planar'
+ 	   echo 'Distance Units of measure?'
+	   echo ''
+	   $ECHON '> '
+	   read input
+	   tmpfile=''
+	   tmpfile=`g.tempfile $$`
+	   echo "$input" > $tmpfile
+	   while [ -n "$input" ] ; do
+	     $ECHON '> '
+	     read input
+	     if [ -z "$input" ] ; then
+    	       break
+   	     else
+    	       echo "$input" >> $tmpfile
+       	     fi
+	   done
+	   "$wordwrap" Abscissa_Resolution $tmpfile
+	   trap "rm $tmpfile ; exit 0" 2
+	   rm $tmpfile
+	   echo ''
+	   echo 'What is the (nominal) minimum distance between the y or'
+	   echo 'row values of two adjacent points, expressed in Planar'
+ 	   echo 'Distance Units of measure?'
+	   echo ''
+	   $ECHON '> '
+	   read input
+	   tmpfile=''
+	   tmpfile=`g.tempfile $$`
+	   echo "$input" > $tmpfile
+	   while [ -n "$input" ] ; do
+	     $ECHON '> '
+	     read input
+	     if [ -z "$input" ] ; then
+    	       break
+   	     else
+    	       echo "$input" >> $tmpfile
+       	     fi
+	   done
+	   "$wordwrap" Ordinate_Resolution $tmpfile
+	   trap "rm $tmpfile ; exit 0" 2
+	   rm $tmpfile;;
+    esac
+    echo ''
+    echo ''
+    echo 'What units of measure are used for distances?'
+    echo ''
+    echo '1 - meters'
+    echo '2 - international feet'
+    echo '3 - survey feet'
+    echo '4 - Others'
+    echo ''
+    echo 'Please select one of the above: '
+    read no
+    case $no in
+	1) echo 'Planar_Distance_Units: meters' >> $metafile;;
+  	2) echo 'Planar_Distance_Units: international feet' >> $metafile;;
+  	3) echo 'Planar_Distance_Units: survey feet' >> $metafile;;
+  	4) echo ''
+	   echo 'Please enter the distance units of measure:'
+   	   echo ''
+	   $ECHON '> '
+   	   read input
+   	   tmpfile=''
+   	   tmpfile=`g.tempfile $$`
+   	   echo "$input" > $tmpfile
+   	   while [ -n "$input" ] ; do
+     	   $ECHON '> '
+     	   read input
+     	   if [ -z "$input" ] ; then
+       	     break
+     	   else
+       	     echo "$input" >> $tmpfile
+     	   fi
+   	   done
+   	   "$wordwrap" Planar_Distance_Units $tmpfile
+   	   trap "rm $tmpfile ; exit 0" 2
+           rm $tmpfile;;
+    esac
+  fi
+fi
+
+if [ "$proj" = "0" -a -z "$planarcheck" ] ; then
+  echo ''
+  echo 'Is this coordinate system not aligned with the surface of the Earth?'
+  $ECHON '(y/n) y '
+  read ans
+  if [ "$ans" = "n" -o "$ans" = "N" ] ; then
+    break
+  else
+    echo 'Describe the coordinate system you used and its orientation to the'
+    echo 'surface of the Earth.'
+    echo ''
+    $ECHON '> '
+    read input
+    tmpfile=''
+    tmpfile=`g.tempfile $$`
+    echo "$input" > $tmpfile
+    while [ -n "$input" ] ; do
+      $ECHON '> '
+      read input
+      if [ -z "$input" ] ; then
+        break
+      else
+        echo "$input" >> $tmpfile
+      fi
+    done
+    "$wordwrap" Local_Description $tmpfile
+    trap "rm $tmpfile ; exit 0" 2
+    rm $tmpfile
+    echo ''
+    echo 'Which of the following was used to register this local system'
+    echo 'to the Earth?'
+    echo ''
+    echo '1 - control points'
+    echo '2 - satellite ephemeral data'
+    echo '3 - inertial navigation data'
+    echo '4 - other'
+    echo ''
+    $ECHON 'Please choose one of the above: '
+    read no
+    case $no in
+	1) echo 'Local_Planar_Georeference_Information: control points' >> $metafile;;
+	2) echo 'Local_Planar_Georeference_Information: satellite ephemeral data' >> $metafile;;
+	3) echo 'Local_Planar_Georeference_Information: inertial navigation data' >> $metafile;;
+	4) echo ''
+	   $ECHON 'What method was used to register this system? '
+	   read input
+	   tmpfile=''
+	   tmpfile=`g.tempfile $$`
+	   echo "$input" > $tmpfile
+	   while [ -n "$input" ] ; do
+	     $ECHON '> '
+	     read input
+	     if [ -z "$input" ] ; then
+    	       break
+   	     else
+    	       echo "$input" >> $tmpfile
+       	     fi
+	   done
+	   "$wordwrap" Local_Georeference_Information $tmpfile
+	   trap "rm $tmpfile ; exit 0" 2
+	   rm $tmpfile;;
+    esac
+  fi
+fi
+
+if [ $ellipsoid = clark66 -o $ellipsoid = clrk66 ] ; then
+  echo "Horizontal_Datum_Name: NAD27" >> $metafile
+elif [ $ellipsoid = grs80 ] ; then
+  echo "Horizontal_Datum_Name: NAD83" >> $metafile
+elif [ $ellipsoid = wgs72 ] ; then
+  echo "Horizontal_Datum_Name: WGS72" >> $metafile
+elif [ $ellipsoid = wgs84 ] ; then
+  echo "Horizontal_Datum_Name: WGS84" >> $metafile
+fi
+
+if [ -n "$ellipsoid" ] ; then
+  echo "Ellipsoid_Name: $ellipsoid" >> $metafile
+fi
+
+semajax=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep 'a:' | cut -d':' -f2 | tr -d ' '`
+if [ -n "$semajax" ] ; then
+  echo "Semi-major_Axis: $semajax" >> $metafile
+fi
+
+f=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep 'f:' | cut -d':' -f2 | tr -d ' '`
+if [ -n "$f" ] ; then
+  echo "Denominator_of_Flattening_Ratio: $f" >> $metafile
+fi

@@ -1,0 +1,82 @@
+# to force make to use /bin/sh
+SHELL           = /bin/sh
+#########################################################################
+# these define the various directories which contain GRASS programs
+# or files used by GRASS programs
+BIN             = $(GISBASE)/bin
+ETC             = $(GISBASE)/etc
+GARDEN_BIN      = $(GISBASE)/garden/bin
+GARDEN_ETC      = $(GISBASE)/garden/etc
+BIN_MAIN_INTER  = $(ETC)/bin/main/inter
+BIN_MAIN_CMD    = $(ETC)/bin/main/cmd
+BIN_ALPHA_INTER = $(ETC)/bin/main/inter
+BIN_ALPHA_CMD   = $(ETC)/bin/main/cmd
+BIN_CONTRIB_INTER = $(ETC)/bin/contrib/inter
+BIN_CONTRIB_CMD   = $(ETC)/bin/contrib/cmd
+TXT             = $(GISBASE)/txt
+MAN1            = $(GISBASE)/man/1
+MAN2            = $(GISBASE)/man/2
+MAN3            = $(GISBASE)/man/3
+MAN4            = $(GISBASE)/man/4
+MAN5            = $(GISBASE)/man/5
+MAN6            = $(GISBASE)/man/6
+HELP            = $(GISBASE)/man/help
+
+# other
+CFLAGS      =  $(COMPILE_FLAGS) $(EXTRA_CFLAGS) -I$(INCLUDE_DIR) $(USE_TERMIO)
+AR          = $(GMAKE) -makeparentdir $@; $(LIBRULE)
+#MANROFF     = tbl -TX $(SRC)/man.help/man.version $(SRC)/man.help/man.header $? | nroff -Tlp | col -b > $@
+MANROFF     = # 
+MAKEALL     = $(GMAKE) -all
+
+# various source directories and libraries
+SRC_X       = $(SRC)/xgrass
+LIBDIR      = $(SRC)/libes
+X_LIBDIR     = $(SRC_X)/libes
+INCLUDE_DIR = $(SRC)/include
+DIG_LIBDIR  = $(SRC)/libes/vect32/libes
+DIG_INCLUDE  = $(SRC)/libes/vect32/lib
+VECT_INCLUDE = -I$(SRC)/libes/vect32/Vlib -I$(SRC)/libes/vect32/diglib
+
+VASKLIB     = $(LIBDIR)/libvask.a
+VASK        = $(VASKLIB) $(CURSES)
+
+GISLIB      = $(LIBDIR)/libgis.a
+G3DLIB      = $(LIBDIR)/libg3d.a
+ICONLIB     = $(LIBDIR)/libicon.a
+LOCKLIB     = $(LIBDIR)/liblock.a
+IMAGERYLIB  = $(LIBDIR)/libI.a
+ROWIOLIB    = $(LIBDIR)/librowio.a
+COORCNVLIB  = $(LIBDIR)/libcoorcnv.a
+SEGMENTLIB  = $(LIBDIR)/libsegment.a
+GPROJLIB    = $(LIBDIR)/libproj.a
+BTREELIB    = $(LIBDIR)/libbtree.a
+IBTREELIB   = $(LIBDIR)/libibtree.a
+DLGLIB      = $(LIBDIR)/libdlg.a
+RASTERLIB   = $(LIBDIR)/libraster.a
+DISPLAYLIB  = $(LIBDIR)/libdisplay.a
+D_LIB       = $(LIBDIR)/libD.a
+DATETIMELIB = $(LIBDIR)/libdatetime.a
+DRIVERLIB   = $(SRC)/display/devices/lib/driverlib.a
+LINKMLIB    = $(LIBDIR)/liblinkm.a
+BITMAPLIB    = $(LIBDIR)/libbitmap.a
+XGILIB	    = $(X_LIBDIR)/libXgi.a
+XGDLIB	    = $(X_LIBDIR)/libXgd.a
+XPMLIB	    = $(X_LIBDIR)/libXpm.a
+
+
+DIGLIB      = $(LIBDIR)/libdig.a
+DIG2LIB     = $(LIBDIR)/libdig2.a
+VECTLIB_REAL= $(LIBDIR)/libvect.a
+VECTLIB     = $(VECTLIB_REAL) $(DIG2LIB)
+DIG_ATTLIB  = $(LIBDIR)/libdig_atts.a
+
+# triangulation libraries
+SOSLIB      = $(LIBDIR)/libsos.a
+LIALIB      = $(LIBDIR)/liblia.a
+OPTRILIB    = $(LIBDIR)/liboptri.a
+BASICLIB    = $(LIBDIR)/libbasic.a
+GEOMLIB     = $(OPTRILIB) $(SOSLIB) $(LIALIB) $(BASICLIB)		
+
+XDISPLAYLIB = $(LIBDIR)/libXdisplay.a
+#########################################################################

@@ -1,0 +1,9 @@
+PGM=i.gensigset
+HOME=$(BIN_ALPHA_INTER)
+
+LIBES = $(IMAGERYLIB) $(GISLIB)
+
+$(HOME)/$(PGM): main.o $(LIBES) $(VASKLIB)
+	$(CC) -o $@ main.o $(LIBES) $(VASK) $(MATHLIB) $(XDRLIB)
+
+$(VASKLIB) $(LIBES): #

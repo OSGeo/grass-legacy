@@ -1,0 +1,16 @@
+#!/bin/sh
+PRINTER=${PRINTER-oscar}
+export PRINTER
+
+if [ $# = 0 ]
+then
+    echo Usage: $0 manual-file [...]
+    exit 2
+fi
+
+for file in $*
+do
+    dir=`dirname $file`
+    tbl man.version $dir/.class-header man.header $file $dir/.class-notice \
+	| troff -t | lpr  -t
+done

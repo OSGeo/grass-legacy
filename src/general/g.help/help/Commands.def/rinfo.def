@@ -1,0 +1,14 @@
+
+
+r.info - 
+
+r.info reports some basic information about a user-specified \raster\
+\map layer\.  This map layer must exist the user's current \mapset\
+search path.  Information about the map's boundaries, \resolution\,
+\projection\, data type, \category\ number, database location and
+mapset, and history are put into a table and written to standard
+output.  The types of information listed can also be found in the
+"cats", "cellhd", and "hist" directories under the mapset in
+which the named map is stored.
+
+Manual entry for \r.info\

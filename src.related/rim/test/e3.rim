@@ -1,0 +1,19 @@
+report                                                                          
+  select from techs                                                             
+    print                                                                       
+      1 1 id     i5                                                             
+      1 10 name  a20                                                            
+    end print                                                                   
+    mid = id                                                                    
+    select from measures where id = mid sort by m_date                          
+      print                                                                     
+        2 5 symbol a8                                                           
+        2 15 m_date 'yy/mm/dd'                                                  
+        2 25 resistivity f6.2                                                   
+      end print                                                                 
+      print                                                                     
+        1 1 ' '                                                                 
+      end print                                                                 
+    end select                                                                  
+  end select                                                                    
+end report                                                                      

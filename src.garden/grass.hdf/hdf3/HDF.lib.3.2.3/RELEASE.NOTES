@@ -1,0 +1,47 @@
+Dec. 5, 1992
+
+This is HDF version 3.2 Release 3. The major differences between 
+Release 3 and Release 2 are:
+
+1. The function DFSDpre32 (dspre32) in HDF3.2r2 is replaced by 
+DFSDpre32sdg (dsp32sd).  See the file "MigrationNotes" for details. 
+
+2. A bug in hdfed dump is fixed. It passed testS on the CRAY, VAX/VMS, 
+   SUN Station, and Dec Station.
+
+3. Two formats are added to hdfed dump options. See CODECHANGES
+for details.
+
+For users' convenience, the RELEASE.NOTES for HDF3.2r2 is attached
+below.
+
+*****************************************************************
+Nov. 1992
+
+This is the second release of HDF 3.2.  In addition to  some bug 
+fixes (detailed in CODECHANGES), the following changes have been 
+made since release 1: 
+
+         1. A calibration tag has been added. See the file 
+            "MigrationNotes" for details.
+
+         2. A routine has been added that tests whether an SDS
+            in a file was written by HDF3.2 or a previous release.
+            See the file "MigrationNotes" for details.
+
+         3. The return values for VSsetfields() and VSinquire()
+            have been changed. See the file "MigrationNotes" for 
+            details.
+
+         4. The argument types for the routines VSwrite and VSread
+            have been changed. See the file "MigrationNotes" for details.
+
+         5. An "examples" directory has been added.  It contains all
+            of the test files needed to test the utilities.  See the
+            file "README.UTILS" in the directory "util" for details.
+
+         6. A directory "bkwdtest" has been added.  It contains routines
+            for testing backward compatibility of SDSs between HDF 3.2 
+            and earlier versions of HDF. See the file "README" in this
+            directory for details.
+ 

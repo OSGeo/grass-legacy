@@ -1,0 +1,10 @@
+
+
+g.filename - 
+
+g.filename is designed for Bourne shell scripts that need to know the
+full \UNIX\ file name for \raster\ \map layers\, \vector\ files,
+\site\ list files, \geographic region\ files, imagery group files,
+etc., in the GRASS database.
+
+Manual entry for \g.filename\

@@ -1,0 +1,1033 @@
+#include <stdio.h>
+#include <math.h>
+#include "gis.h"
+					/* lcta5.c */ 
+					/*
+	the program has the following functions:
+
+		1) usual linear regression: y=a[0]x[0]+a[1],
+                            		y=a[0]x[0]+a[1]x[1]+a[2]
+                            		y=a[0]x[0]+a[1]x[1]+a[2]x[2]+a[4]
+		2) normalized by x1:    y=a[0]x[1]/x[0] + a[1]
+       			                y=a[0]x[1]/x[0] + a[1]x[2]/x[0] + a[2]
+		3) normalized by x2:    y=a[0]x[0]/x[1] + a[1]
+               			        y=a[0]x[0]/x[1] + a[1]x[2]/x[1] + a[2]
+		4) NDVI model
+		5) intensity NDVI model
+		6) reflectance NDVI model
+		7) Half relaxation VI
+		8) RVI model
+		9) sqrt(sum of xi*xi) normalization
+		10)square of xi
+		11)sqrt of xi
+		12)square the y
+		13)sqrt of y
+		14)take log of y
+		15)log(1+y)
+		16)derivative of y
+
+		17)check multi-collinearity
+		18)predict other part of the same data set
+		19)predict other data set
+		20)check confidencial of a
+		21)test model adequacy
+		22)F check model utility
+		23)give correlation between observed and calculated y
+		24)give data for scatter plot
+		25)give data for residual plot
+		26)give data for soil isoline plot
+					*/
+
+
+
+double *vector();
+double **matrix();
+double rms(), log(), sqrt(), err2();
+void function();
+
+main(argc,argv) 
+int   argc;
+char *argv[];
+{
+	FILE *curve_radiance_coverage_x1y;
+	FILE *curve_radiance_coverage_x2y;
+	FILE *curve_radiance_coverage_x3y;
+	FILE *curve_veget_soil_x1x2;
+	FILE *curve_veget_soil_x1x3;
+	FILE *curve_veget_soil_x2x3;
+	FILE *curve_ndvi_coverage;
+	FILE *curve_residual_x1;
+	FILE *curve_residual_x2;
+	FILE *curve_residual_x3;
+	FILE *curve_residual_y;
+	FILE *y_y;
+	FILE *fdinp;
+	FILE *fdoutp;
+
+    double **u, **v, *w, *a, *value,ssto,ssresid,ym,ff;
+    double *x,*y,*y2,*xhong,*epsilon,*oldeps,*delteps,*sigma,*residual;
+					/*  sigma is variance of a */
+    double *xprediction,*yprediction;
+    double *linx,*liny,*lina;
+    double r,t,test, rr2,rrr,sigma1;
+    double eps1;			/* eps1 is (a0*x0+a1*x1+a2*x2+a6) */
+    double eps2;   			/* eps2 is (a3*x3+a4*x4+a5*x5+1) */ 
+    double xtemp;
+    double p;   			/* p is temperally parameter */
+    double *xmul, *ymul;
+    int i,j,k,ka,ma, iamp;
+    int nx,nxhong,nxmul,model;		/* number of variables */
+    int na,n1,n2,n3,ndata1,ndata2;	/* number of parameters */
+    int ndata, flag_nonlinear, flag_prediction,flag_prediction_iteration;
+    char *me,*other_filename[40];
+    char buf[512];
+    FILE *fd, *popen();
+    char *inp;
+    char *outp;
+    char *title;
+    char *oldfile;
+
+struct
+{
+        struct Option *input, *output, *check, *prediction;
+} parm;
+
+struct table
+{
+        double *aaa;                              /* regression coefficients */
+        double *sigma;                          /* of the regression
+                                                   coefficients a[na] */
+        double standard_residual;               /* of the response y */
+        double rr2;                             /* r*r, coefficients of
+                                                   determinant */
+        double rrr;                             /* adjusted r squire */
+        double ff;                              /* F testing number */
+        double r;                               /* correlation between
+                                                   observed and predicted y */
+} table1, nonlinear_table;
+
+
+        G_gisinit (argv[0]);
+
+						/* define the different options
+						*/
+        parm.input = G_define_option() ;
+        parm.input->key        = "input";
+        parm.input->type       = TYPE_STRING;
+        parm.input->required   = YES;
+        parm.input->description= "File name of the imagery to be regressed";
+
+        parm.output = G_define_option() ;
+        parm.output->key        = "output";
+        parm.output->type       = TYPE_STRING;
+        parm.output->required   = YES;
+        parm.output->gisprompt  = "new,cell,raster" ;
+        parm.output->description= "The resulting file name";
+
+        parm.check = G_define_option() ;
+        parm.check->key        = "check";
+        parm.check->type       = TYPE_STRING;
+        parm.check->required   = NO;
+        parm.check->description= "check options" ;
+
+        parm.prediction = G_define_option() ;
+        parm.prediction->key        = "prediction";
+        parm.prediction->type       = TYPE_STRING;
+        parm.prediction->required   = NO;
+        parm.prediction->description= "manner of prediction" ;
+
+/*
+old_name = parm.input->answer;
+new_name = parm.output->answer;
+*/
+        inp = parm.input->answer;
+        outp = parm.output->answer;
+
+    fdinp = fopen (inp, "r");
+    if (fdinp == NULL)
+    {
+                sprintf (buf, "%s - not found\n", inp);
+                G_fatal_error (buf);
+                exit(1);
+        }
+
+if (G_legal_filename (outp) < 0)
+        {
+                sprintf (buf, "%s - illegal file name\n", outp);
+                G_fatal_error (buf);
+                exit(1);
+        }
+sprintf (buf, "i.regression input='%s' output='%s'\n", inp, 
+	outp);
+printf ("i.regression input='%s' output='%s'\n", inp, 
+	outp);
+
+	curve_radiance_coverage_x1y = fopen ("curv.radiance_coverage_x1y","w");
+	curve_radiance_coverage_x2y = fopen ("curv.radiance_coverage_x2y","w");
+	curve_radiance_coverage_x3y = fopen ("curv.radiance_coverage_x3y","w");
+	curve_veget_soil_x1x2 = fopen ( "curve.veget_soil_x1x2", "w");
+	curve_veget_soil_x1x3 = fopen ( "curve.veget_soil_x1x3", "w");
+	curve_veget_soil_x2x3 = fopen ( "curve.veget_soil_x2x3", "w");
+	curve_ndvi_coverage = fopen ( "curve.ndvi_coverage", "w");
+	curve_residual_x1 = fopen ("curve.residual_x1", "w");
+	curve_residual_x2 = fopen ("curve.residual_x2", "w");
+	curve_residual_x3 = fopen ("curve.residual_x3", "w");
+	curve_residual_y = fopen ("curve.residual_y", "w");
+	y_y = fopen ("y.y", "w");
+
+					/* read original data */
+        fdoutp=fopen (outp, "w");
+	xhong=vector(20);
+	y=vector(20);
+printf("before read_data, xhong=%2d, y=%2d\n", xhong, y);
+printf("in main: input file=%s\n", inp);
+
+    read_data (inp, &xhong, &nxhong, &y, &ndata);
+
+printf("after read_data, xhong=%2d, y=%2d\n", xhong, y);
+
+	flag_prediction=0;
+	flag_prediction_iteration=0;
+
+	residual = vector (ndata);
+	flag_nonlinear = 0; 
+	epsilon = vector (ndata);
+	oldeps = vector (ndata);
+	delteps = vector (ndata);
+
+					/* set model number */
+printf("input model number prefered:\n");
+printf("        1) usual linear regression: y=a[0]x[0]+a[1]\n");
+printf("                            y=a[0]x[0]+a[1]x[1]+a[2]\n");
+printf("                            y=a[0]x[0]+a[1]x[1]+a[2]x[2]+a[4]\n");
+printf("        2) normalized by x1:y=a[0]x[1]/x[0] + a[1]\n");
+printf("                            y=a[0]x[1]/x[0] + a[1]x[2]/x[0] + a[2]\n");
+printf("        3) normalized by x2:y=a[0]x[0]/x[1] + a[1]\n");
+printf("                            y=a[0]x[0]/x[1] + a[1]x[2]/x[1] + a[2]\n");
+printf("        4) NDVI model\n");
+printf("        5) intensity NDVI model\n");
+printf("        6) reflectance NDVI model\n");
+printf("        7) Half relaxation VI\n");
+printf("        8) RVI model\n");
+printf("        9) sqrt(sum of xi*xi) normalization\n");
+printf("        10)square of xi\n");
+printf("        11)sqrt of xi\n");
+printf("        12)square the y\n");
+printf("        13)sqrt of y\n");
+printf("        14)take log of y\n");
+printf("        15)log(1+y)\n");
+printf("        16)derivative of y\n");
+scanf("%2d",&model);
+printf("selected model is %2d\n", model);
+
+
+					/* usual linear regression */
+if (model == 1)
+{
+nx=nxhong;
+x=vector(nx,ndata);
+x=xhong;
+goto regression;
+}
+
+					/*
+					for(i=0;i<ndata;i++)
+			{
+					for(j=0;j<nxhong;j++)
+					{
+		printf("in main before normalization: x[%d]=%10.4f\n",
+				i*nxhong+j,*(xhong+i*nxhong+j));
+		printf("in main before normalization: x[%d]=%10.4f\n",
+				i*nxhong+j,xhong[i*nxhong+j]);
+					}
+			}
+					*/
+
+					/* normalization with respect to x1 */
+if (model == 2)
+{
+normalization_x1(xhong,&nxhong,&ndata,&x,&nx);
+goto regression;
+}
+
+if (model == 3 )
+{
+normalization_x2(xhong,&nxhong,&ndata,&x,&nx);
+goto regression;
+}
+
+					/* plot radiance_coverage curves
+					*/
+
+if(nx==1)
+{
+	for (ma=0; ma < ndata; ma++)
+	{
+	fprintf(curve_radiance_coverage_x1y,"%12.4f %12.4f\n",
+		y[ma],x[ma*nx]);
+	}
+}
+if(nx==2)
+{
+	for (ma=0; ma < ndata; ma++)
+	{
+	fprintf(curve_radiance_coverage_x1y,"%12.4f %12.4f\n",
+		y[ma],x[ma*nx]);
+	fprintf(curve_radiance_coverage_x2y,"%12.4f %12.4f\n",
+		y[ma],x[ma*nx+1]);
+	}
+}
+if(nx==3)
+{
+	for (ma=0; ma < ndata; ma++)
+	{
+	fprintf(curve_radiance_coverage_x1y,"%12.4f %12.4f\n",
+		y[ma],x[ma*nx]);
+	fprintf(curve_radiance_coverage_x2y,"%12.4f %12.4f\n",
+		y[ma],x[ma*nx+1]);
+	fprintf(curve_radiance_coverage_x3y,"%12.4f %12.4f\n",
+		y[ma],x[ma*nx+2]);
+	}
+}
+
+					/*   plot vegetation-soil curves  
+					*/
+if (nx == 2 )
+{
+   for ( ma=0; ma< ndata; ma++)
+	{ 
+	n1=ma*nx;
+	n2=ma*nx+1;
+	fprintf(curve_veget_soil_x1x2, "%12.4f%12.4f\n",
+	       x[n1],x[n2]);
+	}
+}
+if (nx == 3 )
+{
+   for ( ma=0; ma< ndata; ma++)
+	{ 
+	n1=ma*nx;
+	n2=ma*nx+1;
+	n3=ma*nx+2;
+	fprintf(curve_veget_soil_x1x2, "%12.4f%12.4f\n",
+	       x[n1],x[n2]);
+	fprintf(curve_veget_soil_x1x3, "%12.4f%12.4f\n",
+	       x[n1],x[n3]);
+	fprintf(curve_veget_soil_x2x3, "%12.4f%12.4f\n",
+	       x[n2],x[n3]);
+	}
+}
+
+					/*  use NDVI to conduct regression 
+					*/
+if (model == 4) 
+{
+ndvi(xhong,&nxhong,&ndata,&x,&nx);
+goto regression;
+}
+ 
+					/* use NDVI of intensity */
+if(model == 5)
+{
+ndvi_intensity(xhong,&nxhong,&ndata,&x,&nx);
+goto regression;
+}
+					/* use NDVI of reflectance */
+if(model == 6)
+{
+ndvi_reflectance(xhong,&nxhong,&ndata,&x,&nx);
+goto regression;
+}
+
+					/* half relaxation VI */
+if(model == 7)
+{
+rvi(xhong,&nxhong,&ndata,&x,&nx);
+goto regression;
+}
+
+					/* rational model fitting */
+if (model == 8)
+{
+flag_nonlinear = 1;
+	nx = 2*nxhong;
+	x = vector (nx*ndata);
+	for(i=0; i < ndata; i++)
+	   {
+	   *(epsilon + i) = 0.0;
+	   *(oldeps + i) = 0.0;
+	   }
+iteration:
+    	nonlinear_data(xhong,&nxhong,y,epsilon,&ndata,&x,&nx);
+/*
+for(i=0;i<ndata;i++)
+{for(k=0;k<nxhong;k++)
+printf("i=%2d,xhong=%12.4f,x=%12.4f\n",i,xhong[i*nxhong+k],x[i*nx+k]);
+p=epsilon[i]-y[i];
+for (k=nxhong;k<nx;k++)
+printf("        xey=%12.4f,x=%12.4f\n",xhong[i*nxhong+k-nxhong]*p,x[i*nx+k]);
+}
+*/
+}
+
+regression:
+
+    na = nx+1;
+    a = vector (na);    /* parameter array */
+    u = matrix (ndata,na);
+    v = matrix (na,na);
+    w = vector (na);
+    value = vector (na);
+    y2 = vector (ndata);
+
+					/* create functions of xi  
+if(flag_nonlinear == 1)
+	goto delay_multi;
+
+    if(model == 9) 
+    {
+	k = 0;
+	for (i = 0; i < ndata; i++)
+	{
+	    t = 0.0;
+	    for (j = 0; j < nx; j++, k++)
+		t += x[k]*x[k];
+	    t = sqrt(t);
+	    k -= nx;
+	    for (j = 0; j < nx; j++, k++)
+		x[k] /= t;
+	}
+    }
+    if (model == 10)
+    {
+	k = 0;
+	for (i = 0; i < ndata; i++)
+	    for (j = 0; j < nx; j++, k++)
+		x[k] *= x[k];
+    }
+    else if (model == 11)
+    {
+	k = 0;
+	for (i = 0; i < ndata; i++)
+	    for (j = 0; j < nx; j++, k++)
+		x[k] = sqrt(x[k]);
+    }
+
+
+    if (model == 12) 
+    {
+	for (i = 0; i < ndata; i++)
+	    y[i] *= y[i];
+    }
+    else if(model == 13) 
+    {
+	for (i = 0; i < ndata; i++)
+	    y[i] = sqrt(y[i]);
+    }
+    if (model == 15)
+    {
+	for (i = 0; i < ndata; i++)
+	    y[i] = log(1+y[i]);
+    }
+    if(model == 14)
+    {
+	for (i = 0; i < ndata; i++)
+	{
+	    if (y[i] < .001) y[i] = .001;
+	    if (y[i] > .999) y[i] = .999;
+	    y[i] = log (1.0/y[i] - 1.0);
+	}
+    }
+    if (model == 16)
+    {
+	for (i = 0; i < ndata; i++)
+	    y[i] = 1.0 - y[i] * (1.0 - y[i]);
+    }
+					*/
+
+					/* check multi_collinearity 
+					*/
+if(flag_nonlinear == 1)
+goto delay_multi;
+
+nxmul = nx -1;
+xmul = vector(nxmul*ndata);
+ymul = vector (ndata);
+    if ( (parm.check->answer) == "multx1" )
+{
+	printf("check multicollinearity for x1=y\n");
+	for ( i=0; i<ndata; i++)
+	{
+		for(j=1; j<(nx); j++)
+		xmul[i*(nx-1)+(j-1)] = x[i*nx+j];
+	ymul[i]=x[i*nx];
+	}
+
+	nx=nxmul;
+	for(k=0; k< ndata; k++)
+	{
+		for(i=0; i<nx; i++)
+		{
+		x[k*nx+i]=xmul[k*nx+i];
+		}
+	y[k]=ymul[k];
+	}
+goto multi;
+}
+    if ( (parm.check->answer) == "multx2" )
+{
+	printf("check multicollinearity for x2=y\n");
+	for ( i=0; i<ndata; i++)
+	{
+		j=0;
+		xmul[i*(nx-1)+j] = x[i*nx+j];
+		j=2;
+		xmul[i*(nx-1)+(j-1)] = x[i*nx+j];
+	ymul[i]=x[i*nx+1];
+	}
+
+	nx=nxmul;
+	for(k=0; k< ndata; k++)
+	{
+		for(i=0; i<nx; i++)
+		{
+		x[k*nx+i]=xmul[k*nx+i];
+		}
+	y[k]=ymul[k];
+	}
+goto multi;
+}
+    if ( (parm.check->answer) == "multx3" )
+{
+	printf("check multicollinearity for x3=y\n");
+	for ( i=0; i<ndata; i++)
+	{
+		for(j=0; j<(nx-1); j++)
+		xmul[i*(nx-1)+j] = x[i*nx+j];
+	ymul[i]=x[i*nx+2];
+	}
+
+	nx=nxmul;
+	for(k=0; k< ndata; k++)
+	{
+		for(i=0; i<nx; i++)
+		{
+		x[k*nx+i]=xmul[k*nx+i];
+		}
+	y[k]=ymul[k];
+
+	}
+}
+multi:
+na = nx + 1;
+
+delay_multi:
+/*
+printf("test in main:\n");
+for(i=0;i<ndata;i++)
+	{
+	for(k=0;k<nx;k++)
+		printf("x[%2d * %2d + %2d]=%10.4f\t",i,nx,k,x[i*nx+k]);
+	printf("y[%2d]=%10.4f\n",i,y[i]);
+	} 
+*/
+					/* set prediction flag */
+if(flag_prediction == 0 )
+{
+if((parm.prediction->answer) == "same")
+{ printf("enter number of sampling data. \n");
+scanf("%2d", &ndata1);
+flag_prediction = 1;
+ndata2=ndata-ndata1;
+ndata=ndata1;
+xprediction=vector(ndata2*nxhong);
+yprediction=vector(ndata2);
+for(i=0;i<ndata2;i++)
+	{
+	for(k=0;k<nx;k++)
+		{
+		if(flag_nonlinear == 0)
+		xprediction[i*nx+k]=x[nx*ndata1+i*nx+k];
+		if(flag_nonlinear == 1)
+		xprediction[i*nxhong+k]=xhong[nxhong*ndata1+i*nxhong+k];
+/*
+printf("xprediction[%2d]=%10.4f\n",i*nxhong+k,xprediction[i*nxhong+k]);
+*/
+		}
+	yprediction[i]=y[ndata1+i];
+/*
+printf("yprediction[%2d]=%10.4f\n", i,yprediction[i]);
+*/
+	}
+}
+}
+
+						/* linearly fit the model */
+    svdfitn(x,nx,y,ndata,a,na,u,v,w,function);
+
+						/**** test matrix v
+for(i=0;i<na;i++)
+{
+for(j=0;j<na;j++)
+printf("v[%2d][%2d] = %12.4f\n",i,j,v[i][j]);
+}
+
+for(i=0;i<na;i++)
+for(j=0;j<na;j++)
+{
+test=0.0;
+for(k=0;k<na;k++)
+test += v[k][i]*v[k][j];
+printf("for i=%2d and j=%2d test[i,j]=%12.4f\n",i,j,test);
+}
+						*/
+
+					/* check confidential, write sigma */
+if((parm.check -> answer) == "confidencial" )
+{
+sigma = vector (na);
+for(ka=0;ka<na;ka++)
+{
+sigma[ka]=0.0;
+for(ma=0;ma<na;ma++)
+{
+if(w[ma] != 0.0)
+ sigma[ka] += (v[ka][ma]/w[ma])*(v[ka][ma]/w[ma]);
+}
+ printf("w[%2d] = %12.4f\n",ka,w[ka]);
+printf("sigma[%1d] **2 =%12.4f\n", ka,sigma[ka]);
+}
+}
+
+
+					/* compute predicted values */
+if(flag_nonlinear == 1)
+{
+	for (i=0; i < ndata; i++)
+	{
+	eps1=0.0;
+	eps2=0.0;
+	  for (k=0; k< nxhong; k++)
+	  {eps1 += a[k] * x[i*nx+k];
+	   eps2 += a[k+nxhong] * x[i*nx+k];}
+	  eps1 += a[nx];
+	  eps2 += 1.0;
+	y2[i] = eps1/eps2;
+	}
+}
+if(flag_nonlinear == 0)
+{
+    for (i=0; i < ndata; i++)
+    {
+	function (x+i*nx,nx,value,na);
+	y2[i] = 0.0;
+	for (k = 0; k < na; k++)
+	    y2[i] += a[k] * value[k];
+printf("in main, y2[%2d]=%10.4f\n",i,y2[i]);
+    }
+}
+
+					/** Check utility: 
+	   				check total sum of squares SSto,
+	   				residual sum of squares SSresid,
+	   				mean value of y: ym,
+	   				regression sum of squares
+					*/
+if((parm.check->answer) == "utility")
+{
+	ssresid = 0.0;
+	ym = 0.0;
+	for (i=0; i < ndata; i++)
+	{
+	ym += y[i];
+	epsilon[i] = y[i] - y2[i];
+	ssresid += epsilon[i] * epsilon[i];
+	p=epsilon[i]/y[i];
+	fprintf(y_y,"%12.4f %12.4f\n",y[i],y2[i]);
+					/*
+	printf(" epsilon/y for data i=%2d is=%12.4f\n", i,p);
+					*/
+	}
+	ym = ym/ndata;
+	printf(" SSresid = %12.4f\n", ssresid);
+	printf(" standard residiance = %16.10f\n", sqrt(ssresid/ndata));
+	printf(" mean y = %12.4f\n", ym);
+	
+	ssto = 0.0;
+	for (i=0;i<ndata;i++)
+	{
+	ssto += (y[i] - ym)*(y[i] - ym);
+	}
+	printf(" SSto = %12.4f\n", ssto);
+	printf(" standard variance of y= %12.4f\n", sqrt(ssto/ndata));
+	ff = ( ssto - ssresid ) / ssresid * ndata/nx;
+	printf("F=%12.4f\n",ff);
+	sigma1 = sqrt ( (double) ssresid/(ndata-(nx+1)));
+	printf("standard deviation = %12.4f\n",sigma1);
+	rr2 = (ssto -ssresid ) / ssto;
+	rrr = 1. - (double) (( ndata - 1 ) /( ndata - 1 - nx )) * 
+		ssresid / ssto;
+	printf("R ** 2 =%12.4f\n",rr2);
+	printf("adjusted R ** 2 =%12.4f\n",rrr);
+}
+					/*  test adequacy  
+					*/
+if((parm.check->answer) == "adequacy")
+{
+if(nx == 1 )
+	for(i=0;i<ndata;i++)
+	{
+	residual[i]=epsilon[i]/sigma1;
+	fprintf(curve_residual_x1,"%12.4f %12.4f\n",x[i*nx+0],residual[i]);
+	fprintf(curve_residual_y,"%12.4f %12.4f\n",y[i],residual[i]);
+	}
+if(nx == 2 )
+	for(i=0;i<ndata;i++)
+	{
+	residual[i]=epsilon[i]/sigma1;
+	fprintf(curve_residual_x1,"%12.4f %12.4f\n",x[i*nx+0],residual[i]);
+	fprintf(curve_residual_x2,"%12.4f %12.4f\n",x[i*nx+1],residual[i]);
+	fprintf(curve_residual_y,"%12.4f %12.4f\n",y[i],residual[i]);
+	}
+if(nx > 2 )
+	for(i=0;i<ndata;i++)
+	{
+	residual[i]=epsilon[i]/sigma1;
+	fprintf(curve_residual_x1,"%12.4f %12.4f\n",x[i*nx+0],residual[i]);
+	fprintf(curve_residual_x2,"%12.4f %12.4f\n",x[i*nx+1],residual[i]);
+	fprintf(curve_residual_x3,"%12.4f %12.4f\n",x[i*nx+2],residual[i]);
+	fprintf(curve_residual_y,"%12.4f %12.4f\n",y[i],residual[i]);
+	}
+}
+
+
+			/* calculate correlation coefficient between y and y2 */
+
+    correlation (y,y2,ndata,&r);
+
+					/* calculate t */
+    tscore (r,ndata,&t);
+
+					/* print coefficients */
+    printf ("---------------\n");
+    show_parms(a,na);
+    for (i = 0; i < na; i++)
+	if (w[i] == 0.0)
+	    printf ("   a[%d] has w==0\n", i);
+
+    printf (" r=%g r^2=%g t=%g\n", r, r*r, t);
+
+    if (argc > 2)
+    {
+	if(!freopen (argv[2], "w", stdout))
+	    perror (argv[2]);
+	else
+	{
+	    printf ("parameters\n");
+	    show_parms(a,na);
+
+	    printf ("corr=%g t=%g\n", r, t);
+	    printf ("  observed  predicted   error\n");
+	    for (i = 0; i < ndata; i++)
+		printf ("%12.4lf %12.4lf %12.4lf\n", y[i], y2[i], y[i]-y2[i]);
+	}
+    }
+    if (argc > 3)
+    {
+	if (!freopen (argv[3], "w", stdout))
+	    perror (argv[3]);
+	else
+	    for (i = 0; i < ndata; i++)
+		printf ("%12.4lf %12.4lf %12.4lf\n", y[i], y2[i], y[i]-y2[i]);
+    }
+					/* iteration for nonlinear fitting */
+
+if(flag_nonlinear == 1)
+{
+if(yes("need further iteration ? "))
+{
+printf("enter integer for percentage of reserving old epsilon\n");
+scanf("%d", &iamp);
+	for (i=0; i<ndata; i++)
+	{
+	delteps[i]=oldeps[i]-epsilon[i];
+	oldeps[i]=epsilon[i];
+	epsilon[i]= (double)iamp / 100. * delteps[i] + epsilon[i];
+	}
+goto iteration;
+}
+					/* check NDVI goodness */
+if((parm.check->answer) == "goodness" && model == 4 )
+{
+ a[0]=1.;
+ a[1]=-1.;
+a[2]=1.;
+a[3]=1.;
+a[4]=0.;
+ nonlinear_linearization_NDVI (xhong,&nxhong,&ndata,y,a,
+		&lina,&nonlinear_table);
+}
+					/* ralaxation vegetation index */
+if(yes("need relaxation vegetation index linear fitting?"))
+ 	{
+	nonlinear_linearization(xhong,&nxhong,&ndata,y,a,
+		&lina,&nonlinear_table);
+ 	relaxation(xhong,&nxhong,&ndata,y,lina,&nonlinear_table);
+	}
+
+					/* nonlinear calculation */
+if(yes("need nonlinear process?"))
+nonlinear_linearization(xhong,&nxhong,&ndata,y,a,
+		&lina,&nonlinear_table);
+ 
+
+}
+
+					/* predictions */
+if((parm.prediction -> answer) == "same" || (parm.prediction -> answer)
+	== "other")
+{
+if((parm.prediction -> answer) == "same" )
+{
+if(flag_nonlinear == 0)
+	prediction_linear(xprediction,yprediction,ndata2,nx,a,na);
+if(flag_nonlinear == 1)
+	prediction_nonlinear(xprediction,yprediction,ndata2,nxhong,a,na);
+goto final;
+}
+
+another_data:
+if((parm.prediction -> answer) == "other" )
+{
+printf("input the name of the other data set\n");
+scanf("%s", other_filename);
+    printf ("using %s\n", other_filename);
+if(flag_nonlinear == 0)
+	prediction_linear_other(other_filename,model,a,na);
+if(flag_nonlinear == 1)
+	prediction_nonlinear_other(other_filename,a,na);
+goto another_data;
+}
+
+goto final;
+}
+
+if(flag_nonlinear ==0)
+goto final;
+
+			/* delayed check multi_collinearity for nonlinear case*/
+if((parm.check->answer)=="multx1" ||
+	(parm.check->answer)=="multx2" ||
+	(parm.check->answer)=="multx3" ) 
+goto checkmulti;
+	goto final;
+checkmulti:
+nxmul = nx -1;
+xmul = vector(nxmul*ndata);
+ymul = vector (ndata);
+if((parm.check->answer)=="multx1")
+{
+	printf("check multicollinearity for x1=y\n");
+	for ( i=0; i<ndata; i++)
+	{
+		for(j=1; j<(nx); j++)
+		xmul[i*(nx-1)+(j-1)] = x[i*nx+j];
+	ymul[i]=x[i*nx];
+	}
+
+	nx=nxmul;
+	for(k=0; k< ndata; k++)
+	{
+		for(i=0; i<nx; i++)
+		{
+		x[k*nx+i]=xmul[k*nx+i];
+		}
+	y[k]=ymul[k];
+	}
+goto nonmult;
+}
+if((parm.check->answer)=="multx2")
+{
+	printf("check multicollinearity for x2=y\n");
+	for ( i=0; i<ndata; i++)
+	{
+		j=0;
+		xmul[i*(nx-1)+j] = x[i*nx+j];
+		j=2;
+		xmul[i*(nx-1)+(j-1)] = x[i*nx+j];
+	ymul[i]=x[i*nx+1];
+	}
+
+	nx=nxmul;
+	for(k=0; k< ndata; k++)
+	{
+		for(i=0; i<nx; i++)
+		{
+		x[k*nx+i]=xmul[k*nx+i];
+		}
+	y[k]=ymul[k];
+	}
+goto nonmult;
+}
+if((parm.check->answer)=="multx3")
+{
+	printf("check multicollinearity for x3=y\n");
+	for ( i=0; i<ndata; i++)
+	{
+		for(j=0; j<(nx-1); j++)
+		xmul[i*(nx-1)+j] = x[i*nx+j];
+	ymul[i]=x[i*nx+2];
+	}
+
+	nx=nxmul;
+	for(k=0; k< ndata; k++)
+	{
+		for(i=0; i<nx; i++)
+		{
+		x[k*nx+i]=xmul[k*nx+i];
+		}
+	y[k]=ymul[k];
+	}
+}
+nonmult:
+na = nx + 1;
+
+/* fit the model */
+    svdfitn(x,nx,y,ndata,a,na,u,v,w,function);
+/*
+for (i=0; i < nx; i++)
+printf("test, x[%2d]=%12.4f\n",i,x[i*nx]);
+*/
+
+/**** test matrix v
+for(i=0;i<na;i++)
+{
+for(j=0;j<na;j++)
+printf("v[%2d][%2d] = %12.4f\n",i,j,v[i][j]);
+}
+
+for(i=0;i<na;i++)
+for(j=0;j<na;j++)
+{
+test=0.0;
+for(k=0;k<na;k++)
+test += v[k][i]*v[k][j];
+printf("for i=%2d and j=%2d test[i,j]=%12.4f\n",i,j,test);
+}
+*/
+
+					/* 
+					check confidential
+					get and write sigma */
+if((parm.check->answer) == "confidencial")
+{
+sigma = vector (na);
+for(ka=0;ka<na;ka++)
+{
+sigma[ka]=0.0;
+for(ma=0;ma<na;ma++)
+{
+if(w[ma] != 0.0)
+ sigma[ka] += (v[ka][ma]/w[ma])*(v[ka][ma]/w[ma]);
+}
+ printf("w[%2d] = %12.4f\n",ka,w[ka]);
+printf("sigma[%1d] **2 =%12.4f\n", ka,sigma[ka]);
+}
+}
+
+
+					/* compute predicted values */
+    for (i=0; i < ndata; i++)
+    {
+	function (x+i*nx,nx,value,na);
+	y2[i] = 0.0;
+	for (k = 0; k < na; k++)
+	    y2[i] += a[k] * value[k];
+    }
+
+					/** Check utility: 
+	   				check total sum of squares SSto,
+	   				residual sum of squares SSresid,
+	   				mean value of y: ym,
+	   				regression sum of squares
+					*/
+if((parm.check->answer) == "utility")
+{
+	ssresid = 0.0;
+	ym = 0.0;
+	for (i=0; i < ndata; i++)
+	{
+	ym += y[i];
+	epsilon[i] = y[i] - y2[i];
+	ssresid += epsilon[i] * epsilon[i];
+	p=epsilon[i]/y[i];
+/*
+	printf(" epsilon/y for data i=%2d is=%12.4f\n", i,p);
+*/
+	}
+	ym = ym/ndata;
+	printf(" SSresid = %12.4f\n", ssresid);
+	printf(" standard residiance = %16.10f\n", sqrt(ssresid/ndata));
+	printf(" mean y = %12.4f\n", ym);
+	
+	ssto = 0.0;
+	for (i=0;i<ndata;i++)
+	{
+	ssto += (y[i] - ym)*(y[i] - ym);
+	}
+	printf(" SSto = %12.4f\n", ssto);
+	printf(" standard variance = %12.4f\n", sqrt(ssto/ndata));
+	ff = ( ssto - ssresid ) / ssresid * ndata/nx;
+	printf("F=%12.4f\n",ff);
+	sigma1 = sqrt ( (double) ssresid/(ndata-(nx+1)));
+	for(i=0;i<ndata;i++)
+	{
+	residual[i]=epsilon[i]/sigma1;
+	}
+	rr2 = (ssto -ssresid ) / ssto;
+	rrr = 1. - (double) (( ndata - 1 ) /( ndata - 1 - nx )) * 
+		ssresid / ssto;
+	printf("R ** 2 =%12.4f\n",rr2);
+	printf("adjusted R ** 2 =%12.4f\n",rrr);
+}
+
+/* calculate correlation coefficient between y and y2 */	
+    correlation (y,y2,ndata,&r);
+    tscore (r,ndata,&t);
+    printf ("---------------\n");
+    show_parms(a,na);
+    for (i = 0; i < na; i++)
+	if (w[i] == 0.0)
+	    printf ("   a[%d] has w==0\n", i);
+
+    printf (" r=%g r^2=%g t=%g\n", r, r*r, t);
+
+    if (argc > 2)
+    {
+	if(!freopen (argv[2], "w", stdout))
+	    perror (argv[2]);
+	else
+	{
+	    printf ("parameters\n");
+	    show_parms(a,na);
+
+	    printf ("corr=%g t=%g\n", r, t);
+	    printf ("  observed  predicted   error\n");
+	    for (i = 0; i < ndata; i++)
+		printf ("%12.4lf %12.4lf %12.4lf\n", y[i], y2[i], y[i]-y2[i]);
+	}
+    }
+    if (argc > 3)
+    {
+	if (!freopen (argv[3], "w", stdout))
+	    perror (argv[3]);
+	else
+	    for (i = 0; i < ndata; i++)
+		printf ("%12.4lf %12.4lf %12.4lf\n", y[i], y2[i], y[i]-y2[i]);
+    }
+
+
+final:
+    exit(0);
+}
+

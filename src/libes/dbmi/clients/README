@@ -1,0 +1,9 @@
+I need to write real clients - useable ones for tcl-like interfaces
+
+-------------------
+db.sql		execute any SQL stmt
+db.drivers	list all drivers
+db.databases	list all databases for a given driver
+db.tables	list all tables for a given database
+db.columns	list all columns for a given table
+db.describe	describe a table (in detail)

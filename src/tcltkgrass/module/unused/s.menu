@@ -1,0 +1,4 @@
+interface_build {
+    {s.menu} 1
+    {Accesses and manipulates GRASS site location data.}
+}

@@ -1,0 +1,5 @@
+cd /tmp
+rm -rf $$
+> $$
+/bin/ls -l $$ | awk '{print $3}'
+rm -f $$

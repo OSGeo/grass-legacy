@@ -1,0 +1,6 @@
+\v.cutter\ - Polygon Cookie Cutter  (Boolean AND Overlay)
+           This program provides a way to generate new maps based on an
+           intersection of two existing maps.  It in effect provides a
+           way to create masked versions of vector maps.
+
+(GRASS Vector Program)

@@ -1,0 +1,6 @@
+interface_build {
+    {v.cadlabel} 0
+    {Attaches labels to (binary) vector contour lines that have been imported to GRASS from DXF format.}
+    {entry lines {vector file containing index contour lines:} 0 vector}
+    {entry labels {vector file containing index contour line labels.} 0 vector_att}
+}

@@ -1,0 +1,83 @@
+The source code and Gmakefile on the enclosed disk will create the executable
+program "ps.map" in the current directory.
+
+ps.map is called with the following arguments:
+    ps.map input=input_script [scale=xxxx] output=outputfile
+The scale is optional.  If no scale is given here and no scale request is 
+made in the input script, a scale equivalent to "1 panel" is used.  The program
+looks for a file named ps.cfg which contains the following printer info:
+
+	level: 2
+	page width: 8.5
+	page height: 11.0
+	top margin: 0.5
+	bottom margin: 0.5
+	left margin: 0.25
+	right margin: 0.25
+
+If the ps.cfg file is not found, the default values are as shown above.  
+
+Of the script requests implemented so far, the following are exactly the
+same as in p.map except as noted:
+
+    colortable (has the following additional sub-requests)   
+      where x y (distance in inches from left and top edges of page - optional)
+      width  tablewidth (maximum width of colortable in inches - optional)
+      cols table_columns (optional - defaullt = 1)
+      font fontname (optional - default = Helvetica)
+      size fontsize (optional - default = 10)
+      color textcolor (optional - default = black)
+      end (required)
+
+    labels (has the following additional sub-requests)   
+      font fontname (optional - default = Helvetica)
+      end (required)
+
+    outline
+
+    raster
+
+    scale (except multiple panels are not yet implemented)
+
+    vector (except the stye sub-request uses the first color for
+	    all non-zero characters in the line pattern)
+
+    verbose
+
+
+The following new script requests have been added:
+
+    header
+      file filename (name of file containing header info - optional -
+	default is the standard header of pmap, except that it is
+	centered on the page.
+	THIS SUB-REQUEST HAS NOT BEEN IMPLEMENTED YET)
+      font fontname (optional - default = Helvetica)
+      size fontsize (optional - default = 10)
+      color textcolor (optional - default = black)
+      end (required)
+
+    maploc x y [width height]  (positions the map x and y inches from
+	the left and top edges of the page.  If the optional width and
+	height arguments are present, the map will be rescaled to fit.
+	If this request is not encountered, the map will be located
+	immediately below the header starting at the left margin.)
+
+    map_info
+      where x y (positons the information about the scale, the grid, and
+	the region x and y inches from the left and top edges of the page -
+	optonal - default is immediately below the map, starting at the
+	left edge of the map)
+      font fontname (optional - default = Helvetica)
+      size fontsize (optional - default = 10)
+      color textcolor (optional - default = black)
+      end (required)
+
+    vlegend
+      where x y (positons the vector legend x and y inches from the left 
+	and top edges of the page - optonal - default is immediately below the
+	map_info, starting at the left edge of the map)
+      font fontname (optional - default = Helvetica)
+      size fontsize (optional - default = 10)
+      end (required)
+

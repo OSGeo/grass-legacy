@@ -1,0 +1,63 @@
+#!/bin/sh
+
+# v.psu.patch, a psu tool for patching quads into counties
+# Version 1 - Written by RL Glenn, CGIS, NHQ
+
+if [ $# != 3 ]
+	then 
+          tput clear
+	  echo "Usage: v.psu.patch state_fips_num county_fips_num county(yes/no)
+
+NAME 
+     v.psu.patch - Tool for creating a vector map from all digit
+               psu files in current $LOCATION
+
+DESCRIPTION
+     v.psu.patch reads in all psu quad digit files, runs the patch.vect
+     program, outputs the resultant patch file, creates a dig_cats
+     category file for the patched map, and then runs support.vect.
+     
+     state_fips_num  - FIPS Pub. 6-3 number for the state.
+     county_fips_num - FIPS Pub. 6-3 number for the county.
+     county(yes/no)  - if county digital data used answer   yes;
+                     - if county digital data NOT used answer   no.
+     "
+
+	  exit
+fi
+# get the zone number from WIND file
+zone=`grep zone WIND | awk '{print $2}'`
+
+# find all .psu files in dig directory and set up patch.vect command
+patch1=$GISBASE/bin/v.patch
+cd $LOCATION/dig
+ls *.psu > $LOCATION/tmp$$
+cd $LOCATION
+for i in `cat tmp$$`
+do
+patch1=`echo "$patch1 in=$i \c" `
+done
+patch2=`echo "$patch1 out=C$2.$zone.psu"`
+
+# execute patch command
+$patch2
+
+# put in the st_co fips codes in digcats if no county data used
+if [ "$3" = "no" -o "$3" = "NO" -o "$3" = "n" - o "$3" = "N" ]
+then 
+     cp SUBJ/*.psu dig_cats/C$2.$zone.psu # now copy SUBJ file to dig_cats
+     v.psu.fips C$2.$zone.psu $1$2
+     v.support C$2.$zone.psu
+else cd dig_att          # remove county attributes to unlabel county data
+     rm -f county
+     v.support county
+     $GISBASE/bin/v.patch C$2.$zone.psu county clip.psu
+     cp SUBJ/*.psu dig_cats/clip.psu # now copy SUBJ file to dig_cats
+fi
+
+rm -f $LOCATION/tmp*
+tput clear
+if [ "$3" = "yes" -o "$3" = "YES" -o "$3" = "y" -o "$3" = "Y" ]
+then echo  "\n\n\tv.psu.patch is completed on  <clip.psu>\n"
+else echo  "\n\n\tv.psu.patch is completed on  <C$2.$zone.psu>\n"
+fi

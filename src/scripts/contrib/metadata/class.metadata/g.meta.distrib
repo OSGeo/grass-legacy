@@ -1,0 +1,723 @@
+:
+# ****  This is g.meta.distrib ****
+
+if [ `uname -m` = mips ] ; then
+  ECHON="/usr/bsd43/bin/echo -n"
+elif [ `uname -s` = SunOS -a `uname -r | sed 's/\...*$//'` = 5 ] ; then
+  ECHON="/usr/ucb/echo -n"
+else
+  ECHON="echo -n"
+fi
+
+wordwrap2="$METAHOME/wordwrap.distrib"
+wordwrap3="$METAHOME/wordwrap.distrib2"
+clear
+echo ''
+if [ -f "$METAHOME/meta.system" ] ; then
+  echo "$METAHOME/meta.system already exists."
+  echo ''
+  echo 'Do you want to . . .'
+  echo ''
+  echo '1 - modify it with vi, then quit'
+  echo '2 - redo it'
+  echo ''
+  $ECHON 'Please select the appropriate number: '
+  read ans
+  case $ans in
+	1) vi $METAHOME/meta.system
+    	   echo ''
+    	   sleep 1
+           echo "Editing completed."
+  	   exit 0;;
+	2) break;;
+  esac
+fi
+echo ''
+echo 'You have accessed the g.meta.distrib program. The information'
+echo 'gathered may be grepped for metadata files.'
+echo ''
+echo "Please enter the login name of the distribution contact for metadata."
+$ECHON "> "
+read input 
+distbtor=`finger $input | grep 'In real life' | sed -n '1p' | cut -d':' -f3 | cut -c2-40`
+echo "Contact_Information: $distbtor" > meta.system
+echo ''
+echo "Does a liability statement exist for the data that this"
+$ECHON "organization provides? (y) "
+read ans
+if [ "$ans" = "N" -o "$ans" = "n" ] ; then
+  echo ''
+  echo "Please compose a liability statement in ascii format, then"
+  echo "begin this program again."
+  echo ''
+  exit 0
+else
+  echo ''
+  echo "Please enter the path and name of the ascii text liability statement."
+  echo "Example: /home/goby/franklin/Disclaimer.ascii"
+  echo ''
+  $ECHON "> "
+  read liabpath 
+  echo ''
+  echo "Lengthy liability statements will take a few moments to process."
+  echo "Please be patient."
+  echo ''
+  liabcount=`cat "$liabpath" | sed '/^$/d' | wc -l | tr -d ' '`
+  howmany=`expr $liabcount / 11`
+  remain=`expr $liabcount % 11`
+  if [ $liabcount -lt 12 ] ; then 
+    "$wordwrap2" Distribution_Liability "$liabpath" meta.system
+  else
+    j=1
+    until [ $j -gt $howmany ] ; do
+      mark1=`expr 11 \* $j`
+      mark2=`expr $mark1 - 10`
+      if [ $j = 1 ] ; then
+        cat "$liabpath" | sed '/^$/d' | sed -n "$j,$mark1""p" > liabtmp
+        "$wordwrap2" Distribution_Liability liabtmp meta.system
+      else
+        cat "$liabpath" | sed '/^$/d' | sed -n "$mark2,$mark1""p" > liabtmp
+        "$wordwrap3" Distribution_Liability liabtmp meta.system
+      fi
+      j=`expr $j + 1`
+    done
+    if [ -n $remain ] ; then
+      mark3=`expr $mark1 + 1`
+      mark4=`expr $mark3 + $remain`
+      cat "$liabpath" | sed '/^$/d' | sed -n "$mark3,$mark4""p" > liabtmp
+      "$wordwrap3" Distribution_Liability liabtmp meta.system
+    fi
+  fi
+fi
+trap "rm liabtmp ; exit 0" 2
+if [ -f liabtmp ] ; then
+  rm liabtmp
+fi
+clear
+
+echo ''
+echo 'What file compression techniques are available to compress or further'
+echo 'compress files for distribution?'
+echo ''
+$ECHON "> "
+read input
+echo "$input" > /tmp/metasys$$
+while [ -n "$input" ] ; do
+$ECHON '> '
+read input
+  if [ -z "$input" ] ; then
+    break
+  else
+    echo "$input" >> /tmp/metasys$$
+  fi
+done
+"$wordwrap2" File_Compression_Information /tmp/metasys$$ meta.system
+trap "rm /tmp/metasys$$ ; exit 0" 2
+rm /tmp/metasys$$
+
+clear
+echo ''
+echo "Please enter information on how to proceed once the connection to the"
+echo "distribution computer is established."
+echo ''
+$ECHON "INSTRUCTIONS> "
+read input
+echo "$input" > /tmp/metasys$$
+while [ -n "$input" ] ; do
+$ECHON '            > '
+read input
+  if [ -z "$input" ] ; then
+    break
+  else
+    echo "$input" >> /tmp/metasys$$
+  fi
+done
+"$wordwrap2" Access_Instructions /tmp/metasys$$ meta.system
+trap "rm /tmp/metasys$$ ; exit 0" 2
+rm /tmp/metasys$$
+clear
+
+echo ''
+echo 'What is the brand of the distribution computer?'
+echo ''
+$ECHON '> '
+read discomp 
+echo ''
+$ECHON 'What is the computer operating sytem?'
+$ECHON '> '
+read opsys
+echo "Online_Computer_and_Operating_System: $discomp ; $opsys" >> meta.system 
+echo ''
+echo ''
+echo "What is the electronic address of the distribution computer?"
+echo ''
+$ECHON '> '
+read input
+echo "Network_Address: $input" >> meta.system
+clear
+
+echo ''
+echo "What is the lowest or only speed for the connection""'""s communication,"
+echo "expressed in bits per second?"
+echo ''
+echo
+$ECHON ' 1 -    110	'
+$ECHON '	 2 -    300 '
+$ECHON '	 	 3 -    600'
+echo
+$ECHON ' 4 -   1200'
+$ECHON '		 5 -   2400'
+$ECHON '		 6 -   4800'
+echo
+$ECHON ' 7 -   9600'
+$ECHON '		 8 -  14400'
+$ECHON '		 9 -  19200'
+echo 
+$ECHON '10 -  38400'
+$ECHON '		11 -  57600'
+$ECHON '		12 - 115200'
+echo
+echo ''
+echo ''
+$ECHON "Please select the appropriate number: "
+read number
+case $number in
+	1) echo "Lowest_BPS: 110" >> meta.system;;
+	2) echo "Lowest_BPS: 300" >> meta.system;;
+	3) echo "Lowest_BPS: 600" >> meta.system;;
+	4) echo "Lowest_BPS: 1200" >> meta.system;;
+	5) echo "Lowest_BPS: 2400" >> meta.system;;
+	6) echo "Lowest_BPS: 4800" >> meta.system;;
+	7) echo "Lowest_BPS: 9600" >> meta.system;;
+	8) echo "Lowest_BPS: 14400" >> meta.system;;
+	9) echo "Lowest_BPS: 19200" >> meta.system;;
+	10) echo "Lowest_BPS: 38400" >> meta.system;;
+	11) echo "Lowest_BPS: 57600" >> meta.system;;
+	12) echo "Lowest_BPS: 115200" >> meta.system;;
+esac
+clear
+
+echo ''
+echo "What is the highest speed for the connection""'""s communication,"
+echo "expressed in bits per second? (Used in cases when a wide range"
+echo "of rates are provided.)"
+echo ''
+echo
+$ECHON ' 1 -    300	'
+$ECHON '	 2 -    600 '
+$ECHON '	 	 3 -   1200'
+echo
+$ECHON ' 4 -   2400'
+$ECHON '		 5 -   4800'
+$ECHON '		 6 -   9600'
+echo
+$ECHON ' 7 -  14400'
+$ECHON '		 8 -  19200'
+$ECHON '		 9 -  38400'
+echo 
+$ECHON '10 -  57600'
+$ECHON '		11 - 115200'
+echo
+echo ''
+echo ''
+$ECHON "Please select the appropriate number: "
+read number
+case $number in
+	1) echo "Highest_BPS: 300" >> meta.system;;
+	2) echo "Highest_BPS: 600" >> meta.system;;
+	3) echo "Highest_BPS: 1200" >> meta.system;;
+	4) echo "Highest_BPS: 2400" >> meta.system;;
+	5) echo "Highest_BPS: 4800" >> meta.system;;
+	6) echo "Highest_BPS: 9600" >> meta.system;;
+	7) echo "Highest_BPS: 14400" >> meta.system;;
+	8) echo "Highest_BPS: 19200" >> meta.system;;
+	9) echo "Highest_BPS: 38400" >> meta.system;;
+	10) echo "Highest_BPS: 57600" >> meta.system;;
+	11) echo "Highest_BPS: 115200" >> meta.system;;
+esac
+clear
+
+echo ''
+echo "Please enter the number of data bits in each character exchanged"
+echo "in the communication?"
+echo ""
+echo '	7'
+echo '	8'
+echo''
+$ECHON 'Select one of the above numbers: '
+read number
+case $number in
+	7) echo "Number_DataBits: $number" >> meta.system;;
+	8) echo "Number_DataBits: $number" >> meta.system;;
+esac
+
+echo ''
+echo ''
+echo "Please enter the number of stop bits in each character exchanged"
+echo "in the communication."
+echo ""
+echo '	1'
+echo '	2'
+echo''
+$ECHON 'Select one of the above numbers: '
+read number
+case $number in
+	1) echo "Number_StopBits: $number" >> meta.system;;
+	2) echo "Number_StopBits: $number" >> meta.system;;
+esac
+
+clear
+echo ''
+echo "What is the parity error checking used in each character exchanged"
+echo "in the communication?"
+echo ""
+echo '	1 - None'
+echo '	2 - Odd'
+echo '	3 - Even'
+echo '	4 - Mark'
+echo '	5 - Space'
+echo''
+$ECHON 'Select one of the above numbers: '
+read number
+case $number in
+	1) echo "Parity: None" >> meta.system;;
+	2) echo "Parity: Odd" >> meta.system;;
+	3) echo "Parity: Even" >> meta.system;;
+	4) echo "Parity: Mark" >> meta.system;;
+	5) echo "Parity: Space" >> meta.system;;
+esac
+clear
+ 
+echo ''
+echo 'What compression is available through the modem service to speed'
+echo 'data transfer?'
+echo ''
+echo '1 - V.32'
+echo '2 - V.32bis'
+echo '3 - V.42'
+echo '4 - V.42bis'
+echo '5 - Other'
+echo ''
+$ECHON 'Please select one of the above: '
+read ans
+case $ans in
+	1) echo "Dialup_Compression: V.32" >> meta.system;;
+	2) echo "Dialup_Compression: V.32bis" >> meta.system;;
+	3) echo "Dialup_Compression: V.42" >> meta.system;;
+	4) echo "Dialup_Compression: V.42bis" >> meta.system;;
+	5) echo ''
+	   echo 'Please enter a compression rate:'
+	   $ECHON '> '
+	   read ans
+	   echo "Dialup_Compression: $ans" >> meta.system;;
+esac
+clear
+echo ''
+
+$ECHON 'Does the distribution computer have a dialup telephone number? (y) '
+read ans
+if [ "$ans" = "n" -o "$ans" = "N" ] ; then
+  echo "Dialup_Telephone: none" >> meta.system
+else
+  echo ''
+  $ECHON "Please enter the area code (no parenthesis): "
+  read areacode
+  areacode=`echo $areacode | tr -d '(' | tr -d ')'`
+  echo ''
+  $ECHON "Please enter the remaining phone number (format= ###-####): "
+  read number
+  echo "Dialup_Telephone: ($areacode) $number" >> meta.system
+fi
+clear
+echo ''
+
+echo 'Please indicate which of the following cartridge drives your' 
+echo 'organization possesses.'
+echo ''
+echo '1 - QIC - (quarter-inch) only'
+echo '2 - 4mm - (4 millimeter) only'
+echo '3 - 8mm - (8 millimeter) only'
+echo '4 - QIC and 4mm' 
+echo '5 - QIC and 8mm'
+echo '6 - 4mm and 8mm'
+echo '7 - QIC, 4mm and 8mm'
+echo ''
+$ECHON 'Please enter the appropriate number: '
+read number
+case $number in
+	1) echo ''
+	   echo 'What is the maximum  amount of data, in megabytes, that can'
+	   $ECHON 'be written to the QIC cartridge? '
+	   read amount
+	   echo "Offline_Media: Cartridge_type  QIC" >> meta.system
+	   echo "Cartridge_Recording_Capacity: $amount Mb" >> meta.system;;
+	2) echo ''
+	   echo 'What is the maximum  amount of data, in megabytes, that can'
+	   $ECHON 'be written to the 4mm cartridge? '
+	   read amount
+	   echo "Offline_Media: Cartridge_type  4mm" >> meta.system
+	   echo "Cartridge_Recording_Capacity: $amount Mb" >> meta.system;;
+	3) echo ''
+	   echo 'What is the maximum  amount of data, in megabytes, that can'
+	   $ECHON 'be written to the 8mm cartridge? '
+	   read amount
+	   echo "Offline_Media: Cartridge_type  8mm" >> meta.system
+	   echo "Cartridge_Recording_Capacity: $amount Mb" >> meta.system;;
+	4) echo ''
+	   echo 'What is the maximum  amount of data, in megabytes, that can'
+	   $ECHON 'be written to the QIC cartridge? '
+	   read amount1
+	   echo ''
+	   echo 'What is the maximum  amount of data, in megabytes, that can'
+	   $ECHON 'be written to the 4mm cartridge? '
+	   read amount2
+	   echo "Offline_Media: Cartridge_type QIC ; 4mm" >> meta.system
+	   echo "Cartridge_Recording_Capacity: QIC $amount1 Mb ; 4mm $amount2 Mb" >> meta.system;;
+	5) echo ''
+	   echo 'What is the maximum  amount of data, in megabytes, that can' 
+	   $ECHON 'be written to the QIC cartridge? '
+	   read amount1
+	   echo ''
+	   echo 'What is the maximum amount of data, in megabytes, that can'
+	   $ECHON 'be written to the 8mm cartridge? '
+	   read amount2
+	   echo "Offline_Media: Cartridge_type  QIC ; 8mm" >> meta.system
+	   echo "Cartridge_Recording_Capacity: QIC $amount1 Mb ; 8mm $amount2 Mb" >> meta.system;;
+	6) echo ''
+	   echo 'What is the maximum amount of data, in megabytes, that can'
+	   $ECHON 'be written to the 4mm cartridge? '
+	   read amount1
+	   echo ''
+	   echo 'What is the maximum amount of data, in megabytes, that can'
+	   $ECHON 'be written to the 8mm cartridge? '
+	   read amount2
+	   echo "Offline_Media: Cartridge_type 4mm ; 8mm" >> meta.system
+	   echo "Cartridge_Recording_Capacity: 4mm $amount1 Mb ; 8mm $amount2 Mb" >> meta.system;;
+	7) echo ''
+	   echo 'What is the maximum amount of data, in megabytes, that can'
+	   $ECHON 'be written to the QIC cartridge? '
+	   read amount1
+	   echo ''
+	   echo 'What is the maximum amount of data, in megabytes, that can'
+	   $ECHON 'be written to the 4mm cartridge? '
+	   read amount2
+	   echo ''
+	   echo 'What is the maximum amount of data, in megabytes, that can'
+	   $ECHON 'be written to the 8mm cartridge? '
+	   read amount3
+	   echo "Offline_Media: Cartridge_Type  QIC ; 4mm ; 8mm " >> meta.system
+	   echo "Cartridge_Recording_Capacity: QIC $amount1 Mb ; 4mm $amount2 Mb ; 8mm $amount3 Mb" >> meta.system;;
+esac
+clear
+
+echo ''
+echo 'What method is used to write the data set to cartridge?'
+echo ''
+echo '1 - cpio'
+echo '2 - bar'
+echo '3 - tar'
+echo '4 - method will be indicated'
+echo ''
+$ECHON 'Please enter the appropriate number: '
+read number
+case $number in
+	1) echo 'Cartridge_Recording_Format  cpio' >> meta.system;;
+	2) echo 'Cartridge_Recording_Format  bar' >> meta.system;;
+	3) echo 'Cartridge_Recording_Format  tar' >> meta.system;;
+	4) echo ''
+	   echo 'Please indicate the method to write to the cartridge.'
+	   echo ''
+	   $ECHON '> '
+	   read method
+	   echo "               Cartridge_Recording_Format  $method" >> meta.system;;
+esac
+clear
+echo ''
+
+$ECHON 'Does this organization have a 9-Track drive for distribution purposes? (y) '
+read ans
+if [ "$ans" = "n" -o "$ans" = "N" ] ; then
+  break
+else
+  echo ''
+  echo 'What is the density, in bytes or characters per inch, in which the'
+  echo 'data set can be recorded?'
+  echo ''
+  echo '1 -  800'
+  echo '2 - 1600'
+  echo '3 - 6250'
+  echo '4 - Other'
+  echo ''
+  $ECHON 'Please enter the appropriate number: '
+  read number
+  case $number in
+	1) echo 'Offline_Media: 9-track' >> meta.system
+	   echo '9-track_Recording-Density: 800' >> meta.system
+ 	   echo '9-track_Recording_Density_Units: bpi' >> meta.system;;
+	2) echo 'Offline_Media: 9-track' >> meta.system
+	   echo '9-track_Recording-Density: 1600' >> meta.system
+ 	   echo '9-track_Recording_Density_Units: bpi' >> meta.system;;
+	3) echo 'Offline_Media: 9-track' >> meta.system
+	   echo '9-track_Recording-Density: 6250' >> meta.system
+ 	   echo '9-track_Recording_Density_Units: bpi' >> meta.system;;
+	4) echo ''
+	   $ECHON 'BPI> '
+	   read bpi
+	   echo "Offline_Media: 9-track_BPI: $bpi" >> meta.system
+	   echo "9-track_Recording-Density: $bpi" >> meta.system
+ 	   echo '9-track_Recording_Density_Units: bpi' >> meta.system;;
+  esac
+  clear
+  echo ''
+  echo 'What are the 9-track record length and options for block size in which'
+  echo 'data sets can be recorded?'
+  echo ''
+  $ECHON '> '
+  read input
+  tmpfile=''
+  tmpfile=/tmp/metasys$$
+  echo "$input" > $tmpfile
+  while [ -n "$input" ] ; do
+    $ECHON '> '
+    read input
+    if [ -z "$input" ] ; then
+      break
+    else
+      echo "$input" >> $tmpfile
+    fi
+  done
+  "$wordwrap2" 9-track_Record_Length_and_Block_Length_Information $tmpfile meta.system
+  trap "rm $tmpfile ; exit 0" 2
+  rm $tmpfile
+fi
+  clear
+  echo ''
+  echo 'What is the method used to write the data set to the 9-Track, including'
+  echo 'information about file labels?'
+  echo ''
+  $ECHON '> '
+  read input
+  tmpfile=''
+  tmpfile=/tmp/metasys$$
+  echo "$input" > $tmpfile
+  while [ -n "$input" ] ; do
+    $ECHON '> '
+    read input
+    if [ -z "$input" ] ; then
+      break
+    else
+      echo "$input" >> $tmpfile
+    fi
+  done
+  "$wordwrap2" 9-Track_Recording_Format $tmpfile meta.system
+  trap "rm $tmpfile ; exit 0" 2
+  rm $tmpfile
+clear
+echo ''
+
+echo 'Which type of floppy disk drives does this organization possess?'
+echo ''
+echo '1 - 5.25 (Five and one-quarter inch) only'
+echo '2 - 3.5  (Three and one-half inch) only'
+echo '3 - Both of the above'
+echo ''
+$ECHON 'Please enter the appropriate number: '
+read number
+case $number in
+	1) echo 'Offline_Media: FD_Type 5.25 inch' >> meta.system
+	   echo 'FD_Capacity: 1.2 Mb' >> meta.system;;
+	2) echo 'Offline_Media: FD_Type 3.5 inch ' >> meta.system
+	   echo 'FD_Capacity: 1.44 Mb' >> meta.system;;
+	3) echo 'Offline_Media: FD_type 5.25 inch ; 3.5 inch' >> meta.system
+	   echo 'FD_Capacity: 5.25 inch = 1.2 ; 3.5 inch = 1.44 Mb' >> meta.system;;
+esac
+clear
+echo ''
+
+$ECHON 'Does this organization distribute data on CD-ROM? (n) '
+read ans
+if [ "$ans" = "y" -o "$ans" = "Y" ] ; then
+  echo ''
+  echo 'What is the standard followed in recording the CD-ROM?'
+  echo ''
+  echo '1 - High Sierra'
+  echo '2 - ISO 9660'
+  echo '3 - ISO 9660 with Rock Ridge extensions'
+  echo '4 - ISO 9660 with Apple HFS extensions'
+  echo '5 - Other'
+  echo ''
+  $ECHON 'Please enter the appropriate number: '
+  read number
+  case $number in
+	1) echo 'Offline_Media: CD-ROM' >> meta.system
+ 	   echo 'CD-ROM_Recording_Format: High Sierra' >> meta.system;;
+	2) echo 'Offline_Media: CD-ROM' >> meta.system
+ 	   echo 'CD-ROM_Recording_Format: ISO 9660' >> meta.system;;
+	3) echo 'Offline_Media: CD-ROM' >> meta.system
+ 	   echo 'CD-ROM_Recording_Format: ISO 9660 w/Rock Ridge extensions' >> meta.system;;
+	4) echo 'Offline_Media: CD-ROM' >> meta.system
+ 	   echo 'CD-ROM_Recording_Format: ISO 9660 w/Apple HFS extensions' >> meta.system;;
+	5) echo ''
+	   $ECHON '> '
+ 	   read input
+	   echo "Offline_Media: CD-ROM" >> $meta.system
+ 	   echo "CD-ROM_Recording_Format: $other" >> meta.system;;
+  esac
+fi
+clear
+echo ''
+
+echo 'Describe any other limitations or requirements for using the'
+echo 'medium or media.'
+echo ''
+$ECHON '> '
+read input
+tmpfile=''
+tmpfile=/tmp/metasys$$
+echo "$input" > $tmpfile
+while [ -n "$input" ] ; do
+  $ECHON '> '
+  read input
+  if [ -z "$input" ] ; then
+    break
+  else
+    echo "$input" >> $tmpfile
+  fi
+done
+"$wordwrap2" Compatibility_Information $tmpfile meta.system
+trap "rm $tmpfile ; exit 0" 2
+rm $tmpfile
+clear
+echo ''
+
+clear
+echo ''
+echo "What options are available to receive data sets on non-digital media?"
+echo "List as many as apply."
+echo ''
+echo "paper     mylar"	 
+echo ''
+echo "slides    overheads"
+echo ''
+echo "other     (if other, please specify)"
+echo ''
+$ECHON '>  '
+read input
+echo "$input" > /tmp/metasys$$
+while [ -n "$input" ] ; do
+$ECHON '> '
+read input
+  if [ -z "$input" ] ; then
+    break
+  else
+    echo "$input" >> /tmp/metasys$$
+  fi
+done
+"$wordwrap2" Non-digital_Form /tmp/metasys$$ meta.system
+trap "rm /tmp/metasys$$ ; exit 0" 2
+rm /tmp/metasys$$
+clear
+echo ''
+
+echo 'What are the fees and terms for retrieving the data set?'
+echo ''
+$ECHON '> '
+read input
+tmpfile=''
+tmpfile=/tmp/metasys$$
+echo "$input" > $tmpfile
+while [ -n "$input" ] ; do
+  $ECHON '> '
+  read input
+  if [ -z "$input" ] ; then
+    break
+  else
+    echo "$input" >> $tmpfile
+  fi
+done
+"$wordwrap2" Fees $tmpfile meta.system
+trap "rm $tmpfile ; exit 0" 2
+rm $tmpfile
+clear
+echo ''
+
+echo 'What are the general instructions and advise about, and special terms'
+echo 'and services provided for, the data set by the distributor.'
+echo ''
+$ECHON '> '
+read input
+tmpfile=''
+tmpfile=/tmp/metasys$$
+echo "$input" > $tmpfile
+while [ -n "$input" ] ; do
+  $ECHON '> '
+  read input
+  if [ -z "$input" ] ; then
+    break
+  else
+    echo "$input" >> $tmpfile
+  fi
+done
+"$wordwrap2" Transfer_Instructions $tmpfile meta.system
+trap "rm $tmpfile ; exit 0" 2
+rm $tmpfile
+clear
+echo ''
+ 
+echo 'What is the typical turnaround time, in days, for the filling of an order?'
+echo ''
+$ECHON '> '
+read input
+tmpfile=''
+tmpfile=/tmp/metasys$$
+echo "$input" > $tmpfile
+while [ -n "$input" ] ; do
+  $ECHON '> '
+  read input
+  if [ -z "$input" ] ; then
+    break
+  else
+    echo "$input" >> $tmpfile
+  fi
+done
+"$wordwrap2" Turnaround $tmpfile meta.system
+trap "rm $tmpfile ; exit 0" 2
+rm $tmpfile
+clear
+echo ''
+
+echo 'Describe the customer distribution services available, and the terms and'
+echo 'conditions for obtaining these services.'
+echo ''
+$ECHON '> '
+read input
+tmpfile=''
+tmpfile=/tmp/metasys$$
+echo "$input" > $tmpfile
+while [ -n "$input" ] ; do
+  $ECHON '> '
+  read input
+  if [ -z "$input" ] ; then
+    break
+  else
+    echo "$input" >> $tmpfile
+  fi
+done
+"$wordwrap2" Custom_Transfer_Options $tmpfile meta.system
+trap "rm $tmpfile ; exit 0" 2
+rm $tmpfile
+clear
+echo ''
+echo "Basic system information has been collected!"
+echo ""
+echo "Do you want to look at $METAHOME/meta.system or"
+$ECHON "do a final edit with vi? (n) "
+read ans
+if [ "$ans" = "y" -o "$ans" = "Y" ] ; then
+  vi $METAHOME/meta.system
+  clear
+  echo ''
+  sleep 1
+  echo "Editing completed."
+fi
+

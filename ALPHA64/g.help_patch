@@ -1,0 +1,18 @@
+src/general/g.help/menu.c
+742c742
+< 	Maxlines = ((short)Numlines <= Windoname->CURSES_MAXY) ?
+---
+> 	/* Maxlines = ((short)Numlines <= Windoname->CURSES_MAXY) ?
+744c744,745
+< 
+---
+>        */ 
+>         Maxlines=Numlines;
+814,816c815,817
+< 	Maxlines = ((short)Numlines <= Windoname->CURSES_MAXY) ?
+< 			Numlines : Windoname->CURSES_MAXY;
+< 
+---
+> 	/* Maxlines = ((short)Numlines <= Windoname->CURSES_MAXY) ?
+> 			Numlines : Windoname->CURSES_MAXY;*/
+>         Maxlines=Numlines;

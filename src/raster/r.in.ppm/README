@@ -1,0 +1,9 @@
+Updated 8/99 to true 24bit support.
+The old version was limited to 32767 colors.
+
+ Incorporated color quantization to speed up GRASS.
+ (GRASS is getting extremely slow with more than
+  a few thousand categories/colors)
+
+Stefano Merler
+merler@irst.itc.it

@@ -1,0 +1,4 @@
+interface_build {
+    {i.target} 1
+    {An imagery function that targets an imagery groups to a target location.}
+}

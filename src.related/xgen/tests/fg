@@ -1,0 +1,14 @@
+environment a
+initialshells:b
+{
+    menu b
+    (
+	button "Run a command" 
+	    captureoutput:editor
+	    runforeground:"ls -l"
+	    ;
+	button "Quit" 
+	    exit:0
+	    ;
+    )
+}

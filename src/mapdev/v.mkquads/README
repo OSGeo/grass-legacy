@@ -1,0 +1,12 @@
+modified v.mkquads (from NRCS)
+
+   map   map name
+  type   quad size
+         options: full,third,quarter,1x1,1x2
+         default: full
+
+  v.mkquads is a map development program and the code must be placed in
+ grass5.0/src/mapdev/mkquads for it to compile correctly.
+ Compile by typing 'gmake5.0'.   
+ There is also a GRASS manual page in the mkquads
+ directory for v.mkquads (g.manual v.mkquads).

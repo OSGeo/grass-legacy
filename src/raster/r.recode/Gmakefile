@@ -1,0 +1,12 @@
+PGM=r.recode
+HOME=$(BIN_MAIN_CMD)
+
+LIST = main.o\
+	read_rules.o\
+	recode.o
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(XDRLIB) $(MATHLIB)
+
+$(LIST): global.h
+$(GISLIB): #

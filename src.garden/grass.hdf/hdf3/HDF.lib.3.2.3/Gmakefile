@@ -1,0 +1,11 @@
+HDF_LIBDIR = lib/$(LIBARCH)
+HDFLIB = lib/libdf.a
+
+
+all: $(HDF_LIBDIR)
+	make libnofortran
+	mv lib/libdf.\a $(HDFLIB)
+	make clean
+
+$(HDF_LIBDIR):
+	mkdir $(HDF_LIBDIR)

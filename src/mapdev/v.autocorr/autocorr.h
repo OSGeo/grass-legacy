@@ -1,0 +1,2 @@
+extern struct Categories cats;
+

@@ -1,0 +1,130 @@
+2 variables
+90 observations
+for check of v[ 0][ 0] =      -0.2437
+for check of v[ 0][ 1] =      -0.8898
+for check of v[ 0][ 2] =      -0.3858
+for check of v[ 1][ 0] =      -0.4678
+for check of v[ 1][ 1] =       0.4563
+for check of v[ 1][ 2] =      -0.7570
+for check of v[ 2][ 0] =      -0.8496
+for check of v[ 2][ 1] =       0.0040
+for check of v[ 2][ 2] =       0.5274
+for i= 0 and j= 0 check summation of Vki*Vkj =      1.0000
+for i= 0 and j= 1 check summation of Vki*Vkj =      0.0000
+for i= 0 and j= 2 check summation of Vki*Vkj =     -0.0000
+for i= 1 and j= 0 check summation of Vki*Vkj =      0.0000
+for i= 1 and j= 1 check summation of Vki*Vkj =      1.0000
+for i= 1 and j= 2 check summation of Vki*Vkj =      0.0000
+for i= 2 and j= 0 check summation of Vki*Vkj =     -0.0000
+for i= 2 and j= 1 check summation of Vki*Vkj =      0.0000
+for i= 2 and j= 2 check summation of Vki*Vkj =      1.0000
+w[ 0] =      11.1493
+sigma[0] **2 =      1.2541
+w[ 1] =       0.8476
+sigma[1] **2 =      0.8746
+w[ 2] =       0.9914
+sigma[2] **2 =      0.2889
+ epsilon/y for data i =  0 is =       0.0422
+ epsilon/y for data i =  1 is =       0.0767
+ epsilon/y for data i =  2 is =      -0.9006
+ epsilon/y for data i =  3 is =      -0.7986
+ epsilon/y for data i =  4 is =       0.3354
+ epsilon/y for data i =  5 is =      -0.2875
+ epsilon/y for data i =  6 is =      -1.1837
+ epsilon/y for data i =  7 is =      -0.0193
+ epsilon/y for data i =  8 is =      -0.0248
+ epsilon/y for data i =  9 is =      -0.0177
+ epsilon/y for data i = 10 is =       0.2962
+ epsilon/y for data i = 11 is =       0.0264
+ epsilon/y for data i = 12 is =       0.0493
+ epsilon/y for data i = 13 is =       0.0665
+ epsilon/y for data i = 14 is =       0.1243
+ epsilon/y for data i = 15 is =      -0.1908
+ epsilon/y for data i = 16 is =      -0.0257
+ epsilon/y for data i = 17 is =       0.2775
+ epsilon/y for data i = 18 is =       0.0241
+ epsilon/y for data i = 19 is =      -0.0098
+ epsilon/y for data i = 20 is =       0.1726
+ epsilon/y for data i = 21 is =       0.2905
+ epsilon/y for data i = 22 is =      -0.1233
+ epsilon/y for data i = 23 is =       0.0181
+ epsilon/y for data i = 24 is =      -0.1874
+ epsilon/y for data i = 25 is =       0.1051
+ epsilon/y for data i = 26 is =       0.3925
+ epsilon/y for data i = 27 is =       0.0876
+ epsilon/y for data i = 28 is =      -0.1687
+ epsilon/y for data i = 29 is =      -0.0650
+ epsilon/y for data i = 30 is =      -0.0207
+ epsilon/y for data i = 31 is =      -0.5976
+ epsilon/y for data i = 32 is =      -1.1955
+ epsilon/y for data i = 33 is =       0.0276
+ epsilon/y for data i = 34 is =      -0.1590
+ epsilon/y for data i = 35 is =      -0.4035
+ epsilon/y for data i = 36 is =       0.0098
+ epsilon/y for data i = 37 is =       0.0031
+ epsilon/y for data i = 38 is =       0.2143
+ epsilon/y for data i = 39 is =       0.1231
+ epsilon/y for data i = 40 is =       0.0200
+ epsilon/y for data i = 41 is =       0.0391
+ epsilon/y for data i = 42 is =       0.0402
+ epsilon/y for data i = 43 is =       0.1967
+ epsilon/y for data i = 44 is =      -0.3402
+ epsilon/y for data i = 45 is =      -3.3974
+ epsilon/y for data i = 46 is =       0.0877
+ epsilon/y for data i = 47 is =      -0.0621
+ epsilon/y for data i = 48 is =       0.0499
+ epsilon/y for data i = 49 is =      -0.1199
+ epsilon/y for data i = 50 is =      -0.0792
+ epsilon/y for data i = 51 is =      -0.0218
+ epsilon/y for data i = 52 is =       0.0396
+ epsilon/y for data i = 53 is =       0.0083
+ epsilon/y for data i = 54 is =       0.0083
+ epsilon/y for data i = 55 is =      -0.0412
+ epsilon/y for data i = 56 is =       0.1164
+ epsilon/y for data i = 57 is =      -0.0379
+ epsilon/y for data i = 58 is =      -0.0432
+ epsilon/y for data i = 59 is =      -0.0433
+ epsilon/y for data i = 60 is =       0.0227
+ epsilon/y for data i = 61 is =      -0.6715
+ epsilon/y for data i = 62 is =       0.0606
+ epsilon/y for data i = 63 is =       0.0417
+ epsilon/y for data i = 64 is =       0.0539
+ epsilon/y for data i = 65 is =      -0.0072
+ epsilon/y for data i = 66 is =       0.3579
+ epsilon/y for data i = 67 is =      -0.1103
+ epsilon/y for data i = 68 is =       0.0614
+ epsilon/y for data i = 69 is =       0.0383
+ epsilon/y for data i = 70 is =      -0.0582
+ epsilon/y for data i = 71 is =       0.0728
+ epsilon/y for data i = 72 is =       0.1270
+ epsilon/y for data i = 73 is =      -0.0531
+ epsilon/y for data i = 74 is =      -0.0243
+ epsilon/y for data i = 75 is =      -0.1044
+ epsilon/y for data i = 76 is =      -0.0860
+ epsilon/y for data i = 77 is =      -0.0971
+ epsilon/y for data i = 78 is =       0.0615
+ epsilon/y for data i = 79 is =       0.0182
+ epsilon/y for data i = 80 is =      -0.3486
+ epsilon/y for data i = 81 is =       0.0414
+ epsilon/y for data i = 82 is =      -0.0890
+ epsilon/y for data i = 83 is =      -0.0055
+ epsilon/y for data i = 84 is =       0.0312
+ epsilon/y for data i = 85 is =       0.0788
+ epsilon/y for data i = 86 is =      -0.1048
+ epsilon/y for data i = 87 is =       0.1182
+ epsilon/y for data i = 88 is =      -0.0100
+ epsilon/y for data i = 89 is =      -1.2977
+ SSresid =       1.3702
+ standard residiance =     0.1233864495
+ mean y =       0.8082
+ SSto =       6.5147
+ standard variance of y =       0.2690
+F =     168.9590
+standard deviation =       0.1255
+R ** 2 =       0.7897
+adjusted R ** 2 =       0.7897
+------------------------------------------
+
+ a[0]=-2.53869 a[1]=0.473378 a[2]=1.2706
+   a[3] has w == 0
+r = 0.888639; r^2 = 0.789679; t = 18.1771

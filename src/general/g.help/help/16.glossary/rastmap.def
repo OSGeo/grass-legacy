@@ -1,0 +1,9 @@
+
+
+raster map - A geographic data file stored in a \raster data\ format
+and any existing supporting files relating to it.  Includes \cell files\,
+\category\ files, color table files, cell header files, etc.
+
+NOTE: "Cell map" was the term used to denote maps in raster format
+in previous versions of GRASS.  A "cell map" is now referred to as
+a "raster map" in GRASS 4.0 documentation.

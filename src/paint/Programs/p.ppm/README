@@ -1,0 +1,32 @@
+This program  (paint.ppm) reads portable pixmap (ppm) files.
+These file formats are created by the PPM utilities by Jef Poskanzer.
+
+Limitations
+    This program only supports the binary format (P6)
+
+    Maximum color level is 255. If the ppm file has more colors
+    levels, use ppmcscale to reduce the number of colors.
+
+    No scaling is done. Use ppmscale to change image size.
+
+    No rotation is done. Use ppmrotate to rotate the image
+
+If the image doesn't fit the output device, it won't get printed.
+If you want it printed (but clipped) use the -f option to this paint.ppm
+or scale the input using ppmscale or rotate the image using ppmrotate
+(if it will fit that way -- otherwise you might have to scale it as well).
+If the image doesn't fit, paint.ppm will tell you what scale value to give
+to ppmscale that will make it fit.
+
+For suntools,
+   sleep 10; screendump | rasttoppm | ppmrotate 90 | paint.ppm
+
+  The sleep allows you time to arrange the windows before the screen dump starts
+  The ppmrotate is usually needed since the sun screens are wide than they are
+  long (and wider than 1024 pixels - which is the width of most of our printers)
+
+
+For X
+   xwd | xwdtoppm | ppmrotate 90 | paint.ppm
+
+

@@ -1,0 +1,6 @@
+
+
+polygon - A multi-sided figure representing an \area\ on a map.  Maps
+in GRASS \vector\ format represent polygons as the area edges forming
+their perimeters.  Maps in GRASS raster format store areas as a
+block of grid cells.

@@ -1,0 +1,7 @@
+#!/bin/sh
+# test for r.reclass.db using prebuilt SQL command file 
+# This tools requires that a SELECT FILE be input
+# DB=seco_soils, GISdb=SECO
+#
+r.reclass.db sql=tst_dbrr.sql key=grass_cat input=seco.soils output=tfact.recl label="Tfact="
+

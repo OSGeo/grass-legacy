@@ -1,0 +1,7 @@
+
+Testing interactive placement of flowlines...
+
+position.c:#ifdef DO_TEST
+panel_query.tcl:# DO_TEST
+/GRASS.src/4.2/grp.contrib/oglnviz/scripts
+

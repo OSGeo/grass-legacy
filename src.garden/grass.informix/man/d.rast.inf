@@ -1,0 +1,116 @@
+.TH d.rast.inf
+.SH NAME
+\fId.rast.inf\fR \- Generate and display a reclass map based on the unique values in a database column.  
+.br
+.I "(GRRASS-RDBMS Interface Display Program)"
+.SH SYNOPSIS
+\fBd.rast.inf\fR
+.br
+\fBd.rast.inf help\fR
+.br
+\fBd.rast.inf\fR \fBkey=\fIname\fR \fBtab=\fIname\fR \fBcol=\fIname\fR \fBinput=\fIname\fR \fB[output=\fIname]\fR \fB[join=\fItab,tabkey,pkey]\fR
+.SH ALTERNATE
+\fBd.rast.inf -s help\fR
+.br
+\fBd.rast.inf\fR \fB-s\fR \fBsql=\fIfilename\fR \fBinput=\fIname\fR \fB[output=\fIname]\fR 
+.SH DESCRIPTION
+d.rast.inf displays a raster image in which each category represents a uniques value in a database column. 
+Values are retrieved from the current database based on a user defined SQL select statement. The current
+database is identified by the GRASS environment variable $DATABASE which is set using the g.select.inf
+GRASS-RDBMS interface tool. If no join parameters are specified by the user a column in the database
+table directly linked to the GRASS raster structure via the category value must be used. The output from
+this program is a set of GRASS reclass rules which are used to create and display a reclassed raster
+surface based on the attributes returned from the database and the raster data layer specified as the
+input map.
+.SH "COMMAND LINE OPTIONS"
+.LP
+Parameters
+.IP \fIkey=database_column_name\fR
+Column corresponding to category values in raster map [input]
+.IP \fItab=database_table_name\fR
+Table containing [col].
+.IP \fIcol=database_column_name\fR
+Column to base reclass on.
+.IP \fIinput=map\fR
+Name of existing raster file.
+.IP \fIoutput=map\fR
+Name of new reclass map.
+.IP \fIjoin=tab,tabkey,pkey\fR
+Tab is the table used to develop the current SQL query. Tabkey is the database column used to relate information in this table with data in the table linked to the GRASS category file. Pkey is the associated column in the table linked to the GRASS category file which is related to tabkey in the current table.
+
+For instance, assume that stf1_main is a table containing column values associated with category values 
+in a the GRASS raster file tractids. In addition, assume that stf1_person is a table containing 
+attribute data on the demography in the same area (p0050002). In this example stf1_main is the table 
+associated with the GRASS raster map and tractbna is the column linking stf1_main to the GRASS category 
+file, the table stf1_person contains the attribute information to base the query/reclass on and it is linked to 
+stf1_main via the common column tractbna. To specify a query based on attribute values in the table stf1_person: 
+
+	d.rast.inf key=grass_cat tab=stf1_main 
+	col=p0050002 input=tractids
+	join=stf1_person,stf1_person.tractbna,stf1_main.tractbna
+
+Specifying these conditions would insure that all rows from table stf1_person which satisfy the query criteria would be matched with the corresponding rows in table stf1_main, which are then related to the spatial features in the GRASS data layer via the GRASS category values.
+
+This syntax is adequate to accomplish 2 table joins. However, if the query demands joins between more than 2 tables it is advisable to use the -s option [see Alternate Command Line Usage] to read a user prepared query, complete with join requirements, from a file.
+.LP
+.SH "ALTERNATE COMMAND LINE USAGE"
+The alternate command line usage is provided to simplify the process of retrieving information from more than one table in the query criteria. The alternate command line structure is selected using the the [-s] flag on the command line. When using this flag the user must include the name of a text file on the command line as well. This file must include a complete, well formed SQL SELECT statement specifying the query criteria and all relevant JOINS needed to retrieve values which correspond to category values in a GRASS data layer. 
+
+The user must also specify the name of the GRASS data layer containing these category values on the command line. The following example illustrates the syntax which must be used in constructing a SELECT statement for use with the -s flag.
+
+.br
+	SELECT DISTINCT tractbna,pop100 FROM
+.br
+	WHERE pop100 IS NOT NULL
+.br
+	ORDER BY pop100
+
+
+
+.LP
+Flags
+.IP \fI-s\fR
+SQL select statements are input from a prepared file.
+.LP
+Parameters
+.IP \fIsql=filename\fR
+SQL statements specifying well formed selection criteria.
+.IP \fIinput=map\fR
+Name of an existing raster map.
+.IP \fIoutput=map\fR
+Name of a new reclass file.
+
+.SH "EXAMPLE (two table join )"
+.br
+d.what.r.inf  -s sql=person.sql map=seco_tractids
+.br
+person.sql:
+.br
+	SELECT tractbna tractbna,p0050002 
+.br
+		FROM stf1_main,stf1_person
+.br
+		WHERE stf1_person.tractbna = stf1_main.tractbna
+.br
+		AND p0050002 IS NOT NULL
+.br
+	ORDER BY p0050002
+
+.br
+
+.SH "RESULT:"
+.br
+This example will display a raster surface with a category for each unique value of the column "p0050002" from the table stf1_person. The raster surface will be a reclassed data layer based on the input raster map tractids.
+.SH BUGS
+None known.
+
+.SH "NOTE"
+This program requires the Informix database software.
+
+.SH "SEE ALSO"
+g.column.inf, g.select.inf, g.stats.inf, g.table.inf, d.site.inf, d.vect.inf, d.what.r.inf, d.what.s.inf, d.what.v.inf, r.reclass.inf, r.rescale.inf, v.reclass.inf
+
+.SH AUTHOR
+James A. Farley, Wang Song and W. Fredrick Limp
+University of Arkansas, CAST
+

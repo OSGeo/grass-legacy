@@ -1,0 +1,19 @@
+OBJ = sos.o minor.o primitive.o \
+         lambda3.o lambda3_star.o \
+         lambda4.o lambda4_star.o \
+         lambda5.o \
+         above3.o above3_star.o \
+         above4.o positive3.o in_sphere.o \
+         rho1.o rho1_num.o \
+         rho2.o rho2_num.o rho2_den.o \
+         rho3.o rho3_num.o rho3_den.o \
+         smaller.o
+
+
+all: $(SOSLIB)
+
+$(SOSLIB): $(OBJ)
+	$(AR)
+
+
+

@@ -1,0 +1,7 @@
+interface_build {
+    {i.ifft} 0
+    {Inverse Fast Fourier Transform (IFFT) for image processing.}
+    {entry real_image {Input raster map for IFFT, real part:} 0 raster}
+    {entry imaginary_image {Input raster map for IFFT, imaginary part:} 0 raster}
+    {entry output_image {Output raster after IFFT:} 0 raster}
+}

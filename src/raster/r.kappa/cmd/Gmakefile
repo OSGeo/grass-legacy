@@ -1,0 +1,20 @@
+PGM=r.kappa
+
+LIBES= $(GISLIB) $(VASK)
+
+OBJS = main.o\
+	calc_kappa.o\
+	mask.o\
+	prt_hdr.o\
+	prt_label.o\
+	prt_mat.o\
+	stats.o\
+	sum.o
+
+$(BIN_ALPHA_CMD)/$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB) $(EXTRA_FLAGS)
+
+saber:
+	#load $(OBJS) $(LIBES)
+
+$(LIBES): #

@@ -1,0 +1,52 @@
+A_B_OFILES = \
+	a_b_main.o \
+	a_b_dlg.o \
+	read_write.o \
+	r_dlg_head.o \
+	pad.o \
+	w_bdlg_hd.o \
+	bound_box.o
+
+B_A_OFILES = \
+	b_a_main.o \
+	b_a_dlg.o \
+	b_a_head.o \
+	pad.o \
+	read_write.o \
+	r_dlg_head.o \
+	w_bdlg_hd.o
+
+A_B_F = \
+	a_b_front.o 
+
+B_A_F = \
+	b_a_front.o 
+
+#all:	$(BIN)/b.a.dlg $(BIN)/a.b.dlg 	$(ETC)/b.a.dlg $(ETC)/a.b.dlg 
+all:	$(ETC)/v.b.a.dlg $(ETC)/v.a.b.dlg 
+
+#  there will be no frontends to dlg code, but code is still there
+#          $(BIN)/b.a.dlg $(BIN)/a.b.dlg
+
+$(ETC)/v.b.a.dlg:	$(B_A_OFILES)
+	$(CC) $(LDFLAGS) -o $@ $(B_A_OFILES) $(GISLIB) $(MATHLIB)
+
+$(ETC)/v.a.b.dlg:	$(A_B_OFILES)
+	$(CC) $(LDFLAGS) -o $@ $(A_B_OFILES) $(GISLIB) $(MATHLIB)
+
+$(BIN)/a.b.dlg: $(A_B_F)
+	$(CC) $(LDFLAGS) -o $@ $(A_B_F) $(GISLIB) $(MATHLIB)
+
+$(BIN)/b.a.dlg: $(B_A_F)
+	$(CC) $(LDFLAGS) -o $@ $(B_A_F) $(GISLIB) $(MATHLIB)
+
+b_a_dlg.o:	format.h
+b_a_main.o:	format.h
+a_b_dlg.o:	dlghead.h  format.h
+a_b_main.o:	dlghead.h  format.h
+bound_box.o:	dlghead.h
+r_dlg_head.o:	dlghead.h
+w_bdlg_head.o:	dlghead.h
+
+$(GISLIB): #
+

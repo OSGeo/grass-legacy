@@ -1,0 +1,11 @@
+interface_build {
+    m.datum.shift 0
+    {Datum shift program.}
+    {entry lat {Latitude (dd:mm:ss{N|S}):} 0 ""}
+    {entry lon {Longitude (ddd:mm:ss{E|W}):} 0 ""}
+    {entry is {Input spheroid:} 0 spheroid}
+    {entry os {Output spheroid:} 0 spheroid}
+    {entry xshift {X shift:} 0 ""}
+    {entry yshift {Y shift:} 0 ""}
+    {entry zshift {Z shift:} 0 ""}
+}

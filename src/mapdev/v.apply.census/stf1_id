@@ -1,0 +1,956 @@
+                             DATA DICTIONARY
+
+CONTENTS
+Identification Section                                                1
+Table (Matrix) Section                                               13
+
+
+IDENTIFICATION SECTION
+
+                          Data dictionary     Field      Starting      Data
+Field name                reference name      size      position       type
+
+Record Codes 
+
+File Identification(1)       FILEID              8          1           A/N
+State/US Abbreviation        STUSAB              2          9             A
+
+---------------------------------------------------------------------------
+AK  Alaska       ID  Idaho          NC  North Carolina   SC  South Carolina
+AL  Alabama      IL  Illinois       ND  North Dakota     SD  South Dakota
+AR  Arkansas     IN  Indiana        NE  Nebraska         TN  Tennessee
+AZ  Arizona      KS  Kansas         NH  New Hampshire    TX  Texas
+CA  California   KY  Kentucky       NJ  New Jersey       US  United States
+CO  Colorado     LA  Louisiana      NM  New Mexico       UT  Utah
+CT  Connecticut  MA  Massachusetts  NV  Nevada           VA  Virginia
+DC  District of  MD  Maryland       NY  New York         VI  Virgin
+     Columbia    ME  Maine          OH  Ohio                 Islands of the
+DE  Delaware     MI  Michigan       OK  Oklahoma             United States
+FL  Florida      MN  Minnesota      OR  Oregon           VT  Vermont
+GA  Georgia      MO  Missouri       PA  Pennsylvania     WA  Washington
+HI  Hawaii       MS  Mississippi    PR  Puerto Rico      WI  Wisconsin
+IA  Iowa         MT  Montana        RI  Rhode Island     WV  West Virginia
+                                                         WY  Wyoming
+---------------------------------------------------------------------------
+
+Summary Level(2)             SUMLEV              3         11             N
+Geographic Component(3)      GEOCOMP             2         14             N
+
+---------------------------------------------------------------------------
+
+00   Not a geographic component
+01   Urban
+02   Urban-in urbanized area
+03   Urban-in urbanized area-in urbanized area central place
+04   Urban-in urbanized area-not in urbanized area central place
+05   Urban-not in urbanized area
+06   Urban-not in urbanized area-place [10,000 or more persons]
+07   Urban-not in urbanized area-place [2,500 to 9,999 persons]
+08   Rural
+09   Rural-place [1,000 to 2,499 population, not in an extended city]
+10   Rural-place [0 to 999 population, not in an extended city]
+11   Rural-not in place [or rural part of extended city]
+12   Rural-farm
+13   Urban portion of extended city
+14   Rural portion of extended city
+20   In metropolitan statistical area/consolidated metropolitan statistical 
+      area
+21   In metropolitan statistical area/consolidated metropolitan statistical 
+      area-urban
+22   In metropolitan statistical area/consolidated metropolitan statistical 
+      area-rural
+23   In metropolitan statistical area/consolidated metropolitan statistical 
+      area-in metropolitan statistical area/primary metropolitan
+      statistical area central city
+24   In metropolitan statistical area/consolidated  metropolitan 
+      statistical area-not in metropolitan statistical area/primary 
+      metropolitan statistical area central city
+25   In metropolitan statistical area/consolidated  metropolitan 
+      statistical area-not in metropolitan statistical area/primary 
+      metropolitan statistical area central city-urban
+26   In metropolitan statistical area/consolidated  metropolitan 
+      statistical area-not in metropolitan statistical area/primary 
+      metropolitan statistical area central city-urban-in urbanized area
+27   In metropolitan statistical area/consolidated  metropolitan 
+      statistical area-not in metropolitan statistical area/primary 
+      metropolitan statistical area central city-urban-not in urbanized 
+      area
+28   In metropolitan statistical area/consolidated  metropolitan 
+      statistical area-not in metropolitan statistical area/primary 
+      metropolitan statistical area central city-rural
+30   Not in metropolitan statistical area/consolidated metropolitan 
+      statistical area
+31   Not in metropolitan statistical area/consolidated metropolitan 
+      statistical area-urban
+32   Not in metropolitan statistical area/consolidated metropolitan 
+      statistical area-urban-in urbanized area
+33   Not in metropolitan statistical area/consolidated metropolitan 
+      statistical area-urban-not in urbanized area
+34   Not in metropolitan statistical area/consolidated metropolitan 
+      statistical area-urban-not in urbanized area-place [10,000
+      or more population]
+35   Not in metropolitan statistical area/consolidated metropolitan 
+      statistical area-urban-not in urbanized area-place 
+      [2,500 - 9,999 population]
+36   Not in metropolitan statistical area/consolidated metropolitan 
+      statistical area-rural
+40   American Indian reservation and trust land [American Indian 
+      reservations (AIR codes 0001-4989) including any trust 
+      lands]
+42   Tribal Jurisdiction Statistical Area [Oklahoma only]  
+43   Tribal Designated Statistical Area     
+44   Alaska Native village statistical area [Alaska only]
+
+---------------------------------------------------------------------------
+
+Characteristic Iteration(4)  CHARITER            3         16             N
+
+---------------------------------------------------------------------------
+                    000  Not a characteristic iteration
+---------------------------------------------------------------------------
+
+Logical Record Number(5)     LOGRECNU            6         19             N
+Logical Record Part
+  Number(6)                  LOGRECPN            4         25             N
+Total Number of Parts in 
+  Record(7)                  PARTREC             4         29             N
+
+Geographic Area Codes
+
+Alaska Native Regional
+  Corporation(8)             ANRC                2         33           A/N
+
+---------------------------------------------------------------------------
+
+07   Ahtna          28   Bering Straits  49   Chugach     70   Koniag
+14   Aleut          35   Bristol Bay     56   Cook Inlet  77   NANA
+21   Arctic Slope   42   Calista         63   Doyon       84   Sealaska 
+
+---------------------------------------------------------------------------
+
+American Indian/Alaska 
+  Native Area (Census)(9)    AIANACE             4         35           A/N
+American Indian/Alaska 
+  Native Area (FIPS)(10)     AIANAFP             5         39           A/N
+American Indian/Alaska
+   Native Area Class Code    AIANACC             2         44           A/N
+
+---------------------------------------------------------------------------
+
+D1     Federally recognized American Indian reservation that does not serve
+        as a minor civil division (MCD) equivalent 
+D2     Federally recognized American Indian reservation that also serves as 
+        an MCD equivalent 
+D3     American Indian tribal government that holds property in trust  
+        "trust land"  for a tribe or individual member(s) of the tribe, and
+        the trust land(s) is not associated with a specific American Indian
+        reservation or the associated American Indian reservation is not 
+        located in this State
+D4     State-recognized American Indian reservation that does not serve as 
+        an MCD equivalent
+D5     State-recognized American Indian reservation that also serves as an 
+        MCD equivalent
+D6     Tribal designated statistical area (TDSA); tribal jurisdiction 
+        statistical area (TJSA) (TJSAs occur only in Oklahoma)
+E1     Alaska Native village statistical area (ANVSA) that does not  
+        coincide with or approximate an incorporated place or a
+        census designated place (CDP) 
+E2     ANVSA that coincides with or approximates a CDP 
+E6     ANVSA that coincides with or approximates an incorporated place
+
+---------------------------------------------------------------------------
+
+American Indian Reservation
+  Trust Land Indicator Code  ARTLI               1         46           A/N
+
+---------------------------------------------------------------------------
+
+1   American Indian reservation; including Tribal Jurisdiction Statistical 
+     Area (TJSA) and Tribal Designated Statistical Area (TDSA)
+2   Off-reservation trust land
+9   Not an American Indian area
+
+---------------------------------------------------------------------------
+
+Block(8)                     BLCK                4         47           A/N
+Block Group(8)               BLCKGR              1         51           A/N
+Census Tract/Block Numbering
+  Area(8)                    TRACTBNA            6         52           A/N
+Congressional District
+  (101st Congress)(8)        CONGDIS             2         58           A/N
+
+---------------------------------------------------------------------------
+
+01-45  The actual congressional district number
+   00  Applies to States whose representative is elected "at large"; i.e., 
+        the State has only one representative in the United States House of 
+        Representatives
+   98  Applies to areas that have a nonvoting delegate in the United States 
+        House of Representatives
+   99  Applies to areas that have no representation in the United States 
+        House of Representatives
+
+---------------------------------------------------------------------------
+
+Consolidated City
+  (Census)(8)                CONCITCE            1         60           A/N
+
+---------------------------------------------------------------------------
+
+B  Butte-Silver Bow, Montana             I  Indianapolis, Indiana  
+C  Columbus, Georgia                     J  Jacksonville, Florida  
+M  Milford, Connecticut                  N  Nashville-Davidson, Tennessee
+
+---------------------------------------------------------------------------
+
+Consolidated City (FIPS)
+  (8,10)                     CONCITFP            5         61           A/N
+Consolidated City Class
+  Code(10)                   CONCITCC            2         66           A/N
+
+---------------------------------------------------------------------------
+                        C3    Consolidated city           
+---------------------------------------------------------------------------
+
+Consolidated City Population
+  Size Code                  CONCITSC            2         68           A/N
+
+---------------------------------------------------------------------------
+
+         00  Not in universe        12  2,500-4,999    
+         01  0                      13  5,000-9,999    
+         02  1-24                   14  10,000-19,999  
+         03  25-99                  15  20,000-24,999  
+         04  100-199                16  25,000-49,999  
+         05  200-249                17  50,000-99,999  
+         06  250-299                18  100,000-249,999
+         07  300-499                19  250,000-499,999
+         08  500-999                20  500,000-999,999
+         09  1,000-1,499            21  1,000,000-2,499,999
+         10  1,500-1,999            22  2,500,000-4,999,999
+         11  2,000-2,499            23  5,000,000 or more
+
+---------------------------------------------------------------------------
+
+Consolidated Metropolitan 
+  Statistical Area(9)        CMSA                2         70           A/N
+County(9)                    CNTY                3         72           A/N
+County Population Size Code  CNTYSC              2         75           A/N
+
+---------------------------------------------------------------------------
+
+         00  Not in universe        12  2,500-4,999    
+         01  0                      13  5,000-9,999    
+         02  1-24                   14  10,000-19,999  
+         03  25-99                  15  20,000-24,999  
+         04  100-199                16  25,000-49,999  
+         05  200-249                17  50,000-99,999  
+         06  250-299                18  100,000-249,999
+         07  300-499                19  250,000-499,999
+         08  500-999                20  500,000-999,999
+         09  1,000-1,499            21  1,000,000-2,499,999
+         10  1,500-1,999            22  2,500,000-4,999,999
+         11  2,000-2,499            23  5,000,000 or more
+
+---------------------------------------------------------------------------
+
+County Subdivision
+  (Census)(9)                COUSUBCE            3         77           A/N
+County Subdivision (FIPS)
+  (10)                       COUSUBFP            5         80           A/N
+County Subdivision Class 
+  Code                       COUSUBCC            2         85           A/N
+
+---------------------------------------------------------------------------
+
+C2  Incorporated place that also serves as a minor civil division (MCD)
+     equivalent because, although the place is coextensive with an MCD,
+     the Census Bureau, in agreement with State officials, does not
+     recognize that MCD for presenting census data because the MCD cannot
+     provide governmental services (Ohio only)
+C5  Incorporated place that also serves as an MCD equivalent because it is
+     not part of an MCD or a county subdivision classified as Z5
+C7  Incorporated place that also serves as a county equivalent  and an MCD 
+     equivalent; generally referred to as an "independent city"
+D2  Federally recognized American Indian reservation that also serves as an 
+     MCD equivalent
+D5  State-recognized American Indian reservation that also serves as an MCD 
+     equivalent
+T1  Governmentally active minor civil division (MCD) that is not 
+     coextensive with an incorporated place
+T5  Governmentally active MCD that is coextensive with an incorporated 
+     place
+Z1  MCD that is governmentally inactive or cannot provide general-purpose 
+     governmental services
+Z3  Unorganized territory identified by the Census Bureau as an MCD 
+     equivalent for presenting census data
+Z5  Census county division (CCD); census subarea (CSA) (Alaska only); 
+     census subdistrict (Virgin Islands only)
+Z7  Incorporated place that the Census Bureau treats as a minor civil 
+     division (MCD) equivalent because it is not in any MCD or is 
+     coextensive with a legally established but nonfunctioning MCD that 
+     the Census Bureau does not recognize for data presentation, AND is 
+     located in a State or county whose MCDs cannot provide governmental 
+     services (Iowa and Nebraska only)
+
+---------------------------------------------------------------------------
+County Subdivision Population
+  Size Code                  COUSUBSC            2         87           A/N
+---------------------------------------------------------------------------
+
+         00  Not in universe        12  2,500-4,999    
+         01  0                      13  5,000-9,999    
+         02  1-24                   14  10,000-19,999  
+         03  25-99                  15  20,000-24,999  
+         04  100-199                16  25,000-49,999  
+         05  200-249                17  50,000-99,999  
+         06  250-299                18  100,000-249,999
+         07  300-499                19  250,000-499,999
+         08  500-999                20  500,000-999,999
+         09  1,000-1,499            21  1,000,000-2,499,999
+         10  1,500-1,999            22  2,500,000-4,999,999
+         11  2,000-2,499            23  5,000,000 or more
+
+---------------------------------------------------------------------------
+Division(8)                  DIVIS               1         89           A/N
+---------------------------------------------------------------------------
+
+0  Not in a division      4  West North Central      7  West South Central 
+1  New England            5  South Atlantic          8  Mountain 
+2  Middle Atlantic        6  East South Central      9  Pacific 
+3  East North Central     
+---------------------------------------------------------------------------
+Extended City Indicator(8)   EXTCITIN            1         90           A/N
+---------------------------------------------------------------------------
+            1    Extended city     9    Not an extended city    
+---------------------------------------------------------------------------
+
+Internal Use Code(11)        INTUC              15         91           A/N
+Metropolitan Statistical
+ Area/Consolidated Metro-
+ politan Statistical 
+ Area(9)                     MSACMSA             4        106           A/N
+MSA/CMSA Population Size
+ Code                        MSACMSAS            2        110           A/N
+---------------------------------------------------------------------------
+
+         00  Not in universe        12  2,500-4,999    
+         01  0                      13  5,000-9,999    
+         02  1-24                   14  10,000-19,999  
+         03  25-99                  15  20,000-24,999  
+         04  100-199                16  25,000-49,999  
+         05  200-249                17  50,000-99,999  
+         06  250-299                18  100,000-249,999
+         07  300-499                19  250,000-499,999
+         08  500-999                20  500,000-999,999
+         09  1,000-1,499            21  1,000,000-2,499,999
+         10  1,500-1,999            22  2,500,000-4,999,999
+         11  2,000-2,499            23  5,000,000 or more
+
+---------------------------------------------------------------------------
+Place (Census)(9)            PLACECE             4        112           A/N
+Place (FIPS)(10)             PLACEFP             5        116           A/N
+Place Class Code             PLACECC             2        121           A/N
+---------------------------------------------------------------------------
+
+C1  Incorporated place that is governmentally active, is not related to an 
+     Alaska Native village statistical area (ANVSA), and does not serve as
+     a minor civil division (MCD) equivalent
+C2  Incorporated place that also serves as a minor civil division (MCD) 
+     equivalent because, although the place is coextensive with an MCD,
+     the Census Bureau, in agreement with State officials, does not
+     recognize that MCD for presenting census data because the MCD cannot
+     provide governmental services (Iowa and Ohio only)
+C5  Incorporated place that also serves as an MCD equivalent because it is 
+     not part of an MCD
+C6  Incorporated place that coincides with or approximates an ANVSA
+C7  Incorporated place that also serves as a county equivalent; generally 
+     referred to as an "independent city"
+C8  The portion ("remainder") of a consolidated city that excludes the 
+     incorporated place(s) within that jurisdiction
+C9  Incorporated place whose government is operationally inactive and is 
+     not included in any other C subclass
+M2  Military or Coast Guard installation (or part of an installation) that 
+     serves as a census designated place (CDP)
+U1  CDP with a name that is commonly recognized for the populated area
+U2  CDP with a name that is not commonly recognized for the populated area 
+     (e.g., a combination of the names of two or three commonly recognized
+     communities, or a name that identifies the location of the CDP in 
+     relation to an adjacent incorporated place)
+U9  CDP that coincides with or approximates an ANVSA.  
+
+Note:  In Ohio, a multi-county place that has a different MCD relationship
+       in each county is assigned only a single class code of C1, C2, or 
+       C5.
+---------------------------------------------------------------------------
+Place Description Code       PLACEDC             1        123           A/N
+---------------------------------------------------------------------------
+
+1  Incorporated central city of a metropolitan statistical area/primary 
+    metropolitan statistical area (MSA/PMSA), but not a central place of
+    an urbanized area (UA)
+2  Incorporated central place of an urbanized area (UA), but not a central
+    city of a metropolitan statistical area/primary metropolitan
+    statistical area (MSA/PMSA)
+3  Incorporated central city of a metropolitan statistical area/primary
+    metropolitan statistical area (MSA/PMSA) and a central place of an
+    urbanized area (UA)
+4  Consolidated city or an incorporated place that is not a central city of 
+    a metropolitan statistical area/primary metropolitan statistical area
+    (MSA/PMSA) and not a central place of an urbanized area (UA)
+5  Incorporated place, which is the central place of an urbanized area 
+    (UA), but only part of which is the central city of a metropolitan
+    statistical area/primary metropolitan statistical area (MSA/PMSA)
+6  Incorporated place, which is not a central place of an urbanized area 
+    (UA), but part of which is the central city of a metropolitan
+    statistical area/primary metropolitan statistical area (MSA/PMSA)
+A  Census designated place (CDP) that is a central place of an urbanized 
+    area (UA), but not a central city of a metropolitan statistical
+    area/primary metropolitan statistical area (MSA/PMSA)
+B  Census designated place (CDP) that is a central city of a metropolitan
+    statistical area/primary metropolitan statistical area (MSA/PMSA), but
+    not a central place of an urbanized area (UA)
+C  Census designated place (CDP) that is a central city of a metropolitan
+    statistical area/primary metropolitan statistical area (MSA/PMSA) and
+    a central place of an urbanized area (UA)
+D  Census designated place (CDP) that is in a 1980 or special census
+    urbanized area (UA) and is not a central city or a central place;
+    these CDP's must have a 1990 population of at least 300 in Hawaii and
+    the Virgin Islands of the United States, 1,000 in Puerto Rico, and
+    2,500 elsewhere
+E  Census designated place (CDP) not classified elsewhere; these CDP's must 
+    meet the following minimum population requirements:
+
+    -- 300 in Hawaii and the Virgin Islands of the United States
+    -- 25 in Alaska
+    -- 1,000 in all other States and Puerto Rico
+
+F  Zona urbana that is a central place of an urbanized area (UA) in Puerto
+    Rico, but not a central city of a metropolitan statistical
+    area/primary metropolitan statistical area (MSA/PMSA)
+G  Zona urbana that is a central city of a metropolitan statistical 
+    area/primary metropolitan statistical area (MSA/PMSA) in
+    Puerto Rico, but not a central place of an urbanized area (UA)
+H  Zona urbana that is a central city of a metropolitan statistical 
+    area/primary metropolitan statistical area (MSA/PMSA) 
+    and a central place of an urbanized area (UA)
+I  Zona urbana in Puerto Rico that is not a central city or a central place
+L  Census designated place (CDP) entirely within an American Indian 
+    reservation and entirely outside of a 1980 or special census urbanized
+    area (UA); these CDP's must have a 1990 population of at least 25 in 
+    Alaska and 250 elsewhere
+
+---------------------------------------------------------------------------
+Place Population Size Code   PLACESC             2        124           A/N
+---------------------------------------------------------------------------
+
+         00  Not in universe        12  2,500-4,999    
+         01  0                      13  5,000-9,999    
+         02  1-24                   14  10,000-19,999  
+         03  25-99                  15  20,000-24,999  
+         04  100-199                16  25,000-49,999  
+         05  200-249                17  50,000-99,999  
+         06  250-299                18  100,000-249,999
+         07  300-499                19  250,000-499,999
+         08  500-999                20  500,000-999,999
+         09  1,000-1,499            21  1,000,000-2,499,999
+         10  1,500-1,999            22  2,500,000-4,999,999
+         11  2,000-2,499            23  5,000,000 or more
+
+---------------------------------------------------------------------------
+Primary Metropolitan Statis-
+ tical Area(9)               PMSA                4        126           A/N
+Region(8)                    REG                 1        130           A/N
+---------------------------------------------------------------------------
+
+     1    Northeast     2     Midwest     3     South     4    West
+
+---------------------------------------------------------------------------
+State (Census)(8)            STATECE             2        131           A/N
+---------------------------------------------------------------------------
+
+06  Puerto Rico         33  Illinois     54  Virginia        81  Montana
+07  Virgin Islands of   34  Michigan     55  West Virginia   82  Idaho 
+     the United States  35  Wisconsin    56  North Carolina  83  Wyoming
+11  Maine               41  Minnesota    57  South Carolina  84  Colorado
+12  New Hampshire       42  Iowa         58  Georgia         85  New Mexico
+13  Vermont             43  Missouri     59  Florida         86  Arizona
+14  Massachusetts       44  North Dakota 61  Kentucky        87  Utah
+15  Rhode Island        45  South Dakota 62  Tennessee       88  Nevada
+16  Connecticut         46  Nebraska     63  Alabama         91  Washington
+21  New York            47  Kansas       64  Mississippi     92  Oregon
+22  New Jersey          51  Delaware     71  Arkansas        93  California
+23  Pennsylvania        52  Maryland     72  Louisiana       94  Alaska
+31  Ohio                53  District of  73  Oklahoma        95  Hawaii
+32  Indiana                  Columbia    74   Texas
+
+---------------------------------------------------------------------------
+State (FIPS)(8)              STATEFP             2        133           A/N
+---------------------------------------------------------------------------
+
+01   Alabama     17   Illinois      31   Nebraska        46   South Dakota
+02   Alaska      18   Indiana       32   Nevada          47   Tennessee
+04   Arizona     19   Iowa          33   New Hampshire   48   Texas
+05   Arkansas    20   Kansas        34   New Jersey      49   Utah
+06   California  21   Kentucky      35   New Mexico      50   Vermont
+08   Colorado    22   Louisiana     36   New York        51   Virginia
+09   Connecticut 23   Maine         37   North Carolina  53   Washington
+10   Delaware    24   Maryland      38   North Dakota    54   West Virginia
+11   District of 25   Massachusetts 39   Ohio            55   Wisconsin
+      Columbia   26   Michigan      40   Oklahoma        56   Wyoming
+12   Florida     27   Minnesota     41   Oregon          72   Puerto Rico
+13   Georgia     28   Mississippi   42   Pennsylvania    78   Virgin Islands
+15   Hawaii      29   Missouri      44   Rhode Island          of the
+16   Idaho       30   Montana       45   South Carolina        United 
+                                                               States
+
+---------------------------------------------------------------------------
+Urban/Rural(8)               URBANRUR            1        135           A/N
+---------------------------------------------------------------------------
+                1    Urban                          2    Rural
+---------------------------------------------------------------------------
+Urbanized Area(9)            URBAREA             4        136           A/N
+Urbanized Area Population
+ Size Code                   UASC                2        140           A/N
+---------------------------------------------------------------------------
+
+         00  Not in universe        12  2,500-4,999    
+         01  0                      13  5,000-9,999    
+         02  1-24                   14  10,000-19,999  
+         03  25-99                  15  20,000-24,999  
+         04  100-199                16  25,000-49,999  
+         05  200-249                17  50,000-99,999  
+         06  250-299                18  100,000-249,999
+         07  300-499                19  250,000-499,999
+         08  500-999                20  500,000-999,999
+         09  1,000-1,499            21  1,000,000-2,499,999
+         10  1,500-1,999            22  2,500,000-4,999,999
+         11  2,000-2,499            23  5,000,000 or more
+
+---------------------------------------------------------------------------
+
+Special Area Code (1)        SAC1                5        142           A/N
+Special Area Code (2)        SAC2                5        147           A/N
+Special Area Code (3)        SAC3                4        152           A/N
+Special Area Code (4)        SAC4                4        156           A/N
+Special Area Code (5)        SAC5                3        160           A/N
+Special Area Code (6)        SAC6                3        163           A/N
+Special Area Code (7)        SAC7                2        166           A/N
+Special Area Code (8)        SAC8                2        168           A/N
+Special Area Code (9)        SAC9                1        170           A/N
+Special Area Code (10)       SAC10               1        171           A/N
+
+---------------------------------------------------------------------------
+Area Characteristics 
+
+Area (land)(12)              AREALAND           10        172           A/N
+Area (water)(13)             AREAWAT            10        182           A/N
+Area Name/PSAD Term/
+ Part Indicator 14           ANPSADPI           66        192          A/N
+
+Functional Status Code       FUNCSTAT            1        258          A/N
+---------------------------------------------------------------------------
+
+A  Active governmental unit, except American Indian reservations and Alaska 
+    Native village statistical areas.    An active governmental unit has 
+    the legal capacity to have officers, to raise revenue, and to conduct
+    governmental activities under State laws, and currently is doing so.
+B  Functioning governmental unit providing no substantive governmental 
+    services.--These areas may be coextensive with and administered by
+    officials of another governmental unit (such as towns in Connecticut
+    that are coextensive with cities), or the number of officials and/or
+    the functions they perform are so minimal and/or vestigial that the
+    Census Bureau does not recognize them as governmental units for census 
+    purposes (such as townships in Iowa).
+F  False entity.--In order to maintain complete coverage of every State at 
+    the county level and of every county at the county subdivision level,
+    we create false entities at these levels for any place that is
+    independent of a county or independent of a minor civil division (MCD).
+    This code also is used for place records that represent the remainder 
+    of a consolidated city or the remainder of a county subdivision.
+I  Inactive governmental unit.--An inactive governmental unit has the legal
+    capacity to be active, but currently has no legal officers, raises no
+    revenues, and conducts no activities.
+N  Nonfunctioning governmental unit.    A nonfunctioning governmental unit
+    has legally established boundaries, but has no legal capacity to
+    conduct governmental activity.
+R  An American Indian reservation, an American Indian tribe whose name is
+    associated with trust lands, or an Alaska Native village statistical
+    area.
+S  Statistical entity, except Alaska Native village statistical areas and
+    tribal jurisdiction statistical areas.    A statistical entity 
+    has no governmental status and is defined by or in cooperation with the 
+    Census Bureau or other Federal agency.  This category includes census
+    regions, census divisions, census county divisions (CCDs), census
+    designated places (CDPs), metropolitan areas (MSA/CMSA/PMSAs),
+    urbanized areas (UAs), unorganized territories (UTs), tribal designated
+    statistical areas (TDSAs), census areas and census subareas in Alaska,
+    and comunidades and zonas urbanas in Puerto Rico. 
+T  Tribal jurisdiction statistical area.    A tribal jurisdiction
+    statistical area (TJSA) is not a legally defined governmental unit, but
+    is recognized as a statistical area for the 1990 census.  These areas 
+    exist only in the State of Oklahoma and were not recognized separately
+    in 1980.
+
+---------------------------------------------------------------------------
+Geographic Change User Note
+ Indicator                   GCUNI               1        259         A/N
+---------------------------------------------------------------------------
+   0    No geographic change note for the area within the summary level
+   1    See User Notes for a geographic change note
+---------------------------------------------------------------------------
+Housing Unit Count (100%)
+ (15)                        HU100               9        260           A/N
+Internal Point (latitude)
+ (16)                        INTPTLAT            9        269           A/N
+Internal Point (longitude)
+ (17)                        INTPTLNG           10        278           A/N
+Part Flag                    PARTFLAG            1        288           A/N
+---------------------------------------------------------------------------
+                0    Not a part                  1    Part
+---------------------------------------------------------------------------
+Political/Statistical Area
+ Description Code            PSADC               2        289           A/N
+---------------------------------------------------------------------------
+
+01  State or State equivalent - no status is appended to the name of the 
+     entity in census publications and related data products.
+04  Borough - county equivalent in Alaska; "Borough" is appended to the 
+     name of the entity in census publications and related data products.
+05  Census area - county equivalent in Alaska; "Census Area" is appended to 
+     the name of the entity in census publications and related data 
+     products.
+06  County - "County" is appended to the name of the entity in census 
+     publications and related data products.
+08  Independent city - county equivalent in Maryland, Missouri, and
+     Virginia; "city" is appended to the name of the entity in census 
+     publications and related data products.
+09  Independent city - county equivalent in Nevada; no status is appended
+     to the name of the entity in census publications and related data
+     products.
+10  Island - county equivalent in Virgin Islands of the United States; 
+     "Island" is appended to the name of the entity in census publications
+     and related data products.
+13  Municipio - county equivalent in Puerto Rico; "Municipio" is appended
+     to the name of the entity in census publications and related data
+     products.
+14  (none) - county equivalent; used at county level for the District of 
+     Columbia and Yellowstone National Park (Montana).  No status is
+     appended to the name of the entity in census publications and related
+     data products.
+15  Parish - county equivalent in Louisiana; "Parish" is appended to the
+     name of the entity in census publications and related data products.
+19  American Indian reservation - minor civil division (MCD) in Maine and
+     New York; "Reservation" is appended to the name of the entity in
+     census publications and related data products.
+20  Barrio - minor civil division (MCD) in Puerto Rico; "barrio" is
+     appended to the name of the entity in census publications and 
+     related data products.
+21  Borough - minor civil division (MCD) in New York; MCD equivalent in New 
+     Jersey and Pennsylvania; "borough" is appended to the name of the
+     entity in census publications and related data products.
+22  Census county division (CCD) - minor civil division (MCD) equivalent in
+     21 States; "division" is appended to the name of the entity in census 
+     publications and related data products.
+23  Census subarea - minor civil division (MCD) equivalent in Alaska;
+     "census subarea" is appended to the name of the entity in census
+     publications and related data products.
+24  Census subdistrict - minor civil division (MCD) equivalent in the
+     Virgin Islands of the United States; "subdistrict" is appended to the
+     name of the entity in census publications and related data products.
+25  City - minor civil division (MCD) equivalent in 20 States; "city" is
+     appended to the name of the entity in census publications and related
+     data products.
+27  District (magisterial, road) - minor civil division (MCD) in
+     Pennsylvania, Virginia, and West Virginia; "district" is appended to
+     the name of the entity in census publications and related data 
+     products.
+28  District (assessment, election, magisterial, supervisors', or parish
+     governing authority) - minor civil division (MCD) in Louisiana,
+     Maryland, Mississippi, and West Virginia; no status is appended to the 
+     name of the entity in census publications and related data products.
+29  Election precinct - minor civil division (MCD) in Illinois and
+     Nebraska; "precinct" is appended to the name of the entity in 
+     census publications and related data products.
+30  Election precinct - minor civil division (MCD) in Illinois and
+     Nebraska; no status is appended to the name of the entity in 
+     census publications and related data products.
+31  Gore - minor civil division (MCD) in Maine and Vermont; "gore" is
+     appended to the name of the entity in census publications and related
+     data products.
+32  Grant - minor civil division (MCD) in New Hampshire and Vermont;
+     "grant" is appended to the name of the entity in census publications
+     and related data products.
+33  Independent city - minor civil division (MCD) equivalent in Maryland,
+     Missouri, and Virginia; "city" is appended to the name of the entity
+     in census publications and related data products.
+34  Independent city - minor civil division (MCD) equivalent in Nevada; no
+     status is appended to the name of the entity in census publications
+     and related data products.
+36  Location - minor civil division (MCD) in New Hampshire; "location" is
+     appended to the name of the entity in census publications and related
+     data products.
+38  (none) - minor civil division (MCD) equivalent for District of Columbia
+     and Arlington County, Virginia; no status is appended to the name of
+     the entity in census publications and related data products.
+39  Plantation - minor civil division (MCD) in Maine; "plantation" is
+     appended to the name of the entity in census publications  and related
+     data products.
+40  Plantation - minor civil division (MCD) in Maine; no status is appended
+     to the name of the entity in census publications and related data
+     products.
+41  Barrio-pueblo - minor civil division (MCD) in Puerto Rico; "barrio-
+     pueblo" is appended to the name of the entity in census publications
+     and related data products.
+42  Purchase - minor civil division (MCD) in New Hampshire; "purchase" is
+     appended to the name of the entity in census publications and related
+     data products.
+43  Town - minor civil division (MCD) in 8 States; MCD equivalent in New
+     Jersey, Pennsylvania, and South Dakota; "town" is appended to the name
+     of the entity in census publications and related data products.
+44  Township - minor civil division (MCD) in 16 States; "township" is
+     appended to the name of the entity in census publications and related
+     data products.
+45  Township - minor civil division (MCD) in Kansas, Nebraska, and North
+     Carolina; no status is appended to the name of the entity in census
+     publications and related data products.
+46  Unorganized territory - minor civil division (MCD) in 9 States;
+     "unorg." is appended to the name of the entity in census publications
+     and related data products.
+47  Village - minor civil division (MCD) equivalent in New Jersey, Ohio,
+     South Dakota, and Wisconsin; "village" is appended to the name of the
+     entity in census publications and related data products.
+51  Subbarrio - sub-minor civil division (sub-MCD) in Puerto Rico;
+     "subbarrio" is appended to the name of the entity in census 
+     publications and related data products.
+55  Comunidad - place (census designated place) in Puerto Rico; "comunidad"
+     is appended to the name of the entity in census publications and
+     related data products.
+56  Borough - place in Connecticut, New Jersey, and Pennsylvania; "borough"
+     is appended to the name of the entity in census publications and
+     related data products.
+57  Census designated place - place; "CDP" is appended to the name of the
+     entity in census publications and related data products.
+58  City - place; "city" is appended to the name of the entity in census
+     publications and related data products.
+59  City - place; used for some cities that have a unique description, no
+     description, or a description included with their name, as follows: 
+
+        Anaconda-Deer Lodge County (Montana): incorporated municipality; 
+        Butte-Silver Bow (remainder) (Montana): (none); 
+        Carson City, Nevada: (none); 
+        Columbus city (remainder) (Georgia): (none); 
+        Indianapolis city (remainder) (Indiana): (none); 
+        Jacksonville city (remainder) (Florida): (none); 
+        Lexington-Fayette (Kentucky): Urban County Government; 
+        Lynchburg-Moore County  (Tennessee): (none); 
+        Milford city (remainder) (Connecticut): (none); 
+        Nashville-Davidson (remainder) (Tennessee): "Metropolitan 
+         Government of Nashville and Davidson County"; 
+
+    No status is appended to the name of the entity in census publications 
+     and related data products.
+60  Town - place; place in 30 States and the Virgin Islands of the United 
+     States; "town" is appended to the name of the entity in census
+     publications and related data products.
+61  Village - place; place in 19 States; "village" is appended to the name 
+     of the entity in census publications and related data products.
+62  Zona urbana - place (census designated place) in Puerto Rico; "zona
+     urbana" is appended to the name of the entity in census publications
+     and related data products.
+65  Consolidated city in Connecticut, Florida, Georgia, and Indiana -
+     "city" is appended to the name of the entity in census publications
+      and related data products.
+66  Consolidated city - used for some consolidated cities that have unique
+     descriptions or no descriptions, as follows: 
+
+        Butte-Silver Bow (Montana): (none); 
+        Nashville-Davidson (Tennessee):  "Metropolitan Government of 
+         Nashville and Davidson County";  
+
+    No status is appended to the name of the entity in census publications 
+     and related data products.
+68  Census region - no status is appended to the name of the entity in 
+     census publications and related data products.
+69  Census division - no status is appended to the name of the entity in 
+     census publications and related data products.
+71  Consolidated metropolitan statistical area (CMSA) - "CMSA" is appended 
+     to the name of the entity in census publications and related data
+     products.
+72  Metropolitan statistical area (MSA) - "MSA" is appended to the name of
+     the entity in census publications and related data products.
+73  Primary metropolitan statistical area (PMSA) - "PMSA" is appended to
+     the name of the entity in census publications and related data
+     products.
+75  Urbanized area (UA) - no status is appended to the name of the entity
+     in census publications and related data products.
+77  Alaska Native Regional Corporation - no status is appended to the name
+     of the entity in census publications and related data products.
+79  Alaska Native village statistical area - no status is appended to the 
+     name of the entity in census publications and related data products.
+80  Tribal designated statistical area - American Indian reservation
+     equivalent for non-land-based tribes outside of Oklahoma; "TDSA" is
+     appended to the name of the entity in census publications and related
+     data products.
+81  Colony - American Indian reservation; "Colony" is appended to the name
+     of the entity in census publications and related data products.
+82  Community - American Indian reservation; "Community" is appended to the
+     name of the entity in census publications and related data products.
+83  Joint area - American Indian reservation equivalent; "joint area" is 
+     appended to the name of the entity in census publications and related
+     data products.
+84  Pueblo - American Indian reservation; "Pueblo" is appended to the name
+     of the entity in census publications and related data products.
+85  Rancheria - American Indian reservation; "Rancheria" is appended to the
+     name of the entity in census publications and related data products.
+86  Reservation - American Indian reservation; "Reservation" is appended to
+     the name of the entity in census publications and related data 
+     products.
+87  Reserve - American Indian reservation; "Reserve" is appended to the
+     name of the entity in census publications and related data products.
+88  Tribal jurisdiction statistical area - American Indian reservation
+     equivalent representing historic tribal areas in Oklahoma; "TJSA" is
+     appended to the name of the entity in census publications and related
+     data products.
+89  Trust lands - American Indian reservation equivalent; no status is
+     appended to the name of the entity in census publications and related
+     data products.
+90  (none) - American Indian reservation; no status is appended to the name
+     of the entity in census publications and related data products.
+
+---------------------------------------------------------------------------
+Population Count (100%)(18)  POP100              9        291           A/N
+Special Flag                 SPFLAG              1        300           A/N
+---------------------------------------------------------------------------
+
+FOOTNOTES
+
+1.  A unique identifier for each file series.  Dress rehearsal files have 
+    a "D" in the character following the last character in the file 
+    identification code for the equivalent 1990 decennial census file; for 
+    example, PL94171D is the identifier for the dress rehearsal file for 
+    the P.L. 94-171 data.  File identification code for the P.L. 94-171
+    file is PL94171.  File identification codes for summary tape files are
+    STFnn where nn = file number; for example, STF1A is the identification
+    for Summary Tape File 1A.  File identification codes for subject
+    summary tape files are SSTFnn where nn = the number of the subject
+    report.  File identification codes for special project files are 
+    identified by SPmmm where mmm = a three digit special project number.
+    See How to Use This File for further information.
+
+2.  Identifies the geographic level for which the data matrices on the 
+    summary tape file have been summarized.  The summary level sequence 
+    chart describes the hierarchical arrangement of the specified 
+    geographic areas with other geographic areas, if any.  The summary 
+    level must be used in combination with the geographic area codes to 
+    identify a specific geographic area (for example, summary level 050 and 
+    a specific county code must be used together to locate the data for a 
+    particular county).  See How to Use This File for further information.
+
+3.  Indicates an iteration (repetition), for the specified summary level, 
+    of the data matrices on the summary tape file for the geographic 
+    components listed in the Geographic Component field.  See How To Use 
+    This File for further information.
+
+4.  Indicates an iteration (repetition), for the specified summary level, 
+    of the data matrices on the summary tape file for a population or 
+    housing characteristic.  Only matrices containing a "B" in the prefix 
+    have characteristic iterations.  See How to Use This File for further 
+    information.
+
+5.  The logical record is the complete record [identification and set of 
+    tables (matrices)] for a geographic entity defined by the summary 
+    level, but exclusive of the characteristic iteration.  A logical record 
+    may have one or more parts (or segments).  Each logical record has an 
+    assigned sequential integer number within the file.  See How to Use 
+    This File for further information.
+
+6.  Within the logical record, each part is identified uniquely in terms of 
+    its sequence.  See How to Use This File for further information.
+
+7.  This field identifies how many parts (or segments) comprise the entire 
+    logical record.  See How to Use This File for further information.
+
+8.  See appendix A, Area Classifications, for definition of this field if 
+    it is applicable to this file.
+
+9.  See the publication, Geographic Identification Code Scheme, for codes 
+    in this field and related terminology if it is applicable to this file.   
+    See appendix A, Area Classifications, for definition of this field if 
+    it is applicable to this file.
+
+10. See the publication, Geographic Identification Code Scheme, for FIPS 55 
+    codes in this field and related terminology if it is applicable to this  
+    file.  See appendix A, Area Classifications, for definition of this 
+    field if it is applicable to this file.
+
+11. Codes in unspecified arrangement for Census Bureau use.
+
+12. Land area measurement in thousandths (.001) of a square kilometer.  The 
+    accuracy of the area measurement is limited by the inaccuracy inherent 
+    in 1) the mapping of the various boundary features in the TIGER File 
+    and 2) rounding affecting the last digit in all operations that compute  
+    and/or sum the area measurements.  Land area includes intermittent 
+    water and glaciers, which appear on census maps and in the TIGER File 
+    as hydrographic features.  An area of .0005 square kilometer is rounded 
+    to .001; an area smaller than .0005 is rounded to .000.  The decimal 
+    point is implied on the file.  Square miles can be derived by dividing 
+    square kilometers by 2.59.  See appendix A, Area Classifications, for 
+    definition of this field if it is applicable to this file.
+
+13. Water area measurement in thousandths (.001) of a square kilometer.  
+    Water area is excluded from census blocks by definition, so the water 
+    area for a block always will be zero.  The accuracy of the area 
+    measurement is limited by the inaccuracy inherent in 1) the mapping of 
+    the various boundary features in the TIGER File and 2) rounding 
+    affecting the last digit in all operations that compute and/or sum the 
+    area measurements.  Water area excludes intermittent water and 
+    glaciers, which are treated as land even though they appear on census 
+    maps and in the TIGER File as hydrographic features.  An area of .0005 
+    square kilometer is rounded to .001; an area smaller than .0005 is 
+    rounded to .000.  The decimal point is implied on the file.  Square 
+    miles can be derived by dividing square  kilometers by 2.59.  See 
+    appendix A, Area Classifications, for definition of this field if it is 
+    applicable to this file.
+
+14. Name of the lowest-level entity represented by the summary level.  In 
+    addition to the name of the entity, the name field contains the 
+    political/statistical area description (PSAD) when appropriate, and  
+    sometimes contains the State abbreviation.
+
+    For legal entities, the name is the one reported to the Bureau of the 
+    Census in the Boundary and Annexation Survey and by other appropriate 
+    sources; for statistical entities, the name is determined by the Office    
+    of Management and Budget for metropolitan areas and, for other areas, 
+    the name is determined by the Bureau of the Census, usually in 
+    cooperation with local officials.
+
+    When the summary level represents only part of the area specified in 
+    the name, the name usually will have "(pt.)" appended to the name/code 
+    terminology to designate that this entry for the entity represents only 
+    a part of the total entity.
+
+15. The total number of housing units enumerated in the specified summary 
+    level as determined in the 100-percent processing.
+
+16. Latitude in degrees, to six decimal places, of a point within the 
+    geographic area represented by the summary level.  The decimal point is 
+    implied on the file.  The character immediately preceding the first 
+    digit of the latitude of an internal point identifies the direction 
+    (hemisphere):  a plus sign (+) indicates the Northern Hemisphere; a 
+    minus sign (-) indicates the Southern Hemisphere.  See appendix A, Area 
+    Classifications, for definition of this field if it is applicable to 
+    this file.
+
+17. Longitude in degrees, to six decimal places, of a point with the 
+    geographic area represented by the summary level.  The decimal point is 
+    implied on the file.  The character immediately preceding the first 
+    digit of the longitude of an internal point identifies the direction 
+    (hemisphere):  a plus sign (+) indicates the Eastern Hemisphere; a 
+    minus sign (-) indicates the Western Hemisphere.  A point on the 180th 
+    meridian is assigned to the Western Hemisphere (-180000000).  See 
+    appendix A, Area Classifications, for definition of this field if it is 
+    applicable to this file.
+
+18. The total number of persons enumerated in the specified summary level 
+    as determined in the 100-percent processing.

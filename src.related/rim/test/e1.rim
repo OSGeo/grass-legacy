@@ -1,0 +1,15 @@
+report                                                                          
+  select from measures sort by symbol                                           
+    print                                                                       
+      1 1 symbol a8                                                             
+    end print                                                                   
+  end select                                                                    
+  print                                                                         
+  1 1 '*****'                                                                   
+  end print                                                                     
+  select from measures sort by symbol                                           
+    print                                                                       
+      1 1 symbol a8                                                             
+    end print                                                                   
+  end select                                                                    
+end report                                                                      

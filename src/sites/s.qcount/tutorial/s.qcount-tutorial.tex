@@ -1,0 +1,130 @@
+\documentstyle{article}
+\title{Complete Spatial Randomness and Quadrat Methods\\ 
+{\large GRASS Tutorial on {\tt s.qcount}}}
+\author{James Darrell McCauley}
+\date{08 January 1993}
+\newcommand{\RR}{\mbox{\protect\makebox[.15em][l]{I}R}}
+\begin{document}
+\bibliographystyle{plain}
+\maketitle
+Cressie~\cite{cressie91} defines the concept of {\em
+complete spatial randomness\/} (csr) as synonymous
+with a {\em homogeneous\/} Poisson process in
+$\RR^d\/$ (here the concern is $d=2$). In layman's
+terms, the definition states that events are equally
+likely to occur anywhere within an area
+$A\subset\RR^d$.
+
+\begin{figure}[h]
+\begin{center}
+\input{csr.latex}
+\centerline{(a)}
+\input{reg.latex}
+\centerline{(b)}
+\input{cls.latex}
+\centerline{(c)}
+\end{center}
+\caption{Realization of two-dimensional Poisson processes of 50
+points on the unit square exhibiting (a)~complete
+spatial randomness, (b)~regularity, and (c)~clustering.}
+\label{fig:csr}
+\end{figure}
+
+\begin{figure}[h]
+% load 'stat.inc
+% plot [0:10] cchi(x) title "$\chi^2\/$ CDF", chi(x) title "$\chi^2\/$ PDF"
+\begin{center}
+\input{chisq.latex}
+\end{center}
+\caption{Probability Density Function and Cumulative Distribution
+Function for a $\chi^2\/$ Random Variable.}
+\label{fig:chisq}
+\end{figure}
+
+There are two types departure from a csr: regularity
+and clustering.  Figure~\ref{fig:csr} shows
+realizations of three processes for $N\left(A\right) =
+50.$ Notice in figure~\ref{fig:csr}a that this
+process may {\em appear\/} to be clustered.
+This is because event-to-nearest-event distances ($W$) of
+a homogeneous Poisson process can be modeled
+as $\chi_2^2\/$ random variables. Recall the form of
+the $\chi_2^2$ probability density function
+(fig.~\ref{fig:chisq}). Most of the probability
+is near zero. It follows that, given a suitable statistic,
+csr can be tested using Pearsons's $\chi^2$ goodness-of-fit test.
+
+Various indices and statistics
+measure departure from csr, ie., the pattern.
+Tables 8.3 and 8.6 in
+Cressie's book~\cite{cressie91} summarizes six {\em
+quadrat count\/} indices and 17 {\em nearest
+neighbor\/} test statistics for quantifying
+departure from csr.   The former,  also discussed
+in Ripley~\cite{ripley81}, are implemented
+in {\tt s.qcount} and described later.
+
+{\tt s.qcount}
+chooses {\em n\/} circular
+regions of radius {\em r\/} such that they
+are completely within the bounds of the current geographic
+region and no two
+regions overlap.
+The regions are called random
+{\em quadrats}.\footnote{Cressie~\protect\cite{cressie91} 
+defined random quadrats this way, however Ripley~\protect\cite{ripley81}
+used rectangular quadrats that potentially overlapped.}
+The number of sites falling within each 
+quadrat are counted and indices are calculated to estimate 
+the departure of site locations from complete spatial 
+randomness. This is illustrated in figure~\ref{fig:quads}.
+
+\begin{figure}[h]
+\begin{center}
+\input pinequads.latex
+\end{center}
+\caption{Randomly placed quadrats ($n=100$) with 584 sample points. This figure
+was produced using the output of {\tt s.qcount} and {\tt g.gnuplot}.}
+\label{fig:quads}
+\end{figure}
+
+The six indices and their realizations for the sampling
+shown in figure~\ref{fig:quads} are shown in Table~\ref{tbl:indices}.
+Cressie~\cite{cressie91} gives a short summary of these on pages~590
+and 591 and Ripley~\cite{ripley81} discusses them on pages~102--106.
+The original reference to each index is given in Table~\ref{tbl:indices}
+in case you want to read more about them.
+
+\begin{table}[h]
+\begin{center}
+\begin{minipage}{.8\textwidth}
+\caption{Indices for Quadrat Count Data.  Adapted from
+Cressie~\protect\cite{cressie91}, this table shows the
+statistics computed for the quadrats in figure~\protect\ref{fig:quads}}
+\label{tbl:indices}
+\begin{center}
+\begin{tabular}{lccl}\hline
+Index & Estimator\protect\footnote{$X_i$ the
+number of sites in the $i$th quadrat, $\bar{X}\/$ is the mean of the
+quadrat counts, and $S^2\/$ is the sample variance.}
+ & Realization & \multicolumn{1}{c}{Reference}\\ \hline
+$I$ & $\frac{S^2}{\bar{X}}$ & 2.128 & Fisher~\cite{fisher22} \\ \\
+$ICS$ & $\frac{S^2}{\bar{X}}-1$ & 1.128& David and Moore~\cite{david54}\\ \\
+$ICF$ & $\frac{\bar{X}^2}{S^2-\bar{X}}$ & 1.383& Douglas~\cite{douglas75}\\ \\
+$\stackrel{*}{X}$ & $\bar{X}-\frac{S^2}{\bar{X}}-1$
+				& 2.688& Lloyd~\cite{lloyd67}\\ \\
+$IP$ & $\frac{\stackrel{*}{X}}{\bar{X}}$ 
+				& 1.723 & Lloyd~\cite{lloyd67}\\ \\
+$I_\delta$ & 
+$\frac{n\sum_{i=1}^n X_i\left(X_i-1\right)}{n\bar{X} \left(n\bar{X}-1\right)}$ 
+%$\frac{n\bar{X} \cdot IP}{n\bar{X}-1}$ 
+& 1.720 & Morisita~\cite{morisita59}\\ \hline
+\end{tabular}
+\end{center}
+\end{minipage}
+\end{center}
+\end{table}
+
+\clearpage
+\bibliography{quadrat}
+\end{document}

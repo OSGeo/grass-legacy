@@ -1,0 +1,4 @@
+Gmakefile:
+    -I$(DIG_INCLUDE)    =>  $(VECT_INCLUDE)
+    $(DIGLIB)		=> $(VECTLIB)
+

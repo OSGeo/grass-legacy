@@ -1,0 +1,16 @@
+PGM=p.ppm
+INTERFACE = $(SRC)/paint/Interface/applib/lib.a
+EXTRA_CFLAGS = -I$(SRC)/paint
+
+LIST  = main.o\
+	color.o\
+	header.o\
+	nextword.o\
+	readcolors.o\
+	paint.o\
+	xalloc.o
+
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(INTERFACE) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(INTERFACE) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(INTERFACE) $(GISLIB): #

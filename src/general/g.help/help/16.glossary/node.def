@@ -1,0 +1,9 @@
+
+
+node - In GRASS, \vector data\ are stored in an \arc-node\ representation.
+An \arc\ (vector) is stored as a series of x,y coordinate pairs.  The
+arc's end-points are called nodes.  Two consecutive x,y pairs define
+an arc segment (line segment).  Arcs, either singly or in combination
+with other arcs, form higher-level \map features\: \line\ features
+(e.g., roads or streams) and \area\ features (e.g., soil types or
+timber-cutting units).

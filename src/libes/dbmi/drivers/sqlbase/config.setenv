@@ -1,0 +1,2 @@
+setenv SQLBASE /SQLBASE
+setenv SQLBASE_SERVER any

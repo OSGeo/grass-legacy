@@ -1,0 +1,95 @@
+# Update to nviz2.2
+# 31 oct. 1999  - Pierre de Mouveaux
+# p_de_mouveaux@hotmail.com
+
+
+Notes for update realtive to Grass 5.0 beta4 - october 31 1999.
+---------------------------------------------------------------
+
+This update correctes the following problems:
+- Screen redrawn in wire mode when mouse passes over 
+  vertical sliders.
+- Also a potential problem with colors in glwrappers.c 
+  (adress of a local variable returned  in color selection)
+- Modified intersection function to allow the "look here"
+  functionality and the "What's here" functionality.
+
+Normally, once Grass is compiled, go in the src.contrib/GMSL/NVIZ2.2 
+directory and type: 
+	./configure 
+	gmake5 
+	gmakelinks5
+
+See the note ROOT-INSTALL for issues regarding installation permissions.
+
+On my Linux box (Mandrake 6.0, based on RedHat 6.0), I had to 
+link against libdl.so. This is requested by tcltk8.0. 
+These modification are included in my patches.
+I don't know if it's requiered for other distributions as well.
+
+For more general infos on compiling Grass, read the file "INSTALL" 
+in the Grass sources top directory. (as usual;-)
+
+Pierre.
+
+----------------------------------------------------------------------
+
+9/99 Jacques Bouchard
+
+Problem with tcl/tk execution of "g.gisenv". 
+The consequense was a brocken mapset and site 
+files selector.
+
+
+------------------------------------------------------
+make scripts use togl functions now when opening windows.
+done
+
+can't find lights
+done
+
+vectors don't show up 
+    - swapping buffers?
+    yeah, 
+
+check to see why drawing to BOTH doesn't work, fix tcl or C code
+
+query messes up %x & %y - ?? - FIXED with configure binding
+but now query seems to be messed up coming from gsflib - screen
+coords are OK.
+
+Fixed wrong type in gsflib - float vs. double.
+
+OK, query fixed - work on "look here" bindings.
+DONE
+
+Add single-buffer/double-buffer switching.
+
+why is entering vert. sliders on main panel triggering redraw?
+- sporadic - inconsistent :-(
+
+query broken again - just hangs, as with look here.
+OK now - fixed LOS tracing to account fo very small/large exag
+
+query - Just need to hook in new color query and category functions:
+scripts/panel_query.tcl
+src/position.c
+DONE- but check color for get_val (needs to check for color lookup, etc)
+- also change to use GS_geodistance (add tcl cmd)
+
+Add option to redirect drawing to user-specified file with user-specified 
+dimensions:  first create an X Pixmap and then pass this as an
+argument to glXCreateGLXPixmap(). Then after rendering, destroy the
+association between the X and GLX Pixmaps with glXDestroyGLXPixmap().
+Then use glXMakeCurrent.  The contents of a GLX pixmap may be read 
+back with glReadPixels or XGetImage.
+NOT supported for "direct rendering"
+Most of the current Glx stuff is in TOGL 
+So would need to create another rendering context (non-direct) 
+and render to file.
+
+AMBIENT control affect the "colored light" bug - look at colormode
+- CHANGED site objects to use CM_DIFFUSE rather than CM_AD
+
+mask doesn't get removed when told to remove - also check invert mask.
+

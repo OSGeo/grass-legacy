@@ -1,0 +1,15 @@
+              MANUAL ENTRIES FOR SITE DATA COMMANDS        
+
+Below is a list of GRASS 5.0 site data manipulation commands.
+
+To access information on a command, highlight the command using the
+RETURN key, then press ESC.
+
+        \s.db.rim\            \s.in.ascii\         \s.menu\
+        \s.out.ascii\         \s.surf.idw\                 
+
+For a general discussion of GRASS sites file format and functions,
+see the manual entries below:
+
+        \sites S interface\      \sites file format\
+        \sites occurrence\       \sites reports\

@@ -1,0 +1,88 @@
+
+_________________________________________________________________________
+p.map.new : 
+ 
+PROBLEM DESCRIPTION:
+1.  the "textsize" parameter for
+    the "grid" instruction is renamed to "numbersize" (for consistency).
+STATUS:
+    FIXED with update package 1
+		
+PROBLEM DESCRIPTION:
+2.  Fixed the following problem:
+    p.map.new used to first draw all the objects: barscale, grid, legend,...
+    and remember their labels.
+    and only afterwards draw all the labels together.
+    Obviously when the objects overlapped, it was a problem.
+STATUS:
+    FIXED with update package 1
+
+PROBLEM DESCRIPTION:
+3.  opaque n[no] doesn't work.
+STATUS:
+    is on the list of things to be fixed
+
+PROBLEM DESCRIPTION:
+4.  sometimes didn't paint the text labels.
+STATUS:
+    FIXED with update package 3
+
+PROBLEM DESCRIPTION:
+5.  p.map.new didn't check if the text is really provided. It read it into a 
+    char string and doesn't check if it's NULL before using it. 
+STATUS:
+    FIXED  and coming out with next update
+
+PROBLEM DESCRIPTION:
+6.  p.map.new sometimes gave segmentation faults when doing legends. 
+STATUS:
+    FIXED  and coming out with next update
+
+PROBLEM DESCRIPTION:
+A barscale option of p.map.new did not work for any locations with resolution
+in different units (other than meters).
+This was because the intervals of the bar were just added to eastings
+to draw the bar, i.e. to draw a bar of 1 km, p.map.new used
+to call G_plot_line(e, n, e + 1000).
+STATUS:
+    FIXED  and coming out with next update
+
+PROBLEM DESCRIPTION:
+As reported by Scott Wade if 2 or more legennds are plotted,
+all the legends have the same category numbers and descriptions
+as the first legend, all the other parameters of legends are different.
+This was because variables nocat, nosite, novect in legentable.c weren't
+static and were initialized to 0 with each call, which is wrong.
+STATUS:
+    FIXED  and coming out with next update
+
+
+PROBLEM DESCRIPTION:
+The legends which looked fine in preview and preview2, were messed up on
+a plot: all the labels were moved to the top of the box partially
+overlapping and the bottom half of the box was empty.
+also the boxheight was not computed correctly based on number of sites, 
+with more than 2 sites it was too short.
+and boxheight was not computed correctly if there are >1 vector in legend
+and textsize is small, the box then wass too long.
+
+NOTE: to fully fix this problem, go to /src/libes/gis/plot.c
+edit line #83:  (xconv should be yconv).
+Then recompile gis library by running gmake4.1
+then go back to p.map.new directory and run gmake4.1 there
+STATUS:
+    FIXED  and coming out with next update
+
+PROBLEM DESCRIPTION: (GRID)
+    When drawing a solid line grid of us map in latlon, the horizontal
+    lines are drawn only partially.
+    also ticks smaller than 25 pixels weren't drawn for this map.
+    The reason is that the tick size in pixels
+    is converted to geogr. resolution for plotting,
+    and this resolution is then conv. to integer. Since it can easily
+    be less than 1 degree in lat-lon, the resolution is then 0, so
+    no ticks are drawn.
+STATUS:
+    FIXED  and coming out with next update
+		 
+

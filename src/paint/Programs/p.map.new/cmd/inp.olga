@@ -1,0 +1,32 @@
+raster slp.dn
+
+setcolor 10-12.5,15,16.7-18.3 white
+setcolor null red
+setcolor default green  
+colortable y
+where  4 .5
+cols   2 
+fontsize 12 
+end
+
+#outline
+#color black
+#end
+
+end
+legend 20% 90%
+height 10
+width 30
+xspace 10
+yspace 20
+textsize 180
+beginrast
+ramp label vertical
+#ramp label horizontal
+#ramp value vertical
+#ramp value horizontal
+#catnum 10-20.5 olga
+#catnum 0.7-13 roman
+#catnum 15 label
+end
+end

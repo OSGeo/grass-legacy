@@ -1,0 +1,7 @@
+interface_build {
+    {r.what} 0
+    {Queries raster map layers on their category values and category labels.}
+    {entry input {Raster maps to be queried (name[,name,...]):} 0 +raster}
+    {entry < {Locations file (east north [label]):} 0 file}
+    {checkbox -f {Show the category label in the grid cell(s).} "" -f}
+}

@@ -1,0 +1,14 @@
+
+
+LIBRARIES = $(GISLIB) $(DATETIMELIB)
+
+
+PGM = $(BIN_CONTRIB_CMD)/r.to.sites
+
+OFILES = main.o
+
+
+$(PGM): $(OFILES) $(LIBRARIES) 
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBRARIES) $(XDRLIB) $(MATHLIB)
+
+

@@ -1,0 +1,363 @@
+ ANSWERS Input File for sample Project
+ METRIC units are used on input/output                   PRINT
+ RAINFALL DATA FOR 1 GAUGE(S) FOR EVENT OF:   rain7
+ GAUGE NUMBER   R1
+0        0         0
+0       12        10
+0       24        15
+0       30        18
+0       40        32
+0       50       109
+0       60        33
+0       72        23
+0       84        16
+0       96        14
+0      120        12
+1      300         0
+  SOIL INFILTRATION, DRAINAGE AND GROUNDWATER CONSTANTS FOLLOW
+ NUMBER OF SOILS=   6
+S    1 TP: 54   FP: 87   FC: 21.0   A: 24.0  P:0.63   DF:133.0   ASM: 70 K: 0.28
+S    2 TP: 47   FP: 93   FC: 21.0   A: 24.0  P:0.56   DF:108.0   ASM: 70 K: 0.33
+S    3 TP: 46   FP: 74   FC:  7.0   A: 14.0  P:0.60   DF: 96.0   ASM: 70 K: 0.28
+S    4 TP: 47   FP: 68   FC:  7.0   A: 14.0  P:0.55   DF: 57.0   ASM: 70 K: 0.32
+S    5 TP: 48   FP: 96   FC: 21.0   A: 24.0  P:0.55   DF: 95.0   ASM: 70 K: 0.32
+S    6 TP: 47   FP: 93   FC: 21.0   A: 24.0  P:0.55   DF:108.0   ASM: 70 K: 0.32
+DRAINAGE COEFFICIENT FOR TILE DRAINS =  8.20 MM/24HR
+GROUNDWATER RELEASE FRACTION =      0.001
+  SURFACE ROUGHNESS AND CROP CONSTANTS FOLLOW
+ NUMBER OF CROPS AND SURFACES =  4
+    1 CROP:    corn PIT: 1.0 PER: 45 RC:0.47 HU:   53. N:0.099 C:0.28
+    2 CROP: pasture PIT: 0.5 PER: 93 RC:0.50 HU:   38. N:0.115 C:0.08
+    3 CROP: alfalfa PIT: 0.6 PER: 96 RC:0.53 HU:   35. N:0.150 C:0.04
+    4 CROP:farmstea PIT: 0.3 PER: 70 RC:0.30 HU:   20. N:0.045 C:0.01
+  CHANNEL SPECIFICATIONS FOLLOW
+ NUMBER OF TYPES OF CHANNELS =  2
+ CHANNEL 1, WIDTH=2.0  M., ROUGHNESS COEFF.(N) =0.060
+ CHANNEL 2, WIDTH=1.5  M., ROUGHNESS COEFF.(N) =0.070
+  ELEMENT SPECIFICATIONS FOR sample Project 
+ EACH ELEMENT IS 100.0M  SQUARE
+ OUTLET FROM ROW   16 COLUMN    6
+  1  8   10 270   5   1   R1 TILE     
+  1  9    7 225   1   1   R1 TILE     
+  1 10    5 315   4   1   R1 TILE     
+  1 11    7 270   4   1   R1 TILE     
+  1 12    7 225   4   1   R1 TILE     
+  1 13    5 180   5   1   R1 TILE     
+  1 14    2 225   5   1   R1 TILE     
+  1 15    2 270   4   1   R1 TILE     
+  1 16    2 225   5   1   R1 TILE     
+  1 17    2 270   4   1   R1 TILE     
+  1 18    1 225   4   1   R1 TILE     
+  1 19    3 270   1   1   R1 TILE     
+  1 20    1 315   4   1   R1 TILE     
+  1 21    3 270   5   1   R1 TILE     
+  1 22    7 270   4   1   R1 TILE     
+  1 23   10 225   4   1   R1 TILE     
+  1 24    8 270   5   1   R1 TILE     
+  1 25    8 270   5   1   R1 TILE     
+  1 26    6 270   4   1   R1 TILE     
+  1 27    3 270   4   1   R1 TILE     
+  2  7    1 270   1   1   R1 TILE     
+  2  8    9 225   5   1   R1 TILE     
+  2  9    9 180   4   1   R1 TILE     
+  2 10    5 270   5   1   R1 TILE     
+  2 11    5 225   5   1   R1 TILE     
+  2 12    7 180   1   1   R1 TILE     
+  2 13    9 270   4   1   R1 TILE     
+  2 14    6 225   4   1   R1 TILE     
+  2 15    5 270   3   1   R1 TILE     
+  2 16    7 315   6   1   R1 TILE     
+  2 17   11 270   6   1   R1 TILE     
+  2 18   11 225   6   1   R1 TILE     
+  2 19    6 225   6   1   R1 TILE     
+  2 20    9 315   6   1   R1 TILE     
+  2 21   10 270   5   1   R1 TILE     
+  2 22   10 225   6   1   R1 TILE     
+  2 23   11 180   5   1   R1 TILE     
+  2 24   12 270   1   1   R1 TILE     
+  2 25   12 270   1   1   R1 TILE     
+  2 26   12 270   5   1   R1 TILE     
+  2 27   10 225   5   1   R1 TILE     
+  2 28    5 180   5   1   R1 TILE     
+  3  5    1 270   5   4   R1 TILE     
+  3  6    1 315   5   1   R1 TILE     
+  3  7    2 270   1   1   R1 TILE     
+  3  8    7 225   5   1   R1 TILE     
+  3  9    9 180   5   1   R1 TILE     
+  3 10    1 225   5   1   R1 TILE     
+  3 11    2 180   5   1   R1 TILE     
+  3 12    1 180   6   1   R1 TILE     
+  3 13    3 315   6   1   R1 TILE     
+  3 14   10 270   6   1   R1 TILE     
+  3 15   12 270   2   1   R1 TILE     
+  3 16   13 270   5   1   R1 TILE     
+  3 17   12 270   1   1   R1 TILE     
+  3 18   15 180   6   1   R1 TILE     
+  3 19   16 315   6   1   R1 TILE     
+  3 20   19 270   5   1   R1 TILE     
+  3 21   15 270   5   1   R1 TILE     
+  3 22   14 225   6   1   R1 TILE     
+  3 23   11 270   5   1   R1 TILE     
+  3 24    8 225   5   1   R1 TILE     
+  3 25    7 270   5   1   R1 TILE     
+  3 26    7 225   1   1   R1 TILE     
+  3 27    7 180   6   1   R1 TILE     
+  3 28   10 270   1   1   R1 TILE     
+  4  4    7 315   5   4   R1 TILE     
+  4  5    5 270   5   4   R1 TILE     
+  4  6    5 270   5   1   R1 TILE     
+  4  7    3 270   1   1   R1 TILE     
+  4  8    5 180   1   1   R1 TILE     
+  4  9    8 180   1   1   R1 TILE     
+  4 10    6 180   5   1   R1 TILE     
+  4 11    1  90   5   1   R1 TILE     
+  4 12    1 315   5   1   R1 TILE     
+  4 13    8 315   5   1   R1 TILE     
+  4 14   13 270   3   1   R1 TILE     
+  4 15   15 270   2   1   R1 TILE     
+  4 16   11 270 205   1   R1 TILE     
+  4 17    5 225   1   1   R1 TILE     
+  4 18    6 315   3   1   R1 TILE     
+  4 19   14 315   5   1   R1 TILE     
+  4 20   15 270   5   1   R1 TILE     
+  4 21   11 225   5   1   R1 TILE     
+  4 22   10 180   6   1   R1 TILE     
+  4 23   10 180   1   1   R1 TILE     
+  4 24    7 180   6   1   R1 TILE     
+  4 25    5 270   1   1   R1 TILE     
+  4 26    7 180   5   1   R1 TILE     
+  4 27    5 225   6   1   R1 TILE     
+  4 28    7 225   6   1   R1 TILE     
+  5  4    5 270   1   4   R1 TILE     
+  5  5    5 270   4   4   R1 TILE     
+  5  6    3 270 205   1   R1 TILE     
+  5  7    3 270   5   1   R1 TILE     
+  5  8    5 180   5   1   R1 TILE     
+  5  9    9 225   1   1   R1 TILE     
+  5 10    8 180   5   1   R1 TILE     
+  5 11    7 225   5   1   R1 TILE     
+  5 12   11 315   6   1   R1 TILE     
+  5 13   14 270 205   1   R1 TILE      3  20
+  5 14    9 270   1   1   R1 TILE     
+  5 15    5 270   5   1   R1 TILE     
+  5 16    5 225 201   1   R1 TILE     
+  5 17    6 315   5   1   R1 TILE     
+  5 18    9 270   6   1   R1 TILE     
+  5 19   10 270   5   1   R1 TILE     
+  5 20    5 270   1   1   R1 TILE     
+  5 21    8 180   6   1   R1 TILE     
+  5 22    5 180   6   1   R1 TILE     
+  5 23    5 180   6   1   R1 TILE     
+  5 24    7 180   1   1   R1 TILE     
+  5 25    7 225   1   1   R1 TILE     
+  5 26    9 180   5   1   R1 TILE     
+  5 27    7 225   1   1   R1 TILE     
+  5 28    5 225   5   1   R1 TILE     
+  6  3    8 315   6   2   R1 TILE     
+  6  4    5 225   5   2   R1 TILE     
+  6  5    2 225   4   1   R1 TILE     
+  6  6    5 270 205   1   R1 TILE     
+  6  7    8 270   5   1   R1 TILE     
+  6  8   10 225   5   1   R1 TILE     
+  6  9   10 225   5   1   R1 TILE     
+  6 10   11 270   5   1   R1 TILE     
+  6 11    8 225   5   1   R1 TILE     
+  6 12   14 315   5   1   R1 TILE     
+  6 13   14 270 201   1   R1 TILE      3  20
+  6 14   11 270   1   1   R1 TILE     
+  6 15   10 270 205   1   R1 TILE     
+  6 16   11 270   1   1   R1 TILE     
+  6 17   13 270   5   1   R1 TILE     
+  6 18   14 270   1   1   R1 TILE     
+  6 19    8 270   1   1   R1 TILE     
+  6 20    5 225   6   1   R1 TILE     
+  6 21    9 180   6   1   R1 TILE     
+  6 22    7 225   6   1   R1 TILE     
+  6 23    3 225   1   1   R1 TILE     
+  6 24    2 225 201   1   R1 TILE     
+  6 25    5 180 201   1   R1 TILE     
+  6 26    5 180   1   1   R1 TILE     
+  6 27    3 180   1   1   R1 TILE     
+  6 28    3 180   1   1   R1 TILE     
+  7  2    7 360   6   2   R1 TILE     
+  7  3    7 270   5   2   R1 TILE     
+  7  4    3 180   5   2   R1 TILE     
+  7  5    3 315   5   1   R1 TILE     
+  7  6   10 270 205   1   R1 TILE     
+  7  7    8 270   5   1   R1 TILE     
+  7  8   10 180   5   1   R1 TILE     
+  7  9   10 315 205   1   R1 TILE     
+  7 10   15 270   6   1   R1 TILE     
+  7 11   17 270   6   1   R1 TILE     
+  7 12   19 315   6   1   R1 TILE     
+  7 13   16 270 206   1   R1 TILE      3  20
+  7 14   13 270   6   1   R1 TILE     
+  7 15   11 225 201   1   R1 TILE     
+  7 16   10 270   1   1   R1 TILE     
+  7 17    8 270   5   1   R1 TILE     
+  7 18    5 225   1   1   R1 TILE     
+  7 19    5 225 201   1   R1 TILE     
+  7 20    5 180 201   1   R1 TILE     
+  7 21    6 180 206   1   R1 TILE     
+  7 22    7 180 206   1   R1 TILE     
+  7 23    6 180 205   1   R1 TILE     
+  7 24    7 180   5   1   R1 TILE     
+  7 25    8 135   5   1   R1 TILE     
+  7 26    9  90   5   1   R1 TILE     
+  7 27    6 135   5   1   R1 TILE     
+  7 28    2  90   5   1   R1 TILE     
+  8  1    2 360   5   2   R1 TILE     
+  8  2    6 360   5   2   R1 TILE     
+  8  3    5 270   3   2   R1 TILE     
+  8  4    3 225   5   2   R1 TILE     
+  8  5    8 270   5   1   R1 TILE     
+  8  6    9 270 205   1   R1 TILE     
+  8  7    3 225   5   1   R1 TILE     
+  8  8    6 180   5   1   R1 TILE     
+  8  9    5 360   5   1   R1 TILE     
+  8 10   11 315 205   1   R1 TILE     
+  8 11   16 270   5   1   R1 TILE     
+  8 12   15 270   5   1   R1 TILE     
+  8 13    9 270 201   1   R1 TILE      3  20
+  8 14    5 180 205   1   R1 TILE     
+  8 15    5 180   5   1   R1 TILE     
+  8 16    5 270   4   1   R1 TILE     
+  8 17    3 270   5   1   R1 TILE     
+  8 18    6 225 201   1   R1 TILE     
+  8 19   10 180   5   1   R1 TILE     
+  8 20    7 135   6   1   R1 TILE     
+  8 21    7  90   6   1   R1 TILE     
+  8 22    7 135   5   1   R1 TILE     
+  8 23    6 135   1   1   R1 TILE     
+  8 24    8 180   5   1   R1 TILE     
+  8 25    5 180   5   1   R1 TILE     
+  8 26    2  90   5   1   R1 TILE     
+  8 27    1 135   5   1   R1 TILE     
+  8 28    3 135   5   1   R1 TILE     
+  9  1    1 360   5   2   R1 TILE     
+  9  2    5 360   5   2   R1 TILE     
+  9  3    9 315   1   2   R1 TILE     
+  9  4   10 270   4   2   R1 TILE     
+  9  5   10 315   5   1   R1 TILE     
+  9  6    5 270 206   1   R1 TILE     
+  9  7    5 225   5   1   R1 TILE     
+  9  8    5 180   5   1   R1 TILE     
+  9  9    7 315   5   1   R1 TILE     
+  9 10   10 315   5   1   R1 TILE     
+  9 11   11 315 205   1   R1 TILE     
+  9 12   11 270   6   1   R1 TILE     
+  9 13    6 270 201   1   R1 TILE      3  20
+  9 14    3 225   1   1   R1 TILE     
+  9 15    3 225 205   1   R1 TILE     
+  9 16    3 180 205   1   R1 TILE     
+  9 17    6 180 201   1   R1 TILE     
+  9 18   11 180   5   1   R1 TILE     
+  9 19    7 180   5   1   R1 TILE     
+  9 20    3 225   5   1   R1 TILE     
+  9 21    5 180   5   1   R1 TILE     
+  9 22    3 180   5   1   R1 TILE     
+  9 23    5 180   1   1   R1 TILE     
+  9 24   10 180   1   1   R1 TILE     
+ 10  3    1 360   5   2   R1 TILE     
+ 10  4    3 315   5   2   R1 TILE     
+ 10  5    7 270   4   1   R1 TILE     
+ 10  6    3 270 206   1   R1 TILE      3  20
+ 10  7    5 180   5   1   R1 TILE     
+ 10  8    5 315   5   1   R1 TILE     
+ 10  9   10 315   5   1   R1 TILE     
+ 10 10   12 270   5   1   R1 TILE     
+ 10 11   10 360   5   1   R1 TILE     
+ 10 12    6 270 101   1   R1 TILE      3  20
+ 10 13    7 180 101   1   R1 TILE      3  20
+ 10 14    2 180 201   1   R1 TILE      3  20
+ 10 15    1 135   1   1   R1 TILE     
+ 10 16    8  90   5   1   R1 TILE     
+ 10 17   17 180   5   1   R1 TILE     
+ 10 18   14 135   5   1   R1 TILE     
+ 10 19    7 135   5   1   R1 TILE     
+ 10 20    7 180   5   1   R1 TILE     
+ 10 21    5 180   1   1   R1 TILE     
+ 10 22    1 135   5   1   R1 TILE     
+ 10 23    3 135   1   1   R1 TILE     
+ 11  4    9 315   5   2   R1 TILE     
+ 11  5    9 270   1   1   R1 TILE     
+ 11  6    7 225 206   1   R1 TILE      3  20
+ 11  7    5 180   6   1   R1 TILE     
+ 11  8    5 270   6   1   R1 TILE     
+ 11  9    7 360   6   1   R1 TILE     
+ 11 10    7 315   5   1   R1 TILE     
+ 11 11    7 270   5   1   R1 TILE     
+ 11 12    5 225 101   3   R1 TILE      3  20
+ 11 13   10 180   4   3   R1 TILE     
+ 11 14    3 135   6   1   R1 TILE     
+ 11 15    5 135   1   1   R1 TILE     
+ 11 16   12 180   5   1   R1 TILE     
+ 11 17   16 135   6   1   R1 TILE     
+ 11 18    9 135   5   1   R1 TILE     
+ 11 19    7  90   5   1   R1 TILE     
+ 11 20    5 135   5   1   R1 TILE     
+ 11 21    1 135   1   1   R1 TILE     
+ 11 22    1  90   1   1   R1 TILE     
+ 12  4   14 270   5   2   R1 TILE     
+ 12  5   11 270 101   1   R1 TILE      3  20
+ 12  6   12 180   6   1   R1 TILE     
+ 12  7   13 270   6   1   R1 TILE     
+ 12  8   13 270   6   1   R1 TILE     
+ 12  9   11 315   6   1   R1 TILE     
+ 12 10   12 270   6   1   R1 TILE     
+ 12 11    9 225 101   1   R1 TILE      3  20
+ 12 12    9 225   1   3   R1 TILE     
+ 12 13   10 180   4   3   R1 TILE     
+ 12 14    3 225   1   1   R1 TILE     
+ 12 15    5 180   6   1   R1 TILE     
+ 12 16   12 225   1   1   R1 TILE     
+ 12 17   13 180   5   1   R1 TILE     
+ 12 18    5 180   5   1   R1 TILE     
+ 12 19    3 135   5   1   R1 TILE     
+ 12 20    1 135   5   1   R1 TILE     
+ 12 21    1 180   5   1   R1 TILE     
+ 13  4   10 270   5   2   R1 TILE     
+ 13  5   10 270 101   1   R1 TILE      3  20
+ 13  6   12 270   6   1   R1 TILE     
+ 13  7   15 270   1   1   R1 TILE     
+ 13  8   15 270   6   1   R1 TILE     
+ 13  9   15 270   1   1   R1 TILE     
+ 13 10   11 270 101   1   R1 TILE      3  20
+ 13 11    3 180   1   3   R1 TILE     
+ 13 12   10 180   5   3   R1 TILE     
+ 13 13   10 180   5   3   R1 TILE     
+ 13 14    5 180   6   1   R1 TILE     
+ 13 15    7 180   5   1   R1 TILE     
+ 13 16   13 180   5   1   R1 TILE     
+ 13 17    8 180   1   1   R1 TILE     
+ 13 18    3 135   5   1   R1 TILE     
+ 14  4    5 360   1   2   R1 TILE     
+ 14  5    6 315 101   1   R1 TILE      3  20
+ 14  6    8 270   1   1   R1 TILE     
+ 14  7    8 270   1   1   R1 TILE     
+ 14  8    6 270 106   1   R1 TILE      3  20
+ 14  9    2 180 101   1   R1 TILE      3  20
+ 14 10    7 180 101   3   R1 TILE      3  20
+ 14 11   14 180   6   3   R1 TILE     
+ 14 12   14 135   5   3   R1 TILE     
+ 14 13   12 135   5   3   R1 TILE     
+ 14 14    9 135   5   1   R1 TILE     
+ 14 15   10  90   5   1   R1 TILE     
+ 14 16    7 135   5   1   R1 TILE     
+ 15  5    6 360   5   1   R1 TILE     
+ 15  6    9 270 101   1   R1 TILE      3  20
+ 15  7    9 270   1   1   R1 TILE     
+ 15  8    5 225 101   1   R1 TILE      3  20
+ 15  9    5 135   1   3   R1 TILE     
+ 15 10   14 180   6   3   R1 TILE     
+ 15 11   14 135   1   3   R1 TILE     
+ 15 12   10 135   5   3   R1 TILE     
+ 15 13    7 135   5   3   R1 TILE     
+ 15 14    3 135   5   1   R1 TILE     
+ 16  6    7 270 101   1   R1 TILE      3  20
+ 16  7    8 180 101   1   R1 TILE      3  20
+ 16  8    8 180   1   3   R1 TILE     
+ 16  9   11 180   6   3   R1 TILE     
+ 16 10   15 180   5   3   R1 TILE     
+ 16 11    9 135   5   3   R1 TILE     
+ 16 12 9  5 180   5   3   R1 TILE     

@@ -1,0 +1,14 @@
+4.0 Conversion note - dks 12 - 90 
+
+Vstat to v.stats
+
+v.stats: command version source = v.stats.c  
+	 inter source           = stats.c
+
+old source:  formerly dig_front/stat.c
+
+BUG NOTE:   both versions only allow you to get stats on one of your 
+	 own files.  however, G_ask_vector in inter lets you ask for a file
+	 you don't own, and doesn't complain as long as it exists; subsequent 
+	 message from dig_P_init is ambiguous:
+	   "can't open dig file"

@@ -1,0 +1,8 @@
+all:
+	rm -rf $(GISBASE)/scripts/demo.scripts
+	if [ ! -d $(GISBASE)/scripts ]; then mkdir $(GISBASE)/scripts; fi
+	cp shells/*.sh $(GISBASE)/scripts
+	mkdir $(GISBASE)/scripts/demo.scripts
+	cp shells/demo.scripts/* $(GISBASE)/scripts/demo.scripts
+	$(GMAKE) contrib
+	chmod -R 0755 $(GISBASE)/scripts/*

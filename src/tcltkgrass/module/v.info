@@ -1,0 +1,5 @@
+interface_build {
+    {v.info} 0
+    {Outputs basic information about a user-specified vector map layer.}
+    {entry input {Vector map:} 0 vector}
+}

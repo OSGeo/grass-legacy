@@ -1,0 +1,11 @@
+
+
+d.vect.dlg - 
+
+d.vect.dlg displays a user-specified binary vector digital line graph -
+level 3 (DLG-3) map in the active \frame\ on the user's graphics
+monitor.  The user can (optionally) specify the color in which vectors
+will be drawn.  The map to be drawn must exist in the user's current
+\mapset\ search path.
+
+Manual entry for \d.vect.dlg\

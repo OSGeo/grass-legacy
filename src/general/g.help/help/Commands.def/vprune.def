@@ -1,0 +1,9 @@
+
+
+v.prune - 
+
+This program allows the user to remove extra \points\ from a \vector\
+file.  This, in turn, allows users to reduce disk space required by a
+vector file and still have data accuracy within a given tolerance.
+
+Manual entry for \v.prune\

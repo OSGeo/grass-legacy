@@ -1,0 +1,13 @@
+
+
+i.his.rgb - 
+
+i.his.rgb is an image processing program that processes three input 
+\raster\ \map layers\ as hue, intensity and saturation components and
+produces three output raster map layers representing the red, green and
+blue components of this data.  The output map layers are created by
+standard hue-intensity-saturation (his) to red-green-blue (rgb) color
+transformation.  Each output map layer is given a linear grey scale
+color table.
+
+Manual entry for \i.his.rgb\

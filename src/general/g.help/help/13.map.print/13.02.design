@@ -1,0 +1,16 @@
+                 DESIGNING MAPS FOR PRINTED OUTPUT
+
+A full range of map design functions, similar to those available for
+map display, are accessed through the following GRASS print commands:
+
+	\-  p.chart \
+	\-  p.colors \
+	\-  p.icons \
+	\-  p.labels \
+	\-  p.map \
+
+See also the \manual entry for paint\.
+
+For more information on a specific command, select a command and press
+ESC.
+

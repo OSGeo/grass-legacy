@@ -1,0 +1,14 @@
+
+
+m.u2ll - 
+
+m.u2ll converts Universal Transverse Mercator (\UTM\) \northings\ and
+\eastings\ to geographic coordinates (i.e., latitudes and longitudes).
+The user must specify the UTM coordinates to be converted and the
+spheroid on which the geographic coordinates will be based.  The program
+also needs to know the \UTM zone\ in which the input coordinates are
+located.  However, if the user is running GRASS from a UTM database
+\LOCATION\, m.u2ll will use this database's UTM zone designation if
+no zone is specified by the user.
+
+Manual entry for \m.u2ll\

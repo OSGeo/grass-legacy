@@ -1,0 +1,4 @@
+all:
+	$(GMAKE) tree
+	$(GMAKE) data
+	$(GMAKE) interp_float

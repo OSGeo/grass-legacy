@@ -1,0 +1,9 @@
+#!/bin/sh
+# test for d.w.v.inf 
+# all required command line args are provided
+# DB=tiger, GISdb=spearfish
+# Output: Attribute report from table type1.
+#
+#
+$INF/d.what.v.inf map=t.roads tab=type1 col=tlid 
+

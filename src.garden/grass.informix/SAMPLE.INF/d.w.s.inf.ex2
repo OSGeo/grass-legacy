@@ -1,0 +1,9 @@
+#!/bin/sh
+# test for d.w.s.inf  -s
+# SQL select statements are read from a file
+# DB=tiger, GISdb=spearfish
+# Output: Attribute report from table type7.
+#
+#
+$INF/d.what.s.inf -s sql=d.w.s.inf.sql distance=100 
+

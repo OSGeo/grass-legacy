@@ -1,0 +1,18 @@
+OFILES = \
+	draw_scale.o \
+	main.o
+
+$(BIN_MAIN_CMD)/d.scale: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+
+$(HELP)/d.scale: scale2.help
+	cp scale2.help $@
+
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
+
+command.o:	options.h
+main.o:	options.h

@@ -1,0 +1,15 @@
+EXCLAM - command
+
+The EXCLAMATION POINT (!) is a "shell-escape".  It allows you to
+run a shell command or gis command WITHOUT leaving combine.
+
+syntax: ! command
+
+EXAMPLES:
+  ! list cell  List the cell files currently accessible.
+  ! vi input   (Where "input" is a word of your choice). Edits the file
+                   "input".  Often useful for creating complex requests to
+                   combine.   Combine can then use this input with the
+                   command "< input".
+  ! whoami     Useful for finding out who is using the terminal when you
+                   need it.

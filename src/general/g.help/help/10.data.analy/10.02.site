@@ -1,0 +1,22 @@
+                        ANALYZING SITE DATA
+
+Site data can be analyzed in GRASS either in their site_lists format or
+after conversion to raster data format.  The following GRASS programs
+are used to analyze site_list data:
+
+     \-  s.db.rim \          \-  s.in.ascii \       \-  s.menu \
+     \-  s.out.ascii \       \-  s.surf.idw \
+
+For more information on a specific command, select a command and press
+ESC.
+
+Further information on GRASS sites file format and functions can be
+accessed by selecting the topics shown below:
+
+      \sites S interface\            \sites file format\
+      \sites occurrence\             \sites reports\
+
+Most GRASS analysis programs operate on raster data.  GRASS programs
+exist that convert GRASS data between raster, vector, and site formats.
+For more information on data conversion, select "Data Conversion" from
+the Help System Main Menu.

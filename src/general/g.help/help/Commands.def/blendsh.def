@@ -1,0 +1,10 @@
+
+
+blend.sh - 
+
+blend.sh is a Bourne shell script that combines the color components of
+two \raster\ files by a given percentage of the first file listed.
+Three new raster files are created, each representing the red, green
+and blue components of the resultant \image\.
+
+Manual entry for \blend.sh\

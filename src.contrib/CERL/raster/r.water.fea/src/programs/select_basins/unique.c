@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "gis.h"
+
+#define INCRBY 5
+int 
+compare (int *a, int *b)
+{
+	return *a - *b;
+}
+
+void 
+unique (int *sel_basins, int *ucount, int count)
+{
+	int i;
+	int *track;
+	int mindex,counter = 0;
+	mindex = INCRBY;
+
+	qsort(sel_basins,count,sizeof(int),compare);
+
+	track = (int *) G_calloc(INCRBY,sizeof(int));
+	if(track == NULL){
+		fprintf(stderr,"Insufficient memory\n");
+		exit(3);
+	}
+
+	track[counter++] = sel_basins[0];
+	for(i=0;i<count;i++){
+		if(sel_basins[i] == sel_basins[i+1])
+			continue;
+		else
+			if( counter == mindex){
+				mindex += INCRBY;
+				track = (int *) G_realloc(track, mindex * sizeof(int));
+				if(track == NULL){
+					fprintf(stderr,"\n Can not resize memeory\n");
+					exit(3);
+				}
+			}
+			track[counter++] = sel_basins[i+1];
+	}
+
+		for(i=0;i<counter - 1 ;i++){
+			sel_basins[i] = track[i];
+		}
+
+		free(track);   
+		*ucount = counter  - 1;
+}
+

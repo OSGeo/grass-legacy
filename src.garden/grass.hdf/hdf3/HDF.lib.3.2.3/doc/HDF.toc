@@ -1,0 +1,294 @@
+i	NCSA HDF Calling Interfaces and Utilities
+
+Table of Contents	i
+
+National Center for Supercomputing Applications
+
+July 1990
+
+                                                                
+
+
+
+
+
+
+
+	Table of Contents
+
+
+
+
+Introduction
+Overview  xiii
+What Is HDF?  xiii
+Differences Between HDF 2.0 and HDF 3.0  xiii
+Differences Between HDF 3.10 and HDF 3.0  xiv
+System Requirements  xv
+Use of This Manual  xv
+	Manual Contents  xv
+	Form of Presentation  xvi
+	Further Reading  xviii
+Chapter 1	NCSA HDF Basics
+Chapter Overview  1.1
+What Is Hierarchical Data Format?  1.1
+Why Was HDF Created?  1.1
+NCSA HDF Application Software  1.3
+	NCSA Scientific Visualization Software 
+	and HDF  1.4
+	HDF Calling Interfaces  1.4
+	HDF Utilities  1.5
+Getting Started with HDF  1.5
+Examples  1.6
+	Writing an HDF 8-Bit Raster Image 
+	Set  1.6
+	Writing an HDF Scientific Dataset  1.7
+FORTRAN and C  1.8
+	FORTRAN Stubs  1.8
+	Data Type Anomalies  1.9
+	Case Sensitivity  1.9
+	Name Length  1.9
+	Header Files  1.9
+	FORTRAN 77 and K & R’s C  1.10
+	HDF Without FORTRAN  1.10
+Installing HDF  1.11
+Transferring HDF Files  1.11
+How to Get HDF  1.11
+
+Chapter 2	Storing Raster Images
+Chapter Overview  2.1
+Header Files  2.1
+Raster Image Sets  2.1
+Reasons to Use Raster Image Sets  2.3
+8-Bit Raster Image Sets  2.3
+	Compression Schemes  2.4
+	Writing 8-Bit Raster Images to a File  2.5
+	Reading 8-Bit Raster Images from a 
+	File  2.8
+24-Bit Raster Image Sets  2.15
+	Interlace Schemes  2.15
+	Compression Schemes  2.17
+	Writing 24-Bit Raster Images to a File  2.17
+	Reading 24-Bit Raster Images from a 
+	File  2.19
+Sample Programs  2.23
+	A FORTRAN Program to Copy a RIS8 
+	from One File to Another  2.23
+	A C Program to Convert a Raw Palette 
+	and Raw Raster Image to HDF RIS8 
+	Format  2.23
+	C Functions to Convert Floating-Point Data 
+	to 8-Bit Raster Data  2.25
+Chapter 3	Storing Palettes
+Chapter Overview  3.1
+HDF 8-Bit Palettes  3.1
+Writing Palettes to a File  3.2
+Reading Palettes from a File  3.3
+Other Palette Routines  3.4
+Chapter 4	Storing Rectangular Gridded Arrays of
+Scientific Data
+Chapter Overview  4.1
+Scientific Datasets  4.1
+Reasons to Use Scientific Datasets  4.4
+Header File  4.4
+Writing Scientific Datasets to a File  4.4
+	The “Set” Routines:  Preparing to Write 
+	Scientific Datasets  4.5
+	Writing Scientific Datasets to a File  4.8
+	Writing Parts of a Scientific Dataset  4.12
+	Restrictions on Slices To Be Written  4.15
+Reading Scientific Datasets from a File  4.17
+	Getting the Dimensions of a Scientific 
+	Dataset  4.18
+	Reading an Entire Scientific Dataset  4.18
+	Getting Other Information About 
+	SDSs  4.19
+	Reading Parts of a SDS  4.23
+How SDS Routines Store and Convert 
+Scientific Data  4.26
+	How HDF Normally Stores Arrays  4.26
+	How HDF Normally Represents 
+	Numbers  4.26
+DFSDsettype:  Setting Scientific Dataset
+Attributes  4.27
+Other SDS Routines  4.28
+Sample Programs  4.29
+	A FORTRAN Program  4.29
+	A C Program  4.32
+Chapter 5	Annotating Data Objects and Files
+Chapter Overview  5.1
+Annotation Tags  5.1
+	File Annotations  5.1
+	HDF Object Annotations  5.1
+	Tags and Reference Numbers  5.2
+The Annotation Interface  5.3
+Writing Annotations for HDF Objects  5.4
+Reading Annotations for HDF Objects  5.6
+Listing All Labels for a Given Tag  5.11
+Writing Annotations for HDF Files  5.13
+Reading Annotations for HDF Files  5.17
+Getting Annotation Information from a File  5.21
+Chapter 6	General Purpose HDF Routines
+Chapter Overview  6.1
+Introduction  6.1
+Header Files  6.2
+Opening and Closing Files  6.3
+Finding the Next Occurrence of a Given 
+Object  6.4
+Finding Data Descriptors for HDF Objects  6.5
+Storing and Retrieving Entire Data Elements  6.6
+Reading or Writing Part of a Data Element  6.8
+Manipulating Data Descriptors (DDs)  6.10
+Miscellaneous  6.12
+Chapter 7	NCSA HDF Command Line Utilities
+Chapter Overview  7.1
+Introduction  7.1
+hdfls:  Listing Basic Information about an 
+HDF File  7.2
+hdfed:  Editing an HDF File  7.3
+Basics  7.3
+Tutorial Session  7.5
+hdfed with the -batch Option  7.12
+fptohdf:  Converting Floating-Point Data to SDS 
+and/or RIS8  7.12
+Basics  7.12
+Notes  7.14
+Examples  7.14
+Utilities for Working with Raster Image 
+Sets  7.15
+r8tohdf:  Converting 8-Bit Raster Images to 
+HDF  7.15
+hdftor8:  Extracting 8-Bit Raster Images 
+and Palettes from an HDF File  7.17
+r24tohdf8:  Converting 24-Bit Raster 
+Images to HDF 8-Bit Raster Images 7.18
+paltohdf:  Converting a Raw Palette to HDF  
+7.18
+hdftopal:  Extracting a Palette from an 
+HDF file  7.18
+hdfrseq and hdfseq:  Displaying 
+Images  7.19
+Chapter 8	Error Handling in HDF
+Chapter Overview  8.1
+Error Handling in HDF  8.1
+Appendix A	NCSA HDF Tags
+Overview  A.1
+Tag Types and Descriptions  A.1
+Appendix B	Header Files and FORTRAN Constants File
+Appendix C	Eight-Character FORTRAN Names
+Appendix D	Public HDF Directories on NCSA Computers
+Appendix E	Routine Lists
+Raster Image Routines  E.1
+Palette Routines  E.2
+Annotations Routines  E.2
+Scientific Dataset Routines  E.3
+General Purpose Routines  E.4
+Utility Routines  E.5
+Appendix F	NCSA HDF README Files on Anonymous FTP
+
+Figures and Tables
+Figure I.1	Reading and Entering a Command 
+Line  xviii
+Figure 1.1	HDF:  A File Format for Scientific Data in 
+a Distributed Environment   1.1
+Figure 1.2	HDF File with Scientific Dataset  1.3
+Figure 1.3	HDF Software in an Integrated 
+Computing Environment  1.4
+Figure 2.1	Two Raster Image Sets in an HDF 
+File  2.4
+Figure 2.2	Storing an RIS8  2.7
+Figure 2.3	Storing Multiple RIS8s in a Single 
+File  2.8
+Figure 2.4	Reading an RIS8:  Dimensions and 
+Presence or Palette Known 
+(FORTRAN)  2.12
+Figure 2.5	Reading an RIS8:  Dimensions and 
+Presence of Palette Known (C)  2.13
+Figure 2.6	Reading an RIS8:  Dimensions Different 
+from Allocated Space  2.14
+Figure 2.7	FORTRAN Image Stored in Oversized 
+Buffer  2.15
+Figure 2.8	Scan-Plane Interlace  2.17
+Figure 2.9	Storing an RIS24 Using Pixel 
+Interlace  2.18
+Figure 2.10	Storing Multiple RIS24s in a Single File  
+2.19
+Figure 2.11	Reading an RIS24:  Dimensions and 
+Interlace Known  2.22
+Figure 2.12	Reading an RIS24:  Dimensions and 
+Interlace Not Known  2.22
+Figure 2.13	FORTRAN Program to Copy an RIS8 from 
+One File to Another  2.23
+Figure 2.14	C Program Dealing with Raster Image 
+Sets  2.24
+Figure 2.15	Converting Floating-Point Data to 
+RIS8  2.25
+Figure 3.1	Writing a Palette to a File  3.3
+Figure 3.2	Reading the First Available Palette  3.4
+Figure 4.1	HDF File with Scientific Dataset  4.2
+Figure 4.2	Storing Just Scientific Data  4.10
+Figure 4.3	Storing Scientific Data with Associated 
+Information  4.11
+Figure 4.4	A 10 x 12 SDS Divided into Slices of 
+Varying Sizes  4.12
+Figure 4.5	Writing Slices to a 10 x 12 SDS  4.15
+Figure 4.6	Reading in a Dataset  4.22
+Figure 4.7	Reading Multiple Scientific Datasets from 
+a Single File of Unknown Size  4.23
+Figure 4.8	A 10 x 12 SDS Showing Two Slices That 
+Are To Be Read.  4.24
+Figure 4.9	FORTRAN Code for DFSDgetslice  4.24
+Figure 4.10	Reading Slices from a 10 x 12 SDS in 
+Reverse Order  4.25
+Figure 4.11	FORTRAN Program Dealing with 
+Scientific Datasets  4.30
+Figure 4.12	C Program Dealing with Scientific 
+Datasets  4.33
+Figure 5.1	Three SDS Tags with Their Ref 
+Numbers  5.2
+Figure 5.2	Displayed Example of SDS, Ref#, and 
+Annotation  5.2
+Figure 5.3	Adding Annotations to a SDS  5.5
+Figure 5.4	Getting Annotations from a SDS  5.9
+Figure 5.5	Getting a List of Labels from a File  5.12
+Figure 5.6	Adding a File ID and a File 
+Description.t   5.15
+Figure 5.7	Reading File IDs and a File 
+Description  5.19
+Figure 7.1	Tutorial Session  7.6
+Figure 7.2	The ftptohdf Utility  7.12
+Figure 7.3	Format Used in a Text File for Input  7.14
+Figure B.1	FORTRAN Header File:  dfF.h  B.2
+Figure B.2	C Header File:  df.h  B.4
+Figure B.3	FORTRAN:  Constants File 
+Constants.h  B.9
+Figure F.1	README.FIRST  F.1
+Figure F.2	README.NCSA.For HDF Users of NCSA 
+Computers  F.4
+Figure F.3	INSTALL:  Compiling the HDF 
+Source  F.6
+Figure F.4	Code Changes:  Changes Made to HDF in 
+Releases 3.0 and 3.10  F.9
+
+Table I.1	Meaning of Entry Format Notations  xvii
+Table 2.1	Raster Image Set Routines in the HDF 
+Library  2.1
+Table 2.2	Compression Scheme Codes  2.4
+Table 2.3	Interlace Scheme Codes  2.16
+Table 3.1	Palette I/O Routines in the HDF 
+Library  3.2
+Table 4.1	Scientific Dataset Routines in the HDF 
+Library  4.2
+Table 5.1	Long and Short Names for Annotation 
+Routines  5.4
+Table 6.1	General Purpose Routines in the HDF 
+Library  6.1
+Table 7.1	Scientific Dataset Routines in the HDF 
+Library  7.1
+Table 7.2	hdfed Commands  7.5
+Table A.1	HDF Tags  A.2
+Table C.1	Long and Short Version FORTRAN 
+Names  C.1
+Table D.1	Pathnames of NCSA HDF 
+Directories  D.1
+

@@ -1,0 +1,244 @@
+Note 8/99
+  TOGL site: http://www.mesa3d.org/brianp/Togl.html
+
+ Current version 1.5 (1998)
+
+-----------------------------------------
+
+
+
+                          Togl - a Tk OpenGL widget
+
+               Copyright (C) 1996 Brian Paul and Ben Bederson
+
+Introduction
+
+Togl is a Tk widget for OpenGL rendering. Togl is originally based on OGLTK,
+written by Benjamin Bederson at the University of New Mexico. Togl adds the
+new features:
+
+   * color-index mode support including color allocation functions
+   * support for requesting stencil, accumulation, alpha buffers, etc
+   * multiple OpenGL drawing widgets
+   * OpenGL extension testing from Tcl
+
+Togl allows one to create and manage a special Tk/OpenGL widget with Tcl and
+render into it with a C program. That is, a typical Togl program will have
+Tcl code for managing the user interface and a C program for computations
+and OpenGL rendering.
+
+Togl is copyrighted by Brian Paul (brianp@ssec.wisc.edu) and Benjamin
+Bederson (bederson@cs.unm.edu). See the LICENSE file for details.
+
+The Togl WWW page is available from:
+
+   * Wisconsin at http://www.ssec.wisc.edu/~brianp/Togl.html
+   * New Mexico at http://www.cs.unm.edu/~bederson/Togl.html
+
+Prerequisites
+
+You should have Tcl and Tk installed on your computer, including the Tk
+source code files. Togl has been tested with Tcl 7.4/Tk 4.0 and Tcl 7.5/Tk
+4.1 at this time. It is currently configured for Tcl7.5/Tk4.1. If you want
+to build it with Tcl7.4/Tk4.0, you must rename the file "tkInt.h" to
+"tkInt4.1.h" and rename "tkInt4.0.h" to "tkInt.h".
+
+You must also have OpenGL or Mesa (a free alternative to OpenGL) installed
+on your computer.
+
+One should be familiar with Tcl, Tk, OpenGL, and C programming to use Togl
+effectively.
+
+Getting Togl
+
+The current version of Togl is 1.0. You may download it from either:
+
+   * Wisconsin at ftp://iris.ssec.wisc.edu/pub/misc/Togl-1.0.tar.gz
+   * New Mexico at ftp://ftp.cs.unm.edu/pub/bederson/Togl-1.0.tar.gz
+
+Togl may also be obtained manually with ftp.
+
+   * Host: iris.ssec.wisc.edu
+   * Login: anonymous
+   * Password: your email address
+   * Directory: pub/misc
+   * File: Togl-1.0.tar.gz
+
+The Makefile included with Togl is configured for SGI systems. It shouldn't
+be hard to adapt it for others.
+
+Using Togl With Your Application
+
+Since the Togl code is in just three files (togl.c, togl.h and tkInt.h) it's
+probably most convenient to just include those files with your application
+sources. The Togl code could be made into a library but that's not
+necessary.
+
+C Togl Functions
+
+These are the Togl commands one may call from a C program.
+
+#include "togl.h"
+
+int Togl_Init( Tcl_Interp *interp )
+     Initializes the Togl module. This is typically called from the
+     Tk_Main() callback function.
+
+void Togl_CreateFunc( Togl_Callback *proc )
+
+void Togl_DisplayFunc( Togl_Callback *proc )
+
+void Togl_ReshapeFunc( Togl_Callback *proc )
+     Register C functions to be called by Tcl/Tk when a widget is realized,
+     must be redrawn, or is resized, respectively.
+
+     Each C callback must be of the form:
+
+             void callback( struct Togl *togl )
+             {
+                ...your code...
+             }
+
+void Togl_CreateCommand( char *cmd_name, Togl_CmdProc *cmd_proc )
+     Used to create a new Togl sub-command. The C function which implements
+     the command must be of the form:
+
+             int callback( struct Togl *togl, int argc, char *argv[] )
+             {
+                ...your code...
+                return TCL_OK or TCL_ERROR;
+             }
+
+
+void Togl_PostRedisplay( struct Togl *togl )
+     Signals that the widget should be redrawn. When Tk is next idle the
+     user's C render callback will be invoked. This is typically called from
+     within a Togl sub-command which was registered with
+     Togl_CreateCommand().
+
+void Togl_SwapBuffers( struct Togl *togl )
+     Swaps the front and back color buffers for a double-buffered widget.
+     glFlush() is executed if the window is single-buffered. This is
+     typically called in the rendering function which was registered with
+     Togl_DisplayFunc().
+
+char *Togl_Ident( struct Togl *togl )
+     Returns a pointer to the identification string associated with an Togl
+     widget or NULL if there's no identifier string.
+
+int Togl_Width( struct Togl *togl )
+     Returns the width of the given Togl widget. Typically called in the
+     function registered with Togl_ReshapeFunc().
+
+int Togl_Height( struct Togl *togl )
+     Returns the height of the given Togl widget. Typically called in the
+     function registered with Togl_ReshapeFunc().
+
+Tcl_Interp *Togl_Interp( struct Togl *togl )
+     Returns the Tcl interpreter associated with the given Togl widget.
+
+unsigned long Togl_AllocColor( struct Togl *togl, float red, float green,
+float blue )
+     Allocate a color from a read-only colormap. Given a color specified by
+     red, green, and blue return a colormap index (aka pixel value) whose
+     entry most closely matches the red, green, blue color. Red, green, and
+     blue are values in [0,1]. This function is only used in color index
+     mode when the -privatecmap option is false.
+
+void Togl_FreeColor( struct Togl *togl, unsigned long index )
+     Free a color in a read-only colormap. Index is a value which was
+     returned by the Togl_AllocColor() function. This function is only used
+     in color index mode when the -privatecmap option is false.
+
+void Togl_SetColor( struct Togl *togl, int index, float red, float green,
+float blue )
+     Load the colormap entry specified by index with the given red, green
+     and blue values. Red, green, and blue are values in [0,1]. This
+     function is only used in color index mode when the -privatecmap option
+     is true.
+
+Tcl Togl commands
+
+These are the Togl commands one may call from a Tcl program.
+
+togl pathName [options]
+     Creates a new togl widget with name pathName and an optional list of
+     configuration options. Options include:
+
+     Option          Default Comments
+     --------------- ------- --------------------------------------------------
+     -width          400     Width of widget in pixels.
+     -height         400     Height of widget in pixels.
+
+     -ident          ""      A user identification string ignored by togltk.  This
+                             can be useful in your C callback functions to determine
+                             which Togl widget is the caller.
+
+     -rgba           true    If true, use RGB(A) mode
+                             If false, use Color Index mode
+
+     -double         false   If false, request a single buffered window
+                             If true, request double buffered window
+
+     -depth          false   If true, request a depth buffer
+
+     -accum          false   If true, request an accumulation buffer
+
+     -alpha          false   If true and -rgba is true, request an alpha channel
+
+     -stencil        false   If true, request a stencil buffer
+
+     -privatecmap    false   Only applicable in color index mode.
+                             If false, use a shared read-only colormap.
+                             If true, use a private read/write colormap.
+
+pathName configure
+     Returns all configuration records for the named togl widget.
+
+pathName configure -option
+     Returns configuration information for the specifed option which may be
+     one of:
+     -width
+          Returns the width configuration of the widget in the form:
+
+          -width width Width W w
+
+          where W is the default width in pixels and w is the current width
+          in pixels
+     -height
+          Returns the height configuration of the widget in the form:
+
+          -height height Height H h
+
+          where H is the default height in pixels and h is the current
+          height in pixels
+     -extensions
+          Returns a list of OpenGL extensions available. For example:
+          GL_EXT_polygon_offset GL_EXT_vertex_array
+
+pathName configure -option value
+     Reconfigure an togl widget. option may be one of:
+     -width
+          Resize the widget to value pixels wide
+     -height
+          Resize the widget to value pixels high
+
+pathName render
+     Causes the render callback function to be called for pathName.
+
+Demo programs
+
+There are three demo programs:
+
+   * double - compares single vs double buffering with two Togl widgets
+   * texture - lets you play with texture mapping options (note that Mesa
+     doesn't support some of them)
+   * index - demo of using color index mode
+
+To compile the demos, edit the Makefile, then type "make". The Makefile
+currently works with IRIX.
+
+To run a demo just type "double" or "texture" or "index".
+
+----------------------------------------------------------------------------
+Last edited on May 14, 1996 by Brian Paul.

@@ -1,0 +1,5 @@
+:
+# test for d.what.s.db using prebuilt SQL command file
+# DB=eco_welleg, GISdb=SECO
+#
+d.what.s.db -s sql=tst_dws.sql distance=$1 

@@ -1,0 +1,20 @@
+NAME	= v.plant
+
+PROGRAM	= $(BIN_CONTRIB_INTER)/$(NAME)
+
+MSEC	= 4
+MDIR	= $(SRC)/../man/man$(MSEC)
+MUTL	= $(SRC)/../man/utilities
+
+all:  $(PROGRAM) man
+
+$(PROGRAM): $(NAME)
+	-cp $(NAME) $(PROGRAM)
+	chmod +x $(PROGRAM)
+
+
+man:  $(NAME).man
+	-cp $(NAME).man $(MDIR)/$(NAME)
+	nroff $(MUTL)/man.version $(MDIR)/.class-header \
+	   $(MUTL)/man.header $(NAME).man $(MDIR)/.class-notice \
+	   > $(GISBASE)/man/$(MSEC)/$(NAME)

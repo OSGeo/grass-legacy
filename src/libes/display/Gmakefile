@@ -1,0 +1,32 @@
+OBJ =\
+	get_win.o\
+	color_list.o\
+	clip.o\
+	cnversions.o\
+	draw.o\
+	ident_win.o\
+	list.o\
+	popup.o\
+	raster.o\
+	raster2.o\
+	scan_dbl.o\
+	scan_float.o\
+	scan_int.o\
+	setup.o\
+	tran_colr.o\
+	window.o
+
+#all: $(LIBDIR)/colors.h $(DISPLAYLIB)
+all: $(DISPLAYLIB)
+
+$(DISPLAYLIB): $(OBJ)
+	$(AR)
+
+#$(LIBDIR)/colors.h: colors.h
+#	rm -f $@
+#	cp $? $@
+#	chmod 444 $@
+
+color_list.o: $(INCLUDE_DIR)/colors.h
+tran_colr.o: $(INCLUDE_DIR)/colors.h
+window.o: $(INCLUDE_DIR)/colors.h

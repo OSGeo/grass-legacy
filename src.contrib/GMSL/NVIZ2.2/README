@@ -1,0 +1,49 @@
+This file describes the installation of nviz version 2.2.  For
+additional information on using nviz, there is a man page in this
+directory which you can install as appropriate. 
+
+INSTALLATION
+------------
+
+nviz requires Tcl 8.x and Tk 8.x.  A special Tk 8.0 compatible version
+of the tkGLX 1.3.2 widget is supplied with this distribution.  Earlier
+versions of Tcl and Tk are not acceptable as major design
+modifications were made in Tk 8.0.
+
+To install:
+
+1. Run the configure script in this directory with:
+	configure
+
+2. Make the distribution in this directory with:
+	gmake5
+
+The configure script sets a few default values and attempts to figure
+out where the tcl/tk libraries reside.  If configure can't find a
+particular library it will ask for the directory where that library
+resides. 
+
+The Gmakefile created in this directory first builds the C portion of
+nviz and the gsf library, and then builds and installs the Tcl scripts
+in the appropriate GRASS directories.  After installing nviz you may
+remove any of the subdirectories contained in the distribution except
+for the bitmaps and scripts directories.  Furthermore, note that the
+location of the Tcl scripts is compiled into nviz.  This means that if
+you need to move these scripts for some reason you will most likely
+have to reinstall nviz.  
+
+CHANGES FROM VERSION 1.0
+------------------------
+
+No significant changes have been made from version 1.0 to 2.0 other
+than a complete port to Tk 4.0 with all the benefits which that
+entails.  All functionality provided by version 1.0 is still supported
+but with a much cleaner interface.
+
+KNOWN BUGS
+----------
+Scripting: There are a few subtle "features" in the scripting
+  interface of nviz.  In particular, if users add their own panels
+  old scripts may have unpredictable behavior.  However, any script
+  created with the "Script File Tools" option under "Script Tools"
+  will be unaffected.

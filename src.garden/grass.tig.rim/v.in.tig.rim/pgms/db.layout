@@ -1,0 +1,19 @@
+.make
+TIGER Census Record ~sRECNUM~~     Census Feature Class Code(CFCC):~tCFCC
+ Type ~iRECTYP Vers ~iVERSION      Source ~tSOURCE  Side Code ~iSIDECDE
+FEAT.ID  Prefix:      Name:                            Type:      Suffix:
+ INFO:  ~tDIRPRE     ~tFEANME~~~~~~~~~~~~~~~~~~~~~~~  ~tFEATYP   ~tDIRSUF
+ADDRESS:    FROM        TO            IMPUTED FLAGS: FROM       TO
+ Left:   ~tFRADDL~~~  ~tTOADDL~~~           Left:  ~iFRIADDFL ~iTOIADDFL
+ Right   ~tFRADDR~~~  ~tTOADDR~~~           Right: ~iFRIADDFR ~iTOIADDFR
+CODES:=ST. FIPS===CO. FIPS====MCD/CCD===SUB-MCD=====PLACE=====AL.NATIVE
+ Left:  ~iSTL      ~iCOL      ~iFMCDL   ~iFSMCDL    ~iFPLCDEL  ~iANRCL
+ Right: ~iSTR      ~iCOR      ~iFMCDR   ~iFSMCDR    ~iFPLCDER  ~iANRCR
+=======TRACT/BNA==SUFFIX====BLOCK NO=SUFFIX==BG====ZIP======AM.INDIAN RES.
+ Left:  ~iCTBNAL   ~iTSL    ~iBLKL   ~tBSL   ~iBGL ~iZIPL     ~iAIRL
+ Right: ~iCTBNAR   ~iTSR    ~iBLKR   ~tBSR   ~iBGR ~iZIPR     ~iAIRR
+COORDS:LONGITUDE   LATITUDE    UTM EAST     UTM NORTH   |    REP. POINT
+ From:~iFROMLONG  ~iFROMLAT~  ~fFREAST~~~  ~fFRNORTH~~  |   ~xE~~~~~~~~~
+ To:  ~iTOLONG~~  ~iTOLAT~~~  ~fTOEAST~~~  ~fTONORTH~~  |   ~yN~~~~~~~~~
+LOCAL: V_type: ~vVT  Source Map: ~mMAP   Offset in File: ~ivectoff
+.end

@@ -1,0 +1,9 @@
+interface_build {
+    {r.statistics} 0
+    {Calculates category- or objectoriented statistics from cover map within areas assigned through a base map.}
+    {entry base {Base raster map (input):} 0 raster}
+    {entry cover {Cover raster map (input):} 0 raster}
+    {entry output {Resultant raster map:} 0 raster}
+    {entry method {Choose statistical method:} 0 method}
+    {checkbox -c {Use cover map's category labels instead of category numbers.} "" -c}
+}

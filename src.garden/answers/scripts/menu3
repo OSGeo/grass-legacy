@@ -1,0 +1,9 @@
+#!/bin/csh
+d.menu bcolor=black tcolor=red dcolor=red size=3 << EOF
+.T 0
+.L 0
+Continue?
+   Yes
+   Exit
+EOF
+

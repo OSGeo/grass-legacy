@@ -1,0 +1,8 @@
+interface_build {
+    {r.in.ascii} 0
+    {Convert an ASCII raster text file into a (binary) raster map layer.}
+    {entry input {Input ASCII raster file:} 0 file}
+    {entry output {Output raster map:} 0 raster}
+    {entry title {Title of the output raster map:} 0 ""}
+    {entry mult {Multiplier for ascii data [1.0]:} 0 ""}
+}

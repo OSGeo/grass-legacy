@@ -1,0 +1,7 @@
+interface_build {
+    {d.vect} 0
+    {Displays GRASS vector data.}
+    {entry map {Vector map, required:} 0 vector}
+    {entry color {Vector display color [white]:} 0 color}
+    {checkbox -m {Use less memory.} "" -m}
+}

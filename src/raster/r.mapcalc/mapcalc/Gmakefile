@@ -1,0 +1,58 @@
+PGM = r.mapcalc
+HOME=$(BIN_MAIN_CMD)
+
+LIST = main.o\
+	compare.o\
+	convert.o\
+	evaluate.o\
+	execute.o\
+	expression.o\
+	function.o\
+	fpe.o\
+	input.o\
+	logical.o\
+	math.o\
+	maps.o\
+	polish.o\
+	pool.o\
+	range.o\
+	readrow.o\
+	round.o\
+	support.o\
+	variables.o\
+	xexp.o\
+	x2float.o\
+	x2int.o\
+	xabs.o\
+	xcoor.o\
+	xcos.o\
+	xeval.o\
+	xatan.o\
+	xif.o\
+	xlog.o\
+	xmax.o\
+	xmedian.o\
+	xmin.o\
+	xmode.o\
+	xnull.o \
+	xisnull.o\
+	xrand.o\
+	xres.o\
+	xround.o\
+	xrowcol.o\
+	xsin.o\
+	xsqrt.o\
+	xtan.o
+
+LIBES = $(GISLIB) $(BTREELIB) $(ROWIOLIB)
+
+$(HOME)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIST): glob.h
+evaluate.o: function.h
+function.o: function.h
+main.o: function.h
+polish.o: function.h
+
+$(LIBES): #

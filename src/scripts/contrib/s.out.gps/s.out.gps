@@ -1,0 +1,27 @@
+#!/bin/sh
+#sites.to.gps
+# from Johnny Duke - jduke22@flash.net
+
+set =x
+cont=y
+while [ "$cont" = "y" ]
+ do
+   clear
+   g.ask type=any element=site_lists unixfile=t.1 prompt="ENTER NAME OF SITE FILE"
+   . t.1
+    if [ ! "$file" ]
+      then
+           exit 
+    fi
+    cont=n
+    sitem=$name 
+   done
+  rm t.1
+awk ' { print NR"|"$0 }' $LOCATION/site_lists/$sitem > /tmp/tmp.1
+awk ' BEGIN { FS = "|" }
+            { print $1","$2","$3 }' /tmp/tmp.1 > $sitem.gps
+echo "LABEL,VALUE" > $sitem.gps.txt
+awk ' BEGIN { FS = "|" }
+            { print $1","$4 }' /tmp/tmp.1 >> $sitem.gps.txt
+echo "GPS-File $sitem.gps.txt is stored in current directory."
+rm /tmp/tmp.1

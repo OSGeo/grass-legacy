@@ -1,0 +1,26 @@
+#!/bin/csh -f
+# from Dr. Agustin Lobo - alobo@ija.csic.es
+
+#set echo
+#set verbose
+if ($#argv == 0) then
+        echo ""
+        echo "Tasseled Cap transformation (Kauth Thomas) - vegetation index"
+        echo ""
+        echo "Usage: i.tasscap tm1 tm2 tm3 tm4 tm5 tm7 outfile"
+	exit
+endif 
+set out = $argv[$#argv]
+echo ""
+echo "Calculating first TC component $out.1 ..."
+r.mapcalc "$out.1 =  0.3037 * $argv[1] + 0.2793 * $argv[2] + 0.4743 * $argv[3] + 0.5585 * $argv[4] + 0.5082 * $argv[5] + 0.1863 * $argv[6]"
+echo ""
+echo "Calculating second TC component $out.2 ..."
+r.mapcalc "$out.2 = -0.2848 * $argv[1] - 0.2435 * $argv[2] - 0.5435 * $argv[3] + 0.7243 * $argv[4] + 0.0840 * $argv[5] - 0.1800 * $argv[6]"
+echo ""
+echo "Calculating third TC component $out.3 ..."
+r.mapcalc "$out.3 =  0.1509 * $argv[1] + 0.1973 * $argv[2] + 0.3279 * $argv[3] + 0.3406 * $argv[4] - 0.7112 * $argv[5] - 0.4572 * $argv[6]"
+r.colors map=$out.1 color=grey
+r.colors map=$out.2 color=grey
+r.colors map=$out.3 color=grey
+echo "Ready."

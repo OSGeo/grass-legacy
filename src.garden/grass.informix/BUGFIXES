@@ -1,0 +1,55 @@
+The grass.informix tools as they went out with 4.1beta still had
+references to tools with a .db extension. This was changed prior to
+4.1 release to use the .inf extension.
+
+This file documents all the source code (names and line numbers)
+of the code before it was modified. The modifications were simply to
+change the .db to .inf.
+
+
+d.rast.inf/getAllOpts.c:83:	   system("d.rast.db -s help");
+d.rast.inf/main.c:2: *   d.rast.db
+d.rast.inf/main.c:40:                  "Please run g.select.db to identify a current database.\n");
+
+d.site.inf/getAllOpts.c:75:	    system("d.site.db -s help");
+d.site.inf/main.c:2: *   d.site.db
+d.site.inf/main.c:40:                  "Please run g.select.db to identify a current database.\n");
+
+d.vect.inf/getAllOpts.c:71:		system("d.vect.db -s help");
+d.vect.inf/main.c:2: *   d.vect.db
+d.vect.inf/main.c:40:                  "Please run g.select.db to identify a current database.\n");
+
+d.what.r.inf/getAllOpts.c:58:		system("d.what.r.db -s help") ;
+d.what.r.inf/main.c:2: *   d.what.r.db
+d.what.r.inf/main.c:33:                  "Please run g.select.db to identify a current database.\n");
+
+d.what.s.inf/getAllOpts.c:71:		system("d.what.s.db help -s");
+d.what.s.inf/main.c:2: *   d.what.s.db
+d.what.s.inf/main.c:36:                  "Please run g.select.db to identify a current database.\n");
+
+d.what.v.inf/getAllOpts.c:63:		system("d.what.v.db -s help") ;
+d.what.v.inf/main.c:2: *   d.what.v.db
+d.what.v.inf/main.c:36:                  "Please run g.select.db to identify a current database.\n");
+
+g.column.inf/main.c:2: *   g.column.db
+g.column.inf/main.c:51:                   "Please run g.select.db to identify a current database.\n");
+
+g.select.inf/main.c:2: *   g.select.db
+
+g.stats.inf/main.c:2: *   g.stats.db
+g.stats.inf/main.c:70:                   "Please run g.select.db to identify a current database.\n");
+
+g.table.inf/main.c:2: *   g.table.db
+g.table.inf/main.c:43:                   "Please run g.select.db to identify a current database.\n");
+
+r.reclass.inf/main.c:2: *   r.reclass.db
+r.reclass.inf/main.c:77:                  "Please run g.select.db to identify a current database.\n");
+
+r.rescale.inf/main.c:2: *   r.rescale.db
+r.rescale.inf/main.c:96:                  "Please run g.select.db to identify a current database.\n");
+
+v.reclass.inf/infxQry.c:81:    	G_set_cats_title("Produced by v.reclass.db",&newcats);
+v.reclass.inf/infxQry.c:94:        strcpy( New_Map.head.map_name,"Created by v.reclass.db");
+v.reclass.inf/main.c:2: *   v.reclass.db
+v.reclass.inf/main.c:32:/* JOIN needs to work as per d.what.db (sites) where 
+v.reclass.inf/main.c:77:                  "Please run g.select.db to identify a current database.\n");

@@ -1,0 +1,8 @@
+interface_build {
+    {v.mkgrid} 0
+    {Creates a user defined grid in a GRASS vector map.}
+    {entry map {New vector map:} 0 vector}
+    {entry grid {Number of rows and columns to appear in grid (rows,columns):} 0 ""}
+    {entry coordinate {Lower left corner of new vector map (easting,norting):} 0 xy}
+    {entry box {Boxes dimension in new grid (length,width):} 0 ""}
+}

@@ -1,0 +1,69 @@
+#!/bin/sh
+# written by Markus Neteler 18. August 1998 / 20. Jan. 1999
+#            neteler@geog.uni-hannover.de
+# mosaic code from Felix Gershunov (Felix@spsl.nsc.ru)
+
+#--------------------------------------------------
+if [ "$#" -lt 2 ]; then
+      echo ""
+      echo "GRASS script to mosaic (aerial) images. A new image will"
+      echo "be created with extended colormap."
+      echo ""
+      echo "Please specify image file(s)!"
+      echo "Usage:"
+      echo "   i.image.mosaic image1 image2 [image3] [image4]"
+      echo ""
+      echo "The first image will be on top of image stack."
+      exit
+fi
+
+
+if [ "$#" -gt 4 ]; then
+     echo ""
+     echo "Sorry, only mosaicing of four images supported."
+     echo "   (You may extend the script yourself.)"
+     exit
+fi
+
+echo ""
+echo "ATTENTION: Do not forget to set region properly to cover all images!"
+echo ""
+
+# two images to patch
+if [ "$#" -eq 2 ]; then
+     echo "Mosaicing two images..."
+     r.mapcalc "$1.$2.mosaic = if($1,$1,$2+256)"
+     #modify the color table:
+     echo '% 0 1024' > $LOCATION/colr/$1.$2.mosaic
+     tail -256 $LOCATION/colr/$1 >> $LOCATION/colr/$1.$2.mosaic
+     tail -256 $LOCATION/colr/$2 |awk -F':' '{print $1+256":"$2":"$3":"$4}'>>$LOCATION/colr/$1.$2.mosaic
+     echo "Ready. File $1.$2.mosaic created."
+     exit
+fi
+
+# three images to patch
+if [ "$#" -eq 3 ]; then
+     echo "Mosaicing three images..."
+     r.mapcalc "$1.$2.$3.mosaic = eval(t1=if($1,$1,$2+256), t2=if(t1 % 256,t1,$3+512), t2)"
+     #modify the color table:
+     echo '% 0 1024' > $LOCATION/colr/$1.$2.$3.mosaic
+     tail -256 $LOCATION/colr/$1 >> $LOCATION/colr/$1.$2.$3.mosaic
+     tail -256 $LOCATION/colr/$2 |awk -F':' '{print $1+256":"$2":"$3":"$4}'>>$LOCATION/colr/$1.$2.$3.mosaic
+     tail -256 $LOCATION/colr/$3 |awk -F':' '{print $1+512":"$2":"$3":"$4}'>>$LOCATION/colr/$1.$2.$3.mosaic
+     echo "Ready. File $1.$2.$3.mosaic created."
+     exit
+fi
+
+# four images to patch
+if [ "$#" -eq 4 ]; then
+     echo "Mosaicing four images..."
+     r.mapcalc "$1.$2.$3.$4.mosaic = eval(t1=if($1,$1,$2+256), t2=if(t1 % 256,t1,$3+512), t3=if(t2 % 256,t2,$4+768),t3)"
+     #modify the color table:
+     echo '% 0 1024' > $LOCATION/colr/$1.$2.$3.$4.mosaic
+     tail -256 $LOCATION/colr/$1 >> $LOCATION/colr/$1.$2.$3.$4.mosaic
+     tail -256 $LOCATION/colr/$2 |awk -F':' '{print $1+256":"$2":"$3":"$4}'>>$LOCATION/colr/$1.$2.$3.$4.mosaic
+     tail -256 $LOCATION/colr/$3 |awk -F':' '{print $1+512":"$2":"$3":"$4}'>>$LOCATION/colr/$1.$2.$3.$4.mosaic
+     tail -256 $LOCATION/colr/$4 |awk -F':' '{print $1+768":"$2":"$3":"$4}'>>$LOCATION/colr/$1.$2.$3.$4.mosaic
+     echo "Ready. File $1.$2.$3.$4.mosaic created."
+     exit
+fi

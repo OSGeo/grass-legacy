@@ -1,0 +1,10 @@
+#########################################################################
+# the tags file created by "make ctags" is great for
+# editing to look for function definitions
+# vi -t <function name>
+
+ctags:
+	ctags *.[ch]
+	sed 's/\?/\//g' tags > tags.tmp
+	mv tags.tmp tags
+tags: ctags ; #

@@ -1,0 +1,16 @@
+OBJS = main.o eigen.o
+
+LIBES= $(GISLIB) 
+
+$(BIN_MAIN_CMD)/i.pca: $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(MAN2)/i.pca: Gpca.man
+	$(MANROFF)
+
+$(HELP)/i.pca: Gpca.help
+	cp Gpca.help $@
+
+$(OBJS): globals.h
+
+$(LIBES): #

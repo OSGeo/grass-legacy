@@ -1,0 +1,9 @@
+
+
+d.sites - 
+
+d.sites displays a GRASS \site\ lists map using site markers of a color,
+size and type specified by the user.  Output is displayed in the active
+\frame\ on the graphics monitor.
+
+Manual entry for \d.sites\

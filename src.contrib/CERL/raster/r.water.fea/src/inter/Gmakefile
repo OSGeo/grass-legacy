@@ -1,0 +1,10 @@
+PGM=r.water.fea
+HOME=$(BIN_CONTRIB_INTER)
+LIBES = $(GISLIB) $(RASTERLIB) $(XDRLIB)
+LDFLAGS = $(MATHLIB)
+LIST = main.o menu.o choicehand.o shell.o
+
+$(HOME)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
+
+$LIBES: #

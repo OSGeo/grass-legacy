@@ -1,0 +1,10 @@
+
+
+d.icons - 
+
+d.icons graphically displays point (\site\) locations as icons in the
+active \frame\ on the grpahics monitor.  Geographic coordinates are
+read either from standard input or from an input file whose name is
+stated by the user.
+
+Manual entry for \d.icons\

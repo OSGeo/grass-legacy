@@ -1,0 +1,8 @@
+interface_build {
+    {r.out.ppm} 0
+    {Exports a GRASS raster file into a PPM (24bit) file.}
+    {entry input {GRASS raster file (input):} 0 raster}
+    {entry output {PPM file (output):} 0 File}
+    {checkbox -G {Greyscale output instead of color.} "" -G}
+    {checkbox -q {Run quietly.} "" -q}
+}

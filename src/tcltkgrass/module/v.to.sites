@@ -1,0 +1,11 @@
+interface_build {
+    {v.to.sites} 0
+    {Converts a binary GRASS vector map to a GRASS sites map.}
+    {entry input {Input vector map:} 0 vector}
+    {entry output {Output sites map:} 0 sites}
+    {entry dmax {Maximum distance between points (optional, for -a -i only):} 0 ""}
+    {checkbox -a {Output all verticies to site file.} "" -a}
+    {checkbox -c {Use category NUMERIC data instead of attribute.} "" -c}
+    {checkbox -C {Use category TEXT data instead of attribute.} "" -C}
+    {checkbox -i {Interpolate points along lines.} "" -i}
+}

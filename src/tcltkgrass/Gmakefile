@@ -1,0 +1,13 @@
+# This file is required for src/CMD/lists/GRASS. Please do not delete.
+#
+# This Gmakefile may only be used when building the entire
+# GRASS from source code. Store this directory tree in src/tcltkgrass/
+#
+# If you are updating your TclTkGRASS, use the "make" command.
+#
+all:
+	if [ ! -d $(GISBASE)/tcltkgrass ]; then mkdir $(GISBASE)/tcltkgrass; fi
+	tar cf - bitmap/* docs/Pro* docs/HIS* main/* module/* script/* | (cd $(GISBASE)/tcltkgrass; tar xf -)
+	rm -f $(GISBASE)/bin/tcltkgrass
+	cp main/tcltkgrass.start $(GISBASE)/bin/tcltkgrass
+	chmod ugo+x $(GISBASE)/bin/tcltkgrass

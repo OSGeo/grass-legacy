@@ -1,0 +1,89 @@
+#!/bin/sh
+
+TMP=`g.tempfile pid=$$`
+TMP2=`g.tempfile pid=$$`
+
+if [ $# = 0 ] || [ $1. = . ]
+    then
+	g.ask type=old element=site_lists unixfile=$TMP2
+	. $TMP2
+    elif [ $1 = "help" ]
+	then
+	    echo "USAGE: d.siter [sites_filename]"
+	    exit
+    elif [ $1 = "-help" ]
+	then
+	    echo "USAGE: d.siter [sites_filename]"
+	    exit
+    else
+	name=$1
+fi
+
+if [ ! "$name" ]
+then
+   exit
+fi
+
+s.info -qw $name 2> /dev/null > $TMP
+
+str=""
+
+numdims=`cat $TMP | grep 'Number of DIMENSIONS' | \
+    awk '{print $4}'`
+if [ $numdims -gt 0 ]
+then
+    linedim=`grep -n 'Number of DIMENSIONS' $TMP | \
+	      awk -F\: '{print $1}'`
+    linedim=`expr $linedim + 3`
+
+    num=1
+    while [ "$num" -le "$numdims" ]
+    do
+	label=`head -$linedim $TMP | tail -1 | 
+	   awk ' NF == 5 { print $5 }; NF < 5 { print "no_label" }'`
+	range=`head -$linedim $TMP | tail -1 | awk '{ printf("%f %f",$3,$4) }'`
+	str="$str D$num $range $label"
+	num=`expr $num + 1`
+	linedim=`expr $linedim + 1`
+    done
+fi
+
+cats=`cat $TMP | grep 'Type of CATEGORY information' | \
+    awk '{print $5}'`
+if [ $cats != "NO" ]
+then
+    linecat=`grep -n 'Type of CATEGORY information' $TMP | \
+	      awk -F\: '{print $1}'`
+    linecat=`expr $linecat + 3`
+ 
+    label=`head -$linecat $TMP | tail -1 | \
+	   awk ' NF == 3 { print $3 }; NF < 3 { print "no_label" }'`
+    range=`head -$linecat $TMP | tail -1 | awk '{ printf("%f %f",$1,$2) }'`
+    str="$str C $range $label"
+fi
+
+numatts=`cat $TMP | grep 'Number of DOUBLE attributes' | \
+    awk '{print $5}'`
+if [ $numatts -gt 0 ]
+then
+    lineatt=`grep -n 'Number of DOUBLE attributes' $TMP | \
+	      awk -F\: '{print $1}'`
+    lineatt=`expr $lineatt + 3`
+
+    num=1
+    while [ "$num" -le "$numatts" ]
+    do
+	label=`head -$lineatt $TMP | tail -1 | 
+	   awk ' NF == 5 { print $5 }; NF < 5 { print "no_label" }'`
+	range=`head -$lineatt $TMP | tail -1 | awk '{ printf("%f %f",$3,$4) }'`
+	str="$str A$num $range $label"
+	num=`expr $num + 1`
+	lineatt=`expr $lineatt + 1`
+    done
+fi
+
+tclsiter $name $str
+
+/bin/rm -f $TMP
+/bin/rm -f $TMP2
+

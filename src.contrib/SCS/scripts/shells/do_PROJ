@@ -1,0 +1,32 @@
+rep=
+while [ "$rep" = "" ]
+do
+if test -f /usr/bin/tput
+then tput clear
+else clear
+fi
+echo " "
+echo " "
+echo "	 There are several standard projections"
+echo " "
+echo "    	Universal Transverse Mercator   utm"
+echo "    	Albers Equal Area               aea"
+echo "    	Lambert Conformal Conic         lcc"
+echo "    	Latitude Longitude              ll"
+echo "    	Transverse Mercator             tmerc"
+echo "    	Mercator                        merc"
+echo -n "	            Enter one from the second column [utm]: "
+read proj
+if test "$proj" = ""
+then m.setproj proj=utm
+elif test "$proj" = "aea" -o "$proj" = "lcc" -o "$proj" = "tmerc" -o "$proj" = "merc" -o "$proj" = "ll" -o "$proj" = "utm"
+   then m.setproj proj=$proj
+   else echo " "
+	echo "		$proj is an INVALID projection"
+	sleep 2
+fi
+if [ -f PROJ_INFO ]         # check for PROJ_INFO file
+then  rep=no 
+else  rep=
+fi
+done

@@ -1,0 +1,32 @@
+DATETIMELIB = $(LIBDIR)/libdatetime.a
+#DATETIMELIB = ../lib.a
+#EXTRA_CFLAGS = -I..
+
+RESET = reset.o $(DATETIMELIB)
+SCAN = scan.o $(DATETIMELIB)
+INCR = incr.o $(DATETIMELIB)
+SUB = sub.o $(DATETIMELIB)
+LOCAL = local.o $(DATETIMELIB)
+
+
+all: scan reset incr sub try local
+
+sub: $(SUB)
+	$(CC) $(LDFLAGS) -o $@ $(SUB)
+
+incr: $(INCR)
+	$(CC) $(LDFLAGS) -o $@ $(INCR)
+
+scan: $(SCAN)
+	$(CC) $(LDFLAGS) -o $@ $(SCAN)
+
+reset: $(RESET)
+	$(CC) $(LDFLAGS) -o $@ $(RESET)
+
+local: $(LOCAL)
+	$(CC) $(LDFLAGS) -o $@ $(LOCAL)
+
+
+TRY = try.o normalize.o $(DATETIMELIB)
+try: $(TRY)
+	$(CC) $(LDFLAGS) -o $@ $(TRY)

@@ -1,0 +1,2 @@
+gmake4.1 . STUBLIB= HOME=. > /dev/null
+rm -f a.out

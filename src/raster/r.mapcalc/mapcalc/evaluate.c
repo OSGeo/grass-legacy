@@ -1,0 +1,347 @@
+#include <unistd.h>
+#include "glob.h"
+#include "function.h"
+#include "mapcalc.h"
+
+int evaluate (int nrows, int ncols)
+{
+    int i,n,n2,d;
+    int nargs,k;
+    int col;
+    CELL *cell;
+    double *xcell;
+    int use_double;
+    int get_double;
+    char *bp;
+
+    int (*icall)(), (*xcall)();
+
+    execute_stack_depth = 0;
+
+    for (i = 0; i < expression_stack_depth; i++)
+    {
+	d = execute_stack_depth - 1 ;
+
+/* perform a double check on the execution stack.
+ * binary ops, comparison, logicals must have two operands.
+ * UMINUS, FUNCTIONS check themselves (see ahead)
+ * all operands are typed as MAP  (see ahead)
+ */
+	switch (expression_stack[i].type)
+	{
+	case GT:
+	case GE:
+	case LT:
+	case LE:
+	case EQ:
+	case NE:
+	case OR:
+	case AND:
+	case '+':
+	case '-':
+	case '*':
+	case '/':
+	case '%':
+	case '^':
+	    if (d < 1) return 0;
+	    if (execute_stack[d].type != MAP) return 0;
+	    if (execute_stack[d-1].type != MAP) return 0;
+	    execute_stack_depth--;
+	    if (expression_stack[i].type == '^' ||
+	        buffer_is_double (d) || buffer_is_double(d-1))
+	    {
+		convert_to_double (d);
+		convert_to_double (d-1);
+		use_double = 1;
+	    }
+	    else
+		use_double = 0;
+	}
+
+	switch (expression_stack[i].type)
+	{
+	case '+': icall = add;      xcall = add_x;      get_double=1; break;
+	case '-': icall = subtract; xcall = subtract_x; get_double=1; break;
+	case '*': icall = multiply; xcall = multiply_x; get_double=1; break;
+	case '/': icall = divide;   xcall = divide_x;   get_double=1; break;
+	case '%': icall = modulus;  xcall = modulus_x;  get_double=1; break;
+	case '^': icall = NULL;     xcall = power_x;    get_double=1; break;
+	case GT:  icall = gt_i;     xcall = gt_x;       get_double=0; break;
+	case GE:  icall = ge_i;     xcall = ge_x;       get_double=0; break;
+	case LT:  icall = lt_i;     xcall = lt_x;       get_double=0; break;
+	case LE:  icall = le_i;     xcall = le_x;       get_double=0; break;
+	case EQ:  icall = eq_i;     xcall = eq_x;       get_double=0; break;
+	case NE:  icall = ne_i;     xcall = ne_x;       get_double=0; break;
+	case OR:  icall = or_i;     xcall = or_x;       get_double=0; break;
+	case AND: icall = and_i;    xcall = and_x;      get_double=0; break;
+	}
+	switch (expression_stack[i].type)
+	{
+/* binary operations */
+	case '+':
+	case '-':
+	case '/':
+	case '*':
+	case '%':
+	case '^':
+	case GT:
+	case GE:
+	case LT:
+	case LE:
+	case EQ:
+	case NE:
+	case OR:
+	case AND:
+	    if (use_double)
+		(*xcall) (execute_stack[d-1].xcell, execute_stack[d].xcell, ncols);
+	    else
+		(*icall) (execute_stack[d-1].cell, execute_stack[d].cell, ncols);
+	    return_buffer_to_pool (execute_stack[d].n);
+	    if (!get_double)
+		convert_to_cell (d-1);
+	    break;
+	case UMINUS:
+	    if (d < 0) return 0;
+	    if (execute_stack[d].type != MAP) return 0;
+	    col = ncols;
+	    if (buffer_is_double(d))
+	    {
+		xcell = execute_stack[d].xcell;
+		while (col-- > 0)
+		{
+		    if (!ISNULL_D(xcell))
+		    {
+			*xcell = -(*xcell);
+		    }
+		    xcell++;
+		}
+	    }
+	    else
+	    {
+		cell = execute_stack[d].cell;
+		while (col-- > 0)
+		{
+		    if (!ISNULL(cell))
+		    {
+			*cell = -(*cell);
+		    }
+		    cell++;
+		}
+	    }
+	    break;
+
+/* set a variable */
+	case SET_VARIABLE:
+	    if (d < 0) return 0;
+	    if (execute_stack[d].type != MAP) return 0;
+	    k = expression_stack[i].k;  /* variable number */
+	    if (buffer_is_double(d))
+		copy_double_to_variable (execute_stack[d].xcell, k, ncols);
+	    else
+		copy_cell_to_variable (execute_stack[d].cell, k, ncols);
+	    break;
+
+
+/* operands */
+	case GET_VARIABLE:
+	    d = execute_stack_depth;
+	    grow_execute_stack();
+	    k = expression_stack[i].k;  /* variable number */
+	    if (variable_is_double(k))
+	    {
+		cell  = NULL;
+		xcell = (double *) get_buffer_from_pool (&n);
+		copy_variable_to_double (xcell, k, ncols);
+	    }
+	    else
+	    {
+		xcell = NULL;
+		cell  = (CELL *) get_buffer_from_pool (&n);
+		copy_variable_to_cell (cell, k, ncols);
+	    }
+	    execute_stack[d].cell = cell;
+	    execute_stack[d].xcell = xcell;
+	    execute_stack[d].n = n;
+	    execute_stack[d].type = MAP;
+	    break;
+
+	case MAP:
+	    d = execute_stack_depth;
+	    grow_execute_stack();
+
+	    bp = get_buffer_from_pool (&n);
+	    /* floating point map or color operation */ 
+	    if (expression_stack[i].nargs == 'f'
+		|| expression_stack[i].nargs == '#'
+		|| expression_stack[i].nargs == 'r'
+		|| expression_stack[i].nargs == 'g'
+		|| expression_stack[i].nargs == 'b')/* floating point map */
+	    {
+		set_readrow_for_fp(1);
+		cell = execute_stack[d].cell = NULL;
+		xcell = execute_stack[d].xcell = (double *)bp;
+	    }
+	    else
+	    {
+		set_readrow_for_fp(0);
+		cell = execute_stack[d].cell = (CELL *)bp;
+		xcell = execute_stack[d].xcell = NULL;
+	    }
+	    execute_stack[d].n = n;
+	    execute_stack[d].type = MAP;
+
+	    if (!readmap (expression_stack[i].k,
+		execute_stack[d].cell, execute_stack[d].xcell,
+		current_row+expression_stack[i].row, expression_stack[i].col,
+		nrows, ncols))
+		    return 0;
+	    switch (expression_stack[i].nargs)
+	    {
+	    case '@': /* convert from cats */
+		xcell = (double *) get_buffer_from_pool (&n2);
+		translate_from_cats (cell, xcell, ncols, expression_stack[i].k);
+		execute_stack[d].cell = NULL;
+		execute_stack[d].xcell = xcell;
+		execute_stack[d].n = n2;
+		return_buffer_to_pool (n);
+		break;
+	    case '#': /* convert from colors */
+	    case 'r':
+	    case 'g':
+	    case 'b':
+                /* need CELL buffer to store result */
+		cell = (CELL *) get_buffer_from_pool (&n2);
+		translate_from_colors (xcell, cell, ncols, 
+			expression_stack[i].k, expression_stack[i].nargs);
+                /* make cell active and xcell inactive */
+		xcell = execute_stack[d].xcell = NULL;
+		execute_stack[d].cell = cell;
+		execute_stack[d].n = n2;
+		return_buffer_to_pool (n);
+		break;
+	    }
+	    break;
+	case INTEGER:
+	    d = execute_stack_depth;
+	    grow_execute_stack();
+
+	    cell = (CELL *) get_buffer_from_pool (&n);
+	    execute_stack[d].cell = cell;
+	    execute_stack[d].xcell = NULL;
+	    execute_stack[d].n = n;
+	    execute_stack[d].type = MAP;
+	    col = ncols;
+	    while (col-- > 0)
+		*cell++ = expression_stack[i].k;
+	    break;
+	case DOUBLE:
+	    d = execute_stack_depth;
+	    grow_execute_stack();
+
+	    xcell = (double *) get_buffer_from_pool (&n);
+	    execute_stack[d].xcell = xcell;
+	    execute_stack[d].cell = NULL;
+	    execute_stack[d].n = n;
+	    execute_stack[d].type = MAP;
+	    col = ncols;
+	    while (col-- > 0)
+		*xcell++ = expression_stack[i].x;
+	    break;
+    
+/* functions */
+	case FUNCTION:
+	/* check that we have nargs and all are type MAP */
+	    nargs = expression_stack[i].nargs;
+	    if (execute_stack_depth < nargs)
+		return 0;
+	    for (d = 1; d <= nargs; d++)
+		if (execute_stack[execute_stack_depth - d].type != MAP)
+		    return 0;
+
+	/* convert arguments(s) to double if necessary */
+	    k = expression_stack[i].k;	/* function number */
+	    get_double = function_list[k].double_result;
+	    use_double = (function_list[k].icall == NOFUNC);
+	    if (!use_double)
+		for (d = 1; d <= nargs; d++)
+		    if (buffer_is_double (execute_stack_depth - d))
+		    {
+			use_double = 1;
+			break;
+		    }
+	    if (use_double)
+	    {
+		for (d = 1; d <= nargs; d++)
+		{
+		    convert_to_double (execute_stack_depth - d);
+		    xargs[nargs-d] = execute_stack[execute_stack_depth - d].xcell;
+		}
+		if (get_double)
+		    xcell = (double *) get_buffer_from_pool (&n);
+		else
+		    cell = (CELL *) get_buffer_from_pool (&n);
+
+		if (function_list[k].xcall == NOFUNC)
+		{
+		    if (get_double)
+			for (d=0; d < ncols; d++)
+			    xcell[d] = 0.0;
+		    else
+			for (d=0; d < ncols; d++)
+			    cell[d] = 0;
+		}
+		else if (get_double)
+		    (*function_list[k].xcall)(nargs,xargs,xcell,ncols);
+		else
+		    (*function_list[k].xcall)(nargs,xargs,cell,ncols);
+	    }
+	    else
+	    {
+		for (d = 1; d <= nargs; d++)
+		    iargs[nargs-d] = execute_stack[execute_stack_depth - d].cell;
+		cell = (CELL *) get_buffer_from_pool (&n);
+		(*function_list[k].icall)(nargs,iargs,cell,ncols);
+	    }
+	    for (d = 1; d <= nargs; d++)
+		return_buffer_to_pool (execute_stack[execute_stack_depth - d].n);
+	    execute_stack_depth -= nargs;
+	    d = execute_stack_depth;
+	    grow_execute_stack();
+	    execute_stack[d].n = n;
+	    execute_stack[d].type = MAP;
+	    if (use_double && get_double)
+	    {
+		execute_stack[d].xcell = xcell;
+		execute_stack[d].cell = 0;
+	    }
+	    else
+	    {
+		execute_stack[d].xcell = 0;
+		execute_stack[d].cell = cell;
+	    }
+	    break;
+
+/* other - shouldn't happen */
+	default:
+	    fprintf (stderr, "evaluate: SHOULDN'T HAPPEN!!\n");
+	    return 0;
+	}
+    }
+
+    return execute_stack_depth == 1;
+}
+
+int grow_execute_stack (void)
+{
+    if (execute_stack_depth++ >= execute_stack_nalloc)
+    {
+	execute_stack_nalloc += 16;
+	execute_stack =
+	    (struct execute_stack *) G_realloc (execute_stack,
+		execute_stack_nalloc * sizeof(struct execute_stack));
+    }
+    if (execute_stack_depth > execute_stack_depth_max)
+	execute_stack_depth_max = execute_stack_depth;
+
+    return 0;
+}

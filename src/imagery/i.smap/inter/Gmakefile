@@ -1,0 +1,6 @@
+LIST = main.o
+
+$(BIN_ALPHA_INTER)/i.smap: $(LIST) $(IMAGERYLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(IMAGERYLIB) $(GISLIB): #

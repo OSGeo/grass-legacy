@@ -1,0 +1,7 @@
+interface_build {
+    {s.surf.idw} 0
+    {Raster surface generation from sites map with inverse distance weighted interpolation.}
+    {entry input {Input site map:} 0 sites}
+    {entry output {Output raster map:} 0 raster}
+    {entry npoints {Number of interpolation points (default = 12):} 0 ""}
+}

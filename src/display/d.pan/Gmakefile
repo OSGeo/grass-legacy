@@ -1,0 +1,17 @@
+LIBES  = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB)
+
+LIST   = main.o \
+	 ask.o\
+	 center.o\
+	 returns.o \
+	 pan.o
+
+PROG = $(BIN_CONTRIB_CMD)/d.pan
+#PROG = ./d.pan
+
+$(PROG): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB)
+
+returns.o: graphics.h
+
+$(LIBES): #

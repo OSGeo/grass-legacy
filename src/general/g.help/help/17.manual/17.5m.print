@@ -1,0 +1,13 @@
+                 MANUAL ENTRIES FOR PRINT COMMANDS           
+
+Below is a list of GRASS 5.0 print commands.
+
+To access information on a command, highlight the command using the
+RETURN key, then press ESC. 
+
+     \p.chart\            \p.colors\              \p.icons\
+     \p.labels\           \p.map\                 \p.ppm\
+     \p.screen\           \p.select\
+
+For a discussion of all of these commands,
+see the \manual entry for paint\.

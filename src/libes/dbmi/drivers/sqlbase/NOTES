@@ -1,0 +1,78 @@
+BUGS: The following "bugs" have been found in the 5.0 version of the GUPTA
+sqlroutr.a library:
+
+*   sqlcnc() - connect to a database
+
+	 this routine misuses longjmp(). xcodecenter will not proceed.
+	 (prehaps only if the database requested doesn't connect)
+
+*   sqletx() - get (extended) error message
+
+	 the txtlen parmameter is set to a rediculous value upon
+	 return.
+
+*   If the any of the .SQL files (ERROR.SQL) are missing, the library
+    routines print error messages to STDOUT and EXIT!!  This messes up the
+    driver which needs to control the printing of error messages.  The
+    effect is that clients get a protocol error from the driver.
+
+*   Some library routines [sqlcnc() and sqlcsv()] print the message
+	    'just use 3'
+	    'just use 4'
+    to stderr. In the driver, I had to freopen("/dev/null","w",stderr)
+
+NOTES:
+* the C/API seems to also look for the $SQLBASE env variable
+  for a place to search for SQL.INI, ERROR.SQL, et al files.
+
+* If a user is given connect prvis with a password of SYSADM, then
+  no password need be provided to connect to the database.
+
+* When creating a database, I wanted to give PUBLIC connect privs.
+  However, SQLBASE doesn't allow the user PUBLIC to be granted connect privs;
+
+  If SQLBASE system is used for GRASS master database, then the following
+  must be done:
+
+  (1) create the database using the driver
+  (2) grant connect to anybody identified by SYSADM
+  (3) grant select/update on all user tables some fictious user (eg., anybody)
+  (4) setenv GRASSMASTER DRIVER:SERVER:grassmaster/anybody:
+       note the databasename has the /anybody user added. This will
+       connect to the grassmaster as the user 'anybody'
+
+STARTING THE SERVER:
+    cd /SQLBASE
+    dbu20srvr silent=2
+
+    [the 20 is for the 20 user server]
+    [silent=2 will run the server in background]
+
+PRIVS:
+    I think SQLBASE handles privs like this:
+
+	if user is a DBA
+	    if no explicit entry in sysprivs tables, then granted
+	    else ??? (can a DBA be denied privs? don't know this yet)
+	if user is owner of the table
+	    if no explicit entry in sysprivs tables, then granted
+	    else ??? (can owner be denied privs? don't know this yet)
+	else whatever privs PUBLIC is given.
+    
+    I think that there is no explicit way to deny privs.  If the privs
+    are not granted explicitly, they are denied unless the user is the
+    table owner or a dba.  (This is the real difference between revoke
+    and deny - can't deny the owner or a dba)
+
+INSERT/UPDATE of DATETIME with CURRENT date/time
+
+    I hacked this one. If the current date/time is requested (in the dbValue)
+    then I convert the current Unix time to an internal SQLBASE date/time
+    and insert/update this value. (See current_dt.c)
+
+    A problem here is that Unix time is only to the nearest second, while
+    database times have fractions of a second.
+
+    It should NOT be done this way, since server/database time may be
+    different. There should be a way to ask the database system
+    explicitly to insert/update with current time.

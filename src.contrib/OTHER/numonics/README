@@ -1,0 +1,24 @@
+
+	****************************************************************
+	            2200/AccuGrid Series NUMONICS digitizing tablet
+	****************************************************************
+
+	The NUMONICS drivers will operate with any numonics board  using
+
+the numonics standard interface configuration.  This driver requires a 4
+
+button cursor.   The driver uses a Polling method and reads data from
+
+digitizer in numonics packed binary format (the digitizer must be set for this
+
+format).  The setup is 9600, No Parity, 1 Stop Bit.
+
+
+	If you have any questions please give me a call:
+
+	Ken Shepardson
+	SPECTRUM SCIENCES & SOFTWARE, INC.
+	242 Vicki Leigh Rd.
+	Fort Walton Beach, FL 32548
+	(904) 862-3031
+

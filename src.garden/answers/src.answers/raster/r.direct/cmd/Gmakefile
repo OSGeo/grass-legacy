@@ -1,0 +1,40 @@
+# local idiosyncracy - I needed to set the fortran compiler var to the 
+# full path to the compiler (I will leave this line here in case
+# you need to know how to do this) if your fortran compiler is in your
+# default path, then you won't need this
+# FC = /usr/lang/f77
+
+FILL = $(ETC)/fill
+PGM = $(BIN_ALPHA_CMD)/r.direct
+
+# this program uses a number of sub-programs.
+# these we will put in $GIS/etc/fill
+
+PGM1 = $(FILL)/direct_for
+PGM2 = $(FILL)/fmt_un_dir
+PGM3 = $(FILL)/un_fmt_dir
+
+OBJ = direct.o cell_open.o cell_open_new.o
+OBJ1 = direct_for.o
+OBJ2 = fmt_un.o
+OBJ3 = un_fmt.o
+
+all: $(PGM) $(PGM1) $(PGM2) $(PGM3) 
+
+$(PGM): $(OBJ) $(GISLIB)
+	$(CC) $(LDFLAGS) $(OBJ) $(GISLIB) $(MATHLIB) -o $@
+
+$(PGM1): $(OBJ1) $(FILL)
+	$(FC) $(LDFLAGS) $(OBJ1) -o $@
+
+$(PGM2): $(OBJ2) $(FILL)
+	$(FC) $(LDFLAGS) $(OBJ2) -o $@
+
+$(PGM3): $(OBJ3) $(FILL)
+	$(FC) $(LDFLAGS) $(OBJ3) -o $@
+
+$(FILL):
+	mkdir $(FILL)
+
+$(GISLIB): #
+

@@ -1,0 +1,11 @@
+
+
+geographic region - A rectangular area (region), stated in the
+\map coordinate system\ of the GRASS location under which the region
+is stored, whose sides are parallel to the coordinate axes.  A geo-
+graphic region also has an east-west \resolution\ and a north-south
+resolution associated with it, which specify the dimensions used
+by individual \cells\ falling within the region's boundaries.
+
+NOTE: In earlier versions of GRASS, the term "geographic window" was
+used to denote a geographic region.

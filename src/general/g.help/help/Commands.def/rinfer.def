@@ -1,0 +1,11 @@
+
+
+r.infer - 
+
+r.infer is an inference engine which applies a set of user-specified
+rules to named \raster\ map layers.  A new raster map layer named
+"infer" is created as output, whose \category values\ reflect the
+ability of each \cell\ in the named input layers to satify the named
+conditions.
+
+Manual entry for \r.infer\

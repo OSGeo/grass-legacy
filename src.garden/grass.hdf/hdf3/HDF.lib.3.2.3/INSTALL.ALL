@@ -1,0 +1,106 @@
+#***************************************************************************
+#
+#
+#                         NCSA HDF version 3.2 release 3
+#                            December 1, 1992
+#
+# NCSA HDF Version 3.2 source code and documentation are in the public
+# domain.  Specifically, we give to the public domain all rights for future
+# licensing of the source code, all resale rights, and all publishing rights.
+#
+# We ask, but do not require, that the following message be included in all
+# derived works:
+#
+# Portions developed at the National Center for Supercomputing Applications at
+# the University of Illinois at Urbana-Champaign, in collaboration with the
+# Information Technology Institute of Singapore.
+#
+# THE UNIVERSITY OF ILLINOIS GIVES NO WARRANTY, EXPRESSED OR IMPLIED, FOR THE
+# SOFTWARE AND/OR DOCUMENTATION PROVIDED, INCLUDING, WITHOUT LIMITATION,
+# WARRANTY OF MERCHANTABILITY AND WARRANTY OF FITNESS FOR A PARTICULAR PURPOSE
+#
+#***************************************************************************
+
+
+All comments, suggestions, and bug reports are welcome, and
+should be sent to mfolk@ncsa.uiuc.edu (cc: dilg@ncsa.uiuc.edu and 
+sxu@ncsa.uiuc.edu).  If you don't have email, phone Mike Folk at
+217-244-0647, or write to Mike Folk, NCSA, 605 E. Springfield Ave.,
+Champaign, IL 61801.
+
+
+
+     ---------------- Invoking the Makefile ------------------ 
+
+
+In general, HDF 3.2 can be built with a single command from this 
+directory.  The file Makefile.template is a generic, machine independent 
+Makefile which you can modify if there is no Makefile already built 
+for your machine.
+
+For convenience, there are also machine customized makefiles.  
+For example MAKE.IBM6000 is a Makefile suitable for compiling HDF
+on an IBM RS/6000. Assuming you are on an IBM RS/6000. Copy 
+MAKE.IBM6000 to Makefile and use the following commands to install
+different targets.
+
+cp MAKE.IBM6000 Makefile
+
+make 
+make all 
+        --- builds HDF library and the C and Fortran interfaces, the 
+                utilities and C and Fortran test programs.
+
+make allnofortran   
+        --- builds the HDF library and only the C interfaces, the
+                utilities and the C test programs.
+
+make libdf
+        --- builds the HDF library and the C and Fortran interfaces.
+
+make libnofortran
+        --- builds the HDF library and only the C interfaces.
+
+make utilities
+        --- builds only the utility programs
+
+make tests
+        --- builds all of the test programs
+
+make clean
+        --- remove all intermediate files
+
+
+     ------------ Compiling C programs with HDF ----------------
+
+To use HDF routines in your program, you must have the line
+'#include "hdf.h"' near the beginning of your code.  You may also
+need to include additional header files (eg. dfrig.h or dfsd.h, etc),
+depending on the interfaces you are using.  Call the appropriate
+HDF routines as described in the documentation.
+Compile a C program called "myprog.c" as follows:
+
+    cc myprog.c libdf.a -o myprog
+or
+    cc myprog.c -o myprog -ldf
+
+If the include files are in the directory "incdir", and the 
+library file "libdf.a" is in "libdir", use
+
+    cc -Iincdir myprog.c libdir/libdf.a -o myprog
+or
+    cc -Iincdir myprog.c -o myprog -L libdir -ldf
+
+
+     ------------ Testing HDF ----------------
+
+A partial test suite should be included in this distribution.
+A Makefile and instructions are included with this test suite.
+To omit various routines in the target, refer to the INSTALL file
+in the subdirectory src/.
+
+     ------------ Testing backward compatibility -----------
+
+The bkwdtest/ subdirectory contains files needed to test the
+compatibility of the DFSD interface to the HDF3.1 library. 
+A Makefile and README are included in that directory.

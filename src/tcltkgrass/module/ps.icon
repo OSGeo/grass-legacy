@@ -1,0 +1,5 @@
+interface_build {
+    {ps.icon} 1
+    {Creates and modifies icons for postscript map display and output.}
+    {entry -icon {Icon output file (mandatory):} 0 Icon}
+}

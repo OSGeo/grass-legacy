@@ -1,0 +1,7 @@
+interface_build {
+    {r.resample} 0
+    {GRASS raster map layer data resampling capability.}
+    {entry input {Input map:} 0 raster}
+    {entry output {Output map matching the current region:} 0 raster}
+    {checkbox -q {Run quietly.} "" -q}
+}

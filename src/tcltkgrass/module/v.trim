@@ -1,0 +1,8 @@
+interface_build {
+    {v.trim} 0
+    {Trims small spurs and removes excessive nodes from binary GRASS vector map.}
+    {entry input {Input vector map:} 0 vector}
+    {entry output {Output vector map:} 0 vector}
+    {entry factor {Trimming value (0-100) [10]:} 0 ""}
+    {checkbox -i {Threshold value in inches.} "" -i}
+}

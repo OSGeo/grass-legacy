@@ -1,0 +1,5 @@
+interface_build {
+    {v.clean} 0
+    {Cleans out dead lines in GRASS vector files.}
+    {entry map {Name of the GRASS vector file to be cleaned:} 0 vector}
+}

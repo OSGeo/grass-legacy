@@ -1,0 +1,5 @@
+\g.setproj\ - Allows the user to create the PROJ_INFO and the
+            PROJ_UNITS files to record the projection information
+            associated with a current location.
+
+(GRASS File Management Program)

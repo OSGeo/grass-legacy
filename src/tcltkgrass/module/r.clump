@@ -1,0 +1,8 @@
+interface_build {
+    {r.clump} 0
+    {Recategorizes data in a raster map layer by grouping cells that form physically discrete areas into unique categories.}
+    {entry input {Input raster map:} 0 raster}
+    {entry output {Output raster map:} 0 raster}
+    {entry title {Title of the output raster map:} 0 ""}
+    {checkbox -q {Run quietly.} "" -q}
+}

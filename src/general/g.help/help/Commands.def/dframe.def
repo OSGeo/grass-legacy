@@ -1,0 +1,10 @@
+
+
+d.frame - 
+
+d.frame manages the display frames on the user's \graphics monitor\.
+Graphics are displayed in these rectangular display frames on whatever
+graphics monitor to which the user is currently directing GRASS display
+output.
+
+Manual entry for \d.frame\

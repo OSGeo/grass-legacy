@@ -1,0 +1,31 @@
+#!/bin/csh -f
+# from Dr. Agustin Lobo - alobo@ija.csic.es
+# TC-factor changed to JENSEN 1996, p.185 (Markus Neteler 8/98)
+
+#set echo
+#set verbose
+if ($#argv == 0) then
+        echo ""
+        echo "Tasseled Cap transformation (Kauth Thomas) - vegetation index"
+        echo ""
+        echo "Usage: i.tasscap tm1 tm2 tm3 tm4 tm5 tm7 outfile"
+	exit
+endif 
+set out = $argv[$#argv]
+echo ""
+echo "Calculating first TC component $out.1.brightness ..."
+r.mapcalc "$out.1.brightness =  0.33183 * $argv[1] + 0.33121 * $argv[2] + 0.55177 * $argv[3] + 0.42514 * $argv[4] + 0.48087 * $argv[5] + 0.25252 * $argv[6]"
+echo ""
+echo "Calculating second TC component $out.2.greenness ..."
+r.mapcalc "$out.2.greenness = -0.24717 * $argv[1] - 0.16263 * $argv[2] - 0.40639 * $argv[3] + 0.85468 * $argv[4] + 0.05493 * $argv[5] - 0.11749 * $argv[6]"
+echo ""
+echo "Calculating third TC component $out.3.wetness ..."
+r.mapcalc "$out.3.wetness =  0.13929 * $argv[1] + 0.22490 * $argv[2] + 0.40359 * $argv[3] + 0.25178 * $argv[4] - 0.70133 * $argv[5] - 0.45732 * $argv[6]"
+echo ""
+echo "Calculating fourth TC component $out.4.haze ..."
+r.mapcalc "$out.4.haze =  0.84610 * $argv[1] - 0.70310 * $argv[2] - 0.46400 * $argv[3] - 0.00320 * $argv[4] - 0.04920 * $argv[5] - 0.01190 * $argv[6]"
+r.colors map=$out.1.brightness color=grey
+r.colors map=$out.2.greenness color=grey
+r.colors map=$out.3.wetness color=grey
+r.colors map=$out.4.haze color=grey
+echo "Ready."

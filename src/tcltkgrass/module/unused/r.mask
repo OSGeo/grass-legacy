@@ -1,0 +1,4 @@
+interface_build {
+    {r.mask} 1
+    {Establishes or removes the current working mask.}
+}

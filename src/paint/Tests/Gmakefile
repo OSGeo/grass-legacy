@@ -1,0 +1,27 @@
+INTERFACE = $(SRC)/paint/Interface/applib/lib.a
+LIBES=$(INTERFACE) $(GISLIB)
+HOME=$(ETC)/paint
+EXTRA_CFLAGS = -I$(SRC)/paint
+
+all:	$(HOME)/vres.test \
+	$(HOME)/hres.test \
+	$(HOME)/pixel.test \
+	$(HOME)/char.test
+
+####################################################################
+
+
+$(HOME)/pixel.test:	ptest.o $(LIBES)
+	$(CC) $(LDFLAGS) ptest.o $(LIBES) $(MATHLIB) $(XDRLIB) -o $@
+
+$(HOME)/hres.test:	htest.o $(LIBES)
+	$(CC) $(LDFLAGS) htest.o $(LIBES) $(MATHLIB) $(XDRLIB) -o $@
+
+$(HOME)/vres.test:	vtest.o $(LIBES)
+	$(CC) $(LDFLAGS) vtest.o $(LIBES) $(MATHLIB) $(XDRLIB) -o $@
+
+$(HOME)/char.test:	ctest.o $(LIBES)
+	$(CC) $(LDFLAGS) ctest.o $(LIBES) $(MATHLIB) $(XDRLIB) -o $@
+
+######################################################################
+$(LIBES):	# in case libraries change

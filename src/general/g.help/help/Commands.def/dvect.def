@@ -1,0 +1,10 @@
+
+
+d.vect - 
+
+d.vect displays the user-named binary vector file in the active display
+\frame\ on the graphics monitor, in the user-named color.  The vector
+file must already exist under a \mapset\ in the user's current mapset
+search path.
+
+Manual entry for \d.vect\

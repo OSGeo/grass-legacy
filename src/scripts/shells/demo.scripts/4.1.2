@@ -1,0 +1,55 @@
+#!/bin/sh
+d.frame -s f=map1
+d.erase
+d.frame -s f=map2
+d.erase
+d.frame -s f=map3
+d.erase
+
+d.frame -s f=text
+d.text << EOF
+.S 10
+
+.S 9
+.F romats
+.C black
+  *
+.C yellow
+  *
+.C black
+  *
+  *
+  *
+  *
+  *
+EOF
+
+d.frame -s f=explain
+d.erase
+d.text << EOF
+.S 5
+
+  Weighted overlays allow you to give values
+  or weights to landscape characteristics.
+  These weights are then added up for each 
+  grid cell to produce a result map.
+
+  Example:
+    You give the following weights:
+       map        category   weight
+       --------   --------  --------
+       soil.ph       1         10
+       soil.ph       2          5
+       landuse       1         12
+       landuse       2         30
+       geology       1          6
+       geology       2          9
+
+A grid-cell with soil.ph cat 2 (5), landuse
+cat 1 (12), and geology category 2 (9)is
+given a total weight of 5+12+9=26.
+EOF
+
+./continue.yes
+
+exit 1

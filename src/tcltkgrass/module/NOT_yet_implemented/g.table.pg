@@ -1,0 +1,67 @@
+proc DB_listtables {} {
+	toplevel .cmd
+	wm geometry .cmd +100+100
+	wm title .cmd "g.table.pg j.soimasuo"
+
+	frame .cmd.frame0 \
+	    -borderwidth {2} \
+	    -relief {flat}
+
+	listbox .cmd.frame0.listbox \
+	    -relief {sunken} \
+	    -geometry 20x10 \
+	    -yscrollcommand {.cmd.frame0.vscrollbar set}
+
+	  scrollbar .cmd.frame0.vscrollbar \
+	    -command {.cmd.frame0.listbox yview}
+	 button .cmd.close -text "Close" -command {
+		destroy .cmd
+                set file_name ""
+	 }
+
+	  pack append .cmd.frame0 \
+	    .cmd.frame0.listbox { left expand fill } \
+	    .cmd.frame0.vscrollbar { right fill }
+
+#	  set db [exec g.gisenv PG_DBASE]
+	  catch {exec g.gisenv PG_DBASE} db
+
+	  label .cmd.label -text "Database: $db"
+	  set first 1
+	  if { $db != ""} {
+	     foreach i [ PQquery $db {retrieve ( pg.relname ) from pg in pg_class where pg.relkind != "i" and pg.relname !~ "pg_" sort by relname} ] {
+     	        if { $first == 1 } {
+		   set first 0
+		} else {
+	           .cmd.frame0.listbox insert end $i
+	  	}
+	     }
+	  } else {
+		.cmd.frame0.listbox insert {Please,}
+		.cmd.frame0.listbox insert {select the database}
+		.cmd.frame0.listbox insert {first !}
+	  }
+	  pack .cmd.label
+	  pack .cmd.frame0 
+	  pack .cmd.close
+
+
+}
+
+
+
+
+set auto_path "$tcltkgrassbase/module  $auto_path"
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+DB_listtables
+

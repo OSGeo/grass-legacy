@@ -1,0 +1,11 @@
+PGM=i.zc
+
+OBJS = main.o fft.o del2g.o getg.o mult.o findzc.o
+
+LIBES= $(GISLIB)
+
+$(BIN_MAIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIBES): #
+

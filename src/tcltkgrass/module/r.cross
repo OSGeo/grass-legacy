@@ -1,0 +1,8 @@
+interface_build {
+    {r.cross} 0
+    {Creates a cross product of the category values from multiple raster map layers.}
+    {entry input {Input raster maps (name,name[name,...]):} 0 +raster}
+    {entry output {Output raster map (name,name[name,...]):} 0 +raster}
+    {checkbox -q {Run quietly.} "" -q}
+    {checkbox -z {Do not cross zero data values.} "" -z}
+}

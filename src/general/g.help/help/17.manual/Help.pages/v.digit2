@@ -1,0 +1,12 @@
+
+
+v.digit2 - 
+
+v.digit2 is a menu-driven, highly \interactive\ map development program
+used for inputting analog map data into a GRASS \vector\ format.
+v.digit2 contains programs for vector \digitizing\, editing, labeling,
+windowing and converting vector data to GRASS \raster\ format.
+
+Corresponds to GRASS 4.0 version of v.digit.
+
+Manual entry for \v.digit2\

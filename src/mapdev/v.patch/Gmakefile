@@ -1,0 +1,25 @@
+EXTRA_CFLAGS	=   $(VECT_INCLUDE) 
+
+#EXTRA_CFLAGS	=   -I../lib   -I../libes 
+
+LIBES = $(VECTLIB) $(DIG_ATTLIB) $(GISLIB)
+
+SOURCES = \
+	patch.c
+
+OBJ = \
+	patch.o
+
+
+
+PROG =   $(BIN_MAIN_CMD)/v.patch 
+
+all:  $(PROG)
+
+$(PROG): $(OBJ) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+saber_src:
+	#load $(CFLAGS) patch.c $(CFILES)  $(LIBES) 
+
+$(LIBES): #

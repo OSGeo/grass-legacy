@@ -1,0 +1,14 @@
+NOT
+
+
+NEGATES EXPR-A to produce a EXPR containing values of 1 and 0.
+Syntax: (NOT EXPR-A) 
+
+
+The NOT command can also be simulated using the GROUP command.
+
+syntax: (GROUP 0 EXPR)
+
+
+aliases:  not
+		  ~

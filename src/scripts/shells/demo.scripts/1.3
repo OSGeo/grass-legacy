@@ -1,0 +1,43 @@
+#!/bin/sh
+d.frame -e
+d.erase
+d.frame -c f=abc a=5,95,5,95
+d.frame -s f=abc
+d.text << EOF
+.F romant
+.S 5
+.C green
+        PEOPLE REQUIREMENTS FOR GRASS
+.C white
+.F romans
+.S 4
+    
+  GRASS  does not REPLACE people.
+
+  It does provide an opportunity for people to do
+  jobs not before possible.   This can result in a
+  restructuring of the personnel in an office or
+  the modification of job descriptions.
+.C yellow
+
+  COMPUTER SUPPORT
+.C white
+  GRASS runs on multi-user machines which require
+  constant attention.  The support person must know
+  UNIX fairly well and be available perhaps 2-3 hours
+  a day for system management functions.
+.C yellow
+
+  USERS
+.C white
+  While GRASS users can do some things with GRASS
+  without knowing much UNIX, a knowledge of this
+  operating system is essential for gaining maximum
+  benefit from the software.  Users must either
+  maintain a strong understanding of UNIX and GRASS
+  -OR- have access to someone who does.
+EOF
+
+./continue.yes
+
+exit 1

@@ -1,0 +1,3 @@
+Creates a quads vector (digit) map, and/or sites file, and/or windows.  All
+complete quads that will fit in the current window are created.  The quads
+are USGS 7.5 minute (1:24000) quads.

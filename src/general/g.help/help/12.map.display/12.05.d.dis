@@ -1,0 +1,54 @@
+              MAP DESIGN, DISPLAY, INPUT AND CAPTURE
+
+Map display, input, and capture functions give users flexibility in
+designing maps for display to graphics monitors. GRASS macros can be
+built to run demos making use of these displays.  Photos can also be
+taken of the screen.  On some systems, a screen dump can also be made,
+to capture the displayed image and reformat it for output to a printer.
+
+The display, input, and capture functions can be further categorized as
+to whether they involve map display, input, or screen capture, and as to
+whether they involve raster data, vector data, site data, text, or
+screen graphics.
+
+  GRASS Programs
+for Display, Input,    Display           Input         Screen Capture
+   and Capture
+***********************************************************************
+                   \-  d.display \    \d.rast.edit\  \-  d.savescreen \
+                   \-  d.rast \                      \-  d.save \
+                   \-  d.his \                       \-  p.ppm \
+     Raster        \-  d.rgb \
+                   \-  d.profile \
+                   \-  d.3d \
+                   \-  3d.view.sh \
+                   \-  slide.show.sh \
+-----------------------------------------------------------------------
+                   \-  d.display \   \-  d.display \ \-  d.savescreen \
+     Vector        \-  d.vect \      \-  v.digit \   \-  d.save \
+                   \-  d.vect.dlg \                  \-  p.ppm \
+-----------------------------------------------------------------------
+                   \-  d.display \                   \-  d.savescreen \
+     Sites         \-  d.points \                    \-  d.save \
+                   \-  d.sites \                     \-  p.ppm \
+                   \-  d.icons \
+-----------------------------------------------------------------------
+                   \-  d.display \   \-  d.display \ \-  d.savescreen \
+                   \-  d.menu \      \-  d.menu \    \-  d.save \
+                   \-  d.text \      \-  d.font \    \-  p.ppm \
+     Text          \-  d.label \     \-  d.title \
+                   \-  d.labels \
+                   \-  d.paint.labels \
+                   \-  d.legend \
+                   \-  show.fonts.sh \
+-----------------------------------------------------------------------
+                   \-  d.display \ \-  d.colors \    \-  d.savescreen \
+                   \-  d.scale \   \-  d.display \   \-  d.save \   
+    Screen         \-  d.grid \    \-  d.colormode \ \-  p.ppm \
+   Graphics        \-  d.colortable \
+                   \-  d.graph \
+                   \-  d.mapgraph \
+                   \-  d.geodesic \
+                   \-  d.rhumbline \
+                   \-  d.histogram \
+                   \-  grass.logo.sh \
