@@ -16,7 +16,7 @@
 G__make_mapset_element (p_element)
     char *p_element;
 {
-    char mkdir[1024];
+    char command[1024];
     char *path;
     char *p;
     char *G_mapset();
@@ -25,7 +25,7 @@ G__make_mapset_element (p_element)
     element = p_element;
     if (*element == 0)
 	    return 0;
-    strcpy (path = mkdir, "mkdir ");
+    strcpy (path = command, "mkdir ");
     while (*path)
 	path++;
 
@@ -46,9 +46,15 @@ G__make_mapset_element (p_element)
 	if (*element == '/' || *element == 0)
 	{
 	    *p = 0;
+/* MOD shapiro 16apr91 */
 	    if (access (path, 0) != 0)
 	    {
-		system (mkdir);
+		mkdir(path,0777);
+	    }
+/* end MOD */
+	    if (access (path, 0) != 0)
+	    {
+		system (command);
 	    }
 	    if (access (path, 0) != 0)
 	    {
