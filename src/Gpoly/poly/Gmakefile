@@ -1,0 +1,13 @@
+INCLUDES = ../include
+OFILES = main.o bound.o io.o
+DIGINC = $(SRC)/mapdev/lib
+EXTRA_CFLAGS = -I$(INCLUDES) -I$(DIGINC)
+
+all:	$(BIN)/Gpoly
+prog:	$(BIN)/Gpoly
+
+$(BIN)/Gpoly:	$(OFILES)
+	rm -f $@
+	$(CC) $(LDFLAGS) $(OFILES) $(DIGLIB) $(GISLIB) -o $@
+
+$(OFILES):	$(INCLUDES)/digit.h $(INCLUDES)/extr_areas.h
