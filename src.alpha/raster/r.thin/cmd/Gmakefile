@@ -1,0 +1,6 @@
+OFILES = main.o thin_lines.o io.o
+
+$(BIN_ALPHA_CMD)/r.thin:	$(OFILES)
+	rm -f $@
+	cc $(LDFLAGS) $(OFILES) $(GISLIB) $(ROWIOLIB) -o $@
+
