@@ -4,6 +4,17 @@ $Id$
 All GRASS modules should use a standardized scheme.                               
 For GRASS 5.1 a parameter harmonization has to be undertaken.
 
+------------------------------------------------
+Question to be discussed:
+
+On command line, shall the modules overwrite existing output maps?
+Example:
+ d.his h=dgm25 i=aspect25 out=his
+ ERROR: d.his: <his> cell file exists already
+Other modules directly overwrite, other ask if they may overwrite
+-> inconsistent!
+
+------------------------------------------------
 Here a rough concept (to be updated):
 
 Import:
