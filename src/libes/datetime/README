@@ -1,26 +1,23 @@
-
-
 /* Copyright Notice
  * ---------------- 
  * Written by Bill Brown & Michael Shapiro, 1995 
  * brown@gis.uiuc.edu
  *
- * Permission to use, copy, and distribute this program in its entirety, for
- * non-commercial purposes, is hereby granted without fee, provided that
- * this notice appear in all copies.
- * 
- * The software may be modified for your own purposes, but modified
- * versions may NOT be distributed without prior consent of the author.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
  *
- * This software is provided 'as-is', without any express or implied
- * warranty.  In no event will the author be held liable for any damages
- * arising from the use of this software.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * If you would like to do something with this software that this copyright
- * notice prohibits (such as distributing it with a commercial product,
- * using portions of the source in some other program, etc.), please
- * contact the author (preferably via email).  Arrangements can
- * probably be worked out.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ *   Free Software Foundation, Inc.,
+ *   59 Temple Place - Suite 330,
+ *   Boston, MA  02111-1307, USA.
 */
 
 
