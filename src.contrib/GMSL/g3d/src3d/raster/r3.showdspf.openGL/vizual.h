@@ -1,5 +1,5 @@
 #include "vizual2.h"
-#include <GL/gl.h>
+#include <gl.h>
 
 #include "gis.h"
 

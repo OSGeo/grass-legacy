@@ -5,7 +5,7 @@
 #define MAIN
 #include <Xm/Xm.h>
 #include <Xm/Form.h>
-#include "GL/GLwMDrawA.h"    /* include file for GL drawing widget */
+#include "GLwMDrawA.h"    /* include file for GL drawing widget */
 #include "vizual.h"
 
 #include "kns_defines.h"
