@@ -238,6 +238,9 @@ G3d_writeWindow (window, windowName)
 
   windowKeys = G_create_key_value();
 
+  G3d_getWindowLocation (path, windowName);
+  G3d_createPath (path);
+
   if (! G3d_readWriteWindow (windowKeys, 0, 
 			     &(window->proj), &(window->zone),
 			     &(window->north), &(window->south), 
@@ -251,9 +254,6 @@ G3d_writeWindow (window, windowName)
     G3d_error (msg);
     return 0;
   }
-
-  G3d_getWindowLocation (path, windowName);
-  G3d_createPath (path);
 
   G3d_getFullWindowPath (path, windowName);
   G_write_key_value_file (path, windowKeys, &status);
