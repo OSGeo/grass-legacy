@@ -1,0 +1,22 @@
+environment a
+initialshells:b
+{
+    menu b
+    (
+	button "Popup" 
+	    popup:c
+	    ;
+	button "Quit" 
+	    exit:0
+	    ;
+    )
+    menu c
+    (
+	button "Popdown" 
+	    popdown:c
+	    ;
+	button "Popup" 
+	    popup:c
+	    ;
+    )
+}
