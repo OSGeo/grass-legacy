@@ -68,7 +68,7 @@ flags. Be sure to send it the <em>x</em> value first, i.e.,
 Note:  The program does not transform GRASS files, it is designed to
 determine coordinate values on an individual position or list of positions.
 Use <A HREF="s.proj.html">s.proj</A>, <A HREF="v.proj.html">v.proj</A>, and
-<A HREF="r.proj.html">r.proj</A>, to reproject GRASS maps.
+<A HREF="r.proj.html">r.proj</A> to reproject GRASS maps.
 
 <P>
 
@@ -116,11 +116,18 @@ For example:
 
 <H2>USAGE EXAMPLES</H2>
 
-To convert WGS84 lat/long GPS coordinates to the current map projection:
+To convert a WGS84 lat/long coordinate to the current map projection:
 <PRE>
     GRASS:~ > echo "170.510125 -45.868537" | <B>m.proj2 -i</B>
     Assuming LL WGS84 as input, current projection as output.
     2316540.779291 5479191.917030
+</PRE><BR>
+<P>
+
+To convert a list of WGS84 lat/long GPS coordinates in a text file (including 
+any attributes) into a GRASS sites file in the current map projection:
+<PRE>
+    GRASS:~ > cat waypoints.txt | <B>m.proj2 -i</B> | <B>s.in.ascii</B> sitesfile
 </PRE><BR>
 <P>
 
