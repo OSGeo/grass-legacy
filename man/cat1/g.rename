@@ -1,7 +1,7 @@
 
 
 
-g.rename             GRASS Reference Manual              g.rename
+g.rename <main>      GRASS Reference Manual       <main> g.rename
 
 
 
@@ -60,14 +60,14 @@ NOTE
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-g.rename             GRASS Reference Manual              g.rename
+g.rename <main>      GRASS Reference Manual       <main> g.rename
 
 
 
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
