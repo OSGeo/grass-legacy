@@ -174,7 +174,6 @@ char *argv[];
      2) it places the zero crossings in the imaginary array */
         findzc(data[0], size, data[1], Thresh);
 
-
         /* open the output cell maps and allocate cell row buffers */
         printf("Writing transformed data to file...\n");
         if ((zcfd = G_open_cell_new(OUTPUT_MAP)) < 0)
