@@ -1,6 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
+<HEAD>
 <TITLE>shade.clr.sh</TITLE>
+</HEAD>
 <body bgcolor="white">
 <img src="grass.smlogo.gif">
 <hr width="100%" align=center size=6 noshade>
@@ -17,14 +19,14 @@ values entered by the user.
 
 <H2>SYNOPSIS</H2>
 
-<B>shade.clr.sh</B> <BR><B>shade.clr.sh help</B> <BR>
-
-<B>shade.clr.sh</B> [<B>altitude=</B><EM>value</EM>] 
+<B>shade.clr.sh<BR>
+shade.clr.sh help<BR>
+shade.clr.sh</B> [<B>altitude=</B><EM>value</EM>] 
 [<B>r_azimuth=</B><EM>value</EM>]
 [<B>g_azimuth=</B><EM>value</EM>]
 [<B>b_azimuth=</B><EM>value</EM>]
 [<B>elevation=</B><EM>name</EM>]
-
+[<B>shade=</B><EM>value|m|f</EM>]
 
 <H2>DESCRIPTION</H2>
 
@@ -37,8 +39,8 @@ mapset.
 
 <P>
 
-In case, no parameter are provided on startup, this program is interactive;
-the user enters the command:
+If no parameters are provided on startup, this program is interactive;
+thus if the user enters the command:
 
 <DL>
 <DD>
@@ -47,16 +49,29 @@ the user enters the command:
 
 The program then prompts the user to enter values for:
 <OL>
-<LI>the altitude of the sun in degrees above the horizon
+<LI>The <B>altitude</B> of the sun in degrees above the horizon
 (a value between 0 and 90 degrees), and
 
-<LI>the azimuth of the red, green, and blue lights in degrees to the east of
+<LI>The <B>azimuth</B> of the red, green, and blue lights in degrees to the east of
 north (a value between -1 and 360 degrees).
 
-<LI>the name of a raster map layer whose cell category values are to
-provide elevation values for the shaded relief map.  Typically, this
+<LI>The name of a raster map layer whose cell category values are to
+provide <B>elevation</B> values for the shaded relief map.  Typically, this
 would be a map layer of elevation;  however, any raster map layer
 can be named.
+
+<LI>The scaling parameter, which compensates for a different horizontal
+<B>scale</B> than vertical scale.
+For example, when a latitude-longitude projection is used with an elevation
+map measured in meters.
+If 'scale' is a number then the ewres and nsres are multiplied by that
+scale to calculate the shading. If 'scale' is the letter M (either case)
+the number of meters in a degree of latitude is used as the scale.
+If 'scale' is the letter F (either case) then the number of feet in a
+degree is used.
+The script scales latitude and longitude equally, so
+it's only approximately right, but for shading its close enough. It makes
+the difference between a usable and unusable shade.
 
 </OL>
 
@@ -64,19 +79,20 @@ Specifically, <EM>shade.clr.sh</EM> executes the following
 <EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>
 statement:
 
-
-<B>
+<!-- is it really necessary to list this here? -->
+<tt>
 <DL>
 <DT><A HREF="r.mapcalc.html">r.mapcalc</A> &lt;&lt; EOF <BR>
 <DD>
 $ELEV.shade = eval( \\<BR>
  x=($elev[-1,-1] + 2.*$elev[0,-1] + $elev[1,-1] \\<BR>
-   -$elev[-1,1] - 2.*$elev[0,1] - $elev[1,1])/(8.* ewres()) , \\<BR>
+   -$elev[-1,1] - 2.*$elev[0,1] - $elev[1,1])/(8.*ewres()*$shade) , \\<BR>
  y=($elev[-1,-1] + 2.*$elev[-1,0] + $elev[-1,1] \\<BR>
-   -$elev[1,-1] - 2.*$elev[1,0] - $elev[1,1])/(8.* nsres()) , \\<BR>
+   -$elev[1,-1] - 2.*$elev[1,0] - $elev[1,1])/(8.* nsres()*$shade) , \\<BR>
  slope=90.-atan(sqrt(x*x + y*y)), \\<BR>
  a=round(atan(x,y)), \\<BR>
- aspect=if(x||y,if(a,a,360.)), \\<BR>
+ a=if(isnull(a),1,a), \\<BR>
+ aspect=if(x!=0||y!=0,if(a,a,360.)), \\<BR>
  rang = sin($alt)*sin(slope) + cos($alt)*cos(slope) * cos($raz-aspect),\\<BR>
  red = int(if(rang < 0.,0.,4.9*rang)), \\<BR>
  gang = sin($alt)*sin(slope) + cos($alt)*cos(slope) * cos($gaz-aspect),\\<BR>
@@ -86,8 +102,7 @@ $ELEV.shade = eval( \\<BR>
  1. + red + 5. * green + 25. * blue )<BR>
 <DT>EOF
 </DL>
-</B>
-
+</tt>
 
 <P>
 
@@ -115,13 +130,12 @@ Westervelt, U.S. Army Construction Engineering Research Laboratory
 (March/1991) (get from GRASS web site).
 
 <P>
-
+<EM><A HREF="shade.rel.sh.html">shade.rel.sh</A></EM><br>
 <EM><A HREF="blend.sh.html">blend.sh</A></EM><br>
 <EM><A HREF="g.ask.html">g.ask</A></EM><br>
 <EM><A HREF="g.region.html">g.region</A></EM><br>
 <EM><A HREF="r.colors.html">r.colors</A></EM><br>
 <EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>
-<EM><A HREF="shade.rel.sh.html">shade.rel.sh</A></EM>
 
 <H2>AUTHOR</H2>
 
