@@ -1,0 +1,45 @@
+CC                  = cc
+FC                  = f77
+LEX                 = lex
+YACC                = yacc
+ARCH                = att386
+
+GISBASE             = /usr/local/grass43
+UNIX_BIN            = /usr/local/bin
+
+DEFAULT_DATABASE    =
+DEFAULT_LOCATION    =
+
+COMPILE_FLAGS       = -O -DNRCS_MODS -DATT_386 -DX_WCHAR -DSYSV386 -DSV32
+LDFLAGS             = -s
+
+XCFLAGS             = -D_NO_PROTO -DUSG
+XLDFLAGS            =
+XINCPATH            =  -I/usr/include -I/usr/local/lib/gcc-lib/i386-att-sysv3/2.3.3/include
+XMINCPATH           =  -I/usr/include/Xm
+XLIBPATH            = -L/usr/lib/X11/Metro/lib -L/usr/lib
+XTLIBPATH           = -L/usr/lib/X11/Metro/lib
+XMLIBPATH           = -L/usr/lib/X11/Metro/lib
+XLIB                = -lX11
+XTLIB               = -lXt
+XMLIB               = -lXm
+XEXTRALIBS          = -lpt -lnet -lnsl_s -lPW
+
+TERMLIB             = -ltermlib
+CURSES              = -lcurses $(TERMLIB)
+MATHLIB             = -lm
+#EXTRALIB	    = -lc_s
+EXTRALIB	    = -lmalloc -lc_s
+
+#                   LIBRULE = ar ruv $@ $?
+#                   LIBRULE = ar ruv $@ $?; ranlib $@
+#                   LIBRULE = ar ruv $@ $?; ar ts $@
+#                   LIBRULE = ar rc $@ `lorder $(OBJ) | tsort`
+LIBRULE             = ar ruv $@ $?
+
+USE_TERMIO          = -DUSE_TERMIO
+USE_MTIO            =
+USE_FTIME           =
+DIGITFLAGS          =
+VECTLIBFLAGS        =
+GETHOSTNAME         = -DGETHOSTNAME_UNAME
