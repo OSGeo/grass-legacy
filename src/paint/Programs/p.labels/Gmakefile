@@ -8,10 +8,10 @@ LIST =	main.o \
 		setup.o\
 		update.o
 
-$(BIN_INTER)/$(PGM): $(LIST) $(GISLIB) $(VASKLIB)
+$(BIN_INTER)/$(PGM): $(LIST) $(DEPGISLIB) $(DEPVASKLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): config.h
 
-$(GISLIB):	# in case the library changes
-$(VASKLIB):	# in case the library changes
+$(DEPGISLIB):	# in case the library changes
+$(DEPVASKLIB):	# in case the library changes

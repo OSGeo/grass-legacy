@@ -16,6 +16,7 @@ PGM = r.surf.fractal
 
 
 LIBES = $(GISLIB) $(GMATHLIB)
+DEPLIBS= $(DEPGISLIB) $(DEPGMATHLIB)
 #-----------^ Library necessary for all GRASS programs.
 #---------------------^ Numerical function fft
 
@@ -36,12 +37,12 @@ OBJ =\
 
 ######### DEPENDENCIES #########
 
-$(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJ) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB) $(FFTWLIB)
 #
 #-----^ This compiles the whole program bringing all labels together.
 
 $(OBJ): $(INCLUDES)
 
-$(LIBES): #
+$(DEPLIBS): #
 #---^ Ignore this line (used for future additions of the library).

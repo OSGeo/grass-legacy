@@ -7,7 +7,7 @@ OFILES = \
 	main.o \
 	Clr_table.o
 
-$(BIN_CMD)/$(PGM):  $(OFILES) $(GISLIB)
+$(BIN_CMD)/$(PGM):  $(OFILES) $(DEPGISLIB)
 	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(VECTLIB) $(GISLIB) $(XLIBPATH) $(XMLIB) $(XTLIB) $(XLIB) $(XEXTRALIBS) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

@@ -5,10 +5,11 @@ HEADERS=r.flow.$(VER).h io.$(VER).h mem.$(VER).h aspect.$(VER).h \
 	precomp.$(VER).h
 
 LIBES=$(GISLIB) $(VECTLIB) $(BITMAPLIB) $(LINKMLIB) $(SEGMENTLIB)
+DEPLIBS=$(DEPGISLIB) $(DEPVECTLIB) $(DEPBITMAPLIB) $(DEPLINKMLIB) $(DEPSEGMENTLIB)
 
 PGM=r.flow
 
-$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(OBJS): Gmakefile
@@ -20,7 +21,7 @@ precomp.$(VER).o \
 mem.$(VER).o:			r.flow.$(VER).h io.$(VER).h mem.$(VER).h
 precomp.$(VER).o:		aspect.$(VER).h
 
-$(GISLIB) $(VECTLIB) $(BITMAPLIB) $(LINKMLIB): #
+$(DEPGISLIB) $(DEPVECTLIB) $(DEPBITMAPLIB) $(DEPLINKMLIB): #
 
 
 

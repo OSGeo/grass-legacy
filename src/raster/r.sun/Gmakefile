@@ -2,5 +2,5 @@ PGM=r.sun
 OBJ=sun11.o
 SOURCES=sun11.c
 
-$(BIN_CMD)/$(PGM): $(OBJ) $(GISLIB) $(LINKMLIB)
+$(BIN_CMD)/$(PGM): $(OBJ) $(DEPGISLIB) $(DEPLINKMLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(LINKMLIB) $(MATHLIB) $(XDRLIB)

@@ -22,5 +22,5 @@ imp_gef.o:	format.h
 imp_main.o:	format.h
 get_head.o:	format.h
 
-$(GISLIB): #
+$(DEPGISLIB): #
 

@@ -25,10 +25,10 @@ OTHERS = main.o \
 
 LIST = $(OTHERS) $(METHODS) $(CAT_NAMES)
 
-$(BIN_CMD)/$(PGM):  $(LIST) $(GISLIB)
+$(BIN_CMD)/$(PGM):  $(LIST) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST):        ncb.h
 main.o:         method.h
 
-$(GISLIB):      # in case this changes
+$(DEPGISLIB):      # in case this changes

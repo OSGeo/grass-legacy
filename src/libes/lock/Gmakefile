@@ -1,9 +1,9 @@
 
 OBJ = lock.o unlock.o
 
-$(LOCKLIB): $(OBJ)
+$(DEPLOCKLIB): $(OBJ)
 	$(AR)
 
 
-try: try.o $(LOCKLIB)
+try: try.o $(DEPLOCKLIB)
 	$(CC) try.o $(LOCKLIB) -o try

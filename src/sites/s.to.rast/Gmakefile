@@ -3,7 +3,7 @@ PGM = s.to.rast
 LIST =  main.o\
 	write_cell.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPGISLIB) $(DEPDATETIMELIB)
 		$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB) $(DATETIMELIB):	#
+$(DEPGISLIB) $(DEPDATETIMELIB):	#

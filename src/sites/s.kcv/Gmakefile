@@ -1,4 +1,5 @@
 LIBES = $(GISLIB) $(DATETIMELIB)
+DEPLIBS= $(DEPGISLIB) $(DEPDATETIMELIB)
 PGM=s.kcv
 
 LIST  = \
@@ -7,7 +8,7 @@ LIST  = \
 	histo.o \
 	utils.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES) 
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 main.o:       	kcv.h version.h

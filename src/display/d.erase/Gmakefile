@@ -1,8 +1,9 @@
 PGM=d.erase
 
 LIBES = $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+DEPLIBS= $(DEPD_LIB) $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB)
 
-$(BIN_CMD)/$(PGM): main.o $(LIBES)
+$(BIN_CMD)/$(PGM): main.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ main.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

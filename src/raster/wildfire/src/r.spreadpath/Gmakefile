@@ -5,11 +5,12 @@ LIST =  main.o \
 	drawline.o
  
 LIBES = $(DISPLAYLIB) $(GISLIB) $(SEGMENTLIB) $(DATETIMELIB)
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPGISLIB) $(DEPSEGMENTLIB) $(DEPDATETIMELIB)
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
  
 $(LIST): point.h stash.h
  
-$(LIBES): #
+$(DEPLIBS): #
 

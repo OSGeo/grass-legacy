@@ -1,10 +1,11 @@
 PGM    = r.what
 LIBES  = $(GISLIB)
+DEPLIBS= $(DEPGISLIB)
 
 SRCS   = main.c die.c
 LIST   = main.o die.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

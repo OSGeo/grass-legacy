@@ -1,4 +1,4 @@
-# $Id: Gmakefile,v 1.20 2002-04-14 11:25:56 glynn Exp $
+# $Id: Gmakefile,v 1.21 2002-04-15 13:26:54 glynn Exp $
 # Makefile for building nvwish
 # Requires Tk 8.x and Tcl 8.x
 
@@ -33,7 +33,7 @@ OBJS = nvizAppInit.o change_view.o draw.o exag.o glwrappers.o \
 
 all: $(SURFLIB) nvwish
 
-nvwish: $(OBJS) $(VECTLIB) $(BITMAPLIB) $(LINKMLIB)
+nvwish: $(OBJS) $(DEPVECTLIB) $(DEPBITMAPLIB) $(DEPLINKMLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(SURFLIB) $(IMGLIB) \
 	$(BITMAPLIB) $(LINKMLIB) $(VECTLIB) \
 	$(GISLIB) $(MATHLIB) $(XDRLIB) \

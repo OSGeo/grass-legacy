@@ -27,5 +27,5 @@ $(ETC)/CFCC.code: CFCC.code
 #$(ETC)/scstig:		$(CON_OFILES)
 #	cc $(LDFLAGS) -o $@ $(CON_OFILES) $(GISLIB) $(VASK) $(COORLIB) $(MATHLIB) $(SHAREDLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #
 

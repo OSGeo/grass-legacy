@@ -1,4 +1,5 @@
 LIBES  = $(GISLIB) $(VASKLIB)
+DEPLIBS= $(DEPGISLIB) $(DEPVASKLIB)
 
 
 PGM = $(GISBASE)/etc/agnps50/agnps_input_2a 
@@ -48,7 +49,7 @@ LIST = \
         EI_Calc.o
 
 
-$(PGM): $(LIST) $(LIBES)
+$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

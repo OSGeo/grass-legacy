@@ -1,6 +1,6 @@
 #############################################################################
 #
-# $Id: Gmakefile,v 1.2 2001-03-22 08:53:38 justin Exp $
+# $Id: Gmakefile,v 1.3 2002-04-15 13:26:30 glynn Exp $
 #
 # MODULE:   	GRASS gis library - NULL test
 # AUTHOR(S):	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
@@ -18,8 +18,9 @@ OBJ = main.o
 SOURCES = main.c
 
 LIBES = $(GISLIB)
+DEPLIBS= $(DEPGISLIB)
 
-$(PGM): $(OBJ) $(LIBES)
+$(PGM): $(OBJ) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

@@ -8,10 +8,10 @@ OBJ = \
 	bilinear.o \
 	cubic.o
 
-$(BIN_CMD)/$(PGM): $(OBJ) $(GPROJLIB) $(GISLIB) 
+$(BIN_CMD)/$(PGM): $(OBJ) $(DEPGPROJLIB) $(DEPGISLIB) 
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GPROJLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 
-$(GPROJLIB) $(GISLIB): # 
+$(DEPGPROJLIB) $(DEPGISLIB): # 
 
 main.o:	r.proj.h

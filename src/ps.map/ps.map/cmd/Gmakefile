@@ -1,6 +1,7 @@
 PGM = ps.map
 
 LIBES = $(VECTLIB) $(GISLIB) $(DATETIMELIB) $(DIG_ATTLIB) $(IMAGERYLIB) $(LINKMLIB)
+DEPLIBS= $(DEPVECTLIB) $(DEPGISLIB) $(DEPDATETIMELIB) $(DEPDIG_ATTLIB) $(DEPIMAGERYLIB) $(DEPLINKMLIB)
 
 OBJ =	box_stuff.o \
 	cellfile.o \
@@ -63,7 +64,7 @@ OBJ =	box_stuff.o \
 
 all: $(BIN_CMD)/$(PGM) $(ETC)/paint/prolog.ps
 
-$(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJ) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(ETC)/paint/prolog.ps: prolog.ps
@@ -90,4 +91,4 @@ sitefile.o:	sites.h
 do_sites.o:	sites.h
 groupfile.o:	group.h
 
-$(LIBES):	#
+$(DEPLIBS):	#

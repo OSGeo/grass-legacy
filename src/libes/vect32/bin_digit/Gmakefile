@@ -22,7 +22,7 @@ all:  $(PROG)  $(ETC)/digitcap
 
 
 
-$(PROG): $(OFILES) $(GISLIB)
+$(PROG): $(OFILES) $(DEPGISLIB)
 	rm -f a.out
 	$(CC) $(LDFLAGS) -o $(PROG) $(OFILES) $(GISLIB) $(MATHLIB) $(XDRLIB)
 

@@ -3,8 +3,9 @@ OFILES = \
 	main.o get_deg.o get_num.o get_stp.o get_datum.o
 
 LIBES = $(GISLIB) $(COORCNVLIB)
+DEPLIBS= $(DEPGISLIB) $(DEPCOORCNVLIB)
 
-$(BIN_INTER)/$(PGM): $(OFILES) $(LIBES)
+$(BIN_INTER)/$(PGM): $(OFILES) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

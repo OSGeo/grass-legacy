@@ -8,10 +8,10 @@ LIST = main.o\
 	rclas_lines.o\
 	reclass.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPGISLIB) $(DEPVECTLIB) $(DEPDIG_ATTLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(MATHLIB) $(EXTRALIB) $(XDRLIB)
 
 $(LIST): rule.h
-$(GISLIB): #
-$(VECTLIB): #
-$(DIG_ATTLIB): #
+$(DEPGISLIB): #
+$(DEPVECTLIB): #
+$(DEPDIG_ATTLIB): #

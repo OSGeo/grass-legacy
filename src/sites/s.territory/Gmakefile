@@ -1,4 +1,5 @@
 LIBES = $(GISLIB) $(DATETIMELIB)
+DEPLIBS= $(DEPGISLIB) $(DEPDATETIMELIB)
 
 PGM = s.territory
 
@@ -6,5 +7,5 @@ OFILES = main.o \
 	 territory.o \
 	 load.o
 
-$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OFILES) $(DEPLIBS)
 	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)

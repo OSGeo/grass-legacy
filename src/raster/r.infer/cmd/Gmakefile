@@ -1,8 +1,8 @@
 OBJ = infer.o compile.o run_maps.o
 
-$(BIN_CMD)/r.infer: $(OBJ) $(GISLIB)
+$(BIN_CMD)/r.infer: $(OBJ) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 
 $(OBJ): infer.h
-$(GISLIB): #
+$(DEPGISLIB): #

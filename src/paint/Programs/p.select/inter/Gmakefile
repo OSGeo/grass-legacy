@@ -1,7 +1,7 @@
 PGM = p.select
 LIST = main.o drivers.o list.o show.o select.o get.o
 
-$(BIN_INTER)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_INTER)/$(PGM): $(LIST) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

@@ -14,9 +14,11 @@ OFILES =  \
 	Panel.o\
 	Polygn_abs.o
 
+LIBES = $(DRIVERLIB) $(GISLIB)
+DEPLIBS= $(DEPDRIVERLIB) $(DEPGISLIB)
 
-$(GISBASE)/driver/PNG: $(OFILES) ${DRIVERLIB} ${GISLIB}
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DRIVERLIB) $(GISLIB) $(XDRLIB) $(GDLIB)
+$(GISBASE)/driver/PNG: $(OFILES) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(XDRLIB) $(GDLIB)
 	@if egrep '^PNG' $(ETC)/monitorcap >/dev/null 2>&1 ; then \
 	echo PNG already defined in $(ETC)/monitorcap ; \
 	else \

@@ -1,9 +1,10 @@
-LIBRARIES = $(GISLIB) 
+LIBES = $(GISLIB)
+DEPLIBS = $(DEPGISLIB)
 
 PGM = r.circle
 
 OFILES = dist.o
 
 
-$(BIN_CMD)/$(PGM): $(OFILES) $(LIBRARIES) 
-	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBRARIES) $(MATHLIB) $(XDRLIB)
+$(BIN_CMD)/$(PGM): $(OFILES) $(DEPLIBS)
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)

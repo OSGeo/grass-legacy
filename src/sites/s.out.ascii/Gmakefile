@@ -1,9 +1,10 @@
 PGM=s.out.ascii
 
 LIBES=$(GISLIB) $(DATETIMELIB)
+DEPLIBS=$(DEPGISLIB) $(DEPDATETIMELIB)
 
-$(BIN_CMD)/$(PGM): main.o $(LIBES)
+$(BIN_CMD)/$(PGM): main.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ main.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
-$(DATETIMELIB): #
+$(DEPGISLIB): #
+$(DEPDATETIMELIB): #

@@ -6,14 +6,15 @@ OBJS = fftmain.o orig_wind.o save_fft.o fft_colors.o
 INVOBJS = ifftmain.o orig_wind.o
 
 LIBES= $(GISLIB) $(GMATHLIB)
+DEPLIBS= $(DEPGISLIB) $(DEPGMATHLIB)
 
 all: $(BIN_CMD)/$(PGM) $(BIN_CMD)/$(PGMI)
 
-$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(XDRLIB) $(FFTWLIB) $(MATHLIB)
 
 
-$(BIN_CMD)/$(PGMI): $(INVOBJS) $(LIBES)
+$(BIN_CMD)/$(PGMI): $(INVOBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(INVOBJS) $(LIBES) $(XDRLIB) $(FFTWLIB) $(MATHLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

@@ -8,10 +8,11 @@ LIST = 	main.o \
 	vector.o
 
 LIBES=$(VECTLIB) $(GISLIB) $(VASKLIB) $(DATETIMELIB)
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+DEPLIBS=$(DEPVECTLIB) $(DEPGISLIB) $(DEPVASKLIB) $(DEPDATETIMELIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 tstinfo: info.o
 	$(CC) $(LDFLAGS) -o $@ info.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): # 
+$(DEPGISLIB): # 

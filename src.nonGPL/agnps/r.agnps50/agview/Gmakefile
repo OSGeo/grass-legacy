@@ -1,4 +1,5 @@
 LIBES  = $(GISLIB) $(VASKLIB)
+DEPLIBS= $(DEPGISLIB) $(DEPVASKLIB)
 
 
 #PGM = $(GISBASE)/bin/r.agnps50.view
@@ -12,7 +13,7 @@ LIST = \
         get_pest_name.o
 
 
-$(PGM): $(LIST) $(LIBES)
+$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

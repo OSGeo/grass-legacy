@@ -3,9 +3,10 @@ PGM=i.zc
 OBJS = main.o mult.o findzc.o
 
 LIBES= $(GISLIB) $(GMATHLIB)
+DEPLIBS= $(DEPGISLIB) $(DEPGMATHLIB)
 
-$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB) $(FFTWLIB)
 
-$(LIBES): #
+$(DEPLIBS): #
 

@@ -1,12 +1,13 @@
 PGM = r.surf.random
 
 LIBES = $(GISLIB) $(GMATHLIB)
+DEPLIBS= $(DEPGISLIB) $(DEPGMATHLIB)
 
 OBJ =\
 	main.o		\
 	randsurf.o
 
-$(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJ) $(DEPLIBS)
 	 $(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

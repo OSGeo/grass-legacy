@@ -2,10 +2,11 @@ PGM=i.pca
 OBJS = main.o
 
 LIBES=$(GMATHLIB) $(GISLIB)
+DEPLIBS=$(DEPGMATHLIB) $(DEPGISLIB)
 
-$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(OBJS): globals.h
 
-$(LIBES): #
+$(DEPLIBS): #

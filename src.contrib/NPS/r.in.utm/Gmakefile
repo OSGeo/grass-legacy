@@ -4,10 +4,11 @@ HOME=$(BIN_CMD)
 LIST = main.o isnumber.o sph.o row_col.o utm_value.o value.o
 
 LIBES = $(COORCNVLIB) $(GISLIB) $(DATETIMELIB) $(ROWIOLIB)
+DEPLIBS= $(DEPCOORCNVLIB) $(DEPGISLIB) $(DEPDATETIMELIB) $(DEPROWIOLIB)
 
-$(HOME)/$(PGM): $(LIST) $(LIBES)
+$(HOME)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(ROWIOLIB): # in case LIB changes
-$(COORCNVLIB): # in case LIB changes
-$(GISLIB): # in case LIB changes
+$(DEPROWIOLIB): # in case LIB changes
+$(DEPCOORCNVLIB): # in case LIB changes
+$(DEPGISLIB): # in case LIB changes

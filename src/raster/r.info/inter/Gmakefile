@@ -2,7 +2,7 @@ PGM      = r.info
 
 LIST = main.o more_print.o
 
-$(BIN_INTER)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_INTER)/$(PGM): $(LIST) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB):      # in case library changes
+$(DEPGISLIB):      # in case library changes

@@ -1,15 +1,16 @@
 PGM    = g.region
 
 LIBES=$(VECTLIB) $(GISLIB) $(DATETIMELIB) $(GPROJLIB)
+DEPLIBS=$(DEPVECTLIB) $(DEPGISLIB) $(DEPDATETIMELIB) $(DEPGPROJLIB)
 
 LIST   = printwindow.o\
 	adjust.o\
 	main.o\
 	zoom.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
-$(VECTLIB): #
-$(DATETIMELIB): #
+$(DEPGISLIB): #
+$(DEPVECTLIB): #
+$(DEPDATETIMELIB): #

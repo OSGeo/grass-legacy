@@ -188,8 +188,8 @@ EOBJ = \
     edit_hist.o
 
 all: \
-	$(GISLIB) \
-	$(EDITLIB) \
+	$(DEPGISLIB) \
+	$(DEPEDITLIB) \
 	$(ETC)/ellipse.table \
 	$(ETC)/datum.table \
 	$(ETC)/projections \
@@ -197,14 +197,14 @@ all: \
 	$(ETC)/state27 \
 	$(ETC)/state83
 #Required for R-statistical language interface:
-	cp $(GISLIB) $(GISBASE)/lib
+	cp $(DEPGISLIB) $(GISBASE)/lib
 #Required for R-statistical language interface:
 	(cd $(SRC)/include ; cp gis.h datetime.h P_datetime.h gisdefs.h site.h P_site.h $(GISBASE)/include )
 
-$(GISLIB): $(OBJ)
+$(DEPGISLIB): $(OBJ)
 	$(AR)
 
-$(EDITLIB): $(EOBJ)
+$(DEPEDITLIB): $(EOBJ)
 	$(AR)
 
 $(ETC)/ellipse.table: ellipse.table

@@ -1,9 +1,9 @@
 OBJ=setup.o get.o forget.o release.o fileno.o put.o
 
-#all: $(ROWIOLIB) $(LIBDIR)/rowio.h
-all: $(ROWIOLIB)
+#all: $(DEPROWIOLIB) $(LIBDIR)/rowio.h
+all: $(DEPROWIOLIB)
 
-$(ROWIOLIB): $(OBJ)
+$(DEPROWIOLIB): $(OBJ)
 	$(AR)
 
 #$(LIBDIR)/rowio.h: rowio.h
@@ -16,5 +16,5 @@ put.o: $(INCLUDE_DIR)/rowio.h
 release.o: $(INCLUDE_DIR)/rowio.h
 setup.o: $(INCLUDE_DIR)/rowio.h
 
-try: $(ROWIOLIB) try.o
+try: $(DEPROWIOLIB) try.o
 	$(CC) try.o $(ROWIOLIB) -o try

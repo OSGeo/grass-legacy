@@ -1,7 +1,7 @@
 PGM=r.in.elas
 HOME=$(BIN_INTER)
 
-$(HOME)/$(PGM): main.o $(GISLIB)
+$(HOME)/$(PGM): main.o $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

@@ -1,9 +1,10 @@
 PGM    = r.sunmask
 LIBES  = $(GISLIB) $(GPROJLIB)
+DEPLIBS= $(DEPGISLIB) $(DEPGPROJLIB)
 
 LIST   = main.o solpos00.o g_solposition.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)	$(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

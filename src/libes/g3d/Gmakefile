@@ -47,9 +47,9 @@ tileread.o \
 tilewrite.o \
 writeascii.o 
 
- all: $(G3DLIB)
+ all: $(DEPG3DLIB)
 
-$(G3DLIB): $(OBJ)
+$(DEPG3DLIB): $(OBJ)
 	$(AR)
 
 

@@ -18,10 +18,11 @@ LIST =  main.o \
 #       select_linksD.o
         
 LIBES = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(DATETIMELIB)
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB) $(DEPDATETIMELIB)
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #
 
 $(LIST): costHa.h cell_ptrHa.h

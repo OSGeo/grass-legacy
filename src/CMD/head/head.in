@@ -52,7 +52,7 @@ DEFAULT_DATABASE    =
 DEFAULT_LOCATION    =
 
 COMPILE_FLAGS       = @CFLAGS@ @INCLUDE_DIRS@
-LDFLAGS             = @LDFLAGS@
+LINK_FLAGS          = @LDFLAGS@
 
 DLLIB               = @DLLIB@
 XCFLAGS             = @X_CFLAGS@

@@ -2,10 +2,10 @@ PGM=r.line
 OFILES = main.o extr_lines.o io.o 
 
 
-$(BIN_CMD)/$(PGM): $(OFILES) $(VECTLIB) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(OFILES) $(DEPVECTLIB) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(VECTLIB) $(GISLIB): #
+$(DEPVECTLIB) $(DEPGISLIB): #
 
 main.o: extr_lines.h
 extr_lines.o: extr_lines.h

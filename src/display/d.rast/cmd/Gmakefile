@@ -2,12 +2,13 @@ PGM=d.rast
 HOME=$(BIN_CMD)
 
 LIBES  = $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) 
+DEPLIBS= $(DEPD_LIB) $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB) 
 
 LIST   = main.o colors.o display.o mask.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #
 
 

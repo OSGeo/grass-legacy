@@ -1,5 +1,6 @@
 PGM       = d.vect
 LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB)
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPVECTLIB) $(DEPGISLIB)
 
 #EXTRA_CFLAGS=-g
 
@@ -11,8 +12,8 @@ OBJS = \
 	use_plot1.o
 
 
-$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #
 

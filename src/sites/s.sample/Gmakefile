@@ -1,6 +1,7 @@
 PGM=s.sample
 
 LIBES = $(GISLIB) $(DATETIMELIB)
+DEPLIBS= $(DEPGISLIB) $(DEPDATETIMELIB)
 
 TUTORIAL = s.sample-tutorial
 
@@ -18,7 +19,7 @@ LIST  = \
 	nearest.o \
 	utils.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 tutorial:

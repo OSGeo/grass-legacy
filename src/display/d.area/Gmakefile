@@ -1,5 +1,6 @@
 PGM       = d.area
 LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB)
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPVECTLIB) $(DEPGISLIB)
 
 
 OBJS = \
@@ -15,10 +16,10 @@ CFILES = \
 
 all: $(BIN_CMD)/$(PGM) $(ETC)/rgb.txt
 
-$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(ETC)/rgb.txt: rgb.txt
 	cp -f $? $@
 
-$(LIBES): #
+$(DEPLIBS): #

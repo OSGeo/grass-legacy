@@ -24,7 +24,7 @@ CFILES = \
 	write_head.c\
 	write.c
 
-$(BIN_CMD)/$(PGM): $(OFILES) $(COMP_LIBES) $(LINKMLIB) 
+$(BIN_CMD)/$(PGM): $(OFILES) $(COMP_LIBES) $(DEPLINKMLIB) 
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(COMP_LIBES) $(MATHLIB) $(XDRLIB)
 
 $(COMP_LIBES): #

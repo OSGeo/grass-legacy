@@ -18,11 +18,11 @@ OBJ =  \
 	tz2.o\
 	values.o
 
-all: $(DATETIMELIB)
+all: $(DEPDATETIMELIB)
 	#Required for gstats interface:
-	cp $(DATETIMELIB) $(GISBASE)/lib
+	cp $(DEPDATETIMELIB) $(GISBASE)/lib
 
-$(DATETIMELIB): $(OBJ)
+$(DEPDATETIMELIB): $(OBJ)
 	$(AR)
 
 $(OBJ): $(INCLUDE_DIR)/datetime.h $(INCLUDE_DIR)/P_datetime.h

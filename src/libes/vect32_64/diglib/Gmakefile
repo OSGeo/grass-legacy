@@ -1,5 +1,5 @@
 #all: port_test libvect.a
-all: port_test $(DIG2LIB)
+all: port_test $(DEPDIG2LIB)
 
 ###########################################################
 #    set_head.o 
@@ -76,7 +76,7 @@ CFILES = \
     x_struct_io.c 
 
 
-$(DIG2LIB): $(OBJ)
+$(DEPDIG2LIB): $(OBJ)
 	$(AR)
 
 

@@ -1,5 +1,6 @@
 PGM=v.patch
 LIBES = $(VECTLIB) $(DIG_ATTLIB) $(GISLIB)
+DEPLIBS= $(DEPVECTLIB) $(DEPDIG_ATTLIB) $(DEPGISLIB)
 
 SOURCES = \
 	patch.c
@@ -7,7 +8,7 @@ SOURCES = \
 OBJ = \
 	patch.o
 
-$(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJ) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

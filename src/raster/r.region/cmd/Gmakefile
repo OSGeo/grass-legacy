@@ -1,8 +1,9 @@
 PGM    = r.region
 
 LIBES=$(VECTLIB) $(GISLIB)
+DEPLIBS=$(DEPVECTLIB) $(DEPGISLIB)
 
 LIST   = main.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)

@@ -1,12 +1,13 @@
 PGM = m.datum.shift
 LIBES = $(COORCNVLIB) $(GISLIB)
+DEPLIBS= $(DEPCOORCNVLIB) $(DEPGISLIB)
 LIST = main.o \
        dat.o \
        sph.o
 # EXTRA_CFLAGS=-DBURSAWOLF
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): # in case LIB changes
-$(COORCNVLIB): # in case LIB changes
+$(DEPGISLIB): # in case LIB changes
+$(DEPCOORCNVLIB): # in case LIB changes

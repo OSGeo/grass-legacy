@@ -45,7 +45,7 @@ OBJ =	\
 	main.o
 
 
-$(BIN_CMD)/$(PGM): $(OBJ)  $(GISLIB) $(VECTLIB)
+$(BIN_CMD)/$(PGM): $(OBJ)  $(DEPGISLIB) $(DEPVECTLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(VECTLIB) $(GISLIB): #
+$(DEPVECTLIB) $(DEPGISLIB): #

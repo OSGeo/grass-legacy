@@ -13,8 +13,8 @@ LIST = main.o		\
        support.o	\
        write_map.o  
 
-$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST): distance.h
-$(GISLIB): #
+$(DEPGISLIB): #

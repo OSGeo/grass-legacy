@@ -3,6 +3,7 @@ DBMILIB = $(LIBDIR)/libdbmi.a
 PGM=v.to.db
 
 LIBES= $(VECTLIB) $(GISLIB) $(DBMILIB)
+DEPLIBS= $(DEPVECTLIB) $(DEPGISLIB) $(DBMILIB)
 LIST = main.o\
 	parse.o\
 	lines.o\
@@ -15,9 +16,9 @@ LIST = main.o\
 	areas.o\
 	units.o	
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES) 
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): global.h
 
-$(LIBES): #
+$(DEPLIBS): #

@@ -6,11 +6,12 @@ DGNLIB=$(LIBDIR)/libdgn.a
 CPLLIB=$(LIBDIR)/libcpl.a
 
 LIBES=$(VECTLIB) $(GISLIB) $(DGNLIB) $(CPLLIB) $(MATHLIB) $(GDAL_LIBS) -lz
+DEPLIBS=$(DEPVECTLIB) $(DEPGISLIB) $(DGNLIB) $(CPLLIB) $(MATHLIB) $(GDAL_LIBS) -lz
 
 
-$(BIN_CMD)/$(PGM):  $(OBJ) $(LIBES) 
+$(BIN_CMD)/$(PGM):  $(OBJ) $(DEPLIBS) 
 	$(CC) -o $@ $(OBJ) $(LIBES)
 
-$(VECTLIB): #
-$(GISLIB): #
+$(DEPVECTLIB): #
+$(DEPGISLIB): #
 

@@ -30,12 +30,13 @@ LIST = main.o\
 	write.o
 
 LIBES = $(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(SEGMENTLIB) $(VASKLIB)
+DEPLIBS= $(IMAGERYLIB2) $(DEPIMAGERYLIB) $(DEPGISLIB) $(DEPD_LIB) $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPSEGMENTLIB) $(DEPVASKLIB)
 
-$(HOME)/$(PROGRAM): $(LIST) $(LIBES)
+$(HOME)/$(PROGRAM): $(LIST) $(DEPLIBS)
 	$(CC) $(EXTRA_CFLAGS) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 $(LIST): defs.h global.h rowcol.h
 
-$(LIBES): # in case libraries change
+$(DEPLIBS): # in case libraries change
 
 
 

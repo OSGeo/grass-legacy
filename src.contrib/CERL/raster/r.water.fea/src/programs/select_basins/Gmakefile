@@ -1,9 +1,10 @@
 PGM = select_basins
 RFEA = $(GISBASE)/etc/r.fea
 LIBES = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB)
 LIST = main.o selectbasin.o basinlink.o unique.o 
 
-$(RFEA)/$(PGM): $(LIST) $(LIBES)
+$(RFEA)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $LIBES: #

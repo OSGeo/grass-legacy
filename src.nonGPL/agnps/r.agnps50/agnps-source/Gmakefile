@@ -1,4 +1,5 @@
 LIBES  = $(GISLIB) $(VASKLIB)
+DEPLIBS= $(DEPGISLIB) $(DEPVASKLIB)
 
 
 PGM = $(GISBASE)/bin/r.agnps50.run
@@ -34,7 +35,7 @@ LIST = \
         ters.o\
         xeros.o
 
-$(PGM): $(LIST) $(LIBES)
+$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

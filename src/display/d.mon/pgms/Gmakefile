@@ -6,19 +6,19 @@ all:	$(ETC)/mon.list \
 	$(ETC)/mon.stop \
 	$(ETC)/mon.which
 
-$(ETC)/mon.list:	list.o $(RASTERLIB) $(GISLIB)
+$(ETC)/mon.list:	list.o $(DEPRASTERLIB) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ list.o $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
-$(ETC)/mon.start:	start.o $(RASTERLIB) $(GISLIB)
+$(ETC)/mon.start:	start.o $(DEPRASTERLIB) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ start.o $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
-$(ETC)/mon.status:	status.o $(RASTERLIB) $(GISLIB)
+$(ETC)/mon.status:	status.o $(DEPRASTERLIB) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ status.o $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
-$(ETC)/mon.stop:	stop.o $(RASTERLIB) $(GISLIB) 
+$(ETC)/mon.stop:	stop.o $(DEPRASTERLIB) $(DEPGISLIB) 
 	$(CC) $(LDFLAGS) -o $@ stop.o $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
-$(ETC)/mon.which:	which.o $(GISLIB)
+$(ETC)/mon.which:	which.o $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ which.o $(GISLIB) $(MATHLIB) $(XDRLIB)
-$(ETC)/mon.select:	select.o $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+$(ETC)/mon.select:	select.o $(DEPD_LIB) $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ select.o $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
-$(ETC)/mon.release:	release.o $(RASTERLIB) $(GISLIB)
+$(ETC)/mon.release:	release.o $(DEPRASTERLIB) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ release.o $(RASTERLIB) $(GISLIB)  $(MATHLIB) $(XDRLIB)
 
 list.o: $(SRC)/include/monitors.h
@@ -31,4 +31,4 @@ status.o: open.h
 stop.o: $(SRC)/include/monitors.h
 stop.o: open.h
 
-$(GISLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB): #
+$(DEPGISLIB) $(DEPD_LIB) $(DEPDISPLAYLIB) $(DEPRASTERLIB): #

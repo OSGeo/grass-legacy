@@ -6,10 +6,11 @@ LIST =  filldir.o\
 	tinf.o
  
 LIBES = $(DISPLAYLIB) $(GISLIB) $(SEGMENTLIB) $(DATETIMELIB)
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPGISLIB) $(DEPSEGMENTLIB) $(DEPDATETIMELIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
  
 $(LIST): local.h tinf.h
  
-$(LIBES): #
+$(DEPLIBS): #
 

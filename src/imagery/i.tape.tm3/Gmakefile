@@ -7,6 +7,7 @@ IMAGERY_SUBINC  = $(SRC)/libes/image3
 IMAGERYLIB_SUP  = $(SRC)/libes/image3/libimage_sup.a
 
 LIBES =  $(IMAGERYLIB) $(IMAGERYLIB_SUP) $(D_LIB) $(COORCNVLIB)\
+DEPLIBS=  $(DEPIMAGERYLIB) $(IMAGERYLIB_SUP) $(DEPD_LIB) $(DEPCOORCNVLIB)\
          $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) \
          $(GPROJLIB) $(LIBTRANS) $(PROJLIB) \
          $(GISLIB) $(VASKLIB)
@@ -25,8 +26,8 @@ EXTRA_CFLAGS = -I$(IMAGERY_SUBINC)
 $(LIST): landsat.h fileseq.h
 
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES) 
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): # in case of changes
+$(DEPLIBS): # in case of changes
 

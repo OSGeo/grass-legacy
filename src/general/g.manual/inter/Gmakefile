@@ -2,7 +2,7 @@ PGM    = g.manual
 
 OBJECTS   = main.o
 
-$(BIN_INTER)/$(PGM):  $(OBJECTS) $(GISLIB) 
+$(BIN_INTER)/$(PGM):  $(OBJECTS) $(DEPGISLIB) 
 	$(CC) $(LDFLAGS) -o $@ $(OBJECTS) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

@@ -16,6 +16,6 @@ $(SCRIPTS)/stf1.labels.sh: stf1.labels.sh
 	chmod +x $(SCRIPTS)/stf1.labels.sh
 
 $(LIB): # in case LIB changes
-$(GISLIB): #
-$(VECTLIB): #
-$(DIG_ATTLIB): #
+$(DEPGISLIB): #
+$(DEPVECTLIB): #
+$(DEPDIG_ATTLIB): #

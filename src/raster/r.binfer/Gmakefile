@@ -6,7 +6,7 @@ OBJS = y.tab.o lex.yy.o symtab.o table.o main.o \
 
 all: $(BIN_CMD)/$(PGM)
 
-$(BIN_CMD)/$(PGM): $(OBJS) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(OBJS) $(DEPGISLIB)
 	$(CC) -o $@ $(LDFLAGS) $(OBJS) $(GISLIB) $(LEXLIB) $(MATHLIB) $(XDRLIB)
 
 count:
@@ -14,7 +14,7 @@ count:
 	@wc -l $(FILES)
 
 $(OBJS): symtab.h
-$(GISLIB): #
+$(DEPGISLIB): #
 
 lex.yy.c: binfer.l
 	$(LEX) -t binfer.l > $@

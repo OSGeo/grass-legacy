@@ -2,7 +2,7 @@ PGM=d.mon
 HOME=$(BIN_CMD)
 
 
-$(HOME)/$(PGM): main.o $(GISLIB)
+$(HOME)/$(PGM): main.o $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

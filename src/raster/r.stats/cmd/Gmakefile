@@ -1,12 +1,13 @@
 PGM=r.stats
 
 LIBES = $(GISLIB) 
+DEPLIBS= $(DEPGISLIB) 
 
 LIST  = main.o raw_stats.o cell_stats.o stats.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): global.h
 
-$(LIBES): #
+$(DEPLIBS): #

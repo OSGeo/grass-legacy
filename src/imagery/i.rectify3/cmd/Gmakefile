@@ -37,13 +37,14 @@ LIST = main.o\
 $(LIST): global.h rowcol.h parse.h
 
 LIBES =  $(IMAGERYLIB) $(IMAGERYLIB_SUP) $(D_LIB)\
+DEPLIBS=  $(DEPIMAGERYLIB) $(IMAGERYLIB_SUP) $(DEPD_LIB)\
 	 $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) \
 	 $(GPROJLIB) $(LIBTRANS) $(COORCNVLIB) \
 	 $(GISLIB) $(VASK) $(XDRLIB)
 
 
 ####	library dependencies
-$(LIBES): # in case of lib changes
+$(DEPLIBS): # in case of lib changes
 
 ####	required compile flags
 EXTRA_CFLAGS = $(VECT_INCLUDE) -I$(IMAGERY_SUBINC)
@@ -53,6 +54,6 @@ EXTRA_CFLAGS = $(VECT_INCLUDE) -I$(IMAGERY_SUBINC)
 
 
 ####	the rules
-$(HOME)/$(PGR): $(LIST) $(LIBES) 
+$(HOME)/$(PGR): $(LIST) $(DEPLIBS) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB)
 

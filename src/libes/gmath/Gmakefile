@@ -10,12 +10,13 @@ OBJ = fft.o \
 	la.o
 
 LIBES = $(GISLIB)
+DEPLIBS= $(DEPGISLIB)
 
 EXTRA_CFLAGS = $(FFTWINC)
 
-all: $(GMATHLIB)
+all: $(DEPGMATHLIB)
 
-$(GMATHLIB): $(OBJ)
+$(DEPGMATHLIB): $(OBJ)
 	$(AR) 
 
 $(OBJ): $(INCLUDE_DIR)/la.h

@@ -8,6 +8,6 @@ $(BIN_CMD)/$(PGM): $(OFILES)
 		$(GISLIB) $(MATHLIB) $(XDRLIB)
 
 
-$(GISLIB): # in case LIB changes
-$(VECTLIB): #
-$(DIG_ATTLIB): #
+$(DEPGISLIB): # in case LIB changes
+$(DEPVECTLIB): #
+$(DEPDIG_ATTLIB): #

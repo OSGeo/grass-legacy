@@ -6,9 +6,9 @@ OBJ = \
 	rewind.o\
 	update.o
 
-all: $(BTREELIB) #$(LIBDIR)/btree.h
+all: $(DEPBTREELIB) #$(LIBDIR)/btree.h
 
-$(BTREELIB): $(OBJ)
+$(DEPBTREELIB): $(OBJ)
 	$(AR)
 
 #$(LIBDIR)/btree.h: btree.h
@@ -18,5 +18,5 @@ $(BTREELIB): $(OBJ)
 
 $(OBJ): #btree.h
 
-try: try.o $(BTREELIB)
+try: try.o $(DEPBTREELIB)
 	$(CC) $(LDFLAGS) try.o $(BTREELIB) -o try

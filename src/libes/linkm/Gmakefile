@@ -6,10 +6,10 @@ OBJ = \
 	oom.o\
 	dispose.o
 
-#all: $(LINKMLIB) $(LIBDIR)/linkm.h
-all: $(LINKMLIB)
+#all: $(DEPLINKMLIB) $(LIBDIR)/linkm.h
+all: $(DEPLINKMLIB)
 
-$(LINKMLIB): $(OBJ)
+$(DEPLINKMLIB): $(OBJ)
 	$(AR)
 
 #$(LIBDIR)/linkm.h: linkm.h
@@ -19,8 +19,8 @@ $(LINKMLIB): $(OBJ)
 
 $(OBJ): #linkm.h
 
-try: try.o $(LINKMLIB)
+try: try.o $(DEPLINKMLIB)
 	$(CC) $(LDFLAGS) try.o $(LINKMLIB) -o try
 
-try2: try2.o $(LINKMLIB)
+try2: try2.o $(DEPLINKMLIB)
 	$(CC) $(LDFLAGS) try2.o $(LINKMLIB) -o try2

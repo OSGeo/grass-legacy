@@ -2,10 +2,11 @@ PGM=i.cca
 OBJS = main.o matrix.o stats.o transform.o
 
 LIBES= $(IMAGERYLIB) $(GMATHLIB) $(GISLIB)
+DEPLIBS= $(DEPIMAGERYLIB) $(DEPGMATHLIB) $(DEPGISLIB)
 
-$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(OBJS): globals.h
 
-$(LIBES): #
+$(DEPLIBS): #

@@ -74,7 +74,7 @@ CFILES = \
     x_struct_io.c 
 
 
-$(DIG2LIB): $(OBJ)
+$(DEPDIG2LIB): $(OBJ)
 	$(AR)
 
 EXTRA_CFLAGS    = $(VECTLIBFLAGS)

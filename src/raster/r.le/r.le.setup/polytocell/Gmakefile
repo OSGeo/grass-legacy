@@ -8,10 +8,11 @@ OFILES = \
 	yadjust.o
 	
 LIBES = $(GISLIB)
+DEPLIBS= $(DEPGISLIB)
 
 all: $(BIN_CMD)/bmif_to_cell $(BIN_CMD)/poly_to_bmif
 
-$(BIN_CMD)/bmif_to_cell: bmf_to_cll.o $(LIBES)
+$(BIN_CMD)/bmif_to_cell: bmf_to_cll.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ bmf_to_cll.o $(LIBES) $(XDRLIB)
 
 $(BIN_CMD)/poly_to_bmif: $(OFILES)

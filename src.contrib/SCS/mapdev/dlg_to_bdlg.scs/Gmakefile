@@ -37,5 +37,5 @@ bound_box.o:	dlghead.h
 r_dlg_head.o:	dlghead.h
 w_bdlg_head.o:	dlghead.h
 
-$(GISLIB): #
+$(DEPGISLIB): #
 

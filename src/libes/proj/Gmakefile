@@ -49,5 +49,5 @@ RLIB = pj_release.o
 
 GRASSINT = get_proj.o do_proj.o
 
-$(GPROJLIB): $(RLIB) $(LLIST) $(GRASSINT)
+$(DEPGPROJLIB): $(RLIB) $(LLIST) $(GRASSINT)
 	$(AR)

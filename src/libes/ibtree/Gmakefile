@@ -6,12 +6,12 @@ OBJ = \
 	rewind.o\
 	update.o
 
-all: $(IBTREELIB)
+all: $(DEPIBTREELIB)
 
-$(IBTREELIB): $(OBJ) 
+$(DEPIBTREELIB): $(OBJ) 
 	$(AR)
 
 $(OBJ): $(INCLUDE_DIR)/ibtree.h
 
-try: try.o $(IBTREELIB)
+try: try.o $(DEPIBTREELIB)
 	$(CC) $(LDFLAGS) try.o $(IBTREELIB) -o try

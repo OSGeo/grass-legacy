@@ -3,5 +3,5 @@ OBJ = main.o
 panel: $(OBJ)
 	$(CC) -o $@ $(OBJ) $(RASTERLIB) $(GISLIB)
 
-$(GISLIB): #
-$(RASTERLIB): #
+$(DEPGISLIB): #
+$(DEPRASTERLIB): #

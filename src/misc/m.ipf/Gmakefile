@@ -1,6 +1,7 @@
 PGM=m.ipf
 
 LIBES = $(GISLIB)  $(DATETIMELIB)
+DEPLIBS= $(DEPGISLIB)  $(DEPDATETIMELIB)
 
 LIST  = \
 	main.o \
@@ -8,5 +9,5 @@ LIST  = \
 	ipf.o 
  
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES) 
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)

@@ -4,8 +4,9 @@ LIST=main.o premodel.o cdpath.o dparam.o updparam.o solve.o hgnio.o save.o\
 	pltmodl.o pltline.o pltsph.o pltexp.o pltgaus.o pltquad.o plthole.o
 
 LIBES=$(GISLIB)
+DEPLIBS=$(DEPGISLIB)
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST)  $(LIBES) $(MATHLIB) $(XDRLIB)
 
 #

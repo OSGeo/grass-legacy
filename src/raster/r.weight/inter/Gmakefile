@@ -1,4 +1,5 @@
 LIBES = $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+DEPLIBS= $(DEPD_LIB) $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB)
 OFILES  =\
 	add_mult.o\
 	ask_weight.o\
@@ -26,7 +27,7 @@ all: clean pgm shell help
 shell: $(BIN_INTER)/r.weight
 pgm: $(ETC)/r.weight
 
-$(ETC)/r.weight: $(OFILES) $(LIBES) $(VASKLIB) $(EDITLIB)
+$(ETC)/r.weight: $(OFILES) $(DEPLIBS) $(DEPVASKLIB) $(DEPEDITLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(EDITLIB) $(LIBES) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB) $(LEXLIB)
 
 $(BIN_INTER)/r.weight: weight.sh
@@ -64,8 +65,8 @@ sav_rec.o: include.h
 weighted.o: include.h
 weighted.o:    yes_no.h 
 
-$(LIBES): #
-$(VASKLIB): #
+$(DEPLIBS): #
+$(DEPVASKLIB): #
 
 print:
 	pr *.h *.l *.y *.c | lpr

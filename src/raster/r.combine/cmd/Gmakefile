@@ -1,5 +1,6 @@
 PGM=r.combine
 LIBES = $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+DEPLIBS= $(DEPD_LIB) $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB)
 OFILES  =\
 	main.o\
 	colors.o\
@@ -37,7 +38,7 @@ $(SCRIPTS)/$(PGM):
 	chmod 0755 $@
 
 
-$(ETC)/$(PGM): $(OFILES) $(LIBES)
+$(ETC)/$(PGM): $(OFILES) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB) $(LEXLIB)
 
 text:
@@ -83,4 +84,4 @@ lex.yy.c:     gis_lxcl.l y.tab.h
 
 y.tab.h:      y.tab.c
 
-$(LIBES): #
+$(DEPLIBS): #

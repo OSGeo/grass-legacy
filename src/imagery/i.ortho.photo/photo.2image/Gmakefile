@@ -37,15 +37,16 @@ LIST=main.o\
 	use_camera.o
 
 LIBES = $(IMAGERYLIB2) $(IMAGERYLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(VASKLIB)
+DEPLIBS= $(IMAGERYLIB2) $(DEPIMAGERYLIB) $(DEPD_LIB) $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB) $(DEPVASKLIB)
 
-$(HOME)/$(PROGRAM): $(LIST) $(LIBES)
+$(HOME)/$(PROGRAM): $(LIST) $(DEPLIBS)
 	$(CC) $(EXTRA_CFLAGS) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): globals.h defs.h
 mark.o:  camera_ref.h
 use_camera.o: camera_ref.h
 
-$(LIBES): #
+$(DEPLIBS): #
 
 try: try.o
 	$(CC) try.o $(GISLIB) -o try

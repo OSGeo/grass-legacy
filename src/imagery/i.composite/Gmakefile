@@ -1,12 +1,13 @@
 PGM=i.composite
 LIBES = $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
+DEPLIBS= $(DEPIMAGERYLIB) $(DEPGISLIB) $(DEPVASKLIB)
 OBJ =\
 	main.o\
 	ask_levels.o\
 	compose.o\
 	gen_colors.o
 
-$(BIN_INTER)/$(PGM): $(OBJ) $(LIBES)
+$(BIN_INTER)/$(PGM): $(OBJ) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

@@ -16,11 +16,12 @@ LIST = 	main.c add_in.c addpts.c find_con.c \
 	flag_get.c flag_set.c flag_unset.c 
 
 LIBES=$(GISLIB) $(SEGMENTLIB) $(DISPLAYLIB)
+DEPLIBS=$(DEPGISLIB) $(DEPSEGMENTLIB) $(DEPDISPLAYLIB)
 
-$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(DISPLAYLIB) $(GISLIB) $(SEGMENTLIB): #
+$(DEPDISPLAYLIB) $(DEPGISLIB) $(DEPSEGMENTLIB): #
 
 add_in.o: contour.h
 addpts.o: contour.h

@@ -10,4 +10,4 @@ $(PGM): $(OFILES)
 		$(GISLIB) $(MATHLIB) $(COORCNVLIB)
 
 
-$(GISLIB): # in case LIB changes
+$(DEPGISLIB): # in case LIB changes

@@ -5,7 +5,7 @@ LIST = main.o vect2rast.o raster.o \
 	support.o inform.o getformat.o\
 	clock.o label.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(VECTLIB) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPVECTLIB) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 getformat.o: format.h
@@ -15,5 +15,5 @@ do_lines.o: null.h
 do_sites.o: null.h
 label.o: null.h
 
-$(GISLIB): #
-$(VECTLIB): #
+$(DEPGISLIB): #
+$(DEPVECTLIB): #

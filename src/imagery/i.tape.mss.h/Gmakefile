@@ -7,8 +7,8 @@ LIST = main.o\
 	tape_dir.o\
 	tape_vol.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST) : tape.h
-$(GISLIB): #
+$(DEPGISLIB): #

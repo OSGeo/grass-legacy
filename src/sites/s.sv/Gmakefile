@@ -3,8 +3,9 @@ PGM=s.sv
 LIST=main.o cdpath.o save.o nbins.o angleok.o plthgpt.o
 
 LIBES=$(GISLIB) $(DATETIMELIB)
+DEPLIBS=$(DEPGISLIB) $(DEPDATETIMELIB)
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 main.o		: sv.h 

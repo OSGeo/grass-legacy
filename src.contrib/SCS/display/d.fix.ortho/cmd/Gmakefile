@@ -1,4 +1,5 @@
 LIBES = $(DISPLAYLIB) $(RASTERLIB) $(COORCNVLIB) $(GISLIB)
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPCOORCNVLIB) $(DEPGISLIB)
 
 LIST = \
 	b_w_line.o \
@@ -6,8 +7,8 @@ LIST = \
 	get_shift.o
 
 
-$(BIN_CMD)/d.fix.ortho: $(LIST) $(LIBES)
+$(BIN_CMD)/d.fix.ortho: $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@  $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 
-$(LIBES): #
+$(DEPLIBS): #

@@ -2,7 +2,7 @@ PGM=r.grow
 
 LIST = main.o
 
-$(BIN_INTER)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_INTER)/$(PGM): $(LIST) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

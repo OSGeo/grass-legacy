@@ -53,9 +53,9 @@ OBJ =\
 	var.o\
 	vask_group.o
 
-all: $(IMAGERYLIB) 
+all: $(DEPIMAGERYLIB) 
 
-$(IMAGERYLIB): ${OBJ}
+$(DEPIMAGERYLIB): ${OBJ}
 	${AR}
 
 $(OBJ): $(INCLUDE_DIR)/imagery.h $(INCLUDE_DIR)/imagedefs.h

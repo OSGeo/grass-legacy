@@ -10,7 +10,8 @@ LIST =main.o\
 	findzc.o
 
 LIBES=$(GISLIB) $(GMATHLIB)
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+DEPLIBS=$(DEPGISLIB) $(DEPGMATHLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB) $(FFTWLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

@@ -52,11 +52,12 @@ LIST =	y.tab.o \
 	xtan.o
 
 LIBES = $(GISLIB) $(BTREELIB) $(ROWIOLIB)
+DEPLIBS= $(DEPGISLIB) $(DEPBTREELIB) $(DEPROWIOLIB)
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #
 
 y.tab.c y.tab.h: mapcalc.y
 	$(YACC) -d mapcalc.y
