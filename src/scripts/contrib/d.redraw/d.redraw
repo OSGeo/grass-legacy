@@ -15,16 +15,6 @@
 #		for details.
 #
 #############################################################################
-#
-# $Log$
-# Revision 1.2  2000-11-26 06:21:18  cho
-# added g.man to browse manual pages using lynx.
-# BSDish man does not work correctly with g.manual.
-#
-# Revision 1.1  2000/11/22 09:12:02  cho
-# added
-#
-#
 
 program=`basename $0`
 
