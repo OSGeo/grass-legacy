@@ -1,0 +1,19 @@
+1c1
+< #define MAIN
+---
+> #define GLOBAL
+58,59c58,59
+< 	for (n = 0; opt2->answers[n]; n++) 
+< 		{} /* count number of input files */
+---
+> /*	for (n = 0; opt2->answers[n]; n++) 
+> 		{}  count number of input files */
+61a62,65
+> 	inputfiles[0] = opt2->answer;
+> 	inputfiles[1] = opt3->answer;
+> 	inputfiles[2] = opt4->answer;
+> 	outputfiles = opt5->answer;
+62a67
+> /*
+67a73
+> */
