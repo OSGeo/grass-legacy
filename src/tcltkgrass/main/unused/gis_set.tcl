@@ -308,20 +308,20 @@ proc gisSetWindow {} {
     -anchor {w} \
     -text "Location" 
 
-  scrollbar .frame0.frame2.vscrollbar \
-    -command {.frame0.frame2.listbox yview} \
-    -relief {raised}
-
-  scrollbar .frame0.frame2.hscrollbar \
-    -command {.frame0.frame2.listbox xview} \
-    -orient {horizontal} \
-    -relief {raised}
-
   listbox .frame0.frame2.listbox \
     -relief {raised} \
     -exportselection false \
     -yscrollcommand {.frame0.frame2.vscrollbar set} \
-    -xscrollcommand {.frame0.frame2.vscrollbar set}
+    -xscrollcommand {.frame0.frame2.hscrollbar set}
+
+  scrollbar .frame0.frame2.vscrollbar -width 12 \
+    -command {.frame0.frame2.listbox yview} \
+    -relief {raised}
+
+  scrollbar .frame0.frame2.hscrollbar -width 12 \
+    -command {.frame0.frame2.listbox xview} \
+    -orient {horizontal} \
+    -relief {raised}
 
   pack append .frame0.frame2 \
     .frame0.frame2.label { top fill } \
@@ -340,19 +340,19 @@ proc gisSetWindow {} {
     -anchor {w} \
     -text "Mapset" 
 
-  scrollbar .frame0.frame3.vscrollbar \
-    -command {.frame0.frame3.listbox yview} \
-    -relief {raised}
-
-  scrollbar .frame0.frame3.hscrollbar \
-    -command {.frame0.frame3.listbox xview} \
-    -orient {horizontal} \
-    -relief {raised}
-
   listbox .frame0.frame3.listbox \
     -relief {raised} \
     -yscrollcommand {.frame0.frame3.vscrollbar set} \
-    -xscrollcommand {.frame0.frame3.vscrollbar set}
+    -xscrollcommand {.frame0.frame3.hscrollbar set}
+
+  scrollbar .frame0.frame3.vscrollbar -width 12 \
+    -command {.frame0.frame3.listbox yview} \
+    -relief {raised}
+
+  scrollbar .frame0.frame3.hscrollbar -width 12 \
+    -command {.frame0.frame3.listbox xview} \
+    -orient {horizontal} \
+    -relief {raised}
 
   pack append .frame0.frame3 \
     .frame0.frame3.label { top fill } \
