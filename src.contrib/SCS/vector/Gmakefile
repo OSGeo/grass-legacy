@@ -2,7 +2,7 @@ all:
 	$(GMAKE) v.extract
 	$(GMAKE) v.make.subj
 	$(GMAKE) v.merge
-	$(GMAKE) v.proj
+	$(GMAKE) v.proj.scs
 	$(GMAKE) v.reclass
 	$(GMAKE) v.report
 	$(GMAKE) v.rmedge
