@@ -81,7 +81,7 @@ int main (int argc, char *argv[])
 
     option.fs = G_define_option() ;
     option.fs->key        = "fs";
-    option.fs->key_desc   = "character|space" ;
+    option.fs->key_desc   = "character|space|tab" ;
     option.fs->type       = TYPE_STRING;
     option.fs->required   = NO;
     option.fs->multiple   = NO;
@@ -224,6 +224,10 @@ int main (int argc, char *argv[])
     {
 	if (strcmp (option.fs->answer, "space") == 0)
 	    *fs = ' ';
+	else if (strcmp (option.fs->answer, "tab") == 0)
+	    *fs = '\t';
+	else if (strcmp (option.fs->answer, "\\t") == 0)
+	    *fs = '\t';
 	else
 	    *fs = *option.fs->answer;
     }
