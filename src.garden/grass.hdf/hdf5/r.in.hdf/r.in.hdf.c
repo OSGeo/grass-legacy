@@ -11,10 +11,12 @@
 *
 * MODIS2QKM format (250m): http://mcstweb.gsfc.nasa.gov/documents/MOD02QKM-fs.txt
 *
+* atmospheric corrections and a suite of ocean color algorithms:
+*   http://picasso.oce.orst.edu/ORSOO/MODIS/code/MODIShp.html
 *IDL example (see hints for slice there):
 * ftp://acdisx.gsfc.nasa.gov/data/modis/tools/hdf/geoview/geov.pro
 **************************************************************************
-* select_vNsds.c (public domain from NASA)
+* select_vNsds.c (public domain)
 *
 * select_vNsds was developed at NASA's Goddard Space Flight Center (GSFC)
 *                                Distributed Active Archive Center (DAAC)
@@ -95,7 +97,7 @@ int main(int argc, char *argv[])
 
     int32 vdata_index[MAX_VDATA], total_vref[MAX_VDATA], total_vidx = 0;
 
-    char fields[FIELD_SIZE], attr_name[64], sds_name[64];
+    char fields[FIELD_SIZE], attr_name[64], sds_name[64], buffer[64];
 
     uint8 *vdatabuf;		/* buffer to retrieve the vdata data   */
     char vdata_name[VSNAMELENMAX];	/* buffer to retrieve the vdata name   */
@@ -332,6 +334,7 @@ int main(int argc, char *argv[])
 		    rank, num_element, dim_sizes[0], dim_sizes[1],
 		    dim_sizes[2]);
 
+
 /* HDF rank:
   A rank 2 dataset is an image read in scan-line order (2D). 
   A rank 3 dataset is a series of images which are read in an image at a time
@@ -367,9 +370,9 @@ http://hdf.ncsa.uiuc.edu/training/UG_Examples/SD/write_slab.c
 
 Meaning of start, edges, stride:
 http://www.swa.com/meteorology/hdf/tutorial/File_reading.html
-YL = 30;
-XL = 30;
-dims[0] = YL;
+ YL = 30;
+ XL = 30;
+ dims[0] = YL;
  dims[1] = XL;
  start[0] =0;  row start - X axis
  start[1]=0; column start - Y axis
@@ -512,6 +515,31 @@ dims[0] = YL;
 			sds_name);
 	    else
 		fprintf(stderr, "\n SDreaddata successful\n");
+
+		/* Find the file attribute named "QAPercentMissingData". 
+		 * http://dial.gsfc.nasa.gov/~rullman/DataModel/Class/QAStats.html */
+		attr_index = SDfindattr(sd_id, "file_contents");
+fprintf(stderr, "sd_id %d attr_index %d\n",sd_id, attr_index);
+	        if (attr_index == FAIL)
+	          G_fatal_error("SDfindattr failed on QAPercentMissingData");
+	        
+	        /* Get information about the file attribute. */
+	        status = SDattrinfo(sd_id, attr_index, "QAPercentMissingData", &num_type, &count);
+	        if (status == FAIL)
+	          G_fatal_error("SDattrinfo failed on QAPercentMissingData");
+	        
+	        /* Read the attribute data. */
+	        status = SDreadattr(sd_id, attr_index, buffer);
+	        if (status == FAIL)
+	          G_fatal_error("SDreadattr failed on QAPercentMissingData");
+		else {
+	          fprintf (stderr, "\n%s: ", attr_name);
+	          for (i=0; i < count; i++)
+	          	fprintf (stderr, "%c", buffer[i]);
+		  fprintf (stderr, "\n");
+	        }
+	        
+
 
 /*
  * Out put sds to binary data file
