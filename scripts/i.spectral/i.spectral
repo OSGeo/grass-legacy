@@ -1,0 +1,132 @@
+#!/bin/sh
+# written by Markus Neteler 18. August 1998
+#            neteler@geog.uni-hannover.de
+#
+# bugfix: 25. Nov.98/20. Jan. 1999
+# this script needs gnuplot
+
+#%Module
+#%  description: i.spectral - displays spectral response at user specifified locations in images
+#%End
+#%option
+#% key: band1
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: raster input map
+#% required : yes
+#%end
+#%option
+#% key: band2
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: raster input map
+#% required : no
+#%end
+#%option
+#% key: band3
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: raster input map
+#% required : no
+#%end
+#%option
+#% key: band4
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: raster input map
+#% required : no
+#%end
+#%option
+#% key: band5
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: raster input map
+#% required : no
+#%end
+#%option
+#% key: band6
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: raster input map
+#% required : no
+#%end
+#%option
+#% key: band7
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: raster input map
+#% required : no
+#%end
+#%option
+#% key: band8
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: raster input map
+#% required : no
+#%end
+
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi
+
+PARAM_NUM=$#
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+fi
+
+# get y-data for gnuplot-data file
+
+RASTERMAPS="$GIS_OPT_band1 $GIS_OPT_band2 $GIS_OPT_band3 $GIS_OPT_band4 $GIS_OPT_band5 $GIS_OPT_band6 $GIS_OPT_band7 $GIS_OPT_band8"
+RASTERMAPS=`echo $RASTERMAPS | sed 's+(null)++g' |tr -s ' ' ' '| sed 's+ $++g' | sed 's+ +,+g'`
+
+d.where -1 |r.what input=$RASTERMAPS > /tmp/spectr.dum1
+cat /tmp/spectr.dum1 | cut -d'|' -f4,5,6,7,8,9,10| tr '|' '\012' > /tmp/spectr.dum2
+COORD="`cat /tmp/spectr.dum1 | cut -d'|' -f1,2 | tr '|' ' '`"
+NUM="`cat /tmp/spectr.dum2 |wc -l`"
+NUM2=`expr $NUM + 1`
+
+
+# build data file
+# the x-axis... depending on number of bands
+rm -f spectrum.data.dum
+file=/tmp/spectr.dum2
+i=1
+
+while [ $i != $NUM2 ]
+do
+ echo $i >> spectrum.data.dum
+ i=`expr $i + 1`
+done 
+# paste to data file
+paste -d' ' spectrum.data.dum /tmp/spectr.dum2 > spectrum.data
+rm -f /tmp/spectr.dum1 /tmp/spectr.dum2
+echo ""
+echo "Band - DN at $COORD"
+cat  spectrum.data
+
+# build g.gnuplot script
+echo "set xtics ('$GIS_OPT_band1' 1, '$GIS_OPT_band2' 2, '$GIS_OPT_band3' 3, '$GIS_OPT_band4' 4, '$GIS_OPT_band5' 5, '$GIS_OPT_band6' 6, '$GIS_OPT_band7' 7, '$GIS_OPT_band8' 8)" >> spectrum.gnuplot
+echo "set grid" >> spectrum.gnuplot
+echo "set title 'Spectral response at $COORD'" >> spectrum.gnuplot
+##echo "set yrange [0:255]" >> spectrum.gnuplot
+echo "set xrange [0:$NUM2]" >> spectrum.gnuplot
+echo "set noclabel" >> spectrum.gnuplot
+echo "set xlabel 'Band number'" >> spectrum.gnuplot
+echo "set ylabel 'DN Value'" >> spectrum.gnuplot
+
+## if more then 2 points we can draw an interpolated spline:
+#if [ $PARAM_NUM -gt 2 ]
+#then
+#   echo "set data style linespoints" >> spectrum.gnuplot
+#   echo "plot 'spectrum.data' with points pt 779, '' smooth csplines t 'spline interpolated'" >> spectrum.gnuplot
+#else
+   echo "set data style lines" >> spectrum.gnuplot
+   echo "plot 'spectrum.data' with linespoints pt 779" >> spectrum.gnuplot
+#fi
+
+# display it...
+gnuplot -persist spectrum.gnuplot
+
+rm -f spectrum.data spectrum.data.dum spectrum.gnuplot

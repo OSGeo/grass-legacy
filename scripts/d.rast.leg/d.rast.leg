@@ -1,0 +1,137 @@
+#!/bin/sh
+
+#	d.rast.leg	(GRASS Shell Script)
+#
+# displays a raster map and its legend on a graphics window. 
+#
+# Usage: 	d.rast.leg
+#	or	d.rast.leg help
+#	or	d.rast.leg rast_map [num_of_lines]
+#
+# Description:	d.rast.leg clears the entire screen, divides it into a main
+#		(left) and a minor (right) frames, and then display a raster 
+#		map in the main frame and the map legend in the minor frame.
+#		The user can run the program interactively or 
+#		non-interactively.
+#
+# Parameters: 	rast_map 	A raster map to be displayed.
+#
+#	 	num_of_lines 	Number of lines to appear in the legend. 
+#				If this number is not given, the legend frame 
+#				will display as many lines as number of 
+#				categories in the map, otherwise, it will
+#				display the first num_of_lines minus 1  
+#				categories with the rest being truncated. 
+# 
+# Note:		The user may adjust the num_of_lines parameter or the size of 
+#		graphics window to get an appropriate result.
+#
+# See also:	d.rast, d.legend.
+#
+# Markus Neteler 8/2002: added simple d.legend logic
+# Jianping Xu and Scott Madry, Rutgers University. October 19, 1993
+# Markus Neteler 10/2003: added g.parser
+##############################################################################
+
+#%Module
+#%  description: d.rast.leg - displays a raster map and its legend on a graphics window
+#%End
+#%option
+#% key: map
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: raster input map
+#% required : yes
+#%end
+#%option
+#% key: num_of_lines
+#% type: integer
+#% description: Number of lines to appear in the legend
+#% required : no
+#%end
+
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+fi
+
+#for -n flag of d.legend
+eval `g.findfile el=cell file=$GIS_OPT_map`
+filemapset="${mapset}"
+HISTFILEDIR=$GISDBASE/$LOCATION_NAME/$filemapset/cell_misc/
+
+
+d.frame -e
+
+#at=bottom,top,left,right
+
+if [ "$GIS_OPT_map" = "(null)" ]
+then
+    d.frame -s at=0,100,0,65 frame=left
+    d.rast
+  
+   # title not supported here (we do not know the map name)
+
+    echo " "
+    echo "Please enter the name of the raster file again!"
+    d.frame -s at=0,100,65,100 frame=right
+    d.legend 
+    d.frame -s frame=left
+    exit
+fi
+
+if [ "$GIS_OPT_num_of_lines" = "(null)" ]
+then
+	d.frame -s at=0,100,0,65 frame=left
+        d.erase col=white
+    	d.rast map=$GIS_OPT_map b=white
+
+       #draw title
+        d.frame -s at=90,100,65,100  frame=title
+        d.erase col=white
+        echo "$GIS_OPT_map" | d.text col=black size=60
+#         d.text.freetype -sp text=$GIS_OPT_map col=black size=30 east_north=10,10
+
+       #draw legend
+    	d.frame -s at=0,90,65,100 frame=right
+        if test -f $HISTFILEDIR/$GIS_OPT_map/histogram
+          then
+             d.erase col=white
+    	     d.legend -n map=$GIS_OPT_map col=black
+          else
+             d.erase col=white
+             d.legend map=$GIS_OPT_map col=black
+          fi
+    	d.frame -s frame=left
+else
+	d.frame -s at=0,100,0,65 frame=left
+        d.erase col=white
+    	d.rast map=$GIS_OPT_map b=white
+
+       #draw title
+        d.frame -s at=90,100,65,100 frame=title
+        d.erase col=white
+        echo "$GIS_OPT_map" | d.text col=black size=60
+#         d.text.freetype -sp text=$GIS_OPT_map col=black size=30 east_north=10,10
+
+       #draw legend
+    	d.frame -s at=0,90,65,100 frame=right
+        if test -f $HISTFILEDIR/$GIS_OPT_map/histogram
+          then
+             d.erase col=white
+             d.legend -n map=$GIS_OPT_map col=black lines=$GIS_OPT_num_of_lines
+          else
+             d.erase col=white
+             d.legend map=$GIS_OPT_map col=black
+          fi
+    	d.frame -s frame=left
+fi
+
+
+#d.frame -s frame=full_screen
+echo "Clear screen with:"
+echo "                  d.frame -e"
