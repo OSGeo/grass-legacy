@@ -10,7 +10,7 @@
  * Author: Jianping Xu, Rutgers University
  * Date: 06/11/1994
  ******************************************************************************/
-#include <values.h>
+#include <limits.h>
 #include <math.h>
 
 int p[18] = {100, 100, 100, 90, 80, 70, 60, 50, 40,   /*adapt the "average"*/
@@ -19,5 +19,5 @@ int p[18] = {100, 100, 100, 90, 80, 70, 60, 50, 40,   /*adapt the "average"*/
 pick_ignite (i)
 int i;
 {
-	return ((100.0*rand()/MAXINT) <= p[i]);
+	return ((100.0*rand()/INT_MAX) <= p[i]);
 }
