@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h>
 #include "raster.h"
 #include "gis.h"
 
@@ -64,14 +65,17 @@ label (int T, int B, int L, int R, int backcolor, int textcolor, int dots_per_li
 				R_text(answer) ;
 				R_stabilize() ;
 
-				if (is_not_ok())
+				if(isatty(fileno(stdin)))
 				{
-					R_panel_restore(panel) ;
-				}
-				else
-				{
-					SCREEN_Y = b + dots_per_line ;
-					if (SCREEN_Y > B) SCREEN_Y = B ;
+					if (is_not_ok())
+					{
+						R_panel_restore(panel) ;
+					}
+					else
+					{
+						SCREEN_Y = b + dots_per_line ;
+						if (SCREEN_Y > B) SCREEN_Y = B ;
+					}
 				}
 				break ;
 
