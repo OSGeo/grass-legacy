@@ -8,5 +8,5 @@ interface_build {
     {entry input  {Raster map:} 0 raster}
     {entry output  {Reclass map (new, optional):} 0 raster}
     {checkbox -s {SQL file input} "" -s}
-    {entry pql  {Name of SQL file:} 0 file}
+    {entry sql  {Name of SQL file:} 0 file}
 }

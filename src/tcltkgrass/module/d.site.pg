@@ -9,5 +9,5 @@ interface_build {
     {entry map  {Sites map (new, optional):} 0 sites}
     {entry plot  {Color,icon,size:} 0 ""}
     {checkbox -s {SQL file input} "" -s}
-    {entry pql  {Name of SQL file:} 0 file}
+    {entry sql  {Name of SQL file:} 0 file}
 }

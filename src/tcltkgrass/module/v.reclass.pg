@@ -10,5 +10,5 @@ interface_build {
     {entry type  {Type coverage:line,area,site} 0 ""}
     {checkbox -d {Dissolve boundaries} "" -d}
     {checkbox -s {SQL file input} "" -s}
-    {entry pql  {Name of SQL file:} 0 file}
+    {entry sql  {Name of SQL file:} 0 file}
 }
