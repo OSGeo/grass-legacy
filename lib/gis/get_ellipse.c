@@ -17,10 +17,9 @@ static struct table
 
 static int count = -1;
 
-static int same (const char *, const char *);
 /* static int get_a_e2 (char *, char *, double *,double *); */
 static int get_a_e2_f (const char*, const char *, double *, double *, double*);
-static char *ellipsoid_table_file(char *);
+void ellipsoid_table_file(char *);
 static int compare_table_names(const struct table *, const struct table *);
 static int read_ellipsoid_table(int );
 
@@ -131,7 +130,7 @@ G_get_ellipsoid_by_name (const char *name, double *a, double *e2)
 
     for (i = 0; i < count; i++)
     {
-	if (same(name, table[i].name))
+	if (G_strcasecmp(name, table[i].name))
 	{
 	    *a = table[i].a;
 	    *e2 = table[i].e2;
@@ -173,7 +172,7 @@ G_get_spheroid_by_name(const char *name, double *a, double *e2, double *f)
 
     for (i = 0; i < count; i++)
     {
-	if (same(name, table[i].name))
+	if (G_strcasecmp(name, table[i].name))
 	{
 	    *a = table[i].a;
 	    *e2 = table[i].e2;
@@ -189,16 +188,6 @@ G_ellipsoid_description(int n)
 {
     (void) read_ellipsoid_table(0);
     return n>=0 && n < count ? table[n].descr : NULL;
-}
-
-static int 
-same (const char *a, const char *b)
-{
-    while (*a && *b)
-	if (tolower(*a++) != tolower(*b++))
-	    return 0;
-    
-    return (*a == 0 && *b == 0);
 }
 
 static int 
@@ -243,11 +232,10 @@ get_a_e2_f (const char *s1, const char *s2, double *a, double *e2, double *f)
     return 0;
 }
 
-static char *
-ellipsoid_table_file(char *file)
+void ellipsoid_table_file(char *file)
 {
-    sprintf (file, "%s/etc/ellipse.table", G_gisbase());
-    return file;
+   sprintf (file, "%s/etc/ellipse.table", G_gisbase());
+   return;
 }
 
 static int 
@@ -275,6 +263,7 @@ read_ellipsoid_table(int fatal)
 
     (void) ellipsoid_table_file (file);
     fd = fopen (file, "r");
+
     if (fd == NULL)
     {
 	perror (file);
@@ -291,7 +280,7 @@ read_ellipsoid_table(int fatal)
 	if (*buf == 0 || *buf == '#')
 	    continue;
 
-	if (sscanf (buf, "%s  \"%32[^\"]\" %s %s", name, descr, buf1, buf2) != 4)
+	if (sscanf (buf, "%s  \"%99[^\"]\" %s %s", name, descr, buf1, buf2) != 4)
 	{
 	    err++;
 	    sprintf (buf, " %d", line);
