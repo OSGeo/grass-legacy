@@ -921,7 +921,7 @@ dnl AC_CHECK_TOOL(AR, ar)
 # see: http://fink.sourceforge.net/doc/porting/shared.php
 # NOTE: Static linking is not supported an Mac OS X: 
 #         http://developer.apple.com/qa/qa2001/qa1118.html
-	    SHLIB_CFLAGS=""
+	    SHLIB_CFLAGS="-fno-common"
 	    SHLIB_LD="-dynamiclib -flat_namespace -undefined suppress -fno-common \${LDFLAGS}"
 	
 	    GRASS_SHLIB_LD_EXTRAS=""
