@@ -783,3 +783,24 @@ int Ndelete_list_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter
     return (TCL_OK);
 
 }
+
+
+/**************************************************************/
+int Ndraw_fringe_cmd(Nv_data * data, Tcl_Interp * interp, /* Current interpreter. */
+                     int argc,   /* Number of arguments. */
+                     char **argv /* Argument strings. */
+                     )
+{
+        int id;
+        int flags[4];
+
+        id = (int) atoi(argv[1]);
+        flags[0] = (int) atoi(argv[2]);
+        flags[1] = (int) atoi(argv[3]);
+        flags[2] = (int) atoi(argv[4]);
+        flags[3] = (int) atoi(argv[5]);
+
+        GS_draw_fringe(id, flags);
+
+        return (TCL_OK);
+}
