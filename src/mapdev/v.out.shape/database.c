@@ -43,24 +43,6 @@ int load_dbf_from_fieldD( DBFHandle hDBF, fieldDescriptor *hFD, const int nf ) {
 
   nrec = hFD[0].nRec;
 
-  /* Loop through fields and determine the size of the string fields if any */
-
-  for( i = 0; i < nf; ++i ) {
-
-    int maxlen = 0, tmplen;
-    
-    /* Check field type, continue if not string */
-    if( hFD[i].fldType != FTString ) continue;
-
-    /* Run through records and find maximum string length */
-    for( j = 0; j < nrec; ++j ) {
-      tmplen = strlen( hFD[i].fldRecs[j].stringField );
-      if( tmplen > maxlen )
-	maxlen = tmplen;
-    }
-    maxlen = 2 * ( (maxlen / 2) + 1 );
-    hFD[i].fldSize = maxlen;
-  }
 
   /* Loop through all the records and write out the fields */
 
