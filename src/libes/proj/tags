@@ -1,0 +1,65 @@
+DV	PJ_robin.c	/^#define DV(C,z) (C.c1 + z * (C.c2 + C.c2 + z * 3. /
+ENTRY	PJ_aea.c	/^ENTRY(pj_aea) {$/
+FORWARD	projects.h	/^#define FORWARD(name) static XY name(LP lp, PJ *P)/
+INVERSE	PJ_aea.c	/^INVERSE(e_inverse) \/* ellipsoid & spheroid *\/;$/
+Mproj	proj.c	/^main(int argc, char **argv) {$/
+TSFN0	PJ_omerc.c	/^#define TSFN0(x)	tan(.5 * (HALFPI - (x)))$/
+V	PJ_robin.c	/^#define V(C,z) (C.c0 + z * (C.c1 + z * (C.c2 + z */
+aacos	PJ_tpeqd.c	/^	z1 = aacos(P->sp1 * sp + P->cp1 * cp * cos(dl1 = /
+aasin	PJ_lsat.c	/^	    lp.phi = aasin(spp \/ sqrt(P->one_es * P->one_/
+addarg	pj_init.c	/^addarg(int type, char *n, char *v) {$/
+adjlon	adjlon.c	/^adjlon (double lon) {$/
+asin	PJ_bipc.c	/^	lp.phi = asin(s * cos(z) + c * sin(z) * cos(Az));/
+asqrt	aasincos.c	/^asqrt(double v) { return ((v <= 0) / 0. : sqrt(v))/
+atan	PJ_eisen.c	/^	xy.y = FACT * ( -2. * atan(t) + c * t * (v + 1.\/v/
+atan2	PJ_bonne.c	/^		lp.lam = rh * atan2(xy.x, xy.y) \/ cos(lp.phi);$/
+bchgen	bchgen.c	/^bchgen(UV a, UV b, int nu, int nv, UV **f, UV(*fun/
+cos	PJ_bipc.c	/^		r \/= cos(al + (tag / t : -t));$/
+dmstor	dmstor.c	/^dmstor(const char *is, char **rs) {$/
+ell_set	pj_init.c	/^ell_set(PJ *P) {$/
+emess	emess.c	/^emess(int code, char *fmt, ...) {$/
+exp	PJ_lsat.c	/^	fac = exp(sqrt(1. + s * s \/ P->xj \/ P->xj) * (xy./
+fabs	PJ_aea.c	/^	secant = fabs(P->phi1 - P->phi2) >= EPS10;$/
+file_opt	proj.c	/^file_opt(char *name) {$/
+for	PJ_bipc.c	/^	for (i = NITER; i ; --i) {$/
+hypot	PJ_aeqd.c	/^	if ((c = (rh = hypot(xy.x, xy.y))) > PI) I_ERROR;/
+if	PJ_aea.c	/^	if (P->rho = hypot(xy.x, xy.y = P->rho0 - xy.y)) /
+int_proj	proj.c	/^int_proj(data) UV data; {$/
+lc	PJ_chamb.c	/^lc(double b,double c,double a) {$/
+log	PJ_eisen.c	/^	xy.x = FACT * ( -2. * log(v) + c * (v - 1.\/v));$/
+malloc	PJ_aeqd.c	/^		P = (PJ *)malloc(sizeof(PJ));$/
+phi1_	PJ_aea.c	/^phi1_(double qs, double Te, double Tone_es) {$/
+pj_authlat	pj_auth.c	/^pj_authlat(double beta, double *APA) {$/
+pj_authset	pj_auth.c	/^pj_authset(double es) {$/
+pj_deriv	pj_deriv.c	/^pj_deriv(LP lp, double h, PJ *P) {$/
+pj_enfn	PJ_eqdc.c	/^	if (!(P->en = pj_enfn(P->es)))$/
+pj_factors	pj_factors.c	/^pj_factors(LP lp, PJ *P) {$/
+pj_free	pj_init.c	/^pj_free(PJ *P) {$/
+pj_fwd	pj_fwd.c	/^pj_fwd(LP lp, PJ *P) {$/
+pj_init	pj_init.c	/^pj_init(int argc, char **argv) {$/
+pj_inv	pj_inv.c	/^pj_inv(XY xy, PJ *P) {$/
+pj_inv_mlfn	pj_mlfn.c	/^pj_inv_mlfn(double arg, double es, double *en) {$/
+pj_mlfn	PJ_tmerc.c	/^	xy.y = P->ks0 * (pj_mlfn(lp.phi, sinphi, cosphi, /
+pj_msfn	pj_msfn.c	/^pj_msfn(double sinphi, double cosphi, double es) {/
+pj_ninvrs	pj_ninvrs.c	/^pj_ninvrs(XY xy, LP lp, PJ *P) {$/
+pj_param	pj_init.c	/^pj_param(opt, def) char *opt, *def; {$/
+pj_phi2	pj_phi2.c	/^pj_phi2(double ts, double e) {$/
+pj_pr_list	pj_init.c	/^pj_pr_list(PJ *P) {$/
+pj_qsfn	pj_qsfn.c	/^pj_qsfn(double sinphi, double e, double one_es) {$/
+pj_tsfn	pj_tsfn.c	/^pj_tsfn(double phi, double sinphi, double e) {$/
+pow	PJ_bipc.c	/^	al = (t + pow(al, n)) \/ T;$/
+process	proj.c	/^process(FILE *fid) {$/
+put_coeff	gen_cheby.c	/^put_coeff(double res, char *fmt, UV **F, int NU, i/
+rtodms	rtodms.c	/^rtodms(char *s, double r, int pos, int neg) {$/
+seraz0	PJ_lsat.c	/^seraz0(double lam, double mult, PJ *P) {$/
+set_rtodms	rtodms.c	/^set_rtodms(int fract, int con_w) {$/
+setup	PJ_tmerc.c	/^setup(PJ *P) { \/* general initialization *\/$/
+sin	PJ_aea.c	/^		P->e, P->one_es) : P->n2 * sin(lp.phi))) < 0.) F/
+sqrt	PJ_collg.c	/^		lp.lam = xy.x \/ (FXC * sqrt(lp.lam));$/
+ssfn_	PJ_stere.c	/^ssfn_(double phit, double sinphi, double eccen) {$/
+strerror	emess.h	/^#define strerror(n) (sys_errlist[n])$/
+switch	PJ_aeqd.c	/^	switch (P->mode) {$/
+tan	PJ_bipc.c	/^	lp.lam = atan2(sin(Az), c \/ tan(z) - s * cos(Az))/
+theta	PJ_eck4.c	/^theta(double ph) {$/
+vect	PJ_chamb.c	/^vect(double dphi, double c1, double s1, double c2,/
+while	PJ_lsat.c	/^	} while (fabs(lamdp - sav) >= TOL && --nn);$/
