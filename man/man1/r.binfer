@@ -150,6 +150,7 @@ to infer either event.
    The conditional probability table is very important, try to
    be sure of its accuracy.
 .bp
+.nf
 #
 # Filename:  avalanche.binfer
 #
@@ -371,6 +372,7 @@ bugs:
 %
 # End of inferred section.
 # End of bugs.binfer script.
+.fi
 
 .SH SEE ALSO
 \fRGRASS Tutorial:  r.binfer\fR (forthcoming).
