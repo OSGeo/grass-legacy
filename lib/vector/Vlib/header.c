@@ -276,6 +276,7 @@ Vect_get_zone (struct Map_info *Map)
 int
 Vect_set_thresh (struct Map_info *Map, double thresh )
 {
+    G_debug ( 1, "Vect_set_thresh(): thresh = %f", thresh );
     Map->head.digit_thresh = thresh;
     return (0);
 }
@@ -283,6 +284,7 @@ Vect_set_thresh (struct Map_info *Map, double thresh )
 double
 Vect_get_thresh (struct Map_info *Map)
 {
+    G_debug ( 1, "Vect_get_thresh(): thresh = %f", Map->head.digit_thresh );
     return (Map->head.digit_thresh);
 }
 

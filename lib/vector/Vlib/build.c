@@ -17,6 +17,7 @@
 *   	    	for details.
 *
 *****************************************************************************/
+#include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include "gis.h"
@@ -56,7 +57,6 @@ int prnmsg ( char *msg, ...) {
 */
 int
 Vect_build ( struct Map_info *Map, FILE *msgout ) {
-    int    i;
     struct Plus_head *plus ;
     int    ret;
     
@@ -65,6 +65,7 @@ Vect_build ( struct Map_info *Map, FILE *msgout ) {
     plus = &(Map->plus);
     prnmsg ("Building topology ...\n") ;
     dig_init_plus ( plus );
+    plus->with_z = Map->head.with_z;
     
     ret = ( (*Build_array[Map->format]) (Map, msgout) );
 
@@ -176,7 +177,7 @@ Vect_topo_dump ( struct Plus_head *plus, FILE *out ) {
     for (i = 1; i <= plus->n_lines; i++) {
 	if ( plus->Line[i] == NULL ) { continue; }
 	Line = plus->Line[i];
-	fprintf (out, "line = %d, type = %d, offset = %d n1 = %d, n2 = %d, "
+	fprintf (out, "line = %d, type = %d, offset = %ld n1 = %d, n2 = %d, "
 	              "left/area = %d, right = %d\n",
 		       i, Line->type, Line->offset, Line->N1, Line->N2,
 	               Line->left, Line->right); 
