@@ -18,6 +18,17 @@
 #
 #############################################################################
 
+if [catch {package require msgcat}] {
+	proc G_msg {message} {
+		return $message
+	}
+} else {
+::msgcat::mcload [file join [file dirname [info script]] msgs]
+	proc G_msg {message} {
+		return [::msgcat::mc $message]
+	}
+}
+
 proc searchGISRC { filename } {
  
   global database
@@ -274,9 +285,9 @@ proc gisSetWindow {} {
     pack .frame0.intro.msg -side top
 
     .frame0.intro.msg tag configure all -justify center
-    .frame0.intro.msg insert end "Welcome to GRASS GIS Version 5.0\n\n"
-    .frame0.intro.msg insert end "Please select location and mapset\n"
-    .frame0.intro.msg insert end "or define a new location\n"
+    .frame0.intro.msg insert end [G_msg "Welcome to GRASS GIS Version5.0\n\n"]
+    .frame0.intro.msg insert end [G_msg "Please select location and mapset\n"]
+    .frame0.intro.msg insert end [G_msg "or define a new location\n"]
     .frame0.intro.msg tag add all 1.0 end
     .frame0.intro.msg configure -state disabled
 
@@ -298,7 +309,7 @@ proc gisSetWindow {} {
 
     label .frame0.frame1.left.label \
     	-anchor {n} \
-    	-text "Database : "
+    	-text [G_msg "Database : "]
 
     entry .frame0.frame1.mid.entry \
     	-relief {sunken} \
@@ -332,7 +343,7 @@ proc gisSetWindow {} {
 
     label .frame0.frame2.label \
     	-anchor {w} \
-    	-text "Location" 
+    	-text [G_msg "Location"] 
 
     listbox .frame0.frame2.listbox \
     	-relief {raised} \
@@ -364,7 +375,7 @@ proc gisSetWindow {} {
 
     label .frame0.frame3.label \
     	-anchor {w} \
-    	-text "Mapset" 
+    	-text [G_msg "Mapset"] 
 
     listbox .frame0.frame3.listbox \
     	-relief {raised} \
@@ -394,7 +405,7 @@ proc gisSetWindow {} {
     	-borderwidth {2}
 
     button .frame0.frame4.ok \
-     	-text "Use Selection" \
+     	-text [G_msg "Use Selection"] \
     	-relief raised \
      	-padx 10 \
      	-command { 
@@ -411,7 +422,7 @@ proc gisSetWindow {} {
         }
 
     button .frame0.frame4.newLoc \
-    	-text "Create New Location" \
+    	-text [G_msg "Create New Location"] \
     	-relief raised \
     	-padx 10 \
     	-command {
@@ -428,7 +439,7 @@ proc gisSetWindow {} {
       	}
 
     button .frame0.frame4.cancel \
-    	-text Cancel \
+    	-text [G_msg "Cancel"] \
     	-relief raised \
     	-padx 10 \
     	-command { 
