@@ -1,20 +1,12 @@
-Sun. 12th Mar. 2000  DD Gray <ddgray@armadce.demon.co.uk>
+ 11th May 2000
 
- o Handle Point data. How should GRASS handle this? Would
-   it be better to dump to a sites list?
- o Still to find ways of managing MULTIPATCH, 3D, measure
-   values.
- o What to do about NULL records in shapefile. Do we need
-   to do anything?
- o Import of arcs and nodes still not properly handled.
+ o Still to fix mapset/projection handling.
+ o Create option to build restore and back-up files
+ o s.in.shape still to be finished (in progress)
+ o Add site list and/or postgres support for database
+ o Possibly add option to split large files on import
+   to facilitate the process.
 
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	 	
+	DD Gray  <ddgray@armadce.demon.co.uk>
 
-[PARTIALLY FIXED: 000312] o Figure out correct way of 
-   handling polygons. 
-
- o Consider producing a category file with all the attributes. 
-
-[FIXED: 000312] o Try and get the v.to.rast process to work. 
-
- o Implement a v.out.shape
+ o +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
