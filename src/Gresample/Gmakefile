@@ -1,0 +1,6 @@
+LIST = main.o percent.o usage.o
+
+$(BIN)/Gresample: $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB)
+
+$(GISLIB): #
