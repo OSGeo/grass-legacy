@@ -29,11 +29,12 @@ the <a href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS</a> version
 <li> r.flowmd added (Jaro Hofierka)
 <li> r.in.dted bugfix to read NIMA DTED level 0 properly (Roberto Currlin)
 <li> r.in.png added (Alex Shevlakov)
+<li> r.in.ppm memory bugfix (Alex Shevlakov)
 <li> r.out.png added (Alex Shevlakov)
 <li> s.in.ascii bugfix on string import (Roger Bivand)
 <li> v.distance added from 4.x (Janne Soimasuo)
 <li> v.in.dxf3d added from 4.x (Evaristo Quiroga)
-<li> v.in.shape/v.in.shape.pg updated rewritten (David D Gray)
+<li> v.in.shape updated/rewritten (David D Gray)
 <li> v.out.idrisi (Philip Verhagen)
 <li> v.out.shape added (derived from v.out.arc, gen2shp by Jan Wagner and
                     shapelib by Frank Warmerdam, modified by Markus Neteler)
@@ -67,8 +68,10 @@ s.in.ascii now), fixed i.gensigset/i.smap entry (Markus Neteler)
 <b>G3D-support</b>
 <menu>
 <li>grid3D modules added: g3.region, r3.in.ascii, r3.mask, r3.out.ascii,
-    r3.in.grid3, r3.mkdspf, r3.showdspf, r3.info, r3.null (Helena Mitasova,
+    r3.in.grid3, r3.mkdspf, r3.showdspf.sgi, r3.info, r3.null (Roman
+    Waupotitsch, Michael Shapiro, Helena Mitasova,
    Bill Brown, Lubos Mitas, Jaro Hofierka)
+<li>r3.showdspf.openGL port (Steve Hall, LMCO)
 </menu>
 
 <b>SDTS-support</b>
@@ -83,6 +86,12 @@ s.in.ascii now), fixed i.gensigset/i.smap entry (Markus Neteler)
      package now: src.garden/grass.java/ (Alexandre Sorokine)
 </menu>
 
+<b>Portability</b>
+<menu>
+<li> Improved for SGI/Irix (Andreas Lange, Eric Mitchell, Rado Bonk and
+     others)
+<li> Improved to compile on Windows/Cygnus (John Huddleston)
+</menu>
 
 <p>
 <hr>
