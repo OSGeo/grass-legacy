@@ -617,8 +617,7 @@ int main( int   argc, char *argv[])
     }
 
     if( lab_field >= 0 ) {
-      if (G_write_vector_cats(name, &cats) != 0)
-	G_fatal_error("Error writing dig_cats file");
+      G_write_vector_cats(name, &cats) != 0;
     }
 
 
