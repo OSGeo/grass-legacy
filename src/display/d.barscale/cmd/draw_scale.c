@@ -126,25 +126,36 @@ int draw_scale(char *save, int toptext)
 	R_cont_rel ( 2, -2) ;
 	R_cont_rel ( 2,  2) ;
 	R_cont_rel (-2, -0) ;
-	R_move_abs (x_pos + 25, y_pos + 17) ;
-	R_cont_rel ((int) line_len, 0) ;
-	R_cont_rel (0, -4) ;
-	R_cont_rel ((int) line_len * -1, 0) ;
-	R_cont_rel (0, 4) ;
-	xarr[0] = 0; yarr[0] = 0;
-	xarr[1] = (int) seg_len; yarr[1] = 0;
-	xarr[2] = 0; yarr[2] = -4;
-	xarr[3] = (int) (seg_len * -1); yarr[3] = 0;
-	xarr[4] = 0; yarr[4] = 4;
-	for (i = 1; i <= scales[incr].seg; i+=2)
-	{
-		R_polygon_rel(xarr, yarr ,4);
-		R_move_rel((int) (seg_len * 2 + 1), 0);
+
+	if(do_bar) {
+		R_move_abs (x_pos + 25, y_pos + 17) ;
+		R_cont_rel ((int) line_len, 0) ;
+		R_cont_rel (0, -4) ;
+		R_cont_rel ((int) line_len * -1, 0) ;
+		R_cont_rel (0, 4) ;
+		xarr[0] = 0; yarr[0] = 0;
+		xarr[1] = (int) seg_len; yarr[1] = 0;
+		xarr[2] = 0; yarr[2] = -4;
+		xarr[3] = (int) (seg_len * -1); yarr[3] = 0;
+		xarr[4] = 0; yarr[4] = 4;
+		for (i = 1; i <= scales[incr].seg; i+=2)
+		{
+			R_polygon_rel(xarr, yarr ,4);
+			R_move_rel((int) (seg_len * 2 + 1), 0);
+		}
+	}
+	else {  /* draw simple line scale */
+		R_move_abs (x_pos + 25, y_pos + 5) ;
+		R_cont_abs (x_pos + 25, y_pos + 25) ;
+		R_move_abs (x_pos + 25, y_pos + 15) ;
+		R_cont_abs (x_pos + 25 + line_len, y_pos + 15) ;
+		R_move_abs (x_pos + 25 + line_len, y_pos + 5) ;
+		R_cont_abs (x_pos + 25 + line_len, y_pos + 25) ;
 	}
 
 	if(toptext)
 	{
-		R_move_abs (x_pos + (int) line_len/2., y_pos) ;
+		R_move_abs(x_pos+25 + (int)(line_len/2. - strlen(scales[incr].name)*size*0.81/2), y_pos);
 		R_text(scales[incr].name) ;
 	}
 	else
