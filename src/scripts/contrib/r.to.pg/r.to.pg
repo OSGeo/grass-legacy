@@ -104,6 +104,6 @@ echo "Created table $CELLTABLE with column $FIELDNAME"
 
 #check number of imported values:
 #not working yet (some shell problem with asterix)
-echo "Number of imported cell values (= rows in $CELLTABLE):
+echo "Number of imported cell values (= rows in $CELLTABLE):"
 SQL_COMMAND="select count(*) from $CELLTABLE;"
 echo $SQL_COMMAND | psql -q -d $DB_DATABASE
