@@ -1,5 +1,7 @@
+PGM=i.grey.scale
 LIBES=$(IMAGERYLIB) $(GISLIB)
-$(BIN_MAIN_CMD)/i.grey.scale: main.o grey_scale.o $(LIBES)
-	$(CC) $(LDFLAGS) main.o grey_scale.o $(LIBES) $(MATHLIB) $(XDRLIB) -o $@
+
+$(BIN_MAIN_CMD)/$(PGM): main.o grey_scale.o $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ main.o grey_scale.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

@@ -1,5 +1,4 @@
 PROGRAM      = photo.2image
-#HOME         = ../bin
 HOME        = $(ETC)/imagery
 
 EXTRA_CFLAGS = -I../libes

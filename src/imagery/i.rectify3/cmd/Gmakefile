@@ -2,16 +2,11 @@
 #### 	i.rectify3 (cmd) 
 ####
 
-PGR  	= i.rectify3
-
-HOME 	= $(BIN_MAIN_CMD)
+PGM  	= i.rectify3
 
 ####    required - suplimental imagery libary
 IMAGERY_SUBINC = $(SRC)/libes/image3
 IMAGERYLIB_SUP = $(SRC)/libes/image3/libimage_sup.a
-
-all:	$(HOME)/$(PGR)
-
 
 ####	object files
 LIST = main.o\
@@ -39,7 +34,7 @@ $(LIST): global.h rowcol.h parse.h
 LIBES =  $(IMAGERYLIB) $(IMAGERYLIB_SUP) $(D_LIB)\
 	 $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) \
 	 $(GPROJLIB) $(LIBTRANS) $(COORCNVLIB) \
-	 $(GISLIB) $(VASK) $(XDRLIB)
+	 $(GISLIB) $(VASK)
 
 
 ####	library dependencies
@@ -53,6 +48,6 @@ EXTRA_CFLAGS = -I$(IMAGERY_SUBINC)
 
 
 ####	the rules
-$(HOME)/$(PGR): $(LIST) $(LIBES) 
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB)
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(LIBES) 
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 

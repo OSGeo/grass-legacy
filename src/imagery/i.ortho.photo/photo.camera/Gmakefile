@@ -1,16 +1,15 @@
-#
 PROGRAM	     = photo.camera
-#HOME         = ../bin
 HOME        = $(ETC)/imagery
 
 IMAGERYLIB2  = ../libes/libortho.a
 EXTRA_CFLAGS = -I../libes
 
 LIST = main.o mod_cam_info.o
-   
-$(HOME)/$(PROGRAM): $(LIST) $(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
+LIBES=$(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(VASK)
 
-$(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(VASKLIB): #
+$(HOME)/$(PROGRAM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(IMAGERYLIB2) $(LIBES): #
 
 main.o:	camera.h

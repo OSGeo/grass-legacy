@@ -1,5 +1,4 @@
 PROGRAM	     = photo.2target
-#HOME         = ../bin
 HOME        = $(ETC)/imagery
 
 

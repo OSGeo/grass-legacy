@@ -1,3 +1,4 @@
+PGM=i.colors
 LIST = main.o \
 	bars.o\
 	colors.o\
@@ -9,12 +10,12 @@ LIST = main.o \
 	mouse.o\
 	title.o
 
-LIBES = $(IMAGERYLIB) $(GISLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB)
+LIBES = $(IMAGERYLIB) $(GISLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(VASK)
 
-$(BIN_MAIN_INTER)/i.colors: $(LIST) $(LIBES) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VASK) $(MATHLIB) $(XDRLIB)
+$(BIN_MAIN_INTER)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): globals.h defs.h
 
-$(LIBES) $(VASKLIB): #
+$(LIBES): #
 

@@ -1,12 +1,11 @@
 PGM=i.gensigset
-HOME=$(BIN_ALPHA_CMD)
 LIST = main.o get_train.o lookup_class.o opencell.o openfiles.o parse.o \
 	read_data.o invert.o read_train.o closefiles.o labels.o \
 	write_sig.o subcluster.o
 
 LIBES = $(IMAGERYLIB) $(GISLIB)
 
-$(HOME)/$(PGM): $(LIST) $(LIBES)
+$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

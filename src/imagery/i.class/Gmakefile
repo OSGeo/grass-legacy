@@ -1,6 +1,4 @@
-#COMPILE_FLAGS= -g
-#LDFLAGS= -g
-
+PGM=i.class
 LIST=main.o\
 	add_point.o\
 	analyze_sig.o\
@@ -45,22 +43,9 @@ LIST=main.o\
 LIBES = $(IMAGERYLIB) $(GISLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(VASK)
 
 
-$(BIN_MAIN_INTER)/i.class: $(LIST) $(LIBES)
+$(BIN_MAIN_INTER)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): globals.h defs.h
 
-cp_man: i.class.man
-	cp i.class.man ../../man.help/man1/i.class
-
-cp_help: i.class.help
-	cp i.class.help ../../man.help/help/i.class
-
-man_help: cp_man cp_help
-	(cd ../../man.help; Nroff)
-	$(GMAKE) ../../man.help
-
 $(LIBES): #
-
-
-

@@ -1,6 +1,7 @@
+PGM=i.find
 LIST = main.o
 
-$(ETC)/i.find: $(LIST) $(GISLIB)
+$(ETC)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #
