@@ -1,0 +1,4 @@
+Mmain	main.c	/^main(argc,argv)$/
+delete	delete.c	/^delete(end_cell, row, col)$/
+insert	insert.c	/^struct cost *insert(start_cell, end_cell, min_cost/
+stash_away	stash.c	/^stash_away(pos,option)$/
