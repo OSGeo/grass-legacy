@@ -1,0 +1,8 @@
+ERASE - command
+
+When using a color monitor to follow COMBINE analyses, ERASE will
+cause the color monitor to clear.
+
+syntax: ERASE
+
+aliases: ERASE erase
