@@ -20,7 +20,7 @@
 
 int main(int argc, char **argv)
 {
-  struct Flag *once, *terse, *txt;
+  struct Flag *once, *terse, *txt, *topo_flag;
   struct Option *opt1;
   struct GModule *module;
   char *mapset, *openvect();
@@ -65,15 +65,17 @@ int main(int argc, char **argv)
   txt->key = 'x';
   txt->description = "Print informations as plain text to terminal window";
   
+  topo_flag = G_define_flag();
+  topo_flag->key = 'd';
+  topo_flag->description = "Print topological informations (debugging).";
+  
   module = G_define_module();
   module->description = 
     "Allows the user to interactively query a vector map layer "
     "at user-selected locations within the current geographic region.";
 
   if(!vect)
-    {
-    	  opt1->required = YES;
-    }
+      opt1->required = YES;
     	  	      
   if((argc > 1 || !vect) && G_parser(argc,argv))
     exit(-1);
@@ -128,7 +130,7 @@ int main(int argc, char **argv)
     G_fatal_error ("No graphics device selected");
   D_setup(0);
 
-  what(once->answer, txt->answer, terse->answer, width, mwidth); 
+  what(once->answer, txt->answer, terse->answer, width, mwidth, topo_flag->answer); 
 
   for(i=0; i<nvects; i++)
       Vect_close (&Map[i]);
