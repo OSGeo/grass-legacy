@@ -1,7 +1,7 @@
 Beep	curses.c	/^Beep()$/
 Begin_curses	curses.c	/^Begin_curses()$/
 Compute_equation	equ.c	/^Compute_equation()$/
-Configure_view	view.c	/^Configure_view (view, name, mapset, cellhd, ns_res/
+Configure_view	view.c	/^Configure_view (view, name, mapset, ns_res, ew_res/
 Curses_allow_interrupts	curses.c	/^Curses_allow_interrupts (true)$/
 Curses_clear_window	curses.c	/^Curses_clear_window(window)$/
 Curses_getch	curses.c	/^Curses_getch(with_echo)$/
@@ -13,7 +13,7 @@ Downarrow	graphics.c	/^Downarrow (top, bottom, left, right)$/
 End_curses	curses.c	/^End_curses()$/
 Erase_view	view.c	/^Erase_view (view)$/
 FMT0	analyze.c	/^#define FMT0(buf,n) \\$/
-FMT1	analyze.c	/^#define FMT1(buf,yres,xres,gnd) \\$/
+FMT1	analyze.c	/^#define FMT1(buf,xres,yres,gnd) \\$/
 FMT2	analyze.c	/^#define FMT2(buf,e1,n1,e2,n2) \\$/
 Get_mouse_xy	mouse.c	/^Get_mouse_xy(x,y)$/
 Get_new_tty	tty.c	/^Get_new_tty()$/
@@ -23,7 +23,7 @@ INIT	globals.h	/^#  define INIT(x)$/
 In_view	view.c	/^In_view (view, x, y)$/
 Init_graphics	graphics.c	/^Init_graphics()$/
 Input_box	input.c	/^Input_box (objects,ax,ay)$/
-Input_keyboard	input.c	/^Input_keyboard (keyboard)$/
+Input_other	input.c	/^Input_other (function, type)$/
 Input_pointer	input.c	/^Input_pointer (objects)$/
 MENU	defs.h	/^#define MENU(label,handler,status) \\$/
 Menu_msg	input.c	/^Menu_msg(msg)$/
@@ -36,16 +36,17 @@ OTHER	defs.h	/^#define OTHER(handler,status) \\$/
 Old_tty	tty.c	/^Old_tty()$/
 Outline_box	graphics.c	/^Outline_box (top, bottom, left, right)$/
 Outline_cellhd	cellhd.c	/^Outline_cellhd (view, cellhd)$/
-Popup	popup.c	/^Popup (type, file, xname, xmapset, position)$/
 Resume_curses	curses.c	/^Resume_curses()$/
 Set_mouse_xy	mouse.c	/^Set_mouse_xy(x,y)$/
 Start_mouse_in_menu	input.c	/^Start_mouse_in_menu()$/
 Suspend_curses	curses.c	/^Suspend_curses()$/
-Text	graphics.c	/^Text (text, top, bottom, left, right, border)$/
+Text	graphics.c	/^Text (text, top, bottom, left, right, edge)$/
 Text_width	graphics.c	/^Text_width (text)$/
 Uparrow	graphics.c	/^Uparrow (top, bottom, left, right)$/
 _keyboard	mark.c	/^_keyboard()$/
 analyze	analyze.c	/^analyze ()$/
+ask_gis_files	ask.c	/^ask_gis_files (type, file, xname, xmapset, positio/
+ask_magnification	ask_mag.c	/^ask_magnification (magnification)$/
 askfile	analyze.c	/^askfile()$/
 call	call.c	/^call (function, msg)$/
 cancel	cell.c	/^cancel()$/
@@ -56,18 +57,21 @@ cmp	group.c	/^cmp(a,b)$/
 col_to_easting	conv.c	/^col_to_easting(cellhd,col,location)$/
 col_to_view	conv.c	/^col_to_view(view,col)$/
 compute_transformation	analyze.c	/^compute_transformation()$/
-debug	analyze.c	/^debug (msg) char *msg;$/
+debug	debug.c	/^debug (msg) char *msg;$/
 digitizer	mark.c	/^digitizer()$/
 digitizer_point	digit.c	/^digitizer_point (east, north)$/
-display	points.c	/^display (view, in_color, east, north, status, coun/
+display_one_point	points.c	/^display_one_point (view, east, north)$/
 display_points	points.c	/^display_points(in_color)$/
+display_points_in_view	points.c	/^display_points_in_view (view, in_color, east, nort/
 display_title	title.c	/^display_title (view)$/
 do_report	analyze.c	/^do_report (fd)$/
-dobox	popup.c	/^dobox (box, text, color, top, left, right, centere/
+dobox	ask.c	/^dobox (box, text, color, top, left, right, centere/
+done	analyze.c	/^done()$/
 dont_stop	driver.c	/^static dont_stop()$/
 dot	dot.c	/^dot(x,y)$/
 dotext	analyze.c	/^dotext (text, top, bottom, left, right, centered, /
 downarrow	analyze.c	/^downarrow (box, color)$/
+draw_mag	ask_mag.c	/^draw_mag()$/
 draw_objects	input.c	/^draw_objects (objects)$/
 draw_option_boxes	input.c	/^draw_option_boxes (objects)$/
 drawcell	drawcell.c	/^drawcell(view)$/
@@ -76,10 +80,13 @@ easting_to_col	conv.c	/^easting_to_col(cellhd,east)$/
 error	main.c	/^error (msg, fatal)$/
 find	input.c	/^find (objects, x, y)$/
 find_target_files	find.c	/^find_target_files()$/
+for	curses.c	/^	for (i = x; i < window->right; i++)$/
 get	tty.c	/^#   define get(x) ioctl (1, TCGETA, x)$/
 get_point2	mark.c	/^get_point2 (east, north)$/
 get_target	target.c	/^get_target ()$/
+if	curses.c	/^    if (line <= 0 || line >= window->bottom-window/
 inbox	analyze.c	/^inbox (box,x,y)$/
+incr	ask_mag.c	/^incr(x,y)$/
 keyboard	mark.c	/^keyboard()$/
 magnification	view.c	/^magnification (view)$/
 make_window	curses.c	/^make_window (top, bottom, left, right)$/
@@ -107,9 +114,10 @@ select_current_env	target.c	/^select_current_env()$/
 select_option	input.c	/^select_option (objects, obj)$/
 select_target_env	target.c	/^select_target_env()$/
 set	tty.c	/^#   define set(x) ioctl (1, TCSETA, x)$/
-set_mouse	analyze.c	/^set_mouse()$/
+set_colors	colors.c	/^set_colors (colors)$/
 setup	digit.c	/^setup()$/
 setup_digitizer	digit.c	/^setup_digitizer()$/
+show_point	analyze.c	/^show_point (n, true_color)$/
 stop	driver.c	/^static stop()$/
 to_file	analyze.c	/^to_file()$/
 to_printer	analyze.c	/^to_printer()$/
@@ -124,7 +132,7 @@ where_21	where.c	/^where_21 (view, x, y)$/
 where_am_i	where.c	/^where_am_i (view, x, y, w1, E, N, w2)$/
 yes	digit.c	/^yes()$/
 zoom	zoom.c	/^zoom()$/
-zoom1	zoom_box.c	/^zoom1(x,y)	/* called by Input_pointer */$/
+zoom1	zoom_box.c	/^zoom1(x,y)	\/* called by Input_pointer *\/$/
 zoom2	zoom_box.c	/^zoom2 (x, y)$/
 zoom_box	zoom_box.c	/^zoom_box()$/
 zoom_point	zoom_pnt.c	/^zoom_point()$/
