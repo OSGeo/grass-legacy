@@ -1,0 +1,8 @@
+
+Running GRASS on SUN4 machines
+
+Run:       To get:                            Was called:
+ grass3.1   GRASS 3.1 as originally released   grass3
+ grass3.2   GRASS 3.2 (before change in color) grass and GRASS3.2
+ grass3.2+  Latest CERL version of GRASS3      GRASS4
+ grass4.0   GRASS 4.0 alpha test version       grass4.0 GRASS3
