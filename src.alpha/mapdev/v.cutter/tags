@@ -1,0 +1,110 @@
+Array_alloc	array.c	/^Array_alloc (Array, num)$/
+Array_destroy	array.c	/^Array_destroy (Array)$/
+Array_new_struct	array.c	/^Array_new_struct (size)$/
+Array_set_chunk_size	array.c	/^Array_set_chunk_size (size)$/
+Cut__intersect_line_with_poly	point.c	/^Cut__intersect_line_with_poly (Points, y, I, poly)/
+Cut_find_poly_centroid	point.c	/^Cut_find_poly_centroid (points, cent_x, cent_y)	  /
+Cut_get_point_in_poly_t	point.c	/^Cut_get_point_in_poly_t (Poly, X, Y)$/
+Cut_point_in_islands	point.c	/^Cut_point_in_islands (Poly, cent_x, cent_y)	\/* DON/
+Mccw	ccw.c	/^main (argc, argv)$/
+Mcross	cross.c	/^main (argc, argv)$/
+Mline	line.c	/^main (argc, argv)$/
+Mmain	main.c	/^main (argc, argv)$/
+Mxlines	xlines.c	/^main()$/
+R	table.c	/^  just determine if B crosses from L->R (OUT) or R/
+SAME_SIGNS	xlines.c	/^#define SAME_SIGNS( a, b )	\\$/
+TGL	point.c	/^#define TGL(x) ((x) = !(x))$/
+V2_read_line_poly_order	readline.c	/^V2_read_line_poly_order (Map, Points, line, poly)$/
+V__within	point.c	/^V__within (a, x, b)$/
+add_line_points_till_eol	vertex.c	/^add_line_points_till_eol (Vert, LPoints, Points, d/
+add_line_points_till_inter	vertex.c	/^add_line_points_till_inter (Vert, Vert2, LPoints, /
+add_point	vertex.c	/^add_point (P, LPoints, PPoints, area_too)	\/* ==ISL/
+add_points_till_eol	vertex.c	/^add_points_till_eol (Poly, Vert, LPoints, PPoints)/
+add_points_till_inter	vertex.c	/^add_points_till_inter (Poly, Vert, Vert2, LPoints,/
+alloc_intersections	alloc.c	/^alloc_intersections (ip, num)$/
+alloc_poly_t	alloc.c	/^alloc_poly_t (poly, n_polys, alloc_points)$/
+alloc_poly_t_lines	alloc.c	/^alloc_poly_t_lines (spoly, n_lines)$/
+area_bboxes_cross	bbox.c	/^area_bboxes_cross (Aarea, Barea)$/
+build_line_table	ltable.c	/^build_line_table (MapA, MapB)$/
+build_lines	lbuild.c	/^build_lines (Maps, MapC, Table)		\/* ==ISLE== *\/$/
+build_polys	build.c	/^build_polys (Maps, MapC, Table)		\/* ==ISLE== *\/$/
+build_table	table.c	/^build_table (MapA, MapB)$/
+bump_vert_to_next_line	poly.c	/^bump_vert_to_next_line (P, Vert)$/
+ccw	intersect.c	/^ccw (p0, p1, p2)$/
+comp_ipoints	point.c	/^comp_ipoints (i, j)	\/* DONE *\/$/
+compar	intersect.c	/^compar (a, b)$/
+cutter_init	init.c	/^cutter_init (Map)$/
+debugf	main.c	/^debugf (format, a, b, c, d, e, f, g, h, i, j, k, l/
+destroy_table	table.c	/^destroy_table (Table)$/
+dist_squared	build.c	/^dist_squared (x1, y1, x2, y2)$/
+do_colinear_intersection	table.c	/^do_colinear_intersection()$/
+do_vertex_intersection	table.c	/^do_vertex_intersection()$/
+draw_tribble	table.c	/^draw_tribble (T, colr)$/
+draw_vertex	build.c	/^draw_vertex (x, y, colr)$/
+dump_active_list	build.c	/^dump_active_list (active)$/
+dump_line	build.c	/^dump_line (Points)$/
+dump_nointersect	interior.c	/^dump_nointersect (Maps)$/
+dump_opoly	label.c	/^dump_opoly (Poly)$/
+dump_opoly0	label.c	/^dump_opoly0 (Poly)$/
+dump_poly	vertex.c	/^dump_poly (P)$/
+dump_table	dump.c	/^dump_table (table)$/
+dump_table_entry	dump.c	/^dump_table_entry (p)$/
+dump_vert	vertex.c	/^dump_vert (Vert)	\/* ==ISLE== *\/$/
+find_intersection	linecros.c	/^find_intersection (ax1,ay1,ax2,ay2,bx1,by1,bx2,by2/
+find_next_intersection	build.c	/^find_next_intersection (active, Vert, Vert2, ab_mo/
+find_next_line_intersection	lbuild.c	/^find_next_line_intersection (active, Vert, Vert2, /
+get_area_line_pos	area.c	/^get_area_line_pos (Map, poly, line)	\/* ==ISLE== *\//
+get_area_line_pos_subpoly	area.c	/^get_area_line_pos_subpoly (Map, poly, subpoly, lin/
+get_line_center	linecent.c	/^get_line_center (x, y, Points)$/
+get_next_area_line	area.c	/^get_next_area_line (Map, poly, line)	\/* ==ISLE== */
+get_prev_area_line	area.c	/^get_prev_area_line (Map, poly, line)	\/* ==ISLE== */
+if	build.c	/^  if (next_intersection)$/
+inter_clean	interior.c	/^inter_clean (ret)$/
+inter_compare	lsort.c	/^inter_compare (a, b)$/
+inter_to_line_vert	vertex.c	/^inter_to_line_vert (T, poly_code, Vert) 	\/*==LINE=/
+inter_to_poly_vert	vertex.c	/^inter_to_poly_vert (T, Poly, poly_code, Vert) \/* =/
+interior_lines	interline.c	/^interior_lines (Maps, Out, Table)		\/* ==ISLE== *\/$/
+interior_polys	interior.c	/^interior_polys (Maps, Out, Table)		\/* ==ISLE== *\/$/
+intersect	intersect.c	/^intersect (l1, l2)$/
+intersect_append_point	point.c	/^intersect_append_point (I, x, poly)	\/* DONE *\/$/
+intersect_line_table	ltable.c	/^intersect_line_table (MapA, MapB, APoints, BPoints/
+intersect_table	table.c	/^intersect_table (MapA, MapB, APoints, BPoints, ali/
+lessor	linecros.c	/^#define lessor(a,b) ((a) < (b) ? (a) : (b))$/
+line_bboxes_cross	bbox.c	/^line_bboxes_cross (Aline, Bline)$/
+lines_intersect	xlines.c	/^int lines_intersect( x1, y1,   \/* First line segme/
+load_active_line_list	lbuild.c	/^load_active_line_list (Table, active, line, code)$/
+load_active_list	build.c	/^load_active_list (Table, active, poly, code)	\/* ==/
+load_poly	poly.c	/^load_poly (Map, poly, P)$/
+new_poly_t	poly.c	/^new_poly_t ()$/
+next_vert	linepnts.c	/^next_vert (Map, Points, lnum, pnum, anum, dir)	   /
+node_to_poly_vert	vertex.c	/^node_to_poly_vert (Poly, Oldvert, Vert)	\/* ==ISLE=/
+open_files	parse.c	/^open_files (Args, Maps, Out)$/
+parse_args	parse.c	/^parse_args (argc, argv, Args)$/
+point_right_of_line	intersect.c	/^point_right_of_line (p0, p1, p2)$/
+point_to_right_of_segment	plane.c	/^point_to_right_of_segment (A, p)$/
+poly_next_vert	poly.c	/^poly_next_vert (poly, old, next)$/
+poly_prev_vert	poly.c	/^poly_prev_vert (poly, old, prev)$/
+poly_t_interior_load_islands	label.c	/^poly_t_interior_load_islands (OPoly, Polys)$/
+poly_t_load_base_points	label.c	/^poly_t_load_base_points (P, Points)$/
+poly_t_load_islands	label.c	/^poly_t_load_islands (OPoly, Polys)$/
+prev_vert	linepnts.c	/^prev_vert (Map, Points, lnum, pnum, anum, dir)$/
+ring_mod	mod.c	/^ring_mod (a, b)$/
+seg_bboxes_cross	tools.c	/^seg_bboxes_cross (A, B)$/
+seg_colinear	linepnts.c	/^seg_colinear (A1, A2, B1, B2)$/
+sort_intersections_on_line	lsort.c	/^sort_intersections_on_line (active, code)$/
+sort_intersections_on_poly	sort.c	/^sort_intersections_on_poly (active, P, code)$/
+sub_poly_line_start_pos	vertex.c	/^sub_poly_line_start_pos (P, line)	\/*==ISLE==*\/$/
+swap_pointers	build.c	/^swap_pointers (P1, P2)$/
+table_cleanup	init.c	/^table_cleanup (T)$/
+table_init	init.c	/^table_init ()$/
+table_new	init.c	/^table_new (T)$/
+test_for_intersection	linecros.c	/^test_for_intersection (ax1,ay1,ax2,ay2,bx1,by1,bx2/
+theta	theta.c	/^theta (p1, p2)$/
+to	build.c	/^  set next in_mode to  (cur_mode + 1) %2$/
+tribbles_intersect	intersect.c	/^tribbles_intersect (A, B)$/
+update_intersect_table	interior.c	/^update_intersect_table (Maps)$/
+vert2_after_vert1	build.c	/^vert2_after_vert1 (Vert, Vert2, Polys, AB_MODE)$/
+vertices_touch	tools.c	/^vertices_touch (A, B)$/
+write_cur_line	write.c	/^write_cur_line (Maps, Out, Points, mode, line)$/
+write_out_new_line_att	label.c	/^write_out_new_line_att (Out, Points, type, att)$/
+write_out_new_poly_att	label.c	/^write_out_new_poly_att (Maps, Out, Polys, Points)$/
