@@ -5,4 +5,4 @@ all:    $(PROG)
 
 
 $(PROG): main.o $(VECTLIB) $(GISLIB)
-	$(CC) -o $@ $(LDFLAGS) main.o $(VECTLIB) $(GISLIB) $(MATHLIB)
+	$(CC) -o $@ $(LDFLAGS) main.o $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
