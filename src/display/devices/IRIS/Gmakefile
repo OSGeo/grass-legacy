@@ -26,4 +26,6 @@ $(GISBASE)/driver/IRIS: IRIS
 	mv IRIS $@
 
 IRIS: $(OFILES) ../lib/driverlib.a
-	cc $(LDFLAGS) -o $@ $(OFILES) ../lib/driverlib.a $(GRAPH)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) ../lib/driverlib.a $(GRAPH)
+
+../lib/driverlib.a: #
