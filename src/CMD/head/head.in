@@ -63,8 +63,10 @@ COMPATLIB           = @COMPATLIB@
 TERMLIB             = @TERMLIB@
 CURSES              = @CURSESLIB@ $(TERMLIB) $(COMPATLIB)
 MATHLIB             = @MATHLIB@ 
-XDRLIB              = @XDRLIB@ @ZLIB@
-ZLIB                = @ZLIB@
+XDRLIB              = @XDRLIB@ @ZLIBLIBPATH@ @ZLIB@
+ZLIB                = @ZLIBLIBPATH@ @ZLIB@
+ZLIBINCPATH         = @ZLIBINCPATH@
+ZLIBLIBPATH         = @ZLIBLIBPATH@
 
 #PostgreSQL:
 PQINCPATH           = @PQINCPATH@
