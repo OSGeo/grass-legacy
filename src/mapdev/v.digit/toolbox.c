@@ -1,4 +1,5 @@
 /*
+** $Id$
 **  Written by Dave Gerdes  4/1988
 **  US Army Construction Engineering Research Lab
 */
@@ -130,7 +131,7 @@ Toolbox (void)
 		    {
 			reset_map(CMap, CMap->coor_file);
 
-			set_window();
+			set_window_w();
 			R_standard_color( dcolors[CLR_ERASE]);
 			erase_window();
 			outline_window();
