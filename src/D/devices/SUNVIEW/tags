@@ -1,0 +1,127 @@
+Box_abs	../lib/Box_abs.c	/^Box_abs(x1,y1,x2,y2)$/
+Box_rel	../lib/Box_rel.c	/^Box_rel(x,y)$/
+Color	../lib/Color.c	/^Color(number)$/
+Color_offset	../lib/Color.c	/^Color_offset(n)$/
+Color_table_fixed	Clr_table.c	/^Color_table_fixed()$/
+Color_table_float	Clr_table.c	/^Color_table_float()$/
+Cont_abs	../lib/Cont_abs.c	/^Cont_abs(x,y)$/
+Cont_rel	../lib/Cont_rel.c	/^Cont_rel(x,y)$/
+D2R	../lib/text.c	/^# define D2R(d) (double)(d * RpD)	\/* degrees->radi/
+Erase	../lib/Erase.c	/^Erase()$/
+Font	../lib/Font.c	/^Font(filename)$/
+Get_current_xy	../lib/Move_abs.c	/^Get_current_xy(x, y)$/
+Get_location_with_box	Get_w_box.c	/^Get_location_with_box(cx, cy, nx, ny, button)$/
+Get_location_with_line	Get_w_line.c	/^Get_location_with_line(cx, cy, nx, ny, button)$/
+Get_location_with_pointer	Get_w_pnt.c	/^Get_location_with_pointer(wx, wy, button)$/
+Get_num_colors	Returns.c	/^Get_num_colors(index)$/
+Get_text_box	../lib/Get_t_box.c	/^Get_text_box(text, t, b, l, r)$/
+Graph_Close	Graph_Clse.c	/^Graph_Close()$/
+Graph_Set	Graph_Set.c	/^Graph_Set() $/
+Linemod	../lib/Linemod.c	/^Linemod(type)$/
+MSWITCHER	SWITCHER.c	/^main(argc,argv)$/
+Move_abs	../lib/Move_abs.c	/^Move_abs(x,y)$/
+Move_rel	../lib/Move_rel.c	/^Move_rel(x,y)$/
+Mresize	resize.c	/^main(argc, argv)$/
+Mshowcolor	showcolor.c	/^main(argc, argv)$/
+Panel_delete	Panel.c	/^Panel_delete(name)$/
+Panel_restore	Panel.c	/^Panel_restore(name)$/
+Panel_save	Panel.c	/^Panel_save(name, top, bottom, left, right)$/
+Polydots_abs	../lib/Plydts_abs.c	/^Polydots_abs(xarray, yarray, number)$/
+Polydots_rel	../lib/Plydts_rel.c	/^Polydots_rel(xarray, yarray, number)$/
+Polygon_abs	Polygn_abs.c	/^Polygon_abs(xarray, yarray, number)$/
+Polygon_rel	../lib/Polygn_rel.c	/^Polygon_rel(xarray, yarray, number)$/
+Polyline_abs	../lib/Plylne_abs.c	/^Polyline_abs(xarray, yarray, number)$/
+Polyline_rel	../lib/Plylne_rel.c	/^Polyline_rel(xarray, yarray, number)$/
+REC	SWITCHER.c	/^#define REC(x,y) if (eof=rec(x,y)) break$/
+RECTEXT	SWITCHER.c	/^#define RECTEXT(x) if (eof=rectext(x)) break$/
+RESULT	SWITCHER.c	/^RESULT(n)$/
+RGB_color	../lib/Color.c	/^RGB_color(r, g, b)$/
+RGB_raster	RGB.c	/^RGB_raster(n, nrows, r, g, b, withzeros)$/
+Raster_char	../lib/Raster_chr.c	/^Raster_char(num, nrows, array, withzeros, color_ty/
+Raster_int	Raster.c	/^Raster_int(num, nrows, array, withzeros, color_typ/
+Raster_int_def	../lib/Raster_def.c	/^Raster_int_def(num, nrows, array, withzeros, color/
+Reset_color	../lib/Reset_clrs.c	/^Reset_color(red, grn, blu, num)$/
+Reset_colors	../lib/Reset_clrs.c	/^Reset_colors(min, max, red, grn, blu)$/
+Screen_bot	Returns.c	/^Screen_bot(index)$/
+Screen_left	Returns.c	/^Screen_left(index)$/
+Screen_rite	Returns.c	/^Screen_rite(index)$/
+Screen_top	Returns.c	/^Screen_top(index)$/
+Set_RGB_color	RGB.c	/^Set_RGB_color(r,g,b)$/
+Set_window	../lib/Set_window.c	/^Set_window(T, B, L, R)$/
+Standard_color	../lib/Color.c	/^Standard_color(number)$/
+Text	../lib/Text.c	/^Text(text)$/
+Text_rotation	../lib/Text_size.c	/^Text_rotation(val)$/
+Text_size	../lib/Text_size.c	/^Text_size(x, y)$/
+X_copy	../lib/font.c	/^X_copy (a, b, n)$/
+_fixed_Reset_color	../lib/Reset_clrs.c	/^_fixed_Reset_color(red, grn, blu, number)$/
+_fixed_Reset_colors	../lib/Reset_clrs.c	/^_fixed_Reset_colors(min, max, red, grn, blu)$/
+_float_Reset_color	../lib/Reset_clrs.c	/^_float_Reset_color(red, grn, blu, incr)$/
+_float_Reset_colors	../lib/Reset_clrs.c	/^_float_Reset_colors(min, max, red, grn, blu)$/
+_get_color_index	../lib/Color.c	/^_get_color_index(number)$/
+_get_color_index_array	../lib/Color.c	/^_get_color_index_array(a, num)$/
+_get_lookup_for_color	Clr_table.c	/^_get_lookup_for_color(red, grn, blu)$/
+_get_lookup_for_color_with_leftover	Clr_table.c	/^_get_lookup_for_color_with_leftover (red, grn, blu/
+_rectext	SWITCHER.c	/^_rectext (s)$/
+append_item	SWITCHER.c	/^append_item (pad, name, value)$/
+assign_fixed_color	../lib/color_supp.c	/^assign_fixed_color(user_color, real_color)$/
+assign_standard_color	../lib/color_supp.c	/^assign_standard_color(user_color, real_color)$/
+can_do_float	Can_do.c	/^can_do_float()$/
+catch	SWITCHER.c	/^static catch (n)$/
+catch_resize	Graph_Set.c	/^catch_resize(frame, event, arg, type)$/
+check_alloc_color	../lib/color_supp.c	/^check_alloc_color(n)$/
+check_connection	../lib/connect.c	/^check_connection(me, link)$/
+clear_all_pads	SWITCHER.c	/^clear_all_pads()$/
+clip	../lib/clip.c	/^clip( s, n, w, e, x, y, c_x, c_y)$/
+close_mon	SWITCHER.c	/^close_mon()$/
+color	Color.c	/^color(number)$/
+create_pad	SWITCHER.c	/^create_pad (name)$/
+delete_item	SWITCHER.c	/^delete_item (pad, name)$/
+delete_pad	SWITCHER.c	/^delete_pad (pad)$/
+delink_pad	SWITCHER.c	/^delink_pad (pad)$/
+do_main_loop	Graph_Set.c	/^do_main_loop()$/
+do_nothing	../lib/Raster_def.c	/^do_nothing(n)$/
+draw_canvas	resize.c	/^draw_canvas()$/
+draw_line	Draw_line.c	/^draw_line(cur_x, cur_y, x, y)$/
+drawchar	../lib/text.c	/^drawchar (_text_size_x, _text_size_y, sinrot, cosr/
+find_item	SWITCHER.c	/^find_item (pad, name)$/
+find_pad	SWITCHER.c	/^find_pad (name)$/
+font_height	Graph_Set.c	/^#define font_height(font)	(font->pf_defaultsize.y)/
+font_offset	Graph_Set.c	/^#define font_offset(font)	(-font->pf_char['n'].pc_/
+free_item	SWITCHER.c	/^free_item (item)$/
+get1	SWITCHER.c	/^get1 (c)$/
+get_char_vects	../lib/font.c	/^get_char_vects(achar, n, X, Y)$/
+get_color_offset	../lib/Color.c	/^get_color_offset()$/
+get_command	SWITCHER.c	/^get_command(c)$/
+get_connection	../lib/connect.c	/^get_connection(files,rfd, wfd)$/
+get_fixed_color	../lib/color_supp.c	/^get_fixed_color(user_color)$/
+get_fixed_color_array	../lib/color_supp.c	/^get_fixed_color_array(a, num)$/
+get_max_std_colors	../lib/color_supp.c	/^get_max_std_colors()$/
+get_num_colors	Returns.c	/^get_num_colors()$/
+get_standard_color	../lib/color_supp.c	/^get_standard_color(user_color)$/
+get_table_type	Clr_table.c	/^get_table_type()$/
+get_text_ext	../lib/text.c	/^get_text_ext (top, bot, left, rite)$/
+init_font	../lib/font.c	/^init_font(filename)$/
+invent_pad	SWITCHER.c	/^invent_pad (name)$/
+make_canvas	Graph_Set.c	/^make_canvas(width, height)$/
+migrate_pad	SWITCHER.c	/^migrate_pad (pad)$/
+new_item	SWITCHER.c	/^new_item (pad, name)$/
+notify_fd	SWITCHER.c	/^notify_fd(which, fd)$/
+onechar	../lib/text.c	/^onechar(x, y, _text_size_x, _text_size_y, _text_ro/
+prepare_connection	../lib/connect.c	/^prepare_connection()$/
+pw_box	Get_w_box.c	/^#define pw_box(pixwin, x0, y0, x1, y1, brush, tex,/
+read1	SWITCHER.c	/^read1 (c)$/
+rec	SWITCHER.c	/^rec (buf, n)$/
+rectext	SWITCHER.c	/^rectext (s)$/
+remember	../lib/text.c	/^remember(x, y)$/
+reset_color	Reset_clr.c	/^reset_color(number, red, grn, blu)$/
+resize	Graph_Set.c	/^resize(frame)$/
+send	SWITCHER.c	/^static send (buf, n)$/
+sendtext	SWITCHER.c	/^static sendtext (s)$/
+soft_text	../lib/text.c	/^soft_text(x, y, _text_size_x, _text_size_y, _text_/
+soft_text_ext	../lib/text.c	/^soft_text_ext(x, y, _text_size_x, _text_size_y, _t/
+store	SWITCHER.c	/^store (s) char *s;$/
+text_draw	../lib/text.c	/^text_draw (x, y)$/
+text_move	../lib/text.c	/^text_move (x, y)$/
+timeout	../lib/connect.c	/^static timeout()$/
+window_clip	../lib/Set_window.c	/^window_clip(new_x, new_y, cur_x, cur_y)$/
+xalloc	SWITCHER.c	/^xalloc (buf, cur, new, len)$/
