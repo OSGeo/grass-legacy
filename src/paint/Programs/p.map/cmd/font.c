@@ -161,7 +161,7 @@ get_font_char(c, n, X, Y)
 	exit(1);
     }
 
-    if (c == 040)
+    if (c == 040 || c == '\t')
     {
 	*X = space_x;
 	*Y = space_y;
@@ -170,8 +170,11 @@ get_font_char(c, n, X, Y)
     }
     if (c < 041 || c > 0176)
     {
+	c = '?'; /* mod shapiro */
+    /*
 	*n = 0 ;
 	return ;
+    */
     }
     p = font + font_index[c - 040] ;
 
