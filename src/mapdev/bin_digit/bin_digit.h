@@ -1,5 +1,5 @@
 
-#define		TMP_FILE	"/tmp/DIGIT."
+#define		TMP_FILE	"/tmp/DIGIT2."
 #define		DIGITIZER_CAP	"digitcap"
 #define		DRIVER_DIR	"dig_drivers"
 
