@@ -1,0 +1,108 @@
+
+
+                                   APPENDIX I                    1
+                              GRASS-MAPGEN User's Guide
+            make.box                                        make.box            make.box                                        make.box
+
+
+
+
+            
+            
+            NAME            NAME
+            make.box - Draws a box on the map.
+            
+            SYNOPSIS            SYNOPSIS
+            make.box [filename]            make.box                                 ________ 
+            
+            DESCRIPTION            DESCRIPTION
+            make.box constructs a box, much the same as the            ________                                       
+            make.neatline command, at a defined location on the map            _____________                                          
+            composition.  The location for the box may be identified on
+            the screen or through centimeter coordinates.  If given,
+            [filename] is used for the name of the overlay file             ________                                          
+            generated.  Multiple files may be generated for the map
+            composition by using unique overlay file names.
+            
+            The user is required to provide the following:
+            
+                 - map definition file name
+                 - an overlay file name (if not specified on the command
+                      line)
+                 - relationship of the box to a window
+                      within the map composition
+                 - plotter pen number
+                 - location (see getting map location) of the box
+            
+            Completing the response sequence generates the required
+            files to construct the map element.  Definition parameters
+            are stored in the misc directory; graphic elements to draw                              ____                                    
+            the map on the screen or plotter are stored in the ovm                                                               ___
+            directory.  The default file name for both directories is
+            box.            ____
+            
+            Changing the appearance of the box (e.g. position, size,
+            etc.) can be done by regenerating the make.box command and                                                  ________            
+            overwriting the initial file, or by editing the text
+            definition file, then executing it directly, or by using the
+            redo.misc command.            _________         
+            
+                 (edit) example:          vi misc/[filename]                                                   ________ 
+                                          vi misc/box                                             ________
+            
+            Information entered through the interactive make.box command                                                        ________        
+            has been reformatted to meet the requirements of the MAPGEN
+            command legend, prefacing the element characteristics with                    ______                                            
+            options for the legend command.  All options available in                            ______                                   
+            the legend command are available for use in the GRASS-MAPGEN                ______                                                  
+            Interface.  Commonly used legend options associated with                                      ______                        
+
+                                   APPENDIX I                    2
+                              GRASS-MAPGEN User's Guide
+            make.box                                        make.box            make.box                                        make.box
+
+
+
+
+            making a box(s) are:
+                 
+                 -w (window/region) [data=d][map plot=p]                                          _           _ 
+                 -L (pen) [plotter pen location=value]                                                _____ 
+            
+            EXAMPLE            EXAMPLE
+            The file misc/box draws a box in pen 6, 3 cm. away from the                     ________                                          
+            bottom, right, top and left sides of the plotting window.
+            
+                 legend -m map.def -o ovm/box << EOF
+                 -w p
+                 -L 6
+                  3.000  3.000       # origin point
+                 >-3.000  3.000      # end bottom side
+                 >-3.000 >-3.000     # end right side
+                  3.000 >-3.000      # end top side
+                  3.000  3.000       # end left side/end
+                 .
+                 EOF
+            
+            NOTE            NOTE
+            If only one map element will be drawn on the map
+            composition, the default selection for the file name is
+            recommended for use.  The make.box file may be modified                                      ________                     
+            through the text definition file to draw irregular shapes
+            with straight sides.
+            
+            The delete key will abort the make.box command.                                          ________         
+            
+            SEE ALSO            SEE ALSO
+                 legend         User Manual for MAPGEN (UNIX Version),                 ______                                               
+                                USGS, p. 29.
+                 redo           GRASS-MAPGEN User's Guide, APPENDIX I,                 ____                                                 
+                                USDA-SCS.
+                 redo.misc      (Same)                 _________            
+                 getting loca-  USDA-MAPGEN User's Guide, APPENDIX I-A,                 _____________                                         
+                   tions        USDA-SCS.                   ________              
+            
+            AUTHOR            AUTHOR
+            Marty Holko, Computer Systems Analyst, Cartography and
+            Geographic Information Systems Division, USDA, Soil
+            Conservation Service, Washington, DC. (October l990).
