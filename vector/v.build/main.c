@@ -62,6 +62,9 @@ main (int argc, char *argv[])
 
 	i++;
     }
+    if ( err_opt->answer ) {    
+        Vect_check_input_output_name ( map_opt->answer, err_opt->answer, GV_FATAL_EXIT );
+    }
     
     /* build topology */
     if ( build ) { 

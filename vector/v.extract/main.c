@@ -121,6 +121,8 @@ int main (int argc, char **argv)
     if (!listopt->answers && !fileopt->answer && !whereopt->answer)
 	G_fatal_error("Either [list] or [file] or [where] should be given.");
 
+    Vect_check_input_output_name ( inopt->answer, outopt->answer, GV_FATAL_EXIT );
+
     /* set input vector file name and mapset */
     input = inopt->answer;
     mapset = G_find_vector2 (input, "") ;

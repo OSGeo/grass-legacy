@@ -66,12 +66,7 @@ main (int argc, char *argv[])
 	i=0;
         while (old->answers[i]) {
             in_name = old->answers[i++];
-	    mapset = G_find_vector2(in_name,"");
-	    if(strcmp(G_fully_qualified_name(in_name, mapset),
-			G_fully_qualified_name(out_name, G_mapset()))
-			==0)
-                 G_fatal_error(
-		    "The output file name must differ from input file names");
+	    Vect_check_input_output_name ( in_name, new->answer, GV_FATAL_EXIT );
         }
 
 	if ( append->answer ) {

@@ -168,11 +168,13 @@ main (int argc, char *argv[])
 	if ( nfields != 2 && option == O_CHFIELD )
 	    G_fatal_error ( "2 fields must be specified");
 	
-	if ( (option != O_REP) && (option != O_PRN) && (out_opt->answer == NULL) )
-	  {
-	    sprintf (errmsg, "Output vector wasn't entered.\n");
-	    G_fatal_error (errmsg);
-	  }
+	if ( (option != O_REP) && (option != O_PRN) ) {
+	    if (out_opt->answer == NULL) {
+	        sprintf (errmsg, "Output vector wasn't entered.\n");
+	        G_fatal_error (errmsg);
+	    }
+	    Vect_check_input_output_name ( in_opt->answer, out_opt->answer, GV_FATAL_EXIT );
+	}
 	
         Points = Vect_new_line_struct ();
 	Cats = Vect_new_cats_struct ();

@@ -396,6 +396,11 @@ int main ( int argc, char *argv[])
   treefile = parm.treefile->answer;
   overfile = parm.overfile->answer;
 
+  if ( treefile ) 
+      Vect_check_input_output_name ( input, treefile, GV_FATAL_EXIT );
+
+  if ( overfile ) 
+      Vect_check_input_output_name ( input, overfile, GV_FATAL_EXIT );
 
   if ((elev == NULL) && (pcurv == NULL) && (tcurv == NULL) && (mcurv == NULL)
       && (slope == NULL) && (aspect == NULL) && (devi == NULL))

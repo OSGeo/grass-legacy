@@ -117,6 +117,7 @@ int main(int argc, char **argv)
     
     term_opt = G_define_standard_option(G_OPT_V_CATS);
     term_opt->key         = "ccats" ;
+    term_opt->required    = YES ;
     term_opt->description = "Categories of points ('cities') on nodes (field is specified by nfield)" ;
     
     geo_f = G_define_flag ();
@@ -146,6 +147,8 @@ int main(int argc, char **argv)
     }
 
     if ( geo_f->answer ) geo = 1; else geo = 0;
+
+    Vect_check_input_output_name ( map->answer, output->answer, GV_FATAL_EXIT );
     
     mapset = G_find_vector2 (map->answer, NULL); 
       

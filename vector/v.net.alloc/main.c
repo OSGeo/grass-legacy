@@ -104,6 +104,8 @@ int main(int argc, char **argv)
     
     if(G_parser(argc,argv)) exit (-1);
 
+    Vect_check_input_output_name ( map->answer, output->answer, GV_FATAL_EXIT );
+
     Cats = Vect_new_cats_struct ();
     Points = Vect_new_line_struct ();
     SPoints = Vect_new_line_struct ();

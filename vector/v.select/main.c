@@ -164,6 +164,8 @@ main (int argc, char *argv[])
 	type[input] = Vect_option_to_types (type_opt[input]);
         field[input] = atoi(field_opt[input]->answer);
 
+	Vect_check_input_output_name ( in_opt[input]->answer, out_opt->answer, GV_FATAL_EXIT );
+
 	if ((mapset[input] = G_find_vector2 (in_opt[input]->answer, NULL)) == NULL) {
 	    G_fatal_error ("Could not find vector '%s'\n", in_opt[input]->answer);
 	}

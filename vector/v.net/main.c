@@ -81,6 +81,8 @@ int main (int argc, char **argv)
     nfield = atoi (nfield_opt->answer);
     
     if ( action->answer[0] == 'n' ) { /* nodes */
+	Vect_check_input_output_name ( input->answer, output->answer, GV_FATAL_EXIT );
+	
         if ( output->answer == NULL ) 
 	    G_fatal_error("Output vector map must be specified");
 

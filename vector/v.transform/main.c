@@ -149,6 +149,8 @@ int main (int argc, char *argv[])
     
     strcpy (Current.name, old->answer);
     strcpy (Trans.name, new->answer);
+
+    Vect_check_input_output_name ( old->answer, new->answer, GV_FATAL_EXIT );
    
     if ( !shift_flag->answer ) { 
 	if (pointsfile->answer != NULL)
