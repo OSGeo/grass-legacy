@@ -147,8 +147,7 @@ int bar (
  *
  */
 	ptr = dist_stats->ptr;
-	if(nodata) dist_stats->maxcat++;
-	for (i=dist_stats->mincat; i<dist_stats->maxcat; i++)
+	for (i=dist_stats->mincat; i<=dist_stats->maxcat; i++)
 	{
 		draw=NO;
 		/* figure bar color and height 
