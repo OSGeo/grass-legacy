@@ -150,7 +150,7 @@ G_matrix_product(mat_struct *mt1, mat_struct *mt2) {
   integer1 no_trans = 'n';
 
   if( (mt1->is_init) || (mt2->is_init) ) {
-    fprintf(stderr, "Error: One or both input matrices uniinitialised\n");
+    fprintf(stderr, "Error: One or both input matrices uninitialised\n");
     return NULL;
   }
 
