@@ -45,8 +45,8 @@ int display(
     D_setup(0);
 
     /* cell maps wipe out a picture, so we clear info on the window too */
-    /* if (!overlay)
-	D_clear_window(); */
+    if (!overlay)
+	D_clear_window();
 
     /* Get color offset value for current window and pass to driver */
     D_offset_is(&offset) ;
