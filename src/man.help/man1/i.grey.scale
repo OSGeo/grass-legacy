@@ -1,0 +1,35 @@
+.\" %W% %G%
+.TH i.grey.scale 1 GRASSimagery
+.nh
+.SH NAME
+.IP i.grey.scale\ \- 15
+An imagery function that assigns a histogram contrast stretch
+grey scale color table to a 
+.CT "map layer" "cell map"
+.br
+.I (GRASS Imagery Tool)
+.SH SYNOPSIS
+.B i.grey.scale
+.SH DESCRIPTION
+.I i.grey.scale
+is an imagery function that assigns a histogram contrast stretch
+grey scale color table to a 
+.CT "map layer." "cell map."
+The histogram contrast stretch
+expands the original range of 
+.CT digital category
+values to utilize the full
+range of the 
+.CT "display device." "graphics monitor."
+
+The user is asked for the name of the 
+.CT "map layer" "cell map"
+that needs a grey scale.
+When the 
+.CT "map layer" "cell map"
+is displayed it will be displayed with a grey scale
+color scheme.
+.SH
+\fIGRASS Tutorial: Image Processing\fR
+.SH AUTHOR
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
