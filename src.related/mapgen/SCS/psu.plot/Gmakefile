@@ -1,0 +1,36 @@
+###########################################################
+###########################################################
+#  %W%  %G%
+
+GRAPH=$(GISBASE)/mapgen
+MAPGEN_BIN = $(GRAPH)/interface
+
+
+EXTRA_CFLAGS	= $(VECT_INCLUDE)
+
+
+all:  $(MAPGEN_BIN)/psu.plot $(UNIX_BIN)/psu.plot $(MAPGEN_BIN)/psu_ptlabel $(MAPGEN_BIN)/psu_alabel\
+	$(MAPGEN_BIN)/get_stp_proj
+
+$(MAPGEN_BIN)/psu.plot: psu.plot $(MAPGEN_BIN)/do.psu.plot
+	cp psu.plot $(MAPGEN_BIN)/psu.plot
+	chmod 755 $(MAPGEN_BIN)/psu.plot
+	find psu.plot.d -print | cpio -oc | (cd ${GRAPH}/etc; cpio -idumcv)
+
+$(UNIX_BIN)/psu.plot: psu.plot
+	if test -f $(UNIX_BIN)/psu.plot; then rm $(UNIX_BIN)/psu.plot; fi
+	cp psu.plot $(UNIX_BIN)/psu.plot
+	chmod 755 $(UNIX_BIN)/psu.plot
+
+$(MAPGEN_BIN)/do.psu.plot: do.psu.plot
+	cp do.psu.plot $(MAPGEN_BIN)/do.psu.plot
+	chmod 755 $(MAPGEN_BIN)/do.psu.plot
+
+$(MAPGEN_BIN)/psu_ptlabel: psu_ptlabel.o
+	$(CC) -o $@ psu_ptlabel.o
+
+$(MAPGEN_BIN)/psu_alabel: psu_alabel.o
+	$(CC) $(LDFLAGS) $(EXTRA_CFLAGS) -o $@ psu_alabel.o $(VECTLIB) $(MATHLIB) $(GISLIB)
+
+$(MAPGEN_BIN)/get_stp_proj: get_stp_proj.o
+	$(CC) $(LDFLAGS) -o $@ get_stp_proj.o $(GISLIB)
