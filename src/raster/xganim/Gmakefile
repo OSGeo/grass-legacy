@@ -1,0 +1,30 @@
+PGM=xganim
+
+MSEC=4
+MDIR=$(SRC)/../man/man$(MSEC)
+MUTL=$(SRC)/../man/utilities
+
+HOME=$(BIN_ALPHA_CMD)
+
+EXTRA_CFLAGS=$(XCFLAGS)
+
+OFILES = \
+	gui.o \
+	main.o
+
+all: $(HOME)/$(PGM) man
+
+$(HOME)/$(PGM):  $(OFILES) $(GISLIB)
+	$(CC) $(LDFLAGS) $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) \
+        $(XMLIBPATH) $(XMLIB) $(XTLIBPATH) $(XTLIB) $(XLIBPATH) $(XLIB) 
+	mv a.out $@
+
+man: 
+	-cp doc/xganim.man $(MDIR)/xganim
+	-cp doc/xganim.catman $(GISBASE)/man/$(MSEC)/xganim
+	nroff $(MUTL)/man.version $(MDIR)/.class-header \
+		$(MUTL)/man.header doc/xganim.man $(MDIR)/.class-notice \
+		> $(GISBASE)/man/$(MSEC)/xganim
+
+
+$(GISLIB): #
