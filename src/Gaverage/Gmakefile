@@ -1,0 +1,4 @@
+$(BIN)/Gaverage: ave.sh
+	rm -f $@
+	cp $? $@
+	chmod +rx $@
