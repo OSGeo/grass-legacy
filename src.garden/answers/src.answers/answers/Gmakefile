@@ -1,0 +1,25 @@
+# %W% %G%
+
+
+# local idiosyncracy - I needed to set the fortran compiler var to the 
+# full path to the compiler (I will leave this line here in case
+# you need to know how to do this) if your fortran compiler is in your
+# default path, then you won't need this
+# FC = /usr/lang/f77
+
+# we will install the answers executable in $ETC/answers
+
+ANSWERS = $(ETC)/answers
+PGM = $(ANSWERS)/answers
+
+# name the object file
+OBJ = answers.o
+
+all:    $(PGM)
+
+$(PGM): $(OBJ) $(ANSWERS)
+	$(FC) $(OBJ) -o $@
+
+$(ANSWERS):
+	mkdir $(ANSWERS)
+
