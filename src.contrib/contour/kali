@@ -1,0 +1,48 @@
+From kali@altair.utu.fi Thu Aug 24 07:38:42 1989
+Return-Path: <kali@altair.utu.fi>
+Received: from cerl.cecer.army.mil by zorro (4.0/SMI-4.0)
+	id AA09655; Thu, 24 Aug 89 07:38:41 CDT
+Received: from osiris.cso.uiuc.edu by cerl.cecer.army.mil with SMTP
+	(5.61+/IDA-1.2.8) id AA08129; Thu, 24 Aug 89 07:39:17 -0500
+Received: from funet.fi by osiris.cso.uiuc.edu with SMTP
+	(5.61+/IDA-1.2.8) id AA07308; Thu, 24 Aug 89 07:39:03 -0500
+Received: by funet.fi; id AA03425; Thu, 24 Aug 89 15:38:56 +0300
+Received: from altair.utu.fi by polaris.utu.fi (4.0/4.7)
+	id AA28015; Thu, 24 Aug 89 15:40:11 +0300
+Received: by altair.utu.fi (4.0/4.7)
+	id AA03917; Thu, 24 Aug 89 15:39:11 +0300
+From: kali@altair.utu.fi (Juha Salo)
+Message-Id: <8908241239.AA03917@altair.utu.fi>
+Subject: xgen
+To: westerve@osiris.cso.uiuc.edu
+Date: Thu, 24 Aug 89 15:39:08 EET DST
+Cc: kali@altair.utu.fi (Juha Salo)
+X-Mailer: ELM [version 2.2 PL0]
+Status: R
+
+Hello,
+
+I'm involved in generating applications (medical image processing) for
+researchers in the University of Turku. The xgen program seems to be
+ideal for generating simple applications. However I've had some
+troubles in writing the scripts, the system behaves oddly or crashes
+(I'm using a Sun 386i with SunOS 4.0.1). Eg. in the demo application
+some of the 'label' objects do not appear at all. 
+
+If You have any patches or additional documents about the xgen I would
+be very grateful to receive those.
+
+My address is
+
+Juha Salo
+Laboratory of Cytometry
+Department of Biomedicin
+University of Turku
+
+Kiinamyllynkatu 10
+SF-20520 TURKU
+FINLAND
+
+e-mail: 
+kali@altair.utu.fi
+
