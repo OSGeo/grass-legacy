@@ -45,7 +45,9 @@
 #include <ctype.h>
 #include <time.h>
 #include <sys/types.h>
+#ifdef HAVE_STATVFS_H
 #include <sys/statvfs.h>
+#endif
 
 
 extern "C" {
@@ -425,7 +427,8 @@ printMaxSortSize(long nodata_count) {
   fprintf(stderr, "Will need at least %s space available in %s\n",
 		  formatNumber(buf, maxneed),  		  /* need 2*N to sort */
 		  getenv(STREAM_TMPDIR));
-  
+ 
+#ifdef HAVE_STATVFS_H
   fprintf(stderr, "Checking current space in %s: ", getenv(STREAM_TMPDIR));
   struct statvfs statbuf;
   statvfs(getenv(STREAM_TMPDIR), &statbuf);
@@ -439,6 +442,7 @@ printMaxSortSize(long nodata_count) {
 	fprintf(stderr, ". Not enough space available.\n");
 	exit(1);
   }
+#endif
 }
 
 
