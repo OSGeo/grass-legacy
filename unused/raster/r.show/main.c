@@ -37,6 +37,7 @@
  *
  * 		fill str buffer with given value.
  *		for CELL type, prec is meaningless.
+ *		if width <= 0, no space is included in str.
  *
  *		returns str length	if successful
  *			0		if given type is unknown
@@ -146,25 +147,25 @@ main(int argc, char **argv)
 		RASTER_MAP tmp;
 		double	dval;
 
-		printf("\n ** Testing functions **\n");
+		fprintf(stderr, "\n*** Testing functions ***\n");
 
 		tmp.type   = buf.type;
 		tmp.data.v = G_allocate_raster_buf(buf.type);
 
 		r_str_value(str, 15, 5, tmp, 2);
-		printf(" tmp[2] = %s,", str);
+		fprintf(stderr, " tmp[2] = %s,", str);
 
 		r_str_value(str, 15, 5, buf, 10);
-		printf(" buf[10] = %s\n", str);
+		fprintf(stderr, " buf[10] = %s\n", str);
 
-		printf("copy buf[10] to tmp[2]\n");
+		fprintf(stderr, "\n copy buf[10] to tmp[2]\n");
 		r_copy_value(buf, 10, tmp, 2);
 		r_str_value(str, 15, 5, tmp, 2);
-		printf(" tmp[2] = %s\n", str);
+		fprintf(stderr, " tmp[2] = %s\n", str);
 
 		r_set_value(tmp, 2, 10*r_get_value(tmp, 2));
 		r_str_value(str, 15, 5, tmp, 2);
-		printf("tmp[2]*10 = %s\n", str);
+		fprintf(stderr, " tmp[2]*10 = %s\n", str);
 	}
 
 	exit(0);
@@ -265,6 +266,15 @@ r_str_value(char *str, int width, int prec, RASTER_MAP buf, int col)
 			G_warning("Illegal raster type\n");
 			return 0;
 			break;
+	}
+
+	if(width <= 0){
+		int	i, j, l;
+
+		l = strlen(str);
+		for(i=0; i<l && str[i]==' '; i++);
+		for(j=i; j<=l; j++)
+			str[j-i] = str[j];
 	}
 
 	return strlen(str);
