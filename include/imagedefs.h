@@ -119,6 +119,8 @@ int I_open_image(struct Ref *);
 int I_get_image_row(struct Ref *, int);
 int I_translate_image_data(CELL *, unsigned char *, register CELL, register CELL, unsigned char *, int);
 int I_close_image(struct Ref *);
+/* list_gp.c */
+int I_list_group(char *, struct Ref *, FILE *);
 /* list_subgp.c */
 int I_list_subgroup(char *, char *, struct Ref *, FILE *);
 /* loc_info.c */
