@@ -1,4 +1,4 @@
-$Id: TODO,v 1.22 2000-10-09 09:35:50 markus Exp $
+$Id: TODO,v 1.23 2000-10-10 13:16:01 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -104,6 +104,12 @@ So two ways from there to improve the situation:
 
 ---------------------------------------------------------------------
 Modules:
+
+-IMPORT/EXPORT modules:
+  They should read/write from current directory instead of subdirectory
+  in mapset.
+  v.in.shape/v.out.shape and m.in.e00 already meet this convention.
+
 - g.manual: change list of manual pages in g.manual
   organized according to objects (vector files, raster files, ...)
   not to "status" of module (which is even confused at time)
