@@ -78,7 +78,7 @@ dig_load_plus (map, digit, do_checks)
     dig_head_to_map (&P_head, map);
 
     fseek (plus, P_head.Node_offset, 0);
-    map->Node = (P_NODE *) dig_falloc (sizeof (P_NODE), (int) P_head.n_nodes+1);
+    map->Node = (P_NODE *) dig_falloc ((int) P_head.n_nodes+1, sizeof(P_NODE));
     map->alloc_nodes = P_head.n_nodes+1;
     for (i = 1 ; i <= P_head.n_nodes ; i++)	
     {
@@ -86,7 +86,7 @@ dig_load_plus (map, digit, do_checks)
     }
 
     fseek (plus, P_head.Line_offset, 0);
-    map->Line = (P_LINE *) dig_falloc (sizeof (P_LINE), (int) P_head.n_lines+1);
+    map->Line = (P_LINE *) dig_falloc ((int) P_head.n_lines+1, sizeof(P_LINE));
     map->alloc_lines = P_head.n_lines+1;
     for (i = 1 ; i <= P_head.n_lines ; i++)	
     {
@@ -94,7 +94,7 @@ dig_load_plus (map, digit, do_checks)
     }
 
     fseek (plus, P_head.Area_offset, 0);
-    map->Area = (P_AREA *) dig_falloc (sizeof (P_AREA), (int) P_head.n_areas+1);
+    map->Area = (P_AREA *) dig_falloc ((int) P_head.n_areas+1, sizeof(P_AREA));
     map->alloc_areas = P_head.n_areas+1;
     for (i = 1 ; i <= P_head.n_areas ; i++)	
     {
@@ -107,7 +107,7 @@ dig_load_plus (map, digit, do_checks)
     /* And finally read in the Attributes.. */
 
     fseek (plus, P_head.Att_offset, 0);
-    map->Att = (P_ATT *) dig_falloc (sizeof (P_ATT), (int) P_head.n_atts+1);
+    map->Att = (P_ATT *) dig_falloc ((int) P_head.n_atts+1, sizeof(P_ATT));
     map->alloc_atts = P_head.n_atts+1;
     for (i = 1 ; i <= P_head.n_atts ; i++)	
     {
@@ -116,7 +116,7 @@ dig_load_plus (map, digit, do_checks)
 
     /* read in island info, as if it exists... */
     fseek (plus, P_head.Isle_offset, 0);
-    map->Isle = (P_ISLE *) dig_falloc (sizeof (P_ISLE), (int) P_head.n_isles+1);
+    map->Isle = (P_ISLE *) dig_falloc ( (int) P_head.n_isles+1, sizeof(P_ISLE));
     map->alloc_isles = P_head.n_isles+1;
     for (i = 1 ; i <= P_head.n_isles ; i++)	
     {
