@@ -154,9 +154,9 @@ AC_SUBST(MATHLIB)
 
 # Handle this the same
 BINDIR=/usr/local/bin
-if test -z "${exec_prefix}" || test "${exec_prefix}" = "NONE"; then
-exec_prefix="/usr/local"
-fi
+#if test -z "${exec_prefix}" || test "${exec_prefix}" = "NONE"; then
+#exec_prefix="/usr/local"
+#fi
 if test "${bindir}"; then
 BINDIR="${bindir}"
 fi
@@ -473,8 +473,8 @@ AC_SUBST(SRCDIR)
 
 # Add VERSION and GISBASE
 VERSION=`cat ${SRCDIR}/src/CMD/VERSION | head -1`
-NAME_VER=`echo -n ${VERSION} | sed 's/\..*//'`
-GISBASE="${exec_prefix}/grass${NAME_VER}"
+NAME_VER=`echo ${VERSION} | sed 's/\..*//'`
+GISBASE="${prefix}/grass${NAME_VER}"
 
 AC_SUBST(VERSION)
 AC_SUBST(NAME_VER)
