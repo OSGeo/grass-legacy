@@ -1,7 +1,0 @@
-OBJ = main.o 
-
-$(BIN_CONTRIB_INTER)/Mlulc.USGS: $(OBJ) $(GISLIB) 
-	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(MATHLIB) $(XDRLIB)
-
-
-

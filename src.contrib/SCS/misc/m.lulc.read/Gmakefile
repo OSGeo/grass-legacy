@@ -1,6 +1,0 @@
-OBJ = main.o header.o
-
-$(BIN_CONTRIB_CMD)/Mlulc.read: $(OBJ) 
-	$(CC) $(LDFLAGS) -o $@ $(OBJ)
-
-
