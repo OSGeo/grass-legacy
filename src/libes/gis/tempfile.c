@@ -22,20 +22,46 @@
 #include "gis.h"
 
 char *
-G_tempfile ()
+G_tempfile()
 {
-    char path[300];
+    char *G__tempfile();
+
+    return G__tempfile(getpid());
+}
+
+char *
+G__tempfile (pid)
+{
+    char path[1024];
     char name[20];
+    char element[100];
     static int uniq = 0;
     char *G_store();
 
-    G__make_mapset_element (".tmp");
+    if (pid <= 0)
+	pid = getpid();
+    G__temp_element(element);
     do
     {
-	sprintf (name, "%d.%d", getpid(), uniq++) ;
-	G__file_name (path, ".tmp", name, G_mapset()) ;
+	sprintf (name, "%d.%d", pid, uniq++) ;
+	G__file_name (path, element, name, G_mapset()) ;
     }
     while (access (path, 0) == 0) ;
 
     return G_store (path);
+}
+
+G__temp_element(element)
+    char *element;
+{
+    char *G__machine_name(), *machine;
+
+    strcpy (element, ".tmp");
+    machine = G__machine_name();
+    if (machine != NULL && *machine != 0)
+    {
+	strcat (element, "/");
+	strcat (element, machine);
+    }
+    G__make_mapset_element (element);
 }
