@@ -4,6 +4,7 @@ row_col (geo, lat, lon, row, col)
     double lat, lon;
     int *row, *col;
 {
-    *row = (geo->lat - lat) / geo->lat_res;
-    *col = (geo->lon - lon) / geo->lon_res;
+    extern double floor();
+    *row = floor((geo->lat - lat) / geo->lat_res);
+    *col = floor((geo->lon - lon) / geo->lon_res);
 }
