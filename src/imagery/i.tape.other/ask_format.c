@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "tape.h"
 
 ask_format ()
