@@ -1,5 +1,7 @@
 PGM    = r.in.gdal
 
+EXTRA_CFLAGS = -shared
+
 LIST   = main.o gbgetsymbol.o gdalbridge.o make_loc.o
 
 LIBES= $(GISLIB) $(IMAGERYLIB) 
