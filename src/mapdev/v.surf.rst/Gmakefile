@@ -1,10 +1,11 @@
 PBIN = /usr/tmp 
 PGM    = v.surf.rst
 HOME = $(BIN_CONTRIB_CMD)
-
+export UNIX_SYS:=\$(shell uname -a | cut -c1-6)
+ifeq (\$(UNIX_SYS), CYGWIN)
 #required for Windows/Cygnus (12/99)
-#XDRLIB = /usr/local/lib/librpclib.a
-
+XDRLIB = /usr/local/lib/librpclib.a
+endif
 TREEDIR = $(SRC)/libes/rst_gmsl/tree
 TREELIB = $(TREEDIR)/libtree.a
 DATADIR = $(SRC)/libes/rst_gmsl/data
