@@ -4,7 +4,7 @@
 # Generated automatically using autoconf version 2.13 
 # Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
 #
-# $Id: configure,v 1.12 2000-10-04 14:02:43 markus Exp $
+# $Id: configure,v 1.13 2000-10-04 15:11:43 markus Exp $
 # This configure script is free software; the Free Software Foundation
 # gives unlimited permission to copy, distribute and modify it.
 #
@@ -14,6 +14,7 @@
 # http://www.wiau.man.ac.uk/services/IUE/v.curr/iue-root-link/configure
 # http://www.ccl.net/cca/software/X-WINDOW/ImageMagick/ImageMagick/configure
 # GDAL configure: www.remotesending.org/gdal/
+# http://www.translator.cx/dist/gpltrans-0.9.8/configure
 
 # Defaults:
 ac_help=
@@ -3178,8 +3179,76 @@ else
   echo "$ac_t""no" 1>&6
 fi
 
-#PNG headers
+#PostgreSQL
+echo "configure: checking for libpq-fe.h" >&5
+echo $ac_n "checking for libpq-fe.h ... $ac_c" 1>&6
+for i in /usr /usr/local /usr/local/pgsql /usr/lib/pgsql; do
+  if test -r $i/include/libpq-fe.h; then PGSQL_DIR=$i; PGSQL_INCDIR=$i/include
+  elif test -r $i/include/pgsql/libpq-fe.h; then PGSQL_DIR=$i; PGSQL_INCDIR=$i/include/pgsql
+  elif test -r $i/include/postgresql/libpq-fe.h; then PGSQL_DIR=$i; PGSQL_INCDIR=$i/include/postgresql
+  fi
+done
+if test -z "$PGSQL_DIR"; then
+  echo "$ac_t""Cannot find libpq-fe.h. Please specify the installation path of PostgreSQL" 1>&6
+else
+  echo "$ac_t""found libpq-fe.h " 1>&6
+  PQINCPATH="-I$PGSQL_INCDIR" 
+  PQLIBPATH=$PGSQL_DIR/lib
+fi
+test -d $PGSQL_DIR/lib/pgsql && PQLIBPATH=$PGSQL_DIR/lib/pgsql
+LDFLAGS="$LDFLAGS -L$PQLIBPATH"
+echo $ac_n "checking for PQcmdTuples in -lpq""... $ac_c" 1>&6
+echo "configure:1532: checking for PQcmdTuples in -lpq" >&5
+ac_lib_var=`echo pq'_'PQcmdTuples | sed 'y%./+-%__p_%'`
+if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
+  echo $ac_n "(cached) $ac_c" 1>&6
+else
+  ac_save_LIBS="$PQLIB"
+ PQLIB="-lpq  $PQLIB -lcrypt"
+cat > conftest.$ac_ext <<EOF
+#line 1540 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char PQcmdTuples();
 
+int main() {
+PQcmdTuples()
+; return 0; }
+EOF
+if { (eval echo configure:1551: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+  rm -rf conftest*
+  eval "ac_cv_lib_$ac_lib_var=yes"
+else
+  echo "configure: failed program was:" >&5
+  cat conftest.$ac_ext >&5
+  rm -rf conftest*
+  eval "ac_cv_lib_$ac_lib_var=no"
+fi
+rm -f conftest*
+PQLIB="$ac_save_LIBS"
+
+fi
+if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
+  echo "$ac_t""yes" 1>&6
+  cat >> confdefs.h <<\EOF
+#define HAVE_PQCMDTUPLES 1
+EOF
+
+else
+  echo "$ac_t""no" 1>&6
+fi
+
+PQLIB="$old_PQLIB"
+cat >> confdefs.h <<\EOF
+#define HAVE_PGSQL 1
+EOF
+if test -z "$PGSQL_DIR"; then
+ PQLIB=""
+else
+ PQLIB="$PQLIB -L$PQLIBPATH -lpq -lcrypt"
+fi
 
 
 #DLLIB=
@@ -3683,6 +3752,9 @@ s%@OPENGLLIB@%$OPENGLLIB%g
 s%@OPENGLULIB@%$OPENGLULIB%g
 s%@TKDIR@%$TKDIR%gs%@SYSV@%$SYSV%g
 s%@USE_TERMIO@%$USE_TERMIO%g
+s%@PQINCPATH@%$PQINCPATH%g
+s%@PQLIBPATH@%$PQLIBPATH%g
+s%@PQLIB@%$PQLIB%g
 
 CEOF
 EOF
