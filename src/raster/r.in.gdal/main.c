@@ -14,7 +14,7 @@
 #include <string.h>
 #include "gis.h"
 #include "imagery.h"
-#include "gprojects.h"
+#include "projects.h"
 
 #ifdef USE_GDAL_H
 #  include "gdal.h"
