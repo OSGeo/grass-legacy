@@ -253,7 +253,8 @@ src/misc/m.ll2gc
 src/misc/m.ll2u
 src/misc/m.lulc.USGS
 src/misc/m.lulc.read
-src/misc/m.proj
+#m.proj does not support datum transformation:
+#src/misc/m.proj
 src/misc/m.proj2
 src/misc/m.region.ll
 src/misc/m.rot90
