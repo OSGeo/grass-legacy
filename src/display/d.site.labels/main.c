@@ -213,4 +213,4 @@ int main (int argc, char **argv)
 
     return 0;
 }
-/* vim: softtabstop=4 shiftwidth=4 expandtab */
+/* vim: set softtabstop=4 shiftwidth=4 expandtab */
