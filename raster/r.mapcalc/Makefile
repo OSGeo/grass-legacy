@@ -80,9 +80,8 @@ $(BIN_CMD)/$(PGM3): $(LIST3) $(DEPLIBS3)
 	@test -x $(BIN)/$(PGM3) || ln $(ETC)/front.end $(BIN)/$(PGM3)
 
 y.tab.c y.tab.h: mapcalc.y
-	rm -f y.tab.c y.tab.h
-	$(YACC) -b y -d mapcalc.y
 	$(MKDIR) $(OBJDIR)
+	$(YACC) -b y -d mapcalc.y
 	$(CC) $(LDFLAGS) $(INC) $(XTRA_LDFLAGS) -o $(OBJDIR)/$*.o -c $*.c
 
 lex.yy.c: mapcalc.l y.tab.h
