@@ -110,10 +110,10 @@ int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs, int head_type,
 	    ncols = ntokens;
 	}
 
-	if ( minncols == -1 || minncols > ncols ) minncols = ncols; 
+	if ( minncols == -1 || minncols > ntokens ) minncols = ntokens; 
 
 	/* Determine column types */
-	for ( i = 0; i < ncols; i++ ) {
+	for ( i = 0; i < ntokens; i++ ) {
 	    G_debug (4, "row %d col %d: %s is_int = %d is_double = %d", 
 		         row, i, tokens[i], is_int(tokens[i]), is_double(tokens[i]) );
 	    if ( is_int(tokens[i]) ) continue; /* integer */
