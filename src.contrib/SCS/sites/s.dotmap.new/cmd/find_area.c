@@ -2,7 +2,9 @@
 #include "Vect.h"
 #include <math.h>
 #include "dots.h"
-
+    
+#define ABS(x)          (((x) < 0) ? -(x) : (x))
+    
 /*#define DEBUG*/
 
 tmp_find_area (map, Area, totalarea, cent_x, cent_y, n,e,w,s)
