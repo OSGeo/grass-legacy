@@ -49,7 +49,6 @@ int main (int argc, char *argv[])
 	void *cell, *cell2;
 	SEGMENT in_seg, out_seg;
 	char *cost_mapset ;
-	char *cum_cost_mapset ;
 	char *in_file, *out_file ;
 	char *search_mapset ;
 	double* value;
@@ -58,7 +57,6 @@ int main (int argc, char *argv[])
 	double NS_fac,EW_fac,DIAG_fac,H_DIAG_fac,V_DIAG_fac ;
 	double fcost ;
 	double min_cost,old_min_cost ;
-	double neg = -2.0 ;
 	double zero = 0.0 ;
 	int at_percent = 0;
 	int col, row, nrows, ncols ;
@@ -163,7 +161,6 @@ int main (int argc, char *argv[])
 	opt6->key_desc   = "null cost" ;
 	opt6->required   = NO;
 	opt6->multiple   = NO;
-/*  	opt6->answer     = ""; */
 	opt6->description= "Cost assigned to null cells. By default, null cells are excluded";
 
 	flag1 = G_define_flag();
@@ -177,6 +174,10 @@ int main (int argc, char *argv[])
 	flag3 = G_define_flag();
 	flag3->key = 'n';
 	flag3->description = "Keep null values in output map";
+
+	/*   Parse command line */
+	if (G_parser(argc, argv))
+		exit(-1);
 
 	/* initalize access to database and create temporary files */
 
@@ -206,10 +207,6 @@ int main (int argc, char *argv[])
 	H_DIAG_fac = (double)sqrt((double)(NS_fac*NS_fac + 4*EW_fac*EW_fac)); 
 
 	G_set_d_null_value(&null_cost,1);
-	/*   Parse command line */
-
-	if (G_parser(argc, argv))
-		exit(-1);
 
 	verbose = flag1->answer;
 	if (flag2->answer)
@@ -316,10 +313,6 @@ int main (int argc, char *argv[])
 			fprintf(stderr," %d rows, %d cols.\n", nrows, ncols);
 	}
 
-/*
-  srows =  nrows/12 + 1;
-  scols =  ncols/12 + 1;
-*/
 	srows = scols = SEGCOLSIZE ;
 	segments_in_memory = 4 * (nrows/SEGCOLSIZE + ncols/SEGCOLSIZE + 2) ;
 
@@ -369,7 +362,6 @@ int main (int argc, char *argv[])
 				G_percent (row, nrows, 2);
 			if(G_get_raster_row(cost_fd, cell, row, data_type)<0)
 				exit(1);
-/*  		segment_put_row(&in_seg, cell, row); */
 
 /* INPUT NULL VALUES: ??? */
 			ptr2 = cell;
@@ -409,7 +401,6 @@ int main (int argc, char *argv[])
 					}
 					break;
 			}				
-/*    			segment_get(&in_seg,&p,row,20);  */
 		}
 	}
 	segment_flush(&in_seg);
@@ -423,8 +414,6 @@ int main (int argc, char *argv[])
 		fprintf (stderr, "Initializing output \n") ;
 	{
 		double *fbuff ;
-		double returnval;
-		void* p = &returnval;
 		int i ;
 
 		fbuff = (double *)G_malloc(ncols * sizeof(double)) ;
@@ -433,23 +422,16 @@ int main (int argc, char *argv[])
 			printf("fbuff == NULL\n");
 		}
 		
-/*		for(i=0;i<ncols;i++) 
-		fbuff[i] = neg ;
-*/
 		G_set_d_null_value(fbuff,ncols);
 
 		for( row=0 ; row<nrows ; row++ ) {
 			if (verbose) {
 				G_percent (row, nrows, 2);
 			}
-/*
-  segment_put_row(&out_seg, fbuffp, row);
-*/
+
 			for(i=0;i<ncols;i++) {
 				segment_put(&out_seg, &fbuff[i], row, i);
 			}
-			
-/*  			segment_get(&out_seg,p,row,0); */
 		}
 		segment_flush(&out_seg);
 		if (verbose)
