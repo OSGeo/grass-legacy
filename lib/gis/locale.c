@@ -25,15 +25,15 @@ void G_init_locale(const char *package)
 }
 
 char *
-libgrass_gettext(const char *package, const char *msgid)
+G_gettext(const char *package, const char *msgid)
 {
+	
+	static char      now_bound[4096] = "";
 
-#ifdef HAVE_LIBINTL_H
-        static int      already_bound = 0;
 
-        if (!already_bound)
+        if (strncmp(now_bound,package,strlen(package)))
         {
-                already_bound = 1;
+                sprintf(now_bound, "%s", package);
 
 		bindtextdomain(package, LOCALEDIR);
 
@@ -41,9 +41,7 @@ libgrass_gettext(const char *package, const char *msgid)
         }
 
 return dgettext(package,msgid);
-#else
-return msgid;       
-#endif
+
 }
 
 
