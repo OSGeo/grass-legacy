@@ -292,20 +292,20 @@ proc DmVector::options { id frm } {
 
     # query
     set row [ frame $frm.query ]
-    checkbutton $row.a -text [G_msg "Print query output as text in terminal"] \
+    Label $row.a -text [G_msg "Query with mouse:"]
+    checkbutton $row.b -text [G_msg "results as text in terminal"] \
                 -variable DmVector::opt($id,_query_text) 
-    checkbutton $row.b -text [G_msg "Edit attributes"] \
+    checkbutton $row.c -text [G_msg "edit attributes (form mode)"] \
                 -variable DmVector::opt($id,_query_edit) 
-    pack $row.a $row.b -side left
+    pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 
     # display only in limited region size range
     set row [ frame $frm.region ]
-    Label $row.a -text [G_msg "Display constraints:"]
-    LabelEntry $row.b -label "Min" -textvariable DmVector::opt($id,minreg) -width 8
-    LabelEntry $row.c -label "Max" -textvariable DmVector::opt($id,maxreg) -width 8
-    Label $row.d -text [G_msg "region size"]
-    pack $row.a $row.b $row.c $row.d -side left
+    Label $row.a -text [G_msg "Display when avg. region dimension is"]
+    LabelEntry $row.b -label "more than" -textvariable DmVector::opt($id,minreg) -width 8
+    LabelEntry $row.c -label "or less than" -textvariable DmVector::opt($id,maxreg) -width 8
+    pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 
     # Width
