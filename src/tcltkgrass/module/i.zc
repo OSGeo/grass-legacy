@@ -1,0 +1,9 @@
+interface_build {
+    {i.zc} 0
+    {Zero-crossing "edge detection" raster function for image processing.}
+    {entry input {Input raster map:} 0 raster}
+    {entry output {Output raster map:} 0 raster}
+    {entry width {x-y extent of the Gaussian filter [9]:} 0 ""}
+    {entry threshold {Sensitivity of Gaussian filter [10]:} 0 ""}
+    {entry orientations {Number of azimuth directions categorized [1]:} 0 ""}
+}
