@@ -55,10 +55,11 @@ int main (int argc, char **argv)
     struct GModule *module;
     struct Option *inopt, *outopt, *fileopt, *newopt, *typopt, *listopt, *fieldopt;
     struct Option *whereopt;
+    struct Flag *t_flag;
+/*    struct Flag *d_flag;*/
     struct Map_info In;
     struct Map_info Out;
     struct field_info *Fi;
-/*    struct Flag *d_flag;*/
     FILE *in;
     dbDriver *driver;
     dbHandle handle;
@@ -78,6 +79,10 @@ int main (int argc, char **argv)
     d_flag->key              = 'd';
     d_flag->description      = "Dissolve common boundaries (default is no) ";
     */
+    
+    t_flag = G_define_flag();
+    t_flag->key              = 't';
+    t_flag->description      = "Do not copy table.";
     
     inopt = G_define_standard_option(G_OPT_V_INPUT);
 
@@ -216,7 +221,9 @@ int main (int argc, char **argv)
     if ( 0 > max_att)
 	G_fatal_error("Error in line/site extraction processing");
 
-    Vect_copy_table ( &In, &Out, field, 1, NULL, GV_1TABLE );
+    if ( !t_flag->answer ) 
+        Vect_copy_table ( &In, &Out, field, 1, NULL, GV_1TABLE );
+
     Vect_close (&In);
     Vect_build (&Out, stdout );
     Vect_close (&Out);
