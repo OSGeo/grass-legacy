@@ -8,8 +8,8 @@
 
 <H2>NAME</H2>
 
-<EM><b>v.extract</b></EM>  - Selects vectors from an existing vector map and
-creates a new map containing only the selected vectors.
+<EM><b>v.extract</b></EM>  - Selects vector objects from an existing vector map
+and creates a new map containing only the selected objects.
 
 <BR>
 
@@ -34,8 +34,8 @@ creates a new map containing only the selected vectors.
 <EM>v.extract</EM> allows a user to create a new vector map layer
 from an existing vector map layer.
 User provides the program with category numbers or option (n) names,
-input vector file name, an output vector name, and the
-type of input map.  There is an option (d) to dissolve common boundaries
+input vector file name, an output vector file name, and the
+type of input object.  There is an option (d) to dissolve common boundaries
 between adjoining map areas in the same category list.  The user may
 specify a file containing category numbers or labels.
 
@@ -75,11 +75,11 @@ to the resultant map.
 
 <DT><B>type=</B><EM>name</EM> 
 
-<DD>Select area, line, or site.
+<DD>Select area, area edge, line, or site.
 
 <BR>
 
-Options:  area, line, site
+Options:  area, edge, line, site
 
 <DT><B>input=</B><EM>name</EM> 
 
