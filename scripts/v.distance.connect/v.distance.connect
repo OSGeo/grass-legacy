@@ -11,12 +11,14 @@
 #%option
 #% key:input1
 #% type:string
+#% gisprompt: old,vector,vector
 #% description: Name of vector points input map1
 #% required : yes
 #%End
 #%option
 #% key:input2
 #% type:string
+#% gisprompt: old,vector,vector
 #% description: Name of vector points input map2
 #% required : yes
 #%End
