@@ -1,4 +1,4 @@
-                 $Id: BUGS,v 1.119 2001-02-26 14:31:29 markus Exp $
+                 $Id: BUGS,v 1.120 2001-02-27 21:52:43 markus Exp $
 
 Known bugs in current GRASS GIS version 5.0 CVS
 [In sync with GRASS 5.0 beta CVS version]
@@ -128,7 +128,7 @@ i.rectify*:
 
 i.ortho.photo
  - if second control point is set by mouse, it is not indicated
-   immediately in orange color (right window)
+   immediately in orange color (right window) [was o.k. in GRASS 4.x]
  - GIS WARNING: Can't write embedded null values for map open for random
    access: i.ortho.photo/photo.rectify/write.c needs to be updated.
   (being worked on by ?)  
