@@ -6,10 +6,12 @@ PROG = $(BIN_MAIN_CMD)/r.poly
 
 all: $(PROG)
 
-$(PROG): $(OFILES)
+$(PROG): $(OFILES) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) 
 	rm -f a.out $@
 	$(CC) $(LDFLAGS) $(OFILES) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(MATHLIB)
 	mv a.out $@
+
+$(VECTLIB) $(DIG_ATTLIB) $(GISLIB): #
 
 $(OFILES):	extr_areas.h
 
