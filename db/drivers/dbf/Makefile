@@ -53,5 +53,5 @@ default: $(DRIVER)
 
 $(DRIVER): $(ARCH_OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
-	cp $(DRIVER) $(SHPDRIVER)
+	cp -f $(DRIVER) $(SHPDRIVER)
 
