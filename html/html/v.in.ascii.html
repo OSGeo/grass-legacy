@@ -1,0 +1,176 @@
+<html>
+<head>
+<TITLE>v.in.ascii</TITLE>
+</head>
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.in.ascii</b></EM>  - Converts ASCII vector map layers
+into binary vector map layers.
+
+<BR>
+
+<EM>(GRASS Vector Data Import Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.in.ascii</B>
+<BR>
+<B>v.in.ascii help</B>
+<BR>
+<B>v.in.ascii</B> <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>v.in.ascii</EM> converts a vector map in ASCII format
+to a vector map in binary format.  
+
+<H2>OPTIONS</H2>
+
+The user can run this
+program non-interactively by specifying all program options
+on the command line, in the form:
+
+<DL>
+<DD>
+<B>v.in.ascii</B> <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM>
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>input=</B><EM>name</EM>
+
+<DD>Name of an ASCII vector file to be converted to binary vector file.
+
+<DT><B>output=</B><EM>name</EM>
+
+<DD>Name given to binary vector output file.
+</DL>
+
+If the user runs <EM>v.in.ascii</EM> without giving program
+arguments on the command line, the program will prompt the
+user for <EM>input</EM> and <EM>output</EM> file names.
+
+<H2>NOTES</H2>
+
+After running this program, GRASS support files must be built for
+the binary <EM>output</EM> file before the user can use the file in 
+
+<EM><A HREF="v.digit.html">v.digit</A></EM>.
+The user can run 
+
+<EM><A HREF="v.support.html">v.support</A></EM> 
+
+to create GRASS support files for the <EM>output</EM> file.
+<P>
+
+Note, that the coordinates order is NORTH EAST.
+<P>
+
+To import category labels, the dig_cats file needs to be specified in
+<tt>OTHER INFO</tt> field.
+
+<P>
+Example ASCII vector file (store in dig_ascii/):<p>
+<pre>
+       ORGANIZATION:
+       DIGIT DATE:   Oct 24 2001
+       DIGIT NAME:   nds_gem
+       MAP NAME:     nds_gem
+       MAP DATE:
+       MAP SCALE:    500000
+       OTHER INFO:   /home/neteler/grassdata5/langeoog/PERMANENT/dig_cats
+       ZONE:         0
+       WEST EDGE:    3399965.343
+       EAST EDGE:    3403360.343
+       SOUTH EDGE:   5957127.30045067
+       NORTH EDGE:   5960625.30045067
+       MAP THRESH:   19.05
+       VERTI:
+       A  13
+        5958812.48844435 3400828.84221011
+        5958957.29887089 3400877.11235229
+        5959021.65906046 3400930.7458436
+        5959048.47580612 3400973.65263665
+        5959069.92920264 3401032.64947709
+        5959064.56585351 3401123.82641232
+        5958994.84231481 3401188.1866019
+        5958914.39207784 3401188.1866019
+        5958823.21514261 3401107.73636493
+        5958753.49160391 3401005.83273144
+        5958753.49160391 3400941.47254186
+        5958780.30834956 3400887.83905055
+        5958812.48844435 3400828.84221011
+       A  8
+        5959010.9323622 3401338.36037757
+        5959096.7459483 3401370.54047235
+        5959091.38259917 3401450.99070932
+        5958973.38891828 3401520.71424803
+        5958882.21198305 3401467.08075671
+        5958903.66537958 3401375.90382148
+        5958941.2088235 3401332.99702844
+        5959010.9323622 3401338.36037757
+</pre>
+
+The associated dig_att file needs following format (store in dig_att/):<p>
+<pre>
+       A 3401180.463379 5959003.209139          1
+       A 3401516.741397 5958966.635071          2
+</pre>
+<P>
+
+The associated dig_cats file needs following format:<p>
+<pre>
+       # 2 categories
+ 
+ 
+       0.00 0.00 0.00 0.00
+       1:forest
+       2:water
+</pre>
+<P>
+
+To (re-)set map metadata like ORGANIZATION etc. later, <EM>v.digit</EM> can be
+used.
+
+<p>
+The GRASS program <EM><A HREF="v.out.ascii.html">v.out.ascii</A></EM>
+performs the function of <EM>v.in.ascii</EM> in reverse;
+i.e., it converts vector files in binary format to ASCII
+format.  These two companion programs are useful both for
+importing and exporting vector files between GRASS and
+other software, and for transferring data between
+machines.
+
+
+<P>
+
+The input from <EM>v.in.ascii</EM> has to be placed into
+<KBD>$LOCATION/dig_ascii</KBD> (this directory must be created if not existing).
+
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.digit.html">v.digit</A></EM>,
+<EM><A HREF="v.import.html">v.import</A></EM>,
+<EM><A HREF="v.out.ascii.html">v.out.ascii</A></EM>,
+<EM><A HREF="v.support.html">v.support</A></EM>,
+<EM><A HREF="../ascii_formats.html">GRASS ASCII formats</A></EM>
+
+<H2>AUTHORS</H2>
+
+Michael Higgins,
+U.S.Army Construction Engineering 
+Research Laboratory<BR>
+James Westervelt, U.S.Army Construction Engineering 
+Research Laboratory
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

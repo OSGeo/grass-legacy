@@ -84,16 +84,20 @@ read_cfg (void)
 	if (FIELD("page width"))
   	{
 	    PS.page_width = atof(value);
+	    /*
 	    if (PS.page_width < 8.5) PS.page_width = 8.5;
 	    if (PS.page_width > 48.0) PS.page_width = 48.0;
+	    */
 	    continue;
 	}
 
 	if (FIELD("page height"))
   	{
 	    PS.page_height = atof(value);
+	    /*
 	    if (PS.page_height < 8.5) PS.page_height = 8.5;
 	    if (PS.page_height > 48.0) PS.page_height = 48.0;
+	    */
 	    continue;
 	}
 

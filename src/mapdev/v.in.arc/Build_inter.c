@@ -31,7 +31,6 @@
 
 #include "stdio.h"
 #include "Vect.h"
-#include "dig_head.h"
 #include "v_in_arc.inter.h"
 
 int 

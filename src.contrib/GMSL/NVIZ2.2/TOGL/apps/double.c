@@ -126,7 +126,7 @@ int setXrot_cb( struct Togl *togl, int argc, char *argv[] )
       return TCL_ERROR;
    }
 
-   xAngle = atof( argv[2] );
+   xAngle = (float)atof( argv[2] );
    
 /* fprintf (stdout, "before %f ", xAngle ); */
 
@@ -149,6 +149,7 @@ int setXrot_cb( struct Togl *togl, int argc, char *argv[] )
 
 int setYrot_cb( struct Togl *togl, int argc, char *argv[] )
 {
+   double atof();
    Tcl_Interp *interp = Togl_Interp(togl);
 
    /* error checking */
@@ -159,7 +160,7 @@ int setYrot_cb( struct Togl *togl, int argc, char *argv[] )
       return TCL_ERROR;
    }
 
-   yAngle = atof( argv[2] );
+   yAngle = (float)atof( argv[2] );
    
    if ( yAngle < 0.0 ) {
      yAngle += 360.0;

@@ -30,7 +30,7 @@ int Write_results(int end)
 					fprintf(stderr, "\t-----------\t----------\n");
 					sprintf(line, "\t%-15s\t%-15s", lon_strng, lat_strng);
 					fprintf(stderr, "\n%s\n", line);
-					fprintf(stderr, "\n                                         To continue    -Hit any key- ");
+					fprintf(stderr, "\n                                       To continue    -Hit enter key- ");
 					G_gets(answer);
 				} else {
 					sprintf(line, "%-15s\t%-15s\t%-15s\t%-15s\n", lon_strng, lat_strng, lon_strng, lat_strng);
@@ -43,7 +43,7 @@ int Write_results(int end)
 					fprintf(stderr, "\t-----------\t----------\t-------------\t-------------\n");
 					sprintf(line, "\t%-15s\t%-15s\t%10.2f\t%10.2f", lon_strng, lat_strng, EAS_res, NOR_res);
 					fprintf(stderr, "\n%s\n", line);
-					fprintf(stderr, "\n                                         To continue    -Hit any key- ");
+					fprintf(stderr, "\n                                       To continue    -Hit enter key- ");
 					G_gets(answer);
 				} else {
 					sprintf(line, "%-15s\t%-15s\t%10.2f\t%10.2f\n", lon_strng, lat_strng, EAS_res, NOR_res);
@@ -58,7 +58,7 @@ int Write_results(int end)
 					fprintf(stderr, "\t-------------\t--------------\t-----------\t---------\n");
 					sprintf(line, "\t%10.2f\t%10.2f\t%-15s\t%-15s", EAS, NOR, lon_strng, lat_strng);
 					fprintf(stderr, "\n%s\n", line);
-					fprintf(stderr, "\n                                         To continue    -Hit any key- ");
+					fprintf(stderr, "\n                                       To continue    -Hit enter key- ");
 					G_gets(answer);
 				} else {
 					sprintf(line, "%10.2f\t%10.2f\t%-15s\t%-15s\n", EAS, NOR, lon_strng, lat_strng);
@@ -71,7 +71,7 @@ int Write_results(int end)
 					fprintf(stderr, "\t------------\t-----------\t-------------\t-------------\n");
 					sprintf(line, "%10.2f\t%10.2f\t%10.2f\t%10.2f", EAS, NOR, EAS_res, NOR_res);
 					fprintf(stderr, "\n%s\n", line);
-					fprintf(stderr, "\n                                         To continue    -Hit any key- ");
+					fprintf(stderr, "\n                                       To continue    -Hit enter key- ");
 					G_gets(answer);
 				} else {
 					sprintf(line, "%10.2f\t%10.2f\t%10.2f\t%10.2f\n", EAS, NOR, EAS_res, NOR_res);
@@ -83,7 +83,7 @@ int Write_results(int end)
 	if (end) {
 		if (output_typ == 2) {
 			fclose(Out_file);
-			sprintf(line, "   %6d coordinates processed, to continue    -Hit any key- ", rec_cnt);
+			sprintf(line, "   %6d coordinates processed, to continue  -Hit enter key- ", rec_cnt);
 			fprintf(stderr, "\n%s\n", line);
 			G_gets(answer);
 		}

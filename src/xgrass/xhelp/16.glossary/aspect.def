@@ -1,7 +1,0 @@
-
-
-aspect - The direction in which a slope faces, commonly expressed
-in degrees clockwise from north.  A directly west-facing slope, for
-example, would have an aspect of 270 degrees.  Maps of slope and
-aspect can be automatically calculated in GRASS from a map of 
-elevation.

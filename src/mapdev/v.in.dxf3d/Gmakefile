@@ -1,0 +1,7 @@
+PGM = v.in.dxf3d
+
+OBJ= main.o
+
+$(BIN_CMD)/$(PGM): main.o  $(GISLIB) $(VECTLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(MATHLIB) $(XDRLIB)
+	cp v.in.dxf3d.sh $(GISBASE)/scripts/

@@ -102,6 +102,7 @@ db_set_value_double(value, d)
     db_set_value_not_null(value);
 }
 
+int
 db_set_value_string(value, s)
     dbValue *value;
     char *s;

@@ -1,4 +1,6 @@
 #include "dbmi.h"
+#include <string.h>
+#include <stdlib.h>
 
 static
 char *dbmscap_files[] = {

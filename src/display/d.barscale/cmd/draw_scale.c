@@ -96,7 +96,8 @@ int draw_scale (int use_mouse)
 		pr = r;         if (pr > r) pr = r;
 		
 		if(use_mouse)
-			R_panel_save(tmp_fname,pt,pb,pl,pr);
+		/* bugfix 1/2002 MN: pr+1, otherwise saved area too small */
+			R_panel_save(tmp_fname,pt,pb,pl,pr+1);
 		for(i=y_pos + 5; i < y_pos + 35; i++)
 			R_move_abs(x_pos+5, i), R_cont_abs(r, i) ;
 			
@@ -125,11 +126,12 @@ int draw_scale (int use_mouse)
 		for (i = 1; i <= scales[incr].seg; i+=2)
 		{
 			R_polygon_rel(xarr, yarr ,4);
-			R_move_rel((int) (seg_len * 2), 0);
+			/* bugfix 1/2002 MN: added +1 to have bar completely filled */
+			R_move_rel((int) (seg_len * 2 + 1), 0);
 		}
 		R_move_abs (x_pos + 40 + (int) line_len, y_pos + 25) ;
 		R_text(scales[incr].name) ;
-		R_flush();
+		R_stabilize();
 
 		if(use_mouse)
 			{

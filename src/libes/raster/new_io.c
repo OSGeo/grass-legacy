@@ -2,6 +2,7 @@ char *getenv();
 #include "raster.h"
 #include <stdio.h>
 #include <signal.h>
+#include <pwd.h>
 #include "graph.h"
 #include "monitors.h"
 #include "gis.h"
@@ -17,7 +18,7 @@ static int no_mon ;
 
 static int _rfd;
 static int _wfd;
-void dead() ;
+static void dead() ;
 static int get_ids ( char *, int *,int);
 static int unlock_driver (int );
 static int find_process (int );
@@ -151,7 +152,7 @@ int R_open_driver()
     struct MON_CAP *mon, *R_parse_monitorcap();
     char *name, *G__getenv(), *getenv(), *key_string;
     char *user, *who_locked_driver();
-    stuct passwd *pw, *getpwuid();
+    struct passwd *pw, *getpwuid();
 
     verbose = !quiet;
     quiet = 0;
@@ -263,7 +264,7 @@ int R_open_driver()
                     unlock_driver(1);
                     return(NO_RUN);
                 default:
-                    return(OKOK);
+                    return(OK);
                 }
             }
         }
@@ -319,6 +320,7 @@ static int sync_driver(char *name)
     int try;
     int count;
     unsigned char c;
+    void (*sigalarm)();
 
     _send_ident (BEGIN);
     flushout();
@@ -375,13 +377,13 @@ static void dead()
 
 int _hold_signals (int hold)
 {
-    static int (*sigint)();
-    static int (*sigquit)();
+    static void (*sigint)();
+    static void (*sigquit)();
 
     if (hold)
     {
-        sigint  = (int (*)()) signal (SIGINT, SIG_IGN);
-        sigquit = (int (*)()) signal (SIGQUIT, SIG_IGN);
+        sigint  = (void (*)()) signal (SIGINT, SIG_IGN);
+        sigquit = (void (*)()) signal (SIGQUIT, SIG_IGN);
     }
     else
     {
@@ -494,7 +496,6 @@ static int lockfile(char *file)
     }
 }
 
-#include <pwd.h>
 static int lock_driver (int lock_pid)
 {
     char file[512];

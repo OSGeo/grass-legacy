@@ -1,4 +1,5 @@
 #include "dbmi.h"
+#include <stdlib.h>
 
 dbTable *
 db_alloc_table (ncols)
@@ -30,7 +31,7 @@ void
 db_init_table (table)
     dbTable *table;
 {
-    db_zero (table, sizeof(dbTable));
+    db_zero ((void *)table, sizeof(dbTable));
     db_init_string (&table->tableName);
     db_init_string (&table->description);
 }
@@ -79,6 +80,7 @@ db_get_table_description (table)
     return db_get_string (&table->description);
 }
 
+int
 db_get_table_number_of_columns(table)
     dbTable *table;
 {
@@ -134,6 +136,7 @@ db_set_table_select_priv_not_granted (table)
     set_all_column_privs (table, db_set_column_select_priv_not_granted);
 }
 
+int
 db_get_table_select_priv (table)
     dbTable *table;
 {
@@ -154,6 +157,7 @@ db_set_table_update_priv_not_granted (table)
     set_all_column_privs (table, db_set_column_update_priv_not_granted);
 }
 
+int
 db_get_table_update_priv (table)
     dbTable *table;
 {
@@ -174,6 +178,7 @@ db_set_table_insert_priv_not_granted (table)
     table->insert = DB_NOT_GRANTED;
 }
 
+int
 db_get_table_insert_priv (table)
     dbTable *table;
 {
@@ -194,6 +199,7 @@ db_set_table_delete_priv_not_granted (table)
     table->delete = DB_NOT_GRANTED;
 }
 
+int
 db_get_table_delete_priv (table)
     dbTable *table;
 {

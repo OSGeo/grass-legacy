@@ -1,0 +1,232 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+   <meta name="GENERATOR" content="Mozilla/4.77 [ru] (X11; U; Linux 2.2.19-3.asp i686) [Netscape]">
+   <title>d.site.pg</title>
+</head>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+<a NAME="d.site.pg"></a><img SRC="grass.smlogo.gif" >
+<hr width=100% align=center size=6 no shade>
+<h2>
+NAME</h2>
+<b><i>d.site.pg</i></b> - Display select sites from a database query. (GRASS-RDBMS
+Interface Display Program)
+<h2>
+SYNOPSIS</h2>
+<b>d.site.pg</b>
+<br><b>d.site.pg help</b>
+<br><b>d.site.pg</b> [<b>sql</b>=file] <b>tab</b>=name <b>coordx</b>=name
+<b>coordy</b>=name
+[<b>cats</b>=name] [<b>where</b>=name] [<b>map</b>=name] [<b>plot</b>=color,icon,size]
+<br>&nbsp;
+<h2>
+ALTERNATE</h2>
+<b>d.vect.pg -s help</b>
+<br><b>d.vect.pg -s sql</b><i>=</i>filename [<b>map</b><i>=</i>name] [<b>plot=</b>color,icon,size]
+<h2>
+DESCRIPTION</h2>
+Query sites in a PostgreSQL database using an SQL file or by specifying
+conditions directly.&nbsp; Optionally, plot display or send output to a
+sites_list "map".
+<p><i>d.site.pg</i> displays select point location information returned
+from a database query. The site locations returned from the database query
+are displayed as icons in the active frame. The user controls the color,
+size and icon used in the graphic output. As option, a site list of the
+database output is generated and placed in the current mapset/location.
+<h2>
+COMMAND LINE OPTIONS</h2>
+
+<h3>
+Parameters:</h3>
+
+<dl>
+<dt>
+<b>tab=databasetablename</b></dt>
+
+<dd>
+Table containing X, Y coordinate values.</dd>
+
+<dt>
+<b>coordx=database_x_columnname</b></dt>
+
+<dd>
+Column containing x coordinate values.</dd>
+
+<dt>
+<b>coordy=database_y_columnname</b></dt>
+
+<dd>
+Column containing y coordinate values.</dd>
+
+<dt>
+<b>where=SQLwhereclause</b></dt>
+
+<dd>
+SQL "where" clause which specifies the query criteria to be used in subsetting
+the database. The information specified in the where option must indicate
+the column(s) to be used, the operators to be used in the evaluation and
+the values which the data in the column will be evaluated against.</dd>
+</dl>
+For example, if you want to select only those records from the table well
+where the value for depth is either 58 or 75 the following could be entered:
+<dd>
+<i>well.depth = 58 or well.depth = 75</i></dd>
+
+<br>&nbsp;
+<p>&nbsp;
+<p>To select all wells in an area where the value for well is between 50
+and 120:
+<dd>
+<i>well.depth > 50 and well.depth &lt; 120</i></dd>
+
+<br>&nbsp;
+<p>&nbsp;
+<p>To select all wells of depth greater than 75 where the value for owner
+is not equal to SMITH:
+<dd>
+<i>well.depth > 75 and well.owner != 'SMITH'</i></dd>
+
+<dd>
+<i></i></dd>
+
+<br>If the database column used as the selection criteria is a character
+field then the associated value must be placed in quotes. To determine
+the data types associated with columns in the currently selected database
+use the <i>g.column.pg</i> command with the <i>-v</i> flag.
+<p>In addition to the operators presented in the examples above a range
+of relational operators including and, or, etc. are supported.
+<p>Queries more complex are best implemented using a prepared SQL file.
+<dl>
+<dt>
+<b>map=list</b></dt>
+
+<dd>
+Name of sites list to output</dd>
+<b></b>
+<p><br><b>cats=name</b>
+<dd>
+Name of the category field to be assigned in the new site list</dd>
+
+<dt>
+<b>plot=color,icon,size</b></dt>
+
+<dd>
+Colors: red, orange, yellow, green, blue, indigo, violet, magenta, brown,
+gray, white, black</dd>
+
+<dd>
+Icon: diamond, box, plus, x</dd>
+
+<dd>
+Size: 1-9</dd>
+
+<dd>
+Default: gray, x, 3</dd>
+</dl>
+
+<dl>
+<dt>
+<b>sql=filename</b></dt>
+
+<dd>
+SQL statements specifying well formed selection criteria</dd>
+
+<br>&nbsp;
+<h2>
+ALTERNATE COMMAND LINE USAGE</h2>
+The alternate command line usage is provided to simplify the process of
+retrieving information from more than one table in the query criteria.
+The alternate command line structure is selected using the the <i>[-s]</i>
+flag on the command line. When using this flag the user must include the
+name of a text file on the command line as well. This file must include
+a complete, well formed SQL SELECT statement specifying the query criteria
+to retrieve values which correspond to category values in a GRASS data
+layer.
+<h3>
+Flag:</h3>
+
+<dt>
+<b>-s</b></dt>
+
+<dd>
+SQL select statements are input from a prepared file</dd>
+
+<h3>
+Parameters:</h3>
+</dl>
+
+<dl>
+<dt>
+<b>map=list</b></dt>
+
+<dd>
+Name of sites list to output</dd>
+
+<dt>
+<b>plot=color,icon,size</b></dt>
+
+<dd>
+Colors: red, orange, yellow, green, blue, indigo, violet, magenta, brown,
+gray, white, black</dd>
+
+<dd>
+Icon: diamond, box, plus, x</dd>
+
+<dd>
+Size: 1-9</dd>
+
+<dd>
+Default: gray, x, 3</dd>
+
+<br>&nbsp;
+<dt>
+<b>sql=filename</b></dt>
+
+<dd>
+SQL statements specifying well formed selection criteria</dd>
+
+<br>&nbsp;
+<dl>&nbsp;</dl>
+<b>EXAMPLE:</b>
+<p>1. <i>d.site.pg tab=izb coordx=xcoor coordy=ycoor where="how_big~'small'"
+plot=white,diamond,9</i>
+<p><b>Result:</b> displays only 'small' huts in white color diamonds size
+9
+<p>2. <i>d.site.pg -s sql=izb3.sql map=huts_good</i>
+<p>izb3.sql is:
+<br><i>select xcoor,ycoor,owner from izb where how_good ~ 'good' and izb_info.name=name
+and izb_info.rec_id=num</i>
+<p><b>Result:</b> displays only 'good' huts (and only huts which have 'name'
+coinciding with that taken from a table <i>izb_info</i>, linked on the
+hut number) and creates site map called <i>huts_good</i> with categories
+taken from the database field 'owner'</dl>
+
+<h2>
+BUGS</h2>
+None known.
+<h2>
+NOTE</h2>
+This program requires the Postgres database software.
+<h2>
+SEE ALSO</h2>
+<i><a href="g.column.pg.html">g.column.pg</a>, <a href="g.select.pg.html">g.select.pg</a>,
+<a href="g.stats.pg.html">g.stats.pg</a>,
+<a href="g.table.pg.html">g.table.pg</a>,
+<a href="d.rast.pg.html">d.rast.pg</a>,
+<a href="d.vect.pg.html">d.vect.pg</a>,
+<a href="d.what.r.pg.html">d.what.r.pg</a>,
+<a href="d.what.s.pg.html">d.what.s.pg</a>,
+<a href="d.what.v.pg.html">d.what.v.pg</a>,
+<a href="r.reclass.pg.html">r.reclass.pg</a>,
+<a href="r.rescale.pg.html">r.rescale.pg</a>,
+<a href="v.reclass.pg.html">v.reclass.pg</a></i>
+<h2>
+AUTHOR</h2>
+Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick
+Limp University of Arkansas, CAST
+<p>Postgres modifications: Janne Soimasuo, Faculty of Forestry, University
+of Joensuu, Finland.
+<p>Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
+</body>
+</html>

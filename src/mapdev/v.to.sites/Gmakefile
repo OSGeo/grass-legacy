@@ -1,17 +1,6 @@
-EXTRA_CFLAGS	= $(VECT_INCLUDE)
-
-
 PGM=v.to.sites
-HOME=$(BIN_ALPHA_CMD)
-PROG =  $(HOME)/$(PGM)
 
-all:  $(PROG)
-	
-$(PROG): v.to_sites.o $(VECTLIB) $(GISLIB) $(DATETIMELIB)
+$(BIN_CMD)/$(PGM): v.to_sites.o $(VECTLIB) $(GISLIB) $(DATETIMELIB)
 	$(CC) $(LDFLAGS) -o $@ v.to_sites.o $(VECTLIB) $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB) $(GISLIB): #
-
-saber_src:
-	#load $(EXTRA_CFLAGS) $(CFLAGS) ../Vlib/*.c ../diglib/*.c v.to_sites.c $(GISLIB) $(DATETIMELIB) $(DIG_ATTLIB) $(MATHLIB) 
-

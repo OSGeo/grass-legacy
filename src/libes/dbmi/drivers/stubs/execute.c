@@ -1,5 +1,6 @@
 #include "dbmi.h"
 
+int
 db_driver_execute_immediate (SQLstatement)
     dbString *SQLstatement;
 {

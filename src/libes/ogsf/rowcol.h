@@ -1,3 +1,10 @@
+/*
+* $Id$
+*/
+
+#ifndef _ROWCOL_H
+#define _ROWCOL_H
+
 /* these defines work with modeling coordinates only */
 
 /* view resolutions */
@@ -33,3 +40,5 @@
 /* viewres row/col to ycoord/xcoord */
 #define VROW2Y(gs,vrow)      (gs->yrange - ((vrow) * gs->yres * gs->y_mod))
 #define VCOL2X(gs,vcol)      ((vcol) * gs->xres * gs->x_mod)
+
+#endif /* _ROWCOL_H */

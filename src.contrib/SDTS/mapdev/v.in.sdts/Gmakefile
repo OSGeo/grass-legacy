@@ -1,0 +1,107 @@
+PGM =	v.in.sdts
+
+HOME =	$(BIN_CMD)
+
+FIPSLIB	= $(LIBDIR)/libf123.a
+
+EXTRA_CFLAGS	= -I../../libes/fips123/f123inc -DSTIG
+
+OFILES = \
+	v.in.sdts.o\
+	rd_fips123.o\
+	in_errors.o\
+	planar_nodes.o\
+	entity_pnts.o\
+	lines.o\
+	conv_bits.o\
+	min_max.o\
+	rw_bdig.o\
+	fm_struct.o\
+	polygon.o\
+	area_point.o\
+	att_ff_info.o\
+	attributes.o\
+	wr_attrs.o\
+	composites.o\
+	get_center.o\
+	boundary.o\
+	display_info.o\
+	mk_area_pnt.o\
+	dictionary.o\
+	manifolds.o\
+	scripts.o
+
+CFILES = \
+	v.in.sdts.c\
+	rd_fips123.c\
+	in_errors.c\
+	planar_nodes.c\
+	entity_pnts.c\
+	lines.c\
+	conv_bits.c\
+	min_max.c\
+	rw_bdig.c\
+	fm_struct.c\
+	polygon.c\
+	area_point.c\
+	att_ff_info.c\
+	attributes.c\
+	wr_attrs.c\
+	composites.c\
+	get_center.c\
+	boundary.c\
+	display_info.c\
+	mk_area_pnt.c\
+	dictionary.c\
+	manifolds.c\
+	scripts.c
+
+
+LIBES =	$(FIPSLIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB)
+
+$(HOME)/$(PGM):  $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIBES):	#
+
+saber_src:
+	#load $(CFLAGS) $(CFILES) $(FIPSLIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(MATHLIB)
+
+
+
+area_point.o: sdts_in.h
+area_point.o: sdts_globals.h
+att_ff_info.o:        sdts_in.h
+att_ff_info.o:        sdts_globals.h
+attributes.o: sdts_globals.h
+attributes.o: sdts_in.h
+boundary.o:   sdts_in.h
+boundary.o:   sdts_globals.h
+composites.o: sdts_in.h
+composites.o: sdts_globals.h
+dictionary.o: sdts_in.h
+dictionary.o: sdts_globals.h
+display_info.o:       sdts_in.h
+display_info.o:       sdts_globals.h
+entity_pnts.o:        sdts_in.h
+entity_pnts.o:        sdts_globals.h
+fm_struct.o:  sdts_in.h
+lines.o:      sdts_in.h
+lines.o:      sdts_globals.h
+manifolds.o:  sdts_globals.h
+manifolds.o:  sdts_in.h
+min_max.o:    sdts_in.h
+mk_area_pnt.o:        sdts_in.h
+mk_area_pnt.o:        sdts_globals.h
+planar_nodes.o:       sdts_in.h
+planar_nodes.o:       sdts_globals.h
+polygon.o:    sdts_in.h
+polygon.o:    sdts_globals.h
+scripts.o:    sdts_in.h
+scripts.o:    defines.h
+scripts.o:    sdts_globals.h
+v.in.sdts.o:  sdts_in.h
+v.in.sdts.o:  sdts_globals.h
+wr_attrs.o:   sdts_in.h
+wr_attrs.o:   sdts_globals.h
+wr_attrs.o:   defines.h

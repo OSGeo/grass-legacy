@@ -5,31 +5,27 @@
 **  US Army Construction Engineering Research Lab, University of Illinois 
 **
 **  Copyright  J. Caplan, H. Mitasova, L. Mitas, M.Ruesink, J. Hofierka, 
-	M. Zlocha  1995
-
+**	M. Zlocha  1995
+**
+**This program is free software; you can redistribute it and/or
+**modify it under the terms of the GNU General Public License
+**as published by the Free Software Foundation; either version 2
+**of the License, or (at your option) any later version.
+**
+**This program is distributed in the hope that it will be useful,
+**but WITHOUT ANY WARRANTY; without even the implied warranty of
+**MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**GNU General Public License for more details.
+**
+**You should have received a copy of the GNU General Public License
+**along with this program; if not, write to the Free Software
+**Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
+**
 **  version 13 for GRASS5.0
-    FP related bugs in slope length output fixed by Helena oct. 1999)
-    Update MN: commented line 387
+**  FP related bugs in slope length output fixed by Helena oct. 1999)
+**  Update MN: commented line 387
 */
 
-/*
-The flowtracing program, both binary and source is copyrighted, but available 
-without fee for education, research and non-commercial purposes. Users may 
-distribute the binary and source code to third parties provided that the
-copyright notice and this statement appears on all copies and that no
-charge is made for such copies.  Any entity wishing to integrate all or
-part of the source code into a product for  commercial use or resale,
-should contact authors of the software, U.S.Army CERL and University
-of Illinois.
-
-THE SOFTWARE IS PROVIDED "AS IS" WITHOUT EXPRESS OR IMPLIED WARRANTY. THE
-U.S.Army CERL, UNIVERSITY OF ILLINOIS OR AUTHORS SHALL NOT BE LIABLE FOR 
-ANY DAMAGES SUFFERED BY THE USER OF THIS SOFTWARE.
-
-By copying this program, you, the user, agree to abide by the copyright
-conditions and understandings with respect to any software which is marked
-with a copyright notice.
-*/
 
 #include "r.flow.13.h"
 #include "mem.13.h"
@@ -113,7 +109,8 @@ height_angle_bounding_box(sub, cut, horiz, p, b)
 	       (double) get(el, c, sub) * r;
     }
 
-    if (!(a1 == UNDEF || a2 == UNDEF))  
+    if (!(a1 == UNDEF || a2 == UNDEF) &&
+        !(G_is_d_null_value(&a1) || G_is_d_null_value(&a2)))
 /*    if (!(G_is_d_null_value(&a1) || G_is_d_null_value(&a2)))*/
     {
 	if ((d = a1 - a2) >= D_PI || d <= -D_PI)
@@ -244,7 +241,16 @@ int next_point(
 	if (oldtheta == 90 || oldtheta == 270)
 	    delta = 0;
 	else
+	{
+	    /* I don't know if this is right case.
+	     * Anyway, DY() should be avoid from dividing by zero.
+	     * Any hydrologic idea?
+	     */
+	    if(tang[oldtheta] == 0.0)
+	        tang[oldtheta] = 0.000001;
+
 	    delta = DY(bdx[semi], oldtheta);
+	}
 
 	delta	 = rectify(delta, bdy, epsilon[VERT][ads.row]);
 	p->y	+= delta;

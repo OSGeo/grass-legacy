@@ -39,8 +39,8 @@ static char *help[]=
     "outline                          mapinfo",
     "colortable [y|n]                 vlegend",
     "comments   [unix-file]           psfile     PostScript include file",
-    "read       unix-file",
-    "verbose    [0|1|2]",
+    "read       unix-file             eps        Encapsulated PostScript file",
+    "verbose    [0|1|2]               rectangle  east north east north",
     "scale      1:#|# inches|# panels|1 inch = # miles",
     ""
 };
@@ -62,6 +62,7 @@ int main(int argc,char *argv[])
     struct Option *output_file;
     struct Option *copies;
     struct Flag *rflag;
+    struct GModule *module;
     static char *def_font = "Helvetica";
 
     /**************** begin ******************************/
@@ -71,7 +72,13 @@ int main(int argc,char *argv[])
     signal (SIGTERM, exit);
 
     setbuf (stderr, NULL);
+
     G_gisinit(argv[0]) ;
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Hardcopy PostScript map output utility.";
 
     rflag = G_define_flag();
     rflag->key = 'r';
@@ -107,9 +114,12 @@ int main(int argc,char *argv[])
     rotate_plot = rflag->answer;
     read_cfg();
 
-    BLACK = get_color_number("black");
-    WHITE = get_color_number("white");
-    GREY  = get_color_number("grey");
+    strcpy(buf,"black");
+    BLACK = get_color_number(buf);
+    strcpy(buf, "white");
+    WHITE = get_color_number(buf);
+    strcpy(buf, "grey"); 
+    GREY  = get_color_number(buf);
 
     /* initialize */
     copies_set = 0;
@@ -436,6 +446,22 @@ int main(int argc,char *argv[])
 	    continue;
 	}
 
+	if (KEY("eps"))
+	{
+	    double e, n;
+	    char east[50], north[50];
+
+	    if (sscanf(data, "%s %s", east, north) == 2
+	        && (scan_easting(east, &e) && scan_northing(north, &n)))
+		    record_eps(e, n);
+	    else
+	    {
+		gobble_input();
+		error(key, data, "illegal eps request");
+	    }
+	    continue;
+	}
+
 	if (KEY("line"))
 	{
 	    char east1[50], north1[50];
@@ -450,6 +476,24 @@ int main(int argc,char *argv[])
 	    {
 		gobble_input();
 		error(key, data, "illegal line request");
+	    }
+	    continue;
+	}
+
+	if (KEY("rectangle"))
+	{
+	    char east1[50], north1[50];
+	    char east2[50], north2[50];
+	    double e1, n1, e2, n2;
+
+	    if (sscanf(data, "%s %s %s %s", east1, north1, east2, north2) == 4
+	        && (scan_easting(east1, &e1)  && scan_easting(east2, &e2)
+	        && scan_northing(north1, &n1) && scan_northing(north2, &n2)))
+		    record_rectangle(e1, n1, e2, n2);
+	    else
+	    {
+		gobble_input();
+		error(key, data, "illegal rectangle request");
 	    }
 	    continue;
 	}
@@ -572,6 +616,14 @@ int main(int argc,char *argv[])
 	 	groupfile();
 	    }
 	    else error(key, data, "group not found");
+	    continue;
+	}
+
+	if (KEY("rgb"))
+	{
+	    G_strip(data);
+	    grp.do_group = 1;
+	    rgbfile(key, data);
 	    continue;
 	}
 

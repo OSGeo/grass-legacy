@@ -1,5 +1,5 @@
 BIN = $(ETC)/water
-PGN = seg
+PGM = seg
 
 SOURCE = main.c init_vars.c find_pour.c \
 	close_maps.c do_astar.c do_cum.c \
@@ -27,17 +27,11 @@ LIST =	main.o init_vars.o find_pour.o \
 	dseg_put.o dseg_read.o dseg_write.o \
 	sseg_close.o sseg_get.o sseg_open.o sseg_put.o
 
-$(BIN)/$(PGN): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) $(LIST) $(ADD_LIBS) $(GISLIB) $(SEGMENTLIB) $(MATHLIB) $(XDRLIB) -o $@
+$(BIN)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(ADD_LIBS) $(GISLIB) $(SEGMENTLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #
 $(SEGMENTLIB): #
-
-saber_src:
-	#load $(CFLAGS)$(ADD_LIBS) $(SOURCE) $(GISLIB) $(SEGMENTLIB) $(MATHLIB)
-
-saber_obj:
-	#load $(LDFLAGS) $(ADD_LIBS) $(LIST) $(GISLIB) $(SEGMENTLIB) $(MATHLIB)
 
 add_pt.o: Gwater.h
 close_maps2.o: Gwater.h

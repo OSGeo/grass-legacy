@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include "glob.h"
 
-static int icmp (CELL *,CELL *);
-static int dcmp (double *,double *);
+static int icmp (const void *, const void *);
+static int dcmp (const void *, const void *);
 
 int i_median (int argc, CELL *argv[], register CELL *cell, register int ncols)
 {
@@ -90,13 +90,15 @@ int n_median (int n, char *name)
     return 0;
 }
 
-static int icmp (CELL *a,CELL *b)
+static int icmp (const void *aa, const void *bb)
 {
+    const CELL *a = aa, *b = bb;
     return *a - *b;
 }
 
-static int dcmp (double *a,double *b)
+static int dcmp (const void *aa, const void *bb)
 {
+    const double *a = aa, *b = bb;
     if (*a < *b) return -1;
     if (*a > *b) return 1;
     return 0;

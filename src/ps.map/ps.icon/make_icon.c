@@ -64,6 +64,7 @@ make_icon (void)
     	    R_standard_color(white);
 	    R_move_abs(fx, fy);
 	    R_cont_abs(x, y);
+	    R_stabilize();
     	    icon.xp[icon.points] = fx = x;
     	    icon.yp[icon.points] = fy = y;
     	    icon.points++;

@@ -1,0 +1,18 @@
+PGM       = $(BIN_CMD)/d.what.r.pg
+LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) 
+
+OBJS = \
+	main.o  \
+        getAllOpts.o \
+        getSopts.o \
+        buildInfxQry.o \
+        runInfxQry.o \
+	getCat.o  \
+	opencell.o 
+
+EXTRA_CFLAGS = $(PQINCPATH)
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(PQLIBPATH) $(PQLIB) $(XEXTRALIBS) $(MATHLIB) $(XDRLIB)
+
+$(LIBES): #

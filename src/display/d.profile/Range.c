@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h> 
 
-int WindowRange (char *name, char *mapset, int *min, int *max)
+int WindowRange (char *name, char *mapset, long *min, long *max)
 {
 char              inbuf[512];     /* input buffer for reading stats */
 int               done = 0;
@@ -15,7 +15,7 @@ int               first;
 
 /* write stats to a temp file */
 temp_fname = G_tempfile();
-sprintf(stats_cmd,"r.stats -c %s > %s\n",name,temp_fname);
+sprintf(stats_cmd,"r.stats -ci %s > %s\n",name,temp_fname);
 system(stats_cmd);
 
 /* open temp file and read the stats into a linked list */
@@ -53,13 +53,28 @@ while (!done)
 int quick_range (char *name, char *mapset, long *min, long *max)
 {
     struct Range range;
+    struct FPRange fprange;
     CELL xmin,xmax;
+    DCELL fpxmin, fpxmax;
+    RASTER_MAP_TYPE a;
 
-    if (G_read_range (name, mapset, &range) <= 0)
-	return 0;
-    G_get_range_min_max (&range, &xmin, &xmax);
-    *max = xmax;
-    *min = xmin;
+    switch(G_raster_map_type(name,mapset))
+    {
+	    case CELL_TYPE:
+    		if (G_read_range (name, mapset, &range) <= 0)
+			return 0;
+    		G_get_range_min_max (&range, &xmin, &xmax);
+    		*max = xmax;
+    		*min = xmin;
+		break;
+	    default:
+    		if (G_read_fp_range (name, mapset, &fprange) <= 0)
+			return 0;
+    		G_get_fp_range_min_max (&fprange, &fpxmin, &fpxmax);
+    		*max = (long) fpxmax;
+    		*min = (long) fpxmin;
+		break;
+    }
     return 1;
 }
 

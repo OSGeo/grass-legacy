@@ -1,4 +1,4 @@
-HOME=$(BIN_MAIN_INTER)
+HOME=$(BIN_INTER)
 
 COMMON  = maketable.o dots.o do_reclass.o
 RECLASS = reclass.o set_cats.o $(COMMON)
@@ -7,10 +7,10 @@ MASK    = mask.o maskinfo.o makemask.o $(COMMON)
 all: $(HOME)/r.reclass $(HOME)/r.mask
 
 $(HOME)/r.reclass: $(RECLASS) $(GISLIB) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(RECLASS) $(GISLIB) $(VASK) $(XDRLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(RECLASS) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(HOME)/r.mask: $(MASK) $(GISLIB) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(MASK) $(GISLIB) $(VASK) $(XDRLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(MASK) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #
 $(VASKLIB): #

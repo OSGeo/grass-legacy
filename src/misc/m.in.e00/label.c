@@ -3,7 +3,9 @@
 #include <string.h>
 #include <math.h>
 #include "gis.h"
-#include "dig_defines.h"
+#include "site.h"
+#include "Vect.h"
+#include "local_proto.h"
 
 /**********************************************************************/
 /*                                                                    */
@@ -13,14 +15,15 @@
 
 extern int debug;		/* debug level (verbosity) */
 extern double scale;		/* scale of coordinates (Cf PRJ) */
-extern FILE *fde00, *fdlog;	/* input and log file descriptors */
+extern FILE *fdlog;	        /* log file descriptor */
 
-void getlabels( char *name, int cover_type)
+void getlabels( char *name, int cover_type, int prec)
 {
     FILE *f;
-    int id;
+    int num, id;		/* coverage-# and coverage-ID */
     double x, y;                /* coordinates		    */
-    char line[1024];            /* line buffer for reading  */
+
+    char line[84];              /* line buffer for reading  */
     char type;			/* 'A' (area) or 'L' (line) */
     extern FILE *G_fopen_new( char*, char*);
     extern FILE *G_fopen_append( char*, char*);
@@ -42,15 +45,16 @@ void getlabels( char *name, int cover_type)
     }
     if (f == NULL)
 	G_fatal_error( "Unable to create attribute file");
-    while (fgets( line, 1024, fde00) != NULL) {
-        sscanf( line, "%d%*d%lf%lf", &id, &x, &y);
+    for(;;) {
+	read_e00_line( line);
+        sscanf( line, "%d%d%lf%lf", &id, &num, &x, &y);
         if (id == -1)
             break;
         fprintf( f, "%c  %-12f  %-12f  %-8d \n", type,
-		x*scale, y*scale, id);
-        fscanf( fde00, "%lf%lf", &x, &y);	/* 4 values to skip */
-        fscanf( fde00, "%lf%lf", &x, &y);
-	fgets( line, 1024, fde00);		/* skip end of line */
+		x*scale, y*scale, num);
+	read_e00_line( line);		/* 4 values to skip */
+	if (prec)
+	    read_e00_line( line);	/* on 2 line when double precision */
     }
     fclose( f);
 
@@ -59,31 +63,37 @@ void getlabels( char *name, int cover_type)
 /**********************************************************************/
 /*                                                                    */
 /* getsites - create a site file from e00 - M. Wurtz (1998-10-10)     */
+/* must be changed, and use PAT info to fill the site structure       */
 /*                                                                    */
 /**********************************************************************/
 
-void getsites( char *name)
+void getsites( char *name, int prec)
 {
     FILE *f;
     int id;
     double x, y;		/* coordinates */
-    char ident[8];		/* ident */
-    char line[1024];            /* line buffer for reading */
-    extern FILE *G_fopen_sites_new( char *name);
+    char line[84];      	/* line buffer for reading */
+    Site *sites;
 
     if (debug)
 	fprintf( fdlog, "Creating Site file \"%s\"\n", name);
-    if ((f = G_fopen_sites_new( name)) == NULL)
+    if ((f = G_sites_open_new( name)) == NULL)
 	G_fatal_error( "Unable to create site file");
-    while (fgets( line, 1024, fde00) != NULL) {
+    sites = G_site_new_struct( CELL_TYPE, 2, 0, 0);
+
+    for(;;) {
+	read_e00_line( line);
         sscanf( line, "%d%*d%lf%lf", &id, &x, &y);
         if (id == -1)
             break;
-	sprintf( ident, "%d", id);
-	G_put_site( f, x, y, ident);
-        fscanf( fde00, "%lf%lf", &x, &y);	/* 4 values to skip */
-        fscanf( fde00, "%lf%lf", &x, &y);
-	fgets( line, 1024, fde00);		/* skip end of line */
+	sites->east = x;
+	sites->north = y;
+	sites->ccat = id;
+	G_site_put( f, sites);
+	read_e00_line( line);		/* 4 values to skip */
+	if (prec)
+	    read_e00_line( line);	/* on 2 line when double precision */
     }
     fclose( f);
+    G_site_free_struct( sites);
 }

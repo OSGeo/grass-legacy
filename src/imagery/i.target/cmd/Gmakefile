@@ -1,0 +1,7 @@
+PGM=i.target
+LIST = main.o
+LIBES=$(IMAGERYLIB) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST)  $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIBES): #

@@ -1,0 +1,55 @@
+<TITLE>i.oif</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>i.oif</b></EM> - Calculates Optimum Index Factor for LANDSAT TM bands 1,2,3,4,5 and 7
+<BR>
+<EM>(GRASS shell script)</EM> 
+
+<H2>SYNOPSIS</H2>
+
+<B>i.oif</B> 
+<BR>
+<B>i.oif help</B> 
+<BR>
+<B>i.oif tm1 tm2 tm3 tm4 tm5 tm7</B> 
+ 
+<H2>DESCRIPTION</H2>
+
+<EM>i.oif</EM> calculates the <br>
+ <b>  Optimum Index factor (OIF)</b>
+ for all LANDSAT TM band combinations (LANDSAT TM 1,2,3,4,5,7 without termal band 6).
+<p>
+ The result is a ranked list, which shows the
+ information content for all possible combinations (20).
+ The list is ranked from the best combination down to the 
+ combination containing less information.
+ From this the user can derive which band combinations
+ are interesting to analyse.
+<p>
+ Calculation (after CHAVEZ et al. 1984):
+
+<pre>
+           Sum of Standard deviations of 3 bands
+    OIF = ------------------------------------------------
+           Sum of ABS(correlation coefficients of 3 bands)
+</pre>
+<p>
+Ref.: Jensen: Introductory digital image processing 1996, p.98
+              ISBN 0-13-205840-5
+<p>
+  
+<H2>AUTHOR</H2>
+
+Markus Neteler<br>
+University of Hannover, Germany<br>
+neteler@itc.it
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

@@ -9,7 +9,7 @@
 #include "param.h"
 
 
-close_down()
+void close_down(void)
 {
     /* Close connection with existing input raster. */
 

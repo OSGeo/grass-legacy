@@ -1,5 +1,0 @@
-all:
-	$(GMAKE) Interface
-	$(GMAKE) Drivers
-	$(GMAKE) Programs
-	$(GMAKE) Tests

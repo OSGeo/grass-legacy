@@ -15,6 +15,7 @@ int main (
 int argc,
 char *argv[])
 {
+  struct GModule *module;
   struct Option *input;
   struct Map_info map;
   struct Categories cats;
@@ -23,6 +24,10 @@ char *argv[])
   int cats_ok, i;
 
   G_gisinit (argv[0]);
+
+  module = G_define_module();
+  module->description =
+	"Outputs basic information about a user-specified vector map layer.";
 
   input = G_define_option();
   input->key = "input";
@@ -70,7 +75,7 @@ char *argv[])
   divider ('|');
   printline ("");
 
-  sprintf (line, "  Type of Map:  %s                   ", "Vector");
+  sprintf (line, "  Type of Map:  %s (level: %i)        ", "Vector", Vect_level (&map));
 
   strcat (line, "Number of Categories: ");
 
@@ -81,8 +86,23 @@ char *argv[])
   }
   else
     strcat (line, "??");
-
   printline (line);
+
+  if ( Vect_level (&map) > 1)
+  {
+    sprintf (line, "                                         Number of lines:      %-9ld", (long)V2_num_lines (&map));
+    printline (line);
+    sprintf (line, "                                         Number of areas:      %-9ld", (long)V2_num_areas (&map));
+    printline (line);
+    sprintf (line, "                                         Number of islands:    %-9ld", (long)V2_num_islands (&map));
+    printline (line);
+  }
+  else
+  {
+    sprintf (line, "                No topology present.");
+    printline (line);
+  }
+
   printline ("");
   sprintf (line, "  Projection: %s (zone %d)", G_database_projection_name(), G_zone());
   printline (line);
@@ -93,8 +113,7 @@ char *argv[])
   printline (line);
 
   printline ("");
-
-  sprintf (line, "  Source date:     %s", v_head.source_date);
+  sprintf (line, "  Source date:      %s", v_head.source_date);
   printline (line);
   sprintf (line, "  Original scale 1:%ld", v_head.orig_scale);
   printline (line);

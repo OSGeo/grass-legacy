@@ -1,21 +1,24 @@
 PGM       = d.area
-LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB) $(XDRLIB)
+LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB)
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 OBJS = \
 	main.o \
-	plot.o
+	plot.o\
+	color_parse.o\
+        screenpoly.o
 
 CFILES = \
 	main.c \
-	plot.c
+	plot.c \
+        screenpoly.c
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB)
+all: $(BIN_CMD)/$(PGM) $(ETC)/rgb.txt
+
+$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(ETC)/rgb.txt: rgb.txt
+	cp -f $? $@
 
 $(LIBES): #
-
-saber_src:
-	#load $(EXTRA_CFLAGS) $(CFLAGS) $(CFILES)  /grass.src/4.0/src/mapdev/Vlib/*.c /grass.src/4.0/src/mapdev/diglib/*.c $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB)
-

@@ -1,0 +1,86 @@
+<HTML>
+
+<TITLE>i.rvi.prediction</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>i.rvi.prediction</b></EM>  - Calculates ground features, e.g. plant
+cover, by remote sensing data using a given regression model
+
+<BR>
+
+<EM>(GRASS Image Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>i.rvi.prediction</B>
+
+<BR>
+
+<B>i.rvi.prediction help</B>
+
+<BR>
+
+<B>i.rvi.prediction
+<B>model=</B><EM>name</EM>
+<B>band1=</B><EM>name</EM> 
+<B>band2=</B><EM>name</EM>
+<B>band3=</B><EM>name</EM>
+<B>output=</B><EM>name </EM>
+
+
+<H2>DESCRIPTION</H2>
+
+This programs calculate ground feature, e.g. plant cover, by remote sensing
+data using a given regression model. The input imagery is assumed with three
+optical bands: visible band1 and band2 and another infrared band3
+
+<H2>OPTIONS</H2>
+<H3>Parameter:</H3>
+
+<DL>
+
+<DT><B>model=</B><EM>name</EM> 
+<DD>rvi regression model input file
+<DT><B>band1=</B><EM>name</EM>
+<DD>visible band1 input file
+<DT><B>band2=</B><EM>name</EM>
+<DD>visible band2 input file
+<DT><B>band3=</B><EM>name</EM>
+<DD>infrared band3 input file
+<DT><B>output=</B><EM>name</EM> 
+<DD>output ground feature calculated
+</DL>
+
+The current region definition and mask settings are respected
+when reading the input map.
+
+<H2>NOTES</H2>
+
+The ground feature of each pixel by remote sensing data is calculated using
+rvi regression model. After run r.rational.regression, a rvi model is
+a coefficient vector with the definition of:<p>
+
+<pre>
+                          a[0]x1 + a[1]x2 + a[2]x3 + a[6]
+        ground feature = ---------------------------------
+                          a[3]x1 + a[4]x2 + a[5]x3 + 1.0
+</pre>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="r.rational.regression.html">r.rational.regression</A></EM><BR>
+<EM><A HREF="r.linear.regression.html">r.linear.regression</A></EM>
+
+<H2>AUTHOR</H2>
+CERL
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

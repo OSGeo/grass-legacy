@@ -1,13 +1,15 @@
-LIBES  = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+PGM=d.zoom
+LIBES  = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB) $(DATETIMELIB)
 
 LIST   = main.o \
 	 ask.o\
 	 box.o\
 	 center.o\
 	 returns.o \
-	 zoom.o
+	 zoom.o \
+	 redraw.o
 
-$(BIN_MAIN_CMD)/d.zoom: $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 returns.o: graphics.h

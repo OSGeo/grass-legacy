@@ -1,0 +1,87 @@
+<TITLE>r.in.ppm</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.in.ppm</b></EM> - Converts an ASCII/BINARY PPM image file to
+a GRASS raster file.
+
+<BR>
+
+<EM>(GRASS Raster Data Import Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.in.ppm </b>[<b>-vb</b>] <b>input=</b><em>name</em>
+<b>output=</b><em>name</em> <b>[nlev=</b><em>value]</em>
+
+<H2>DESCRIPTION</H2>
+
+This program converts a PPM raster file to a GRASS raster file.
+Output is placed in the <EM>/cell</EM> directory under the user's
+current GRASS mapset. Optionally, the user is asked to enter the
+maximum number of levels for each band; The default value is 20 (= 20
+x 20 x 20 = 8000 colors). If the number of colors in the PPM raster
+file is greater than the maximum number of colors, a quantized color
+table is created and each color of the PPM raster file assigned to the
+nearest available color. Optionally, the program creates 3 separate
+raster maps of the (true) red, green and blue levels. Currently PPM
+ASCII and PPM BINARY (PBM) formats are supported.
+
+<H2>OPTIONS</H2>
+
+<H3>Flag:</H3>
+
+<DL>
+<DT><B>-v</B>
+<DD>Verbose mode</DD>
+<DT><B>-b</B>
+<DD>Create 3 separate raster maps of the (true) R/G/B levels</DD>
+</DL> 
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+<DD>Name of an existing PPM raster file to be imported. 
+<DT><B>output=</B><EM>name</EM>
+<DD>Name to be assigned to resultant binary raster map layer. 
+<DT><B>nlev=</B><EM>value</EM>
+<DD>Max number of levels for R/G/B.
+<DD>options: 1-256
+<DD>default: 20 (= 8000 colors)
+</DL>
+
+<H2>NOTES</H2> 
+<P>
+R/G/B levels: each output raster map layer is given a linear gray
+scale color table. Each output raster map layer is assigned the
+user-specified <EM>output</EM> with (.r, .g, .b) suffix.  
+
+<P>
+The user should adjust boundary coordinates stored in the cell header
+after import using <EM>
+<EM>
+<A HREF="r.support.html">r.support</A>
+</EM>
+and
+<EM>
+<A HREF="parser.html">parser</A>
+</EM>
+
+<H2>SEE ALSO</H2>
+
+<EM>
+<A HREF="r.in.pbm.html">r.in.pbm</A>
+</EM>
+
+<H2>AUTHOR</H2>
+
+Stefano Merler, ITC-irst (Italy)
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

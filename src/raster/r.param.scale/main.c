@@ -5,16 +5,14 @@
 /**  										**/
 /**                                                         			**/
 /**			  Jo Wood, V 1.1, 11th December, 1994			**/
-/**                                      					**/
+/**                                $Id$      					**/
 /*********************************************************************************/
 
 #define MAIN
 
 #include "param.h"	
 
-main(argc,argv) 
-    int argc;
-    char *argv[];
+int main(int argc, char **argv)
 {
 
     /*--------------------------------------------------------------------------*/
@@ -55,4 +53,5 @@ main(argc,argv)
 	write_cats();
     }
 
+    return 0;
 }

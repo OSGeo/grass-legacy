@@ -1,5 +1,5 @@
 #include <math.h>
-#include    "digit.h"
+#include    "Vect.h"
 
 #define	SCALE    16000.0	
 /*	I arbitrarily increased this to help find straight lines ...

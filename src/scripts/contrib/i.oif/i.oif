@@ -14,6 +14,20 @@ echo "You Must be in GRASS to run this program."
 exit
 fi
 
+if [ $# = 0 -o "$1" = "-help" -o "$1" = "help" ]
+then
+      echo ""
+      echo "Optimum-Index-Factor for LANDSAT TM"
+      echo "i.oif calculates a rank of all reflective LANDSAT TM band combinations."
+      echo "The output table starts with the best 3-band composite."
+      echo ""
+      echo "Usage:"
+      echo "   i.oif tm1 tm2 tm3 tm4 tm5 tm7"
+      echo ""
+      exit
+fi
+
+
 # test: all parameters specified?
 if test "$6" = ""; then
       echo ""

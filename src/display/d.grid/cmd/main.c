@@ -17,7 +17,16 @@ main (int argc, char **argv)
 	int color ;
 	double size ;
 	double east, north ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3 ;
+
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Overlays a user-specified grid "
+		"in the active display frame on the graphics monitor.";
 
 	opt2 = G_define_option() ;
 	opt2->key        = "size" ;
@@ -41,9 +50,6 @@ main (int argc, char **argv)
 	opt3->answer     = "0,0" ;
 	opt3->multiple   = NO;
 	opt3->description= "Lines of the grid pass through this coordinate" ;
-
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
 
 	/* Check command line */
 	if (G_parser(argc, argv))
@@ -78,7 +84,8 @@ main (int argc, char **argv)
 	}
 
 	/* Setup driver and check important information */
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	D_setup(0);
 

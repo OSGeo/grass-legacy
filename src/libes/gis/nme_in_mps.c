@@ -1,4 +1,3 @@
-#include "gis.h"
 /*****************************************************************
  * G__name_in_mapset (name_in, name_out, mapset)
  *
@@ -13,6 +12,8 @@
  ****************************************************************/
 
 #include "gis.h"
+#include <string.h>
+
 #ifndef COMMENTED_OUT
 int G__name_in_mapset (
     char *name_in,
@@ -66,6 +67,10 @@ G_fully_qualified_name (name, mapset)
     char fullname[1024];
     char *G_store();
 
-    sprintf (fullname, "%s@%s", name, mapset);
+    if(strchr(name, '@'))
+    	sprintf (fullname, "%s", name);
+    else
+    	sprintf (fullname, "%s@%s", name, mapset);
+
     return G_store(fullname);
 }

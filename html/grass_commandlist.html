@@ -1,0 +1,982 @@
+<?xml version="1.0" encoding="iso8859-1"?>
+<html xmlns="http://www.w3.org/TR/xhtml1/strict">
+  <head>
+    <title>GRASS 5.0
+        Command: Index</title>
+  </head>
+  <body>
+    <h1>GRASS 5.0 Command Index</h1>
+    <h2>Contents</h2>
+    <ul>
+      <li><a href="html/d.3d.html">d.3d</a>
+		Displays three-dimensional images based on raster map layers
+	</li>
+      <li><a href="html/d.area.html">d.area</a>
+		Obtains area/perimeter information on vector polygons.
+	</li>
+      <li><a href="html/d.ask.html">d.ask</a>
+		Prompts the user to select a GRASS data base file from among files displayed in a menu on the graphics monitor.
+	</li>
+      <li><a href="html/d.barscale.html">d.barscale</a>
+		Displays a barscale on GRASS monitor.
+	</li>
+      <li>
+        <a href="html/db.columns.html">db.columns</a>
+      </li>
+      <li><a href="html/db.connect.html">db.connect</a>
+		Connect to the database through DBMI.
+	</li>
+      <li><a href="html/db.createdb.html">db.createdb</a>
+		Create an empty database.
+	</li>
+      <li><a href="html/db.databases.html">db.databases</a>
+		List all databases for a given driver.
+	</li>
+      <li><a href="html/db.describe.html">db.describe</a>
+		Describe a table (in detail).
+	</li>
+      <li><a href="html/db.drivers.html">db.drivers</a>
+		List all installed DBMI drivers.
+	</li>
+      <li><a href="html/db.dropdb.html">db.dropdb</a>
+		Remove a database.
+	</li>
+      <li><a href="html/db.droptable.html">db.droptable</a>
+		Remove a table from database.
+	</li>
+      <li><a href="html/db.execute.html">db.execute</a>
+		Execute any SQL statement.
+	</li>
+      <li><a href="html/db.select.html">db.select</a>
+		Select data from database.
+	</li>
+      <li><a href="html/db.tables.html">db.tables</a>
+		List all tables for a given database.
+	</li>
+      <li><a href="html/d.colorlist.html">d.colorlist</a>
+		Output a list of all available display colors with a configurable separator (default is comma).
+	</li>
+      <li><a href="html/d.colormode.html">d.colormode</a>
+		Allows the user to establish whether a map will be displayed using its own color table or the fixed color table of the graphics monitor.
+	</li>
+      <li><a href="html/d.colortable.html">d.colortable</a>
+		To display the color table associated with a raster map layer.
+	</li>
+      <li><a href="html/d.db.html">d.db</a>
+		Displays sites from DB table in the active graphics monitor.
+	</li>
+      <li><a href="html/d.erase.html">d.erase</a>
+		Erase the contents of the active display frame with user defined color
+	</li>
+      <li><a href="html/d.extend.html">d.extend</a>
+		Set window region from currently displayed raster, vector and sites maps with largest map region.
+	</li>
+      <li><a href="html/d.fix.ortho.html">d.fix.ortho</a>
+		Shifts raster map to position specified by mouse
+	</li>
+      <li><a href="html/d.font.html">d.font</a>
+		Selects the font in which text will be displayed on the user's graphics monitor.
+	</li>
+      <li><a href="html/d.frame.html">d.frame</a>
+		Manages display frames on the user's graphics monitor.
+	</li>
+      <li><a href="html/d.geodesic.html">d.geodesic</a>
+		Displays a geodesic line, tracing the shortest distance between two geographic points along a great circle, in a longitude/latitude data set.
+	</li>
+      <li><a href="html/d.graph.html">d.graph</a>
+		Program for generating and displaying simple graphics to the graphics display monitor.
+	</li>
+      <li><a href="html/d.grid.html">d.grid</a>
+		Overlays a user-specified grid in the active display frame on the graphics monitor.
+	</li>
+      <li><a href="html/d.histogram.html">d.histogram</a>
+		Displays a histogram in the form of a pie or bar chart for a user-specified raster file.
+	</li>
+      <li><a href="html/d.his.html">d.his</a>
+		Produces and displays a raster map layer combining hue, intensity, and saturation (his) values from user-specified input raster map layers.
+	</li>
+      <li><a href="html/d.icons.html">d.icons</a>
+		Displays points, as icons, at user-defined locations in the active display frame on the graphics monitor.
+	</li>
+      <li><a href="html/d.label.html">d.label</a>
+		Creates and displays text labels in the active display frame on the graphics monitor.
+	</li>
+      <li><a href="html/d.legend.html">d.legend</a>
+		Displays a legend for a raster map layer in the active frame on the graphics monitor.
+	</li>
+      <li><a href="html/d.linegraph.html">d.linegraph</a>
+		Generates and displays simple line graphs in the active graphics monitor display frame.
+	</li>
+      <li><a href="html/d.mapgraph.html">d.mapgraph</a>
+		Generates and displays simple graphics on map layers drawn in the active graphics monitor display frame.
+	</li>
+      <li><a href="html/d.measure.html">d.measure</a>
+		Measures the lengths and areas of features drawn by the user in the active display frame on the graphics monitor.
+	</li>
+      <li><a href="html/d.menu.html">d.menu</a>
+		Creates and displays a menu within the active frame on the graphics monitor.
+	</li>
+      <li><a href="html/d.mon.html">d.mon</a>
+		To establish and control use of a graphics display monitor.
+	</li>
+      <li><a href="html/d.paint.labels.html">d.paint.labels</a>
+		Displays text labels formatted for use with GRASS paint (p.labels, p.map) output to the active frame on the graphics monitor.
+	</li>
+      <li><a href="html/d.points.html">d.points</a>
+		Displays point graphics in the active frame on the graphics display monitor.
+	</li>
+      <li><a href="html/d.profile.html">d.profile</a>
+		Interactive profile plotting utility with optional output.
+	</li>
+      <li><a href="html/d.rast.arrow.html">d.rast.arrow</a>
+		Draws arrows representing cell aspect direction for a raster map layer.
+	</li>
+      <li><a href="html/d.rast.num.html">d.rast.num</a>
+		Overlays cell category values on a raster map layer displayed to the graphics monitor.
+	</li>
+      <li><a href="html/d.rast.html">d.rast</a>
+		Displays and overlays raster map layers in the active display frame on the graphics monitor.
+	</li>
+      <li><a href="html/d.rgb.html">d.rgb</a>
+		Displays three user-specified raster map layers as red, green, and blue overlays in the active graphics frame.
+	</li>
+      <li><a href="html/d.rhumbline.html">d.rhumbline</a>
+		Displays the rhumbline joining two user-specified points, in the active frame on the user's graphics monitor.
+	</li>
+      <li><a href="html/d.scale.html">d.scale</a>
+		Overlays a bar scale and north arrow for the current geographic region at a user-defined location in the active display frame.
+	</li>
+      <li><a href="html/d.site.labels.html">d.site.labels</a>
+		Interactively label sites using a string or double attribute value or the category value on the current graphics monitor.
+	</li>
+      <li><a href="html/d.sites.qual.html">d.sites.qual</a>
+		Displays a subset of a sites list based on site attributes.
+	</li>
+      <li><a href="html/d.sites.html">d.sites</a>
+		Displays site markers in the active display frame on the graphics monitor.
+	</li>
+      <li><a href="html/d.text.html">d.text</a>
+		Draws text in the active display frame on the graphics monitor.
+	</li>
+      <li><a href="html/d.title.html">d.title</a>
+		Outputs a TITLE for a raster map layer in a form suitable for display by d.text.
+	</li>
+      <li><a href="html/d.vect.cats.html">d.vect.cats</a>
+		Tool for viewing vector maps with labels.
+	</li>
+      <li><a href="html/d.vect.html">d.vect</a>
+		Displays GRASS vector data in the active frame on the graphics monitor.
+	</li>
+      <li><a href="html/d.what.db.html">d.what.db</a>
+		View/edit attributes of selected DB site.
+	</li>
+      <li><a href="html/d.where.html">d.where</a>
+		Identifies the geographic coordinates associated with point locations in the active frame on the graphics monitor.
+	</li>
+      <li><a href="html/g.ask.html">g.ask</a>
+		Prompts the user for the names of GRASS data base files.
+	</li>
+      <li><a href="html/g.copy.html">g.copy</a>
+		Copies available data files in the user's current mapset search path and location to the appropriate element directories under the user's current mapset.
+	</li>
+      <li><a href="html/g.filename.html">g.filename</a>
+		Prints GRASS data base file names.
+	</li>
+      <li><a href="html/g.findfile.html">g.findfile</a>
+		Searches for GRASS data base files and sets variables for the shell.
+	</li>
+      <li><a href="html/g.gisenv.html">g.gisenv</a>
+		Outputs the user's current GRASS variable settings.
+	</li>
+      <li><a href="html/g.list.html">g.list</a>
+		Lists available GRASS data base files of the user-specified data type to standard output.
+	</li>
+      <li><a href="html/g.mapsets.html">g.mapsets</a>
+		Modifies the user's current mapset search path, affecting the user's access to data existing under the other GRASS mapsets in the current location.
+	</li>
+      <li><a href="html/g.region.html">g.region</a>
+		Program to manage the boundary definitions for the geographic region.
+	</li>
+      <li><a href="html/g.remove.html">g.remove</a>
+		Removes data base element files from the user's current mapset.
+	</li>
+      <li><a href="html/g.rename.html">g.rename</a>
+		To rename data base element files in the user's current mapset.
+	</li>
+      <li><a href="html/g.tempfile.html">g.tempfile</a>
+		Creates a temporary file and prints the file name.
+	</li>
+      <li><a href="html/g.version.html">g.version</a>
+		Displays version and copyright information.
+	</li>
+      <li><a href="html/i.cca.html">i.cca</a>
+		Canonical components analysis (cca) program for image processing.
+	</li>
+      <li><a href="html/i.cluster.html">i.cluster</a>
+		An imagery function that generates spectral signatures for land cover types in an image using a clustering algorithm. The resulting signature file is used as input for i.maxlik, to generate an unsupervised image classification.
+	</li>
+      <li><a href="html/i.fft.html">i.fft</a>
+		Fast Fourier Transform (FFT) for image processing.
+	</li>
+      <li><a href="html/i.gensigset.html">i.gensigset</a>
+		Generate statistics for i.smap from raster map layer.
+	</li>
+      <li><a href="html/i.gensig.html">i.gensig</a>
+		Generates statistics for i.maxlik from raster map layer.
+	</li>
+      <li><a href="html/i.grey.scale.html">i.grey.scale</a>
+		An imagery function that assigns a histogram contrast stretch grey scale color table to a raster map layer.
+	</li>
+      <li><a href="html/i.his.rgb.html">i.his.rgb</a>
+		Hue-intensity-saturation (his) to red-green-blue (rgb) raster map color transformation function.
+	</li>
+      <li><a href="html/i.ifft.html">i.ifft</a>
+		Inverse Fast Fourier Transform (ifft) for image processing.
+	</li>
+      <li><a href="html/i.in.erdas.html">i.in.erdas</a>
+		Creates raster files from ERDAS files.
+	</li>
+      <li><a href="html/i.maxlik.html">i.maxlik</a>
+		An imagery function that classifies the cell spectral reflectances in imagery data based on the spectral signature information generated by either i.cluster, i.class, or i.gensig.
+	</li>
+      <li><a href="html/i.out.erdas.html">i.out.erdas</a>
+		Creates ERDAS files from raster files.
+	</li>
+      <li><a href="html/i.pca.html">i.pca</a>
+		Principal components analysis (pca) program for image processing.
+	</li>
+      <li><a href="html/i.rgb.his.html">i.rgb.his</a>
+		Red-green-blue (rgb) to hue-intensity-saturation (his) raster map color transformation function.
+	</li>
+      <li>
+        <a href="html/i.rvi.prediction.html">i.rvi.prediction</a>
+      </li>
+      <li><a href="html/i.shape.html">i.shape</a>
+		Performs spatial shape identification and classification
+	</li>
+      <li><a href="html/i.smap.html">i.smap</a>
+		An imagery function that performs contextual image classification using sequential maximum a posteriori (SMAP) estimation.
+	</li>
+      <li><a href="html/i.tape.mss.h.html">i.tape.mss.h</a>
+		An imagery function that extracts header information from LANDSAT Multispectral Scanner (MSS) imagery data stored on half-inch tape.
+	</li>
+      <li><a href="html/i.tape.tm.fast.html">i.tape.tm.fast</a>
+		An imagery function that extracts Thematic Mapper (TM) imagery from tape media.
+	</li>
+      <li><a href="html/i.texture.html">i.texture</a>
+		Calculate textural features on a raster map
+	</li>
+      <li><a href="html/i.zc.html">i.zc</a>
+		Zero-crossing &quot;edge detection&quot; raster function for image processing.
+	</li>
+      <li>
+        <a href="html/m.bsplit.html">m.bsplit</a>
+      </li>
+      <li><a href="html/m.datum.shift.html">m.datum.shift</a>
+		Datum shift program. Return geographic coordinates based on a different datum that the one used to obtain the original coordinates. 
+	</li>
+      <li><a href="html/m.dem.examine.html">m.dem.examine</a>
+		Provides a terse description of USGS Digital Elevation Model (DEM) data files stored on 1/2-inch magnetic tape.
+	</li>
+      <li><a href="html/m.dem.extract.html">m.dem.extract</a>
+		Extracts USGS Digital Elevation Model (DEM) data from 1/2-inch magnetic tape.
+	</li>
+      <li><a href="html/m.dmaUSGSread.html">m.dmaUSGSread</a>
+		Extracts digital terrain elevation data (DTED) produced by the Defense Mapping Agency (DMA) but supplied by the USGS (in a different tape format) on 1/2-inch magnetic tape.
+	</li>
+      <li><a href="html/m.dted.examine.html">m.dted.examine</a>
+		Provides a terse description of level 1 and 2 digital terrain elevation data (DTED) files produced and distributed by the Defense Mapping Agency (DMA) on 1/2-inch magnetic tapes.
+	</li>
+      <li><a href="html/m.dted.extract.html">m.dted.extract</a>
+		Extracts digital terrain elevation data (DTED - levels 1 and 2) produced and supplied by the Defense Mapping Agency (DMA) on 1/2-inch magnetic tapes.
+	</li>
+      <li><a href="html/m.flip.html">m.flip</a>
+		Flips elevation data extracted from systems that retrieve data by rows from south to north.
+	</li>
+      <li><a href="html/m.gc2ll.html">m.gc2ll</a>
+		Converts geocentric to geographic coordinates.
+	</li>
+      <li><a href="html/m.in.e00.html">m.in.e00</a>
+		Read an ESRI e00 file.
+	</li>
+      <li><a href="html/m.ipf.html">m.ipf</a>
+		Iterative proportional fitting for error matrices.
+	</li>
+      <li><a href="html/m.kappa.html">m.kappa</a>
+		Calculate error matrix and kappa parameter for accuracy assessment of classification result.
+	</li>
+      <li><a href="html/m.ll2gc.html">m.ll2gc</a>
+		Converts geographic coordinates to geocentric coordinates.
+	</li>
+      <li><a href="html/m.ll2u.html">m.ll2u</a>
+		Converts geographic coordinates to Universal Transverse Mercator (UTM) coordinates.
+	</li>
+      <li><a href="html/m.lulc.read.html">m.lulc.read</a>
+		Extracts Landuse/Landcover data in the ASCII Composite Theme Grid (CTG) data format distributed by the USGS in to a working file for m.lulc.USGS.
+	</li>
+      <li><a href="html/m.qcalc.html">m.qcalc</a>
+		Creates tables, performs conversions, and performs simple math calculations.
+	</li>
+      <li><a href="html/m.region.ll.html">m.region.ll</a>
+		Converts UTM coordinates falling within the current geographic region to geographic (latitude/longitude) coordinates. 
+	</li>
+      <li><a href="html/m.rot90.html">m.rot90</a>
+		Rotates elevation data extracted by either m.dted.extract or m.dmaUSGSread.
+	</li>
+      <li><a href="html/m.sdts.read.html">m.sdts.read</a>
+		Reads files in ISO 8211 (FIPS 123) format and dumps contents to screen and/or file.
+	</li>
+      <li><a href="html/m.strip99s.html">m.strip99s</a>
+		strips the no data, '99', areas out and replaces them with spaces (after raster import with r.in.miads)
+	</li>
+      <li><a href="html/m.svfit.html">m.svfit</a>
+		Semivariogram model fitting.
+	</li>
+      <li><a href="html/m.tiger.region.html">m.tiger.region</a>
+		Finds geographic region information for U.S. Census Bureau TIGER input data.
+	</li>
+      <li><a href="html/m.u2ll.html">m.u2ll</a>
+		Converts Universal Transverse Mercator (UTM) coordinates to geographic (latitude/longitude) coordinates.
+	</li>
+      <li><a href="html/p.chart.html">p.chart</a>
+		Prints the color chart of the currently selected printer.
+	</li>
+      <li><a href="html/p.map.new.html">p.map.new</a>
+		Color map output utility.
+	</li>
+      <li><a href="html/p.map.html">p.map</a>
+		Hardcopy color map output utility.
+	</li>
+      <li><a href="html/p.ppm.html">p.ppm</a>
+		Reads portable pixmap (ppm) files created by PPM utilities.
+	</li>
+      <li><a href="html/p.select.html">p.select</a>
+		Selects a device (printer) for GRASS hardcopy output.
+	</li>
+      <li><a href="html/ps.icon.html">ps.icon</a>
+		Creates and modifies icons for use with ps.map.
+	</li>
+      <li><a href="html/ps.map.html">ps.map</a>
+		Hardcopy PostScript map output utility.
+	</li>
+      <li><a href="html/ps.select.html">ps.select</a>
+		Selects a PostScript device for GRASS hardcopy output.
+	</li>
+      <li><a href="html/r.average.html">r.average</a>
+		Finds the average of values in a cover map within areas assigned the same category value in a user-specified base map.
+	</li>
+      <li><a href="html/r.basins.fill.html">r.basins.fill</a>
+		Generates a raster map layer showing watershed subbasins.
+	</li>
+      <li><a href="html/r.bilinear.html">r.bilinear</a>
+		Bilinear interpolation utility for raster map layers.
+	</li>
+      <li><a href="html/r.binfer.html">r.binfer</a>
+		Bayesian expert system development program.
+	</li>
+      <li><a href="html/r.buffer.html">r.buffer</a>
+		Creates a raster map layer showing buffer zones surrounding cells that contain non-NULL category values.
+	</li>
+      <li><a href="html/r.cats.html">r.cats</a>
+		Prints category values and labels associated with user-specified raster map layers.
+	</li>
+      <li><a href="html/r.circle.html">r.circle</a>
+		Creates a raster map containing concentric rings around a given point.
+	</li>
+      <li><a href="html/r.clump.html">r.clump</a>
+		Recategorizes data in a raster map layer by grouping cells that form physically discrete areas into unique categories.
+	</li>
+      <li><a href="html/r.cn.html">r.cn</a>
+		Generates a SCS curve number map layer
+	</li>
+      <li><a href="html/r.coin.html">r.coin</a>
+		Tabulates the mutual occurrence (coincidence) of categories for two raster map layers.
+	</li>
+      <li>
+        <a href="html/r.colors.paint.html">r.colors.paint</a>
+      </li>
+      <li><a href="html/r.colors.html">r.colors</a>
+		Creates/Modifies the color table associated with a raster map layer.
+	</li>
+      <li><a href="html/r.compress.html">r.compress</a>
+		Compresses and decompresses raster files.
+	</li>
+      <li><a href="html/r.contour.html">r.contour</a>
+		Produces a GRASS binary vector map of specified contours from GRASS raster map layer.
+	</li>
+      <li><a href="html/r.cost.html">r.cost</a>
+		Outputs a raster map layer showing the cumulative cost of moving between different geographic locations on an input raster map layer whose cell category values represent cost.
+	</li>
+      <li><a href="html/r.covar.html">r.covar</a>
+		Outputs a covariance/correlation matrix for user-specified raster map layer(s).
+	</li>
+      <li><a href="html/r.cross.html">r.cross</a>
+		Creates a cross product of the category values from multiple raster map layers.
+	</li>
+      <li><a href="html/r.describe.html">r.describe</a>
+		Prints terse list of category values found in a raster map layer.
+	</li>
+      <li><a href="html/r.distance.html">r.distance</a>
+		Locates the closest points between objects in two raster maps.
+	</li>
+      <li><a href="html/r.drain.html">r.drain</a>
+		Traces a flow through an elevation model on a raster map layer.
+	</li>
+      <li><a href="html/r.fill.dir.html">r.fill.dir</a>
+		Filters and generates a depressionless elevation map and a flow direction map from a given elevation layer
+	</li>
+      <li><a href="html/r.flowmd.html">r.flowmd</a>
+		construction of slope lines (flowlines),  flowpath lengths and flowline  densities from a raster digital elevation model using a modified multiple directions algorithm.
+	</li>
+      <li><a href="html/r.flow.html">r.flow</a>
+		Construction of slope curves (flowlines), flowpath lengths, and flowline densities (upslope areas) from a raster digital elevation model(DEM).
+	</li>
+      <li><a href="html/r.grow.html">r.grow</a>
+		Generates an output raster map layer with contiguous areas grown by one cell (pixel).
+	</li>
+      <li><a href="html/r.hydro.CASC2D.html">r.hydro.CASC2D</a>
+		Fully integrated distributed cascaded 2D hydrologic modeling.
+	</li>
+      <li><a href="html/r.in.arc.html">r.in.arc</a>
+		Convert an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster map layer.
+	</li>
+      <li><a href="html/r.in.ascii.html">r.in.ascii</a>
+		Convert an ASCII raster text file into a (binary) raster map layer.
+	</li>
+      <li><a href="html/r.in.bin.html">r.in.bin</a>
+		Import a binary raster file into a GRASS raster map layer.
+	</li>
+      <li><a href="html/r.in.doq.html">r.in.doq</a>
+		Import digitial orthophotographs into GRASS raster map
+	</li>
+      <li><a href="html/r.in.dted.html">r.in.dted</a>
+		Imports DTED I &amp; DTED II into GRASS Lat-Lon location
+	</li>
+      <li><a href="html/r.in.elas.html">r.in.elas</a>
+		Import an ELAS raster file into a GRASS raster map.
+	</li>
+      <li><a href="html/r.infer.html">r.infer</a>
+		Outputs a raster map layer whose category values represent the application of user-specified criteria (rules statements) to other raster map layers' category values.
+	</li>
+      <li><a href="html/r.info.html">r.info</a>
+		Outputs basic information about a user-specified raster map layer.
+	</li>
+      <li><a href="html/r.in.gdal.html">r.in.gdal</a>
+		Import GDAL supported raster file into a binary raster map layer.
+	</li>
+      <li><a href="html/r.in.gridatb.html">r.in.gridatb</a>
+		Imports GRIDATB.FOR map file (TOPMODEL) into GRASS raster map
+	</li>
+      <li><a href="html/r.in.ll.html">r.in.ll</a>
+		Converts raster data referenced using latitude and longitude coordinates to a UTM-referenced map layer in GRASS raster format.
+	</li>
+      <li><a href="html/r.in.miads.html">r.in.miads</a>
+		Imports SCS MIADS format raster data into GRASS raster map layer
+	</li>
+      <li><a href="html/r.in.png.html">r.in.png</a>
+		Import non-georeferenced PNG format Image into GRASS raster file.
+	</li>
+      <li><a href="html/r.in.poly.html">r.in.poly</a>
+		Create raster maps from ascii polygon/line data files in the current directory.
+	</li>
+      <li><a href="html/r.in.ppm.html">r.in.ppm</a>
+		Converts an ASCII/BINARY PPM image file to a GRASS raster file.
+	</li>
+      <li><a href="html/r.in.shape.html">r.in.shape</a>
+		Read an ArcView Shapefile (polygons and lines).
+	</li>
+      <li><a href="html/r.in.sunrast.html">r.in.sunrast</a>
+		Converts a SUN raster file to a GRASS raster file.
+	</li>
+      <li><a href="html/r.in.tang.html">r.in.tang</a>
+		Imports Tangent raster data into GRASS raster map layer
+	</li>
+      <li><a href="html/r.in.tiff.html">r.in.tiff</a>
+		Imports a TIFF (8 or 24 bit) raster file into GRASS raster file(s)
+	</li>
+      <li><a href="html/r.in.utm.html">r.in.utm</a>
+		Imports an utm raster map into a GRASS raster map layer.
+	</li>
+      <li><a href="html/r.kappa.html">r.kappa</a>
+		Calculate error matrix and kappa parameter for accuracy assessment of classification result.
+	</li>
+      <li><a href="html/r.linear.regression.html">r.linear.regression</a>
+		Linear regression calculation from data stored in ASCII file
+	</li>
+      <li><a href="html/r.line.html">r.line</a>
+		Creates a new binary GRASS vector (v.digit) file by extracting linear features from a thinned raster file.
+	</li>
+      <li><a href="html/r.los.html">r.los</a>
+		Line-of-sight raster analysis program.
+	</li>
+      <li><a href="html/r.mask.points.html">r.mask.points</a>
+		Examines and filters lists of points constituting lines to determine if they fall within current region and mask and optionally an additional raster map.
+	</li>
+      <li><a href="html/r.median.html">r.median</a>
+		Finds the median of values in a cover map within areas assigned the same category value in a user-specified base map.
+	</li>
+      <li><a href="html/r.mfilter.html">r.mfilter</a>
+		Raster file matrix filter.
+	</li>
+      <li><a href="html/r.mode.html">r.mode</a>
+		Finds the mode of values in a cover map within areas assigned the same category value in a user-specified base map.
+	</li>
+      <li><a href="html/r.neighbors.html">r.neighbors</a>
+		Makes each cell category value a function of the category values assigned to the cells around it, and stores new cell values in an output raster map layer.
+	</li>
+      <li><a href="html/r.null.html">r.null</a>
+		The function of r.null is to explicitly create the NULL-value bitmap file.
+	</li>
+      <li><a href="html/r.out.arc.html">r.out.arc</a>
+		Converts a raster map layer into an ESRI ARCGRID file.
+	</li>
+      <li><a href="html/r.out.ascii.html">r.out.ascii</a>
+		Converts a raster map layer into an ASCII text file.
+	</li>
+      <li><a href="html/r.out.bin.html">r.out.bin</a>
+		Exports a GRASS raster to a binary array.
+	</li>
+      <li><a href="html/r.out.elas.html">r.out.elas</a>
+		Export a GRASS raster map layer to an ELAS raster file
+	</li>
+      <li><a href="html/r.out.gridatb.html">r.out.gridatb</a>
+		Exports GRASS raster map to GRIDATB.FOR map file (TOPMODEL)
+	</li>
+      <li><a href="html/r.out.mpeg.html">r.out.mpeg</a>
+		Raster File Series to MPEG Conversion Program.
+	</li>
+      <li><a href="html/r.out.png.html">r.out.png</a>
+		Export GRASS raster as non-georeferenced PNG image format.
+	</li>
+      <li><a href="html/r.out.pov.html">r.out.pov</a>
+		Converts a raster map layer into a height-field file for POVRAY.
+	</li>
+      <li><a href="html/r.out.ppm.html">r.out.ppm</a>
+		Converts a GRASS raster file to a PPM image file at the pixel resolution of the CURRENTLY DEFINED REGION.
+	</li>
+      <li><a href="html/r.out.rlc.html">r.out.rlc</a>
+		Exports a GRASS raster to a RLC encoded binary file.
+	</li>
+      <li><a href="html/r.out.tga.html">r.out.tga</a>
+		Exports a GRASS raster file to a 24bit TGA file
+	</li>
+      <li><a href="html/r.out.tiff.html">r.out.tiff</a>
+		Exports a GRASS raster file to a 8/24bit TIFF image file at the pixel resolution of the currently defined region.
+	</li>
+      <li><a href="html/r.out.xyz.html">r.out.xyz</a>
+		Export GRASS raster files into xyz format.
+	</li>
+      <li><a href="html/r.patch.html">r.patch</a>
+		Creates a composite raster map layer by using known category values from one (or more) map layer(s) to fill in areas of &quot;no data&quot; in another map layer.
+	</li>
+      <li><a href="html/r.poly.html">r.poly</a>
+		Extracts area edges from a raster map layer and converts data to GRASS vector format.
+	</li>
+      <li><a href="html/r.profile.html">r.profile</a>
+		Outputs the raster map layer values lying on user-defined line(s).
+	</li>
+      <li><a href="html/r.proj.html">r.proj</a>
+		re-project a raster map from one location to the current location
+	</li>
+      <li><a href="html/r.quant.html">r.quant</a>
+		This routine produces the quantization file for a floating-point map.
+	</li>
+      <li><a href="html/r.random.cells.html">r.random.cells</a>
+		Generates random cell values with spatial dependence.
+	</li>
+      <li><a href="html/r.random.surface.html">r.random.surface</a>
+		Generates random surface(s) with spatial dependence.
+	</li>
+      <li><a href="html/r.random.html">r.random</a>
+		Creates a raster map layer and site list file containing randomly located sites.
+	</li>
+      <li><a href="html/r.rational.regression.html">r.rational.regression</a>
+		Linear and nonlinear regression calculation from data stored in ASCII file
+	</li>
+      <li><a href="html/r.reclass.html">r.reclass</a>
+		Creates a new map layer whose category values are based upon the user's reclassification of categories in an existing raster map layer.
+	</li>
+      <li><a href="html/r.recode.html">r.recode</a>
+		Recode raster maps.
+	</li>
+      <li><a href="html/r.report.html">r.report</a>
+		Reports statistics for raster map layers.
+	</li>
+      <li><a href="html/r.resample.html">r.resample</a>
+		GRASS raster map layer data resampling capability.
+	</li>
+      <li><a href="html/r.resamp.rst.html">r.resamp.rst</a>
+		Reinterpolates and computes topographic analysis from input raster file to a new raster file (possibly with different resolution) using regularized spline with tension and smoothing.
+	</li>
+      <li><a href="html/r.rescale.eq.html">r.rescale.eq</a>
+		Rescales histogram equalized the range of categoryvalues in a raster map layer.
+	</li>
+      <li><a href="html/r.rescale.html">r.rescale</a>
+		Rescales the range of category values in a raster map layer.
+	</li>
+      <li><a href="html/r.ros.html">r.ros</a>
+		Generates three, or four raster map layers showing 1) the base (perpendicular) rate of spread (ROS), 2) the maximum (forward) ROS, 3) the direction of the maximum ROS, and optionally 4) the maximum potential spotting distance.
+	</li>
+      <li><a href="html/r.rvi.prediction.html">r.rvi.prediction</a>
+		Calculates ground features, e.g. plant cover, by remote sensing data using a given regression model
+	</li>
+      <li><a href="html/r.slope.aspect.html">r.slope.aspect</a>
+		Generates raster map layers of slope, aspect, curvatures and partial derivatives from a raster map layer of true elevation values.
+	</li>
+      <li><a href="html/r.spreadpath.html">r.spreadpath</a>
+		Recursively traces the least cost path backwards to cells from which the cumulative cost was determined.
+	</li>
+      <li><a href="html/r.spread.html">r.spread</a>
+		Simulates elliptically anisotropic spread on a graphics window and generates a raster map of the cumulative time of spread, given raster maps containing the rates of spread (ROS), the ROS directions and the spread origins. It optionally produces raster maps to contain backlink UTM coordinates for tracing spread paths. (GRASS Raster/Display Program)
+	</li>
+      <li><a href="html/r.statistics.html">r.statistics</a>
+		Category or object oriented statistics.
+	</li>
+      <li><a href="html/r.stats.html">r.stats</a>
+		Generates area statistics for raster map layers.
+	</li>
+      <li><a href="html/r.sum.html">r.sum</a>
+		Sums up the raster cell values.
+	</li>
+      <li><a href="html/r.sunmask.html">r.sunmask</a>
+		Calculates cast shadow areas from sun position and DEM. Either A: exact sun position is specified, or B: date/time to calculate the sun position by r.sunmask itself.
+	</li>
+      <li><a href="html/r.sun.html">r.sun</a>
+		Computes solar illumination (incidence) angle raster maps for given time and latitude and solar irradiance (direct solar radiation) raster maps for given day and latitude. They are computed from elevation, slope and aspect raster maps. Sunrise, sunset times, declination for given day are displayed along with solar azimuth and zenith angle for specified local time. The shadowing effect of the topography is optionally incorporated.
+	</li>
+      <li><a href="html/r.support.html">r.support</a>
+		Allows the user to create and/or modify raster map layer support files. Note: Interactive mode offers more functionality than command line mode.
+	</li>
+      <li><a href="html/r.surf.area.html">r.surf.area</a>
+		Surface area estimation for rasters.
+	</li>
+      <li><a href="html/r.surf.contour.html">r.surf.contour</a>
+		Surface generation program from rasterized contours.
+	</li>
+      <li><a href="html/r.surf.fractal.html">r.surf.fractal</a>
+		GRASS module to create a fractal surface of a given fractal dimension. Uses spectral synthesis method. Can create intermediate layers showing the build up of different spectral coefficients (see Saupe, pp.106-107 for an example of this). Use this module to generate naturally looking sythetical elevation models (DEM).
+	</li>
+      <li><a href="html/r.surf.gauss.html">r.surf.gauss</a>
+		GRASS module to produce a raster map layer of gaussian deviates whose mean and standard deviation can be expressed by the user. It uses a gaussian random number generator from Press, Flannery, Teukolsky and Vetterling (1988) - Numerical Recipes in C.
+	</li>
+      <li><a href="html/r.surf.idw2.html">r.surf.idw2</a>
+		Surface generation program.
+	</li>
+      <li><a href="html/r.surf.idw.html">r.surf.idw</a>
+		Surface interpolation utility for raster map layers.
+	</li>
+      <li><a href="html/r.surf.random.html">r.surf.random</a>
+		GRASS module to produce a raster map layer of uniform random deviates whose range can be expressed by the user. It uses the random number generator described in Press, Flannery, Teukolsky and Vetterling (1988) - Numerical Recipes in C.
+	</li>
+      <li><a href="html/r.thin.html">r.thin</a>
+		Thins non-zero cells that denote linear features in a raster map layer.
+	</li>
+      <li><a href="html/r.timestamp.html">r.timestamp</a>
+		Print/add/remove a timestamp for a raster map.
+	</li>
+      <li><a href="html/r.topidx.html">r.topidx</a>
+		Creates topographic index, ln(a/tan(beta)), map from elevation map.
+	</li>
+      <li><a href="html/r.topmodel.html">r.topmodel</a>
+		Simulates TOPMODEL which is physically based hydrologic model.
+	</li>
+      <li><a href="html/r.to.sites.html">r.to.sites</a>
+		Converts point data in a GRASS raster map layer into a GRASS site_lists file.
+	</li>
+      <li><a href="html/r.transect.html">r.transect</a>
+		Outputs raster map layer values lying along user defined transect line(s).
+	</li>
+      <li><a href="html/r.volume.html">r.volume</a>
+		Calculates the volume of data &quot;clumps&quot;, and (optionally) produces a GRASS site_lists file containing the calculated centroids of these clumps.
+	</li>
+      <li><a href="html/r.water.outlet.html">r.water.outlet</a>
+		Watershed basin creation program.
+	</li>
+      <li><a href="html/r.watershed.html">r.watershed</a>
+		Watershed basin analysis program.
+	</li>
+      <li><a href="html/r.weight2.html">r.weight2</a>
+		Non-interactive weighted overlay raster map layer analysis program.
+	</li>
+      <li>
+        <a href="html/r.weight.new.html">r.weight.new</a>
+      </li>
+      <li><a href="html/r.what.html">r.what</a>
+		Queries raster map layers on their category values and category labels.
+	</li>
+      <li><a href="html/s.delaunay.html">s.delaunay</a>
+		Create a Delaunay triangulation from a sites list in a GRASS binary vector file.
+	</li>
+      <li><a href="html/s.in.ascii.html">s.in.ascii</a>
+		Convert an ASCII listing of site locations into a GRASS site list file.
+	</li>
+      <li><a href="html/s.in.dbf.html">s.in.dbf</a>
+		Import a dBase table of site locations into a GRASS site list file.
+	</li>
+      <li><a href="html/s.info.html">s.info</a>
+		reports attribute, label, and other information about a sites file
+	</li>
+      <li><a href="html/s.in.shape.html">s.in.shape</a>
+		Read an ArcView Shapefile with points or multipoint shapes
+	</li>
+      <li><a href="html/s.medp.html">s.medp</a>
+		Median polish for a GRASS sites list.
+	</li>
+      <li><a href="html/s.normal.html">s.normal</a>
+		tests for normality for sites.
+	</li>
+      <li><a href="html/s.out.ascii.html">s.out.ascii</a>
+		Converts a GRASS site list file into an ASCII listing of site locations and their descriptions.
+	</li>
+      <li><a href="html/s.out.e00.html">s.out.e00</a>
+		Write an Arc-Info point coverage in e00 format.
+	</li>
+      <li><a href="html/s.perturb.html">s.perturb</a>
+		Random location perturbations of GRASS sites.
+	</li>
+      <li><a href="html/s.probplt.html">s.probplt</a>
+		Normal probability plot of a GRASS site list.
+	</li>
+      <li><a href="html/s.proj.html">s.proj</a>
+		Allows the user to re-project a sites file from one location to the current location.
+	</li>
+      <li><a href="html/s.qcount.html">s.qcount</a>
+		indices for quadrat counts of sites lists
+	</li>
+      <li><a href="html/s.random.html">s.random</a>
+		Randomly generate a GRASS sites list.
+	</li>
+      <li><a href="html/s.sample.html">s.sample</a>
+		Sample a raster file at site locations.
+	</li>
+      <li><a href="html/s.surf.idw.html">s.surf.idw</a>
+		Surface interpolation from sites data by Inverse Distance Weighted algorithm.
+	</li>
+      <li><a href="html/s.sv.html">s.sv</a>
+		Sample semivariogram of a GRASS sites list.
+	</li>
+      <li><a href="html/s.territory.html">s.territory</a>
+		Calculates territory consumption for animal based on distributed positions
+	</li>
+      <li><a href="html/s.to.rast.html">s.to.rast</a>
+		Converts a site file to a raster map
+	</li>
+      <li><a href="html/s.to.vect.html">s.to.vect</a>
+		Converts a GRASS site_lists file into a vector file.
+	</li>
+      <li><a href="html/s.univar.html">s.univar</a>
+		Univariate statistics for a GRASS sites list.
+	</li>
+      <li>
+        <a href="html/s.vol.rst.html">s.vol.rst</a>
+      </li>
+      <li><a href="html/s.voronoi.html">s.voronoi</a>
+		Create a Voronoi diagram (Thiessen polygon) from a sites list in a GRASS binary vector file. 
+	</li>
+      <li><a href="html/s.windavg.html">s.windavg</a>
+		Average an attribute of a site_list for all the sites within each cell of the current region.
+	</li>
+      <li><a href="html/v.alabel.html">v.alabel</a>
+		Bulk-labels unlabeled area features in a binary GRASS vector file.
+	</li>
+      <li><a href="html/v.apply.census.html">v.apply.census</a>
+		Calculate/Import Demographics from Census STF1 Files.
+	</li>
+      <li><a href="html/v.area.html">v.area</a>
+		Display GRASS area and perimeter information for GRASS vector map.
+	</li>
+      <li><a href="html/v.autocorr.html">v.autocorr</a>
+		Calculate spatial autocorrelation statistics for GRASS vector file.
+	</li>
+      <li><a href="html/v.bubble.html">v.bubble</a>
+		Creates a vector file which consists of bubble(s)  for each point in a site-file and with a size relative to the z value of that point.
+	</li>
+      <li><a href="html/v.build.polylines.html">v.build.polylines</a>
+		Build polylines from lines.
+	</li>
+      <li><a href="html/v.cadlabel.html">v.cadlabel</a>
+		Attaches labels to (binary) vector contour lines that have been imported to GRASS from DXF format.
+	</li>
+      <li><a href="html/v.circle.html">v.circle</a>
+		Creates a vector file which consists of circle(s) which uses each point in a 'site_lists' file as the center of those circle(s).
+	</li>
+      <li><a href="html/v.clean.html">v.clean</a>
+		Cleans out dead lines in GRASS vector files.
+	</li>
+      <li><a href="html/v.cutter.html">v.cutter</a>
+		Polygon Cookie Cutter  (Boolean AND Overlay).
+	</li>
+      <li><a href="html/v.db.reclass.html">v.db.reclass</a>
+		Changes vector category values for an existing vector map according to results of SQL queries.
+	</li>
+      <li><a href="html/v.distance.html">v.distance</a>
+		Calculates distance from a point to nearest line or point in vector layer.
+	</li>
+      <li><a href="html/v.dump.html">v.dump</a>
+		Reports details information on vector map contents
+	</li>
+      <li><a href="html/v.extract.html">v.extract</a>
+		Selects vectors from an existing vector map and creates a new map containing only the selected vectors.
+	</li>
+      <li><a href="html/v.in.arc.html">v.in.arc</a>
+		Imports vector data in ARC/INFO ungenerate format into GRASS.
+	</li>
+      <li><a href="html/v.in.ascii.html">v.in.ascii</a>
+		Converts ASCII vector map layers into binary vector map layers.
+	</li>
+      <li><a href="html/v.in.atlas.html">v.in.atlas</a>
+		Import ATLAS GIS vector files into GRASS binary vector files. 
+	</li>
+      <li><a href="html/v.in.dlg2.html">v.in.dlg2</a>
+		Converts an ASCII or binary USGS DLG-3 (bdlg) file to a binary GRASS vector (dig) file.
+	</li>
+      <li><a href="html/v.in.dlg.scs.html">v.in.dlg.scs</a>
+		Developed to handle DLG-3 ASCII import of data, specifically a DLG WITHOUT category/attribute codes. DLG files with this affliction will require a flat ASCII file having a 1 to 1 correspondence between DLG area number and a text label. 
+	</li>
+      <li><a href="html/v.in.dlg.html">v.in.dlg</a>
+		Converts an ASCII USGS DLG-3 Optional file to a binary GRASS vector (dig) file.
+	</li>
+      <li><a href="html/v.in.dxf3d.html">v.in.dxf3d</a>
+		Converts the Z values of DXF files to attribute GRASS vector file format.
+	</li>
+      <li><a href="html/v.in.dxf.html">v.in.dxf</a>
+		Converts files in DXF format to ASCII or binary GRASS vector file format.
+	</li>
+      <li><a href="html/v.info.html">v.info</a>
+		Outputs basic information about a user-specified vector map layer.
+	</li>
+      <li><a href="html/v.in.gshhs.html">v.in.gshhs</a>
+		Imports Global Self-consistant Hierarchical High-resolution Shoreline (GSHHS) vector data
+	</li>
+      <li><a href="html/v.in.mif.html">v.in.mif</a>
+		Import of MapInfo vector files
+	</li>
+      <li><a href="html/v.in.poly.html">v.in.poly</a>
+		Create a vector file of polygons centered on given locations.
+	</li>
+      <li><a href="html/v.in.sdts.html">v.in.sdts</a>
+		Imports SDTS vector data, conforming to the Topological Vector Profile, into GRASS, creating GRASS vector map(s) and associated attribute files ready to be installed in a relational database.
+	</li>
+      <li><a href="html/v.in.shape.html">v.in.shape</a>
+		Read an ArcView Shapefile.
+	</li>
+      <li><a href="html/v.in.transects.html">v.in.transects</a>
+		Import transect data to a GRASS vector map.
+	</li>
+      <li><a href="html/v.llabel.html">v.llabel</a>
+		Bulk-labels unlabeled lines in a binary GRASS vector file.
+	</li>
+      <li><a href="html/v.make.subj.html">v.make.subj</a>
+		Create a 'subject' file from all category labels found in a set of listed vector maps.
+	</li>
+      <li><a href="html/v.merge.html">v.merge</a>
+		Merges vector map files.
+	</li>
+      <li><a href="html/v.mkgrid.html">v.mkgrid</a>
+		Creates a (binary) GRASS vector map of a user-defined grid.
+	</li>
+      <li><a href="html/v.mkquads.html">v.mkquads</a>
+		Create a vector map layer and/or sites list and/or geographic region definintion file for a USGS 7.5-minute quadrangle. 
+	</li>
+      <li><a href="html/v.mk_stats.html">v.mk_stats</a>
+		Generates statistics for vector files.
+	</li>
+      <li><a href="html/v.out.arc.html">v.out.arc</a>
+		Exports GRASS vector files to ARC/INFO's 'ungenerate' file format.
+	</li>
+      <li><a href="html/v.out.ascii.html">v.out.ascii</a>
+		Converts a binary GRASS vector map layer into an ASCII GRASS vector map layer.
+	</li>
+      <li><a href="html/v.out.atlas.html">v.out.atlas</a>
+		Export GRASS vector file to ATLAS GIS vector file. 
+	</li>
+      <li><a href="html/v.out.dlg.html">v.out.dlg</a>
+		Converts binary GRASS vector data to DLG-3 Optional vector data format.
+	</li>
+      <li><a href="html/v.out.dxf.html">v.out.dxf</a>
+		Exports GRASS vector files to DXF file format.
+	</li>
+      <li><a href="html/v.out.e00.html">v.out.e00</a>
+		Write an Arc-Info line/polygon coverage in e00 format.
+	</li>
+      <li><a href="html/v.out.idrisi.html">v.out.idrisi</a>
+		Export routine from GRASS to IDRISI.
+	</li>
+      <li><a href="html/v.out.mif.html">v.out.mif</a>
+		Exports GRASS vector map to MapInfo vector file
+	</li>
+      <li><a href="html/v.out.sdts.html">v.out.sdts</a>
+		Creates an SDTS dataset conforming to the Topological Vector Profile from a GRASS vector map layer.
+	</li>
+      <li><a href="html/v.out.shape.html">v.out.shape</a>
+		Export GRASS vector files to SHAPE
+	</li>
+      <li><a href="html/v.patch.html">v.patch</a>
+		Creates a new binary vector map layer by combining other binary vector map layers.
+	</li>
+      <li><a href="html/v.proj.html">v.proj</a>
+		Allows projection conversion of vector files.
+	</li>
+      <li><a href="html/v.prune.html">v.prune</a>
+		Prunes points from binary GRASS vector data files.
+	</li>
+      <li><a href="html/v.random.html">v.random</a>
+		Creates a GRASS site_lists file of randomly placed symbols (sites) within a GRASS vector area.
+	</li>
+      <li><a href="html/v.reclass.html">v.reclass</a>
+		Creates a new map layer whose category values are based upon the user's reclassification of categories in an existing vector map layer.
+	</li>
+      <li><a href="html/v.report.html">v.report</a>
+		Generates statistics for vector files.
+	</li>
+      <li><a href="html/v.rm.dangles.html">v.rm.dangles</a>
+		Removes dangling vectors from vector map
+	</li>
+      <li><a href="html/v.rmdup.html">v.rmdup</a>
+		Remove duplicate items GRASS vector file.
+	</li>
+      <li><a href="html/v.rmedge.html">v.rmedge</a>
+		Selects edge vectors from an existing vector map, removes them, and creates a new vector map.
+	</li>
+      <li><a href="html/v.scale.random.html">v.scale.random</a>
+		Creates a site_lists file of randomly placed symbols within a GRASS vector area.
+	</li>
+      <li><a href="html/v.sdts.dq.cp.html">v.sdts.dq.cp</a>
+		Installs SDTS data quality reports.
+	</li>
+      <li><a href="html/v.sdts.meta.cp.html">v.sdts.meta.cp</a>
+		Installs supplementary metadata file preparatory to creation of an SDTS export dataset.
+	</li>
+      <li><a href="html/v.spag.html">v.spag</a>
+		Process spaghetti-digitized binary vector file.
+	</li>
+      <li><a href="html/v.stats.html">v.stats</a>
+		Prints information about a binary GRASS vector map layer.
+	</li>
+      <li><a href="html/v.support.html">v.support</a>
+		Creates GRASS support files for (binary) GRASS vector data.
+	</li>
+      <li><a href="html/v.surf.rst.html">v.surf.rst</a>
+		Interpolation and topographic analysis from given contour data in vector format to GRASS floating point raster format using regularized spline with tension.
+	</li>
+      <li><a href="html/v.timestamp.html">v.timestamp</a>
+		Print/add/remove a timestamp for a vector map.
+	</li>
+      <li><a href="html/v.to.db.html">v.to.db</a>
+		Load values from vector to database.
+	</li>
+      <li><a href="html/v.to.rast.html">v.to.rast</a>
+		Converts a binary GRASS vector map layer into a GRASS raster map layer.
+	</li>
+      <li><a href="html/v.to.sites.html">v.to.sites</a>
+		Converts point data in a binary GRASS vector map layer into a GRASS site_lists file.
+	</li>
+      <li><a href="html/v.transform.html">v.transform</a>
+		Transforms an ASCII vector map layer from one coordinate system into another coordinate system.
+	</li>
+      <li><a href="html/v.what.html">v.what</a>
+		Query the category contents of a (binary) vector map layer at user-selected locations.
+	</li>
+    </ul>
+  </body>
+</html>

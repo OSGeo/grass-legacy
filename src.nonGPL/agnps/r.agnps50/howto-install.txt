@@ -1,0 +1,81 @@
+This text is an update from documentation/agnps2.html  
+
+  $Log$
+  Revision 1.1.4.1  2001-10-10 13:10:30  markus
+  added source descriptions
+
+  Revision 1.1  2000/01/14 17:15:05  markus
+  needs updating to GRASS 5
+
+Markus Neteler  <neteler@itc.it>
+
+Update for WATERSHEDDS-NCSU-GRASS-AGNPS.
+------------------------------------------------------
+
+ Compiling and installing GRASS-AGNPS:   
+
+1. Check the first line of the  
+     scripts/make_display_rules.pl 
+  script to make sure
+  that the path of the PERL utility on your UNIX workstation is 
+  correct, for example /usr/bin/perl. Type [which perl] to  
+  determine the correct path for your PERL utility if you are not sure. 
+
+
+2. Start the process with:
+
+  gmake5
+  
+This  
+ - compiles and installs the executable agnps_input_2a
+ - compiles and installs the executable agnps_views
+ - compiles and installs the GRASS hydrologic functions      
+      r.cn2, r.weighted.cn
+ - copies scripts into grass5/etc/agnps/ and grass5/scripts subdirectory 
+
+4. cshrc:
+   You must have a .cshrc in your directory with the following statement
+   in the PATH-command: $GISBASE
+
+   for example:
+    path = ( . /usr/local/bin $GISBASE/bin $GISBASE/scripts $GISBASE/garden/bin /usr/bin )
+   
+   (optimize this for your machine)
+
+   Otherwise the csh-scripts of AGNPS won't work.
+
+That's all...
+
+
+5. The test GRASS dataset,
+     ansi  (in example/) 
+   can be conveniently located as a subdirectory of your
+   home directory; however it may reside anywhere 
+   as long as the directory path is  defined when running GRASS.   
+   
+
+For the usage please read documentation/agnps2.html
+
+For short:
+
+ start with
+   grass5
+   d.mon x0
+
+ and then
+
+  1. r.agnps50.input
+  2. r.agnps50.run
+  3. r.agnps50.view
+   
+Good luck!
+
+Source home:
+ scripts/            scripts for GISBASE/etc/agnps
+ src_agnps_input_1/  contains $(GISBASE)/etc/agnps50/agnps_input_1, called
+                     by scripts/r.agnps50.input
+ src_agnps_input_2a/ contains $(GISBASE)/etc/agnps50/agnps_input_2a, called
+                     by scripts/r.agnps50.input
+ agnps-source/       r.agnps50.run
+ agview/             r.agnps50.view
+ hydro_tools/        r.cn* etc.

@@ -99,13 +99,13 @@ Auxillary_Photo *auxil;
     n1 = row_to_northing (&view->cell.head, row, 0.5);
 
 /**    Curses_clear_window (MENU_WINDOW);
-/**    sprintf (buf, "Point %d marked on image at", auxil->points_fid.count+1);
-/**    Curses_write_window (MENU_WINDOW, 1, 1, buf);
-/**    sprintf (buf, "East:  %10.2lf", e1);
-/**    Curses_write_window (MENU_WINDOW, 3, 3, buf);
-/**    sprintf (buf, "North: %10.2lf", n1);
-/**    Curses_write_window (MENU_WINDOW, 4, 3, buf);
-/**    Curses_clear_window (INFO_WINDOW);
+**    sprintf (buf, "Point %d marked on image at", auxil->points_fid.count+1);
+**    Curses_write_window (MENU_WINDOW, 1, 1, buf);
+**    sprintf (buf, "East:  %10.2lf", e1);
+**    Curses_write_window (MENU_WINDOW, 3, 3, buf);
+**    sprintf (buf, "North: %10.2lf", n1);
+**    Curses_write_window (MENU_WINDOW, 4, 3, buf);
+**    Curses_clear_window (INFO_WINDOW);
 **/
 
     R_standard_color (I_COLOR_ORANGE);
@@ -126,12 +126,12 @@ Auxillary_Photo *auxil;
     else {
 
 /**      sprintf (buf, "Point %d referenced to PHOTO COORDINATES:", 
-/**	       auxil->points_fid.count+1);
-/**      Curses_write_window (MENU_WINDOW, 7, 1, buf);
-/**      sprintf (buf, "X:  %10.2lf", e2);
-/**      Curses_write_window (MENU_WINDOW, 9, 3, buf);
-/**      sprintf (buf, "Y:  %10.2lf", n2);
-/**      Curses_write_window (MENU_WINDOW,10, 3, buf);
+**	       auxil->points_fid.count+1);
+**      Curses_write_window (MENU_WINDOW, 7, 1, buf);
+**      sprintf (buf, "X:  %10.2lf", e2);
+**      Curses_write_window (MENU_WINDOW, 9, 3, buf);
+**      sprintf (buf, "Y:  %10.2lf", n2);
+**      Curses_write_window (MENU_WINDOW,10, 3, buf);
 **/
 
       I_new_ref_point  (&auxil->points_fid, e1, n1, e2, n2, 1);

@@ -1,0 +1,8 @@
+PGM    = r.in.doq
+
+LIST   =  main.o gethead.o get_newhead.o
+
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB): #

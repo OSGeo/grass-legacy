@@ -1,0 +1,8 @@
+LIBRARIES = $(GISLIB)
+
+PGM = r.out.ppm3
+
+OFILES = main.o 
+
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBRARIES)
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBRARIES) $(MATHLIB) $(XDRLIB)

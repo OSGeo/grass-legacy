@@ -8,7 +8,7 @@
 
 #include "param.h"
 
-write_cats()
+void write_cats(void)
 {
     /*------------------------------------------------------------------------*/
     /*                            INITIALISE                                  */

@@ -20,6 +20,8 @@
 
 static int Debug = 0;
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <sys/ioctl.h>
 #include <ctype.h>
 #include <string.h>

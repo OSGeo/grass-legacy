@@ -1,6 +1,0 @@
-
-@man("v.mkcontour") - Creates a vector file containing unlabelled contour lines
-at user-defined intervals, from raster map data.
-
-(GRASS Vector Program)
-

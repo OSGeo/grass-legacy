@@ -22,7 +22,7 @@ retileNocache (map, nameOut, tileX, tileY, tileZ)
   int tileXsave, tileYsave, tileZsave;
   G3D_Region region;
 
-  saveType = G3d_getFileType (map);
+  saveType = G3d_getFileType ();
   G3d_setFileType (G3d_fileTypeMap (map));
   G3d_getTileDimension (&tileXsave, &tileYsave, &tileZsave);
   G3d_setTileDimension (tileX, tileY, tileZ);
@@ -81,7 +81,7 @@ G3d_retile (map, nameOut, tileX, tileY, tileZ)
     return;
   }
 
-  saveType = G3d_getFileType (map);
+  saveType = G3d_getFileType ();
   G3d_setFileType (G3d_fileTypeMap (map));
   G3d_getTileDimension (&tileXsave, &tileYsave, &tileZsave);
   G3d_setTileDimension (tileX, tileY, tileZ);
@@ -117,8 +117,8 @@ G3d_retile (map, nameOut, tileX, tileY, tileZ)
     for (y = 0; y < rows; y++)
       for (x = 0; x < cols; x++) {
 
-	G3d_getValueRegion (map, x, y, z, &value, typeIntern);
-	if (! G3d_putValue(map2, x, y, z, &value, typeIntern))
+	G3d_getValueRegion (map, x, y, z, (char *)&value, typeIntern);
+	if (! G3d_putValue(map2, x, y, z, (char *)&value, typeIntern))
 	  G3d_fatalError ("G3d_retile: error in G3d_putValue");
       }
   }

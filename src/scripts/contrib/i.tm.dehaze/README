@@ -1,0 +1,24 @@
+ LANDSAT TM5 Dehaze script
+
+ copyright Markus Neteler <neteler@geog.uni-hannover.de>
+ License: GNU GPL
+
+ Methodology:
+ Bandwise correction using tasscap4 (haze) and linear regression.
+
+ The regression based technique which determines a 'best fit' line for
+ multispectral plots of pixels within homogenous cover types. The slope of
+ the plot is proportional to the ratio of the reflective material (Crippen
+ 1987).
+
+ http://www.forestry.umt.edu/academics/courses/FOR503/rs1.htm:
+ The correction technique is based on the fact that Thematic Mapper (TM)
+ band 7 is essentially free from atmospheric effects. Upon examining an
+ area in the image that is in deep shadow or a body of homogeneous deep
+ nonturbid water, the resulting reflectance value in band 7 is either 0 or
+ 1. A histogram of the reflectivity values in band 7 for this area starts
+ from 0 or 1. On the contrary, a histogram of the reflectivity values in
+ bands 1, 2 and 3 for the same area starts from much higher values as a
+ result of haze. This offset, characteristic for each one of the three
+ bands is subtracted from the initial reflectance values and the result is
+ a haze corrected image (Sabins 1987).

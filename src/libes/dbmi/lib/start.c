@@ -1,4 +1,7 @@
 #include "dbmi.h"
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
 #define READ  0
 #define WRITE 1
@@ -15,10 +18,18 @@ db_start_driver(name)
     int p1[2], p2[2];
     int pid;
     int stat;
+    dbConnection connection;
 
 /* read the dbmscap file */
     if(NULL == (list = db_read_dbmscap()))
 	return (dbDriver *) NULL;
+
+/* if name is empty use connection.driverName, added by RB 4/2000 */
+    if( name == '\0' )
+    {
+	db_get_connection( &connection );
+	name = connection.driverName;
+    }
 
 /* find this system name */
     for (cur = list; cur; cur = cur->next)

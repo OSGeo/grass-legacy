@@ -47,21 +47,29 @@
 
 /* The six quadratic coefficients are stored in the array coeff */
 
-#define C_A coeff[1]
-#define C_B coeff[2]
-#define C_C coeff[3]
-#define C_D coeff[4]
-#define C_E coeff[5]
-#define C_F coeff[6]
+#define C_A coeff[0]
+#define C_B coeff[1]
+#define C_C coeff[2]
+#define C_D coeff[3]
+#define C_E coeff[4]
+#define C_F coeff[5]
 
 /* ------ Declare functions ----- */
 
-float	*vector(),		/* Reserves memory for 1D matrix.	*/
-	**matrix();		/* Reserves memory for 2D matrix.	*/
-
-int	*ivector();		/* Reserves memory for 1D int matrix.	*/
-
-CELL	param();		/* Calculates terrain parameters.	*/
+CELL param(int ptype, double *coeff);	/* Calculates terrain parameters. */
+void interface(int argc, char **argv);
+void open_files(void);
+void process(void);
+void close_down(void);
+void write_cols(void);
+void write_cats(void);
+void find_normal(double **normal,	/* Matrix of cross-products.	*/
+		 double *w);		/* Weights matrix.		*/
+void find_obs(CELL  *z,			/* Local window of elevs.	*/
+	      double *obs,		/* Observed column vector.	*/
+	      double  *w);		/* Weighting matrix.		*/
+void find_weight(double *weight_ptr);
+CELL feature(double *coeff);	/* Set of six quadratic coefficents. 	*/
 
 /* ------ Global variables ------ */
 

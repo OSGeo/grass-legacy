@@ -1,0 +1,146 @@
+#!/bin/sh
+#
+# $Id$
+#
+############################################################################
+#
+# MODULE:	r.fillnulls
+# AUTHOR(S):	Markus Neteler <neteler@geog.uni-hannover.de>
+# PURPOSE:	fills NULL (no data areas) in raster maps
+#               The script respects a user mask (MASK) if present.
+#
+# COPYRIGHT:	(C) 2001 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+#############################################################################
+
+# what to do in case of user break:
+function exitprocedure()
+{
+ echo "User break!"
+ #shall we delete any TMP files?
+ exit 1
+}
+# shell check for user break (signal list: trap -l)
+trap "exitprocedure" 2 3 9 15
+
+program=`basename $0`
+
+if [ ! "$GISBASE" ]
+then
+	echo
+	echo "ERROR: must be in GRASS to use $program"
+	echo
+	exit 1
+fi
+
+if [ $# = 0 -o "$1" = "-help" -o "$1" = "help" ]
+then
+	echo ""
+	echo "Description:"
+	echo "  fills NULL (no data areas) in input map and stores filled"
+	echo "  map to a new output map. The fill data are interpolated from"
+	echo "  the no data area boundaries using s.surf.rst."
+	echo ""
+	echo "Usage:"
+	echo "       r.fillnulls input=name output=name"
+	echo ""
+	echo "WARNING: As the null data areas are filled by interpolation"
+	echo "         the user should know what he/she is doing. Be careful"
+	echo "         to check the results (r.contour, r.mapcalc)."
+	exit 1
+fi
+
+for i
+do
+	echo $i | grep '=' > /dev/null 2>&1
+	wildcard=`echo $i | awk -F '=' '{print $2}'`
+	case $i in
+		i=*|in=*|inp=*|inpu=*|input=*)
+			INMAP=$wildcard;;
+		o=*|ou=*|out=*|outp=*|outpu=*|output=*)
+			OUTMAP=$wildcard;;
+	esac
+done
+
+#test:
+if [ ! $INMAP ]
+then
+ echo "Please provide an input name"
+ exit 1
+fi
+if [ ! $OUTMAP ]
+then
+ echo "Please provide an output name"
+ exit 1
+fi
+
+#check if a MASK is already present:
+MASKFILE=
+if test -f $LOCATION/cell/MASK
+then
+ echo "A raster mask (MASK) is present. Saving it..."
+ MASKFILE=mask.$$
+ g.rename MASK,mask.$$ > /dev/null
+fi
+
+#make a null mask
+TMP1=r.fillnulls.$$
+echo Using tmp file $TMP1
+
+# idea: filter all NULLS and grow that area(s) by one pixel, then
+# interpolate from these surrounding one pixel area
+
+r.mapcalc $TMP1="if(isnull($INMAP))"
+r.grow in=$TMP1 out=MASK
+
+# now we would see only the outlines of the NULL areas if looking at INMAP.
+# Use this outline (raster border) for interpolating the fill data:
+r.to.sites -a in=$INMAP out=$INMAP.$TMP1
+
+#count number of sites to control segmax parameter for interpolation:
+POINTSNUMBER=`grep "%" $LOCATION/site_lists/$INMAP.$TMP1 |wc -l`
+# reduce by 2 because of sites file header:
+POINTSNUMBER=`expr $POINTSNUMBER - 2`
+
+# don't set a mask for interpolation to avoid problem:
+echo ""
+echo "Note: Below warnings may be ignored."
+echo ""
+
+if [ $POINTSNUMBER  -ge 800 ] ; then
+  echo "Using segmentation for interpolation..."
+  s.surf.rst in=$INMAP.$TMP1 ele=rfillnulls.$TMP1 > /dev/null
+else
+  #if less than 800 points, use no segmentation for speedup:
+  echo "Using no segmentation for interpolation as not needed..."
+  s.surf.rst in=$INMAP.$TMP1 ele=rfillnulls.$TMP1 segmax=700 > /dev/null
+fi
+
+echo ""
+echo "Note: Above warnings may be ignored."
+echo ""
+
+#remove internal MASK first
+g.remove MASK > /dev/null
+
+#restoring user's mask, if present:
+if test -f $LOCATION/cell/mask.$$
+then
+ echo "Restoring user mask (MASK)..."
+ g.rename mask.$$,MASK > /dev/null
+fi
+
+#patch orig and fill map
+echo "Patching fill data into NULL areas..."
+r.patch in=$INMAP,rfillnulls.$TMP1 out=$OUTMAP
+
+#cleanup
+g.remove rast=$TMP1,rfillnulls.$TMP1 > /dev/null
+g.remove sites=$INMAP.$TMP1 > /dev/null
+
+echo ""
+echo "Filled raster map is: $OUTMAP"

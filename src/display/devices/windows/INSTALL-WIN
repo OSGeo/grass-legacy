@@ -1,0 +1,71 @@
+$Id: INSTALL-WIN,v 1.1.2.5 2002-01-07 16:23:43 markus Exp $
+
+From: "Mike Thomas" <miketh@brisbane.paradigmgeo.com>
+Re: [winGRASS] Re: generic Windows GRASS driver
+Slightly updated by Markus Neteler
+
+
+1. setting up cygwin
+
+See instructions:
+http://grass.itc.it/grass5/binary/windows_cygnus/cygwin_grass50compile.html
+
+The X stuff and the TCL/TK stuff are not relevant if you are doing a Win32
+native driver - so save yourself some time there.
+
+My configure script:
+--------------------------
+#! /bin/bash -ef
+CFLAGS=-g ./configure --enable-postgres=no --with-tcltk-libs=/usr/local/lib --with-tcltk-includes=/usr/local/include --with-gdal --with-postgres-includes=/usr/include/postgresql --with-postgres-libs=/lib >& configure.log
+---------------------------
+
+Then build GRASS:
+make
+
+> 3. compile libG11 (native windows display driver .dll)
+
+$ `pwd`/bin.i686-pc-cygwin/gmake5  `pwd`/src/display/devices/windows
+
+> 4. recompile Xdriver
+
+These changes in "src/CMD/head/head.i686-pc-cygwin" required:
+
+
+COMPILE_FLAGS       = -O -D__W98__
+LDFLAGS             =
+XCFLAGS             = -I/path_to_grass/src/display/devices/windows/libW11
+
+XLIBPATH            = -L/path_to_grass/src/display/devices/windows/libW11/lib
+XLIB                = -lX11
+XTLIB               =
+XMLIB               =
+XEXTRALIBS          =
+XTLIBPATH           =
+XMLIBPATH           =
+
+
+PART 3 - Rebuilding "display/devices", "d.mon" etc
+
+3.a XDriver: 
+ Delete all the "OBJ.i686-pc-cygwin/*"  files
+
+ cd src/display/devices
+ find . -type d -name 'OBJ.*' -exec rm -rf {} \;
+ $ `pwd`/bin.i686-pc-cygwin/gmake5
+
+3.b d.mon
+
+Likewise d.mon, although probably unnecessary, although the __W98__ changes
+affect it.
+
+ Delete all the "OBJ.i686-pc-cygwin/*"  files
+
+ cd src/display/d.mon
+ find . -type d -name 'OBJ.*' -exec rm -rf {} \;
+ $ `pwd`/bin.i686-pc-cygwin/gmake5
+
+
+Start Grass, and type "d.mon x0" - you should get a bunch of debugging
+output and a display. Happy testing...
+
+GREAT!!!

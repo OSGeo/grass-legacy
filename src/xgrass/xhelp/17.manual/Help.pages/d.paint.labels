@@ -1,5 +1,0 @@
-
-@man("d.paint.labels") - Displays text labels formatted for use with GRASS paint
-(@man("p.map"), @man("p.labels")) output to the active frame on the graphics monitor.
-
-(GRASS Display Program)

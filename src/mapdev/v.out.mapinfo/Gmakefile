@@ -1,0 +1,18 @@
+PGM=v.out.mapinfo
+
+OFILES = \
+	main.o \
+	site_to_mpinfo.o \
+        pnt_to_mpinfo.o \
+	line_to_mpinfo.o \
+	area_to_mpinfo.o \
+        prune_points.o \
+	wr_mpinfo_head.o \
+	wr_mpinfo_coor.o \
+        get_isle_xy.o
+
+LIBES=$(VECTLIB) $(GISLIB) $(DATETIMELIB)
+$(BIN_INTER)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+#$(OFILES):	$(LIBDIG)/digit.h $(LIBDIR)/gis.h

@@ -1,40 +1,131 @@
+#############################################################################
+#
+# $Id$
+#
+# MODULE:   	Grass Compilation
+# AUTHOR(S):	Original author unknown - probably CERL
+#		Markus Neteler - Germany - neteler@geog.uni-hannover.de
+#   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
+#   	    	Huidae Cho - Korea - hdcho@geni.knu.ac.kr
+#   	    	Eric G. Miller - egm2@jps.net
+# PURPOSE:  	The source file for this Makefile is in src/CMD/head/head.in.
+#		It is the top part of a file called make.rules which is used
+#		for compiling all GRASS modules. This part of the file provides
+#		make variables that are dependent on the results of the
+#		configure script.
+# COPYRIGHT:    (C) 2000 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#   	    	License (>=v2). Read the file COPYING that comes with GRASS
+#   	    	for details.
+#
+#############################################################################
+
+############################## Make Variables ###############################
+
 CC                  = @CC@
 FC                  = @F77@
 LEX                 = @LEX@
-YACC                = yacc
+YACC                = @YACC@
+PERL                = @PERL@
 ARCH                = @host@
-
-GISBASE             = @prefix@
+MAKE                = make
+prefix              = @prefix@
+exec_prefix         = @exec_prefix@
 UNIX_BIN            = @BINDIR@
+
+GISBASE             = @GISBASE@
+GRASS_BIN           = @GRASS_BIN@
+#VERSION             = @VERSION@
+NAME_VER            = @NAME_VER@
 
 DEFAULT_DATABASE    =
 DEFAULT_LOCATION    =
 
 COMPILE_FLAGS       = @CFLAGS@ @INCLUDE_DIRS@
-LDFLAGS             = @STRIPFLAG@ @LIBRARY_DIRS@
+LDFLAGS             = @LDFLAGS@
 
+DLLIB               = @DLLIB@
 XCFLAGS             = @X_CFLAGS@
 # XXX - replace SYSV in code with configure results in config.h
 # XXX - need SYSV defined for hpux10
 XLDFLAGS            = @SYSV@
-XINCPATH            = 
-XMINCPATH           = 
+XMINC               = @XMINC@
 XLIBPATH            = @X_LIBS@
-XTLIBPATH           = 
-XMLIBPATH           = 
-XLIB                = @X_PRE_LIBS@ -lX11
-XTLIB               = -lXt
-XMLIB               = -lXm
+XLIB                = @X_PRE_LIBS@ @XLIB@
+XTLIB               = @XTLIB@
+XMLIB               = @XMLIB@
 XEXTRALIBS          = @X_EXTRA_LIBS@
 
 COMPATLIB           = @COMPATLIB@
 TERMLIB             = @TERMLIB@
 CURSES              = @CURSESLIB@ $(TERMLIB) $(COMPATLIB)
-MATHLIB             = -lm
-XDRLIB              = @XDRLIB@
+MATHLIB             = @MATHLIB@ 
+XDRLIB              = @XDRLIB@ @ZLIBINCPATH@ @ZLIBLIBPATH@ @ZLIB@ $(XEXTRALIBS)
+ICONVLIB            = @ICONVLIB@
+
+#ZLIB:
+ZLIB                = @ZLIBINCPATH@ @ZLIBLIBPATH@ @ZLIB@
+ZLIBINCPATH         = @ZLIBINCPATH@
+ZLIBLIBPATH         = @ZLIBLIBPATH@
+
+#DBM:
+DBMINCPATH          = @DBMINCPATH@
+DBMLIBPATH          = @DBMLIBPATH@
+DBMLIB              = @DBMLIB@
+
+#PostgreSQL:
+PQINCPATH           = @PQINCPATH@
+PQLIBPATH           = @PQLIBPATH@
+PQLIB               = @PQLIB@
+
+#ODBC:
+ODBCINC             = @ODBCINC@
+ODBCLIB             = @ODBCLIB@
+
+#Image formats:
+PNGINC              = @PNGINC@
+PNGLIB              = @PNGLIB@
+
+JPEGINCPATH         = @JPEGINCPATH@
+JPEGLIBPATH         = @JPEGLIBPATH@
+JPEGLIB             = @JPEGLIB@
 
 TIFFINCPATH         = @TIFF_INCLUDE_DIRS@
 TIFFLIBPATH         = @TIFF_LIBRARY_DIRS@
+TIFFLIB             = @TIFFLIB@
+
+#GD library (for PNGdriver):
+GDINC               = @GDINC@
+GDLIB               = @GDLIB@
+
+#openGL files for NVIZ/r3.showdspf
+OPENGLINC           = @OPENGLINC@
+OPENGLwINC          = @OPENGLwINC@
+OPENGLLIB           = @OPENGLLIB@
+OPENGLULIB          = @OPENGLULIB@
+LGLWM               = @LGLWM@
+
+#tcl/tk stuff
+TCLINCDIR           = @TCLINCDIR@
+TKINCDIR            = @TKINCDIR@
+TCLTKLIBPATH        = @TCLTKLIBPATH@
+TCLTKLIBS           = @TCLTKLIBS@
+
+#FFTW:
+FFTWINC             = @FFTWINC@
+FFTWLIB             = @FFTWLIB@
+
+#LAPACK/BLAS stuff for gmath lib:
+BLASLIB             = @BLASLIB@
+LAPACKLIB           = @LAPACKLIB@
+
+#GDAL:
+GDAL_LIBS           = @GDAL_LIBS@
+GDAL_CFLAGS         = @GDAL_CFLAGS@
+
+#FreeType:
+FTINC               = @FTINC@
+FTLIB               = @FTLIB@
 
 LIBRULE             = ar ruv $@ $?; @RANLIB@ $@
-USE_TERMIO          = @USE_TERMIO@

@@ -1,6 +1,7 @@
 #include <stdlib.h>
-#include "digit.h"
+#include "Vect.h"
 #include "vbuildlib.h"
+#include "gis.h"
 
 #ifdef LABEL
 static int label_area (struct Map_info *,int);
@@ -16,6 +17,7 @@ int build_all_areas (struct Map_info *map)
     cnt = 0;
     for (line = 1 ; line <= map->n_lines ; line++)
     {
+        G_percent(line, map->n_lines, 2);
 	Line = &(map->Line[line]);
 	if (!LINE_ALIVE (Line) || Line->type != AREA)
 	    continue;

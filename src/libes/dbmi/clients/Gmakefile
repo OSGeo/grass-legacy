@@ -1,51 +1,59 @@
-#HOME = $(DBMIDIR)/bin
+HOME=$(BIN_CMD)
 
-HOME=$(GISBASE)/etc/dbmi/bin
 INCLUDE = ../include
-DBMILIB = ../lib/libdbmi.a
+DBMILIB = $(LIBDIR)/libdbmi.a
 
-LIBES = $(GISLIB) $(DBMILIB)
+LIBES = $(DBMILIB) $(GISLIB) 
 EXTRA_CFLAGS=-I$(INCLUDE)
 
-all: 
-	if [ ! -d $(GISBASE)/etc/dbmi ]; then mkdir $(GISBASE)/etc/dbmi; fi; \
-	if [ ! -d $(HOME) ]; then mkdir $(HOME); fi; \
-	$(HOME)/db.columns \
+all: 	$(HOME)/db.columns \
+	$(HOME)/db.createdb \
+	$(HOME)/db.dropdb \
+	$(HOME)/db.droptable \
 	$(HOME)/db.databases \
 	$(HOME)/db.describe \
 	$(HOME)/db.drivers \
 	$(HOME)/db.execute \
 	$(HOME)/db.select \
-	$(HOME)/db.tables
+	$(HOME)/db.tables \
+	$(HOME)/db.connect \
+	$(ETC)/db.attr
 
 $(HOME)/db.columns: columns.o $(LIBES)
-	$(CC) -o $@ columns.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ columns.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(HOME)/db.createdb: createdb.o $(LIBES)
-	$(CC) -o $@ createdb.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ createdb.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(HOME)/db.dropdb: dropdb.o $(LIBES)
-	$(CC) -o $@ dropdb.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ dropdb.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(HOME)/db.droptable: droptable.o $(LIBES) 
-	$(CC) -o $@ droptable.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ droptable.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(HOME)/db.databases: databases.o $(LIBES)
-	$(CC) -o $@ databases.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ databases.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(HOME)/db.describe: describe.o printtab.o $(LIBES)
-	$(CC) -o $@ describe.o printtab.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ describe.o printtab.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(HOME)/db.drivers: drivers.o $(LIBES)
-	$(CC) -o $@ drivers.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ drivers.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(HOME)/db.execute: execute.o $(LIBES)
-	$(CC) -o $@ execute.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ execute.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(HOME)/db.select: select.o $(LIBES)
-	$(CC) -o $@ select.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ select.o $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(HOME)/db.tables: tables.o $(LIBES)
-	$(CC) -o $@ tables.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ tables.o $(LIBES) $(XDRLIB) $(MATHLIB)
+
+$(HOME)/db.connect: connect.o $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ connect.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	
+$(ETC)/db.attr: db.attr
+	cp db.attr $(ETC)
+	chmod 0755 $(ETC)/db.attr
 
 $(LIBES): #

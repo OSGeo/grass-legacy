@@ -9,7 +9,7 @@
 #include "param.h"
 
 
-open_files()
+void open_files(void)
 {
     /* Open existing file and set the input file descriptor. */
 

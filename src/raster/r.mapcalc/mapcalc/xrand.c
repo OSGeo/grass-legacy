@@ -1,6 +1,11 @@
+
+#include <stdlib.h>
+
 #include "gis.h"
 #include "mapcalc.h"
-/* Author: Michael Shapiro. 16 feb 1993 
+#include "config.h"
+
+/* Author: Michael Shapiro. 16 feb 1993 / update 12/99 on __CYGWIN__
  * NOTE:
  *   This depends on the Unix function drand48() which returns a
  *   double between 0.0 and 1.0
@@ -8,7 +13,9 @@
  * g_randseed(): it does nothing at present
  */
 
-extern double drand48();
+#if !defined(HAVE_DRAND48)
+#define drand48() ((double)rand()/RAND_MAX)
+#endif
 
 int 
 g_randseed (void)

@@ -1,0 +1,12 @@
+PGM = r.random.surface
+
+OBJS =	cpfilter.o gennorm.o makepp.o decay.o init.o save.o \
+	calcsd.o digits.o calcsurf.o gasdev.o main.o random.o \
+	dd.o makebigf.o zero.o
+
+$(BIN_CMD)/$(PGM): $(OBJS) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(OBJS): ransurf.h
+
+$(GISLIB): #

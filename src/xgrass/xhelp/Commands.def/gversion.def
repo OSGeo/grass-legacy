@@ -1,9 +1,0 @@
-
-
-g.version - 
-
-g.version prints to standard output the GRASS version number and date,
-in the form: 
-			GRASS 4.0 (Summer 1991)
-
-Manual entry for @man("g.version")

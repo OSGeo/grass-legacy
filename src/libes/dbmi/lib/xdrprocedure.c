@@ -3,7 +3,7 @@
 
 /******** client only ***************/
 
-db__start_procedure_call (procnum)
+int db__start_procedure_call (procnum)
     int procnum;
 {
     int reply;
@@ -31,6 +31,7 @@ db__start_procedure_call (procnum)
  * DB_OK  ok
  * DB_EOF eof from client
  */
+int
 db__recv_procnum (n)
     int *n;
 {
@@ -47,12 +48,14 @@ db__recv_procnum (n)
     return stat;
 }
 
+int
 db__send_procedure_ok(n)
     int n;
 {
     return db__send_int (n);
 }
 
+int
 db__send_procedure_not_implemented(n)
     int n;
 {

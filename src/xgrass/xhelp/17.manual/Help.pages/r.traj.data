@@ -1,5 +1,0 @@
-
-@man("r.traj.data") - Reviews the ammunition and weapon data base used
-by @man("r.traj").
-
-(GRASS Raster Program)

@@ -1,0 +1,140 @@
+<html>
+<A NAME="r.sunmask">
+<TITLE>r.sunmask</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<B><EM>r.sunmask</EM></B> - calculate cast shadow areas from sun position
+and DEM. Either A: exact sun position is specified, or B: date/time to
+calculate the sun position by r.sunmask itself.<BR>
+
+<EM>(GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>r.sunmask</B> 
+[<B>-zvs</B>]
+<B>elev</B><EM>=name</EM> 
+<B>output</B><EM>=name</EM> 
+[<B>altitude</B><EM>=value</EM>]
+[<B>azimuth</B><EM>=value</EM>]
+[<B>year</B><EM>=value</EM>]
+[<B>month</B><EM>=value</EM>]
+[<B>day</B><EM>=value</EM>]
+[<B>hour</B><EM>=value</EM>]
+[<B>minute</B><EM>=value</EM>]
+[<B>second</B><EM>=value</EM>]
+[<B>timezone</B><EM>=value</EM>]
+[<B>east</B><EM>=value</EM>]
+[<B>north</B><EM>=value</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<em>r.sunmask</em> creates an output map layer based on an input elevation
+raster map layer and the sun position. The output map layer contains the
+cast shadow areas arising from sun shine and elevations. The user can define
+the sun position either directly or the module calculates it from given
+location and date/time parameters using the <a
+href=http://rredc.nrel.gov/>NREL</a> sun position algorithm. So either
+"A:"-parameters to specify the exact known sun position or "B:-parameters"
+to specify date/time for sun position calculation by r.sunmask itself have
+to be used.
+
+<H3>Flag:</H3>
+<DL>
+<DT><B>-z</B>
+<DD>Zero is a real elevation
+<DT><B>-v</B>
+<DD>verbose output<br>
+displays sun related information like sunset/sunrise etc.
+<DT><B>-s</B>
+<DD>calculate sun position only and exit
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>elev</B>
+<DD>Elevation raster map to be used for shadow calculation
+
+<DT><B>output</B>
+<DD>Name for the resulting binary cast shadow raster map (1=shadow)
+
+<DT><B>A: altitude</B>
+<DD>altitude of the sun above horizon, degrees (options: 0-89.999)
+
+<DT><B>A: azimuth</B>
+<DD>azimuth of the sun from the north, degrees (options: 0-360)
+
+<DT><B>B: year</B>
+<DD>year (1950..2050) for sun position calculation
+
+<DT><B>B: month</B>
+<DD>month (0..12) for sun position calculation
+
+<DT><B>B: day</B>
+<DD>day (0..31) for sun position calculation
+
+<DT><B>B: hour</B>
+<DD>hour (0..12) for sun position calculation
+
+<DT><B>B: minute</B>
+<DD>minutes (0..60) for sun position calculation
+
+<DT><B>B: second</B>
+<DD>seconds (0..60) for sun position calculation
+
+<DT><B>B: timezone</B>
+<DD>timezone (east positive, offset from GMT, also use to adjust daylight savings)
+
+<DT><B>east</B>
+<DD> east coordinate (point of interest, default: map center)
+
+<DT><B>north</B>
+<DD>north coordinate (point of interest, default: map center)
+
+</DL>
+
+The module performs sunset/sunrise checks and refraction correction for sun
+position calculation. Local coordinate systems are internally transformed to
+latitude/longitude for the SOLPOS algorithm.
+
+<h2>Notes</h2>
+
+r.sunmask and daylight savings: Rather than convert time to GMT, the solpos
+algorithm uses what is called Local Standard Time, which is generally
+defined politically as an offset from GMT.  So the key is the offset from
+GMT, which the solpos Time Zone parameter.  If the user specifies clock time
+(different for winter and summer), he/she would have to change the Time Zone
+parameter seasonally in r.sunmask (timezone parameter).
+<p>
+
+Note: In latitude/longitude locations the position coordinates pair
+(east/west) has to be specified in decimal degree (not D:M:S). If
+not specified, the map center's coordinates will be used.
+Also <em>g.region -l</em> displays the map center's coordinates.
+
+
+<h2>Acknowledgements</h2>
+Acknowledgements: National Renewable Energy Laboratory for their <a
+href=http://rredc.nrel.gov/solar/codes_algs/solpos/>SOLPOS 2.0</a> sun position
+algorithm.
+
+<H2>SEE ALSO</H2>
+<EM>
+<a href="g.region.html">g.region</a>,
+<a href="r.sun.html">r.sun</a>,
+<a href="r.slope.aspect.html">r.slope.aspect</a>
+</EM>
+
+<H2>AUTHOR</H2>
+Janne Soimasuo, Finland 1994<br>
+update to FP by Huidae Cho 2001<br>
+added solpos algorithm feature by Markus Neteler 2001
+<p>
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

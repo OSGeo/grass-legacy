@@ -1,3 +1,7 @@
+/*
+* $Id$
+*/
+
 /*  GSX.c 
     Bill Brown, USACERL  
     December 1993
@@ -7,29 +11,31 @@
 
 static int Cxl=0;
 
-int 
-GS_check_cancel()
+int GS_check_cancel(void)
 {
     Cxl_func();
+
     return(Cxl);
 }
 
-GS_set_cancel(c)
-int c;
+void GS_set_cancel(int c)
 {
     Cxl = c;
+    
+    return;
 }
 
-GS_set_cxl_func(f)
-void (*f)();
+void GS_set_cxl_func(void (*f)(void))
 {
     Cxl_func = f;
+    
+    return;
 }
 
 
-GS_set_swap_func(f)
-void (*f)();
+void GS_set_swap_func(void (*f)(void))
 {
     Swap_func = f;
+    
+    return;
 }
-

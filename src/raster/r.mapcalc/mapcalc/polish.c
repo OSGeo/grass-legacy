@@ -6,13 +6,13 @@
 
 int polish (FILE *exp_fd, char *result)
 {
-    char buf[1024];
+    char buf[1024], buf2[1024];
     char name[300];
-    char *mapset;
+    char *mapset,*p,*q;
     FILE *fd;
     static char *tempfile = NULL ;
     int ok,x;
-    int n;
+    int i,j,n;
     int row,col;
     double xd;
 
@@ -30,9 +30,86 @@ int polish (FILE *exp_fd, char *result)
     sprintf (buf, "%s/etc/polish > %s", G_gisbase(), tempfile);
     fd = popen (buf, "w");
     if (!fd) return 0;
-    while ((n = fgetc (exp_fd)) > 0)
+    i = 0;
+    while ((n = fgetc (exp_fd)) > 0){
 	fputc ((char)n, fd);
+	if(!strchr(" \t", (char)n))
+		buf2[i++] = (char)n;
+    }
     pclose (fd);
+    buf2[i] = 0;
+
+    cp_cats = 0;
+    catmap[0] = 0;
+    if((p=strchr(buf2, '='))){
+	    p++;
+	    q = p;
+	    if(strstr(p, "if(") != p){
+		    if(*q && *q != '.' && !isdigit(*q)){
+			    for(; *p; p++)
+				    if(strchr("^#\"'()[]+-*/%><!=&|,", *p))
+					    break;
+			    if(!*p && *q != '.' && !isdigit(*q)){
+				    cp_cats = 1;
+				    strcpy(catmap, q);
+				    j = strlen(catmap);
+				    if(catmap[j-1] == '\n')
+				    	catmap[j-1] = 0;
+			    }
+		    }
+	    }else{
+		    for(i--; i>=0; i--){
+			    if(buf2[i] == ')'){
+				    buf2[i] = 0;
+				    break;
+			    }
+		    }
+
+		    i = 0;
+		    for(p+=3; *p; p++){
+			    if(*p == '(')
+				    i++;
+			    else
+			    if(*p == ')')
+				    i--;
+			    else
+			    if(*p == ',' && !i)
+				    break;
+		    }
+
+		    p++;
+		    if(*p && *p != '.'){
+		    	    i = 0;
+			    n = 0;
+			    q = p;
+			    for(; *p; p++){
+				    if(strchr("^#\"'()[]+-*/%><!=&|", *p))
+					    i++;
+				    else
+				    if(*p == ','){
+					    if(n++ == 0){
+						    *p = 0;
+						    strcpy(catmap, q);
+						    j = strlen(catmap);
+				    		    if(catmap[j-1] == '\n')
+							    catmap[j-1] = 0;
+						    *p = ',';
+					    }
+					    break;
+				    }
+			    }
+			    n = 0;
+			    for(j=0; catmap[j]; j++){
+				    if(isdigit(catmap[j]) || catmap[j] == '.')
+					    n++;
+			    }
+			    if(n == strlen(catmap))
+				    i++;
+			    if(!i)
+				    cp_cats = 2;
+		    }
+	    }
+    }
 
 /* open the result file and put it into the expression stack */
     fd = fopen (tempfile, "r");

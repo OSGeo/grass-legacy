@@ -1,0 +1,121 @@
+<HTML>
+
+<TITLE>i.target</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>i.target</b></EM>  - This program targets an imagery group to a GRASS location and mapset
+
+<BR>
+
+<EM>(GRASS Image Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>i.target</B> [<B>-c</B>] group=</B><EM>name</EM>
+[<B>location=</B><EM>name</EM>]
+[<B>mapset=</B><EM>name</EM>]
+
+<H3>Parameters:</H3>
+
+<H3>Flags:</H3>
+<DL>
+<DT><B>-c</B> 
+<DD>Set current location and mapset as target for of imagery group
+</DL>
+
+<DL>
+<DT><B>group</B>
+<DD>Name of imagery group
+
+<DT><B>location</B>
+<DD>Name of imagery target location
+
+<DT><B>mapset</B>
+<DD>Name of imagery target mapset
+</DL>
+
+
+<H2>DESCRIPTION</H2>
+
+<EM>i.target</EM>
+targets an 
+
+<A HREF="i.group.html">imagery</A> 
+group to a GRASS data base location name and mapset.  
+During the 
+
+<A HREF="../imagery.html">imagery</A> 
+program <EM><A HREF="i.rectify.html">i.rectify</A></EM>,
+
+
+a location name and mapset are required
+into which to transfer the rectified file
+just prior to completion of the program;
+<EM>i.target</EM> enables the user to specify this location.
+<EM>i.target</EM> must be run before 
+
+<EM><A HREF="i.points.html">i.points</A></EM> and 
+
+<EM><A HREF="i.rectify.html">i.rectify</A></EM>.
+
+
+<P>
+
+In interactive mode the first prompt in the program asks the user for the name of 
+the <A HREF="i.group.html">imagery</A> 
+group that needs a target.  The imagery group
+must be present in the user's current mapset.
+
+<P>
+
+The following menu asking for the target LOCATION NAME and MAPSET is displayed:
+
+
+<PRE>
+Please select the target LOCATION and MAPSET for group &lt;spot&gt;
+
+ CURRENT LOCATION:  location______
+ CURRENT MAPSET:  demo___________
+
+ TARGET LOCATION:_________
+ TARGET MAPSET:___________
+
+ (Enter list for a list of location names or mapsets 
+  within a location)
+
+
+     AFTER COMPLETING ALL ANSWERS, HIT &lt;ESC&gt; TO CONTINUE
+                    (OR &lt;Ctrl-C&gt; TO CANCEL
+
+</PRE>
+
+An <A HREF="i.group.html">imagery</A> 
+group may be targeted to any GRASS location.
+
+<H2>SEE ALSO</H2>
+
+<EM>GRASS Tutorial: <A HREF="../Postscript/imagery.ps">Image Pro
+cessing</A></EM>
+
+<P>
+
+<EM><A HREF="i.group.html">i.group</A></EM><BR>
+<EM><A HREF="i.points.html">i.points</A></EM><BR>
+<EM><A HREF="i.rectify.html">i.rectify</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro,
+U.S. Army Construction Engineering Research Laboratory<p>
+Parser support: Bob Covill
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

@@ -3,3 +3,4 @@ all:
 	$(GMAKE) Vlib
 	$(GMAKE) diglib
 	$(GMAKE) libes
+	$(GMAKE) georef

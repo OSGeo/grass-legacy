@@ -45,16 +45,18 @@
 		Bill Hughes
 */
 
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdarg.h>
 #include <time.h>
 #include "gis.h"
 
-#include <stdarg.h>
 
-static int (*error)() = 0;
+/* static int (*error)() = 0; */
+static int (*ext_error)() = 0; /* Roger Bivand 17 June 2000 */
 static int no_warn = 0;
-static int no_sleep = 0;
+static int no_sleep = 1;
 
 extern char *getenv();
 static int print_word (FILE *,char **,int *,int);
@@ -111,14 +113,15 @@ int G_sleep_on_error (int flag)
 
 int G_set_error_routine ( int (*error_routine)())
 {
-    error = error_routine;
-
+    /* error = error_routine; */
+    ext_error = error_routine; /* Roger Bivand 17 June 2000 */
     return 0;
 }
 
 int G_unset_error_routine ()
 {
-    error = 0;
+    /* error = 0; */
+    ext_error = 0; /* Roger Bivand 17 June 2000 */
 
     return 0;
 }
@@ -129,16 +132,27 @@ static int print_error(char *msg,int fatal)
 
     if (active)
     {
-	fprintf(stderr,"%s: ",fatal?"ERROR":"WARNING");
+	/* fprintf(stderr,"%s: ",fatal?"ERROR":"WARNING");
 	fprintf (stderr, "%s\n", msg);
-	return -1;
+	return -1; */
+	if (ext_error) { /* Roger Bivand 18 June 2000 */
+	    ext_error(msg, fatal);
+	    return -1;
+	}
+	else {
+	    fprintf(stderr,"%s: ",fatal?"ERROR":"WARNING");
+	    fprintf (stderr, "%s\n", msg);
+	    return -1;
+	}
     }
     active = 1;
 
     log_error (msg, fatal);
 
-    if (error)
-	error (msg, fatal);
+    /* if (error)
+	error (msg, fatal); */
+    if (ext_error) /* Roger Bivand 17 June 2000 */
+	ext_error (msg, fatal);
     else
     {
 	char *w;

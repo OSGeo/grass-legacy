@@ -1,4 +1,5 @@
 #define MAIN
+#include <stdlib.h>
 #include <string.h>
 #include "local_proto.h"
 #include <unistd.h>
@@ -10,10 +11,16 @@ int
 main (int argc, char *argv[])
 {
 	int n, len;
+	struct GModule *module;
 	struct Option *mapset;
 	struct Flag *full;
 
 	init (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Lists available GRASS data base files "
+		"of the user-specified data type to standard output.";
 
 	element = G_define_option();
 	element->key =      "type";
@@ -46,7 +53,7 @@ main (int argc, char *argv[])
 
 	full = G_define_flag();
 	full->key = 'f';
-	full->description = "verbose listing";
+	full->description = "verbose listing (also list map titles)";
 #define FULL full->answer
 
 	n = parse(argc, argv);

@@ -2,14 +2,13 @@
 SQLBASE=/SQLBASE
 
 # these are DBMI definitions
-INCLUDE = ../../include
 # STUBLIB = ../libstubs.a
 DBMILIB= ../../lib/libdbmi.a
 
 HOME = $(DBMIDIR)/driver
 
 LIBES = $(DBMILIB) $(STUBLIB) $(SQLBASE)/sqlroutr.\a
-EXTRA_CFLAGS = -I$(SQLBASE) -I$(INCLUDE)
+EXTRA_CFLAGS = -I$(SQLBASE) -I$(INCLUDE_DIR)
 
 OBJ 	=  \
 	bind.o \
@@ -64,7 +63,7 @@ try: $(TRY) $(LIBES)
 $(HOME):
 	-mkdir -p $(HOME)
 
-$(DRIVER) $(TRY):  $(INCLUDE)/dbmi.h globals.h proto.h
+$(DRIVER) $(TRY):  $(INCLUDE_DIR)/dbmi.h globals.h proto.h
 $(LIBES): #
 
 

@@ -4,7 +4,7 @@
 */
 
 #include "Vect.h"
-#include "digit.h"
+#include "Vect.h"
 
 /* make new line.  write line info to digit file, create new node info
 **   and fill in P_LINE info

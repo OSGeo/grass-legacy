@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include "G3d.h"
 #include "G3d_intern.h"
 
 /*---------------------------------------------------------------------------*/
@@ -91,7 +92,8 @@ G3d_flushIndex (map)
     return 0;
   }
 
-  map->indexNbytesUsed = G3d_longEncode (&(map->indexOffset), &ldummy, 1);
+  map->indexNbytesUsed = G3d_longEncode (&(map->indexOffset), 
+		  (unsigned char *)&ldummy, 1);
 
   tmp = G3d_malloc (sizeof (long) * map->nTiles);
   if (tmp == NULL) {
@@ -114,7 +116,7 @@ G3d_flushIndex (map)
     }
   } else {
     indexLength = sizeCompressed;
-    G_rle_encode (tmp, map->index, sizeof (long) * map->nTiles, 1);
+    G_rle_encode (tmp, (char *)map->index, sizeof (long) * map->nTiles, 1);
     if (write (map->data_fd, map->index, sizeCompressed) != sizeCompressed) {
       G3d_error ("G3d_flushIndex: can't write file");
       return 0;

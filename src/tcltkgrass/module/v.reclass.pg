@@ -1,0 +1,14 @@
+interface_build {
+    v.reclass.pg 0
+    {Reclasses vector maps with DB query.}
+    {entry key {Column cat_ID:} 0 ""}
+    {entry tab {DB table:} 0 ""}
+    {entry col {Column reclass base:} 0 ""}
+    {entry where  {Where clause:} 0 ""}
+    {entry input  {Vector map:} 0 vector}
+    {entry output {Reclass map:} 0 vector}
+    {entry type  {Type coverage:line,area,site} 0 ""}
+    {checkbox -d {Dissolve boundaries} "" -d}
+    {checkbox -s {SQL file input} "" -s}
+    {entry sql  {Name of SQL file:} 0 file}
+}

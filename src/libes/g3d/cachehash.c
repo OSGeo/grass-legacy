@@ -2,10 +2,11 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include "G3d.h"
 #include "G3d_intern.h"
 
 /*---------------------------------------------------------------------------*/
-
+#ifndef GRASS_G3D_H
 typedef struct {
 
   int nofNames;
@@ -16,7 +17,7 @@ typedef struct {
   int lastIndexActive;
 
 } G3d_cache_hash;
-
+#endif
 /*---------------------------------------------------------------------------*/
 
 void

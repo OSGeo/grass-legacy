@@ -1,5 +1,0 @@
-
-@man("m.dem.extract") - Extracts USGS Digital Elevation Model (DEM) data from
-1/2-inch magnetic tape.
-
-(GRASS Data Import/Processing Program)

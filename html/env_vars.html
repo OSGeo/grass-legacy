@@ -1,0 +1,294 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [de] (X11; U; Linux 2.2.16 i686) [Netscape]">
+   <title>GRASS 5 Environment Variables</title>
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EF" vlink="#59188E" alink="#FF0000">
+
+<h1>
+GRASS 5 Environment Variables</h1>
+
+Disclaimer: there is no real need to be concerned with most of these
+variables. The default settings will work fine for most users. They are
+mainly used to preserve settings so that the next time the user runs GRASS,
+it knows a little bit about how you left things.
+<p>
+<i>The following is a list of environment variables used in GRASS. These
+variables were found by searching all *.c *.h files for the words "setenv"
+and "getenv" individually. Note that some of them are not yet found in the
+source code. These are indicated along with the date they were last checked
+(dd/mm/yy).</i>
+
+<p>The second part lists GRASS related files.
+<p>
+<hr WIDTH="100%">
+<h2>Setting environment variables</h2>
+
+<br>Setting environment variables depends on the shell being used:
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <tt>export VARIABLE=value</tt>
+<p>or
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <tt>setenv VARIABLE value</tt>
+<p>
+An alternate option is to use "g.gisenv" (within GRASS):<br>
+<p>
+Use: &nbsp;&nbsp;&nbsp; <tt>g.gisenv set=VARIABLE=VALUE</tt>
+<p>
+
+It looks unusual with two equals signs, but g.gisenv does dual duty for
+getting and setting GRASS environment variables.  If the user just specifies
+a variable name, it defaults to "get" mode. Example:
+<p>
+<tt>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GRASS ~> g.gisenv GRASS_GUI<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text
+</tt>
+
+<p>
+To <b>permanently</b> predefine GRASS environment variables the user may specify
+the variable(s) in the <a href=html/grass5.html>.grassrc5</a> file.
+
+<hr WIDTH="100%">
+<H2>List of GRASS environment variables</H2>
+
+<br>ANGLE
+<p>ANOTHER_BUTTON
+<br>[v.digit]
+<br>&nbsp; define to click conveniently for two button mouse.
+<br>&nbsp; It's hard to click two buttons simultaneously with two button
+mouse,
+<br>&nbsp; #ifndef ANOTHER_BUTTON
+<br>&nbsp; #&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; define MIDDLEB&nbsp; 2
+<br>&nbsp; #&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; define RIGHTB&nbsp;&nbsp;
+3
+<br>&nbsp; #else
+<br>&nbsp; #&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; define MIDDLEB&nbsp; 3
+<br>&nbsp; #&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; define RIGHTB&nbsp;&nbsp;
+2
+<br>&nbsp; #endif
+<p>BAUD
+<p>CMAP_SIZE
+<p>CODECENTER
+<p>DARKEN
+<p>DATABASE
+<p>DBMSCAP
+<br>[db.connect]
+<br>&nbsp; defines DBMI driver
+<p>DBPATH
+<p>DB_DATABASE
+<p>DB_DRIVER
+<p>DB_KEYCOL
+<p>DB_LOCATION
+<p>DB_PASSWORD
+<p>DB_USER
+<p>DEB
+<p>DEBUG
+<p>DIGITIZER
+<br>[v.digit]
+<br>&nbsp; name of currently selected digitizer board
+<p>DPG_LOCK
+<p>DUMP
+<p>ELEMENT_LIST
+<br>&nbsp; pathname of element list file to use instead of $GISBASE/etc/element_list
+<p>ENDPANEL
+<p>FORCE_GRASS3_COLORS
+<br>&nbsp; define to force color table output format in 3.0, even if the
+structure
+<br>&nbsp; contains 4.0 rules
+<p>GRASS_FP_DOUBLE
+<br>&nbsp; define GRASS floating point type (DCELL_TYPE, FCELL_TYPE)
+<p>G3D_CACHE_SIZE_ENV_VAR
+<p>G3D_CACHE_SIZE_MAX_ENV_VAR
+<p>G3D_COMPRESSION_ENV_VAR_NO
+<p>G3D_COMPRESSION_ENV_VAR_YES
+<p>G3D_DEFAULT_WINDOW3D
+<p>G3D_FATAL_ERROR_ENV_VAR
+<p>G3D_FILE_DOUBLE_ENV_VAR
+<p>G3D_FILE_FLOAT_ENV_VAR
+<p>G3D_PRECISION_ENV_VAR
+<p>G3D_PRECISION_ENV_VAR_MAX
+<p>G3D_PRINT_ERROR_ENV_VAR
+<p>G3D_RLE_ENV_VAR_NO
+<p>G3D_RLE_ENV_VAR_YES
+<p>G3D_TILE_DIM_X_ENV_VAR
+<p>G3D_TILE_DIM_Y_ENV_VAR
+<p>G3D_TILE_DIM_Z_ENV_VAR
+<p>GDAL_HOME
+<p>GISBASE
+<br>&nbsp; directory where GRASS lives
+<p>GISDBASE
+<br>&nbsp; initial database
+<p>GISRC
+<br>&nbsp; name of .grassrc5 file
+<p>GIS_LOCK
+<br>&nbsp; lock ID to prevent parallel GRAS use,
+<br>&nbsp; process id of the start-up shell script
+<p>GMPEG_SIZE
+<p>GRAPH
+<p>HEIGHT
+<p>GRASS_ADDON_PATH
+<br>[grass5] startup script
+<br>&nbsp; allows to specify additional paths to local GRASS modules extra
+    to standard distribution
+<p>GRASS_GNUPLOT
+<br>[m.svfit, s.probplt, s.sv]
+<br>&nbsp; program to use for plotting "gnuplot" data
+<p>GRASS_GUI
+<br>&nbsp; either "text" or "tcltk" to define non-/graphical startup
+<p>GRASS_HEIGHT
+<br>[d.mon]
+<br>&nbsp; defines the height of CELL driver output
+<p>GRASS_WIDTH
+<br>[d.mon]
+<br>&nbsp; defines the width&nbsp; of CELL driver output
+<p>GTUNE_VSUP_RAM
+<p>GTUNE_VTOC_RAM
+<p>HOME
+<br>&nbsp; user's home directory
+<p>GRASS_HTMLFILE
+<p>GRASS_HTMLMAXPOINTS
+<p>GRASS_HTMLMINBBOX
+<p>GRASS_HTMLMINDIST
+<p>GRASS_HTMLTYPE
+<p>LOCATION
+<br>&nbsp;full path to location directory
+<p>LOCATION_NAME
+<br>&nbsp;initial location name
+<p>MAPLP
+<br>[ppm driver]
+<p>MAPSET
+<br>&nbsp; initial mapset
+<p>MONITOR
+<br>[d.mon]
+<br>&nbsp; name of selected GRASS monitor
+<p>NODUMP
+<p>NO_DRAW
+<p>NPIXELS
+<p>Nviz_AutoSurfColors
+<br>[nviz]
+<p>ORACLE_HOME
+<p>GRASS_PAGER
+<br>[various modules]
+<br>Maybe set to either "less" or "more"
+<p>PAINT
+<p>PAINTER
+<br>&nbsp; currently selected paint output device
+<p>PAINT_DRIVER
+<p>PAINT_DRIVER_SHELL
+<p>PAINT_HEADER
+<p>PAINT_TRACE
+<p>GRASS_ORGANIZATION
+<br>[various vector modules which generate new vector maps]
+<br>&nbsp; To set the owner of the vector map ("Organization"). Default
+is "GRASS Development Team"
+<p>GRASS_PAN_THRESHOLD
+<br>[v.digit]
+<br>&nbsp; auto-pan moving speed. Auto panning can be set off by setting
+<br>&nbsp; GRASS_PAN_THRESHOLD=0
+<p>GRASS_PERL
+<br>&nbsp; set perl with path
+<p>PGSQL - not found in source 20/02/01
+<p>PG_HOST
+<br>[g.select.pg]
+<br>&nbsp; name of PostgreSQL host
+<p>PG_DBASE
+<br>[g.select.pg]
+<br>&nbsp; name of selected PostgreSQL database
+<p>GRASS_PNGFILE
+<p>PREVIEW_BACKGROUND
+<p>PROJ_LIB
+<p>PSPAINTER
+<br>[ps.select]
+<br>&nbsp; naem of ps device to print to
+<p>PWAIT
+<p>QUALITY
+<p>RASTERFILE
+<p>SG3D_HEIGHT
+<br>[sg3d]
+<p>SG3D_SITE_CACHE
+<br>[sg3d]
+<p>SG3D_WIDTH
+<br>[sg3d]
+<p>SHORT
+<p>GRASS_SLEEP - not found in source 20/02/01
+<p>SPAG_THRESH
+<br>[v.spag]
+<br>&nbsp; snap threshold value
+<p>SPRINT_COMMAND
+<p>SQLBASE_DIR
+<p>SQLBASE_DRIVER_STDERR
+<p>SQLBASE_SERVER
+<p>STARTPANEL
+<p>GRASS_STDERR
+<br>&nbsp; set to prevent user mail on error
+<p>GRASS_TCLSH
+<br>[tcltkgrass, nviz]
+<br>&nbsp; set tclsh shell name to override 'tclsh'
+<p>TERM
+<br>&nbsp; current terminal type
+<p>GRASS_TEXT_BROWSER - not found in source 20/02/01
+<p>TRANSPARENT
+<p>GRASS_TRUECOLOR
+<br>&nbsp; if "TRUE", the PNG driver generates a true-color image (requires GD 2.0)
+<p>USER
+<p>WIDTH
+<p>GRASS_WISH
+<br>[tcltkgrass, nviz]
+<br>&nbsp; set wish shell name to override 'wish'
+<p>WRITE
+<p>X3D_HEIGHT
+<p>X3D_WIDTH
+<p>XDRIVER_HEIGHT
+<br>[d.mon]
+<br>&nbsp; defines the height of GRASS monitor
+<p>XDRIVER_WIDTH
+<br>[d.mon]
+<br>&nbsp; defines the width of GRASS monitor
+<p>XDRIVER_LEFT
+<br>[d.mon]
+<br>&nbsp; defines the left position of GRASS monitor
+<p>XDRIVER_TOP
+<br>[d.mon]
+<br>&nbsp; define the upper position of GRASS monitor
+<p>XDRIVER_PRIVATE_CMAP
+<br>[d.mon]
+<br>&nbsp; if set, use a private colormap
+<p>XGANIM_SIZE
+<p>_XPG
+<p>
+<hr WIDTH="100%">
+<br>GRASS-related Files:
+<p>$HOME/.grassrc5
+<p>$HOME/.tcltkgrass
+<p>GIS_ERROR_LOG
+<br>&nbsp; If this file exists, all GRASS error messages are stored here
+instead of sending a mail to the GIS user. To generate the file, use:
+<br>&nbsp;&nbsp; touch GIS_ERROR_LOG
+<p>
+
+<h3>
+<font face="Arial, Helvetica">Other Commands</font></h3>
+<font face="Arial, Helvetica">
+<a href="index.html">help home</a>,
+<a href="database.html">database</a>,
+<a href="display.html">display</a>,
+<a href="drivers.html">drivers</a>,
+<a href="general.html">general</a>,
+<a href="grid3d.html">grid3d</a>,
+<a href="imagery.html">imagery</a>,
+<a href="import.html">import</a>, <a href="misc.html">misc</a>,
+<a href="models.html">models</a>,
+<a href="paint.html">paint</a>,
+<a href="photo.html">photo</a>,
+<a href="ps.html">postscript</a>,
+<a href="raster.html">raster</a>,
+<a href="scripts.html">scripts</a>,
+<a href="sites.html">sites</a>,
+<a href="vector.html">vector</a></font>
+
+<hr WIDTH="100%">
+<br><i>GRASS&nbsp;Development Team</i>
+<br><i>$Date$</i>
+</body>
+</html>

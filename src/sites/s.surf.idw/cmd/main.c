@@ -1,4 +1,5 @@
 #include "gis.h"
+#include "site.h"
 
 int search_points = 12;
 
@@ -15,22 +16,25 @@ struct Point
 struct Point *points = NULL;
 struct Point *list;
 
+
 int main(int argc, char *argv[])
 {
     int fd, maskfd;
     CELL  *mask;
     DCELL *dcell;
     struct Cell_head window;
+    struct GModule *module;
     int row, col;
     double north, east;
     double dx,dy;
     double maxdist,dist;
     double sum1, sum2;
-    int i,n,max;
+    int i,n,max, field;
     void read_sites();
+    char errmsg[200];
     struct
     {
-	struct Option *input, *npoints, *output;
+	struct Option *input, *npoints, *output, *dfield;
     } parm;
 
     parm.input = G_define_option() ;
@@ -55,9 +59,21 @@ int main(int argc, char *argv[])
     parm.npoints->description="Number of interpolation points";
     parm.npoints->answer = "12";
 
+    parm.dfield = G_define_option ();
+    parm.dfield->key = "field";
+    parm.dfield->type = TYPE_INTEGER;
+    parm.dfield->answer = "1";
+    parm.dfield->multiple = NO;
+    parm.dfield->required = NO;
+    parm.dfield->description = "which decimal attribute (if multiple)";
 
     G_gisinit(argv[0]);
 
+    module = G_define_module();
+    module->description =        
+                    "Surface interpolation from sites data by Inverse "
+                    "Distance Weighted algorithm.";
+                    
     if (G_parser(argc, argv))
         exit(1);
 
@@ -76,10 +92,18 @@ int main(int argc, char *argv[])
 	exit(1);
     }
 
+    sscanf(parm.dfield->answer,"%d", &field);
+    if (field < 1)
+    {
+      sprintf (errmsg, "Decimal attribute field 0 doesn't exist.");
+      G_fatal_error (errmsg);
+    }
+
     list = (struct Point *) G_calloc (search_points, sizeof (struct Point));
 
+
 /* read the elevation points from the input sites file */
-    read_sites (parm.input->answer);
+    read_sites (parm.input->answer, field);
 
     if (npoints == 0)
     {
@@ -89,7 +113,7 @@ int main(int argc, char *argv[])
     nsearch = npoints < search_points ? npoints : search_points;
 
 /* get the window, allocate buffers, etc. */
-    G_get_set_window (&window);
+    G_get_window (&window);
 
     /*cell = G_allocate_cell_buf();*/
     dcell=G_allocate_d_raster_buf();
@@ -193,7 +217,6 @@ int main(int argc, char *argv[])
 	/*    cell[col] = (CELL) (sum1/sum2 + .5);*/
 	    dcell[col] = (DCELL) (sum1/sum2);
 	}
-	/*G_put_map_row (fd, cell);*/
 	G_put_d_raster_row(fd,dcell);
     }
     G_close_cell(fd);

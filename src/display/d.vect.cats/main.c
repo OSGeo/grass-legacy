@@ -13,6 +13,7 @@
 #include "Vect.h"
 #include "display.h"
 #include "raster.h"
+#include "colors.h"
 
 #define MAIN
 int plotCat(char *, char *, struct line_pnts *, int, int);
@@ -26,10 +27,17 @@ int main( int argc , char **argv )
 	int color,fill;
         int line_cat;
 	char map_name[128] ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3;
 	struct Flag *flag1;
 	struct line_pnts *Points;
 
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"displays vector maps by selected categories in current monitor window.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "map" ;
@@ -43,23 +51,19 @@ int main( int argc , char **argv )
 	opt2->key        = "color" ;
 	opt2->type       = TYPE_STRING ;
 	opt2->answer     = "white" ;
-	opt2->options = "white,red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,black";
+	opt2->options    = D_COLOR_LIST ;
 	opt2->description= "Color desired for drawing map" ;
 
         opt3 = G_define_option();
-        opt3->key	= "cat" ;
+        opt3->key	= "catnum" ;
         opt3->type	= TYPE_INTEGER ;
 	opt3->required	= YES ;
 	opt3->multiple	= YES ;
-	opt3->description= "Vector category type to be displayed" ;
+	opt3->description= "Vector category number(s) to be displayed" ;
 
 	flag1 = G_define_flag();
 	flag1->key 	= 'f';
 	flag1->description= "Fill areas";
-
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
-
 
 	/* Check command line */
 	if (G_parser(argc, argv))
@@ -81,7 +85,8 @@ int main( int argc , char **argv )
 		exit(-1);
 	}
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	D_setup(0);
 

@@ -1,0 +1,11 @@
+agnps_input.c:           V_line(2,"Any Point Source Entry? (yes/no)");
+agnps_input.c:           V_line(2,"Any Channel Data Input? (yes/no) ");
+agnps_input.c:           V_line(2,"Do You Wish To Edit Fertilizer Data? (yes/no) ");
+agnps_input.c.baknew:           V_line(2,"Any Point Source Entry? (yes/no)");
+agnps_input.c.baknew:           V_line(2,"Any Channel Data Input? (yes/no)");
+agnps_input.c.baknew:           V_line(2,"Do You Wish To Edit Fertilizer Data? (yes/no)");
+dchl_input.c:           V_line(2,"More Channel Input? (yes/no)");
+dfert_input.c:           V_line(2,"More Fertilizer Input? (yes/no)");
+mchl_input.c:           V_line(2,"More Channel Input? (yes/no)");
+mfert_input.c:           V_line(2,"More Fertilizer Input? (yes/no)");
+ptsrc_input.c:           V_line(2,"More Point Sources? (yes/no)");

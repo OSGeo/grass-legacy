@@ -28,21 +28,25 @@ char *G__file_name (
 {
 	char xname[512];
 	char xmapset[512];
+	char *location = G__location_path();
 
 /*
  * if a name is given, build a file name
  * must split the name into name, mapset if it is
  * in the name@mapset format
  */
-	if (name && *name)
-		if (G__name_is_fully_qualified(name, xname, xmapset))
-		{
-			name = xname;
-			mapset = xmapset;
-		}
+	if (name && *name && G__name_is_fully_qualified(name, xname, xmapset))
+	{
+		strcpy(name, xname);
+		sprintf(path,"%s/%s", location, xmapset);
+	}
+	else if (mapset && *mapset)
+		sprintf(path,"%s/%s", location, mapset);
+	else
+		sprintf(path,"%s/%s", location, G_mapset());
 
-	sprintf(path,"%s/%s", G__location_path(), mapset);
-
+	G_free (location);
+	
 	if (element && *element)
 	{
 		strcat (path, "/");

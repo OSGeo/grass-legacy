@@ -3,8 +3,8 @@ PGM=v.report
 LIST=main.o ask_layers.o ask_units.o run_report.o
 
 
-$(BIN_CONTRIB_INTER)/$(PGM): $(LIST) $(GISLIB) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
+$(BIN_INTER)/$(PGM): $(LIST) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 
 $(LIST): global.h

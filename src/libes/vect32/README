@@ -3,3 +3,12 @@ to improve the source code structure and to allow later
 modularizing of the source code package.
 
 12/99 M.N.
+
+Vlib            : portable GRASS vector functions
+bin_digit       : digitizer capability data base # unused
+digitizers      : digitizer board drivers # unused
+diglib          : more GRASS vector functions
+dlg_to_bdlg     : # unused
+dlg_to_dig      : # unused
+georef          : Imagery Georeferencing Programs
+libes/transform : transformations from one coord. system to another

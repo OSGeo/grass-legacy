@@ -11,6 +11,8 @@ extern double D_get_d_east();
 extern int D_move_abs();
 extern int D_cont_abs();
 
+extern int quiet;
+
 int 
 plot2 (char *name, char *mapset, struct line_pnts *Points)
 {
@@ -21,8 +23,10 @@ plot2 (char *name, char *mapset, struct line_pnts *Points)
     /*char *dig__P_init(), *err;*/
     struct Map_info P_map;
 
-    fprintf (stdout,"Initializing [%s] ... ", name);
-    fflush (stdout);
+	if (!quiet) {
+		fprintf (stdout,"Initializing [%s] ... ", name);
+		fflush (stdout);
+	}
 
     /*
     if (NULL != (err = dig__P_init (name, mapset, &P_map)))
@@ -35,7 +39,9 @@ plot2 (char *name, char *mapset, struct line_pnts *Points)
 	return -1;
     }
 
-    fprintf (stdout,"Plotting ... "); fflush (stdout);
+	if (!quiet) {
+		fprintf (stdout,"Plotting ... "); fflush (stdout);
+	}
 
     G_get_set_window (&window);
 
@@ -98,7 +104,8 @@ plot2 (char *name, char *mapset, struct line_pnts *Points)
 	}
     }
 
-    fprintf (stdout,"Done\n");
+	if (!quiet)
+		fprintf (stdout,"Done\n");
 
     return 0;
 }

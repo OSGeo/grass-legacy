@@ -15,6 +15,7 @@ int main (int argc, char *argv[])
     int raw_data;
     int with_coordinates;
     int with_xy;
+    int with_percents;
     int with_counts;
     int with_areas;
     int with_labels;
@@ -26,10 +27,12 @@ int main (int argc, char *argv[])
     struct Quant q;
     CELL min, max, null_set=0;
     DCELL dmin, dmax;
+	struct GModule *module;
     struct
     {
 	struct Flag *a ;   /* area */
 	struct Flag *c ;   /* cell counts */
+	struct Flag *p ;   /* percents */
 	struct Flag *l ;   /* with labels */
 	struct Flag *q ;   /* quiet */
 	struct Flag *n ;   /* Suppress reporting of any NULLs */
@@ -58,6 +61,12 @@ int main (int argc, char *argv[])
 				   is int, nsteps is ignored */
     } option;
 
+    G_gisinit (argv[0]);
+
+    module = G_define_module();
+    module->description =
+		"Generates area statistics for raster map layers.";
+					        
 /* Define the different options */
 
     option.cell = G_define_option() ;
@@ -117,6 +126,10 @@ int main (int argc, char *argv[])
     flag.c->key         = 'c' ;
     flag.c->description = "Print cell counts" ;
 
+    flag.p = G_define_flag() ;
+    flag.p->key         = 'p' ;
+    flag.p->description = "Print APPROXIMATE percents (total percent may not be 100%)" ;
+
     flag.l = G_define_flag() ;
     flag.l->key         = 'l' ;
     flag.l->description = "Print category labels" ;
@@ -152,8 +165,6 @@ int main (int argc, char *argv[])
     flag.i->key = 'i';
     flag.i->description = "Read fp map as integer (use map's quant rules)";
 
-    G_gisinit (argv[0]);
-
     if (G_parser(argc, argv))
 	exit (-1);
 
@@ -184,6 +195,7 @@ int main (int argc, char *argv[])
     nfiles = 0;
     dp = -1;
 
+    with_percents = flag.p->answer;
     with_counts = flag.c->answer;
     with_areas = flag.a->answer;
     with_labels = flag.l->answer;
@@ -313,6 +325,6 @@ int main (int argc, char *argv[])
     if (raw_data)
 	raw_stats (fd, verbose, with_coordinates, with_xy, with_labels);
     else
-	cell_stats (fd, verbose, with_counts, with_areas, with_labels, fmt);
+	cell_stats (fd, verbose, with_percents, with_counts, with_areas, with_labels, fmt);
     exit(0);
 }

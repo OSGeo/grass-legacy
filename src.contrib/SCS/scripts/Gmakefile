@@ -1,7 +1,0 @@
-SYSCMD = more lpr reset whoami
-
-all: 
-	chmod 0775 $(GISBASE)/scripts/*
-	cp shells/* $(GISBASE)/scripts
-	./SYSMK $(GISBASE)/scripts $(SYSCMD)
-	chmod 0555 $(GISBASE)/scripts/*

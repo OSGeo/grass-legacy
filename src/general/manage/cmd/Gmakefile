@@ -1,5 +1,5 @@
 LIB = ../lib.a
-HOME=$(BIN_MAIN_CMD)
+HOME=$(BIN_CMD)
 EXTRA_CFLAGS=-I..
 LIST = init.o $(LIB) $(GISLIB)
 

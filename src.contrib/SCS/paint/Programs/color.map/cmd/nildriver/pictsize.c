@@ -1,3 +1,0 @@
-Ppictsize (nrows, ncols)
-{
-}

@@ -19,7 +19,6 @@ V="$3"
 R=R
 G=G
 B=B
-V=V
 
 x="$H"
 case "$x" in

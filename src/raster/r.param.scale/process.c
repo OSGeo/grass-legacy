@@ -6,9 +6,12 @@
 /***                                                                       ***/
 /*****************************************************************************/
 
-#include "param.h"
+#include <stdlib.h>
 
-process()
+#include "param.h"
+#include "nrutil.h"
+
+void process(void)
 {
 
     /*--------------------------------------------------------------------------*/
@@ -26,7 +29,6 @@ process()
 			centre;		/* Elevation of central cell in window.	*/
 
     struct Cell_head	region;		/* Structure to hold region information	*/
-    struct Categories	cats;		/* Category file structure for raster	*/
 
     int			nrows,		/* Will store the current number of 	*/
 			ncols,		/* rows and columns in the raster.	*/
@@ -37,12 +39,11 @@ process()
 			wind_row,	/* Counts through each row and column	*/
 			wind_col,	/* of the local neighbourhood window.	*/
 
-			row_mem,	/* Memory to hold one raster row.	*/
-
 			*index_ptr;	/* Row permutation vector for LU decomp.*/
 
-    float		**normal_ptr,	/* Cross-products matrix.		*/
-			*obs_ptr;	/* Observed vector.			*/
+    double		**normal_ptr,	/* Cross-products matrix.		*/
+			*obs_ptr,	/* Observed vector.			*/
+			temp;		/* Unused */
 
     double		*weight_ptr;	/* Weighting matrix for observed values.*/
 
@@ -85,9 +86,9 @@ process()
     weight_ptr = (double *) G_malloc(wsize*wsize*sizeof(double));	
 					/* Reserve enough memory weights matrix.*/
 
-    normal_ptr = matrix(1,6,1,6);	/* Allocate memory for 6*6 matrix	*/
-    index_ptr  = ivector(1,6);		/* and for 1D vector holding indices	*/
-    obs_ptr    = vector(1,6);		/* and for 1D vector holding observed z */
+    normal_ptr = dmatrix(0,5,0,5);	/* Allocate memory for 6*6 matrix	*/
+    index_ptr  = ivector(0,5);		/* and for 1D vector holding indices	*/
+    obs_ptr    = dvector(0,5);		/* and for 1D vector holding observed z */
 
 
     /* ---------------------------------------------------------------- */
@@ -110,7 +111,8 @@ process()
     /*--- Apply LU decomposition to normal equations. ---*/
 
     if (constrained){
-	ludcomp(normal_ptr,5,index_ptr);   /* To constrain the quadtratic 
+	G_ludcmp(normal_ptr,5,index_ptr,&temp);
+					   /* To constrain the quadtratic 
 					      through the central cell, ignore 
 					      the calculations involving the
 					      coefficient f. Since these are 
@@ -121,7 +123,7 @@ process()
     }
 	
     else{
-    	ludcomp(normal_ptr,6,index_ptr);
+    	G_ludcmp(normal_ptr,6,index_ptr,&temp);
 	/* disp_matrix(normal_ptr,obs_ptr,obs_ptr,6);
 	*/
     }
@@ -172,7 +174,7 @@ process()
 	
 	    if (constrained) 
 	    {
-	    	lubksub(normal_ptr,5,index_ptr,obs_ptr);
+	    	G_lubksb(normal_ptr,5,index_ptr,obs_ptr);
 		/*
 	 	   disp_matrix(normal_ptr,obs_ptr,obs_ptr,5);
 		*/
@@ -180,7 +182,7 @@ process()
 
 	    else
 	    {
-	    	lubksub(normal_ptr,6,index_ptr,obs_ptr);
+	    	G_lubksb(normal_ptr,6,index_ptr,obs_ptr);
 	/*	
 	 	  disp_matrix(normal_ptr,obs_ptr,obs_ptr,6);
 	*/
@@ -219,7 +221,7 @@ process()
     free(row_in);
     free(row_out);
     free(window_ptr);
-    free_matrix(normal_ptr,1,6,1,6);
-    free_vector(obs_ptr,1,6);
-    free_ivector(index_ptr,1,6);
+    free_dmatrix(normal_ptr,0,5,0,5);
+    free_dvector(obs_ptr,0,5);
+    free_ivector(index_ptr,0,5);
 }

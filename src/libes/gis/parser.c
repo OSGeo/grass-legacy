@@ -97,6 +97,7 @@
 
 #include <string.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include "gis.h"
 
 #define BAD_SYNTAX  1
@@ -112,6 +113,9 @@ static struct Flag *current_flag; /* Pointer for traversing list      */
 
 static struct Option first_option ;
 static struct Option *current_option ;
+
+static struct GModule module_info; /* general information on the
+									  corresponding module */
 
 static char *pgm_name = NULL;
 
@@ -244,6 +248,22 @@ G_define_option (void)
 	return(opt) ;
 }
 
+struct GModule *
+G_define_module (void)
+{
+	struct GModule *module ;
+
+	/* Allocate memory */
+
+	module = &module_info;
+
+	/* Zero structure */
+
+	G_zero ((char *) module, sizeof(struct GModule));
+
+	return(module) ;
+}
+
 /* The main parsing routine */
 
 /*
@@ -277,6 +297,19 @@ int G_parser (int argc, char **argv)
 	opt= &first_option;
 	while(opt != NULL)
 	{
+		if(opt->multiple && opt->answers && opt->answers[0])
+		{
+			opt->answer = (char *)G_malloc(strlen(opt->answers[0])+1);
+			strcpy(opt->answer, opt->answers[0]);
+			for(i=1; opt->answers[i]; i++)
+			{
+				opt->answer = (char *)G_realloc (opt->answer,
+						strlen(opt->answer)+
+						strlen(opt->answers[i])+2);
+				strcat(opt->answer, ",");
+				strcat(opt->answer, opt->answers[i]);
+			}
+		}
 		opt->def = opt->answer ;
 		opt = opt->next_opt ;
 	}
@@ -298,9 +331,19 @@ int G_parser (int argc, char **argv)
 	{
 
 		/* If first arg is "help" give a usage/syntax message */
-		if (strcmp(argv[1],"help") == 0 || strcmp(argv[1], "-help") == 0)
+		if (strcmp(argv[1],"help") == 0 ||
+			strcmp(argv[1], "-help") == 0 ||
+			strcmp(argv[1], "--help") == 0)
 		{
 			G_usage();
+			return -1;
+		}
+
+		/* If first arg is "--interface-description" then print out
+		 * a xml description of the task */
+		if (strcmp(argv[1],"--interface-description") == 0)
+		{
+			G_usage_xml();
 			return -1;
 		}
 
@@ -370,13 +413,18 @@ int G_usage (void)
 	char *key_desc;
 	int maxlen;
 	int len, n;
-
-	fprintf (stderr, "\nUsage:\n ");
-
+	
 	if (!pgm_name)		/* v.dave && r.michael */
 	    pgm_name = G_program_name ();
 	if (!pgm_name)
 	    pgm_name = "??";
+
+	if (module_info.description) {
+		fprintf (stderr, "\nDescription:\n");
+		fprintf (stderr, " %s\n", module_info.description);
+	}
+
+	fprintf (stderr, "\nUsage:\n ");
 
 	len = show(pgm_name,1);
 
@@ -471,6 +519,191 @@ int G_usage (void)
 	}
 
         return 0;
+}
+
+void print_escaped_for_xml (FILE * fp, char * str) {
+	for (;*str;str++) {
+		switch (*str) {
+			case '&':
+				fputs("&amp;", fp);
+				break;
+			case '<':
+				fputs("&lt;", fp);
+				break;
+			case '>':
+				fputs("&gt;", fp);
+				break;
+			default:
+				fputc(*str, fp);
+		}
+	}
+}
+
+int G_usage_xml (void)
+{
+	struct Option *opt ;
+	struct Flag *flag ;
+	char *type;
+	char *s, *top;
+	int i;
+	
+	if (!pgm_name)		/* v.dave && r.michael */
+	    pgm_name = G_program_name ();
+	if (!pgm_name)
+	    pgm_name = "??";
+
+	fprintf(stdout, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+	fprintf(stdout, "<!DOCTYPE task SYSTEM \"grass-interface.dtd\">\n");
+
+	fprintf(stdout, "<task name=\"%s\">\n", pgm_name);  
+
+	if (module_info.description) {
+		fprintf(stdout, "\t<description>\n\t\t");
+		print_escaped_for_xml (stdout, module_info.description);
+		fprintf(stdout, "\n\t</description>\n");
+	}
+
+	/***** Don't use parameter-groups for now.  We'll reimplement this later 
+	 ***** when we have a concept of several mutually exclusive option
+	 ***** groups
+	if (n_opts || n_flags)
+		fprintf(stdout, "\t<parameter-group>\n");
+	 *****
+	 *****
+	 *****/
+	
+	if(n_opts)
+	{
+		opt= &first_option;
+		while(opt != NULL)
+		{
+			/* TODO: make this a enumeration type? */
+			switch (opt->type) {
+				case TYPE_INTEGER:
+					type = "integer";
+					break ;
+				case TYPE_DOUBLE:
+					type = "float";
+					break ;
+				case TYPE_STRING:
+					type = "string";
+					break ;
+				default:
+					type = "string";
+					break;
+			}
+			fprintf (stdout, "\t<parameter "
+				"name=\"%s\" "
+				"type=\"%s\" "
+				"required=\"%s\" "
+				"multiple=\"%s\">\n",
+				opt->key,
+				type,
+				opt->required == YES ? "yes" : "no",
+				opt->multiple == YES ? "yes" : "no");
+
+			if (opt->description) {
+				fprintf(stdout, "\t\t<description>\n\t\t\t");
+				print_escaped_for_xml(stdout, opt->description);
+				fprintf(stdout, "\n\t\t</description>\n");
+			}
+
+			if (opt->key_desc)
+			{
+				fprintf (stdout, "\t\t<keydesc>\n");
+				top = G_calloc (strlen (opt->key_desc) + 1, 1);
+				strcpy (top, opt->key_desc);
+				s = strtok (top, ",");
+				for (i = 1; s != NULL; i++)
+				{
+					fprintf (stdout, "\t\t\t<item order=\"%d\">", i);
+					print_escaped_for_xml (stdout, s);
+					fprintf (stdout, "</item>\n");
+					s = strtok (NULL, ",");
+				}
+				fprintf (stdout, "\t\t</keydesc>\n");
+				G_free (top);
+			}
+			
+			if (opt->gisprompt)
+			{
+				const char *atts[] = {"age", "element", "prompt", NULL};
+				top = G_calloc (strlen (opt->gisprompt) + 1, 1);
+				strcpy (top, opt->gisprompt);
+				s = strtok (top, ",");
+				fprintf (stdout, "\t\t<gisprompt ");
+				for (i = 0; s != NULL && atts[i] != NULL; i++)
+				{
+					fprintf (stdout, "%s=\"%s\" ", atts[i], s);
+					s = strtok (NULL, ",");
+				}
+				fprintf (stdout, "/>\n");
+				G_free (top);
+			}
+
+			if(opt->def) {
+				fprintf(stdout, "\t\t\t<default>\n\t\t\t");
+				print_escaped_for_xml(stdout, opt->def);
+				fprintf(stdout, "\n\t\t\t</default>\n");
+			}
+
+			if(opt->options) {
+				fprintf(stdout, "\t\t<values>\n");
+				top = G_calloc(strlen(opt->options) + 1,1);
+				strcpy(top, opt->options);
+				s = strtok(top, ",");
+				while (s) {
+					fprintf(stdout, "\t\t\t<value>");
+					print_escaped_for_xml(stdout, s);
+					fprintf(stdout, "</value>\n");
+					s = strtok(NULL, ",");
+				}
+				fprintf(stdout, "\t\t</values>\n");
+				G_free (top);
+			}
+
+			/* TODO:
+			 * add something like
+			 * 	 <range min="xxx" max="xxx"/>
+			 * to <values>
+			 * - key_desc?
+			 * - there surely are some more. which ones?
+			 */
+
+			opt = opt->next_opt ;
+			fprintf (stdout, "\t</parameter>\n");
+		}
+	}
+
+	
+	if(n_flags)
+	{
+		flag= &first_flag;
+		while(flag != NULL)
+		{
+			fprintf (stdout, "\t<flag name=\"%c\">\n", flag->key);
+
+			if (flag->description) {
+				fprintf(stdout, "\t\t<description>\n\t\t\t");
+				print_escaped_for_xml(stdout, flag->description);
+				fprintf(stdout, "\n\t\t</description>\n");
+			}
+			flag = flag->next_flag ;
+			fprintf (stdout, "\t</flag>\n");
+		}
+	}
+
+	/***** Don't use parameter-groups for now.  We'll reimplement this later 
+	 ***** when we have a concept of several mutually exclusive option
+	 ***** groups
+	if (n_opts || n_flags)
+		fprintf(stdout, "\t</parameter-group>\n");
+	 *****
+	 *****
+	 *****/
+
+	fprintf(stdout, "</task>\n");
+    return 0;
 }
 
 /**************************************************************************
@@ -621,7 +854,7 @@ static int set_option (char *string)
 	/* Allocate memory where answer is stored */
 	if (opt->count++)
 	{
-		opt->answer = G_realloc (opt->answer,
+		opt->answer = (char *)G_realloc (opt->answer,
 			strlen (opt->answer)+strlen(string)+2);
 		strcat (opt->answer, ",");
 		strcat (opt->answer, string);
@@ -911,7 +1144,7 @@ static int split_opts (void)
 
 				if (len > 0)        /* skip ,, */
 				{
-					opt->answers[ans_num]=G_malloc(len+1) ;
+					opt->answers[ans_num]=(char *)G_malloc(len+1) ;
 					G_copy(opt->answers[ans_num], ptr1, len) ;
 					opt->answers[ans_num][len] = 0;
 
@@ -1174,16 +1407,27 @@ static int gis_prompt (struct Option *opt, char *buff)
 
 char *G_recreate_command (void)
 {
-	char flg[2] ;
-	static char buff[1024] ;
+	char flg[4] ;
+	static char *buff, *cur, *tmp;
 	struct Flag *flag ;
 	struct Option *opt ;
-	int n ;
+	int n , len, slen;
+	int nalloced = 0;
 
 	/* Flag is not valid if there are no flags to set */
-
-	*buff = '\0' ;
-	strcat(buff, G_program_name()) ;
+	
+	buff = G_calloc (1024, sizeof(char));
+	nalloced += 1024;
+	tmp = G_program_name();
+	len = strlen (tmp);
+	if (len >= nalloced)
+	{
+		nalloced += (1024 > len) ? 1024 : len + 1;
+		buff = G_realloc (buff, nalloced);
+	}
+	cur = buff;
+	strcpy (cur, tmp);
+	cur += len;
 
 	if(n_flags)
 	{
@@ -1192,8 +1436,17 @@ char *G_recreate_command (void)
 		{
 			if( flag->answer == 1 )
 			{
-				strcat (buff, " -") ;
-				flg[0] = flag->key ; flg[1] = '\0'; strcat (buff, flg) ;
+				flg[0] = ' '; flg[1] = '-'; flg[2] = flag->key; flg[3] = '\0';
+				slen = strlen (flg);
+				if (len + slen >= nalloced)
+				{
+					nalloced += (nalloced + 1024 > len + slen) ? 1024 : slen + 1;
+					buff = G_realloc (buff, nalloced);
+					cur = buff + len;
+				}
+				strcpy (cur, flg);
+				cur += slen;
+				len += slen;
 			}
 			flag = flag->next_flag ;
 		}
@@ -1204,14 +1457,36 @@ char *G_recreate_command (void)
 	{
 		if (opt->answer != '\0')
 		{
-			strcat(buff, " ") ;
-			strcat(buff, opt->key) ;
-			strcat(buff, "=") ;
-			strcat(buff, opt->answers[0]) ;
+			slen = strlen (opt->key) + strlen (opt->answers[0]) + 2;
+			if (len + slen >= nalloced)
+			{
+				nalloced += (nalloced + 1024 > len + slen) ? 1024 : slen + 1;
+				buff = G_realloc (buff, nalloced);
+				cur = buff + len;
+			}
+			strcpy (cur, " ");
+			cur++;
+			strcpy (cur, opt->key);
+			cur = strchr (cur, '\0');
+			strcpy (cur, "=");
+			cur++;
+			strcpy (cur, opt->answers[0]);
+			cur = strchr (cur, '\0');
+			len = cur - buff;
 			for(n=1;opt->answers[n] != '\0';n++)
 			{
-				strcat(buff, ",") ;
-				strcat(buff, opt->answers[n]) ;
+				slen = strlen (opt->answers[n]) + 1;
+				if (len + slen >= nalloced)
+				{
+					nalloced += (nalloced + 1024 > len + slen) ? 1024 : slen + 1;
+					buff = G_realloc (buff, nalloced);
+					cur = buff + len;
+				}
+				strcpy (cur, ",");
+				cur++;
+				strcpy (cur, opt->answers[n]);
+				cur = strchr(cur, '\0');
+				len = cur - buff;
 			}
 		}
 		opt = opt->next_opt ;

@@ -1,9 +1,67 @@
-:
-#updated $ewres to ewres() and $nsres to nsres() 11/99
+#!/bin/sh
+# 10/2001 fix for testing for dashes in raster file name
+#        by Andreas Lange <andreas.lange@rhein-main.de>
+# 10/2001 added parser support - Markus Neteler
+# updated $ewres to ewres() and $nsres to nsres() 11/99
 # updated number to FP in r.mapcalc statement
 
 # set nsres and ewres
-eval `g.region -g`
+# eval `g.region -g`
+PROG=`basename $0`
+
+if [ ! "$GISBASE" ]
+then
+	echo
+	echo "ERROR: must be in GRASS to use $PROG"
+	echo
+	exit 1
+fi
+
+if [ "$1" = "-help" -o "$1" = "help" -o "$1" = "-h" -o "$1" = "--help" ]
+then
+        echo
+        echo Please provide the altitude of the sun in degrees above the
+        echo horizon and the azimuth of the red, green, and blue lights
+        echo in degrees to the east of 'north (N:0 E:90 S:180 W:270)'
+        echo Might we suggest 60 for red, 180 for green and 300 for blue.
+        echo
+        echo Usage:
+        echo      shade.clr.sh [altitude=value] [r_azimuth=value] [g_azimuth=value] [b_azimuth=value] [elevation=name]
+	echo
+	exit 1
+fi
+
+gotitALT=0
+gotitRAZ=0
+gotitGAZ=0
+gotitBAZ=0
+gotitELEV=0
+
+for i
+do
+	case $i in
+		altitude=*)
+			alt=`echo $i | awk -F '=' '{print $2}'` ; gotitALT=1;;
+		r_azimuth=*)
+			raz=`echo $i | awk -F '=' '{print $2}'` ; gotitRAZ=1;;
+		g_azimuth=*)
+			gaz=`echo $i | awk -F '=' '{print $2}'` ; gotitGAZ=1;;
+		b_azimuth=*)
+			baz=`echo $i | awk -F '=' '{print $2}'` ; gotitBAZ=1;;
+		elevation=*)
+			elev=`echo $i | awk -F '=' '{print $2}'` ;
+                                    gotitELEV=1;
+                                    eval `g.findfile element=cell file=$elev` ;
+                                    elev="${fullname}" ;
+                                    ELEV="${name}" ;
+                                    if [ "$elev" = "" ] ; then
+                                       echo "ERROR: raster map [`echo $i | awk -F '=' '{print $2}'`] does not exist."
+                                       exit 1
+                                    fi ;;
+
+	esac
+done
+
 
 echo ""
 echo Please provide the altitude of the sun in degrees above the
@@ -12,58 +70,89 @@ echo in degrees to the east of 'north (N:0 E:90 S:180 W:270)'
 echo Might we suggest 60 for red, 180 for green and 300 for blue.
 echo ""
 
-gotit=0
-while test $gotit -eq 0
+while test $gotitALT -eq 0
 do
 	echo -n "altitude: "
 	read alt
 	if test $alt -gt 0 -a $alt -lt 90
 	then
-		gotit=1
+		gotitALT=1
 	else
 		echo Sorry, altitude must be greater than 0 and less than 90
 	fi
 done
 
-gotit=0
-while test $gotit -eq 0
+if test $alt -gt 0 -a $alt -lt 90
+then
+	gotitALT=1
+else
+	echo Sorry, altitude must be greater than 0 and less than 90
+	exit 1
+fi
+
+
+while test $gotitRAZ -eq 0
 do
 	echo -n "red light azimuth: "
 	read raz
 	if test $raz -ge 0 -a $raz -lt 360
 	then
-		gotit=1
+		gotitRAZ=1
 	else
-		echo Sorry, azimuth must be greater than -1  and less than 360
+		echo Sorry, azimuth must be greater than -1 and less than 360
 	fi
 done
 
-gotit=0
-while test $gotit -eq 0
+if test $raz -ge 0 -a $raz -lt 360
+then
+	gotitRAZ=1
+else
+	echo Sorry, azimuth must be greater than -1 and less than 360
+	exit 1
+fi
+
+while test $gotitGAZ -eq 0
 do
 	echo -n "green light azimuth: "
 	read gaz
 	if test $gaz -ge 0 -a $gaz -lt 360
 	then
-		gotit=1
+		gotitGAZ=1
 	else
-		echo Sorry, azimuth must be greater than -1  and less than 360
+		echo Sorry, azimuth must be greater than -1 and less than 360
 	fi
 done
 
-gotit=0
-while test $gotit -eq 0
+if test $gaz -ge 0 -a $gaz -lt 360
+then
+	gotitGAZ=1
+else
+	echo Sorry, azimuth must be greater than -1 and less than 360
+	exit 1
+fi
+
+while test $gotitBAZ -eq 0
 do
 	echo -n "blue light azimuth: "
 	read baz
 	if test $baz -ge 0 -a $baz -lt 360
 	then
-		gotit=1
+		gotitBAZ=1
 	else
-		echo Sorry, azimuth must be greater than -1  and less than 360
+		echo Sorry, azimuth must be greater than -1 and less than 360
 	fi
 done
 
+if test $baz -ge 0 -a $baz -lt 360
+then
+	gotitBAZ=1
+else
+	echo Sorry, azimuth must be greater than -1 and less than 360
+	exit 1
+fi
+
+while test $gotitELEV -eq 0
+do
 echo ""
 g.ask type=old element=cell desc=raster prompt="Enter elevation file" unixfile=/tmp/$$
 eval `cat /tmp/$$`
@@ -73,24 +162,38 @@ then
     exit 0
 fi
 elev="${fullname}"
-
+ELEV="${name}"
 echo "$elev"
+gotitELEV=1
+done
 
+
+elev2=`echo $elev | sed -e "s/-//g"`
+if [ "$elev" != "$elev2" ] ; then
+    echo "Name of raster map ($elev) contains one or more \"-\" (dash(es)), "
+    echo "which is not allowed! Please rename raster map before using $PROG."
+    echo "Exiting."
+    exit 1
+fi
+
+echo Using altitude:$alt  r_azimuth:$raz g_azimuth:$gaz b_azimuth:$baz  elevation:$elev
+
+#correct azimuths to East (GRASS convention):
 raz=`expr $raz - 90`
 gaz=`expr $gaz - 90`
 baz=`expr $baz - 90`
 
 echo ""
 echo Running r.mapcalc, please stand by.
-echo Your new map will be named shade.  Please consider renaming.
+echo Your new map will be named $ELEV.shade. Please consider renaming.
 echo ""
 
 r.mapcalc << EOF
-shade = eval( \\
- x=($elev[-1,-1] + 2*$elev[0,-1] + $elev[1,-1] \\
-   -$elev[-1,1] - 2*$elev[0,1] - $elev[1,1])/(8.* ewres()) , \\
- y=($elev[-1,-1] + 2*$elev[-1,0] + $elev[-1,1] \\
-   -$elev[1,-1] - 2*$elev[1,0] - $elev[1,1])/(8.* nsres()) , \\
+$ELEV.shade = eval( \\
+ x=($elev[-1,-1] + 2.*$elev[0,-1] + $elev[1,-1] \\
+   -$elev[-1,1] - 2.*$elev[0,1] - $elev[1,1])/(8.* ewres()) , \\
+ y=($elev[-1,-1] + 2.*$elev[-1,0] + $elev[-1,1] \\
+   -$elev[1,-1] - 2.*$elev[1,0] - $elev[1,1])/(8.* nsres()) , \\
  slope=90.-atan(sqrt(x*x + y*y)), \\
  a=round(atan(x,y)), \\
  aspect=if(x||y,if(a,a,360.)), \\
@@ -103,11 +206,9 @@ shade = eval( \\
  1. + red + 5. * green + 25. * blue )
 EOF
 
-r.colors shade color=grey
-
-echo ""
-echo shade.relief map created and named shade.  Consider renaming
-r.colors shade color=rules 2>&1 > /dev/null << EOF
+# needed?
+# r.colors $ELEV.shade color=grey
+r.colors $ELEV.shade color=rules 2>&1 > /dev/null << EOF
 1     0   0   0
 5   255   0   0
 6     0  64   0
@@ -159,3 +260,7 @@ r.colors shade color=rules 2>&1 > /dev/null << EOF
 121   0 255 255
 125 255 255 255
 EOF
+
+echo ""
+echo "Shaded relief map created and named $ELEV.shade. Consider renaming.
+

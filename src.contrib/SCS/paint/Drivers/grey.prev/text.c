@@ -1,3 +1,0 @@
-Ptext(s) char *s;
-{
-}

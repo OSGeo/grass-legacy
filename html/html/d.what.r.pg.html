@@ -1,0 +1,178 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+   <meta name="GENERATOR" content="Mozilla/4.77 [ru] (X11; U; Linux 2.2.19-3.asp i686) [Netscape]">
+   <title>d.what.r.pg</title>
+</head>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+<a NAME="d.what.r.pg"></a><img SRC="grass.smlogo.gif" >
+<hr width=100% align=center size=6 no shade>
+<h2>
+NAME</h2>
+<b><i>d.what.r.pg</i></b> - Report database attributes associated with
+a raster category value at a specified location. (GRASS-RDBMS Attribute
+Interface Program)
+<h2>
+SYNOPSIS</h2>
+<b>d.what.r.pg</b>
+<br><b>d.what.r.pg help</b>
+<br><b>d.what.r.pg map</b><i>=name</i> <b>tab</b><i>=name</i> <b>col</b><i>=name</i>
+[<b>hv</b>=name]
+<br>&nbsp;
+<h2>
+ALTERNATE</h2>
+<b>d.what.r.pg -s help</b>
+<br><b>d.what.r.pg -s sql</b><i>=filename</i> <b>map</b><i>=name</i>
+<h2>
+DESCRIPTION</h2>
+<i>d.what.r.pg</i> reports database attributes from the currently selected
+database associated with a raster category at a specific location on a
+raster map. The currently selected database is identified by the GRASS
+environment variable $PG_DBASE which is set using the <i>g.select.pg</i>
+GRASS-RDBMS interface tool. If this environment variable is not set the
+program terminates with a message to the user. The current raster location
+is selected by the user with the mouse. If the alternate form of this command
+is selected with the <i>-s</i> flag the user has greater control over the
+manner in which the attribute information is displayed. Using the <i>-s</i>
+option the attributes from more than one table can be returned and displayed.
+<h2>
+COMMAND LINE OPTIONS</h2>
+
+<h3>
+Parameters:</h3>
+
+<dl>
+<dt>
+<b>map=map</b></dt>
+
+<dd>
+Name of an existing raster map with category values linked to the currently
+selected database.</dd>
+
+<dt>
+<b>tab=databasetablename</b></dt>
+
+<dd>
+Table in the currently selected database containing a column associated
+with raster category values.</dd>
+
+<dt>
+<b>col=databasecolumnname</b></dt>
+
+<dd>
+Column associated with raster category values.</dd>
+
+<br><b>hv</b>
+<dd>
+Type of database output - [h/v]</dd>
+
+<dd>
+default: h</dd>
+
+<br>&nbsp;</dl>
+
+<h2>
+ALTERNATE COMMAND LINE USAGE</h2>
+The alternate command line usage is provided to simplify the process of
+retrieving information from more than one table in the query criteria.
+The alternate command line structure is selected using the the <i>[-s]</i>
+flag on the command line. When using this flag the user must include the
+name of a text file on the command line as well. This file must include
+a complete, well formed SQL SELECT statement specifying the query criteria&nbsp;
+needed to retrieve values which correspond to category values in a GRASS
+data layer.
+<p>The user must also specify the name of the GRASS data layer containing
+these category values on the command line. The following examples illustrate
+the syntax which must be used in constructing a SELECT statement for use
+with the <i>-s</i> flag.
+<p><b>EXAMPLE:</b>
+<p><b>1.</b><i> d.what.r.pg -s sql=raster.sql map=blag_forest_kur</i>
+<p>and raster.sql is:
+<p><i>select rec_id, type_id from info_kuruma where type_id = ?</i>
+<p><b>Result:</b>
+<br>Reports two fields from the table info_kuruma associated with the raster
+category value at the current mouse location the raster map.
+<p><b>2.</b><i> d.what.r.pg -s sql=raster2.sql map=blag_forest_kur</i>
+<p>and raster2.sql is:
+<p><i>select rec_id, type_id, census_info.type_good from info_kuruma where
+type_id = ? and rec_id = census_info.rec_id</i>
+<p><b>Result:</b>
+<br>Reports fields from two tables info_kuruma and census_info associated
+with the raster category value at the current mouse location the raster
+map.
+<p><b>3.</b> <i>d.what.r.pg -s kur_rast_id sql=process.sql</i>
+<p>process.sql is:
+<p><i>update census_info set type_good = '1' where rec_id = ? and info_kuruma.type_id
+= 35 and info_kuruma.rec_id = rec_id;</i>
+<p><b>Result: </b>this would only change field of the census_info table
+for the clicked polygon or line,
+<br>if the corresponding type taken from <i>info_kuruma</i> table is equal
+to 35.
+<br>&nbsp;
+<h3>
+Flag:</h3>
+
+<dl>
+<dt>
+<b>-s</b></dt>
+
+<dd>
+SQL select statements are input from a prepared file.</dd>
+</dl>
+
+<h3>
+Parameters:</h3>
+
+<dl>
+<dt>
+<b>sql=filename</b></dt>
+
+<dd>
+SQL statements specifying well formed selection criteria.</dd>
+
+<dt>
+<b>map=map</b></dt>
+
+<dd>
+Name of an existing raster map with category values linked to a database.</dd>
+
+<br><b>hv</b>
+<dd>
+Type of database output - [h/v]</dd>
+
+<dd>
+default: h</dd>
+
+<dd>
+</dd>
+</dl>
+
+<h2>
+BUGS</h2>
+None known.
+<h2>
+NOTE</h2>
+This program requires the Postgres database software.
+<h2>
+SEE ALSO</h2>
+<i><a href="g.column.pg.html">g.column.pg</a>, <a href="g.select.pg.html">g.select.pg</a>,
+<a href="g.stats.pg.html">g.stats.pg</a>,
+<a href="g.table.pg.html">g.table.pg</a>,
+<a href="d.rast.pg.html">d.rast.pg</a>,
+<a href="d.site.pg.html">d.site.pg</a>,
+<a href="d.vect.pg.html">d.vect.pg</a>,
+<a href="d.what.s.pg.html">d.what.s.pg</a>,
+<a href="d.what.v.pg.html">d.what.v.pg</a>,
+<a href="r.reclass.pg.html">r.reclass.pg</a>,
+<a href="r.rescale.pg.html">r.rescale.pg</a>,
+<a href="v.reclass.pg.html">v.reclass.pg</a></i>
+<h2>
+AUTHOR</h2>
+Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick
+Limp University of Arkansas, CAST
+<p>Postgres modifications: Janne Soimasuo, Faculty of Forestry, University
+of Joensuu, Finland.
+<p>Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
+</body>
+</html>

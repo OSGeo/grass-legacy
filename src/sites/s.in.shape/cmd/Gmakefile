@@ -1,0 +1,11 @@
+PGM=s.in.shape
+
+OBJFILES=	main.o\
+		s_procs.o\
+		dbfopen.o\
+		shpopen.o
+
+$(BIN_CMD)/$(PGM): $(OBJFILES) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJFILES) $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB): #

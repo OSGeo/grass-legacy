@@ -2,7 +2,7 @@
 #	for optimization,   this is also toggle-able from the command line if -DRAM_ON is used
 #EXTRA_CFLAGS	=	-I../lib -I../libes -DRAM_ON
 
-EXTRA_CFLAGS	=	$(VECT_INCLUDE) -DRAM_ON
+EXTRA_CFLAGS	=	-DRAM_ON
 
 BUILD_LIB = ../v.build/libbuild.a
 
@@ -43,24 +43,18 @@ PROG = $(ETC)/v.build
 
 all:    $(BUILD_LIB) $(PROG) $(ETC)/b.a.plus
 
-
+LIBES=$(VECTLIB) $(VECTLIB_REAL) $(DIG2LIB) $(GISLIB)
 
 $(BUILD_LIB): $(OBJ)
 	$(AR)
 
-$(BIN_MAIN_INTER)/v.build: front_end.o $(GISLIB)
+$(BIN_INTER)/v.build: front_end.o $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ front_end.o $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(PROG): main.o $(BUILD_LIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ main.o $(BUILD_LIB) $(VECTLIB) $(VECTLIB)  $(GISLIB) $(DIG_ATTLIB) $(MATHLIB) $(XDRLIB)
+$(PROG): main.o $(BUILD_LIB) $(LIBES) $(DIG_ATTLIB)
+	$(CC) $(LDFLAGS) -o $@ main.o $(BUILD_LIB) $(LIBES) $(DIG_ATTLIB) $(MATHLIB) $(XDRLIB)
 
-$(ETC)/b.a.plus: $(B_A_OFILES) $(VECTLIB) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(B_A_OFILES) $(VECTLIB) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+$(ETC)/b.a.plus: $(B_A_OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(B_A_OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB) $(GISLIB) $(DIG_ATTLIB): #
-
-#$(OFILES):	
-#$(B_A_OFILES):	
-
-saber_src:
-	#load $(EXTRA_CFLAGS) $(CFLAGS) *.c ../Vlib/*.c ../diglib/*.c $(DIG_ATTLIB) $(GISLIB)

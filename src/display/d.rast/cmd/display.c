@@ -45,8 +45,8 @@ int display(
     D_setup(0);
 
     /* cell maps wipe out a picture, so we clear info on the window too */
-    if (!overlay)
-	D_clear_window();
+    /* if (!overlay)
+	D_clear_window(); */
 
     /* Get color offset value for current window and pass to driver */
     D_offset_is(&offset) ;
@@ -63,14 +63,17 @@ int display(
 
     /* record the cell file */
     D_set_cell_name(G_fully_qualified_name(name, mapset));
+    D_add_to_cell_list(G_fully_qualified_name(name, mapset));
+
+    D_add_to_list(G_recreate_command());
 
     /* If overlay add it to the list instead of setting the cell name */
+/*
     if (overlay) {
-	/*
 	sprintf(buf,"d.rast -o map=%s", G_fully_qualified_name(name,mapset));
 	D_add_to_list(buf) ;
-	*/
     }
+*/
 
     return 0;
 }
@@ -88,9 +91,10 @@ static int cell_draw(
     void *xarray ;
     int cur_A_row ;
     int t, b, l, r ;
-    int ncols;
+    int ncols, nrows;
 
     ncols = G_window_cols();
+    nrows = G_window_rows();
 
     /* Set up the screen, conversions, and graphics */
     D_get_screen_window(&t, &b, &l, &r) ;
@@ -114,6 +118,7 @@ static int cell_draw(
     /* loop for array rows */
     for (cur_A_row = 0; cur_A_row != -1; )
     {
+        G_percent(cur_A_row, nrows, 2);
 	/* Get window (array) row currently required */
 	G_get_raster_row(cellfile, xarray, cur_A_row, data_type) ;
 	mask_raster_array (xarray, ncols, invert, data_type);
@@ -123,6 +128,7 @@ static int cell_draw(
 
     }
     R_flush() ;
+    G_percent(nrows, nrows, 2);
 
     /* Wrap up and return */
     G_close_cell(cellfile) ;

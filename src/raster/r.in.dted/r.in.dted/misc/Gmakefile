@@ -1,4 +1,3 @@
-HOME = $(BIN_MAIN_CMD)
 PGM      = m.dted.extract
 
 LIST = main.o\
@@ -15,7 +14,7 @@ LIST = main.o\
 	zero_out.o
 
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST): dma.h

@@ -11,9 +11,11 @@ int welcome_mat (void)
 	fprintf (stdout,"\n  Information you will need to run this program:\n") ;
 	fprintf (stdout,"   1) Name of the vector file to store the grid.\n") ;
 	fprintf (stdout,"   2) The number of rows and columns in the grid.\n") ;
-	fprintf (stdout,"   2) An easting and northing of the point in the lower left corner where the\n   grid will start.\n") ;
-	fprintf (stdout,"   3) The width and length of the boxes in the grid.\n") ;
-	fprintf (stdout,"   4) The angle of rotation counter-clockwise about the origin.\n") ;
+	fprintf (stdout,"   3) An easting and northing of the point in the lower left corner where the\n      grid will start.\n") ;
+	fprintf (stdout,"   4) The width and length of the boxes in the grid.\n") ;
+	fprintf (stdout,"   5) The angle of rotation counter-clockwise about the origin.\n") ;
+	fprintf (stdout,"   6) The type of attribute grid if applicable. \n      Options are [const, rows, cols].\n") ;
+	fprintf (stdout,"   7) If a constant attribute is selected, the value may also be set. \n      Default 1.\n") ;
 
 	fprintf (stdout,"\n\n\n\n            Hit <RETURN> to continue ") ;
 	fgets(buf,81,stdin) ;

@@ -1,7 +1,7 @@
 #include "dbmi.h"
 #include "macros.h"
 
-db__send_table_definition(table)
+int db__send_table_definition(table)
     dbTable *table;
 {
     int i;
@@ -21,6 +21,7 @@ db__send_table_definition(table)
     return DB_OK;
 }
 
+int
 db__recv_table_definition(table)
     dbTable **table;
 {
@@ -46,6 +47,7 @@ db__recv_table_definition(table)
     return DB_OK;
 }
 
+int
 db__send_table_data(table)
     dbTable *table;
 {
@@ -61,6 +63,7 @@ db__send_table_data(table)
     return DB_OK;
 }
 
+int
 db__recv_table_data(table)
     dbTable *table;
 {

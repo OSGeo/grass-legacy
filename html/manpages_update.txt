@@ -1,0 +1,279 @@
+
+  List of man-pages to be changed for GRASS 5.x (FP-support etc.)
+
+
+  -> Updated 8. Oct. 99- in sync with GRASS5 beta4
+
+
+This is an incomplete list of man-pages which have to be 
+updated. Changed modules, which have to be used interactively 
+are not (yet) listed here.
+
+- If no man page is available, all parameters and flags are
+  listed here. 
+- If a man-page is available, just the changed
+  parameters and flags are listed here.
+
+
+My suggestions to proceed for man-page updating:
+
+ - Update the old manpages in HTML-Format (source:
+   http://www.geog.uni-hannover.de/grass/gdp/html_421/
+   )
+ - convert them later to "man"-format with g.html2man
+   This modules is included from GRASS 5beta (2e) onwards.
+   NOTE: The HTML-tags have to be written in bold characters
+         to be recognized by g.html2man.
+
+
+Cheers
+
+  Markus Neteler
+
+
+--------------------------------------------------------------------------
+Checklist for new/changed parameters:
+
+ d.3d
+  -n   Show null elevations
+
+ d.histogram
+  -n   Display information for null cells
+  -C   Report for ranges defined in cats file (fp maps only)
+  nsteps   Number of steps to divide the data range into (fp maps only)
+           default: 255
+
+ d.pan  -> no man-page available
+ d.pan2 -> no man-page available (one module is enough here!)
+  -q   Quiet
+  zoom   magnification: >1.0 zooms in, <1.0 zooms out
+         options: 0.001-1000.0
+         default: 1.0
+
+
+ d.rast
+  -i   Invert catlist
+  catlist   List of categories to be displayed
+  vallist   List of values to be displayed
+       bg   Background color (for null)
+
+ f.wsurf -> not working at all, isn't it?
+
+ g.setproj -> LAEA and LEAC projection added recently in 5.0
+
+ i.points3 -> no man page available
+
+ i.rectify3 -> no man page available
+  -o   Overwrite target imagery files
+  -c   Use current target region
+  -m   Use minimal target region
+  -q   Run quietly
+  -v   Verbose output
+   group   Imagery group to be rectified
+  source   Source raster file to be rectified
+  target   Target name of rectified image
+   trans   Transformation type [poly1|poly2|poly3|photo|landtm]
+       n   Value for the northern edge
+       s   Value for the southern edge
+       e   Value for the eastern edge 
+       w   Value for the western edge 
+     res   Grid resolution (both north-south and east-west)
+   nsres   North-south grid resolution
+   ewres   East-west grid resolution  
+
+
+ i.tape.tm3 -> no man page available
+  -e   Only examine (not extract) data
+  -q   Run quietly
+      input   Filename or name of tape drive device
+  blocksize   Block size of tape device
+      group   Name of imagery group
+     output   Prefix for names of created raster maps
+      bands   LandSat TM Bands to import
+       rows   First and last rows of extracted region
+       cols   First and last columns of extracted region
+      title   Title for extracted bands
+
+
+ r.cats
+  vals   Comma separated value list: e.g. 1.4,3.8,13
+
+ r.cost
+  max_cost   An optional maximum cumulative cost
+
+ r.describe
+  -i   read fp map as integer
+  nv   string representing no data cell value
+  nsteps   number of quantization steps
+
+ r.dist -> ? (already fp?)
+
+ r.hydro.CASC2D ->?
+
+ r.in.arc -> no man page available
+   input   ARC/INFO ascii raster file to be imported
+  output   Name for resultant raster map
+    type   Storage type for resultant raster map
+           options: CELL,FCELL,DCELL
+           default: FCELL
+   title   Title for resultant raster map
+    mult   Multiplier for ascii data
+
+
+ r.in.ascii
+  -i   integer values are imported
+  -f   floating point values are imported
+  -d   double floating point values are imported
+  nv   String representing NULL value data cell
+
+
+ r.in.bin -> no man page available
+ -s   Signed data (high bit means negative value)
+   input   Bin raster file to be imported
+  output   Name for resultant raster map
+   title   Title for resultant raster map
+    mult   Multiplier for bin data
+           default: 1.0
+   bytes   Number of bytes per cell (1, 2, 4)
+           default: 1
+   north   Northern limit of geographic region
+   south   Southern limit of geographic region
+    east   Eastern limit of geographic region
+    west   Western limit of geographic region
+       r   Number of rows
+       c   Number of columns
+   subst   Replace 1st value by 2nd one.
+
+
+ r.mapcalc
+  - needs update: for example:
+        difference beteen  new = old * 100 and 
+                           new = old * 100.
+
+ r.out.ascii
+  -i   Output integer category values, not cell values
+    dp   number of decimal places
+  null   Char string to represent no data cell
+
+ r.out.xyz -> no man page available
+  input   Name of raster file.
+
+ r.recode -> no man page available
+  -a   Align the current region to the input map
+   input   Raster map to be recoded
+  output   Name for the resulting raster map
+   title   Title for the resulting raster map
+
+
+ r.report
+  -n   filter out all no data cells
+  -N   filter out cells where all maps have no data
+  -C   report for cats fp ranges (fp maps only)
+  -i   Read fp map as integer (use map's quant rules
+    null   string representing no data cell value
+  nsteps   number of fp subranges to collect stats from
+
+
+ r.resamp.rst -> no man page available
+  -r   Do zeroes in input map represent elevation?
+  -d   Output partial derivatives instead
+  -h   Display reference information
+    input   Name of the input raster file
+   ew_res   Desired East-West resolution
+   ns_res   Desired North-South resolution
+     elev   Output z-file (elevation)
+    slope   Slope
+   aspect   Aspect
+    pcurv   Profile curvature
+    tcurv   Tangential curvature
+    mcurv   Mean curvature
+   smooth   Name of the cell file containing smoothing
+  maskmap   Name of the raster file used as mask
+  overlap   Rows/columns overlap for segmentation 
+            default: 3
+    zmult   Conversion factor for z-values
+            default: 1.0
+  tension   Tension
+
+
+
+ r.stats
+  -n   Suppress reporting of any NULLs
+  -N   Suppress reporting of NULLs when all values are NULL
+  -C   report for cats fp ranges (fp maps only)
+  -r   Print raw indexes of fp ranges (fp maps only)
+  -i   Read fp map as integer (use map's quant rules)
+
+
+ r.sum -> no man page available
+  rast   Name of incidence or density file.
+
+
+ r.support
+  The null file for [cir549] might indicate that some cells contain
+  Do you want to create/reset null file for [cir549] so that
+  Do you want to delete null file for [cir549] 
+
+ r.surf.area
+   input   Raster file for surface.
+  vscale   Vertical scale
+
+ r.to.sites -> no man page available
+  not in new sites API yet!
+    input   Name of an existing raster map
+  output   sites file to be made from raster file
+
+
+ r.what
+  -c   Turn on cache reporting
+  -i   Output integer category values, not cell values
+  cache   Size of point cache
+   null   Char string to represent no data cell
+
+
+ s.in.ascii
+  -e   Attribute field to import represents elevation heights
+
+
+ s.surf.krig -> no man page available
+    input   Name of input site map
+     outz   Name of output z value raster map
+  outvarz   Name of output z variance raster map
+    model   Type of semivariogram model to be used
+            options: power,spherical,exp,log,gaussian
+  npoints   Number of interpolation points
+            default: 12
+    range   Not used with log or power models
+            default: 1.0
+    power   Only for use with the power model
+            default: 1.0
+   nugget   The variogram nugget variance
+            default: 0.0
+     sill   The variogram sill scaled to the sample variance
+            default: 1.0
+  max_lag   The max_lag is only used with the power model
+
+
+
+ v.digit is former v.digspline 
+   new: spline interpolation 
+
+ v.in.shape -> no man page available
+      input   Name of .shp file to be imported
+     mapset   Name of mapset to hold resulting files (Default = current)
+    verbose   Debugging level : 0 (silent) - 9 (verbose)
+              default: 0
+    logfile   Name of file where log operations
+  attribute   Name of attribute to use as category
+
+
+So. 
+Then there are several scripts without manpage...
+i.spectral         r.out.arctiff      s.out.gps
+d.rast.leg         i.tasscap          r.out.bil          tiger.info
+d.rast.rescale     m.statistics       r.out.geotiff      v.cutter.attr
+g.html2man         ps.add.pagesize    r.reclass.area     v.in.gps
+i.image.mosaic     r.edge.dig         r.regression.line  v.line2area
+i.oif              r.in.arctiff       s.in.gps           v.xfig
+
+

@@ -9,7 +9,7 @@ usage v.in.dlg -bl in=input file out=outfile
 
              -b   "     "   = binary dlg (default is ascii dlg)
 	     -l  force lines instead of areas (areas is default)
-
+*/
 /**  data directories   **/
 #define         B_DIG           "dig"
 #define         A_DIG           "dig_ascii"
@@ -34,6 +34,7 @@ main (argc, argv)
     char a_dlgfile[200];
     char b_dlgfile[200];
     char digfile[200];
+	struct GModule *module;
     struct Option *old, *new;
     /*struct Flag *a_flag;*/
     struct Flag *b_flag, *l_flag;
@@ -44,6 +45,10 @@ main (argc, argv)
     G_gisinit (argv[0]);
     setbuf (stdout, NULL);
 
+	module = G_define_module();
+	module->description =
+		"Converts an ASCII or binary USGS DLG-3 "
+		"(bdlg) file to a binary GRASS vector (dig) file.";
 
     /*
     a_flag = G_define_flag();
@@ -78,6 +83,8 @@ main (argc, argv)
     new->gisprompt		= "new,dig,vector";
     new->description		= "vector output file";
 
+    if (G_parser (argc, argv))
+	exit (-1);
 
     /*initialize defaults*/
     force_areas = 1;
@@ -85,9 +92,6 @@ main (argc, argv)
     
     gbase = G_gisbase();
     current_mapset = G_mapset();
-
-    if (G_parser (argc, argv))
-	exit (-1);
 
     if (!*old->answer  || !*new->answer )
     {

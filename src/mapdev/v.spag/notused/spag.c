@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "digit.h"
 
 /*
@@ -12,8 +13,6 @@ static int first = 1;
 static double Threshold;
 static double Threshold2;
 
-char *malloc (), *realloc ();
-
 spagetti (Map, thresh)
     struct Map_info *Map;
     double thresh;
@@ -21,7 +20,6 @@ spagetti (Map, thresh)
     int A, B;
     P_LINE *Aline, *Bline;
     char *p, *getenv ();
-    double atof ();
     char buf[300];
 
     if (NULL != (p = getenv ("SPAG_THRESH")))

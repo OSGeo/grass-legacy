@@ -1,0 +1,47 @@
+#!/bin/sh
+# NOTE: This is based on the output pattern of d.mon -p
+# Anantha Prasad <aprasad/ne_de@fs.fed.us>
+#
+# $Id$
+# Version 1: Tue, 25 Jan 2000 10:31:37
+
+if [ "$#" -lt 3 -o "$1" = "-help" -o "$1" = "help" ]
+then 
+  echo
+  echo "USAGE: d.monsize <monitor_width> <monitor_height> <monitor_name>"
+  exit
+fi
+
+export XDRIVER_WIDTH=$1 
+export XDRIVER_HEIGHT=$2
+mon=$3
+
+# Check the current status of the monitor
+st=`d.mon -p`
+echo $st > /tmp/monstat$$
+st2=`gawk -F: '{print $2}' /tmp/monstat$$`
+# STrip leading blanks
+echo $st2 > /tmp/tst$$
+st3=`perl -pne 's/^\s+//g' /tmp/tst$$`
+
+if [ -z "$st3" ]
+then
+  # No monitor running so start a new one....
+  echo
+  echo "Starting monitor $mon of size ${1}x${2} ..."
+  d.mon start=`echo ${mon}`
+else
+  if [ "$mon" = "$st3" ]
+  then
+    # Monitor is already running...stop it and start new one
+    d.mon stop=`echo ${mon}`
+    echo
+    echo "Starting monitor $mon of size ${1}x${2} ..."
+    sleep 4
+    d.mon start=`echo ${mon}`
+  else
+    echo
+    echo "Starting monitor $mon of ssize ${1}x${2}..."
+    d.mon start=`echo ${mon}`
+  fi
+fi

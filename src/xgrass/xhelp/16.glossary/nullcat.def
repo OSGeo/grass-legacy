@@ -1,7 +1,0 @@
-
-
-null category - Also referred to as "no data category".  @glossary("Map layer",16.glossary/maplayer.def)
-data that are not assigned any @glossary("category",16.glossary/cat.def) value are assigned a
-@glossary("category value",16.glossary/catval.def) of "0" and a @glossary("category label",16.glossary/catlab.def) of "no data".  Each
-map layer contains this category, in addition to others specified
-by the user.

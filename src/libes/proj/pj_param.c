@@ -4,6 +4,7 @@ static const char SCCSID[]="@(#)pj_param.c	4.4	93/06/12	GIE	REL";
 #endif
 #include <projects.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 	paralist * /* create parameter list entry */
 pj_mkparam(char *str) {

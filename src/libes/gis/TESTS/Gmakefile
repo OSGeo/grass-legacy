@@ -1,4 +1,4 @@
 try$(try): try$(try).o $(GISLIB)
-	$(CC) $(LDFLAGS) try$(try).o $(GISLIB) $(VASK) $(MATHLIB) -o try$(try)
+	$(CC) $(LDFLAGS) try$(try).o $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) -o try$(try)
 
 $(GISLIB): #

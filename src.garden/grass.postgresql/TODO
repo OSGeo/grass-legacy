@@ -1,0 +1,11 @@
+Jan'13 2000
+---------------
+1. Add on the libpq update of the last of the 12 (or 13?) modules 
+from the old grass.postres pack.
+2. Check to see if there's a better graphics implementation for filling polys
+in GRASS libraries. R_polygon_abs() seems to ignore islands. Yes, we can use it,
+anyway, first finding islands, and replotting them.
+3. Find the easy way to pick column names in Tcl/Tk interface. As of now,
+they have just to be typed in. This may be as easy as rotating lists, though.
+4. Find way to input spaces in Tcl/Tk "where" clauses.
+5. Update manuals.

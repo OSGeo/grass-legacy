@@ -1,13 +1,23 @@
 /*-s.probplot
 **
-** Author: James Darrell McCauley 
-**         McCauley Technical Services
-**         PO Box 2485
-**         West Lafayette, Indiana 47906-0485 USA
+** Author: James Darrell McCauley darrell@mccauley-usa.com
+** 	                          http://mccauley-usa.com/
 **
-** Permission to use, copy, modify, and distribute this software and its
-** documentation for any purpose and without fee is hereby granted. This
-** software is provided "as is" without express or implied warranty.
+** This program is free software; you can redistribute it and/or
+** modify it under the terms of the GNU General Public License
+** as published by the Free Software Foundation; either version 2
+** of the License, or (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+**
+** $Id$
 **
 ** Modification History:
 ** 0.1B <14 Oct 1994> first version
@@ -15,6 +25,7 @@
 **      Thanks to E.A. Koster <ekoster@let.rug.nl> for noticing the problem.
 ** 0.3B <02 Jan 1995> added version.h, cleaned man page, added html (jdm)
 ** 0.4B <25 Feb 1995> cleaned 'gcc -Wall' warnings (jdm)
+** <13 Sep 2000> released under GPL
 **/
 
 #pragma ident "s.probplt v 0.4B <25 Feb 1995>; Copyright (c) 1994-1995. James Darrell McCauley"
@@ -28,15 +39,16 @@
 
 int nsites;
 char *plot_file, *data_file;
+struct Cell_head window;
+const char *plot_program;
 
-int main (argc, argv)
-  char **argv;
-  int argc;
+int main ( int argc, char **argv)
 {
   char *mapset, *sitefile, *graphfile, errmsg[200];
-  int all, i, log, verbose, dcmp (), readz(), pltsqq();
+  int field, all, i, log, verbose, dcmp (), pltsqq();
 
-  struct Cell_head window;
+  extern struct Cell_head window;
+  struct GModule *module;
   double factor;
   double  *z;
   FILE *fdsite;
@@ -46,11 +58,15 @@ int main (argc, argv)
   } flag;
   struct
   {
-    struct Option *input, *width, *save;
+    struct Option *input, *width, *save, *dfield;
   } parm;
 
   G_gisinit (argv[0]);
 
+  module = G_define_module();
+  module->description =        
+                  "Normal probability plot of a GRASS site list.";
+                  
   parm.input = G_define_option ();
   parm.input->key = "sites";
   parm.input->type = TYPE_STRING;
@@ -70,6 +86,14 @@ int main (argc, argv)
   parm.save->required = NO;
   parm.save->description = "basename of a graphing data/commands files";
 
+  parm.dfield = G_define_option ();
+  parm.dfield->key = "field";
+  parm.dfield->type = TYPE_INTEGER;
+  parm.dfield->answer = "1";
+  parm.dfield->multiple = NO;
+  parm.dfield->required = NO;
+  parm.dfield->description = "which decimal attribute (if multiple)";
+
   flag.all = G_define_flag ();
   flag.all->key = 'a';
   flag.all->description = "Use all sites (do not limit to current region)";
@@ -85,9 +109,7 @@ int main (argc, argv)
   if (G_parser (argc, argv))
     exit (1);
 
-  /* need graphics. program will exit here if driver is not available */
-  R_open_driver ();
-  R_close_driver ();
+  plot_program = getenv("GRASS_GNUPLOT");
 
   all = flag.all->answer;
   if (!all)
@@ -98,6 +120,7 @@ int main (argc, argv)
   verbose = (!flag.q->answer);
   log = (!flag.l->answer);
   sitefile= parm.input->answer;
+  sscanf(parm.dfield->answer,"%d", &field);
   graphfile= parm.save->answer;
   if ((i=sscanf(parm.width->answer,"%lf",&factor))!=1)
       G_fatal_error("error scanning arguments");
@@ -110,6 +133,12 @@ int main (argc, argv)
     G_fatal_error (errmsg);
   }
 
+  if (field < 1)
+  {
+     sprintf (errmsg, "Decimal attribute field 0 doesn't exist.");
+     G_fatal_error (errmsg);
+  }
+
   fdsite = G_fopen_sites_old (parm.input->answer, mapset);
   if (fdsite == NULL)
   {
@@ -118,7 +147,7 @@ int main (argc, argv)
   }
 
   /* read sites */
-  if ((nsites = readz (fdsite, verbose, &z, window, all))==0)
+  if ((nsites = G_readsites (fdsite, all, verbose, field, &z))==0)
     G_fatal_error("No sites found. Check your region.");
 
   if (verbose)

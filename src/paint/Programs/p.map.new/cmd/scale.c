@@ -24,7 +24,11 @@
 #define MILES_TO_INCHES  ((double)5280*12)
 
 static double do_scale (struct Cell_head *, int, int, char *);
+#ifdef __GNUC_MINOR__
 static int OOPS (void) __attribute__ ((__noreturn__));
+#else
+static int OOPS (void);
+#endif
 
 int scale (struct Cell_head *window, int panel, int margin, char *text)
 {

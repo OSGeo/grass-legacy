@@ -1,0 +1,9 @@
+PGM=$(GISBASE)/etc/permut
+
+all:    $(PGM)
+
+$(PGM): permut.o  
+	$(CC) $(LDFLAGS) -o $@ permut.o    
+
+$(GISLIB): #
+$(VECTLIB): #

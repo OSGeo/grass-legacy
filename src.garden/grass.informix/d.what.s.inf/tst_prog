@@ -1,6 +1,0 @@
-:
-# test for d.what.s.inf where all required command line args are provided
-# DB=seco_wells,  GISdb=SECO
-#
-
-d.what.s.inf  tab=well xcol=utm_east ycol=utm_north distance=500  

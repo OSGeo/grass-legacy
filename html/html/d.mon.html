@@ -1,0 +1,226 @@
+<HTML>
+<TITLE>d.mon</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.mon</b></EM> - To establish and control use of a graphics display monitor. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.mon</B> 
+<BR>
+<B>d.mon help</B> 
+<BR>
+<B>d.mon</B> 
+[<B>-lLprs</B>] 
+[<B>start=</B><EM>name</EM>] 
+[<B>stop=</B><EM>name</EM>] 
+[<B>select=</B><EM>name</EM>] 
+[<B>unlock=</B><EM>name</EM>] 
+[<B>nlev=</B><EM>value</EM>]
+
+<H2>DESCRIPTION</H2>
+
+The GRASS program <EM>d.mon</EM> allows the user to start,
+select, list, query the status of, release control of,
+stop, and unlock control of, available graphics monitors.
+The user can run this program either interactively (through
+a series of menus), or non-interactively by typing the name
+of the monitor to start, stop, select, or unlock, and any
+desired flags on the command line.
+
+<P>
+
+<H3>Flags:</H3>
+
+<DL>
+
+<DT><B>-l</B> 
+<DD>List all monitors 
+
+<DT><B>-L</B> 
+<DD>List all monitors (with current status) 
+
+<DT><B>-p</B> 
+<DD>Print name of currently selected monitor 
+
+<DT><B>-r</B> 
+<DD>Release currently selected monitor 
+
+<DT><B>-s</B> 
+<DD>Do not automatically select when starting 
+
+</DL>
+
+<H3>Parameters:</H3> 
+
+<DL>
+
+<DT><B>start=</B><EM>name</EM> 
+<DD>Name of graphics monitor to start 
+
+<DT><B>stop=</B><EM>name</EM> 
+<DD>Name of graphics monitor to stop 
+
+<DT><B>select=</B><EM>name</EM> 
+<DD>Name of graphics monitor to select 
+
+<DT><B>unlock=</B><EM>name</EM> 
+<DD>Name of graphics monitor to unlock 
+
+<DT><B>nlev=</B><EM>value</EM>
+<DD>Number of color levels for each R/G/B (default: nlev=32: 32768 colors)
+
+</DL>
+
+When the user enters the command <B>d.mon</B> without
+specifying parameter values, the below menu appears on the
+screen:
+
+<PRE>
+                        MONITOR MENU
+Making sure that the graphics monitor is running:
+
+  1      - Start a graphics monitor
+         (also automatically selects this monitor)
+  2      - Stop a graphics monitor
+
+Choosing a graphics monitor for your graphics:
+
+  3      - Select a graphics device for output
+         (currently selected monitor:  name)
+  4      - Release control of the graphics driver
+         (let someone else use it)
+         (option 4 appears only after selection of a monitor)
+
+RETURN   quit
+</PRE>
+
+These parameters perform the following functions: 
+
+<OL>
+<LI><B>Start a Monitor.</B> 
+<BR>
+
+In order to display on-screen GRASS graphics, the user must
+<EM>start</EM> and <EM>select</EM> a graphics monitor.  By
+default, the <EM>start</EM> command actually runs two
+commands, to both start and select whatever monitor is
+named by the user. (The user can get a list of available
+monitors by setting the -l or -L flag on the command line.)
+
+<P>
+
+When a monitor is <EM>started</EM>, it is therefore also
+(automatically) <EM>selected</EM> for output, unless the
+<EM>-s</EM> flag is set by the user; the user can also
+explictly <EM>select</EM> a monitor that has been started
+(see (3) below).  After a monitor is started, a blank
+graphics frame should appear on whatever terminal the user
+is using to display graphics.
+
+<P>
+
+The desired monitor should be started once and need not be restarted unless 
+it is stopped (option <EM>2</B>)</EM> for some reason. A monitor may continue 
+to run for any length of time, even when no GRASS session is being run. 
+The monitor program runs in the background. 
+
+<p>
+
+Using the <EM>nlev</EM> parameter the user can define the number of
+color levels to be used. nlev can be a value between 1 and 256.
+nlev=256 means 8bit for each R, G, B color channel equal to 24bit 
+truecolor (16.7 million colors). The calculation of number of colors 
+(ncolors) is performed by calculating:
+
+<pre>
+ ncolors = nlev^3
+</pre>
+
+Starting a monitor with a high number of colors may take some time
+to allocate the required memory.
+
+<LI><B>Stop a Monitor.</B> 
+<BR>
+Sometimes the monitor program needs to be stopped
+(terminated).  Choosing option 2 will terminate a
+user-specified monitor program.  A graphics monitor has two
+different types of status:  monitor program <EM>not
+running</EM>, and monitor <EM>running</EM>.  A monitor that
+has been started and/or selected will be listed as running;
+a monitor that has been stopped (or not started) will be
+listed as not running.  The -L (list status) flag will list
+the status of each monitor connected to the system.
+
+<LI><B>Select a Monitor.</B> 
+<BR>
+
+When the user <EM>starts</EM> a monitor, it is also
+(automatically) <EM>selected</EM> for graphics output
+unless the user sets the <EM>-s</EM> flag.  In order to use
+(direct graphics output to) a monitor, the user must
+<EM>select</EM> that monitor for use, either by simply
+starting the monitor without the -s flag or by explictly
+selecting the monitor for output using option 3. Only
+running monitors can be selected for graphics output.  Once
+the user has <EM>selected</EM> a monitor for output, no
+other user can use this monitor for graphics output until
+the monitor driver is either <EM>released</EM> (by the
+user) or <EM>unlocked</EM> (by any user on the system).
+
+<P> 
+
+The user can run multiple graphics monitors by simply
+starting each of the graphics monitors drivers he wishes to
+direct output to.  
+
+<LI><B>Release a Monitor.</B>
+<BR> Once a user has <EM>selected</EM> a monitor for
+graphics output, it is locked for use by that user until
+either: (1) the user voluntarily releases control of the
+monitor for use by another (option 4), or (2) another GRASS
+user <EM>unlocks</EM> the user's control of the monitor.
+Menu option 4 appears only to the person who has selected
+the monitor (since only that user can release control of
+his selected graphics monitor.) If another user wishes to
+<EM>unlock</EM> the user's control of the monitor, that
+user must run <EM>d.mon</EM> from the command line and set
+the <B>unlock=</B><EM>name</EM> parameter.
+
+</OL>
+
+You may choose multiple options within the <EM>d.mon</EM>
+program.  To leave (exit) the
+<EM>d.mon</EM> menu, press the &lt;RETURN&gt; key.
+
+<H2>NOTES</H2>
+
+The <EM>d.mon</EM> program can regulate control of graphics
+monitors both in systems using multiple monitors and in
+systems using a single graphics monitor.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.erase.html">d.erase</A></EM><br>
+<EM><A HREF="d.frame.html">d.frame</A></EM><br>
+<EM><A HREF="monitorcap.html">monitorcap</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, 
+U.S. Army Construction Engineering 
+Research Laboratory,<br>
+Full 24bit support by Roberto Flor, ITC-Irst, Trento, Italy
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>

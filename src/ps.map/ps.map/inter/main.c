@@ -118,6 +118,7 @@ int main (int argc, char *argv[])
 
 	fprintf (stdout,"\nenter name for script file: ");
 	fgets(save_name,128,stdin);
+        G_squeeze(save_name); /* added to remove \n, RB Jan 2000 */ 
  	strcpy(buf, "mv ");
 	strcat(buf, scriptfile);
 	strcat(buf, " ");

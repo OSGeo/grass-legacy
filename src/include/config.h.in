@@ -27,6 +27,9 @@
 /* define if values.h exists */
 #undef HAVE_VALUES_H
 
+/* define if zlib.h exists */
+#undef HAVE_ZLIB_H
+
 /* define if sys/ioctl.h exists */
 #undef HAVE_SYS_IOCTL_H
 
@@ -51,6 +54,12 @@
 /* define if sys/utsname.h exists */
 #undef HAVE_SYS_UTSNAME_H
 
+/* define if g2c.h exists */
+#undef HAVE_G2C_H
+
+/* define if f2c.h exists */
+#undef HAVE_F2C_H
+
 /* define gid_t type */
 #undef gid_t
 
@@ -59,6 +68,9 @@
 
 /* define uid_t type */
 #undef uid_t
+
+/* Define the return type of signal handlers */
+#define RETSIGTYPE int
 
 /* define curses.h WINDOW structure component */
 #define CURSES_MAXY @CURSES_MAXY@
@@ -75,8 +87,6 @@
 /* define if lseek() exists */
 #undef HAVE_LSEEK
 
-/* define if nice() exists */
-#undef HAVE_NICE
 
 /* define if time() exists */
 #undef HAVE_TIME
@@ -98,6 +108,61 @@
 
 /* define if setpgrp() takes no argument */
 #undef SETPGRP_VOID
+
+/* define if drand48() exists */
+#undef HAVE_DRAND48
+
+/* define if PNG support exists */
+#undef HAVE_PNG
+
+/* define if postgres.h exists */
+#undef HAVE_POSTGRES_H
+
+/* define if postgres_fe.h exists */
+#undef HAVE_POSTGRES_FE_H
+
+/* define if PQcmdTuples in lpq */
+#undef HAVE_PQCMDTUPLES
+
+/* define if jpeglib.h exists */
+#undef HAVE_JPEGLIB_H
+
+/* define if gdImageGif() exists */
+#undef HAVE_GDIMAGEGIF
+
+/* define if gdImagePng() exists */
+#undef HAVE_GDIMAGEPNG
+
+/* define if gdImageCreateTrueColor() exists */
+#undef HAVE_GDIMAGECREATETRUECOLOR
+
+/* define if fftw.h exists */
+#undef HAVE_FFTW_H
+
+/* define if dfftw.h exists */
+#undef HAVE_DFFTW_H
+
+/* define if BLAS exists */
+#undef HAVE_LIBBLAS
+
+/* define if LAPACK exists */
+#undef HAVE_LIBLAPACK
+
+/* define if dbm.h exists */
+#undef HAVE_DBM_H
+
+/* Whether or not we are using G_socks for display communications */
+#undef USE_G_SOCKS
+
+/* define if X is disabled or unavailable */
+#undef X_DISPLAY_MISSING
+
+/*
+ * It's hard to click two buttons simultaneously with two button mouse.
+ * Situation is worse, if it requires continuous clicking.
+ * In this case uncomment below.
+ */
+#undef ANOTHER_BUTTON
 
 /*
  * configuration information solely dependent on the above

@@ -98,14 +98,12 @@ int zc_curve (int inputfd, int zcfd, double Width,
                 for (j=0; j<oc; j++) {
                         *(cell_row+j) = (CELL) (*(data[1]+i*cols+j));
                 }
-                G_put_map_row(zcfd, cell_row);
+                G_put_raster_row(zcfd, cell_row, CELL_TYPE);
         }
         G_close_cell(zcfd);
 
         G_free(cell_row);
 
-        /* Release memory resources */
-        for (i=0 ; i<2 ; i++) G_free(data[i]);
         fprintf (stdout,"Transform successful\n");
 				/*
 -------------------------------------------------------------------
@@ -311,6 +309,9 @@ fprintf (stdout,"x[%d]=%f, y[%d]=%f\n", s, x[s], s, y[s]);
 fprintf (stdout,"dalpha[%d]=%f\n", s, dalpha[s]);
 *sout=s+1;
 *totals=ltotal;
+
+        /* Release memory resources */
+/*        for (i=0 ; i<2 ; i++) G_free(data[i]);*/
 
 return 0;
 }

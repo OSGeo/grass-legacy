@@ -1,4 +1,5 @@
-EXTRA_CFLAGS=$(GETHOSTNAME)
+EXTRA_CFLAGS=$(GETHOSTNAME) $(ZLIBINCPATH)
+
 OBJ = \
     adj_cellhd.o\
     align_window.o\
@@ -19,6 +20,7 @@ OBJ = \
     cell_stats.o\
     cellstats_eq.o\
     cell_title.o\
+    chop.o\
     clear_scrn.o\
     clicker.o\
     closecell.o\
@@ -49,18 +51,21 @@ OBJ = \
     dalloc.o\
     date.o\
     def_window.o\
+    dig_title.o\
     distance.o\
     done_msg.o\
     edit_cats.o\
     edit_cellhd.o\
     edit_hist.o\
     eigen_tools.o\
+    endian.o\
     env.o\
     error.o\
     file_name.o\
     find_cell.o\
     find_file.o\
     find_vect.o\
+    flate.o\
     fork.o\
     format.o\
     fpreclass.o\
@@ -68,11 +73,14 @@ OBJ = \
     geodesic.o\
     geodist.o\
     get_cellhd.o\
+    get_datum.o\
+    get_datum_name.o\
     get_ellipse.o\
     get_ell_name.o\
     get_projname.o\
     get_projinfo.o\
     get_row.o\
+    get_row_colr.o\
     get_window.o\
     getl.o\
     gets.o\
@@ -100,7 +108,6 @@ OBJ = \
     ll_scan.o\
     location.o\
     lu.o\
-    lzw.o\
     mach_name.o\
     make_colr.o\
     mapcase.o\
@@ -137,6 +144,8 @@ OBJ = \
     range.o\
     raster.o\
     rd_cellhd.o\
+    readsites.o\
+    readsites_xyz.o\
     reclass.o\
     remove.o\
     rename.o\
@@ -146,6 +155,7 @@ OBJ = \
     set_window.o\
     short_way.o\
     sites.o\
+    sites_title.o\
     sleep.o\
     squeeze.o\
     store.o\
@@ -159,6 +169,7 @@ OBJ = \
     wind_2_box.o\
     trim_dec.o\
     unctrl.o\
+    unix_socks.o\
     view.o\
     whoami.o\
     wind_format.o\
@@ -174,13 +185,17 @@ OBJ = \
     zone.o\
     G_dump.o
 
- all: version.h \
-      $(GISLIB) \
-      $(ETC)/ellipse.table \
-      $(ETC)/projections \
-      $(ETC)/FIPS.code \
-      $(ETC)/state27 \
-      $(ETC)/state83
+all: $(SRC)/include/version.h \
+	$(GISLIB) \
+	$(ETC)/ellipse.table \
+	$(ETC)/projections \
+	$(ETC)/FIPS.code \
+	$(ETC)/state27 \
+	$(ETC)/state83
+#Required for R-statistical language interface:
+	cp $(LIBDIR)/libgis.a $(GISBASE)/lib
+#Required for R-statistical language interface:
+	(cd $(SRC)/include ; cp gis.h datetime.h P_datetime.h gisdefs.h site.h P_site.h $(GISBASE)/include )
 
 $(GISLIB): $(OBJ)
 	$(AR)
@@ -210,6 +225,9 @@ $(ETC)/projections: projections
 	cp $? $@
 	chmod +r $@
 
+$(SRC)/include/version.h: $(VERSION_FILE)
+	echo 'static char *VERSION_STRING = "@(#) GRASS $(VERSION_NUMBER) ($(VERSION_DATE))";' > $@
+
 area_ellipse.o: pi.h
 area_sphere.o: pi.h
 auto_mask.o: G.h
@@ -220,9 +238,10 @@ geodist.o: pi.h
 get_row.o: G.h
 get_window.o: G.h
 gisinit.o: G.h
-gisinit.o: version.h
+gisinit.o: $(SRC)/include/version.h
 maskfd.o: G.h
 opencell.o: G.h
+# openvect.o ***DEPRECATED*** delete next line for 5.1
 openvect.o: G.h
 put_row.o: G.h
 radii.o: pi.h
@@ -230,6 +249,4 @@ rhumbline.o: pi.h
 set_window.o: G.h
 window_map.o: G.h
 
-version.h: $(VERSION_FILE)
-	echo 'static char *VERSION_STRING = "@(#) GRASS $(VERSION_NUMBER) ($(VERSION_DATE))";' > $@
 ...: #

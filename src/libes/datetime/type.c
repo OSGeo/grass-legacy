@@ -1,3 +1,9 @@
+/*
+ * Copyright (C) 1995.  Bill Brown <brown@gis.uiuc.edu> & Michael Shapiro
+ *
+ * This program is free software under the GPL (>=v2)
+ * Read the file GPL.TXT coming with GRASS for details.
+ */
 #include "datetime.h"
 
 int 
@@ -34,12 +40,16 @@ datetime_get_type (DateTime *dt, int *mode, int *from, int *to, int *fracsec)
 int 
 datetime_is_valid_type (DateTime *dt)
 {
+   /* Returns 0 if DateTime structure is not valid. */
     return datetime_check_type (dt) == 0;
 }
 
 int 
 datetime_check_type (DateTime *dt)
 {
+   /* Returns 0 for a valid DateTime structure.
+      Sets the error code and error message if the structure is not
+         valid.  Returns error code. */
     switch (dt->mode)
     {
     case DATETIME_ABSOLUTE:

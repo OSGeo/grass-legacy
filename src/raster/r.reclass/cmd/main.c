@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include "rule.h"
@@ -10,13 +11,21 @@ int main (int argc, char *argv[])
     RULE *rules, *tail;
     int any;
     char *old_name, *old_mapset;
+    char rname[256], rmapset[256]; /* for reclass check only */
     char *new_name;
+	struct GModule *module;
     struct
     {
 	struct Option *input, *output, *title;
     } parm;
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+    module->description =
+		"Creates a new map layer whose category values "
+		"are based upon the user's reclassification of categories in an "
+		"existing raster map layer.";
 
     parm.input = G_define_option();
     parm.input->key = "input";
@@ -63,9 +72,21 @@ int main (int argc, char *argv[])
 	exit(1);
     }
 
+    if (G_is_reclass (old_name, old_mapset, rname, rmapset) > 0)
+    {
+      sprintf(buf, "%s is a reclass of map <%s> in mapset <%s>. Consider to use r.mapcalc to generate a map copy. Exiting.", old_name, rname, rmapset);
+	  G_fatal_error(buf);
+    }
+
+
     G_init_cats (0, "", &cats);
     rules = tail = NULL;
     any = 0;
+
+    if(isatty(0))
+	{
+	  fprintf (stdout,"\nEnter the rule or 'help' for the format description:\n");
+	}
 
     while (input(buf))
     {

@@ -3,6 +3,6 @@ LIST = main.o
 LIBES = $(IMAGERYLIB) $(GISLIB)
 
 $(ETC)/imagery/title: $(LIST) $(LIBES) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VASK) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES) $(VASKLIB): #

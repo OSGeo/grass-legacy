@@ -1,0 +1,54 @@
+LIBES  = $(GISLIB) $(VASKLIB)
+
+
+PGM = $(GISBASE)/etc/agnps50/agnps_input_2a 
+LIST = \
+	cell_open.o\
+	cell_open_new.o\
+	get_mapset.o\
+	get_old_name.o\
+	find_old_map.o\
+	cell_num_id.o\
+	get_input_map_names.o\
+	get_new_name.o\
+	slope_aspect.o\
+	get_wshd_input.o\
+	assign_landuse.o\
+	drain_num.o\
+	clean_up.o\
+	rules_sur_cond.o\
+	rules_man_n.o\
+	rules_ch_side_slope.o\
+	rules_soil_texture.o\
+	rules_fert_aval.o\
+	rules_cod.o\
+	misc_routines.o\
+	op_cel_fls.o\
+	chkdata.o\
+	remove_maps.o\
+	agnps_input.o\
+        get_pts_dat.o\
+        ptsrc_input.o\
+        fert_lvl_input.o\
+        channel_dat.o\
+        channel00_dat.o\
+        channel01_dat.o\
+        channel10_dat.o\
+        channel11_dat.o\
+        create_grid_map.o\
+        dchannel00_dat.o\
+        dchannel01_dat.o\
+        dchannel10_dat.o\
+        dchannel11_dat.o\
+        dchl_input.o\
+        mchl_input.o\
+        dfert_input.o\
+        dfert_lvl_input.o\
+        mfert_input.o\
+        EI_Calc.o
+
+
+$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
+
+$(LIBES): #

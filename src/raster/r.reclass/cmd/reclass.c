@@ -86,6 +86,40 @@ int _reclass (RULE *rules, struct Categories *cats,
     long num;
     struct Range range;
     struct Categories old_cats;
+/*
+ * Do not uncomment this code unless you have a good reason!
+ *
+ * Supposing this case:
+ * 
+ * map range is 0 to 4 and given rules:
+ *   r new
+ *   1=0
+ *   3=1
+ *   4=2
+ *   7=4		# how can we check every range of input maps
+ *   *=0
+ *
+ * In this case, new->min = 0, new->max = 4, new->num = 4 - 0 + 1 = 5;
+ * new->table size = is_default size = 5 of sizeof(DATA TYPE)
+ *
+ * OK, another fragment of code tries to assign table:
+ *
+ * for ( r = rules; r; r = r->next)
+ *    for ( i = r->lo; i <= r->hi; i++)
+ *    {
+ *	  n = i;
+ *
+ *	  new->table[n-new->min] = r->new;
+ *	  is_default[n-new->min] = 0;
+ *
+ * its index may be 1-1=0
+ * 		    3-1=2
+ * 		    4-1=3
+ * 		    7-1=6	limit exceeded!!! index range: 0 to 4
+ *
+ * JUST DO NOT UNCOMMENT THIS CODE !!
+ *
+ *
     if(default_rule && !G_is_c_null_value(&DEFAULT))
     {
          first = 0;
@@ -102,6 +136,7 @@ int _reclass (RULE *rules, struct Categories *cats,
          }
      }
      else
+*/
      {
          /* first find the min,max cats */
          first = 1;

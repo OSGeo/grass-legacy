@@ -46,8 +46,15 @@ int main (int argc, char *argv[])
 
 	struct Option *inopt, *outopt;
 	struct Flag *vflag;
+	struct GModule *module;
 
 	G_gisinit(argv[0]);
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+	"Imports Tangent raster data into GRASS raster map layer";
+	
 	inopt = G_define_option();
 	inopt->key		= "cmd";
 	inopt->type		= TYPE_STRING;

@@ -1,0 +1,766 @@
+Modifications to GRASS 5 beta X
+
+The next lines after the change date indicate the
+name of the BETA-package.
+The history is organized bottom-up (latest comes first).
+Find the authors of every section behind the release date.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+30. Dec. 1999
+
+This change log will be continued in ../ChangeLog
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+23th December, 1999 (John Huddleston, Bill Hughes, Markus Neteler)
+
+        -------------------
+   ----> grass5.0beta_6d.tar <--
+         -------------------
+
+ - renamed src/libes/geom/lia/aux.c to (John)
+    auxiliary.c
+   Updated local Gmakefile
+   (The word aux is a special name in DOS/Windows)
+ - Created a search.h file in the grass/src/include
+   directory (John)
+ - update on 117 Gmakefiles: (John)
+     I have modified 117 Gmakefiles in order to make the
+     GRASS executables under Cygwin.  Basically the
+     operations that did the following three lines                                                                            
+       rm -f a.out
+       $(CC)  $(LDFLAGS)  ...
+       mv a.out $@
+     were replaced by one line                                                       
+
+     $(CC) $(LDFLAGS) -o $@  ...
+ updated files:
+ display/d.mouse/Gmakefile
+ mapdev/bin_digit/Gmakefile
+ mapdev/v.alabel/Gmakefile
+ mapdev/v.apply.census/Gmakefile
+ mapdev/v.area/Gmakefile
+ mapdev/v.autocorr/Gmakefile
+ mapdev/v.build/Gmakefile
+ mapdev/v.cadlabel/Gmakefile
+ mapdev/v.clean/Gmakefile
+ mapdev/v.cutter/Gmakefile
+ mapdev/v.digit.test/Gmakefile
+ mapdev/v.digit/Gmakefile
+ mapdev/v.from.3/Gmakefile
+ mapdev/v.import/Gmakefile
+ mapdev/v.in.ascii/Gmakefile
+ mapdev/v.in.dlg2/Gmakefile
+ mapdev/v.in.dxf/Gmakefile
+ mapdev/v.info/Gmakefile
+ mapdev/v.merge/Gmakefile
+ mapdev/v.mkgrid/Gmakefile
+ mapdev/v.mkquads/Gmakefile
+ mapdev/v.out.dlg/Gmakefile
+ mapdev/v.out.dxf/Gmakefile
+ mapdev/v.patch/Gmakefile
+ mapdev/v.prune/Gmakefile
+ mapdev/v.spag/Gmakefile
+ mapdev/v.stats/Gmakefile
+ mapdev/v.support/Gmakefile
+ mapdev/v.surf.rst/Gmakefile
+ mapdev/v.to.rast/Gmakefile
+ mapdev/v.to.sites/Gmakefile
+ mapdev/v.transform/Gmakefile
+ mapdev/v.trim/Gmakefile
+ misc/m.clump/Gmakefile
+ misc/m.dted.examine/Gmakefile
+ misc/m.dted.extract/Gmakefile
+ misc/m.examine.tape/Gmakefile
+ misc/m.in.pl94.db3/Gmakefile
+ misc/m.in.stf1.db3/Gmakefile
+ misc/m.in.stf1.tape/Gmakefile
+ paint/p.vrml1.1/Gmakefile
+ ps.map/ps.icon/Gmakefile
+ ps.map/ps.select/Gmakefile
+ raster/r.bilinear/Gmakefile
+ raster/r.circle/Gmakefile
+ raster/r.digit/Gmakefile
+ raster/r.in.bin/Gmakefile
+ raster/r.in.poly/Gmakefile
+ raster/r.out.mpeg/Gmakefile
+ raster/r.out.ppm/Gmakefile
+ raster/r.out.xyz/Gmakefile
+ raster/r.resamp.rst/Gmakefile
+ raster/r.sum/Gmakefile
+ raster/r.sun/Gmakefile
+ raster/r.surf.area/Gmakefile
+ raster/r.timestamp/Gmakefile
+ raster/r.to.sites/Gmakefile
+ sites/s.info/Gmakefile
+ sites/s.surf.rst/Gmakefile
+ sites/s.surf.tps/Gmakefile
+ sites/s.territory/Gmakefile
+ xgrass/display/Gmakefile
+ xgrass/xgrasteredit/Gmakefile
+ display/d.icons/cmd/Gmakefile
+ display/d.measure/cmd/Gmakefile
+ display/d.mon/pgms/Gmakefile
+ display/d.points/cmd/Gmakefile
+ display/d.vect.zoom/cmd/Gmakefile
+ display/d.what.vect/cmd/Gmakefile
+ imagery/i.cluster/cmd/Gmakefile
+ imagery/i.gensig/cmd/Gmakefile
+ imagery/i.gensig/inter/Gmakefile
+ imagery/i.gensigset/cmd/Gmakefile
+ imagery/i.gensigset/inter/Gmakefile
+ imagery/i.maxlik/cmd/Gmakefile
+ imagery/i.maxlik/inter/Gmakefile
+ imagery/i.smap/inter/Gmakefile
+ libes/datetime/tests/Gmakefile
+ libes/dbmi/clients/Gmakefile
+ mapdev/v.geom/cmd/Gmakefile
+ mapdev/v.import/x.import/Gmakefile
+ misc/m.ll2u/cmd/Gmakefile
+ misc/m.rot90/cmd/Gmakefile
+ misc/m.u2ll/cmd/Gmakefile
+ paint/Interface/driverlib/Gmakefile
+ raster/r.combine/cmd/Gmakefile
+ raster/r.covar/cmd/Gmakefile
+ raster/r.in.arc/cmd/Gmakefile
+ raster/r.in.ascii/cmd/Gmakefile
+ raster/r.in.ll/cmd/Gmakefile
+ raster/r.infer/cmd/Gmakefile
+ raster/r.line/cmd/Gmakefile
+ raster/r.mapcalc/mapcalc/Gmakefile
+ raster/r.mask.points/cmd/Gmakefile
+ raster/r.median/cmd/Gmakefile
+ raster/r.mode/cmd/Gmakefile
+ raster/r.out.arc/cmd/Gmakefile
+ raster/r.out.ascii/cmd/Gmakefile
+ raster/r.poly/cmd/Gmakefile
+ raster/r.random/cmd/Gmakefile
+ raster/r.rescale.eq/cmd/Gmakefile
+ raster/r.statistics/cmd/Gmakefile
+ raster/r.surf.idw/cmd/Gmakefile
+ raster/r.surf.idw2/cmd/Gmakefile
+ raster/r.tiff/tools/Gmakefile
+ raster/r.transect/cmd/Gmakefile
+ raster/r.weight/inter/Gmakefile
+ scripts/contrib/s.in.grid/Gmakefile
+ sites/s.geom/s.geom/Gmakefile
+ sites/s.geom/s.out.minmaxer/Gmakefile
+ sites/s.geom/v.in.minmaxer/Gmakefile
+ display/devices/XDRIVER/XDRIVER24/Gmakefile
+ display/devices/XDRIVER/panel/Gmakefile
+ imagery/i.smap/cmd/shapiro/Gmakefile
+ libes/dbmi/drivers/informix/Gmakefile
+ libes/dbmi/drivers/sqlbase/Gmakefile
+ raster/r.in.dted/r.in.dted/misc/Gmakefile
+
+ - src/libes/dsp/viz.h John Huddleston <jhudd@cody.itc.nrcs.usda.gov>
+     put contents of Viz.h into viz.h, removed Viz.h
+     (problem for GRASS->Windows port)
+
+ - src/sites/s.in.ascii/main.c (Markus)
+    removed "-e" flag. not required any more
+ - src/sites/s.to.rast  (Markus)
+   updated s.to.rast to floating point support
+
+ - patches, one of which is this change to sites.c, and some (Bill)
+other prototyping that didn't get done in the newer modules.
+  - display/d.mon/pgms/start.c; return type for start_mon()
+  - imagery/i.colors/local_proto.h; redefinition of static funcs
+  - libes/geom/lia/aux.c; static had no type
+  - libes/geom/optri; redefinition of macro MAX,
+                     wrong type in fprintf()
+  - raster/r.water.outlet; prototypes, moved protos for flag_*(),
+                           updated G_fatal_error() calls
+  - libes/gis/sites.c; returns, free() -> G_free(),
+              malloc failure cleanup 
+  - libes/gis/squeeze.c; tighter code, 6 fewer lines (Beat That!)
+  - libes/proj; remove unused variable, bracket initializers,
+                    fix improper use of freev2()
+  - libes/rst_gmsl/interp_float/ressegm2d.c; bad pointer in fprint
+  - mapdev/v.digit/debug.c; bad pointer in fprintf
+  - mapdev/v.in.tig.lndmk/cmd_parse.c; bracketted if()
+  - mapdev/v.info/main.c; prototype
+  - mapdev/v.surf.rst/main.c; bad format specifier
+  - misc/m.proj; bad format specifier, fixed header for global vars
+  - raster/r.colors/cmd/rules.c; bad format specifier
+  - raster/r.flow/calc.13.c; removed bad 'return 0;'
+  - raster/r.out.arc/cmd/main.c; bad format specifier
+  - CERL/imagery/i.shape; poor declaration of class()
+  - CERL/raster/r.out.mpeg  ; poor declaration oparse_command()
+  - CERL/raster/r.water.fea/src/programs/qd; compare NULL with int
+  - PURDUE/s.voronoi; pointer casts in makefree()
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+20th December, 1999 (Alex Shevlakov, Markus Neteler)
+                     sixote@yahoo.com
+
+        -------------------
+   ----> grass5.0beta_6c.tar <--
+         -------------------
+
+ - src/libes/gis/sites.c (Markus)
+    removed two return 0 statements from last update
+    -> infinite loop of reading of sites fixed.
+ - src/mapdev/v.in.arc/ (Alex)
+     L_labs_inter.c
+     main_inter.c
+     A_labs_inter.c
+    - final (?) updates on "fgets" problems
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+17th December, 1999 (Angus Carr, Werner Droege, Michel Wurtz, Tom Poindexter)
+                        Werner.Droege@mailbox.tu-dresden.de
+                        tpoindex@nyx.net
+
+        -------------------
+   ----> grass5.0beta_6b.tar <--
+         -------------------
+
+ - New tree: src.nonGPL/
+ - r.in.tiff/r.out.tif/r.in.gif
+ ************************************************************************
+ * NOTE: to avoid entanglements with Unisys' patent on LZW compression, *
+ * this code has been removed                                           *
+ ************************************************************************
+
+ - src/scripts/contrib/r.dma2ll (Tom Poindexter)
+    added 
+ - src/libes/gis/squeeze.c (Werner Droege) 
+    fixed with an add_on of "new line" strip. "\0"
+ - src/mapdev/v.in.arc/main_inter.c (Werner Droege)
+    fixed fgets problem causing segfaults
+ - src/raster/r.surf.fractal/spec_syn.c (Michel Wurtz)
+    update for rand1() and gauss()
+ - src/imagery/i.in.erdas (Angus Carr)
+    Fix for reading in projection info properly.
+    added a new switch to i.in.erdas to assume that the coordinates 
+    should be used, not what you have been using.
+ - src/raster/r.water.outlet
+    added. But needs 5.0 update 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+13th December, 1999 (Bill Hughes, Angus Carr, Markus Neteler)
+
+        -------------------
+   ----> grass5.0beta_6a.tar <--
+         -------------------
+
+ Bill Hughes:
+  Patching for prototypes, along with several 'return 0;' commands added.  
+  This cleans up _all_ existing implicit declarations and 'return' 
+  deficiencies from the code that is compiled by default in CMD/lists/GRASS:
+   src/display/d.area/main.c
+   src/display/d.rast.edit/edit.h
+   src/display/d.sites.label/draw_site_label.c
+   src/display/d.sites.label/main.c
+   src/general/g.setproj/local_proto.h
+   src/imagery/i.class/local_proto.h
+   src/imagery/i.colors/main.c
+   src/imagery/i.ortho.photo/photo.2image/globals.h
+   src/imagery/i.ortho.photo/photo.2target/local_proto.h
+   src/imagery/i.points/main.c
+   src/imagery/i.vpoints/globals.h
+   src/include/gisdefs.h
+   src/libes/geom/sos/primitive.i.c
+   src/libes/gis/geo_init.c
+   src/libes/gis/sites.c
+   src/mapdev/v.apply.census/v.apply.cen.c
+   src/mapdev/v.digit/debug.c
+   src/mapdev/v.digit/set_window.c
+   src/mapdev/v.digit/states.c
+   src/mapdev/v.in.tig.basic/v.in.tig.bas.c
+   src/mapdev/v.in.tig.lndmk/points.c
+   src/misc/m.proj/process.c
+   src/paint/Programs/p.map/cmd/main.c
+   src/paint/Programs/p.map.new/cmd/scale.c
+   src/ps.map/ps.map/cmd/scale.c
+   src/raster/r.colors/cmd/rules.c
+   src/raster/r.flow/calc.13.c
+   src/raster/r.report/cmd/parse.c
+   src/raster/r.slope.aspect/cmd/main.c
+   src/sites/s.univar/main.c
+   src.contrib/CAST/r.colors.paint/main.c
+   src.contrib/CERL/imagery/i.shape/class.c
+   src.contrib/CERL/imagery/i.shape/del2g.c
+   src.contrib/CERL/imagery/i.shape/zc_curve.c
+   src.contrib/NPS/r.in.utm/row_col.c
+   src.contrib/PURDUE/s.medp/init_head.c
+   src.contrib/PURDUE/s.medp/local_proto.h
+   src.contrib/PURDUE/s.medp/medpolish.c
+   src.contrib/PURDUE/s.medp/myprint.c
+   src.contrib/SCS/display/d.text/cmd/main.c
+   src.contrib/SCS/misc/m.qcalc/cmd/main.c
+   src.contrib/SCS/misc/m.strip99s/m.strip99s.c
+   src.contrib/SCS/raster/r.in.miads/cmd/proces.c
+   src.contrib/SCS/raster/r.out.rlc/percent.c
+   src.contrib/SCS/vector/v.dump/cmd/do_areas.c
+
+- src/imagery/i.out.erdas (Angus Carr)
+   new: added
+- src/scripts/contrib/r.in.arctiff/r.in.arctiff (Markus)
+   minor bugfix for black-white TIFFs
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+8th December, 1999 (Angus Carr)
+
+        -------------------
+   ----> grass5.0beta_5k.tar <--
+         -------------------
+     published as grass5.0beta5
+
+- src/raster/r.tiff/cmd/Gmakefile (Markus)
+   removed -ljpeg to be included
+- src/imagery/i.in.erdas (Angus Carr)
+   final bugfix for 16bit. working now.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+7th December, 1999 (Angus Carr, M.J. de Bijl, Luca Palmeri, Bill Hughes,
+                    Markus Neteler)
+
+        -------------------
+   ----> grass5.0beta_5j.tar <--
+         -------------------
+- added 64bit autodetect routine (Luca)
+  - changed Makefile.in
+  - added src/CMD/generic/is64bit.sh
+     which changes LNG_SIZ from 4 to 8 in case of 64bit architecture
+     in file: src/mapdev/diglib/portable.h
+- added DUAlpha64 patches (Luca)
+   new directory ./ALPHA64/*
+
+- a big set of patches from Bill Hughes:
+ - i.in.gtc: prototypes, headers, confusion in format strings %ld vs %d
+ - i.in.pri: prototypes, headers
+ - i.in.slc: prototypes, headers, confusion in format strings %ld vs %d,
+                    returns
+ - P_site.h: added G__site_get() and G__site_put() prototypes
+ - r.statistics: prototypes, headers, returns, format strings, NULL->\0
+ - r.sun: prototypes, headers
+ - s.kcv: prototypes, headers
+ - i.rvi.prediction2: prototypes, headers, format strings
+ - i.shape: prototypes, headers, incorrect pointer in main.c
+ - r.water.fea: prototypes, headers, gets()->fgets()
+ - r.out.elas: prototypes, headers
+ - v.circle: prototypes, headers, format strings
+ - v.in.poly: prototypes, headers, returns
+ - i.texture: prototypes, headers, format strings,
+                        replaced free() with G_free()
+ - s.voronoi: prototypes, headers, s[] and v[] weren't being free()-ed
+ - d.fix.ortho: prototypes, headers
+ - v.in.dlg: prototypes, headers, too few parameters to some fprintf()
+ - v.patch.scs: prototypes
+ - v.scale.random: prototypes, header
+ - m.bsplit: prototypes, headers, \0 in formats
+ - m.futil: prototypes, headers
+ - m.lulc.USGS: prototypes, headers
+ - m.qcalc: prototypes, headers
+ - r.in.miads: prototypes, headers, \0 in formats
+ - r.out.rlc: prototypes, headers
+ - r.reclass.scs: prototypes, headers, gets()->fgets()
+ - r.tangent: prototypes, headers, redeclaration of u_short
+ - v.mk_stats: prototypes, headers
+ - v.report: prototypes, headers, %ld vs %d
+ - v.rmedge: prototypes, headers
+ - r.surf.fractal: prototypes, headers, char* comparison with NULL
+ - r.surf.gauss: prototypes, headers, incomplete pointer
+ - r.surf.random: prototypes, headers, char* comparison with NULL
+ (end of Bill Hughes patches)
+
+- src/imagery/i.rectify (Luca)
+    final bug fixed (cellhd/-file was not generated properly)
+   exec.c, rectify.c
+- src/imagery/i.rectify2 (Luca)
+    final bug fixed (cellhd/-file was not generated properly) 
+   exec.c, rectify.c
+- src/CMD/lists/GRASS
+   commented i.points3, i.rectify3, i.tape.tm3 due to module problems
+- src/sites/s.territory/Gmakefile (Luca)
+   updated on $(LIBRARIES)
+- src/imagery/i.in.erdas (Angus Carr)
+    Added Autoswap code - now detects byte order of file and makes sure
+       it is swapped when needed. This is not perfect code and will
+       fail occasionally, so use the -a and -s flags too.
+    Added -a flag to disable autoswap detection. Falls back on checking
+               -DATT_386 from compile command line.
+    Added -s flag to use non-default swap state.
+    Added an acknowledgement of swapping or not swapping.
+    Removed 7-band limit. Now deals with any number of bands (I think)
+      up to 32766 (signed 16 bit value in ERDAS header) or so...
+    Uses dynamic memory allocation to achieve this state.
+        Better code commenting (I think, anyway).
+- src/imagery/i.in.pri/Gmakefile (M.J. de Bijl)
+  src/imagery/i.in.gtc/Gmakefile
+  src/imagery/i.tape.slc/Gmakefile
+   added $(XDRLIB) in Gmakefile
+- src/include/geom/basic.h (Markus, M.J. de Bijl)
+   #ifndef sparc ... #endif (line 107)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+30. November, 1999 (Markus Neteler)
+
+        -------------------
+   ----> grass5.0beta_5i.tar <--
+         -------------------
+- added src/scripts/contrib/r.univar (Markus)
+   calculates univariate statistics from raster map (was: m.statistics)
+- src/display/d.colors (Markus)
+    bugfix for category cycling: curses.c and interact.c
+    The code did not take care of NULL existing in list of cats.
+ - src/raster/r.surf.fractal (Markus, module from Jo Wood)
+     added and updated tp FP support (nice to create DEMs!)
+ - src/raster/r.surf.gauss (Markus, module from Jo Wood)
+     added and updated tp FP support
+ - src/raster/r.surf.random (Markus, module from Jo Wood)
+     added and updated tp FP support
+ - src/raster/r.tiff/cmd/r.in.tiff.c (Markus)
+    updated to 5.0 map write funtion
+     -> fixes color table problem and warning "embedded null.."
+ - src/raster/r.in.gif/cmd/r.in.gif.c (Markus)
+    updated to 5.0 map write funtion
+     -> fixes color table problem and warning "embedded null.."
+ - added src/scripts/contrib/v.plant/
+ - src/scripts/shells/shade.clr.sh 
+   src/scripts/shells/shade.rel.sh
+   updated $ewres to ewres() and $nsres to nsres()
+   updated integer numbers to fp numbers
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+25. November, 1999 (Markus Neteler, Jan-Oliver Wagner)
+
+        -------------------
+   ----> grass5.0beta_5h.tar <--
+         -------------------
+ - reorganized src.garden/grass.hdf/ (Markus)
+      -> hdf3/ contains old HDF3 version (working)
+      -> hdf4/ contains current HDF4 version (not yet working)
+ - src/CMD/lists/GRASS
+    src/raster/r.statistics added to list
+ - src/scripts/contrib/i.oif/r.stddev (Markus)
+      small bugfix
+ - added src/mapdev/summa-mg3grass.README
+     install text Summagraphics Microgrid III digi board
+ - src.contrib/UCB/gdbase/scripts/gdbase.cmd (Jan)
+    no executable flag (confused .rpm package production)
+    updated Gmakefile as well (chmod command)
+ - src/raster/r.out.arc/cmd/main.c (Markus)
+    final fix for row order. Should work now.
+   src/raster/r.in.arc 
+    kept as before.
+ - src/include/gis.h (Markus)
+     updated GRASS copyright information to GNU GPL
+ - src/raster/r.tiff/cmd/r.in.tiff.c (Markus)
+   added return 0; in function "quantize"
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+15. November, 1999 (Lisa Zygo, Olaf Hellwich, Markus Neteler)
+                               Olaf.Hellwich@photo.verm.tu-muenchen.de
+        -------------------
+   ----> grass5.0beta_5g.tar <--
+         -------------------
+- bugfix for header written by r.out.arc
+   -> still confusion: write center or corner?? 
+- added CEOS/SAR reading software (Olaf Hellwich)
+   src/imagery/i.tape.slc (ERS1.SAR.SLC)
+   src/imagery/i.in.gtc   (ERS1.SAR.GTC)
+   src/imagery/i.in.pri   (ERS1.SAR.PRI)
+- updated man-pages for: (HTML-pages as well) Lisa Zygo 
+d.3d                   r.le.dist              r.proj
+d.histogram            r.le.null              r.rational.regression
+d.leg.thin             r.le.patch             r.report
+d.rast                 r.le.pixel             r.spreadpath
+g.setproj              r.le.rename            r.stage3
+m.in.stf1.db3          r.le.setup             r.stats
+p.vrml                 r.le.trace             r.surf.fractal
+r.cats                 r.null                 r.surf.gauss
+r.circle               r.out.agnps            r.surf.random
+r.cost                 r.out.arc              r.surf.xy
+r.describe             r.out.ascii            r.tribs
+r.in.ascii             r.out.mpeg             r.what
+r.in.hdf               r.out.tiff
+r.in.pbm               r.plane
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+14. November, 1999 (Helena Mitasova, Markus Neteler, Luca Palmeri, Angus Carr)
+
+        -------------------
+   ----> grass5.0beta_5f.tar <--
+         -------------------
+- src/raster/r.out.arc (Markus)
+   export ARC/INFO ascii grid module added, written from r.out.ascii
+- src/imagery/i.maxlik/cmd/main.c (Angus)
+   fixed   if (G_put_c_raster_row (cellfd[band], cell[band]) < 0)
+   it should read:
+       if (G_get_c_raster_row (cellfd[band], cell[band],row) < 0)
+- src/libes/imagery/c_point.c (Angus)
+   line 29: if (!G_is_c_null_value(&x[band])) return 1; changed to
+            if (  G_is_c_null_value(&x[band])) return 1;
+   The bug rejects all non-null points, which is probably incorrect
+- src/sites/s.surf.rst/main.c  (Helena)
+  fixed: s.surf.rst did not have default smoothing assigned (v.surf. does it)
+- updated r.resamp.rst, v.surf.rst, s.surf.rst (Helena)
+    identical tension now, new parameter for old tension
+- src/raster/r.mapcalc/mapcalc/main.c (Luca)
+   r.mapcalc exited with errorcode 1 even when all was o.k. fixed
+- src/general/g.region/cmd/main.c (Luca)
+   was broken when invoked like that: g.region myregion, fixed
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+13. November, 1999 (Helena Mitasova, Markus Neteler)
+
+        -------------------
+   ----> grass5.0beta_5e.tar <--
+         -------------------
+
+- restructured GMSL/rst-package: (Markus, o.k. with Helena)
+     src/libes/rst_gmsl/ (tree/, data/, interp_float/)
+     src/raster/r.resamp.rst
+     src/mapdev/v.surf.rst
+     src/sites/s.surf.rst
+   updated src/CMD/lists/GRASS to reflect this
+- src/sites/s.in.ascii (Markus)
+   bugfix again. Now the proper sites format is written with
+   "-e" (elevation data) option. Works with s.to.vect now.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+12. November, 1999 (Markus Neteler, Luca Palmeri)
+
+        -------------------
+   ----> grass5.0beta_5d.tar <--
+         -------------------
+
+- src.garden/answers/* (Markus)
+   several bugfixes, compiles now on Linux
+- updated NVIZ-docs (Markus)
+- added src.contrib/GMSL/NVIZ2.2/README.mesa3d (Markus)
+   comments on MESA compiling for NVIZ
+- src/scripts/contrib/s.reclass/
+   added from src.contrib section
+- src/libes/geom/optri/pqe2qe.c (Markus)
+  src/libes/geom/optri/heur.slope.c
+   added MAX definition
+
+- Makefile.in  (Luca)
+   changed: mkdir -m 755  -> mkdir -p -m 755
+
+- updated:
+  src/display/d.site.labels/Gmakefile (Markus)
+  src/mapdev/v.export/Gmakefile
+  src/mapdev/v.extract/cmd/Gmakefile
+  src/mapdev/v.extract/inter/Gmakefile
+  src/mapdev/v.geom/cmd/Gmakefile
+  src/mapdev/v.info/Gmakefile
+  src/mapdev/v.merge/Gmakefile
+  src/mapdev/v.random/Gmakefile
+  src/sites/s.surf.rst/v.surf.rst/Gmakefile
+  src/raster/r.sun/Gmakefile
+  src.contrib/CAST/r.colors.paint/Gmakefile
+  src.contrib/CERL/imagery/i.rvi.prediction2/Gmakefile
+  src.contrib/CERL/imagery/i.shape/Gmakefile
+  src.contrib/CERL/raster/r.rvi/Gmakefile
+  src.contrib/NPS/r.in.elas/cmd/Gmakefile
+  src.contrib/NPS/r.in.elas/Gmakefile
+  src.contrib/NPS/r.in.utm/Gmakefile
+  src.contrib/NPS/r.out.elas/Gmakefile
+  src.contrib/NPS/v.circle/inter/Gmakefile
+  src.contrib/NPS/v.circle/inter/Gmakefile
+  src.contrib/OTHER/v.in.poly/cmd/Gmakefile
+  src.contrib/PURDUE/d.linegraph/cmd/Gmakefile
+  src.contrib/PURDUE/i.texture/Gmakefile
+  src.contrib/PURDUE/s.medp/Gmakefile
+  src.contrib/SCS/display/d.fix.ortho/cmd/Gmakefile
+  src.contrib/SCS/display/d.text/cmd/Gmakefile
+  src.contrib/SCS/mapdev/v.in.dlg/Gmakefile
+  src.contrib/SCS/mapdev/v.patch.scs/inter/Gmakefile
+  src.contrib/SCS/misc/dotmaps/v.scale.random/Gmakefile
+  src.contrib/SCS/misc/m.bsplit/cmd/Gmakefile
+  src.contrib/SCS/misc/m.futil/inter/Gmakefile
+  src.contrib/SCS/misc/m.lulc.USGS/Gmakefile
+  src.contrib/SCS/misc/m.qcalc/cmd/Gmakefile
+  src.contrib/SCS/misc/m.strip99s/Gmakefile
+  src.contrib/SCS/raster/r.in.miads/cmd/Gmakefile
+  src.contrib/SCS/raster/r.out.rlc/Gmakefile
+  src.contrib/SCS/raster/r.reclass.scs/inter/Gmakefile
+  src.contrib/SCS/raster/r.tangent/cmd/Gmakefile
+  src.contrib/SCS/vector/v.dump/cmd/Gmakefile
+  src.contrib/SCS/vector/v.make.subj/cmd/Gmakefile
+  src.contrib/SCS/vector/v.mk_stats/Gmakefile
+  src.contrib/SCS/vector/v.report/cmd/Gmakefile
+  src.contrib/SCS/vector/v.report/inter/Gmakefile
+  src.contrib/SCS/vector/v.rmedge/cmd/Gmakefile
+    added missing $(XDRLIB)   [I have tested this on SUN/Solaris2.6]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+8. November, 1999 (Markus Neteler, Jaro Hofierka, Luca Palmeri)
+
+        -------------------
+   ----> grass5.0beta_5c.tar <--
+         -------------------
+- Makefile.in (Luca)
+   changed: install -d -m 755 -> mkdir -m 755
+   But: Causes troubles of GRASS install directory already
+        exists!
+- src/mapdev/v.digit (Luca)
+    patched several files. Fixes problem with with curses
+    arises by the fact that a symbol is defined (#define CM CurrentMap)
+    This symbol 'CM' has another meaning in curses so this gives rise to a
+    symbol redefinition error. My patch simply changes CM to CMap everywhere.
+- src/raster/r.cats/cmd/main.c (Luca)
+    r.cats, this fixes the fact that r.cats displayed the message "fp cells
+    need val arg" even when using int cells and the fact that the val arg was 
+    never read.
+- patches for Gmakefiles (Luca)
+   src/scripts/contrib/Gmakefile
+   src.contrib/CERL/raster/r.water.fea/src/inter/Gmakefile
+   src.contrib/CERL/raster/r.water.fea/src/programs/datafea/Gmakefile
+   src.contrib/CERL/raster/r.water.fea/src/programs/select_basins/Gmakefile
+   src.contrib/SCS/misc/m.lulc.USGS/Gmakefile
+   src.contrib/SCS/misc/m.strip99s/Gmakefile
+   src.contrib/SCS/raster/r.out.rlc/Gmakefile
+   src.contrib/SCS/raster/r.reclass.scs/inter/Gmakefile
+  due to compile problems on DUalpha
+- src/sites/s.surf.idw/cmd/main.c (Luca)
+    fixes seg. fault on masked maps
+- src/libes/g3d/*  (Jaro)
+  src/include/G3d.h
+    new version
+- src/raster/r.sun (Jaro)
+   added - new version with FP-support
+- src/sites/s.in.ascii/main.c (Markus)
+   added #cat support for site_list (required for s.to.vect)
+- src/display/d.sites/cmd/draw_point.c  (Markus)
+   fixed d.sites with code from d.sites.qual
+- updated all Gmakefiles: -lm -> $(MATHLIB) (Markus)
+- src.contrib/CERL/raster/r.water.fea/src/*/Gmakefile
+   added several $(XDRLIB)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+3. November, 1999 (Pierre de Mouveaux, Markus Neteler, Luca Palmeri)
+                            p_de_mouveaux@hotmail.com
+
+        -------------------
+   ----> grass5.0beta_5b.tar <--
+         -------------------
+- src/sites/v.surf.rst (Markus)
+    updated to reflect ../interp_float/ - working now!!
+- r.mask fixed in (Luca)
+     src/raster/r.reclass/inter/
+- src.contrib/GMSL/NVIZ2.2/src/togl_cb.c (Pierre)
+    commented lines 44, 73: fixes red flicker bug when moving 
+    over NVIZ graphical window
+- src.contrib/GMSL/NVIZ2.2/NVIZ2.2-UPDATE (Pierre)
+  src/libes/ogsf/GS.c
+  src.contrib/GMSL/NVIZ2.2/Gmakefile.in
+  src.contrib/GMSL/NVIZ2.2/scripts/panel_main.tcl
+  src.contrib/GMSL/NVIZ2.2/src/Gmakefile.in
+  src.contrib/GMSL/NVIZ2.2/src/change_view.c
+  src.contrib/GMSL/NVIZ2.2/src/glwrappers.c
+  This update corrects the following problems:
+  - Screen redrawn in wire mode when mouse passes over vertical sliders.
+  - Also a potential problem with colors in glwrappers.c 
+    (adress of a local variable returned  in color selection)
+  - Modified intersection function to allow the "look here"
+    functionality and the "What's here" functionality.
+
+- src/scripts/contrib/metadata/ (added by Markus)
+   added r.meta, g.meta, v.meta: METADATA system (from Berkeley?)
+- src/libes/geom/basic/basic.c (Markus)
+   line 85: changed fprint -> fprintf
+- src/libes/geom/optri/pqe2qe.c (Markus)
+   #include <math.h> added
+- src/mapdev/ (Markus)
+   mv moss/ -> v.out.moss/ (this is a module, not a lib)
+- updated src/CMD/lists/GRASS to reflect this
+- src/general/gis/gis.shell (Markus)
+   updated text to "GNU General Public License".
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+October 29, 1999 (Bernhard Reiter, Markus Neteler, Bill Brown, Job Spijker)
+                                                    spijker@geo.uu.nl
+        -------------------
+   ----> grass5.0beta_5a.tar <--
+         -------------------
+
+- patches from Bernhard Reiter:
+  The configure script has to be created after patching, because configure.in
+  is changed. On my machine the macro AC_BINDIR_DEFAULT was missing.
+  (I guess it was left out.)
+  Also: had to add the libtiff path to src/CMD/head
+  configure.in
+	there were spaces before the #include compiler directive
+	and the Dec C Compiler doesn't accept the function definition 
+	there. It was unnecessary anyway.
+  src/general/g.region/cmd/main.c
+	included stdlib.h to remove warning
+	tested G__get_window for NULL pointer and not for "< 0" 
+	changed: 	int die() -> void die()
+  src/display/devices/XDRIVER/XDRIVER24/SWITCHER.c
+  src/imagery/i.gensigset/cmd/read_data.c
+  src/imagery/i.rectify3/cmd/protodefs.h
+  src/mapdev/digitizers/dig_inter.h
+  src/paint/Programs/p.map.new/cmd/text.h
+  src/raster/r.cost/cmd/local_proto.h
+  src/raster/r.poly/cmd/io.c
+  src/sites/s.territory/main.c
+  src/libes/geom/optri/internoptri.h
+	removed c++ style comment
+  src/mapdev/v.in.tig.lndmk/globals.h
+	dirname -> T_dirname    because dirname() was already defined in
+	the string.h header on the alpha. And dirname wasn't used
+	anywhere in v.in.tig.lndmk anyway. On second thought, took it out.
+  src/misc/m.flip/main.c
+	l. 112: used the value behind the pointer as condition
+  src/paint/Programs/p.map/cmd/windfile.c
+  src/paint/Programs/p.map.new/cmd/windfile.c
+  src/paint/Programs/p.map.new/cmd/regionfile.c
+  src/ps.map/ps.map/cmd/windfile.c
+	tested G__get_window for NULL pointer and not for "< 0"
+  src/raster/r.tiff/README
+	pointed out new libtiff homepage
+  src/sites/s.menu/Lib/menu_hndlr.c
+  src/sites/s.menu/Lib/Gmakefile
+  src/sites/s.menu/driver/Gmakefile
+  src/sites/s.menu/driver/main.c
+  src/sites/s.menu/site_reports/Gmakefile
+  src/sites/s.menu/site_reports/main.c
+	renamed menu.h -> local_menu.h, because there is a conflict
+	with some curses extentions and if the <menu.h> is found first
+	things go down.
+  src/include/geom/basic.h
+	removed declaration of sbrk(),  Luca Palmeri did the same
+  src/sites/s.surf.rst/tree/Gmakefile
+	removed space between -I and ../data
+  src.contrib/CERL/raster/r.out.mpeg/local_proto.h
+  src.contrib/CERL/raster/r.out.mpeg/main.c
+	tried to fix the probably non ANSI-C *x[][] notation.
+  src.contrib/CERL/raster/r.out.mpeg/Gmakefile
+	removed fixed -lnsl library
+  src.contrib/PURDUE/s.voronoi/sw_defs.h
+	removed malloc() declaration
+  src.contrib/SCS/misc/m.bsplit/cmd/main.c
+	removed malloc and errno declaration
+	added #include <errno.h>
+
+- src/sites/s.surf.idw (Job Spijker)
+- src/mapdev/v.autocorr/Gmakefile (Markus)
+   fixed. $(XDRLIB) was missing.
+- new src/libes/gis/sites.c (Bill Brown)
+- src/sites/s.in.ascii/get_site.c (Bill Brown)
+   bugfix: memory overflow due to wrong variable declaration
+- src/display/d.area/Gmakefile (Markus)
+   fixed. $(XDRLIB) was missing.
+   BUG here: Obviously d.area likes just 4096 vector lines?!
+- moved src.contrib/GMSL/NVIZ2.2/libimage/ (Markus)
+  to src/libes/libimage
+  and updated src.contrib/GMSL/NVIZ2.2/src/Gmakefile to reflect this
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+October 25, 1999
+
+        -------------------
+   ----> grass5.0beta_4n.tar <--
+         published under GPL on Tue Oct 26
+         -------------------
+
+(for change history to GRASS 5 beta2..4 please check
+ file HISTORY_beta2to4.txt)

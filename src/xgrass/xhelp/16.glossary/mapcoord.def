@@ -1,7 +1,0 @@
-
-
-map coordinate system - Either a geographic coordinate system (like
-@glossary("UTM",16.glossary/utm.def) or latitude/longitude) or an arbitrary coordinate system (like
-the X,Y coordinate system initially assigned to imported satellite
-imagery), used to reference the locations of objects in a 
-two-dimensional space.

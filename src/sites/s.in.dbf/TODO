@@ -1,0 +1,6 @@
+$Id: TODO,v 1.1.4.2 2002-01-15 20:01:34 markus Exp $
+
+Todo: 
+
+ - Add option to re-order fields (columns) during import
+ - use G_sites-functions

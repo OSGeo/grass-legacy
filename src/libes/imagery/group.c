@@ -1,3 +1,5 @@
+
+
 /**********************************************************
 * I_get_group (group);
 * I_put_group (group);
@@ -18,7 +20,7 @@ static int get_ref(char *,char *,struct Ref *);
 static int set_color(char *,char *,char *,struct Ref *);
 static int put_ref(char *,char *,struct Ref *);
 
-/* get current group name from file GROUP in current mapset */
+/* get current group name from file GROUPFILE in current mapset */
 int I_get_group(char *group)
 {
     FILE *fd;
@@ -26,7 +28,7 @@ int I_get_group(char *group)
 
     *group = 0;
     G_suppress_warnings(1);
-    fd = G_fopen_old ("", "GROUP", G_mapset());
+    fd = G_fopen_old ("", GROUPFILE, G_mapset());
     G_suppress_warnings(0);
     if (fd == NULL)
 	return 0;
@@ -35,12 +37,12 @@ int I_get_group(char *group)
     return stat;
 }
 
-/* write group name to file GROUP in current mapset */
+/* write group name to file GROUPFILE in current mapset */
 int I_put_group(char *group)
 {
     FILE *fd;
 
-    fd = G_fopen_new ("", "GROUP");
+    fd = G_fopen_new ("", GROUPFILE);
     if (fd == NULL)
 	return 0;
     fprintf (fd, "%s\n", group);
@@ -59,7 +61,7 @@ int I_get_subgroup (char *group,char *subgroup)
     if (!I_find_group(group))
 	return 0;
     G_suppress_warnings(1);
-    fd = I_fopen_group_file_old (group, "SUBGROUP");
+    fd = I_fopen_group_file_old (group, SUBGROUPFILE);
     G_suppress_warnings(0);
     if (fd == NULL)
 	return 0;
@@ -76,7 +78,7 @@ int I_put_subgroup(char *group,char *subgroup)
 
     if (!I_find_group(group))
 	return 0;
-    fd = I_fopen_group_file_new (group, "SUBGROUP");
+    fd = I_fopen_group_file_new (group, SUBGROUPFILE);
     if (fd == NULL)
 	return 0;
     fprintf (fd, "%s\n", subgroup);

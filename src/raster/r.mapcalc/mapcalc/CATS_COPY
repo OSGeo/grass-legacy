@@ -1,0 +1,21 @@
+[Topic: copying the cats file in special cases - method implementation]
+
+Date: Mon, 8 Oct 2001 17:56:41 +0900 (KST)
+From: Huidae Cho <hdcho@geni.cemtlo.com>
+
+Well, I think it may be possible to know both expressions.
+
+	new_mapname = old_mapname
+	new_mapname = if(cond, old_mapname1, old_mapname2)
+
+where old_mapname can not be expression but mapname.
+
+Find the attached r.mapcalc/mapcalc/polish.c
+This prints out
+	cp_cats: 0	for a complicated expressions to transfer cats easily.
+	cp_cats: 1	for a simplest assignment.
+			new_mapname = old_mapname
+	cp_cats: 2	for a simplest if() clause.
+			new_mapname = if(cond, old_mapname1, old_mapname2)
+
+Huidae Cho

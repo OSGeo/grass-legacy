@@ -12,10 +12,8 @@
 #include <math.h>
 
 
-CELL param(ptype,coeff)
-    int ptype;			/* Type of terrain parameter to calculate */
-    float *coeff;		/* Set of six quadratic coefficents.	  */
-
+CELL param(int ptype,		/* Type of terrain parameter to calculate */
+	   double *coeff)	/* Set of six quadratic coefficents.	  */
 {
 
     /* Quadratic function in the form of
@@ -57,7 +55,6 @@ CELL param(ptype,coeff)
 		    return((CELL)0);
 		else
 		    return((CELL)rint(200.0*resoln*wsize*(b*d*d + a*e*e - c*d*e) /
-		 		/*      powf(e*e + d*d,1.5) )); */
 		 		        pow(e*e + d*d,1.5) ));
 		break;
 

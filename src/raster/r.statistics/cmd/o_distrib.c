@@ -47,7 +47,7 @@ o_distrib (char *basemap, char *covermap, char *outputmap, int usecats)
 
     catb = 0;
     csum = 0;    
-/*    fprintf(stderr,"***** Stage 1 - Calculating sums ****\n");/**/
+/*    fprintf(stderr,"***** Stage 1 - Calculating sums ****\n"); */
     while (fscanf (fd1, "%ld %ld %ld", &basecat, &covercat, &area) == 3)
     {
 	if (catb != basecat)
@@ -63,7 +63,7 @@ o_distrib (char *basemap, char *covermap, char *outputmap, int usecats)
     rewind(fd1);
     freopen(tempfile2,"r",fd2);
        
-/*    fprintf(stderr,"***** Stage 2 - Calculating percents of values in cover  ****\n");/**/
+/*    fprintf(stderr,"***** Stage 2 - Calculating percents of values in cover  ****\n"); */
         
     catb = 0;
     tot = 0;
@@ -75,7 +75,7 @@ o_distrib (char *basemap, char *covermap, char *outputmap, int usecats)
 	{
            if(fscanf (fd2, "%ld %ld", &cat, &total_count) != 2) return(1);
            catb = basecat;
-           /* fprintf(stderr,"Total (must be 100): %lf\n",tot);/**/
+           /* fprintf(stderr,"Total (must be 100): %lf\n",tot); */
            tot=0;
         }   
         
@@ -84,7 +84,7 @@ o_distrib (char *basemap, char *covermap, char *outputmap, int usecats)
           sum = (double)(100.0 * area)/total_count;
           fprintf(stdout,"%8ld %8ld %f\n", basecat, covercat, sum);
           /*tot+=sum;
-          fprintf(stderr,"Area: %ld   Tot: %ld  totsum: %lf\n",area,total_count,tot);/**/
+          fprintf(stderr,"Area: %ld   Tot: %ld  totsum: %lf\n",area,total_count,tot); */
         }
     }
     

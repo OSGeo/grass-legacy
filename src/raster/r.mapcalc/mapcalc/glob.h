@@ -41,6 +41,9 @@ struct execute_stack
 #define GLOBAL
 #endif
 
+GLOBAL int cp_cats;
+GLOBAL char catmap[1024];
+
 GLOBAL int expression_stack_depth;
 GLOBAL int expression_stack_nalloc ;
 GLOBAL struct expression_stack *expression_stack;

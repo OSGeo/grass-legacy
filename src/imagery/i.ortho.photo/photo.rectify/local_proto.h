@@ -42,7 +42,7 @@ int mail(char *);
 /* matrix.c */
 int compute_georef_matrix(struct Cell_head *, struct Cell_head *);
 /* perform.c */
-int perform_georef (int, CELL *);
+int perform_georef (int, void *rast);
 /* ps_cp.c */
 int get_psuedo_control_pt(int, int);
 /* rectify.c */
@@ -52,4 +52,4 @@ int report(char *, char *, char *, char *, long, long, int);
 /* target.c */
 int get_target(char *);
 /* write.c */
-int write_matrix(int, int, int);
+int write_matrix(int, int);
