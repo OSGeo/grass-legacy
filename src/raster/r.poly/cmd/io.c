@@ -207,10 +207,10 @@ int n;				/* number of points to write */
 
     for (i = 1; i < n; i++) 
     {
-    /*
+    /* M.N.*/
 	if( i<10)
          printf(" row: %d col: %d\n", p->row, p->col);
-	 */
+
 	last = p;
 	if ((p = move(p)) == NULPTR)
 	  break;
@@ -268,10 +268,9 @@ int n;				/* number of points to write */
     */
     for (i = 1; i < n; i++) 
     {
-    /*
+    /* M.N.*/
 	if( i<10)
          printf(" row: %d col: %d\n", p->row, p->col);
-	 */
 	last = p;
 	if ((p = move(p)) == NULPTR)	/* this should NEVER happen */
 	{
@@ -311,7 +310,7 @@ int n;				/* number of points to write */
     total++;
     Vect_append_point (Points, x, y);
 
-/*DEBUG*/ fprintf (stderr, "Total: %d  n_points: %d\n", total, Points->n_points);
+/*DEBUG fprintf (stderr, "Total: %d  n_points: %d\n", total, Points->n_points);*/
 
     /* strip out the duplicate points from the list */
 /* TODO, -dpg  this may not be all that necessary?
@@ -344,10 +343,9 @@ int n;				/* number of points to write */
 
     for (i = 1; i < n; i++) 
     {
-    /*
+    /* M.N. */
 	if( i<10)
          printf(" row: %d col: %d\n", p->row, p->col);
-	 */
 	   last = p;
 	if ((p = move(p)) == NULPTR)
 	  break;
@@ -657,7 +655,9 @@ char *cell, *digit;
 	fprintf(stderr,"%s:  open_file:  could not read header for cell file %s in %s\n",error_prefix,cell_name,mapset);
 	exit(-1);
     }
-    G_set_window(&cell_head);
+/* changed to take care of user´s specified area within location M.Neteler 9/98*/
+/*    G_set_window(&cell_head);*/
+    G_get_window(&cell_head);
     strcpy(dig_name, digit);
 
     G__file_name (lab_name, "dig_att", digit, G_mapset());
