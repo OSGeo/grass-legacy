@@ -1,7 +1,7 @@
 
 
 
-g.manual             GRASS Reference Manual              g.manual
+g.manual <main>      GRASS Reference Manual       <main> g.manual
 
 
 
@@ -11,6 +11,8 @@ NAME
 
 SYNOPSIS
      g.manual
+     g.manual help
+     g.manual [-1aefs] [entries=name[,name,...]]
 
 DESCRIPTION
      The g.manual command provides user access to the on-line
@@ -18,6 +20,56 @@ DESCRIPTION
      a list of available manual entries, and may get a manual
      entry printed to the terminal screen and/or to the line
      printer.
+
+     g.manual can be run either interactively or non-
+     interactively.  If the user types
+
+          g.manual
+
+     on the command line without program arguments, the program
+     will prompt the user for a manual entry to display. The user
+     may enter "list" to get a section-by-section listing of the
+     manual entries available.  Once the user has viewed the
+     desired information it may be printed by responding to the
+     questions appropriately.
+
+     The user can run the program non-interactively, by
+     specifying the appropriate options and/or the name(s) of the
+     manual entries to displayed.
+
+OPTIONS
+     -1   This option will list all manual entries, one per line.
+
+     -a   This option will list all manual entries in a more
+          appealing format.  The manual page list will be
+          separated by manual section.
+
+     -e   This option tells g.manual to ignore empty manual
+          sections when printing the listings from the -1 or -a
+          options.
+
+     -f   This option will add formfeeds to output listing when
+          using the -a option.
+
+     -s   This option will cause g.manual to run silently.
+          Instead of displaying the manual page it will simply
+          set the exit status to:
+             0   if entry exists, or
+             1   if it does not exist.
+
+
+
+
+GRASS 4.1                U.S. Army CERL                         1
+
+
+
+
+
+
+g.manual <main>      GRASS Reference Manual       <main> g.manual
+
+
 
      These entries may also be accessed through the g.help
      command.
@@ -28,8 +80,8 @@ SEE ALSO
      g.help
 
 AUTHOR
-     James Westervelt, U.S. Army Construction Engineering
-     Research Laboratory
+     Kurt Buehler, U.S. Army Construction Engineering Research
+     Laboratory
 
 
 
@@ -60,7 +112,21 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
