@@ -1,0 +1,63 @@
+all:	progs
+progs:	$(LIBDIR)/monitors.h \
+	$(ETC)/list.mon \
+	$(ETC)/start.mon \
+	$(ETC)/status.mon \
+	$(ETC)/stop.mon \
+	$(BIN)/Dstart.mon \
+	$(BIN)/Dlist.mon \
+	$(BIN)/Dwhich.mon \
+	$(BIN)/Dstop.mon \
+	$(BIN)/Dselect.mon\
+	$(BIN)/Drelease.mon \
+	$(BIN)/Dstatus.mon \
+	$(BIN)/monitor
+
+$(LIBDIR)/monitors.h:	monitors.h
+	rm -f $@
+	cp $? $@
+monitors.h: #
+$(ETC)/list.mon:	list.o $(RASTERLIB)
+	$(CC) $(LDFLAGS) list.o $(RASTERLIB) -o $@ 
+$(ETC)/start.mon:	start.o ttyname.o $(RASTERLIB)
+	$(CC) $(LDFLAGS) start.o ttyname.o $(RASTERLIB) -o $@
+$(ETC)/status.mon:	status.o $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) status.o $(GISLIB) $(RASTERLIB) -o $@
+$(ETC)/stop.mon:	stop.o $(GISLIB) $(RASTERLIB)
+	$(CC) $(LDFLAGS) stop.o $(GISLIB) $(RASTERLIB) -o $@
+$(BIN)/Dlist.mon: list.sh
+	rm -rf $@
+	cp $? $@
+	chmod +x $@
+$(BIN)/Dstart.mon: start.sh
+	rm -rf $@
+	cp $? $@
+	chmod +x $@
+$(BIN)/Dstatus.mon: status.sh
+	rm -rf $@
+	cp $? $@
+	chmod +x $@
+$(BIN)/Dstop.mon: stop.sh
+	rm -rf $@
+	cp $? $@
+	chmod +x $@
+$(BIN)/Dwhich.mon:	which.o $(GISLIB)
+	$(CC) $(LDFLAGS) which.o $(GISLIB) -o $@
+$(BIN)/Dselect.mon:	select.o $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) 
+	$(CC) $(LDFLAGS) select.o $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) -o $@
+$(BIN)/Drelease.mon:	release.o $(GISLIB) $(RASTERLIB)
+	$(CC) $(LDFLAGS) release.o $(GISLIB) $(RASTERLIB) -o $@
+$(BIN)/monitor:	monitor.o $(GISLIB) $(RASTERLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) monitor.o $(GISLIB) $(RASTERLIB) $(VASK) -o $@
+
+list.o: monitors.h
+release.o: monitors.h
+release.o: open.h
+select.o: monitors.h
+start.o: monitors.h
+status.o: monitors.h
+status.o: open.h
+stop.o: monitors.h
+stop.o: open.h
+
+$(GISLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB): #
