@@ -60,6 +60,8 @@ int nodes ( char *in, char *out)
     Vect_reset_cats (Cats);
     count = 0;
     for ( node = 1; node <= nnodes; node++ ) {
+	int has_lines = 0;
+	
 	nlines = Vect_get_node_n_lines ( &In, node );
 	found = 0;
 	for ( i = 0; i < nlines; i++ ) {
@@ -67,10 +69,12 @@ int nodes ( char *in, char *out)
             type = Vect_read_line (&In, NULL, NULL, line);
 	    if ( type == GV_POINT ) {
 		found = 1;
-		break;
+	    }
+	    if ( type & GV_LINES ) {
+		has_lines = 1;
 	    }
 	}
-	if ( !found ) { /* Write new point */
+	if ( has_lines && !found ) { /* Write new point */
 	    Vect_reset_line ( Pout );    
 	    Vect_get_node_coor ( &In, node, &x, &y, &z);
 	    Vect_append_point ( Pout, x, y, z);
