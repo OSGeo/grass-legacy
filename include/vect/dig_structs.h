@@ -110,6 +110,12 @@ struct Port_info
     int shrt_quick;
   };
 
+/* List of dead lines in the file, the space can be reused, not yet used */
+struct recycle
+  {
+     /* TODO */
+  };
+
 struct dig_head
   {	  
     /*** HEAD_ELEMENT ***/
@@ -140,6 +146,8 @@ struct dig_head
     struct Port_info port;      /* Portability information */
    
     long last_offset;           /* offset of last read line */
+
+    struct recycle *recycle;
     
     struct Map_info *Map;	/* X-ref to Map_info struct ?? */
   };
@@ -337,7 +345,8 @@ struct Plus_head
 struct Map_info
   {
     /* Common info for all formats */  
-    int format;                /* format */
+    int format;                 /* format */
+    int temporary;              /* temporary file flag, not yet used */
 
     struct dblinks *dblnk;      /* info about tables */ 
     
