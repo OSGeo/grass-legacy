@@ -1,0 +1,38 @@
+d.param.scale
+
+GRASS module that allows interactive indentification of
+terrain parameters and features with a mouse. Reports 
+membership classes for variable window sizes and their
+variance or entropy.
+
+Jo Wood, 4th November, 1995
+
+see r.param.scale
+
+-------
+
+ d.param.scale [-cft] in=name [s_tol=value] [c_tol=value] [size=value]
+   [param=name] [exp=value] [zscale=value]
+
+Flags:
+  -c   Constrain model through central window cell
+  -f   Fix axis scale
+  -t   Create text output of results
+
+Parameters:
+      in   Raster surface layer to interrogate
+   s_tol   Slope tolerance that defines a `flat' surface (degrees)
+           default: 1.0
+   c_tol   Curvature tolerance that defines `planar' surface
+           default: 1.0
+    size   Size of processing window (odd number only)
+           default: 15
+   param   Morphometric parameter to calculate
+           options: elev,slope,aspect,profc,planc,longc,crosc,minic,maxic,
+                    feature,resid,moran,geary
+           default: elev
+     exp   Exponent for distance weighting (0.0-4.0)
+           default: 0.0
+  zscale   Vertical scaling factor
+           default: 1.0
+
