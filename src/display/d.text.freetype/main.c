@@ -18,7 +18,7 @@
 *
 *****************************************************************************/
 
-#include <config.h>
+#include "config.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -37,7 +37,7 @@
 #define	DEFAULT_COLOR	"gray"
 
 typedef struct {
-	char	*cfont, *cpath, *ccharset, *ccolor, *csize;
+	char	*font, *path, *charset, *color, *size;
 } capinfo;
 
 static capinfo	*fonts = NULL;
@@ -100,7 +100,7 @@ main(int argc, char **argv)
 	opt3->type       = TYPE_STRING;
 	opt3->required   = NO;
 	if (cur_font >= 0)
-	opt3->answer     = fonts[cur_font].cfont;
+	opt3->answer     = fonts[cur_font].font;
 	opt3->options    = font_names;
 	opt3->description= "Font name";
 	}
@@ -147,10 +147,10 @@ main(int argc, char **argv)
 		if (cur_font < 0)
 			G_fatal_error("Invalid font: %s", opt3->answer);
 
-		path = fonts[cur_font].cpath;
-		charset = transform_string(fonts[cur_font].ccharset, toupper);
-		tcolor = transform_string(fonts[cur_font].ccolor, tolower);
-		size = atoi(fonts[cur_font].csize);
+		path = fonts[cur_font].path;
+		charset = transform_string(fonts[cur_font].charset, toupper);
+		tcolor = transform_string(fonts[cur_font].color, tolower);
+		size = atoi(fonts[cur_font].size);
 	}
 
 	if (opt4->answer)
@@ -311,7 +311,6 @@ main(int argc, char **argv)
 	exit(0);
 }
 
-
 static void
 error(const char *msg)
 {
@@ -331,9 +330,6 @@ read_capfile(void)
 {
 	char freetypecap[4096], buf[4096];
 	char ifont[128], ipath[4096], icharset[32], icolor[128], isize[10];
-	/* speed-sensitive?
-	int fonts_size = 0;
-	 */
 	int font_names_size = 0;
 	FILE *fp;
 	int i;
@@ -364,15 +360,6 @@ read_capfile(void)
 		if (access(ipath, R_OK))
 			continue;
 
-		/* speed-sensitive?
-		 * too much unused memory as more fonts get added.
-		if (fonts_count >= fonts_size)
-		{
-			fonts_size = fonts_size ? fonts_size * 2 : 10;
-			fonts = (capinfo *)
-				G_realloc(fonts, fonts_size * sizeof(capinfo));
-		}
-		 */
 		fonts = (capinfo *)
 			G_realloc(fonts, (fonts_count + 1) * sizeof(capinfo));
 
@@ -383,11 +370,11 @@ read_capfile(void)
 		if (offset > 0 && cur_font < 0)
 			cur_font = fonts_count;
 
-		font->cfont    = G_store(ifont + offset);
-		font->cpath    = G_store(ipath);
-		font->ccharset = G_store(icharset);
-		font->ccolor   = G_store(icolor);
-		font->csize    = G_store(isize);
+		font->font    = G_store(ifont + offset);
+		font->path    = G_store(ipath);
+		font->charset = G_store(icharset);
+		font->color   = G_store(icolor);
+		font->size    = G_store(isize);
 
 		fonts_count++;
 	}
@@ -396,7 +383,7 @@ read_capfile(void)
 
 	font_names_size = 0;
 	for (i = 0; i < fonts_count; i++)
-		font_names_size += strlen(fonts[i].cfont) + 1;
+		font_names_size += strlen(fonts[i].font) + 1;
 
 	font_names = (char *) G_malloc(font_names_size);
 	font_names[0] = '\0';
@@ -404,7 +391,7 @@ read_capfile(void)
 	{
 		if (i > 0)
 			strcat(font_names, ",");
-		strcat(font_names, fonts[i].cfont);
+		strcat(font_names, fonts[i].font);
 	}
 
 	return;
@@ -415,7 +402,7 @@ find_font(const char *name)
 {
 	int i;
 	for (i = 0; i < fonts_count; i++)
-		if (strcasecmp(fonts[i].cfont, name) == 0)
+		if (strcasecmp(fonts[i].font, name) == 0)
 			return i;
 
 	return -1;
