@@ -15,11 +15,3 @@ r.in.tiff / r.out.tiff Requirements:
 
 Usually these libraries should be installed on your machine.
 Otherwise get the source code and compile them.
------------------------------------------
-Bugfixes from Carl Anderson 5/2000
-
-Bugfixes from Jacques Bouchard 19. Nov. 98
-
----------------
-This r.tiff version uses the standard libtiff from your system.
-8. June 98 Marco Valagussa <marco@duffy.crcc.it>
