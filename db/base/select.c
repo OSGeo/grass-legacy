@@ -123,10 +123,10 @@ sel (dbDriver *driver,
 	for (col = 0; col < ncols; col++)
 	{
 	    column = db_get_table_column(table, col);
-	    if (col) G_message (_("%s"), parms.fs);
-	    G_message ("%s", db_get_column_name (column));
+	    if (col) fprintf (stdout, "%s", parms.fs);
+	    fprintf (stdout, "%s", db_get_column_name (column));
 	}
-	G_message ("\n");
+	fprintf (stdout, "\n");
     }
 
 /* fetch the data */
@@ -143,20 +143,20 @@ sel (dbDriver *driver,
 	    value  = db_get_column_value(column);
 	    db_convert_column_value_to_string (column, &value_string);
 	    if (parms.c && !parms.h)
-		G_message ("%s%s", db_get_column_name (column), parms.fs);
+		fprintf (stdout, "%s%s", db_get_column_name (column), parms.fs);
 	    if (col && parms.h)
-		G_message ("%s", parms.fs);
+		fprintf (stdout, "%s", parms.fs);
 	    if(parms.nv && db_test_value_isnull(value))
-		G_message ("%s", parms.nv);
+		fprintf (stdout, "%s", parms.nv);
 	    else
-		G_message ("%s", db_get_string (&value_string));
+		fprintf (stdout, "%s", db_get_string (&value_string));
 	    if (!parms.h)
-		G_message ("\n");
+		fprintf (stdout, "\n");
 	}
 	if (parms.h)
-	    G_message ("\n");
+	    fprintf (stdout, "\n");
 	else if (parms.vs)
-	    G_message ("%s\n", parms.vs);
+	    fprintf (stdout, "%s\n", parms.vs);
     }
 
     return OK;
@@ -310,5 +310,5 @@ print_column_definition(dbColumn *column)
     G_message (_("scale%s%d\n"), parms.fs, db_get_column_scale(column));
     G_message (_("precision%s%d\n"), parms.fs, db_get_column_precision(column));
     if (parms.vs)
-	G_message ("%s\n", parms.vs);
+	fprintf (stdout, "%s\n", parms.vs);
 }
