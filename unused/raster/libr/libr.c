@@ -32,7 +32,7 @@
  * 		r_type_spec[DCELL_TYPE] or r_type_spec[2]:	"%%lf"
  *
  *		it's not flexible for precision control.
- *		use r_str_value() instead. see main_old.c for more info.
+ *		use r_str_value() instead.
  *
  * double
  * r_get_value(RASTER_ROW buf, int col);
