@@ -100,7 +100,7 @@ main (int argc, char *argv[])
       {
        field = atoi ( fieldopt->answer );
        fprintf(stdout,"Displaying column type for database connection of field %d:\n", field);
-       if ( (fi = Vect_get_dblink ( &Map, field-1)) == NULL)
+       if ( (fi = Vect_get_field ( &Map, field)) == NULL)
           G_fatal_error("Database connection not defined");
        driver = db_start_driver(fi->driver);
        if (driver == NULL)
