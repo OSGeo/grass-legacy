@@ -1,16 +1,10 @@
-value (data, n, sflag)
-    register unsigned char *data;
+int value (unsigned char *data, int n, int sflag)
 {
-    register int v;
-    int negative;
+    int v;
 
-    if (negative = (sflag && (*data & 0200)))
-	v = *data++ & 0177;
-    else
-	v = *data++;
+    v = *data++;
+    if (sflag && v > 127) v -= 256;
+    while (--n > 0) v = v * 256 + *data++;
 
-    while (--n > 0)
-	v = v * 256 + *data++;
-
-    return negative ? -v : v;
+    return v;
 }
