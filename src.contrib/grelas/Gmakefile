@@ -1,0 +1,6 @@
+OBJ = grelas.o eltran.o genproc.o
+
+$(BIN)/grelas: $(OBJ) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(MATHLIB) -ltermcap
+
+$(GISLIB): #
