@@ -16,22 +16,22 @@ SYNOPSIS
      r.traj.data [-aw]
 
 DESCRIPTION
-     r.traj uses ammunition and weapon information that can be
+     r.traj uses ammunition and	weapon information that	can be
      displayed with this program.  Program flags are listed
      below.
 
      Flags:
 
-     -a             Prints list of ammunition types usable by
-                    r.traj.
+     -a		    Prints list	of ammunition types usable by
+		    r.traj.
 
-     -w             Prints list of weapons usable by r.traj.
+     -w		    Prints list	of weapons usable by r.traj.
 
 SEE ALSO
      r.traj, and parser
 
 AUTHOR
-     James Westervelt, Construction Engineering Research
+     James Westervelt, Construction Engineering	Research
      Laboratory
 
 
@@ -60,7 +60,7 @@ AUTHOR
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
