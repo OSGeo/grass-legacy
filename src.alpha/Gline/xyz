@@ -1,0 +1,16 @@
+  if ((mapset = G_find_cell(cell,"")) == NULL)
+  {
+    fprintf(stderr,"%s:  open_file:  cell file %s not found\n",error_prefix,cell);
+    exit(-1);
+  }
+  sscanf(cell,"%s",cell_name);
+  if ((in_file_d = G_open_cell_old(cell_name,mapset)) < 0)
+  {
+    fprintf(stderr,"%s:  open_file:  could not open cell file %s in %s\n",error_prefix,cell_name,mapset);
+    exit(-1);
+  }
+  if (G_get_cellhd(cell_name,mapset,&cell_head) == -1)
+  {
+    fprintf(stderr,"%s:  open_file:  could not read header for cell file %s in %s\n",error_prefix,cell_name,mapset);
+    exit(-1);
+  }
