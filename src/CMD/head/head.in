@@ -69,6 +69,7 @@ LGLWM               = @LGLWM@
 #tcl/tk stuff
 TCLINCDIR           = @TCLINCDIR@
 TKINCDIR            = @TKINCDIR@
+TCLTKLIBPATH        = @TCLTKLIBPATH@
 TCLTKLIBS           = @TCLTKLIBS@
 
 LIBRULE             = ar ruv $@ $?; @RANLIB@ $@
