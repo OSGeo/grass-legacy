@@ -9,7 +9,7 @@ if test "$GISBASE" = ""; then
  exit
 fi
 
-if [ $# -eq 0  -o "$1" = "-h" -o "$1" = "-help" -o "$1" = "--help" ]
+if [ $# -eq 0  -o "$1" = "-h" -o "$1" = "-help" -o "$1" = "--help" -o "--html-description" ]
 then
  echo "Unregisters a registered SHAPE file from GRASS 5.1 DATABASE"
  echo " "

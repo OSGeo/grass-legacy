@@ -16,7 +16,7 @@ echo "You must be in GRASS to run this program."
 exit
 fi
 
-if [ $# -eq 0 -o "$1" = "-h" -o "$1" = "-help" -o "$1" = "--help" ]
+if [ $# -eq 0 -o "$1" = "-h" -o "$1" = "-help" -o "$1" = "--help" -o "--html-description" ]
 then
  echo "Registers a SHAPE file into GRASS 5.1 DATABASE"
  echo " "
