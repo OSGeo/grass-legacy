@@ -749,7 +749,6 @@ if (tlid_first){
       if (1 == (sscanf(buff,"%d",r)) )
         r++;
     *r = 0;
-    fclose(fp);
   }
   else max = 0; /* can't use memory list */
 } /* end of first time */
