@@ -7,7 +7,7 @@
 
 
 char *get_name();
-char *monitor;
+char *monitor, monitor_sv[50];
 
 main(argc, argv) char *argv[];
 {
@@ -15,6 +15,7 @@ main(argc, argv) char *argv[];
 
     G_gisinit(argv[0]);
     get_monitor();
+    if(monitor!=NULL)strcpy(monitor_sv, monitor);
     while (1)
     {
 	G_clear_screen();
@@ -81,6 +82,12 @@ select_mon()
 	get_monitor();
 	if (monitor != NULL)
 	    break;
+        else 
+           {
+              G__setenv("MONITOR", monitor_sv);
+              G__write_env();
+              /* restore old environment */
+            }
     }
 }
 
@@ -91,6 +98,13 @@ start_mon()
     {
 	sprintf (buf, "d.mon start=%s", name);
 	system (buf);
+	get_monitor();
+	if(monitor==NULL) 
+	   {
+	     G__setenv("MONITOR", monitor_sv);
+	     G__write_env();
+	     /* restore old environment */
+           }
 	hitreturn();
     }
 }
@@ -102,6 +116,7 @@ stop_mon()
     {
 	sprintf (buf, "d.mon stop=%s", name);
 	system (buf);
+	get_monitor();
 	hitreturn();
     }
 }
