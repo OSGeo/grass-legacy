@@ -1,0 +1,41 @@
+.TH Gen.tractmap
+.SH NAME
+\fIGen.tractmap\fR \- Generates two vector maps from a RIM/TIGER data base.
+.br
+.I "(GRASS Shell Script)"
+.SH SYNOPSIS
+\fBGen.tractmap help\fR
+.br
+\fBGen.tractmap \fIdbname\fR
+.SH DESCRIPTION
+\fIGen.tractmap\fR is a shell script which queries information from a RIM
+data base using the GRASS command \fIv.db.rim\fR, which is an interface
+between GRASS and RIM.  The \fIdbname\fR given on the command line 
+should be the name of a RIM database created using \fIv.in.tiger\fR.  
+\fIGen.tractmap\fR will create two new vector files: one showing the 
+county outline and one showing all tract boundaries within the county.
+These output files will be named \fIdbname.county\fR and \fIdbname.tract\fR,
+respectively.
+.LP
+\fBParameters:\fR
+.IP \fIdbname\fR 18
+Name of an existing RIM data base.
+.SH NOTES
+This command must be installed separately as part of the package of routines
+dealing with the import of Census (TIGER) data.  It requires the use of
+\fIrim\fR and \fIv.db.rim\fR, which must be compiled first.
+
+The output maps produced by this command are also included as part of 
+the more extensive output from \fIGen.Maps\fR.
+
+If the master binary vector file created using \fIv.in.tiger\fR is
+modified after it is in GRASS, this program will probably not work.
+In that situation, the processes from this shell script may simply
+be run by hand, using \fIv.db.rim\fR directly, but searching the 
+old vector file to find lines for the new vector files without
+using the binary offset field (vectoff).
+.SH "SEE ALSO"
+\fIv.in.tiger, v.db.rim, Gen.Maps, tiger.info.sh\fR
+.SH AUTHOR
+Jim Hinthorne and David Satnik,
+GIS Lab, Central Washington University, Ellensburg, WA.
