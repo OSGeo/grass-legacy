@@ -1,5 +1,4 @@
 PGM = m.in.e00
-HOME = $(BIN_CONTRIB_CMD)
 LIST = 	main.o \
 	e00read.o \
 	info.o \
@@ -8,9 +7,11 @@ LIST = 	main.o \
 	label.o \
 	vector.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) $(VASK) $(DATETIMELIB) $(XDRLIB) $(MATHLIB)
+LIBES=$(VECTLIB) $(GISLIB) $(VASK) $(DATETIMELIB)
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 tstinfo: info.o
-	$(CC) $(LDFLAGS) -o $@ info.o $(GISLIB) $(VECTLIB) $(VASK) $(DATETIMELIB) $(XDRLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ info.o $(LIBES) $(MATHLIB) $(XDRLIB)
+
 $(GISLIB): # 

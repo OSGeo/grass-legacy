@@ -1,12 +1,11 @@
 PGM = m.datum.shift
-HOME = $(BIN_MAIN_CMD)
 LIBES = $(COORCNVLIB) $(GISLIB)
 LIST = main.o \
        dat.o \
        sph.o
 # EXTRA_CFLAGS=-DBURSAWOLF
 
-$(HOME)/$(PGM): $(LIST) $(LIBES)
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): # in case LIB changes

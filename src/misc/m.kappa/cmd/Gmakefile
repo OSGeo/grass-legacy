@@ -8,9 +8,6 @@ OBJS = main.o\
 	readin_data.o
 
 $(BIN_ALPHA_CMD)/$(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB) $(EXTRA_FLAGS)
-
-saber:
-	#load $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #
