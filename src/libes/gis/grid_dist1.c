@@ -53,7 +53,7 @@ G_ellipsoid_grid_dist (a, e2, lon1, lat1, lon2, lat2)
 	C =                    - e4 * (15.0/32.0) - e6 * (175.0/384.0);
 	D =                                       - e6 * (35.0/96.0);
 
-	distance = a * (1-e2) * (sc(A,B,C,D,lat2)-sc(A,B,C,D,lat1));
+	distance = a * (1-e2) * (sc(A,B,C,D,lat2, 0., 0.)-sc(A,B,C,D,lat1, 0., 0.));
     }
 
 /* other lines */
