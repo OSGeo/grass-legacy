@@ -172,18 +172,21 @@ askagain:
 	sigint = (int (*)())signal(SIGINT, SIG_IGN) ;
 	sigquit = (int (*)())signal(SIGQUIT, SIG_IGN) ;
 
-	lock = lock_file( lock_name, pid) ;
-	if ( ! lock)
+	if (strcmp (Driver.name, "none"))
 	{
-		fprintf( stderr, "Digitizer is already being used.\n") ;
-		exit(0) ;
-	}
-	if ( lock < 0)
-	{
-		fprintf( stderr, "ERROR - Could not lock digitizer.\n") ;
-		fprintf( stderr, "Check for existance of /usr/gis/locks .\n") ;
-		fprintf(stderr, "Contact your GRASS system administrator\n") ;
-		exit(-1) ;
+	    lock = lock_file( lock_name, pid) ;
+	    if ( ! lock)
+	    {
+		    fprintf( stderr, "Digitizer is already being used.\n") ;
+		    exit(0) ;
+	    }
+	    if ( lock < 0)
+	    {
+		    fprintf (stderr, "ERROR - Could not lock digitizer.\n") ;
+		    fprintf (stderr, "Check for existance of %s/locks.\n", G_gisbase()) ;
+		    fprintf(stderr, "Contact your GRASS system administrator\n") ;
+		    exit(-1) ;
+	    }
 	}
 
 
