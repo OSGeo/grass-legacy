@@ -26,18 +26,49 @@ Many thanks to all contributors!
 
 <b>Modules fixed/updated</b> (major changes only)
 <ul>
+<li>r3.*: various fixes (Alfonso Vitti, John Harrop)
 <li>d.legend: partial rewrite, now in usable condition (Hamish Bowman)
+<li>d.what.sites: added flash when clicking on vector (Alex Shevlakov)
+<li>d.what.vect: added flash when clicking on vector (Alex Shevlakov)
+<li>g.mapsets: added addmapset= parameter (Alexander Soraruf, Markus Neteler)
 <li>g.setproj: UPS projection query mode fixed (Morten Hulden, Eric Miller)
+<li>m.ll2db: datum transformation added (Paul Kelly)
+<li>NVIZ: various fixes for off-screen rendering (Bob Covill), tcl/tk 8.4 fixes
+<li>r.colors: added blue through yellow to green colors (Markus Neteler)
+<li>r.mapcalc3 (i.e new: r.mapcalc): errors fixed (Glynn Clements)
 <li>r.neighbors: added sum method (Markus Neteler)
 <li>r.param.scale: fixed c_tol default settings to 0.0001 (Markus Neteler)
+<li>r.proj: datum transformation added (Paul Kelly)
 <li>r.series: added for time series analysis (Glynn Clements)
+<li>r.simwe: added hydrologic and sediment transport simulation (Helena Mitasova, Jaro Hofierka, Lubos Mitas)
+<li>r.sun: datum transformation added (Paul Kelly)
+<li>r.sunmask: datum transformation added (Paul Kelly)
+<li>r.terraflow: added flow computation for massive grids (Laura I. Toma)
+<li>scripts: removed the word 'function' everywhere (to make scripts cygwin
+    compliant) (Markus Neteler)
+<li>s.cellstats: added, calculates stats of sites on a per cell basis (Eric Miller)
+<li>s.datum.shift: datum transformation added (Paul Kelly)
 <li>s.kernel: added for kernel density maps (Stefano Menegon)
+<li>s.proj: datum transformation added (Paul Kelly)
+<li>v.cutregion.sh: OTHER INFO bugs #1389 fixed (Markus Neteler)
+<li>v.in.dgn: added to read DNG files (Radim Blazek)
+<li>v.in.gshhs: datum transformation added (Paul Kelly)
+<li>v.proj: datum transformation added (Paul Kelly, Eric Miller)
 <li>v.report: fixed line length calculation (Radim Blazek)
 <li>v.out.shape: fixed type=area output, island problem, -A flag (Eric Miller)
 </ul>
 
 <b>Source Code:</b><br>
 <ul>
+<li>winGRASS: started support for native WIN MinGW32 changes (Mike Thomas)
+<li>various IRIX compatibility changes (Paul Kelly)
+<li>G3D: various fixes, most bugs are fixed now (Alfonso Vitti)
+<li>proj: datum transformation cleaned and general support added  (Paul
+    Kelly, Eric Miller)
+<li>Fix North Carolina false easting (Eric Miller)
+<li>i18n: internationalization (Russia) continued (Alex Shevlakov)
+<li>PostgreSQL support: various fixes (Alex Shevlakov)
+<li>unrequired TERMLIB refs removed (Glynn Clements)
 <li>configure, configure.in: Fix FreeType header check (Glynn Clements)
 <li>Gmakefiles: fixed TERMLIB dependencies (Glynn Clements)
 <li>MacOS X portability fixes (Glynn Clements)
