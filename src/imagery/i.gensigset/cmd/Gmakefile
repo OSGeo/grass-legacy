@@ -3,8 +3,8 @@ LIST = main.o get_train.o lookup_class.o opencell.o openfiles.o parse.o \
 	read_data.o invert.o read_train.o closefiles.o labels.o \
 	write_sig.o subcluster.o
 
-LIBES = $(IMAGERYLIB) $(GISLIB)
-DEPLIBS= $(DEPIMAGERYLIB) $(DEPGISLIB)
+LIBES = $(IMAGERYLIB) $(GISLIB) $(GMATHLIB)
+DEPLIBS= $(DEPIMAGERYLIB) $(DEPGISLIB) $(DEPGMATHLIB)
 
 $(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)

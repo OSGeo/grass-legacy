@@ -9,9 +9,10 @@ LIST = main.o\
 	print6.o\
 	open_files.o\
 	timer.o
-
-$(BIN_CMD)/$(PGM): $(LIST) $(DEPIMAGERYLIB) $(DEPGISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+LIBES=$(IMAGERYLIB) $(GISLIB) $(GMATHLIB)
+DEPLIBS=$(DEPIMAGERYLIB) $(DEPGISLIB) $(DEPGMATHLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 open_files.o: global.h
 checkpt.o: global.h
