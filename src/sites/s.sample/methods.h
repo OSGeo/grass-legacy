@@ -10,7 +10,8 @@
 #define NEAREST 1
 #define BILINEAR 2
 #define CUBIC 3
- 
+
+#ifdef USE_OLD_CODE
 struct zstruct
 {
   double x, y; 
@@ -19,6 +20,7 @@ struct zstruct
 typedef struct zstruct Z;
 
 int readsites();
+#endif
 double nearest ();
 double bilinear ();
 double scancatlabel ();
