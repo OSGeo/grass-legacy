@@ -1,0 +1,74 @@
+.TH dlglabel 1
+.SH "NAME"
+dlglabel \- label dlg-3 map features (categories)
+.br
+.I (Map Development Tool)
+.SH "SYNOPSIS"
+.I dlglabel
+.SH "DESCRIPTION"
+.I dlglabel
+is the third phase of the
+.I MAPDEV
+system for converting a hard copy map to a
+.I GRASS
+grid cell map.
+.I dlglabel
+allows the user to label linear and areal features on dlg-3 maps.  'Label'
+meaning give attribute/ category numbers to the features.
+The category numbers are later used by 
+.I GRASS
+to give cell files category information.  The program is highly interactive
+and the use of a graphics monitor is required.
+.SH "FEATURES"
+Simiplified method  of labeling and re-labeling.
+Labeling is accomplished by the user entering a category number and then using
+the mouse to label either areal or linear features.  Area and line category
+numbers are maintened by the program and the user need not concern themselves
+with them.
+Re-labeling is just a matter of following the same procedure as labeling.
+Any feature of the  map can be re-labeled as many times as needed.
+.sp
+Label displaying.  Each areal feature has a centroid associated with it that
+can be displayed at anytime.
+After an area is labeled, the point identified by the graphics cursor becomes
+the new 'centroid' as well as the origin for placement of labels.
+Area labels (category numbers) can also be displayed at
+anytime and unlabeled areas become apparent by the fact that a centroid still
+exists.  Linear features that have been labeled are highlighted.
+.sp
+Multiple session labeling.  Labeling can be completed in one session of
+.I dlglabel
+or can be completed in as many sessions as a person feels comfortable with.
+.sp
+Error reporting.  Any errors or discrepancies in the
+.I dlg-3
+file are noted and a printable report is created.
+.sp
+Windowing on the monitor.  It is possible to window in on a section of the
+map displayed on the graphics monitor.  Color coding is used to distinguish
+map information on the monitor in the following manner:
+.sp
+.nf
+.cs R 36 4
+--------------------------------------------------------
+| GRAY line       | A line or area edge                |
+--------------------------------------------------------
+| GREEN dot       | A node                              |
+--------------------------------------------------------
+| ORANGE dot      | An area centroid                    |
+--------------------------------------------------------
+| ORANGE numbers  | A labeled areal feature             |
+--------------------------------------------------------
+| PURPLE line     | A labeled linear feature            |
+--------------------------------------------------------
+.cs R
+
+.fi
+Two screen labeling.  Textual information is provided on an ascii terminal
+screen freeing the entire graphics monitor for displaying the map.
+.SH "SEE ALSO"
+dlg_to_cell(1), b_a_dlg(1), a_b_dlg(1)
+.SH "AUTHOR"
+Michael Higgins, U.S. Army Construction Engineering Research Laboratory
+.br
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
