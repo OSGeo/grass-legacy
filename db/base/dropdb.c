@@ -18,13 +18,10 @@ main(int argc, char *argv[])
 
     parse_command_line (argc, argv);
 
-    /* driver = db_start_driver (argv[1]); */
     driver = db_start_driver (parms.driver); 
     if (driver == NULL)
-    {
-	fprintf (stderr, "Can't run driver %s\n", argv[1]);
-	exit(1);
-    }
+        G_fatal_error("No db connection for driver <%s> defined. Run db.connect", parms.driver);
+
     db_init_handle (&handle);
     db_set_handle (&handle, parms.database, NULL);
     stat = db_delete_database (driver, &handle);
