@@ -1,27 +1,27 @@
 .\" @(#)legend.1 - 1.1
 .nr LL 5.5i
-.TH LEGEND 1 2/20/89 "USGS/OEMG Systems"
+.TH LEGEND 1 6/21/89 "USGS/OEMG Systems"
 .ad b
 .hy 1
 .SH NAME
-legend - create map overlay of legend information
+legend \- create overlay of legend information
 .SH SYNOPSIS
 .LP
 .B legend
-[ -oci [args]]
-[ -m ] def_file
+[ \-oaci [args]]
+[ \-m ] def_file
 [ files ]
 .SH DESCRIPTION
 .I Legend
 is a graphic function in the
-.I mapgen
-graphic series which provides for creating map overlays
+.SM MAPGEN/PLOTGEN
+graphic series which provides for creating overlays
 of legend information such as titles, scale bars, etc..
-.P
+.PP
 Most of the following options can appear in any order:
 .TP
 .BI "[ \-m ]" " def_file"
-This option specifies the required map definition file.
+This option specifies the required map or plot definition file.
 If the
 .B \-m
 is omitted,
@@ -29,30 +29,46 @@ is omitted,
 must be the first file listed.
 .TP
 .BI \-o " file"
-This option specifies the map overlay metagraphic file.
+This option specifies the name of the overlay metagraphic file to
+be created.
+.TP
+.BI \-a " file"
+Similar to the
+.B \-o
+option except that if the named file already exists graphic
+data will be appended.
 .TP
 .BI \-i
 If this option is specified a preview of the plot is
 output to the controlling terminal.
 If the
 .B \-o
+or
+.B \-a
 option is omitted, then
 .B \-i
 is implied.
-.P
+.TP
+.BI \-c " string"
+This options provides for run-line inclusion of graphic options
+listed below.
+If there is more than one option or imbedded blanks,
+the field must be enclosed in quotes or apostrophies.
+The contents of this option is processed before the control files.
+.PP
 One or more
 .I files
 containing control and graphic operations associated with the
 legend overlay.
 
 The following options provide for graphic control and may only appear
-in the control file[s].
+in the control file[s] or the \-c runline argument.
 .TP
 .BI \-f " font"
 .I Font
 is the name of the graphics system character set font to be
 employed in subsequent character plotting.
-A - will select the system default font.
+A \- will select the system default font.
 This option and
 .B \-s
 must be selected prior to any character
@@ -61,12 +77,12 @@ operations.
 .BI \-a " font"
 .I Font
 is similar to the
-.B -f
+.B \-f
 option except that it selects an alternate character font.
 This font will be selected when ^B control character
 occurs in a text string.
 A ^A control character will reselect the
-.B -f
+.B \-f
 font.
 Size and other attibutes of the alternate character are
 set as per the normal font.
@@ -91,7 +107,7 @@ at the current x-y coordinate.
 If the first character of sym is a decimal digit then
 .I sym
 is assumed to be the numeric
--- decimal (1-9), octal (0n), or hexadecimal (0xn) --
+\(emdecimal (1\-9), octal (0n), or hexadecimal (0xn)\(em
 value of the selected symbol;
 otherwise, it is assumed to be the ascii equivalent of the
 selected symbol.
@@ -143,13 +159,13 @@ command for selection region of reference.
 .TP
 .BI \-w " region"
 This option specifies which of the two basic regions of the
-map sheet are begin referred to with the
+plot sheet are begin referred to with the
 .B \-x/y
 coordinate values.
 The value of
 .I region
 should be either p or d
-corresponding to the respective basic map sheet or data region.
+corresponding to the respective basic plot sheet or data region.
 The effect of this command will remain in effect until another
 .B \-w
 command.
@@ -165,17 +181,17 @@ If
 is a numeric value, it represents the number of meters in one
 basic unit.
 Otherwise it must be one of the following unit types:
-.sp
- ft - feet
- kf - kilofeet
- m  - meter
- km - kilometers
- yd - yards
- ky - kiloyards
- mi - statute miles
- kn - nautical miles
-.sp
-.br
+.RS 2i
+ \f(CWft\fR	\(em feet
+ \f(CWkf\fR	\(em kilofeet
+ \f(CWm\fR	\(em meters
+ \f(CWkm\fR	\(em kilometers
+ \f(CWyd\fR	\(em yards
+ \f(CWky\fR	\(em kiloyards
+ \f(CWmi\fR	\(em statute miles
+ \f(CWkn\fR	\(em nautical miles
+.RE
+.IP
 .I Rep
 is the number of times the unit part of the scale bar is repeated.
 If
@@ -277,45 +293,85 @@ to be rotated form the positive x direction.
 .I Pen
 is a mechanical pen number to be employed.
 .TP
-.BI \-L " pen[,mask,size[,dist,ssize,str]]"
-This option provides for drafting lines with
+.BI \-[L|B] " pen[,mask,size[,dist,ssize,str]]"
+This option provides for controlling the method and character of lines.
+\-L designates normal point to point vector drafting and \-B selects
+four point Bezier method of creating smooth lines.
+Argument
 .I pen
-mechanical pen.
-If
-.I mask
-and
-.I size
-are present then the line will be drafted in dashed-line mode with
-.I mask
-dash pattern and
-.I size
-dash size in centimeters.
+designates the mechanical pen to be employed in drafting and must
+be specified with each usage.
+The remaining arguments may be optionally specified but when omitted
+the position must be indicated with appropriate comma (,) delimiters
+(ie. \(CW# -B 0,,,1,.2,\e010 #\fR\(em \fImask\fR and \fIsize\fR unaltered).
 .IP
+.I Mask
+and
+.I size
+control dash line drafting where
+.I mask
+is specification of the 16 bit dash pattern to be employed and
+.I size
+is the size of the bit element of the mask pattern in centimeters.
+Note that the total length of the dash pattern is 16\(mu\fIsize\fR
+centimeters.
 If
-.I dist, ssize,
+.I mask
+is \-1 then a solid line is drafted and
+.I size
+is ignored and
+when
+.I mask
+is 0 line drafting is suspended
+(0 is usually only employed with symbol line drafting).
+.I Mask
+is usually specified as a hexadecimal value
+(ie. 0xCCCC for a small dash bit pattern of 1010101010101010)
+.IP
+Lines with symbol patterns may be created by using
+the
+.I dist, ssize
 and
 .I str
-are present then a symbol line will be drawn with the symbol
-font set by the
-.BI \-S f
-command.
-.I Dist
-is the inter symbol distance and
+options where
+.I dist
+is the inter-symbol distance in centimeters,
 .I ssize
-is the symbol size.
-If line is not used to interconnect the symbols then
-.I mask
-should be set to 0.
-A solid line is selected by
-.I mask=-1
-and a dashed line by any other value of
-.I mask.
-The contents of
+is the size of the symbol in centimeters.
+.IP
+.I Str
+is any string of one to 128 symbols selected from the selected character
+font to be employed in a repeated manner when drafting symbol lines.
+A special symbol (\e177) may be employed to denote an empty
+point in the symbol sequence.
+Any symbol (including the empty point symbol)
+with the most significant bit (sign) set will cause 180\(de
+rotation of the current and following
 .I str
-should be similar to those specified by the
-.I -a
-commands of
-.B pline.
+(if any) symbols.
+At the start of each cycle through
+.I str
+the character rotation is set to 0\(de so that if a line is progressing
+from left to right the symbol would appear right side up.
+If a single symbol is to appear in a reverse manner then
+\e200 should be added (i.e. a reverse rotation letter A would be \e301).
+To create a sequence of symbols with
+alternating rotation then two or more
+symbols must be used with the sign set on some symbol other than
+the first.
+For example, \f(CW\-a A\e301\fR will cause the letter A to be
+plotted with alternating rotation.
+.IP
+The cyclic operation though
+.I str
+can be inhibited by terminating
+.I str
+with the \e377 special character.
+This permits this option to be employed for drafting curved annotation
+based on the following line data.
+With this feature the
+drafting of the line is normally turned off
+(ie. \f(CW# -L ,0,,.01,.3,Example\e Line\e377\fR).
 .IP
 Coordinates of the line to be drafted follow the current command
 line with one x-y pair per line.
@@ -323,29 +379,27 @@ The string of coordinates must be terminated with a '.'
 in column 1 (similar to
 .B \-t
 option).
-Use of + and - sign prefixes follow the same meaning as
+Use of + and \- sign prefixes follow the same meaning as
 defined under the
 .B \-x/y
 option.
 This option should not be employed on the same control line
 as option
 .B \-t.
-.TP
-.BI \-B " pen[,mask,size[,dist,ssize,str]]"
-This option functions the same as
-.B \-L
-except that following line data must have intermediate
-Bezier control points and output will be a smoothly interpolated
-curve.
-.SH FILES
- MAPGEN definition file.
+.PP
+The older
+.SM PLOTGEN
+verson of
+.B legend, plegend,
+is replaced by this program.
 .SH SEE ALSO
-MAPGEN system documentation
+.SM "" MAPGEN/PLOTGEN system documentation
 .br
 troff and plroff
 .SH BUGS
-The \-T option is only available on AT&T
-UNIX V.2 or later systems with device independent
+The \-T option is only available on
+.SM "AT&T UNIX"
+V.2 or later systems with device independent
 .I troff.
 .SH AUTHOR/MAINTENANCE
 Gerald I. Evenden, USGS, Woods Hole, MA.
