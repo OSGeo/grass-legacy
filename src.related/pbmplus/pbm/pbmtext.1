@@ -1,0 +1,64 @@
+.TH pbmtext 1 "5 January 1991"
+.SH NAME
+pbmtext - render text into a bitmap
+.SH SYNOPSIS
+.B pbmtext
+.RB [ -font
+.IR fontfile ]
+.RI [ text ]
+.SH DESCRIPTION
+.PP
+Takes the specified text, either a single line from the command
+line or multiple lines from standard input, and renders it
+into a bitmap.
+.SH OPTIONS
+.PP
+By default, pbmtext uses a built-in font.
+You can also specify your own font with the
+.B -font
+flag.
+The
+.I fontfile
+is a pbm file, created in a very specific way.
+In your window system of choice, display the following text
+in the desired (fixed-width) font:
+.nf
+
+    M ",/^_[`jpqy| M
+
+    /  !"#$%&'()*+ /
+    < ,-./01234567 <
+    > 89:;<=>?@ABC >
+    @ DEFGHIJKLMNO @
+    _ PQRSTUVWXYZ[ _
+    { \\]^_`abcdefg {
+    } hijklmnopqrs }
+    ~ tuvwxyz{|}~  ~
+
+    M ",/^_[`jpqy| M
+
+.fi
+Do a screen grab or window dump of that text, using for instance
+.IR xwd ,
+.IR xgrabsc ,
+or
+.IR screendump .
+Convert the result into a pbm file.
+If necessary, use
+.I pnmcut
+to remove everything except the text.
+Finally, run it through
+.I pnmcrop
+to make sure the edges are right up against the text.
+.I pbmtext
+can figure out the sizes and spacings from that.
+.SH "SEE ALSO"
+pbm(5), pnmcut(1), pnmcrop(1)
+.SH AUTHOR
+Copyright (C) 1991 by Jef Poskanzer.
+.\" Permission to use, copy, modify, and distribute this software and its
+.\" documentation for any purpose and without fee is hereby granted, provided
+.\" that the above copyright notice appear in all copies and that both that
+.\" copyright notice and this permission notice appear in supporting
+.\" documentation.  This software is provided "as is" without express or
+.\" implied warranty.
