@@ -1,0 +1,132 @@
+
+
+
+grow(1)              GRASS Reference Manual               grow(1)
+
+
+
+NAME
+     grow - Generate output with contiguous areas grown by one
+     (GRASS Tool)
+
+SYNOPSIS
+     grow
+
+DESCRIPTION
+     Grow generates an output from the input by adding one cell
+     around the perimeter of areas.  An area consists of any
+     contiguous clump of cells with non-zero category values.  No
+     distinction is made between differing category values within
+     an area.  Rather, a border is grown around the outside of
+     the entire contiguous set of non-zero cells.
+
+     The output will not go outside of the current window.  Thus,
+     if a contiguous area in the input extends to the edge of the
+     current window, no new border cells can be added to that
+     side of the area.
+
+     Growth around a rectangular area in the input will occur
+     straight out from each edge, but not diagonally from the
+     corners of the rectangle.  Thus, the "grown" border area
+     will contain lines along the edge of the original rectangle,
+     but the corners of the border will not be squared off.
+     Instead, the lines of the border which go along each side of
+     the original rectangle will touch only at the corners of the
+     cells at the end of each line.
+
+     The user is given the option of creating an output which is
+     completely zero-one, regardless of category values in the
+     input In this case, all cells with a non-zero value in the
+     input are assigned to category 1 in the output If the user
+     does not choose this option, these cells will retain their
+     original non-zero category value.  In either case, all cells
+     whose category value is changed from 0 during the growing
+     process are given a category value of 1.
+
+     The grow command is useful in representing the boundary of
+     one or more areas. this case, the zero-one output option
+     should NOT be used. Then the input can be subtracted from
+     the output using the Gmapcalc command.  All original will be
+     subtracted out, leaving the boundary areas only.  This
+     resulting zero-one boundary depiction can be displayed over
+     other related using Doverlay.
+
+NOTES
+     If the resolution of the current window does not agree with
+     the resolution of the input unintended resampling of the
+     original may occur.  The user should be sure that the
+     current window is set properly.
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+grow(1)              GRASS Reference Manual               grow(1)
+
+
+
+SEE ALSO
+     Ggrow[2G]
+
+AUTHOR
+     Marjorie Larson, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
