@@ -1,0 +1,50 @@
+.TH pgmtoppm 1 "11 January 1991"
+.SH NAME
+pgmtoppm - colorize a portable graymap into a portable pixmap
+.SH SYNOPSIS
+.B pgmtoppm
+.I colorspec
+.RI [ pgmfile ]
+.br
+.B pgmtoppm
+.IB colorspec1 - colorspec2
+.RI [ pgmfile ]
+.br
+.B pgmtoppm -map
+.I mapfile
+.RI [ pgmfile ]
+.SH DESCRIPTION
+Reads a portable graymap as input.
+Colorizes it by multiplying the the gray values by specified color or colors,
+and produces a portable pixmap as output.
+.PP
+If only one color is specified, black in the pgm file stays black and
+white in the pgm file turns into the specified color in the ppm file.
+If two colors (separated by a dash) are specified, then black gets mapped
+to the first color and white gets mapped to the second.
+.PP
+The colors can be specified in three ways.  One, as a name, assuming
+that a pointer to an X11-style color names file was compiled in.  Two,
+as an X11-style hexidecimal number: #rgb, #rrggbb, #rrrgggbbb, or
+#rrrrggggbbbb.  Three, as a triplet of decimal floating point numbers
+separated by commas: r.r,g.g,b.b.
+.PP
+Also, the
+.B -map
+flag lets you specify an entire colormap to be used.
+The mapfile is just a
+.I ppm
+file; it can be any shape, all that matters
+is the colors in it and their order.
+In this case, black gets mapped into the first
+color in the map file, and white gets mapped to the last.
+.SH "SEE ALSO"
+rgb3toppm(1), ppmtopgm(1), ppmtorgb3(1), ppm(5), pgm(5)
+.SH AUTHOR
+Copyright (C) 1991 by Jef Poskanzer.
+.\" Permission to use, copy, modify, and distribute this software and its
+.\" documentation for any purpose and without fee is hereby granted, provided
+.\" that the above copyright notice appear in all copies and that both that
+.\" copyright notice and this permission notice appear in supporting
+.\" documentation.  This software is provided "as is" without express or
+.\" implied warranty.
