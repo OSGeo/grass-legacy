@@ -14,7 +14,8 @@ Institutions:
 
  University of Illinois at Urbana-Champaign
    Helena Mitasova <helena@gis.uiuc.edu> (interpolation modules, NVIZ, G3D)
-   William Brown   <brown@gis.uiuc.edu>  (libraries, interpolation modules, NVIZ, G3D)
+   William Brown   <brown@gis.uiuc.edu>  (libraries, interpolation modules, 
+					  NVIZ, G3D)
 
  National Center for Supercomputing Applications
    Lubos Mitas (G3D)
@@ -33,22 +34,26 @@ GRASS 5 Core Team (most have CVS access):
  Roger Bivand    <Roger.Bivand@nhh.no>        ("R" statistical language support)
  Radim Blazek    <Radim.Blazek@dhv.cz>        (DBMS support, ps.map, d.dm)
  Bill Brown      <brown@gomez.gis.uiuc.edu>   (grid3D and related)
- Huidae Cho      <hdcho@geni.knu.ac.kr>       (FreeBSD, r.topmodel, r.topidx, ...)
+ Huidae Cho      <hdcho@geni.knu.ac.kr>       (FreeBSD,r.topmodel,r.topidx,...)
  David D Gray    <ddgray@armadce.demon.co.uk> (Vector, SQL support)
  Jaro Hofierka   <hofierka@geomodel.sk>       (NVIZ port, grid3D and related)
- Justin Hickey   <jhickey@impact1.hpcc.nectec.or.th>   (GRASS initialization, new env var handling, SGI)
+ Justin Hickey   <jhickey@impact1.hpcc.nectec.or.th>   (GRASS initialization, 
+						new env var handling, SGI)
  John Huddleston <jhudd@lamar.colostate.edu>  (Windows/Cygnus port)
  Bill Hughes     <bhughes@grasshoppernet.com> (64bit compliance)
- Andreas Lange   <Andreas.Lange@Rhein-Main.de> (SGI/Irix compliance, Proj/Datum support)
+ Andreas Lange   <Andreas.Lange@Rhein-Main.de> (SGI/Irix compliance, 
+						Proj/Datum support)
  Pierre de Mouveaux <pmx@audiovu.com>         (NVIZ)
  Lubos Mitas     <lmitas@ncsa.uiuc.edu>       (grid3D and related)
- Helena Mitasova <helena@gomez.gis.uiuc.edu>  (grid3D and related, spline interpolation)
+ Helena Mitasova <helena@gomez.gis.uiuc.edu>  (grid3D and related, 
+						spline interpolation)
  Eric Mitchell   <emitchell@altaira.com>      (new Makefile system)
  Markus Neteler  <neteler@geog.uni-hannover.de> (GRASS 5 organization, ...)
- Bernhard Reiter <bernhard@intevation.de>       (license, CVS)
+ Bernhard Reiter <bernhard@intevation.de>     (License, CVS, Bugfixes)
  Alexander Shevlakov <sixote@yahoo.com>       (PostgreSQL/GRASS interface)
- Frank Warmerdam <warmerda@home.com>          (GDAL, SHAPE implementation, new GRASS I/O library)
- Michel Wurtz    <mw@engees.u-strasbg.fr>     (ESRI E00 support)
+ Frank Warmerdam <warmerda@home.com>          (GDAL, SHAPE implementation, 
+						new GRASS I/O library)
+ Michel Wurtz    <mw@teledetection.fr>        (ESRI E00 support)
 
 Significant contributions (very incomplete, please add):
  Angus Carr      <apcarr@flash.lakeheadu.ca> (ERDAS LAN)
@@ -61,8 +66,9 @@ User support:
 
 
 Former programmers:
- Jacques Bouchard    <bouchard@onera.fr>        (tcltkgrass, bugfixes)
- Brook Milligan      <brook@trillium.NMSU.Edu>  (initial autoconf implementation)
+ Jacques Bouchard    <bouchard@onera.fr>     (tcltkgrass, bugfixes)
+ Brook Milligan      <brook@trillium.NMSU.Edu>  
+					     (initial autoconf implementation)
  Phisan Santitamnont <fsvpss@eng.chula.ac.th>   (bugfixes)
 
 
