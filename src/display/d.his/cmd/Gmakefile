@@ -1,0 +1,10 @@
+OFILES =  main.o his.o init_his.o
+
+$(BIN_MAIN_CMD)/d.his: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) ${GISLIB} $(TERMLIB)
+
+his_color: his_color.o his.o
+	$(CC) $(LDFLAGS) -o $@ his_color.o his.o ${GISLIB} $(TERMLIB)
+$(GISLIB): #
+$(DISPLAYLIB): #
+$(RASTERLIB): #
