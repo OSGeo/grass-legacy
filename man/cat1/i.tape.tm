@@ -1,7 +1,7 @@
 
 
 
-i.tape.tm            GRASS Reference Manual             i.tape.tm
+i.tape.tm <main>     GRASS Reference Manual      <main> i.tape.tm
 
 
 
@@ -60,14 +60,14 @@ IMAGE IDENTIFICATION MENU
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-i.tape.tm            GRASS Reference Manual             i.tape.tm
+i.tape.tm <main>     GRASS Reference Manual      <main> i.tape.tm
 
 
 
@@ -126,14 +126,14 @@ i.tape.tm            GRASS Reference Manual             i.tape.tm
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
 
 
 
-i.tape.tm            GRASS Reference Manual             i.tape.tm
+i.tape.tm <main>     GRASS Reference Manual      <main> i.tape.tm
 
 
 
@@ -192,14 +192,14 @@ ROW AND COLUMN EXTRACTION
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
 
 
 
-i.tape.tm            GRASS Reference Manual             i.tape.tm
+i.tape.tm <main>     GRASS Reference Manual      <main> i.tape.tm
 
 
 
@@ -258,7 +258,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         4
+GRASS 4.1                U.S. Army CERL                         4
 
 
 
