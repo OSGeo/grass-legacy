@@ -1,0 +1,13 @@
+EXTRA_CFLAGS=$(CAN_CLEAR)
+OBJ = cats.o mapset_msc.o
+
+all: $(GISLIB)
+
+$(GISLIB): $(OBJ)
+	$(AR)
+
+mapset_msc.o: $(LIBDIR)/gis.h $(LIBDIR)/gisdefs.h
+
+version.h: $(VERSION_FILE)
+	echo 'static char *VERSION_STRING = "@(#) GRASS $(VERSION_NUMBER) ($(VERSION_DATE))";' > $@
+...: #
