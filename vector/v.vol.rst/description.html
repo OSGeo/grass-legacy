@@ -1,16 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>s.vol.rst</title>
+<title>v.vol.rst</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
 <body bgcolor="white">
 <h2>NAME</h2>
-<em><b>s.vol.rst</b></em>  - Interpolates point data to a G3D grid volume using regularized spline with tension (RST) algorithm
+<em><b>v.vol.rst</b></em>  - Interpolates vector point data to a G3D grid volume using regularized spline with tension (RST) algorithm
 <h2>SYNOPSIS</h2>
-<b>s.vol.rst</b><br>
-<b>s.vol.rst help</b><br>
-<b>s.vol.rst</b> <b>input</b>=<em>string</em>  [<b>cellinp</b>=<em>string</em>]   [<b>field</b>=<em>integer</em>]   [<b>tension</b>=<em>float</em>]   [<b>smooth</b>=<em>float</em>]   [<b>devi</b>=<em>string</em>]   [<b>maskmap</b>=<em>string</em>]   [<b>segmax</b>=<em>integer</em>]   [<b>dmin</b>=<em>float</em>]   [<b>npmin</b>=<em>integer</em>]   [<b>wmult</b>=<em>float</em>]   [<b>zmult</b>=<em>float</em>]   [<b>cellout</b>=<em>string</em>]   [<b>elev</b>=<em>string</em>]   [<b>gradient</b>=<em>string</em>]   [<b>aspect1</b>=<em>string</em>]   [<b>aspect2</b>=<em>string</em>]   [<b>ncurv</b>=<em>string</em>]   [<b>gcurv</b>=<em>string</em>]   [<b>mcurv</b>=<em>string</em>]  
+<b>v.vol.rst</b><br>
+<b>v.vol.rst help</b><br>
+<b>v.vol.rst</b> <b>input</b>=<em>string</em>  [<b>cellinp</b>=<em>string</em>]   [<b>field</b>=<em>integer</em>]   [<b>tension</b>=<em>float</em>]   [<b>smooth</b>=<em>float</em>]   [<b>devi</b>=<em>string</em>]   [<b>maskmap</b>=<em>string</em>]   [<b>segmax</b>=<em>integer</em>]   [<b>dmin</b>=<em>float</em>]   [<b>npmin</b>=<em>integer</em>]   [<b>wmult</b>=<em>float</em>]   [<b>zmult</b>=<em>float</em>]   [<b>cellout</b>=<em>string</em>]   [<b>elev</b>=<em>string</em>]   [<b>gradient</b>=<em>string</em>]   [<b>aspect1</b>=<em>string</em>]   [<b>aspect2</b>=<em>string</em>]   [<b>ncurv</b>=<em>string</em>]   [<b>gcurv</b>=<em>string</em>]   [<b>mcurv</b>=<em>string</em>]  
 
 
 <h3>Parameters:</h3>
@@ -87,7 +87,7 @@
 </body></html>
 <H2>DESCRIPTION</H2>
 
-<p><i>s.vol.rst</i> interpolates the values to 3-dimensional grid from point
+<p><i>v.vol.rst</i> interpolates the values to 3-dimensional grid from point
  data (climatic stations, drill holes etc.) given in a 3D sites file named
  <i>input</i>.&nbsp; Output g3d file is <i>elev</i>. The 3-dimensional grid
  is given by the current 3D region. If the options <i>cellinp</i> and <i>cellout</i>
@@ -131,7 +131,7 @@ interpolation  is controlled by <i>npmin</i> , the value of which must be
 larger than <i>segmax</i>  and less than 700. This limit of 700 was selected
 to ensure the numerical  stability and efficiency of the algorithm. </p>
       
-<p><i>s.vol.rst</i> uses regularized spline with tension for interpolation
+<p><i>v.vol.rst</i> uses regularized spline with tension for interpolation
  from point data (as described in Mitasova and Mitas, 1993). The implementation
  has an improved segmentation procedure based on Oct-trees which enhances
 the efficiency for large data sets. </p>
@@ -233,7 +233,8 @@ Talmi and Gilat, 1977 or Wahba, 1990. </p>
 <h2>SEE ALSO</h2>
 <a href="g3.region.html">g3.region</a>,
 <a href="s.in.ascii.html">s.in.ascii</a>,
-<a href="s.vol.idw.html">s.vol.idw</a>,
+<a href="s.in.ascii.html">v.in.ascii</a>,
+<a href="v.vol.idw.html">v.vol.idw</a>,
 <a href="r3.mask.html">r3.mask</a>,
 <a href="v.surf.rst.html">v.surf.rst</a>
 
