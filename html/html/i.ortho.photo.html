@@ -50,23 +50,33 @@ options:
 2) Select/Modify imagery group target<BR>
 3) Select/Modify target elevation model <BR>
 4) Select/Modify imagery group camera <BR>
-
+<BR>
 <DT>Transformation Parameter Computation:
 <DD>
 5) Compute image-to-photo transformation parameters<BR>
-6) Compute photo-to-target transformation parameters<BR>
-7) Initialize exposure station parameters<BR>
-
+6) Initialize exposure station parameters<BR>
+7) Compute photo-to-target transformation parameters<BR>
+<BR>
 <DT>Ortho-rectification Option:
 <DD>
 8) Ortho-rectify imagery group raster files
-
+<BR>
 <DT>RETURN to exit
 <DD>&gt;
 
 </DL>
 
-The options are described as follows:
+To ortho-rectify aerial images the user has to follow the menu options step by
+step. Generally the user builds a target location containing a projected DEM 
+and a map reference (topo sheet or other map). Another xy-location will 
+contain the aerial photo. The entire rectification process is started within 
+the xy-location. First the target to the projected location has to be set
+(i.target), then the image references (fiducial points) will be defined. After
+describing the camera parameters, reference points from aerial image to the
+topo sheet from the target location will be set. The local elevation will be
+taken from the target DEM. Finally the aerial image will be rectified.
+<p>
+The options to follow are described as follows:
 
 <DL>
 <DT><EM>Select/Modify imagery group</EM>
