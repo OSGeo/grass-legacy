@@ -42,9 +42,9 @@
  *
  */
 
+#include "gis.h"
 #include "Vect.h"
 #include "values.h"
-#include "dig_head.h"
 
 /**********************************************************************/
 GenToDigArea(ascii,VectMap,neatline,filename)
@@ -82,6 +82,7 @@ char *filename;
 {
 	char   inbuf[1024];
 	char   tmpbuf[1024];
+	char   tmp[1024];
 	char   *G_whoami();
 	char   *G_date();
 	int    id;
@@ -89,7 +90,7 @@ char *filename;
 	int    almost_done=0;
 	int    itmp;
 	int    vertex_count=0;
-	int    vertex_max=-MAXINT;
+	int    vertex_max= -MAXINT;
 	int    n_points=0;
 	int    n_dig_lines=0;
 	int    day, yr;
@@ -114,8 +115,20 @@ char *filename;
  */
 	do {
 		if (!fgets(inbuf,1024,ascii)) return (-1);
-		if (sscanf(inbuf,"%lf %lf",&xtmp,&ytmp)==2)
+		strcpy(tmpbuf, inbuf);
+		if ((strcmp(G_squeeze(inbuf),"END") == 0) && almost_done)
+			done = 1;
+		else if (strcmp(G_squeeze(inbuf),"END") == 0)
 		{
+			almost_done = 1;
+			if (vertex_count > vertex_max)
+				vertex_max = vertex_count;
+                }
+		else
+		{
+		   process_inp(tmpbuf);
+		   if (sscanf(tmpbuf,"%lf %lf",&xtmp,&ytmp)==2)
+		   {
 			if (first)
 			{
 				xmax=xmin=xtmp;
@@ -132,17 +145,12 @@ char *filename;
 
 
 			almost_done = 0;
-		}
-		else if (sscanf(inbuf,"%d",&itmp)==1)
-		{
-			if (vertex_count > vertex_max)
-				vertex_max = vertex_count;
+		   }
+	      	   else if (sscanf(tmpbuf,"%d",&itmp)==1)
+		   {
 			vertex_count = 0;
-		}
-		else if ((strcmp(G_squeeze(inbuf),"END") == 0) && almost_done)
-			done = 1;
-		else if (strcmp(G_squeeze(inbuf),"END") == 0)
-			almost_done = 1;
+		   }
+                }
 	/*DEBUG*//*fprintf (stderr, "inbuf:  %s\n", inbuf);*/
 	}while (!done);
 	rewind(ascii);
@@ -217,7 +225,8 @@ char *filename;
 			sscanf(inbuf,"%s",tmpbuf);
 			if (strcmp(G_squeeze(tmpbuf),"END")==0)
 				done = 1;
-		}   while (sscanf(inbuf,"%d",&id)!=1 && !done);
+			process_inp(tmpbuf);
+		}   while (sscanf(tmpbuf,"%d",&id)!=1 && !done);
 
 		if (!done)
 		{
@@ -230,13 +239,18 @@ char *filename;
 				if (NULL == fgets(inbuf,1024,ascii))
 				    break;
 				sscanf(inbuf,"%s",tmpbuf);
+				strcpy(tmp, inbuf);
 				if (strcmp(G_squeeze(tmpbuf),"END")==0)
 					almost_done=1;
-				else if (sscanf(inbuf,"%lf %lf",&xtmp,&ytmp)==2) 
+			        else 
 				{
+			            process_inp(tmp);
+				    if (sscanf(tmp,"%lf %lf",&xtmp,&ytmp)==2) 
+				    {
 					*x++ = xtmp;
 					*y++ = ytmp;
 					n_points++;
+                                    }
 				}
 			}      while (!almost_done);
 
@@ -252,6 +266,7 @@ char *filename;
 			}
 		}
 	}while (!done);
+
 
 	Vect_destroy_line_struct (Points);
 	if (n_dig_lines > 0)
