@@ -37,7 +37,7 @@ main (argc, argv) char *argv[];
     int row, col;		/* Holds row/col value. */
     int lrow, lcol;		/* Values passed to functions. */
     double a,e;
-    int zone, len;
+    int zone;
     char buf[1024], buf1[1024];
     struct
     {
@@ -50,7 +50,6 @@ main (argc, argv) char *argv[];
     } flag;
     int getrow();
     char *spheroid_list();
-    G_zero (buf, len);
 
     G_gisinit(argv[0]);
 
@@ -186,8 +185,7 @@ main (argc, argv) char *argv[];
     n = lseek (utm_fd, 0L, 2);
     if (n < nr)
     {
-fprintf(stderr, "ROWS * COLS = %d,  LSEEK = %d\m", nr, n);
-	fprintf (stderr, "%s - file size to small for input specifications\n",
+fprintf(stderr, "ROWS * COLS = %d,  LSEEK = %d\n", nr, n);	fprintf (stderr, "%s - file size to small for input specifications\n",
 		parm.input->answer);
 	exit(1);
     }
