@@ -1,0 +1,4 @@
+cgisun1:/usr/FRAME /usr/FRAME nfs ro,soft,retry=1 1 1
+cg38603:/usr3/grass4.0 /usr/grass4.0 nfs rw,soft,retry=1 1 1
+cgisun4:/cgis /cgis nfs rw,soft,retry=1 1 1
+cgisun5:/usr/mlh /usr/mlh nfs rw,soft,retry=1 1 1
