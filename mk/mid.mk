@@ -15,6 +15,7 @@ MAN6            = $(GISBASE)/man/6
 HELP            = $(GISBASE)/man/help
 HTML            = $(GISBASE)/documents
 SCRIPTS         = $(GISBASE)/scripts
+LOCALE          = $(GISBASE)/locale
 
 # other
 CFLAGS      = -I$(INCLUDE_DIR) -I$(CONFIG_DIR) $(COMPILE_FLAGS) $(EXTRA_CFLAGS) $(USE_TERMIO)
