@@ -266,6 +266,7 @@ int main( int argc , char ** argv )
 		fprintf( stderr , "\ngnGrpWrite error: %s\n" , gnGrpStrerror( & graph ) );
 		return 1;
 	}
+	close( fd );
 	printf( "done.\n" );
 
 
