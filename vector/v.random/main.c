@@ -41,7 +41,7 @@
 #include <unistd.h>
 #include <string.h>
 #include "gis.h"
-#include "site.h"
+#include "Vect.h"
 
 #ifndef RAND_MAX 
 #define RAND_MAX (pow(2.0,31.0)-1) 
@@ -58,11 +58,12 @@ double drand48()
 
 int main (int argc, char *argv[])
 {
-  char *output, errmsg[256];
+  char *output;
   double (*rng) (), max;
-  int i, c, n, b;
-  Site *s;
-  FILE *fd;
+  int i, n, b;
+  struct Map_info Out;
+  struct line_pnts *Points;
+  struct line_cats *Cats;
   struct Cell_head window;
   struct GModule *module;
   struct
@@ -104,25 +105,12 @@ int main (int argc, char *argv[])
   n = atoi(parm.nsites->answer);
   b = (flag.drand48->answer == '\0') ? 0 : 1;
 
-  s = G_site_new_struct (c, 2, 0, 1);
-
-  if (strcmp(output,"stdout")==0 || strcmp(output,"-")==0)
-    fd=stdout;
-  else
-    fd = G_fopen_sites_new (output);
-  if (fd == NULL)
-  {
-    sprintf (errmsg, "%s can't create sites file [%s]",
-	     G_program_name (), output);
-    G_fatal_error(errmsg);
-  }
-  else if (n <= 0)
-  {
-    sprintf (errmsg, "%s given an illegal number of sites [%d]",
-	     G_program_name (), n);
-    G_fatal_error(errmsg);
+  if (n <= 0) {
+    G_fatal_error ( "%s given an illegal number of sites [%d]", G_program_name (), n);
   }
 
+  Vect_open_new (&Out, output, 0);
+  
   if (b)
   {
     rng=drand48;
@@ -137,18 +125,28 @@ int main (int argc, char *argv[])
   }
 
   G_get_window (&window);
-  s->cattype=CELL_TYPE;
+
+  Points = Vect_new_line_struct ();
+  Cats = Vect_new_cats_struct ();
   
   for(i=0; i<n; ++i)
   {
-    s->east=rng()/max*(window.west-window.east)+window.east;
-    s->north=rng()/max*(window.north-window.south)+window.south;
-    s->ccat=i+1;
-    s->dbl_att[0]=i+1;
-    G_site_put (fd, s);
+      double x, y;
+	
+      Vect_reset_line ( Points );
+      Vect_reset_cats ( Cats );
+      
+      x = rng()/max*(window.west-window.east)+window.east;
+      y = rng()/max*(window.north-window.south)+window.south;
+
+      Vect_append_point ( Points, x, y, 0.0 );
+      Vect_cat_set (Cats, 1, i+1);
+      
+      Vect_write_line ( &Out, GV_POINT, Points, Cats );
   }
-  if ( fd != NULL )
-      G_sites_close (fd);
+
+  Vect_build (&Out, stderr);
+  Vect_close (&Out);
 
   return (0);
 }
