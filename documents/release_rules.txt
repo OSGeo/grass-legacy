@@ -38,6 +38,13 @@ How to release GRASS 5 binaries:
    Get GDAL sources at:
     http://www.remotesensing.org/gdal/
 
+   Run again
+    gmakelinks5
+   or 
+    gmakelinks5 |wc -l
+   
+   Should be > 400 modules.
+
 
 2. Package GRASS bins with
 
