@@ -99,7 +99,10 @@ F_generate (char *drvname, char *dbname, char *tblname, char *key, int keyval,
 
 	    sprintf (buf, "<INPUT type=hidden name=%s value='%s'>", F_DRIVER_FNAME, drvname );
 	    db_append_string (&html, buf);
-	    sprintf (buf, "<INPUT type=hidden name=%s value='%s'>", F_DATABASE_FNAME, dbname );
+	    /* Note: because html_library.tcl failes to parse
+	    *  <INPUT name=abc value='dbname=xxx'> and returnes
+	    *  name="xxx" value="dbname=xxx" order of value and name parameters is changed */
+	    sprintf (buf, "<INPUT type=hidden value='%s' name=%s>", dbname, F_DATABASE_FNAME );
 	    db_append_string (&html, buf);
 	    sprintf (buf, "<INPUT type=hidden name=%s value='%s'>", F_TABLE_FNAME, tblname );
 	    db_append_string (&html, buf);
