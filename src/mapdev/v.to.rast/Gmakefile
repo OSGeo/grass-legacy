@@ -1,37 +1,24 @@
-EXTRA_CFLAGS = $(VECT_INCLUDE) 
+PGM=v.to.rast
+EXTRA_CFLAGS = $(VECT_INCLUDE)
 
-OFILES = \
-	do_areas.o \
-	do_lines.o \
-	do_sites.o \
-	find_line.o \
-	bres_line.o \
-	polyfill.o \
-	clock.o \
-	update_hist.o \
-	vtoc.o
+LIST = main.o vect2rast.o raster.o \
+	do_areas.o do_lines.o do_sites.o \
+	support.o inform.o getformat.o\
+	clock.o
 
-CFILES = \
-	do_areas.c \
-	do_lines.c \
-	do_sites.c \
-	find_line.c \
-	bres_line.c \
-	polyfill.c \
-	clock.c \
-	update_hist.c \
-	vtoc.c
-
-all: $(BIN_MAIN_CMD)/v.to.rast
-
-$(BIN_MAIN_CMD)/v.to.rast: $(OFILES) $(VECTLIB) $(GISLIB)
-	rm -f a.out $@
-	$(CC) $(LDFLAGS) $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB)
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(VECTLIB) $(GISLIB)
+	rm -f a.out
+	$(CC) $(LDFLAGS) $(LIST) $(VECTLIB) $(GISLIB) $(MATHLIB)
 	mv a.out $@
 
+getformat.o: format.h
+raster.o: format.h
 
-$(OFILES):	vtoc.h
+$(GISLIB): #
+$(VECTLIB): #
 
-
-saber_src:
-	#load $(EXTRA_CFLAGS) $(CFLAGS) ../Vlib/*.c ../diglib/*.c $(CFILES) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)
+saber:
+	#unload -lgis
+	#load *.c $(VECTLIB)
+	#load $(LIBDIR)/gis/area_poly1.c
+	#load -lgis
