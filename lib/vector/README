@@ -20,4 +20,4 @@ Generate PDF document (requires Latex):
 	make pdfdocs
 
 Delete ./latex and ./html docs directories:
-	make veryclean
+	make cleandocs
