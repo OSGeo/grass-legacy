@@ -823,7 +823,8 @@ if test -z "$opengl_includes" && test -n "$USE_OPENGL"; then
     opengl_includes="/usr/include/GL /usr/local/include/GL \
     /usr/include/Mesa/GL /usr/local/include/Mesa/GL \
     /usr/local/Mesa/include/GL /opt/include/GL /opt/Mesa/include/GL \
-    /usr/X11R6/include /usr/X11R6/include/GL /opt/Mesa/include"
+    /usr/X11R6/include /usr/X11R6/include/GL /opt/Mesa/include \
+    /usr/X11r6/include"
 fi
 if test -n "$opengl_includes"; then
     AC_MSG_CHECKING(GL/gl.h and GL/GLwMDrawA.h)
@@ -854,7 +855,7 @@ if test -z "$opengl_libs" && test -n "$USE_OPENGL"; then
     opengl_libs="/usr/lib /usr/local/lib /usr/lib/X11 \
     /usr/local/Mesa/lib /usr/X11R6/lib /usr/local/X11/lib \
     /usr/local/X11R6/lib /usr/lib/Mesa /opt/lib /opt/Mesa \
-    /opt/Mesa/lib"
+    /opt/Mesa/lib /usr/X11r6/lib"
 fi
 
 if test -n "$opengl_libs"; then
