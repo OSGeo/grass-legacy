@@ -111,7 +111,7 @@ int Service_Xevent (void)
                            1, SCREEN_RIGHT) ;
 		/* Handle backing store */
                 if (!backing_store) {
-fprintf(stderr,"Destroying old pixmap\n");
+/* fprintf(stderr,"Destroying old pixmap\n"); */
                     XFreePixmap(dpy, bkupmap);
                     bkupmap = XCreatePixmap(dpy, grwin, SC_WID, SC_HITE, 
                         xwa.depth);
