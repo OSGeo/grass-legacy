@@ -10,7 +10,6 @@ main (int argc, char *argv[])
     int i,n;
     struct GModule *module;
     struct Option **parm, *p;
-    struct Flag *overwr;
     char *old, *new;
     int nrmaps;
     char *mapset, *location_path, **rmaps;
@@ -44,10 +43,6 @@ main (int argc, char *argv[])
 	p->description = G_malloc (64);
 	sprintf (p->description, "%s file(s) to be renamed", list[n].alias);
     }
-
-    overwr		= G_define_flag();
-    overwr->key		= 'o';
-    overwr->description	= "Overwrite <new> file(s)";
 
     if (G_parser(argc, argv))
 	exit(1);
@@ -83,7 +78,7 @@ main (int argc, char *argv[])
 		fprintf (stderr, "ERROR: <%s> not found\n", old);
 		continue;
 	    }
-	    if (!overwr->answer && find (n, new, ""))
+	    if (find (n, new, "") && !(module->overwrite))
 	    {
 		fprintf (stderr, "ERROR: <%s> already exists in mapset <%s>\n", new, find (n, new, ""));
 		continue;

@@ -1702,6 +1702,9 @@ static int check_overwrite (void)
 	    over = atoi ( overstr );
 	}
 
+	if ( overwrite || over )
+	    module_info.overwrite = 1;
+
 	opt= &first_option;
 	while(opt != NULL)
 	{
