@@ -60,7 +60,7 @@ parse_command_line (int argc, char *argv[])
     parms.units->required = NO ;
     parms.units->multiple = NO ;
     parms.units->options      = "mi,miles,f,feet,me,meters,k,kilometers,a,acres,h,hectares";
-    parms.units->description = "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectaces)";
+    parms.units->description = "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares)";
 
     parms.col1 = G_define_option();
     parms.col1->key    = "col1";
