@@ -36,7 +36,11 @@ int do_masking (void)
     fprintf(PS.fp, "%.2f %.2f TR\n", PS.map_left, PS.map_bot);
     fprintf(PS.fp, "%d %d scale\n", 
 	(int)(width + 0.5), (int)(PS.map_pix_high + 0.5));
-    fprintf(PS.fp, "%.3f %.3f %.3f C\n", PS.r0, PS.g0, PS.b0);
+    if (PS.mask_color == 1){
+	fprintf(PS.fp, "%.3f %.3f %.3f C\n", PS.mask_r, PS.mask_g, PS.mask_b);
+    } else {
+	fprintf(PS.fp, "%.3f %.3f %.3f C\n", PS.r0, PS.g0, PS.b0);
+    }
     fprintf(PS.fp, "cw ch true\n");
     fprintf(PS.fp, "[cw 0 0 ch neg 0 ch]\n");
     fprintf(PS.fp, "{currentfile imgstrg readhexstring pop}\n");
