@@ -30,7 +30,7 @@ AL3=-lcore4 -lnlsrtl3 -lcore4 -lnlsrtl3 -lnetv2 -lnttcp -lnetwork -lncr -lnetv2
 AL4=-lnttcp -lnetwork -lclient -lvsn -lcommon -lgeneric  -lepc -lnlsrtl3  -lcore4
 AL5=-lnlsrtl3 -lcore4 -lnlsrtl3 -lclient -lvsn -lcommon -lgeneric -lnlsrtl3  -lcore4
 AL6=-lnlsrtl3 -lcore4 -lnlsrtl3
-AL7=-lnsl -lgen -lmw -ldl -lelf -laio -lposix4 -lc -lm -lm
+AL7=-lnsl -lgen -lmw -ldl -lelf -laio -lposix4 -lc -lm
 
 CAT2=`cat /u/app/oracle/product/8.0.5/lib/sysliblist`
 
