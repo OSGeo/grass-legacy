@@ -541,6 +541,7 @@ case "$GRASS_GUI" in
     # Check for tcltk interface
     tcltk)
         "$GISBASE/scripts/d.m" &
+        "$GISBASE/bin/tcltkgrass" &
 	;;
     
     # Ignore others
