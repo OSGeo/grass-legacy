@@ -12,6 +12,7 @@
 #include "Map_proto.h"
 #include "dig_curses.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int 
 slid_window_w_mouse (unsigned char type, struct line_pnts *Xpoints)
@@ -31,14 +32,14 @@ slid_window_w_mouse (unsigned char type, struct line_pnts *Xpoints)
     while (1)
     {
 	_Clear_base ();
-	_Write_base (12, "Buttons:") ;
-	_Write_base (13, "   Left:   Specify new window CENTER") ;
+	_Write_base (12, _("Buttons:")) ;
+	_Write_base (13, _("   Left:   Specify new window CENTER")) ;
 #ifdef ANOTHER_BUTTON
-	_Write_base (14, "   Middle: Abort/Quit");
-	Write_base  (15, "   Right:  Specify new window CENTER") ;
+	_Write_base (14, _("   Middle: Abort/Quit"));
+	Write_base  (15, _("   Right:  Specify new window CENTER")) ;
 #else
-	_Write_base (14, "   Middle: Specify new window CENTER");
-	Write_base  (15, "   Right:  Abort/Quit") ;
+	_Write_base (14, _("   Middle: Specify new window CENTER"));
+	Write_base  (15, _("   Right:  Abort/Quit")) ;
 #endif
 
 	button = (pan_threshold != 0.0 ? -1 : 0);

@@ -15,6 +15,7 @@
 #include        "ginput.h" 
 #include "dig_curses.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 #define	LEAVE -1
 #define	ADD_MORE 0
@@ -123,7 +124,7 @@ while (1)
 
 				default:
 					Clear_info() ;
-					Write_info(2, "  Points weren't spread out enough to setup the map.") ;
+					Write_info(2, _("  Points weren't spread out enough to setup the map.")) ;
 					sleep (3) ;
 					Clear_info() ;
 					show_reg_menu() ;
@@ -163,21 +164,21 @@ show_reg_menu (void)
 		/*  how are the buttons numbered on the cursor  */
 		first_button = D_start_button() ;
 #ifdef USE_KEYS
-		Write_info( 1, " USE DIGITIZER CURSOR OR KEYBOARD FOR INPUT") ;
+		Write_info( 1, _(" USE DIGITIZER CURSOR OR KEYBOARD FOR INPUT")) ;
 #else
 		if (D_cursor_buttons() < 5)
-		    Write_info( 1, "USE KEYBOARD FOR INPUT") ;
+		    Write_info( 1, _("USE KEYBOARD FOR INPUT")) ;
 		else
-		    Write_info( 1, "USE DIGITIZER CURSOR FOR INPUT") ;
+		    Write_info( 1, _("USE DIGITIZER CURSOR FOR INPUT")) ;
 #endif
 
-		sprintf( buf, "  Key <%d> - register point,      Key<%d> - add more points", first_button, first_button+3) ;
+		sprintf( buf, _("  Key <%d> - register point,      Key<%d> - add more points"), first_button, first_button+3) ;
 		Write_info( 2, buf) ;
 
-		sprintf( buf, "  Key <%d> - skip point,          Key<%d> - accept residuals", first_button+1, first_button+4) ;
+		sprintf( buf, _("  Key <%d> - skip point,          Key<%d> - accept residuals"), first_button+1, first_button+4) ;
 		Write_info( 3, buf) ;
 
-		sprintf( buf, "  Key <%d> - unregister point", first_button+2) ;
+		sprintf( buf, _("  Key <%d> - unregister point"), first_button+2) ;
 		Write_info( 4, buf) ;
 
 		return(0) ;
@@ -188,10 +189,10 @@ show_reg_menu (void)
 	* the room to use the keyboard.
 	*/
 
-	Write_info( 1, "  r - register point,      A - accept residuals") ;
-	Write_info( 2, "  s - skip a point") ;
-	Write_info( 3, "  u - unregister point") ;
-	Write_info( 4, "  a - add more points") ;
+	Write_info( 1, _("  r - register point,      A - accept residuals")) ;
+	Write_info( 2, _("  s - skip a point")) ;
+	Write_info( 3, _("  u - unregister point")) ;
+	Write_info( 4, _("  a - add more points")) ;
 #endif
 }
 

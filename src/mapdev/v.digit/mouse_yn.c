@@ -4,6 +4,7 @@
 #include "local_proto.h"
 #include "raster.h"
 #include "dig_curses.h"
+#include "glocale.h"
 
 int mouse_yes_no (char *header)
 {
@@ -14,10 +15,10 @@ int mouse_yes_no (char *header)
 
 	_Clear_base () ;
 	Write_base(10, header) ;
-	Write_base(12, "    Buttons:") ;
-	Write_base(13, "       Left:   Yes") ;
-	Write_base(14, "       Middle: No") ;
-	Write_base(15, "       Right:  No") ;
+	Write_base(12, _("    Buttons:")) ;
+	Write_base(13, _("       Left:   Yes")) ;
+	Write_base(14, _("       Middle: No")) ;
+	Write_base(15, _("       Right:  No")) ;
 
 
 	R_get_location_with_pointer ( &screen_x, &screen_y, &button) ;
@@ -33,14 +34,14 @@ int mouse_next_prev (char *header)
 
 	_Clear_base () ;
 	Write_base(10, header) ;
-	Write_base(12, "    Buttons:") ;
-	Write_base(13, "       Left:   Previous line") ;
+	Write_base(12, _("    Buttons:")) ;
+	Write_base(13, _("       Left:   Previous line")) ;
 #ifdef ANOTHER_BUTTON
-	Write_base(14, "       Middle: Quit") ;
-	Write_base(15, "       Right:  Next line") ;
+	Write_base(14, _("       Middle: Quit")) ;
+	Write_base(15, _("       Right:  Next line")) ;
 #else
-	Write_base(14, "       Middle: Next line") ;
-	Write_base(15, "       Right:  Quit") ;
+	Write_base(14, _("       Middle: Next line")) ;
+	Write_base(15, _("       Right:  Quit")) ;
 #endif
 
 	R_get_location_with_pointer ( &screen_x, &screen_y, &button) ;
@@ -57,14 +58,14 @@ int mouse_yes_no_zoom (char *header,
 
 	screen_x = screen_y = 1;
 
-	sprintf(buf, "       Middle: Zoom%s",
-			(type == LINE || type == AREA ? "/Continue" : "")) ;
+	sprintf(buf, _("       Middle: Zoom%s"),
+			(type == LINE || type == AREA ? _("/Continue") : "")) ;
 	_Clear_base () ;
 	Write_base(10, header) ;
-	Write_base(12, "    Buttons:") ;
-	Write_base(13, "       Left:   Yes") ;
+	Write_base(12, _("    Buttons:")) ;
+	Write_base(13, _("       Left:   Yes")) ;
 	Write_base(14, buf) ;
-	Write_base(15, "       Right:  No") ;
+	Write_base(15, _("       Right:  No")) ;
 
 
 	R_get_location_with_pointer ( &screen_x, &screen_y, &button) ;

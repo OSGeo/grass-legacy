@@ -12,6 +12,7 @@
 #include "Map_proto.h"
 #include "keyboard.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 #define SCALE_FACTOR 0.8
 
@@ -31,14 +32,14 @@ top:
     while (1)
     {
 	_Clear_base ();
-	_Write_base (12, "Buttons:") ;
-	_Write_base (13, "   Left:   Zoom in") ;
+	_Write_base (12, _("Buttons:")) ;
+	_Write_base (13, _("   Left:   Zoom in")) ;
 #ifdef ANOTHER_BUTTON
-	_Write_base (14, "   Middle: Abort/Quit") ;
-	Write_base  (15, "   Right:  Zoom out") ;
+	_Write_base (14, _("   Middle: Abort/Quit")) ;
+	Write_base  (15, _("   Right:  Zoom out")) ;
 #else
-	_Write_base (14, "   Middle: Zoom out") ;
-	Write_base  (15, "   Right:  Abort/Quit") ;
+	_Write_base (14, _("   Middle: Zoom out")) ;
+	Write_base  (15, _("   Right:  Abort/Quit")) ;
 #endif
 
         screen_x = screen_y = 1;

@@ -14,6 +14,7 @@
 #include "keyboard.h"
 #include "debug.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 static int screen_x = 1, screen_y = 1;
 
@@ -25,16 +26,17 @@ int find_node_with_mouse (double *x, double *y, double thresh, char *header)
     double    ux2, uy2;
     char    buffer[64];
 
+
     _Clear_base ();
     _Write_base(10, header);
-    _Write_base(12, "    Buttons:");
-    _Write_base(13, "       Left:   Choose node");
+    _Write_base(12, _("    Buttons:"));
+    _Write_base(13, _("       Left:   Choose node"));
 #ifdef ANOTHER_BUTTON
-    _Write_base(14, "       Middle: Abort/Quit");
-     Write_base(15, "       Right:  Accept chosen node");
+    _Write_base(14, _("       Middle: Abort/Quit"));
+     Write_base(15, _("       Right:  Accept chosen node"));
 #else
-    _Write_base(14, "       Middle: Accept chosen node");
-     Write_base(15, "       Right:  Abort/Quit");
+    _Write_base(14, _("       Middle: Accept chosen node"));
+     Write_base(15, _("       Right:  Abort/Quit"));
 #endif
 
     node_num = 0;
@@ -56,10 +58,10 @@ int find_node_with_mouse (double *x, double *y, double thresh, char *header)
 		*y = uy1;
 
 		if ( (node_num = dig_which_node (CMap, &ux1, &uy1, thresh))  < 0)
-		    sprintf (buffer, " no node found ");
+		    sprintf (buffer, _(" no node found "));
 		else
 		{
-		    sprintf (buffer, " node#: %d", node_num);
+		    sprintf (buffer, _(" node#: %d"), node_num);
 		    R_standard_color (dcolors[CLR_HIGHLIGHT]);
 		    Blot (&(CMap->Node[node_num].x), &(CMap->Node[node_num].y));
 		}
@@ -69,12 +71,16 @@ int find_node_with_mouse (double *x, double *y, double thresh, char *header)
 	    case MIDDLEB:			/*  quit this */
 		Clear_info ();
 		_Clear_base ();
+		
+		
 		return (node_num);
 		break;
 
 	    case RIGHTB:			/*  coordinates  */
 		Clear_info ();
 		_Clear_base ();
+		
+		
 		return (-1);
 		break;
 	 }
@@ -100,16 +106,16 @@ int find_point_with_mouse (double *x, double *y, int n_points, double thresh)
 
 
     _Clear_base ();
-    sprintf(buffer, "Number of points on line: %d", n_points);
+    sprintf(buffer, _("Number of points on line: %d"), n_points);
     _Write_base(10, buffer);
-    _Write_base(12, "    Buttons:");
-    _Write_base(13, "       Left:   Choose point on line");
+    _Write_base(12, _("    Buttons:"));
+    _Write_base(13, _("       Left:   Choose point on line"));
 #ifdef ANOTHER_BUTTON
-    _Write_base(14, "       Middle: Abort/Quit");
-     Write_base(15, "       Right:  Accept chosen point");
+    _Write_base(14, _("       Middle: Abort/Quit"));
+     Write_base(15, _("       Right:  Accept chosen point"));
 #else
-    _Write_base(14, "       Middle: Accept chosen point");
-     Write_base(15, "       Right:  Abort/Quit");
+    _Write_base(14, _("       Middle: Accept chosen point"));
+     Write_base(15, _("       Right:  Abort/Quit"));
 #endif
 
     point_num = -1;
@@ -138,7 +144,7 @@ int find_point_with_mouse (double *x, double *y, int n_points, double thresh)
 
 		if ( i < n_points)
 		{
-		    sprintf (buffer, " point#: %d", i+1);
+		    sprintf (buffer, _(" point#: %d"), i+1);
 		    /*
 		    ** assume a chosen line is already highlit
 		    **  if Disp_lines, then make it contrast 
@@ -152,7 +158,7 @@ int find_point_with_mouse (double *x, double *y, int n_points, double thresh)
 		}
 		else
 		{
-		    sprintf (buffer, " no point found ");
+		    sprintf (buffer, _(" no point found "));
 		    point_num = -1;
 		}
 
@@ -162,21 +168,25 @@ int find_point_with_mouse (double *x, double *y, int n_points, double thresh)
 	    case MIDDLEB:			/*  quit this  */
 		Clear_info ();
 		_Clear_base ();
+		
+		
 		return (point_num);
 		break;
 
 	    case RIGHTB:			/*  coordinates  */
 		Clear_info ();
 		_Clear_base ();
+		
+
 		return (-1);
 		break;
 	 }
 
 	screen_to_utm(screen_x, screen_y, &ux2, &uy2);
 
-	sprintf(buffer," EAST:  %10.2f", ux1>ux2?ux1:ux2);
+	sprintf(buffer,_(" EAST:  %10.2f"), ux1>ux2?ux1:ux2);
 	    Write_info(3, buffer);
-	sprintf(buffer," NORTH: %10.2f", uy1>uy2?uy1:uy2);
+	sprintf(buffer,_(" NORTH: %10.2f"), uy1>uy2?uy1:uy2);
 	    Write_info(4, buffer);
 
     }
@@ -194,16 +204,17 @@ int new_point_with_mouse (double *x, double *y, char *header)
 
     *x = 0.0 ;  *y = 0.0;
 
+
     _Clear_base ();
     _Write_base(10, header);
-    _Write_base(12, "    Buttons:");
-    _Write_base(13, "       Left:   Choose this position");
+    _Write_base(12, _("    Buttons:"));
+    _Write_base(13, _("       Left:   Choose this position"));
 #ifdef ANOTHER_BUTTON
-    _Write_base(14, "       Middle: Abort/Quit");
-     Write_base(15, "       Right:  Accept chosen point position");
+    _Write_base(14, _("       Middle: Abort/Quit"));
+     Write_base(15, _("       Right:  Accept chosen point position"));
 #else
-    _Write_base(14, "       Middle: Accept chosen point position");
-     Write_base(15, "       Right:  Abort/Quit");
+    _Write_base(14, _("       Middle: Accept chosen point position"));
+     Write_base(15, _("       Right:  Abort/Quit"));
 #endif
 
 
@@ -227,12 +238,13 @@ int new_point_with_mouse (double *x, double *y, char *header)
 		*y = uy1;
 		R_standard_color (dcolors[CLR_HIGHLIGHT]);
 		Blot (x, y);
-		Write_info (1, " Point location:");
+		Write_info (1, _(" Point location:"));
 		break;
 
 	    case MIDDLEB:			/*  quit this  */
 		Clear_info ();
 		_Clear_base ();
+				
 		return (0);
 		break;
 
@@ -246,15 +258,16 @@ int new_point_with_mouse (double *x, double *y, char *header)
 		*y = 0.0;
 		Clear_info ();
 		_Clear_base ();
+		
 		return (0);
 		break;
 	 }
 
 	screen_to_utm(screen_x, screen_y, &ux2, &uy2);
 
-	sprintf(buffer," EAST:  %10.2f", ux1>ux2?ux1:ux2);
+	sprintf(buffer,_(" EAST:  %10.2f"), ux1>ux2?ux1:ux2);
 	    Write_info(3, buffer);
-	sprintf(buffer," NORTH: %10.2f", uy1>uy2?uy1:uy2);
+	sprintf(buffer,_(" NORTH: %10.2f"), uy1>uy2?uy1:uy2);
 	    Write_info(4, buffer);
     }
 }
@@ -303,26 +316,26 @@ int _find_line_with_mouse (int type_mask, char *header, int (*call)(), int type_
     _Write_base(10, header);
     if (type_mask == DOT)
     {
-	_Write_base(12, "    Buttons:");
-	_Write_base(13, "       Left:   Choose site");
+	_Write_base(12, _("    Buttons:"));
+	_Write_base(13, _("       Left:   Choose site"));
 #ifdef ANOTHER_BUTTON
-	_Write_base(14, "       Middle: Abort/Quit");
-	 Write_base(15, "       Right:  Accept chosen site");
+	_Write_base(14, _("       Middle: Abort/Quit"));
+	 Write_base(15, _("       Right:  Accept chosen site"));
 #else
-	_Write_base(14, "       Middle: Accept chosen site");
-	 Write_base(15, "       Right:  Abort/Quit");
+	_Write_base(14, _("       Middle: Accept chosen site"));
+	 Write_base(15, _("       Right:  Abort/Quit"));
 #endif
     }
     else
     {
-	_Write_base(12, "    Buttons:");
-	_Write_base(13, "       Left:   Choose line");
+	_Write_base(12, _("    Buttons:"));
+	_Write_base(13, _("       Left:   Choose line"));
 #ifdef ANOTHER_BUTTON
-	_Write_base(14, "       Middle: Abort/Quit");
-	 Write_base(15, "       Right:  Accept chosen line");
+	_Write_base(14, _("       Middle: Abort/Quit"));
+	 Write_base(15, _("       Right:  Accept chosen line"));
 #else
-	_Write_base(14, "       Middle: Accept chosen line");
-	 Write_base(15, "       Right:  Abort/Quit");
+	_Write_base(14, _("       Middle: Accept chosen line"));
+	 Write_base(15, _("       Right:  Abort/Quit"));
 #endif
     }
 
@@ -374,7 +387,7 @@ int _find_line_with_mouse (int type_mask, char *header, int (*call)(), int type_
 		line = dig_point_by_line (CMap, ux1, uy1, ux2, uy2, type_mask);
 		if (! line)
 		{
-		    sprintf (buffer, " no line found ");
+		    sprintf (buffer, _(" no line found "));
 		    Write_info(1, buffer);
 		}
 		else
@@ -382,13 +395,16 @@ int _find_line_with_mouse (int type_mask, char *header, int (*call)(), int type_
 		    type = CMap->Line[line].type;
 /*DEBUG*/ debugf ("calling V1_read_line from find_line ()\n");
 		    if(0 > V1_read_line(CMap, &Gpoints, CMap->Line[line].offset))
+			{
 			return (0);
+			}
+			
 		    highlight_line (type, &Gpoints, line, CMap);
 
 		    if (CMap->Line[line].att)	/* for scs */
-			sprintf (buffer, " Line#: %d  Category: %d", line, CMap->Att[CMap->Line[line].att].cat);
+			sprintf (buffer, _(" Line#: %d  Category: %d"), line, CMap->Att[CMap->Line[line].att].cat);
 		    else
-			sprintf (buffer, " Line#: %d  Category: (unlabeled)", line);
+			sprintf (buffer, _(" Line#: %d  Category: (unlabeled)"), line);
 		    Write_info(1, buffer);
 
 		    ret = line;
@@ -401,6 +417,7 @@ int _find_line_with_mouse (int type_mask, char *header, int (*call)(), int type_
 	    case MIDDLEB:				/* return line */
 		Clear_info ();
 		_Clear_base ();
+		
 		return (ret);
 		break;
 
@@ -409,7 +426,10 @@ int _find_line_with_mouse (int type_mask, char *header, int (*call)(), int type_
 		{
 		    display_line (type, &Gpoints, line, CMap);
 		}
+		{
+
 		return (0);
+		}
 		break;
 	 }
     }

@@ -12,6 +12,7 @@
 #include "ginput.h"
 #include "local_proto.h"
 #include "digit.h"
+#include "glocale.h"
 
 #define		BIN    "bin"
 /*  Sun needs a null string, not just a null  */
@@ -50,22 +51,22 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"A menu-driven, highly interactive map "
+		_("A menu-driven, highly interactive map "
 		"development program used for vector digitizing, editing, "
-		"labeling and converting vector data to raster format.";
+		"labeling and converting vector data to raster format.");
 
 	if (argc > 1 && !strcmp (argv[1], "help"))
 	{
 fprintf(stderr,"\n\n");
-fprintf(stderr,"Digit is an interactive vector map digitizing and editing\n");
-fprintf(stderr,"  tool designed to work with the GRASS vector 'dig' files.\n");
-fprintf (stderr, "\nThere are NO arguments required.\n\n");
+fprintf(stderr,_("Digit is an interactive vector map digitizing and editing\n"));
+fprintf(stderr,_("  tool designed to work with the GRASS vector 'dig' files.\n"));
+fprintf (stderr, _("\nThere are NO arguments required.\n\n"));
 	    exit (1);
 	}
 
 	/* digit sets DPG_LOCK when forking a shell */
 	if (NULL != getenv ("DPG_LOCK"))
-	    fprintf (stderr, "Sorry, You are already running DIGIT\n"),exit(-1);
+	    fprintf (stderr, _("Sorry, You are already running DIGIT\n")),exit(-1);
 
 	system("clear") ;
 
@@ -82,7 +83,7 @@ fprintf (stderr, "\nThere are NO arguments required.\n\n");
 
 	if ( (fp = fopen(Driver.name, "r"))  ==  NULL)
 	{
-		fprintf(stderr, "Can't open file for read: %s\n", Driver.name) ;
+		fprintf(stderr, _("Can't open file for read: %s\n"), Driver.name) ;
 		fprintf(stderr, "Contact your GRASS system administrator\n") ;
 		exit(-1) ;
 	}
@@ -101,7 +102,7 @@ fprintf (stderr, "\nThere are NO arguments required.\n\n");
 	/*  update the DIGITIZER variable in .gisrc  */
 		G_setenv( "DIGITIZER", Driver.name) ;
 
-		fprintf (stdout,"\n Selected digitizer is: %-20s \n\n", Driver.name) ;
+		fprintf (stdout,_("\n Selected digitizer is: %-20s \n\n"), Driver.name) ;
 	}
 
 	fclose(fp) ;
@@ -127,9 +128,9 @@ fprintf( stderr, "\nDEBUG: name: %s, device: %s, prog: %s,  desc: %s \n",
 
 askagain:
 	fprintf (stdout,"\n");
-	fprintf (stdout,"\nEnter the name of a map to work with.\n");
-	fprintf (stdout,"    If name is entered that does not already exist, it\n");
-	fprintf (stdout,"    will be created at this time.\n\n");
+	fprintf (stdout,_("\nEnter the name of a map to work with.\n"));
+	fprintf (stdout,_("    If name is entered that does not already exist, it\n"));
+	fprintf (stdout,_("    will be created at this time.\n\n"));
 	mapset = G_ask_any( " DIGIT FILENAME ", buf, "dig", "digit", 0);
 
 	if ( ! mapset)
@@ -145,28 +146,28 @@ askagain:
 	    char buff[1024];
 	if (NULL == G_find_file ("dig", buf, G_mapset ()))
 	{
-	    sprintf (tmpbuf, "You requested to create new file: '%s'. Is this correct? ", buf);
+	    sprintf (tmpbuf, _("You requested to create new file: '%s'. Is this correct? "), buf);
 	    if (!G_yes (tmpbuf, 0))
 		goto askagain;
 
 	    proj = G_projection ();
 	    if (proj == 0)
 	    {
-		if (!G_yes ( "Mapset units are undefined. Continue? ", 1))
+		if (!G_yes ( _("Mapset units are undefined. Continue? "), 1))
 		    return (-1);
 	    }
 	    else
 	    {
-		fprintf (stdout, "\n\nCurrent mapset is %s.\n", G_database_projection_name ());
-		sprintf (buff, "  Is this map in %s %s? ", 
+		fprintf (stdout, _("\n\nCurrent mapset is %s.\n"), G_database_projection_name ());
+		sprintf (buff, _("  Is this map in %s %s? "), 
 		  G_database_projection_name (), G_database_unit_name (1));
 		if (!G_yes (buff, 1))
 		{
-		    fprintf (stdout, "Sorry, GRASS does not currently support mixing map units\n");
+		    fprintf (stdout, _("Sorry, GRASS does not currently support mixing map units\n"));
 		    return (-1);
 		}
 		else
-		    fprintf (stdout, "Thank You\n");
+		    fprintf (stdout, _("Thank You\n"));
 		fprintf (stdout, "\n");
 	    }
 	}
@@ -184,12 +185,12 @@ askagain:
 	sigint = (int (*)())signal(SIGINT, SIG_IGN) ;
 	sigquit = (int (*)())signal(SIGQUIT, SIG_IGN) ;
 
-        if (strcmp (Driver.name, "none"))
+        if (strcmp (Driver.name, _("none")))
         {
             lock = lock_file( lock_name, pid) ;
             if ( ! lock)
             {
-                fprintf( stderr, "Digitizer is already being used.\n") ;
+                fprintf( stderr, _("Digitizer is already being used.\n")) ;
                 exit(0) ;
             }
             if ( lock < 0)

@@ -11,6 +11,7 @@
 #include "line_pnts.h"
 #include "dig_curses.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 /* returns new line number */
 static int _do_break_line (
@@ -33,7 +34,7 @@ static int _do_break_line (
     if (nline < 0)
     {
 	BEEP;
-	Write_info (2, "Error creating new line.");
+	Write_info (2, _("Error creating new line."));
 	sleep (4);
 	return (-1);
     }
@@ -65,13 +66,13 @@ break_line (struct Map_info *map)
 	Clear_info ();
 
 	/* find_line_with_mouse  fills Gpoints */
-	line_from = find_line_with_mouse (LINE|AREA, "Line to Break:", NULL);
+	line_from = find_line_with_mouse (LINE|AREA, _("Line to Break:"), NULL);
 	line = line_from;
 	if (line_from <= 0)
 	    return (0);
 
 
-	get_point (&ux, &uy, "Select break point on line:");
+	get_point (&ux, &uy, _("Select break point on line:"));
 	if ( ux == 0.0 && uy == 0.0)
 	{
 	    /* reset the highlit line */
@@ -123,7 +124,7 @@ break_line_w_point (struct Map_info *map, int line, double ux, double uy)
     if (0 > (V1_read_line (map, &Points, Line->offset)))
     {
 	BEEP;
-	Write_info (2, "Error reading line.");
+	Write_info (2, _("Error reading line."));
 	sleep (3);
 	return (-1);
     }
@@ -226,7 +227,7 @@ break_line_w_point (struct Map_info *map, int line, double ux, double uy)
     if (0 >(V1_read_line (map, &NPoints, map->Line[line1].offset)))
     {
 	BEEP;
-	Write_info (2, "Error reading line.");
+	Write_info (2, _("Error reading line."));
 	sleep (3);
 	return (-1);
     }

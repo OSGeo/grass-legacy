@@ -19,6 +19,7 @@
 #include	<stdio.h>
 #include	"bin_digit.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 #define		BUFFERSIZE	256
 #define		COMMENT_CHAR	'#'
@@ -32,9 +33,9 @@ show_driver_names (FILE *fp, struct driver_desc *Driver)
 
 /*  show available digitizers on the system   */
 
-	fprintf (stdout,"\n\n\n\n\n                 Available  Digitizers\n\n") ;
-	fprintf (stdout,"           Name                   Description\n") ;
-	fprintf (stdout,"           ----                   -----------\n") ;
+	fprintf (stdout,_("\n\n\n\n\n                 Available  Digitizers\n\n")) ;
+	fprintf (stdout,_("           Name                   Description\n")) ;
+	fprintf (stdout,_("           ----                   -----------\n")) ;
 	
 	fseek( fp, 0L, 0) ;
 	cnt = 1 ;
@@ -43,7 +44,7 @@ show_driver_names (FILE *fp, struct driver_desc *Driver)
 	{
 		if (status < 0)
 		{
-				fprintf( stderr,"\n Error in reading digitcap file.\n") ;
+				fprintf( stderr,_("\n Error in reading digitcap file.\n")) ;
 				fprintf(stderr, "\n Contact your GRASS system administrator\n") ;
 				fclose(fp) ;
 				exit(-1) ;
@@ -130,7 +131,7 @@ get_driver (FILE *fp, int which_driver, struct driver_desc *Driver)
 
 		if (status < 0)
 		{
-				fprintf( stderr," Error in reading digitcap file.\n") ;
+				fprintf( stderr,_(" Error in reading digitcap file.\n")) ;
 				fprintf(stderr, "Contact your GRASS system administrator\n") ;
 				fclose(fp) ;
 				exit(-1) ;
@@ -162,7 +163,7 @@ get_driver_name (FILE *fp, char *selected_name, struct driver_desc *Driver)
 
 		if (status < 0)
 		{
-				fprintf( stderr," Error in reading digitcap file.\n") ;
+				fprintf( stderr,_(" Error in reading digitcap file.\n")) ;
 				fprintf(stderr, "Contact your GRASS system administrator\n") ;
 				fclose(fp) ;
 				exit(-1) ;

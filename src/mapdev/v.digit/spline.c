@@ -22,6 +22,7 @@
 #include "line_pnts.h"
 #include "display_line.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int smooth_line (struct Map_info *map)
 {
@@ -30,7 +31,7 @@ int smooth_line (struct Map_info *map)
    {
        Clear_info ();
 
-      line_from = find_line_with_mouse (LINE|AREA, "Line to smooth:", NULL);
+      line_from = find_line_with_mouse (LINE|AREA, _("Line to smooth:"), NULL);
       line = line_from;
       if (line_from <= 0)
         return (0);
@@ -68,7 +69,7 @@ int angle_in_line (struct Map_info *map, int line)
     {
         BEEP;
         display_line (type, &Points,line,map);
-        Write_info (2, "Error reading line.");
+        Write_info (2, _("Error reading line."));
         sleep (3);
         return (-1);
     }  
@@ -88,7 +89,7 @@ int angle_in_line (struct Map_info *map, int line)
      if (n_points < 3)
      {
        display_line (type, &Gpoints,line,map);
-       Write_info (2, "Not enough points in line.");
+       Write_info (2, _("Not enough points in line."));
        sleep (1);
        return (-1);
      } 
@@ -133,7 +134,7 @@ int angle_in_line (struct Map_info *map, int line)
      if (nline < 0)
      {
         BEEP;
-        Write_info (2, "Error creating new line.");
+        Write_info (2, _("Error creating new line."));
         sleep (4);
         return (-1);
      }
@@ -155,7 +156,7 @@ int angle_in_line (struct Map_info *map, int line)
     if (0 > (V1_read_line (map, &NPoints,map->Line[nline].offset)))
     {
         BEEP;
-        Write_info (2, "Error reading line.");
+        Write_info (2, _("Error reading line."));
         sleep (3);
         return (-1);
     }

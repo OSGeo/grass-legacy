@@ -14,6 +14,7 @@
 #include "dig_curses.h"
 #include "Map_proto.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 static  double  scale ;
 
@@ -45,12 +46,12 @@ int check_scale (struct Map_info *Map)
 		}
 		Clear_info () ;
 	
-		Write_info ( 1, " Map scales are not close to each other.") ;
+		Write_info ( 1, _(" Map scales are not close to each other.")) ;
 	
-		sprintf ( buf, " Current map scale: %d.   Calculated map scale: %12f", cur_scale, calc_scale) ;
+		sprintf ( buf, _(" Current map scale: %d.   Calculated map scale: %12f"), cur_scale, calc_scale) ;
 		Write_info ( 2, buf) ;
 	
-		Write_info ( 3, " Enter new map scale or <RETURN> to use calculated scale: ") ;
+		Write_info ( 3, _(" Enter new map scale or <RETURN> to use calculated scale: ")) ;
 	
 		cur_scale = -1 ;
 		Get_curses_text (buf) ;

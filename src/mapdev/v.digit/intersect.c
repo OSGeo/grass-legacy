@@ -8,6 +8,7 @@
 #include "Map_proto.h"
 #include "dig_curses.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 #define	YES    1
 #define	NO    2
@@ -57,13 +58,13 @@ int intersect_line (struct Map_info *map)
 #endif /* BREAKCNT */
       Clear_info ();
     /* find_line_with_mouse  fills Gpoints */
-      line_to = find_line_with_mouse (LINE|AREA, "Line to snap to:", NULL);
+      line_to = find_line_with_mouse (LINE|AREA, _("Line to snap to:"), NULL);
       line = line_to;
       if (line_to <= 0)
 /*	  return (0);*/
           break;
 
-      get_point (&ux, &uy, "Select snap intersection:");
+      get_point (&ux, &uy, _("Select snap intersection:"));
       if ( ux == 0.0 && uy == 0.0)
         {
 	/* reset the highlit line */
@@ -76,12 +77,12 @@ int intersect_line (struct Map_info *map)
     /* let break_line redraw the new lines */
 
       if ( (node_num = dig_which_node (CMap, &ux, &uy, thresh))  < 0)
-         Write_info (2, " no node found ");
+         Write_info (2, _(" no node found "));
       else
          {
          sprintf (message, " node#: %d", node_num);
          Write_info( 2, message);
-         line_from = find_line_with_mouse (LINE|AREA, " Line to be snapped:", NULL);
+         line_from = find_line_with_mouse (LINE|AREA, _(" Line to be snapped:"), NULL);
          line = line_from;
 
          if (line_from <= 0)

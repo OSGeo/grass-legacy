@@ -8,6 +8,7 @@
 #include "digit.h"
 #include "dig_curses.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int 
 Help (struct Menu_head *Menu)
@@ -28,7 +29,7 @@ Help (struct Menu_head *Menu)
 	if ((fp = fopen (nohelp, "r")) == NULL)
 	{
 	    _Clear_help ();
-	    _Write_help (2, " No help available\n");
+	    _Write_help (2, _(" No help available\n"));
 	    Show_help ();
 	    sleep (3);
 	    goto leave;
@@ -37,10 +38,10 @@ Help (struct Menu_head *Menu)
     _Clear_help ();
     for (line = 1; fgets (buf, BUFSIZ, fp) != NULL && line < 13 ; line++)
     {
-	dig_rmcr (buf);
-	_Write_help (line, buf);
+	/*dig_rmcr (buf);*/
+	_Write_help (line, _(buf));
     }
-    _Write_help (14, "  Press option for more help. <ESC> to end");
+    _Write_help (14, _("  Press option for more help. <ESC> to end"));
     fclose (fp);
 
     Show_help ();
@@ -49,7 +50,7 @@ Help (struct Menu_head *Menu)
 	register int i, cnt;
 	char buf[BUFSIZ], tmp[10];
 
-	strcpy (buf, "Press one of: ");
+	strcpy (buf, _("Press one of: "));
 	cnt = 0;
 	for (i = 0 ; NULL !=  Menu->item[i].text ; i++)
 	{
@@ -61,11 +62,11 @@ Help (struct Menu_head *Menu)
 	    }
 	}
 	if (!cnt)
-	    Write_info (2, "Only Global Menu options area available from this screen");
+	    Write_info (2, _("Only Global Menu options area available from this screen"));
 	else
 	{
 	    Write_info (2, buf);
-	    Write_info (4, "   for more information.  Press the <ESC> key to leave Help");
+	    Write_info (4, _("   for more information.  Press the <ESC> key to leave Help"));
 	}
     }
 
@@ -87,14 +88,14 @@ Help (struct Menu_head *Menu)
 	    if ((fp = fopen (file, "r")) == NULL)
 	    {
 		    _Clear_info ();
-		    Write_info (2, " No help available\n");
+		    Write_info (2, _(" No help available\n"));
 	    }
 	    else
 	    {
 	    for (line = 1; fgets (buf, BUFSIZ, fp) != NULL && line < 5; line++)
 		{
-		    dig_rmcr (buf);
-		    _Write_info (line, buf);
+		    /*dig_rmcr (buf);*/
+		    _Write_info (line, _(buf));
 		}
 	    fclose (fp);
 	    }

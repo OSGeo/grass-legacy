@@ -12,6 +12,7 @@
 #include "debug.h"
 #include "dig_curses.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int interact (void)
 {
@@ -79,6 +80,6 @@ int interact (void)
 
 int Main_info (void)
 {
-    Base_string (13, 21, Dig_Enabled   ? "Enabled  " : "Disabled ");
+    Base_string (13, 21, Dig_Enabled   ? _("Enabled  ") : _("Disabled "));
     return 0;
 }

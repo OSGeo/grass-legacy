@@ -20,6 +20,7 @@
 #include "dig_curses.h"
 #include "Map_proto.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int 
 Toolbox (void)
@@ -68,7 +69,7 @@ Toolbox (void)
 		    fprintf (stderr, "\n Creating Cell File\n");
 		    gorun ("vect.to.cell", N_name);
 		    flush_keyboard ();
-		    fprintf (stderr, "Press enter to continue. ");
+		    fprintf (stderr, _("Press enter to continue. "));
 		    {
 			char buf[1024];
 			gets (buf);
@@ -84,7 +85,7 @@ Toolbox (void)
 
 		    gorun ("Dcell", N_name);
 		    flush_keyboard ();
-		    fprintf (stderr, "Press enter to continue. ");
+		    fprintf (stderr, _("Press enter to continue. "));
 		    {
 			char buf[1024];
 			gets (buf);
@@ -147,7 +148,7 @@ Toolbox (void)
 			/* reset back to REAL user */
 			if (0 > set_uid_to_user ())
 			    _exit (127);
-			fprintf (stderr, "\nType 'exit' to return\n");
+			fprintf (stderr, _("\nType 'exit' to return\n"));
 			execl ("/bin/csh", "csh", 0);
 			_exit (127);
 		    }
