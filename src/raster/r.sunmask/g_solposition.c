@@ -58,7 +58,6 @@ long G_calc_solar_position (double longitude, double latitude, double timezone,
     struct Key_Value *in_proj_info, *in_unit_info; /* projection information of input map */
     struct pj_info iproj;    /* input map proj parameters  */
     struct pj_info oproj;    /* output map proj parameters  */
-    UV data;
     extern struct Cell_head window;
     int inside;
         
