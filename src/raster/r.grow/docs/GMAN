@@ -1,4 +1,3 @@
-.\" %W% %G%
 .TH Ggrow 2 G-language
 .SH NAME
 Ggrow \- generate output layer grown by one pixel
