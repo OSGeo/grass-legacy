@@ -12,6 +12,18 @@
 #include "gis.h"
 static int add_aspect_colors (struct Colors *, DCELL, DCELL);
 
+
+/*!
+ * \brief make aspect colors
+ *
+ * Generates a color table for aspect data.
+ *
+ *  \param colors
+ *  \param min
+ *  \param max
+ *  \return int
+ */
+
 int G_make_aspect_colors (struct Colors *colors, CELL min, CELL max)
 {
     G_init_colors (colors);

@@ -5,6 +5,19 @@
 #define MAX_COLORS 1024
 #define DEVIATION 128
 
+
+/*!
+ * \brief make random colors
+ *
+ * Generates random colors. Good as a first pass at a
+ * color table for nominal data.
+ *
+ *  \param colors
+ *  \param min
+ *  \param max
+ *  \return int
+ */
+
 int G_make_random_colors ( struct Colors *colors , CELL min,CELL max)
 {
     unsigned char red, grn, blu;
