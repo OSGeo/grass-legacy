@@ -167,7 +167,7 @@ FTINC               = @FTINC@
 FTLIB               = @FTLIB@
 
 #PROJ.4:
-PROJINC             = @PROJINC@
+PROJINC             = @PROJINC@ $(GDALCFLAGS)
 PROJLIB             = @PROJLIB@
 
 #OPENDWG:
