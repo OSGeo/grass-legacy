@@ -248,6 +248,7 @@ int main (int argc, char *argv[])
                 G_fatal_error("site_list does not have any category values");
             }
         default: /* Already caught.. */
+        break;
     }
     
     if (str_index > strs) {
