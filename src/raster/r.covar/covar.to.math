@@ -1,0 +1,25 @@
+#!/bin/sh
+# converts output from r.covar to Mathematic format
+# including requests to compute eigenvectors
+#
+awk '
+	BEGIN {printf("m={")}
+
+	NR>1  {printf(",")}
+	 
+	      {
+	       N = NF
+	       printf("{")
+	       for(i=1;i<NF;i++) printf("%s,",$i)
+	       printf("%s}",$NF)
+	      }
+
+	END   {
+	       print "};"
+	       print "MatrixForm[m]"
+	       print "e=N[Eigenvalues[m],15]"
+	       print "v=N[Eigenvectors[m],15]"
+	       for(i=1;i<=N;i++) {
+		print "N[v[[" i "]]/Sqrt[v[[" i "]] . v[[" i "]]],15]"
+	       }
+	      }' $*
