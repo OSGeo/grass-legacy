@@ -4,7 +4,7 @@
 ** v.in.sdts:
 ** 
 ** Usage:
-**  v.in.sdts [-il] catd=name [output=name] [dbpath=name] [domain=name]
+**  v.in.sdts [-il] catd=name output=name [dbpath=name] [domain=name]
 **    [map=name] [theme=name] [manifold=name]
 ** 
 ** Flags:
@@ -82,7 +82,7 @@ main (int argc, char *argv[])
     new = G_define_option();
     new->key            = "output";
     new->type            = TYPE_STRING;
-    new->required        = NO;
+    new->required        = YES;
     new->multiple        = NO;
     new->gisprompt        = "new,dig,vector";
     new->description        = "vector output file";
