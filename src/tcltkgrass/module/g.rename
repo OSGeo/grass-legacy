@@ -1,0 +1,12 @@
+interface_build {
+    g.rename 0
+    {Copies data files in the user's current mapset search path and location.}
+    {entry rast {Raster maps (old,new):} 0 raster}
+    {entry vect {Vector maps (old,new):} 0 vector}
+    {entry icon {Icon files (old,new):} 0 icon}
+    {entry labels {Label files (old,new):} 0 label}
+    {entry sites {Site files (old,new):} 0 sites}
+    {entry region {Region definition files (old,new):} 0 region}
+    {entry group {Imagery group files (old,new):} 0 group}
+    {entry 3dview {3dview files (old,new):} 0 3dview}
+}
