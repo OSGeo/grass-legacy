@@ -5,6 +5,7 @@
 #include "globals.h"
 #include "local_proto.h"
 #include "raster.h"
+#include "glocale.h"
 
 #ifdef __GNUC_MINOR__
 int quit (int) __attribute__ ((__noreturn__));
@@ -17,8 +18,25 @@ int main (int argc, char *argv[])
 {
     char name[100], mapset[100];
     struct Cell_head cellhd;
+    struct GModule *module;
+    struct Option *grp;
 
     G_gisinit (argv[0]);
+    
+    module = G_define_module();
+    module->description = _("Mark ground control points on image to be rectified.");
+
+    grp = G_define_option();
+    grp->key		 = "group";
+    grp->type		 =  TYPE_STRING;
+    grp->required	 =  YES;
+    grp->gisprompt	 = "old,group,group";
+    grp->description	 = "Name of imagery group";
+
+    if (G_parser(argc,argv))
+	exit(1);
+
+
     G_suppress_masking();	/* need to do this for target location */
 
     interrupt_char = G_intr_char();
@@ -33,19 +51,14 @@ int main (int argc, char *argv[])
    if (R_open_driver() != 0)
 	G_fatal_error ("No graphics device selected");
 
-    if (!I_ask_group_old ("Enter imagery group to be registered", group.name))
-	exit(0);
+    group.name = grp->answer;
+
     if (!I_get_group_ref (group.name, &group.ref))
-    {
-        fprintf (stderr, "Group [%s] contains no files\n", group.name);
-	exit(1);
-    }
+	G_fatal_error("Group [%s] contains no files", group.name);
+
     if (group.ref.nfiles <= 0)
-    {
-	fprintf (stderr, "Group [%s] contains no files\n", group.name);
-	sleep(3);
-	exit(1);
-    }
+	G_fatal_error("Group [%s] contains no files", group.name);
+
 /* write group files to group list file */
     prepare_group_list();
 
