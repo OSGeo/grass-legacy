@@ -1,0 +1,668 @@
+
+state 0
+	$accept : _map_cmnd $end 
+
+	error  shift 9
+	CATS_TKN  shift 13
+	WIN_TKN  shift 12
+	BYE_TKN  shift 17
+	ERA_TKN  shift 16
+	HST_TKN  shift 15
+	HLP_TKN  shift 14
+	NAM_STR  shift 11
+	LP  shift 10
+	.  error
+
+	map_expr  goto 2
+	map_cmnd  goto 1
+	win_expr  goto 3
+	cats_expr  goto 4
+	help_expr  goto 5
+	hist_expr  goto 6
+	eras_expr  goto 7
+	exit_expr  goto 8
+
+state 1
+	$accept :  map_cmnd_$end 
+
+	$end  accept
+	.  error
+
+
+state 2
+	map_cmnd :  map_expr_    (1)
+
+	.  reduce 1
+
+
+state 3
+	map_cmnd :  win_expr_    (2)
+
+	.  reduce 2
+
+
+state 4
+	map_cmnd :  cats_expr_    (3)
+
+	.  reduce 3
+
+
+state 5
+	map_cmnd :  help_expr_    (4)
+
+	.  reduce 4
+
+
+state 6
+	map_cmnd :  hist_expr_    (5)
+
+	.  reduce 5
+
+
+state 7
+	map_cmnd :  eras_expr_    (6)
+
+	.  reduce 6
+
+
+state 8
+	map_cmnd :  exit_expr_    (7)
+
+	.  reduce 7
+
+
+state 9
+	map_cmnd :  error_    (8)
+
+	.  reduce 8
+
+
+state 10
+	map_expr :  LP_NAM_TKN NAM_STR map_expr RP 
+	map_expr :  LP_OVR_TKN NAM_STR INUMBER map_expr RP 
+	map_expr :  LP_OVR_TKN INUMBER NAM_STR map_expr RP 
+	map_expr :  LP_OVR_TKN INUMBER map_expr RP 
+	map_expr :  LP_COV_TKN NAM_STR map_expr RP 
+	map_expr :  LP_AND_TKN map_expr map_expr RP 
+	map_expr :  LP_OR_TKN map_expr map_expr RP 
+	map_expr :  LP_NOT_TKN map_expr RP 
+	map_expr :  LP_GRP_TKN $$17 grp_expr map_expr RP 
+	map_expr :  LP_EXPR_TKN INUMBER RP 
+	map_expr :  LP_NAM_STR RP 
+	help_expr :  LP_HLP_TKN RP 
+
+	AND_TKN  shift 21
+	OR_TKN  shift 22
+	NOT_TKN  shift 23
+	GRP_TKN  shift 24
+	EXPR_TKN  shift 25
+	NAM_TKN  shift 18
+	OVR_TKN  shift 19
+	COV_TKN  shift 20
+	HLP_TKN  shift 27
+	NAM_STR  shift 26
+	.  error
+
+
+state 11
+	map_expr :  NAM_STR_    (21)
+
+	.  reduce 21
+
+
+state 12
+	win_expr :  WIN_TKN_NAM_STR 
+	win_expr :  WIN_TKN_    (23)
+
+	NAM_STR  shift 28
+	.  reduce 23
+
+
+state 13
+	cats_expr :  CATS_TKN_NAM_STR 
+
+	NAM_STR  shift 29
+	.  error
+
+
+state 14
+	help_expr :  HLP_TKN_    (31)
+	help_expr :  HLP_TKN_HLP_TKN 
+	help_expr :  HLP_TKN_NAM_STR 
+	help_expr :  HLP_TKN_AND_TKN 
+	help_expr :  HLP_TKN_OR_TKN 
+	help_expr :  HLP_TKN_NOT_TKN 
+	help_expr :  HLP_TKN_GRP_TKN 
+	help_expr :  HLP_TKN_CATS_TKN 
+	help_expr :  HLP_TKN_EXPR_TKN 
+	help_expr :  HLP_TKN_RANGE_TKN 
+	help_expr :  HLP_TKN_NAM_TKN 
+	help_expr :  HLP_TKN_OVR_TKN 
+	help_expr :  HLP_TKN_COV_TKN 
+	help_expr :  HLP_TKN_WIN_TKN 
+	help_expr :  HLP_TKN_BYE_TKN 
+	help_expr :  HLP_TKN_ERA_TKN 
+	help_expr :  HLP_TKN_HST_TKN 
+	help_expr :  HLP_TKN_HLP_TKN 
+
+	AND_TKN  shift 32
+	OR_TKN  shift 33
+	NOT_TKN  shift 34
+	GRP_TKN  shift 35
+	CATS_TKN  shift 36
+	EXPR_TKN  shift 37
+	RANGE_TKN  shift 38
+	NAM_TKN  shift 39
+	OVR_TKN  shift 40
+	COV_TKN  shift 41
+	WIN_TKN  shift 42
+	BYE_TKN  shift 43
+	ERA_TKN  shift 44
+	HST_TKN  shift 45
+	HLP_TKN  shift 30
+	NAM_STR  shift 31
+	.  reduce 31
+
+
+state 15
+	hist_expr :  HST_TKN_    (28)
+
+	.  reduce 28
+
+
+state 16
+	eras_expr :  ERA_TKN_    (29)
+
+	.  reduce 29
+
+
+state 17
+	exit_expr :  BYE_TKN_    (49)
+
+	.  reduce 49
+
+
+state 18
+	map_expr :  LP NAM_TKN_NAM_STR map_expr RP 
+
+	NAM_STR  shift 46
+	.  error
+
+
+state 19
+	map_expr :  LP OVR_TKN_NAM_STR INUMBER map_expr RP 
+	map_expr :  LP OVR_TKN_INUMBER NAM_STR map_expr RP 
+	map_expr :  LP OVR_TKN_INUMBER map_expr RP 
+
+	NAM_STR  shift 47
+	INUMBER  shift 48
+	.  error
+
+
+state 20
+	map_expr :  LP COV_TKN_NAM_STR map_expr RP 
+
+	NAM_STR  shift 49
+	.  error
+
+
+state 21
+	map_expr :  LP AND_TKN_map_expr map_expr RP 
+
+	NAM_STR  shift 11
+	LP  shift 51
+	.  error
+
+	map_expr  goto 50
+
+state 22
+	map_expr :  LP OR_TKN_map_expr map_expr RP 
+
+	NAM_STR  shift 11
+	LP  shift 51
+	.  error
+
+	map_expr  goto 52
+
+state 23
+	map_expr :  LP NOT_TKN_map_expr RP 
+
+	NAM_STR  shift 11
+	LP  shift 51
+	.  error
+
+	map_expr  goto 53
+
+state 24
+	map_expr :  LP GRP_TKN_$$17 grp_expr map_expr RP 
+	$$17 : _    (17)
+
+	.  reduce 17
+
+	$$17  goto 54
+
+state 25
+	map_expr :  LP EXPR_TKN_INUMBER RP 
+
+	INUMBER  shift 55
+	.  error
+
+
+state 26
+	map_expr :  LP NAM_STR_RP 
+
+	RP  shift 56
+	.  error
+
+
+state 27
+	help_expr :  LP HLP_TKN_RP 
+
+	RP  shift 57
+	.  error
+
+
+state 28
+	win_expr :  WIN_TKN NAM_STR_    (22)
+
+	.  reduce 22
+
+
+state 29
+	cats_expr :  CATS_TKN NAM_STR_    (27)
+
+	.  reduce 27
+
+
+30: reduce/reduce conflict (red'ns 32 and 48 ) on $end
+state 30
+	help_expr :  HLP_TKN HLP_TKN_    (32)
+	help_expr :  HLP_TKN HLP_TKN_    (48)
+
+	.  reduce 32
+
+
+state 31
+	help_expr :  HLP_TKN NAM_STR_    (33)
+
+	.  reduce 33
+
+
+state 32
+	help_expr :  HLP_TKN AND_TKN_    (34)
+
+	.  reduce 34
+
+
+state 33
+	help_expr :  HLP_TKN OR_TKN_    (35)
+
+	.  reduce 35
+
+
+state 34
+	help_expr :  HLP_TKN NOT_TKN_    (36)
+
+	.  reduce 36
+
+
+state 35
+	help_expr :  HLP_TKN GRP_TKN_    (37)
+
+	.  reduce 37
+
+
+state 36
+	help_expr :  HLP_TKN CATS_TKN_    (38)
+
+	.  reduce 38
+
+
+state 37
+	help_expr :  HLP_TKN EXPR_TKN_    (39)
+
+	.  reduce 39
+
+
+state 38
+	help_expr :  HLP_TKN RANGE_TKN_    (40)
+
+	.  reduce 40
+
+
+state 39
+	help_expr :  HLP_TKN NAM_TKN_    (41)
+
+	.  reduce 41
+
+
+state 40
+	help_expr :  HLP_TKN OVR_TKN_    (42)
+
+	.  reduce 42
+
+
+state 41
+	help_expr :  HLP_TKN COV_TKN_    (43)
+
+	.  reduce 43
+
+
+state 42
+	help_expr :  HLP_TKN WIN_TKN_    (44)
+
+	.  reduce 44
+
+
+state 43
+	help_expr :  HLP_TKN BYE_TKN_    (45)
+
+	.  reduce 45
+
+
+state 44
+	help_expr :  HLP_TKN ERA_TKN_    (46)
+
+	.  reduce 46
+
+
+state 45
+	help_expr :  HLP_TKN HST_TKN_    (47)
+
+	.  reduce 47
+
+
+state 46
+	map_expr :  LP NAM_TKN NAM_STR_map_expr RP 
+
+	NAM_STR  shift 11
+	LP  shift 51
+	.  error
+
+	map_expr  goto 58
+
+state 47
+	map_expr :  LP OVR_TKN NAM_STR_INUMBER map_expr RP 
+
+	INUMBER  shift 59
+	.  error
+
+
+state 48
+	map_expr :  LP OVR_TKN INUMBER_NAM_STR map_expr RP 
+	map_expr :  LP OVR_TKN INUMBER_map_expr RP 
+
+	NAM_STR  shift 60
+	LP  shift 51
+	.  error
+
+	map_expr  goto 61
+
+state 49
+	map_expr :  LP COV_TKN NAM_STR_map_expr RP 
+
+	NAM_STR  shift 11
+	LP  shift 51
+	.  error
+
+	map_expr  goto 62
+
+state 50
+	map_expr :  LP AND_TKN map_expr_map_expr RP 
+
+	NAM_STR  shift 11
+	LP  shift 51
+	.  error
+
+	map_expr  goto 63
+
+state 51
+	map_expr :  LP_NAM_TKN NAM_STR map_expr RP 
+	map_expr :  LP_OVR_TKN NAM_STR INUMBER map_expr RP 
+	map_expr :  LP_OVR_TKN INUMBER NAM_STR map_expr RP 
+	map_expr :  LP_OVR_TKN INUMBER map_expr RP 
+	map_expr :  LP_COV_TKN NAM_STR map_expr RP 
+	map_expr :  LP_AND_TKN map_expr map_expr RP 
+	map_expr :  LP_OR_TKN map_expr map_expr RP 
+	map_expr :  LP_NOT_TKN map_expr RP 
+	map_expr :  LP_GRP_TKN $$17 grp_expr map_expr RP 
+	map_expr :  LP_EXPR_TKN INUMBER RP 
+	map_expr :  LP_NAM_STR RP 
+
+	AND_TKN  shift 21
+	OR_TKN  shift 22
+	NOT_TKN  shift 23
+	GRP_TKN  shift 24
+	EXPR_TKN  shift 25
+	NAM_TKN  shift 18
+	OVR_TKN  shift 19
+	COV_TKN  shift 20
+	NAM_STR  shift 26
+	.  error
+
+
+state 52
+	map_expr :  LP OR_TKN map_expr_map_expr RP 
+
+	NAM_STR  shift 11
+	LP  shift 51
+	.  error
+
+	map_expr  goto 64
+
+state 53
+	map_expr :  LP NOT_TKN map_expr_RP 
+
+	RP  shift 65
+	.  error
+
+
+state 54
+	map_expr :  LP GRP_TKN $$17_grp_expr map_expr RP 
+	grp_expr : _    (24)
+
+	.  reduce 24
+
+	grp_expr  goto 66
+
+state 55
+	map_expr :  LP EXPR_TKN INUMBER_RP 
+
+	RP  shift 67
+	.  error
+
+
+state 56
+	map_expr :  LP NAM_STR RP_    (20)
+
+	.  reduce 20
+
+
+state 57
+	help_expr :  LP HLP_TKN RP_    (30)
+
+	.  reduce 30
+
+
+state 58
+	map_expr :  LP NAM_TKN NAM_STR map_expr_RP 
+
+	RP  shift 68
+	.  error
+
+
+state 59
+	map_expr :  LP OVR_TKN NAM_STR INUMBER_map_expr RP 
+
+	NAM_STR  shift 11
+	LP  shift 51
+	.  error
+
+	map_expr  goto 69
+
+state 60
+	map_expr :  LP OVR_TKN INUMBER NAM_STR_map_expr RP 
+	map_expr :  NAM_STR_    (21)
+
+	NAM_STR  shift 11
+	LP  shift 51
+	.  reduce 21
+
+	map_expr  goto 70
+
+state 61
+	map_expr :  LP OVR_TKN INUMBER map_expr_RP 
+
+	RP  shift 71
+	.  error
+
+
+state 62
+	map_expr :  LP COV_TKN NAM_STR map_expr_RP 
+
+	RP  shift 72
+	.  error
+
+
+state 63
+	map_expr :  LP AND_TKN map_expr map_expr_RP 
+
+	RP  shift 73
+	.  error
+
+
+state 64
+	map_expr :  LP OR_TKN map_expr map_expr_RP 
+
+	RP  shift 74
+	.  error
+
+
+state 65
+	map_expr :  LP NOT_TKN map_expr RP_    (16)
+
+	.  reduce 16
+
+
+state 66
+	map_expr :  LP GRP_TKN $$17 grp_expr_map_expr RP 
+	grp_expr :  grp_expr_INUMBER 
+	grp_expr :  grp_expr_INUMBER RANGE_TKN INUMBER 
+
+	NAM_STR  shift 11
+	INUMBER  shift 76
+	LP  shift 51
+	.  error
+
+	map_expr  goto 75
+
+state 67
+	map_expr :  LP EXPR_TKN INUMBER RP_    (19)
+
+	.  reduce 19
+
+
+state 68
+	map_expr :  LP NAM_TKN NAM_STR map_expr RP_    (9)
+
+	.  reduce 9
+
+
+state 69
+	map_expr :  LP OVR_TKN NAM_STR INUMBER map_expr_RP 
+
+	RP  shift 77
+	.  error
+
+
+state 70
+	map_expr :  LP OVR_TKN INUMBER NAM_STR map_expr_RP 
+
+	RP  shift 78
+	.  error
+
+
+state 71
+	map_expr :  LP OVR_TKN INUMBER map_expr RP_    (12)
+
+	.  reduce 12
+
+
+state 72
+	map_expr :  LP COV_TKN NAM_STR map_expr RP_    (13)
+
+	.  reduce 13
+
+
+state 73
+	map_expr :  LP AND_TKN map_expr map_expr RP_    (14)
+
+	.  reduce 14
+
+
+state 74
+	map_expr :  LP OR_TKN map_expr map_expr RP_    (15)
+
+	.  reduce 15
+
+
+state 75
+	map_expr :  LP GRP_TKN $$17 grp_expr map_expr_RP 
+
+	RP  shift 79
+	.  error
+
+
+state 76
+	grp_expr :  grp_expr INUMBER_    (25)
+	grp_expr :  grp_expr INUMBER_RANGE_TKN INUMBER 
+
+	RANGE_TKN  shift 80
+	.  reduce 25
+
+
+state 77
+	map_expr :  LP OVR_TKN NAM_STR INUMBER map_expr RP_    (10)
+
+	.  reduce 10
+
+
+state 78
+	map_expr :  LP OVR_TKN INUMBER NAM_STR map_expr RP_    (11)
+
+	.  reduce 11
+
+
+state 79
+	map_expr :  LP GRP_TKN $$17 grp_expr map_expr RP_    (18)
+
+	.  reduce 18
+
+
+state 80
+	grp_expr :  grp_expr INUMBER RANGE_TKN_INUMBER 
+
+	INUMBER  shift 81
+	.  error
+
+
+state 81
+	grp_expr :  grp_expr INUMBER RANGE_TKN INUMBER_    (26)
+
+	.  reduce 26
+
+Rule not reduced:   help_expr :  HLP_TKN HLP_TKN 
+
+22/300 terminals, 10/300 nonterminals
+50/600 grammar rules, 82/1000 states
+0 shift/reduce, 1 reduce/reduce conflicts reported
+46/350 working sets used
+memory: states,etc. 511/24000, parser 20/12000
+16/600 distinct lookahead sets
+16 extra closures
+89 shift entries, 1 exceptions
+21 goto entries
+0 entries saved by goto default
+Optimizer space used: input 212/24000, output 135/12000
+135 table entries, 41 zero
+maximum spread: 275, maximum offset: 275
