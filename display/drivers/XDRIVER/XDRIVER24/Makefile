@@ -53,18 +53,18 @@ OBJS =  \
 	Respond.o\
 	Serve_Xevent.o\
 	Work.o\
-	alloc.o
+	alloc.o\
+	Draw_point.o
 
 ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 
 PGM=xdriver
 
-FREETYPEBASED = Draw_point.o
-
+#FREETYPEBASED = Draw_point.o
 #compile if FreeType Lib present:
-ifneq ($(strip $(FTLIB)),)
-    OBJS += $(FREETYPEBASED)
-endif
+#ifneq ($(strip $(FTLIB)),)
+#    OBJS += $(FREETYPEBASED)
+#endif
 
 default: $(DRIVERDIR)/XDRIVER htmlgen
 
