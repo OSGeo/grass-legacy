@@ -42,6 +42,9 @@ int main(int argc, char **argv)
 	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4 ;
 
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
+
 	module = G_define_module();
 	module->description =
 		"To display the color table associated with a raster "
@@ -72,9 +75,6 @@ int main(int argc, char **argv)
 	opt4->type       = TYPE_INTEGER ;
 	opt4->options    = "1-1000" ;
 	opt4->description= "Number of columns" ;
-
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
 
 	/* Check command line */
 	if (G_parser(argc, argv))
