@@ -1,0 +1,700 @@
+.add
+site    1
+east    593493
+north  4914730
+name Signature Rock
+.end
+.add
+site    2
+east    591950
+north  4923000
+name No Name
+.end
+.add
+site    3
+east    589860
+north  4922000
+name Canyon Station
+.end
+.add
+site    4
+east    590400
+north  4922820
+name Spearfish Creek
+.end
+.add
+site    5
+east    593549
+north  4925500
+name No Name
+.end
+.add
+site    6
+east    600375
+north  4925235
+name Prairie Site
+.end
+.add
+site    7
+east    606635
+north  4920773
+name Jensen Pass Site
+.end
+.add
+site    8
+east    595755
+north  4925300
+name No Name
+.end
+.add
+site    9
+east    601000
+north  4926310
+name No Name
+.end
+.add
+site   10
+east    602550
+north  4917370
+name Slaughterhouse Gulch
+.end
+.add
+site   11
+east    591635
+north  4924340
+name No Name
+.end
+.add
+site   12
+east    603000
+north  4925250
+name Elkhorn Peak
+.end
+.add
+site   13
+east    592100
+north  4921200
+name No Name
+.end
+.add
+site   14
+east    592600
+north  4922000
+name No Name
+.end
+.add
+site   15
+east    604194
+north  4925980
+name No Name
+.end
+.add
+site   16
+east    608200
+north  4915900
+name Boulder Creek Cabin
+.end
+.add
+site   17
+east    601400
+north  4925450
+name Ridge
+.end
+.add
+site   18
+east    591000
+north  4916600
+name Cole Creek Mine
+.end
+.add
+site   19
+east    607150
+north  4916650
+name No Name
+.end
+.add
+site   20
+east    593690
+north  4914479
+name No Name
+.end
+.add
+site   21
+east    608355
+north  4926490
+name Whitewood Flats
+.end
+.add
+site   22
+east    597945
+north  4918950
+name Bob Miller
+.end
+.add
+site   23
+east    607159
+north  4917000
+name No Name
+.end
+.add
+site   24
+east    591583
+north  4925280
+name Hanson Ranch
+.end
+.add
+site   25
+east    602580
+north  4918480
+name No Name
+.end
+.change
+site    1
+project  NA
+state    MV
+field    NA
+quad     Spearfish
+.end
+.change
+site    2
+project  Timbersale Survey
+state    MV
+field    T-3
+quad     Spearfish
+.end
+.change
+site    3
+project  NA
+state    MV
+field    NA
+quad     Spearfish
+.end
+.change
+site    4
+project  College Survey
+state    MV
+field    C-3
+quad     Spearfish
+.end
+.change
+site    5
+project  I-90 Survey
+state    MV
+field    I-90-39
+quad     Spearfish
+.end
+.change
+site    6
+project  I-90 Survey
+state    MV
+field    I-90-44
+quad     Deadwood
+.end
+.change
+site    7
+project  NA
+state    MV
+field    NA
+quad     Deadwood
+.end
+.change
+site    8
+project  I-90 Survey
+state    MV
+field    I-90-40
+quad     Spearfish
+.end
+.change
+site    9
+project  I-90 Survey
+state    MV
+field    I-90-42
+quad     Deadwood
+.end
+.change
+site   10
+project  NA
+state    MV
+field    NA
+quad     Deadwood
+.end
+.change
+site   11
+project  College Survey
+state    MV
+field    C-2
+quad     Spearfish
+.end
+.change
+site   12
+project  NA
+state    MV
+field    NA
+quad     Deadwood
+.end
+.change
+site   13
+project  Timbersale Survey
+state    MV
+field    T-9
+quad     Spearfish
+.end
+.change
+site   14
+project  Timbersale Survey
+state    MV
+field    T-4
+quad     Spearfish
+.end
+.change
+site   15
+project  I-90 Survey
+state    MV
+field    I-90-43
+quad     Deadwood
+.end
+.change
+site   16
+project  Timbersale Survey
+state    MV
+field    T-29
+quad     Deadwood
+.end
+.change
+site   17
+project  NA
+state    MV
+field    NA
+quad     Deadwood
+.end
+.change
+site   18
+project  NA
+state    MV
+field    NA
+quad     Spearfish
+.end
+.change
+site   19
+project  Timbersale Survey
+state    MV
+field    T-31
+quad     Deadwood
+.end
+.change
+site   20
+project  NA
+state    MV
+field    NA
+quad     Spearfish
+.end
+.change
+site   21
+project  NA
+state    MV
+field    NA
+quad     Deadwood
+.end
+.change
+site   22
+project  NA
+state    MV
+field    NA
+quad     Deadwood
+.end
+.change
+site   23
+project  Timbersale Survey
+state    MV
+field    T-30
+quad     Deadwood
+.end
+.change
+site   24
+project  College Survey
+state    MV
+field    C-1
+quad     Spearfish
+.end
+.change
+site   25
+project  Timbersale Survey
+state    MV
+field    T-17
+quad     Deadwood
+.end
+.change
+site    1
+status   recorded
+disturbed vandalized
+eligible nominated
+.end
+.change
+site    2
+status   recorded
+disturbed none
+eligible ineligible
+.end
+.change
+site    3
+status   recorded
+disturbed vandalized
+eligible nominated
+.end
+.change
+site    4
+status   excavated
+disturbed vandalism
+eligible nominated
+.end
+.change
+site    5
+status   excavated
+disturbed none
+eligible eligible
+.end
+.change
+site    6
+status   reported
+disturbed none
+eligible nominated
+.end
+.change
+site    7
+status   recorded
+disturbed vandalism
+eligible MV
+.end
+.change
+site    8
+status   recorded
+disturbed destroyed (construction; vandalism)
+eligible MV
+.end
+.change
+site    9
+status   recorded
+disturbed construction
+eligible ineligible
+.end
+.change
+site   10
+status   reported
+disturbed construction; vandalism
+eligible MV
+.end
+.change
+site   11
+status   reported
+disturbed cultivation; construction
+eligible MV
+.end
+.change
+site   12
+status   reported
+disturbed none
+eligible MV
+.end
+.change
+site   13
+status   reported
+disturbed none
+eligible ineligible
+.end
+.change
+site   14
+status   recorded
+disturbed none
+eligible eligible
+.end
+.change
+site   15
+status   excavated
+disturbed none
+eligible eligible
+.end
+.change
+site   16
+status   reported
+disturbed vandalism
+eligible ineligible
+.end
+.change
+site   17
+status   reported
+disturbed vandalism
+eligible MV
+.end
+.change
+site   18
+status   recorded
+disturbed MV
+eligible MV
+.end
+.change
+site   19
+status   reported
+disturbed none
+eligible eligible
+.end
+.change
+site   20
+status   recorded
+disturbed none
+eligible MV
+.end
+.change
+site   21
+status   reported
+disturbed vandalism; cattle; erosion
+eligible MV
+.end
+.change
+site   22
+status   reported
+disturbed vandalism
+eligible MV
+.end
+.change
+site   23
+status   reported
+disturbed logging
+eligible ineligible
+.end
+.change
+site   24
+status   reported
+disturbed erosion
+eligible MV
+.end
+.change
+site   25
+status   reported
+disturbed none
+eligible ineligible
+.end
+.change
+site    1
+type     p;h
+period   MV
+date          0
+size         17
+features.1 pictographs; petroglyphs; graffiti
+diag.1 none
+.end
+.change
+site    2
+type     p
+period   MV
+date          0
+size       2625
+features.1 lithic scatter
+diag.1 none
+.end
+.change
+site    3
+type     h
+period   MV
+date          0
+size       2600
+features.1 frame bldgs; log bldgs; midden
+diag.1 iron parts; metal cans; glazed shards
+.end
+.change
+site    4
+type     p
+period   Plains Village
+date        600
+size      15000
+features.1 circular housepits; enclosing embankment; pits; midden; hearths
+diag.1 pottery (incised; rim-indented); incised soapstone; triangle
+.end   side-notched points
+.change
+site    5
+type     p
+period   Plains Archaic
+date       5500
+size       2100
+features.1 midden; hearths; housepits; storage pits
+diag.1 McKean points
+.end
+.change
+site    6
+type     p
+period   Plains Woodland
+date          0
+size      38400
+features.1 storage pits; post molds; midden
+diag.1 pottery (undecorated; cord-impressed)
+.end
+.change
+site    7
+type     p
+period   Paleoindian
+date          0
+size          0
+features.1 scatter (lithic; faunal)
+diag.1 Angostura points
+.end
+.change
+site    8
+type     p
+period   Plains Archaic
+date          0
+size          0
+features.1 burials
+diag.1 McKean points
+.end
+.change
+site    9
+type     MV
+period   MV
+date          0
+size      21875
+features.1 lithic scatter
+diag.1 none
+.end
+.change
+site   10
+type     h
+period   Military
+date          0
+size          0
+features.1 none
+diag.1 bullets; iron frags
+.end
+.change
+site   11
+type     p; ph
+period   MV
+date          0
+size       8400
+features.1 tipi rings
+diag.1 none
+.end
+.change
+site   12
+type     MV
+period   MV
+date          0
+size       1200
+features.1 hearth; rock cairns
+diag.1 none
+.end
+.change
+site   13
+type     p
+period   MV
+date          0
+size       3600
+features.1 lithic scatter
+diag.1 none
+.end
+.change
+site   14
+type     p
+period   Plains Archaic
+date          0
+size       5625
+features.1 lithic scatter
+diag.1 McKean points (& fragments)
+.end
+.change
+site   15
+type     p
+period   Paleoindian
+date       8900
+size        312
+features.1 scatter (lithic; faunal)
+diag.1 Angostura points
+.end
+.change
+site   16
+type     h
+period   Recent Historic
+date          0
+size       1350
+features.1 cabin
+diag.1 iron; recent ceramics
+.end
+.change
+site   17
+type     p
+period   Plains Woodland
+date          0
+size       4950
+features.1 burial mound
+diag.1 pottery (plain; cord-impressed); points (side-notched; corner-notched)
+.end
+.change
+site   18
+type     h
+period   Mining
+date          0
+size       8450
+features.1 mine shaft; prospect pits; tailings; stone foundations
+diag.1 iron parts; timbers; Euro-American ceramics
+.end
+.change
+site   19
+type     p
+period   MV
+date          0
+size          5
+features.1 petroglyphs
+diag.1 none
+.end
+.change
+site   20
+type     MV
+period   MV
+date          0
+size          6
+features.1 rock cairn
+diag.1 none
+.end
+.change
+site   21
+type     p; ph
+period   MV
+date          0
+size      20000
+features.1 tipi rings
+diag.1 lithics; iron
+.end
+.change
+site   22
+type     p
+period   MV
+date          0
+size          0
+features.1 scatter (litic; faunal; ceramic)
+diag.1 pottery (cord-impressed); McKean points
+.end
+.change
+site   23
+type     p
+period   MV
+date          0
+size        700
+features.1 scatter (lithic)
+diag.1 none
+.end
+.change
+site   24
+type     p
+period   Plains Woodland
+date          0
+size          0
+features.1 MV
+diag.1 pottery (plain; cord-impressed); lithics; faunal
+.end
+.change
+site   25
+type     p
+period   MV
+date          0
+size       2625
+features.1 scatter (lithic)
+diag.1 none
+.end
