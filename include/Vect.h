@@ -43,6 +43,7 @@ int Vect_list_append ( struct ilist *, int);
 int Vect_list_append_list ( struct ilist *, struct ilist *);
 int Vect_list_delete ( struct ilist *, int);
 int Vect_list_delete_list ( struct ilist *, struct ilist *);
+int Vect_val_in_list ( struct ilist *, int);
 int Vect_reset_list (struct ilist *);
 int Vect_destroy_list (struct ilist *);
 
@@ -76,6 +77,7 @@ int  Vect_set_zone (struct Map_info *, int );
 int  Vect_get_zone (struct Map_info *);
 int  Vect_set_thresh (struct Map_info *, double );
 double Vect_get_thresh (struct Map_info *);
+int Vect_get_constraint_box ( struct Map_info *, BOUND_BOX *);
 
     /* Get map level 2 informations */
 int Vect_level (struct Map_info *);
@@ -144,6 +146,13 @@ int Vect_find_poly_centroid (struct line_pnts *, double *, double *);
 int Vect_get_point_in_poly_isl (struct line_pnts *, struct line_pnts **, int, double *, double *);
 int Vect__intersect_line_with_poly (struct line_pnts *, double, struct line_pnts *);
 int Vect_get_point_in_poly (struct line_pnts *, double *, double *);
+
+
+      /* Overlay */
+int Vect_overlay_str_to_operator ( char * );
+int Vect_overlay ( struct Map_info *, int, struct ilist *, struct ilist *, 
+	           struct Map_info *, int, struct ilist *, struct ilist *,
+                   int, struct Map_info *);
 
     /* Network (graph) */
 int Vect_net_build_graph ( struct Map_info *, int, int, int, char *, char *, char *, int, int);

@@ -113,12 +113,14 @@ Vect_read_line (Map, line_p, line_c, line )
      int    line;
 {
 
-#ifdef GDEBUG
     G_debug (3, "Vect_read_line()");
-#endif    
   
     if (!VECT_OPEN (Map))
-        return -1;
+        G_fatal_error ( "Vect_read_line(): vector is not opened" );
+
+    if (line < 1 || line > Map->plus.n_lines)
+        G_fatal_error ( "Vect_read_line(): line '%d' is not reasonable (max line in map: %d)",
+	                 line, Map->plus.n_lines );
     
     return (*V2_read_line_array[Map->format]) (Map, line_p, line_c, line);
 }

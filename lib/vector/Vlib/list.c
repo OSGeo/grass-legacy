@@ -155,3 +155,24 @@ Vect_list_delete_list ( struct ilist *alist,  struct ilist *blist )
     
     return 0;
 }
+
+/* Is value in list? 
+*
+*  returns: 1 - yes
+*           0 - no
+*/
+int
+Vect_val_in_list ( struct ilist *list, int val )
+{
+    int i, size;
+    
+    if ( list == NULL ) 
+        return 0;
+	
+    for ( i = 0; i < list->n_values; i++ ) {
+	if ( val == list->value[i] )
+	    return 1;
+    }
+    
+    return 0;
+}
