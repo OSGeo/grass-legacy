@@ -1,8 +1,20 @@
-/*
- * $Id$
+/****************************************************************
  *
- * d.path
-*/
+ * MODULE:       d.path
+ * 
+ * AUTHOR(S):    Radim Blazek
+ *               
+ * PURPOSE:      shortest path networking on vector map
+ *               Uses the DGLib from Roberto Micarelli
+ *               
+ * COPYRIGHT:    (C) 2002 by the GRASS Development Team
+ *
+ *               This program is free software under the 
+ *               GNU General Public License (>=v2). 
+ *               Read the file COPYING that comes with GRASS
+ *               for details.
+ *
+ ****************************************************************/
 
 #include <stdlib.h>
 #include <string.h>
@@ -24,6 +36,9 @@ int main(int argc, char **argv)
     struct Map_info Map;
     int    type, afield, nfield, color, hcolor, bgcolor, geo;
     int    r, g, b, colornum = MAX_COLOR_NUM;
+    char **vect = NULL;
+    int nvects = 0;
+            
 
     /* Initialize the GIS calls */
     G_gisinit (argv[0]) ;
@@ -31,6 +46,20 @@ int main(int argc, char **argv)
     module = G_define_module();
     module->description = 
     "Find shortest path for selected starting and ending node";
+
+    /* Conditionalize R_open_driver() so "help" works, open quiet as well */
+    R__open_quiet();
+    if (R_open_driver() != 0) {
+       G_fatal_error ("No graphics device selected");
+    }
+    if (D_get_dig_list (&vect, &nvects) < 0)
+       G_fatal_error ("No vector map shown in monitor, use d.vect first");
+    else
+    {
+       vect = (char **)G_realloc(vect, (nvects+1)*sizeof(char *));
+       vect[nvects] = NULL;
+    }
+    R_close_driver();
 
     map = G_define_standard_option(G_OPT_V_MAP);
 
@@ -90,13 +119,13 @@ int main(int argc, char **argv)
     geo_f->description     = "Use geodesic calculation for longitude-latitude locations";
     
     if(G_parser(argc,argv))
-        G_fatal_error("");
+        exit(-1);
 
     type = Vect_option_to_types ( type_opt ); 
     afield = atoi (afield_opt->answer);
     nfield = atoi (nfield_opt->answer);
 
-    color = WHITE;
+    color = BLACK;
     if ( G_str_to_color(color_opt->answer, &r, &g, &b) ) {
         colornum++;
 	R_reset_color (r, g, b, colornum); 
@@ -110,14 +139,20 @@ int main(int argc, char **argv)
 	hcolor = colornum;
     }
     
-    bgcolor = BLACK;
+    bgcolor = WHITE;
     if ( G_str_to_color(bgcolor_opt->answer, &r, &g, &b) ) {
         colornum++;
 	R_reset_color (r, g, b, colornum); 
 	bgcolor = colornum;
     }
 
-    if ( geo_f->answer ) geo = 1; else geo = 0;
+    if ( geo_f->answer ) 
+    {
+       geo = 1; 
+       if (G_projection () != PROJECTION_LL)
+          G_fatal_error("The current projection is not longitude-latitude");
+    }
+    else geo = 0;
     
     mapset = G_find_vector2 (map->answer, NULL); 
       
