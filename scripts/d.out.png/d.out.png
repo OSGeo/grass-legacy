@@ -1,13 +1,11 @@
 #!/bin/sh
 #
-# $Id: d.out.png,v 1.3 2004/04/01 
-#
 ############################################################################
 #
-# MODULE:		d.out.png for GRASS 5.7; based on d.out.png for GRASS 5
+# MODULE:	d.out.png for GRASS 5.7; based on d.out.png for GRASS 5
 # AUTHOR(S):	Michael Barton 
-#				Routine to read current display geometry by 
-#				Hamish Moffatt & Glynn Clements
+#		 Routine to read current display geometry written by 
+#		 Hamish Bowman & Glynn Clements
 # PURPOSE:	To redraw current displayed maps to 24 bit PNG output
 # COPYRIGHT:	(C) 2004 by the GRASS Development Team
 #
@@ -63,7 +61,7 @@ fi
 old_GRASSW=`eval g.gisenv get=GRASS_WIDTH`
 old_GRASSH=`eval g.gisenv get=GRASS_HEIGHT`
 old_TRUECOLOR=`eval g.gisenv get=GRASS_TRUECOLOR`
-curr_mon=`d.mon -p | awk '{printf "%s", $4}'`
+curr_mon=`d.mon -p | awk '{printf "%s", $1}'`
 
 #defaults
 res=2
