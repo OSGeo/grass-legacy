@@ -131,9 +131,8 @@ void clean_fatal_error(char *);
 
 int main (int argc, char *argv[])
 {
-  int per, npmin;
-  int ii, i, m1, ret_val;
-  char dminchar[200];
+  int per;
+  int m1, ret_val;
   struct FPRange range;
   DCELL cellmin, cellmax;
   FCELL *cellrow,fcellmin;
