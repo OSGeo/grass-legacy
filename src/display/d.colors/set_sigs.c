@@ -1,4 +1,4 @@
-#define MAIN
+#define SIG_MAIN
 #include "externs.h"
 #include <signal.h>
 

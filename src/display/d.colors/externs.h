@@ -2,7 +2,7 @@ struct signalflag
 {
 	int interrupt;
 };
-#ifdef MAIN
+#ifdef SIG_MAIN
 struct signalflag signalflag;
 #else
 extern struct signalflag signalflag;
