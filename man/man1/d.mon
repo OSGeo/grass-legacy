@@ -1,0 +1,150 @@
+.TH d.mon
+.SH NAME
+\fId.mon \fR\- To establish and control use of a graphics display monitor.
+.br
+.I "(GRASS Display Program)"
+.SH SYNOPSIS
+\fBd.mon\fR
+.br
+\fBd.mon help\fR
+.br
+\fBd.mon \fR[\fB-lLprs\fR] [\fBstart\*=\fIname\fR] [\fBstop\*=\fIname\fR] [\fBselect\*=\fIname\fR] [\fBunlock\*=\fIname\fR]
+.SH DESCRIPTION
+The GRASS program \fId.mon\fR
+allows the user to start, select, list, query the status of, release
+control of, stop, and unlock control of, available graphics monitors.
+The user can run this program either interactively (through a series of menus),
+or non-interactively by typing the name of the monitor to start,
+stop, select, or unlock, and any desired flags on the command line.
+.LP
+\fBFlags:\fR
+.TP
+\fB-l	\fRList all monitors
+.TP
+\fB-L	\fRList all monitors (with current status)
+.TP
+\fB-p	\fRPrint name of currently selected monitor
+.TP
+\fB-r	\fRRelease currently selected monitor
+.TP
+\fB-s	\fRDo not automatically select when starting
+
+.LP
+\fBParameters:
+.TP
+\fBstart\*=\fIname    \fRName of graphics monitor to start	
+.TP
+\fBstop\*=\fIname     \fRName of graphics monitor to stop	
+.TP
+\fBselect\*=\fIname   \fRName of graphics monitor to select
+.TP
+\fBunlock\*=\fIname   \fRName of graphics monitor to unlock
+.br
+.TP	
+When the user enters the command \fBd.mon\fR without specifying parameter values,
+the below menu appears on the screen:
+
+.sp
+.RS
+.TS
+cs
+ls
+cl.
+MONITOR MENU
+Making sure that the graphics monitor is running:
+
+1	- Start a graphics monitor
+	\fI(also automatically selects this monitor)\fR
+2	- Stop a graphics monitor
+
+.T&
+ls
+cl.
+Choosing a graphics monitor for your graphics:
+
+3	- Select a graphics device for output
+	(currently selected monitor:  \fIname\fR)
+4	- Release control of the graphics driver
+	(let someone else use it)
+	\fI(option 4 appears only after selection of a monitor)\fR
+
+.T&
+ll.
+RETURN	quit
+.TE
+.RE
+
+.bp
+These parameters perform the following functions:
+.IP 1 4
+\fBStart a Monitor.\fR
+.br
+In order to display on-screen GRASS graphics,
+the user must \fIstart\fR and \fIselect\fR a graphics monitor.
+By default, the \fIstart\fR command actually runs two commands, to both start
+and select whatever monitor is named by the user.  (The user can get a list
+of available monitors by setting the -l or -L flag on the command line.)
+
+When a monitor is \fIstarted\fR, it is therefore also (automatically) \fIselected\fR
+for output, unless the \fI-s\fR flag is set by the user;  the user can also
+explictly \fIselect\fR a monitor that has been started (see (3) below).
+After a monitor is started, a blank graphics frame should appear on whatever
+terminal the user is using to display graphics.
+
+The desired monitor should be started once and need not be restarted unless
+it is stopped (option \fI2\fR) for some reason.  A monitor may continue
+to run for any length of time, even when no GRASS session is being run.
+The monitor program runs in the background.
+.IP 2
+\fBStop a Monitor.\fR
+.br
+Sometimes the monitor program needs to be stopped (terminated).
+Choosing option 2 will terminate a user-specified monitor program.
+.IP
+A graphics monitor has two different types of status:
+monitor program \fInot running\fR, and monitor \fIrunning\fR.
+A monitor that has been started and/or selected will be listed as running;  a monitor
+that has been stopped (or not started) will be listed as not running.
+The -L (list status) flag will list the status of each monitor connected to
+the system.
+
+.IP 3
+\fBSelect a Monitor.\fR
+.br
+When the user \fIstarts\fR a monitor, it is also (automatically) \fIselected\fR
+for graphics output unless the user sets the \fI-s\fR flag.
+In order to use (direct graphics output to) a monitor,
+the user must \fIselect\fR that monitor for use, either by simply starting
+the monitor without the -s flag or by explictly selecting the monitor for output
+using option 3.  Only running monitors can be selected for graphics output.
+Once the user has \fIselected\fR a monitor for output, no other user can
+use this monitor for graphics output until the monitor driver is
+either \fIreleased\fR (by the user) or \fIunlocked\fR (by any user on the system).
+.br
+The user can run multiple graphics monitors by simply starting each of the graphics
+monitors drivers he wishes to direct output to.
+.IP 4
+\fBRelease a Monitor.\fR
+.br
+Once a user has \fIselected\fR a monitor for graphics output, it is locked
+for use by that user until either:  (1) the user voluntarily releases
+control of the monitor for use by another (option 4), or
+(2) another GRASS user \fIunlocks\fR the user's control of the monitor.
+Menu option 4 appears only to the person who has selected the monitor
+(since only that user can release control of his selected graphics monitor.)
+If another user wishes to \fIunlock\fR the user's control of the monitor,
+that user must run \fId.mon\fR from the command line and set the
+unlock\*=\fIname\fR parameter.
+.LP
+You may choose multiple options within the \fId.mon\fR program.
+To leave (exit) the \fId.mon\fR menu, press the <RETURN> key.
+.SH NOTES
+The \fId.mon\fR program can regulate control of graphics monitors
+both in systems
+using multiple monitors and in systems using a single graphics monitor. 
+.SH SEE ALSO
+.I d.erase,
+.I d.frame,
+.I monitorcap
+.SH "AUTHOR"
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
