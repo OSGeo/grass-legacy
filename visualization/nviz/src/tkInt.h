@@ -1,6 +1,9 @@
 /* 
   $Log$
-  Revision 1.2  2000-01-12 08:52:08  markus
+  Revision 1.3  2000-02-22 19:19:38  markus
+  added definition for Tk_SendCmd
+
+  Revision 1.2  2000/01/12 08:52:08  markus
   commented line 46: Tk_PostscriptInfo
 
   adjusted path in line 28   8/99 MN 
@@ -713,7 +716,8 @@ extern int			tkSendSerial;
  * Internal procedures shared among Tk modules but not exported
  * to the outside world:
  */
-
+EXTERN int              Tk_SendCmd _ANSI_ARGS_((ClientData clientData,
+                            Tcl_Interp *interp, int argc, char **argv));
 EXTERN char *		TkAlignImageData _ANSI_ARGS_((XImage *image,
 			    int alignment, int bitOrder));
 EXTERN TkWindow *	TkAllocWindow _ANSI_ARGS_((TkDisplay *dispPtr,
