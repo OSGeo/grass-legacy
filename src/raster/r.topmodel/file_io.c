@@ -253,12 +253,12 @@ write_outputs(void)
 	fprintf(fp, "%-15s %15d\n",	"nidxclass:",	misc.nidxclass	);
 	fprintf(fp, "%-15s %15d\n",	"ndelay_:",	misc.ndelay_	);
 	fprintf(fp, "%-15s %15d\n",	"nreach_:",	misc.nreach_	);
-	fprintf(fp, "%-15s %15.5lf\n",	"lnTe_:",	misc.lnTe_	);
-	fprintf(fp, "%-15s %15.5lf\n",	"vch_:",	misc.vch_	);
-	fprintf(fp, "%-15s %15.5lf\n",	"vr_:",		misc.vr_	);
-	fprintf(fp, "%-15s %15.5lf\n",	"lambda:",	misc.lambda	);
-	fprintf(fp, "%-15s %15.5lf\n",	"_qs_:",	misc._qs_	);
-	fprintf(fp, "%-15s %15.5lf\n",	"qs0_:",	misc.qs0_	);
+	fprintf(fp, "%-15s %15.5le\n",	"lnTe_:",	misc.lnTe_	);
+	fprintf(fp, "%-15s %15.5le\n",	"vch_:",	misc.vch_	);
+	fprintf(fp, "%-15s %15.5le\n",	"vr_:",		misc.vr_	);
+	fprintf(fp, "%-15s %15.5le\n",	"lambda:",	misc.lambda	);
+	fprintf(fp, "%-15s %15.5le\n",	"_qs_:",	misc._qs_	);
+	fprintf(fp, "%-15s %15.5le\n",	"qs0_:",	misc.qs0_	);
 
 	fprintf(fp, "\n");
 	fprintf(fp, "%-15s %15d       # parameters.nch\n",
@@ -300,11 +300,11 @@ write_outputs(void)
 
 	fprintf(fp, "%-15s\n", "tch_::");
 	for(i=0; i<params.nch; i++)
-		fprintf(fp, "%15.5lf\n", misc.tch_[i]);
+		fprintf(fp, "%15.5le\n", misc.tch_[i]);
 
 	fprintf(fp, "%-15s\n", "Add::");
 	for(i=0; i<misc.nreach_; i++)
-		fprintf(fp, "%15.5lf\n", misc.Add[i]);
+		fprintf(fp, "%15.5le\n", misc.Add[i]);
 
 
 	if(misc.timestep || misc.idxclass){
@@ -334,8 +334,8 @@ write_outputs(void)
 		fprintf(fp, "\n");
 
 		for(i=0; i<input.ntimestep; i++){
-			fprintf(fp, "%15.5lf %15.5lf %15.5lf %15.5lf "
-				    "%15.5lf %15.5lf",
+			fprintf(fp, "%15.5le %15.5le %15.5le %15.5le "
+				    "%15.5le %15.5le",
 					misc.Qt_[i],
 					misc.qt_[i][misc.nidxclass],
 					misc.qo_[i][misc.nidxclass],
@@ -343,7 +343,7 @@ write_outputs(void)
 					misc.qv_[i][misc.nidxclass],
 					misc.Sbar_[i]);
 			if(params.infex)
-				fprintf(fp, " %15.5lf %15.5lf",
+				fprintf(fp, " %15.5le %15.5le",
 						misc.f_[i], misc.fex_[i]);
 			fprintf(fp, "\n");
 		}
@@ -366,9 +366,9 @@ write_outputs(void)
 
 			for(i=st; i<et; i++)
 				for(j=si; j<ei; j++)
-					fprintf(fp, "%15.5lf %15.5lf %15.5lf "
-						    "%15.5lf %15.5lf %15.5lf "
-						    "%15.5lf %15.5lf %15.5lf\n",
+					fprintf(fp, "%15.5le %15.5le %15.5le "
+						    "%15.5le %15.5le %15.5le "
+						    "%15.5le %15.5le %15.5le\n",
 						misc.qt_[i][j], misc.qo_[i][j],
 						misc.qs_[i],	misc.qv_[i][j],
 						misc.Srz_[i][j],misc.Suz_[i][j],
@@ -379,7 +379,7 @@ write_outputs(void)
 		fprintf(fp, "%-15s %-15s %-15s %-15s %-15s\n",
 				"Qt_::", "qt_::", "qo_::", "qs_::", "qv_::");
 		for(i=0; i<input.ntimestep; i++)
-			fprintf(fp, "%15.5lf %15.5lf %15.5lf %15.5lf %15.5lf\n",
+			fprintf(fp, "%15.5le %15.5le %15.5le %15.5le %15.5le\n",
 					misc.Qt_[i],
 					misc.qt_[i][misc.nidxclass],
 					misc.qo_[i][misc.nidxclass],
@@ -392,10 +392,10 @@ write_outputs(void)
 		fprintf(fp, "\n");
 
 		for(i=0; i<input.ntimestep; i++){
-			fprintf(fp, "%15.5lf",
+			fprintf(fp, "%15.5le",
 					misc.Sbar_[i]);
 			if(params.infex)
-				fprintf(fp, " %15.5lf %15.5lf",
+				fprintf(fp, " %15.5le %15.5le",
 						misc.f_[i], misc.fex_[i]);
 			fprintf(fp, "\n");
 		}
@@ -414,8 +414,8 @@ write_outputs(void)
 					"qt_:::", "qo_:::", "qs_:::", "qv_:::");
 			for(i=st; i<et; i++)
 				for(j=si; j<ei; j++)
-					fprintf(fp, "%15.5lf %15.5lf %15.5lf "
-						    "%15.5lf\n",
+					fprintf(fp, "%15.5le %15.5le %15.5le "
+						    "%15.5le\n",
 						misc.qt_[i][j], misc.qo_[i][j],
 						misc.qs_[i],	misc.qv_[i][j]);
 
@@ -423,7 +423,7 @@ write_outputs(void)
 					"Srz_:::", "Suz_:::", "S_:::");
 			for(i=st; i<et; i++)
 				for(j=si; j<ei; j++)
-					fprintf(fp, "%15.5lf %15.5lf %15.5lf\n",
+					fprintf(fp, "%15.5le %15.5le %15.5le\n",
 						misc.Srz_[i][j],misc.Suz_[i][j],
 						misc.S_[i][j]);
 
@@ -431,7 +431,7 @@ write_outputs(void)
 					"Ea_:::", "ex_:::");
 			for(i=st; i<et; i++)
 				for(j=si; j<ei; j++)
-					fprintf(fp, "%15.5lf %15.5lf\n",
+					fprintf(fp, "%15.5le %15.5le\n",
 						misc.Ea_[i][j], misc.ex_[i][j]);
 		}
 	}
