@@ -230,7 +230,10 @@ int main (int argc, char *argv[])
 	out_val = newvalue (values, n, map_type);
 	if (!flag.zero->answer){ /* Set zero to null */
 	if (out_val == 0) {
+/*
 	G_set_null_value(&out_val, 1, map_type);
+*/
+	G_set_d_null_value(&out_val, 1);
 	} }
 		        G_set_raster_value_d(rp, out_val, map_type);
 			rp = G_incr_void_ptr(rp, G_raster_size(map_type));
