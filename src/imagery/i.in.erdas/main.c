@@ -615,7 +615,7 @@ int main (int argc, char *argv[])
 
 	/*Now Allocate the band arrays */
 	new= (int *) G_calloc(erdashd.nbands,sizeof(int));
-	outband= (int *) G_calloc(erdashd.nbands,sizeof(int));
+	outband= (int *) G_calloc(erdashd.nbands+1,sizeof(int));
 	
 	for (i=0;i<erdashd.nbands;i++) outband[i]=i+1;
 	outband[i]=0;	
