@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include "display.h"
 #include "raster.h"
-
+#include "glocale.h"
 
 int
 getSelectOpts (argc, argv)
@@ -44,7 +44,7 @@ getSelectOpts (argc, argv)
 
         select = G_define_flag();
         select->key     = 's';
-        select->description     = "Use [s] for input from SQL-file." ;
+        select->description     = _("Use [s] for input from SQL-file.") ;
 
         map = G_define_option() ;
         map->key        = "map" ;
@@ -52,7 +52,7 @@ getSelectOpts (argc, argv)
         map->type       = TYPE_STRING ;
         map->required   = YES  ;
         map->multiple   = NO ;
-        map->description= "Raster map to query:";
+        map->description= _("Raster map to query:");
 
 	sql = G_define_option() ;
         sql->key        = "sql" ;
@@ -60,13 +60,13 @@ getSelectOpts (argc, argv)
         sql->type       = TYPE_STRING ;
         sql->required   = YES  ;
         sql->multiple   = NO ;
-        sql->description= "SQL command file:";
+        sql->description= _("SQL command file:");
 	
 	hv = G_define_option() ;
 	hv->key        = "hv" ;
 	hv->type       = TYPE_STRING ;
 	hv->answer     = "v" ;
-	hv->description= "Database output format - [v(ert)/h(oriz)]:";
+	hv->description= _("Database output format - [v(ert)/h(oriz)]:");
 
         /* Check for help flag */
         for (i=0; i<argc; i++)
@@ -99,7 +99,7 @@ getSelectOpts (argc, argv)
 			/* read all lines of sql stmt into a var  */
         
 			if((fp = fopen(sql->answer,"r")) == NULL) {
-            			fprintf(stderr, "File read error on %s\n",sql->answer);
+            			fprintf(stderr, _("File read error on %s\n"),sql->answer);
             			exit(-1);
            		}
 

@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "raster.h"
+#include "glocale.h"
 
 int getCat (mapname)
   char *mapname;
@@ -28,9 +29,9 @@ int getCat (mapname)
     screen_x = ((int)D_get_d_west() + (int)D_get_d_east()) / 2 ;
     screen_y = ((int)D_get_d_north() + (int)D_get_d_south()) / 2 ;
 
-        fprintf(stderr, "\n\nButtons:\n") ;
-        fprintf(stderr, "Left:  Choose location.\n") ;
-        fprintf(stderr, "Right: Finish. \n\n\n") ;
+        fprintf(stderr, _("\n\nButtons:\n")) ;
+        fprintf(stderr, _("Left:  Choose location.\n")) ;
+        fprintf(stderr, _("Right: Finish. \n\n\n")) ;
 
 
         R_get_location_with_pointer(&screen_x, &screen_y, &button) ;
@@ -45,7 +46,7 @@ int getCat (mapname)
         east  = window.west  + (col+.5) * window.ew_res ;
 
         if (G_get_map_row (fd, buf, row) < 0)
-	   fprintf(stderr, "Error read cell file %s.",mapname);
+	   fprintf(stderr, _("Error read cell file %s."),mapname);
 
 
 	if (button != 3)

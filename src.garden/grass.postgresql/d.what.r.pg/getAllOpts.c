@@ -13,6 +13,7 @@
 #include <string.h>
 #include "display.h"
 #include "raster.h"
+#include "glocale.h"
 
 int getAllOpts(argc, argv)
         int argc;
@@ -31,27 +32,27 @@ int getAllOpts(argc, argv)
 	map->type       = TYPE_STRING ;
 	map->required   = YES  ;
 	map->multiple   = NO ;
-	map->description= "Raster map to query:" ;
+	map->description= _("Raster map to query:") ;
 
 	keytable = G_define_option() ;
 	keytable->key        = "tab" ;
 	keytable->type       = TYPE_STRING ;
 	keytable->required   = YES  ;
 	keytable->multiple   = NO ;
-	keytable->description= "Table with categories:" ;
+	keytable->description= _("Table with categories:") ;
 
 	col = G_define_option() ;
 	col->key        = "col" ;
 	col->type       = TYPE_STRING ;
 	col->required   = YES  ;
 	col->multiple   = NO ;
-	col->description= "Column with categories:" ;
+	col->description= _("Column with categories:") ;
 
 	hv = G_define_option() ;
 	hv->key        = "hv" ;
 	hv->type       = TYPE_STRING ;
 	hv->answer     = "v" ;
-	hv->description= "Database output format - [v(ert)/h(oriz)]:";
+	hv->description= _("Database output format - [v(ert)/h(oriz)]:");
 
 
         /* Invoke parser */
