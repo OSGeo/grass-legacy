@@ -31,3 +31,4 @@ GLOBAL char *stats_file;
 GLOBAL char *report_file;
 GLOBAL int nlayers;
 GLOBAL struct layer { char *name; char *mapset;} *layer;
+/* GLOBAL int e_format; */
