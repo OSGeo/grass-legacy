@@ -88,7 +88,7 @@ OGRSpatialReferenceH *GPJ_grass_to_osr(struct Key_Value * proj_info,
 
     if( (proj_info == NULL) || (proj_units == NULL) )
         return NULL;
-   
+
     hSRS = OSRNewSpatialReference(NULL);
 
     if (pj_get_kv(&pjinfo, proj_info, proj_units) < 0)
@@ -104,11 +104,12 @@ OGRSpatialReferenceH *GPJ_grass_to_osr(struct Key_Value * proj_info,
     else
 	proj4mod = proj4;
 
-    if (OSRImportFromProj4(hSRS, proj4mod) < 0)
-	G_fatal_error("Can't parse PROJ.4-style parameter string");
+    if (OSRImportFromProj4(hSRS, proj4mod) != 0)
+	G_fatal_error("OGR can't parse PROJ.4-style parameter string:\n"
+		      "%s", proj4mod);
 
-    if (OSRExportToWkt(hSRS, &wkt) < 0)
-	G_fatal_error("Can't get WKT-style parameter string");
+    if (OSRExportToWkt(hSRS, &wkt) != 0)
+	G_fatal_error("OGR can't get WKT-style parameter string");
 
     ellps = G_find_key_value("ellps", proj_info);
     GPJ__get_ellipsoid_params(proj_info, &a, &es, &rf);
