@@ -3,7 +3,8 @@
 # GRASS 5 binary package installation tool
 # platform indendent
 
-# Version 8/Sun Jan 30 17:17:57 MET 2000
+# $Id$
+# Version 9
 # 1999-2000 by Markus Neteler, neteler@geog.uni-hannover.de
 
 ######################################################
