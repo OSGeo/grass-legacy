@@ -218,6 +218,8 @@ main (int argc, char **argv)
 
 	alloc_pass_buff(window.cols) ;
 
+	G_zeros_r_nulls(0);
+
 	next_row = 0;
 	for (atrow=0; atrow<window.rows; )
 	{
