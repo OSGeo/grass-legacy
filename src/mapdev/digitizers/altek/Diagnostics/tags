@@ -1,0 +1,14 @@
+D__read	berk_altek.c	/^int  D__read ()$/
+D_end_digit	berk_altek.c	/^D_end_digit ()$/
+D_flush	berk_altek.c	/^D_flush()$/
+D_init_digit	berk_altek.c	/^D_init_digit()$/
+D_open_failed	berk_altek.c	/^D_open_failed ()$/
+D_open_serial	berk_altek.c	/^D_open_serial (tty_name)$/
+D_write_digit	berk_altek.c	/^D_write_digit( string)$/
+Mberk_altek	berk_altek.c	/^main ()$/
+close_down	berk_altek.c	/^close_down()$/
+delay	berk_altek.c	/^delay(n) \/* delay n milliseconds *\/$/
+if	berk_altek.c	/^	if (D_end_digit () < 0)$/
+jtimeout	berk_altek.c	/^jtimeout ()$/
+prompt	berk_altek.c	/^prompt( buf, p_string)$/
+set_resolution	berk_altek.c	/^set_resolution( buf)$/
