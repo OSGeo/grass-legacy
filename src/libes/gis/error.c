@@ -61,7 +61,7 @@ static int no_sleep = 1;
 static int print_word (FILE *,char **,int *,int);
 static int print_error(char *,int);
 static int mail_msg (char *,int);
-static int write_error(char *, int,char *,long,char *);
+static int write_error(char *, int,char *,time_t,char *);
 static int log_error (char *,int);
 
 int G_fatal_error ( char *msg,...)
