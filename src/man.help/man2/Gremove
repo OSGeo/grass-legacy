@@ -1,0 +1,68 @@
+.\" %W% %G%
+.TH Gremove 2G G-language
+.SH NAME
+Gremove \- Remove data 
+.CT files "base element"
+.br
+.I "(G Language Tool)"
+.SH SYNOPSIS
+\fBGremove\fR \fIelement name\fR [\fIname\fR ...]
+.SH DESCRIPTION
+.I Gremove
+allows the user to remove data 
+.CT files "base elements"
+from the current mapset.
+The user specifies the type of data 
+.CT file "base element"
+.XT "(i.e., the data \fIelement\fR)"
+to be removed from among those in the following list:
+
+.RS
+.TP 12
+cell
+(cell maps)
+.TP 12
+vect
+(vector maps)
+.TP 12
+window
+(window files)
+.TP 12
+labels
+(paint labels)
+.TP 12
+icon
+(paint icon files) 
+.TP 12
+sites
+(site maps)
+.TP 12
+group
+(imagery group files)
+.TP
+RETURN
+exit
+.RE
+
+.PP
+This list will vary depending on the type of 
+.CT data "data base"
+elements which
+exist in the user's 
+.CT "database." "data base."
+
+The 
+.CT "file(s)" "data base element(s)"
+named by the user on the command line are then removed.
+.SH NOTE
+If a particular data 
+.CT file "base element"
+has support files (e.g., cell 
+.CT "files)" "maps)"
+these support files will be removed by \fIGremove\fR as well.
+.SH FILES
+$GISBASE/etc/element_list describes the elements which can be removed.
+.SH SEE ALSO
+\fIremove[1], report[1]\fR
+.SH AUTHOR
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
