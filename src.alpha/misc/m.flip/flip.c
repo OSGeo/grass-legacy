@@ -1,6 +1,5 @@
-/* %W% %G% */
 #include <stdio.h>
-#include <sys/file.h>  
+/*#include <sys/file.h>*/
 flip (in, out, nrows, ncols, bpc, verbose)
 {
     char *buffer;
@@ -22,7 +21,8 @@ flip (in, out, nrows, ncols, bpc, verbose)
 
     for (row = nrows; row; row--)
     {
-	lseek (in, (row-1)*ncols*bpc, L_SET);
+	/*lseek (in, (row-1)*ncols*bpc, L_SET);*/
+	lseek (in, (row-1)*ncols*bpc, 0);
 	read (in, buffer, bpc * ncols);
 	write(out, buffer, bpc * ncols);
     }
