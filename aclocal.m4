@@ -1083,8 +1083,6 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    AC_DEFINE(_REENTRANT)
 	    AC_DEFINE(_POSIX_PTHREAD_SEMANTICS)
 
-	    SHLIB_CFLAGS="-KPIC"
-
 	    # Note: need the LIBS below, otherwise Tk won't find Tcl's
 	    # symbols when dynamically loaded into tclsh.
 
@@ -1092,10 +1090,12 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    SHLIB_SUFFIX=".so"
 	    LDFLAGS=""
 	    if test "$GCC" = "yes" ; then
+		SHLIB_CFLAGS="-fPIC"
 		SHLIB_LD="$CC -shared"
 		CC_SEARCH_FLAGS='-Wl,-R,${LIB_RUNTIME_DIR}'
 		LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
 	    else
+		SHLIB_CFLAGS="-KPIC"
 		SHLIB_LD="/usr/ccs/bin/ld -G -z text"
 		CC_SEARCH_FLAGS='-R ${LIB_RUNTIME_DIR}'
 		LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
@@ -1109,7 +1109,6 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    AC_DEFINE(_REENTRANT)
 	    AC_DEFINE(_POSIX_PTHREAD_SEMANTICS)
 
-	    SHLIB_CFLAGS="-KPIC"
 	    LDFLAGS=""
     
 	    # Check to enable 64-bit flags for compiler/linker
@@ -1119,6 +1118,7 @@ dnl AC_CHECK_TOOL(AR, ar)
 			if test "$GCC" = "yes" ; then
 			    AC_MSG_WARN("64bit mode not supported with GCC on $system")
 			else
+			    SHLIB_CFLAGS="-KPIC"
 			    do64bit_ok=yes
 			    if test "$do64bitVIS" = "yes" ; then
 				EXTRA_CFLAGS="-xarch=v9a"
@@ -1139,10 +1139,12 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    SHLIB_LD_LIBS='${LIBS}'
 	    SHLIB_SUFFIX=".so"
 	    if test "$GCC" = "yes" ; then
+		SHLIB_CFLAGS="-fPIC"
 		SHLIB_LD="$CC -shared"
 		CC_SEARCH_FLAGS='-Wl,-R,${LIB_RUNTIME_DIR}'
 		LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
 	    else
+		SHLIB_CFLAGS="-KPIC"
 		SHLIB_LD="/usr/ccs/bin/ld -G -z text"
 		CC_SEARCH_FLAGS='-Wl,-R,${LIB_RUNTIME_DIR}'
 		LD_SEARCH_FLAGS='-R ${LIB_RUNTIME_DIR}'
