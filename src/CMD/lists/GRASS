@@ -67,6 +67,7 @@ src/display/d.db
 src/display/d.display
 src/display/d.dm
 src/display/d.erase
+src/display/d.extent
 src/display/d.font
 src/display/d.frame
 src/display/d.geodesic
