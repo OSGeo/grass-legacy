@@ -11,7 +11,7 @@ initialize(void)
 	natb=0;
 	for(i=0;i<window.rows;i++){
 		for(j=0;j<window.cols;j++){
-			a[i][j]=window.ns_res*window.ew_res;
+			av(i,j)=window.ns_res*window.ew_res;
 			if(IScvNULL(i,j)){
 				natb++;
 				G_set_d_null_value(&atbv(i,j),1);
