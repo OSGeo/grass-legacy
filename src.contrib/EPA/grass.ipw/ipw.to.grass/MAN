@@ -6,58 +6,58 @@ ipw.to.grass            GRASS Reference Manual             ipw.to.grass
 
 
 NAME
-     ipw.to.grass - Converts IPW image file to GRASS raster map layer
-     (GRASS Data Import/Processing Program)
+	ipw.to.grass - Converts IPW image file to GRASS raster map layer
 
 SYNOPSIS
-     ipw.to.grass
-     ipw.to.grass help
-     ipw.to.grass [ipw=name] map=name [mask=name] [multiplier=value] \
-               [offset=value]
+	ipw.to.grass
+	ipw.to.grass help
+	ipw.to.grass [-o] [ipw=name] map=name [mask=name] [multiplier=value] \
+		[offset=value]
 
 DESCRIPTION
 
-     ipw.to.grass converts a single-band image file in IPW (Image
-     Processing Workbench) format to a GRASS raster map layer.
-     If an IPW image is not specified, standard input will be
-     used.
+	ipw.to.grass converts a single-band image file in IPW (Image
+	Processing Workbench) format to a GRASS raster map layer.
+	If an IPW image is not specified, standard input will be
+	used.  If an IPW image is specified as a mask, all cells in the 
+	GRASS map layer corresponding to the zero ("no data") values
+	in the mask will be set to zero, regardless of the value
+	in the IPW input image.
 
-     The current region in GRASS must have the same number of
-     rows and columns (as shown by g.region -p) as the IPW
-     image has lines and samples, respectively.  If the IPW
-     input file contains a geodetic header, the geographic
-     boundaries and resolutions must match, or a warning will
-     be issued and the GRASS values will be used.
+	Since GRASS cell values are integers, IPW image floating
+	point values will be truncated to integer values, i.e.
+	29.2 and 29.9 will both be set to 29 in the resulting
+	GRASS cell file.  A multiplier and/or offset may be
+	specified to convert the input IPW floating point pixel
+	values to the GRASS integer values.  If both a multiplier
+	and offset are specified, the data are first multiplied
+	by the multiplier, then the offset will be added.
 
-     If an IPW image is specified as a mask, all cells in the 
-     GRASS map layer corresponding to the zero ("no data") values
-     in the mask will be set to zero, regardless of the value
-     in the IPW input image.
-
-     Since GRASS cell values are integers, IPW image floating
-     point values will be truncated to integer values, i.e.
-     29.2 and 29.9 will both be set to 29 in the resulting
-     GRASS cell file.  A multiplier and/or offset may be
-     specified to convert the input IPW floating point pixel
-     values to the GRASS integer values.  If both a multiplier
-     and offset are specified, the data are first multiplied
-     by the multiplier, then the offset will be added.
-
-
-     Parameters:
-
-     ipw=name            IPW input image (defaults to standard input)
-     map=name            output GRASS cell file
-     mask=name           IPW mask image
-     multiplier=value    multiply IPW datum by value (before offset)
-                         default: 1.0
-     offset=value        add to map datum (after multiplication)
-                         default: 0.0
-
-
-
-
-
+	In GRASS, the geographic region (window) specifies the north,
+	south, east and west edges of the raster map.  The data values are
+	assumed to be located at the cell centers so that the data value
+	for the north-westernmost pixel (1,1) is actually located at
+	northing NORTH-NSRES/2 and easting WEST+EWRES/2	(where NORTH
+	is the northern edge of the file, WEST is the western edge of
+	the file and NSRES and EWRES are the resolutions in the
+	N/S and E/W directions, respectively).  In IPW, the image origin
+	(beginning line and sample coordinates) are assumed to be at the
+	center of pixel (0,0).  Unless the -o (override) option is set,
+	the geographic region in the GRASS cell header will be set so that:
+		NORTH = bline + dline/2
+		SOUTH = NORTH - nlines * dline
+		WEST = bsamp - dsamp/2
+		EAST = WEST + nsamps * dsamp
+		NSRES = -dline
+		EWRES = dsamp
+	where bline and bsamp are the beginning line, sample coordinates
+	and dline and dsamp are the line, sample increments from the
+	IPW geodetic header, and nlines and nsamps are the number of lines
+	and samples in the IPW file.
+	If the -o option is specified, NORTH will be set to bline and
+	WEST will be set to bsamp.
+	Note: if the IPW image file contains no GEO header, the GRASS
+	active window will be used to define the geographic region.
 
 
 GRASS 4.0                U.S. Army CERL                         1
@@ -71,33 +71,49 @@ ipw.to.grass            GRASS Reference Manual             ipw.to.grass
 
 
 
+
+	Flags:
+	-o		    use the IPW GEO header origin (bline and bsamp)
+			    as the north and west edge of the region
+			    default: origin is offset by half a pixel in
+			    each direction (see discussion above)
+
+	Parameters:
+
+	ipw=name            IPW input image (defaults to standard input)
+	map=name            output GRASS cell file
+	mask=name           IPW mask image
+	multiplier=value    multiply IPW datum by value (before offset)
+			    default: 1.0
+	offset=value        add to map datum (after multiplication)
+			    default: 0.0
+
 EXAMPLES
+	The following command,
 
-     The following command,
+		ipw.to.grass ipw=ipwfile map=grasslayer multiplier=10.0 \
+			offset=100.0
 
-              ipw.to.grass ipw=ipwfile map=grasslayer multiplier=10.0 \
-                        offset=100.0
+	will convert an IPW image called ipwfile to a GRASS map
+	layer called  grasslayer, multiplying all input values by 10
+	then adding 100 before storing in the GRASS output file.
 
-     will convert an IPW image called ipwfile to a GRASS map
-     layer called  grasslayer, multiplying all input values by 10
-     then adding 100 before storing in the GRASS output file.
+	In the following command,
 
-     In the following command,
+		demux -b 0 ipw.img | ipw.to.grass map=grass.out \
+			mask=ipwmask offset=0.5
 
-              demux -b 0 ipw.img | ipw.to.grass map=grass.out \
-                  mask=ipwmask offset=0.5
+	the IPW command demux is used to extract band 0 from a mult-band
+	IPW image file and feed it as input to ipw.to.grass.  The data are
+	masked by the IPW mask image ipwmask and 0.5 is added to non-masked
+	data to cause rounding to the nearest integer, rather than
+	truncating.
 
-     the IPW command demux is used to extract band 0 from a mult-band
-     IPW image file and feed it as input to ipw.to.grass.  The data are
-     masked by the IPW mask image ipwmask and 0.5 is added to non-masked
-     data to cause rounding to the nearest integer, rather than
-     truncating.
+	To convert an N-band IPW image into N GRASS cell files:
 
-     To convert an N-band IPW image into N GRASS cell files:
-
-             demux -b 1 ipwfile | ipw.to.grass o=cell.1
-                     ...
-             demux -b N ipwfile | ipw.to.grass o=cell.N
+		demux -b 1 ipwfile | ipw.to.grass o=cell.1
+			...
+		demux -b N ipwfile | ipw.to.grass o=cell.N
 
 SEE ALSO
      James Edward Frew, Jr., The Image Processing Workbench
@@ -110,29 +126,6 @@ AUTHOR
      Research Lab - Corvallis
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 GRASS 4.0                U.S. Army CERL                         2
-
 
 
