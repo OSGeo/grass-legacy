@@ -1,4 +1,4 @@
-$Id: README,v 1.3 2002-04-29 04:43:50 cho Exp $
+$Id: README,v 1.4 2002-04-29 04:50:05 cho Exp $
 
 Displays text using TrueType fonts.
 ===================================
@@ -41,6 +41,7 @@ Usage
 
 Bugs
 ----
+
 With some PCF files, it cannot handle bitmap images correctly.
 Could anyone fix this?
 
