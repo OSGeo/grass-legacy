@@ -1,4 +1,5 @@
-EXTRA_CFLAGS=$(GETHOSTNAME)
+EXTRA_CFLAGS=$(GETHOSTNAME) $(ZLIBINCPATH)
+
 OBJ = \
     adj_cellhd.o\
     align_window.o\
