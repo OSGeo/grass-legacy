@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.92 2000-12-04 08:26:10 markus Exp $
+$Id: BUGS,v 1.93 2000-12-04 08:27:04 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -460,6 +460,10 @@ v.cutter:
   works an when it doesn't so I think that this might be some bug in
   v.cutter.  
  (reported by Stefan.Neumann@agrar.uni-giessen.de)
+  (being worked on by ?)
+
+v.out.e00:
+  Doesn't output any information about projection, datum, etc.
   (being worked on by ?)
 
 [RC]v.out.shape:
