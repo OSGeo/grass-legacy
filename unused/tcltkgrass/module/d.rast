@@ -111,7 +111,7 @@ proc mapset_listbox { type } {
    -width 20
 
   menubutton .mapset.frame0.mapsets \
-    -bitmap {@../bitmap/arrow} \
+    -bitmap {@../bitmap/arrow.xbm} \
     -menu {.mapset.frame0.mapsets.pulldown}
 
   menu .mapset.frame0.mapsets.pulldown
@@ -279,7 +279,7 @@ proc proc_d.rast { } {
     -padx {2}
 
   scrollbar .cmd.frame0.hscrollbar \
-    -command {.cmd.frame0.entry view} \
+    -command {.cmd.frame0.entry xview} \
     -orient {horizontal}
 
   entry .cmd.frame0.entry \
@@ -308,7 +308,7 @@ proc proc_d.rast { } {
     -padx {2}
 
   scrollbar .cmd.frame1.hscrollbar \
-    -command {.cmd.frame1.entry view} \
+    -command {.cmd.frame1.entry xview} \
     -orient {horizontal}
 
   entry .cmd.frame1.entry \
@@ -337,7 +337,7 @@ proc proc_d.rast { } {
     -padx {2}
 
   scrollbar .cmd.frame2.hscrollbar \
-    -command {.cmd.frame2.entry view} \
+    -command {.cmd.frame2.entry xview} \
     -orient {horizontal}
 
   entry .cmd.frame2.entry \

@@ -483,8 +483,8 @@ proc ColorBoxSelectColor {colorW colorBoxMessage colorBoxTargetW colorY} {# xf i
 
   set colorNearest [$colorW nearest $colorY]
   if {$colorNearest >= 0} {
-    $colorW select from $colorNearest
-    $colorW select to $colorNearest
+    $colorW select set $colorNearest
+    $colorW select set $colorNearest
     set colorTmpValue [$colorW get $colorNearest]
     set colorCurrentColor [lrange $colorTmpValue 0 \
           [expr [llength $colorTmpValue]-2]]

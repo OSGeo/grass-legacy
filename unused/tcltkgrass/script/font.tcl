@@ -662,8 +662,8 @@ proc FontBoxSelectFont {fontBoxW fontBoxTargetW fontBoxY} {# xf ignore me 6
 
   set fontBoxNearest [$fontBoxW nearest $fontBoxY]
   if {$fontBoxNearest >= 0} {
-    $fontBoxW select from $fontBoxNearest
-    $fontBoxW select to $fontBoxNearest
+    $fontBoxW select set $fontBoxNearest
+    $fontBoxW select set $fontBoxNearest
     .fontBox.current.current delete 0 end
     .fontBox.current.current insert 0 [$fontBoxW get $fontBoxNearest]
     FontBoxSetFont "$fontBoxTargetW"

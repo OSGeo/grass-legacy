@@ -34,20 +34,20 @@ proc colors { } {
     .colors.frame0.vscrollbar { right fill }
 
   bind .colors.frame0.listbox <Button-1> {
-       %W select from [%W nearest %y]
-       %W select to [%W nearest %y]
+       %W select set [%W nearest %y]
+       %W select set [%W nearest %y]
        set name [%W get [%W nearest %y]]
   }
 
   bind .colors.frame0.listbox <ButtonRelease-1> {
-       %W select from [%W nearest %y]
-       %W select to [%W nearest %y]
+       %W select set [%W nearest %y]
+       %W select set [%W nearest %y]
        set name [%W get [%W nearest %y]]
   }
 
   bind .colors.frame0.listbox <Double-ButtonPress-1> {
-       %W select from [%W nearest %y]
-       %W select to [%W nearest %y]
+       %W select set [%W nearest %y]
+       %W select set [%W nearest %y]
        set name [%W get [%W nearest %y]]
   }
 
