@@ -1,0 +1,95 @@
+.\"%W% %G%
+.TH Mdted.extract 2M GRASSmapdev
+.SH NAME
+Mdted.extract \- Extracts DTED (level 1&2) from 1/2 inch magnetic tapes
+.br
+.I (Map Development Tool)
+.SH SYNOPSIS
+.IP \fBMdted.extract\fR 15
+if\*=\fItapedev\fR of\*=\fIoutfile\fR hf\*=\fIheadfile\fR n\*=\fIlat
+\fRs\*=\fIlat\fR e\*=\fIlon\fR w\*=\fIlon
+.SH DESCRIPTION
+.I Mdted.extract 
+extracts DTED (Level 1&2) elevation data produced by the Defense
+Mapping Agency (DMA) from 1/2 inch magnetic tape.  
+Data is read from the input file (if) specified by \fItapedev\fR.
+If the user does not specify any input file name on the command line,
+the program assumes that input is coming from /dev/rmt0.
+The extracted data is placed in the output file (of) specified by
+\fIoutfile\fR.  This program should be used in conjunction with the
+programs \fIMrot90\fR and \fIMimport.ll\fR to convert DTED data to
+GRASS 
+.CT raster "cell map"
+format.
+.sp
+.IP \fIif\fR 4
+The pathname of the tape device where the raw DTED data exists (default is
+/dev/rmt0)
+.IP \fIof\fR
+The full pathname of the output file into which the extracted tape data is
+to be copied
+.IP \fIhf\fR
+The full pathname of a file to contain descriptive information about
+the extracted data;  should be placed in the same directory as the output file
+.IP \fIn\fR
+North latitude value defining the extraction 
+.CT window "geographic window"
+(format: dd.mm.ss[n|\|s])
+.IP \fIs\fR
+South latitude value defining the extraction 
+.CT window "geographic window"
+(format: dd.mm.ss[n|\|s])
+.IP \fIea\fR
+East longitude value defining the extraction 
+.CT window "geographic window"
+(format: dd.mm.ss[e|\|w])
+.IP \fIw\fR
+West longitude value defining the extraction 
+.CT window "geographic window"
+(format: dd.mm.ss[e|w])
+
+.LP
+The \fIn s e\fR and \fIw\fR parameters define a 
+.CT window "geographic window"
+that should completely
+encompass the data set.
+.I dd.mm.ss 
+are degree, minute, and second values.  
+Only data that falls within this defined 
+.CT window "geographic window"
+will be
+extracted from the tape.
+
+.SH EXAMPLE
+.br
+The command line:
+.sp
+\fBMdted.extract if=/dev/rmt0 of=dted.out hf=dted.head n=37.30.00n s=37.15.00n e=103.30.00w  w=103.45.00w\fR
+.LP
+will extract DTED data from /dev/rmt0, store it in a file named \fIdted.out\fR,
+and store some supporting information in the file \fIdted.head\fR.
+Only data that falls within the 
+.CT window "geographic window"
+defined by the coordinates \fIn,s,e\fR
+and \fIw\fR will be extracted.
+.SH NOTE
+The user should examine the contents of the header file produced by
+this program; it contains information needed as inputs to the 
+data rotation and cell 
+.CT file map
+import programs
+.I Mrot90
+and
+.I Mimport.ll,
+respectfully.
+.SH BUGS
+The format of the header file for DTED Level 1&2 data was changed in 1987.
+\fIMdted.extract\fR and \fIMdted.examine\fR only operate on DTED data
+cointaining pre-1987 headers.  DTED 
+data containing the pre-1987 headers may be purchased from the DMA upon request.
+.SH DIAGNOSTICS
+Invalid requests are so designated.
+.SH "SEE ALSO"
+\fIexamine.tape[1], Mdted.examine[2M], Mimport.ll[2M], Mrot90[2M]\fR
+.SH "AUTHOR"
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
