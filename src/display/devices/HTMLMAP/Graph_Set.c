@@ -109,7 +109,7 @@ int Graph_Set (void)
      * initialize text memory and list pointers
      */
     
-    last_text = (char *) malloc(INITIAL_TEXT+1);
+    last_text = (char *) G_malloc(INITIAL_TEXT+1);
     last_text[0] = '\0';
     last_text_len = INITIAL_TEXT;
 
