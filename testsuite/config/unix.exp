@@ -3,71 +3,83 @@
 # $Id$
 #
 
+load_lib grass.exp
 
-if ![info exists prompt] then {
+
+if { ![info exists prompt] } {
     set prompt "GRASS GRID >"
 }
 
 
 proc grass_exit { } {
     global GRASS
-    global env
 
-    send_user "Exiting $GRASS\n"
-    send "exit \n"
-    expect {
-	-re {.*Goodbye from GRASS GIS.*} { send_user "GRASS GIS exited\n" }
-	timeout { send_user "timeout" }
-    }
-    if { [file isdirectory "$env(LOCATION)"] } {
-	if { [regexp {test} $env(LOCATION) ] } { 
-	    exec rm -fR $env(LOCATION)
+    verbose "Exiting $GRASS"
+    if { [file isdirectory [getenv GISDBASE]] } {
+	if { [regexp {test} [getenv GISDBASE]] } { 
+	    verbose "Deleting GISDBASE"
+	    exec rm -fR [getenv GISDBASE]
 	}
     }
-
-    # exit 0
+    return
 }
 
 
 proc grass_version { } {
-    global env
     global GRASS
-    global version
+    global prompt
 
-    # send_user "checking $GRASS version: "
-    send "g.version |head -1 \n"
-    expect {
-	-re {GRASS.*}       { send_user [lindex [split $expect_out(buffer) \n] 2] }
-	timeout             { perror "timeout"   }
-	-re {.*not found.*} { perror "g.version module not found" }
+    set temp [exec "g.version"]
+    regexp "GRASS.*$" $temp vers
+    if { [info exists vers] } {
+	clone_output "[lindex [split $vers \n] 0] \n"
     }
+    return
 }
 
 
 proc grass_start { } {
     global GRASS
     global prompt
-    global verbose
-    global spawn_id
-    global env
 
-    if { $env(GISBASE) == "" } {
+    if { [getenv GISBASE] == "" } {
 	perror "GRASS GISBASE not found, use export to set GISBASE!"
 	exit 1
     }
-    set env(GISDBASE) "/tmp"
-    set env(LOCATION) "/tmp/grasstestsuite"
-    set env(LOCATION_NAME) "grasstestsuite"
-    set env(MAPSET) "PERMANENT"
-    exec mkdir -p "$env(LOCATION)/$env(MAPSET)"
-    exec touch "$env(LOCATION)/$env(MAPSET)/WIND"
-    spawn $GRASS "$env(LOCATION)/$env(MAPSET)"
-    expect {
-	-re "No such file." { perror "Can't start $GRASS"; exit 1 }
-	-re {.*GRASS.*}     { send_user "ok, $GRASS started\n" }
-	timeout             { perror "Timeout starting $GRASS"; exit 1 }
+    if { [getenv SRCDIR] == "" } {
+	perror "SRCDIR not set, use export to set SRCDIR!"
+	exit 1
     }
-    send_user "testsuite $GRASS running\n\n"
+    # GISBASE is set from Makefile!
+    set path [file join [getenv GISBASE]]
+    setenv ETC [file join $path "etc"]
+    set oldpath [getenv PATH]
+    # bin scripts $PATH /usr/bin etc/bin/main/cmd etc/bin/main/inter 
+    setenv PATH [join [list [file join $path "bin"] [file join $path "scripts"] "$oldpath" "/usr/bin" [file join $path "etc" "bin" "main" "cmd"] [file join $path "etc" "bin" "main" "inter"]] : ]
+    setenv GISDBASE "/tmp/grasstestsuite"
+    setenv LOCATION "/tmp/grasstestsuite/utm"
+    setenv LOCATION_NAME "utm"
+    setenv MAPSET "PERMANENT"
+    setenv GISRC [file join [getenv GISDBASE] ".grassrc5.tmp"]
+    # make location
+    exec mkdir -p [file join [getenv LOCATION] [getenv MAPSET]]
+    exec touch [file join [getenv LOCATION] [getenv MAPSET] "WIND"]
+    set gisrc [getenv GISRC]
+    # write GISRC
+    if [catch {open $gisrc w 0600} fd] {
+	perror "error opening $gisrc"
+	exit -1
+    }
+    puts $fd "GISDBASE: [getenv GISDBASE]"
+    puts $fd "LOCATION_NAME: [getenv LOCATION_NAME]"
+    puts $fd "MAPSET: [getenv MAPSET]"
+    puts $fd "PAINTER: ppm"
+    puts $fd "MAPLP: stuff.ppm"
+    close $fd
+    # create a grass location
+    # UTM projection, zone 12, north, south, east, west, ewres, nsres
+    grass_create_location [getenv GISDBASE] [getenv LOCATION_NAME] 1 13 4928000.00 4914000.00 609000.00 590000.00 50.00 50.00
+    return
 }
 
 
