@@ -1,5 +1,5 @@
 /*
-**  Vpatch  file1 file2 .... composite
+**  v.patch  input=file1,file2,.... output=composite
 **
 **   patch 2 or more vector files together creating composite
 **
@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include "gis.h"
 #include "digit.h"
+#include "dig_atts.h"
 #include "dig_head.h"
 
 
@@ -31,29 +32,47 @@ char *argv[];
 	char errmsg[200];
 	FILE *Out, *In, *fopen ();
 	struct dig_head d_head;
-	struct Option *old, *new;
+	struct Option *old, *new, *title;
+	struct Cell_stats stats;
 
 	struct Map_info InMap, OutMap;
 	struct line_pnts *Points;
+
+	int max_cat;
+	int cat, n_files;
+	char type;
+	int cats_exist;
+	double x, y;
+	long offset;
+
+	struct Categories *old_cats, new_cats;
 
 	setbuf (stdout, NULL);
 	G_gisinit (argv[0]);
 
 	old = G_define_option();
-	old->key			= "input";
-	old->type			= TYPE_STRING;
+	old->key		= "input";
+	old->type		= TYPE_STRING;
 	old->required		= YES;
 	old->multiple		= YES;
 	old->gisprompt		= "old,dig,vector";
-	old->description		= "vector map--source for composite";
+	old->description	= "vector map(s)--source for composite";
 
 	new = G_define_option();
-	new->key			= "output";
-	new->type			= TYPE_STRING;
+	new->key		= "output";
+	new->type		= TYPE_STRING;
 	new->required		= YES;
 	new->multiple		= NO;
-	new->gisprompt		= "new, dig, vector";
-	new->description		= "new vector composite";
+	new->gisprompt		= "any,dig,vector";
+	new->description	= "new vector composite";
+
+	title = G_define_option();
+	title->key		= "title";
+	title->type		= TYPE_STRING;
+	title->required		= NO;
+	title->multiple		= NO;
+	title->answer           = "";
+	title->description	= "new categories table title";
 
 	if (G_parser (argc, argv))
 		exit(-1);
@@ -66,6 +85,17 @@ char *argv[];
 		exit(-1);
 	}
 	*/
+	i=0;
+        while (old->answers[i])
+        {
+            in_name = old->answers[i++];
+	    mapset = G_find_vector(in_name,"");
+	    if(strcmp(G_fully_qualified_name(in_name, mapset),
+			G_fully_qualified_name(out_name, G_mapset()))
+			==0)
+                 G_fatal_error(
+		    "The output file name must differ from input file names");
+        }
 
 	if (0 > Vect_open_new (&OutMap, out_name))
 	{
@@ -133,6 +163,8 @@ char *argv[];
 		fclose (In);
 		*/
 	}
+	n_files = i;
+	/* debug: fprintf(stdout,"n_files: %d\n", n_files);*/
 
 	/*
 	strcpy (d_head.map_name, "Output from v.patch");
@@ -157,11 +189,15 @@ char *argv[];
 	}
 
 	i = 0;
+	cats_exist=0;
+	G_init_cell_stats(&stats);
 	while (old->answers[i])
 	{
+	   int stat;
 		in_name = old->answers[i++];
 		fprintf (stdout, "    Processing attribute file %s\n", in_name);
-		if ((mapset = G_find_file2 ("dig_att", in_name, "")) == NULL)
+		mapset = G_find_vector(in_name,"");
+		if (G_find_file ("dig_att", in_name, mapset) == NULL)
 		{
 			fprintf (stderr, "Cannot find attribute file for <%s>\n", in_name);
 			continue;
@@ -171,10 +207,77 @@ char *argv[];
 			fprintf (stderr, "Cannot open attribute file for <%s>\n", in_name);
 			continue;
 		}
-		docat (In, Out);
+        	while ((stat = read_att(In, &type, &x, &y, &cat, &offset))!=1)
+		{
+		   if(stat==0) 
+		   {
+		      G_update_cell_stats((CELL *) &cat,1,&stats);
+		      cats_exist=1;
+		      write_att (Out, type, x, y, cat);
+		   } 
+                }
 		fclose (In);
 	}
 	fclose (Out);
+
+        if(cats_exist)
+	{
+	     char *temp_buf;
+	     char cat_title[100];
+	     long count;
+
+	     printf("Writing category file...\n");
+	     G_rewind_cell_stats(&stats);
+	     old_cats = (struct Categories*) G_malloc(sizeof(struct Categories)*n_files);
+	     i=0;
+	     while (old->answers[i])
+             {
+                 in_name = old->answers[i];
+	         mapset = G_find_vector(in_name,"");
+	         if(G_read_vector_cats(in_name, mapset, &(old_cats[i])))
+	          G_init_cats((CELL)0,"", &(old_cats[i]));
+	         i++;
+	     }
+	     if(strcmp(title->answer,"")==0) 
+	     /* if no new categories title provided, set the new title 
+		to the first existing cat title of the input files */
+	     {
+		 for(i=0;i<n_files;i++)
+		 {
+	            strcpy(cat_title, G_get_cats_title(&old_cats[i]));
+		    if(strcmp("",cat_title)!=0) break;
+	         }
+             }
+             else strcpy(cat_title, title->answer);
+
+	     G_init_cats((CELL)0, cat_title, &new_cats);
+
+             while(G_next_cell_stat((CELL *)&cat, &count, &stats)) 
+	     {
+	         i=0;
+	         while (old->answers[i])
+	         {
+                    in_name = old->answers[i];
+	   	    mapset = G_find_vector(in_name,"");
+		    temp_buf = G_get_cat(cat, &(old_cats[i]));
+		    if (strcmp(temp_buf,"")!=0)
+		    {
+		         G_set_cat(cat, temp_buf, &new_cats);
+		         /* debug:  fprintf(stdout,
+		        "%d:   %s\n", cat, temp_buf);*/
+		         break; /* i - loop */ 
+                    }
+		    i++;
+                 }
+              }
+	      for(i=0;i<n_files;i++)
+	      {
+                      G_free_cats(&(old_cats[i]));
+              }
+	      G_write_vector_cats(out_name, &new_cats);
+              G_free_cats(&new_cats);
+	}
+	G_free_cell_stats(&stats);
 
 end:
 	fprintf (stdout, "\n");
@@ -240,11 +343,3 @@ struct line_pnts *Points;
 	return (0);
 }
 
-docat (In, Out)
-FILE *In, *Out;
-{
-	char buf[BUFSIZ];
-
-	while (fgets (buf, BUFSIZ, In) != NULL)
-		fputs (buf, Out);
-}
