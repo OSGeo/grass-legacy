@@ -162,7 +162,7 @@ static int list_element( FILE *out, char *element,
 	else
 	    sprintf(buf,"ls -C %s", path);
 
-	if (ls = G_popen(buf,"r"))
+	if ((ls = G_popen(buf,"r")))
 	{
 	    while (!broken_pipe && fgets(buf, sizeof buf, ls))
 	    {
