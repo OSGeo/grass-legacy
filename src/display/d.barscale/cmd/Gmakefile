@@ -2,6 +2,7 @@ PGM=d.barscale
 
 OFILES = \
 	draw_scale.o \
+	mouse.o \
 	main.o
 LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 
@@ -12,5 +13,6 @@ $(RASTERLIB): #
 $(DISPLAYLIB): #
 $(GISLIB): #
 
-command.o:	options.h
-main.o:	options.h
+draw_scale.o:	options.h
+main.o:		options.h
+mouse.o:	options.h

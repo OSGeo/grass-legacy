@@ -4,6 +4,9 @@ EXTRA_CFLAGS += -I$(OBJARCH)
 $(OBJARCH)/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+makefile: Gmakefile
+	${SRCDIR}/mk/genmake.sed < $< > $@
+
 dir: force
 	mkdir -p $(OBJARCH)
 	$(MAKE) -f makefile
