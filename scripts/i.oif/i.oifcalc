@@ -10,32 +10,32 @@ exit
 fi
 
 # calculate SUM of Stddeviations:
-$GISBASE/etc/i.oif/m.cutmatrix /tmp/i.oif.stddev 1 $1 >  /tmp/i.oif.sum
-$GISBASE/etc/i.oif/m.cutmatrix /tmp/i.oif.stddev 1 $2 >> /tmp/i.oif.sum
-$GISBASE/etc/i.oif/m.cutmatrix /tmp/i.oif.stddev 1 $3 >> /tmp/i.oif.sum
+$GISBASE/etc/i.oif/m.cutmatrix /tmp/i.oif.stddev 1 $1 >  "$temp_sum"
+$GISBASE/etc/i.oif/m.cutmatrix /tmp/i.oif.stddev 1 $2 >> "$temp_sum"
+$GISBASE/etc/i.oif/m.cutmatrix /tmp/i.oif.stddev 1 $3 >> "$temp_sum"
 
-cat /tmp/i.oif.sum | awk 'BEGIN {sum = 0.0} 
+cat "$temp_sum" | awk 'BEGIN {sum = 0.0} 
 NR == 1{}
 	{sum += $1 ; N++}
 END{
-print sum > "/tmp/i.oif.calc"
+print sum > "$temp_calc"
 }'
 
 # calculate SUM of absolute(Correlation values):
-$GISBASE/etc/i.oif/m.cutmatrix /tmp/i.oif.correlation $1 $2 >  /tmp/i.oif.sum
-$GISBASE/etc/i.oif/m.cutmatrix /tmp/i.oif.correlation $1 $3 >> /tmp/i.oif.sum
-$GISBASE/etc/i.oif/m.cutmatrix /tmp/i.oif.correlation $2 $3 >> /tmp/i.oif.sum
+$GISBASE/etc/i.oif/m.cutmatrix /tmp/i.oif.correlation $1 $2 >  "$temp_sum"
+$GISBASE/etc/i.oif/m.cutmatrix /tmp/i.oif.correlation $1 $3 >> "$temp_sum"
+$GISBASE/etc/i.oif/m.cutmatrix /tmp/i.oif.correlation $2 $3 >> "$temp_sum"
 
-cat /tmp/i.oif.sum | awk 'BEGIN {sum = 0.0}
+cat "$temp_sum" | awk 'BEGIN {sum = 0.0}
 NR == 1{}
         {sum += sqrt($1*$1) ; N++}  # sqrt(x^2) is my ABS-function
 END{
-print sum >> "/tmp/i.oif.calc"
+print sum >> "$temp_calc"
 }'
 
 # Calculate OIF index:
 #     Divide (SUM of Stddeviations) and (SUM of Correlation)
-cat /tmp/i.oif.calc | awk 'BEGIN {}
+cat "$temp_calc" | awk 'BEGIN {}
 {count = divisor; divisor = $1;}      # value shift - no better idea ;-)
 END{
 print count / divisor
