@@ -2,13 +2,7 @@
 #include "internoptri.h"
 #include "persquadedge.h"
 
-#ifdef  __CYGWIN__
-#define MAX(a,b) (a > b ? a : b)
-#endif
-
-#ifdef  sparc
-#define MAX(a,b) (a > b ? a : b)
-#endif
+#define MYMAX(a,b) (a > b ? a : b)
 
 /*-------------------------------------------------------------------------*/
 
@@ -132,8 +126,8 @@ void copyHdagToQe (
   maxVertex = 0;
   for (e = 0; e < pNPE (pq); e++) {
     pqe = pMAKEQE (e);
-    maxVertex = MAX (maxVertex, pORG (pq, pqe));
-    maxVertex = MAX (maxVertex, pDST (pq, pqe));
+    maxVertex = MYMAX (maxVertex, pORG (pq, pqe));
+    maxVertex = MYMAX (maxVertex, pDST (pq, pqe));
   }
 
   inci = MALLOC (indexType,  maxVertex + 1);
