@@ -1,12 +1,19 @@
 #include <stdio.h>
 #include <signal.h>
+#include <errno.h>
+#include <sys/ipc.h>
+#include <sys/msg.h>
 #include "graph.h"
 #include "monitors.h"
 #include "gis.h"
-#include <errno.h>
+
+/* for locking based on inode number of a fifo */
+#ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
-#include <sys/ipc.h>
-#include <sys/msg.h>
+#endif
+#include <sys/stat.h>
+
+static int _fifo_ino;
 
 extern int errno;
 
@@ -232,6 +239,7 @@ R_open_driver()
     struct MON_CAP *mon, *R_parse_monitorcap();
     char *name, *G__getenv(), *getenv(), *key_string;
     char *user, *who_locked_driver();
+    struct stat stat_buf;
 
     verbose = !quiet;
     quiet = 0;
@@ -243,103 +251,99 @@ R_open_driver()
             fprintf(stderr,"Please run \"d.mon\" to select a graphics monitor.\n");
             exit(-1);
         }
-        else
-        {
-            return(NO_MON);
-        }
+        return(NO_MON);
     }
-    else
+
+    if ((mon = R_parse_monitorcap(MON_NAME,name)) == NULL)
     {
-        if ((mon = R_parse_monitorcap(MON_NAME,name)) == NULL)
+        if (verbose)
         {
-            if (verbose)
-            {
-                fprintf(stderr,"No such graphics monitor as <%s>.\n",name);
-                fprintf(stderr,"Please run \"d.mon\" to select a valid graphics monitor.\n");
-                exit(-1);
-            }
-            else
-            {
-                return(NO_MON);
-            }
+            fprintf(stderr,"No such graphics monitor as <%s>.\n",name);
+            fprintf(stderr,"Please run \"d.mon\" to select a valid graphics monitor.\n");
+            exit(-1);
         }
-        else
+        return(NO_MON);
+    }
+
+/* get the fifos and get the inode number of one of them */
+    sscanf(mon->link,"%s %s",our_output_file,our_input_file);
+    if (stat (our_output_file, &stat_buf) != 0)
+    {
+	if (verbose)
+	{
+	    fprintf (stderr, "Can't stat %s\n", our_output_file);
+	    exit(-1);
+	}
+	return (LOCK_FAILED);
+    }
+    _fifo_ino = stat_buf.st_ino; /* global: used by lockfile() */
+
+    key_string = getenv("GIS_LOCK");
+    if (key_string == NULL || sscanf(key_string,"%d",&key) != 1 || key <= 0)
+        key = 0;
+    lock = lock_driver(key);
+    if (lock == 0)
+    {
+        if (verbose)
         {
-            key_string = getenv("GIS_LOCK");
-            if (key_string == NULL || sscanf(key_string,"%d",&key) != 1 || key <= 0)
-		key = 0;
-            lock = lock_driver(key);
-            if (lock == 0)
+            if ((user = who_locked_driver()) == NULL)
+                fprintf(stderr,"Error - Monitor <%s> is in use.\n",name);
+            else
+                fprintf(stderr,"Error - Monitor <%s> is in use by %s.\n",name,user);
+            exit(-1);
+        }
+        return(LOCKED);
+    }
+    if (lock < 0)
+    {
+        if (verbose)
+        {
+            char file[512];
+            fprintf(stderr,"Error - Could not complete locking process for monitor <%s>.\n",name);
+            lockfile(file);
+            fprintf (stderr, "Lock file is %s\n", file);
+            exit(-1);
+        }
+        return(LOCK_FAILED);
+    }
+    if (verbose)
+    {
+        for (try = 0; try < 2; try++)
+        {
+            switch (fifoto (our_input_file,our_output_file,try?15:3))
             {
-                if (verbose)
+            case -1:
+                fprintf(stderr, "\07Error - Can't set up pipe to graphics device.\n");
+                unlock_driver(1);
+                exit(-1);
+            case 0:
+                if (try)
                 {
-                    if ((user = who_locked_driver()) == NULL)
-                        fprintf(stderr,"Error - Monitor <%s> is in use.\n",name);
-                    else
-                        fprintf(stderr,"Error - Monitor <%s> is in use by %s.\n",name,user);
-                    exit(-1);
-                }
-                else
-                {
-                    return(LOCKED);
-                }
-            }
-            if (lock < 0)
-            {
-                if (verbose)
-                {
-		    char file[512];
-                    fprintf(stderr,"Error - Could not complete locking process for monitor <%s>.\n",name);
-		    lockfile(file);
-		    fprintf (stderr, "Lock file is %s\n", file);
-                    exit(-1);
-                }
-                else
-                {
-                    return(LOCK_FAILED);
-                }
-            }
-            sscanf(mon->link,"%s %s",our_output_file,our_input_file);
-            if (verbose)
-            {
-                for (try = 0; try < 2; try++)
-                {
-                    switch (fifoto (our_input_file,our_output_file,try?15:3))
-                    {
-                    case -1:
-                        fprintf(stderr, "\07Error - Can't set up pipe to graphics device.\n");
-                        unlock_driver(1);
-                        exit(-1);
-                    case 0:
-                        if (try)
-                        {
-                            fprintf (stderr, "Error - Graphics monitor <%s> not running!\n",name);
-                            unlock_driver(1);
-                            exit(1);
-                        }
-                        fprintf (stderr, "\07Please start graphics monitor <%s>.\n",name);
-                        break;
-                    default:
-                        sync_driver(name); /* syncronize driver */
-                        return(0);
-                    }             /* switch */
-                }               /* for */
-            }
-            else /* non-verbose mode */
-            {
-            /*  switch (fifoto(our_input_file,our_output_file,3)) */
-                switch (fifoto(our_input_file,our_output_file,1))
-                {
-                case -1:
+                    fprintf (stderr, "Error - Graphics monitor <%s> not running!\n",name);
                     unlock_driver(1);
-                    return(NO_OPEN);
-                case 0:
-                    unlock_driver(1);
-                    return(NO_RUN);
-                default:
-                    return(OKOK);
+                    exit(1);
                 }
-            }
+                fprintf (stderr, "\07Please start graphics monitor <%s>.\n",name);
+                break;
+            default:
+                sync_driver(name); /* syncronize driver */
+                return(0);
+            }             /* switch */
+        }               /* for */
+    }
+    else /* non-verbose mode */
+    {
+    /*  switch (fifoto(our_input_file,our_output_file,3)) */
+        switch (fifoto(our_input_file,our_output_file,1))
+        {
+        case -1:
+            unlock_driver(1);
+            return(NO_OPEN);
+        case 0:
+            unlock_driver(1);
+            return(NO_RUN);
+        default:
+            return(OKOK);
         }
     }
 
@@ -367,6 +371,7 @@ R__open_quiet()
 static int
 fifoto(input,output,alarm_time)
     char *input, *output;
+    int alarm_time;
 {
     no_mon = 0;
     _wfd = msgget(ftok(output,0), 0600);
@@ -502,68 +507,39 @@ static int
 lockfile(file)
     char *file;
 {
-	char *G__getenv();
-	char *G_getenv();
-	char *G__machine_name();
-	char *name;
-	char *disp, display[64] ;
-	char *base ;
-	char *hostname ;
-	int mask;
-	char lock_dir[256] ;
+    char *G_gisbase();
+    char *G__machine_name();
+    char *name;
+    char *hostname ;
+    int mask;
+    char lock_dir[256] ;
+
+/* create the lock_dir */
+    mask = umask(0);
+    sprintf (lock_dir, "%s/locks", G_gisbase());
+    mkdir (lock_dir,0777);
 
 /* get machine name, if it has one */
     hostname = G__machine_name();
-    if (hostname == NULL) hostname = "";
-    for(name=hostname; *name!=NULL; name++) /* use only first part */
-	if (*name == '.')
-	{
-	    *name = 0 ;
-	    break ;
-    }
-
-    disp   = getenv("DISPLAY") ;
-    name   = G__getenv ("MONITOR");
-    base   = G_getenv ("GISBASE");
-
-    if(disp)
-	{
-		if(strncmp(disp,"unix:",5))
-			strcpy(display, disp) ;
-		else
-		{
-			char *disptr ;
-			disptr = disp + 5 ;
-			sprintf(display,"%s:%s",hostname,disptr) ;
-		}
-        sprintf (file, "%s/locks/%s/%s/%s", base, hostname, display, name);
-        sprintf (lock_dir, "%s/locks/%s/%s", base, hostname, display);
-	}
-    else
-	{
-        sprintf (file, "%s/locks/%s/%s", base, hostname, name);
-        sprintf (lock_dir, "%s/locks/%s", base, hostname);
-	}
-
-	if (access(lock_dir, 0) == 0)
-		return(0) ;
-
-/* make sure lock directory exists */
-    *file = 0;
-    sprintf (lock_dir, "%s/locks/%s", base, hostname);
-    mask=umask(0) ;
-    mkdir(lock_dir,0777) ;
-    umask(mask);
-
-    if(disp)
+    if (hostname)
     {
-        sprintf (lock_dir, "%s/locks/%s/%s", base, hostname, display);
-        mask=umask(0) ;
-        mkdir(lock_dir,0777) ;
-	umask(mask);
+	for(name=hostname; *name!='\0'; name++) /* use only first part */
+	{
+	    if (*name == '.')
+	    {
+		*name = 0 ;
+		break ;
+	    }
+	}
+	strcat (lock_dir, "/");
+	strcat (lock_dir, hostname);
+	mkdir (lock_dir,0777);
     }
+    umask (mask);
 
-    return 0;
+    sprintf (file, "%s/mon.%d", lock_dir, _fifo_ino);
+
+	return 0;
 }
 
 #include <pwd.h>
