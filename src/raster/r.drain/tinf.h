@@ -67,6 +67,8 @@ void prod_d(void *, void *);
 
 /* to add a new multitype function, add a pointer for the function and
  * its argument list to the list below */
+#ifdef TINF_MAIN
+
 int (*is_null)(void *);
 void (*set_null_value)(void *, int);
 int (*bpe)();
@@ -82,7 +84,7 @@ void (*diff)(void *, void *);
 void (*sum)(void *, void *);
 void (*quot)(void *, void *);
 void (*prod)(void *, void *);
-
+#endif
 /* probably not something of general interest */
 
 double slope_c(void *, void *, double);
