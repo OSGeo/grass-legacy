@@ -20,7 +20,7 @@ int zoomwindow (int quiet, int rotate, double magnify)
 	else
 	    quitonly=make_window_box (&window, magnify);
 
-	if (quitonly) 
+	if (quitonly == 1) 
 	  break; /* no action was taken */
 	else	  
 	{
