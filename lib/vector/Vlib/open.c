@@ -334,6 +334,13 @@ Vect_open_new (
     ferror = Vect_get_fatal_error ();
     Vect_set_fatal_error (GV_FATAL_EXIT);
 
+    /* check for [A-Za-z][A-Za-z0-9_]* in name */
+    if (Vect_legal_filename(name) < 0 ) {
+       sprintf ( errmsg, "Map name not SQL compliant.");
+       fatal_error (ferror , errmsg );
+       return (-1);
+    }
+
     /* Check if map already exists */
     if ( G_find_file(GRASS_VECT_DIRECTORY, name, G_mapset()) != NULL ) {
        G_warning ("Vector '%s' already exists and will be overwritten.", name);
@@ -359,7 +366,7 @@ Vect_open_new (
 	else if ( G_strcasecmp ( frmt, "NATIVE") == 0 )
 	    format = GV_FORMAT_NATIVE;
 	else
-	    G_warning ("Format '%s' not supported, native format used");
+	    G_warning ("Format '%s' not supported, native format used", frmt);
     }
     Map->format = format;
     G_debug ( 3, "  format = %d", format);
