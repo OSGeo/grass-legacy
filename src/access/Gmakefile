@@ -1,0 +1,10 @@
+LIST = main.o ask_perms.o exp_perms.o get_perms.o set_perms.o verify_perms.o
+
+$(BIN)/access: $(LIST) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VASK)
+
+get_perms.o: access.h
+set_perms.o: access.h
+
+$(GISLIB): #
+$(VASKLIB): #
