@@ -381,7 +381,7 @@ fprintf(stderr, "Percent complete: ");
 		null_val_i = (int)null_str;
 		if(flag.swap->answer)
 		TIFFSwabShort((uint16 *)&null_val_i);
-		fwrite(&null_val_i, sizeof(int), 1, fp);
+		fwrite(&null_val_i, sizeof(short), 1, fp);
 		}
 	if( out_type == FCELL_TYPE ) {
 		null_val_f = (float)null_str;
