@@ -1,4 +1,4 @@
-INCLUDE = ../../display/devices/lib
+INCLUDE = $(SRC)/display/devices/lib
 EXTRA_CFLAGS = -I$(INCLUDE)
 
 OBJ = \
