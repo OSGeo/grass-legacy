@@ -1,0 +1,13 @@
+*******************************
+g.column.db
+
+(m) means modified
+
+Katarina Johnsson, 930415
+*******************************    
+
+main (m)
+	ingresColumn (m, <=> infxColumn)
+		ingresUnTable (new)
+		parseTypes (NOT CERTAIN THAT THIS WORKS!!)
+
