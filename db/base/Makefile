@@ -75,10 +75,10 @@ $(HOME)/db.connect: $(OBJDIR)/connect.o
 PROGRAMS = db.columns db.copy db.createdb db.dropdb db.droptable db.databases db.describe db.drivers db.execute db.select db.tables db.connect
 
 allhtml: *.html
-	for pgm in $(PROGRAMS) ; do \
-		GRASS_FAKE_START=1 GISBASE=$(GISBASE) $(ETC)/bin/cmd/$$pgm --html-description | grep -v '</body>' > $$pgm.tmp ; true ; \
-		test ! -f $$pgm.html || ( cat $$pgm.html >> $$pgm.tmp ) ; \
-		echo "</body></html>" >> $$pgm.tmp ; \
+	for prog in $(PROGRAMS) ; do \
+		GRASS_FAKE_START=1 GISBASE=$(GISBASE) $(ETC)/bin/cmd/$$prog --html-description | grep -v '</body>' > $$prog.tmp ; true ; \
+		test ! -f $$prog.html || ( cat $$prog.html >> $$prog.tmp ) ; \
+		echo "</body></html>" >> $$prog.tmp ; \
 		mkdir -p $(GISBASE)/docs/html ; \
-		mv $$pgm.tmp $(GISBASE)/docs/html/$$pgm.html ; \
+		mv $$prog.tmp $(GISBASE)/docs/html/$$prog.html ; \
 	done
