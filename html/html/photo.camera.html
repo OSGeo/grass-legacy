@@ -29,12 +29,9 @@ GRASS Image Processing Program <EM>
 
 <H2>DESCRIPTION</H2>
 
-<EM>photo.camera</EM>
-creates or modifies entries in a 
-camera reference file.
-For ortho-photo rectification,
-a camera reference file is required
-for computation of scanned image to photo-coordinate transformation parameters.
+<EM>photo.camera</EM> creates or modifies entries in a camera reference
+file. For ortho-photo rectification, a camera reference file is required for
+computation of scanned image to photo-coordinate transformation parameters.
 
 
 <P>
@@ -71,13 +68,16 @@ The calibrated focal length and the point of symmetry are used in computing
 the photo-to-target transformation parameters.  These values should be entered
 from the camera calibration report (usually available from the photograph 
 supplier).  The maximum number of fiducials will determine the number
-of fiducial or reasuae coordinate pairs to be entered below.
+of fiducial or reseau coordinate pairs to be entered below.
 
 
 <P>
 
 You are then ask to enter the X and Y photo coordinates
-of each fiducial as follows:
+of each fiducial as follows. On this screen you should enter the fiducial or
+reseau photo-coordinates as given in the camera calibration report. The X,
+and Y coordinates are in milli-meters from the principle point.
+
 <P>
 Please provide the following information
 <PRE>
@@ -100,10 +100,7 @@ Please provide the following information
                     (OR &lt;Ctrl-C&gt; TO CANCEL)
 </PRE>
 The input display is repeated until the number of MAXIMUM FIDUCIALS 
-is reached.  On this screen you should enter the fiducial or ressuae
-photo-coordinates as given in the camera calibration report.
-The X, and Y coordinates are in milli-meters from the principle point.
-
+is reached.  
 
 <P>
 

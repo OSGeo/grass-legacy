@@ -35,9 +35,9 @@ int main(int argc, char *argv[])
 
 	int proj_changed_in = 0;
 	int proj_changed_out = 0;
-	char ebuf[256], nbuf[256];
-	char b1[100], b2[100], label[512];
-	char buf[1024];
+	char ebuf[256]="", nbuf[256]="";
+	char b1[100]="", b2[100]="", label[512]="";
+	char buf[1024]="";
 	char *proj_name;
 	/* int proj_index = 0; */
 
@@ -93,8 +93,8 @@ int main(int argc, char *argv[])
         if (p_in->answers) {
         int i;
 	double a, es;
-	char ellps[80];
-        char ibuf[1024], ibuf_tmp[120];
+	char ellps[80]="";
+        char ibuf[1024]="", ibuf_tmp[120]="";
 
         parms_in[0] = '\0';
         pj_zero_proj(&info_in);
@@ -142,9 +142,9 @@ int main(int argc, char *argv[])
 	/* Get output projections parms */
 	if (p_out->answers) {
 		int i;
-		char obuf[1024], obuf_tmp[120];
+		char obuf[1024]="", obuf_tmp[120]="";
 		double a, es;
-		char ellps[80];
+		char ellps[80]="";
 
 		parms_out[0] = '\0';
 		pj_zero_proj(&info_out);

@@ -846,6 +846,28 @@ int main (int argc, char *argv[])
 		if(max_asp < aspect) max_asp = aspect;
              } /* computing aspect */
 
+	     if(dx_fd > 0)
+	     {
+                if (out_type == CELL_TYPE)
+                    *((CELL *) dx_ptr) = (CELL) (scik1 * dx);
+                else
+                    G_set_raster_value_d(dx_ptr, (DCELL) dx, data_type);
+                dx_ptr= G_incr_void_ptr(dx_ptr, G_raster_size(data_type));
+	     }
+
+	     if(dy_fd > 0)
+	     {
+                if (out_type == CELL_TYPE)
+                    *((CELL *) dy_ptr) = (CELL) (scik1 * dy);
+                else
+                    G_set_raster_value_d(dy_ptr, (DCELL) dy, data_type);
+                dy_ptr= G_incr_void_ptr(dy_ptr, G_raster_size(data_type));
+	     }
+
+             if(dxx_fd <= 0 && dxy_fd <= 0 && dyy_fd <= 0 &&
+		pcurv_fd <= 0 && tcurv_fd <= 0 )
+	       continue;
+
 	     /* compute second order derivatives */
 	     s4 = *c1 + *c3 + *c7 + *c9 - *c5 * 8.;
              s5 = *c4 * 4. + *c6 * 4. - *c8 * 2. - *c2 * 2.;
@@ -856,28 +878,10 @@ int main (int argc, char *argv[])
              dyy = (s4 + s6) / ((3./32.)*V*V);
              dxy = s3 / ((1./16.)*H*V);
 
-	     if(dx_fd > 0)
-	     {
-                if (out_type == CELL_TYPE)
-                    *((CELL *) dx_ptr) = (CELL) dx;
-                else
-                    G_set_raster_value_d(dx_ptr, (DCELL) dx, data_type);
-                dx_ptr= G_incr_void_ptr(dx_ptr, G_raster_size(data_type));
-	     }
-
-	     if(dy_fd > 0)
-	     {
-                if (out_type == CELL_TYPE)
-                    *((CELL *) dy_ptr) = (CELL) dy;
-                else
-                    G_set_raster_value_d(dy_ptr, (DCELL) dy, data_type);
-                dy_ptr= G_incr_void_ptr(dy_ptr, G_raster_size(data_type));
-	     }
-
 	     if(dxx_fd > 0)
 	     {
                 if (out_type == CELL_TYPE)
-                    *((CELL *) dxx_ptr) = (CELL) dxx;
+                    *((CELL *) dxx_ptr) = (CELL) (scik1 * dxx);
                 else
                     G_set_raster_value_d(dxx_ptr, (DCELL) dxx, data_type);
                 dxx_ptr= G_incr_void_ptr(dxx_ptr, G_raster_size(data_type));
@@ -886,7 +890,7 @@ int main (int argc, char *argv[])
 	     if(dyy_fd > 0)
 	     {
                 if (out_type == CELL_TYPE)
-                    *((CELL *) dyy_ptr) = (CELL) dyy;
+                    *((CELL *) dyy_ptr) = (CELL) (scik1 * dyy);
                 else
                     G_set_raster_value_d(dyy_ptr, (DCELL) dyy, data_type);
                 dyy_ptr= G_incr_void_ptr(dyy_ptr, G_raster_size(data_type));
@@ -895,54 +899,55 @@ int main (int argc, char *argv[])
 	     if(dxy_fd > 0)
 	     {
                 if (out_type == CELL_TYPE)
-                    *((CELL *) dxy_ptr) = (CELL) dxy;
+                    *((CELL *) dxy_ptr) = (CELL) (scik1 * dxy);
                 else
                     G_set_raster_value_d(dxy_ptr, (DCELL) dxy, data_type);
                 dxy_ptr= G_incr_void_ptr(dxy_ptr, G_raster_size(data_type));
 	     }
 
 	     /* compute curvature */
-             if(pcurv_fd > 0 || tcurv_fd > 0 )
-      	     {
-        	grad2 = key;         /*dx2 + dy2*/
-        	grad = sqrt (grad2);
-        	if (grad <= gradmin)
-        	{
-            		pcurv = 0.;
-            		tcurv = 0.;
-        	}
-        	else
-        	{
-            		dnorm1 =  sqrt (grad2 + 1.);
-            		dxy2 = 2. * dxy * dx * dy;
-            		dx2 = dx * dx;
-            		dy2 = dy * dy;
-            		pcurv = (dxx * dx2 + dxy2 + dyy * dy2) / 
-				(grad2 * dnorm1*dnorm1*dnorm1);
-            		tcurv = (dxx * dy2 - dxy2 + dyy * dx2) / 
-				(grad2 * dnorm1);
-        	}
-		if (pcurv_fd > 0) {
-		  if (out_type == CELL_TYPE)
-		    *((CELL *) pcurv_ptr) = (CELL) (scik1 * pcurv);
-		  else
-		    G_set_raster_value_d(pcurv_ptr, (DCELL) pcurv, data_type);
-		}
-		else
-		    G_set_null_value (pcurv_ptr, 1, data_type);
-		pcurv_ptr= G_incr_void_ptr(pcurv_ptr, G_raster_size(data_type));
-                if (tcurv_fd > 0) {
-                  if (out_type == CELL_TYPE)
-                    *((CELL *) tcurv_ptr) = (CELL) (scik1 * tcurv);
-                  else
-                    G_set_raster_value_d(tcurv_ptr, (DCELL) tcurv, data_type);
-                }
-                else
-                    G_set_null_value (tcurv_ptr, 1, data_type);
-                tcurv_ptr= G_incr_void_ptr(tcurv_ptr, G_raster_size(data_type));
-	      } /* curvature end */
+             if(pcurv_fd <= 0 && tcurv_fd <= 0 )
+	       continue;
+
+	     grad2 = key;         /*dx2 + dy2*/
+	     grad = sqrt (grad2);
+	     if (grad <= gradmin)
+	     {
+	       pcurv = 0.;
+	       tcurv = 0.;
+	     }
+	     else
+	     {
+	       dnorm1 =  sqrt (grad2 + 1.);
+	       dxy2 = 2. * dxy * dx * dy;
+	       dx2 = dx * dx;
+	       dy2 = dy * dy;
+	       pcurv = (dxx * dx2 + dxy2 + dyy * dy2) / 
+		 (grad2 * dnorm1*dnorm1*dnorm1);
+	       tcurv = (dxx * dy2 - dxy2 + dyy * dx2) / 
+		 (grad2 * dnorm1);
+	     }
+
+	     if (pcurv_fd > 0)
+	     {
+	        if (out_type == CELL_TYPE)
+	            *((CELL *) pcurv_ptr) = (CELL) (scik1 * pcurv);
+	        else
+	            G_set_raster_value_d(pcurv_ptr, (DCELL) pcurv, data_type);
+	        pcurv_ptr= G_incr_void_ptr(pcurv_ptr, G_raster_size(data_type));
+	     }
+
+	     if (tcurv_fd > 0)
+	     {
+	        if (out_type == CELL_TYPE)
+	            *((CELL *) tcurv_ptr) = (CELL) (scik1 * tcurv);
+	        else
+	            G_set_raster_value_d(tcurv_ptr, (DCELL) tcurv, data_type);
+	        tcurv_ptr= G_incr_void_ptr(tcurv_ptr, G_raster_size(data_type));
+	     }
 
         } /* column for loop */
+
         if (aspect_fd > 0)
 	    G_put_raster_row(aspect_fd, asp_raster, data_type);
 
@@ -1001,14 +1006,14 @@ int main (int argc, char *argv[])
 	{
 	       if(i==360)sprintf(buf,"east");
 	       else if(i==360)sprintf(buf,"east");
-	       else if(i==45)sprintf(buf,"north of east");
+	       else if(i==45)sprintf(buf,"north ccw of east");
 	       else if(i==90)sprintf(buf,"north");
-	       else if(i==135)sprintf(buf,"north of west");
+	       else if(i==135)sprintf(buf,"north ccw of west");
 	       else if(i==180)sprintf(buf,"west");
-	       else if(i==225)sprintf(buf,"south of west");
+	       else if(i==225)sprintf(buf,"south ccw of west");
 	       else if(i==270)sprintf(buf,"south");
-	       else if(i==315)sprintf(buf,"south of east");
-               else sprintf (buf, "%d degree%s from east", i, i==1?"":"s");
+	       else if(i==315)sprintf(buf,"south ccw of east");
+               else sprintf (buf, "%d degree%s ccw from east", i, i==1?"":"s");
 	       if(data_type==CELL_TYPE) 
 	       {
 		  G_set_cat(i, buf, &cats);

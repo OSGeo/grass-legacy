@@ -69,8 +69,9 @@ int exec_rectify (int order, char *extension)
 	mapset = ref.file[n].mapset;
 	
 	/* generate out name, add extension to output */
-	result = ref.file[n].name;
-	strcat (result, extension);
+	result = G_malloc(strlen(ref.file[n].name) + strlen(extension) + 1);
+	strcpy(result, ref.file[n].name);
+	strcat(result, extension);
 	fprintf(stderr, "Rectified input file %s will be saved as %s\n", name, result);
 
 	select_current_env();
