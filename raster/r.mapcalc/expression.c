@@ -80,7 +80,7 @@ int list_length(expr_list *l)
 	return n;
 }
 
-expr_list *single(expression *e1)
+expr_list *singleton(expression *e1)
 {
 	return list(e1, NULL);
 }

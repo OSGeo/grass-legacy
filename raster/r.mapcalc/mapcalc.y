@@ -91,7 +91,7 @@ index		: INTEGER
 		| '-' INTEGER		{ $$ = -$2;			}
 		;
 
-expr_list	: exp			{ $$ = single($1);		}
+expr_list	: exp			{ $$ = singleton($1);		}
 		| exp ',' expr_list	{ $$ = list($1, $3);		}
 		;
 
@@ -124,7 +124,7 @@ exp_atom	: '(' exp ')'		{ $$ = $2;			}
 		;
 
 exp_neg		: exp_atom
-		| '-' exp_atom		{ $$ = function("neg",single($2));	}
+		| '-' exp_atom		{ $$ = function("neg",singleton($2));	}
 		;
 
 exp_pow		: exp_neg
