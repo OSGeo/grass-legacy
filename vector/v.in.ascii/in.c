@@ -140,7 +140,7 @@ main (int argc, char *argv[])
         }
 
 	fs = delim_opt->answer;
-	if ( strcmp(fs,"\t") ) fs = "\t";
+	if ( strcmp(fs,"\\t") == 0 ) fs = "\t";
 
 	/* check dimension */
 	if (zcoorf->answer) {
