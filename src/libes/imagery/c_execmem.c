@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "imagery.h"
 
 I_cluster_exec_allocate(C)
