@@ -273,4 +273,13 @@ struct line_cats
     int alloc_cats;		/* allocated space */
   };
 
+struct cat_list
+  {
+    GRASS_V_CAT *min;         /* pointer to array of minimun values */
+    GRASS_V_CAT *max;         /* pointer to array of maximum values */
+    int         n_ranges;     /* number ranges */
+    int         alloc_ranges; /* allocated space */
+  };
+
 #endif /* DIG___STRUCTS___ */
+
