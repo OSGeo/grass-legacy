@@ -1,4 +1,5 @@
 Pretester for pre-candidates:
+To be contacted before releasing a new GRASS 5 version.
 
 Linux:
 *Juhana Nieminen
@@ -15,14 +16,28 @@ Linux:
 * Richard Christofferson
   <richc@eng.utah.edu>
 
+* Bill Kristan <wbkiii@citrus.ucr.edu>
+  UC Riverside
 
-
+--------------------
 Solaris 2.7:
 * Richard Christofferson 
   <richc@eng.utah.edu>
 
+--------------------
 SGI:
+?
 
+--------------------
 FreeBSD:
+?
 
+--------------------
+LinuxPPC:
+* Bill Kristan <wbkiii@citrus.ucr.edu>
+  UC Riverside
+
+--------------------
 Mac OS X:
+* Bill Kristan <wbkiii@citrus.ucr.edu>
+  UC Riverside
