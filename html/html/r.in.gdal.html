@@ -139,6 +139,10 @@ the underlying format driver supports it:<p>
 
 <DT> Color Table
 <DD> Bands with associated colortables will have the color tables transferred.
+Note that if the source has no colormap, r.in.gdal in GRASS 5.0 will emit
+no colormap.  Use r.colors map=... color=grey to assign a greyscale colormap.
+In a future version of GRASS r.in.gdal will likely be upgraded to automatically
+emit greyscale colormaps.
 <BR>
 
 <DT> Data Types
