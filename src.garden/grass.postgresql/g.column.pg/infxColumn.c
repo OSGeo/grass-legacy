@@ -10,11 +10,7 @@
 #ifdef HAVE_POSTGRES_FE_H
 #include <postgres_fe.h>
 #else
-#ifdef HAVE_INTERNAL_POSTGRES_FE_H
-#include <internal/postgres_fe.h>
-#else
 #error Neither <postgres.h> nor <postgres_fe.h> available
-#endif
 #endif
 #endif
 
