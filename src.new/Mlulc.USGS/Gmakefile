@@ -1,0 +1,10 @@
+OBJ = main.o 
+
+$(MAN2)/Mlulc.USGS: $(BIN)/Mlulc.USGS 
+	cp manual $@
+
+$(BIN)/Mlulc.USGS: $(OBJ) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB)
+
+
+
