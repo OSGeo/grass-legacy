@@ -1,14 +1,14 @@
 #include "tape.h"
 
-put_row (fd, buf, row)
+put_row (fd, buf)
     unsigned char *buf;
 {
     CELL *c;
-    int ncols;
+    int nncols;
 
-    ncols = G_window_cols();
+    nncols = ncols;
     c = cellbuf;
-    while(ncols-- > 0)
+    while(nncols-- > 0)
 	*c++ = *buf++;
-    G_put_map_row (fd, cellbuf, row);
+    G_put_map_row (fd, cellbuf);
 }
