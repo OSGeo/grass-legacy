@@ -1,55 +1,77 @@
-                   INSTALL GRASS 5.7.x source code
+                   INSTALL GRASS 5.7.x from source code
 
 Please read *all* text below.
 
-Note: We use synonymical:
-      grass50 == grass50x == grass53x
+Note: This version was previously called GRASS 5.1
 
-CURRENT STATUS
 
-The GRASS 5.7.x code repository currently contains only the new 3D/DBMS
-vector library and a few rewritten vector modules as well as a subset of
-merged 5.3.x modules.
+SOURCE CODE DISTRIBUTION
 
-To compile the 5.7.x code, source code from 5.3.x is needed (the CVS HEAD
-version), which is automatically linked then into the 5.7.x directory
-structure. In future we continue to migrate further code into the 5.7.x
-directory structure.
+GRASS 5.7.x source code is currently distributed in 2 forms:
 
-Because of that the source code of GRASS 5.3.x is needed. When
-running "configure" the  full path to grass50/ has to be specified.
+1) Full source code (e.g. grass-5.7.0.tar.gz)
+  This version contains all the GRASS source code required for compilation. 
+  It is distributed as one file (*.tar.gz package) and the version is composed of 
+  3 numbers, e.g. 5.7.0, 5.7.1 etc. 
+
+2) Incomplete source code (CVS or CVS snapshot)
+  This version currently contains only the new vector library, vector modules 
+  and few files updated from 5.3.x. 
+  To compile this version of 5.7.x, source code from 5.3.x/5.4.x is also needed.
+  The 5.3.x/5.4.x source code is then automatically linked into the 5.7.x source 
+  directory structure during the compilation.
+  This version of source code can be acquired either from CVS repository 
+  (intevation.de:/grassrepository/grass51) or as a snapshot (*.tar.gz package)
+  of that CVS repository. The CVS snapshot name contains the datum of the day
+  when the snapshot was created (checked out from the CVS repoository), e.g.
+  grass57src_cvs_snapshot_exp_2004_05_24.tar.gz
 
 
 COMPILATION
 
-CFLAGS="-g -Wall" ./configure \
-   --with-grass50=/full/path/to/grass50(MAIN)/source
-make mix   
+  First steps of the compilation depend on the version of source code (see above):
+
+  1) Full source code:
+
+CFLAGS="-g -Wall" ./configure
+
+
+  2) Incomplete source code:
+
+CFLAGS="-g -Wall" ./configure --with-grass50=/full/path/to/grass53/source
+make mix
+
+
+  Next steps are the same for both versions of source code:
+
 make       
 
-Optionaly it is possible to copy binary modules from compiled 5.3.x by:
-make binmix
+Explanation of configure options:
+--with-grass50    Use only if incomplete source code is used (see above).
+                  It must be full path to GRASS 5.3.x/5.4.x source code. Use the 
+                  latest version of 5.3.x/5.4.x series. Make it an *absolute* path, 
+                  not a relative path.
 
-Explanation of options:
---with-grass50    must be full path to MAIN (=experimental) branch (not 
-                  release) of GRASS 5.3.x. Make it an *absolute* path, not a
-                  relative path.
-
-Explanation of all targets:
-make mix           - create symbolic links to grass50 for file not yet 
+Explanation of make targets:
+make mix           - create symbolic links to grass53/grass54 for file not yet 
                       uploaded into the 5.7.x CVS repository
-make copymix       - copy files from grass50 instead of linking
+                      (needed only if incomplete source code is used (see above).
+
+make copymix       - copy files from grass50 instead of linking,
+                     creates full source code from incomplete source code
                       (NOT RECOMMENDED!!)
+
 make binmix        - Copy binary modules not yet updated to 5.7.x 
                       from compiled 5.3.x (NOT RECOMMENDED!!)
 
 make install       - installs the binary
 
 make bindist       - make a binary package with install script
+
 make srcdist       - make a source package for distribution (including the
                      5.3.0 files)
 
-make srclibsdist    - make a source package for library distribution (including the 5.3.0 files)
+make srclibsdist   - make a source package for library distribution (including the 5.3.0 files)
 make libs          - make libraries
 
 make clean         - delete all files created by 'make' 
@@ -68,14 +90,15 @@ and the scripts (grass57, ...) in
 To run GRASS 5.7.x, simply start
 ./bin.$ARCH/grass57
 
-Note that most modules from GRASS 5.3.x are missing. However, they
+Note that some modules from GRASS 5.3.x are missing. However, they
 can be easily linked into the ./dist.$ARCH structure if needed.
 Or, new directories with new Makefiles must be added and the
 directory defined in ./tools/link.conf.
 
 
-UPDATE OF 5.7.x
+UPDATE OF 5.7.x (CVS or CVS snapshot only)
 
+It is impossible to update full source code (see above).
 Assuming that you want to update your current installation from
 CVS, you have to perform a couple of steps. In general:
 
@@ -107,9 +130,9 @@ and then "make install" from the top source directory.
 
 SUPPORT
 
-Note that this code is quite experimental. Without announcement the
-vector structure can change. But usually it will be possible to upgrade
-the data set. DO NOT USE THIS VERSION FOR PRODUCTION.
+Note that this code is experimental. Data formats and functionality
+may change in future versions. 
+DO NOT USE THIS VERSION FOR PRODUCTION!
 
 If interested to develop GRASS 5.7.x, please join the GRASS developers 
 mailing list:
@@ -120,11 +143,11 @@ GRASS 5.7 PROGRAMMER'S MANUAL
 
 The Programmer's manual is generated with doxygen from the source code.
 Please see the README file and the files at:
-http://grass.itc.it/grass51/index.html#docs
+http://grass.itc.it/grass57/index.html#docs
 
 Draft TUTORIAL
 
-http://grass.itc.it/grass51/tutorial/index.html
+http://grass.itc.it/grass57/tutorial/index.html
 
 ------------------
 GRASS Development Team
