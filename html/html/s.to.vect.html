@@ -18,8 +18,8 @@ a vector file.
 <BR>
 <B>s.to.vect help</B>
 <BR>
-<B>s.to.vect input=</B><EM>name</EM> <B>output=</B><EM>name</EM>
-<B>desc=</B><EM>value</EM>
+<B>s.to.vect</B> [<B>-p</B>] <B>input=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM> [<B>cat=</B><EM>type,index</EM>]
 
 <H2>DESCRIPTION</H2>
 
@@ -33,6 +33,13 @@ site_lists file are standard (i.e., a regular
 
 <H2>OPTIONS</H2>
 
+<H2>Flags:</H2>
+
+<DL>
+<DT><B>-p</B>
+<DD>Don't prompt for map header information.
+</DL>
+
 <H2>Parameters:</H2>
 
 <DL>
@@ -43,10 +50,29 @@ converted.
 <DT><B>output=</B><EM>name</EM> 
 <DD>Name to be assigned to the vector output file.
 
-<DT><B>desc=</B><EM>value</EM> 
-<DD>String field in site_list to use in vector file (default: 1)
+<DT><B>cat=</B><EM>type,index</EM>
+<DD>Field type ("string", "dim", or "decimal") and index to use 
+for the vector category value. By default, the category number
+is used.  The <EM>type</EM> is the <KBD>site_lists</KBD> attribute type
+of "string", "dim" (or dimension), or "decimal".  The <EM>index</EM> is a 
+positive integer attribute number for the specified <EM>type</EM>.  That is,
+the second "string" attribute would be "2" or the fourth dimension would be
+"four".  For the "dim" type, the <EM>index</EM> must be greater than 2.
 </DL>
+
+<H2>NOTES</H2>
+
+The specification for <KBD>site_lists</KBD> allows category numbers to be missing
+or to be floating point.  Since attributes in <KBD>vector</KBD> layers are
+linked by positive integers, when a <KBD>site_lists</KBD> file has floating
+point or missing category numbers, a positive sequential numbering is used
+instead.  This may have the unfortunate side-effect of generating different
+category numbers for category values that are exactly the same.
 
 <H2>AUTHOR</H2>
 
 R.L. Glenn, USDA, SCS, NHQ-CGIS
+
+<BR>
+
+GRASS 5.0 Team
