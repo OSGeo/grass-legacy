@@ -8,6 +8,7 @@
 #  - add stuff for multilayer SHAPE (ID field identification with ogrinfo,
 #    currently only first layer supported)
 #
+#  - implement UNIQUE test (see below)
 #  - eventully add .prj/.PRJ support (not sure)
 
 
@@ -58,8 +59,9 @@ fi
 
 cp $DIRNAME/$SHAPE.shp $DIRNAME/$SHAPE.shx $DIRNAME/$SHAPE.dbf $SHPTARGET
 
-#analyse the file for later:
+#analyse the file for later (check first layer):
 LAYER1=`ogrinfo $DIRNAME/$SHAPE.shp |grep 1 | cut -d' ' -f2`
+#get list of ID fields (ID field must be integer):
 IDFIELD=`ogrinfo $DIRNAME/$SHAPE.shp $LAYER1 |awk '/Layer name/,/OGRFeature/' |grep Integer| cut -d':' -f1`
 
 # any integer field there?
@@ -74,6 +76,11 @@ else
  read USERIDFIELD
 fi
 
+#ADD here unique test UNIQUE:
+#ogrinfo $DIRNAME/$SHAPE.shp $USERIDFIELD | grep VEGCNP_ID | wc -l
+#ogrinfo $DIRNAME/$SHAPE.shp $USERIDFIELD | grep VEGCNP_ID | tr -s ' ' ' ' | cut -d' ' -f5 | sort -un |wc -l
+# if not unique - WARNING "Cannot connect DBF to map (DB file requires unique ID column)"
+
 # now build FRMT file
 if test ! -d $VECTTARGET/$SHAPE.shp
 then
@@ -81,7 +88,7 @@ then
 fi
 cd $VECTTARGET/$SHAPE.shp
 
-
+#FRMT file: CAT_COLUMN defines from which column values should be used as categories
 echo "FORMAT: shape
 SHAPE: $SHPTARGET/$SHAPE
 CAT_COLUMN: $USERIDFIELD" > frmt
@@ -100,9 +107,18 @@ MAP THRESH:   0.500000" > head
 
 
 #write DB file
+#KEY_COLUMN defines name of column used to link database records to geometry
+#
 cd $GISDBASE/$LOCATION_NAME/$MAPSET
-####    file  field table  CAT_COLUMN  path                  driver
-echo "$SHAPE.shp 1 $SHAPE $USERIDFIELD $LOCATION/shp dbf" >> DB
+
+if test ! -f DB
+then
+  echo " file field table KEY_COLUMN path driver" >> DB
+  echo " NOTE: the latter rules overwrites first rules" >> DB
+fi
+
+#add line:
+echo "$SHAPE.shp 1 $SHAPE $USERIDFIELD $GISDBASE/$LOCATION_NAME/shp dbf" >> DB
 
 ### that's it
 echo "$SHAPE.shp is registered now."
