@@ -23,8 +23,6 @@ NAD_DIR = $(GISBASE)/etc/nad
 NAD2BIN = nad2bin
 CSV_DIR = $(GISBASE)/etc/ogr_csv
 
-EXTRA_CLEAN_FILES = $(NAD2BIN)
-
 include $(MODULE_TOPDIR)/include/Make/Lib.make 
 
 default: lib $(NAD_DIR) $(CSV_DIR)
@@ -39,9 +37,6 @@ $(CSV_DIR): $(CSV_FILES)
 	@ if [ ! -d $@ ] ; then $(MKDIR) $@ ; fi
 	$(INSTALL) -m 644 $(CSV_FILES) $@
 	@ touch $@
-
-$(NAD2BIN): nad2bin.o
-	$(CC) $(LDFLAGS) $(XTRA_LDFLAGS) -o $@ $^
 
 # Note for future improvement:
 # nad2bin should be compiled from source if we are cross compiling and then the
