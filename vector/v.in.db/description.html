@@ -30,16 +30,17 @@ if not existing yet). Then the DBMI needs to be connected to
 this directory:
 
 <pre>
+ #check current DB settings:
+ db.connect -p
+ #only needed, if not already defined:
+ db.connect driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
 
-db.connect driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
+ #create vector map from DBF table ('idcol' is containing unique row IDs):
+ v.in.db table=pointsfile x=x y=y z=z key=idcol out=dtmpoints
 
-#if no ID column present in the DBF file, the 'shp' driver can be used
-#instead of the 'dbf' driver to generate the virtual ID/key column 'shp_fid'
-#on-the-fly:
-
-v.in.db driver=shp database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/' \
-  table=pointsfile x=x y=y z=z key=shp_fid out=dtm
-v.info dtm
+ #check result:
+ v.info dtmpoints
+ v.info -c dtmpoints
 </pre>
 
 <H2>AUTHOR</H2>
