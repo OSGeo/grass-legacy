@@ -60,14 +60,12 @@ int main (int argc, char *argv[])
     map->gisprompt = "old,cell,raster";
     map->description = "raster map name";
 
-    /* test if running in command line mode */
-    if (argc >2 ) /* -r is specified */
-    {
-      flag1 = G_define_flag() ;
-      flag1->key         = 'r';
-      flag1->description = "Calculate range";
+    flag1 = G_define_flag() ;
+    flag1->key         = 'r';
+    flag1->description = "Calculate range";
+
+    if (&flag1->answer != NULL)
       commandmode=1; /* Calculate range wanted == run in command mode */
-    }
     else
       commandmode=0; /* Calculate range not wanted */
     
@@ -76,8 +74,7 @@ int main (int argc, char *argv[])
             exit(1);
 
     name = map->answer;
-    if (commandmode)
-        calc_range= flag1->answer;
+    calc_range= flag1->answer;
 
 /* cell header */
     cellhd_ok = G_get_cellhd (name, G_mapset(), &cellhd) >= 0 ;
