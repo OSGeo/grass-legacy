@@ -248,7 +248,7 @@ struct Option *elevin,*aspin,*slopein,*linkein,*lin,*albedo,*alb,*latin,*lat,*co
           parm.coefbh->type = TYPE_STRING;
           parm.coefbh->required = NO;
           parm.coefbh->gisprompt = "new,cell,raster";
-          parm.coefbh->description = " The real-sky beam radiation coefficient file";
+          parm.coefbh->description = "The real-sky beam radiation coefficient file";
 
 	  parm.coefdh = G_define_option();
 	  parm.coefdh->key = "coefdh";
