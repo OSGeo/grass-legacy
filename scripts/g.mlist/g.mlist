@@ -23,9 +23,10 @@
 #%option
 #% key: type
 #% type: string
-#% description: data type (rast, rast3d, vect, or sites)
+#% description: data type
 #% answer: rast
-#% required : no
+#% options: rast,rast3d,oldvect,vect,asciivect,icon,labels,sites,region,region3d,group,3dview
+#% required : yes
 #%end
 #%option
 #% key: mapset
@@ -69,11 +70,11 @@ mapset="$GIS_OPT_mapset"
 sep="$GIS_OPT_sep"
 search="$GIS_OPT_pattern"
 
-if [ "$mapset" = "(null)" ] ; then
+if [ -z "$mapset" ] ; then
 #    echo using current mapset
     mapset="$MAPSET"
 fi
-if [ "$sep" = "(null)" ] ; then
+if [ -z "$sep" ] ; then
 #    echo using "\n" as separator
     sep=""
 fi
