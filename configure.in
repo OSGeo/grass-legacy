@@ -639,11 +639,15 @@ fi
 
 if test "$GDAL_CONFIG" != "" ; then
   GDAL_LIBS="`$GDAL_CONFIG --libs`"
+  GDAL_LIBS_PATH="-L`$GDAL_CONFIG --prefix`/lib"
   GDAL_CFLAGS="`$GDAL_CONFIG --cflags` -DUSE_GDAL_H"
   USE_GDAL=yes
   if test `$GDAL_CONFIG --ogr-enabled` = "yes" ; then
-    AC_DEFINE(HAVE_OGR)
-    USE_OGR=yes
+    LOC_CHECK_LIBS(gdal,OGRFree,GDAL,$GDAL_LIBS_PATH,OGR_LIB,$MATHLIB,-lstdc++,,)
+    if [ "$OGRLIB" -ne "" ] ; then
+       AC_DEFINE(HAVE_OGR)
+       USE_OGR=yes
+    fi
   fi
 else
   GDAL_LIBS=$DLLIB
@@ -654,6 +658,7 @@ fi
 
 AC_SUBST(GDAL_LIBS)
 AC_SUBST(GDAL_CFLAGS)
+AC_SUBST(OGR_LIB)
 
 # Enable TIFF option
 
