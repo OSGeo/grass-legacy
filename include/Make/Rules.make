@@ -9,6 +9,11 @@ ifndef LOCAL_HEADERS
 LOCAL_HEADERS = $(wildcard *.h)
 endif
 
+#for i18N support
+PACKAGE ="grassmods"
+DEFS=-DPACKAGE=\"$(PACKAGE)\"
+NLS_CFLAGS=$(GETHOSTNAME) $(ZLIBINCPATH) $(PICFLAGS) $(DEFS)
+
 # default cc rules
 $(OBJDIR)/%.o : %.c $(DEPENDENCIES) $(LOCAL_HEADERS) 
 	@test -d $(OBJDIR) || mkdir $(OBJDIR)	
