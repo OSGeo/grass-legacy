@@ -38,11 +38,11 @@ Explanation of options:
 Explanation of all targets:
 make mix           - create symbolic links to grass50 for file not yet 
                       uploaded into the 5.7.x CVS repository
-make copymix       - copy files from grass50
+make copymix       - copy files from grass50 instead of linking
 make binmix        - Copy binary modules not yet updated to 5.7.x 
                       from compiled 5.3.x
 
-make install       - TODO
+make install       - installs the binary
 
 make bindist       - make a binary package with install script
 make srcdist       - make a source package for distribution (including the
