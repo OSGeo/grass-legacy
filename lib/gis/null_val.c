@@ -366,7 +366,7 @@ int G_set_c_null_value(
 
     NEG_HUGE++;
 
-    conv.p = (unsigned char *) malloc(size);
+    conv.p = (unsigned char *) G_malloc(size);
     *(conv.NEG_HUGE) = NEG_HUGE;
 #endif
 
