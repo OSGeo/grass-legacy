@@ -28,21 +28,37 @@ Many thanks to all contributors!
 
 <b>Modules fixed/updated</b> (major changes only)
 <menu>
+<li>d.barscale: added "feet" measure with -f (Glynn Clements)
+<li>d.his: color problem for FCELL fixed (Glynn Clements)
+<li>d.save: bugfixes (Glynn Clements)
 <li>d.vect: is d.vect.cats code with d.vect merged into, d.vect.cats deprecated (Markus Neteler)
+<li>d.vect.pg, d.what.vect.pg: island display problem fixed (Alex Shevlakov)
+<li>d.what.rast: -c bugfixed (Huidae Cho)
+<li>p.vrml: re-added to release branch
 <li>r.bilinear: fixed 0/NULL problem (Glynn Clements)
 <li>r.in.gdal: fixed 3 channel import for true color images (Frank Warmerdam)
 <li>r.mapcalc: fix bug where an invalid expression could subsequently become
    valid (Glynn Clements)
+<li>r.mapcalc3: added, reimplementation of r.mapcalc, will replace it soon
+  (Glynn Clements)
 <li>r.param.scale: updated processing to floating point, kept feature map as
   CELL type (Lorenzo Potrich & Markus Neteler), fixed curvature bugs
   (Stefano Menegon)
+<li>r.patch: max files now 200
+<li>r.statistics: bugfix on '-z' problem (Glynn Clements)
 <li>r.slope.aspect: fixed crash if only pc= or tc= was selected (Glynn
   Clements)
+<li>tcltkgrass: several menu fixes
+<li>v.alabel: category label support added (Eric Miller)
+<li>v.llabel: category label support added (Eric Miller)
 </menu>
 
 <b>Source Code</b>
 <menu>
 <li>configure: added configure status report, fixed lex/yacc/bison test (Glynn Clements)
+<li>added false northing query for Transverse Mercator (Markus Neteler)
+<li>i18n: internationalization started for grass.postgres (Alex Shevlakov,
+    only EXP CVS)
 </menu>
 
 <hr>
