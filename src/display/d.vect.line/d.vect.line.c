@@ -249,10 +249,11 @@ static int rgb_ok (int red, int green, int blue)
 
 static int use_legend_file (const char *filename)
 {
-	const char *format = "%d %d %d %d";
+	const char *format = "%20[-0123456789*] %d %d %d";
 	int status = 0;
 	int conversions = 0;
 	int cat;
+	char scat[21];
 	int line_cnt = 0;
 	long red, green, blue;
 	struct rgb_color *line;
@@ -268,7 +269,8 @@ static int use_legend_file (const char *filename)
 	if (ifp) {
 		while (fgets (buff, 80, ifp)) {
 			line_cnt++;
-			conversions = sscanf (buff, format, &cat,
+			scat[0] = 0;
+			conversions = sscanf (buff, format, scat,
 					&red, &green, &blue);
 			if (conversions < 1)
 				continue;
@@ -287,9 +289,8 @@ static int use_legend_file (const char *filename)
 						line_cnt);
 				continue;
 			}
-			
-			if (cat < 1) {
-				/* defaults? */
+			if (scat[0] = "*") {
+				/* default */
 				if (def_line_color == NULL) {
 					def_line_color = line;
 				}
@@ -301,6 +302,7 @@ static int use_legend_file (const char *filename)
 				}
 			}
 			else {
+				cat = atoi(scat);
 				add_cat_to_table (cat, line);
 			}
 			status++;
@@ -399,8 +401,7 @@ static int write_legend (const char *filename)
 		/* write default first, if any */
 		if (def_line_color) {
 			line = def_line_color;
-			fprintf (ofp, fmt, -1,
-				 line->R, line->G, line->B);
+			fprintf (ofp, "* %d %d %d", line->R, line->G, line->B);
 		}
 					
 		/* traverse cat tree */
