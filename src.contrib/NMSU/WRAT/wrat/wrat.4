@@ -1,0 +1,217 @@
+
+wrat          GRASS Reference Manual                        wrat
+ 
+ 
+NAME   wrat   ( Water Resource Assessment Tool ) 
+ 
+SYNOPSIS: WRAT is an interactive module for evaluating water 
+          resources. It contains a section for terrain analysis,
+ 
+          a section for runoff simulation and a section for 
+          modeling runoff quality.  
+ 
+   WRAT was developed to address water related issues in
+watersheds of mixed landuse in watersheds from a few square miles
+to approximately 100 square miles. It combines ideas from both
+agricultural models and urban models. The results are not
+absolute predictors of contaminant levels in the water column. As
+an assessment tool these simulations differentiate between areas
+and events and with careful interpretation allow the ranking of
+areas and subwatersheds for comparison.  
+ 
+   The module is highly interactive and menu driven. Work is
+organized into projects. A file for each project keeps track of
+progress to date and the names of the most recent input and
+product maps. The following paragraphs summarize each of the
+sections. For a full explanation consult the tutorial. 
+ 
+   TERRAIN ANALYSIS: Routing of water and contaminants requires a
+coherent path, or set of directions, through watersheds for every
+cell. The terrain analysis requires a digital elevation model as
+input. It produces an idealized elevation model, drainage
+direction maps and drainage accumulation maps. These use the same
+codes for output as those produced by r.watershed, however the
+algorithms are quite different. A slope map is produced using the
+GRASS slope.aspect function.  
+ 
+    HYDROLOGY: Runoff is based on the Soil Conservation's curve
+number method. It requires a map of hydrologic soil group and a
+land cover map. Users may provide a one day design storm, or a
+map of a real rainfall event. Users must also provide the
+antecedent moisture condition. Output is a map of the depth of
+runoff from each cell in 100ths of an inch. 
+    A second hydrologic simulation models peak discharge. This
+requires a runoff map, the drainage direction and accumulation
+maps and the idealized elevation map. Output is a map of all peak
+discharges greater then 1 cfs.  
+ 
+    QUALITY: Simulations of contaminant source areas require a
+land cover map, maps of soil texture, and soil erodibility K
+factor, a slope map and a runoff map. Users must provide the
+number of dry days since the last major storm. Production of
+sediment, nitrogen, phosphorous and chemical oxygen demand (COD)
+are modeled to produce individual maps of contaminant source
+areas (mass per unit area)  Routing routines can process these
+source area maps to provide maps of contaminant generated above
+that point in the watershed. Optional best management maps may be
+applied during routing. These indicate the % of each contaminant
+removed from the flow as it passes that raster cell. 
+ 
+   A general accumulation function is also provided. "ga" adds
+the values of any map down through the watersheds. it requires a
+drainage direction map, drainage accumulation map and input map. 
+ 
+ 
+ 
+TYPICAL ANALYSIS:  Experience with these models suggests that a
+useful approach follows this general path. Model typical design
+storms, those expected once a month and once a year. Smaller
+storms may produce no surface runoff and larger storms may exceed
+the valid ranges of empirical relationships used in the models.
+In regions containing significant portions of urban areas, model
+both wet and dry antecedent moisture conditions. Follow the
+contaminant module through the routing of contaminants. Employ
+the general accumulation program to sum the runoff maps for those
+modeled storms. Then sample those maps at the outflows of
+subwatersheds. Subwatersheds may be compared using the ratios
+between contaminants and drainage area, the ratios between
+accumulated contaminants and total runoff volume and the ratio of
+runoff to area. 
+ 
+Subwatershed maps (developed elsewhere) may be reclassified to
+show the relative rankings of streams. Small differences in
+contaminant to runoff ratios are probably insignificant.  
+ 
+INPUT MAP CODES 
+ 
+elevation:       meters, as well as cell resolution 
+rainfall maps:   100ths of an inch  
+K factor:        K factor times 100  K of .35 = 35 
+ 
+Hydrologic Soil Group         Soil Texture  
+1 = HSG A                     1 = clay soils 
+2 = HSG B                     2 = silt soils 
+3 = HSG C                     3 = sandy soils 
+4 = HSG D                     4 = peat 
+5 = water                     5 = water 
+ 
+Land Cover  
+1 = corn                       9 = pasture 
+2 = rye                       10 = forest 
+3 = oats                      11 = wetlands 
+4 = soybeans                  12 = fens 
+5 = hay                       13 = water 
+6 = grass                     14 = built-up 
+7 = old fields (grass)        15 = barren 
+8 = old fields (shrub) 
+ 
+AUTHOR    Brian R. Brodeur    Cook College Remote Sensing Center
+ 
+
+wrat          GRASS Reference Manual                        wrat
+ 
+ 
+NAME   wrat   ( Water Resource Assessment Tool ) 
+ 
+SYNOPSIS: WRAT is an interactive module for evaluating water 
+          resources. It contains a section for terrain analysis,
+ 
+          a section for runoff simulation and a section for 
+          modeling runoff quality.  
+ 
+   WRAT was developed to address water related issues in
+watersheds of mixed landuse in watersheds from a few square miles
+to approximately 100 square miles. It combines ideas from both
+agricultural models and urban models. The results are not
+absolute predictors of contaminant levels in the water column. As
+an assessment tool these simulations differentiate between areas
+and events and with careful interpretation allow the ranking of
+areas and subwatersheds for comparison.  
+ 
+   The module is highly interactive and menu driven. Work is
+organized into projects. A file for each project keeps track of
+progress to date and the names of the most recent input and
+product maps. The following paragraphs summarize each of the
+sections. For a full explanation consult the tutorial. 
+ 
+   TERRAIN ANALYSIS: Routing of water and contaminants requires a
+coherent path, or set of directions, through watersheds for every
+cell. The terrain analysis requires a digital elevation model as
+input. It produces an idealized elevation model, drainage
+direction maps and drainage accumulation maps. These use the same
+codes for output as those produced by r.watershed, however the
+algorithms are quite different. A slope map is produced using the
+GRASS slope.aspect function.  
+ 
+    HYDROLOGY: Runoff is based on the Soil Conservation's curve
+number method. It requires a map of hydrologic soil group and a
+land cover map. Users may provide a one day design storm, or a
+map of a real rainfall event. Users must also provide the
+antecedent moisture condition. Output is a map of the depth of
+runoff from each cell in 100ths of an inch. 
+    A second hydrologic simulation models peak discharge. This
+requires a runoff map, the drainage direction and accumulation
+maps and the idealized elevation map. Output is a map of all peak
+discharges greater then 1 cfs.  
+ 
+    QUALITY: Simulations of contaminant source areas require a
+land cover map, maps of soil texture, and soil erodibility K
+factor, a slope map and a runoff map. Users must provide the
+number of dry days since the last major storm. Production of
+sediment, nitrogen, phosphorous and chemical oxygen demand (COD)
+are modeled to produce individual maps of contaminant source
+areas (mass per unit area)  Routing routines can process these
+source area maps to provide maps of contaminant generated above
+that point in the watershed. Optional best management maps may be
+applied during routing. These indicate the % of each contaminant
+removed from the flow as it passes that raster cell. 
+ 
+   A general accumulation function is also provided. "ga" adds
+the values of any map down through the watersheds. it requires a
+drainage direction map, drainage accumulation map and input map. 
+ 
+ 
+ 
+TYPICAL ANALYSIS:  Experience with these models suggests that a
+useful approach follows this general path. Model typical design
+storms, those expected once a month and once a year. Smaller
+storms may produce no surface runoff and larger storms may exceed
+the valid ranges of empirical relationships used in the models.
+In regions containing significant portions of urban areas, model
+both wet and dry antecedent moisture conditions. Follow the
+contaminant module through the routing of contaminants. Employ
+the general accumulation program to sum the runoff maps for those
+modeled storms. Then sample those maps at the outflows of
+subwatersheds. Subwatersheds may be compared using the ratios
+between contaminants and drainage area, the ratios between
+accumulated contaminants and total runoff volume and the ratio of
+runoff to area. 
+ 
+Subwatershed maps (developed elsewhere) may be reclassified to
+show the relative rankings of streams. Small differences in
+contaminant to runoff ratios are probably insignificant.  
+ 
+INPUT MAP CODES 
+ 
+elevation:       meters, as well as cell resolution 
+rainfall maps:   100ths of an inch  
+K factor:        K factor times 100  K of .35 = 35 
+ 
+Hydrologic Soil Group         Soil Texture  
+1 = HSG A                     1 = clay soils 
+2 = HSG B                     2 = silt soils 
+3 = HSG C                     3 = sandy soils 
+4 = HSG D                     4 = peat 
+5 = water                     5 = water 
+ 
+Land Cover  
+1 = corn                       9 = pasture 
+2 = rye                       10 = forest 
+3 = oats                      11 = wetlands 
+4 = soybeans                  12 = fens 
+5 = hay                       13 = water 
+6 = grass                     14 = built-up 
+7 = old fields (grass)        15 = barren 
+8 = old fields (shrub) 
+ 
+AUTHOR    Brian R. Brodeur    Cook College Remote Sensing Center
