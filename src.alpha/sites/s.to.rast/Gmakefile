@@ -1,0 +1,10 @@
+PGM = s.to.rast
+HOME = $(BIN_ALPHA_CMD)
+
+LIST =  main.o\
+	write_cell.o
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB)
+		$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB)
+
+$(GISLIB):	#
