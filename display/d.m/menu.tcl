@@ -107,7 +107,7 @@
         	}}
         	{cascad "Manage GRASS working environment" {} "" 1 {			
         	    {command "Modify access by other users to current mapset" {} "" {} -command  {term g.access }}
-        	    {command "Modify mapset search path" {} "" {} -command {exec g.mapsets.tcl}}
+        	    {command "Modify mapset search path" {} "" {} -command {spawn $env(GISBASE)/etc/g.mapsets.tcl}}
         	    {command "Change current working session to new mapset, location, or GISDBASE" {} "" {} -command {execute g.mapset }}
                 {command "Show current GRASS environment settings" {} "g.gisenv" {} -command {execute g.gisenv }}
                 {command "Show current GRASS version" {} "g.version -c" {} -command {run g.version -c }}
