@@ -80,6 +80,7 @@ int main( int argc , char ** argv )
 	int			 	nret , fd;
 
 	int				irow , icol , itrow , itcol;
+	int				irowsave , icolsave;
 
 	gnInt32_t	 	from , to , arc , cost , xyz[3];
 
@@ -91,9 +92,11 @@ int main( int argc , char ** argv )
 	/* program options
 	 */
  	char	*	pszFileout;
+	Boolean		fInterlaced;
  
-	GNO_BEGIN/* short   long        default     variable        help */
- 	GNO_OPTION( "g", 	"graph", 	NULL ,  	& pszFileout ,	"Output Graph file" )
+	GNO_BEGIN/* short   long        	default     variable        help */
+ 	GNO_OPTION( "g", 	"graph", 		NULL ,  	& pszFileout ,	"Output Graph file" )
+ 	GNO_SWITCH( "i", 	"interlaced", 	False , 	& fInterlaced ,	"Avoid node ids sorting at insertion" )
  	GNO_END
  
 
@@ -124,7 +127,19 @@ int main( int argc , char ** argv )
 
 	printf( "Add horizontal and vertical links:\n" );
 	for ( irow = 0 ; irow < NROWS ; irow ++ ) {
+
+	if ( fInterlaced == True ) {
+		irowsave = irow;
+		if ( irow % 2 ) irow = NROWS - irow;
+	}
+
 		for ( icol = 0 ; icol < NCOLS ; icol ++ ) {
+
+			if ( fInterlaced == True ) {
+					icolsave = icol;
+					if ( icol % 2 ) icol = NCOLS - icol;
+			}
+
 			itcol = icol + 1;
 			itrow = irow + 1;
 
@@ -159,7 +174,11 @@ int main( int argc , char ** argv )
 				}
 #endif
 			}
+
+			if ( fInterlaced == True ) icol = icolsave;
 		}
+
+		if ( fInterlaced == True ) irow = irowsave;
 	}
 
 	printf( "\nAdd oblique links:\n" );
