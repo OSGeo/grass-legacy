@@ -1,9 +1,10 @@
 #include "gis.h"
 
-do_reclass (old_name, old_mapset, new_name, cats, new_cats, table)
+do_reclass (old_name, old_mapset, new_name, cats, new_cats, table, min, max)
     char *old_name, *old_mapset, *new_name;
     struct Categories *cats, *new_cats;
     long *table;
+    CELL min, max;
 {
     FILE *fd;
     char *tempfile;
@@ -17,9 +18,9 @@ do_reclass (old_name, old_mapset, new_name, cats, new_cats, table)
     fd = fopen (tempfile, "w");
     if (fd == NULL)
 	G_fatal_error ("can't open any tempfiles");
-    for (n = 0; n <= cats->num; n++)
-	if (table[n])
-	    fprintf (fd, "%ld = %ld\n", (long) n, (long) table[n]);
+    for (n = min; n <= max; n++)
+	if (table[n-min])
+	    fprintf (fd, "%ld = %ld\n", (long) n, (long) table[n-min]);
     fclose (fd);
 
 /* build the reclass command */
