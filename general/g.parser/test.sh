@@ -1,18 +1,3 @@
-<H2>DESCRIPTION</H2>
-
-The command provides full parser support for GRASS scripts.
-<P>
-
-<H2>OPTIONS</H2>
-
-The arguments are stored in environment variables, named
-GIS_FLAG_&lt;name&gt; for flags and GIS_OPT_&lt;name&gt; for options.
- 
-For flags, the value will be "1" if the flag was given, and "0"
-otherwise.
-<P>
-
-<pre>
 #!/bin/sh
 
 # g.parser demo script
@@ -62,33 +47,3 @@ echo "Value of GIS_OPT_raster: '$GIS_OPT_raster'"
 echo "Value of GIS_OPT_vect: '$GIS_OPT_vector'"
 
 #add your code here
-</pre>
-
-<P>
-The <tt>test.sh</tt> script will provide following help text:
-<P>
-<pre>
-./test.sh help
- 
-Description:
- g.parser test script
- 
-Usage:
- test.sh [-f] option=name
- 
-Flags:
-  -f   a flag
- 
-Parameters:
-  option   an option
-</pre>
-
-
-<H2>SEE ALSO</H2>
-
-<EM><A HREF="g.findfile.html">g.findfile</A></EM>
-
-<H2>AUTHOR</H2>
-
-Glynn Clements
-<p><i>Last changed: $Date$</i>
