@@ -1,0 +1,8 @@
+Mmain	main.c	/^main(argc, argv)$/
+addpoint	main.c	/^addpoint(row, col, data, head, npts)$/
+free_list	main.c	/^free_list(head)		\/* frees list of neighboring pts	/
+interpolate	main.c	/^interpolate(head, npts, nrows, ncols, mlow,mhih, o/
+make_neighbor	main.c	/^*make_neighbor(dist, val)	$/
+make_neighbors_list	main.c	/^NEIGHBOR *make_neighbors_list(head, row, col, mlow/
+sort_list	sort_list.c	/^NBR *sort_list(total,head)$/
+stash_away	stash.c	/^stash_away(pos,option)$/
