@@ -464,7 +464,7 @@ show_options(maxlen, str)
 	fprintf (stderr, "  %*s   options: ", maxlen, " ") ;
 	totlen = maxlen + 13 ;
 	p1 = buff ;
-	while(p2 = index(p1, ','))
+	while(p2 = G_index(p1, ','))
 	{
 		*p2 = NULL ;
 		len = strlen(p1) + 1 ;
@@ -980,6 +980,7 @@ check_multiple_opts()
 
 static
 interactive(command)
+	char *command;
 {
 	struct Item *item ;
 
@@ -1052,7 +1053,7 @@ interactive_option(opt)
 			if (opt->checker)
 				if (opt->checker(buff))
 				{
-					fprintf(stderr,"Sorry, %s is not accepted.\n", opt->answer) ;
+					fprintf(stderr,"Sorry, %s is not accepted.\n", buff) ;
 					*buff = NULL ;
 					if (G_yes("   Try again? ", 1))
 						continue ;
@@ -1122,7 +1123,10 @@ gis_prompt(opt, buff)
 		*ptr2 = *ptr1 ;
 	}
 	*ptr2 = NULL ;
+	/*********ptr1 points to current mapset description***********/
 
+	if (opt->answer)
+		G_set_ask_return_msg ("to accept the default");
 	if (! strcmp("old",age))
 	{
 		ptr1 = G_ask_old("", buff, element, desc) ;
