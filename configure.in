@@ -153,7 +153,8 @@ LOC_ARG_WITH(lapack, LAPACK, no)
 LOC_ARG_WITH(motif, Motif, no)
 LOC_ARG_WITH(freetype, FreeType, no)
 LOC_ARG_WITH(glw, GLw, no)
-LOC_ARG_WITH(nls, NLS,no)
+LOC_ARG_WITH(nls, NLS, no)
+LOC_ARG_WITH(readline, Readline, no)
 
 # With includes and libs options
 
@@ -171,6 +172,9 @@ LOC_ARG_WITH_LIB(zlib, zlib)
 
 LOC_ARG_WITH_INC(dbm, DBM)
 LOC_ARG_WITH_LIB(dbm, DBM)
+
+LOC_ARG_WITH_INC(readline, Readline)
+LOC_ARG_WITH_LIB(readline, Readline)
 
 LOC_ARG_WITH_INC(jpeg, JPEG)
 LOC_ARG_WITH_LIB(jpeg, JPEG)
@@ -512,6 +516,40 @@ AC_SUBST(DBMLIBPATH)
 AC_SUBST(DBMLIB)
 
 # Done checking DBM
+
+# Enable Readline option
+
+LOC_CHECK_USE(readline,Readline,USE_READLINE)
+
+READLINEINCPATH=
+READLINELIBPATH=
+READLINELIB=
+HISTORYLIB=
+
+if test -n "$USE_READLINE"; then
+
+# With Readline includes directory
+
+LOC_CHECK_INC_PATH(readline,Readline,READLINEINCPATH)
+
+LOC_CHECK_INCLUDES(readline/readline.h,Readline,$READLINEINCPATH)
+LOC_CHECK_INCLUDES(readline/history.h,Readline,$READLINEINCPATH)
+
+# With Readline library directory
+
+LOC_CHECK_LIB_PATH(readline,Readline,READLINELIBPATH)
+
+LOC_CHECK_LIBS(readline,readline,Readline,$READLINELIBPATH,READLINELIB,,,,$TERMLIB)
+LOC_CHECK_LIBS(history,add_history,History,$READLINELIBPATH,HISTORYLIB,,,,$TERMLIB)
+
+fi # $USE_READLINE
+
+AC_SUBST(READLINEINCPATH)
+AC_SUBST(READLINELIBPATH)
+AC_SUBST(READLINELIB)
+AC_SUBST(HISTORYLIB)
+
+# Done checking Readline
 
 # Enable JPEG option
 
@@ -1113,4 +1151,5 @@ LOC_MSG_USE(Motif support,USE_MOTIF)
 LOC_MSG_USE(FreeType support,USE_FREETYPE)
 LOC_MSG_USE(GLw support,USE_GLW)
 LOC_MSG_USE(NLS support,USE_NLS)
+LOC_MSG_USE(Readline support,USE_READLINE)
 LOC_MSG()
