@@ -2,11 +2,13 @@
 
 # v.in.garmin.sh -- import gps data from garmin receiver 
 #                   into GRASS binary vector file
-# 
-# c) Andreas Lange, andreas.lange@rhein-main.de
+#
 # $Id$
 # 
-# requirements: GRASS 4.x or GRASS 5.0 with v.in.ascii
+# c) Andreas Lange, andreas.lange@rhein-main.de
+#    Updates 2003-2004  Hamish Bowman
+# 
+# requirements: GRASS 5.3 with v.in.ascii
 #      -  gpstrans from Carsten Tschach et al. 
 #           get gpstrans from one of:
 #             http://gpstrans.sourceforge.net
@@ -17,7 +19,7 @@
 #
 
 #%Module
-#%  description: Upload Waypoints, Routes and Tracks from a Garmin GPS reciever into a GRASS binary vector file, transformed into the current projection.
+#%  description: Upload Waypoints, Routes and Tracks from a Garmin GPS reciever into a binary vector.
 #%End
 #%flag
 #%  key: v
@@ -70,11 +72,11 @@ fi
 if test "$GISBASE" = ""; then
  echo "You must be in GRASS GIS to run this program." >&2
  exit 1
-fi   
-     
+fi
+
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
-LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+LOCATION="$GISDBASE"/"$LOCATION_NAME"/"$MAPSET"
 
 PROG=`basename $0`
 VERSION="$PROG c) 2000 Andreas Lange, andreas.lange@rhein-main.de"
@@ -181,7 +183,7 @@ if [ $WPT -eq 1 ] ; then
 	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="W" { printf(" %lf %lf\n", $8, $7) ; ++R } END { printf("L %d\n", R) }' | tac >> ${TMP}_P
 	    ;;
 	DDD)
-	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="W" { printf(" %lf %lf\n", $5, $6) ; ++R } END { printf("L %d\n", R) }' | tac >> ${TMP}_P
+	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="W" { printf(" %lf %lf\n", $5, $6) ; ++R } END { printf("L %d\n", R) }' | tac >> ${TMP}_P_raw
 	    ;;
 	GKK)
 	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="W" { printf(" %lf %lf\n", $6, $5) ; ++R } END { printf("L %d\n", R) }' | tac >> ${TMP}_P
@@ -214,7 +216,7 @@ if [ $RTE -eq 1 ] ; then
 	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="W" { printf(" %lf %lf\n", $8, $7) ; R=R+1 } $1=="R" { printf("L %u\n", R) ; R=0 }' | tac >> ${TMP}_P
 	    ;;
 	DDD)
-	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="W" { printf(" %lf %lf\n", $5, $6) ; R=R+1 } $1=="R" { printf("L %d\n", R) ; R=0 }' | tac >> ${TMP}_P
+	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="W" { printf(" %lf %lf\n", $5, $6) ; R=R+1 } $1=="R" { printf("L %d\n", R) ; R=0 }' | tac >> ${TMP}_P_raw
 	    ;;
 	GKK)
 	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="W" { printf(" %lf %lf\n", $6, $5) ; R=R+1 } $1=="R" { printf("L %u\n", R) ; R=0 }' | tac >> ${TMP}_P
@@ -236,7 +238,6 @@ if [ $TRK -eq 1 ] ; then
 	exit 1
     fi
 
-
     #### check which projection we are working with
     PROJ="`head -1 $TMP | sed -e 's/Format: //' | sed -e 's/  UTC.*//'`"
     # echo ${PROJ}_
@@ -247,7 +248,7 @@ if [ $TRK -eq 1 ] ; then
 	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="T" { printf(" %lf %lf\n", $5, $6) ; ++R } END { printf("L %d\n", R) }' | tac >> ${TMP}_P
 	    ;;
 	DDD)
-	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="T" { printf(" %lf %lf\n", $3, $4) ; ++R } END { printf("L %d\n", R) }' | tac >> ${TMP}_P
+	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="T" { printf(" %lf %lf\n", $3, $4) ; ++R } END { printf("L %d\n", R) }' | tac >> ${TMP}_P_raw
 	    ;;
 	GKK)
 	    tac $TMP | $AWK 'BEGIN { FS="\t" ; R=0 } $1=="T" { printf(" %lf %lf\n", $4, $3) ; ++R } END { printf("L %d\n", R) }' | tac >> ${TMP}_P
@@ -264,14 +265,24 @@ fi
 #### convert from WGS84 to current projection
 if [ -z "$IS_WGS84" ] || [ $KEEP_WGS84 -eq 1 ] ; then
     echo "No projection transformation performed" 1>&2
-#    mv -f ${TMP}_P_raw ${TMP}_P
+    if [ -e "${TMP}_P_raw" ] ; then
+	mv -f ${TMP}_P_raw ${TMP}_P
+    fi
 else
     echo "Attempting projection transform with m.proj2" 1>&2
-#    m.proj2 -i input=${TMP}_P_raw output=${TMP}_P
-#    if [ $? -ne 0 ] ; then
-#        echo "Projection transform failed, retaining WGS84" 1>&2
-#        mv -f ${TMP}_P_raw ${TMP}_P
-#    fi
+    # invert columns, crop
+    cat ${TMP}_P_raw | grep -v "^L" | awk '{print $2 " " $1}' > ${TMP}_P_raw2
+    # perform the projection
+    m.proj2 -i input=${TMP}_P_raw2 output=${TMP}_P_raw3
+    if [ $? -ne 0 ] ; then
+        echo "Projection transform failed, retaining WGS84" 1>&2
+        mv -f ${TMP}_P_raw ${TMP}_P
+    else
+	# put projected results back together as grass-vector line
+	LINE_NUM="`head -1 ${TMP}_P_raw`"
+	echo "$LINE_NUM" > ${TMP}_P
+	cat ${TMP}_P_raw3 | awk '{print " " $2 " " $1}' >> ${TMP}_P
+    fi
 fi
 
 
@@ -290,6 +301,7 @@ DIGIT DATE:   `date +%D`
 DIGIT NAME:   $PROG
 MAP NAME:     $NAME
 MAP DATE:     `date +%Y`
+OTHER INFO:   Imported by `echo $USER@$HOSTNAME`
 MAP SCALE:    1:1000
 ZONE:         
 WEST EDGE:    $WEST
