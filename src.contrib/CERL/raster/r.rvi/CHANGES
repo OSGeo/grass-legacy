@@ -1,0 +1,13 @@
+ corrected globals.h: NBANDS was undefined:
+        #define NBANDS 3
+    (taken from ../../imagery/i.rvi.prediction)
+
+    corrected main.c
+      line 44:
+           opt2->mutilple   = YES;
+      to
+           opt2->multiple   = YES;
+
+
+Markus Neteler
+4. Feb. 1998
