@@ -1,0 +1,58 @@
+#!/bin/sh
+#
+# $Id$
+#
+# At-satellite reflectance based tasseled cap transformation.
+# TASSCAP factors cited from:
+#   DERIVATION OF A TASSELED CAP TRANSFORMATION BASED ON LANDSAT 7 AT-SATELLITE REFLECTANCE
+#   Chengquan Huang, Bruce Wylie, Limin Yang, Collin Homer and Gregory Zylstra Raytheon ITSS, 
+#   USGS EROS Data Center Sioux Falls, SD 57198, USA
+#   http://landcover.usgs.gov/pdf/tasseled.pdf
+#
+#  This is published as well on INT. J. OF RS, 2002, VOL 23, NO. 8, 1741-1748.
+#  Compare discussion:
+#  http://adis.cesnet.cz/cgi-bin/lwgate/IMAGRS-L/archives/imagrs-l.log0211/date/article-14.html
+
+
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+     
+if test "$1" = "" ; then
+        echo ""
+        echo "Tasseled Cap transformation (Kauth Thomas) - vegetation index"
+	echo "for LANDSAT-7 ETM"
+        echo ""
+        echo "Usage: i.tasscap.tm7 tm1 tm2 tm3 tm4 tm5 tm7 outfile"
+	exit
+fi
+
+if test "$7" = "" ; then
+        echo ""
+        echo "Tasseled Cap transformation (Kauth Thomas) - vegetation index"
+        echo "for LANDSAT-7 ETM"
+        echo ""
+        echo "Usage: i.tasscap.tm7 tm1 tm2 tm3 tm4 tm5 tm7 outfile"
+        exit
+fi
+
+out=$7
+echo ""
+echo "Calculating first TC component $out.1 (Brightness) ..."
+r.mapcalc $out.1 = "0.3561 * $1 + 0.3972 * $2 + 0.3904 * $3 + 0.6966 * $4 + 0.2286 * $5 + 0.1596 * $6"
+echo ""
+echo "Calculating second TC component $out.2 (Greenness) ..."
+r.mapcalc $out.2 ="-0.3344 * $1 - 0.3544 * $2 - 0.4556 * $3 + 0.6966 * $4 - 0.0242 * $5 - 0.2630 * $6"
+echo ""
+echo "Calculating third TC component $out.3 (Wetness) ..."
+r.mapcalc $out.3 = "0.2626 * $1 + 0.2141 * $2 + 0.0926 * $3 + 0.0656 * $4 - 0.7629 * $5 - 0.5388 * $6"
+echo ""
+echo "Calculating fourth TC component $out.4. (Haze) ..."
+r.mapcalc $out.4 = "0.0805 * $1 - 0.0498 * $2 + 0.1950 * $3 - 0.1327 * $4 + 0.5752 * $5 - 0.7775 * $6"
+
+r.colors map=$out.1 color=grey
+r.colors map=$out.2 color=grey
+r.colors map=$out.3 color=grey
+r.colors map=$out.4 color=grey
+echo "Ready."
