@@ -1,6 +1,10 @@
 %{
-static char gis_lxclSid[] = "%W% %G%";
+extern char *falloc();
 #include "gis_pars.h"
+#ifdef getc
+#undef getc
+#endif
+#define getc mygetc
 long atol();
 %}
 
