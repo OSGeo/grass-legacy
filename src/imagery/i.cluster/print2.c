@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "imagery.h"
 /* safe to call only during checkpoint(2) and after
  * I_cluster_exec() completes
