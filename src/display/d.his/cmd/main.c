@@ -34,9 +34,16 @@ main (int argc, char **argv)
 	struct Colors int_colors ;
 	struct Colors out_colors ;
 	struct Colors sat_colors ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4 ;
 	struct Flag *flg1 ;
 	char mg[100];
+
+	module = G_define_module();
+	module->description =
+		"Produces and displays a raster map layer combining "
+		"hue, intensity, and saturation (his) values "
+		"from user-specified input raster map layers.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "h_map" ;
