@@ -1,0 +1,52 @@
+#!/bin/sh
+
+echo ${GIS?}
+wd=$GIS\/src/man.help/utilities
+
+echo ".ds vn $1" > man.version
+if test "$2" = ""
+then
+    echo ".ds vd" >> man.version
+else
+    echo ".ds vd ($2)" >> man.version
+fi
+
+for cmd in nroff tbl col
+do
+    $wd\/find_cmd $cmd
+    if [ $? != 0 ]
+    then
+	echo Note: $cmd not found on this system
+	exit 0
+    fi
+done
+
+find man[123] -type f -print | \
+(
+    i=0
+    while read man
+    do
+	if test $i = 0
+	then
+	    list=
+#	    echo 'N=tbl -TX man.version man.header $? | nroff -Tlp | col -b > $@' > .makefile
+ 	    echo 'N=tbl -TX man.version '$wd'/man.header $? | nroff | col -b > $@' > .makefile
+	    echo 'all: list' >> .makefile
+	fi
+	i=`expr $i + 1`
+	cat=`echo $man | sed s/man/cat/`
+	list="$list $cat"
+	echo "$cat: $man ; " '$N' >> .makefile
+	if test $i = 100
+	then
+	    echo "list: $list" >> .makefile
+	    make -f .makefile
+	    i=0
+	fi
+    done
+    if test $i != 0
+    then
+	echo "list: $list" >> .makefile
+	make -f .makefile
+    fi
+)
