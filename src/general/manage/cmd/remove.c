@@ -63,7 +63,7 @@ main (int argc, char *argv[])
 
 		    if(nrmaps == 1 && !strcmp(rmaps[0], buf2))
 		    {
-			sprintf(buf2, "rm %s", buf1);
+			sprintf(buf2, "rm -f %s", buf1);
 			system(buf2);
 		    }
 		    else
