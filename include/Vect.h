@@ -46,11 +46,13 @@ int V2_get_line_bbox (struct Map_info *, int, double *, double *, double *, doub
 struct line_pnts *Vect_new_line_struct (void);
 struct line_cats *Vect_new_cats_struct (void);
 struct cat_list *Vect_new_cat_list (void);
+struct ilist *Vect_new_list (void);
 struct line_pnts *Vect__new_line_struct (void);
 struct line_cats *Vect__new_cats_struct (void);
 int Vect_destroy_line_struct (struct line_pnts *);
 int Vect_destroy_cats_struct (struct line_cats *);
 int Vect_destroy_cat_list (struct cat_list *);
+int Vect_destroy_list (struct ilist *);
 int Vect_copy_xy_to_pnts (struct line_pnts *, double *, double *, int);
 int Vect_copy_xyz_to_pnts (struct line_pnts *, double *, double *, double *, int);
 int Vect_reset_line (struct line_pnts *);
@@ -61,6 +63,7 @@ int Vect_cat_set (struct line_cats *, GRASS_V_FIELD, GRASS_V_CAT);
 int Vect_cat_get (struct line_cats *, GRASS_V_FIELD, GRASS_V_CAT *);
 int Vect_cat_del (struct line_cats *, GRASS_V_FIELD);
 int Vect_reset_cats (struct line_cats *);
+int Vect_reset_list (struct ilist *);
 int Vect_str_to_cat_list (char *, struct cat_list *);
 int Vect_array_to_cat_list (int *, int, struct cat_list *);
 int Vect_cat_in_cat_list (GRASS_V_CAT, struct cat_list *);
@@ -169,6 +172,16 @@ int Vect_point_on_line ( struct line_pnts *, double,
 	             double *, double *, double *, double *, double *);
 double Vect_line_length ( struct line_pnts *);
 int Vect_line_distance ( struct line_pnts *, double, double, double *);
+
+int Vect_point_in_box (double, double, double, BOUND_BOX *);
+int Vect_box_overlap (BOUND_BOX *, BOUND_BOX *);
+int Vect_get_line_box (struct Map_info *, int, BOUND_BOX *);
+int Vect_get_area_box (struct Map_info *, int, BOUND_BOX *);
+int Vect_get_isle_box (struct Map_info *, int, BOUND_BOX *);
+
+int Vect_select_lines_by_box (struct Map_info *, BOUND_BOX *, int, struct ilist *);
+int Vect_select_areas_by_box (struct Map_info *, BOUND_BOX *, struct ilist *);
+int Vect_select_isles_by_box (struct Map_info *, BOUND_BOX *, struct ilist *);
 
 #endif
 
