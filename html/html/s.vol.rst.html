@@ -10,8 +10,9 @@
 <EM>(GRASS 3D Program)</EM>
 
 <H2>SYNOPSIS</H2>
-<B>s.vol.rst input=</B><EM>name</EM><B> [cellinp=</B><EM>name</EM><B>] z_orig=
-</B><EM>value</EM><B> tb_res=</B><EM>value</EM> <B>n_levs=</B><EM>value</EM>
+<B>s.vol.rst input=</B><EM>name</EM><B> [cellinp=</B><EM>name</EM><B>] 
+<B>[field=</B><EM>value</EM><B>]</B>
+z_orig=</B><EM>value</EM><B> tb_res=</B><EM>value</EM> <B>n_levs=</B><EM>value</EM>
 <B> [tension=</B><EM>value</EM><B>] [smooth=</B><EM>value</EM><B>] [maskmap=
 </B><EM>name</EM><B>] [segmax=</B><EM>value</EM><B>] [dmin=</B><EM>value</EM>
 <B>] [npmin=</B><EM>value</EM><B>] [wmult=</B><EM>value</EM><B>] [zmult=</B>
@@ -138,6 +139,10 @@ for interpolation.
 
 <DT><B>cellinp</B>
 <DD>Name of the surface cell file
+
+<DT><B>field</B>
+<DD>Number of z-field attribute to use for calculation
+<DD>default: 1  
 
 <DT><B>z_orig</B>
 <DD>Minimum z-value
