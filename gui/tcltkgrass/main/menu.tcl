@@ -639,7 +639,7 @@ menu_build 1 .main_menu {
 	    "Steiner tree" "" {
 	    "exec  v.net.steiner &"}
 	    "Traveling salesman analysis" "" {
-	    "exec  v.net.salsman &"}
+	    "exec  v.net.salesman &"}
 	}
 	"Overlay maps" "" {
 	    "Overlay/combine 2 vector maps" "" {
