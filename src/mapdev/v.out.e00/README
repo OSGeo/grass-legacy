@@ -1,0 +1,19 @@
+After two long night, I finaly have something that mimics (as far                                
+as I know) the e00 format.  The boring thing was to create the                                   
+"universe" polygon beloved by Arc/Info.                                                          
+                                                                                                 
+I would be glad if some Arc/Info owner can test the output.                                      
+I something doesnt work, I will like to have an original e00                                     
+file of a simple drawing (2 polygons, on with a hole, and an                                     
+external isle) with straigth lines, so it's easy to import and                                   
+export and to compare both.                                                                      
+                                                                                                 
+v.out.e00 use the Grass dig_att file for filling the attribute of                                
+the coverage-ID, so if it is linked to an external database via the                              
+attribute, you should get all of them in Arc/Info.                                               
+                                                                                                 
+Here is the program, the Gmakefile and the manual page in html.                                  
+--                                                                                               
+Michel Wurtz    ENGEES - CEREG                                                                   
+                1, quai Koch - BP 1039, F-67070 STRASBOURG cedex                                 
+                Tel: +33 03.88.24.82.45  Fax: +33 03.88.37.04.97  

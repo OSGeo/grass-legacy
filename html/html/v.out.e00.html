@@ -1,0 +1,66 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<TITLE>v.out.e00</TITLE>
+</HEAD>
+<BODY bgcolor="#FFFFFF">
+<IMG SRC="grass.smlogo.gif" >
+<HR width=100% align=center size=6 no shade>
+<H2>
+NAME</H2>
+<B><I>v.out.e00</I></B> - Write an Arc-Info line/polygon coverage in e00 format
+<H2>
+SYNOPSIS</H2>
+<B>v.out.e00</B>
+<BR><B>v.out.e00 help</B>
+<BR><B>v.out.e00</B> <B>input=</B><I>name</I> [<B>output=</B><I>name</I>]
+<H2>
+DESCRIPTION</H2>
+The <I>v.out.e00</I> program is designed to create an ESRI Arc/Info e00 ascii
+file from a Grass vector file.
+<P><I>v.out.e00</I> will be run non-interactively if the user specifies
+program arguments on the command line, using the form:
+<P><B>v.out.e00</B> <B>input=</B><I>name</I> [<B>output=</B><I>name</I>]
+<P>Alternately, the user can simply type:
+<P><B>v.out.e00</B>
+<P>on the command line without program arguments.  In this case, the user
+will be prompted for parameter values using the standard GRASS user interface
+described in the manual entry for <I>parser</I>.
+<H2>
+FEATURES</H2>
+<I>v.out.e00</I> attempts to create an Arc/Info export
+file (.e00) for a line/polygon coverage.  The attribut of
+each Grass line or area will be the Arc/Info coverage-ID.
+If there is no attribute, the coverage-ID will be the same as
+the coverage-# (numbered from 1 to the number of lines or areas).
+<H2>
+OPTIONS</H2>
+<I>v.out.e00</I> requires the user to enter the following information:
+<H3>
+Parameters:</H3>
+<DL>
+<DT>
+<B>output=</B><I>name</I></DT>
+<DD>
+Name of output file.  If no name is given, <I>v.out.e00</I> will write on
+the standard output.</DD>
+</DL>
+<H2>
+BUGS AND CAVEAT</H2>
+Since e00 is NOT a public format, this program
+is mainly based on analysis of existing files.
+<H2>
+NOTES</H2>
+<H2>
+SEE ALSO</H2>
+<I><A href="m.in.e00.html">m.in.e00</A></I>,
+<I><A href="s.out.e00.html">s.out.e00</A></I>,
+<I><A href="v.in.shape.html">v.in.shape</A></I>.
+<H2>
+AUTHOR</H2>
+Michel J. Wurtz, CEREG,
+<P>Ecole Nationale du Genie de l'Eau et de l'Environnement.
+<P>mw@engees.u-strasbg.fr
+</BODY>
+</HTML>
