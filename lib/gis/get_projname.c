@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include  "gis.h"
+#include  "glocale.h"
 
 int G_ask_proj_name(proj_id, proj_name)
  char *proj_id;
@@ -32,19 +33,19 @@ int G_ask_proj_name(proj_id, proj_name)
         sprintf(path,"%s/etc/projections",G_gisbase());
         while (access(path,0) !=0)
         { 
-          sprintf(buff,"%s not found",path);
+          sprintf(buff,_("%s not found"),path);
           G_fatal_error(buff);
         }
         in_proj_keys = G_read_key_value_file(path,&in_stat);
         if (in_stat != 0)
         {
-          sprintf(buff,"ERROR in reading %s",path);
+          sprintf(buff,_("ERROR in reading %s"),path);
           G_fatal_error(buff);
         }
         npr = in_proj_keys->nitems;
         Tmp_file = G_tempfile ();
         if (NULL == (Tmp_fd = fopen (Tmp_file, "w"))) {
-	  G_fatal_error("Cannot open temp file") ;
+	  G_fatal_error(_("Cannot open temp file")) ;
         }
         for (i=0; i<npr; i++) {
           fprintf(Tmp_fd,"%s -- %s\n",in_proj_keys->key[i],in_proj_keys->value[i]);
@@ -54,9 +55,9 @@ int G_ask_proj_name(proj_id, proj_name)
         for(;;) {
 
 	  do {
-	      fprintf(stderr,"\n\nPlease specify projection name\n");
-	      fprintf(stderr,"Enter 'list' for the list of available projections\n");
-	      fprintf (stderr, "Hit RETURN to cancel request\n");
+	      fprintf(stderr,_("\n\nPlease specify projection name\n"));
+	      fprintf(stderr,_("Enter 'list' for the list of available projections\n"));
+	      fprintf (stderr, _("Hit RETURN to cancel request\n"));
 	      fprintf(stderr,">");
           } while(!G_gets(answer));
 
@@ -74,7 +75,7 @@ int G_ask_proj_name(proj_id, proj_name)
             a = G_find_key_value(answer,in_proj_keys);
             if (a==NULL) 
 	    {
-	      fprintf(stderr,"\ninvalid projection\n");
+	      fprintf(stderr,_("\ninvalid projection\n"));
 	    }
             else break;
           }

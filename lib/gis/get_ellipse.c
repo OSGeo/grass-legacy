@@ -1,4 +1,5 @@
 #include "gis.h"
+#include "glocale.h"
 #include <unistd.h>
 #include <ctype.h>
 #include <string.h>
@@ -50,7 +51,7 @@ G_get_ellipsoid_parameters (double *a, double *e2)
     proj_keys = G_read_key_value_file(ipath, &in_stat); 
     if (in_stat !=0)
     {
-	sprintf (err, "Unable to open file %s in %s",PROJECTION_FILE,PERMANENT);
+	sprintf (err, _("Unable to open file %s in %s"),PROJECTION_FILE,PERMANENT);
 	G_fatal_error (err);
     }
     if ((str = G_find_key_value("ellps",proj_keys))!=NULL) {
@@ -58,7 +59,7 @@ G_get_ellipsoid_parameters (double *a, double *e2)
         str = G_find_key_value("a",proj_keys); 
         if (str!=NULL)  {
           if(sscanf(str,"%lf",a)!=1) {
-	    sprintf (err, "invalid a: field %s in file %s in %s"
+	    sprintf (err, _("invalid a: field %s in file %s in %s")
                               ,str,PROJECTION_FILE,PERMANENT);
 	    G_fatal_error (err);
           }
@@ -71,7 +72,7 @@ G_get_ellipsoid_parameters (double *a, double *e2)
       }
       else {
         if (G_get_ellipsoid_by_name (str, a, e2)==0) {
-	  sprintf (err, "invalid ellipsoid %s in file %s in %s"
+	  sprintf (err, _("invalid ellipsoid %s in file %s in %s")
                               ,str,PROJECTION_FILE,PERMANENT);
 	  G_fatal_error (err);
         }
@@ -83,12 +84,12 @@ G_get_ellipsoid_parameters (double *a, double *e2)
       str1 = G_find_key_value("es",proj_keys); 
       if ((str!=NULL) && (str1!=NULL)) {
         if(sscanf(str,"%lf",a)!=1) {
-	  sprintf (err, "invalid a: field %s in file %s in %s"
+	  sprintf (err, _("invalid a: field %s in file %s in %s")
                             ,str,PROJECTION_FILE,PERMANENT);
 	  G_fatal_error (err);
         }
         if(sscanf(str1,"%lf",e2)!=1) {
-	  sprintf (err, "invalid es: field %s in file %s in %s"
+	  sprintf (err, _("invalid es: field %s in file %s in %s")
                             ,str,PROJECTION_FILE,PERMANENT);
 	  G_fatal_error (err);
         }
@@ -102,7 +103,7 @@ G_get_ellipsoid_parameters (double *a, double *e2)
 	  return 0;
         }
         else {
- 	  sprintf (err, "No ellipsoid info given in file %s in %s",
+ 	  sprintf (err, _("No ellipsoid info given in file %s in %s"),
                                         PROJECTION_FILE,PERMANENT);
 	  G_fatal_error (err);
         }
@@ -277,7 +278,7 @@ read_ellipsoid_table(int fatal)
     if (fd == NULL)
     {
 	perror (file);
-	sprintf (buf, "unable to open ellipsoid table file: %s", file);
+	sprintf (buf, _("unable to open ellipsoid table file: %s"), file);
 	fatal ? G_fatal_error(buf) : G_warning (buf);
 	return 0;
     }
@@ -323,8 +324,10 @@ read_ellipsoid_table(int fatal)
 	qsort ((void *)table, (size_t)count, (size_t)sizeof(*table), (int (*)(const void*, const void *))(compare_table_names));
 	return 1;
     }
-    sprintf (buf, "Line%s%s of ellipsoid table file <%s> %s invalid",
-	err==1?"":"s", badlines, file, err==1?"is":"are");
+    /* for i18n this is not very inconvenient grammar*/
+    
+    sprintf (buf, _("Line%s%s of ellipsoid table file <%s> %s invalid"),
+	err==1?"":_("s"), badlines, file, err==1?_("is"):_("are"));
     fatal ? G_fatal_error(buf) : G_warning (buf);
     return 0;
 }

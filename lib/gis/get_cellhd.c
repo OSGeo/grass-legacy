@@ -25,6 +25,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "gis.h"
+#include "glocale.h"
 
 int G_get_cellhd (name, mapset, cellhd)
     char *name ;
@@ -55,14 +56,14 @@ int G_get_cellhd (name, mapset, cellhd)
 	fd = G_fopen_old ("cellhd", real_name, real_mapset);
 	if (fd == NULL)
 	{
-	    sprintf (buf,"Can't read header file for [%s in %s]\n", name, mapset);
+	    sprintf (buf,_("Can't read header file for [%s in %s]\n"), name, mapset);
 	    tail = buf + strlen(buf);
-	    sprintf (tail, "It is a reclass of [%s in %s] ", real_name, real_mapset);
+	    sprintf (tail, _("It is a reclass of [%s in %s] "), real_name, real_mapset);
 	    tail = buf + strlen(buf);
 	    if (!G_find_cell (real_name, real_mapset))
-		sprintf (tail, "which is missing");
+		sprintf (tail, _("which is missing"));
 	    else
-		sprintf (tail, "whose header file can't be opened");
+		sprintf (tail, _("whose header file can't be opened"));
 	    G_warning (buf);
 	    return -1;
 	}
@@ -72,7 +73,7 @@ int G_get_cellhd (name, mapset, cellhd)
 	fd = G_fopen_old ("cellhd", name, mapset);
 	if (fd == NULL)
 	{
-	    sprintf (buf, "Can't open header file for [%s in %s]", name, mapset);
+	    sprintf (buf, _("Can't open header file for [%s in %s]"), name, mapset);
 	    G_warning (buf);
 	    return -1;
 	}
@@ -84,15 +85,15 @@ int G_get_cellhd (name, mapset, cellhd)
     if (err == NULL)
 	return 0;
 
-    sprintf (buf, "Can't read header file for [%s in %s]\n", name, mapset);
+    sprintf (buf, _("Can't read header file for [%s in %s]\n"), name, mapset);
     tail = buf + strlen(buf);
     if (is_reclass)
     {
-	sprintf (tail, "It is a reclass of [%s in %s] whose header file is invalid\n",
+	sprintf (tail, _("It is a reclass of [%s in %s] whose header file is invalid\n"),
 		real_name, real_mapset);
     }
     else
-	sprintf (tail, "Invalid format\n");
+	sprintf (tail, _("Invalid format\n"));
     tail = buf + strlen(buf);
     strcpy (tail, err);
     free (err);
