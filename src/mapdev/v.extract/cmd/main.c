@@ -75,9 +75,12 @@ int main (int argc, char **argv)
     d_flag->key              = 'd';
     d_flag->description      = "Dissolve common boundaries (default is no) ";
     
+    /* -n flag commented because there is a bug, see below */
+    /* 
     n_flag = G_define_flag();
     n_flag->key              = 'n';
     n_flag->description      = "Use category names NOT numbers ";
+    */
 
     inopt = G_define_option();
     inopt->key             = "input";
@@ -148,7 +151,8 @@ int main (int argc, char **argv)
     if (!newopt->answer) new_cat = 0;
     else new_cat = atoi(newopt->answer);
 
-    if ( n_flag->answer )    /* check name flag */
+    /* if ( n_flag->answer ) */    /* check name flag */
+    if ( 0 )   
     {    
 	/* the n_flag is set, read in the categories for this file */
 	G_read_vector_cats (input, mapset, &cats);
@@ -358,6 +362,7 @@ int scan_names (struct Categories *pcats, char *s, int *x)
   sleep(2);*/
 	if (strcmp(nptr,cptr) == 0)     /* compare for match */
 	{                           /* match, assigned already */
+	    /* !!! this is the bug, 'i' is not category number !!! */
 	    *x = i ; /* return category code */
 	    return(1);
 	}
