@@ -1,0 +1,16 @@
+Mmodcats	modcats.c	/^main (argc, argv) char *argv[];$/
+Mmodcolr	modcolr.c	/^main (argc, argv) char *argv[];$/
+Mmodhead	modhead.c	/^main(argc,argv) char *argv[];$/
+Mmodhist	modhist.c	/^main (argc, argv) char *argv[];$/
+Msupport	support.c	/^main(argc, argv) char *argv[];$/
+ask_format	ask_format.c	/^ask_format (name, cellhd, filesize)$/
+check_new_compressed	check_new.c	/^check_new_compressed (cellhd, fd)$/
+check_old_compressed	check_old.c	/^check_old_compressed (cellhd, fd)$/
+check_stats	check.c	/^check_stats (name)$/
+check_uncompressed	check_un.c	/^check_uncompressed (cellhd, filesize)$/
+do_histogram	histo.c	/^do_histogram (name, mapset)$/
+edit_cellhd	edit_head.c	/^edit_cellhd (cellhd)$/
+factors	factors.c	/^factors (fd, n, div)$/
+hitreturn	hitreturn.c	/^hitreturn()$/
+next_row_addr	row_addr.c	/^next_row_addr (fd, offset, nbytes)$/
+visually_equal	edit_head.c	/^visually_equal (x, y)$/
