@@ -88,7 +88,7 @@ main (int argc, char *argv[])
 	thresh_opt ->required = NO;
 	thresh_opt ->multiple = YES;
         thresh_opt ->label       = "Threshold";
-        thresh_opt ->description = "Threshold in map units for each tool (default: 0.0).";
+        thresh_opt ->description = "Threshold in map units, one value for each tool (default: 0.0[,0.0,...])";
 
         no_build_flag = G_define_flag ();
         no_build_flag->key             = 'b';
