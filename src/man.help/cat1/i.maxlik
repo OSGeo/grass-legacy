@@ -1,0 +1,198 @@
+
+
+
+i.maxlik(1)          GRASS Reference Manual           i.maxlik(1)
+
+
+
+NAME
+     i.maxlik - An imagery function that classifies the spectral
+                reflectances in imagery based on the spectral
+                signature information generated in i.cluster
+                (GRASS Imagery Tool)
+
+SYNOPSIS
+     i.maxlik
+
+DESCRIPTION
+     i.maxlik is a maximum-likelihood discriminant analysis
+     classifier.  It performs the second pass in a two-pass
+     procedure that is commonly known as an unsupervised
+     classification.  It also performs the second step in a
+     supervised classification;  however, the supervised
+     classification is not currently supported by GRASS 3.0. The
+     first pass in the unsupervised classification is executed by
+     the GRASS program i.cluster.  Both passes are required to
+     complete the unsupervised classification.  The maximum-
+     likelihood classifier uses the cluster means and covariance
+     matrices from the i.cluster signature file to determine to
+     which category (spectral class) each in the has the highest
+     probability of belonging The resulting is a classified image
+     in which each has been assigned to a The spectral classes
+     can be related to specific land cover types on the ground.
+
+     The first asks the user for the group and subgroup to be
+     classified:
+
+      Please select the group/subgroup containing the signatures
+                   to be used in the classification
+
+                       GROUP:      spot_______
+                       SUBGROUP:   123________
+
+         AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE
+                       (OR <Ctrl-C> TO CANCEL)
+
+
+     This group should contain the subgroup to be classified.
+     The subgroup should contain the band that were used to
+     create the signature file in the program i.cluster.
+
+     The first prompt asks the user for the name of the signature
+     file to be used for the classification.  The signature file
+     contains the cluster and covariance matrices that were
+     calculated in the GRASS program i.cluster.  These signatures
+     are what determine the categories in the classification
+     process.
+
+     The next prompt asks the user for the name of the classified
+     that will be generated in i.maxlik.  This is the cell that
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+i.maxlik(1)          GRASS Reference Manual           i.maxlik(1)
+
+
+
+     will contain the categories that can be related to land
+     cover categories on the ground.
+
+     Next, the user is asked to enter the name of the reject
+     threshold that is also generated in i.maxlik.  After
+     classifying the i.maxlik runs a chi square test on each
+     discriminant result at various threshold levels of
+     confidence to determine at what confidence level each is
+     likely to belong to the assigned This is the reject
+     threshold It contains one calculated confidence level for
+     each classified in the classified One of the possible uses
+     for this is as a mask, to identify in the classified that
+     have the lowest probability of being assigned to the correct
+
+     Next, the following menu is displayed:
+
+        COLOR CONFIGURATION FOR CLASSIFIED LAYER [spotclass1]
+
+     Please indicate which to use for red, green, and blue
+     colors.  You may leave any color out.  You may specify more
+     than one color per color However, each color may only be
+     used once.
+
+     For example, to get a full color specify r,g,b for 3
+     different To get a grey scale
+      specify rgb for a single
+
+                        b___   spot.1 in demo
+                        g___   spot.2 in demo
+                        r___   spot.3 in demo
+
+
+         AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE
+                       (OR <Ctrl-C> TO CANCEL)
+
+
+     More than three can be classified, but since only three can
+     be displayed on most color graphics monitors at one time,
+     only three are assigned a color in the above menu.  This
+     subgroup, therefore, could have more than three in it.
+
+     i.maxlik runs in the background and the user is notified by
+     mail when it is complete.
+
+
+NOTES
+     The maximum-likelihood classifier assumes that the spectral
+     signatures for each in each are normally distributed (i.e.,
+     Gaussian in nature).  Clustering algorithms, however, can
+     create signatures that are not normally distributed.  If
+     this occurs, i.maxlik will reject them and display an error
+     message.
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
+
+
+
+i.maxlik(1)          GRASS Reference Manual           i.maxlik(1)
+
+
+
+SEE ALSO
+     Grass Tutorial: Image Processing
+     mask[1], i.cluster[1]
+
+AUTHOR
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         3
+
+
+
