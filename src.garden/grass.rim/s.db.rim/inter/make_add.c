@@ -90,8 +90,13 @@ make_add(inp_buf)
             break;
          }
 
-         /* only text fields are allowed to be split */
-         if (split_field!=0 && field_type!=T_FIELD_CHAR) {
+         /* text fields are allowed to be split and */
+         /* floats can have decimal places specified */
+         if (split_field!=0 &&
+             (field_type!=T_FIELD_CHAR &&
+              field_type!=X_FIELD_CHAR &&
+              field_type!=Y_FIELD_CHAR &&
+              field_type!=F_FIELD_CHAR)   ) {
             fprintf(Outfile,"\nForm Definition Error: Only Text fields can be split.\n");
             pos = inp_length;
             Make_OK = FALSE;
