@@ -18,7 +18,7 @@ static char *intro[] =
 
 main (argc, argv) char *argv[];
 {
-    char command[1024];
+    char command[1024], path[256];
     char list_name[40], name[40], cat_list[128], new_cat[10];
     char in_name[20], out_name[20], tmp_dig[20];
     char *mapset, *gets(), *tmp_file, *G_tempfile();
@@ -135,10 +135,11 @@ main (argc, argv) char *argv[];
           if ( ! mapset)
 	      exit(0);
 
-	  if (access(list_name,0) != 0)
+          sprintf(path,"%s/%s/%s",G_location_path(),mapset,list_name);
+	  if (access(path,0) != 0)
 	        G_fatal_error ("Could not find list file %s\n", list_name);
 
-          if (conv_file(1,&cats,list_name,tmp_file,uniq) > 0)  exit(-1);
+          if (conv_file(1,&cats,path,list_name,tmp_file,uniq) > 0)  exit(-1);
           }
        else
           {    /* no file, get a list of names */
@@ -156,8 +157,12 @@ main (argc, argv) char *argv[];
 
 	  if (access(list_name,0) != 0)
 	        G_fatal_error ("Could not find list file %s\n", list_name);
+          sprintf(path,"%s/%s/%s",G_location_path(),mapset,list_name);
+	  if (access(path,0) != 0)
+	        G_fatal_error ("Could not find list file %s\n", list_name);
 
-          if (conv_file(0,&cats,list_name,tmp_file,uniq) > 0)  exit(-1);
+
+          if (conv_file(0,&cats,path,list_name,tmp_file,uniq) > 0)  exit(-1);
           }
        else
           {    /* no file, get a list of categories */
@@ -182,17 +187,18 @@ main (argc, argv) char *argv[];
        }
     fprintf (stderr,"\n This re-classification pass is complete ");
     i = G_yes("\n Do you want to do another ?",0) ;
-    if (!i) break;
+    if (!i) 
+      break;
     }
     strcat (command, tmp_file);
     fflush (stdout);
 
     G_clear_screen ();
     fprintf (stderr,"\n Re-classification process begins:\n");
-/*  fprintf(stderr," %s\n",command);   sleep(4); */
+/*  fprintf(stderr," %s\n",command); */
     system (command); 
 
-    unlink(tmp_file); 
+    unlink(tmp_file);
     exit(0);
 }
 
@@ -231,7 +237,7 @@ ask_name(type, pcats,outfile, clas_num)
         strcat(cat_name,pcats->list[i].label); /* get a category label */
         cptr = cat_name;
 		  /* look for field separating colons (SCS version) */
-	while (*nptr != '\0')
+	while (*cptr != '\0')
 	   {
 	   if (*cptr == '\072')
 	      {
@@ -262,9 +268,9 @@ ask_name(type, pcats,outfile, clas_num)
     return(0);
 }
 
-conv_file(type, pcats,infile, outfile, clas_num)
+conv_file(type, pcats,inpath,infile, outfile, clas_num)
     int type, clas_num;
-    char *infile, *outfile;
+    char *inpath, *infile, *outfile;
     struct Categories *pcats ;
 {
     int i, icode, recd, begin=0, pass=0;
@@ -274,7 +280,7 @@ conv_file(type, pcats,infile, outfile, clas_num)
     FILE *IN, *OUT;
 
     /* open input file  will append if it exists*/
-    IN = fopen(infile,"r");
+    IN = fopen(inpath,"r");
 
     /* open output will append if it already exists  */
     OUT = fopen (outfile,"a");
@@ -312,8 +318,9 @@ conv_file(type, pcats,infile, outfile, clas_num)
            cat_name[0] = '\0';
            strcat(cat_name,pcats->list[i].label); /* get a category label */
            cptr = cat_name;
+
 		  /* look for field separating colons (SCS version) */
-	   while (*nptr != '\0')
+	   while (*cptr != '\0')
 	     {
 	     if (*cptr == '\072')
 	        {
@@ -326,7 +333,7 @@ conv_file(type, pcats,infile, outfile, clas_num)
  
 /*fprintf(stderr,"i= %d, compare nam|%s| :cat|%s|\n",i,nptr,cptr);
   fprintf(stderr,"       compare value= %d\n",strcmp(cptr,nptr));
-  sleep(1);*/
+  sleep(1); */
 	   if (strcmp(nptr,cptr) == 0)     /* compare for match */
 	      {                           /* match, assigned already */
               icode = pcats->list[i].num; /* set icode to category code */
