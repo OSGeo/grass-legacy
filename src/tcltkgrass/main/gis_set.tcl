@@ -325,7 +325,7 @@ proc gisSetWindow {} {
     	-orient {horizontal}
  
     button .frame0.frameDB.right.button \
-    	-text "Browse..." \
+    	-text [G_msg "Browse..."] \
     	-command {GetDir .frame0.frameDB.mid.entry .frame0.frameLOC.listbox \
     	    .frame0.frameMS.listbox}
 
@@ -425,7 +425,7 @@ proc gisSetWindow {} {
     	-width 15
 	
     button .frame0.frameNMS.right.button \
-    	-text "Create..." \
+    	-text [G_msg "Create..."] \
      	-command { 
             .frame0.frameNMS.right.button configure -state disabled
 	    if { $mymapset != "" } {
