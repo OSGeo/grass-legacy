@@ -7,6 +7,7 @@ SUBDIRS = \
 	g.parser \
 	g.region \
 	g.tempfile \
+	g.version \
 	manage
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
