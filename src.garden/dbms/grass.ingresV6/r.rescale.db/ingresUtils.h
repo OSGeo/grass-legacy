@@ -1,0 +1,2 @@
+void ingresUnTable();
+void ingresGetKey();
