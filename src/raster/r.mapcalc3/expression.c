@@ -148,6 +148,7 @@ expression *binding(const char *var, expression *val)
 	expression *e = allocate(expr_type_binding, val->res_type);
 	e->data.bind.var = var;
 	e->data.bind.val = val;
+	e->data.bind.fd = -1;
 	return e;
 }
 
@@ -165,7 +166,7 @@ expression *function(const char *name, expr_list *arglist)
 	for (l = arglist, i = 1; l; l = l->next, i++)
 		args[i] = l->exp;
 
-	for (i = 1; i < argc; i++)
+	for (i = 1; i <= argc; i++)
 		argt[i] = args[i]->res_type;
 
 	switch (d->check_args(argc, argt))
@@ -250,6 +251,7 @@ expression *to_float(expression *e1)
 
 	e->data.func.name = "float";
 	e->data.func.func = f_float;
+	e->data.func.argc = 1;
 	e->data.func.args = args;
 	e->data.func.argt = argt;
 	e->data.func.argv = argv;
@@ -270,6 +272,7 @@ expression *to_double(expression *e1)
 
 	e->data.func.name = "double";
 	e->data.func.func = f_double;
+	e->data.func.argc = 1;
 	e->data.func.args = args;
 	e->data.func.argt = argt;
 	e->data.func.argv = argv;

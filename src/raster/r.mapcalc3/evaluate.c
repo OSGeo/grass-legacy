@@ -174,61 +174,91 @@ static int evaluate(expression *e)
 
 /****************************************************************************/
 
-int execute(expression *e)
+int execute(expr_list *ee)
 {
-	const char *out_name;
-	expression *ee;
-	int out_fd;
-
-	if (e->type != expr_type_binding)
-		return E_WTF;
-
-	out_name = e->data.bind.var;
-	ee = e->data.bind.val;
-
-	print_expression(stderr, e);
-	fprintf(stderr, "\n");
+	expr_list *l;
 
 	rows = G_window_rows();
 	columns = G_window_cols();
 
-	if (initialize(ee) != 0)
-	{
-		fprintf(stderr, "initialization error\n");
-		return 1;
-	}
-
 	setup_maps();
 
-	out_fd = open_output_map(out_name, ee->res_type);
-	if (!out_fd)
-		return -1;
+	for (l = ee; l; l = l->next)
+	{
+		expression *e = l->exp;
+		const char *var;
+		expression *val;
+		int fd;
+
+		if (e->type != expr_type_binding)
+			return E_WTF;
+
+		print_expression(stderr, e);
+		fprintf(stderr, "\n");
+
+		if (initialize(e) != 0)
+		{
+			fprintf(stderr, "initialization error\n");
+			return -1;
+		}
+
+		var = e->data.bind.var;
+		val = e->data.bind.val;
+
+		fd = open_output_map(var, val->res_type);
+
+		if (fd < 0)
+		{
+			fprintf(stderr, "error opening output map '%s'\n", var);
+			return -1;
+		}
+
+		e->data.bind.fd = fd;
+	}
 
 	for (current_row = 0; current_row < rows; current_row++)
 	{
 		G_percent (current_row, rows, 2);
 
-		if (evaluate(ee) != 0)
+		for (l = ee; l; l = l->next)
 		{
-			fprintf(stderr, "error evaluating expression\n");
-			G_unopen_cell(out_fd);
-			return -1;
-		}
+			expression *e = l->exp;
+			const char *var = e->data.bind.var;
+			expression *val = e->data.bind.val;
+			int fd = e->data.bind.fd;
 
-		if (put_map_row(out_fd, ee->buf, ee->res_type) != 0)
-		{
-			fprintf(stderr, "error writing output\n");
-			G_unopen_cell(out_fd);
-			return -1;
+			if (evaluate(e) != 0)
+			{
+				fprintf(stderr, "error evaluating expression:\n");
+				print_expression(stderr, e);
+				fprintf(stderr, "\n");
+				G_unopen_cell(fd);
+				return -1;
+			}
+
+			if (put_map_row(fd, e->buf, e->res_type) != 0)
+			{
+				fprintf(stderr, "error writing output map '%s'\n",
+					var);
+				G_unopen_cell(fd);
+				return -1;
+			}
 		}
 	}
 
 	G_percent(current_row, rows, 2);
 
-	if (close_output_map(out_fd) < 0)
+	for (l = ee; l; l = l->next)
 	{
-		fprintf(stderr, "Can't close output file\n");
-		return -1;
+		expression *e = l->exp;
+		const char *var = e->data.bind.var;
+		int fd = e->data.bind.fd;
+
+		if (close_output_map(fd) < 0)
+		{
+			fprintf(stderr, "Can't close output file '%s'\n", var);
+			return -1;
+		}
 	}
 
 	return 0;

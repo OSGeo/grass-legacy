@@ -98,12 +98,6 @@ int translate_from_colors(map *m, DCELL *rast, CELL *cell, int ncols, int mod)
 
 	switch (mod)
 	{
-	case '#': /* grey */
-		/* old weightings: R=0.177, G=0.813, B=0.011 */
-		/* NTSC weightings: R=0.299, G=0.587, B=0.114 */
-		for (i = 0; i < ncols; i++)
-			cell[i] = (306*red[i] + 601*grn[i] + 117*blu[i] + 512) / 1024;
-		break;
 	case 'r':
 		for (i = 0; i < ncols; i++)
 			cell[i] = red[i];
@@ -115,6 +109,20 @@ int translate_from_colors(map *m, DCELL *rast, CELL *cell, int ncols, int mod)
 	case 'b':
 		for (i = 0; i < ncols; i++)
 			cell[i] = blu[i];
+		break;
+	case '#': /* grey (backwards compatible) */
+		/* old weightings: R=0.177, G=0.813, B=0.011 */
+		for (i = 0; i < ncols; i++)
+			cell[i] = (181*red[i] + 833*grn[i] + 11*blu[i] + 512) / 1024;
+		break;
+	case 'y': /* grey (NTSC) */
+		/* NTSC weightings: R=0.299, G=0.587, B=0.114 */
+		for (i = 0; i < ncols; i++)
+			cell[i] = (306*red[i] + 601*grn[i] + 117*blu[i] + 512) / 1024;
+		break;
+	case 'i': /* grey (equal weight) */
+		for (i = 0; i < ncols; i++)
+			cell[i] = (red[i] + grn[i] + blu[i]) / 3;
 		break;
 	case 'M':
 	case '@':
@@ -425,11 +433,15 @@ int map_type(const char *name, int mod)
 	case 'M':
 		mapset = G_find_cell2((char *) name, "");
 		return G_raster_map_type((char *) name, mapset);
-	case '@': return DCELL_TYPE;
-	case '#': return CELL_TYPE;
-	case 'r': return CELL_TYPE;
-	case 'g': return CELL_TYPE;
-	case 'b': return CELL_TYPE;
+	case '@':
+		return DCELL_TYPE;
+	case 'r':
+	case 'g':
+	case 'b':
+	case '#':
+	case 'y':
+	case 'i':
+		return CELL_TYPE;
 	default:
 		fprintf(stderr, "Invalid map modifier: '%c'\n", mod);
 		return DCELL_TYPE;
@@ -459,12 +471,19 @@ int open_map(const char *name, int mod, int row, int col)
 
 	switch (mod)
 	{
-	case 'M':			break;
-	case '@': use_cats   = 1;	break;
-	case '#': use_colors = 1;	break;
-	case 'r': use_colors = 1;	break;
-	case 'g': use_colors = 1;	break;
-	case 'b': use_colors = 1;	break;
+	case 'M':
+		break;
+	case '@':
+		use_cats = 1;
+		break;
+	case 'r':
+	case 'g':
+	case 'b':
+	case '#':
+	case 'y':
+	case 'i':
+		use_colors = 1;
+		break;
 	default:
 		fprintf(stderr, "Invalid map modifier: '%c'\n", mod);
 		return -1;
@@ -553,10 +572,12 @@ int get_map_row(int idx, int mod, int row, int col, void *buf, int res_type)
 			return -1;
 		translate_from_cats(m, ibuf, buf, columns);
 		break;
-	case '#':
 	case 'r':
 	case 'g':
 	case 'b':
+	case '#':
+	case 'y':
+	case 'i':
 		if (!fbuf)
 			fbuf = G_malloc(columns * sizeof(CELL));
 		if (read_map(m, fbuf, 0, row, col) < 0)
@@ -589,10 +610,7 @@ int open_output_map(const char *name, int res_type)
 {
 	int fd;
 
-	if (res_type == CELL_TYPE)
-		fd = G_open_cell_new((char *) name);
-	else
-		fd = G_open_fp_cell_new((char *) name);
+	fd = G_open_raster_new((char *) name, res_type);
 
 	if (fd < 0)
 	{
