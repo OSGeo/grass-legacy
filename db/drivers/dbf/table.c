@@ -61,7 +61,7 @@ int find_table (char *table)
 	
     for ( i = 0; i < db.ntables; i++ )
       {
-         if ( strcmp( db.tables[i].name, table ) == 0 )
+         if ( G_strcasecmp( db.tables[i].name, table ) == 0 )
 	     return (i);   
       }
     
