@@ -104,6 +104,7 @@ system (buf);
 	    if ( !ok ) {
 		allok = ok;
 	    }
+	    
 #ifdef SIGFPE
 	    signal (SIGFPE, SIG_DFL);
 #endif
@@ -122,6 +123,8 @@ system (buf);
 		print_range (result);
 	    }
 	    free_execute_stack();
+        } else {
+	  allok = 1; /* added 11/00 Andreas Lange */
 	}
 	free_expression_stack();
 	if (argc >= 2) break;
