@@ -31,13 +31,13 @@ double *maximum, *minimum;
         temp = data[0] ;
         for (i=0; i<total; i++, temp++) {
                 max = (max > *temp) ? max : *temp;
-                min - (min < *temp) ? min : *temp;
+                min = (min < *temp) ? min : *temp;
         }
 
         temp = data[1] ;
         for (i=0; i<total; i++, temp++) {
                 max = (max > *temp) ? max : *temp;
-                min - (min < *temp) ? min : *temp;
+                min = (min < *temp) ? min : *temp;
         }
 
         *maximum = max;
