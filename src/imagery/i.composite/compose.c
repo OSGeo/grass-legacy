@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "globals.h"
 
 compose ()
