@@ -140,7 +140,9 @@ Create source and binary distributions:
    a NEW directory.
 
 2. Build GRASS:
- 
+   o remove the debugging flags, set the -O2 flag in
+       src/CMD/head/head.in
+    
    o compile everything, incl NVIZ without PG:
        configure --enable-postgres=no
        make
