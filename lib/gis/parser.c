@@ -2024,6 +2024,8 @@ char *G_recreate_command (void)
 	int n , len, slen;
 	int nalloced = 0;
 
+	G_debug ( 3, "G_recreate_command()");
+
 	/* Flag is not valid if there are no flags to set */
 	
 	buff = G_calloc (1024, sizeof(char));
@@ -2065,7 +2067,7 @@ char *G_recreate_command (void)
 	opt= &first_option;
 	while(opt != '\0')
 	{
-		if (opt->answer != '\0')
+		if ( opt->answer != '\0' && opt->answers[0] != NULL )
 		{
 			slen = strlen (opt->key) + strlen (opt->answers[0]) + 4; /* +4 for: ' ' = " " */
 			if (len + slen >= nalloced)
@@ -2087,8 +2089,9 @@ char *G_recreate_command (void)
 			strcpy (cur, opt->answers[0]);
 			cur = strchr (cur, '\0');
 			len = cur - buff;
-			for(n=1;opt->answers[n] != '\0';n++)
+			for(n=1; opt->answers[n] != NULL && opt->answers[n] != '\0';n++)
 			{
+				if ( opt->answers[n] == NULL ) break;
 				slen = strlen (opt->answers[n]) + 2; /* +2 for , " */
 				if (len + slen >= nalloced)
 				{
