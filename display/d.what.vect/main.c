@@ -71,7 +71,7 @@ int main(int argc, char **argv)
  
   flash = G_define_flag();
   flash->key = 'f';
-  flash->description = "Enable flashingi (slower).";
+  flash->description = "Enable flashing (slower).";
  
   module = G_define_module();
   module->description = 
