@@ -6,7 +6,7 @@ r.slope.aspect <main> GRASS Reference Manual<main> r.slope.aspect
 
 
 NAME
-     r.slope.aspect - Generates raster map layers of slope and
+     r.slope.aspect - Generates	raster map layers of slope and
      aspect from a raster map layer of true elevation values.
      (GRASS Raster Program)
 
@@ -17,13 +17,13 @@ SYNOPSIS
      [aspect=name] [format=name] [zfactor=value]
 
 DESCRIPTION
-     r.slope.aspect generates raster map layers of slope and
+     r.slope.aspect generates raster map layers	of slope and
      aspect from a raster map layer of true elevation values.
      The user must specify the input elevation file name and at
-     least one output file name to contain the slope or aspect
-     data.  The user can also specify the format for slope
-     (degrees, percent; default=degrees), and zfactor:
-     multiplicative factor to convert elevation units to meters;
+     least one output file name	to contain the slope or	aspect
+     data.  The	user can also specify the format for slope
+     (degrees, percent;	default=degrees), and zfactor:
+     multiplicative factor to convert elevation	units to meters;
      (default 1.0).
 
 
@@ -31,36 +31,36 @@ DESCRIPTION
      specifies program inputs and any desired options on the
      command line, using the form
 
-          r.slope.aspect [-aq] elevation=name [slope=name]
-          [aspect=name] [slope=name] [zfactor=value]
+	  r.slope.aspect [-aq] elevation=name [slope=name]
+	  [aspect=name]	[slope=name] [zfactor=value]
 
-     If the user runs:
-          r.slope.aspect
+     If	the user runs:
+	  r.slope.aspect
 
      without command line arguments, the program will prompt the
-     user for flag settings and parameter values.
+     user for flag settings and	parameter values.
 
 
      Flags:
 
-     -a                Do not align the settings of the current
-                       geographic region (to which the output
-                       slope and aspect map layers will be set)
-                       to those of the elevation layer.  See
-                       NOTES.
+     -a		       Do not align the	settings of the	current
+		       geographic region (to which the output
+		       slope and aspect	map layers will	be set)
+		       to those	of the elevation layer.	 See
+		       NOTES.
 
-     -q                Run quietly, and suppress the printing of
-                       information on program operations during
-                       execution.
+     -q		       Run quietly, and	suppress the printing of
+		       information on program operations during
+		       execution.
 
-     -z                Assume that zero values in the elevation
-                       map layer represent true elevation values,
-                       not areas of "no data".
-
-
+     -z		       Assume that zero	values in the elevation
+		       map layer represent true	elevation values,
+		       not areas of "no	data".
 
 
-GRASS 4.1                U.S. Army CERL                         1
+
+
+GRASS 4.2		Baylor University			1
 
 
 
@@ -74,51 +74,51 @@ r.slope.aspect <main> GRASS Reference Manual<main> r.slope.aspect
      Parameters:
 
      elevation=name    Name of the raster map layer of true
-                       elevation values to be used as input.
+		       elevation values	to be used as input.
 
-     slope=name        Name of a raster map layer of slope values
-                       created from the elevation map.
+     slope=name	       Name of a raster	map layer of slope values
+		       created from the	elevation map.
 
-     aspect=name       Name of a raster map layer of aspect
-                       values created from the elevation map.
+     aspect=name       Name of a raster	map layer of aspect
+		       values created from the elevation map.
 
-     format=name       format for reporting the slope; options:
-                       degrees,percent; default: degrees.
+     format=name       format for reporting the	slope; options:
+		       degrees,percent;	default: degrees.
 
-     zfactor=value     Multiplicative factor to convert elevation
-                       units to meters (default: 1.0).
+     zfactor=value     Multiplicative factor to	convert	elevation
+		       units to	meters (default: 1.0).
 
      min_slp=value     Minimum slope for which aspect is
-                       computed.
+		       computed.
 
      Resulting raster map layers of slope and aspect are named by
-     the user and placed in the current mapset.
+     the user and placed in the	current	mapset.
 
 ELEVATION RASTER MAP
-     The raster elevation map layer specified by the user must
-     contain true elevation values, not rescaled or categorized
+     The raster	elevation map layer specified by the user must
+     contain true elevation values, not	rescaled or categorized
      data.
 
 ASPECT RASTER MAP
-     The raster aspect map layer which is created indicates the
-     direction that slopes are facing.  The aspect categories
+     The raster	aspect map layer which is created indicates the
+     direction that slopes are facing.	The aspect categories
      represent the number degrees of east.
 
-     Category and color table files are also generated for the
-     aspect map layer.
+     Category and color	table files are	also generated for the
+     aspect map	layer.
 
 SLOPE RASTER MAP
-     The resulting raster slope map layer will contain slope
+     The resulting raster slope	map layer will contain slope
      values, stated in degrees of inclination from the horizontal
-     if format=degrees option (which is also default ) is chosen,
+     if	format=degrees option (which is	also default ) is chosen,
      and in percent rise if format=percent option is chosen.  The
-     category file, but not the color table, is generated by
-     r.slope.aspect for the raster slope map layer.
+     category file, but	not the	color table, is	generated by
+     r.slope.aspect for	the raster slope map layer.
 
-     For most applications, the user will wish to use a
+     For most applications, the	user will wish to use a
      reclassified map layer of slope that groups slope values
-     into ranges of slope.  This can be done using r.reclass.  An
-     example of a useful reclassification is given below:
+     into ranges of slope.  This can be	done using r.reclass.  An
+     example of	a useful reclassification is given below:
 
 
 
@@ -126,7 +126,7 @@ SLOPE RASTER MAP
 
 
 
-GRASS 4.1                U.S. Army CERL                         2
+GRASS 4.2		Baylor University			2
 
 
 
@@ -137,62 +137,62 @@ r.slope.aspect <main> GRASS Reference Manual<main> r.slope.aspect
 
 
 
-          category      range       category labels
-                     (in degrees)    (in percent)
+	  category	range	    category labels
+		     (in degrees)    (in percent)
 
-             1           0-1             0-2%
-             2           2-3             3-5%
-             3           4-5             6-10%
-             4           6-8            11-15%
-             5           9-11           16-20%
-             6          12-14           21-25%
-             7          15-90       26% and higher
+	     1		 0-1		 0-2%
+	     2		 2-3		 3-5%
+	     3		 4-5		 6-10%
+	     4		 6-8		11-15%
+	     5		 9-11		16-20%
+	     6		12-14		21-25%
+	     7		15-90	    26%	and higher
 
      The following color table works well with the above
      reclassification.
 
-          category   red   green   blue
+	  category   red   green   blue
 
-             0       179    179    179
-             1         0    102      0
-             2         0    153      0
-             3       128    153      0
-             4       204    179      0
-             5       128     51     51
-             6       255      0      0
-             7         0      0      0
+	     0	     179    179	   179
+	     1	       0    102	     0
+	     2	       0    153	     0
+	     3	     128    153	     0
+	     4	     204    179	     0
+	     5	     128     51	    51
+	     6	     255      0	     0
+	     7	       0      0	     0
 
 NOTES
-     To ensure that the raster elevation map layer is not
-     inappropriately resampled, the settings for the current
-     region are modified slightly (for the execution of the
-     program only): the resolution is set to match the resolution
-     of the elevation map and the edges of the region (i.e. the
-     north, south, east and west) are shifted, if necessary, to
-     line up along edges of the nearest cells in the elevation
-     map. If the user really wants the elevation map resampled to
-     the current region resolution, the -a flag should be
-     specified.
+     To	ensure that the	raster elevation map layer is not
+     inappropriately resampled,	the settings for the current
+     region are	modified slightly (for the execution of	the
+     program only):  the resolution is set to match the
+     resolution	of the elevation map and the edges of the region
+     (i.e. the north, south, east and west) are	shifted, if
+     necessary,	to line	up along edges of the nearest cells in
+     the elevation map.	If the user really wants the elevation
+     map resampled to the current region resolution, the -a flag
+     should be specified.
 
      The current mask, if set, is ignored.
 
-     The algorithm used to determine slope and aspect uses a 3x3
+     The algorithm used	to determine slope and aspect uses a 3x3
      neighborhood around each cell in the elevation file.  Thus,
-     it is not possible to determine slope and aspect for the
-     cells adjacent to the edges in the elevation map layer.
-     These cells are assigned a "no data" value (category 0) in
-     both the slope and aspect raster map layers.
+     it	is not possible	to determine slope and aspect for the
+     cells adjacent to the edges in the	elevation map layer.
+     These cells are assigned a	"no data" value	(category 0) in
+     both the slope and	aspect raster map layers.
 
-     Because Horn's formula is used to find the derivatives in x
+     Because Horn's formula is used to find the	derivatives in x
      and y directions, the aspect is biased in 0, 45, 90, 180,
-     225, 270, 315, and 360 directions; i.e., the distribution of
-     aspect categories is very uneven, with peaks at 0, 45,...,
-     360 categories.  In the next GRASS release, a different
-     algorithm will be tried in the computation of derivatives in
+     225, 270, 315, and	360 directions;	i.e., the distribution of
+     aspect categories is very uneven, with peaks at 0,	45,...,
+     360 categories.  In the next GRASS	release, a different
+     algorithm will be tried in	the computation	of derivatives in
 
 
 
-GRASS 4.1                U.S. Army CERL                         3
+GRASS 4.2		Baylor University			3
 
 
 
@@ -207,38 +207,38 @@ r.slope.aspect <main> GRASS Reference Manual<main> r.slope.aspect
      the surface and find the derivatives from the resulting
      equation.
 
-     Helena Mitasova of USACERL observed that most cells with a
-     very small slope end up having category 0, 45,..., 360.  By
-     filtering out such aspects it is sometimes possible to
+     Helena Mitasova of	USACERL	observed that most cells with a
+     very small	slope end up having category 0,	45,...,	360.  By
+     filtering out such	aspects	it is sometimes	possible to
      reduce bias in these directions.  The new option
 
-         min_slp=value
+	 min_slp=value
 
-     was added (minimum slope for which aspect is computed).  The
-     aspect for all cells with slope < min_slp is set to 0 (no
+     was added (minimum	slope for which	aspect is computed).  The
+     aspect for	all cells with slope < min_slp is set to 0 (no
      value).
 
 
 WARNING
-     Elevations of zero (as well as below sea level elevations)
-     are valid.  This means that areas assigned category value 0
+     Elevations	of zero	(as well as below sea level elevations)
+     are valid.	 This means that areas assigned	category value 0
      may have one of two possible meanings:  they may either be
-     areas of "no data" or areas having 0 elevation.  If the user
-     wishes r.slope.aspect to assume that cells assigned category
-     value zero in the elevation map layer represent true
-     elevation values, not areas of "no data", the user should
-     set the -z flag when running this program.
+     areas of "no data"	or areas having	0 elevation.  If the user
+     wishes r.slope.aspect to assume that cells	assigned category
+     value zero	in the elevation map layer represent true
+     elevation values, not areas of "no	data", the user	should
+     set the -z	flag when running this program.
 
-     If the -z flag is not set and the raster map layer of true
-     elevation contains areas of "no data" that are assigned to
-     category 0, either at its edges or in its interior,
-     incorrect (and usually quite large) slopes will result.
+     If	the -z flag is not set and the raster map layer	of true
+     elevation contains	areas of "no data" that	are assigned to
+     category 0, either	at its edges or	in its interior,
+     incorrect (and usually quite large) slopes	will result.
 
 SEE ALSO
-     r.mapcalc, r.neighbors, r.reclass, r.rescale
+     r.mapcalc,	r.neighbors, r.reclass,	r.rescale
 
 AUTHORS
-     Michael Shapiro, U.S. Army Construction Engineering Research
+     Michael Shapiro, U.S. Army	Construction Engineering Research
      Laboratory
 
      Olga Waupotitsch, U.S. Army Construction Engineering
@@ -258,7 +258,7 @@ AUTHORS
 
 
 
-GRASS 4.1                U.S. Army CERL                         4
+GRASS 4.2		Baylor University			4
 
 
 
