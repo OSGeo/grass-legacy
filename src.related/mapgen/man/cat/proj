@@ -1,0 +1,198 @@
+
+
+
+
+
+
+_p_r_o_j - _f_o_r_w_a_r_d _c_a_r_t_o_g_r_a_p_h_i_c _p_r_o_j_e_c_t_i_o_n _f_i_l_t_e_r
+_i_n_v_p_r_o_j - _i_n_v_e_r_s_e _c_a_r_t_o_g_r_a_p_h_i_c _p_r_o_j_e_c_t_i_o_n _f_i_l_t_e_r
+
+_p_r_o_j [ -_b_c_e_f_i_m_o_r_s_t_T_w_W [ _a_r_g_s ] ] [ +_a_r_g_s ] file[s]
+_i_n_v_p_r_o_j [ -_b_c_e_f_i_m_o_r_s_t_T_w_W [ _a_r_g_s ] ] [ +_a_r_g_s ] file[s]
+
+_P_r_o_j and _i_n_v_p_r_o_j perform respective forward and inverse
+transformation  of  cartographic data to or from carte-
+sian data with a wide range  of  selectable  projection
+functions.
+
+     The following control parameters can appear in any
+order:  Special option for binary coordinate data input
+and output through standard input and standard  output.
+Data  is  assumed  to be in system type _d_o_u_b_l_e floating
+point words.  This option is to be used when _p_r_o_j is  a
+_s_o_n process and allows bypassing formatting operations.
+Selects binary  input  only  (see  -_boption).   Selects
+binary output only (see -_boption).  _A specifies a char-
+acter employed as the first character to denote a  con-
+trol  line  to  be  passed  through without processing.
+This option applicable to ascii input only.  (# is  the
+default  value).   _S_t_r_i_n_g  is an arbitrary string to be
+output if an error is detected during data  transforma-
+tions.   The  default value is: *\t*.  Note that if the
+-_b, -_i or -_o options are employed, an error is returned
+as  _H_U_G_E  value  for  both  return values.  _F_i_l_e is the
+source file name of additional +  option  control  data
+for  the  projection procedures.  This options reverses
+the order of the expected input from longitude-latitude
+or x-y to latitude-longitude or y-x.  This options rev-
+erses the order of the output from  x-y  or  longitude-
+latitude  to  y-x or latitude-longitude.  The cartesian
+data may be scaled by the _m_u_l_t  parameter.   When  pro-
+cessing data in a forward projection mode the cartesian
+output values are  multiplied  by  _m_u_l_t  otherwise  the
+input  cartesian  values  are  divided  by  _m_u_l_t before
+inverse projection.  If the  first  two  characters  of
+_m_u_l_t  are 1/ or 1: then the reciprocal value of _m_u_l_t is
+employed.  _F_o_r_m_a_t is a _p_r_i_n_t_f format string to  control
+the  form  of  the  output values.  For inverse projec-
+tions, the output will be in degrees when  this  option
+is employed.  If a format is specified for inverse pro-
+jection the output data will  be  in  decimal  degrees.
+The  default  format is %.2f for forward projection and
+DMS for inverse.  _N is the number of significant  frac-
+tional  digits  to  employ for seconds output (when the
+option is not specified, -_w_3 is assumed).  When  -_W  is
+employed the fields will be constant width with leading
+zeroes.  This option creates a set  of  bivariate  Che-
+byshev  polynomial  coefficients  that  approximate the
+selected cartographic projection on _s_t_d_o_u_t.  The values
+_l_o_w and _h_i denote the range of the input where the _u or
+_v  prefixes  apply   to   respective   longitude-x   or
+
+
+
+                     June 4, 1991
+
+
+
+
+
+                         - 2 -
+
+
+latitude-y  depending upon whether a forward or inverse
+projection is  selected.   _R_e_s  is  an  integer  number
+specifying  the power of 10 precision of the approxima-
+tion.  For example, a _r_e_s of -3 specifies an approxima-
+tion accuracy better than .001.  _U_m_a_x, and _v_m_a_x specify
+maximum degree of the polynomials (default:  15).   See
+also: _f_p_r_o_j(_1).
+
+     The +_a_r_g_s run-line arguments are  associated  with
+cartographic  parameters  and usage varies with projec-
+tion and for a complete  description  see  _C_a_r_t_o_g_r_a_p_h_i_c
+_P_r_o_j_e_c_t_i_o_n _P_r_o_c_e_d_u_r_e_s _f_o_r _t_h_e _U_N_I_X _E_n_v_i_r_o_n_m_e_n_t-_A _U_s_e_r'_s
+_M_a_n_u_a_l) They may be either  entered  on  the  run  line
+where  they must be preceeded by the + symbol or speci-
+fied in the file reference by the -_c option where the +
+prefix  is optional.  The options are processed in left
+to right order from the run line followed by processing
+the  entries  in  the -_c file.  Reentry of an option is
+ignored with the first  occurance  assumed  to  be  the
+desired value.
+
+     One or more _f_i_l_e_s  (processed  in  left  to  right
+order) specify the source of data to be transformed.  A
+- will specify  the  location  of  processing  standard
+input.  If no files are specified, the input is assumed
+to be from _s_t_d_i_n.  For ASCII input data  the  two  data
+values  must  be in the first two white space separated
+fields and when both input and  output  are  ASCII  all
+trailing portions of the input line are appended to the
+output line.
+
+     Input geographic  data  (longitude  and  latitude)
+must  be in DMS format and input cartesian data must be
+in units consistent with the ellipsoid  major  axis  or
+sphere  radius  units.   Output  geographic coordinates
+will be in DMS (if the -_w switch is not  employed)  and
+precise  to  0.001"  with trailing, zero-valued minute-
+second fields deleted.
+
+_T_h_e _f_o_l_l_o_w_i_n_g _s_c_r_i_p_t
+      proj +proj=utm +lon_0=112w -r <<EOF
+      45d15'33.1"    111.5W
+      45d15.551666667N       -111d30
+      +45.25919444444        111d30'000w
+      EOF
+will perform UTM forward projection with a standard UTM
+central  meridian  nearest  longitude  112W.   The geo-
+graphic values of this example are equivalent and meant
+as  examples  of  various  forms of DMS input.  The x-y
+output data will appear as three lines of:
+      460769.27      5011648.45
+
+
+
+
+
+
+                     June 4, 1991
+
+
+
+
+
+                         - 3 -
+
+
+_C_a_r_t_o_g_r_a_p_h_i_c  _P_r_o_j_e_c_t_i_o_n  _P_r_o_c_e_d_u_r_e_s   _f_o_r   _t_h_e   _U_N_I_X
+_E_n_v_i_r_o_n_m_e_n_t-_A  _U_s_e_r'_s _M_a_n_u_a_l, (Evenden, 1990, Open-file
+report 90-xxx).
+_M_a_p _P_r_o_j_e_c_t_i_o_n_s _U_s_e_d _b_y _t_h_e  _U.  _S.  _G_e_o_l_o_g_i_c_a_l  _S_u_r_v_e_y
+(Snyder, 1984, USGS Bulletin 1532).
+_M_a_p _P_r_o_j_e_c_t_i_o_n_s-_A _W_o_r_k_i_n_g _M_a_n_u_a_l  (Synder,  1988,  USGS
+Prof. Paper 1395).
+_A_n _A_l_b_u_m _o_f _M_a_p _P_r_o_j_e_c_t_i_o_n_s (Snyder  &  Voxland,  1989,
+USGS Prof. Paper 1453).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                     June 4, 1991
+
+
