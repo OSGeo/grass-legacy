@@ -15,7 +15,7 @@ G_get_cell_title (name, mapset)
 {
     FILE *fd;
     int stat;
-    char title[100];
+    char title[1024];
 
     stat = -1;
     fd = G_fopen_old ("cats", name, mapset);
