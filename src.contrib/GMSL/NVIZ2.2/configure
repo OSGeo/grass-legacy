@@ -3,7 +3,10 @@
 
 # Revisions:
 #  $Log: configure,v $
-#  Revision 1.7  2000-05-26 14:04:36  markus
+#  Revision 1.8  2000-06-12 14:06:53  cho
+#  Huidae Cho <hdcho@geni.knu.ac.kr>: added FreeBSD sensivity: -ldl
+#
+#  Revision 1.7  2000/05/26 14:04:36  markus
 #  Huidae Cho <hdcho@geni.knu.ac.kr>: added FreeBSD sensivity
 #
 #  Revision 1.6  2000/05/05 14:22:03  markus
@@ -54,9 +57,11 @@ set OS=`uname -s`
 
 # Look for tcl, tk libraries
 if ("$OS" == "FreeBSD") then
+	set DLLIB=""
 	set spath=(/usr/lib /usr/local/lib /usr/X11R6/lib)
 	set libs_reqd=(libtcl80 libtk80 libX11 libGL )
 else
+	set DLLIB="-ldl"
 	set spath=(/lib /usr/lib /usr/local/lib /usr/X11R6/lib)
 	set libs_reqd=(libtcl8.0 libtk8.0 libX11 libGL )
 endif
@@ -192,7 +197,8 @@ sed -e "\
 s/TK_LIB_PATH=sed/TK_LIB_PATH=${TK_LIB_PATH}/g;\
 s/TK_INCLUDE_PATH=sed/TK_INCLUDE_PATH=${TK_INCLUDE_PATH}/g;\
 s/PQ_OBJS=sed/PQ_OBJS=${PQ_OBJS}/g;\
-s/NVWISH_VER=sed/NVWISH_VER=${NVWISH_VER}/g\
+s/NVWISH_VER=sed/NVWISH_VER=${NVWISH_VER}/g;\
+s/DLLIB=sed/DLLIB=${DLLIB}/g\
 " src/Gmakefile.in > src/Gmakefile
 
 # Finally create the toplevel makefile
