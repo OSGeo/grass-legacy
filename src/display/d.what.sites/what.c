@@ -3,6 +3,7 @@
 */
 #include <unistd.h>
 #include <string.h>
+#include <math.h>
 #include "local_proto.h"
 #include "gis.h"
 #include "raster.h"
