@@ -1,5 +1,5 @@
 /*!
-\mainpage GRASS 5.7 Vector Architecture
+\mainpage GRASS 6.0 Vector Architecture
 
 by GRASS Development Team
 
@@ -7,8 +7,8 @@ http://grass.itc.it
 
 \section intro Introduction
 
-This describtion covers the new GRASS 5.7 vector library architecture.
-This new architecture overcomes the vector limitations of GRASS 4.x-5.0 by
+This describtion covers the new GRASS 5.7/6.0 vector library architecture.
+This new architecture overcomes the vector limitations of GRASS 4.x-5.4.x by
 extending the vector support with attributes stored in external relational
 databases and by new 3D capabilities. Besides internal file based storage the
 geometry may alternatively be stored in PostGIS database. This enables users
@@ -20,10 +20,10 @@ conversion.
 
 In GIS the vector data model is used for geographic phenomena which may be
 represented by geometric entities (primitives) like points, lines, and
-areas. In GRASS 5.7 the vector data model includes the description of
+areas. The GRASS vector data model includes the description of
 topology, where besides the coordinates describing the location of the
 points, lines, boundaries and centroids also their spatial relations are
-stored. In general topological GIS require a data structure, where common
+stored. In general, topological GIS require a data structure where common
 boundary between two adjacent areas is stored as a single line, simplifying
 the map maintenance.
 
@@ -36,7 +36,7 @@ Besides internal library functions there are two main libraries:
 For details please read Blazek et al. 2002 (see below) as well as the
 references in this document.
 
-The Vect_*() functions are the programmer's API for GRASS 5.7 vector
+The Vect_*() functions are the programmer's API for GRASS vector
 programming. See details here:
 
 
@@ -48,7 +48,7 @@ programming. See details here:
 The Directed Graph Library or DGLib (Micarelli 2002,
 http://grass.itc.it/dglib/) provides functionality for vector network
 analysis. This library released under GPL is hosted by the GRASS project (in
-the CVS server within the GRASS 5.7 source code). As stand-alone library it
+the CVS server within the GRASS source code). As stand-alone library it
 may also be used by other software project.
 
 The Directed Graph Library library provides functionality to assign costs to

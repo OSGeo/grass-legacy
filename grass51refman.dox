@@ -1,5 +1,5 @@
 /*!
-\mainpage GRASS 5.7 Programmer's Manual
+\mainpage GRASS 6.0 Programmer's Manual
 
 by GRASS Development Team
 
@@ -34,7 +34,7 @@ documentation</a>
 
 \section contacts Contacts
 
-GRASS Development Team: http://grass.itc.it/support.html
+GRASS Development Team: http://grass.itc.it/devel/support.php
  
 Radim Blazek (vector architecture) <blazek@itc.it>
 

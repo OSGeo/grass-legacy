@@ -4,7 +4,7 @@ HOWTO translate GRASS messages
 $Id$
 
 
-[ Web page: http://grass.itc.it/i18n.html ]
+[ Web page: http://grass.itc.it/devel/i18n.php ]
 
 Updating the message catalogs currently only works on 
 unix-like systems and requires xgettext.

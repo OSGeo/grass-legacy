@@ -1,4 +1,4 @@
-                   INSTALL GRASS 5.7.x from source code
+                   INSTALL GRASS from source code
                    $Id$
 
 Please read *all* text below.
@@ -8,7 +8,7 @@ Note: This version was previously called GRASS 5.1
 
 SOURCE CODE DISTRIBUTION
 
-GRASS 5.7.x source code is currently distributed in 2 forms:
+GRASS source code is currently distributed in 2 forms:
 
 1) Officially released source code (e.g. grass-5.7.0.tar.gz)
 
@@ -72,7 +72,7 @@ After compilation, the resulting code is stored in the directory
 and the scripts (grass57, ...) in
 ./bin.$ARCH
 
-To run GRASS 5.7.x, simply start
+To run GRASS, simply start
 ./bin.$ARCH/grass57
 
 or run
@@ -90,12 +90,12 @@ startup menu to the directory.
 Enjoy.
 
 
-UPDATE OF 5.7.x (CVS or CVS snapshot only)
+UPDATE OF SOURCE CODE (CVS or CVS snapshot only)
 
 Assuming that you want to update your current installation from
 CVS, you have to perform a few steps. In general:
 
-- update from 5.7-CVS (the 5.7.x code)
+- update from CVS
 - configure, compile
 
 In detail:
@@ -109,7 +109,7 @@ make install
 
 COMPILING INDIVIDUAL MODULES - OWN MODULES
 
-Compiling own GRASS 5.7 modules or modified modules:
+Compiling own GRASS modules or modified modules:
 Simply run "make" in the appropriate directory
 and then install with "INST_NOW=y make".
 It is not necessary to install the full distribution.
@@ -164,12 +164,12 @@ Note that this code is still somewhat experimental. Data formats and
 functionality may change in future versions. DO NOT USE THIS VERSION
 FOR PRODUCTION (ok, we do it...)!
 
-If interested to develop GRASS 5.7.x, please join the GRASS developers 
+If interested to develop GRASS, please join the GRASS developers 
 mailing list:
-http://grass.itc.it/grassdevel.html
+http://grass.itc.it/devel/index.php
 
 
-GRASS 5.7 PROGRAMMER'S MANUAL
+GRASS PROGRAMMER'S MANUAL
 
 The Programmer's manual is generated with doxygen from the source code.
 Please see the README file and the files at:
@@ -178,6 +178,7 @@ http://grass.itc.it/grass57/index.html#docs
 Draft TUTORIAL
 
 http://grass.itc.it/grass57/tutorial/index.html
+http://grass.gdf-hannover.de/twiki/bin/view/GRASS/GrassSixTutorial
 
 ------------------
 GRASS Development Team

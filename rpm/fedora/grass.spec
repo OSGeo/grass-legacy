@@ -4,7 +4,7 @@
 
 %define PACKAGE_NAME grass
 %define PACKAGE_VERSION 5.7.0
-%define PACKAGE_URL http://grass.itc.it/index.html
+%define PACKAGE_URL http://grass.itc.it/index.php
 %define _prefix /usr/lib
 %define _bindir /usr/bin
 
@@ -28,11 +28,12 @@ BuildRoot: %{_builddir}/%{name}-root
 Prefix: %{_prefix}
 
 %description
-GRASS (Geographic Resources Analysis Support System)
-is a complete GIS with integrated database management
-system, image processing system, graphics production
-system, and spatial modeling system. A graphical user
-interface for X-Window is provided.
+GRASS (Geographic Resources Analysis Support System) is a Geographic
+Information System (GIS) used for geospatial data management and
+analysis, image processing, graphics/maps production, spatial
+modeling, and visualization. GRASS is currently used in academic and
+commercial settings around the world, as well as by many governmental
+agencies and environmental consulting companies.
 
 %prep
 %setup -n %{name}-%{version}
