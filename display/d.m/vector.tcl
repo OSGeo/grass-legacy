@@ -89,11 +89,11 @@ proc DmVector::create { tree parent } {
     set opt($count,type_line) 1 
     set opt($count,type_boundary) 1 
     set opt($count,type_centroid) 1 
-    set opt($count,type_area) 0 
+    set opt($count,type_area) 1 
 
-    set opt($count,color) \#ffffff
-    set opt($count,fcolor) \#ffffff 
-    set opt($count,lcolor) \#ffffff
+    set opt($count,color) \#000000
+    set opt($count,fcolor) \#AAAAAA 
+    set opt($count,lcolor) \#000000
 
     set opt($count,icon) "cross"
     set opt($count,size) 5 
