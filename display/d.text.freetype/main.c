@@ -32,130 +32,27 @@
 #include "raster.h"
 
 #define	DEFAULT_CHARSET	"ISO-8859-1"
-#define	DEFAULT_SIZE	"10"
+#define	DEFAULT_SIZE	"30"
 #define	DEFAULT_COLOR	"gray"
 
 typedef struct {
-	char *cfont, *cpath, *ccharset, *ccolor, *csize;
+	char	*cfont, *cpath, *ccharset, *ccolor, *csize;
 } capinfo;
+
+static capinfo	*fonts = NULL;
+static int	fonts_count = 0;
+static int	cur_font = -1;
+static char	*font_names = NULL;
 
 static FT_Library	library;
 static FT_Face		face;
 static int		driver;
 
-static void
-error(const char *msg)
-{
-	if (face)
-		FT_Done_Face(face);
-	if (library)
-		FT_Done_FreeType(library);
-	if (driver)
-		R_close_driver();
-	G_fatal_error("%s", msg);
-}
+static void	error(const char *msg);
+static void	read_capfile(void);
+static int	find_font(const char *name);
+static char 	*transform_string(char *str, int (*func)(int));
 
-static capinfo *fonts = NULL;
-static int fonts_count = 0;
-
-static char *font_names = NULL;
-
-static int cur_font = -1;
-
-static void
-read_capfile(void)
-{
-	char freetypecap[4096], buf[4096];
-	char ifont[128], ipath[4096], icharset[32], icolor[128], isize[10];
-	int fonts_size = 0;
-	int font_names_size = 0;
-	FILE *fp;
-	int i;
-
-	sprintf(freetypecap, "%s/etc/freetypecap", G_gisbase());
-	fp = fopen(freetypecap, "r");
-
-	if (!fp)
-	{
-		G_warning("%s: No FreeType definition file", freetypecap);
-		return;
-	}
-
-	while (fgets(buf, sizeof(buf), fp) && !feof(fp))
-	{
-		capinfo *font;
-		int offset;
-		char *ptr;
-
-		ptr = strchr(buf, '#');
-		if (ptr)
-			*ptr = 0;
-
-		if (sscanf(buf, "%[^:]:%[^:]:%[^:]:%[^:]:%[^:]",
-			  ifont, ipath, icharset, icolor, isize) != 5)
-			continue;
-
-		if (fonts_count >= fonts_size)
-		{
-			fonts_size = fonts_size ? fonts_size * 2 : 10;
-			fonts = (capinfo *)
-				G_realloc(fonts, fonts_size * sizeof(capinfo));
-		}
-
-		font = &fonts[fonts_count];
-
-		offset = (ifont[0] == '*') ? 1 : 0;
-
-		if (offset > 0 && cur_font < 0)
-			cur_font = fonts_count;
-
-		font->cfont    = G_store(ifont + offset);
-		font->cpath    = G_store(ipath);
-		font->ccharset = G_store(icharset);
-		font->ccolor   = G_store(icolor);
-		font->csize    = G_store(isize);
-
-		fonts_count++;
-	}
-
-	fclose(fp);
-
-	font_names_size = 0;
-	for (i = 0; i < fonts_count; i++)
-		font_names_size += strlen(fonts[i].cfont) + 1;
-
-	font_names = G_malloc(font_names_size);
-	font_names[0] = '\0';
-	for (i = 0; i < fonts_count; i++)
-	{
-		if (i > 0)
-			strcat(font_names, ",");
-		strcat(font_names, fonts[i].cfont);
-	}
-}
-
-static int
-find_font(const char *name)
-{
-	int i;
-	for (i = 0; i < fonts_count; i++)
-		if (strcasecmp(fonts[i].cfont, name) == 0)
-			return i;
-
-	return -1;
-}
-
-static char *
-transform_string(char *str, int (*func)(int))
-{
-	char *result = G_store(str);
-	int i;
-
-	for (i = 0; result[i]; i++)
-		result[i] = (*func)(result[i]);
-
-	return result;
-}
 
 int
 main(int argc, char **argv)
@@ -400,5 +297,117 @@ main(int argc, char **argv)
 	R_close_driver();
 
 	exit(0);
+}
+
+
+static void
+error(const char *msg)
+{
+	if (face)
+		FT_Done_Face(face);
+	if (library)
+		FT_Done_FreeType(library);
+	if (driver)
+		R_close_driver();
+	G_fatal_error("%s", msg);
+
+	return;
+}
+
+static void
+read_capfile(void)
+{
+	char freetypecap[4096], buf[4096];
+	char ifont[128], ipath[4096], icharset[32], icolor[128], isize[10];
+	int fonts_size = 0;
+	int font_names_size = 0;
+	FILE *fp;
+	int i;
+
+	sprintf(freetypecap, "%s/etc/freetypecap", G_gisbase());
+	fp = fopen(freetypecap, "r");
+
+	if (!fp)
+	{
+		G_warning("%s: No FreeType definition file", freetypecap);
+		return;
+	}
+
+	while (fgets(buf, sizeof(buf), fp) && !feof(fp))
+	{
+		capinfo *font;
+		int offset;
+		char *ptr;
+
+		ptr = strchr(buf, '#');
+		if (ptr)
+			*ptr = 0;
+
+		if (sscanf(buf, "%[^:]:%[^:]:%[^:]:%[^:]:%[^:]",
+			  ifont, ipath, icharset, icolor, isize) != 5)
+			continue;
+
+		if (fonts_count >= fonts_size)
+		{
+			fonts_size = fonts_size ? fonts_size * 2 : 10;
+			fonts = (capinfo *)
+				G_realloc(fonts, fonts_size * sizeof(capinfo));
+		}
+
+		font = &fonts[fonts_count];
+
+		offset = (ifont[0] == '*') ? 1 : 0;
+
+		if (offset > 0 && cur_font < 0)
+			cur_font = fonts_count;
+
+		font->cfont    = G_store(ifont + offset);
+		font->cpath    = G_store(ipath);
+		font->ccharset = G_store(icharset);
+		font->ccolor   = G_store(icolor);
+		font->csize    = G_store(isize);
+
+		fonts_count++;
+	}
+
+	fclose(fp);
+
+	font_names_size = 0;
+	for (i = 0; i < fonts_count; i++)
+		font_names_size += strlen(fonts[i].cfont) + 1;
+
+	font_names = G_malloc(font_names_size);
+	font_names[0] = '\0';
+	for (i = 0; i < fonts_count; i++)
+	{
+		if (i > 0)
+			strcat(font_names, ",");
+		strcat(font_names, fonts[i].cfont);
+	}
+
+	return;
+}
+
+static int
+find_font(const char *name)
+{
+	int i;
+	for (i = 0; i < fonts_count; i++)
+		if (strcasecmp(fonts[i].cfont, name) == 0)
+			return i;
+
+	return -1;
+}
+
+static char *
+transform_string(char *str, int (*func)(int))
+{
+	char *result = G_store(str);
+	int i;
+
+	for (i = 0; result[i]; i++)
+		result[i] = (*func)(result[i]);
+
+	return result;
 }
 
