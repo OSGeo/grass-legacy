@@ -1,18 +1,38 @@
-Functionality test of GRASS 5 beta 8
-
-$Id$
-
-Legend: GRASS module is     
-        +  working
-        +- partly working
-        -  failing
-        ?  unknown, waiting for your comment
-
-Please send updates and comments to
-Markus Neteler
-neteler@geog.uni-hannover.de
-
-----------------------------------------
+# Automated functionality test of GRASS 5
+#
+# Legend: 
+# Test, GRASS Test:
+#        +  working
+#        o  partly functional, some functionality missing or not working
+#        -  failing, not working
+#        ?  unknown, untested, waiting for your comments
+#
+# Status, GRASS Testsuite:
+#        ? unresolved, module is there and starts
+#        - module missing
+#        . module can not be tested (scripts etc)
+#        f module failed in test
+#        p module passed test
+#        i interface problem with module
+#
+# Name of Module
+#
+# Type of Module:
+#        script bash, c-shell, tcl/tk etc script
+#        exe    binary executable file
+#        unkn   not known
+#
+# Interface is:
+#        inter  only interactive usage
+#        cmd    commandline, uses GRASS parser
+#        script shell script (bourne, c, tcl/tk, wish)
+#        other  other interface
+#        n/a    not applicable, not known
+#
+# Please send updates and comments to
+# Markus Neteler
+# neteler@geog.uni-hannover.de
+#
 +  d.3d
 +  d.area
 +  d.ask
@@ -28,7 +48,7 @@ neteler@geog.uni-hannover.de
 +  d.geodesic
 ?  d.graph
 +  d.grid
-+- d.his
+o  d.his
 +  d.histogram
 ?  d.icons
 ?  d.label
@@ -40,12 +60,12 @@ neteler@geog.uni-hannover.de
 ?  d.mapgraph
 +  d.measure
 +  d.menu
-+  d.mon (-L option fails)
+-  d.mon
 ?  d.paint.labels
 +  d.pan
-+- d.param.scale
+o  d.param.scale
 ?  d.points
--  d.profile (sometimes crazy profile)
+-  d.profile
 +  d.rast
 ?  d.rast.arrow
 ?  d.rast.edit
@@ -205,7 +225,7 @@ neteler@geog.uni-hannover.de
 +  r.in.ppm
 +  r.in.sunrast
 ?  r.in.tang
-+- r.in.tiff (fails on selected platforms)
+-  r.in.tiff
 ?  r.in.utm
 ?  r.infer
 +  r.info
@@ -356,8 +376,8 @@ neteler@geog.uni-hannover.de
 +  v.timestamp
 +  v.transform
 +  v.trim
-
-Grid3D
+# 
+# Grid3D
 +  r3.in.ascii
 ?  r3.in.grid3
 ?  r3.in.v5d
