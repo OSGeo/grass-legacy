@@ -34,7 +34,7 @@ fi
 
 COVER="$GIS_OPT_map"
 
-TMP=/tmp/r.univar.tmp
+TMP="`g.tempfile pid=$$`"
 cleanup()
 {
  \rm -f $TMP $TMP.sort
