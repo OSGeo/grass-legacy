@@ -4,9 +4,9 @@ HDF_LIBDIR = lib/$(LIBARCH)
 
 all: $(HDF_LIBDIR)
 	configure
-	make hdf-libnofortran
+	$(MAKE) hdf-libnofortran
 	mv hdf/src/libdf.\a $(HDF_LIBDIR)
-	make clean
+	$(MAKE) clean
 
 $(HDF_LIBDIR):
 	mkdir $(HDF_LIBDIR)
