@@ -100,6 +100,7 @@ main (int argc, char *argv[])
     int    input, operator;
     int    aline, nalines;
     int    type[2], field[2];
+    int    *cats, ncats;
     char   *mapset[2], *pre[2];
     struct GModule *module;
     struct Option *in_opt[2], *out_opt, *type_opt[2], *field_opt[2], *operator_opt;
@@ -370,9 +371,14 @@ main (int argc, char *argv[])
         
     Vect_close ( &(In[1]) ); 
 
+    if ( !(table_flag->answer) && (IFi != NULL) ) {
+	cats = (int *) G_malloc ( nalines * sizeof(int) );
+	ncats = 0;
+    }
+
     /* Write lines */
     for ( aline = 1; aline <= nalines; aline++ ) {
-	int atype;
+	int atype, cat;
 
         G_debug (4, "aline = %d ALines[aline] = %d", aline, ALines[aline]);
 
@@ -380,6 +386,14 @@ main (int argc, char *argv[])
 	
 	atype = Vect_read_line ( &(In[0]), APoints, ACats, aline);
         Vect_write_line ( &Out, atype, APoints, ACats );
+	
+        if ( !(table_flag->answer) && (IFi != NULL) ) {
+	    Vect_cat_get ( ACats, field[0], &cat); 
+	    if ( cat > 0 ) {
+	        cats[ncats] = cat;
+	        ncats++;
+	    }
+	}
     }
 
     Vect_close ( &(In[0]) ); 
@@ -391,12 +405,16 @@ main (int argc, char *argv[])
 	int ret; 
 
 	fprintf ( stderr, "Writing attributes ...\n" );
+
+	/* Make a list of categories */
+	
 	
         OFi = Vect_default_field_info ( &Out, 1, NULL, GV_1TABLE );
 	
 
-        ret = db_copy_table ( IFi->driver, IFi->database, IFi->table,
-                              OFi->driver, Vect_subst_var(OFi->database,&Out), OFi->table );
+        ret = db_copy_table_by_ints ( IFi->driver, IFi->database, IFi->table,
+                              OFi->driver, Vect_subst_var(OFi->database,&Out), OFi->table,
+	       		      IFi->key, cats, ncats );
 
 	if ( ret == DB_FAILED ) {
 	    G_warning ( "Cannot copy table" );

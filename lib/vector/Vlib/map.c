@@ -311,15 +311,41 @@ Vect_copy_tables ( struct Map_info *In, struct Map_info *Out, int field )
                            int field_out, char *field_name, int type )
  \brief Copy map table.
  \return 0 on success, -1 on error
- \param  in Map_info structure, out Map_info structure, field_in , field_out, field_name, type
+ \param In 
+ \param Out
+ \param field_in
+ \param field_out
+ \param field_name 
+ \param type
 */
 int 
 Vect_copy_table ( struct Map_info *In, struct Map_info *Out, int field_in, 
 	           int field_out,  char *field_name, int type )
 {
+    return Vect_copy_table_by_cats ( In, Out, field_in, field_out, field_name, type, NULL, 0); 
+}
+
+/*!
+ \fn int Vect_copy_table_by_cats ( struct Map_info *In, struct Map_info *Out, int field_in, 
+                           int field_out, char *field_name, int type, int *cats, int ncats )
+ \brief Copy map table.
+ \return 0 on success, -1 on error
+ \param In 
+ \param Out
+ \param field_in
+ \param field_out
+ \param field_name 
+ \param type
+ \param cats pointer to array of cats or NULL
+ \param ncats number of cats in 'cats'
+*/
+int 
+Vect_copy_table_by_cats ( struct Map_info *In, struct Map_info *Out, int field_in, 
+	           int field_out,  char *field_name, int type, int *cats, int ncats )
+{
     int    ret;
     struct field_info *Fi, *Fin;
-    char   *name;
+    char   *name, *key;
 
     G_debug (2, "Vect_copy_table(): field_in = %d field_out = %d", field_in, field_out);
 
@@ -333,7 +359,7 @@ Vect_copy_table ( struct Map_info *In, struct Map_info *Out, int field_in,
     else name = Fi->name;
     
     Fin = Vect_default_field_info ( Out, field_out, name, type );
-    G_debug (2, "Copy drv:db:table '%s:%s:%s' to '%s:%s:%s'", 
+    G_debug (3, "Copy drv:db:table '%s:%s:%s' to '%s:%s:%s'", 
 		  Fi->driver, Fi->database, Fi->table, Fin->driver, Fin->database, Fin->table );
     
     ret = Vect_map_add_dblink ( Out, Fin->number, Fin->name, Fin->table, Fi->key, Fin->database, Fin->driver);
@@ -342,8 +368,13 @@ Vect_copy_table ( struct Map_info *In, struct Map_info *Out, int field_in,
 	return -1;
     }
     
-    ret = db_copy_table ( Fi->driver, Fi->database, Fi->table, 
-		Fin->driver, Vect_subst_var(Fin->database,Out), Fin->table );
+    if ( cats ) 
+	key = Fi->key;
+    else 
+	key = NULL;
+    
+    ret = db_copy_table_by_ints ( Fi->driver, Fi->database, Fi->table, 
+		Fin->driver, Vect_subst_var(Fin->database,Out), Fin->table, key, cats, ncats );
     if ( ret == DB_FAILED ) {
 	G_warning ( "Cannot copy table" );
 	return -1;
