@@ -65,12 +65,6 @@ char *me, *link;
         fprintf(stderr, "Sorry, <%s> not available\n", in_fifo);
         goto error;
     }
-#ifdef S_IFIFO
-    if (!(buf.st_mode & S_IFIFO)) {
-        fprintf(stderr, "Sorry, <%s> is not a fifo file\n", in_fifo);
-        goto error;
-    }
-#endif  /* FIFO */
     if ((buf.st_mode & 0666) != 0666) {
         fprintf(stderr, "Sorry, permissions on <%s> (%o) should be 0666\n",
                 in_fifo, buf.st_mode & 0666);
@@ -80,13 +74,6 @@ char *me, *link;
         fprintf(stderr, "Sorry, <%s> not available\n", out_fifo);
         goto error;
     }
-#ifdef S_IFIFO
-    /* Check existence and access of out_fifo */
-    if (!(buf.st_mode & S_IFIFO)) {
-        fprintf(stderr, "Sorry, <%s> is not a fifo file\n", out_fifo);
-        goto error;
-    }
-#endif  /* FIFO */
     if ((buf.st_mode & 0666) != 0666) {
         fprintf(stderr, "Sorry, permissions on <%s> (%o) should be 0666\n",
                 out_fifo, buf.st_mode & 0666);
