@@ -1,5 +1,4 @@
 /***************************************************************************
-* $Id$
 *
 * MODULE: 	g.version
 * AUTHOR(S):	Michael Shapiro, CERL
@@ -13,6 +12,7 @@
 *   	    	Read the file COPYING that comes with GRASS for details.
 *****************************************************************************/
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include "gis.h"
@@ -40,10 +40,11 @@ int main(int argc, char *argv[])
 
     fprintf (stdout, "GRASS %s (%s) %s\n",
     	GRASS_VERSION_NUMBER, GRASS_VERSION_DATE, GRASS_VERSION_UPDATE_PKG );
-    fprintf (stdout, "\n");
     
-    if (copyright->answer)
+    if (copyright->answer){
+	fprintf(stdout, "\n");
     	fputs (COPYING, stdout);
+    }
     
     return 0;
 }
