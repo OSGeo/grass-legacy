@@ -1,0 +1,14 @@
+# %W%  %G%
+all:
+	$(GMAKE) Lib
+	$(GMAKE) char_rpt
+	$(GMAKE) driver
+	$(GMAKE) meta_report
+	$(GMAKE) meta_to_S
+	$(GMAKE) occur_rpt
+	$(GMAKE) put_gis_sl
+	$(GMAKE) shells
+	$(GMAKE) site_mask
+	$(GMAKE) site_reports
+	$(GMAKE) sites_to_cell
+	$(GMAKE) sites_in_cell
