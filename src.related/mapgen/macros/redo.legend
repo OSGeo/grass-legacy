@@ -1,0 +1,21 @@
+#!/bin/sh
+
+tput clear
+
+CHECK.MAP
+if test $? = 1
+        then
+        exit
+fi
+for name in $*
+do
+echo $name
+if test -f legend/cmd/$name
+        then
+        sh legend/cmd/$name
+else
+        echo "Command for $name not found. Execute make.leg..."
+fi
+done
+sleep 2
+tput clear
