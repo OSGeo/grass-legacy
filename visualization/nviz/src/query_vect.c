@@ -60,7 +60,7 @@ char *query_vect( char *name, double x, double y )
 	int i;
 
 	for (i = 0; i < Cats->n_cats; i++) {
-	    sprintf( buf, "\nfield: %d\ncategory: %d\n", Cats->field[i], Cats->cat[i] );
+	    sprintf( buf, "\nlayer: %d\ncategory: %d\n", Cats->field[i], Cats->cat[i] );
 	    db_append_string (&form, buf );
 
 	    Fi = Vect_get_field( &Map, Cats->field[i]);
