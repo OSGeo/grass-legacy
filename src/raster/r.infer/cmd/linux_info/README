@@ -1,0 +1,21 @@
+Dear Markus,
+
+sys_errlist is defined in stdio.h in RedHat 5.0,
+but not in SGI 6.2, nor in Solaris. (I just checked),
+hence the problem.
+
+In fact, sys_errlist is NOT 'ANSI C' (like almost everything in GRASS),
+and is NOT supposed to be used.
+
+'sys_errlist[errno]' should be replaced with 'strerror(errno)',
+which IS 'ANSI C', and which should be understood by EVERY
+C compiler.
+
+I wrote a small program (err.c) which proves that
+'sys_errlist[errno]' and 'strerror(errno)' produce
+the SAME results:
+
+[err.c]
+
+Jacques Bouchard
+13.3.98
