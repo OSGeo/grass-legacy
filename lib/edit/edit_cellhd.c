@@ -102,13 +102,17 @@ static char *def_window_screen[] = {
 "                               North-South:",
 NULL};
 
-static double format_value(int (*func)(double, char *, int), double x, char *buf, int projection)
+static void format_value(int (*func)(double, char *, int), 
+                         double x, char *buf, int projection)
 {
-	int k = (projection == PROJECTION_LL) ? 3600 : 1;
-	int i = (int) (x * k + (x < 0 ? -0.5 : 0.5));
-	double y = (double) i / k;
-	(*func)(y, buf, projection);
-	buf[10] = '\0';
+    int i, k;
+    double y;
+
+    k = (projection == PROJECTION_LL) ? 3600 : 1;
+    i = (int) (x * k + (x < 0 ? -0.5 : 0.5));
+    y = (double) i / k;
+    func (y, buf, projection);
+    buf[10] = '\0';
 }
 
 static void format_northing(double north, char *buf, int projection)
