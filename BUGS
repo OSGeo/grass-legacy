@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.78 2000-11-14 14:39:35 markus Exp $
+$Id: BUGS,v 1.79 2000-11-14 14:42:33 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -471,6 +471,16 @@ v.cutter:
    and David Finlayson <david_finlayson@yahoo.com>)
   (being worked on by David D Gray)
 
+v.support/v.build                                                               
+  During the build process an area (polygon edge) that is just a single     
+  link between two nodes is often not recognised so the polygon is          
+  registered 'open' and so does not build. At least one intervening point      
+  on the line will always fix this. It seems to me this shouldn't happen   
+  and so is a bug. But where is it? It affects manually digitised maps      
+  much more than autodigitised (like those done with v.mkgrid), so         
+  perhaps it is in v.digit, or maybe in v.build.                           
+  (being worked on by ?)
+
 [RC]v.trim 
  bugreport: If a polygon has island, v.trim removes such islands
  from the vector file... urgh! I've obtained such a behaviour with a
@@ -511,6 +521,8 @@ m.lulc.USGS:
 Mlulc.read:
   can these modules be deprecated/discarded?
 
+g3.region:
+  no parser
 
 -----------------------------------------------------------------------
 Further discussion/hints:
