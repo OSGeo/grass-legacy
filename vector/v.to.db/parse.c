@@ -55,7 +55,7 @@ parse_command_line (int argc, char *argv[])
     parms.col1->required = YES ;
     parms.col1->multiple = NO ;
     parms.col1->gisprompt  = "column 1" ;
-    parms.col1->description = "column 2";
+    parms.col1->description = "column 1";
 
     parms.col2 = G_define_option();
     parms.col2->key    = "col2";
