@@ -1,10 +1,19 @@
 GRASS GIS programming style standards
 
-$Id: STYLE_PROGRAMMING,v 1.1 2000-07-10 13:45:51 markus Exp $
+$Id: STYLE_PROGRAMMING,v 1.2 2000-07-24 10:46:00 markus Exp $
 
 Please improve this list!
+Get the latest
+GRASS 5 Programmer's Manual
+here:
+http://www.geog.uni-hannover.de/grass/grassdevel.html
+
+or grab it from CVS server (Latex):
+cvs -z3 co progmangrass50
 
 -----------------------------------------------------------
+GRASS GIS programming style standards
+
 1. Use the directory structure to place your module
 
 2. documents go to
@@ -22,3 +31,4 @@ Please improve this list!
 
 6. Put a new line at end-of-file
 
+...
