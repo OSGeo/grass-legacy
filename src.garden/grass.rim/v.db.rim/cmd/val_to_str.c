@@ -24,6 +24,13 @@ int val_to_str(string, field)
     break;
   case X_FIELD_CHAR:
   case Y_FIELD_CHAR:
+    if (Projection==PROJECTION_LL)
+      sprintf(format, "%%-%d.6lf", Field_info[field].length);
+    else
+      sprintf(format, "%%-%d.2lf", Field_info[field].length);
+    sprintf(string, format, *((double *) Field_info[field].value));
+    break;
+    
   case F_FIELD_CHAR:
     sprintf(format, "%%-%d.2lf", Field_info[field].length);
     sprintf(string, format, *((double *) Field_info[field].value));
