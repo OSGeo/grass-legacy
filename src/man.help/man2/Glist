@@ -1,0 +1,45 @@
+.\" %W% %G%
+.TH Glist 2G G-language
+.SH NAME
+Glist  \- List available database files
+.br
+.I (G Language Tool)
+.SH SYNOPSIS
+.B Glist
+.I element
+.SH DESCRIPTION
+.I Glist
+allows the user to list available files from the \fImapsets \fR in the user's
+search path. The user specifies the type of data file (i.e., the
+data \fIelement\fR) from the following list:
+
+.RS
+.TP 14
+cell
+(cell files)
+.TP 14
+vect
+(vector files)
+.TP 14
+icon
+(paint icon files)
+.TP 14
+labels
+(paint labels files)
+.TP 14
+sites
+(site list files)
+.TP 14
+window
+(window files)
+.TP 14
+group
+(imagery group files)
+.RE
+
+.PP
+
+.SH "SEE ALSO"
+\fIlist[1], mapsets[1]\fR
+.SH AUTHOR
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
