@@ -175,8 +175,8 @@ Set max number of points per segment to <i>val</i>. Default value is
 </p>
 <p><b>npmin</b> = <i>val</i><br>
 Set min number of points for interpolation to <i>val</i>. Default value
-is 200, for data with heterogeneous spatial distribution higher value is
-suggested (see notes).</p>
+is 300, for dense homogeneous data use lower value for faster computation.
+</p>
 <p><b>theta</b> =<i> val</i><i><br>
 </i>Set anisotropy angle in degrees (measured from East counterclockwise) to <i>val</i>.<br></p>
 <p><b>scalex</b> =<i> val</i><i><br>
@@ -318,7 +318,7 @@ of data points or segmax=700.
 </p>
 <P>When the data points are dense and homogeneously distributed, such
 as lidar data, reducing segmax from the default 40 to a lower number (e.g. 20)
-and npmin from default 200 to 100-150 can speed-up the computation substantially. 
+and npmin from default 300 to 100-150 can speed-up the computation substantially. 
 </P>
 <p>The program gives warning when user wants to interpolate outside the
 rectangle given by minimum and maximum coordinates in site file, zoom into
