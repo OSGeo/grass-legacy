@@ -34,7 +34,8 @@ GRASS Image Processing Program <EM>
 <EM>photo.camera</EM> creates or modifies entries in a camera reference
 file. For ortho-photo rectification, a camera reference file is required for
 computation of scanned image to photo-coordinate transformation parameters.
-
+There are two coordinate systems: The image coordinate system (in pixels)
+and the photo coordinate system (in milli-meters).
 
 <P>
 
@@ -69,14 +70,26 @@ The camera name and identification describe the camera reference file.
 The calibrated focal length and the point of symmetry are used in computing 
 the photo-to-target transformation parameters.  These values should be entered
 from the camera calibration report (usually available from the photograph 
-supplier).  The maximum number of fiducials will determine the number
-of fiducial or reseau coordinate pairs to be entered below.
+supplier). 
 
-
+The photo coordinate system origin is the so-called calibrated principal
+point (Principal Point of Symmetry) which is in the center of the image.
+The center is the origin, in case of no deviation in the camera (see camera
+calibration certificate), the values are 0 for both X and Y of Point of
+Symmetry.
 <P>
 
-You are then ask to enter the X and Y photo coordinates
-of each fiducial as follows. On this screen you should enter the fiducial or
+You are then asked to enter the X and Y photo coordinates
+of each fiducial as follows.
+These fiducials (or reseau) marks are index marks imaged on film which serve
+as reference photo coordinate system. The maximum number of fiducials will
+determine the number of fiducial or reseau coordinate pairs to be entered
+below. The origin is the center of the image (or the point of symmetry) and
+X and Y are left-right and up-down. The order is up to the user, but must be
+kept consistent throughout the rectification process.
+<P>
+
+On this screen you should enter the fiducial or
 reseau photo-coordinates as given in the camera calibration report. The X,
 and Y coordinates are in milli-meters from the principle point.
 
