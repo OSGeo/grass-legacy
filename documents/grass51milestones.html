@@ -42,7 +42,8 @@ improvements</i></blockquote>
 new directory layout as discussed</li>
 
 <li>
-implement common Makefile system (replacement for GRASS Gmakefiles)</li>
+implement common <a href=http://www.gnu.org/directory/automake.html>Makefile
+system</a> (replacement for GRASS Gmakefiles)</li>
 
 <li>
 build shared libraries</li>
@@ -51,17 +52,21 @@ build shared libraries</li>
 implement new environment variables management</li>
 
 <li>
-remove internal i/o routines from GISLIB and add Frank Warmerdam's&nbsp;<br>
-libgrassio into separate directory, release libgrassio under LGPL</li>
+separate GRASS database I/O routines from GISLIB and add Frank Warmerdam's&nbsp;<br>
+<a href=http://gdal.velocet.ca/projects/grass/>libgrassio</a> into separate
+directory, release libgrassio under <a href=http://www.gnu.org/copyleft/lesser.html>LGPL</a> 
+to allow implementation of I/O routines (but nothing else) into proprietary software 
+</li>
+
 </ul>
 
 <p><br><b><font color="#FF0000">Milestone 2 - Status: restricted</font></b>
 <ul>
 <li>
-implement new vector library: 2.5D (3D optionally), DBMS support</li>
+implement <a href=http://www.raz-dva.cz/krakonos/grass/vector5.html>new GRASS vector library</a>: 2.5D (3D optionally), DBMS support</li>
 
 <li>
-implement DBMS for multiple vector attributes management</li>
+implement GRASS-builtin DBMS for multiple vector attributes management (which DBMS?)</li>
 
 <li>
 implement vector segmentation to speed up topology build&nbsp;<br>
@@ -73,7 +78,7 @@ processes on large vector files</li>
 update all vector modules</li>
 
 <li>
-implement basic raster/sites/... modules</li>
+implement <b>basic</b> raster/sites/... modules</li>
 
 <ul>
 <li>
@@ -152,7 +157,8 @@ improve locking system for monitor lock files</li>
 improve legend support</li>
 
 <li>
-implement FreeType system to support any font</li>
+implement <a href=http://www.freetype.org/>FreeType font engine</a> 
+to support any font</li>
 </ul>
 
 <p><br><b><font color="#FF0000">Milestone 4 - Status: open</font></b>
@@ -167,19 +173,23 @@ implement better chart support (histograms etc)</li>
 <p><br><b><font color="#FF0000">Milestone 5 - Status: open</font></b>
 <ul>
 <li>
-implement internationalization (multiple languages) using "gettext/gnu"</li>
+implement internationalization (multiple languages) using <a
+href=http://www.gnu.org/software/gettext/gettext.html>gettext</a></li>
 </ul>
 
 <p><b><font color="#FF0000">Future/add to "open" Milestones:</font></b>
 <ul>
 <li>
-write a nice auto-generated GUI</li>
+write a nice auto-generated GUI (Mac OSX example)</li>
 
 <li>
-add module supporting OGR Simple Features Library (vector data)</li>
+add v.[in|out].ogr module supporting <a
+href=http://gdal.velocet.ca/projects/opengis/>OGR Simple Features
+Library</a> (vector data)</li>
 
 <li>
-support OpenSource Vector Database (OSVecDB)</li>
+support <a href=http://gdal.velocet.ca/projects/osvecdb/>OpenSource Vector
+Database</a> (OSVecDB)</li>
 
 <li>
 implement vector network analysis (ongoing)</li>
@@ -191,7 +201,7 @@ implement TIN support</li>
 implement better Metadata support</li>
 
 <li>
-Parallelize mathlib intense GRASS modules (interpolation etc)</li>
+Parallelize math-intense GRASS modules (interpolation etc)</li>
 
 <li>
 eventually distribute simulation models etc. in extra package</li>
@@ -200,6 +210,7 @@ eventually distribute simulation models etc. in extra package</li>
 implement more intuitive high-res driver (replace CELL driver), add to
 NVIZ</li>
 </ul>
+
 This proposal is open to ideas/corrections/suggestions.
 <address>
 <p><a href="mailto:neteler@geog.uni-hannover.de">Markus Neteler</a>
