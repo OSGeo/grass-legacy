@@ -18,16 +18,7 @@
 #
 #############################################################################
 
-if [catch {package require msgcat}] {
-	proc G_msg {message} {
-		return $message
-	}
-} else {
-::msgcat::mcload [file join [file dirname [info script]] msgs]
-	proc G_msg {message} {
-		return [::msgcat::mc $message]
-	}
-}
+source $env(GISBASE)/etc/gtcltk/gmsg.tcl
 
 proc searchGISRC { filename } {
  
@@ -325,7 +316,7 @@ proc gisSetWindow {} {
     	-orient {horizontal}
  
     button .frame0.frameDB.right.button \
-    	-text "Browse..." \
+    	-text [G_msg "Browse..."] \
     	-command {GetDir .frame0.frameDB.mid.entry .frame0.frameLOC.listbox \
     	    .frame0.frameMS.listbox}
 
@@ -425,7 +416,7 @@ proc gisSetWindow {} {
     	-width 15
 	
     button .frame0.frameNMS.right.button \
-    	-text "Create..." \
+    	-text [G_msg "Create..."] \
      	-command { 
             .frame0.frameNMS.right.button configure -state disabled
 	    if { $mymapset != "" } {

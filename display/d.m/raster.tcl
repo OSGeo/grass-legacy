@@ -57,7 +57,7 @@ proc DmRaster::options { id frm } {
 
     # raster name
     set row [ frame $frm.name ]
-    Button $row.a -text "Raster name:" \
+    Button $row.a -text [G_msg "Raster name:"] \
            -command "DmRaster::select_map $id"
     Entry $row.b -width 40 -text "$opt($id,map)" \
           -textvariable DmRaster::opt($id,map)
@@ -66,7 +66,7 @@ proc DmRaster::options { id frm } {
 
     # overlay
     set row [ frame $frm.over ]
-    checkbutton $row.a -text "overlay" -variable DmRaster::opt($id,overlay) 
+    checkbutton $row.a -text [G_msg "overlay"] -variable DmRaster::opt($id,overlay) 
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 

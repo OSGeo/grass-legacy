@@ -37,6 +37,7 @@ default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/echo \
 	$(ETC)/grass_intro \
 	$(ETC)/license \
+	$(ETC)/msgs \
 	$(ETC)/gis_set.tcl
 
 $(ARCH_BINDIR)/$(START_UP): init.sh 
@@ -80,6 +81,12 @@ $(ETC)/license: license.txt version.sed
 	sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" license.txt > $@
 	chmod +r $@
 
+$(ETC)/msgs: msgs
+	rm -rf $@
+	mkdir $@
+	cp msgs/*.msg $@	
+	chmod +r $@
+	
 $(ETC)/gis_set.tcl: gis_set.tcl
 	rm -f $@
 	cp gis_set.tcl $(ETC)

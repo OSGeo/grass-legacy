@@ -21,6 +21,17 @@
 #     - MainFrame::_parse_accelerator
 # ------------------------------------------------------------------------------
 
+if [catch {package require msgcat}] {
+	proc G_msg {message} {
+		return $message
+	}
+} else {
+	::msgcat::mcload $env(GISBASE)/etc/msgs
+	proc G_msg {message} {
+		return [::msgcat::mc $message]
+	}
+}
+
 namespace eval MainFrame {
     ProgressBar::use
 
@@ -363,7 +374,7 @@ proc MainFrame::_create_menubar { path descmenu } {
 
     set count 0
     foreach {name tags menuid tearoff entries} $descmenu {
-        set opt  [_parse_name $name]
+        set opt  [_parse_name [G_msg $name]]
         if { [string length $menuid] && ![info exists _widget($path,menuid,$menuid)] } {
             # menu has identifier
 	    # we use it for its pathname, to enable special menu entries
@@ -406,7 +417,7 @@ proc MainFrame::_create_entries { path menu bg entries } {
         }
 
         # entry name and tags
-        set opt  [_parse_name [lindex $entry 1]]
+        set opt  [_parse_name [G_msg [lindex $entry 1]]]
         set tags [lindex $entry 2]
         foreach tag $tags {
             lappend _widget($path,tags,$tag) $menu $count
@@ -428,7 +439,7 @@ proc MainFrame::_create_entries { path menu bg entries } {
         }
 
         # entry help description
-        set desc [lindex $entry 3]
+        set desc [G_msg [lindex $entry 3]]
         if { [string length $desc] } {
             if { !$registered } {
                 DynamicHelp::register $menu menu [Widget::getoption $path -textvariable]

@@ -58,7 +58,7 @@ proc DmLabels::options { id frm } {
 
     # labels name
     set row [ frame $frm.name ]
-    Button $row.a -text "Labels name:" \
+    Button $row.a -text [G_msg "Labels name:"] \
            -command "DmLabels::select_map $id"
     Entry $row.b -width 40 -text "$opt($id,map)" \
           -textvariable DmLabels::opt($id,map)
@@ -67,10 +67,10 @@ proc DmLabels::options { id frm } {
 
     # display only in limited region size range
     set row [ frame $frm.region ]
-    Label $row.a -text "Display constraints:"
+    Label $row.a -text [G_msg "Display constraints:"]
     LabelEntry $row.b -label "Min" -textvariable DmLabels::opt($id,minreg) -width 8
     LabelEntry $row.c -label "Max" -textvariable DmLabels::opt($id,maxreg) -width 8
-    Label $row.d -text "region size"
+    Label $row.d -text [G_msg "region size"]
     pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 }
