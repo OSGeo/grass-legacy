@@ -1,0 +1,10 @@
+LIST = Gwatershed.o usage.o
+
+$(BIN)/Gwatershed: $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(SEGMENTLIB) $(MATHLIB) -o $@
+
+$(GISLIB): #
+$(SEGMENTLIB): #
+$(GISLIB): #
+
+Gwatershed.o: cseg.h flag.h
