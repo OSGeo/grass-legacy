@@ -1,0 +1,85 @@
+#!/bin/csh
+
+# Chris Rewerts, Agricultural Engineering, Purdue University
+# display 5 ranges of values for maps, plus other fun stuff
+#
+# usage: d.range mapname deposition|erosion
+
+d.frame -e
+d.font font=romant
+echo ""
+echo "rescaling $2 layer values..."
+r.rescale input=$1 output=$1.rescale to=1,5 
+onintr end
+echo ""
+echo "setting colors..."
+
+if ($2 == "deposition") then
+# set deposition colormap
+r.colors -q map=$1.rescale color=rules << EOF
+0 0 0 0
+1 120 120 120
+2 150 150 150 
+3 0 200 255
+4 110 140 255
+5 0 100 255
+EOF
+
+else
+#set erosion colormap
+r.colors -q map=$1.rescale color=rules << EOF
+0 0 0 0
+1 131 71 38
+2 180 138 57
+3 195 195 30
+4 200 90 0
+5 255 0 0
+EOF
+endif
+
+echo ""
+echo "displaying rescaled $2 map..."
+d.frame -c frame=main at=40,90,0,100
+d.rast $1.rescale
+d.frame -s full_screen
+d.text << EOF
+.B 0
+.S 5
+.C indigo 
+             Soil $2
+EOF
+
+echo ""
+echo "displaying legend..."
+d.frame -c frame=legend at=0,40,0,60
+d.legend $1.rescale lines=10
+d.text << EOF
+.B 0
+.S 9
+
+
+
+
+
+
+
+.C white
+The $1 map values rescaled
+to 5 categories of ranges 
+(values are kg/ha)
+EOF
+
+echo ""
+echo "displaying histograms..."
+d.frame -c frame=hist1 at=0,40,60,100
+d.histogram -q map=$1.rescale style=bar
+#d.frame -c frame=hist2 at=50,100,60,100
+#d.histogram -q map=$1.rescale style=pie
+
+
+clear
+r.report -q -h map=$1.rescale units=h,p,c
+
+end:
+
+g.remove rast=$1.rescale >& /dev/null
