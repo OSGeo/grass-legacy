@@ -384,7 +384,9 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
 		    Line->left = 0;
 	    }
 	    dig_free_plus_areas (plus);
+	    dig_spidx_free_areas (plus);
 	    dig_free_plus_isles (plus);
+	    dig_spidx_free_isles (plus);
 	}
 
 
@@ -399,11 +401,15 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
 		}
 	    }
 	    dig_free_plus_areas (plus);
+	    dig_spidx_free_areas (plus);
 	    dig_free_plus_isles (plus);
+	    dig_spidx_free_isles (plus);
 	}
 	if ( plus->built >= GV_BUILD_BASE && build < GV_BUILD_BASE) {
 	    dig_free_plus_nodes (plus);
+	    dig_spidx_free_nodes (plus);
 	    dig_free_plus_lines (plus);
+	    dig_spidx_free_lines (plus);
 	}
 	
 	plus->built = build;
@@ -444,6 +450,17 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
 		Vect_box_copy (&(plus->box), &box);
 	    else
 		Vect_box_extend (&(plus->box), &box);
+
+	    /* Add all categories to category index */
+	    if ( build == GV_BUILD_ALL ) {
+		int c; 
+
+		for ( c = 0; c < Cats->n_cats; c++ ) {
+		    dig_cidx_add_cat (plus, Cats->field[c], Cats->cat[c], lineid, type);
+		}
+		if ( Cats->n_cats == 0 ) /* add field 0, cat 0 */
+		    dig_cidx_add_cat (plus, 0, 0, lineid, type);
+	    }
 	    
 	    /* print progress */
 	    if ( i == 1000 ) {
@@ -550,6 +567,22 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
 	}
 	prnmsg ("\r                                      \r");
 	plus->built = GV_BUILD_CENTROIDS;
+    }
+
+    /* Add areas to category index */
+    for ( area = 1; area <= plus->n_areas; area++ ) {
+	int c;
+
+	if ( plus->Area[area]->centroid > 0 ) { 
+	    Vect_read_line (Map, NULL, Cats, plus->Area[area]->centroid );
+
+	    for ( c = 0; c < Cats->n_cats; c++ ) {
+		dig_cidx_add_cat (plus, Cats->field[c], Cats->cat[c], area, GV_AREA);
+	    }
+	}
+
+	if ( plus->Area[area]->centroid == 0 || Cats->n_cats == 0 ) /* no centroid or no cats */
+            dig_cidx_add_cat (plus, 0, 0, area, GV_AREA);
     }
 
     return 1;

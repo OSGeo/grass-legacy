@@ -55,50 +55,6 @@ V1_open_old_ogr ( struct Map_info *Map, int update )
     return (0);
 }
 
-/* Open old file.
-*  Map->name and Map->mapset must be set before
-*
-*  Return: 0 success
-*         -1 error
-*/
-int 
-V2_open_old_ogr ( struct Map_info *Map, int update )
-{
-    int ret;
-
-    if ( update ) {
-        G_warning ( "OGR format cannot be updated.");
-        return -1;
-    }
-
-    /* open topo */
-    ret = Vect_open_topo ( Map );
-      
-    if ( ret == -1 ) { /* topo file is not available */
-        G_debug( 1, "Cannot open topo file for vector '%s'.", Vect_get_full_name (Map));
-        return -1;
-    } 
-    
-    /* open spatial index */
-    ret = Vect_open_spatial_index ( Map );
-	 
-    if ( ret == -1 ) { /* spatial index is not available */
-        G_debug( 1, "Cannot open spatial index file for vector '%s'.", Vect_get_full_name (Map) );
-	/* free topology */
-        dig_free_plus ( &(Map->plus) );
-        return -1;
-    }
-    
-    ret = V1_open_old_shp ( Map, 0 );
-    if ( ret != 0 ) {
-	dig_free_plus ( &(Map->plus) );
-	/* TODO: free spatial index */
-        return -1;
-    }
-
-    return 0;
-}
-
 /* Open new file.
 *
 *  Return: 0 success

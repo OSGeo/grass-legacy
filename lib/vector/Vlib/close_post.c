@@ -40,52 +40,16 @@ V1_close_post (struct Map_info *Map)
 {
   G_debug (1, "V1_close_post():");
 
-  if (!VECT_OPEN (Map)) return -1;
+  if (!VECT_OPEN (Map)) 
+      return 1;
 
   if (Map->mode & (GV_MODE_WRITE | GV_MODE_RW)) {
       Vect__write_head (Map);
       Vect_write_dblinks ( Map );
   }
 
-  free (Map->name);
-  free (Map->mapset);
-  Map->name = NULL;
-  Map->mapset = NULL;
-  Map->digit_file = NULL;
-  Map->open = VECT_CLOSED_CODE;
-
   PQfinish (Map->fInfo.post.conn);
   return 0;
-}
-
-/* 
-** return 0 on success
-**        non-zero on error
-*/
-int
-V2_close_post (struct Map_info *Map)
-{
-  struct Coor_info CInfo;
-  struct Plus_head *Plus;
-
-  G_debug (1, "V2_close_post(): name = %s mapset= %s", Map->name,
-	   Map->mapset);
-
-  Plus = &(Map->plus);
-
-  /* Save topo if necessary */
-  if (Plus->mode & (GV_MODE_WRITE | GV_MODE_RW) && Plus->built == GV_BUILD_ALL) {
-      Vect_coor_info ( Map, &CInfo); /* Size and time is 0L for PostGIS) */
-      Plus->coor_size = CInfo.size;
-      Plus->coor_mtime = CInfo.mtime;
-      
-      Vect_save_topo (Map);
-      Vect_save_spatial_index ( Map );
-  }
-  dig_free_plus (Plus);
-
-  return (V1_close_post (Map));
-
 }
 
 #endif

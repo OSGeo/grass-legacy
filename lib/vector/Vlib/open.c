@@ -40,19 +40,19 @@ static int format () { G_fatal_error ("Requested format is not compiled in this 
 
 static int Open_level = 0;
 
-static int (*Open_old_array[][3]) () =
+static int (*Open_old_array[][2]) () =
 {
-    { open_old_dummy, V1_open_old_nat, V2_open_old_nat }
-   ,{ open_old_dummy, V1_open_old_shp, V2_open_old_shp }
+    { open_old_dummy, V1_open_old_nat }
+   ,{ open_old_dummy, V1_open_old_shp }
 #ifdef HAVE_POSTGRES
-   ,{ open_old_dummy, V1_open_old_post, V2_open_old_post }
+   ,{ open_old_dummy, V1_open_old_post }
 #else   
-   ,{ open_old_dummy, format, format }
+   ,{ open_old_dummy, format }
 #endif
 #ifdef HAVE_OGR
-   ,{ open_old_dummy, V1_open_old_ogr, V2_open_old_ogr }
+   ,{ open_old_dummy, V1_open_old_ogr }
 #else   
-   ,{ open_old_dummy, format, format }
+   ,{ open_old_dummy, format }
 #endif
 };
 
@@ -119,39 +119,38 @@ Vect_set_open_level (int level)
 }
 
 
-/*
-*  Returns Level of openness.   [ 1, 2, (3) ] or -1 for error.
-*  In case of error, the functions respect fatal error settings.
+/*! 
+ \fn Vect__open_old (struct Map_info *Map, char *name, char *mapset, int update, int head)
+ \brief  Returns Level of openness.   [ 1, 2 ] or -1 for error.
+         In case of error, the functions respect fatal error settings.
+ \param Map
+ \param name
+ \param mapset
+ \param update open for update
+ \param head_only Read only header info from 'head', 'dbln', 'topo' and 'cidx'. 
+             'cidx' is not opened.
+             The headed may be opened on level 2 only. 
 */
 int
-Vect__open_old (
-		struct Map_info *Map,
-		char *name,
-		char *mapset,
-		int update) /* open for update */
+Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int head_only ) 
 {
-  char buf[200], buf2[200], xname[512], xmapset[512], name_buf[1024], errmsg[2000];
+  char buf[200], buf2[200], xname[512], xmapset[512], errmsg[2000];
   FILE *fp;
   int level, level_request, ferror;
   int format;
 
   G_debug (1, "Vect_open_old(): name = %s mapset= %s update = %d", name, mapset, update);
+  
+  /* TODO: Open header for update ('dbln') */
       
   ferror = Vect_get_fatal_error ();
   Vect_set_fatal_error (GV_FATAL_EXIT);
-    
+
   level_request = Open_level;
   Open_level = 0;
   Vect__init_head (Map);
   dig_init_plus ( &(Map->plus) );    
   
-  /* check for [A-Za-z][A-Za-z0-9_]* in name */
-  if (Vect_legal_filename(name) < 0 ) {
-      sprintf ( errmsg, "Map name not SQL compliant.");
-      fatal_error (ferror , errmsg );
-      return (-1);
-  }
-                             
   if (G__name_is_fully_qualified (name, xname, xmapset)) {
       sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, xname);
       sprintf (buf2, "%s@%s", GRASS_VECT_COOR_ELEMENT, xmapset); /* ==coor@mapset */
@@ -173,9 +172,6 @@ Vect__open_old (
       return -1;
   }
 
-  G__file_name (name_buf, buf, buf2, mapset);
-  Map->digit_file = G_store (name_buf);  
-  
   /* Read vector format information */
   format = 0;
   sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
@@ -196,39 +192,93 @@ Vect__open_old (
   if ( Map->format == GV_FORMAT_POSTGIS )
       G_fatal_error ("PostGIS support is not compiled in GRASS vector library.\n");
 #endif
-  
-  if (level_request) {
-      level = level_request;
-      G_debug ( 1, "Level request = %d", level_request);
-      if (0 != (*Open_old_array[format][level_request]) (Map, update))
-	level = -1;
-  } else {
-      for (level = MAX_OPEN_LEVEL; level; level--)
-	  if (0 == (*Open_old_array[format][level]) (Map, update)) {
-	      break;
-	  }
-  }
 
-  if ( level >= 1 && Vect__read_head (Map) == GRASS_OK ) {
-	  Map->open = VECT_OPEN_CODE;
-	  Map->level = level;
-          if ( update ) {
-	      Map->mode = GV_MODE_RW;
-	      Map->plus.mode = GV_MODE_RW;
-	  } else {
-	      Map->mode = GV_MODE_READ;
-	      Map->plus.mode = GV_MODE_READ;
-	  }
-	  
-	  Map->Constraint_region_flag = 0;
-	  Map->Constraint_type_flag = 0;
-	  G_debug (1, "Vect_open_old(): vector opened on level %d", level);
-  } else {
+  /* Read vector head */
+  if ( Vect__read_head (Map) != GRASS_OK ) {
       sprintf ( errmsg, "Cannot open old vector %s on level %d", Vect_get_full_name(Map), level_request ); 
-      G_debug (1, "Vect_open_old(): vector was not opened");
       fatal_error (ferror, errmsg);
       return -1;
   }
+  
+  G_debug ( 1, "Level request = %d", level_request);
+
+  /* There are only 2 possible open levels, 1 and 2. Try first to open 'support' files
+   * (topo,sidx,cidx), these files are the same for all formats.
+   * If it is not possible and requested level is 2, return error,
+   * otherwise call Open_old_array[format][1], to open remaining files/sources (level 1)
+   */
+
+  /* Try to open support files if level was not requested or requested level is 2 (format independent) */
+  if (level_request == 0 || level_request == 2 ) {
+      level = 2; /* We expect success */
+      /* open topo */
+      if ( Vect_open_topo(Map, head_only) == -1 ) { /* topo file is not available */
+	  G_debug( 1, "Cannot open topo file for vector '%s'.", Vect_get_full_name (Map));
+	  level = 1;
+      }
+      /* open spatial index, not needed for head_only */
+      if ( level == 2 && !head_only ) {
+	 if ( Vect_open_spatial_index(Map) == -1 ) {
+	     G_debug( 1, "Cannot open spatial index file for vector '%s'.", Vect_get_full_name (Map) );
+	     dig_free_plus ( &(Map->plus) ); /* free topology */
+	     level = 1;
+	 }
+      }
+      /* open category index */
+      if ( level == 2 ) {
+	  if ( Vect_cidx_open(Map, head_only) ) { /* category index is not available */
+	      G_debug( 1, "Cannot open category index file for vector '%s'.", Vect_get_full_name (Map) );
+	      dig_free_plus ( &(Map->plus) ); /* free topology */
+	      dig_spidx_free ( &(Map->plus) ); /* free spatial index */
+	      level = 1;
+	  }
+      }
+      if (level_request == 2 && level < 2) {
+	  sprintf ( errmsg, "Cannot open old vector %s on level %d", Vect_get_full_name(Map), level_request ); 
+	  fatal_error (ferror, errmsg);
+	  return -1;
+      }
+  } else {
+      level = 1; /* I.e. requested level is 1 */
+  }
+
+  /* Open level 1 files / sources (format specific) */ 
+  if ( !head_only ) { /* No need to open coordinates */
+      if (0 != (*Open_old_array[format][1]) (Map, update)) { /* Cannot open */
+	  if ( level == 2 ) { /* support files opened */
+	      dig_free_plus ( &(Map->plus) );
+	      dig_spidx_free ( &(Map->plus) );
+	      dig_cidx_free ( &(Map->plus) );
+	  }
+	  sprintf ( errmsg, "Cannot open old vector %s on level %d", Vect_get_full_name(Map), level_request ); 
+	  fatal_error (ferror, errmsg);
+	  return -1;
+      }
+  } else {
+      Map->head.with_z = Map->plus.with_z; /* take dimension from topo */
+  }
+	  
+  /* Set status */
+  Map->open = VECT_OPEN_CODE;
+  Map->level = level;
+  Map->head_only = head_only;
+  Map->support_updated = 0;
+  if ( update ) {
+      Map->mode = GV_MODE_RW;
+      Map->plus.mode = GV_MODE_RW;
+  } else {
+      Map->mode = GV_MODE_READ;
+      Map->plus.mode = GV_MODE_READ;
+  }
+  if ( head_only ) {
+      Map->head_only = 1;
+  } else {
+      Map->head_only = 0;
+  }
+  
+  Map->Constraint_region_flag = 0;
+  Map->Constraint_type_flag = 0;
+  G_debug (1, "Vect_open_old(): vector opened on level %d", level);
 
   if ( level == 1 ) { /* without topology */
       Map->plus.built = GV_BUILD_NONE;  
@@ -274,7 +324,9 @@ Vect__open_old (
  \brief Open old vector for reading
  \return level of openness.  [ 1, 2, (3) ] or -1 for error. In case of
     error, the functions respect fatal error settings.
- \param Map_info structure, map name, map mapset
+ \param Map
+ \param name
+ \param mapset
 */
 int
 Vect_open_old (
@@ -282,7 +334,7 @@ Vect_open_old (
 		char *name,
 		char *mapset)
 {
-    return ( Vect__open_old (Map, name, mapset, 0) );
+    return ( Vect__open_old (Map, name, mapset, 0, 0) );
 }
 
 /*!
@@ -292,7 +344,9 @@ Vect_open_old (
  \brief Open old vector for reading/writing
  \return level of openness.  [ 1, 2, (3) ], -1 for error. In case of
    error, the functions respect fatal error settings.
- \param Map_info structure, map name, map mapset
+ \param Map
+ \param name
+ \param mapset
 */
 int
 Vect_open_update (
@@ -302,7 +356,7 @@ Vect_open_update (
 {
     int ret;
 
-    ret = Vect__open_old (Map, name, mapset, 1);
+    ret = Vect__open_old (Map, name, mapset, 1, 0);
 
     if ( ret > 0 ) {
 	Map->plus.do_uplist = 1;
@@ -316,6 +370,21 @@ Vect_open_update (
     }
 	
     return ret;
+}
+
+/*! 
+ \fn Vect_open_old_head (struct Map_info *Map,char *name, char *mapset)
+ \brief Reads only info about vector from headers of 'head', 'dbln', 'topo' and 'cidx' file. 
+ \return level of openness.  [ 1, 2, (3) ], -1 for error. In case of
+   error, the functions respect fatal error settings.
+ \param Map
+ \param name
+ \param mapset
+ */
+int
+Vect_open_old_head (struct Map_info *Map, char *name, char *mapset)
+{
+    return ( Vect__open_old (Map, name, mapset, 0, 1) );
 }
 
 /*!
@@ -399,6 +468,8 @@ Vect_open_new (
     
     Map->open = VECT_OPEN_CODE;
     Map->level = 1;
+    Map->head_only = 0;
+    Map->support_updated = 0;
     Map->plus.built = GV_BUILD_NONE;
     Map->mode = GV_MODE_RW;
     Map->Constraint_region_flag = 0;
@@ -516,7 +587,7 @@ Vect_maptype_info ( struct Map_info *Map )
  \param Map_info structure
 */
 int 
-Vect_open_topo (struct Map_info *Map)
+Vect_open_topo (struct Map_info *Map, int head_only)
 {
     int  err;
     char buf[500];
@@ -570,8 +641,7 @@ Vect_open_topo (struct Map_info *Map)
     /* dig_file_load ( &fp); */
 
     /* load topo to memory */
-    dig_init_plus ( Plus );    
-    dig_load_plus ( Plus, &fp );    
+    dig_load_plus ( Plus, &fp, head_only );    
    
     fclose ( fp.file );  
     /* dig_file_free ( &fp); */

@@ -116,6 +116,7 @@ Vect_write_line (
 
     dig_line_reset_updated ( &(Map->plus) );
     dig_node_reset_updated ( &(Map->plus) );
+    Map->plus.cidx_up_to_date = 0;
 
     return (*Write_line_array[Map->format][Map->level]) (Map, type, points, cats);
 }
@@ -146,6 +147,7 @@ Vect_rewrite_line (
     
     dig_line_reset_updated ( &(Map->plus) );
     dig_node_reset_updated ( &(Map->plus) );
+    Map->plus.cidx_up_to_date = 0;
 
     return (*Vect_rewrite_line_array[Map->format][Map->level]) (Map, line, type, points, cats);
 }
@@ -198,6 +200,7 @@ Vect_delete_line (
     
     dig_line_reset_updated ( &(Map->plus) );
     dig_node_reset_updated ( &(Map->plus) );
+    Map->plus.cidx_up_to_date = 0;
     
     ret = (*Vect_delete_line_array[Map->format][Map->level]) (Map, line);
 
