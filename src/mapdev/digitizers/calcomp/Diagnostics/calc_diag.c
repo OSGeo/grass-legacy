@@ -133,9 +133,13 @@ delay(n) /* delay n milliseconds */
 	zero = 0;
 
 /* this assumes 9600 baud to stderr */
+#ifdef DPG
+    sleep (1);
+#else
 	while (n-- > 0)
 		for (i = 0; i < 10; i++)
 			write (2, &zero, 1);
+#endif
 }
 
 close_down()
