@@ -2,14 +2,15 @@
 <html>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
-   <meta name="GENERATOR" content="Mozilla/4.77 [en] (X11; U; Linux 2.4.9-31smp i686) [Netscape]">
+   <meta name="GENERATOR" content="Mozilla/4.77 [ru] (X11; U; Linux 2.2.19-3.asp i686) [Netscape]">
    <meta name="Author" content="Alex Shevlakov, sixote@yahoo.com">
    <title>GRASS code i18n mini-HOWTO</title>
 </head>
 <body text="#000000" bgcolor="#FFFFFF" link="#0000EF" vlink="#59188E" alink="#FF0000">
 <b><font size=+1>GRASS code internationalization&nbsp;
 (i18n) mini-HOWTO.</font></b>
-<br><b>by Alex Shevlakov</b>
+<br><b><font size=-1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+by Alex Shevlakov <i>sixote@yahoo.com</i></font></b>
 <br>&nbsp;
 <blockquote><a href="#p1">1. GRASS modules code and Gmakefile changes.</a>
 <br><a href="#p2">2. GRASS libraries code and Gmakefile changes.</a>
@@ -22,46 +23,26 @@ locale national language, the module's developer or maintainer has to make
 the following changes into the code and Gmakefile of this module:
 <br>&nbsp;
 <blockquote>a) Lines of C code which contain translatable strings, e.g.,
-<br>
-<i>&nbsp; fprintf(stderr, "This module is cool!\n");</i>&nbsp;<br>
-have to be replaced with
-<br>
-<i>&nbsp; fprintf(stderr, _("This module is cool!\n"));<br>
-</i>i.e., all "comments" are put inside brackets and underscored from the
+<br><i>&nbsp; fprintf(stderr, "This module is cool!\n");</i>
+<br>have to be replaced with
+<br><i>&nbsp; fprintf(stderr, _("This module is cool!\n"));</i>
+<br>i.e., all "comments" are put inside brackets and underscored from the
 left, thus becoming _("comments"). No changes into any other lines are
 needed.
 <p>b) Files with C code that have been modified in this way must be referenced
 to the header file "glocale.h". Add line <i>#include "glocale.h" </i>somewhere
-below other 'include' directives.
-<p>c) There must be G_int_locale() function call to set up the locale when
-the module is started. To do that, add line: <i>G_init_locale(); </i>somewhere
-to the beginning code of "main", e.g,
-<blockquote>int main(argc, argv)
-<br>int argc ;
-<br>char **argv ;
-<br>{
-<p>&nbsp;&nbsp;&nbsp; char *dbname;
-<p>&nbsp;&nbsp;&nbsp; int i;
-<p>/* Initialize the locale */
-<br>&nbsp;G_init_locale();
-<p>&nbsp;/* Initialize the GIS calls */
-<br>&nbsp;G_gisinit(argv[0]) ;
-<p>. . . . . . . .
-<br>. . . . . . . .</blockquote>
-</blockquote>
+below other 'include' directives.</blockquote>
 
-<blockquote>d) The Gmakefile of this module has to be modified to have
+<blockquote>c) The Gmakefile of this module has to be modified to have
 the following additional compiler options definitions in it:
 <p>PACKAGE = "<i>your_module_name</i>"
 <br>DEFS = -DPACKAGE=\"$(PACKAGE)\"
 <br>EXTRA_CFLAGS&nbsp;&nbsp;&nbsp; = $(...) $(...) ... $(DEFS)</blockquote>
 
 <p><br><a NAME="p2"></a><b>2. GRASS libraries code and Gmakefile changes.</b>
-<p>Statements a), b) and d) from the first paragraph wholly apply to the
-procedure of GRASS libraries code i18n changes. However, there is no need
-to initialize locale for the libraries, as it must have been already done
-in modules. So, do the same work as for the module, except c). The 'PACKAGE'
-variable would be called, for libraries, as 'libgis' or 'libraster', etc.
+<p>Statements a), b) and c) from the first paragraph wholly apply to the
+procedure of GRASS libraries code i18n changes.&nbsp; The 'PACKAGE' variable
+would be called, for libraries, 'libgis' or 'libraster', etc.
 <p><a NAME="p3"></a><b>3. Using gettext binaries for messages catalogues
 creation and maintenance.</b>
 <br>&nbsp;
