@@ -202,6 +202,8 @@ if [ ! "$GRASS_WISH" ] ; then
    export GRASS_WISH
 fi
 
+CYGWIN=`uname | grep CYGWIN`
+
 if [ ! "$GRASS_HTML_BROWSER" ] ; then
     for i in `echo "$PATH" | sed 's/^:/.:/
                                 s/::/:.:/g
@@ -235,6 +237,14 @@ if [ ! "$GRASS_HTML_BROWSER" ] ; then
         elif [ "$HOSTTYPE" = "arm" ] ; then
             GRASS_HTML_BROWSER=dillo2
             break
+	elif [ "$CYGWIN" ] ; then
+	    iexplore="$SYSTEMDRIVE/Program Files/Internet Explorer/iexplore.exe"
+	    if [ -f "$iexplore" ] ; then
+		GRASS_HTML_BROWSER=$iexplore
+	    else
+		GRASS_HTML_BROWSER="iexplore"
+	    fi
+	    break
         fi
     done
 fi
@@ -552,14 +562,14 @@ case $? in
 esac
 
 trap "" 2 3 15
-CYGWIN=`uname | grep CYGWIN`
 
 # cygwin has many problems with the shell setup
 # below, so i hardcoded everything here.
 if [ "$CYGWIN" ] ; then
     sh="cygwin"
     shellname="GNU Bash (Cygwin)"
-    SHELL=/usr/bin/bash.exe
+    export SHELL=/bin/bash.exe
+    export OSTYPE=cygwin
 else 
     sh=`basename "$SHELL"`
     case "$sh" in
