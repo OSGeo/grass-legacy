@@ -1,0 +1,4 @@
+all:
+	cp i.oif $(GISBASE)/scripts
+	if [ ! -d $(GISBASE)/etc/i.oif ]; then mkdir $(GISBASE)/etc/i.oif; fi
+	cp i.oifcalc m.cutmatrix r.stddev $(GISBASE)/etc/i.oif/
