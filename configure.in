@@ -96,6 +96,7 @@ AC_CHECK_HEADERS(sys/timeb.h sys/types.h sys/utsname.h)
 AC_HEADER_TIME
 AC_TYPE_OFF_T
 AC_TYPE_UID_T
+AC_CYGWIN
 
 AC_MSG_CHECKING(curses.h WINDOW structure component)
 CURSES_MAXY=NONE
@@ -387,8 +388,8 @@ if test -z "$TKINCDIR" && test -z "$HAVE_TK_H"; then
 fi
 AC_SUBST(TKINCDIR)
 
-# Also need this for Cygwin (how is it identified??)
-if test `uname -s` = FreeBSD; then
+# FreeBSD and CygWin don't have a "dot" between major/minor version number
+if test `uname -s` = FreeBSD || test "$CYGWIN"; then
     tcltk_ver=`echo $tcltk_ver | sed 's/\.//g'`
 fi
 
