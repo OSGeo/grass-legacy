@@ -27,7 +27,7 @@ proc mksitePanel { BASE } {
     }
 
     frame $BASE  -relief groove -borderwidth 2
-    Nv_mkPanelname $BASE "Site Panel"
+    Nv_mkPanelname $BASE "Sites Panel"
 
     set tmp [frame $BASE.top]
     label $tmp.current -text "Current:" -anchor nw
