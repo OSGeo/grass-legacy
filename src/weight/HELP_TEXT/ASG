@@ -1,0 +1,15 @@
+
+------------------------------------------------------------------
+KEYWORD: assign
+    "assign" is used to establish weights for categories within
+    maps.
+
+EXAMPLES:
+    assign geology 3 24         assign 24 to cat 3 for map: geology
+    assign geology 43 132 10    assign 10 to cats 43-132 for map: geology
+    assign geology              interactive assignment of all geology cats
+    Note: geology must be chosen first; see "choose"
+
+ALIAS: set
+------------------------------------------------------------------
+
