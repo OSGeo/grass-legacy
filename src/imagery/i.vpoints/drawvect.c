@@ -27,7 +27,7 @@ int zoomvect(View *zoom_view)
 }
 
 int 
-re_fresh (void)
+re_fresh_vect (void)
 {
     return( drawvect(-1,(View *)NULL,(double *)NULL,(double *)NULL,0));
 }
@@ -47,9 +47,8 @@ double E[],
 double N[],
 int trans_order)  /* order of tranformation if warping vectors */
 {
-    int stat;
+    int stat=0;
     int i;
-    int color;
     char name[100], mapset[100];
     struct Cell_head cellhd;
     struct line_pnts *Points;

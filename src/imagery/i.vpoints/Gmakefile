@@ -1,3 +1,4 @@
+EXTRA_CFLAGS=-g
 PGM= i.vpoints
 OBJS =  main.o\
 	ask.o\
