@@ -121,6 +121,7 @@ else
     
     # Display a message if a graphical interface was expected
     if [ "$GRASS_GUI" != "text" ] ; then
+        # Set the interface mode to text
     	echo
 	echo "WARNING: It appears that the X Windows system is not active."
 	echo "A graphical based user interface is not supported."
@@ -128,10 +129,9 @@ else
 	echo
 	echo "Hit RETURN to continue"
 	read ans
+
+        GRASS_GUI="text"
     fi
-    
-    # Set the interface mode to text
-    GRASS_GUI="text"
 fi
 
 # Parsing argument to get LOCATION
