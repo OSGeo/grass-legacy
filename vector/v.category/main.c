@@ -370,7 +370,7 @@ main (int argc, char *argv[])
 				    	freps[i]->count[FR_AREA], freps[i]->min[FR_AREA], 
 					freps[i]->max[FR_AREA]);
 		    } else {
-			fprintf (stdout, "FIELD %d:\n", freps[i]->field);
+			fprintf (stdout, "LAYER %d:\n", freps[i]->field);
 			fprintf (stdout, "type       count        min        max\n");
 			fprintf (stdout, "point    %7d %10d %10d\n", 
 					freps[i]->count[FR_POINT],
