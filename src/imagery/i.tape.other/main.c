@@ -25,7 +25,7 @@ main(argc,argv) char *argv[];
 
     get_tapename(tapename) ;
     I_ask("Please mount and load tape, then hit RETURN-->", 0, 1) ;
-    tapefd = mount_tape (tapename);
+    mount_tape (tapename);
 
 /* ask for description of the tape */
     I_clear_tape_info (&tape_info);
@@ -45,12 +45,13 @@ main(argc,argv) char *argv[];
 
 /* skip the initial files */
 
-    printf("\n\n");
+    fprintf(stderr, "\n\n");
+
     if (skipfiles > 0)
     {
 	fprintf(stderr,"skipping %d files..",skipfiles);
 	while (skipfiles--)
-	    I_tape_advance (tapefd, -1);
+	    I_tape_advance (tapefd, -999);
 	fprintf(stderr,"\n\n");
     }
 
