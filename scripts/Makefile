@@ -16,7 +16,8 @@ SUBDIRS = \
 	r.out.gdal \
 	r.reclass.area \
 	r.univar \
-	v.shape.regist
+	v.shape.regist \
+	v.build.all
 
 default: subdirs
 
