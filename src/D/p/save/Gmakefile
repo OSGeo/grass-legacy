@@ -1,0 +1,19 @@
+# @(#)Gmakefile	2.1  6/26/87
+
+OFILES = \
+    main.o \
+    save_info.o
+
+Dsave: $(BIN)/Dsave $(MAN2)/Dsave.2 $(HELP)/Dsave
+
+$(BIN)/Dsave: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	cc $(LDFLAGS) $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) -o $@
+
+$(MAN2)/Dsave.2: MAN
+	rm -f $@ ; cp $? $@ ; chmod +r $@
+
+$(HELP)/Dsave: HELP
+	rm -f $@ ; cp $? $@ ; chmod +r $@
+
+$(DISPLAYLIB): #
+$(RASTERLIB): #
