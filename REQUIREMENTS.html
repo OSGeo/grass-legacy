@@ -139,6 +139,19 @@ Note: the support is intended for future module implementations
 <li>FreeType2 (for d.text.freetype)<br>
 <a href="http://www.freetype.org/">http://www.freetype.org/</a>
 <br></li>
+
+<li>PROJ.4 Cartographic Projections Library<br>
+GRASS has an internal `private' copy of PROJ.4 contained within the source
+tree, based on PROJ.4.4.5 with some bugfixes. Optionally (GRASS version >=
+5.3), you may install an
+external copy of PROJ.4 and then use the --with-proj configure option to
+link against this instead. Advantages: you may save some disk space by using
+a shared library, and may be able to use the latest features or take
+advantage of bugfixes before they make it into the GRASS copy of PROJ. Note
+for GRASS version >= 5.7, an external PROJ.4 library is a mandatory
+requirement.<br>
+<a href="http://www.remotesensing.org/proj/">http://www.remotesensing.org/proj/</a><br>
+</li>
 </ul>
 
 <h3>Note:</h3>
