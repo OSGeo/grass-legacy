@@ -212,9 +212,17 @@ char *cats_filename;
 	{
 		/* read a line */
 		if (!fgets(inbuf,1024,pts_file)) return (-1);
-		sscanf(inbuf,"%s",tmpbuf);
-		if (sscanf(inbuf,"%d %lf %lf",&id,&east,&north) == 3)
+		strcpy(tmpbuf, inbuf);
+		if (strcmp(G_squeeze(tmpbuf),"END") == 0)
 		{
+			/* end of file reached */
+			done = 1;
+		}
+                else
+		{
+		   process_inp(tmpbuf);
+		   if (sscanf(tmpbuf,"%d %lf %lf",&id,&east,&north) == 3)
+		   {
 /*dks: BUG???--why rewind this every time if the points are sequential?*/
 			rewind(txt_file);
 			if (!fgets(txtbuf,512,txt_file)) return (-1);  /* skip headers record */
@@ -233,16 +241,12 @@ char *cats_filename;
 			/* set the attribute string in the category structure */
 			if (G_set_cat((CELL)CatNum,AttText,&new_cats) != 1)
 				G_fatal_error("Do_area_labs: call to G_set_cats");
-		}
-		else if (strcmp(G_squeeze(tmpbuf),"END") == 0)
-		{
-			/* end of file reached */
-			done = 1;
-		}
-		else
-		{
+                   }
+		   else
+		   {
 			/* error */
 			G_fatal_error("reading LABEL-POINTS file");
+		   }
 		}
 	}
 
