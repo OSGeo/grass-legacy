@@ -3,50 +3,61 @@
 #include "gis.h"
 #include "Vect.h"
 #include "display.h"
+#include "raster.h"
+#include "plot.h"
 
-extern int quiet;
 
 int plot1 (
-    char *name,char *mapset,
-    struct line_pnts *Points)
+    struct Map_info *Map, int type, int area, 
+    struct cat_list *Clist, int color, int fcolor)
 {
-    int i, type;
-    struct Map_info Map;
+    int i, ltype;
     double *x, *y;
+    struct line_pnts *Points;
+    struct line_cats *Cats;
+    int cat;
+    
+    Points = Vect_new_line_struct ();
+    Cats = Vect_new_cats_struct ();
+    
+    Vect_rewind ( Map );
+    
+    /* Is it necessary to reset line/label color in each loop ? */
 
-    /*fd = open_vect (name, mapset);*/
-    Vect_set_open_level (1);
-    if (1 > Vect_open_old (&Map, name, mapset))
-	G_fatal_error ("Failed opening vector file");
+    R_standard_color(color) ;
 
-    G_setup_plot (
-	D_get_d_north(), D_get_d_south(), D_get_d_west(), D_get_d_east(),
-	D_move_abs, D_cont_abs);
-
-	if (!quiet)
-			fprintf (stdout,"Plotting ... "); fflush (stdout);
     while (1)
-    {
-	type =  Vect_read_next_line (&Map, Points, NULL);   
-        switch ( type )
+     {
+	ltype =  Vect_read_next_line (Map, Points, Cats);   
+        switch ( ltype )
 	{
 	case -1:
-	    Vect_close (&Map);
-	    fprintf (stderr, "\nERROR: vector file [%s] - can't read\n", name);
+	    fprintf (stderr, "\nERROR: vector file - can't read\n" );
 	    return -1;
 	case -2: /* EOF */
-		if (!quiet)
-			fprintf (stdout,"Done\n");
-	    Vect_close (&Map);
 	    return  0;
 	}
 
+	if ( !(type & ltype) ) continue;
+	
+        if ( Clist->n_ranges > 0)
+          {
+             Vect_cat_get(Cats, Clist->field, &cat);
+	     if ( !(Vect_cat_in_cat_list (cat, Clist)) )
+                 continue;
+          }
+	
 	x = Points->x;
 	y = Points->y;
 
-	if ( type & ELEMENT_TYPE_DOT )
+	
+        if ( ltype & ELEMENT_TYPE_DOT )
 	  {
-	      G_plot_line(x[0], y[0], x[0], y[0]);
+	    G_plot_line(x[0], y[0], x[0], y[0]);
+	  }
+	else if ( Points->n_points == 1 ) /* line with one coor */
+	  {
+	    G_plot_line(x[0], y[0], x[0], y[0]);
 	  }
 	else
 	  {
@@ -57,7 +68,13 @@ int plot1 (
 	        y++;
 	      }
 	  }
-    }
+      }
+	
 
-    return 0;
+    Vect_destroy_line_struct (Points);
+    Vect_destroy_cats_struct (Cats);
+    
+    return 0; /* not reached */
 }
+
+
