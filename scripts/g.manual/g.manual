@@ -3,7 +3,7 @@
 #
 # MODULE:	g.manual
 # AUTHOR(S):	Markus Neteler
-# PURPOSE:	Display the HTML man pages of 5.7
+# PURPOSE:	Display the HTML/MAN pages
 # COPYRIGHT:	(C) 2003 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
@@ -30,6 +30,8 @@
 #% required : no
 #%END
 
+GRASS_DOC_BASE="$GISBASE"
+
 if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
@@ -44,22 +46,22 @@ fi
 
 start_browser()
 {
-  if test ! -f "$GISBASE"/docs/html/$1.html -a -n $1 ; then
+  if test ! -f "$GRASS_DOC_BASE"/docs/html/$1.html -a -n $1 ; then
     echo "ERROR: no HTML manual page entry for <$1>."
     exit 1
   else
     echo "Starting browser <$BROWSERNAME> for module $1..."
-    $GRASS_HTML_BROWSER "$GISBASE"/docs/html/$1.html
+    $GRASS_HTML_BROWSER "$GRASS_DOC_BASE"/docs/html/$1.html
   fi
 }
 
 start_man()
 {
-  if test ! -f "$GISBASE"/man/man1/$1.1 -a -n $1 ; then
+  if test ! -f "$GRASS_DOC_BASE"/man/man1/$1.1 -a -n $1 ; then
     echo "ERROR: no MAN page entry for <$1>."
     exit 1
   else
-    man "$GISBASE"/man/man1/$1.1
+    man "$GRASS_DOC_BASE"/man/man1/$1.1
   fi
 }
 
