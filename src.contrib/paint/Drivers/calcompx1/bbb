@@ -1,0 +1,12 @@
+pr -f DRIVER.sh
+pr -f Gmakefile
+pr -f P.h
+pr -f alpha.c
+pr -f data.c
+pr -f finish.c
+pr -f init.c
+pr -f npixels.c
+pr -f pictsize.c
+pr -f raster.c
+pr -f rle.c
+pr -f text.c
