@@ -13,14 +13,21 @@ all: unix \
      $(ETC)/grass_intro
 
 unix:
-	@test -d $(UNIX_BIN) || (echo 'UNIX_BIN($(UNIX_BIN))' not found; exit 1)
-	@test -w $(UNIX_BIN) || (echo 'UNIX_BIN($(UNIX_BIN))' not writeable; exit 1)
-	rm -f $(UNIX_BIN)/$(shell)
-	echo ':' > $(UNIX_BIN)/$(shell)
-	echo GISBASE=$(GISBASE) >> $(UNIX_BIN)/$(shell)
-	echo export GISBASE >> $(UNIX_BIN)/$(shell)
-	echo exec '$$'GISBASE/etc/Init.sh >> $(UNIX_BIN)/$(shell)
-	chmod +x $(UNIX_BIN)/$(shell)
+	@test -f $(BIN)/$(shell) || (echo $(BIN)/$(shell) not found; exit 1)
+	@test -w $(BIN)/$(shell) || (echo $(BIN)/$(shell) not writeable; exit 1)
+	@echo ':' > $(BIN)/$(shell)
+	@echo GISBASE=$(GISBASE) >> $(BIN)/$(shell)
+	@echo export GISBASE >> $(BIN)/$(shell)
+	@echo exec '$$'GISBASE/etc/Init.sh >> $(BIN)/$(shell)
+	@chmod +x $(BIN)/$(shell)
+	@echo $(BIN)/$(shell) created
+	@((test -f $(UNIX_BIN)/$(shell) && \
+		((test -w $(UNIX_BIN)/$(shell) && \
+			cp $(BIN)/$(shell) $(UNIX_BIN)/$(shell) && \
+				echo $(UNIX_BIN)/$(shell) created) || \
+		echo $(UNIX_BIN)/$(shell) not writeable)) || \
+	echo $(UNIX_BIN)/$(shell) not found)
+	@echo
 
 $(ETC)/Init.sh: init.head init.shell init.tail version.sed $(SRC)/CMD/VERSION
 	rm -f $@
