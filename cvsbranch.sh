@@ -28,7 +28,7 @@ FURTHER_FILES="config.guess \
 	configure.in configure NEWS.html"
 
 #list of extra directories not in compile list:
-FURTHER_DIRECTORIES="documents ALPHA64 testsuite tools unused src/CMD"
+FURTHER_DIRECTORIES="documents ALPHA64 testsuite tools unused src/include src/CMD"
 
 
 #tag it...
