@@ -1,0 +1,89 @@
+#!/bin/sh
+#
+# $Id: r.regression.line,v 2 2004/04/11 
+#
+############################################################################
+#
+# MODULE:		r.regression line
+# AUTHOR(S):	Dr. Agustin Lobo - alobo@ija.csic.es
+#              Updated to GRASS 5.7 by Michael Barton
+# PURPOSE:	Calculates linear regression from two raster maps: y = a + b*x
+# COPYRIGHT:	(C) 2004 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+#############################################################################
+
+
+#%Module
+#%  description: r.regression.line - Calculates linear regression from two raster maps: y = a + b*x
+#%End
+#%option
+#% key: map1
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: Map for x coefficient
+#% required : yes
+#%end
+#%option
+#% key: map2
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: Map for y coefficient
+#% required : yes
+#%end
+#%option
+#% key: output
+#% type: string
+#% gisprompt: file,file,file
+#% description: ASCII file for storing regression coefficients (output to screen if file not specified).
+#% required : no
+#%end
+
+if  [ -z $GISBASE ] ; then
+ echo "You must be in GRASS GIS to run this program."
+ exit 1
+fi   
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+fi
+
+
+#calculate regression equation
+r.stats -c input=$GIS_OPT_map1,$GIS_OPT_map2  > /tmp/corr.del
+awk '{tot += $3;sumX +=$1 * $3; sumsqX +=$1*$1*$3;sumY +=$2 * $3; sumsqY +=$2*$2*$3;\
+ sumXY +=$1*$2*$3;\
+}\
+END {B=(sumXY - sumX*sumY/tot)/(sumsqX - sumX*sumX/tot);\
+R= (sumXY - sumX*sumY/tot)/((sumsqX - sumX^2/tot)*(sumsqY - sumY^2/tot))^0.5;\
+mediaX=sumX/tot;sumsqX=sumsqX/tot;varX=sumsqX-(mediaX^2);sdX=varX^0.5;\
+mediaY=sumY/tot;sumsqY=sumsqY/tot;varY=sumsqY-(mediaY^2);sdY=varY^0.5;\
+A=mediaY - B*mediaX; F= R^2/(1-R^2/tot-2);\
+print A, B, R, tot, F, mediaX, sdX, mediaY, sdY}' /tmp/corr.del > /tmp/corr.delb
+#cat /tmp/corr.delb
+
+#send output to screen or text file
+if [ $GIS_OPT_output = "" ] 
+then
+	RESULTADO = `cat /tmp/corr.delb`
+        echo "y = a + b*x"
+        echo "           a, b: coefficients"
+        echo "a  b"
+	echo $RESULTADO[1]  $RESULTADO[2]
+else
+        echo "y = a + b*x"
+        echo "   a, b: coefficients"
+        echo "   R: sumXY - sumX*sumY/tot"
+        echo "   N: number of elements"
+        echo "   medX, medY: Medians"
+        echo "   sdX, sdY: Standard deviations"
+	echo "a  b  R  N  F medX  sdX  medY  sdY" > /tmp/corr.delc
+	cat /tmp/corr.delb >> /tmp/corr.delc
+	mv /tmp/corr.delc $GIS_OPT_output
+        cat $GIS_OPT_output
+fi
+\rm /tmp/corr.del*
+
