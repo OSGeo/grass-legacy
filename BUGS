@@ -1,6 +1,6 @@
 Known bugs in current GRASS GIS version 5.0 CVS
 
-$Id: BUGS,v 1.99 2000-12-28 09:08:31 markus Exp $
+$Id: BUGS,v 1.100 2000-12-28 09:33:56 markus Exp $
 [In sync with GRASS 5.0 beta CVS version]
 
 Maintained by
@@ -503,11 +503,6 @@ Please run "d.mon" to select a graphics monitor.
 d.site.pg, d.vect.pg, d.what.r.pg, d.what.s.pg, d.what.v.pg,        
 g.column.pg, g.stats.pg, g.table.pg, v.reclass.pg print :                
  Please run g.select.pg to identify a current database.      
-
-g.gisenv:
-  g.gisenv help says nothing (not a bug, just to remind that it is
-  always listed in grass.sum as FAILED).
-  -help prints nothing
 
 g3.region:
   no parser
