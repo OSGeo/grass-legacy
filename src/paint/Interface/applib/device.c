@@ -1,5 +1,3 @@
-/* %W% %G% */
-
 #include <stdio.h>
 #include <signal.h>
 
@@ -30,7 +28,6 @@ P__errordev (err)
     if (xpgm != NULL)
 	fprintf (stderr, "%s ", xpgm);
     fprintf (stderr, "driver\n");
-    sleep(4);
     exit(1);
 }
 
@@ -42,7 +39,7 @@ P__flushdev ()
 }
 
 /*************************************************
- * P__opendev (pgm)
+ * P__opendev (pgm, argv, painter)
  *	start up a child process and open a two way pipe to/from child
  *	child will read/write stdin/stdout
  * note: can not tell if the exec of pgm succeeded.
@@ -53,21 +50,19 @@ P__flushdev ()
 #define READ  0
 #define WRITE 1
 
-P__opendev (pgm)
+P__opendev (pgm, argv, name)
     char *pgm;
+    char *argv[];
+    char *name;
 {
     int p1[2], p2[2], pid;
     char *malloc();
     int i,j;
 
-/* save the program name. strip off the leading directories */
-    j = 0 ;
-    for (i = 0; pgm[i]; i++)
-	if (pgm[i] == '/')
-	    j = i + 1;
-    xpgm = malloc (strlen(pgm+j) + 1);
+/* save the program name */
+    xpgm = malloc (strlen(name) + 1);
     if (xpgm != NULL)
-	strcpy (xpgm, pgm+j);
+	strcpy (xpgm, name);
 
 /* open the pipes */
     if ((pipe(p1) < 0 ) || (pipe(p2) < 0 )) 
@@ -109,7 +104,7 @@ P__opendev (pgm)
 	    _exit(127) ;
 	}
 
-	execlp(pgm, pgm, 0);
+	execvp(pgm, argv);
     /* if we get here, the exec failed */
 	fprintf (stderr,"can't execute ");
 	perror (pgm);
