@@ -115,6 +115,8 @@ int what(int once, int terse, int width, int mwidth, int dodbmi)
 	    area = Vect_find_area(&Map[i], east, north);
 	    getz = Vect_tin_get_z(&Map[i], east, north, &z, NULL, NULL);
 
+	    G_debug (2, "line = %d, area = %d", line, area);
+
 	    if (!i) {
 		G_format_easting(east, east_buf, G_projection());
 		G_format_northing(north, north_buf, G_projection());
@@ -148,7 +150,7 @@ int what(int once, int terse, int width, int mwidth, int dodbmi)
 	    else {
 		fprintf(stdout, "Line %d\n", line);
 
-		Vect_read_line(Map, Points, Cats, line);
+		Vect_read_line(&Map[i], Points, Cats, line);
 		for (j = 0; j < Cats->n_cats; j++) {
 		    fprintf(stdout, "field = %d category = %d\n",
 			    Cats->field[j], Cats->cat[j]);
@@ -181,14 +183,14 @@ int what(int once, int terse, int width, int mwidth, int dodbmi)
 		;
 	    }
 	    else {
-		if (Map->head.with_z && getz)
+		if (Map[i].head.with_z && getz)
 		    fprintf(stdout, "Area %d z = %f\n", area, z);
 		else
 		    fprintf(stdout, "Area %d\n", area);
 
-		centroid = Vect_get_area_centroid(Map, area);
+		centroid = Vect_get_area_centroid(&Map[i], area);
 		if (centroid > 0) {
-		    Vect_read_line(Map, Points, Cats, centroid);
+		    Vect_read_line(&Map[i], Points, Cats, centroid);
 		    for (j = 0; j < Cats->n_cats; j++) {
 			fprintf(stdout, "field = %d category = %d\n",
 				Cats->field[j], Cats->cat[j]);
