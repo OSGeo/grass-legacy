@@ -150,7 +150,7 @@
 # 3104:new york long island datum:NAD83
 3104: +proj=lcc +a=0.6378137e+07 +es=0.66943800229e-02 +x_0=0.3e+06 +y_0=0 +lon_0=74dw +lat_0=40d10'n +lat_1=41d2'n +lat_2=40d40'n
 # 3200:north carolina --- datum:NAD83
-3200: +proj=lcc +a=0.6378137e+07 +es=0.66943800229e-02 +x_0=0.6e+06 +y_0=0 +lon_0=79dw +lat_0=33d45'n +lat_1=36d10'n +lat_2=34d20'n
+3200: +proj=lcc +a=0.6378137e+07 +es=0.66943800229e-02 +x_0=0.60960122e+06 +y_0=0 +lon_0=79dw +lat_0=33d45'n +lat_1=36d10'n +lat_2=34d20'n
 # 3301:north dakota north datum:NAD83
 3301: +proj=lcc +a=0.6378137e+07 +es=0.66943800229e-02 +x_0=0.6e+06 +y_0=0 +lon_0=100d30'w +lat_0=47dn +lat_1=48d44'n +lat_2=47d26'n
 # 3302:north dakota south datum:NAD83

@@ -298,9 +298,6 @@ Modules:
 
 
 - d.legend:
-  - there is no facility to place the legend     
-    exactly on the screen and also control the size of the text and boxes           
-    d.frames is not adequate..finer control is needed
   - For categorical maps with more than 10 classes, where user                   
     discrimination among colors becomes difficult, there should be a flash 
     utility. Based on d.legend ... we should be able to click on any legend 

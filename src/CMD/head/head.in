@@ -75,6 +75,7 @@ MATHLIB             = @MATHLIB@
 XDRLIB              = @XDRLIB@ @ZLIBINCPATH@ @ZLIBLIBPATH@ @ZLIB@
 ICONVLIB            = @ICONVLIB@
 INTLLIB             = @INTLLIB@
+SOCKLIB             = @SOCKLIB@
 
 #ZLIB:
 ZLIB                = @ZLIBINCPATH@ @ZLIBLIBPATH@ @ZLIB@

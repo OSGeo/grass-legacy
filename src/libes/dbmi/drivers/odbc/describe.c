@@ -83,7 +83,7 @@ describe_table(stmt, table)
 	return DB_FAILED;
     }
 
-    // Get col names and attributes
+    /* Get col names and attributes */
     for (col=0; col < ncols; col++)
     {    
         column = db_get_table_column (*table, col);
@@ -91,7 +91,7 @@ describe_table(stmt, table)
         SQLColAttribute( stmt, col+1, SQL_COLUMN_NAME, charval, sizeof(charval), NULL, NULL );
         db_set_column_name (column, charval);   
 
-	// label(title) is not description, but I did not found better attribute and it can say something about column
+	/* label(title) is not description, but I did not found better attribute and it can say something about column */
         SQLColAttribute( stmt, col+1, SQL_COLUMN_LABEL, charval, sizeof(charval), NULL, NULL );
         db_set_column_description(column, charval);
 
@@ -110,22 +110,26 @@ describe_table(stmt, table)
         else
             db_unset_column_null_allowed (column);
 
-        //db_set_column_select_priv_not_granted (column);
-	//db_set_column_select_priv_not_granted (column);
-	//db_set_column_update_priv_granted (column);
-	//db_set_column_update_priv_not_granted (column);
+	/*
+        db_set_column_select_priv_not_granted (column);
+	db_set_column_select_priv_not_granted (column);
+	db_set_column_update_priv_granted (column);
+	db_set_column_update_priv_not_granted (column);
+	*/
 
-	// because set_column_type() uses other attributes (length, precision,...) must be called at the end
+	/* because set_column_type() uses other attributes (length, precision,...) must be called at the end */
         SQLColAttribute( stmt, col+1, SQL_COLUMN_TYPE,  NULL, 0, NULL, &intval );
         set_column_type (column, intval);
 	db_set_column_host_type (column, intval);   	
 
-	// set default value after we recognized type
-	//db_set_column_has_defined_default_value(column);
-	//db_set_column_has_undefined_default_value(column);
-	//db_set_column_use_default_value(column);
-	//db_unset_column_use_default_value(column);
-	// and set column.defaultValue
+	/* set default value after we recognized type */
+	/*
+	db_set_column_has_defined_default_value(column);
+	db_set_column_has_undefined_default_value(column);
+	db_set_column_use_default_value(column);
+	db_unset_column_use_default_value(column);
+	*/
+	/* and set column.defaultValue */
     }															
 
     return DB_OK;
@@ -141,7 +145,7 @@ set_column_type ( column, otype)
     /* determine the DBMI datatype from ODBC type */
     switch ( otype )
     {  
-    // numbers
+    /* numbers */
     case SQL_INTEGER:
         dbtype = DB_SQL_TYPE_INTEGER;
         break;
@@ -158,7 +162,7 @@ set_column_type ( column, otype)
         if (db_get_column_precision(column) == 24 )
     	    dbtype = DB_SQL_TYPE_REAL;    
         else
-            dbtype = DB_SQL_TYPE_DOUBLE_PRECISION; // precision == 53
+            dbtype = DB_SQL_TYPE_DOUBLE_PRECISION; /* precision == 53 */
 	break;
     case SQL_DECIMAL:
         dbtype = DB_SQL_TYPE_DECIMAL;
@@ -167,7 +171,7 @@ set_column_type ( column, otype)
         dbtype = DB_SQL_TYPE_NUMERIC;
         break;
 
-    // strings
+    /* strings */
     case SQL_CHAR:
         dbtype = DB_SQL_TYPE_CHARACTER;
         break;   
@@ -178,7 +182,7 @@ set_column_type ( column, otype)
         dbtype = DB_SQL_TYPE_CHARACTER;
 	break;	
 
-    // date & time
+    /* date & time */
     case SQL_DATE:
 	dbtype = DB_SQL_TYPE_DATE;
         break;  

@@ -2,7 +2,7 @@
 */
 #include "config.h"
 
-#if defined(HAVE_POSTGRES_H) || defined(HAVE_POSTGRES_FE_H)
+#if defined(HAVE_LIBPQ_FE_H)
 
 #include "gis.h"
 #include "infx.h"

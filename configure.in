@@ -456,6 +456,12 @@ AC_CHECK_LIB(intl, gettext, INTLLIB=-lintl, [
 ])])
 AC_SUBST(INTLLIB)
 
+AC_CHECK_FUNC(socket, SOCKLIB=, [
+AC_CHECK_LIB(socket, socket, SOCKLIB=-lsocket, [
+    AC_MSG_WARN([*** Unable to locate socket() function.])
+])])
+AC_SUBST(SOCKLIB)
+
 # Mandatory zlib dependency
 
 ZLIBLIBPATH=
@@ -1019,8 +1025,8 @@ LOC_CHECK_LIBS(GLwM,    GLwCreateM1DrawingArea,GLwM,$LGLWM $XMLIB $OPENGL_LIB_PA
 LOC_CHECK_LIBS(GLwM,    GLwCreateM2DrawingArea,GLwM,$LGLWM $XMLIB $OPENGL_LIB_PATH,LGLWM,$X_LIBS $OPENGLLIB -lXm -lXt $X_PRE_LIBS -lX11 $X_EXTRA_LIBS,,[
 LOC_CHECK_LIBS(MesaGLw, GLwCreateMDrawingArea, GLwM,$LGLWM $XMLIB $OPENGL_LIB_PATH,LGLWM,$X_LIBS $OPENGLLIB -lXm -lXt $X_PRE_LIBS -lX11 $X_EXTRA_LIBS,,[
 LOC_CHECK_LIBS(MesaGLwM,GLwCreateMDrawingArea, GLwM,$LGLWM $XMLIB $OPENGL_LIB_PATH,LGLWM,$X_LIBS $OPENGLLIB -lXm -lXt $X_PRE_LIBS -lX11 $X_EXTRA_LIBS,,[
-])
-])
+], $OPENGLULIB)
+], $OPENGLULIB)
 ])
 ])
 ])

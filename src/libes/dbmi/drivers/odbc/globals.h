@@ -1,6 +1,6 @@
-#define MAX_CHAR_SIZE	1000	// replace by value from ODBC 
-#define DB_MSG 800  //max length message for report_error()
-#define OD_MSG 500  //max length of message returned by SQLGetDiagRec()
+#define MAX_CHAR_SIZE	1000	/* replace by value from ODBC */
+#define DB_MSG 800  /* max length message for report_error() */
+#define OD_MSG 500  /* max length of message returned by SQLGetDiagRec() */
 
 /* cursors */
 typedef struct _cursor {
@@ -10,9 +10,9 @@ typedef struct _cursor {
 } cursor;  
 
 #ifndef MAIN
-    SQLHENV	ODenvi;  // Handle ODBC environment
-    SQLHDBC    	ODconn;      // Handle connection   
+    SQLHENV	ODenvi;  /* Handle ODBC environment */
+    SQLHDBC    	ODconn;  /* Handle connection */
 #else
-    extern  SQLHENV  ODenvi;  // Handle ODBC environment
-    extern  SQLHDBC  ODconn;      // Handle connection   
+    extern  SQLHENV  ODenvi;  /* Handle ODBC environment */
+    extern  SQLHDBC  ODconn;  /* Handle connection */
 #endif 

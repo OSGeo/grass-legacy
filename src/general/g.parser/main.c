@@ -283,15 +283,15 @@ int main(int argc, char *argv[])
     for (flag = ctx.first_flag; flag; flag = flag->next_flag)
     {
 	char buff[12];
-	sprintf(buff, "GIS_FLAG_%c", flag->key);
-	setenv(buff, flag->answer ? "1" : "0", 1);
+	sprintf(buff, "GIS_FLAG_%c=%d", flag->key, flag->answer ? 1 : 0);
+	putenv(G_store(buff));
     }
 
     for (option = ctx.first_option; option; option = option->next_opt)
     {
 	char buff[1024];
-	sprintf(buff, "GIS_OPT_%s", option->key);
-	setenv(buff, option->answer, 1);
+	sprintf(buff, "GIS_OPT_%s=%s", option->key, option->answer);
+	putenv(G_store(buff));
     }
 
     execl(filename, filename, "@ARGS_PARSED@", NULL);

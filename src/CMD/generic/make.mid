@@ -35,7 +35,7 @@ INCLUDE_DIR = $(SRC)/include
 
 # libraries
 DEPGISLIB      = $(LIBDIR)/libgis.a
-GISLIB         = -lgis
+GISLIB         = -lgis $(SOCKLIB) $(INTLLIB)
 
 DEPVASKLIB     = $(LIBDIR)/libvask.a
 VASKLIB        = -lvask

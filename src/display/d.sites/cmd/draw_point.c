@@ -108,7 +108,8 @@ int next_point (
         }
         while(!G_site_in_region(s,window));
 
-        *U_X=s->east;
+        
+        *U_X=G_adjust_easting (s->east, window);;
         *U_Y=s->north;
 
 	return 1;

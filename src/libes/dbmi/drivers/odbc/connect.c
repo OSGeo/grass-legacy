@@ -7,7 +7,7 @@ int open_connection ()
 {
     SQLRETURN   ret;  
 
-    // Allocate Environment handle and register version
+    /* Allocate Environment handle and register version */
     ret = SQLAllocHandle(SQL_HANDLE_ENV,SQL_NULL_HANDLE, &ODenvi);
     if (( ret != SQL_SUCCESS) && ( ret != SQL_SUCCESS_WITH_INFO))
     {
@@ -23,7 +23,7 @@ int open_connection ()
 	return DB_FAILED;
     }  
 
-    // Allocate connection handle
+    /* Allocate connection handle */
     ret = SQLAllocHandle(SQL_HANDLE_DBC, ODenvi, &ODconn);
     if (( ret != SQL_SUCCESS) && ( ret != SQL_SUCCESS_WITH_INFO))
     {
@@ -32,7 +32,7 @@ int open_connection ()
 	return DB_FAILED;
     }  
 
-    // Set timeout
+    /* Set timeout */
     SQLSetConnectAttr( ODconn, SQL_LOGIN_TIMEOUT, (SQLPOINTER *)5, 0);
 
     return DB_OK;

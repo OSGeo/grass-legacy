@@ -176,19 +176,26 @@ fprintf (stderr, "   reclass\n\r");
   {
     if(G_is_c_null_value(c)) 
     {
-       c++;
-       continue;
+      if (null_is_zero)
+	*c = 0;
+      c++;
+      continue;
     }
-    v = *(c);
+    v = *c;
     if (v < min || v > max)
     {
-       if(null_is_zero)
-	   *(c)++ = 0;
-       else
-           G_set_c_null_value(c++,1);
+      if(null_is_zero)
+	*c++ = 0;
+      else
+	G_set_c_null_value(c++,1);
     }
     else
-      *(c)++ = reclass_table [v - min];
+    {
+      *c = reclass_table [v - min];
+      if(null_is_zero && G_is_c_null_value(c))
+	*c = 0;
+      c++;
+    }
   }
 }
 
