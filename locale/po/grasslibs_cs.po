@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_cs\n"
-"POT-Creation-Date: 2004-11-17 09:31+0100\n"
+"POT-Creation-Date: 2004-11-17 18:05+0100\n"
 "PO-Revision-Date: 2004-10-29 15:58+0200\n"
 "Last-Translator: Radim Blazek <blazek@itc.it>\n"
 "Language-Team: Czech <translations@grass.itc.it>\n"

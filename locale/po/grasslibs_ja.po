@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_ja\n"
-"POT-Creation-Date: 2004-11-17 09:31+0100\n"
+"POT-Creation-Date: 2004-11-17 18:05+0100\n"
 "PO-Revision-Date: 2004-10-17 15:09+0200\n"
 "Last-Translator: Markus Neteler <neteler@itc.it>\n"
 "Language-Team: Japanese <translations@grass.itc.it>\n"

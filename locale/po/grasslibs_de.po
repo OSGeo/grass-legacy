@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_de\n"
-"POT-Creation-Date: 2004-11-17 09:31+0100\n"
+"POT-Creation-Date: 2004-11-17 18:05+0100\n"
 "PO-Revision-Date: 2004-11-17 13:11+0100\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
@@ -752,7 +752,8 @@ msgstr "Kann Datei %s in %s nicht öffnen"
 #: ../lib/gis/get_datum.c:107
 #, c-format
 msgid "Error reading datum shift parameters for %s from table"
-msgstr "Fehler beim Lesen der Datums-Transformationsparameter für %s aus der Tabelle"
+msgstr ""
+"Fehler beim Lesen der Datums-Transformationsparameter für %s aus der Tabelle"
 
 #: ../lib/gis/get_datum.c:115
 #, c-format
@@ -987,7 +988,8 @@ msgstr "Kann kein Histogramm für [%s in %s] erstellen."
 #: ../lib/gis/history.c:120
 #, c-format
 msgid "can't get history information for [%s] in mapset [%s]"
-msgstr "Kann die History-Informationen der Karte [%s] in Mapset [%s] nicht finden."
+msgstr ""
+"Kann die History-Informationen der Karte [%s] in Mapset [%s] nicht finden."
 
 #: ../lib/gis/history.c:170
 #, c-format
@@ -1170,7 +1172,8 @@ msgstr "opencell: %s - ungültiger Dateiname"
 
 #: ../lib/gis/opencell.c:699
 msgid "Can't write embedded null values for map open for random access"
-msgstr "Kann keine embedded NULL Werte für Karte mit random access Zugriff schreiben"
+msgstr ""
+"Kann keine embedded NULL Werte für Karte mit random access Zugriff schreiben"
 
 #: ../lib/gis/opencell.c:930 ../lib/gis/opencell.c:951
 #, c-format
@@ -1574,7 +1577,8 @@ msgstr ""
 
 #: ../lib/gis/view.c:548
 #, c-format
-msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgid ""
+" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
 msgstr ""
 " Nur %d%% des in \"%s\" abgespeicherten Fensters überlappt mit dem "
 "derzeitigen GRASS-Fenster."
@@ -1654,7 +1658,8 @@ msgstr "Nicht verbunden...\n"
 
 #: ../lib/raster/io.c:371
 msgid "Couldn't connect to monitor. Will try once more.\n"
-msgstr "Kann nicht mit einem Monitor verbinden. Versuche es noch ein weiteres Mal.\n"
+msgstr ""
+"Kann nicht mit einem Monitor verbinden. Versuche es noch ein weiteres Mal.\n"
 
 #: ../lib/raster/io.c:377
 msgid "Connection failed.\n"
@@ -1868,7 +1873,8 @@ msgstr "Feldnummer muss 1 oder größer sein."
 
 #: ../lib/vector/Vlib/field.c:78
 msgid "Cannot add database link, map is not opened in WRITE mode."
-msgstr "Kann keine Datenbankverknüpfung erstellen. Die Karte ist nicht schreibbar."
+msgstr ""
+"Kann keine Datenbankverknüpfung erstellen. Die Karte ist nicht schreibbar."
 
 #: ../lib/vector/Vlib/field.c:84
 msgid "Cannot add database link."
@@ -1944,12 +1950,14 @@ msgstr ""
 #: ../lib/vector/Vlib/legal_vname.c:29
 #, c-format
 msgid "Illegal vector map name <%s>. Must start with a letter.\n"
-msgstr "Ungültiger Name der Vektorkarte <%s>. Muss mit einem Buchstaben beginnen.\n"
+msgstr ""
+"Ungültiger Name der Vektorkarte <%s>. Muss mit einem Buchstaben beginnen.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:35
 #, c-format
 msgid "Illegal vector map name <%s>. Character <%c> not allowed.\n"
-msgstr "Ungültiger Name der Vektorkarte <%s>. Zeichenfolge <%c> ist nicht erlaubt.\n"
+msgstr ""
+"Ungültiger Name der Vektorkarte <%s>. Zeichenfolge <%c> ist nicht erlaubt.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:60 ../lib/vector/Vlib/legal_vname.c:62
 #, c-format
@@ -2043,10 +2051,10 @@ msgstr ""
 
 #: ../lib/vector/Vlib/open.c:649
 msgid "Size of 'coor' file differs from value saved in topo file."
-msgstr "Größe der 'coor' Datei unterscheidet sich vom Werte in der 'topo' Datei."
+msgstr ""
+"Größe der 'coor' Datei unterscheidet sich vom Werte in der 'topo' Datei."
 
 #: ../lib/vector/Vlib/open.c:660
 #, c-format
 msgid "Please rebuild topology for vector '%s@%s'"
 msgstr "Bitte Topologie für Vektorkarte '%s@%s' neu erzeugen"
-
