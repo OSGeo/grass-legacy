@@ -4,7 +4,7 @@
 # platform indendent
 
 # $Id$
-# Version 10
+# Version 11
 # 1999-2000 by Markus Neteler, neteler@geog.uni-hannover.de
 
 ######################################################
@@ -91,7 +91,6 @@ else
      else
           #check if a word "grass" is in string $DESTDIR
           echo $DESTDIR |grep -w "grass"
-echo $? scheise
           if [ $? -eq 1 ] ; then
             echo "WARNING: Your destination path $DESTDIR does not contain the word 'grass'"
             echo "Continue (y/n)?"
