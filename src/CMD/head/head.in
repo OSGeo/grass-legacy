@@ -27,6 +27,7 @@ CC                  = @CC@
 FC                  = @F77@
 LEX                 = @LEX@
 YACC                = yacc
+PERL                = @PERL@
 ARCH                = @host@
 MAKE                = make
 prefix              = @prefix@
