@@ -180,10 +180,10 @@ proc DmVector::options { id frm } {
     Label $row.a -text "Line color:" 
     SelectColor $row.b -type menubutton -variable DmVector::opt($id,color) \
                 -command "DmVector::legend $id"
-    Label $row.c -text "Fill color:" 
+    Label $row.c -text " Fill color:" 
     SelectColor $row.d -type menubutton -variable DmVector::opt($id,fcolor) \
                 -command "DmVector::legend $id"
-    Label $row.e -text "Label color:" 
+    Label $row.e -text " Label color:" 
     SelectColor $row.f -type menubutton -variable DmVector::opt($id,lcolor) \
                 -command "DmVector::legend $id"
 
