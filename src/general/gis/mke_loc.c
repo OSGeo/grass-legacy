@@ -22,6 +22,8 @@ make_location (gisdbase, location_name)
     printf ("        %s (for imagery and other unreferenced data)\n", name);
     for (i = 1; name = G__projection_name(i); i++)
 	printf ("        %s\n", name);
+    name = "other projection"; 
+	printf ("        %s\n", name);
     printf ("2. The zone for the database\n");
     printf ("       (except for %s",G__projection_name(0));
     printf (" and %s databases)\n", G__projection_name(PROJECTION_LL));
@@ -35,6 +37,7 @@ make_location (gisdbase, location_name)
 	return 0;
 
     G_zero (&window, sizeof(window));
+
     while(1)
     {
 	G_clear_screen();
@@ -42,6 +45,8 @@ make_location (gisdbase, location_name)
 		location_name);
 	for (i = 0; name = G__projection_name(i); i++)
 	    printf ("%4d %s\n", i, name);
+        i = PROJECTION_OTHER;
+	printf ("%4d %s\n", i, G__projection_name(i));
 	printf ("RETURN to cancel\n");
 	printf ("\n");
 	printf ("> ");
@@ -50,7 +55,7 @@ make_location (gisdbase, location_name)
 	G_strip (buf);
 	if (*buf == 0) return 0;
 	if (sscanf (buf, "%d", &i) != 1)
-	    continue;
+	    continue; 
 	name = G__projection_name(i);
 	if (name == NULL)
 	    continue;
@@ -59,8 +64,10 @@ make_location (gisdbase, location_name)
 	if (G_yes (buf, 1))
 	    break;
     }
+    
     window.proj = i;
-    while (window.proj != 0 && window.proj != PROJECTION_LL)
+    while (window.proj != 0 && window.proj != PROJECTION_LL
+          && window.proj != PROJECTION_OTHER)
     {
 	G_clear_screen();
 	printf ("Please specify the %s zone for location <%s>\n",
@@ -118,3 +125,4 @@ make_location (gisdbase, location_name)
     system(buf);
     return 1;
 }
+
