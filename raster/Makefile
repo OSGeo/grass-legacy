@@ -69,10 +69,8 @@ SUBDIRS1 = \
 	r.sunmask \
 	r.surf.area \
 	r.surf.contour \
-	r.surf.gauss \
 	r.surf.idw \
 	r.surf.idw2 \
-	r.surf.random \
 	r.texture \
 	r.thin \
 	r.timestamp \
@@ -85,7 +83,7 @@ SUBDIRS1 = \
 
 GDALBASED = r.in.gdal
 
-FFTWBASED = r.surf.fractal
+FFTWBASED = r.surf.fractal r.surf.gauss r.surf.random
 
 PNGBASED = r.out.png
 
