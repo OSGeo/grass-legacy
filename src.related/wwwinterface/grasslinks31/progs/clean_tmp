@@ -1,0 +1,57 @@
+#!/bin/sh
+
+#############################################################
+#
+# Checks for files older than one hour
+# and deletes them.
+#
+# Requires the helper progam "checktimes.c"
+#
+# Created by Sue Huse, James Ganong - UC Berekley
+#
+# USE ON YOUR SYSTEM AT YOUR OWN RISK
+#############################################################
+
+LOCATION_NAME=/grass/data/sfbay
+PROG_PATH=/htdocs/grasslinks/progs
+
+# clean out GRASSLinks tmp directory
+cd /htdocs/grasslinks/tmp
+/bin/ls |
+$PROG_PATH/checktimes |
+/bin/xargs /bin/rm -f
+
+#clean out GRASS tmp directories
+for i in 1 2 3 4 5 
+do
+	DIR=/grass/data/sfbay/grasslinks$i
+	cd $DIR/.tmp/grasslinks_hostname.berkeley.edu
+	/bin/ls |
+	$PROG_PATH/checktimes |
+	/bin/xargs /bin/rm -rf
+done
+
+# clean out grasslinks mapsets by
+# deleting all files in the mapset subdirectories, but none
+# of the top level files or directories.
+
+for i in grasslinks1 grasslinks2 grasslinks3 grasslinks4 grasslinks5
+do
+	(
+	cd $LOCATION_NAME/$i
+	for i in *
+	do
+		(
+			if [ -d $i ] 
+			then
+				cd $i
+				if [ ! -z "`/bin/ls`" ]
+				then 
+					find `/bin/ls` -print | 
+					$PROG_PATH/checktimes | /bin/xargs /bin/rm -rf
+				fi
+			fi
+		)
+	done
+	)
+done
