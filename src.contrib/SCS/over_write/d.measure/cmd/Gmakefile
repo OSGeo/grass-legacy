@@ -1,0 +1,10 @@
+PGM=d.measure
+
+LIST = main.o msurements.o draw_line.o
+
+LIBES = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(TERMLIB)
+
+$(LIBES): #
