@@ -425,7 +425,8 @@ main (int argc, char *argv[])
     Vect_close ( &(In[0]) );
     Vect_close ( &(In[1]) );
     Vect_close (&Out);
-    
+
+    G_done_msg("");
     exit (0);
 }
 
