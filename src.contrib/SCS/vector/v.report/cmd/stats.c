@@ -36,7 +36,7 @@ get_stats()
     {
 	if (type == 0)
 	   {
-	   sscanf(buf,"%s,%d",atype, &nalloc);
+	   sscanf(buf,"%s %d",atype, &nalloc);
 	   if (*atype == 'a') type = 1;
 	   if (*atype == 'l') type = 2;
 	   if (*atype == 's') type = 3;
