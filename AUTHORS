@@ -26,13 +26,15 @@ Institutions:
 
 GRASS 5 Core Team (most have CVS access):
  Andrea Aime     <aaime@comune.modena.it>      (raster/vector modules)
- Roger Bivand    <Roger.Bivand@nhh.no>         ("R" statistical language support)
+ Roger Bivand    <Roger.Bivand@nhh.no>         ("R" statistical language 
+                                                support)
  Radim Blazek    <Radim.Blazek@dhv.cz>         (DBMS support, ps.map, d.dm)
  Malcolm Blue    <mblue@nb.sympatico.ca>       (Windows NT/Cygnus port)
  Bill Brown      <brown@gomez.gis.uiuc.edu>    (NVIZ, SG3D, grid3D and related)
  Glynn Clements  <glynn.clements@virgin.net>   (Code portability, ...)
  Huidae Cho      <grass@geni.cemtlo.com>       (FreeBSD,r.topmodel,r.topidx,...)
- Bob Covill      <bcovill@tekmap.ns.ca>        (NVIZ export formats, r.in|out.bin)
+ Bob Covill      <bcovill@tekmap.ns.ca>        (NVIZ export formats, 
+                                                r.in|out.bin)
  David D. Gray   <ddgray@armadce.demon.co.uk>  (Vector, SQL support)
  Jaro Hofierka   <hofierka@geomodel.sk>        (NVIZ port, grid3D and related)
  Justin Hickey   <jhickey@hpcc.nectec.or.th>   (GRASS initialization, 
@@ -42,17 +44,20 @@ GRASS 5 Core Team (most have CVS access):
  Andreas Lange   <Andreas.Lange@Rhein-Main.de> (SGI/Irix compliance, 
 						Proj/Datum support)
  Lubos Mitas     <lmitas@ncsa.uiuc.edu>        (multivariate spline
-                                                interpolation (RST) and erosion modeling)
+                                                interpolation (RST) 
+                                                and erosion modeling)
  Helena Mitasova <hmitaso@unity.ncsu.edu>      (interpolation modules, NVIZ,
                                                 G3D, erosion modelling)
- Eric G. Miller  <egm2@jps.net>                (sites format, new autoconf system, bugfixes etc.)
+ Eric G. Miller  <egm2@jps.net>                (sites format, new autoconf 
+                                                system, bugfixes etc.)
  Roger S. Miller <rgrmill@rt66.com>            (raster modules, r.drain etc.)
  Eric Mitchell   <emitchell@altaira.com>       (new Makefile system)
  Markus Neteler  <neteler@itc.it>              (GRASS 5 coordination, ...)
  Bernhard Reiter <bernhard@intevation.de>      (License, CVS, Bugfixes, RT)
  Alexander Shevlakov <sixote@yahoo.com>        (PostgreSQL/GRASS interface)
  Mike Thomas <miketh@brisbane.paradigmgeo.com> (generic Windows driver)
- Jan-Oliver Wagner <jan@intevation.de>         (XML-support, Module descriptions)
+ Jan-Oliver Wagner <jan@intevation.de>         (XML-support, 
+                                                Module descriptions)
  Frank Warmerdam <warmerdam@pobox.com>         (GDAL, SHAPE implementation, 
                                                 new GRASS I/O library)
  Michel Wurtz    <mw@teledetection.fr>         (ESRI E00 support)
