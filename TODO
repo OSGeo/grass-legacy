@@ -1,4 +1,4 @@
-$Id: TODO,v 1.64 2001-01-14 19:38:36 markus Exp $
+$Id: TODO,v 1.65 2001-01-19 15:23:57 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -321,8 +321,7 @@ Modules:
 
 - r.proj
  Idea: r.proj could be used for easy map copying between locations:
-
- Morten Hulden <morten@ngb.se> wrote:
+   Morten Hulden <morten@ngb.se> wrote:
  item: The idea (you mentioned some messages ago) of allowing r.proj and
  (v.proj) to do lonlat->lonlat conversions by just copying the files is
  something that needs more planning:
@@ -341,6 +340,10 @@ Modules:
  or datum, and in these cases a simple copy is not what we want. Only if
  spheroid and datum are the same on the input and output side should a
  straight copy be done, I think.
+
+r.proj/v.proj/s.proj:
+ - add -l flag to list relevant files in source location (source of
+   projection)
 
 - r.reclass.pg
   write it
