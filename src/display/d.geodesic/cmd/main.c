@@ -10,7 +10,7 @@ main(argc, argv)
     double lon1,lat1,lon2,lat2;
     char msg[100];
     char *deftcolor;
-    static char *color_list = "red,orange,yellow,green,blue,magenta,indigo,violet,brown,gray,white,black";
+    char *D_color_list();
     struct
     {
 	struct Option *lcolor, *tcolor, *coor;
@@ -30,7 +30,7 @@ main(argc, argv)
     parm.lcolor->type       = TYPE_STRING ;
     parm.lcolor->required   = NO ;
     parm.lcolor->description= "Line color" ;
-    parm.lcolor->options    = color_list;
+    parm.lcolor->options    = D_color_list();
     parm.lcolor->answer     = "white";
 
     parm.tcolor = G_define_option() ;
@@ -38,7 +38,7 @@ main(argc, argv)
     parm.tcolor->type       = TYPE_STRING ;
     parm.tcolor->required   = NO ;
     parm.tcolor->description= "Text color" ;
-    parm.tcolor->options    = color_list;
+    parm.tcolor->options    = D_color_list();
 
     if (argc > 1 && G_parser(argc, argv))
         exit(-1);
@@ -54,27 +54,27 @@ main(argc, argv)
     use_mouse = 1;
     if (parm.coor->answer)
     {
-        if (!G_scan_easting (parm.coor->answer[0], &lon1, G_projection())) 
+        if (!G_scan_easting (parm.coor->answers[0], &lon1, G_projection())) 
 	{
-	    fprintf (stderr, "%s - illegal longitude\n", parm.coor->answer[0]);
+	    fprintf (stderr, "%s - illegal longitude\n", parm.coor->answers[0]);
 	    G_usage();
             exit(-1);
 	}
-        if (!G_scan_northing (parm.coor->answer[1], &lat1, G_projection())) 
+        if (!G_scan_northing (parm.coor->answers[1], &lat1, G_projection())) 
 	{
-	    fprintf (stderr, "%s - illegal longitude\n", parm.coor->answer[0]);
+	    fprintf (stderr, "%s - illegal longitude\n", parm.coor->answers[1]);
 	    G_usage();
             exit(-1);
 	}
-        if (!G_scan_easting (parm.coor->answer[2], &lon2, G_projection())) 
+        if (!G_scan_easting (parm.coor->answers[2], &lon2, G_projection())) 
 	{
-	    fprintf (stderr, "%s - illegal longitude\n", parm.coor->answer[0]);
+	    fprintf (stderr, "%s - illegal longitude\n", parm.coor->answers[2]);
 	    G_usage();
             exit(-1);
 	}
-        if (!G_scan_northing (parm.coor->answer[3], &lat2, G_projection())) 
+        if (!G_scan_northing (parm.coor->answers[3], &lat2, G_projection())) 
 	{
-	    fprintf (stderr, "%s - illegal longitude\n", parm.coor->answer[0]);
+	    fprintf (stderr, "%s - illegal longitude\n", parm.coor->answers[3]);
 	    G_usage();
             exit(-1);
 	}
