@@ -122,6 +122,7 @@ SQLP_LIBNAME     = sqlp
 DBSTUBS_LIBNAME  = dbstubs
 
 SHAPE_LIBNAME    = shape
+GRAPH_LIBNAME    = dgl
 
 ##################### library options ###################################
 VASKLIB     = $(ARCH_LIBDIR)/$(STLIB_PREFIX)$(VASK_LIBNAME).$(STLIB_SUFFIX)
@@ -174,6 +175,7 @@ SQLPLIB     = $(ARCH_LIBDIR)/$(STLIB_PREFIX)$(SQLP_LIBNAME).$(STLIB_SUFFIX)
 DBSTUBSLIB  = $(ARCH_LIBDIR)/$(STLIB_PREFIX)$(DBSTUBS_LIBNAME).$(STLIB_SUFFIX)
 
 SHAPELIB    = $(ARCH_LIBDIR)/$(STLIB_PREFIX)$(SHAPE_LIBNAME).$(STLIB_SUFFIX)
+GRAPHLIB    = $(ARCH_LIBDIR)/$(STLIB_PREFIX)$(GRAPH_LIBNAME).$(STLIB_SUFFIX)
 
 ##################### dependencies ######################################
 VECTDEP     =  $(GRASS_INCDIR)/Vect.h $(GRASS_INCDIR)/V_.h \
