@@ -20,7 +20,6 @@
 #include "gis.h"
 #include "Vect.h"
 #include "dbmi.h"
-#include "proto.h"
 
 /* TODO: Use some better algorithm */
 
