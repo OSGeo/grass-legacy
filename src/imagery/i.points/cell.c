@@ -35,7 +35,7 @@ cancel()
 static
 plot(x,y)
 {
-    char name[40], mapset[40];
+    char name[100], mapset[100];
     struct Cell_head cellhd;
 
     if (x > VIEW_MAP1->left && x < VIEW_MAP1->right)
@@ -94,5 +94,5 @@ static
 choose_cellfile (name, mapset)
     char *name, *mapset;
 {
-    return ask_gis_files ("cell", cell_list, name, mapset, 1);
+    return ask_gis_files ("raster", cell_list, name, mapset, 1);
 }
