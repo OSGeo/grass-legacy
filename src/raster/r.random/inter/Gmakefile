@@ -1,4 +1,0 @@
-$(BIN_MAIN_INTER)/r.random: main.o $(GISLIB) $(DATETIMELIB) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(DATETIMELIB) $(VASK) $(XDRLIB) $(MATHLIB)
-
-$(GISLIB) $(DATETIMELIB) $(VASKLIB): #
