@@ -1,0 +1,28 @@
+#!/bin/sh
+############################################################################
+#
+# MODULE:	d.redraw
+# AUTHOR(S):	Huidae Cho - hdcho@geni.knu.ac.kr
+# PURPOSE:	To redraw current displayed maps without saving d.save info
+#		before d.erase.
+# COPYRIGHT:	(C) 2000 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+#############################################################################
+
+#%Module
+#% description: redraw current displayed maps in GRASS monitor
+#%End
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+fi
+
+dsave=`d.save -o`
+d.erase
+eval "$dsave"
+
+exit 0
