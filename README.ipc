@@ -162,6 +162,8 @@ then
 fi
 
 ########## END OF MANUAL EXECUTION
+else
+	cmd=$1
 fi
 
 
