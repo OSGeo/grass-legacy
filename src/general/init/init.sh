@@ -456,7 +456,10 @@ if [ ! "$LOCATION" ] ; then
     esac
 fi
 
-eval `g.gisenv`
+GISDBASE=`g.gisenv GISDBASE`
+LOCATION_NAME=`g.gisenv LOCATION_NAME`
+MAPSET=`g.gisenv MAPSET`
+
 LOCATION=${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}
 
 trap "" 2 3 15
