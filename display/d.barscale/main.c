@@ -14,6 +14,7 @@ double east;
 double north;
 int use_feet;
 int do_background = 1;
+int do_bar = 1;
 
 int main (int argc, char **argv)
 {
@@ -22,7 +23,7 @@ int main (int argc, char **argv)
 	int t, b, l, r ;
 	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3 ;
-	struct Flag *mouse, *feet, *top ;
+	struct Flag *mouse, *feet, *top, *linescale ;
 	struct Cell_head W ;
 
 	/* Initialize the GIS calls */
@@ -33,15 +34,19 @@ int main (int argc, char **argv)
 		"Displays a barscale on GRASS monitor.";
 
 	mouse = G_define_flag() ;
-	mouse->key        = 'm';
+	mouse->key       = 'm';
 	mouse->description= "Use mouse to interactively place scale" ;
 
 	feet = G_define_flag() ;
 	feet->key        = 'f';
 	feet->description= "Use feet/miles instead of meters" ;
 
+	linescale = G_define_flag() ;
+	linescale->key   = 'l';
+	linescale->description= "Draw a line scale instead of a bar scale" ;
+
 	top = G_define_flag() ;
-	top->key        = 't';
+	top->key         = 't';
 	top->description= "Write text on top of the scale, not to the right" ;
 
 	opt1 = G_define_option() ;
@@ -75,6 +80,9 @@ int main (int argc, char **argv)
 	if (W.proj == PROJECTION_LL)
 		G_fatal_error("%s does not work with a latitude-longitude location",
 			      argv[0]) ;
+
+	if(linescale->answer)
+		do_bar = 0;
 
 	use_feet = feet->answer ? 1 : 0;
 
