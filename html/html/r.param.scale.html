@@ -1,8 +1,8 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html>
 <head>
-   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-   <meta name="GENERATOR" content="Mozilla/4.77 [en] (X11; U; Linux 2.4.9-12smp i686) [Netscape]">
+   <DEFANGED_meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <DEFANGED_meta name="GENERATOR" content="Mozilla/4.73 [en] (X11; U; Linux 2.2.16-3 i686) [Netscape]">
    <title>r.param.scale</title>
 </head>
 <body bgcolor="#FFFFFF">
@@ -11,8 +11,8 @@
 <h2>
 NAME</h2>
 <b>r.param.scale</b> - GRASS module that extracts terrain parameters from
-a DEM. Uses a multi-scalar approach by taking fitting quadratic parameters
-to any size window (via least squares).
+a DEM. Uses a multi-scale approach by fitting a bivariate quadratic polynomial
+to a given window size using least squares.
 <h2>
 Usage:</h2>
 <b>r.param.scale</b> [-c] <b>in=</b>name <b>out=</b>name [<b>s_tol=</b>value]
@@ -24,13 +24,14 @@ Flags:</h2>
 -c Constrain model through central window cell
 <h2>
 Parameters:</h2>
-<b>&nbsp;in </b>Raster surface layer to process
-<p><b>&nbsp;out </b>Output raster layer containing morphometric parameter
+<b>&nbsp;in </b>Input elevation raster
+<p><b>&nbsp;out </b>Output raster representing the selected morphometric
+parameter
 <p><b>&nbsp;s_tol</b> Slope tolerance that defines a `flat' surface (degrees)
 <br>default: 1.0
 <p><b>&nbsp;c_tol</b> Curvature tolerance that defines `planar' surface
 <br>default: 0.02
-<p><b>&nbsp;size </b>Size of processing window (odd number only)
+<p><b>&nbsp;size </b>Size of processing window (odd numbers only)
 <br>default: 3
 <p><b>&nbsp;param</b> Morphometric parameter to calculate
 <br>options: elev,slope,aspect,profc,planc,longc,crosc,minic,maxic, feature
@@ -40,32 +41,55 @@ Parameters:</h2>
 <p><b>&nbsp;zscale</b> Vertical scaling factor
 <br>default: 1.0
 <br>&nbsp;
-<br>&nbsp;
-<p><b><i>r.param.scale can calculate the following parameters:</i></b>
-<UL>
-<li>elev: Generalised elevation value (for resampling purposes at different
-    scale)
-<li>slope: Maximum gradient at a point
-<li>aspect: Direction of maximum gradient
-<li><I>profc</I> or profile convexity (intersecting with the plane of
-  the <I>Z</I> axis and aspect direction)
-<li><I>planc</I> or plan convexity (intersecting with the <I>XY</I>
-  plane)
-<li><I>longc</I> or longitudinal curvature (intersecting with the plane
-  of the slope normal and aspect direction)
-<li><I>crosc</I> or cross-sectional curvature (intersecting with the
-   plane of the slope normal and perpendicular aspect direction)
-<li><I>maxic</I> or maximum curvature (in any plane)
-<li><I>minic</I> or minimum curvature (in any plane)
-<li><I>meanc</I> or mean curvature (in any plane).
-<li>Morphometric features: 
-   peaks, ridges, passes, channels, pits and planes
-</UL>
+<p>The module calculates the following parameters (terminology is from
+Wood, 1996 with related terminology
+<br>used in other GRASS modules listed in brackets)
+<ul>
+<li>
+elev: Generalised elevation value (for resampling purposes at different
+scale)</li>
+
+<li>
+slope: Magnitude of maximum gradient (steepest slope angle)</li>
+
+<li>
+aspect: Direction of maximum gradient (steepest slope direction=flow direction)</li>
+
+<li>
+<i>profc</i> or profile curvature (curvature intersecting with the plane
+defined by <i>Z</i> axis and maximum gradient direction)</li>
+
+<li>
+<i>planc</i> or plan curvature (horizontal curvature, intersecting with
+the <i>XY</i> plane)</li>
+
+<li>
+<i>longc</i> or longitudinal curvature (profile curvature intersecting
+with the plane defined by the surface normal and maximum gradient direction)</li>
+
+<li>
+<i>crosc</i> or cross-sectional curvature (tangential curvature intersecting
+with the plane defined by the surface normal and a tangent to the contour
+- perpendicular to maximum gradient direction)</li>
+
+<li>
+<i>maxic</i> or maximum curvature (can be in any direction)</li>
+
+<li>
+<i>minic</i> or minimum curvature (in direction perpendicular to the direction
+of of maximum curvature)</li>
+
+<li>
+<i>meanc</i> or mean curvature (average of maximum and minimum curvatures).</li>
+
+<li>
+Morphometric features: peaks, ridges, passes, channels, pits and planes</li>
+</ul>
 
 <h2>
 NOTES</h2>
-In <i>r.param.scale</i> the direction of maximum gradient (considered
-downslope) is stored as:
+In <i>r.param.scale</i> the direction of maximum gradient (considered downslope)
+is stored as:
 <ul>
 <li>
 0..+180 degree from West to North to East</li>
@@ -99,7 +123,7 @@ AUTHOR</h2>
 <a href="MAILTO:jwo@le.ac.uk">jwo@le.ac.uk</a> - <a href="http://www.geog.le.ac.uk/assist/index.html">ASSIST's
 home</a></address>
 
-<p><br>Update to FP 1/2002: L. Potrich, M. Neteler (ITC-irst)
+<p>Update to FP 3/2002: L. Potrich, M. Neteler, S. Menegon (ITC-irst)
 <p><i>Last changed: $Date$</i>
 </body>
 </html>
