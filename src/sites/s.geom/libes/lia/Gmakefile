@@ -1,0 +1,22 @@
+###########################################################
+
+EXTRA_CFLAGS	= -I../include
+
+LIA_LIB = liblia.a
+
+CFILES =  lia.c aux.c chars.c stack.c pool.c \
+         det.c sdet.c sdet_one.c \
+         mint.c
+
+OBJ =  lia.o aux.o chars.o stack.o pool.o \
+         det.o sdet.o sdet_one.o \
+         mint.o
+
+
+all: $(LIA_LIB)
+
+$(LIA_LIB): $(OBJ)
+	$(AR)
+
+
+
