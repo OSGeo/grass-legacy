@@ -57,6 +57,9 @@ int main( int argc, char **argv )
 	CELL min_ind, max_ind, null_cell;
 	DCELL dmin, dmax, val;
 
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
+
 	module = G_define_module();
 	module->description =
 		"improved version of d.legend that allows:\n"
@@ -113,9 +116,6 @@ int main( int argc, char **argv )
 	mouse = G_define_flag ();
 	mouse->key = 'm';
 	mouse->description = "Use mouse to size & place legend (only when -s is specified)";
-
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
 
 	/* Check command line */
 	if (G_parser(argc, argv))
