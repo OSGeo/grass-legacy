@@ -23,21 +23,30 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
     struct line_cats *Cats;
     CENTR  *Centr;
     char    *Del;
-
     char     buf[1000];
     dbString stmt;
+    int    nmodif;
 
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
 
-    /* Probably not necessary for LINE x AREA */
-    fprintf (stderr, SEP );
-    fprintf ( stderr, "Removing duplicates ...\n" );
-    Vect_remove_duplicates ( Out, GV_BOUNDARY, NULL, stderr );
+    /* Vect_clean_small_angles_at_nodes() can change the geometry so that new intersections
+     * are created. We must call Vect_break_lines(), Vect_remove_duplicates()
+     * and Vect_clean_small_angles_at_nodes() until no more small dangles are found */
+    do {
+	fprintf (stderr, SEP );
+	fprintf ( stderr, "Breaking lines ...\n" );
+	Vect_break_lines ( Out, GV_LINE|GV_BOUNDARY, NULL, stderr );
 
-    fprintf (stderr, SEP );
-    fprintf ( stderr, "Cleaning boundaries at nodes ...\n" );
-    Vect_clean_small_angles_at_nodes ( Out, GV_BOUNDARY, NULL, stderr );
+	/* Probably not necessary for LINE x AREA */
+	fprintf (stderr, SEP );
+	fprintf ( stderr, "Removing duplicates ...\n" );
+	Vect_remove_duplicates ( Out, GV_BOUNDARY, NULL, stderr );
+
+	fprintf (stderr, SEP );
+	fprintf ( stderr, "Cleaning boundaries at nodes ...\n" );
+	nmodif = Vect_clean_small_angles_at_nodes ( Out, GV_BOUNDARY, NULL, stderr );
+    } while ( nmodif > 0 );
 
     /* ?: May be result of Vect_break_lines() + Vect_remove_duplicates() any dangle or bridge?
      * In that case, calls to Vect_remove_dangles() and Vect_remove_bridges() would be also necessary */
