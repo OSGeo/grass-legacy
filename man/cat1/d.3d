@@ -1,205 +1,205 @@
 
 
 
-d.3d <main>          GRASS Reference Manual           <main> d.3d
+d.3d <main>	     GRASS Reference Manual	      <main> d.3d
 
 
 
 NAME
-     _d._3_d - Displays three-dimensional images based on raster map
+     d.3d - Displays three-dimensional images based on raster map
      layers.
-     (_G_R_A_S_S _D_i_s_p_l_a_y _P_r_o_g_r_a_m)
+     (GRASS Display Program)
 
 SYNOPSIS
      d.3d
      d.3d help
-     d.3d [-l0a] map=_n_a_m_e elevation=_n_a_m_e [from_coordinate=_x,_y,_z]
-        [to_coordinate=_x,_y,_z] [exaggeration=_v_a_l_u_e] [lines=_v_a_l_u_e]
-     [field=_v_a_l_u_e]
-        [color=_n_a_m_e] [box=_n_a_m_e]
+     d.3d [-l0a] map=name elevation=name [from_coordinate=x,y,z]
+	[to_coordinate=x,y,z] [exaggeration=value] [lines=value]
+     [field=value]
+	[color=name] [box=name]
 
 DESCRIPTION
-     _d._3_d displays three-dimensional graphic images based on
-     GRASS raster map layers.  The user identifies the viewing
-     point, the line of sight, a vertical exaggeration factor,
-     the viewing angle (field of view), the frequency and color
-     of vector grid lines to appear in the display, the map to be
+     d.3d displays three-dimensional graphic images based on
+     GRASS raster map layers.  The user	identifies the viewing
+     point, the	line of	sight, a vertical exaggeration factor,
+     the viewing angle (field of view),	the frequency and color
+     of	vector grid lines to appear in the display, the	map to be
      displayed in 3-d, and the map whose category values are to
-     be used as elevation values in the 3-dimensional image.
+     be	used as	elevation values in the	3-dimensional image.
 
      The program will be run non-interactively if the user
      specifies all needed parameter values and flag settings on
-     the command line.  Alternately, the user can simply type
-     d.3d on the command line;  in this case, the program will
-     prompt the user for parameter values and flag settings using
+     the command line.	Alternately, the user can simply type
+     d.3d on the command line;	in this	case, the program will
+     prompt the	user for parameter values and flag settings using
      the standard interface described in the manual entry for
-     _p_a_r_s_e_r.
+     parser.
 
      Three-dimensional images can also be generated through the
-     GRASS _d._d_i_s_p_l_a_y program.
+     GRASS d.display program.
 
 
-COMMAND LINE OPTIONS
-     -l                Display _l_i_n_e_s only, without displaying the
-                       raster base _m_a_p.
+COMMAND	LINE OPTIONS
+     -l		       Display lines only, without displaying the
+		       raster base map.
 
-     -0                Show zero elevations.
+     -0		       Show zero elevations.
 
-     -_a                Each grid-cell is rendered using four
-                       elevation coordinates: one for each
-                       corner.  By default, each corner takes the
-                       value of the grid-cell to the lower right.
-                       With the -a option each corner is
-                       calculated to be an average of the four
-                       bordering cell elevation values.
+     -a		       Each grid-cell is rendered using	four
+		       elevation coordinates: one for each
+		       corner.	By default, each corner	takes the
+		       value of	the grid-cell to the lower right.
+		       With the	-a option each corner is
+		       calculated to be	an average of the four
+		       bordering cell elevation	values.
 
 
      Parameters:
 
-     map=_n_a_m_e          The raster map layer used to generate the
+     map=name	       The raster map layer used to generate the
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
-
-
-
-
-
-
-d.3d <main>          GRASS Reference Manual           <main> d.3d
-
-
-
-                       color shown in the 3-d output (i.e., the
-                       map whose x and y values will be
-                       displayed, using the z values present in
-                       the _e_l_e_v_a_t_i_o_n map layer.)
-
-     elevation=_n_a_m_e    The raster map used to generate the
-                       texture in the 3-d image (i.e., the map
-                       whose category values will become the
-                       elevation values in the 3-d map
-                       displayed).  This need not be an elevation
-                       map layer, although elevation is commonly
-                       used.
-                       Default:  elevation
-
-     from_coordinate=_x,_y,_z
-                       Coordinates of the viewing point, given
-                       as:  _n_o_r_t_h_i_n_g,_e_a_s_t_i_n_g,_e_l_e_v_a_t_i_o_n.  The
-                       default _f_r_o_m__c_o_o_r_d_i_n_a_t_e value is
-                       appropriate for the spearfish sample data
-                       set.
-                       Default:  Calculated at run-time just
-                       south-west of the south-west corner.
-
-     to_coordinate=_x,_y,_z
-                       Coordinates of center of view, given as:
-                       _n_o_r_t_h_i_n_g,_e_a_s_t_i_n_g,_e_l_e_v_a_t_i_o_n.  The default
-                       _t_o__c_o_o_r_d_i_n_a_t_e value is appropriate for the
-                       spearfish sample data set.
-                       Default:  Calculated at run-time as the
-                       center of the image
-
-     exaggeration=_v_a_l_u_e
-                       Vertical exaggeration factor.  This value
-                       is multiplied by the "elevation" values
-                       (category values) in the _e_l_e_v_a_t_i_o_n map
-                       layer.  As the vertical coordinates are
-                       exaggerated, the elevation (z) value of
-                       the center of view (the _t_o__c_o_o_r_d_i_n_a_t_e)
-                       should be increased.
-                       Default:  2.0
-
-     lines=_v_a_l_u_e       North-south and east-west trending lines
-                       can be drawn on the 3-d image output, to
-                       enhance the 3-d effect.  The _l_i_n_e_s value
-                       specifies the number of rows and columns
-                       to skip between lines.  0 means "display
-                       no lines".  Lines will be drawn in the
-                       _c_o_l_o_r stated.  The user can elect to only
-                       display these lines, without displaying
-                       the _m_a_p, by setting the -l flag.
-                       Default:  1
-
-
-
-
-2                        U.S. Army CERL                 GRASS 4.1
+GRASS 4.2		Baylor University			1
 
 
 
 
 
 
-d.3d <main>          GRASS Reference Manual           <main> d.3d
+d.3d <main>	     GRASS Reference Manual	      <main> d.3d
 
 
 
-     field=_v_a_l_u_e       The field of view (viewing angle) in the
-                       image, stated in degrees.
-                       Default:  30
+		       color shown in the 3-d output (i.e., the
+		       map whose x and y values	will be
+		       displayed, using	the z values present in
+		       the elevation map layer.)
 
-     color=_n_a_m_e        Color of vector _l_i_n_e_s drawn on the output.
-                       Options:  color, white, red, orange,
-                       yellow, green, blue, indigo, violet, gray,
-                       black
-                       Default:  gray
+     elevation=name    The raster map used to generate the
+		       texture in the 3-d image	(i.e., the map
+		       whose category values will become the
+		       elevation values	in the 3-d map
+		       displayed).  This need not be an	elevation
+		       map layer, although elevation is	commonly
+		       used.
+		       Default:	 elevation
+
+     from_coordinate=x,y,z
+		       Coordinates of the viewing point, given
+		       as:  northing,easting,elevation.	 The
+		       default from_coordinate value is
+		       appropriate for the spearfish sample data
+		       set.
+		       Default:	 Calculated at run-time	just
+		       south-west of the south-west corner.
+
+     to_coordinate=x,y,z
+		       Coordinates of center of	view, given as:
+		       northing,easting,elevation.  The	default
+		       to_coordinate value is appropriate for the
+		       spearfish sample	data set.
+		       Default:	 Calculated at run-time	as the
+		       center of the image
+
+     exaggeration=value
+		       Vertical	exaggeration factor.  This value
+		       is multiplied by	the "elevation"	values
+		       (category values) in the	elevation map
+		       layer.  As the vertical coordinates are
+		       exaggerated, the	elevation (z) value of
+		       the center of view (the to_coordinate)
+		       should be increased.
+		       Default:	 2.0
+
+     lines=value       North-south and east-west trending lines
+		       can be drawn on the 3-d image output, to
+		       enhance the 3-d effect.	The lines value
+		       specifies the number of rows and	columns
+		       to skip between lines.  0 means "display
+		       no lines".  Lines will be drawn in the
+		       color stated.  The user can elect to only
+		       display these lines, without displaying
+		       the map,	by setting the -l flag.
+		       Default:	 1
+
+
+
+
+GRASS 4.2		Baylor University			2
+
+
+
+
+
+
+d.3d <main>	     GRASS Reference Manual	      <main> d.3d
+
+
+
+     field=value       The field of view (viewing angle) in the
+		       image, stated in	degrees.
+		       Default:	 30
+
+     color=name	       Color of	vector lines drawn on the output.
+		       Options:	 color,	white, red, orange,
+		       yellow, green, blue, indigo, violet, gray,
+		       black
+		       Default:	 gray
 
      The resulting three-dimensional image is drawn in the active
      frame on the graphics monitor.  The user should select and
-     erase the full graphics monitor frame before running _d._3_d to
-     prepare the screen for graphics.  Refer to the GRASS program
-     _3_d._v_i_e_w._s_h for a demonstration of the _d._3_d program.
+     erase the full graphics monitor frame before running d.3d to
+     prepare the screen	for graphics.  Refer to	the GRASS program
+     3d.view.sh	for a demonstration of the d.3d	program.
 
 INTERACTIVE MODE
-     The interactive mode prompts for the raster map to be
-     rendered, the raster map to be queried for elevation
+     The interactive mode prompts for the raster map to	be
+     rendered, the raster map to be queried for	elevation
      information, and an optionally saved set of saved viewing
      parameters.  The user is then presented with a form in which
-     the options can be modified.
+     the options can be	modified.
 
-     It is suggested that the following procedure be used to
+     It	is suggested that the following	procedure be used to
      efficiently find the correct viewing parameters.  Start with
      a gross grid (by default, a resolution is chosen which
-     limits the total number of rows and columns), display lines
-     only, set line colors to "color" (lines take their color
-     from the map), set the box color to something other than
+     limits the	total number of	rows and columns), display lines
+     only, set line colors to "color" (lines take their	color
+     from the map), set	the box	color to something other than
      "none", and use the default viewing coordinates.  Experiment
-     with the viewing coordinates until the map is positioned in
-     a desireable configuration.  When the map is lined up
-     correctly, set the display resolution as low as you like for
+     with the viewing coordinates until	the map	is positioned in
+     a desireable configuration.  When the map is lined	up
+     correctly,	set the	display	resolution as low as you like for
      a final image.
 
 
 BUGS
      Several additions to this program have been suggested.
      These include the following:
-     1) Border the image with a visually appealing curtain.
-     2) Add x,y,z coordinates and scale information to the
+     1)	Border the image with a	visually appealing curtain.
+     2)	Add x,y,z coordinates and scale	information to the
      displayed 3-d image.
-     3) Provide a graphic-oriented user interface for identifying
+     3)	Provide	a graphic-oriented user	interface for identifying
      viewing parameters.
-     4) Display output more quickly by doing mathematics in
+     4)	Display	output more quickly by doing mathematics in
      integers.
-     5) Add the option of plotting vector map layers.
+     5)	Add the	option of plotting vector map layers.
 
 SEE ALSO
-     _3_d._v_i_e_w._s_h, _d._d_i_s_p_l_a_y, _d._e_r_a_s_e, _d._f_r_a_m_e, and _p_a_r_s_e_r
+     3d.view.sh, d.display, d.erase, d.frame, and parser
 
 
 
 
 
-GRASS 4.1                U.S. Army CERL                         3
+GRASS 4.2		Baylor University			3
 
 
 
 
 
 
-d.3d <main>          GRASS Reference Manual           <main> d.3d
+d.3d <main>	     GRASS Reference Manual	      <main> d.3d
 
 
 
@@ -258,7 +258,7 @@ AUTHOR
 
 
 
-4                        U.S. Army CERL                 GRASS 4.1
+GRASS 4.2		Baylor University			4
 
 
 
