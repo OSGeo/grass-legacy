@@ -39,8 +39,10 @@ main(int argc, char *argv[])
     db_init_string(&table_name);
     db_set_string(&table_name, parms.table);
 
-    if(db_describe_table (driver, &table_name, &table) != DB_OK)
+    if(db_describe_table (driver, &table_name, &table) != DB_OK) {
+	G_warning ("Cannot describe table" ); 
 	exit(ERROR);
+    }
 
     if(!parms.printcolnames)
         print_table_definition(table);
