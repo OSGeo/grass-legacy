@@ -41,37 +41,37 @@ CONFIG_DIR  = $(DSTDIR)/src/include
 
 # libraries
 DEPGISLIB      = $(LIBDIR)/$(LIB_PREFIX)grass_gis$(LIB_SUFFIX)
-GISLIB         = -lgrass_gis $(SOCKLIB) $(INTLLIB)
+GISLIB         = -lgrass_gis $(DATETIMELIB) $(XDRLIB) $(ZLIB) $(MATHLIB) $(SOCKLIB) $(INTLLIB)
 
 DEPVASKLIB     = $(LIBDIR)/$(LIB_PREFIX)grass_vask$(LIB_SUFFIX)
-VASKLIB        = -lgrass_vask
+VASKLIB        = -lgrass_vask $(CURSES)
 
 DEPEDITLIB     = $(LIBDIR)/$(LIB_PREFIX)grass_gedit$(LIB_SUFFIX)
-EDITLIB        = -lgrass_gedit
+EDITLIB        = -lgrass_gedit $(VASKLIB) $(GISLIB)
 
 DEPG3DLIB      = $(LIBDIR)/$(LIB_PREFIX)grass_g3d$(LIB_SUFFIX)
-G3DLIB         = -lgrass_g3d
+G3DLIB         = -lgrass_g3d $(GISLIB)
 
 DEPICONLIB     = $(LIBDIR)/$(LIB_PREFIX)grass_icon$(LIB_SUFFIX)
-ICONLIB        = -lgrass_icon
+ICONLIB        = -lgrass_icon $(GISLIB)
 
 DEPLOCKLIB     = $(LIBDIR)/$(LIB_PREFIX)grass_lock$(LIB_SUFFIX)
 LOCKLIB        = -lgrass_lock
 
 DEPIMAGERYLIB  = $(LIBDIR)/$(LIB_PREFIX)grass_I$(LIB_SUFFIX)
-IMAGERYLIB     = -lgrass_I
+IMAGERYLIB     = -lgrass_I $(VASKLIB) $(GMATHLIB) $(GISLIB)
 
 DEPROWIOLIB    = $(LIBDIR)/$(LIB_PREFIX)grass_rowio$(LIB_SUFFIX)
 ROWIOLIB       = -lgrass_rowio
 
 DEPCOORCNVLIB  = $(LIBDIR)/$(LIB_PREFIX)grass_coorcnv$(LIB_SUFFIX)
-COORCNVLIB     = -lgrass_coorcnv
+COORCNVLIB     = -lgrass_coorcnv $(GISLIB)
 
 DEPSEGMENTLIB  = $(LIBDIR)/$(LIB_PREFIX)grass_segment$(LIB_SUFFIX)
-SEGMENTLIB     = -lgrass_segment
+SEGMENTLIB     = -lgrass_segment $(GISLIB)
 
 DEPGPROJLIB    = $(LIBDIR)/$(LIB_PREFIX)grass_gproj$(LIB_SUFFIX)
-GPROJLIB       = -lgrass_gproj $(PROJLIB)
+GPROJLIB       = -lgrass_gproj $(PROJLIB) $(GISLIB) $(MATHLIB)
 
 DEPBTREELIB    = $(LIBDIR)/$(LIB_PREFIX)grass_btree$(LIB_SUFFIX)
 BTREELIB       = -lgrass_btree
@@ -80,40 +80,40 @@ DEPIBTREELIB   = $(LIBDIR)/$(LIB_PREFIX)grass_ibtree$(LIB_SUFFIX)
 IBTREELIB      = -lgrass_ibtree
 
 DEPGMATHLIB    = $(LIBDIR)/$(LIB_PREFIX)grass_gmath$(LIB_SUFFIX)
-GMATHLIB       = -lgrass_gmath
+GMATHLIB       = -lgrass_gmath $(GISLIB) $(FFTWLIB) $(LAPACKLIB) $(BLASLIB) $(MATHLIB)
 
 DEPDLGLIB      = $(LIBDIR)/$(LIB_PREFIX)grass_dlg$(LIB_SUFFIX)
-DLGLIB         = -lgrass_dlg
+DLGLIB         = -lgrass_dlg $(GISLIB)
 
 DEPRASTERLIB   = $(LIBDIR)/$(LIB_PREFIX)grass_raster$(LIB_SUFFIX)
-RASTERLIB      = -lgrass_raster
+RASTERLIB      = -lgrass_raster $(GISLIB)
 
 DEPDISPLAYLIB  = $(LIBDIR)/$(LIB_PREFIX)grass_display$(LIB_SUFFIX)
-DISPLAYLIB     = -lgrass_display
+DISPLAYLIB     = -lgrass_display $(RASTERLIB) $(GISLIB)
 
 DEPD_LIB       = $(LIBDIR)/$(LIB_PREFIX)grass_D$(LIB_SUFFIX)
-D_LIB          = -lgrass_D
+D_LIB          = -lgrass_D $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 
 DEPDATETIMELIB = $(LIBDIR)/$(LIB_PREFIX)grass_datetime$(LIB_SUFFIX)
 DATETIMELIB    = -lgrass_datetime
 
 DEPDRIVERLIB   = $(LIBDIR)/$(STLIB_PREFIX)grass_driver$(STLIB_SUFFIX)
-DRIVERLIB      = -lgrass_driver
+DRIVERLIB      = -lgrass_driver $(GISLIB) $(MATHLIB)
 
 DEPLINKMLIB    = $(LIBDIR)/$(LIB_PREFIX)grass_linkm$(LIB_SUFFIX)
 LINKMLIB       = -lgrass_linkm
 
 DEPBITMAPLIB   = $(LIBDIR)/$(LIB_PREFIX)grass_bitmap$(LIB_SUFFIX)
-BITMAPLIB      = -lgrass_bitmap
+BITMAPLIB      = -lgrass_bitmap $(LINKMLIB)
 
 DEPDIGLIB      = $(LIBDIR)/$(LIB_PREFIX)grass_dig$(LIB_SUFFIX)
 DIGLIB         = -lgrass_dig
 
 DEPDIG_ATTLIB  = $(LIBDIR)/$(LIB_PREFIX)grass_dig_atts$(LIB_SUFFIX)
-DIG_ATTLIB     = -lgrass_dig_atts
+DIG_ATTLIB     = -lgrass_dig_atts $(GISLIB)
 
 DEPVECTLIB     = $(LIBDIR)/$(LIB_PREFIX)grass_vect_combined$(LIB_SUFFIX)
-VECTLIB        = -lgrass_vect_combined
+VECTLIB        = -lgrass_vect_combined $(DIG_ATTLIB) $(LINKMLIB) $(GISLIB)
 
 # Cannot be made shared
 DEPDBMILIB     = $(LIBDIR)/$(STLIB_PREFIX)dbmi$(STLIB_SUFFIX)
