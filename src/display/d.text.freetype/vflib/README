@@ -1,4 +1,4 @@
-$Id: README,v 1.1 2002-06-07 08:01:35 cho Exp $
+$Id: README,v 1.2 2004-10-28 10:29:31 cho Exp $
 
 Displays text using various font formats.
 =========================================
@@ -29,6 +29,6 @@ will be overrided.
 Rotation is not supported.
 
 
-Huidae Cho <grass@geni.cemtlo.com>
+Huidae Cho <grass4u@gmail.com>
 2002/06/07
 
