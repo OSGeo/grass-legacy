@@ -115,6 +115,7 @@ Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
     }
 
     /* Copy the directory */
+    G__make_mapset_element ( GRASS_VECT_DIRECTORY );
     G__file_name (old_path, GRASS_VECT_DIRECTORY, in, mapset );
     G__file_name (new_path, GRASS_VECT_DIRECTORY, out, G_mapset() );
     sprintf ( cmd, "cp -r '%s' '%s'", old_path, new_path );
