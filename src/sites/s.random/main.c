@@ -77,7 +77,7 @@ int main (int argc, char *argv[])
   
   module = G_define_module();
   module->description =        
-                  "Randomly generate a GRASS sites list.";
+      "Randomly generate a GRASS sites list within the current region.";
                   
   parm.output = G_define_option ();
   parm.output->key = "sites";
@@ -138,8 +138,7 @@ int main (int argc, char *argv[])
   }
 
   G_get_window (&window);
-  s->cattype=CELL_TYPE;
-  
+ 
   for(i=0; i<n; ++i)
   {
     s->east=rng()/max*(window.west-window.east)+window.east;
