@@ -1,0 +1,14 @@
+PROG = $(BIN_CONTRIB_CMD)/r.1Dcorrelogram
+
+LIBES = $(GISLIB) $(VASK) $(MATHLIB)
+
+OBJ =\
+	addmean.o	\
+	init.o		\
+	addcov.o	\
+	calcmean.o
+
+$(PROG): ${OBJ} ${LIBES}
+	 ${CC} ${LDFLAGS} -o $@ ${OBJ} ${LIBES}
+
+$(LIBES): #
