@@ -2,7 +2,8 @@
 MODULE_TOPDIR = ..
 
 SUBDIRS = \
-	drivers
+	drivers \
+	base
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
