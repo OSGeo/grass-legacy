@@ -1,0 +1,35 @@
+maploc 0.25 1.5
+raster soils
+header
+  font Courier Bold
+  fontsize 15
+  end
+vector roads
+  width 1
+  color black
+  end
+vector streams.dead
+  width 1
+  color black
+  style 111100
+  hcolor white
+  hwidth 1
+  end
+vector streams.spear
+  width 1
+  color black
+  style 111100
+  hcolor white
+  hwidth 1
+  end
+mapinfo
+  where 6.2 1.6
+  font Helvetica
+  fontsize 10
+  end
+vlegend
+  where 0.4 6.6
+  font Helvetica
+  fontsize 10
+  end
+end
