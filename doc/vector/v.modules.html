@@ -53,7 +53,7 @@ before you start.
 <TR><TD>f.xsection</TD><TD>src.contrib/CORPS/FLOOD/fxsect.c, sort.c</TD>		<TD>-</TD><TD>-</TD><TD>-</TD><TD>not working in 5.0</TD><TD>&nbsp</TD></TR>
 <TR><TD>f.xsection</TD><TD>src.contrib/CORPS/FLOOD2/fxsect.c, sort.c</TD>		<TD>-</TD><TD>-</TD><TD>-</TD><TD>not working in 5.0</TD><TD>&nbsp</TD></TR>
 <TR><TD>g.region</TD><TD>src/general/g.region/cmd/main.c, inter/from_vect.c</TD>	<TD>Y</TD><TD>-</TD><TD>-</TD><TD>&nbsp</TD><TD></TD></TR>
-<TR><TD>g3.region</TD><TD>src.contrib/GMSL/g3d/src3d/general/g3.region/from_vect.c</TD>	<TD>N</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
+<TR><TD>g3.region</TD><TD>src.contrib/GMSL/g3d/src3d/general/g3.region/from_vect.c</TD>	<TD>Y</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
 
 <TR><TD>color.map</TD><TD>src.contrib/SCS/paint/Programs/color.map/cmd/do_vectors.c, vectfile.c</TD>	<TD>-</TD><TD>-</TD><TD>-</TD><TD>not used in 5.0 (SCS paint modules need to be integrated with the src/paint)</TD><TD>&nbsp</TD></TR>
 <TR><TD>grey.map</TD><TD>src.contrib/SCS/paint/Programs/grey.map/cmd/do_vectors.c, vectfile.c</TD>	<TD>-</TD><TD>-</TD><TD>-</TD><TD>not used in 5.0 (SCS paint modules need to be integrated with the src/paint)</TD><TD>&nbsp</TD></TR>
@@ -63,38 +63,38 @@ before you start.
 <TR><TD>ISMdig2ann</TD><TD>src.contrib/CERL/SGI/ISM/dig2ann/main.c</TD>			<TD>-</TD><TD>-</TD><TD>-</TD><TD>not used in 5.0</TD><TD>&nbsp</TD></TR>
 
 <TR><TD>i.points3</TD><TD>src/imagery/i.points3/inter/draw_vect.c, plot_vect.c</TD>	<TD>X</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>there are bugs in 5.0 version</TD><TD>&nbsp</TD></TR>
-<TR><TD>i.vpoints</TD><TD>src/imagery/i.vpoints/plot1.c, plot2.c, use_plot1.c</TD>	<TD>N</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
+<TR><TD>i.vpoints</TD><TD>src/imagery/i.vpoints/plot1.c, plot2.c, use_plot1.c</TD>	<TD>Y</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
 
-<TR><TD>java</TD><TD>src.garden/grass.java/GRASS_libvect.c</TD>				<TD>?</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>Andrea Antonello ?</TD></TR>
+<TR><TD>java</TD><TD>src.garden/grass.java/GRASS_libvect.c</TD>				<TD>X</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>Andrea Antonello ?</TD></TR>
 
 <TR><TD>libgsf</TD><TD>src.contrib/GMSL/ogl3d_linux/gsf/Gv2.c</TD>			<TD>-</TD><TD>-</TD><TD>-</TD><TD>not used</TD><TD>&nbsp</TD></TR>
 <TR><TD>libgsf</TD><TD>src/libes/ogsf/Gv3.c</TD>					<TD>Y</TD><TD>-</TD><TD>Y</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
 
 <TR><TD>m.clump</TD><TD>src/misc/m.clump/vect.c</TD>					<TD>X</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
-<TR><TD>m.in.e00</TD><TD>src/misc/m.in.e00/vector.c</TD>				<TD>?</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>http://remotesensing.org/pipermail/gdal-dev/2003-April/000547.html <BR> http://grass.itc.it/pipermail/grass5/2002-February/001918.html</TD><TD>&nbsp</TD></TR>
+<TR><TD>m.in.e00</TD><TD>src/misc/m.in.e00/vector.c</TD>				<TD>X</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>E00 Should be added to OGR library: http://remotesensing.org/pipermail/gdal-dev/2003-April/000547.html <BR> http://grass.itc.it/pipermail/grass5/2002-February/001918.html</TD><TD>&nbsp</TD></TR>
 <TR><TD>m.in.ntf</TD><TD>src/misc/m.in.ntf/cmd/open_vector.c</TD>			<TD>-</TD><TD>-</TD><TD>-</TD><TD>not used in 5.0</TD><TD>&nbsp</TD></TR>
 
 <TR><TD>NVIZ2.2</TD><TD>src.contrib/GMSL/NVIZ2.2/src/query_postgr_orig.c</TD>		<TD>X</TD><TD>&nbsp</TD><TD>&nbsp</TD>		<TD>use DBMI instead of Postgres</TD><TD>&nbsp</TD></TR>
 
 <TR><TD>p.map</TD><TD>src/paint/Programs/p.map/cmd/do_vectors.c, vectfile.c</TD>			<TD>-</TD><TD>-</TD><TD>-</TD><TD>not used in 5.0</TD><TD>&nbsp</TD></TR>
 <TR><TD>p.mapcmd7</TD><TD>src.contrib/SCS/paint/Programs/newp.map/cmd/do_vectors.c, vectfile.c</TD>	<TD>-</TD><TD>-</TD><TD>-</TD><TD>not used in 5.0</TD><TD>&nbsp</TD></TR>
-<TR><TD>p.map.new</TD><TD>src/paint/Programs/p.map.new/cmd/do_vectors.c, vectfile.c</TD>		<TD>?</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
+<TR><TD>p.map.new</TD><TD>src/paint/Programs/p.map.new/cmd/do_vectors.c, vectfile.c</TD>		<TD>X</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
 
 <TR><TD>ps.map</TD><TD>src/ps.map/ps.map/cmd/do_vectors.c, vectfile.c</TD>						<TD>Y</TD><TD>Y</TD><TD>-</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
 <TR><TD>ps.map</TD><TD>src.contrib/SCS/paint/Programs/ps.map/do_vectors.c, outl_io.c, ps_outline.c, vectfile.c</TD>	<TD>-</TD><TD>-</TD><TD>-</TD><TD>not used in 5.0</TD><TD>&nbsp</TD></TR>
 
-<TR><TD>r.contour</TD><TD>src/raster/r.contour/main.c</TD>			<TD>N</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
-<TR><TD>r.flow</TD><TD>src/raster/r.flow/io.13.c</TD>				<TD>N</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
+<TR><TD>r.contour</TD><TD>src/raster/r.contour/main.c</TD>			<TD>Y</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
+<TR><TD>r.flow</TD><TD>src/raster/r.flow/io.13.c</TD>				<TD>Y</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
 <TR><TD>r.flowmd</TD><TD>src/raster/r.flowmd/rflow5f_1.c</TD>			<TD>-</TD><TD>-</TD><TD>-</TD><TD>this is old, use r.flow</TD><TD>&nbsp</TD></TR>
-<TR><TD>r.line</TD><TD>src/raster/r.line/cmd/io.c</TD>				<TD>N</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
-<TR><TD>r.poly</TD><TD>src/raster/r.poly/cmd/io.c</TD>				<TD>N</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
+<TR><TD>r.line</TD><TD>src/raster/r.line/cmd/io.c</TD>				<TD>Y</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
+<TR><TD>r.poly</TD><TD>src/raster/r.poly/cmd/io.c</TD>				<TD>Y</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
 
 <TR><TD>SG3d</TD><TD>src.contrib/GMSL/SG3d/Dcell.c, path.c, vector.c</TD>	<TD>-</TD><TD>-</TD><TD>-</TD><TD>runs only on old SGI</TD><TD>&nbsp</TD></TR>
 
 <TR><TD>s.buffer</TD><TD>sites module</TD>			<TD>-</TD><TD>-</TD><TD>-</TD><TD>replaced by v.buffer</TD><TD>&nbsp</TD></TR>
-<TR><TD>s.delaunay</TD><TD>sites module</TD>			<TD>N</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>merge with s.hull ?</TD><TD>&nbsp</TD></TR>
+<TR><TD>s.delaunay</TD><TD>sites module</TD>			<TD>Y</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
 <TR><TD>s.geom</TD><TD>src/sites/s.geom/s.geom/main.c</TD>	<TD>-</TD><TD>-</TD><TD>-</TD><TD>non GPL</TD><TD>&nbsp</TD></TR>
-<TR><TD>s.hull</TD><TD>sites module</TD>			<TD>N</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>merge with s.delaunay ?</TD><TD>&nbsp</TD></TR>
+<TR><TD>s.hull</TD><TD>sites module</TD>			<TD>Y</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
 <TR><TD>s.in.ascii</TD><TD>sites module</TD>			<TD>Y</TD><TD>Y</TD><TD>Y</TD><TD>temporary for debugging</TD><TD>&nbsp</TD></TR>
 <TR><TD>s.in.atkisdgm</TD><TD>sites module</TD>			<TD>X</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
 <TR><TD>s.in.atkisktb</TD><TD>sites module</TD>			<TD>X</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
@@ -104,17 +104,17 @@ before you start.
 <TR><TD>s.info</TD><TD>sites module</TD>			<TD>-</TD><TD>-</TD><TD>-</TD><TD>v.info</TD><TD>&nbsp</TD></TR>
 <TR><TD>s.label</TD><TD>sites module</TD>						<TD>-</TD><TD>-</TD><TD>-</TD><TD>v.label</TD><TD>&nbsp</TD></TR>
 <TR><TD>s.makedots</TD><TD>src.contrib/SCS/sites/s.dotmap.new/cmd/do_dot.c</TD>		<TD>-</TD><TD>-</TD><TD>-</TD><TD>not used in 5.0</TD><TD>&nbsp</TD></TR>
-<TR><TD>s.medp</TD><TD>src.contrib/PURDUE/s.medp/main.c</TD>				<TD>?</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
+<TR><TD>s.medp</TD><TD>src.contrib/PURDUE/s.medp/main.c</TD>				<TD bgcolor=orange>?</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
 
-<TR><TD>s.normal</TD><TD>sites module</TD>			<TD>?</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
+<TR><TD>s.normal</TD><TD>sites module</TD>			<TD bgcolor=orange>?</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
 <TR><TD>s.out.ascii</TD><TD>sites module</TD>			<TD>Y</TD><TD>Y</TD><TD>Y</TD><TD>temporary for debugging</TD><TD>&nbsp</TD></TR>
 <TR><TD>s.out.e00</TD><TD>sites module</TD>			<TD>-</TD><TD>-</TD><TD>-</TD><TD>sites not used in 5.1/7</TD><TD>&nbsp</TD></TR>
-<TR><TD>s.perturb</TD><TD>sites module</TD>			<TD>?</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
-<TR><TD>s.probplt</TD><TD>sites module</TD>			<TD>?</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
+<TR><TD>s.perturb</TD><TD>sites module</TD>			<TD bgcolor=orange>?</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
+<TR><TD>s.probplt</TD><TD>sites module</TD>			<TD bgcolor=orange>?</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
 <TR><TD>s.proj</TD><TD>sites module</TD>			<TD>-</TD><TD>-</TD><TD>-</TD><TD>sites not used in 5.1/7, v.proj</TD><TD>&nbsp</TD></TR>
-<TR><TD>s.qcount</TD><TD>sites module</TD>			<TD>?</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
+<TR><TD>s.qcount</TD><TD>sites module</TD>			<TD bgcolor=orange>?</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
 <TR><TD>s.random</TD><TD>sites module</TD>			<TD>Y</TD><TD>-</TD><TD>-</TD><TD>v.random</TD><TD>&nbsp</TD></TR>
-<TR><TD>s.sample</TD><TD>sites module</TD>			<TD>?</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
+<TR><TD>s.sample</TD><TD>sites module</TD>			<TD bgcolor=orange>?</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
 <TR><TD>s.surf.idw</TD><TD>sites module</TD>			<TD>Y</TD><TD>Y</TD><TD>N</TD><TD>v.surf.idw</TD><TD>&nbsp</TD></TR>
 <TR><TD>s.surf.rst</TD><TD>src/sites/s.surf.rst/main.c</TD>	<TD>-</TD><TD>-</TD><TD>-</TD><TD>merged to v.surf.rst</TD><TD>&nbsp</TD></TR>
 
@@ -124,8 +124,8 @@ before you start.
 <TR><TD>s.to.vect</TD><TD>src/sites/s.to.vect/cmd/main.c</TD>	<TD>-</TD><TD>-</TD><TD>-</TD><TD>sites not used in 5.1/7</TD><TD>&nbsp</TD></TR>
 
 <TR><TD>s.univar</TD><TD>sites module</TD>						<TD>X</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
-<TR><TD>s.vol.rst</TD><TD>sites module</TD>						<TD>N</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
-<TR><TD>s.voronoi</TD><TD>src.contrib/PURDUE/s.voronoi/dt_main.c, vo_main.c</TD>	<TD>N</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>merge to s.hull / s.delaunay ?</TD><TD>&nbsp</TD></TR>
+<TR><TD>s.vol.rst</TD><TD>sites module</TD>						<TD>Y</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
+<TR><TD>s.voronoi</TD><TD>src.contrib/PURDUE/s.voronoi/dt_main.c, vo_main.c</TD>	<TD>Y</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
 
 <TR><TD>s.what</TD><TD>sites module</TD>					<TD>-</TD><TD>-</TD><TD>-</TD><TD>sites not used in 5.1/7; v.distance</TD><TD>&nbsp</TD></TR>
 <TR><TD>s.windavg</TD><TD>sites module</TD>					<TD>X</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
@@ -197,8 +197,8 @@ before you start.
 
 <TR><TD>v.llabel</TD><TD>src/mapdev/v.llabel/main.c</TD>				<TD>-</TD><TD>-</TD><TD>-</TD><TD>replaced by v.category</TD><TD>&nbsp</TD></TR>
 
-<TR><TD>v.mkgrid</TD><TD>src/mapdev/v.mkgrid/mkgrid_cmd.c, mkgrid_inter.c</TD>		<TD>N</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
-<TR><TD>v.mkquads</TD><TD>src/mapdev/v.mkquads/mkquads_cmd.c</TD>			<TD>N</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
+<TR><TD>v.mkgrid</TD><TD>src/mapdev/v.mkgrid/mkgrid_cmd.c, mkgrid_inter.c</TD>		<TD bgcolor=red>N</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
+<TR><TD>v.mkquads</TD><TD>src/mapdev/v.mkquads/mkquads_cmd.c</TD>			<TD>X</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD><TD>&nbsp</TD></TR>
 <TR><TD>v.mkquads</TD><TD>src.contrib/SCS/vector/v.mkquads/mkquads_cm.c</TD>		<TD>-</TD><TD>-</TD><TD>-</TD><TD>not used in 5.0</TD><TD>&nbsp</TD></TR>
 <TR><TD>v.mkquads.scs</TD><TD>src.contrib/SCS/vector/v.mkquads.scs/mkquads_cm.c</TD>	<TD>-</TD><TD>-</TD><TD>-</TD><TD>not used in 5.0</TD><TD>&nbsp</TD></TR>
 
