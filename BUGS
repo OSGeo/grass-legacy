@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.57 2000-10-29 16:49:27 markus Exp $
+$Id: BUGS,v 1.58 2000-10-31 08:21:27 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -173,7 +173,9 @@ p.map.new:
 
 [RC]r.binfer
  - bug in table.c causing segfault
- - probability "1" not accepted
+ - example scripts say, that value of predefined probabilities does not
+   sum up to 1 although they do
+  (reported by DIETER LEHMANN <lehmann@fh-nuertingen.de>)
   (being worked on by David D Gray)  
 
 [RC]r.buffer
