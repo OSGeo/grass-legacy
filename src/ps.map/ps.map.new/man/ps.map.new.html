@@ -319,6 +319,10 @@ USAGE:	<B>labels</B>  labelfile|<EM>list</EM>
 	<B>font</B> font name
 	<B>end</B>
 </PRE>
+<P>
+NOTE: ps.map.new can read new option 'ROTATE:' from labels file, which
+specifies counter clockwise rotation in degrees. 
+<P>
 This example would paint labels from the labels file called
 <EM>town.names</EM>.  Presumably, these labels would indicate the names of
 towns on the map.
@@ -888,6 +892,7 @@ USAGE:	<B>vector</B> vectormap|<EM>list</EM>
 	<B>hwidth</B> #
 	<B>offset</B> #
 	<B>coffset</B> #
+	<B>ref</B> left|right
 	<B>masked</B> [y|n]
 	<B>style</B>  0-9
 	<B>line_cat</B> #	
@@ -895,44 +900,58 @@ USAGE:	<B>vector</B> vectormap|<EM>list</EM>
 	<B>lpos</B> 0|1-20
 	<B>end</B>
 </PRE>
-The user can specify
-the <B>color</B> of the vector lines or area boundaries;
-the area color (<B>acolor</B>). If acolor is used areas are plotted
+The user can specify:
+<P>
+<B>color</B> - color of the vector lines or area boundaries;
+<P>
+<B>acolor</B> - the area color. If acolor is used areas are plotted
 instead of lines (accepts 3 integers from 0 to 255 for red, green
 and blue separated by spaces);
-the <B>width</B> of the vectors lines or area boundaries in pixels
+<P>
+<B>width</B> - width of the vectors lines or area boundaries in pixels
 (accepts decimal points [floating points] as well as integers);
-the <B>cwidth</B> of the vectors lines. If cwidth is used then 
+<P>
+<B>cwidth</B> - width of the vectors lines. If cwidth is used then 
 width of line is equal to cwidth * category value and width is 
 used in legend;
-the highlight color (<B>hcolor</B>) for the vector lines;
-the width of the highlight color (<B>hwidth</B>) in pixels;
-the <B>offset</B> for the vectors lines in pixels for plotting
+<P>
+<B>hcolor</B> - the highlight color for the vector lines;
+<P>
+<B>hwidth</B> - the width of the highlight color in pixels;
+<P>
+<B>offset</B> (experimental) - offset for the vectors lines in pixels for plotting
 parallel lines in distance equal to offset (accepts positive or 
 negative decimal points);
-the <B>coffset</B> for the vectors lines. If coffset is used then 
+<P>
+<B>coffset</B> (experimental) - offset for the vectors lines. If coffset is used then 
 offset of line is equal to coffset * category value and offset is 
 used in legend;
-whether or not the raster map layer is to be <B>masked</B>
-by the current mask
+<P>
+<B>ref</B> (experimental) - line justification. 
+<P>
+<B>masked</B> - whether or not the raster map layer is to be masked
+by the current mask 
 (see manual entry <EM>
 <A HREF="r.mask.html">r.mask</A>
 </EM> for more information on the mask);
-and the line <B>style</B>.
-The line style allows the vectors
+<P>
+<B>style</B> - the line style allows the vectors
 to be dashed in different patterns.  This is done by typing a
 series of numbers (0's and 1's) in a desired sequence or pattern.
 Blanks and
 non-digit characters are recognized as 0's. Using 0 would allow the
 colors of the raster map layer (or the background color
 if no raster map layer was selected) to show through;
-which category (<B>line_cat</B>) should be plotted (default is all);
-the <B>label</B> for description in vlegend [default is 
-vectormap(mapset)];
-vector is plotted on <B>lpos</B> position in legend. If lpos is
+<P>
+<B>line_cat</B> - which category should be plotted (default is all);
+<P>
+<B>label</B> - for description in vlegend. Default is: 
+map(mapset);
+<P>
+<B>lpos</B> - position vector is plotted in legend. If lpos is
 0 then this vector is omitted in legend. If more vectors used the 
 same lpos then their symbols in legend are merged and label for
-first vector is used. 
+first vector is used.
 
 <P>
 <P>
@@ -1057,34 +1076,60 @@ two columns.  This script file can be entered at the command line:
   <B>ps.map.new input=</B><EM>spear.soils</EM> <B>output=</B><EM>soils.ps</EM>
 </PRE>
 <PRE>
-	(cont.)
-<B>raster</B> soils		<B>vlegend</B>
-<B>vector</B> roads	  	   <B>where</B> 4.5 0
-   <B>width</B> 2	  	   <B>end</B>
-   <B>style</B> 0011		<B>text</B> 608000.00 3476004.73 SPEARFISH SOILS MAP
-   <B>color</B> 1 black	   	   <B>color</B> red  
-   <B>color</B> 2 red	   	   <B>width</B> 2  
-   <B>masked</B> n	   	   <B>hcolor</B> black
-   <B>end</B>	   	   	   <B>hwidth</B> 1  
-<B>labels</B> town.names   	   <B>background</B> white
-<B>region</B> subregion	   <B>border</B> red  
-   <B>color</B> white	   	   <B>size</B> 500
-   <B>width</B> 2	   	   <B>ref</B> lower left
-   <B>end</B>	           	   <B>opaque</B> y
-<B>grid</B> 10000	   	   <B>end</B>
-   <B>color</B> green		<B>line</B> 606969.73 3423092.91 616969.73 3423092.91
-   <B>numbers</B> 2 red	   <B>color</B> yellow
-   <B>end</B>	  	   	   <B>width</B> 2
-<B>outline</B>	   	   	   <B>opaque</B> yes
-   <B>color</B> black	   	   <B>end</B>
-   <B>end</B>			<B>point</B> 40% 60%
-<B>colortable</B> y	   	   <B>color</B> purple
-<B>comments</B> soil.cmt   	   <B>icon</B> diamond
-   <B>font</B> Helvetica   	   <B>size</B> 2	
-   <B>end</B>	   	   	   <B>masked</B> n
-<B>scale</B> 1:25000       	   <B>end</B>	
-<B>setcolor</B> 6,8,9 white	<B>end</B>	
+
+<B>raster</B> soils
+<B>vector</B> roads
+   <B>width</B> 2
+   <B>style</B> 0011
+   <B>color</B> 1 black  
+   <B>color</B> 2 red  
+   <B>masked</B> n
+   <B>end</B>   
+<B>labels</B> town.names
+<B>region</B> subregion	  
+   <B>color</B> white	
+   <B>width</B> 2	
+   <B>end</B>	        
+<B>grid</B> 10000	
+   <B>color</B> green	
+   <B>numbers</B> 2 red	
+   <B>end</B>	  	
+<B>outline</B>	   	
+   <B>color</B> black	
+   <B>end</B>		
+<B>colortable</B> y	
+<B>comments</B> soil.cmt
+   <B>font</B> Helvetica	
+   <B>end</B>	   	
+<B>scale</B> 1:25000    	
+<B>setcolor</B> 6,8,9 white	
 <B>setcolor</B> 10 green
+<B>vlegend</B>
+    <B>where</B> 4.5 0
+    <B>end</B>
+<B>text</B> 608000.00 3476004.73 SPEARFISH SOILS MAP
+    <B>color</B> red  
+    <B>width</B> 2  
+    <B>hcolor</B> black
+    <B>hwidth</B> 1  
+    <B>background</B> white
+    <B>border</B> red  
+    <B>size</B> 500
+    <B>ref</B> lower left
+    <B>opaque</B> y
+    <B>end</B>
+<B>line</B> 606969.73 3423092.91 616969.73 3423092.91
+    <B>color</B> yellow
+    <B>width</B> 2
+    <B>opaque</B> yes
+    <B>end</B>
+<B>point</B> 40% 60%
+    <B>color</B> purple
+    <B>icon</B> diamond
+    <B>size</B> 2	
+    <B>masked</B> n
+    <B>end</B>	
+<B>end</B>	
 
 </PRE>
 
@@ -1107,8 +1152,4 @@ at this level.
 
 <H2>AUTHOR</H2>
 
-Paul Carlson, USDA, SCS, NHQ-CGIS<br>
-updates by: Radim Blazek (Radim.Blazek@dhv.cz)
-</BODY>
-</HTML>
-
+Paul Carlson, USDA, SCS, NHQ-CGIS<BR>Modifications: Radim Blazek
