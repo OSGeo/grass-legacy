@@ -34,7 +34,7 @@ int WriteProfile(char *raster, char *mapset,
         return 0;
     
     /* Each profile has the letter appended to the name */
-    snprintf(outfile, strlen(fname) + 3, "%s.%c", fname, letter);
+    sprintf(outfile, "%s.%c", fname, letter);
     outFile = fopen (outfile, "w");
     if (outFile == NULL)
         return -1;
@@ -86,24 +86,24 @@ char * _fmt_ucat(UCAT *c, UCAT *min, char *s)
     {
         case CELL_TYPE:
             if (c->val.c == INT_MIN)
-                snprintf (s, UCAT_STR_SIZE, "%d", min->val.c);
+                sprintf (s, "%d", min->val.c);
             else
-                snprintf (s, UCAT_STR_SIZE, "%d", c->val.c);
+                sprintf (s, "%d", c->val.c);
             break;
         case FCELL_TYPE:
             if (c->val.f == FLT_MIN)
-                snprintf (s, UCAT_STR_SIZE, "%f", min->val.f);
+                sprintf (s, "%f", min->val.f);
             else
-                snprintf (s, UCAT_STR_SIZE, "%f", c->val.f);
+                sprintf (s, "%f", c->val.f);
             break;
         case DCELL_TYPE:
             if (c->val.d == DBL_MIN)
-                snprintf (s, UCAT_STR_SIZE, "%lf", min->val.d);
+                sprintf (s,"%lf", min->val.d);
             else
-                snprintf (s, UCAT_STR_SIZE, "%lf", c->val.d);
+                sprintf (s, "%lf", c->val.d);
             break;
         default: /* Shouldn't happen */
-            snprintf (s, UCAT_STR_SIZE, "\0");
+            *s = '\0';
     }
 
     return s;
