@@ -1,5 +1,5 @@
-/* $Id$ 
- * r.in.mat
+/* r.in.mat
+ * $Id$ 
  *
  * Input a GRASS raster file from a MAT-File (version 4).
  *
@@ -18,7 +18,7 @@
  *
  *  AND OPTIONALLY :
  *    map_name             name for new map (max 64 chars, normal rules apply)
- *    map_title            contains map title (max 40 chars)
+ *    map_title            contains map title
  *
  *  THESE MUST BE PRESENT UNLESS USING THE "XY" PROJECTION :
  *    map_northern_edge
@@ -70,8 +70,8 @@ int main(int argc, char *argv[]) {
     double *pval_d;	/* for misc use */
     char c, *buff;	/* for misc use */
 
-    char map_name[65], map_title[41];
-    double map_name_d[65];  /* I'm not sure why you'd save char strings as double, but whatever */
+    char map_name[65], map_title[1024];
+    double map_name_d[1024];  /* I'm not sure why you'd save char strings as double, but whatever */
 
     int have_name, have_data, have_title, have_n, have_s, have_e, have_w;
 
@@ -279,7 +279,7 @@ int main(int argc, char *argv[]) {
 
 	else if (strcmp(array_name, "map_title") == 0) {
 	    have_title = 1;
-	    if(mrows != 1 || ncols > 40 || data_type != 1)
+	    if(mrows != 1 || ncols > 1023 || data_type != 1)
 		G_fatal_error("invalid 'map_title' array");
 
 	    if(data_format == 5 )
@@ -501,7 +501,7 @@ int main(int argc, char *argv[]) {
 
 
     if (! have_title)
-	strncpy(map_title, infile, 40);
+	strncpy(map_title, infile, 1023);
 
     G_put_cell_title (map_name, map_title);
 
