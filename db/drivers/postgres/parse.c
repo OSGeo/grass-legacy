@@ -4,7 +4,6 @@
 #include <dbmi.h>
 #include "globals.h"
 #include "proto.h"
-#include "../dialog/dbd.h"
 
 /* Parse connection string in form: 1) 'database_name'
 *  2) 'host=xx,port=xx,dbname=xx,user=xx,password=xx'
