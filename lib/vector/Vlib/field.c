@@ -396,7 +396,7 @@ Vect_subst_var ( char *in, char *map, char *mapset )
     char *c;
     char buf[1000], str[1000];
     
-    G_debug (0, "Vect_subst_var(): in = %s, map = %s, mapset = %s", in, map, mapset);
+    G_debug (3, "Vect_subst_var(): in = %s, map = %s, mapset = %s", in, map, mapset);
     
     strcpy ( str, in );
     
@@ -428,7 +428,7 @@ Vect_subst_var ( char *in, char *map, char *mapset )
         sprintf (str, "%s%s%s", buf, map, c+4 );
     }
     
-    G_debug (0, "  -> %s", str);
+    G_debug (3, "  -> %s", str);
     return ( G_store(str) );
 }
 
