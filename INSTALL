@@ -1,6 +1,6 @@
                    INSTALL GRASS 5.0 source code
 
-($Id: INSTALL,v 1.15 2001-01-05 04:42:16 justin Exp $)
+($Id: INSTALL,v 1.16 2001-01-13 09:33:36 markus Exp $)
 
 Welcome to the GRASS GIS source code distribution. This is the installation
 instruction file and contains the following sections:
@@ -17,6 +17,7 @@ Please read through these sections before installing GRASS.
 
 ************  IMPORTANT READ THIS  *********************************
 
+Note for version *later* than beta11:
 Because of the UNISYS patent on the LZW compression algorithm, on
 December 16, 2000, GRASS library code no longer uses this method
 to compress floating point rasters and G3D files.  Unfortunately,
@@ -208,12 +209,18 @@ To compile a single module go into the module's directory and compile it with:
 
    gmake5
 
-Finally the module has to be linked to the GRASS front.end by:
+Then the module has to be linked to the GRASS front.end by:
   
    gmakelinks5
 
-Then you should be able to use the module. Note that gmakelinks5 only needs to
-be run once after the module is compiled.
+Finally you have to install it:
+   cd root_of_grass_sources
+   make install
+
+Then you should be able to use the module. Note that gmakelinks5 only needs
+to be run once after the module is compiled, but you always need to run the
+make install procedure (full installation). This will be improved in GRASS
+5.1.
 
 If you did not run "make install" then gmake5 and gmakelinks5 will be located
 in the bin.$ARCH/ directory. Note that you will have to specify the absolute 
