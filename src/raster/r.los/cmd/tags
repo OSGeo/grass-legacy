@@ -1,0 +1,10 @@
+Mmain	main.c	/^main(argc,argv)$/
+decide_color_range	color_rnge.c	/^double decide_color_range(max_inclination,COLOR_SH/
+delete	delete.c	/^struct point *delete(PT_TO_DELETE,head,seg_out_p,r/
+find_inclination	pts_elim.c	/^double find_inclination(x,y,viewpt_elev,seg_in_p,$/
+find_orientation	pts_elim.c	/^double find_orientation(x,y,quadrant)$/
+hidden_point_elimination	pts_elim.c	/^struct point *hidden_point_elimination(head,viewpt/
+make_list	make_list.c	/^struct point *make_list(head,y,x,seg_in_p,viewpt_e/
+make_point	make_point.c	/^struct point *make_point(orientation,inclination,y/
+mark_visible_points	mark_pts.c	/^mark_visible_points(head,seg_out_p,row_viewpt,col_/
+segment	newsegment.c	/^struct point *segment(segment_no, xmax, ymax,$/
