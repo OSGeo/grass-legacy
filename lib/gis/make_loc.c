@@ -139,19 +139,19 @@ G_compare_projections( struct Key_Value *proj_info1,
 /*      Are they both in the same projection?                           */
 /* -------------------------------------------------------------------- */
     if( G_find_key_value( "proj", proj_info1 ) != NULL
-        && G_find_key_value( "meter", proj_units1 ) != NULL
-        && atof(G_find_key_value( "meter", proj_units1 ))
-           != atof(G_find_key_value( "meter", proj_units2 )) )
+        && G_find_key_value( "meters", proj_units1 ) != NULL
+        && atof(G_find_key_value( "meters", proj_units1 ))
+           != atof(G_find_key_value( "meters", proj_units2 )) )
         return -1;
 
 /* -------------------------------------------------------------------- */
 /*      Verify that the linear unit translation to meters is OK.        */
 /* -------------------------------------------------------------------- */
     if( proj_units1 != NULL && proj_units2 != NULL
-        && G_find_key_value( "meter", proj_units1 ) != NULL
-        && G_find_key_value( "meter", proj_units2 ) != NULL
-        && atof(G_find_key_value( "meter", proj_units1 ))
-           != atof(G_find_key_value( "meter", proj_units2 )) )
+        && G_find_key_value( "meters", proj_units1 ) != NULL
+        && G_find_key_value( "meters", proj_units2 ) != NULL
+        && atof(G_find_key_value( "meters", proj_units1 ))
+           != atof(G_find_key_value( "meters", proj_units2 )) )
         return -2;
 
 /* -------------------------------------------------------------------- */
