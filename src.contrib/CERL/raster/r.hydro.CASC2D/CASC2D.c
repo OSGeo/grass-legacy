@@ -199,7 +199,7 @@ int main (int argc, char *argv[])
 	    *inf_rate_file[2000],*dis_rain_file[2000];
      char   *radar_file[10000];
 
-     struct Colors *colors;
+     struct Colors colors;
 
 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   Explicit Channel Variables 
@@ -2333,7 +2333,7 @@ for ( itime=1; itime<=niter+1; itime++ )
 		 yes_priess,ltype,nx1,chn_row,chn_col,hch,yp,bel,
 		 depth_tmp,inf_tmp,surf_moist_tmp,inf_rate_tmp,
 		 dis_rain_tmp,nitrn,vinf,surf_moist,frate,rint,space,
-		 yes_lake,elev,colors);
+		 yes_lake,elev,&colors);
         }
      }
 
@@ -2451,7 +2451,7 @@ for ( itime=1; itime<=niter+1; itime++ )
 		   yes_priess,ltype,nx1,chn_row,chn_col,hch,yp,bel,
 		   depth_tmp,inf_tmp,surf_moist_tmp,inf_rate_tmp,
 		   dis_rain_tmp,nitrn,vinf,surf_moist,frate,rint,space,
-		   yes_lake,elev,colors);
+		   yes_lake,elev,&colors);
 	       goto PRINT;
              }
 
@@ -2517,11 +2517,15 @@ for ( itime=1; itime<=niter+1; itime++ )
 		if(htop>hch[node+link*NODES])
 		{
                    qtoch=3.27*w*pow((base=h[vect]),(power=1.5));
+		   if(qtoch > h[vect]*w*w/dt)
+			   qtoch = h[vect]*w*w/dt;
                    h[vect]=h[vect]-qtoch*dt/(w*w);
                 }
 		else
 		{
                    qtoch=-1.*(hch[node+link*NODES]-htop)*(wid+2.*z*depth)*w/dt;
+		   if(qtoch > h[vect]*w*(w+wid+2.*z*depth)/dt)
+			   qtoch = h[vect]*w*(w+wid+2.*z*depth)/dt;
                    h[vect]=h[vect]-qtoch*dt/(w*(w+wid+2.*z*depth));
                 }   
 
@@ -2547,7 +2551,7 @@ for ( itime=1; itime<=niter+1; itime++ )
 		   yes_priess,ltype,nx1,chn_row,chn_col,hch,yp,bel,
 		   depth_tmp,inf_tmp,surf_moist_tmp,inf_rate_tmp,
 		   dis_rain_tmp,nitrn,vinf,surf_moist,frate,rint,space,
-		   yes_lake,elev,colors);
+		   yes_lake,elev,&colors);
 
 		   goto PRINT; 
 
@@ -2692,6 +2696,8 @@ for ( itime=1; itime<=niter+1; itime++ )
 
              qtoch=2.0*w*(2.0/3.0)*sqrt((double)(2.0*9.81/3.0))*pow((double)
                    (h[con_vect[node+link*NODES]]),(double)(3.0/2.0));
+	     if(qtoch > h[con_vect[node+link*NODES]]*w*w/dt)
+		   qtoch = h[con_vect[node+link*NODES]]*w*w/dt;
              qlat[node+link*NODES]=qtoch/w;
 	     h[con_vect[node+link*NODES]]=h[con_vect[node+link*NODES]]
 		        		     -qtoch*dt/(w*w);
@@ -2766,6 +2772,8 @@ for ( itime=1; itime<=niter+1; itime++ )
      {
         hout=h[vectout]; 
         qoutov=w*alfaovout*pow((base=hout),(power=1.667));
+	if(qoutov > h[vectout]*w*w/dt)
+	   qoutov = h[vectout]*w*w/dt;
         h[vectout]=h[vectout]-qoutov*dt/(w*w);
         qout=qoutov;
      }
