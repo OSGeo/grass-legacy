@@ -37,7 +37,7 @@ double scale = 1.0;
 
 extern void getraster( char*, int, int);
 extern long read_e00_line( char*);
-extern int getinfo( char*, int);
+extern int getinfo( char*, int, int);
 extern int getarcs( char*, int, int);
 extern void getproj( void);
 extern void getsites( char*, int);
@@ -314,7 +314,7 @@ int main( int argc, char *argv[])
 	/* to find wether it's a polygone or line coverage           */
 	    if (todo == VECTOR || todo == ALL)
 		if (todo == ANALYSE)
-		     cover = getinfo( name, 0, 0, 0);
+		     cover = getinfo( name, 0, 0);
 		else
 	/* If we have only offset_lab != 0, it's a point coverage.  Don't */
 	/* create a dig_cat file, but keep attributes for site file       */
