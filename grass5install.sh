@@ -4,7 +4,6 @@
 # platform indendent
 
 # $Id$
-# Version 11
 # 1999-2000 by Markus Neteler, neteler@geog.uni-hannover.de
 
 ######################################################
