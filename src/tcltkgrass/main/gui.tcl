@@ -727,7 +727,9 @@ proc execute {command path button terminal} {
     switch [$path cget -text] {
         Run {
             if {$button == 1} {
-                set name [concat $cmd]
+				set prog [lindex $cmd 0]
+				set args [lrange $cmd 1 end]
+				set name [eval concat $prog [list $args]]
                 set see [expr {[lindex $cmd 0] == "g.manual"} ? 0 : -1]
             } elseif {$button == 2} {
                 set name "g.manual [lindex $root 0]"
