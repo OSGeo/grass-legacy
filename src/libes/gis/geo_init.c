@@ -1,7 +1,140 @@
 #include "geo.h"
 #include "gis.h"
 
-int init_table(void)
+/* Copied from geo.h - remove when all uses are cleaned up */
+#if 0
+int ier, proj_index, zone, snum, spath;
+
+double radius, kfact, mfact, msfact, nfact, 
+       qfact, wfact, unit_fact, x_false, y_false, heigh, azim, tilt;
+
+struct used_opt USED_in[NOPTIONS];
+struct used_opt USED_out[NOPTIONS];
+
+double LLSTUFF[NLLSTUFF];
+
+#endif
+
+/* ------- # Linear Unit(s) to Meters Conversions # ----------- */
+const struct conv_fact UNITS[NUNITS] = {
+    /* If you add to this, add to NUNITS in geo.h */
+    /* units, unit, fact */
+    {"meters", "meter", 1.0},
+    {"feet", "foot", 0.3048},
+    {"miles", "mile", 1609.344},
+    {"inches", "inch", 2.540000e-02},
+    {"centimeters", "centimeter", 0.01},
+    {"nanometers", "nanometer", 1.000000e-09},
+    {"microns", "micron", 1.000000e-06},
+    {"angstroms", "angstrom", 1.000000e-10},
+    {"decinanometers", "decinanometer", 1.000000e-10},
+    {"yards", "yard", 0.9144},
+    {"rods", "rod", 5.0292},
+    {"lightyears", "lightyear", 9.460530e+15},
+    {"USfeet", "USfoot", 0.34080060960121920243},
+    {"USinches", "USinch", .02540005080010160020},
+    {"USyards", "USyard", .91440182880365760731},
+    {"USmiles", "USmile", 1609.34721869443738887477}
+
+/*** other factors ***
+   british		1200|3937 m/ft
+   nmile		1852m
+   arpentlin		191.835 ft
+   barleycorn		1|3 in
+   bolt  		40 yd
+   bottommeasure	1|40 in
+   cable		720 ft
+   caliber		1-2 in
+   chain		66 ft
+   cordfoot		cord
+   cubit		18 in
+   ell   		45 in
+   engineerschain	100 ft
+   engineerslink	100|100 ft
+   fathom		6 ft
+   fermi		1-15 m
+   finger		7|8 in
+   furlong		220 yd
+   geodeticfoot		british-ft
+   geographicalmile	1852 m
+   gunterschain		22 yd
+   hand  		4 in
+   league		3 mi
+   line 		1|12 in
+   link 		66|100 ft
+   marineleague		3 nmile
+   mil  		1-3 in
+   nauticalmile		nmile
+   pace 		36 in
+   palm			3 in
+   parasang		3.5 mi
+   pica  		1|6 in
+   point		1|72 in
+   quarter 		9 in
+   rope 		20 ft
+   skein 		120 yd
+   span 		9 in
+   spindle 		14400 yd
+   surveyfoot 		british-ft
+   surveyorschain	66 ft
+   surveyorslink	66|100 ft
+ */
+}; /* const struct conv_fact UNITS[NUNITS] = ... */
+
+
+/* --------- # Descriptions of Projection Options # --------------------- */
+const char DESC[NOPTIONS][63] = {
+/* MAX LEN = 62    "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" */
+/*  0 - LAT0    */ "Central Parallel [lat_0]",
+/*  1 - LAT1    */ "First Standard Parallel [lat_1]",
+/*  2?- OLAT1   */ "",
+/*  3 - LAT2    */ "Second Standard Parallel [lat_2]",
+/*  4?- OLAT2   */ "",
+/*  5 - LAT3    */ "Third Standard Parallel [lat_3]",
+/*  6 - LATTS   */ "Latitude of True Scale [lat_ts]",
+/*  7 - LATB    */ "Angular Distance from Tangency Point [lat_b]",
+/*  8 - OLATP   */ "Latitude of New Pole [o_lat_p]",
+/*  9 - LON0    */ "Central Meridian [lon_0]",
+/* 10 - LON1    */ "First Standard Meridian [lon_1]",
+/* 11?- OLON1   */ "",
+/* 12 - LON2    */ "Second Standard Meridian [lon_2]",
+/* 13?- OLON2   */ "",
+/* 14 - LON3    */ "Third Standard Meridian [lon_3]",
+/* 15 - LONC    */ "Longitude of Cartesian Origin [lon_c]",
+/* 16?- OLONC   */ "",
+/* 17 - OLONP   */ "Longitude of New Pole [o_lon_p]",
+/* 18 - ALPHA   */ "Azimuth angle at Cartesian Origin [alpha]",
+/* 19?- OALPHA  */ "",
+/* 20 - THETA   */ "Theta Angle [theta]",
+/* 21 - AZIM    */ "Azimuth Angle of Tilt in Decimal degrees [azi]",
+/* 22 - TILT    */ "Tilt Angle in Decimal Degrees [tilt]",
+/* 23 - HEIGH   */ "Height of Viewing Point in Meters [h]",
+/* 24 - KFACT   */ "Scale Factor at the Central Meridian [k_0]",
+/* 25 - MFACT   */ "m factor [m]",
+/* 26 - MSFACT  */ "M factor [M]",
+/* 27 - NFACT   */ "n factor [n]",
+/* 28 - QFACT   */ "q factor [q]",
+/* 29 - WFACT   */ "W factor [W]",
+/* 30 - X0      */ "False Easting [x_0]",
+/* 31 - Y0      */ "False Northing [y_0]",
+/* 32 - ZONE    */ "Projection Zone [zone]",
+/* 33 - SNUM    */ "Satellite Number [lsat]",
+/* 34 - SPATH   */ "Satellite Path Number [path]",
+/* 35?- INTHIGH */ "",
+/* 36 - LOTSA   */ "LOTSA [lotsa]",
+/* 37 - NOCUT   */ "Both Hemispheres [no_cut]",
+/* 38?- NODEFS  */ "",
+/* 39 - NOROT   */ "Suppress Rotation [no_rot]",
+/* 40 - NOSKEW  */ "Suppress Skew [ns]",
+/* 41 - NOUOFF  */ "Suppress Offset from Pre-Rotated Axis [no_uoff]",
+/* 42 - ROTCONV */ "Origin Convergence Angle [rot_conv]",
+/* 43 - SOUTH   */ "South Hemisphere"
+};
+
+
+struct opt_req TABLE[NPROJES][NOPTIONS]; 
+
+int G_geo_init_table(void)
 {
 	int i, j;
 
@@ -1322,48 +1455,10 @@ int init_table(void)
 	TABLE[WINTRI][LAT1].def_exists = 1;
 	TABLE[WINTRI][LAT1].deflt = 0.0;
 
-	/* MAX STRLEN = 63 */
-	sprintf(DESC[LAT0], "Central Parallel [lat_0]");
-	sprintf(DESC[LON0], "Central Meridian [lon_0]");
-	sprintf(DESC[LAT1], "First Standard Parallel [lat_1]");
-	sprintf(DESC[LON1], "First Standard Meridian [lon_1]");
-	sprintf(DESC[LAT2], "Second Standard Parallel [lat_2]");
-	sprintf(DESC[LON2], "Second Standard Meridian [lon_2]");
-	sprintf(DESC[LAT3], "Third Standard Parallel [lat_3]");
-	sprintf(DESC[LON3], "Third Standard Meridian [lon_3]");
-	sprintf(DESC[LATTS], "Latitude of True Scale [lat_ts]");
-	sprintf(DESC[LATB], "Angular Distance from Tangency Point [lat_b]");
-	sprintf(DESC[LONC], "Longitude of Cartesian Origin [lon_c]");
-	sprintf(DESC[ALPHA], "Azimuth angle at Cartesian Origin [alpha]");
-	sprintf(DESC[THETA], "Theta Angle [theta]");
-	sprintf(DESC[OLONP], "Longitude of New Pole [o_lon_p]");
-	sprintf(DESC[OLATP], "Latitude of New Pole [o_lat_p]");
-	sprintf(DESC[ZONE], "Projection Zone [zone]");
-	sprintf(DESC[SOUTH], "South Hemisphere");
-	sprintf(DESC[KFACT], "Scale Factor at the Central Meridian [k_0]");
-	sprintf(DESC[X0], "False Easting [x_0]");
-	sprintf(DESC[Y0], "False Northing [y_0]");
-	sprintf(DESC[NOCUT], "Both Hemispheres [no_cut]");
-	sprintf(DESC[LOTSA], "LOTSA [lotsa]");
-	sprintf(DESC[NOROT], "Suppress Rotation [no_rot]");
-	sprintf(DESC[NOSKEW], "Suppress Skew [ns]");
-	sprintf(DESC[NOUOFF], "Suppress Offset from Pre-Rotated Axis [no_uoff]");
-	sprintf(DESC[ROTCONV], "Origin Convergence Angle [rot_conv]");
-	sprintf(DESC[HEIGH], "Height of Viewing Point in Meters [h]");
-	sprintf(DESC[AZIM], "Azimuth Angle of Tilt in Decimal degrees [azi]");
-	sprintf(DESC[TILT], "Tilt Angle in Decimal Degrees [tilt]");
-	sprintf(DESC[SNUM], "Satellite Number [lsat]");
-	sprintf(DESC[SPATH], "Satellite Path Number [path]");
-	sprintf(DESC[MFACT], "m factor [m]");
-	sprintf(DESC[MSFACT], "M factor [M]");
-	sprintf(DESC[NFACT], "n factor [n]");
-	sprintf(DESC[QFACT], "q factor [q]");
-	sprintf(DESC[WFACT], "W factor [W]");
 	return 1;
 }
 
-int get_proj_index(str)
-char *str;
+int G_geo_get_proj_index(char *str)
 {
 	if (G_strcasecmp(str, "LL") == 0)
 		return LL;
@@ -1615,6 +1710,8 @@ char *str;
 	return -1;	/* added by M. Shapiro: 22Jan93 */
 }
 
+#if 0
+/* remove this when all external references are cleaned up */
 int init_used_table(void)
 {
 	int i;
@@ -1628,97 +1725,8 @@ int init_used_table(void)
 
 int init_unit_table()
 {
-	sprintf(UNITS[0].units, "meters");
-	sprintf(UNITS[0].unit, "meter");
-	UNITS[0].fact = 1.0;
-
-	sprintf(UNITS[1].units, "feet");
-	sprintf(UNITS[1].unit, "foot");
-	UNITS[1].fact = 0.3048;
-
-	sprintf(UNITS[2].units, "miles");
-	sprintf(UNITS[2].unit, "mile");
-	UNITS[2].fact = 1609.344;
-
-	sprintf(UNITS[3].units, "inches");
-	sprintf(UNITS[3].unit, "inch");
-	UNITS[3].fact = 2.540000e-02;
-
-	sprintf(UNITS[4].units, "centimeters");
-	sprintf(UNITS[4].unit, "centimeter");
-	UNITS[4].fact = 0.01;
-
-	sprintf(UNITS[5].units, "nanometers");
-	sprintf(UNITS[5].unit, "nanometer");
-	UNITS[5].fact = 1.000000e-09;
-
-	sprintf(UNITS[6].units, "microns");
-	sprintf(UNITS[6].unit, "micron");
-	UNITS[6].fact = 1.000000e-06;
-
-	sprintf(UNITS[7].units, "angstroms");
-	sprintf(UNITS[7].unit, "angstrom");
-	UNITS[7].fact = 1.000000e-10;
-
-	sprintf(UNITS[8].units, "decinanometers");
-	sprintf(UNITS[8].unit, "decinanometer");
-	UNITS[8].fact = 1.000000e-10;
-
-	sprintf(UNITS[9].units, "yards");
-	sprintf(UNITS[9].unit, "yard");
-	UNITS[9].fact = 0.9144;
-
-	sprintf(UNITS[10].units, "rods");
-	sprintf(UNITS[10].unit, "rod");
-	UNITS[10].fact = 5.0292;
-
-	sprintf(UNITS[11].units, "lightyears");
-	sprintf(UNITS[11].unit, "lightyear");
-	UNITS[11].fact = 9.460530e+15;
-
-	return 1;
+    /* just dummy til we clean up the callers */
+    return 1;
 }
+#endif
 
-/*
-   british		1200|3937 m/ft
-   nmile		1852m
-   arpentlin		191.835 ft
-   barleycorn		1|3 in
-   bolt  		40 yd
-   bottommeasure	1|40 in
-   cable		720 ft
-   caliber		1-2 in
-   chain		66 ft
-   cordfoot		cord
-   cubit		18 in
-   ell   		45 in
-   engineerschain	100 ft
-   engineerslink	100|100 ft
-   fathom		6 ft
-   fermi		1-15 m
-   finger		7|8 in
-   furlong		220 yd
-   geodeticfoot		british-ft
-   geographicalmile	1852 m
-   gunterschain		22 yd
-   hand  		4 in
-   league		3 mi
-   line 		1|12 in
-   link 		66|100 ft
-   marineleague		3 nmile
-   mil  		1-3 in
-   nauticalmile		nmile
-   pace 		36 in
-   palm			3 in
-   parasang		3.5 mi
-   pica  		1|6 in
-   point		1|72 in
-   quarter 		9 in
-   rope 		20 ft
-   skein 		120 yd
-   span 		9 in
-   spindle 		14400 yd
-   surveyfoot 		british-ft
-   surveyorschain	66 ft
-   surveyorslink	66|100 ft
- */
