@@ -335,6 +335,7 @@ proc dump_rgb { } {
     appBusy
 
     if {$fname != -1} then {
+	Ndraw_all
 	Nwrite_rgb $fname
     }
     # show user can proceed
@@ -348,7 +349,8 @@ proc dump_ppm { } {
     appBusy
 
     if {$fname != -1} then {
-       Nwrite_ppm $fname
+	Ndraw_all
+	Nwrite_ppm $fname
     }
     # show user can proceed
     appNotBusy
@@ -361,7 +363,8 @@ proc dump_tif { } {
     appBusy
 
     if {$fname != -1} then {
-       Nwrite_tif $fname
+	Ndraw_all
+	Nwrite_tif $fname
     }
     # show user can proceed
     appNotBusy
