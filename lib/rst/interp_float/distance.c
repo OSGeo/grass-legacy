@@ -24,7 +24,7 @@ IL_dist_square (double *pt1, double *pt2, int dim)
   for (i = 0; i < dim; i++)
   {
     s = pt1[i] - pt2[i];
-    sum + = s * s;
+    sum += s * s;
   }
   return sum;
 }
