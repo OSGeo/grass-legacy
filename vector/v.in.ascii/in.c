@@ -200,10 +200,14 @@ main (int argc, char *argv[])
 	    fprintf ( stderr, "Minimum number of columns: %d\n", minncols);
 
 	    /* check column numbers */
-	    if ( xcol >= minncols ) G_fatal_error ( "x column number > minimum last column number"); 
-	    if ( ycol >= minncols ) G_fatal_error ( "y column number > minimum last column number"); 
-	    if ( zcol >= minncols ) G_fatal_error ( "z column number > minimum last column number"); 
-	    if ( catcol >= minncols ) G_fatal_error ( "cat column number > minimum last column number"); 
+	    if ( xcol >= minncols )
+		G_fatal_error("x column number > minimum last column number\n(incorrect field separator?)");
+	    if ( ycol >= minncols )
+		G_fatal_error("y column number > minimum last column number\n(incorrect field separator?)");
+	    if ( zcol >= minncols )
+		G_fatal_error("z column number > minimum last column number\n(incorrect field separator?)");
+	    if ( catcol >= minncols )
+		G_fatal_error("cat column number > minimum last column number\n(incorrect field separator?)");
 
 	    if ( coltype[xcol] == DB_C_TYPE_STRING ) G_fatal_error ( "x column is not of number type");
 	    if ( coltype[ycol] == DB_C_TYPE_STRING ) G_fatal_error ( "y column is not of number type");
