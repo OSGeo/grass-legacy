@@ -8,5 +8,5 @@ include $(MODULE_TOPDIR)/include/Make/Lib.make
 default: lib symb
 
 symb:
-	mkdir -p $(GISBASE)/etc/symbol
-	cp -r symbol/* $(GISBASE)/etc/symbol/ 
+	mkdir -p $(ETC)/symbol
+	(cd symbol/ ; tar cBf - * --exclude=CVS | (cd $(ETC)/symbol/; tar xBf - ) )
