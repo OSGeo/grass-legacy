@@ -115,6 +115,7 @@ case OPEN_NEW_RANDOM: fprintf (stderr, "close %s random\n",FCB.name); break;
 	    for (row = FCB.cur_row; row < FCB.cellhd.rows; row++)
 	        G_put_raster_row (fd, FCB.data, FCB.map_type);
             free (FCB.data);
+	    FCB.data = NULL;
 	}
 
         /* create path : full null file name */
