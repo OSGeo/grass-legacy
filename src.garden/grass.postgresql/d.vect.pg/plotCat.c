@@ -39,6 +39,7 @@ int plotCat (name, mapset, points, vect_cat, Map, fillcolr)
     double **xs, **ys;
     int rings;
     int *rpnts;
+    struct line_pnts *points_i;
 
     fflush (stdout);
 
@@ -74,29 +75,35 @@ int plotCat (name, mapset, points, vect_cat, Map, fillcolr)
             rings = 1 + pa->n_isles;
             xs = (double **) G_malloc (sizeof(double *) * rings);
             ys = (double **) G_malloc (sizeof(double *) * rings);
-            rpnts = (int *) G_malloc (sizeof (int) * rings);
-	    
-	    
+            rpnts = (int *) G_malloc (sizeof (int) * rings);	    
 	    
             Vect_get_area_points (Map, a_index, points);
             rpnts[0] = points->n_points;
             xs[0] = (double *) G_malloc (sizeof(double) * rpnts[0]);
             ys[0] = (double *) G_malloc (sizeof(double) * rpnts[0]);
             Vect_copy_pnts_to_xy (points, xs[0], ys[0], &rpnts[0]);
-            for (j = 0; j < pa->n_isles; j++) {
-                Vect_get_isle_points (Map, pa->isles[j], points);
-                rpnts[j+1] = points->n_points;
+            
+	    points_i = Vect_new_line_struct();
+	    
+	    for (j = 0; j < pa->n_isles; j++) {
+                Vect_get_isle_points (Map, pa->isles[j], points_i);
+                rpnts[j+1] = points_i->n_points;
                 xs[j+1] = (double *) G_malloc (sizeof(double) * rpnts[j+1]);
                 ys[j+1] = (double *) G_malloc (sizeof(double) * rpnts[j+1]);
-                Vect_copy_pnts_to_xy (points, xs[j+1], ys[j+1], &rpnts[j+1]);
+                Vect_copy_pnts_to_xy (points_i, xs[j+1], ys[j+1], &rpnts[j+1]);
             }
 
            if (fillcolr) G_plot_area (xs, ys, rpnts, rings);
 	   
-           for (j = 0; j < points->n_points - 1; j++)
+           for (j = 0; j < points_i->n_points - 1; j++)
+                G_plot_line (points_i->x[j],   points_i->y[j],
+                        points_i->x[j+1], points_i->y[j+1]);
+			
+	   for (j = 0; j < points->n_points - 1; j++)
                 G_plot_line (points->x[j],   points->y[j],
                         points->x[j+1], points->y[j+1]);
 	    
+	    Vect_destroy_line_struct (points_i);
 	    
             for (j = 0; j < rings; j++)
             {
