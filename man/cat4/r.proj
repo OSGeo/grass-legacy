@@ -1,0 +1,132 @@
+
+
+
+r.proj <contrib>      GRASS Reference Manual	 <contrib> r.proj
+
+
+
+NAME
+     r.proj - projection conversion of a raster map.
+     (GRASS Raster Program)
+
+SYNOPSIS
+     r.proj
+     r.proj help
+     r.proj [-B|C] -m source_map -l source_location [-o
+     target_map] [-s source_mapset] [-d source_gisdbase]
+
+DESCRIPTION
+     r.proj allows a user to convert a raster map in a specified
+     mapset of a specified location (different from current) with
+     the projection of this source location, to a raster map in
+     the current mapset of a target location with the projection
+     of this target location.  Both projections are defined in
+     PROJ_INFO files in the PERMANENT directories of the
+     respective locations.
+
+     The size and resolution of the target map are controlled by
+     the current region, as set using g.region.
+
+     r.proj creates the correct cellhd file, and copies the cats
+     and colr files from the source mapset.
+
+OPTIONS
+     Flags:
+
+     -B|C	       Local interpolation method used:
+		       B=bilinear, C=cubic, default=nearest
+		       neighbour.
+
+     Parameters:
+
+     -m source_map     Name of input raster map.
+
+     -l source_location
+		       Name of location containing input raster
+		       map.
+
+     -o target_map     Name of output raster map
+		       (default=source_map).
+
+     -s source_mapset  Name of mapset containing input raster map
+		       (default=same as current mapset).
+
+     -d source_gisdbase
+		       Name of database containing input location
+		       (default=current gisdbase).
+
+NOTES
+     This is implemented as a Bourne shell script, which calls
+
+
+
+GRASS 4.3		Baylor University			1
+
+
+
+
+
+
+r.proj <contrib>      GRASS Reference Manual	 <contrib> r.proj
+
+
+
+     r.stats (GRASS main), the PROJ program (Gerry Evenden), and
+     s.sample (Darrell McCauley), so all these programs need to
+     installed and running in order for r.proj to work.
+
+SEE ALSO
+     v.proj, g.setproj, PROJ4.0, s.sample, g.region
+
+BUGS
+     Only tested for a few projections.	 Uses a very large
+     temporary ascii file.  The s.sample step does not scale
+     well;  this part needs to be rewritten by sorting the site-
+     list according to the y coordinate, and then keeping rows of
+     the source map in buffers to cut down the number of get_row
+     calls which are quite expensive.
+
+     Please send all bug fixes and comments to the author.
+
+AUTHOR
+     Simon Cox, AGCRC, CSIRO Exploration & Mining
+     (simon@ned.dem.csiro.au)
+
+NOTICE
+     This program is part of the contrib section of the GRASS
+     distribution.  As such, it is externally contributed code
+     that has not been examined or tested by the Office of GRASS
+     Integration.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.3		Baylor University			2
+
+
+
