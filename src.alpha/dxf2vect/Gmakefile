@@ -1,0 +1,42 @@
+PGM = dxf2vect
+BIN = .
+
+SOURCES =	\
+		dxf_extents.c \
+		dxf_line.c \
+		dxf_point.c \
+		dxf_polyline.c \
+		dxf_ext.c \
+		dxf_entities.c \
+		dxf_lines.c \
+		dxf_init.c \
+		dxf_header.c \
+		dxf_layer.c \
+		dxf_which.c \
+		main.c
+
+LIST =	\
+	dxf_extents.o \
+	dxf_line.o \
+	dxf_point.o \
+	dxf_polyline.o \
+	dxf_ext.o \
+	dxf_entities.o \
+	dxf_lines.o \
+	dxf_init.o \
+	dxf_header.o \
+	dxf_layer.o \
+	dxf_which.o \
+	main.o
+
+
+all:	$(BIN)/$(PGM)
+
+$(BIN)/$(PGM): $(LIST)
+	$(CC) $(LDFLAGS) $(LIST) $(TERMLIB) $(MATHLIB) -o $@
+
+saber_src:
+	#load $(SOURCES)
+
+saber_obj:
+	#load $(LIST)
