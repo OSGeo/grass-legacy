@@ -1,0 +1,26 @@
+
+MODULE_TOPDIR = ../../..
+
+LIB_NAME = $(SQLP_LIBNAME)
+
+LIB_OBJS = \
+	alloc.o \
+	print.o \
+	sql.o \
+	lex.yy.o \
+	y.tab.o
+
+EXTRA_CLEAN_FILES = lex.yy.c y.tab.c y.output y.tab.h test/sqlptest
+
+include $(MODULE_TOPDIR)/include/Make/Lib.make
+
+default: lib
+	(cd test && make) || exit 1
+ 
+y.tab.c: yac.y
+	$(YACC) -d -v yac.y
+
+lex.yy.c: lex.l y.tab.c
+	$(LEX) lex.l
+
+
