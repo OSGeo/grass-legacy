@@ -1,0 +1,17 @@
+LIBES    = $(GISLIB)
+
+PGM      = Greport
+
+LIST  = main.o\
+	conv.o\
+	format.o\
+	get_params.o\
+	prnt_rprt.o\
+	prnt_tbles.o
+
+
+$(BIN)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
+
+$(LIST):        table.h
+$(LIBES): #
