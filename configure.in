@@ -991,7 +991,7 @@ fi
 
 ac_save_cppflags="$CPPFLAGS"
 CPPFLAGS="$CPPFLAGS $ODBCINC"
-AC_CHECK_HEADER(sql.h,HAVE_SQL_H=1 ,ODBCINC="")
+AC_CHECK_HEADER(sql.h,AC_DEFINE(HAVE_SQL_H),ODBCINC="")
 CPPFLAGS=${ac_save_cppflags}
 
 

@@ -118,6 +118,9 @@
 #undef HAVE_POSTGRES
 #undef HAVE_POSTGRES_H
 
+/* define if ODBC exists */
+#undef HAVE_SQL_H
+
 /* Whether or not we are using G_socks for display communications */
 #undef USE_G_SOCKS
 
