@@ -1,0 +1,3 @@
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+ask	ask.c	/^ask(old_min, old_max, new_min, new_max, title)$/
+get_range	get_range.c	/^get_range(name, mapset, min, max)$/
