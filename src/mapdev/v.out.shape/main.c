@@ -47,7 +47,7 @@ int main( int argc, char *argv[] ) {
   struct GModule *module;
   struct Option *out, *set, *altname, *logfile, *shapetype, *category;
   struct Option *table, *key;
-  struct Flag *chatflag, *Linetype, *Areatype;
+  struct Flag *chatflag, *Linetype, *Areatype, *allAreas;
   struct Map_info vmap;
   struct Categories *Cat1;
   fieldDescriptor *fd[3];
@@ -153,6 +153,10 @@ int main( int argc, char *argv[] ) {
   Areatype->key = 'a';
   Areatype->description = "Restrict lines to arcs of type area edge";
 
+  allAreas = G_define_flag();
+  allAreas->key = 'A';
+  allAreas->description = "Ouput all areas (include unlabelled areas)";
+  
   /* Parse and process options */
   if( G_parser( argc, argv ) )
     exit(-1);
@@ -286,7 +290,8 @@ int main( int argc, char *argv[] ) {
 	pcl_size += pcl_incr;
 	poly_chklist = (int *)realloc( poly_chklist, pcl_size * sizeof(int) );
       }
-      found = extract_ring( &hShape, &vmap, poly_chklist, &nP, where++ );
+      found = extract_ring( &hShape, &vmap, poly_chklist, 
+                    &nP, where++, allAreas->answer );
       
       /* go to next area not extracted (may be used for skipping not 
          labeled islands in future) */
