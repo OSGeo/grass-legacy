@@ -75,9 +75,7 @@ main(int argc, char **argv)
 	if(check_ready())
 		exit(-1);
 
-	G_get_cellhd(iname,mapset,&cellhd);
-	if(adjcellhd(&cellhd))
-		exit(-1);
+	G_get_window(&window);
 
 	getcells();
 	initialize();

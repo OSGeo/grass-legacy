@@ -12,7 +12,6 @@
 
 
 int	check_ready(void);
-int	adjcellhd(struct Cell_head *cellhd);
 void	getcells(void);
 void	putcells(void);
 void	initialize(void);
@@ -26,7 +25,7 @@ void	atanb(void);
 
 GLOBAL	char	*mapset,*iname,*oname;
 GLOBAL	char	verbose;
-GLOBAL	struct	Cell_head	cellhd;
+GLOBAL	struct	Cell_head	window;
 GLOBAL	DCELL	**cell;
 GLOBAL	DCELL	**atb,**a;
 

@@ -9,9 +9,9 @@ initialize(void)
 	int	i,j;
 
 	natb=0;
-	for(i=0;i<cellhd.rows;i++){
-		for(j=0;j<cellhd.cols;j++){
-			a[i][j]=cellhd.ns_res*cellhd.ew_res;
+	for(i=0;i<window.rows;i++){
+		for(j=0;j<window.cols;j++){
+			a[i][j]=window.ns_res*window.ew_res;
 			if(IScvNULL(i,j)){
 				natb++;
 				G_set_d_null_value(&atbv(i,j),1);
@@ -31,10 +31,10 @@ atanb(void)
 	double	sum,route[9],tanB[9],dx,dx1,dx2,sumtb,C;
 	int	nsink;
 
-	dx     = cellhd.ew_res;
+	dx     = window.ew_res;
 	dx1    = 1 / dx;
 	dx2    = 1 / (1.414 * dx);
-	ncells = cellhd.rows * cellhd.cols;
+	ncells = window.rows * window.cols;
 	snatb  = natb;
 
 	fprintf(stderr,"Calculating:");
@@ -47,8 +47,8 @@ atanb(void)
 		fprintf(stderr,"Iteration: %d",iter);
 */
 		G_percent(natb-snatb, ncells-snatb, 1);
-		for(i=0;i<cellhd.rows;i++){
-			for(j=0;j<cellhd.cols;j++){
+		for(i=0;i<window.rows;i++){
+			for(j=0;j<window.cols;j++){
 				/* skip null values */
 				if(IScvNULL(i,j))
 					continue;
@@ -75,7 +75,7 @@ atanb(void)
 					   atbv(i-1,j)<ZERO)
 						continue;
 
-					if(j+1<cellhd.cols &&
+					if(j+1<window.cols &&
 					   (IScvNULL(i-1,j+1)    ||
 					    cv(i-1,j+1)>cv(i,j)) &&
 					   !ISatbvNULL(i-1,j+1)  &&
@@ -88,13 +88,13 @@ atanb(void)
 				   !ISatbvNULL(i,j-1)  &&
 				   atbv(i,j-1)<ZERO)
 					continue;
-				if(j+1<cellhd.cols &&
+				if(j+1<window.cols &&
 				   (IScvNULL(i,j+1)    ||
 				    cv(i,j+1)>cv(i,j)) &&
 				   !ISatbvNULL(i,j+1)  &&
 				   atbv(i,j+1)<ZERO)
 					continue;
-				if(i+1<cellhd.rows){
+				if(i+1<window.rows){
 					if(j>0 &&
 					   (IScvNULL(i+1,j-1)    ||
 					    cv(i+1,j-1)>cv(i,j)) &&
@@ -106,7 +106,7 @@ atanb(void)
 					   !ISatbvNULL(i+1,j)  &&
 					   atbv(i+1,j)<ZERO)
 						continue;
-					if(j+1<cellhd.cols &&
+					if(j+1<window.cols &&
 					   (IScvNULL(i+1,j+1)    ||
 					    cv(i+1,j+1)>cv(i,j)) &&
 					   !ISatbvNULL(i+1,j+1)  &&
@@ -138,7 +138,7 @@ atanb(void)
 						sum+=route[1];
 						nroute++;
 					}
-					if(j+1<=cellhd.cols &&
+					if(j+1<=window.cols &&
 					   !IScvNULL(i-1,j+1) &&
 					   cv(i,j)-cv(i-1,j+1)>ZERO){
 						tanB[2]=(cv(i,j)-cv(i-1,j+1))*
@@ -157,7 +157,7 @@ atanb(void)
 					sum+=route[3];
 					nroute++;
 				}
-				if(j+1<cellhd.cols){
+				if(j+1<window.cols){
 					if(!IScvNULL(i,j+1) &&
 					   cv(i,j)-cv(i,j+1)>ZERO){
 						tanB[5]=(cv(i,j)-cv(i,j+1))*
@@ -167,7 +167,7 @@ atanb(void)
 						nroute++;
 					}
 				}
-				if(i+1<cellhd.rows){
+				if(i+1<window.rows){
 					if(j>0 &&
 					   !IScvNULL(i+1,j-1) &&
 					   cv(i,j)-cv(i+1,j-1)>ZERO){
@@ -185,7 +185,7 @@ atanb(void)
 						sum+=route[7];
 						nroute++;
 					}
-					if(j+1<cellhd.cols &&
+					if(j+1<window.cols &&
 					   !IScvNULL(i+1,j+1) &&
 					   cv(i,j)-cv(i+1,j+1)>ZERO){
 						tanB[8]=(cv(i,j)-cv(i+1,j+1))*
@@ -217,7 +217,7 @@ atanb(void)
 								-cv(i,j))*dx1;
 							nslp++;
 						}
-						if(j+1<cellhd.cols &&
+						if(j+1<window.cols &&
 						   !IScvNULL(i-1,j+1)){
 							sumtb+=(cv(i-1,j+1)
 								-cv(i,j))*dx2;
@@ -231,13 +231,13 @@ atanb(void)
 							-cv(i,j))*dx1;
 						nslp++;
 					}
-					if(j+1<cellhd.cols &&
+					if(j+1<window.cols &&
 					   !IScvNULL(i,j+1)){
 						sumtb+=(cv(i,j+1)
 							-cv(i,j))*dx1;
 						nslp++;
 					}
-					if(i+1<cellhd.rows){
+					if(i+1<window.rows){
 						if(j>0 &&
 						   !IScvNULL(i+1,j-1)){
 							sumtb+=(cv(i+1,j-1)
@@ -249,7 +249,7 @@ atanb(void)
 								-cv(i,j))*dx1;
 							nslp++;
 						}
-						if(j+1<cellhd.cols &&
+						if(j+1<window.cols &&
 						   !IScvNULL(i+1,j+1)){
 							sumtb+=(cv(i+1,j+1)
 								-cv(i,j))*dx2;
@@ -278,22 +278,22 @@ atanb(void)
 						av(i-1,j-1)+=C*route[0];
 					}
 					av(i-1,j)+=C*route[1];
-					if(j+1<cellhd.cols){
+					if(j+1<window.cols){
 						av(i-1,j+1)+=C*route[2];
 					}
 				}
 				if(j>0){
 					av(i,j-1)+=C*route[3];
 				}
-				if(j+1<cellhd.cols){
+				if(j+1<window.cols){
 					av(i,j+1)+=C*route[5];
 				}
-				if(i+1<cellhd.rows){
+				if(i+1<window.rows){
 					if(j>0){
 						av(i+1,j-1)+=C*route[6];
 					}
 					av(i+1,j)+=C*route[7];
-					if(j+1<cellhd.cols){
+					if(j+1<window.cols){
 						av(i+1,j+1)+=C*route[8];
 					}
 				}
