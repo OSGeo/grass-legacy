@@ -1,7 +1,6 @@
 #include "options.h"
 #include "dhist.h"
 #include "gis.h"
-#include <values.h> 
 #include <stdio.h> 
 
 get_stats(mapname,mapset,dist_stats,quiet)
