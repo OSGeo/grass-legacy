@@ -110,7 +110,7 @@ proc DmVector::create { tree parent } {
     set opt($count,minreg) "" 
     set opt($count,maxreg) "" 
 
-    set opt($count,_query_text) 0 
+    set opt($count,_query_text) 1 
     set opt($count,_query_edit) 0 
 
     set opt($count,_width) 1
@@ -497,15 +497,19 @@ proc DmVector::query { node } {
          !$opt($id,type_boundary)  && !$opt($id,type_centroid) && 
          !$opt($id,type_area) && !$opt($id,type_face) } { return } 
 
-    set cmd "d.what.vect -xf map=$opt($id,map)"
-    if { $opt($id,_query_text) } { 
-        append cmd " -t" 
+    set cmd "d.what.vect -f map=$opt($id,map)"
+    if { $opt($id,_query_text) && !$opt($id,_query_edit) } { 
+        append cmd " -x" 
     } 
     if { $opt($id,_query_edit) } { 
         append cmd " -e" 
     } 
 
-    term $cmd
+    if { $opt($id,_query_text) && !$opt($id,_query_edit) } {
+        term $cmd
+    } else {
+        spawn $cmd
+    }
 }
 
 proc DmVector::WorkOnVector { node } {
