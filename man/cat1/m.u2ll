@@ -1,7 +1,7 @@
 
 
 
-m.u2ll               GRASS Reference Manual                m.u2ll
+m.u2ll <main>        GRASS Reference Manual         <main> m.u2ll
 
 
 
@@ -13,7 +13,7 @@ NAME
 SYNOPSIS
      m.u2ll
      m.u2ll help
-     m.u2ll [-srwo] spheroid=name [zone=value] [input=name]
+     m.u2ll [-srwod] spheroid=name [zone=value] [input=name]
      [output=name]
 
 DESCRIPTION
@@ -42,7 +42,7 @@ DESCRIPTION
      parameter values on the command line using the following
      format:
 
-          m.u2ll [-srwo] spheroid=name [zone=value] [input=name]
+          m.u2ll [-srwod] spheroid=name [zone=value] [input=name]
           [output=name]
 
      Alternately, the user can simply type:
@@ -60,14 +60,14 @@ DESCRIPTION
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-m.u2ll               GRASS Reference Manual                m.u2ll
+m.u2ll <main>        GRASS Reference Manual         <main> m.u2ll
 
 
 
@@ -109,6 +109,10 @@ m.u2ll               GRASS Reference Manual                m.u2ll
 
      -o                Flag other invalid input lines as errors.
 
+     -d                Output latitude/longitude values in
+                       decimal degrees, rather than in the form
+                       dd:mm:ss.
+
      Parameters:
 
      spheroid=name     Reference spheroid (ellipsoid).
@@ -119,45 +123,46 @@ m.u2ll               GRASS Reference Manual                m.u2ll
 
      zone=value        UTM zone in which UTM coordinates are
                        located.
+
+
+
+GRASS 4.1                U.S. Army CERL                         2
+
+
+
+
+
+
+m.u2ll <main>        GRASS Reference Manual         <main> m.u2ll
+
+
+
                        Options:  1-60
 
      input=name        Name of input file containing UTM values
                        to be converted.
-
-
-
-GRASS 4.0                U.S. Army CERL                         2
-
-
-
-
-
-
-m.u2ll               GRASS Reference Manual                m.u2ll
-
-
 
      output=name       Name to be assigned to output file
                        containing longitude and latitude values.
 
      AVAILABLE SPHEROIDS
      (The on-line listing includes only the spheroid names.)
-     Spheroid:                                    |    Semi-major axis  |  Eccentricity sqrd (e),|  Commonly used for:
-                                                  |  (Equatorial Radius)|  Flattening (f),       |
-                                                  |         (a):        |  or Polar Radius (b):  |
-     _____________________________________________|_____________________|________________________|____________________
-     airy          a=6377563.396 e=.006670540     |                     |                        |
-     australian     a=6378160     f=1/298.25      |  Australia          |                        |
-     bessel        a=6377397.155 e=.006674372     |  Japan              |                        |
-     clark66       a=6378206.4   b=6356583.8      |  N. America         |                        |
-     everest       a=6377276.345 e=.0066378466    |  India, Burma       |                        |
-     grs80         a=6378137     f=1/298.257      |                     |                        |
-     hayford       a=6378388     f=1/297          |                     |                        |
-     international a=6378388     f=1/297          |  Europe             |                        |
-     krasovsky     a=6378245     f=1/298.3        |                     |                        |
-     wgs66         a=6378145     f=1/298.25       |  worldwide coverage |                        |
-     wgs72         a=6378135     f=1/298.26       |  worldwide coverage |                        |
-     wgs84         a=6378137     f=1/298.257223563|  worldwide coverage |                        |
+     Spheroid:    |    Semi-major axis  |  Eccentricity sqrd (e),|  Commonly used for:
+                  |  (Equatorial Radius)|  Flattening (f),       |
+                  |         (a):        |  or Polar Radius (b):  |
+     _____________|_____________________|________________________|____________________
+     airy         |  a=6377563.396      |  e=.006670540          |
+     australian   |  a=6378160          |  f=1/298.25            |  Australia
+     bessel       |  a=6377397.155      |  e=.006674372          |  Japan
+     clark66      |  a=6378206.4        |  b=6356583.8           |  N. America
+     everest      |  a=6377276.345      |  e=.0066378466         |  India, Burma
+     grs80        |  a=6378137          |  f=1/298.257           |
+     hayford      |  a=6378388          |  f=1/297               |
+     international|  a=6378388          |  f=1/297               |  Europe
+     krasovsky    |  a=6378245          |  f=1/298.3             |
+     wgs66        |  a=6378145          |  f=1/298.25            |  worldwide coverage
+     wgs72        |  a=6378135          |  f=1/298.26            |  worldwide coverage
+     wgs84        |  a=6378137          |  f=1/298.257223563     |  worldwide coverage
 
 EXAMPLE
      Assume the user has input the command:
@@ -185,24 +190,23 @@ EXAMPLE
           166:03:41.428895W 70:28:25.61617S
           end
 
+
+
+GRASS 4.1                U.S. Army CERL                         3
+
+
+
+
+
+
+m.u2ll <main>        GRASS Reference Manual         <main> m.u2ll
+
+
+
 NOTES
      Users can add information to the ellipsoid parameter
      definition file on their systems (located in
      $GISBASE/etc/ellipse.table) to add spheroids not now among
-
-
-
-GRASS 4.0                U.S. Army CERL                         3
-
-
-
-
-
-
-m.u2ll               GRASS Reference Manual                m.u2ll
-
-
-
      those supported by GRASS.
 
      See m.ll2u for a brief discussion of spheroids.
@@ -251,23 +255,23 @@ SEE ALSO
      For wgs84 parameter values, see:
      U.S. Naval Oceanographic Labs.
 
+
+
+
+GRASS 4.1                U.S. Army CERL                         4
+
+
+
+
+
+
+m.u2ll <main>        GRASS Reference Manual         <main> m.u2ll
+
+
+
      Also read GRASS User's Reference Manual entries for:
      d.labels, d.points, d.sites, d.where, m.datum.shift,
      m.gc2ll, m.ll2gc, m.ll2u, and parser
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         4
-
-
-
-
-
-
-m.u2ll               GRASS Reference Manual                m.u2ll
-
-
 
 AUTHOR
      Michael Shapiro, U.S. Army Construction Engineering Research
@@ -320,11 +324,7 @@ AUTHOR
 
 
 
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         5
+GRASS 4.1                U.S. Army CERL                         5
 
 
 
