@@ -1,0 +1,29 @@
+Mmain	main.c	/^main(argc, argv)$/
+bslash	graph_input.c	/^bslash(string)$/
+closef	discio.c	/^int closef( fd )$/
+decode_digpkt	graph_input.c	/^long decode_digpkt(string)$/
+dig_input	graph_input.c	/^long dig_input()$/
+digdefaults	graph_input.c	/^long digdefaults()$/
+dparse	graph_input.c	/^dparse(raw, delims, parsed, max_raw, max_delims, m/
+ginput_ctl	graph_input.c	/^ginput_ctl(no_actions,action)$/
+ginput_setup	graph_input.c	/^ginput_setup( new_dev, ttypath, mode )$/
+lowerc	str.c	/^char *lowerc(string)$/
+openf	discio.c	/^int openf( fname, type )    $/
+print_binary_char	graph_input.c	/^print_binary_char (val)$/
+print_binary_int	graph_input.c	/^print_binary_int (val)$/
+query_ginput	graph_input.c	/^query_ginput()$/
+raw_diginput	graph_input.c	/^raw_diginput()$/
+read_digfile	graph_input.c	/^read_digfile(path)$/
+read_value	graph_input.c	/^read_value(p1,p2,act)$/
+reada	discio.c	/^char *reada( string, bytes, fd  )$/
+reada_old	discio.c	/^char *reada_old( string, bytes, fd  )$/
+set_diginternals	graph_input.c	/^long set_diginternals()$/
+sleep_ltp	sleep.c	/^long sleep_ltp(tm)$/
+start_ginput	graph_input.c	/^start_ginput(dev_path, mode)$/
+start_point_mode	graph_input.c	/^start_point_mode ()$/
+start_query_mode	graph_input.c	/^start_query_mode ()$/
+start_run_mode	graph_input.c	/^start_run_mode ()$/
+stop_ginput	graph_input.c	/^long stop_ginput()$/
+strsplit	str.c	/^long strsplit(ref,delim,part1,part2)$/
+time_ltp	sleep.c	/^long time_ltp(tme)$/
+trim	str.c	/^char *trim( str )$/
