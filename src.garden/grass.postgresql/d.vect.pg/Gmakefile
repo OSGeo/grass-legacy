@@ -1,11 +1,10 @@
-#PGM       = d.vect.pg
 PGM       = $(BIN_CONTRIB_CMD)/d.vect.pg
-LIBES     = $(DISPLAYLIB) $(VECTLIB) $(RASTERLIB) $(GISLIB) $(PQLIB) $(MATHLIB)
+LIBES     = $(DISPLAYLIB) $(VECTLIB) $(RASTERLIB) $(GISLIB) $(PQLIB)
 EXTRA_CFLAGS = $(PQINCPATH) 
 # -Dunlink=puts
 
 OBJS = \
-	main.o  \
+	main.o\
 	bsearch.o\
 	find.o\
 	getAllOpts.o \
@@ -14,8 +13,7 @@ OBJS = \
 	runInfxFile.o \
 	plotCat.o 
 
-
-
 $(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+
 $(LIBES): #

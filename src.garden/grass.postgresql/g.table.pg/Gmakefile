@@ -1,9 +1,6 @@
 PGM       = $(BIN_CONTRIB_CMD)/g.table.pg
-#PGM       = g.table.pg
 EXTRA_CFLAGS = $(PQINCPATH)
-LIBES     = $(GISLIB) $(PQLIB) $(MATHLIB)
-
-
+LIBES     = $(GISLIB) $(PQLIB)
 
 OBJS = \
 	main.o \
@@ -11,7 +8,7 @@ OBJS = \
 	delcr.o
 
 $(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #
 

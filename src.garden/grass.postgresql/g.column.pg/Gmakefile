@@ -1,6 +1,5 @@
 PGM       = $(BIN_CONTRIB_CMD)/g.column.pg
-#PGM       = g.column.pg
-LIBES     = $(GISLIB) $(PQLIB) $(MATHLIB)
+LIBES     = $(GISLIB) $(PQLIB)
 EXTRA_CFLAGS = $(PQINCPATH)
 
 OBJS = \
@@ -10,5 +9,6 @@ OBJS = \
 
 
 $(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+
 $(LIBES): #
