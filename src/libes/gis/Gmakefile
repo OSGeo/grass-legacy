@@ -181,7 +181,7 @@ OBJ = \
     zone.o\
     G_dump.o
 
-all: version.h \
+all: $(SRC)/include/version.h \
 	$(GISLIB) \
 	$(ETC)/ellipse.table \
 	$(ETC)/projections \
@@ -221,6 +221,9 @@ $(ETC)/projections: projections
 	cp $? $@
 	chmod +r $@
 
+$(SRC)/include/version.h: $(VERSION_FILE)
+	echo 'static char *VERSION_STRING = "@(#) GRASS $(VERSION_NUMBER) ($(VERSION_DATE))";' > $@
+
 area_ellipse.o: pi.h
 area_sphere.o: pi.h
 auto_mask.o: G.h
@@ -242,6 +245,4 @@ rhumbline.o: pi.h
 set_window.o: G.h
 window_map.o: G.h
 
-version.h: $(VERSION_FILE)
-	echo 'static char *VERSION_STRING = "@(#) GRASS $(VERSION_NUMBER) ($(VERSION_DATE))";' > $(SRC)/include/$@
 ...: #
