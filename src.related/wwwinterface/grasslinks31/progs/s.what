@@ -1,0 +1,88 @@
+#! /bin/sh
+# button instructions and error messages go to stderr
+# coordinates and site information go to stdout
+
+# s.what
+#
+# is a quick hack to get a program with similar functionality
+# to r.what for non-interactive query of a site-list.
+#
+# 1/96  Simon Cox , AGCRC, CSIRO Exploration & Mining
+#       simon@ned.dem.csiro.au
+#
+# - based on code fragments supplied by Sue Huse, REGIS, Berkeley.
+#
+# Performance not guaranteed.
+#
+
+if [ $# -lt 1 ]
+then
+        echo "usage:  s.what in=site_list < coord_list"
+        exit
+fi
+
+sitename=`echo $1 | sed 's/in=//'`
+
+#
+# find the sites file or give error if not available
+#
+eval `g.findfile element=site_lists file=$sitename`
+        if [ ! "$file" ]
+        then
+                echo "Site file $sitename unavailable" | cat 1>&2
+                exit 1
+        else
+                sitefile=$file
+        fi
+
+#
+#  loop through input lines
+#
+
+while read easting northing
+do
+
+if [ "X$easting" = "X" ]
+then
+        exit
+fi
+if [ "X$northing" = "X" ]
+then
+        exit
+fi
+
+#
+# calculate the distance from point to each site in file and
+# choose the closest
+# uses (x2 + y2) rather than sqrt(x2 + y2) to minimize computation.
+#
+
+eval ` echo "nawk -F\"|\" '
+        BEGIN { min_distance = 0;
+                east = $easting;
+                north = $northing
+                 } \
+        {
+
+        distance = (\\\$1-east)^2 + (\\\$2-north)^2;
+        if (min_distance == 0) {
+                min_distance = distance;
+                site_east = \\\$1;
+                site_north = \\\$2;
+                site_label = \\\$3;
+                line_no = NR;
+                };
+        if (distance < min_distance) {
+                min_distance = distance;
+                site_east = \\\$1;
+                site_north = \\\$2;
+                site_label = \\\$3;
+                line_no = NR;
+                }
+        }
+        END { print site_east\"|\"site_north\"|\"site_label ;
+                exit line_no
+                } ' $sitefile" `
+
+
+done
