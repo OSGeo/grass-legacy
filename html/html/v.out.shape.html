@@ -88,8 +88,12 @@ number. Otherwise ignored.
 NOTES</h2>
 <font size=+0>The vector file export program, v.out.shape, will prompt
 you to enter the name of a GRASS vector file to be exported to SHAPE and
-for various options, see above.</font>
-<p><font size=+0>A GRASS vector file to be exported to SHAPE may contain
+for various options, see above.
+<P>
+v.out.shape exports only labeled polygons. Labeling unlabeled polygons can
+be be done by <a href=v.alabel.html>v.alabel</a>.
+
+<p>A GRASS vector file to be exported to SHAPE may contain
 POINT, LINE and POLYGON coverage. If you select more types for conversion,
 more layers will be produced with the appended suffixes <b>_line</b>,
 <b>_point</b> and <b>_area</b>. Lines used as area edges however are
@@ -111,10 +115,16 @@ instead of column size. PostgreSQL tables are OK. Problem is in ODBC
 driver and database specific drivers.
 
 <h2>SEE ALSO</h2>
-<i><a href="v.in.shape.html">v.in.shape</a>, <a href="m.in.e00.html">m.in.e00</a>,
-v.out.e00, <a href="v.in.arc.html">v.in.arc</a>, <a href="v.out.arc.html">v.out.arc</a>,<a href="v.out.dlg.html">v.out.dlg</a>,
+<i>
+<a href="v.alabel.html">v.alabel</a>,
+<a href="v.in.shape.html">v.in.shape</a>,
+<a href="m.in.e00.html">m.in.e00</a>,
+v.out.e00,
+<a href="v.in.arc.html">v.in.arc</a>,
+<a href="v.out.arc.html">v.out.arc</a>,
+<a href="v.out.dlg.html">v.out.dlg</a>,
 <a href="db.connect.html">db.connect</a></i>
-<br>&nbsp;
+
 <h2>
 AUTHOR</h2>
 <font size=+0>David D. Gray</font>
