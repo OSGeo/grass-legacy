@@ -18,12 +18,13 @@ set dmpath $env(GISBASE)/etc/dm/
 source $env(GISBASE)/etc/gtcltk/select.tcl
 
 source $dmpath/cmd.tcl
-source $dmpath/group.tcl
-source $dmpath/print.tcl
-source $dmpath/raster.tcl
-source $dmpath/tool.tcl
 source $dmpath/tree.tcl
+source $dmpath/tool.tcl
+source $dmpath/group.tcl
 source $dmpath/vector.tcl
+source $dmpath/raster.tcl
+source $dmpath/labels.tcl
+source $dmpath/print.tcl
 
 namespace eval Dm {
     variable mainframe
@@ -158,7 +159,6 @@ proc Dm::add { type } {
     if { $parent_type != "group" } {
         set parent_node [$tree parent $parent_node]
     }
-    
 
     switch $type {
         group {
@@ -169,6 +169,9 @@ proc Dm::add { type } {
         }
         vector {
             DmVector::create $tree $parent_node
+        }
+        labels {
+            DmLabels::create $tree $parent_node
         }
         cmd {
             DmCmd::create $tree $parent_node
@@ -196,6 +199,9 @@ proc Dm::select { node } {
         }
         vector {
             DmVector::options $id $opt
+        }
+        labels {
+            DmLabels::options $id $opt
         }
         cmd {
             DmCmd::options $id $opt
@@ -285,6 +291,9 @@ proc Dm::display_node { node } {
 	raster {
 	    DmRaster::display $node
 	}
+	labels {
+	    DmLabels::display $node
+	}
 	vector {
 	    DmVector::display $node
 	}
@@ -311,6 +320,9 @@ proc Dm::print_node { file node } {
                 set raster_printed 1
             }
 	}
+	labels {
+	    DmLabels::print $file $node
+	}
 	vector {
 	    DmVector::print $file $node
 	}
@@ -332,7 +344,10 @@ proc Dm::query { } {
 
     switch $type {
         raster {
-            DmVector::query $sel
+            DmRaster::query $sel
+        }
+        labels {
+            DmLabels::query $sel
         }
         vector {
             DmVector::query $sel
@@ -379,6 +394,11 @@ proc Dm::save_node { depth node } {
             incr depth
 	    DmRaster::save $tree $depth $node
 	}
+	labels {
+            Dm::rc_write $depth Labels $name
+            incr depth
+	    DmLabels::save $tree $depth $node
+	}
 	vector {
             Dm::rc_write $depth Vector $name
             incr depth
@@ -406,7 +426,13 @@ proc Dm::load { } {
 
     set prgtext "Loading layers..."
     set fpath "$gisdbase/$location_name/$mapset/.dmrc"
-    if { ![file exist $fpath] || ![file readable $fpath] } { return }
+    # If .dmrc not available, try to load from PERMANENT
+    if { ![file exist $fpath] || ![file readable $fpath] } { 
+        set fpath "$gisdbase/$location_name/PERMANENT/.dmrc"
+        if { ![file exist $fpath] || ![file readable $fpath] } { 
+            return 
+        }
+    }
     set rcfile [open $fpath r]
     set file_size [file size $fpath]
     set nrows [expr $file_size / 15]
@@ -446,6 +472,10 @@ proc Dm::load { } {
 			set current_node [DmRaster::create $tree $parent]
 			$tree itemconfigure $current_node -text $val 
 		    }
+		    Labels {
+			set current_node [DmLabels::create $tree $parent]
+			$tree itemconfigure $current_node -text $val 
+		    }
 		    Vector {
 			set current_node [DmVector::create $tree $parent]
 			$tree itemconfigure $current_node -text $val 
@@ -469,6 +499,9 @@ proc Dm::load { } {
 			    }
 			    raster { 
 				DmRaster::set_option $current_node $key $val
+			    }
+			    labels { 
+				DmLabels::set_option $current_node $key $val
 			    }
 			    vector { 
 				DmVector::set_option $current_node $key $val
@@ -520,6 +553,9 @@ proc Dm::node_type { node } {
     }  
     if { [string compare -length 6 $node "raster"] == 0 } {
        return "raster"
+    }  
+    if { [string compare -length 6 $node "labels"] == 0 } {
+       return "labels"
     }  
     if { [string compare -length 6 $node "vector"] == 0 } {
        return "vector"
