@@ -11,7 +11,7 @@ mk/mkmakefiles
 mkdir ~/grass-build
 cd ~/grass-build
 /usr/src/grass5/configure ...
-mv -f mk/Makefile Makefile
+cp -f mk/Makefile Makefile
 make all		# all == dirs gmake binaries links documents
 sudo make install
 
@@ -23,4 +23,17 @@ cd ~/grass-build
 cp -f mk/Makefile .
 make dirs gmake
 ./gmake5 <subdir>
+
+Building everything using shared libraries (Linux only):
+
+cd /usr/src/grass5
+mk/mkmakefiles
+mkdir ~/grass-build
+cd ~/grass-build
+/usr/src/grass5/configure ...
+cp -f mk/Makefile Makefile
+cp /usr/src/grass5/mk/mid.mk.shlib mk/mid.mk		# xxx
+make all		# all == dirs gmake binaries links documents
+cp -af src/libes/*.so* dist.i686-pc-linux-gnu/lib	# xxx
+sudo make install
 
