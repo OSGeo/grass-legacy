@@ -4,10 +4,10 @@ OGSF_DIR     = $(SRC)/libes/ogsf
 
 EXTRA_CFLAGS = -I$(MYLIBDIR) -I$(OGSF_DIR) $(OPENGLINC) $(OPENGLwINC) $(XCFLAGS)
 SUNLDFLAGS   = $(XMLIBPATH) $(XLIBPATH) -L/lib
-OGLLIB	     = -lGLU -lGL -lGLw ${LGLWM} -lXm -lX11 -lXt -lXext
+OGLLIB	     = $(OPENGLULIB) -lGL $(LGLWM) -lXm -lX11 -lXt -lXext
 LIBES        = $(DSPLIB) $(G3DLIB) $(DATETIMELIB) $(GISLIB)
 
-PGM	=	$(BIN_CONTRIB_CMD)/r3.showdspf
+PGM	=	r3.showdspf
 
 SOURCES	=	\
                 new_init_graphics.c \
@@ -50,9 +50,7 @@ OBJ	=	\
                 main_ogl.o
 
 
-
-
-$(PGM): $(OBJ) $(G3DLIB) $(LIBES)
+$(BIN_CONTRIB_CMD)/$(PGM): $(OBJ) $(G3DLIB) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(EXTRA_CFLAGS) $(LIBES) $(OGLLIB) $(SUNLDFLAGS) $(MATHLIB) $(XDRLIB)
 
 

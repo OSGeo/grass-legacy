@@ -4,7 +4,7 @@ DSPLIB	=	$(LDIR)/libdsp3.a
 EXTRA_CFLAGS	=	-I$(LDIR) -I$(INCLUDE_DIR)
 
 
-PGM	=	$(BIN_CONTRIB_CMD)/r3.mkdspf
+PGM	=	r3.mkdspf
 
 SOURCES	=	\
 		fill_cfax.c \
@@ -25,8 +25,7 @@ OBJ	=	\
 		main.o
 
 
-
-$(PGM): $(OBJ) $(DSPLIB) $(G3DLIB) $(GISLIB) $(DATETIMELIB)
+$(BIN_CONTRIB_CMD)/$(PGM): $(OBJ) $(DSPLIB) $(G3DLIB) $(GISLIB) $(DATETIMELIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(DSPLIB) $(G3DLIB) $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
 
 fill_cfax.o: vizual.h $(LDIR)/cell_table.h
@@ -36,19 +35,3 @@ iso_surface.o: vizual.h $(LDIR)/cell_table.h
 calc_linefax.o: vizual.h
 
 main.o:	vizual.h
-
-#.c.o:
-#	@echo ""
-#	@echo COMPILING: $<
-#	$(CC) $(CFLAGS) -c $<
-
-
-saber_src:
-	#load $(CFLAGS) $(SOURCES) $(DSPLIB)
-
-saber_obj:
-	#load $(OBJ)
-#ctags:
-#	ctags *.[ch]
-#	sed 's/\?/\//g' tags > tags.tmp
-#	mv tags.tmp tags

@@ -1,9 +1,7 @@
 PGM=r3.to.sites
-HOME=$(BIN_MAIN_CMD)
 
-$(HOME)/$(PGM): main.o $(G3DLIB) $(GISLIB) $(DATETIMELIB)
-	$(CC) $(LDFLAGS) -o $@ main.o $(G3DLIB) $(GISLIB) $(XDRLIB) $(MATHLIB) $(DATETIMELIB)
+$(BIN_MAIN_CMD)/$(PGM): main.o $(G3DLIB) $(GISLIB) $(DATETIMELIB)
+	$(CC) $(LDFLAGS) -o $@ main.o $(G3DLIB) $(GISLIB) $(MATHLIB) $(DATETIMELIB) $(XDRLIB)
 
 $(G3DLIB): #
 $(GISLIB): #
-

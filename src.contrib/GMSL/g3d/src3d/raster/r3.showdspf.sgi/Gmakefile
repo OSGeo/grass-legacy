@@ -1,14 +1,10 @@
-#MYLIBDIR =	../../../libes/dspf
 MYLIBDIR= $(SRC)/libes/dspf
 DSPLIB	=	$(MYLIBDIR)/libdsp3.a
 SGILIB	=	-lgl_s
 
-#CFLAGS = 	-g
 EXTRA_CFLAGS	=	-I$(MYLIBDIR)
-#LDFLAGS =	-L../libes
 
-
-PGM	=	$(BIN_CONTRIB_CMD)/r3.showdspf
+PGM	=	r3.showdspf
 
 SOURCES	=	\
 		cap_data.c \
@@ -46,12 +42,8 @@ OBJ	=	\
 		r3_find.o \
 		main.o
 
-
-
-
-#$(PGM): $(OBJ) $(DSPLIB) 
-$(PGM): $(OBJ) $(G3DLIB) $(GISLIB) $(DATETIMELIB)
-	$(CC) $(OBJ) $(LDFLAGS) -o $@ $(MATHLIB) $(SGILIB) $(DSPLIB) $(G3DLIB) $(GISLIB) $(DATETIMELIB)
+$(BIN_CONTRIB_CMD)/$(PGM): $(OBJ) $(G3DLIB) $(GISLIB) $(DATETIMELIB)
+	$(CC) $(OBJ) $(LDFLAGS) -o $@ $(SGILIB) $(DSPLIB) $(G3DLIB) $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
 
 
 #cap_data.o: $(MYLIBDIR)/viz.h

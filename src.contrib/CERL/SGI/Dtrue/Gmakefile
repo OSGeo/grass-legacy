@@ -1,12 +1,9 @@
-# %W%  %G%
-
+PGM=Dtrue
 DLIB  = $(SRC)/D/libes/Dlib.a
 
 OFILES = main.o Dcell.o
 
-Dtrue: $(BIN_CONTRIB_CMD)/Dtrue
-
-$(BIN_CONTRIB_CMD)/Dtrue: $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+$(BIN_CONTRIB_CMD)/$(PGM): $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) -lgl_s
 
 $(RASTERLIB): #

@@ -1,9 +1,4 @@
-#  %W%  %G%
-
-
-
-
-PROG =   $(BIN_CONTRIB_CMD)/ISMann2dig
+PGM = ISMann2dig
 
 all:  $(PROG)
 	
@@ -12,5 +7,5 @@ OBJS =  \
 	ann2dig.o \
 	line_cent.o
 
-$(PROG): $(OBJS)
+$(BIN_CONTRIB_CMD)/$(PROG): $(OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(VECTLIB) $(GISLIB) $(MATHLIB) 

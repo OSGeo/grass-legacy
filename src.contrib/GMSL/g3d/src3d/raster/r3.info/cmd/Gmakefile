@@ -1,10 +1,9 @@
 PGM      = r3.info
-HOME     = $(BIN_MAIN_CMD)
 
 LIST = main.o
 
-$(HOME)/$(PGM): $(LIST) $(G3DLIB) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(G3DLIB) $(GISLIB) $(XDRLIB) $(MATHLIB)
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(G3DLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(G3DLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB):      # in case library changes
 $(G3DLIB):      # in case library changes

@@ -1,29 +1,2 @@
 all:
 	$(MAKEALL)
-
-man:
-	$(GMAKE) s.normal	man
-	$(GMAKE) s.perturb	man
-	$(GMAKE) s.probplt	man
-	$(GMAKE) s.qcount	man
-	$(GMAKE) s.rand		man
-	$(GMAKE) s.sample	man
-	$(GMAKE) s.sv		man
-#	$(GMAKE) s.surf.krig	man
-	$(GMAKE) s.info		man
-	$(GMAKE) s.kcv		man
-	$(GMAKE) s.univar	man
-
-clean:
-	$(GMAKE) s.normal	realclean
-	$(GMAKE) s.perturb	realclean
-	$(GMAKE) s.probplt	realclean
-	$(GMAKE) s.qcount	realclean
-	$(GMAKE) s.rand		realclean
-	$(GMAKE) s.sample	realclean
-	$(GMAKE) s.sv		realclean
-#	$(GMAKE) s.surf.krig	realclean
-	$(GMAKE) s.info		realclean
-	$(GMAKE) s.kcv		realclean
-	$(GMAKE) s.univar	realclean
-	-rm -rf OBJ*
