@@ -28,7 +28,7 @@ ENV=			@ENV@
 MAKE=			make
 
 # these variables will be passed to the scripts below:
-MAKE_ENV=		GRASSSRC=${SRCDIR}/src GMAKE=${SRCDIR}/src/CMD/gmake5.0 HEAD=head.${ARCH} MAKE=${MAKE}
+MAKE_ENV=		GRASSSRC=${SRCDIR}/src GMAKE=${SRCDIR}/src/CMD/gmake5.0 HEADER=head.${ARCH} MAKE=${MAKE}
 
 IS64BIT=		${SRCDIR}/src/CMD/generic/is64bit.sh
 
