@@ -46,6 +46,9 @@ write_line ( struct Map_info *Map, int type, struct line_pnts *Points )
     for ( i = 0; i < Vect_get_num_updated_nodes(Map); i++ )
 	G_debug (2, "Updated node: %d", Vect_get_updated_node( Map, i ) );
 
+    /* Reset category (this automaticaly resets cat for next not used) */
+    var_seti ( VAR_FIELD, var_geti ( VAR_FIELD ) );
+
     if ( var_geti(VAR_CAT_MODE) != CAT_MODE_NO && var_geti(VAR_INSERT) && cat > 0 ) {
 	G_debug (2, "Insert new record" );
         db_set_string (&html, "<HTML><HEAD><TITLE>Form</TITLE><BODY>");
@@ -106,8 +109,6 @@ write_line ( struct Map_info *Map, int type, struct line_pnts *Points )
         G_free (form);	
 	db_free_string (&html);
 
-	/* Reset category (this automaticaly resets cat for next not used) */
-	var_seti ( VAR_FIELD, var_geti ( VAR_FIELD ) );
     }
 
     return 0;
