@@ -115,7 +115,7 @@ int main(int argc,char *argv[])
     Vect_open_old (&Map, vect_opt->answer, mapset);
 
     Fi = Vect_get_field ( &Map, field);
-    if ( Fi == NULL ) G_fatal_error ( "Cannot get field info for vector");
+    if ( Fi == NULL ) G_fatal_error ( "Cannot get layer info for vector map");
     
     /* Open driver */
     driver = db_start_driver_open_database ( Fi->driver, Fi->database );

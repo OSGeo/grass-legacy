@@ -104,7 +104,7 @@ main (int argc, char *argv[])
     db_CatValArray_init ( &Cvarr );
     Fi = Vect_get_field( &Map, ofield);
     if ( Fi == NULL ) {
-	G_fatal_error ("Cannot read field info");
+	G_fatal_error ("Cannot get layer info for vector map");
     }
 
     Driver = db_start_driver_open_database ( Fi->driver, Fi->database );

@@ -1,4 +1,4 @@
-/* $Id$
+/*
  * ***************************************************************
  * *
  * * MODULE:       v.out.ogr
@@ -214,7 +214,7 @@ main (int argc, char *argv[])
 	 doatt = 1; /* do attributes */
 	 Fi = Vect_get_field( &In, field);
 	 if ( Fi == NULL ) {
-	     G_warning ("Cannot read field info -> using categories only for attributes");
+	     G_warning ("Cannot get layer info for vector map -> using categories only for attributes");
 	     
 	     Ogr_field = OGR_Fld_Create( "cat", OFTInteger ); 
 	     OGR_L_CreateField( Ogr_layer, Ogr_field, 0 ); 
@@ -509,7 +509,7 @@ mk_att ( int cat, struct field_info *Fi, dbDriver *Driver, int ncol, int keycol,
 	    OGR_F_SetFieldInteger( Ogr_feature, 0, cat );  
 	}
     } else { 
-	/* G_warning ( "Line without cat of field %d", field); */
+	/* G_warning ( "Line without cat of layer %d", field); */
 	nocat++;
     }
     fout++;

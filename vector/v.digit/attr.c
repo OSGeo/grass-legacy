@@ -112,7 +112,7 @@ int new_record ( int field, int cat )
     
     Fi = Vect_get_field( &Map, field );
     if ( Fi == NULL ) { 
-	i_message ( MSG_OK, MSGI_ERROR, "Database table for this field is not defined" );
+	i_message ( MSG_OK, MSGI_ERROR, "Database table for this layer is not defined" );
 	return -1;
     }
 
