@@ -32,13 +32,14 @@ struct band {
 	int type;
 	int size;
 	unsigned char *array[3];
+	short *floyd[2];
 	struct Colors colors;
 };
 
 static char * const color_names[3] = {"red", "green", "blue"};
 
 static struct band B[3];
-static int dither, closest;
+static int closest;
 
 static void make_color_cube(struct Colors *colors);
 static int quantize(int c, int x);
@@ -51,6 +52,7 @@ int main(int argc, char **argv)
 	struct Flag *flg_o;
 	struct Flag *flg_d;
 	struct Flag *flg_c;
+	int dither;
 	char *out_name;
 	int out_file;
 	CELL *out_array;
@@ -140,15 +142,15 @@ int main(int argc, char **argv)
 
 	levels = atoi(opt_lev->answer);
 
-	dither = flg_d->answer;
-	closest = flg_c->answer;
+	dither    = flg_d->answer;
+	closest   = flg_c->answer;
 
 	/* read in current window */
 	G_get_window(&window);
 
-	dummy = (unsigned char *) G_malloc(window.cols);
+	dummy = G_malloc(window.cols);
 
-	nulls = (unsigned char *) G_malloc(window.cols);
+	nulls = G_malloc(window.cols);
 
 	for (i = 0; i < 3; i++)
 	{
@@ -175,7 +177,7 @@ int main(int argc, char **argv)
 
 		for (j = 0; j < 3; j++)
 			b->array[j] = (i == j)
-				? (unsigned char *) G_malloc(window.cols)
+				? G_malloc(window.cols)
 				: dummy;
 
 		b->levels = b->opt_levels->answer
@@ -183,6 +185,10 @@ int main(int argc, char **argv)
 			: levels;
 		b->maxlev = b->levels - 1;
 		b->offset = 128 / b->maxlev;
+
+		if (dither)
+			for (j = 0; j < 2; j++)
+				b->floyd[j] = G_calloc(window.cols + 2, sizeof(short));
 	}
 
 	/* open output files */
@@ -207,21 +213,28 @@ int main(int argc, char **argv)
 
 	for (atrow = 0; atrow < window.rows; atrow++)
 	{
-		int diff[3];
-
 		G_percent(atrow, window.rows, 2);
 
 		for (i = 0; i < 3; i++)
 		{
+			struct band *b = &B[i];
+
 			if (G_get_raster_row_colors(
-				    B[i].file, atrow, &B[i].colors,
-				    B[i].array[0],
-				    B[i].array[1],
-				    B[i].array[2],
+				    b->file, atrow, &b->colors,
+				    b->array[0],
+				    b->array[1],
+				    b->array[2],
 				    nulls) < 0)
 				G_fatal_error("Error reading '%s' map", color_names[i]);
 
-			diff[i] = 0;
+			if (dither)
+			{
+				short *tmp = b->floyd[0];
+				b->floyd[0] = b->floyd[1];
+				for (atcol = 0; atcol < window.cols + 2; atcol++)
+					tmp[atcol] = 0;
+				b->floyd[1] = tmp;
+			}
 		}
 
 		for (atcol = 0; atcol < window.cols; atcol++)
@@ -236,19 +249,24 @@ int main(int argc, char **argv)
 
 			for (i = 0; i < 3; i++)
 			{
-				int v = B[i].array[i][atcol];
+				struct band *b = &B[i];
+				int v = b->array[i][atcol];
 
 				if (dither)
 				{
-					int r, w;
+					int r, w, d;
 
-					v += diff[i];
+					v += b->floyd[0][atcol+1] / 16;
+					v =	(v < 0) ? 0 :
+						(v > 255) ? 255 :
+						v;
 					r = quantize(i, v);
-					r = 	(r<0) ? 0 :
-						(r>256) ? 256 :
-						r;
-					w = r * 255 / B[i].maxlev;
-					diff[i] = v - w;
+					w = r * 255 / b->maxlev;
+					d = v - w;
+					b->floyd[0][atcol+2] += 7 * d;
+					b->floyd[1][atcol+0] += 3 * d;
+					b->floyd[1][atcol+1] += 5 * d;
+					b->floyd[1][atcol+2] += 1 * d;
 					val[i] = r;
 				}
 				else
