@@ -104,6 +104,21 @@ heights, the <em>-e</em> flag must be used. Otherwise the
 GRASS interpolation and conversion modules will not detect
 this points data attribute properly.
 
+
+<H2>GRASS 5.0 internal sites format in "sites_list/"</H2>
+
+
+easting|northing|[z|[d4|]...][#category_int] [ [@attr_text OR %flt] ... ]
+<p>
+
+such as:
+<p>
+739865.8|4279785.5|#2965 %396685 %194919 %160392 %10941 %2.473222 @"St.Louis" @MO @city
+<p>
+There can be many dimensions between pipes (|), but no #%@. <p>
+There can be only one cat, preceded by #, then there may be 
+many FP or text attributes.
+
 <H2>NOTES</H2>
 
 Other GRASS programs can be used to produce output in a
