@@ -97,16 +97,16 @@ F_generate (char *drvname, char *dbname, char *tblname, char *key, int keyval,
 	if ( edit_mode == F_EDIT ) {
 	    db_append_string (&html, "<FORM>");	
 
-	    sprintf (buf, "<INPUT type=hidden name=%s value='%s'>", F_DRIVER_FNAME, drvname );
+	    sprintf (buf, "<INPUT type=hidden name=%s value=\"%s\">", F_DRIVER_FNAME, drvname );
 	    db_append_string (&html, buf);
 	    /* Note: because html_library.tcl failes to parse
 	    *  <INPUT name=abc value='dbname=xxx'> and returnes
 	    *  name="xxx" value="dbname=xxx" order of value and name parameters is changed */
-	    sprintf (buf, "<INPUT type=hidden value='%s' name=%s>", dbname, F_DATABASE_FNAME );
+	    sprintf (buf, "<INPUT type=hidden value=\"%s\" name=%s>", dbname, F_DATABASE_FNAME );
 	    db_append_string (&html, buf);
-	    sprintf (buf, "<INPUT type=hidden name=%s value='%s'>", F_TABLE_FNAME, tblname );
+	    sprintf (buf, "<INPUT type=hidden name=%s value=\"%s\">", F_TABLE_FNAME, tblname );
 	    db_append_string (&html, buf);
-	    sprintf (buf, "<INPUT type=hidden name=%s value='%s'>", F_KEY_FNAME, key );
+	    sprintf (buf, "<INPUT type=hidden name=%s value=\"%s\">", F_KEY_FNAME, key );
 	    db_append_string (&html, buf);
 
 	}
@@ -129,7 +129,7 @@ F_generate (char *drvname, char *dbname, char *tblname, char *key, int keyval,
 	        db_append_string (&html, buf);
 
 		if ( G_strcasecmp (colname,key) == 0 ) {
-		    sprintf (buf, "%s<BR> <INPUT type=hidden name=%s value='%s'>", 
+		    sprintf (buf, "%s<BR> <INPUT type=hidden name=%s value=\"%s\">", 
 			       db_get_string(&str), colname, db_get_string(&str) );
 		} else {
 		    switch ( ctype ) {
@@ -146,7 +146,7 @@ F_generate (char *drvname, char *dbname, char *tblname, char *key, int keyval,
 			    sprintf (buf1, "20" );
 			    break;
 		    }		
-		    sprintf (buf, "<INPUT type=text size=%s name=%s value='%s'><BR>", 
+		    sprintf (buf, "<INPUT type=text size=%s name=%s value=\"%s\"><BR>", 
 				   buf1, colname, db_get_string(&str) );
 		}
 	        db_append_string (&html, buf);	
