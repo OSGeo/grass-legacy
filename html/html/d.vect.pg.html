@@ -16,12 +16,13 @@ map. (GRASS-RDBMS Interface Display Program)
 SYNOPSIS</h2>
 <b>d.vect.pg</b>
 <br><b>d.vect.pg help</b>
-<br><b>d.vect.pg [-f]</b> <b>key</b>=<i>name</i> <b>tab</b>=<i>name</i>
+<br><b>d.vect.pg [-fe]</b> <b>key</b>=<i>name</i> <b>tab</b>=<i>name</i>
 [<b>where</b>=<i>name</i>] <b>map</b>=<i>name</i> [<b>color</b>=<i>name</i>]
 <h2>
 ALTERNATE</h2>
 <b>d.vect.pg -s help</b>
-<br><b>d.vect.pg -s sql</b><i>=filename</i> <b>map</b><i>=name</i> [<b>color</b><i>=name</i>]
+<br><b>d.vect.pg [-sfe] sql</b><i>=filename</i> <b>map</b><i>=name</i>
+[<b>color</b><i>=name</i>]
 <h2>
 DESCRIPTION</h2>
 <i>d.vect.pg</i> displays select vectors from an existing vector map based
@@ -42,6 +43,12 @@ Flag:</h3>
 
 <dd>
 Fill polygons selected on the query criteria</dd>
+
+<dt>
+<b>-e</b></dt>
+
+<dd>
+Extract vector objects to new map</dd>
 </dl>
 
 <h3>
@@ -125,6 +132,12 @@ SQL select statements are input from a prepared file</dd>
 
 <dd>
 Fill polygons selected on the query criteria</dd>
+
+<dt>
+<b>-e</b></dt>
+
+<dd>
+Extract vector objects to new map</dd>
 </dl>
 
 <h3>
@@ -160,16 +173,20 @@ gray, white, black</dd>
 <br>&nbsp;
 <p><b>Result:</b> only polygons with type in 33-37 range would be displayed
 in red color..
-<p><b>2.</b> <i>d.vect.pg -f -s sql=oak.sql map=kuruma_id</i>
+<p><b>2.</b> <i>d.vect.pg -f -e -s sql=oak.sql map=kuruma_id</i>
 <p>oak.sql is:
 <p><i>select rec_id from info_kuruma where type_id > 32 and type_id &lt;38;</i>
-<p><b>Result: </b>this would be the same as in the first example.
+<p><b>Result: </b>this would be the same as in the first example, saving
+extracted fetures to a new vector map.
 <h2>
 BUGS</h2>
 none
+<br>&nbsp;
 <h2>
 NOTE</h2>
 This program requires the Postgres database software.
+<p><b>v.extract</b> is loaded from within <b>d.vect.pg </b>if '-e' flag
+was given.
 <h2>
 SEE ALSO</h2>
 <i><a href="g.column.pg.html">g.column.pg</a>, <a href="g.select.pg.html">g.select.pg</a>,
@@ -180,8 +197,6 @@ SEE ALSO</h2>
 <a href="d.what.r.pg.html">d.what.r.pg</a>,
 <a href="d.what.s.pg.html">d.what.s.pg</a>,
 <a href="d.what.v.pg.html">d.what.v.pg</a>,
-<a href="r.reclass.pg.html">r.reclass.pg</a>,
-<a href="r.rescale.pg.html">r.rescale.pg</a>,
 <a href="v.reclass.pg.html">v.reclass.pg</a></i>
 <h2>
 AUTHOR</h2>
