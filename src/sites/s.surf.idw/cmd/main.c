@@ -158,7 +158,7 @@ int main(int argc, char *argv[])
 		/* don't interpolate outside of the mask */
 	    if (mask && mask[col] == 0)
 	    {
-		dcell[col] = 0;
+		G_set_d_null_value(&dcell[col], 1);
 		continue;
 	    }
 		/* fill list with first nsearch points */
