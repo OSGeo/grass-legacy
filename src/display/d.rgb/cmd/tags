@@ -1,0 +1,5 @@
+G_RGB	rgb.c	/^G_RGB(col, R, G, B)$/
+G_make_RGB_color	rgb.c	/^G_make_RGB_color(color)$/
+Mmain	main.c	/^main(argc, argv)$/
+alloc_pass_buff	rgb.c	/^alloc_pass_buff(n)$/
+init_rgb	init_rgb.c	/^init_rgb()$/
