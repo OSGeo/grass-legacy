@@ -1,0 +1,8 @@
+
+
+ This program will convert a 3.0 Dig file to 4.0 format.
+The main feature of this is to create the portable data format.  This will
+update both the dig and (if it exists) the dig_plus files.
+
+   The dig_plus file can be forced to be removed by  using the -p flag.
+This is useful for v.build which will just remake that file anyway.
