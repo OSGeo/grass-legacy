@@ -4,7 +4,10 @@
     January 1993
 */
 	
+#define	ID_MATRIX
 #include "gstypes.h"
+#undef	ID_MATRIX
+
 #include "math.h"
 
 /*
