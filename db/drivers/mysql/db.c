@@ -19,6 +19,64 @@
 #include <dbmi.h>
 #include "globals.h"
 #include "proto.h"
+#include "../dialog/dbd.h"
+
+typedef struct { 
+    char *host,  *socket, *dbname, *user, *password;
+    int  port;
+} MYCONN;
+
+/* Parse connection string in form: 1) 'database_name'
+*  2) 'host=xx,port=xx,socket=xx,dbname=xx,user=xx,password=xx'
+*  
+*  returns:  0 OK
+*           -1 error
+*/
+int parse_conn ( char *str, MYCONN *myconn )
+{
+    int  i;
+    char **tokens, delm[2];
+    
+    /* reset */
+    myconn->host = NULL;
+    myconn->port = 0;
+    myconn->socket = NULL;
+    myconn->dbname = NULL;
+    myconn->user = NULL;
+    myconn->password = NULL;
+ 
+    G_debug (3, "parse_conn : %s", str ); 
+    
+    if ( strchr(str, '=') == NULL ) { /*db name only */
+	myconn->dbname = G_store ( str );
+    } else {
+	delm[0] = ','; delm[1] = '\0';
+        tokens = G_tokenize ( str, delm );
+	i = 0;
+	while ( tokens[i] ) {
+	   G_debug (3, "token %d : %s", i, tokens[i] ); 
+	   if ( strncmp(tokens[i], "host", 4 ) == 0 )
+	       myconn->host = G_store ( tokens[i] + 5 );
+	   else if ( strncmp(tokens[i], "port", 4 ) == 0 )
+	       myconn->port = atoi ( tokens[i] + 5 );
+	   else if ( strncmp(tokens[i], "socket", 6 ) == 0 )
+	       myconn->socket = G_store ( tokens[i] + 7 );
+	   else if ( strncmp(tokens[i], "dbname", 6 ) == 0 )
+	       myconn->dbname = G_store ( tokens[i] + 7 );
+	   else if ( strncmp(tokens[i], "user", 4 ) == 0 )
+	       myconn->user = G_store ( tokens[i] + 5 );
+	   else if ( strncmp(tokens[i], "password", 8 ) == 0 )
+	       myconn->password = G_store ( tokens[i] + 9 );
+	   else 
+               G_warning ( "Unknown option in database definition for mysql: '%s'", tokens[i] );
+	   
+	   i++;
+	}
+	G_free_tokens ( tokens );	
+    }
+
+    return 0;
+}
 
 int db_driver_open_database(handle)
      dbHandle *handle;
@@ -26,10 +84,11 @@ int db_driver_open_database(handle)
     char *name;
     char emsg[MYSQL_MSG];
     dbConnection connection;
+    MYCONN myconn;
+    MYSQL *ret_conn;
 
     MYSQL_RES *res;
     MYSQL_ROW row;
-    char *mysqlhost;
 
     db.name[0] = '\0';
     db.tables = NULL;
@@ -45,21 +104,48 @@ int db_driver_open_database(handle)
 	name = connection.databaseName;
     }
 
-    strcpy(db.name, name);
-    
-    mysqlhost = connection.hostName;
-    
-    G_debug(3, "db_driver_open_database() - mysql host is %s, driver is %s", 
-    		mysqlhost, G__getenv("DB_DRIVER"));
+    G_debug(3, "db_driver_open_database() driver = mysql database definition = '%s'", name );
 
+    parse_conn ( name, &myconn );
+
+    G_debug(3, "host = %s, port = %d, socket = %s, dbname = %s, user = %s, password = %s", 
+	        myconn.host, myconn.port, myconn.socket, myconn.dbname, myconn.user, myconn.password ); 
+	    
+    strcpy(db.name, myconn.dbname);
+
+    /* Try to connect first maybe without user/password */
     mysql_init(&mysql_conn);
-    if (mysql_real_connect
-	(&mysql_conn, mysqlhost, connection.user, connection.password,
-	 db.name, 0, NULL, 0) == NULL) {
-	snprintf(emsg, sizeof(emsg), "Error: connect Mysql: %s\n",
-		 mysql_error(&mysql_conn));
-	report_error(emsg);
-	return DB_FAILED;
+    ret_conn = mysql_real_connect(&mysql_conn, myconn.host, myconn.user, myconn.password, myconn.dbname, 
+		myconn.port, myconn.socket, 0);
+
+    if ( ret_conn == NULL ) {
+	G_debug (3, "First attempt to connect to mysql failed");
+	if ( mysql_errno(&mysql_conn) == ER_DBACCESS_DENIED_ERROR || 
+	     mysql_errno(&mysql_conn) == ER_ACCESS_DENIED_ERROR )
+	{
+	    /* Either user or password is not correct */
+	    if ( myconn.user == NULL || strlen(myconn.user) == 0 || 
+		 myconn.password == NULL || strlen(myconn.password) == 0 ) {
+	       /* Ask user for login/password */
+	       G_debug (3, "User/password missing");
+	       if ( dbd_user ( "mysql", name, &myconn.user, &myconn.password ) < 0 ) {
+                    snprintf(emsg, sizeof(emsg), "cannot get user/password\n" );
+		    report_error(emsg);
+		    return DB_FAILED;
+	       }
+	       G_debug ( 3, "user =  %s", myconn.user ); 
+
+               /* Try to connect again in loop until success or quit by user */	       
+               ret_conn = mysql_real_connect(&mysql_conn, myconn.host, myconn.user, myconn.password, 
+		                             myconn.dbname, myconn.port, myconn.socket, 0);
+	    }
+	}
+	if ( ret_conn == NULL ) {  
+	      snprintf(emsg, sizeof(emsg), "mysql_real_connect() error (%d): %s\n",
+		                            mysql_errno(&mysql_conn), mysql_error(&mysql_conn));
+	      report_error(emsg);
+	      return DB_FAILED;
+	}
     }
 
     if ((res = mysql_list_tables(&mysql_conn, NULL)) == NULL) {

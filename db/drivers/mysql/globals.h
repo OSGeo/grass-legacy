@@ -1,5 +1,6 @@
 #include <sqlp.h>
 #include <mysql/mysql.h>
+#include <mysql/mysqld_error.h>
 
 #define MYSQL_MSG 1024		/* max length of message for report_error() */
 
