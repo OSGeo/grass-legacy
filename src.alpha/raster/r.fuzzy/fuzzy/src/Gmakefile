@@ -1,0 +1,23 @@
+FUZLIB = ../lib
+FUZINC = ../include
+
+EXTRA_CFLAGS = -I$(FUZINC)
+
+OBJS =  \
+	E_S.o \
+	dessin.o \
+	erreur.o \
+	nb_flous.o \
+	maths.o \
+	fichiers.o \
+	piles.o \
+	regles.o \
+	var_floues.o \
+	discrets.o
+
+LIB = $(FUZLIB)/libfuzzy.a
+
+all: $(LIB)
+
+$(LIB): $(OBJS)
+	$(AR)
