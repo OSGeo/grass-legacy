@@ -30,7 +30,7 @@ int Get_location_with_pointer (int *wx, int *wy, int *button)
     /* wait for a button-push event in the grass window, and return the
      * x,y coord and button number */
 
-    if(*button < 0){
+    if(*button == -1){
 	XQueryPointer(dpy, grwin, &root, &child, &rx, &ry, wx, wy, &mask);
 	*button = (mask&Button1Mask ? 1
 			: (mask&Button2Mask ? 2
