@@ -353,7 +353,10 @@ int main (int argc, char *argv[])
             if ( strcmp(colornamebuf,"Undefined") == 0 )
                  sprintf( szBandName, "%s.%d", output, nBand);
             else
+            {
+                 G_tolcase(colornamebuf);
                  sprintf( szBandName, "%s.%s", output, colornamebuf);
+            }
 
             ImportBand( hBand, szBandName, &ref );
             if (title)
