@@ -1,4 +1,9 @@
 #include "geo.h"
+
+/* $GISBASE-relative locations of parameter files */
+#define STP1927PARAMS "/etc/state27"
+#define STP1983PARAMS "/etc/state83"
+
 /* get_deg.c */
 int get_deg(char *, int);
 /* get_num.c */
@@ -22,7 +27,7 @@ double prompt_num_double(char *, double, int);
 int prompt_num_int(char *, int, int);
 /* get_stp.c */
 void get_stp_proj(char[]);
-int get_stp_code(int, char[]);
+int get_stp_code(int, char *, char *);
 int get_stp_num(void);
 int ask_fips(FILE *, int *, int *, int *);
 /* main.c */
@@ -45,4 +50,4 @@ int get_proj_index(char *);
 int init_unit_table(void);
 
 /* get_datum.c */
-int ask_datum(char *);
+int ask_datum(char *, char *, char *);

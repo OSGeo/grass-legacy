@@ -1,0 +1,34 @@
+# Datum Transformation Parameter Lists for GRASS
+#
+# Line Format:
+# shortname "PROJ.4-style parameters" "Where Used" "Comment"
+#
+# 4 fields on each line, shortname should be already listed in datum.table
+#
+# All but 1st field must be enclosed in quotes ("") An empty field can
+# contain a single space between the quotes (" ") but try to provide as
+# much detail as possible for the user.
+#
+# datum.table only holds one 3-parameter transformation. Extra sets of 
+# transformation parameters may be defined in this file for each datum
+# and will be presented to the user to select the most appropriate one for
+# his/her location. The "Where Used" and "Comment" fields should contain
+# information to aid in the user's decision.
+#
+# Any supplementary files needed by the PROJ.4 library (e.g. gridshift tables) 
+# should be placed in the directory $GISBASE/etc/nad/.
+#
+ire65	"towgs84=482.530,-130.596,564.557,-1.042,-0.214,-0.631,8.15" "Ireland (North & South)"	"OSi/OSNI Helmert Transformation, Accuracy 0.4m"
+nad27	"nadgrids=conus"        "Conterminous United States"	  " "
+nad27	"nadgrids=ntv1_can.dat" "Canada"	  " "
+nad27	"nadgrids=alaska"       "Alaska" " "
+nad27	"nadgrids=hawaii"       "Hawaii" " "
+nad27	"nadgrids=prvi"         "Puerto Rico-Virgin Is." " "
+nad27	"nadgrids=stgeorge"     "St. George Is., AK" " "
+nad27	"nadgrids=stlrnc"       "St. Lawrence Island, AK" " "
+nad27	"nadgrids=stpaul"       "St. Paul Island, AK" " "
+nad27	"nadgrids=FL"           "Florida" "High Precision"
+nad27	"nadgrids=MD"           "Maryland" "High Precision"
+nad27	"nadgrids=TN"           "Tennessee" "High Precision"
+nad27	"nadgrids=WI"           "Wisconsin" "High Precision"
+nad27	"nadgrids=WO"           "Washington - Oregon" "High Precision"

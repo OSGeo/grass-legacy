@@ -31,8 +31,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <projects.h>
-#include <gis.h>
+#include "gis.h"
 #include "site.h"
 #include "local_proto.h"
 #include "projects.h"

@@ -1,6 +1,6 @@
 PGM    = r.sunmask
-LIBES  = $(GISLIB) $(GPROJLIB)
-DEPLIBS= $(DEPGISLIB) $(DEPGPROJLIB)
+LIBES  = $(GPROJLIB) $(GISLIB)
+DEPLIBS= $(DEPGPROJLIB) $(DEPGISLIB)
 
 LIST   = main.o solpos00.o g_solposition.o
 
