@@ -18,7 +18,7 @@ message strings in GRASS must be modified from
 
  fprintf ( ..., "...", ...);
 to
- G_message ( "...", ...);
+ G_message ( _("..."), ...);
 
 See for example ./vector/v.what.rast/main.c
 
