@@ -1,0 +1,108 @@
+#!/bin/sh
+#
+# Usage: d.3d.fly image elevationmap
+if test "$GISBASE" = ""; then
+echo "You Must be in GRASS to run this program."
+exit
+fi
+
+# test: all parameters specified?
+if test "$1" = ""; then
+      echo ""
+      echo "GRASS script for 3D fly over terrain with MPEG film output"
+      echo ""
+      echo "Usage: d.3d.fly  image  elevationmap"
+      echo "       Change coordinates within the script."
+      echo ""
+      exit
+fi
+
+###########################################################
+# Example script to create a series of 3D gif images in
+# GRASS for subsequent animation with xanim, animate or 
+# create MPEG film with mpeg_encode (src.related/mpeg_encode)
+#
+# This script uses the GRASS CELL monitor to capture
+# output from d.3d, and writes each image to a GRASS 
+# raster file upon each termination of the CELL monitor. 
+# Each raster file is written to stdout as a 24-bit color 
+# PPM file with Bill Brown's r.out.ppm module, may be piped 
+# to ppmquant for color reduction if desired, 
+# then piped to ppmtogif for conversion to gif format.
+#
+# You must set the size of the CELL monitor (and final
+# images) before starting your GRASS session and running
+# your modification of this script, e.g.:
+#       setenv GRASS_WIDTH 401
+#       setenv GRASS_HEIGHT 201 
+# (will create 200 row x 400 col raster files and images)
+###########################################################
+
+# SCRIPT FOR SPEARFISH SATELLITE FLY-OVER 
+
+export GRASS_WIDTH=601
+export GRASS_HEIGHT=301
+
+# starting view point: (get coordinates with d.what.rast)
+x=606810      # east
+y=4947890     # north
+z=10000       # height
+
+# center of view:
+cx=599000     # east
+cy=4914000    # north
+
+#Max number of Calculations:
+MAX=20
+
+# Start calculation:
+i=1
+while [ $i != $MAX ]
+do
+  d.mon start=CELL
+  echo "Calculating image $i..."
+  g.region rast=$1
+  d.erase
+  d.3d map=$1 elev=$2 \
+    from=$x,$y,$z to=$cx,$cy,2500 \
+    exag=3 lines=0 field=40
+#with closing driver write the Dcell-file:
+  d.mon stop=CELL
+  sleep 1   # wait for the CELL-driver
+
+# GIF export:
+ #  g.region rast=D_cell
+ # r.out.ppm i=D_cell o=- | ppmquant 256| ppmtogif > fly_$i.gif
+ # g.remove D_cell
+ # echo "Generated fly_$i.gif."
+
+# MPEG export (see also last line):
+  g.rename D_cell,fly_$i
+  echo "Generated fly_$i"
+
+##------------------------
+# shift position:
+ # eye position:
+  x=`expr $x - 1000`   # go west
+#  y=`expr $y + 6200`
+####  z=`expr $z + 200`
+
+ # center of view
+#  cx=`expr $cx + 400`
+#  cy=`expr $cy + 1367`
+  i=`expr $i + 1`
+done
+
+# MPEG output
+GMPEG_SIZE=500
+g.region rast=fly_1
+# (wildcards are allowed):
+r.out.mpeg view1="fly_?","fly_??","fly_???" output=fly3d.mpg
+
+#remove the raster files:
+i=1
+while [ $i != $MAX ]
+do
+  g.remove rast=fly_$i
+  i=`expr $i + 1`
+done
