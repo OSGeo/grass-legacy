@@ -42,7 +42,23 @@ htmlgen:
 		cat description.html >> $(PGM).tmp.html ; \
 	fi
 	echo "<HR>" >> $(PGM).tmp.html
-	echo "<P><a href=index.html>Help Index</a>" >> $(PGM).tmp.html
+	#generate module class reference:
+	@MODCLASS=`echo $(PGM) | cut -d'.' -f1` ; \
+	if [ "$$MODCLASS" = "d" ]  ; then INDEXNAME=`echo display` ; \
+	elif [ $$MODCLASS = "db" ] ; then INDEXNAME=`echo database` ; \
+	elif [ $$MODCLASS = "g" ]  ; then INDEXNAME=`echo general` ; \
+	elif [ $$MODCLASS = "i" ]  ; then INDEXNAME=`echo imagery` ; \
+	elif [ $$MODCLASS = "m" ]  ; then INDEXNAME=`echo misc` ; \
+	elif [ $$MODCLASS = "pg" ] ; then INDEXNAME=`echo postGRASS` ; \
+	elif [ $$MODCLASS = "ps" ] ; then INDEXNAME=`echo postscript` ; \
+	elif [ $$MODCLASS = "p" ]  ; then INDEXNAME=`echo paint` ; \
+	elif [ $$MODCLASS = "r" ]  ; then INDEXNAME=`echo raster` ; \
+	elif [ $$MODCLASS = "r3" ] ; then INDEXNAME=`echo raster3D` ; \
+	elif [ $$MODCLASS = "s" ]  ; then INDEXNAME=`echo sites` ; \
+	elif [ $$MODCLASS = "v" ]  ; then INDEXNAME=`echo vector` ; \
+	else \
+	    INDEXNAME=`echo $$MODCLASS` ; \
+	fi ; echo "<P><a href=\"index.html\">Main index</a> - <a href=\"$$INDEXNAME.html\">$$INDEXNAME index</a> - <a href=\"full_index.html\">Full index</a>" >> $(PGM).tmp.html
 	echo "</body></html>" >> $(PGM).tmp.html
 	-$(MKDIR) $(GISBASE)/docs/html
 	-mv -f $(PGM).tmp.html $(GISBASE)/docs/html/$(PGM).html
