@@ -1,0 +1,15 @@
+              MANAGEMENT OF THE GRAPHICS DISPLAY MONITOR
+
+The GRASS program \d.mon\ allows the user to start, select, list,
+query the status of, release control of, stop, and unlock control of,
+available graphics monitors.  Select one of the topics listed below for
+a brief explanation of monitor functions.  See the manual entry for
+d.mon for specific information on program syntax.
+
+          \Starting a Graphics Monitor\
+          \Selecting a Graphics Monitor for Output\
+          \Releasing and Unlocking a Monitor\
+          \Stopping a Monitor\
+
+See also the \d.erase\ and \d.frame\ commands, and the
+discussion of \monitorcap\.
