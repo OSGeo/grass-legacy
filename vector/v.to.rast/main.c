@@ -50,7 +50,7 @@ int main (int argc, char *argv[])
 			"\t\tz    - use z coordinate (points or contours only)";
 
     col = G_define_option();
-    col->key            = "col";
+    col->key            = "column";
     col->type           = TYPE_STRING;
     col->required       = NO;
     col->multiple       = NO;

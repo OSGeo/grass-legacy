@@ -66,7 +66,7 @@ parse_command_line (int argc, char *argv[])
     parms.units->description = "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares)";
 
     parms.col = G_define_option();
-    parms.col->key    = "col";
+    parms.col->key    = "column";
     parms.col->type   = TYPE_STRING ;
     parms.col->required = NO ;
     parms.col->multiple = YES ;
@@ -74,7 +74,7 @@ parse_command_line (int argc, char *argv[])
     parms.col->description = "column(s)";
 
     parms.qcol = G_define_option();
-    parms.qcol->key    = "qcol";
+    parms.qcol->key    = "qcolumn";
     parms.qcol->type   = TYPE_STRING ;
     parms.qcol->required = NO ;
     parms.qcol->multiple = NO ;

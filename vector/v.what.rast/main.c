@@ -90,7 +90,7 @@ int main(int argc,char *argv[])
     field_opt = G_define_standard_option(G_OPT_V_FIELD);
 
     col_opt = G_define_option() ;
-    col_opt->key        = "col" ;
+    col_opt->key        = "column" ;
     col_opt->type       = TYPE_STRING ;
     col_opt->required   = YES ;
     col_opt->description= "Column name (will be updated by raster values)" ;
