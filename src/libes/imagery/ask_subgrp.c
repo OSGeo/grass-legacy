@@ -1,4 +1,3 @@
-/* %W%  %G% */
 /*************************************************************
 * I_ask_subgroup_old (prompt,group,subgroup)
 * I_ask_subgroup_new (prompt,group,subgroup)
