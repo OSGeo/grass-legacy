@@ -247,47 +247,77 @@ int
 Vect_point_on_line ( struct line_pnts *Points, double distance, 
 	  double *x, double *y, double *z, double *angle, double *slope )
 {
-    int j;
-    double dist = 0;
+    int j, np, seg;
+    double dist = 0, length;
     double xp, yp, zp, dx, dy, dz, dxy, dxyz, k, rest;
 
+    G_debug ( 3, "Vect_point_on_line(): distance = %f", distance);
     if ( (distance < 0) || (Points->n_points < 2) ) return 0;
+
+    /* Check if first or last */
+    length = Vect_line_length ( Points );
+    G_debug ( 3, "  length = %f", length);
+    if ( distance < 0 || distance > length ) { 
+        G_debug ( 3, "  -> outside line");
+	return 0; 
+    }
     
-    for ( j = 0; j < Points->n_points - 1; j++) {
-        /* dxyz = G_distance(Points->x[j], Points->y[j], 
-	                     Points->x[j+1], Points->y[j+1]); */
-	dx = Points->x[j+1] - Points->x[j];
-        dy = Points->y[j+1] - Points->y[j];
-        dz = Points->z[j+1] - Points->z[j];
+    np = Points->n_points;
+    if ( distance == 0 ) {
+        G_debug ( 3, "  -> first point");
+	xp = Points->x[0];
+	yp = Points->y[0];
+	zp = Points->z[0];
+        dx = Points->x[1] - Points->x[0];
+	dy = Points->y[1] - Points->y[0];
+        dz = Points->z[1] - Points->z[0];
         dxy = hypot (dx, dy); 
-        dxyz = hypot (dxy, dz); 
-	
-	dist += dxyz; 
-        if ( dist >= distance ){ /* point is on the current line part */
-            rest = distance - dist + dxyz; /* from first point of segment to point */
-            k = rest / dxyz;
-
-	    xp = Points->x[j] + k * dx;
-            yp = Points->y[j] + k * dy;
-            zp = Points->z[j] + k * dz;
-	
-            if ( x != NULL ) *x = xp;
-            if ( y != NULL ) *y = yp;
-            if ( z != NULL ) *z = zp;
+	seg = 1;
+    } else if ( distance == length ) {
+        G_debug ( 3, "  -> last point");
+	xp = Points->x[np-1];
+	yp = Points->y[np-1];
+	zp = Points->z[np-1];
+        dx = Points->x[np-1] - Points->x[np-2];
+	dy = Points->y[np-1] - Points->y[np-2];
+        dz = Points->z[np-1] - Points->z[np-2];
+        dxy = hypot (dx, dy); 
+	seg = np - 1;
+    } else {
+	for ( j = 0; j < Points->n_points - 1; j++) {
+	    /* dxyz = G_distance(Points->x[j], Points->y[j], 
+				 Points->x[j+1], Points->y[j+1]); */
+	    dx = Points->x[j+1] - Points->x[j];
+	    dy = Points->y[j+1] - Points->y[j];
+	    dz = Points->z[j+1] - Points->z[j];
+	    dxy = hypot (dx, dy); 
+	    dxyz = hypot (dxy, dz); 
 	    
-	    /* calculate angle */
-	    if ( angle != NULL )
-	       *angle = atan2(dy, dx);
+	    dist += dxyz; 
+	    if ( dist >= distance ){ /* point is on the current line part */
+		rest = distance - dist + dxyz; /* from first point of segment to point */
+		k = rest / dxyz;
 
-	    /* calculate slope */
-	    if ( slope != NULL )
-	       *slope = atan2(dz, dxy);
-	    
-	    return (j + 1);
+		xp = Points->x[j] + k * dx;
+		yp = Points->y[j] + k * dy;
+		zp = Points->z[j] + k * dz;
+		seg = j + 1;
+		break;
+	    }
 	}
     }
 
-    return 0;
+    if ( x != NULL ) *x = xp;
+    if ( y != NULL ) *y = yp;
+    if ( z != NULL ) *z = zp;
+
+    /* calculate angle */
+    if ( angle != NULL ) *angle = atan2(dy, dx);
+
+    /* calculate slope */
+    if ( slope != NULL )  *slope = atan2(dz, dxy);
+
+    return seg;
 }
 
 /*!
@@ -300,7 +330,7 @@ Vect_point_on_line ( struct line_pnts *Points, double distance,
   If the distance is greater than line length or negative, error is returned.
 
  \return  1 success
-          0 error when start > length or end < 0 
+          0 error when start > length or end < 0 or start < 0 or end > length
  \param line_pnts * structure, start, end, line_pnts * structure 
 */
 int 
@@ -310,6 +340,8 @@ Vect_line_segment ( struct line_pnts *InPoints, double start, double end,
     int i, seg1, seg2;
     double length, tmp;
     double x1, y1, z1, x2, y2, z2;
+
+    G_debug ( 3, "Vect_line_segment(): start = %f, end = %f, n_points = %d", start, end, InPoints->n_points);
 
     Vect_reset_line (OutPoints);
     
@@ -327,6 +359,13 @@ Vect_line_segment ( struct line_pnts *InPoints, double start, double end,
     /* Find coordinates and segments of start/end */
     seg1 = Vect_point_on_line ( InPoints, start, &x1, &y1, &z1, NULL, NULL);
     seg2 = Vect_point_on_line ( InPoints, end, &x2, &y2, &z2, NULL, NULL);
+
+    G_debug ( 3, "  -> seg1 = %d seg2 = %d", seg1, seg2);
+
+    if ( seg1 == 0 || seg2 == 0 ) { 
+	G_warning ("Segment outside line, no segment created"); 
+	return 0;
+    }
     
     Vect_append_point ( OutPoints, x1, y1, z1 );
 
