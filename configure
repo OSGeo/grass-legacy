@@ -4621,7 +4621,7 @@ LDFLAGS=${ac_save_ldflags}
 # Done with JPEG library
 
 
-XDRIVER=fifo
+XDRIVER=socket
 
 # Check whether --with-fifo or --without-fifo was given.
 if test "${with_fifo+set}" = set; then
@@ -4671,20 +4671,8 @@ echo "configure:4671: checking for XDriver" >&5
 echo "$ac_t""$XDRIVER" 1>&6
 
 
-case "$XDRIVER" in
-    ipc)
-       xdriver=ipc
-    ;;
-    socket)
-       xdriver=socket
-    ;;
-    *)
-       xdriver=fifo
-    ;;
-esac
-
-echo GRASS_IN_CONFIGURE=yes ./README.xdriver $xdriver
-GRASS_IN_CONFIGURE=yes ./README.xdriver $xdriver
+echo GRASS_IN_CONFIGURE=yes ./README.xdriver $XDRIVER
+GRASS_IN_CONFIGURE=yes ./README.xdriver $XDRIVER
 
 
 trap '' 1 2 15

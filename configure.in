@@ -1045,7 +1045,7 @@ AC_SUBST(JPEGINCPATH)
 # Done with JPEG library
 
 
-XDRIVER=fifo
+XDRIVER=socket
 
 AC_ARG_WITH(fifo,
     [  --with-fifo             use fifo XDriver instead of ipc (default)],
@@ -1082,20 +1082,8 @@ AC_MSG_CHECKING(for XDriver)
 AC_MSG_RESULT($XDRIVER)
 AC_SUBST(XDRIVER)
 
-case "$XDRIVER" in
-    ipc)
-       xdriver=ipc
-    ;;
-    socket)
-       xdriver=socket
-    ;;
-    *)
-       xdriver=fifo
-    ;;
-esac
-
-echo GRASS_IN_CONFIGURE=yes ./README.xdriver $xdriver
-GRASS_IN_CONFIGURE=yes ./README.xdriver $xdriver
+echo GRASS_IN_CONFIGURE=yes ./README.xdriver $XDRIVER
+GRASS_IN_CONFIGURE=yes ./README.xdriver $XDRIVER
 
 
 AC_OUTPUT(Makefile src/CMD/head/head)
