@@ -88,10 +88,12 @@ HTMLDIR2	= ${HTMLDIR}/html
 
 MANSECT		= 1
 MANDIR		= ${GISBASE}/man/man${MANSECT}
+CATDIR		= ${GISBASE}/man/cat${MANSECT}
 
+MAN2CAT		= man
 HTML2MAN	= GRASS_PERL=${PERL} sh ${SRCDIR}/src/scripts/contrib/g.html2man/g.html2man
 
-documents:	htmlpages images manpages
+documents:	htmlpages images manpages catpages
 
 htmlpages:	htmlpages1 htmlpages2
 
@@ -111,6 +113,14 @@ ${MANDIR}:
 manpages1:	$(patsubst ${HTMLSRC1}/%.html,${MANDIR}/%.${MANSECT},$(wildcard ${HTMLSRC1}/*.html))
 manpages2:	$(patsubst ${HTMLSRC2}/%.html,${MANDIR}/%.${MANSECT},$(wildcard ${HTMLSRC2}/*.html))
 
+catpages:	${CATDIR} catpages1 catpages2
+
+${CATDIR}:
+		-mkdir -p ${CATDIR}
+
+catpages1:	$(patsubst ${HTMLSRC1}/%.html,${CATDIR}/%.${MANSECT},$(wildcard ${HTMLSRC1}/*.html))
+catpages2:	$(patsubst ${HTMLSRC2}/%.html,${CATDIR}/%.${MANSECT},$(wildcard ${HTMLSRC2}/*.html))
+
 ${HTMLDIR}/%.html:	${HTMLSRC}/%.html
 	cp -f $< $@
 
@@ -122,3 +132,6 @@ ${MANDIR}/%.${MANSECT}:	${HTMLSRC1}/%.html
 
 ${MANDIR}/%.${MANSECT}:	${HTMLSRC2}/%.html
 	${HTML2MAN} $< $@ $(MANSECT)
+
+${CATDIR}/%.${MANSECT}:	${MANDIR}/%.${MANSECT}
+	${MAN2CAT} $< > $@
