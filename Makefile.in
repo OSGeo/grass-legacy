@@ -229,5 +229,5 @@ check: install
 	EXPECT=${EXPECT} ; export EXPECT; \
 	if [ -f $${SRCDIR}/../../expect/expect ] ; then \
 	  TCL_LIBRARY=$${SRCDIR}/../../tcl/library ; \
-	  export TCL_LIBRARY; fi; export GISBASE=${PREFIX} ; export SRCDIR=$${SRCDIR} ; \
+	  export TCL_LIBRARY; fi; export GISBASE=${PREFIX} ; export SRCDIR=${SRCDIR} ; \
 	(cd ${SRCDIR}/testsuite && ${RUNTEST} ${RUNTESTFLAGS} --tool grass --srcdir .  || exit 0)
