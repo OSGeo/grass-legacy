@@ -179,6 +179,7 @@ src/mapdev/v.out.arc
 src/mapdev/v.out.dlg
 src/mapdev/v.out.dxf
 src/mapdev/v.out.moss
+src/mapdev/v.out.shape
 src/mapdev/v.patch
 src/mapdev/v.proj
 src/mapdev/v.prune
