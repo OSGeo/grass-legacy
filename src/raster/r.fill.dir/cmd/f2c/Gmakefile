@@ -1,0 +1,55 @@
+PGM = $(BIN_CMD)/r.fill.dir
+
+FILL = $(ETC)/fill
+
+# this program uses a number of sub-programs.
+# these we will put in $GIS/etc/fill
+
+PGM1 = $(FILL)/fmt_un
+PGM2 = $(FILL)/fillsngl
+PGM3 = $(FILL)/direct
+PGM4 = $(FILL)/dopolys
+PGM5 = $(FILL)/wtrshed
+PGM6 = $(FILL)/ppupdate
+PGM7 = $(FILL)/un_fmt_fill
+
+OBJ = main.o
+OBJ1 = fmt_un.o
+OBJ2 = fillsngl.o
+OBJ3 = direct.o
+OBJ4 = dopolys.o
+OBJ5 = wtrshed.o
+OBJ6 = ppupdate.o
+OBJ7 = un_fmt_fill.o
+
+all: $(PGM) $(PGM1) $(PGM2) $(PGM3) $(PGM4) $(PGM5) $(PGM6) $(PGM7)
+
+$(PGM): $(OBJ) $(GISLIB)
+	$(CC) $(LDFLAGS) $(OBJ) -o $@ $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(PGM1): $(OBJ1) $(FILL)
+	$(CC) $(LDFLAGS) $(OBJ1) -o $@ $(XDRLIB)
+
+$(PGM2): $(OBJ2) $(FILL)
+	$(CC) $(LDFLAGS) $(OBJ2) -o $@ $(XDRLIB)
+
+$(PGM3): $(OBJ3) $(FILL)
+	$(CC) $(LDFLAGS) $(OBJ3) -o $@ $(XDRLIB)
+
+$(PGM4): $(OBJ4) $(FILL)
+	$(CC) $(LDFLAGS) $(OBJ4) -o $@ $(XDRLIB)
+
+$(PGM5): $(OBJ5) $(FILL)
+	$(CC) $(LDFLAGS) $(OBJ5) -o $@ $(XDRLIB)
+
+$(PGM6): $(OBJ6) $(FILL)
+	$(CC) $(LDFLAGS) $(OBJ6) -o $@ $(XDRLIB)
+
+$(PGM7): $(OBJ7) $(FILL)
+	$(CC) $(LDFLAGS) $(OBJ7) -o $@ $(XDRLIB)
+
+$(FILL):
+	mkdir $(FILL)
+
+$(GISLIB): #
+
