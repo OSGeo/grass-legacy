@@ -86,7 +86,7 @@ if [ $GIS_FLAG_r -ne 1 ] ; then
 #    echo regex, as is
 fi
 
-for i in `g.list type=$type mapset=$mapset | grep -v '^-\+$' | grep -v "files available" | grep -v "available in mapset"`
+for i in `g.list type=$type mapset=$mapset | grep -v '^-\+$' | grep -v "files available" | grep -vi "mapset"`
 do
     if [ ! "$search" ] ; then
 	list="$list $i"
