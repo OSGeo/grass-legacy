@@ -22,15 +22,42 @@ int cf;
 CELL *cell;
 FILE *ifp;
 
+long int num_colors;
+long int maxcolor = 0;
+char tmpbuf[80];
+
 short int	write_PNG_pixel();
+short int 	write_PNG_rgbpixel();
 unsigned char	PNG_pixel ;
 
-#define MaxColors	256		
+#define MaxColors	256 /* that's for palette*/
+/*#define MAXCOLOR	167772168 -so big - crashes your prog unless you have big ram*/
+/*#define MAXCOLOR	65536 - that's ok, but we'd still ask user to choose*/	
+
+#define TRUECOLOR24	167772168
+#define TRUECOLOR16	65536
+
+long int longcolor;
 
 struct ColorEntry
     {
     unsigned char red, green, blue;
     };
+/*
+struct mycolor {
+	int red;
+	int grn;
+	int blu;
+} ppm_color[MAXCOLOR];
+*/
+
+  typedef struct {
+	int red;
+	int grn;
+	int blu;
+  } mycolor;
+  
+  mycolor * ppm_color;
 
 #define SIG_CHECK_SIZE 4
 
@@ -151,7 +178,7 @@ int main(int argc, char *argv[])
   pixel *pnm_pixel;
   int x, y;
   int linesize;
-  png_uint_16 c, c2, c3, a;
+  png_uint_16 c, c2, c3, a, rgb_pixel;
   int pnm_type;
   int i;
   int trans_mix;
@@ -159,11 +186,11 @@ int main(int argc, char *argv[])
   char gamma_string[80];
   static char *type_string;
   static char *alpha_string;
-
-
-	
   
-
+  
+  
+  
+  
   type_string = alpha_string = "";
   
 
@@ -303,6 +330,43 @@ fprintf(stderr,"\nType of png image is rgb with alpha\n");
         alpha_string = "+alpha";
         break;
     }
+   if (info_ptr->color_type == PNG_COLOR_TYPE_RGB) {
+   
+    fprintf (stdout,"\n MAXCOLOR value:\n");
+		fprintf (stdout,"Enter \"24\" or \"16\" for bits\n");
+		fprintf (stdout,"Hit RETURN if you're not sure\n");
+		fprintf (stdout,"> ");
+		fgets(tmpbuf,80,stdin);
+/*************************************************************************/
+   /*****!!!!!! hier eine Zeile eingefuegt,ebenso bei allen anderen fgets *****/
+
+              tmpbuf[strlen(tmpbuf)-1]='\0';
+/********************************************************************/
+                
+
+		if (!strlen(tmpbuf)) {
+			longcolor=TRUECOLOR16;
+		}
+		else if (!strncmp(tmpbuf,"24",2)) { 
+			longcolor=TRUECOLOR24;
+			fprintf(stdout,"\nMAXCOLOR set to 24 bit\n");
+		}
+		else if (!strncmp(tmpbuf,"16",2)) { 
+			longcolor=TRUECOLOR16;
+			fprintf(stdout,"\nMAXCOLOR set to 16 bit\n");
+		}
+		else {
+			longcolor=TRUECOLOR16;
+			fprintf(stdout,"\nMAXCOLOR set to 16 bit\n");
+		}
+	
+	ppm_color = (mycolor*) malloc(longcolor * sizeof(mycolor));
+  
+  	if (ppm_color == NULL) {
+    		fprintf(stderr,"\nCouldn't allocate space for image.\n Try reduce MAXCOLOR to 16bit,\nor - increase your comp's RAM\n");
+    	exit(-1);
+  	}
+   }
     if (info_ptr->valid & PNG_INFO_tRNS) {
       alpha_string = "+transparency";
     }
@@ -607,9 +671,26 @@ fprintf(stderr,"\nType of png image is rgb with alpha\n");
 	irow = icol = 0;
 	/* Test compatibility */
 	
+	
 /*************************************/
 /*Conversion code -A.Sh.*/
+if (info_ptr->color_type == PNG_COLOR_TYPE_RGB){
 
+	for (y = 0 ; y < info_ptr->height ; y++) {
+    		png_pixel = png_image[y];
+
+    		for (x = 0 ; x < info_ptr->width ; x++) {
+      			c = get_png_val (png_pixel);
+      			c2 = get_png_val (png_pixel);
+      			c3 = get_png_val (png_pixel);
+      			fill_color_tab(c,c2,c3);
+      
+    		}
+	}
+	num_colors = maxcolor;
+	if (Verbose) 
+		fprintf(stdout,"\nTotal number of colors is %d\n",maxcolor);
+}
  for (y = 0 ; y < info_ptr->height ; y++) {
     png_pixel = png_image[y];
 
@@ -656,15 +737,14 @@ fprintf(stderr,"\nType of png image is rgb with alpha\n");
           break;
 
         case PNG_COLOR_TYPE_RGB:
-/*          c2 = get_png_val (png_pixel);
+	
+          c2 = get_png_val (png_pixel);
           c3 = get_png_val (png_pixel);
-          store_pixel (pnm_pixel, c, c2, c3,
-		((info_ptr->valid & PNG_INFO_tRNS) &&
-		 (c  == gamma_correct (info_ptr->trans_values.red, totalgamma)) &&
-		 (c2 == gamma_correct (info_ptr->trans_values.green, totalgamma)) &&
-		 (c3 == gamma_correct (info_ptr->trans_values.blue, totalgamma))) ?
-			0 : maxval);
-*/
+
+			   rgb_pixel = lookup_color(c,c2,c3,num_colors);
+			   write_PNG_rgbpixel(rgb_pixel);
+
+/*
       for (i = 0 ; i < info_ptr->height ; i++)
             free (png_image[i]);
       free (png_image);
@@ -672,6 +752,7 @@ fprintf(stderr,"\nType of png image is rgb with alpha\n");
       fclose (ifp);
       fprintf(stderr,"\nrgb not supported yet- yummm!\n");
       exit(-1);
+*/
           break;
 
         case PNG_COLOR_TYPE_RGB_ALPHA:
@@ -721,11 +802,20 @@ fprintf(stderr,"\nType of png image is rgb with alpha\n");
 	    	      
 	      G_set_color((CELL)i, info_ptr->palette[i].red, info_ptr->palette[i].green, info_ptr->palette[i].blue, &color);
 	    }
+	} else if ( info_ptr->color_type == PNG_COLOR_TYPE_RGB) {
+		
+		for(i=0; i <num_colors; i++){
+		G_set_color((CELL)i, ppm_color[i].red, ppm_color[i].grn,
+			ppm_color[i].blu, &color);
+		}
+ 
 	} else if ( info_ptr->color_type == PNG_COLOR_TYPE_GRAY) {
 /*do something here*/
 	} 
 	    
 	G_write_colors(layer, G_mapset(), &color);
+	
+	free(ppm_color);
 
 
     exit (0);
@@ -746,3 +836,57 @@ unsigned char	PNG_pixel ;
 	return(0);
 } /* write_PNG_pixel */
 
+short int write_PNG_rgbpixel(PNG_pixel)
+int	PNG_pixel ;
+{
+	cell[icol] = (CELL)PNG_pixel;
+	if (icol == ncols){
+		icol = 0;
+		G_put_c_raster_row(cf, cell);
+		irow ++;
+	}
+	icol++;
+	return(0);
+} /* write_PNG_pixel */
+
+int 
+lookup_color (int r, int g, int b, int num)
+{
+	int x;
+
+	for (x=0;x<num;x++){
+		if (ppm_color[x].red == r && 
+		    ppm_color[x].grn == g &&
+		    ppm_color[x].blu == b){
+			break;
+		}
+	}
+	return(x);
+}
+
+
+int fill_color_tab( int c, int c2, int c3) {
+
+int i;
+int match = 0;
+
+	
+		for (i=0;i<maxcolor;i++){
+			if (ppm_color[i].red == c && 
+			    ppm_color[i].grn == c2 &&
+			    ppm_color[i].blu == c3){
+				match = 1;
+				break;
+			}
+		}
+		if (match == 0){
+			ppm_color[maxcolor].red = c;
+			ppm_color[maxcolor].grn = c2;
+			ppm_color[maxcolor].blu = c3;
+			maxcolor++;
+
+			if (maxcolor == longcolor)
+				G_fatal_error("Exceeded maximum colors - exiting");
+		}
+return 0;
+}
