@@ -16,6 +16,7 @@
 
 struct {
 	char *driver, *database, *input;
+	int i;
 } parms;
 
 void parse_command_line();
@@ -61,8 +62,12 @@ main( int argc, char *argv[] )
 	    G_debug (3, "sql: %s", db_get_string(&stmt) );
             ret = db_execute_immediate (driver, &stmt);
 	    if ( ret != DB_OK ) {
-	       G_warning ( _("Error while executing: \"%s\"\n"), db_get_string( &stmt ) );
-	       error++;
+	       if (parms.i){ /* ignore SQL errors */
+		   G_warning ( _("Error while executing: \"%s\"\n"), db_get_string( &stmt ) );
+		   error++;
+	       }
+	       else
+	           G_fatal_error ( _("Error while executing: \"%s\"\n"), db_get_string( &stmt ) );
 	    }
 	}
     }
@@ -77,6 +82,7 @@ void
 parse_command_line(argc, argv) char *argv[];
 {
     struct Option *driver, *database, *input;
+    struct Flag *i;
     struct GModule *module;
     char *drv, *db;
 
@@ -108,6 +114,10 @@ parse_command_line(argc, argv) char *argv[];
     input->description 	= "filename with sql statement";
     input->gisprompt    = "file,file,file";
 
+    i = G_define_flag();
+    i->key              = 'i';
+    i->description      = _("ignore SQL errors and continue");
+
     /* Set description */
     module              = G_define_module();
     module->description = ""\
@@ -120,6 +130,7 @@ parse_command_line(argc, argv) char *argv[];
     parms.driver	= driver->answer;
     parms.database	= database->answer;
     parms.input		= input->answer;
+    parms.i		= i->answer;
 }
 
 int
@@ -127,7 +138,7 @@ get_stmt(fd, stmt)
     FILE *fd;
     dbString *stmt;
 {
-    char buf[4000], buf2[4000], *str;
+    char buf[4000], buf2[4000];
     int len, row = 0;
 
     db_init_string (stmt);
