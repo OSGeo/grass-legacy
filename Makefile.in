@@ -314,6 +314,7 @@ mostlyclean:
 	${SHELL} -c "find . -name 'OBJ*' -exec rm -rf {} \; 2>/dev/null ; true"
 	${SHELL} -c "rm -f src/CMD/next_step/${ARCH}   	    2>/dev/null ; true"
 	${SHELL} -c "rm -f grass*install.sh   	    	    2>/dev/null ; true"
+	${SHELL} -c "rm -f error.log                        2>/dev/null ; true"
 	${SHELL} -c "rm -f testsuite/*log                   2>/dev/null ; true"
 	${SHELL} -c "rm -f testsuite/*.sum                  2>/dev/null ; true"
 	${SHELL} -c "rm -f testsuite/core                   2>/dev/null ; true"
