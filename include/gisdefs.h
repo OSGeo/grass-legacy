@@ -1094,6 +1094,7 @@ int G_sock_bind(char *);
 int G_sock_listen(int, unsigned int);
 int G_sock_accept(int);
 int G_sock_connect(char *);
+int G_sock_socketpair(int, int, int, int *);
 
 /* view.c */
 int G_3dview_warning(int);
