@@ -129,7 +129,7 @@ process(FILE *fid) {
 *pargv[MAX_PARGS];
 	static int
 pargc = 0;
-	void
+	int
 main(int argc, char **argv) {
 	char *arg, **eargv = argv, *strnchr();
 	FILE *fid;
@@ -238,5 +238,5 @@ noargument:		   emess(1,"missing argument for -%c",*arg);
 			emess_dat.File_name = (char *)0;
 		}
 	}
-	exit(0); /* normal completion */
+	return 0; /* normal completion */
 }

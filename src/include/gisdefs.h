@@ -58,14 +58,14 @@ int G__null_bitstream_size(int);
 
 /* area.c */
 int G_begin_cell_area_calculations(void);
-double G_area_of_cell_at_row(register int);
+double G_area_of_cell_at_row(int);
 int G_begin_polygon_area_calculations(void);
 double G_area_of_polygon(double *, double *, int);
 
 /* area_ellipse.c */
 int G_begin_zone_area_on_ellipsoid(double, double, double);
-double G_darea0_on_ellipsoid(register double);
-double G_area_for_zone_on_ellipsoid(register double, register double);
+double G_darea0_on_ellipsoid(double);
+double G_area_for_zone_on_ellipsoid(double, double);
 
 /* area_poly1.c */
 int G_begin_ellipsoid_polygon_area(double, double);
@@ -76,8 +76,8 @@ double G_planimetric_polygon_area(double *, double *, int);
 
 /* area_sphere.c */
 int G_begin_zone_area_on_sphere(double, double);
-double G_darea0_on_sphere(register double);
-double G_area_for_zone_on_sphere(register double, register double);
+double G_darea0_on_sphere(double);
+double G_area_for_zone_on_sphere(double, double);
 
 /* ascii_chk.c */
 int G_ascii_check(char *);
@@ -112,7 +112,7 @@ int G_suppress_masking(void);
 int G_unsuppress_masking(void);
 
 /* bres_line.c */
-int G_bresenham_line(register int, register int, int, int, int (*)());
+int G_bresenham_line(int, int, int, int, int (*)());
 
 /* cats.c */
 int G_read_cats(char *, char *, struct Categories *);
@@ -604,8 +604,8 @@ int G_free_ivector(int *);
 int G_free_imatrix(int **);
 
 /* index.c */
-char *G_index(register char *, int);
-char *G_rindex(register char *, int);
+char *G_index(char *, int);
+char *G_rindex(char *, int);
 
 /* init_map.c */
 int G__random_d_initialize_0(int, int, int);
@@ -749,10 +749,10 @@ void G_set_null_value (void *, int, RASTER_MAP_TYPE);
 void G_set_c_null_value (CELL *, int);
 void G_set_f_null_value (FCELL *, int);
 void G_set_d_null_value (DCELL *, int);
-int G_is_null_value (void *, RASTER_MAP_TYPE);
-int G_is_c_null_value (CELL *);
-int G_is_f_null_value (FCELL *);
-int G_is_d_null_value (DCELL *);
+int G_is_null_value (const void *, RASTER_MAP_TYPE);
+int G_is_c_null_value (const CELL *);
+int G_is_f_null_value (const FCELL *);
+int G_is_d_null_value (const DCELL *);
 int G_insert_null_values (void *, char *, int, RASTER_MAP_TYPE);
 int G_insert_c_null_values (CELL *, char *, int);
 int G_insert_f_null_values (FCELL *, char *, int);
@@ -998,21 +998,21 @@ char *G_squeeze(char *);
 char *G_store(char *);
 
 /* strings.c */
-char *G_strcpy(register char *, register char *);
-char *G_chrcpy(register char *, register char *, register int);
-char *G_strncpy(register char *, register char *, register int);
-char *G_strmov(register char *, register char *);
-char *G_chrmov(register char *, register char *, register int);
-char *G_strcat(register char *, register char *);
-char *G_chrcat(register char *, register char *, register int);
-int G_strcasecmp(char *, char *);
-char *G_strstr(char *, char *);
-char *G_strdup(char *);
+char *G_strcpy(char *, const char *);
+char *G_chrcpy(char *, const char *, int);
+char *G_strncpy(char *, const char *, int);
+char *G_strcat(char *, const char *);
+char *G_chrcat(char *, const char *, int);
+char *G_strmov(char *, const char *);
+char *G_chrmov(char *, const char *, int);
+int G_strcasecmp(const char *, const char *);
+char *G_strstr(char *, const char *);
+char *G_strdup(const char *);
 char *G_strchg(char*, char, char);
-char *G_str_replace(char*, char*, char*);
+char *G_str_replace(char*, const char*, const char*);
 
 /* strip.c */
-int G_strip(register char *);
+int G_strip(char *);
 
 /* support.c */
 #ifndef SWIGGING
@@ -1129,11 +1129,11 @@ int G_write_zeros(int, long);
 int G_yes(char *, int);
 
 /* zero.c */
-int G_zero(register void *, register int);
+int G_zero(void *, int);
 
 /* zero_cell.c */
-int G_zero_cell_buf(register CELL *);
-int G_zero_raster_buf(register void *, RASTER_MAP_TYPE);
+int G_zero_cell_buf(CELL *);
+int G_zero_raster_buf(void *, RASTER_MAP_TYPE);
 
 /* zone.c */
 int G_zone(void);

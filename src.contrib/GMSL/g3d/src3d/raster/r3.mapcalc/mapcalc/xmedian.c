@@ -1,5 +1,15 @@
 #include "glob.h"
 
+static
+dcmp (const void *aa, const void *bb)
+{
+    const double *a = aa;
+    const double *b = bb;
+    if (*a < *b) return -1;
+    if (*a > *b) return 1;
+    return 0;
+}
+
 x_median (argc, argv, xcell, ncols)
     double *argv[];
     register double *xcell;
@@ -47,14 +57,5 @@ n_median (n,name) char *name;
     else
 	fprintf (stderr, "only one argument ");
     fprintf (stderr, "specified. usage: %s(x,y[,z...])\n", name);
-    return 0;
-}
-
-static
-dcmp (a,b)
-    double *a,*b;
-{
-    if (*a < *b) return -1;
-    if (*a > *b) return 1;
     return 0;
 }

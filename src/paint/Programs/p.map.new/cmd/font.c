@@ -50,7 +50,7 @@ int select_font (char *name)
 
 #ifdef DEBUG
 fprintf (stdout,"select_font(%s)\n", name);
-#endif DEBUG
+#endif
 /* if this is a new font, release previous font data */
     if (font)
     {
@@ -76,7 +76,7 @@ fprintf (stdout,"select_font(%s)\n", name);
 
 #ifdef DEBUG
 fprintf (stdout, " opened\n");
-#endif DEBUG
+#endif
 
 /* read entire font into memory */
     read (fd, &bytes, sizeof(bytes));
@@ -91,7 +91,7 @@ fprintf (stdout, " opened\n");
 
 #ifdef DEBUG
 fprintf (stdout, " font read\n");
-#endif DEBUG
+#endif
 
     if (read (fd, &nchars, sizeof(nchars)) != sizeof(nchars))
 	fonterror (name, "unable to read");
@@ -106,7 +106,7 @@ fprintf (stdout, " font read\n");
 
 #ifdef DEBUG
 fprintf (stdout, " index read, %ld chars\n", nchars);
-#endif DEBUG
+#endif
 
 /* font is now in memory! */
     close (fd);

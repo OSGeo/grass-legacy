@@ -304,7 +304,7 @@ void G3d_setFileType(int);
 int G3d_getFileType(void);
 void G3d_setTileDimension(int, int, int);
 void G3d_getTileDimension(int *, int *, int *);
-void G3d_setErrorFun(void (*)(void));
+void G3d_setErrorFun(void (*)());
 void G3d_setUnit(char *);
 void G3d_initDefaults(void);
 /* grass/src/libes/g3d/g3ddoubleio.c */
@@ -407,7 +407,7 @@ void G3d_getVolume(void *, double, double, double, double, double, double, doubl
 void G3d_getAllignedVolume(void *, double, double, double, double, double, double, int, int, int, char *, int);
 void G3d_makeAllignedVolumeFile(void *, char *, double, double, double, double, double, double, int, int, int);
 /* grass/src/libes/g3d/g3dwindow.c */
-void G3d_getValue(G3D_Map *, int, int, int, char *, int);
+void G3d_getValue(G3D_Map *, int, int, int, void *, int);
 float G3d_getFloat(G3D_Map *, int, int, int);
 double G3d_getDouble(G3D_Map *, int, int, int);
 G3D_Region * G3d_windowPtr (void);
@@ -460,7 +460,7 @@ int G3d_tileLoad(G3D_Map *, int);
 int G3d__removeTile(G3D_Map *, int);
 float G3d_getFloatRegion(G3D_Map *, int, int, int);
 double G3d_getDoubleRegion(G3D_Map *, int, int, int);
-void G3d_getValueRegion(G3D_Map *, int, int, int, char *, int);
+void G3d_getValueRegion(G3D_Map *, int, int, int, void *, int);
 /* grass/src/libes/g3d/tilemath.c */
 void G3d_tileIndex2tile(G3D_Map *, int, int *, int *, int *);
 int G3d_tile2tileIndex(G3D_Map *, int, int, int);

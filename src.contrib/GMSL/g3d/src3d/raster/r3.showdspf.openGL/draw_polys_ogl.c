@@ -8,6 +8,9 @@
 
 static float ZNexag = 1.0;
 
+void fill_data_cube();
+void get_vert_color();
+
 void set_ZNexag(exag)
 float exag;
 {
@@ -23,11 +26,11 @@ float *exag;
 void fdraw_polys(D_spec)
 struct dspec	*D_spec;/*structure containing interactive input*/
 {
-  register int x, y, z;
-  register int 	t,p; /* LOOP COUNTER */
-  register double	xadd,yadd,zadd;
-  register poly_info *Polyfax;	  /* local pointer */
-  register float tmp_vect[3];
+  int x, y, z;
+  int 	t,p; /* LOOP COUNTER */
+  double	xadd,yadd,zadd;
+  poly_info *Polyfax;	  /* local pointer */
+  float tmp_vect[3];
   Cube_data	Cube;/*structure containing poly info*/
   cube_info *cubefax;  /* local pointer */
   int curr;
@@ -122,14 +125,14 @@ void normalize(v)
 void gdraw_polys(D_spec)
 struct dspec	*D_spec;
 {
-  register int x, y, z;
-  register int 	t,p; /* LOOP COUNTER */
-  register float	xadd,yadd,zadd;
-  register poly_info *Polyfax;	  /* local pointer */
-  register cube_info *cubefax;  /* local pointer */
+  int x, y, z;
+  int 	t,p; /* LOOP COUNTER */
+  float	xadd,yadd,zadd;
+  poly_info *Polyfax;	  /* local pointer */
+  cube_info *cubefax;  /* local pointer */
 
-  register int curr;
-  register float xres, yres, zres, norm[3];
+  int curr;
+  float xres, yres, zres, norm[3];
   Cube_data Cube;    /*structure containing poly info*/
   file_info chead;
   int color_on = 0;

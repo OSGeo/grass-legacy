@@ -54,7 +54,7 @@ main ()
     fprintf (stdout,"%g %g\n", x, inverse_normal (p));
 }
 
-#endif TESTING
+#endif
 
 double inverse_normal (p)
   double p;

@@ -286,7 +286,7 @@
 #include "gis.h"
 
 /*--------------------------------------------------------------------------*/
-static int double_comp(DCELL *,DCELL *);
+static int double_comp(const void *, const void *);
 
 #define USE_LOOKUP 1
 #define MAX_LOOKUP_TABLE_SIZE 2048
@@ -334,7 +334,6 @@ int G__quant_organize_fp_lookup (struct Quant *q)
   DCELL val;
   CELL tmp;
   struct Quant_table *p;
-  int double_comp();
 
   if(q->nofRules * 2 > MAX_LOOKUP_TABLE_SIZE) return -1;
   if(q->nofRules == 0) return -1;
@@ -865,8 +864,10 @@ void G_quant_perform_f (
 
 /*--------------------------------------------------------------------------*/
 
-static int double_comp(DCELL *x,DCELL *y)
+static int double_comp(const void *xx,const void *yy)
 {
+    const DCELL *x = xx;
+    const DCELL *y = yy;
     if(G_is_d_null_value(x)) return 0;
     if(*x < *y) return -1;
     else if(*x==*y) return 0;

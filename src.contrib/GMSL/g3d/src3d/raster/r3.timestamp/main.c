@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "gis.h"
+#include "G3d.h"
 
 int main (int argc, char *argv[])
 {

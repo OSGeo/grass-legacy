@@ -8,16 +8,6 @@ exp(x)
   if floating point exception, the result is 0
 **********************************************************************/
 
-x_exp (argc, argv, xcell, ncols)
-    double *argv[];
-    double *xcell;
-{
-    if (argc == 1)
-	_exp(argv[0], xcell, ncols);
-    else
-	_pow(argv[0], argv[1], xcell, ncols);
-}
-
 static
 _exp (a, xcell, ncols)
     register double *a;
@@ -58,6 +48,16 @@ _pow (a, b, xcell, ncols)
 		SETNULL_D(xcell);
 	}
     }
+}
+
+x_exp (argc, argv, xcell, ncols)
+    double *argv[];
+    double *xcell;
+{
+    if (argc == 1)
+	_exp(argv[0], xcell, ncols);
+    else
+	_pow(argv[0], argv[1], xcell, ncols);
 }
 
 n_exp(n,name) char *name;

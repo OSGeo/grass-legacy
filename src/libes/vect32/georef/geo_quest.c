@@ -43,7 +43,7 @@ main (int argc, char *argv[])
 #ifdef DEBUG
 fprintf( stderr, "\nDEBUG: name: %s, device: %s, prog: %s,  desc: %s \n",
 	Driver.name, Driver.device, Driver.dig_program, Driver.dig_desc) ;
-#endif DEBUG
+#endif
 
 
 	exit(0) ;

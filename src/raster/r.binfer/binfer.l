@@ -29,13 +29,13 @@ int yynerrs = 0;
 
 #   define token(x)      (int) "x"
 
-#else   ! DEBUG
+#else /* ! DEBUG */
 
 #   include   "symtab.h"
 #   include   "y.tab.h"
 #   define     token(x)      x
 
-#endif   DEBUG
+#endif /* DEBUG */
 
 #ifndef sgi
 #ifndef sparc
