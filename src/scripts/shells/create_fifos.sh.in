@@ -1,7 +1,8 @@
 #!/bin/sh
 # create_fifos.sh.in
 
-DEV=@GISBASE@/dev
+#DEV=@GISBASE@/dev
+DEV=@prefix@/grass@NAME_VER@/dev
 
 test -d ${DEV} || mkdir ${DEV}
 

@@ -472,12 +472,12 @@ SRCDIR=`pwd`
 AC_SUBST(SRCDIR)
 
 # Add VERSION and GISBASE
-#VERSION=`cat ${SRCDIR}/src/CMD/VERSION | head -1`
-#NAME_VER=`echo ${VERSION} | sed 's/\..*//'`
+VERSION=`cat ${SRCDIR}/src/CMD/VERSION | head -1`
+NAME_VER=`echo ${VERSION} | sed 's/\..*//'`
 #GISBASE="${prefix}/grass${NAME_VER}"
 
-#AC_SUBST(VERSION)
-#AC_SUBST(NAME_VER)
+AC_SUBST(VERSION)
+AC_SUBST(NAME_VER)
 #AC_SUBST(GISBASE)
 
 ARCH=
