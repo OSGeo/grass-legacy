@@ -31,4 +31,4 @@ int zoomwindow(int, int, double);
 
 GLOBAL char **rast, **vect, **site;
 GLOBAL int nrasts, nvects, nsites;
-
+GLOBAL double U_east, U_west, U_south, U_north;

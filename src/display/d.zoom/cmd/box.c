@@ -19,6 +19,7 @@ int make_window_box ( struct Cell_head *window, double magnify)
     int cur_screen_x, cur_screen_y ;
     int quitonly;  /* required if user just wants to quit d.zoom */
     int prebutton; /* which previous button was pressed? */
+    int reached;
     
     screen_y = get_map_top() ;
     screen_x = get_map_left() ;
@@ -48,6 +49,7 @@ int make_window_box ( struct Cell_head *window, double magnify)
     len_n = len_s = len_e = len_w = 0;
     do
     {
+	reached = 0;
 	R_get_location_with_box(cur_screen_x, cur_screen_y, &screen_x, &screen_y, &button) ;
 	button &= 0xf;
 /*	fprintf (stdout,"\nscreen_x: %d screen_y: %d\n",screen_x,screen_y);*/
@@ -73,7 +75,18 @@ int make_window_box ( struct Cell_head *window, double magnify)
 		quitonly=0;
 		prebutton=button;
 		break ;
-	case 2: make_window_center(window, magnify, ux2, uy2);
+	case 2: if(U_east > window->east ||
+		   U_west < window->west ||
+		   U_south < window->south ||
+		   U_north > window->north)
+		{
+			make_window_center(window, magnify, ux2, uy2);
+		}
+		else
+		{
+			reached = 1;
+			fprintf(stderr,"** Reached at region boundary **\n");
+		}
 		prebutton=2;
 	        button=3;
 	        quitonly=2;   /* leave after unzoom */
@@ -86,27 +99,37 @@ int make_window_box ( struct Cell_head *window, double magnify)
 		break;
 	}
 
-	north = uy1>uy2?uy1:uy2 ;
-	south = uy1<uy2?uy1:uy2 ;
-	west  = ux1<ux2?ux1:ux2 ;
-	east  = ux1>ux2?ux1:ux2 ;
-
-	G_limit_east (&east, window->proj);
-	G_limit_west (&west, window->proj);
-	G_limit_north (&north, window->proj);
-	G_limit_south (&south, window->proj);
-
-	t = (window->north - north) / window->ns_res;
-	north = window->north - (t) * window->ns_res;
-
-	t = (south - window->south) / window->ns_res;
-	south = window->south + (t) * window->ns_res;
-
-	t = (window->east - east) / window->ew_res;
-	east = window->east - (t) * window->ew_res;
-
-	t = (west - window->west) / window->ew_res;
-	west = window->west + (t) * window->ew_res;
+	if(!reached)
+	{
+		north = uy1>uy2?uy1:uy2 ;
+		south = uy1<uy2?uy1:uy2 ;
+		west  = ux1<ux2?ux1:ux2 ;
+		east  = ux1>ux2?ux1:ux2 ;
+	
+		G_limit_east (&east, window->proj);
+		G_limit_west (&west, window->proj);
+		G_limit_north (&north, window->proj);
+		G_limit_south (&south, window->proj);
+	
+		t = (window->north - north) / window->ns_res;
+		north = window->north - (t) * window->ns_res;
+	
+		t = (south - window->south) / window->ns_res;
+		south = window->south + (t) * window->ns_res;
+	
+		t = (window->east - east) / window->ew_res;
+		east = window->east - (t) * window->ew_res;
+	
+		t = (west - window->west) / window->ew_res;
+		west = window->west + (t) * window->ew_res;
+	}
+	else
+	{
+		east = window->east;
+		west = window->west;
+		south = window->south;
+		north = window->north;
+	}
 
 	strcpy (buffer, "?");
 	G_format_easting(east, buffer, window->proj)  ;

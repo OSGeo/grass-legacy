@@ -7,8 +7,10 @@
 #define	MAIN
 
 #include "gis.h"
+#include "datetime.h"
 #include "display.h"
 #include "raster.h"
+#include "Vect.h"
 #include "local_proto.h"
 
 int 
@@ -20,7 +22,7 @@ main (int argc, char **argv)
     struct Option *action;
     struct Option *rmap, *vmap, *smap, *zoom;
     double magnify;
-    int i;
+    int i, first=1;
     char *mapset;
                         
 /* Initialize the GIS calls */
@@ -119,6 +121,8 @@ main (int argc, char **argv)
 
     if (rmap->answers)
     {
+        struct Cell_head window;
+
 	if (!nrasts)
 	{
 		for(i=0; rmap->answers[i]; i++);
@@ -132,6 +136,31 @@ main (int argc, char **argv)
 			sprintf(msg,"Raster file [%s] not available", rmap->answers[i]);
 			G_fatal_error(msg) ;
 		}
+		else
+		{
+	 		if(G_get_cellhd(rmap->answers[i], mapset, &window) >= 0)
+			{
+	 			if(first)
+	 			{
+					first = 0;
+					U_east = window.east;
+					U_west = window.west;
+					U_south = window.south;
+					U_north = window.north;
+	 			}
+	 			else
+				{
+					if(window.east > U_east)
+						U_east = window.east;
+					if(window.west < U_west)
+						U_west = window.west;
+					if(window.south < U_south)
+						U_south = window.south;
+					if(window.north > U_north)
+						U_north = window.north;
+				}
+			}
+		}
 	}
     }
 
@@ -140,11 +169,14 @@ main (int argc, char **argv)
 
     if (vmap->answers)
     {
+        struct Map_info Map;
+
 	if (!nvects)
 	{
 		for(i=0; vmap->answers[i]; i++);
 		nvects = i;
 	}
+        Vect_set_open_level(1);
 	for(i=0; i<nvects; i++){
     		mapset = G_find_vector2 (vmap->answers[i], "");
     		if (mapset == NULL)
@@ -152,6 +184,31 @@ main (int argc, char **argv)
 			char msg[256];
 			sprintf(msg,"Vector file [%s] not available", vmap->answers[i]);
 			G_fatal_error(msg) ;
+		}
+		else
+		{
+			if(Vect_open_old(&Map, vmap->answers[i], mapset) == 1)
+			{
+	 			if(first)
+	 			{
+					first = 0;
+					U_east = Map.head.E;
+					U_west = Map.head.W;
+					U_south = Map.head.S;
+					U_north = Map.head.N;
+	 			}
+	 			else
+				{
+					if(Map.head.E > U_east)
+						U_east = Map.head.E;
+					if(Map.head.W < U_west)
+						U_west = Map.head.W;
+					if(Map.head.S < U_south)
+						U_south = Map.head.S;
+					if(Map.head.N > U_north)
+						U_north = Map.head.N;
+				}
+			}
 		}
 	}
     }
@@ -161,18 +218,59 @@ main (int argc, char **argv)
 
     if (smap->answers)
     {
+	FILE *fp;
+	Site mysite;
+
+	mysite.dim_alloc = mysite.dbl_alloc = mysite.str_alloc = 0;
+
 	if (!nsites)
 	{
 		for(i=0; smap->answers[i]; i++);
 		nsites = i;
 	}
 	for(i=0; i<nsites; i++){
-    		mapset = G_find_file ("site_lists", smap->answers[i], "");
+    		mapset = G_find_sites2 (smap->answers[i], "");
     		if (mapset == NULL)
     		{
 			char msg[256];
 			sprintf(msg,"Site file [%s] not available", smap->answers[i]);
 			G_fatal_error(msg) ;
+		}
+		else
+		{
+			if(NULL != (fp = G_fopen_sites_old(smap->answers[i], mapset)))
+			{
+				/*
+				while(!feof(fp))
+				{
+					if(G_site_get(fp, &mysite))
+						continue;
+				*/
+				while(G_site_get(fp, &mysite) == 0)
+				{
+					fprintf(stderr,"NEVER REACH HERE, STRANGE !!!");
+					if(first)
+					{
+						first = 0;
+						U_east = mysite.east;
+						U_west = mysite.east;
+						U_south = mysite.north;
+						U_north = mysite.north;
+					}
+					else
+					{
+						if(mysite.east > U_east)
+							U_east = mysite.east;
+						if(mysite.east < U_west)
+							U_west = mysite.east;
+						if(mysite.north < U_south)
+							U_south = mysite.north;
+						if(mysite.north > U_north)
+							U_north = mysite.north;
+					}
+				}
+				fclose(fp);
+			}
 		}
 	}
     }
@@ -180,6 +278,29 @@ main (int argc, char **argv)
     /* if map was found in monitor: */
     if (rast || vect || site) 
        quiet->answer=1;
+
+#ifdef BOUNDARY
+    if(!first)
+    {
+    /*
+	    if(U_east == U_west)
+	    {
+		    U_east += 100;
+		    U_west -= 100;
+	    }
+	    if(U_south == U_north)
+	    {
+		    U_south -= 100;
+		    U_north += 100;
+	    }
+    */
+
+	    U_east += 0.05 * (U_east - U_west);
+	    U_west -= 0.05 * (U_east - U_west);
+	    U_south -= 0.05 * (U_north - U_south);
+	    U_north += 0.05 * (U_north - U_south);
+    }
+#endif
 
 /* find out for lat/lon if zoom or rotate option */
     rotate = 0;
@@ -190,6 +311,7 @@ main (int argc, char **argv)
 	else
 	    rotate = ask_rotate();
     }
+
 
     do
     {

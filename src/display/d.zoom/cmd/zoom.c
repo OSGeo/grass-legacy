@@ -28,11 +28,28 @@ int zoomwindow (int quiet, int rotate, double magnify)
 	  break; /* no action was taken */
 	else	  
 	{
+	  if(quitonly == 2 &&
+	     U_east <= oldwindow.east && U_west >= oldwindow.west &&
+	     U_south >= oldwindow.south && U_north <= oldwindow.north)
+	  {
+		break;
+	  }
+	  
+	  if(window.east > U_east)
+		  window.east = U_east;
+	  if(window.west < U_west)
+		  window.west = U_west;
+	  if(window.south < U_south)
+		  window.south = U_south;
+	  if(window.north > U_north)
+		  window.north = U_north;
+
 	  if (err = G_adjust_Cell_head (&window, 0, 0))
 	  {
 	    	just_click(err);
 	    	continue;
 	  }
+
           G_put_window(&window) ;
           G_set_window(&window) ;
 	  redraw();
