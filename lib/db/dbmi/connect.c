@@ -17,8 +17,10 @@ db_set_connection( connection )
     if ( connection->driverName )
 	G_setenv("DB_DRIVER", connection->driverName);
 
+    /*
     if ( connection->hostName )
 	G_setenv("DB_HOST", connection->hostName);
+    */
 
     if ( connection->databaseName )
 	G_setenv("DB_DATABASE", connection->databaseName);
@@ -49,7 +51,7 @@ db_get_connection( connection )
     dbConnection   *connection;
 {
     connection->driverName = G__getenv("DB_DRIVER");
-    connection->hostName = G__getenv("DB_HOST");    
+    /* connection->hostName = G__getenv("DB_HOST"); */
     connection->databaseName = G__getenv("DB_DATABASE");    
     connection->location = G__getenv("DB_LOCATION");
     connection->user = G__getenv("DB_USER");

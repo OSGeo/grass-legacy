@@ -23,13 +23,12 @@
 int db_driver_open_database(handle)
      dbHandle *handle;
 {
-    char *name, emsg[PG_MSG];
+    char *name, emsg[PG_MSG], buf[500];
     dbConnection connection;
 
     int i;
 
     PGresult *res;
-    char *pghost;
     int rec_num;
 
 
@@ -46,17 +45,23 @@ int db_driver_open_database(handle)
 	name = connection.databaseName;
     }
 
-    strcpy(db.name, name);
     
-    pghost = connection.hostName;
-    pg_conn = PQsetdb(pghost, NULL, NULL, NULL, db.name);
-    
-    G_debug(3, "db_driver_open_database() - pghost is %s, driver is %s", 
-    		pghost, G__getenv("DB_DRIVER"));
+    /* 'name' may be: 1) database name
+    *                 2) connection string in form: host=abc,dbname=db1  */
+    if ( strchr(name, '=') == NULL ) { /*db name only */
+	sprintf ( buf, "dbname=%s", name );
+        strcpy(db.name, buf);
+    } else {
+        strcpy(db.name, name);
+	G_strchg( db.name, ',', ' ');
+    }
+
+    G_debug(3, "db_driver_open_database() driver=pg connection='%s'", db.name );
+
+    pg_conn = PQconnectdb( db.name );
     
     if (PQstatus(pg_conn) == CONNECTION_BAD) {
-	snprintf(emsg, sizeof(emsg), "Error: connect Postgres: %s\n",
-		 PQerrorMessage(pg_conn));
+	snprintf(emsg, sizeof(emsg), "Error: connect Postgres: %s\n", PQerrorMessage(pg_conn));
 	report_error(emsg);
 	PQfinish(pg_conn);
 	return DB_FAILED;
