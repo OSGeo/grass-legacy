@@ -48,7 +48,7 @@ xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_inf
 			 centroid = Vect_get_area_centroid ( In, areal );
 			 if ( centroid > 0 ) {
 	                     Vect_read_line ( In, CPoints, CCats, centroid);
-			     Vect_cat_get ( CCats, field_in, &catr );
+			     Vect_cat_get ( CCats, field_in, &catl );
 			 }
 		     }
 		     if ( arear > 0 ) {
