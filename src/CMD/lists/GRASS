@@ -31,6 +31,7 @@ src/libes/vect32/Vlib
 src/libes/vect32/diglib
 src/libes/vect32/georef
 src/libes/image3
+src/general/gis
 src/display/devices/lib
 src/display/devices/monitorcap
 src/display/devices/CELL
