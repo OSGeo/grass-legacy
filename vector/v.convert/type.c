@@ -1,7 +1,12 @@
 #include "Vect.h"
 #include "conv.h"
 
-/* conversion of old file format elment type codes to new */ 
+/* conversion of old file format elment type codes to new 
+*
+*  returns: new type
+*           0 - dead element
+*          -1 - error
+*/ 
 char dig_old_to_new_type (char type)
 {
     switch (type) {
@@ -21,7 +26,7 @@ char dig_old_to_new_type (char type)
 	    break;
 	default:
 	    fprintf (stderr, "SYSTEM_ERROR: OLD_T_NEW Got a bad type code %x\n", type);
-	    type = 0;
+	    type = -1;
 	    break;
     }
     return (type);
