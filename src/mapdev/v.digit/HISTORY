@@ -1,0 +1,21 @@
+GRASS - v.digit
+
+v.digit compiles, but doesn't work because an old assumption 
+on Termio : in System V.2, reading a serial line without the 
+need of a LF is possible, but the driver wait at least VMIN 
+char on input or VTIME ms before returning anything.  
+In older termio libs, VEOF=VTIME and VEOL=VMIN (or the opposite), 
+but this is not true with Linux (See /usr/include/asm/termbits.h).
+
+If you want run v.digit you should edit line 50 and 51 of the
+file "set_key.c", replacing VEOL and VEOF by VTIME and VMIN.
+
+This is for keyboard entry. I have not yet tested the digitizers,
+but I'm sure that it will not work without editing "graph_input.c"
+at lines 598 and 599, doing the same change.
+
+
+Michel Wurtz    ENGEES - Laboratoire Territoires & Environnement
+                1, quai Koch - BP 1039, F-67070 STRASBOURG cedex
+                Tel: +33 03.88.25.34.62  Fax: +33 03.88.37.04.97
+ 
