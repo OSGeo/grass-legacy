@@ -1,10 +1,10 @@
 /* infer --- inference engine */
 
-# include <stdio.h>
+#include <stdio.h>
 #include <string.h>
 #include <errno.h>
-# include <ctype.h>
-# include "infer.h"
+#include <ctype.h>
+#include "infer.h"
 
 # define TRUTHVAL(E)    ((E->type & NOT) ? (E->str->val == TRUE) ? FALSE : TRUE : (E->str->val))
 
