@@ -40,20 +40,20 @@ Specific Census Feature Class (CFCC) codes.
 To extract all Primary (A1) and Secondary (A2) roads from a county's
 TIGER files the following command would be used:
 .IP
-\fBv.in.tiger tig1=t12113.1 tig2=t12113.2 out=roads \\
+\fBv.in.tiger.scs tig1=t12113.1 tig2=t12113.2 out=roads \\
 .br
 cfc=A1,A2  \fR
 .LP
 To extract all the Hydrographic features in a county's TIGER
 files with verbose output:  
 .IP
-\fBv.in.tiger -v tig1=t12113.1 tig2=t12113.2 out=hydro \\
+\fBv.in.tiger.scs -v tig1=t12113.1 tig2=t12113.2 out=hydro \\
 .br
 cfc=H  \fR
 .LP
 To extract the county boundary the command would be:
 .IP
-\fBv.in.tiger tig1=t12113.1 tig2=t12113.2 out=bou \\
+\fBv.in.tiger.scs tig1=t12113.1 tig2=t12113.2 out=bou \\
 .br
 cfc=BOU  \fR
 .SH NOTES
