@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.64 2000-11-06 12:33:39 markus Exp $
+$Id: BUGS,v 1.65 2000-11-06 13:41:14 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -229,7 +229,7 @@ p.map.new:
  Chris Cornuelle <bob@math.umn.edu> 
 
 
-[rc]r.flow
+r.flow
   bugreport: Issuing the command (-M switch is the problem):
   r.flow -M elevin=fill aspin=dir flout=flowout_M dsout=density_M
   [...] Writing density file...ERROR: r.flow: cannot write segment file for
@@ -248,7 +248,10 @@ r.in.hdf/r.out.hdf (src.garden/grass.hdf)
   (being worked on by ?)
 
 [RC]r.in.png:
-  seg. faults on Pentium CPU (compare r.binfer)
+ -  seg. faults on Pentium CPU (compare r.binfer)
+ -  r.in.png refused to import a 24-bit image.  However it seems to work 
+    OK with an 8-bit image.
+    (reported by Steve Trick <TrickSG1@cf.ac.uk>)
   (being worked on by David D Gray)
 
 [RC]r.in.ppm
@@ -315,8 +318,17 @@ r.in.hdf/r.out.hdf (src.garden/grass.hdf)
   (reported by Bruno Crippa <bruno@ipmtf4.topo.polimi.it>)
   (being worked on by ?)
 
-[RC]r.null:
- does not work with reclassified maps
+r.null:
+ does not work with reclassified maps.
+ Comment from Eric G. Miller:
+   The problem is, if r.null was run on the reclass raster it would alter    
+   the original and any other reclass rasters of the original.  So, there are
+   two basic approaches, let the user make a raster out of the reclass that  
+   isn't a reclass (e.g. cho 'newmap = reclass' | r.mapcalc) or have        
+   r.null do this for them.  With the second, a new raster has to be made     
+   and what do you name it?  If you name it the same as the reclass and      
+   blow away the reclass, is that okay? 
+
  (being worked on by ?)
 
 [RC]r.random:
