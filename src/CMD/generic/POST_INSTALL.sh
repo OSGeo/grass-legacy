@@ -1,3 +1,21 @@
+#############################################################################
+#
+# $Id$
+#
+# MODULE:   	Grass Compilation
+# AUTHOR(S):	Original author unknown - probably CERL
+#   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
+#		Markus Neteler - Germany - neteler@geog.uni-hannover.de
+# PURPOSE:  	This script will perform the last few steps of the GRASS
+#   	    	compilation and print a message for users.
+# COPYRIGHT:    (C) 2000 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#   	    	License (>=v2). Read the file COPYING that comes with GRASS
+#   	    	for details.
+#
+#############################################################################
+
 :
 ARCH=$1
 
@@ -26,6 +44,13 @@ echo "* PostgreSQL support please compile as:"
 echo "       gmake5 src.garden/grass.postgresql"
 echo "       gmakelinks5"
 echo ""
+echo "* Note that if you try to compile these modules before you run"
+echo "  make install then you will need to specify the absolute pathname"
+echo "  to gmake5 and gmakelinks5. For example, for GRID3D the commands"
+echo "  may be as follows:"
+echo "	     /home/grass/bin.i686-pc-linux-gnu/gmake5 src.contrib/GMSL/g3d"
+echo "	     /home/grass/bin.i686-pc-linux-gnu/gmakelinks5"
+echo ""
 echo "* Check file error.log for modules not been compiled due to error."
-echo "Install GRASS with (as root)"
+echo "Install GRASS with (possibly as root)"
 echo "       make install"
