@@ -1,8 +1,0 @@
-all:
-	$(MAKE) jar
-	$(MAKE) check1
-	$(MAKE) check2
-	$(MAKE) docs
-	$(MAKE) install
-#	$(MAKE) clean
-#	$(MAKE) distclean
