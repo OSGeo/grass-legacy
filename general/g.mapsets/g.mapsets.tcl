@@ -17,7 +17,6 @@ proc set_mapsets { } {
     for {set i 0} {$i < $nms} {incr i 1} {
         set ms $ms_name($i)
         if { $ms_ch($ms) } { 
-            puts "new ms = $ms"
             if { !$first } {  append cmd "," }
             append cmd "$ms"
             set first 0
