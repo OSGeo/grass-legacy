@@ -28,7 +28,7 @@ int geom(OGRGeometryH hGeom, struct Map_info *Map, int cat );
 int 
 main (int argc, char *argv[])
 {
-    int    i, layer, arg_s_num;
+    int    i, layer, arg_s_num, nogeom;
     float  xmin=0., ymin=0., xmax=0., ymax=0.;
     int    ncols;
     struct GModule *module;
@@ -249,15 +249,16 @@ main (int argc, char *argv[])
 
     /* Import feature */
     cat = 1;
+    nogeom = 0;
     OGR_L_ResetReading ( Ogr_layer ); 
     while( (Ogr_feature = OGR_L_GetNextFeature(Ogr_layer)) != NULL ) {
         /* Geometry */
         Ogr_geometry = OGR_F_GetGeometryRef(Ogr_feature);
 	if ( Ogr_geometry == NULL ) {
-	    G_warning ("Feature without geometry");
-	    continue;
+	    nogeom++;
+	} else {
+	    geom ( Ogr_geometry, &Map, cat );
 	}
-        geom ( Ogr_geometry, &Map, cat );
 
 	/* Attributes */
 	sprintf ( buf, "insert into %s values ( %d", Fi->table, cat );
@@ -299,6 +300,9 @@ main (int argc, char *argv[])
         OGR_F_Destroy( Ogr_feature );
 	cat++;
     }
+
+    if ( nogeom > 0 )
+	G_warning ("%d feature without geometry.", nogeom);
     
     OGR_DS_Destroy( Ogr_ds );
     
