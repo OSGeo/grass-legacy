@@ -133,7 +133,7 @@ if (max < 0) max = 0;
 			R_get_location_with_pointer(&screen_x, &screen_y, &button);
 
 			/* exit if user hit left mouse button */
-			if(button == RIGHT)
+			if(button == RIGHTB)
 			{
 				Dchoose(ORIG.name);
 				return(0) ;
@@ -152,7 +152,7 @@ if (max < 0) max = 0;
 				R_standard_color(D_translate_color("red"));
 				R_flush();
 				DrawText(25,1,1,"OUTSIDE CURRENT WINDOW");
-				button = LEFT;
+				button = LEFTB;
 			}
 			else
 			{
@@ -162,7 +162,7 @@ if (max < 0) max = 0;
 
 			}
 
-		}   while (button != MIDDLE);
+		}   while (button != MIDDLEB);
 
 		/* display mouse-menu in mouse-menu window */
 		Dchoose(MOU.name);
@@ -208,18 +208,18 @@ if (max < 0) max = 0;
 				R_standard_color(D_translate_color("red"));
 				R_flush();
 				DrawText(25,1,1,"OUTSIDE CURRENT WINDOW");
-				button = LEFT;
+				button = LEFTB;
 			}
 			else
 			{
 				switch (button)
 				{
-				case LEFT:
+				case LEFTB:
 					/* print "earth" coords. and category info. in status window */
 					Dchoose(STA.name);
 					What(old_mapname,old_mapset,window,ux,uy);
 					break;
-				case MIDDLE:
+				case MIDDLEB:
 					/* get profile data */
 					InitProfile(&profile,window,cur_uy,cur_ux,uy,ux);
 					if (err=ExtractProfile(&profile,old_mapname,old_mapset)==-1)
@@ -330,7 +330,7 @@ if (max < 0) max = 0;
 					break;
 				}
 			}
-		}   while (button != RIGHT && button != MIDDLE);
+		}   while (button != RIGHTB && button != MIDDLEB);
 
 		/* display mouse-menu in mouse-menu window */
 		Dchoose(MOU.name);
@@ -350,12 +350,12 @@ if (max < 0) max = 0;
 #endif
 
 		R_get_location_with_pointer(&screen_x, &screen_y, &button) ;
-		if (button == RIGHT)
+		if (button == RIGHTB)
 		{
 			Dchoose(ORIG.name);
 			return(0);
                 }
-		else if (button == MIDDLE)
+		else if (button == MIDDLEB)
 		{
 			Dchoose(MAP.name);
 			Derase("black") ;
