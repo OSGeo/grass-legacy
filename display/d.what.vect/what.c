@@ -350,10 +350,10 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 		for (j = 0; j < Cats->n_cats; j++) {
 		    G_debug(2, "field = %d category = %d", Cats->field[j], Cats->cat[j]);
 		    if ( txt ) {
-			fprintf( stdout, _("field: %d\ncategory: %d\n"), Cats->field[j], Cats->cat[j] );
+			fprintf( stdout, _("Layer: %d\ncategory: %d\n"), Cats->field[j], Cats->cat[j] );
 		    } else { 
 			db_append_string (&html, "<HR><BR>");
-			sprintf(buf, "field: %d<BR>category: %d<BR>", Cats->field[j], Cats->cat[j] );
+			sprintf(buf, "Layer: %d<BR>category: %d<BR>", Cats->field[j], Cats->cat[j] );
 			db_append_string (&html, buf);
 		    }
 		    Fi = Vect_get_field( &(Map[i]), Cats->field[j]);
