@@ -53,7 +53,7 @@ main(argc, argv)
       }
    if (conv_typ == 1 || conv_typ == 2)
       {
-      if (strlen(proj_name) == 0 || strcmp(proj_name,"none",4) == 0)
+      if (strlen(proj_name) == 0 || strncmp(proj_name,"none",4) == 0)
           {
 	  proj_name[0] = '\0';
           if (!get_proj(proj_name)) continue;
@@ -78,7 +78,7 @@ main(argc, argv)
           }
       if (strncmp(proj_name,"stp",3) != 0)
 	  {
-          if (strcmp(ellps_name,"none",4) == 0 || strlen(ellps_name) == 0)
+          if (strncmp(ellps_name,"none",4) == 0 || strlen(ellps_name) == 0)
 	     {
 	     ellps_name[0] = '\0';
              if (!get_ellp(ellps_name)) continue;
@@ -103,7 +103,7 @@ main(argc, argv)
         case 2: 			/*  ll->coord conversions */
     parms[0] = '\0';
 	tmp_file = G_tempfile();
-    if (strcmp(proj_name,"stp",3) == 0)
+    if (strncmp(proj_name,"stp",3) == 0)
 		{
 		if (COzone == 0) if (get_CO_code() == 0) break;
 		if (get_stp_code(COzone,parms) == 0)
