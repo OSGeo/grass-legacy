@@ -1,0 +1,12 @@
+***************************
+r.rescale.db
+
+(m) means modified
+
+Katarina Johnsson 930417
+**************************
+
+main (m)
+	sqlQry (m, <=> infxQry)
+		ingresUnTable (new)
+	
