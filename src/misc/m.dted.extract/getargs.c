@@ -11,6 +11,7 @@ getargs (argc, argv)
 	struct Flag *f, *q;
     } flag;
     char n_info[100], s_info[100], e_info[100], w_info[100];
+    double xeast, xwest, xnorth, xsouth;
 
     int i;
     int k;
@@ -88,38 +89,38 @@ getargs (argc, argv)
     outname  = parm.output->answer;
     headname = parm.header->answer;
 
-    if (!G_scan_northing (parm.north->answer, &north, PROJECTION_LL))
+    if (!G_scan_northing (parm.north->answer, &xnorth, PROJECTION_LL))
     {
 	fprintf (stderr, "%s=%s - illegal latitude\n",
 		parm.north->key, parm.north->answer);
 	return 0;
     }
 
-    if (!G_scan_northing (parm.south->answer, &south, PROJECTION_LL))
+    if (!G_scan_northing (parm.south->answer, &xsouth, PROJECTION_LL))
     {
 	fprintf (stderr, "%s=%s - illegal latitude\n",
 		parm.south->key, parm.south->answer);
 	return 0;
     }
 
-    if (!G_scan_easting (parm.east->answer, &east, PROJECTION_LL))
+    if (!G_scan_easting (parm.east->answer, &xeast, PROJECTION_LL))
     {
 	fprintf (stderr, "%s=%s - illegal longitude\n",
 		parm.east->key, parm.east->answer);
 	return 0;
     }
 
-    if (!G_scan_easting (parm.west->answer, &west, PROJECTION_LL))
+    if (!G_scan_easting (parm.west->answer, &xwest, PROJECTION_LL))
     {
 	fprintf (stderr, "%s=%s - illegal longitude\n",
 		parm.west->key, parm.west->answer);
 	return 0;
     }
-/* convert lat/lon to arc seconds */
-    north *= 3600;
-    south *= 3600;
-    east *= -3600; /* longitude sense must be inverted */
-    west *= -3600;
+/* convert lat/lon to 10*arc seconds (as required by printgeo.c)*/
+    north = xnorth * 36000;
+    south = xsouth * 36000;
+    east  = -(xeast * 36000); /* longitude sense must be inverted */
+    west  = -(xwest * 36000);
 
     return 1;
 }
