@@ -225,8 +225,9 @@
 			{command "Locate closest points between areas in 2 raster maps" {} "" {} -command  { execute r.distance }}
 			{command "Map calculator" {} "" {} -command { execute r.mapcalculator }}
 			{cascad "Neighborhood analysis" {} "" 1 {			
-    			{command "Moving window analysis of raster cells" {} "" {} -command  { execute r.neighbors }}
-    			{command "Analyze vector points in neighborhood of raster cells" {} "" {} -command  { execute v.neighbors }}
+    			    {command "Moving window analysis of raster cells" {} "" {} -command  { execute r.neighbors }}
+    			    {command "Analyze vector points in neighborhood of raster cells" {} "" {} -command  { execute v.neighbors }}
+			}}
 			{cascad "Overlay maps" {} "" 1 {			
 			    {command "Cross product" {} "" {} -command {execute  r.cross }}
 			    {command "Function of map series (time series)" {} "" {} -command {execute  r.series }}
@@ -380,7 +381,7 @@
 			    {command "Patch multiple maps (combine)" {} "" {} -command {execute  v.patch }}
 			}}
 			{command "Generate area feature for extent of current region" {} "" {} -command {execute  v.in.region }}
-			{command "Generate retangular vector grid" {} "" {} -command {execute  v.mkgrid }}
+			{command "Generate rectangular vector grid" {} "" {} -command {execute  v.mkgrid }}
 			{separator}
 			{cascad "Change attributes" {} "" 1 {			
 			    {command "Attach, delete, or report categories" {} "" {} -command {execute  v.category }}
