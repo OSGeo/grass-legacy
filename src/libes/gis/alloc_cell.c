@@ -13,7 +13,7 @@ static int type_size[3] = {sizeof(CELL), sizeof(FCELL), sizeof(DCELL)};
  *
  * If <em>data_type</em> is CELL_TYPE, returns sizeof(CELL)
  * If <em>data_type</em> is FCELL_TYPE, returns sizeof(FCELL)
- * If <em>data_type</em> is DCELL_TYPE,q returns sizeof(DCELL)
+ * If <em>data_type</em> is DCELL_TYPE, returns sizeof(DCELL)
  *
  *  \param data_type
  *  \return int
