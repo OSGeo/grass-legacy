@@ -1,0 +1,185 @@
+.TH r.stats
+.SH NAME
+\fIr.stats\fR \- Generates area statistics for raster map layers.
+.br
+\fI(GRASS Raster Program)\fR
+.SH SYNOPSIS
+\fBr.stats\fR
+.br
+\fBr.stats help\fR
+.br
+\fBr.stats \fR[\fB-1acmqzgx\fR] \fBinput\*=\fIname\fR[,\fIname\fR,...] [\fBfs\*=\fIcharacter\||\|space\fR] \
+[\fBoutput\*=\fIname\fR]
+.SH DESCRIPTION
+.I r.stats
+calculates the area present in each of the categories
+of user-selected raster map layer(s).
+Area statistics can be given in units of acres, hectares, square miles,
+and cell counts.
+This analysis uses the current geographic region and mask settings.
+Output can be sent to a file in the user's current working directory.
+
+The program will be run non-interactively if the user specifies
+the program arguments and desired options on the command line,
+using the form
+
+\fBr.stats \fR[\fB-1acmqzgx\fR] \fBinput\*=\fIname\fR[,\fIname\fR,...] [\fBfs\*=\fIcharacter\||\|space\fR] \
+[\fBoutput\*=\fIname\fR]
+
+where each input \fIname\fR is the name of a raster map layer on which
+area/cell statistics are to be generated,
+the (optional) output \fIname\fR is the name of a file to contain program
+output (sent to the user's current working directory),
+the fs \fIcharacter\fR or space is the field separator
+to be used to separate data fields in the output file
+(default is a space if unspecified),
+and the (optional) flags
+\fI-1\fR, \fI-a\fR, \fI-c\fR, \fI-m\fR, \fI-q\fR, \fI-z\fR, \fI-g\fR,
+and \fI-x\fR have the meanings described in the OPTIONS section.
+
+Alternately, the user can simply type \fBr.stats\fR on the command line,
+without program arguments.  In this case, the user will be prompted for
+needed inputs and option choices using the standard GRASS parser interface
+described in the manual entry for \fIparser\fR.
+.SH OPTIONS
+\fBFlags:\fR
+.IP \fB-1\fR 18
+The data for each cell in the current geographic region will be output,
+one cell per line, rather than the totals for each distinct combination.
+Also prints the geographic coordinates (eastings, and northings)
+associated with each cell.
+.IP \fB-a\fR 18
+Print area totals.
+.IP \fB-c\fR 18
+Print total cell counts.
+.IP \fB-m\fR 18
+Report zero values, because a mask is present and the user is interested
+in zero data values falling within the mask.
+.IP \fB-q\fR 18
+Run quietly, and supress printing of percent complete messages
+to standard output.
+.IP \fB-z\fR 18
+Report only non-zero data values.
+Zero data will not be output.  For multiple map layers this means that
+zero category values in every map layer will not be output;
+non-zero category values in any map layer will be output.
+.IP \fB-g\fR 18
+Print the grid coordinates (easting and northing), for each cell.
+This option works only if the -1 option is also specified.
+.IP \fB-x\fR 18
+Print the x and y (column and row) values, for each cell.
+This option works only if the -1 option is also specified.
+\fBParameters:\fR
+.IP \fBinput\*=\fIname\fR 18
+The name(s) of one or more existing raster map layer(s)
+whose cell counts or area statistics are to be calculated.
+.IP "\fBfs\*=\fIcharacter\fR  or  \fBfs\*=\fIspace\fR" 18
+The field separator (fs) to be used to separate data fields in
+the \fIoutput\fR file.
+.br
+Options:  a character or space
+.br
+Default:  a space
+.IP \fBoutput\*=\fIname\fR 18
+The name to be assigned to the ASCII output file.
+.SH NON-INTERACTIVE PROGRAM USE
+If users invoke program options on the command line, \fIr.stats\fR
+will print out area statistics for the user-specified raster map layers
+in a columnar format suitable for input to UNIX programs like
+\fIawk\fR and \fIsed\fR.
+Output can be saved by specifying the name of an \fIoutput\fR file
+on the command line.
+
+If a single map layer is specified on the command line, a list of areas
+in square meters (assuming the map's coordinate system is in meters)
+for each category in the raster map layer will be printed.
+(If the -c option is chosen, areas will be stated in number of cells.)
+If multiple raster map layers
+are specified on the command line, a cross-tabulation table of areas
+for each combination of categories in the 
+map layers will be printed.
+
+For example, if one raster map layer were specified, the output would look like:
+
+.nf
+.in +.5i
+1:1350000.00
+2:4940000.00
+3:8870000.00
+.fi
+.in
+
+If three raster map layers
+\fIa, b\fR, and \fIc\fR, were specified, the output would look like:
+
+.nf
+.in +.5i
+0:0:0:8027500.00
+1:0:0:164227500.00
+2:0:0:31277500.00
+3:0:0:17140000.00
+1:0:1:2177500.00
+2:0:1:2490000.00
+0:1:0:1152500.00
+1:1:0:140092500.00
+2:1:0:24207500.00
+3:1:0:11270000.00
+1:1:1:3355000.00
+2:1:1:1752500.00
+3:1:1:2500.00
+.fi
+.in
+
+Within each grouping, the first field represents the category 
+value of map layer \fIa\fR,
+the second represents the category values associated with
+map layer \fIb\fR,
+the third represents category values for map layer \fIc\fR,
+and the last field gives the area in square meters for the particular
+combination of these three map layers' categories.
+For example, above, combination 3,1,1 covered 2500 square meters.
+Fields are separated by colons.
+.SH NOTES
+.I r.stats
+works in the current geographic region with the current mask.
+
+If a nicely formatted output is desired, pipe the output into
+a command which can create columnar output.  For example, the command:
+
+    \fBr.stats input\*=a,b,c | pr -3 | cat -s\fR
+
+will create a three-column output
+
+.ne 5
+.NF
+1:4:4:10000.00          2:1:5:290000.00         2:4:5:2090000.00
+1:4:5:1340000.00        2:2:5:350000.00         3:1:2:450000.00
+2:1:1:1090000.00        2:4:1:700000.00         3:1:3:5280000.00
+2:1:3:410000.00         2:4:3:10000.00          3:1:5:3140000.00
+.FI
+
+Also, the output in the examples given happen to be in sorted order,
+but the output from
+.I r.stats
+on more than one map layer
+is not guaranteed to be in any particular order.
+If the user desires sorted output, use the UNIX \fIsort\fR command.
+For example:
+
+    \fBr.stats input\*=a,b,c | sort -t: -0n\fR
+
+Note that the user has only the option of printing out
+cell statistics in terms of cell counts and/or area totals.
+Users wishing to use different units than are available here
+should use the GRASS program \fIr.report\fR.
+.SH SEE ALSO
+.I g.region,
+.I r.coin,
+.I r.describe,
+.I r.report,
+and
+.I parser
+.SH "AUTHORS"
+Michael O'Shea, U.S. Army Construction Engineering Research Laboratory
+.br
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
