@@ -95,7 +95,7 @@ Vect_map_add_dblink ( struct Map_info *Map, int number, char *name, char *table,
 /*!
  \fn int Vect_map_del_dblink ( struct Map_info *Map, int number)
  \brief delete db connection from Map_info structure
- \return 0 deleted, -1 no such field found
+ \return 0 deleted, -1 error
  \param pointer to existing Map structure, field number
 */
 int
@@ -123,7 +123,17 @@ Vect_map_del_dblink ( struct Map_info *Map, int field)
         }
     }
 
-    return ret;
+    if ( ret == -1 )
+	return -1;
+
+    /* write it immediately otherwise it is lost if module crashes */
+    ret = Vect_write_dblinks ( Map );
+    if ( ret == -1 ) {
+        G_warning ("Cannot write database links.");
+	return -1;
+    }
+
+    return 0;
 }
 
 /*!
