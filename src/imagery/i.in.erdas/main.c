@@ -37,6 +37,10 @@
   For what it is worth, the swapping code was originally written on a k6-2, running
   	Slackware Linux 4.0. It was tested using homebrew files in arbitrary byte order.
   	Some time soon, I will have to release i.out.erdas, if only for completeness. 	
+
+LAN Format:
+       http://www2.erdas.com/SupportSite/documentation/files/erdas7xfiles.pdf
+
 */
 
 
@@ -155,7 +159,7 @@ printhd (struct edheader *hd)
 	fprintf(stderr,"number bands----------- %d\n",hd->nbands);
 	fprintf(stderr,"number cols,rows------- %ld, %ld\n",hd->rcols,hd->rrows);
 	fprintf(stderr,"starting coordinate --- %ld, %ld\n",hd->rx,hd->ry);
-	fprintf(stderr,"map type (int, float) - %d\n",hd->maptyp);
+	fprintf(stderr,"map type (projection) - %d\n",hd->maptyp);
 	fprintf(stderr,"number classes -------- %d\n",hd->nclass);
 	fprintf(stderr,"unit-type: ------------ %c (N=None A=Acre H=Hectare O=Other)\n", IAUTYP[hd->utyp]);
 	fprintf(stderr,"area per pixel -------- %f\n",hd->area);
@@ -177,7 +181,7 @@ static void getbands (int out[], int bands)
 	fprintf(stderr, "Do you want to select a subset of the bands in the ERDAS file (y/n)[n] ");
 	if (G_gets(line)) {
 		if (line[0] == 'y') {
-			fprintf(stderr, "Enter the selcted bands one per line stop with a cariage return\n");
+			fprintf(stderr, "Enter the selected bands one per line stop with a carriage return\n");
 			while (length > 0 && i <= MAXBND) {
 				fprintf(stderr, ":");
 				G_gets(line);
