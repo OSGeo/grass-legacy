@@ -1,5 +1,8 @@
 # $Log$
-# Revision 1.6  2000-03-06 17:17:22  markus
+# Revision 1.7  2000-06-12 14:09:32  cho
+# Huidae Cho <hdcho@geni.knu.ac.kr>: added FreeBSD sensivity: -ldl
+#
+# Revision 1.6  2000/03/06 17:17:22  markus
 # Alex Shevlakov: added new fields in WHATS HERE menu for GRASS/PostgreSQL interface
 #
 # Revision 1.5  2000/03/06 09:04:07  markus
@@ -34,8 +37,9 @@ TK_LIB_PATH=sed
 TK_INCLUDE_PATH=sed
 NVWISH_VER=sed
 PQ_OBJS=sed
+DLLIB=sed
 
-OGL_LIBS = -lGLU -lGL $(XLIB) -lXmu -lXext $(MATHLIB) -ldl $(XDRLIB) $(XEXTRALIBS)
+OGL_LIBS = -lGLU -lGL $(XLIB) -lXmu -lXext $(MATHLIB) $(DLLIB) $(XDRLIB) $(XEXTRALIBS)
 
 SURF_INCDIR = $(LIBDIR)/ogsf
 SURFLIB = $(LIBDIR)/ogsf/libgsf.a
