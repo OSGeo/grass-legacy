@@ -333,7 +333,7 @@ int main (int argc, char **argv)
 		 G_set_cat(new_cat, "", &temp_cats);
 	    }
 	 }
-     if( G_write_vector_cats( output, &temp_cats ))
+     if( G_write_vector_cats( output, &temp_cats ) < 0 )
        fprintf( stderr, "Could not write category file, see error above." );
 
      sprintf( buffr, "%s/etc/v.build  map=%s  thresh=no",G_gisbase(),output);
