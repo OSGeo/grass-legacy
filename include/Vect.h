@@ -37,6 +37,7 @@ int Vect_cat_in_array (int, int *, int);
 int Vect_reset_cats (struct line_cats *);
 int Vect_destroy_cats_struct (struct line_cats *);
 int Vect_get_area_cat ( struct Map_info *, int, int);
+int Vect_get_line_cat ( struct Map_info *, int, int);
 
       /* List of categories */
 struct cat_list *Vect_new_cat_list (void);

@@ -703,3 +703,26 @@ void Vect_line_reverse ( struct line_pnts *Points )
     }
 }
 
+
+/*!
+\brief fetches category number for given vector line and field
+\param vmap: Map input
+\param varea: line number
+\param vfield: field number
+\return 0: no category, >0: category number
+*/
+int
+Vect_get_line_cat ( struct Map_info *Map, int line, int field ) {
+
+    static struct line_cats *cats = NULL;
+    int cat;
+
+    if ( cats == NULL ) 
+	cats = Vect_new_cats_struct ();
+
+    Vect_read_line (Map, NULL, cats, line );
+    Vect_cat_get(cats, field, &cat);
+    G_debug (3, "Vect_get_line_cat: display line %d, ltype %d, cat %d", line, ltype, cat);
+
+    return cat;
+}

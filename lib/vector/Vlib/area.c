@@ -378,7 +378,7 @@ Vect_get_area_area (
 \param vmap: Map input
 \param varea: area number
 \param vfield: field number
-\return -1: no centroid, 0: no category, >0: category
+\return -1: no centroid, 0: no category, >0: category number
 */
 int
 Vect_get_area_cat ( struct Map_info *Map, int area, int field ) {
