@@ -12,11 +12,11 @@
 int main (int argc, char **argv)
 {
     int stat;
-    char **rast, **vect;
-    int nrasts, nvects;
+    char **rast, **vect, **site;
+    int nrasts, nvects, nsites;
     char command[128];
     struct Flag *quiet;
-    struct Option *rmap, *vmap, *zoom;
+    struct Option *rmap, *vmap, *smap, *zoom;
     double magnify;
     char *mapset;
     int i;
@@ -29,6 +29,9 @@ int main (int argc, char **argv)
                rast = NULL;
     if(D_get_dig_list (&vect, &nvects) < 0)
                vect = NULL;
+    if(D_get_site_list (&site, &nsites) < 0)
+               site = NULL;
+
     R_close_driver();
                     
     rmap = G_define_option();
@@ -51,7 +54,17 @@ int main (int argc, char **argv)
     vmap->gisprompt = "old,dig,vector" ;
     vmap->description = "Name of vector map";
                                                         
-    if(!rast && !vect)
+    smap = G_define_option();
+    smap->key = "site";
+    smap->type = TYPE_STRING;
+    smap->multiple = YES;
+    if (site)
+          smap->answers = site;
+    smap->required = NO;
+    smap->gisprompt = "old,site_lists,sites" ;
+    smap->description = "Name of site file";
+                                                        
+    if(!rast && !vect && !site)
     {
 	    rmap->required = YES;
     }
@@ -116,8 +129,29 @@ int main (int argc, char **argv)
 	}
     }
 
+    if (smap->required == YES && smap->answers == NULL)
+	exit(0);
+
+    if (smap->answers)
+    {
+	if (!nsites)
+	{
+		for(i=0; smap->answers[i]; i++);
+		nsites = i;
+	}
+	for(i=0; i<nsites; i++){
+    		mapset = G_find_file ("site_lists", smap->answers[i], "");
+    		if (mapset == NULL)
+    		{
+			char msg[256];
+			sprintf(msg,"Site file [%s] not available", smap->answers[i]);
+			G_fatal_error(msg) ;
+		}
+	}
+    }
+
     /* if map was found in monitor: */
-    if (rast || vect) 
+    if (rast || vect || site) 
        quiet->answer=1;
         
     R_open_driver();
@@ -158,7 +192,17 @@ int main (int argc, char **argv)
       R_pad_freelist(vect, nvects);
     }
     
-
+/* Redraw site map */
+    if (site)
+    {
+      for(i=0; i<nsites; i++)
+      {
+      	sprintf(command, "d.sites sitefile=%s", smap->answers[i]);
+      	system(command);
+      }
+      R_pad_freelist(site, nsites);
+    }
+    
     exit(stat);
 }
 
