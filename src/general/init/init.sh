@@ -26,7 +26,7 @@
 : ${GISBASE?}
 
 # Set the GIS_LOCK variable to current process id
-lockfile=$HOME/.gislock5
+lockfile="$HOME/.gislock5"
 GIS_LOCK=$$
 export GIS_LOCK
 
@@ -57,7 +57,7 @@ else
 fi
 
 # Check for concurrent use
-$ETC/lock $lockfile $$
+$ETC/lock "$lockfile" $$
 case $? in
     0) ;;
     1)
@@ -101,7 +101,7 @@ if [ ! "$GRASS_GNUPLOT" ] ; then
 fi
 
 # First time user - GISRC is defined in the grass script
-if [ ! -f $GISRC ] ; then
+if [ ! -f "$GISRC" ] ; then
 
     if [ ! -f $GISBASE/locale/$LCL/etc/grass_intro ] ; then
 	cat $ETC/grass_intro
@@ -183,10 +183,10 @@ fi
 
 # Save the user interface variable in the grassrc file - choose a temporary
 # file name that should not match another file
-if [ -f $GISRC ] ; then
-    awk '$1 !~ /GRASS_GUI/ {print}' $GISRC > $GISRC.$$
-    echo "GRASS_GUI: $GRASS_GUI" >> $GISRC.$$
-    mv -f $GISRC.$$ $GISRC
+if [ -f "$GISRC" ] ; then
+    awk '$1 !~ /GRASS_GUI/ {print}' "$GISRC" > "$GISRC.$$"
+    echo "GRASS_GUI: $GRASS_GUI" >> "$GISRC.$$"
+    mv -f "$GISRC.$$" "$GISRC"
 fi
 
 # Parsing argument to get LOCATION
@@ -227,29 +227,29 @@ else
     fi
 
     if [ "$GISDBASE" -a "$LOCATION_NAME" -a "$MAPSET" ] ; then
-    	LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+    	LOCATION="$GISDBASE/$LOCATION_NAME/$MAPSET"
     
-    	if [ ! -r $LOCATION/WIND ] ; then
+    	if [ ! -r "$LOCATION/WIND" ] ; then
     	    echo "$LOCATION: No such location"
     	    exit
     	fi
     
-    	if [ -s $GISRC ] ; then
+    	if [ -s "$GISRC" ] ; then
     	    sed -e "s|^GISDBASE:.*$|GISDBASE: $GISDBASE|; \
     	    	s|^LOCATION_NAME:.*$|LOCATION_NAME: $LOCATION_NAME|; \
-    	    	s|^MAPSET:.*$|MAPSET: $MAPSET|" $GISRC > $GISRC.$$
+    	    	s|^MAPSET:.*$|MAPSET: $MAPSET|" "$GISRC" > "$GISRC.$$"
     
     	    if [ $? -eq 0 ] ; then
-    	    	mv -f $GISRC.$$ $GISRC
+    	    	mv -f "$GISRC.$$" "$GISRC"
     	    else
-    	    	rm -f $GISRC.$$
+    	    	rm -f "$GISRC.$$"
     	    	echo "Failed to create new $GISRC"
     	    	LOCATION=
     	    fi
     	else
-    	    echo "GISDBASE: $GISDBASE" > $GISRC
-    	    echo "LOCATION_NAME: $LOCATION_NAME" >> $GISRC
-    	    echo "MAPSET: $MAPSET" >> $GISRC
+    	    echo "GISDBASE: $GISDBASE" > "$GISRC"
+    	    echo "LOCATION_NAME: $LOCATION_NAME" >> "$GISRC"
+    	    echo "MAPSET: $MAPSET" >> "$GISRC"
     	fi
     else
     	echo "GISDBASE, LOCATION_NAME and MAPSET variables not set properly."
@@ -271,11 +271,11 @@ if [ ! "$LOCATION" ] ; then
      	    	0) ;;
      	    	*) 
 		    # Check for an invalid GISRC file
-		    if [ -f $GISRC ] ; then
-			VALUE=`grep "GISDBASE" $GISRC`
+		    if [ -f "$GISRC" ] ; then
+			VALUE=`grep "GISDBASE" "$GISRC"`
 			if [ "$VALUE" = "" ] ; then
-    			    echo "Invalid resource file, removing $GISRC" 
-			    rm -f $GISRC
+    			    echo "Invalid resource file, removing $GISRC"
+			    rm -f "$GISRC"
 			fi
 		    fi
 		    
@@ -300,10 +300,10 @@ if [ ! "$LOCATION" ] ; then
 		    
 		    GRASS_GUI="text"
 
-                    if [ -f $GISRC ] ; then
-                        awk '$1 !~ /GRASS_GUI/ {print}' $GISRC > $GISRC.$$
-                        echo "GRASS_GUI: $GRASS_GUI" >> $GISRC.$$
-                        mv -f $GISRC.$$ $GISRC
+                    if [ -f "$GISRC" ] ; then
+                        awk '$1 !~ /GRASS_GUI/ {print}' "$GISRC" > "$GISRC.$$"
+                        echo "GRASS_GUI: $GRASS_GUI" >> "$GISRC.$$"
+                        mv -f "$GISRC.$$" "$GISRC"
                     fi
 
 		    $ETC/set_data
@@ -312,11 +312,11 @@ if [ ! "$LOCATION" ] ; then
      	    		0) ;;
      	    		*) 
 			    # Check for an invalid GISRC file
-			    if [ -f $GISRC ] ; then
-				VALUE=`grep "GISDBASE" $GISRC`
+			    if [ -f "$GISRC" ] ; then
+				VALUE=`grep "GISDBASE" "$GISRC"`
 				if [ "$VALUE" = "" ] ; then
     				    echo "Invalid resource file, removing $GISRC" 
-				    rm -f $GISRC
+				    rm -f "$GISRC"
 				fi
 			    fi
 
@@ -330,9 +330,9 @@ if [ ! "$LOCATION" ] ; then
 		    if [ "$LOCATION_NAME" = "##NONE##" ] ; then
     	    		$ETC/set_data
     	    		if [ $? != 0 ]; then
-    	    		    echo "GISDBASE: $OLD_DB" > $GISRC
-    	    		    echo "LOCATION_NAME: $OLD_LOC" >> $GISRC
-    	    		    echo "MAPSET: $OLD_MAP" >> $GISRC
+    	    		    echo "GISDBASE: $OLD_DB" > "$GISRC"
+    	    		    echo "LOCATION_NAME: $OLD_LOC" >> "$GISRC"
+    	    		    echo "MAPSET: $OLD_MAP" >> "$GISRC"
     	    		    exit
     	    		fi
     		    fi
@@ -489,10 +489,10 @@ bash)
     ;;
 
 cygwin)
-    USERHOME=$HOME      # save original home
-    HOME=$LOCATION      # save .bashrc in $LOCATION
+    USERHOME="$HOME"      # save original home
+    HOME="$LOCATION"      # save .bashrc in $LOCATION
     export HOME
-    bashrc=$HOME/.bashrc
+    bashrc="$HOME/.bashrc"
     rm -f $bashrc
     # this does not work on cygwin for unknown reasons
     # echo "test -z $PROFILEREAD && . /etc/profile" > $bashrc
@@ -500,16 +500,16 @@ cygwin)
     echo "umask 022" >> $bashrc
     echo "PS1='GRASS:\w > '" >> $bashrc
 
-    if [ -r $USERHOME/.grass.bashrc ]
+    if [ -r "$USERHOME/.grass.bashrc" ]
     then
-        cat $USERHOME/.grass.bashrc >> $bashrc
+        cat "$USERHOME/.grass.bashrc" >> $bashrc
     fi
 
     echo "export PATH=\"$PATH\"" >> $bashrc
     echo "export HOME=\"$USERHOME\"" >> $bashrc # restore user home path
 
     $ETC/run $SHELL
-    HOME=$USERHOME
+    HOME="$USERHOME"
     export HOME
     ;;
 
@@ -532,7 +532,7 @@ tput clear
 echo "Cleaning up temporary files....."
 
 ($ETC/clean_temp > /dev/null &)
-rm -f $lockfile
+rm -f "$lockfile"
 
 echo "done"
 echo 
