@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include "gis.h"
 #include "Vect.h"
+#include "dbmi.h"
 
 #define printline(x) fprintf (stdout, " | %-74.74s |\n", x)
 #define divider(x) \
@@ -37,14 +38,20 @@ int
 main (int argc, char *argv[])
 {
   struct GModule *module;
-  struct Option *in_opt;
-  struct Flag *histf;
+  struct Option *in_opt, *fieldopt;
+  struct Flag *histf, *columns;
   struct Map_info Map;
   struct dig_head v_head;
   BOUND_BOX box;
   char *mapset, line[200], buf[1001];
   int i;
   int with_z;
+  struct field_info *fi;
+  dbDriver *driver=NULL;
+  dbHandle handle;
+  dbString table_name;
+  dbTable *table;
+  int field, num_dblinks, ncols, col;
 
   G_gisinit (argv[0]);
 
@@ -53,10 +60,16 @@ main (int argc, char *argv[])
 
   /* get G_OPT_ from include/gis.h */
   in_opt = G_define_standard_option(G_OPT_V_MAP);
+ 
+  fieldopt = G_define_standard_option(G_OPT_V_FIELD);
 
   histf = G_define_flag ();
   histf->key             = 'h';
   histf->description     = "Print vector history instead of info";
+
+  columns = G_define_flag();
+  columns->key           = 'c';
+  columns->description   = "Print types/names of table columns for specified field instead of info";
 
   if (G_parser(argc,argv))
     exit(1);
@@ -75,8 +88,40 @@ main (int argc, char *argv[])
       Vect_hist_rewind ( &Map );
       while ( Vect_hist_read ( buf, 1000, &Map ) != NULL ) {
 	 fprintf ( stdout, buf );
-      } 
-  } else { 
+      }
+  } else {
+     if ( columns->answer ) {
+      num_dblinks = Vect_get_num_dblinks(&Map);
+      if (num_dblinks <= 0) {
+         fprintf(stderr, "Database connection for map <%s> is not defined in DB file\n", in_opt->answer);
+         exit(0);
+      }
+      else /* num_dblinks > 0 */
+      {
+       field = atoi ( fieldopt->answer );
+       fprintf(stdout,"Displaying column type for database connection of field %d:\n", field);
+       if ( (fi = Vect_get_dblink ( &Map, field-1)) == NULL)
+          G_fatal_error("Database connection not defined");
+       driver = db_start_driver(fi->driver);
+       if (driver == NULL)
+           G_fatal_error("Cannot open driver %s", fi->driver) ;
+       db_init_handle (&handle);
+       db_set_handle (&handle, fi->database, NULL);
+       if (db_open_database(driver, &handle) != DB_OK)
+           G_fatal_error("Cannot open database <%s>", fi->database);
+       db_init_string(&table_name);
+       db_set_string(&table_name, fi->table);
+       if(db_describe_table (driver, &table_name, &table) != DB_OK)
+           G_fatal_error("Cannot open table <%s>", fi->table);
+
+       ncols = db_get_table_number_of_columns(table);
+       for (col = 0; col < ncols; col++)
+           fprintf (stdout,"%s|%s\n", db_sqltype_name(db_get_column_sqltype(db_get_table_column(table, col))), db_get_column_name(db_get_table_column(table, col)));
+ 
+       db_close_database(driver);
+       db_shutdown_driver(driver);
+      }
+     } else {  
       divider ('+');
       sprintf (line, "Layer:    %-29.29s  Organization: %s", in_opt->answer, Vect_get_organization(&Map));
       printline (line);
@@ -147,8 +192,9 @@ main (int argc, char *argv[])
       printline (line);
       divider ('+');
       fprintf (stdout, "\n");
+    }
   }
- 
+
   Vect_close (&Map);
 
   return (0);
