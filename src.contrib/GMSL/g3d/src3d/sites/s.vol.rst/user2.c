@@ -1,6 +1,4 @@
 /*
-* $Id$
-*
 ****************************************************************************
 *
 * MODULE:       s.vol.rst: program for 3D(volume) interpolation and geometry
@@ -222,7 +220,7 @@ interp_call (root, tree)
 
 	/* show before to catch 0% */
 
-fprintf(stderr,"total segments = %d, Current = %d, npoints = %d\n",totsegm,cursegm+1,npt+1);
+/*fprintf(stderr,"total segments = %d, Current = %d, npoints = %d\n",totsegm,cursegm+1,npt);*/
 
 {
   G_percent (cursegm, totsegm, 1);

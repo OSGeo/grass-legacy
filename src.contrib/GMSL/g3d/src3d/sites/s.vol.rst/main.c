@@ -166,7 +166,6 @@ int main (int argc, char *argv[])
     struct octtree *tree;
     int dims, strs, dbls = 0;
     RASTER_MAP_TYPE map_type;
-    
 /*DEBUG */ int testout = 1;
 
     struct
@@ -207,6 +206,7 @@ int main (int argc, char *argv[])
     nsizr = n_rows;
     nsizc = n_cols;
     nsizl = n_levs;
+    n_rows_in = n_rows; /* fix by JH 04/24/02 */
 
     /* This should now be a sites file using the new API */
     parm.input = G_define_option ();
@@ -389,7 +389,7 @@ int main (int argc, char *argv[])
     tb_res = tb_res*zmult;
     KMAX2 = MAXPOINTS;
 
-    fprintf (stderr, "DMIN = %f\n", dmin);
+/*    fprintf (stderr, "DMIN = %f\n", dmin);*/
 
     /************************************/
     KMIN = npmin;
@@ -460,7 +460,7 @@ int main (int argc, char *argv[])
       G_fatal_error("%s: Unable to guess sites format", G_program_name());
     if (dims < 3)
       G_fatal_error("Only found %i dimensions in sites file %s. Need 3 dimensions.", dims, input);
-   
+    
     ii=INPUT(field);
     if (ii>0)
     {
@@ -500,9 +500,8 @@ int main (int argc, char *argv[])
         }
       }
       ertot = 0.;
-/*      if (per)
-	fprintf (stderr, "Percent complete: "); */
-      fprintf (stderr, "adjusted DMIN = %f\n", dmin);
+      if (per)
+	fprintf (stderr, "Percent complete: "); 
       
       out_cond1 = (outz!= NULL)||(gradient!=NULL)||(aspect1!=NULL)||
         (aspect2!= NULL)||(gcurv!=NULL)||(mcurv!=NULL)||(ncurv!=NULL);
