@@ -64,7 +64,8 @@ proc Dm::create { } {
             {command "E&xit" {} "Exit d.m" {} -accelerator Ctrl-Q -command { DmPrint::clean;  exit } }
         }
         "&Options" all options 0 {
-	    {command "Toggle Form Mode" {} "Form displays / accepts input" {} -accelerator Ctrl-T -command { Dm::toggleformmode}}
+	    {command "Toggle Attribute &Form Mode (R/W)" {} "Form displays / accepts input" {} -accelerator Ctrl-T -command { Dm::toggleformmode}}
+            {command "Launch &tcltkgrass" {} "tcltkgrass" {} -command { exec $env(GISBASE)/bin/tcltkgrass & } }
         }
         "&Help" all options 0 {
             {command "d.m &help" {} "d.m help" {} -command { exec $env(GRASS_HTML_BROWSER) $env(GISBASE)/docs/html/d.m.html & } }
