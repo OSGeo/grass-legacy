@@ -79,7 +79,7 @@ main(argc, argv)
     parm.output->type       = TYPE_STRING ;
     parm.output->required   = YES;
     parm.output->description= "Name of output 3D - G3D file" ;
-    parm.output->gisprompt  = "any,cell,raster" ;
+    parm.output->gisprompt  = "new,grid3,3d raster";
 
     parm.npoints = G_define_option() ;
     parm.npoints->key        = "npoints" ;
