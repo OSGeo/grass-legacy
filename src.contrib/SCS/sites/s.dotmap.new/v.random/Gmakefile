@@ -1,0 +1,18 @@
+#  %W%  %G%
+
+PGM=v.random
+EXTRA_CFLAGS	= $(VECT_INCLUDE)
+
+OFILES = \
+	main.o \
+	do_dot.o \
+	put_dots.o \
+	find_area.o
+
+all:  $(BIN_CONTRIB_CMD)/$(PGM)
+
+$(BIN_CONTRIB_CMD)/$(PGM): $(OFILES) 
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(VECTLIB) $(MATHLIB)
+
+do_dots.o: dots.h
+put_dots.o: dots.h
