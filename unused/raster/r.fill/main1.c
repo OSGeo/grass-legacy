@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "gis.h"
-#include "libr.h"
+#include "libtir.h"
 
 #define	DEFAULT_DH	"0.5"
 

@@ -14,7 +14,7 @@
 
 #include <stdio.h>
 #include "gis.h"
-#include "libr.h"
+#include "libtir.h"
 
 
 int

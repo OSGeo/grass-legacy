@@ -3,8 +3,8 @@
  *
  ****************************************************************************
  *
- * MODULE:	GRASS type-independent raster library (libr library)
- * FILENAME:	libr.c
+ * MODULE:	GRASS Type-Independent Raster library (libtir library)
+ * FILENAME:	libtir.c
  * AUTHOR(S):	Huidae Cho - Korea - hdcho@geni.cemtlo.com
  * PURPOSE:	This library functions help you program a type-independent
  * 		raster modules.
@@ -69,7 +69,7 @@
 
 #include <stdio.h>
 #include "gis.h"
-#include "libr.h"
+#include "libtir.h"
 
 
 /* Here is a full example 'r.show' */

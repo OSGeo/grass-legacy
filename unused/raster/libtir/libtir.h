@@ -3,8 +3,8 @@
  *
  ****************************************************************************
  *
- * MODULE:	GRASS type-independent raster library (libr library)
- * FILENAME:	libr.h
+ * MODULE:	GRASS Type-Independent Raster library (libtir library)
+ * FILENAME:	libtir.h
  * AUTHOR(S):	Huidae Cho - Korea - hdcho@geni.cemtlo.com
  * PURPOSE:	This library functions help you program a type-independent
  * 		raster modules.
@@ -17,8 +17,8 @@
  *
  *****************************************************************************/
 
-#ifndef	_LIBR_H_
-#define	_LIBR_H_
+#ifndef	_LIBTIR_H_
+#define	_LIBTIR_H_
 
 typedef	union	_RASTER_MAP_ROW
 {
