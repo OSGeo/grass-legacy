@@ -46,7 +46,8 @@ int main(int argc, char **argv)
   sep->answer = ",";
 
   G_disable_interactive();
-  if (G_parser(argc, argv))
+
+  if (argc > 1 && G_parser(argc, argv))
     exit(1);
 
   colorlist = G_store(D_color_list());
