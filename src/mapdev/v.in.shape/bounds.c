@@ -35,17 +35,20 @@ int set_bounds(SHPHandle hs) {
 
   /* Main structures */
 
+  int *dummy1, *dummy2;
   double *minvals, *maxvals;
   double minx, maxx, miny, maxy;
   char renderbuf[128];
 
   int ilbx, ilby, ilen, ilen0;
   double flbx, flby;
-
+  
+  dummy1 = (int *)G_malloc( sizeof(int) );
+  dummy2 = (int *)G_malloc( sizeof(int) );
   minvals = (double *)G_malloc(4 * sizeof(double) );
   maxvals = (double *)G_malloc(4 * sizeof(double) );
 
-  SHPGetInfo(hs, NULL, NULL, minvals, maxvals);
+  SHPGetInfo(hs, dummy1, dummy2, minvals, maxvals);
 
   minx = minvals[0];
   miny = minvals[1];
@@ -54,6 +57,8 @@ int set_bounds(SHPHandle hs) {
 
   G_free(minvals);
   G_free(maxvals);
+  G_free(dummy1);
+  G_free(dummy2);
 
   if( minx < 0.0 )
     ilbx = (int)minx - 1;
@@ -70,10 +75,10 @@ int set_bounds(SHPHandle hs) {
 
   flby = - (double)ilby;
 
-  sprintf(renderbuf, "%.0lf", flbx);
+  sprintf(renderbuf, "%.0lf", maxx + flbx);
   ilen = strlen(renderbuf);
 
-  sprintf(renderbuf, "%.0lf", flby);
+  sprintf(renderbuf, "%.0lf", maxy + flby);
   ilen0 = strlen(renderbuf);
   if(ilen0 > ilen) ilen = ilen0;
 

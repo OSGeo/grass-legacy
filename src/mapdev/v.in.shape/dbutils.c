@@ -259,14 +259,18 @@ char *calcKeyValue( pntDescript *pnt1, float sr, int decs, double efalse,
   /* local */
 
   double xtmp, ytmp;
-  char xbuf[40], ybuf[40];
+  char xbuf[128], ybuf[128];
   char *retbuf;
   int indx;
   char *indx_ptr;
   int idigits;
 
-  xtmp = ((int)( (pnt1->xPosn + efalse) / sr )) * sr;
-  ytmp = ((int)( (pnt1->yPosn + nfalse) / sr )) * sr;
+  xtmp = ((long long)( (pnt1->xPosn + efalse) / sr )) * sr;
+  ytmp = ((long long)( (pnt1->yPosn + nfalse) / sr )) * sr;
+
+  /* To elliminate small negative values */
+  if(xtmp < 0.0) xtmp = 0.0;
+  if(ytmp < 0.0) xtmp = 0.0;
 
   if(decs < 0 || decs > 16)
     return NULL;
@@ -275,8 +279,8 @@ char *calcKeyValue( pntDescript *pnt1, float sr, int decs, double efalse,
 
   retbuf = (char *)malloc( 33 );
   
-  snprintf( xbuf, 35, "%035.10f", xtmp );
-  snprintf( ybuf, 35, "%035.10f", ytmp );
+  snprintf( xbuf, 127, "%065.20f", xtmp );
+  snprintf( ybuf, 127, "%065.20f", ytmp );
 
   indx_ptr = strchr( xbuf, '.' );
   strncpy( retbuf, indx_ptr - idigits, idigits );

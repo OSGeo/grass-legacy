@@ -482,9 +482,11 @@ int main( int   argc, char *argv[])
     segl->segments = NULL;
 
     /* Read shape into line list and fill out V-base */
+    fprintf(stderr, "Creating vector network...\n\n");
     linedCreate( ll0, hShapeDB, hDBF, fd0, hVB, &fc1 );
 
     /* Extract arcs from V-base into segment list */
+    fprintf(stderr, "Extracting and storing area edges...\n\n");
     vbase2segd( segl, hVB );
 
     
@@ -519,6 +521,8 @@ int main( int   argc, char *argv[])
     /* -------------------------------------------------------------------- */
     /*      Scan segment list to extract and write arcs.                    */
     /* -------------------------------------------------------------------- */
+
+    fprintf(stderr, "Writing vector map...\n\n");
 
     for( iArc = 0; iArc < segl->numSegments; ++iArc ) {
       if( segl->segments[iArc].duff ) continue;
