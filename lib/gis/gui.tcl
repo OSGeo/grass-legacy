@@ -150,18 +150,22 @@ proc add_buttons {} {
 	pack .run .close -side left -expand yes -padx 20 -pady 5
 }
 
-proc do_button_file {optn} {
-	global opt suf
-	button $suf.val$optn.sel -text {>} -command {
-		set filename [tk_getOpenFile -title {Load File}]
-		if {$filename != ""} {
-			if {$opt($optn,multi) && $opt($optn,val) != ""} {
-				append opt($optn,val) "," $filename
-			} {
-				set opt($optn,val) $filename
-			}
+proc get_file {optn}
+{
+	global opt
+	set filename [tk_getOpenFile -title {Load File}]
+	if {$filename != ""} {
+		if {$opt($optn,multi) && $opt($optn,val) != ""} {
+			append opt($optn,val) "," $filename
+		} {
+			set opt($optn,val) $filename
 		}
 	}
+}
+
+proc do_button_file {optn} {
+	global opt suf
+	button $suf.val$optn.sel -text {>} -command [list get_file $optn]
 	pack $suf.val$optn.sel -side left -fill x
 }
 
