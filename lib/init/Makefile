@@ -62,7 +62,7 @@ $(ETC)/run: $(OBJDIR)/run.o
 	$(CC) $(LDFLAGS) $(OBJDIR)/run.o -o $@
 
 $(ETC)/lock: $(OBJDIR)/lock.o
-	$(CC) $(LDFLAGS) $(OBJDIR)/lock.o -o $@
+	$(CC) $(LDFLAGS) $(OBJDIR)/lock.o $(GISLIB) -o $@
 
 $(BIN)/exit:
 	touch $@
