@@ -3,6 +3,8 @@
 
 static int nlines = 50;
 
+#define WDTH 2
+
 what(once, Map, Cats)
 struct Map_info *Map;
 struct Categories *Cats;
@@ -14,38 +16,62 @@ struct Categories *Cats;
 	int screen_x, screen_y ;
 	double east, north ;
 	int button ;
+	char east_buf[40], north_buf[40];
 	double D_get_d_north(), D_get_d_south() ;
 	double D_get_d_east(), D_get_d_west() ;
 	double D_d_to_u_row(), D_d_to_u_col() ;
+ 	extern double G_area_of_polygon();
 	double sq_meters;
+	double x1, y1, x2, y2;
 
 	P_LINE *Line ;
 	P_AREA *Area ;
 	plus_t line, area ;
-
+	int i;
+	struct line_pnts * Points;
+   
 	G_get_set_window (&window);
+	G_begin_polygon_area_calculations();
 	nrows = window.rows;
 	ncols = window.cols;
 
 	screen_x = ((int)D_get_d_west() + (int)D_get_d_east()) / 2 ;
 	screen_y = ((int)D_get_d_north() + (int)D_get_d_south()) / 2 ;
 
+	Points = Vect_new_line_struct();
+
 	do
 	{
 		show_buttons (once);
 		R_get_location_with_pointer(&screen_x, &screen_y, &button) ;
 		if (button == 3) break;
+
 		east  = D_d_to_u_col((double)screen_x) ;
 		north = D_d_to_u_row((double)screen_y) ;
+
 		row = (window.north - north) / window.ns_res ;
 		col = (east - window.west) / window.ew_res ;
 		if (row < 0 || row >= nrows) continue;
 		if (col < 0 || col >= ncols) continue;
 
+		/*  Nov 20, 1992   -dpg   the -1 allows ALL lines 
+		**     including deleted lines  Also switch to point_by_line
 		line = dig_point_to_line (Map, east, north, -1);
+		*/
+
+		x1 = D_d_to_u_col ((double)(screen_x-WDTH));
+		y1 = D_d_to_u_row ((double)(screen_y-WDTH));
+		x2 = D_d_to_u_col ((double)(screen_x+WDTH));
+		y2 = D_d_to_u_row ((double)(screen_y+WDTH));
+
+		line = dig_point_by_line (Map, x1, y1, x2, y2, LINE|AREA|DOT);
+
 		area = dig_point_to_area (Map, east, north) ;
 
-		printf("\nUTM  - %9.2f %10.2f\n", east, north);
+/*		printf("\nUTM  - %9.2f %10.2f\n", east, north);*/
+                G_format_easting(east, east_buf, G_projection());
+                G_format_northing(north, north_buf, G_projection());
+		printf("\n       %s  %s\n", east_buf, north_buf);
 		nlines++ ;
 
 		if (line + area == 0)
@@ -93,7 +119,17 @@ struct Categories *Cats;
 				printf ("Area - Category <not tagged>\n");
 
 			/* Area stats - just for grins */
-			dig_find_area2(Map, Area, &sq_meters);
+			/* dig_find_area2(Map, Area, &sq_meters); */
+			Vect_get_area_points(Map, area, Points);
+			sq_meters = 
+			     G_area_of_polygon(Points->x, Points->y, Points->n_points);
+                        /* substructing island areas */
+                        for(i = 0;i<Area->n_isles;i++)
+			{
+			   Vect_get_isle_points(Map, Area->isles[i], Points);
+			   sq_meters = sq_meters -
+			      G_area_of_polygon(Points->x, Points->y, Points->n_points);
+			}
 
 			printf("Size - Sq Meters: %.3lf\t\tHectares: %.3lf\n",
 			    sq_meters, (sq_meters/10000.) );
@@ -105,6 +141,7 @@ struct Categories *Cats;
 		}
 
 	}while (!once);
+	Vect_destroy_line_struct(Points);
 }
 
 /* TODO */
