@@ -1,4 +1,3 @@
-/* %W% %G% */
 struct dlg_node
 {
 	double x ;
