@@ -144,7 +144,7 @@ c_logop(int argc, int *argt)
 	if (argc > 2)
 		return E_ARG_HI;
 
-	if (argt[1] != CELL_TYPE || argt[1] != CELL_TYPE)
+	if (argt[1] != CELL_TYPE || argt[2] != CELL_TYPE)
 		return E_ARG_TYPE;
 
 	argt[0] = CELL_TYPE;
