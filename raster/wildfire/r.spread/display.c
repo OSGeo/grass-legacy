@@ -1,7 +1,13 @@
-#include "gis.h"
-#include "cmd_line.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <time.h>
+#include "gis.h"
+#include "display.h"
+#include "raster.h"
+#include "cmd_line.h"
+#include "local_proto.h"
+
 #define SIZE 80
 
 static char	buf[SIZE], old_time[SIZE], cur_time[SIZE];
@@ -15,7 +21,7 @@ static struct 	Colors colors;
 static struct 	tm *t_time;
 static 		time_t c_time;
 
-display_init ()
+void display_init (void)
 {
 	extern struct Cell_head window;
 	extern int	nrows, ncols;	/*numbers of rows and columns in file*/
@@ -26,7 +32,9 @@ display_init ()
 	/*set time zone for tracing local time*/
 	tzset ();
 
-    	R_open_driver();
+    	if (R_open_driver() != 0) {
+            G_fatal_error ("couldn't open display");
+        }
 	D_setup (1);
 	D_get_screen_window (&t, &b, &l, &r);
 /*printf("\nt,b,l,r: %d, %d, %d, %d", t, b, l, r);
@@ -115,8 +123,7 @@ display_init ()
 }
 
 
-draw_a_cell (row, col, cell_value)
-int row, col, cell_value;
+void draw_a_cell (int row, int col, int cell_value)
 {	
 	x1 = xoffset + f2s_x*col;
 	y1 = yoffset + f2s_y*row;
@@ -156,9 +163,8 @@ int row, col, cell_value;
  	}
 }
 
-
-draw_a_burning_cell (row, col)
-int row, col;
+void
+draw_a_burning_cell (int row, int col)
 {	
 	x1 = xoffset + f2s_x*col;
 	y1 = yoffset + f2s_y*row;
@@ -169,8 +175,8 @@ int row, col;
         R_flush (); 	
 }
 
-
-display_close ()
+void
+display_close (void)
 {
 	R_close_driver ();
 }

@@ -9,15 +9,16 @@
  *
  ************************************************************/
 
+#include <stdio.h>
+#include <stdlib.h>
 #include "costHa.h"
+#include "local_proto.h"
 
-deleteHa(old_min_cost, row, col, heap, heap_len)
-	struct costHa  *heap;
-	float           old_min_cost;
-	int             row, col;
-	long           *heap_len;
+void
+deleteHa(float old_min_cost, int row, int col, 
+        struct costHa * heap, long *heap_len)
 {
-	struct costHa  *fixHa();
+	/* struct costHa  *fixHa(); */
 	long            i;
 
 	if (*heap_len < 1) {

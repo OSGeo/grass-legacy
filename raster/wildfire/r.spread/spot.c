@@ -1,4 +1,4 @@
-                                                                                /******************************************************************************
+/******************************************************************************
  *	spot.c 		in ~/r.spread.fast
  *	
  *  	This function is for wildfire spread simulation only.
@@ -40,12 +40,13 @@
  *	and range fires. US Forest Service, Gen. Tech. Rep. INT-143. Ogden, 
  *	Utha, 161 p.
  ******************************************************************************/
+#include <stdio.h>
+#include <math.h>
 #include "gis.h"
-#define MAIN
 #include "cmd_line.h"
 #include "costHa.h"
 #include "cell_ptrHa.h"
-#include <math.h>
+#include "local_proto.h"
 
 #ifndef PI
 #define PI 3.1415926535897932
@@ -54,9 +55,8 @@
 #define DATA(map, r, c)		(map)[(r) * ncols + (c)]
 /*#define DEBUG*/
 
-spot (pres_cell, dir)
-struct costHa 	*pres_cell;
-int 		dir; /* direction of forward ROS */
+void
+spot (struct costHa *pres_cell, int dir/* direction of forward ROS */)
 {
 	extern CELL	*map_max;		/* max ROS (cm/min) */
 	extern CELL	*map_spotdist;		/* max spotting distance (m) */

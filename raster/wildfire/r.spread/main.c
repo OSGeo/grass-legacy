@@ -24,15 +24,17 @@
  *
  */
 
-#include "gis.h"
-#define MAIN
-#include "cmd_line.h"
-#include "costHa.h"
-#include "cell_ptrHa.h"
+#include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
 #include <sys/types.h>
- 
+#include <unistd.h>
+#include "gis.h"
+#include "cmd_line.h"
+#include "costHa.h"
+#include "cell_ptrHa.h"
+#include "local_proto.h"
+
 #define DATA(map, r, c)		(map)[(r) * ncols + (c)]
 
 /*#define DEBUG*/
@@ -73,7 +75,7 @@ struct Range 	range;
 struct costHa 	*heap;
 
 
-int
+int 
 main (int argc, char *argv[])
 {
 	int col, row, srows, scols;
@@ -85,7 +87,7 @@ main (int argc, char *argv[])
 	struct Cell_head cum_cellhd;            
 
         struct cell_ptrHa *to_cell, *old_to_cell, 
-        *front_cell = NULL, *rear_cell = NULL, *insert2Ha();
+        *front_cell = NULL, *rear_cell = NULL;
 
 	struct Colors colors;
 

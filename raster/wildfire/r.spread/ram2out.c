@@ -1,10 +1,13 @@
+#include <stdio.h>
 #include "gis.h"
-#define MAIN
 #include "cmd_line.h"
 #include "costHa.h"
+#include "local_proto.h"
+
 #define DATA(map, r, c)		(map)[(r) * ncols + (c)]
 
-ram2out ()
+void
+ram2out (void)
 {
 	extern CELL 	*cell, *x_cell, *y_cell;
 	extern CELL	*map_x_out, *map_y_out;
