@@ -1,0 +1,19 @@
+PGM      = Mimport.ll
+
+LIST =  main.o\
+	row_col.o\
+	geo_value.o\
+	getargs.o\
+	scan_geo.o\
+	value.o\
+	usage.o
+
+
+$(BIN)/$(PGM): $(LIST) $(GISLIB) $(COORCNVLIB) $(ROWIOLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(COORCNVLIB) $(ROWIOLIB) $(MATHLIB)
+
+
+$(LIST): geo.h
+$(GISLIB): #
+$(COORCNVLIB): #
+$(ROWIOLIB): #
