@@ -8,8 +8,8 @@ int main(int argc, char **argv)
 	char temp[128] ;
 	int t, b, l, r ;
 	struct Option *opt1;
-	struct Flag *shh;
-
+	struct Flag *shh, *once, *terse;
+	struct GModule *module;
 
 	/* Initialize the GIS calls */
 	G_gisinit (argv[0]) ;
@@ -35,10 +35,22 @@ int main(int argc, char **argv)
 	opt1->gisprompt  = "old,site_lists,Sites" ;
 	opt1->description= "Name of existing sites file"; 
 
+	once = G_define_flag();
+	once->key = '1';
+	once->description ="Identify just one site";
+	
+	terse = G_define_flag();
+	terse->key = 't';
+	terse->description = "Terse output. For parsing by programs.";
+	
 	shh = G_define_flag ();
 	shh->key = 'q';
 	shh->description = "Load quietly";
 	
+	module = G_define_module();
+	module->description = 
+	  "Allows the user to interactively query site list descriptions. ";
+
 	if(!site)
 		opt1->required = YES;
 
@@ -70,7 +82,7 @@ int main(int argc, char **argv)
 	
 	if(open_sites(opt1->answer)){
 	    load_sites(&window, !(shh->answer));
-	    what (0, 0) ;
+	    what (once->answer, terse->answer) ;
 	}
 
 	free_cached_sites();
