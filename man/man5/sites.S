@@ -210,7 +210,7 @@ from "S", issue the command:
 .ti +5
 define("<file>")
 .SH "SEE ALSO"
-.I s.db,
+.I s.db.rim,
 .I s.in.ascii,
 .I s.menu,
 .I s.out.ascii,
