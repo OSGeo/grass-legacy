@@ -1,0 +1,4 @@
+interface_build {
+    {r.mapcalc} 1
+    {Raster map layer data calculator.}
+}
