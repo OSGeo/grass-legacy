@@ -137,6 +137,8 @@ SHAPE_LIBNAME    = shape
 GRAPH_LIBNAME    = dgl
 RTREE_LIBNAME    = rtree
 
+FORM_LIBNAME     = form
+
 ##################### library options ###################################
 VASKLIB     = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(VASK_LIBNAME).$(LIB_SUFFIX)
 
@@ -196,6 +198,8 @@ SHAPELIB    = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(SHAPE_LIBNAME).$(LIB_SUFFIX)
 GRAPHLIB    = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(GRAPH_LIBNAME).$(LIB_SUFFIX)
 RTREELIB    = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(RTREE_LIBNAME).$(LIB_SUFFIX)
 
+FORMLIB    = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(FORM_LIBNAME).$(LIB_SUFFIX)
+
 ##################### dependencies ######################################
 VECTDEP     =  $(GRASS_INCDIR)/Vect.h $(GRASS_INCDIR)/V_.h \
 	       $(GRASS_INCDIR)/vect/dig_defines.h \
@@ -203,6 +207,7 @@ VECTDEP     =  $(GRASS_INCDIR)/Vect.h $(GRASS_INCDIR)/V_.h \
                $(GRASS_INCDIR)/vect/dig_externs.h $(GRASS_INCDIR)/vect/dig_globs.h \
                $(VECTRLIB) $(DIG2LIB) $(SHAPELIB) $(BTREELIB) $(RTREELIB)
 
+FORMDEP     =  $(GRASS_INCDIR)/form.h $(FORMLIB)
 ##################### driver names #####################################
 
 DBF_DRIVERNAME=dbf
