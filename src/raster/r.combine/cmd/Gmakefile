@@ -6,6 +6,7 @@ OFILES  =\
 	cry_n_die.o\
 	eval_tree.o\
 	falloc.o\
+	getc.o\
 	get_cats.o\
 	get_c_win.o\
 	get_win.o\
@@ -27,10 +28,10 @@ OFILES  =\
 	sigint.o\
 	write.o
 
-all: remove $(BIN_MAIN_CMD)/r.combine $(ETC)/r.combine text
+all: clean $(BIN_MAIN_CMD)/r.combine $(ETC)/r.combine text
 
-remove:
-	# rm -f gis_pars.c gis_lxcl.c
+clean:
+	-rm -f gis_lxcl.c gis_pars.c gis_pars.h gis_pars.out
 
 $(BIN_MAIN_CMD)/r.combine:
 	rm -f $@
@@ -48,8 +49,6 @@ text:
 	mkdir $(TXT)/COMBINE
 	cp HELP_TEXT/* $(TXT)/COMBINE
 
-clean:
-	-rm gis_pars.c gis_pars.h gis_lxcl.c gis_pars.o gis_lxcl.o
 #
 
 main.o: tree.h
@@ -82,12 +81,14 @@ sigint.o: externs.h
 # PARSER
 gis_pars.c:     lvw.h tree.h gis_pars.y
 	yacc -v -d gis_pars.y
+	rm -f gis_pars.c gis_pars.h gis_pars.out
 	mv y.tab.c gis_pars.c
 	mv y.tab.h gis_pars.h
 	mv y.output gis_pars.out
 	@echo "See gis_pars.out for review of this parser." 
 
 gis_lxcl.c:     gis_lxcl.l gis_pars.h
+	rm -f gis_lxcl.c
 	lex -t gis_lxcl.l > gis_lxcl.c
 
 gis_pars.h:      gis_pars.c
