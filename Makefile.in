@@ -184,6 +184,7 @@ real-install: FORCE
 	${SHELL} -c "cd ${GISBASE} ; tar cBf - scripts | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
 	${SHELL} -c "cd ${GISBASE} ; tar cBf - tcltkgrass | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
 	${SHELL} -c "cd ${GISBASE} ; tar cBf - txt | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	test -d ${GISBASE}/locale && ${SHELL} -c "cd ${GISBASE} ; tar cBf - locale | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
 	@ # The man, include, and lib could go to ${PREFIX}/ BUT if this is
 	@ # done, then the corresponding uninstall instructions must delete
 	@ # the grass files BY FILENAME NOT DIRECTORY!! Otherwise there is a
@@ -265,6 +266,7 @@ real-uninstall: FORCE
 	${SHELL} -c "rm -rf ${INST_DIR}/scripts ; true"
 	${SHELL} -c "rm -rf ${INST_DIR}/tcltkgrass ; true"
 	${SHELL} -c "rm -rf ${INST_DIR}/txt ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/locale ; true"
 	@ # If man, include, and lib are changed to ${PREFIX}/ in the install
 	@ # target then the grass files MUST BE REMOVED BY FILENAME NOT BY
 	@ # DIRECTORY!! Otherwise there is a high risk of deleteing system
@@ -461,6 +463,7 @@ clean: FORCE mostlyclean
 	${SHELL} -c "rm -rf ${GISBASE}/scripts/    	    2>/dev/null ; true"
 	${SHELL} -c "rm -rf ${GISBASE}/tcltkgrass/ 	    2>/dev/null ; true"
 	${SHELL} -c "rm -rf ${GISBASE}/txt/        	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/locale/        	    2>/dev/null ; true"
 	${SHELL} -c "rmdir ${GISBASE} ; true"
 	${SHELL} -c "rmdir ${GRASS_BIN} ; true"
 
