@@ -29,4 +29,7 @@ echo "convert 'g2.grp' to text 'g2.grp.txt'"
 echo "done"
 
 echo "compare 'g1.grp.txt' with 'g2.grp.txt'"
-(diff -q g1.grp.txt g2.grp.txt && echo "'g1.grp.txt' and 'g2.grp.txt' are identical") || echo "'g1.grp.txt' and 'g2.grp.txt' differ"
+(diff -q g1.grp.txt g2.grp.txt && \
+	 echo "'g1.grp.txt' and 'g2.grp.txt' are identical") ||
+	(echo "'g1.grp.txt' and 'g2.grp.txt' differ") || exit 1
+exit 0
