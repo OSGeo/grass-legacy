@@ -153,6 +153,7 @@ LOC_ARG_WITH(lapack, LAPACK, no)
 LOC_ARG_WITH(motif, Motif, no)
 LOC_ARG_WITH(freetype, FreeType, no)
 LOC_ARG_WITH(glw, GLw, no)
+LOC_ARG_WITH(nls, NLS,no)
 
 # With includes and libs options
 
@@ -1029,6 +1030,10 @@ AC_SUBST(FTLIB)
 
 # Done checking FreeType
 
+# Enable NLS option
+
+LOC_CHECK_USE(nls,NLS,USE_NLS)
+
 # Check for optional packages
 
 USE_TOGL=
@@ -1051,6 +1056,8 @@ LOC_OPTIONAL(ODBC library,ODBC,ODBC,src/libes/dbmi/drivers/odbc)
 LOC_OPTIONAL(xganim,MOTIF,XGANIM,src.contrib/GMSL/xganim)
 
 LOC_OPTIONAL(FreeType programs,FREETYPE,FREETYPE,src/display/d.text.freetype)
+
+LOC_OPTIONAL(NLS support,NLS,NLS,locale)
 
 AC_MSG_CHECKING(whether to build FFTW programs)
 AC_MSG_RESULT()
@@ -1101,4 +1108,5 @@ LOC_MSG_USE(LAPACK support,USE_LAPACK)
 LOC_MSG_USE(Motif support,USE_MOTIF)
 LOC_MSG_USE(FreeType support,USE_FREETYPE)
 LOC_MSG_USE(GLw support,USE_GLW)
+LOC_MSG_USE(NLS support,USE_NLS)
 LOC_MSG()
