@@ -1,4 +1,4 @@
-$Id: TODO,v 1.60 2000-12-20 10:49:34 markus Exp $
+$Id: TODO,v 1.61 2001-01-04 16:20:34 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -548,3 +548,8 @@ Datum support:
 
 - upgrade r.proj, s.proj, v.proj
 - ?
+
+---------------------------------------------------------------------
+Implement gdchart for nice charts:
+
+  http://www.fred.net/brv/chart/
