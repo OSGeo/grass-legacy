@@ -583,25 +583,25 @@ void init_graphics(char *name,int argc,char **argv,struct dspec *dspecptr)
     *     Create the colormap window
     */
    n = 0;
-   XtSetArg(args[n],XmNwidth,130);
+   XtSetArg(args[n],XmNwidth,100);
    n++;
-   XtSetArg(args[n],XmNheight,1000);
+   XtSetArg(args[n],XmNheight,500);
    n++;
-   XtSetArg(args[n],XmNx,1140);
+   XtSetArg(args[n],XmNx,5);
    n++;
-   XtSetArg(args[n],XmNy,10);
+   XtSetArg(args[n],XmNy,5);
    n++;
    gl_shell = XtAppCreateShell("Colormap","GL_window", 
                  topLevelShellWidgetClass,XtDisplay(toplevel),args,n);
 
    n = 0;
-   XtSetArg(args[n],XmNwidth,130);
+   XtSetArg(args[n],XmNwidth,100);
    n++;
-   XtSetArg(args[n],XmNheight,1000);
+   XtSetArg(args[n],XmNheight,500);
    n++;
-   XtSetArg(args[n],XmNx,1140);
+   XtSetArg(args[n],XmNx,5);
    n++;
-   XtSetArg(args[n],XmNy,10);
+   XtSetArg(args[n],XmNy,5);
    n++;
    form = XmCreateForm (gl_shell, "form", args, n);
    XtManageChild(form);
