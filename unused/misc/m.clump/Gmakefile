@@ -1,0 +1,35 @@
+LIBES = $(VECTLIB) $(GISLIB) $(GEOMLIB)
+
+
+OBJ =   \
+    main.o \
+    attr.o \
+    barriers.o \
+    bbox.o \
+    break.o \
+    disconnect.o \
+    fields.o \
+    inci.o \
+    intersect.o \
+    list.o \
+    neighbors.o  \
+    parse.o \
+    read.o \
+    region.o \
+    readline.o \
+    report.o \
+    triangulate.o \
+    vect.o \
+    write.o
+
+
+
+PROG = m.clump
+HOME = $(BIN_ALPHA_CMD)
+
+
+$(HOME)/$(PROG): $(OBJ) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(DATETIMELIB) $(XDRLIB)
+
+$(LIBES): #
+
