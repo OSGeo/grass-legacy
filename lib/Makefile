@@ -33,7 +33,13 @@ SUBDIRS = \
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
-default: subdirs
+default: headers subdirs
+
+headers: 
+	if [ ! -d $(GISBASE)/include ]; then mkdir $(GISBASE)/include; fi
+	if [ ! -d $(GISBASE)/include/vect ]; then mkdir $(GISBASE)/include/vect; fi
+	cp ../include/*.h $(GISBASE)/include/
+	cp ../include/vect/*.h $(GISBASE)/include/vect/
 
 clean: cleansubdirs
 
