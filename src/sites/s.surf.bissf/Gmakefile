@@ -1,0 +1,82 @@
+COMPILE_FLAGS = -g
+EXTRACFLAGS = 
+
+NAME=$(BIN_CONTRIB_CMD)/s.surf.bissf
+
+MSEC=4
+MDIR=$(SRC)/../man/man$(MSEC)
+MUTL=$(SRC)/../man/utilities
+
+LIBES = $(GISLIB) 
+
+LIST  = \
+	driver.o \
+	clicker.o \
+	main.o\
+        readsite.o \
+	wrtesite.o \
+	wrtesite2.o \
+	idbvip.o  \
+	idgrid.o  \
+	idpdrv.o  \
+	idsfft.o  \
+	idxchg.o\
+	idcldp.o  \
+	idlctn.o  \
+	idptip.o  \
+	idtang.o
+
+$(NAME): $(LIST) $(LIBES) #delete for distribution
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) 
+
+all: $(NAME) man
+
+$(NAME): $(LIST) $(LIBES) 
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) 
+
+man:  
+	-cp $(NAME).man $(MDIR)/$(NAME)
+	nroff $(MUTL)/man.version $(MDIR)/.class-header \
+	   $(MUTL)/man.header $(NAME).man $(MDIR)/.class-notice \
+	   > $(GISBASE)/man/$(MSEC)/$(NAME)
+
+mancat:  
+	nroff $(MUTL)/man.version $(MDIR)/.class-header \
+	  $(MUTL)/man.header $(NAME).man $(MDIR)/.class-notice \
+	  > $(NAME).cat
+ 
+manps:  
+	troff -Tpsc $(MUTL)/man.version $(MDIR)/.class-header \
+	  $(MUTL)/man.header $(NAME).man $(MDIR)/.class-notice \
+	  | psdit > $(NAME).ps
+ 
+lint:
+	lint $(CFLAGS) $(SOURCE)
+
+clean: 
+	-rm -f *.BAK core *~ $(NAME) tags $(NAME).cat $(NAME).ps
+
+realclean: clean
+	-rm -rf OBJ.* 
+
+veryclean: realclean
+
+dist: veryclean
+	(cd .. ; tar cvf $(NAME).tar $(NAME); gzip $(NAME).tar; mv $(NAME).tar.gz /home/pasture/ftp/pub/mccauley/grass)
+ 
+
+main.o:       idsfft.h
+readsite.o:   idsfft.h
+wrtesite.o:
+wrtesite2.o:
+driver.o:     idsfft.h
+idbvip.o:
+idgrid.o:
+idpdrv.o:
+idsfft.o:
+idxchg.o:
+idcldp.o:
+idlctn.o:
+idptip.o:
+idtang.o:
+
