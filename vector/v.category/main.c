@@ -21,6 +21,7 @@
 #define O_ADD  1
 #define O_DEL  2
 #define O_REP  3
+#define O_PRN  4
 
 #define FRTYPES 6  /* number of field report types */
 
@@ -45,7 +46,7 @@ main (int argc, char *argv[])
 	struct line_cats *Cats;
         int    i, j, ret, option, otype, type, oarea, with_z, step;
 	char   *mapset, errmsg[200];
-	int    cat, ocat, field;
+	int    cat, ocat, *fields, nfields, field;
 	struct GModule *module;
 	struct Option *in_opt, *out_opt, *option_opt, *type_opt;
 	struct Option *cat_opt, *field_opt, *step_opt;
@@ -58,6 +59,7 @@ main (int argc, char *argv[])
 
 	in_opt = G_define_standard_option(G_OPT_V_INPUT);
 	out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
+	out_opt->required = NO;
 	type_opt = G_define_standard_option(G_OPT_V_TYPE) ;
 	
 	option_opt = G_define_option();
@@ -65,7 +67,7 @@ main (int argc, char *argv[])
 	option_opt->type =  TYPE_STRING;
 	option_opt->required = NO;
 	option_opt->multiple = NO;
-	option_opt->options = "add,del,report";
+	option_opt->options = "add,del,report,print";
 	option_opt->answer = "add";
         option_opt->description = "Action to be done";
 
@@ -74,6 +76,7 @@ main (int argc, char *argv[])
 	
 	field_opt = G_define_standard_option(G_OPT_V_FIELD);
 	field_opt->answer = "1";
+	field_opt->multiple = YES;
 
 	step_opt = G_define_option();
 	step_opt->key = "step";
@@ -99,12 +102,13 @@ main (int argc, char *argv[])
 	    case ( 'r' ):
 		option = O_REP;
 		break;
+	    case ( 'p' ):
+		option = O_PRN;
+		break;
 	  }
 
 	cat = atoi( cat_opt->answer );
-	field = atoi( field_opt->answer );
 	step = atoi( step_opt->answer );
-	
         
 	i = 0;
         otype = 0; oarea = FALSE;
@@ -130,8 +134,20 @@ main (int argc, char *argv[])
 	      }
 	    i++;
 	  }
+
+	/* read fields */
+	i = 0; nfields = 0;
+	while (field_opt->answers[i]) { nfields++; i++; }
+	fields = (int *) G_malloc ( nfields * sizeof(int) );
+	i = 0;
+	while (field_opt->answers[i]) {
+	    fields[i] = atoi( field_opt->answers[i] );
+	    i++;
+	}
+	if ( nfields > 1 && option != O_PRN )
+	    G_fatal_error ( "Too many fields for this operation");
 	
-	if ( (option != O_REP) && (out_opt->answer == NULL) )
+	if ( (option != O_REP) && (option != O_PRN) && (out_opt->answer == NULL) )
 	  {
 	    sprintf (errmsg, "Output vector wasn't entered.\n");
 	    G_fatal_error (errmsg);
@@ -171,9 +187,9 @@ main (int argc, char *argv[])
 	          {
 	            if ( type & otype )
 	               {
-                         if( (Vect_cat_get (Cats, field, &ocat)) == 0)
+                         if( (Vect_cat_get (Cats, fields[0], &ocat)) == 0)
 	                   {
-                             Vect_cat_set (Cats, field, cat);
+                             Vect_cat_set (Cats, fields[0], cat);
 	                     cat += step;
 	                   }
 	               }	   
@@ -186,7 +202,7 @@ main (int argc, char *argv[])
 	          {
 	            if ( type & otype )
 	               {
-                         ret = Vect_cat_del (Cats, field);
+                         ret = Vect_cat_del (Cats, fields[0]);
 	               }	   
 	            Vect_write_line ( &Out, type, Points, Cats );  
 	          }
@@ -284,6 +300,19 @@ main (int argc, char *argv[])
 				    freps[i]->max[FR_ALL]);
 
 		  }
+		break;
+		
+	    case (O_PRN):
+	        while ( (type = Vect_read_next_line (&In, Points, Cats)) > 0) {
+	            if ( !(type & otype) ) continue;
+		    
+		    for (i=0; i < nfields; i++) {
+		        Vect_cat_get ( Cats, fields[i], &cat );
+		        if ( i > 0 ) fprintf (stdout, "|" );
+		        fprintf (stdout, "%d", cat );
+		    }
+	            fprintf (stdout, "\n" );
+		}
 		break;
 	  }
 	
