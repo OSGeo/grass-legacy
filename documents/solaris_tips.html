@@ -1,0 +1,44 @@
+<html>
+<pre>
+Corrections for Solaris 2.6 using gcc - compiler:
+
+1. Problems with src.alpha/sites/s.geom-package?
+
+ a) Edit src.alpha/sites/s.geom/libes/basic/basic.h:
+   comment line 92 to 94:
+   from:    #ifdef sun
+              char *sprintf();
+            #endif
+
+   to :  /*#ifdef sun
+          *    char *sprintf();
+          * #endif */
+
+ b) Edit src.alpha/sites/s.geom/libes/include/basic.h:
+   comment line 92 to 94:
+   from:    #ifdef sun
+              char *sprintf();
+            #endif
+
+   to :  /*#ifdef sun
+          *    char *sprintf();
+          * #endif */
+
+ Then you will be able to compile the s.geom module. The v.geom
+ seems to cause more problems. Any ideas?
+
+ To skip v.geom, change to
+    src421/src/CMD/next_step/
+ 
+ textedit the solaris file stored there and change
+ from:
+    src.alpha/sites/s.geom 
+ to:
+    src.alpha/sites/s.in.ascii.dem
+
+ After that change to
+   src421/src/CMD/
+ and proceed with GISGEN.my.
+   
+</pre>
+</html>
