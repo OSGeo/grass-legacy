@@ -1,6 +1,6 @@
 This file lists most of ongoing GRASS 5 Projects
 
-$Id: ONGOING,v 1.9 2000-11-19 17:29:20 markus Exp $
+$Id: ONGOING,v 1.10 2001-01-16 17:52:37 markus Exp $
 
 
 GRASS 5.0 (stable) is scheduled for Autumn 2000.
@@ -48,18 +48,22 @@ XDRIVER
 
 
 Modules:
-- full RGB support to all display modules
+- display modules:
+  full RGB support to all display modules
   (Pierre de Mouveaux <pmx@audiovu.com> <pmx@free.fr>)
   -> will go into GRASS 5.1
+
+- r.le: update to FP
+  (Being worked on by William L. Baker <BakerWL@uwyo.edu>)
+
+- r.out.e00: write it
+  (Being worked on by Michel Wurtz)
 
 - vector network analysis
   (Being worked on by Roberto Micarelli <mi.ro@iol.it>)
  
 - v.out.e00: make it working
   (Being worked on by Michel Wurtz <mw@engees.u-strasbg.fr>)
-
-- r.out.e00: write it
-  (Being worked on by Michel Wurtz)
 
 - Reorganize initialization routines and write a Tcl/Tk interface
   for initialization
@@ -72,6 +76,7 @@ Modules:
 
 - Stereo Visualization/Analysis (aerial photos)
   (Being worked on by Cesare Furlanello/IRST <furlan@itc.it>)
+  Buciu Claudiu <claudiub@rol.ro>
   -> will go into GRASS 5.1
 
 - bug fixes
