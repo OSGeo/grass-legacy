@@ -1,4 +1,4 @@
-# $Id: Gmakefile,v 1.10 2000-10-11 09:30:08 cho Exp $
+# $Id: Gmakefile,v 1.11 2000-10-11 10:00:44 cho Exp $
 #
 # Toplevel makefile for building everything
 
@@ -11,6 +11,10 @@ SCRIPTDIR=$(NV_VER)/scripts
 
 all: configure nvwish nviz install
 
+#
+# DO NOT CHANGE configure: TARGET TO preconfigure:
+# SOME make WON'T WORK IF TARGET AND SHELL NAME ARE EQUAL.
+#
 configure:
 	@PRECONFIGURE=YES ./preconfigure $(VER) "$(PQLIB)"
 
