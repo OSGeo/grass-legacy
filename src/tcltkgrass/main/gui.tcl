@@ -843,7 +843,6 @@ proc reader {stream path cmd see} {
                 button $name.buttons.quit -text Quit -command "destroy $name"
                 button $name.buttons.save -text Save \
                     -command "savelist $name.frame.text"
-		# MARK
 		button $name.buttons.clear -text Clear -command "$name.frame.text delete 1.0 end"
                 pack $name.buttons.quit $name.buttons.save $name.buttons.clear \
                     -side left -expand yes
@@ -1396,17 +1395,17 @@ proc quit {} {
 proc script_start {} {
     global script env
 
-    if {$script(running) == 1} {
-	tk_messageBox -icon info -type ok -message "Scripting already running, stop first"
-    } else {
+    if {$script(running) != 1} {
 	source $env(TCLTKGRASSBASE)/main/help-scripting.tcl
 	set answer [tk_messageBox -icon question -type yesnocancel -message "Do you want to start a script session?"]
 	if {$answer == "yes"} {
 	    set script(running) 1
 	    set script(cmds) ""
-	} else {
-	    return
-	}
+	} 
+	return
+    } else {
+	tk_messageBox -icon info -type ok -message "Scripting already running, stop first"
+	return 
     }
 }
 
@@ -1416,16 +1415,17 @@ proc script_start {} {
 proc script_stop {} {
     global script env
 
-    if {$script(running) == 0 }  {
-	tk_messageBox -icon info -type ok -message "Scripting not running, start first"
-    } else {
-	set answer [tk_messageBox -icon info -type okcancel -message "select or enter a filename to save the generated script"]
+    if {$script(running) != 0 } {
+	set answer [tk_messageBox -icon info -type okcancel \
+			-message "select or enter a filename to save the generated script"]
 	if {$answer == "cancel"} {
 	    return
 	}
-	set script(file) [tk_getSaveFile -initialdir . -defaultextension ".sh" -title "Enter filename to save script"]
+	set script(file) [tk_getSaveFile -initialdir . -defaultextension ".sh" \
+			      -title "Enter filename to save script"]
 	if {[string length $script(file)] == 0} {
-	    set answer [tk_messageBox -type yesno -icon question -message "No filename given, discard recorded script?"]
+	    set answer [tk_messageBox -type yesno -icon question \
+			    -message "No filename given, discard recorded script?"]
 	    if {$answer == "yes" } {
 		set script(running) 0
 		set script(cmds) ""
@@ -1444,17 +1444,20 @@ proc script_stop {} {
 	    # caveat: not portable to win32 or mac
 	    exec chmod u+x $script(file)
 	}
+    } else {
+	tk_messageBox -icon info -type ok -message "Scripting not running, start first"
     }
     set script(running) 0
     set script(cmds) ""
+    return
 }
-
 
 ###############################################################################
 # added by Andreas Lange (andreas.lange@rhein-main.de) for scripting support
 
 proc script_play {} {
     global script
+
 
     if {$script(running) == 1} {
 	tk_messageBox -icon info -type ok -message "Script recording in progress, stop first"
@@ -1486,7 +1489,8 @@ proc script_play {} {
 	}
 	set message [run $script(file)]
 	if {$message != ""} {
-	    tk_messageBox -type ok -icon warning -message "Error executing script $script(file): $message"
+	    tk_messageBox -type ok -icon warning \
+		-message "Error executing script $script(file): $message"
 	} else {
 	    tk_messageBox -type ok -icon info -message "Script $script(file) executed"
 	}
@@ -1612,21 +1616,22 @@ proc config_netscape {} {
 ###############################################################################
 # added by Andreas Lange (andreas.lange@rhein-main.de)
 
-proc set_list {path file elemn sep} {
+proc set_list {path file {elemn 1} {sep " "} } {
     global env
 
     set list ""
-    set gispath [file join $env(GISBASE) $path]
 
     # this is ugly, but portable to win
     if { [regexp -- {filelist} $file] } {
-	set oldpath [pwd]
-	cd $gispath
-	set name [glob *]
-	cd $oldpath
-	return
+	set gispath [file join $env(GISBASE) $path "*"]
+	set files [glob $gispath]
+	foreach file $files {
+	    lappend list [file tail $file]
+	}
+	return $list
     }
 
+    set gispath [file join $env(GISBASE) $path]
     set filename [file join $gispath $file]
     if { ! [file exists $filename] } {
 	return
@@ -1644,6 +1649,7 @@ proc set_list {path file elemn sep} {
 	    incr i
 	    if { $i == $elemn } {
 		lappend list $element
+		continue
 	    }
 	}
     }
@@ -1654,7 +1660,7 @@ proc set_list {path file elemn sep} {
 ###############################################################################
 # added by Andreas Lange (andreas.lange@rhein-main.de)
 #
-# proc set_array {arrayname path file arrayn elemn sep} {
+# proc set_array {arrayname path file arrayn elemn {sep " "} } {
 #  return 1
 # }
 
@@ -1715,7 +1721,7 @@ set Colors "$colors none"
 
 set 3Dcolors "color $colors"
 
-set fonts [set_list fonts filelist 1 " "]
+set fonts [set_list fonts filelist 1]
 
 # distance_units: where gets g.setproj these values from?
 set distance_units {
