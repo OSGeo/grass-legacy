@@ -4,7 +4,8 @@
  * * MODULE:       v.out.ogr
  * * 
  * * AUTHOR(S):    Radim Blazek
- * *               
+ * *               Some extensions: Markus Neteler
+ * *
  * * PURPOSE:      Category manipulations
  * *               
  * * COPYRIGHT:    (C) 2001 by the GRASS Development Team
@@ -21,6 +22,7 @@
 #include "dbmi.h"
 #include "Vect.h"
 #include "ogr_api.h"
+#include "cpl_string.h"
 #include "config.h"
 #include "gprojects.h"
 
@@ -40,7 +42,7 @@ main (int argc, char *argv[])
     char   *mapset;
     int    field;
     struct GModule *module;
-    struct Option *in_opt, *dsn_opt, *layer_opt, *type_opt, *frmt_opt, *field_opt;
+    struct Option *in_opt, *dsn_opt, *layer_opt, *type_opt, *frmt_opt, *field_opt, *dsco, *lco;
     struct Flag   *cat_flag;
     char   buf[2000], *pbuf;
     char   key1[200], key2[200];
@@ -72,6 +74,7 @@ main (int argc, char *argv[])
     OGRFeatureDefnH Ogr_featuredefn;
     OGRGeometryH Ogr_geometry;
     OGRSpatialReferenceH Ogr_projection;
+    char **papszDSCO = NULL, **papszLCO = NULL;
 
     G_gisinit(argv[0]);
 
@@ -114,11 +117,27 @@ main (int argc, char *argv[])
     frmt_opt->options = OGR_list_write_drivers();
     frmt_opt->description = "OGR format.";
     
+    dsco              = G_define_option();
+    dsco->key         = "dsco";
+    dsco->type        = TYPE_STRING;
+    dsco->required    = NO;
+    dsco->multiple    = NO;
+    dsco->answer      = "";
+    dsco->description = "OGR dataset creation option (format specific, NAME=VALUE)";
+    
+    lco               = G_define_option();
+    lco->key          = "lco";
+    lco->type         = TYPE_STRING;
+    lco->required     = NO;
+    lco->multiple     = NO;
+    lco->answer       = "";
+    lco->description  = "OGR layer creation option (format specific, NAME=VALUE)";
+    
     cat_flag = G_define_flag ();
     cat_flag->key            = 'c';
     cat_flag->description    = "Export features with category (labeled) only. "
 			       "Otherwise all features are exported";
-    
+
     if (G_parser (argc, argv)) exit(1); 
     
     /* read options */
@@ -178,10 +197,14 @@ main (int argc, char *argv[])
     }
     if ( drn == -1 ) G_fatal_error ( "Driver %s not found", frmt_opt->answer ); 
     Ogr_driver = OGRGetDriver( drn );
-    Ogr_ds = OGR_Dr_CreateDataSource( Ogr_driver, dsn_opt->answer, NULL );
+    papszDSCO = CSLSetNameValue( papszDSCO, dsco->answer,"YES");
+    Ogr_ds = OGR_Dr_CreateDataSource( Ogr_driver, dsn_opt->answer, papszDSCO );
+    CSLDestroy( papszDSCO );
     if ( Ogr_ds == NULL ) G_fatal_error ("Cannot open OGR data source '%s'", dsn_opt->answer);
     
-    Ogr_layer = OGR_DS_CreateLayer( Ogr_ds, layer_opt->answer, Ogr_projection, wkbtype, NULL );
+    papszLCO = CSLSetNameValue( papszLCO, lco->answer,"YES");
+    Ogr_layer = OGR_DS_CreateLayer( Ogr_ds, layer_opt->answer, Ogr_projection, wkbtype, papszLCO );
+    CSLDestroy( papszLCO );
     if ( Ogr_layer == NULL ) G_fatal_error ("Cannot create layer");
     
     db_init_string(&dbstring);
@@ -325,7 +348,7 @@ main (int argc, char *argv[])
 	fprintf(stderr,"Exporting %i areas...\n", Vect_get_num_areas(&In) );
 	fprintf(stderr,"GRASS Topology -> Simple Features conversion (may take some time)...\n" );
 	for ( i = 1; i <= Vect_get_num_areas(&In) ; i++ ) {
-	    fprintf(stderr,"\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\bProcessing area %i...", i );
+	    fprintf(stderr,"\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\bProcessing area %i...", i );
 	    int j;
 	    
 	    G_percent(i,Vect_get_num_areas(&In),2);
