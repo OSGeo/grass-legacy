@@ -26,8 +26,7 @@ HVect MouseOnSphere(HVect mouse, HVect ballCenter, double ballRadius)
 Quat Qt_FromBallPoints(HVect from, HVect to)
 {
     Quat qu;
-    Quat qreturn;
-    float mag,ang,s,c;
+    float mag,ang,s;
     qu.x = from.y*to.z - from.z*to.y;
     qu.y = from.z*to.x - from.x*to.z;
     qu.z = from.x*to.y - from.y*to.x;
