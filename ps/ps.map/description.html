@@ -142,6 +142,7 @@ information, starting at the left margin.
 <PRE>
 EXAMPLE:	
 	<B>colortable</B> y
+        <B>end</B>
 </PRE>
 <P>
 
@@ -1330,46 +1331,57 @@ two columns.  This script file can be entered at the command line:
    <B>width</B> 1
    <B>end</B>
 <B>colortable</B> y
+   <B>font</B> Helvetica
    <B>end</B>
 <B>comments</B> soil.cmt
+   <B>where</B> 4.5 1
    <B>font</B> Helvetica
    <B>end</B>
 <B>setcolor</B> 6,8,9 white
 <B>setcolor</B> 10 green
 <B>vlines</B> roads
    <B>width</B> 2
-   <B>style</B> 0011
+   <B>style</B> 0111
    <B>color</B> grey
    <B>masked</B> n
    <B>end</B>
 <B>vlegend</B>
-    <B>where</B> 5 1
-    <B>end</B>
+   <B>where</B> 4.5 0
+   <B>font</B> Courier
+   <B>fontsize</B> 8
+   <B>end</B>
+<B>text</B> 30% 100% SPEARFISH SOILS MAP
+   <B>color</B> red
+   <B>width</B> 1
+   <B>hcolor</B> black
+   <B>hwidth</B> 1
+   <B>background</B> white
+   <B>border</B> red
+   <B>size</B> 500
+   <B>ref</B> lower left
+   <B>end</B>
+<B>line</B> 606969.73 3423092.91 616969.73 3423092.91
+   <B>color</B> yellow
+   <B>width</B> 2
+   <B>end</B>
+<B>point</B> 40% 60%
+   <B>color</B> purple
+   <B>symbol</B> basic/diamond
+   <B>size</B> 5
+   <B>masked</B> n
+   <B>end</B>
 <B>scale</B> 1:125000
-<B>geogrid</B> 10000 m
+<B>scalebar f
+   <B>where</B> 4.5 6.5
+   <B>length</B> 5000
+   <B>height</B> 0.05
+   <B>segment</B> 5
+   <B>numbers</B> 5
+   <B>end</B>
+<B>geogrid</B> 60 s
    <B>color</B> blue
    <B>numbers</B> 2 yellow
    <B>end</B>
-<B>text</B> 608000.00 3476004.73 SPEARFISH SOILS MAP
-    <B>color</B> red
-    <B>width</B> 2
-    <B>hcolor</B> black
-    <B>hwidth</B> 1
-    <B>background</B> white
-    <B>border</B> red
-    <B>size</B> 500
-    <B>ref</B> lower left
-    <B>end</B>
-<B>line</B> 606969.73 3423092.91 616969.73 3423092.91
-    <B>color</B> yellow
-    <B>width</B> 2
-    <B>end</B>
-<B>point</B> 40% 60%
-    <B>color</B> purple
-    <B>symbol</B> basic/diamond
-    <B>size</B> 2
-    <B>masked</B> n
-    <B>end</B>
 <B>paper</B> a4
     <B>end</B>
 <B>end</B>
