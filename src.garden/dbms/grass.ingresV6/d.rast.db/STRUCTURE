@@ -1,0 +1,24 @@
+*******************************************
+d.rast.db
+             
+(m) means modified for INGRES 
+
+Katarina Johnsson, 930412
+*******************************************
+
+main
+	getAllOpts (m)
+		buildSQL (m)
+		runSQL (m)
+			row_or_col (m)
+				ingresUnTable (new)
+			readSQLout (m)
+				ingresUnTable
+				fancyDisplay (new)
+	getSelectOpts (m)
+		runSQL
+			row_or_col
+				ingresUnTable
+			readSQLout
+				ingresUnTable
+				fancyDisplay 
