@@ -7,7 +7,6 @@
  */
 
 #include "gis.h"
-#include "s_struct.h"
 #include "quaddefs.h"
 
 void qindices (cnt, n, fisher, david, douglas, lloyd, lloydip, morisita)
