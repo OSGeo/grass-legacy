@@ -1,4 +1,4 @@
-#!$(GISBASE)/etc/nviz2.2/NVWISH2.2 -f
+#!nviz -f
 # This file contains the following script tools:
 #
 #    1. Vanilla looping construct - Allows the user to specify a bracket of
@@ -55,7 +55,7 @@ proc fopen_tools {} {
     source $src_boot/etc/nviz2.2/scripts/config.tcl
 
     # Just start the external tools process
-    exec NVWISH2.2 -f $default_panel_path/script_file_tools -q &
+    exec nviz -f $default_panel_path/script_file_tools -q &
     exit
 }
 
