@@ -50,11 +50,11 @@ dig_read_frmt_ascii ( FILE *dascii, struct Format_info *finfo)
       while (*ptr == ' ') ptr++;
 
       if (strcmp (buf1, "FORMAT" ) == 0) {
-          if (strcmp (ptr, "shape") == 0) {
+          if ( G_strcasecmp (ptr, "shape") == 0) {
 	      frmt = GV_FORMAT_SHAPE; 
-	  } else if (strcmp (ptr, "postgis") == 0) {
+	  } else if ( G_strcasecmp (ptr, "postgis") == 0) {
 	      frmt = GV_FORMAT_POSTGIS; 
-	  } else if (strcmp (ptr, "ogr") == 0) {
+	  } else if ( G_strcasecmp (ptr, "ogr") == 0) {
 	      frmt = GV_FORMAT_OGR; 
 	  }	  
       }
@@ -72,19 +72,22 @@ dig_read_frmt_ascii ( FILE *dascii, struct Format_info *finfo)
 	  
 #ifdef HAVE_POSTGRES	  
       case GV_FORMAT_POSTGIS :
+	  finfo->post.db         = NULL;
 	  finfo->post.host       = NULL;
 	  finfo->post.port       = NULL;
+	  finfo->post.options    = NULL;
+	  finfo->post.tty        = NULL;
 	  finfo->post.database   = NULL;
 	  finfo->post.user       = NULL;
 	  finfo->post.password   = NULL;
 	  finfo->post.geom_table = NULL;
 	  finfo->post.cat_table  = NULL;
-	  finfo->post.geom_id    = G_store ("id");
-	  finfo->post.geom_type  = G_store ("type");
-	  finfo->post.geom_geom  = G_store ("geom");
-	  finfo->post.cat_id     = G_store ("id");
-	  finfo->post.cat_field  = G_store ("field");
-	  finfo->post.cat_cat    = G_store ("cat");
+	  finfo->post.geom_id    = NULL;
+	  finfo->post.geom_type  = NULL;
+	  finfo->post.geom_geom  = NULL;
+	  finfo->post.cat_id     = NULL;
+	  finfo->post.cat_field  = NULL;
+	  finfo->post.cat_cat    = NULL;
           break;
 #endif
 #ifdef HAVE_OGR	  
@@ -145,16 +148,8 @@ dig_read_frmt_ascii ( FILE *dascii, struct Format_info *finfo)
 
 #ifdef HAVE_POSTGRES	      
           case GV_FORMAT_POSTGIS :
-              if (strcmp (buf1, "HOST") == 0)
-	          finfo->post.host = G_store (ptr);
-	      else if (strcmp (buf1, "PORT") == 0)
-	          finfo->post.port = G_store (ptr);
-	      else if (strcmp (buf1, "DATABASE") == 0)
-	          finfo->post.database = G_store (ptr);
-	      else if (strcmp (buf1, "USER") == 0)
-	          finfo->post.user = G_store (ptr);
-	      else if (strcmp (buf1, "PASSWORD") == 0)
-	          finfo->post.password = G_store (ptr);
+	      if (strcmp (buf1, "DATABASE") == 0)
+	          finfo->post.db = G_store (ptr);
 	      else if (strcmp (buf1, "GEOM_TABLE") == 0)
 	          finfo->post.geom_table = G_store (ptr);
 	      else if (strcmp (buf1, "CAT_TABLE") == 0)
@@ -173,7 +168,7 @@ dig_read_frmt_ascii ( FILE *dascii, struct Format_info *finfo)
 	          finfo->post.cat_cat = G_store (ptr);
               else
 	          G_warning ("unknown keyword '%s' in vector format file\n", buff);
-
+  
 	      break;
 #endif
 #ifdef HAVE_OGR	  
@@ -187,5 +182,33 @@ dig_read_frmt_ascii ( FILE *dascii, struct Format_info *finfo)
     }
 
     return frmt;
+}
+
+/* Write vector format, currently writes POSTGIS only.
+*  Parse also connection string.
+*
+*  Returns: 0 OK
+*           -1 on error
+*/           
+int 
+dig_write_frmt_ascii ( FILE *dascii, struct Format_info *finfo, int format)
+{
+    G_debug ( 3, "dig_write_frmt_ascii()");
+    
+    if ( format != GV_FORMAT_POSTGIS )
+	G_fatal_error ("Format not supported by dig_write_frmt_ascii()");
+
+    fprintf (dascii, "FORMAT: postgis\n");
+    fprintf (dascii, "DATABASE: %s\n", finfo->post.db);
+    fprintf (dascii, "GEOM_TABLE: %s\n", finfo->post.geom_table);
+    fprintf (dascii, "CAT_TABLE: %s\n", finfo->post.cat_table);
+    fprintf (dascii, "GEOM_ID: %s\n", finfo->post.geom_id);
+    fprintf (dascii, "GEOM_TYPE: %s\n", finfo->post.geom_type);
+    fprintf (dascii, "GEOM_GEOM: %s\n", finfo->post.geom_geom);
+    fprintf (dascii, "CAT_ID: %s\n", finfo->post.cat_id);
+    fprintf (dascii, "CAT_FIELD: %s\n", finfo->post.cat_field);
+    fprintf (dascii, "CAT_CAT: %s\n", finfo->post.cat_cat);
+
+    return 0;
 }
 
