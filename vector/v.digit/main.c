@@ -139,6 +139,8 @@ main (int argc, char *argv[])
            fprintf (stderr, "New empty map created.\n");	
 	   Vect_open_new (&Map, map_opt->answer, 0 ); 
            Vect_build ( &Map, NULL );
+           Vect_close (&Map);
+           Vect_open_update (&Map, map_opt->answer, G_mapset());
        } else {
 	   exit ( 1 );
        }
