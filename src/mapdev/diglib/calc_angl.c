@@ -45,22 +45,34 @@ dig_calc_begin_angle (points, thresh)
 /*DEBUG fprintf (stderr, "Thresh = %lf\n", thresh); */
 
     short_line = 1;
-    for (i=1; i < n_points; i++) /* Search for next different coord */
+    if (n_points != 2)
     {
-	if ( (thresh < fabs(*xptr - last_x) ) ||
-	     (thresh < fabs(*yptr - last_y) ) )
+	/* Search for next different coord */
+	/* 4.1 but do not use opposite node if there are other points */
+	for (i=1; i < n_points - 1; i++) 
 	{
-	    short_line = 0;
-	    break;
+	    if ( (thresh < fabs(*xptr - last_x) ) ||
+		 (thresh < fabs(*yptr - last_y) ) )
+	    {
+		short_line = 0;
+		break;
+	    }
+	    xptr++;  yptr++;
 	}
-	xptr++;  yptr++;
     }
 
+#ifdef OLD
     /* if entire line is w/in threshold, get angle from end points */
     if (short_line)
     {
 	return ((float) d_atan2 (yarray[n_points-1]-last_y, xarray[n_points-1]-last_x));
     }
+#else	/* for 4.1 change this to take 1st point after node  -dpg 12/92 */
+    if (short_line)
+    {
+	return ((float) d_atan2 (yarray[1]-last_y, xarray[1]-last_x));
+    }
+#endif
 
     return ((float) d_atan2 (*yptr-last_y, *xptr-last_x));
 
@@ -101,20 +113,33 @@ dig_calc_end_angle(points, thresh)
     last_y = *(yarray + n_points - 1);
     xptr = xarray + n_points - 2;
     yptr = yarray + n_points - 2;
-    for(i=n_points-2; i>=0; i--)
+
+    if (n_points != 2)
     {
-	if ( (thresh < fabs(*xptr - last_x) ) ||
-	     (thresh < fabs(*yptr - last_y) ) )
+	/* Search for next different coord */
+	/* 4.1 but do not use opposite node if there are other points */
+	for(i=n_points-2; i > 0; i--)
 	{
-	    short_line = 0;
-	    break;
+	    if ( (thresh < fabs(*xptr - last_x) ) ||
+		 (thresh < fabs(*yptr - last_y) ) )
+	    {
+		short_line = 0;
+		break;
+	    }
+	    xptr--; yptr--;
 	}
-	xptr--; yptr--;
     }
 
     /* if entire line is w/in threshold, get angle from end points */
+#ifdef OLD
     if (short_line)
 	return ((float) d_atan2 (yarray[0]-last_y, xarray[0]-last_x));
+#else	/* updated for 4.1 to take next point away from node  -dpg */
+    if (short_line)
+    {
+	return ((float) d_atan2 (yarray[n_points-2]-last_y, xarray[n_points-2]-last_x));
+    }
+#endif
 
     return( (float)d_atan2(*yptr-last_y, *xptr-last_x));
 }
