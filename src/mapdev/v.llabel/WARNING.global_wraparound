@@ -1,0 +1,51 @@
+From grass-lists-owner@max.cecer.army.mil Wed Oct 20 08:57:25 1993
+X-VM-Attributes: [nil nil nil nil nil]
+Status: RO
+Received: from bank.ecn.purdue.edu by pasture.ecn.purdue.edu (5.65/1.32jrs)
+	id AA17450; Wed, 20 Oct 93 08:57:20 -0500
+Received: from max.cecer.army.mil by bank.ecn.purdue.edu (5.65/1.32jrs)
+	id AA07904; Wed, 20 Oct 93 08:56:44 -0500
+Received: from amber.cecer.army.mil by max.cecer.army.mil with SMTP id AA00490
+  (5.67a/IDA-1.5); Wed, 20 Oct 1993 08:51:13 -0500
+Received: from zorro.cecer.army.mil by amber.cecer.army.mil (4.1/SMI-4.1)
+	id AA11257; Wed, 20 Oct 93 08:46:59 CDT
+Received: from amber.cecer.army.mil by zorro.cecer.army.mil with SMTP id AA10012
+  (5.67a/IDA-1.4.4 for <grassp-people@amber>); Wed, 20 Oct 1993 08:46:58 -0500
+Received: from max.cecer.army.mil by amber.cecer.army.mil (4.1/SMI-4.1)
+	id AA11251; Wed, 20 Oct 93 08:46:55 CDT
+Received: from zorro.cecer.army.mil by max.cecer.army.mil with SMTP id AA29933
+  (5.67a/IDA-1.5 for <grassp-list@max.cecer.army.mil>); Wed, 20 Oct 1993 08:46:55 -0500
+Received: by zorro.cecer.army.mil id AA09995
+  (5.67a/IDA-1.4.4 for grassp-list@max.cecer.army.mil); Wed, 20 Oct 1993 08:46:52 -0500
+Message-Id: <199310201346.AA09995@zorro.cecer.army.mil>
+Reply-To: grassp-list@max.cecer.army.mil
+Precedence: Bulk
+From: Bill Brown <brown@zorro.cecer.army.mil>
+Sender: grass-lists-owner@max.cecer.army.mil
+To: grassp-list@max.cecer.army.mil
+Subject: Re: bulk label lines
+Date: Wed, 20 Oct 1993 08:46:52 -0500
+
+Darrell writes:
+
+>         if ( 0 < Vect_read_next_line(&Map,Points) )
+>         {
+>           X = Points->x[1] + 0.5*(Points->x[0] - Points->x[1]);
+>           Y = Points->y[1] + 0.5*(Points->y[0] - Points->y[1]);
+>         }
+>         else
+>         {...
+>
+> where X and Y are the location of the label points. Is this
+> valid? It worked on my UTM test case ...
+
+The points in the line are not neccessarily in order from west to east,
+if that's what you're asking.
+
+I'm not familiar with the program you're working on, but in general to
+make this work in lat-long, you should use:
+east = G_adjust_easting (Points->x[i], &wind);
+or something like that.
+
+bill
+
