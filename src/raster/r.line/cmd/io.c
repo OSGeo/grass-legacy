@@ -430,7 +430,7 @@ int open_file (char *cell,char *digit)
 	}
 	data_type = G_raster_map_type(cell_name,mapset);
 	data_size = G_raster_size(data_type);
-	G_set_window(&cell_head);
+	G_get_window(&cell_head);
 	/* open digit file */
 
 	G__make_mapset_element("dig");
