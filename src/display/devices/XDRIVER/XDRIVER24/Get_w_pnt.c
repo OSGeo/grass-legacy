@@ -34,7 +34,7 @@ int Get_location_with_pointer (int *wx, int *wy, int *button)
 	XQueryPointer(dpy, grwin, &root, &child, &rx, &ry, wx, wy, &mask);
 	*button = (mask&Button1Mask ? 1
 			: (mask&Button2Mask ? 2
-				: (mask&Button2Mask ? 3
+				: (mask&Button3Mask ? 3
 					: *button)));
     }else{
 	XWindowEvent(dpy, grwin, ButtonPressMask, &bpevent);
