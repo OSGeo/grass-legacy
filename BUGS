@@ -1,6 +1,6 @@
 Known bugs in current GRASS GIS version 5.0 CVS
 
-$Id: BUGS,v 1.100 2000-12-28 09:33:56 markus Exp $
+$Id: BUGS,v 1.101 2001-01-02 12:08:19 markus Exp $
 [In sync with GRASS 5.0 beta CVS version]
 
 Maintained by
@@ -310,6 +310,12 @@ r.null:
    and what do you name it?  If you name it the same as the reclass and      
    blow away the reclass, is that okay? 
  (being worked on by ?)
+
+
+[RC]r.out.tiff
+ - the flag -t does not produce correct file extensions (neither .tfw 
+   nor .tif)
+ - NULL color should be changed to white during export (currently red)
 
 
 [RC]r.poly
