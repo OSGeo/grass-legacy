@@ -44,10 +44,10 @@ main (int argc, char *argv[])
 	if (parm[n]->answers)
 	    for (i = 0; name = parm[n]->answers[i]; i++)
 	    {
-		if(G_is_reclassed_by(name, mapset, &nrmaps, &rmaps) > 0)
+		if(G_is_reclassed_to(name, mapset, &nrmaps, &rmaps) > 0)
 		{
 		    fprintf(stderr,
-			"[%s@%s] is base map. Remove reclass map%s first:\n",
+			"[%s@%s] is base map. Remove reclassed map%s first:\n",
 					name, mapset, (nrmaps > 1 ? "s" : ""));
 
 		    fprintf(stderr, " %s", *rmaps);
@@ -57,9 +57,9 @@ main (int argc, char *argv[])
 		    continue;
 		}
 		if(G_is_reclass(name, mapset, rname, rmapset) > 0 &&
-		   G_is_reclassed_by(rname, rmapset, &nrmaps, &rmaps) > 0)
+		   G_is_reclassed_to(rname, rmapset, &nrmaps, &rmaps) > 0)
 		{
-		    sprintf (buf1, "%s/%s/cell_misc/%s/reclassed_by",
+		    sprintf (buf1, "%s/%s/cell_misc/%s/reclassed_to",
 				    location_path, rmapset, rname);
 		    sprintf(buf2, "%s@%s", name, mapset);
 
