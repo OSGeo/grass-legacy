@@ -1,0 +1,4 @@
+
+all:
+	$(GMAKE) v.random
+	$(GMAKE) v.scale.random
