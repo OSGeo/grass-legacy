@@ -433,6 +433,7 @@ int G_unsetenv2(char *, int);
 int G__write_env(void);
 char *G__env_name(int);
 int G__read_env(void);
+void G_set_gisrc_mode ( int );
 int G__set_gisrc_file(char *);
 char *G__get_gisrc_file(void);
 int G__create_alt_env(void);
@@ -447,7 +448,7 @@ int G_fatal_error(char *,...);
 int G_warning(char *,...);
 int G_suppress_warnings(int);
 int G_sleep_on_error(int);
-int G_set_error_routine(int (*)());
+int G_set_error_routine(int (*)(char *, int));
 int G_unset_error_routine(void);
 
 /* file_name.c */
@@ -748,6 +749,8 @@ char *G__mapset_name(int);
 int G__create_alt_search_path(void);
 int G__switch_search_path(void);
 int G_reset_mapsets(void);
+char **G_available_mapsets ( void );
+void G_add_mapset_to_search_path ( char *mapset );
 
 /* mask_info.c */
 char *G_mask_info(void);

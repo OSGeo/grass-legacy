@@ -72,6 +72,10 @@ static const char *GRASS_copyright = "GRASS GNU GPL licensed Software" ;
 #define G_VAR_GISRC    0
 #define G_VAR_MAPSET   1
 
+/* Where to find/store variables */
+#define G_GISRC_MODE_FILE     0      /* files */
+#define G_GISRC_MODE_MEMORY   1      /* memory only */
+
 /* for G_parser() */
 #define TYPE_INTEGER  1
 #define TYPE_DOUBLE   2
