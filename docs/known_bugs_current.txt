@@ -49,6 +49,23 @@ i.shape
 r.binfer
   bug in table.c causing segfault
 
+r.contour: (reported by D D Gray <ddgray@armadce.demon.co.uk>)
+ Though it is not a stability problem, I've found that if this module is
+ run on an elev raster with an active old-style mask, i.e applied with
+ r.mask, the contour lines which terminate on the mask boundary (but only
+ these) are duplicated, as if reflected off the mask boundary. The
+ resulting line is then closed giving a closed loop that is folded in on
+ itself with a node at one end or in the middle of the line, and no node
+ at the other. This is most clearly seen when viewed with v.digit. I have
+ not seen a prior report of this problem though I have looked. My
+ apologies if this has already been documented. Though I can't look into
+ this myself at the moment, I have prepared a quick fix in the form of an
+ awk post-processor which ´cleans' this problem, splitting the loop and
+ removing the duplicate segment (it also removes ´degenerate' lines ie.  
+ lines of one point which r.contour creates occasionally.) I have added  
+ this as an extension, though I stress it is just a temporary fix.
+ (script: v.asc.degen)
+
 r.cost
  segment_put_row write error Bad address (same problem with r.surf.contour)
  
@@ -232,7 +249,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log$
- Revision 1.10  2000-02-15 17:57:10  markus
+ Revision 1.11  2000-02-16 12:02:41  markus
+ added r.contour bug
+
+ Revision 1.10  2000/02/15 17:57:10  markus
  added r.los seg.fault
 
  Revision 1.9  2000/02/09 16:28:12  markus
