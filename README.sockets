@@ -153,7 +153,7 @@ then
 	done
 fi
 
-GISBASE=`sed 's| ||g; s|\t||g' src/CMD/head/head | awk -F '=' '/^GISBASE=/{print $2}'`
+GISBASE=`sed 's| ||g; s|	||g' src/CMD/head/head | awk -F '=' '/^GISBASE=/{print $2}'`
 
 if [ ! -f $GISBASE/dev/create_buffers.sh ]
 then
