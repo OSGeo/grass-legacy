@@ -14,7 +14,6 @@ SUBDIRS1 = \
 	r.colors \
 	r.composite \
 	r.compress \
-	r.cost \
 	r.covar \
 	r.cross \
 	r.describe \
@@ -30,7 +29,6 @@ SUBDIRS1 = \
 	r.in.gridatb \
 	r.in.poly \
 	r.kappa \
-	r.le \
 	r.los \
 	r.mapcalc \
 	r.median \
@@ -71,7 +69,6 @@ SUBDIRS1 = \
 	r.surf.area \
 	r.surf.contour \
 	r.surf.idw \
-	r.surf.idw2 \
 	r.texture \
 	r.thin \
 	r.timestamp \
