@@ -147,19 +147,20 @@ static int update_list (int i)
       /* Bottom right corner - Point in middle of new line */
       /* (growing) <- ptr2 -><- ptr1 -><- ptr3 -> (growing) */
       /*            (?, col) (row, col) (row, ?) */
-      new_ptr1 = get_ptr();		/* corner point */
-      new_ptr2 = get_ptr();		/* downward-growing point */
-      new_ptr3 = get_ptr();		/* right-growing point */
+      new_ptr1 = get_ptr(); /* corner point */
+      new_ptr2 = get_ptr(); /* downward-growing point */
+      new_ptr3 = get_ptr(); /* right-growing point */
       new_ptr1->bptr = new_ptr2;
       new_ptr1->fptr = new_ptr3;
       new_ptr2->bptr = new_ptr3->bptr = new_ptr1;
 
-     	if(tl_area == 0) {
-				new_ptr1->left = new_ptr2->right = new_ptr3->left = 0;
-     		assign_area(tl,1);
-     	} else {
-     		new_ptr1->left = new_ptr2->right = new_ptr3->left = tl_area;
-     	}
+      /* if(G_is_c_null_value(&tl_area)) {
+            new_ptr1->left = new_ptr2->right = new_ptr3->left = 0;
+            assign_area(tl,1);
+      } else {
+      */
+      new_ptr1->left = new_ptr2->right = new_ptr3->left = tl_area;
+
       new_ptr1->right = new_ptr2->left = new_ptr3->right = area_num;
       assign_area(br,1);
       update_width(a_list_old,1);
@@ -170,7 +171,7 @@ static int update_list (int i)
       /* Bottom left corner - Add point to line already under construction */
       /* (fixed) -><- original h_ptr -><- new_ptr -> (growing) */
       /*                (row, col)       (?, col) */
-		  tl_area = h_ptr->left;
+      tl_area = h_ptr->left;
       new_ptr = get_ptr();		/* downward-growing point */
       h_ptr->col = col;
       h_ptr->fptr = new_ptr;
@@ -185,7 +186,7 @@ static int update_list (int i)
       /* Top left corner - Join two lines already under construction */
       /* (fixed) -><- original v_list -><- (fixed) */
       /*                 (row, col) */
-			tl_area = v_list[col]->left;
+      tl_area = v_list[col]->left;
       equiv_areas(h_ptr->left,v_list[col]->right);
       equiv_areas(h_ptr->right,v_list[col]->left);
       v_list[col]->row = row;		/* keep downward-growing point */
@@ -675,7 +676,6 @@ int more_equivs (void)
 }
 
 /* update_width - update position of longest horizontal strip in an area */
-
 static int update_width (struct area_table *ptr, int kase)
 {
   int w, j, a;
