@@ -2,7 +2,11 @@ PGM       = $(BIN_CMD)/d.rast.pg
 # EXTRA_CFLAGS = -Dunlink=puts
 LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) \
 		$(DATETIMELIB)
-EXTRA_CFLAGS    = $(PQINCPATH)
+PACKAGE = "d.rast.pg"
+DEFS = -Wall -DPACKAGE=\"$(PACKAGE)\"
+EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS)
+
+
 
 OBJS = \
 	main.o \
