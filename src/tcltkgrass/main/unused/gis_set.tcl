@@ -8,6 +8,7 @@ proc searchGISRC { filename } {
   global database
   global location
   global mapset
+  global oldDb oldLoc oldMap
 
   global grassrc_list
   set grassrc_list ""
@@ -31,6 +32,11 @@ proc searchGISRC { filename } {
             }
             set thisline [gets $ifp]
       }
+      
+      set oldDb $database
+      set oldLoc $location
+      set oldMap $mapset
+      
       close $ifp
       if { $database != "" && $location != "" && $mapset != "" } {
          set flag 1
@@ -50,22 +56,31 @@ proc putGRASSRC { filename } {
 
   global grassrc_list
 
+  puts stderr "$filename"
   set ofp [open $filename "w"]
 
   foreach i $grassrc_list {
-            if { [scan $i "GISDBASE: %s" env_database] } {
-                puts $ofp "GISDBASE: $database"
-            } else {
-                if { [scan $i "LOCATION_NAME: %s" env_location] } {
-                   puts $ofp "LOCATION_NAME: $location"
-                } else {
-                   if { [scan $i "MAPSET: %s" env_mapset] } {
-                      puts $ofp "MAPSET: $mapset"
-                   } else {
-                      puts $ofp $i
-                   }
-                }
-            }
+      puts stderr "$i"
+      if { [regexp {^GISDBASE:} $i] } \
+      {
+      	  puts stderr "dbase = $database"
+	  puts $ofp "GISDBASE: $database"
+      } \
+      elseif { [regexp {^LOCATION_NAME:} $i] } \
+      {
+      	  puts stderr "location = $location"
+	  puts $ofp "LOCATION_NAME: $location"
+      } \
+      elseif { [regexp {^MAPSET:} $i] } \
+      {
+      	  puts stderr "mapset = $mapset"
+          puts $ofp "MAPSET: $mapset"
+      } \
+      else \
+      {
+      	  puts stderr "none"
+      	  puts $ofp $i
+      }
   }
 
   close $ofp
@@ -196,6 +211,28 @@ proc ChangeDir {widget y} \
     GetListItems $widget $dir ""
 }
 
+proc CheckLocation {} \
+{
+    global database location
+    
+    set found 0
+    set dir $database
+    append dir $location 
+    
+    foreach filename [glob -nocomplain *] \
+    {
+    	if {[string compare $dir "PERMANENT"] == 0} \
+	{
+	    set found 1
+	}
+    }
+    
+    if {$found == 0} \
+    {
+    	set location "##ERROR##"
+    }
+}
+
 proc gisSetWindow {} {
 
   # Window manager configurations
@@ -206,6 +243,7 @@ proc gisSetWindow {} {
   global database
   global location
   global mapset
+  global oldDb oldLoc oldMap
 
   global grassrc_list
   global gisrc_name
@@ -336,11 +374,14 @@ proc gisSetWindow {} {
      -padx 10 \
      -command { 
                 if { $mapset != "" } {
-                   putGRASSRC $gisrc_name
+                   CheckLocation
                    puts stdout "GISDBASE='$database'; export GISDBASE;"
                    puts stdout "LOCATION_NAME='$location'; export LOCATION_NAME;"
                    puts stdout "MAPSET='$mapset'; export MAPSET;"
-                   destroy .
+                   if {[string compare $location "##ERROR##"] != 0} {
+		     putGRASSRC $gisrc_name
+		   }
+		   destroy .
                 } 
               }
 
@@ -349,10 +390,16 @@ proc gisSetWindow {} {
     -relief raised \
     -padx 10 \
     -command {
-                puts stdout "GISDBASE='$database'; export GISDBASE;"
+                puts stdout "OLD_DB='$oldDb';"
+                puts stdout "OLD_LOC='$oldLoc';"
+                puts stdout "OLD_MAP='$oldMap';"
+		puts stdout "GISDBASE='$database'; export GISDBASE;"
     	    	puts stdout "LOCATION_NAME='##NONE##'; export LOCATION_NAME;"
                 puts stdout "MAPSET=''; export MAPSET;"
-                destroy . 
+                set location ""
+		set mapset ""
+		putGRASSRC $gisrc_name
+		destroy . 
              }
 
   button .frame0.frame4.cancel \
