@@ -19,6 +19,7 @@
 *         -d      : dissolve common boundaries
 *         -n      : use category names, NOT numbers
 *
+* TODO: fix white space problems for file= option
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -112,7 +113,7 @@ int main (int argc, char **argv)
     fileopt->key             = "file";
     fileopt->type            =  TYPE_STRING;
     fileopt->required        =  NO;
-    fileopt->description     = "Text file name for category range/list ";
+    fileopt->description     = "Text file with category numbers/number ranges ";
 
     whereopt = G_define_standard_option(G_OPT_WHERE) ;
 
@@ -159,18 +160,22 @@ int main (int argc, char **argv)
 	    while (x <= y) add_cat(x++);
 	}
     } else if ( fileopt->answer != NULL )  {  /* got a file of category numbers */
-	fprintf(stderr,"process file <%s> for cats\n",fileopt->answer);
+	fprintf(stderr,"process file <%s> for category numbers\n",fileopt->answer);
 
 	/* open input file */
 	if( (in = fopen(fileopt->answer,"r")) == NULL )
-	    G_fatal_error("Can't open category file <%s>", fileopt->answer) ;
+	    G_fatal_error("Can't open specified file <%s>", fileopt->answer) ;
 	while (1)
 	{
 	    if (!fgets (buffr, 39, in)) break;
-	    sscanf (buffr, "%[a-zA-Z., -_/$%@!#0-9]", text); 
-	    scan_cats (text, &x, &y);
+	    G_chop(buffr); /* eliminate some white space, we accept numbers and dashes only */
+	    sscanf (buffr, "%[- 0-9]", text);
+	    if (strlen(text) == 0) G_warning("Ignored text entry: %s", buffr);
 
-	    while (x <= y) add_cat(x++);
+	    scan_cats (text, &x, &y);
+            /* two BUGS here: - fgets stops if white space appears
+	                      - if white space appears, number is not read correctly */
+	    while (x <= y && x >= 0 && y >= 0) add_cat(x++);
 	}
 	fclose(in);
     } else { 
@@ -213,6 +218,12 @@ scan_cats (char *s, int *x, int *y)
 {
     char dummy[2];
 
+    if(strlen(s) == 0)  /* error */
+    {
+	*y = *x = -1;
+	return 1;
+    }
+    
     *dummy = 0;
     if (sscanf (s, "%d-%d%1s", x, y, dummy) == 2)
 	return (*dummy == 0 && *x <= *y);
