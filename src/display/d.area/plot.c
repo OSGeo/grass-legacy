@@ -296,15 +296,7 @@ ScreenPolyMerge (SCREENPOLY *a, SCREENPOLY *b)
     else
     {
         /* Make sure polys are at nearest node points */
-        /* This is turned off right now to see if it's even
-         * necessary.  The connecting line segments are colinear,
-         * so we are testing that no "fill" occurs along this
-         * zero width area.  That one call below triples running
-         * time in some cases...
-         */
-        /***********
         ScreenPolyMoveNearest (a,b);
-        ***********/
 
         if (NULL == (new = ScreenPolyNew()))
             return NULL;
