@@ -165,6 +165,12 @@ Vect_x__Rewrite_line (
   if (0 >= dig__fwrite_port_D (points->y, n_points, dig_fp))
     return -1;
 
+  if (Map->head.with_z == WITH_Z)
+    {
+      if (0 >= dig__fwrite_port_D (points->z, n_points, dig_fp))
+          return -1;
+    }
+  
   fflush (dig_fp);
 
   /* 
