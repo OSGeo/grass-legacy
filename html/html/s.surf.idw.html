@@ -8,16 +8,16 @@
 <H2>NAME</H2>
 
 <EM><b>s.surf.idw</b></EM>  - Surface interpolation from sites data by
-Inverse Distance Weighted algorithm.
+Inverse Distance Squared Weighting.
 <BR>
-<EM>(GRASS</EM> Raster Program)</B> 
+<EM>(GRASS</EM> Sites Program)</B> 
 
 <H2>SYNOPSIS</H2>
 
 <B>s.surf.idw input=</B><EM>name</EM> 
 <B>output=</B><EM>name</EM> 
 <B>[npoints=</B><EM>count</EM><B>]</B>
-<B>[field=</B><EM>value</EM><B>]</B>
+<B>[field=</B><EM>number</EM><B>]</B>
 
 <H2>DESCRIPTION</H2>
 
@@ -51,7 +51,7 @@ using the form:
 <B>s.surf.idw input=</B><EM>name</EM> 
 <B>output=</B><EM>name</EM> 
 <B>[npoints=</B><EM>count</EM><B>]</B>
-<B>[field=</B><EM>value</EM><B>]</B>
+<B>[field=</B><EM>number</EM><B>]</B>
 </DL>
 
 Alternately, the user can simply type <B>s.surf.idw</B> on the command line, 
@@ -68,48 +68,51 @@ interface.
 <H3>Parameters:</H3>
 
 <DL>
-<DT><B>input=</B><EM>name</EM>
-<DD>Name of an input site list file that contains a set of
-irregularly spaced data values; i.e., some cells contain
-known data values while the rest contain zero (0).
+<DT><B>input=</B><EM>name</EM></DT>
+<DD>Name of an input site list file that contains sites with
+one or more floating point attributes.</DD>
 
-<DT><B>output=</B><EM>name</EM>
+<DT><B>output=</B><EM>name</EM></DT>
 <DD>Name to be assigned to the new output raster map layer
 containing a smooth surface generated from the known data
-values in the input site list file.
+values in the input site list file.</DD>
 
-<DT><B>npoints=</B><EM>count</EM>
+<DT><B>npoints=</B><EM>count</EM></DT>
 <DD>The number of points to use for interpolation.  By
 default, the 12 nearest points are used for interpolation.
 <BR>
-Default: 12 
+Default: 12</DD>
 
-<DT><B>field</B>
-<DD>Number of z-field attribute to use for calculation
-<DD>default: 1
-</DL>
+<DT><B>field=</B><EM>number</EM></DT>
+<DD>Number of floating point attribute to use for interpolation.
+<BR>
+Default: 1</DD>
 </DL>
 
 <H2>NOTES</H2>
 
 The amount of memory used by this program is related to the
-number of non-zero data values in the <B>input</B> sites
-list file.  If the <B>input</B> site list is very dense
-(i.e., contains many non-zero data points), the program may
+number of sites in the current region.  If the site list is 
+very dense (i.e., contains many data points), the program may
 not be able to get all the memory it needs from the
-system.  The time required to execute increases with the
-number of input data points.
+system.  The time required to execute is related to the 
+resolution of the current region, after an initial delay 
+determined by the time taken to read the input sites file.
 
 <P>
 
 If the user has a mask set, then interpolation is only done
 for those cells that fall within the mask. However, all
-non-zero data points in the <B>input</B> map are used even
-if they fall outside the mask.
+sites in the current region are used even
+if they fall outside the mask. Sites outside the current
+region are not used in the interpolation. A larger region may
+be set and a mask used to limit interpolation to a smaller area
+if it is desired to use sites from outside the region in the
+interpolation.
 <p>
 
-If two or more sites fall into one target raster cell, the last site value
-will determine the cell value (no warning yet).
+If more than <EM>count</EM> sites fall into one target raster cell, 
+the mean of all the site values will determine the cell value.
 
 
 <H2>SEE ALSO</H2>
@@ -132,6 +135,9 @@ will determine the cell value (no warning yet).
 Michael Shapiro,  
 U.S. Army Construction Engineering 
 Research Laboratory
+<BR>
+Improved algorithm (indexes sites according to cell and ignores
+sites outside current region) by Paul Kelly
 
 <p><i>Last changed: $Date$</i>
 </body>
