@@ -367,6 +367,12 @@ static void cell_values_float(
 	    continue;
 	}
 
+	if (cmap[i] < cmapold)
+	{
+	    xdr_setpos(xdrs, 0);
+	    cmapold = 0;
+	}
+
 	while (cmapold++ != cmap[i]) /* skip */
 	    if (!xdr_float(xdrs, &c[i]))
 	    {
@@ -406,6 +412,12 @@ static void cell_values_double(
 	{
 	    c[i] = c[i-1];
 	    continue;
+	}
+
+	if (cmap[i] < cmapold)
+	{
+	    xdr_setpos(xdrs, 0);
+	    cmapold = 0;
 	}
 
 	while (cmapold++ != cmap[i]) /* skip */
