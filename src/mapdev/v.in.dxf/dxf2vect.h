@@ -35,12 +35,14 @@ DXF_DIG
 	char  	*dxf_file = NULL;
 	int	num_open_layers = 0;
 	int	num_closed_layers = 0;
+	int     from_table = 0;
 
 #define GLOBAL_DXF
 #else
 	extern char  	*dxf_file;
 	extern int	num_open_layers;
 	extern int	num_closed_layers;
+	int     from_table;
 #define GLOBAL_DXF extern
 #endif
 
@@ -73,7 +75,6 @@ GLOBAL_DXF	char	seqend[8];
 GLOBAL_DXF	char	dxf_line[80];
 GLOBAL_DXF	DXF_DIG	layers[MAX_FILES];
 GLOBAL_DXF	DXF_DIG *closed_layers;
-GLOBAL_DXF	int     from_table;
 GLOBAL_DXF	double	XMAX,XMIN,YMAX,YMIN;
 GLOBAL_DXF	int	BOUNDARIES;
 GLOBAL_DXF    struct Flag *ascii_flag;
