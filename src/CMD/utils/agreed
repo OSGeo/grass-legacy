@@ -1,4 +1,12 @@
 :
+#
+#	agreed
+#
+#	WARNING: because of the way 'setup' is run from the CMD
+#	directory, this script will *assume* that the current
+#	working directory is src/CMD -- running this script from
+#	CMD/utils *WILL*NOT*WORK*!!!			// Amit, 1993-01-26
+#
 if test $# = 0
 then
     default=YES
@@ -15,7 +23,7 @@ shift
 
 while true
 do
-    printf %s "$@""? "
+    sh utils/printf %s "$@""? "
     read a
     if test .$a = .''
     then
