@@ -1,4 +1,3 @@
-/* %W%  %G% */
 /**********************************************************
 * I_read_group_colors (group, &ref);
 *    determines, from the ref structure, the cellfiles which
@@ -115,7 +114,6 @@ I_free_group_colors (ref)
 	free (ref->red.table);
     ref->red.table = NULL;
 
-    if (ref->red.index != NULL);
     if (ref->grn.table != NULL)
 	free (ref->grn.table);
     ref->grn.table = NULL;
