@@ -7,10 +7,11 @@ PREFIX=			@prefix@
 
 BINDIR=			@BINDIR@
 
-SRCDIR=			`pwd`
+SRCDIR=			@SRCDIR@
 SERVERNAME=		`uname -n`
 SYSTEM=			`uname -s`
-ARCH=			`grep "host\@" config.status | tr -s '%' ' ' | cut -d' ' -f 3`
+#ARCH=			`grep "host\@" config.status | tr -s '%' ' ' | cut -d' ' -f 3`
+ARCH=			@ARCH@
 VERSION=		`cat src/CMD/VERSION | head -1`
 
 # Get the major release number from the version for appending to gmake,
