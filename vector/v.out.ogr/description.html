@@ -22,14 +22,21 @@ For further available drivers go
 
 <h2>EXAMPLE</h2>
 
-Export of GRASS 5.1 vector map to SHAPE format (generates /tmp/testogr.shp #and related files):
+Export lines of GRASS 5.7 vector map to SHAPE format (generates /tmp/testogr.shp #and related files):
 <br>
 <b>v.out.ogr input=</b><em>multi</em> <b>typ=</b><em>line</em> 
 <b>dsn=</b><em>/tmp</em> <b>layer=</b><em>testogr</em>
 
 <p>
 
-Export to GML format (generates /tmp/testogr.gml file with layer 'testogr'):
+Export areas of GRASS 5.7 vector map to SHAPE format (generates /tmp/testogr.shp #and related files):
+<br>
+<b>v.out.ogr input=</b><em>multi</em> <b>typ=</b><em>area,centroid</em> 
+<b>dsn=</b><em>/tmp</em> <b>layer=</b><em>testogr</em>
+
+<p>
+
+Export lines to GML format (generates /tmp/testogr.gml file with layer 'testogr'):
 <br>
 <b>v.out.ogr input=</b><em>multi</em> <b>typ=</b><em>line</em> 
 <b>dsn=</b><em>/tmp/testogr.gml</em> <b>layer=</b><em>testogr</em> 
@@ -48,7 +55,7 @@ documentation
 <h2>SEE ALSO</h2>
 
 <em><a HREF="http://grass.itc.it/grass51/tutorial/ex_basic.html#ogr_export">
-GRASS 5.1 Tutorial pages</a></em><p>
+GRASS 5.7 Tutorial pages</a></em><p>
 
 <em><a HREF="v.format.html">v.format</a></em>,
 <em><a HREF="v.in.ogr.html">v.in.ogr</a></em>

@@ -14,16 +14,19 @@ don't need them.
 
 To updated s.* to v.*, it is typically necessary:
 1) ->key = "sites"			=>  "input" / "output" / "vector"
-2) ->description="... sites ..."	=> "... vector ..."
+2) ->description="... sites ..."	=> "... vector points ..."
 3) ->gisprompt="old,site_lists,sites"	=> "old,vector,vector"
    ->gisprompt="any,site_lists,sites"	=> "any,vector,vector"
    ->gisprompt="new,site_lists,sites"	=> "new,vector,vector"
 4) G_find_file ("site_lists",,) 	=> G_find_sites (,)
 5) fclose() 				=> G_sites_close()
+   (Hint: to find close(), search for related G_fopen_sites_old())
 
 New version is slower (dbf driver, 10000 points): 
                  time(200x200cells)   time(667x667cells)
 s.surf.idw              0.43                10.71
 v.surf.idw              1.76                11.35
+
+The Makefile needs a reference to $(SITESLIB).
 
 Radim
