@@ -1,0 +1,8 @@
+GRASS 5.1 authors
+(please complete this list)
+$Date$
+
+Radim Blazek <blazek@itc.it>: vector engine core developer
+David D Gray: vector engine contributions
+Roberto Micarelli: LIBDGL - graph library for vector network analysis
+
