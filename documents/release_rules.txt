@@ -1,0 +1,38 @@
+How to release GRASS 5 binaries:
+
+1. Build it:
+ o wipe out binaries, (re-)compile everything,
+
+ o re-compile NVIZ *without* PostgreSQL support
+   for distribution
+
+ o check, if libgdal is in place ($GISBASE/lib/)
+
+
+2. Package it with
+
+   make bindist
+
+3. Publish it on web site:
+ - grass5x_y_bin.tar.gz
+ - grass5install.sh
+
+4. Tell others about it:
+ - related announcement press release at:
+
+ Our GRASS web site: /announces/
+
+ news:comp.infosystems.gis
+ http://spatialnews.geocomm.com/dailynews/
+ http://spatialnews.geocomm.com/submitnews.html (Free News Posting Service)
+ http://freshmeat.net/projects/grass/?highlight=GRASS
+ http://www.remotesensing.org/submit/submit.php3
+ http://www.newsforge.com/submit.pl
+ http://osx.macnn.com/
+ http://www.gis-news.de/
+
+ ... where else?
+
+Cheers
+
+ Markus
