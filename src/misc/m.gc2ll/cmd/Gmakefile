@@ -1,8 +1,9 @@
+PGM=m.gc2ll
 LIBES = $(GISLIB) $(COORCNVLIB)
 
 LIST = main.o sph.o
 
-$(BIN_MAIN_CMD)/m.gc2ll: $(LIST) $(LIBES)
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): # in case LIBs change

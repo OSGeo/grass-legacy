@@ -1,9 +1,8 @@
 PGM  = m.dted.examine
-HOME = $(BIN_MAIN_CMD)
 
 LIST	= main.o tape.o 
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 
