@@ -39,7 +39,7 @@ extern int *GP_get_site_list(int *); */
 #define SITE 2
 #define VOL  3
 
-/* I don't like this - to be consistant, should really do all scaling 
+/* I don't like this - to be consistant, should really do all scaling
 in library, so can send real world coords. (seems like it would make
 type-ins & sliders easier, too) */
 #define RANGE (5 * GS_UNIT_SIZE)
@@ -49,11 +49,11 @@ type-ins & sliders easier, too) */
 
 #define DEFAULT_SURF_COLOR 0x33BBFF
 #define DEFAULT_WIRE_COLOR 0x999999
-#define DEFAULT_WIRE_CNT 10 
+#define DEFAULT_WIRE_CNT 10
 #define DEFAULT_POLY_CNT 2
 
 /* Attributes for vector and site files */
-#define SV_ATT_WIDTH    -1 
+#define SV_ATT_WIDTH    -1
 #define SV_ATT_MARKER   -2
 #define SV_ATT_SIZE     -3
 #define SV_ATT_USEATT   -4
@@ -67,30 +67,30 @@ GLuint FontBase;
 extern GLuint FontBase;
 #endif
 
-/*------------------------------------------------------------------------ 
+/*------------------------------------------------------------------------
 -            this is the data type declaration section                   -
 ------------------------------------------------------------------------*/
 
 typedef struct{
         int id;
-	float brt;
-	float r, g, b;
-	float ar, ag, ab;  /* ambient rgb */
-	float x, y, z, w; /* position */
+    float brt;
+    float r, g, b;
+    float ar, ag, ab;  /* ambient rgb */
+    float x, y, z, w; /* position */
 } light_data;
 
 typedef struct {
         float Zrange, XYrange;
-	
-	int NumCplanes;
-	int CurCplane, Cp_on[MAX_CPLANES];
-	float Cp_trans[MAX_CPLANES][3];
-	float Cp_rot[MAX_CPLANES][3];
 
-	light_data light[MAX_LIGHTS];
+    int NumCplanes;
+    int CurCplane, Cp_on[MAX_CPLANES];
+    float Cp_trans[MAX_CPLANES][3];
+    float Cp_rot[MAX_CPLANES][3];
 
-	int BGcolor;
-} Nv_data; 
+    light_data light[MAX_LIGHTS];
+
+    int BGcolor;
+} Nv_data;
 
 /* - The following structure is used to associate client data with surfaces.
  * We do this so that we don't have to rely on the surface ID (which is libal to change
@@ -113,7 +113,7 @@ typedef struct {
      */
 
     char *logical_name;
-  
+
 } Nv_clientData;
 
 /* Here are the functions that use these structures */
@@ -133,6 +133,7 @@ int Nmove_key_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Ndo_framestep_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nshow_site_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nshow_vect_cmd(Nv_data *, Tcl_Interp *, int, char **);
+int Nshow_vol_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nshow_path_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nwrite_rgb_cmd(Nv_data *, Tcl_Interp *, int, char **);
 /* change_view.c */
@@ -177,10 +178,12 @@ int Ndraw_model_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nsurf_draw_one_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nvect_draw_one_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nsite_draw_one_cmd(Nv_data *, Tcl_Interp *, int, char **);
+int Nvol_draw_one_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nsurf_draw_all_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nset_cancel_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nvect_draw_all_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nsite_draw_all_cmd(Nv_data *, Tcl_Interp *, int, char **);
+int Nvol_draw_all_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nready_draw_cmd(void);
 int Ndone_draw_cmd(void);
 int check_blank(Tcl_Interp *, int);
@@ -207,6 +210,7 @@ int Nlogical_from_literal_cmd(Nv_data *, Tcl_Interp *, int, char *[]);
 int Nget_surf_list_cmd(Nv_data *, Tcl_Interp *, int, char *[]);
 int Nget_vect_list_cmd(Nv_data *, Tcl_Interp *, int, char *[]);
 int Nget_site_list_cmd(Nv_data *, Tcl_Interp *, int, char *[]);
+int Nget_vol_list_cmd(Nv_data *, Tcl_Interp *, int, char *[]);
 int Nnew_map_obj_cmd(Nv_data *, Tcl_Interp *, int, char *[]);
 int Nmap_obj_cmd(Nv_data *, Tcl_Interp *, int, char *[]);
 int get_idnum(char *);
@@ -236,7 +240,6 @@ int Nmove_to_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nset_fov_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nget_region_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nget_point_on_surf_cmd(Nv_data *, Tcl_Interp *, int, char **);
-int Nget_point_on_surf_vect(Nv_data *, Tcl_Interp *, int, char **);
 int Nget_dist_along_surf_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nget_cat_at_xy_cmd(Nv_data *, Tcl_Interp *, int, char **);
 int Nget_val_at_xy_cmd(Nv_data *, Tcl_Interp *, int, char **);
@@ -261,7 +264,7 @@ int Tcl_AppInit(Tcl_Interp *);
 /* tkBind.c */
 int TkCopyAndGlobalEval(Tcl_Interp *, char *);
 /* tkSend.c */
-#if TK_MAJOR_VERSION>8 || (TK_MAJOR_VERSION==8 && TK_MINOR_VERSION>=4)
+#if TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==4
     CONST char *Tk_SetAppName(Tk_Window, CONST char *);
 #else
     char *Tk_SetAppName(Tk_Window, char *);
@@ -299,3 +302,34 @@ int set_att(int, int, Nv_data *, Tcl_Interp *, int, char *[]);
 int get_mask_mode(int, int, Nv_data *, Tcl_Interp *);
 int set_mask_mode(int, int, Nv_data *, Tcl_Interp *, int, char *[]);
 int set_default_wirecolors(Nv_data *, int);
+/* volume.c*/
+int isosurf_set_res(int, Tcl_Interp *, int, char *[]);
+int isosurf_get_res(int, Tcl_Interp *, int, char *[]);
+int isosurf_set_drawmode(int, Tcl_Interp *, int, char *[]);
+int isosurf_get_drawmode(int, Tcl_Interp *, int, char *[]);
+int isosurf_num_isosurfs(int, Tcl_Interp *, int, char *[]);
+int isosurf_add(int, Tcl_Interp *, int, char *[]);
+int isosurf_del(int, Tcl_Interp *, int, char *[]);
+int isosurf_move_up(int, Tcl_Interp *, int, char *[]);
+int isosurf_move_down(int, Tcl_Interp *, int, char *[]);
+int isosurf_get_att(int, Tcl_Interp *, int, char *[]);
+int isosurf_set_att(int, Tcl_Interp *, int, char *[]);
+int isosurf_unset_att(int, Tcl_Interp *, int, char *[]);
+int isosurf_att_atoi(char *);
+int isosurf_get_mask_mode(int, Tcl_Interp *, int, char *[]);
+int isosurf_set_mask_mode(int, Tcl_Interp *, int, char *[]);
+int isosurf_get_flags(int, Tcl_Interp *, int, char *[]);
+int isosurf_set_flags(int, Tcl_Interp *, int, char *[]);
+int slice_set_res(int, Tcl_Interp *, int, char *[]);
+int slice_get_res(int, Tcl_Interp *, int, char *[]);
+int slice_set_drawmode(int, Tcl_Interp *, int, char *[]);
+int slice_get_drawmode(int, Tcl_Interp *, int, char *[]);
+int slice_num_slices(int, Tcl_Interp *, int, char *[]);
+int slice_set_pos(int, Tcl_Interp *, int, char *[]);
+int slice_get_pos(int, Tcl_Interp *, int, char *[]);
+int slice_add(int, Tcl_Interp *, int, char *[]);
+int slice_del(int, Tcl_Interp *, int, char *[]);
+int slice_move_up(int, Tcl_Interp *, int, char *[]);
+int slice_move_down(int, Tcl_Interp *, int, char *[]);
+int slice_get_transp(int, Tcl_Interp *, int, char *[]);
+int slice_set_transp(int, Tcl_Interp *, int, char *[]);

@@ -1,5 +1,5 @@
-/* 
- * $Id$ 
+/*
+ * $Id$
  */
 
 #include <stdio.h>
@@ -23,7 +23,7 @@ grab .wait_ok.wait";
 int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
 		  int argc, char **argv)
 {
-    struct Option *elev, *colr, *vct, *pnt;
+    struct Option *elev, *colr, *vct;
     struct Option *panel_path, *script, *state;
     struct Flag *no_args, *script_kill, *demo;
     struct GModule *module;
@@ -72,15 +72,7 @@ int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
     vct->required = NO;
     vct->multiple = YES;
     vct->gisprompt = "old,vector,Vector";
-    vct->description = "Vector lines overlay file(s)";
-
-    pnt = G_define_option();
-    pnt->key = "points";
-    pnt->type = TYPE_STRING;
-    pnt->required = NO;
-    pnt->multiple = YES;
-    pnt->gisprompt = "old,vector,Vector";
-    pnt->description = "Vector points overlay file(s)";
+    vct->description = "Vector overlay file(s)";
 
     no_args = G_define_flag();
     no_args->key = 'q';
@@ -276,23 +268,15 @@ int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
 	}
     }
 
-    if (pnt->answers) {
-      for (i = 0; pnt->answers[i]; i++) {
-           arglist[1] = "site";
-           arglist[2] = pnt->answers[i];
-           Nnew_map_obj_cmd(data, interp, 3, arglist);
-       }
-    }
-
     return(TCL_OK);
 }
 
 
 /*
  * Ngetargs: gets command line args from tcl. Tcl stores argv[0] by
- * itself and the rest of the args as a single string so Ngetargs goes 
+ * itself and the rest of the args as a single string so Ngetargs goes
  * through some string manipulation to put all the args back into a single array
- * so that G_parser can deal with them without getting sick. 
+ * so that G_parser can deal with them without getting sick.
  */
 
 int Ngetargs(Tcl_Interp * interp,	/* Current interpreter. */
@@ -421,7 +405,10 @@ int Ninitdata(Tcl_Interp * interp,	/* Current interpreter. */
     G_gisinit(argv[0]);
 
     GS_libinit();
-    GS_set_swap_func(swap_togl);
+
+	GVL_libinit(); // TODO
+
+	GS_set_swap_func(swap_togl);
     data->NumCplanes = 0;
     data->CurCplane = 0;
     parse_command(data, interp, argc, argv);

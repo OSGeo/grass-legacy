@@ -1,3 +1,4 @@
+# $Id$
 # Makefile for building nvwish
 # Requires Tk 8.x and Tcl 8.x
 
@@ -8,7 +9,7 @@ include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
 # These should be set by the doconfigure script
-NVWISH_VER=sed
+NVWISH_VER=NVWISH2.2
 
 OGL_LIBS = $(OPENGLULIB) $(OPENGLLIB) $(OPENGL32) $(XLIB) -lXmu -lXext $(MATHLIB) $(DLLIB) $(XDRLIB) $(XEXTRALIBS) $(XLIBPATH)
 
@@ -21,7 +22,7 @@ SURFLIB = $(OGSFLIB)
 EXTRA_INC = $(VECT_INC)
 EXTRA_CFLAGS= ${XCFLAGS} ${TCLINCDIR} ${TKINCDIR} \
 	$(INC) \
-	-D_NO_PROTO $(TIFFINCPATH) $(DSPINC) \
+	-D_NO_PROTO -D__STDC__ $(TIFFINCPATH) $(DSPINC) \
 	$(VECT_CFLAGS)
 
 
@@ -34,7 +35,8 @@ OBJS = nvizAppInit.o change_view.o draw.o exag.o glwrappers.o \
 	position.o quick_draw.o anim_support.o cutplane_obj.o \
 	script_support.o do_zoom.o \
 	label.o nvizMain.o togl.o togl_cb.o\
-	query_vect.o
+	query_vect.o \
+	volume.o
 # mkdspf_calc_linefax.o mkdspf_init_file.o mkdspf_main.o \
 # mkdspf_fill_cfax.o mkdspf_iso_surface.o
 
@@ -50,4 +52,4 @@ nvwish: $(ARCH_OBJS) $(VECTDEP) $(BITMAPDEP) $(LINKMDEP) $(FORMDEP) $(DBMIDEP $(
 	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(SURFLIB) $(IMGLIB) \
 	$(BITMAPLIB) $(LINKMLIB) $(VECTLIB) $(SITESLIB) $(FORMLIB) $(DBMILIB) \
 	$(GISLIB) $(MATHLIB) $(XDRLIB) \
-	$(DATETIMELIB) $(XTRA_LDFLAGS) -ltiff $(XLIB)
+	$(DATETIMELIB) $(XTRA_LDFLAGS) -ltiff $(XLIB) $(G3DLIB)
