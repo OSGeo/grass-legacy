@@ -311,6 +311,7 @@ main (int argc, char *argv[])
 
     /* fetch boundaries */
     if ( (OGR_L_GetExtent (Ogr_layer , &oExt, 1 )) == OGRERR_NONE ) {
+	G_get_window ( &cellhd );
         cellhd.north  = oExt.MaxY;
         cellhd.south  = oExt.MinY;
         cellhd.west   = oExt.MinX;
@@ -325,10 +326,18 @@ main (int argc, char *argv[])
         cellhd.south  = 0.;
         cellhd.west   = 0.;
         cellhd.east   = 1.;
+        cellhd.top    = 1.;
+        cellhd.bottom = 1.;
         cellhd.rows   = 1 ;
+        cellhd.rows3  = 1 ;
         cellhd.cols   = 1 ;
+        cellhd.cols3  = 1 ;
+        cellhd.depths = 1 ;
         cellhd.ns_res = 1.;
+        cellhd.ns_res3= 1.;
         cellhd.ew_res = 1.;
+        cellhd.ew_res3= 1.;
+        cellhd.tb_res = 1.;
     }
    
     /* Fetch input map projection in GRASS form. */
