@@ -96,7 +96,6 @@ int main(int argc, char *argv[])
         char ibuf[1024]="", ibuf_tmp[120]="";
 
         parms_in[0] = '\0';
-        pj_zero_proj(&info_in);
         for (i=0; p_in->answers[i]; i++) {
 	  if (strstr(p_in->answers[i], "ellps") != NULL) {
 	    sscanf(p_in->answers[i], "ellps=%s", ellps);
@@ -132,7 +131,6 @@ int main(int argc, char *argv[])
 		/* Get intercatively */
 		parms_in[0] = '\0';
 		proj_changed_in = process(1, parms_in, proj_name_in, proj_title_in, ellps_name_in, &radius_in, USED_in, units_in);
-		pj_zero_proj(&info_in);
 		if (pj_get_string(&info_in, parms_in) < 0)
 		G_fatal_error("Cannot initialize proj_info_in");
 	}
@@ -146,7 +144,6 @@ int main(int argc, char *argv[])
 		char ellps[80]="";
 
 		parms_out[0] = '\0';
-		pj_zero_proj(&info_out);
 		for (i=0; p_out->answers[i]; i++) {
 		   if (strstr(p_out->answers[i], "ellps") != NULL) {
 			sscanf(p_out->answers[i], "ellps=%s", ellps);
@@ -182,7 +179,6 @@ int main(int argc, char *argv[])
 			/* Get interactively */
 			parms_out[0] = '\0';
 			proj_changed_out = process(2, parms_out, proj_name_out, proj_title_out, ellps_name_out, &radius_out, USED_out, units_out);
-			pj_zero_proj(&info_out);
 			if (pj_get_string(&info_out, parms_out) < 0)
 				G_fatal_error("Cannot initialize proj_info_out");
 		}
