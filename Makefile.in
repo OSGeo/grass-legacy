@@ -398,7 +398,7 @@ real-bindist:
 	${SHELL} -c "sed -e \"s/BIN_DIST_VERSION/${NAME_VER}/\" -e \"s#BIN_DIST_DIR#'${DIST_DIR}'#\" -e \"s/TEST_STR=/TEST_STR=executable/\" -e \"s#IMPORTANT.*#Generated from the binaryInstall.src file using the command make bindist#\" -e \"s/# executable shell.*//\" -e \"s/# make bindist.*//\"  binaryInstall.src > grass${NAME_VER}install.sh 2>/dev/null ; true"
 	${SHELL} -c "chmod a+x grass${NAME_VER}install.sh  2>/dev/null ; true"
 	(cd ${DIST_DIR}; tar cf - ${BIN_DIST_FILES} | gzip -fc > ${SRCDIR}/grass${VERSION}_${SYSTEM}_bin.tar.gz )
-	${SHELL} -c "rm -f AUTHORS BUGS COPYING NEWS.html README REQUIREMENTS TODO ; true"
+	${SHELL} -c "rm -f ${DIST_DIR}/AUTHORS ${DIST_DIR}/BUGS ${DIST_DIR}/COPYING ${DIST_DIR}/NEWS.html ${DIST_DIR}/README ${DIST_DIR}/REQUIREMENTS ${DIST_DIR}/TODO ; true"
 	${SHELL} -c "rm -f ${DIST_DIR}/grass${NAME_VER} ; true"
 	@ echo "Distribution binary package: grass${VERSION}_${SYSTEM}_bin.tar.gz ready."
 	@ echo "DO NOT FORGET!! Upload grass${VERSION}_${SYSTEM}_bin.tar.gz and grass${NAME_VER}install.sh to the GRASS ftp server."
