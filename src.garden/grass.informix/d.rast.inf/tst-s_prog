@@ -1,0 +1,5 @@
+:
+# test for d.rast.db using prebuilt SQL command file
+# DB=seco_soils, GISdb=SECO
+#
+d.rast.db -s sql=tst_dbr.sql input=seco.soils output=seco.soils.recl
