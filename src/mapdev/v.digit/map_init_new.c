@@ -16,7 +16,7 @@
 #include "Map_proto.h"
 #include "dig_curses.h"
 #include "keyboard.h"
-#include        "projects.h"
+#include        "gprojects.h"
 #include "local_proto.h"
 #include "glocale.h"
 

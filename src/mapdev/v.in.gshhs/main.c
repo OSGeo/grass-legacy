@@ -25,7 +25,7 @@
 
 #include "gis.h"
 #include "Vect.h"
-#include "projects.h"
+#include "gprojects.h"
 
 
 int main (int argc, char **argv)

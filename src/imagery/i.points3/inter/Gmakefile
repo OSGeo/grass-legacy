@@ -65,7 +65,7 @@ DEPLIBS= $(DEPIMAGERYLIB) $(DEPIMAGESUPLIB) $(DEPD_LIB)\
 
 ####   required compile flags
 ####   NOTE: probably needs -D_NO_PROTO for now
-EXTRA_CFLAGS = -I$(IMAGERY_SUBINC)
+EXTRA_CFLAGS = -I$(IMAGERY_SUBINC) $(PROJINC)
 
 
 ####	the rules

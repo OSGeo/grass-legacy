@@ -28,18 +28,8 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.4  2003-02-14 12:58:59  paul
- * Fix Multiply Defined Symbol errors in proj library by removing global
- * variable definitions (in the end should probably be separate header files
- * for proj internal files and for GRASS modules that use proj)
- *
- * Revision 1.3  2003/01/26 17:47:01  paul
- * Implement general datum transformation support in [rsv].proj,
- * Fix some other programs' usage of the GRASS PROJ.4 wrapper functions
- *     to reflect changes in these.
- *
- * Revision 1.2  2002/04/20 22:46:16  roger
- * Changed to Proj4.4.5 header, with GRASS-specific additions
+ * Revision 1.1  2003-04-07 15:15:19  paul
+ * External PROJ.4 (libproj) support
  *
  * Revision 1.9  2001/04/06 01:24:13  warmerda
  * Introduced proj_api.h as a public interface for PROJ.4
@@ -351,35 +341,4 @@ extern char const pj_release[];
 }
 #endif
 
-/* header information added for GRASS */
-struct pj_info {
-      PJ     *pj;
-      double meters;
-      int    zone;
-      char   proj[100];
-};
-
-#ifndef PROTO
-
-#ifdef __STDC__
-# define	PROTO(s) s
-#else
-# define PROTO(s) ()
-#endif
-
-#endif	/* PROTO */
-
-/* do_proj.c */
-int pj_do_proj PROTO((double *, double *, struct pj_info *, struct pj_info *));
-int pj_do_transform PROTO((int, double *, double *, double *, 
-                           struct pj_info *, struct pj_info *));
-/* get_proj.c */
-int pj_get_string PROTO((struct pj_info *, char *));
-int pj_zero_proj PROTO((struct pj_info *));
-const char * set_proj_lib PROTO((const char *name));
-
-#ifdef GRASS_GIS_H
-int pj_get_kv PROTO((struct pj_info *, struct Key_Value *, struct Key_Value *));
-#endif
-
-#endif   /* define GRASS_PROJECTS_H */
+#endif /* end of basic projections header */

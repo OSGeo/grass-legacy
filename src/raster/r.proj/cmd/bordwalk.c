@@ -27,7 +27,7 @@
 
 #include <stdio.h>
 #include "gis.h"
-#include "projects.h"
+#include "gprojects.h"
 
 void bordwalk(struct Cell_head *from_hd, struct Cell_head *to_hd, 
 	      struct pj_info *from_pj, struct pj_info *to_pj)

@@ -5,7 +5,7 @@ INCTRANS	= -I$(SRC)/libes/vect32/libes
 PACKAGE ="v.digit"
 DEFS=-DPACKAGE=\"$(PACKAGE)\"
 
-EXTRA_CFLAGS	=  $(DIGITFLAGS)  $(USE_FTIME) $(INCTRANS) $(DEFS)
+EXTRA_CFLAGS	=  $(DIGITFLAGS)  $(USE_FTIME) $(INCTRANS) $(DEFS) $(PROJINC)
 
 OBJ = \
 	add_scale.o \

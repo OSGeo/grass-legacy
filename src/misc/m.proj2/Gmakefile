@@ -1,4 +1,5 @@
 PGM  = m.proj2
+EXTRA_CFLAGS=$(PROJINC)
 
 LIST =  main.o get_deg.o get_stp.o geo_func.o process.o input.o output.o
 

@@ -4,7 +4,7 @@
 #include <math.h>
 #include <string.h>
 #include "gis.h"
-#include "projects.h"
+#include "gprojects.h"
 #define MAIN
 
 /* GRASS relative location of datum conversion lookup tables */
@@ -31,7 +31,7 @@ struct Key_Value *in_proj_keys, *in_units_keys;
         double dx, dy, dz;
 	char buffa[300], factbuff[50];
 	char proj_in[50];
-	PJ *pj;
+	projPJ *pj;
 
         proj_in[0] = '\0';
 	info->zone = 0;
@@ -248,7 +248,7 @@ char *str;
     int nopt = 0;
     int nsize;
     char zonebuff[50], buffa[300];
-    PJ *pj;
+    projPJ *pj;
 
     info->zone = 0;
     info->proj[0] = '\0';

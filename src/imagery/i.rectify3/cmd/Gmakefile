@@ -46,7 +46,7 @@ DEPLIBS= $(DEPIMAGERYLIB) $(DEPIMAGESUPLIB) $(DEPD_LIB)\
 $(DEPLIBS): # in case of lib changes
 
 ####	required compile flags
-EXTRA_CFLAGS = $(VECT_INCLUDE) -I$(IMAGERY_SUBINC)
+EXTRA_CFLAGS = $(VECT_INCLUDE) -I$(IMAGERY_SUBINC) $(PROJINC)
 
 ####	any program required link flags
 #EXTRA_LDFLAGS 

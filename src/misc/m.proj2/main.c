@@ -23,7 +23,7 @@
 #include <unistd.h>
 #include "geo.h"
 #include "gis.h"
-#include "projects.h"
+#include "gprojects.h"
 #define MAIN
 #include "local_proto.h"
 

@@ -1,7 +1,7 @@
 #include <string.h>
 #include "geo.h"
 #include "gis.h"
-#include "projects.h"
+#include "gprojects.h"
 #include "local_proto.h"
 
 /* returns 1 if projection info changed, 0 otherwise */

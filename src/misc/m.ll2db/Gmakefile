@@ -1,4 +1,5 @@
 PGM=m.ll2db
+EXTRA_CFLAGS=$(PROJINC)
 
 LIST = main.o input.o output.o warning.o number.o
 

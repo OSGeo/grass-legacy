@@ -22,7 +22,7 @@ LIST  = landsat.o \
 	control_pt.o \
 	examine.o
 
-EXTRA_CFLAGS = -I$(IMAGERY_SUBINC)
+EXTRA_CFLAGS = -I$(IMAGERY_SUBINC) $(PROJINC)
 
 $(LIST): landsat.h fileseq.h
 
