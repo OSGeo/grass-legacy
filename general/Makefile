@@ -2,6 +2,10 @@
 MODULE_TOPDIR = ..
 
 SUBDIRS = \
+	g.access \
+	g.ask \
+	g.filename \
+	g.findfile \
 	g.gisenv \
 	g.mapsets \
 	g.parser \
@@ -16,4 +20,3 @@ include $(MODULE_TOPDIR)/include/Make/Dir.make
 default: subdirs
 
 clean: cleansubdirs
-
