@@ -66,7 +66,7 @@ int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx ) {
 
   /* Go on if any point should be invalid */
 
-  if( setjmp(startpnt) ) return 0;
+  /* if( setjmp(startpnt) ) return 0; */
 
   /* Retrieve snap distance for map */
   if( procSnapDistance( GET_SD, &snap ) ) {
@@ -136,7 +136,7 @@ int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx ) {
 
 	/* Is this the same vertex. If so skip */
 
-	if( pc == pb ) longjmp( startpnt, 1);
+	if( pc == pb ) return 0; /* longjmp( startpnt, 1); */
 
 	/* Are we already linked to this? */
 	linked = 0;
@@ -537,31 +537,28 @@ int allocate_recs(duff_recs_t *duff_recs, int size) {
 
   dr_incr = 3000;
 
-  incr_size = dr_incr;
+  incr_size = 10000;
 
   if(duff_recs->alloc_recs > size)
     return 1;
 
   if(duff_recs->alloc_recs == 0) {
 
-    if( (duff_recs->duff_rec_list = (duff_rec *)malloc(dr_incr * sizeof(duff_rec)))
+    if( (duff_recs->duff_rec_list = (int *)malloc(incr_size * sizeof(int)))
 	== NULL )
       return -1;
 
-    memset(duff_recs->duff_rec_list, 0, dr_incr * sizeof(duff_rec));
-    duff_recs->alloc_recs = dr_incr;
+    duff_recs->alloc_recs = incr_size;
   }
 
   else {
 
     incr_size += dr_incr;
-    if( (duff_recs->duff_rec_list = (duff_rec *)realloc(duff_recs->duff_rec_list,
-							incr_size * sizeof(duff_rec)))
+    if( (duff_recs->duff_rec_list = (int *)realloc(duff_recs->duff_rec_list,
+							incr_size * sizeof(int)))
 	== NULL )
       return -1;
 
-    memset(&duff_recs->duff_rec_list[incr_size - dr_incr], 0,
-	   dr_incr * sizeof(duff_rec));
     duff_recs->alloc_recs = incr_size;
   }
 
@@ -580,8 +577,9 @@ int add_rec_spec(duff_recs_t *duff_recs, int recno, int fduff) {
       return -1;
   }
 
-  duff_recs->duff_rec_list[duff_recs->n_recs].rec_no = recno;
-  duff_recs->duff_rec_list[duff_recs->n_recs++].is_duff = fduff;
+  duff_recs->duff_rec_list[recno] = fduff;
+
+  duff_recs->n_recs++;
 
   return 0;
 }

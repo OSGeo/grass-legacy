@@ -67,7 +67,7 @@ int main( int   argc, char *argv[])
     DBFHandle   hDBF, hDB1 = NULL;
     duff_recs_t *drec0;
     double	adfMinBound[4], adfMaxBound[4];
-    int		nShapeType, nShapes, iShape, iPart, iArc;
+    int		nShapeType, nShapes, iShape, iPart, iArc, ia;
     int         iPoint, iRec, iField;
     int         pntCount;
     int		cat_field;
@@ -89,10 +89,19 @@ int main( int   argc, char *argv[])
     char    AttText[512];    /* added MN 10/99 */
     int attval;
     int lab_field = -1;
+    int old_indx;
 
     int unity = 1, zero = 0;
     int f_indx = -1;
     char s_field[512], s_val[512];
+
+    DBFFieldType tmp_type;
+    char tmp_cat_name[17], tmp_string_val[512];
+    int field_wide, field_decs, tmp_int_val;
+    double tmp_double_val;
+    int totalPnts;
+    int nduffs;
+    
 
 
     /* DDG: Create structures for processing of shapefile contents */
@@ -115,6 +124,7 @@ int main( int   argc, char *argv[])
 
     double *pntxlist, *pntylist;
     double *xlab, *ylab;
+    int *att_val, *orig_val;
     
     int (*btrkeycmp)(char *, char *);
     char buf[256];
@@ -669,7 +679,19 @@ int main( int   argc, char *argv[])
 
     /* Read shape into line list and fill out V-base */
     fprintf(stderr, "Creating vector network...\n\n");
-    linedCreate( ll0, hShapeDB, hDBF, fd0, hVB, &fc1, drec0 );
+    linedCreate( ll0, hShapeDB, hDBF, hVB, &fc1, drec0 );
+
+    /* Check the number of duffs */
+
+    if(selflag->answer) {
+      nduffs = 0;
+      for(ia = 0; ia < drec0->n_recs; ia++) {
+	if(drec0->duff_rec_list[ia] == 0)
+	  nduffs++;
+      }
+    }
+
+    fprintf(stderr, "Number of valid records is %d of %d\n", nduffs, drec0->n_recs);
 
     /* Extract arcs from V-base into segment list */
     fprintf(stderr, "Extracting and storing area edges...\n\n");
@@ -689,29 +711,69 @@ int main( int   argc, char *argv[])
                         
 
 
+    if(cat_field > -1) 
+      tmp_type = DBFGetFieldInfo(hDBF, cat_field, tmp_cat_name, &field_wide, &field_decs);
 
 
-    /* Check the number of records is the same as the number of lines */
+      /* Check the number of records is the same as the number of lines */
     xlab = (double *)malloc( ll0->totalValidParts * sizeof( double ) );
     ylab = (double *)malloc( ll0->totalValidParts * sizeof( double ) );
+    att_val = (int *)malloc( ll0->totalValidParts * sizeof( int ) );
+    orig_val = (int *)malloc( ll0->totalValidParts * sizeof( int ) );
 
     pntCount = 0;
     for( iShape = 0; iShape < nShapes; ++iShape ) {
 
+
       if(max_sh > 0 && iShape > max_sh)
 	break;
 
-      if(selflag->answer) {
-	if( drec0->duff_rec_list[iShape].is_duff )
-	  continue;
-      }
-
       for( iPart = 0; iPart < ll0->lines[iShape].numParts; ++iPart ) {
 	if( ll0->lines[iShape].parts[iPart].duff ) continue;
+	
+	if(cat_field > -1) {
+
+	  switch(tmp_type) {
+
+	  case 0:
+	    {
+	      strncpy(tmp_string_val, DBFReadStringAttribute(hDBF, iShape, cat_field), 511);
+	      att_val[pntCount] = (int)(0.5 + atof(tmp_string_val));
+	      break;
+	    }
+
+	  case 1:
+	    {
+	      tmp_int_val = DBFReadIntegerAttribute(hDBF, iShape, cat_field);
+	      att_val[pntCount] = tmp_int_val;
+	      break;
+	    }
+
+	  case 2:
+	    {
+	      /* Unwise - but can happen */
+	      tmp_double_val = DBFReadDoubleAttribute(hDBF, iShape, cat_field);
+	      att_val[pntCount] = (int) (tmp_double_val + 0.5);
+	      break;
+	    }
+
+	  default:
+	    {
+	      /* This shouldn't have happened. Set category to none */
+	      G_fatal_error("Error: Attempt to use invalid field as attribute value.");
+	    }
+
+	  }  /* end switch */
+
+	}
+	orig_val[pntCount] = iShape;
 	xlab[pntCount] = ll0->lines[iShape].parts[iPart].centroid->xcentroid;
 	ylab[pntCount++] = ll0->lines[iShape].parts[iPart].centroid->ycentroid;
       }	 
+
     } 
+
+    totalPnts = pntCount;
 
     /* -------------------------------------------------------------------- */
     /*      Scan segment list to extract and write arcs.                    */
@@ -750,24 +812,26 @@ int main( int   argc, char *argv[])
     if( f_att != NULL ) {
       if(cat_field == -1)
 	G_warning( "No attribute value field assigned. Using record ID.\n" );	
-      else if(fd0[cat_field+4].fldType != 1 && fd0[cat_field+4].fldType != 2)
-	G_warning( "Named attribute field is not numeric value. Using record ID.\n" );	
-      for( iRec = 0; iRec < fd0[0].nRec; ++iRec ) {
+      for( iRec = 0; iRec < totalPnts; ++iRec ) {
+
+	/* Skip records that are not to be extracted */
+
+	if(selflag->answer) {
+	  if(drec0->duff_rec_list[orig_val[iRec]])
+	    continue;
+	}
+
 	if( cover_type == LINE ) {
-	  if(cat_field > -1 && fd0[cat_field+4].fldType == 1)
-	    attval = fd0[cat_field+4].fldRecs[iRec].intField;
-	  else if(cat_field > -1 && fd0[cat_field+4].fldType == 2)
-	    attval = round( fd0[cat_field+4].fldRecs[iRec].doubleField );
+	  if(cat_field > -1)
+	    attval = att_val[iRec];
 	  else
 	    attval = iRec + 1;
 	  fprintf( f_att, "L  %-14f  %-14f  %-8d \n",
 		   xlab[iRec], ylab[iRec], attval );
 	}
 	else if( cover_type == AREA ) {
-	  if(cat_field > -1 && fd0[cat_field+4].fldType == 1)
-	    attval = fd0[cat_field+4].fldRecs[iRec].intField;
-	  else if(cat_field > -1 && fd0[cat_field+4].fldType == 2)
-	    attval = round( fd0[cat_field+4].fldRecs[iRec].doubleField );
+	  if(cat_field > -1)
+	    attval = att_val[iRec];
 	  else
 	    attval = iRec + 1;
 	  fprintf( f_att, "A  %-14f  %-14f  %-8d \n",
@@ -776,9 +840,8 @@ int main( int   argc, char *argv[])
 
                      
 	/* set cat for dig_cats file*/ /* M Neteler 10/99 */
-	if( lab_field >= 0 ) {
+	/* if( lab_field >= 0 ) {
 
-	  switch(fd0[lab_field+4].fldType){
 	  case 0:
 	    strncpy(AttText, fd0[lab_field+4].fldRecs[iRec].stringField, 511 );
 	    break;
@@ -799,12 +862,15 @@ int main( int   argc, char *argv[])
 	  if (G_set_cat(attval, AttText, &cats) != 1)
 	    G_fatal_error("Error setting category in dig_cats");
 	}
+	*/
 	    
       }
 
 
       free( xlab );
       free( ylab );
+      free( att_val );
+      free( orig_val );
     }
 
     if( lab_field >= 0 ) {
