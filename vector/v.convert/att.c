@@ -74,8 +74,12 @@ int attributes (char *in, struct Map_info *Out )
 	G_fatal_error ( _("Cannot create table: %s"), db_get_string ( &sql )  );
     }
 
+    if ( db_create_index2(driver, fi->table, "cat" ) != DB_OK )
+	G_warning ( "Cannot create index" );
+
     if (db_grant_on_table (driver, fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
 	G_fatal_error ( "Cannot grant privileges on table %s", fi->table );
+    
 
     G_debug ( 1, "ncats = %d", Cats.ncats );	
     count = 0;
