@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "vizual.h"
-#include "debug.h"
 
 
 #define COLOR3

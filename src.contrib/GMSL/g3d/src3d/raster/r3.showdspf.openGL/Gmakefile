@@ -14,7 +14,6 @@ SOURCES	=	\
                 new_init_graphics.c \
 		cap_data.c \
 		init_caps.c \
-		debugf.c \
 		do_color_ogl.c \
 		get_color_ogl.c \
 		draw_cap_ogl.c \
@@ -34,7 +33,6 @@ OBJ	=	\
                 new_init_graphics.o \
 		cap_data.o \
 		init_caps.o \
-		debugf.o \
 		do_color_ogl.o \
 		get_color_ogl.o \
 		draw_cap_ogl.o \
@@ -56,7 +54,6 @@ $(BIN_CMD)/$(PGM): $(OBJ) $(DEPG3DLIB) $(DEPLIBS)
 
 cap_data.o: $(MYLIBDIR)/viz.h
 axes2_ogl.o: $(MYLIBDIR)/viz.h
-debugf.o: ./debug.h
 togif.o: ./togif.h
 draw_cap_ogl.o: $(MYLIBDIR)/viz.h
 draw_cappolys_ogl.o: $(MYLIBDIR)/viz.h

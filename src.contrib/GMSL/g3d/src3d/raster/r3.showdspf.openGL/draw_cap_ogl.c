@@ -1,5 +1,4 @@
 #include "vizual.h"
-#include "debug.h"
 
 
 /* LOCALLY Global structures */
@@ -9,7 +8,7 @@ static  struct Cap *Cap;
 static  struct poly_info Polys[3*(MAXTHRESH + 1)];
 static  int x,y;
 
-double Xlinterp();
+static double Xlinterp();
 
 #define ANTICLOCKWISE 0
 #define CLOCKWISE     1
@@ -134,7 +133,7 @@ int t;		/* current threshold index */
     }
 
     /*and we are done */
-    return t;
+    return;
   }
   /* thresh in square */
   else if (WITHIN((double)minmax[0],zz,(double)minmax[1]))
