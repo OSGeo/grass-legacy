@@ -9,7 +9,7 @@ extern double sqrt();
 
 /*
  * a is semi-major axis, e2 is eccentricity squared, s is a scale factor
- * code will fail dump if e2==0 (sphere)
+ * code will fail if e2==0 (sphere)
  */
 G_begin_zone_area_on_ellipsoid (a, e2, s)
     double a, e2, s;
