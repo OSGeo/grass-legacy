@@ -1,4 +1,3 @@
-/*  %W%  %G%  */
 #define CPI_100	1     /* 100 Counts Per Inch */
 #define CPI_200	2     /* 200 Counts Per Inch */
 #define CPI_400	3     /* 400 Counts Per Inch */
