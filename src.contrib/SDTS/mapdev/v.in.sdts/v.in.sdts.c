@@ -1,3 +1,7 @@
+/*
+ * $Id$
+ */
+
 #include     <stdio.h>
 #include     <signal.h>
 #include     "gis.h"
