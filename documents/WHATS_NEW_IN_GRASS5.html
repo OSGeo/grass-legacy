@@ -21,9 +21,10 @@ Many thanks to all contributors!
 <p>
 <b>Modules</b>
 <menu>
-<li> r.drain: new flags -c  and -a (Pierre de Mouveaux)
+<li> r.cost: accepts sites files as start and stop points (Pierre de Mouveaux)
+<li> r.drain: corrected lat-lon projection issues, 3 selectable output modes (Pierre de Mouveaux)
 <li> r.in.globedem added for importing GLOBE DEM data (Markus Neteler)
-<li> r.line fixed for int and fp maps (Pierre de Mouveaux)
+<li> r.line working now with Grass5 (Pierre de Mouveaux)
 </menu>
 
 <hr>
@@ -34,13 +35,14 @@ Many thanks to all contributors!
 <p>
 <b>Modules</b>
 <menu>
+<li> d.vect: runs quitely by default (flag -v added) (Pierre de Mouveaux)
 <li> i.rectify, i.rectify2 fixed (Pierre de Mouveaux)
 <li> i.shape bugfix on segmentation fault (Markus Neteler)
 <li> i.smap bugfix on segmentation fault (Markus Neteler)
 <li> i.tape.tm.fast fixed blank screen problem (Markus Neteler)
 <li> m.in.e00 updated (Michel Wurtz)
 <li> ps.map.new added (Radim.Blazek)
-<li> r.cost fixed (Pierre de Mouveaux)
+<li> r.cost fixed, sites files accepted as start and stop points (Pierre de Mouveaux)
 <li> r.drain fixed, new feature: read site list for starting points (Pierre de Mouveaux)
 <li> r.flowmd added (Jaro Hofierka)
 <li> r.in.dted bugfix to read NIMA DTED level 0 properly (Roberto Currlin)
@@ -96,7 +98,7 @@ Many thanks to all contributors!
 </dl>
 </menu>
 
-<b>G3D-support</b> ((new 3D raster format "voxels"))
+<b>G3D-support</b> (new 3D raster format "voxels")
 <menu>
 <li>grid3D modules added: g3.region, r3.in.ascii, r3.mask, r3.out.ascii,
     r3.in.grid3, r3.mapcalc, r3.mkdspf, r3.showdspf.sgi, r3.info, r3.null
