@@ -90,19 +90,19 @@ char **argv ;
 	db_set_connection( &conn );    
 	
 	if ( (conn.password != NULL) && ( strlen (conn.password) > 0))
-	    printf("Warning: Your password was written to %s in readable form!!!\n", getenv ("GISRC"));    
+	    fprintf(stdout, "Warning: Your password was written to %s in readable form!!!\n", getenv ("GISRC"));    
 
     }
     
     /* get and print connection */
     db_get_connection( &conn );    
     
-    printf("driver:%s\n", conn.driverName);
-    printf("database:%s\n", conn.databaseName);    
-    printf("location:%s\n", conn.location);
-    printf("user:%s\n", conn.user);
-    printf("password:%s\n", conn.password);    
-    printf("key:%s\n", conn.keycol);    
+    fprintf(stdout, "driver:%s\n", conn.driverName);
+    fprintf(stdout, "database:%s\n", conn.databaseName);    
+    fprintf(stdout, "location:%s\n", conn.location);
+    fprintf(stdout, "user:%s\n", conn.user);
+    fprintf(stdout, "password:%s\n", conn.password);    
+    fprintf(stdout, "key:%s\n", conn.keycol);    
 
     exit(OK);
 }
