@@ -36,6 +36,8 @@ CELL *value;
 int nrows, ncols;
 SEGMENT in_seg, out_seg;
 int data_type;
+int exclude_nulls = 1;
+double null_value = 0.0;
 
 int 
 main (int argc, char *argv[])
@@ -55,7 +57,7 @@ main (int argc, char *argv[])
 	void *cell;
 	POINT *PRES_PT=NULL, *NEW_START_PT, *PRESENT_PT=NULL;
 	double east, north;
-	struct Option *opt1, *opt2, *opt3;
+	struct Option *opt1, *opt2, *opt3, *opt4;
 
 	opt2 = G_define_option() ;
 	opt2->key        = "input" ;
@@ -78,6 +80,15 @@ main (int argc, char *argv[])
 	opt3->key_desc   = "x,y" ;
 	opt3->description= "The map E and N grid coordinates of a starting point";
 
+	opt4 = G_define_option() ;
+	opt4->key        = "null_value" ;
+	opt4->type       = TYPE_DOUBLE;
+	opt4->key_desc   = "null cells value" ;
+	opt4->required   = NO;
+	opt4->multiple   = NO;
+/*  	opt4->answer     = ""; */
+	opt4->description= "Value assigned to null cells. Null cells are excluded by default";
+
 	G_gisinit (argv[0]);
 
 	current_mapset = G_mapset();
@@ -97,6 +108,11 @@ main (int argc, char *argv[])
 	if (G_parser(argc, argv))
 		exit(-1);
 	
+	if ((opt4->answer != NULL) && (sscanf(opt4->answer, "%lf", &null_value) == 1))	{
+		exclude_nulls = 0;
+		printf("\nnull %lf\n",null_value);
+	} 
+
 	if (opt3->answer) 
 	{  
 	    for(n=0; opt3->answers[n] != NULL; n+=2)
@@ -389,6 +405,7 @@ int drain_path_finder ( POINT *PRES_PT)
 			case (CELL_TYPE):
 				segment_get(&in_seg, &val, PRES_PT_ROW, PRES_PT_COL);
 				p_elev = val;
+
 				/* check the elevations of neighbouring pts to determine the	*/
 				/* next pt(s) for the drop to flow				*/
 				for (row = PRES_PT_ROW -1;
@@ -403,9 +420,18 @@ int drain_path_finder ( POINT *PRES_PT)
 						if (row == PRES_PT_ROW && col == PRES_PT_COL) continue;
 
 						segment_get(&in_seg, &val, row, col);
-						fdata = val;
-							/* elev of neighbor is higher. i.e. no chance of flow	*/
-							if(data > p_elev) continue;
+						if (G_is_c_null_value(&val)) {
+							if (exclude_nulls) {
+								continue;
+							} else {
+								fdata = null_value;
+							} 
+						} else {
+							fdata = val;
+						}
+				/* elev of neighbor is higher. i.e. no chance of flow	*/
+						if (fdata > p_elev)
+								continue;
 
 						/* if elev of neighbor is equal or lower consider for	*/
 						/* addition to the list of pts where water will flow	*/
@@ -433,9 +459,17 @@ int drain_path_finder ( POINT *PRES_PT)
 						if (row == PRES_PT_ROW && col == PRES_PT_COL) continue;
 
 						segment_get(&in_seg, &f, row, col);
-						fdata = f;
-							/* elev of neighbor is higher. i.e. no chance of flow	*/
-							if(data > p_elev) continue;
+						if (G_is_f_null_value(&f)) {
+							if (exclude_nulls) {
+								continue;
+							} else {
+								fdata = null_value;
+							} 
+						} else {
+							fdata = f;
+						}
+						/* elev of neighbor is higher. i.e. no chance of flow	*/
+							if(fdata > p_elev) continue;
 
 						/* if elev of neighbor is equal or lower consider for	*/
 						/* addition to the list of pts where water will flow	*/
@@ -462,8 +496,15 @@ int drain_path_finder ( POINT *PRES_PT)
 						if (row == PRES_PT_ROW && col == PRES_PT_COL) continue;
 
 						segment_get(&in_seg, &fdata, row, col);
+						if (G_is_d_null_value(&fdata)) {
+							if (exclude_nulls) {
+								continue;
+							} else {
+								fdata = null_value;
+							} 
+						}
 							/* elev of neighbor is higher. i.e. no chance of flow	*/
-							if(data > p_elev) continue;
+							if(fdata > p_elev) continue;
 
 						/* if elev of neighbor is equal or lower consider for	*/
 						/* addition to the list of pts where water will flow	*/
