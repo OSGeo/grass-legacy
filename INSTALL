@@ -22,7 +22,8 @@ make
 
 Explanation of options:
 --with-grass50    must be full path to MAIN (=experimental) branch (not 
-                  release) of GRASS 5.0
+                  release) of GRASS 5.0. Make it an *absolute* path, not a
+                  relative path.
 
 Explanation of all targets:
 make mix           - create symbolic links to grass50 for not yet uploaded files
@@ -57,9 +58,15 @@ If interested to develop GRASS 5.1, please join the GRASS developers mailing
 list:
 http://grass.itc.it/grassdevel.html
 
+
 PROGRAMMER'S MANUAL
 
 Please see the README file.
+
+
+Draft TUTORIAL
+
+http://grass.itc.it/grass51/tutorial/index.html
 
 ------------------
 GRASS Development Team
