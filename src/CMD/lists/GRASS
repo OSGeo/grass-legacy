@@ -179,6 +179,7 @@ src/mapdev/v.mkquads
 src/mapdev/v.out.arc
 src/mapdev/v.out.dlg
 src/mapdev/v.out.dxf
+src/mapdev/v.out.idrisi
 src/mapdev/v.out.moss
 src/mapdev/v.out.shape
 src/mapdev/v.patch
@@ -194,6 +195,7 @@ src/mapdev/v.to.rast
 src/mapdev/v.to.sites
 src/mapdev/v.transform
 src/mapdev/v.trim
+src/mapdev/v.what
 # src/misc/m.datum.shift
 src/misc/m.dem.examine
 src/misc/m.dem.extract
@@ -254,6 +256,7 @@ src/raster/r.in.ascii
 src/raster/r.in.bin
 src/raster/r.in.dted/r.in.dted
 src/raster/r.in.ll
+src/raster/r.in.png
 src/raster/r.in.ppm
 src/raster/r.in.poly
 src/raster/r.in.sunrast
@@ -446,6 +449,7 @@ src.contrib/SCS/vector/v.mk_stats
 # src.contrib/SCS/vector/v.reclass  # obsolete(?)/better?, already in src/mapdev/
 src.contrib/SCS/vector/v.report
 src.contrib/SCS/vector/v.rmedge
+src.contrib/SDTS
 src.contrib/UCB/gdbase
 # src.contrib/GMSL/SG3d # only on SGI
 #src.contrib/eurogis/v.out.DI # very special, outdated?
