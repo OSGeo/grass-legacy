@@ -979,6 +979,39 @@ else
     done
 fi                         
 
+XDRIVER=fifo
+AC_ARG_WITH(ipc,
+    [  --with-ipc              use ipc XDriver instead of fifo (for Cygwin)],
+    [
+	case "$withval" in
+	"" | y | ye | yes)
+	    XDRIVER=ipc
+	  ;;
+	esac
+    ])
+
+AC_ARG_WITH(fifo,
+    [  --with-fifo             use fifo XDriver instead of ipc (default)],
+    [
+	case "$withval" in
+	"" | y | ye | yes)
+	    XDRIVER=fifo
+	  ;;
+	esac
+    ])
+
+AC_MSG_CHECKING(for XDriver)
+AC_MSG_RESULT($XDRIVER)
+
+if test "$XDRIVER" = "ipc"; then
+    echo env GRASS_IN_CONFIGURE=yes ./README.ipc new
+    env GRASS_IN_CONFIGURE=yes ./README.ipc new
+else
+    echo env GRASS_IN_CONFIGURE=yes ./README.ipc orig
+    env GRASS_IN_CONFIGURE=yes ./README.ipc orig
+fi
+
+
 ac_save_cppflags="$CPPFLAGS"
 CPPFLAGS="$CPPFLAGS $JPEGINCPATH"
 AC_CHECK_HEADERS(jpeglib.h)
