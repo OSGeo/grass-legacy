@@ -171,8 +171,8 @@ proc Nv_floatscaleCallback { S {who s} {decimal 0} {cmd null} {val 0} } {
 	    $S.scale configure -from $val
 	}
 	if {$val != 0} {
-	if {$val < $res} {
-	set res $val
+	if {[expr abs($val)] < [expr abs($res)]} {
+	set res [expr abs($val)]
 	} else {
 	set res [expr $val/floor($val/$res)]
 	}
@@ -203,8 +203,8 @@ proc Nv_floatscaleCallback { S {who s} {decimal 0} {cmd null} {val 0} } {
 	    $S.scale configure -from $val
 	}
         if {$val != 0} {
-	if {$val < $res || $res == 0} {
-        set res $val
+	if {[expr abs($val)] < [expr abs($res)] || $res == 0} {
+        set res [expr abs($val)]
         } else {
         set res [expr $val/floor($val/$res)]
 	}
@@ -262,7 +262,8 @@ if {![llength [info commands tkScaleActivate]]} {
 tk::unsupported::ExposePrivateCommand tkScaleActivate
 }
 tkScaleActivate %W %x %y
-if {[Nauto_draw] == 1} {Ndraw_all} }
+if {[Nauto_draw] == 1} {Ndraw_all}
+}
 
 bind $S.f.entry <Return> "+ Nv_scaleCallback $S e $decimal $cmd"
 bind $S.f.entry <Return> {+ if {[Nauto_draw] == 1} {Ndraw_all} }
@@ -308,7 +309,7 @@ set num [expr int($num + 3)]
     pack $S.f.entry -side $text_side 
 
 #Bind For Re-Draw Surface
-bind $S.scale <Any-ButtonRelease> {+ 
+bind $S.scale <Any-ButtonRelease> {+
 if {![llength [info commands tkCancelRepeat]]} {
 tk::unsupported::ExposePrivateCommand tkCancelRepeat
 }
@@ -321,7 +322,8 @@ if {![llength [info commands tkScaleActivate]]} {
 tk::unsupported::ExposePrivateCommand tkScaleActivate
 }
 tkScaleActivate %W %x %y
-if {[Nauto_draw] == 1} {Ndraw_all} }
+if {[Nauto_draw] == 1} {Ndraw_all}
+}
 
 bind $S.f.entry <Return> "+ Nv_floatscaleCallback $S e 0 $cmd"
 bind $S.f.entry <Return> {+ if {[Nauto_draw] == 1} {Ndraw_all} }
