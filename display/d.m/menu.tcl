@@ -17,7 +17,7 @@
             		{command "ESRI Arc/Info ASCII grid" {} "r.in.arc" {} -command { execute r.in.arc }}
             		{command "GRIDATB.FOR map file (TOPMODEL)" {} "r.in.gridatb" {} -command { execute r.in.gridatb }}
             		{command "MAT-File (v.4) map file (Matlab or Octave)" {} "r.in.gridatb" {} -command { execute r.in.mat }}
-            		{command "STRM hgt files" {} "r.in.strm" {} -command { execute r.in.strm }}
+            		{command "SRTM hgt files" {} "r.in.srtm" {} -command { execute r.in.srtm }}
         	    }}
         	    {cascad "Vector map" {} "" 1 {			
             		{command "Various formats using OGR" {} "v.in.ogr" {} -command { execute v.in.ogr }}
@@ -444,7 +444,6 @@
 			    {command "Non-interactive input for supervised classification (MLC)" {} "" {} -command {execute  i.gensig }}
 			    {command "Non-interactive input for supervised classification (SMAP)" {} "" {} -command {execute  i.gensigset }}
 			}}
-			{command "Dehaze for LandSAT 5" {} "" {} -command {execute  i.tm.dehaze }}
 			{cascad "Filter image" {} "" 1 {			
 			    {command "Zero edge crossing detection" {} "" {} -command {execute  i.zc }}
 			    {command "User defined matrix/convolving filter" {} "" {} -command {execute  r.mfilter }}
@@ -484,11 +483,11 @@
 			    {command "Connect to database" {} "" {} -command {execute  db.connect }}
 			    {command "PERMANTLY remove table" {} "" {} -command {execute  db.droptable }}
 			    {command "Copy table" {} "" {} -command {execute  db.copy }}
+			    {command "Test database" {} "" {} -command {execute  db.test }}
 			}}
 			{cascad "Database information" {} "" 1 {			
 			    {command "Describe table" {} "" {} -command {execute  db.describe }}
 			    {command "List columns" {} "" {} -command {execute  db.columns }}
-			    {command "List databases" {} "" {} -command {execute  db.databases }}
 			    {command "List drivers" {} "" {} -command {execute  db.drivers }}
 			    {command "List tables" {} "" {} -command {execute  db.tables }}
 			}}
