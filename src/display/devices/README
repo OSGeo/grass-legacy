@@ -15,19 +15,12 @@ Contents:
    IGRAPH        Intergraph driver
    IRIS          IRIS Personal Workstation - Silicon Graphics
    XDRIVER       X-windows driver
-   monitorcap    Documentation and sample monitocap files
+   monitorcap    generic monitorcap file installed in $GISBASE/etc
 
-To install a driver on your system, simply run the Gmake  command
-on  that directory (after you have run GISGEN to build the entrie
-system).  Of course, you may not be able to simply  type  "Gmake"
-since  Gmake  doesn't  live  in  any of the standard Unix command
-dirctories. You will have to specify it fully. Suppose  that  you
-have   installed   GRASS   in  /usr/gis.   Then  "Gmake"  becomes
-/usr/gis/src/CMD/Gmake. To compile the MASS driver you could type
-
-	cd MASS
-	/usr/gis/src/CMD/Gmake
+To install a driver on your system, simply run the gmake  command
+on  that directory (after you have run GISGEN to build the entire
+system).
 
 After you have compiled the driver, you will need to  tell  GRASS
-about  it.  To  do  this,  change to the monitorcap directory and
-follow the instructions in the README file there.
+about  it.  To  do  this,  edit the $GISBASE/etc/monitorcap file
+and add the driver to this file.
