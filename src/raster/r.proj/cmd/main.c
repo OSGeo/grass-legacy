@@ -424,8 +424,8 @@ int main (int argc, char **argv)
    /* project coordinates in output matrix to		 */
    /* coordinates in input matrix			 */
 			if (proj_f(&xcoord1, &ycoord1, &oproj, &iproj) < 0)
-				G_fatal_error("Error in proj_f\n");
-
+				G_set_null_value(obufptr, 1, cell_type);
+			else {
    /* convert to row/column indices of input matrix	 */
 			col_idx = (xcoord1 - incellhd.west) / incellhd.ew_res;
 			row_idx = (incellhd.north - ycoord1) / incellhd.ns_res;
@@ -434,6 +434,7 @@ int main (int argc, char **argv)
 
 			interpolate(ibuffer, obufptr, cell_type,
 				    &col_idx, &row_idx, &incellhd);
+			}
 
 			obufptr = G_incr_void_ptr(obufptr, cell_size);
 			xcoord2 += outcellhd.ew_res;
