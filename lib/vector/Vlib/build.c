@@ -215,6 +215,7 @@ Vect_build_partial ( struct Map_info *Map, int build, FILE *msgout )
 	prnmsg ("Number of areas     :   -\n");
 	prnmsg ("Number of isles     :   -\n");
     }
+    prnmsg ("Topology was built.\n");
     return 1;
 }
 
