@@ -25,13 +25,7 @@ echo "Add the flag in src/CMD/head/head.$ARCH and clean ps.map OBJ-files before"
 echo "recompiling."
 echo ""
 
-# talk about NVIZ and other stuff:
-echo "* NVIZ Visualization tool:"
-echo "   Please compile it separately in"
-echo "          src.contrib/GMSL/NVIZ2.2/"
-echo "   To compile NVIZ, change to this directory."
-echo "   Use 'gmake5'"
-echo ""
+# talk about stuff not yet compiled:
 echo "* GRID3D raster volume support please compile here:"
 echo "          src.contrib/GMSL/g3d/"
 echo "   To compile GRID3D, change to this directory and run 'gmake5'"
