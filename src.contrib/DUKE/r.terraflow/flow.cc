@@ -93,7 +93,7 @@ computeFlowAccumulation(AMI_STREAM<waterWindowBaseType>* fillStream,
     
     size_t mm_size = (opt->mem  << 20); /* (in bytes) */
     formatNumber(buf, mm_size);
-    *stats << form("memory size: %s bytes\n", buf);
+    *stats << "memory size: " << buf << " bytes\n";
   }
 
   /* create sweepstream using info from  fillStream  */

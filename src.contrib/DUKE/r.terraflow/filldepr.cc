@@ -137,12 +137,12 @@ inmemory_fill_depression(AMI_STREAM<boundaryType> *boundaryStr,
     watersheds except for the outside watershed; the outside watershed
     is not in the unionfind structure; */
   unionFind<cclabel_type> unionf;
-  FLOOD_DEBUG cout << form("nb watersheds %d, bstream length %d\n",
-			   maxWatersheds, boundaryStr->stream_len());
+  FLOOD_DEBUG printf("nb watersheds %d, bstream length %ld\n",
+    (int)maxWatersheds, (long)boundaryStr->stream_len());
   
   for (cclabel_type i=1; i< maxWatersheds; i++) {
-    FLOOD_DEBUG cout << form("makeset %d\n",i); cout.flush();
-     unionf.makeSet(i);
+    FLOOD_DEBUG printf("makeset %d\n",i); 
+    unionf.makeSet(i);
   }
 
   /*__________________________________________________________*/
@@ -163,14 +163,13 @@ inmemory_fill_depression(AMI_STREAM<boundaryType> *boundaryStr,
     v = nextedge->getLabel2();
     h = nextedge->getElevation();
     FLOOD_DEBUG {
-      cout << form("\nreading edge ((%d,%d),h=%d)\n",u,v,h); 
-      cout.flush();
+      printf("\nreading edge ((%d,%d),h=%d)\n",(int)u,(int)v,(int)h); 
     }
 
     /*find representatives;  LABEL_BOUNDARY means the outside watershed*/
     (u==LABEL_BOUNDARY)? ur = LABEL_BOUNDARY: ur = unionf.findSet(u);
     (v==LABEL_BOUNDARY)? vr = LABEL_BOUNDARY: vr = unionf.findSet(v);
-    FLOOD_DEBUG cout <<form("%d is %d, %d is %d\n", u, ur, v, vr);
+    FLOOD_DEBUG printf("%d is %d, %d is %d\n", u, ur, v, vr);
 
     /*watersheds are done; just ignore it*/
     if ((ur == vr) || (done[ur] && done[vr])) {
@@ -184,14 +183,14 @@ inmemory_fill_depression(AMI_STREAM<boundaryType> *boundaryStr,
     case of boundary watersheds; */
     if (done[ur] || done[vr]) {
       if (done[ur]) {
-	FLOOD_DEBUG cout << form("%d is done, %d raised to %d and done\n", 
-				 ur, vr, h);
+	FLOOD_DEBUG printf("%d is done, %d raised to %d and done\n", 
+			   (int)ur, (int)vr, (int)h);
 	done[vr] = 1;
 	raise[vr] = h;
       } else {
 	assert(done[vr]);
-	FLOOD_DEBUG cout << form("%d is done, %d raised to %d and done\n", 
-				 vr, ur, h);
+	FLOOD_DEBUG printf("%d is done, %d raised to %d and done\n", 
+			   vr, ur, h);
 	done[ur] = 1;
 	raise[ur] = h;
       }
@@ -200,7 +199,7 @@ inmemory_fill_depression(AMI_STREAM<boundaryType> *boundaryStr,
     
     /* if none of the  watersheds is done: union and raise them */
     assert(!done[ur] && !done[vr] && ur>0 && vr>0);
-    FLOOD_DEBUG cout << form("union %d and %d,  raised to %d\n", ur, vr, h);
+    FLOOD_DEBUG printf("union %d and %d,  raised to %d\n", ur, vr, h);
     raise[ur] = raise[vr] = h;
     unionf.makeUnion(ur,vr);
   }
@@ -209,8 +208,8 @@ inmemory_fill_depression(AMI_STREAM<boundaryType> *boundaryStr,
   for (cclabel_type i=1; i< maxWatersheds; i++) {
     /* assert(done[unionf.findSet(i)]); sometimes this fails! */
     if (!done[unionf.findSet(i)]) {
-      cerr << form("warning: watershed %d (R=%d) not done\n", 
-		   i, unionf.findSet(i));
+      fprintf(stderr, "warning: watershed %d (R=%d) not done\n", 
+	     i, unionf.findSet(i));
     }
   }
 #endif
