@@ -137,6 +137,7 @@ int Vect_set_fatal_error (int);
 int Vect_get_fatal_error ();
 
     /* Open/close/rewind/set_constraints for map */
+int Vect_legal_filename(char *);
 int Vect_set_open_level (int);
 int Vect_open_old (struct Map_info *, char *, char *);
 int Vect_open_new (struct Map_info *, char *, int);
