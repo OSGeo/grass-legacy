@@ -1,20 +1,20 @@
 
 
 
-r.profile            GRASS Reference Manual             r.profile
+r.profile <main>     GRASS Reference Manual      <main> r.profile
 
 
 
 NAME
-     r.profile - Outputs the raster map layer values lying on
+     _r._p_r_o_f_i_l_e - Outputs the raster map layer values lying on
      user-defined line(s).
-     (GRASS Raster Program)
+     (_G_R_A_S_S _R_a_s_t_e_r _P_r_o_g_r_a_m)
 
 SYNOPSIS
      r.profile
      r.profile help
-     r.profile map=name [result=type] [width=value]
-         line=east,north,east,north[,east,north,east,north,...]
+     r.profile map=_n_a_m_e [result=_t_y_p_e] [width=_v_a_l_u_e]
+         line=_e_a_s_t,_n_o_r_t_h,_e_a_s_t,_n_o_r_t_h[,_e_a_s_t,_n_o_r_t_h,_e_a_s_t,_n_o_r_t_h,...]
 
 DESCRIPTION
      This program outputs, in ASCII, the values assigned to those
@@ -26,12 +26,16 @@ DESCRIPTION
      cells, or a single aggregate value (e.g., average or median
      value).
 
+     _r._p_r_o_f_i_l_e automatically orders the coordinates.  The user
+     cannot specify the order for a specific profile; the
+     direction is always northwest to southeast.
+
 COMMAND LINE OPTIONS
      Parameters:
 
-     map=name          Raster map to be queried.
+     map=_n_a_m_e          Raster map to be queried.
 
-     result=type       Type of result to be output.
+     result=_t_y_p_e       Type of result to be output.
                        Options:  raw, median, average
                        Default:  raw
 
@@ -43,7 +47,7 @@ COMMAND LINE OPTIONS
                        under the profile;  median outputs the
                        median cell category value.
 
-     line=east,north,east,north[,east,north,east,north,...]
+     line=_e_a_s_t,_n_o_r_t_h,_e_a_s_t,_n_o_r_t_h[,_e_a_s_t,_n_o_r_t_h,_e_a_s_t,_n_o_r_t_h,...]
                        The geographic coordinates of the starting
                        and ending points that define each profile
                        line, given as easting and northing
@@ -53,24 +57,24 @@ COMMAND LINE OPTIONS
                        starting and ending coordinates of
                        additional lines.
 
-     width=value       Profile width, in cells (odd number).
+
+
+
+GRASS 4.1                U.S. Army CERL                         1
+
+
+
+
+
+
+r.profile <main>     GRASS Reference Manual      <main> r.profile
+
+
+
+     width=_v_a_l_u_e       Profile width, in cells (odd number).
                        Default:  1
 
                        Wider profiles can be specified by setting
-
-
-
-GRASS 4.0                U.S. Army CERL                         1
-
-
-
-
-
-
-r.profile            GRASS Reference Manual             r.profile
-
-
-
                        the width to 3, 5, 7, etc.  The profiles
                        are then formed as rectangles 3, 5, 7,
                        etc., cells wide.
@@ -85,8 +89,8 @@ OUTPUT FORMAT
      followed by a single value (i.e., the average or the median
      value).
 
-     These examples are for the elevation.dem raster map layer in
-     the spearfish sample data set distributed with GRASS 4.0:
+     These examples are for the _e_l_e_v_a_t_i_o_n._d_e_m raster map layer in
+     the _s_p_e_a_r_f_i_s_h sample data set distributed with GRASS 4.0:
 
      Single-cell profile:
 
@@ -119,28 +123,28 @@ OUTPUT FORMAT
 
      3-cell wide profile median:
 
+
+
+
+2                        U.S. Army CERL                 GRASS 4.1
+
+
+
+
+
+
+r.profile <main>     GRASS Reference Manual      <main> r.profile
+
+
+
           r.profile map=elevation.dem
           line=593655,4917280,593726,4917351 width=3
           result=median
 
-
-
-
-GRASS 4.0                U.S. Army CERL                         2
-
-
-
-
-
-
-r.profile            GRASS Reference Manual             r.profile
-
-
-
           22 1549.000000
 
 SEE ALSO
-     d.profile, r.transect
+     _d._p_r_o_f_i_l_e, _r._t_r_a_n_s_e_c_t
 
 AUTHOR
      Michael Shapiro, U.S. Army Construction Engineering Research
@@ -188,11 +192,7 @@ AUTHOR
 
 
 
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
