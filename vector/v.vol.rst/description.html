@@ -225,7 +225,7 @@ constant)</dd>
   <dd>Smoothing parameter</dd>
   <dd>Default: 0.1</dd>
   <dt><b>devi</b></dt>
-  <dd>Output deviations to a vector file </dd>
+  <dd>Output deviations to a vector file (not yet working, see bugs) </dd>
   <dt><b>cvdev</b></dt>
   <dd>Name of the output cross-validation vector file</dd>
   <dt><b>maskmap</b></dt>
@@ -267,6 +267,9 @@ constant)</dd>
 The vector points map must be a 3D vector map (x, y, z as geometry).
 The module <a href="v.in.db.html">v.in.db</a> can be used to generate
 a 3D vector map from a table containing x,y,z columns.
+
+<h2>BUGS</h2>
+<b>devi</b> file is written as 2D and deviations are not written as attributes.
 
 <h2>SEE ALSO</h2>
 <a href="g3.region.html">g3.region</a>,
