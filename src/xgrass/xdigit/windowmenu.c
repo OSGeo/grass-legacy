@@ -163,7 +163,7 @@ make_win_menu (parent)
     XtSetArg (wargs[n], XmNtopAttachment, XmATTACH_POSITION); n++;
     XtSetArg (wargs[n], XmNtopPosition, y); n++;
     XtSetValues (overlay, wargs, n); 
-   /* 
+    
     x += 6; 
     backdrop =
     make_button (parent, "",win_men, MWC_BACKDROP, "backdrop", fg, bg,
@@ -174,7 +174,7 @@ make_win_menu (parent)
     XtSetArg (wargs[n], XmNtopAttachment, XmATTACH_POSITION); n++;
     XtSetArg (wargs[n], XmNtopPosition, y); n++;
     XtSetValues (backdrop, wargs, n); 
-   */ 
+   
     x += 8; 
     clear =
     make_button (parent, "", win_men, MWC_CLEAR, "clear", fg, bg,
