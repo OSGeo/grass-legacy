@@ -46,6 +46,9 @@
 #define GET_MT 0
 #define SET_MT 1
 
+#define GET_VAL 0
+#define SET_VAL 1
+
 /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 /*                                                           */
 /*                            Unions                         */
@@ -339,7 +342,7 @@ void getValidParts( lineDescript *line1 );
    in finding the new centroid position
 */
 
-void locateNewCentroid( double *xpos1, double *xpos2, 
+int locateNewCentroid( double *xpos1, double *xpos2, 
 			double xcentre, pntDescript *isects, int nIsects );
 
 
@@ -369,6 +372,13 @@ void recalcCentroid( partDescript *part1, double intsect );
 /* Set or retrieve the value of map-type required by various functions remotely */
 
 int procMapType( int iswitch, int *mtype );
+
+
+/* Set a variable to indicate if we want to reject calculation of the current
+   centroid
+*/
+
+int proc_reject_centroid( int, int *);
 
 
 #endif /* SHP2DIG_INCLUDE */
