@@ -63,7 +63,7 @@ main (int argc, char *argv[])
     char **layer_names; /* names of layers to be imported */
     int *layers;  /* layer indexes */
     int nlayers; /* number of layers to import */
-    char **available_layer_names; /* names of layers to be imported */;
+    char **available_layer_names; /* names of layers to be imported */
     int navailable_layers; 
     int layer_id;
 
