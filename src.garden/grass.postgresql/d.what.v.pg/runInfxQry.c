@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include "display.h"
 #include "raster.h"
+#include "glocale.h"
 
 int runInfxQry(SQL_stmt,print_out)
 	char *SQL_stmt;
@@ -34,7 +35,7 @@ if(!strncmp(print_out,"v",1)) vrbs=1;
     pg_conn = PQsetdb(pghost,NULL, NULL,NULL,G_getenv("PG_DBASE"));
 
     if (PQstatus (pg_conn) == CONNECTION_BAD) {
-      printf ("Error: select Postgres:%s\n",PQerrorMessage(pg_conn));
+      printf (_("Error: select Postgres:%s\n"),PQerrorMessage(pg_conn));
       PQfinish(pg_conn);
       exit (-1); 
     }
@@ -44,7 +45,7 @@ if ( strncmp(sqlcmd,"update",6) && strncmp(sqlcmd,"UPDATE",6) ){
 
 upd=1;
     if ( PQresultStatus (res) != PGRES_TUPLES_OK ) {
-      printf ("Error: Connecting to Postgres:%s\n",PQerrorMessage(pg_conn)); 
+      printf (_("Error: Connecting to Postgres:%s\n"),PQerrorMessage(pg_conn)); 
       PQfinish(pg_conn);
       exit (-1);      
     }
@@ -76,7 +77,7 @@ upd=1;
     	} 
 	
  	if(vrbs && upd)
-    	fprintf(stderr,"\n%d rows selected\n\n",nrows);
+    	fprintf(stderr,_("\n%d rows selected\n\n"),nrows);
     
 
     	
