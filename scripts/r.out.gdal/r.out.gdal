@@ -69,22 +69,12 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec g.parser "$0" "$@"
 fi
 
-gdal-config --formats 2>&1 > /dev/null
-if [ $? -ne 0 ] ; then
-   echo "ERROR: GDAL not installed (gdal-config not found)"
+#check gdal_translate exists
+if [ -z "`which gdal_translate`" ] ; then
+   echo "ERROR: Required program gdal_translate is missing"
+   echo "       Full GDAL binaries are needed to use r.out.gdal."
    exit 1
 fi
-
-### 2005: test doesn't work with GRASS plugin
-#
-##check if GRASS is supported by gdal_translate for reading
-#GDAL_INPUT_FORMATS=`gdal-config --formats`
-#echo $GDAL_INPUT_FORMATS | grep grass 2>&1 > /dev/null
-#if [ $? -ne 0 ] ; then
-#   echo "ERROR: GDAL installation does not support GRASS."
-#   echo "       Recompile GDAL libraries to use r.out.gdal."
-#   exit 1
-#fi
 
 INPUT="$GIS_OPT_input"
 FORMAT="$GIS_OPT_format"
