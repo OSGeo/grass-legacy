@@ -1,5 +1,6 @@
 <H2>DESCRIPTION</H2>
 
+
 <EM>r.mapcalc</EM> performs arithmetic on raster map layers.
 New raster map layers can be created which are arithmetic expressions
 involving existing raster map layers, integer or floating point constants,
@@ -223,18 +224,14 @@ map or across multiple maps.
 <H2>RASTER MAP LAYER VALUES FROM THE CATEGORY FILE</H2>
 
 Sometimes it is desirable to use a value associated with a category's
-<EM>contents</EM> instead of the category value itself.  If a raster
-map layer name is preceded by the
-<B>@</B>
+<EM>label</EM> instead of the category value itself.  If a raster
+map layer name is preceded by the <B>@</B>
 operator, then the labels in the category file for the raster map layer
 are used in the expression instead of the category value.
 
-
 <P>
-
 For example, suppose that the raster map layer <EM>soil.ph</EM>
 (representing soil pH values) has a category file with labels as follows:
-
 
 <P>
 
@@ -259,31 +256,26 @@ cat	label
 
 
 <P>
-
 Then the expression:
-
-
 <P>
 
 <DL>
 <DD>
-result = @soils.ph * 10
+result = @soils.ph
 </DL>
 
-
 <P>
-
 would produce a result with category values
-0, 14, 24, 35, 58, 72, 88 and 94.
-
+0, 1.4, 2.4, 3.5, 5.8, 7.2, 8.8 and 9.4.
 
 <P>
-
 Note that this operator may only be applied to raster map layers
 and produces a floating point value in the expression.
-Also the category label must start with a valid number.
-Missing labels, or labels that do not start with a number will
-(silently) produce a 0 value for that category.
+Therefore, the category label must start with a valid number.
+If the category label is integer, it will be represented by
+a floating point number. I the category label does not start
+with a number or is missing, it will be represented by NULL
+(no data) in the resulting raster file. 
 
 <H2>GREY SCALE EQUIVALENTS AND COLOR SEPARATES</H2>
 
@@ -468,6 +460,7 @@ eval([x,y,...,]z)	evaluate values of listed expr, pass results to z
 exp(x)			exponential function of x			F
 exp(x,y)		x to the power y				F
 float(x)		convert x to single-precision floating point	F
+graph(x,x1,y1[x2,y2..])	convert the x to a y based on points in a graph	F
 if			decision options:				*
 if(x)			1 if x not zero, 0 otherwise
 if(x,a)			a if x not zero, 0 otherwise
@@ -509,7 +502,7 @@ Note, that the row() and col() indexing starts with 1.
 Floating point numbers are allowed in the expression. A floating point
 number is a number which contains a decimal point:
 <PRE>
-2.3   12.   .81
+    2.3   12.0   12.   .81
 </PRE>
 Floating point values in the expression are handled in a special way.
 With arithmetic and logical operators, if either operand is float,
@@ -522,6 +515,14 @@ the result is float if any argument is float, integer otherwise.
 Note: If you calculate with integer numbers, the resulting map will
 be integer. If you want to get a float result, add the decimal point
 to integer number(s).
+<P>
+If you want floating point division, at least one of the arguments has
+to be a floating point value. Multiplying one of them by 1.0 will
+produce a floating-point result, as will using float():
+<pre>
+      r.mapcalc "ndvi=float(lsat.4 - lsat.3) / (lsat.4 + lsat.3)"
+</pre>
+
 
 <H2>NULL support</H2>
 
@@ -598,7 +599,31 @@ To change all map values below 5 to NULL:
 <PRE>
         newmap = if(map&lt;5, null(), 5)
 </PRE>
-
+The graph function allows users to specify a x-y conversion using 
+pairs of x,y coordinates.
+In some situations a transformation from one value to another is not
+easily established mathematically, but can be represented by a 2-D
+graph.  The graph() function provides the opportunity to accomplish
+this.  An x-axis value is provided to the graph function along with
+the associated graph represented by a series of x,y pairs.  The x
+values must be monotonically increasing (each larger than or equal to
+the previous).  The graph function linearly interpolates between
+pairs.  Any x value lower the lowest x value (i.e. first) will have
+the associated y value returned.  Any x value higher than the last
+will similarly have the associated y value returned.  Consider the
+request:
+<PRE>
+        newmap = graph(map, 1,10, 2,25, 3,50)
+</PRE>
+X (map) values supplied and y (newmap) values returned:
+<PRE>
+        0, 10
+        1, 10,
+        1.5, 16.5
+        2.9, 47.5
+        4, 50
+        100, 50
+</PRE>
 
 <H2>REGION/MASK</H2>
 
@@ -756,7 +781,5 @@ by Anil K. Jain (Prentice Hall, NJ, 1989; p 67).
 <H2>AUTHOR</H2>
 
 Michael Shapiro, U.S.Army Construction Engineering 
-Research Laboratory<br>
-Partially rewritten by Glynn Clements
-
+Research Laboratory
 <p><i>Last changed: $Date$</i>
