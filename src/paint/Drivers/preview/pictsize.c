@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "P.h"
 Ppictsize (rows, cols)
 {
@@ -6,7 +5,7 @@ Ppictsize (rows, cols)
     if (data)
 	error ("Multiple pictures not allowed");
     if (cols > window_ncols || rows > window_nrows)
-	error ("Picture size is too large for the graphics window");
+	error ("Picture size is too large for the graphics frame");
     data = (int *) malloc (cols * sizeof(int));
     picture_ncols = cols;
     picture_nrows = rows;
