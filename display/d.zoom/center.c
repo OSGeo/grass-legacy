@@ -21,6 +21,9 @@ int make_window_center (struct Cell_head *window, double mag)
 
     len_n = len_e = 0;
 
+    east = (window->east + window->west)/2.;
+    north = (window->north + window->south)/2.;
+
     east_west = (window->east - window->west)/mag;
     window->east =  east + east_west/2;
     window->west =  east - east_west/2;
