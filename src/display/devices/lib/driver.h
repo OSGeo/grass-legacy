@@ -1,12 +1,18 @@
-#ifdef SWITCHER
-#define GLOBAL
-#else
-#define GLOBAL extern
-#endif
 
-GLOBAL int cur_x ;
-GLOBAL int cur_y ;
+#define DEF_WIDTH  640
+#define DEF_HEIGHT 480
 
-GLOBAL double _text_size_x ;
-GLOBAL double _text_size_y ;
-GLOBAL double _text_rotation ;
+extern int NCOLORS;
+
+extern int screen_left;
+extern int screen_right;
+extern int screen_bottom;
+extern int screen_top;
+
+extern int cur_x;
+extern int cur_y;
+
+extern double text_size_x;
+extern double text_size_y;
+extern double text_rotation;
+

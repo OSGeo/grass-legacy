@@ -1,10 +1,6 @@
 /* These return the values as defined in the Graph_Set() routine */
 
-extern int screen_left;
-extern int screen_right;
-extern int screen_bottom;
-extern int screen_top;
-extern int NCOLORS;
+#include "driver.h"
 
 int Screen_left (int *index)
 {

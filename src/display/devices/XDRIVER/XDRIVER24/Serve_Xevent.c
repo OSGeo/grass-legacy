@@ -67,8 +67,8 @@ int Service_Xevent (int opened)
 	switch (event.type)
 	{
 	case ConfigureNotify:
-	    if ( event.xconfigure.width != SC_WID || 
-		 event.xconfigure.height != SC_HITE ) 
+	    if ( event.xconfigure.width != screen_right || 
+		 event.xconfigure.height != screen_bottom ) 
 		do_resize = 1; /* group requests into one */
 	    break;
 
@@ -243,8 +243,6 @@ static void handleResizeEvent(void)
     if (!XGetWindowAttributes(dpy, grwin, &xwa))
 	return;
 
-    SC_WID  = xwa.width;
-    SC_HITE = xwa.height;
     screen_right = xwa.width;
     screen_bottom = xwa.height;
 
@@ -286,10 +284,10 @@ static void handleResizeEvent(void)
 
     /* Handle backing store */
     XFreePixmap(dpy, bkupmap);
-    bkupmap = XCreatePixmap(dpy, grwin, SC_WID, SC_HITE, xwa.depth);
+    bkupmap = XCreatePixmap(dpy, grwin, xwa.width, xwa.height, xwa.depth);
     XGetGCValues(dpy, gc, GCForeground, &gc_values);
     XSetForeground(dpy, gc, BlackPixel(dpy, scrn));
-    XFillRectangle(dpy, bkupmap, gc, 0, 0, SC_WID, SC_HITE);
+    XFillRectangle(dpy, bkupmap, gc, 0, 0, xwa.width, xwa.height);
     XSetForeground(dpy, gc, gc_values.foreground);
     XSetWindowBackgroundPixmap(dpy, grwin, bkupmap);
     XClearWindow(dpy, grwin);

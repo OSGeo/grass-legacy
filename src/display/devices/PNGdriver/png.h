@@ -1,13 +1,7 @@
 #include <gd.h>
 
-#ifndef BUFSIZ
-#include <stdio.h>
-#endif
-
 #include "config.h"
-
-#define DEF_WIDTH  640
-#define DEF_HEIGHT 480
+#include "driver.h"
 
 #if defined(HAVE_GDIMAGEPNG)
 # define FILE_NAME  "map.png"
@@ -23,4 +17,3 @@ extern gdImagePtr im;
 extern int currentColor;
 extern unsigned long *xpixels;
 extern int true_color;
-extern int NCOLORS;

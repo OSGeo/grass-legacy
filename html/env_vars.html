@@ -67,6 +67,9 @@ mouse,
 <br>&nbsp; #&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; define RIGHTB&nbsp;&nbsp;
 2
 <br>&nbsp; #endif
+<p>GRASS_BACKGROUNDCOLOR
+<br>[PNGdriver]
+<br>&nbsp; defines the background color of the image created by the PNG driver
 <p>BAUD
 <p>CMAP_SIZE
 <p>CODECENTER
@@ -138,10 +141,10 @@ structure
 <br>&nbsp; either "text" or "tcltk" to define non-/graphical startup
 <p>GRASS_HEIGHT
 <br>[d.mon]
-<br>&nbsp; defines the height of CELL driver output
+<br>&nbsp; defines the height of GRASS monitor
 <p>GRASS_WIDTH
 <br>[d.mon]
-<br>&nbsp; defines the width&nbsp; of CELL driver output
+<br>&nbsp; defines the width of GRASS monitor
 <p>GTUNE_VSUP_RAM
 <p>GTUNE_VTOC_RAM
 <p>HOME
@@ -196,6 +199,8 @@ is "GRASS Development Team"
 <br>[g.select.pg]
 <br>&nbsp; name of selected PostgreSQL database
 <p>GRASS_PNGFILE
+<br>[PNGdriver]
+<br>&nbsp; name of PNG output file
 <p>PREVIEW_BACKGROUND
 <p>PROJ_LIB
 <p>PSPAINTER
@@ -228,8 +233,11 @@ is "GRASS Development Team"
 <p>TERM
 <br>&nbsp; current terminal type
 <p>GRASS_TEXT_BROWSER - not found in source 20/02/01
-<p>TRANSPARENT
+<p>GRASS_TRANSPARENT
+<br>[PNGdriver]
+<br>&nbsp; if "TRUE", the image created by the PNG driver will have a transparent background
 <p>GRASS_TRUECOLOR
+<br>[PNGdriver]
 <br>&nbsp; if "TRUE", the PNG driver generates a true-color image (requires GD 2.0)
 <p>USER
 <p>WIDTH
@@ -239,21 +247,12 @@ is "GRASS Development Team"
 <p>WRITE
 <p>X3D_HEIGHT
 <p>X3D_WIDTH
-<p>XDRIVER_HEIGHT
-<br>[d.mon]
-<br>&nbsp; defines the height of GRASS monitor
-<p>XDRIVER_WIDTH
-<br>[d.mon]
-<br>&nbsp; defines the width of GRASS monitor
-<p>XDRIVER_LEFT
-<br>[d.mon]
-<br>&nbsp; defines the left position of GRASS monitor
-<p>XDRIVER_TOP
-<br>[d.mon]
-<br>&nbsp; define the upper position of GRASS monitor
 <p>XDRIVER_PRIVATE_CMAP
 <br>[d.mon]
 <br>&nbsp; if set, use a private colormap
+<p>XDRIVER_WINDOW
+<br>[d.mon]
+<br>&nbsp; if set, should contain an X window ID; XDRIVER will use this window instead of creating its own
 <p>XGANIM_SIZE
 <p>_XPG
 <p>

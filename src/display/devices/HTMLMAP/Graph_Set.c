@@ -13,19 +13,20 @@
 
 #include <string.h>
 #include <stdlib.h>
+
 #include "gis.h"
 #include "driverlib.h"
-
-
-#define MAIN
+#include "driver.h"
 #include "htmlmap.h"
 
-int screen_left;
-int screen_top;
-int screen_right;
-int screen_bottom;
+char *last_text;
+int   last_text_len;
+char *file_name;
+int   html_type;
+FILE *output;
 
-int NCOLORS       = 256 ;
+struct MapPoly *head;
+struct MapPoly **tail;
 
 int BBOX_MINIMUM;
 int MAX_POINTS;
@@ -37,27 +38,7 @@ int Graph_Set (int argc, char **argv, int nlev)
 
     G_gisinit("HTMLMAP driver") ;
 
-    /*
-     * set the 'screen' resolution of the driver
-     */
-
-    if (NULL != (p = getenv ("GRASS_WIDTH"))) {
-	screen_right = atoi (p);
-        if (screen_right <= 0) {
-	    screen_right = DEF_WIDTH;
-        }
-    } else {
-	screen_right = DEF_WIDTH;
-    }
-
-    if (NULL != (p = getenv ("GRASS_HEIGHT"))) {
-	screen_bottom = atoi (p);
-        if (screen_bottom <= 0) {
-            screen_bottom = DEF_HEIGHT;
-        }
-    } else {
-	screen_bottom = DEF_HEIGHT;
-    }
+    NCOLORS = 256;
 
     /*
      * set the minimum bounding box dimensions 
