@@ -5,7 +5,7 @@
 *
 * MODULE:       d.text.freetype
 *
-* AUTHOR(S):    Huidae Cho <hdcho@geni.cemtlo.com>
+* AUTHOR(S):    Huidae Cho <hdcho@water.knu.ac.kr>
 *
 * PURPOSE:      d.text with FreeType2 support
 *               http://www.freetype.org
@@ -133,7 +133,7 @@ main(int argc, char **argv)
 
 	module = G_define_module();
 	module->description =
-		"Draws text in the active display frame on the graphics monitor using TrueType fonts.";
+		"Draws text in the graphics monitor's active display frame using TrueType fonts.";
 
 	i = 0;
 	if(getenv("GRASS_FREETYPECAP"))
@@ -157,14 +157,14 @@ main(int argc, char **argv)
 	param.text->key         = "text";
 	param.text->type        = TYPE_STRING;
 	param.text->required    = NO;
-	param.text->description = "Text";
+	param.text->description = "Text (enclose multiple words \"in quotes\")";
 
 	param.east_north = G_define_option();
 	param.east_north->key         = "east_north";
 	param.east_north->type        = TYPE_DOUBLE;
 	param.east_north->required    = NO;
 	param.east_north->key_desc    = "east,north";
-	param.east_north->description = "Coordinates";
+	param.east_north->description = "Map coordinates";
 
 	param.font = NULL;
 	if(fonts_count)
@@ -183,7 +183,7 @@ main(int argc, char **argv)
 	param.path->key         = "path";
 	param.path->type        = TYPE_STRING;
 	param.path->required    = NO;
-	param.path->description = "Font path";
+	param.path->description = "Path to TrueType font (including file name)";
 
 	param.charset = G_define_option();
 	param.charset->key         = "charset";
@@ -195,7 +195,8 @@ main(int argc, char **argv)
 	param.color->key         = "color";
 	param.color->type        = TYPE_STRING;
 	param.color->required    = NO;
-	param.color->description = "Color";
+	param.color->description =
+		"Text color (either standard GRASS color or hexadecimal 0xRRGGBB)";
 
 	param.size = G_define_option();
 	param.size->key         = "size";
@@ -210,27 +211,27 @@ main(int argc, char **argv)
 	param.align->required    = NO;
 	param.align->answer      = DEFAULT_ALIGN;
 	param.align->options     = "ll,lc,lr,cl,cc,cr,ul,uc,ur";
-	param.align->description = "Text align";
+	param.align->description = "Text alignment";
 
 	param.rotation = G_define_option();
 	param.rotation->key         = "rotation";
 	param.rotation->type        = TYPE_DOUBLE;
 	param.rotation->required    = NO;
 	param.rotation->answer      = DEFAULT_ROTATION;
-	param.rotation->description = "Rotation angle (counterclockwise)";
+	param.rotation->description = "Rotation angle in degrees (counterclockwise)";
 
 
 	flag.r = G_define_flag();
 	flag.r->key         = 'r';
-	flag.r->description = "Radian rotation";
+	flag.r->description = "Use radians instead of degrees for rotation";
 
 	flag.p = G_define_flag();
 	flag.p->key         = 'p';
-	flag.p->description = "Pixel coordinates";
+	flag.p->description = "Use pixel coordinates ([0,0] is top left)";
 
 	flag.s = G_define_flag();
 	flag.s->key         = 's';
-	flag.s->description = "Pixel size";
+	flag.s->description = "Font size is height in pixels";
 
 	flag.c = G_define_flag();
 	flag.c->key         = 'c';
@@ -968,17 +969,37 @@ draw_character(rectinfo win, FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
 	{
 		buffer = (char *) G_malloc(l);
 		memset(buffer, 0, l);
-	
-		j = (width + 7) / 8;
-	
+
+		j = face->glyph->bitmap.pitch;
+
+	/* note in FreeType bitmap.buffer [0,0] is lower left */
 		for(i = 0; i < l; i++)
 		{
-			if(face->glyph->bitmap.buffer[
-				(i / width) * j + (i % width) / 8
-			   ] & (1 << (7 - (i % width) % 8)))
+			if(face->glyph->bitmap.buffer
+			  [ (i / width) * j + (i % width) / 8 ]
+			    & (1 << (7 - (i % width) % 8)) )
 				buffer[i] = color;
 		}
-	
+
+#ifdef DEBUG
+		if(1) {
+			int k;
+
+			fprintf(stdout, "[%c] %dx%d  pitch=%d\n", ch, width, rows, j);
+			for(i=0; i<rows; i++) {
+				for(k=0; k<width; k++) {
+					if(buffer[(i*width)+k])
+						fprintf(stdout, "%c", ch);
+					else
+						fprintf(stdout, ".");
+				}
+				fprintf(stdout, "\n");
+			}
+			fprintf(stdout, "\n\n");
+			fflush(stdout);
+		}
+#endif
+
 		start_row = 0;
 		start_col = 0;
 		w = width;
