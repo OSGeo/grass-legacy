@@ -393,7 +393,7 @@ int do16bit (int fd, unsigned char *buf, unsigned size)
 		buf[i*2+1] = tmpbuf[i*2+1];
 		}
 	
-	/*swab(tmpbuf, buf, size*2);*//*Removed APC Nov 20/1999*/
+	/*swab(tmpbuf, buf, size*2);*/ /*Removed APC Nov 20/1999*/
 	/*static void convbuf (void *buf, int ftype)*/
 	
 	return(2*n);
@@ -409,7 +409,7 @@ int do16bitS (int fd, unsigned char *buf, unsigned size)
 
 	tmpbuf = (unsigned char*)G_malloc(size*2);
 	n = read(fd,tmpbuf,size*2);
-	/*swab(tmpbuf, buf, size*2);*//*Removed APC Nov 20/1999*/
+	/*swab(tmpbuf, buf, size*2);*/ /*Removed APC Nov 20/1999*/
 	for (i=0;i<size;i++)
 		{
 		buf[i*2+1] = tmpbuf[i*2+0];
@@ -545,7 +545,7 @@ int main (int argc, char *argv[])
         if (!(swapflag->answer || autoswapflag->answer))
         {
         	ActuallySwap = 0;
-        	if ((erdashd.pack == 256 ) || (erdashd.pack == 512 )) // 1 or 2 byte-swapped
+        	if ((erdashd.pack == 256 ) || (erdashd.pack == 512 )) /* 1 or 2 byte-swapped*/
                 	ActuallySwap = 1 ;
          	if (erdashd.pack == 0)
          	{
