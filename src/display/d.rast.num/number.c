@@ -304,7 +304,7 @@ main (int argc, char **argv)
 
 			/* if(cell[col] > 0) { */
 			   if ( fixed_color == 0 ) {
-					G_get_color(cell[col],&R,&G,&B,&colors);
+					G_get_raster_color(&cell[col],&R,&G,&B,&colors, inmap_type);
 
 				/*
 				if(B>200 && R < 205 && G < 150)
