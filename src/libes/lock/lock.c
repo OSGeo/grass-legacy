@@ -1,5 +1,3 @@
-/* %W% %G% */
-
 /******************************************************************
 * lock_file (file,pid)
 *   char *file
@@ -108,6 +106,8 @@ find_process (pid)
    kill failed because no such process, or because user is
    not owner of process
 */
+    if (pid <= 0)
+	return 0;
     if (kill (pid, 0) == 0)
 	return 1;
     return errno != ESRCH;
