@@ -71,13 +71,13 @@ void interface(int argc, char **argv)
     rast_out->required	  = YES;
 
     tol1_val->key	  = "s_tol";
-    tol1_val->description = "Slope tolerance that defines a `flat' surface (degrees)";
+    tol1_val->description = "Slope tolerance that defines a 'flat' surface (degrees)";
     tol1_val->type	  = TYPE_DOUBLE;
     tol1_val->required	  = NO;
     tol1_val->answer	  = "1.0";
 
     tol2_val->key	  = "c_tol";
-    tol2_val->description = "Curvature tolerance that defines `planar' surface";
+    tol2_val->description = "Curvature tolerance that defines 'planar' surface";
     tol2_val->type	  = TYPE_DOUBLE;
     tol2_val->required	  = NO;
     tol2_val->answer	  = "0.0001";
@@ -161,7 +161,7 @@ void interface(int argc, char **argv)
 	    			    	    mparam = FEATURE;
 			    	    else
 			    	    {
-	    				G_warning("Morphometric parameter not recognised. Assuming `Elevation'");
+	    				G_warning("Morphometric parameter not recognised. Assuming 'Elevation'");
 	    				mparam  = ELEV;
     			    	    }
 
