@@ -173,8 +173,8 @@ Vect__P_init_new_plus (map, name)
     }
     else
     {
-	fclose(map->dig_fp); 
-	map->dig_fp=NULL;    
+	/* fclose(map->dig_fp); */ /* commented out for Linux */ 
+	/* map->dig_fp=NULL; */    
 	have_plus = 0;
 	/*
 	return ("Cannot open dig_plus file");
