@@ -46,43 +46,41 @@ static int Vect__divide_and_conquer (struct Slink *, struct line_pnts *,
  \param Map_info structure, area number, x, y
 */
 int 
-Vect_get_point_in_area (
-		       struct Map_info *Map, int area, double *X, double *Y)
+Vect_get_point_in_area ( struct Map_info *Map, int area, double *X, double *Y)
 {
-/*
   static struct line_pnts *Points;
   static struct line_pnts **IPoints;
   static int first_time = 1;
   static int isl_allocated = 0;
-  register int i;
+  int i, n_isles;
 
-  if (first_time)
-    {
+  G_debug ( 3, "Vect_get_point_in_area()" );
+
+  if (first_time) {
       Points = Vect_new_line_struct ();
       IPoints = NULL;
       first_time = 0;
-    }
-  if (Map->plus.Area[area].n_isles > isl_allocated)
-    {
+  }
+  n_isles = Vect_get_area_num_isles ( Map, area);
+  if ( n_isles > isl_allocated) {
       IPoints = (struct line_pnts **)
-	G_realloc (IPoints, (1 + Map->plus.Area[area].n_isles) * sizeof (struct line_pnts *));
-      for (i = isl_allocated; i < Map->plus.Area[area].n_isles; i++)
-	IPoints[i] = Vect_new_line_struct ();
-      isl_allocated = Map->plus.Area[area].n_isles;
-    }
+	G_realloc (IPoints, (1 + n_isles) * sizeof (struct line_pnts *));
+      for (i = isl_allocated; i < n_isles; i++)
+	    IPoints[i] = Vect_new_line_struct ();
+      isl_allocated = n_isles;
+  }
 
   if (0 > Vect_get_area_points (Map, area, Points))
-    return -1;
+      return -1;
 
-  for (i = 0; i < Map->plus.Area[area].n_isles; i++)
-    {
+  for (i = 0; i < n_isles; i++) {
       IPoints[i]->alloc_points = 0;
-      if (0 > Vect_get_isle_points (Map, Map->plus.Area[area].isles[i], IPoints[i]))
-	return -1;
-    }
-  return (Vect_get_point_in_poly_isl (Points, IPoints, Map->plus.Area[area].n_isles, X, Y));
-*/
-    return -1;
+      if (0 > Vect_get_isle_points (Map, Vect_get_area_isle(Map, area, i), IPoints[i]))
+	  return -1;
+  }
+  return (Vect_get_point_in_poly_isl (Points, IPoints, n_isles, X, Y));
+
+  return -1;
 }
 
 static int 
@@ -413,12 +411,15 @@ Vect_get_point_in_poly_isl (
 			     double *att_x, double *att_y)
 {
   static struct line_pnts *Intersects;
+  static int  first_time = 1;
   double cent_x, cent_y;
   register int i, j;
   double max, hi_y, lo_y;
   int maxpos;
-  int point_in_sles = 0, first_time = 1;
+  int point_in_sles = 0;
   double diff;
+
+  G_debug ( 3, "Vect_get_point_in_poly_isl(): n_isles = %d", n_isles );
 
   if (first_time)
     {
@@ -535,3 +536,4 @@ Vect_get_point_in_poly_isl (
   /* if (dig_point_in_poly (*att_x, *att_y, Points)==0.0) */
   return 0;
 }
+
