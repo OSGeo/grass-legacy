@@ -55,6 +55,7 @@ parse_command_line(int argc, char *argv[])
     struct Option *driver, *database;
     struct Flag *p, *s;
     struct GModule *module;
+    char *drv, *db;
 
     /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
@@ -65,12 +66,16 @@ parse_command_line(int argc, char *argv[])
     driver->options     = db_list_drivers();
     driver->required 	= NO;
     driver->description = "driver name";
+    if ( (drv=db_get_default_driver_name()) ) 
+	driver->answer = drv;
 
     database 		= G_define_option();
     database->key 	= "database";
     database->type 	= TYPE_STRING;
     database->required 	= NO;
     database->description = "database name";
+    if ( (db=db_get_default_database_name()) ) 
+	database->answer = db;
 
     p = G_define_flag();
     p->key               = 'p';
