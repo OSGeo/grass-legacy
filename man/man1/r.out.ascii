@@ -1,0 +1,75 @@
+.TH r.out.ascii
+.SH NAME
+\fIr.out.ascii\fR \- Converts a raster map layer into an ASCII text file.
+.br
+.I (GRASS Raster Data Export Program)
+.SH SYNOPSIS
+\fBr.out.ascii\fR
+.br
+\fBr.out.ascii help\fR
+.br
+\fBr.out.ascii \fR[\fB-h\fR] \fBmap\*=\fIname \fR[\fBdigits\*=\fIvalue\fR]
+.SH DESCRIPTION
+.I r.out.ascii
+converts a user-specified raster map layer (map\*=\fIname\fR)
+into an ASCII text file suitable for export to other computer systems.
+The digits\*=\fIvalue\fR option (where \fIvalue\fR is a number of the
+user's choice) can be used to request that numbers in the ouput
+be equally-spaced (i.e., columnar output).
+Each category value in the ASCII map layer will then take up
+\fIvalue\fR number of spaces.
+However, to use this, the user should know the maximum number of
+digits that will occur in the output file, and add one to this number
+(to leave a space between each column).  The user can find the maximum
+number of digits occurring in the output file
+by running \fIr.out.ascii\fR without the digits\*=\fIvalue\fR option.
+.LP
+The GRASS program \fIr.in.ascii\fR can be used to perform the reverse
+function, converting an ASCII file in suitable format to GRASS
+raster file format.
+
+\fBFlag:\fR
+.IP \fB-h\fR 18
+Suppress printing of header information.
+
+\fBParameters:\fR
+.IP \fBmap\*=\fIname\fR 18
+Name of an existing raster map layer.
+.IP \fBdigits\*=\fIvalue\fR 18
+The minimum number of digits (per cell) to be printed.
+.LP
+.LP
+\fIr.out.ascii\fR can be run either non-interactively or interactively.
+The program will be run non-interactively if the user specifies
+the name of a raster map layer and (optionally) a value for \fIdigits\fR,
+using the form
+.LP
+.RS
+\fBr.out.ascii map\*=\fIname \fR[\fBdigits\*=\fIvalue\fR]
+.RE
+.LP
+where \fIname\fR is the name of a raster map layer to
+be converted to ASCII format, and \fIvalue\fR is the minimum number
+of digits (per cell) to be printed to output.  The user can also
+the -h option to suppress the output of file header information.
+.LP
+Alternately, the user can simply type \fBr.out.ascii\fR on the command line,
+without program arguments.  In this case, the user will be prompted for
+parameter values using the standard GRASS parser interface
+described in the manual entry for \fIparser\fR.
+.SH NOTES
+The output from \fIr.out.ascii\fR may be placed into a file
+by using the UNIX redirection mechanism;  e.g.:
+.LP
+.RS
+\fBr.out.ascii map\*=soils > out.file\fR
+.RE
+.LP
+The output file \fIout.file\fR can then be printed or copied
+onto a magnetic tape or floppy disk for export purposes.
+.SH SEE ALSO
+.I r.in.ascii,
+and
+.I parser
+.SH AUTHOR
+Michael Shapiro, U.S. Construction Engineering Research Laboratory
