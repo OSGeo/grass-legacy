@@ -286,19 +286,11 @@
 			}}
 			{separator}
 			{command "Generate concentric circles around points" {} ""  {} -command { execute r.circle }}
-			{cascad "Generate and interpolate surfaces" {} "" 1 {			
-			    {cascad "Interpolate surfaces from points" {} "" 1 {			
-						{command "Bilinear from points" {} "" {} -command { execute r.bilinear }}
-						{command "Inverse distance weighted from raster (Lat./Long. locations)" {} "" {} -command { execute r.surf.idw }}
-						{command "Inverse distance weighted from vector points" {} "" {} -command { execute v.surf.idw }}
-						{command "Regularized spline tension from vector points" {} "" {} -command { spawn v.surf.rst }}
-				}}
-			    {command "Fill NULL areas using regularized spline tension" {} "" {} -command {execute  r.fillnulls }}
-			    {cascad "Interpolate surfaces from contours" {} "" 1 {			
-						{command "Regularized spline tension from raster contours" {} "" {} -command { execute r.surf.contour }}
-						{command "Regularized spline tension from vector contours" {} "" {} -command { spawn v.surf.rst }}
-			    }}
-			    {separator}
+			{cascad "Generate random points" {} "" 1 {			
+			    {command "Generate random cells" {} "" {} -command {execute  r.random.cells }}
+			    {command "Generate random cells and sites from raster map" {} "" {} -command {execute  r.random }}
+			}}
+			{cascad "Generate surfaces" {} "" 1 {			
 			    {command "Generate density surface using moving Gausian kernal" {} "" {} -command {execute  v.kernel }}
 			    {command "Generate fractal surface" {} "" {} -command {execute  r.surf.fractal }}
 			    {command "Generate gaussian deviates surface" {} "" {} -command {execute  r.surf.gauss }}
@@ -306,11 +298,17 @@
 			    {command "Generate random deviates surface" {} "" {} -command {execute  r.surf.random }}
 			    {command "Generate random surface with spatial dependence" {} "" {} -command {execute  r.random.surface }}
 			}}
-			{cascad "Generate points" {} "" 1 {			
-			    {command "Generate random cells" {} "" {} -command {execute  r.random.cells }}
-			    {command "Generate random cells and sites from raster map" {} "" {} -command {execute  r.random }}
-			}}
 			{command "Generate vector contour lines" {} "" {} -command { execute r.contour }}
+			{cascad "Interpolate surfaces" {} "" 1 {			
+						{command "Bilinear interpolation from raster points" {} "" {} -command { execute r.bilinear }}
+						{command "Inverse distance weighted interpolation from raster points" {} "" {} -command { execute r.surf.idw }}
+						{command "Interpolation from raster contours" {} "" {} -command { execute r.surf.contour }}
+			            {separator}
+						{command "Inverse distance weighted interpolation from vector points" {} "" {} -command { execute v.surf.idw }}
+						{command "Regularized spline tension interpolation from vector points or contours" {} "" {} -command { exec v.surf.rst &}}
+			            {separator}
+			            {command "Fill NULL cells by interpolation using regularized spline tension" {} "" {} -command {execute  r.fillnulls }}
+			}}
 			{separator}
 			{cascad "Reports and statistics" {} "" 1 {			
 			    {command "Report basic file information" {} "" {} -command {execute  r.info }}
