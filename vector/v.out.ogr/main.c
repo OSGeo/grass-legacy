@@ -64,6 +64,8 @@ main (int argc, char *argv[])
     OGRFeatureDefnH Ogr_featuredefn;
     OGRGeometryH Ogr_geometry;
 
+    G_gisinit(argv[0]);
+
     /* Module options */
     module = G_define_module();
     module->description = "Convert to OGR format.";
@@ -108,7 +110,6 @@ main (int argc, char *argv[])
     cat_flag->description    = "Export features with category (labeled) only."
 			       "Otherwise all features are exported";
     
-    G_gisinit(argv[0]);
     if (G_parser (argc, argv)) exit(-1); 
     
     /* read options */
