@@ -557,7 +557,7 @@ if test -n "$USE_POSTGRES"; then
 	fi
 fi
 
-if test -n "$USE_POSTRES"; then
+if test -n "$USE_POSTGRES"; then
 	ac_save_ldflags=${LDFLAGS}
 	LDFLAGS="$LDFLAGS $PQLIBPATH"
 	AC_CHECK_LIB(pq,PQcmdTuples, 
