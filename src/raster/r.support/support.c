@@ -2,8 +2,8 @@
 #include "gis.h"
 main(argc, argv) char *argv[];
 {
-    char name[40];
-    char rname[40], rmapset[40];
+    char name[256];
+    char rname[256], rmapset[256];
     char buf[1024];
     struct Cell_head cellhd;
     int cellhd_ok;
@@ -81,3 +81,4 @@ main(argc, argv) char *argv[];
 
     exit(0);
 }
+G_clear_screen(){}
