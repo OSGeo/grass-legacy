@@ -1,6 +1,7 @@
 #include "site.h"
 #include <signal.h>
 #include <setjmp.h>
+#include "gis.h"
 
 static jmp_buf jmp_env;
 
@@ -10,15 +11,19 @@ duplicates (s1)
 {
 	SITE_LIST s2;
 	char *desc1, *desc2;
-	int n1, e1;
-	int n2, e2;
+	double n1, e1;
+	double n2, e2;
 	int dups;
 	int same;
 	int interrupted;
 	int (*sigint)();
 	int (*sigquit)();
 	int catch();
+        char buff1[50], buff2[50], *N, *E;
+        int proj;
+	char *format_north(), *format_east();
 
+        N = "(N)";   E = "(E)";
 	initialize_site_list (&s2);
 	printf ("checking for duplicates\n");
 
@@ -29,6 +34,7 @@ duplicates (s1)
 	sigquit = signal (SIGQUIT, catch);
 
 	dups = 0;
+        proj = G_projection();
 
 	strcpy (s2.name, s1->name);
 	strcpy (s2.desc, s1->desc);
@@ -52,8 +58,17 @@ duplicates (s1)
 				printf("duplicates:\n");
 			dups = 1;
 			printf("\n");
-			printf("%10d(E) %10d(N)    %s\n", e1,n1, desc1);
-			printf("%10d(E) %10d(N)    %s\n", e2,n2, desc2);
+                        if(G_projection() == PROJECTION_LL)
+                           {
+                             N = "";
+                             E = "";
+                           }
+			printf("%s%s %s%s    %s\n", 
+                          format_east(e1, buff1, proj), E,
+                          format_north(n1, buff2, proj), N, desc1);
+			printf("%s%s %s%s    %s\n", 
+                          format_east(e2, buff1, proj), E,
+                          format_north(n2, buff2, proj), N, desc2);
 		}
 	}
 	rewind_site_list (s1);
