@@ -21,8 +21,9 @@ static grass_debug_level = -1;
 int G_debug (int level, char *msg,...)
 {
 #ifdef GDEBUG
-    char buffer[1000], *lstr;
+    char    buffer[1000], *lstr, *filen;
     va_list ap;
+    FILE    *fd;
    
     if (grass_debug_level < 0) {
         lstr =  getenv("GRASS_DEBUG_LEVEL");
@@ -37,10 +38,22 @@ int G_debug (int level, char *msg,...)
         va_start(ap,msg);
         vsprintf(buffer,msg,ap);
         va_end(ap);
-        fprintf (stderr, "D%d/%d: %s\n", level, grass_debug_level, buffer);
+
+	filen =  getenv("GRASS_DEBUG_FILE"); 
+        if ( filen != NULL ) {
+	    fd = fopen (filen,"a");
+            if ( !fd ) {
+		G_warning ( "Cannot open debug file '%s'", filen);
+		return 0;
+	    }
+            fprintf (fd, "D%d/%d: %s\n", level, grass_debug_level, buffer);
+	    fclose ( fd );
+	} else {
+            fprintf (stderr, "D%d/%d: %s\n", level, grass_debug_level, buffer);
+	}
     }
 #endif
 
-    return 0;
+    return 1;
 }
 
