@@ -1,0 +1,50 @@
+/*!
+\mainpage GRASS 5.1 Programmer's Manual
+
+by GRASS Development Team
+
+http://grass.itc.it
+
+\section libraries Libraries
+
+Library functions API:
+
+\subsection vlib Vlib (Vector library)
+
+For details please read Blazek et al. 2002 (see below) as well as the
+references in this document.
+
+The Vect_*() functions are the programmer's API for GRASS 5.1 vector
+programming. For details see:
+
+<a href="../lib/vector/html/index.html">Vector library
+documentation</a>
+
+
+\subsection dblib DBMI (DataBase Management Interface)
+
+Access to databases is supported by DBMI through various drivers (DBF, ODBC
+etc).
+
+For details please read Blazek et al. 2002 (see below).
+
+<a href="../lib/db/html/index.html">DataBase Management Interface
+documentation</a>
+
+
+\section contacts Contacts
+
+GRASS Development Team: http://grass.itc.it/support.html
+ 
+Radim Blazek (vector architecture) <blazek@itc.it>
+
+
+\section references References
+
+Text based on: R. Blazek, M. Neteler, and R. Micarelli. The new GRASS 5.1
+ vector architecture. In Open source GIS - GRASS users conference 2002,
+ Trento, Italy, 11-13 September 2002. University of Trento, Italy, 2002.
+ http://www.ing.unitn.it/~grass/proceedings/proceedings/pdfs/Blazek_Radim.pdf
+
+Last change: $Date$
+*/
