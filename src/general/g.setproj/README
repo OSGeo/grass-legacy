@@ -1,0 +1,32 @@
+new metadata system:
+
+system
+
+zone
+
+projection
+
+datum
+
+ellipsoid
+
+
+
+# projection	spheroid	map datum
+ALSK		clark66
+GS48		clark66
+GS50		clark66
+LABRD		international
+NZMG		interantional
+SOMERC		bessel
+OBTRAN		eqc
+
+
+
+# units
+meters		1.0
+degree
+degrees
+feet
+foot
+meters		0.30479999
