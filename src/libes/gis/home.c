@@ -17,11 +17,33 @@
 #include "gis.h"
 #include "glocale.h"
 
+
+/*!
+ * \brief user's home directory
+ *
+ * Returns a pointer to a string
+ * which is the full path name of the user's home directory.
+ *
+ *  \param ~
+ *  \return char * 
+ */
+
 char *
 G_home ()
 {
     char *home;
-    char *G_home();
+    
+/*!
+ * \brief user's home directory
+ *
+ * Returns a pointer to a string
+ * which is the full path name of the user's home directory.
+ *
+ *  \param ~
+ *  \return char * 
+ */
+
+char *G_home();
 
     if ((home = G__home()))
 	return home;

@@ -274,6 +274,16 @@ char *G__getenv ( char *name)
     return get_env (name);
 }
 
+
+/*!
+ * \brief set GRASS environment
+ *       variable
+ * 
+ *  \param name
+ *  \param value
+ *  \return int
+ */
+
 int G_setenv (char *name, char *value)
 {
     read_env();

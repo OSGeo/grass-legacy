@@ -12,6 +12,19 @@ static double dabs (double);
 static int projection = 0;
 static double factor = 1.0;
 
+
+/*!
+ * \brief begin distance calculations
+ *
+ * Initializes the distance calculations. It is used both for the
+ * planimetric and latitude-longitude projections.
+ * It returns 2 if the projection is latitude-longitude, 1 if the projection is
+ * planimetric, and 0 if the projection doesn't hav e a metric (e.g. imagery.)
+ *
+ *  \param void
+ *  \return int
+ */
+
 int G_begin_distance_calculations()
 {
     double a, e2;
@@ -33,6 +46,22 @@ int G_begin_distance_calculations()
 	return 1;
     }
 }
+
+
+/*!
+ * \brief distance in meters
+ *
+ * This routine computes the distance, in meters, from
+ * <b>x1,y1</b> to <b>x2,y2.</b> If the projection is
+ * latitude-longitude, this distance is measured along the geodesic. Two
+ * routines perform geodesic distance calculations.
+ *
+ *  \param x1
+ *  \param y1
+ *  \param x2
+ *  \param y2
+ *  \return double
+ */
 
 double G_distance (double e1,double n1,double e2,double n2)
 {

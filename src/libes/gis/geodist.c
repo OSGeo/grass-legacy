@@ -21,6 +21,19 @@ static double ff64;
 static double al;
 
 /* must be called once to establish the ellipsoid */
+
+/*!
+ * \brief begin geodesic distance
+ *
+ * Initializes the distance calculations for the ellipsoid with
+ * semi-major axis <b>a</b> (in meters) and ellipsoid eccentricity squared
+ * <b>e2.</b> It is used only for the latitude-longitude projection.
+ *
+ *  \param a
+ *  \param e2
+ *  \return int
+ */
+
 int G_begin_geodesic_distance(double a,double e2)
 {
     al = a;
@@ -34,6 +47,16 @@ int G_begin_geodesic_distance(double a,double e2)
 static double t1,t2,t3,t4,t1r,t2r;
 
 /* must be called first */
+
+/*!
+ * \brief set geodesic distance lat1
+ *
+ * Set the first latitude.
+ *
+ *  \param lat1
+ *  \return int
+ */
+
 int G_set_geodesic_distance_lat1(double lat1)
 {
     t1r = atan(boa*tan(Radians(lat1)));
@@ -41,6 +64,16 @@ int G_set_geodesic_distance_lat1(double lat1)
     return 0;
 }
 /* must be called second */
+
+/*!
+ * \brief set geodesic distance lat2
+ *
+ * Set the second latitude.
+ *
+ *  \param lat2
+ *  \return int
+ */
+
 int G_set_geodesic_distance_lat2( double lat2)
 {
     double stm,ctm,sdtm,cdtm;
@@ -67,6 +100,21 @@ int G_set_geodesic_distance_lat2( double lat2)
 
     return 0;
 }
+
+
+/*!
+ * \brief geodesic distance
+ *
+ * Calculates the geodesic distance from
+ * <b>lon1,lat1</b> to <b>lon2,lat2</b> in meters, where <b>lat1</b> was
+ * the latitude passed to <i>G_set_geodesic_distance_latl</i> and
+ * <b>lat2</b> was the <i>latitude passed to
+ * G_set_geodesic_distance_lat2.</i>
+ *
+ *  \param lon1
+ *  \param lon2
+ *  \return double
+ */
 
 double G_geodesic_distance_lon_to_lon (double lon1,double lon2)
 {
@@ -133,6 +181,23 @@ double G_geodesic_distance_lon_to_lon (double lon1,double lon2)
 		)
 	    );
 }
+
+
+/*!
+ * \brief geodesic distance
+ *
+ * Calculates the geodesic distance from
+ * <b>lon1,lat1</b> to <b>lon2,lat2</b> in meters.
+ * The calculation of the geodesic distance is fairly costly. These next three
+ * routines provide a mechanism for calculating distance with two fixed latitudes
+ * and varying longitude separation.
+ *
+ *  \param lon1
+ *  \param lat1
+ *  \param lon2
+ *  \param lat2
+ *  \return double
+ */
 
 double G_geodesic_distance (double lon1,double lat1,double lon2,double lat2)
 {
