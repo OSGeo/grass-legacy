@@ -13,6 +13,8 @@
 
 draw_line(cur_x, cur_y, x, y)
 {
+	Hide_cursor();
 	move(WNO, cur_x, cur_y) ;
 	draw(WNO, x, y) ;
+	Show_cursor();
 }
