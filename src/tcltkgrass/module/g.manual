@@ -1,0 +1,9 @@
+interface_build {
+    {g.manual} 0
+    {Prints out manual page(s) of GRASS binary and shell modules.}
+    {entry entries {Manual entries to be displayed:} 0 +module}
+    {checkbox -1 {List all manual entries (one per line).} "" -1}
+    {checkbox -a {List all manual entries (pretty format).} "" -a}
+    {checkbox -e {Ignore empty manual sections.} "" -e}
+    {checkbox -f {Add formfeeds to output (pretty format mode).} "" -f}
+}
