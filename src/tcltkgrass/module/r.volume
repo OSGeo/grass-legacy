@@ -1,0 +1,9 @@
+interface_build {
+    {r.volume} 0
+    {Calculates the volume of data "clumps", and (optionally) produces a GRASS site_lists file containing the calculated centroids of these clumps.}
+    {entry data {Map containing the category values to be summed (input):} 0 raster}
+    {entry clump {Map defining the boundaries of each clump (input):} 0 raster}
+    {entry site_list {Site file of clump centroids (output):} 0 sites}
+    {checkbox -f {Generate unformatted output.} "" -f}
+    {checkbox -q {Run quietly.} "" -q}
+}
