@@ -51,6 +51,11 @@ fi
 
 
 TMP="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
+    echo "ERROR: unable to create temporary files" 1>&2
+    exit 1
+fi
+
 
 #calculate regression equation
 r.stats -c input=$GIS_OPT_map1,$GIS_OPT_map2  > "$TMP"
@@ -85,4 +90,4 @@ else
 	mv "$TMP"c "$GIS_OPT_output"
 	cat "$GIS_OPT_output"
 fi
-rm -f "$TMP"*
+rm -f "$TMP" "$TMP"b "$TMP"c
