@@ -53,15 +53,18 @@ int main (int argc, char **argv)
 	int npads;
 	int nitems;
 	int p;
-	int stat ;
+	int stat;
+	int i;
+	int total_rno, *rno;
 	struct list_struct *temp_list;
 	struct Flag *all_flag;
 	struct Flag *cur_frame;
 	struct Flag *only_object;
 	struct Option *opt1;
+	struct Option *opt2;
 	struct GModule *module;
 	char buff[1024];
-	char current_frame[64] ;
+	char current_frame[64];
 
 	G_gisinit(argv[0]);
 
@@ -95,6 +98,13 @@ int main (int argc, char **argv)
 	}
 	opt1->options = buff;
 
+	opt2 = G_define_option();
+	opt2->key = "remove";
+	opt2->description = "List no to be removed";
+	opt2->type = TYPE_INTEGER;
+	opt2->required = NO;
+	opt2->multiple = YES;
+
 	cur_frame = G_define_flag();
 	cur_frame->key = 'c';
 	cur_frame->description = "Save current frame";
@@ -118,6 +128,17 @@ int main (int argc, char **argv)
 	if (G_parser(argc, argv))
 		exit(1);
 
+	if (opt2->answers)
+	{
+		for (total_rno=0; opt2->answers[total_rno]; total_rno++);
+		if (total_rno)
+		{
+			rno = (int *) G_malloc(total_rno*sizeof(int));
+			for (i=0; i<total_rno; i++)
+				rno[i] = atoi(opt2->answers[i]);
+		}
+	}
+
 	if (cur_frame->answer)
 	{
 		D_get_cur_wind(current_frame) ;
@@ -125,20 +146,48 @@ int main (int argc, char **argv)
 	}
 
 	if(!only_object->answer)
-		fprintf (stdout,":\n#Shell Script created by d.save %s\n\n", G_date());
+		fprintf (stdout,":\n# Shell Script created by d.save %s\n\n", G_date());
 
 	/* now start at the end (the earliest made window) and process them */
 	for (p = npads-1; p >= 0; p--) {
 		if (all_flag->answer || in_frame_list(opt1, pads[p]))
 		{
 			if(!cur_frame->answer && !only_object->answer)
-				fprintf (stdout,"\n#Here are the commands to create window: %s\n", pads[p]);
+				fprintf (stdout,"\n# Here are the commands to create window: %s\n", pads[p]);
 			stat = R_pad_select (pads[p]);
 			if (stat) {
 				R_pad_perror ("echo     ERROR", stat);
 				fprintf (stdout,"exit -1\n\n");
 				continue;
 			}
+
+			if (total_rno)
+			{
+				char **list;
+				int nlists;
+				int j;
+
+				stat = R_pad_get_item("list", &list, &nlists);
+				if (stat) {
+					R_pad_perror ("echo     ERROR", stat);
+					fprintf (stdout,"exit -1\n\n");
+				}
+				else
+					R_pad_delete_item("list");
+
+				for (i=0; i<nlists; i++)
+				{
+					for (j=0; j<total_rno; j++)
+					{
+						if (rno[j]==nlists-i)
+						break;
+					}
+					if(j==total_rno)
+						D_add_to_list(list[i]);
+				}
+				R_pad_freelist (list, nlists);
+			}
+
 			if (process_pad(&items, &nitems) != 0) continue;
 
 			Wtop = (100.0 * Wtop)/Sheight + 0.5;
@@ -185,8 +234,15 @@ int main (int argc, char **argv)
 */
 
 			/* print out the list */
+			i=0;
+			temp_list = List;
+			while (temp_list!=NULL) {
+				i++;
+				temp_list = temp_list->ptr;
+			}
+
 			while (List!=NULL) {
-				fprintf (stdout,"%s\n", List->string);
+				fprintf (stdout,"%-70s # %d\n", List->string, i--);
 				temp_list = List;
 				List = List->ptr;
 				free(temp_list->string);
