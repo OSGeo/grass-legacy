@@ -1,0 +1,9 @@
+# %W% %G%
+
+OFILES = main.o creat_rand.o
+
+
+$(BIN)/Grandom: $(OFILES) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB)
+
+$(GISLIB): #
