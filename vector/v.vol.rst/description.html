@@ -10,7 +10,7 @@
 <h2>SYNOPSIS</h2>
 <b>v.vol.rst</b><br>
 <b>v.vol.rst help</b><br>
-<b>v.vol.rst</b> <b>input</b>=<em>string</em>  [<b>cellinp</b>=<em>string</em>]   [<b>field</b>=<em>integer</em>]   [<b>tension</b>=<em>float</em>]   [<b>smooth</b>=<em>float</em>]   [<b>devi</b>=<em>string</em>]   [<b>maskmap</b>=<em>string</em>]   [<b>segmax</b>=<em>integer</em>]   [<b>dmin</b>=<em>float</em>]   [<b>npmin</b>=<em>integer</em>]   [<b>wmult</b>=<em>float</em>]   [<b>zmult</b>=<em>float</em>]   [<b>cellout</b>=<em>string</em>]   [<b>elev</b>=<em>string</em>]   [<b>gradient</b>=<em>string</em>]   [<b>aspect1</b>=<em>string</em>]   [<b>aspect2</b>=<em>string</em>]   [<b>ncurv</b>=<em>string</em>]   [<b>gcurv</b>=<em>string</em>]   [<b>mcurv</b>=<em>string</em>]  
+<b>v.vol.rst</b> <b>input</b>=<em>string</em>  [<b>cellinp</b>=<em>string</em>]   [<b>colnum</b>=<em>integer</em>]   [<b>tension</b>=<em>float</em>]   [<b>smooth</b>=<em>float</em>]   [<b>devi</b>=<em>string</em>]   [<b>maskmap</b>=<em>string</em>]   [<b>segmax</b>=<em>integer</em>]   [<b>dmin</b>=<em>float</em>]   [<b>npmin</b>=<em>integer</em>]   [<b>wmult</b>=<em>float</em>]   [<b>zmult</b>=<em>float</em>]   [<b>cellout</b>=<em>string</em>]   [<b>elev</b>=<em>string</em>]   [<b>gradient</b>=<em>string</em>]   [<b>aspect1</b>=<em>string</em>]   [<b>aspect2</b>=<em>string</em>]   [<b>ncurv</b>=<em>string</em>]   [<b>gcurv</b>=<em>string</em>]   [<b>mcurv</b>=<em>string</em>]  
 
 
 <h3>Parameters:</h3>
@@ -21,8 +21,8 @@
 <DT><b>cellinp</b>=<em>string</em>
 <DD>Name of the surface cell file</DD>
 
-<DT><b>field</b>=<em>integer</em>
-<DD>Number of z-field attribute to use for calculation</DD>
+<DT><b>colnum</b>=<em>integer</em>
+<DD>Column number of w attribute to use for calculation (counting only float type columns)</DD>
 <DD>Default: <em>1</em></DD>
 
 <DT><b>tension</b>=<em>float</em>
@@ -176,7 +176,7 @@ Talmi and Gilat, 1977 or Wahba, 1990. </p>
 <dl>
   <dt><b>input</b></dt>
   <dd>Name of the site file (format see NOTES below)</dd>
-  <dt><strong>field</strong></dt>
+  <dt><strong>colnum</strong></dt>
   <dd>decimal attribute to use for value w (1=first) options (1-100), default
  is 1.</dd>
   <dt><b>cellinp</b></dt>
@@ -225,17 +225,18 @@ Talmi and Gilat, 1977 or Wahba, 1990. </p>
 </dl>
       
 <h2>NOTES</h2>
-    The sites volume format is as follows:    
-    <pre>   x|y|z|#n %w1 %w2 %w3<br></pre>
-    with x,y,z (spatial coordinates), n (optional integer number) and w (data 
- values).    
+
+The vector points map must be a 3D vector map (x, y, z as geometry).
+The module <a href="v.in.db.html">v.in.db</a> can be used to generate
+a 3D vector map from a table containing x,y,z columns.
 
 <h2>SEE ALSO</h2>
 <a href="g3.region.html">g3.region</a>,
 <a href="s.in.ascii.html">s.in.ascii</a>,
-<a href="s.in.ascii.html">v.in.ascii</a>,
+<a href="v.in.ascii.html">v.in.ascii</a>,
 <a href="v.vol.idw.html">v.vol.idw</a>,
 <a href="r3.mask.html">r3.mask</a>,
+<a href="v.in.db.html">v.in.db</a>
 <a href="v.surf.rst.html">v.surf.rst</a>
 
 <h2>AUTHOR</h2>
