@@ -29,11 +29,10 @@ Prefix: %{_prefix}
 
 %description
 GRASS (Geographic Resources Analysis Support System)
-is a raster-based GIS, vector GIS,
-image processing system, graphics production
-system, data management system, and spatial
-modeling system. A graphical user interface
-for X-Windows is provided. 
+is a complete GIS with integrated database management
+system, image processing system, graphics production
+system, and spatial modeling system. A graphical user
+interface for X-Window is provided.
 
 %prep
 %setup -n %{name}-%{version}
