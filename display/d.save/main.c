@@ -200,9 +200,10 @@ int main (int argc, char **argv)
 				if (stat || !nlists) {
 					R_pad_perror ("echo     ERROR", stat);
 					fprintf (stdout,"exit -1\n\n");
+					continue;
 				}
-				else
-					R_pad_delete_item("list");
+
+				R_pad_delete_item("list");
 
 				live = (int *) G_malloc(nlists*sizeof(int));
 				for (i=0; i<nlists; i++)
@@ -265,6 +266,7 @@ int main (int argc, char **argv)
 					if (live[i]>=0)
 						D_add_to_list(list[live[i]]);
 				}
+				G_free(live);
 				R_pad_freelist (list, nlists);
 			}
 
