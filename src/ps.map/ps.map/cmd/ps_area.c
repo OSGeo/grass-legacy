@@ -92,6 +92,7 @@ int PS_area_plot (struct Map_info *P_map, int vec)
     int  na, area, line_cat, ret;
     double e, w, n, s, aw, shift; 
 
+    shift = 0;
     line_cat = vector.line_cat[vec];
     /* read and plot areas */
     na = V2_num_areas(P_map); 
