@@ -379,7 +379,7 @@ double atof();
     }
     else if (G_get_raster_row ( elev, elevbuf, row, data_type) > 0)
     {
-	if(!G_is_null_value(elevbuf+col*G_raster_size(data_type), data_type))
+	if(!G_is_null_value((char *)elevbuf+col*G_raster_size(data_type), data_type))
 	{
             if(data_type == CELL_TYPE)
               Z = (double) ((CELL *) elevbuf)[col];
@@ -392,6 +392,7 @@ double atof();
 	{
 	    G_set_d_null_value(&Z, 1);
 	}
+
 	G_close_cell (elev);
 	G_free(elevbuf);
 	select_current_env();
@@ -407,3 +408,4 @@ static int cancel (void)
 {
     return -1;
 }
+
