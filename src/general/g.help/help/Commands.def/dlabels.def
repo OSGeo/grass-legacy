@@ -1,0 +1,10 @@
+
+
+d.labels - 
+
+d.labels allows the user to \interactively\ create and modify
+paint-labels files for use with the \p.map\ and \d.paint.labels\
+programs.  The paint-labels file created will be stored in the user's
+current \mapset\ under the "paint labels" directory.
+
+Manual entry for \d.labels\
