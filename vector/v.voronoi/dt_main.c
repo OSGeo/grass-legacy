@@ -31,7 +31,7 @@ int
 main (int argc, char **argv)
 {
   char *mapset;
-  struct Flag *all_flag, *line_flag;
+  struct Flag *reg_flag, *line_flag;
   struct Option *in_opt, *out_opt;
   struct GModule *module;
   struct line_pnts *Points;
@@ -46,9 +46,9 @@ main (int argc, char **argv)
   in_opt = G_define_standard_option(G_OPT_V_INPUT);
   out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
 
-  all_flag = G_define_flag ();
-  all_flag->key = 'a';
-  all_flag->description = "Use all sites (do not limit to current region)";
+  reg_flag = G_define_flag ();
+  reg_flag->key = 'r';
+  reg_flag->description = "Use only sites in current region";
 
   line_flag = G_define_flag ();
   line_flag->key = 'l';
@@ -62,7 +62,7 @@ main (int argc, char **argv)
   else
       Type = GV_BOUNDARY;
 
-  All = all_flag->answer;
+  All = reg_flag->answer ? 0 : 1 ;
 
   Points = Vect_new_line_struct ();
   Cats = Vect_new_cats_struct();
