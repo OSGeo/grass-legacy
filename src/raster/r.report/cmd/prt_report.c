@@ -46,6 +46,7 @@ print_report(unit1, unit2)
 	    unit[i].len = 6;
 	    unit[i].label[0] = "  %  ";
 	    unit[i].label[1] = "cover";
+	    unit[i].eformat = 0;
 	    break;
 
 	case SQ_METERS:
@@ -89,7 +90,7 @@ print_report(unit1, unit2)
 	    unit[i].eformat = 0;
 	    ns = 0;
 	    format_parms (area_sum(&ns,-1)*unit[i].factor,
-		unit[i].len, &unit[i].eformat, &unit[i].dp);
+	      	&unit[i].len, &unit[i].dp, &(unit[i].eformat), e_format);
 	}
     }
 
@@ -128,6 +129,7 @@ print_report(unit1, unit2)
     divider_level = -1;
     for (ns = 0; ns < nstats; ns++)
     {
+	int NS;
 	cats  = Gstats[ns].cats;
 
 /* determine the number of lines needed to print the cat labels 
@@ -200,12 +202,20 @@ print_report(unit1, unit2)
 			printf ("|%*s|", layers[nl].nlen, "");
 
 		    with_stats = nunits && first;
+		    /*
 		    if (new == 2 && nl != nlayers-1)
 			with_stats = 0;
+			*/
 		    if (with_stats)
+		    /* if it's not the lowest level of the table */
 		    {
 			if (nl != nlayers-1)
 			{
+			    if(new!=2) NS = ns;  /* to memorise total */
+
+/* if new is 2 then the total for this class should be reprinted on the
+top of the page. So we need to remember ns of total in case we need to
+print it again later*/
 			    spacing = 0;
 			    dot = '_';
 			}
@@ -221,10 +231,12 @@ print_report(unit1, unit2)
 			dot = ' ';
 		    }
 		    cp = print_label (cp, layers[nl].clen, 1, spacing, dot);
-		    if (with_stats)
+		    if  (with_stats) 
 		    {
 			for (i = unit1; i <= unit2; i++)
-			    print_unit(i,ns,nl);
+	                    if(nl != nlayers-1)
+			        print_unit(i,NS,nl);
+			    else print_unit(i,ns,nl);
 		    }
 		    else
 		    {
