@@ -1,0 +1,45 @@
+#!/bin/sh
+
+# $Id$
+# put out available G3D files
+# written by Markus Neteler
+#            neteler@geog.uni-hannover.de
+
+if test "$GISBASE" = ""; then
+echo "You must be in GRASS to run this program."
+exit
+fi
+
+if [ "$1" = "help" ] ; then
+ echo "g3.list parameter"
+ echo "   where parameter="
+ echo "       g3d: list available G3D raster volumes"
+ echo "       dsp: list available G3D display files"
+ echo "    region: list available G3D region files"
+ echo ""
+ exit
+fi
+
+if [ "$1" = "" -o "$1" = "g3d" ] ; then
+ echo "----------------------------------------------"
+ echo "G3D raster volumes available in mapset $MAPSET:"
+ ls $LOCATION/grid3
+ echo "----------------------------------------------"
+ exit
+fi
+
+if [ "$1" = "dsp" ] ; then
+ list=`find $LOCATION/grid3/$2 -type d -name '*' |grep dsp`
+ for i in $list ; do
+#  echo "$list:"
+  ls $i
+ done
+fi
+
+if [ "$1" = "region" -o "$1" = "windows3d" ] ; then
+ echo "----------------------------------------------"
+ echo "G3D region files available in mapset $MAPSET:"
+ ls $LOCATION/windows3d
+ echo "----------------------------------------------"
+ exit
+fi
