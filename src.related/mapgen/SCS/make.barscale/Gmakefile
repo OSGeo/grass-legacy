@@ -1,0 +1,30 @@
+###########################################################
+
+
+###########################################################
+#  %W%  %G%
+
+GRAPH=$(GISBASE)/mapgen
+MAPGEN_BIN=$(GRAPH)/interface
+MAP_SRC = $(SRC)/../src.related/mapgen
+
+
+EXTRA_CFLAGS = -I$(MAP_SRC)/SCS/include -lm
+GMAPLIB = $(MAP_SRC)/SCS/libes/gmaplib.a
+INCLIB = $(DISPLAYLIB) $(RASTERLIB)  $(GISLIB)
+
+
+
+
+CFILE = make_bscale.c
+
+all:  $(MAPGEN_BIN)/make_bscale $(MAPGEN_BIN)/make.barscale
+
+$(MAPGEN_BIN)/make_bscale: $(CFILE)
+	$(CC) -o $@ $(CFILE) $(EXTRA_CFLAGS) $(GMAPLIB) $(INCLIB)
+
+$(MAPGEN_BIN)/make.barscale: make.barscale
+	cp make.barscale $(MAPGEN_BIN)/make.barscale
+
+
+$(GMAPLIB): #
