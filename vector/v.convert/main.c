@@ -53,7 +53,7 @@ main (int argc, char *argv[])
     opt_ver->type         = TYPE_INTEGER;
     opt_ver->required     = NO;
     opt_ver->multiple     = NO;
-    opt_ver->options      = "4,5";
+    opt_ver->options      = "5,4";
     opt_ver->description  = "version of output vector map";
     opt_ver->answer = "5"; 
 
