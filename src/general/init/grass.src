@@ -106,7 +106,7 @@ if [ ! "$GRASS_GUI" ] ; then
     
     # Check for a reference to the grass user interface in the grassrc file
     if [ -f $GISRC ] ; then
-    	GRASS_GUI=`awk '/GRASS_GUI/ {print $2}' $GISRC`
+    	GRASS_GUI=`awk '/GRASS_GUI/ {print $2}' "$GISRC"`
     fi
     
     # Set the grass user interface to the default if needed - currently tcltk
