@@ -89,8 +89,10 @@ proc DmVector::create { tree parent } {
 
     set opt($count,color) \#000000
     set opt($count,sqlcolor) 0
+    set opt($count,rdmcolor) 0
     set opt($count,fcolor) \#AAAAAA 
     set opt($count,lcolor) \#000000
+    set opt($count,_use_color) 1
     set opt($count,_use_fcolor) 1
 
     set opt($count,symdir) "basic"
@@ -141,10 +143,9 @@ proc DmVector::select_map { id } {
 # select symbols from directories
 proc DmVector::select_symbol { id } {
     variable opt
-    set i [GSelect $opt($id,symdir)]
+    set i [GSelect symbol]
     if { $i != "" } {
-	set tmp_i "$opt($id,symdir)/$i"
-        set DmVector::opt($id,icon) $tmp_i
+        set DmVector::opt($id,icon) $i
     }
 }
 
@@ -172,7 +173,7 @@ proc DmVector::options { id frm } {
                 -command "DmVector::legend $id"
     checkbutton $row.e -text [G_msg "direction"] -variable DmVector::opt($id,display_dir) \
                 -command "DmVector::legend $id"
-    checkbutton $row.f -text [G_msg "attribute"] -variable DmVector::opt($id,display_attr) \
+    checkbutton $row.f -text [G_msg "label"] -variable DmVector::opt($id,display_attr) \
                 -command "DmVector::legend $id"
     pack $row.a $row.b $row.c $row.d $row.e $row.f -side left
     pack $row -side top -fill both -expand yes
@@ -195,25 +196,6 @@ proc DmVector::options { id frm } {
     pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g -side left
     pack $row -side top -fill both -expand yes
 
-    # color
-    set row [ frame $frm.color ]
-    Label $row.a -text [G_msg "Line color:"] 
-    SelectColor $row.b -type menubutton -variable DmVector::opt($id,color) \
-                -command "DmVector::legend $id"
-    Label $row.c -text [G_msg " Fill color:"] 
-    SelectColor $row.d -type menubutton -variable DmVector::opt($id,fcolor) \
-                -command "DmVector::legend $id"
-    checkbutton $row.e -text [G_msg "fill areas"] -variable DmVector::opt($id,_use_fcolor) \
-                -command "DmVector::legend $id"
-    Label $row.f -text [G_msg " Label color:"] 
-    SelectColor $row.g -type menubutton -variable DmVector::opt($id,lcolor) \
-                -command "DmVector::legend $id"
-    checkbutton $row.h -text [G_msg "SQL color"] -variable DmVector::opt($id,sqlcolor) \
-                -command "DmVector::legend $id"
- 
-    pack $row.a $row.b $row.c $row.d $row.e $row.f $row.g $row.h -side left
-    pack $row -side top -fill both -expand yes
-
     # point icon / size
     set row [ frame $frm.icon ]
  #  ComboBox $row.a -label [G_msg "Symbol:"] \
@@ -221,16 +203,16 @@ proc DmVector::options { id frm } {
  #        -values {"basic/cross" "basic/circle" "basic/box" "basic/diamond"} \
  #        -modifycmd "DmVector::legend $id"
     
-    ComboBox $row.e -label [G_msg "Symbol collection:"] \
- 	-width 10 -textvariable DmVector::opt($id,symdir)  \
- 	-values {"basic" "demo"} \
- 	-modifycmd "DmVector::legend $id"
+ #   ComboBox $row.e -label [G_msg "Symbol collection:"] \
+ #       -width 10 -textvariable DmVector::opt($id,symdir)  \
+ #	 -values {"basic" "demo"} \
+ #	 -modifycmd "DmVector::legend $id"
   
     Button $row.a -text [G_msg "Symbol:"] \
 	-command "DmVector::select_symbol $id"
     Entry $row.d -width 15 -text "$opt($id,icon)" \
 	-textvariable DmVector::opt($id,icon)
-    pack $row.e $row.a $row.d -side left
+    pack $row.a $row.d -side left
     pack $row -side top -fill both -expand yes
 
     Label $row.b -text "Size:" 
@@ -239,42 +221,71 @@ proc DmVector::options { id frm } {
     pack $row.a $row.b $row.c -side left
     pack $row -side top -fill both -expand yes
 
+    # color
+    set row [ frame $frm.color ]
+    Label $row.a -text [G_msg "Line color:"] 
+    SelectColor $row.b -type menubutton -variable DmVector::opt($id,color) \
+                -command "DmVector::legend $id"
+    checkbutton $row.c -text [G_msg "show lines"] -variable DmVector::opt($id,_use_color) \
+                -command "DmVector::legend $id"
+    Label $row.d -text [G_msg " Fill color:"] 
+    SelectColor $row.e -type menubutton -variable DmVector::opt($id,fcolor) \
+                -command "DmVector::legend $id"
+    checkbutton $row.f -text [G_msg "fill areas"] -variable DmVector::opt($id,_use_fcolor) \
+                -command "DmVector::legend $id"
+ 
+    pack $row.a $row.b $row.c $row.d $row.e $row.f -side left
+    pack $row -side top -fill both -expand yes
+
+    # multi fill colors
+    set row [ frame $frm.multicolor ]
+    checkbutton $row.a -text [G_msg "Random fill colors for each cat value"] -variable DmVector::opt($id,rdmcolor) \
+                -command "DmVector::legend $id"
+    checkbutton $row.b -text [G_msg " GRASSRGB column for fill color"] -variable DmVector::opt($id,sqlcolor) \
+                -command "DmVector::legend $id"
+ 
+    pack $row.a $row.b -side left
+    pack $row -side top -fill both -expand yes
+
     # field
     set row [ frame $frm.field ]
-    LabelEntry $row.a -label [G_msg "Layer"] -textvariable DmVector::opt($id,field) -width 5
-    LabelEntry $row.b -label [G_msg "Label layer"] -textvariable DmVector::opt($id,lfield) -width 5
-    ComboBox $row.c -label [G_msg "Label xpos"] \
+    Label $row.a -text [G_msg "Label color:"] 
+    SelectColor $row.b -type menubutton -variable DmVector::opt($id,lcolor) \
+                -command "DmVector::legend $id"
+    Label $row.c -text [G_msg " Label size:"] 
+    SpinBox $row.d -range {1 50 1} -textvariable DmVector::opt($id,lsize) \
+                   -width 2 -helptext [G_msg "Label size"] -modifycmd "DmVector::legend $id"
+    ComboBox $row.e -label [G_msg " Label xpos"] \
                     -width 6  -textvariable DmVector::opt($id,xref) \
                     -values {"left" "center" "right"} \
                     -modifycmd "DmVector::legend $id"
-    ComboBox $row.d -label [G_msg "Label ypos"] \
+    ComboBox $row.f -label [G_msg " Label ypos"] \
                     -width 6  -textvariable DmVector::opt($id,yref) \
                     -values {"top" "center" "bottom"} \
                     -modifycmd "DmVector::legend $id"
-    pack $row.a $row.b $row.c $row.d -side left
+    pack $row.a $row.b $row.c $row.d $row.e $row.f -side left
     pack $row -side top -fill both -expand yes
 
-    # attribute column
+    # label attribute column
     set row [ frame $frm.attribute ]
-    LabelEntry $row.a -label [G_msg "Attribute col"] -textvariable DmVector::opt($id,attribute) -width 30
-    Label $row.b -text [G_msg "Label size:"] 
-    SpinBox $row.c -range {1 50 1} -textvariable DmVector::opt($id,lsize) \
-                   -width 2 -helptext [G_msg "Label size"] -modifycmd "DmVector::legend $id"
-    pack $row.a $row.b $row.c -side left
+    LabelEntry $row.a -label [G_msg "Layer for labels"] -textvariable DmVector::opt($id,lfield) -width 5
+    LabelEntry $row.b -label [G_msg " Attribute col for labels"] -textvariable DmVector::opt($id,attribute) -width 24
+    pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
     # category
     set row [ frame $frm.cat ]
-    LabelEntry $row.a -label [G_msg "Category"] -textvariable DmVector::opt($id,cat) \
-               -width 40
-    pack $row.a -side left
+    LabelEntry $row.a -label [G_msg "Layer for query"] -textvariable DmVector::opt($id,field) -width 5
+    LabelEntry $row.b -label [G_msg " Category query"] -textvariable DmVector::opt($id,cat) \
+               -width 30
+    pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
     # where
     set row [ frame $frm.where ]
     LabelEntry $row.a -label [G_msg "SQL query"] -textvariable DmVector::opt($id,where) \
-               -width 40
-    checkbutton $row.b -text [G_msg "use query"] -variable DmVector::opt($id,_use_where) \
+               -width 42
+    checkbutton $row.b -text [G_msg " use query"] -variable DmVector::opt($id,_use_where) \
                 -command "DmVector::legend $id"
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
@@ -314,7 +325,7 @@ proc DmVector::save { tree depth node } {
 
     foreach key { _check map display_shape display_cat display_topo display_dir display_attr
                   type_point type_line type_boundary type_centroid type_area type_face
-                  color fcolor _use_fcolor lcolor sqlcolor icon size field lfield attribute
+                  color _use_color fcolor _use_fcolor lcolor rdmcolor sqlcolor icon size field lfield attribute
                   xref yref lsize cat where _query_text _query_edit _use_where minreg maxreg _width } {
         Dm::rc_write $depth "$key $opt($id,$key)"
 
@@ -353,11 +364,13 @@ proc DmVector::display { node } {
     set cmd "d.vect map=$opt($id,map)"
 
     # color
+    if { $opt($id,rdmcolor) } { append cmd " -c" }
     if { $opt($id,sqlcolor) } { append cmd " -a" }
     set color [DmVector::color $opt($id,color)]
     set fcolor [DmVector::color $opt($id,fcolor)]
     set lcolor [DmVector::color $opt($id,lcolor)]
-    append cmd " color=$color"
+
+    if { $opt($id,_use_color) } { append cmd " color=$color" } { append cmd " color=none" }
     append cmd " lcolor=$lcolor" 
 
     if { $opt($id,_use_fcolor) } { append cmd " fcolor=$fcolor" } { append cmd " fcolor=none" }
@@ -442,7 +455,12 @@ proc DmVector::print { file node } {
 	if { $opt($id,cat) != "" }   { puts $file "  cats $opt($id,cat)" }
 	if { $opt($id,where) != "" } { puts $file "  where $opt($id,where)" } 
 
-	puts $file "  color $color"
+	    if { $opt($id,_use_color) } { 
+	    puts $file "  color $color"
+        } else { 
+	    puts $file "  color none"
+        }
+
 	#puts $file "width $opt($id,ps_width)"
 
         if { $opt($id,_use_fcolor) } { 
@@ -474,7 +492,12 @@ proc DmVector::print { file node } {
 	if { $opt($id,cat) != "" }   { puts $file "  cats $opt($id,cat)" }
 	if { $opt($id,where) != "" } { puts $file "  where $opt($id,where)" } 
 
-	puts $file "  color $color"
+        if { $opt($id,_use_color) } { 
+	    puts $file "  color $color"
+        } else { 
+	    puts $file "  color none"
+        }
+
 	puts $file "width $opt($id,_width)"
 
 	puts $file "  hcolor NONE"
@@ -490,7 +513,12 @@ proc DmVector::print { file node } {
 	if { $opt($id,cat) != "" }   { puts $file "  cats $opt($id,cat)" }
 	if { $opt($id,where) != "" } { puts $file "  where $opt($id,where)" } 
 
-	puts $file "  color $color"
+        if { $opt($id,_use_color) } { 
+	    puts $file "  color $color"
+        } else { 
+	    puts $file "  color none"
+        }
+
 	puts $file "width $opt($id,_width)"
 
         if { $opt($id,_use_fcolor) } { 
