@@ -1,4 +1,6 @@
 #include "G3d.h"
+#include "Vect.h"
+#include "dbmi.h"
 
 #ifdef USERMAIN
 double /* pargr */ xmin, xmax, ymin, ymax, zmin, zmax, wmin, wmax;
@@ -18,12 +20,25 @@ int             cursegm;
 int             totsegm;
 int             iw2;
 int             n_rows_in; /* fix by JH 04/24/02 */
+int		cv;
+int		sig1;
 
 char            msg[80];
 
-FILE *dev;
+struct Map_info Map;
+dbString sql;
+dbDriver *driver;
+dbHandle handle;
+struct field_info *f;
+struct line_pnts *Pnts;
+struct line_cats *Cats;
+char   buf[1024];
+int count;
+
+FILE *dev,*cvdevf;
 FCELL   *zero_array_cell;
 G3D_Region current_region;
+
 #else
 extern double /* pargr */ xmin, xmax, ymin, ymax, zmin, zmax, wmin, wmax;
 extern double /* norm */ xmin0, xmax0, ymin0, ymax0, zmin0, zmax0, wmin0, wmax0, delt, dnorm;
@@ -43,10 +58,22 @@ extern int             cursegm;
 extern int             totsegm;
 extern int             iw2;
 extern int             n_rows_in; /* fix by JH 04/24/02 */
+extern int             cv;
+extern int	       sig1;
 
 extern char            msg[80];
 
-extern FILE *dev;
+extern struct Map_info Map;
+extern dbString sql;
+extern dbDriver *driver;
+extern dbHandle handle;
+extern struct field_info *f;
+extern struct line_pnts *Pnts;
+extern struct line_cats *Cats;
+extern char   buf[1024];
+extern int count;
+
+extern FILE *dev,*cvdevf;
 extern FCELL   *zero_array_cell;
 extern G3D_Region current_region;
 #endif
