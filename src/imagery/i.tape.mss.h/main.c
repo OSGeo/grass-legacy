@@ -1,4 +1,3 @@
-/* %W% %G% */
 /*********************************************************************
 
 NAME:		i.tape.mss.h
@@ -22,23 +21,29 @@ main(argc,argv) char *argv[];
     int tape_1_rows ;
     int tape_2_rows ;
     int tape_total;
+    struct Option *tapename;
 
 /*
 * NOTE: image_size as documented is the same for geometrically
 *	 corrected and uncorrected landsat tapes
 *	 image offset is 12 bytes into image record
 */
-    if (argc != 2)
-    {
-	fprintf (stderr, "usage: %s <tapedev>\n");
+    G_gisinit(argv[0]);
+
+    tapename = G_define_option();
+    tapename->key = "input";
+    tapename->type = TYPE_STRING;
+    tapename->description = "Name of the tape device";
+    tapename->required = YES;
+
+    if (G_parser(argc,argv))
 	exit(1);
-    }
 
 /* mount the tape */
-    tapefd = open (argv[1], 0);
+    tapefd = open (tapename->answer, 0);
     if (tapefd < 0)
     {
-	perror (argv[1]);
+	perror (tapename->answer);
 	exit(1);
     }
 
