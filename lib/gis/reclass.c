@@ -24,6 +24,68 @@ int G_is_reclass (char *name, char *mapset, char *rname, char *rmapset)
 	return type != 0;
 }
 
+int G_is_reclassed_by (char *name, char *mapset, int *nrmaps, char ***rmaps)
+{
+    FILE *fd;
+    int i, j, k, l;
+    char buf1[256], buf2[256], buf3[256], *p;
+
+    strcpy(buf2, name);
+    if ((p = strchr(buf2, '@')))
+        *p = 0;
+
+    sprintf (buf1, "%s/%s/cell_misc/%s/reclassed_by",
+    		G__location_path(), mapset, buf2);
+
+    fd = fopen(buf1, "r");
+
+    if (fd == NULL)
+    {
+        return -1;
+    }
+
+    if (rmaps)
+        *rmaps = NULL;
+    for (i=0; !feof(fd) && fgets(buf2, 255, fd); )
+    {
+	l = strlen(buf2);
+	for (j=0, k=0; j<l; j++)
+	{
+	    if(buf2[j] == '#' ||
+		((buf2[j] == ' ' || buf2[j] == '\t' || buf2[j] == '\n') && k))
+	        break;
+	    else
+	    if(buf2[j] != ' ' && buf2[j] != '\t')
+		buf3[k++] = buf2[j];
+	}
+
+	if (k)
+	{
+	    buf3[k] = 0;
+	    i++;
+	    if (rmaps)
+	    {
+	        *rmaps = (char **) G_realloc(*rmaps, i*sizeof(char *));
+	        (*rmaps)[i-1] = (char *) G_malloc(k+1);
+	        strncpy((*rmaps)[i-1], buf3, k);
+	        (*rmaps)[i-1][k] = 0;
+	    }
+	}
+    }
+
+    if (nrmaps)
+        *nrmaps = i;
+
+    if (i && rmaps)
+    {
+	i++;
+	*rmaps = (char **) G_realloc(*rmaps, i*sizeof(char *));
+	(*rmaps)[i-1] = NULL;
+    }
+
+    return i;
+}
+
 int G_get_reclass (char *name, char *mapset, struct Reclass *reclass)
 {
     FILE *fd;
@@ -125,6 +187,8 @@ int G_put_reclass (char *name, struct Reclass *reclass)
 {
     FILE *fd;
     long min, max;
+    int i;
+    char buf1[256], buf2[256], buf3[256], *p;
 
     switch (reclass->type)
     {
@@ -139,6 +203,7 @@ int G_put_reclass (char *name, struct Reclass *reclass)
 	G_fatal_error ("Illegal reclass type");
 	return -1;
     }
+
     fd = fopen_cellhd_new (name);
     if (fd == NULL)
     {
@@ -181,6 +246,41 @@ int G_put_reclass (char *name, struct Reclass *reclass)
         }
     }
     fclose (fd);
+
+    strcpy(buf2, reclass->name);
+    if ((p = strchr(buf2, '@')))
+        *p = 0;
+
+    sprintf (buf1, "%s/%s/cell_misc/%s/reclassed_by",
+    		G__location_path(), reclass->mapset, buf2);
+
+    fd = fopen(buf1, "a+");
+    fseek (fd, 0L, SEEK_SET);
+
+    if (fd == NULL)
+    {
+        G_warning ("Unable to create dependency file in [%s in %s]",
+    	    buf2, reclass->mapset);
+        return -1;
+    }
+
+    sprintf (buf2, "%s@%s\n", name, G_mapset());
+    for (i=0; !feof(fd) && fgets(buf3, 255, fd); )
+    {
+        if (!(strcmp(buf2, buf3)))
+        {
+            i = 1;
+    	break;
+        }
+    }
+
+    if (!i)
+    {
+        fprintf (fd, "%s@%s\n", name, G_mapset());
+    }
+
+    fclose (fd);
+
     return 1;
 }
 
