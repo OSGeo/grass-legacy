@@ -22,6 +22,7 @@ int main (int argc, char *argv[])
 	void *rp;
 	void *result;
 	RASTER_MAP_TYPE map_type;
+	DCELL out_val;
 	int row, col;
 	int readrow;
 	int nrows, ncols;
@@ -41,7 +42,7 @@ int main (int argc, char *argv[])
 	} parm;
 	struct
 	    {
-		struct Flag *quiet, *align;
+		struct Flag *quiet, *align, *null;
 	} flag;
 
 	DCELL *values;   /* list of neighborhood values */
@@ -105,6 +106,10 @@ int main (int argc, char *argv[])
 	flag.quiet = G_define_flag();
 	flag.quiet->key = 'q';
 	flag.quiet->description = "Run quietly";
+
+        flag.null= G_define_flag();
+        flag.null->key = 'n';
+        flag.null->description = "Set zeros to null";
 
 	if (G_parser(argc,argv))
 		exit(1);
@@ -220,7 +225,14 @@ int main (int argc, char *argv[])
 		for (col = 0; col < ncols; col++)
 		{
 			n = gather (values, col);
-		        G_set_raster_value_d(rp, newvalue (values, n, map_type), map_type);
+/* Catch zeros and convert to null if set */
+/* Probably a better way to do this */
+	out_val = newvalue (values, n, map_type);
+	if (flag.null->answer){ /* Set zero to null */
+	if (out_val == 0) {
+	G_set_null_value(&out_val, 1, map_type);
+	} }
+		        G_set_raster_value_d(rp, out_val, map_type);
 			rp = G_incr_void_ptr(rp, G_raster_size(map_type));
 			ncb.center++;
 		}
