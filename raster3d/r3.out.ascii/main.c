@@ -208,6 +208,11 @@ int main(int argc, char *argv[]) {
   /* Parse input parameters */
   getParams(&input, &output, &decim);
 
+  if(NULL == G_find_grid3(input, "")){
+    G3d_fatalError("g3d file not found");
+    exit (1);
+  }
+
 /*  map = G3d_openCellOld(input, G_find_grid3(input, ""), G3D_DEFAULT_WINDOW,
 			G3D_TILE_SAME_AS_FILE,
 			G3D_NO_CACHE);*/
