@@ -24,6 +24,7 @@
 /* Grass and local include files */
 #include "G.h"
 #include "gis.h"
+#include "glocale.h"
 
 /*======================= Internal Constants/Defines =======================*/
 
@@ -92,7 +93,7 @@ static int EmbedGivenNulls (void *cell, char *nulls, RASTER_MAP_TYPE map_type,
 		    break;
 		
 		default:
-		    G_warning("EmbedGivenNulls: wrong data type!");
+		    G_warning(_("EmbedGivenNulls: wrong data type!"));
             }
     	}
     }
@@ -113,9 +114,9 @@ static void InitError (void)
 {
     char    errMsg[512];    /* array to hold error message */
     
-    strcpy(errMsg, "Null values have not been initialized. ");
-    strcat(errMsg, "G_gisinit() must be called first. ");
-    strcat(errMsg, "Please advise GRASS developers of this error.\n");
+    strcpy(errMsg, _("Null values have not been initialized. "));
+    strcat(errMsg, _("G_gisinit() must be called first. "));
+    strcat(errMsg, _("Please advise GRASS developers of this error.\n"));
     G_fatal_error(errMsg);
 
     return;
@@ -229,7 +230,7 @@ void G_set_null_value (void *buf, int numVals, RASTER_MAP_TYPE data_type)
 	    break;
 		
 	default:
-	    G_warning("G_set_null_value: wrong data type!");
+	    G_warning(_("G_set_null_value: wrong data type!"));
     }
 
     return;
