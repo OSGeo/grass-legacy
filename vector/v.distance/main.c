@@ -116,12 +116,12 @@ int main (int argc, char *argv[])
     to_type_opt->description = "To type";
 
     from_field_opt = G_define_standard_option(G_OPT_V_FIELD) ;     
-    from_field_opt->key         = "from_field";
-    from_field_opt->description = "From field";
+    from_field_opt->key         = "from_layer";
+    from_field_opt->description = "From layer";
     
     to_field_opt = G_define_standard_option(G_OPT_V_FIELD) ;     
-    to_field_opt->key         = "to_field";
-    to_field_opt->description = "To field";
+    to_field_opt->key         = "to_layer";
+    to_field_opt->description = "To layer";
     
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
     out_opt->key         = "output";
@@ -258,7 +258,7 @@ int main (int argc, char *argv[])
 
 	if (!all) {
 	    Fi = Vect_get_field ( &From, from_field);
-	    if ( Fi == NULL ) G_fatal_error ( "Cannot get field info" );
+	    if ( Fi == NULL ) G_fatal_error ( "Cannot get layer info" );
 	    
 	    driver = db_start_driver_open_database ( Fi->driver, Fi->database );
 	    if ( driver == NULL ) 
@@ -462,7 +462,7 @@ int main (int argc, char *argv[])
 		for ( j = 0; j < TCats->n_cats; j++) {
 		    if ( TCats->field[j] == to_field ) {
 			if ( tmp_tcat >= 0 ) 
-			    G_warning ( "more cats of to_field" );
+			    G_warning ( "more cats of to_layer" );
 			tmp_tcat = TCats->cat[j];
 		    }
 		}

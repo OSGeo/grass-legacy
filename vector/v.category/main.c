@@ -74,15 +74,15 @@ main (int argc, char *argv[])
 	option_opt->type =  TYPE_STRING;
 	option_opt->required = NO;
 	option_opt->multiple = NO;
-	option_opt->options = "add,del,chfield,sum,report,print";
+	option_opt->options = "add,del,chlayer,sum,report,print";
 	option_opt->answer = "add";
         option_opt->description = "Action to be done:\n"
 	    	"\tadd - add a new category\n"
 		"\tdel - delete category\n"
-		"\tchfield - change field number (e.g. field=3,1 changes all fields 3 to field 1)\n"
+		"\tchlayer - change layer number (e.g. layer=3,1 changes layer 3 to layer 1)\n"
 		"\tsum - add the value specified by cat option to the current category value\n"
 		"\treport - print report (statistics), in shell style:\n"
-			"\t\tfield type count min max\n"
+			"\t\tlayer type count min max\n"
 		"\tprint - print category values";
 
 	cat_opt = G_define_standard_option(G_OPT_V_CAT);
@@ -119,7 +119,7 @@ main (int argc, char *argv[])
 		break;
 	    case ( 'c' ):
 		option = O_CHFIELD;
-		G_warning("Database connection and attribute tables for concerned fields are not changed");
+		G_warning("Database connection and attribute tables for concerned layers are not changed");
 		break;
 	    case ( 's' ):
 		option = O_SUM;
@@ -170,10 +170,10 @@ main (int argc, char *argv[])
 	    i++;
 	}
 	if ( nfields > 1 && option != O_PRN && option != O_CHFIELD )
-	    G_fatal_error ( "Too many fields for this operation");
+	    G_fatal_error ( _("Too many layers for this operation") );
 	
 	if ( nfields != 2 && option == O_CHFIELD )
-	    G_fatal_error ( "2 fields must be specified");
+	    G_fatal_error ( _("2 layers must be specified") );
 	
 	if ( (option != O_REP) && (option != O_PRN) ) {
 	    if (out_opt->answer == NULL) {

@@ -160,9 +160,9 @@ int main(int argc, char **argv)
     out_opt->description = "Output map where points will be written";
 
     lfield_opt = G_define_standard_option(G_OPT_V_FIELD);
-    lfield_opt->key = "lfield";
+    lfield_opt->key = "llayer";
     lfield_opt->answer = "1";
-    lfield_opt->description = "Line field";
+    lfield_opt->description = "Line layer";
 
     vertex_flag = G_define_flag ();
     vertex_flag->key = 'v';

@@ -49,7 +49,7 @@ main (int argc, char *argv[])
     type_opt[0]->answer = "area";
 
     field_opt[0] = G_define_standard_option(G_OPT_V_FIELD);
-    field_opt[0]->key = "afield";
+    field_opt[0]->key = "alayer";
 
     in_opt[1] = G_define_standard_option(G_OPT_V_INPUT);
     in_opt[1]->key = "binput";
@@ -60,7 +60,7 @@ main (int argc, char *argv[])
     type_opt[1]->answer = "area";
     
     field_opt[1] = G_define_standard_option(G_OPT_V_FIELD);
-    field_opt[1]->key = "bfield";
+    field_opt[1]->key = "blayer";
     
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
 
@@ -73,7 +73,7 @@ main (int argc, char *argv[])
     operator_opt->answer = "or";
     operator_opt->description = "Operator defines features written to output vector. "
 	"Feature is written to output if the result of operation 'ainput operator binput' is true. "
-	"Input feature is considered to be true, if category of given field is defined.\n"
+	"Input feature is considered to be true, if category of given layer is defined.\n"
 	"\t and : also known as 'intersection' in GIS\n"
 	"\t or  : also known as 'union' in GIS (only for atype=area)\n"
 	"\t not : features from ainput not overlayed by features from binput\n"
@@ -81,10 +81,10 @@ main (int argc, char *argv[])
 	"\t       (only for atype=area)";
     
     ofield_opt = G_define_standard_option(G_OPT_V_FIELD);
-    ofield_opt->key = "ofield";
+    ofield_opt->key = "olayer";
     ofield_opt->multiple = YES;
     ofield_opt->answer = "1,2,3";
-    ofield_opt->description = "Output field for new category, ainput and binput. If 0 or not given, "
+    ofield_opt->description = "Output layer for new category, ainput and binput. If 0 or not given, "
 	                      "the category is not written.";
 
     table_flag = G_define_flag ();

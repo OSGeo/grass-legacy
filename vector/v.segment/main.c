@@ -56,9 +56,9 @@ int main(int argc, char **argv)
     out_opt->description = "Output map where segments will be written";
 
     lfield_opt = G_define_standard_option(G_OPT_V_FIELD);
-    lfield_opt->key = "lfield";
+    lfield_opt->key = "llayer";
     lfield_opt->answer = "1";
-    lfield_opt->description = "Line field";
+    lfield_opt->description = "Line layer";
     
     if(G_parser(argc,argv)) exit(1);
 
@@ -190,7 +190,7 @@ find_line ( struct Map_info *Map, int lfield, int lcat )
     int i, nlines, type, cat;
     struct line_cats *Cats;
     
-    G_debug (2, "find_line(): lfield = %d lcat = %d", lfield, lcat);
+    G_debug (2, "find_line(): llayer = %d lcat = %d", lfield, lcat);
     Cats = Vect_new_cats_struct ();
     
     nlines = Vect_get_num_lines ( Map );

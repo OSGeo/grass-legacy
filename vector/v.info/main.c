@@ -69,7 +69,7 @@ main (int argc, char *argv[])
 
   columns = G_define_flag();
   columns->key           = 'c';
-  columns->description   = "Print types/names of table columns for specified field instead of info";
+  columns->description   = "Print types/names of table columns for specified layer instead of info";
 
   if (G_parser(argc,argv))
     exit(1);

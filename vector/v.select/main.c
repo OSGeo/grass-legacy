@@ -127,7 +127,7 @@ main (int argc, char *argv[])
     type_opt[0]->key = "atype";
 
     field_opt[0] = G_define_standard_option(G_OPT_V_FIELD);
-    field_opt[0]->key = "afield";
+    field_opt[0]->key = "alayer";
     
     in_opt[1] = G_define_standard_option(G_OPT_V_INPUT);
     in_opt[1]->key = "binput";
@@ -136,7 +136,7 @@ main (int argc, char *argv[])
     type_opt[1]->key = "btype";
 
     field_opt[1] = G_define_standard_option(G_OPT_V_FIELD);
-    field_opt[1]->key = "bfield";
+    field_opt[1]->key = "blayer";
     
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
 
@@ -149,7 +149,7 @@ main (int argc, char *argv[])
     operator_opt->answer = "overlap";
     operator_opt->description = "Operator defines required relation between features. "
 	"A feature is written to output if the result of operation 'ainput operator binput' is true. "
-	"An input feature is considered to be true, if category of given field is defined.\n"
+	"An input feature is considered to be true, if category of given layer is defined.\n"
 	"\t overlap : features partialy or completely overlap\n";
 
     table_flag = G_define_flag ();

@@ -98,7 +98,7 @@ main (int argc, char *argv[])
 			   "\t\tMapInfo File: directory containing mapinfo files";
 
     layer_opt = G_define_option();
-    layer_opt->key = "layer";
+    layer_opt->key = "olayer";
     layer_opt->type = TYPE_STRING;
     layer_opt->required = YES;
     layer_opt->description = "OGR layer name.\n"

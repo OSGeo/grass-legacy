@@ -37,8 +37,8 @@ parse_command_line (int argc, char *argv[])
     parms.field = G_define_standard_option(G_OPT_V_FIELD);
 
     parms.qfield = G_define_standard_option(G_OPT_V_FIELD);
-    parms.qfield->key = "qfield";
-    parms.qfield->description = "Query field. Used by 'query' option.";
+    parms.qfield->key = "qlayer";
+    parms.qfield->description = "Query layer. Used by 'query' option.";
 
     parms.option = G_define_option();
     parms.option->key          = "option";
@@ -53,9 +53,9 @@ parse_command_line (int argc, char *argv[])
 				 "\tcount - number of features for each category\n"
 				 "\tcoor - point coordinates, X,Y or X,Y,Z\n"
 				 "\tsides - categories of areas on the left and right side of the boundary,\n"
-    					   "\t\t'qfield' is used for area category.\n"
+    					   "\t\t'qlayer' is used for area category.\n"
 				 "\tquery - result of a database query for all records of the geometry\n"
-				           "\t\t(or geometries) from table specified by 'qfield' option";	
+				           "\t\t(or geometries) from table specified by 'qlayer' option";	
 
     parms.units = G_define_option();
     parms.units->key   = "units";

@@ -90,7 +90,7 @@ read_vareas (char *name, char *mapset)
 	    continue;
 	}
 
-	if (KEY("field")) 
+	if (KEY("layer")) 
 	{
 	    G_strip(data);
 	    vector.layer[vec].field = atoi (data);
