@@ -1,7 +1,7 @@
 
 
 
-r.cats               GRASS Reference Manual                r.cats
+r.cats <main>        GRASS Reference Manual         <main> r.cats
 
 
 
@@ -60,14 +60,14 @@ EXAMPLES
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-r.cats               GRASS Reference Manual                r.cats
+r.cats <main>        GRASS Reference Manual         <main> r.cats
 
 
 
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
