@@ -1,12 +1,12 @@
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "site.h"
 
 int main(int argc, char *argv[])
 {
     char *mapset, *name;
-    double east, north;
     char ebuf[128], nbuf[128];
-    char *desc;
     Site *site;
     char *fs;
     int full, all, strip, n=0, s=0, d=0;
@@ -61,9 +61,12 @@ int main(int argc, char *argv[])
 
     if (G_parser(argc,argv))
 	exit(1);
-    full = flag.full->answer;
     all  = flag.all->answer;
+    full = flag.full->answer;
     strip  = flag.strip->answer;
+
+    if(strip)
+	full = 1;
 
     name = parm.input->answer;
     mapset = G_find_file ("site_lists", name, "");
