@@ -1,4 +1,4 @@
-                 $Id: BUGS,v 1.127 2001-03-20 19:16:09 markus Exp $
+                 $Id: BUGS,v 1.128 2001-03-21 08:57:17 markus Exp $
 
 Known bugs in current GRASS GIS version 5.0 CVS
 [In sync with GRASS 5.0 beta CVS version]
@@ -108,12 +108,14 @@ d.rast.num: some numbers are displayed in wrong (unreadable) color
   (being worked on by ?)
 
 d.rgb: Is there a difference between d.rgb and i.composite?
-  Comment from Eric:
+ - Comment from Eric:
    d.rgb vs. i.composite:  I've had a few problems with both.  With a large
    imagery group, i.composite never finished (after hours!).  On the same
    data, d.rgb worked but produced junk in the NULL data areas to the east
    and south of the image (okay on the north and west NULL data areas).
-  (being worked on by ?)
+ - Another comment from Eric:
+   For some reason, it hardwires the colors to 8-bit, needs to be updated.
+  (being worked on by Eric G. Miller <egm2@jps.net>)
 
 i.in.gtc/i.in.pri
   i.in.gtc, putting in input leadername voldirname and dataname        
