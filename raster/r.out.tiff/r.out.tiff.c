@@ -46,7 +46,7 @@ main (int argc, char *argv[])
 	TIFF *out;
 	int in;
 	struct rasterfile h;
-	struct Option *inopt, *outopt;
+	struct Option *inopt, *outopt, *compopt;
 	struct Flag *pflag, *vflag, *tflag;
 	CELL *cell, *cellptr;
 	struct Cell_head cellhd;
@@ -71,6 +71,14 @@ main (int argc, char *argv[])
 	outopt->gisprompt	= "new,tiff,tiff";
 	outopt->description     = "File name for new TIFF file.";
 
+	compopt = G_define_option();
+	compopt->key		= "compression";
+	compopt->type		= TYPE_STRING;
+	compopt->required       = NO;
+	compopt->options        = "none,packbit,deflate";
+	compopt->description    = "TIFF file compression";
+	compopt->answer         = "none";
+	
 	pflag = G_define_flag();
 	pflag->key		= 'p';
 	pflag->description	= "TIFF Pallete output (8bit instead of 24bit).";
@@ -86,8 +94,14 @@ main (int argc, char *argv[])
 
 	if (G_parser (argc, argv))
 		exit (-1);
-
-	compression = COMPRESSION_NONE;
+	
+	if (strncmp(compopt->answer,"packbit",7) == 0)
+		compression = COMPRESSION_PACKBITS;
+	else if (strncmp(compopt->answer,"deflate",7) == 0)
+		compression = COMPRESSION_DEFLATE;
+	else
+		compression = COMPRESSION_NONE;
+	
 	verbose = vflag->answer;
 
 	mapset = G_find_cell(inopt->answer, "");
