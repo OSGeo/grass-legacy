@@ -30,7 +30,7 @@
 
 static int *cat_array, cat_count, cat_size;
 int scan_cats(char *, int *, int *);
-int xtract_line(int, int [], struct Map_info *, struct Map_info *, int, int, int, int);
+int xtract_line(int, int [], struct Map_info *, struct Map_info *, int, int, int, int, int);
 
 static void add_cat(int x)
 {
@@ -48,7 +48,7 @@ static void add_cat(int x)
 int main (int argc, char **argv)
 {
     int i, new_cat, type, ncats, *cats, field;
-    int dissolve=0, x, y;
+    int dissolve=0, x, y, type_only;
     char buffr[1024], text[80];
     char *input, *output, *mapset;
     struct GModule *module;
@@ -67,7 +67,9 @@ int main (int argc, char **argv)
     module = G_define_module();
     module->description =
 	"Selects vector objects from an existing vector map and "
-	"creates a new map containing only the selected objects.";
+	"creates a new map containing only the selected objects. "
+	"In list,file and where are not specified, all features of given type are extracted, categories "
+	"are not changed in that case.";
 
     d_flag = G_define_flag();
     d_flag->key              = 'd';
@@ -91,7 +93,7 @@ int main (int argc, char **argv)
     newopt->key              = "new";
     newopt->type             =  TYPE_INTEGER;
     newopt->required         =  NO;
-    newopt->answer           = "1";
+    newopt->answer           = "-1";
     newopt->description      = "Enter -1 to keep original category or a desired NEW category value. "
 	                       "If new >= 0, table is not copied.";
 
@@ -118,8 +120,10 @@ int main (int argc, char **argv)
         exit (-1);
 
     /* start checking options and flags */
-    if (!listopt->answers && !fileopt->answer && !whereopt->answer)
-	G_fatal_error("Either [list] or [file] or [where] should be given.");
+    type_only = 0;
+    if (!listopt->answers && !fileopt->answer && !whereopt->answer) {
+	type_only = 1;
+    }
 
     Vect_check_input_output_name ( inopt->answer, outopt->answer, GV_FATAL_EXIT );
 
@@ -188,7 +192,7 @@ int main (int argc, char **argv)
 	    while (x <= y && x >= 0 && y >= 0) add_cat(x++);
 	}
 	fclose(in);
-    } else { 
+    } else if ( whereopt->answer != NULL ) { 
         Fi = Vect_get_field( &In, field);
 	fprintf(stderr,"Load cats from the database (table = %s, db = %s).\n",  Fi->table, Fi->database);
 	
@@ -216,7 +220,7 @@ int main (int argc, char **argv)
 	type |= GV_CENTROID;
     }
     
-    xtract_line( cat_count, cat_array, &In, &Out, new_cat, type, dissolve, field);
+    xtract_line( cat_count, cat_array, &In, &Out, new_cat, type, dissolve, field, type_only);
 
     if ( !t_flag->answer && new_cat == -1 ) 
         Vect_copy_table_by_cats ( &In, &Out, field, 1, NULL, GV_1TABLE, cat_array, cat_count );

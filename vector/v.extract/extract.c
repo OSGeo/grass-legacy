@@ -15,7 +15,7 @@
 
 int 
 xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_info *Out,
-             int cat_new, int select_type, int dissolve, int field)
+             int cat_new, int select_type, int dissolve, int field, int type_only)
 {
 	int left_cat_old, right_cat_old;
 	int left_cat_new, right_cat_new;
@@ -38,6 +38,33 @@ xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_inf
         for ( line = 1; line <= Vect_get_num_lines ( In ); line++) {
 	     G_debug ( 2, "Line = %d", line );
 	     type = Vect_read_line ( In, Points, Line_Cats_Old, line);
+
+	     if ( type_only ) {
+		 int write = 0;
+		 
+		 if ( type & select_type ) write = 1;
+
+		 if ( type == GV_BOUNDARY && select_type & GV_AREA ) {
+		     Vect_get_line_areas ( In, line, &areal, &arear );
+                     if ( areal != 0 || arear != 0 ) {
+			 if ( dissolve ) {
+			     if ( areal < 0 || arear < 0 ) {
+			 	write = 1;
+			     }
+			 } else {
+			     write = 1;
+			 }
+		     }
+		 }
+		 
+		 if ( type == GV_CENTROID  && select_type & GV_AREA ) {
+		     areal = Vect_get_centroid_area ( In, line );
+		     if ( areal > 1 ) write = 1;
+		 }
+	
+                 if ( write ) Vect_write_line (Out, type, Points, Line_Cats_Old);
+		 continue;
+	     }
 	     
 	     left_cat_old = right_cat_old = -1;
 	     
