@@ -1,6 +1,18 @@
-r.out.bin
+Usage:
+ r.out.bin [-i] input=name output=name [null=value]
+
+Flags:
+  -i   Output integer category values, not cell values
+
+Parameters:
+   input   Name of an existing raster map
+  output   Name of an output binary map (use out=- for stdout)
+    null   Value to write out for null
+           default: 0
 
 This program is derived from r.out.ascii with a few modifications.
+Author: Bob Covill <bcovill@tekmap.ns.ca>
+
 
 If exported data is moved between platforms byte swapping 
 may be required.
@@ -18,8 +30,5 @@ standard output. The source is taken from r.out.ascii with a few minor
 changes. Depending on the data type the program will output a integer,          
 float, or double array, unless "-i" is specified, then it will be forced        
 to integer. The region parameters are printed to stderr. This file is           
-compatible with the generic mapping tools (GMT) program xyz2grd if the          
-user wants to convert to netCDF. I have also been re-writing r.in.bin to        
-be more flexible for this type of data and allow float import. I will           
-pass this code along when I am happy with it. I noticed it has none of          
-the new Grass-5 lib routines.   
+compatible with the generic mapping tools (GMT) program xyz2grd if the   
+user wants to convert to netCDF. 
