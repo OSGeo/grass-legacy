@@ -18,7 +18,7 @@
 #%End
 #%flag
 #%  key: e
-#%  description: extended statistics (quartiles)
+#%  description: extended statistics (quartiles and 90th percentile)
 #%END
 #%option
 #% key: map
@@ -29,7 +29,7 @@
 #%End
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec g.parser "$0" "$@"
+  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
 fi
 
 COVER="$GIS_OPT_map"
@@ -120,6 +120,12 @@ if [ $GIS_FLAG_e -eq 1 ] ; then
   QPOS=`echo $NUMBER $QUARTILE | awk '{printf "%d", $1 * $2 + 0.5}'`
   QELEMENT=`head -$QPOS $TMP.sort | tail -1`
   echo "3rd Quartile: $QELEMENT"
+
+  # 0.90 percentile
+  QUARTILE=0.9
+  QPOS=`echo $NUMBER $QUARTILE | awk '{printf "%d", $1 * $2 + 0.5}'`
+  QELEMENT=`head -$QPOS $TMP.sort | tail -1`
+  echo "90th Percentile: $QELEMENT"
 
 fi
 
