@@ -64,14 +64,11 @@ void my_attr_copy(char *theText, Site *theSite, int attr, int index) {
   switch (attr) {
   case SITE_ATTR_CAT:
     if (theSite->cattype == CELL_TYPE)
-      snprintf(theText, MAX_SITE_STRING,
-	       "%d", theSite->ccat);
+      sprintf(theText, "%d", theSite->ccat);
     else if (theSite->cattype == FCELL_TYPE)
-      snprintf(theText, MAX_SITE_STRING,
-	       "%f", theSite->fcat);
+      sprintf(theText, "%f", theSite->fcat);
     else if (theSite->cattype == DCELL_TYPE)
-      snprintf(theText, MAX_SITE_STRING,
-	       "%lf", theSite->dcat);
+      sprintf(theText, "%lf", theSite->dcat);
     else
       G_fatal_error("No categories in site file!\n");
     break;
@@ -88,8 +85,7 @@ void my_attr_copy(char *theText, Site *theSite, int attr, int index) {
       G_fatal_error("No double attributes!\n");
     if (theSite->dbl_alloc <= index)
       G_fatal_error("Double index out of range!\n");
-    snprintf(theText, MAX_SITE_STRING,
-	     "%lf", theSite->dbl_att[index]);
+    sprintf(theText, "%lf", theSite->dbl_att[index]);
     break;
   case SITE_ATTR_COORD:
     *ptr = '(';
@@ -109,8 +105,7 @@ void my_attr_copy(char *theText, Site *theSite, int attr, int index) {
       G_fatal_error("No dimensions in site file!\n");
     if (theSite->dim_alloc <= index)
       G_fatal_error("Dimension index out of range!\n");
-    snprintf(theText, MAX_SITE_STRING,
-	     "%lf", theSite->dim[index]);
+    sprintf(theText, "%lf", theSite->dim[index]);
     break;
   default:
     G_fatal_error("Wrong or unknown attribute type!\n");
@@ -417,4 +412,4 @@ static int ymatch ( char *word)
   yok = 1;
   return 1;
 }
-/* vim: softtabstop=4 shiftwidth=4 expandtab */
+/* vim: set softtabstop=4 shiftwidth=4 expandtab */
