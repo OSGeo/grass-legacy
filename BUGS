@@ -1,4 +1,4 @@
-                 $Id: BUGS,v 1.109 2001-01-27 19:08:05 markus Exp $
+                 $Id: BUGS,v 1.110 2001-01-30 15:12:38 markus Exp $
 
 Known bugs in current GRASS GIS version 5.0 CVS
 [In sync with GRASS 5.0 beta CVS version]
@@ -81,6 +81,10 @@ i.in.gtc/i.in.pri
   (reported by Stefano Merler <merler@itc.it>)
   -> NOTE: r.in.gdal offers SAR import, shall we remove i.in.gtc/i.in.pri?
   (being worked on by ?)
+
+i.rectify*:
+ - should update the history "was transformed with i.rectify"
+   (currently keeps old hist only! Confusing.)
 
 i.ortho.photo
  - if second control point is set by mouse, it is not indicated
