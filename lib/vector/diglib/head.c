@@ -33,10 +33,11 @@ dig__write_head ( struct Map_info *Map )
     dig_fseek ( &(Map->dig_fp), 0L, 0);
     
     /* bytes 1 - 5 */
-    buf[0] = GV_COOR_VER_MAJOR;
-    buf[1] = GV_COOR_VER_MINOR;
-    buf[2] = GV_COOR_EARLIEST_MAJOR;
-    buf[3] = GV_COOR_EARLIEST_MINOR;
+    buf[0] = Map->head.Version_Major;
+    buf[1] = Map->head.Version_Minor;
+    buf[2] = Map->head.Back_Major;
+    buf[3] = Map->head.Back_Minor;
+    
     buf[4] = Map->head.port.byte_order;
     if (0 >= dig__fwrite_port_C ( buf, 5, &(Map->dig_fp) )) return (0);
     
@@ -82,8 +83,8 @@ dig__read_head ( struct Map_info *Map )
     if ( Map->head.Version_Major > GV_COOR_VER_MAJOR || Map->head.Version_Minor > GV_COOR_VER_MINOR ) {
       if ( Map->head.Back_Major > GV_COOR_EARLIEST_MAJOR 
 	      || Map->head.Back_Minor > GV_COOR_EARLIEST_MINOR ) {
-	  G_fatal_error ( "Vector format version %d.%d is not supported by this release.",
-			   Map->head.Version_Major, Map->head.Version_Minor);
+	  G_fatal_error ( "Vector 'coor' format version %d.%d is not supported by this version of GRASS. "
+		  	  "Update your GRASS.", Map->head.Version_Major, Map->head.Version_Minor);
 	  return (-1);
       }
       G_warning ( "Your GRASS version does not fully support vector format %d.%d."
