@@ -1,0 +1,10 @@
+OFILES = \
+	do_labels.o \
+	main.o
+
+$(BIN_CONTRIB_CMD)/d.site.labels: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
