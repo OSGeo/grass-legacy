@@ -6,6 +6,7 @@
 int main (int argc, char **argv)
 {
 	char frame[64] ;
+	struct GModule *module;
 	struct
 	{
 	    struct Option *c1;
@@ -15,6 +16,12 @@ int main (int argc, char **argv)
 
 /* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Measures the lengths and areas of features drawn "
+		"by the user in the active display frame on the "
+		"graphics monitor.";
 
 	parm.c1 = G_define_option();
 	parm.c1->key = "c1";
