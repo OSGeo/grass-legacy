@@ -1,0 +1,8 @@
+HDF_LIBDIR = LIB.$(ARCH)
+
+all: $(HDF_LIBDIR)
+	make libnofortran
+	make clean
+
+$(HDF_LIBDIR):
+	ln -s lib $(HDF_LIBDIR)
