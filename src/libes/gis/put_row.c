@@ -386,7 +386,8 @@ static void update_compressed_bits(int fd, int row)
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 
-static int convert_float(XDR *xdrs, const FCELL *rast, int row, int col, int n)
+static int convert_float(
+	XDR *xdrs, const FCELL *rast, int row, int col, int n, int random)
 {
     int i;
 
@@ -414,7 +415,8 @@ static int convert_float(XDR *xdrs, const FCELL *rast, int row, int col, int n)
     return 0;
 }
 
-static int convert_double(XDR *xdrs, const DCELL *rast, int row, int col, int n)
+static int convert_double(
+	XDR *xdrs, const DCELL *rast, int row, int col, int n, int random)
 {
     int i;
 
@@ -473,12 +475,12 @@ static int put_fp_data(int fd, void *rast, int row, int col, int n, RASTER_MAP_T
   
     if (data_type == FCELL_TYPE)
     {
-	if (convert_float(xdrs, rast, row, col, n) < 0)
+	if (convert_float(xdrs, rast, row, col, n, random) < 0)
 	    return -1;
     }
     else
     {
-	if (convert_double(xdrs, rast, row, col, n) < 0)
+	if (convert_double(xdrs, rast, row, col, n, random) < 0)
 	    return -1;
     }
 
@@ -773,7 +775,7 @@ int G__open_null_write(int fd)
 	return -1;
     }
 
-    null_fd = open(fcb->null_temp_name, O_WRONLY|O_TRUNC);
+    null_fd = open(fcb->null_temp_name, O_WRONLY);
     if (null_fd < 0)
 	return -1;
 
