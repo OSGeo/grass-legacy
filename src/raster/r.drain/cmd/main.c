@@ -41,9 +41,13 @@ struct Cell_head window;
 CELL *value;
 int nrows, ncols;
 SEGMENT in_seg, out_seg;
-int data_type;
+int data_type, data_type2;
 int exclude_nulls = 1;
 double null_value = 0.0;
+int mode=0;
+int cum = 0;
+float fcum =0.0;
+double dcum = 0.0;
 
 struct metrics* m = NULL;
 
@@ -52,7 +56,7 @@ main (int argc, char *argv[])
 {
 	int n ;
 	int col, row, 
-	len, flag,
+	len, len2, flag,
 	srows, scols,
 	elevation_fd, drain_path_fd,
 	in_fd, out_fd;
@@ -66,6 +70,7 @@ main (int argc, char *argv[])
 	POINT *PRES_PT=NULL, *NEW_START_PT, *PRESENT_PT=NULL;
 	double east, north;
 	struct Option *opt1, *opt2, *opt3, *opt4, *opt5;
+	struct Flag *flag1, *flag2;
 
 	opt2 = G_define_option() ;
 	opt2->key        = "input" ;
@@ -103,6 +108,14 @@ main (int argc, char *argv[])
 	opt5->multiple   = NO;
 /*  	opt5->answer     = ""; */
 	opt5->description= "Value assigned to null cells. Null cells are excluded by default";
+
+	flag1 = G_define_flag();
+	flag1->key = 'c';
+	flag1->description = "Copy input cell values on output";
+
+	flag2 = G_define_flag();
+	flag2->key = 'a';
+	flag2->description = "Accumulate input values along the path";
 
 	G_gisinit (argv[0]);
 
@@ -204,6 +217,15 @@ main (int argc, char *argv[])
 #endif
 	}
 
+	if (flag1->answer)
+		mode = 1;
+	if (flag2->answer) {
+		if (mode)
+			G_warning("Both -c and -a flags specified! r.drain will use the -a flag");
+		mode = 2;
+	}
+
+
 /*  Check if elevation layer exists in data base  */
 	search_mapset = "";
 
@@ -292,8 +314,16 @@ main (int argc, char *argv[])
 	cell = G_allocate_raster_buf(data_type); 
 	len = G_raster_size(data_type) ;
 
+	if (mode) {
+		len2 = len;
+		data_type2 = data_type;
+	} else {
+		data_type2 = CELL_TYPE;
+		len2 =G_raster_size(data_type2);
+	}
+
 /*   Parameters for map submatrices   */
-	
+#if 0
 	if (1) {
 		switch (data_type) {
 			case (CELL_TYPE):
@@ -308,7 +338,7 @@ main (int argc, char *argv[])
 		}
 			fprintf(stderr," %d rows, %d cols.\n", nrows, ncols);
 	}
-
+#endif
 	/*   Parameters for map submatrices   */
 
 	srows = nrows/4 + 1;
@@ -320,7 +350,7 @@ main (int argc, char *argv[])
 	close(in_fd);
 
 	out_fd = creat(out_file,0666);
-	segment_format(out_fd, nrows, ncols, srows, scols, len);
+	segment_format(out_fd, nrows, ncols, srows, scols, len2);
 	close(out_fd);
 
 	/*   Open initialize and segment all files  */
@@ -339,10 +369,12 @@ main (int argc, char *argv[])
 	}
 	segment_flush(&in_seg);
 
+//	G_close_cell(elevation_fd);
+
 //	G_free(cell);
 
-	cell = G_allocate_raster_buf(data_type); 
-	G_set_null_value(cell,ncols,data_type);
+	cell = G_allocate_raster_buf(data_type2); 
+	G_set_null_value(cell,ncols,data_type2);
 	for( row=0 ; row<nrows ; row++ )
 	{
 		segment_put_row(&out_seg, cell, row);
@@ -352,14 +384,14 @@ main (int argc, char *argv[])
 	/* If the output layer containing the marked starting positions*/
 	/* already exists, create a linked list of starting locations  */
 	if (flag == 1) {
-		int data_type2;
-		int data_size2;
-		void* cell2;
+		int data_type3;
+		int data_size3;
+		void* cell3;
 
 		drain_path_fd = G_open_cell_old (drain_path_layer,
 		    drain_path_mapset);
-		data_type2 = G_raster_map_type(drain_path_layer,drain_path_mapset);
-		data_size2 = G_raster_size(data_type2);
+		data_type3 = G_raster_map_type(drain_path_layer,drain_path_mapset);
+		data_size3 = G_raster_size(data_type3);
 
 		if (drain_path_fd < 0)
 		{
@@ -368,22 +400,22 @@ main (int argc, char *argv[])
 			exit(1);
 		}
 
-		cell2 = G_allocate_raster_buf(data_type2); 
+		cell3 = G_allocate_raster_buf(data_type3); 
 
 		/*  Search for the marked starting pts and make list	*/
 		for(row = 0; row < nrows; row++)
 		{
-			if(G_get_raster_row(drain_path_fd,cell,row, data_type2) < 0)
+			if(G_get_raster_row(drain_path_fd,cell,row, data_type3) < 0)
 		/* Originally: if(G_get_map_row(drain_path_layer,cell,row) < 0).
 		 * Fixed by Jianping Xu*/
 				exit(1);
 
 			for(col = 0; col < ncols; col++)
 			{
-/* 				if(((int*)cell2)[col] > 0) { */
-				if(!G_is_null_value(cell2,data_type2)) {
+/* 				if(((int*)cell3)[col] > 0) { */
+				if(!G_is_null_value(cell3,data_type3)) {
 					POINT *new;
-					G_incr_void_ptr(cell2,data_size2);
+					G_incr_void_ptr(cell3,data_size3);
 					new = make_point((POINT *)NULL,row,col,0.0);
 					if(head_start_pt == NULL)
 						head_start_pt = new;
@@ -395,7 +427,7 @@ main (int argc, char *argv[])
 		}	/* loop over rows */
 
 		printf("free--------------\n");
-		G_free(cell2);
+		G_free(cell3);
 		printf("free--------------\n");
 		G_close_cell(drain_path_fd);
 	}
@@ -420,13 +452,18 @@ main (int argc, char *argv[])
 	PRES_PT = head_start_pt;
 	while(PRES_PT != NULL)
 	{
+		if (mode == 2) {
+			cum = 0;
+			fcum= 0.0;
+			dcum = 0.0;
+		}
 		drain_path_finder (PRES_PT);
 		PRES_PT = NEXT_PT;
 	}
 
 
 	/*  Open output layer for writing   */
-	drain_path_fd = G_open_raster_new(drain_path_layer,data_type);
+	drain_path_fd = G_open_raster_new(drain_path_layer,data_type2);
 
 	/*  Write pending updates by segment_put() to outputmap   */
 	segment_flush(&in_seg);
@@ -436,7 +473,7 @@ main (int argc, char *argv[])
 	{
 		segment_get_row(&out_seg,cell,row);
 
-		if (G_put_raster_row(drain_path_fd,cell,data_type)<0)
+		if (G_put_raster_row(drain_path_fd,cell,data_type2)<0)
 			exit(1);
 	}
 
@@ -446,7 +483,7 @@ main (int argc, char *argv[])
 	close(in_fd);               /* close all files */
 	close(out_fd);
 
-	G_close_cell(drain_path_fd);
+  	G_close_cell(drain_path_fd); 
 	G_close_cell(elevation_fd);
 
 	unlink(in_file);       /* remove submatrix files  */
@@ -472,7 +509,7 @@ int drain_path_finder ( POINT *PRES_PT)
 	POINT *head = NULL, *make_neighbors_list();
 
 	{ /* start a new block to minimize variable use in recursion */
-		int data,row,col, val;
+		int data,row,col, val,val2;
 		double p_elev, fdata;
 		float f;
 //		value = &data;
@@ -490,13 +527,28 @@ int drain_path_finder ( POINT *PRES_PT)
 
 		switch (data_type) {
 			case (CELL_TYPE):
-				segment_get(&out_seg, &val, PRES_PT_ROW, PRES_PT_COL);
-				if(!G_is_c_null_value(&val)) 
+				segment_get(&out_seg, &val2, PRES_PT_ROW, PRES_PT_COL);
+				if(!G_is_c_null_value(&val2)) 
 					return 0;		/* already traversed	*/
 				segment_get(&in_seg, &val, PRES_PT_ROW, PRES_PT_COL);
 				p_elev = val;
-				segment_put(&out_seg, &val, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
-
+				switch (mode){
+					case 0: {
+						val2 = 1;
+						segment_put(&out_seg, &val2, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
+						break;
+					}
+					case 1: {
+						segment_put(&out_seg, &val, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
+						break;
+					}
+					case 2: {
+						cum+=val;
+						segment_put(&out_seg, &cum, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
+						break;
+					}
+				}						
+					
 				/* check the elevations of neighbouring pts to determine the	*/
 				/* next pt(s) for the drop to flow				*/
 				for (row = PRES_PT_ROW -1;
@@ -539,7 +591,19 @@ int drain_path_finder ( POINT *PRES_PT)
 				segment_get(&in_seg, &f, PRES_PT_ROW, PRES_PT_COL);
 				p_elev = f;
 
-  				segment_put(&out_seg, &f, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
+				switch (mode){
+					case 0:
+						val2 = 1;
+						segment_put(&out_seg, &val2, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
+						break;
+					case 1:
+						segment_put(&out_seg, &f, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
+						break;
+					case 2:
+						fcum +=f;
+						segment_put(&out_seg, &fcum, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
+						break;
+				}						
 
 				/* check the elevations of neighbouring pts to determine the	*/
 				/* next pt(s) for the drop to flow				*/
@@ -577,13 +641,25 @@ int drain_path_finder ( POINT *PRES_PT)
 				}	/* end of "row" loop */
 				break;
 			case (DCELL_TYPE):
-				segment_get(&out_seg, &p_elev, PRES_PT_ROW, PRES_PT_COL);
-				if(!G_is_d_null_value(&p_elev) ) 
+				segment_get(&out_seg, &fdata, PRES_PT_ROW, PRES_PT_COL);
+				if(!G_is_d_null_value(&fdata) ) 
 					return 0;		/* already traversed	*/
 				segment_get(&in_seg, &p_elev, PRES_PT_ROW, PRES_PT_COL);
 				/* check the elevations of neighbouring pts to determine the	*/
 				/* next pt(s) for the drop to flow				*/
-				segment_put(&out_seg, &p_elev, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
+				switch (mode){
+					case 0:
+						val2 = 1;
+						segment_put(&out_seg, &val2, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
+						break;
+					case 1:
+						segment_put(&out_seg, &p_elev, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
+						break;
+					case 2:
+						dcum+=p_elev;
+						segment_put(&out_seg, &dcum, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
+						break;
+				}						
 				for (row = PRES_PT_ROW -1;
 					 row <= (PRES_PT_ROW +1) && row < nrows; row++)
 				{
