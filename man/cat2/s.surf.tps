@@ -60,7 +60,7 @@ s.surf.tps <alpha>    GRASS Reference Manual   <alpha> s.surf.tps
 
 
 
-GRASS 5.0beta3	      GRASS Development Team			1
+GRASS 5.0beta6	      GRASS Development Team			1
 
 
 
@@ -126,7 +126,7 @@ s.surf.tps <alpha>    GRASS Reference Manual   <alpha> s.surf.tps
 
 
 
-2		      GRASS Development Team	   GRASS 5.0beta3
+2		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -192,7 +192,7 @@ s.surf.tps <alpha>    GRASS Reference Manual   <alpha> s.surf.tps
 
 
 
-GRASS 5.0beta3	      GRASS Development Team			3
+GRASS 5.0beta6	      GRASS Development Team			3
 
 
 
@@ -258,7 +258,7 @@ s.surf.tps <alpha>    GRASS Reference Manual   <alpha> s.surf.tps
 
 
 
-4		      GRASS Development Team	   GRASS 5.0beta3
+4		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -324,7 +324,7 @@ s.surf.tps <alpha>    GRASS Reference Manual   <alpha> s.surf.tps
 
 
 
-GRASS 5.0beta3	      GRASS Development Team			5
+GRASS 5.0beta6	      GRASS Development Team			5
 
 
 
@@ -390,7 +390,7 @@ NOTICE
 
 
 
-6		      GRASS Development Team	   GRASS 5.0beta3
+6		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
