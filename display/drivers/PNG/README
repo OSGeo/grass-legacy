@@ -36,14 +36,6 @@ USAGE
        directory.
          d.mon stop=PNG
        
-NOTES
-
-   ThePNG driver uses the Gd library developed by Boutell.Com, Inc.
-   The Gd library in turn relies on libpng (see the libpng home page)
-   and zlib (see the info-zip home page), all which needs to be
-   installed for the PNG driver to work (it's worth it).
-   http://www.boutell.com/gd/
-   
 AUTHOR
 
    Per Henrik Johansen
