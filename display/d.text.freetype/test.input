@@ -1,3 +1,21 @@
+.c COMMANDS: .F .C .S .A .R .X .Y .L
+.c Other .* except COMMANDS and .. can be used for comments.
+.a ALSO COMMENT
+.c
+.c .F {font|path}[:charset]		font
+.c .C {color_name|0xRRGGBB}		color
+.c .S size[p]				size		p means pixel size
+.c .A {ll,lc,lr,cl,cc,cr,ul,uc,ur}	align
+.c .R rotation[r]			rotation	r means radian rotation
+.c .X [+|-]x[p]				set x-coord	+|- means relative dx
+.c .Y [+|-]y[p]				set y-coord
+.c .L {0|1}				set auto-linefeed
+.c ..					draw one .
+.
+. ALSO COMMENT
+.
+.
+.
 .F gulim
 .S 10
 line 1
@@ -8,6 +26,8 @@ line 2-2
 .L 1
 .C 0xff00ff
 line 3
+
+line 5
 .Y 0
 line 1 again
 .X +3
@@ -18,12 +38,13 @@ line 2 again
 line 3 again
 line 4
 line 5-1
+
 .L 0
 line 5-2
 .A cc
-.X 200p
+.X 100p
 .Y 200p
 .C red
 .R 3.14r
-(200,200)
+(100,200)
 
