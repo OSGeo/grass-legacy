@@ -1,134 +1,64 @@
-$Id: SUBMITTING,v 1.5 2000-11-19 12:24:16 markus Exp $
+$Id: SUBMITTING,v 1.6 2000-11-21 08:41:11 justin Exp $
+
+NOTE: Please improve this list!
 
 Dear (new) GRASS Developer,
 
 When submitting to GRASS CVS repositiory, please take
 care of following rules:
 
-- For programming style, please see below.
+1.  Get the latest GRASS 5 Programmer's Manual here:
+    http://www.geog.uni-hannover.de/grass/grassdevel.html#prog
 
-- Get the latest GRASS 5 Programmer's Manual here:
-  http://www.geog.uni-hannover.de/grass/grassdevel.html#prog
+    or (better) grab it from GRASS CVS server (Latex):
+    	cvs -z3 co progmangrass50
 
-  or (better) grab it from GRASS CVS server (Latex):
-    cvs -z3 co progmangrass50
+2.  Use the directory structure to place your module appropriately into
+    the source tree
+    	- libes go into src/libes/
+    	- raster goes into src/raster/
+    	- vector goes into src/mapdev/
+    	- sites goes into src/sites
+    	- ...
 
-- Add a header section to each file you submit and make sure you include
-  the copyright:
-  Example:
+3.  Add a header section to each file you submit and make sure you include
+    the copyright. The purpose section is meant to contain a general
+    overview of the code in the file to assist other programmers that will
+    need to make changes to your code.
+
+    Example (ficticious header for a file called color.c) :
 
 /*
-* <Id flag - see STYLE_PROGRAMMING for proper syntax>
+* $Id flag - see note 4 below for syntax specification
 *
 ****************************************************************************
-* 	               -- GRASS Development Team --
 *
-* MODULE: 	GRASS gis library
-* FILENAME:	env.c
-* AUTHOR(S):	Original author unknown - probably CERL
-*  	    	Justin Hickey - Bangkok Thailand - jhickey@hpcc.nectec.or.th
-*   	    	Roger Bivand - rsb@reclus.nhh.no
-* PURPOSE: 	To provide functionality for GRASS programs to set and get
-*  	    	environment variables. The set environment functions can set
-*  	    	variables for the duration of the program, or variables can be
-*  	    	set permanently by adding them to the GISRC file. The get
-*  	    	environment functions simply get the given variable from the
-*  	    	environment regardless of whether it is permanent or not. 
-*  	    	Functions are also provided to read and write the GISRC file.
-*  	    	This file has been rewritten by Justin Hickey.
-* DATE CREATED: Jul 14 2000
-* COPYRIGHT:  	(C) 2000 by the GRASS Development Team
+* MODULE:       d.rast (or new higher level module name (eg GRASS core) 
+*   	    	for 5.1)
+* AUTHOR(S):    Original author unknown - probably CERL
+*               John Doe - jdoe@some.where.org
+* PURPOSE:      To provide storage and manipulation of colors used for 
+*               rendering the raster. The colors are stored in a doubly linked
+*   	    	list which must be initialized with InitColors() before it can
+*   	    	be used. Note that most linked list functionality (add,
+*   	    	remove, get) is supported, but their is no sorting
+*   	    	functionality.
+* COPYRIGHT:    (C) 2000 by the GRASS Development Team
 *
-*   	    	This program is free software under the GPL (>=v2)
-*   	    	Read the file COPYING that comes with GRASS for details.
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
 *
 *****************************************************************************/
 
-  The copyright protects your rights according to GNU GPL (www.gnu.org).
+    The copyright protects your rights according to GNU General Public
+    License (www.gnu.org).
 
-- Place your module into the appropriate directory:
-  - libes go into src/libes/
-  - raster goes into src/raster/
-  - vector goes into src/mapdev/
-  - sites goes into src/sites
-  - ...
-
-- Add the module's directory name (pointing to the local Gmakefile)
-  to the compile list at src/CMD/lists/GRASS
-
-- Place the documentation in HTML format into html/html/ and
-  add it to the module's list in html/
-  Easiest way is to modify an existing HTML page for your purposes
-  (to get the page style). There is a local README telling more details.
-  The online WWW man pages will be updated over-night by CVS.
-
-- Tell the other developers about it:
-   grass5@geog.uni-hannover.de
- 
-  To subscribe to this list, see
-  http://www.geog.uni-hannover.de/grass/grassdevel.html
-
-- In case of question feel free to contact the developers at above
-  mailing list.
-
-That's it. We are glad to receive your contributions!
-
-
------------------------------------------------------------------------
-GRASS GIS programming style standards
-
-$Id: SUBMITTING,v 1.5 2000-11-19 12:24:16 markus Exp $
-
-Please improve this list!
- 
- Get the latest GRASS 5 Programmer's Manual here:
-   http://www.geog.uni-hannover.de/grass/grassdevel.html
-
- or (better) grab it from CVS server (Latex):
-   cvs -z3 co progmangrass50
-
------------------------------------------------------------
-GRASS GIS programming style standards
-
-1. Use the directory structure to place your module
-
-2. documents go to
-    ./html and
-    ./man
-   See local examples about documentation style. To convert
-   to MAN format, the g.html2man can be used.
-
-3. When writing Gmakefiles, use the current standard
-   [insert module example here]
-
-   Take care of this:
-
-   Couple notes for your Gmakefiles: 
-     - do not add libraries on a link line after the $(XDRLIB) $(MATHLIB)
-     - please add them before these
-     - The XDRLIB and MATHLIB may not go into the $(LIBES) line, but only
-       into the $(CC) line.
-
-4. Platform dependent code:
-   Do not remove #ifdef __CYGWIN__ and/or #ifndef __CYGWIN__ lines and 
-   their encapsulated lines from source code (one example was that someone
-   removed drand48 definition.)
-
-5. Insert return statements for functions
-
-6. Use fprintf instead of printf
-
-7. Put a new line at end-of-file
-
-8. Don't use C++ comment style! This confuses several compilers.
-   Use instead:
-       /* C-comments */
-
-9. If you add the CVS Id flag (<$>Id<$>) (without angle brackets)
-
+4. When you add the CVS Id flag (<$>Id<$>) (without angle brackets)
     to a file for CVS-versioning, note that this is not allowed in the
-    *first* line of a comment. Some compilers will get confused. Note do
-    NOT include the angle brackets <>
+    *first* line of a comment. Some compilers will get confused. NOTE when 
+    following the examples below do NOT include the angle brackets <>, they
+    are needed to prevent CVS from interpreting the flag for this example.
 
     Forbidden:
 
@@ -139,9 +69,89 @@ GRASS GIS programming style standards
      * <$>Id<$>
      */
 
-10. For consistency, use README rather than README.txt.
+5.  Always specify the return type for ALL functions including those that
+    return type "void", and insert return statements for ALL functions.
+    Also, use ANSI C prototypes to declare your functions. Examples:
+    
+    void G_something(void);
+    int G_somethingElse(int, int);
+    
+    void G_something(void)
+    {
+    	/* Snipped out code */
+	
+	return;
+    }
+    
+    int G_somethingElse(int x, int y)
+    {
+    	/* Snipped out code */
+	
+	return(0);
+    }
+    
+6.  Use fprintf instead of printf
 
-11. Add your copyright notice (see template above)
+7.  Use the following GRASS library functions instead of the standard C
+    functions. The reason for this is that the following functions ensure
+    good programming practice (eg always checking if memory was allocated)
+    and/or improves portability. PLEASE refer to the programmers manual
+    for the proper use (eg determining if any casts are needed for arguments
+    or return values) of these library functions. They may perform a task
+    slightly different from their corresponding C library function, and thus,
+    their use may not be the same.
+    
+    	G_malloc() instead of malloc()
+	G_calloc() instead of calloc()
+	G_realloc() instead of realloc()
+	G_getenv() instead of getenv()
+	G_setenv() instead of setenv()
+	G_unsetenv() instead of unsetenv()
+	
+	Could somebody please add others (please verify that they are
+	useful and safe first)
+
+8.  Don't use the C++ comment style! This confuses several compilers.
+    Use instead:
+       /* C-comments */
+
+9.  Platform dependent code:
+    Do not remove #ifdef __CYGWIN__ and/or #ifndef __CYGWIN__ lines and 
+    their encapsulated lines from source code (one example was that someone
+    removed drand48 definition.)
+
+10. Make sure a new line is at the end of each file
+
+11. When writing Gmakefiles, use the current standard
+    [insert module example here]
+
+    Someone please take care of this:
+
+    Couple of notes for your Gmakefiles: 
+    	- do not add libraries on a link line after the $(XDRLIB) $(MATHLIB)
+     	- please add them before these
+     	- The XDRLIB and MATHLIB may not go into the $(LIBES) line, but only
+          into the $(CC) line.
+
+12. Add the module's directory name (pointing to the local Gmakefile)
+    to the compile list at src/CMD/lists/GRASS
+
+13. Place the documentation in HTML format into html/html/ and
+    add it to the module's list in html/ The easiest way to do this is to copy
+    an existing HTML page and modify it for your purposes
+    (to get the page style). There is a local README containing more details.
+    The online WWW man pages will be updated over-night by CVS.
+
+14. For consistency, use README rather than README.txt for any README files.
+
+15. Tell the other developers about the new code using the following e-mail:
+    grass5@geog.uni-hannover.de
+ 
+    To subscribe to this mailing list, see
+    http://www.geog.uni-hannover.de/grass/grassdevel.html
+
+16. In case of questions feel free to contact the developers at the above
+    mailing list.
 
 ...
-[add further hints]
+[please add further hints]
