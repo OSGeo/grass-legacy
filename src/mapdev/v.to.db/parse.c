@@ -56,8 +56,8 @@ parse_command_line (int argc, char *argv[])
 	parms.units->type   = TYPE_STRING ;
 	parms.units->required = NO ;
 	parms.units->multiple = NO ;
-	parms.units->options      = "mi,miles,f,feet,me,meters,k,kilometers,a,acres,h,hectacres";
-	parms.units->description = "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectacres)";
+	parms.units->options      = "mi,miles,f,feet,me,meters,k,kilometers,a,acres,h,hectares";
+	parms.units->description = "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares)";
 
 	parms.table = G_define_option();
 	parms.table->key    = "table";
@@ -166,7 +166,7 @@ int parse_units (char *s)
 		x = U_KILOMETERS;
 	else if (match (s, "acres",1))
 		x = U_ACRES;
-	else if (match (s, "hectacres",1))
+	else if (match (s, "hectares",1))
 		x = U_HECTARES;
 
 	return x;
