@@ -20,11 +20,12 @@ G_remove (element, name)
     char *path;
     char command[1040];
     char *mapset;
-    char tname[256], tmap[256];
+    char xname[512], xmapset[512];
 
 /* name in mapset legal only if mapset is current mapset */
     mapset = G_mapset();
-    if (G__name_in_mapset (name, tname, tmap) && strcmp (mapset, tmap))
+    if (G__name_is_fully_qualified (name, xname, xmapset)
+    && strcmp (mapset, xmapset))
 	    return -1;
 
     strcpy (command, "rm -rf ");
@@ -32,6 +33,10 @@ G_remove (element, name)
 /* if file does not exist, return 0 */
     if (access (G__file_name (path, element, name, mapset),0) != 0)
 	    return 0;
+
+/* try unlink() first */
+    if (unlink(path) == 0)
+	    return 1;
 
 /* otherwise return result from rm */
     return system (command) == 0 ? 1 : -1;
