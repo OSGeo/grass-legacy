@@ -23,9 +23,11 @@ OBJ = \
     open1.o \
     open2.o \
     portable_io.o \
+    poly.o \
     read.o \
     read1.o \
     read2.o \
+    support.o \
     rewind.o \
     window.o \
     write.o \
