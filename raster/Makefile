@@ -52,6 +52,7 @@ SUBDIRS = \
 	r.profile \
 	r.proj \
 	r.quant \
+	r.random \
 	r.random.cells \
 	r.random.surface \
 	r.reclass \
