@@ -34,6 +34,17 @@ ETC=$GISBASE/etc
 PATH=$GISBASE/bin:$GISBASE/scripts:$PATH
 export PATH
 
+# Set LD_LIBRARY_PATH.  For GRASS 5.0 we don't depend on this much, though
+# r.in.gdal may use it to find some things.  Over time we intend to put
+# more GRASS related shared libraries in $GISBASE/lib.
+
+if [ ${#LD_LIBRARY_PATH} = 0 ] ; then
+  LD_LIBRARY_PATH=$GISBASE/lib
+  export LD_LIBRARY_PATH
+else
+  LD_LIBRARY_PATH=$GISBASE/lib:$LD_LIBRARY_PATH
+fi
+
 # Check for concurrent use
 $ETC/lock $lockfile $$
 case $? in
