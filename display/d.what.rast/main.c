@@ -66,7 +66,7 @@ int main (int argc, char **argv)
 
 	colrow = G_define_flag();
 	colrow->key 	    = 'c';
-	colrow->description = "Print out col and row for entire map region";
+	colrow->description = "Print out col/row for the entire map in grid resolution of the region";
 
 	module = G_define_module();
 	module->description = 
