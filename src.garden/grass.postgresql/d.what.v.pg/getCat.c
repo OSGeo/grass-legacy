@@ -36,7 +36,7 @@ int getCat (Map, Cats,colr,fillcolr,fill)
     double **xs, **ys;
     int rings;
     int *rpnts;
-    int j;    
+    int j, jk;    
     	
 
 	dbCat = -1;
@@ -129,18 +129,6 @@ int getCat (Map, Cats,colr,fillcolr,fill)
             	xs[0] = (double *) G_malloc (sizeof(double) * rpnts[0]);
             	ys[0] = (double *) G_malloc (sizeof(double) * rpnts[0]);
             	Vect_copy_pnts_to_xy (Points, xs[0], ys[0], &rpnts[0]);
-            	for (j = 0; j < pa->n_isles; j++) {
-                	Vect_get_isle_points (Map, pa->isles[j], Points_i);
-                	rpnts[j+1] = Points_i->n_points;
-                	xs[j+1] = (double *) G_malloc (sizeof(double) * rpnts[j+1]);
-                	ys[j+1] = (double *) G_malloc (sizeof(double) * rpnts[j+1]);
-                	Vect_copy_pnts_to_xy (Points_i, xs[j+1], ys[j+1], &rpnts[j+1]);
-            	}
-		
-		if (fill) {
-			R_standard_color(fillcolr);
-			G_plot_area (xs, ys, rpnts, rings);
-		}
 		
 		if (colr > 0) {
 			
@@ -150,10 +138,30 @@ int getCat (Map, Cats,colr,fillcolr,fill)
                 		G_plot_line (Points->x[j],   Points->y[j],
                         	Points->x[j+1], Points->y[j+1]);
 				
-			for (j = 0; j < Points_i->n_points - 1; j++)
-                		G_plot_line (Points_i->x[j],   Points_i->y[j],
-                        	Points_i->x[j+1], Points_i->y[j+1]);
+
 		}
+
+            	for (j = 0; j < pa->n_isles; j++) {
+                	Vect_get_isle_points (Map, pa->isles[j], Points_i);
+                	rpnts[j+1] = Points_i->n_points;
+                	xs[j+1] = (double *) G_malloc (sizeof(double) * rpnts[j+1]);
+                	ys[j+1] = (double *) G_malloc (sizeof(double) * rpnts[j+1]);
+                	Vect_copy_pnts_to_xy (Points_i, xs[j+1], ys[j+1], &rpnts[j+1]);
+			
+			if (colr > 0) {
+			
+				for (jk = 0; jk < Points_i->n_points - 1; jk++)
+                			G_plot_line (Points_i->x[jk],   Points_i->y[jk],
+                        		Points_i->x[jk+1], Points_i->y[jk+1]);
+			}
+
+            	}
+		
+		if (fill) {
+			R_standard_color(fillcolr);
+			G_plot_area (xs, ys, rpnts, rings);
+		}
+		
 		
 		for (j = 0; j < rings; j++)
             	{	
