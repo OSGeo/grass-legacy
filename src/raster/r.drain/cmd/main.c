@@ -137,7 +137,7 @@ main (int argc, char *argv[])
 
 	flag3 = G_define_flag();
 	flag3->key = 'n';
-	flag3->description = "Accumulate cell numbers along the path";
+	flag3->description = "Count cell numbers along the path";
 
 	G_gisinit (argv[0]);
 
