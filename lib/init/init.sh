@@ -176,32 +176,32 @@ if [ ! "$GRASS_WISH" ] ; then
 fi
 
 if [ ! "$GRASS_HTML_BROWSER" ] ; then
-    type -p konqueror > /dev/null
-    if [ $? -eq 1 ] ; then
-       type -p mozilla > /dev/null
-       if [ $? -eq 1 ] ; then
-          type -p opera > /dev/null
-          if [ $? -eq 1 ] ; then
-             type -p netscape > /dev/null
-             if [ $? -eq 1 ] ; then
-                echo "Searching for web browser, but neither konqueror, nor mozilla, opera, netscape found."
-                # so we set konqueror, though, to make lib/gis/parser.c happy:
-                GRASS_HTML_BROWSER=konqueror
-             else 
-                GRASS_HTML_BROWSER=netscape
-             fi
-          else
-             GRASS_HTML_BROWSER=opera
-          fi
-       else
-          GRASS_HTML_BROWSER=mozilla
-       fi
-    else
-       GRASS_HTML_BROWSER=konqueror
-    fi
-
-    export GRASS_HTML_BROWSER
+    for i in `echo "$PATH" | sed 's/^:/.:/
+                                s/::/:.:/g
+                                s/:$/:./
+                                s/:/ /g'`
+    do
+        if [ -f "$i/konqueror" ] ; then
+            GRASS_HTML_BROWSER=konqueror
+            break
+        elif [ -f "$i/mozilla" ] ; then
+            GRASS_HTML_BROWSER=mozilla
+            break
+        elif [ -f "$i/opera" ] ; then
+            GRASS_HTML_BROWSER=opera
+            break
+        elif [ -f "$i/netscape" ] ; then
+            GRASS_HTML_BROWSER=netscape
+            break
+        fi
+    done
 fi
+if [ ! "$GRASS_HTML_BROWSER" ] ; then
+    echo "Searching for web browser, but neither konqueror, nor mozilla, opera, netscape found."
+    # so we set konqueror, though, to make lib/gis/parser.c happy:
+    GRASS_HTML_BROWSER=konqueror
+fi
+export GRASS_HTML_BROWSER
 
 if [ ! "$GRASS_GNUPLOT" ] ; then
     GRASS_GNUPLOT="gnuplot -persist"
