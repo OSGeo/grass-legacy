@@ -1,0 +1,16 @@
+EXTRA_CFLAGS	= $(VECT_INCLUDE)
+
+
+PROG = $(BIN_MAIN_CMD)/v.support
+
+OFILES = \
+	support.o
+
+
+
+all:  $(PROG)
+
+$(PROG): $(OFILES) $(GISLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) $(OFILES) $(GISLIB) $(MATHLIB)
+	mv a.out $@
