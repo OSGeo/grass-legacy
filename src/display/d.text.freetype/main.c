@@ -968,17 +968,37 @@ draw_character(rectinfo win, FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
 	{
 		buffer = (char *) G_malloc(l);
 		memset(buffer, 0, l);
-	
-		j = (width + 7) / 8;
-	
+
+		j = face->glyph->bitmap.pitch;
+
+	/* note in FreeType bitmap.buffer [0,0] is lower left */
 		for(i = 0; i < l; i++)
 		{
-			if(face->glyph->bitmap.buffer[
-				(i / width) * j + (i % width) / 8
-			   ] & (1 << (7 - (i % width) % 8)))
+			if(face->glyph->bitmap.buffer
+			  [ (i / width) * j + (i % width) / 8 ]
+			    & (1 << (7 - (i % width) % 8)) )
 				buffer[i] = color;
 		}
-	
+
+#ifdef DEBUG
+		if(1) {
+			int k;
+
+			fprintf(stdout, "[%c] %dx%d  pitch=%d\n", ch, width, rows, j);
+			for(i=0; i<rows; i++) {
+				for(k=0; k<width; k++) {
+					if(buffer[(i*width)+k])
+						fprintf(stdout, "%c", ch);
+					else
+						fprintf(stdout, ".");
+				}
+				fprintf(stdout, "\n");
+			}
+			fprintf(stdout, "\n\n");
+			fflush(stdout);
+		}
+#endif
+
 		start_row = 0;
 		start_col = 0;
 		w = width;
