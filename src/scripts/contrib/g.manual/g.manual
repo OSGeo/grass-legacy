@@ -105,6 +105,10 @@ then
 
   for i in $entries
   do
+    if [ "$i" = "aboutus" ]
+    then
+      continue
+    fi
     awk 'BEGIN{i=0}
         /\.pp|\.br/i{if(i){for(j=1;j<NF;j++) printf "%s ",$j; printf "\n"; exit;}}
     	{if(!NF) exit;
