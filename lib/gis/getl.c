@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "gis.h"
 /*
  ***********************************************************
@@ -11,7 +12,6 @@
  *  returns: 1 ok, 0 eof
  ************************************************************/
 
-#include <stdio.h>
 int G_getl ( char *buf, int n, FILE *fd)
 {
     if (!fgets (buf, n, fd))
@@ -26,20 +26,19 @@ int G_getl ( char *buf, int n, FILE *fd)
 
 /*
  ***********************************************************
- *  G_getl(buf, n, fd)
+ *  G_getl2(buf, n, fd)
  *     char *buf         buffer to receive read data, at least n+1 must be allocated
  *     int n             max num of bytes to read
  *     FILE *fd          file descriptor structure
  *
  *  Reads in at most n characters from stream and stores them into the  buffer pointed to by buf.
  *  Reading stops after an EOF or a newline. New line is not stored in the buffer.
- *  It supports text files created on various platforms (UNIX,DOS,Mac), 
+ *  It supports text files created on various platforms (UNIX, DOS, MacOS9),
  *  i.e. \n (\012), \r (\015) and \r\n (\015\012)
  *  
  *  returns: 1 ok, 0 eof
  ************************************************************/
 
-#include <stdio.h>
 int G_getl2 ( char *buf, int n, FILE *fd)
 {
     int i = 0;
@@ -58,9 +57,9 @@ int G_getl2 ( char *buf, int n, FILE *fd)
 	
 	if ( c == '\012' ) break;               /* UNIX */
 
-	if ( c == '\015' ) {                    /* DOS or MAC */
+	if ( c == '\015' ) {                    /* DOS or MacOS9 */
             if ( (c = fgetc(fd) ) != EOF ) {     
-		if ( c != '\012' ) {            /* MAC - we have to return the char to stream */
+		if ( c != '\012' ) {            /* MacOS9 - we have to return the char to stream */
 		    ungetc ( c, fd );
 		}
 	    }
@@ -77,4 +76,3 @@ int G_getl2 ( char *buf, int n, FILE *fd)
 
     return ret;
 }
-
