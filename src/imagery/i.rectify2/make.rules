@@ -1,0 +1,189 @@
+VERSION_NUMBER=4.0
+VERSION_DATE=Summer 1991
+VERSION_FILE=/usr/grass4/src/CMD/VERSION
+SRC=/usr/grass4/src
+OBJARCH=OBJ
+LIBARCH=LIB
+
+
+GISBASE             = /usr/grass4
+UNIX_BIN            = /usr/local/bin
+
+DEFAULT_DATABASE    = /usr/data
+DEFAULT_LOCATION    = ingham
+
+COMPILE_FLAGS       = -O
+LDFLAGS             = -s
+
+TERMLIB             = -ltermlib
+CURSES              = -lcurses $(TERMLIB)
+MATHLIB             = -lm
+LIBRULE             = ar rc $@ `lorder $(OBJ) | tsort`
+
+USE_TERMIO          = -DUSE_TERMIO
+USE_MTIO            =
+DIGITFLAGS          = -DHIGHPRIORITY
+VECTLIBFLAGS        =
+CAN_CLEAR           = -DCAN_CLEAR
+GETHOSTNAME         = -DGETHOSTNAME_UNAME
+GMAKE = /usr/local/bin/gmake4.0
+# to force make to use /bin/sh
+SHELL           = /bin/sh
+#########################################################################
+# these define the various directories which contain GRASS programs
+# or files used by GRASS programs
+BIN             = $(GISBASE)/bin
+ETC             = $(GISBASE)/etc
+GARDEN_BIN      = $(GISBASE)/garden/bin
+GARDEN_ETC      = $(GISBASE)/garden/etc
+BIN_MAIN_INTER  = $(ETC)/bin/main/inter
+BIN_MAIN_CMD    = $(ETC)/bin/main/cmd
+BIN_ALPHA_INTER = $(ETC)/bin/alpha/inter
+BIN_ALPHA_CMD   = $(ETC)/bin/alpha/cmd
+BIN_CONTRIB_INTER = $(ETC)/bin/contrib/inter
+BIN_CONTRIB_CMD   = $(ETC)/bin/contrib/cmd
+TXT             = $(GISBASE)/txt
+MAN1            = $(GISBASE)/man/1
+MAN2            = $(GISBASE)/man/2
+MAN3            = $(GISBASE)/man/3
+MAN4            = $(GISBASE)/man/4
+MAN5            = $(GISBASE)/man/5
+MAN6            = $(GISBASE)/man/6
+HELP            = $(GISBASE)/man/help
+
+# other
+CFLAGS      =  $(COMPILE_FLAGS) $(EXTRA_CFLAGS) -I$(LIBDIR) $(USE_TERMIO)
+AR          = $(GMAKE) -makeparentdir $@; $(LIBRULE)
+#MANROFF     = tbl -TX $(SRC)/man.help/man.version $(SRC)/man.help/man.header $? | nroff -Tlp | col -b > $@
+MANROFF     = # 
+MAKEALL     = $(GMAKE) -all
+
+# various source directories and libraries
+LIBDIR      = $(SRC)/libes
+DIG_LIBDIR  = $(SRC)/mapdev/libes
+DIG_INCLUDE  = $(SRC)/mapdev/lib
+VECT_INCLUDE = -I$(SRC)/mapdev/Vlib -I$(SRC)/mapdev/diglib
+
+VASKLIB     = $(LIBDIR)/$(LIBARCH)/libvask.a
+VASK        = $(VASKLIB) $(CURSES)
+
+GISLIB      = $(LIBDIR)/$(LIBARCH)/libgis.a
+ICONLIB     = $(LIBDIR)/$(LIBARCH)/libicon.a
+LOCKLIB     = $(LIBDIR)/$(LIBARCH)/liblock.a
+IMAGERYLIB  = $(LIBDIR)/$(LIBARCH)/libI.a
+ROWIOLIB    = $(LIBDIR)/$(LIBARCH)/librowio.a
+COORCNVLIB  = $(LIBDIR)/$(LIBARCH)/libcoorcnv.a
+SEGMENTLIB  = $(LIBDIR)/$(LIBARCH)/libsegment.a
+BTREELIB    = $(LIBDIR)/$(LIBARCH)/libbtree.a
+DLGLIB      = $(LIBDIR)/$(LIBARCH)/libdlg.a
+RASTERLIB   = $(LIBDIR)/$(LIBARCH)/libraster.a
+DISPLAYLIB  = $(LIBDIR)/$(LIBARCH)/libdisplay.a
+D_LIB       = $(LIBDIR)/$(LIBARCH)/libD.a
+DRIVERLIB   = $(SRC)/display/devices/lib/$(LIBARCH)/driverlib.a
+
+
+DIGLIB      = $(LIBDIR)/$(LIBARCH)/libdig.a
+DIG2LIB     = $(LIBDIR)/$(LIBARCH)/libdig2.a
+VECTLIB_REAL= $(LIBDIR)/$(LIBARCH)/libvect.a
+VECTLIB     = $(VECTLIB_REAL) $(DIG2LIB)
+DIG_ATTLIB  = $(LIBDIR)/$(LIBARCH)/libdig_atts.a
+
+XDISPLAYLIB = $(LIBDIR)/$(LIBARCH)/libXdisplay.a
+#########################################################################
+LIST = $(OBJARCH)/main.o\
+	$(OBJARCH)/ask_files.o\
+	$(OBJARCH)/ask_files2.o\
+	$(OBJARCH)/ask_wind.o\
+	$(OBJARCH)/get_wind.o\
+	$(OBJARCH)/cp.o\
+	$(OBJARCH)/compress.o\
+	$(OBJARCH)/env.o\
+	$(OBJARCH)/exec.o\
+	$(OBJARCH)/mail.o\
+	$(OBJARCH)/matrix.o\
+	$(OBJARCH)/perform.o\
+	$(OBJARCH)/rectify.o\
+	$(OBJARCH)/report.o\
+	$(OBJARCH)/target.o\
+	$(OBJARCH)/write.o
+
+$(BIN_MAIN_INTER)/i.rectify: $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASK)
+$(LIST): global.h rowcol.h
+
+
+$(IMAGERYLIB) $(GISLIB) $(VASKLIB): # in case libraries change
+
+$(OBJARCH)/ask_files.o: ask_files.c
+	rm -f $@
+	$(CC) $(CFLAGS) -c ask_files.c
+	mv ask_files.o $@
+$(OBJARCH)/ask_files2.o: ask_files2.c
+	rm -f $@
+	$(CC) $(CFLAGS) -c ask_files2.c
+	mv ask_files2.o $@
+$(OBJARCH)/ask_wind.o: ask_wind.c
+	rm -f $@
+	$(CC) $(CFLAGS) -c ask_wind.c
+	mv ask_wind.o $@
+$(OBJARCH)/compress.o: compress.c
+	rm -f $@
+	$(CC) $(CFLAGS) -c compress.c
+	mv compress.o $@
+$(OBJARCH)/cp.o: cp.c
+	rm -f $@
+	$(CC) $(CFLAGS) -c cp.c
+	mv cp.o $@
+$(OBJARCH)/env.o: env.c
+	rm -f $@
+	$(CC) $(CFLAGS) -c env.c
+	mv env.o $@
+$(OBJARCH)/exec.o: exec.c
+	rm -f $@
+	$(CC) $(CFLAGS) -c exec.c
+	mv exec.o $@
+$(OBJARCH)/get_wind.o: get_wind.c
+	rm -f $@
+	$(CC) $(CFLAGS) -c get_wind.c
+	mv get_wind.o $@
+$(OBJARCH)/mail.o: mail.c
+	rm -f $@
+	$(CC) $(CFLAGS) -c mail.c
+	mv mail.o $@
+$(OBJARCH)/main.o: main.c
+	rm -f $@
+	$(CC) $(CFLAGS) -c main.c
+	mv main.o $@
+$(OBJARCH)/matrix.o: matrix.c
+	rm -f $@
+	$(CC) $(CFLAGS) -c matrix.c
+	mv matrix.o $@
+$(OBJARCH)/perform.o: perform.c
+	rm -f $@
+	$(CC) $(CFLAGS) -c perform.c
+	mv perform.o $@
+$(OBJARCH)/rectify.o: rectify.c
+	rm -f $@
+	$(CC) $(CFLAGS) -c rectify.c
+	mv rectify.o $@
+$(OBJARCH)/report.o: report.c
+	rm -f $@
+	$(CC) $(CFLAGS) -c report.c
+	mv report.o $@
+$(OBJARCH)/target.o: target.c
+	rm -f $@
+	$(CC) $(CFLAGS) -c target.c
+	mv target.o $@
+$(OBJARCH)/write.o: write.c
+	rm -f $@
+	$(CC) $(CFLAGS) -c write.c
+	mv write.o $@
+#########################################################################
+# the tags file created by "make ctags" is great for
+# editing to look for function definitions
+# vi -t <function name>
+
+ctags:
+	ctags *.[ch]
+	sed 's/\?/\//g' tags > tags.tmp
+	mv tags.tmp tags
