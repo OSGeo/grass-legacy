@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 	int ml;
 	int width, mwidth;
 	struct Option *opt1;
-	struct Flag *shh, *once, *terse;
+	struct Flag *shh, *once, *terse, *dontflash;
 	struct GModule *module;
 
 	/* Initialize **site */
@@ -63,6 +63,11 @@ int main(int argc, char **argv)
 	shh = G_define_flag ();
 	shh->key = 'q';
 	shh->description = "Load quietly";
+	
+	dontflash = G_define_flag ();
+	dontflash->key = 'd';
+	dontflash->description = "Disable flashing and extra graphics. "
+                                 "Useful over a slow network.";
 	
 	module = G_define_module();
 	module->description = 
@@ -133,7 +138,8 @@ int main(int argc, char **argv)
 	    load_sites(i, &window, !(shh->answer));
 	}
 
-	what (once->answer, terse->answer, width, mwidth);
+	what (once->answer, terse->answer, !(dontflash->answer),
+	      width, mwidth);
 
 	free_cached_sites();
 

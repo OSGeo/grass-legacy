@@ -9,7 +9,7 @@
 #include "raster.h"
 #include "display.h"
 
-int what (int once, int terse, int width, int mwidth)
+int what (int once, int terse, int graphic, int width, int mwidth)
 {
   int row, col;
   int nrows, ncols;
@@ -29,27 +29,44 @@ int what (int once, int terse, int width, int mwidth)
   nrows = window.rows;
   ncols = window.cols;
   
-    G_setup_plot (
+  if(graphic)
+  {
+      G_setup_plot (
 	D_get_d_north(), D_get_d_south(), D_get_d_west(), D_get_d_east(),
 	D_move_abs, D_cont_abs);
 
-  paneli = G_tempfile() ;  
+      paneli = G_tempfile() ;
+  }
   screen_x = ((int)D_get_d_west() + (int)D_get_d_east()) / 2 ;
   screen_y = ((int)D_get_d_north() + (int)D_get_d_south()) / 2 ;
-  flash_basecolr=D_translate_color("yellow");
+  if(graphic)
+      flash_basecolr=D_translate_color("yellow");
   
   do
-    {	
-      R_panel_save(paneli,R_screen_top(),R_screen_bot(),
-		R_screen_left(), R_screen_rite());
-      flash_colr = flash_basecolr;
+    {
+      if(graphic)
+      {
+        R_panel_save(paneli,R_screen_top(),R_screen_bot(),
+	    	  R_screen_left(), R_screen_rite());
+        flash_colr = flash_basecolr;
+      }
       if (!terse)
 	show_buttons(once);
       R_get_location_with_pointer(&screen_x, &screen_y, &button) ;
       if (!once)
 	{
-	  if (button == 2) {R_panel_delete(paneli);continue;}
-	  if (button == 3) {R_panel_delete(paneli);break;}
+	  if (button == 2) 
+	  {
+	    if(graphic) 
+	      R_panel_delete(paneli);
+	    continue;
+	  }
+	  if (button == 3)
+	  {
+	    if(graphic)
+	      R_panel_delete(paneli);
+	    break;
+	  }
 	}
       east  = D_d_to_u_col((double)screen_x) ;
       north = D_d_to_u_row((double)screen_y) ;
@@ -60,14 +77,23 @@ int what (int once, int terse, int width, int mwidth)
       
       for(i=0; i<nsites; i++){
       
-        R_standard_color(flash_colr);
+        if(graphic)
+	  R_standard_color(flash_colr);
 	if(!i)
 	{
 	  G_format_easting(east, east_buf, G_projection());
 	  G_format_northing(north, north_buf, G_projection());
 	  if (!isatty(fileno(stdout)))
-	    fprintf(stdout, "\n\"+\" at %s(E) %s(N)\n", east_buf, north_buf);
-	  fprintf(stderr, "\n\"+\" at %s(E) %s(N)\n", east_buf, north_buf);
+	  {
+	    if(graphic)
+	      fprintf(stdout, "\n\"+\" at %s(E) %s(N)\n", east_buf, north_buf);
+	    else
+	      fprintf(stdout, "\n%s(E) %s(N)\n", east_buf, north_buf);
+	  }
+	  if(graphic)
+	    fprintf(stderr, "\n\"+\" at %s(E) %s(N)\n", east_buf, north_buf);
+	  else
+	    fprintf(stderr, "\n%s(E) %s(N)\n", east_buf, north_buf);
 	  Gmapset = G_mapset();
 	}
 	strcpy(temp, site[i]);
@@ -81,64 +107,78 @@ int what (int once, int terse, int width, int mwidth)
 	  fprintf(stdout, "%*s in %-*s  ", width, temp, mwidth, mapset);
 	fprintf(stderr, "%*s in %-*s  ", width, temp, mwidth, mapset);
 
+	if(graphic)
+	{
 	  R_standard_color(D_translate_color("black"));
 	  draw_point_plus(screen_x, screen_y, 5);
 	  R_flush();
 	  R_standard_color(D_translate_color("red"));
 	  draw_point_plus(screen_x, screen_y, 5);
 	  R_flush();
+	}
 
         if(NULL != (close = closest_site(i, east, north))){
-	  
-	  D_X = (int)D_u_to_d_col(close->east) ;
-	  D_Y = (int)D_u_to_d_row(close->north) ;
-	  cs_distance = sqrt((D_X - screen_x)*(D_X - screen_x) + (D_Y - screen_y)*(D_Y - screen_y));
-	  cs_rdist = sqrt((close->east - east)*(close->east - east) + 
-	  	(close->north - north)*(close->north - north));
-	  cosa = (D_X - screen_x)/cs_distance;
-	  sina = (D_Y - screen_y)/cs_distance;
-	  cs_rad = (fabs(D_get_d_north() - D_get_d_south()))/20;
-	  j = 1;
-	  while ((cs_rad * j <= cs_distance) || (j == 1)) {
-	  	R_standard_color(D_translate_color("black"));
-	  	draw_sector(sina, cosa, screen_x-cs_rad*j,screen_y+cs_rad*j,screen_x+cs_rad*j,screen_y-cs_rad*j);
-		R_flush();
-		R_standard_color(D_translate_color("yellow"));
-		draw_sector(sina, cosa, screen_x-cs_rad*j,screen_y+cs_rad*j,screen_x+cs_rad*j,screen_y-cs_rad*j);
-		R_flush();
-		j++;
-	  }
+	 
+	  if(graphic)
+	  {
+	    D_X = (int)D_u_to_d_col(close->east) ;
+	    D_Y = (int)D_u_to_d_row(close->north) ;
+	    cs_distance = sqrt((D_X - screen_x)*(D_X - screen_x) + (D_Y - screen_y)*(D_Y - screen_y));
+	    cs_rdist = sqrt((close->east - east)*(close->east - east) + 
+	   	  (close->north - north)*(close->north - north));
+	    cosa = (D_X - screen_x)/cs_distance;
+	    sina = (D_Y - screen_y)/cs_distance;
+	    cs_rad = (fabs(D_get_d_north() - D_get_d_south()))/20;
+	    j = 1;
+	    while ((cs_rad * j <= cs_distance) || (j == 1)) {
+	  	  R_standard_color(D_translate_color("black"));
+	  	  draw_sector(sina, cosa, screen_x-cs_rad*j,screen_y+cs_rad*j,screen_x+cs_rad*j,screen_y-cs_rad*j);
+		  R_flush();
+		  R_standard_color(D_translate_color("yellow"));
+		  draw_sector(sina, cosa, screen_x-cs_rad*j,screen_y+cs_rad*j,screen_x+cs_rad*j,screen_y-cs_rad*j);
+		  R_flush();
+		  j++;
+	    }
 
-	  R_standard_color(D_translate_color("black"));
-	  draw_point_x(D_X, D_Y,10);
-	  R_flush();
-	  R_standard_color(D_translate_color("yellow"));
-	  draw_point_x(D_X, D_Y,10);
-	  R_flush();
+	    R_standard_color(D_translate_color("black"));
+	    draw_point_x(D_X, D_Y,10);
+	    R_flush();
+	    R_standard_color(D_translate_color("yellow"));
+	    draw_point_x(D_X, D_Y,10);
+	    R_flush();
+	  }
 	  
 	  desc =  G_site_format (close, NULL, 0);
 	  if (!isatty(fileno(stdout)))
-	    fprintf(stdout, "%s\n  Distance from \"+\":%10.2f\n", desc, cs_rdist);
-	  fprintf(stderr, "%s\n  Distance from \"+\":%10.2f\n", desc, cs_rdist);
+	  {
+	    if(graphic)
+	      fprintf(stdout, "%s\n  Distance from \"+\":%10.2f\n", desc, cs_rdist);
+	    else
+	      fprintf(stdout, "%s\n", desc);
+	  }
+	  if(graphic)
+	    fprintf(stderr, "%s\n  Distance from \"+\":%10.2f\n", desc, cs_rdist);
+	  else
+	    fprintf(stderr, "%s\n", desc);
         }else{
-/*
-	  R_standard_color(D_translate_color("black"));
-	  draw_point_plus(screen_x, screen_y, 5);
-	  R_flush();
-	  R_standard_color(D_translate_color("red"));
-	  draw_point_plus(screen_x, screen_y, 5);
-	  R_flush();
-	  sleep(1);*/
 
 	  if (!isatty(fileno(stdout)))
 	    fprintf(stdout, "Nothing Found.\n");
 	  fprintf(stderr, "Nothing Found.\n");
 	}
-	flash_colr++; if (flash_colr == 14) flash_colr = 1;
+	if(graphic)
+	{
+	  flash_colr++;
+	  if (flash_colr == 14) 
+	    flash_colr = 1;
+	}
       } /*end for*/
     
-    R_panel_restore(paneli);
-    R_panel_delete(paneli);		
+    if(graphic)
+    {
+      R_panel_restore(paneli);
+      R_panel_delete(paneli);
+    }
 
     } while (! once) ;
   
