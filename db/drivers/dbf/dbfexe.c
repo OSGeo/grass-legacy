@@ -12,6 +12,7 @@
 *   	    	License (>=v2). Read the file COPYING that comes with GRASS
 *   	    	for details.
 *
+* DBF API:      http://shapelib.maptools.org/dbf_api.html
 *****************************************************************************/
 #include <stdlib.h>
 #include <stdio.h>
@@ -148,6 +149,11 @@ int execute(char *sql, cursor * c)
 	    case (SQLP_VARCHAR):
 		dtype = DBF_CHAR;
 		width = st->ColWidth[i];
+		decimals = 0;
+		break;
+	    case (SQLP_DATE):  /* DATE treated as string unless SHAPELIB/DBFLIB supports date type */
+		dtype = DBF_CHAR;
+		width = 10;   /* 2004-01-23 = 10 chars */
 		decimals = 0;
 		break;
 	    case (SQLP_DOUBLE):

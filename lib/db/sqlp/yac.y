@@ -69,6 +69,7 @@
 %token INTEGER
 %token DOUBLE
 %token PRECISION
+%token DATE
 
 %{
  
@@ -130,6 +131,7 @@ y_columndef:
 	|	NAME INTEGER 			{ sqpColumnDef( $1, SQLP_INTEGER,  0, 0 ); }
 	|	NAME DOUBLE			{ sqpColumnDef( $1, SQLP_DOUBLE,   0, 0 ); }
 	|	NAME DOUBLE PRECISION		{ sqpColumnDef( $1, SQLP_DOUBLE,   0, 0 ); }
+	|	NAME DATE			{ sqpColumnDef( $1, SQLP_DATE,     0, 0 ); }
 	;
 
 y_columns:
