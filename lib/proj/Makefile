@@ -49,7 +49,7 @@ support = \
 	pj_release.o pj_strerrno.o pj_transform.o pj_tsfn.o pj_units.o \
 	pj_utils.o pj_zpoly1.o rtodms.o strtod.o vector1.o
 
-GRASSINT = get_proj.o do_proj.o do_proj_nad.o datum_shift.o 
+GRASSINT = get_proj.o do_proj.o
 
 LIB_OBJS = $(azimuthal) $(conic) $(cylinder) $(misc) $(pseudo) $(support) $(GRASSINT)
 
