@@ -304,11 +304,11 @@ stmt_is_empty(dbString *stmt)
 void
 print_column_definition(dbColumn *column)
 {
-    G_message (_("column%s%s\n"), parms.fs, db_get_column_name(column));
-    G_message (_("type%s%s\n"), parms.fs, db_sqltype_name(db_get_column_sqltype(column)));
-    G_message (_("len%s%d\n"), parms.fs, db_get_column_length(column));
-    G_message (_("scale%s%d\n"), parms.fs, db_get_column_scale(column));
-    G_message (_("precision%s%d\n"), parms.fs, db_get_column_precision(column));
+    fprintf (stdout, "column%s%s\n", parms.fs, db_get_column_name(column));
+    fprintf (stdout, "type%s%s\n", parms.fs, db_sqltype_name(db_get_column_sqltype(column)));
+    fprintf (stdout, "len%s%d\n", parms.fs, db_get_column_length(column));
+    fprintf (stdout, "scale%s%d\n", parms.fs, db_get_column_scale(column));
+    fprintf (stdout, "precision%s%d\n", parms.fs, db_get_column_precision(column));
     if (parms.vs)
 	fprintf (stdout, "%s\n", parms.vs);
 }

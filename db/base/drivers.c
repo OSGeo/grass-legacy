@@ -26,9 +26,9 @@ main(int argc, char *argv[])
     }
 
     for (p = list; p; p = p->next) {
-      G_message ( _("%s"), p->driverName);
-      if (parms.f) G_message ( _(":%s"), p->comment);
-      G_message ("\n");
+      fprintf(stdout, "%s", p->driverName);
+      if (parms.f) fprintf(stdout, ":%s", p->comment);
+      fprintf(stdout, "\n");
     }
     exit(OK);
 }
@@ -47,8 +47,8 @@ parse_command_line (int argc, char *argv[])
     full->description = _("Full output");
 
     print = G_define_flag();
-    print->key               = 'p';
-    print->description       = _("print tables and exit");    
+    print->key          = 'p';
+    print->description  = _("print tables and exit");    
 
     /* Set description */
     module              = G_define_module();
