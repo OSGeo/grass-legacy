@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "globals.h"
 /* read the target for the group and cast it into the alternate GRASS env */
 
