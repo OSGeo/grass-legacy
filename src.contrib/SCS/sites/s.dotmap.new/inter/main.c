@@ -228,7 +228,7 @@ fprintf(stderr,"\n\n\tOne dot representing %.0lf unit(s)\n\twill allow a dot siz
  
  if (mult > 1.0) {
 	fprintf(stderr,"\nHow many units do you want represented by one dot [%.0lf]: ",mult);
- 	gets(buffr,50);
+ 	fgets(buffr,50,stdin);
 	if (strlen(buffr) > 0)
 		sscanf(buffr,"%lf",&nmult);
  	else
