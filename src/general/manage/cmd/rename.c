@@ -6,10 +6,17 @@ int
 main (int argc, char *argv[])
 {
     int i,n;
+	struct GModule *module;
     struct Option **parm, *p;
     char *old, *new;
 
     init (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"To rename data base element files in "
+		"the user's current mapset.";
+
     parm = (struct Option **) G_calloc (nlist, sizeof(struct Option *));
 
     for (n = 0; n < nlist; n++)

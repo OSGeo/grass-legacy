@@ -6,8 +6,14 @@ int
 main (int argc, char *argv[])
 {
     int i,n;
+	struct GModule *module;
     struct Option **parm, *p;
     char *name;
+
+	module = G_define_module();
+	module->description =
+		"Removes data base element files from "
+		"the user's current mapset.";
 
     init (argv[0]);
     parm = (struct Option **) G_calloc (nlist, sizeof(struct Option *));

@@ -13,7 +13,10 @@
  *   	    	Read the file COPYING that comes with GRASS for details.
  ****************************************************************************
  * $Log$
- * Revision 1.4  2000-11-26 16:33:14  andreas
+ * Revision 1.5  2000-12-20 14:42:42  jan
+ * Added module description.
+ *
+ * Revision 1.4  2000/11/26 16:33:14  andreas
  * added module description, file header, output of ellipsoid with cmdline and inter
  *
  * Revision 1.3  2000/11/08 20:30:36  andreas
@@ -47,6 +50,7 @@ int main (int argc, char *argv[])
 	char *G_align_window();
 	int projection;
 
+	struct GModule *module;
 	struct
 	    {
 		struct Flag
@@ -65,6 +69,11 @@ int main (int argc, char *argv[])
 	} parm;
 
 	G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Program to manage the boundary definitions for the "
+		"geographic region.";
 
 	/* get current region.
 	 * if current region not valid, set it from default
