@@ -12,6 +12,7 @@
 *   	    	License (>=v2). Read the file COPYING that comes with GRASS
 *   	    	for details.
 *
+* DBF API:      http://shapelib.maptools.org/dbf_api.html
 *****************************************************************************/
 #include <stdlib.h>
 #include <stdio.h>
@@ -113,7 +114,8 @@ load_table_head( int t)
     for( i = 0; i < ncol; i++ )
       {
          dtype = DBFGetFieldInfo( dbf, i, fname, &width, &decimals );
-
+         G_debug ( 2, "  DBFFieldType %s", dtype);
+	 
 	 switch ( dtype )
 	   {
              case FTInteger:
@@ -244,6 +246,7 @@ save_table ( int t)
     for( i = 0; i < ncols; i++ )
       {
         if ( drv_mode == DBF_MODE_SHP && i == 0 ) continue;
+
 	switch ( db.tables[t].cols[i].type )
           {
             case DBF_INT:
