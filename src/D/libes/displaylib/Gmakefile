@@ -1,0 +1,24 @@
+OBJ =\
+	get_win.o\
+	clip.o\
+	cnversions.o\
+	draw.o\
+	ident_win.o\
+	list.o\
+	parse.o\
+	popup.o\
+	raster.o\
+	reset_clr.o\
+	scan_dbl.o\
+	scan_float.o\
+	scan_int.o\
+	setup.o\
+	tran_colr.o\
+	usage.o\
+	window.o
+
+$(DISPLAYLIB): $(OBJ)
+	$(AR)
+
+tran_colr.o: ../colors.h
+window.o: ../colors.h
