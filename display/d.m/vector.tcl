@@ -103,6 +103,8 @@ proc DmVector::create { tree parent } {
     set opt($count,cat) "" 
     set opt($count,where) "" 
 
+    set opt($count,attribute) "" 
+
     set opt($count,_query_attr) 0 
 
     DmVector::legend $count
