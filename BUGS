@@ -1,4 +1,4 @@
-                 $Id: BUGS,v 1.129 2001-03-24 12:58:47 markus Exp $
+                 $Id: BUGS,v 1.130 2001-04-09 08:25:56 markus Exp $
 
 Known bugs in current GRASS GIS version 5.0 CVS
 [In sync with GRASS 5.0 beta CVS version]
@@ -41,15 +41,6 @@ RC-Bug list:
  would be appropriate -- although, even that wouldn't be required.  I think
  at most it needs three rows in memory for cubic interpolation.
  -> comment from Morten Hulden: This can only happen with *large* maps.
-
-[RC]v.trim 
-
- bugreport: If a polygon has island, v.trim removes such islands from the
- vector file... urgh! I've obtained such a behaviour with a map obtained
- with r.poly, v.support, I don't know if there is a relation (my map was a
- reclassified DEM).
- (reported by: Andrea Aime <aaime@comune.modena.it>)
- (being worked on by ?)
 
 
 ----------- libraries ---------------------------------------------
@@ -216,6 +207,7 @@ r.fill.dir:
    (reported by Markus Neteler)
  - requires FP update
    (being worked on by Roger S. Miller <rgrmill@rt66.com>)
+    and Huidae Cho
 
 r.in.bin:
  not a bug:
@@ -387,6 +379,16 @@ v.support/v.build
   much more than autodigitised (like those done with v.mkgrid), so         
   perhaps it is in v.digit, or maybe in v.build.                           
   (being worked on by Daid D. Gray)
+
+v.trim 
+
+ bugreport: If a polygon has island, v.trim removes such islands from the
+ vector file... urgh! I've obtained such a behaviour with a map obtained
+ with r.poly, v.support, I don't know if there is a relation (my map was a
+ reclassified DEM).
+ (reported by: Andrea Aime <aaime@comune.modena.it>)
+ -> needs a total rewrite!!
+ (being worked on by ?)
 
 -----------------------------------------------------------------------
 Modules with interface problems (parser etc): 
