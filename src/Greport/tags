@@ -1,0 +1,11 @@
+F_CTOA	conv.c	/^#define F_CTOA(C)	F_CTOK(C) * 247.1000$/
+F_CTOH	conv.c	/^#define F_CTOH(C)	F_CTOK(C) * 100.0000$/
+F_CTOK	conv.c	/^#define F_CTOK(C)	square_meters*((double)(C))\/1000/
+F_CTOM	conv.c	/^#define F_CTOM(C)	F_CTOK(C) *   0.3861$/
+Mmain	main.c	/^main(argc, argv) $/
+conv	conv.c	/^conv(key,count,cat)$/
+get_params	get_params.c	/^get_params()$/
+my_help	main.c	/^my_help (prog, vars)$/
+print_cats_report	prnt_rprt.c	/^print_cats_report(stats,mapname,mapset)$/
+print_cats_tables	prnt_tbles.c	/^print_cats_tables (stats)$/
+stash_params	main.c	/^stash_params (position, alias)$/
