@@ -1,4 +1,4 @@
-$Id: TODO,v 1.55 2000-11-21 17:42:49 markus Exp $
+$Id: TODO,v 1.56 2000-11-21 19:48:10 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -307,6 +307,30 @@ Modules:
      2 Km        210m                                                                
      3 Km        150m  
   (Being worked on by Bob Covill) 
+
+- r.proj
+ Idea: r.proj could be used for easy map copying between locations:
+
+ Morten Hulden <morten@ngb.se> wrote:
+ item: The idea (you mentioned some messages ago) of allowing r.proj and
+ (v.proj) to do lonlat->lonlat conversions by just copying the files is
+ something that needs more planning:
+ * First, lonlat handling is not part of the routines that pro handles in
+ grass. Many modules (or the wrapper part in them) check for 99 (other
+ projections) before passing the task to the proj dependent routines. The
+ reason is that grass is a patchwork of band-aid when it comes to projection
+ routines. The original projections XY, UTM, LL are handled separately and
+ the wrapper will not pass these to proj. UTM could well be handled by proj,
+ but often is not, because, like LL, it is one of the 'original' projections
+ that were there before '99 other' were added. So, letting proj do LL->LL
+ handling would require rewriting the 'wrapper' part of each module. It
+ should be done eventually, but in connection with clearing up the messy
+ handling of projection in grass.
+ * Second, sometimes there is a need to project LL->LL with different spheroid
+ or datum, and in these cases a simple copy is not what we want. Only if
+ spheroid and datum are the same on the input and output side should a
+ straight copy be done, I think.
+
 
 - r.surf.distance: write it
   this module would generate a distance surface (improved version of
