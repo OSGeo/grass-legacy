@@ -1,0 +1,83 @@
+#!/bin/sh -f
+
+Dscreen
+Dgraph << EOF
+color red
+polygon
+    0.00   0
+    0.00 100
+    7.69 100
+    7.69   0
+color orange
+polygon
+    7.69   0
+    7.69 100
+   15.38 100
+   15.38   0
+color yellow
+polygon
+   15.38   0
+   15.38 100
+   23.07 100
+   23.07   0
+color green
+polygon
+   23.07   0
+   23.07 100
+   30.76 100
+   30.76   0
+color blue
+polygon
+   30.76   0
+   30.76 100
+   38.45 100
+   38.45   0
+color indigo
+polygon
+   38.45   0
+   38.45 100
+   46.14 100
+   46.14   0
+color violet
+polygon
+   46.14   0
+   46.14 100
+   53.83 100
+   53.83   0
+color white
+polygon
+   53.83   0
+   53.83 100
+   61.52 100
+   61.52   0
+color black
+polygon
+   61.52   0
+   61.52 100
+   69.21 100
+   69.21   0
+color gray
+polygon
+   69.21   0
+   69.21 100
+   76.90 100
+   76.90   0
+color brown
+polygon
+   76.90   0
+   76.90 100
+   84.59 100
+   84.59   0
+color magenta
+polygon
+   84.59   0
+   84.59 100
+   92.28 100
+   92.28   0
+color aqua
+polygon
+   92.28   0
+   92.28 100
+  100.00 100
+  100.00   0
+EOF
