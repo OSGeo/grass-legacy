@@ -99,6 +99,7 @@ proc DmVector::create { tree parent } {
     set opt($count,lfield) 1 
     set opt($count,cat) "" 
     set opt($count,where) "" 
+    set opt($count,_use_where) 1
 
     set opt($count,attribute) "" 
     set opt($count,xref) "left"
@@ -109,7 +110,7 @@ proc DmVector::create { tree parent } {
     set opt($count,maxreg) "" 
 
     set opt($count,_query_text) 0 
-    set opt($count,_use_query_text) 0
+    set opt($count,_query_edit) 0 
 
     set opt($count,_width) 1
 
@@ -246,7 +247,7 @@ proc DmVector::options { id frm } {
     set row [ frame $frm.where ]
     LabelEntry $row.a -label [G_msg "SQL query"] -textvariable DmVector::opt($id,where) \
                -width 40
-    checkbutton $row.b -text [G_msg "use query"] -variable DmVector::opt($id,_use_query_text) \
+    checkbutton $row.b -text [G_msg "use query"] -variable DmVector::opt($id,_use_where) \
                 -command "DmVector::legend $id"
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
@@ -255,7 +256,9 @@ proc DmVector::options { id frm } {
     set row [ frame $frm.query ]
     checkbutton $row.a -text [G_msg "Print query output as text in terminal"] \
                 -variable DmVector::opt($id,_query_text) 
-    pack $row.a -side left
+    checkbutton $row.b -text [G_msg "Edit attributes"] \
+                -variable DmVector::opt($id,_query_edit) 
+    pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
     # display only in limited region size range
@@ -285,7 +288,7 @@ proc DmVector::save { tree depth node } {
     foreach key { _check map display_shape display_cat display_topo display_dir display_attr
                   type_point type_line type_boundary type_centroid type_area type_face
                   color fcolor _use_fcolor lcolor icon size field lfield attribute
-                  xref yref lsize cat where _query_text _use_query_text minreg maxreg _width } {
+                  xref yref lsize cat where _query_text _query_edit _use_where minreg maxreg _width } {
         Dm::rc_write $depth "$key $opt($id,$key)"
 
     } 
@@ -366,7 +369,7 @@ proc DmVector::display { node } {
     if { $opt($id,cat) != "" } { 
         append cmd " cat=$opt($id,cat)" 
     } 
-    if { $opt($id,where) != "" && $opt($id,_use_query_text) } { 
+    if { $opt($id,where) != "" && $opt($id,_use_where) } { 
         append cmd " {where=$opt($id,where)}" 
     } 
     if { $opt($id,minreg) != "" } { 
@@ -486,6 +489,9 @@ proc DmVector::query { node } {
     set cmd "d.what.vect map=$opt($id,map)"
     if { $opt($id,_query_text) } { 
         append cmd " -t" 
+    } 
+    if { $opt($id,_query_edit) } { 
+        append cmd " -e" 
     } 
 
     Dm::execute $cmd
