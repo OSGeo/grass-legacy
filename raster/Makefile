@@ -23,6 +23,7 @@ SUBDIRS = \
 	r.distance \
 	r.drain \
 	r.fill.dir \
+	r.flow \
 	r.grow \
 	r.his \
 	r.in.arc \
