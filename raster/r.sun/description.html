@@ -3,8 +3,8 @@
 <b>r.sun</b> computes beam (direct), diffuse and ground reflected solar
 irradiation raster maps for given day, latitude, surface and atmospheric
 conditions. Solar parameters (e.g. time of sunrise and sunset, declination,
-extraterrestrial irradiance, daylight length) are saved in a local text
-file. Alternatively, the local time can be specified to compute solar
+extraterrestrial irradiance, daylight length) are stored in the resultant maps'
+history files. Alternatively, the local time can be specified to compute solar
 incidence angle and/or irradiance raster maps. The shadowing effect of the
 topography is optionally incorporated.
 
@@ -26,19 +26,21 @@ to fulfil user needs in various fields of science (hydrology, climatology,
 ecology and environmental sciences, photovoltaics, engineering, etc.) for
 continental, regional up to the landscape scales. 
 <p>As an option the model considers a shadowing effect of the local topography. 
-The r.sun works in two modes. In the first mode it calculates for the set 
+The r.sun program works in two modes. In the first mode it calculates for the set 
 local time a solar incidence angle [degrees] and solar irradiance values [W.m-2].
 In the second mode daily sums of solar radiation [Wh.m-2.day-1] are computed
 within a set day. By a scripting the two modes can be used separately or
 in a combination to provide estimates for any desired time interval. The
 model accounts for sky obstruction by local relief features. Several solar
-parameters are saved in a local text file named <i>r.sun_out.txt</i>. </p>
+parameters are saved in the resultant maps' history files, which may be viewed
+with the <a href="r.info.html">r.info</a> command.
+</p>
 <p>The solar incidence angle raster map <i>incidout</i> is computed specifying 
 elevation raster map <i>elevin</i>, aspect raster map <i>aspin</i>, slope 
 steepness raster map <i>slopin,</i> given the day <i>day</i> and local time
 <i>time</i>. There is no need to define latitude for locations with known
-and defined projection/coordinate system (check it out using <a href="g.projinfo.html">
-g.projinfo</a>
+and defined projection/coordinate system (check it with the <a href="g.proj.html">
+g.proj</a>
  command). If you have undefined projection, (x,y) system, etc. then the latitude
 can be defined explicitely for large areas by input raster map <i>latin</i>
  with interpolated latitude values or, for smaller areas, a single region 
@@ -122,19 +124,7 @@ reclassified into coarser categories. This could lead to incorrect results.
 </p>
 
 <h2> OPTIONS</h2>
- The user can run this program either interactively
-or non- interactively. The program will be run non-interactively if the user
-specifies program arguments and flag settings on the command line using the
-form: 
-<p>r.sun [-s] elevin=name aspin=name slopein=name [linkein=name]
-[lin=value] [albedo=name] [alb=value] [latin=name] [lat=value] [coefbh=name]
-[coefdh=name] [incidout=name] [insol_time=name]
-[beam_rad=name] [diff_rad=name] [refl_rad=name] day=value [step=value] [declin=value]
-[time=value] [dist=value] </p>
-<p>Alternately, the user can simply type <i>
-r.sun</i> on the command line without program
-arguments. In this case, the user will be prompted for parameter values using
-the standard GRASS parser interface. Currently, there are two modes of r.sun.
+<P>Currently, there are two modes of r.sun.
 In the first mode it calculates solar incidence angle and solar irradiance
 raster maps using the set local time. In the second mode daily sums of solar
 irradiation [kWh.m-2.day-1] are computed for a specified day. </p>
