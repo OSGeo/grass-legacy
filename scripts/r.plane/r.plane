@@ -4,6 +4,8 @@
 #
 # MODULE:	r.plane for GRASS 5.7; based on r.plane for GRASS 5
 # AUTHOR(S):	CERL?; updated to GRASS 5.7 by Michael Barton
+#               Dec 2004: Alessandro Frigeri & Ivan Marchesini
+#               Modified to produce floating and double values maps
 # PURPOSE:	Creates a raster plane map from user specified inclination and azimuth
 # COPYRIGHT:	(C) 2004 by the GRASS Development Team
 #
@@ -13,24 +15,23 @@
 #
 #############################################################################
 
-
 #%Module
 #%  description: r.plane - Creates raster plane map given dip (inclination), aspect (azimuth), and one point
 #%End
 #%option
 #% key: dip
-#% type: integer
+#% type: double
 #% gisprompt: -90-90
-#% answer: 0
+#% answer: 0.0
 #% description: Dip of plane. Value must be between -90 and 90 degrees.
 #% required : yes
 #%end
 #%option
 #% key: az
-#% type: integer
+#% type: double
 #% gisprompt: 0-360
-#% answer: 0
-#% description: Aspect of plane. Value must be between 0 and 360 degrees.
+#% answer: 0.0
+#% description: Azimuth of the plane. Value must be between 0 and 360 degrees.
 #% required : yes
 #%end
 #%option
@@ -52,13 +53,19 @@
 #% required : yes
 #%end
 #%option
+#% key: type
+#% type: string 
+#% options: int,float,double
+#% description: Type of the raster map to be created.
+#% required : yes
+#%end
+#%option
 #% key: name
 #% type: string
 #% gisprompt: old,cell,raster
 #% description: Name of raster plane to be created.
 #% required : yes
 #%end
-
 
 
 if  [ -z $GISBASE ] ; then
@@ -75,22 +82,21 @@ eval `g.gisenv`
 LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 
-dip=$GIS_OPT_dip 
+dip=$GIS_OPT_dip
 az=$GIS_OPT_az
 ea=$GIS_OPT_ea
 no=$GIS_OPT_no
 el=$GIS_OPT_el
 name=$GIS_OPT_name
+type=$GIS_OPT_type
 
 
 eval `g.region -g`
 
-
 # get directory for r.in.ascii
-CELLDIR=$LOCATION/cell
+#CELLDIR=$LOCATION/fcell
 
 diptest=`echo $dip | awk '{ printf("%8d", int($1 + 0.5))'}`
-
 if [ $diptest -lt -90 -o $diptest -gt 90 ]
 then
 	echo Sorry, dip must be greater than -90 and less than 90.
@@ -104,8 +110,30 @@ then
 	exit 1
 fi
 
+if  [ $type = "int" ]
+then
+        echo preparing to produce a CELL map...
+	typeflag=''
+	ctype=cell
+fi
+
+if  [ $type = "float" ]
+then
+        echo preparing to produce an FCELL map...
+        typeflag=-f
+        ctype=fcell
+fi
+
+if  [ $type = "double" ]
+then
+        echo preparing to produce a DCELL map...
+        typeflag=-d
+        ctype=dcell
+fi
+
+
 echo $ea > /tmp/$$
-awk '{ printf "eaint=%d",$1 }' /tmp/$$ > /tmp/$$ea
+awk '{ printf"eaint=%d",$1 }' /tmp/$$ > /tmp/$$ea
 	eval `cat /tmp/$$ea`
 rm /tmp/$$*
 if test $eaint -le $e -a $eaint -ge $w
@@ -121,10 +149,10 @@ fi
 
 
 echo $no > /tmp/$$
-awk '{ printf "noint=%d",$1 }' /tmp/$$ > /tmp/$$no
+awk '{ printf"noint=%d",$1 }' /tmp/$$ > /tmp/$$no
 	eval `cat /tmp/$$no`
 rm /tmp/$$*
-if test $noint -gt $s -a $noint -lt $n
+if test $noint -gt `echo $s | cut -d. -f1` -a $noint -lt `echo $n | cut -d. -f1`
 then
 	gotit=1
 	echo $no
@@ -181,6 +209,7 @@ if (NR==2) {
 	   epsilon=a2-gamma
 	   d=dist*cos(epsilon)
 	   h=(d*sin(dip2)/cos(dip2))	
+	   #print h
 	   new_elev[z]=el-h
 	   z++
 	   }
@@ -192,23 +221,30 @@ if (NR>=2) {
 }
 END {  
       for (z=1; z <= cells; z++) {
- 	printf" %d",new_elev[z]
+        if (typeflag==""){
+ 	  printf" %d",new_elev[z]
+	  }
+	else {
+	  printf" %f",new_elev[z]
+	  }
  	}
-  
 }
 
 EOF
 
 #execute awk and remove temporary file
 
-awk  -f /tmp/$$ -v east=$e west=$w north=$n south=$s ea=$ea no=$no \
+awk  -f /tmp/$$ -v east=$e west=$w north=$n south=$s ea=$ea no=$no typeflag=$typeflag \
   nsres=$nsres ewres=$ewres  dip=$dip az=$az el=$el /tmp/$$ > $name
 
 rm /tmp/$$
 
+
+#if [ type='int' ]
+#then 
 echo "Running r.in.ascii, please stand by"
-r.in.ascii i=$name o=$name
-rm $name
+r.in.ascii `echo $typeflag` i=$name o=$name
+### rm $name
 
 dat=`date +'%a %b %e %T %Y'`
 user=`logname`
@@ -217,10 +253,10 @@ $dat
 $MAPSET
 $name
 $user
-cell
+`echo $ctype`
 EOF2
+#fi
 
-echo ""
 echo ""
 echo "DONE"
 echo ""
