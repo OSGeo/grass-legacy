@@ -1,7 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
+<head>
 <TITLE>s.in.ascii</TITLE>
-
+</head>
 <body bgcolor="white">
 <img src="grass.smlogo.gif">
 <hr width="100%" align=center size=6 noshade>
@@ -29,9 +30,7 @@ their descriptions into a GRASS site list file.
 <H2>DESCRIPTION</H2>
 
 <EM>s.in.ascii</EM> converts an ASCII listing of site
-locations and category labels into a file in GRASS site
-list file format.
-
+locations and category labels into a GRASS site list.
 <P>
 
 Input can be entered via standard input or from the file
@@ -127,8 +126,11 @@ spaces are the default field separator assumed by
 Data may be imported from many spreadsheet programs by saving the spreadsheet
 as a comma separated variable (.csv) text file, and then using 
 the "<b>fs=</b><EM>,</EM>" command line parameter with <EM>s.in.ascii</EM>.
-Note <EM>s.in.ascii</EM> currently requires there to be at least three 
-columns of data for the import to work properly.
+Note that for the import to work properly with the version of <EM>s.in.ascii</EM> 
+supplied with GRASS 5.0.x, it is required that there be at least one more column 
+of data than the number of dimensions (i.e. 3 columns for 2D input, 4 columns 
+for 3D, etc). This has been fixed in later versions of GRASS.
+
 <p>
 <b>Importing latitude/longitude data</b>
 <p>
