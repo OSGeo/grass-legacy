@@ -1,0 +1,18 @@
+raster|rdb|wetlands.str@PERMANENT|Wetlands to 16 Categories|/metadata/wetlands-str.metad.txt|/thumbnails/wetlands.str.small.gif|Wetland categories set by San Francisco Estuary Project Status and Trends Report: Source USFWS National Wetlands Inventory
+raster|rdt|islands@PERMANENT|Delta Islands|/metadata/islands.metad.txt|/thumbnails/islands.small.gif|Boundaries designated by REGIS from USGS 1:100,000 DLG files; with the outer boundary being the Delta Service Area as depicted in the DWR Delta Atlas.
+raster|r|nichols.wright@PERMANENT|Nichols and Wright Historic Shoreline and Open Water|/metadata/nichols.wright.metad.txt|/thumbnails/nichols.wright.small.gif|Source: Donald Nichols and Nancy Wright, USGS, 1971, Scale 1125,000 Basic Data Contribution.
+
+vector|rdb|counties.12@PERMANENT|County Boundaries for 12 San Francisco Bay counties|||
+vector|rb|cities.9@bcdc|City Boundaries for 9 San Francisco Bay counties
+vector|rdb|quads@PERMANENT|USGS 7.5min Quad Boundaries for Northern California||| 
+
+sites|rb|mines@rwqcb|Mining Operations in Bay Area counties|||
+sites|t|gasWells@twitchell|Twitchell Island Gas Wells|||
+
+region|!!|raster|Set to area of selected maps
+region|rg|12county@sue|12 County Bay and Delta Area
+region|rdt|delta@sue|Sacramento San Joaquin Delta
+region|rdt|3county@sue|3 Delta Counties
+
+project|r|San Francisco Bay Area and Delta Regions|sfbay.sr.gif|12county@sue
+project|d|Sacramento - San Joaquin Delta Area|delta.sr.gif|delta@sue
