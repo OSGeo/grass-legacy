@@ -45,7 +45,6 @@ int make_window_box ( struct Cell_head *window, double magnify, char pan)
     screen_x = cur_screen_x + 10 ;
     screen_y = cur_screen_y + 10 ;
 
-    prebutton=2;
     len_n = len_s = len_e = len_w = 0;
     do
     {
@@ -73,9 +72,9 @@ int make_window_box ( struct Cell_head *window, double magnify, char pan)
 		ux1 = ux2 ;
 		uy1 = uy2 ;
 		quitonly=0;
-		prebutton=button;
 		break ;
-	case 2: if(U_east > window->east ||
+	case 2:
+		if(U_east > window->east ||
 		   U_west < window->west ||
 		   U_south < window->south ||
 		   U_north > window->north)
@@ -90,11 +89,10 @@ int make_window_box ( struct Cell_head *window, double magnify, char pan)
 			reached = 1;
 			fprintf(stderr,"** Reached at region boundary **\n");
 		}
-		prebutton=2;
 	        button=3;
 	        quitonly=2;   /* leave after unzoom */
 	        break;
-	case 3: button=3;
+	case 3:
 		if (prebutton == 1)
 		  quitonly=0; /* box opening */
 		else
@@ -102,71 +100,102 @@ int make_window_box ( struct Cell_head *window, double magnify, char pan)
 		break;
 	}
 
-	if(!reached)
-	{
-		north = uy1>uy2?uy1:uy2 ;
-		south = uy1<uy2?uy1:uy2 ;
-		west  = ux1<ux2?ux1:ux2 ;
-		east  = ux1>ux2?ux1:ux2 ;
-	
-		G_limit_east (&east, window->proj);
-		G_limit_west (&west, window->proj);
-		G_limit_north (&north, window->proj);
-		G_limit_south (&south, window->proj);
-	
-		t = (window->north - north) / window->ns_res;
-		north = window->north - (t) * window->ns_res;
-	
-		t = (south - window->south) / window->ns_res;
-		south = window->south + (t) * window->ns_res;
-	
-		t = (window->east - east) / window->ew_res;
-		east = window->east - (t) * window->ew_res;
-	
-		t = (west - window->west) / window->ew_res;
-		west = window->west + (t) * window->ew_res;
-	}
+	if(quitonly==2)
+	   prebutton = 2;
 	else
+	   prebutton = button;
+
+	if(prebutton==1)
 	{
-		east = window->east;
-		west = window->west;
-		south = window->south;
-		north = window->north;
+	   north = uy1;
+	   east = ux1;
+
+	   G_limit_north (&north, window->proj);
+	   G_limit_east (&east, window->proj);
+
+	   t = (window->north - north) / window->ns_res;
+	   north = window->north - (t) * window->ns_res;
+	
+	   t = (window->east - east) / window->ew_res;
+	   east = window->east - (t) * window->ew_res;
+
+           strcpy (buffer, "?");
+           G_format_northing(north, buffer, window->proj)  ;
+           len_n = max (len_n, strlen(buffer));
+           fprintf(stderr,"%-*s(N)  ", len_n, buffer);
+
+           strcpy (buffer, "?");
+           G_format_easting(east, buffer, window->proj)  ;
+           len_e = max (len_e, strlen(buffer));
+           fprintf(stderr,"%-*s(E)  ", len_e, buffer);
+
+           fprintf (stderr,"\r");
+           fflush (stderr);
 	}
-
-	strcpy (buffer, "?");
-	G_format_northing(north, buffer, window->proj)  ;
-	len_n = max (len_n, strlen(buffer));
-	fprintf(stderr,"north: %-*s  ", len_n, buffer);
-
-	strcpy (buffer, "?");
-	G_format_northing(south, buffer, window->proj)  ;
-	len_s = max (len_s, strlen(buffer));
-	fprintf(stderr,"south: %-*s  ", len_s, buffer);
-
-	strcpy (buffer, "?");
-	G_format_easting(east, buffer, window->proj)  ;
-	len_e = max (len_e, strlen(buffer));
-	fprintf(stderr,"east: %-*s  ", len_e, buffer);
-
-	strcpy (buffer, "?");
-	G_format_easting(west, buffer, window->proj)  ;
-	len_w = max (len_w, strlen(buffer));
-	fprintf(stderr,"west: %-*s  ", len_w, buffer);
-
-	fprintf (stderr,"\r");
-	fflush (stderr);
     } while (button != 3) ;
 
-    fprintf (stderr, "\n\n");
-
-    if(prebutton != 2)
+    if(quitonly != 1)
     {
+	if(prebutton == 2)
+	{
+	   east = window->east;
+	   west = window->west;
+	   south = window->south;
+	   north = window->north;
+	}else{
+	   north = uy1>uy2?uy1:uy2 ;
+	   south = uy1<uy2?uy1:uy2 ;
+	   west  = ux1<ux2?ux1:ux2 ;
+	   east  = ux1>ux2?ux1:ux2 ;
+	
+	   G_limit_north (&north, window->proj);
+	   G_limit_south (&south, window->proj);
+	   G_limit_east (&east, window->proj);
+	   G_limit_west (&west, window->proj);
+	
+	   t = (window->north - north) / window->ns_res;
+	   north = window->north - (t) * window->ns_res;
+	
+	   t = (south - window->south) / window->ns_res;
+	   south = window->south + (t) * window->ns_res;
+	
+	   t = (window->east - east) / window->ew_res;
+	   east = window->east - (t) * window->ew_res;
+	
+	   t = (west - window->west) / window->ew_res;
+	   west = window->west + (t) * window->ew_res;
+	}
+
+        strcpy (buffer, "?");
+        G_format_northing(north, buffer, window->proj)  ;
+        len_n = max (len_n, strlen(buffer));
+        fprintf(stderr,"north: %-*s  ", len_n, buffer);
+
+        strcpy (buffer, "?");
+        G_format_northing(south, buffer, window->proj)  ;
+        len_s = max (len_s, strlen(buffer));
+        fprintf(stderr,"south: %-*s  ", len_s, buffer);
+
+        strcpy (buffer, "?");
+        G_format_easting(east, buffer, window->proj)  ;
+        len_e = max (len_e, strlen(buffer));
+        fprintf(stderr,"east: %-*s  ", len_e, buffer);
+
+        strcpy (buffer, "?");
+        G_format_easting(west, buffer, window->proj)  ;
+        len_w = max (len_w, strlen(buffer));
+        fprintf(stderr,"west: %-*s  ", len_w, buffer);
+
+        fprintf (stderr,"\r");
+        fflush (stderr);
+
     	window->north = north;
     	window->south = south;
     	window->east  = east ;
     	window->west  = west ;
     }
+
+    fprintf (stderr, "\n\n");
 
     return quitonly;
 }
