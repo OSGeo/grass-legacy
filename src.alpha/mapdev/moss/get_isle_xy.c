@@ -6,6 +6,7 @@
 */
 #include "Vect.h"
 struct line_pnts *get__isle_xy ();
+#define ABS(x) ((x) < 0 ? -(x) : (x))
 
 /* returns 0  or -1 on error */
 get_isle_xy (Map, isle, n_points, x, y)
