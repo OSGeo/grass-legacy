@@ -76,7 +76,7 @@ int InitProfile(struct Profile *, struct Cell_head, double, double, double, doub
 /* PlotProfile.c */
 int PlotProfile(struct Profile, char *, int, int);
 /* Range.c */
-int WindowRange(char *, char *, int *, int *);
+int WindowRange(char *, char *, long *, long *);
 int quick_range(char *, char *, long *, long *);
 int slow_range(char *, char *, long *, long *);
 /* What.c */
