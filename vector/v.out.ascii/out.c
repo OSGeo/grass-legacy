@@ -16,8 +16,12 @@ int main (int argc, char *argv[])
 	char errmsg[200];
 	struct Map_info Map;
 	int    ver=5, pnt=0; 
+	struct GModule *module;
 
 	G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description = "Convert a GRASS binary vector map to a GRASS ASCII vector map";
 
 	old = G_define_standard_option(G_OPT_V_INPUT);
 
