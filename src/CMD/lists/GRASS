@@ -153,6 +153,7 @@ src/mapdev/v.apply.census
 src/mapdev/v.area
 src/mapdev/v.autocorr
 src/mapdev/v.build
+src/mapdev/v.build.polylines
 src/mapdev/v.cadlabel
 src/mapdev/v.clean
 src/mapdev/v.cutter
