@@ -41,7 +41,7 @@
 #define	FLUSH_EACH_CHAR
  */
 
-#define	DEFAULT_CHARSET		"ISO-8859-1"
+#define	DEFAULT_CHARSET		"UTF-8"
 #define	DEFAULT_SIZE		"5"
 #define	DEFAULT_COLOR		"gray"
 
@@ -50,7 +50,7 @@
 #define	DEFAULT_LINESPACING	"1.1"
 
 /* font size conversion */
-#define	CNV			(0.8*64)
+#define	cnv(x)			((int)(0.8*64*(x)))
 
 #define	deinit()		{if(face)				\
 					FT_Done_Face(face);		\
@@ -75,8 +75,9 @@ static int	read_capfile(char *capfile, capinfo **fonts, int *fonts_count,
 static int	find_font(capinfo *fonts, int fonts_count, char *name);
 static char	*transform_string(char *str, int (*func)(int));
 static int	convert_text(char *charset, char *text, unsigned char **out);
-static int	get_coordinates(rectinfo win, char **ans, char pixel, char percent,
-			double *east, double *north, int *x, int *y);
+static int	get_coordinates(rectinfo win, char **ans, char pixel,
+			char percent, double *east, double *north,
+			int *x, int *y);
 static void	get_color(char *tcolor, int *color);
 
 static int	set_font(FT_Library library, FT_Face *face, char *path);
@@ -119,7 +120,6 @@ main(int argc, char **argv)
 		struct	Flag	*c;
 	} flag;
 
-	char	capfile[4096];
 	capinfo	*fonts;
 	int	fonts_count;
 	int	cur_font;
@@ -127,7 +127,7 @@ main(int argc, char **argv)
 
 	FT_Library	library = NULL;
 	FT_Face		face = NULL;
-	FT_Vector	dim, pen, pen2;
+	FT_Vector	pen, pen2;
 
 	int	driver = 0;
 	char	win_name[64];
@@ -137,6 +137,7 @@ main(int argc, char **argv)
 	double	east, north, size, rotation, linespacing;
 	int	i, l, ol, x, y;
 	unsigned char	*out;
+	char	buf[512];
 
 
 	G_gisinit(argv[0]);
@@ -336,7 +337,7 @@ main(int argc, char **argv)
 		if(set_font(library, &face, path))
 			error("Unable to create face");
 
-		if(FT_Set_Char_Size(face, size*CNV, size*CNV, 100, 100))
+		if(FT_Set_Char_Size(face, cnv(size), cnv(size), 100, 100))
 			error("Unable to set size");
 	}
 
@@ -380,10 +381,15 @@ main(int argc, char **argv)
 
 		if(param.east_north->answer)
 			D_add_to_list(G_recreate_command());
+		else{
+			sprintf(buf, "%s east_north=%g,%g",
+					G_recreate_command(), east, north);
+			D_add_to_list(buf);
+		}
 	}
 	else
 	{
-		char	*tmpfile, buf[512], *p, *c, ch, align[3], linefeed,
+		char	*tmpfile, *p, *c, align[3], linefeed,
 			setx, sety, setl;
 		FILE	*fp;
 		int	sx, sy, px, py;
@@ -472,7 +478,7 @@ main(int argc, char **argv)
 							charset = transform_string(c+1, toupper);
 						if(set_font(library, &face, path))
 							error("Unable to create face");
-						if(FT_Set_Char_Size(face, size*CNV, size*CNV, 100, 100))
+						if(FT_Set_Char_Size(face, cnv(size), cnv(size), 100, 100))
 							error("Unable to set size");
 						break;
 					case 'C':
@@ -487,7 +493,7 @@ main(int argc, char **argv)
 						if(p[l-1] != 'p')
 							d *= (double)(win.b-win.t)/100.0;
 						size = d + (i ? size : 0);
-						if(face && FT_Set_Char_Size(face, size*CNV, size*CNV, 100, 100))
+						if(face && FT_Set_Char_Size(face, cnv(size), cnv(size), 100, 100))
 							error("Unable to set size");
 						break;
 					case 'B':
