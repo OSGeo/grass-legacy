@@ -29,13 +29,13 @@ cells.
 
 <EM>s.cellstats</EM> calculates univariate statistics of sites
 lists for each cluster of input sites falling within each cell of
-the current region. This includes the number of sites, mean, standard
+the current region. This includes mean, standard
 deviation, coefficient of variation, mininum, first
-quartile, median, third quartile, maximum and sum.  The output is a sites
-list where the coordinates are cell centers, the category is the
-count of sites falling within the cell, and the decimal attributes
-are the statistics.  Sites falling outside the current region are
-discarded.
+quartile, median, third quartile, maximum, sum and the number of 
+sites.  The output is a sites list where the coordinates are cell
+centers, the category is the count of sites falling within the cell,
+and the decimal attributes are the statistics.  Sites falling outside
+the current region are discarded.
 
 <H2>OPTIONS</H2>
 
@@ -83,6 +83,8 @@ they are output in the order below.  The statistics are:<BR>
 <EM>q3 </EM> - third quartile<BR>
 <EM>max</EM> - maximum<BR>
 <EM>sum</EM> - sum<BR>
+<EM>n  </EM> - number of sites in the sample<BR>
+
 
 </DL>
 <H2>SEE ALSO</H2>
