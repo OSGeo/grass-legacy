@@ -22,7 +22,7 @@ echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">
  <meta name=\"Author\" content=\"GRASS Development Team\">
 </head>
 <body bgcolor=\"#FFFFFF\">
-<h2>GRASS GIS 5.1 Reference Manual</h2>
+<h2>GRASS GIS 5.7 Reference Manual</h2>
 This reference manual details the use of modules distributed with
 Geographic Resources Analysis Support System (GRASS), an open source (GNU
 GPL'ed), image processing and geographic information system (GIS).
@@ -91,7 +91,7 @@ CMDLISTNO=`echo $CMDLIST | wc -w | awk '{print $1}'`
 
 #write main index:
 echo "Generating HTML manual pages..."
-write_html_header $FULLINDEX "GRASS GIS 5.1 Reference Manual"
+write_html_header $FULLINDEX "GRASS GIS 5.7 Reference Manual"
 echo "<b>Full command index:</b>" >> $FULLINDEX
 
 #generate main index of all modules:
@@ -137,7 +137,7 @@ do
   MODCLASS=`expand_module_class_name $k`
   FILENAME=$MODCLASS.html
 
-  write_html_header $FILENAME "GRASS GIS 5.1 Reference Manual"
+  write_html_header $FILENAME "GRASS GIS 5.7 Reference Manual"
   echo "<b>$MODCLASS commands:</b>" >> $FILENAME
   echo "<ul>" >> $FILENAME
   #for all modules:
@@ -154,7 +154,7 @@ done
 
 #next write main page:
 FILENAME=index.html
-write_html_header $FILENAME "GRASS GIS 5.1 Reference Manual"
+write_html_header $FILENAME "GRASS GIS 5.7 Reference Manual"
 
 #modules:
 echo "<b>Manual sections:</b>" >> $FILENAME
