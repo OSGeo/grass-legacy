@@ -1,7 +1,7 @@
 
 
 
-v.mkgrid <main>	GRASS Reference Manual	<main> v.mkgrid
+v.mkgrid <main>	      GRASS Reference Manual	  <main> v.mkgrid
 
 
 
@@ -23,19 +23,19 @@ DESCRIPTION
 
      Parameters:
 
-     map=name		Name to be assigned to binary vector
+     map=name		     Name to be assigned to binary vector
 			     map layer output.
 
-     grid=rows,columns	Number of ROWS and COLUMNS to appear
+     grid=rows,columns	     Number of ROWS and COLUMNS to appear
 			     in grid.
 
-     coordinate=x,y	  Lower left EASTING and NORTHING
+     coordinate=x,y	     Lower left EASTING and NORTHING
 			     coordinates of vector map layer
 			     output.
 
-     box=length,width	LENGTH and WIDTH of boxes in grid.
+     box=length,width	     LENGTH and WIDTH of boxes in grid.
 
-     [angle=degree]	  optional rotate grid counter-
+     [angle=degree]	     optional rotate grid counter-
 			     clockwise about the origin
 			     (coordinate).
 
@@ -60,14 +60,14 @@ DESCRIPTION
 
 
 
-GRASS 5.0beta7	GRASS Development Team			1
+GRASS 5.0beta8	      GRASS Development Team			1
 
 
 
 
 
 
-v.mkgrid <main>	GRASS Reference Manual	<main> v.mkgrid
+v.mkgrid <main>	      GRASS Reference Manual	  <main> v.mkgrid
 
 
 
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-2		     GRASS Development Team	GRASS 5.0beta7
+2		      GRASS Development Team	   GRASS 5.0beta8
 
 
 

@@ -53,14 +53,14 @@ FEATURES
      that are frequently met with in shapefiles.
 
 FLAGS
-     -l	List the fields contained in the DBF file associated
+     -l	  List the fields contained in the DBF file associated
 	  with the input shapefile, then exit.
 
-     -r	Create a reject lines file. During import some lines
+     -r	  Create a reject lines file. During import some lines
 
 
 
-GRASS 5.0beta8	GRASS Development Team			1
+GRASS 5.0beta8	      GRASS Development Team			1
 
 
 
@@ -78,7 +78,7 @@ v.in.shape <alpha>    GRASS Reference Manual   <alpha> v.in.shape
      *NOTE*  The following option is only available in the
      version with postgres support (v.in.shape.pg)
 
-     -p	Dump the fields of the shapefile from DBF to a postgres
+     -p	  Dump the fields of the shapefile from DBF to a postgres
 	  table.
 
 OPTIONS
@@ -126,7 +126,7 @@ OPTIONS
 
 
 
-2		     GRASS Development Team	GRASS 5.0beta8
+2		      GRASS Development Team	   GRASS 5.0beta8
 
 
 
@@ -192,7 +192,7 @@ AUTHORS
 
 
 
-GRASS 5.0beta8	GRASS Development Team			3
+GRASS 5.0beta8	      GRASS Development Team			3
 
 
 
@@ -258,7 +258,7 @@ NOTICE
 
 
 
-4		     GRASS Development Team	GRASS 5.0beta8
+4		      GRASS Development Team	   GRASS 5.0beta8
 
 
 
