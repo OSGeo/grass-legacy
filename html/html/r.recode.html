@@ -34,13 +34,13 @@
 
 Enter a rule in one of these formats:
 <PRE>
- old_low:old_high:new_low:new_high
- old_low:old_high:new_val  (i.e. new_high == new_low)
- *:old_val:new_val         (interval [inf, old_val])
- old_val:*:new_val         (interval [old_val, inf])
+    old_low:old_high:new_low:new_high
+    old_low:old_high:new_val  (i.e. new_high == new_low)
+    *:old_val:new_val         (interval [inf, old_val])
+    old_val:*:new_val         (interval [old_val, inf])
 </PRE>
 
-<em>r.recode> is loosely based on r.reclass and uses the GRASS reclass
+<em>r.recode</em> is loosely based on r.reclass and uses the GRASS reclass
 library to convert the rasters. It has routines for converting to every
 possible combination of raster (eg. int to double, double to float, etc).
 There are four basic routines that it accepts:
