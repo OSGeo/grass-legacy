@@ -344,18 +344,19 @@ A <EM>r.reclass</EM> map is not a true raster map layer.
 Rather, it is a table of reclassification values which reference the
 input raster map layer.  Therefore, users who wish to retain reclassified
 map layers must also save the original input raster map layers
-from which they were generated.
+from which they were generated. Alternatively r.recode can be used.
 
 
 <P>
 
 Category values which are not explicitly reclassified to a new value
-by the user will be reclassified to 0.
+by the user will be reclassified to NULL.
 
 <H2>SEE ALSO</H2>
 
 <EM><A HREF="r.resample.html">r.resample</A></EM><br>
-<EM><A HREF="r.rescale.html">r.rescale</A></EM>
+<EM><A HREF="r.rescale.html">r.rescale</A></EM>,
+<EM><A HREF="r.recode.html">r.recode</A></EM>
 
 <H2>AUTHORS</H2>
 
