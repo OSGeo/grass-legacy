@@ -1,4 +1,3 @@
-/* %W%   %G% */
 #include "bmif.h"
 #include "gis.h"
 #include "dlg.h"
