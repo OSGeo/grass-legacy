@@ -1,0 +1,54 @@
+Mmain	main.c	/^main (argc, argv) char *argv[];$/
+P	proto.h	/^# define	P(s) s$/
+arc_intersects_segment	intersect.c	/^arc_intersects_segment (arc, x1, y1, x2, y2)$/
+attributes_are_the_same	attr.c	/^attributes_are_the_same (pt1, pt2)$/
+be_quiet	main.c	/^be_quiet()$/
+boxes_overlap	bbox.c	/^boxes_overlap (box1, box2)$/
+break_connections	break.c	/^break_connections()$/
+close_vector_map	vect.c	/^close_vector_map ()$/
+disconnect	disconnect.c	/^disconnect (pt1, pt2)$/
+disposeNeighbors	neighbors.c	/^disposeNeighbors (neighbors, nofSites)$/
+doMakeNeighbors	neighbors.c	/^doMakeNeighbors (g, neighbors, n)$/
+doit	disconnect.c	/^doit (pt1, pt2)$/
+extend_pointlist	read.c	/^extend_pointlist (list, n)$/
+findMax	neighbors.c	/^findMax (d, n) \/* find the largest value of abs (d/
+find_fs	fields.c	/^find_fs (buf, fs)$/
+find_vector	vect.c	/^find_vector(name)$/
+get_arc_bounding_box	bbox.c	/^get_arc_bounding_box (arc, box)$/
+get_barrier_name	barriers.c	/^get_barrier_name(i)$/
+get_bounding_box	bbox.c	/^get_bounding_box (x, y, n, box)$/
+get_field	fields.c	/^get_field (buf, which, fs, word)$/
+get_field_list	fields.c	/^get_field_list (fields, count)$/
+get_neighbor	list.c	/^get_neighbor (pt, n)$/
+get_neighbor_list	list.c	/^get_neighbor_list (pt, count)$/
+get_number_of_neighbors	list.c	/^get_number_of_neighbors (pt)$/
+get_pointlist_bounding_box	bbox.c	/^get_pointlist_bounding_box (box)$/
+get_xy	read.c	/^get_xy (buf, x, y, fs)$/
+have_attributes	attr.c	/^have_attributes()$/
+have_region	region.c	/^have_region()$/
+inciEnd	inci.c	/^inciEnd ()$/
+inciGetFirstIncidence	inci.c	/^inciGetFirstIncidence (g, site, qe)$/
+inciGetNextIncidence	inci.c	/^inciGetNextIncidence (g, qe)$/
+inciInitIncidences	inci.c	/^inciInitIncidences (g)$/
+inciMakeIncidences	inci.c	/^inciMakeIncidences (g, loi, n)$/
+init_attributes	attr.c	/^init_attributes (f)$/
+init_barriers	barriers.c	/^init_barriers (names)$/
+is_comment	read.c	/^is_comment (buf)$/
+makeNeighbors	neighbors.c	/^makeNeighbors (x, y, nofSites, neighbors)$/
+open_vector_map	vect.c	/^open_vector_map (name)$/
+parse_command_line	parse.c	/^parse_command_line(argc, argv, parms)$/
+point_in_region	region.c	/^point_in_region (x, y)$/
+read_and_print	report.c	/^read_and_print (outfd, infd, offset, indent)$/
+read_next_vector_arc	vect.c	/^read_next_vector_arc (arc)$/
+read_point	report.c	/^read_point (fd, offset, buf, len)$/
+read_point_list	read.c	/^read_point_list (filename, fs)$/
+readline	readline.c	/^readline (fd, buf, len)$/
+report_point	report.c	/^report_point (fd, pt)$/
+segment_may_fall_in_box	bbox.c	/^segment_may_fall_in_box (x1, y1, x2, y2, box)$/
+segments_intersect	intersect.c	/^segments_intersect (ax1, ay1, ax2, ay2, bx1, by1, /
+set_region	region.c	/^set_region()$/
+skip	break.c	/^#define skip(pt1,pt2) (pt2 < pt1)$/
+triangulate_point_list	triangulate.c	/^triangulate_point_list()$/
+unset_neighbor	list.c	/^unset_neighbor (pt, n)$/
+write_point	report.c	/^write_point (fd, buf, indent)$/
+write_results	write.c	/^write_results (filename)$/
