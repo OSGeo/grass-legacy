@@ -103,12 +103,11 @@ fi
 # First time user - GISRC is defined in the grass script
 if [ ! -f $GISRC ] ; then
 
-if [ ! -f $GISBASE/locale/$LCL/etc/grass_intro ] ; then
-    cat $ETC/grass_intro
-else
+    if [ ! -f $GISBASE/locale/$LCL/etc/grass_intro ] ; then
+	cat $ETC/grass_intro
+    else
 	cat $GISBASE/locale/$LCL/etc/grass_intro
-fi
-
+    fi
 
     echo
     echo "Hit RETURN to continue"
@@ -117,6 +116,9 @@ fi
     # This is a hack for not having a good initial gui - should be removed
     # with next version of initialization gui
     GRASS_GUI="text"
+else
+    echo "Cleaning up temporary files....."
+    ($ETC/clean_temp > /dev/null &)
 fi
 
 echo "Starting GRASS ..."
