@@ -10,13 +10,13 @@
 <P><IMG SRC="grass.smlogo.gif" NAME="Image1" ALIGN=BOTTOM WIDTH=76 HEIGHT=91 BORDER=0>
 </P>
 <HR>
-<H3>NAME</H3>
+<H2>NAME</H2>
 <P><EM><B>r.cost</B></EM> - Outputs a raster map layer showing the
 cumulative cost of moving between different geographic locations on
 an input raster map layer whose cell category values represent cost.
 <BR><EM>(GRASS Raster Program)</EM> 
 </P>
-<H3>SYNOPSIS</H3>
+<H2>SYNOPSIS</H2>
 <P><B>r.cost</B> <BR><B>r.cost help</B> <BR><B>r.cost</B> [<B>-vkn</B>]
 <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM>
 [<B>start_sites=</B><EM>name</EM>] [<B>stop_sites=</B><EM>name</EM>]
@@ -25,7 +25,7 @@ an input raster map layer whose cell category values represent cost.
 [<B>max_cost=</B><SPAN STYLE="font-weight: medium"><I>cost</I></SPAN>]
 [<B>null_value=</B><EM><SPAN STYLE="font-weight: medium">value</SPAN></EM>]
 </P>
-<H3>DESCRIPTION</H3>
+<H2>DESCRIPTION</H2>
 <P><EM>r.cost</EM> determines the cumulative cost of moving to each
 cell on a <EM>cost surface</EM> (the input raster map layer) from
 other user-specified cell(s) whose locations are specified by their
@@ -154,10 +154,11 @@ considered a stop point.</P>
 <P><B>null_value=</B><SPAN STYLE="font-weight: medium"><I>value</I></SPAN></P>
 <P>The optional value that will be assigned to the null cells in the
 input map. This is a positive floating point value.</P>
-<H3>EXAMPLE</H3>
+<H2>EXAMPLE</H2>
 <P>Consider the following example: 
 </P>
-<PRE>      Input:
+<PRE>
+       Input:
          COST SURFACE
        . . . . . . . . . . . . . . .
        . 2 . 2 . 1 . 1 . 5 . 5 . 5 .
@@ -203,7 +204,7 @@ and the <EM>r.cost</EM> starting location(s). The two programs, when
 used together, generate least-cost paths or corridors between any two
 map locations (cells). 
 </P>
-<H3>NULL CELLS</H3>
+<H2>NULL CELLS</H2>
 <P>By defaults, null cells in the input raster map are excluded from
 the algorithm, and thus retained on output. 
 </P>
@@ -212,7 +213,7 @@ one must use the option <B>null_value=</B><SPAN STYLE="font-weight: medium"><I>0
 </B><SPAN STYLE="font-weight: medium">Then, null cells just propagate
 adjacent costs. These cells could then be retained as null cells into
 the output map through the <B>-n</B> flag.</SPAN></P>
-<H3>NOTES</H3>
+<H2>NOTES</H2>
 <P>If you submit the starting point map on the command line by
 specifying: 
 </P>
@@ -237,10 +238,10 @@ of the map's cell resolution, before running <EM>r.cost</EM>. This
 can be done using <EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM> or
 other programs. The map resolution can be found using <EM><A HREF="g.region.html">g.region</A></EM>.
 This problem doesn't arise with floating point maps.</P>
-<H3>SEE ALSO</H3>
+<H2>SEE ALSO</H2>
 <P><EM><A HREF="g.copy.html">g.copy</A></EM><BR><EM><A HREF="g.region.html">g.region</A></EM><BR><EM><A HREF="g.rename.html">g.rename</A></EM><BR><EM><A HREF="r.drain.html">r.drain</A></EM><BR><EM><A HREF="r.in.ascii.html">r.in.ascii</A></EM><BR><EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM><BR><EM><A HREF="r.out.ascii.html">r.out.ascii</A></EM><BR><EM><A HREF="parser.html">parser</A></EM>
 </P>
-<H3>AUTHOR</H3>
+<H2>AUTHOR</H2>
 <P>Antony Awaida, <BR>Intelligent Engineering <BR>Systems Laboratory,
 <BR>M.I.T.<BR><BR>James Westervelt,<BR>U.S.Army Construction
 Engineering Research Laboratory</P>
