@@ -364,7 +364,7 @@ Vect_read_dblinks ( struct Map_info *Map )
 {
     int  ndef;	
     FILE *fd;
-    char file[1024], buf[1024];
+    char file[1024], buf[2001];
     char tab[1024], col[1024], db[1024], drv[1024], fldstr[1024], *fldname;
     int  fld;
     char *c;
@@ -422,7 +422,7 @@ Vect_read_dblinks ( struct Map_info *Map )
 
     row = 0;
     rule = 0;
-    while (fgets (buf, 1023, fd) != NULL) {
+    while ( G_getl2 (buf, 2000, fd) ) {
 	row++;      
 	G_chop ( buf ); 
 	G_debug (1, "dbln: %s", buf);

@@ -68,18 +68,25 @@ Vect_hist_write ( struct Map_info *Map, char *str )
 
 /*!
  \fn char Vect_hist_read ( char *s, int size, struct Map_info *Map )
- \brief read history file
- \return return s on success, and NULL on error
- \param char *s, int size, struct Map_info *Map
+ \brief reads one line from history file without newline character
+ \return return s on success, and NULL on error or EOF
+ \param s buffer, allocated space must be size+1
+ \param size maximum number of character
+ \param Map 
 */
 char * 
 Vect_hist_read ( char *s, int size, struct Map_info *Map )
 {
+    int ret;
     G_debug (5, "Vect_hist_read()");
 
     if ( Map->hist_fp == NULL ) return NULL; /* OK for shapefile etc. */
 
-    return ( fgets (s, size, Map->hist_fp) );
+    ret = G_getl2 (s, size, Map->hist_fp);
+
+    if ( ret == 1 ) return s;
+
+    return NULL;
 }
 
 /*!

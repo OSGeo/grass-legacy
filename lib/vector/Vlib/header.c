@@ -79,7 +79,7 @@ int
 Vect__read_head (struct Map_info *Map)
 {
     FILE *head_fp;
-    char buff[1024];
+    char buff[2001];
     char *ptr;
 
     G_debug (1, "Vect__read_head(): vector = %s@%s", Map->name, Map->mapset);
@@ -91,10 +91,7 @@ Vect__read_head (struct Map_info *Map)
         return (GRASS_ERR);
       }
    
-    while ( NULL != fgets (buff, sizeof (buff), head_fp)) {
-
-	for (ptr = buff; *ptr != '\n'; ptr++);	/* Remove new-line char */
-	*ptr = '\0';
+    while ( G_getl2 (buff, 2000, head_fp) ) {
 
 	if (!(ptr = G_index (buff, ':')))
 	return (-1);
