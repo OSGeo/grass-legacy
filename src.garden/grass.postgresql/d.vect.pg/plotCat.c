@@ -30,7 +30,7 @@ int plotCat (name, mapset, points, vect_cat, Map, fillcolr)
     struct Map_info *Map;
 {
     double *x, *y;
-    int *list, count, idx, i, j;
+    int *list, count, idx, i, j, jk;
     int ret, n,np, a_index;
     double N,S,E,W;
     struct Cell_head window;
@@ -91,13 +91,15 @@ int plotCat (name, mapset, points, vect_cat, Map, fillcolr)
                 xs[j+1] = (double *) G_malloc (sizeof(double) * rpnts[j+1]);
                 ys[j+1] = (double *) G_malloc (sizeof(double) * rpnts[j+1]);
                 Vect_copy_pnts_to_xy (points_i, xs[j+1], ys[j+1], &rpnts[j+1]);
+		
+			   
+           	for (jk = 0; jk < points_i->n_points - 1; jk++)
+                	G_plot_line (points_i->x[jk],   points_i->y[jk],
+                        	points_i->x[jk+1], points_i->y[jk+1]);
+
             }
 
            if (fillcolr) G_plot_area (xs, ys, rpnts, rings);
-	   
-           for (j = 0; j < points_i->n_points - 1; j++)
-                G_plot_line (points_i->x[j],   points_i->y[j],
-                        points_i->x[j+1], points_i->y[j+1]);
 			
 	   for (j = 0; j < points->n_points - 1; j++)
                 G_plot_line (points->x[j],   points->y[j],
