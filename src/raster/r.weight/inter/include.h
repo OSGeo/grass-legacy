@@ -45,7 +45,7 @@ extern long normalize ;
 extern char map_name[] ;
 extern char input_buf[] ;
 
-#endif MAIN
+#endif /* MAIN */
 
 #define GETS mygets(input_buf)
 char *mygets() ;
