@@ -1,5 +1,8 @@
 MODULE_TOPDIR = ../../..
 
+include $(MODULE_TOPDIR)/include/Make/Lib.make
+include $(MODULE_TOPDIR)/include/Make/Platform.make
+
 EXTRA_CFLAGS=$(FTINC)
 EXTRA_LIBS=$(GISLIB)
 LIB_NAME = $(DRIVER_LIBNAME)
@@ -44,11 +47,14 @@ LIB_OBJS =\
 	pad.o\
 	utils.o\
 	RGB.o\
-	Text2.o\
-	Text3.o\
-	font_freetype.o
+	Text2.o
 
-include $(MODULE_TOPDIR)/include/Make/Lib.make
+FREETYPEBASED = Text3.o font_freetype.o
+
+#compile if FreeType Lib present:
+ifneq ($(strip $(FTLIB)),)
+    LIB_OBJS += $(FREETYPEBASED)
+endif
 
 default: stlib
 
