@@ -146,7 +146,7 @@
 static int ERROR;
 static char *me;
 static RASTER_MAP_TYPE write_type;
-static _zeros_r_nulls = 1;
+static int _zeros_r_nulls = 1;
 
 static int put_raster_data (int,void *,int,int,int,int,RASTER_MAP_TYPE);
 static int put_data (int,CELL *,int, int,int,int);
