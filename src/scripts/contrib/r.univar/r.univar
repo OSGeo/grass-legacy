@@ -4,6 +4,32 @@
 #            neteler@itc.it
 #
 
+#%Module
+#%  description: This module calculates univariate statistics of a raster map
+#%End
+#%flag
+#%  key: e
+#%  description: calculate extended statistics (median and quartiles)
+#%END
+#%option
+#% key: cover
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: raster input map
+#% required : yes
+#%end
+#%option
+#% key: base
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: raster input map (optional masking map containing areas)
+#% required : no
+#%end
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+fi
+
 if test "$GISBASE" = ""; then
  echo "You must be in GRASS GIS to run this program." >&2
  exit 1
@@ -29,47 +55,30 @@ exitprocedure()
 # shell check for user break (signal list: trap -l)
 trap "exitprocedure" 2 3 15
 
-
-if [ "$1" = "-help" -o "$1" = "help" -o "$1" = "-h" ]
-then
- echo "Description:"
- echo "This module calculates univariate statistics from a GRASS raster map"
- echo ""
- echo "Usage: r.univar [base=name] cover=name"
- echo ""
- echo "Parameter basemap is an optional masking map (containing areas)"
- echo ""
- exit
-fi
-
 gotitBASE=0
 gotitCOVER=0
 
-for i
-do
-	case $i in
-		b=*|ba=*|bas=*|base=*)
-		base=`echo $i | awk -F '=' '{print $2}'` ;
-                            gotitBASE=1;
-                            eval `g.findfile element=cell file=$base` ;
-                            base="${fullname}" ;
-                            BASE="${name}" ;
-                            if [ "$base" = "" ] ; then
-                               echo "ERROR: base raster map [`echo $i | awk -F '=' '{print $2}'`] does not exist."
-                               exit 1
-                            fi ;;
-		c=*|co=*|cov=*|cove=*|cover=*)
-		cover=`echo $i | awk -F '=' '{print $2}'` ;
-                            gotitCOVER=1;
-                            eval `g.findfile element=cell file=$cover` ;
-                            cover="${fullname}" ;
-                            COVER="${name}" ;
-                            if [ "$cover" = "" ] ; then
-                               echo "ERROR: cover raster map [`echo $i | awk -F '=' '{print $2}'`] does not exist."
-                               exit 1
-                            fi ;;
-	esac
-done
+cover="$GIS_OPT_cover"
+base="$GIS_OPT_base"
+if [ "$GIS_OPT_base" != "(null)" ] ; then
+  gotitBASE=1
+  eval `g.findfile element=cell file=$base`
+  base="${fullname}"
+  BASE="${name}"
+  if [ "$base" = "" ] ; then
+     echo "ERROR: base raster map [`echo $i | awk -F '=' '{print $2}'`] does not exist."
+     exit 1
+  fi
+fi
+
+gotitCOVER=1
+eval `g.findfile element=cell file=$cover`
+cover="${fullname}"
+COVER="${name}"
+if [ "$cover" = "" ] ; then
+  echo "ERROR: cover raster map [`echo $i | awk -F '=' '{print $2}'`] does not exist."
+  exit 1
+fi
 
 #also run if only one map specified, take it as cover map:
 if [ $# -eq 1 -a $gotitBASE -eq 0 -a $gotitCOVER -eq 0 ] ; then
@@ -173,40 +182,42 @@ print "Standard deviation:",sqrt((sum2 - sum*sum/N)/N)
 print "Variation coefficient:",100*(sqrt((sum2 - sum*sum/N)/N))/(sqrt(sum*sum)/N),"%"
 }'
 
-#preparations:
-cat $TMP | sort -n > $TMP.sort
-NUMBER=`cat $TMP.sort | wc -l | awk '{print $1}'`
-ODDEVEN=`echo $NUMBER | awk '{print $1%2}'`
+if [ $GIS_FLAG_e -eq 1 ] ; then
+ #preparations:
+ cat $TMP | sort -n > $TMP.sort
+ NUMBER=`cat $TMP.sort | wc -l | awk '{print $1}'`
+ ODDEVEN=`echo $NUMBER | awk '{print $1%2}'`
 
-# 0.25 quartile
-QUARTILE=0.25
-QPOS=`echo $NUMBER $QUARTILE | awk '{printf "%d", $1 * $2 + 0.5}'`
-QELEMENT=`head -$QPOS $TMP.sort | tail -1`
-echo "1st Quartile: $QELEMENT"
+ # 0.25 quartile
+ QUARTILE=0.25
+ QPOS=`echo $NUMBER $QUARTILE | awk '{printf "%d", $1 * $2 + 0.5}'`
+ QELEMENT=`head -$QPOS $TMP.sort | tail -1`
+ echo "1st Quartile: $QELEMENT"
 
-#Calculate median
-if [ $ODDEVEN -eq 0 ]
-then
- # even
- EVENMEDIANNUMBER=`expr $NUMBER / 2`
- EVENMEDIANNUMBERPLUSONE=`expr $EVENMEDIANNUMBER + 1`
- # select two numbers
- SELECTEDNUMBERS=`cat $TMP.sort | head -$EVENMEDIANNUMBERPLUSONE | tail -2`
- RESULTEVENMEDIAN=`echo $SELECTEDNUMBERS | awk '{printf "%f", ($1 + $2)/2.0}'`
- echo "Median (even N): $RESULTEVENMEDIAN"
-else
- # odd
- ODDMEDIANNUMBER=`echo $NUMBER | awk '{printf "%d", int($1/2+.5)}'`
- RESULTODDMEDIAN=`cat $TMP.sort | head -$ODDMEDIANNUMBER | tail -1 | awk '{printf "%f", $1}'`
- echo "Median (odd N): $RESULTODDMEDIAN"
+ #Calculate median
+ if [ $ODDEVEN -eq 0 ]
+ then
+  # even
+  EVENMEDIANNUMBER=`expr $NUMBER / 2`
+  EVENMEDIANNUMBERPLUSONE=`expr $EVENMEDIANNUMBER + 1`
+  # select two numbers
+  SELECTEDNUMBERS=`cat $TMP.sort | head -$EVENMEDIANNUMBERPLUSONE | tail -2`
+  RESULTEVENMEDIAN=`echo $SELECTEDNUMBERS | awk '{printf "%f", ($1 + $2)/2.0}'`
+  echo "Median (even N): $RESULTEVENMEDIAN"
+ else
+  # odd
+  ODDMEDIANNUMBER=`echo $NUMBER | awk '{printf "%d", int($1/2+.5)}'`
+  RESULTODDMEDIAN=`cat $TMP.sort | head -$ODDMEDIANNUMBER | tail -1 | awk '{printf "%f", $1}'`
+  echo "Median (odd N): $RESULTODDMEDIAN"
+ fi
+
+ # 0.75 quartile
+ QUARTILE=0.75
+ QPOS=`echo $NUMBER $QUARTILE | awk '{printf "%d", $1 * $2 + 0.5}'`
+ QELEMENT=`head -$QPOS $TMP.sort | tail -1`
+ echo "3rd Quartile: $QELEMENT"
+
+ rm -f $TMP.sort
 fi
 
-
-# 0.75 quartile
-QUARTILE=0.75
-QPOS=`echo $NUMBER $QUARTILE | awk '{printf "%d", $1 * $2 + 0.5}'`
-QELEMENT=`head -$QPOS $TMP.sort | tail -1`
-echo "3rd Quartile: $QELEMENT"
-
-rm -f $TMP.sort
 cleanup
