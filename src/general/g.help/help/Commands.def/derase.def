@@ -1,0 +1,11 @@
+
+
+d.erase - 
+
+d.erase erases the contents of the active \graphics display frame\ and
+replaces it with the color black (by default) or by whatever color is
+specified by the user.  Because d.erase replaces the contents of the
+active display frame with a color, it will obscure those portions of
+any frames that overlap the active frame with that color.
+
+Manual entry for \d.erase\
