@@ -21,8 +21,9 @@ fonts already installed on the user's system.
 <DD>Sets character encoding for input <B>text</B>. (e.g. <TT>ISO-8859-1</TT>)
 
 <DT><B>color=</B><EM>name</EM>
-<DD>Sets text color to <EM>name</EM>. It can also be a hexadecimal
-       value of <TT>0xRRGGBB</TT>.<BR>
+<DD>Sets text color to <EM>name</EM> or <EM>R:G:B triplet</EM>.
+	It can also be a hexadecimal value of <TT>0xRRGGBB</TT>
+	(deprecated).<BR>
     Options: red, orange, yellow, green, blue, indigo, 
     violet, gray, white, and black<BR>
     Default: <EM>gray</EM><BR>
@@ -62,13 +63,17 @@ fonts already installed on the user's system.
 <DL>
 <DT><DD>.F {font|path}[:charset] <EM>font</EM>
 <DD>
-<DT><DD>.C {color_name|0xRRGGBB} <EM>color</EM>
+<DT><DD>.C {color_name|R:G:B} <EM>color</EM>
 <DD>
 <DT><DD>.S [+|-]size[p] <EM>size</EM>
+<DD>
+<DT><DD>.B {0|1} <EM>bold</EM>
 <DD>
 <DT><DD>.A {ll|lc|lr|cl|cc|cr|ul|uc|ur} <EM>align</EM>
 <DD>
 <DT><DD>.R [+|-]rotation[r] <EM>rotation</EM>
+<DD>
+<DT><DD>.I linespacing <EM>linespacing</EM>
 <DD>
 <DT><DD>.X [+|-]x[%|p] <EM>x-coord</EM>
 <DD>
