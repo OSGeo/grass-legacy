@@ -1,0 +1,28 @@
+                    NEIGHBORHOOD ANALYSIS AND FILTERS
+
+The user may wish to model interactions across a landscape, or to remove
+systematic distortions occurring across a map or image.  The user may
+also wish to eliminate "noise" from map data in order to make the basic
+results more visually apparent.  Such applications can be approached by
+filtering data.
+
+The user can build custom filters to make the value of one pixel a
+(user-defined) function of the values in the surrounding cells.  The
+paper \"r.mapcalc: An Algebra for GIS and Image Processing"\ provides
+examples of how some spatial filters commonly used in image processing
+can built using \r.mapcalc\.  See also past issues of the newsletter
+\"GRASSClippings"\ for other examples of custom filters for specific
+applications and the image processing section on "Building Custom
+Filters."
+
+The programs below are used in neighborhood analysis and filtering.  
+
+ \-  r.basins.fill \            \-  r.mapcalc \
+ \-  r.buffer \                 \-  r.neighbors \ 
+ \-  r.cost \                   \-  r.slope.aspect \ 
+ \-  r.clump \                  \-  r.thin \ 
+ \-  r.drain \                  \-  r.watershed \ 
+ \-  r.grow \ 
+
+For more information on a specific command, select a command and press
+ESC.
