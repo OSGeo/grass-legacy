@@ -60,7 +60,7 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield )
     }
 
     if ( count < npoints ) 
-	G_warning ( "%d points without category.", npoints - count );
+	G_warning ( "%d points without category (nfield: %d).", npoints - count, nfield );
 
     npoints = count;
 
