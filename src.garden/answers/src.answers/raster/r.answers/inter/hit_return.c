@@ -22,11 +22,14 @@
 hit_return()
 {
     char buf[100];
-    extern char *gets();
-    
+/* sustituyo temporalmente lo siguiente a ve su funciona */
+/*    extern char *gets();   */
+
     fprintf (stderr,"hit RETURN to continue -->");
-    if (!gets(buf)) exit(0); 
+    if (!fgets(buf,sizeof(buf),stdin)) exit(0);
+
+/*    if (!gets(buf)) exit(0);  */
     G_strip (buf);
     if (strcmp (buf, "exit") == 0) exit(0);
-        return(0);
+        return(0); 
 }

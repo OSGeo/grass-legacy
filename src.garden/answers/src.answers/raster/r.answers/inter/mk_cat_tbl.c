@@ -84,7 +84,7 @@ fprintf (stderr,"\n<reading categories in project MASK and REGION>\n");
 
     for (row = 0; row < window.rows; row++)
     {
-	if (G_get_map_row (fd, cell, row) < 0)  {
+	if (G_get_c_raster_row (fd, cell, row) < 0)  {
             fprintf(stderr, "\n\7WARNING: Failure to read row %d in <%s>\n", 
             row, layer);
             hit_return();
@@ -92,7 +92,7 @@ fprintf (stderr,"\n<reading categories in project MASK and REGION>\n");
         }
         if (zero == 1)
         {
-            if (G_get_map_row (mask_fd, mask_cell, row) < 0)  {
+            if (G_get_c_raster_row (mask_fd, mask_cell, row) < 0)  {
                 fprintf(stderr, "\n\7WARNING: Failure to read row %d in <%s>\n", 
                 row, mask_layer);
                 hit_return();
@@ -135,7 +135,7 @@ fprintf (stderr,"\n<reading categories in project MASK and REGION>\n");
 
 /* the first stat is zero (no data) so we call this once to read past that */
 
-    G_next_cell_stat (&c, &count, &statf);
+/*    G_next_cell_stat (&c, &count, &statf);  */
 
     while (G_next_cell_stat (&c, &count, &statf))
     {
