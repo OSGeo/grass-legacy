@@ -1,0 +1,28 @@
+<h2>DESCRIPTION</h2>
+
+<em>v.distance.connect</em> creates connecting vector lines from vector
+points to the nearest points found on a lines layer (point to line
+connections).
+
+<h2>EXAMPLE</h2>
+
+The map 'streets' be a line street network and the map 'schools' a
+points map of school locations which are not on the network. To
+generate a connecting lines map layer which connects the schools
+points to the network at shortest distance to the next street,
+run:
+
+<br>
+<tt>v.distance.connect input1=streets input2=schools output=connect</tt>
+<P>
+The resulting map may be patched into the 'streets' map with
+<em>v.patch</em>
+
+<H2>SEE ALSO</H2>
+ 
+<EM><a href="v.distance.html">v.distance</a></EM>,
+<EM><a href="v.patch.html">v.patch</a></EM>
+
+<h2>AUTHOR</h2>
+
+Markus Neteler, ITC-Irst, Trento, Italy

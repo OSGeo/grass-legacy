@@ -1,0 +1,82 @@
+#!/bin/sh
+
+# Markus Neteler 2003
+
+# creates connecting vector lines from vector points to the nearest points
+# found on a lines layer (point to line connections).
+
+#%Module
+#% description: create vector map with vector lines connecting points to nearest line as found by v.distance
+#%End
+#%option
+#% key:input1
+#% type:string
+#% description: Name of vector points input map1
+#% required : yes
+#%End
+#%option
+#% key:input2
+#% type:string
+#% description: Name of vector points input map2
+#% required : yes
+#%End
+#%option
+#% key:output
+#% type:string
+#% description: Name of vector lines output map
+#%required : yes
+#%end
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+fi
+
+MAP1="$GIS_OPT_input1"
+MAP2="$GIS_OPT_input2"
+OUTMAP="$GIS_OPT_output"
+
+OUTFILEPATH="`g.gisenv GISDBASE`/`g.gisenv LOCATION_NAME`/`g.gisenv MAPSET`/vector/"
+TMPFILE=`g.tempfile pid=$$`
+
+#for vect ascii:
+mkdir -p "$OUTFILEPATH"/../dig_ascii
+#in case of being the first vector map:
+mkdir -p "$OUTFILEPATH"
+
+#fetch x1 y1 x2 y2 (nearest points)
+echo "Searching for nearest points..."
+v.out.ascii "$MAP1" | v.distance "$MAP2" | cut -d'|' -f1,2,6,7 > $TMPFILE
+
+echo "Generating line map..."
+#generate ASCII header:
+echo "ORGANIZATION: $USER
+DIGIT DATE:   
+DIGIT NAME:   $USER
+MAP NAME:     $OUTMAP
+MAP DATE:     
+MAP SCALE:    10000
+OTHER INFO:   
+ZONE:         0
+MAP THRESH:   0.000000
+VERTI:        " > "$OUTFILEPATH"/../dig_ascii/"$OUTMAP"
+
+
+#v.in.ascii wants Y X, so revert the order:
+cat $TMPFILE | cut -d'|' -f1 > $TMPFILE.1
+cat $TMPFILE | cut -d'|' -f2 > $TMPFILE.2
+cat $TMPFILE | cut -d'|' -f3 > $TMPFILE.3
+cat $TMPFILE | cut -d'|' -f4 > $TMPFILE.4
+paste -d'|' $TMPFILE.2 $TMPFILE.1 $TMPFILE.4 $TMPFILE.3 > $TMPFILE
+
+#let's do all in one step:
+cat $TMPFILE | sed 's+^+L%%2 +g' | sed  's+|+-+1' | sed 's+|+-+2'| tr ' ' '\012' \
+		| sed 's+-+ +g' | tr '|' '\012' | tr -s '%' ' ' | sed 's+^+ +g' \
+		| sed 's+^ L+L+g' >> "$OUTFILEPATH"/../dig_ascii/"$OUTMAP"
+
+#generate binary map:
+v.in.ascii in="$OUTMAP" out="$OUTMAP"
+
+#clean
+rm -f $TMPFILE $TMPFILE.1 $TMPFILE.2 $TMPFILE.3 $TMPFILE.4 "$OUTFILEPATH"/../dig_ascii/"$OUTMAP"
+
+echo "Done."
