@@ -1,0 +1,13 @@
+   Top Level    Main Menu
+
+ The Main menu is always available.
+ To select an item, simply select a command
+ with the mouse.
+
+ These commands will take you to other menus:
+     Digitize    Edit     Label
+     Customize   Window   Toolbox
+ These will cause an immediate action:
+     Help   Zoom   
+ While Quit will exit the program
+
