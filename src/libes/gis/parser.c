@@ -1126,53 +1126,48 @@ static int split_opts (void)
 	if(! n_opts)
 		return 0;
 
-	opt= &first_option;
-	while(opt != NULL)
+	for (opt = &first_option; opt; opt = opt->next_opt)
 	{
-		if (/*opt->multiple && */(opt->answer != NULL))
-		{
-			/* Allocate some memory to store array of pointers */
-			allocated = 10 ;
-			opt->answers = (char **)G_malloc(allocated * sizeof(char *)) ;
+		if (!opt->answer)
+			continue;
 
-			ans_num = 0 ;
-			ptr1 = opt->answer ;
+		/* Allocate some memory to store array of pointers */
+		allocated = 10 ;
+		opt->answers = (char **)G_malloc(allocated * sizeof(char *)) ;
+
+		ans_num = 0 ;
+		ptr1 = opt->answer ;
+		opt->answers[ans_num] = NULL ;
+
+		for(;;)
+		{
+			for(len=0, ptr2=ptr1; *ptr2 != '\0' && *ptr2 != ','; ptr2++, len++)
+				;
+
+			opt->answers[ans_num]=(char *)G_malloc(len+1) ;
+			G_copy(opt->answers[ans_num], ptr1, len) ;
+			opt->answers[ans_num][len] = 0;
+
+			ans_num++ ;
+
+			if(ans_num >= allocated)
+			{
+				allocated += 10 ;
+				opt->answers =
+					(char **)G_realloc((char *)opt->answers,
+							   allocated * sizeof(char *)) ;
+			}
+
 			opt->answers[ans_num] = NULL ;
 
-			for(;;)
-			{
-				for(len=0, ptr2=ptr1; *ptr2 != '\0' && *ptr2 != ','; ptr2++, len++)
-					;
+			if(*ptr2 == '\0')
+				break ;
 
-				if (len > 0)        /* skip ,, */
-				{
-					opt->answers[ans_num]=(char *)G_malloc(len+1) ;
-					G_copy(opt->answers[ans_num], ptr1, len) ;
-					opt->answers[ans_num][len] = 0;
+			ptr1 = ptr2+1 ;
 
-					ans_num++ ;
-
-					if(ans_num >= allocated)
-					{
-						allocated += 10 ;
-						opt->answers =
-						    (char **)G_realloc((char *)opt->answers,
-						    allocated * sizeof(char *)) ;
-					}
-
-					opt->answers[ans_num] = NULL ;
-				}
-
-				if(*ptr2 == '\0')
-					break ;
-
-				ptr1 = ptr2+1 ;
-
-				if(*ptr1 == '\0')
-					break ;
-			}
+			if(*ptr1 == '\0')
+				break ;
 		}
-		opt = opt->next_opt ;
 	}
 
 	return 0;
