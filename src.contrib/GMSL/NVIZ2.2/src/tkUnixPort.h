@@ -74,7 +74,7 @@
 #endif
 #ifdef HAVE_UNISTD_H
 #   include <unistd.h>
-#else
+#elif !defined(__FreeBSD__)
 #   include "compat/unistd.h"
 #endif
 #include <X11/Xlib.h>
