@@ -1,0 +1,10 @@
+SCSFIPS      = $(LIBDIR)/scsfips.a
+
+OFILES = \
+	main.o
+
+all:  $(BIN_CONTRIB_CMD)/m.setproj
+
+$(BIN_CONTRIB_CMD)/m.setproj: $(OFILES) 
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(SCSFIPS) $(GISLIB) $(CURSES)
+
