@@ -38,7 +38,7 @@
 
 int main( int argc , char ** argv )
 {
-	gnGrpGraph_s  	graph;
+	dglGraph_s  	graph;
 	int			 	nret , fd;
 
 	/* program options
@@ -65,9 +65,9 @@ int main( int argc , char ** argv )
 	{
 		perror( "open" ); return 1;
 	}
-	nret = gnGrpRead( & graph , fd );
+	nret = dglRead( & graph , fd );
 	if ( nret < 0 ) {
-		fprintf( stderr , "gnGrpRead error: %s\n", gnGrpStrerror( & graph ) );
+		fprintf( stderr , "dglRead error: %s\n", dglStrerror( & graph ) );
 		return 1;
 	}
 	close( fd );
@@ -75,16 +75,16 @@ int main( int argc , char ** argv )
 
 
 	printf( "Graph unflatten:\n" );
-	nret = gnGrpUnflatten( & graph );
+	nret = dglUnflatten( & graph );
 	if ( nret < 0 ) {
-		fprintf( stderr , "gnGrpUnflatten error: %s\n", gnGrpStrerror( & graph ) );
+		fprintf( stderr , "dglUnflatten error: %s\n", dglStrerror( & graph ) );
 		return 1;
 	}
 	printf( "Done.\n" );
 
 
 	printf( "Graph flatten:\n" );
-	nret = gnGrpFlatten( & graph );
+	nret = dglFlatten( & graph );
 	printf( "Done.\n" );
 
 
@@ -94,16 +94,16 @@ int main( int argc , char ** argv )
 		{
 			perror( "open" ); return 1;
 		}
-		gnGrpWrite( & graph, fd );
+		dglWrite( & graph, fd );
 		if ( nret < 0 )
 		{
-			fprintf( stderr , "gnGrpWrite error: %s\n" , gnGrpStrerror( & graph ) );
+			fprintf( stderr , "dglWrite error: %s\n" , dglStrerror( & graph ) );
 			return 1;
 		}
 		close( fd );
 		printf( "Done.\n" );
 	}
 
-	gnGrpRelease( & graph );
+	dglRelease( & graph );
 	return 0;
 }

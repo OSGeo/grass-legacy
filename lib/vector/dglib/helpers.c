@@ -26,12 +26,13 @@
 
 #include "type.h"
 #include "tree.h"
+#include "graph.h"
 #include "helpers.h"
 
 /*
  * helpers for parametric stack
  */
-unsigned char * gngrp_mempush( unsigned char * pstack , long * istack , long size , void * pv )
+unsigned char * dgl_mempush( unsigned char * pstack , long * istack , long size , void * pv )
 {
 	if ( *istack == 0 ) pstack = NULL;
 	pstack = realloc( pstack , size * (1 + *istack) );
@@ -41,50 +42,113 @@ unsigned char * gngrp_mempush( unsigned char * pstack , long * istack , long siz
 	return pstack;
 }
 
-unsigned char * gngrp_mempop( unsigned char * pstack , long * istack , long size )
+unsigned char * dgl_mempop( unsigned char * pstack , long * istack , long size )
 {
 	if ( *istack == 0 ) return NULL;
 	return & pstack[ size * (--(*istack)) ];
 }
 
-void gngrp_swapInt32Bytes( gnInt32_t * pn ) {
+void dgl_swapInt32Bytes( dglInt32_t * pn ) {
 	unsigned char * pb = (unsigned char *) pn;
 	pb[0] ^= pb[3];
 	pb[3] ^= pb[0];
 	pb[0] ^= pb[3];
+
 	pb[1] ^= pb[2];
 	pb[2] ^= pb[1];
 	pb[1] ^= pb[2];
 }	
 
+void dgl_swapInt64Bytes( dglInt64_t * pn ) {
+	unsigned char * pb = (unsigned char *) pn;
+	pb[0] ^= pb[7];
+	pb[7] ^= pb[0];
+	pb[0] ^= pb[7];
 
-int gngrp_node_free( gnTreeNode_s * pnode , void * pv )
+	pb[1] ^= pb[6];
+	pb[6] ^= pb[1];
+	pb[1] ^= pb[6];
+
+	pb[2] ^= pb[5];
+	pb[5] ^= pb[2];
+	pb[2] ^= pb[5];
+
+	pb[3] ^= pb[4];
+	pb[4] ^= pb[3];
+	pb[3] ^= pb[4];
+}	
+
+/*
+ * Keep the edge cost prioritizer in sync
+ */
+int dgl_edge_prioritizer_del(dglGraph_s * pG, dglInt32_t nId, dglInt32_t nPriId)
 {
-	if ( pnode ) {
-		if ( pnode->data.pv ) {
-			free( pnode->data.pv );
+	dglTreeEdgePri32_s findPriItem, * pPriItem;
+	register int iEdge1, iEdge2;
+	dglInt32_t * pnNew;
+
+	if (pG->edgePrioritizer.pvAVL) {
+
+		findPriItem.nKey = nPriId;
+		pPriItem = avl_find(pG->edgePrioritizer.pvAVL, &findPriItem);
+
+		if ( pPriItem && pPriItem->pnData ) {
+
+			pnNew = malloc( sizeof(dglInt32_t) * pPriItem->cnData );
+
+			if ( pnNew == NULL ) {
+				pG->iErrno = DGL_ERR_MemoryExhausted;
+				return -pG->iErrno;
+			}
+
+			for (iEdge1 = 0, iEdge2 = 0 ; iEdge2 < pPriItem->cnData ; iEdge2 ++) {
+				if (pPriItem->pnData[iEdge2] != nId) {
+					pnNew[iEdge1++] = pPriItem->pnData[iEdge2];
+				}
+			}
+
+			free(pPriItem->pnData);
+			if ( iEdge1 == 0) {
+				free(pnNew);
+				pPriItem->pnData = NULL;
+				pPriItem->cnData = 0;
+			}
+			else {
+				pPriItem->pnData = pnNew;
+				pPriItem->cnData = iEdge1;
+			}
 		}
-		if ( pnode->data2.pv ) {
-			free( pnode->data2.pv );
-		}
-		free( pnode );
 	}
 	return 0;
 }
 
-gnTreeNode_s * gngrp__node( gnTreeNode_s * ptree , gnInt32_t nodeid )
+int dgl_edge_prioritizer_add(dglGraph_s * pG, dglInt32_t nId, dglInt32_t nPriId)
 {
-	gnTreeNode_s * pnode , * pnoderet;
+	dglTreeEdgePri32_s * pPriItem;
 
-	if ( (pnode = gnTreeNewNode( nodeid , (gnTreeData_u)0 , (gnTreeData_u)0 )) == NULL ) return NULL;
-
-	pnoderet = gnTreeInsert( ptree , pnode );
-
-	if ( pnoderet != pnode ) {
-		free( pnode );
-		pnode = pnoderet;
+	if ( pG->edgePrioritizer.pvAVL == NULL ) {
+		pG->edgePrioritizer.pvAVL = avl_create( dglTreeEdgePri32Compare, NULL, dglTreeGetAllocator() );
+		if ( pG->edgePrioritizer.pvAVL == NULL ) {
+			pG->iErrno = DGL_ERR_MemoryExhausted;
+			return -pG->iErrno;
+		}
 	}
-
-	return pnode;
+	pPriItem = dglTreeEdgePri32Add(pG->edgePrioritizer.pvAVL, nPriId);
+	if (pPriItem == NULL) {
+		pG->iErrno = DGL_ERR_MemoryExhausted;
+		return -pG->iErrno;
+	}
+	if (pPriItem->cnData == 0) {
+		pPriItem->pnData = (dglInt32_t*) malloc( sizeof(dglInt32_t) );
+	}
+	else {
+		pPriItem->pnData = (dglInt32_t*) realloc( pPriItem->pnData , sizeof(dglInt32_t) * (pPriItem->cnData + 1) );
+	}
+	if ( pPriItem->pnData == NULL ) {
+		pG->iErrno = DGL_ERR_MemoryExhausted;
+		return -pG->iErrno;
+	}
+	pPriItem->pnData[ pPriItem->cnData ] = nId;
+	pPriItem->cnData++;
+	return 0;
 }
-

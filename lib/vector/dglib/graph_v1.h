@@ -20,10 +20,10 @@
  * best view tabstop=4
  */
 
-#ifndef _GN_GRAPH_V1_H_
-#define _GN_GRAPH_V1_H_
+#ifndef _DGL_GRAPH_V1_H_
+#define _DGL_GRAPH_V1_H_
 
-#ifdef GNGRP_STATS
+#ifdef DGL_STATS
 #include <time.h>
 #endif
 
@@ -32,130 +32,241 @@ __BEGIN_DECLS
 /*
  * Node macros - addresses in a flat node
  */
-#define GNGRP_IN_NODEID_v1					0
-#define GNGRP_IN_STATUS_v1 					1
-#define GNGRP_IN_TO_OFFSET_v1 				2
-#define GNGRP_IN_ATTR_v1					3
-#define GNGRP_IN_SIZE_v1					GNGRP_IN_ATTR_v1
+#define DGL_IN_NODEID_v1		0
+#define DGL_IN_STATUS_v1 		1
+#define DGL_IN_TAIL_OFFSET_v1 	2
+#define DGL_IN_ATTR_v1			3
+#define DGL_IN_SIZE_v1			DGL_IN_ATTR_v1
 
-#define GNGRP_NODE_SIZEOF_v1( nattr  ) 	 	(sizeof( gnInt32_t ) * GNGRP_IN_SIZE_v1 + (nattr) )
-#define GNGRP_NODE_WSIZE_v1( nattr )		(GNGRP_NODE_SIZEOF_v1( nattr ) / sizeof(gnInt32_t) )
-#define GNGRP_NODE_ALLOC_v1( nattr )   		(malloc( GNGRP_NODE_SIZEOF_v1( nattr ) ) )
+#define DGL_NODE_SIZEOF_v1( nattr  ) 	(sizeof( dglInt32_t ) * DGL_IN_SIZE_v1 + (nattr) )
+#define DGL_NODE_WSIZE_v1( nattr )		(DGL_NODE_SIZEOF_v1( nattr ) / sizeof(dglInt32_t) )
+#define DGL_NODE_ALLOC_v1( nattr )  	(malloc( DGL_NODE_SIZEOF_v1( nattr ) ) )
 
-#define GNGRP_NODE_ID_v1(p)					((p)[GNGRP_IN_NODEID_v1])
-#define GNGRP_NODE_STATUS_v1(p)				((p)[GNGRP_IN_STATUS_v1])
-#define GNGRP_NODE_LINKAREA_OFFSET_v1(p)		((p)[GNGRP_IN_TO_OFFSET_v1])
-#define GNGRP_NODE_ATTR_PTR_v1(p)				((p) + GNGRP_IN_ATTR_v1)
-
-/*
- * LinkArea macros - addresses in a flat link-area
- */
-#define GNGRP_ILA_TOCNT_v1						0
-#define GNGRP_ILA_SIZE_v1						1
-#define GNGRP_ILA_TOARR_v1						GNGRP_ILA_SIZE_v1
-
-#define GNGRP_LINKAREA_SIZEOF_v1(C, lattr)  	(sizeof( gnInt32_t ) * (GNGRP_ILA_SIZE_v1) + GNGRP_LINK_SIZEOF_v1(lattr) * (C))
-#define GNGRP_LINKAREA_WSIZE_v1(C, lattr)		(GNGRP_LINKAREA_SIZEOF_v1(C, lattr) / sizeof(gnInt32_t)))
-#define GNGRP_LINKAREA_ALLOC_v1(C, lattr)   	(malloc(GNGRP_LINKAREA_SIZEOF_v1(C, lattr)))
-#define GNGRP_LINKAREA_REALLOC_v1(P, C, lattr)	(realloc(P , GNGRP_LINKAREA_SIZEOF_v1(C, lattr)))
-
-#define GNGRP_LINKAREA_LINKCOUNT_v1(p)			((p)[GNGRP_ILA_TOCNT_v1])
-#define GNGRP_LINKAREA_LINKARRAY_PTR_v1(p)		((p) + GNGRP_ILA_TOARR_v1)
-#define GNGRP_LINKAREA_LINK_PTR_v1(p,i,C)		(((p) + GNGRP_ILA_TOARR_v1) + (i) * GNGRP_LINK_WSIZE_v1(C))
-#define GNGRP_LINKAREA_BUFFER_OFFSET_v1(pgrp,pla)	((gnInt32_t)pla - (gnInt32_t)(pgrp)->pLinkBuffer)
+#define DGL_NODE_ID_v1(p)				((p)[DGL_IN_NODEID_v1])
+#define DGL_NODE_STATUS_v1(p)			((p)[DGL_IN_STATUS_v1])
+#define DGL_NODE_EDGESET_OFFSET_v1(p)	((p)[DGL_IN_TAIL_OFFSET_v1])
+#define DGL_NODE_ATTR_PTR_v1(p)			((p) + DGL_IN_ATTR_v1)
 
 /*
- * Link macros - addresses in a flat link
+ * Edgeset macros - addresses in a flat edge-area
  */
-#define GNGRP_IL_TO_OFFSET_v1					0
-#define GNGRP_IL_COST_v1						1
-#define GNGRP_IL_USER_v1						2
-#define GNGRP_IL_ATTR_v1						3
-#define GNGRP_IL_SIZE_v1						GNGRP_IL_ATTR_v1
+#define DGL_ILA_TOCNT_v1	0
+#define DGL_ILA_SIZE_v1		1
+#define DGL_ILA_TOARR_v1	DGL_ILA_SIZE_v1
 
-#define GNGRP_LINK_SIZEOF_v1( lattr ) 			(sizeof( gnInt32_t ) * GNGRP_IL_SIZE_v1 + (lattr))
-#define GNGRP_LINK_WSIZE_v1( lattr ) 			(GNGRP_LINK_SIZEOF_v1( lattr ) / sizeof( gnInt32_t ))
-#define GNGRP_LINK_ALLOC_v1( lattr )  			(malloc( GNGRP_LINK_SIZEOF_v1( lattr ) ))
+#define DGL_EDGESET_SIZEOF_v1(C, lattr)  	(sizeof( dglInt32_t ) * (DGL_ILA_SIZE_v1) + DGL_EDGE_SIZEOF_v1(lattr) * (C))
+#define DGL_EDGESET_WSIZE_v1(C, lattr)		(DGL_EDGESET_SIZEOF_v1(C, lattr) / sizeof(dglInt32_t))
+#define DGL_EDGESET_ALLOC_v1(C, lattr)   	(malloc(DGL_EDGESET_SIZEOF_v1(C, lattr)))
+#define DGL_EDGESET_REALLOC_v1(P, C, lattr)	(realloc(P , DGL_EDGESET_SIZEOF_v1(C, lattr)))
 
-#define GNGRP_LINK_TONODE_OFFSET_v1(p)			((p)[GNGRP_IL_TO_OFFSET_v1])
-#define GNGRP_LINK_COST_v1(p)					((p)[GNGRP_IL_COST_v1])
-#define GNGRP_LINK_USER_v1(p)					((p)[GNGRP_IL_USER_v1])
-#define GNGRP_LINK_ATTR_PTR_v1(p)				((p) + GNGRP_IL_ATTR_v1)
-#define GNGRP_LINK_TONODE_ID_v1(pgrp,pl)		((pgrp->Flags&1)?\
-												GNGRP_NODE_ID_v1(pgrp->pNodeBuffer+GNGRP_LINK_TONODE_OFFSET_v1(pl)):\
-												GNGRP_LINK_TONODE_OFFSET_v1(pl))
+#define DGL_EDGESET_EDGECOUNT_v1(p)			((p)[DGL_ILA_TOCNT_v1])
+#define DGL_EDGESET_EDGEARRAY_PTR_v1(p)		((p) + DGL_ILA_TOARR_v1)
+#define DGL_EDGESET_EDGE_PTR_v1(p,i,C)		(((p) + DGL_ILA_TOARR_v1) + (i) * DGL_EDGE_WSIZE_v1(C))
+
+/*
+ * Edge macros - addresses in a flat edge
+ */
+#define DGL_IL_HEAD_OFFSET_v1	0
+#define DGL_IL_TAIL_OFFSET_v1	1
+#define DGL_IL_COST_v1			2
+#define DGL_IL_ID_v1			3
+#define DGL_IL_ATTR_v1			4
+#define DGL_IL_SIZE_v1			DGL_IL_ATTR_v1
+
+#define DGL_EDGE_SIZEOF_v1( lattr ) 	(sizeof( dglInt32_t ) * DGL_IL_SIZE_v1 + (lattr))
+#define DGL_EDGE_WSIZE_v1( lattr ) 		(DGL_EDGE_SIZEOF_v1( lattr ) / sizeof( dglInt32_t ))
+#define DGL_EDGE_ALLOC_v1( lattr )  	(malloc( DGL_EDGE_SIZEOF_v1( lattr ) ))
+
+#define DGL_EDGE_HEADNODE_OFFSET_v1(p)		((p)[DGL_IL_HEAD_OFFSET_v1])
+#define DGL_EDGE_TAILNODE_OFFSET_v1(p)		((p)[DGL_IL_TAIL_OFFSET_v1])
+#define DGL_EDGE_COST_v1(p)					((p)[DGL_IL_COST_v1])
+#define DGL_EDGE_ID_v1(p)					((p)[DGL_IL_ID_v1])
+#define DGL_EDGE_ATTR_PTR_v1(p)				((p) + DGL_IL_ATTR_v1)
+#define DGL_EDGE_HEADNODE_ID_v1(pgrp,pl)	((pgrp->Flags&1)?\
+												DGL_NODE_ID_v1(pgrp->pNodeBuffer+DGL_EDGE_HEADNODE_OFFSET_v1(pl)):\
+												DGL_EDGE_HEADNODE_OFFSET_v1(pl))
+#define DGL_EDGE_TAILNODE_ID_v1(pgrp,pl)	((pgrp->Flags&1)?\
+												DGL_NODE_ID_v1(pgrp->pNodeBuffer+DGL_EDGE_TAILNODE_OFFSET_v1(pl)):\
+												DGL_EDGE_TAILNODE_OFFSET_v1(pl))
 
 /*
  * Scan a node buffer
  */
-#define GNGRP_FOREACH_NODE_v1(pgrp,pn)			for((pn)=(gnInt32_t*)(pgrp)->pNodeBuffer;\
-												(pn)<(gnInt32_t*)((pgrp)->pNodeBuffer+(pgrp)->iNodeBuffer);\
-												(pn)+=GNGRP_NODE_WSIZE_v1((pgrp)->NodeAttrSize))
+#define DGL_FOREACH_NODE_v1(pgrp,pn)	for((pn)=(dglInt32_t*)(pgrp)->pNodeBuffer;\
+											(pgrp)->pNodeBuffer && (pn)<(dglInt32_t*)((pgrp)->pNodeBuffer+(pgrp)->iNodeBuffer);\
+											(pn)+=DGL_NODE_WSIZE_v1((pgrp)->NodeAttrSize))
 /*
- * Scan a linkarea
+ * Scan a edgeset
  */
-#define GNGRP_FOREACH_LINK_v1(pgrp,pla,pl)		for((pl)=GNGRP_LINKAREA_LINKARRAY_PTR_v1(pla);\
-												(pl)<(pla)+GNGRP_LINK_WSIZE_v1((pgrp)->LinkAttrSize)*GNGRP_LINKAREA_LINKCOUNT_v1(pla);\
-												(pl)+=GNGRP_LINK_WSIZE_v1((pgrp)->LinkAttrSize))
+#define DGL_FOREACH_EDGE_v1(pgrp,pla,pl)	for((pl)=DGL_EDGESET_EDGEARRAY_PTR_v1(pla);\
+												(pl)<(pla)+DGL_EDGE_WSIZE_v1((pgrp)->EdgeAttrSize)*DGL_EDGESET_EDGECOUNT_v1(pla);\
+												(pl)+=DGL_EDGE_WSIZE_v1((pgrp)->EdgeAttrSize))
 /*
  * Node Buffer Utilities
  */
-#define GNGRP_NODEBUFFER_SHIFT_v1(pgrp,o)		((gnInt32_t*)((pgrp)->pNodeBuffer + (o)))
-#define GNGRP_NODEBUFFER_OFFSET_v1(pgrp,p)		((gnInt32_t)p - (gnInt32_t)(pgrp)->pNodeBuffer)
+#define DGL_NODEBUFFER_SHIFT_v1(pgrp,o)		((dglInt32_t*)((pgrp)->pNodeBuffer + (o)))
+#define DGL_NODEBUFFER_OFFSET_v1(pgrp,p)	((dglInt32_t)p - (dglInt32_t)(pgrp)->pNodeBuffer)
 
 /*
- * Link Buffer Utilities
+ * Edge Buffer Utilities
  */
-#define GNGRP_LINKBUFFER_SHIFT_v1(pgrp,o)		((gnInt32_t*)((pgrp)->pLinkBuffer + (o)))
-#define GNGRP_LINKBUFFER_OFFSET_v1(pgrp,pl)		((gnInt32_t)pl - (gnInt32_t)(pgrp)->pLinkBuffer)
+#define DGL_EDGEBUFFER_SHIFT_v1(pgrp,o)		((dglInt32_t*)((pgrp)->pEdgeBuffer + (o)))
+#define DGL_EDGEBUFFER_OFFSET_v1(pgrp,pl)	((dglInt32_t)pl - (dglInt32_t)(pgrp)->pEdgeBuffer)
 
 
 
 
-int 		gngrp_add_node_V1(
-			gnGrpGraph_s *  pgraph,
-			gnInt32_t       lNodeId,
-			void * 			pvNodeAttr,	
-			gnInt32_t 		nFlags
+int dgl_add_edge_V1 (
+			dglGraph_s * 	pgraph ,
+			dglInt32_t 		nHead,
+			dglInt32_t 		nTail,
+			dglInt32_t 		nCost,
+			dglInt32_t 		nEdge,
+			void * pvHeadAttr ,	
+			void * pvTailAttr ,	
+			void * pvEdgeAttr ,
+			dglInt32_t 		nFlags
 			);
-int 		gngrp_add_link_V1 (
-			gnGrpGraph_s * 	pgraph ,
-			gnInt32_t 		lFrom,
-			gnInt32_t 		lTo,
-			gnInt32_t 		lCost,
-			gnInt32_t 		lUser,
-			void * pvFnodeAttr ,	
-			void * pvTnodeAttr ,	
-			void * pvLinkAttr ,
-			gnInt32_t 		nFlags
-			);
-gnInt32_t * gngrp_get_node_V1( gnGrpGraph_s * pgraph , gnInt32_t nodeid );
-gnInt32_t * gngrp_getnode_outlinkarea_V1( gnGrpGraph_s * pgraph , gnInt32_t * pnode );
-int 		gngrp_unflatten_V1( gnGrpGraph_s * pgraph );
-int 		gngrp_flatten_V1( gnGrpGraph_s * pgraph );
-int			gngrp_dijkstra_V1	(
-			gnGrpGraph_s * 		pgraph ,
-			gnGrpSPReport_s **	ppReport ,
-			gnInt32_t *			pDistance ,
-			gnInt32_t 			from ,
-			gnInt32_t 			to ,
-			gnGrpSPClip_fn		fnClip,
-			void * 				pvClipArg,
-			gnGrpSPCache_s *	pCache
-			);
-int 		gngrp_depthfirst_spanning_V1(
-			gnGrpGraph_s * pgraphIn ,
-			gnGrpGraph_s * pgraphOut ,
-			gnInt32_t nNodeId ,
-			void * pvVisited ,
-			gnGrpSpanClip_fn	fnClip ,
-			void *				pvClipArg
-			);
-int 		gngrp_release_V1( gnGrpGraph_s * pgraph );
-int 		gngrp_write_V1( gnGrpGraph_s * pgraph , int fd );
-int 		gngrp_read_V1( gnGrpGraph_s * pgraph , int fd );
-int 		gngrp_initialize_sp_cache_V1( gnGrpGraph_s * pgraph, gnGrpSPCache_s * pCache, gnInt32_t nFromNode );
-void 		gngrp_release_sp_cache_V1( gnGrpGraph_s * pgraph, gnGrpSPCache_s * pCache );
+
+int dgl_unflatten_V1( dglGraph_s * pgraph );
+int dgl_flatten_V1( dglGraph_s * pgraph );
+int dgl_initialize_V1( dglGraph_s * pgraph );
+int dgl_release_V1( dglGraph_s * pgraph );
+int dgl_write_V1( dglGraph_s * pgraph , int fd );
+int dgl_read_V1( dglGraph_s * pgraph , int fd );
+
+
+int dgl_sp_cache_initialize_V1( dglGraph_s * pgraph, dglSPCache_s * pCache, dglInt32_t nStart );
+void dgl_sp_cache_release_V1( dglGraph_s * pgraph, dglSPCache_s * pCache );
+
+int dgl_dijkstra_V1_TREE	(
+						dglGraph_s * 		pgraph ,
+						dglSPReport_s **	ppReport ,
+						dglInt32_t *			pDistance ,
+						dglInt32_t 			nStart ,
+						dglInt32_t 			nDestination ,
+						dglSPClip_fn		fnClip,
+						void * 				pvClipArg,
+						dglSPCache_s * 	pCache
+						);
+int dgl_dijkstra_V1_FLAT	(
+						dglGraph_s * 		pgraph ,
+						dglSPReport_s **	ppReport ,
+						dglInt32_t *			pDistance ,
+						dglInt32_t 			nStart ,
+						dglInt32_t 			nDestination ,
+						dglSPClip_fn		fnClip,
+						void * 				pvClipArg,
+						dglSPCache_s * 	pCache
+						);
+int dgl_dijkstra_V1	(
+						dglGraph_s * 		pgraph ,
+						dglSPReport_s **	ppReport ,
+						dglInt32_t *			pDistance ,
+						dglInt32_t 			nStart ,
+						dglInt32_t 			nDestination ,
+						dglSPClip_fn		fnClip,
+						void * 				pvClipArg,
+						dglSPCache_s * 	pCache
+						);
+
+
+int dgl_span_depthfirst_spanning_V1_TREE(
+						dglGraph_s * pgraphIn ,
+						dglGraph_s * pgraphOut ,
+						dglInt32_t nVertex ,
+						void * pvVisited ,
+						dglSpanClip_fn	fnClip ,
+						void *				pvClipArg
+						);
+int dgl_span_depthfirst_spanning_V1_FLAT(
+						dglGraph_s * pgraphIn ,
+						dglGraph_s * pgraphOut ,
+						dglInt32_t nVertex ,
+						void * pvVisited ,
+						dglSpanClip_fn	fnClip ,
+						void *				pvClipArg
+						);
+int dgl_depthfirst_spanning_V1(
+						dglGraph_s * pgraphIn ,
+						dglGraph_s * pgraphOut ,
+						dglInt32_t nVertex ,
+						void * pvVisited ,
+						dglSpanClip_fn	fnClip ,
+						void *				pvClipArg
+						);
+
+
+int dgl_span_minimum_spanning_V1_TREE(
+						dglGraph_s * pgraphIn ,
+						dglGraph_s * pgraphOut ,
+						dglInt32_t nVertex ,
+						dglSpanClip_fn	fnClip ,
+						void *				pvClipArg
+						);
+int dgl_span_minimum_spanning_V1_FLAT(
+						dglGraph_s * pgraphIn ,
+						dglGraph_s * pgraphOut ,
+						dglInt32_t nVertex ,
+						dglSpanClip_fn	fnClip ,
+						void *				pvClipArg
+						);
+int dgl_minimum_spanning_V1(
+						dglGraph_s * pgraphIn ,
+						dglGraph_s * pgraphOut ,
+						dglInt32_t nVertex ,
+						dglSpanClip_fn	fnClip ,
+						void *				pvClipArg
+						);
+
+
+int dgl_add_node_V1(
+						dglGraph_s *  pgraph,
+						dglInt32_t       nId,
+						void * 			pvNodeAttr,	
+						dglInt32_t 		nFlags
+					);
+int dgl_del_node_V1(
+						dglGraph_s *  pgraph,
+						dglInt32_t       nId
+					);
+dglInt32_t * dgl_get_node_V1( dglGraph_s * pgraph , dglInt32_t nId );
+
+dglInt32_t * dgl_get_edge_V1( dglGraph_s * pgraph , dglInt32_t nId );
+int dgl_del_edge_V1( dglGraph_s * pgraph , dglInt32_t nId );
+
+dglInt32_t * dgl_getnode_outedgeset_V1( dglGraph_s * pgraph , dglInt32_t * pnode );
+
+/*
+ * Node Traversing
+ */
+int			dgl_node_t_initialize_V1( dglGraph_s * pGraph, dglNodeTraverser_s * pT );
+void		dgl_node_t_release_V1( dglNodeTraverser_s * pT );
+dglInt32_t * dgl_node_t_first_V1( dglNodeTraverser_s * pT );
+dglInt32_t * dgl_node_t_next_V1( dglNodeTraverser_s * pT );
+dglInt32_t * dgl_node_t_find_V1( dglNodeTraverser_s * pT , dglInt32_t nId );
+
+
+/*
+ * Edgeset Traversing
+ */
+int			dgl_edgeset_t_initialize_V1	(
+										dglGraph_s * pGraph ,
+										dglEdgesetTraverser_s * pTraverser ,
+										dglInt32_t * pnEdgeset
+										);
+void		dgl_edgeset_t_release_V1	( dglEdgesetTraverser_s * pTraverser );
+dglInt32_t *	dgl_edgeset_t_first_V1	( dglEdgesetTraverser_s * pTraverser );
+dglInt32_t *	dgl_edgeset_t_next_V1	( dglEdgesetTraverser_s * pTraverser );
+
+
+int 		dgl_edge_t_initialize_V1	( dglGraph_s * pGraph , dglEdgeTraverser_s * pTraverser , dglEdgePrioritizer_s * pEP );
+void 		dgl_edge_t_release_V1		( dglEdgeTraverser_s * pTraverser );
+dglInt32_t * dgl_edge_t_first_V1		( dglEdgeTraverser_s * pT );
+dglInt32_t * dgl_edge_t_next_V1		( dglEdgeTraverser_s * pT );
+
+
+
 
 __END_DECLS
 #endif

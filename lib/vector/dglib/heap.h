@@ -19,12 +19,12 @@
 /* best view tabstop=4
  */
 
-#ifndef _GN_HEAP_H_
-#define _GN_HEAP_H_
+#ifndef _DGL_HEAP_H_
+#define _DGL_HEAP_H_
 
 __BEGIN_DECLS
 
-typedef union _gnHeapData
+typedef union _dglHeapData
 {
 	void * 			pv;
 	int				n;
@@ -32,53 +32,59 @@ typedef union _gnHeapData
 	long			l;
 	unsigned long 	ul;
 
-} gnHeapData_u;
+} dglHeapData_u;
 
 
-typedef struct _gnHeapNode
+typedef struct _dglHeapNode
 {
 	long 			key;
-	gnHeapData_u 	value;
+	dglHeapData_u 	value;
+	unsigned char	flags;
 
-} gnHeapNode_s;
+} dglHeapNode_s;
 
-typedef struct _gnHeap {
+typedef struct _dglHeap {
 
 	long				index; /* last node / number of current nodes (complete-binary-tree array representation ...) */
 	long				count; /* number of allocated nodes in ->pnode array */
 	long				block; /* allocation block size expressed in number of nodes */
-	gnHeapNode_s * 		pnode; /* the node-array */
+	dglHeapNode_s * 	pnode; /* the node-array */
 
-} gnHeap_s;
+} dglHeap_s;
 
-extern void	gnHeapInit		(
-							gnHeap_s * 		pheap
+extern void	dglHeapInit		(
+							dglHeap_s * 		pheap
 							);
 
-extern void	gnHeapFree		(
-							gnHeap_s * 		pheap
+
+typedef void (*dglHeapCancelItem_fn)(dglHeap_s * pheap, dglHeapNode_s * pitem);
+extern void	dglHeapFree		(
+							dglHeap_s * 		pheap,
+							dglHeapCancelItem_fn pfnCancelItem
 							);
 
-extern int 	gnHeapInsertMax	(
-							gnHeap_s * 		pheap ,
+extern int 	dglHeapInsertMax	(
+							dglHeap_s *		pheap ,
 							long 			key ,
-							gnHeapData_u 	value
+							unsigned char	flags ,
+							dglHeapData_u 	value
 							);
 
-extern int	gnHeapExtractMax(
-							gnHeap_s * 		pheap,
-							gnHeapNode_s *	pnoderet
+extern int	dglHeapExtractMax(
+							dglHeap_s * 	pheap,
+							dglHeapNode_s *	pnoderet
 							);
 
-extern int 	gnHeapInsertMin	(
-							gnHeap_s * 		pheap ,
+extern int 	dglHeapInsertMin	(
+							dglHeap_s * 	pheap ,
 							long 			key ,
-							gnHeapData_u 	value
+							unsigned char	flags ,
+							dglHeapData_u 	value
 							);
 
-extern int	gnHeapExtractMin(
-							gnHeap_s * 		pheap,
-							gnHeapNode_s *	pnoderet
+extern int	dglHeapExtractMin(
+							dglHeap_s * 	pheap,
+							dglHeapNode_s *	pnoderet
 							);
 
 __END_DECLS

@@ -32,13 +32,13 @@
 #include "type.h"
 #include "tree.h"
 #include "graph.h"
-#include "graph_v1.h"
+#include "graph_v2.h"
 #include "helpers.h"
 
 
 /* Template expansion
  */
-#include "v1-defs.h"
+#include "v2-defs.h"
 #include "sp-template.c"
 #include "nodemgmt-template.c"
 #include "edgemgmt-template.c"
@@ -48,7 +48,7 @@
 /* algorithms for TREE state
  */
 #define DGL_DEFINE_TREE_PROCS 1
-#include "v1-defs.h"
+#include "v2-defs.h"
 #include "sp-template.c"
 #include "span-template.c"
 #undef DGL_DEFINE_TREE_PROCS
@@ -57,14 +57,14 @@
 /* algorithms for FLAT state
 */
 #define DGL_DEFINE_FLAT_PROCS 1
-#include "v1-defs.h"
+#include "v2-defs.h"
 #include "sp-template.c"
 #include "span-template.c"
 #undef DGL_DEFINE_FLAT_PROCS
 
 
 
-int dgl_dijkstra_V1	(
+int dgl_dijkstra_V2	(
 						dglGraph_s * 		pgraph ,
 						dglSPReport_s **	ppReport ,
 						dglInt32_t *			pDistance ,
@@ -76,15 +76,15 @@ int dgl_dijkstra_V1	(
 					)
 {
 	if ( pgraph->Flags & DGL_GS_FLAT ) {
-		return dgl_dijkstra_V1_FLAT(pgraph,ppReport,pDistance,nStart,nDestination,fnClip,pvClipArg,pCache);
+		return dgl_dijkstra_V2_FLAT(pgraph,ppReport,pDistance,nStart,nDestination,fnClip,pvClipArg,pCache);
 	}
 	else {
-		return dgl_dijkstra_V1_TREE(pgraph,ppReport,pDistance,nStart,nDestination,fnClip,pvClipArg,pCache);
+		return dgl_dijkstra_V2_TREE(pgraph,ppReport,pDistance,nStart,nDestination,fnClip,pvClipArg,pCache);
 	}
 }
 
 
-int dgl_depthfirst_spanning_V1(
+int dgl_depthfirst_spanning_V2(
 						dglGraph_s * pgraphIn ,
 						dglGraph_s * pgraphOut ,
 						dglInt32_t nVertex ,
@@ -94,14 +94,14 @@ int dgl_depthfirst_spanning_V1(
 						)
 {
 	if ( pgraphIn->Flags & DGL_GS_FLAT ) {
-		return dgl_span_depthfirst_spanning_V1_FLAT(pgraphIn,pgraphOut,nVertex,pvVisited,fnClip,pvClipArg);
+		return dgl_span_depthfirst_spanning_V2_FLAT(pgraphIn,pgraphOut,nVertex,pvVisited,fnClip,pvClipArg);
 	}
 	else {
-		return dgl_span_depthfirst_spanning_V1_TREE(pgraphIn,pgraphOut,nVertex,pvVisited,fnClip,pvClipArg);
+		return dgl_span_depthfirst_spanning_V2_TREE(pgraphIn,pgraphOut,nVertex,pvVisited,fnClip,pvClipArg);
 	}
 }
 
-int dgl_minimum_spanning_V1(
+int dgl_minimum_spanning_V2(
 						dglGraph_s * pgraphIn ,
                         dglGraph_s * pgraphOut ,
 						dglInt32_t nVertex ,
@@ -110,26 +110,30 @@ int dgl_minimum_spanning_V1(
 						)
 {
 	if ( pgraphIn->Flags & DGL_GS_FLAT ) {
-		return dgl_span_minimum_spanning_V1_FLAT(pgraphIn,pgraphOut,nVertex,fnClip,pvClipArg);
+		return dgl_span_minimum_spanning_V2_FLAT(pgraphIn,pgraphOut,nVertex,fnClip,pvClipArg);
 	}
 	else {
-		return dgl_span_minimum_spanning_V1_TREE(pgraphIn,pgraphOut,nVertex,fnClip,pvClipArg);
+		return dgl_span_minimum_spanning_V2_TREE(pgraphIn,pgraphOut,nVertex,fnClip,pvClipArg);
 	}
 }
 
 
-int dgl_initialize_V1( dglGraph_s * pgraph )
+int dgl_initialize_V2( dglGraph_s * pgraph )
 {
-	if ( pgraph->pNodeTree == NULL ) pgraph->pNodeTree = avl_create( dglTreeNodeCompare, NULL, dglTreeGetAllocator() );
+	if ( pgraph->pNodeTree == NULL ) pgraph->pNodeTree = avl_create( dglTreeNode2Compare, NULL, dglTreeGetAllocator() );
 	if ( pgraph->pNodeTree == NULL ) {
 		pgraph->iErrno = DGL_ERR_MemoryExhausted;
 		return -pgraph->iErrno;
 	}
-	pgraph->pEdgeTree = NULL;
+	if ( pgraph->pEdgeTree == NULL ) pgraph->pEdgeTree = avl_create( dglTreeEdgeCompare, NULL, dglTreeGetAllocator() );
+	if ( pgraph->pEdgeTree == NULL ) {
+		pgraph->iErrno = DGL_ERR_MemoryExhausted;
+		return -pgraph->iErrno;
+	}
 	return 0;
 }
 
-int dgl_release_V1( dglGraph_s * pgraph )
+int dgl_release_V2( dglGraph_s * pgraph )
 {
 	pgraph->iErrno = 0;
 
@@ -144,7 +148,7 @@ int dgl_release_V1( dglGraph_s * pgraph )
 }
 
 
-int dgl_write_V1( dglGraph_s * pgraph , int fd )
+int dgl_write_V2( dglGraph_s * pgraph , int fd )
 {
 	long nret , cnt , tot;	
 
@@ -253,7 +257,7 @@ int dgl_write_V1( dglGraph_s * pgraph , int fd )
 }
 
 
-int dgl_read_V1( dglGraph_s * pgraph , int fd )
+int dgl_read_V2( dglGraph_s * pgraph , int fd , int version )
 {
 	long 		nret , cnt , tot;	
 	dglByte_t 	Endian;
@@ -288,7 +292,7 @@ int dgl_read_V1( dglGraph_s * pgraph , int fd )
 	}
 	if ( fSwap ) dgl_swapInt32Bytes( & EdgeAttrSize );
 
-	if ( (nret = dglInitialize( pgraph, 1, NodeAttrSize, EdgeAttrSize, NULL )) < 0 )
+	if ( (nret = dglInitialize( pgraph, version, NodeAttrSize, EdgeAttrSize, NULL )) < 0 )
 	{
 		return nret;
 	}

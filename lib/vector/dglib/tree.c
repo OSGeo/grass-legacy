@@ -22,17 +22,315 @@
 #include <string.h>
 #include <malloc.h>
 
-#include "avl.h"
 #include "type.h"
 #include "tree.h"
 
-typedef struct {
-	struct avl_table * pbst;
-	int (* pfnNodeCancel )( gnTreeNode_s * , void * );
-	void * pvNodeCancel;
-} gnTree_s;
+/*
+ * AVL Support for data type dglTreeNode_s
+ * alloc
+ * cancel
+ * compare
+ * add
+ */
+dglTreeNode_s * dglTreeNodeAlloc()
+{
+	dglTreeNode_s * pNode = (dglTreeNode_s*)malloc( sizeof(dglTreeNode_s) );
+	if ( pNode ) memset( pNode, 0, sizeof(dglTreeNode_s) );
+	return pNode;
+}
+
+void dglTreeNodeCancel( void * pvNode , void * pvParam )
+{
+	if ( ((dglTreeNode_s *)pvNode)->pv  ) free( ((dglTreeNode_s *)pvNode)->pv  );
+	if ( ((dglTreeNode_s *)pvNode)->pv2 ) free( ((dglTreeNode_s *)pvNode)->pv2 );
+	free( pvNode );
+}
+
+int dglTreeNodeCompare( const void * pvNodeA , const void * pvNodeB , void * pvParam )
+{
+	if ( ((dglTreeNode_s *)pvNodeA)->nKey < ((dglTreeNode_s *)pvNodeB)->nKey ) return -1;
+	else if ( ((dglTreeNode_s *)pvNodeA)->nKey > ((dglTreeNode_s *)pvNodeB)->nKey ) return 1;
+	else return 0;
+}
+
+dglTreeNode_s * dglTreeNodeAdd( void * pavl, dglInt32_t nKey )
+{
+	dglTreeNode_s * pnode;
+	void **ppvret;
+	if ( (pnode = dglTreeNodeAlloc()) == NULL ) return NULL;
+	pnode->nKey = nKey;
+	ppvret = avl_probe( pavl , pnode );
+	if ( *ppvret != pnode ) {
+		free( pnode );
+		pnode = *ppvret;
+	}
+	return pnode;
+}
 
 
+/*
+ * AVL Support for data type dglTreeNode2_s
+ * alloc
+ * cancel
+ * compare
+ * add
+ */
+dglTreeNode2_s * dglTreeNode2Alloc()
+{
+	dglTreeNode2_s * pNode2 = (dglTreeNode2_s*)malloc( sizeof(dglTreeNode2_s) );
+	if ( pNode2 ) memset( pNode2, 0, sizeof(dglTreeNode2_s) );
+	return pNode2;
+}
+
+void dglTreeNode2Cancel( void * pvNode2 , void * pvParam )
+{
+	if ( ((dglTreeNode2_s *)pvNode2)->pv  ) free( ((dglTreeNode2_s *)pvNode2)->pv  );
+	if ( ((dglTreeNode2_s *)pvNode2)->pv2 ) free( ((dglTreeNode2_s *)pvNode2)->pv2 );
+	if ( ((dglTreeNode2_s *)pvNode2)->pv3 ) free( ((dglTreeNode2_s *)pvNode2)->pv3 );
+	free( pvNode2 );
+}
+
+int dglTreeNode2Compare( const void * pvNode2A , const void * pvNode2B , void * pvParam )
+{
+	if ( ((dglTreeNode2_s *)pvNode2A)->nKey < ((dglTreeNode2_s *)pvNode2B)->nKey ) return -1;
+	else if ( ((dglTreeNode2_s *)pvNode2A)->nKey > ((dglTreeNode2_s *)pvNode2B)->nKey ) return 1;
+	else return 0;
+}
+
+dglTreeNode2_s * dglTreeNode2Add( void * pavl, dglInt32_t nKey )
+{
+	dglTreeNode2_s * pnode;
+	void **ppvret;
+	if ( (pnode = dglTreeNode2Alloc()) == NULL ) return NULL;
+	pnode->nKey = nKey;
+	ppvret = avl_probe( pavl , pnode );
+	if ( *ppvret != pnode ) {
+		free( pnode );
+		pnode = *ppvret;
+	}
+	return pnode;
+}
+
+
+/*
+ * AVL Support for data type dglTreeEdge_s
+ * alloc
+ * cancel
+ * compare
+ * add
+ */
+dglTreeEdge_s * dglTreeEdgeAlloc()
+{
+	dglTreeEdge_s * pEdge = (dglTreeEdge_s*)malloc( sizeof(dglTreeEdge_s) );
+	if ( pEdge ) memset( pEdge, 0, sizeof(dglTreeEdge_s) );
+	return pEdge;
+}
+
+void dglTreeEdgeCancel( void * pvEdge , void * pvParam )
+{
+	if ( ((dglTreeEdge_s *)pvEdge)->pv  ) free( ((dglTreeEdge_s *)pvEdge)->pv  );
+	free( pvEdge );
+}
+
+int dglTreeEdgeCompare( const void * pvEdgeA , const void * pvEdgeB , void * pvParam )
+{
+	if ( ((dglTreeEdge_s *)pvEdgeA)->nKey < ((dglTreeEdge_s *)pvEdgeB)->nKey ) return -1;
+	else if ( ((dglTreeEdge_s *)pvEdgeA)->nKey > ((dglTreeEdge_s *)pvEdgeB)->nKey ) return 1;
+	else return 0;
+}
+
+dglTreeEdge_s * dglTreeEdgeAdd( void * pavl, dglInt32_t nKey )
+{
+	dglTreeEdge_s * pedge;
+	void **ppvret;
+	if ( (pedge = dglTreeEdgeAlloc()) == NULL ) return NULL;
+	pedge->nKey = nKey;
+	ppvret = avl_probe( pavl , pedge );
+	if ( *ppvret != pedge ) {
+		free( pedge );
+		pedge = *ppvret;
+	}
+	return pedge;
+}
+
+
+
+/*
+ * AVL Support for data type dglTreeTouchI32_s
+ * alloc
+ * cancel
+ * compare
+ * add
+ */
+dglTreeTouchI32_s * dglTreeTouchI32Alloc()
+{
+	dglTreeTouchI32_s * pTouchI32 = (dglTreeTouchI32_s*)malloc( sizeof(dglTreeTouchI32_s) );
+	pTouchI32->nKey = 0;
+	return pTouchI32;
+}
+
+void dglTreeTouchI32Cancel( void * pvTouchI32 , void * pvParam )
+{
+	free( pvTouchI32 );
+}
+
+int dglTreeTouchI32Compare( const void * pvTouchI32A , const void * pvTouchI32B , void * pvParam )
+{
+	if ( ((dglTreeTouchI32_s *)pvTouchI32A)->nKey < ((dglTreeTouchI32_s *)pvTouchI32B)->nKey ) return -1;
+	else if ( ((dglTreeTouchI32_s *)pvTouchI32A)->nKey > ((dglTreeTouchI32_s *)pvTouchI32B)->nKey ) return 1;
+	else return 0;
+}
+
+dglTreeTouchI32_s * dglTreeTouchI32Add( void * pavl, dglInt32_t nKey )
+{
+	dglTreeTouchI32_s * pnode;
+	void **ppvret;
+	if ( (pnode = dglTreeTouchI32Alloc()) == NULL ) return NULL;
+	pnode->nKey = nKey;
+	ppvret = avl_probe( pavl , pnode );
+	if ( *ppvret != pnode ) {
+		free( pnode );
+		pnode = *ppvret;
+	}
+	return pnode;
+}
+
+
+
+/*
+ * AVL Support for data type dglTreePredist_s
+ * alloc
+ * cancel
+ * compare
+ * add
+ */
+dglTreePredist_s * dglTreePredistAlloc()
+{
+	dglTreePredist_s * pPredist = (dglTreePredist_s*)malloc( sizeof(dglTreePredist_s) );
+	if ( pPredist ) memset( pPredist, 0, sizeof(dglTreePredist_s) );
+	return pPredist;
+}
+
+void dglTreePredistCancel( void * pvPredist , void * pvParam )
+{
+	free( pvPredist );
+}
+
+int dglTreePredistCompare( const void * pvPredistA , const void * pvPredistB , void * pvParam )
+{
+	if ( ((dglTreePredist_s *)pvPredistA)->nKey < ((dglTreePredist_s *)pvPredistB)->nKey ) return -1;
+	else if ( ((dglTreePredist_s *)pvPredistA)->nKey > ((dglTreePredist_s *)pvPredistB)->nKey ) return 1;
+	else return 0;
+}
+
+dglTreePredist_s * dglTreePredistAdd( void * pavl, dglInt32_t nKey )
+{
+	dglTreePredist_s * pnode;
+	void **ppvret;
+	if ( (pnode = dglTreePredistAlloc()) == NULL ) return NULL;
+	pnode->nKey = nKey;
+	ppvret = avl_probe( pavl , pnode );
+	if ( *ppvret != pnode ) {
+		free( pnode );
+		pnode = *ppvret;
+	}
+	return pnode;
+}
+
+
+
+
+/*
+ * AVL Support for data type dglTreeNodePri32_s
+ * alloc
+ * cancel
+ * compare
+ * add
+ */
+dglTreeNodePri32_s * dglTreeNodePri32Alloc()
+{
+	dglTreeNodePri32_s * pNodePri32 = (dglTreeNodePri32_s*)malloc( sizeof(dglTreeNodePri32_s) );
+	if ( pNodePri32 ) memset( pNodePri32, 0, sizeof(dglTreeNodePri32_s) );
+	return pNodePri32;
+}
+
+void dglTreeNodePri32Cancel( void * pvNodePri32 , void * pvParam )
+{
+	free( pvNodePri32 );
+}
+
+int dglTreeNodePri32Compare( const void * pvNodePri32A , const void * pvNodePri32B , void * pvParam )
+{
+	if ( ((dglTreeNodePri32_s *)pvNodePri32A)->nKey < ((dglTreeNodePri32_s *)pvNodePri32B)->nKey ) return -1;
+	else if ( ((dglTreeNodePri32_s *)pvNodePri32A)->nKey > ((dglTreeNodePri32_s *)pvNodePri32B)->nKey ) return 1;
+	else return 0;
+}
+
+dglTreeNodePri32_s * dglTreeNodePri32Add( void * pavl, dglInt32_t nKey )
+{
+	dglTreeNodePri32_s * pnode;
+	void **ppvret;
+	if ( (pnode = dglTreeNodePri32Alloc()) == NULL ) return NULL;
+	pnode->nKey = nKey;
+	ppvret = avl_probe( pavl , pnode );
+	if ( *ppvret != pnode ) {
+		free( pnode );
+		pnode = *ppvret;
+	}
+	return pnode;
+}
+
+
+
+/*
+ * AVL Support for data type dglTreeEdgePri32_s
+ * alloc
+ * cancel
+ * compare
+ * add
+ */
+dglTreeEdgePri32_s * dglTreeEdgePri32Alloc()
+{
+	dglTreeEdgePri32_s * pEdgePri32 = (dglTreeEdgePri32_s*)malloc( sizeof(dglTreeEdgePri32_s) );
+	if ( pEdgePri32 ) memset( pEdgePri32, 0, sizeof(dglTreeEdgePri32_s) );
+	return pEdgePri32;
+}
+
+void dglTreeEdgePri32Cancel( void * pvEdgePri32 , void * pvParam )
+{
+	if ( ((dglTreeEdgePri32_s*)pvEdgePri32)->pnData ) {
+		free( ((dglTreeEdgePri32_s*)pvEdgePri32)->pnData );
+	}
+	free( pvEdgePri32 );
+}
+
+int dglTreeEdgePri32Compare( const void * pvEdgePri32A , const void * pvEdgePri32B , void * pvParam )
+{
+	if ( ((dglTreeEdgePri32_s *)pvEdgePri32A)->nKey < ((dglTreeEdgePri32_s *)pvEdgePri32B)->nKey ) return -1;
+	else if ( ((dglTreeEdgePri32_s *)pvEdgePri32A)->nKey > ((dglTreeEdgePri32_s *)pvEdgePri32B)->nKey ) return 1;
+	else return 0;
+}
+
+dglTreeEdgePri32_s * dglTreeEdgePri32Add( void * pavl, dglInt32_t nKey )
+{
+	dglTreeEdgePri32_s * pnode;
+	void **ppvret;
+	if ( (pnode = dglTreeEdgePri32Alloc()) == NULL ) return NULL;
+	pnode->nKey = nKey;
+	ppvret = avl_probe( pavl , pnode );
+	if ( *ppvret != pnode ) {
+		free( pnode );
+		pnode = *ppvret;
+	}
+	return pnode;
+}
+
+
+
+
+/*
+ * Our AVL allocator
+ */
 static void * _tree_malloc(struct libavl_allocator * allocator, size_t libavl_size)
 {
 	return malloc( libavl_size );
@@ -47,194 +345,6 @@ static struct libavl_allocator _tree_allocator = {
 	_tree_malloc , _tree_free
 };
 
-
-/* node item comparison */
-static int _avl_compare(const void * avl_a, const void * avl_b, void * avl_param )
-{
-	gnTreeNode_s * pa = (gnTreeNode_s*)avl_a;
-	gnTreeNode_s * pb = (gnTreeNode_s*)avl_b;
-	if ( pa->key < pb->key ) return -1;
-	if ( pa->key > pb->key ) return 1;
-	return 0;
+void * dglTreeGetAllocator() {
+	return & _tree_allocator;
 }
-
-/* node item cancel */
-static void _avl_cancel(void *avl_item, void *avl_param)
-{
-	gnTreeNode_s * pn = (gnTreeNode_s*)avl_item;
-	gnTree_s * ptree = avl_param;
-
-	ptree->pfnNodeCancel( pn , ptree->pvNodeCancel );
-}
-
-
-void * gnTreeCreate( int (* pfnNodeCancel )( gnTreeNode_s * , void * ) , void * pvcancel )
-{
-	gnTree_s * ptree = malloc( sizeof(gnTree_s) );
-	if ( ptree == NULL ) {
-		return NULL;
-	}
-	ptree->pfnNodeCancel = pfnNodeCancel;
-	ptree->pvNodeCancel = pvcancel;
-	ptree->pbst = avl_create(_avl_compare, ptree, &_tree_allocator);
-	if ( ptree->pbst == NULL ) {
-		free( ptree );
-		return NULL;
-	}
-	return ptree;
-}
-
-void gnTreeDestroy( void * pvtree )
-{
-	gnTree_s * ptree = pvtree;
-	avl_destroy( ptree->pbst , _avl_cancel );
-	free( pvtree );
-}
-
-void gnTreeInitNode( gnTreeNode_s * pnode , long key , gnTreeData_u data , gnTreeData_u data2 )
-{
-	if ( pnode )
-	{
-		memset( pnode , 0 , sizeof( gnTreeNode_s ) );
-		pnode->key = key;
-		pnode->data = data;
-		pnode->data2 = data2;
-	}
-}
-
-/*
-void gnTreeSetNode( gnTreeNode_s * pnode , long key , gnTreeData_u data )
-{
-	if ( pnode )
-	{
-		pnode->key = key;
-		pnode->data = data;
-	}
-}
-*/
-
-gnTreeNode_s * gnTreeNewNode( long key , gnTreeData_u data , gnTreeData_u data2 )
-{
-	gnTreeNode_s * pnode;
-
-	pnode = malloc( sizeof( gnTreeNode_s ) );
-	gnTreeInitNode( pnode , key , data , data2 );
-	return pnode;
-}
-
-gnTreeNode_s * gnTreeSearch ( void * pvtree , long key )
-{
-	gnTree_s * ptree = pvtree;
-	gnTreeNode_s node , * pnode;
-
-	node.key = key;
-	pnode = avl_find( ptree->pbst , & node );
-	return pnode;
-}
-
-/*
-int gnTreeInsert( void * pvtree , gnTreeNode_s *pnode )
-{
-	gnTree_s * ptree = pvtree;
-	void ** pitem;
-
-	pitem = avl_probe( ptree->pbst , pnode );
-	if ( pitem == NULL ) return -1;
-	if ( *pitem != pnode ) return -2;
-	return 0;
-}
-*/
-gnTreeNode_s * gnTreeInsert( void * pvtree , gnTreeNode_s * pnode )
-{
-	gnTree_s * ptree = pvtree;
-	void ** pitem;
-
-	pitem = avl_probe( ptree->pbst , pnode );
-	if ( pitem == NULL ) return NULL;
-	return (gnTreeNode_s*) *pitem;
-}
-	
-/*
- * The caller is responsible of freeing the returned node-pointer
- */
-gnTreeNode_s * gnTreeCancel( void * pvtree , gnTreeNode_s * pnode )
-{
-	gnTree_s * ptree = pvtree;
-	gnTreeNode_s * pitem;
-
-	pitem = avl_delete( ptree->pbst , pnode );
-	return pitem;
-}
-
-
-
-
-
-#if 0
-
-
-#include <unistd.h>
-#include <time.h>
-
-
-int main( int argc , char ** argv )
-{
-
-	long 			i , x , c = 20000 , mod;
-	gnTreeData_u		data;
-	gnTreeNode_s * 	proot = NULL;
-	gnTreeNode_s * 	pnode;
-	char 			szdata[ 64 ];
-	time_t			t;
-
-	printf( "inserting %ld nodes: " , c );
-	fflush( stdout );
-
-	mod = c / 100;
-
-	for( i = 0 ; i < c ; i ++ )
-	{
-		if ( (i % 2) == 0 ) 	x = c - i;
-		else			x = i;
-
-
-		sprintf( szdata , "#%ld - ", x );
-		t = time( 0L );
-		strcat( szdata , ctime( & t ) );
-		szdata[ strlen( szdata ) - 1 ] = 0;
-		data.pv = strdup( szdata );
-
-		pnode = gnTreeNewNode( x , data );
-
-		if ( gnTreeInsert( & proot , pnode ) < 0 )
-		{
-			fprintf( stderr , "error inserting node %ld - key %ld\n" , i , x );
-			return 1;
-		}
-
-		if ( (i % mod) == 0 ) { printf( "<%ld lev:%ld> " , i , g_level ); fflush( stdout ); }
-	}
-	printf( "\nEnd of insert, try to search:\n" );
-
-	for( i=0 ; i < c ; i ++ )
-	{
-		/* x = rand(); */
-
-		pnode = gnTreeSearch( proot , i );
-
-		if ( pnode == NULL )
-		{
-			printf( "node %ld not found\n" , i );
-		}
-		else
-		{
-			/* printf( "%ld: <%s>\n" , i , pnode->data.pv ); */
-		}
-	}
-
-	printf( "Search of %ld nodes. Done.\n" , i );
-
-	return 0;
-}
-
-#endif

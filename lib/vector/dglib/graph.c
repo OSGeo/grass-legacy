@@ -28,135 +28,156 @@
 #include <malloc.h>
 #include <errno.h>
 
+#define DGL_V2 1
+
 #include "type.h"
-#include "helpers.h"
+#include "tree.h"
 #include "graph.h"
 #include "graph_v1.h"
-#ifdef GNGRP_V2
+#if defined(DGL_V2)
 #include "graph_v2.h"
 #endif
+#include "helpers.h"
 
 
-void gnGrpResetStats( gnGrpGraph_s * pgraph )
+void dglResetStats( dglGraph_s * pgraph )
 {
-#ifdef GNGRP_STATS
-	pgraph->clkAddLink = 0;
-	pgraph->cAddLink = 0;
+#ifdef DGL_STATS
+	pgraph->clkAddEdge = 0;
+	pgraph->cAddEdge = 0;
 	pgraph->clkNodeTree = 0;
-	pgraph->clkNodeHeap = 0;
 	pgraph->cNodeTree = 0;
-	pgraph->cNodeHeap = 0;
 #endif
 }
 
-int gnGrpInitialize(gnGrpGraph_s * pGraph, gnByte_t Version, gnInt32_t NodeAttrSize, gnInt32_t LinkAttrSize, gnInt32_t * pOpaqueSet)
+int dglInitialize(dglGraph_s * pGraph, dglByte_t Version, dglInt32_t NodeAttrSize, dglInt32_t EdgeAttrSize, dglInt32_t * pOpaqueSet)
 {
 	if ( pGraph == NULL ) {
-		return -GNGRP_ERR_UnexpectedNullPointer;
+		return -DGL_ERR_BadArgument;
 	}
 	switch( Version )
 	{
 	case 1:
-#ifdef GNGRP_V2
+#ifdef DGL_V2
 	case 2:
+	case 3:
 #endif
-		memset( pGraph , 0 , sizeof( gnGrpGraph_s ) );
-		gnHeapInit( & pGraph->NodeHeap );
+		memset( pGraph , 0 , sizeof( dglGraph_s ) );
 		/*
-	   	 * round attr size to the upper multiple of gnInt32_t size
+	   	 * round attr size to the upper multiple of dglInt32_t size
 	 	 */
-		if ( NodeAttrSize % sizeof(gnInt32_t) ) NodeAttrSize += ( sizeof(gnInt32_t) - (NodeAttrSize % sizeof(gnInt32_t)) );
-		if ( LinkAttrSize % sizeof(gnInt32_t) ) LinkAttrSize += ( sizeof(gnInt32_t) - (LinkAttrSize % sizeof(gnInt32_t)) );
+		if ( NodeAttrSize % sizeof(dglInt32_t) ) NodeAttrSize += ( sizeof(dglInt32_t) - (NodeAttrSize % sizeof(dglInt32_t)) );
+		if ( EdgeAttrSize % sizeof(dglInt32_t) ) EdgeAttrSize += ( sizeof(dglInt32_t) - (EdgeAttrSize % sizeof(dglInt32_t)) );
 		pGraph->Version  = Version;
 		pGraph->NodeAttrSize = NodeAttrSize;
-		pGraph->LinkAttrSize = LinkAttrSize;
-		if ( pOpaqueSet ) memcpy( & pGraph->aOpaqueSet , pOpaqueSet , sizeof( gnInt32_t ) * 16 );
-#ifdef GN_ENDIAN_BIG
-		pGraph->Endian = GNGRP_ENDIAN_BIG;
+		pGraph->EdgeAttrSize = EdgeAttrSize;
+		if ( pOpaqueSet ) memcpy( & pGraph->aOpaqueSet , pOpaqueSet , sizeof( dglInt32_t ) * 16 );
+#ifdef DGL_ENDIAN_BIG
+		pGraph->Endian = DGL_ENDIAN_BIG;
 #else
-		pGraph->Endian = GNGRP_ENDIAN_LITTLE;
+		pGraph->Endian = DGL_ENDIAN_LITTLE;
 #endif
-		return 0;
 	}
-	pGraph->iErrno = GNGRP_ERR_VersionNotSupported;
+	switch( Version ) {
+	case 1:
+		if ( dgl_initialize_V1(pGraph) < 0 ) {
+			return -pGraph->iErrno;
+		}
+		else return 0;
+#ifdef DGL_V2
+	case 2:
+	case 3:
+		if ( dgl_initialize_V2(pGraph) < 0 ) {
+			return -pGraph->iErrno;
+		}
+		else return 0;
+#endif
+	}
+	pGraph->iErrno = DGL_ERR_VersionNotSupported;
 	return -pGraph->iErrno;
 }
 
-int gnGrpRelease( gnGrpGraph_s * pGraph )
+int dglRelease( dglGraph_s * pGraph )
 {
 	switch( pGraph->Version ) {
-	case 1: return gngrp_release_V1(pGraph);
-#ifdef GNGRP_V2
-	case 2: return gngrp_release_V2(pGraph);
+	case 1: return dgl_release_V1(pGraph);
+#ifdef DGL_V2
+	case 2:
+	case 3: return dgl_release_V2(pGraph);
 #endif
 	}
-	pGraph->iErrno = GNGRP_ERR_BadVersion;
+	pGraph->iErrno = DGL_ERR_BadVersion;
 	return -pGraph->iErrno;
 }
 
-int gnGrpUnflatten( gnGrpGraph_s * pGraph )
+int dglUnflatten( dglGraph_s * pGraph )
 {
 	switch( pGraph->Version ) {
-	case 1: return gngrp_unflatten_V1(pGraph);
-#ifdef GNGRP_V2
-	case 2: return gngrp_unflatten_V2(pGraph);
+	case 1: return dgl_unflatten_V1(pGraph);
+#ifdef DGL_V2
+	case 2:
+	case 3: return dgl_unflatten_V2(pGraph);
 #endif
 	}
-	pGraph->iErrno = GNGRP_ERR_BadVersion;
-	return -pGraph->iErrno;
-}
-
-
-int gnGrpFlatten( gnGrpGraph_s * pGraph )
-{
-	switch( pGraph->Version ) {
-	case 1: return gngrp_flatten_V1(pGraph);
-#ifdef GNGRP_V2
-	case 2: return gngrp_flatten_V2(pGraph);
-#endif
-	}
-	pGraph->iErrno = GNGRP_ERR_BadVersion;
+	pGraph->iErrno = DGL_ERR_BadVersion;
 	return -pGraph->iErrno;
 }
 
 
-gnInt32_t * gnGrpGetNode(gnGrpGraph_s * pGraph , gnInt32_t nNodeId)
+int dglFlatten( dglGraph_s * pGraph )
 {
 	switch( pGraph->Version ) {
-	case 1: return gngrp_get_node_V1(pGraph, nNodeId);
-#ifdef GNGRP_V2
-	case 2: return gngrp_get_node_V2(pGraph, nNodeId);
+	case 1: return dgl_flatten_V1(pGraph);
+#ifdef DGL_V2
+	case 2:
+	case 3: return dgl_flatten_V2(pGraph);
 #endif
 	}
-	pGraph->iErrno = GNGRP_ERR_BadVersion;
+	pGraph->iErrno = DGL_ERR_BadVersion;
+	return -pGraph->iErrno;
+}
+
+
+dglInt32_t * dglGetNode(dglGraph_s * pGraph , dglInt32_t nNodeId)
+{
+	switch( pGraph->Version ) {
+	case 1: return dgl_get_node_V1(pGraph, nNodeId);
+#ifdef DGL_V2
+	case 2:
+	case 3: return dgl_get_node_V2(pGraph, nNodeId);
+#endif
+	}
+	pGraph->iErrno = DGL_ERR_BadVersion;
 	return NULL;
 }
 
-gnInt32_t *	gnGrpGetNode_OutLinkarea(gnGrpGraph_s * pGraph, gnInt32_t * pnNode)
+dglInt32_t *	dglNodeGet_OutEdgeset(dglGraph_s * pGraph, dglInt32_t * pnNode)
 {
 	if ( pnNode) {
 		switch( pGraph->Version ) {
-		case 1: return gngrp_getnode_outlinkarea_V1(pGraph, pnNode);
-#ifdef GNGRP_V2
-		case 2: return gngrp_getnode_outlinkarea_V2(pGraph, pnNode);
+		case 1: return dgl_getnode_outedgeset_V1(pGraph, pnNode);
+#ifdef DGL_V2
+		case 2:
+		case 3: return dgl_getnode_outedgeset_V2(pGraph, pnNode);
 #endif
 		}
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
+		pGraph->iErrno = DGL_ERR_BadVersion;
 		return NULL;
 	}
 	return NULL;
 }
 
-gnInt32_t *	gnGrpGetNode_InLinkarea(gnGrpGraph_s * pGraph, gnInt32_t * pnNode)
+dglInt32_t *	dglNodeGet_InEdgeset(dglGraph_s * pGraph, dglInt32_t * pnNode)
 {
 	if ( pnNode) {
 		switch( pGraph->Version ) {
-		case 1: pGraph->iErrno = GNGRP_ERR_NotSupported; return NULL;
-#ifdef GNGRP_V2
-		case 2: return gngrp_getnode_inlinkarea_V2(pGraph, pnNode);
+		case 1: pGraph->iErrno = DGL_ERR_NotSupported; return NULL;
+#ifdef DGL_V2
+		case 2:
+		case 3: return dgl_getnode_inedgeset_V2(pGraph, pnNode);
 #endif
 		}
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
+		pGraph->iErrno = DGL_ERR_BadVersion;
 		return NULL;
 	}
 	return NULL;
@@ -168,557 +189,533 @@ gnInt32_t *	gnGrpGetNode_InLinkarea(gnGrpGraph_s * pGraph, gnInt32_t * pnNode)
  * Given that node id can be negative, only iErrno can report a error,
  * thus it is initialized to zero
  */
-gnInt32_t	gnGrpGetNode_Id(gnGrpGraph_s * pGraph, gnInt32_t * pnNode)
+dglInt32_t	dglNodeGet_Id(dglGraph_s * pGraph, dglInt32_t * pnNode)
 {
 	pGraph->iErrno = 0;
 	if (pnNode) {
 		switch( pGraph->Version ) {
-		case 1: return GNGRP_NODE_ID_v1(pnNode);
-#ifdef GNGRP_V2
-		case 2: return GNGRP_NODE_ID_v2(pnNode);
+		case 1: return DGL_NODE_ID_v1(pnNode);
+#ifdef DGL_V2
+		case 2:
+		case 3: return DGL_NODE_ID_v2(pnNode);
 #endif
 		}
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
+		pGraph->iErrno = DGL_ERR_BadVersion;
 		return 0;
 	}
-	pGraph->iErrno = GNGRP_ERR_UnexpectedNullPointer;
+	pGraph->iErrno = DGL_ERR_UnexpectedNullPointer;
 	return 0;
 }
 
 
-gnInt32_t	gnGrpGetNode_Status(gnGrpGraph_s * pGraph, gnInt32_t * pnNode)
+dglInt32_t	dglNodeGet_Status(dglGraph_s * pGraph, dglInt32_t * pnNode)
 {
 	pGraph->iErrno = 0;
 	if (pnNode) {
 		switch( pGraph->Version ) {
-		case 1: return GNGRP_NODE_STATUS_v1(pnNode);
-#ifdef GNGRP_V2
-		case 2: return GNGRP_NODE_STATUS_v2(pnNode);
+		case 1: return DGL_NODE_STATUS_v1(pnNode);
+#ifdef DGL_V2
+		case 2:
+		case 3: return DGL_NODE_STATUS_v2(pnNode);
 #endif
 		}
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
+		pGraph->iErrno = DGL_ERR_BadVersion;
 		return 0;
 	}
-	pGraph->iErrno = GNGRP_ERR_UnexpectedNullPointer;
+	pGraph->iErrno = DGL_ERR_UnexpectedNullPointer;
 	return 0;
 }
 
 
-gnInt32_t *	gnGrpGetNode_Attr(gnGrpGraph_s * pGraph, gnInt32_t * pnNode)
+dglInt32_t *	dglNodeGet_Attr(dglGraph_s * pGraph, dglInt32_t * pnNode)
 {
 	if ( pnNode) {
 		switch( pGraph->Version ) {
-		case 1: return GNGRP_NODE_ATTR_PTR_v1(pnNode);
-#ifdef GNGRP_V2
-		case 2: return GNGRP_NODE_ATTR_PTR_v2(pnNode);
+		case 1: return DGL_NODE_ATTR_PTR_v1(pnNode);
+#ifdef DGL_V2
+		case 2:
+		case 3: return DGL_NODE_ATTR_PTR_v2(pnNode);
 #endif
 		}
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
+		pGraph->iErrno = DGL_ERR_BadVersion;
 		return NULL;
 	}
-	pGraph->iErrno = GNGRP_ERR_UnexpectedNullPointer;
+	pGraph->iErrno = DGL_ERR_UnexpectedNullPointer;
 	return NULL;
 }
 
 
-int	gnGrpSetNode_Attr(gnGrpGraph_s * pGraph, gnInt32_t * pnNode, gnInt32_t * pnAttr)
+void dglNodeSet_Attr(dglGraph_s * pGraph, dglInt32_t * pnNode, dglInt32_t * pnAttr)
 {
 	if ( pnNode) {
 		switch( pGraph->Version ) {
-		case 1: memcpy(GNGRP_NODE_ATTR_PTR_v1(pnNode), pnAttr, pGraph->NodeAttrSize);
+		case 1: memcpy(DGL_NODE_ATTR_PTR_v1(pnNode), pnAttr, pGraph->NodeAttrSize);
+				return;
+#ifdef DGL_V2
+		case 2:
+		case 3: memcpy(DGL_NODE_ATTR_PTR_v2(pnNode), pnAttr, pGraph->NodeAttrSize);
+				return;
+#endif
+		}
+		return;
+	}
+	return;
+}
+
+int dglNodeGet_InDegree( dglGraph_s * pGraph, dglInt32_t * pnNode )
+{
+#ifdef DGL_V2
+	dglInt32_t * pinedgeset;
+#endif
+
+	pGraph->iErrno = 0;
+	if ( pnNode) {
+		switch( pGraph->Version ) {
+		case 1:
+				pGraph->iErrno = DGL_ERR_NotSupported;
 				return 0;
-#ifdef GNGRP_V2
-		case 2: memcpy(GNGRP_NODE_ATTR_PTR_v2(pnNode), pnAttr, pGraph->NodeAttrSize);
+#ifdef DGL_V2
+		case 2:
+				if ( DGL_NODE_STATUS_v2(pnNode) & DGL_NS_ALONE ) return 0;
+				pinedgeset = dglNodeGet_InEdgeset(pGraph, pnNode);
+				if ( pinedgeset ) return DGL_EDGESET_EDGECOUNT_v2(pinedgeset);
 				return 0;
+		case 3:
+				return dglNodeGet_Valence(pGraph, pnNode);
 #endif
 		}
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
-		return -pGraph->iErrno;
+		pGraph->iErrno = DGL_ERR_BadVersion;
+		return 0;
 	}
-	pGraph->iErrno = GNGRP_ERR_UnexpectedNullPointer;
-	return -pGraph->iErrno;
+	pGraph->iErrno = DGL_ERR_UnexpectedNullPointer;
+	return 0;
 }
 
 
-gnInt32_t gnGrpGetOutLink_Count(gnGrpGraph_s * pGraph, gnInt32_t * pnOutLinkarea)
+int dglNodeGet_OutDegree( dglGraph_s * pGraph, dglInt32_t * pnNode )
+{
+	dglInt32_t * poutedgeset;
+
+	pGraph->iErrno = 0;
+	if ( pnNode) {
+		switch( pGraph->Version ) {
+		case 1:
+				if ( DGL_NODE_STATUS_v1(pnNode) & DGL_NS_ALONE ) return 0;
+				poutedgeset = dglNodeGet_OutEdgeset(pGraph, pnNode);
+				if ( poutedgeset ) return DGL_EDGESET_EDGECOUNT_v1(poutedgeset);
+				return 0;
+#ifdef DGL_V2
+		case 2:
+				if ( DGL_NODE_STATUS_v2(pnNode) & DGL_NS_ALONE ) return 0;
+				poutedgeset = dglNodeGet_OutEdgeset(pGraph, pnNode);
+				if ( poutedgeset ) return DGL_EDGESET_EDGECOUNT_v2(poutedgeset);
+				return 0;
+		case 3:
+				return dglNodeGet_Valence(pGraph, pnNode);
+#endif
+		}
+		pGraph->iErrno = DGL_ERR_BadVersion;
+		return 0;
+	}
+	pGraph->iErrno = DGL_ERR_UnexpectedNullPointer;
+	return 0;
+}
+
+
+int dglNodeGet_Valence( dglGraph_s * pGraph, dglInt32_t * pnNode )
+{
+#ifdef DGL_V2
+	dglInt32_t * poutedgeset;
+	dglInt32_t * pinedgeset;
+	int c;
+#endif
+
+	pGraph->iErrno = 0;
+	if ( pnNode) {
+		switch( pGraph->Version ) {
+#ifdef DGL_V2
+		case 3:
+				if ( DGL_NODE_STATUS_v2(pnNode) & DGL_NS_ALONE ) return 0;
+				poutedgeset = dglNodeGet_OutEdgeset(pGraph, pnNode);
+				pinedgeset = dglNodeGet_InEdgeset(pGraph, pnNode);
+				c = 0;
+				if ( poutedgeset ) c += DGL_EDGESET_EDGECOUNT_v2(poutedgeset);
+				if ( pinedgeset ) c += DGL_EDGESET_EDGECOUNT_v2(pinedgeset);
+				return c;
+#endif
+		}
+		pGraph->iErrno = DGL_ERR_BadVersion;
+		return 0;
+	}
+	pGraph->iErrno = DGL_ERR_UnexpectedNullPointer;
+	return 0;
+}
+
+
+
+dglInt32_t dglEdgesetGet_EdgeCount(dglGraph_s * pGraph, dglInt32_t * pnEdgeset)
 {
 	pGraph->iErrno = 0;
-	if ( pnOutLinkarea ) {
+	if ( pnEdgeset ) {
 		switch( pGraph->Version ) {
 		case 1:
-			return GNGRP_LINKAREA_LINKCOUNT_v1(pnOutLinkarea);
-#ifdef GNGRP_V2
+			return DGL_EDGESET_EDGECOUNT_v1(pnEdgeset);
+#ifdef DGL_V2
 		case 2:
-			return GNGRP_LINKAREA_LINKCOUNT_v2(pnOutLinkarea);
+		case 3:
+			return DGL_EDGESET_EDGECOUNT_v2(pnEdgeset);
 #endif
 		}
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
+		pGraph->iErrno = DGL_ERR_BadVersion;
 		return 0;
 	}
-	pGraph->iErrno = GNGRP_ERR_UnexpectedNullPointer;
+	pGraph->iErrno = DGL_ERR_UnexpectedNullPointer;
 	return 0;
 }
 
-gnInt32_t *	gnGrpGetOutLink_ByNode(gnGrpGraph_s * pGraph, gnInt32_t * pnOutLinkarea, gnInt32_t nToNode)
-{
-	gnInt32_t * pnLink;
-
-	if ( pnOutLinkarea ) {
-		switch( pGraph->Version ) {
-		case 1:
-			GNGRP_FOREACH_LINK_v1(pGraph, pnOutLinkarea, pnLink) {
-				if ( GNGRP_LINK_TONODE_ID_v1(pGraph,pnLink) == nToNode ) return pnLink;
-			}	
-			pGraph->iErrno = GNGRP_ERR_LinkNotFound;
-			return NULL;
-#ifdef GNGRP_V2
-		case 2:
-			GNGRP_FOREACH_LINK_v2(pGraph, pnOutLinkarea, pnLink) {
-				if ( GNGRP_LINK_TONODE_ID_v2(pGraph,pnLink) == nToNode ) return pnLink;
-			}	
-			pGraph->iErrno = GNGRP_ERR_LinkNotFound;
-			return NULL;
-#endif
-		}
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
-		return NULL;
-	}
-	pGraph->iErrno = GNGRP_ERR_UnexpectedNullPointer;
-	return NULL;
-}
-
-
-gnInt32_t *	gnGrpGetOutLink_ByUserId(gnGrpGraph_s * pGraph, gnInt32_t * pnOutLinkarea, gnInt32_t nUserId)
-{
-	gnInt32_t * pnLink;
-
-	if ( pnOutLinkarea ) {
-		switch( pGraph->Version ) {
-		case 1:
-			GNGRP_FOREACH_LINK_v1(pGraph, pnOutLinkarea, pnLink) {
-				if ( GNGRP_LINK_USER_v1(pnLink) == nUserId ) return pnLink;
-			}	
-			pGraph->iErrno = GNGRP_ERR_LinkNotFound;
-			return NULL;
-#ifdef GNGRP_V2
-		case 2:
-			GNGRP_FOREACH_LINK_v2(pGraph, pnOutLinkarea, pnLink) {
-				if ( GNGRP_LINK_USER_v2(pnLink) == nUserId ) return pnLink;
-			}	
-			pGraph->iErrno = GNGRP_ERR_LinkNotFound;
-			return NULL;
-#endif
-		}
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
-		return NULL;
-	}
-	pGraph->iErrno = GNGRP_ERR_UnexpectedNullPointer;
-	return NULL;
-}
-
-
-gnInt32_t *	gnGrpGetOutLink_ByIndex(gnGrpGraph_s * pGraph, gnInt32_t * pnOutLinkarea, int iLink)
-{
-	if ( pnOutLinkarea ) {
-		switch( pGraph->Version ) {
-		case 1:
-			return GNGRP_LINKAREA_LINK_PTR_v1(pnOutLinkarea,iLink,pGraph->LinkAttrSize);
-#ifdef GNGRP_V2
-		case 2:
-			return GNGRP_LINKAREA_LINK_PTR_v2(pnOutLinkarea,iLink,pGraph->LinkAttrSize);
-#endif
-		}
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
-		return NULL;
-	}
-	pGraph->iErrno = GNGRP_ERR_UnexpectedNullPointer;
-	return NULL;
-}
-
-gnInt32_t gnGrpGetInLink_Count(gnGrpGraph_s * pGraph, gnInt32_t * pnInLinkarea)
+dglInt32_t dglEdgeGet_Cost( dglGraph_s * pGraph , dglInt32_t * pnEdge )
 {
 	pGraph->iErrno = 0;
-	if ( pnInLinkarea ) {
-		switch( pGraph->Version ) {
-		case 1:
-			pGraph->iErrno = GNGRP_ERR_NotSupported;
-			return 0;
-#ifdef GNGRP_V2
+	if (pnEdge) {
+		switch(pGraph->Version) {
+		case 1: return DGL_EDGE_COST_v1(pnEdge);
+#ifdef DGL_V2
 		case 2:
-			return GNGRP_LINKAREA_INLINKCOUNT_v2(pnInLinkarea);
+		case 3: return DGL_EDGE_COST_v2(pnEdge);
 #endif
 		}
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
+		pGraph->iErrno = DGL_ERR_BadVersion;
 		return 0;
 	}
-	pGraph->iErrno = GNGRP_ERR_UnexpectedNullPointer;
+	pGraph->iErrno = DGL_ERR_UnexpectedNullPointer;
 	return 0;
 }
 
-
-gnInt32_t *	gnGrpGetInLink_ByNode(gnGrpGraph_s * pGraph, gnInt32_t * pnInLinkarea, gnInt32_t nFromNode)
-{
-
-	if ( pnInLinkarea ) {
-		switch( pGraph->Version ) {
-		case 1:
-			pGraph->iErrno = GNGRP_ERR_NotSupported;
-			return NULL;
-#ifdef GNGRP_V2
-		case 2:
-			GNGRP_FOREACH_INLINK_v2(pGraph, pnLinkarea, pnLink) {
-				if ( GNGRP_LINK_FROMNODE_ID_v2(pnLink) == nFromNode ) return pnLink;
-			}	
-			pGraph->iErrno = GNGRP_ERR_LinkNotFound;
-			return NULL;
-#endif
-		}
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
-		return NULL;
-	}
-	pGraph->iErrno = GNGRP_ERR_UnexpectedNullPointer;
-	return NULL;
-}
-
-
-gnInt32_t *	gnGrpGetInLink_ByUserId(gnGrpGraph_s * pGraph, gnInt32_t * pnInLinkarea, gnInt32_t nUserId)
-{
-
-	if ( pnInLinkarea ) {
-		switch( pGraph->Version ) {
-		case 1:
-			pGraph->iErrno = GNGRP_ERR_NotSupported;
-			return NULL;
-#ifdef GNGRP_V2
-		case 2:
-			GNGRP_FOREACH_INLINK_v2(pGraph, pnLinkarea, pnLink) {
-				if ( GNGRP_LINK_USER_v2(pnLink) == nUserId ) return pnLink;
-			}	
-			pGraph->iErrno = GNGRP_ERR_LinkNotFound;
-			return NULL;
-#endif
-		}
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
-		return NULL;
-	}
-	pGraph->iErrno = GNGRP_ERR_UnexpectedNullPointer;
-	return NULL;
-}
-
-gnInt32_t *	gnGrpGetInLink_ByIndex(gnGrpGraph_s * pGraph, gnInt32_t * pnInLinkarea, int iLink)
-{
-	if ( pnInLinkarea ) {
-		switch( pGraph->Version ) {
-		case 1:
-			pGraph->iErrno = GNGRP_ERR_NotSupported;
-			return NULL;
-#ifdef GNGRP_V2
-		case 2:
-			return GNGRP_LINKAREA_INLINK_PTR_v2(pnInLinkarea,iLink,pGraph->LinkAttrSize);
-#endif
-		}
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
-		return NULL;
-	}
-	pGraph->iErrno = GNGRP_ERR_UnexpectedNullPointer;
-	return NULL;
-}
-
-gnInt32_t gnGrpGetLink_Cost( gnGrpGraph_s * pGraph , gnInt32_t * pnLink )
+dglInt32_t dglEdgeGet_Id( dglGraph_s * pGraph , dglInt32_t * pnEdge )
 {
 	pGraph->iErrno = 0;
-	if (pnLink) {
+	if (pnEdge) {
 		switch(pGraph->Version) {
-		case 1: return GNGRP_LINK_COST_v1(pnLink);
-#ifdef GNGRP_V2
-		case 2: return GNGRP_LINK_COST_v2(pnLink);
+		case 1: return DGL_EDGE_ID_v1(pnEdge);
+#ifdef DGL_V2
+		case 2:
+		case 3: return DGL_EDGE_ID_v2(pnEdge);
 #endif
 		}
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
+		pGraph->iErrno = DGL_ERR_BadVersion;
 		return 0;
 	}
-	pGraph->iErrno = GNGRP_ERR_UnexpectedNullPointer;
+	pGraph->iErrno = DGL_ERR_UnexpectedNullPointer;
 	return 0;
 }
 
-gnInt32_t gnGrpGetLink_UserId( gnGrpGraph_s * pGraph , gnInt32_t * pnLink )
+dglInt32_t * dglEdgeGet_Head( dglGraph_s * pGraph , dglInt32_t * pnEdge )
 {
 	pGraph->iErrno = 0;
-	if (pnLink) {
-		switch(pGraph->Version) {
-		case 1: return GNGRP_LINK_USER_v1(pnLink);
-#ifdef GNGRP_V2
-		case 2: return GNGRP_LINK_USER_v2(pnLink);
-#endif
-		}
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
-		return 0;
-	}
-	pGraph->iErrno = GNGRP_ERR_UnexpectedNullPointer;
-	return 0;
-}
-
-gnInt32_t * gnGrpGetLink_FromNode( gnGrpGraph_s * pGraph , gnInt32_t * pnLink )
-{
-	if (pnLink) {
-		switch(pGraph->Version) {
-#ifdef GNGRP_V2
-		case 2:
-			return GNGRP_LINK_FROMNODE_v2(pnLink);
-#endif
-		case 1:
-			pGraph->iErrno = GNGRP_ERR_NotSupported;
-			return NULL;
-		}
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
-		return 0;
-	}
-	pGraph->iErrno = GNGRP_ERR_UnexpectedNullPointer;
-	return 0;
-}
-
-gnInt32_t * gnGrpGetLink_ToNode( gnGrpGraph_s * pGraph , gnInt32_t * pnLink )
-{
-	if (pnLink) {
+	if (pnEdge) {
 		switch(pGraph->Version) {
 		case 1:
-			if ( pGraph->Flags & GNGRP_GS_FLAT ) {
-				return GNGRP_NODEBUFFER_SHIFT_v1(pGraph,GNGRP_LINK_TONODE_OFFSET_v1(pnLink));
+			if ( pGraph->Flags & DGL_GS_FLAT ) {
+				return DGL_NODEBUFFER_SHIFT_v1(pGraph,DGL_EDGE_HEADNODE_OFFSET_v1(pnEdge));
 			}
 			else {
-				return gngrp_get_node_V1(pGraph, GNGRP_LINK_TONODE_OFFSET_v1(pnLink));
+				return dgl_get_node_V1(pGraph, DGL_EDGE_HEADNODE_OFFSET_v1(pnEdge));
 			}
-#ifdef GNGRP_V2
+#ifdef DGL_V2
 		case 2:
-			if ( pGraph->Flags & GNGRP_GS_FLAT ) {
-				return GNGRP_NODEBUFFER_SHIFT_v2(pGraph,GNGRP_LINK_TONODE_OFFSET_v2(pnLink));
+		case 3:
+			if ( pGraph->Flags & DGL_GS_FLAT ) {
+				return DGL_NODEBUFFER_SHIFT_v2(pGraph,DGL_EDGE_HEADNODE_OFFSET_v2(pnEdge));
 			}
 			else {
-				return gngrp_get_node_V2(pGraph, GNGRP_LINK_TONODE_OFFSET_v2(pnLink));
+				return dgl_get_node_V2(pGraph, DGL_EDGE_HEADNODE_OFFSET_v2(pnEdge));
 			}
 #endif
 		}
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
-		return 0;
-	}
-	pGraph->iErrno = GNGRP_ERR_UnexpectedNullPointer;
-	return 0;
-}
-
-gnInt32_t * gnGrpGetLink_Attr( gnGrpGraph_s * pGraph , gnInt32_t * pnLink )
-{
-	if (pnLink) {
-		switch(pGraph->Version) {
-		case 1: return GNGRP_LINK_ATTR_PTR_v1(pnLink);
-#ifdef GNGRP_V2
-		case 2: return GNGRP_LINK_ATTR_PTR_v2(pnLink);
-#endif
-		}
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
+		pGraph->iErrno = DGL_ERR_BadVersion;
 		return NULL;
 	}
-	pGraph->iErrno = GNGRP_ERR_UnexpectedNullPointer;
+	pGraph->iErrno = DGL_ERR_UnexpectedNullPointer;
 	return NULL;
 }
 
-int gnGrpSetLink_Attr( gnGrpGraph_s * pGraph , gnInt32_t * pnAttr , gnInt32_t * pnLink )
+dglInt32_t * dglEdgeGet_Tail( dglGraph_s * pGraph , dglInt32_t * pnEdge )
 {
-	if (pnLink) {
+	pGraph->iErrno = 0;
+	if (pnEdge) {
+		switch(pGraph->Version) {
+		case 1:
+			if ( pGraph->Flags & DGL_GS_FLAT ) {
+				return DGL_NODEBUFFER_SHIFT_v1(pGraph,DGL_EDGE_TAILNODE_OFFSET_v1(pnEdge));
+			}
+			else {
+				return dgl_get_node_V1(pGraph, DGL_EDGE_TAILNODE_OFFSET_v1(pnEdge));
+			}
+#ifdef DGL_V2
+		case 2:
+		case 3:
+			if ( pGraph->Flags & DGL_GS_FLAT ) {
+				return DGL_NODEBUFFER_SHIFT_v2(pGraph,DGL_EDGE_TAILNODE_OFFSET_v2(pnEdge));
+			}
+			else {
+				return dgl_get_node_V2(pGraph, DGL_EDGE_TAILNODE_OFFSET_v2(pnEdge));
+			}
+#endif
+		}
+		pGraph->iErrno = DGL_ERR_BadVersion;
+		return NULL;
+	}
+	pGraph->iErrno = DGL_ERR_UnexpectedNullPointer;
+	return NULL;
+}
+
+dglInt32_t * dglEdgeGet_Attr( dglGraph_s * pGraph , dglInt32_t * pnEdge )
+{
+	pGraph->iErrno = 0;
+	if (pnEdge) {
+		switch(pGraph->Version) {
+		case 1: return DGL_EDGE_ATTR_PTR_v1(pnEdge);
+#ifdef DGL_V2
+		case 2:
+		case 3: return DGL_EDGE_ATTR_PTR_v2(pnEdge);
+#endif
+		}
+		pGraph->iErrno = DGL_ERR_BadVersion;
+		return NULL;
+	}
+	pGraph->iErrno = DGL_ERR_UnexpectedNullPointer;
+	return NULL;
+}
+
+int dglEdgeSet_Attr( dglGraph_s * pGraph , dglInt32_t * pnAttr , dglInt32_t * pnEdge )
+{
+	if (pnEdge) {
 		switch( pGraph->Version ) {
-		case 1: memcpy(GNGRP_LINK_ATTR_PTR_v1(pnLink), pnAttr, pGraph->LinkAttrSize);
+		case 1: memcpy(DGL_EDGE_ATTR_PTR_v1(pnEdge), pnAttr, pGraph->EdgeAttrSize);
 				return 0;
-#ifdef GNGRP_V2
-		case 2: memcpy(GNGRP_LINK_ATTR_PTR_v2(pnLink), pnAttr, pGraph->LinkAttrSize);
+#ifdef DGL_V2
+		case 2:
+		case 3: memcpy(DGL_EDGE_ATTR_PTR_v2(pnEdge), pnAttr, pGraph->EdgeAttrSize);
 				return 0;
 #endif
 		}
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
+		pGraph->iErrno = DGL_ERR_BadVersion;
 		return -pGraph->iErrno;
 	}
-	pGraph->iErrno = GNGRP_ERR_UnexpectedNullPointer;
+	pGraph->iErrno = DGL_ERR_UnexpectedNullPointer;
 	return -pGraph->iErrno;
 }
 
 
 
-int gnGrpNodeScan(
-			gnGrpGraph_s * pGraph ,
-			gnGrpScan_fn fnScan ,
-			void * pvArg
-			)
+dglInt32_t * dglGetEdge(
+				dglGraph_s * 	pGraph ,
+				dglInt32_t 		nEdgeId
+				)
 {
-	gnInt32_t * pnNode;
-	int			nRet;
-
-	if ( fnScan == NULL ) {
-		pGraph->iErrno = GNGRP_ERR_UnexpectedNullPointer;
-		return -pGraph->iErrno;
-	}
-
-	if ( !(pGraph->Flags & 0x1) ) {
-		pGraph->iErrno = GNGRP_ERR_BadOnTreeGraph;
-		return -pGraph->iErrno;
-	}
-
 	switch( pGraph->Version ) {
 	case 1:
-		GNGRP_FOREACH_NODE_v1(pGraph, pnNode) {
-			if ( (nRet = fnScan( pGraph, pnNode, pvArg )) ) return nRet;	
-		}
-		return 0;
-#ifdef GNGRP_V2
+		return dgl_get_edge_V1(pGraph, nEdgeId );
+		break;
+#ifdef DGL_V2
 	case 2:
-		GNGRP_FOREACH_NODE_v2(pGraph, pnNode) {
-			if ( (nRet = fnScan( pGraph, pnNode, pvArg )) ) return nRet;	
-		}
-		return 0;
+	case 3:
+		return dgl_get_edge_V2(pGraph, nEdgeId );
+		break;
 #endif
 	}
-	pGraph->iErrno = GNGRP_ERR_BadVersion;
+	pGraph->iErrno = DGL_ERR_BadVersion;
+	return NULL;
+}
+
+int dglDelEdge(
+				dglGraph_s * 	pGraph ,
+				dglInt32_t 		nEdgeId
+				)
+{
+	switch( pGraph->Version ) {
+	case 1:
+		return dgl_del_edge_V1(pGraph, nEdgeId );
+		break;
+#ifdef DGL_V2
+	case 2:
+	case 3:
+		return dgl_del_edge_V2(pGraph, nEdgeId );
+		break;
+#endif
+	}
+	pGraph->iErrno = DGL_ERR_BadVersion;
 	return -pGraph->iErrno;
 }
 
-
-
-int gnGrpAddLink(
-				gnGrpGraph_s * 	pGraph ,
-				gnInt32_t 		nFrom ,
-				gnInt32_t 		nTo ,
-				gnInt32_t 		nCost ,
-				gnInt32_t 		nUser
+int dglAddEdge(
+				dglGraph_s * 	pGraph ,
+				dglInt32_t 		nHead ,
+				dglInt32_t 		nTail ,
+				dglInt32_t 		nCost ,
+				dglInt32_t 		nEdge
 				)
 {
 	int 		nRet;
-#ifdef GNGRP_STATS
+#ifdef DGL_STATS
 	clock_t clk;
 	clk = clock();
-	pGraph->cAddLink ++;
+	pGraph->cAddEdge ++;
 #endif
 	switch( pGraph->Version ) {
 	case 1:
-		nRet = gngrp_add_link_V1(pGraph, nFrom, nTo, nCost, nUser, NULL, NULL, NULL, 0);
+		nRet = dgl_add_edge_V1(pGraph, nHead, nTail, nCost, nEdge, NULL, NULL, NULL, 0);
 		break;
-#ifdef GNGRP_V2
+#ifdef DGL_V2
 	case 2:
-		nRet = gngrp_add_link_V2(pGraph, nFrom, nTo, nCost, nUser, NULL, NULL, NULL, 0);
+	case 3:
+		nRet = dgl_add_edge_V2(pGraph, nHead, nTail, nCost, nEdge, NULL, NULL, NULL, 0);
 		break;
 #endif
 	default:
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
+		pGraph->iErrno = DGL_ERR_BadVersion;
 		nRet = -pGraph->iErrno;
 		break;
 	}
-#ifdef GNGRP_STATS
-	pGraph->clkAddLink += clock() - clk;
+#ifdef DGL_STATS
+	pGraph->clkAddEdge += clock() - clk;
 #endif
 	return nRet;
 }
 
-int gnGrpAddLinkX	(
-				gnGrpGraph_s * 	pGraph ,
-				gnInt32_t 		nFrom ,
-				gnInt32_t 		nTo ,
-				gnInt32_t 		nCost ,
-				gnInt32_t 		nUser ,
-				void *			pvFnodeAttr ,
-				void *			pvTnodeAttr ,
-				void *			pvLinkAttr ,
-				gnInt32_t		nFlags
+int dglAddEdgeX	(
+				dglGraph_s * 	pGraph ,
+				dglInt32_t 		nHead ,
+				dglInt32_t 		nTail ,
+				dglInt32_t 		nCost ,
+				dglInt32_t 		nEdge ,
+				void *			pvHeadAttr ,
+				void *			pvTailAttr ,
+				void *			pvEdgeAttr ,
+				dglInt32_t		nFlags
 				)
 {
 	int 		nRet;
-#ifdef GNGRP_STATS
+#ifdef DGL_STATS
 	clock_t clk;
 	clk = clock();
-	pGraph->cAddLink ++;
+	pGraph->cAddEdge ++;
 #endif
 	switch( pGraph->Version ) {
 	case 1:
-		nRet = gngrp_add_link_V1(pGraph, nFrom, nTo, nCost, nUser, pvFnodeAttr, pvTnodeAttr, pvLinkAttr, nFlags);
+		nRet = dgl_add_edge_V1(pGraph, nHead, nTail, nCost, nEdge, pvHeadAttr, pvTailAttr, pvEdgeAttr, nFlags);
 		break;
-#ifdef GNGRP_V2
+#ifdef DGL_V2
 	case 2:
-		nRet = gngrp_add_link_V2(pGraph, nFrom, nTo, nCost, nUser, pvFnodeAttr, pvTnodeAttr, pvLinkAttr, nFlags);
+	case 3:
+		nRet = dgl_add_edge_V2(pGraph, nHead, nTail, nCost, nEdge, pvHeadAttr, pvTailAttr, pvEdgeAttr, nFlags);
 		break;
 #endif
 	default:
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
+		pGraph->iErrno = DGL_ERR_BadVersion;
 		nRet = -pGraph->iErrno;
 		break;
 	}
-#ifdef GNGRP_STATS
-	pGraph->clkAddLink += clock() - clk;
+#ifdef DGL_STATS
+	pGraph->clkAddEdge += clock() - clk;
 #endif
 	return nRet;
 }
 
-int gnGrpAddNode(
-				gnGrpGraph_s * 	pGraph ,
-				gnInt32_t 		nNodeId ,
+int dglAddNode(
+				dglGraph_s * 	pGraph ,
+				dglInt32_t 		nNodeId ,
 				void *			pvNodeAttr ,
-				gnInt32_t		nFlags
+				dglInt32_t		nFlags
 				)
 {
 	int 		nRet;
 	switch( pGraph->Version ) {
 	case 1:
-		nRet = gngrp_add_node_V1(pGraph, nNodeId, pvNodeAttr, nFlags);
+		nRet = dgl_add_node_V1(pGraph, nNodeId, pvNodeAttr, nFlags);
 		break;
-#ifdef GNGRP_V2
+#ifdef DGL_V2
 	case 2:
-		nRet = gngrp_add_node_V2(pGraph, nNodeId, pvNodeAttr, nFlags);
+	case 3:
+		nRet = dgl_add_node_V2(pGraph, nNodeId, pvNodeAttr, nFlags);
 		break;
 #endif
 	default:
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
+		pGraph->iErrno = DGL_ERR_BadVersion;
 		nRet = -pGraph->iErrno;
 		break;
 	}
 	return nRet;
 }
 
-int gnGrpWrite( gnGrpGraph_s * pGraph, int fd )
+int dglDelNode(
+				dglGraph_s * 	pGraph ,
+				dglInt32_t 		nNodeId
+				)
+{
+	int 		nRet;
+	switch( pGraph->Version ) {
+	case 1:
+		nRet = dgl_del_node_V1(pGraph, nNodeId);
+		break;
+#ifdef DGL_V2
+	case 2:
+	case 3:
+		nRet = dgl_del_node_V2(pGraph, nNodeId);
+		break;
+#endif
+	default:
+		pGraph->iErrno = DGL_ERR_BadVersion;
+		nRet = -pGraph->iErrno;
+		break;
+	}
+	return nRet;
+}
+
+int dglWrite( dglGraph_s * pGraph, int fd )
 {
 	int nRet;
 
 	switch( pGraph->Version ) {
 	case 1:
-		nRet = gngrp_write_V1(pGraph, fd);
+		nRet = dgl_write_V1(pGraph, fd);
 		break;
-#ifdef GNGRP_V2
+#ifdef DGL_V2
 	case 2:
-		nRet = gngrp_write_V2(pGraph, fd);
+	case 3:
+		nRet = dgl_write_V2(pGraph, fd);
 		break;
 #endif
 	default:
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
+		pGraph->iErrno = DGL_ERR_BadVersion;
 		nRet = -pGraph->iErrno;
 		break;
 	}
 	return nRet;
 }
 
-int gnGrpRead( gnGrpGraph_s * pGraph, int fd )
+int dglRead( dglGraph_s * pGraph, int fd )
 {
-	gnByte_t bVersion;
+	dglByte_t bVersion;
 	int	nRet;
 
 	if ( read( fd , & bVersion , 1 ) != 1 ) {
-		pGraph->iErrno = GNGRP_ERR_Read;
+		pGraph->iErrno = DGL_ERR_Read;
 		nRet = -pGraph->iErrno;
 	}
 	else {
 		switch( bVersion ) {
 		case 1:
-			nRet = gngrp_read_V1( pGraph, fd );
+			nRet = dgl_read_V1( pGraph, fd );
 			break;
-#ifdef GNGRP_V2
+#ifdef DGL_V2
 		case 2:
-			nRet = gngrp_read_V2( pGraph, fd );
+		case 3:
+			nRet = dgl_read_V2( pGraph, fd, bVersion );
 			break;
 #endif
 		default:
-			pGraph->iErrno = GNGRP_ERR_VersionNotSupported;
+			pGraph->iErrno = DGL_ERR_VersionNotSupported;
 			nRet = -pGraph->iErrno;
 			break;
 		}
@@ -727,29 +724,30 @@ int gnGrpRead( gnGrpGraph_s * pGraph, int fd )
 }
 
 
-int gnGrpShortestPath	(
-					 	gnGrpGraph_s * 	 pGraph,
-						gnGrpSPReport_s **ppReport,
-					 	gnInt32_t 		 nFrom,
-					 	gnInt32_t 		 nTo,
-						gnGrpSPClip_fn	 fnClip,
+int dglShortestPath	(
+					 	dglGraph_s * 	 pGraph,
+						dglSPReport_s **ppReport,
+					 	dglInt32_t 		 nStart,
+					 	dglInt32_t 		 nDestination,
+						dglSPClip_fn	 fnClip,
 						void *			 pvClipArg,
-						gnGrpSPCache_s * pCache
+						dglSPCache_s * pCache
 					 	)
 {
 	int nRet;
 
 	switch( pGraph->Version ) {
 	case 1:
-		nRet = gngrp_dijkstra_V1( pGraph, ppReport, NULL, nFrom, nTo, fnClip, pvClipArg, pCache );
+		nRet = dgl_dijkstra_V1( pGraph, ppReport, NULL, nStart, nDestination, fnClip, pvClipArg, pCache );
 		break;
-#ifdef GNGRP_V2
+#ifdef DGL_V2
 	case 2:
-		nRet = gngrp_dijkstra_V2( pGraph, ppReport, NULL, nFrom, nTo, fnClip, pvClipArg, pCache );
+	case 3:
+		nRet = dgl_dijkstra_V2( pGraph, ppReport, NULL, nStart, nDestination, fnClip, pvClipArg, pCache );
 		break;
 #endif
 	default:
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
+		pGraph->iErrno = DGL_ERR_BadVersion;
 		nRet = -pGraph->iErrno;
 		break;
 	}
@@ -757,29 +755,30 @@ int gnGrpShortestPath	(
 }
 
 
-int gnGrpShortestDistance	(
-					 		gnGrpGraph_s * 	 pGraph,
-							gnInt32_t *      pnDistance ,
-					 		gnInt32_t 		 nFrom,
-					 		gnInt32_t 		 nTo,
-							gnGrpSPClip_fn	 fnClip,
+int dglShortestDistance	(
+					 		dglGraph_s * 	 pGraph,
+							dglInt32_t *      pnDistance ,
+					 		dglInt32_t 		 nStart,
+					 		dglInt32_t 		 nDestination,
+							dglSPClip_fn	 fnClip,
 							void *			 pvClipArg,
-							gnGrpSPCache_s * pCache
+							dglSPCache_s * pCache
 					 		)
 {
 	int nRet;
 
 	switch( pGraph->Version ) {
 	case 1:
-		nRet = gngrp_dijkstra_V1( pGraph, NULL, pnDistance, nFrom, nTo, fnClip, pvClipArg, pCache );
+		nRet = dgl_dijkstra_V1( pGraph, NULL, pnDistance, nStart, nDestination, fnClip, pvClipArg, pCache );
 		break;
-#ifdef GNGRP_V2
+#ifdef DGL_V2
 	case 2:
-		nRet = gngrp_dijkstra_V2( pGraph, NULL, pnDistance, nFrom, nTo, fnClip, pvClipArg, pCache );
+	case 3:
+		nRet = dgl_dijkstra_V2( pGraph, NULL, pnDistance, nStart, nDestination, fnClip, pvClipArg, pCache );
 		break;
 #endif
 	default:
-		pGraph->iErrno = GNGRP_ERR_BadVersion;
+		pGraph->iErrno = DGL_ERR_BadVersion;
 		nRet = -pGraph->iErrno;
 		break;
 	}
@@ -787,117 +786,119 @@ int gnGrpShortestDistance	(
 }
 
 
-int	gnGrpDepthSpanning	(
-						gnGrpGraph_s *  	pgraphInput,
-						gnGrpGraph_s *  	pgraphOutput,
-						gnInt32_t			nVertexNode,
-						gnGrpSpanClip_fn	fnClip,
+int	dglDepthSpanning	(
+						dglGraph_s *  	pgraphInput,
+						dglGraph_s *  	pgraphOutput,
+						dglInt32_t			nVertexNode,
+						dglSpanClip_fn	fnClip,
 						void *				pvClipArg
 						)
 {
 	int nRet;
 	void * pvVisited;
 
-	if ( gnGrpGet_LinkCount(pgraphInput) == 0 ) { /* no span */
+	if ( dglGet_EdgeCount(pgraphInput) == 0 ) { /* no span */
 		pgraphInput->iErrno = 0;
 		return 0;
 	}
 
-#ifndef GNGRP_V2
+#ifndef DGL_V2
 	if ( pgraphInput->Version == 2 ) {
-		pgraphInput->iErrno = GNGRP_ERR_BadVersion;
+		pgraphInput->iErrno = DGL_ERR_BadVersion;
 		return -pgraphInput->iErrno;
 	}
 #endif
 
-	nRet = gnGrpInitialize( pgraphOutput,
-			gnGrpGet_Version(pgraphInput),
-			gnGrpGet_NodeAttrSize(pgraphInput),
-			gnGrpGet_LinkAttrSize(pgraphInput), 
-			gnGrpGet_Opaque(pgraphInput) );
+	nRet = dglInitialize( pgraphOutput,
+			dglGet_Version(pgraphInput),
+			dglGet_NodeAttrSize(pgraphInput),
+			dglGet_EdgeAttrSize(pgraphInput), 
+			dglGet_Opaque(pgraphInput) );
 
 	if ( nRet < 0 ) return nRet;
 
-	if ( (pvVisited = gnTreeCreate( gngrp_node_free , NULL )) == NULL ) {
-		pgraphInput->iErrno = GNGRP_ERR_MemoryExhausted;
+	if ( (pvVisited = avl_create( dglTreeNodeCompare, NULL, dglTreeGetAllocator() )) == NULL ) {
+		pgraphInput->iErrno = DGL_ERR_MemoryExhausted;
 		return -pgraphInput->iErrno;
 	}
 
 	switch( pgraphInput->Version ) {
 	case 1:
-		nRet = gngrp_depthfirst_spanning_V1( pgraphInput, pgraphOutput, nVertexNode , pvVisited , fnClip , pvClipArg );
+		nRet = dgl_depthfirst_spanning_V1( pgraphInput, pgraphOutput, nVertexNode , pvVisited , fnClip , pvClipArg );
 		break;
-#ifdef GNGRP_V2
+#ifdef DGL_V2
 	case 2:
-		nRet = gngrp_depthfirst_spanning_V2( pgraphInput, pgraphOutput, nVertexNode , pvVisited , fnClip , pvClipArg );
+	case 3:
+		nRet = dgl_depthfirst_spanning_V2( pgraphInput, pgraphOutput, nVertexNode , pvVisited , fnClip , pvClipArg );
 		break;
 #endif
 	default:
-		pgraphInput->iErrno = GNGRP_ERR_BadVersion;
+		pgraphInput->iErrno = DGL_ERR_BadVersion;
 		nRet = -pgraphInput->iErrno;
 		break;
 	}
-	gnTreeDestroy( pvVisited );
+
+	avl_destroy( pvVisited, dglTreeNodeCancel );
+
 	if ( nRet < 0 ) {
-		gnGrpRelease( pgraphOutput );
+		dglRelease( pgraphOutput );
 	}
+
 	return nRet;
 }
 
-int gnGrpDepthComponents(
-						gnGrpGraph_s *  	pgraphInput,
-						gnGrpGraph_s *  	pgraphComponents,
+int dglDepthComponents(
+						dglGraph_s *  	pgraphInput,
+						dglGraph_s *  	pgraphComponents,
 						int					cgraphComponents,
-						gnGrpSpanClip_fn	fnClip,
+						dglSpanClip_fn	fnClip,
 						void *				pvClipArg
 						)
 {
 	int i, nret;
+	dglTreeNode_s findVisited;
 	void * pvVisited;
-	gnInt32_t * pvertex , * pnode;
+	dglInt32_t * pvertex , * pnode;
 
-	if ( gnGrpGet_LinkCount(pgraphInput) == 0 ) { /* no span */
+	if ( dglGet_EdgeCount(pgraphInput) == 0 ) { /* no span */
 		pgraphInput->iErrno = 0;
 		return 0;
 	}
 
-#ifndef GNGRP_V2
-	if ( pgraphInput->Version == 2 ) {
-		pgraphInput->iErrno = GNGRP_ERR_BadVersion;
+#ifndef DGL_V2
+	if ( pgraphInput->Version == 2 || pgraphInput->Version == 3 ) {
+		pgraphInput->iErrno = DGL_ERR_BadVersion;
 		return -pgraphInput->iErrno;
 	}
 #endif
 
-	if ( (pvVisited = gnTreeCreate( gngrp_node_free , NULL )) == NULL ) {
-		pgraphInput->iErrno = GNGRP_ERR_MemoryExhausted; goto error;
+	if ( (pvVisited = avl_create( dglTreeNodeCompare, NULL, dglTreeGetAllocator() )) == NULL ) {
+		pgraphInput->iErrno = DGL_ERR_MemoryExhausted; goto error;
 	}
 
 	/*
 	 * choose a vertex to start from
 	 */
 	pvertex = NULL;
-	switch(pgraphInput->Version) {
-	case 1:
-		GNGRP_FOREACH_NODE_v1(pgraphInput, pnode) {
-			if ( GNGRP_NODE_STATUS_v1(pnode) & GNGRP_NS_FROM ) {
-				pvertex = pnode;
-				break;
-			}
-		}
-		break;
-#ifdef GNGRP_V2
-	case 2:
-		GNGRP_FOREACH_NODE_v2(pgraphInput, pnode) {
-			if ( GNGRP_NODE_STATUS_v2(pnode) & GNGRP_NS_FROM ) {
-				pvertex = pnode;
-				break;
-			}
-		}
-		break;
+	{
+		dglNodeTraverser_s pT;
+
+		dglNode_T_Initialize( &pT, pgraphInput );
+		for( pnode = dglNode_T_First( &pT ); pnode; pnode = dglNode_T_Next( &pT ) ) {
+			switch(pgraphInput->Version) {
+			case 1: if ( DGL_NODE_STATUS_v1(pnode) & DGL_NS_HEAD ) pvertex = pnode; break;
+#ifdef DGL_V2
+			case 2:
+			case 3: if ( DGL_NODE_STATUS_v2(pnode) & DGL_NS_HEAD ) pvertex = pnode; break;
 #endif
+			}
+			if ( pvertex ) break;
+		}
+		dglNode_T_Release( &pT );
 	}
+
 	if ( pvertex == NULL ) {
-		pgraphInput->iErrno = GNGRP_ERR_UnexpectedNullPointer; goto error;
+		pgraphInput->iErrno = DGL_ERR_UnexpectedNullPointer; goto error;
 	}
 
 	for (
@@ -906,27 +907,28 @@ int gnGrpDepthComponents(
 		i++
 		)
 	{
-		nret = gnGrpInitialize( & pgraphComponents[i],
-				gnGrpGet_Version(pgraphInput),
-				gnGrpGet_NodeAttrSize(pgraphInput),
-				gnGrpGet_LinkAttrSize(pgraphInput), 
-				gnGrpGet_Opaque(pgraphInput) );
+		nret = dglInitialize( & pgraphComponents[i],
+				dglGet_Version(pgraphInput),
+				dglGet_NodeAttrSize(pgraphInput),
+				dglGet_EdgeAttrSize(pgraphInput), 
+				dglGet_Opaque(pgraphInput) );
 
 		if ( nret < 0 ) goto error;
 
 		switch( pgraphInput->Version ) {
 		case 1:
-			nret = gngrp_depthfirst_spanning_V1(pgraphInput, & pgraphComponents[i], GNGRP_NODE_ID_v1(pvertex), pvVisited, fnClip, pvClipArg);
+			nret = dgl_depthfirst_spanning_V1(pgraphInput, & pgraphComponents[i], DGL_NODE_ID_v1(pvertex), pvVisited, fnClip, pvClipArg);
 			if ( nret < 0 ) goto error;
 			break;
-#ifdef GNGRP_V2
+#ifdef DGL_V2
 		case 2:
-			nret = gngrp_depthfirst_spanning_V2(pgraphInput, & pgraphComponents[i], GNGRP_NODE_ID_v1(pvertex), pvVisited, fnClip, pvClipArg);
+		case 3:
+			nret = dgl_depthfirst_spanning_V2(pgraphInput, & pgraphComponents[i], DGL_NODE_ID_v1(pvertex), pvVisited, fnClip, pvClipArg);
 			if ( nret < 0 ) goto error;
 			break;
 #endif
 		default:
-			pgraphInput->iErrno = GNGRP_ERR_BadVersion;
+			pgraphInput->iErrno = DGL_ERR_BadVersion;
 			nret = -pgraphInput->iErrno;
 			goto error;
 		}
@@ -934,47 +936,92 @@ int gnGrpDepthComponents(
 		/*
 		 * select next unvisited vertex
 		 */
-		switch( pgraphInput->Version ) {
-		case 1:
-			pvertex = NULL;
-			GNGRP_FOREACH_NODE_v1(pgraphInput, pnode) {
-				if ( GNGRP_NODE_STATUS_v1(pnode) & GNGRP_NS_FROM ) {
-					if ( gnTreeSearch( pvVisited, GNGRP_NODE_ID_v1(pnode) ) == NULL ) {
-						pvertex = pnode;
+		pvertex = NULL;
+		{
+			dglNodeTraverser_s pT;
+
+			dglNode_T_Initialize( &pT, pgraphInput );
+			for( pnode = dglNode_T_First(  &pT ); pnode; pnode = dglNode_T_Next( &pT ) ) {
+				switch(pgraphInput->Version) {
+				case 1: if ( DGL_NODE_STATUS_v1(pnode) & DGL_NS_HEAD ) {
+							findVisited.nKey = DGL_NODE_ID_v1(pnode);
+							if ( avl_find( pvVisited, &findVisited ) == NULL ) {
+								pvertex = pnode;
+								break;
+							}
+						}
 						break;
-					}
-				}
-			}
-			break;
-#ifdef GNGRP_V2
-		case 2:
-			pvertex = NULL;
-			GNGRP_FOREACH_NODE_v2(pgraphInput, pnode) {
-				if ( GNGRP_NODE_STATUS_v2(pnode) & GNGRP_NS_FROM ) {
-					if ( gnTreeSearch( pvVisited, GNGRP_NODE_ID_v2(pnode) ) == NULL ) {
-						pvertex = pnode;
+#ifdef DGL_V2
+				case 2:
+				case 3: if ( DGL_NODE_STATUS_v2(pnode) & DGL_NS_HEAD ) {
+							findVisited.nKey = DGL_NODE_ID_v2(pnode);
+							if ( avl_find( pvVisited, &findVisited ) == NULL ) {
+								pvertex = pnode;
+								break;
+							}
+						}
 						break;
-					}
-				}
-			}
-			break;
 #endif
-		default:
-			pgraphInput->iErrno = GNGRP_ERR_BadVersion;
-			nret = -pgraphInput->iErrno;
-			goto error;
+				}
+				if ( pvertex ) break;
+			}
+			dglNode_T_Release( &pT );
 		}
 	}
 
-	gnTreeDestroy(pvVisited);
+	avl_destroy( pvVisited, dglTreeNodeCancel );
 	return i;
 
 error:
-	gnTreeDestroy(pvVisited);
+	avl_destroy( pvVisited, dglTreeNodeCancel );
 	return nret;
 }
 
-void gnGrpFreeSPReport( gnGrpGraph_s * pgraph , gnGrpSPReport_s * pSPReport )
+int	dglMinimumSpanning(
+						dglGraph_s *  	pgraphInput,
+						dglGraph_s *  	pgraphOutput,
+						dglInt32_t			nVertexNode,
+						dglSpanClip_fn	fnClip,
+						void *				pvClipArg
+						)
+{
+	int nRet;
+
+	if ( dglGet_EdgeCount(pgraphInput) == 0 ) { /* no span */
+		pgraphInput->iErrno = 0;
+		return 0;
+	}
+
+	nRet = dglInitialize( pgraphOutput,
+			dglGet_Version(pgraphInput),
+			dglGet_NodeAttrSize(pgraphInput),
+			dglGet_EdgeAttrSize(pgraphInput), 
+			dglGet_Opaque(pgraphInput) );
+
+	if ( nRet < 0 ) return nRet;
+
+	switch( pgraphInput->Version ) {
+	case 1:
+		nRet = dgl_minimum_spanning_V1( pgraphInput, pgraphOutput, nVertexNode , fnClip , pvClipArg );
+		break;
+#ifdef DGL_V2
+	case 2:
+	case 3:
+		nRet = dgl_minimum_spanning_V2( pgraphInput, pgraphOutput, nVertexNode , fnClip , pvClipArg );
+		break;
+#endif
+	default:
+		pgraphInput->iErrno = DGL_ERR_BadVersion;
+		nRet = -pgraphInput->iErrno;
+		break;
+	}
+	if ( nRet < 0 ) {
+		dglRelease( pgraphOutput );
+	}
+	return nRet;
+}
+
+void dglFreeSPReport( dglGraph_s * pgraph , dglSPReport_s * pSPReport )
 {
 	int iArc;
 	if ( pSPReport )
@@ -982,7 +1029,7 @@ void gnGrpFreeSPReport( gnGrpGraph_s * pgraph , gnGrpSPReport_s * pSPReport )
 		if ( pSPReport->pArc )
 		{
 			for ( iArc = 0 ; iArc < pSPReport->cArc ; iArc ++ ) {
-				if ( pSPReport->pArc[iArc].Link ) free( pSPReport->pArc[iArc].Link );
+				if ( pSPReport->pArc[iArc].pnEdge ) free( pSPReport->pArc[iArc].pnEdge );
 			}
 			free( pSPReport->pArc );
 		}
@@ -990,132 +1037,659 @@ void gnGrpFreeSPReport( gnGrpGraph_s * pgraph , gnGrpSPReport_s * pSPReport )
 	}
 }
 
-int gnGrpInitializeSPCache( gnGrpGraph_s * pgraph, gnGrpSPCache_s * pCache ) {
-	return gngrp_initialize_sp_cache_V1( pgraph, pCache, 0 );
+int dglInitializeSPCache( dglGraph_s * pGraph, dglSPCache_s * pCache ) {
+	switch( pGraph->Version ) {
+	case 1:
+		return dgl_sp_cache_initialize_V1( pGraph, pCache, 0 );
+#ifdef DGL_V2
+	case 2:
+	case 3:
+		return dgl_sp_cache_initialize_V2( pGraph, pCache, 0 );
+#endif
+	}
+	pGraph->iErrno = DGL_ERR_BadVersion;
+	return -pGraph->iErrno;
 }
 
-void gnGrpReleaseSPCache( gnGrpGraph_s * pgraph, gnGrpSPCache_s * pCache ) {
-	gngrp_release_sp_cache_V1( pgraph, pCache );
+void dglReleaseSPCache( dglGraph_s * pGraph, dglSPCache_s * pCache ) {
+	pGraph->iErrno = 0;
+	switch( pGraph->Version ) {
+	case 1:
+		dgl_sp_cache_release_V1( pGraph, pCache );
+		break;
+#ifdef DGL_V2
+	case 2:
+	case 3:
+		dgl_sp_cache_release_V2( pGraph, pCache );
+		break;
+#endif
+	}
+	pGraph->iErrno = DGL_ERR_BadVersion;
 }
 
 
-int gnGrpErrno( gnGrpGraph_s * pgraph )
+int dglErrno( dglGraph_s * pgraph )
 {
 	return pgraph->iErrno;
 }
 
-char * gnGrpStrerror( gnGrpGraph_s * pgraph )
+char * dglStrerror( dglGraph_s * pgraph )
 {
 	switch( pgraph->iErrno )
 	{
-	case GNGRP_ERR_BadVersion:
+	case DGL_ERR_BadVersion:
 		return "Bad Version";
-	case GNGRP_ERR_BadNodeType:
+	case DGL_ERR_BadNodeType:
 		return "Bad Node Type";
-	case GNGRP_ERR_MemoryExhausted:
+	case DGL_ERR_MemoryExhausted:
 		return "Memory Exhausted";
-	case GNGRP_ERR_HeapError:
+	case DGL_ERR_HeapError:
 		return "Heap Error";
-	case GNGRP_ERR_UndefinedMethod:
+	case DGL_ERR_UndefinedMethod:
 		return "Undefined Method";
-	case GNGRP_ERR_Write:
+	case DGL_ERR_Write:
 		return "Write";
-	case GNGRP_ERR_Read:
+	case DGL_ERR_Read:
 		return "Read";
-	case GNGRP_ERR_NotSupported:
+	case DGL_ERR_NotSupported:
 		return "Not Supported";
-	case GNGRP_ERR_UnknownByteOrder:
+	case DGL_ERR_UnknownByteOrder:
 		return "Unknown Byte Order";
-	case GNGRP_ERR_NodeNotFound:
+	case DGL_ERR_NodeNotFound:
 		return "Node Not Found";
-	case GNGRP_ERR_FromNodeNotFound:
-		return "From Node Not Found";
-	case GNGRP_ERR_ToNodeNotFound:
-		return "To Node Not Found";
-	case GNGRP_ERR_BadLink:
-		return "Bad Link";
-	case GNGRP_ERR_BadOnFlatGraph:
+	case DGL_ERR_HeadNodeNotFound:
+		return "Head Node Not Found";
+	case DGL_ERR_TailNodeNotFound:
+		return "Tail Node Not Found";
+	case DGL_ERR_BadEdge:
+		return "Bad Edge";
+	case DGL_ERR_BadOnFlatGraph:
 		return "Operation Not Supported On Flat-State Graph";
-	case GNGRP_ERR_BadOnTreeGraph:
+	case DGL_ERR_BadOnTreeGraph:
 		return "Operation Not Supported On Tree-State Graph";
-	case GNGRP_ERR_TreeSearchError:
+	case DGL_ERR_TreeSearchError:
 		return "Tree Search Error";
-	case GNGRP_ERR_UnexpectedNullPointer:
+	case DGL_ERR_UnexpectedNullPointer:
 		return "Unexpected Null Pointer";
-	case GNGRP_ERR_VersionNotSupported:
+	case DGL_ERR_VersionNotSupported:
 		return "Version Not Supported";
-	case GNGRP_ERR_LinkNotFound:
-		return "Link Not Found";
-	case GNGRP_ERR_NodeAlreadyExist:
+	case DGL_ERR_EdgeNotFound:
+		return "Edge Not Found";
+	case DGL_ERR_NodeAlreadyExist:
 		return "Node Already Exist";
-	case GNGRP_ERR_NodeIsAComponent:
+	case DGL_ERR_NodeIsAComponent:
 		return "Node Is A Component";
+	case DGL_ERR_EdgeAlreadyExist:
+		return "Edge Already Exist";
+	case DGL_ERR_BadArgument:
+		return "Bad Argument";
 	}
 
 	return "unknown graph error code";
 }
 
 /*
- * gnGrpGraph_s hiders
+ * dglGraph_s hiders
  */
-int	gnGrpGet_Version		(gnGrpGraph_s *  pgraph) {
+int	dglGet_Version		(dglGraph_s *  pgraph) {
 	return pgraph->Version;
 }
-int	gnGrpGet_Endianess		(gnGrpGraph_s *  pgraph) {
+void dglSet_Version		(dglGraph_s *  pgraph, int nVersion) {
+	pgraph->Version = nVersion;
+}
+int	dglGet_Endianess		(dglGraph_s *  pgraph) {
 	return pgraph->Endian;
 }
-int	gnGrpGet_NodeAttrSize	(gnGrpGraph_s *  pgraph) {
+int	dglGet_NodeAttrSize	(dglGraph_s *  pgraph) {
 	return pgraph->NodeAttrSize;
 }
-int	gnGrpGet_LinkAttrSize	(gnGrpGraph_s *  pgraph) {
-	return pgraph->LinkAttrSize;
+int	dglGet_EdgeAttrSize	(dglGraph_s *  pgraph) {
+	return pgraph->EdgeAttrSize;
 }
-int	gnGrpGet_NodeCount		(gnGrpGraph_s *  pgraph) {
+int	dglGet_NodeCount		(dglGraph_s *  pgraph) {
 	return pgraph->cNode;
 }
-int	gnGrpGet_FromNodeCount	(gnGrpGraph_s *  pgraph) {
-	return pgraph->cFrom;
+int	dglGet_HeadNodeCount	(dglGraph_s *  pgraph) {
+	return pgraph->cHead;
 }
-int	gnGrpGet_ToNodeCount	(gnGrpGraph_s *  pgraph) {
-	return pgraph->cTo;
+int	dglGet_TailNodeCount	(dglGraph_s *  pgraph) {
+	return pgraph->cTail;
 }
-int	gnGrpGet_LinkCount		(gnGrpGraph_s *  pgraph) {
-	return pgraph->cArc;
+int	dglGet_AloneNodeCount	(dglGraph_s *  pgraph) {
+	return pgraph->cAlone;
 }
-int	gnGrpGet_GraphState		(gnGrpGraph_s *  pgraph) {
+int	dglGet_EdgeCount		(dglGraph_s *  pgraph) {
+	return pgraph->cEdge;
+}
+int	dglGet_State		(dglGraph_s *  pgraph) {
 	return pgraph->Flags;
 }
-gnInt32_t * gnGrpGet_Opaque	(gnGrpGraph_s *  pgraph) {
+dglInt32_t * dglGet_Opaque	(dglGraph_s *  pgraph) {
 	return pgraph->aOpaqueSet;
 }
-void gnGrpSet_Opaque( gnGrpGraph_s * pgraph, gnInt32_t * pOpaque ) {
-	memcpy( pgraph->aOpaqueSet , pOpaque , sizeof( gnInt32_t ) * 16 );
+void dglSet_Opaque( dglGraph_s * pgraph, dglInt32_t * pOpaque ) {
+	memcpy( pgraph->aOpaqueSet , pOpaque , sizeof( dglInt32_t ) * 16 );
 }
-gnInt32_t gnGrpGet_NodeSize		(gnGrpGraph_s *  pgraph) {
+int dglGet_NodeSize		(dglGraph_s *  pgraph) {
 	switch(pgraph->Version) {
 	case 1:
-		return GNGRP_NODE_SIZEOF_v1( pgraph->NodeAttrSize );
-#ifdef GNGRP_V2
+		return DGL_NODE_SIZEOF_v1( pgraph->NodeAttrSize );
+#ifdef DGL_V2
 	case 2:
-		return GNGRP_NODE_SIZEOF_v2( pgraph->NodeAttrSize );
+	case 3:
+		return DGL_NODE_SIZEOF_v2( pgraph->NodeAttrSize );
 #endif
 	}
-	pgraph->iErrno = GNGRP_ERR_BadVersion;
+	pgraph->iErrno = DGL_ERR_BadVersion;
 	return -pgraph->iErrno;
 }
-gnInt32_t gnGrpGet_LinkSize		(gnGrpGraph_s *  pgraph) {
+int dglGet_EdgeSize		(dglGraph_s *  pgraph) {
 	switch(pgraph->Version) {
 	case 1:
-		return GNGRP_LINK_SIZEOF_v1( pgraph->NodeAttrSize );
-#ifdef GNGRP_V2
+		return DGL_EDGE_SIZEOF_v1( pgraph->NodeAttrSize );
+#ifdef DGL_V2
 	case 2:
-		return GNGRP_LINK_SIZEOF_v2( pgraph->NodeAttrSize );
+	case 3:
+		return DGL_EDGE_SIZEOF_v2( pgraph->NodeAttrSize );
 #endif
 	}
-	pgraph->iErrno = GNGRP_ERR_BadVersion;
+	pgraph->iErrno = DGL_ERR_BadVersion;
 	return -pgraph->iErrno;
+}
+dglInt64_t dglGet_Cost(dglGraph_s *  pgraph) {
+	return pgraph->nnCost;
+}
+void dglSet_Cost(dglGraph_s * pgraph, dglInt64_t nnCost) {
+	pgraph->nnCost = nnCost;
+}
+dglInt32_t dglGet_Family(dglGraph_s * pgraph) {
+	return pgraph->nFamily;
+}
+void dglSet_Family(dglGraph_s * pgraph, dglInt32_t nFamily) {
+	pgraph->nFamily = nFamily;
+}
+dglInt32_t dglGet_Options(dglGraph_s * pgraph) {
+	return pgraph->nOptions;
+}
+void dglSet_Options(dglGraph_s * pgraph, dglInt32_t nOptions) {
+	pgraph->nOptions = nOptions;
+}
+dglEdgePrioritizer_s * dglGet_EdgePrioritizer(dglGraph_s * pGraph) {
+	return & pGraph->edgePrioritizer;
+}
+dglNodePrioritizer_s * dglGet_NodePrioritizer(dglGraph_s * pGraph) {
+	return & pGraph->nodePrioritizer;
 }
 
 
 
+/*
+ * Node Traverse
+ */
+int dglNode_T_Initialize( dglNodeTraverser_s * pT , dglGraph_s * pGraph ) {
+	switch( pGraph->Version ) {
+	case 1:
+		return dgl_node_t_initialize_V1( pGraph, pT );
+#ifdef DGL_V2
+	case 2:
+	case 3:
+		return dgl_node_t_initialize_V2( pGraph, pT );
+#endif
+	}
+	pGraph->iErrno = DGL_ERR_BadVersion;
+	return -pGraph->iErrno;
+}
 
+void dglNode_T_Release( dglNodeTraverser_s * pT ) {
+	switch( pT->pGraph->Version ) {
+	case 1:
+		return dgl_node_t_release_V1( pT );
+#ifdef DGL_V2
+	case 2:
+	case 3:
+		return dgl_node_t_release_V2( pT );
+#endif
+	}
+	pT->pGraph->iErrno = DGL_ERR_BadVersion;
+}
+
+dglInt32_t * dglNode_T_First( dglNodeTraverser_s * pT ) {
+	switch( pT->pGraph->Version ) {
+	case 1:
+		return dgl_node_t_first_V1( pT );
+#ifdef DGL_V2
+	case 2:
+	case 3:
+		return dgl_node_t_first_V2( pT );
+#endif
+	}
+	pT->pGraph->iErrno = DGL_ERR_BadVersion;
+	return NULL;
+}
+
+dglInt32_t * dglNode_T_Next( dglNodeTraverser_s * pT ) {
+	switch( pT->pGraph->Version ) {
+	case 1:
+		return dgl_node_t_next_V1( pT );
+#ifdef DGL_V2
+	case 2:
+	case 3:
+		return dgl_node_t_next_V2( pT );
+#endif
+	}
+	pT->pGraph->iErrno = DGL_ERR_BadVersion;
+	return NULL;
+}
+
+dglInt32_t * dglNode_T_Find( dglNodeTraverser_s * pT , dglInt32_t nNodeId ) {
+	switch( pT->pGraph->Version ) {
+	case 1:
+		return dgl_node_t_find_V1( pT , nNodeId );
+#ifdef DGL_V2
+	case 2:
+	case 3:
+		return dgl_node_t_find_V2( pT , nNodeId );
+#endif
+	}
+	pT->pGraph->iErrno = DGL_ERR_BadVersion;
+	return NULL;
+}
+
+/*
+ * Edge Traverser
+ */
+int	dglEdge_T_Initialize(
+			dglEdgeTraverser_s * pT ,
+			dglGraph_s * pGraph ,
+			dglEdgePrioritizer_s * pEdgePrioritizer
+			)
+{
+	switch( pGraph->Version ) {
+	case 1:
+		return dgl_edge_t_initialize_V1( pGraph, pT , pEdgePrioritizer );
+#ifdef DGL_V2
+	case 2:
+	case 3:
+		return dgl_edge_t_initialize_V2( pGraph, pT , pEdgePrioritizer );
+#endif
+	}
+	pGraph->iErrno = DGL_ERR_BadVersion;
+	return -pGraph->iErrno;
+}
+void dglEdge_T_Release( dglEdgeTraverser_s * pT )
+{
+	switch( pT->pGraph->Version ) {
+	case 1:
+		return dgl_edge_t_release_V1( pT );
+#ifdef DGL_V2
+	case 2:
+	case 3:
+		return dgl_edge_t_release_V2( pT );
+#endif
+	}
+	pT->pGraph->iErrno = DGL_ERR_BadVersion;
+}
+dglInt32_t *	dglEdge_T_First( dglEdgeTraverser_s * pT )
+{
+	switch( pT->pGraph->Version ) {
+	case 1:
+		return dgl_edge_t_first_V1( pT );
+#ifdef DGL_V2
+	case 2:
+	case 3:
+		return dgl_edge_t_first_V2( pT );
+#endif
+	}
+	pT->pGraph->iErrno = DGL_ERR_BadVersion;
+	return NULL;
+}
+dglInt32_t *	dglEdge_T_Next( dglEdgeTraverser_s * pT )
+{
+	switch( pT->pGraph->Version ) {
+	case 1:
+		return dgl_edge_t_next_V1( pT );
+#ifdef DGL_V2
+	case 2:
+	case 3:
+		return dgl_edge_t_next_V2( pT );
+#endif
+	}
+	pT->pGraph->iErrno = DGL_ERR_BadVersion;
+	return NULL;
+}
+
+
+int	dglEdgeset_T_Initialize	(
+			dglEdgesetTraverser_s * pT ,
+			dglGraph_s * pGraph ,
+			dglInt32_t * pnEdgeset
+			)
+{
+	switch(pGraph->Version) {
+	case 1: return dgl_edgeset_t_initialize_V1(pGraph,pT,pnEdgeset);
+#ifdef DGL_V2
+	case 2:
+	case 3: return dgl_edgeset_t_initialize_V2(pGraph,pT,pnEdgeset);
+#endif
+	}
+	pGraph->iErrno = DGL_ERR_BadVersion;
+	return -pGraph->iErrno;
+}
+
+void dglEdgeset_T_Release( dglEdgesetTraverser_s * pT )
+{
+}
+
+dglInt32_t *	dglEdgeset_T_First( dglEdgesetTraverser_s * pT )
+{
+	switch(pT->pGraph->Version) {
+	case 1: return dgl_edgeset_t_first_V1(pT);
+#ifdef DGL_V2
+	case 2:
+	case 3: return dgl_edgeset_t_first_V2(pT);
+#endif
+	}
+	pT->pGraph->iErrno = DGL_ERR_BadVersion;
+	return NULL;
+}
+
+dglInt32_t *	dglEdgeset_T_Next( dglEdgesetTraverser_s * pT )
+{
+	switch(pT->pGraph->Version) {
+	case 1: return dgl_edgeset_t_next_V1(pT);
+#ifdef DGL_V2
+	case 2:
+	case 3: return dgl_edgeset_t_next_V2(pT);
+#endif
+	}
+	pT->pGraph->iErrno = DGL_ERR_BadVersion;
+	return NULL;
+}
+
+
+/*
+ * chunked I/O
+ */
+
+#define __CIO_BEGIN	0
+#define __CIO_W_HEADER 1
+#define __CIO_W_NODEBUFFER 2
+#define __CIO_W_EDGEBUFFER 3
+#define __CIO_R_HEADER 4
+#define __CIO_R_NODEBUFFER 5
+#define __CIO_R_EDGEBUFFER 6
+#define __CIO_END 7
+
+int dglIOContextInitialize(dglGraph_s * pG, dglIOContext_s * pIO) {
+	pIO->pG = pG;
+	pIO->nState = __CIO_BEGIN;
+	pIO->cb = 0;
+	pIO->ib = 0;
+	pIO->pb = NULL;
+	return 0;
+}
+
+void dglIOContextRelease( dglIOContext_s * pIO ) {
+}
+
+int dglWriteChunk(dglIOContext_s * pIO, dglWriteChunk_fn pfn, void * pv)
+{
+	unsigned char * pb;
+	int cb;
+
+	switch( pIO->nState ) {
+	case __CIO_BEGIN:
+		pIO->pb = pIO->ab;
+		pb = pIO->pb;
+		memcpy( pb,   & pIO->pG->Version        , 1    ); pb += 1;  /* 1 */
+		memcpy( pb,   & pIO->pG->Endian         , 1    ); pb += 1;  /* 2 */
+		memcpy( pb,   & pIO->pG->NodeAttrSize   , 4    ); pb += 4;  /* 6 */
+		memcpy( pb,   & pIO->pG->EdgeAttrSize   , 4    ); pb += 4;  /* 10 */
+		memcpy( pb,   & pIO->pG->aOpaqueSet     , 64   ); pb += 64; /* 74 */
+		memcpy( pb,   & pIO->pG->nOptions       , 4    ); pb += 4;  /* 78 */
+		memcpy( pb,   & pIO->pG->nFamily        , 4    ); pb += 4;  /* 82 */
+		memcpy( pb,   & pIO->pG->nnCost         , 8    ); pb += 8;  /* 90 */
+		memcpy( pb,   & pIO->pG->cNode          , 4    ); pb += 4;  /* 94 */
+		memcpy( pb,   & pIO->pG->cHead          , 4    ); pb += 4;  /* 98 */
+		memcpy( pb,   & pIO->pG->cTail          , 4    ); pb += 4;  /* 102 */
+		memcpy( pb,   & pIO->pG->cAlone         , 4    ); pb += 4;  /* 106 */
+		memcpy( pb,   & pIO->pG->cEdge          , 4    ); pb += 4;  /* 110 */
+		memcpy( pb,   & pIO->pG->iNodeBuffer    , 4    ); pb += 4;  /* 114 */
+		memcpy( pb,   & pIO->pG->iEdgeBuffer    , 4    ); pb += 4;  /* 118 */
+		pIO->cb = 118;
+		cb = pfn(pIO->pG, pIO->pb, pIO->cb, pv);
+		if (cb >= 0) {
+			pIO->ib += cb;
+			if ((pIO->cb - pIO->ib) == 0) {
+				pIO->ib = 0;
+				pIO->cb = pIO->pG->iNodeBuffer;
+				pIO->pb = pIO->pG->pNodeBuffer;
+				pIO->nState = __CIO_W_NODEBUFFER;
+			}
+			else {
+				pIO->nState = __CIO_W_HEADER;
+			}
+		}
+		return cb;
+	case __CIO_W_HEADER:
+		cb = pfn(pIO->pG, pIO->pb + pIO->ib, pIO->cb - pIO->ib, pv);
+		if (cb > 0) {
+			pIO->ib += cb;
+			if ((pIO->cb - pIO->ib) == 0) {
+				if ( pIO->pG->iNodeBuffer > 0 ) {
+					pIO->ib = 0;
+					pIO->cb = pIO->pG->iNodeBuffer;
+					pIO->pb = pIO->pG->pNodeBuffer;
+					pIO->nState = __CIO_W_NODEBUFFER;
+				}
+				else if ( pIO->pG->iEdgeBuffer > 0 ) {
+					pIO->ib = 0;
+					pIO->cb = pIO->pG->iEdgeBuffer;
+					pIO->pb = pIO->pG->pEdgeBuffer;
+					pIO->nState = __CIO_W_EDGEBUFFER;
+				}
+				else {
+					pIO->nState = __CIO_END;
+				}
+			}
+			else {
+				pIO->nState = __CIO_W_HEADER;
+			}
+		}
+		return cb;
+	case __CIO_W_NODEBUFFER:
+		cb = pfn(pIO->pG, pIO->pb + pIO->ib, pIO->cb - pIO->ib, pv);
+		if (cb > 0) {
+			pIO->ib += cb;
+			if ((pIO->cb - pIO->ib) == 0) {
+				if ( pIO->pG->iEdgeBuffer > 0 ) {
+					pIO->ib = 0;
+					pIO->cb = pIO->pG->iEdgeBuffer;
+					pIO->pb = pIO->pG->pEdgeBuffer;
+					pIO->nState = __CIO_W_EDGEBUFFER;
+				}
+				else {
+					pIO->nState = __CIO_END;
+				}
+			}
+		}
+		return cb;
+	case __CIO_W_EDGEBUFFER:
+		cb = pfn(pIO->pG, pIO->pb + pIO->ib, pIO->cb - pIO->ib, pv);
+		if (cb > 0) {
+			pIO->ib += cb;
+			if ((pIO->cb - pIO->ib) == 0) {
+				pIO->nState = __CIO_END;
+			}
+		}
+		return cb;
+	case __CIO_END:
+		pfn(pIO->pG, NULL, 0, pv); /* notify end of graph */
+		return 0;
+	}
+	return 0;
+}
+
+#ifndef MIN
+#define MIN(x,y)	(((x)<(y))?x:y)
+#endif
+
+int dglReadChunk(dglIOContext_s * pIO, dglByte_t * pbChunk, int cbChunk)
+{
+	int i, c;
+	unsigned char * pb;
+
+	switch( pIO->nState ) {
+	case __CIO_BEGIN:
+		pIO->cb = 118;
+		pIO->ib = 0;
+		pIO->pb = pIO->ab;
+
+		c = MIN(cbChunk, 118);
+		memcpy( pIO->pb, pbChunk, c );
+		pIO->ib += c;
+		if ((pIO->cb - pIO->ib) == 0)
+			goto init_nodebuffer;
+		pIO->nState = __CIO_R_HEADER;
+		return c;
+
+	case __CIO_R_HEADER:
+		c = MIN(cbChunk , pIO->cb - pIO->ib);
+		memcpy( pIO->pb + pIO->ib, pbChunk, c );
+		pIO->ib += c;
+		init_nodebuffer:
+		if ((pIO->cb - pIO->ib) == 0) {
+			pb = pIO->pb;
+			memcpy( & pIO->pG->Version      , pb , 1  ); pb += 1;  /* 1 */
+			memcpy( & pIO->pG->Endian       , pb , 1  ); pb += 1;  /* 2 */
+			memcpy( & pIO->pG->NodeAttrSize , pb , 4  ); pb += 4;  /* 6 */
+			memcpy( & pIO->pG->EdgeAttrSize , pb , 4  ); pb += 4;  /* 10 */
+			memcpy( & pIO->pG->aOpaqueSet   , pb , 64 ); pb += 64; /* 74 */
+			memcpy( & pIO->pG->nOptions     , pb , 4  ); pb += 4;  /* 78 */
+			memcpy( & pIO->pG->nFamily      , pb , 4  ); pb += 4;  /* 82 */
+			memcpy( & pIO->pG->nnCost       , pb , 8  ); pb += 8;  /* 90 */
+			memcpy( & pIO->pG->cNode        , pb , 4  ); pb += 4;  /* 94 */
+			memcpy( & pIO->pG->cHead        , pb , 4  ); pb += 4;  /* 98 */
+			memcpy( & pIO->pG->cTail        , pb , 4  ); pb += 4;  /* 102 */
+			memcpy( & pIO->pG->cAlone       , pb , 4  ); pb += 4;  /* 106 */
+			memcpy( & pIO->pG->cEdge        , pb , 4  ); pb += 4;  /* 110 */
+			memcpy( & pIO->pG->iNodeBuffer  , pb , 4  ); pb += 4;  /* 114 */
+			memcpy( & pIO->pG->iEdgeBuffer  , pb , 4  ); pb += 4;  /* 118 */
+
+			pIO->fSwap = 0;
+#ifdef DGL_ENDIAN_BIG
+			if ( pIO->pG->Endian == DGL_ENDIAN_LITTLE ) pIO->fSwap = 1;
+#else
+			if ( pIO->pG->Endian == DGL_ENDIAN_BIG    ) pIO->fSwap = 1;
+#endif
+			if ( pIO->fSwap ) {
+				dgl_swapInt32Bytes( & pIO->pG->NodeAttrSize );
+				dgl_swapInt32Bytes( & pIO->pG->EdgeAttrSize );
+				dgl_swapInt32Bytes( & pIO->pG->nOptions );
+				dgl_swapInt32Bytes( & pIO->pG->nFamily );
+				dgl_swapInt64Bytes( & pIO->pG->nnCost );
+				dgl_swapInt32Bytes( & pIO->pG->cNode );
+				dgl_swapInt32Bytes( & pIO->pG->cHead );
+				dgl_swapInt32Bytes( & pIO->pG->cTail );
+				dgl_swapInt32Bytes( & pIO->pG->cAlone );
+				dgl_swapInt32Bytes( & pIO->pG->cEdge );
+				dgl_swapInt32Bytes( & pIO->pG->iNodeBuffer );
+				dgl_swapInt32Bytes( & pIO->pG->iEdgeBuffer );
+
+				for ( i = 0 ; i < 16 ; i ++ ) {
+					dgl_swapInt32Bytes( & pIO->pG->aOpaqueSet[i] );
+				}
+
+#ifdef DGL_ENDIAN_BIG
+				pIO->pG->Endian = DGL_ENDIAN_BIG;
+#else
+				pIO->pG->Endian = DGL_ENDIAN_LITTLE;
+#endif
+			}
+
+			if ( pIO->pG->iNodeBuffer > 0 ) {
+				pIO->pG->pNodeBuffer = malloc( pIO->pG->iNodeBuffer );
+				if ( pIO->pG->pNodeBuffer == NULL ) {
+					return -1;
+				}
+				pIO->cb = pIO->pG->iNodeBuffer;
+				pIO->pb = pIO->pG->pNodeBuffer;
+				pIO->ib = 0;
+				pIO->nState = __CIO_R_NODEBUFFER;
+			}
+			else {
+				goto init_edgebuffer;
+			}
+		}
+		return c;
+	case __CIO_R_NODEBUFFER:
+		c = MIN(cbChunk , pIO->cb - pIO->ib);
+		memcpy( pIO->pb + pIO->ib, pbChunk, c );
+		pIO->ib += c;
+		init_edgebuffer:
+		if ((pIO->cb - pIO->ib) == 0) {
+			if ( pIO->pG->iEdgeBuffer > 0 ) {
+				pIO->pG->pEdgeBuffer = malloc( pIO->pG->iEdgeBuffer );
+				if ( pIO->pG->pEdgeBuffer == NULL ) {
+					return -1;
+				}
+				pIO->cb = pIO->pG->iEdgeBuffer;
+				pIO->pb = pIO->pG->pEdgeBuffer;
+				pIO->ib = 0;
+				pIO->nState = __CIO_R_EDGEBUFFER;
+			}
+			else {
+				pIO->nState = __CIO_END;
+			}
+		}
+		return c;
+	case __CIO_R_EDGEBUFFER:
+		c = MIN(cbChunk , pIO->cb - pIO->ib);
+		memcpy( pIO->pb + pIO->ib, pbChunk, c );
+		pIO->ib += c;
+		if ((pIO->cb - pIO->ib) == 0) {
+			pIO->nState = __CIO_END;
+		}
+		return c;
+	case __CIO_END:
+		{
+			/* switch on FLAT bit */
+			pIO->pG->Flags |= DGL_GS_FLAT;
+
+			/* nodebuffer and edgebuffer are both arrays on 32 bit integer
+			 * byte order swapping is straightforward
+			 */
+			if (pIO->fSwap && pIO->pG->iNodeBuffer > 0) {
+				int in, cn;
+				dglInt32_t * pn;
+				for (
+						cn = pIO->pG->iNodeBuffer / sizeof(dglInt32_t),
+						pn = (dglInt32_t*)pIO->pG->pNodeBuffer,
+						in = 0 ;
+						in < cn ;
+						in ++
+					)
+				{
+					dgl_swapInt32Bytes( & pn[in] );
+				}
+			}
+			if (pIO->fSwap && pIO->pG->iEdgeBuffer > 0) {
+				int in, cn;
+				dglInt32_t * pn;
+				for (
+						cn = pIO->pG->iEdgeBuffer / sizeof(dglInt32_t),
+						pn = (dglInt32_t*)pIO->pG->pEdgeBuffer,
+						in = 0 ;
+						in < cn ;
+						in ++
+					)
+				{
+					dgl_swapInt32Bytes( & pn[in] );
+				}
+			}
+		}
+		return 0;
+	default:
+		return 0;
+	}
+}

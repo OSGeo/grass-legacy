@@ -36,31 +36,22 @@
 
 #include "opt.h"
 
-static int _clipper(dglGraph_s * pgraphIn,
-					dglGraph_s * pgraphOut,
-					dglSpanClipInput_s * pArgIn,
-					dglSpanClipOutput_s * pArgOut,
-					void * pvArg)
-{
-	return 0;
-}
-
 int main( int argc , char ** argv )
 {
-	dglGraph_s  	graph , graphOut;
-	dglInt32_t		nVertex;
+	dglGraph_s  	graph;
+	dglInt32_t		nNode;
 	int			 	nret , fd;
 
 	/* program options
 	 */
  	char	*	pszGraph;
  	char	*	pszGraphOut;
- 	char	*	pszVertex;
+ 	char	*	pszNode;
  
 	GNO_BEGIN/* short   long        	default     variable        help */
  	GNO_OPTION( "g", 	"graph", 		NULL ,  	& pszGraph ,	"Input Graph file" )
  	GNO_OPTION( "o", 	"graphout", 	NULL ,  	& pszGraphOut ,	"Output Graph file" )
- 	GNO_OPTION( "v", 	"vertex", 		NULL ,  	& pszVertex ,	"Vertex Node Id" )
+ 	GNO_OPTION( "n", 	"node", 		NULL ,  	& pszNode ,		"Node Id to cancel" )
  	GNO_END
  
 
@@ -72,11 +63,11 @@ int main( int argc , char ** argv )
 	 * options parsed
 	 */
 
-	if ( pszVertex == NULL ) {
-		GNO_HELP("span usage");
+	if ( pszNode == NULL ) {
+		GNO_HELP("delnode usage");
 		return 1;
 	}
-	nVertex = atol(pszVertex);
+	nNode = atol(pszNode);
 
 	printf( "Graph read:\n" );
 	if ( (fd = open( pszGraph , O_RDONLY )) < 0 )
@@ -91,43 +82,40 @@ int main( int argc , char ** argv )
 	close( fd );
 	printf( "Done.\n" );
 
-	printf( "Graph depth spanning:\n" );
-	nret = dglDepthSpanning( & graph , & graphOut , nVertex , _clipper , NULL );
+	printf( "Graph unflatten:\n" );
+	nret = dglUnflatten( & graph );
 	if ( nret < 0 ) {
-		fprintf( stderr , "dglDepthSpanning error: %s\n", dglStrerror( & graph ) );
+		fprintf( stderr , "dglUnflatten error: %s\n", dglStrerror( & graph ) );
 		return 1;
 	}
 	printf( "Done.\n" );
 
+	nret = dglDelNode( & graph, nNode );
+	if ( nret < 0 ) {
+		fprintf( stderr , "dglDelNode error: %s\n", dglStrerror( & graph ) );
+		return 1;
+	}
 
 	printf( "Graph flatten:\n" );
-	nret = dglFlatten( & graphOut );
+	nret = dglFlatten( & graph );
 	printf( "Done.\n" );
 
-	if ( dglGet_EdgeCount( & graphOut ) > 0 ) {
-
-
-		if ( pszGraphOut ) {
-			printf( "Graph write:\n" );
-			if ( (fd = open( pszGraphOut , O_WRONLY | O_CREAT | O_TRUNC, 0666 )) < 0 )
-			{
-				perror( "open" ); return 1;
-			}
-			dglWrite( & graphOut, fd );
-			if ( nret < 0 )
-			{
-				fprintf( stderr , "dglWrite error: %s\n" , dglStrerror( & graphOut ) );
-				return 1;
-			}
-			close( fd );
-			printf( "Done.\n" );
+	if ( pszGraphOut ) {
+		printf( "Graph write: %s\n", pszGraphOut );
+		if ( (fd = open( pszGraphOut , O_WRONLY | O_CREAT | O_TRUNC, 0666 )) < 0 )
+		{
+			perror( "open" ); return 1;
 		}
-	}
-	else {
-		printf( "Empty span. No output produced.\n" );
+		nret = dglWrite( & graph, fd );
+		if ( nret < 0 )
+		{
+			fprintf( stderr , "dglWrite error: %s\n" , dglStrerror( & graph ) );
+			return 1;
+		}
+		close( fd );
+		printf( "Done.\n" );
 	}
 
 	dglRelease( & graph );
-	dglRelease( & graphOut );
 	return 0;
 }

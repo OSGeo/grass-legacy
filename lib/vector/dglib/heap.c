@@ -26,7 +26,7 @@
 
 
 
-void gnHeapInit( gnHeap_s * pheap )
+void dglHeapInit( dglHeap_s * pheap )
 {
 	pheap->index = 0;
 	pheap->count = 0;
@@ -34,16 +34,25 @@ void gnHeapInit( gnHeap_s * pheap )
 	pheap->pnode = NULL;
 }
 
-void gnHeapFree( gnHeap_s * pheap )
+void dglHeapFree( dglHeap_s * pheap, dglHeapCancelItem_fn pfnCancelItem  )
 {
-	if ( pheap->pnode ) free( pheap->pnode );
+	int iItem;
+	if ( pheap->pnode ) {
+		if ( pfnCancelItem ) {
+			for (iItem = 0 ; iItem <= pheap->index ; iItem ++) {
+				pfnCancelItem(pheap, & pheap->pnode[iItem] );
+			}
+		}
+		free( pheap->pnode );
+	}
 	pheap->pnode = NULL;
 }
 
-int gnHeapInsertMin(
-		gnHeap_s * pheap ,
+int dglHeapInsertMin(
+		dglHeap_s * pheap ,
 		long key ,
-		gnHeapData_u value
+		unsigned char flags ,
+		dglHeapData_u value
 		)
 {
 	long i;
@@ -51,7 +60,7 @@ int gnHeapInsertMin(
 	if ( pheap->index >= pheap->count - 1 )
 	{
 		pheap->count += pheap->block;
-		if ( (pheap->pnode = realloc( pheap->pnode , sizeof( gnHeapNode_s ) * pheap->count )) == NULL ) return -1;
+		if ( (pheap->pnode = realloc( pheap->pnode , sizeof( dglHeapNode_s ) * pheap->count )) == NULL ) return -1;
 	}
 
 	i = ++pheap->index;
@@ -63,17 +72,18 @@ int gnHeapInsertMin(
 	}
 
 	pheap->pnode[ i ].key = key;
+	pheap->pnode[ i ].flags = flags;
 	pheap->pnode[ i ].value = value;
 
 	return i;
 }
 
-int gnHeapExtractMin(
-		gnHeap_s * pheap,
-		gnHeapNode_s * pnoderet
+int dglHeapExtractMin(
+		dglHeap_s * pheap,
+		dglHeapNode_s * pnoderet
 		)
 {
-	gnHeapNode_s temp;
+	dglHeapNode_s temp;
 	long iparent , ichild;
 
 	if ( pheap->index == 0 ) return 0; /* empty heap */
@@ -102,10 +112,11 @@ int gnHeapExtractMin(
 	return 1;	
 }
 
-int gnHeapInsertMax(
-		gnHeap_s * pheap ,
+int dglHeapInsertMax(
+		dglHeap_s * pheap ,
 		long key ,
-		gnHeapData_u value
+		unsigned char flags ,
+		dglHeapData_u value
 		)
 {
 	long i;
@@ -113,7 +124,7 @@ int gnHeapInsertMax(
 	if ( pheap->index >= pheap->count - 1 )
 	{
 		pheap->count += pheap->block;
-		if ( (pheap->pnode = realloc( pheap->pnode , sizeof( gnHeapNode_s ) * pheap->count )) == NULL ) return -1;
+		if ( (pheap->pnode = realloc( pheap->pnode , sizeof( dglHeapNode_s ) * pheap->count )) == NULL ) return -1;
 	}
 
 	i = ++pheap->index;
@@ -125,17 +136,18 @@ int gnHeapInsertMax(
 	}
 
 	pheap->pnode[ i ].key = key;
+	pheap->pnode[ i ].flags = flags;
 	pheap->pnode[ i ].value = value;
 
 	return i;
 }
 
-int gnHeapExtractMax(
-		gnHeap_s * pheap,
-		gnHeapNode_s * pnoderet
+int dglHeapExtractMax(
+		dglHeap_s * pheap,
+		dglHeapNode_s * pnoderet
 		)
 {
-	gnHeapNode_s temp;
+	dglHeapNode_s temp;
 	long iparent , ichild;
 
 	if ( pheap->index == 0 ) return 0; /* empty heap */
