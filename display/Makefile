@@ -11,6 +11,7 @@ SUBDIRS = \
 	d.path \
 	d.rast \
 	d.vect \
+	d.text \
 	d.what.rast \
 	d.what.vect \
 	d.zoom
