@@ -1,10 +1,9 @@
 PGM = r.buffer
-HOME=$(BIN_MAIN_INTER)
 
 LIST = main.o getdists.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VASK) $(XDRLIB) $(MATHLIB)
+$(BIN_MAIN_INTER)/$(PGM): $(LIST) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #
 $(VASKLIB): #

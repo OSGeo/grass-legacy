@@ -2,7 +2,7 @@ PGM = r.median
 OBJS = main.o read_stats.o write_rec.o median.o
 
 $(BIN_ALPHA_CMD)/$(PGM): $(OBJS) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(GISLIB) $(XDRLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 main.o median.o: stats.h
 

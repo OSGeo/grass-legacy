@@ -1,6 +1,6 @@
-PROG = $(BIN_ALPHA_CMD)/r.cn
+PGM = r.cn
 
-LIBES  = $(GISLIB) $(MATHLIB)
+LIBES  = $(GISLIB)
 
 OBJ = \
 	Gcn.o\
@@ -13,7 +13,7 @@ OBJ = \
 	amc_conversion.o
 
 
-$(PROG): ${OBJ} ${LIBES}
-	 ${CC} -o $@ ${OBJ} ${LIBES} ${XDRLIB}
+$(BIN_ALPHA_CMD)/$(PGM): $(OBJ) $(LIBES)
+	 $(CC) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

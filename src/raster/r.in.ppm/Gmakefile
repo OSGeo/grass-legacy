@@ -1,10 +1,8 @@
-# %W% %G%
+PGM=r.in.ppm
 
-all: $(BIN_CONTRIB_CMD)/r.in.ppm
+OBJ=r.in.ppm.o
 
-PGM=r.in.ppm.o
-
-$(BIN_CONTRIB_CMD)/r.in.ppm: $(PGM) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(PGM) $(GISLIB) $(EXTRALIB) $(MATHLIB) $(XDRLIB)
+$(BIN_CONTRIB_CMD)/$(PGM): $(OBJ) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(EXTRALIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

@@ -1,5 +1,4 @@
 PGM    = r.in.dem
-HOME   = $(BIN_CONTRIB_CMD)
 
 EXTRA_CFLAGS = 
 OBJ	= \
@@ -11,7 +10,7 @@ OBJ	= \
 INCLUDE = -I$(INCLUDE_DIR)
 LIBES	= $(COORCNVLIB) $(GISLIB) $(VECTLIB) $(DATETIMELIB)
 
-$(HOME)/$(PGM): $(OBJ) $(LIBES)
+$(BIN_CONTRIB_CMD)/$(PGM): $(OBJ) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(COORCNVLIB): #

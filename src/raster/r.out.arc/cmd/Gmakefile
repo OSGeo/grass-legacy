@@ -1,7 +1,6 @@
 PGM=r.out.arc
-HOME=$(BIN_ALPHA_CMD)
 
-$(HOME)/$(PGM): main.o $(GISLIB)
+$(BIN_ALPHA_CMD)/$(PGM): main.o $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

@@ -5,6 +5,6 @@ LIST= r.in.png.o
 
 $(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(EXTRA_CFLAGS) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(EXTRALIB) \
-        $(PNGLIB) -lpng -lz $(MATHLIB) $(XDRLIB)
+        $(PNGLIB) -lpng $(ZLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

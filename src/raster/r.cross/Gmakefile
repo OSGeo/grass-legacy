@@ -4,7 +4,7 @@ HOME=$(BIN_MAIN_CMD)
 OBJS = main.o tree.o cross.o cats.o store.o renumber.o
 
 $(HOME)/$(PGM): $(OBJS) $(GISLIB)
-	$(CC) $(LDFLAGS) $(OBJS) $(GISLIB) $(XDRLIB) $(MATHLIB) -o $@
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(OBJS): glob.h
 

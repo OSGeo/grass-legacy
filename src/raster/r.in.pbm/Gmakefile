@@ -1,9 +1,8 @@
+PGM=r.in.pbm
 
-all: $(BIN_CONTRIB_CMD)/r.in.pbm
+OBJ=r.in.pbm.o
 
-PGM2=r.in.pbm.o
-
-$(BIN_CONTRIB_CMD)/r.in.pbm: $(PGM2) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(PGM2) $(GISLIB) $(EXTRALIB) $(MATHLIB) $(XDRLIB)
+$(BIN_CONTRIB_CMD)/$(PGM): $(OBJ) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(EXTRALIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

@@ -1,10 +1,9 @@
 PGM    = r.in.gdal
-HOME   = $(BIN_MAIN_CMD)
 
 LIST   = main.o gbgetsymbol.o gdalbridge.o make_loc.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB) $(GISLIB) $(XDRLIB) \
-			$(DLLIB) $(MATHLIB)
+LIBES= $(GISLIB) $(IMAGERYLIB) 
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(DLLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

@@ -1,8 +1,9 @@
+PGM=r.line
 OFILES = main.o extr_lines.o io.o 
 
 
-$(BIN_ALPHA_CMD)/r.line:	$(OFILES) $(VECTLIB) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(XDRLIB) $(MATHLIB)
+$(BIN_ALPHA_CMD)/$(PGM): $(OFILES) $(VECTLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB) $(GISLIB): #
 
