@@ -20,7 +20,7 @@
 
 int main(int argc, char **argv)
 {
-  struct Flag *once, *terse, *txt, *topo_flag, *flash;
+  struct Flag *once, *terse, *txt, *topo_flag, *flash, *edit_flag;
   struct Option *opt1;
   struct GModule *module;
   char *mapset, *openvect();
@@ -72,6 +72,10 @@ int main(int argc, char **argv)
   flash = G_define_flag();
   flash->key = 'f';
   flash->description = "Enable flashing (slower).";
+ 
+  edit_flag = G_define_flag();
+  edit_flag->key = 'e';
+  edit_flag->description = "Open form in edit mode.";
  
   module = G_define_module();
   module->description = 
@@ -135,7 +139,7 @@ int main(int argc, char **argv)
   D_setup(0);
 
   what(once->answer, txt->answer, terse->answer, flash->answer,
-       width, mwidth, topo_flag->answer); 
+       width, mwidth, topo_flag->answer, edit_flag->answer); 
 
   for(i=0; i<nvects; i++)
       Vect_close (&Map[i]);
