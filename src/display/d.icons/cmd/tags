@@ -1,0 +1,5 @@
+Mmain	main.c	/^main(argc, argv)$/
+draw_icon	draw_icon.c	/^draw_icon (icon, x, y)$/
+input	plot_points.c	/^input(buf)$/
+plot_points	plot_points.c	/^plot_points (icon, reversed)$/
+setup_plot	setup.c	/^setup_plot()$/
