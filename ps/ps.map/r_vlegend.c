@@ -50,7 +50,6 @@ read_vlegend (void)
 	if (KEY("fontsize"))
 	{
 	    fontsize = atoi(data);
-	    if (fontsize < 4 || fontsize > 50) fontsize = 0;
 	    continue;
 	}
 
