@@ -41,7 +41,7 @@ main (int argc, char *argv[])
     int    in_area, in_centr, in_cat;
     int    field[2];
     char   *mapset[2];
-    char   *pre[0], *sep;
+    char   *pre[2], *sep;
     struct GModule *module;
     struct Option *in_opt[2], *out_opt, *type_opt[2], *field_opt[2], *operator_opt;
     struct Flag *table_flag;
