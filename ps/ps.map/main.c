@@ -99,6 +99,7 @@ int main(int argc,char *argv[])
     input_file->key = "input";
     input_file->type = TYPE_STRING;
     input_file->description = "file containing mapping instructions (or use input=- to enter from keyboard)";
+    input_file->gisprompt = "file,file,file";
     input_file->required = NO;
 
     map_scale = G_define_option();
