@@ -156,14 +156,17 @@ sweepOutput::compute(elevation_type elev,
 
 FLOW_DATASTR* 
 initializePQ() {
-  
+   
   stats->comment("sweep:initialize flow data structure", opt->verbose);
   
   FLOW_DATASTR *flowpq;
 #ifdef IM_PQUEUE
   stats->comment("FLOW_DATASTRUCTURE: in-memory pqueue");
   flowpq = new FLOW_DATASTR(PQ_SIZE);
-  *stats << form("initialized to %.2fMB\n", (float)PQ_SIZE / (1<<20));
+  char buf[1024]; 
+  sprintf(buf, "initialized to %.2fMB\n", (float)PQ_SIZE / (1<<20));
+  *stats << buf; 
+
 #endif
 #ifdef EM_PQUEUE
   stats->comment("FLOW_DATASTRUCTURE: ext-memory pqueue");
@@ -253,7 +256,7 @@ sweep(AMI_STREAM<sweepItem> *sweepstr, const flowaccumulation_type D8CUT,
     /* read next sweepItem = (prio, elevwin, topoRankwin, dir) */
     ae = sweepstr->read_item(&crtpoint);
     if (ae != AMI_ERROR_NO_ERROR) {
-      cerr << form("sweep: k=%ld: cannot read next item..\n", k);
+      fprintf(stderr, "sweep: k=%ld: cannot read next item..\n", k);
       exit(1);
     }
     /* cout << "k=" << k << " prio =" << crtpoint->getPriority() << "\n"; */
@@ -309,7 +312,7 @@ sweep(AMI_STREAM<sweepItem> *sweepstr, const flowaccumulation_type D8CUT,
     printf("%7ld: (%5d, %5d, %5d) flow: %7.3f, weights:[",
 	   k, crtpoint->getElev(), crtpoint->getI(),crtpoint->getJ(), 
 	   flow.get());
-    for (int l=0;l<9;l++) cout << form("%2.1f ",weight.get(l));
+    for (int l=0;l<9;l++) printf("%2.1f ",weight.get(l));
     cout <<"] ";
     cout << output << "\n";
 #endif        
@@ -326,7 +329,9 @@ sweep(AMI_STREAM<sweepItem> *sweepstr, const flowaccumulation_type D8CUT,
   
   fprintf(stderr, "\n");
   *stats << "sweeping done\n";
-  *stats << form("pqsize = %ld \n", (long)flowpq->size());
+  char buf[1024];
+  sprintf(buf, "pqsize = %ld \n", (long)flowpq->size());
+  *stats << buf;
   
   assert(outstr->stream_len() == nitems);
   delete flowpq; 
@@ -389,8 +394,8 @@ pushFlow(const sweepItem& swit, const flowValue &flow,
 	  /* assert(prio >= prio_crt); */
 #if (defined WARNING_FLAG)
 	  if (prio < prio_crt) {
-	    cout << form("\n(row=%d,col=%d,ele=%d): ",
-			 i_crt, j_crt, elev_crt);
+	    printf("\n(row=%d,col=%d,ele=%d): ",
+		   i_crt, j_crt, elev_crt);
 	    cout << "attempt to push flow uphill\n";
 	  }
 #endif

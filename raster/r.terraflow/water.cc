@@ -579,10 +579,11 @@ compressedWaterWindowBaseType::sanityCheck() {
 
 ostream&
 operator<<(ostream& s, const compressedWaterWindowBaseType &p) {
-  return s << form("[compressedWaterWindowBaseType %d,%d %c e=%d d=%u]",
-		   p.i, p.j, 
-		   directionSymbol(p.getDirection()),
-		   p.getElevation(), p.getDepth());
+  return s << "[compressedWaterWindowBaseType " 
+	   << p.i << "," << p.j 
+	   << " " << directionSymbol(p.getDirection())
+	   << " e=" << p.getElevation() 
+	   << " d =" << p.getDepth() << "]";
 }
 
 /* ********************************************************************** */
@@ -601,10 +602,12 @@ compressedWaterWindowType::sanityCheck() {
 
 ostream&
 operator<<(ostream& s, const compressedWaterWindowType &p) {
-  return s << form("[compressedWaterWindowType %d,%d %c e=%d d=%u l=%ld]",
-				   p.i, p.j, 
-				   directionSymbol(p.getDirection()),
-				   p.getElevation(), p.getDepth(), p.label);
+  return s << "[compressedWaterWindowType " 
+	   << p.i << "," <<  p.j 
+	   << "  " << directionSymbol(p.getDirection())
+	   << " e=" << p.getElevation()
+	   << " d=" << p.getDepth() 
+	   << " l=" << p.label;
 }
 
 
