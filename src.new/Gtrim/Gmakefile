@@ -1,0 +1,12 @@
+#  %W%  %G%
+OFILES = main.o 
+
+EXTRA_CFLAGS = -I$(SRC)/mapdev/lib
+
+$(BIN)/Gtrim: $(OFILES) $(DIGLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(DIGLIB) $(MATHLIB)
+
+$(DIGLIB): #in case of library changes
+
+
+
