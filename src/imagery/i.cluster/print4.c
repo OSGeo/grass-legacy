@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "imagery.h"
 
 #define FMT1 "%g/%d=%.1lf"
