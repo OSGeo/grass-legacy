@@ -16,7 +16,6 @@ SUBDIRS = \
 	g.manual \
 	g.mlist \
 	g.mremove \
-	g3_scripts \
 	i.fusion.brovey \
 	i.image.mosaic \
 	i.oif \

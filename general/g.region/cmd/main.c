@@ -18,6 +18,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "gis.h"
+#include "G3d.h"
 #include "Vect.h"
 #include "local_proto.h"
 #include "projects.h"
@@ -54,15 +55,16 @@ int main (int argc, char *argv[])
 		*center,
 		*res_set,
 		*dist_res,
-		*dflt;
+		*dflt,
+		*z;
 	} flag;
 	struct
 	    {
 		struct Option
-		*north,*south,*east,*west,
-		*res, *nsres, *ewres,
+		*north,*south,*east,*west,*top,*bottom,
+		*res, *nsres, *ewres, *res3, *tbres,
 		*save, *region, *view,
-		*raster, *align, *zoom, *vect;
+		*raster, *raster3d, *align, *zoom, *vect;
 	} parm;
 
 	G_gisinit (argv[0]);
@@ -104,11 +106,16 @@ int main (int argc, char *argv[])
 
         flag.res_set= G_define_flag();
         flag.res_set->key         = 'a';
-        flag.res_set->description = "Align region to resolution (default = align to bounds)";
+        flag.res_set->description = "Align region to resolution (default = align to bounds, "
+	    			    "works only for 2D resolution )";
 
 	flag.update = G_define_flag();
 	flag.update->key         = 'u';
 	flag.update->description = "Do not update the current region";
+
+	flag.z = G_define_flag();
+	flag.z->key         = '3';
+	flag.z->description = "Print also 3D";
 
 	/* parameters */
 
@@ -129,6 +136,15 @@ int main (int argc, char *argv[])
 	parm.raster->type        = TYPE_STRING;
 	parm.raster->description = "Set region to match this raster map";
 	parm.raster->gisprompt   = "old,cell,raster";
+
+	parm.raster3d = G_define_option();
+	parm.raster3d->key         = "raster3d";
+	parm.raster3d->key_desc    = "name";
+	parm.raster3d->required    = NO;
+	parm.raster3d->multiple    = NO;
+	parm.raster3d->type        = TYPE_STRING;
+	parm.raster3d->description = "Set region to match this 3D raster map (both 2D and 3D values)";
+	parm.raster3d->gisprompt   = "old,grid3,raster 3D";
 
 	parm.vect = G_define_option();
 	parm.vect->key         = "vector";
@@ -179,13 +195,37 @@ int main (int argc, char *argv[])
 	parm.west->type        = TYPE_STRING;
 	parm.west->description = llinfo("Value for the western edge ", G_lon_format_string(), window.proj);
 
+	parm.top = G_define_option();
+	parm.top->key         = "t";
+	parm.top->key_desc    = "value";
+	parm.top->required    = NO;
+	parm.top->multiple    = NO;
+	parm.top->type        = TYPE_STRING;
+	parm.top->description = "Value for the top edge";
+
+	parm.bottom = G_define_option();
+	parm.bottom->key         = "b";
+	parm.bottom->key_desc    = "value";
+	parm.bottom->required    = NO;
+	parm.bottom->multiple    = NO;
+	parm.bottom->type        = TYPE_STRING;
+	parm.bottom->description = "Value for the bottom edge";
+
 	parm.res = G_define_option();
 	parm.res->key         = "res";
 	parm.res->key_desc    = "value";
 	parm.res->required    = NO;
 	parm.res->multiple    = NO;
 	parm.res->type        = TYPE_STRING;
-	parm.res->description = "Grid resolution (both north-south and east-west)";
+	parm.res->description = "Grid resolution 2D (both north-south and east-west)";
+
+	parm.res3 = G_define_option();
+	parm.res3->key         = "res3";
+	parm.res3->key_desc    = "value";
+	parm.res3->required    = NO;
+	parm.res3->multiple    = NO;
+	parm.res3->type        = TYPE_STRING;
+	parm.res3->description = "3D grid resolution (north-south, east-west and top-bottom)";
 
 	parm.nsres = G_define_option();
 	parm.nsres->key         = "nsres";
@@ -193,7 +233,7 @@ int main (int argc, char *argv[])
 	parm.nsres->required    = NO;
 	parm.nsres->multiple    = NO;
 	parm.nsres->type        = TYPE_STRING;
-	parm.nsres->description = llinfo("North-south grid resolution", G_llres_format_string(), window.proj);
+	parm.nsres->description = llinfo("North-south grid resolution 2D ", G_llres_format_string(), window.proj);
 
 	parm.ewres = G_define_option();
 	parm.ewres->key         = "ewres";
@@ -201,7 +241,15 @@ int main (int argc, char *argv[])
 	parm.ewres->required    = NO;
 	parm.ewres->multiple    = NO;
 	parm.ewres->type        = TYPE_STRING;
-	parm.ewres->description = llinfo("East-west grid resolution  ", G_llres_format_string(), window.proj);
+	parm.ewres->description = llinfo("East-west grid resolution  2D ", G_llres_format_string(), window.proj);
+
+	parm.tbres = G_define_option();
+	parm.tbres->key         = "tbres";
+	parm.tbres->key_desc    = "value";
+	parm.tbres->required    = NO;
+	parm.tbres->multiple    = NO;
+	parm.tbres->type        = TYPE_STRING;
+	parm.tbres->description = "Top-bottom grid resolution";
 
 	parm.zoom = G_define_option();
 	parm.zoom->key         = "zoom";
@@ -357,6 +405,37 @@ int main (int argc, char *argv[])
 	}
 				
 
+	/* raster3d= */
+	if (name = parm.raster3d->answer)
+	{
+	    	G3D_Region win;
+		
+		if( (mapset = G_find_grid3(name, "")) == NULL )
+			G_fatal_error ( "3D raster map <%s> not found", name);
+		    
+		if ( G3d_readRegionMap (name, mapset, &win) < 0 ) 
+			G_fatal_error ( "can't read header for 3D raster <%s> in <%s>", name, mapset);
+
+		window.proj = win.proj;
+		window.zone = win.zone;
+		window.north = win.north;
+		window.south = win.south;
+		window.east = win.east;
+		window.west = win.west;
+		window.top = win.top;
+		window.bottom = win.bottom;
+		window.rows = win.rows;
+		window.rows3 = win.rows;
+		window.cols = win.cols;
+		window.cols3 = win.cols;
+		window.depths = win.depths;
+		window.ns_res = win.ns_res;
+		window.ns_res3 = win.ns_res;
+		window.ew_res = win.ew_res;
+		window.ew_res3 = win.ew_res;
+		window.tb_res = win.tb_res;
+	}
+
 	/* vect= */
 	if (name = parm.vect->answer)
 	{
@@ -502,6 +581,58 @@ int main (int argc, char *argv[])
 			die(parm.west);
 	}
 
+	/* t= */
+	if (value = parm.top->answer)
+	{
+		if(i = nsew(value, "t+", "t-", "b+"))
+		{
+			if (!G_scan_resolution (value+2, &x, PROJECTION_XY))
+				die(parm.top);
+			switch(i)
+			{
+			case 1:
+				window.top += x;
+				break;
+			case 2:
+				window.top -= x;
+				break;
+			case 3:
+				window.top = window.bottom + x;
+				break;
+			}
+		}
+		else if (G_scan_resolution (value, &x, PROJECTION_XY))
+			window.top = x;
+		else
+			die(parm.top);
+	}
+
+	/* b= */
+	if (value = parm.bottom->answer)
+	{
+		if(i = nsew(value, "b+", "b-", "t-"))
+		{
+			if (!G_scan_resolution (value+2, &x, PROJECTION_XY))
+				die(parm.bottom);
+			switch(i)
+			{
+			case 1:
+				window.bottom += x;
+				break;
+			case 2:
+				window.bottom -= x;
+				break;
+			case 3:
+				window.bottom = window.top - x;
+				break;
+			}
+		}
+		else if (G_scan_resolution (value, &x, PROJECTION_XY))
+			window.bottom = x;
+		else
+			die(parm.bottom);
+	}
+
 	/* res= */
 	if (value = parm.res->answer)
 	{
@@ -509,12 +640,23 @@ int main (int argc, char *argv[])
 			die(parm.res);
 		window.ns_res = x;
 		window.ew_res = x;
-	if (flag.res_set->answer) {
-		window.north =  ceil(window.north/x) * x ;
-		window.south = floor(window.south/x) * x ;
-		window.east = ceil(window.east/x) * x ;
-		window.west = floor(window.west/x) * x ;
+	
+		if (flag.res_set->answer) {
+			window.north =  ceil(window.north/x) * x ;
+			window.south = floor(window.south/x) * x ;
+			window.east = ceil(window.east/x) * x ;
+			window.west = floor(window.west/x) * x ;
                 }
+	}
+
+	/* res3= */
+	if (value = parm.res3->answer)
+	{
+		if (!G_scan_resolution (value, &x, window.proj))
+			die(parm.res);
+		window.ns_res3 = x;
+		window.ew_res3 = x;
+		window.tb_res = x;
 	}
 
 	/* nsres= */
@@ -523,9 +665,10 @@ int main (int argc, char *argv[])
 		if (!G_scan_resolution (value, &x, window.proj))
 			die(parm.nsres);
 		window.ns_res = x;
-	if (flag.res_set->answer) {
-		window.north = 2 * x * ( (int)(window.north/2/x));
-                window.south = 2 * x * ( (int)(window.south/2/x));
+	
+		if (flag.res_set->answer) {
+			window.north = 2 * x * ( (int)(window.north/2/x));
+                	window.south = 2 * x * ( (int)(window.south/2/x));
 		}
 	}
 
@@ -535,9 +678,23 @@ int main (int argc, char *argv[])
 		if (!G_scan_resolution (value, &x, window.proj))
 			die(parm.ewres);
 		window.ew_res = x;
-	if (flag.res_set->answer) {
-		window.east =  2 * x * ( (int)(window.east/2/x));
-                window.west =  2 * x * ( (int)(window.west/2/x));
+		
+		if (flag.res_set->answer) {
+			window.east =  2 * x * ( (int)(window.east/2/x));
+                	window.west =  2 * x * ( (int)(window.west/2/x));
+		}
+	}
+
+	/* tbres= */
+	if (value = parm.tbres->answer)
+	{
+		if (!G_scan_resolution (value, &x, PROJECTION_XY))
+			die(parm.tbres);
+		window.tb_res = x;
+
+		if (flag.res_set->answer) {
+			window.top =  2 * x * ( (int)(window.top/2/x));
+                	window.bottom =  2 * x * ( (int)(window.bottom/2/x));
 		}
 	}
 
@@ -600,7 +757,7 @@ int main (int argc, char *argv[])
 	}
 	if (print_flag)
 	{
-		print_window (&window, print_flag, dist_flag);
+		print_window (&window, print_flag, dist_flag, flag.z->answer);
 	}
 
 	exit(0);

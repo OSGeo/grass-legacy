@@ -4,11 +4,11 @@
 #include "local_proto.h"
 #include "gprojects.h"
 
-int print_window(struct Cell_head *window,int print_flag, int dist_flag)
+int print_window(struct Cell_head *window,int print_flag, int dist_flag, int z_flag)
 {
 	char *prj, *datum, *ellps;
 	int x;
-	char north[30], south[30], east[30], west[30], nsres[30], ewres[30];
+	char north[30], south[30], east[30], west[30], nsres[30], ewres[30], nsres3[30], ewres3[30], tbres[30];
 	/* BOB */
 	double EW_DIST1, EW_DIST2, NS_DIST1, NS_DIST2;
 	double longitude, latitude;
@@ -26,7 +26,10 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag)
 	G_format_easting  (window->east,  east,  x);
 	G_format_easting  (window->west,  west,  x);
 	G_format_resolution  (window->ew_res,  ewres,  x);
+	G_format_resolution  (window->ew_res3,  ewres3,  x);
 	G_format_resolution  (window->ns_res,  nsres,  x);
+	G_format_resolution  (window->ns_res3,  nsres3,  x);
+	G_format_resolution  (window->tb_res,  tbres,  x);
 	G_begin_distance_calculations();
 	/* EW Dist at North edge*/
 	EW_DIST1 = G_distance(window->east, window->north, window->west, window->north);
@@ -40,8 +43,14 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag)
 	if (dist_flag == 1) {
 	sprintf (ewres, "%.8f", ((EW_DIST1 + EW_DIST2) / 2) / window->cols );
 	G_trim_decimal (ewres);
+	sprintf (ewres3, "%.8f", ((EW_DIST1 + EW_DIST2) / 2) / window->cols3 );
+	G_trim_decimal (ewres3);
 	sprintf (nsres, "%.8f", ((NS_DIST1 + NS_DIST2) / 2) / window->rows );
 	G_trim_decimal (nsres);
+	sprintf (nsres3, "%.8f", ((NS_DIST1 + NS_DIST2) / 2) / window->rows3 );
+	G_trim_decimal (nsres3);
+	sprintf (tbres, "%.8f", (window->top - window->bottom) / window->depths );
+	G_trim_decimal (tbres);
 	}
 	if (print_flag == 1)
 	{
@@ -64,11 +73,29 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag)
 		fprintf (stdout, "%-11s %s\n","south:", south);
 		fprintf (stdout, "%-11s %s\n","west:",  west);
 		fprintf (stdout, "%-11s %s\n","east:",  east);
+		if ( z_flag ) {
+			fprintf (stdout, "%-11s %.8f\n","top:",  window->top);
+			fprintf (stdout, "%-11s %.8f\n","bottom:",  window->bottom);
+		}
 		fprintf (stdout, "%-11s %s\n","nsres:", nsres);
+		if ( z_flag ) {
+		    fprintf (stdout, "%-11s %s\n","nsres3:", nsres3);
+		}
 		fprintf (stdout, "%-11s %s\n","ewres:", ewres);
+		if ( z_flag ) {
+		    fprintf (stdout, "%-11s %s\n","ewres3:", ewres3);
+		    fprintf (stdout, "%-11s %s\n","tbres:", tbres);
+		}
 
 		fprintf (stdout, "%-11s %d\n","rows:", window->rows);
+		if ( z_flag ) {
+		    fprintf (stdout, "%-11s %d\n","rows3:", window->rows3);
+		}
 		fprintf (stdout, "%-11s %d\n","cols:", window->cols);
+		if ( z_flag ) {
+		   fprintf (stdout, "%-11s %d\n","cols3:", window->cols3);
+		   fprintf (stdout, "%-11s %d\n","depths:", window->depths);
+		}
 	}
 	else if (print_flag == 3) /* show boundaries in lat/long  MN 2001*/
 	{
@@ -214,8 +241,19 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag)
 		fprintf (stdout, "s=%s\n",    south);
 		fprintf (stdout, "w=%s\n",    west);
 		fprintf (stdout, "e=%s\n",    east);
+		if ( z_flag ) {
+		    fprintf (stdout, "t=%g\n",    window->top);
+		    fprintf (stdout, "b=%g\n",    window->bottom);
+		}
 		fprintf (stdout, "nsres=%s\n",nsres);
+		if ( z_flag ) {
+		    fprintf (stdout, "nsres3=%s\n",nsres3);
+		}
 		fprintf (stdout, "ewres=%s\n",ewres);
+		if ( z_flag ) {
+		    fprintf (stdout, "ewres3=%s\n",ewres3);
+		    fprintf (stdout, "tbres=%s\n",tbres);
+		}
 	}
 
 	return 0;

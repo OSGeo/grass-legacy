@@ -418,7 +418,7 @@ void G3d_getWindow (G3D_Region *);
 /* grass/src/libes/g3d/g3dwindowio.c */
 void G3d_useWindowParams(void);
 int G3d_readWindow (G3D_Region *, char *);
-int G3d_writeWindow (G3D_Region *, char *);
+/* int G3d_writeWindow (G3D_Region *, char *); */
 /* grass/src/libes/g3d/getblock.c */
 void G3d_getBlockNocache(G3D_Map *, int, int, int, int, int, int, void *, int);
 void G3d_getBlock(G3D_Map *, int, int, int, int, int, int, char *, int);

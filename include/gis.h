@@ -131,16 +131,24 @@ struct Cell_head
 {
     int format;     	/* max numer of bytes per cell minus 1          */
     int compressed; 	/* 0 = uncompressed, 1 = compressed, -1 pre 3.0 */
-    int rows;	    	/* number of rows in the data                   */
-    int cols;	    	/* number of columns in the data                */
+    int rows;	    	/* number of rows in the data 2D                */
+    int rows3;	    	/* number of rows in the data 3D                */
+    int cols;	    	/* number of columns in the data 2D             */
+    int cols3;	    	/* number of columns in the data 3D             */
+    int depths;         /* number of depths in data                     */
     int proj;	    	/* Projection (see #defines above)              */
     int zone;	    	/* Projection zone                              */
-    double ew_res;  	/* East to West cell size                       */
-    double ns_res;  	/* North to South cell size                     */
+    double ew_res;  	/* East to West cell size 2D                    */
+    double ew_res3;  	/* East to West cell size 3D                    */
+    double ns_res;  	/* North to South cell size 2D                  */
+    double ns_res3;  	/* North to South cell size 3D                  */
+    double tb_res;  	/* Top to Bottom cell size                      */
     double north;   	/* coordinates of layer                         */
     double south;
     double east;
     double west;
+    double top;
+    double bottom;
 };
 
 struct _Color_Rule_
@@ -450,7 +458,7 @@ struct GModule                      /* Structure that stores module info  */
 {
     char *description;              /* String describing module */
 	/* further items are possible: author(s), version */
-    int overwrite;   /* overwrite old files */
+    int overwrite; /* overwrite old files */
 };
 
 struct TimeStamp

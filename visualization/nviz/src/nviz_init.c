@@ -7,7 +7,6 @@
 #include "tk.h"
 #include "interface.h"
 #include "gis.h"
-#include "G3d.h"
 #include "coldefs.h"
 #include "bitmap.h"
 /* get from gislib: */
@@ -33,7 +32,6 @@ int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
     struct GModule *module;
     char *arglist[3], *autoload;
     int i, aload = 1;
- 
     /*
      * Flags and Options:
      * -q : quickstart, starts nvwish without querying for the usual maps
@@ -114,6 +112,7 @@ int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
 
     if (G_parser(argc, argv))
 	exit(0);
+
     /* Exit status is zero to avoid TCL complaints */
 
     {
@@ -430,38 +429,10 @@ int Ninitdata(Tcl_Interp * interp,	/* Current interpreter. */
 {
     char **argv;
     int argc;
-    G3D_Region win3;
-    struct Cell_head win2;
-    char *xdbase, *xlocation, *xmapset;
-    char xname[512], xname_perm[512];
-    
 
     argc = Ngetargs(interp, &argv);
 
     G_gisinit(argv[0]);
-    
-    /*G3d_initDefaults ();*/
-        xdbase = G_gisdbase();
-        xlocation = G_location();
-	xmapset = G_mapset();
-	sprintf(xname, "%s/%s/%s/%s", xdbase, xlocation, xmapset, G3D_WINDOW_ELEMENT);
-	sprintf(xname_perm, "%s/%s/PERMANENT/%s", xdbase, xlocation, G3D_DEFAULT_WINDOW_ELEMENT);
-	if (! G3d_readWindow (&win3, xname))
-	{
-		if (! G3d_readWindow (&win3, xname_perm))
-		{
-			 fprintf(stderr, "Creating DEFAULT_WIND3\n");
-			 G_get_default_window (&win2);
-			 G3d_incorporate2dRegion(&win2, &win3);
-			 win3.top = 100.;
-			 win3.bottom = 0.;
-			 win3.tb_res = 2.;
-			 G3d_adjustRegionRes (&win3);
-			 G3d_writeWindow(&win3, xname_perm);
-		}
-		fprintf(stderr, "Creating WIND3 File\n");
-		G3d_writeWindow(&win3, xname);
-	}
 
     GS_libinit();
 
