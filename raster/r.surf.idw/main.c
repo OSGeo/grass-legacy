@@ -225,8 +225,10 @@ interpolate (MELEMENT rowlist[], SHORT nrows, SHORT ncols, SHORT datarows, int n
     current_row = search = (EW *) G_calloc (datarows, sizeof (EW));
     lastrow = search + datarows - 1;
     nbr_head = (NEIGHBOR *) G_calloc (npoints + 1, sizeof (NEIGHBOR));
-    /*nbr_head->distance = maxdist;
+#if 0
+    nbr_head->distance = maxdist;
     nbr_head->searchptr = &(nbr_head->Mptr);      /* see replace_neighbor */
+#endif
 
     fprintf (stderr, "Interpolating raster map <%s> ... %d rows ... ", output, nrows);
 
