@@ -46,11 +46,16 @@ main(argc,argv) char *argv[];
 	CELL ncats;
 	ncats = G_number_of_cats (name, mapset);
 	G_init_colors (&colors);
-	G_add_color_rule ((CELL)0, 255, 255, 255, ncats, 255, 255,255, &colors);
+/* 	G_add_color_rule ((CELL)0, 255, 255, 255, ncats, 255, 255,255, &colors);*/
     }
 
 /* translate the cell color table to paint colors */
     G_get_color_range (&min, &max, &colors);
+    /* G_get_color_range() sets min to 1 if range for the map isn't set */
+
+    if(min==1) min = 0;
+    /* added by Olga apr,94 in order to allow editing of cat 0 */
+
     xnum = max - min + 1;
 
     num = xnum;		/* check for int overflow */
@@ -61,6 +66,7 @@ main(argc,argv) char *argv[];
     red  = (unsigned char *) G_malloc (num);
     grn  = (unsigned char *) G_malloc (num);
     blu  = (unsigned char *) G_malloc (num);
+
     for (i = 0, cat = min; cat <= max; cat++, i++)
     {
 	int r,g,b;
@@ -80,7 +86,8 @@ main(argc,argv) char *argv[];
 	colortable[i] = temp[i];
     free (temp);
 
-/* avoid category zero */
+/* commented out by Olga. Apr, 94 to allow users change color for cat 0 */
+/*
     if (min == 0)
     {
 	min++;
@@ -92,6 +99,7 @@ main(argc,argv) char *argv[];
 	max--;
 	num--;
     }
+*/
     if (min > max || num <= 0)
     {
 	Pdisconnect();
@@ -113,7 +121,7 @@ main(argc,argv) char *argv[];
 	col = 7;
 	for (cn = startcolor; cn < endcolor; cn++) 
 	{
-	    if (cn == 0) continue;
+/*	    if (cn == 0) continue;*/
 	    i = cn - startcolor ;
 	    sprintf (colornum[i], "%5ld", cn);
 	    V_const (colornum[i], 's', line+2, col, 5) ;
@@ -152,13 +160,11 @@ main(argc,argv) char *argv[];
 	if (strcmp (next, "end") == 0) break;
 	if (sscanf (next, "%ld", &endcolor) != 1)
 		continue;
-	if (endcolor == 0) endcolor++;
 	if (endcolor < min)
 	    endcolor = min;
 	if (endcolor > max)
 	{
 	    endcolor = max - NROWS*NCOLS + 1;
-	    if (endcolor == 0) endcolor++;
 	}
 	startcolor = endcolor ;
     }
@@ -180,7 +186,7 @@ main(argc,argv) char *argv[];
 	}
     }
     add_colors (min,i,j,cur,&colors);
-    G_set_color ((CELL)0, 255, 255, 255, &colors);
+    /* G_set_color ((CELL)0, 255, 255, 255, &colors);*/
 
     Pdisconnect();
 
