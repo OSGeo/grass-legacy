@@ -1,0 +1,12 @@
+
+# %W%  %G%
+
+OFILES = \
+	arcdef.o \
+	bnw_line.o \
+	main.o \
+	make_cell.o \
+	returns.o
+
+$(BIN)/d.digit: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(VASK) $(MATHLIB)
