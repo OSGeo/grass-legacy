@@ -44,7 +44,7 @@ Optional requirements:
  - libpng (for r.in.png, r.out.png), usually already installed.
      [ftp://ftp.cdrom.com/pub/png/]
  - libz (compression library, for some modules), usually already installed.
-     [ftp://ftp.cdrom.com/pub/infozip/zlib]
+     [ftp://ftp.freesoftware.com/pub/infozip/zlib/]
  - libjpeg (for r.in.tiff, r.out.tiff, for HDF library), 
    usually already installed.
      [ftp://ftp.uu.net/graphics/jpeg/]
@@ -78,4 +78,4 @@ Optional requirements:
 GRASS Development Team 2000
 grass@baylor.edu
 
-$Id: REQUIREMENTS,v 1.7 2000-11-19 20:31:53 andreas Exp $
+$Id: REQUIREMENTS,v 1.8 2001-01-19 14:28:06 markus Exp $
