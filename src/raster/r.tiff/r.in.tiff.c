@@ -132,8 +132,9 @@ int main (int argc, char *argv[])
   char mapred[300], mapgrn[300], mapblu[300];
   CELL *cellr, *cellg, *cellb;
   
-  pbwcolr=&bwcolors;
   G_gisinit(argv[0]);
+
+  pbwcolr=&bwcolors;
 
   inopt = G_define_option();
   inopt->key		= "input";
@@ -167,7 +168,7 @@ int main (int argc, char *argv[])
   if(G_parser(argc, argv))
     exit(-1);
 
-  Verbose = vflag->answer ;
+  Verbose = vflag->answer;
   Bands = bflag->answer;
 
   nlev=atoi(nlevopt->answer);
@@ -747,7 +748,7 @@ set_cellhd(char *fname, struct Cell_head *head,
   head->format = 0;
   head->compressed = 0; /* Is this necessary? */
 
-  free(tfw);
+  G_free(tfw);
 
 
 }
