@@ -383,7 +383,7 @@ int main(int argc, char *argv[]) {
     fclose(fp1);
 
     if(verbose->answer)
-	printf("\n%ld bytes written to '%s'.\n", filesize, outfile);
+	fprintf(stderr, "\n%ld bytes written to '%s'.\n", filesize, outfile);
 
     G_done_msg("");
     return 0;
