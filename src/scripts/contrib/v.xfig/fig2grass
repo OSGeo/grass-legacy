@@ -10,7 +10,7 @@
 #
 # Usage      : fig2grass [inputfile ...] [> outputfile]
 
-awk --source='
+gawk --source='
 
 function formerr() {
     printf "*** WRONG FIG 3.2 FORMAT ! ***\n"
