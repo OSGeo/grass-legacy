@@ -2,12 +2,28 @@
 #include <math.h>
 #include "gis.h"
 
+/*
+ * r.sunmask:
+ *   Calculates the real shadows from a DEM from
+ *
+ * Janne Soimasuo, Finland
+ *
+ * GPL >= 2
+ *
+ * MN 2/2002: attempt to update to FP
+ *
+ */
+ 
 int main(int argc, char *argv[]) 
 {
     char *mapset;
     struct Cell_head window;
-    CELL *cell, value,value2 ,min, max, *tmpcell,*outcell;
+    void *cellbuf*tmpcellbuf, *outcellbuf;
+    CELL value,value2 ,min, max;
+    DCELL dmin, dmax;
+    RASTER_MAP_TYPE data_type;
     struct Range range;
+    struct FPRange fprange;
     double drow, dcol;
     int elev, output, zeros;
     char buf[1024];
@@ -15,10 +31,11 @@ int main(int argc, char *argv[])
     char **ptr;
     double G_northing_to_row();
     double G_easting_to_col();
-    struct Option *opt1, *opt2, *opt3, *opt4, *opt5;
+    struct Option *opt1, *opt2, *opt3, *opt4;
     struct Flag *flag1;
+    struct GModule *module;
     char *name, *name2;
-    double dazi, dalti,zmult;
+    double dazi, dalti;
     double azi, alti;
     double nstep,estep;
     double hight1,hight2,maxh;
@@ -26,10 +43,14 @@ int main(int argc, char *argv[])
     int row1, col1;
     int row, col;
     char OK;
-    char *new_name;
 
+    G_gisinit (argv[0]);
 
-    opt1 = G_define_option() ;
+    module = G_define_module();
+    module->description =
+            "Calculates total shadow areas from sun position and DEM.";
+
+    opt1 = G_define_option();
     opt1->key        = "elev" ;
     opt1->type       = TYPE_STRING ;
     opt1->required   = YES ;
@@ -59,67 +80,75 @@ int main(int argc, char *argv[])
     opt4->options    = "0-360";
     opt4->description= "azimuth of the sun from the north, degrees" ;
     
-    opt5 = G_define_option() ;
-    opt5->key        = "z-mult" ;
-    opt5->type       = TYPE_DOUBLE ;
-    opt5->required   = NO;
-    opt5->answer     = "1.0";
-    opt5->description= "Multiplier for elevation" ;
-
     flag1 = G_define_flag();
     flag1->key         = 'z' ;
     flag1->description = "Zero is a real elevation" ;
 
-    G_gisinit (argv[0]);
     
     if (G_parser(argc, argv))
       exit(-1);
 	
-    
-    cell = G_allocate_cell_buf();
-    outcell = G_allocate_cell_buf();
-    tmpcell = G_allocate_cell_buf();
     zeros = flag1->answer;
 
     G_get_window (&window);
     
     sscanf(opt3->answer,"%lf",&dalti);
     sscanf(opt4->answer,"%lf",&dazi);
-    sscanf(opt5->answer,"%lf",&zmult);
     name = opt1->answer;
     name2= opt2->answer;
 
 
-    if(NULL == (mapset = G_find_cell2 (name, "")))
-      die (name, " - not found");
-    if(0 > (elev = G_open_cell_old (name, mapset)))
-      die ("can't open", name);
-
- 
-    if((output = G_open_cell_new(new_name=name2)) == NULL) 
-      die ("cannot open output file ");
-
-/*
+    if((mapset = G_find_cell2 (name, "")) < 0)
+    {
+      sprintf (buf,"%s not found", name);
+      G_fatal_error(buf);
+    }
+    if((elev = G_open_cell_old (name, mapset)) < 0)
+    {
+      sprintf (buf,"can't open %s", name);
+      G_fatal_error(buf);
+    }
+    if((output = G_open_cell_new(name2)) < 0)
+    {
+      sprintf (buf,"can't open %s", name2);
+      G_fatal_error(buf);
+    }
     if ((G_read_range(name, mapset,&range))<0)
-	die("cannot open range file for ",name);
-    G_get_range_min_max(range,&min,&max);
-*/
-    get_range (name, mapset, &min, &max);
+    {
+      sprintf (buf,"can't open range file for %s",name);
+      G_fatal_error(buf);
+    }
+
+    data_type = G_raster_map_type(name, mapset);
+    cellbuf = G_allocate_raster_buf(data_type);
+    outcellbuf = G_allocate_raster_buf(CELL_TYPE); /* binary map */
+    tmpcellbuf = G_allocate_raster_buf(CELL_TYPE);
+
+    if(data_type == CELL_TYPE)
+    {
+        G_read_range(name, mapset, &range);
+        G_get_range_min_max(&range,&min,&max);
+    }
+    else
+    {
+        G_read_fp_range(name, mapset, &fprange);
+        G_get_fp_range_min_max(&fprange,&dmin,&dmax);
+    }
 
     azi=2*3.1415926*dazi/360;
     alti=2*3.1415926*dalti/360;
     nstep=cos(azi)*window.ns_res;
     estep=sin(azi)*window.ew_res;
-	row1=0;
+    row1=0;
 
-	while (row1 < window.rows) 
+    while (row1 < window.rows) 
 	  {
-/*printf("%d\n",row1);*/
 fprintf(stderr," %d %c complete\r",(int)100*row1/window.rows,'%');
 	    col1=0;
 	    drow=-1;
-	    if (G_get_map_row(elev, cell, row1) < 0)
-	      die (argv[1], " - can't read",elev);
+	    if (G_get_raster_row(elev, cell, row1, data_type) < 0)
+	      G_fatal_error("can't read row in input elevation map");
+
 	    while (col1<window.cols)
 	      {
 		value = cell[col1];
@@ -143,7 +172,7 @@ fprintf(stderr," %d %c complete\r",(int)100*row1/window.rows,'%');
 				maxh=tan(alti)*
 				     sqrt((north1-north)*(north1-north)+
 					  (east1-east)*(east1-east));
-				if ((maxh*zmult) > (max-value))
+				if ((maxh) > (max-value))
 					OK=0;
 				else
 				  {
@@ -151,10 +180,10 @@ fprintf(stderr," %d %c complete\r",(int)100*row1/window.rows,'%');
 				  if(drow!=G_northing_to_row(north,&window))
 					{
 					drow=G_northing_to_row(north,&window);
-	    				G_get_map_row(elev, tmpcell,(int) drow);
+	    				G_get_raster_row(elev, tmpcell,(int) drow, data_type);
 					}
 				  value2=tmpcell[(int)dcol];
-				  if ((value2-value)>(maxh*zmult))
+				  if ((value2-value)>(maxh))
 					{
 					OK=0;
 					outcell[col1]=0;
@@ -164,7 +193,7 @@ fprintf(stderr," %d %c complete\r",(int)100*row1/window.rows,'%');
 			}	
 		col1+=1;
 	      }
-	    G_put_map_row(output,outcell);
+	    G_put_raster_row(output,outcell, data_type);
 	    row1+=1;
 	  }
     
