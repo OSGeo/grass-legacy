@@ -57,7 +57,7 @@ if [ "$OSTYPE" = "cygwin" ] ; then
         echo "ERROR: cannot find grass document base."
         exit 1
     fi
-    BROWSERNAME=`basename "$BROWSERNAME" | sed 's/\.exe//i'`
+    BROWSERNAME=`basename "$BROWSERNAME" | sed 's/\.exe$//i'`
 fi
 
 
