@@ -10,7 +10,7 @@ clean:
 	-rm -f lex.c gram.c
 
 $(BIN_MAIN_CMD)/r.binfer: $(OBJS) $(GISLIB)
-	$(CC) -o $@ $(LDFLAGS) $(OBJS) $(GISLIB) $(MATHLIB)
+	$(CC) -o $@ $(LDFLAGS) $(OBJS) $(GISLIB) $(LEXLIB) $(MATHLIB)
 	rm -f lex.c gram.c y.tab.h
 
 count:
@@ -21,12 +21,12 @@ $(OBJS): symtab.h
 $(GISLIB): #
 
 lex.c: binfer.l
-	lex binfer.l
+	$(LEX) binfer.l
 	rm -f lex.c
 	mv lex.yy.c lex.c
 
 gram.c: binfer.y
-	yacc binfer.y
+	$(YACC) binfer.y
 	rm -f gram.c
 	mv y.tab.c gram.c
 
