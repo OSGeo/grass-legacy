@@ -147,7 +147,7 @@ src/imagery/i.ortho.photo
 src/imagery/i.out.erdas
 src/imagery/i.pca
 src/imagery/i.points
-#src/imagery/i.points3
+src/imagery/i.points3
 src/imagery/i.quantize
 src/imagery/i.rectify
 src/imagery/i.rectify2
