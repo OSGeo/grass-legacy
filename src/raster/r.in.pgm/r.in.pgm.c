@@ -8,7 +8,7 @@ read_line(char *buf, int size, FILE *fp)
 	for (;;)
 	{
 		if (!fgets(buf, size, fp))
-			G_fatal_error("Error reading PBM file.");
+			G_fatal_error("Error reading PGM file.");
 
 		if (buf[0] != '#')
 			return 0;
@@ -18,34 +18,37 @@ read_line(char *buf, int size, FILE *fp)
 int 
 main (int argc, char *argv[])
 {
+	static CELL i0 = 0, i1 = 255;
+	static FCELL f0 = 0.0f, f1 = 1.0f;
+
 	struct GModule *module;
 	struct Option *inopt, *outopt;
-	struct Flag *vflag;
-	int verbose = 0;
+	struct Flag *vflag, *fflag;
+	int verbose, isfp;
 	char *outname;
 	struct Colors colors;
 	FILE *infp;
 	char buf[80];
 	int magic;
+	int maxval;
 	int nrows, ncols;
 	struct Cell_head cellhd;
 	int outfd;
-	int bytes;
 	unsigned char *line;
-	CELL *cell;
+	void *xcell;
 	int row, col;
 
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
 	module->description =
-		"Converts a PBM image file to a GRASS raster map.";
+		"Converts a PGM image file to a GRASS raster map.";
 
 	inopt = G_define_option();
 	inopt->key              = "input";
 	inopt->type             = TYPE_STRING;
 	inopt->required 	= YES;
-	inopt->description      = "Name of existing PBM file.";
+	inopt->description      = "Name of existing PGM file.";
 
 	outopt = G_define_option();
 	outopt->key             = "output";
@@ -56,37 +59,53 @@ main (int argc, char *argv[])
 	
 	vflag = G_define_flag();
 	vflag->key              = 'v';
-	vflag->description      = "verbose.";
+	vflag->description      = "Verbose.";
+	
+	fflag = G_define_flag();
+	fflag->key              = 'f';
+	fflag->description      = "Create floating-point map (0.0 - 1.0).";
 
 	if(G_parser(argc, argv))
 		return 1;
 
 	verbose = vflag->answer;
+	isfp = fflag->answer;
 
 	infp = fopen(inopt->answer, "r");
 	if (!infp)
-		G_fatal_error("Unable to open PBM file.");
+		G_fatal_error("Unable to open PGM file.");
 
 	outname = outopt->answer;
 
 	G_init_colors(&colors);
-	G_set_color(0,   0,   0,   0, &colors);
-	G_set_color(1, 255, 255, 255, &colors);
+	if (isfp)
+		G_add_f_raster_color_rule(&f0,   0,   0,   0,
+					  &f1, 255, 255, 255,
+					  &colors);
+	else
+		G_add_c_raster_color_rule(&i0,   0,   0,   0,
+					  &i1, 255, 255, 255,
+					  &colors);
 
 	read_line(buf, sizeof(buf), infp);
 
 	if (sscanf(buf, "P%c", &magic) != 1)
-		G_fatal_error("Invalid PBM file.");
+		G_fatal_error("Invalid PGM file.");
 
 	read_line(buf, sizeof(buf), infp);
 
 	if (sscanf(buf, "%d %d", &ncols, &nrows) != 2)
-		G_fatal_error("Invalid PBM file.");
+		G_fatal_error("Invalid PGM file.");
+
+	read_line(buf, sizeof(buf), infp);
+
+	if (sscanf(buf, "%d", &maxval) != 1)
+		G_fatal_error("Invalid PGM file.");
 
 	switch (magic)
 	{
-	case '1':
-	case '4':
+	case '2':
+	case '5':
 		break;
 	default:
 		G_fatal_error("Invalid magic number: 'P%c'.", magic);
@@ -107,45 +126,45 @@ main (int argc, char *argv[])
 	G_set_window(&cellhd);
 	G_set_cell_format(0);
 
-	outfd = G_open_cell_new(outname);
+	outfd = isfp
+		? G_open_fp_cell_new(outname)
+		: G_open_cell_new(outname);
 	if(outfd < 0)
 		G_fatal_error("Unable to open output map.");
 
-	bytes = (ncols + 7) / 8;
-	line = G_malloc(bytes);
-	cell = G_allocate_cell_buf();
+	line = G_malloc(ncols);
+
+	xcell = isfp
+		? (void *) G_allocate_f_raster_buf()
+		: (void *) G_allocate_c_raster_buf();
 
 	for (row = 0; row < nrows; row++)
 	{
 		switch (magic)
 		{
-		case '1':
+		case '2':
 			for (col = 0; col < ncols; col++)
 			{
-				switch (fgetc(infp))
-				{
-				case '0':	cell[col] = 0;	break;
-				case '1':	cell[col] = 1;	break;
-				case '\r':	col--;		break;
-				case '\n':	col--;		break;
-				case EOF:
-					G_fatal_error("Error reading PBM file.");
-					break;
-				default:
-					G_fatal_error("Invalid PBM file.");
-					break;
-				}
+				int v;
+				if (fscanf(infp, "%d", &v) != 1)
+					G_fatal_error("Invalid PGM file.");
+				line[col] = (unsigned char) v;
 			}
 			break;
-		case '4':
-			if (fread(line, 1, bytes , infp) != bytes)
-				G_fatal_error("Invalid PBM file.");
-			for (col = 0; col < ncols; col++)
-				cell[col] = (line[col/8] >> (7 - (col % 8))) & 1;
+		case '5':
+			if (fread(line, 1, ncols, infp) != ncols)
+				G_fatal_error("Invalid PGM file.");
 			break;
 		}
 
-		if (G_put_raster_row(outfd, cell, CELL_TYPE) < 0)
+		if (isfp)
+			for (col = 0; col < ncols; col++)
+				((FCELL *) xcell)[col] = (FCELL) line[col] / maxval;
+		else
+			for (col = 0; col < ncols; col++)
+				((CELL *) xcell)[col] = line[col] * 255 / maxval;
+
+		if (G_put_raster_row(outfd, xcell, isfp ? FCELL_TYPE : CELL_TYPE) < 0)
 			G_fatal_error("Error writing output map.");
 
 		if (verbose)

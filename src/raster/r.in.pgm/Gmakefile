@@ -1,0 +1,8 @@
+PGM=r.in.pgm
+
+OBJ=r.in.pgm.o
+
+$(BIN_CMD)/$(PGM): $(OBJ) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(EXTRALIB) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB): #

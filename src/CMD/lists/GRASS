@@ -311,7 +311,8 @@ src/raster/r.in.dted/r.in.dted
 src/raster/r.in.gdal
 src/raster/r.in.gridatb
 src/raster/r.in.ll
-#src/raster/r.in.pbm # replaced by r.in.ppm
+src/raster/r.in.pbm
+src/raster/r.in.pgm
 src/raster/r.in.png
 src/raster/r.in.poly
 src/raster/r.in.ppm
