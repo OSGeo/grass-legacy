@@ -174,7 +174,7 @@ do_label (FILE *fd)
 	    	text_box_path(x, y, xref, yref, value, fontsize, rotate);
 	    }
 
-	    if (opaque)
+	    if (opaque && background >= 0)
 	    {
 		/* fill the box */
 		set_rgb_color(background);
@@ -246,9 +246,10 @@ do_label (FILE *fd)
 
         if (FIELD("background"))
         {
+	    /*
 	    if(strncmp(value, "none", 4)==0) opaque = 0;
-	    else
-	        background = get_color_number(value);
+	    */
+	    background = get_color_number(value);
             continue;
         }
 
