@@ -1,0 +1,13 @@
+# %W% %G%
+
+PGM      = Mdem.extract
+
+LIST	= usgs_init.o usgs_buf.o usgs_hdr.o usgs_num.o \
+          main.o getargs.o getgrid.o get_prof.o
+
+$(BIN)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(TERMLIB) -o $@
+
+$(LIST):        usgs.h
+
+$(GISLIB):      # in case library changes
