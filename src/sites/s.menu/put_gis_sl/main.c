@@ -1,4 +1,4 @@
-#include "dir.h"
+#include "site_dir.h"
 #include "gis.h"
 #include "site.h"
 main(argc, argv)    char *argv[];
@@ -17,7 +17,7 @@ main(argc, argv)    char *argv[];
     if (!get_site_list (&site_list, argv[1]))
         exit (-1);
 
-    if (!G_ask_any ("enter a site list name", name, SITE_DIR, "site list"))
+    if (!G_ask_any ("enter a site list name", name, SITE_DIR, "site list", NULL))
         exit (0);
     
     fd = G_fopen_new (SITE_DIR, name);
