@@ -408,10 +408,10 @@ int main( int argc, char **argv )
 	      int lleg, dx, dy, horiz, txsiz;
 
 	      /* set legend box according to mouse settings */
-	      t=x0;
-	      l=y0;
-	      b=x1;
-	      r=y1;
+	      l=x0;
+	      t=y0;
+	      r=x1;
+	      b=y1;
 
 	      horiz = (x1-x0 > y1-y0);
 	      if(horiz){
@@ -438,12 +438,12 @@ int main( int argc, char **argv )
 	    x_box[0] = 0                 ;
 	    y_box[0] = 0                 ;
 	    x_box[1] = 0                 ;
-	    y_box[1] = (6-dots_per_line) ;
-	    x_box[2] = (dots_per_line-6) ;
+	    y_box[1] = (5-dots_per_line) ;
+	    x_box[2] = (dots_per_line-5) ;
 	    y_box[2] = 0                 ;
 	    x_box[3] = 0                 ;
-	    y_box[3] = (dots_per_line-6) ;
-	    x_box[4] = (6-dots_per_line) ;
+	    y_box[3] = (dots_per_line-5) ;
+	    x_box[4] = (5-dots_per_line) ;
 	    y_box[4] = 0                 ;
 
 
@@ -475,7 +475,7 @@ int main( int argc, char **argv )
 
 		    /* Color solid box */
 		    D_color((CELL)i,&colors) ;
-		    R_move_abs(l+4, (cur_dot_row-3)) ;
+		    R_move_abs(l+4, (cur_dot_row-2)) ;
 		    R_polygon_rel(x_box, y_box, 5) ;
 
 		    /* Draw text */
