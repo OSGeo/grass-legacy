@@ -15,7 +15,7 @@ Interface Program)
 <H2>SYNOPSIS</H2>
 <B>v.reclass.pg</B><BR>
 <B>v.reclass.pg help</B><BR>
-<B>v.reclass.pg [-d] pql</B><EM>=name</EM> <B>key</B><EM>=name</EM> <B>type</B><EM>=name</EM> <B>input</B><EM>=name</EM>[<B>output</B><EM>=name</EM>]
+<B>v.reclass.pg [-d] sql</B><EM>=name</EM> <B>key</B><EM>=name</EM> <B>type</B><EM>=name</EM> <B>input</B><EM>=name</EM>[<B>output</B><EM>=name</EM>]
 
 <H2>DESCRIPTION</H2>
 
@@ -88,7 +88,7 @@ statement(s).
 <B>EXAMPLE:</B> produces vector map of primary and secondary roads.<P>
 <EM>v.reclass.pg sql=vect.sql key=tlid input=t.roads.pg out­put=t.roads.12</EM>
 <P>
-vect.pql:
+vect.sql:
 <EM>retrieve unique (t.tlid,t.cfcc) from t in type1</EM><BR>
 where cfcc ~ "A1"<BR>
 sort by tlid
