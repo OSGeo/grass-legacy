@@ -5,7 +5,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <signal.h>
-#include <error.h>
 #include <errno.h>
 #define SWITCHER
 #include "gis.h"
