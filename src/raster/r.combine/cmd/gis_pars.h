@@ -1,5 +1,9 @@
 
-typedef union 
+typedef union
+#ifdef __cplusplus
+	YYSTYPE
+#endif
+
 {
 	int              int_val;
 	struct Node     *nod_val;
