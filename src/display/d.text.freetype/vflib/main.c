@@ -1066,7 +1066,7 @@ draw_character(rectinfo win, FT_Face face, FT_Matrix *matrix, FT_Vector *pen,
 		buffer = (char *) G_malloc(l);
 		memset(buffer, 0, l);
 	
-		j = width / 8 + (width % 8 ? 1 : 0);
+		j = (width + 7) / 8;
 	
 		for(i = 0; i < l; i++)
 		{
@@ -1252,7 +1252,10 @@ draw_character(rectinfo win, int fid, int *x, int *y,
 	rectinfo	rect;
 	VF_BITMAP	bm;
 
+	/*
 	if(!(bm = VF_RotatedBitmap(VF_GetBitmap2(fid, ch, 1, 1), rot)))
+	*/
+	if(!(bm = VF_GetBitmap2(fid, ch, 1, 1)))
 		return -1;
 
 	rows  = bm->bbx_height;
@@ -1270,7 +1273,7 @@ draw_character(rectinfo win, int fid, int *x, int *y,
 		buffer = (char *) G_malloc(l);
 		memset(buffer, 0, l);
 	
-		j = width / 8 + (width % 8 ? 1 : 0);
+		j = bm->raster;
 	
 		for(i = 0; i < l; i++)
 		{
