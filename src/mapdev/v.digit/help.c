@@ -75,7 +75,11 @@ Help (Menu)
 	}
 	else
 	{
-	    sprintf (file, "%s.%c", filename, (char)key);
+	    switch (key) {     /* nobody likes a space in a file name */
+		case ' ': key = '_'; break;
+		case '*': key = '@'; break;
+	    }
+	    sprintf (file, "%s._%c", filename, (char)key);
 	    if ((fp = fopen (file, "r")) == NULL)
 	    {
 		    _Clear_info ();
