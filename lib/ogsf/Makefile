@@ -1,5 +1,7 @@
 MODULE_TOPDIR = ../..
 
+EXTRA_LIBS=$(GISLIB) $(BITMAPLIB) $(VECTLIB) $(OPENGLLIB) $(TIFFLIB)
+
 LIB_NAME = $(OGSF_LIBNAME)
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
