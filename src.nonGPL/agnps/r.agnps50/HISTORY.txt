@@ -6,13 +6,19 @@
 
 
   $Log$
-  Revision 1.1  2000-01-14 17:15:05  markus
+  Revision 1.2  2000-06-13 16:07:50  markus
+  updated
+
   needs updating to GRASS 5
 
- 
+ - updated printf to fprintf
+
+-----------------------------------------------------------
+
+   Revision 1.1  2000/01/14 17:15:05  markus
+
  - all scripts (except r.agnps50.input) go to $GISBASE/etc/agnps50/ now
    r.agnps50.input goes to $GISBASE/scripts
- - removed src_agnps_input_1/
 
  
 -----------------------------------------------------------
