@@ -32,7 +32,7 @@ int BBOX_MINIMUM;
 int MAX_POINTS;
 int MINIMUM_DIST;
 
-int Graph_Set (int argc, char **argv, int nlev) 
+int Graph_Set (int argc, char **argv) 
 {
     char *p;
 
