@@ -10,7 +10,7 @@
 #include "coldefs.h"
 #include "bitmap.h"
 /* get from gislib: */
-#include "../../../../src/libes/gis/version.h"
+#include "../../../../src/include/version.h"
 
 char startup_script[] =
 "toplevel .wait_ok\n\

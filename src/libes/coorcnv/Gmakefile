@@ -9,8 +9,7 @@ OBJ = \
     datum.o\
     molodens.o
     
-all: 	version.h \
-	$(COORCNVLIB) \
+all: $(COORCNVLIB) \
 	$(GISLIB) \
 	$(ETC)/datum.table
 
@@ -23,7 +22,3 @@ $(ETC)/datum.table: datum.table
 	chmod +r $@
 
 LIBES = $(COORCNVLIB) $(GISLIB)
-
-version.h: $(VERSION_FILE)
-	echo 'static char *VERSION_STRING = "@(#) GRASS $(VERSION_NUMBER) ($(VERSION_DATE))";' > $@
-
