@@ -51,6 +51,20 @@ dig_spidx_init ( struct Plus_head *Plus)
     return 1;
 }
 
+/* 
+*  dig_spidx_free ()
+*  free spatial index (nodes, lines, areas, isles)
+*
+*/
+void 
+dig_spidx_free ( struct Plus_head *Plus) 
+{
+    RTreeDestroyNode ( Plus->Node_spidx );
+    RTreeDestroyNode ( Plus->Line_spidx );
+    RTreeDestroyNode ( Plus->Area_spidx );
+    RTreeDestroyNode ( Plus->Isle_spidx );
+}
+
 /************************* ADD NEW *********************************/
 /* 
 *  dig_spindex_add_node ()
