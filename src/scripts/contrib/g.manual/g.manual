@@ -24,12 +24,12 @@ Flags:
           ftp://ftp.cs.berkeley.edu/ucb/people/phelps/tcltk/rman.tar.Z
 
 Parameters:
-  browser   Override GRASS_TEXT_BROWSER env variable to browser html pages.
+  browser   Override GRASS_TEXT_BROWSER env variable to browse html pages.
   entries   Exists for compatibility.
 
 Note:
   To use hyperlink features of html pages, set env variable GRASS_TEXT_BROWSER
-  to any text-based web browser that you want, e.g., lynx, w3m.
+  to any text-based web browser that you want, e.g., lynx, w3m or etc.
 "
 
 if [ $# -lt 1 ]
