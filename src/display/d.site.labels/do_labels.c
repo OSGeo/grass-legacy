@@ -115,11 +115,11 @@ void my_attr_copy(char *theText, Site *theSite, int attr, int index) {
 
 
 int do_labels (FILE *infile, struct Cell_head window,
-	char *buff2, char *buff3, char *buff4, 
-	char *buff6, char *buff7,  char *buff9,
+	char *position, char *text_color, char *text_size, 
+	char *bg_color, char *border_color,  char *font_name,
 	int column, int index, int mouse)
 {
-	char *buff, *tbuff;
+	char prn_east[80], prn_north[80];
 	int screenx, screeny, button, nDims, nDbls, nStrs;
 	RASTER_MAP_TYPE maptype;
 	double pnorth, peast, dist, tdist, teast, tnorth;
@@ -133,16 +133,16 @@ int do_labels (FILE *infile, struct Cell_head window,
   	}
 
 	initialize_options() ;
-	color = D_translate_color(buff3) ;
-	sscanf(buff4,"%lf",&size) ;
-	background = D_translate_color(buff6) ;
-	border = D_translate_color(buff7) ;
-	if (scan_ref (buff2) == 0)
+	color = D_translate_color(text_color) ;
+	sscanf(text_size,"%lf",&size) ;
+	background = D_translate_color(bg_color) ;
+	border = D_translate_color(border_color) ;
+	if (scan_ref (position) == 0)
 	{
 		xref = CENT ;
 		yref = BOT ;
 	}
-	strcpy (font, buff9);
+	strcpy (font, font_name);
 	R_font(font);
 	if (mouse)
 	{
@@ -189,9 +189,13 @@ int do_labels (FILE *infile, struct Cell_head window,
                     		north <= window.north)
 			{
 				my_attr_copy(text, theSite, column, index); 
-				show_it(mouse); 
-				fprintf(stdout,"%6.0f %6.0f %s\n",
-						east,north,text);
+				show_it(mouse);
+				/* This is probably useless...
+				G_format_easting(east, prn_east, G_projection());
+				G_format_northing(north, prn_north, G_projection());
+				fprintf(stdout,"%s %s %s\n",
+						prn_east, prn_north, text);
+				*/
 			}
 		}
 	}

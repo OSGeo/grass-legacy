@@ -7,6 +7,7 @@
 #include "gis.h"
 #include "raster.h"
 #include "display.h"
+#include "colors.h"
 #include "local_proto.h"
 
 #define DEFAULT_ATTRIBUTE "string"
@@ -22,8 +23,8 @@ int main (int argc, char **argv)
 	char buff[128] ;
 	int t, b, l, r ;
 	int i, column, index ;
-        struct Option *opt1, *opt2, *yref_opt, *opt3, *opt4, *opt6;
-	struct Option *opt7, *opt9, *col_opt, *index_opt ;
+        struct Option *site_opt, *xref_opt, *yref_opt, *color_opt, *size_opt, *backgr_opt;
+	struct Option *border_opt, *font_opt, *col_opt, *index_opt ;
 	struct Flag *mouse;
 	
 
@@ -34,12 +35,12 @@ int main (int argc, char **argv)
     mouse->key = 'm';
     mouse->description =  "Use mouse to interactively place scale" ;
 
-    opt1 = G_define_option() ;
-    opt1->key        = "file" ;
-    opt1->type       = TYPE_STRING ;
-    opt1->required   = YES ;
-    opt1->gisprompt  = "old,site_lists,sites" ;
-    opt1->description= "Name of sites file" ;
+    site_opt = G_define_option() ;
+    site_opt->key        = "file" ;
+    site_opt->type       = TYPE_STRING ;
+    site_opt->required   = YES ;
+    site_opt->gisprompt  = "old,site_lists,sites" ;
+    site_opt->description= "Name of sites file" ;
 
     col_opt = G_define_option();
     col_opt->key     = "attr";
@@ -56,13 +57,13 @@ int main (int argc, char **argv)
     index_opt->description = "Index of attribute. Ignored when attr=cat or attr=coords.";
     index_opt->answer = DEFAULT_INDEX;
     
-    opt2 = G_define_option() ;
-    opt2->key        = "xref" ;
-    opt2->type       = TYPE_STRING ;
-    opt2->required   = NO ;
-    opt2->options    = "left,center,right";
-    opt2->answer     = "center";
-    opt2->description = "Relative horizontal position 'left|center|right'" ;
+    xref_opt = G_define_option() ;
+    xref_opt->key        = "xref" ;
+    xref_opt->type       = TYPE_STRING ;
+    xref_opt->required   = NO ;
+    xref_opt->options    = "left,center,right";
+    xref_opt->answer     = "center";
+    xref_opt->description = "Relative horizontal position 'left|center|right'" ;
 
     yref_opt = G_define_option();
     yref_opt->key = "yref";
@@ -72,46 +73,46 @@ int main (int argc, char **argv)
     yref_opt->answer  = "bottom";
     yref_opt->description = "Relative vertical position 'top|bottom'" ;
 
-    opt4 = G_define_option() ;
-    opt4->key        = "size" ;
-    opt4->type       = TYPE_DOUBLE ;
-    opt4->required   = NO ;
-    opt4->answer     = "10";
-    opt4->description= "Size of text (pixels)" ;
+    size_opt = G_define_option() ;
+    size_opt->key        = "size" ;
+    size_opt->type       = TYPE_DOUBLE ;
+    size_opt->required   = NO ;
+    size_opt->answer     = "10";
+    size_opt->description= "Size of text (pixels)" ;
 
-    opt3 = G_define_option() ;
-    opt3->key        = "color" ;
-    opt3->type       = TYPE_STRING ;
-    opt3->required   = NO ;
-    opt3->options    = "red,white,magenta,brown,blue,indigo,yellow,black,orange,green,violet,grey";
-    opt3->answer     = "white";
-    opt3->description= "Text color" ;
+    color_opt = G_define_option() ;
+    color_opt->key        = "color" ;
+    color_opt->type       = TYPE_STRING ;
+    color_opt->required   = NO ;
+    color_opt->options    = D_COLOR_LIST;
+    color_opt->answer     = "white";
+    color_opt->description= "Text color" ;
 
-    opt6 = G_define_option() ;
-    opt6->key        = "backgr" ;
-    opt6->type       = TYPE_STRING ;
-    opt6->required   = NO ;
-    opt6->answer     = "none" ;
-    opt6->options    = "grey,red,white,magenta,brown,blue,indigo,yellow,black,orange,green,violet,none";
-    opt6->description= "Background color" ;
+    backgr_opt = G_define_option() ;
+    backgr_opt->key        = "backgr" ;
+    backgr_opt->type       = TYPE_STRING ;
+    backgr_opt->required   = NO ;
+    backgr_opt->answer     = "none" ;
+    backgr_opt->options    = "none," D_COLOR_LIST;
+    backgr_opt->description= "Background color" ;
 
-    opt7 = G_define_option() ;
-    opt7->key        = "border" ;
-    opt7->type       = TYPE_STRING ;
-    opt7->required   = NO ;
-    opt7->answer     = "none" ;
-    opt7->options    = "grey,red,white,magenta,brown,blue,indigo,yellow,black,orange,green,violet,none";
-    opt7->description= "Border color" ;
+    border_opt = G_define_option() ;
+    border_opt->key        = "border" ;
+    border_opt->type       = TYPE_STRING ;
+    border_opt->required   = NO ;
+    border_opt->answer     = "none" ;
+    border_opt->options    = "none," D_COLOR_LIST;
+    border_opt->description= "Border color" ;
 
-    opt9 = G_define_option() ;
-    opt9->key        = "font" ;
-    opt9->type       = TYPE_STRING ;
-    opt9->required   = NO ;
-    opt9->options    = "cyrilc,gothgbt,gothgrt,gothitt,greekc,greekcs,greekp,"
+    font_opt = G_define_option() ;
+    font_opt->key        = "font" ;
+    font_opt->type       = TYPE_STRING ;
+    font_opt->required   = NO ;
+    font_opt->options    = "cyrilc,gothgbt,gothgrt,gothitt,greekc,greekcs,greekp,"
     	"greeks,italicc,italiccs,italict,romanc,romancs,romand,"
 	"romans,romant,scriptc,scripts";
-    opt9->answer     = "romans" ;
-    opt9->description= "Fontname" ;
+    font_opt->answer     = "romans" ;
+    font_opt->description= "Fontname" ;
 
     if (G_parser(argc, argv))
         exit(-1);
@@ -119,7 +120,7 @@ int main (int argc, char **argv)
 /* Check command line */
 
 /* Save map name */
-	site_name = opt1->answer ;
+	site_name = site_opt->answer ;
 
 /* Make sure map is available */
 	mapset = G_find_sites (site_name, "") ;
@@ -163,7 +164,7 @@ int main (int argc, char **argv)
   	}
 
 /* Default positioning hack (should fix do_labels) */
-	sprintf(position, "%s %s", opt2->answer, yref_opt->answer);
+	sprintf(position, "%s %s", xref_opt->answer, yref_opt->answer);
 
 	R_open_driver();
 
@@ -190,9 +191,9 @@ int main (int argc, char **argv)
 
 	
 /* Go draw the cell file */
-	do_labels(infile,window, position, opt3->answer, opt4->answer, 
-			opt6->answer, opt7->answer, 
-			opt9->answer, column, index, mouse->answer);
+	do_labels(infile,window, position, color_opt->answer, size_opt->answer, 
+			backgr_opt->answer, border_opt->answer, 
+			font_opt->answer, column, index, mouse->answer);
 
 	D_add_to_list(G_recreate_command()) ;
 
