@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include "gis.h"
-#include "site.h"
 
 int search_points = 12;
 
@@ -29,7 +28,7 @@ static struct Flag *noindex;
 void calculate_distances(int, int, double, double, int*);
 void calculate_distances_noindex(double, double);
 /* read_sites.c */
-void read_sites(char *, int);
+void read_sites(char *, int, char *);
 
 int main(int argc, char *argv[])
 {
@@ -47,7 +46,7 @@ int main(int argc, char *argv[])
     int n, field;
     struct
     {
-        struct Option *input, *npoints, *output, *dfield;
+        struct Option *input, *npoints, *output, *dfield, *col;
     } parm;
     struct cell_list
     {
@@ -59,12 +58,7 @@ int main(int argc, char *argv[])
     int searchallpoints = 0;
    
 
-    parm.input = G_define_option() ;
-    parm.input->key        = "input" ;
-    parm.input->type       = TYPE_STRING ;
-    parm.input->required   = YES ;
-    parm.input->description= "Name of input vector map" ;
-    parm.input->gisprompt  = "old,vector,vector" ;
+    parm.input = G_define_standard_option(G_OPT_V_INPUT);
 
     parm.output = G_define_option() ;
     parm.output->key        = "output" ;
@@ -81,13 +75,13 @@ int main(int argc, char *argv[])
     parm.npoints->description="Number of interpolation points";
     parm.npoints->answer = "12";
 
-    parm.dfield = G_define_option ();
-    parm.dfield->key = "field";
-    parm.dfield->type = TYPE_INTEGER;
-    parm.dfield->answer = "1";
-    parm.dfield->multiple = NO;
-    parm.dfield->required = NO;
-    parm.dfield->description = "which decimal attribute (if multiple)";
+    parm.dfield = G_define_standard_option(G_OPT_V_FIELD);
+
+    parm.col = G_define_option() ;
+    parm.col->key        = "col" ;
+    parm.col->type       = TYPE_STRING ;
+    parm.col->required   = YES ;
+    parm.col->description="Attribute table column";
    
     noindex = G_define_flag();
     noindex->key = 'n';
@@ -122,8 +116,6 @@ int main(int argc, char *argv[])
     }
 
     sscanf(parm.dfield->answer,"%d", &field);
-    if (field < 1)
-      G_fatal_error ("Decimal attribute field 0 doesn't exist.");    
 
     list = (struct list_Point *) G_calloc (search_points, sizeof (struct list_Point));
 
@@ -151,7 +143,7 @@ int main(int argc, char *argv[])
   }
    
 /* read the elevation points from the input sites file */
-    read_sites (parm.input->answer, field);
+    read_sites (parm.input->answer, field, parm.col->answer);
 
     if (npoints == 0)
     {
@@ -242,7 +234,7 @@ int main(int argc, char *argv[])
     north = window.north + window.ns_res/2.0;
     for (row = 0; row < window.rows; row++)
     {
-        fprintf (stderr, "%-10d\b\b\b\b\b\b\b\b\b\b", window.rows-row);
+        G_percent ( row, window.rows-1, 1 );
 
         if (mask)
         {
