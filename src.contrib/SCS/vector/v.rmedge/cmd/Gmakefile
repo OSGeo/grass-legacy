@@ -1,3 +1,6 @@
+#  %W%  %G%
+
+
 EXTRA_CFLAGS	= $(VECT_INCLUDE)
 
 
@@ -12,5 +15,5 @@ IFILES = \
 all:  $(BIN_CONTRIB_CMD)/v.rmedge
 
 $(BIN_CONTRIB_CMD)/v.rmedge: $(OFILES)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(TERMLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(VECTLIB) $(GISLIB) $(TERMLIB) $(MATHLIB)
 
