@@ -1,0 +1,99 @@
+<H2>DESCRIPTION</H2>
+
+
+<EM>r.in.bin</EM> allows a user to create a (binary) GRASS raster map layer 
+from a variety of binary raster data formats. 
+
+<P>
+The <B> -s</B> flag is used for importing signed one byte data (range -128 -
+127). High bit (> 127) values are interpreted as negative values.
+<P>
+The <B> -h</B> flag is used to read region information from a Generic
+Mapping Tools (GMT) type binary header. It is compatible with GMT binary
+grid types 1 and 2.
+<P>
+The north, south, east, and west field values entered 
+are the coordinates of the edges of the geographic region. 
+The rows and cols field values entered describe the dimensions 
+of the matrix of data to follow. If input is a
+<a href=http://gmt.soest.hawaii.edu/>GMT</a> binary array
+(-h flag), the six dimension fields are obtained from the GMT header. 
+If the bytes field is entered incorrectly an error will be generated
+suggesting a closer bytes value. 
+
+<P>
+<EM>r.in.bin</EM> can be used to import numerous binary arrays including:
+etopo30, etopo-5, Globe DEM, BIL, AVHRR and GMT binary arrays (ID 1 &amp; 2)
+<P>
+
+<H2>EXAMPLE</H2>
+
+The following is a sample call of <EM>r.in.bin</EM> to import GTOPO30 DEM
+data:
+<P>
+<TT>
+r.in.bin -s input=E020N90.DEM output=gtopo30 bytes=2 north=90 south=40
+east=60 west=20 r=6000 c=4800
+</TT>
+<P>
+(you can add "anull=-9999" if you want sea level to have a NULL value)
+
+<P>
+The following is a sample call of <EM>r.in.bin</EM> to import a GMT 
+type 1 (float) binary array:
+<P>
+<TT>
+r.in.bin -hf input=sample.grd output=sample.grass
+</TT>
+<P>
+(-b could be used to swap bytes if required)
+
+<P>
+The following is a sample call of <EM>r.in.bin</EM> to import an AVHRR image:
+<P> 
+<TT>
+r.in.bin in=p07_b6.dat out=avhrr c=128 r=128
+</TT>
+
+
+<H2>NOTES</H2>
+
+If optional parameters are not supplied, <B>r.in.bin</B> attempts
+to calculate them. For example if the rows and columns parameters are 
+not entered, <B>r.in.bin</B> automatically calculates them by subtracting
+south from north and west from east. This will only produce correct
+results if the raster resolution equals 1. Also, if the north, south, 
+east, and west parameters are not entered, <B>r.in.bin</B> assigns 
+them from the rows and columns parameters. In the above AVHRR example, 
+the raster would be assigned a north=128, south=0, east=128, west=0.
+<P>
+The geographic coordinates north, south, east, and west
+describe the outer edges of the geographic region.  They
+run along the edges of the cells at the edge of the
+geographic region and <EM>not</EM> through the center of the cells
+at the edges.
+<P>
+Notes on (non)signed data:<P>
+If you use the -s flag the highest bit is the sign bit. If this is 1 the
+data is negative, and the data interval is half of the unsigned (not
+exactly).
+<P>
+This flag is only used if <B>bytes=</B> 1. If <B>bytes=</B> is greater
+than 1 the flag is ignored.
+
+<H2>SEE ALSO</H2>
+
+<EM>
+<A HREF="r.out.bin.html">r.out.bin</A>,
+<A HREF="r.in.ascii.html">r.in.ascii</A>, 
+<A HREF="r.out.ascii.html">r.out.ascii</A>, 
+<A HREF="r.in.arc.html">r.in.arc</A>, 
+<A HREF="r.out.arc.html">r.out.arc</A>,
+<A HREF="r.in.gdal.html">r.in.gdal</A></EM>
+
+<H2>AUTHORS</H2>
+
+Jacques Bouchard, France (bouchard@onera.fr)<BR>
+Bob Covill, Canada (bcovill@tekmap.ns.ca)<BR>
+Man page: Zsolt Felker (felker@c160.pki.matav.hu)
+<p><i>Last changed: $Date$</i>
