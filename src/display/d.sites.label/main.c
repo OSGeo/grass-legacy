@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <gis.h>
 #include <stdio.h>
+#include <string.h>
 #include <math.h>
 #include "raster.h"
 #include "display.h"
@@ -15,24 +16,56 @@
 #define DEFAULT_HEIGHT "10"
 #define DEFAULT_OFFSET "5"
 #define DEFAULT_PLACEMENT "c"
+#define DEFAULT_ATTRIBUTE "string"
+#define DEFAULT_INDEX "1"
+
+void my_attr_copy(char *theText, Site *theSite, int attr, int index) {
+	switch (attr) {
+		case SITE_ATTR_CAT:
+			if (theSite->cattype == CELL_TYPE)
+				snprintf(theText, MAX_SITE_STRING,
+						"%d", theSite->ccat);
+			else if (theSite->cattype == FCELL_TYPE)
+				snprintf(theText, MAX_SITE_STRING,
+						"%f", theSite->fcat);
+			else if (theSite->cattype == DCELL_TYPE)
+				snprintf(theText, MAX_SITE_STRING,
+						"%lf", theSite->dcat);
+			else
+				G_fatal_error("No categories in site file!\n");
+			break;
+		case SITE_ATTR_STR:
+			G_strncpy(theText, theSite->str_att[index], 
+					MAX_SITE_STRING);
+			break;
+		case SITE_ATTR_DBL:
+			snprintf(theText, MAX_SITE_STRING,
+					"%lf", theSite->dbl_att[index]);
+			break;
+		default:
+			G_fatal_error("Wrong or unknown attribute type!\n");
+	}
+}
 
 int main(int argc, char *argv[])
 {
   struct Option *site_opt, *anchor_opt, *color_opt, *font_opt;
-  struct Option *width_opt, *height_opt;
+  struct Option *width_opt, *height_opt, *attr_opt, *index_opt;
   char *sitefile;
   char *mapset;
   FILE *site_fd;
   double east, north;
-  char *desc;
-  int x,y;
-  int color;
+  char desc[MAX_SITE_STRING];
+  int x,y, nDims, nStrs, nDbls;
+  int color,index, attrib;
   int top,bottom,left,right;
   char window_name[64];
   struct Cell_head region;
   char *anchor;
   int width, height;
   char *font;
+  Site *theSite;
+  RASTER_MAP_TYPE maptype;
 
   G_gisinit(argv[0]);
 
@@ -42,6 +75,21 @@ int main(int argc, char *argv[])
   site_opt->required = YES;
   site_opt->description = "Site file to display labels for.";
 
+  attr_opt = G_define_option();
+  attr_opt->key = "attr";
+  attr_opt->type = TYPE_STRING;
+  attr_opt->required = NO;
+  attr_opt->description = "Type of attribute to use for labels";
+  attr_opt->options = "string,cat,double";
+  attr_opt->answer  = DEFAULT_ATTRIBUTE;
+
+  index_opt = G_define_option();
+  index_opt->key = "index";
+  index_opt->type = TYPE_STRING;
+  index_opt->required = NO;
+  index_opt->description = "Index of attribute. Ignored when attr=cat.";
+  index_opt->answer = DEFAULT_INDEX;
+  
   anchor_opt = G_define_option();
   anchor_opt->key = "anchor";
   anchor_opt->type = TYPE_STRING;
@@ -84,6 +132,25 @@ int main(int argc, char *argv[])
 
   sitefile = site_opt->answer;
   mapset = G_find_file("site_lists", sitefile, "");
+  
+  if(strcmp(attr_opt->answer, "string") == 0) {
+	  attrib = SITE_ATTR_STR;
+  }
+  else if (strcmp(attr_opt->answer, "cat") == 0) {
+	  attrib = SITE_ATTR_CAT;
+  }
+  else if (strcmp(attr_opt->answer, "double") == 0) {
+	  attrib = SITE_ATTR_DBL;
+  }
+  else {
+	  G_fatal_error("Unknown attribute type!\n");
+  }
+  
+  index = atoi(index_opt->answer) - 1;
+  if (index < 0) {
+	  G_fatal_error("Index must be a positive number greater than zero!\n");
+  }
+  
   width = atoi(width_opt->answer);
   height = atoi(height_opt->answer);
   font = font_opt->answer;
@@ -116,13 +183,22 @@ int main(int argc, char *argv[])
   D_get_screen_window(&top, &bottom, &left, &right);
   R_set_window(top,bottom,left,right);
 
-  while(-1 != G_get_site(site_fd, &east, &north, &desc)) {
+  if ( 0 != G_site_describe(site_fd, &nDims, &maptype, &nStrs, &nDbls)) {
+	  G_fatal_error("Unable to get format of site file!\n");
+  }
+  if (NULL == (theSite = G_site_new_struct(maptype, nDims, nStrs, nDbls))) {
+	  G_fatal_error("Unable to allocate site structure!\n");
+  }
+  while(0 == G_site_get(site_fd, theSite)) {
+    east = theSite->east;
+    north = theSite->north;
     if(east<region.west || east>region.east ||
        north<region.south || north>region.north)
       ;
     else {
       x = (int)D_u_to_d_col(east);
       y = (int)D_u_to_d_row(north);
+      my_attr_copy(desc, theSite, attrib, index);
       draw_site_label(x,y,5,width,height,color,font,desc,anchor);
     }
   }
