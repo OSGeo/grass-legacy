@@ -1,6 +1,4 @@
 /*
-* $Id$
-*
 ****************************************************************************
 *
 * MODULE:       s.vol.rst: program for 3D(volume) interpolation and geometry
@@ -396,12 +394,12 @@ C
 	ngstl = (int) (z_or / tb_res + 0.5) + 1;
 	nszl = ngstl + n_levs - 1;
 
-        fprintf(stderr," Progress percentage for each segment ..." );
+/*        fprintf(stderr," Progress percentage for each segment ..." );*/
 /*fprintf(stderr,"Before loops,ngstl = %d,nszl =%d\n",ngstl,nszl);*/
      for (i = ngstl; i <= nszl; i++)
      {
 /*fprintf(stderr,"level=%d\n",i);*/
-	G_percent(i, nszl, 2);
+/*	G_percent(i, nszl, 2);*/
 	offset = offset1*(i-1); /* levels offset */
         zg = (i - ngstl) * stepiz;
         for (m = 1; m <= n_points; m++)
@@ -420,8 +418,8 @@ C
 		w2[m] = wm * wm;
 	    }
             if ((cellinp != NULL) && (cellout != NULL)&&(i==ngstl)) {
-              if (G_get_f_raster_row(fdcell,cell,nszr-k) <0)
-                G_fatal_error("Could not get row (eventually WIND3 does not match WIND)");
+              if (G_get_f_raster_row(fdcell,cell,n_rows_in-k) <0) /* fix by JH 04/24/02 */
+                G_fatal_error("Could not get row (eventually WIND3 does not match WIND)"); 
             }
 	    for (l = ngstc; l <= nszc; l++)
 	    {

@@ -1,6 +1,4 @@
 /*
-* $Id$
-*
 ****************************************************************************
 *
 * MODULE:       s.vol.rst: program for 3D(volume) interpolation and geometry
