@@ -234,7 +234,7 @@ int polish (FILE *exp_fd, char *result)
 		x = openmap (name, mapset, &n, row);
 		if (x < 0)
 		    ok = 0;
-		else
+		else if (ok)
 		    ok = push_expression_map (x, n, row, col);
 		break;
 
