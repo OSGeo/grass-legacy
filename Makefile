@@ -135,6 +135,7 @@ cleandistdirs:
 	-rm -rf ${ARCH_DISTDIR}/man/         2>/dev/null
 	-rm -rf ${ARCH_DISTDIR}/scripts/     2>/dev/null
 	-rm -rf ${ARCH_DISTDIR}/tcltkgrass/  2>/dev/null
+	-rm -rf ${ARCH_DISTDIR}/demolocation/ 2>/dev/null
 	-rm -f ${ARCH_DISTDIR}/README ${ARCH_DISTDIR}/REQUIREMENTS.html ${ARCH_DISTDIR}/COPYING ${ARCH_DISTDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.tmp 2>/dev/null
 	-rmdir ${ARCH_DISTDIR}
 	-rm -f ${ARCH_BINDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} 2>/dev/null
