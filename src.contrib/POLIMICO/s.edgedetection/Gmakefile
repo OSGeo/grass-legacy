@@ -1,0 +1,19 @@
+PGM = s.edgedetection
+HOME = $(BIN_CMD)
+
+LIST =  main.o\
+        interpspline.o\
+        nrutil0.o\
+        tcholband.o
+
+LIBES=$(GISLIB) $(RASTERLIB) $(DATETIMELIB)
+DEPLIBES=$(DEPGISLIB) $(DEPDATETIMELIB) $(DEPRASTERLIB)
+
+$(HOME)/$(PGM):$(LIST) $(DEPLIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
+$(DLGLIB): #
+

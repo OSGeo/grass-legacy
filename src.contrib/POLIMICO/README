@@ -1,0 +1,28 @@
+Politecnico di Milano
+Polo regionale di Como
+Prof. M.A. Brovelli, Longoni, Cannata, 2003
+
+http://geomatica.ing.unico.it
+maria@geomatica.como.polimi.it
+
+LIDAR data filtering
+--------------------
+
+Command execution order: 
+
+1. s.bspline.reg
+2. s.edgedetection
+3. s.growing
+
+s.bspline.reg/	: bilinear or bicubic spline interpolation Least quares approach
+s.correction/	: DTM correction: error removal (building remainder, vegetation etc)
+s.edgedetection/: detection of building edges, vegetation edges, etc.
+s.growing/	: filling of previously computed edges
+
+Additional software
+s.to.qrast/	: fast sites to raster conversion (replaces s.to.rast)
+
+Related Publications:
+- Transactions in GIS, Special issue (in print 2004)
+- GRASS Users conference 2002, Trento, Italy
+
