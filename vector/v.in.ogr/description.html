@@ -68,6 +68,11 @@ imported with the indicated <b>output</b> name into the PERMANENT mapset.<P>
 <b>v.in.ogr dsn=</b><em>input/2000/56015/</em>
     <b>layer=</b><em>CompleteChain,PIP</em> <b>output=</b><em>t56015_all</em>
     <b>type=</b><em>boundary,centroid</em> <b>snap=</b><em>-1</em>
+<P>
+<B>PostGIS maps</B><BR>
+<b>v.in.ogr dsn=</b><em>"PG:dbname=postgis"</em>
+    <b>layer=</b><em>polymap</em> <b>output=</b><em>polygons</em>
+    <b>type=</b><em>area</em>
 
 <h2>NOTES</h2>
 
