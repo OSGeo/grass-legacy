@@ -1,3 +1,7 @@
+#  %W%  %G%
+#@(#) 
+
+
 EXTRA_CFLAGS	= $(VECT_INCLUDE)
 
 OFILES = \
@@ -9,6 +13,6 @@ OFILES = \
 all:  $(BIN_CONTRIB_CMD)/v.reclass
 
 $(BIN_CONTRIB_CMD)/v.reclass: $(OFILES) 
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(MATHLIB)
 
 $(GISLIB): #
