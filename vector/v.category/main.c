@@ -345,11 +345,12 @@ main (int argc, char *argv[])
 		break;
 	  }
 	
-	Vect_close (&In);
 	if (option == O_ADD || option == O_DEL) {
+	    Vect_copy_tables ( &In, &Out, 0 );
 	    Vect_build (&Out, stdout);
 	    Vect_close (&Out);
 	}
+	Vect_close (&In);
 
 	exit(0) ;
 }

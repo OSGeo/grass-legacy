@@ -158,6 +158,8 @@ Vect_delete ( char *map )
 	return -1;
     }
 
+#ifdef HAVE_POSTGRES
+    /* If not Vect_open_old() must fail */
     /* Delete PostGis tables (shoud be in some _post.c) */
     if ( Map.format == GV_FORMAT_POSTGIS ) {
 	ret = Vect_delete_post_tables (  &Map );
@@ -166,6 +168,7 @@ Vect_delete ( char *map )
 	    return -1;
 	}
     }
+#endif
     
     /* Delete all tables, NOT external like shapefile */
     if ( Map.format == GV_FORMAT_NATIVE || Map.format == GV_FORMAT_POSTGIS ) {
@@ -228,6 +231,53 @@ Vect_delete ( char *map )
     if ( ret == -1 ) { 
 	G_warning ( "Cannot delete directory '%s'", buf );
 	return -1;
+    }
+
+    return 0;
+}
+
+/*!
+ \fn int Vect_copy_tables ( struct Map_info *In, struct Map_info *Out, int field )
+ \brief Copy map tables. All if field = 0, or table defined by given field if field > 0
+ \return 0 on success, -1 on error
+ \param  in Map_info structure, out Map_info structure, field number 
+*/
+int 
+Vect_copy_tables ( struct Map_info *In, struct Map_info *Out, int field )
+{
+    int i, n, ret, type;
+    struct field_info *Fi, *Fin;
+
+    G_debug (2, "Vect_copy_tables()");
+
+    n = Vect_get_num_dblinks ( In );
+    type = GV_1TABLE;
+    if ( n > 1 ) type = GV_MTABLE;
+
+    for ( i = 0; i < n; i++ ) {
+	Fi = Vect_get_dblink ( In, i );
+	if ( Fi == NULL ) {
+	    G_warning ( "Cannot get db link info" );
+	    return -1;
+	}
+	if ( field > 0 && Fi->number != field ) continue;
+
+	Fin = Vect_default_field_info ( Out->name, Fi->number, Fi->name, type );
+        G_debug (2, "Copy drv:db:table '%s:%s:%s' to '%s:%s:%s'", 
+	              Fi->driver, Fi->database, Fi->table, Fin->driver, Fin->database, Fin->table );
+	
+	ret = Vect_map_add_dblink ( Out, Fi->number, Fi->name, Fin->table, Fi->key, Fin->database, Fin->driver);
+	if ( ret == -1 ) {
+	    G_warning ( "Cannot add database link" );
+	    return -1;
+	}
+        
+	ret = db_copy_table ( Fi->driver, Fi->database, Fi->table, 
+		    Fin->driver, Vect_subst_var(Fin->database,Out->name,G_mapset()), Fin->table );
+	if ( ret == DB_FAILED ) {
+	    G_warning ( "Cannot copy table" );
+	    return -1;
+	}
     }
 
     return 0;
