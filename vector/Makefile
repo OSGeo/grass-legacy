@@ -22,6 +22,7 @@ SUBDIRS = \
 	v.kernel \
 	v.label \
 	v.proj \
+	v.mkgrid \
 	v.neighbors \
 	v.net \
 	v.net.alloc \
