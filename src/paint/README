@@ -1,17 +1,18 @@
 The paint system achieves device independence by separating the
 application code from the device dependent code as follow:
 
-The application code calls routines in the interface library
-(interface.a).  These routines communicate with a device driver program
-(via unix pipes, parent to child), which consists of device dependent
-code loaded with the interface main() (ie, interface.o) that talks with
-the interface library routines.
+The application code calls routines in the interface library (see
+Interface/applib).  These routines communicate with a device driver
+program via unix pipes, parent to child. The driver consists of device
+dependent code loaded with the interface routine paint_interface() (see
+Interface/driverlib) that knows how to talk to the application
+program.
 
 Source code directories:
 
   Interface: this directory contains the source code for the
-	     interface.  Both the library routines and the
-	     driver main are found here.
+	     interface.  Both the application and driver libraries
+	     are found here.
 
   Drivers:   this directory contains directories for each driver
 	     supported by paint. These directories contain the
@@ -20,9 +21,9 @@ Source code directories:
 	     parameters and calls the real driver.
 
 The interface, consisting of the application library and the
-driver interface, is defined as follows:
+driver library, is defined as follows:
 
-application library (interface.a) has the following routines:
+application library (applib.a) has the following routines:
 
     Pconnect()
 
@@ -228,19 +229,40 @@ routines for each driver to be implemented:
      Computes the red, grn, and blu components of the predefined
      color n.
 
+A main() must be written which looks like:
+
+	main(argc,argv) char *argv[];
+	{
+	    paint_interface(argc,argv);
+	}
+
+This main() must then be linked with the routines describes above and
+the driverlib.a to form the driver program.
+
 How the user selects the printer.
 
-   The user selects the printer by setting the envirnoment variable
-   PAINT_DEVICE to a driver name.  The paint shell then constructs
-   the PAINT_DRIVER name from PAINT_DEVICE before calling the
-   particular paint application program. PAINT_DEVICE is a simple
-   name, like act2. PAINT_DRIVER becomes a full path reference to the
-   driver shell script (eg. $GISBASE/etc/paint/driver.sh/act2).
-   This shell script, which is called by the application program,
-   sets some device parameters (described below) and then calls
-   the driver program itself (eg. $GISBASE/etc/paint/driver/act2).
+   The user selects the printer by setting the grass envirnoment variable
+   PAINTER to a driver name. This is done using the p.select command.
 
-   The driver shell must set the following parameters
+How the application program starts the driver.
+
+   The Pconnect() call runs the command
+
+	$GISBASE/etc/paint/driver.shell $PAINTER
+    
+   which sets some unix environement variables and runs the shell
+   script
+
+       $GISBASE/etc/paint/driver.sh/$PAINTER
+
+   This shell script must be written by the driver writer. It is
+   responsible for setting some other unix env variables (described
+   below) and then running the driver program which is named
+
+	$GISBASE/etc/paint/driver/$PAINTER
+
+
+   The driver shell script must set the following unix env variables
 
    HRES=     horizontal resolution, pixels per inch
    VRES=     vertical resolution, pixels per inch
