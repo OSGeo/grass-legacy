@@ -17,6 +17,7 @@ SUBDIRS = \
 	v.info \
 	v.in.ascii \
 	v.in.db \
+	v.in.region \
 	v.in.sites \
 	v.label \
 	v.proj \
@@ -32,6 +33,7 @@ SUBDIRS = \
 	v.patch \
 	v.random \
 	v.segment \
+	v.select \
 	v.surf.idw \
 	v.surf.rst \
 	v.transform \
