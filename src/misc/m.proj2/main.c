@@ -31,7 +31,12 @@ int main(int argc, char *argv[])
 {
     struct pj_info info_in;
     struct pj_info info_out;
+    struct Key_Value *in_proj_info, *in_proj_units;
+    struct Key_Value *out_proj_info, *out_proj_units;
+
     struct Option *input, *output, *p_in, *p_out;
+    struct Flag *wgs84_in, *wgs84_out;
+    int use_wgs84_in, use_wgs84_out;
 
     int proj_changed_in = 0;
     int proj_changed_out = 0;
@@ -67,6 +72,16 @@ int main(int argc, char *argv[])
     output->required = NO;
     output->description = "Output coordinate file";
 
+    wgs84_in = G_define_flag();
+    wgs84_in->key = 'i';
+    wgs84_in->description =
+	"Use WGS84 as input and current location as output projection";
+
+    wgs84_out = G_define_flag();
+    wgs84_out->key = 'o';
+    wgs84_out->description =
+	"Use current location as input and WGS84 as output projection";
+
     if (G_parser(argc, argv))
 	exit(-1);
 
@@ -85,78 +100,178 @@ int main(int argc, char *argv[])
 
     input_typ = output_typ = 2;
 
-    /* Input Projection */
-    /* Get input projection parms */
-    if (p_in->answers) {
-	int i;
-	char ibuf[1024];
-	struct Key_Value *in_proj_info, *in_proj_units;
-	char *paramkey, *paramvalue;
+    use_wgs84_in = wgs84_in->answer;
+    use_wgs84_out = wgs84_out->answer;
+    if (use_wgs84_in && use_wgs84_out)
+	G_fatal_error("You can't have it both ways");
+    if ((use_wgs84_in || use_wgs84_out) && (p_in->answers || p_out->answers))
+	G_fatal_error("Cannot use both default parameters and specified parameters");
 
+
+    if (use_wgs84_in) {
+
+	fprintf(stderr,
+		"Assuming LL WGS84 as input, current projection as output.\n");
+	fflush(stderr);
+
+	/* INPUT to WGS84 */
 	in_proj_info = G_create_key_value();
 	in_proj_units = G_create_key_value();
+	/* set output projection to lat/long */
+	G_set_key_value("proj", "ll", in_proj_info);
+	G_set_key_value("datum", "wgs84", in_proj_info);
+	G_set_key_value("unit", "degree", in_proj_units);
+	G_set_key_value("units", "degrees", in_proj_units);
+	G_set_key_value("meters", "1.0", in_proj_units);
 
-	for (i = 0; p_in->answers[i]; i++) {
-	    sscanf(p_in->answers[i], "%1023s", ibuf);
-	    paramkey = strtok(ibuf, "=");
-	    paramvalue = ibuf + strlen(paramkey) + 1;
-	    if (strcmp(paramkey, "unfact") == 0)
-		G_set_key_value("meters", paramvalue, in_proj_units);
-	    else
-		G_set_key_value(paramkey, paramvalue, in_proj_info);
-	}
 	if (pj_get_kv(&info_in, in_proj_info, in_proj_units) < 0)
-	    G_fatal_error("Cannot initialize proj_info_in");
+	    G_fatal_error("Cannot initialize WGS84 parameters");
+
 	G_free_key_value(in_proj_info);
 	G_free_key_value(in_proj_units);
-    }
-    else {
-	/* Get intercatively */
-	parms_in[0] = '\0';
-	proj_changed_in =
-	    process(1, parms_in, proj_name_in, proj_title_in, ellps_name_in,
-		    &radius_in, USED_in, units_in);
-	if (pj_get_string(&info_in, parms_in) < 0)
-	    G_fatal_error("Cannot initialize proj_info_in");
-    }
 
-    /* Output Projection */
-    /* Get output projections parms */
-    if (p_out->answers) {
-	int i;
-	char obuf[1024];
-	struct Key_Value *out_proj_info, *out_proj_units;
-	char *paramkey, *paramvalue;
+	proj_index_in = 3;	/* ie LL */
 
+
+	/* OUTPUT parameters from CURRENT LOCATION's projection */
 	out_proj_info = G_create_key_value();
 	out_proj_units = G_create_key_value();
 
-	for (i = 0; p_out->answers[i]; i++) {
-	    sscanf(p_out->answers[i], "%1023s", obuf);
-	    paramkey = strtok(obuf, "=");
-	    paramvalue = obuf + strlen(paramkey) + 1;
-	    if (strcmp(paramkey, "unfact") == 0)
-		G_set_key_value("meters", paramvalue, out_proj_units);
-	    else
-		G_set_key_value(paramkey, paramvalue, out_proj_info);
-	}
+	/* read current projection info */
+	if ((out_proj_info = G_get_projinfo()) == NULL)
+	    G_fatal_error("Can't get projection info of current location");
+
+	if ((out_proj_units = G_get_projunits()) == NULL)
+	    G_fatal_error("Can't get projection units of current location");
+
 	if (pj_get_kv(&info_out, out_proj_info, out_proj_units) < 0)
-	    G_fatal_error("Cannot initialize proj_info_out");
+	    G_fatal_error("Can't get projection key values of current location");
+
 	G_free_key_value(out_proj_info);
 	G_free_key_value(out_proj_units);
+
+	proj_index_out = G_projection();
+
     }
-    else {
-	/* Get interactively */
-	parms_out[0] = '\0';
-	proj_changed_out =
-	    process(2, parms_out, proj_name_out, proj_title_out, ellps_name_out,
-		    &radius_out, USED_out, units_out);
-	if (pj_get_string(&info_out, parms_out) < 0)
-	    G_fatal_error("Cannot initialize proj_info_out");
+    else if (use_wgs84_out) {
+
+	fprintf(stderr,
+		"Assuming current projection as input, LL WGS84 as output.\n");
+	fflush(stderr);
+
+	/* INPUT parameters from CURRENT LOCATION's projection */
+	in_proj_info = G_create_key_value();
+	in_proj_units = G_create_key_value();
+
+	/* read current projection info */
+	if ((in_proj_info = G_get_projinfo()) == NULL)
+	    G_fatal_error("Can't get projection info of current location");
+
+	if ((in_proj_units = G_get_projunits()) == NULL)
+	    G_fatal_error("Can't get projection units of current location");
+
+	if (pj_get_kv(&info_in, in_proj_info, in_proj_units) < 0)
+	    G_fatal_error("Can't get projection key values of current location");
+
+	G_free_key_value(in_proj_info);
+	G_free_key_value(in_proj_units);
+
+	proj_index_in = G_projection();
+
+
+	/* OUTPUT to WGS84 */
+	out_proj_info = G_create_key_value();
+	out_proj_units = G_create_key_value();
+	/* set output projection to lat/long */
+	G_set_key_value("proj", "ll", out_proj_info);
+	G_set_key_value("datum", "wgs84", out_proj_info);
+	G_set_key_value("unit", "degree", out_proj_units);
+	G_set_key_value("units", "degrees", in_proj_units);
+	G_set_key_value("meters", "1.0", out_proj_units);
+
+	if (pj_get_kv(&info_out, out_proj_info, out_proj_units) < 0)
+	    G_fatal_error("Cannot initialize WGS84 parameters");
+
+	G_free_key_value(out_proj_info);
+	G_free_key_value(out_proj_units);
+
+	proj_index_out = 3;	/* ie LL */
+
     }
-    proj_index_in = G_geo_get_proj_index(proj_name_in);
-    proj_index_out = G_geo_get_proj_index(proj_name_out);
-    pj_print_proj_params(&info_in, &info_out);
+    else {  /* not using wgs84 flag */
+
+	/* Input Projection */
+	/* Get input projection parms */
+	if (p_in->answers) {
+	    int i;
+	    char ibuf[1024];
+	    char *paramkey, *paramvalue;
+
+	    in_proj_info = G_create_key_value();
+	    in_proj_units = G_create_key_value();
+
+	    for (i = 0; p_in->answers[i]; i++) {
+		sscanf(p_in->answers[i], "%1023s", ibuf);
+		paramkey = strtok(ibuf, "=");
+		paramvalue = ibuf + strlen(paramkey) + 1;
+		if (strcmp(paramkey, "unfact") == 0)
+		    G_set_key_value("meters", paramvalue, in_proj_units);
+		else
+		    G_set_key_value(paramkey, paramvalue, in_proj_info);
+	    }
+	    if (pj_get_kv(&info_in, in_proj_info, in_proj_units) < 0)
+		G_fatal_error("Cannot initialize proj_info_in");
+	    G_free_key_value(in_proj_info);
+	    G_free_key_value(in_proj_units);
+	}
+	else {
+	    /* Get intercatively */
+	    parms_in[0] = '\0';
+	    proj_changed_in =
+		process(1, parms_in, proj_name_in, proj_title_in, ellps_name_in,
+			&radius_in, USED_in, units_in);
+	    if (pj_get_string(&info_in, parms_in) < 0)
+		G_fatal_error("Cannot initialize proj_info_in");
+	}
+
+	/* Output Projection */
+	/* Get output projections parms */
+	if (p_out->answers) {
+	    int i;
+	    char obuf[1024];
+	    char *paramkey, *paramvalue;
+
+	    out_proj_info = G_create_key_value();
+	    out_proj_units = G_create_key_value();
+
+	    for (i = 0; p_out->answers[i]; i++) {
+		sscanf(p_out->answers[i], "%1023s", obuf);
+		paramkey = strtok(obuf, "=");
+		paramvalue = obuf + strlen(paramkey) + 1;
+		if (strcmp(paramkey, "unfact") == 0)
+		    G_set_key_value("meters", paramvalue, out_proj_units);
+		else
+		    G_set_key_value(paramkey, paramvalue, out_proj_info);
+	    }
+	    if (pj_get_kv(&info_out, out_proj_info, out_proj_units) < 0)
+		G_fatal_error("Cannot initialize proj_info_out");
+	    G_free_key_value(out_proj_info);
+	    G_free_key_value(out_proj_units);
+	}
+	else {
+	    /* Get interactively */
+	    parms_out[0] = '\0';
+	    proj_changed_out =
+		process(2, parms_out, proj_name_out, proj_title_out,
+			ellps_name_out, &radius_out, USED_out, units_out);
+	    if (pj_get_string(&info_out, parms_out) < 0)
+		G_fatal_error("Cannot initialize proj_info_out");
+	}
+	proj_index_in = G_geo_get_proj_index(proj_name_in);
+	proj_index_out = G_geo_get_proj_index(proj_name_out);
+	pj_print_proj_params(&info_in, &info_out);
+
+    }	/* end if use_wgs84 */
 
     /* BOB start here */
 
@@ -185,8 +300,10 @@ int main(int argc, char *argv[])
     }
 
     for (;;) {
-	if (get_input(b1, ebuf, b2, nbuf, label) == 0)
+	if (get_input(b1, ebuf, b2, nbuf, label) == 0) {
+	    fprintf(stderr,"\n");
 	    break;
+	}
 	rec_cnt++;
 
 	if (proj_index_in == LL) {
@@ -208,6 +325,8 @@ int main(int argc, char *argv[])
 	}
 
 	/* Convert Coordinates */
+
+	/* need to remove the following to allow LL->LL datum transforms */
 	if ((proj_index_in == proj_index_out) && (proj_index_out == LL)) {
 	    LON_res = LON;
 	    LAT_res = LAT;
@@ -236,10 +355,10 @@ int main(int argc, char *argv[])
 	    strcat(buf, label);
 	}
 	/* Write Out Results */
-	if(output->answer)
-		fprintf(stderr, "%s", buf);
+	if (output->answer)
+	    fprintf(stderr, "%s", buf);
 	else
-		fprintf(stdout, "%s", buf);
+	    fprintf(stdout, "%s", buf);
 	put_output(buf, (int)output->answer);
     }	/* end for loop */
 
