@@ -18,8 +18,6 @@
 *
 *****************************************************************************/
 
-#define SQLP_MAIN 
-
 #include <stdlib.h>
 #include <stdio.h>
 #include "sqlp.h"
