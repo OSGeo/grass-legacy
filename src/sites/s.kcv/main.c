@@ -34,14 +34,22 @@
 #ifndef RAND_MAX 
 #define RAND_MAX (pow(2.0,31.0)-1) 
 #endif
-
+#ifdef __CYGWIN__
+double drand48()
+{
+	return(rand()/32767.0);
+}
+#define srand48(sv) (srand((unsigned)(sv)))
+#else
+double drand48 ();
+void srand48 ();
+#endif
 int 
 main (int argc, char **argv)
 {
   char siteslist[256], errmsg[256], *mapset;
-  double east, north, (*rng) (), max, drand48 (), myrand ();
+  double east, north, (*rng) (), max, myrand ();
   int i, j, k, m, n, a, b, nsites, verbose, np, *p, dcmp ();
-  void srand48 ();
   FILE *fdsite, *fdtest, *fdtrain;
   D *d;
   Z *z;

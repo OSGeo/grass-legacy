@@ -60,7 +60,7 @@ DESCRIPTION
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			1
+GRASS 5.0beta6	      GRASS Development Team			1
 
 
 
@@ -126,7 +126,7 @@ Description of Main Menu Steps
 
 
 
-2		      GRASS Development Team	   GRASS 5.0beta2
+2		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -192,7 +192,7 @@ r.answers <contrib>   GRASS Reference Manual  <contrib> r.answers
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			3
+GRASS 5.0beta6	      GRASS Development Team			3
 
 
 
@@ -258,7 +258,7 @@ Step 3 Catalogue land use and surface parameters
 
 
 
-4		      GRASS Development Team	   GRASS 5.0beta2
+4		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -324,7 +324,7 @@ Step 5 Prepare rain gauge data
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			5
+GRASS 5.0beta6	      GRASS Development Team			5
 
 
 
@@ -390,7 +390,7 @@ Step 6 Identify outlet cell
 
 
 
-6		      GRASS Development Team	   GRASS 5.0beta2
+6		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -456,7 +456,7 @@ Step 10 Specify BMP's in watershed
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			7
+GRASS 5.0beta6	      GRASS Development Team			7
 
 
 
@@ -522,7 +522,7 @@ r.answers <contrib>   GRASS Reference Manual  <contrib> r.answers
 
 
 
-8		      GRASS Development Team	   GRASS 5.0beta2
+8		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -588,7 +588,7 @@ Step 12 Miscellaneous Command Menu
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			9
+GRASS 5.0beta6	      GRASS Development Team			9
 
 
 
@@ -654,7 +654,7 @@ FILES
 
 
 
-10		      GRASS Development Team	   GRASS 5.0beta2
+10		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -720,7 +720,7 @@ r.answers <contrib>   GRASS Reference Manual  <contrib> r.answers
 
 
 
-GRASS 5.0beta2	      GRASS Development Team		       11
+GRASS 5.0beta6	      GRASS Development Team		       11
 
 
 
@@ -786,7 +786,7 @@ NOTICE
 
 
 
-12		      GRASS Development Team	   GRASS 5.0beta2
+12		      GRASS Development Team	   GRASS 5.0beta6
 
 
 

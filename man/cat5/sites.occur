@@ -60,7 +60,7 @@ m
 
 
 
-2				 m				 1
+6				 m				 1
 
 
 
@@ -126,7 +126,7 @@ EXPLANATION
 
 
 
-2		      GRASS Development Team	   GRASS 5.0beta2
+2		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -171,12 +171,12 @@ sites.occur	      GRASS Reference Manual	      sites.occur
 
 	chi square
 	     gives the user a statistical test of the
-	     hypothesis that ´site distribution is
+	     hypothesis that site distribution is
 	     dependent on environmental factors'.  For
 	     this hypothesis to be true, the chi-square
 	     test must fail since we are calculating
 	     expected sites according to the hypothesis
-	     that ´sites are randomly distributed'.
+	     that sites are randomly distributed'.
 
 	degrees of freedom
 	     Number of degrees of freedom for the chi-
@@ -192,7 +192,7 @@ sites.occur	      GRASS Reference Manual	      sites.occur
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			3
+GRASS 5.0beta6	      GRASS Development Team			3
 
 
 
@@ -258,7 +258,7 @@ SEE ALSO
 
 
 
-4		      GRASS Development Team	   GRASS 5.0beta2
+4		      GRASS Development Team	   GRASS 5.0beta6
 
 
 

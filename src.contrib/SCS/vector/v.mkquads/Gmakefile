@@ -20,6 +20,4 @@ all:  $(PROG)
 
 
 $(PROG): $(OFILES) $(LIBES)
-	rm -f a.out $@
-	$(CC) $(LDFLAGS) $(OFILES) $(LIBES)
-	mv a.out $@
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES)

@@ -1,0 +1,40 @@
+CC                  = gcc
+FC                  = f77
+LEX                 = flex
+YACC                = bison -y
+ARCH                = i586-pc-cygwin32
+
+GISBASE             = /usr/local/grass-5.0b
+UNIX_BIN            = /usr/local/bin
+
+DEFAULT_DATABASE    =
+DEFAULT_LOCATION    =
+
+COMPILE_FLAGS       = -g -O2 -I/usr/local/include
+LDFLAGS             = -s 
+
+XCFLAGS             =  -I/usr/X11R6.4/include
+# XXX - replace SYSV in code with configure results in config.h
+# XXX - need SYSV defined for hpux10
+XLDFLAGS            = 
+XINCPATH            = 
+XMINCPATH           = 
+XLIBPATH            =  -L/usr/X11R6.4/lib
+XTLIBPATH           = 
+XMLIBPATH           = 
+XLIB                =  -lSM -lICE -lX11
+XTLIB               = -lXt
+XMLIB               = -lXm
+XEXTRALIBS          = 
+
+COMPATLIB           = 
+TERMLIB             = 
+CURSES              = -lncurses $(TERMLIB) $(COMPATLIB)
+MATHLIB             = -lm
+XDRLIB              = /usr/local/lib/librpclib.a
+
+TIFFINCPATH         = 
+TIFFLIBPATH         = 
+
+LIBRULE             = ar ruv $@ $?; ranlib $@
+USE_TERMIO          = 

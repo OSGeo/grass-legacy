@@ -120,17 +120,13 @@ is 150, for data with heterogeneous spatial distribution higher value is
 suggested (see Notes).
 
 .br
-&nbsp;
-&nbsp;
 
 .br
-&nbsp;
 
 .br
-&nbsp;
 
 .br
-&nbsp;
+
 .LE
 .SH 
 NOTES
@@ -211,8 +207,8 @@ The program was used for various applications with the following parameters
 \*C
 .DStension 20. - 80.
 smoothing 0.01 - 1.0
-segmax&nbsp; 40
-npmin&nbsp;&nbsp; 200 - 300
+segmax 40
+npmin 200 - 300
 (low tension was used for relatively flat terrain, high tension
 was necessary for terrain with sharp changes in slope, low value of
 smoothing is usually sufficient for dense and accurately digitized
@@ -224,16 +220,16 @@ higher smoothing is suggested)
 \*L"interpolation of precipitation from climatic stations"\*O
 \*C
 .DStension 40. - 150.
-smoothing&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0. - 2.
-segmax&nbsp; 40
-npmin&nbsp;&nbsp; 200
+smoothing&nbsp; 0. - 2.
+segmax 40
+npmin 200
 
 .DE
 \*O
 \*L"interpolation of concentration of chemicals"\*O
 \*C
-.DStension 20.&nbsp; -&nbsp; 60.
-smoothing&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.5 - 5.0
+.DStension 20. - 60.
+smoothing 0.5 - 5.0
 
 .DE
 \*O

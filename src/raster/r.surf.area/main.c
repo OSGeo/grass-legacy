@@ -1,5 +1,9 @@
 /* main.c - r.surf.area */
 
+/* 
+ * $Id$ 
+ */
+
 /* Copyright Notice
  * ---------------- 
  * Written by Bill Brown, USACERL December 21, 1994 
@@ -115,7 +119,7 @@ main(argc, argv)
     cell_buf[0] = (CELL *)G_malloc (w.cols * sizeof (CELL));
     cell_buf[1] = (CELL *)G_malloc (w.cols * sizeof (CELL));
     
-    fprintf(stderr,"\n");
+    fprintf(stdout,"\n");
     {
     CELL *top, *bottom;
 	
@@ -134,8 +138,8 @@ main(argc, argv)
     }
 
 
-    free(cell_buf[0]);
-    free(cell_buf[1]);
+    G_free(cell_buf[0]);
+    G_free(cell_buf[1]);
     G_close_cell(cellfile);
 
     { /* report */
@@ -145,24 +149,24 @@ main(argc, argv)
 	reg_area = w.cols * w.rows * w.ns_res * w.ew_res;
 	estavg = (minarea+maxarea) / 2.0;
 /*
-	fprintf(stderr,"Plan area used in calculation: %.4lf\n", flat_area);
-	fprintf(stderr,
+	fprintf(stdout,"Plan area used in calculation: %.4lf\n", flat_area);
+	fprintf(stdout,
 	    "Surface Area Calculation(low, high, avg):\n\t%.4lf %.4lf %.4lf\n", 
 	    minarea, maxarea, estavg);
 
-	fprintf(stderr,"Current Region plan area: %.4lf\n", reg_area);
-	fprintf(stderr,"Estimated Region Surface Area: %.4lf\n", 
+	fprintf(stdout,"Current Region plan area: %.4lf\n", reg_area);
+	fprintf(stdout,"Estimated Region Surface Area: %.4lf\n", 
 		reg_area * estavg /flat_area );
 */
-	fprintf(stderr,"Plan area used in calculation: %e\n", flat_area);
-	fprintf(stderr,
+	fprintf(stdout,"Plan area used in calculation: %e\n", flat_area);
+	fprintf(stdout,
 	    "Surface Area Calculation(low, high, avg):\n\t%e %e %e\n",
 	    minarea, maxarea, estavg);
 
-	fprintf(stderr,"Current Region plan area: %e\n", reg_area);
-	fprintf(stderr,"Estimated Region Surface Area: %e\n", 
+	fprintf(stdout,"Current Region plan area: %e\n", reg_area);
+	fprintf(stdout,"Estimated Region Surface Area: %e\n", 
 		reg_area * estavg /flat_area );
-	fprintf(stderr,"\nDone.\n"); 
+	fprintf(stdout,"\nDone.\n"); 
     }
     
     return(1);

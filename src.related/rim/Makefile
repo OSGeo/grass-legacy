@@ -1,6 +1,12 @@
-# definitions for MIPS RISCos / CDC EP/IX rim
-PILE = /usr/bsd43/bin/f77
-AR = ar ruv
+# definitions for LINUX rim
+RANLIB=ranlib
+F2CLIB=/usr/lib/f2cmain.a -lf2c
+F77=g77
+EXTRA=time_date.o
+LIBEXTRA=time_date.o
+PILE = CC_f2c=$(CC) $(F77)
+LIBRIM=librim.a
+AR = ar rv
 RAN = ranlib
 # make rim (generic instructions to be customized for each installation)
 #
@@ -9,8 +15,8 @@ RAN = ranlib
 rim::
 	(cd src;     make rim)
 	(cd src;     make rimlib)
-	$(PILE) -o rim src/rim.o src/rimlib
-#	$(PILE) -Bstatic -o rim src/rim.o src/rimlib
+#	$(PILE) -o rim src/rim.o src/rimlib
+	$(PILE) -Bstatic -o rim src/rim.o src/rimlib
 #
 # Rim file editor (for debugging)
 #
@@ -25,7 +31,7 @@ rimh::
 	(cd src;     make rimh)
 	(cd src;     make rimlib)
 	(cd src;     make librim.a)
-	$(PILE) -o rimh src/rimh.o src/rimlib -L. -lrim
+	$(PILE) -o rimh src/rimh.o src/rimlib -Lsrc -lrim
 #
 # Program to test text i/o and parsing routines
 #

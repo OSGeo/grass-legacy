@@ -96,6 +96,10 @@ extern void Togl_FreeColor( struct Togl *togl, unsigned long index );
 extern void Togl_SetColor( struct Togl *togl, unsigned long index,
                            float red, float green, float blue );
 
+void create_cb(struct Togl *);
+void reshape_cb(struct Togl *);
+void display_cb(struct Togl *);
+void swap_togl(void);
 
 #ifdef __cplusplus
 }

@@ -1,14 +1,19 @@
 all:
 	sh ./utilities/Nroff "$(VERSION_NUMBER)" "$(VERSION_DATE)" $(SRC)/..
-	rm -f $(HELP)/*
-	rm -f $(MAN1)/* $(MAN1)/.class-title
-	rm -f $(MAN2)/* $(MAN2)/.class-title
-	rm -f $(MAN3)/* $(MAN3)/.class-title
-	rm -f $(MAN4)/* $(MAN4)/.class-title
-	rm -f $(MAN5)/* $(MAN5)/.class-title
-	cp help.src/* $(HELP)/.
-	cp cat1/* man1/.class-title $(MAN1)/.
-	cp cat2/* man2/.class-title $(MAN2)/.
-	cp cat3/* man3/.class-title $(MAN3)/.
-	cp cat4/* man4/.class-title $(MAN4)/.
-	cp cat5/* man5/.class-title $(MAN5)/.
+	rm -rf $(HELP)/*
+	rm -rf $(MAN1)/* $(MAN1)/.class-title
+	rm -rf $(MAN2)/* $(MAN2)/.class-title
+	rm -rf $(MAN3)/* $(MAN3)/.class-title
+	rm -rf $(MAN4)/* $(MAN4)/.class-title
+	rm -rf $(MAN5)/* $(MAN5)/.class-title
+	(cd help.src/ ; tar --exclude=CVS -cvf - * | tar -C $(HELP) -xvf - 2>/dev/null ; true )
+	(cd cat1/     ; tar --exclude=CVS -cvf - * | tar -C $(MAN1) -xvf - 2>/dev/null ; true )
+	(cd man1/     ; tar --exclude=CVS -cvf - .class-title | tar -C $(MAN1) -xvf - 2>/dev/null ; true )
+	(cd cat2/     ; tar --exclude=CVS -cvf - * | tar -C $(MAN2) -xvf - 2>/dev/null ; true )
+	(cd man2/     ; tar --exclude=CVS -cvf - .class-title | tar -C $(MAN2) -xvf - 2>/dev/null ; true )
+	(cd cat3/     ; tar --exclude=CVS -cvf - * | tar -C $(MAN3) -xvf - 2>/dev/null ; true )
+	(cd man3/     ; tar --exclude=CVS -cvf - .class-title | tar -C $(MAN3) -xvf - 2>/dev/null ; true )
+	(cd cat4/     ; tar --exclude=CVS -cvf - * | tar -C $(MAN4) -xvf - 2>/dev/null ; true )
+	(cd man4/     ; tar --exclude=CVS -cvf - .class-title | tar -C $(MAN4) -xvf - 2>/dev/null ; true )
+	(cd cat5/     ; tar --exclude=CVS -cvf - * | tar -C $(MAN5) -xvf - 2>/dev/null ; true )
+	(cd man5/     ; tar --exclude=CVS -cvf - .class-title | tar -C $(MAN5) -xvf - 2>/dev/null ; true )

@@ -179,16 +179,17 @@ static void	TimeoutProc _ANSI_ARGS_((ClientData clientData));
  *--------------------------------------------------------------
  */
 
-int
-Tk_RegisterInterp(interp, name, tkwin)
-    Tcl_Interp *interp;		/* Interpreter associated with name. */
-    char *name;			/* The name that will be used to
+int 
+Tk_RegisterInterp (
+    Tcl_Interp *interp,		/* Interpreter associated with name. */
+    char *name,			/* The name that will be used to
 				 * refer to the interpreter in later
 				 * "send" commands.  Must be globally
 				 * unique. */
-    Tk_Window tkwin;		/* Token for window associated with
+    Tk_Window tkwin		/* Token for window associated with
 				 * interp;  used to identify display
 				 * for communication.  */
+)
 {
 #define TCL_MAX_NAME_LENGTH 1000
     char propInfo[TCL_MAX_NAME_LENGTH + 20];
@@ -301,13 +302,14 @@ Tk_RegisterInterp(interp, name, tkwin)
  *--------------------------------------------------------------
  */
 
-int
-Tk_SendCmd(clientData, interp, argc, argv)
-    ClientData clientData;		/* Information about sender (only
+int 
+Tk_SendCmd (
+    ClientData clientData,		/* Information about sender (only
 					 * dispPtr field is used). */
-    Tcl_Interp *interp;			/* Current interpreter. */
-    int argc;				/* Number of arguments. */
-    char **argv;			/* Argument strings. */
+    Tcl_Interp *interp,			/* Current interpreter. */
+    int argc,				/* Number of arguments. */
+    char **argv			/* Argument strings. */
+)
 {
     RegisteredInterp *senderRiPtr = (RegisteredInterp *) clientData;
     Window w;
@@ -484,11 +486,12 @@ Tk_SendCmd(clientData, interp, argc, argv)
  *----------------------------------------------------------------------
  */
 
-int
-TkGetInterpNames(interp, tkwin)
-    Tcl_Interp *interp;		/* Interpreter for returning a result. */
-    Tk_Window tkwin;		/* Window whose display is to be used
+int 
+TkGetInterpNames (
+    Tcl_Interp *interp,		/* Interpreter for returning a result. */
+    Tk_Window tkwin		/* Window whose display is to be used
 				 * for the lookup. */
+)
 {
     TkDisplay *dispPtr = ((TkWindow *) tkwin)->dispPtr;
     char *regProp;
@@ -566,11 +569,12 @@ TkGetInterpNames(interp, tkwin)
  *--------------------------------------------------------------
  */
 
-static int
-SendInit(interp, dispPtr)
-    Tcl_Interp *interp;		/* Interpreter to use for error
+static int 
+SendInit (
+    Tcl_Interp *interp,		/* Interpreter to use for error
 				 * reporting. */
-    register TkDisplay *dispPtr;/* Display to initialize. */
+    register TkDisplay *dispPtr/* Display to initialize. */
+)
 
 {
     XSetWindowAttributes atts;
@@ -653,12 +657,12 @@ SendInit(interp, dispPtr)
  *--------------------------------------------------------------
  */
 
-static Window
-LookupName(dispPtr, name, delete)
-    register TkDisplay *dispPtr;
-			/* Display whose registry to check. */
-    char *name;		/* Name of an interpreter. */
-    int delete;		/* If non-zero, delete info about name. */
+static Window 
+LookupName (
+    register TkDisplay *dispPtr,
+    char *name,		/* Name of an interpreter. */
+    int delete		/* If non-zero, delete info about name. */
+)
 {
     char *regProp, *entry;
     register char *p;
@@ -769,10 +773,11 @@ LookupName(dispPtr, name, delete)
  *--------------------------------------------------------------
  */
 
-static void
-SendEventProc(clientData, eventPtr)
-    ClientData clientData;	/* Display information. */	
-    XEvent *eventPtr;		/* Information about event. */
+static void 
+SendEventProc (
+    ClientData clientData,	/* Display information. */
+    XEvent *eventPtr		/* Information about event. */
+)
 {
     TkDisplay *dispPtr = (TkDisplay *) clientData;
     char *propInfo;
@@ -994,18 +999,19 @@ SendEventProc(clientData, eventPtr)
  *--------------------------------------------------------------
  */
 
-static void
-AppendPropCarefully(display, window, property, value, pendingPtr)
-    Display *display;		/* Display on which to operate. */
-    Window window;		/* Window whose property is to
+static void 
+AppendPropCarefully (
+    Display *display,		/* Display on which to operate. */
+    Window window,		/* Window whose property is to
 				 * be modified. */
-    Atom property;		/* Name of property. */
-    char *value;		/* Characters (null-terminated) to
+    Atom property,		/* Name of property. */
+    char *value,		/* Characters (null-terminated) to
 				 * append to property. */
-    PendingCommand *pendingPtr;	/* Pending command to mark complete
+    PendingCommand *pendingPtr	/* Pending command to mark complete
 				 * if an error occurs during the
 				 * property op.  NULL means just
 				 * ignore the error. */
+)
 {
     Tk_ErrorHandler handler;
 
@@ -1022,10 +1028,11 @@ AppendPropCarefully(display, window, property, value, pendingPtr)
  */
 
 	/* ARGSUSED */
-static int
-AppendErrorProc(clientData, errorPtr)
-    ClientData clientData;	/* Command to mark complete, or NULL. */
-    XErrorEvent *errorPtr;	/* Information about error. */
+static int 
+AppendErrorProc (
+    ClientData clientData,	/* Command to mark complete, or NULL. */
+    XErrorEvent *errorPtr	/* Information about error. */
+)
 {
     PendingCommand *pendingPtr = (PendingCommand *) clientData;
     register PendingCommand *pcPtr;
@@ -1070,11 +1077,12 @@ AppendErrorProc(clientData, errorPtr)
  *--------------------------------------------------------------
  */
 
-static void
-TimeoutProc(clientData)
-    ClientData clientData;	/* Information about command that
+static void 
+TimeoutProc (
+    ClientData clientData	/* Information about command that
 				 * has been sent but not yet
 				 * responded to. */
+)
 {
     PendingCommand *pcPtr = (PendingCommand *) clientData;
     register PendingCommand *pcPtr2;
@@ -1116,10 +1124,11 @@ TimeoutProc(clientData)
  *--------------------------------------------------------------
  */
 
-static void
-DeleteProc(clientData)
-    ClientData clientData;	/* Info about registration, passed
+static void 
+DeleteProc (
+    ClientData clientData	/* Info about registration, passed
 				 * as ClientData. */
+)
 {
     RegisteredInterp *riPtr = (RegisteredInterp *) clientData;
     register RegisteredInterp *riPtr2;
@@ -1163,12 +1172,13 @@ DeleteProc(clientData)
  */
 
     /* ARGSUSED */
-static Bool
-SendRestrictProc(display, eventPtr, arg)
-    Display *display;		/* Display from which event arrived. */
-    register XEvent *eventPtr;	/* Event that just arrived. */
-    char *arg;			/* Comunication window in which
+static Bool 
+SendRestrictProc (
+    Display *display,		/* Display from which event arrived. */
+    register XEvent *eventPtr,	/* Event that just arrived. */
+    char *arg			/* Comunication window in which
 				 * we're interested. */
+)
 {
     register Tk_Window comm = (Tk_Window) arg;
 

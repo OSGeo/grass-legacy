@@ -1,0 +1,7 @@
+$Id$
+
+Wishlist for GRASS 5
+
+- r.buffer: the history should contain info about used buffers
+- r.in.tiff/r.out.tiff: removal of LZW support
+

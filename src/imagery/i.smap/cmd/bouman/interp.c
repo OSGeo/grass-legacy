@@ -1,6 +1,8 @@
 #include "bouman.h"
 #include "region.h"
-
+#ifdef __CYGWIN__
+#define HUGE HUGE_VAL
+#endif
 #define EM_PRECISION 1e-4
 #define ML_PRECISION 1e-6
 

@@ -6,6 +6,7 @@
 
 #include "tk.h"
 #include "togl.h"
+#include "interface.h"
 
 
 
@@ -44,9 +45,10 @@ extern void display_cb();
  *----------------------------------------------------------------------
  */
 
-int
-Tcl_AppInit(interp)
-     Tcl_Interp *interp;		/* Interpreter for application. */
+int 
+Tcl_AppInit (
+    Tcl_Interp *interp		/* Interpreter for application. */
+)
 {
   
   mainWindow = Tk_MainWindow(interp);

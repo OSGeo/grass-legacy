@@ -1,3 +1,7 @@
+/*
+ * $Id$
+ */
+ 
 #include <string.h>
 #include <stdlib.h>
 #include "coin.h"
@@ -29,7 +33,7 @@ make_coin (int verbose)
 				    map1name,map2name);
 	fflush (stderr);
     }
-    sprintf (buf, "r.stats -ac%s fs=: input='", verbose?"":"q");
+    sprintf (buf, "r.stats -anrc%s fs=: input='", verbose?"":"q");
     strcat(buf, G_fully_qualified_name(map1name, mapset1));
     strcat(buf, ",");
     strcat(buf, G_fully_qualified_name(map2name, mapset2));

@@ -124,7 +124,8 @@ int execute_random (long targets, long count, char *input, char *mapset, CELL ca
 			cell[col++] = 0;
 
 		if (raster)
-			G_put_map_row (outfd, cell);
+			/*G_put_map_row (outfd, cell);*/
+			G_put_c_raster_row(outfd, (CELL*)cell);
 	}
 
 	/* close files */

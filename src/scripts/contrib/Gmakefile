@@ -1,5 +1,6 @@
 all:
 	$(GMAKE) d.rast.leg
+	cp d.monsize/d.monsize $(GISBASE)/scripts
 	cp d.rast.rescale/d.rast.rescale $(GISBASE)/scripts
 	cp g.html2man/g.html2man $(GISBASE)/scripts
 	$(GMAKE) i.oif
@@ -25,5 +26,5 @@ all:
 	cp v.in.gps/v.in.gps $(GISBASE)/scripts
 	cp v.line2area/v.line2area $(GISBASE)/scripts
 	cp v.plant/v.plant $(GISBASE)/scripts
-	cp v.xfig/*  $(GISBASE)/scripts
+	cp v.xfig/*fig*  $(GISBASE)/scripts
 	chmod 755 $(GISBASE)/scripts/*

@@ -24,8 +24,7 @@ all:  $(PROG)  $(ETC)/digitcap
 
 $(PROG): $(OFILES) $(GISLIB)
 	rm -f a.out
-	$(CC) $(LDFLAGS) $(OFILES) $(GISLIB) $(MATHLIB) $(XDRLIB)
-	mv a.out $(PROG)
+	$(CC) $(LDFLAGS) -o $(PROG) $(OFILES) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 #  update the digitcap file
 

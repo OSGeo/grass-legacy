@@ -211,7 +211,7 @@ static int d_area_info (struct Map_info *map)
 	    return (0);
 	}
 	_Clear_info ();
-	if (area = dig_point_to_area (map, x, y))
+	if ((area = dig_point_to_area (map, x, y)))
 	{
 	    if (Disp_labels)
 		highlight_area_label (area, map);
@@ -289,6 +289,8 @@ static int d_find_line (struct Map_info *map)
 	highlight_line (map->Line[num].type, &Gpoints, num, map);
 	V_flush ();
     }
+
+    return 0;
 }
 
 static int d_find_area (struct Map_info *map)

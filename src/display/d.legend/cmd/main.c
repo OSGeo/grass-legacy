@@ -4,7 +4,13 @@
 #include "raster.h"
 #include "gis.h"
 
-/* added "no data" flag 11/99 M. Neteler */
+/*********
+  $Id$
+ 
+  bugfix on shifted number 2/2000 M. Neteler
+  
+  added "no data" flag 11/99 M. Neteler 
+**********/
 
 int main(int argc,char **argv)
 {
@@ -67,8 +73,8 @@ int main(int argc,char **argv)
 	opt4->description= "Number of text lines (useful for truncating long legends)" ;
 
         flag1 = G_define_flag();
-        flag1->key      = 'f';
-        flag1->description= "Do not display no data values.";
+        flag1->key      = 'n';
+        flag1->description= "Do not display no data (NULL) values.";
                         
 
 	/* Initialize the GIS calls */
@@ -158,11 +164,11 @@ int main(int argc,char **argv)
 	   }
 	   G_get_range_min_max (&range, &min_ind, &max_ind);
 	   cats_num = max_ind - min_ind + 1 ;
-	   min_ind++;
+	   /*min_ind++;*/
 	   max_ind++;
 	   /* to allow for null */
         }
-	else
+	else /* is fp */
 	{
 	   if(!color_ramp)
 		cats_num = G_number_of_raster_cats(&cats) ;
@@ -219,7 +225,7 @@ int main(int argc,char **argv)
         else
 	   j = 0;
 	dot_rows_per_box = y_dots_per_line - 6;
-	for(i=min_ind-1; j<=do_cats && i<=max_ind; j++, i++)
+	for(i=min_ind-1; j<=do_cats && i<=max_ind-1; j++, i++)
 	{
 		/* if color ramp, draw one tall box */
 		if(i==1 && color_ramp)
@@ -252,13 +258,28 @@ int main(int argc,char **argv)
 		cur_dot_row += y_dots_per_line;
 
 		/* White box */
-		R_standard_color(white) ;
-		R_move_abs(l+2, (cur_dot_row-1)) ;
-		R_cont_rel(0, (2-y_dots_per_line)) ;
-		R_cont_rel((x_dots_per_line-2), 0) ;
-		R_cont_rel(0, (y_dots_per_line-2)) ;
-		R_cont_rel((2-x_dots_per_line), 0) ;
-
+		if (i<0) /* check for null cat */
+		{
+		  if (!flag1->answer) /* do not draw when flag*/
+		  {
+		    R_standard_color(white) ;
+		    R_move_abs(l+2, (cur_dot_row-1)) ;
+		    R_cont_rel(0, (2-y_dots_per_line)) ;
+		    R_cont_rel((x_dots_per_line-2), 0) ;
+		    R_cont_rel(0, (y_dots_per_line-2)) ;
+		    R_cont_rel((2-x_dots_per_line), 0) ;
+		  }
+		}
+		else
+		  {
+		    R_standard_color(white) ;
+		    R_move_abs(l+2, (cur_dot_row-1)) ;
+		    R_cont_rel(0, (2-y_dots_per_line)) ;
+		    R_cont_rel((x_dots_per_line-2), 0) ;
+		    R_cont_rel(0, (y_dots_per_line-2)) ;
+		    R_cont_rel((2-x_dots_per_line), 0) ;
+		  }
+		
 		/* Black box */
 		R_standard_color(black) ;
 		R_move_abs(l+3, (cur_dot_row-2)) ;
@@ -269,11 +290,14 @@ int main(int argc,char **argv)
 
 
 		/* Color solid box */
-		if(i<min_ind) /* no data cell */
+		if(i<0) /* no data cell */
 		{
-		   D_color(null_cell,&colors) ;
-		   R_move_abs(l+4, (cur_dot_row-3)) ;
-		   R_polygon_rel(x_box, y_box, 5) ;
+		  if (!flag1->answer)
+		  {
+		    D_color(null_cell,&colors) ;
+		    R_move_abs(l+4, (cur_dot_row-3)) ;
+		    R_polygon_rel(x_box, y_box, 5) ;
+		  }
                 }
                 else if(!fp)
 		{
@@ -322,10 +346,15 @@ int main(int argc,char **argv)
 
 		/* Draw text */
 		R_standard_color(color) ;
-		if(!i) /* no data cell */
+		if(i<0) /* no data cell */
+		{
+		 if (!flag1->answer)
+		 {
 		   sprintf(buff, " no data");
+		 }
+		}
                 else if(!fp)
-		   sprintf(buff, "%2d) %s", i-1, G_get_cat(i, &cats)) ;
+		   sprintf(buff, "%2d) %s", i, G_get_cat(i, &cats)) ;
                 else if(dmin==dmax)
 		{
 		   sprintf(tmp_buf1, "%.10f", dmin);

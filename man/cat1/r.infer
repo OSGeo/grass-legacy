@@ -60,7 +60,7 @@ OPTIONS
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			1
+GRASS 5.0beta6	      GRASS Development Team			1
 
 
 
@@ -126,7 +126,7 @@ COMMANDS AND STATEMENTS
 
 
 
-2		      GRASS Development Team	   GRASS 5.0beta2
+2		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -192,7 +192,7 @@ r.infer <main>	      GRASS Reference Manual	   <main> r.infer
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			3
+GRASS 5.0beta6	      GRASS Development Team			3
 
 
 
@@ -258,7 +258,7 @@ r.infer <main>	      GRASS Reference Manual	   <main> r.infer
 
 
 
-4		      GRASS Development Team	   GRASS 5.0beta2
+4		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -324,7 +324,7 @@ AUTHOR
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			5
+GRASS 5.0beta6	      GRASS Development Team			5
 
 
 

@@ -67,6 +67,7 @@ src/display/d.menu
 src/display/d.mon
 src/display/d.p.labels
 src/display/d.pan
+src/display/d.param.scale
 src/display/d.points
 src/display/d.profile
 src/display/d.rast
@@ -79,7 +80,7 @@ src/display/d.rhumbline
 src/display/d.save
 src/display/d.scale
 src/display/d.site.labels
-src/display/d.sites.label
+#src/display/d.sites.label
 src/display/d.siter
 src/display/d.sites
 src/display/d.sites.qual
@@ -252,6 +253,7 @@ src/raster/r.in.sunrast
 src/raster/r.infer
 src/raster/r.info
 src/raster/r.line
+src/raster/r.kappa
 src/raster/r.los
 src/raster/r.mapcalc
 src/raster/r.mask.points
@@ -266,6 +268,7 @@ src/raster/r.out.mpeg
 src/raster/r.out.ppm
 src/raster/r.out.tga
 src/raster/r.out.xyz
+src/raster/r.param.scale
 src/raster/r.patch
 src/raster/r.poly
 src/raster/r.profile
@@ -308,6 +311,7 @@ src/sites/s.in.ascii
 src/sites/s.info
 src/sites/s.menu
 src/sites/s.out.ascii
+src/sites/s.out.e00
 src/sites/s.surf.idw
 src/sites/s.surf.rst
 src/sites/s.surf.tps
@@ -340,11 +344,11 @@ src.contrib/CAST/r.colors.paint
 src.contrib/CERL/imagery/i.rvi.prediction2
 src.contrib/CERL/imagery/i.shape
 ###src.contrib/CERL/libes/projsupp   # obsolete!!
-# src.contrib/CERL/misc/m.regression  # missing tscore()
-# src.contrib/CERL/raster/r.linear.regression  # missing tscore()
-# src.contrib/CERL/raster/r.ndvi.model  # missing tscore()
+# src.contrib/CERL/misc/m.regression
+src.contrib/CERL/raster/r.linear.regression
+# src.contrib/CERL/raster/r.ndvi.model
 src.contrib/CERL/raster/r.out.mpeg
-# src.contrib/CERL/raster/r.rational.regression # missing tscore()
+src.contrib/CERL/raster/r.rational.regression
 src.contrib/CERL/raster/r.rvi
 src.contrib/CERL/raster/r.water.fea/src
 src.contrib/CERL/sites/s.surf.krig
@@ -440,3 +444,5 @@ src.contrib/UCB/gdbase
 #src.contrib/eurogis/v.out.DI # very special, outdated?
 #src.contrib/eurogis/v.in.EE
 #src.contrib/eurogis/r.to.SVF
+#src.garden/grass.hdf/hdf3
+src.garden/answers/src.answers/raster/r.fill.dir

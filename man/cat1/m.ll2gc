@@ -60,7 +60,7 @@ EXAMPLE
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			1
+GRASS 5.0beta6	      GRASS Development Team			1
 
 
 
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-2		      GRASS Development Team	   GRASS 5.0beta2
+2		      GRASS Development Team	   GRASS 5.0beta6
 
 
 

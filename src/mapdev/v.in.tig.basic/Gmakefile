@@ -7,8 +7,7 @@ all:	$(BIN_ALPHA_CMD)/v.in.tig.basic
 
 $(BIN_ALPHA_CMD)/v.in.tig.basic: v.in.tig.bas.o $(GISLIB) $(LIB) $(DIG_ATTLIB) $(VECTLIB)
 	$(CC) $(LDFLAGS) v.in.tig.bas.o $(LIB) $(DIG_ATTLIB) $(VECTLIB) \
-		$(GISLIB) $(MATHLIB) $(XDRLIB) -o v.in.tig.basic
-	mv v.in.tig.basic $@
+		$(GISLIB) $(MATHLIB) $(XDRLIB) -o $@
 
 $(LIB): # in case LIB changes
 $(GISLIB): #

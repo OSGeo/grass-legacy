@@ -60,7 +60,7 @@
 
 
 
-Printed 7/23/99	      GRASS Development Team			1
+Printed 1/5/100	      GRASS Development Team			1
 
 
 
@@ -126,7 +126,7 @@ DESCRIPTION
 
 
 
-2		      GRASS Development Team	   GRASS 5.0beta2
+2		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -192,7 +192,7 @@ COMMANDS
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			3
+GRASS 5.0beta6	      GRASS Development Team			3
 
 
 
@@ -258,7 +258,7 @@ v.db.rim <contrib>    GRASS Reference Manual   <contrib> v.db.rim
 
 
 
-4		      GRASS Development Team	   GRASS 5.0beta2
+4		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -324,7 +324,7 @@ v.db.rim <contrib>    GRASS Reference Manual   <contrib> v.db.rim
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			5
+GRASS 5.0beta6	      GRASS Development Team			5
 
 
 
@@ -390,7 +390,7 @@ v.db.rim <contrib>    GRASS Reference Manual   <contrib> v.db.rim
 
 
 
-6		      GRASS Development Team	   GRASS 5.0beta2
+6		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -456,7 +456,7 @@ v.db.rim <contrib>    GRASS Reference Manual   <contrib> v.db.rim
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			7
+GRASS 5.0beta6	      GRASS Development Team			7
 
 
 
@@ -522,7 +522,7 @@ v.db.rim <contrib>    GRASS Reference Manual   <contrib> v.db.rim
 
 
 
-8				 m				 2
+8				 m				 6
 
 
 
@@ -588,7 +588,7 @@ v.db.rim <contrib>    GRASS Reference Manual   <contrib> v.db.rim
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			9
+GRASS 5.0beta6	      GRASS Development Team			9
 
 
 
@@ -654,7 +654,7 @@ v.db.rim <contrib>    GRASS Reference Manual   <contrib> v.db.rim
 
 
 
-10		      GRASS Development Team	   GRASS 5.0beta2
+10		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -720,7 +720,7 @@ v.db.rim <contrib>    GRASS Reference Manual   <contrib> v.db.rim
 
 
 
-GRASS 5.0beta2	      GRASS Development Team		       11
+GRASS 5.0beta6	      GRASS Development Team		       11
 
 
 
@@ -786,7 +786,7 @@ v.db.rim <contrib>    GRASS Reference Manual   <contrib> v.db.rim
 
 
 
-12		      GRASS Development Team	   GRASS 5.0beta2
+12		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -852,7 +852,7 @@ v.db.rim <contrib>    GRASS Reference Manual   <contrib> v.db.rim
 
 
 
-GRASS 5.0beta2	      GRASS Development Team		       13
+GRASS 5.0beta6	      GRASS Development Team		       13
 
 
 
@@ -918,7 +918,7 @@ v.db.rim <contrib>    GRASS Reference Manual   <contrib> v.db.rim
 
 
 
-14		      GRASS Development Team	   GRASS 5.0beta2
+14		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -984,7 +984,7 @@ THE MAIN MENU
 
 
 
-GRASS 5.0beta2	      GRASS Development Team		       15
+GRASS 5.0beta6	      GRASS Development Team		       15
 
 
 
@@ -1050,7 +1050,7 @@ v.db.rim <contrib>    GRASS Reference Manual   <contrib> v.db.rim
 
 
 
-16		      GRASS Development Team	   GRASS 5.0beta2
+16		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -1116,7 +1116,7 @@ v.db.rim <contrib>    GRASS Reference Manual   <contrib> v.db.rim
 
 
 
-GRASS 5.0beta2	      GRASS Development Team		       17
+GRASS 5.0beta6	      GRASS Development Team		       17
 
 
 
@@ -1182,7 +1182,7 @@ v.db.rim <contrib>    GRASS Reference Manual   <contrib> v.db.rim
 
 
 
-18		      GRASS Development Team	   GRASS 5.0beta2
+18		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -1248,7 +1248,7 @@ FIND/QUERY TARGET MENU
 
 
 
-2				 m				 9
+6				 m				 9
 
 
 
@@ -1314,7 +1314,7 @@ QUERY COMMAND MENU
 
 
 
-0				 m				 2
+0				 m				 6
 
 
 
@@ -1380,7 +1380,7 @@ MANAGEMENT MENU
 
 
 
-GRASS 5.0beta2	      GRASS Development Team		       21
+GRASS 5.0beta6	      GRASS Development Team		       21
 
 
 
@@ -1446,7 +1446,7 @@ v.db.rim <contrib>    GRASS Reference Manual   <contrib> v.db.rim
 
 
 
-22		      GRASS Development Team	   GRASS 5.0beta2
+22		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -1512,7 +1512,7 @@ NOTICE
 
 
 
-GRASS 5.0beta2	      GRASS Development Team		       23
+GRASS 5.0beta6	      GRASS Development Team		       23
 
 
 

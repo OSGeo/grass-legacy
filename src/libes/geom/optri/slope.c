@@ -11,8 +11,8 @@ void buildMinMaxSlopeTriangulation (
   int *nofFlips, int *nofAttempts, double *runTime)
 
 {
-  ANGLEMAKETIME = 0;
-  NOFANGLECOMPARISONS = 0;
+  ANGLEMAKETIME = 0.0L;
+  NOFANGLECOMPARISONS = 0L;
 
   fprintf (stdout,"MinMax Slope: "); (void) fflush(stdout);
 
@@ -20,9 +20,9 @@ void buildMinMaxSlopeTriangulation (
 		   GT_CANNOT_DECIDE_RIGHT_TURN, hsSlopeRightTurn,
 		   hsPrintSlope, nofFlips, nofAttempts, runTime);
 
-  fprintf (stdout,"Time used for slope comparisons: %d\n", ANGLEMAKETIME);
+  fprintf (stdout,"Time used for slope comparisons: %f\n", ANGLEMAKETIME);
   if (printInfo) 
-    fprintf (stdout,"Number of Slope Comparisons: %d\n",   NOFANGLECOMPARISONS);
+    fprintf (stdout,"Number of Slope Comparisons: %ld\n", NOFANGLECOMPARISONS);
 }
 
 /*--------------------------------------------------------------------------*/

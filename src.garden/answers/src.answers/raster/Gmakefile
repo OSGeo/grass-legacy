@@ -1,3 +1,4 @@
 all:
-	$(MAKEALL)
-
+	$(GMAKE) r.answers
+	$(GMAKE) r.direct
+	$(GMAKE) r.fill.dir
