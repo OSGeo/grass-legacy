@@ -40,7 +40,7 @@ main (int argc, char **argv)
 	struct Option *lcolor_opt, *bgcolor_opt, *bcolor_opt;
 	struct Option *lsize_opt, *font_opt, *xref_opt, *yref_opt;
 	struct Option *attrcol_opt, *maxreg_opt, *minreg_opt;
-	struct Flag   *_quiet, *id_flag;
+	struct Flag   *_quiet, *id_flag, *table_acolors_flag;
 	struct cat_list *Clist;
 	int *cats, ncat;
 	LATTR lattr;
@@ -176,6 +176,10 @@ main (int argc, char **argv)
 	_quiet->key		= 'v';
 	_quiet->description	= "Run verbosely";
 
+	table_acolors_flag = G_define_flag ();
+	table_acolors_flag->key		= 'a';
+	table_acolors_flag->description	= "Get area fill colors from map table column 'GRASSRGB' (RR:GG:BB)";
+
 	id_flag = G_define_flag ();
 	id_flag->key		= 'i';
 	id_flag->description	= "Use values from 'cat' option as line id";
@@ -238,7 +242,7 @@ main (int argc, char **argv)
 	size = atoi (size_opt->answer);
 	Symb = S_read ( icon_opt->answer );
         if ( Symb == NULL ) G_warning ("Cannot read symbol, cannot display points");
-	else S_stroke ( Symb, size, 0, 0 );
+	else S_stroke ( Symb, size, 0.0, 0 );
 
 	/* Make sure map is available */
 	mapset = G_find_vector2 (map_name, "") ; 
@@ -410,7 +414,7 @@ main (int argc, char **argv)
          
 	if ( area ) {
 	    if ( level >= 2 )
-	        stat = darea ( &Map, Clist, color, fcolor, chcat, (int) id_flag->answer );
+	        stat = darea ( &Map, Clist, color, fcolor, chcat, (int) id_flag->answer, table_acolors_flag->answer );
 	    else
 		G_warning ("Cannot display areas, topology not available");
         }
