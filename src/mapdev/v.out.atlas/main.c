@@ -1,8 +1,7 @@
-/* 12/17/92 */
-
 #define MAIN
 #include "gis.h"
 #include "Vect.h"
+#include <stdio.h>
 
 #define  USAGE  "v.out.atlas dig_file atlas_file type\n"
 
@@ -54,14 +53,10 @@ opt3->options = "A,a,L,l";
 /*  check args and set flags  */
 	
     if(G_parser (argc, argv))
-    {
-        fprintf (stderr, "%s: Command line error.\n\n Usage: %s\n",
-		argv[0], USAGE);
-        exit (-1);
-    }
+        exit (1);
 
 /* Show advertising */
-    printf("\n\n   Export from GRASS Vector to ATLAS GIS format.\n\n") ;
+    fprintf(stderr, "\n\n   Export from GRASS Vector to ATLAS GIS format.\n\n") ;
 
     if ((mapset = G_find_file2 ("dig", opt1->answer, "")) == NULL)
 	G_fatal_error ("Could not find DIG file %s\n", opt1->answer);
@@ -74,9 +69,9 @@ opt3->options = "A,a,L,l";
 
     lin_file = fopen(lin_filename,"w");
 
-printf("ATLAS data being created\n");
-       write_lines(opt1->answer,mapset,Map,lin_file,opt3->answer);
+    fprintf(stderr, "ATLAS data being created\n");
+    write_lines(opt1->answer,mapset,Map,lin_file,opt3->answer);
 
-	printf("Done processing.\n");
+    fprintf(stderr, "Done processing.\n");
     exit(0);
 }
