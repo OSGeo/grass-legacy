@@ -1,0 +1,20 @@
+PGM       = $(GARDEN_BIN)/d.what.s.inf
+LIBES     = $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) 
+
+# EXTRA_CFLAGS 	= -Dunlink=puts
+
+OBJS = \
+	main.o  \
+	getArea.o \
+	returns.o \
+        getAllOpts.o \
+        getSopts.o \
+        buildInfxQry.o \
+        runInfxFile.o 
+
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) 
+
+$(LIBES): #
