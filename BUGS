@@ -1,4 +1,4 @@
-                 $Id: BUGS,v 1.121 2001-02-28 01:48:41 bob Exp $
+                 $Id: BUGS,v 1.122 2001-03-03 10:23:34 markus Exp $
 
 Known bugs in current GRASS GIS version 5.0 CVS
 [In sync with GRASS 5.0 beta CVS version]
@@ -251,6 +251,10 @@ r.in.ppm
   Memory bug fixed by Alex Shevlakov
   (being worked on by ?)
   -> r.in.gdal can be used
+
+r.recode:
+  - NULL is not supported (compare r.reclass how this could be done)
+   (being worked on by ?)
 
 r.resamp.rst:
   When processing quite a big DEM file with r.resamp.rst I got the  
