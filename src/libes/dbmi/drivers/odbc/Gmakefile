@@ -6,7 +6,7 @@ STUBLIB = ../libstubs.a
 DBMILIB= $(LIBDIR)/libdbmi.a
 
 DBMIDIR=$(GISBASE)
-HOME = $(DBMIDIR)/driver
+HOME = $(DBMIDIR)/driver/db
 
 LIBES = $(DBMILIB) $(STUBLIB) $(GISLIB) 
 #LIBES = $(DBMILIB) $(STUBLIB) $(ODBCBASE)/odbc.a
