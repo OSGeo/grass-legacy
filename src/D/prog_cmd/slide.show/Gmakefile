@@ -1,0 +1,4 @@
+$(BIN)/Dslide.show: slideshow.sh
+	rm -f $@
+	cp $? $@
+	chmod +rx $@
