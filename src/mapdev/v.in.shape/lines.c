@@ -23,6 +23,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <string.h>
 #include <math.h>
 #include "lines.h"
@@ -38,11 +39,10 @@ static BTREE *bt1 = NULL;
 static param_import_ctrl *paric1 = NULL;
 
 static long v_old = -1;
-static fp_epsilon = 0.0;
 
-static false_easting;
-static false_northing;
-static n_decs;
+static double false_easting;
+static double false_northing;
+static int n_decs;
 
 /* Static routines */
 
@@ -184,7 +184,7 @@ int vbase_add_line(struct line_pnts *lpt0) {
   char *vk1;
   char *data1;
   long *offs1;
-  int fres, fres2, sres, rres, vres, wres, ures;
+  int fres, sres, rres, vres, wres, ures;
   int old_link;
   vertex vt1, *vptr1;
 
@@ -354,6 +354,8 @@ int vbase_add_line(struct line_pnts *lpt0) {
       
     }
   }
+
+  return (0);
 }
 
 
@@ -553,10 +555,8 @@ int vertex_links_remove(vertex *vptr0a, vertex *vptr0b, long idx0a, long idx0b) 
   vertex *vptr1, *vptr2;
   long idx1, idx2;
   int res1;
-  int n_extra;
-  int missing_links = 0;
   int idx_located;
-
+ 
   /* loop */
 
   int i, ix;
@@ -603,7 +603,7 @@ int vertex_links_remove(vertex *vptr0a, vertex *vptr0b, long idx0a, long idx0b) 
 
     if(idx_located < 0) {
       if(paric1->verbose_level > 1) {
-	fprintf(paric1->logptr, "    WARNING: Link from vertex %d to vertex %d absent. Not deleted.\n",
+	fprintf(paric1->logptr, "    WARNING: Link from vertex %ld to vertex %ld absent. Not deleted.\n",
 		idx1, idx2);
       }
       continue;
@@ -615,7 +615,7 @@ int vertex_links_remove(vertex *vptr0a, vertex *vptr0b, long idx0a, long idx0b) 
 
     if(res1) {
       if(paric1->verbose_level > 1) {
-	fprintf(paric1->logptr, "    WARNING: Could not delete link %d to vertex %d.\n",
+	fprintf(paric1->logptr, "    WARNING: Could not delete link %ld to vertex %ld.\n",
 		idx1, idx2);
       }
     }
@@ -630,6 +630,8 @@ int vertex_links_remove(vertex *vptr0a, vertex *vptr0b, long idx0a, long idx0b) 
 int vertex_delete_link(vertex *vt0, int idl0) {
 
   /* Still to implement */
+
+  return (0);
 }
 
 repository *get_repository_ptr(void) {
@@ -677,7 +679,7 @@ int vmap_write_area_edges(struct Map_info *Map0) {
 
   /* loop */
 
-  int ia, ib;
+  int ia;
 
   /* local */
   char *key1, *data1;
@@ -1057,7 +1059,7 @@ void vmap_dump_line(struct line_pnts *lp0, FILE *fp0) {
   fprintf(fp0, "A  %d\n", lp0->n_points);
 
   for(ia = 0; ia < lp0->n_points; ia++) {
-    fprintf(fp0, "%16.6lf  %16.6lf\n", lp0->y[ia], lp0->x[ia]);
+    fprintf(fp0, "%16.6f  %16.6f\n", lp0->y[ia], lp0->x[ia]);
   }  
 }
 
@@ -1083,7 +1085,6 @@ static char *get_vkey( double xa, double ya, double sr, int decs, double efalse,
   double xtmp, ytmp;
   char xbuf[128], ybuf[128];
   char *retbuf;
-  int indx;
   char *indx_ptr;
   int idigits;
 

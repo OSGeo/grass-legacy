@@ -58,7 +58,6 @@ int vmap_import(param_import_ctrl *pic0) {
   int res1, res2;
   int go_out = 0;
   int null_recs = 0;
-  int vert_cnt = 0;
   int part_cnt = 0;
   int no_atts = 0;
   int verb = pic0->verbose_level;
@@ -72,7 +71,6 @@ int vmap_import(param_import_ctrl *pic0) {
   struct Map_info Map1;
   polygon_ctrl *pgc1 = NULL;
   ringset *prings;
-  repository *vrep;
 
   /* loop */
   int ia, ib, ic;
@@ -235,7 +233,7 @@ int vmap_import(param_import_ctrl *pic0) {
 
   if(verb > 0) {
     fprintf(hlog, "with %d entries.\n\n", num_entries);
-    fprintf(hlog, "Bounds:\nW:%16.6lf, E:%16.6lf, S:%16.6lf, N:%16.6lf.\n\n",
+    fprintf(hlog, "Bounds:\nW:%16.6f, E:%16.6f, S:%16.6f, N:%16.6f.\n\n",
 	    W_bound, E_bound, S_bound, N_bound);
   }
 
@@ -309,7 +307,7 @@ int vmap_import(param_import_ctrl *pic0) {
 	  part_cnt++;
 
 	  if(verb > 2) {
-	    fprintf(hlog, "    Vertex: %16.6lf  %16.6lf\n", 
+	    fprintf(hlog, "    Vertex: %16.6f  %16.6f\n", 
 		    shpobj->padfX[ib], shpobj->padfY[ib]);
 	  }
 
@@ -475,7 +473,7 @@ int vmap_import(param_import_ctrl *pic0) {
 	    /* Just assume lp2 has the same number of entries */
 	  
 	    if(verb > 2) {
-	      fprintf(hlog, "    %16.6lf  %16.6lf\n", lp1->x[ic], lp1->y[ic]);
+	      fprintf(hlog, "    %16.6f  %16.6f\n", lp1->x[ic], lp1->y[ic]);
 	    }
 
 	  } /* ic */
@@ -656,10 +654,12 @@ int shp_extract_line(SHPObject *shp0, int idx, struct line_pnts **lpt0) {
 
   lpt1 = Vect_new_line_struct();
 
-  while(++vcnt <= nPartVertices) {
+  for(vcnt = 1; vcnt <= nPartVertices; vcnt++) {
 
     if(vcnt > 1) {
       if(xnow == *vertex1 && ynow == *vertex2) {
+	vertex1++;
+	vertex2++;
 	continue;
       }
     }
@@ -667,7 +667,7 @@ int shp_extract_line(SHPObject *shp0, int idx, struct line_pnts **lpt0) {
     xnow = *vertex1;
     ynow = *vertex2;
     Vect_append_point(lpt1, xnow, ynow);
-    if(vcnt <= nPartVertices) {
+    if(vcnt < nPartVertices) {
       vertex1++;
       vertex2++;
     }
@@ -731,9 +731,7 @@ int shp_write_fields(param_import_ctrl *paric0, FILE *att_fp, DBFHandle hDBF, st
 		     const double x_coord0, const double y_coord0, char cov_type) {
 
   int no_atts = 0, no_cats = 0;
-  int attval;
   DBFFieldType dbft;
-  int go_out = 0;
 
   int f_size, f_decs;
   char buffer1[64] = "";
@@ -828,7 +826,7 @@ int shp_write_fields(param_import_ctrl *paric0, FILE *att_fp, DBFHandle hDBF, st
 
   }
 
-  fprintf(att_fp, "%c %16.6lf %16.6lf %10d\n", cov_type, x_coord0, y_coord0, val1);
+  fprintf(att_fp, "%c %16.6f %16.6f %10d\n", cov_type, x_coord0, y_coord0, val1);
 
 
   /* If we got this far it is valid to write cats if they are to be defined */
@@ -864,7 +862,7 @@ int shp_write_fields(param_import_ctrl *paric0, FILE *att_fp, DBFHandle hDBF, st
 	}
 
 	else {
-	  sprintf(tmp_buf, "%.ld", catval1);
+	  sprintf(tmp_buf, "%ld", catval1);
 	  len1 = strlen(tmp_buf) - f_decs;
 	  strncpy(buffer2, tmp_buf, len1);
 	  chptr = &tmp_buf[len1];
