@@ -39,6 +39,7 @@ namespace eval Dm {
 
 proc Dm::create { } {
     global dmpath
+    global mainwindow
     variable mainframe
     variable options
     variable tree
@@ -55,7 +56,14 @@ proc Dm::create { } {
     # Menu description
     set descmenu {
         "&File" all file 0 {
-            {command "E&xit" {} "Exit d.m" {} -command { DmPrint::clean;  exit } }
+	    {command "New" {} "Create new file" {} -accelerator Ctrl-N -command { Dm::new}}
+	    {command "Open..." {} "Open file" {} -accelerator Ctrl-O -command { Dm::OpenFileBox {}}}
+	    {command "Save" {} "Save file" {} -accelerator Ctrl-S -command { Dm::SaveFileBox {}}}
+	    {command "Save as..." {} "Save file as name" {} 
+	     -command { if {[catch {unset ::Dm::filename}]} {}; Dm::SaveFileBox {}}}
+	    {command "Close" {} "Close file" {} -accelerator Ctrl-W -command { Dm::FileClose {}}}
+	     {separator}
+            {command "E&xit" {} "Exit d.m" {} -accelerator Ctrl-Q -command { DmPrint::clean;  exit } }
         }
         "&Options" all options 0 {
         }
@@ -139,20 +147,44 @@ proc Dm::_create_intro { } {
 proc Dm::new { } {
     variable tree
     variable options
+    global new_root_node
     
     $tree delete [$tree nodes root]
     destroy $options.fr
+
+    catch {unset ::Dm::filename}
     DmPrint::init
+    set new_root_node [DmGroup::create $tree "root"]
+    $tree itemconfigure $new_root_node -text "UNTITLED"
+    
+    set ::Dm::filename Untitled.dmrc 
+}
+
+#Ctrl-W to close file
+proc Dm::FileClose { stay_alive} {
+    variable tree
+    variable options
+    
+    $tree delete [$tree nodes root]
+    destroy $options.fr
+
+    if { $stay_alive == ""} {
+    	catch {unset ::Dm::filename}
+    }
 }
 
 # add new group/layer to tree
 proc Dm::add { type } {
     variable tree
+    global new_root_node
 
+    if { [catch {match string {} $new_root_node}] } {
+    set new_root_node root
+    }
     # selected node
     set parent_node [ lindex [$tree selection get] 0 ]
     if { $parent_node == "" } {
-       set parent_node root
+       set parent_node $new_root_node
     } 
 
     set parent_type [Dm::node_type $parent_node]
@@ -239,6 +271,33 @@ proc Dm::monitor { } {
         }
     }
     Dm::execute "d.mon start=x0"
+}
+
+#digitize
+proc Dm::edit { } {
+    variable tree
+    variable options
+
+    set sel [ lindex [$tree selection get] 0 ]
+    if { $sel == "" } { return }
+
+    set type [Dm::node_type $sel]
+
+    switch $type {
+        raster {
+            return
+        }
+        labels {
+            return
+        }
+        vector {
+	    DmVector::WorkOnVector $sel
+        }
+        cmd {
+            return
+        }
+    }
+
 }
 
 # display
@@ -360,13 +419,13 @@ proc Dm::query { } {
 }
 
 # save tree/options to file
-proc Dm::save { } {
+proc Dm::save { spth } {
     global gisdbase location_name mapset
     global env
     variable rcfile
     variable tree
 
-    set fpath "$gisdbase/$location_name/$mapset/.dmrc"
+    set fpath $spth
     set rcfile [open $fpath w]
 
     DmPrint::save
@@ -382,6 +441,10 @@ proc Dm::save_node { depth node } {
 
     set type [Dm::node_type $node]
     set name [$tree itemcget $node -text]
+
+    if { $type == "group" && $name == "UNTITLED" } {
+    set name "File $::Dm::filename"
+    }
 
     switch $type {
         group {
@@ -416,7 +479,7 @@ proc Dm::save_node { depth node } {
 }
 
 # load tree/options from file
-proc Dm::load { } {
+proc Dm::load { lpth } {
     global gisdbase location_name mapset
     global env
     variable rcfile
@@ -425,14 +488,13 @@ proc Dm::load { } {
     variable prgtext
 
     set prgtext "Loading layers..."
-    set fpath "$gisdbase/$location_name/$mapset/.dmrc"
-    # If .dmrc not available, try to load from PERMANENT
+
+    set fpath $lpth
+
     if { ![file exist $fpath] || ![file readable $fpath] } { 
-        set fpath "$gisdbase/$location_name/PERMANENT/.dmrc"
-        if { ![file exist $fpath] || ![file readable $fpath] } { 
             return 
-        }
     }
+
     set rcfile [open $fpath r]
     set file_size [file size $fpath]
     set nrows [expr $file_size / 15]
@@ -464,6 +526,12 @@ proc Dm::load { } {
 		# Tree of layers	
 		switch $key {
 		    Group {
+
+			if { [regexp -- {^File (.+)} $val r leftover]  && ($leftover !=
+			$::Dm::filename)} {
+			    	set val "<-- $leftover"
+			}
+
 			set current_node [DmGroup::create $tree $parent]
 			$tree itemconfigure $current_node -text $val 
 			set parent $current_node
@@ -491,7 +559,12 @@ proc Dm::load { } {
 			}
 			set current_node [$tree parent $current_node]
 		    }
-		    default { 
+		    default {
+		      if {[catch {Dm::node_type $current_node}] } {
+			tk_messageBox -type ok -message "Inappropriate file format"
+			break
+		      } else {
+
 			set type [Dm::node_type $current_node]
 			switch $type {
 			    group { 
@@ -510,7 +583,7 @@ proc Dm::load { } {
 				DmCmd::set_option $current_node $key $val
 			    }
 			}
-
+		      }
 		    }           
 		}
 	    }
@@ -598,16 +671,89 @@ proc Dm::print { } {
     DmPrint::window
 }
 
+#open dialog box
+proc Dm::OpenFileBox {w} {
+    global mainwindow
+    variable win
+
+    set win $w
+    
+    if { $win == ""} {set win $mainwindow}
+    
+    set types {
+        {{Adm Resource Files} {.dmrc}}
+        {{All Files} *}
+    }
+
+        if {[catch {tk_getOpenFile \
+                -parent $win \
+                -filetypes $types \
+                -title {Load File}} \
+                ::Dm::filename_new] || \
+                [string match {} $::Dm::filename_new]} return
+	
+	if {[catch {if { [ regexp -- {^Untitled.dmrc$} $::Dm::filename r]} {}}] } {
+		set ::Dm::filename $::Dm::filename_new
+	}
+	
+	Dm::load $::Dm::filename_new
+		
+};
+
+#save dialog box
+proc Dm::SaveFileBox {w} {
+    global mainwindow
+    variable win
+
+    set win $w
+    if { $win == ""} {set win $mainwindow}
+    catch {if { [ regexp -- {^Untitled.dmrc$} $::Dm::filename r]} {unset ::Dm::filename}}
+    if {[catch {Dm::save $::Dm::filename}]} {
+        set types {
+            {{Adm Resource Files} {.dmrc}}
+            {{All Files} *}
+        }
+        if {[catch {tk_getSaveFile \
+                -parent $win \
+                -filetypes $types \
+                -title {Save File}} \
+                ::Dm::filename] || \
+                [string match {} $::Dm::filename]} return
+	
+	Dm::save $::Dm::filename
+	Dm::FileClose stay_alive
+	Dm::load $::Dm::filename
+    }
+};
+
 proc main {} {
     global auto_path
 
     wm withdraw .
     wm title . "GRASS 5.1 Display Manager"
 
+    bind . <Control-Key-o> {
+	Dm::OpenFileBox {}
+    }
+    bind . <Control-Key-n> {
+	Dm::new
+    }
+    bind . <Control-Key-s> {
+	Dm::SaveFileBox {}
+    }
+    bind . <Control-Key-q> {
+	DmPrint::clean;  exit
+    }
+    bind . <Control-Key-x> {
+	Dm::delete
+    }
+    bind . <Control-Key-w> {
+	Dm::FileClose {}
+    }
+
     Dm::create
     DmPrint::init
     DmPrint::init_tmpfiles
-    Dm::load
     BWidget::place . 0 0 center
     wm deiconify .
     raise .

@@ -479,3 +479,25 @@ proc DmVector::query { node } {
     Dm::execute $cmd
 }
 
+proc DmVector::WorkOnVector { node } {
+    variable opt
+    
+    set tree $Dm::tree
+    set id [Dm::node_id $node]
+
+    if { ! ( $opt($id,_check) ) } { return } 
+
+    if { $opt($id,map) == "" } { return } 
+
+    if { !$opt($id,display_shape) && !$opt($id,display_cat) &&
+         !$opt($id,display_topo)  && !$opt($id,display_dir) &&
+         !$opt($id,display_attr) } { return } 
+
+    if { !$opt($id,type_point) && !$opt($id,type_line) &&
+         !$opt($id,type_boundary)  && !$opt($id,type_centroid) && 
+         !$opt($id,type_area) && !$opt($id,type_face) } { return } 
+
+    set cmd "v.digit -n map=$opt($id,map)"
+    Dm::monitor
+    Dm::execute $cmd
+}

@@ -75,6 +75,11 @@ proc DmToolBar::create { tb  } {
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
         -helptext "Create new command"
 
+    $bbox2 add -image [image create photo -file "$dmpath/dig.gif"] \
+        -command "Dm::edit" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
+        -helptext "Digitize vector map"
+
     $bbox2 add -image [Bitmap::get cut] -command "Dm::delete" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
         -helptext "Cut selection"
@@ -96,10 +101,10 @@ proc DmToolBar::create { tb  } {
      $bbox3 add -image [Bitmap::get new] -command "Dm::new" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
         -helptext "Create a new d.m settings file (erase current settings first)"
-    # $bbox3 add -image [Bitmap::get open] \
-    #    -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-    #    -helptext "Open an existing file"
-    $bbox3 add -image [Bitmap::get save]  -command "Dm::save" \
+    $bbox3 add -image [Bitmap::get open] -command "Dm::OpenFileBox $toolbar"\
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
+        -helptext "Open an existing file"
+    $bbox3 add -image [Bitmap::get save]  -command "Dm::SaveFileBox $toolbar"\
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
         -helptext "Save d.m settings file"
 
