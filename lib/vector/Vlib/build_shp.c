@@ -182,7 +182,7 @@ Vect_build_shp ( struct Map_info *Map, FILE *msgout )
 				lines[0] = pline[i]; 
 				isle = dig_add_isle (plus, 1, lines);
 				dig_line_box ( Points[i], &box );
-				dig_area_set_box (plus, isle, &box);
+				dig_isle_set_box (plus, isle, &box);
 				
 				G_debug ( 3, " -> isle %d", isle );
 				Isle = plus->Isle[isle];
