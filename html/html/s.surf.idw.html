@@ -48,7 +48,7 @@ using the form:
 <P>
 <DL>
 <DD>
-<B>s.surf.idw input=</B><EM>name</EM> 
+<B>s.surf.idw [-n] input=</B><EM>name</EM> 
 <B>output=</B><EM>name</EM> 
 <B>[npoints=</B><EM>count</EM><B>]</B>
 <B>[field=</B><EM>number</EM><B>]</B>
@@ -64,6 +64,14 @@ interface.
 
 
 <H2>OPTIONS</H2>
+
+<H3>Flags:</H3>  
+
+<DL>
+<DT><B>-n</B>
+<DD> Don't index sites by cell. (for very large regions; uses less memory,
+but is very slow if there is a large number of sites)
+</DL>
 
 <H3>Parameters:</H3>
 
@@ -112,7 +120,9 @@ interpolation.
 <p>
 
 If more than <EM>count</EM> sites fall into one target raster cell, 
-the mean of all the site values will determine the cell value.
+the mean of all the site values will determine the cell value (unless
+the -n flag is specifed, in which case only the <EM>count</EM> 
+sites closest to the centre of the cell will be interpolated).
 
 
 <H2>SEE ALSO</H2>
