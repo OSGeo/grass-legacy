@@ -3,9 +3,10 @@
  *
  * function defined:
  *
- * pie(dist_stats) 
+ * pie(dist_stats,colors) 
  *
- * struct stat_list dist_stats     - linked list of statistics
+ * struct stat_list *dist_stats     - linked list of statistics
+ * struct Colors *colors            - map colors
  *
  * 
  * PURPOSE: To draw a pie-chart representing the histogram
@@ -36,8 +37,9 @@
 #define NO	0
 
 
-pie(dist_stats)
-struct stat_list dist_stats;  /* list of distribution statistics */
+pie(dist_stats,colors)
+struct stat_list *dist_stats;  /* list of distribution statistics */
+struct Colors *colors;
 {
 struct stat_node *ptr;
 double arc,
@@ -83,9 +85,9 @@ x_line[2] = x_line[3] = l+(int)(BAR_X2*width);
 bar_height = y_line[1] = y_line[2] = b-(int)(BAR_Y2*height);
 
 /* figure scaling factors and offsets */
-num_cats = dist_stats.maxcat - dist_stats.mincat+1;
+num_cats = dist_stats->maxcat - dist_stats->mincat+1;
 xscale = ((double)(x_line[2]-x_line[1])/((double)num_cats));
-yscale = ((double)(y_line[0]-y_line[1]))/dist_stats.maxstat;
+yscale = ((double)(y_line[0]-y_line[1]))/dist_stats->maxstat;
 yoffset = (long)(y_line[0]);
 if (num_cats >= x_line[2]-x_line[1]) 
    xoffset = (double)x_line[1];             
@@ -125,16 +127,19 @@ else
  * number on those evenly divisible by tic_every
  *
  */
-ptr = dist_stats.ptr;
+ptr = dist_stats->ptr;
 arc_counter = 0;
-for (i=dist_stats.mincat; i<=dist_stats.maxcat; i++)
+for (i=dist_stats->mincat; i<=dist_stats->maxcat; i++)
    {
    draw=NO;
    /* figure color and height of the slice of pie 
     *
-    * the cat number indicates the color, the corresponding stat,
+    * the cat number determines the color, the corresponding stat,
     * determines the bar height.  if a stat cannot be found for the
-    * cat, then the bar color will be black and its height will be 0.
+    * cat, then we don't draw anything, but before in this case we
+    * used to draw a black box of size 0. Later on when the option 
+    * to specify the backgrown colors will be added, we might still
+    * draw a box in that color.
     */
    if (ptr->cat == i) /* AH-HA!! found the stat */
       {
@@ -144,18 +149,18 @@ for (i=dist_stats.mincat; i<=dist_stats.maxcat; i++)
          {
          draw=YES;
          bar_color = ptr->cat; 
-         R_color(bar_color);
-         arc = (double)360*((double)ptr->stat/(double)dist_stats.sumstat);
+         D_color((CELL)bar_color, colors);
+         arc = (double)360*((double)ptr->stat/(double)dist_stats->sumstat);
          text_height = (height)*0.7*TEXT_HEIGHT;
          text_width = (width)*0.7*TEXT_WIDTH; 
          R_text_size(text_width,text_height);
-         draw_slice_filled((int)bar_color,(int)color,(double)ORIGIN_X,
+         draw_slice_filled(colors, (CELL)bar_color,(int)color,(double)ORIGIN_X,
                            (double)ORIGIN_Y, (double)RADIUS,arc_counter,arc);
          /*OUTLINE THE SLICE
-         draw_slice_unfilled((int)color,(double)ORIGIN_X,(double)ORIGIN_Y,
+         draw_slice_unfilled(colors, (int)color,(double)ORIGIN_X,(double)ORIGIN_Y,
                              (double)RADIUS,arc_counter,arc);*/
          arc_counter += arc;
-         R_color(bar_color);
+         D_color((CELL)bar_color, colors);
          }
       if (ptr->next != NULL)
          ptr=ptr->next;
@@ -173,18 +178,18 @@ for (i=dist_stats.mincat; i<=dist_stats.maxcat; i++)
             {
             draw=YES;
             bar_color = ptr->cat;    
-            R_color(bar_color);
-            arc = (double)360*((double)ptr->stat/(double)dist_stats.sumstat);
+            D_color((CELL)bar_color, colors);
+            arc = (double)360*((double)ptr->stat/(double)dist_stats->sumstat);
             text_height = (height)*0.7*TEXT_HEIGHT;
             text_width = (width)*0.7*TEXT_WIDTH; 
             R_text_size(text_width,text_height);
-            draw_slice_filled((int)bar_color,(int)color,(double)ORIGIN_X,
+            draw_slice_filled(colors, (CELL)bar_color,(int)color,(double)ORIGIN_X,
                               (double)ORIGIN_Y,(double)RADIUS,arc_counter,arc);
             /*OUTLINE THE SLICE
-            draw_slice_unfilled((int)color,(double)ORIGIN_X,(double)ORIGIN_Y,
+            draw_slice_unfilled(colors, (int)color,(double)ORIGIN_X,(double)ORIGIN_Y,
                               (double)RADIUS,arc_counter,arc);*/
             arc_counter += arc;
-            R_color(bar_color);
+            D_color((CELL)bar_color, colors);
             }
          if (ptr->next != NULL)
             ptr=ptr->next;
@@ -193,7 +198,10 @@ for (i=dist_stats.mincat; i<=dist_stats.maxcat; i++)
          {
          if (xscale > 1)
             {
+	    /*
             draw=YES;
+	    */
+            draw=NO;
             bar_color = D_translate_color("black");  
             R_standard_color(bar_color);
             }
@@ -208,10 +216,11 @@ for (i=dist_stats.mincat; i<=dist_stats.maxcat; i++)
       if (xscale != 1)
          {
          /* draw the bar as a box */
+         D_color((CELL)bar_color, colors);
          x_box[0] = x_box[1] = x_box[4] = 
-                    xoffset+((i-dist_stats.mincat)*xscale-0.5*xscale); 
+                    xoffset+((i-dist_stats->mincat)*xscale-0.5*xscale); 
          x_box[2] = x_box[3] = 
-                    xoffset+((i-dist_stats.mincat)*xscale+0.5*xscale); 
+                    xoffset+((i-dist_stats->mincat)*xscale+0.5*xscale); 
          y_box[0] = y_box[3] = y_box[4] = y_line[0]; 
          y_box[1] = y_box[2] = bar_height; 
          R_polygon_abs(x_box,y_box,4);
@@ -219,8 +228,8 @@ for (i=dist_stats.mincat; i<=dist_stats.maxcat; i++)
       else
          {
          /* draw the bar as a line */
-         R_color(bar_color);
-         x_box[0] = x_box[1] = xoffset+(i-dist_stats.mincat)*xscale; 
+         D_color((CELL)bar_color, colors);
+         x_box[0] = x_box[1] = xoffset+(i-dist_stats->mincat)*xscale; 
          y_box[0] = yoffset;
          y_box[1] = bar_height;
          R_move_abs((int)x_box[0],(int)y_box[0]);
@@ -233,7 +242,7 @@ for (i=dist_stats.mincat; i<=dist_stats.maxcat; i++)
       {
       /* draw a numbered tic-mark */
       R_standard_color(color);
-      R_move_abs( (int)(xoffset+(i-dist_stats.mincat)*xscale),
+      R_move_abs( (int)(xoffset+(i-dist_stats->mincat)*xscale),
                   (int)(b-BAR_Y1*(height)) );
       R_cont_rel( (int)0 , (int)(BIG_TIC*(height)) );
       sprintf(txt,"%d",(int)(i/tic_unit));
@@ -248,7 +257,7 @@ for (i=dist_stats.mincat; i<=dist_stats.maxcat; i++)
          R_text_size(text_width,text_height);
          R_get_text_box(txt,&tt,&tb,&tl,&tr);
          }
-      R_move_abs((int)(xoffset+(i-dist_stats.mincat)*xscale-(tr-tl)/2),
+      R_move_abs((int)(xoffset+(i-dist_stats->mincat)*xscale-(tr-tl)/2),
                  (int)(b-XNUMS_Y*(height)));
       R_text(txt);
       }
@@ -256,7 +265,7 @@ for (i=dist_stats.mincat; i<=dist_stats.maxcat; i++)
       {
       /* draw a tic-mark */
       R_standard_color((int)color);
-      R_move_abs( (int)(xoffset+(i-dist_stats.mincat)*xscale),
+      R_move_abs( (int)(xoffset+(i-dist_stats->mincat)*xscale),
                   (int)(b-BAR_Y1*(height)) );
       R_cont_rel( (int)0 , (int)(SMALL_TIC*(height)) );
       }
@@ -264,7 +273,7 @@ for (i=dist_stats.mincat; i<=dist_stats.maxcat; i++)
 
 /* draw border around pie */
 R_standard_color((int)color);
-draw_slice_unfilled((int)color,(double)ORIGIN_X,(double)ORIGIN_Y,
+draw_slice_unfilled(colors, (int)color,(double)ORIGIN_X,(double)ORIGIN_Y,
                    (double)RADIUS,(double)0,(double)360);
 
 /* draw border around legend bar */
