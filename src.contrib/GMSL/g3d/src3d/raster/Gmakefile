@@ -1,0 +1,12 @@
+all:
+	$(GMAKE) r3.in.ascii
+	$(GMAKE) r3.in.grid3
+	$(GMAKE) r3.info
+	$(GMAKE) r3.mask
+	$(GMAKE) r3.mkdspf
+	$(GMAKE) r3.mkdspf.1
+	$(GMAKE) r3.null
+	$(GMAKE) r3.out.ascii
+	$(GMAKE) r3.out.ascii.orig
+# needs to be ported to non-SGI:
+#	$(GMAKE) r3.showdspf
