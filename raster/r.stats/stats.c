@@ -282,13 +282,25 @@ print_cell_stats (char *fmt, int with_percents, int with_counts, int with_areas,
 		       dHigh= (DMAX[i] - DMIN[i])/nsteps * 
 		              (double) node->values[i] + DMIN[i];
                    }
-		   sprintf(str1, "%10f", dLow);
-		   sprintf(str2, "%10f", dHigh);
-		   G_trim_decimal(str1);
-		   G_trim_decimal(str2);
-		   G_strip(str1);
-		   G_strip(str2);
-		   fprintf (stdout,"%s%s-%s", i?fs:"", str1, str2);
+		   if(averaged)
+		   {
+			   /* print averaged values */
+			   sprintf(str1, "%10f", (dLow+dHigh)/2.0);
+			   G_trim_decimal(str1);
+			   G_strip(str1);
+			   fprintf (stdout,"%s%s", i?fs:"", str1);
+		   }
+		   else
+		   {
+			   /* print intervals */
+			   sprintf(str1, "%10f", dLow);
+			   sprintf(str2, "%10f", dHigh);
+			   G_trim_decimal(str1);
+			   G_trim_decimal(str2);
+			   G_strip(str1);
+			   G_strip(str2);
+			   fprintf (stdout,"%s%s-%s", i?fs:"", str1, str2);
+		   }
 		   if (with_labels)
 		   {
 		     if(cat_ranges)

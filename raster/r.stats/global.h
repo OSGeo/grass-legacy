@@ -11,7 +11,7 @@ GLOBAL char * no_data_str;
 GLOBAL int nfiles;
 GLOBAL int nrows;
 GLOBAL int ncols, no_nulls INIT(0), no_nulls_all INIT(0);
-GLOBAL int nsteps, cat_ranges, raw, as_int;
+GLOBAL int nsteps, cat_ranges, raw, as_int, averaged;
 GLOBAL int *is_fp INIT(NULL);
 GLOBAL DCELL *DMAX INIT(NULL), *DMIN INIT(NULL);
 
