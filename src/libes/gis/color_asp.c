@@ -1,40 +1,39 @@
 /**********************************************************************
  *
- *  G_make_aspect_colors (pcolr, min, max)
+ *  G_make_aspect_colors (colors, min, max)
  *
- *   struct Colors *pcolr    struct to hold colors
- *   CELL min,max            min,max color numbers
+ *   struct Colors *colors    struct to hold colors
+ *   CELL min,max             min,max color numbers
  *
- *  Generates aspect colors that are stored in the pcolr structure. 
+ *  Generates aspect colors that are stored in the colors structure. 
  *
  **********************************************************************/
 
 #include "gis.h"
 
-G_make_aspect_colors (pcolr,min,max)
-    struct Colors *pcolr ;
+G_make_aspect_colors (colors,min,max)
+    struct Colors *colors ;
     CELL min,max;
 {
-    int i ;
-    int num ;
-    int n;
-    int red, grn, blu;
+    G_init_colors (colors);
+    return G_add_aspect_colors (colors,min,max) ;
+}
 
-    G_init_colors (pcolr);
+G_add_aspect_colors (colors,min,max)
+    struct Colors *colors ;
+    CELL min,max;
+{
+    CELL half;
+
     if (max < min)
 	return -1;
 
     if (min == 1) min = 0;
     if (max == -1) max = 0;
-    num = max - min + 1;
+    half = ((double)min+(double)max)/2;
 
-    n = num / 2;
+    G_add_color_rule (min, 0,0,0, half, 255, 255, 255, colors);
+    G_add_color_rule (half, 255, 255, 255, max, 0,0,0, colors);
 
-    for(i=0; i<=n; i++)
-    {
-	red = grn = blu = (.20 + .60 * (float)(2*i) / (float)num) * 256 ;
-	G_set_color ((CELL)(i+min), red, grn, blu, pcolr);
-	G_set_color ((CELL)(num-i+min), red, grn, blu, pcolr);
-    }
     return 1;
 }
