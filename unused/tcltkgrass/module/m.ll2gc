@@ -1,0 +1,760 @@
+
+
+proc latitude { } {
+
+
+  toplevel .latitude
+
+  wm geometry .latitude +100+20
+  wm title .latitude "latitude"
+
+
+  global ldd
+
+
+  frame .latitude.frame0 \
+    -relief {flat}
+
+  scale .latitude.frame0.scale \
+     -label "Latitude Degrees" \
+     -from 0 \
+     -to 90 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .latitude.frame0 \
+    .latitude.frame0.scale { left expand fill }
+
+  .latitude.frame0.scale set 0
+
+  global lmm
+
+
+  frame .latitude.frame1 \
+    -relief {flat}
+
+  scale .latitude.frame1.scale \
+     -label "Latitude Minutes" \
+     -from 0 \
+     -to 60 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .latitude.frame1 \
+    .latitude.frame1.scale { left expand fill }
+
+  .latitude.frame1.scale set 0
+
+  global lss
+
+
+  frame .latitude.frame2 \
+    -relief {flat}
+
+  scale .latitude.frame2.scale \
+     -label "Latitude Seconds" \
+     -from 0 \
+     -to 60 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .latitude.frame2 \
+    .latitude.frame2.scale { left expand fill }
+
+  .latitude.frame2.scale set 0
+
+  global ns
+
+
+  frame .latitude.frame3 \
+    -relief {flat}
+
+  label .latitude.frame3.label \
+    -anchor {w} \
+    -text {North/South} \
+    -padx {2}
+
+  scrollbar .latitude.frame3.hscrollbar \
+    -command {.latitude.frame3.entry view} \
+    -orient {horizontal}
+
+  entry .latitude.frame3.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.latitude.frame3.hscrollbar set}
+
+  pack append .latitude.frame3 \
+    .latitude.frame3.label { top fillx } \
+    .latitude.frame3.entry { top fillx } \
+    .latitude.frame3.hscrollbar { bottom fillx }
+
+  .latitude.frame3.entry configure -state normal
+
+  bind .latitude.frame3.entry <Return> {
+       set ns [%W get] }
+
+
+
+  frame .latitude.frame4 \
+     -borderwidth {2}
+
+  button .latitude.frame4.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set ldd [.latitude.frame0.scale get]
+                  set lmm [.latitude.frame1.scale get]
+                  set lss [.latitude.frame2.scale get]
+                  set ns [.latitude.frame3.entry get]
+                 destroy .latitude }
+
+  button .latitude.frame4.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set ldd ""
+                  set lmm ""
+                  set lss ""
+                  set ns ""
+                 destroy .latitude }
+
+  pack append .latitude.frame4 \
+    .latitude.frame4.ok { left expand } \
+    .latitude.frame4.cancel { right expand }
+
+
+bind .latitude.frame0.scale <Return> {
+     focus .latitude.frame1.scale
+}
+
+bind .latitude.frame1.scale <Return> {
+     focus .latitude.frame2.scale
+}
+
+bind .latitude.frame2.scale <Return> {
+     focus .latitude.frame3.entry
+}
+
+bind .latitude.frame3.entry <Return> {
+     focus .latitude.frame0.scale
+}
+
+
+  pack append .latitude \
+    .latitude.frame0 { top expand fill } \
+    .latitude.frame1 { top expand fill } \
+    .latitude.frame2 { top expand fill } \
+    .latitude.frame3 { top expand fill } \
+    .latitude.frame4 { bottom expand fill }
+
+
+
+  grab set .latitude
+  tkwait window .latitude
+
+}
+
+
+
+
+proc longitude { } {
+
+
+  toplevel .longitude
+
+  wm geometry .longitude +100+20
+  wm title .longitude "longitude"
+
+
+  global mdd
+
+
+  frame .longitude.frame0 \
+    -relief {flat}
+
+  scale .longitude.frame0.scale \
+     -label "Latitude Degrees" \
+     -from 0 \
+     -to 90 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .longitude.frame0 \
+    .longitude.frame0.scale { left expand fill }
+
+  .longitude.frame0.scale set 0
+
+  global mmm
+
+
+  frame .longitude.frame1 \
+    -relief {flat}
+
+  scale .longitude.frame1.scale \
+     -label "Longitude Minutes" \
+     -from 0 \
+     -to 60 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .longitude.frame1 \
+    .longitude.frame1.scale { left expand fill }
+
+  .longitude.frame1.scale set 0
+
+  global mss
+
+
+  frame .longitude.frame2 \
+    -relief {flat}
+
+  scale .longitude.frame2.scale \
+     -label "Longitude Seconds" \
+     -from 0 \
+     -to 60 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .longitude.frame2 \
+    .longitude.frame2.scale { left expand fill }
+
+  .longitude.frame2.scale set 0
+
+  global ew
+
+
+  frame .longitude.frame3 \
+    -relief {flat}
+
+  label .longitude.frame3.label \
+    -anchor {w} \
+    -text {East/West} \
+    -padx {2}
+
+  scrollbar .longitude.frame3.hscrollbar \
+    -command {.longitude.frame3.entry view} \
+    -orient {horizontal}
+
+  entry .longitude.frame3.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.longitude.frame3.hscrollbar set}
+
+  pack append .longitude.frame3 \
+    .longitude.frame3.label { top fillx } \
+    .longitude.frame3.entry { top fillx } \
+    .longitude.frame3.hscrollbar { bottom fillx }
+
+  .longitude.frame3.entry configure -state normal
+
+  bind .longitude.frame3.entry <Return> {
+       set ew [%W get] }
+
+
+
+  frame .longitude.frame4 \
+     -borderwidth {2}
+
+  button .longitude.frame4.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set mdd [.longitude.frame0.scale get]
+                  set mmm [.longitude.frame1.scale get]
+                  set mss [.longitude.frame2.scale get]
+                  set ew [.longitude.frame3.entry get]
+                 destroy .longitude }
+
+  button .longitude.frame4.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set mdd ""
+                  set mmm ""
+                  set mss ""
+                  set ew ""
+                 destroy .longitude }
+
+  pack append .longitude.frame4 \
+    .longitude.frame4.ok { left expand } \
+    .longitude.frame4.cancel { right expand }
+
+
+bind .longitude.frame0.scale <Return> {
+     focus .longitude.frame1.scale
+}
+
+bind .longitude.frame1.scale <Return> {
+     focus .longitude.frame2.scale
+}
+
+bind .longitude.frame2.scale <Return> {
+     focus .longitude.frame3.entry
+}
+
+bind .longitude.frame3.entry <Return> {
+     focus .longitude.frame0.scale
+}
+
+
+  pack append .longitude \
+    .longitude.frame0 { top expand fill } \
+    .longitude.frame1 { top expand fill } \
+    .longitude.frame2 { top expand fill } \
+    .longitude.frame3 { top expand fill } \
+    .longitude.frame4 { bottom expand fill }
+
+
+
+  grab set .longitude
+  tkwait window .longitude
+
+}
+
+
+
+
+proc height { } {
+
+
+  toplevel .height
+
+  wm geometry .height +100+20
+  wm title .height "height"
+
+
+  global height
+
+
+  frame .height.frame0 \
+    -relief {flat}
+
+  label .height.frame0.label \
+    -anchor {w} \
+    -text {Height} \
+    -padx {2}
+
+  scrollbar .height.frame0.hscrollbar \
+    -command {.height.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .height.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.height.frame0.hscrollbar set}
+
+  pack append .height.frame0 \
+    .height.frame0.label { top fillx } \
+    .height.frame0.entry { top fillx } \
+    .height.frame0.hscrollbar { bottom fillx }
+
+  .height.frame0.entry configure -state normal
+
+  bind .height.frame0.entry <Return> {
+       set height [%W get] }
+
+
+
+  frame .height.frame1 \
+     -borderwidth {2}
+
+  button .height.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set height [.height.frame0.entry get]
+                 destroy .height }
+
+  button .height.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set height ""
+                 destroy .height }
+
+  pack append .height.frame1 \
+    .height.frame1.ok { left expand } \
+    .height.frame1.cancel { right expand }
+
+
+
+  pack append .height \
+    .height.frame0 { top expand fill } \
+    .height.frame1 { bottom expand fill }
+
+
+
+  grab set .height
+  tkwait window .height
+
+}
+
+
+
+
+proc spheroids { } {
+
+
+  toplevel .spheroids
+
+  wm geometry .spheroids +100+20
+  wm title .spheroids "spheroids"
+
+
+  global airy australian bessel clark66 everest grs80 hayford international krasovsky wgs66 wgs72 wgs84
+
+
+  frame .spheroids.frame0 \
+    -relief {flat}
+
+  label .spheroids.frame0.label \
+     -anchor {w} \
+     -text {Spheroid} \
+     -padx {2}
+
+  listbox .spheroids.frame0.listbox \
+     -relief sunken \
+     -yscrollcommand {.spheroids.frame0.vscrollbar set}
+
+  scrollbar .spheroids.frame0.vscrollbar \
+     -command {.spheroids.frame0.listbox yview}
+
+
+  pack append .spheroids.frame0 \
+    .spheroids.frame0.label { top fillx } \
+    .spheroids.frame0.listbox { left expand fill } \
+    .spheroids.frame0.vscrollbar { right fill }
+
+  bind .spheroids.frame0.listbox <Button-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set airy australian bessel clark66 everest grs80 hayford international krasovsky wgs66 wgs72 wgs84 [%W get [%W nearest %y]]
+  }
+
+  bind .spheroids.frame0.listbox <ButtonRelease-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set airy australian bessel clark66 everest grs80 hayford international krasovsky wgs66 wgs72 wgs84 [%W get [%W nearest %y]]
+  }
+
+  bind .spheroids.frame0.listbox <Double-ButtonPress-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set airy australian bessel clark66 everest grs80 hayford international krasovsky wgs66 wgs72 wgs84 [%W get [%W nearest %y]]
+  }
+
+  .spheroids.frame0.listbox delete 0 end
+  foreach i {} {
+      .spheroids.frame0.listbox insert 0 $i
+  }
+
+
+  frame .spheroids.frame1 \
+     -borderwidth {2}
+
+  button .spheroids.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .spheroids }
+
+  button .spheroids.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .spheroids }
+
+  pack append .spheroids.frame1 \
+    .spheroids.frame1.ok { left expand } \
+    .spheroids.frame1.cancel { right expand }
+
+
+
+  pack append .spheroids \
+    .spheroids.frame0 { top expand fill } \
+    .spheroids.frame1 { bottom expand fill }
+
+
+
+  grab set .spheroids
+  tkwait window .spheroids
+
+}
+
+
+
+
+proc put_command { } {
+
+
+  global ldd
+  global lmm
+  global lss
+  global ns
+  global mdd
+  global mmm
+  global mss
+  global ew
+  global height
+  global spheroid
+
+
+  set cmd ""
+
+  if {  $ldd != "" || $lmm != "" || $lss != "" || $ns != "" } {
+         set cmd "$cmd lat=$ldd,$lmm,$lss,$ns"
+  }
+
+  if {  $mdd != "" || $mmm != "" || $mss != "" || $ew != "" } {
+         set cmd "$cmd lon=$mdd,$mmm,$mss,$ew"
+  }
+
+  if {  $height != "" } {
+         set cmd "$cmd h=$height"
+  }
+
+  if {  $spheroid != "" } {
+         set cmd "$cmd s=$spheroid"
+  }
+
+  if { $cmd != "" } {
+     set cmd "m.ll2gc $cmd"
+  }
+}
+
+
+
+
+proc set_command_entry { } {
+
+  .cmd.frame0.entry configure -state normal
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 [put_command]
+  .cmd.frame0.entry configure -state disabled
+
+}
+
+
+proc proc_m.ll2gc { } {
+
+
+  global ldd
+  global lmm
+  global lss
+  global ns
+  global mdd
+  global mmm
+  global mss
+  global ew
+  global height
+  global spheroid
+
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "Convert Geographic Coordinates to Geocentric"
+
+
+  frame .cmd.frame0 \
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame0.hscrollbar set}
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {m.ll2gc}
+
+  .cmd.frame0.entry configure -state disabled
+
+
+
+  frame .cmd.frame1 \
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame1.hscrollbar set}
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {m.ll2gc converts geographic coordinates to geocentric coordinates.}
+
+  .cmd.frame1.entry configure -state disabled
+
+
+
+  frame .cmd.frame2 \
+    -relief {flat}
+
+  label .cmd.frame2.label \
+    -anchor {w} \
+    -text {Other options available:} \
+    -padx {2}
+
+  button .cmd.frame2.button0 \
+     -text "latitude ..." \
+     -relief raised \
+     -padx 10 \
+     -command "latitude
+                set_command_entry"
+
+
+  button .cmd.frame2.button1 \
+     -text "longitude ..." \
+     -relief raised \
+     -padx 10 \
+     -command "longitude
+                set_command_entry"
+
+
+  button .cmd.frame2.button2 \
+     -text "height ..." \
+     -relief raised \
+     -padx 10 \
+     -command "height
+                set_command_entry"
+
+
+  button .cmd.frame2.button3 \
+     -text "spheroids ..." \
+     -relief raised \
+     -padx 10 \
+     -command "spheroids
+                set_command_entry"
+
+
+  frame .cmd.frame3 \
+     -borderwidth {2}
+
+  button .cmd.frame3.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 
+		if {  $ldd != "" && $lmm != "" && $lss != "" && $ns != "" && $mdd != "" && $mmm != "" && $mss != "" && $ew != "" && $spheroid != "" } {
+ 		set cmd [put_command]
+ 		if { $cmd != "" } {
+ 		   eval " exec xterm -title m.ll2gc -geometry 50x5 -exec $cmd " 
+ 		   destroy .cmd
+ 		}
+ 	}
+ }
+
+  button .cmd.frame3.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { destroy .cmd }
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.ok { left expand } \
+    .cmd.frame3.cancel { right expand }
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.label { top fillx } \
+    .cmd.frame2.button0 { left } \
+    .cmd.frame2.button1 { left } \
+    .cmd.frame2.button2 { left } \
+    .cmd.frame2.button3  { left }
+
+
+
+  pack append .cmd \
+    .cmd.frame1 { top expand fill } \
+    .cmd.frame2 { top expand fill } \
+    .cmd.frame0 { top expand fill } \
+    .cmd.frame3 { bottom expand fill }
+
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global ldd
+set ldd ""
+
+global lmm
+set lmm ""
+
+global lss
+set lss ""
+
+global ns
+set ns ""
+
+global mdd
+set mdd ""
+
+global mmm
+set mmm ""
+
+global mss
+set mss ""
+
+global ew
+set ew ""
+
+global height
+set height ""
+
+global spheroid
+set spheroid ""
+
+
+global database
+global location
+global mapset
+global feature
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_m.ll2gc

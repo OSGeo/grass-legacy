@@ -1,0 +1,683 @@
+
+
+proc zone { } {
+
+
+  toplevel .zone
+
+  wm geometry .zone +100+20
+  wm title .zone "zone"
+
+
+  global value
+
+
+  frame .zone.frame0 \
+    -relief {flat}
+
+  scale .zone.frame0.scale \
+     -label "UTM zone in which UTM coordinates are located:" \
+     -from 1 \
+     -to 60 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .zone.frame0 \
+    .zone.frame0.scale { left expand fill }
+
+  .zone.frame0.scale set 1
+
+
+  frame .zone.frame1 \
+     -borderwidth {2}
+
+  button .zone.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set value [.zone.frame0.scale get]
+                 destroy .zone }
+
+  button .zone.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set value ""
+                 destroy .zone }
+
+  pack append .zone.frame1 \
+    .zone.frame1.ok { left expand } \
+    .zone.frame1.cancel { right expand }
+
+
+
+  pack append .zone \
+    .zone.frame0 { top expand fill } \
+    .zone.frame1 { bottom expand fill }
+
+
+
+  grab set .zone
+  tkwait window .zone
+
+}
+
+
+
+
+proc input { } {
+
+
+  toplevel .input
+
+  wm geometry .input +100+20
+  wm title .input "input"
+
+
+  global iname
+
+
+  frame .input.frame0 \
+    -relief {flat}
+
+  label .input.frame0.label \
+    -anchor {w} \
+    -text {Input file containing UTM values to be converted:} \
+    -padx {2}
+
+  scrollbar .input.frame0.hscrollbar \
+    -command {.input.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .input.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.input.frame0.hscrollbar set}
+
+  pack append .input.frame0 \
+    .input.frame0.label { top fillx } \
+    .input.frame0.entry { top fillx } \
+    .input.frame0.hscrollbar { bottom fillx }
+
+  .input.frame0.entry configure -state normal
+
+  bind .input.frame0.entry <Return> {
+       set iname [%W get] }
+
+
+
+  frame .input.frame1 \
+     -borderwidth {2}
+
+  button .input.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set iname [.input.frame0.entry get]
+                 destroy .input }
+
+  button .input.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set iname ""
+                 destroy .input }
+
+  pack append .input.frame1 \
+    .input.frame1.ok { left expand } \
+    .input.frame1.cancel { right expand }
+
+
+
+  pack append .input \
+    .input.frame0 { top expand fill } \
+    .input.frame1 { bottom expand fill }
+
+
+
+  grab set .input
+  tkwait window .input
+
+}
+
+
+
+
+proc output { } {
+
+
+  toplevel .output
+
+  wm geometry .output +100+20
+  wm title .output "output"
+
+
+  global oname
+
+
+  frame .output.frame0 \
+    -relief {flat}
+
+  label .output.frame0.label \
+    -anchor {w} \
+    -text {Output file to contain latitude and longitude values:} \
+    -padx {2}
+
+  scrollbar .output.frame0.hscrollbar \
+    -command {.output.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .output.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.output.frame0.hscrollbar set}
+
+  pack append .output.frame0 \
+    .output.frame0.label { top fillx } \
+    .output.frame0.entry { top fillx } \
+    .output.frame0.hscrollbar { bottom fillx }
+
+  .output.frame0.entry configure -state normal
+
+  bind .output.frame0.entry <Return> {
+       set oname [%W get] }
+
+
+
+  frame .output.frame1 \
+     -borderwidth {2}
+
+  button .output.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set oname [.output.frame0.entry get]
+                 destroy .output }
+
+  button .output.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set oname ""
+                 destroy .output }
+
+  pack append .output.frame1 \
+    .output.frame1.ok { left expand } \
+    .output.frame1.cancel { right expand }
+
+
+
+  pack append .output \
+    .output.frame0 { top expand fill } \
+    .output.frame1 { bottom expand fill }
+
+
+
+  grab set .output
+  tkwait window .output
+
+}
+
+
+
+
+proc flags { } {
+
+
+  toplevel .flags
+
+  wm geometry .flags +100+20
+  wm title .flags "flags"
+
+
+  global s
+
+
+  frame .flags.frame0 \
+    -relief {flat}
+
+  checkbutton .flags.frame0.checkbutton \
+     -text "Specified UTM zone is in the southern hemisphere." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "s" \
+     -offvalue "" \
+     -variable s
+
+  pack append .flags.frame0 \
+    .flags.frame0.checkbutton { left }
+
+  global r
+
+
+  frame .flags.frame1 \
+    -relief {flat}
+
+  checkbutton .flags.frame1.checkbutton \
+     -text "Order of coordinates reversed and enterd in input file as: north east." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "r" \
+     -offvalue "" \
+     -variable r
+
+  pack append .flags.frame1 \
+    .flags.frame1.checkbutton { left }
+
+  global w
+
+
+  frame .flags.frame2 \
+    -relief {flat}
+
+  checkbutton .flags.frame2.checkbutton \
+     -text "Do not flag invalid east/north input lines as errors." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "w" \
+     -offvalue "" \
+     -variable w
+
+  pack append .flags.frame2 \
+    .flags.frame2.checkbutton { left }
+
+  global o
+
+
+  frame .flags.frame3 \
+    -relief {flat}
+
+  checkbutton .flags.frame3.checkbutton \
+     -text "Flag other invalid input lines as errors." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "o" \
+     -offvalue "" \
+     -variable o
+
+  pack append .flags.frame3 \
+    .flags.frame3.checkbutton { left }
+
+
+  frame .flags.frame4 \
+     -borderwidth {2}
+
+  button .flags.frame4.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .flags }
+
+  button .flags.frame4.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .flags }
+
+  pack append .flags.frame4 \
+    .flags.frame4.ok { left expand } \
+    .flags.frame4.cancel { right expand }
+
+
+bind .flags.frame0.checkbutton <Return> {
+     focus .flags.frame1.checkbutton
+}
+
+bind .flags.frame1.checkbutton <Return> {
+     focus .flags.frame2.checkbutton
+}
+
+bind .flags.frame2.checkbutton <Return> {
+     focus .flags.frame3.checkbutton
+}
+
+bind .flags.frame3.checkbutton <Return> {
+     focus .flags.frame0.checkbutton
+}
+
+
+  pack append .flags \
+    .flags.frame0 { top expand fill } \
+    .flags.frame1 { top expand fill } \
+    .flags.frame2 { top expand fill } \
+    .flags.frame3 { top expand fill } \
+    .flags.frame4 { bottom expand fill }
+
+
+
+  grab set .flags
+  tkwait window .flags
+
+}
+
+
+
+
+proc put_command { } {
+
+
+  global s
+  global r
+  global w
+  global o
+  global sname
+  global value
+  global iname
+  global oname
+
+
+  set cmd ""
+
+  if {  $s != "" || $r != "" || $w != "" || $o != "" } {
+         set cmd "$cmd -$s$r$w$o"
+  }
+
+  if {  $sname != "" } {
+         set cmd "$cmd spheroid=$sname"
+  }
+
+  if {  $value != "" } {
+         set cmd "$cmd zone=$value"
+  }
+
+  if {  $iname != "" } {
+         set cmd "$cmd input=$iname"
+  }
+
+  if {  $oname != "" } {
+         set cmd "$cmd output=$oname"
+  }
+
+  if { $cmd != "" } {
+     set cmd "m.ll2u $cmd"
+  }
+}
+
+
+
+
+proc set_command_entry { } {
+
+  .cmd.frame0.entry configure -state normal
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 [put_command]
+  .cmd.frame0.entry configure -state disabled
+
+}
+
+
+proc proc_m.ll2u { } {
+
+
+  global s
+  global r
+  global w
+  global o
+  global sname
+  global value
+  global iname
+  global oname
+
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "Convert UTM Coordinates to Geographic"
+
+
+  frame .cmd.frame0 \
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame0.hscrollbar set}
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {m.ll2u}
+
+  .cmd.frame0.entry configure -state disabled
+
+
+
+  frame .cmd.frame1 \
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame1.hscrollbar set}
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {m.ll2u converts Universal Transverse Mercator (UTM) coordinates to geographic (latitude/longitude) coordinates.}
+
+  .cmd.frame1.entry configure -state disabled
+
+
+
+  frame .cmd.frame2 \
+    -relief {flat}
+
+  label .cmd.frame2.label \
+     -anchor {w} \
+     -text {Spheroid:} \
+     -padx {2}
+
+  listbox .cmd.frame2.listbox \
+     -relief sunken \
+     -yscrollcommand {.cmd.frame2.vscrollbar set}
+
+  scrollbar .cmd.frame2.vscrollbar \
+     -command {.cmd.frame2.listbox yview}
+
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.label { top fillx } \
+    .cmd.frame2.listbox { left expand fill } \
+    .cmd.frame2.vscrollbar { right fill }
+
+  bind .cmd.frame2.listbox <Button-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set sname [%W get [%W nearest %y]]
+  }
+
+  bind .cmd.frame2.listbox <ButtonRelease-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set sname [%W get [%W nearest %y]]
+  }
+
+  bind .cmd.frame2.listbox <Double-ButtonPress-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set sname [%W get [%W nearest %y]]
+  }
+
+  .cmd.frame2.listbox delete 0 end
+  foreach i {airy australian bessel clark66 everest grs80 hayford international krasovsky wgs66 wgs72 wgs84} {
+      .cmd.frame2.listbox insert 0 $i
+  }
+
+
+  frame .cmd.frame3 \
+    -relief {flat}
+
+  label .cmd.frame3.label \
+    -anchor {w} \
+    -text {Other options available:} \
+    -padx {2}
+
+  button .cmd.frame3.button0 \
+     -text "zone ..." \
+     -relief raised \
+     -padx 10 \
+     -command "zone
+                set_command_entry"
+
+
+  button .cmd.frame3.button1 \
+     -text "input ..." \
+     -relief raised \
+     -padx 10 \
+     -command "input
+                set_command_entry"
+
+
+  button .cmd.frame3.button2 \
+     -text "output ..." \
+     -relief raised \
+     -padx 10 \
+     -command "output
+                set_command_entry"
+
+
+  button .cmd.frame3.button3 \
+     -text "flags ..." \
+     -relief raised \
+     -padx 10 \
+     -command "flags
+                set_command_entry"
+
+
+  frame .cmd.frame4 \
+     -borderwidth {2}
+
+  button .cmd.frame4.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 
+		if {  $sname != "" } {
+ 		set cmd [put_command]
+ 		if { $cmd != "" } {
+ 		   eval " exec xterm -title m.ll2u -geometry 50x5 -exec $cmd " 
+ 		   destroy .cmd
+ 		}
+ 	}
+ }
+
+  button .cmd.frame4.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { destroy .cmd }
+
+  pack append .cmd.frame4 \
+    .cmd.frame4.ok { left expand } \
+    .cmd.frame4.cancel { right expand }
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.label { top fillx } \
+    .cmd.frame3.button0 { left } \
+    .cmd.frame3.button1 { left } \
+    .cmd.frame3.button2 { left } \
+    .cmd.frame3.button3  { left }
+
+
+
+  pack append .cmd \
+    .cmd.frame1 { top expand fill } \
+    .cmd.frame2 { top expand fill } \
+    .cmd.frame3 { top expand fill } \
+    .cmd.frame0 { top expand fill } \
+    .cmd.frame4 { bottom expand fill }
+
+
+bind .cmd.frame2.listbox <ButtonPress-1> {
+ %W select from [%W nearest %y]
+ %W select to [%W nearest %y]
+		set sname [%W get [%W nearest %y]]
+		set_command_entry
+}
+
+bind .cmd.frame2.listbox <ButtonRelease-1> {
+ %W select from [%W nearest %y]
+ %W select to [%W nearest %y]
+		set sname [%W get [%W nearest %y]]
+		set_command_entry
+}
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global s
+set s ""
+
+global r
+set r ""
+
+global w
+set w ""
+
+global o
+set o ""
+
+global sname
+set sname ""
+
+global value
+set value ""
+
+global iname
+set iname ""
+
+global oname
+set oname ""
+
+
+global database
+global location
+global mapset
+global feature
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_m.ll2u
