@@ -1,0 +1,21 @@
+TO DO LIST :
+
+1.  create support file (that is implement support.vect) is requested on
+on the command line.  Default: no support file created.s 
+
+2.  write out info as one long line instead of two point lines
+
+3.  write prgm to remove xtra lines (duplicate) only allow 2 lines to be writtenout if nodes = thresholds.
+
+4.  specifc suggestions have been given to improve the overall speed of this
+program. The limiting factor would probably be all the calls to the
+write_att and dig_Write_line subroutines. 
+
+5.  There are some obvious bugs with the contouring program as it exists but
+the best solution may be to rewrite the code using method 2.  THis would
+take care of #2 #4.  
+
+6.  write linterp as a macro like WITHIN instead of subroutine
+
+
+
