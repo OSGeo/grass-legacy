@@ -506,3 +506,14 @@ Vect_copy_table_by_cats ( struct Map_info *In, struct Map_info *Out, int field_i
 
     return 0;
 }
+
+/*!
+  \brief Set spatial index to be realease when vector is closed, by default, the memory
+         occupied by spatial index is not released.
+  \param Map pointer to map
+*/
+void
+Vect_set_release_support ( struct Map_info * Map )
+{
+    Map->plus.release_support = 1;
+}

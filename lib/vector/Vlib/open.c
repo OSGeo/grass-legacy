@@ -212,13 +212,16 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
 	  level = 1;
       }
       /* open spatial index, not needed for head_only */
+      /* spatial index is not loaded anymore */
+      /*
       if ( level == 2 && !head_only ) {
 	 if ( Vect_open_spatial_index(Map) == -1 ) {
 	     G_debug( 1, "Cannot open spatial index file for vector '%s'.", Vect_get_full_name (Map) );
-	     dig_free_plus ( &(Map->plus) ); /* free topology */
+	     dig_free_plus ( &(Map->plus) );
 	     level = 1;
 	 }
       }
+      */
       /* open category index */
       if ( level == 2 ) {
 	  if ( Vect_cidx_open(Map, head_only) ) { /* category index is not available */
@@ -396,6 +399,9 @@ Vect_open_update (
 	Map->plus.upnodes = NULL;
 	Map->plus.n_upnodes = 0;
 	Map->plus.alloc_upnodes = 0;
+
+	/* Build spatial index from topo */
+	Vect_build_sidx_from_topo ( Map, stderr );
     }
 	
     return ret;

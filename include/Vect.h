@@ -138,6 +138,7 @@ int  Vect_set_thresh (struct Map_info *, double );
 double Vect_get_thresh (struct Map_info *);
 int Vect_get_constraint_box ( struct Map_info *, BOUND_BOX *);
 
+
     /* Get map level 2 informations */
 int Vect_level (struct Map_info *);
 int Vect_get_num_nodes (struct Map_info *);
@@ -150,6 +151,8 @@ int Vect_get_area_box (struct Map_info *, int, BOUND_BOX *);
 int Vect_get_isle_box (struct Map_info *, int, BOUND_BOX *);
 int Vect_get_map_box (struct Map_info *, BOUND_BOX *);
 int V__map_overlap (struct Map_info *, double, double, double, double);
+
+void Vect_set_release_support ( struct Map_info * );
 
     /* Set/get fatal error behaviour */
 int Vect_set_fatal_error (int);
@@ -323,6 +326,8 @@ int Vect_save_topo ( struct Map_info *);
 int Vect_open_spatial_index (struct Map_info *);
 int Vect_save_spatial_index ( struct Map_info *);
 int Vect_spatial_index_dump ( struct Plus_head *, FILE * ); 
+int Vect_build_sidx_from_topo ( struct Map_info *, FILE * );
+int Vect_build_spatial_index ( struct Map_info *, FILE * );
 
 int Vect__write_head (struct Map_info *);
 int Vect__read_head (struct Map_info *);

@@ -122,6 +122,8 @@ Vect_build_partial ( struct Map_info *Map, int build, FILE *msgout )
     *  be read by V1_read_ (all lines) */
     Map->level = 1; /* may be not needed, because  V1_read is used directly by Vect_build_ */
     Map->support_updated = 1;
+
+    Map->plus.Spidx_built = 1;
     
     plus = &(Map->plus);
     prnmsg ( _("Building topology ...\n") );
