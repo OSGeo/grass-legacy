@@ -15,122 +15,110 @@
 #
 #############################################################################
 
+#%Module
+#%  description: Apply regular expressions and wildcards to g.list
+#%End
+#%flag
+#%  key: r
+#%  description: use regular expression instead of wildcard
+#%end
+#%option
+#% key: type
+#% type: string
+#% description: data type (rast, vect, or sites)
+#% answer: rast
+#% required : no
+#%end
+#%option
+#% key: mapset
+#% type: string
+#% description: mapset to list (default: current mapset search path)
+#% required : no
+#%end
+#%option
+#% key: sep
+#% type: string
+#% description: output separator (default: newline)
+#% required : no
+#%end
+#%option
+#% key: pattern
+#% type: string
+#% description: map name search pattern, must be 'quoted'. (default: all)
+#% answer: *
+#% required : no
+#%end
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+    exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+fi
+
 if test "$GISBASE" = ""; then
- echo "You must be in GRASS GIS to run this program." >&2
- exit 1
-fi   
-     
+    echo "You must be in GRASS GIS to run this program." >&2
+    exit 1
+fi
+
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
-program=`basename $0`
+#echo "Note:"
+#echo "  Do not forget to enclose expression with '...' to avoid being expanded"
+#echo "  by the shell first."
 
-if [ "$1" = "-help" -o "$1" = "help" ]
-then
-        echo
-        echo "Usage:"
-	echo " $program [-r] [type=name] [mapset=name] [sep=name] [map_pattern]"
-	echo
-	echo "Flags:"
-	echo "  -r   use regular expression instead of wildcard"
-	echo
-	g.list help 2>&1 | awk 'BEGIN{i=0}{if($1=="Parameters:") {print; i=1;} else if(i) print "     "$0}'
-	echo
-	echo "          sep   output separator"
-	echo "  map_pattern   mapname pattern"
-	echo
-	echo "Note:"
-	echo "  Do not forget to enclose expression with '...' to avoid being expanded"
-	echo "  by the shell first."
-	exit 1
+type="$GIS_OPT_type"
+mapset="$GIS_OPT_mapset"
+sep="$GIS_OPT_sep"
+search="$GIS_OPT_pattern"
+
+if [ "$mapset" == "(null)" ] ; then
+#    echo using current mapset
+    mapset="$MAPSET"
+fi
+if [ "$sep" == "(null)" ] ; then
+#    echo using "\n" as separator
+    sep=""
 fi
 
 
-type=rast
-r=
-search=
-for i
-do
-	case $i in
-		-r)
-			r=1;;
-		t=*|ty=*|typ=*|type=*)
-			itype=`echo "$i" | awk -F '=' '{print $2}'`
-			case $itype in
-				ra|ras|rast*)
-					type=rast;;
-				v|ve|vec|vect*)
-					type=vect;;
-				i|ic|ico|icon*)
-					type=icon;;
-				l|la|lab|labe|label*)
-					type=labels;;
-				s|si|sit|site*)
-					type=sites;;
-				re|reg|regi|regio|region*)
-					type=region;;
-				g|gr|gro|grou|group*)
-					type=group;;
-				3|3d|3dv|3dvi|3dvie|3dview*)
-					type=3dview;;
-			esac;;
-		m=*|ma=*|map=*|maps=*|mapse=*|mapset=*)
-			mapset=`echo "$i" | awk -F '=' '{print "mapset="$2}'`;;
-		s=*|se=*|sep=*)
-			sep=`echo "$i" | awk -F '=' '{print $2}'`;;
-		*)
-			if [ ! "$search" ]
-			then
-				search="$i"
-			else
-				search="$search\|$i"
-			fi;;
-	esac
-done
-
-# do wildcard:
-if [ "$r" = "" -a "$search" ]
-then
-	search="^`echo \"$search\" | sed 's/\./\\\\./g; s/?/./g; s/*/.*/g; s/|/$|^/g'`$"
+if [ $GIS_FLAG_r -ne 1 ] ; then
+#    echo wildcard
+    search="^`echo \"$search\" | sed 's/\./\\\\./g; s/?/./g; s/*/.*/g; s/|/$|^/g'`$"
+#else
+#    echo regex, as is
 fi
 
-#problem: it doesn't display the mapset
-for i in `g.list type=$type $mapset | grep -v '^-\+$' | grep -v "files available" | grep -v "available in mapset"`
+for i in `g.list type=$type mapset=$mapset | grep -v '^-\+$' | grep -v "files available" | grep -v "available in mapset"`
 do
-	if [ ! "$search" ]
-	then
-		list="$list $i"
-	else
-		list="$list `echo $i | grep \"$search\"`"
-	fi
+    if [ ! "$search" ] ; then
+	list="$list $i"
+    else
+	list="$list `echo $i | grep \"$search\"`"
+    fi
 done
 
-if [ ! "$list" ]
-then
-	exit 1
+if [ ! "$list" ] ; then
+    exit 1
 fi
 
 start=
 i=""
 for i in $list
 do
-	if [ "$start" ]
-	then
-		if [ ! "$sep" ]
-		then
-			printf "\n"
-		else
-			printf "%s" "$sep"
-		fi
+    if [ "$start" ] ; then
+	if [ ! "$sep" ] ; then
+	    printf "\n"
+	else
+	    printf "%s" "$sep"
 	fi
-	start=1
-	printf "%s" "$i"
+    fi
+    start=1
+    printf "%s" "$i"
 done
 
 if test $i
 then
- echo ""
+    echo ""
 fi
 
 exit 0
