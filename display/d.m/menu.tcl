@@ -210,7 +210,7 @@
 			    {command "Reproject raster from other location" {} "" {} -command {execute  r.proj }}
 			}}
 			{cascad "Manage map colors" {} "" 1 {			
-			    {command "Modify color table" {} "" {} -command {execute  d.colors }}
+			    {command "Modify color table" {} "" {} -command {execute  d.colors.sh }}
 			    {command "Set colors to predefined color tables" {} "" {} -command {execute  r.colors }}
 			    {command "Set colors using color rules" {} "" {} -command {execute  $env(GISBASE)/etc/dm/script/r.colors.rules }}
 			    {separator}
@@ -258,12 +258,12 @@
 			{separator}
 			{cascad "Hydrologic modeling" {} "" 1 {			
 			    {command "Depressionless elevation map and flowline map" {} "" {} -command {execute  r.fill.dir }}
-			    {command "Flow accumulation for massive grids" {} "" {} -command {exec r.terraflow &}}
+			    {command "Flow accumulation for massive grids" {} "" {} -command {spawn r.terraflow }}
 			    {command "Generate flow lines for raster map" {} "" {} -command {execute  r.flow }}
 			    {command "Topographic index map" {} "" {} -command {execute  r.topidx }}
 			    {command "TOPMODEL simulation" {} "" {} -command {execute  r.topmodel }}
 			    {command "Watershed subbasins" {} "" {} -command {execute  r.basins.fill }}
-			    {command "Watershed basin analysis" {} "" {} -command {execute  r.watershed }}
+			    {command "Watershed analysis" {} "" {} -command {execute  r.watershed }}
 			    {command "Watershed basin creation" {} "" {} -command {execute  r.water.outlet }}
 			}}
 			{cascad "Landscape structure modeling" {} "" 1 {			
