@@ -1,4 +1,4 @@
-man
+#man
 #html
 src/libes/vask
 src/libes/segment
@@ -33,7 +33,7 @@ src/libes/vect32/georef
 src/libes/image3
 src/libes/bwidget
 src/general/init
-src/display/devices/lib
+#src/display/devices/lib
 src/display/devices/monitorcap
 src/display/devices/CELL
 src/display/devices/XDRIVER
@@ -94,7 +94,6 @@ src/display/d.rast
 src/display/d.rast.arrow
 src/display/d.rast.edit
 src/display/d.rast.num
-src/display/d.rast.zoom
 src/display/d.rgb
 src/display/d.rhumbline
 src/display/d.save
@@ -107,7 +106,6 @@ src/display/d.text
 src/display/d.title
 src/display/d.vect
 src/display/d.vect.cats
-src/display/d.vect.zoom
 src/display/d.what.db
 src/display/d.what.rast
 src/display/d.what.sites
@@ -243,8 +241,6 @@ src/misc/m.gc2ll
 src/misc/m.in.e00
 #buggy: new version from Mark Lake planned:
 #src/misc/m.in.ntf
-src/misc/m.in.pl94.db3
-src/misc/m.in.stf1.db3
 src/misc/m.in.stf1.tape
 src/misc/m.ipf
 src/misc/m.kappa
