@@ -1,119 +1,155 @@
-/*****************************************************************************
-*
-* MODULE:       PostgreSQL driver forked from DBF driver by Radim Blazek 
-*   	    	
-* AUTHOR(S):    Alex Shevlakov
-*
-* PURPOSE:      Simple driver for reading and writing data     
-*
-* COPYRIGHT:    (C) 2000 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
-#include <dbmi.h>
+#include <stdlib.h>
+#include "dbmi.h"
 #include "globals.h"
-#include "proto.h"
+#include "proto.h" 
 
-int db_driver_fetch(cn, position, more)
-     dbCursor *cn;
-     int position;
-     int *more;
+int
+db_driver_fetch(cn, position, more)
+    dbCursor *cn;
+    int position;
+    int *more;
 {
-    cursor *c;
-    dbToken token;
-    dbTable *table;
-    dbColumn *column;
-    dbValue *value;
-    int col, ncols;
-    int htype, sqltype, ctype;
-    int pg_row, pg_col;
+    cursor     *c;
+    dbToken    token;    
+    dbTable    *table;
+    int        i;
 
     /* get cursor token */
     token = db_get_cursor_token(cn);
 
     /* get the cursor by its token */
     if (!(c = (cursor *) db_find_token(token))) {
-	db_error("cursor not found");
+	append_error ("Cursor not found");
+	report_error();
 	return DB_FAILED;
     }
 
     /* fetch on position */
-    switch (position) {
+    switch (position)
+    { 
     case DB_NEXT:
-	c->cur++;
+	c->row++;
 	break;
     case DB_CURRENT:
 	break;
     case DB_PREVIOUS:
-	c->cur--;
-	break;
+	c->row--;
+    	break;
     case DB_FIRST:
-	c->cur = 0;
+	c->row = 0;
 	break;
     case DB_LAST:
-	c->cur = c->nrows - 1;
+	c->row = c->nrows - 1;
 	break;
     };
 
-    if ((c->cur >= c->nrows) || (c->cur < 0)) {
+    G_debug ( 3, "row = %d nrows = %d", c->row, c->nrows );
+    if ( c->row < 0 || c->row >= c->nrows ) {
 	*more = 0;
 	return DB_OK;
     }
-    *more = 1;
 
+    *more = 1;
 
     /* get the data out of the descriptor into the table */
     table = db_get_cursor_table(cn);
-    ncols = db_get_table_number_of_columns(table);
-    pg_row = c->set[c->cur];
-    for (col = 1; col <= ncols; col++) {
-	pg_col = c->cols[col - 1];
-	column = db_get_table_column(table, col - 1);
-	value = db_get_column_value(column);
-	db_free_string(&value->s);
 
+    for (i = 0; i < c->ncols; i++) {
+	int col, pgtype, sqltype;
+	dbColumn   *column;
+	dbValue    *value;
+
+	col = c->cols[i]; /* known cols */
+ 		
+	column = db_get_table_column (table, i);
+	pgtype  = db_get_column_host_type(column);
 	sqltype = db_get_column_sqltype(column);
-	ctype = db_sqltype_to_Ctype(sqltype);
-	htype = db_get_column_host_type(column);
 
-	switch (ctype) {
-	case DB_C_TYPE_STRING:
-	    db_set_string(&(value->s),
-			  db.tables[c->table].rows[pg_row].values[pg_col].c);
-	    break;
-	case DB_C_TYPE_INT:
-	    value->i = db.tables[c->table].rows[pg_row].values[pg_col].i;
-	    break;
-	case DB_C_TYPE_DOUBLE:
-	    value->d = db.tables[c->table].rows[pg_row].values[pg_col].d;
-	    break;
-	case DB_C_TYPE_DATETIME:
-	    value->t = db.tables[c->table].rows[pg_row].values[pg_col].t;
-	    break;
+	value  = db_get_column_value (column);
+	db_zero_string (&value->s);
+	
+	/* Is null? */
+	if ( PQgetisnull(c->res, c->row, col ) ) {
+	    value->isNull = 1;
+	    continue;
+	} else {
+	    value->isNull = 0;
+	}
+
+	G_debug (3, "row %d, col %d, sqltype %d: val = '%s'", 
+		    c->row, col, sqltype, PQgetvalue(c->res, c->row, col) );
+	
+	switch (pgtype) {
+	    int ns, tz;
+	    
+	    case PG_TYPE_CHAR:
+	    case PG_TYPE_VARCHAR:
+		db_set_string ( &(value->s),  PQgetvalue(c->res, c->row, col) );
+		break;
+
+	    case PG_TYPE_INT2:
+	    case PG_TYPE_INT4:
+	    case PG_TYPE_SERIAL:
+	    case PG_TYPE_OID:
+	    	value->i = atoi ( PQgetvalue(c->res, c->row, col) );
+		break;
+		
+	    case PG_TYPE_REAL:
+	    case PG_TYPE_FLOAT8:
+	    case PG_TYPE_NUMERIC:
+	    	value->d = atof ( PQgetvalue(c->res, c->row, col) );
+		break;
+		
+ 	    /* Note: we have set DATESTYLE TO ISO in db_driver_open_select_cursor() so datetime
+	     *       format should be ISO */
+
+	    case PG_TYPE_DATE:
+		/* Example: '1999-01-25' */
+		ns = sscanf( PQgetvalue(c->res, c->row, col), "%4d-%2d-%2d",
+			     &(value->t.year), &(value->t.month), &(value->t.day) ); 
+
+		if ( ns != 3 ) {
+		    append_error ( "Cannot scan date:");
+		    append_error ( PQgetvalue(c->res, c->row, col) );
+		    report_error();
+		    return DB_FAILED;
+		}
+		value->t.hour = 0;
+		value->t.minute = 0;
+		value->t.seconds = 0.0;
+		break;
+
+	    case PG_TYPE_TIME:
+		/* Example: '04:05:06.25', '04:05:06' */
+		ns = sscanf( PQgetvalue(c->res, c->row, col), "%2d:%2d:%lf",
+			     &(value->t.hour), &(value->t.minute), &(value->t.seconds) );
+
+		if ( ns != 3 ) {
+		    append_error ( "Cannot scan time:");
+		    append_error ( PQgetvalue(c->res, c->row, col) );
+		    report_error();
+		    return DB_FAILED;
+		}
+		value->t.year = 0;
+		value->t.month = 0;
+		value->t.day = 0;
+		break;
+
+	    case PG_TYPE_TIMESTAMP:
+		/* Example: '1999-01-25 04:05:06.25+01', '1999-01-25 04:05:06+01' */
+		ns = sscanf( PQgetvalue(c->res, c->row, col), "%4d-%2d-%2d %2d:%2d:%lf%3d",
+			     &(value->t.year), &(value->t.month), &(value->t.day), 
+			     &(value->t.hour), &(value->t.minute), &(value->t.seconds), &tz );
+
+		if ( ns != 7 ) {
+		    append_error ( "Cannot scan timestamp:");
+		    append_error ( PQgetvalue(c->res, c->row, col) );
+		    report_error();
+		    return DB_FAILED;
+		}
+		break;
 	}
     }
+    G_debug (3, "Row fetched" );
     return DB_OK;
-}
-
-int
-db_driver_get_num_rows (cn )
-        dbCursor *cn;
-{
-    cursor     *c;
-    dbToken    token;
-
-    /* get cursor token */
-    token = db_get_cursor_token(cn);
-
-    /* get the cursor by its token */
-    if (!(c = (cursor *) db_find_token(token)))
-    {
-        db_error("cursor not found");
-        return DB_FAILED;
-    }
-
-    return ( c->nrows );
 }

@@ -1,18 +1,3 @@
-/*****************************************************************************
-*
-* MODULE:       PostgreSQL driver forked from DBF driver by Radim Blazek 
-*   	    	
-* AUTHOR(S):    Alex Shevlakov
-*
-* PURPOSE:      Simple driver for reading and writing data     
-*
-* COPYRIGHT:    (C) 2000 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
 #include <dbmi.h>
 #include "globals.h"
 #include "proto.h"
@@ -20,19 +5,23 @@
 int db_driver_execute_immediate(sql)
      dbString *sql;
 {
-    char *s;
-    int ret;
+    PGresult *res;
 
-    db_set_string ( &errMsg, "" );
-    s = db_get_string(sql);
+    init_error();
 
-    ret = execute(s, NULL);
+    res = PQexec(pg_conn, db_get_string(sql) );
 
-    if (ret == DB_FAILED) {
-	db_append_string ( &errMsg, "Error in db_execute_immediate()\n");
-	report_error(  db_get_string (&errMsg) );
+    if (!res || PQresultStatus(res) != PGRES_COMMAND_OK) {
+	append_error( "Cannot execute: \n" );
+	append_error( db_get_string(sql) );
+	append_error( "\n" );
+	append_error(PQerrorMessage(pg_conn));
+	report_error();
+	PQclear(res);
 	return DB_FAILED;
     }
+    
+    PQclear(res);
 
     return DB_OK;
 }
@@ -42,10 +31,13 @@ int db_driver_begin_transaction(void)
     PGresult *res;
 
     G_debug (2, "pg : BEGIN");
+
+    init_error();
     res = PQexec(pg_conn, "BEGIN");
 
     if (!res || PQresultStatus(res) != PGRES_COMMAND_OK) {
-	report_error( "Cannot 'BEGIN' transaction");
+	append_error( "Cannot 'BEGIN' transaction");
+	report_error();
 	PQclear(res);
 	return DB_FAILED;
     }
@@ -60,10 +52,13 @@ int db_driver_commit_transaction(void)
     PGresult *res;
 
     G_debug (2, "pg : COMMIT");
+
+    init_error();
     res = PQexec(pg_conn, "COMMIT");
 
     if (!res || PQresultStatus(res) != PGRES_COMMAND_OK) {
-	report_error( "Cannot 'COMMIT' transaction" );
+	append_error( "Cannot 'COMMIT' transaction" );
+	report_error();
 	PQclear(res);
 	return DB_FAILED;
     }

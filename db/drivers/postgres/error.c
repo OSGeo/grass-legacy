@@ -1,27 +1,32 @@
-/*****************************************************************************
-*
-* MODULE:       PostgreSQL driver forked from DBF driver by Radim Blazek 
-*   	    	
-* AUTHOR(S):    Alex Shevlakov
-*
-* PURPOSE:      Simple driver for reading and writing data     
-*
-* COPYRIGHT:    (C) 2000 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
-
+#include <stdio.h>
+#include <gis.h>
 #include <dbmi.h>
 #include "globals.h"
 
-void report_error(err)
-     char *err;
+/* init error message */
+void
+init_error ( void )
 {
-    char msg[PG_MSG];
+    if ( !errMsg ) {
+	errMsg = (dbString *) G_malloc(sizeof(dbString));
+        db_init_string (errMsg);
+    }
 
-    snprintf(msg, sizeof(msg), "DBMI-PG driver error: %s", err);
-    db_error(msg);
+    db_set_string ( errMsg, "DBMI-ODBC driver error:\n");
 }
+
+/* append error message */
+void
+append_error ( char *msg )
+{
+    db_append_string ( errMsg, msg);
+}
+
+
+void
+report_error ( void )
+{
+    db_append_string ( errMsg, "\n");
+    db_error ( db_get_string (errMsg) );
+}
+

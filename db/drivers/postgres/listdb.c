@@ -1,18 +1,3 @@
-/*****************************************************************************
-*
-* MODULE:       PostgreSQL driver forked from DBF driver by Radim Blazek 
-*   	    	
-* AUTHOR(S):    Alex Shevlakov
-*
-* PURPOSE:      Simple driver for reading and writing data     
-*
-* COPYRIGHT:    (C) 2000 by the GRASS Development Team
-*
-*               This program is free software under the GNU General Public
-*   	    	License (>=v2). Read the file COPYING that comes with GRASS
-*   	    	for details.
-*
-*****************************************************************************/
 #include <dbmi.h>
 #include "globals.h"
 #include "proto.h"
@@ -23,35 +8,48 @@ int db_driver_list_databases(dbpath, npaths, dblist, dbcount)
      dbHandle **dblist;
      int *dbcount;
 {
-    char emsg[PG_MSG];
     int i;
-
+    PGCONN pgconn;
     PGresult *res;
-    char *pghost;
     int rec_num = 0;
-
     dbHandle *list;
-
+    
+    init_error();
     *dblist = NULL;
     *dbcount = 0;
 
-    pghost = G__getenv("DB_HOST");
-    pg_conn = PQsetdb(pghost, NULL, NULL, NULL, "template1");
+    /* TODO: the solution below is not good as user usually does not have permissions for "template1" */
+    append_error( "db_driver_list_databases() is not implemented in pg driver" );
+    report_error();
+    return DB_FAILED;
+    
+    if ( npaths > 0 ) {
+        G_debug (3, "location: %s", db_get_string ( dbpath ) );
+	if ( parse_conn ( db_get_string(dbpath), &pgconn ) == DB_FAILED ) {
+	    report_error();
+	    return DB_FAILED;
+	}
+    }
+
+    G_debug(3, "host = %s, port = %s, options = %s, tty = %s",
+                pgconn.host, pgconn.port, pgconn.options, pgconn.tty);
+
+    pg_conn = PQsetdb( pgconn.host, pgconn.port, pgconn.options, pgconn.tty, "template1");
 
     if (PQstatus(pg_conn) == CONNECTION_BAD) {
-	snprintf(emsg, sizeof(emsg), "Error: connect Postgres: %s\n",
-		 PQerrorMessage(pg_conn));
-	report_error(emsg);
-	PQfinish(pg_conn);
+	append_error( "Cannot connect to Postgres:\n" );
+        append_error( PQerrorMessage(pg_conn) );
+	report_error();
+	PQfinish (pg_conn);
 	return DB_FAILED;
     }
 
     res = PQexec(pg_conn, "select datname from pg_database");
 
     if (!res || PQresultStatus(res) != PGRES_TUPLES_OK) {
-	snprintf(emsg, sizeof(emsg), "Error: select Postgres: %s\n",
-		 PQerrorMessage(pg_conn));
-	report_error(emsg);
+	append_error( "Cannot select from Postgres:\n" );
+	append_error( PQerrorMessage(pg_conn) );
+	report_error();
 	PQclear(res);
 	PQfinish(pg_conn);
 	return DB_FAILED;
@@ -61,16 +59,16 @@ int db_driver_list_databases(dbpath, npaths, dblist, dbcount)
 
     list = db_alloc_handle_array(rec_num);
     if (list == NULL) {
-	report_error("db_alloc_handle_array()");
+	append_error ( "Cannot db_alloc_handle_array()" );
+	report_error();
 	return DB_FAILED;
     }
 
-
-    for (i = 0; i < rec_num; i++)
-    {
+    for (i = 0; i < rec_num; i++) {
 	db_init_handle(&list[i]);
 	if (db_set_handle(&list[i], PQgetvalue(res, i, 0), NULL) != DB_OK) {
-	    report_error("db_set_handle()");
+	    append_error( "db_set_handle()" );
+	    report_error();
 	    db_free_handle_array(list, rec_num);
 	    return DB_FAILED;
 	}
@@ -79,10 +77,9 @@ int db_driver_list_databases(dbpath, npaths, dblist, dbcount)
     PQclear(res);
     PQfinish(pg_conn);
 
-
     *dblist = list;
     *dbcount = rec_num;
 
-
     return DB_OK;
 }
+
