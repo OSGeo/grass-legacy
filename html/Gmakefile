@@ -1,13 +1,13 @@
-# Creates all manpages in $(GISBASE)/man/1
-# (Think to add grass programmer's manual pages in $(GISBASE)/man/3
-# and file format in $(GISBASE)/man/5 later...)
+# Creates all manpages in $(GISBASE)/man/man1
+# (Think to add grass programmer's manual pages in $(GISBASE)/man/man3
+# and file format in $(GISBASE)/man/man5 later...)
 # Copy html tree (without the other files) in $(GISBASE)/documents
 # The manual in html format will be in $(GISBASE)/documents/html
 # (default in tcltkgrass ?)
 #
 
 # default manual section number is 1
-SECT = 1
+SECT = man1
 GRASS_MANDIR=$(GISBASE)/man/$(SECT)
 GRASS_HTMLDIR=$(GISBASE)/documents
 HTML_DIR = html
