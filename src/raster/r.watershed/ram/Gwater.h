@@ -7,10 +7,9 @@
 #include "ramseg.h"
 #include "flag.h"
 
-/* redefining G_malloc allows you to see where in
-program that memory runs out
-#define G_malloc malloc
-*/
+/* redefining G_malloc allows you to see where in */
+/* program that memory runs out */
+/* #define G_malloc malloc */
 
 #define AR_SIZE			16
 #define AR_INCR			16
