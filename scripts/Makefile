@@ -32,7 +32,8 @@ SUBDIRS = \
 	r.regression.line \
 	r.shaded.relief \
 	r.univar.sh \
-	v.build.all
+	v.build.all \
+	v.in.garmin
 
 default: subdirs
 
