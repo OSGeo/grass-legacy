@@ -3,6 +3,8 @@ New in GRASS 5 beta6 against beta5
 $Id$
 
 Modules:
+- added missing MAN pages (Markus Neteler)
+
 - d.area: fixed. Now dynamic allocation to remove the 4096 vector
     line limit (Bill Hughes)
 - d.legend: fixed bug on shifted numbers. Optional flag to suppress
@@ -11,17 +13,23 @@ Modules:
 - i.in.erdas: "-m" reads in map coordinate info (reference) now (Angus Carr)
 - i.out.erdas added (Angus Carr)
 
-- nviz code:  removed MouseWheelEvent problem in compilation (Angus Carr)
+- m.in.e00: manages correctly the info table with aliases now,
+            added a flag for choosing to link geometry and attributes 
+            on feature-# or feature-ID, e000b2a integrated (Michel Wurtz)
+
+- nviz code: update prototyping and 'return' fixing (Bill Hughes)
 
 - r.coin fixed (hopefully) (Markus Neteler)
 
 - again general sites import bug (in beta6a-d) fixed
 - s.in.ascii fixed for x y z datasets (like DEM) (Markus Neteler)
+- s.out.e00 added (Michel Wurtz)
 - s.surf.idw import routine updated (Job Spijker, Markus Neteler)
 - s.probplt: bugfix on sites read (Job Spijker)
 - s.sample fix (Markus Neteler)
 
 - v.bubble: added (Job Spijker)
+- v.db.rim, s.db.rim: should compile now
 - v.in.arc should be fixed (Werner Droege, Alex Shevlakov)
 - v.in.dxf2 added (Ben Johnson)
 - v.report: fixed km conversion factor (Markus Neteler)
@@ -46,3 +54,6 @@ Source code structure:
 - configure:
   automatically choosing the diglib64 library at compile-time for 
   64-bit machines (Bill Hughes)
+
+src.related
+- rim: should compile now
