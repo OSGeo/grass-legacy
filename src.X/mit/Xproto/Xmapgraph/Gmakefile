@@ -1,0 +1,9 @@
+OFILES = \
+	allocation.o \
+	command.o \
+	do_graph.o \
+	graphics.o \
+	main.o
+
+$(BIN)/Xmapgraph: $(OFILES) $(XDISPLAYLIB) $(GISLIB) 
+	cc $(LDFLAGS) -o $@ $(OFILES) $(XDISPLAYLIB) $(GISLIB) -lX11
