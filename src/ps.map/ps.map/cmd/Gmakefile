@@ -40,6 +40,7 @@ OBJ =	box_stuff.o \
 	plfile.o \
 	ps_area.o \
 	ps_clrtbl.o \
+	ps_fclrtbl.o \
 	ps_colors.o \
 	ps_header.o \
 	ps_map.o \

@@ -142,6 +142,8 @@ read_cfg (void)
     }
     fclose(fp);
 
+    printf("pwidth = %f pheight = %f\n", PS.page_width, PS.page_height); 
+
     if (rotate_plot)
     {
 	double t;

@@ -91,6 +91,8 @@ int PS_area_plot (struct Map_info *P_map, int vec)
 {
     int  na, area, line_cat, ret;
     double e, w, n, s, aw, shift; 
+    double llx, lly, urx, ury, sc;
+    char pat[50];
 
     shift = 0;
     line_cat = vector.line_cat[vec];
@@ -132,7 +134,36 @@ int PS_area_plot (struct Map_info *P_map, int vec)
 	    	if ( ret != 1) 
 		    return 0;
 	    }
-	    fprintf(PS.fp, "%.2f %.2f %.2f C\n", (double) vector.acolor[vec].r/255., vector.acolor[vec].g/255., vector.acolor[vec].b/255.);  
+	    if ( vector.pat[vec] != NULL ) { /* use pattern */
+		sc = vector.scale[vec];
+		/* DEBUG */
+		/*
+		printf("\n eps pattern = %s\n", vector.eps[vec]);
+		printf("       scale = %f\n", vector.scale[vec]);
+		*/
+		/* load pattern */
+		eps_bbox( vector.pat[vec] , &llx, &lly, &urx, &ury);
+		sprintf ( pat, "APATTEPS%d", vec);
+		pat_save ( PS.fp, vector.pat[vec], pat); 
+		fprintf(PS.fp, "<<  /PatternType 1\n    /PaintType 1\n    /TilingType 1\n"); 
+		fprintf(PS.fp, "    /BBox [%f %f %f %f]\n", llx * sc, lly * sc, urx * sc, ury * sc ); 
+		fprintf(PS.fp, "    /XStep %f\n    /YStep %f\n", (urx - llx) * sc, (ury - lly) * sc);
+		fprintf(PS.fp, "    /PaintProc\n      { begin\n");
+		fprintf(PS.fp, "        %f %f scale\n", sc, sc);
+	        fprintf(PS.fp, "        %.2f %.2f %.2f C\n", (double) vector.acolor[vec].r/255., 
+			                vector.acolor[vec].g/255., vector.acolor[vec].b/255.);  
+    		fprintf(PS.fp, "        %.8f W\n", vector.pwidth[vec] );  
+		fprintf(PS.fp, "        %s\n", pat);
+		fprintf(PS.fp, "        end\n");
+		fprintf(PS.fp, "      } bind\n>>\n");
+		sprintf ( pat, "APATT%d", vec);
+		fprintf(PS.fp, " matrix\n makepattern /%s exch def\n", pat);
+	        fprintf(PS.fp, "/Pattern setcolorspace\n %s setcolor\n", pat);
+	    } else {
+	        fprintf(PS.fp, "%.2f %.2f %.2f C\n", (double) vector.acolor[vec].r/255., 
+			           vector.acolor[vec].g/255., vector.acolor[vec].b/255.);  
+	    }
+	    
 	    fprintf(PS.fp, "F\n");			
 	    if ( vector.width[vec] )
 	    {

@@ -6,6 +6,7 @@
 ** Modified by: Janne Soimasuo August 1994 line_cat added
 ** Modified by: Radim Blazek Jan 2000 acolor, label added
 */
+#include <stdlib.h>
 #include <string.h>
 #include "vector.h"
 #include "Vect.h"
@@ -30,6 +31,9 @@ static char *help[]=
     "label    label",
     "lpos     0|1-20",
     "ref      left|right",
+    "pat      EPS pattern file",
+    "scale    #",
+    "pwidth   #",
     ""
 };
 
@@ -79,8 +83,14 @@ vectfile (char *name, char *mapset)
     vector.hcolor[vector.count] = WHITE;
     vector.line_cat[vector.count] = -1 ;
     vector.area[vector.count] = 0 ;    
+    vector.acolor[vector.count].r = 125;
+    vector.acolor[vector.count].g = 125;
+    vector.acolor[vector.count].b = 125;
     vector.label[vector.count] = NULL ;    
     vector.lpos[vector.count] = -1 ;
+    vector.pat[vector.count] = NULL ;    
+    vector.scale[vector.count] = 1. ;    
+    vector.pwidth[vector.count] = 1. ;    
 
     got_color = 0;
     while (input(2, buf, help))
@@ -283,6 +293,32 @@ vectfile (char *name, char *mapset)
 		continue;
 	    }
 	    error(key, data, "illegal ref request");
+	    continue;
+	}
+	if (KEY("pat"))
+	{
+	    G_chop(data); 
+	    vector.pat[vector.count] = G_store(data);
+	    vector.area[vector.count] = 1 ;    	    
+	    continue;
+	}
+	if (KEY("scale"))
+	{
+	    G_strip(data); 
+	    vector.scale[vector.count] = atof(data);
+	    continue;
+	}
+	if (KEY("pwidth"))
+	{
+	    width = -1.;
+	    if (sscanf(data, "%lf%s", &width, mapset) < 1 || width < 0.)
+	    {
+		width = 0.;
+		error(key, data, "illegal pwidth");
+		continue;
+	    }
+	    if(mapset[0] == 'i') width = width/72.;
+	    vector.pwidth[vector.count] = width;
 	    continue;
 	}
 

@@ -44,6 +44,9 @@ struct vector
     RGB acolor[MAXVECTORS];
     char *label[MAXVECTORS];
     int lpos[MAXVECTORS];
+    char *pat[MAXVECTORS];   /* name of eps file for pattern */
+    double scale[MAXVECTORS]; /* scale of pattern */
+    double pwidth[MAXVECTORS]; /* pattern width */
 } ;
 
 #ifdef MAIN
