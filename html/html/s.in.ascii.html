@@ -107,7 +107,21 @@ this points data attribute properly.
 
 <H2>GRASS 5.0 internal sites format in "sites_list/"</H2>
 
-
+Each line of the ascii input file should contain either two or three
+coordinates (x,y and optionally z) separated by a user-selectable
+field-delimiting character.  After the coordinates there are optional
+attribute fields separated from the coordinates and from each other with
+the same user-selectable field delimiter.
+<P>
+The attribute field may be a category number, a decimal value or a string.
+Category numbers must be preceded by the "#" character and string values
+must be preceded by the "@" character.  Floating point values may be
+preceded by the "%" character but if there is no "#" or "@" preceding the
+attribute then it is assumed to be a floating point value.  Also, string
+values that contain blanks must be quoted or the part of the string
+following the first blank will be parsed as a separate field, which may
+cause an error.
+<p>
 easting|northing|[z|[d4|]...][#category_int] [ [@attr_text OR %flt] ... ]
 <p>
 
