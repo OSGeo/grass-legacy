@@ -1,0 +1,29 @@
+PGM = Xdisp
+LIBES = $(GISLIB) $(XDISPLAYLIB)
+OFILES =  main.o \
+	cr_displ.o \
+	quit.o \
+	draw_map.o \
+	draw_vect.o \
+	erase.o \
+	show_3D.o \
+	replay.o \
+	run_shell.o \
+	color.o \
+	change_win.o \
+	back.o \
+	fonts.o \
+	light_txt.o \
+	cursors.o \
+	att_info.o \
+	change_env.o \
+	display_coors.o \
+	list_cells.o \
+	list_vects.o
+
+$(BIN)/$(PGM): $(OFILES) $(LIBES) 
+	$(CC) $(LDFLAGS) -o $@ \
+		$(OFILES) $(LIBES) -lXaw -lXmu -lXt -lX11 $(MATHLIB)
+
+$(LIBES):	#
+
