@@ -15,6 +15,7 @@ EXTRA_CLEAN_FILES = lex.yy.c y.tab.c y.output y.tab.h
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
 default: lib
+	cp description.html $(GISBASE)/docs/html/sql.html
  
 y.tab.c: yac.y
 	$(YACC) -d -v yac.y
