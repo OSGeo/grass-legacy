@@ -46,7 +46,7 @@ main (int argc, char *argv[])
 	    {
 		if(G_is_reclassed_by(name, mapset, &nrmaps, &rmaps) > 0)
 		{
-		    fprintf(stderr, "[%s in %s] is reclassed by(remove these first):\n",
+		    fprintf(stderr, "[%s in %s] is base map for following reclassed map(s).\n Remove first map(s):\n",
 					name, mapset);
 		    fprintf(stderr, " %s", *rmaps);
 		    for(rmaps++; *rmaps; rmaps++)
