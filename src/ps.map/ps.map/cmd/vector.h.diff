@@ -1,0 +1,13 @@
+@@ -1,3 +1,4 @@
++/** Modified by: Janne Soimasuo August 1994 line_cat added **/
+ #define MAXVECTORS 20
+ 
+ struct vector
+@@ -16,6 +17,7 @@
+     char masked[MAXVECTORS];
+     char *name[MAXVECTORS];
+     char *mapset[MAXVECTORS];
++    int line_cat[MAXVECTORS];
+ } ;
+ 
+ #ifdef MAIN
