@@ -61,6 +61,7 @@ SUBDIRS1 = \
 	r.resample \
 	r.rescale \
 	r.rescale.eq \
+	r.series \
 	r.slope.aspect \
 	r.statistics \
 	r.stats \
