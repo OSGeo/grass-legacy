@@ -31,6 +31,8 @@ db_driver_open_database (handle)
     char   buf[1024];
     DIR    *dir;
     struct dirent *ent;
+    char **tokens;
+    int no_tokens, n;
 
     db.name[0] = '\0';
     db.tables = NULL;
@@ -50,6 +52,30 @@ db_driver_open_database (handle)
     
     /* open database dir and read table ( *.dbf files ) names 
      * to structure */ 
+
+    /* parse variables in db.name if present */
+    if ( db.name[0] == '$' )
+    {
+     tokens = G_tokenize (db.name, "/");
+     no_tokens=G_number_of_tokens(tokens);
+     db.name[0] = '\0'; /* re-init */
+     
+     for (n = 0; n < no_tokens ; n++)
+     {
+       if ( tokens[n][0] == '$' )
+       {
+         G_strchg(tokens[n],'$', ' ' );
+         G_chop(tokens[n]);
+         strcat(db.name, G__getenv(tokens[n]) );
+       }
+       else
+         strcat(db.name, tokens[n]);
+         
+       strcat(db.name, "/");
+     }
+     G_free_tokens(tokens);
+    }
+
     dir = opendir(db.name);
     if (dir == NULL)
       {
