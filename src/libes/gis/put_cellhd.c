@@ -23,7 +23,7 @@ G_put_cellhd (name, cellhd)
     {
 	char buf[1024];
 
-	sprintf (buf, "Unable to create cell header for [%s]", name);
+	sprintf (buf, "Unable to create header file for [%s]", name);
 	G_warning (buf);
 	return -1;
     }
