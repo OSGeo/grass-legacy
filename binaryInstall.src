@@ -36,7 +36,7 @@ if [ -z "$TEST_STR" ] ; then
 fi
 
 # Check for first parameter:
-if [ $# -lt 1 -o "$1" == "-h" -o "$1" == "-help" ] ; then
+if [ $# -lt 1 -o "$1" = "-h" -o "$1" = "-help" ] ; then
     echo "
 
 GRASS GIS $NAME_VER binary package installation tool
