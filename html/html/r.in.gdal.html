@@ -21,7 +21,7 @@
 <BR>
 <B>r.in.gdal help</B> 
 <BR>
-<B>r.in.gdal [-o] input=</B><EM>name</EM>
+<B>r.in.gdal [-o] [-e] input=</B><EM>name</EM>
 [<B>band=</B><EM>number</EM>]
 <B>output=</B><EM>name</EM> 
 [<B>TITLE=</B>"<EM>phrase</EM>"] 
@@ -41,6 +41,12 @@ imported file may also be optionally used to create a new location.
 <DL>
 <DT><B>-o</B>
 <DD>Override projection (use locations projection)
+
+<DT><B>-e</B>
+<DD>Extend the DEFAULT_WIND in PERMANENT mapset to include the region of
+the new map layer.  Old resolution is preserved, but the region, and rows/cols
+are updated.  This will fail if the user doesn't have write access to the
+PERMANENT mapset.
 </DL>
 
 <H3>Parameters:</H3>
