@@ -1,0 +1,69 @@
+<html>
+<A NAME="m.kappa">
+<TITLE>m.kappa</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<B><EM>m.kappa</EM></B> - Calculate error matrix and kappa parameter for accuracy assessment of classification result.<BR>
+<EM>(GRASS Support Program)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>m.kappa</B><BR>
+<B>m.kappa help</B><BR>
+<B>m.kappa</B> [<B>-h</B>] [<B>inputname</B>] [<B>outputname</B>] [<B>title"name"</B>]
+
+<H2>DESCRIPTION</H2>
+<EM>m.kappa</EM> tabulates the error matrix of classification result by reading error matrix.  Both overall kappa (accompanied by its variance) and conditional kappa values are calculated.
+<P>
+
+The user can run the program non-interactively by specifying all needed flag settings and parameter values on the command line, in the form:
+<P>
+<DD><EM>m.kappa [-h] [inputname] [outputname] [title"name"]</EM>
+<P>
+
+<H3>Flag:</H3>
+<DL>
+<DT><B>-h</B>
+<DD>Report without header
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>inputname</B>
+<DD>Name of error matrix file.  If file name is not specified, the program will obtain error matrix from standard input.  If file name is provided, it must have the following format: the first line is an integer N which is the number of rows/columns of the matrix; the remainder of the file is the error matrix, or N lines, each containing N integers. For example:
+<PRE>
+                           tab(  ); lnnnnnn nnnnnnn.  6 28010 0 0
+                           0 5235 0 17797 0 0 0  3368  744  56  0
+                           69340 0 437 0 0 0 0 0 0 2118 0 0 15762
+                           0 40759 0 0 0 1766 0 0 8126
+</PRE>
+
+<DT><B>outputname</B>
+<DD>Name of ascii file in which to report results.  If no file name is provided, the report will go to standard output.
+
+<DT><B>titlename</B>
+<DD>Title of the report file which is the first line in output file.
+<DD>Default: Error matrix and Kappa
+</DL>
+
+<P>
+Alternately, the user can run <EM>m.kappa</EM> interactively by simply typing <EM>m.kappa</EM> without command line arguments; in this case, the user will be prompted for the names of input error matrix.  <EM>m.kappa</EM> then calculates the kappa values for overall and each classes along with their variances.  Also percentage of commission and ommission error, total correct in counts, total area in counts and percentage of overall correct counts are tabulated.
+<P>
+
+The report will be displayed on screen, or written to an output file which is in plain text format and named by user at prompt of running the program.
+
+<H2>NOTES</H2>
+NA's in report mean non-applicable.
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="r.kappa.html">r.kappa</A></EM>
+
+<H2>AUTHOR</H2>
+Tao Wen, University of Illinois at Urbana-Champaign, Illinois.
+
+</BODY>
+</HTML>
