@@ -22,7 +22,7 @@ G3d_float2xdrFloat (f, xdrf)
 {
   XDR xdrEncodeStream;
 
-  xdrmem_create (&xdrEncodeStream, xdrf, 4, XDR_ENCODE);
+  xdrmem_create (&xdrEncodeStream, (caddr_t) xdrf, 4, XDR_ENCODE);
 
   if (! xdr_setpos (&xdrEncodeStream, 0))
     G3d_fatalError ("G3d_float2xdrFloat: positioning xdr failed");
@@ -43,7 +43,7 @@ G3d_double2xdrDouble (d, xdrd)
 {
   XDR xdrEncodeStream;
 
-  xdrmem_create (&xdrEncodeStream, xdrd, 8, XDR_ENCODE);
+  xdrmem_create (&xdrEncodeStream, (caddr_t)xdrd, 8, XDR_ENCODE);
 
   if (! xdr_setpos (&xdrEncodeStream, 0))
     G3d_fatalError ("G3d_double2xdrDouble: positioning xdr failed");
