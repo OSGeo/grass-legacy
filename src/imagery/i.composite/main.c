@@ -1,4 +1,3 @@
-/* %W% %G% */
 #define GLOBAL
 #include "globals.h"
 
