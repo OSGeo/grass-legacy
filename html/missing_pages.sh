@@ -13,7 +13,7 @@ fi
 list=
 for f in `cd $bin; ls`
 do
-    if [ ! -f $GISBASE/man/1/$f.1 ]
+    if [ ! -f $GISBASE/man/man1/$f.1 ]
     then
 	list="$list $f"
     fi
@@ -29,7 +29,7 @@ fi
 list=
 for f in `cd $scripts; ls`
 do
-    if [ ! -f $GISBASE/man/1/$f.1 ]
+    if [ ! -f $GISBASE/man/man1/$f.1 ]
     then
 	list="$list $f"
     fi
