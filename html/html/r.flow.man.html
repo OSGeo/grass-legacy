@@ -1,0 +1,168 @@
+<HTML>
+<HEAD>
+<TITLE>r.flowmd manual page</TITLE>
+</HEAD>
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+ 
+<H2>NAME</H2>
+<I>r.flowmd </I> - construction of slope lines (flowlines),  flowpath lengths 
+and flowline  densities from  a raster digital elevation model using a 
+modified multiple directions  algorithm. <P>
+  <BR>
+<I>(GRASS Raster/Vector Program) 
+</I>
+
+<H2>SYNOPSIS</H2>
+<B>r.flowmd</B>  <BR>
+<B>r.flowmd help </B>  <BR>
+<B>r.flowmd </B> [<B>-d </B>] <B>elevin=name </B> <B>aspin=name 
+</B> <B>barrierin=name </B> [<B>skip=val </B>] [<B>flout=name </B> [<B>lgout=name </B>] [<B>dsout=name </B>] 
+<P>
+  
+<H2>DESCRIPTION</H2>
+<I>r.flowmd </I> <P>
+  <BR>
+generates flowlines using a combined raster-vector 
+approach from input elevation <I>elevin </I>, aspect <I>aspin </I> and optionally barrier 
+<I>barrierin </I> raster maps.  <P>
+Input elevation raster map with integer values 
+should have values  in centimeters preventing premature flowline stop 
+in flat areas.  Aspect used for input must follow the same rules as aspect 
+computed in other GRASS programs (see r.slope.aspect, s.surf.tps). Barriers 
+are defined by non-zero values in an input raster map <I>barierin </I>. Make sure 
+that the resolution of your current region is set to the resolution of 
+the elevation raster file. <P>
+There are three possible output maps which can 
+be produced in any combination simultaneously:  a vector file <I>flout </I> of 
+flowlines, a raster map <I>lgout </I> of flowpath lengths, and a raster map  
+<I>dsout </I> of flowline densities. Flowlines are constructed by straight line 
+segments (vectors) with endpoints creating intersections of the flowline 
+with edges of the imaginary mesh connecting centers of the grid cells. 
+ Flowlines are generated from each  cell uphill by default; they can be 
+generated downhill using the flag <B>-d </B>.  A flowline stops if its next segment 
+would reverse the direction of flow (from up to down or vice-versa), cross 
+a barrier, or arrive at a cell with undefined elevation or aspect. Another 
+option, <B>skip </B>=<I>val </I>, indicates that only the flowlines from every <I>val </I>th 
+cell are to be included in <I>flout </I>.  The default <B>skip </B> is 1. A high <B>skip 
+</B> usually speeds up processing time and often improves the readability 
+of a visualization of <I>flout </I>. <P>
+ <P>
+Flowpath length output <I>flout </I> gives the 
+horizontal length of the flowline for given grid cell in units defined 
+by your mapset. It is computed as the sum of the planar length of all straight 
+flowline segments.   <P>
+Flowline density output <I>dsout </I> represents the number 
+of generated flowlines passing through the given cell. This program uses 
+a modified multiple directions algorithm. Flowline density for each flowline 
+passing between 2 grid cell centers is   fractioned between these grid 
+cells by distance. This algorithm smoothes  flowline densities on convex 
+(dispersing) slopes. Flowline lengths and densities can be computed for 
+both uphill and downhill directionss. <P>
+  
+<H2>OPTIONS</H2>
+The user can run this program 
+either interactively or non-interactively. The program will be run non-interactively 
+if the user specifies program arguments and flag settings on the command 
+line using the form: <P>
+ <blockquote><B>r.flowmd </B> [<B>-d </B>] <B>elevin=name </B> <B>aspin=name </B> [<B>barrierin=name<B>] 
+[<B>skip=val </B></B></B>] [<B>flout=name </B>] [<B>lgout=name </B>] [<B>dsout=name </B>] <P>
+  </blockquote>
+<P>
+Alternately, the 
+user can simply type <B>r.flowmd </B> on the command line without program arguments. 
+ In this case, the user will be prompted for parameter values and flag 
+settings using the standard GRASS parser interface. <P>
+ <P>
+<B>Flag: </B>  
+<DL>
+
+<DT>[<B>-d </B>] </DT>
+<DD>Generate 
+flowlines downhill (default generates flowlines uphill) </DD>
+</DL>
+<P>
+ <P>
+<B>Parameters: </B> 
+
+<DL>
+
+<DT><B>elevin=<I>name </I></B> </DT>
+<DD>Use the existing raster file with elevations<I>name </I> as input. 
+</DD>
+
+<DT><B>aspin=<I>name </I></B> </DT>
+<DD>Use the existing raster file with aspect<I>name </I> as input. </DD>
+
+<DT><B>barrierin=<I>name 
+</I></B> </DT>
+<DD>Use the existing raster file with non-zero values representing barriers 
+with <I>name </I> as input. </DD>
+
+<DT><B>skip=<I>val </I></B> </DT>
+<DD>Set the the number of cells skipped for 
+origins of flowlines to <I>val </I>. </DD>
+
+<DT><B>flout=<I>name </I></B> </DT>
+<DD>Output coordinates of flowlines 
+to vector file named  <I>name </I>. </DD>
+
+<DT><B>lgout=<I>name </I></B> </DT>
+<DD>Output flowpath length values 
+to raster file named  <I>name </I>. </DD>
+
+<DT><B>dsout=<I>name </I></B> </DT>
+<DD>Output flowline density values 
+to raster file named  <I>name </I>. </DD>
+</DL>
+<P>
+  
+<H2>NOTES</H2>
+<P>
+ Flowlines generated uphill are used 
+for computation of the flowpath length (slope lenghts) defining the distance 
+between the grid cell   and upland area.  This can be used, for example, 
+in water erosion modeling for the computation of LS factor in standard 
+form of USLE. Flowlines can be also generated downhill from each grid point 
+to simulate the topographic potential for quasi steady-state overland water 
+flow. Downslope flowline density multiplied by grid cell area gives the 
+upslope contributing  area.  This topographic parameter  defines an area 
+from which water  inflows to the given cell. This area is an estimate of 
+potential steady-state water flux and can be used in the modeling of water 
+erosion and for computation of unit stream power based LS factor. The program 
+has been designed for modeling erosion on hillslopes and has a very strict 
+condition for ending the flowline. It is therefore not very suitable for 
+the extraction of stream network or delineation of watersheds unless a 
+DEM without pits or flat areas is available. <P>
+  <P>
+ 
+<H2>SEE ALSO</H2>
+<I>
+<a href=r.flow.html>r.flow</a>,<br>
+<a href=r.watershed.html>r.watershed</a>,<br> 
+<a href=r.drain.html>r.drain</a>,<br> 
+<a href=r.slope.aspect.html>r.slope.aspect</a>,<br>
+<a href=s.surf.tps.html>s.surf.tps</a>
+</I> <P>
+ <P>
+ 
+<H2>AUTHOR</H2>
+Jaroslav Hofierka, GeoModel s.r.o., 
+Bratislava, Slovakia <P>
+ <P>
+ 
+<H2>REFERENCES</H2>
+Mitasova, H. and Hofierka, J. (1993): 
+Interpolation by Regularized Spline with Tension: II. Aplication to Terrain 
+Modeling and Surface Geometry Analysis. Mathemtical Geology August, 1993 
+ <BR>
+Mitasova, H., Hofierka, J., Zlocha, M., Iverson, L.(1993): Modeling topographic 
+potential for erosion and deposition using GIS. submitted to IJofGIS.  
+<BR>
+Mitasova, H.(1993): Surfaces and modeling. Grassclippings (winter and spring) 
+p.18-19. <P>
+
+</BODY></HTML>
