@@ -1,0 +1,16 @@
+PGM=i.cluster
+
+LIST=main.o ask_files.o ask_parms.o run_cluster.o
+
+$(BIN_ALPHA_INTER)/$(PGM): $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASKLIB) 
+	$(CC) -o $@ $(LDFLAGS) $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASK) $(MATHLIB)
+
+
+main.o: global.h
+ask_files.o: global.h
+ask_parms.o: global.h
+run_cluster.o: global.h
+
+$(LIST): global.h
+
+$(IMAGEERYLIB) $(GISLIB) $(VASKLIB): #
