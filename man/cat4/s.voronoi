@@ -1,0 +1,132 @@
+
+
+
+s.voronoi <contrib>   GRASS Reference Manual  <contrib> s.voronoi
+
+
+
+NAME
+     s.voronoi - Uses a GRASS sites list to produce a Voronoi
+     diagram.
+     (GRASS Sites Program)
+
+SYNOPSIS
+     s.voronoi
+     s.voronoi help
+     s.voronoi [-alq] sites=name [vect=name]
+
+DESCRIPTION
+     s.voronoi uses an existing sites list (sites=name) to create
+     a Voronoi diagram (Theissen polygons) in a binary vector
+     file (vect=name).
+
+     Flags:
+
+     -a		       Use all sites found in the named sites
+		       file, rather than limiting output to sites
+		       falling within the current geographic
+		       region.
+
+     -l		       Attempt to use site descriptions (category
+		       labels) as categories and attributes for
+		       the vector file. Sites must be in the
+		       (E|N|#n desc) format for this to work.
+
+     -q		       Quiet. Cut out the chatter.
+
+     Parameters:
+
+     sites=name	       Name of an existing sites file.
+
+     vect=name	       Name of the output file (binary vector
+		       file).
+
+     s.voronoi can be run either non-interactively or
+     interactively.  The program will be run non-interactively if
+     the user specifies the name of an existing site list file
+     and a name for a vect file, using the form
+
+	  s.voronoi [-adlpq] sites=name1 [vect=name2]
+
+     where name1 is the name of an existing site list file and
+     name2 is the name of vector output file.
+
+     Alternately, the user can simply type s.voronoi on the
+     command line, without program arguments.  In this case, the
+     user will be prompted for parameter values using the
+     standard GRASS parser interface described in the manual
+     entry for parser.	In either case, v.spag and v.support
+     should be run on the output (running v.spag is necessary so
+
+
+
+GRASS 4.2.1		Baylor University			1
+
+
+
+
+
+
+s.voronoi <contrib>   GRASS Reference Manual  <contrib> s.voronoi
+
+
+
+     that nodes are created where the polygons cross the boundary
+     of the region).
+
+SEE ALSO
+     s.delaunay, v.autocorr, v.spag, v.support, parser, and
+     Steve J. Fortune, (1987).	A Sweepline Algorithm for Voronoi
+     Diagrams, Algorithmica 2, 153-174.
+
+BUGS
+     Please send all bug fixes and comments to the author.
+
+AUTHOR
+     James Darrell McCauley, Purdue University
+     (mccauley@ecn.purdue.edu)
+
+
+NOTICE
+     This program is part of the contrib section of the GRASS
+     distribution.  As such, it is externally contributed code
+     that has not been examined or tested by the Office of GRASS
+     Integration.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.2.1		Baylor University			2
+
+
+
