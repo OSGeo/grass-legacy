@@ -34,10 +34,6 @@ main(argc,argv)
 		struct	Option	*output;
 	} params;
 
-	struct
-	{
-		struct	Flag	*overwr;
-	} flags;
 	struct GModule *module;
 	
 
@@ -61,17 +57,12 @@ main(argc,argv)
 	params.output->required		= YES;
 	params.output->gisprompt	= "new,cell,raster";
 
-	flags.overwr			= G_define_flag();
-	flags.overwr->key		= 'o';
-	flags.overwr->description	= _("Overwrite output map");
-
 	if(G_parser(argc, argv)){
 	        exit(-1);
 	}
 
 	file   = params.input->answer;
 	oname  = params.output->answer;
-	overwr = flags.overwr->answer;
 
 	mapset = G_mapset();
 
