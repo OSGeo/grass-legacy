@@ -1,3 +1,5 @@
+# %W%  %G%
+
 PGM      = m.qcalc
 
 LIST =  main.o
