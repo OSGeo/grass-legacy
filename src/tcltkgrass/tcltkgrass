@@ -1,0 +1,29 @@
+#!/bin/sh
+# Startup script for tcltkgrass
+# to make tcltkgrass independent of local wish8.x installation
+# The script searches for wish8.x and starts tcltkgrass
+
+# Markus Neteler
+# $Id: tcltkgrass,v 1.1 2000-09-27 07:50:14 markus Exp $
+
+SEARCHCOMMAND=wish8
+
+k=0
+PATHLIST=""
+
+SEARCHPATHS=`echo $PATH | tr -s ':' ' '`
+for i in $SEARCHPATHS ; do
+   k=`expr $k + 1`
+   cd $i
+   ls -1 |grep $SEARCHCOMMAND > /dev/null
+   if [ $? = 0 ]
+   then
+      #found
+      PATHLIST="$i/`ls -1 |grep $SEARCHCOMMAND` $PATHLIST"
+   fi
+done
+
+#now all wish8.x are stored in $PATHLIST
+#take the first and start tcltkgrass
+WISH=`echo "$PATHLIST"| cut -d' ' -f1`
+$GISBASE/etc/tcltkgrass.start $WISH&
