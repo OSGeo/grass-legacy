@@ -2,7 +2,7 @@ interface_build {
     {v.in.shape} 0
     {Converts data in ESRI shapefile format to GRASS's vector format, and stores output in the user's current GRASS mapset.}
     {entry input {Shapefile:} 0 file}
-    {entry output Resultant Vector Map:} 0 vector}
+    {entry output {Resultant Vector Map:} 0 vector}
     {entry verbose {Debugging level (0-3):} 0 ""}
     {entry logfile {File to log operations:} 0 File }
     {entry snapdist {Snap distance for nodes during import:} 0 ""}
