@@ -1,0 +1,17 @@
+# %W% %G%
+PGM      = layer.info
+GPGM	 = Glayer.info
+
+LIST = main.o reclas_txt.o more_print.o
+GLIST = gmain.o reclas_txt.o
+
+all: $(BIN)/$(PGM) $(BIN)/$(GPGM)
+
+$(BIN)/$(PGM): $(LIST) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(VASK) -o $@
+
+$(BIN)/$(GPGM): $(GLIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(GLIST) $(GISLIB) -o $@
+
+$(GISLIB):      # in case library changes
+$(VASKLIB): #
