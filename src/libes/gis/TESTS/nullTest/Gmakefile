@@ -1,0 +1,10 @@
+PGM = nullTest
+OBJ = main.o
+SOURCES = main.c
+
+LIBES = $(GISLIB)
+
+$(PGM): $(OBJ) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(XDRLIB)
+
+$(GISLIB): #
