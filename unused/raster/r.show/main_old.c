@@ -35,9 +35,11 @@ struct	RASTER_MAP_PTR
 #ifdef	RASTER_VALUE_FUNC
 double	raster_value(struct RASTER_MAP_PTR buf, int col);
 #else
-#define	raster_value(buf, col)	((double)(buf.type == CELL_TYPE ? buf.c[col] : \
-					(buf.type == FCELL_TYPE ? buf.f[col] : \
-								  buf.d[col])))
+#define	raster_value(buf, col)	((double)(buf.type == CELL_TYPE ?	\
+						buf.data.c[col] :	\
+					(buf.type == FCELL_TYPE ?	\
+					 	buf.data.f[col] :	\
+						buf.data.d[col])))
 #endif
 
 int	is_null_value(struct RASTER_MAP_PTR buf, int col);
@@ -154,13 +156,13 @@ raster_value(buf, col)
 	switch(buf.type)
 	{
 		case CELL_TYPE:
-			retval = (double) buf.c[col];
+			retval = (double) buf.data.c[col];
 			break;
 		case FCELL_TYPE:
-			retval = (double) buf.f[col];
+			retval = (double) buf.data.f[col];
 			break;
 		case DCELL_TYPE:
-			retval = (double) buf.d[col];
+			retval = (double) buf.data.d[col];
 			break;
 	}
 
