@@ -1,0 +1,22 @@
+NEWOBJ= new_window.o cmd_new.o  Dnew.o window.o
+CHOSEOBJ= choose_win.o Dnew.o window.o
+
+all: $(BIN)/Dnnew $(BIN)/Dnchoose 
+
+
+$(BIN)/Dnnew: $(NEWOBJ) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(D_LIB)
+	$(CC) $(LDFLAGS) -o $@ $(NEWOBJ) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(BIN)/Dnchoose: $(CHOSEOBJ) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(CHOSEOBJ) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(D_LIB): #
+$(GISLIB): #
+
+new_window.o:	opt_new.h
+cmd_new.o:	opt_new.h
+which_win.o:	opt_which.h
+cmd_which.o:	opt_which.h
