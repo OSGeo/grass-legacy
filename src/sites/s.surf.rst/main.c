@@ -132,6 +132,7 @@ char *Tmp_file_xy = NULL;
 double gmin, gmax, c1min, c1max, c2min, c2max, fi, rsm;
 double xmin, xmax, ymin, ymax, zmin, zmax;
 int elattr, smattr;
+double theta, scalex;
 
 struct BM *bitmask;
 struct Cell_head cellhd;
@@ -156,7 +157,8 @@ int main ( int argc, char *argv[])
   {
     struct Option *input, *smatt, *elatt, 
     *elev, *slope, *aspect, *pcurv, *tcurv, *mcurv, *maskmap,
-    *dmin1, *zmult, *fi, *rsm, *segmax, *npmin, *devi, *treefile, *overfile;
+    *dmin1, *zmult, *fi, *rsm, *segmax, *npmin, *devi, *treefile, *overfile,
+    *theta, *scalex;
   } parm;
   struct
   {
@@ -337,6 +339,18 @@ int main ( int argc, char *argv[])
   parm.npmin->required = NO;
   parm.npmin->description = "Min number of points for interpolation(>segmax)";
 
+  parm.theta = G_define_option ();
+  parm.theta ->key = "theta";
+  parm.theta ->type = TYPE_DOUBLE;
+  parm.theta ->required = NO;
+  parm.theta ->description = "Anisotropy angle (in degrees)";
+
+  parm.scalex = G_define_option ();
+  parm.scalex ->key = "scalex";
+  parm.scalex ->type = TYPE_DOUBLE;
+  parm.scalex ->required = NO;
+  parm.scalex ->description = "Anisotropy scaling factor";
+
   flag.deriv = G_define_flag ();
   flag.deriv->key = 'd';
   flag.deriv->description = "Output partial derivatives instead";
@@ -380,6 +394,16 @@ int main ( int argc, char *argv[])
   sscanf (parm.npmin->answer, "%d", &npmin);
   sscanf (parm.zmult->answer, "%lf", &zmult);
   sscanf (parm.elatt->answer, "%d", &elattr);
+
+  if(parm.theta->answer) 
+  sscanf (parm.theta->answer, "%lf", &theta);
+	
+  if(parm.scalex->answer) {
+  sscanf (parm.scalex->answer, "%lf", &scalex);
+	if (!parm.theta->answer)
+      	G_fatal_error("Using anisotropy - both theta and scalex have to be specified");
+	}
+
   if(parm.rsm->answer){
       sscanf (parm.rsm->answer, "%lf", &rsm);
       if(rsm < 0.0)
@@ -642,7 +666,7 @@ void IL_init_params_2d(struct interp_params *, FILE *, int, int, double,
 		     maskmap, n_rows, n_cols, az, adx, ady, adxx, adyy, adxy, 
 		     fi, KMAX2, SCIK1, SCIK2, SCIK3,
 		     rsm, elev, slope, aspect, pcurv, tcurv, mcurv, dmin, 
-		     x_orig, y_orig, deriv,
+		     x_orig, y_orig, deriv, theta, scalex,
 		     Tmp_fd_z, Tmp_fd_dx, Tmp_fd_dy, 
 		     Tmp_fd_xx, Tmp_fd_yy, Tmp_fd_xy, fddevi, inhead.time);
 
@@ -789,11 +813,8 @@ void IL_init_params_2d(struct interp_params *, FILE *, int, int, double,
 static int print_tree (struct multtree *tree,
     double x_orig, double y_orig, struct Map_info *Map)
 {
-  double x_se, x_sw, x_ne, x_nw, y_se, y_sw, y_ne, y_nw;
   double xarray[5], yarray[5];
   struct line_pnts *Points;
-  static int k = 0;
-  static int i = 1;
   int j;
   int type = LINE;
 

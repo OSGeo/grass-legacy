@@ -666,11 +666,15 @@ int IL_output_2d (
 
     sprintf (hist.edhist[3], "zmin_data=%f, zmax_data=%f", zmin, zmax);
     sprintf (hist.edhist[4], "zmin_int=%f, zmax_int=%f", zminac, zmaxac);
+
+    if((params->theta) && (params->scalex))
+    sprintf (hist.edhist[5], "theta=%f, scalex=%f", params->theta, params->scalex);
+
     if (vect)
       sprintf (hist.datsrc_1, "vector file %s", input);
     else
       sprintf (hist.datsrc_1, "site file %s", input);
-    hist.edlinecnt = 5;
+    hist.edlinecnt = 6;
     G_write_history (params->elev, &hist);
     if(params->ts)
 	G_write_raster_timestamp(params->elev,params->ts);
