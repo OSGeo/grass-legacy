@@ -1,7 +1,5 @@
 #############################################################################
 #
-# $Id$
-#
 # MODULE:   	Grass Compilation
 # AUTHOR(S):	Original author unknown - probably CERL
 #		Markus Neteler - Germany - neteler@geog.uni-hannover.de
@@ -47,8 +45,8 @@ GRASS50             = @GRASS50@
 DEFAULT_DATABASE    =
 DEFAULT_LOCATION    =
 
-COMPILE_FLAGS       = @CFLAGS@ @INCLUDE_DIRS@
-LD_FLAGS             = @STRIPFLAG@ @LDFLAGS@
+COMPILE_FLAGS       = @CFLAGS@ -Wall @INCLUDE_DIRS@
+LD_FLAGS            = @STRIPFLAG@ @LDFLAGS@
 
 DLLIB               = @DLLIB@
 XCFLAGS             = @X_CFLAGS@
