@@ -212,7 +212,7 @@ load_table ( int t)
 int
 save_table ( int t)
 {
-    int  i, j, ncols, nrows, ret, field;
+    int  i, j, ncols, nrows, ret, field, rec;
     char name[2000], fname[20], element[100], cmd[2000];
     DBFHandle   dbf;
     ROW  *rows;
@@ -263,6 +263,7 @@ save_table ( int t)
 
       }
     
+    rec = 0;
     for( i = 0; i < nrows; i++ )
       {
          if ( rows[i].alive == FALSE ) continue;
@@ -280,19 +281,20 @@ save_table ( int t)
 	     switch ( db.tables[t].cols[j].type )
 	       {
                  case DBF_INT:    
-		     ret = DBFWriteIntegerAttribute( dbf, i, field, val->i ); 
+		     ret = DBFWriteIntegerAttribute( dbf, rec, field, val->i ); 
                      break;
                  case DBF_CHAR:    
 		     if ( val->c != NULL )
-		         ret = DBFWriteStringAttribute( dbf, i, field, val->c ); 
+		         ret = DBFWriteStringAttribute( dbf, rec, field, val->c ); 
 		     else
-		         ret = DBFWriteStringAttribute( dbf, i, field, "" ); 
+		         ret = DBFWriteStringAttribute( dbf, rec, field, "" ); 
                      break;
                  case DBF_DOUBLE:    
-		     ret = DBFWriteDoubleAttribute( dbf, i, field, val->d ); 
+		     ret = DBFWriteDoubleAttribute( dbf, rec, field, val->d ); 
                      break;
                }
            }
+	 rec++;
       }
 
     DBFClose ( dbf );
