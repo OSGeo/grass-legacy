@@ -32,6 +32,7 @@ db_init_string (x)
  */
 static int set_string();
 
+int
 db_set_string (x, s)
     dbString *x;
     char *s;
@@ -45,6 +46,7 @@ db_set_string (x, s)
  \return 
  \param 
 */
+int 
 db_set_string_no_copy (x, s)
     dbString *x;
     char *s;
@@ -72,6 +74,7 @@ db_sizeof_string (x)
  \return 
  \param 
 */
+void
 db_zero_string (x)
     dbString *x;
 {
@@ -122,6 +125,7 @@ set_string (x, s, copy)
  \return 
  \param 
 */
+int
 db_enlarge_string (x, len)
     dbString *x;
     int len;
@@ -231,8 +235,36 @@ db_append_string (x, s)
  \return 
  \param 
 */
+int
 db_copy_string (dst, src)
     dbString *dst, *src;
 {
     return db_set_string (dst, db_get_string(src));
 }
+
+/*!
+ \fn 
+ \brief each ' is replaced by ''
+ \return 
+ \param 
+*/
+void
+db_double_quote_string (src)
+    dbString *src;
+{
+    char *ptra, *ptrb, buf[2];
+    dbString tmp;
+    
+    db_init_string (&tmp);
+    buf[1] = 0;
+    
+    ptrb = db_get_string(src);
+    while ( (ptra = strchr( ptrb, '\'') ) != NULL ) {
+	for ( ; ptrb <= ptra; ptrb++ ) { buf[0] = ptrb[0]; db_append_string (&tmp, buf); }
+        db_append_string (&tmp, "'");
+    }
+    db_append_string (&tmp, ptrb );
+    db_set_string ( src, db_get_string(&tmp));
+    db_free_string( &tmp );
+}
+
