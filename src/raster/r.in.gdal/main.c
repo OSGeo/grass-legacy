@@ -4,7 +4,13 @@
 #include <string.h>
 #include "gis.h"
 #include "imagery.h"
-#include "gdalbridge.h"
+
+#ifdef USE_GDAL_H
+#  include "gdal.h"
+#  include "ogr_srs_api.h"
+#else
+#  include "gdalbridge.h"
+#endif
 
 #ifndef MAX
 #  define MIN(a,b)      ((a<b) ? a : b)
@@ -116,12 +122,14 @@ int main (int argc, char *argv[])
 /* -------------------------------------------------------------------- */
 /*      Initialize GDAL Bridge, and open the file.                      */
 /* -------------------------------------------------------------------- */
+#ifndef USE_GDAL_H
     sprintf( error_msg, "%s/lib", getenv( "GISBASE" ) );                  
     if( !GDALBridgeInitialize( error_msg ) )
     {
         G_fatal_error( "Unable to initialize GDAL bridge (check libgdal installation).\n" );
         exit( 10 );
     }
+#endif
 
     GDALAllRegister();
     hDS = GDALOpen( input, GA_ReadOnly );
