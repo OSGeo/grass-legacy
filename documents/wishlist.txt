@@ -8,4 +8,4 @@ Wishlist for GRASS 5
 - etc/monitorcap: use relative paths based on $GISBASE
 - fix s.to.rast and s.to.vect to accept site lists created
   by r.to.sites
-
+- fix the bugs in know_bugs.list
