@@ -421,10 +421,21 @@ if [ ! "$LOCATION" ] ; then
 	# Check for tcltk interface
 	tcltk)
 	    eval `"$GRASS_WISH" -file "$TCLTKGRASSBASE/gis_set.tcl"`
-	    
-	    case $? in
+	    thetest=$?
+        
+		###########################################################################
+		# at the moment when the EPSG facility is used, the eval returns "1"
+		# whereas everything should be ok, therefore til that problem is not solved
+		# the return is forced to be ok ("0")
+	    if [ "$EPSGSCRIPT" = "yes" ] ; then
+		thetest=0
+	    fi
+		############################################################################
+            
+	    case thetest in
      	    	1)
-		    # The gis_set.tcl script printed an error message so wait
+
+         	    # The gis_set.tcl script printed an error message so wait
 		    # for user to read it
 		    echo "Error in Tcl/Tk startup. If necessary, please"
 		    echo "report this error to the Grass developers."

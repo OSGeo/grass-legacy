@@ -38,7 +38,9 @@ default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/grass_intro \
 	$(ETC)/license \
 	$(ETC)/msgs \
-	$(ETC)/gis_set.tcl
+	$(ETC)/gis_set.tcl \
+	$(ETC)/epsg_option.tcl \
+	$(ETC)/make_location_epsg_g57.sh
 	mkdir -p $(GISBASE)/docs/html
 	cp description.html $(GISBASE)/docs/html/variables.html
 
@@ -102,4 +104,14 @@ $(ETC)/msgs: msgs
 $(ETC)/gis_set.tcl: gis_set.tcl
 	rm -f $@
 	cp gis_set.tcl $(ETC)
+	chmod +x $@
+	
+$(ETC)/epsg_option.tcl: epsg_option.tcl
+	rm -f $@
+	cp epsg_option.tcl $(ETC)
+	chmod +x $@
+	
+$(ETC)/make_location_epsg_g57.sh: make_location_epsg_g57.sh
+	rm -f $@
+	cp make_location_epsg_g57.sh $(ETC)
 	chmod +x $@

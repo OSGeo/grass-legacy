@@ -19,6 +19,13 @@
 #############################################################################
 
 source $env(GISBASE)/etc/gtcltk/gmsg.tcl
+#############################################################################
+#
+#   part regarding to the creation of a new location using proj and 
+#   the EPSG codes    (routines epsgLocCom and infoEpsg)
+#
+#############################################################################
+source $env(GISBASE)/etc/epsg_option.tcl
 
 proc searchGISRC { filename } {
  
@@ -246,6 +253,8 @@ proc CheckLocation {} \
     cd $currDir
 }
 
+
+
 proc gisSetWindow {} {
 
     # Window manager configurations
@@ -421,13 +430,13 @@ proc gisSetWindow {} {
             .frame0.frameNMS.right.button configure -state disabled
 	    if { $mymapset != "" } {
             	CheckLocation
-		cd $database
-        	cd $location
+                cd $database
+                cd $location
                 file mkdir $mymapset
                 file copy $mymapset/../PERMANENT/WIND $mymapset
                 file attributes $mymapset/WIND -permissions u+rw,go+r
-		.frame0.frameMS.listbox insert end $mymapset
-		#TODO: select new MAPSET
+                .frame0.frameMS.listbox insert end $mymapset
+                #TODO: select new MAPSET
             }
 	}
 
@@ -444,21 +453,27 @@ proc gisSetWindow {} {
     # ----------------------------------
     frame .frame0.frameBUTTONS \
     	-borderwidth {2}
-
+    
+    
     button .frame0.frameBUTTONS.ok \
      	-text [G_msg "Use Selection"] \
     	-relief raised \
      	-padx 10 \
      	-command { 
-            if { $mapset != "" } {
+            if {[file exists "$database/$location/PERMANENT/WIND"] == 0} {
+                DialogGen .wrnDlg "WARNING: not a mapset" warning "Warning: This is not \
+                a valid mapset" \
+                0 OK;
+            }
+            if { $mapset != "" && [file exists "$database/$location/PERMANENT/WIND"] != 0} {
             	CheckLocation
                 puts stdout "GISDBASE='$database';"
                 puts stdout "LOCATION_NAME='$location';"
                 puts stdout "MAPSET='$mapset';"
                 if {[string compare $location "##ERROR##"] != 0} {
-		    putGRASSRC $gisrc_name
-		}
-		destroy .
+                    putGRASSRC $gisrc_name
+                }
+                destroy .
             } 
         }
 
@@ -470,14 +485,14 @@ proc gisSetWindow {} {
             puts stdout "OLD_DB='$oldDb';"
             puts stdout "OLD_LOC='$oldLoc';"
             puts stdout "OLD_MAP='$oldMap';"
-	    puts stdout "GISDBASE='$database';"
+	        puts stdout "GISDBASE='$database';"
     	    puts stdout "LOCATION_NAME='##NONE##';"
             puts stdout "MAPSET='';"
             set location ""
-	    set mapset ""
-	    putGRASSRC $gisrc_name
-	    destroy . 
-      	}
+            set mapset ""
+            putGRASSRC $gisrc_name
+            destroy . 
+            }
 
     button .frame0.frameBUTTONS.cancel \
     	-text [G_msg "Cancel"] \
@@ -488,9 +503,17 @@ proc gisSetWindow {} {
             destroy . 
         }
 
+    #############################################################################
+    button .frame0.frameBUTTONS.newLocEpsg \
+    	-text [G_msg "Create Location From EPSG"] \
+    	-relief raised \
+    	-padx 10 \
+    	-command {epsgLocCom}
+
     pack append .frame0.frameBUTTONS \
     	.frame0.frameBUTTONS.ok { left expand } \
     	.frame0.frameBUTTONS.newLoc {left expand } \
+    	.frame0.frameBUTTONS.newLocEpsg {left expand } \
     	.frame0.frameBUTTONS.cancel { right expand }
 
 
@@ -504,7 +527,7 @@ proc gisSetWindow {} {
     	.frame0.frameDB { top expand fill } \
     	.frame0.frameBUTTONS { bottom expand fill } \
     	.frame0.frameLOC { left expand  } \
-   	.frame0.frameMS { left expand  } \
+    	.frame0.frameMS { left expand  } \
      	.frame0.frameNMS { right expand fill }
 
     .frame0.frameNMS.right.button configure -state disabled
@@ -783,3 +806,10 @@ if { [info exists env(GISRC)] } {
 if { [searchGISRC $gisrc_name] } {
    gisSetWindow
 }
+
+
+
+
+
+
+
