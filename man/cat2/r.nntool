@@ -1,0 +1,66 @@
+
+
+
+r.nntool <alpha>     GRASS Reference Manual	 <alpha> r.nntool
+
+
+
+NAME
+     r.nntool -	Neural network image classifier.  Due to the
+     complex nature of this program, users are referred	to the
+     hard-copy manual pages for	directions.  (GRASS Raster
+     Program)
+
+
+NOTICE
+     This program is part of the alpha section of the GRASS
+     distribution.  Unlike the code in the main	section	of GRASS,
+     the alpha code has	not yet	been fully tested for one release
+     cycle.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.2		Baylor University			1
+
+
+
