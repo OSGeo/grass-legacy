@@ -1,21 +1,18 @@
-/***************************************************************************
+/*
  * $Id$
  *
- * MODULE: 	v.out.atlas
- * AUTHOR(S):	R. L. Glenn ?, unknown GRASS author
- * PURPOSE: 	Export GRASS vector file to ATLAS GIS vector file ?
- *             
- * COPYRIGHT:  	(C) 2000 by the GRASS Development Team
- *
- *   	    	This program is free software under the GPL (>=v2)
- *   	    	Read the file COPYING that comes with GRASS for details.
  ****************************************************************************
- * $Log$
- * Revision 1.5  2000-11-06 19:43:39  andreas
- * added header
  *
- */
-
+ * MODULE:       v.out.atlas 
+ * AUTHOR(S):    R. L. Glenn ?, unknown GRASS author
+ * PURPOSE:      Export GRASS vector file to ATLAS GIS vector file ?    
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
 
 #define MAIN
 #include "gis.h"
@@ -45,8 +42,13 @@ FILE	*dig_fp,
 struct Option *opt1;
 struct Option *opt2;
 struct Option *opt3;
+struct GModule *module;
 
 G_gisinit("Export ATLAS");
+
+module = G_define_module();
+module->description =
+  "Export GRASS vector file to ATLAS GIS vector file";
 
 opt1 = G_define_option();
 opt1->key = "dig_name";
