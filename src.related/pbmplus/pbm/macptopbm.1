@@ -1,0 +1,43 @@
+.TH macptopbm 1 "29 March 1989"
+.SH NAME
+macptopbm - convert a MacPaint file into a portable bitmap
+.SH SYNOPSIS
+.B macptopbm
+.RB [ -extraskip
+.IR N ]
+.RI [ macpfile ]
+.SH DESCRIPTION
+Reads a MacPaint file as input.
+Produces a portable bitmap as output.
+.SH OPTIONS
+.TP
+.B -extraskip
+This flag is to get around a problem with some methods
+of transferring files from the Mac world to the Unix world.
+Most of these methods leave the Mac files alone, but a few of
+them add the "finderinfo" data onto the front of the Unix file.
+This means an extra 128 bytes to skip over when reading the file.
+The symptom to watch for is that the resulting PBM file looks shifted
+to one side.
+If you get this, try
+.B -extraskip
+128, and if that still doesn't look right try another value.
+.PP
+All flags can be abbreviated to their shortest unique prefix.
+.SH "SEE ALSO"
+picttoppm(1), pbmtomacp(1), pbm(5)
+.SH AUTHOR
+Copyright (C) 1988 by Jef Poskanzer.
+.\" Permission to use, copy, modify, and distribute this software and its
+.\" documentation for any purpose and without fee is hereby granted, provided
+.\" that the above copyright notice appear in all copies and that both that
+.\" copyright notice and this permission notice appear in supporting
+.\" documentation.  This software is provided "as is" without express or
+.\" implied warranty.
+The MacPaint-reading code is copyright (c) 1987 by Patrick J. Naughton
+(naughton@wind.sun.com).
+.\" Permission to use, copy, modify, and distribute this software and its
+.\" documentation for any purpose and without fee is hereby granted,
+.\" provided that the above copyright notice appear in all copies and that
+.\" both that copyright notice and this permission notice appear in
+.\" supporting documentation. 
