@@ -1,0 +1,9 @@
+# %W% %G%
+OBJ = infer.o compile.o run_maps.o
+
+$(BIN)/Ginfer: $(OBJ) $(GISLIB)
+	$(CC) -o $(BIN)/Ginfer $(LDFLAGS) $(OBJ) $(GISLIB)
+
+
+$(OBJ): infer.h
+$(GISLIB): #
