@@ -201,7 +201,7 @@ int vbase2segd( segmentList *seg0, BTREE *btr0 ) {
 		  }
 		}
 
-	      if( pcurr->linknum == 1 && maptype == 2 ) seg0->segments[segID].duff = 1;
+	      if( pcurr->linknum == 1 && maptype == 2 ) seg0->segments[segID-1].duff = 1;
 
 	      /* Deal with the anomalous case of a single link
 		 between two nodes 
