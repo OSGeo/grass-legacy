@@ -346,9 +346,19 @@ src.contrib/CERL/raster/r.distance
 src.contrib/CERL/raster/r.hydro.CASC2D
 #
 # requires MOTIF:
-#src.contrib/GMSL/xganim
+# src.contrib/GMSL/xganim
 # src.contrib/GMSL/ogl3d_linux
-# src.contrib/GMSL/NVIZ2.2 # compile manually there: configure; gmake5
+#
+# compile manually with: configure; gmake5
+# src.contrib/GMSL/NVIZ2.2
+# only on SGI:
+# src.contrib/GMSL/SG3d
+# grid3d support (raster voxel):
+src.contrib/GMSL/g3d
+#
+#######################################
+# PostgreSQL support: (working!)
+#src.garden/grass.postgresql
 #######################################
 # from here onwards it becomes experimental!!
 #
@@ -453,11 +463,8 @@ src.contrib/SCS/vector/v.report
 src.contrib/SCS/vector/v.rmedge
 src.contrib/SDTS
 src.contrib/UCB/gdbase
-# src.contrib/GMSL/SG3d # only on SGI
 #src.contrib/eurogis/v.out.DI # very special, outdated?
 #src.contrib/eurogis/v.in.EE
 #src.contrib/eurogis/r.to.SVF
 #src.garden/grass.hdf/hdf3
 src.garden/answers/src.answers/raster/r.fill.dir
-# PostgreSQL support: (working!)
-#src.garden/grass.postgresql
