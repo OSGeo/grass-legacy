@@ -325,7 +325,7 @@ G_define_standard_option (int opt)
 	    Opt->type         = TYPE_STRING;
 	    Opt->required     = YES;
 	    Opt->gisprompt    = "old,cell,raster";
-	    Opt->description  = _("Name of input vector");
+	    Opt->description  = _("Name of input raster");
 	    break;
 	    
 	case G_OPT_V_INPUT:
