@@ -273,19 +273,15 @@ main(int argc, char **argv)
 			if(face->glyph->bitmap.buffer[j])
 				face->glyph->bitmap.buffer[j] = color;
 
-		x += face->glyph->bitmap_left;
-		y -= face->glyph->bitmap_top;
-
-		for(j=0; j<face->glyph->bitmap.rows; j++){
-			R_move_abs(x, y+j);
+		for(j=0; j<face->glyph->bitmap.rows; j++)
+		{
+			R_move_abs(x + face->glyph->bitmap_left,
+				   y - face->glyph->bitmap_top + j);
 			R_raster_char(face->glyph->bitmap.width,
 					1, 0,
 					face->glyph->bitmap.buffer
 					+ face->glyph->bitmap.width * j);
 		}
-
-		x -= face->glyph->bitmap_left;
-		y += face->glyph->bitmap_top;
 
 		x += face->glyph->advance.x >> 6;
 		y += face->glyph->advance.y >> 6;
