@@ -160,6 +160,8 @@ int main (int argc, char *argv[])
                     "greater than 2", index);
         }
         index--;
+        if (field == SITE_COL_DIM)
+            index -= 2;
     }
     else    /* Use category value */
     {
@@ -206,7 +208,7 @@ int main (int argc, char *argv[])
         case SITE_COL_DIM:
             if ((index + 1) > s->dim_alloc)
                 G_fatal_error ("Dimension attribute with index %d does not exist",
-                        index + 1);
+                        index + 3);
             break;
         case SITE_COL_DBL:
             if ((index + 1) > s->dbl_alloc)
