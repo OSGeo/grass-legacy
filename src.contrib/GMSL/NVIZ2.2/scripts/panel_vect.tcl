@@ -18,6 +18,20 @@ proc mkvectPanel { BASE } {
     global Nv_
     
     catch {destroy $BASE}
+
+    set curr [Nget_current vect]
+    
+    if {0 != $curr}  {
+	set width [Nvect$curr get_att width]
+	set flat_state [Nvect$curr get_att flat]
+	set height [expr [lindex [Nvect$curr get_trans] 2] * 10]
+	set maplist [Nget_map_list surf]
+    } else {
+	set width 1
+        set flat_state 0
+	set height 0
+	set maplist {}
+    }
     
     #  Initialize panel info
     if [catch {set Nv_($BASE)}] {
@@ -28,9 +42,12 @@ proc mkvectPanel { BASE } {
     frame $BASE -relief groove -borderwidth 2
     Nv_mkPanelname $BASE "Vector Panel"
     
+    #top frame
     set tmp [frame $BASE.top]
     label $tmp.current -text "Current:" -anchor nw
-    mkMapList $tmp.list vect 
+
+    mkMapList $tmp.list vect
+
     button $tmp.new -text New -anchor ne -command "add_map vect" 
     button $tmp.delete -text Delete -anchor ne -command "delete_map vect"
 
@@ -40,40 +57,57 @@ proc mkvectPanel { BASE } {
     
     pack $tmp -side top -fill x -expand 1
     
-    frame $BASE.f 
-    button $BASE.f.close -text Close -command "Nv_closePanel $BASE" -anchor s
-    pack $BASE.f.close -side right
-    pack $BASE.f -side bottom -fill x -expand 1
-    
-    set curr [Nget_current vect]
-    
-    if {0 != $curr}  {
-	set width [Nvect$curr get_att width]
-	set maplist [Nget_map_list surf]
-    } else {
-	set width 1 
-	set maplist {}
-    }
-
-    set tmp [frame $BASE.left]
-    Nv_mkArrows $tmp.linewidth "Line Width" [concat set_width vect] $width
-#	checkbutton $tmp.load -relief flat -text "Load to memory"
-    button $tmp.color -text Color \
-	-command "change_color vect $tmp.color"
+    #bottom frame
+    set tmp [frame $BASE.f]
+    button $tmp.close -text Close -command "Nv_closePanel $BASE" -anchor s
+    pack $tmp.close -side right
     button $tmp.draw_current -text {Draw Current} \
 	-command {Nvect_draw_one [Nget_current vect]}
-    bind $tmp.color <Expose> \
-	"$tmp.color configure -bg \[get_curr_sv_color vect\]"
+    pack $tmp.draw_current -side left
+    pack $tmp -side bottom -fill x -expand 1
 
-    pack $tmp.linewidth $tmp.color $tmp.draw_current -anchor w \
-	-padx 2 -pady 2 -side top -expand 1
-    pack $tmp -side left  -fill y -expand 1
+    #mid frame
+    set tmp [frame $BASE.mid]
+    set tmp1 [frame $tmp.left]
+    set tmp2 [frame $tmp.mid]
+    set tmp3 [frame $tmp.right]
+    set tmp1a [frame $tmp1.b]
 
-    set tmp [frame $BASE.right]
-    label $tmp.label -text "Display on surface(s):"
-    Nv_mkSurfacelist $tmp.list $maplist Nvect$curr vect
-    pack $tmp.label $tmp.list -expand 1
-    pack $tmp -side right -fill y -expand 1
+    Nv_mkArrows $tmp1.linewidth "Line Width" [concat set_width vect] $width
+#	checkbutton $tmp.load -relief flat -text "Load to memory"
+    button $tmp1a.color -text Color \
+	-command "change_color vect $tmp1a.color"
+    bind $tmp1a.color <Expose> \
+	"$tmp1a.color configure -bg \[get_curr_sv_color vect\]"
+    radiobutton $tmp2.label1 -text "Display on surface(s):" \
+	-variable flat_state -value 0 \
+        -command "check_list $tmp2.list"
+    radiobutton $tmp2.label2 -text "Display Flat" \
+	-variable flat_state -value 1 -command "check_list $tmp2.list"
+
+    Nv_mkScale $tmp3.scale v "Vect. Z" 1000 0 $height set_ht 1
+
+    pack $tmp1a.color -side left
+    pack $tmp1a -side bottom -fill x -expand 1
+    pack $tmp1.linewidth -anchor w \
+	-padx 2 -pady 2 -side left -expand 1
+    pack $tmp2.label2 $tmp2.label1 -expand 1
+    pack $tmp3.scale -expand 1
+
+# Let radiobutton state handle building list
+# of available surfaces
+    if {$flat_state == 0} {
+	$tmp2.label1 select
+	check_list $tmp2.list
+    } else {
+	$tmp2.label2 select
+	check_list $tmp2.list
+    }
+
+    pack $tmp1 -side left -fill both -expand 1
+    pack $tmp2 -side left -fill both -expand 1
+    pack $tmp3 -side right -fill both -expand 1
+    pack $tmp -side top  -fill both -expand 1
 
     return $panel
 }
@@ -101,7 +135,6 @@ proc Nviz_vect_save {file_hook} {
 
     # Get the list of surfaces for checking draping
     set surf_list [Nget_surf_list]
-# puts "Surf list is $surf_list"
 
     # Write out the total number of vector files
     puts $file_hook "[llength $vect_list]"
@@ -287,4 +320,42 @@ proc set_width {type E} {
     if {0 != $curr} {
 	$head$curr set_att width $i
     }
+}
+
+# Procedure to set vector elevation eith above surface
+# or level height
+proc set_ht {h} {
+    global Nv_ vect_height
+
+    set vect_height $h
+    set curr [Nget_current vect]
+    if {0 != $curr}  {
+    Nvect$curr set_trans 0 0 $vect_height
+    }
+      
+}
+
+#Procedure to update vect atts from radiobutton
+proc check_list {address} {
+    global Nv_ flat_state curr vect_height
+
+    set state [winfo exists $address]
+    set curr [Nget_current vect]
+    if {0 != $curr}  {
+	set maplist [Nget_map_list surf]
+
+        if {$state == 0 && $flat_state == 0 } {
+        #display on surface
+	catch {destroy $address}
+        Nvect$curr set_att flat 0
+	Nv_mkSurfacelist $address $maplist Nvect$curr vect
+	pack $address
+	} 
+        if { $state == 1 && $flat_state == 1} {
+        #display on flat
+	catch {destroy $address}
+	Nvect$curr set_att flat 1
+	}
+     }
+	
 }

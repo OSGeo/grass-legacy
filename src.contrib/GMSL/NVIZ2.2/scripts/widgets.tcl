@@ -450,10 +450,12 @@ proc Nv_mkSurfacelist { P L C type} {
 	    -command "change_surf_list $C $i" \
 	    -variable "SL$P.$j"
 
-#Auto-enable all surfaces for drawing
-            $P.$j select
-            auto_enable_data $i $type
-	
+            if {0 != [$C surf_is_selected Nsurf$i]} {
+	    $P.$j select
+            } else {
+            $P.$j deselect
+	    }
+
 	pack $P.$j -fill x -expand 1 -side top
 	incr j
     }
@@ -463,8 +465,6 @@ proc Nv_mkSurfacelist { P L C type} {
 
 proc change_surf_list {C id} {
 
-#puts "change_surf_list $C $id" 
-    
     if {0 != [$C surf_is_selected Nsurf$id]} {
 	$C unselect_surf Nsurf$id
     } else {
@@ -541,7 +541,7 @@ proc mkMapList { P type {cmd null}} {
     foreach i $list {
 	set map_name [Nget_map_name $i $type]
 	$P.m add command -label "$map_name" \
-	    -command "inform Current $type: $i; set_new_curr $type $i; $cmd $i"
+            -command "inform Current $type: $i; set_new_curr $type $i; $cmd $i"
     }
 
     return $P

@@ -59,6 +59,7 @@ type-ins & sliders easier, too) */
 #define SV_ATT_USEATT   -4
 #define SV_ATT_DISPLAY  -5
 #define SV_ATT_MAP      -6
+#define SV_ATT_FLAT     -7
 
 
 /*------------------------------------------------------------------------ 
