@@ -100,16 +100,18 @@ if [ "$shortdesc" ]
 then
   if [ ! "$tentries" ]
   then
-    entries=`(cd $GISBASE/man/man1; ls *.1 | sed 's!\.1$||g')`
+    entries=`(cd $GISBASE/man/man1; ls *.1 | sed 's|\.1$||g')`
   fi
 
   for i in $entries
   do
     awk 'BEGIN{i=0}
-    	{if(i&&$0==".br") exit;
-	 if(i) printf "%s ",$0;
+        /\.PP|\.br/{if(i){for(j=1;j<NF;j++) printf "%s ",$j; printf "\n"; exit;}}
+    	{if(!NF) exit;
+	 if(i==1) printf "%s ",$0;
 	 if ($0==".SH NAME") i=1;
-    }' $GISBASE/man/man1/$i.1
+    }' $GISBASE/man/man1/$i.1 | sed 's|\\f.||g; s| *- *| - |'
+    echo
   done
 else
   if [ "$GRASS_TEXT_BROWSER" ]
@@ -123,6 +125,9 @@ else
   fi
 fi
 
-echo
-echo "$msg"
+if [ "$msg" ]
+then
+  echo
+  echo "$msg"
+fi
 
