@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<HTML>
+<HEAD> 
+<BASE HREF="http://www.agcrc.csiro.au/publications/9596/csiro/r49.html">
+<TITLE>r.proj:  A Program to Cartographically Reproject Raster Maps ...</TITLE>
+<META name="AGCRC.posted" content="10/10/97"> 
+<META name="AGCRC.title" content="r.proj:  A Program to Cartographically Reproject Raster Maps For Use With the GRASS GIS">
+<META name="AGCRC.author" content="<B>Cox, S. J. D.</B>">
+<META name="AGCRC.version" content="">
+<META name="AGCRC.projno" content="3018C0">
+<META name="AGCRC.posted_by" content="Julie Bellgard">
+<META name="AGCRC.contact" content="agcrc-publications@ned.dem.csiro.au">
+<META name="AGCRC.keyword" content="Australia, Geodynamics,">
+<META name="AGCRC.jref" content="CSIRO Exploration & Mining Report 238F, January 1996.">
+<META name="AGCRC.doc_type" content="Other type of publication">
+<META name="AGCRC.doc_status" content="">
+</HEAD>
+<BODY BACKGROUND="/logos/agcrc.background.gif">
+
+<P><CENTER>CSIRO Exploration & Mining Report 238F, January 1996.</CENTER></P>
+<HR>
+<! This is the title logo and wording>
+<TABLE BORDER=0 CELLPADDING=10 CELLSPACING=0>
+<TR VALIGN=MIDDLE>
+<TD><IMG SRC="/logos/agcrc.logo.100.gif"></TD><TD><H2>r.proj:  A Program to Cartographically Reproject Raster Maps For Use With the GRASS GIS</H2><P>
+<H3>S.J.D. Cox</H3>
+<P><I>AGCRC, CSIRO Exploration & Mining, Nedlands, WA</I></TH>
+</TR>
+</TABLE>
+<CENTER><P><SMALL><SMALL>Progressing further in this document and web constitutes acceptance of the terms of our <A HREF="http://www.ned.dem.csiro.au/AGCRC/general/copyright.html">copyright and disclaimer</A></SMALL></SMALL></P></CENTER>
+<! End of Logo and wording>
+<HR>
+<BR><B>Summary
+<P></B>This report describes the use and operation of the program r.proj, used with the GRASS GIS system.  The report contains (i) a discussion of the problem which motivated the development of the program, (ii) a description of the method used, (iii) the manual page describing the usage of the program,  (iv) a listing of the source-code.  
+<P><B>Introduction
+<P></B><I>Map projections
+<P></I>Map projections are a method of representing information from a curved surface (usually a spheroid) in two dimensions, typically to allow indexing through cartesian coordinates.  There are a wide variety of projections, with common ones divided into a number of classes, including cylindrical and pseudo-cylindrical, conic and pseudo-conic, and azimuthal methods, each of which may be conformal, equal-area, or neither.  
+<P>The particular projection chosen depends on the purpose of the project, and the size, shape and location of the area of interest.  For example, normal cylindrical projections are good for maps which are of greater extent east-west than north-south and in equatorial regions, while conic projections are better in mid-latitudes;  transverse cylindrical projections are used for maps which are of greater extent north-south than east-west;  azimuthal projections are used for polar regions.  Oblique versions of any of these may also be used.  Conformal projections preserve angular relationships, and better preserve arc-length, while equal-area projections are more appropriate for statistical studies and work in which the amount of material is important.  
+<P>Projections are defined by precise mathematical relations, so the method of projecting coordinates from a geographic reference frame (latitude-longitude) into a projected cartesian reference frame (eg metres) is governed by these equations.  Inverse projections can also be achieved.  The public-domain Unix software package <I>proj</I> [1] has been designed to perform these transformations, and the user&#39;s manual contains a detailed description of over 100 useful projections.  This also includes a programmers library of the projection methods to support other software development.  
+<P>Thus, converting a &#34;vector&#34; map - in which objects are located with arbitrary spatial precision - from one projection into another is usually accomplished by a simple two-step process:  first the location of all the points in the map are converted from the source through an inverse projection into latitude-longitude, and then through a forward projection into the target.  (Of course the procedure will be one-step if either the source or target is in geographic coordinates.)  Converting a raster map, or image, between different projections, however, involves additional considerations.  A raster may be considered to represent a sampling of a process at a regular, ordered set of locations.  The set of locations that lie at the intersections of a cartesian grid in one projection will not, in general, coincide with the sample points in another projection.  Thus, the conversion of raster maps involves an interpolation step in which the values of points at intermediate locations relative to the source grid are estimated.  
+<P><I>Projecting maps within the GRASS GIS
+<P></I>GIS data capture, import and transfer often requires a projection step, since the source or client will frequently be in a different projection to the working projection.  
+<P>In some cases it is convenient to do the conversion outside the package, prior to import or after export, using software such as <I>proj</I> [1].  This is certainly the easiest method for <B>site-lists,</B> since there is no topology to be preserved, and <I>proj</I> can be used to process simple lists with a one-line command.  
+<P>The format of files describing maps containing <B>lines</B><I> </I>and<I> </I><B>arcs</B> is generally more complex, as even in ascii parts of the files will describe topology, and not just locations.  In the GRASS GIS package a program <I>v.proj</I> is provided to convert &#34;vector&#34; maps, transferring topology and attributes as well as node locations.  This program uses the projection definition and parameters which are stored in the PROJ_INFO and PROJ_UNITS files in the PERMANENT mapset directory for every GRASS location.  
+<P>However, although it is oriented mainly towards operations on <B>raster maps</B>, the standard GRASS distribution does not include an equivalent program to convert raster maps.  That is the purpose of the program described here.  
+<P><B>Design of r.proj
+<P></B>As discussed briefly above, the fundamental step in re-projecting a raster is resampling the source grid at locations corresponding to the intersections of a grid in the target projection.  The basic procedure for accomplishing this, therefore, is as follows:
+<P>1.  Generate a list of the grid-cell locations in the target;  
+<P>2.  Transform the coordinates of these into the source projection;  
+<P>3.  Resample the source grid, using an appropriate method, at these locations;
+<P>4.  Copy these values into the correct grid-cells in the target.  
+<P>Existing programs in either the GRASS distribution or contributed code, from other public-domain sources, or using standard Unix tools, are designed to accomplish all of these steps.  In particular, <I>r.stats</I> [2] will generate a list of grid-cell locations (using the <I>-1g</I> flags), <I>proj</I> [1] will perform conversions into and out-of almost any projection, and <I>s.sample</I> [3] is designed to resample a grid at a list of arbitrary locations.  For this reason, <I>r.proj</I> has been written as a Bourne-shell-script which essentially links these together, so that they are invoked automatically using a one-line command.  
+<P>An alternative procedure might have converted the source grid cell values into a site-list in the target, and then resampled this on a grid in the target.  Consider, however, that s.sample interpolates using a regular grid as its source, in which the indexing is implicit, whereas in the various tools for converting an irregularly located site-list into a grid (<I>s.surf.tps</I>, <I>s.surf.idw</I>, etc) the source data has to be explicitly sorted and indexed.  As the two procedures will produce equivalent results, the intrinsic performance advantage of the chosen method is clear.  
+<P>The usage is exemplified in the attached manual page.  The source code is also attached, which may be examined for a detailed understanding of the method.  
+<P>Note that, following normal GRASS conventions, the coverage and resolution of the resulting grid is set by the current region settings, which may be adjusted using <I>g.region</I>.  The target raster will be relatively unbiased for all cases if its grid has a similar resolution to the source, so that the resampling/interpolation step is only a local operation.  If the resolution is changed significantly, then the behaviour of the generalisation or refinement will depend on the model of the process being represented.  This will be very different for categorical versus numerical data.  Note that three methods for the local interpolation step are provided, corresponding to the three methods provided by s.sample.  
+<P><B>Future enhancements
+<P></B>Since it is a script, the performance of <I>r.proj</I> depends on the performance of the components.  The slowest step is in <I>s.sample</I>.  While in this procedure there is very intensive disk access.  Examination of <I>s.sample</I> (and advice from the author, Darrell McCauley) shows that there are three calls to <I>get_row</I> for each sample point in the case of bilinear interpolation, five for cubic, in order to retrieve the required section of the source grid.  This is an expensive disk seek and (often) decompress operation which is clearly having a substantial effect, and appears to be negating the advantages expected from implicit indexing, discussed above.  A substantial improvement might be expected if (a) the target points were sorted by northing before being passed to <I>s.sample</I>, and (b) <I>s.sample</I> held the rows in buffers, to be re-used as long as the points in the list fell within the same grid-row.  The output would subsequently have to be &#34;un-sorted&#34; of course, in order to regain the original cell-order for the target grid.  
+
+<P><I>Acknowledgments:</I>  This report is published with the permission of the Director of the Australian Geodynamics Cooperative Research Centre.  
+<P><B>References
+<P></B>[1]	Evenden, G.I.  (1990) Cartographic projection procedures for the UNIX environment - a user&#39;s manual.  USGS Open-File Report 90-284  (Also see Interim Report and 2nd Interim Report on Release 4, Evenden 1994).  
+<P>[2]	Shapiro, M.  r.stats - Generates area statistics for raster map layers.  GRASS 4.1 documentation (main section).
+<P>[3]	McCauley, J.D.,  s.sample - Sample a raster file at site locations.  GRASS 4.1 documentation (contrib section).
+<BR>
+<HR>
+<P><NOBR><A HREF="http://www.agcrc.csiro.au/publications/9596/">
+<IMG SRC="/icons/back1.gif" BORDER=1>[95/96 Publication List]</A></NOBR>
+<NOBR><A HREF="/AGCRC/"><IMG SRC="/logos/agcrc.button.gif" BORDER=0 >[AGCRC Home]</A></NOBR>
+<NOBR><A HREF="mailto:agcrc-publications@ned.dem.csiro.au"><IMG SRC="/icons/mailbox.gif" BORDER=0 >[Feedback]</A></NOBR>
+<NOBR><A HREF="/AGCRC/general/copyright.html"><IMG SRC="/icons/copyright.gif" BORDER=0>[Copyright and Disclaimer]</A></NOBR>
+</P>
+<BR>
+<P>Copyright &#169;  1997 AGCRC &amp; CSIRO</P>
+<ADDRESS>
+<P><FONT SIZE=2><A HREF="mailto:agcrc-publications@ned.dem.csiro.au">Publications Contact</A>
+<BR>10/10/97 13:35</STRONG></P>
+</ADDRESS>
+</BODY>
+</HTML>
+ 
+
+
+
