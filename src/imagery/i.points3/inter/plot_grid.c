@@ -93,12 +93,12 @@ int  which)     /* 0 - both target&zoom, 1 - zoom only */
 }
 
 /***********************************************************
-/** _plotgrid_warp (color_name, which, E, N, order)
-/** char *color_name;
-/** int  which;        /* 0 - both target&zoom, 1 - zoom only */
-/** double E[];
-/** double N[];
-/** int  order;
+** _plotgrid_warp (color_name, which, E, N, order)
+** char *color_name;
+** int  which;         0 - both target&zoom, 1 - zoom only 
+** double E[];
+** double N[];
+** int  order;
 ***********************************************************/
 
 int _plotgrid_warp (

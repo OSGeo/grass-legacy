@@ -45,10 +45,10 @@ static int where_am_i (View *view,int x, int y, Window *w1,
     n1 = row_to_northing (&view->cell.head, row, 0.5);
 
 /**    Curses_clear_window (w1);
-/**    sprintf (buf, "East:  %10.2lf", e1);
-/**    Curses_write_window (w1, 3, 3, buf);
-/**    sprintf (buf, "North: %10.2lf", n1);
-/**    Curses_write_window (w1, 4, 3, buf);
+**    sprintf (buf, "East:  %10.2lf", e1);
+**    Curses_write_window (w1, 3, 3, buf);
+**    sprintf (buf, "North: %10.2lf", n1);
+**    Curses_write_window (w1, 4, 3, buf);
 **/
 
 

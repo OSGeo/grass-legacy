@@ -89,13 +89,13 @@ int ask_transform()
          }
        }
 
-/**      /* is something went wrong dont run transformation */
+      /* is something went wrong dont run transformation */
 /**       if (status != 1) {
-/**           sprintf (msg, "Problem selecting  %s transformation, select another\n",
-/**		trans_text[group.trans_type]);
-/**           G_warning (msg);
-/**	   goto skip_trans;
-/**       }
+**           sprintf (msg, "Problem selecting  %s transformation, select another\n",
+**		trans_text[group.trans_type]);
+**           G_warning (msg);
+**	   goto skip_trans;
+**       }
 **/
 
 
