@@ -1,6 +1,10 @@
 /*-
  * $Log$
- * Revision 1.5  2000-10-06 04:13:53  eric
+ * Revision 1.6  2000-10-07 21:23:24  eric
+ * Added Cell_head *region parameter. Now respects region! Fixed index bug for
+ * dimensions.
+ *
+ * Revision 1.5  2000/10/06 04:13:53  eric
  * Added the G_readsites_xyz() function and related G_alloc_site_xyz() and
  * G_free_site_xyz() convenience functions.  Will send Markus a short LaTeX
  * documentation and example...
@@ -135,11 +139,11 @@ typedef struct {
 
 
 /* Allocate 'num' SITE_XYZ structs. Returns NULL on failure */
-SITE_XYZ * G_alloc_site_xyz(size_t num);
+SITE_XYZ * G_alloc_site_xyz(size_t);
 
 
 /* Free the array of SITE_XYZ struct */
-void G_free_site_xyz(SITE_XYZ *theSites);
+void G_free_site_xyz(SITE_XYZ *);
 
 
 /* G_readsites_xyz: Reads a sites file converting to a site struct of xyz
@@ -153,10 +157,11 @@ void G_free_site_xyz(SITE_XYZ *theSites);
  * the array, that there aren't any more records.
  */
 int G_readsites_xyz( 
-	FILE * fdsite,   /* The FILE stream to the sites file               */
-	int    type,     /* Attribute type: SITE_COL_DIM, etc...            */
-	int    index,    /* The field index (1 based) for the attribute     */
-	int    size,     /* Size of the array                               */
+	FILE * ,   /* The FILE stream to the sites file               */
+	int    ,     /* Attribute type: SITE_COL_DIM, etc...            */
+	int    ,    /* The field index (1 based) for the attribute     */
+	int    ,     /* Size of the array                               */
+	struct Cell_head *,    /* Respect region if not NULL */
 	SITE_XYZ *xyz    /* The site array of size 'size'                   */
 	);
 
