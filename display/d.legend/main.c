@@ -309,7 +309,7 @@ int main( int argc, char **argv )
 	if((x0 < l) || (x1 > r) || (y0 < t) || (y1 > b))	/* for mouse or at= 0- or 100+; needs to be after order check */
 		fprintf(stderr, "Warning: legend box lies outside of frame. Text may not display properly.\n");
 
-	horiz = ( (x1-x0 > y1-y0) && do_smooth );   /* remove the &&do_smooth when we have horiz cat legends */
+	horiz = (x1-x0 > y1-y0);
 	if(horiz)
 		fprintf(stderr, "Drawing horizontal legend as box width exceeds height.\n");
 	
