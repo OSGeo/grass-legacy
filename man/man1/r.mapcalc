@@ -273,6 +273,7 @@ _
 abs(x)	return absolute value of x	*
 atan(x)	inverse tangent of x (result is in degrees)	F
 cos(x)	cosine of x (x is in degrees)	F
+eval([x,y,...,]z)	evaluate values of listed expr, pass results to z
 exp(x)	exponential function of x	F
 exp(x,y)	x to the power y	F
 float(x)	convert x to floating point	F
@@ -287,6 +288,7 @@ int(x)	convert x to integer [ truncates ]	I
 log(x)	natural log of x	F
 log(x,b)	log of x base b	F
 max(x,y[,z...])	largest value of those listed	*
+median(x,y[,z...])	median value of those listed	*
 min(x,y[,z...])	smallest value of those listed	*
 round(x)	round x to nearest integer	I
 sin(x)	sine of x (x is in degrees)	F
@@ -406,6 +408,31 @@ When the user enters input to \fIr.mapcalc\fR non-interactively on
 the command line, the program will not warn the user not to overwrite
 existing map layers.  Users should therefore take care to assign program
 outputs raster file names that do not yet exist in their current mapsets.
+.SH BUGS
+Continuation lines must end with a \ and have NO trailing
+white space (blanks or tabs).  If the user does leave white space
+at the end of continuation lines,
+the error messages produced by \fIr.mapcalc\fR will be meaningless
+and the equation will not work as the user intended.
+
+Error messages produced by \fIr.mapcalc\fR are almost useless.
+In future, \fIr.mapcalc\fR should make some attempt
+to point the user to the offending section of the equation, e.g.:
+
+.ti +.5i
+x \*= a * b ++ c
+
+ERROR: somewhere in line 1: ...  b ++ c ...
+
+
+Currently, there is no comment mechanism in \fIr.mapcalc\fR.
+Perhaps adding a capability that would cause the entire line to be
+ignored when the user inserted a # at the start of a line
+as if it were not present, would do the trick.
+
+The function should require the user to type "end" or "exit" instead
+of simply a blank line.  This would make separation of multiple scripts
+separable by white space.
 .SH SEE ALSO
 "\fIr.mapcalc\fR:  An Algebra for GIS and Image Processing,"
 by Michael Shapiro and Jim Westervelt,
