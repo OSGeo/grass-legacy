@@ -1,5 +1,25 @@
 #include "gis.h"
-#define MAXFILES    30
+/* #define MAXFILES    30  Original setting */
+
+#define MAXFILES    1024
+/*  We made the above change to fix the "Too many open files" problem.  
+* The problem is that MAXFILES was used to compare with fd (file descriptor) 
+* which is NOT a counter of open files in a process.  fd is assigned by the 
+* system and it can be greater than MAXFILES even if the actual number of 
+* open files is less than MAXFILES.  Since UNIX has a system level variable 
+* OPEN_MAX (default = 64 for Solaris, 256 for some LINUX) it is safe to let 
+* the system to control the number of open files.  By assigning MAXFILES to a 
+* large number we simply make the following statement in opencell.c & closecell.c 
+* always FALSE.
+* 	    if (fd >= MAXFILES)
+*		......
+* For questions or comments please contact:
+* 			GPZ Technology, Inc.	June 1998
+*			support@gpz.com
+* Note: If you adopt the change made above, please do not remove this
+* notes.  Thanks.
+*/
+
 
 /* if short is 16 bits, then
  *       short will allow 32767 cols
