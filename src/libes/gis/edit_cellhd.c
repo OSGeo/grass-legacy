@@ -98,6 +98,30 @@ static char *def_window_screen[] = {
 "                               North-South:",
 NULL};
 
+static double format_value(int (*func)(double, char *, int), double x, char *buf, int projection)
+{
+	int k = (projection == PROJECTION_LL) ? 3600 : 100000;
+	int i = (int) (x * k + 0.5);
+	double y = (double) i / k;
+	(*func)(y, buf, projection);
+	buf[10] = '\0';
+}
+
+static void format_northing(double north, char *buf, int projection)
+{
+	format_value(G_format_northing, north, buf, projection);
+}
+
+static void format_easting(double east, char *buf, int projection)
+{
+	format_value(G_format_easting, east, buf, projection);
+}
+
+static void format_resolution(double res, char *buf, int projection)
+{
+	format_value(G_format_resolution, res, buf, projection);
+}
+
 int G_edit_cellhd (struct Cell_head *cellhd , int type)
 {
     char ll_north[20];
@@ -190,12 +214,12 @@ int G_edit_cellhd (struct Cell_head *cellhd , int type)
 	*ll_def_west = 0;
 	*ll_def_ewres = 0;
 	*ll_def_nsres = 0;
-	G_format_northing (def_wind.north, ll_def_north, def_wind.proj);
-	G_format_northing (def_wind.south, ll_def_south, def_wind.proj);
-	G_format_easting  (def_wind.east,  ll_def_east,  def_wind.proj);
-	G_format_easting  (def_wind.west,  ll_def_west, def_wind.proj);
-	G_format_resolution (def_wind.ew_res, ll_def_ewres, def_wind.proj);
-	G_format_resolution (def_wind.ns_res, ll_def_nsres, def_wind.proj);
+	format_northing (def_wind.north, ll_def_north, def_wind.proj);
+	format_northing (def_wind.south, ll_def_south, def_wind.proj);
+	format_easting  (def_wind.east,  ll_def_east,  def_wind.proj);
+	format_easting  (def_wind.west,  ll_def_west, def_wind.proj);
+	format_resolution (def_wind.ew_res, ll_def_ewres, def_wind.proj);
+	format_resolution (def_wind.ns_res, ll_def_nsres, def_wind.proj);
     }
 
     *ll_north = 0;
@@ -204,12 +228,12 @@ int G_edit_cellhd (struct Cell_head *cellhd , int type)
     *ll_west = 0;
     *ll_ewres = 0;
     *ll_nsres = 0;
-    G_format_northing (cellhd->north, ll_north, cellhd->proj);
-    G_format_northing (cellhd->south, ll_south, cellhd->proj);
-    G_format_easting  (cellhd->east, ll_east, cellhd->proj);
-    G_format_easting  (cellhd->west, ll_west, cellhd->proj);
-    G_format_resolution (cellhd->ew_res, ll_ewres, cellhd->proj);
-    G_format_resolution (cellhd->ns_res, ll_nsres, cellhd->proj);
+    format_northing (cellhd->north, ll_north, cellhd->proj);
+    format_northing (cellhd->south, ll_south, cellhd->proj);
+    format_easting  (cellhd->east, ll_east, cellhd->proj);
+    format_easting  (cellhd->west, ll_west, cellhd->proj);
+    format_resolution (cellhd->ew_res, ll_ewres, cellhd->proj);
+    format_resolution (cellhd->ns_res, ll_nsres, cellhd->proj);
 
 
 while(1)
@@ -230,26 +254,26 @@ while(1)
 	V_line (line++, *screen++);
 
 /* V_ques ( variable, type, row, col, length) ; */
-    V_ques (ll_north, 's',  6, 36, max(11,strlen(ll_north)));
-    V_ques (ll_south, 's', 10, 36, max(11,strlen(ll_south))) ;
-    V_ques (ll_west,  's',  9, 12, max(11,strlen(ll_west))) ;
-    V_ques (ll_east,  's',  9, 52, max(11,strlen(ll_east))) ;
+    V_ques (ll_north, 's',  6, 36, 10);
+    V_ques (ll_south, 's', 10, 36, 10) ;
+    V_ques (ll_west,  's',  9, 12, 10) ;
+    V_ques (ll_east,  's',  9, 52, 10) ;
     if (type != AS_CELLHD)
     {
-	V_ques (ll_ewres, 's', 18, 48, max(10,strlen(ll_ewres))) ;
-	V_ques (ll_nsres, 's', 19, 48, max(10,strlen(ll_nsres))) ;
+	V_ques (ll_ewres, 's', 18, 48, 10) ;
+	V_ques (ll_nsres, 's', 19, 48, 10) ;
     }
 
     if (type != AS_DEF_WINDOW)
     {
-	V_const (ll_def_north, 's',  3, 36, strlen(ll_def_north)) ;
-	V_const (ll_def_south, 's', 13, 36, strlen(ll_def_north)) ;
-	V_const (ll_def_west,  's',  9,  1, strlen(ll_def_west)) ;
-	V_const (ll_def_east,  's',  9, 65, strlen(ll_def_east)) ;
+	V_const (ll_def_north, 's',  3, 36, 10) ;
+	V_const (ll_def_south, 's', 13, 36, 10) ;
+	V_const (ll_def_west,  's',  9,  1, 10) ;
+	V_const (ll_def_east,  's',  9, 65, 10) ;
 	if (type != AS_CELLHD)
 	{
-	    V_const (ll_def_ewres, 's', 18, 21, strlen(ll_def_ewres)) ;
-	    V_const (ll_def_nsres, 's', 19, 21, strlen(ll_def_nsres)) ;
+	    V_const (ll_def_ewres, 's', 18, 21, 10) ;
+	    V_const (ll_def_nsres, 's', 19, 21, 10) ;
 	}
     }
 
