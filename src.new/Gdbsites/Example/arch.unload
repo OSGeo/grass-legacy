@@ -1,0 +1,163 @@
+*(unload of arch at 06/08/89  14:08:35)
+*(set con=+)
+*(set end=null)
+Define arch            
+Owner                 
+Attributes
+ id int  1 format 'i4'
+ e int  1 format 'i6'
+ n int  1 format 'i7'
+ name text  var format 'a20'
+ project text 20 format 'a20'
+ state text 7 format 'a7'
+ field text 8 format 'a8'
+ quad text 10 format 'a10'
+ status text 10 format 'a10'
+ disturb text  var format 'a14'
+ elig text 13 format 'a13'
+ type text 6 format 'a6'
+ period text 16 format 'a16'
+ date int  1 format 'i6'
+ size int  1 format 'i6'
+ features text  var format 'a15'
+ diag text  var format 'a15'
+Relations
+ loc with id e n name 
+ idents with id project state field quad 
+ admin with id status disturb elig 
+ data with id type period date size features diag 
+Links
+ I_L from id in idents to id in loc
+ D_L from id in data to id in loc
+ A_L from id in admin to id in loc
+ L_A from id in loc to id in admin
+ L_D from id in loc to id in data
+ L_I from id in loc to id in idents
+Passwords
+End
+Set integer format 'i8'
+Set real format 'f8.2'
+Set date format 'mm/dd/yy'
+Load loc             
+   1 593493 4914730 'Signature Rock'  
+   2 591950 4923000 'No Name'  
+   3 589860 4922000 'Canyon Station'  
+   4 590400 4922820 'Spearfish Creek'  
+   5 593549 4925500 'No Name'  
+   6 600375 4925235 'Prairie Site'  
+   7 606635 4920773 'Jensen Pass Site'  
+   8 595755 4925300 'No Name'  
+   9 601000 4926310 'No Name'  
+  10 602550 4917370 'Slaughterhouse Gulch'  
+  11 591635 4924340 'No Name'  
+  12 603000 4925250 'Elkhorn Peak'  
+  13 592100 4921200 'No Name'  
+  14 592600 4922000 'No Name'  
+  15 604194 4925980 'No Name'  
+  16 608200 4915900 'Boulder Creek Cabin'  
+  17 601400 4925450 'Ridge'  
+  18 591000 4916600 'Cole Creek Mine'  
+  19 607150 4916650 'No Name'  
+  20 593690 4914479 'No Name'  
+  21 608355 4926490 'Whitewood Flats'  
+  22 597945 4918950 'Bob Miller'  
+  23 607159 4917000 'No Name'  
+  24 591583 4925280 'Hanson Ranch'  
+  25 602580 4918480 'No Name'  
+End
+Load idents          
+   1 'NA' 'MV' 'NA' 'Spearfish'  
+   2 'Timbersale Survey' 'MV' 'T-3' 'Spearfish'  
+   3 'NA' 'MV' 'NA' 'Spearfish'  
+   4 'College Survey' 'MV' 'C-3' 'Spearfish'  
+   5 'I-90 Survey' 'MV' 'I-90-39' 'Spearfish'  
+   6 'I-90 Survey' 'MV' 'I-90-44' 'Deadwood'  
+   7 'NA' 'MV' 'NA' 'Deadwood'  
+   8 'I-90 Survey' 'MV' 'I-90-40' 'Spearfish'  
+   9 'I-90 Survey' 'MV' 'I-90-42' 'Deadwood'  
+  10 'NA' 'MV' 'NA' 'Deadwood'  
+  11 'College Survey' 'MV' 'C-2' 'Spearfish'  
+  12 'NA' 'MV' 'NA' 'Deadwood'  
+  13 'Timbersale Survey' 'MV' 'T-9' 'Spearfish'  
+  14 'Timbersale Survey' 'MV' 'T-4' 'Spearfish'  
+  15 'I-90 Survey' 'MV' 'I-90-43' 'Deadwood'  
+  16 'Timbersale Survey' 'MV' 'T-29' 'Deadwood'  
+  17 'NA' 'MV' 'NA' 'Deadwood'  
+  18 'NA' 'MV' 'NA' 'Spearfish'  
+  19 'Timbersale Survey' 'MV' 'T-31' 'Deadwood'  
+  20 'NA' 'MV' 'NA' 'Spearfish'  
+  21 'NA' 'MV' 'NA' 'Deadwood'  
+  22 'NA' 'MV' 'NA' 'Deadwood'  
+  23 'Timbersale Survey' 'MV' 'T-30' 'Deadwood'  
+  24 'College Survey' 'MV' 'C-1' 'Spearfish'  
+  25 'Timbersale Survey' 'MV' 'T-17' 'Deadwood'  
+End
+Load admin           
+   1 'recorded' 'vandalized' 'nominated'  
+   2 'recorded' 'none' 'ineligible'  
+   3 'recorded' 'vandalized' 'nominated'  
+   4 'excavated' 'vandalism' 'nominated'  
+   5 'excavated' 'none' 'eligible'  
+   6 'reported' 'none' 'nominated'  
+   7 'recorded' 'vandalism' 'MV'  
+   8 'recorded' 'destroyed (construction; vandalism)' 'MV'  
+   9 'recorded' 'construction' 'ineligible'  
+  10 'reported' 'construction; vandalism' 'MV'  
+  11 'reported' 'cultivation; construction' 'MV'  
+  12 'reported' 'none' 'MV'  
+  13 'reported' 'none' 'ineligible'  
+  14 'recorded' 'none' 'eligible'  
+  15 'excavated' 'none' 'eligible'  
+  16 'reported' 'vandalism' 'ineligible'  
+  17 'reported' 'vandalism' 'MV'  
+  18 'recorded' 'MV' 'MV'  
+  19 'reported' 'none' 'eligible'  
+  20 'recorded' 'none' 'MV'  
+  21 'reported' 'vandalism; cattle; erosion' 'MV'  
+  22 'reported' 'vandalism' 'MV'  
+  23 'reported' 'logging' 'ineligible'  
+  24 'reported' 'erosion' 'MV'  
+  25 'reported' 'none' 'ineligible'  
+End
+Load data            
+   1 'p;h' 'MV'      0     17 'pictographs; petroglyphs; graffiti' +
+'none'  
+   2 'p' 'MV'      0   2625 'lithic scatter' 'none'  
+   3 'h' 'MV'      0   2600 'frame bldgs; log bldgs; midden' +
+'iron parts; metal cans; glazed shards'  
+   4 'p' 'Plains Village'    600  15000 'circular housepits; enclosing embank+
+ment; pits; midden; hearths' 'pottery (incised; rim-indented); incised soapst+
+one; triangle side-notched points'  
+   5 'p' 'Plains Archaic'   5500   2100 'midden; hearths; housepits; storage +
+pits' 'McKean points'  
+   6 'p' 'Plains Woodland'      0  38400 'storage pits; post molds; midden' +
+'pottery (undecorated; cord-impressed)'  
+   7 'p' 'Paleoindian'      0      0 'scatter (lithic; faunal)' +
+'Angostura points'  
+   8 'p' 'Plains Archaic'      0      0 'burials' 'McKean points'  
+   9 'MV' 'MV'      0  21875 'lithic scatter' 'none'  
+  10 'h' 'Military'      0      0 'none' 'bullets; iron frags'  
+  11 'p; ph' 'MV'      0   8400 'tipi rings' 'none'  
+  12 'MV' 'MV'      0   1200 'hearth; rock cairns' 'none'  
+  13 'p' 'MV'      0   3600 'lithic scatter' 'none'  
+  14 'p' 'Plains Archaic'      0   5625 'lithic scatter' 'McKean points (& fr+
+agments)'  
+  15 'p' 'Paleoindian'   8900    312 'scatter (lithic; faunal)' +
+'Angostura points'  
+  16 'h' 'Recent Historic'      0   1350 'cabin' 'iron; recent ceramics'  
+  17 'p' 'Plains Woodland'      0   4950 'burial mound' 'pottery (plain; cord+
+-impressed); points (side-notched; corner-notched)'  
+  18 'h' 'Mining'      0   8450 'mine shaft; prospect pits; tailings; stone f+
+oundations' 'iron parts; timbers; Euro-American ceramics'  
+  19 'p' 'MV'      0      5 'petroglyphs' 'none'  
+  20 'MV' 'MV'      0      6 'rock cairn' 'none'  
+  21 'p; ph' 'MV'      0  20000 'tipi rings' 'lithics; iron'  
+  22 'p' 'MV'      0      0 'scatter (litic; faunal; ceramic)' +
+'pottery (cord-impressed); McKean points'  
+  23 'p' 'MV'      0    700 'scatter (lithic)' 'none'  
+  24 'p' 'Plains Woodland'      0      0 'MV' 'pottery (plain; cord-impressed+
+); lithics; faunal'  
+  25 'p' 'MV'      0   2625 'scatter (lithic)' 'none'  
+End
+*(set end=;)
+*(exit)
