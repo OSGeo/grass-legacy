@@ -1,5 +1,10 @@
 PGM       = $(BIN_CMD)/d.what.r.pg
 LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) 
+PACKAGE = "d.what.r.pg"
+DEFS = -Wall -DPACKAGE=\"$(PACKAGE)\"
+EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS)
+
+
 
 OBJS = \
 	main.o  \
@@ -10,7 +15,6 @@ OBJS = \
 	getCat.o  \
 	opencell.o 
 
-EXTRA_CFLAGS = $(PQINCPATH)
 
 $(PGM): $(OBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(PQLIBPATH) $(PQLIB) $(XEXTRALIBS) $(MATHLIB) $(XDRLIB)

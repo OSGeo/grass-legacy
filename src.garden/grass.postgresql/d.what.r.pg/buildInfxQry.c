@@ -1,7 +1,6 @@
 #include "gis.h"
 #include <stdio.h> 
 
-/*------------ A.Sh. 29.12.99 */
 
 int buildInfxQry(ktab,keycat,curcat)
 	struct Option *ktab, *keycat; 
@@ -15,5 +14,3 @@ int buildInfxQry(ktab,keycat,curcat)
 	return ((int) SQL_stmt) ;
 
 }
-
-
