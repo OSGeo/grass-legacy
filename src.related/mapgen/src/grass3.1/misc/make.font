@@ -1,0 +1,5 @@
+#!/bin/sh
+##### setup mapgen variables   #######################################
+PATH=$PATH:/usr/mapgen/bin:/usr/mapgen/macros
+##### END setup
+mapdef -csm ${GRAPH}/etc/showfont/map.def < etc/showfont/map.def.par
