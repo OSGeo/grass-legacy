@@ -1,8 +1,8 @@
-:
+#!/bin/sh
 ssdata=$1
 master=$2
 
-if [ $# != 2 -o "$ssdata" = "help" ]; then
+if [ $# != 2 -o "$ssdata" = "help" -o "$ssdata" = "-help" ]; then
 echo "Usage: v.cutter.attr source_data master
 
 where:

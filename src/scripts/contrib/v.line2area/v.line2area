@@ -1,4 +1,4 @@
-:
+#!/bin/sh
 ################################################################################
 # *** This is v.line2area . ***
 #
@@ -16,6 +16,11 @@ elif [ `uname -s` = SunOS -a `uname -r | sed 's/\...*$//'` = 5 ] ; then
   ECHON="/usr/ucb/echo -n"
 else
   ECHON="echo -n"
+fi
+
+if [ "$1" = "-help" -o "$1" = "help" ]
+then
+ v.line2area vectormap
 fi
 
 clear

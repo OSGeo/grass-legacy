@@ -7,6 +7,12 @@
 
 # $Id$
 
+if [ $# = 0 -o "$1" = "-help" -o "$1" = "help" ]
+then
+ echo "Usage: g.man2html manfile"
+ exit
+fi
+
 echo "Checking if rman installed..."
 which rman > /dev/null
 if [ $? -eq 1 ] ; then

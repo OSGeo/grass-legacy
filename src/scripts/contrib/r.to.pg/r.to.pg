@@ -28,7 +28,7 @@ if [ $? != 0 ]; then
  exit
 fi
 
-if [ "$1" = "help" ]; then
+if [ "$1" = "help" -o "$1" = "-help" ]; then
  echo "r.to.pg exports GRASS raster map to PostgreSQL database"
  echo "        into a one column table (raster values only)."
  echo "Usage:"

@@ -12,7 +12,7 @@ if test "$GISBASE" = ""; then
  exit
 fi
 
-if [ "$#" -lt 1 ]; then
+if [ "$#" -lt 1  -o "$1" = "-help" -o "$1" = "help" ]; then
       echo ""
       echo ""
       echo "Import of GLOBE DEM file as GRASS raster map"
