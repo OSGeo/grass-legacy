@@ -19,7 +19,7 @@ char get_pest_name(char *input_file, int num, int resolution)
 	
 	if((infile = fopen(input_file,"r")) == NULL) {
        fprintf(stderr,"Can't open file: %s\n",input_file);
-       sprintf(cmd,"Bad_dir_message.sh %s.nps\n",input_file); 
+       sprintf(cmd,"$GISBASE/etc/agnps50/Bad_dir_message.sh %s.nps\n",input_file); 
        system(cmd); 
        return;
        }
@@ -43,11 +43,11 @@ char get_pest_name(char *input_file, int num, int resolution)
       }
     else {    
 		if (num==9)
-	 	  sprintf(cmd,"show_PRUNOFF.csh %d %d %s",num,resolution,pesticide);
+	 	  sprintf(cmd,"$GISBASE/etc/agnps50/show_PRUNOFF.csh %d %d %s",num,resolution,pesticide);
     	else if (num==10)
-     	  sprintf(cmd,"show_PSED.csh %d %d %s",num,resolution,pesticide);
+     	  sprintf(cmd,"$GISBASE/etc/agnps50/show_PSED.csh %d %d %s",num,resolution,pesticide);
     	else if (num==11)
-          sprintf(cmd,"show_PPERC.csh %d %d %s",num,resolution,pesticide);
+          sprintf(cmd,"$GISBASE/etc/agnps50/show_PPERC.csh %d %d %s",num,resolution,pesticide);
     	system(cmd);
 	  }
-}	      
+}
