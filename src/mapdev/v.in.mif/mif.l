@@ -282,7 +282,7 @@ logf [Ll]ogical
 						 BEGIN GLINE; 
                                                }
                             
-<GLINE>({float}{whitespace}){3}{float}         { 
+<GLINE>{float}.*{float}                        { 
                                                  ssx1 = strtok(yytext, " \t");
 						 sx1 = atof(ssx1);
 						 ssy1 = strtok(NULL, " \t");
