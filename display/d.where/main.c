@@ -39,7 +39,7 @@ int main (int argc, char **argv)
     wgs84 = G_define_flag() ;
     wgs84->key        = 'w' ;
     wgs84->description= "Output lat/long referenced to WGS84 ellipsoid using datum\n"
-                        "       transformation parameters defined in current location if available";
+                        "transformation parameters defined in current location if available";
      
      
     if (G_parser(argc,argv))
