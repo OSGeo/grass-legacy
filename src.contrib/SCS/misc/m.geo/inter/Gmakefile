@@ -7,7 +7,8 @@ LIST =  main.o \
 	geo_func.o  \
 	geo_supp.o
 
-all: LIBPROJ $(BIN_CONTRIB_INTER)/$(PGM)
+#all: LIBPROJ $(BIN_CONTRIB_INTER)/$(PGM)
+all: FIPSlib $(BIN_CONTRIB_INTER)/$(PGM)
 
 
 $(BIN_CONTRIB_INTER)/$(PGM): $(LIST) 
@@ -18,7 +19,10 @@ START:
 	cp $(SRC)/../src.related/mapgen/proj/projects.h projects.h
 
 LIBPROJ: $(LIBPROJ) $(LIBSUPP)
-	cd $(SRC)/../src.related/mapgen/proj; grassmke $(LIBARCH) $(GISBASE) $(SRC)
+	cd $(SRC)/../src.related/mapgen/proj; $(GMAKE) $(LIBARCH) $(GISBASE) $(SRC)
+
+FIPSlib: 
+	cd ../../FIPS_proj/lib; $(GMAKE) 
 
 main.o: geo.h
 geo_func.o: geo.h
