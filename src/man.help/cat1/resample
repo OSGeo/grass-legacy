@@ -1,0 +1,66 @@
+
+
+
+resample(1)          GRASS Reference Manual           resample(1)
+
+
+
+NAME
+     resample - GRASS resampling capability
+     (Available through grass3 menu)
+
+SYNOPSIS
+     resample
+
+DESCRIPTION
+     This is an interactive program to resample a It reads the
+     user-specified into the current geographic window masked by
+     the current mask, and produces a new containing the results
+     of the resampling. The values in the new cell will be the
+     same as in the original, except that the resolution and
+     extent of the new will match those of the current window.
+
+NOTES
+     The method by which resampling is conducted is "nearest
+     neighbor" (see neighbors[1]).  The resulting cell will have
+     the same resolution as the resolution of the current window.
+
+     The resulting can be identical to the original The resample
+     program will copy the color table, category file, and
+     history file associated with the original for the resulting
+
+SEE ALSO
+     neighbors[1]
+
+AUTHOR
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
