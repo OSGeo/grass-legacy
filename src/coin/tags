@@ -1,0 +1,18 @@
+F_CTOA	prnt_entry.c	/^#define F_CTOA(C)	F_CTOK(C) * 247.1000$/
+F_CTOH	prnt_entry.c	/^#define F_CTOH(C)	F_CTOK(C) * 100.0000$/
+F_CTOK	prnt_entry.c	/^#define F_CTOK(C)	square_meters*((double)(C))\/1000/
+F_CTOM	prnt_entry.c	/^#define F_CTOM(C)	F_CTOK(C) *   0.3861$/
+F_CTOP	prnt_entry.c	/^#define F_CTOP(C,R) ((int)R) / (double)C \/ (double/
+F_CTOX	prnt_entry.c	/^#define F_CTOX(C,R) ((int)R) / (double)C \/ (double/
+F_CTOY	prnt_entry.c	/^#define F_CTOY(C,R) ((int)R) / (double)C \/ (double/
+Mmain	main.c	/^main(argc, argv) char *argv[];$/
+check_report_size	check.c	/^check_report_size()$/
+cmp	make_coin.c	/^cmp (a,b)$/
+col_total	totals.c	/^col_total (col, with_no_data)$/
+collapse	make_coin.c	/^collapse (list,n)$/
+format_double	format.c	/^format_double (v, buf, n)$/
+make_coin	make_coin.c	/^make_coin()$/
+print_coin	print_coin.c	/^print_coin(Conformat,out_cols)$/
+print_coin_hdr	print_hdr.c	/^print_coin_hdr(Conformat)$/
+print_entry	prnt_entry.c	/^print_entry(Conformat,entry)$/
+row_total	totals.c	/^row_total (row, with_no_data)$/
