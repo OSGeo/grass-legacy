@@ -10,7 +10,7 @@
  *   1 if it contains the north pole,
  *   0 no pole
  *
- * Note: don't use this routine if the projection is PROJECTION_LL
+ * Note: don't use this routine if the projection isn't PROJECTION_LL
  *       no check is made by this routine for valid projection
  ***********************************************************/
 
@@ -63,4 +63,3 @@ mystats (x0,y0,x1,y1,len,area)
     else
 	*area = (x1-x0) * (y1+y0)/2.0;
 }
-    
